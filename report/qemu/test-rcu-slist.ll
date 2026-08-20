@@ -201,7 +201,7 @@ bb.e:                                             ; preds = %.critedge
   br i1 %i.z, label %.lr.ph85._crit_edge, label %.lr.ph109
 
 .lr.ph85:                                         ; preds = %.lr.ph109
-  %i.aa = add i32 %i.af, 1                        ; 2 uses
+  %i.aa = add nuw i32 %i.af, 1                    ; 2 uses
   %i.ab = icmp eq i32 %i.x, %i.aa
   br i1 %i.ab, label %.lr.ph85._crit_edge, label %.lr.ph109, !llvm.loop !35
 

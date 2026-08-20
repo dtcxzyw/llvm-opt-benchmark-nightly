@@ -204,7 +204,7 @@ bb.h:                                             ; preds = %.lr.ph.1
 
 bb.i:                                             ; preds = %bb.h, %.lr.ph.1
   %i.bg = add nuw i64 %.020, 2                    ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !1129
 
@@ -607,7 +607,7 @@ bb.i:                                             ; preds = %.lr.ph.1
 
 bb.j:                                             ; preds = %bb.i, %.lr.ph.1
   %i.dc = add nuw i64 %.023, 2                    ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !1151
 
@@ -1010,7 +1010,7 @@ bb.h:                                             ; preds = %.lr.ph.1
 
 bb.i:                                             ; preds = %bb.h, %.lr.ph.1
   %i.bk = add nuw i64 %.021, 2                    ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !1234
 
@@ -1413,7 +1413,7 @@ bb.i:                                             ; preds = %.lr.ph.1
 
 bb.j:                                             ; preds = %bb.i, %.lr.ph.1
   %i.di = add nuw i64 %.024, 2                    ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !1256
 

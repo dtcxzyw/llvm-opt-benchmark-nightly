@@ -203,7 +203,7 @@ bb.e:                                             ; preds = %.lr.ph.3
 bb.f:                                             ; preds = %bb.e, %.lr.ph.3
   %.1.3 = phi i32 [ %i.p, %bb.e ], [ %.1.2, %.lr.ph.3 ] ; 3 uses
   %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %._crit_edge.unr-lcssa, label %.lr.ph, !llvm.loop !79
 
@@ -606,7 +606,7 @@ bb.w:                                             ; preds = %.lr.ph.i333.3
 bb.x:                                             ; preds = %bb.w, %.lr.ph.i333.3
   %.1.i.3 = phi i32 [ %i.dc, %bb.w ], [ %.1.i.2, %.lr.ph.i333.3 ] ; 3 uses
   %indvars.iv.next.i335.3 = add nuw nsw i64 %indvars.iv.i334, 4 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %._crit_edge.i337.unr-lcssa, label %.lr.ph.i333, !llvm.loop !79
 
@@ -815,7 +815,7 @@ bb.am:                                            ; preds = %.lr.ph.i344.3
 bb.an:                                            ; preds = %bb.am, %.lr.ph.i344.3
   %.1.i348.3 = phi i32 [ %i.fn, %bb.am ], [ %.1.i348.2, %.lr.ph.i344.3 ] ; 3 uses
   %indvars.iv.next.i349.3 = add nuw nsw i64 %indvars.iv.i345, 4 ; 2 uses
-  %niter633.next.3 = add i64 %niter633, 4         ; 2 uses
+  %niter633.next.3 = add nuw i64 %niter633, 4     ; 2 uses
   %niter633.ncmp.3 = icmp eq i64 %niter633.next.3, %unroll_iter632
   br i1 %niter633.ncmp.3, label %._crit_edge.i351.unr-lcssa, label %.lr.ph.i344, !llvm.loop !79
 
@@ -1218,7 +1218,7 @@ bb.a:
   %i.aw = getelementptr inbounds i8, ptr %i.am, i64 %i.av
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.at, ptr noundef nonnull align 1 dereferenceable(3) %i.aw, i64 3, i1 false)
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.unr-lcssa, label %.preheader.new, !llvm.loop !103
 
@@ -1341,7 +1341,7 @@ bb.a:
   %i.aw = getelementptr inbounds i8, ptr %i.am, i64 %i.av
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.at, ptr noundef nonnull align 1 dereferenceable(3) %i.aw, i64 3, i1 false)
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.unr-lcssa, label %.preheader.new, !llvm.loop !106
 
@@ -1744,7 +1744,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.new
   %i.p = getelementptr inbounds i8, ptr %i.h, i64 %i.o
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.p, ptr noundef nonnull align 1 dereferenceable(3) @stbhw__black, i64 3, i1 false)
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %bb.b, !llvm.loop !112
 
@@ -1991,7 +1991,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.new
   %gep.1 = getelementptr i8, ptr %invariant.gep, i64 %i.n
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %gep.1, ptr noundef nonnull align 1 dereferenceable(3) @stbhw__black, i64 3, i1 false)
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %bb.b, !llvm.loop !122
 
@@ -2332,7 +2332,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.i.new
   %i.y = getelementptr inbounds i8, ptr %i.q, i64 %i.x
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.y, ptr noundef nonnull align 1 dereferenceable(3) @stbhw__black, i64 3, i1 false)
   %indvars.iv.next.i.1 = add nuw nsw i64 %indvars.iv.i, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.i.loopexit.unr-lcssa, label %bb.b, !llvm.loop !112
 
@@ -2562,7 +2562,7 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph.i54.n
   %i.dw = getelementptr inbounds i8, ptr %i.do, i64 %i.dv
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.dw, ptr noundef nonnull align 1 dereferenceable(3) @stbhw__black, i64 3, i1 false)
   %indvars.iv.next.i57.1 = add nuw nsw i64 %indvars.iv.i56, 2 ; 2 uses
-  %niter290.next.1 = add i64 %niter290, 2         ; 2 uses
+  %niter290.next.1 = add nuw i64 %niter290, 2     ; 2 uses
   %niter290.ncmp.1 = icmp eq i64 %niter290.next.1, %unroll_iter289
   br i1 %niter290.ncmp.1, label %._crit_edge.i41.loopexit.unr-lcssa, label %bb.c, !llvm.loop !112
 
@@ -2791,7 +2791,7 @@ bb.d:                                             ; preds = %bb.d, %.lr.ph.i67.n
   %gep.i.1 = getelementptr i8, ptr %invariant.gep.i, i64 %i.hq
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %gep.i.1, ptr noundef nonnull align 1 dereferenceable(3) @stbhw__black, i64 3, i1 false)
   %indvars.iv.next.i70.1 = add nuw nsw i64 %indvars.iv.i69, 2 ; 2 uses
-  %niter296.next.1 = add i64 %niter296, 2         ; 2 uses
+  %niter296.next.1 = add nuw i64 %niter296, 2     ; 2 uses
   %niter296.ncmp.1 = icmp eq i64 %niter296.next.1, %unroll_iter295
   br i1 %niter296.ncmp.1, label %._crit_edge.i60.loopexit.unr-lcssa, label %bb.d, !llvm.loop !122
 
@@ -2898,7 +2898,7 @@ bb.f:                                             ; preds = %bb.f, %.lr.ph.i87.n
   %gep.i91.1 = getelementptr i8, ptr %invariant.gep.i88, i64 %i.jg
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %gep.i91.1, ptr noundef nonnull align 1 dereferenceable(3) @stbhw__black, i64 3, i1 false)
   %indvars.iv.next.i92.1 = add nuw nsw i64 %indvars.iv.i90, 2 ; 2 uses
-  %niter302.next.1 = add i64 %niter302, 2         ; 2 uses
+  %niter302.next.1 = add nuw i64 %niter302, 2     ; 2 uses
   %niter302.ncmp.1 = icmp eq i64 %niter302.next.1, %unroll_iter301
   br i1 %niter302.ncmp.1, label %._crit_edge.i72.loopexit.unr-lcssa, label %bb.f, !llvm.loop !122
 
@@ -3002,7 +3002,7 @@ bb.h:                                             ; preds = %bb.h, %.lr.ph.i108.
   %i.kw = getelementptr inbounds i8, ptr %i.kp, i64 %i.kv
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.kw, ptr noundef nonnull align 1 dereferenceable(3) @stbhw__black, i64 3, i1 false)
   %indvars.iv.next.i111.1 = add nuw nsw i64 %indvars.iv.i110, 2 ; 2 uses
-  %niter308.next.1 = add i64 %niter308, 2         ; 2 uses
+  %niter308.next.1 = add nuw i64 %niter308, 2     ; 2 uses
   %niter308.ncmp.1 = icmp eq i64 %niter308.next.1, %unroll_iter307
   br i1 %niter308.ncmp.1, label %._crit_edge.i95.loopexit.unr-lcssa, label %bb.h, !llvm.loop !112
 
@@ -3227,7 +3227,7 @@ bb.i:                                             ; preds = %bb.i, %.lr.ph.i127.
   %i.op = getelementptr inbounds i8, ptr %i.oi, i64 %i.oo
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.op, ptr noundef nonnull align 1 dereferenceable(3) @stbhw__black, i64 3, i1 false)
   %indvars.iv.next.i130.1 = add nuw nsw i64 %indvars.iv.i129, 2 ; 2 uses
-  %niter314.next.1 = add i64 %niter314, 2         ; 2 uses
+  %niter314.next.1 = add nuw i64 %niter314, 2     ; 2 uses
   %niter314.ncmp.1 = icmp eq i64 %niter314.next.1, %unroll_iter313
   br i1 %niter314.ncmp.1, label %._crit_edge.i114.loopexit.unr-lcssa, label %bb.i, !llvm.loop !112
 
@@ -3471,7 +3471,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.i.new
   %i.y = getelementptr inbounds i8, ptr %i.q, i64 %i.x
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.y, ptr noundef nonnull align 1 dereferenceable(3) @stbhw__black, i64 3, i1 false)
   %indvars.iv.next.i.1 = add nuw nsw i64 %indvars.iv.i, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.i.loopexit.unr-lcssa, label %bb.b, !llvm.loop !112
 
@@ -3702,7 +3702,7 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph.i48.n
   %gep.i.1 = getelementptr i8, ptr %invariant.gep.i, i64 %i.du
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %gep.i.1, ptr noundef nonnull align 1 dereferenceable(3) @stbhw__black, i64 3, i1 false)
   %indvars.iv.next.i51.1 = add nuw nsw i64 %indvars.iv.i50, 2 ; 2 uses
-  %niter210.next.1 = add i64 %niter210, 2         ; 2 uses
+  %niter210.next.1 = add nuw i64 %niter210, 2     ; 2 uses
   %niter210.ncmp.1 = icmp eq i64 %niter210.next.1, %unroll_iter209
   br i1 %niter210.ncmp.1, label %._crit_edge.i41.loopexit.unr-lcssa, label %bb.c, !llvm.loop !122
 
@@ -3808,7 +3808,7 @@ bb.e:                                             ; preds = %bb.e, %.lr.ph.i68.n
   %gep.i72.1 = getelementptr i8, ptr %invariant.gep.i69, i64 %i.fj
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %gep.i72.1, ptr noundef nonnull align 1 dereferenceable(3) @stbhw__black, i64 3, i1 false)
   %indvars.iv.next.i73.1 = add nuw nsw i64 %indvars.iv.i71, 2 ; 2 uses
-  %niter216.next.1 = add i64 %niter216, 2         ; 2 uses
+  %niter216.next.1 = add nuw i64 %niter216, 2     ; 2 uses
   %niter216.ncmp.1 = icmp eq i64 %niter216.next.1, %unroll_iter215
   br i1 %niter216.ncmp.1, label %._crit_edge.i53.loopexit.unr-lcssa, label %bb.e, !llvm.loop !122
 
@@ -3912,7 +3912,7 @@ bb.g:                                             ; preds = %bb.g, %.lr.ph.i91.n
   %gep.i95.1 = getelementptr i8, ptr %invariant.gep.i92, i64 %i.gw
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %gep.i95.1, ptr noundef nonnull align 1 dereferenceable(3) @stbhw__black, i64 3, i1 false)
   %indvars.iv.next.i96.1 = add nuw nsw i64 %indvars.iv.i94, 2 ; 2 uses
-  %niter222.next.1 = add i64 %niter222, 2         ; 2 uses
+  %niter222.next.1 = add nuw i64 %niter222, 2     ; 2 uses
   %niter222.ncmp.1 = icmp eq i64 %niter222.next.1, %unroll_iter221
   br i1 %niter222.ncmp.1, label %._crit_edge.i76.loopexit.unr-lcssa, label %bb.g, !llvm.loop !122
 
@@ -4013,7 +4013,7 @@ bb.i:                                             ; preds = %bb.i, %.lr.ph.i114.
   %gep.i118.1 = getelementptr i8, ptr %invariant.gep.i115, i64 %i.ig
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %gep.i118.1, ptr noundef nonnull align 1 dereferenceable(3) @stbhw__black, i64 3, i1 false)
   %indvars.iv.next.i119.1 = add nuw nsw i64 %indvars.iv.i117, 2 ; 2 uses
-  %niter228.next.1 = add i64 %niter228, 2         ; 2 uses
+  %niter228.next.1 = add nuw i64 %niter228, 2     ; 2 uses
   %niter228.ncmp.1 = icmp eq i64 %niter228.next.1, %unroll_iter227
   br i1 %niter228.ncmp.1, label %._crit_edge.i99.loopexit.unr-lcssa, label %bb.i, !llvm.loop !122
 
@@ -4116,7 +4116,7 @@ bb.k:                                             ; preds = %bb.k, %.lr.ph.i135.
   %i.jv = getelementptr inbounds i8, ptr %i.jo, i64 %i.ju
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.jv, ptr noundef nonnull align 1 dereferenceable(3) @stbhw__black, i64 3, i1 false)
   %indvars.iv.next.i138.1 = add nuw nsw i64 %indvars.iv.i137, 2 ; 2 uses
-  %niter234.next.1 = add i64 %niter234, 2         ; 2 uses
+  %niter234.next.1 = add nuw i64 %niter234, 2     ; 2 uses
   %niter234.ncmp.1 = icmp eq i64 %niter234.next.1, %unroll_iter233
   br i1 %niter234.ncmp.1, label %._crit_edge.i122.loopexit.unr-lcssa, label %bb.k, !llvm.loop !112
 
@@ -4365,7 +4365,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.i.new
   %i.ad = getelementptr inbounds i8, ptr %i.v, i64 %i.ac
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.ad, ptr noundef nonnull align 1 dereferenceable(3) @stbhw__black, i64 3, i1 false)
   %indvars.iv.next.i.1 = add nuw nsw i64 %indvars.iv.i, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.i.loopexit.unr-lcssa, label %bb.b, !llvm.loop !112
 
@@ -4600,7 +4600,7 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph.i157.
   %i.eg = getelementptr inbounds i8, ptr %i.dy, i64 %i.ef
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.eg, ptr noundef nonnull align 1 dereferenceable(3) @stbhw__black, i64 3, i1 false)
   %indvars.iv.next.i160.1 = add nuw nsw i64 %indvars.iv.i159, 2 ; 2 uses
-  %niter438.next.1 = add i64 %niter438, 2         ; 2 uses
+  %niter438.next.1 = add nuw i64 %niter438, 2     ; 2 uses
   %niter438.ncmp.1 = icmp eq i64 %niter438.next.1, %unroll_iter437
   br i1 %niter438.ncmp.1, label %._crit_edge.i144.loopexit.unr-lcssa, label %bb.c, !llvm.loop !112
 
@@ -4832,7 +4832,7 @@ bb.d:                                             ; preds = %bb.d, %.lr.ph.i170.
   %gep.i.1 = getelementptr i8, ptr %invariant.gep.i, i64 %i.id
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %gep.i.1, ptr noundef nonnull align 1 dereferenceable(3) @stbhw__black, i64 3, i1 false)
   %indvars.iv.next.i173.1 = add nuw nsw i64 %indvars.iv.i172, 2 ; 2 uses
-  %niter444.next.1 = add i64 %niter444, 2         ; 2 uses
+  %niter444.next.1 = add nuw i64 %niter444, 2     ; 2 uses
   %niter444.ncmp.1 = icmp eq i64 %niter444.next.1, %unroll_iter443
   br i1 %niter444.ncmp.1, label %._crit_edge.i163.loopexit.unr-lcssa, label %bb.d, !llvm.loop !122
 
@@ -4943,7 +4943,7 @@ bb.f:                                             ; preds = %bb.f, %.lr.ph.i190.
   %gep.i194.1 = getelementptr i8, ptr %invariant.gep.i191, i64 %i.jx
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %gep.i194.1, ptr noundef nonnull align 1 dereferenceable(3) @stbhw__black, i64 3, i1 false)
   %indvars.iv.next.i195.1 = add nuw nsw i64 %indvars.iv.i193, 2 ; 2 uses
-  %niter450.next.1 = add i64 %niter450, 2         ; 2 uses
+  %niter450.next.1 = add nuw i64 %niter450, 2     ; 2 uses
   %niter450.ncmp.1 = icmp eq i64 %niter450.next.1, %unroll_iter449
   br i1 %niter450.ncmp.1, label %._crit_edge.i175.loopexit.unr-lcssa, label %bb.f, !llvm.loop !122
 
@@ -5052,7 +5052,7 @@ bb.h:                                             ; preds = %bb.h, %.lr.ph.i211.
   %i.ls = getelementptr inbounds i8, ptr %i.ll, i64 %i.lr
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.ls, ptr noundef nonnull align 1 dereferenceable(3) @stbhw__black, i64 3, i1 false)
   %indvars.iv.next.i214.1 = add nuw nsw i64 %indvars.iv.i213, 2 ; 2 uses
-  %niter456.next.1 = add i64 %niter456, 2         ; 2 uses
+  %niter456.next.1 = add nuw i64 %niter456, 2     ; 2 uses
   %niter456.ncmp.1 = icmp eq i64 %niter456.next.1, %unroll_iter455
   br i1 %niter456.ncmp.1, label %._crit_edge.i198.loopexit.unr-lcssa, label %bb.h, !llvm.loop !112
 
@@ -5280,7 +5280,7 @@ bb.i:                                             ; preds = %bb.i, %.lr.ph.i230.
   %i.po = getelementptr inbounds i8, ptr %i.ph, i64 %i.pn
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.po, ptr noundef nonnull align 1 dereferenceable(3) @stbhw__black, i64 3, i1 false)
   %indvars.iv.next.i233.1 = add nuw nsw i64 %indvars.iv.i232, 2 ; 2 uses
-  %niter462.next.1 = add i64 %niter462, 2         ; 2 uses
+  %niter462.next.1 = add nuw i64 %niter462, 2     ; 2 uses
   %niter462.ncmp.1 = icmp eq i64 %niter462.next.1, %unroll_iter461
   br i1 %niter462.ncmp.1, label %._crit_edge.i217.loopexit.unr-lcssa, label %bb.i, !llvm.loop !112
 
@@ -5683,7 +5683,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.i.new
   %i.ad = getelementptr inbounds i8, ptr %i.v, i64 %i.ac
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.ad, ptr noundef nonnull align 1 dereferenceable(3) @stbhw__black, i64 3, i1 false)
   %indvars.iv.next.i.1 = add nuw nsw i64 %indvars.iv.i, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.i.loopexit.unr-lcssa, label %bb.b, !llvm.loop !112
 
@@ -5917,7 +5917,7 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph.i151.
   %gep.i.1 = getelementptr i8, ptr %invariant.gep.i, i64 %i.ec
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %gep.i.1, ptr noundef nonnull align 1 dereferenceable(3) @stbhw__black, i64 3, i1 false)
   %indvars.iv.next.i154.1 = add nuw nsw i64 %indvars.iv.i153, 2 ; 2 uses
-  %niter368.next.1 = add i64 %niter368, 2         ; 2 uses
+  %niter368.next.1 = add nuw i64 %niter368, 2     ; 2 uses
   %niter368.ncmp.1 = icmp eq i64 %niter368.next.1, %unroll_iter367
   br i1 %niter368.ncmp.1, label %._crit_edge.i144.loopexit.unr-lcssa, label %bb.c, !llvm.loop !122
 
@@ -6028,7 +6028,7 @@ bb.e:                                             ; preds = %bb.e, %.lr.ph.i171.
   %gep.i175.1 = getelementptr i8, ptr %invariant.gep.i172, i64 %i.fw
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %gep.i175.1, ptr noundef nonnull align 1 dereferenceable(3) @stbhw__black, i64 3, i1 false)
   %indvars.iv.next.i176.1 = add nuw nsw i64 %indvars.iv.i174, 2 ; 2 uses
-  %niter374.next.1 = add i64 %niter374, 2         ; 2 uses
+  %niter374.next.1 = add nuw i64 %niter374, 2     ; 2 uses
   %niter374.ncmp.1 = icmp eq i64 %niter374.next.1, %unroll_iter373
   br i1 %niter374.ncmp.1, label %._crit_edge.i156.loopexit.unr-lcssa, label %bb.e, !llvm.loop !122
 
@@ -6137,7 +6137,7 @@ bb.g:                                             ; preds = %bb.g, %.lr.ph.i194.
   %gep.i198.1 = getelementptr i8, ptr %invariant.gep.i195, i64 %i.ho
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %gep.i198.1, ptr noundef nonnull align 1 dereferenceable(3) @stbhw__black, i64 3, i1 false)
   %indvars.iv.next.i199.1 = add nuw nsw i64 %indvars.iv.i197, 2 ; 2 uses
-  %niter380.next.1 = add i64 %niter380, 2         ; 2 uses
+  %niter380.next.1 = add nuw i64 %niter380, 2     ; 2 uses
   %niter380.ncmp.1 = icmp eq i64 %niter380.next.1, %unroll_iter379
   br i1 %niter380.ncmp.1, label %._crit_edge.i179.loopexit.unr-lcssa, label %bb.g, !llvm.loop !122
 
@@ -6242,7 +6242,7 @@ bb.i:                                             ; preds = %bb.i, %.lr.ph.i217.
   %gep.i221.1 = getelementptr i8, ptr %invariant.gep.i218, i64 %i.jc
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %gep.i221.1, ptr noundef nonnull align 1 dereferenceable(3) @stbhw__black, i64 3, i1 false)
   %indvars.iv.next.i222.1 = add nuw nsw i64 %indvars.iv.i220, 2 ; 2 uses
-  %niter386.next.1 = add i64 %niter386, 2         ; 2 uses
+  %niter386.next.1 = add nuw i64 %niter386, 2     ; 2 uses
   %niter386.ncmp.1 = icmp eq i64 %niter386.next.1, %unroll_iter385
   br i1 %niter386.ncmp.1, label %._crit_edge.i202.loopexit.unr-lcssa, label %bb.i, !llvm.loop !122
 
@@ -6348,7 +6348,7 @@ bb.k:                                             ; preds = %bb.k, %.lr.ph.i238.
   %i.ku = getelementptr inbounds i8, ptr %i.kn, i64 %i.kt
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.ku, ptr noundef nonnull align 1 dereferenceable(3) @stbhw__black, i64 3, i1 false)
   %indvars.iv.next.i241.1 = add nuw nsw i64 %indvars.iv.i240, 2 ; 2 uses
-  %niter392.next.1 = add i64 %niter392, 2         ; 2 uses
+  %niter392.next.1 = add nuw i64 %niter392, 2     ; 2 uses
   %niter392.ncmp.1 = icmp eq i64 %niter392.next.1, %unroll_iter391
   br i1 %niter392.ncmp.1, label %._crit_edge.i225.loopexit.unr-lcssa, label %bb.k, !llvm.loop !112
 
@@ -6751,7 +6751,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.new
   %i.ac = getelementptr inbounds i8, ptr %1, i64 %i.ab
   tail call void @llvm.memset.p0.i64(ptr align 1 %i.ac, i8 -1, i64 %i.k, i1 false)
   %indvars.iv.next.7 = add nuw nsw i64 %indvars.iv, 8 ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %._crit_edge.loopexit.unr-lcssa, label %bb.b, !llvm.loop !220
 

@@ -203,7 +203,7 @@ bb.ab:                                            ; preds = %.split.us.preheader
   %i.cy = getelementptr inbounds nuw i8, ptr %.0193237.us.1, i64 28
   store i8 0, ptr %i.cy, align 1, !tbaa !24
   %i.cz = getelementptr inbounds nuw i8, ptr %.0193237.us.1, i64 32 ; 2 uses
-  %niter340.next.7 = add i32 %niter340, 8         ; 2 uses
+  %niter340.next.7 = add nuw i32 %niter340, 8     ; 2 uses
   %niter340.ncmp.7 = icmp eq i32 %niter340.next.7, %unroll_iter339
   br i1 %niter340.ncmp.7, label %..loopexit235_crit_edge.us.1.thread.unr-lcssa, label %.preheader234.us.1, !llvm.loop !81
 
@@ -270,7 +270,7 @@ bb.ac:                                            ; preds = %..loopexit235_crit_
   %i.dm = getelementptr inbounds nuw i8, ptr %.0193237.us.2, i64 28
   store i8 0, ptr %i.dm, align 1, !tbaa !24
   %i.dn = getelementptr inbounds nuw i8, ptr %.0193237.us.2, i64 32 ; 2 uses
-  %niter346.next.7 = add i32 %niter346, 8         ; 2 uses
+  %niter346.next.7 = add nuw i32 %niter346, 8     ; 2 uses
   %niter346.ncmp.7 = icmp eq i32 %niter346.next.7, %unroll_iter345
   br i1 %niter346.ncmp.7, label %..loopexit235_crit_edge.us.2.thread.unr-lcssa, label %.preheader234.us.2, !llvm.loop !81
 
@@ -337,7 +337,7 @@ bb.ad:                                            ; preds = %..loopexit235_crit_
   %i.ea = getelementptr inbounds nuw i8, ptr %.0193237.us.3, i64 28
   store i8 -1, ptr %i.ea, align 1, !tbaa !24
   %i.eb = getelementptr inbounds nuw i8, ptr %.0193237.us.3, i64 32 ; 2 uses
-  %niter352.next.7 = add i32 %niter352, 8         ; 2 uses
+  %niter352.next.7 = add nuw i32 %niter352, 8     ; 2 uses
   %niter352.ncmp.7 = icmp eq i32 %niter352.next.7, %unroll_iter351
   br i1 %niter352.ncmp.7, label %.loopexit.loopexit324.unr-lcssa, label %.preheader234.us.3, !llvm.loop !81
 
@@ -740,7 +740,7 @@ bb.ao:                                            ; preds = %stbi__get8.exit159
   %i.fw = getelementptr i8, ptr %invariant.gep322, i64 %indvars.iv.next257.2
   %gep323.3 = getelementptr i8, ptr %i.fw, i64 12
   store i8 %.0.i158, ptr %gep323.3, align 1, !tbaa !24
-  %niter.next.3 = add i32 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i32 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i32 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.loopexit.loopexit.unr-lcssa, label %.lr.ph211, !llvm.loop !116
 
@@ -1143,7 +1143,7 @@ bb.au:                                            ; preds = %stbi__getn.exit.us.
 stbi__getn.exit.us.us.1:                          ; preds = %bb.au, %stbi__getn.exit.us.us
   %i.ja = phi ptr [ %i.it, %bb.au ], [ %i.is, %stbi__getn.exit.us.us ] ; 2 uses
   %indvars.iv.next359.1 = add nuw nsw i64 %indvars.iv358, 2 ; 2 uses
-  %niter493.next.1 = add i64 %niter493, 2         ; 2 uses
+  %niter493.next.1 = add nuw i64 %niter493, 2     ; 2 uses
   %niter493.ncmp.1 = icmp eq i64 %niter493.next.1, %unroll_iter492
   br i1 %niter493.ncmp.1, label %.loopexit325.loopexit.unr-lcssa, label %..thread_crit_edge.i262.us.us, !llvm.loop !129
 
@@ -1183,7 +1183,7 @@ bb.aw:                                            ; preds = %stbi__getn.exit.us
 stbi__getn.exit.us.1:                             ; preds = %bb.aw, %stbi__getn.exit.us
   %i.jo = phi ptr [ %i.ji, %bb.aw ], [ %i.jh, %stbi__getn.exit.us ] ; 2 uses
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.loopexit325.loopexit484.unr-lcssa, label %..thread_crit_edge.i262.us, !llvm.loop !129
 
@@ -1586,7 +1586,7 @@ bb.cm:                                            ; preds = %bb.cm, %.lr.ph347.n
   store i8 %i.ta, ptr %i.sx, align 1, !tbaa !24
   store i8 %i.sy, ptr %i.sz, align 1, !tbaa !24
   %i.tb = getelementptr inbounds nuw i8, ptr %i.sx, i64 %i.sj ; 2 uses
-  %niter498.next.3 = add i32 %niter498, 4         ; 2 uses
+  %niter498.next.3 = add nuw i32 %niter498, 4     ; 2 uses
   %niter498.ncmp.3 = icmp eq i32 %niter498.next.3, %unroll_iter497
   br i1 %niter498.ncmp.3, label %.loopexit.loopexit.unr-lcssa, label %bb.cm, !llvm.loop !145
 
@@ -1989,7 +1989,7 @@ bb.e:                                             ; preds = %stbi__malloc_mad4.e
   %i.ar = getelementptr inbounds [4 x i8], ptr %i.k, i64 %i.ai
   store float %i.aq, ptr %i.ar, align 4, !tbaa !121
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.unr-lcssa, label %.preheader49.new, !llvm.loop !171
 
@@ -2053,7 +2053,7 @@ bb.e:                                             ; preds = %stbi__malloc_mad4.e
   %i.bs = getelementptr inbounds [4 x i8], ptr %i.k, i64 %i.bn
   store float %i.br, ptr %i.bs, align 4, !tbaa !121
   %indvars.iv.next62.1 = add nuw nsw i64 %indvars.iv61, 2 ; 2 uses
-  %niter78.next.1 = add i64 %niter78, 2           ; 2 uses
+  %niter78.next.1 = add nuw i64 %niter78, 2       ; 2 uses
   %niter78.ncmp.1 = icmp eq i64 %niter78.next.1, %unroll_iter77
   br i1 %niter78.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !173
 
@@ -2456,7 +2456,7 @@ bb.u:                                             ; preds = %bb.u, %.lr.ph.new
   %i.cu = getelementptr inbounds nuw i8, ptr %i.cs, i64 360
   store ptr null, ptr %i.cu, align 8, !tbaa !308
   %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %._crit_edge.unr-lcssa, label %bb.u, !llvm.loop !310
 
@@ -2828,7 +2828,7 @@ bb.ax:                                            ; preds = %bb.ax, %.lr.ph252.n
   %i.ib = load i32, ptr %i.ia, align 8, !tbaa !266
   %.1.1 = tail call i32 @llvm.smax.i32(i32 %i.ib, i32 %.1) ; 3 uses
   %indvars.iv.next275.1 = add nuw nsw i64 %indvars.iv274, 2 ; 2 uses
-  %niter348.next.1 = add i64 %niter348, 2         ; 2 uses
+  %niter348.next.1 = add nuw i64 %niter348, 2     ; 2 uses
   %niter348.ncmp.1 = icmp eq i64 %niter348.next.1, %unroll_iter347
   br i1 %niter348.ncmp.1, label %.lr.ph256.unr-lcssa, label %bb.ax, !llvm.loop !314
 
@@ -3231,7 +3231,7 @@ bb.a:
   %i.ae = add nsw i32 %i.ad, 1
   store i32 %i.ae, ptr %i.ac, align 4, !tbaa !27
   %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %._crit_edge.unr-lcssa, label %.lr.ph, !llvm.loop !394
 
@@ -3634,7 +3634,7 @@ bb.i:                                             ; preds = %bb.i, %.lr.ph.new
   %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 3
   store i8 %i.ar, ptr %i.at, align 1, !tbaa !24
   %i.au = add nsw i32 %i.af, -32                  ; 3 uses
-  %niter.next.3 = add i32 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i32 %niter, 4           ; 2 uses
   %niter.ncmp.3.not = icmp eq i32 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3.not, label %.unr-lcssa, label %bb.i, !llvm.loop !418
 
@@ -4037,7 +4037,7 @@ bb.v:                                             ; preds = %bb.t, %bb.u
   %i.rt = getelementptr inbounds nuw i8, ptr %.0239390, i64 2 ; 2 uses
   store i8 %i.rs, ptr %i.rq, align 1, !tbaa !24
   %i.ru = add nuw i32 %.0265388, 2                ; 2 uses
-  %niter786.next.1 = add i32 %niter786, 2         ; 2 uses
+  %niter786.next.1 = add nuw i32 %niter786, 2     ; 2 uses
   %niter786.ncmp.1 = icmp eq i32 %niter786.next.1, %unroll_iter785
   br i1 %niter786.ncmp.1, label %.loopexit335.loopexit738.unr-lcssa, label %.lr.ph392, !llvm.loop !455
 
@@ -4070,7 +4070,7 @@ bb.w:                                             ; preds = %.lr.ph387
   store i8 %i.se, ptr %i.sb, align 1, !tbaa !24
   %i.sg = shl i8 %.3, 4                           ; 2 uses
   %i.sh = add nuw i32 %.1266383, 2                ; 2 uses
-  %niter780.next.1 = add i32 %niter780, 2         ; 2 uses
+  %niter780.next.1 = add nuw i32 %niter780, 2     ; 2 uses
   %niter780.ncmp.1 = icmp eq i32 %niter780.next.1, %unroll_iter779
   br i1 %niter780.ncmp.1, label %.loopexit335.loopexit739.unr-lcssa, label %.lr.ph387, !llvm.loop !456
 
@@ -4103,7 +4103,7 @@ bb.x:                                             ; preds = %.lr.ph397
   store i8 %i.so, ptr %i.sn, align 1, !tbaa !24
   %i.sq = shl i8 %.5, 2                           ; 2 uses
   %i.sr = add nuw i32 %.2267393, 2                ; 2 uses
-  %niter792.next.1 = add i32 %niter792, 2         ; 2 uses
+  %niter792.next.1 = add nuw i32 %niter792, 2     ; 2 uses
   %niter792.ncmp.1 = icmp eq i32 %niter792.next.1, %unroll_iter791
   br i1 %niter792.ncmp.1, label %.loopexit335.loopexit.unr-lcssa, label %.lr.ph397, !llvm.loop !457
 
@@ -4488,7 +4488,7 @@ bb.ah:                                            ; preds = %bb.ag
   store i16 %i.yo, ptr %i.yg, align 2, !tbaa !85
   %i.yp = getelementptr inbounds nuw i8, ptr %.0381, i64 8 ; 2 uses
   %i.yq = getelementptr inbounds nuw i8, ptr %.0249380, i64 8 ; 2 uses
-  %niter771.next.3 = add i32 %niter771, 4         ; 2 uses
+  %niter771.next.3 = add nuw i32 %niter771, 4     ; 2 uses
   %niter771.ncmp.3 = icmp eq i32 %niter771.next.3, %unroll_iter770
   br i1 %niter771.ncmp.3, label %.loopexit.loopexit743.unr-lcssa, label %.lr.ph382, !llvm.loop !462
 
@@ -4805,7 +4805,7 @@ bb.g:                                             ; preds = %bb.f
   %i.cb = getelementptr inbounds i8, ptr %.pre115, i64 %i.ca
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.by, ptr align 1 %i.cb, i64 %i.t, i1 false)
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1.not = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1.not, label %._crit_edge.unr-lcssa, label %.preheader.new, !llvm.loop !467
 
@@ -4918,7 +4918,7 @@ bb.a:
   %i.ah = getelementptr inbounds nuw i8, ptr %.029, i64 7
   store i8 %i.ag, ptr %i.ah, align 1, !tbaa !24
   %i.ai = getelementptr inbounds nuw i8, ptr %.029, i64 8 ; 2 uses
-  %niter.next.3 = add i32 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i32 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i32 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.loopexit.loopexit.unr-lcssa, label %.lr.ph30, !llvm.loop !470
 
@@ -5272,7 +5272,7 @@ bb.c:                                             ; preds = %stbi__malloc_mad2.e
   store i8 %i.aq, ptr %i.ar, align 1, !tbaa !24
   %i.as = getelementptr inbounds nuw i8, ptr %.04553, i64 6 ; 2 uses
   %indvars.iv.next60.1 = add nuw nsw i64 %indvars.iv59, 2 ; 2 uses
-  %niter76.next.1 = add i64 %niter76, 2           ; 2 uses
+  %niter76.next.1 = add nuw i64 %niter76, 2       ; 2 uses
   %niter76.ncmp.1 = icmp eq i64 %niter76.next.1, %unroll_iter75
   br i1 %niter76.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %.lr.ph55, !llvm.loop !482
 
@@ -5316,7 +5316,7 @@ bb.c:                                             ; preds = %stbi__malloc_mad2.e
   store <4 x i8> %i.bw, ptr %i.bp, align 1, !tbaa !24
   %i.bx = getelementptr inbounds nuw i8, ptr %.14651, i64 16 ; 2 uses
   %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.loopexit.loopexit69.unr-lcssa, label %.lr.ph, !llvm.loop !483
 
@@ -5473,7 +5473,7 @@ bb.a:
   store i8 %i.z, ptr %i.w, align 1, !tbaa !24
   store i8 %i.x, ptr %i.y, align 1, !tbaa !24
   %i.aa = getelementptr inbounds nuw i8, ptr %.04666, i64 12 ; 2 uses
-  %niter90.next.3 = add i32 %niter90, 4           ; 2 uses
+  %niter90.next.3 = add nuw i32 %niter90, 4       ; 2 uses
   %niter90.ncmp.3 = icmp eq i32 %niter90.next.3, %unroll_iter89
   br i1 %niter90.ncmp.3, label %.loopexit.loopexit.unr-lcssa, label %.lr.ph68, !llvm.loop !486
 
@@ -5591,7 +5591,7 @@ bb.i:                                             ; preds = %bb.d, %bb.c
   store i8 %i.bx, ptr %i.bu, align 1, !tbaa !24
   store i8 %i.bv, ptr %i.bw, align 1, !tbaa !24
   %i.by = getelementptr inbounds nuw i8, ptr %.24863, i64 16 ; 2 uses
-  %niter.next.3 = add i32 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i32 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i32 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.loopexit.loopexit82.unr-lcssa, label %.lr.ph65, !llvm.loop !488
 
@@ -5994,7 +5994,7 @@ bb.g:                                             ; preds = %bb.g, %stbi__get8.e
   %i.bb = getelementptr inbounds nuw i8, ptr %i.ay, i64 3
   store i8 %i.az, ptr %i.bb, align 1, !tbaa !528
   %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.unr-lcssa, label %bb.g, !llvm.loop !537
 
@@ -6397,7 +6397,7 @@ bb.k:                                             ; preds = %bb.j
 
 bb.l:                                             ; preds = %bb.k, %bb.j
   %indvars.iv.next266.1 = add nuw nsw i64 %indvars.iv265, 2 ; 2 uses
-  %niter334.next.1 = add i64 %niter334, 2         ; 2 uses
+  %niter334.next.1 = add nuw i64 %niter334, 2     ; 2 uses
   %niter334.ncmp.1 = icmp eq i64 %niter334.next.1, %unroll_iter333
   br i1 %niter334.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %bb.h, !llvm.loop !542
 
@@ -6440,7 +6440,7 @@ bb.p:                                             ; preds = %bb.o
 
 bb.q:                                             ; preds = %bb.p, %bb.o
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.loopexit.loopexit327.unr-lcssa, label %bb.m, !llvm.loop !543
 

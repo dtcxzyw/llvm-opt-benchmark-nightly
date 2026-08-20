@@ -204,7 +204,7 @@ bb.l:                                             ; preds = %bb.l, %.lr.ph69.new
   %i.aj = or disjoint i64 %i.af, -9223372036854775808
   %spec.select.1 = select i1 %.not53.1, i64 %i.af, i64 %i.aj ; 3 uses
   %i.ak = add nsw i64 %.067, -2                   ; 2 uses
-  %niter106.next.1 = add i64 %niter106, 2         ; 2 uses
+  %niter106.next.1 = add nuw i64 %niter106, 2     ; 2 uses
   %niter106.ncmp.1.not = icmp eq i64 %niter106.next.1, %unroll_iter105
   br i1 %niter106.ncmp.1.not, label %._crit_edge70.loopexit.unr-lcssa, label %bb.l, !llvm.loop !135
 
@@ -395,7 +395,7 @@ bb.ah:                                            ; preds = %bb.ag, %GC_lock.exi
   %i.cn = getelementptr inbounds nuw i8, ptr %i.cm, i64 8
   store i32 1, ptr %i.cn, align 8
   %i.co = add nuw nsw i64 %.03754.i, 2            ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.i.loopexit.unr-lcssa, label %.lr.ph55.i, !llvm.loop !137
 
@@ -798,7 +798,7 @@ bb.f:                                             ; preds = %.lr.ph.split.1
 
 bb.g:                                             ; preds = %bb.f, %.lr.ph.split.1
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit95.unr-lcssa, label %.lr.ph.split, !llvm.loop !309
 

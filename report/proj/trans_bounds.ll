@@ -204,7 +204,7 @@ vector.ph1334:                                    ; preds = %.lr.ph1011.preheade
 vector.body1344:                                  ; preds = %vector.body1344, %vector.ph1334
   %index1345 = phi i64 [ 0, %vector.ph1334 ], [ %index.next1348, %vector.body1344 ] ; 2 uses
   %vec.ind1346 = phi <2 x i32> [ <i32 0, i32 1>, %vector.ph1334 ], [ %vec.ind.next1349, %vector.body1344 ] ; 3 uses
-  %step.add1347 = add nuw <2 x i32> %vec.ind1346, splat (i32 2)
+  %step.add1347 = add nuw nsw <2 x i32> %vec.ind1346, splat (i32 2)
   %i.fu = add nuw i64 %index1345, %i.fq           ; 3 uses
   %i.fv = getelementptr inbounds nuw [8 x i8], ptr %i.ag, i64 %i.fu ; 2 uses
   %i.fw = getelementptr inbounds nuw i8, ptr %i.fv, i64 16
@@ -223,7 +223,7 @@ vector.body1344:                                  ; preds = %vector.body1344, %v
   store <2 x double> %broadcast.splat1343, ptr %i.gd, align 8, !tbaa !8
   store <2 x double> %broadcast.splat1343, ptr %i.ge, align 8, !tbaa !8
   %index.next1348 = add nuw i64 %index1345, 4     ; 2 uses
-  %vec.ind.next1349 = add nuw <2 x i32> %vec.ind1346, splat (i32 4)
+  %vec.ind.next1349 = add nuw nsw <2 x i32> %vec.ind1346, splat (i32 4)
   %i.gf = icmp eq i64 %index.next1348, %n.vec1335
   br i1 %i.gf, label %middle.block1350, label %vector.body1344, !llvm.loop !46
 
@@ -264,7 +264,7 @@ middle.block1350:                                 ; preds = %vector.body1344
   %i.gq = getelementptr inbounds nuw [8 x i8], ptr %i.aj, i64 %indvars.iv1087
   store double %5, ptr %i.gq, align 8, !tbaa !8
   %indvars.iv.next1088 = add nuw nsw i64 %indvars.iv1087, 1 ; 2 uses
-  %i.gr = add nuw i32 %.04191010, 1
+  %i.gr = add nuw nsw i32 %.04191010, 1
   %exitcond1091.not = icmp eq i32 %.04191010, %15
   br i1 %exitcond1091.not, label %.lr.ph1016.preheader, label %.lr.ph1011, !llvm.loop !48
 
@@ -290,7 +290,7 @@ vector.ph1356:                                    ; preds = %.lr.ph1016.preheade
 vector.body1366:                                  ; preds = %vector.body1366, %vector.ph1356
   %index1367 = phi i64 [ 0, %vector.ph1356 ], [ %index.next1370, %vector.body1366 ] ; 2 uses
   %vec.ind1368 = phi <2 x i32> [ <i32 0, i32 1>, %vector.ph1356 ], [ %vec.ind.next1371, %vector.body1366 ] ; 3 uses
-  %step.add1369 = add nuw <2 x i32> %vec.ind1368, splat (i32 2)
+  %step.add1369 = add nuw nsw <2 x i32> %vec.ind1368, splat (i32 2)
   %i.gu = add nuw i64 %indvars.iv.next1088.lcssa, %index1367 ; 3 uses
   %i.gv = uitofp nneg <2 x i32> %vec.ind1368 to <2 x double>
   %i.gw = uitofp nneg <2 x i32> %step.add1369 to <2 x double>
@@ -309,7 +309,7 @@ vector.body1366:                                  ; preds = %vector.body1366, %v
   store <2 x double> %broadcast.splat1365, ptr %i.hd, align 8, !tbaa !8
   store <2 x double> %broadcast.splat1365, ptr %i.he, align 8, !tbaa !8
   %index.next1370 = add nuw i64 %index1367, 4     ; 2 uses
-  %vec.ind.next1371 = add nuw <2 x i32> %vec.ind1368, splat (i32 4)
+  %vec.ind.next1371 = add nuw nsw <2 x i32> %vec.ind1368, splat (i32 4)
   %i.hf = icmp eq i64 %index.next1370, %n.vec1357
   br i1 %i.hf, label %middle.block1372, label %vector.body1366, !llvm.loop !49
 
@@ -334,7 +334,7 @@ middle.block1372:                                 ; preds = %vector.body1366
   %i.hk = getelementptr inbounds nuw [8 x i8], ptr %i.aj, i64 %indvars.iv1092
   store double %5, ptr %i.hk, align 8, !tbaa !8
   %indvars.iv.next1093 = add nuw nsw i64 %indvars.iv1092, 1 ; 2 uses
-  %i.hl = add nuw i32 %.04181015, 1
+  %i.hl = add nuw nsw i32 %.04181015, 1
   %exitcond1096.not = icmp eq i32 %.04181015, %15
   br i1 %exitcond1096.not, label %.lr.ph1021.preheader, label %.lr.ph1016, !llvm.loop !50
 
@@ -360,7 +360,7 @@ vector.ph1378:                                    ; preds = %.lr.ph1021.preheade
 vector.body1388:                                  ; preds = %vector.body1388, %vector.ph1378
   %index1389 = phi i64 [ 0, %vector.ph1378 ], [ %index.next1392, %vector.body1388 ] ; 2 uses
   %vec.ind1390 = phi <2 x i32> [ <i32 0, i32 1>, %vector.ph1378 ], [ %vec.ind.next1393, %vector.body1388 ] ; 3 uses
-  %step.add1391 = add nuw <2 x i32> %vec.ind1390, splat (i32 2)
+  %step.add1391 = add nuw nsw <2 x i32> %vec.ind1390, splat (i32 2)
   %i.ho = add nuw i64 %indvars.iv.next1093.lcssa, %index1389 ; 3 uses
   %i.hp = getelementptr inbounds nuw [8 x i8], ptr %i.ag, i64 %i.ho ; 2 uses
   %i.hq = getelementptr inbounds nuw i8, ptr %i.hp, i64 16
@@ -381,7 +381,7 @@ vector.body1388:                                  ; preds = %vector.body1388, %v
   store <2 x double> %broadcast.splat1387, ptr %i.hz, align 8, !tbaa !8
   store <2 x double> %broadcast.splat1387, ptr %i.ia, align 8, !tbaa !8
   %index.next1392 = add nuw i64 %index1389, 4     ; 2 uses
-  %vec.ind.next1393 = add nuw <2 x i32> %vec.ind1390, splat (i32 4)
+  %vec.ind.next1393 = add nuw nsw <2 x i32> %vec.ind1390, splat (i32 4)
   %i.ib = icmp eq i64 %index.next1392, %n.vec1379
   br i1 %i.ib, label %middle.block1394, label %vector.body1388, !llvm.loop !51
 
@@ -407,7 +407,7 @@ middle.block1394:                                 ; preds = %vector.body1388
   %i.ih = getelementptr inbounds nuw [8 x i8], ptr %i.aj, i64 %indvars.iv1082.1
   store double %8, ptr %i.ih, align 8, !tbaa !8
   %indvars.iv.next1083.1 = add nsw i64 %indvars.iv1082.1, 1 ; 2 uses
-  %i.ii = add nuw i32 %.04201005.1, 1
+  %i.ii = add nuw nsw i32 %.04201005.1, 1
   %exitcond1086.1.not = icmp eq i32 %.04201005.1, %15
   br i1 %exitcond1086.1.not, label %.lr.ph1011.1.preheader, label %.lr.ph1007.1, !llvm.loop !52
 
@@ -433,7 +433,7 @@ vector.ph1422:                                    ; preds = %.lr.ph1011.1.prehea
 vector.body1432:                                  ; preds = %vector.body1432, %vector.ph1422
   %index1433 = phi i64 [ 0, %vector.ph1422 ], [ %index.next1436, %vector.body1432 ] ; 2 uses
   %vec.ind1434 = phi <2 x i32> [ <i32 0, i32 1>, %vector.ph1422 ], [ %vec.ind.next1437, %vector.body1432 ] ; 3 uses
-  %step.add1435 = add nuw <2 x i32> %vec.ind1434, splat (i32 2)
+  %step.add1435 = add nuw nsw <2 x i32> %vec.ind1434, splat (i32 2)
   %i.il = add i64 %indvars.iv.next1083.1.lcssa, %index1433 ; 3 uses
   %i.im = getelementptr inbounds nuw [8 x i8], ptr %i.ag, i64 %i.il ; 2 uses
   %i.in = getelementptr inbounds nuw i8, ptr %i.im, i64 16
@@ -452,7 +452,7 @@ vector.body1432:                                  ; preds = %vector.body1432, %v
   store <2 x double> %broadcast.splat1431, ptr %i.iu, align 8, !tbaa !8
   store <2 x double> %broadcast.splat1431, ptr %i.iv, align 8, !tbaa !8
   %index.next1436 = add nuw i64 %index1433, 4     ; 2 uses
-  %vec.ind.next1437 = add nuw <2 x i32> %vec.ind1434, splat (i32 4)
+  %vec.ind.next1437 = add nuw nsw <2 x i32> %vec.ind1434, splat (i32 4)
   %i.iw = icmp eq i64 %index.next1436, %n.vec1423
   br i1 %i.iw, label %middle.block1438, label %vector.body1432, !llvm.loop !53
 
@@ -477,7 +477,7 @@ middle.block1438:                                 ; preds = %vector.body1432
   %i.jb = getelementptr inbounds nuw [8 x i8], ptr %i.aj, i64 %indvars.iv1087.1
   store double %8, ptr %i.jb, align 8, !tbaa !8
   %indvars.iv.next1088.1 = add nsw i64 %indvars.iv1087.1, 1 ; 2 uses
-  %i.jc = add nuw i32 %.04191010.1, 1
+  %i.jc = add nuw nsw i32 %.04191010.1, 1
   %exitcond1091.1.not = icmp eq i32 %.04191010.1, %15
   br i1 %exitcond1091.1.not, label %.lr.ph1016.1.preheader, label %.lr.ph1011.1, !llvm.loop !54
 
@@ -503,7 +503,7 @@ vector.ph1444:                                    ; preds = %.lr.ph1016.1.prehea
 vector.body1454:                                  ; preds = %vector.body1454, %vector.ph1444
   %index1455 = phi i64 [ 0, %vector.ph1444 ], [ %index.next1458, %vector.body1454 ] ; 2 uses
   %vec.ind1456 = phi <2 x i32> [ <i32 0, i32 1>, %vector.ph1444 ], [ %vec.ind.next1459, %vector.body1454 ] ; 3 uses
-  %step.add1457 = add nuw <2 x i32> %vec.ind1456, splat (i32 2)
+  %step.add1457 = add nuw nsw <2 x i32> %vec.ind1456, splat (i32 2)
   %i.jf = add i64 %indvars.iv.next1088.1.lcssa, %index1455 ; 3 uses
   %i.jg = uitofp nneg <2 x i32> %vec.ind1456 to <2 x double>
   %i.jh = uitofp nneg <2 x i32> %step.add1457 to <2 x double>
@@ -522,7 +522,7 @@ vector.body1454:                                  ; preds = %vector.body1454, %v
   store <2 x double> %broadcast.splat1453, ptr %i.jo, align 8, !tbaa !8
   store <2 x double> %broadcast.splat1453, ptr %i.jp, align 8, !tbaa !8
   %index.next1458 = add nuw i64 %index1455, 4     ; 2 uses
-  %vec.ind.next1459 = add nuw <2 x i32> %vec.ind1456, splat (i32 4)
+  %vec.ind.next1459 = add nuw nsw <2 x i32> %vec.ind1456, splat (i32 4)
   %i.jq = icmp eq i64 %index.next1458, %n.vec1445
   br i1 %i.jq, label %middle.block1460, label %vector.body1454, !llvm.loop !55
 
@@ -547,7 +547,7 @@ middle.block1460:                                 ; preds = %vector.body1454
   %i.jv = getelementptr inbounds nuw [8 x i8], ptr %i.aj, i64 %indvars.iv1092.1
   store double %8, ptr %i.jv, align 8, !tbaa !8
   %indvars.iv.next1093.1 = add nsw i64 %indvars.iv1092.1, 1 ; 2 uses
-  %i.jw = add nuw i32 %.04181015.1, 1
+  %i.jw = add nuw nsw i32 %.04181015.1, 1
   %exitcond1096.1.not = icmp eq i32 %.04181015.1, %15
   br i1 %exitcond1096.1.not, label %.lr.ph1021.1.preheader, label %.lr.ph1016.1, !llvm.loop !56
 
@@ -573,7 +573,7 @@ vector.ph1466:                                    ; preds = %.lr.ph1021.1.prehea
 vector.body1476:                                  ; preds = %vector.body1476, %vector.ph1466
   %index1477 = phi i64 [ 0, %vector.ph1466 ], [ %index.next1480, %vector.body1476 ] ; 2 uses
   %vec.ind1478 = phi <2 x i32> [ <i32 0, i32 1>, %vector.ph1466 ], [ %vec.ind.next1481, %vector.body1476 ] ; 3 uses
-  %step.add1479 = add nuw <2 x i32> %vec.ind1478, splat (i32 2)
+  %step.add1479 = add nuw nsw <2 x i32> %vec.ind1478, splat (i32 2)
   %i.jz = add i64 %indvars.iv.next1093.1.lcssa, %index1477 ; 3 uses
   %i.ka = getelementptr inbounds nuw [8 x i8], ptr %i.ag, i64 %i.jz ; 2 uses
   %i.kb = getelementptr inbounds nuw i8, ptr %i.ka, i64 16
@@ -594,7 +594,7 @@ vector.body1476:                                  ; preds = %vector.body1476, %v
   store <2 x double> %broadcast.splat1475, ptr %i.kk, align 8, !tbaa !8
   store <2 x double> %broadcast.splat1475, ptr %i.kl, align 8, !tbaa !8
   %index.next1480 = add nuw i64 %index1477, 4     ; 2 uses
-  %vec.ind.next1481 = add nuw <2 x i32> %vec.ind1478, splat (i32 4)
+  %vec.ind.next1481 = add nuw nsw <2 x i32> %vec.ind1478, splat (i32 4)
   %i.km = icmp eq i64 %index.next1480, %n.vec1467
   br i1 %i.km, label %middle.block1482, label %vector.body1476, !llvm.loop !57
 
@@ -620,7 +620,7 @@ middle.block1482:                                 ; preds = %vector.body1476
   %i.ks = getelementptr inbounds nuw [8 x i8], ptr %i.aj, i64 %indvars.iv1097.1
   store double %8, ptr %i.ks, align 8, !tbaa !8
   %indvars.iv.next1098.1 = add nsw i64 %indvars.iv1097.1, 1 ; 2 uses
-  %i.kt = add nuw i32 %.04171020.1, 1
+  %i.kt = add nuw nsw i32 %.04171020.1, 1
   %exitcond1101.1.not = icmp eq i32 %.04171020.1, %15
   br i1 %exitcond1101.1.not, label %.lr.ph1030.preheader, label %.lr.ph1021.1, !llvm.loop !58
 
@@ -637,7 +637,7 @@ middle.block1482:                                 ; preds = %vector.body1476
   %i.kz = getelementptr inbounds nuw [8 x i8], ptr %i.aj, i64 %indvars.iv1097
   store double %5, ptr %i.kz, align 8, !tbaa !8
   %indvars.iv.next1098 = add nuw nsw i64 %indvars.iv1097, 1 ; 2 uses
-  %i.la = add nuw i32 %.04171020, 1
+  %i.la = add nuw nsw i32 %.04171020, 1
   %exitcond1101.not = icmp eq i32 %.04171020, %15
   br i1 %exitcond1101.not, label %.lr.ph1007.1.preheader, label %.lr.ph1021, !llvm.loop !59
 
@@ -663,7 +663,7 @@ vector.ph1400:                                    ; preds = %.lr.ph1007.1.prehea
 vector.body1410:                                  ; preds = %vector.body1410, %vector.ph1400
   %index1411 = phi i64 [ 0, %vector.ph1400 ], [ %index.next1414, %vector.body1410 ] ; 2 uses
   %vec.ind1412 = phi <2 x i32> [ <i32 0, i32 1>, %vector.ph1400 ], [ %vec.ind.next1415, %vector.body1410 ] ; 3 uses
-  %step.add1413 = add nuw <2 x i32> %vec.ind1412, splat (i32 2)
+  %step.add1413 = add nuw nsw <2 x i32> %vec.ind1412, splat (i32 2)
   %i.ld = add i64 %indvars.iv.next1098.lcssa, %index1411 ; 3 uses
   %i.le = uitofp nneg <2 x i32> %vec.ind1412 to <2 x double>
   %i.lf = uitofp nneg <2 x i32> %step.add1413 to <2 x double>
@@ -684,7 +684,7 @@ vector.body1410:                                  ; preds = %vector.body1410, %v
   store <2 x double> %broadcast.splat1409, ptr %i.lo, align 8, !tbaa !8
   store <2 x double> %broadcast.splat1409, ptr %i.lp, align 8, !tbaa !8
   %index.next1414 = add nuw i64 %index1411, 4     ; 2 uses
-  %vec.ind.next1415 = add nuw <2 x i32> %vec.ind1412, splat (i32 4)
+  %vec.ind.next1415 = add nuw nsw <2 x i32> %vec.ind1412, splat (i32 4)
   %i.lq = icmp eq i64 %index.next1414, %n.vec1401
   br i1 %i.lq, label %middle.block1416, label %vector.body1410, !llvm.loop !60
 

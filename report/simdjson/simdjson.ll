@@ -203,7 +203,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   %i.ad = phi i64 [ %i.ac, %bb.h ], [ 0, %bb.g ]
   %i.ae = add i64 %i.ad, %i.y                     ; 3 uses
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %bb.e, !llvm.loop !36
 
@@ -574,7 +574,7 @@ bb.e:                                             ; preds = %bb.e, %.lr.ph65.new
   %i.be = getelementptr inbounds nuw i8, ptr %i.c, i64 %indvars.iv84
   %i.bf = getelementptr inbounds nuw i8, ptr %i.be, i64 1
   store i8 %i.aw, ptr %i.bf, align 1, !tbaa !9
-  %niter.next.1 = add i32 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i32 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i32 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.preheader.loopexit.unr-lcssa, label %bb.e, !llvm.loop !47
 
@@ -977,7 +977,7 @@ begin_hunk_1_@_ZN8simdjson7haswell25dom_parser_implementation6stage1EPKhmNS_11st
   %i.oi = add i64 %i.oc, -2
   %i.oj = and i64 %i.oi, %i.oc                    ; 2 uses
   %indvars.iv.next.i.1 = add nuw nsw i64 %indvars.iv.i, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2
+  %niter.next.1 = add nuw i64 %niter, 2
   %niter.ncmp.1 = icmp eq i64 %niter, %i.nw
   br i1 %niter.ncmp.1, label %.loopexit2250.i.loopexit.unr-lcssa, label %.noexc145.i, !llvm.loop !111
 
@@ -1310,7 +1310,7 @@ _ZN8simdjson7haswell12_GLOBAL__N_115utf8_validation12utf8_checker16check_next_in
   %i.xn = add i64 %i.xh, -2
   %i.xo = and i64 %i.xn, %i.xh                    ; 2 uses
   %indvars.iv.next2317.i.1 = add nuw nsw i64 %indvars.iv2316.i, 2 ; 2 uses
-  %niter99.next.1 = add i64 %niter99, 2
+  %niter99.next.1 = add nuw i64 %niter99, 2
   %niter99.ncmp.1 = icmp eq i64 %niter99, %i.xb
   br i1 %niter99.ncmp.1, label %.loopexit2248.i.loopexit.unr-lcssa, label %.noexc149.i, !llvm.loop !111
 
@@ -1713,7 +1713,7 @@ begin_hunk_2_@_ZN8simdjson7haswell25dom_parser_implementation6stage1EPKhmNS_11st
   %i.amd = add i64 %i.alx, -2
   %i.ame = and i64 %i.amd, %i.alx                 ; 2 uses
   %indvars.iv.next2322.i.1 = add nuw nsw i64 %indvars.iv2321.i, 2 ; 2 uses
-  %niter104.next.1 = add i64 %niter104, 2
+  %niter104.next.1 = add nuw i64 %niter104, 2
   %niter104.ncmp.1 = icmp eq i64 %niter104, %i.alr
   br i1 %niter104.ncmp.1, label %.loopexit2246.i.loopexit.unr-lcssa, label %.noexc138.i, !llvm.loop !111
 
@@ -2046,7 +2046,7 @@ _ZN8simdjson7haswell12_GLOBAL__N_115utf8_validation12utf8_checker16check_next_in
   %i.avm = add i64 %i.avg, -2
   %i.avn = and i64 %i.avm, %i.avg                 ; 2 uses
   %indvars.iv.next2327.i.1 = add nuw nsw i64 %indvars.iv2326.i, 2 ; 2 uses
-  %niter109.next.1 = add i64 %niter109, 2
+  %niter109.next.1 = add nuw i64 %niter109, 2
   %niter109.ncmp.1 = icmp eq i64 %niter109, %i.ava
   br i1 %niter109.ncmp.1, label %.loopexit2244.i.loopexit.unr-lcssa, label %.noexc141.i, !llvm.loop !111
 
@@ -2307,7 +2307,7 @@ _ZN8simdjson7haswell12_GLOBAL__N_16stage123json_structural_indexer4stepILm128EEE
   %i.bcm = add i64 %i.bcg, -2
   %i.bcn = and i64 %i.bcm, %i.bcg                 ; 2 uses
   %indvars.iv.next2332.i.1 = add nuw nsw i64 %indvars.iv2331.i, 2 ; 2 uses
-  %niter114.next.1 = add i64 %niter114, 2
+  %niter114.next.1 = add nuw i64 %niter114, 2
   %niter114.ncmp.1 = icmp eq i64 %niter114, %i.bca
   br i1 %niter114.ncmp.1, label %.loopexit.i.loopexit.unr-lcssa, label %.noexc153.i, !llvm.loop !111
 
@@ -2710,7 +2710,7 @@ begin_hunk_3_@_ZN8simdjson8westmere25dom_parser_implementation6stage1EPKhmNS_11s
   %i.oz = add i64 %i.ot, -2
   %i.pa = and i64 %i.oz, %i.ot                    ; 2 uses
   %indvars.iv.next.i.1 = add nuw nsw i64 %indvars.iv.i, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2
+  %niter.next.1 = add nuw i64 %niter, 2
   %niter.ncmp.1 = icmp eq i64 %niter, %i.on
   br i1 %niter.ncmp.1, label %.loopexit1661.i.loopexit.unr-lcssa, label %.noexc108.i, !llvm.loop !173
 
@@ -3113,7 +3113,7 @@ begin_hunk_4_@_ZN8simdjson8westmere25dom_parser_implementation6stage1EPKhmNS_11s
   %i.aeh = add i64 %i.aeb, -2
   %i.aei = and i64 %i.aeh, %i.aeb                 ; 2 uses
   %indvars.iv.next1722.i.1 = add nuw nsw i64 %indvars.iv1721.i, 2 ; 2 uses
-  %niter94.next.1 = add i64 %niter94, 2
+  %niter94.next.1 = add nuw i64 %niter94, 2
   %niter94.ncmp.1 = icmp eq i64 %niter94, %i.adv
   br i1 %niter94.ncmp.1, label %.loopexit1659.i.loopexit.unr-lcssa, label %.noexc105.i, !llvm.loop !173
 
@@ -3372,7 +3372,7 @@ _ZN8simdjson8westmere12_GLOBAL__N_16stage123json_structural_indexer4stepILm64EEE
   %i.alf = add i64 %i.akz, -2
   %i.alg = and i64 %i.alf, %i.akz                 ; 2 uses
   %indvars.iv.next1727.i.1 = add nuw nsw i64 %indvars.iv1726.i, 2 ; 2 uses
-  %niter99.next.1 = add i64 %niter99, 2
+  %niter99.next.1 = add nuw i64 %niter99, 2
   %niter99.ncmp.1 = icmp eq i64 %niter99, %i.akt
   br i1 %niter99.ncmp.1, label %.loopexit.i.loopexit.unr-lcssa, label %.noexc112.i, !llvm.loop !173
 
@@ -3775,7 +3775,7 @@ bb.t:                                             ; preds = %bb.s, %bb.r
   %i.bq = phi i64 [ %i.bp, %bb.s ], [ 0, %bb.r ]
   %i.br = add i64 %i.bq, %i.bl                    ; 3 uses
   %indvars.iv.next.i.1 = add nuw nsw i64 %indvars.iv.i, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.i.loopexit.unr-lcssa, label %bb.p, !llvm.loop !36
 
