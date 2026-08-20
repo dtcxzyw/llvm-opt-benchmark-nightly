@@ -204,9 +204,10 @@ define internal void @apply_prof_uni_12(ptr nofree noundef writeonly captures(no
   %i.bb = load <4 x i16>, ptr %i.ac, align 2, !tbaa !45
   %i.bc = shufflevector <4 x i16> %i.ay, <4 x i16> %i.bb, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
   %i.bd = ashr <8 x i16> %i.bc, splat (i16 6)
-  %5 = shufflevector <8 x i16> %i.ag, <8 x i16> %i.ao, <4 x i32> <i32 5, i32 12, i32 13, i32 14>
-  %6 = shufflevector <4 x i16> %5, <4 x i16> %i.ba, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
-  %i.be = sub nsw <8 x i16> %6, %i.bd
+  %5 = shufflevector <8 x i16> %i.ag, <8 x i16> %i.ao, <8 x i32> <i32 5, i32 12, i32 13, i32 14, i32 poison, i32 poison, i32 poison, i32 poison>
+  %6 = shufflevector <4 x i16> %i.ba, <4 x i16> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
+  %7 = shufflevector <8 x i16> %5, <8 x i16> %6, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 10, i32 11>
+  %i.be = sub nsw <8 x i16> %7, %i.bd
   store <8 x i16> %i.be, ptr %i.w, align 16, !tbaa !45
   %i.bf = lshr i64 %1, 1
   br label %.preheader
@@ -405,9 +406,10 @@ define internal void @apply_prof_uni_w_12(ptr nofree noundef writeonly captures(
   %i.bb = load <4 x i16>, ptr %i.ac, align 2, !tbaa !45
   %i.bc = shufflevector <4 x i16> %i.ay, <4 x i16> %i.bb, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
   %i.bd = ashr <8 x i16> %i.bc, splat (i16 6)
-  %8 = shufflevector <8 x i16> %i.ag, <8 x i16> %i.ao, <4 x i32> <i32 5, i32 12, i32 13, i32 14>
-  %9 = shufflevector <4 x i16> %8, <4 x i16> %i.ba, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
-  %i.be = sub nsw <8 x i16> %9, %i.bd
+  %8 = shufflevector <8 x i16> %i.ag, <8 x i16> %i.ao, <8 x i32> <i32 5, i32 12, i32 13, i32 14, i32 poison, i32 poison, i32 poison, i32 poison>
+  %9 = shufflevector <4 x i16> %i.ba, <4 x i16> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
+  %10 = shufflevector <8 x i16> %8, <8 x i16> %9, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 10, i32 11>
+  %i.be = sub nsw <8 x i16> %10, %i.bd
   store <8 x i16> %i.be, ptr %i.w, align 16, !tbaa !45
   %i.bf = lshr i64 %1, 1
   %i.bg = add nsw i32 %5, 2                       ; 4 uses
@@ -810,9 +812,10 @@ define internal void @apply_prof_uni_10(ptr nofree noundef writeonly captures(no
   %i.bb = load <4 x i16>, ptr %i.ac, align 2, !tbaa !45
   %i.bc = shufflevector <4 x i16> %i.ay, <4 x i16> %i.bb, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
   %i.bd = ashr <8 x i16> %i.bc, splat (i16 6)
-  %5 = shufflevector <8 x i16> %i.ag, <8 x i16> %i.ao, <4 x i32> <i32 5, i32 12, i32 13, i32 14>
-  %6 = shufflevector <4 x i16> %5, <4 x i16> %i.ba, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
-  %i.be = sub nsw <8 x i16> %6, %i.bd
+  %5 = shufflevector <8 x i16> %i.ag, <8 x i16> %i.ao, <8 x i32> <i32 5, i32 12, i32 13, i32 14, i32 poison, i32 poison, i32 poison, i32 poison>
+  %6 = shufflevector <4 x i16> %i.ba, <4 x i16> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
+  %7 = shufflevector <8 x i16> %5, <8 x i16> %6, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 10, i32 11>
+  %i.be = sub nsw <8 x i16> %7, %i.bd
   store <8 x i16> %i.be, ptr %i.w, align 16, !tbaa !45
   %i.bf = lshr i64 %1, 1
   br label %.preheader
@@ -1011,9 +1014,10 @@ define internal void @apply_prof_uni_w_10(ptr nofree noundef writeonly captures(
   %i.bb = load <4 x i16>, ptr %i.ac, align 2, !tbaa !45
   %i.bc = shufflevector <4 x i16> %i.ay, <4 x i16> %i.bb, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
   %i.bd = ashr <8 x i16> %i.bc, splat (i16 6)
-  %8 = shufflevector <8 x i16> %i.ag, <8 x i16> %i.ao, <4 x i32> <i32 5, i32 12, i32 13, i32 14>
-  %9 = shufflevector <4 x i16> %8, <4 x i16> %i.ba, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
-  %i.be = sub nsw <8 x i16> %9, %i.bd
+  %8 = shufflevector <8 x i16> %i.ag, <8 x i16> %i.ao, <8 x i32> <i32 5, i32 12, i32 13, i32 14, i32 poison, i32 poison, i32 poison, i32 poison>
+  %9 = shufflevector <4 x i16> %i.ba, <4 x i16> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
+  %10 = shufflevector <8 x i16> %8, <8 x i16> %9, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 10, i32 11>
+  %i.be = sub nsw <8 x i16> %10, %i.bd
   store <8 x i16> %i.be, ptr %i.w, align 16, !tbaa !45
   %i.bf = lshr i64 %1, 1
   %i.bg = add nsw i32 %5, 4                       ; 4 uses
@@ -1416,9 +1420,10 @@ define internal void @apply_prof_uni_8(ptr nofree noundef writeonly captures(non
   %i.bb = load <4 x i16>, ptr %i.ac, align 2, !tbaa !45
   %i.bc = shufflevector <4 x i16> %i.ay, <4 x i16> %i.bb, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
   %i.bd = ashr <8 x i16> %i.bc, splat (i16 6)
-  %5 = shufflevector <8 x i16> %i.ag, <8 x i16> %i.ao, <4 x i32> <i32 5, i32 12, i32 13, i32 14>
-  %6 = shufflevector <4 x i16> %5, <4 x i16> %i.ba, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
-  %i.be = sub nsw <8 x i16> %6, %i.bd
+  %5 = shufflevector <8 x i16> %i.ag, <8 x i16> %i.ao, <8 x i32> <i32 5, i32 12, i32 13, i32 14, i32 poison, i32 poison, i32 poison, i32 poison>
+  %6 = shufflevector <4 x i16> %i.ba, <4 x i16> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
+  %7 = shufflevector <8 x i16> %5, <8 x i16> %6, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 10, i32 11>
+  %i.be = sub nsw <8 x i16> %7, %i.bd
   store <8 x i16> %i.be, ptr %i.w, align 16, !tbaa !45
   br label %.preheader
 
@@ -1624,9 +1629,10 @@ define internal void @apply_prof_uni_w_8(ptr nofree noundef writeonly captures(n
   %i.bb = load <4 x i16>, ptr %i.ac, align 2, !tbaa !45
   %i.bc = shufflevector <4 x i16> %i.ay, <4 x i16> %i.bb, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
   %i.bd = ashr <8 x i16> %i.bc, splat (i16 6)
-  %8 = shufflevector <8 x i16> %i.ag, <8 x i16> %i.ao, <4 x i32> <i32 5, i32 12, i32 13, i32 14>
-  %9 = shufflevector <4 x i16> %8, <4 x i16> %i.ba, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
-  %i.be = sub nsw <8 x i16> %9, %i.bd
+  %8 = shufflevector <8 x i16> %i.ag, <8 x i16> %i.ao, <8 x i32> <i32 5, i32 12, i32 13, i32 14, i32 poison, i32 poison, i32 poison, i32 poison>
+  %9 = shufflevector <4 x i16> %i.ba, <4 x i16> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
+  %10 = shufflevector <8 x i16> %8, <8 x i16> %9, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 10, i32 11>
+  %i.be = sub nsw <8 x i16> %10, %i.bd
   store <8 x i16> %i.be, ptr %i.w, align 16, !tbaa !45
   %i.bf = add nsw i32 %5, 6                       ; 4 uses
   %i.bg = add nsw i32 %5, 5

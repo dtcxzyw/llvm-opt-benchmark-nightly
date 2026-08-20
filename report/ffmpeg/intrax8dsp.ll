@@ -201,30 +201,31 @@ define internal void @spatial_compensation_1(ptr noalias nofree noundef readonly
 .preheader:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 19
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 21
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 22
-  %i.c = load <8 x i8>, ptr %i.a, align 1, !tbaa !16 ; 4 uses
-  %4 = load i8, ptr %3, align 1, !tbaa !16
-  %5 = load i8, ptr %i.b, align 1, !tbaa !16
+  %i.c = load <8 x i8>, ptr %i.a, align 1, !tbaa !16 ; 5 uses
   store <8 x i8> %i.c, ptr %1, align 1, !tbaa !16
-  %6 = getelementptr inbounds i8, ptr %1, i64 %2  ; 6 uses
-  store i8 %5, ptr %6, align 1, !tbaa !16
-  %7 = getelementptr inbounds nuw i8, ptr %6, i64 1
-  store i8 %4, ptr %7, align 1, !tbaa !16
-  %i.d = getelementptr inbounds nuw i8, ptr %6, i64 2
-  %i.e = extractelement <8 x i8> %i.c, i64 6
-  %8 = extractelement <8 x i8> %i.c, i64 7
-  %9 = shufflevector <8 x i8> %i.c, <8 x i8> poison, <4 x i32> <i32 4, i32 5, i32 6, i32 7> ; 2 uses
-  store <4 x i8> %9, ptr %i.d, align 1, !tbaa !16
+  %3 = getelementptr inbounds i8, ptr %1, i64 %2  ; 6 uses
+  %4 = load <2 x i8>, ptr %i.b, align 1, !tbaa !16
+  %5 = shufflevector <8 x i8> %i.c, <8 x i8> poison, <4 x i32> <i32 poison, i32 poison, i32 4, i32 5>
+  %6 = shufflevector <2 x i8> %4, <2 x i8> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %7 = shufflevector <4 x i8> %6, <4 x i8> %5, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
+  store <4 x i8> %7, ptr %3, align 1, !tbaa !16
+  %i.d = getelementptr inbounds nuw i8, ptr %3, i64 4
+  %i.e = extractelement <8 x i8> %i.c, i64 6      ; 2 uses
+  store i8 %i.e, ptr %i.d, align 1, !tbaa !16
+  %8 = getelementptr inbounds nuw i8, ptr %3, i64 5
+  %9 = extractelement <8 x i8> %i.c, i64 7        ; 2 uses
+  store i8 %9, ptr %8, align 1, !tbaa !16
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 27
   %i.g = load i8, ptr %i.f, align 1, !tbaa !16    ; 4 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %6, i64 6
+  %i.h = getelementptr inbounds nuw i8, ptr %3, i64 6
   store i8 %i.g, ptr %i.h, align 1, !tbaa !16
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 28
   %i.j = load i8, ptr %i.i, align 1, !tbaa !16    ; 4 uses
-  %i.k = getelementptr inbounds nuw i8, ptr %6, i64 7
+  %i.k = getelementptr inbounds nuw i8, ptr %3, i64 7
   store i8 %i.j, ptr %i.k, align 1, !tbaa !16
-  %i.l = getelementptr inbounds i8, ptr %6, i64 %2 ; 6 uses
-  store <4 x i8> %9, ptr %i.l, align 1, !tbaa !16
+  %i.l = getelementptr inbounds i8, ptr %3, i64 %2 ; 6 uses
+  %10 = shufflevector <8 x i8> %i.c, <8 x i8> poison, <4 x i32> <i32 4, i32 5, i32 6, i32 7>
+  store <4 x i8> %10, ptr %i.l, align 1, !tbaa !16
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 4
   store i8 %i.g, ptr %i.m, align 1, !tbaa !16
   %i.n = getelementptr inbounds nuw i8, ptr %i.l, i64 5
@@ -240,7 +241,7 @@ define internal void @spatial_compensation_1(ptr noalias nofree noundef readonly
   %i.u = getelementptr inbounds i8, ptr %i.l, i64 %2 ; 9 uses
   store i8 %i.e, ptr %i.u, align 1, !tbaa !16
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 1
-  store i8 %8, ptr %i.v, align 1, !tbaa !16
+  store i8 %9, ptr %i.v, align 1, !tbaa !16
   %i.w = getelementptr inbounds nuw i8, ptr %i.u, i64 2
   store i8 %i.g, ptr %i.w, align 1, !tbaa !16
   %i.x = getelementptr inbounds nuw i8, ptr %i.u, i64 3

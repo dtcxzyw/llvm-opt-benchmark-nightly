@@ -202,7 +202,7 @@ define void @_RINvMs_NtCs45bxiIjzMqg_5salsa11zalsa_localNtB5_10ZalsaLocal13alloc
 bb.a:
   %i.a = alloca [56 x i8], align 8                ; 4 uses
   %i.b = alloca [8 x i8], align 8                 ; 4 uses
-  %i.c = alloca [24 x i8], align 4                ; 5 uses
+  %i.c = alloca [24 x i8], align 4                ; 6 uses
   %i.d = alloca [72 x i8], align 8                ; 14 uses
   %i.e = alloca [56 x i8], align 8                ; 11 uses
   %i.f = alloca [24 x i8], align 8                ; 7 uses
@@ -264,7 +264,7 @@ _RINvMs18_NtNtNtCs2AWtUsOyxgP_3std11collections4hash3mapINtB7_5EntryNtNtCs45bxiI
   %i.ad = extractelement <4 x i32> %i.ac, i64 0
   %.not5 = icmp eq i32 %i.ad, 2
   %i.ae = extractelement <4 x i32> %i.ac, i64 2
-  %i.af = extractelement <4 x i32> %i.ac, i64 3
+  %i.af = extractelement <4 x i32> %i.ac, i64 3   ; 2 uses
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph, %_RNvMNtNtCsc4HYy37PfYO_6boxcar3vec3rawINtB2_3VecNtNtCs45bxiIjzMqg_5salsa5table4PageE4pushCsfDzkztWVnn_18ty_module_resolver.exit
@@ -321,11 +321,13 @@ _RINvMs6_NtCs45bxiIjzMqg_5salsa5tableINtB6_8PageViewINtNtB8_8interned5ValueNtNtC
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !140
   store i32 %i.au, ptr %i.c, align 4, !noalias !140
   %i.bb = getelementptr inbounds nuw i8, ptr %i.c, i64 4
-  store i32 0, ptr %i.bb, align 4, !noalias !140
-  %i.bc = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 2 uses
-  store <4 x i32> %i.ac, ptr %i.bc, align 4, !noalias !144
+  %5 = getelementptr inbounds nuw i8, ptr %i.c, i64 8
+  %6 = shufflevector <4 x i32> %i.ac, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>, <4 x i32> <i32 4, i32 0, i32 1, i32 2>
+  store <4 x i32> %6, ptr %i.bb, align 4, !noalias !144
+  %i.bc = getelementptr inbounds nuw i8, ptr %i.c, i64 20
+  store i32 %i.af, ptr %i.bc, align 4, !noalias !144
   %i.bd = getelementptr inbounds nuw i8, ptr %i.d, i64 32
-  call void @_RNvXs0_NvNtCsfDzkztWVnn_18ty_module_resolver4lists1_1__INtB5_9StructKeyNtNtB9_6module6ModulebEINtNtCs45bxiIjzMqg_5salsa8interned6LookupTB17_bEE10into_ownedB9_(ptr noalias noundef nonnull sret([16 x i8]) align 4 captures(none) dereferenceable(16) %i.bd, ptr noalias noundef nonnull align 4 captures(address) dereferenceable(16) %i.bc), !noalias !135
+  call void @_RNvXs0_NvNtCsfDzkztWVnn_18ty_module_resolver4lists1_1__INtB5_9StructKeyNtNtB9_6module6ModulebEINtNtCs45bxiIjzMqg_5salsa8interned6LookupTB17_bEE10into_ownedB9_(ptr noalias noundef nonnull sret([16 x i8]) align 4 captures(none) dereferenceable(16) %i.bd, ptr noalias noundef nonnull align 4 captures(address) dereferenceable(16) %5), !noalias !135
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !140
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.12.0..sroa_idx.promoted) ]
   %i.be = getelementptr inbounds nuw i8, ptr %.sroa.12.0..sroa_idx.promoted, i64 16

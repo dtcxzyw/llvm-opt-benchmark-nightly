@@ -64,6 +64,7 @@ bb.a:
   %i.be = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.bf = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.bg = getelementptr inbounds nuw i8, ptr %0, i64 48
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 112
   %i.bh = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 104
   %i.bj = getelementptr inbounds nuw i8, ptr %0, i64 24
@@ -72,7 +73,9 @@ bb.a:
   %i.bm = getelementptr inbounds nuw i8, ptr %0, i64 36
   %i.bn = getelementptr inbounds nuw i8, ptr %0, i64 100
   %i.bo = getelementptr inbounds nuw i8, ptr %0, i64 20
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 116
   %i.bp = getelementptr inbounds nuw i8, ptr %0, i64 44
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 108
   %i.bq = load float, ptr %i.e, align 4, !tbaa !9 ; 2 uses
   %i.br = load float, ptr %i.f, align 4, !tbaa !9 ; 2 uses
   %i.bs = fsub nsz float %i.bq, %i.br
@@ -269,9 +272,9 @@ bb.a:
   %i.it = insertelement <4 x float> %i.ir, float 1.000000e+00, i64 0
   %i.iu = shufflevector <4 x float> %i.it, <4 x float> %foldExtExtBinop639, <4 x i32> <i32 0, i32 1, i32 2, i32 7>
   %i.iv = fmul nsz <4 x float> %i.iu, <float -0.000000e+00, float f0xBF0A8BD4, float f0xBF0A8BD4, float 1.000000e+00>
-  %i.iw = fmul nsz <4 x float> %i.in, <float f0xBFA73D75, float f0xBFA73D75, float f0xBFA73D75, float f0xBF3504F3> ; 5 uses
+  %i.iw = fmul nsz <4 x float> %i.in, <float f0xBFA73D75, float f0xBFA73D75, float f0xBFA73D75, float f0xBF3504F3> ; 4 uses
   %i.ix = fsub nsz <4 x float> %i.ip, %i.is
-  %i.iy = fmul nsz <4 x float> %i.ix, <float f0xBF0A8BD4, float f0xBF3504F3, float f0xBF3504F3, float f0x3F3504F3> ; 6 uses
+  %i.iy = fmul nsz <4 x float> %i.ix, <float f0xBF0A8BD4, float f0xBF3504F3, float f0xBF3504F3, float f0x3F3504F3> ; 7 uses
   %i.iz = fadd nsz <4 x float> %i.iw, %i.iv       ; 2 uses
   %i.ja = shufflevector <4 x float> %i.fw, <4 x float> %i.gh, <2 x i32> <i32 2, i32 5>
   %i.jb = shufflevector <4 x float> %i.gm, <4 x float> %i.fs, <2 x i32> <i32 2, i32 5>
@@ -320,13 +323,14 @@ bb.a:
   %i.km = fsub nsz <2 x float> %i.jy, %i.je
   %i.kn = fsub nsz float %i.kd, %i.jg
   %i.ko = fmul nsz float %i.kn, f0xBF3504F3       ; 3 uses
-  %i.kp = extractelement <4 x float> %i.iw, i64 3 ; 2 uses
+  %i.kp = extractelement <4 x float> %i.iw, i64 3 ; 3 uses
   %foldExtExtBinop653 = fadd nsz <4 x float> %i.iy, %i.iw ; 2 uses
   %i.kq = extractelement <4 x float> %foldExtExtBinop653, i64 3
   %i.kr = fadd nsz float %i.ko, %i.kq             ; 2 uses
   %i.ks = shufflevector <2 x float> %i.km, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %i.kt = extractelement <4 x float> %i.iy, i64 2
   %i.ku = fadd nsz float %i.kk, %i.jw
+  %5 = extractelement <4 x float> %i.iy, i64 1    ; 2 uses
   %i.kv = fadd nsz float %i.jg, %i.kd
   %i.kw = fadd nsz float %i.kv, %i.ko             ; 2 uses
   %foldExtExtBinop655 = fadd nsz <4 x float> %i.hv, %i.gp
@@ -336,8 +340,10 @@ bb.a:
   store float %i.kh, ptr %i.bd, align 4, !tbaa !9
   store float %i.kt, ptr %i.bk, align 4, !tbaa !9
   %i.ky = extractelement <4 x float> %i.kj, i64 3
-  %i.kz = fadd nsz float %i.kw, %i.ky             ; 2 uses
-  %i.la = fadd nsz float %i.ko, %i.kp             ; 2 uses
+  %6 = fadd nsz float %i.kw, %i.ky                ; 2 uses
+  %i.kz = fadd nsz float %i.ko, %i.kp             ; 2 uses
+  %i.la = fadd nsz float %5, %i.kp
+  store float %i.la, ptr %3, align 4, !tbaa !9
   %i.lb = shufflevector <4 x float> %i.id, <4 x float> poison, <2 x i32> <i32 1, i32 2>
   %i.lc = shufflevector <4 x float> %i.iq, <4 x float> poison, <2 x i32> <i32 1, i32 2>
   %i.ld = fadd nsz <2 x float> %i.lb, %i.lc       ; 2 uses
@@ -371,6 +377,7 @@ bb.a:
   %i.md = shufflevector <4 x float> %i.mb, <4 x float> %i.mc, <4 x i32> <i32 0, i32 1, i32 5, i32 poison>
   %i.me = insertelement <4 x float> %i.md, float %i.kl, i64 3
   %i.mf = fmul nsz <4 x float> %i.me, <float f0x3F3504F3, float 1.000000e+00, float f0x3F3504F3, float f0x3F3504F3> ; 3 uses
+  %7 = extractelement <4 x float> %i.lo, i64 0
   %i.mg = insertelement <4 x float> %i.lo, float %i.kr, i64 1
   %i.mh = shufflevector <4 x float> %i.mg, <4 x float> %i.ks, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
   %i.mi = fmul nsz <4 x float> %i.mh, <float 1.000000e+00, float 1.000000e+00, float f0xBF3504F3, float f0xBF3504F3> ; 4 uses
@@ -378,14 +385,18 @@ bb.a:
   %i.mk = fadd nsz <2 x float> %i.ld, %i.lg
   %i.ml = shufflevector <4 x float> %i.kj, <4 x float> poison, <2 x i32> <i32 1, i32 2>
   %i.mm = fadd nsz <2 x float> %i.mk, %i.ml       ; 3 uses
+  %foldExtExtBinop661 = fadd nsz <4 x float> %i.mi, %i.iy
+  %8 = extractelement <4 x float> %foldExtExtBinop661, i64 2
   store float %i.lq, ptr %i.be, align 4, !tbaa !9
+  store float %7, ptr %2, align 4, !tbaa !9
+  store float %8, ptr %i.bi, align 4, !tbaa !9
   %i.mn = fadd nsz <2 x float> %i.lv, %i.ma       ; 2 uses
   %i.mo = extractelement <2 x float> %i.ma, i64 0
   %i.mp = fadd nsz float %i.kw, %i.mo             ; 2 uses
   %i.mq = extractelement <2 x float> %i.mn, i64 0
   %i.mr = fadd nsz float %i.ku, %i.mq
   store float %i.mr, ptr %i.bl, align 4, !tbaa !9
-  %i.ms = fadd nsz float %i.mj, %i.la
+  %i.ms = fadd nsz float %i.mj, %i.kz
   store float %i.ms, ptr %i.bn, align 4, !tbaa !9
   %i.mt = extractelement <2 x float> %i.mm, i64 0
   %i.mu = fadd nsz float %i.mt, %i.mp
@@ -406,19 +417,15 @@ bb.a:
   %i.nh = shufflevector <4 x float> %i.nf, <4 x float> %i.ng, <4 x i32> <i32 0, i32 7, i32 6, i32 5>
   store <4 x float> %i.nh, ptr %i.bb, align 4, !tbaa !9
   %i.ni = extractelement <4 x float> %i.lp, i64 1
-  %i.nj = fadd nsz float %i.ni, %i.kz
+  %i.nj = fadd nsz float %i.ni, %6
   store float %i.nj, ptr %i.bp, align 4, !tbaa !9
-  %2 = shufflevector <4 x float> %i.iy, <4 x float> %i.lo, <4 x i32> <i32 2, i32 1, i32 4, i32 1>
-  %3 = shufflevector <4 x float> %i.mi, <4 x float> %i.iw, <4 x i32> <i32 2, i32 poison, i32 poison, i32 7>
-  %4 = insertelement <4 x float> %3, float -0.000000e+00, i64 2
-  %5 = insertelement <4 x float> %4, float %i.la, i64 1
-  %6 = fadd nsz <4 x float> %2, %5
-  store <4 x float> %6, ptr %i.bi, align 4, !tbaa !9
+  %9 = fadd nsz float %5, %i.kz
+  store float %9, ptr %4, align 4, !tbaa !9
   %i.nk = fadd nsz <2 x float> %i.je, %i.jy
   %i.nl = shufflevector <4 x float> %i.mi, <4 x float> poison, <2 x i32> <i32 2, i32 3>
   %i.nm = fadd nsz <2 x float> %i.nk, %i.nl       ; 2 uses
   %i.nn = shufflevector <4 x float> %i.lp, <4 x float> poison, <2 x i32> <i32 2, i32 poison>
-  %i.no = insertelement <2 x float> %i.nn, float %i.kz, i64 1
+  %i.no = insertelement <2 x float> %i.nn, float %6, i64 1
   %i.np = fadd nsz <2 x float> %i.nm, %i.no
   %i.nq = shufflevector <2 x float> %i.np, <2 x float> poison, <2 x i32> <i32 1, i32 0>
   store <2 x float> %i.nq, ptr %i.bm, align 4, !tbaa !9

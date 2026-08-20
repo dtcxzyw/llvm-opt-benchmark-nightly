@@ -204,17 +204,19 @@ bb.a:
   %i.n = fptrunc double %i.m to float             ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
   store float %i.n, ptr %i.o, align 4, !tbaa !150
-  %i.p = load <4 x float>, ptr %2, align 4, !tbaa !77 ; 7 uses
-  %i.q = tail call noalias noundef nonnull dereferenceable(80) ptr @_Znam(i64 noundef 80) #22 ; 8 uses
-  %i.r = shufflevector <4 x float> %i.p, <4 x float> poison, <2 x i32> <i32 0, i32 1> ; 4 uses
+  %i.p = load <4 x float>, ptr %2, align 4, !tbaa !77 ; 6 uses
+  %i.q = tail call noalias noundef nonnull dereferenceable(80) ptr @_Znam(i64 noundef 80) #22 ; 9 uses
+  %i.r = shufflevector <4 x float> %i.p, <4 x float> poison, <2 x i32> <i32 0, i32 1> ; 5 uses
   store <2 x float> %i.r, ptr %i.q, align 4
-  %i.s = getelementptr inbounds nuw i8, ptr %i.q, i64 8
-  %i.t = shufflevector <4 x float> %i.p, <4 x float> poison, <2 x i32> <i32 2, i32 3> ; 2 uses
+  %i.s = getelementptr inbounds nuw i8, ptr %i.q, i64 72
+  %i.t = shufflevector <4 x float> %i.p, <4 x float> poison, <2 x i32> <i32 2, i32 3> ; 3 uses
+  store <2 x float> %i.t, ptr %i.s, align 4
+  %5 = getelementptr inbounds nuw i8, ptr %i.q, i64 8
   %i.u = fsub <2 x float> %i.t, %i.r
-  %i.v = fdiv <2 x float> %i.u, splat (float 9.000000e+00) ; 2 uses
+  %i.v = fdiv <2 x float> %i.u, splat (float 9.000000e+00) ; 3 uses
   %i.w = fadd <2 x float> %i.v, %i.r
-  store <2 x float> %i.w, ptr %i.s, align 4, !tbaa !77
-  %i.x = shufflevector <2 x float> %i.v, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1> ; 4 uses
+  store <2 x float> %i.w, ptr %5, align 4, !tbaa !77
+  %i.x = shufflevector <2 x float> %i.v, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1> ; 3 uses
   %i.y = getelementptr inbounds nuw i8, ptr %i.q, i64 16
   %i.z = shufflevector <4 x float> %i.p, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1> ; 3 uses
   %i.aa = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.x, <4 x float> <float 2.000000e+00, float 2.000000e+00, float 3.000000e+00, float 3.000000e+00>, <4 x float> %i.z)
@@ -226,9 +228,8 @@ bb.a:
   %i.ae = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.x, <4 x float> <float 6.000000e+00, float 6.000000e+00, float 7.000000e+00, float 7.000000e+00>, <4 x float> %i.z)
   store <4 x float> %i.ae, ptr %i.ad, align 4, !tbaa !77
   %i.af = getelementptr inbounds nuw i8, ptr %i.q, i64 64
-  %5 = shufflevector <4 x float> %i.x, <4 x float> <float poison, float poison, float -0.000000e+00, float -0.000000e+00>, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
-  %6 = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %5, <4 x float> <float 8.000000e+00, float 8.000000e+00, float 0.000000e+00, float 0.000000e+00>, <4 x float> %i.p)
-  store <4 x float> %6, ptr %i.af, align 4
+  %6 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.v, <2 x float> splat (float 8.000000e+00), <2 x float> %i.r)
+  store <2 x float> %6, ptr %i.af, align 4, !tbaa !77
   %i.ag = tail call noalias noundef nonnull dereferenceable(80) ptr @_Znam(i64 noundef 80) #22 ; 25 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(80) %i.ag, i8 0, i64 80, i1 false), !tbaa !71
   %i.ah = tail call noalias noundef nonnull dereferenceable(80) ptr @_Znam(i64 noundef 80) #22 ; 25 uses

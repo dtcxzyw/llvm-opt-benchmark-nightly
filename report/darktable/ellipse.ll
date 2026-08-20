@@ -204,7 +204,7 @@ bb.a:
   %i.t = shl nuw i32 %i.s, 1
   %i.u = zext i32 %i.t to i64
   %i.v = shl nuw nsw i64 %i.u, 2
-  %i.w = tail call ptr @dt_alloc_aligned(i64 noundef %i.v) #12 ; 12 uses
+  %i.w = tail call ptr @dt_alloc_aligned(i64 noundef %i.v) #12 ; 15 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %i.w, i64 64) ]
   %.not = icmp eq ptr %i.w, null
   br i1 %.not, label %bb.b, label %vector.ph
@@ -221,12 +221,15 @@ vector.ph:                                        ; preds = %bb.a
   %cos = extractvalue { float, float } %sincos, 1 ; 2 uses
   %sin = extractvalue { float, float } %sincos, 0 ; 2 uses
   store i32 %i.s, ptr %7, align 4, !tbaa !32
-  %i.z = fmul reassoc nsz arcp contract afn float %5, %0 ; 6 uses
+  %i.z = fmul reassoc nsz arcp contract afn float %5, %0 ; 7 uses
   store float %i.z, ptr %i.w, align 64, !tbaa !26
-  %i.aa = fmul reassoc nsz arcp contract afn float %6, %1 ; 6 uses
+  %i.aa = fmul reassoc nsz arcp contract afn float %6, %1 ; 7 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %i.w, i64 4
   store float %i.aa, ptr %i.ab, align 4, !tbaa !26
   %i.ac = getelementptr inbounds nuw i8, ptr %i.w, i64 8
+  %8 = getelementptr inbounds nuw i8, ptr %i.w, i64 12
+  %9 = getelementptr inbounds nuw i8, ptr %i.w, i64 16
+  %10 = getelementptr inbounds nuw i8, ptr %i.w, i64 20
   %i.ad = fadd reassoc nsz arcp contract afn float %.0112, f0xBFC90FDB
   %sincos120 = tail call reassoc nsz arcp contract afn { float, float } @llvm.sincos.f32(float %i.ad) ; 2 uses
   %sin121 = extractvalue { float, float } %sincos120, 0
@@ -251,15 +254,17 @@ vector.ph:                                        ; preds = %bb.a
   %i.ar = insertelement <2 x float> %i.aq, float %sin, i64 1
   %i.as = insertelement <2 x float> poison, float %i.d, i64 0
   %i.at = shufflevector <2 x float> %i.as, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.au = fmul reassoc nsz arcp contract afn <2 x float> %i.ar, %i.at ; 4 uses
-  %8 = shufflevector <2 x float> %i.au, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1> ; 2 uses
-  %9 = insertelement <4 x float> %8, float %i.z, i64 2
-  %10 = insertelement <4 x float> %9, float %i.aa, i64 3 ; 3 uses
-  %11 = shufflevector <4 x float> %8, <4 x float> %10, <4 x i32> <i32 6, i32 7, i32 0, i32 1> ; 2 uses
-  %12 = fadd reassoc nsz arcp contract afn <4 x float> %10, %11
-  %13 = fsub reassoc nsz arcp contract afn <4 x float> %10, %11
-  %14 = shufflevector <4 x float> %12, <4 x float> %13, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
-  store <4 x float> %14, ptr %i.ac, align 8, !tbaa !26
+  %i.au = fmul reassoc nsz arcp contract afn <2 x float> %i.ar, %i.at ; 5 uses
+  %11 = extractelement <2 x float> %i.au, i64 0   ; 2 uses
+  %12 = fadd reassoc nsz arcp contract afn float %11, %i.z
+  store float %12, ptr %i.ac, align 8, !tbaa !26
+  %13 = extractelement <2 x float> %i.au, i64 1   ; 2 uses
+  %14 = fadd reassoc nsz arcp contract afn float %13, %i.aa
+  store float %14, ptr %8, align 4, !tbaa !26
+  %15 = fsub reassoc nsz arcp contract afn float %i.z, %11
+  store float %15, ptr %9, align 16, !tbaa !26
+  %16 = fsub reassoc nsz arcp contract afn float %i.aa, %13
+  store float %16, ptr %10, align 4, !tbaa !26
   %i.av = insertelement <2 x float> poison, float %i.e, i64 0
   %i.aw = shufflevector <2 x float> %i.av, <2 x float> poison, <2 x i32> zeroinitializer
   %i.ax = insertelement <2 x float> poison, float %i.ap, i64 0
@@ -402,7 +407,7 @@ bb.a:
   %i.o = add nsw i32 %i.n, 5                      ; 2 uses
   %i.p = sext i32 %i.o to i64                     ; 2 uses
   %i.q = shl nsw i64 %i.p, 3
-  %i.r = tail call ptr @dt_alloc_aligned(i64 noundef %i.q) #12 ; 12 uses
+  %i.r = tail call ptr @dt_alloc_aligned(i64 noundef %i.q) #12 ; 15 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %i.r, i64 64) ]
   %i.s = icmp eq ptr %i.r, null
   br i1 %i.s, label %.loopexit, label %bb.b
@@ -415,9 +420,9 @@ bb.b:                                             ; preds = %bb.a
   %cos = extractvalue { float, float } %sincos, 1 ; 2 uses
   %sin = extractvalue { float, float } %sincos, 0 ; 2 uses
   store i64 %i.p, ptr %7, align 8, !tbaa !167
-  %i.v = fmul reassoc nsz arcp contract afn float %5, %0 ; 6 uses
+  %i.v = fmul reassoc nsz arcp contract afn float %5, %0 ; 7 uses
   store float %i.v, ptr %i.r, align 64, !tbaa !26
-  %i.w = fmul reassoc nsz arcp contract afn float %6, %1 ; 6 uses
+  %i.w = fmul reassoc nsz arcp contract afn float %6, %1 ; 7 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.r, i64 4
   store float %i.w, ptr %i.x, align 4, !tbaa !26
   %i.y = getelementptr inbounds nuw i8, ptr %i.r, i64 8
@@ -425,15 +430,20 @@ bb.b:                                             ; preds = %bb.a
   %i.aa = insertelement <2 x float> %i.z, float %sin, i64 1
   %i.ab = insertelement <2 x float> poison, float %., i64 0
   %i.ac = shufflevector <2 x float> %i.ab, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.ad = fmul reassoc nsz arcp contract afn <2 x float> %i.aa, %i.ac ; 4 uses
-  %8 = shufflevector <2 x float> %i.ad, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1> ; 2 uses
-  %9 = insertelement <4 x float> %8, float %i.v, i64 2
-  %10 = insertelement <4 x float> %9, float %i.w, i64 3 ; 3 uses
-  %11 = shufflevector <4 x float> %8, <4 x float> %10, <4 x i32> <i32 6, i32 7, i32 0, i32 1> ; 2 uses
-  %12 = fadd reassoc nsz arcp contract afn <4 x float> %10, %11
-  %13 = fsub reassoc nsz arcp contract afn <4 x float> %10, %11
-  %14 = shufflevector <4 x float> %12, <4 x float> %13, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
-  store <4 x float> %14, ptr %i.y, align 8, !tbaa !26
+  %i.ad = fmul reassoc nsz arcp contract afn <2 x float> %i.aa, %i.ac ; 5 uses
+  %8 = extractelement <2 x float> %i.ad, i64 0    ; 2 uses
+  %9 = fadd reassoc nsz arcp contract afn float %8, %i.v
+  store float %9, ptr %i.y, align 8, !tbaa !26
+  %10 = extractelement <2 x float> %i.ad, i64 1   ; 2 uses
+  %11 = fadd reassoc nsz arcp contract afn float %10, %i.w
+  %12 = getelementptr inbounds nuw i8, ptr %i.r, i64 12
+  store float %11, ptr %12, align 4, !tbaa !26
+  %13 = fsub reassoc nsz arcp contract afn float %i.v, %8
+  %14 = getelementptr inbounds nuw i8, ptr %i.r, i64 16
+  store float %13, ptr %14, align 16, !tbaa !26
+  %15 = fsub reassoc nsz arcp contract afn float %i.w, %10
+  %16 = getelementptr inbounds nuw i8, ptr %i.r, i64 20
+  store float %15, ptr %16, align 4, !tbaa !26
   %i.ae = fadd reassoc nsz arcp contract afn float %.103, f0xBFC90FDB
   %sincos96 = tail call reassoc nsz arcp contract afn { float, float } @llvm.sincos.f32(float %i.ae) ; 2 uses
   %sin97 = extractvalue { float, float } %sincos96, 0

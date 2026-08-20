@@ -203,19 +203,15 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #3
 define void @_ZN4geos9operation6buffer22OffsetSegmentGenerator13addLineEndCapERKNS_4geom10CoordinateES6_(ptr noundef nonnull align 8 dereferenceable(484) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %2) local_unnamed_addr #0 align 2 {
 bb.a:
   %3 = alloca %"class.geos::geom::Coordinate", align 16 ; 5 uses
-  %4 = alloca %"class.geos::geom::LineSegment", align 16 ; 6 uses
-  %5 = alloca %"class.geos::geom::LineSegment", align 16 ; 6 uses
+  %4 = alloca %"class.geos::geom::LineSegment", align 8 ; 5 uses
+  %5 = alloca %"class.geos::geom::LineSegment", align 8 ; 5 uses
   %6 = alloca %"class.geos::geom::Coordinate", align 16 ; 5 uses
   %7 = alloca %"class.geos::geom::Coordinate", align 16 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #11
-  %8 = getelementptr inbounds nuw i8, ptr %4, i64 16
-  store double +qnan, ptr %8, align 16, !tbaa !26
-  %9 = getelementptr inbounds nuw i8, ptr %4, i64 24 ; 3 uses
-  %i.a = getelementptr inbounds nuw i8, ptr %4, i64 40
-  store double +qnan, ptr %i.a, align 8, !tbaa !26
+  %i.a = getelementptr inbounds nuw i8, ptr %4, i64 24 ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
   %i.c = load double, ptr %i.b, align 8, !tbaa !23 ; 3 uses
-  %i.d = load <2 x double>, ptr %1, align 8, !tbaa !44 ; 5 uses
+  %i.d = load <2 x double>, ptr %1, align 8, !tbaa !44 ; 3 uses
   %i.e = load <2 x double>, ptr %2, align 8, !tbaa !44 ; 5 uses
   %i.f = fsub <2 x double> %i.e, %i.d             ; 6 uses
   %i.g = extractelement <2 x double> %i.f, i64 0
@@ -230,36 +226,43 @@ bb.a:
   %i.n = fmul <2 x double> %i.f, %i.m
   %i.o = insertelement <2 x double> poison, double %sqrt.i, i64 0
   %i.p = shufflevector <2 x double> %i.o, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
-  %i.q = fdiv <2 x double> %i.n, %i.p
-  %i.r = shufflevector <2 x double> %i.q, <2 x double> poison, <2 x i32> <i32 1, i32 0> ; 4 uses
-  %i.s = fsub <2 x double> %i.d, %i.r
-  %i.t = fadd <2 x double> %i.d, %i.r
-  %10 = shufflevector <2 x double> %i.s, <2 x double> %i.t, <2 x i32> <i32 0, i32 3>
-  store <2 x double> %10, ptr %4, align 16, !tbaa !44
-  %11 = fsub <2 x double> %i.e, %i.r
-  %12 = fadd <2 x double> %i.e, %i.r
-  %13 = shufflevector <2 x double> %11, <2 x double> %12, <2 x i32> <i32 0, i32 3> ; 2 uses
-  store <2 x double> %13, ptr %9, align 8, !tbaa !44
+  %i.q = fdiv <2 x double> %i.n, %i.p             ; 3 uses
+  %i.r = shufflevector <2 x double> %i.q, <2 x double> poison, <2 x i32> <i32 1, i32 0> ; 2 uses
+  %i.s = fsub <2 x double> %i.e, %i.r             ; 2 uses
+  %i.t = fadd <2 x double> %i.e, %i.r             ; 2 uses
+  %8 = shufflevector <2 x double> %i.d, <2 x double> poison, <4 x i32> <i32 poison, i32 1, i32 poison, i32 poison>
+  %9 = shufflevector <4 x double> <double -0.000000e+00, double poison, double +qnan, double -0.000000e+00>, <4 x double> %8, <4 x i32> <i32 0, i32 5, i32 2, i32 3> ; 2 uses
+  %10 = shufflevector <2 x double> %i.q, <2 x double> %i.s, <4 x i32> <i32 poison, i32 0, i32 poison, i32 2>
+  %11 = insertelement <4 x double> %10, double -0.000000e+00, i64 2
+  %12 = getelementptr inbounds nuw i8, ptr %4, i64 32
+  %13 = shufflevector <2 x double> %i.t, <2 x double> <double poison, double +qnan>, <2 x i32> <i32 1, i32 3>
+  store <2 x double> %13, ptr %12, align 8, !tbaa !44
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #11
-  %i.u = getelementptr inbounds nuw i8, ptr %5, i64 16
-  store double +qnan, ptr %i.u, align 16, !tbaa !26
-  %14 = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 3 uses
-  %15 = getelementptr inbounds nuw i8, ptr %5, i64 40
-  store double +qnan, ptr %15, align 8, !tbaa !26
-  %16 = fneg double %i.c
-  %17 = insertelement <2 x double> poison, double %16, i64 0
-  %18 = shufflevector <2 x double> %17, <2 x double> poison, <2 x i32> zeroinitializer
-  %19 = fmul <2 x double> %i.f, %18
-  %20 = fdiv <2 x double> %19, %i.p
-  %21 = shufflevector <2 x double> %20, <2 x double> poison, <2 x i32> <i32 1, i32 0> ; 4 uses
-  %i.v = fsub <2 x double> %i.d, %21
-  %22 = fadd <2 x double> %i.d, %21
-  %23 = shufflevector <2 x double> %i.v, <2 x double> %22, <2 x i32> <i32 0, i32 3>
-  store <2 x double> %23, ptr %5, align 16, !tbaa !44
-  %24 = fsub <2 x double> %i.e, %21
-  %25 = fadd <2 x double> %i.e, %21
-  %26 = shufflevector <2 x double> %24, <2 x double> %25, <2 x i32> <i32 0, i32 3> ; 2 uses
-  store <2 x double> %26, ptr %14, align 8, !tbaa !44
+  %i.u = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 2 uses
+  %14 = fneg double %i.c
+  %15 = insertelement <2 x double> poison, double %14, i64 0
+  %16 = shufflevector <2 x double> %15, <2 x double> poison, <2 x i32> zeroinitializer
+  %17 = fmul <2 x double> %i.f, %16
+  %18 = fdiv <2 x double> %17, %i.p               ; 3 uses
+  %19 = shufflevector <2 x double> %18, <2 x double> poison, <2 x i32> <i32 1, i32 0> ; 2 uses
+  %20 = fsub <2 x double> %i.e, %19               ; 2 uses
+  %21 = fadd <2 x double> %i.e, %19               ; 2 uses
+  %22 = shufflevector <2 x double> %i.d, <2 x double> poison, <2 x i32> zeroinitializer
+  %23 = shufflevector <2 x double> %i.q, <2 x double> %18, <2 x i32> <i32 1, i32 3>
+  %i.v = fsub <2 x double> %22, %23               ; 2 uses
+  %24 = shufflevector <2 x double> %i.v, <2 x double> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
+  %25 = shufflevector <4 x double> %24, <4 x double> %11, <4 x i32> <i32 0, i32 5, i32 6, i32 7>
+  %26 = fadd <4 x double> %9, %25
+  store <4 x double> %26, ptr %4, align 8, !tbaa !44
+  %27 = shufflevector <2 x double> %18, <2 x double> %20, <4 x i32> <i32 poison, i32 0, i32 poison, i32 2>
+  %28 = insertelement <4 x double> %27, double -0.000000e+00, i64 2
+  %29 = shufflevector <2 x double> %i.v, <2 x double> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 poison>
+  %30 = shufflevector <4 x double> %29, <4 x double> %28, <4 x i32> <i32 0, i32 5, i32 6, i32 7>
+  %31 = fadd <4 x double> %9, %30
+  store <4 x double> %31, ptr %5, align 8, !tbaa !44
+  %32 = getelementptr inbounds nuw i8, ptr %5, i64 32
+  %33 = shufflevector <2 x double> %21, <2 x double> <double poison, double +qnan>, <2 x i32> <i32 1, i32 3>
+  store <2 x double> %33, ptr %32, align 8, !tbaa !44
   %i.w = tail call double @atan2(double noundef %i.i, double noundef %i.g) #11 ; 4 uses
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.y = load ptr, ptr %i.x, align 8, !tbaa !46, !nonnull !47, !align !48
@@ -273,7 +276,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
-  call void @_ZN4geos9operation6buffer19OffsetSegmentString5addPtERKNS_4geom10CoordinateE(ptr noundef nonnull align 8 dereferenceable(24) %i.ab, ptr noundef nonnull align 8 dereferenceable(24) %9)
+  call void @_ZN4geos9operation6buffer19OffsetSegmentString5addPtERKNS_4geom10CoordinateE(ptr noundef nonnull align 8 dereferenceable(24) %i.ab, ptr noundef nonnull align 8 dereferenceable(24) %i.a)
   %i.ac = fadd double %i.w, f0x3FF921FB54442D18   ; 2 uses
   %i.ad = fadd double %i.w, f0xBFF921FB54442D18
   %i.ae = fsub double %i.ac, %i.ad
@@ -321,16 +324,18 @@ bb.c:                                             ; preds = %bb.b
   br label %_ZN4geos9operation6buffer22OffsetSegmentGenerator17addDirectedFilletERKNS_4geom10CoordinateEddid.exit
 
 _ZN4geos9operation6buffer22OffsetSegmentGenerator17addDirectedFilletERKNS_4geom10CoordinateEddid.exit: ; preds = %bb.b, %.split23.us.i
-  call void @_ZN4geos9operation6buffer19OffsetSegmentString5addPtERKNS_4geom10CoordinateE(ptr noundef nonnull align 8 dereferenceable(24) %i.ab, ptr noundef nonnull align 8 dereferenceable(24) %14)
+  call void @_ZN4geos9operation6buffer19OffsetSegmentString5addPtERKNS_4geom10CoordinateE(ptr noundef nonnull align 8 dereferenceable(24) %i.ab, ptr noundef nonnull align 8 dereferenceable(24) %i.u)
   br label %bb.f
 
 bb.d:                                             ; preds = %bb.a
   %i.be = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
-  call void @_ZN4geos9operation6buffer19OffsetSegmentString5addPtERKNS_4geom10CoordinateE(ptr noundef nonnull align 8 dereferenceable(24) %i.be, ptr noundef nonnull align 8 dereferenceable(24) %9)
-  call void @_ZN4geos9operation6buffer19OffsetSegmentString5addPtERKNS_4geom10CoordinateE(ptr noundef nonnull align 8 dereferenceable(24) %i.be, ptr noundef nonnull align 8 dereferenceable(24) %14)
+  call void @_ZN4geos9operation6buffer19OffsetSegmentString5addPtERKNS_4geom10CoordinateE(ptr noundef nonnull align 8 dereferenceable(24) %i.be, ptr noundef nonnull align 8 dereferenceable(24) %i.a)
+  call void @_ZN4geos9operation6buffer19OffsetSegmentString5addPtERKNS_4geom10CoordinateE(ptr noundef nonnull align 8 dereferenceable(24) %i.be, ptr noundef nonnull align 8 dereferenceable(24) %i.u)
   br label %bb.f
 
 bb.e:                                             ; preds = %bb.a
+  %34 = shufflevector <2 x double> %20, <2 x double> %21, <2 x i32> <i32 0, i32 3>
+  %35 = shufflevector <2 x double> %i.s, <2 x double> %i.t, <2 x i32> <i32 0, i32 3>
   %i.bf = tail call double @llvm.fabs.f64(double %i.c)
   %i.bg = tail call double @cos(double noundef %i.w) #11
   %i.bh = tail call double @sin(double noundef %i.w) #11
@@ -340,12 +345,12 @@ bb.e:                                             ; preds = %bb.a
   %i.bk = insertelement <2 x double> poison, double %i.bg, i64 0
   %i.bl = insertelement <2 x double> %i.bk, double %i.bh, i64 1
   %i.bm = fmul <2 x double> %i.bj, %i.bl          ; 2 uses
-  %i.bn = fadd <2 x double> %13, %i.bm
+  %i.bn = fadd <2 x double> %35, %i.bm
   store <2 x double> %i.bn, ptr %6, align 16, !tbaa !44
   %i.bo = getelementptr inbounds nuw i8, ptr %6, i64 16
   store double +qnan, ptr %i.bo, align 16, !tbaa !26
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #11
-  %i.bp = fadd <2 x double> %26, %i.bm
+  %i.bp = fadd <2 x double> %34, %i.bm
   store <2 x double> %i.bp, ptr %7, align 16, !tbaa !44
   %i.bq = getelementptr inbounds nuw i8, ptr %7, i64 16
   store double +qnan, ptr %i.bq, align 16, !tbaa !26
