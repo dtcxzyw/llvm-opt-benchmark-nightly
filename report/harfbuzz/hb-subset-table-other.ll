@@ -204,26 +204,28 @@ bb.y:                                             ; preds = %.split, %bb.x, %bb.
   br i1 %.not767, label %.critedge7.i, label %.lr.ph672
 
 .lr.ph672:                                        ; preds = %bb.y, %bb.an
-  %.0.i671 = phi i32 [ %i.jd, %bb.an ], [ 0, %bb.y ] ; 6 uses
+  %.0.i671 = phi i32 [ %i.jd, %bb.an ], [ 0, %bb.y ] ; 3 uses
   %.092.i670 = phi double [ %.5.i.ph, %bb.an ], [ 1.000000e+00, %bb.y ] ; 11 uses
   %.3108.i669 = phi ptr [ %.6111.i.ph, %bb.an ], [ %.2107.i536, %bb.y ] ; 7 uses
+  %9 = zext nneg i32 %.0.i671 to i64              ; 5 uses
   br i1 %i.dz, label %.preheader640.preheader, label %.critedge7.i.thread
 
 .preheader640.preheader:                          ; preds = %.lr.ph672
-  %9 = add i32 %.0.i671, 4                        ; 2 uses
-  %.not128.i1049 = icmp ugt i32 %9, %i.dj
+  %indvars.iv.next1067 = add nuw nsw i64 %9, 4    ; 2 uses
+  %indvars1068 = trunc nuw i64 %indvars.iv.next1067 to i32
+  %.not128.i1049 = icmp ugt i32 %indvars1068, %i.dj
   br i1 %.not128.i1049, label %.critedge.i, label %.lr.ph1051
 
 .preheader640:                                    ; preds = %.lr.ph1051
-  %10 = add i32 %11, 4                            ; 2 uses
-  %.not128.i = icmp ugt i32 %10, %i.dj
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv.next1071, 4 ; 2 uses
+  %indvars = trunc i64 %indvars.iv.next to i32
+  %.not128.i = icmp ugt i32 %indvars, %i.dj
   br i1 %.not128.i, label %.critedge.i, label %.lr.ph1051, !llvm.loop !653
 
 .lr.ph1051:                                       ; preds = %.preheader640.preheader, %.preheader640
-  %11 = phi i32 [ %10, %.preheader640 ], [ %9, %.preheader640.preheader ] ; 3 uses
-  %.1.i1050 = phi i32 [ %11, %.preheader640 ], [ %.0.i671, %.preheader640.preheader ] ; 2 uses
-  %12 = zext i32 %.1.i1050 to i64
-  %i.hg = getelementptr inbounds nuw [2 x i8], ptr %.199.i538, i64 %12
+  %indvars.iv.next1071 = phi i64 [ %indvars.iv.next, %.preheader640 ], [ %indvars.iv.next1067, %.preheader640.preheader ] ; 3 uses
+  %indvars.iv1070 = phi i64 [ %indvars.iv.next1071, %.preheader640 ], [ %9, %.preheader640.preheader ] ; 2 uses
+  %i.hg = getelementptr inbounds nuw [2 x i8], ptr %.199.i538, i64 %indvars.iv1070
   %i.hh = load i64, ptr %i.hg, align 1, !tbaa !654
   %i.hi = icmp eq i64 %i.hh, 0
   br i1 %i.hi, label %.preheader640, label %..critedge.i_crit_edge, !llvm.loop !653
@@ -232,16 +234,13 @@ bb.y:                                             ; preds = %.split, %bb.x, %bb.
   br label %.critedge.i, !llvm.loop !653
 
 .critedge.i:                                      ; preds = %.preheader640, %..critedge.i_crit_edge, %.preheader640.preheader
-  %.1.i.lcssa = phi i32 [ %.1.i1050, %..critedge.i_crit_edge ], [ %.0.i671, %.preheader640.preheader ], [ %11, %.preheader640 ] ; 2 uses
-  %i.hj = icmp ult i32 %.1.i.lcssa, %i.dj
-  br i1 %i.hj, label %.lr.ph.preheader, label %.critedge7.i
+  %indvars.iv.lcssa = phi i64 [ %indvars.iv1070, %..critedge.i_crit_edge ], [ %9, %.preheader640.preheader ], [ %indvars.iv.next1071, %.preheader640 ] ; 2 uses
+  %10 = trunc nuw i64 %indvars.iv.lcssa to i32
+  %i.hj = icmp ult i32 %10, %i.dj
+  br i1 %i.hj, label %.lr.ph, label %.critedge7.i
 
-.lr.ph.preheader:                                 ; preds = %.critedge.i
-  %13 = zext nneg i32 %.1.i.lcssa to i64
-  br label %.lr.ph
-
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.z
-  %indvars.iv = phi i64 [ %13, %.lr.ph.preheader ], [ %indvars.iv.next.a, %bb.z ] ; 4 uses
+.lr.ph:                                           ; preds = %.critedge.i, %bb.z
+  %indvars.iv = phi i64 [ %indvars.iv.next.a, %bb.z ], [ %indvars.iv.lcssa, %.critedge.i ] ; 4 uses
   %i.hk = getelementptr inbounds nuw [2 x i8], ptr %.199.i538, i64 %indvars.iv
   %i.hl = load i16, ptr %i.hk, align 1, !tbaa !155 ; 3 uses
   %i.hm = icmp eq i16 %i.hl, 0
@@ -259,8 +258,7 @@ bb.z:                                             ; preds = %.lr.ph
   br label %bb.aa
 
 .critedge7.i.thread:                              ; preds = %.lr.ph672
-  %.phi.trans.insert880 = zext nneg i32 %.0.i671 to i64 ; 2 uses
-  %.phi.trans.insert881 = getelementptr inbounds nuw [2 x i8], ptr %.199.i538, i64 %.phi.trans.insert880
+  %.phi.trans.insert881 = getelementptr inbounds nuw [2 x i8], ptr %.199.i538, i64 %9
   %.pre882 = load i16, ptr %.phi.trans.insert881, align 1, !tbaa !155 ; 3 uses
   %i.hp = call noundef i16 @llvm.bswap.i16(i16 %.pre882)
   %.not130.i = icmp eq i16 %.pre882, 0
@@ -270,7 +268,7 @@ bb.aa:                                            ; preds = %.critedge7.i.thread
   %i.hq = phi i16 [ %i.ho, %.critedge7.i.thread.thread ], [ %i.hp, %.critedge7.i.thread ] ; 4 uses
   %.3.i967 = phi i32 [ %i.hn, %.critedge7.i.thread.thread ], [ %.0.i671, %.critedge7.i.thread ] ; 9 uses
   %i.hr = phi i16 [ %i.hl, %.critedge7.i.thread.thread ], [ %.pre882, %.critedge7.i.thread ] ; 2 uses
-  %.pre-phi966 = phi i64 [ %indvars.iv, %.critedge7.i.thread.thread ], [ %.phi.trans.insert880, %.critedge7.i.thread ] ; 3 uses
+  %.pre-phi966 = phi i64 [ %indvars.iv, %.critedge7.i.thread.thread ], [ %9, %.critedge7.i.thread ] ; 3 uses
   %i.hs = sext i16 %i.hq to i32                   ; 6 uses
   %.not.i.i360 = icmp ult i32 %.3.i967, %.sroa.4.8.extract.trunc
   %i.ht = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %.pre-phi966

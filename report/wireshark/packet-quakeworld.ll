@@ -201,8 +201,8 @@ bb.m:                                             ; preds = %bb.j
   %i.by = getelementptr i8, ptr %.387.i.i.i, i64 1 ; 3 uses
   %i.bz = load i8, ptr %.387.i.i.i, align 1       ; 2 uses
   switch i8 %i.bz, label %bb.n [
-    i8 34, label %COM_Parse.exit.loopexit84.i.i
-    i8 0, label %COM_Parse.exit.loopexit84.i.i
+    i8 34, label %COM_Parse.exit.i.loopexit.i
+    i8 0, label %COM_Parse.exit.i.loopexit.i
   ]
 
 bb.n:                                             ; preds = %.lr.ph.i.i.i
@@ -213,22 +213,22 @@ bb.n:                                             ; preds = %.lr.ph.i.i.i
   br i1 %exitcond.not.i.i.i, label %COM_Parse.exit.i.i, label %.lr.ph.i.i.i, !llvm.loop !9
 
 .loopexit.i.i.i:                                  ; preds = %bb.k, %bb.j, %bb.m
-  %.244.i.i = phi i32 [ %i.bw, %bb.m ], [ %.143.i.i, %bb.j ], [ %.143.i.i, %bb.k ]
+  %.244.i.i = phi i32 [ %i.bw, %bb.m ], [ %.143.i.i, %bb.j ], [ %.143.i.i, %bb.k ] ; 2 uses
   %.4.i.i.i = phi ptr [ %i.bv, %bb.m ], [ %.156.i.i.i, %bb.j ], [ %.156.i.i.i, %bb.k ]
-  %4 = sext i32 %i.bd to i64
   br label %.preheader.i.i.i
 
 .preheader.i.i.i:                                 ; preds = %bb.o, %.loopexit.i.i.i
-  %indvars.iv.i.a = phi i64 [ %indvars.iv.next.i, %bb.o ], [ 0, %.loopexit.i.i.i ] ; 2 uses
+  %indvars.iv.i.a = phi i64 [ %indvars.iv.next104.i.i.i, %bb.o ], [ 0, %.loopexit.i.i.i ] ; 3 uses
   %.5.i.i.i = phi ptr [ %i.cc, %bb.o ], [ %.4.i.i.i, %.loopexit.i.i.i ]
   %.2.i.i.i = phi i8 [ %i.cd, %bb.o ], [ %i.bi, %.loopexit.i.i.i ]
   %i.cb = getelementptr i8, ptr %i.bg, i64 %indvars.iv.i.a
   store i8 %.2.i.i.i, ptr %i.cb, align 1
-  %i.cc = getelementptr i8, ptr %.5.i.i.i, i64 1  ; 3 uses
-  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i.a, 1 ; 3 uses
+  %i.cc = getelementptr i8, ptr %.5.i.i.i, i64 1  ; 4 uses
+  %4 = trunc nsw i64 %indvars.iv.i.a to i32
+  %5 = add i32 %4, 1                              ; 3 uses
   %i.cd = load i8, ptr %i.cc, align 1             ; 3 uses
   %.not66.i.i.i = icmp eq i8 %i.cd, 32
-  br i1 %.not66.i.i.i, label %COM_Parse.exit.i.loopexit.i, label %bb.o
+  br i1 %.not66.i.i.i, label %COM_Parse.exit.i.i, label %bb.o
 
 bb.o:                                             ; preds = %.preheader.i.i.i
   %i.ce = zext i8 %i.cd to i64
@@ -236,22 +236,19 @@ bb.o:                                             ; preds = %.preheader.i.i.i
   %i.cg = load i16, ptr %i.cf, align 2
   %i.ch = and i16 %i.cg, 4
   %.not67.i.i.i = icmp eq i16 %i.ch, 0
-  %i.ci = icmp slt i64 %indvars.iv.next.i, %4
+  %i.ci = icmp slt i32 %5, %i.bd
   %or.cond.i.i.i = and i1 %i.ci, %.not67.i.i.i
-  br i1 %or.cond.i.i.i, label %.preheader.i.i.i, label %COM_Parse.exit.i.loopexit.i, !llvm.loop !10
+  %indvars.iv.next104.i.i.i = add nuw nsw i64 %indvars.iv.i.a, 1
+  br i1 %or.cond.i.i.i, label %.preheader.i.i.i, label %COM_Parse.exit.i.i, !llvm.loop !10
 
-COM_Parse.exit.loopexit84.i.i:                    ; preds = %.lr.ph.i.i.i, %.lr.ph.i.i.i
-  %indvars104.i.i = trunc i64 %indvars.iv.i.i.i to i32
+COM_Parse.exit.i.loopexit.i:                      ; preds = %.lr.ph.i.i.i, %.lr.ph.i.i.i
+  %i.cj = trunc i64 %indvars.iv.i.i.i to i32
   br label %COM_Parse.exit.i.i
 
-COM_Parse.exit.i.loopexit.i:                      ; preds = %bb.o, %.preheader.i.i.i
-  %i.cj = trunc nuw nsw i64 %indvars.iv.next.i to i32
-  br label %COM_Parse.exit.i.i
-
-COM_Parse.exit.i.i:                               ; preds = %bb.n, %COM_Parse.exit.i.loopexit.i, %COM_Parse.exit.loopexit84.i.i
-  %.4.i.i = phi i32 [ %i.bw, %COM_Parse.exit.loopexit84.i.i ], [ %.244.i.i, %COM_Parse.exit.i.loopexit.i ], [ %i.bw, %bb.n ] ; 2 uses
-  %.2.i.i = phi i32 [ %indvars104.i.i, %COM_Parse.exit.loopexit84.i.i ], [ %i.cj, %COM_Parse.exit.i.loopexit.i ], [ %i.bd, %bb.n ] ; 2 uses
-  %.054.i.i.i = phi ptr [ %i.by, %COM_Parse.exit.loopexit84.i.i ], [ %i.cc, %COM_Parse.exit.i.loopexit.i ], [ %i.by, %bb.n ] ; 3 uses
+COM_Parse.exit.i.i:                               ; preds = %bb.n, %bb.o, %.preheader.i.i.i, %COM_Parse.exit.i.loopexit.i
+  %.4.i.i = phi i32 [ %i.bw, %COM_Parse.exit.i.loopexit.i ], [ %.244.i.i, %bb.o ], [ %.244.i.i, %.preheader.i.i.i ], [ %i.bw, %bb.n ] ; 2 uses
+  %.2.i.i = phi i32 [ %i.cj, %COM_Parse.exit.i.loopexit.i ], [ %5, %bb.o ], [ %5, %.preheader.i.i.i ], [ %i.bd, %bb.n ] ; 2 uses
+  %.054.i.i.i = phi ptr [ %i.by, %COM_Parse.exit.i.loopexit.i ], [ %i.cc, %bb.o ], [ %i.cc, %.preheader.i.i.i ], [ %i.by, %bb.n ] ; 3 uses
   %.not29.i.i = icmp eq ptr %.054.i.i.i, null
   br i1 %.not29.i.i, label %Cmd_TokenizeString.exit.i, label %bb.p
 
