@@ -204,44 +204,30 @@ add_cea_modes.exit:                               ; preds = %cea_db_is_y420vdb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #20
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %4, i8 0, i64 32, i1 false), !annotation !17
   %.val.i.i.i39 = load i64, ptr %1, align 8       ; 2 uses
-  %.val9.i.i.i = load ptr, ptr %i.c, align 8      ; 13 uses
+  %.val9.i.i.i = load ptr, ptr %i.c, align 8      ; 14 uses
   %i.rw = getelementptr i8, ptr %.val9.i.i.i, i64 126
-  %.val.i.i.i.i.i = load i8, ptr %i.rw, align 1   ; 5 uses
+  %.val.i.i.i.i.i = load i8, ptr %i.rw, align 1   ; 4 uses
   %.not.i.i.i.i.i40 = icmp ult i64 %.val.i.i.i39, 256
   %i.rx = trunc i64 %.val.i.i.i39 to i32          ; 5 uses
-  %i.ry = sdiv i32 %i.rx, 128                     ; 4 uses
+  %i.ry = sdiv i32 %i.rx, 128                     ; 3 uses
   %i.rz = getelementptr i8, ptr %.val9.i.i.i, i64 128
   %i.sa = getelementptr i8, ptr %.val9.i.i.i, i64 129
   %i.sb = getelementptr i8, ptr %.val9.i.i.i, i64 130
   %i.sc = getelementptr i8, ptr %.val9.i.i.i, i64 132
   %i.sd = getelementptr i8, ptr %.val9.i.i.i, i64 133
   %i.se = getelementptr i8, ptr %.val9.i.i.i, i64 134
-  br i1 %.not.i.i.i.i.i40, label %.split.us.i.i, label %.split.i.i
+  br i1 %.not.i.i.i.i.i40, label %__drm_edid_iter_next.exit.us.i.i, label %.split.i.i
 
-.split.us.i.i:                                    ; preds = %add_cea_modes.exit
-  %.1.in.i.i.i.us.i.i = zext i8 %.val.i.i.i.i.i to i32
-  %.1.i.i.i.us.i.i = add nuw nsw i32 %.1.in.i.i.i.us.i.i, 1
-  %12 = call range(i32 -16777216, 257) i32 @llvm.smin.i32(i32 %.1.i.i.i.us.i.i, i32 %i.ry)
-  %wide.trip.count119.i = zext nneg i32 %12 to i64
-  %exitcond120.not.i206 = icmp ult i32 %i.rx, 128
-  br i1 %exitcond120.not.i206, label %__drm_edid_iter_next.exit.thread.i.i, label %__drm_edid_iter_next.exit.us.i.i
-
-drm_edid_block_count.exit.i.us.i.i:               ; preds = %bb.fj
-  %13 = add nuw nsw i64 %.sroa.6.0.us.i.i207, 1   ; 2 uses
-  %exitcond120.not.i = icmp eq i64 %13, %wide.trip.count119.i
-  br i1 %exitcond120.not.i, label %__drm_edid_iter_next.exit.thread.i.i, label %__drm_edid_iter_next.exit.us.i.i, !llvm.loop !120
-
-__drm_edid_iter_next.exit.us.i.i:                 ; preds = %.split.us.i.i, %drm_edid_block_count.exit.i.us.i.i
-  %.sroa.6.0.us.i.i207 = phi i64 [ %13, %drm_edid_block_count.exit.i.us.i.i ], [ 0, %.split.us.i.i ] ; 2 uses
-  %14 = shl nuw nsw i64 %.sroa.6.0.us.i.i207, 7
-  %15 = getelementptr i8, ptr %.val9.i.i.i, i64 %14 ; 2 uses
-  %.not.us.i.i = icmp eq ptr %15, null
-  br i1 %.not.us.i.i, label %__drm_edid_iter_next.exit.thread.i.i, label %bb.fj
+__drm_edid_iter_next.exit.us.i.i:                 ; preds = %add_cea_modes.exit
+  %exitcond119.not.i206 = icmp ult i32 %i.rx, 128
+  %.not.us.i.i = icmp eq ptr %.val9.i.i.i, null
+  %or.cond = or i1 %exitcond119.not.i206, %.not.us.i.i
+  br i1 %or.cond, label %__drm_edid_iter_next.exit.thread.i.i, label %bb.fj
 
 bb.fj:                                            ; preds = %__drm_edid_iter_next.exit.us.i.i
-  %i.sf = load i8, ptr %15, align 1
+  %i.sf = load i8, ptr %.val9.i.i.i, align 1
   %i.sg = icmp eq i8 %i.sf, 2
-  br i1 %i.sg, label %drm_edid_has_cta_extension.exit.thread.i, label %drm_edid_block_count.exit.i.us.i.i, !llvm.loop !120
+  br i1 %i.sg, label %drm_edid_has_cta_extension.exit.thread.i, label %__drm_edid_iter_next.exit.thread.i.i, !llvm.loop !120
 
 .split.i.i:                                       ; preds = %add_cea_modes.exit
   %.not.i.i.i.i.i.i.i = icmp eq i8 %.val.i.i.i.i.i, 0
@@ -375,7 +361,7 @@ bb.fq:                                            ; preds = %__drm_edid_iter_nex
   %i.tk = icmp eq i8 %i.tj, 2
   br i1 %i.tk, label %drm_edid_has_cta_extension.exit.thread.i, label %drm_edid_block_count.exit.i.i.i, !llvm.loop !120
 
-__drm_edid_iter_next.exit.thread.i.i:             ; preds = %drm_edid_block_count.exit.i.i.i, %__drm_edid_iter_next.exit.i.i, %__drm_edid_iter_next.exit.us33.i.i, %drm_edid_block_count.exit.i.us29.i.i, %drm_edid_block_count.exit.i.us29.us.i.i, %__drm_edid_iter_next.exit.us33.us.i.i, %drm_edid_block_count.exit.i.us.i.i, %__drm_edid_iter_next.exit.us.i.i, %.split.split.split.i.i, %.split.split.split.us.split.us.i.i, %.split.split.us.i.i, %bb.fk, %.split.us.i.i
+__drm_edid_iter_next.exit.thread.i.i:             ; preds = %drm_edid_block_count.exit.i.i.i, %__drm_edid_iter_next.exit.i.i, %__drm_edid_iter_next.exit.us33.i.i, %drm_edid_block_count.exit.i.us29.i.i, %drm_edid_block_count.exit.i.us29.us.i.i, %__drm_edid_iter_next.exit.us33.us.i.i, %.split.split.split.i.i, %.split.split.split.us.split.us.i.i, %.split.split.us.i.i, %bb.fk, %__drm_edid_iter_next.exit.us.i.i, %bb.fj
   call void @displayid_iter_edid_begin(ptr noundef nonnull %1, ptr noundef nonnull %4) #22
   br label %bb.fr
 
@@ -398,7 +384,7 @@ drm_edid_has_cta_extension.exit.i:                ; preds = %bb.fr
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #20
   br label %add_alternate_cea_modes.exit
 
-drm_edid_has_cta_extension.exit.thread.i:         ; preds = %bb.fq, %bb.fp, %bb.fl, %bb.fj, %bb.fk, %drm_edid_has_cta_extension.exit.thread73.i
+drm_edid_has_cta_extension.exit.thread.i:         ; preds = %bb.fq, %bb.fp, %bb.fl, %bb.fk, %bb.fj, %drm_edid_has_cta_extension.exit.thread73.i
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #20
   %i.to = getelementptr i8, ptr %0, i64 176       ; 3 uses
   %.pn93.i = load ptr, ptr %i.to, align 8         ; 2 uses

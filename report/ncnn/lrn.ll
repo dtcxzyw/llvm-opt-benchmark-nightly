@@ -203,7 +203,7 @@ bb.b:                                             ; preds = %bb.a
   %i.i = load i32, ptr %i.b, align 4, !tbaa !38
   %i.j = call i32 @llvm.smin.i32(i32 %i.i, i32 %i.g) ; 4 uses
   store i32 %i.j, ptr %i.b, align 4, !tbaa !38
-  %i.k = load i32, ptr %i.a, align 4, !tbaa !38   ; 4 uses
+  %i.k = load i32, ptr %i.a, align 4, !tbaa !38   ; 3 uses
   %.not108 = icmp sgt i32 %i.k, %i.j
   br i1 %.not108, label %._crit_edge110, label %.noexc47.lr.ph
 
@@ -217,7 +217,7 @@ bb.b:                                             ; preds = %bb.a
   %i.q = getelementptr inbounds nuw i8, ptr %4, i64 212
   %i.r = load i32, ptr %i.q, align 4, !tbaa !29   ; 2 uses
   %.neg = sdiv i32 %i.r, -2
-  %i.s = sdiv i32 %i.r, 2                         ; 2 uses
+  %i.s = sdiv i32 %i.r, 2
   %i.t = getelementptr inbounds nuw i8, ptr %5, i64 64
   %i.u = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.v = load ptr, ptr %7, align 8, !tbaa !43, !noalias !88 ; 3 uses
@@ -236,7 +236,6 @@ bb.b:                                             ; preds = %bb.a
 
 .noexc47.us.preheader:                            ; preds = %.noexc47.lr.ph
   %i.ag = sext i32 %i.k to i64                    ; 4 uses
-  %9 = add i32 %i.k, %i.s
   %wide.trip.count125 = zext nneg i32 %i.aa to i64 ; 11 uses
   %wide.trip.count133 = zext nneg i32 %i.aa to i64
   %i.ah = mul i64 %i.x, %i.z                      ; 2 uses
@@ -295,16 +294,14 @@ bb.b:                                             ; preds = %bb.a
 .noexc47.us:                                      ; preds = %.noexc47.us.preheader, %._crit_edge.us
   %indvar = phi i64 [ 0, %.noexc47.us.preheader ], [ %indvar.next, %._crit_edge.us ] ; 2 uses
   %indvars.iv135 = phi i64 [ %i.ag, %.noexc47.us.preheader ], [ %indvars.iv.next136, %._crit_edge.us ] ; 5 uses
-  %indvars.iv127.in = phi i32 [ %9, %.noexc47.us.preheader ], [ %indvars.iv127, %._crit_edge.us ] ; 2 uses
   %i.be = mul i64 %i.au, %indvar                  ; 2 uses
   %scevgep168 = getelementptr i8, ptr %i.aw, i64 %i.be
   %scevgep169 = getelementptr i8, ptr %i.ay, i64 %i.be
-  %indvars.iv127 = add i32 %indvars.iv127.in, 1
   %.reass.us = mul i64 %factor.op.mul, %indvars.iv135
   %i.bf = getelementptr inbounds nuw i8, ptr %i.l, i64 %.reass.us ; 10 uses
   %i.bg = trunc nsw i64 %indvars.iv135 to i32
   %i.bh = add i32 %.neg, %i.bg                    ; 2 uses
-  %i.bi = add nsw i64 %indvars.iv135, %i.ae
+  %i.bi = add nsw i64 %indvars.iv135, %i.ae       ; 2 uses
   %i.bj = sext i32 %i.bh to i64
   %.not43103.us = icmp slt i64 %i.bi, %i.bj
   br i1 %.not43103.us, label %.noexc.us, label %.lr.ph105.us
@@ -416,9 +413,10 @@ middle.block186:                                  ; preds = %vector.body179
   br i1 %exitcond126.not.3, label %.loopexit.us, label %.lr.ph.us, !llvm.loop !101
 
 .loopexit.us:                                     ; preds = %.lr.ph.us.prol.loopexit, %.lr.ph.us, %middle.block186, %bb.c, %.lr.ph105.us
-  %i.db = add i32 %.041104.us, 1
-  %exitcond129.not = icmp eq i32 %.041104.us, %indvars.iv127.in
-  br i1 %exitcond129.not, label %.noexc.us, label %.lr.ph105.us, !llvm.loop !102
+  %i.db = add nsw i32 %.041104.us, 1
+  %9 = sext i32 %.041104.us to i64
+  %.not43.us.not = icmp sgt i64 %i.bi, %9
+  br i1 %.not43.us.not, label %.lr.ph105.us, label %.noexc.us, !llvm.loop !102
 
 .noexc.us:                                        ; preds = %.loopexit.us, %.noexc47.us
   %.reass112.us = mul i64 %factor.op.mul111, %indvars.iv135

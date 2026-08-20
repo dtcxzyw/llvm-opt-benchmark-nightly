@@ -132,7 +132,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #13
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 48
   %i.e = load i32, ptr %i.d, align 8              ; 7 uses
-  %i.f = sdiv i32 %i.e, 16                        ; 3 uses
+  %i.f = sdiv i32 %i.e, 16                        ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 52
   %i.h = load i32, ptr %i.g, align 4              ; 3 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 104
@@ -215,7 +215,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.bf = getelementptr inbounds nuw i8, ptr %0, i64 %i.be
   %i.bg = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
   store ptr %i.bf, ptr %i.bg, align 8
-  %i.bh = sext i32 %i.f to i64                    ; 2 uses
+  %i.bh = sext i32 %i.f to i64                    ; 3 uses
   %i.bi = shl nsw i64 %i.bh, 7
   %i.bj = add i64 %i.be, %i.bi                    ; 2 uses
   %i.bk = getelementptr inbounds nuw i8, ptr %0, i64 %i.bj
@@ -252,11 +252,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
 
 .preheader:                                       ; preds = %.lr.ph
   %i.cb = icmp samesign ugt i32 %i.e, 15
-  br i1 %i.cb, label %.lr.ph106.preheader, label %._crit_edge
-
-.lr.ph106.preheader:                              ; preds = %.preheader
-  %wide.trip.count111 = zext nneg i32 %i.f to i64
-  br label %.lr.ph106
+  br i1 %i.cb, label %.lr.ph106, label %._crit_edge
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
   %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %.lr.ph ] ; 6 uses
@@ -286,8 +282,8 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #13
   ret void
 
-.lr.ph106:                                        ; preds = %.lr.ph106.preheader, %.lr.ph106
-  %indvars.iv108 = phi i64 [ 0, %.lr.ph106.preheader ], [ %indvars.iv.next109, %.lr.ph106 ] ; 3 uses
+.lr.ph106:                                        ; preds = %.preheader, %.lr.ph106
+  %indvars.iv108 = phi i64 [ %indvars.iv.next109, %.lr.ph106 ], [ 0, %.preheader ] ; 3 uses
   %i.co = load ptr, ptr %i.bg, align 8
   %i.cp = getelementptr inbounds nuw [128 x i8], ptr %i.co, i64 %indvars.iv108
   %i.cq = load i32, ptr %i.s, align 4
@@ -296,8 +292,8 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.cs = getelementptr inbounds nuw [4 x i8], ptr %i.cr, i64 %indvars.iv108
   store i32 0, ptr %i.cs, align 4
   %indvars.iv.next109 = add nuw nsw i64 %indvars.iv108, 1 ; 2 uses
-  %exitcond112.not = icmp eq i64 %indvars.iv.next109, %wide.trip.count111
-  br i1 %exitcond112.not, label %._crit_edge, label %.lr.ph106, !llvm.loop !6
+  %2 = icmp slt i64 %indvars.iv.next109, %i.bh
+  br i1 %2, label %.lr.ph106, label %._crit_edge, !llvm.loop !6
 }
 
 declare i32 @pg_snprintf(ptr noundef, i64 noundef, ptr noundef, ...) local_unnamed_addr #3

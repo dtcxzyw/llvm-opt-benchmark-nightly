@@ -172,7 +172,7 @@ bb.b:                                             ; preds = %bb.a
   br label %.loopexit
 
 bb.c:                                             ; preds = %bb.a
-  %i.d = sdiv i32 %1, %2                          ; 7 uses
+  %i.d = sdiv i32 %1, %2                          ; 6 uses
   %i.e = add nsw i32 %2, -1                       ; 3 uses
   %i.f = icmp sgt i32 %2, 0
   br i1 %i.f, label %.lr.ph48, label %.loopexit
@@ -190,8 +190,7 @@ bb.c:                                             ; preds = %bb.a
   br label %.lr.ph48.split
 
 .lr.ph.us.preheader:                              ; preds = %.lr.ph48
-  %4 = zext nneg i32 %i.d to i64
-  %wide.trip.count54 = zext nneg i32 %i.d to i64  ; 2 uses
+  %wide.trip.count54 = zext nneg i32 %i.d to i64  ; 3 uses
   %xtraiter = and i64 %wide.trip.count54, 3       ; 3 uses
   %i.k = icmp ult i32 %i.d, 4
   %unroll_iter = and i64 %wide.trip.count54, 2147483644
@@ -207,7 +206,7 @@ bb.c:                                             ; preds = %bb.a
   store i8 %i.l, ptr %i.m, align 1, !tbaa !19
   store i8 %i.n, ptr %i.h, align 1, !tbaa !19
   %i.o = sub nsw i64 %i.g, %indvars.iv56
-  %i.p = mul nsw i64 %i.o, %4
+  %i.p = mul nsw i64 %i.o, %wide.trip.count54
   %i.q = getelementptr inbounds [8 x i8], ptr %0, i64 %i.p ; 6 uses
   br i1 %i.k, label %.epil.preheader, label %.lr.ph.us.new
 

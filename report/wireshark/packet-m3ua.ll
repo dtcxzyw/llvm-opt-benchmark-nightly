@@ -201,13 +201,13 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.d
-  %.039.a = phi i32 [ 4, %.lr.ph ], [ %i.ac, %bb.d ] ; 6 uses
-  %.03638 = phi i16 [ 0, %.lr.ph ], [ %4, %bb.d ]
+  %.039.a = phi i32 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.d ]
+  %.039 = phi i32 [ 4, %.lr.ph ], [ %i.ac, %bb.d ] ; 6 uses
   %i.g = load i32, ptr @ett_parameter, align 4
-  %i.h = call ptr @proto_tree_add_subtree(ptr noundef %2, ptr noundef %0, i32 noundef %.039.a, i32 noundef 8, i32 noundef %i.g, ptr noundef nonnull %i.a, ptr noundef nonnull @.str.363) ; 4 uses
+  %i.h = call ptr @proto_tree_add_subtree(ptr noundef %2, ptr noundef %0, i32 noundef %.039, i32 noundef 8, i32 noundef %i.g, ptr noundef nonnull %i.a, ptr noundef nonnull @.str.363) ; 4 uses
   %i.i = load i32, ptr @hf_cic_range_mask, align 4
-  %i.j = call ptr @proto_tree_add_item(ptr noundef %i.h, i32 noundef %i.i, ptr noundef %0, i32 noundef %.039.a, i32 noundef 1, i32 noundef 0) ; 0 uses
-  %i.k = or disjoint i32 %.039.a, 1               ; 2 uses
+  %i.j = call ptr @proto_tree_add_item(ptr noundef %i.h, i32 noundef %i.i, ptr noundef %0, i32 noundef %.039, i32 noundef 1, i32 noundef 0) ; 0 uses
+  %i.k = or disjoint i32 %.039, 1                 ; 2 uses
   %i.l = call i32 @tvb_get_ntoh24(ptr noundef %0, i32 noundef %i.k)
   %i.m = load ptr, ptr %i.f, align 8
   %i.n = call ptr @mtp3_pc_to_str(ptr noundef %i.m, i32 noundef %i.l) ; 2 uses
@@ -221,11 +221,11 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  %i.r = add i32 %.039.a, 4                       ; 2 uses
+  %i.r = add nuw nsw i32 %.039, 4                 ; 2 uses
   %i.s = call zeroext i16 @tvb_get_ntohs(ptr noundef %0, i32 noundef %i.r)
   %i.t = load i32, ptr @hf_cic_range_lower, align 4
   %i.u = call ptr @proto_tree_add_item(ptr noundef %i.h, i32 noundef %i.t, ptr noundef %0, i32 noundef %i.r, i32 noundef 2, i32 noundef 0) ; 0 uses
-  %i.v = add i32 %.039.a, 6                       ; 2 uses
+  %i.v = add nuw nsw i32 %.039, 6                 ; 2 uses
   %i.w = call zeroext i16 @tvb_get_ntohs(ptr noundef %0, i32 noundef %i.v)
   %i.x = load i32, ptr @hf_cic_range_upper, align 4
   %i.y = call ptr @proto_tree_add_item(ptr noundef %i.h, i32 noundef %i.x, ptr noundef %0, i32 noundef %i.v, i32 noundef 2, i32 noundef 0) ; 0 uses
@@ -233,11 +233,10 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.aa = zext i16 %i.s to i32
   %i.ab = zext i16 %i.w to i32
   call void (ptr, ptr, ...) @proto_item_append_text(ptr noundef %i.z, ptr noundef nonnull @.str.364, ptr noundef %i.n, i32 noundef %i.aa, i32 noundef %i.ab)
-  %i.ac = add i32 %.039.a, 8
-  %4 = add i16 %.03638, 1                         ; 2 uses
-  %5 = zext i16 %4 to i32
-  %6 = icmp samesign ugt i32 %i.e, %5
-  br i1 %6, label %bb.b, label %._crit_edge, !llvm.loop !27
+  %i.ac = add nuw nsw i32 %.039, 8
+  %indvars.iv.next = add nuw nsw i32 %.039.a, 1   ; 2 uses
+  %exitcond.not = icmp eq i32 %indvars.iv.next, %i.e
+  br i1 %exitcond.not, label %._crit_edge, label %bb.b, !llvm.loop !27
 
 ._crit_edge:                                      ; preds = %bb.d, %bb.a
   %i.ad = add i16 %i.b, -12

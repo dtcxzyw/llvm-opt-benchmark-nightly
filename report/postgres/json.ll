@@ -201,9 +201,8 @@ bb.t:                                             ; preds = %escape_json_text.ex
   br label %escape_json_text.exit26.peel
 
 escape_json_text.exit26.peel:                     ; preds = %bb.t, %bb.s, %VARSIZE_ANY_EXHDR.exit.i19.peel
-  %2 = and i32 %i.y, 2147483646
-  %exitcond.peel.not = icmp eq i32 %2, 2
-  br i1 %exitcond.peel.not, label %._crit_edge, label %.lr.ph
+  %2 = icmp samesign ugt i32 %i.y, 3
+  br i1 %2, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %escape_json_text.exit26.peel, %escape_json_text.exit26
   %indvars.iv = phi i64 [ %indvars.iv.next, %escape_json_text.exit26 ], [ 1, %escape_json_text.exit26.peel ] ; 2 uses
@@ -339,8 +338,8 @@ bb.ag:                                            ; preds = %VARSIZE_ANY_EXHDR.e
 
 escape_json_text.exit26:                          ; preds = %bb.ag, %VARSIZE_ANY_EXHDR.exit.i19, %bb.aa
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !14
+  %3 = icmp samesign ult i64 %indvars.iv.next, %wide.trip.count
+  br i1 %3, label %.lr.ph, label %._crit_edge, !llvm.loop !14
 
 ._crit_edge:                                      ; preds = %escape_json_text.exit26, %escape_json_text.exit26.peel, %bb.h
   call void @appendStringInfoChar(ptr noundef nonnull %1, i8 noundef signext 125) #10

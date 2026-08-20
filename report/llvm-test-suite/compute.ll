@@ -202,15 +202,18 @@ bb.d:                                             ; preds = %make_orthogonal.exi
   %i.bk = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.bi, <2 x double> %i.bi, <2 x double> %i.bj) ; 2 uses
   %i.bl = extractelement <2 x double> %i.bk, i64 0
   %i.bm = tail call double @llvm.fmuladd.f64(double %i.bg, double %i.bg, double %i.bl)
-  %2 = insertelement <2 x double> %i.bk, double %i.bm, i64 0
-  %3 = tail call <2 x double> @llvm.sqrt.v2f64(<2 x double> %2) ; 3 uses
-  %i.bn = shufflevector <2 x double> %3, <2 x double> poison, <2 x i32> zeroinitializer
+  %sqrt60 = tail call double @llvm.sqrt.f64(double %i.bm) ; 2 uses
+  %2 = insertelement <2 x double> poison, double %sqrt60, i64 0
+  %i.bn = shufflevector <2 x double> %2, <2 x double> poison, <2 x i32> zeroinitializer
   %i.bo = fdiv <2 x double> %i.bf, %i.bn          ; 3 uses
+  %3 = extractelement <2 x double> %i.bk, i64 1
+  %sqrt.i = tail call double @llvm.sqrt.f64(double %3)
   %i.bp = fneg <2 x double> %i.be
   %i.bq = fmul <2 x double> %i.be, %i.bp
   %i.br = fmul <2 x double> %i.bq, %i.bf
-  %4 = shufflevector <2 x double> %3, <2 x double> poison, <2 x i32> <i32 1, i32 1>
-  %i.bs = fdiv <2 x double> %i.br, %4             ; 2 uses
+  %4 = insertelement <2 x double> poison, double %sqrt.i, i64 0
+  %5 = shufflevector <2 x double> %4, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.bs = fdiv <2 x double> %i.br, %5             ; 2 uses
   %i.bt = shufflevector <2 x double> %i.bo, <2 x double> poison, <2 x i32> zeroinitializer
   %i.bu = insertelement <2 x double> %i.bs, double f0x3FC91A556151761C, i64 1
   %i.bv = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.bt, <2 x double> %i.bu, <2 x double> zeroinitializer)
@@ -219,8 +222,7 @@ bb.d:                                             ; preds = %make_orthogonal.exi
   %i.by = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.bw, <2 x double> %i.bx, <2 x double> %i.bv) ; 3 uses
   %i.bz = extractelement <2 x double> %i.by, i64 0
   %i.ca = tail call double @llvm.fabs.f64(double %i.bz)
-  %5 = extractelement <2 x double> %3, i64 0
-  %i.cb = fdiv double %5, %i.ca
+  %i.cb = fdiv double %sqrt60, %i.ca
   %i.cc = extractelement <2 x double> %i.by, i64 1
   %i.cd = fneg double %i.cc                       ; 2 uses
   %i.ce = insertelement <2 x double> poison, double %i.cd, i64 0
@@ -474,9 +476,6 @@ declare double @llvm.sqrt.f64(double) #1
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #1
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x double> @llvm.sqrt.v2f64(<2 x double>) #1
 
 attributes #0 = { nofree nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }

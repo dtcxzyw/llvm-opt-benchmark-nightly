@@ -131,7 +131,7 @@ bb.a:
   store <2 x double> %i.n, ptr %i.l, align 16, !tbaa !10
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 96
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 80
-  %i.q = load <2 x double>, ptr %i.p, align 16, !tbaa !10 ; 2 uses
+  %i.q = load <2 x double>, ptr %i.p, align 16, !tbaa !10 ; 3 uses
   store <2 x double> %i.q, ptr %i.o, align 16, !tbaa !10
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 112
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 96
@@ -142,11 +142,10 @@ bb.a:
   %i.w = load <2 x double>, ptr %i.v, align 16, !tbaa !10 ; 3 uses
   store <2 x double> %i.w, ptr %i.u, align 16, !tbaa !10
   %.sroa.0.8.vec.insert = shufflevector <2 x double> %i.b, <2 x double> %i.h, <2 x i32> <i32 0, i32 2> ; 2 uses
-  %2 = extractelement <2 x double> %i.n, i64 0
   %.sroa.9.40.vec.insert = shufflevector <2 x double> %i.b, <2 x double> %i.h, <2 x i32> <i32 1, i32 3> ; 2 uses
   %i.x = extractelement <2 x double> %i.n, i64 1
   %.sroa.15.72.vec.insert = shufflevector <2 x double> %i.e, <2 x double> %i.k, <2 x i32> <i32 0, i32 2> ; 2 uses
-  %i.y = extractelement <2 x double> %i.q, i64 0  ; 2 uses
+  %i.y = extractelement <2 x double> %i.q, i64 0
   %i.z = fneg <2 x double> %.sroa.0.8.vec.insert
   %i.aa = shufflevector <2 x double> %i.t, <2 x double> poison, <2 x i32> zeroinitializer
   %i.ab = fmul <2 x double> %i.aa, %i.z
@@ -168,9 +167,8 @@ bb.a:
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 144
   store <2 x double> %.sroa.0.8.vec.insert, ptr %i.ap, align 16
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 160
-  store double %2, ptr %.sroa.6.0..sroa_idx, align 16
-  %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 168
-  store double 0.000000e+00, ptr %.sroa.7.0..sroa_idx, align 8
+  %2 = insertelement <2 x double> %i.n, double 0.000000e+00, i64 1
+  store <2 x double> %2, ptr %.sroa.6.0..sroa_idx, align 16
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 176
   store <2 x double> %.sroa.9.40.vec.insert, ptr %.sroa.9.0..sroa_idx, align 16
   %.sroa.12.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 192
@@ -180,9 +178,8 @@ bb.a:
   %.sroa.15.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 208
   store <2 x double> %.sroa.15.72.vec.insert, ptr %.sroa.15.0..sroa_idx, align 16
   %.sroa.18.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 224
-  store double %i.y, ptr %.sroa.18.0..sroa_idx, align 16
-  %.sroa.19.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 232
-  store double 0.000000e+00, ptr %.sroa.19.0..sroa_idx, align 8
+  %3 = insertelement <2 x double> %i.q, double 0.000000e+00, i64 1
+  store <2 x double> %3, ptr %.sroa.18.0..sroa_idx, align 16
   %.sroa.21.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 240
   store <2 x double> %i.ai, ptr %.sroa.21.0..sroa_idx, align 16
   %.sroa.22.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 256
@@ -252,7 +249,7 @@ _ZN5Eigen10MatrixBaseINS_3MapINS_6MatrixIdLi4ELi1ELi0ELi4ELi1EEELi0ENS_6StrideIL
   store <2 x double> %i.ab, ptr %i.z, align 16, !tbaa !10
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 96
   %i.ad = getelementptr inbounds nuw i8, ptr %3, i64 80
-  %i.ae = load <2 x double>, ptr %i.ad, align 16, !tbaa !10 ; 2 uses
+  %i.ae = load <2 x double>, ptr %i.ad, align 16, !tbaa !10 ; 3 uses
   store <2 x double> %i.ae, ptr %i.ac, align 16, !tbaa !10
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 112
   %i.ag = getelementptr inbounds nuw i8, ptr %3, i64 96
@@ -263,11 +260,10 @@ _ZN5Eigen10MatrixBaseINS_3MapINS_6MatrixIdLi4ELi1ELi0ELi4ELi1EEELi0ENS_6StrideIL
   %i.ak = load <2 x double>, ptr %i.aj, align 16, !tbaa !10 ; 3 uses
   store <2 x double> %i.ak, ptr %i.ai, align 16, !tbaa !10
   %.sroa.0.8.vec.insert.i = shufflevector <2 x double> %i.p, <2 x double> %i.v, <2 x i32> <i32 0, i32 2> ; 2 uses
-  %4 = extractelement <2 x double> %i.ab, i64 0
   %.sroa.9.40.vec.insert.i = shufflevector <2 x double> %i.p, <2 x double> %i.v, <2 x i32> <i32 1, i32 3> ; 2 uses
   %i.al = extractelement <2 x double> %i.ab, i64 1
   %.sroa.15.72.vec.insert.i = shufflevector <2 x double> %i.s, <2 x double> %i.y, <2 x i32> <i32 0, i32 2> ; 2 uses
-  %i.am = extractelement <2 x double> %i.ae, i64 0 ; 2 uses
+  %i.am = extractelement <2 x double> %i.ae, i64 0
   %i.an = fneg <2 x double> %.sroa.0.8.vec.insert.i
   %i.ao = shufflevector <2 x double> %i.ah, <2 x double> poison, <2 x i32> zeroinitializer
   %i.ap = fmul <2 x double> %i.ao, %i.an
@@ -289,9 +285,8 @@ _ZN5Eigen10MatrixBaseINS_3MapINS_6MatrixIdLi4ELi1ELi0ELi4ELi1EEELi0ENS_6StrideIL
   %i.bd = getelementptr inbounds nuw i8, ptr %0, i64 144
   store <2 x double> %.sroa.0.8.vec.insert.i, ptr %i.bd, align 16
   %.sroa.6.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 160
-  store double %4, ptr %.sroa.6.0..sroa_idx.i, align 16
-  %.sroa.7.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 168
-  store double 0.000000e+00, ptr %.sroa.7.0..sroa_idx.i, align 8
+  %4 = insertelement <2 x double> %i.ab, double 0.000000e+00, i64 1
+  store <2 x double> %4, ptr %.sroa.6.0..sroa_idx.i, align 16
   %.sroa.9.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 176
   store <2 x double> %.sroa.9.40.vec.insert.i, ptr %.sroa.9.0..sroa_idx.i, align 16
   %.sroa.12.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 192
@@ -301,9 +296,8 @@ _ZN5Eigen10MatrixBaseINS_3MapINS_6MatrixIdLi4ELi1ELi0ELi4ELi1EEELi0ENS_6StrideIL
   %.sroa.15.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 208
   store <2 x double> %.sroa.15.72.vec.insert.i, ptr %.sroa.15.0..sroa_idx.i, align 16
   %.sroa.18.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 224
-  store double %i.am, ptr %.sroa.18.0..sroa_idx.i, align 16
-  %.sroa.19.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 232
-  store double 0.000000e+00, ptr %.sroa.19.0..sroa_idx.i, align 8
+  %5 = insertelement <2 x double> %i.ae, double 0.000000e+00, i64 1
+  store <2 x double> %5, ptr %.sroa.18.0..sroa_idx.i, align 16
   %.sroa.21.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 240
   store <2 x double> %i.aw, ptr %.sroa.21.0..sroa_idx.i, align 16
   %.sroa.22.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 256
@@ -706,7 +700,6 @@ bb.a:
   %i.dm = getelementptr inbounds nuw i8, ptr %0, i64 320
   store <2 x double> %.sroa.1928.120.vec.insert, ptr %i.dm, align 16, !tbaa !10
   %.sroa.06.8.vec.insert = shufflevector <2 x double> %i.z, <2 x double> %i.bb, <2 x i32> <i32 0, i32 2> ; 2 uses
-  %1 = extractelement <2 x double> %i.bx, i64 0
   %.sroa.910.40.vec.insert = shufflevector <2 x double> %i.z, <2 x double> %i.bb, <2 x i32> <i32 1, i32 3> ; 2 uses
   %i.dn = extractelement <2 x double> %i.bx, i64 1
   %.sroa.1514.64.vec.insert = insertelement <2 x double> poison, double %i.ak, i64 0
@@ -732,9 +725,8 @@ bb.a:
   %i.ee = getelementptr inbounds nuw i8, ptr %0, i64 80
   store <2 x double> %.sroa.06.8.vec.insert, ptr %i.ee, align 16
   %.sroa.68.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 96
-  store double %1, ptr %.sroa.68.0..sroa_idx, align 16
-  %.sroa.79.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 104
-  store double 0.000000e+00, ptr %.sroa.79.0..sroa_idx, align 8
+  %1 = insertelement <2 x double> %i.bx, double 0.000000e+00, i64 1
+  store <2 x double> %1, ptr %.sroa.68.0..sroa_idx, align 16
   %.sroa.910.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 112
   store <2 x double> %.sroa.910.40.vec.insert, ptr %.sroa.910.0..sroa_idx, align 16
   %.sroa.1212.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 128

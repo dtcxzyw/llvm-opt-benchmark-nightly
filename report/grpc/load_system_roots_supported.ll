@@ -203,21 +203,18 @@ bb.w:                                             ; preds = %bb.d
   %i.aj = call i32 @closedir(ptr noundef nonnull %i.b) ; 0 uses
   %i.ak = add i64 %.042, 1
   %i.al = invoke ptr @gpr_zalloc(i64 noundef %i.ak)
-          to label %.preheader unwind label %bb.x ; 2 uses
+          to label %.lr.ph.preheader unwind label %bb.x ; 2 uses
 
-.preheader:                                       ; preds = %bb.w
-  %7 = ptrtoint ptr %.sroa.078.0 to i64           ; 5 uses
-  %.not133 = icmp eq ptr %.sroa.12.0, %.sroa.078.0
-  br i1 %.not133, label %._crit_edge, label %.lr.ph.preheader
-
-.lr.ph.preheader:                                 ; preds = %.preheader
+.lr.ph.preheader:                                 ; preds = %bb.w
   %i.am = ptrtoint ptr %.sroa.12.0 to i64
+  %7 = ptrtoint ptr %.sroa.078.0 to i64           ; 5 uses
   %i.an = sub i64 %i.am, %7
   %i.ao = sdiv exact i64 %i.an, 4104
-  br label %.lr.ph
+  %.not133 = icmp eq ptr %.sroa.12.0, %.sroa.078.0
+  br i1 %.not133, label %._crit_edge, label %.lr.ph
 
-._crit_edge:                                      ; preds = %bb.al, %.preheader
-  %.029.lcssa = phi i64 [ 0, %.preheader ], [ %.2, %bb.al ]
+._crit_edge:                                      ; preds = %bb.al, %.lr.ph.preheader
+  %.029.lcssa = phi i64 [ 0, %.lr.ph.preheader ], [ %.2, %bb.al ]
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #17
   invoke void @grpc_slice_new(ptr dead_on_unwind nonnull writable sret(%struct.grpc_slice) align 8 %6, ptr noundef %i.al, i64 noundef %.029.lcssa, ptr noundef nonnull @gpr_free)
           to label %bb.am unwind label %bb.ao
@@ -312,8 +309,8 @@ bb.ak:                                            ; preds = %_ZNKO4absl12lts_202
 bb.al:                                            ; preds = %bb.ak, %bb.y
   %.2 = phi i64 [ %.029130, %bb.y ], [ %.1, %bb.ak ] ; 2 uses
   %i.bf = add nuw i64 %.0131, 1                   ; 2 uses
-  %exitcond.not = icmp eq i64 %i.bf, %i.ao
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !25
+  %8 = icmp ult i64 %i.bf, %i.ao
+  br i1 %8, label %.lr.ph, label %._crit_edge, !llvm.loop !25
 
 bb.am:                                            ; preds = %._crit_edge
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %6, i64 32, i1 false), !tbaa.struct !26

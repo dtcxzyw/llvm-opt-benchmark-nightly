@@ -203,8 +203,7 @@ bb.h:                                             ; preds = %bb.f, %bb.g
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %smax = call i32 @llvm.smax.i32(i32 %i.s, i32 1)
-  %wide.trip.count50 = zext nneg i32 %smax to i64
+  %3 = sext i32 %i.s to i64
   br label %bb.i
 
 bb.i:                                             ; preds = %.lr.ph45, %bb.m
@@ -298,8 +297,8 @@ bb.l:                                             ; preds = %_ZN2v88internal12_G
 
 bb.m:                                             ; preds = %_ZN2v88internal12_GLOBAL__N_18print_pcERSoi.exit, %bb.l
   %indvars.iv.next48 = add nuw nsw i64 %indvars.iv47, 1 ; 2 uses
-  %exitcond51.not = icmp eq i64 %indvars.iv.next48, %wide.trip.count50
-  br i1 %exitcond51.not, label %.loopexit, label %bb.i, !llvm.loop !11
+  %4 = icmp slt i64 %indvars.iv.next48, %3
+  br i1 %4, label %bb.i, label %.loopexit, !llvm.loop !11
 
 .loopexit:                                        ; preds = %bb.m, %._crit_edge, %bb.h, %bb.b
   ret void
@@ -701,9 +700,6 @@ declare i64 @llvm.umin.i64(i64, i64) #11
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #4
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #11
 
 attributes #0 = { mustprogress nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

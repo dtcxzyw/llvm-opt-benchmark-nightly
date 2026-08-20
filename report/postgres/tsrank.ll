@@ -204,9 +204,11 @@ get_docrep.exit:                                  ; preds = %bb.v, %bb.r
   %i.fb = getelementptr inbounds nuw i8, ptr %.0.lcssa.i, i64 24
   %i.fc = ptrtoint ptr %i.fb to i64
   %i.fd = sub i64 %i.fc, %i.dz
-  %i.fe = sdiv exact i64 %i.fd, 24
+  %i.fe = sdiv exact i64 %i.fd, 24                ; 2 uses
+  %sext = shl i64 %i.fe, 32
+  %5 = ashr exact i64 %sext, 32
   %sext.a = shl i64 %i.fe, 32
-  %i.ff = ashr exact i64 %sext.a, 32              ; 2 uses
+  %i.ff = ashr exact i64 %sext.a, 32
   br label %bb.w
 
 bb.w:                                             ; preds = %get_docrep.exit, %bb.ap
@@ -216,8 +218,7 @@ bb.w:                                             ; preds = %get_docrep.exit, %b
   %.084 = phi i32 [ %i.ml, %bb.ap ], [ 0, %get_docrep.exit ] ; 4 uses
   %i.fg = phi <2 x double> [ %i.mm, %bb.ap ], [ zeroinitializer, %get_docrep.exit ] ; 2 uses
   %sext222 = shl i64 %.promoted164, 32
-  %i.fh = ashr exact i64 %sext222, 32             ; 2 uses
-  %smax = call i64 @llvm.smax.i64(i64 %i.fh, i64 %i.ff)
+  %i.fh = ashr exact i64 %sext222, 32
   br label %tailrecurse.i
 
 tailrecurse.i:                                    ; preds = %.loopexit.i108.thread, %bb.w
@@ -251,8 +252,8 @@ tailrecurse.i:                                    ; preds = %.loopexit.i108.thre
   br i1 %i.fy, label %.lr.ph.i.i, label %resetQueryRepresentation.exit.i, !llvm.loop !17
 
 resetQueryRepresentation.exit.i:                  ; preds = %.lr.ph.i.i, %tailrecurse.i
-  %exitcond.not = icmp eq i64 %indvars.iv, %smax
-  br i1 %exitcond.not, label %.loopexit, label %.lr.ph.preheader.i
+  %6 = icmp slt i64 %indvars.iv, %i.ff
+  br i1 %6, label %.lr.ph.preheader.i, label %.loopexit
 
 .lr.ph.preheader.i:                               ; preds = %resetQueryRepresentation.exit.i
   %i.fz = getelementptr inbounds [24 x i8], ptr %.3.i, i64 %indvars.iv ; 2 uses
@@ -397,7 +398,7 @@ bb.af:                                            ; preds = %fillQueryRepresenta
   %i.it = ptrtoint ptr %i.is to i64
   %i.iu = sub i64 %i.it, %i.dz
   %i.iv = sdiv exact i64 %i.iu, 24                ; 2 uses
-  %i.iw = icmp slt i64 %i.iv, %i.ff
+  %i.iw = icmp slt i64 %i.iv, %5
   br i1 %i.iw, label %.lr.ph.i106, label %.loopexit, !llvm.loop !21
 
 .lr.ph86.i:                                       ; preds = %.lr.ph86.i.preheader, %bb.am
@@ -799,9 +800,6 @@ declare float @sqrtf(float) local_unnamed_addr
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i16 @llvm.umax.i16(i16, i16) #6
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.smax.i64(i64, i64) #6
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

@@ -204,8 +204,7 @@ bb.ax:                                            ; preds = %bb.aw, %bb.av
   %i.na = getelementptr i8, ptr %.pre89.i, i64 4
   %i.nb = getelementptr i8, ptr %.pre89.i, i64 8
   %.val15.i.i = load ptr, ptr %i.nb, align 8, !tbaa !31
-  %smax.i = call i32 @llvm.smax.i32(i32 %i.md, i32 2)
-  %wide.trip.count.i = zext nneg i32 %smax.i to i64
+  %wide.trip.count.i = zext nneg i32 %i.md to i64
   br label %bb.ay
 
 bb.ay:                                            ; preds = %Hash_Int2ManLookup.exit.i, %.lr.ph.i
@@ -606,9 +605,6 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.abs.i32(i32, i1 immarg) #12
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #13
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #13

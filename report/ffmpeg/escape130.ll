@@ -189,7 +189,6 @@ bb.d:                                             ; preds = %bb.c
   %i.al = zext i32 %i.w to i64                    ; 2 uses
   %i.am = add i32 %i.w, 1
   %i.an = zext i32 %i.am to i64                   ; 2 uses
-  %umax = tail call i32 @llvm.umax.i32(i32 %i.j, i32 1)
   br label %bb.e
 
 bb.e:                                             ; preds = %.lr.ph, %bb.u
@@ -580,8 +579,8 @@ bb.u:                                             ; preds = %bb.t, %bb.s
   %.1174 = phi i32 [ 0, %bb.t ], [ %i.jk, %bb.s ]
   %.1 = phi ptr [ %i.jr, %bb.t ], [ %i.je, %bb.s ]
   %i.kc = add nuw i32 %.0175270, 1                ; 2 uses
-  %exitcond.not = icmp eq i32 %i.kc, %umax
-  br i1 %exitcond.not, label %._crit_edge, label %bb.e, !llvm.loop !47
+  %4 = icmp ult i32 %i.kc, %i.j
+  br i1 %4, label %bb.e, label %._crit_edge, !llvm.loop !47
 
 ._crit_edge:                                      ; preds = %bb.u, %bb.d
   %i.kd = tail call i32 @ff_get_buffer(ptr noundef nonnull %0, ptr noundef %1, i32 noundef 0) #5 ; 2 uses
@@ -764,9 +763,6 @@ declare i32 @llvm.umin.i32(i32, i32) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #4
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umax.i32(i32, i32) #4
 
 attributes #0 = { cold nounwind optsize uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nounwind uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

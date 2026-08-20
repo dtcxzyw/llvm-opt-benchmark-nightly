@@ -201,22 +201,19 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.a = tail call zeroext i16 @tvb_get_ntohs(ptr noundef %0, i32 noundef 2) ; 2 uses
+  %4 = zext i16 %i.a to i32
   %i.b = load i32, ptr @hf_swils_esc_payload_length, align 4
   %i.c = tail call ptr @proto_tree_add_item(ptr noundef nonnull %2, i32 noundef %i.b, ptr noundef %0, i32 noundef 2, i32 noundef 2, i32 noundef 0) ; 0 uses
   %i.d = load i32, ptr @hf_swils_esc_swvendorid, align 4
   %i.e = tail call ptr @proto_tree_add_item(ptr noundef nonnull %2, i32 noundef %i.d, ptr noundef %0, i32 noundef 4, i32 noundef 8, i32 noundef 0) ; 0 uses
+  %5 = add nsw i32 %4, -12
+  %6 = sdiv i32 %5, 12
   %i.f = icmp ugt i16 %i.a, 23
-  br i1 %i.f, label %.lr.ph.preheader, label %.loopexit
+  br i1 %i.f, label %.lr.ph, label %.loopexit
 
-.lr.ph.preheader:                                 ; preds = %bb.c
-  %.lhs.trunc = add i16 %i.a, -12
-  %4 = udiv i16 %.lhs.trunc, 12
-  %.zext = zext nneg i16 %4 to i32
-  br label %.lr.ph
-
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
-  %.040 = phi i32 [ %i.o, %.lr.ph ], [ 0, %.lr.ph.preheader ] ; 2 uses
-  %.03639 = phi i32 [ %i.n, %.lr.ph ], [ 12, %.lr.ph.preheader ] ; 4 uses
+.lr.ph:                                           ; preds = %bb.c, %.lr.ph
+  %.040 = phi i32 [ %i.o, %.lr.ph ], [ 0, %bb.c ] ; 2 uses
+  %.03639 = phi i32 [ %i.n, %.lr.ph ], [ 12, %bb.c ] ; 4 uses
   %i.g = load i32, ptr @ett_fcswils_esc_pdesc, align 4
   %i.h = tail call ptr (ptr, ptr, i32, i32, i32, ptr, ptr, ...) @proto_tree_add_subtree_format(ptr noundef nonnull %2, ptr noundef %0, i32 noundef %.03639, i32 noundef 12, i32 noundef %i.g, ptr noundef null, ptr noundef nonnull @.str.439, i32 noundef %.040) ; 2 uses
   %i.i = load i32, ptr @hf_swils_esc_pdesc_vendorid, align 4
@@ -226,8 +223,8 @@ bb.c:                                             ; preds = %bb.b
   %i.m = tail call ptr @proto_tree_add_item(ptr noundef %i.h, i32 noundef %i.k, ptr noundef %0, i32 noundef %i.l, i32 noundef 2, i32 noundef 0) ; 0 uses
   %i.n = add nuw nsw i32 %.03639, 12
   %i.o = add nuw nsw i32 %.040, 1                 ; 2 uses
-  %exitcond.not = icmp eq i32 %i.o, %.zext
-  br i1 %exitcond.not, label %.loopexit, label %.lr.ph, !llvm.loop !18
+  %7 = icmp slt i32 %i.o, %6
+  br i1 %7, label %.lr.ph, label %.loopexit, !llvm.loop !18
 
 bb.d:                                             ; preds = %bb.b
   %i.p = load i32, ptr @hf_swils_esc_swvendorid, align 4

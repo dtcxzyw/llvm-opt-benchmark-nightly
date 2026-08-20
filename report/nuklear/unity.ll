@@ -204,8 +204,8 @@ bb.i:                                             ; preds = %bb.h
 
 nk_panel_alloc_row.exit:                          ; preds = %.lr.ph.split, %bb.e, %bb.h, %bb.i
   %i.ao = add nuw nsw i32 %.038, 1                ; 2 uses
-  %exitcond.not = icmp eq i32 %i.ao, %i.l
-  br i1 %exitcond.not, label %.loopexit37, label %.lr.ph.split, !llvm.loop !971
+  %3 = icmp slt i32 %i.ao, %i.l
+  br i1 %3, label %.lr.ph.split, label %.loopexit37, !llvm.loop !971
 
 .loopexit37:                                      ; preds = %nk_panel_alloc_row.exit, %.preheader36, %bb.d
   %.025 = phi i32 [ %1, %bb.d ], [ %i.k, %.preheader36 ], [ %i.k, %nk_panel_alloc_row.exit ] ; 2 uses
@@ -608,8 +608,8 @@ bb.g:                                             ; preds = %bb.f
   %.sroa.20.8.vec.insert.i = insertelement <2 x float> poison, float %i.t, i64 0
   %.sroa.20.12.vec.insert.i = insertelement <2 x float> %i.q, float %i.t, i64 0 ; 3 uses
   %i.z = extractelement <2 x float> %i.u, i64 0
-  %i.aa = fadd float %i.z, %i.y                   ; 4 uses
-  %i.ab = insertelement <2 x float> poison, float %i.aa, i64 0 ; 6 uses
+  %i.aa = fadd float %i.z, %i.y                   ; 6 uses
+  %i.ab = insertelement <2 x float> poison, float %i.aa, i64 0 ; 3 uses
   %i.ac = insertelement <2 x float> %i.u, float %i.aa, i64 0
   %i.ad = fadd float %i.t, %i.aa                  ; 4 uses
   %i.ae = insertelement <2 x float> %i.u, float %i.ad, i64 0 ; 2 uses
@@ -909,28 +909,26 @@ nk_color_picker_behavior.exit.i:                  ; preds = %nk_input_is_mouse_p
   %i.ex = insertelement <4 x float> poison, float %i.et, i64 0
   %i.ey = shufflevector <4 x float> %i.ex, <4 x float> poison, <4 x i32> zeroinitializer
   %i.ez = shufflevector <2 x float> %i.u, <2 x float> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
-  %i.fa = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.ey, <4 x float> <float 0.000000e+00, float 2.000000e+00, float 3.000000e+00, float 4.000000e+00>, <4 x float> %i.ez) ; 4 uses
+  %i.fa = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.ey, <4 x float> <float 0.000000e+00, float 2.000000e+00, float 3.000000e+00, float 4.000000e+00>, <4 x float> %i.ez) ; 2 uses
   %i.fb = extractelement <4 x float> %i.fa, i64 0
   %i.fc = fadd float %i.fb, 5.000000e-01
   %.sroa.0.4.vec.insert.i.i.i = insertelement <2 x float> %i.ab, float %i.fc, i64 1
   tail call void @nk_fill_rect_multi_color(ptr noundef nonnull %i.n, <2 x float> %.sroa.0.4.vec.insert.i.i.i, <2 x float> %.sroa.3.12.vec.insert.i.i.i, i32 -16776961, i32 -16776961, i32 -16711681, i32 -16711681)
   tail call void @nk_fill_rect_multi_color(ptr noundef nonnull %i.n, <2 x float> %.sroa.0.4.vec.insert.i.1.i.i, <2 x float> %.sroa.3.12.vec.insert.i.i.i, i32 -16711681, i32 -16711681, i32 -16711936, i32 -16711936)
-  %4 = extractelement <4 x float> %i.fa, i64 1
-  %5 = fadd float %4, 5.000000e-01
-  %.sroa.0.4.vec.insert.i.2.i.i = insertelement <2 x float> %i.ab, float %5, i64 1
-  tail call void @nk_fill_rect_multi_color(ptr noundef nonnull %i.n, <2 x float> %.sroa.0.4.vec.insert.i.2.i.i, <2 x float> %.sroa.3.12.vec.insert.i.i.i, i32 -16711936, i32 -16711936, i32 -256, i32 -256)
-  %6 = extractelement <4 x float> %i.fa, i64 2
-  %7 = fadd float %6, 5.000000e-01
-  %.sroa.0.4.vec.insert.i.3.i.i = insertelement <2 x float> %i.ab, float %7, i64 1
-  tail call void @nk_fill_rect_multi_color(ptr noundef nonnull %i.n, <2 x float> %.sroa.0.4.vec.insert.i.3.i.i, <2 x float> %.sroa.3.12.vec.insert.i.i.i, i32 -256, i32 -256, i32 -65536, i32 -65536)
-  %8 = extractelement <4 x float> %i.fa, i64 3
-  %9 = fadd float %8, 5.000000e-01
-  %.sroa.0.4.vec.insert.i.4.i.i = insertelement <2 x float> %i.ab, float %9, i64 1
+  %4 = tail call float @llvm.fmuladd.f32(float %i.et, float 5.000000e+00, float %i.v)
+  %5 = insertelement <4 x float> %i.fa, float %4, i64 0
+  %6 = fadd <4 x float> %5, splat (float 5.000000e-01) ; 4 uses
+  %7 = shufflevector <2 x float> %i.ab, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison> ; 2 uses
+  %8 = shufflevector <4 x float> %7, <4 x float> %6, <2 x i32> <i32 0, i32 5>
+  tail call void @nk_fill_rect_multi_color(ptr noundef nonnull %i.n, <2 x float> %8, <2 x float> %.sroa.3.12.vec.insert.i.i.i, i32 -16711936, i32 -16711936, i32 -256, i32 -256)
+  %9 = shufflevector <4 x float> %6, <4 x float> poison, <2 x i32> <i32 poison, i32 2>
+  %10 = insertelement <2 x float> %9, float %i.aa, i64 0
+  tail call void @nk_fill_rect_multi_color(ptr noundef nonnull %i.n, <2 x float> %10, <2 x float> %.sroa.3.12.vec.insert.i.i.i, i32 -256, i32 -256, i32 -65536, i32 -65536)
+  %11 = shufflevector <4 x float> %6, <4 x float> poison, <2 x i32> <i32 poison, i32 3>
+  %.sroa.0.4.vec.insert.i.4.i.i = insertelement <2 x float> %11, float %i.aa, i64 0
   tail call void @nk_fill_rect_multi_color(ptr noundef nonnull %i.n, <2 x float> %.sroa.0.4.vec.insert.i.4.i.i, <2 x float> %.sroa.3.12.vec.insert.i.i.i, i32 -65536, i32 -65536, i32 -65281, i32 -65281)
-  %10 = tail call float @llvm.fmuladd.f32(float %i.et, float 5.000000e+00, float %i.v)
-  %11 = fadd float %10, 5.000000e-01
-  %.sroa.0.4.vec.insert.i.5.i.i = insertelement <2 x float> %i.ab, float %11, i64 1
-  tail call void @nk_fill_rect_multi_color(ptr noundef nonnull %i.n, <2 x float> %.sroa.0.4.vec.insert.i.5.i.i, <2 x float> %.sroa.3.12.vec.insert.i.i.i, i32 -65281, i32 -65281, i32 -16776961, i32 -16776961)
+  %12 = shufflevector <4 x float> %7, <4 x float> %6, <2 x i32> <i32 0, i32 4>
+  tail call void @nk_fill_rect_multi_color(ptr noundef nonnull %i.n, <2 x float> %12, <2 x float> %.sroa.3.12.vec.insert.i.i.i, i32 -65281, i32 -65281, i32 -16776961, i32 -16776961)
   %.sroa.0.4.vec.extract.i.i.i37.i = extractelement <2 x float> %i.er, i64 1
   %.sroa.18.8.vec.extract.i.i.i38.i = extractelement <2 x float> %i.es, i64 0
   %i.fd = fcmp olt float %.sroa.0.4.vec.extract.i.i.i37.i, %.sroa.18.8.vec.extract.i.i.i38.i ; 3 uses

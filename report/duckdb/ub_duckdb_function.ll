@@ -204,17 +204,13 @@ bb.c:                                             ; preds = %_ZN6duckdb14Functio
   %i.l = ptrtoint ptr %i.j to i64
   %i.m = ptrtoint ptr %i.k to i64
   %i.n = sub i64 %i.l, %i.m                       ; 3 uses
+  %13 = sdiv exact i64 %i.n, 24
   %.not3998 = icmp ne ptr %i.j, %i.k
   %.not3998.fr = freeze i1 %.not3998
-  br i1 %.not3998.fr, label %.lr.ph103.split.us.preheader, label %.lr.ph103.split
+  br i1 %.not3998.fr, label %.lr.ph103.split.us, label %.lr.ph103.split
 
-.lr.ph103.split.us.preheader:                     ; preds = %.lr.ph103
-  %13 = sdiv exact i64 %i.n, 24
-  %umax = call i64 @llvm.umax.i64(i64 %13, i64 1)
-  br label %.lr.ph103.split.us
-
-.lr.ph103.split.us:                               ; preds = %.lr.ph103.split.us.preheader, %_ZN6duckdb17AggregateFunctionC2ERKS0_.exit.us
-  %.sroa.074.0102.us = phi ptr [ %i.ab, %_ZN6duckdb17AggregateFunctionC2ERKS0_.exit.us ], [ %i.f, %.lr.ph103.split.us.preheader ] ; 4 uses
+.lr.ph103.split.us:                               ; preds = %.lr.ph103, %_ZN6duckdb17AggregateFunctionC2ERKS0_.exit.us
+  %.sroa.074.0102.us = phi ptr [ %i.ab, %_ZN6duckdb17AggregateFunctionC2ERKS0_.exit.us ], [ %i.f, %.lr.ph103 ] ; 4 uses
   %i.o = getelementptr inbounds nuw i8, ptr %.sroa.074.0102.us, i64 136
   %i.p = getelementptr inbounds nuw i8, ptr %.sroa.074.0102.us, i64 144
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !226
@@ -231,8 +227,8 @@ bb.c:                                             ; preds = %_ZN6duckdb14Functio
 
 bb.d:                                             ; preds = %bb.e
   %i.w = add nuw i64 %.02399.us, 1                ; 2 uses
-  %exitcond.not = icmp eq i64 %i.w, %umax
-  br i1 %exitcond.not, label %.critedge, label %.preheader.us, !llvm.loop !640
+  %.not39.us = icmp ult i64 %i.w, %13
+  br i1 %.not39.us, label %.preheader.us, label %.critedge, !llvm.loop !640
 
 .preheader.us:                                    ; preds = %.preheader.us.preheader, %bb.d
   %.02399.us = phi i64 [ %i.w, %bb.d ], [ 0, %.preheader.us.preheader ] ; 5 uses

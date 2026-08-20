@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %.val174 = phi i32 [ %i.q, %bb.c ], [ %i.aa, %bb.d ] ; 2 uses
   %i.ah = phi ptr [ %.014.i, %bb.c ], [ %.014.i.i, %bb.d ] ; 5 uses
   %i.ai = phi i32 [ %i.v, %bb.c ], [ %i.ae, %bb.d ] ; 4 uses
-  %.0147 = phi i32 [ %i.q, %bb.c ], [ undef, %bb.d ] ; 4 uses
+  %.0147 = phi i32 [ %i.q, %bb.c ], [ undef, %bb.d ] ; 3 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %i.e, i64 44
   %i.ak = load i32, ptr %i.aj, align 4, !tbaa !63
   %i.al = getelementptr inbounds nuw i8, ptr %i.e, i64 8 ; 11 uses
@@ -607,20 +607,19 @@ bb.bq:                                            ; preds = %._crit_edge253
   %i.akk = tail call i32 @llvm.umin.i32(i32 %i.ajy, i32 %i.akj)
   store i32 %i.akk, ptr %i.al, align 8, !tbaa !62
   %i.akl = sdiv i32 %.0147, 16
-  %i.akm = add nsw i32 %i.akl, -1                 ; 3 uses
+  %i.akm = add nsw i32 %i.akl, -1                 ; 4 uses
   %i.akn = icmp sgt i32 %.0147, 31
   %i.ako = getelementptr inbounds nuw i8, ptr %3, i64 24
   %i.akp = load ptr, ptr %i.ako, align 8, !tbaa !58 ; 3 uses
   br i1 %i.akn, label %.lr.ph257, label %._crit_edge258
 
 .lr.ph257:                                        ; preds = %bb.bq
-  %smax = tail call i32 @llvm.smax.i32(i32 %i.akm, i32 1)
-  %wide.trip.count293 = zext nneg i32 %smax to i64 ; 3 uses
-  %min.iters.check380 = icmp slt i32 %.0147, 144
+  %wide.trip.count293 = zext i32 %i.akm to i64    ; 3 uses
+  %min.iters.check380 = icmp ult i32 %i.akm, 8
   br i1 %min.iters.check380, label %scalar.ph379.preheader, label %vector.ph381
 
 vector.ph381:                                     ; preds = %.lr.ph257
-  %n.vec382 = and i64 %wide.trip.count293, 2147483640 ; 3 uses
+  %n.vec382 = and i64 %wide.trip.count293, 4294967288 ; 3 uses
   br label %vector.body383
 
 vector.body383:                                   ; preds = %vector.body383, %vector.ph381

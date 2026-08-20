@@ -143,8 +143,6 @@ bb.a:
   %.lhs.trunc23.i = add nsw i16 %i.j, -4
   %.rhs.trunc.i = zext i8 %i.i to i16
   %i.k = sdiv i16 %.lhs.trunc23.i, %.rhs.trunc.i
-  %6 = trunc i16 %i.k to i8
-  %7 = sub i8 4, %6                               ; 3 uses
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 20 ; 4 uses
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 80 ; 4 uses
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %5, i64 8
@@ -153,22 +151,22 @@ bb.a:
   %.sroa.7.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %5, i64 17
   %.sroa.8.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %5, i64 18
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 1104 ; 2 uses
-  %umax.i = tail call i8 @llvm.umax.i8(i8 %7, i8 4)
-  %wide.trip.count.i = zext i8 %umax.i to i32
-  %exitcond.not.i75 = icmp ugt i8 %7, 3
-  br i1 %exitcond.not.i75, label %._crit_edge, label %.lr.ph
+  %6 = sub nsw i16 4, %i.k
+  %7 = and i16 %6, 255                            ; 2 uses
+  %8 = icmp samesign ult i16 %7, 4
+  br i1 %8, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.a
-  %i.o = zext nneg i8 %7 to i32
+  %i.o = zext nneg i16 %7 to i32
   br label %bb.c
 
 bb.b:                                             ; preds = %bb.c
-  %indvars.iv.next.i = add nuw nsw i32 %indvars.iv.i76, 1 ; 2 uses
-  %exitcond.not.i = icmp eq i32 %indvars.iv.next.i, %wide.trip.count.i
-  br i1 %exitcond.not.i, label %._crit_edge, label %bb.c
+  %indvars.iv.next.i = add nuw nsw i32 %indvars.iv.i76, 1
+  %9 = icmp samesign ult i32 %indvars.iv.i76, 3
+  br i1 %9, label %bb.c, label %._crit_edge
 
 bb.c:                                             ; preds = %.lr.ph, %bb.b
-  %indvars.iv.i76 = phi i32 [ %i.o, %.lr.ph ], [ %indvars.iv.next.i, %bb.b ] ; 3 uses
+  %indvars.iv.i76 = phi i32 [ %i.o, %.lr.ph ], [ %indvars.iv.next.i, %bb.b ] ; 4 uses
   %i.p = load i8, ptr %i.a, align 1
   %i.q = zext i8 %i.p to i32                      ; 2 uses
   %i.r = sub nuw nsw i32 3, %indvars.iv.i76
@@ -186,7 +184,7 @@ bb.c:                                             ; preds = %.lr.ph, %bb.b
   store i32 %i.w, ptr %.sroa.4.0..sroa_idx.i, align 8
   store i32 %i.x, ptr %.sroa.5.0..sroa_idx.i, align 4
   store i8 %i.e, ptr %.sroa.6.0..sroa_idx.i, align 8
-  %i.z = trunc nuw i32 %indvars.iv.i76 to i8
+  %i.z = trunc nuw nsw i32 %indvars.iv.i76 to i8
   store i8 %i.z, ptr %.sroa.7.0..sroa_idx.i, align 1
   %i.aa = load ptr, ptr %i.n, align 16
   %i.ab = call ptr @g_hash_table_lookup(ptr noundef %i.aa, ptr noundef nonnull %5) #10 ; 2 uses
@@ -219,29 +217,27 @@ bb.e:                                             ; preds = %bb.d
   %.lhs.trunc23.i37 = add nsw i16 %i.an, -4
   %.rhs.trunc.i38 = zext i8 %i.am to i16
   %i.ao = sdiv i16 %.lhs.trunc23.i37, %.rhs.trunc.i38
-  %8 = trunc i16 %i.ao to i8
-  %9 = sub i8 4, %8                               ; 3 uses
   %.sroa.4.0..sroa_idx.i39 = getelementptr inbounds nuw i8, ptr %4, i64 8
   %.sroa.5.0..sroa_idx.i40 = getelementptr inbounds nuw i8, ptr %4, i64 12
   %.sroa.6.0..sroa_idx.i41 = getelementptr inbounds nuw i8, ptr %4, i64 16
   %.sroa.7.0..sroa_idx.i42 = getelementptr inbounds nuw i8, ptr %4, i64 17
   %.sroa.8.0..sroa_idx.i43 = getelementptr inbounds nuw i8, ptr %4, i64 18
-  %umax.i44 = call i8 @llvm.umax.i8(i8 %9, i8 4)
-  %wide.trip.count.i45 = zext i8 %umax.i44 to i32
-  %exitcond.not.i4777 = icmp ugt i8 %9, 3
-  br i1 %exitcond.not.i4777, label %.loopexit, label %.lr.ph80
+  %10 = sub nsw i16 4, %i.ao
+  %11 = and i16 %10, 255                          ; 2 uses
+  %12 = icmp samesign ult i16 %11, 4
+  br i1 %12, label %.lr.ph80, label %.loopexit
 
 .lr.ph80:                                         ; preds = %bb.e
-  %i.ap = zext nneg i8 %9 to i32
+  %i.ap = zext nneg i16 %11 to i32
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.g
-  %indvars.iv.next.i50 = add nuw nsw i32 %indvars.iv.i4678, 1 ; 2 uses
-  %exitcond.not.i47 = icmp eq i32 %indvars.iv.next.i50, %wide.trip.count.i45
-  br i1 %exitcond.not.i47, label %.loopexit, label %bb.g
+  %indvars.iv.next.i50 = add nuw nsw i32 %indvars.iv.i4678, 1
+  %13 = icmp samesign ult i32 %indvars.iv.i4678, 3
+  br i1 %13, label %bb.g, label %.loopexit
 
 bb.g:                                             ; preds = %.lr.ph80, %bb.f
-  %indvars.iv.i4678 = phi i32 [ %i.ap, %.lr.ph80 ], [ %indvars.iv.next.i50, %bb.f ] ; 3 uses
+  %indvars.iv.i4678 = phi i32 [ %i.ap, %.lr.ph80 ], [ %indvars.iv.next.i50, %bb.f ] ; 4 uses
   %i.aq = load i8, ptr %i.a, align 1
   %i.ar = zext i8 %i.aq to i32                    ; 2 uses
   %i.as = sub nuw nsw i32 3, %indvars.iv.i4678
@@ -259,7 +255,7 @@ bb.g:                                             ; preds = %.lr.ph80, %bb.f
   store i32 %i.ax, ptr %.sroa.4.0..sroa_idx.i39, align 8
   store i32 %i.ay, ptr %.sroa.5.0..sroa_idx.i40, align 4
   store i8 %i.aj, ptr %.sroa.6.0..sroa_idx.i41, align 8
-  %i.ba = trunc nuw i32 %indvars.iv.i4678 to i8
+  %i.ba = trunc nuw nsw i32 %indvars.iv.i4678 to i8
   store i8 %i.ba, ptr %.sroa.7.0..sroa_idx.i42, align 1
   %i.bb = load ptr, ptr %i.n, align 16
   %i.bc = call ptr @g_hash_table_lookup(ptr noundef %i.bb, ptr noundef nonnull %4) #10 ; 2 uses
@@ -661,9 +657,6 @@ bb.d:                                             ; preds = %bb.c, %smmu_get_sbu
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.fshl.i32(i32, i32, i32) #9
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i8 @llvm.umax.i8(i8, i8) #9
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "zero-call-used-regs"="used-gpr" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
