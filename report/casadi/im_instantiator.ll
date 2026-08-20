@@ -204,7 +204,7 @@ bb.q:                                             ; preds = %bb.i
 _ZNSt6vectorIxSaIxEEC2IPKxvEET_S5_RKS0_.exit:     ; preds = %bb.m, %bb.l, %.thread.i.i
   %.sroa.12.0 = phi ptr [ %i.ap, %.thread.i.i ], [ %i.ar, %bb.l ], [ %i.ar, %bb.m ] ; 2 uses
   %.sroa.0183.0 = phi ptr [ null, %.thread.i.i ], [ %i.aq, %bb.l ], [ %i.aq, %bb.m ] ; 9 uses
-  %i.az = icmp slt i64 %i.q, 2                    ; 2 uses
+  %i.az = icmp slt i64 %i.q, 2
   %i.ba = icmp sgt i64 %i.q, 0
   br i1 %i.ba, label %.lr.ph214, label %._crit_edge215
 
@@ -598,12 +598,9 @@ bb.al:                                            ; preds = %._crit_edge
 
 bb.am:                                            ; preds = %bb.al
   %i.fh = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull @.str.279, i64 noundef 3)
-          to label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit126 unwind label %.loopexit197 ; 0 uses
+          to label %bb.an unwind label %.loopexit197 ; 0 uses
 
-_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit126: ; preds = %bb.am
-  br i1 %i.az, label %_ZNSolsEPFRSoS_E.exit128, label %bb.an
-
-bb.an:                                            ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit126
+bb.an:                                            ; preds = %bb.am
   %i.fi = load ptr, ptr %0, align 8, !tbaa !59
   %i.fj = getelementptr i8, ptr %i.fi, i64 -24
   %i.fk = load i64, ptr %i.fj, align 8
@@ -678,7 +675,7 @@ bb.as:                                            ; preds = %._crit_edge
   %i.gj = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull @.str.281, i64 noundef 2)
           to label %_ZNSolsEPFRSoS_E.exit128 unwind label %.loopexit197 ; 0 uses
 
-_ZNSolsEPFRSoS_E.exit128:                         ; preds = %.noexc168.invoke, %bb.as, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit126, %bb.ap
+_ZNSolsEPFRSoS_E.exit128:                         ; preds = %.noexc168.invoke, %bb.as, %bb.ap
   %i.gk = add nuw nsw i64 %.076213, 1             ; 2 uses
   %exitcond236.not = icmp eq i64 %i.gk, %i.q
   br i1 %exitcond236.not, label %._crit_edge215, label %bb.r, !llvm.loop !1506

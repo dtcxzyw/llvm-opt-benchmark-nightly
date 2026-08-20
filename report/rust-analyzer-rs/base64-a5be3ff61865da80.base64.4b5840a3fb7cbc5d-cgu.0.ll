@@ -203,7 +203,7 @@ bb.c:                                             ; preds = %bb.f, %bb.d, %bb.a
   %i.i = tail call i64 @llvm.usub.sat.i64(i64 range(i64 0, -9223372036854775808) %3, i64 %6) ; 2 uses
   %i.j = icmp eq i64 %6, 0
   %i.k = tail call i64 @llvm.usub.sat.i64(i64 %i.i, i64 4)
-  %i.l = select i1 %i.j, i64 %i.k, i64 %i.i       ; 20 uses
+  %i.l = select i1 %i.j, i64 %i.k, i64 %i.i       ; 19 uses
   %i.m = lshr i64 %i.l, 2                         ; 2 uses
   %i.n = mul nuw nsw i64 %i.m, 3                  ; 10 uses
   %i.o = icmp samesign ult i64 %5, %i.n
@@ -332,7 +332,7 @@ _RNvXs_NtNtNtCshzWfHUSfYae_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtB
 
 _RNvXs_NtNtNtCshzWfHUSfYae_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs6t3BXPRE3GP_6base64.exit.thread.thread.i.i: ; preds = %bb.ak, %bb.ah, %bb.ae, %bb.ai, %.outer.3.i.i, %bb.af, %.outer.2.i.i, %bb.ac, %.outer.1.i.i, %_RNvXs_NtNtNtCshzWfHUSfYae_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs6t3BXPRE3GP_6base64.exit.thread.i.i
   %.sroa.011.0.lcssa294.i.i = phi i64 [ 0, %_RNvXs_NtNtNtCshzWfHUSfYae_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs6t3BXPRE3GP_6base64.exit.thread.i.i ], [ 0, %.outer.1.i.i ], [ 0, %.outer.2.i.i ], [ 0, %.outer.3.i.i ], [ %i.dx, %bb.af ], [ %i.eo, %bb.ai ], [ %i.dx, %bb.ah ], [ %i.di, %bb.ae ], [ %i.di, %bb.ac ], [ %i.eo, %bb.ak ] ; 3 uses
-  %.sroa.017.0.lcssa293.i.i = phi i64 [ 0, %_RNvXs_NtNtNtCshzWfHUSfYae_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs6t3BXPRE3GP_6base64.exit.thread.i.i ], [ 0, %.outer.1.i.i ], [ 0, %.outer.2.i.i ], [ 0, %.outer.3.i.i ], [ 3, %bb.af ], [ 4, %bb.ai ], [ 3, %bb.ah ], [ 2, %bb.ae ], [ 2, %bb.ac ], [ %spec.select.4.i.i, %bb.ak ]
+  %.sroa.017.0.lcssa293.i.i = phi i64 [ 0, %_RNvXs_NtNtNtCshzWfHUSfYae_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs6t3BXPRE3GP_6base64.exit.thread.i.i ], [ 0, %.outer.1.i.i ], [ 0, %.outer.2.i.i ], [ 0, %.outer.3.i.i ], [ 3, %bb.af ], [ 4, %bb.ai ], [ 3, %bb.ah ], [ 2, %bb.ae ], [ 2, %bb.ac ], [ 4, %bb.ak ]
   %.sroa.04.0.ph.lcssa143292.i.i = phi i64 [ 0, %_RNvXs_NtNtNtCshzWfHUSfYae_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs6t3BXPRE3GP_6base64.exit.thread.i.i ], [ 2, %.outer.1.i.i ], [ 3, %.outer.2.i.i ], [ 4, %.outer.3.i.i ], [ 3, %bb.af ], [ 4, %bb.ai ], [ 3, %bb.ah ], [ 2, %bb.ae ], [ 2, %bb.ac ], [ 4, %bb.ak ] ; 3 uses
   %.sroa.019.0.ph.lcssa147291.i.i = phi i8 [ 0, %_RNvXs_NtNtNtCshzWfHUSfYae_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs6t3BXPRE3GP_6base64.exit.thread.i.i ], [ %i.da, %.outer.1.i.i ], [ %i.dk, %.outer.2.i.i ], [ %i.dz, %.outer.3.i.i ], [ %i.dk, %bb.af ], [ %i.dz, %bb.ai ], [ %i.dk, %bb.ah ], [ %i.da, %bb.ae ], [ %i.da, %bb.ac ], [ %i.dz, %bb.ak ]
   %.sroa.0.0290.i.i = phi i8 [ 0, %_RNvXs_NtNtNtCshzWfHUSfYae_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs6t3BXPRE3GP_6base64.exit.thread.i.i ], [ %i.ct, %.outer.1.i.i ], [ %i.ct, %.outer.2.i.i ], [ %i.ct, %.outer.3.i.i ], [ %i.ct, %bb.af ], [ %i.ct, %bb.ai ], [ %i.ct, %bb.ah ], [ %i.ct, %bb.ae ], [ %i.ct, %bb.ac ], [ %i.ct, %bb.ak ]
@@ -431,7 +431,7 @@ bb.u:                                             ; preds = %bb.v, %bb.t
 ._crit_edge.i.i:                                  ; preds = %bb.w, %bb.x, %bb.y, %bb.s
   %.sroa.0.0.lcssa.i.i = phi i64 [ %i.n, %bb.s ], [ %i.cf, %bb.w ], [ %i.cj, %bb.x ], [ %i.cn, %bb.y ]
   %.not114.i.i = icmp ne i64 %.sroa.011.0.lcssa294.i.i, 0 ; 2 uses
-  %i.ca = add i64 %.sroa.017.0.lcssa293.i.i, %i.l
+  %i.ca = add nuw i64 %.sroa.017.0.lcssa293.i.i, %i.l
   %.sroa.093.0.i.i = zext i1 %.not114.i.i to i64
   %.sroa.594.0.i.i = select i1 %.not114.i.i, i64 %i.ca, i64 undef
   store i64 %.sroa.093.0.i.i, ptr %0, align 8, !alias.scope !100, !noalias !101
@@ -481,7 +481,7 @@ bb.y:                                             ; preds = %.lr.ph.i.i.2
   br label %._crit_edge.i.i
 
 .loopexit211.i.i:                                 ; preds = %bb.aj, %bb.ag, %bb.ad, %_RNvXs_NtNtNtCshzWfHUSfYae_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs6t3BXPRE3GP_6base64.exit.lr.ph.1.i.i, %_RNvXs_NtNtNtCshzWfHUSfYae_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs6t3BXPRE3GP_6base64.exit.lr.ph.preheader.i.i
-  %.sroa.8.0148.lcssa185.i.i = phi i64 [ 1, %_RNvXs_NtNtNtCshzWfHUSfYae_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs6t3BXPRE3GP_6base64.exit.lr.ph.1.i.i ], [ 0, %_RNvXs_NtNtNtCshzWfHUSfYae_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs6t3BXPRE3GP_6base64.exit.lr.ph.preheader.i.i ], [ 0, %bb.ad ], [ 0, %bb.ag ], [ 0, %bb.aj ]
+  %.sroa.8.0148.lcssa185.i.i = phi i64 [ 1, %_RNvXs_NtNtNtCshzWfHUSfYae_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs6t3BXPRE3GP_6base64.exit.lr.ph.1.i.i ], [ 0, %_RNvXs_NtNtNtCshzWfHUSfYae_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs6t3BXPRE3GP_6base64.exit.lr.ph.preheader.i.i ], [ 0, %bb.ag ], [ 0, %bb.ad ], [ 0, %bb.aj ]
   %i.co = add nuw i64 %.sroa.8.0148.lcssa185.i.i, %i.l
   %i.cp = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i8 0, ptr %i.cp, align 8, !alias.scope !100, !noalias !101
@@ -492,8 +492,8 @@ bb.y:                                             ; preds = %.lr.ph.i.i.2
   store i64 2, ptr %0, align 8, !alias.scope !100, !noalias !101
   br label %_RNvNtNtNtCs6t3BXPRE3GP_6base646engine15general_purpose6decode13decode_helper.exit
 
-.loopexit1940.i:                                  ; preds = %_RNvXs_NtNtNtCshzWfHUSfYae_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs6t3BXPRE3GP_6base64.exit.3.i.i, %_RNvXs_NtNtNtCshzWfHUSfYae_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs6t3BXPRE3GP_6base64.exit.2.i.i, %..loopexit1940.i_crit_edge
-  %.pre-phi = phi i64 [ %.pre, %..loopexit1940.i_crit_edge ], [ %i.dg, %_RNvXs_NtNtNtCshzWfHUSfYae_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs6t3BXPRE3GP_6base64.exit.2.i.i ], [ %i.du, %_RNvXs_NtNtNtCshzWfHUSfYae_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs6t3BXPRE3GP_6base64.exit.3.i.i ]
+.loopexit1940.i:                                  ; preds = %_RNvXs_NtNtNtCshzWfHUSfYae_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs6t3BXPRE3GP_6base64.exit.4.i.i, %_RNvXs_NtNtNtCshzWfHUSfYae_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs6t3BXPRE3GP_6base64.exit.3.i.i, %_RNvXs_NtNtNtCshzWfHUSfYae_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs6t3BXPRE3GP_6base64.exit.2.i.i
+  %.pre-phi = phi i64 [ %i.du, %_RNvXs_NtNtNtCshzWfHUSfYae_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs6t3BXPRE3GP_6base64.exit.3.i.i ], [ %i.dg, %_RNvXs_NtNtNtCshzWfHUSfYae_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs6t3BXPRE3GP_6base64.exit.2.i.i ], [ %i.ek, %_RNvXs_NtNtNtCshzWfHUSfYae_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs6t3BXPRE3GP_6base64.exit.4.i.i ]
   %i.cq = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i8 0, ptr %i.cq, align 8, !alias.scope !100, !noalias !101
   %.sroa.434.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %0, i64 9
@@ -510,10 +510,10 @@ bb.z:                                             ; preds = %_RNvXs_NtNtNtCshzWf
   %i.cu = icmp eq i8 %i.ct, -1
   br i1 %i.cu, label %bb.aa, label %.outer.i.i
 
-bb.aa:                                            ; preds = %.thread318.i.i, %.thread306.i.i, %.thread.i.i, %bb.ab, %bb.z
-  %.sroa.8.0148.lcssa.lcssa187.i.i = phi i64 [ 0, %bb.z ], [ 1, %bb.ab ], [ 2, %.thread.i.i ], [ 3, %.thread306.i.i ], [ %.sroa.8.0148.lcssa.4323.i.i, %.thread318.i.i ]
-  %.lcssa173.lcssa176.i.i = phi i8 [ %i.av, %bb.z ], [ %i.da, %bb.ab ], [ %i.dk, %.thread.i.i ], [ %i.dz, %.thread306.i.i ], [ %.lcssa173.4324.i.i, %.thread318.i.i ]
-  %i.cv = add i64 %.sroa.8.0148.lcssa.lcssa187.i.i, %i.l
+bb.aa:                                            ; preds = %bb.z, %.thread318.i.i, %.thread306.i.i, %.thread.i.i, %bb.ab
+  %.sroa.8.0148.lcssa.lcssa187.i.i = phi i64 [ 4, %.thread318.i.i ], [ 1, %bb.ab ], [ 2, %.thread.i.i ], [ 3, %.thread306.i.i ], [ 0, %bb.z ]
+  %.lcssa173.lcssa176.i.i = phi i8 [ %i.ep, %.thread318.i.i ], [ %i.da, %bb.ab ], [ %i.dk, %.thread.i.i ], [ %i.dz, %.thread306.i.i ], [ %i.av, %bb.z ]
+  %i.cv = add nuw i64 %.sroa.8.0148.lcssa.lcssa187.i.i, %i.l
   %i.cw = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i8 0, ptr %i.cw, align 8, !alias.scope !100, !noalias !101
   %.sroa.442.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %0, i64 9
@@ -560,9 +560,10 @@ bb.ac:                                            ; preds = %_RNvXs_NtNtNtCshzWf
   br i1 %i.dn, label %_RNvXs_NtNtNtCshzWfHUSfYae_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs6t3BXPRE3GP_6base64.exit.thread.thread.i.i, label %_RNvXs_NtNtNtCshzWfHUSfYae_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs6t3BXPRE3GP_6base64.exit.2.i.i
 
 _RNvXs_NtNtNtCshzWfHUSfYae_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs6t3BXPRE3GP_6base64.exit.2.i.i: ; preds = %bb.ac, %bb.ae
-  %.sroa.011.0151.2.i.i = phi i64 [ %9, %bb.ae ], [ 1, %bb.ac ] ; 2 uses
   %.sroa.0.0116149.2.i.i = phi ptr [ %8, %bb.ae ], [ %i.dj, %bb.ac ] ; 2 uses
+  %.sroa.011.0151.2.i.i = phi i64 [ %9, %bb.ae ], [ 3, %bb.ac ] ; 2 uses
   %8 = getelementptr inbounds nuw i8, ptr %.sroa.0.0116149.2.i.i, i64 1 ; 2 uses
+  %9 = add i64 %.sroa.011.0151.2.i.i, 1
   %i.do = load i8, ptr %.sroa.0.0116149.2.i.i, align 1, !alias.scope !98, !noalias !99, !noundef !8
   %i.dp = icmp eq i8 %i.do, 61
   br i1 %i.dp, label %bb.ad, label %.loopexit1940.i
@@ -580,11 +581,10 @@ _RNvXs_NtNtNtCshzWfHUSfYae_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtB
   br i1 %i.dv, label %_RNvXs_NtNtNtCshzWfHUSfYae_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs6t3BXPRE3GP_6base64.exit.thread.thread.i.i, label %_RNvXs_NtNtNtCshzWfHUSfYae_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs6t3BXPRE3GP_6base64.exit.lr.ph.3.i.i
 
 bb.ad:                                            ; preds = %_RNvXs_NtNtNtCshzWfHUSfYae_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs6t3BXPRE3GP_6base64.exit.2.i.i
-  %exitcond1871.i = icmp eq i64 %.sroa.011.0151.2.i.i, -2
+  %exitcond1871.i = icmp eq i64 %.sroa.011.0151.2.i.i, 0
   br i1 %exitcond1871.i, label %.loopexit211.i.i, label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad
-  %9 = add nuw i64 %.sroa.011.0151.2.i.i, 1
   %i.dw = icmp eq ptr %8, %i.ap
   br i1 %i.dw, label %_RNvXs_NtNtNtCshzWfHUSfYae_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs6t3BXPRE3GP_6base64.exit.thread.thread.i.i, label %_RNvXs_NtNtNtCshzWfHUSfYae_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs6t3BXPRE3GP_6base64.exit.2.i.i, !llvm.loop !106
 
@@ -617,7 +617,7 @@ _RNvXs_NtNtNtCshzWfHUSfYae_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtB
   br i1 %i.ej, label %bb.aa, label %.outer.3.i.i
 
 .outer.3.i.i:                                     ; preds = %.thread306.i.i
-  %i.ek = add nuw nsw i64 %i.l, 4
+  %i.ek = add nuw i64 %i.l, 4                     ; 2 uses
   %i.el = icmp samesign eq i64 %i.ek, %3
   br i1 %i.el, label %_RNvXs_NtNtNtCshzWfHUSfYae_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs6t3BXPRE3GP_6base64.exit.thread.thread.i.i, label %_RNvXs_NtNtNtCshzWfHUSfYae_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs6t3BXPRE3GP_6base64.exit.lr.ph.4.i.i
 
@@ -633,7 +633,7 @@ bb.ah:                                            ; preds = %bb.ag
 _RNvXs_NtNtNtCshzWfHUSfYae_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs6t3BXPRE3GP_6base64.exit.lr.ph.4.i.i: ; preds = %.outer.3.i.i
   %.sroa.0.0116.ph160209.4.i.i = ptrtoaddr ptr %i.dy to i64
   %i.eo = sub i64 %i.at, %.sroa.0.0116.ph160209.4.i.i ; 2 uses
-  %i.ep = load i8, ptr %i.dy, align 1, !alias.scope !98, !noalias !99, !noundef !8 ; 2 uses
+  %i.ep = load i8, ptr %i.dy, align 1, !alias.scope !98, !noalias !99, !noundef !8 ; 3 uses
   %i.eq = icmp eq i8 %i.ep, 61
   br i1 %i.eq, label %bb.ai, label %.thread318.i.i
 
@@ -647,41 +647,26 @@ _RNvXs_NtNtNtCshzWfHUSfYae_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtB
   br label %_RNvXs_NtNtNtCshzWfHUSfYae_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs6t3BXPRE3GP_6base64.exit.4.i.i
 
 _RNvXs_NtNtNtCshzWfHUSfYae_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs6t3BXPRE3GP_6base64.exit.4.i.i: ; preds = %_RNvXs_NtNtNtCshzWfHUSfYae_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs6t3BXPRE3GP_6base64.exit.4.i.i.preheader, %bb.ak
-  %.sroa.011.0151.4.i.i = phi i64 [ %14, %bb.ak ], [ 1, %_RNvXs_NtNtNtCshzWfHUSfYae_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs6t3BXPRE3GP_6base64.exit.4.i.i.preheader ] ; 3 uses
-  %.sroa.017.0150.4.i.i = phi i64 [ %spec.select.4.i.i, %bb.ak ], [ 4, %_RNvXs_NtNtNtCshzWfHUSfYae_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs6t3BXPRE3GP_6base64.exit.4.i.i.preheader ] ; 2 uses
   %.sroa.0.0116149.4.i.i = phi ptr [ %i.eu, %bb.ak ], [ %i.et, %_RNvXs_NtNtNtCshzWfHUSfYae_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs6t3BXPRE3GP_6base64.exit.4.i.i.preheader ] ; 2 uses
-  %.sroa.8.0148.4.in.i.i = phi i64 [ %.sroa.8.0148.4.i.i, %bb.ak ], [ 4, %_RNvXs_NtNtNtCshzWfHUSfYae_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs6t3BXPRE3GP_6base64.exit.4.i.i.preheader ]
-  %.sroa.8.0148.4.i.i = add i64 %.sroa.8.0148.4.in.i.i, 1 ; 4 uses
+  %.sroa.8.0148.4.in.i.i = phi i64 [ %.sroa.8.0148.4.i.i, %bb.ak ], [ 4, %_RNvXs_NtNtNtCshzWfHUSfYae_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs6t3BXPRE3GP_6base64.exit.4.i.i.preheader ] ; 2 uses
+  %.sroa.8.0148.4.i.i = add i64 %.sroa.8.0148.4.in.i.i, 1
   %i.eu = getelementptr inbounds nuw i8, ptr %.sroa.0.0116149.4.i.i, i64 1 ; 2 uses
-  %i.ev = load i8, ptr %.sroa.0.0116149.4.i.i, align 1, !alias.scope !98, !noalias !99, !noundef !8 ; 2 uses
+  %i.ev = load i8, ptr %.sroa.0.0116149.4.i.i, align 1, !alias.scope !98, !noalias !99, !noundef !8
   %i.ew = icmp eq i8 %i.ev, 61
-  br i1 %i.ew, label %bb.aj, label %10
+  br i1 %i.ew, label %bb.aj, label %.loopexit1940.i
 
-10:                                               ; preds = %_RNvXs_NtNtNtCshzWfHUSfYae_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs6t3BXPRE3GP_6base64.exit.4.i.i
-  %11 = icmp eq i64 %.sroa.011.0151.4.i.i, 0
-  br i1 %11, label %.thread318.i.i, label %..loopexit1940.i_crit_edge
-
-..loopexit1940.i_crit_edge:                       ; preds = %10
-  %.pre = add i64 %.sroa.017.0150.4.i.i, %i.l
-  br label %.loopexit1940.i
-
-.thread318.i.i:                                   ; preds = %10, %_RNvXs_NtNtNtCshzWfHUSfYae_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs6t3BXPRE3GP_6base64.exit.lr.ph.4.i.i
-  %.lcssa173.4324.i.i = phi i8 [ %i.ev, %10 ], [ %i.ep, %_RNvXs_NtNtNtCshzWfHUSfYae_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs6t3BXPRE3GP_6base64.exit.lr.ph.4.i.i ] ; 2 uses
-  %.sroa.8.0148.lcssa.4323.i.i = phi i64 [ %.sroa.8.0148.4.i.i, %10 ], [ 4, %_RNvXs_NtNtNtCshzWfHUSfYae_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs6t3BXPRE3GP_6base64.exit.lr.ph.4.i.i ]
-  %i.ex = zext i8 %.lcssa173.4324.i.i to i64
+.thread318.i.i:                                   ; preds = %_RNvXs_NtNtNtCshzWfHUSfYae_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs6t3BXPRE3GP_6base64.exit.lr.ph.4.i.i
+  %i.ex = zext i8 %i.ep to i64
   %i.ey = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.ex
   %i.ez = load i8, ptr %i.ey, align 1, !alias.scope !104, !noalias !105, !noundef !8
   %i.fa = icmp eq i8 %i.ez, -1
   br i1 %i.fa, label %bb.aa, label %bb.al
 
 bb.aj:                                            ; preds = %_RNvXs_NtNtNtCshzWfHUSfYae_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs6t3BXPRE3GP_6base64.exit.4.i.i
-  %12 = icmp ult i64 %.sroa.8.0148.4.i.i, 2
-  br i1 %12, label %.loopexit211.i.i, label %bb.ak
+  %exitcond = icmp eq i64 %.sroa.8.0148.4.in.i.i, -1
+  br i1 %exitcond, label %.loopexit211.i.i, label %bb.ak
 
 bb.ak:                                            ; preds = %bb.aj
-  %13 = icmp eq i64 %.sroa.011.0151.4.i.i, 0
-  %spec.select.4.i.i = select i1 %13, i64 %.sroa.8.0148.4.i.i, i64 %.sroa.017.0150.4.i.i ; 2 uses
-  %14 = add i64 %.sroa.011.0151.4.i.i, 1
   %i.fb = icmp eq ptr %i.eu, %i.ap
   br i1 %i.fb, label %_RNvXs_NtNtNtCshzWfHUSfYae_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs6t3BXPRE3GP_6base64.exit.thread.thread.i.i, label %_RNvXs_NtNtNtCshzWfHUSfYae_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs6t3BXPRE3GP_6base64.exit.4.i.i, !llvm.loop !106
 

@@ -203,7 +203,6 @@ $_ZTSN9grpc_core8channelz22DataSinkImplementation4DataE = comdat any
 @.str = private unnamed_addr constant [64 x i8] c"/opt-bench/work/grpc/grpc/src/core/lib/channel/channel_stack.cc\00", align 1
 @.str.1 = private unnamed_addr constant [21 x i8] c"CHANNEL_STACK: init \00", align 1
 @.str.2 = private unnamed_addr constant [25 x i8] c"CHANNEL_STACK:   filter \00", align 1
-@.str.3 = private unnamed_addr constant [25 x i8] c"user_data > (char*)stack\00", align 1
 @.str.4 = private unnamed_addr constant [74 x i8] c"(uintptr_t)(user_data - (char*)stack) == grpc_channel_stack_size(filters)\00", align 1
 @.str.5 = private unnamed_addr constant [14 x i8] c"channel_stack\00", align 1
 @.str.6 = private unnamed_addr constant [5 x i8] c"type\00", align 1
@@ -367,8 +366,7 @@ bb.a:
   %11 = alloca %struct.grpc_channel_element_args, align 8 ; 10 uses
   %12 = alloca %"class.absl::lts_20250512::Status", align 8 ; 6 uses
   %13 = alloca %"class.absl::lts_20250512::log_internal::LogMessageFatal", align 8 ; 6 uses
-  %14 = alloca %"class.absl::lts_20250512::log_internal::LogMessageFatal", align 8 ; 6 uses
-  %15 = alloca %"class.grpc_core::RefCountedPtr.13", align 8 ; 6 uses
+  %14 = alloca %"class.grpc_core::RefCountedPtr.13", align 8 ; 6 uses
   store ptr %6, ptr %i.a, align 8, !tbaa !40
   %i.b = load atomic i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN9grpc_core19channel_stack_traceE, i64 8) monotonic, align 8, !range !41, !noundef !42
   %i.c = trunc nuw i8 %i.b to i1
@@ -516,7 +514,7 @@ bb.k:                                             ; preds = %_ZNSt12__shared_ptr
   %i.bd = and i64 %i.bc, 4294967280
   %i.be = getelementptr inbounds nuw i8, ptr %i.ax, i64 %i.bd ; 2 uses
   %.not110 = icmp eq ptr %i.ay, %i.az
-  br i1 %.not110, label %._crit_edge, label %.lr.ph108
+  br i1 %.not110, label %.critedge, label %.lr.ph108
 
 .lr.ph108:                                        ; preds = %bb.k
   %i.bf = getelementptr inbounds nuw i8, ptr %11, i64 16
@@ -655,10 +653,10 @@ _ZN4absl12lts_202505126StatusD2Ev.exit:           ; preds = %._ZN4absl12lts_2025
   %i.do = load ptr, ptr %i.ad, align 8, !tbaa !8  ; 2 uses
   %i.dp = ptrtoint ptr %i.do to i64
   %i.dq = ptrtoint ptr %i.dm to i64
-  %i.dr = sub i64 %i.dp, %i.dq
+  %i.dr = sub i64 %i.dp, %i.dq                    ; 2 uses
   %i.ds = ashr exact i64 %i.dr, 4
   %i.dt = icmp ult i64 %i.dn, %i.ds
-  br i1 %i.dt, label %bb.l, label %._crit_edge, !llvm.loop !82
+  br i1 %i.dt, label %bb.l, label %bb.x, !llvm.loop !82
 
 bb.w:                                             ; preds = %_ZN9grpc_core13RefCountedPtrIKNS_12FilterConfigEEaSEOS3_.exit
   %i.du = landingpad { ptr, i32 }
@@ -666,53 +664,25 @@ bb.w:                                             ; preds = %_ZN9grpc_core13RefC
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #34
   br label %bb.ar
 
-._crit_edge:                                      ; preds = %_ZN4absl12lts_202505126StatusD2Ev.exit, %bb.k
-  %16 = phi ptr [ %i.az, %bb.k ], [ %i.dm, %_ZN4absl12lts_202505126StatusD2Ev.exit ] ; 3 uses
-  %17 = phi ptr [ %i.ay, %bb.k ], [ %i.do, %_ZN4absl12lts_202505126StatusD2Ev.exit ] ; 3 uses
-  %.058.lcssa = phi i64 [ %i.aw, %bb.k ], [ %i.dh, %_ZN4absl12lts_202505126StatusD2Ev.exit ]
-  %.057.lcssa = phi ptr [ %i.be, %bb.k ], [ %i.dc, %_ZN4absl12lts_202505126StatusD2Ev.exit ] ; 2 uses
-  %.not.not = icmp ugt ptr %.057.lcssa, %7
-  br i1 %.not.not, label %.critedge, label %18, !prof !83
+bb.x:                                             ; preds = %_ZN4absl12lts_202505126StatusD2Ev.exit
+  %.pre117 = and i64 %i.dr, 4294967280
+  %15 = add nuw nsw i64 %.pre117, 144
+  br label %.critedge
 
-18:                                               ; preds = %._crit_edge
-  call void @llvm.lifetime.start.p0(ptr nonnull %13) #34
-  invoke void @_ZN4absl12lts_2025051212log_internal15LogMessageFatalC1EPKciS4_(ptr noundef nonnull align 8 dereferenceable(16) %13, ptr noundef nonnull @.str, i32 noundef 169, ptr noundef nonnull @.str.3) #35
-          to label %19 unwind label %bb.x
-
-19:                                               ; preds = %18
-  invoke void @_ZN4absl12lts_2025051212log_internal10LogMessage5FlushEv(ptr noundef nonnull align 8 dereferenceable(16) %13)
-          to label %_ZNKO4absl12lts_2025051212log_internal7VoidifyaaIRNS1_10LogMessageEEEvOT_.exit80 unwind label %21
-
-_ZNKO4absl12lts_2025051212log_internal7VoidifyaaIRNS1_10LogMessageEEEvOT_.exit80: ; preds = %19
-  call void @_ZN4absl12lts_2025051212log_internal15LogMessageFatalD1Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %13) #37
-  unreachable
-
-bb.x:                                             ; preds = %18
-  %20 = landingpad { ptr, i32 }
-          cleanup
-  call void @llvm.lifetime.end.p0(ptr nonnull %13) #34
-  br label %bb.ar
-
-21:                                               ; preds = %19
-  %22 = landingpad { ptr, i32 }
-          cleanup                                 ; 0 uses
-  call void @_ZN4absl12lts_2025051212log_internal15LogMessageFatalD1Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %13) #37
-  unreachable
-
-.critedge:                                        ; preds = %._crit_edge
-  %23 = ptrtoint ptr %.057.lcssa to i64
-  %24 = ptrtoint ptr %7 to i64
-  %25 = sub i64 %23, %24
-  %26 = ptrtoint ptr %17 to i64
-  %27 = ptrtoint ptr %16 to i64
-  %28 = sub i64 %26, %27
-  %29 = and i64 %28, 4294967280
-  %30 = add nuw nsw i64 %29, 144                  ; 2 uses
+.critedge:                                        ; preds = %bb.x, %bb.k
+  %.pre-phi118 = phi i64 [ %15, %bb.x ], [ 144, %bb.k ] ; 2 uses
+  %16 = phi ptr [ %i.dm, %bb.x ], [ %i.az, %bb.k ] ; 2 uses
+  %17 = phi ptr [ %i.do, %bb.x ], [ %i.ay, %bb.k ] ; 2 uses
+  %.058.lcssa = phi i64 [ %i.dh, %bb.x ], [ %i.aw, %bb.k ]
+  %.057.lcssa = phi ptr [ %i.dc, %bb.x ], [ %i.be, %bb.k ]
+  %18 = ptrtoint ptr %.057.lcssa to i64
+  %19 = ptrtoint ptr %7 to i64
+  %20 = sub i64 %18, %19
   %.not9.i = icmp eq ptr %16, %17
   br i1 %.not9.i, label %_Z23grpc_channel_stack_sizeRKSt6vectorIN9grpc_core15FilterAndConfigESaIS1_EE.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.critedge, %.lr.ph.i
-  %.011.i = phi i64 [ %i.ea, %.lr.ph.i ], [ %30, %.critedge ]
+  %.011.i = phi i64 [ %i.ea, %.lr.ph.i ], [ %.pre-phi118, %.critedge ]
   %.sroa.06.010.i = phi ptr [ %i.eb, %.lr.ph.i ], [ %16, %.critedge ] ; 2 uses
   %i.dv = load ptr, ptr %.sroa.06.010.i, align 8, !tbaa !13
   %i.dw = getelementptr inbounds nuw i8, ptr %i.dv, i64 48
@@ -725,39 +695,39 @@ bb.x:                                             ; preds = %18
   br i1 %.not.i81, label %_Z23grpc_channel_stack_sizeRKSt6vectorIN9grpc_core15FilterAndConfigESaIS1_EE.exit, label %.lr.ph.i
 
 _Z23grpc_channel_stack_sizeRKSt6vectorIN9grpc_core15FilterAndConfigESaIS1_EE.exit: ; preds = %.lr.ph.i, %.critedge
-  %.0.lcssa.i = phi i64 [ %30, %.critedge ], [ %i.ea, %.lr.ph.i ]
-  %.not.not67 = icmp eq i64 %25, %.0.lcssa.i
+  %.0.lcssa.i = phi i64 [ %.pre-phi118, %.critedge ], [ %i.ea, %.lr.ph.i ]
+  %.not.not67 = icmp eq i64 %20, %.0.lcssa.i
   br i1 %.not.not67, label %.critedge76, label %bb.y, !prof !83
 
 bb.y:                                             ; preds = %_Z23grpc_channel_stack_sizeRKSt6vectorIN9grpc_core15FilterAndConfigESaIS1_EE.exit
-  call void @llvm.lifetime.start.p0(ptr nonnull %14) #34
-  invoke void @_ZN4absl12lts_2025051212log_internal15LogMessageFatalC1EPKciS4_(ptr noundef nonnull align 8 dereferenceable(16) %14, ptr noundef nonnull @.str, i32 noundef 171, ptr noundef nonnull @.str.4) #35
+  call void @llvm.lifetime.start.p0(ptr nonnull %13) #34
+  invoke void @_ZN4absl12lts_2025051212log_internal15LogMessageFatalC1EPKciS4_(ptr noundef nonnull align 8 dereferenceable(16) %13, ptr noundef nonnull @.str, i32 noundef 171, ptr noundef nonnull @.str.4) #35
           to label %bb.z unwind label %bb.aa
 
 bb.z:                                             ; preds = %bb.y
-  invoke void @_ZN4absl12lts_2025051212log_internal10LogMessage5FlushEv(ptr noundef nonnull align 8 dereferenceable(16) %14)
+  invoke void @_ZN4absl12lts_2025051212log_internal10LogMessage5FlushEv(ptr noundef nonnull align 8 dereferenceable(16) %13)
           to label %_ZNKO4absl12lts_2025051212log_internal7VoidifyaaIRNS1_10LogMessageEEEvOT_.exit83 unwind label %bb.ab
 
 _ZNKO4absl12lts_2025051212log_internal7VoidifyaaIRNS1_10LogMessageEEEvOT_.exit83: ; preds = %bb.z
-  call void @_ZN4absl12lts_2025051212log_internal15LogMessageFatalD1Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %14) #37
+  call void @_ZN4absl12lts_2025051212log_internal15LogMessageFatalD1Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %13) #37
   unreachable
 
 bb.aa:                                            ; preds = %bb.y
   %i.ec = landingpad { ptr, i32 }
           cleanup
-  call void @llvm.lifetime.end.p0(ptr nonnull %14) #34
+  call void @llvm.lifetime.end.p0(ptr nonnull %13) #34
   br label %bb.ar
 
 bb.ab:                                            ; preds = %bb.z
   %i.ed = landingpad { ptr, i32 }
           cleanup                                 ; 0 uses
-  call void @_ZN4absl12lts_2025051212log_internal15LogMessageFatalD1Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %14) #37
+  call void @_ZN4absl12lts_2025051212log_internal15LogMessageFatalD1Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %13) #37
   unreachable
 
 .critedge76:                                      ; preds = %_Z23grpc_channel_stack_sizeRKSt6vectorIN9grpc_core15FilterAndConfigESaIS1_EE.exit
   %i.ee = getelementptr inbounds nuw i8, ptr %7, i64 48
   store i64 %.058.lcssa, ptr %i.ee, align 8, !tbaa !84
-  call void @llvm.lifetime.start.p0(ptr nonnull %15) #34
+  call void @llvm.lifetime.start.p0(ptr nonnull %14) #34
   %i.ef = invoke noundef ptr @_ZNK9grpc_core11ChannelArgs14GetVoidPointerESt17basic_string_viewIcSt11char_traitsIcEE(ptr noundef nonnull align 8 dereferenceable(8) %5, i64 57, ptr nonnull @.str.20)
           to label %.noexc84 unwind label %bb.ap  ; 3 uses
 
@@ -774,7 +744,7 @@ bb.ad:                                            ; preds = %bb.ac, %.noexc84
   %i.ej = getelementptr inbounds nuw i8, ptr %7, i64 96
   call void @llvm.lifetime.start.p0(ptr nonnull %8)
   store ptr %i.ef, ptr %8, align 8, !tbaa !92
-  store ptr null, ptr %15, align 8, !tbaa !92
+  store ptr null, ptr %14, align 8, !tbaa !92
   invoke void @_ZN18grpc_channel_stack22ChannelStackDataSourceC2EN9grpc_core13RefCountedPtrINS1_8channelz8BaseNodeEEE(ptr noundef nonnull align 8 dereferenceable(16) %i.ej, ptr noundef nonnull align 8 %8)
           to label %_ZN9grpc_core9ConstructIN18grpc_channel_stack22ChannelStackDataSourceEJNS_13RefCountedPtrINS_8channelz8BaseNodeEEEEEEvPT_DpOT0_.exit.i unwind label %.body
 
@@ -782,7 +752,7 @@ bb.ad:                                            ; preds = %bb.ac, %.noexc84
   %i.ek = landingpad { ptr, i32 }
           cleanup
   call void @_ZN9grpc_core13RefCountedPtrINS_8channelz8BaseNodeEED2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %8) #34
-  call void @_ZN9grpc_core13RefCountedPtrINS_8channelz8BaseNodeEED2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %15) #34
+  call void @_ZN9grpc_core13RefCountedPtrINS_8channelz8BaseNodeEED2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %14) #34
   br label %bb.aq
 
 _ZN9grpc_core9ConstructIN18grpc_channel_stack22ChannelStackDataSourceEJNS_13RefCountedPtrINS_8channelz8BaseNodeEEEEEEvPT_DpOT0_.exit.i: ; preds = %bb.ad
@@ -825,7 +795,7 @@ bb.ah:                                            ; preds = %bb.af
 
 bb.ai:                                            ; preds = %bb.ag, %.noexc.i.i, %_ZN9grpc_core9ConstructIN18grpc_channel_stack22ChannelStackDataSourceEJNS_13RefCountedPtrINS_8channelz8BaseNodeEEEEEEvPT_DpOT0_.exit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %8)
-  %i.ez = load ptr, ptr %15, align 8, !tbaa !92   ; 6 uses
+  %i.ez = load ptr, ptr %14, align 8, !tbaa !92   ; 6 uses
   %.not.i86 = icmp eq ptr %i.ez, null
   br i1 %.not.i86, label %_ZN9grpc_core13RefCountedPtrINS_8channelz8BaseNodeEED2Ev.exit, label %bb.aj
 
@@ -863,7 +833,7 @@ bb.am:                                            ; preds = %bb.ak
   unreachable
 
 _ZN9grpc_core13RefCountedPtrINS_8channelz8BaseNodeEED2Ev.exit: ; preds = %bb.ai, %.noexc.i, %bb.al
-  call void @llvm.lifetime.end.p0(ptr nonnull %15) #34
+  call void @llvm.lifetime.end.p0(ptr nonnull %14) #34
   %i.fn = load ptr, ptr %i.ah, align 8, !tbaa !63 ; 4 uses
   %.not.i.i87 = icmp eq ptr %i.fn, null
   br i1 %.not.i.i87, label %_ZN25grpc_channel_element_argsD2Ev.exit, label %bb.an
@@ -893,11 +863,11 @@ bb.ap:                                            ; preds = %.critedge76
 
 bb.aq:                                            ; preds = %.body, %bb.ap
   %.pn = phi { ptr, i32 } [ %i.ek, %.body ], [ %i.fu, %bb.ap ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %15) #34
+  call void @llvm.lifetime.end.p0(ptr nonnull %14) #34
   br label %bb.ar
 
-bb.ar:                                            ; preds = %bb.aq, %bb.aa, %bb.x, %bb.w, %bb.t
-  %.pn69.pn = phi { ptr, i32 } [ %i.du, %bb.w ], [ %i.ct, %bb.t ], [ %.pn, %bb.aq ], [ %i.ec, %bb.aa ], [ %20, %bb.x ]
+bb.ar:                                            ; preds = %bb.aq, %bb.aa, %bb.w, %bb.t
+  %.pn69.pn = phi { ptr, i32 } [ %i.du, %bb.w ], [ %i.ct, %bb.t ], [ %.pn, %bb.aq ], [ %i.ec, %bb.aa ]
   call void @_ZN4absl12lts_202505126StatusD2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %0) #34
   br label %bb.as
 

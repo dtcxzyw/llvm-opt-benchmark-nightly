@@ -204,7 +204,7 @@ bb.ab:                                            ; preds = %bb.aa, %.critedge3.
 
 heapsortx.exit.i:                                 ; preds = %bb.ab, %bb.g
   %.118910.i = phi ptr [ %i.n, %bb.g ], [ %.2190.i, %bb.ab ] ; 2 uses
-  %.01868.i = phi ptr [ %i.o, %bb.g ], [ %.1187.i, %bb.ab ] ; 4 uses
+  %.01868.i = phi ptr [ %i.o, %bb.g ], [ %.1187.i, %bb.ab ] ; 3 uses
   %.2193.i = phi i64 [ %i.q, %bb.g ], [ %.1192.i, %bb.ab ] ; 2 uses
   %i.dy = shl nuw nsw i64 %.2193.i, 3
   %i.dz = getelementptr inbounds nuw i8, ptr %.01868.i, i64 %i.dy
@@ -216,9 +216,8 @@ heapsortx.exit.i:                                 ; preds = %bb.ab, %bb.g
   br label %.preheader.i
 
 .preheader.i:                                     ; preds = %.critedge5.i, %.preheader.preheader.i
-  %.218551.i = phi ptr [ %.2185.i, %.critedge5.i ], [ %.218550.i, %.preheader.preheader.i ] ; 3 uses
-  %2 = icmp ugt ptr %.218551.i, %.01868.i
-  br i1 %2, label %.lr.ph48.i, label %.critedge5.i
+  %.218551.i = phi ptr [ %.2185.i, %.critedge5.i ], [ %.218550.i, %.preheader.preheader.i ] ; 2 uses
+  br label %.lr.ph48.i
 
 .lr.ph48.i:                                       ; preds = %.preheader.i, %bb.ac
   %.218247.i = phi ptr [ %i.eb, %bb.ac ], [ %.218551.i, %.preheader.i ] ; 3 uses
@@ -233,7 +232,7 @@ bb.ac:                                            ; preds = %.lr.ph48.i
   %i.ef = icmp ugt ptr %i.eb, %.01868.i
   br i1 %i.ef, label %.lr.ph48.i, label %.critedge5.i, !llvm.loop !83
 
-.critedge5.i:                                     ; preds = %bb.ac, %.lr.ph48.i, %.preheader.i
+.critedge5.i:                                     ; preds = %.lr.ph48.i, %bb.ac
   %.2185.i = getelementptr inbounds nuw i8, ptr %.218551.i, i64 8 ; 2 uses
   %i.eg = icmp ult ptr %.2185.i, %i.dz
   br i1 %i.eg, label %.preheader.i, label %.loopexit.i, !llvm.loop !84

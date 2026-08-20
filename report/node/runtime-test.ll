@@ -203,14 +203,15 @@ bb.f:                                             ; preds = %_ZN2v88internal12_G
 
 .lr.ph.i:                                         ; preds = %bb.f, %bb.i
   %i.y = call noundef i32 @_ZN2v88internal17SemiSpaceNewSpace40GetSpaceRemainingOnCurrentPageForTestingEv(ptr noundef nonnull align 8 dereferenceable(432) %i.v) #29 ; 2 uses
-  %i.z = icmp sgt i32 %i.y, 23
+  %5 = add nsw i32 %i.y, -16
+  %6 = sdiv i32 %5, 8
+  %7 = icmp sgt i32 %i.y, 131079
+  %.sroa.speculated.i.i = select i1 %7, i32 16382, i32 %6 ; 2 uses
+  %i.z = icmp sgt i32 %.sroa.speculated.i.i, 0
   br i1 %i.z, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %.lr.ph.i
-  %5 = add nsw i32 %i.y, -16
-  %6 = lshr i32 %5, 3
-  %7 = call i32 @llvm.umin.i32(i32 %6, i32 16382)
-  %i.aa = call ptr @_ZN2v88internal11FactoryBaseINS0_7FactoryEE13NewFixedArrayEiNS0_14AllocationTypeENS0_14AllocationHintE(ptr noundef nonnull align 1 dereferenceable(1) %2, i32 noundef %7, i8 noundef zeroext 0, i8 0) #29
+  %i.aa = call ptr @_ZN2v88internal11FactoryBaseINS0_7FactoryEE13NewFixedArrayEiNS0_14AllocationTypeENS0_14AllocationHintE(ptr noundef nonnull align 1 dereferenceable(1) %2, i32 noundef %.sroa.speculated.i.i, i8 noundef zeroext 0, i8 0) #29
   %i.ab = load i64, ptr %i.aa, align 8
   %i.ac = add i64 %i.ab, -1                       ; 2 uses
   %i.ad = inttoptr i64 %i.ac to ptr
@@ -611,9 +612,6 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #28
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #7
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umin.i32(i32, i32) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #7

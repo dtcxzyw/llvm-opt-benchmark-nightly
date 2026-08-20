@@ -204,7 +204,7 @@ bb.aa:                                            ; preds = %.preheader.us.i
   %.0135.lcssa.us.i = phi i32 [ %i.ih, %.critedge.us.split.loop.exit.i ], [ %umax.i, %bb.aa ] ; 3 uses
   %i.ii = load i32, ptr %i.dp, align 8, !tbaa !52
   %.not164.us.i = icmp ult i32 %.0135.lcssa.us.i, %i.ii
-  br i1 %.not164.us.i, label %.split.us.1.i, label %.split231.us.i
+  br i1 %.not164.us.i, label %.split.us.1.i, label %MovePos.exit.sink.split.sink.split.i
 
 .split.us.1.i:                                    ; preds = %.critedge.us.i, %bb.z, %.split.us.preheader.i
   %.2141.ph.us.i = phi i32 [ 0, %bb.z ], [ 0, %.split.us.preheader.i ], [ %.0135.lcssa.us.i, %.critedge.us.i ] ; 4 uses
@@ -250,7 +250,7 @@ bb.ac:                                            ; preds = %.preheader.us.1.i
   %.0135.lcssa.us.1.i = phi i32 [ %i.ix, %.critedge.us.1.split.loop.exit318.i ], [ %umax.i, %bb.ac ] ; 4 uses
   %i.iy = load i32, ptr %i.dp, align 8, !tbaa !52
   %.not164.us.1.i = icmp ult i32 %.0135.lcssa.us.1.i, %i.iy
-  br i1 %.not164.us.1.i, label %bb.ad, label %.split231.us.i
+  br i1 %.not164.us.1.i, label %bb.ad, label %MovePos.exit.sink.split.sink.split.i
 
 bb.ad:                                            ; preds = %.critedge.us.1.i
   %i.iz = icmp ugt i32 %.0135.lcssa.us.1.i, %.2141.ph.us.i
@@ -303,7 +303,7 @@ bb.af:                                            ; preds = %.preheader.us.2.i
   %.0135.lcssa.us.2.i = phi i32 [ %i.jo, %.critedge.us.2.split.loop.exit320.i ], [ %umax.i, %bb.af ] ; 4 uses
   %i.jp = load i32, ptr %i.dp, align 8, !tbaa !52
   %.not164.us.2.i = icmp ult i32 %.0135.lcssa.us.2.i, %i.jp
-  br i1 %.not164.us.2.i, label %bb.ag, label %.split231.us.i
+  br i1 %.not164.us.2.i, label %bb.ag, label %MovePos.exit.sink.split.sink.split.i
 
 bb.ag:                                            ; preds = %.critedge.us.2.i
   %i.jq = icmp ugt i32 %.0135.lcssa.us.2.i, %.2141.ph.us.1.i
@@ -356,7 +356,7 @@ bb.ai:                                            ; preds = %.preheader.us.3.i
   %.0135.lcssa.us.3.i = phi i32 [ %i.kf, %.critedge.us.3.split.loop.exit322.i ], [ %umax.i, %bb.ai ] ; 4 uses
   %i.kg = load i32, ptr %i.dp, align 8, !tbaa !52
   %.not164.us.3.i = icmp ult i32 %.0135.lcssa.us.3.i, %i.kg
-  br i1 %.not164.us.3.i, label %bb.aj, label %.split231.us.i
+  br i1 %.not164.us.3.i, label %bb.aj, label %MovePos.exit.sink.split.sink.split.i
 
 bb.aj:                                            ; preds = %.critedge.us.3.i
   %i.kh = icmp ugt i32 %.0135.lcssa.us.3.i, %.2141.ph.us.2.i
@@ -374,14 +374,7 @@ bb.ak:                                            ; preds = %.split.preheader.i
 .preheader.i:                                     ; preds = %bb.ak
   %i.kl = load i32, ptr %i.dp, align 8, !tbaa !52
   %.not164.i = icmp ugt i32 %i.kl, 2
-  br i1 %.not164.i, label %.split.1.i, label %MovePos.exit.sink.split.i
-
-.split231.us.i:                                   ; preds = %.critedge.us.3.i, %.critedge.us.2.i, %.critedge.us.1.i, %.critedge.us.i
-  %.us-phi.i = phi i32 [ 0, %.critedge.us.i ], [ 1, %.critedge.us.1.i ], [ 2, %.critedge.us.2.i ], [ 3, %.critedge.us.3.i ] ; 2 uses
-  %.us-phi232.i = phi i32 [ %.0135.lcssa.us.i, %.critedge.us.i ], [ %.0135.lcssa.us.1.i, %.critedge.us.1.i ], [ %.0135.lcssa.us.2.i, %.critedge.us.2.i ], [ %.0135.lcssa.us.3.i, %.critedge.us.3.i ] ; 2 uses
-  %4 = add i32 %.us-phi232.i, -1                  ; 2 uses
-  %.not.i173.i = icmp eq i32 %4, 0
-  br i1 %.not.i173.i, label %GetOptimumFast.exit.thread, label %MovePos.exit.sink.split.i
+  br i1 %.not164.i, label %.split.1.i, label %MovePos.exit.sink.split.sink.split.i
 
 .split.1.i:                                       ; preds = %.preheader.i, %bb.ak, %.split.preheader.i
   %spec.select.1.i = phi i32 [ 1, %bb.ak ], [ 1, %.split.preheader.i ], [ 0, %.preheader.i ]
@@ -405,7 +398,7 @@ bb.al:                                            ; preds = %.split.1.i
 .preheader.1.i:                                   ; preds = %bb.al
   %i.kv = load i32, ptr %i.dp, align 8, !tbaa !52
   %.not164.1.i = icmp ugt i32 %i.kv, 2
-  br i1 %.not164.1.i, label %.split.2.i, label %MovePos.exit.sink.split.i
+  br i1 %.not164.1.i, label %.split.2.i, label %MovePos.exit.sink.split.sink.split.i
 
 .split.2.i:                                       ; preds = %.preheader.1.i, %bb.al, %.split.1.i
   %.2144.ph.1.i = phi i32 [ 0, %bb.al ], [ 0, %.split.1.i ], [ %spec.select.1.i, %.preheader.1.i ] ; 3 uses
@@ -429,7 +422,7 @@ bb.am:                                            ; preds = %.split.2.i
 .preheader.2.i:                                   ; preds = %bb.am
   %i.lf = load i32, ptr %i.dp, align 8, !tbaa !52
   %.not164.2.i = icmp ugt i32 %i.lf, 2
-  br i1 %.not164.2.i, label %bb.an, label %MovePos.exit.sink.split.i
+  br i1 %.not164.2.i, label %bb.an, label %MovePos.exit.sink.split.sink.split.i
 
 bb.an:                                            ; preds = %.preheader.2.i
   %i.lg = icmp samesign ult i32 %.2141.ph.1.i, 2
@@ -458,7 +451,7 @@ bb.ao:                                            ; preds = %.split.3.i
 .preheader.3.i:                                   ; preds = %bb.ao
   %i.lq = load i32, ptr %i.dp, align 8, !tbaa !52
   %.not164.3.i = icmp ugt i32 %i.lq, 2
-  br i1 %.not164.3.i, label %bb.ap, label %MovePos.exit.sink.split.i
+  br i1 %.not164.3.i, label %bb.ap, label %MovePos.exit.sink.split.sink.split.i
 
 bb.ap:                                            ; preds = %.preheader.3.i
   %i.lr = icmp samesign ult i32 %.2141.ph.2.i, 2
@@ -466,8 +459,8 @@ bb.ap:                                            ; preds = %.preheader.3.i
   br label %.split234.us.i
 
 .split234.us.i:                                   ; preds = %bb.ap, %bb.ao, %.split.3.i, %bb.aj, %bb.ah, %.split.us.3.i
-  %.us-phi235.i = phi i32 [ %spec.select.us.3.i, %bb.aj ], [ %.2144.ph.us.2.i, %bb.ah ], [ %.2144.ph.us.2.i, %.split.us.3.i ], [ %.2144.ph.2.i, %bb.ao ], [ %.2144.ph.2.i, %.split.3.i ], [ %spec.select.3.i, %bb.ap ]
-  %.us-phi236.i = phi i32 [ %spec.select165.us.3.i, %bb.aj ], [ %.2141.ph.us.2.i, %bb.ah ], [ %.2141.ph.us.2.i, %.split.us.3.i ], [ %.2141.ph.2.i, %bb.ao ], [ %.2141.ph.2.i, %.split.3.i ], [ 2, %bb.ap ] ; 6 uses
+  %.us-phi235.i = phi i32 [ %spec.select.us.3.i, %bb.aj ], [ %.2144.ph.us.2.i, %bb.ah ], [ %.2144.ph.us.2.i, %.split.us.3.i ], [ %.2144.ph.2.i, %bb.ao ], [ %.2144.ph.2.i, %.split.3.i ], [ %spec.select.3.i, %bb.ap ] ; 3 uses
+  %.us-phi236.i = phi i32 [ %spec.select165.us.3.i, %bb.aj ], [ %.2141.ph.us.2.i, %bb.ah ], [ %.2141.ph.us.2.i, %.split.us.3.i ], [ %.2141.ph.2.i, %bb.ao ], [ %.2141.ph.2.i, %.split.3.i ], [ 2, %bb.ap ] ; 7 uses
   %i.ls = load i32, ptr %i.dp, align 8, !tbaa !52
   %.not.i224 = icmp ult i32 %.0147.i, %i.ls
   br i1 %.not.i224, label %bb.ar, label %bb.aq
@@ -543,25 +536,21 @@ bb.av:                                            ; preds = %.critedge2.i, %bb.a
 bb.aw:                                            ; preds = %bb.av
   %i.mu = add i32 %.us-phi236.i, 1
   %.not157.i = icmp ult i32 %i.mu, %.2149.fr.i
-  br i1 %.not157.i, label %bb.ax, label %MovePos.exit177.i
+  br i1 %.not157.i, label %bb.ax, label %MovePos.exit.sink.split.sink.split.i
 
 bb.ax:                                            ; preds = %bb.aw
   %i.mv = add i32 %.us-phi236.i, 2
   %i.mw = icmp uge i32 %i.mv, %.2149.fr.i
   %i.mx = icmp ugt i32 %.1146.i, 511
   %or.cond5.i = select i1 %i.mw, i1 %i.mx, i1 false
-  br i1 %or.cond5.i, label %MovePos.exit177.i, label %bb.ay
+  br i1 %or.cond5.i, label %MovePos.exit.sink.split.sink.split.i, label %bb.ay
 
 bb.ay:                                            ; preds = %bb.ax
   %i.my = add i32 %.us-phi236.i, 3
   %i.mz = icmp uge i32 %i.my, %.2149.fr.i
   %i.na = icmp ugt i32 %.1146.i, 32767
   %or.cond7.i = select i1 %i.mz, i1 %i.na, i1 false
-  br i1 %or.cond7.i, label %MovePos.exit177.i, label %bb.az
-
-MovePos.exit177.i:                                ; preds = %bb.ay, %bb.ax, %bb.aw
-  %5 = add i32 %.us-phi236.i, -1
-  br label %MovePos.exit.sink.split.i
+  br i1 %or.cond7.i, label %MovePos.exit.sink.split.sink.split.i, label %bb.az
 
 bb.az:                                            ; preds = %bb.ay, %bb.av
   %i.nb = icmp ult i32 %.2149.fr.i, 2
@@ -894,16 +883,27 @@ bb.bt:                                            ; preds = %select.unfold.2.i
   %.not.i189.i = icmp eq i32 %i.st, 0
   br i1 %.not.i189.i, label %GetOptimumFast.exit.thread, label %MovePos.exit.sink.split.i
 
-MovePos.exit.sink.split.i:                        ; preds = %.preheader.i, %.preheader.1.i, %.preheader.2.i, %.preheader.3.i, %.split254.us.i, %MovePos.exit177.i, %bb.aq, %.split231.us.i
-  %.1345 = phi i32 [ %.us-phi235.i, %MovePos.exit177.i ], [ %i.ss, %.split254.us.i ], [ %i.lx, %bb.aq ], [ %.us-phi.i, %.split231.us.i ], [ 2, %.preheader.2.i ], [ 1, %.preheader.1.i ], [ 0, %.preheader.i ], [ 3, %.preheader.3.i ]
-  %.sink327.i = phi i32 [ %5, %MovePos.exit177.i ], [ %i.st, %.split254.us.i ], [ %i.ly, %bb.aq ], [ %4, %.split231.us.i ], [ 1, %.preheader.2.i ], [ 1, %.preheader.1.i ], [ 1, %.preheader.i ], [ 1, %.preheader.3.i ] ; 2 uses
-  %.6.ph.i = phi i32 [ %.us-phi236.i, %MovePos.exit177.i ], [ %.2149.fr.i, %.split254.us.i ], [ %.0147.i, %bb.aq ], [ %.us-phi232.i, %.split231.us.i ], [ 2, %.preheader.2.i ], [ 2, %.preheader.1.i ], [ 2, %.preheader.i ], [ 2, %.preheader.3.i ]
+GetOptimumFast.exit.thread:                       ; preds = %.split254.us.i
+  %4 = load i32, ptr %i.dv, align 4, !tbaa !90
+  %5 = and i32 %4, %.2205
+  br label %bb.hf
+
+MovePos.exit.sink.split.sink.split.i:             ; preds = %bb.ay, %bb.ax, %bb.aw, %.preheader.3.i, %.preheader.2.i, %.preheader.1.i, %.preheader.i, %.critedge.us.3.i, %.critedge.us.2.i, %.critedge.us.1.i, %.critedge.us.i
+  %.us-phi235.sink.i = phi i32 [ 3, %.critedge.us.3.i ], [ 3, %.preheader.3.i ], [ 0, %.preheader.i ], [ 1, %.preheader.1.i ], [ 2, %.preheader.2.i ], [ 0, %.critedge.us.i ], [ 1, %.critedge.us.1.i ], [ 2, %.critedge.us.2.i ], [ %.us-phi235.i, %bb.ay ], [ %.us-phi235.i, %bb.ax ], [ %.us-phi235.i, %bb.aw ]
+  %.us-phi236.sink.i = phi i32 [ %.0135.lcssa.us.3.i, %.critedge.us.3.i ], [ 2, %.preheader.3.i ], [ 2, %.preheader.i ], [ 2, %.preheader.1.i ], [ 2, %.preheader.2.i ], [ %.0135.lcssa.us.i, %.critedge.us.i ], [ %.0135.lcssa.us.1.i, %.critedge.us.1.i ], [ %.0135.lcssa.us.2.i, %.critedge.us.2.i ], [ %.us-phi236.i, %bb.ay ], [ %.us-phi236.i, %bb.ax ], [ %.us-phi236.i, %bb.aw ] ; 2 uses
+  %6 = add i32 %.us-phi236.sink.i, -1
+  br label %MovePos.exit.sink.split.i
+
+MovePos.exit.sink.split.i:                        ; preds = %MovePos.exit.sink.split.sink.split.i, %.split254.us.i, %bb.aq
+  %.1345 = phi i32 [ %.us-phi235.sink.i, %MovePos.exit.sink.split.sink.split.i ], [ %i.ss, %.split254.us.i ], [ %i.lx, %bb.aq ]
+  %.sink322.i = phi i32 [ %6, %MovePos.exit.sink.split.sink.split.i ], [ %i.st, %.split254.us.i ], [ %i.ly, %bb.aq ] ; 2 uses
+  %.6.ph.i = phi i32 [ %.us-phi236.sink.i, %MovePos.exit.sink.split.sink.split.i ], [ %.2149.fr.i, %.split254.us.i ], [ %.0147.i, %bb.aq ]
   %i.su = load i32, ptr %i.dj, align 4, !tbaa !89
-  %i.sv = add i32 %i.su, %.sink327.i
+  %i.sv = add i32 %i.su, %.sink322.i
   store i32 %i.sv, ptr %i.dj, align 4, !tbaa !89
   %i.sw = load ptr, ptr %i.dw, align 8, !tbaa !147
   %i.sx = load ptr, ptr %i.df, align 8, !tbaa !116
-  tail call void %i.sw(ptr noundef %i.sx, i32 noundef %.sink327.i) #14, !inline_history !143
+  tail call void %i.sw(ptr noundef %i.sx, i32 noundef %.sink322.i) #14, !inline_history !143
   br label %GetOptimumFast.exit
 
 bb.bu:                                            ; preds = %CheckErrors.exit336
@@ -1306,14 +1306,6 @@ GetOptimum.exit:                                  ; preds = %bb.de, %bb.cx, %bb.
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #14
   br label %GetOptimumFast.exit
 
-GetOptimumFast.exit.thread:                       ; preds = %.split254.us.i, %.split231.us.i
-  %.0.ph = phi i32 [ %.us-phi.i, %.split231.us.i ], [ %i.ss, %.split254.us.i ]
-  %6 = phi i1 [ true, %.split231.us.i ], [ false, %.split254.us.i ]
-  %.0198.ph = phi i32 [ 1, %.split231.us.i ], [ 2, %.split254.us.i ]
-  %7 = load i32, ptr %i.dv, align 4, !tbaa !90
-  %8 = and i32 %7, %.2205
-  br label %bb.hf
-
 GetOptimumFast.exit:                              ; preds = %bb.bj, %bb.bl, %bb.bn, %bb.bp, %MovePos.exit.sink.split.i, %bb.bt, %bb.bs, %bb.br, %bb.bq, %bb.bg, %bb.bf, %bb.be, %bb.az, %bb.aq, %bb.x, %GetOptimum.exit
   %.0 = phi i32 [ %.3347, %GetOptimum.exit ], [ -1, %bb.x ], [ %.1345, %MovePos.exit.sink.split.i ], [ -1, %bb.az ], [ -1, %bb.bl ], [ -1, %bb.bn ], [ -1, %bb.bp ], [ -1, %bb.bg ], [ %i.lx, %bb.aq ], [ -1, %bb.bq ], [ -1, %bb.br ], [ -1, %bb.bs ], [ -1, %bb.bt ], [ -1, %bb.be ], [ -1, %bb.bf ], [ -1, %bb.bj ] ; 2 uses
   %.0198 = phi i32 [ %.2.i, %GetOptimum.exit ], [ 1, %bb.x ], [ %.6.ph.i, %MovePos.exit.sink.split.i ], [ 1, %bb.az ], [ 1, %bb.bl ], [ 1, %bb.bn ], [ 1, %bb.bp ], [ 1, %bb.bg ], [ 1, %bb.aq ], [ 1, %bb.bq ], [ 1, %bb.br ], [ 1, %bb.bs ], [ 1, %bb.bt ], [ 1, %bb.be ], [ 1, %bb.bf ], [ 1, %bb.bj ] ; 2 uses
@@ -1511,10 +1503,10 @@ LitEnc_Encode.exit275:                            ; preds = %RangeEnc_EncodeBit.
   br label %bb.kh
 
 bb.hf:                                            ; preds = %GetOptimumFast.exit.thread, %GetOptimumFast.exit
-  %i.but = phi i1 [ %6, %GetOptimumFast.exit.thread ], [ %i.bqm, %GetOptimumFast.exit ] ; 2 uses
-  %i.buu = phi i32 [ %8, %GetOptimumFast.exit.thread ], [ %i.bql, %GetOptimumFast.exit ] ; 3 uses
-  %.0198357 = phi i32 [ %.0198.ph, %GetOptimumFast.exit.thread ], [ %.0198, %GetOptimumFast.exit ] ; 6 uses
-  %.0355 = phi i32 [ %.0.ph, %GetOptimumFast.exit.thread ], [ %.0, %GetOptimumFast.exit ] ; 8 uses
+  %i.but = phi i1 [ false, %GetOptimumFast.exit.thread ], [ %i.bqm, %GetOptimumFast.exit ] ; 2 uses
+  %i.buu = phi i32 [ %5, %GetOptimumFast.exit.thread ], [ %i.bql, %GetOptimumFast.exit ] ; 3 uses
+  %.0198357 = phi i32 [ 2, %GetOptimumFast.exit.thread ], [ %.0198, %GetOptimumFast.exit ] ; 6 uses
+  %.0355 = phi i32 [ %i.ss, %GetOptimumFast.exit.thread ], [ %.0, %GetOptimumFast.exit ] ; 8 uses
   %i.buv = load i32, ptr %i.ed, align 8, !tbaa !25
   %i.buw = zext i32 %i.buv to i64
   %i.bux = getelementptr inbounds nuw [32 x i8], ptr %i.ej, i64 %i.buw

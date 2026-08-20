@@ -201,9 +201,8 @@ X509at_get_attr_by_OBJ.exit:                      ; preds = %.lr.ph
   br label %bb.g
 
 bb.d:                                             ; preds = %X509at_get_attr_by_OBJ.exit
-  %4 = tail call i32 @llvm.smax.i32(i32 %.0.i39, i32 -1)
   %i.l = tail call i32 @OPENSSL_sk_num(ptr noundef nonnull %0) #4 ; 2 uses
-  %.0.i1740 = add nuw nsw i32 %4, 1               ; 2 uses
+  %.0.i1740 = add nuw nsw i32 %.0.i39, 1          ; 2 uses
   %i.m = icmp slt i32 %.0.i1740, %i.l
   br i1 %i.m, label %.lr.ph42, label %X509at_get_attr_by_OBJ.exit19.thread
 

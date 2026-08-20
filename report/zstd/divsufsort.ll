@@ -203,7 +203,7 @@ bb.fk:                                            ; preds = %.preheader.i
   br i1 %i.ann, label %.preheader.i, label %.critedge.i.i300, !llvm.loop !80
 
 .critedge.i.i300:                                 ; preds = %bb.fk, %.preheader.i, %._crit_edge.thread.i.i299
-  %.1463.i.i = phi ptr [ %.0462.ph.i.i, %._crit_edge.thread.i.i299 ], [ %i.ank, %.preheader.i ], [ %i.ank, %bb.fk ] ; 10 uses
+  %.1463.i.i = phi ptr [ %.0462.ph.i.i, %._crit_edge.thread.i.i299 ], [ %i.ank, %.preheader.i ], [ %i.ank, %bb.fk ] ; 9 uses
   %i.ano = icmp ult ptr %.1463.i.i, %.0459.ph.i.i
   br i1 %i.ano, label %bb.fl, label %bb.gh
 
@@ -280,7 +280,7 @@ bb.fu:                                            ; preds = %bb.fs
 
 tr_ilg.exit558.i.i:                               ; preds = %bb.fu, %bb.ft, %bb.fr, %bb.fq, %bb.fn
   %i.aoy = phi i32 [ -1, %bb.fn ], [ %i.aop, %bb.fr ], [ %i.aok, %bb.fq ], [ %i.aou, %bb.ft ], [ %i.aox, %bb.fu ] ; 3 uses
-  %i.aoz = getelementptr inbounds nuw i8, ptr %i.anq, i64 8 ; 10 uses
+  %i.aoz = getelementptr inbounds nuw i8, ptr %i.anq, i64 8 ; 9 uses
   %i.apa = icmp ult ptr %i.aoz, %.0459.ph.i.i
   %i.apb = ptrtoint ptr %i.aoz to i64             ; 4 uses
   br i1 %i.apa, label %bb.fv, label %tr_ilg.exit558._crit_edge.i.i
@@ -290,10 +290,9 @@ bb.fv:                                            ; preds = %tr_ilg.exit558.i.i
   %i.apd = lshr exact i64 %i.apc, 2
   %i.ape = trunc i64 %i.apd to i32
   %i.apf = add i32 %i.ape, -1
-  %6 = icmp ult ptr %.1463.i.i, %i.aoz
-  br i1 %6, label %.lr.ph686.i.i, label %tr_ilg.exit558._crit_edge.i.i
+  br label %.lr.ph686.i.i
 
-.lr.ph686.i.i:                                    ; preds = %bb.fv, %.lr.ph686.i.i
+.lr.ph686.i.i:                                    ; preds = %.lr.ph686.i.i, %bb.fv
   %i.apg = phi ptr [ %i.apk, %.lr.ph686.i.i ], [ %.1463.i.i, %bb.fv ] ; 2 uses
   %i.aph = load i32, ptr %i.apg, align 4, !tbaa !8
   %i.api = sext i32 %i.aph to i64
@@ -303,7 +302,7 @@ bb.fv:                                            ; preds = %tr_ilg.exit558.i.i
   %i.apl = icmp ult ptr %i.apk, %i.aoz
   br i1 %i.apl, label %.lr.ph686.i.i, label %tr_ilg.exit558._crit_edge.i.i, !llvm.loop !82
 
-tr_ilg.exit558._crit_edge.i.i:                    ; preds = %.lr.ph686.i.i, %bb.fv, %tr_ilg.exit558.i.i
+tr_ilg.exit558._crit_edge.i.i:                    ; preds = %.lr.ph686.i.i, %tr_ilg.exit558.i.i
   %i.apm = ptrtoint ptr %.1463.i.i to i64
   %i.apn = sub i64 %i.apb, %i.apm                 ; 2 uses
   %i.apo = lshr exact i64 %i.apn, 2

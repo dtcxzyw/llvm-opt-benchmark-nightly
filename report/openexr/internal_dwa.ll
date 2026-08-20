@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %._crit_edge.us.i, %.lr.ph123.split.us.i
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %._crit_edge.us.i ], [ 0, %.lr.ph123.split.us.i ] ; 3 uses
-  %i.ax = phi i32 [ %i.cp, %._crit_edge.us.i ], [ %i.aq, %.lr.ph123.split.us.i ] ; 2 uses
+  %i.ax = phi i32 [ %i.cp, %._crit_edge.us.i ], [ %i.aq, %.lr.ph123.split.us.i ]
   %i.ay = getelementptr inbounds nuw [576 x i8], ptr %i.at, i64 %indvars.iv.i ; 2 uses
   %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 448
   %i.ba = load ptr, ptr %i.az, align 32, !tbaa !56 ; 2 uses
@@ -216,15 +216,11 @@ bb.c:                                             ; preds = %._crit_edge.us.i, %
   %i.be = ptrtoint ptr %.0.i.us.i to i64
   %i.bf = ptrtoint ptr %i.bb to i64
   %i.bg = sub i64 %i.be, %i.bf                    ; 3 uses
-  %2 = icmp sgt i32 %i.ax, 0
-  br i1 %2, label %.lr.ph.preheader.i.us.i, label %CscPrefixMap_find.exit.us.i
-
-.lr.ph.preheader.i.us.i:                          ; preds = %bb.c
   %wide.trip.count.i.us.i = zext nneg i32 %i.ax to i64 ; 2 uses
   br label %.lr.ph.i.us.i
 
-.lr.ph.i.us.i:                                    ; preds = %bb.f, %.lr.ph.preheader.i.us.i
-  %indvars.iv.i.us.i = phi i64 [ 0, %.lr.ph.preheader.i.us.i ], [ %indvars.iv.next.i.us.i, %bb.f ] ; 4 uses
+.lr.ph.i.us.i:                                    ; preds = %bb.f, %bb.c
+  %indvars.iv.i.us.i = phi i64 [ 0, %bb.c ], [ %indvars.iv.next.i.us.i, %bb.f ] ; 4 uses
   %i.bh = getelementptr inbounds nuw [32 x i8], ptr %i.am, i64 %indvars.iv.i.us.i ; 7 uses
   %i.bi = load ptr, ptr %i.bh, align 8, !tbaa !201 ; 2 uses
   %i.bj = icmp eq ptr %i.bi, null
@@ -258,8 +254,8 @@ bb.g:                                             ; preds = %.lr.ph.i.us.i
   store i32 -1, ptr %i.br, align 8, !tbaa !51
   br label %CscPrefixMap_find.exit.us.i
 
-CscPrefixMap_find.exit.us.i:                      ; preds = %bb.f, %bb.e, %bb.g, %bb.c
-  %.028.i.us.i = phi i64 [ %indvars.iv.i.us.i, %bb.g ], [ 0, %bb.c ], [ %indvars.iv.i.us.i, %bb.e ], [ %wide.trip.count.i.us.i, %bb.f ]
+CscPrefixMap_find.exit.us.i:                      ; preds = %bb.f, %bb.e, %bb.g
+  %.028.i.us.i = phi i64 [ %indvars.iv.i.us.i, %bb.g ], [ %indvars.iv.i.us.i, %bb.e ], [ %wide.trip.count.i.us.i, %bb.f ]
   %i.bs = getelementptr inbounds nuw [32 x i8], ptr %i.am, i64 %.028.i.us.i
   %i.bt = getelementptr inbounds nuw i8, ptr %i.ba, i64 26
   %i.bu = load i16, ptr %i.bt, align 2, !tbaa !62
@@ -325,7 +321,7 @@ Classifier_match.exit.thread.us.i:                ; preds = %bb.m, %bb.l, %Class
   br i1 %i.cr, label %bb.c, label %.preheader.i, !llvm.loop !206
 
 .preheader.i:                                     ; preds = %._crit_edge.us.i, %CscPrefixMap_find.exit.i
-  %i.cs = phi i32 [ %6, %CscPrefixMap_find.exit.i ], [ %i.cp, %._crit_edge.us.i ] ; 2 uses
+  %i.cs = phi i32 [ %4, %CscPrefixMap_find.exit.i ], [ %i.cp, %._crit_edge.us.i ] ; 2 uses
   %i.ct = icmp sgt i32 %i.cs, 0
   br i1 %i.ct, label %.lr.ph.i, label %DwaCompressor_classifyChannels.exit
 
@@ -334,7 +330,7 @@ Classifier_match.exit.thread.us.i:                ; preds = %bb.m, %bb.l, %Class
   br label %bb.p
 
 .lr.ph123.split.i:                                ; preds = %.lr.ph123.i, %CscPrefixMap_find.exit.i
-  %i.cv = phi i32 [ %6, %CscPrefixMap_find.exit.i ], [ %i.aq, %.lr.ph123.i ] ; 5 uses
+  %i.cv = phi i32 [ %4, %CscPrefixMap_find.exit.i ], [ %i.aq, %.lr.ph123.i ] ; 3 uses
   %indvars.iv136.i = phi i64 [ %indvars.iv.next137.i, %CscPrefixMap_find.exit.i ], [ 0, %.lr.ph123.i ] ; 2 uses
   %i.cw = getelementptr inbounds nuw [576 x i8], ptr %i.at, i64 %indvars.iv136.i
   %i.cx = getelementptr inbounds nuw i8, ptr %i.cw, i64 448
@@ -347,17 +343,13 @@ Classifier_match.exit.thread.us.i:                ; preds = %bb.m, %bb.l, %Class
   %i.dc = ptrtoint ptr %.0.i.i to i64
   %i.dd = ptrtoint ptr %i.cz to i64
   %i.de = sub i64 %i.dc, %i.dd                    ; 3 uses
-  %3 = icmp sgt i32 %i.cv, 0
-  br i1 %3, label %.lr.ph.preheader.i.i, label %CscPrefixMap_find.exit.i
-
-.lr.ph.preheader.i.i:                             ; preds = %.lr.ph123.split.i
   %wide.trip.count.i.i = zext nneg i32 %i.cv to i64 ; 2 uses
-  %4 = load ptr, ptr %i.am, align 8, !tbaa !201   ; 2 uses
-  %5 = icmp eq ptr %4, null
-  br i1 %5, label %.lr.ph.i.i._crit_edge, label %.lr.ph201
+  %2 = load ptr, ptr %i.am, align 8, !tbaa !201   ; 2 uses
+  %3 = icmp eq ptr %2, null
+  br i1 %3, label %.lr.ph.i.i._crit_edge, label %.lr.ph201
 
-.lr.ph.i.i._crit_edge:                            ; preds = %.lr.ph.i.backedge.i, %.lr.ph.preheader.i.i
-  %.lcssa = phi ptr [ %i.am, %.lr.ph.preheader.i.i ], [ %i.dp, %.lr.ph.i.backedge.i ] ; 5 uses
+.lr.ph.i.i._crit_edge:                            ; preds = %.lr.ph.i.backedge.i, %.lr.ph123.split.i
+  %.lcssa = phi ptr [ %i.am, %.lr.ph123.split.i ], [ %i.dp, %.lr.ph.i.backedge.i ] ; 5 uses
   store ptr %i.cz, ptr %.lcssa, align 8, !tbaa !201
   %i.df = getelementptr inbounds nuw i8, ptr %.lcssa, i64 8
   store i64 %i.de, ptr %i.df, align 8, !tbaa !203
@@ -370,10 +362,10 @@ Classifier_match.exit.thread.us.i:                ; preds = %bb.m, %bb.l, %Class
   %.pre.i = load i32, ptr %i.ac, align 8, !tbaa !47
   br label %CscPrefixMap_find.exit.i
 
-.lr.ph201:                                        ; preds = %.lr.ph.preheader.i.i, %.lr.ph.i.backedge.i
-  %i.dj = phi ptr [ %i.dq, %.lr.ph.i.backedge.i ], [ %4, %.lr.ph.preheader.i.i ]
-  %i.dk = phi ptr [ %i.dp, %.lr.ph.i.backedge.i ], [ %i.am, %.lr.ph.preheader.i.i ]
-  %indvars.iv.i.i200 = phi i64 [ %indvars.iv.i.be.i, %.lr.ph.i.backedge.i ], [ 0, %.lr.ph.preheader.i.i ] ; 2 uses
+.lr.ph201:                                        ; preds = %.lr.ph123.split.i, %.lr.ph.i.backedge.i
+  %i.dj = phi ptr [ %i.dq, %.lr.ph.i.backedge.i ], [ %2, %.lr.ph123.split.i ]
+  %i.dk = phi ptr [ %i.dp, %.lr.ph.i.backedge.i ], [ %i.am, %.lr.ph123.split.i ]
+  %indvars.iv.i.i200 = phi i64 [ %indvars.iv.i.be.i, %.lr.ph.i.backedge.i ], [ 0, %.lr.ph123.split.i ] ; 2 uses
   %i.dl = getelementptr inbounds nuw i8, ptr %i.dk, i64 8
   %i.dm = load i64, ptr %i.dl, align 8, !tbaa !203
   %i.dn = icmp eq i64 %i.de, %i.dm
@@ -399,10 +391,10 @@ bb.o:                                             ; preds = %.lr.ph201
   %i.dr = icmp eq ptr %i.dq, null
   br i1 %i.dr, label %.lr.ph.i.i._crit_edge, label %.lr.ph201, !llvm.loop !204
 
-CscPrefixMap_find.exit.i:                         ; preds = %bb.o, %bb.n, %.lr.ph.i.i._crit_edge, %.lr.ph123.split.i
-  %6 = phi i32 [ %.pre.i, %.lr.ph.i.i._crit_edge ], [ %i.cv, %.lr.ph123.split.i ], [ %i.cv, %bb.n ], [ %i.cv, %bb.o ] ; 3 uses
+CscPrefixMap_find.exit.i:                         ; preds = %bb.o, %bb.n, %.lr.ph.i.i._crit_edge
+  %4 = phi i32 [ %.pre.i, %.lr.ph.i.i._crit_edge ], [ %i.cv, %bb.n ], [ %i.cv, %bb.o ] ; 3 uses
   %indvars.iv.next137.i = add nuw nsw i64 %indvars.iv136.i, 1 ; 2 uses
-  %i.ds = sext i32 %6 to i64
+  %i.ds = sext i32 %4 to i64
   %i.dt = icmp slt i64 %indvars.iv.next137.i, %i.ds
   br i1 %i.dt, label %.lr.ph123.split.i, label %.preheader.i, !llvm.loop !206
 

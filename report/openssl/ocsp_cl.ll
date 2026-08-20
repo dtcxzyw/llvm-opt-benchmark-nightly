@@ -201,7 +201,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.d, %bb.b
-  %.0.in.i = phi i32 [ -1, %bb.b ], [ %.0.i, %bb.d ] ; 2 uses
+  %.0.in.i = phi i32 [ -1, %bb.b ], [ %.0.i, %bb.d ]
   %.0.i = add nsw i32 %.0.in.i, 1                 ; 4 uses
   %i.d = tail call i32 @OPENSSL_sk_num(ptr noundef %i.c) #8
   %i.e = icmp slt i32 %.0.i, %i.d
@@ -212,13 +212,9 @@ bb.d:                                             ; preds = %bb.c
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !72
   %i.h = tail call i32 @OCSP_id_cmp(ptr noundef %1, ptr noundef %i.g) #8
   %.not.i = icmp eq i32 %i.h, 0
-  br i1 %.not.i, label %OCSP_resp_find.exit, label %bb.c, !llvm.loop !75
+  br i1 %.not.i, label %OCSP_resp_get0.exit, label %bb.c, !llvm.loop !75
 
-OCSP_resp_find.exit:                              ; preds = %bb.d
-  %7 = icmp slt i32 %.0.in.i, -1
-  br i1 %7, label %OCSP_resp_find.exit.thread, label %OCSP_resp_get0.exit
-
-OCSP_resp_get0.exit:                              ; preds = %OCSP_resp_find.exit
+OCSP_resp_get0.exit:                              ; preds = %bb.d
   %i.i = load ptr, ptr %i.b, align 8, !tbaa !64
   %i.j = tail call ptr @OPENSSL_sk_value(ptr noundef %i.i, i32 noundef %.0.i) #8 ; 4 uses
   %i.k = icmp eq ptr %i.j, null
@@ -291,8 +287,8 @@ bb.o:                                             ; preds = %OCSP_single_get0_st
   store i32 %.0.i16, ptr %2, align 4, !tbaa !83
   br label %OCSP_resp_find.exit.thread
 
-OCSP_resp_find.exit.thread:                       ; preds = %bb.c, %bb.a, %OCSP_single_get0_status.exit, %bb.o, %OCSP_resp_find.exit
-  %.0 = phi i32 [ 0, %OCSP_resp_find.exit ], [ 1, %bb.o ], [ 1, %OCSP_single_get0_status.exit ], [ 0, %bb.a ], [ 0, %bb.c ]
+OCSP_resp_find.exit.thread:                       ; preds = %bb.c, %bb.a, %OCSP_single_get0_status.exit, %bb.o
+  %.0 = phi i32 [ 0, %bb.a ], [ 1, %bb.o ], [ 1, %OCSP_single_get0_status.exit ], [ 0, %bb.c ]
   ret i32 %.0
 }
 

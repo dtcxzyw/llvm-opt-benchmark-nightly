@@ -201,7 +201,7 @@ bb.a:
   store i64 0, ptr %0, align 8, !annotation !12
   tail call void asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock orb ${1:b},$0", "=*m,iq,*m,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr nonnull elementtype(i8) @mp_bus_not_pci, i32 1, ptr nonnull elementtype(i8) @mp_bus_not_pci) #18, !srcloc !35
   %i.a = load ptr, ptr @legacy_pic, align 8
-  %i.b = load i32, ptr %i.a, align 8              ; 2 uses
+  %i.b = load i32, ptr %i.a, align 8
   %i.c = icmp sgt i32 %i.b, 0
   br i1 %i.c, label %.lr.ph39, label %._crit_edge
 
@@ -212,16 +212,10 @@ bb.a:
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 1
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 5
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 7
-  br label %1
+  br label %bb.b
 
-1:                                                ; preds = %.lr.ph39, %acpi_isa_irq_to_gsi.exit.thread
-  %indvars.iv41 = phi i64 [ 0, %.lr.ph39 ], [ %indvars.iv.next42, %acpi_isa_irq_to_gsi.exit.thread ] ; 5 uses
-  %2 = phi i32 [ %i.b, %.lr.ph39 ], [ %i.am, %acpi_isa_irq_to_gsi.exit.thread ]
-  %3 = zext i32 %2 to i64
-  %4 = icmp samesign ult i64 %indvars.iv41, %3
-  br i1 %4, label %bb.b, label %acpi_isa_irq_to_gsi.exit.thread
-
-bb.b:                                             ; preds = %1
+bb.b:                                             ; preds = %.lr.ph39, %acpi_isa_irq_to_gsi.exit.thread
+  %indvars.iv41 = phi i64 [ 0, %.lr.ph39 ], [ %indvars.iv.next42, %acpi_isa_irq_to_gsi.exit.thread ] ; 4 uses
   %i.j = getelementptr [4 x i8], ptr @isa_irq_to_gsi, i64 %indvars.iv41
   %i.k = load i32, ptr %i.j, align 4              ; 3 uses
   %.not.i = icmp eq i32 %i.k, -1
@@ -300,13 +294,13 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   call void @mp_save_irq(ptr noundef nonnull %0) #17
   br label %acpi_isa_irq_to_gsi.exit.thread
 
-acpi_isa_irq_to_gsi.exit.thread:                  ; preds = %1, %bb.b, %.thread, %acpi_isa_irq_to_gsi.exit, %.thread.thread
+acpi_isa_irq_to_gsi.exit.thread:                  ; preds = %bb.b, %.thread, %acpi_isa_irq_to_gsi.exit, %.thread.thread
   %indvars.iv.next42 = add nuw nsw i64 %indvars.iv41, 1 ; 2 uses
   %i.al = load ptr, ptr @legacy_pic, align 8
-  %i.am = load i32, ptr %i.al, align 8            ; 2 uses
+  %i.am = load i32, ptr %i.al, align 8
   %i.an = sext i32 %i.am to i64
   %i.ao = icmp slt i64 %indvars.iv.next42, %i.an
-  br i1 %i.ao, label %1, label %._crit_edge, !llvm.loop !37
+  br i1 %i.ao, label %bb.b, label %._crit_edge, !llvm.loop !37
 
 ._crit_edge:                                      ; preds = %acpi_isa_irq_to_gsi.exit.thread, %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %0) #18

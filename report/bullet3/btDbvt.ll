@@ -204,20 +204,16 @@ bb.g:                                             ; preds = %bb.c, %bb.b, %bb.d,
 
 .lr.ph:                                           ; preds = %.preheader, %bb.q
   %indvars.iv = phi i64 [ %indvars.iv.next, %bb.q ], [ 0, %.preheader ] ; 4 uses
-  %i.bd = phi i32 [ %i.cj, %bb.q ], [ %i.av, %.preheader ] ; 10 uses
+  %i.bd = phi i32 [ %i.cj, %bb.q ], [ %i.av, %.preheader ] ; 5 uses
   %i.be = load ptr, ptr %i.b, align 8, !tbaa !83  ; 4 uses
   %i.bf = getelementptr inbounds nuw [8 x i8], ptr %i.be, i64 %indvars.iv
   %i.bg = load ptr, ptr %i.bf, align 8, !tbaa !35 ; 5 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %i.bg, i64 32
   %i.bi = load ptr, ptr %i.bh, align 8, !tbaa !50 ; 2 uses
   %.not = icmp eq ptr %i.bi, null
-  br i1 %.not, label %_ZNK20btAlignedObjectArrayIPK10btDbvtNodeE16findLinearSearchERKS2_.exit, label %3
+  br i1 %.not, label %_ZNK20btAlignedObjectArrayIPK10btDbvtNodeE16findLinearSearchERKS2_.exit, label %.lr.ph.i
 
-3:                                                ; preds = %.lr.ph
-  %4 = icmp sgt i32 %i.bd, 0
-  br i1 %4, label %.lr.ph.i, label %_ZNK20btAlignedObjectArrayIPK10btDbvtNodeE16findLinearSearchERKS2_.exit
-
-.lr.ph.i:                                         ; preds = %3
+.lr.ph.i:                                         ; preds = %.lr.ph
   %wide.trip.count.i = zext nneg i32 %i.bd to i64
   br label %bb.h
 
@@ -242,18 +238,14 @@ bb.j:                                             ; preds = %bb.p
           cleanup
   br label %bb.r
 
-_ZNK20btAlignedObjectArrayIPK10btDbvtNodeE16findLinearSearchERKS2_.exit: ; preds = %bb.i, %._crit_edge.loopexit.split.loop.exit.i, %3, %.lr.ph
-  %.0 = phi i32 [ -1, %.lr.ph ], [ %i.bd, %3 ], [ %i.bm, %._crit_edge.loopexit.split.loop.exit.i ], [ %i.bd, %bb.i ] ; 2 uses
+_ZNK20btAlignedObjectArrayIPK10btDbvtNodeE16findLinearSearchERKS2_.exit: ; preds = %bb.i, %._crit_edge.loopexit.split.loop.exit.i, %.lr.ph
+  %.0 = phi i32 [ -1, %.lr.ph ], [ %i.bm, %._crit_edge.loopexit.split.loop.exit.i ], [ %i.bd, %bb.i ] ; 2 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bg, i64 48
   %i.bp = load ptr, ptr %i.bo, align 8, !tbaa !26 ; 2 uses
   %.not46 = icmp eq ptr %i.bp, null
-  br i1 %.not46, label %bb.p, label %5
+  br i1 %.not46, label %bb.p, label %.lr.ph.i29
 
-5:                                                ; preds = %_ZNK20btAlignedObjectArrayIPK10btDbvtNodeE16findLinearSearchERKS2_.exit
-  %6 = icmp sgt i32 %i.bd, 0
-  br i1 %6, label %.lr.ph.i29, label %_ZNK20btAlignedObjectArrayIPK10btDbvtNodeE16findLinearSearchERKS2_.exit43
-
-.lr.ph.i29:                                       ; preds = %5
+.lr.ph.i29:                                       ; preds = %_ZNK20btAlignedObjectArrayIPK10btDbvtNodeE16findLinearSearchERKS2_.exit
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bg, i64 40
   %i.br = load ptr, ptr %i.bq, align 8, !tbaa !35
   %wide.trip.count.i30 = zext nneg i32 %i.bd to i64 ; 2 uses
@@ -276,7 +268,7 @@ bb.l:                                             ; preds = %bb.k
   br label %.lr.ph.i37
 
 .lr.ph.i37:                                       ; preds = %bb.l, %._crit_edge.loopexit.split.loop.exit.i34
-  %.06.i28 = phi i32 [ %i.bv, %._crit_edge.loopexit.split.loop.exit.i34 ], [ %i.bd, %bb.l ] ; 2 uses
+  %.06.i28 = phi i32 [ %i.bv, %._crit_edge.loopexit.split.loop.exit.i34 ], [ %i.bd, %bb.l ]
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.n, %.lr.ph.i37
@@ -295,14 +287,13 @@ bb.n:                                             ; preds = %bb.m
   %i.bz = trunc nuw nsw i64 %indvars.iv.i39 to i32
   br label %_ZNK20btAlignedObjectArrayIPK10btDbvtNodeE16findLinearSearchERKS2_.exit43
 
-_ZNK20btAlignedObjectArrayIPK10btDbvtNodeE16findLinearSearchERKS2_.exit43: ; preds = %bb.n, %5, %._crit_edge.loopexit.split.loop.exit.i42
-  %.06.i2845 = phi i32 [ %i.bd, %5 ], [ %.06.i28, %._crit_edge.loopexit.split.loop.exit.i42 ], [ %.06.i28, %bb.n ]
-  %.06.i36 = phi i32 [ %i.bd, %5 ], [ %i.bz, %._crit_edge.loopexit.split.loop.exit.i42 ], [ %i.bd, %bb.n ]
+_ZNK20btAlignedObjectArrayIPK10btDbvtNodeE16findLinearSearchERKS2_.exit43: ; preds = %bb.n, %._crit_edge.loopexit.split.loop.exit.i42
+  %.06.i36 = phi i32 [ %i.bz, %._crit_edge.loopexit.split.loop.exit.i42 ], [ %i.bd, %bb.n ]
   %i.ca = load ptr, ptr %1, align 8, !tbaa !78
   %i.cb = getelementptr inbounds nuw i8, ptr %i.ca, i64 24
   %i.cc = load ptr, ptr %i.cb, align 8
   %i.cd = trunc nuw nsw i64 %indvars.iv to i32
-  invoke void %i.cc(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull %i.bg, i32 noundef %i.cd, i32 noundef %.0, i32 noundef %.06.i2845, i32 noundef %.06.i36)
+  invoke void %i.cc(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull %i.bg, i32 noundef %i.cd, i32 noundef %.0, i32 noundef %.06.i28, i32 noundef %.06.i36)
           to label %bb.q unwind label %bb.o
 
 bb.o:                                             ; preds = %_ZNK20btAlignedObjectArrayIPK10btDbvtNodeE16findLinearSearchERKS2_.exit43

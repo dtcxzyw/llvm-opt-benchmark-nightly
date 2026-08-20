@@ -68,7 +68,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %.0126197 = phi i32 [ 0, %.lr.ph200.preheader ], [ %.2128, %bb.o ] ; 4 uses
   %.0133193 = phi i32 [ 0, %.lr.ph200.preheader ], [ %.3136, %bb.o ] ; 5 uses
   %i.l = tail call i32 @llvm.smax.i32(i32 %.1123198, i32 65535)
-  %spec.store.select = add nsw i32 %i.l, -65535   ; 2 uses
+  %spec.store.select = add nsw i32 %i.l, -65535
   %.not = icmp eq i32 %.1123198, 0
   br i1 %.not, label %bb.m, label %bb.a
 
@@ -95,7 +95,6 @@ bb.a:                                             ; preds = %.lr.ph200
 .lr.ph.split.us.preheader:                        ; preds = %.lr.ph
   %i.z = sub i32 %1, %.1123198
   %i.aa = sub nsw i64 %i.k, %i.m
-  %8 = zext nneg i32 %spec.store.select to i64
   %invariant.gep243 = getelementptr [4 x i8], ptr %0, i64 %i.m
   br label %.lr.ph.split.us
 
@@ -131,19 +130,15 @@ bb.a:                                             ; preds = %.lr.ph200
   br label %.lr.ph169.us
 
 .lr.ph169.us:                                     ; preds = %.lr.ph169.us.preheader, %bb.f
-  %indvars.iv218 = phi i64 [ %i.an, %.lr.ph169.us.preheader ], [ %indvars.iv.next219, %bb.f ] ; 6 uses
-  %.1168.us.us = phi i32 [ %.0113180.us, %.lr.ph169.us.preheader ], [ %.2.us.us, %bb.f ] ; 4 uses
-  %.1115167.us.us = phi i32 [ %.0114179.us, %.lr.ph169.us.preheader ], [ %.2116.us.us, %bb.f ] ; 5 uses
+  %indvars.iv218 = phi i64 [ %i.an, %.lr.ph169.us.preheader ], [ %indvars.iv.next219, %bb.f ] ; 5 uses
+  %.1168.us.us = phi i32 [ %.0113180.us, %.lr.ph169.us.preheader ], [ %.2.us.us, %bb.f ] ; 3 uses
+  %.1115167.us.us = phi i32 [ %.0114179.us, %.lr.ph169.us.preheader ], [ %.2116.us.us, %bb.f ] ; 4 uses
   %i.ao = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %indvars.iv218
   %i.ap = load i32, ptr %i.ao, align 4, !tbaa !8
   %i.aq = icmp eq i32 %i.ap, %i.o
-  br i1 %i.aq, label %9, label %._crit_edge173.split.us.us
+  br i1 %i.aq, label %.preheader.us.us.preheader, label %._crit_edge173.split.us.us
 
-9:                                                ; preds = %.lr.ph169.us
-  %.not143.us.us = icmp samesign ult i64 %indvars.iv218, %8
-  br i1 %.not143.us.us, label %bb.f, label %.preheader.us.us.preheader
-
-.preheader.us.us.preheader:                       ; preds = %9
+.preheader.us.us.preheader:                       ; preds = %.lr.ph169.us
   %invariant.gep = getelementptr [4 x i8], ptr %0, i64 %indvars.iv218
   br label %.preheader.us.us
 
@@ -187,9 +182,9 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.ba = trunc nsw i64 %indvars.iv218 to i32
   br label %bb.f
 
-bb.f:                                             ; preds = %bb.e, %bb.d, %._crit_edge.us.us, %9
-  %.2116.us.us = phi i32 [ %.0119.lcssa.us.us, %bb.e ], [ %.1115167.us.us, %9 ], [ %.1115167.us.us, %bb.d ], [ %.1115167.us.us, %._crit_edge.us.us ] ; 2 uses
-  %.2.us.us = phi i32 [ %i.ba, %bb.e ], [ %.1168.us.us, %9 ], [ %.1168.us.us, %bb.d ], [ %.1168.us.us, %._crit_edge.us.us ] ; 2 uses
+bb.f:                                             ; preds = %bb.e, %bb.d, %._crit_edge.us.us
+  %.2116.us.us = phi i32 [ %.0119.lcssa.us.us, %bb.e ], [ %.1115167.us.us, %._crit_edge.us.us ], [ %.1115167.us.us, %bb.d ] ; 2 uses
+  %.2.us.us = phi i32 [ %i.ba, %bb.e ], [ %.1168.us.us, %._crit_edge.us.us ], [ %.1168.us.us, %bb.d ] ; 2 uses
   %indvars.iv.next219 = add nuw nsw i64 %indvars.iv218, 1 ; 2 uses
   %lftr.wideiv = trunc i64 %indvars.iv.next219 to i32
   %exitcond221.not = icmp eq i32 %.1123198, %lftr.wideiv

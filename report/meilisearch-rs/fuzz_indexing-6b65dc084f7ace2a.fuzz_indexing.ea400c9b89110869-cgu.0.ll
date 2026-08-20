@@ -204,7 +204,7 @@ bb.dr:                                            ; preds = %.loopexit692
   br i1 %.not27.i.i.i.i1131, label %.loopexit681, label %.lr.ph.i.i.i.i294
 
 .lr.ph.i.i.i.i294:                                ; preds = %bb.dr, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h0c5c5fde6a7785ccE.exit.i.i.i.i.i.i.i.i.i.i.i.i"
-  %.sroa.10.0.copyload15.i.i.i.i1135 = phi i64 [ %1, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h0c5c5fde6a7785ccE.exit.i.i.i.i.i.i.i.i.i.i.i.i" ], [ 1, %bb.dr ] ; 8 uses
+  %.sroa.10.0.copyload15.i.i.i.i1135 = phi i64 [ %1, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h0c5c5fde6a7785ccE.exit.i.i.i.i.i.i.i.i.i.i.i.i" ], [ 1, %bb.dr ] ; 9 uses
   %i.mt = phi ptr [ %i.nl, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h0c5c5fde6a7785ccE.exit.i.i.i.i.i.i.i.i.i.i.i.i" ], [ %i.mr, %bb.dr ]
   %.sroa.0559.01134 = phi i64 [ %.sroa.0559.1, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h0c5c5fde6a7785ccE.exit.i.i.i.i.i.i.i.i.i.i.i.i" ], [ 4, %bb.dr ] ; 7 uses
   %.sroa.9563.01133 = phi ptr [ %.sroa.9563.1, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h0c5c5fde6a7785ccE.exit.i.i.i.i.i.i.i.i.i.i.i.i" ], [ %i.mr, %bb.dr ] ; 6 uses
@@ -366,7 +366,6 @@ bb.eb:                                            ; preds = %.body301
   %i.ni = icmp samesign ult i64 %.sroa.10.0.copyload15.i.i.i.i1135, 384307168202282326
   call void @llvm.assume(i1 %i.ni)
   %i.nj = icmp eq i64 %.sroa.10.0.copyload15.i.i.i.i1135, %.sroa.0559.01134
-  %1 = add nuw nsw i64 %.sroa.10.0.copyload15.i.i.i.i1135, 1 ; 2 uses
   br i1 %i.nj, label %bb.ed, label %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h0c5c5fde6a7785ccE.exit.i.i.i.i.i.i.i.i.i.i.i.i"
 
 .loopexit681:                                     ; preds = %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h0c5c5fde6a7785ccE.exit.i.i.i.i.i.i.i.i.i.i.i.i", %bb.ea, %bb.dr, %"_ZN106_$LT$core..iter..adapters..GenericShunt$LT$I$C$R$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$8try_fold17he6525e40efea3fadE.exit.i"
@@ -375,16 +374,17 @@ bb.eb:                                            ; preds = %.body301
   %i.nk = icmp eq i64 %.sroa.0549.0.copyload, 0
   br i1 %i.nk, label %bb.eg, label %.sink.split
 
-"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h0c5c5fde6a7785ccE.exit.i.i.i.i.i.i.i.i.i.i.i.i": ; preds = %.loopexit680, %_ZN5alloc7raw_vec11finish_grow17h6451728e2875e0eaE.exit
-  %.sroa.9563.1 = phi ptr [ %i.ns, %_ZN5alloc7raw_vec11finish_grow17h6451728e2875e0eaE.exit ], [ %.sroa.9563.01133, %.loopexit680 ] ; 2 uses
-  %.sroa.0559.1 = phi i64 [ %.sroa.0.0.i32.i.i, %_ZN5alloc7raw_vec11finish_grow17h6451728e2875e0eaE.exit ], [ %.sroa.0559.01134, %.loopexit680 ] ; 2 uses
-  %i.nl = phi ptr [ %i.ns, %_ZN5alloc7raw_vec11finish_grow17h6451728e2875e0eaE.exit ], [ %i.mt, %.loopexit680 ] ; 2 uses
+"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h0c5c5fde6a7785ccE.exit.i.i.i.i.i.i.i.i.i.i.i.i": ; preds = %_ZN5alloc7raw_vec11finish_grow17h6451728e2875e0eaE.exit, %.loopexit680
+  %.sroa.9563.1 = phi ptr [ %.sroa.9563.01133, %.loopexit680 ], [ %i.ns, %_ZN5alloc7raw_vec11finish_grow17h6451728e2875e0eaE.exit ] ; 2 uses
+  %.sroa.0559.1 = phi i64 [ %.sroa.0559.01134, %.loopexit680 ], [ %.sroa.0.0.i32.i.i, %_ZN5alloc7raw_vec11finish_grow17h6451728e2875e0eaE.exit ] ; 2 uses
+  %i.nl = phi ptr [ %i.mt, %.loopexit680 ], [ %i.ns, %_ZN5alloc7raw_vec11finish_grow17h6451728e2875e0eaE.exit ] ; 2 uses
   %i.nm = getelementptr inbounds nuw [24 x i8], ptr %i.nl, i64 %.sroa.10.0.copyload15.i.i.i.i1135 ; 3 uses
   store i64 %.sroa.4.0.ph.i.i.i.ph.i, ptr %i.nm, align 8, !noalias !14733
   %.sroa.4573.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.nm, i64 8
   store ptr %.sroa.6.0.ph.i.i.i.ph.i, ptr %.sroa.4573.0..sroa_idx, align 8, !noalias !14733
   %.sroa.7574.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.nm, i64 16
   store i64 %.sroa.8.0.ph.i.i.i.ph.i, ptr %.sroa.7574.0..sroa_idx, align 8, !noalias !14733
+  %1 = add nuw nsw i64 %.sroa.10.0.copyload15.i.i.i.i1135, 1
   %.not27.i.i.i.i = icmp eq ptr %i.mw, %i.mc
   br i1 %.not27.i.i.i.i, label %.loopexit681, label %.lr.ph.i.i.i.i294
 
@@ -394,14 +394,13 @@ bb.ec:                                            ; preds = %.split.loop.exit112
   br label %.body301
 
 bb.ed:                                            ; preds = %.loopexit680
-  %2 = shl nuw nsw i64 %.sroa.10.0.copyload15.i.i.i.i1135, 1
-  %.sroa.0.0.i.i.i291 = call noundef i64 @llvm.umax.i64(i64 %1, i64 %2) ; 2 uses
-  %i.no = icmp samesign ugt i64 %.sroa.0.0.i.i.i291, 384307168202282325
+  %i.no = icmp samesign ugt i64 %.sroa.10.0.copyload15.i.i.i.i1135, 192153584101141162
   br i1 %i.no, label %.split.loop.exit1124, label %_ZN5alloc7raw_vec11finish_grow17h6451728e2875e0eaE.exit, !prof !4065
 
 _ZN5alloc7raw_vec11finish_grow17h6451728e2875e0eaE.exit: ; preds = %bb.ed
-  %.sroa.0.0.i32.i.i = call noundef i64 @llvm.umax.i64(i64 %.sroa.0.0.i.i.i291, i64 4) ; 3 uses
-  %i.np = mul nuw i64 %.sroa.0.0.i32.i.i, 24      ; 2 uses
+  %2 = shl nuw nsw i64 %.sroa.10.0.copyload15.i.i.i.i1135, 1
+  %.sroa.0.0.i32.i.i = call noundef i64 @llvm.umax.i64(i64 %2, i64 4) ; 3 uses
+  %i.np = mul nuw nsw i64 %.sroa.0.0.i32.i.i, 24  ; 2 uses
   %i.nq = mul nuw nsw i64 %.sroa.10.0.copyload15.i.i.i.i1135, 24
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.9563.01133) ]
   %i.nr = icmp samesign uge i64 %.sroa.0.0.i32.i.i, %.sroa.10.0.copyload15.i.i.i.i1135

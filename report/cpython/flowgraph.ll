@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %make_cfg_traversal_
 
 bb.d:                                             ; preds = %.lr.ph, %bb.w
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.w ] ; 2 uses
-  %i.ai = phi i32 [ %i.aa, %.lr.ph ], [ %i.ct, %bb.w ] ; 2 uses
+  %i.ai = phi i32 [ %i.aa, %.lr.ph ], [ %i.ct, %bb.w ]
   %.091181 = phi i32 [ -1, %.lr.ph ], [ %.293.ph, %bb.w ] ; 8 uses
   %.094180 = phi ptr [ %i.ag, %.lr.ph ], [ %.296.ph, %bb.w ] ; 12 uses
   %.198179 = phi ptr [ %i.v, %.lr.ph ], [ %.5.ph, %bb.w ] ; 13 uses
@@ -306,13 +306,9 @@ bb.m:                                             ; preds = %bb.l
   %i.by = load i8, ptr %i.bx, align 8
   %i.bz = and i8 %i.by, 2
   %.not118 = icmp eq i8 %i.bz, 0
-  br i1 %.not118, label %1, label %bb.w
+  br i1 %.not118, label %basicblock_last_instr.exit.i, label %bb.w
 
-1:                                                ; preds = %bb.m
-  %2 = icmp sgt i32 %i.ai, 0
-  br i1 %2, label %basicblock_last_instr.exit.i, label %basicblock_nofallthrough.exit.thread
-
-basicblock_last_instr.exit.i:                     ; preds = %1
+basicblock_last_instr.exit.i:                     ; preds = %bb.m
   %i.ca = zext nneg i32 %i.ai to i64
   %i.cb = getelementptr [40 x i8], ptr %i.aj, i64 %i.ca
   %i.cc = getelementptr i8, ptr %i.cb, i64 -40    ; 2 uses
@@ -332,7 +328,7 @@ bb.n:                                             ; preds = %basicblock_last_ins
     i32 76, label %basicblock_nofallthrough.exit.thread138
   ]
 
-basicblock_nofallthrough.exit.thread:             ; preds = %bb.n, %1, %basicblock_last_instr.exit.i
+basicblock_nofallthrough.exit.thread:             ; preds = %bb.n, %basicblock_last_instr.exit.i
   %i.ce = tail call ptr @PyMem_Malloc(i64 noundef 192) #8 ; 3 uses
   %i.cf = icmp eq ptr %i.ce, null
   br i1 %i.cf, label %.thread, label %bb.o

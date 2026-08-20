@@ -204,8 +204,8 @@ bb.ft:                                            ; preds = %bb.fv, %.lr.ph.i134
   %i.xt = lshr i64 %i.xs, 6
   %.0.i137 = select i1 %.not.i136, i64 %i.xo, i64 %i.xt ; 2 uses
   %indvars.iv.next48.i = add nuw nsw i64 %indvars.iv47.i, 1 ; 5 uses
-  %25 = zext nneg i32 %.2933.i to i64
-  %.not22.i = icmp samesign ult i64 %indvars.iv47.i, %25
+  %25 = sext i32 %.2933.i to i64
+  %.not22.i = icmp slt i64 %indvars.iv47.i, %25
   br i1 %.not22.i, label %bb.fv, label %bb.fu
 
 bb.fu:                                            ; preds = %bb.ft
@@ -213,25 +213,17 @@ bb.fu:                                            ; preds = %bb.ft
   %i.xv = add i32 %i.xu, 48
   %i.xw = sdiv i32 %i.xv, 2
   %i.xx = trunc nsw i64 %indvars.iv.next48.i to i32
-  %..i138 = call i32 @llvm.smax.i32(i32 %i.xw, i32 %i.xx) ; 3 uses
-  %i.xy = sext i32 %..i138 to i64                 ; 2 uses
-  %mul.ov.i.i = icmp slt i32 %..i138, 0
-  br i1 %mul.ov.i.i, label %26, label %st_mult.exit.i
-
-26:                                               ; preds = %bb.fu
-  call void (ptr, ...) @die(ptr noundef nonnull @.str.363, i64 noundef 16, i64 noundef %i.xy) #35
-  unreachable
-
-st_mult.exit.i:                                   ; preds = %bb.fu
-  %27 = shl nuw nsw i64 %i.xy, 4
-  %28 = call ptr @xrealloc(ptr noundef %i.xg, i64 noundef %27) #33
+  %..i138 = call i32 @llvm.smax.i32(i32 %i.xw, i32 %i.xx) ; 2 uses
+  %i.xy = sext i32 %..i138 to i64
+  %26 = shl nuw nsw i64 %i.xy, 4
+  %27 = call ptr @xrealloc(ptr noundef %i.xg, i64 noundef %26) #33
   %.pre.i139 = load i32, ptr %24, align 8, !tbaa !70
   br label %bb.fv
 
-bb.fv:                                            ; preds = %st_mult.exit.i, %bb.ft
-  %i.xz = phi i32 [ %.pre.i139, %st_mult.exit.i ], [ %i.xf, %bb.ft ] ; 2 uses
-  %i.ya = phi ptr [ %28, %st_mult.exit.i ], [ %i.xg, %bb.ft ] ; 6 uses
-  %.28.i = phi i32 [ %..i138, %st_mult.exit.i ], [ %.2933.i, %bb.ft ] ; 2 uses
+bb.fv:                                            ; preds = %bb.fu, %bb.ft
+  %i.xz = phi i32 [ %.pre.i139, %bb.fu ], [ %i.xf, %bb.ft ] ; 2 uses
+  %i.ya = phi ptr [ %27, %bb.fu ], [ %i.xg, %bb.ft ] ; 6 uses
+  %.28.i = phi i32 [ %..i138, %bb.fu ], [ %.2933.i, %bb.ft ] ; 2 uses
   %i.yb = getelementptr inbounds nuw i8, ptr %i.xj, i64 8
   %i.yc = load ptr, ptr %i.yb, align 8, !tbaa !78
   %i.yd = getelementptr inbounds nuw [16 x i8], ptr %i.ya, i64 %indvars.iv47.i ; 2 uses
@@ -634,23 +626,15 @@ bb.kx:                                            ; preds = %bb.kw
   %i.avx = add i32 %i.avw, 48
   %i.avy = sdiv i32 %i.avx, 2
   %i.avz = trunc nsw i64 %indvars.iv.next.i107.i.i to i32
-  %..i.i.i = call i32 @llvm.smax.i32(i32 %i.avy, i32 %i.avz) ; 3 uses
-  %i.awa = sext i32 %..i.i.i to i64               ; 2 uses
-  %mul.ov.i.i.i.i = icmp slt i32 %..i.i.i, 0
-  br i1 %mul.ov.i.i.i.i, label %29, label %st_mult.exit.i.i.i
-
-29:                                               ; preds = %bb.kx
-  call void (ptr, ...) @die(ptr noundef nonnull @.str.363, i64 noundef 16, i64 noundef %i.awa) #35
-  unreachable
-
-st_mult.exit.i.i.i:                               ; preds = %bb.kx
-  %30 = shl nuw nsw i64 %i.awa, 4
-  %31 = call ptr @xrealloc(ptr noundef %.02942.i.i.i, i64 noundef %30) #33
+  %..i.i.i = call i32 @llvm.smax.i32(i32 %i.avy, i32 %i.avz) ; 2 uses
+  %i.awa = sext i32 %..i.i.i to i64
+  %28 = shl nuw nsw i64 %i.awa, 4
+  %29 = call ptr @xrealloc(ptr noundef %.02942.i.i.i, i64 noundef %28) #33
   br label %bb.ky
 
-bb.ky:                                            ; preds = %st_mult.exit.i.i.i, %bb.kw
-  %.130.i.i.i = phi ptr [ %31, %st_mult.exit.i.i.i ], [ %.02942.i.i.i, %bb.kw ] ; 4 uses
-  %.2.i109.i.i = phi i32 [ %..i.i.i, %st_mult.exit.i.i.i ], [ %.02843.i.i.i, %bb.kw ] ; 3 uses
+bb.ky:                                            ; preds = %bb.kx, %bb.kw
+  %.130.i.i.i = phi ptr [ %29, %bb.kx ], [ %.02942.i.i.i, %bb.kw ] ; 4 uses
+  %.2.i109.i.i = phi i32 [ %..i.i.i, %bb.kx ], [ %.02843.i.i.i, %bb.kw ] ; 3 uses
   %i.awb = load i32, ptr %i.aqn, align 4, !tbaa !168
   %i.awc = and i32 %i.awb, 32
   %.not36.i.i.i = icmp eq i32 %i.awc, 0

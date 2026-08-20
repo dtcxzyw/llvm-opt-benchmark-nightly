@@ -204,8 +204,7 @@ _ZNK6embree13InstanceArray6boundsEmm.exit:        ; preds = %_ZNK6embree13Instan
   %i.ghu = fdiv <2 x float> %i.ght, %i.flg
   %i.ghv = fsub <2 x float> %i.ghu, %i.fli
   %i.ghw = fdiv <2 x float> %i.ghv, %i.fll        ; 3 uses
-  %16 = tail call noundef i32 @llvm.smax.i32(i32 %i.ghm, i32 1)
-  %i.ghx = zext nneg i32 %16 to i64
+  %i.ghx = zext i32 %i.ghm to i64
   %i.ghy = icmp eq i64 %indvars.iv5085, %i.ghx
   %i.ghz = select i1 %i.ghy, float %i.fkm, float 1.000000e+00
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #24

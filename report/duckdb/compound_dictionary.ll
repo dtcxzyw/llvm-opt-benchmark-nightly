@@ -32,8 +32,8 @@ bb.a:
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.lr.ph.3, %.lr.ph, %.lr.ph.1, %.lr.ph.2, %bb.a
-  %.014.lcssa = phi i32 [ 17, %bb.a ], [ 18, %.lr.ph ], [ 19, %.lr.ph.1 ], [ 20, %.lr.ph.2 ], [ %spec.select, %.lr.ph.3 ] ; 6 uses
-  %.013.lcssa = phi i32 [ 7, %bb.a ], [ 8, %.lr.ph ], [ 9, %.lr.ph.1 ], [ 10, %.lr.ph.2 ], [ %spec.select55, %.lr.ph.3 ] ; 5 uses
+  %.014.lcssa = phi i32 [ 17, %bb.a ], [ 18, %.lr.ph ], [ 19, %.lr.ph.1 ], [ 20, %.lr.ph.2 ], [ %spec.select, %.lr.ph.3 ] ; 5 uses
+  %.013.lcssa = phi i32 [ 7, %bb.a ], [ 8, %.lr.ph ], [ 9, %.lr.ph.1 ], [ 10, %.lr.ph.2 ], [ %spec.select55, %.lr.ph.3 ] ; 4 uses
   %i.f = shl nuw i32 1, %.013.lcssa               ; 2 uses
   %i.g = sub nuw nsw i32 64, %.014.lcssa
   %i.h = add i32 %i.f, -1
@@ -41,11 +41,9 @@ bb.a:
   %i.j = shl i64 4, %i.i
   %i.k = zext nneg i32 %.014.lcssa to i64         ; 2 uses
   %i.l = shl nuw nsw i64 2, %i.k                  ; 2 uses
-  %3 = icmp ugt i32 %.013.lcssa, %.014.lcssa
   %i.m = sub nuw nsw i32 %.014.lcssa, %.013.lcssa
   %i.n = icmp samesign ugt i32 %i.m, 15
-  %or.cond198.i = select i1 %3, i1 true, i1 %i.n
-  br i1 %or.cond198.i, label %_ZL34CreatePreparedDictionaryWithParamsPN13duckdb_brotli13MemoryManagerEPKhmjjjt.exit, label %bb.b
+  br i1 %i.n, label %_ZL34CreatePreparedDictionaryWithParamsPN13duckdb_brotli13MemoryManagerEPKhmjjjt.exit, label %bb.b
 
 bb.b:                                             ; preds = %._crit_edge
   %i.o = shl nuw nsw i32 1, %.014.lcssa

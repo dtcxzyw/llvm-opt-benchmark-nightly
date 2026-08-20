@@ -204,11 +204,10 @@ bb.u:                                             ; preds = %._crit_edge.i
   br label %.preheader.i.i.i.i.i.i
 
 .preheader.i.i.i.i.i.i:                           ; preds = %.critedge.i.i.i.i.i.i, %.preheader.preheader.i.i.i.i.i.i
-  %.01520.i.i.i.i.i.i = phi ptr [ %.015.i.i.i.i.i.i, %.critedge.i.i.i.i.i.i ], [ %.01519.i.i.i.i.i.i, %.preheader.preheader.i.i.i.i.i.i ] ; 3 uses
-  %18 = icmp ugt ptr %.01520.i.i.i.i.i.i, %.sroa.21.4.i
-  br i1 %18, label %.lr.ph.i.i.i.i.i.i, label %.critedge.i.i.i.i.i.i
+  %.01520.i.i.i.i.i.i = phi ptr [ %.015.i.i.i.i.i.i, %.critedge.i.i.i.i.i.i ], [ %.01519.i.i.i.i.i.i, %.preheader.preheader.i.i.i.i.i.i ] ; 2 uses
+  br label %.lr.ph.i.i.i.i.i.i
 
-.lr.ph.i.i.i.i.i.i:                               ; preds = %.preheader.i.i.i.i.i.i, %bb.w
+.lr.ph.i.i.i.i.i.i:                               ; preds = %bb.w, %.preheader.i.i.i.i.i.i
   %.017.i.i.i.i.i.i = phi ptr [ %i.ef, %bb.w ], [ %.01520.i.i.i.i.i.i, %.preheader.i.i.i.i.i.i ] ; 8 uses
   %i.ef = getelementptr inbounds i8, ptr %.017.i.i.i.i.i.i, i64 -24 ; 5 uses
   %i.eg = getelementptr inbounds i8, ptr %.017.i.i.i.i.i.i, i64 -8
@@ -243,7 +242,7 @@ bb.v:                                             ; preds = %.lr.ph.i.i.i.i.i.i
   %i.fd = fcmp ule double %i.ex, %i.ew
   br i1 %i.fd, label %.critedge.i.i.i.i.i.i, label %bb.w
 
-.critedge.i.i.i.i.i.i:                            ; preds = %bb.w, %bb.v, %.split.i.i.i.i.i.i, %.preheader.i.i.i.i.i.i
+.critedge.i.i.i.i.i.i:                            ; preds = %bb.w, %bb.v, %.split.i.i.i.i.i.i
   %.015.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %.01520.i.i.i.i.i.i, i64 24 ; 2 uses
   %i.fe = icmp ult ptr %.015.i.i.i.i.i.i, %i.ee
   br i1 %i.fe, label %.preheader.i.i.i.i.i.i, label %_ZN11hb_vector_tI13lookup_size_tLb0EE5qsortEv.exit.i, !llvm.loop !132
@@ -517,7 +516,7 @@ _ZN11hb_vector_tI13lookup_size_tLb0EE5allocEjb.exit149.i: ; preds = %_ZN11hb_vec
 _ZN11hb_vector_tI13lookup_size_tLb0EE4pushIJS0_EEEPS0_DpOT_.exit.i: ; preds = %.critedge.i100.i, %_ZN11hb_vector_tI13lookup_size_tLb0EE5allocEjb.exit149.i
   %.sroa.0178.3.i = phi i32 [ %.sroa.0178.2.i, %.critedge.i100.i ], [ %.sroa.0178.4.i, %_ZN11hb_vector_tI13lookup_size_tLb0EE5allocEjb.exit149.i ] ; 4 uses
   %.sroa.11184.1.i = phi i32 [ %.pre289.i, %.critedge.i100.i ], [ %.sroa.11184.0248.i, %_ZN11hb_vector_tI13lookup_size_tLb0EE5allocEjb.exit149.i ] ; 4 uses
-  %.sroa.21.4.i = phi ptr [ %.sroa.21.3.i, %.critedge.i100.i ], [ %.sroa.21.0250.i, %_ZN11hb_vector_tI13lookup_size_tLb0EE5allocEjb.exit149.i ] ; 9 uses
+  %.sroa.21.4.i = phi ptr [ %.sroa.21.3.i, %.critedge.i100.i ], [ %.sroa.21.0250.i, %_ZN11hb_vector_tI13lookup_size_tLb0EE5allocEjb.exit149.i ] ; 8 uses
   call void @_ZN14hb_sparseset_tI23hb_bit_set_invertible_tED2Ev(ptr noundef nonnull align 8 dead_on_return(72) dereferenceable(72) %9) #15
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #15
   %i.ir = zext i32 %.sroa.7163.0252.i to i64
@@ -920,7 +919,7 @@ bb.p:                                             ; preds = %bb.o, %_ZL9hb_memcp
   %.val.i = phi i32 [ %2, %bb.p ], [ %i.fz, %._crit_edge208 ]
   %.076.lcssa = phi ptr [ %.0.i298, %bb.p ], [ %.1.lcssa, %._crit_edge208 ] ; 2 uses
   %i.ep = getelementptr inbounds nuw i8, ptr %.076.lcssa, i64 24
-  %i.eq = load ptr, ptr %i.ep, align 8, !tbaa !78 ; 5 uses
+  %i.eq = load ptr, ptr %i.ep, align 8, !tbaa !78 ; 4 uses
   %i.er = getelementptr inbounds nuw i8, ptr %.076.lcssa, i64 20
   %i.es = load i32, ptr %i.er, align 4, !tbaa !76 ; 3 uses
   %.not.i.i.i.i = icmp eq i32 %i.es, 0
@@ -939,11 +938,10 @@ bb.q:                                             ; preds = %._crit_edge216
   br label %.preheader.i.i.i.i.i
 
 .preheader.i.i.i.i.i:                             ; preds = %.critedge.i.i.i.i.i, %.preheader.preheader.i.i.i.i.i
-  %.01519.i.i.i.i.i = phi ptr [ %.015.i.i.i.i.i, %.critedge.i.i.i.i.i ], [ %.01518.i.i.i.i.i, %.preheader.preheader.i.i.i.i.i ] ; 3 uses
-  %5 = icmp ugt ptr %.01519.i.i.i.i.i, %i.eq
-  br i1 %5, label %.lr.ph.i.i.i.i.i, label %.critedge.i.i.i.i.i
+  %.01519.i.i.i.i.i = phi ptr [ %.015.i.i.i.i.i, %.critedge.i.i.i.i.i ], [ %.01518.i.i.i.i.i, %.preheader.preheader.i.i.i.i.i ] ; 2 uses
+  br label %.lr.ph.i.i.i.i.i
 
-.lr.ph.i.i.i.i.i:                                 ; preds = %.preheader.i.i.i.i.i, %bb.r
+.lr.ph.i.i.i.i.i:                                 ; preds = %bb.r, %.preheader.i.i.i.i.i
   %.016.i.i.i.i.i = phi ptr [ %i.fg, %bb.r ], [ %.01519.i.i.i.i.i, %.preheader.i.i.i.i.i ] ; 7 uses
   %i.eu = getelementptr inbounds i8, ptr %.016.i.i.i.i.i, i64 -8
   %i.ev = load i32, ptr %i.eu, align 4, !tbaa !291 ; 2 uses
@@ -960,7 +958,7 @@ bb.q:                                             ; preds = %._crit_edge216
   %i.fe = icmp sgt i32 %.0.i.i.i.i.i.i.i, 0
   br i1 %i.fe, label %bb.r, label %.critedge.i.i.i.i.i
 
-.critedge.i.i.i.i.i:                              ; preds = %bb.r, %.lr.ph.i.i.i.i.i, %.preheader.i.i.i.i.i
+.critedge.i.i.i.i.i:                              ; preds = %bb.r, %.lr.ph.i.i.i.i.i
   %.015.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %.01519.i.i.i.i.i, i64 12 ; 2 uses
   %i.ff = icmp ult ptr %.015.i.i.i.i.i, %i.et
   br i1 %i.ff, label %.preheader.i.i.i.i.i, label %_ZN11hb_vector_tIN22hb_serialize_context_t8object_t6link_tELb0EE5qsortEv.exit, !llvm.loop !523
@@ -1363,7 +1361,7 @@ _ZN2OT7ArrayOfINS_8OffsetToINS_6Layout9GSUB_impl11LigatureSetINS2_10SmallTypesEE
 
 bb.aa:                                            ; preds = %_ZN2OT7ArrayOfINS_8OffsetToINS_6Layout9GSUB_impl11LigatureSetINS2_10SmallTypesEEENS_7NumTypeILb1EtLj2EEEvLb1EEES8_EixEi.exit
   %i.fo = sub nuw nsw i32 %i.fm, %i.fn
-  %i.fp = load ptr, ptr %i.do, align 8, !tbaa !78 ; 5 uses
+  %i.fp = load ptr, ptr %i.do, align 8, !tbaa !78 ; 4 uses
   %.not.i.i.i.i.i175 = icmp eq i32 %i.fn, 0
   br i1 %.not.i.i.i.i.i175, label %_ZN11hb_vector_tIN22hb_serialize_context_t8object_t6link_tELb0EE5qsortEv.exit.i, label %bb.ab, !prof !11
 
@@ -1380,11 +1378,10 @@ bb.ab:                                            ; preds = %bb.aa
   br label %.preheader.i.i.i.i.i.i
 
 .preheader.i.i.i.i.i.i:                           ; preds = %.critedge.i.i.i.i.i.i, %.preheader.preheader.i.i.i.i.i.i
-  %.01519.i.i.i.i.i.i = phi ptr [ %.015.i.i.i.i.i.i, %.critedge.i.i.i.i.i.i ], [ %.01518.i.i.i.i.i.i, %.preheader.preheader.i.i.i.i.i.i ] ; 3 uses
-  %6 = icmp ugt ptr %.01519.i.i.i.i.i.i, %i.fp
-  br i1 %6, label %.lr.ph.i.i.i.i.i.i, label %.critedge.i.i.i.i.i.i
+  %.01519.i.i.i.i.i.i = phi ptr [ %.015.i.i.i.i.i.i, %.critedge.i.i.i.i.i.i ], [ %.01518.i.i.i.i.i.i, %.preheader.preheader.i.i.i.i.i.i ] ; 2 uses
+  br label %.lr.ph.i.i.i.i.i.i
 
-.lr.ph.i.i.i.i.i.i:                               ; preds = %.preheader.i.i.i.i.i.i, %bb.ac
+.lr.ph.i.i.i.i.i.i:                               ; preds = %bb.ac, %.preheader.i.i.i.i.i.i
   %.016.i.i.i.i.i.i = phi ptr [ %i.gd, %bb.ac ], [ %.01519.i.i.i.i.i.i, %.preheader.i.i.i.i.i.i ] ; 7 uses
   %i.fr = getelementptr inbounds i8, ptr %.016.i.i.i.i.i.i, i64 -8
   %i.fs = load i32, ptr %i.fr, align 4, !tbaa !291 ; 2 uses
@@ -1401,7 +1398,7 @@ bb.ab:                                            ; preds = %bb.aa
   %i.gb = icmp sgt i32 %.0.i.i.i.i.i.i.i.i, 0
   br i1 %i.gb, label %bb.ac, label %.critedge.i.i.i.i.i.i
 
-.critedge.i.i.i.i.i.i:                            ; preds = %bb.ac, %.lr.ph.i.i.i.i.i.i, %.preheader.i.i.i.i.i.i
+.critedge.i.i.i.i.i.i:                            ; preds = %bb.ac, %.lr.ph.i.i.i.i.i.i
   %.015.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %.01519.i.i.i.i.i.i, i64 12 ; 2 uses
   %i.gc = icmp ult ptr %.015.i.i.i.i.i.i, %i.fq
   br i1 %i.gc, label %.preheader.i.i.i.i.i.i, label %_ZN11hb_vector_tIN22hb_serialize_context_t8object_t6link_tELb0EE5qsortEv.exit.i, !llvm.loop !523

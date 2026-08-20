@@ -99,14 +99,13 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 _ZNK2v84base6VectorIhE6lengthEv.exit:             ; preds = %bb.a
-  %1 = trunc nuw nsw i64 %i.b to i32
-  %2 = tail call i32 @llvm.umax.i32(i32 %1, i32 256) ; 2 uses
-  %i.d = icmp samesign ult i64 %i.b, 349525
-  %3 = shl nsw i32 %2, 2
-  %4 = add nuw nsw i32 %2, 1048576
-  %5 = select i1 %i.d, i32 %3, i32 %4
-  %6 = zext nneg i32 %5 to i64                    ; 2 uses
-  %i.e = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %6) #11 ; 18 uses
+  %1 = tail call i64 @llvm.umax.i64(i64 %i.b, i64 256) ; 2 uses
+  %i.d = icmp ult i64 %i.b, 349525
+  %2 = shl nuw nsw i64 %1, 2
+  %3 = add nuw nsw i64 %1, 1048576
+  %4 = select i1 %i.d, i64 %2, i64 %3
+  %5 = and i64 %4, 4294967295                     ; 2 uses
+  %i.e = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %5) #11 ; 18 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.g = load i32, ptr %i.f, align 8              ; 3 uses
   %i.h = icmp sgt i32 %i.g, 0
@@ -216,7 +215,7 @@ _ZN2v88internal7MemCopyEPvPKvm.exit.thread:       ; preds = %bb.d, %bb.e, %bb.f,
 
 _ZN2v84base6VectorIhE7DisposeEv.exit:             ; preds = %_ZN2v88internal7MemCopyEPvPKvm.exit, %_ZN2v88internal7MemCopyEPvPKvm.exit.thread
   store ptr %i.e, ptr %0, align 8
-  store i64 %6, ptr %i.a, align 8
+  store i64 %5, ptr %i.a, align 8
   ret void
 }
 
@@ -479,7 +478,7 @@ declare void @_Z8V8_FatalPKcz(ptr noundef, ...) local_unnamed_addr #6
 declare noundef nonnull ptr @_Znam(i64 noundef) local_unnamed_addr #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umax.i32(i32, i32) #8
+declare i64 @llvm.umax.i64(i64, i64) #8
 
 attributes #0 = { mustprogress nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

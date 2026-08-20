@@ -18,7 +18,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define range(i32 0, 27) i32 @wwunpack(ptr noundef %0, i32 noundef %1, ptr noundef %2, ptr nofree noundef readonly captures(none) %3, i16 noundef zeroext %4, i32 noundef %5, i32 noundef %6) local_unnamed_addr #0 {
 bb.a:
-  %i.a = getelementptr i8, ptr %2, i64 673        ; 3 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %2, i64 673 ; 2 uses
   tail call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str) #5
   %i.b = zext i16 %4 to i64                       ; 2 uses
   %i.c = getelementptr inbounds nuw [36 x i8], ptr %3, i64 %i.b ; 4 uses
@@ -29,11 +29,7 @@ bb.a:
   %i.h = ptrtoint ptr %0 to i64                   ; 10 uses
   %i.i = add i64 %i.f, %i.h                       ; 18 uses
   %i.j = icmp ult i32 %1, 2
-  br i1 %i.g, label %.split.us, label %.split.preheader
-
-.split.preheader:                                 ; preds = %bb.a
-  %.not1240 = icmp ult ptr %i.a, %2
-  br label %.split
+  br i1 %i.g, label %.split.us, label %.split
 
 .split.us:                                        ; preds = %bb.a
   %i.k = load i32, ptr %i.d, align 4, !tbaa !8    ; 2 uses
@@ -52,12 +48,11 @@ bb.b:                                             ; preds = %.split.us
   %or.cond1347.us = and i1 %i.r, %or.cond1346.us
   br i1 %or.cond1347.us, label %.split1503, label %.loopexit1456.sink.split
 
-.split:                                           ; preds = %.split.preheader, %bb.fo
-  %.01060 = phi ptr [ %i.qe, %bb.fo ], [ %i.a, %.split.preheader ] ; 6 uses
+.split:                                           ; preds = %bb.a, %bb.fo
+  %.01060 = phi ptr [ %i.qe, %bb.fo ], [ %i.a, %bb.a ] ; 6 uses
   %i.s = load i32, ptr %i.d, align 4, !tbaa !8    ; 2 uses
   %i.t = icmp ult i32 %i.s, 17
-  %or.cond = or i1 %i.t, %.not1240
-  br i1 %or.cond, label %.loopexit1456.sink.split, label %bb.c
+  br i1 %i.t, label %.loopexit1456.sink.split, label %bb.c
 
 bb.c:                                             ; preds = %.split
   %i.u = zext i32 %i.s to i64
@@ -460,24 +455,17 @@ bb.fu:                                            ; preds = %bb.fs
   %i.rz = add i32 %5, 24
   %i.sa = add i32 %i.rz, %i.ry
   %i.sb = zext i32 %i.sa to i64
-  %i.sc = getelementptr i8, ptr %0, i64 %i.sb     ; 3 uses
+  %i.sc = getelementptr inbounds nuw i8, ptr %0, i64 %i.sb ; 2 uses
   %.not = icmp eq i16 %4, 0
   br i1 %.not, label %._crit_edge, label %.lr.ph1508
 
 .lr.ph1508:                                       ; preds = %bb.fu
   %i.sd = icmp ult i32 %1, 40
-  br i1 %i.sd, label %.split1510, label %.lr.ph1508.split.preheader
+  br i1 %i.sd, label %.split1510, label %bb.fv
 
-.lr.ph1508.split.preheader:                       ; preds = %.lr.ph1508
-  %.not1343 = icmp ult ptr %i.sc, %0
-  br label %.lr.ph1508.split
-
-.lr.ph1508.split:                                 ; preds = %.lr.ph1508.split.preheader, %bb.fw
-  %indvars.iv = phi i64 [ 0, %.lr.ph1508.split.preheader ], [ %indvars.iv.next, %bb.fw ] ; 2 uses
-  %.110611506 = phi ptr [ %i.sc, %.lr.ph1508.split.preheader ], [ %i.ss, %bb.fw ] ; 6 uses
-  br i1 %.not1343, label %.split1510, label %bb.fv
-
-bb.fv:                                            ; preds = %.lr.ph1508.split
+bb.fv:                                            ; preds = %.lr.ph1508, %bb.fw
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.fw ], [ 0, %.lr.ph1508 ] ; 2 uses
+  %.110611506 = phi ptr [ %i.ss, %bb.fw ], [ %i.sc, %.lr.ph1508 ] ; 6 uses
   %i.se = ptrtoint ptr %.110611506 to i64         ; 2 uses
   %i.sf = add i64 %i.se, 40                       ; 2 uses
   %.not1344 = icmp ule i64 %i.sf, %i.i
@@ -487,7 +475,7 @@ bb.fv:                                            ; preds = %.lr.ph1508.split
   %or.cond1421 = and i1 %i.sh, %or.cond1420
   br i1 %or.cond1421, label %bb.fw, label %.split1510
 
-.split1510:                                       ; preds = %.lr.ph1508.split, %bb.fv, %.lr.ph1508
+.split1510:                                       ; preds = %bb.fv, %.lr.ph1508
   tail call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.8) #5
   br label %bb.ga
 
@@ -509,14 +497,12 @@ bb.fw:                                            ; preds = %bb.fv
   %i.ss = getelementptr inbounds nuw i8, ptr %.110611506, i64 40 ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %i.b
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph1508.split
+  br i1 %exitcond.not, label %._crit_edge, label %bb.fv
 
 ._crit_edge:                                      ; preds = %bb.fw, %bb.fu
-  %.11061.lcssa = phi ptr [ %i.sc, %bb.fu ], [ %i.ss, %bb.fw ] ; 3 uses
+  %.11061.lcssa = phi ptr [ %i.sc, %bb.fu ], [ %i.ss, %bb.fw ] ; 2 uses
   %i.st = icmp ult i32 %1, 40
-  %.not1340 = icmp ult ptr %.11061.lcssa, %0
-  %or.cond1453 = select i1 %i.st, i1 true, i1 %.not1340
-  br i1 %or.cond1453, label %bb.fy, label %bb.fx
+  br i1 %i.st, label %bb.fy, label %bb.fx
 
 bb.fx:                                            ; preds = %._crit_edge
   %i.su = ptrtoint ptr %.11061.lcssa to i64       ; 2 uses

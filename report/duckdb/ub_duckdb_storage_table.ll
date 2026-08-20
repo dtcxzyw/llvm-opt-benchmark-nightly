@@ -204,7 +204,7 @@ _ZNK6duckdb18RowGroupCollection12GetRowGroupsEv.exit: ; preds = %_ZNSt10lock_gua
 
 bb.f:                                             ; preds = %bb.ac, %_ZNK6duckdb18RowGroupCollection12GetRowGroupsEv.exit
   %.033 = phi i64 [ 0, %_ZNK6duckdb18RowGroupCollection12GetRowGroupsEv.exit ], [ %i.cu, %bb.ac ]
-  %.031 = phi i64 [ 0, %_ZNK6duckdb18RowGroupCollection12GetRowGroupsEv.exit ], [ %.132.lcssa, %bb.ac ] ; 6 uses
+  %.031 = phi i64 [ 0, %_ZNK6duckdb18RowGroupCollection12GetRowGroupsEv.exit ], [ %.132.lcssa, %bb.ac ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #37
   %i.x = invoke noundef ptr @_ZNK6duckdb10shared_ptrINS_19RowGroupSegmentTreeELb1EEptEv(ptr noundef nonnull align 8 dereferenceable(16) %7)
           to label %bb.g unwind label %bb.l
@@ -276,7 +276,7 @@ bb.n:                                             ; preds = %_ZNK6duckdb11Segmen
 
 ._crit_edge101:                                   ; preds = %bb.k, %._crit_edge, %bb.j
   %.132.lcssa93 = phi i64 [ %.13299, %._crit_edge ], [ %.13297, %bb.j ], [ %.132, %bb.k ]
-  %.132.lcssa = phi i64 [ %.13299, %._crit_edge ], [ %umax, %bb.j ], [ %umax, %bb.k ] ; 3 uses
+  %.132.lcssa = phi i64 [ %.13299, %._crit_edge ], [ %umax, %bb.j ], [ %umax, %bb.k ] ; 2 uses
   %i.aq = icmp ult i64 %.132.lcssa93, %4
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #37
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.n, ptr noundef nonnull align 8 dereferenceable(24) %1, i64 24, i1 false)
@@ -287,17 +287,16 @@ bb.n:                                             ; preds = %_ZNK6duckdb11Segmen
   store i64 0, ptr %i.q, align 8, !tbaa !2880
   store i64 %i.af, ptr %i.r, align 8, !tbaa !2881
   store i64 0, ptr %i.s, align 8, !tbaa !2882
-  %.not.i = icmp eq i64 %.132.lcssa, %.031
-  br i1 %.not.i, label %._crit_edge.i, label %.lr.ph.i
+  br label %.lr.ph.i
 
-._crit_edge.i:                                    ; preds = %_ZN6duckdb18VersionDeleteState6DeleteEl.exit.i, %._crit_edge101
+._crit_edge.i:                                    ; preds = %_ZN6duckdb18VersionDeleteState6DeleteEl.exit.i
   invoke void @_ZN6duckdb18VersionDeleteState5FlushEv(ptr noundef nonnull align 8 dereferenceable(16464) %6)
           to label %bb.ac unwind label %.body65.loopexit.split-lp.loopexit
 
-.lr.ph.i:                                         ; preds = %._crit_edge101, %_ZN6duckdb18VersionDeleteState6DeleteEl.exit.i
-  %i.as = phi i64 [ %i.co, %_ZN6duckdb18VersionDeleteState6DeleteEl.exit.i ], [ -1, %._crit_edge101 ] ; 2 uses
-  %i.at = phi i64 [ %i.ax, %_ZN6duckdb18VersionDeleteState6DeleteEl.exit.i ], [ -1, %._crit_edge101 ]
-  %.08.i = phi i64 [ %i.cs, %_ZN6duckdb18VersionDeleteState6DeleteEl.exit.i ], [ 0, %._crit_edge101 ] ; 2 uses
+.lr.ph.i:                                         ; preds = %_ZN6duckdb18VersionDeleteState6DeleteEl.exit.i, %._crit_edge101
+  %i.as = phi i64 [ -1, %._crit_edge101 ], [ %i.co, %_ZN6duckdb18VersionDeleteState6DeleteEl.exit.i ] ; 2 uses
+  %i.at = phi i64 [ -1, %._crit_edge101 ], [ %i.ax, %_ZN6duckdb18VersionDeleteState6DeleteEl.exit.i ]
+  %.08.i = phi i64 [ 0, %._crit_edge101 ], [ %i.cs, %_ZN6duckdb18VersionDeleteState6DeleteEl.exit.i ] ; 2 uses
   %i.au = getelementptr inbounds nuw [8 x i8], ptr %i.y, i64 %.08.i
   %i.av = load i64, ptr %i.au, align 8, !tbaa !24
   %i.aw = sub nsw i64 %i.av, %i.af                ; 3 uses

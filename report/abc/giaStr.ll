@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %.lr.ph70, %._crit_e
   %i.v = ashr i32 %i.u, 1
   %i.w = sext i32 %i.v to i64
   %i.x = getelementptr inbounds [64 x i8], ptr %2, i64 %i.w ; 5 uses
-  %i.y = add nuw nsw i64 %indvars.iv81, 1         ; 3 uses
+  %i.y = add nuw nsw i64 %indvars.iv81, 1         ; 2 uses
   %i.z = and i32 %i.q, 1
   %i.aa = and i32 %i.u, 1
   %i.ab = getelementptr inbounds nuw i8, ptr %i.x, i64 16
@@ -224,7 +224,7 @@ bb.e:                                             ; preds = %.lr.ph70, %._crit_e
   br label %._crit_edge.i
 
 ._crit_edge.i:                                    ; preds = %.lr.ph, %bb.k
-  %indvars.iv75 = phi i64 [ %indvars.iv, %.lr.ph ], [ %indvars.iv.next76, %bb.k ] ; 6 uses
+  %indvars.iv75 = phi i64 [ %indvars.iv, %.lr.ph ], [ %indvars.iv.next76, %bb.k ] ; 5 uses
   %.15161 = phi i32 [ %.05067, %.lr.ph ], [ %.2, %bb.k ] ; 2 uses
   %.15559 = phi i32 [ %.05465, %.lr.ph ], [ %.256, %bb.k ] ; 3 uses
   %i.ap = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv75
@@ -236,7 +236,6 @@ bb.e:                                             ; preds = %.lr.ph70, %._crit_e
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(64) %i.i, ptr noundef nonnull align 4 dereferenceable(64) %i.t, i64 64, i1 false), !tbaa.struct !159
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(64) %i.j, ptr noundef nonnull align 4 dereferenceable(64) %i.x, i64 64, i1 false), !tbaa.struct !159
   %i.au = and i32 %i.aq, 1
-  %8 = icmp samesign ult i64 %i.y, %indvars.iv75
   %i.av = load i32, ptr %i.ae, align 4, !tbaa !148
   %i.aw = load i32, ptr %i.af, align 4, !tbaa !153
   %i.ax = getelementptr inbounds nuw i8, ptr %i.at, i64 16
@@ -253,16 +252,13 @@ bb.e:                                             ; preds = %.lr.ph70, %._crit_e
   store i32 %i.bd, ptr %i.ak, align 4, !tbaa !153
   %i.be = load <2 x i32>, ptr %i.ag, align 4, !tbaa !40
   store <2 x i32> %i.be, ptr %i.al, align 4, !tbaa !40
-  br i1 %8, label %.lr.ph110.i, label %Str_MuxChangeOnce.exit
-
-.lr.ph110.i:                                      ; preds = %._crit_edge.i
-  %9 = load i32, ptr %i.k, align 4, !tbaa !154
+  %8 = load i32, ptr %i.k, align 4, !tbaa !154
   %.promoted.i = load i32, ptr %i.am, align 4, !tbaa !150
   br label %bb.f
 
-bb.f:                                             ; preds = %bb.f, %.lr.ph110.i
-  %indvars.iv119.i = phi i64 [ %i.y, %.lr.ph110.i ], [ %indvars.iv.next120.i, %bb.f ] ; 2 uses
-  %i.bf = phi i32 [ %.promoted.i, %.lr.ph110.i ], [ %i.by, %bb.f ] ; 2 uses
+bb.f:                                             ; preds = %bb.f, %._crit_edge.i
+  %indvars.iv119.i = phi i64 [ %i.y, %._crit_edge.i ], [ %indvars.iv.next120.i, %bb.f ] ; 2 uses
+  %i.bf = phi i32 [ %.promoted.i, %._crit_edge.i ], [ %i.by, %bb.f ] ; 2 uses
   %i.bg = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv119.i
   %i.bh = load i32, ptr %i.bg, align 4, !tbaa !40
   %i.bi = ashr i32 %i.bh, 1
@@ -281,7 +277,7 @@ bb.f:                                             ; preds = %bb.f, %.lr.ph110.i
   %i.bt = select i1 %.not13.i.i, i32 1, i32 %i.bs
   %i.bu = add nuw nsw i32 %i.br, %i.bt            ; 2 uses
   %i.bv = shl nsw i32 %i.bp, 4
-  %i.bw = icmp sgt i32 %i.bu, %9
+  %i.bw = icmp sgt i32 %i.bu, %8
   %i.bx = select i1 %i.bw, i32 18, i32 %i.bu
   %i.by = add nsw i32 %i.bx, %i.bv                ; 2 uses
   store i32 %i.by, ptr %i.am, align 4, !tbaa !150
@@ -290,7 +286,7 @@ bb.f:                                             ; preds = %bb.f, %.lr.ph110.i
   %exitcond = icmp eq i64 %i.bz, %indvars.iv75
   br i1 %exitcond, label %Str_MuxChangeOnce.exit, label %bb.f, !llvm.loop !161
 
-Str_MuxChangeOnce.exit:                           ; preds = %bb.f, %._crit_edge.i
+Str_MuxChangeOnce.exit:                           ; preds = %bb.f
   %i.ca = tail call i32 @Str_MuxDelayEdge_rec(ptr noundef %3, i32 noundef %4) ; 4 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(64) %i.at, ptr noundef nonnull readonly align 16 dereferenceable(64) %7, i64 64, i1 false), !tbaa.struct !159
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(64) %i.t, ptr noundef nonnull readonly align 16 dereferenceable(64) %i.i, i64 64, i1 false), !tbaa.struct !159
