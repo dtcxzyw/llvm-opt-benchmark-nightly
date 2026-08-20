@@ -204,7 +204,7 @@ bb.a:
   br i1 %i.i, label %bb.bz, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.j = tail call noalias dereferenceable_or_null(65536) ptr @g_malloc(i64 noundef 65536) #9 ; 63 uses
+  %i.j = tail call noalias dereferenceable_or_null(65536) ptr @g_malloc(i64 noundef 65536) #9 ; 61 uses
   %i.k = ptrtoaddr ptr %i.j to i64                ; 5 uses
   %i.l = getelementptr i8, ptr %i.b, i64 40       ; 4 uses
   %i.m = getelementptr i8, ptr %i.b, i64 48       ; 3 uses
@@ -489,7 +489,7 @@ bb.u:                                             ; preds = %bb.s, %bb.t
 
 .preheader411:                                    ; preds = %bb.u, %select.unfold
   %i.ds = phi i32 [ %i.hj, %select.unfold ], [ %i.dr, %bb.u ] ; 2 uses
-  %.1332489 = phi i32 [ %.2333.lcssa, %select.unfold ], [ 52, %bb.u ] ; 11 uses
+  %.1332489 = phi i32 [ %.2333.lcssa, %select.unfold ], [ 52, %bb.u ] ; 10 uses
   %.1335488 = phi i32 [ %i.he, %select.unfold ], [ %.0334, %bb.u ]
   %.3340487 = phi i32 [ 0, %select.unfold ], [ %i.df, %bb.u ] ; 2 uses
   %i.dt = icmp ult i32 %.3340487, %i.ds
@@ -504,17 +504,12 @@ iter.check810:                                    ; preds = %.preheader411
 
 vector.scevcheck789:                              ; preds = %iter.check810
   %i.dx = xor i64 %i.du, -1
-  %i.dy = add nsw i64 %i.dx, %i.dv                ; 3 uses
+  %i.dy = add nsw i64 %i.dx, %i.dv                ; 2 uses
   %i.dz = trunc i64 %i.dy to i32
   %i.ea = xor i32 %.1332489, -1
   %i.eb = icmp ult i32 %i.ea, %i.dz
   %i.ec = icmp ugt i64 %i.dy, 4294967295
-  %5 = or i1 %i.eb, %i.ec
-  %6 = zext i32 %.1332489 to i64
-  %scevgep790 = getelementptr i8, ptr %i.j, i64 %6 ; 2 uses
-  %7 = getelementptr i8, ptr %scevgep790, i64 %i.dy
-  %8 = icmp ult ptr %7, %scevgep790
-  %i.ed = or i1 %5, %8
+  %i.ed = or i1 %i.eb, %i.ec
   br i1 %i.ed, label %.lr.ph483.preheader, label %vector.memcheck792
 
 vector.memcheck792:                               ; preds = %vector.scevcheck789
@@ -917,7 +912,7 @@ bb.bi:                                            ; preds = %bb.bh
 
 .preheader413:                                    ; preds = %bb.bi, %select.unfold406
   %i.pu = phi i32 [ %i.tl, %select.unfold406 ], [ %i.pt, %bb.bi ] ; 2 uses
-  %.5470 = phi i32 [ %.6.lcssa, %select.unfold406 ], [ 35, %bb.bi ] ; 11 uses
+  %.5470 = phi i32 [ %.6.lcssa, %select.unfold406 ], [ 35, %bb.bi ] ; 10 uses
   %.2336469 = phi i32 [ %i.tg, %select.unfold406 ], [ %.0334, %bb.bi ]
   %.7344468 = phi i32 [ 0, %select.unfold406 ], [ %indvars.iv.next563.34, %bb.bi ] ; 2 uses
   %i.pv = icmp ult i32 %.7344468, %i.pu
@@ -932,17 +927,12 @@ iter.check:                                       ; preds = %.preheader413
 
 vector.scevcheck:                                 ; preds = %iter.check
   %i.pz = xor i64 %i.pw, -1
-  %i.qa = add nsw i64 %i.pz, %i.px                ; 3 uses
+  %i.qa = add nsw i64 %i.pz, %i.px                ; 2 uses
   %i.qb = trunc i64 %i.qa to i32
   %i.qc = xor i32 %.5470, -1
   %i.qd = icmp ult i32 %i.qc, %i.qb
   %i.qe = icmp ugt i64 %i.qa, 4294967295
-  %9 = or i1 %i.qd, %i.qe
-  %10 = zext i32 %.5470 to i64
-  %scevgep = getelementptr i8, ptr %i.j, i64 %10  ; 2 uses
-  %11 = getelementptr i8, ptr %scevgep, i64 %i.qa
-  %12 = icmp ult ptr %11, %scevgep
-  %i.qf = or i1 %9, %12
+  %i.qf = or i1 %i.qd, %i.qe
   br i1 %i.qf, label %.lr.ph466.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %vector.scevcheck

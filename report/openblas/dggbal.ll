@@ -203,7 +203,7 @@ bb.at:                                            ; preds = %bb.as, %bb.ar
   br label %._crit_edge795
 
 .lr.ph761:                                        ; preds = %bb.at
-  %i.og = sext i32 %i.of to i64                   ; 6 uses
+  %i.og = sext i32 %i.of to i64                   ; 5 uses
   %i.oh = sext i32 %.pre957.pre.pre to i64        ; 2 uses
   %i.oi = add i32 %i.oe, 1
   %invariant.gep1056 = getelementptr [8 x i8], ptr %i.r, i64 %i.oh ; 6 uses
@@ -214,20 +214,21 @@ bb.at:                                            ; preds = %bb.as, %bb.ar
   br i1 %min.iters.check1161, label %scalar.ph.preheader, label %vector.memcheck1154
 
 vector.memcheck1154:                              ; preds = %.lr.ph761
-  %i.om = shl nsw i64 %i.og, 3                    ; 2 uses
+  %i.om = shl nsw i64 %i.og, 3                    ; 4 uses
   %scevgep1156 = getelementptr i8, ptr %scevgep1155, i64 %i.om
   %i.on = sub i32 %i.oe, %i.of
   %i.oo = zext i32 %i.on to i64
   %i.op = shl nuw nsw i64 %i.oo, 3                ; 2 uses
   %i.oq = getelementptr i8, ptr %10, i64 %i.om
   %scevgep1157 = getelementptr i8, ptr %i.oq, i64 %i.op
-  %12 = add nsw i64 %i.oh, %i.og
-  %13 = shl nsw i64 %12, 3                        ; 2 uses
-  %scevgep1159.a = getelementptr i8, ptr %scevgep1158, i64 %13
-  %i.or = getelementptr i8, ptr %10, i64 %13
+  %12 = shl nsw i64 %i.oh, 3                      ; 2 uses
+  %13 = getelementptr i8, ptr %scevgep1158, i64 %12
+  %scevgep1159 = getelementptr i8, ptr %13, i64 %i.om
+  %scevgep1159.a = getelementptr i8, ptr %10, i64 %12
+  %i.or = getelementptr i8, ptr %scevgep1159.a, i64 %i.om
   %scevgep1160 = getelementptr i8, ptr %i.or, i64 %i.op
   %bound0 = icmp ult ptr %scevgep1156, %scevgep1160
-  %bound1 = icmp ult ptr %scevgep1159.a, %scevgep1157
+  %bound1 = icmp ult ptr %scevgep1159, %scevgep1157
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.ph1162
 

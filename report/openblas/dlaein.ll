@@ -201,29 +201,31 @@ bb.y:                                             ; preds = %.loopexit899
   %indvars.iv.next1076 = add nuw nsw i64 %indvars.iv1075, 1 ; 11 uses
   %indvars = trunc i64 %indvars.iv.next1076 to i32
   %i.tx = getelementptr [8 x i8], ptr %i.v, i64 %indvars.iv.next1076
-  %i.ty = getelementptr [8 x i8], ptr %i.tx, i64 %i.ts ; 5 uses
+  %i.ty = getelementptr [8 x i8], ptr %i.tx, i64 %i.ts ; 4 uses
   %i.tz = call double @dlapy2_(ptr noundef %i.tw, ptr noundef %i.ty) #7 ; 3 uses
   %i.ua = mul nsw i64 %indvars.iv1075, %i.tn
   %i.ub = getelementptr [8 x i8], ptr %i.q, i64 %indvars.iv.next1076
   %i.uc = getelementptr [8 x i8], ptr %i.ub, i64 %i.ua
-  %i.ud = load double, ptr %i.uc, align 8, !tbaa !9 ; 5 uses
+  %i.ud = load double, ptr %i.uc, align 8, !tbaa !9 ; 4 uses
   %i.ue = call double @llvm.fabs.f64(double %i.ud)
   %i.uf = fcmp olt double %i.tz, %i.ue
   br i1 %i.uf, label %bb.z, label %bb.aa
 
 bb.z:                                             ; preds = %.lr.ph929
-  %16 = load double, ptr %i.tw, align 8, !tbaa !9
-  %17 = fdiv double %16, %i.ud                    ; 3 uses
-  store double %17, ptr %i.l, align 8, !tbaa !9
-  %18 = load double, ptr %i.ty, align 8, !tbaa !9
-  %19 = fdiv double %18, %i.ud                    ; 2 uses
-  store double %19, ptr %i.k, align 8, !tbaa !9
+  %16 = load <2 x double>, ptr %i.tw, align 8, !tbaa !9
+  %17 = insertelement <2 x double> poison, double %i.ud, i64 0
+  %18 = shufflevector <2 x double> %17, <2 x double> poison, <2 x i32> zeroinitializer
+  %19 = fdiv <2 x double> %16, %18                ; 2 uses
+  %20 = extractelement <2 x double> %19, i64 0    ; 3 uses
+  store double %20, ptr %i.l, align 8, !tbaa !9
+  %21 = extractelement <2 x double> %19, i64 1    ; 2 uses
+  store double %21, ptr %i.k, align 8, !tbaa !9
   store double %i.ud, ptr %i.tw, align 8, !tbaa !9
   store double 0.000000e+00, ptr %i.ty, align 8, !tbaa !9
   %i.ug = load i32, ptr %2, align 4, !tbaa !8     ; 3 uses
   %i.uh = sext i32 %i.ug to i64
   %.not877921.not = icmp slt i64 %indvars.iv1075, %i.uh
-  %i.ui = fneg double %19                         ; 7 uses
+  %i.ui = fneg double %21                         ; 7 uses
   br i1 %.not877921.not, label %.lver.check1581, label %.._crit_edge925_crit_edge
 
 .._crit_edge925_crit_edge:                        ; preds = %bb.z
@@ -231,7 +233,7 @@ bb.z:                                             ; preds = %.lr.ph929
   br label %._crit_edge925
 
 .lver.check1581:                                  ; preds = %bb.z
-  %i.uj = fneg double %17                         ; 6 uses
+  %i.uj = fneg double %20                         ; 6 uses
   %i.uk = mul nsw i64 %indvars.iv.next1076, %i.tc ; 5 uses
   %i.ul = add i32 %i.ug, 1
   %wide.trip.count1073 = zext i32 %i.ul to i64    ; 6 uses
@@ -389,7 +391,7 @@ bb.z:                                             ; preds = %.lr.ph929
   %i.wg = getelementptr [8 x i8], ptr %i.v, i64 %.pre-phi1200
   %i.wh = getelementptr [8 x i8], ptr %i.wg, i64 %i.vx ; 2 uses
   %i.wi = load double, ptr %i.wh, align 8, !tbaa !9
-  %i.wj = call double @llvm.fmuladd.f64(double %17, double %i.wf, double %i.wi)
+  %i.wj = call double @llvm.fmuladd.f64(double %20, double %i.wf, double %i.wi)
   store double %i.wj, ptr %i.wh, align 8, !tbaa !9
   br label %bb.ad
 

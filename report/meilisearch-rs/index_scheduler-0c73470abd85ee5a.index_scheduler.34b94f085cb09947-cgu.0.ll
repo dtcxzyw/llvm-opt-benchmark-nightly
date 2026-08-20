@@ -205,7 +205,7 @@ bb.i:                                             ; preds = %bb.h
 _ZN4core5slice4sort6shared9smallsort11insert_tail17h8bbcd770b05ccecdE.exit.i: ; preds = %._crit_edge, %.lr.ph.i
   %i.fa = icmp samesign ult i64 %.sroa.08.110.i, %i.c ; 2 uses
   %i.fb = zext i1 %i.fa to i64
-  %.sroa.08.1.i = add nuw i64 %.sroa.08.110.i, %i.fb
+  %.sroa.08.1.i = add nuw nsw i64 %.sroa.08.110.i, %i.fb
   br i1 %i.fa, label %.lr.ph.i, label %.loopexit.i
 
 _ZN4core5slice4sort6shared9smallsort31small_sort_general_with_scratch17hb06157c167d5333dE.exit: ; preds = %bb.a, %bb.g
@@ -594,7 +594,7 @@ bb.i:                                             ; preds = %bb.h
 _ZN4core5slice4sort6shared9smallsort11insert_tail17h1a6ec916f8b5daabE.exit.i: ; preds = %._crit_edge, %.lr.ph.i
   %i.fa = icmp samesign ult i64 %.sroa.08.110.i, %i.c ; 2 uses
   %i.fb = zext i1 %i.fa to i64
-  %.sroa.08.1.i = add nuw i64 %.sroa.08.110.i, %i.fb
+  %.sroa.08.1.i = add nuw nsw i64 %.sroa.08.110.i, %i.fb
   br i1 %i.fa, label %.lr.ph.i, label %.loopexit.i
 
 _ZN4core5slice4sort6shared9smallsort31small_sort_general_with_scratch17h5599cee126b4d985E.exit: ; preds = %bb.a, %bb.g
@@ -997,7 +997,7 @@ bb.l:                                             ; preds = %.lr.ph126
 _ZN4core5slice4sort6shared9smallsort11insert_tail17h7abd3bb5623d4129E.exit.i.i: ; preds = %._crit_edge127, %.lr.ph.i.i
   %i.bv = icmp samesign ult i64 %.sroa.08.16.i.i, %i.j ; 2 uses
   %i.bw = zext i1 %i.bv to i64
-  %.sroa.08.1.i.i = add nuw i64 %.sroa.08.16.i.i, %i.bw
+  %.sroa.08.1.i.i = add nuw nsw i64 %.sroa.08.16.i.i, %i.bw
   br i1 %i.bv, label %.lr.ph.i.i, label %.loopexit.i.i
 
 _ZN4core5slice4sort6shared9smallsort18small_sort_general17h56c6929042a8729eE.exit: ; preds = %._crit_edge, %.loopexit.1.i.i
@@ -1400,7 +1400,7 @@ bb.l:                                             ; preds = %.lr.ph126
 _ZN4core5slice4sort6shared9smallsort11insert_tail17hf5571c61ef6e55c0E.exit.i.i: ; preds = %._crit_edge127, %.lr.ph.i.i
   %i.bv = icmp samesign ult i64 %.sroa.08.16.i.i, %i.j ; 2 uses
   %i.bw = zext i1 %i.bv to i64
-  %.sroa.08.1.i.i = add nuw i64 %.sroa.08.16.i.i, %i.bw
+  %.sroa.08.1.i.i = add nuw nsw i64 %.sroa.08.16.i.i, %i.bw
   br i1 %i.bv, label %.lr.ph.i.i, label %.loopexit.i.i
 
 _ZN4core5slice4sort6shared9smallsort18small_sort_general17hff19179305e2ea22E.exit: ; preds = %._crit_edge, %.loopexit.1.i.i
@@ -1803,7 +1803,7 @@ bb.l:                                             ; preds = %.lr.ph126
 _ZN4core5slice4sort6shared9smallsort11insert_tail17h5daea8c898d63e37E.exit.i.i: ; preds = %._crit_edge127, %.lr.ph.i.i
   %i.bv = icmp samesign ult i64 %.sroa.08.16.i.i, %i.j ; 2 uses
   %i.bw = zext i1 %i.bv to i64
-  %.sroa.08.1.i.i = add nuw i64 %.sroa.08.16.i.i, %i.bw
+  %.sroa.08.1.i.i = add nuw nsw i64 %.sroa.08.16.i.i, %i.bw
   br i1 %i.bv, label %.lr.ph.i.i, label %.loopexit.i.i
 
 _ZN4core5slice4sort6shared9smallsort18small_sort_general17h38435efa30c3036aE.exit: ; preds = %._crit_edge, %.loopexit.1.i.i
@@ -2206,14 +2206,15 @@ _ZN9hashbrown3raw13RawTableInner23prepare_rehash_in_place17he54fe5d713f70050E.ex
   br label %._crit_edge
 
 .lr.ph.i:                                         ; preds = %bb.a
-  %i.e = lshr i64 %i.c, 4
+  %i.e = lshr i64 %i.c, 4                         ; 2 uses
   %i.f = and i64 %i.c, 15
   %.not9.i.i.i = icmp ne i64 %i.f, 0
-  %i.g = zext i1 %.not9.i.i.i to i64
-  %.sroa.05.0.i.i.i = add nuw nsw i64 %i.e, %i.g  ; 4 uses
+  %i.g = zext i1 %.not9.i.i.i to i64              ; 2 uses
+  %.sroa.05.0.i.i.i = add nuw nsw i64 %i.e, %i.g  ; 3 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val13) ]
+  %4 = add nuw nsw i64 %i.e, %i.g
   %xtraiter = and i64 %.sroa.05.0.i.i.i, 1
-  %i.h = icmp eq i64 %.sroa.05.0.i.i.i, 1
+  %i.h = icmp eq i64 %4, 1
   br i1 %i.h, label %.epil.preheader, label %.lr.ph.i.new
 
 .lr.ph.i.new:                                     ; preds = %.lr.ph.i
@@ -2616,14 +2617,15 @@ bb.o:                                             ; preds = %bb.b
   br i1 %.not6.i.i, label %._crit_edge.thread.i.i, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.o
-  %i.bl = lshr i64 %i.k, 4
+  %i.bl = lshr i64 %i.k, 4                        ; 2 uses
   %i.bm = and i64 %i.k, 15
   %.not9.i.i.i.i = icmp ne i64 %i.bm, 0
-  %i.bn = zext i1 %.not9.i.i.i.i to i64
-  %.sroa.05.0.i.i.i.i = add nuw nsw i64 %i.bl, %i.bn ; 4 uses
+  %i.bn = zext i1 %.not9.i.i.i.i to i64           ; 2 uses
+  %.sroa.05.0.i.i.i.i = add nuw nsw i64 %i.bl, %i.bn ; 3 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val11.i) ]
+  %3 = add nuw nsw i64 %i.bl, %i.bn
   %xtraiter = and i64 %.sroa.05.0.i.i.i.i, 1
-  %i.bo = icmp eq i64 %.sroa.05.0.i.i.i.i, 1
+  %i.bo = icmp eq i64 %3, 1
   br i1 %i.bo, label %.epil.preheader, label %.lr.ph.i.i.new
 
 .lr.ph.i.i.new:                                   ; preds = %.lr.ph.i.i
@@ -3026,14 +3028,15 @@ bb.u:                                             ; preds = %bb.b
   br i1 %.not6.i, label %._crit_edge.thread.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.u
-  %i.eo = lshr i64 %i.p, 4
+  %i.eo = lshr i64 %i.p, 4                        ; 2 uses
   %i.ep = and i64 %i.p, 15
   %.not9.i.i.i = icmp ne i64 %i.ep, 0
-  %i.eq = zext i1 %.not9.i.i.i to i64
-  %.sroa.05.0.i.i.i = add nuw nsw i64 %i.eo, %i.eq ; 4 uses
+  %i.eq = zext i1 %.not9.i.i.i to i64             ; 2 uses
+  %.sroa.05.0.i.i.i = add nuw nsw i64 %i.eo, %i.eq ; 3 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val10) ]
+  %4 = add nuw nsw i64 %i.eo, %i.eq
   %xtraiter = and i64 %.sroa.05.0.i.i.i, 1
-  %i.er = icmp eq i64 %.sroa.05.0.i.i.i, 1
+  %i.er = icmp eq i64 %4, 1
   br i1 %i.er, label %.epil.preheader, label %.lr.ph.i.new
 
 .lr.ph.i.new:                                     ; preds = %.lr.ph.i
@@ -3436,14 +3439,15 @@ bb.l:                                             ; preds = %bb.b
   br i1 %.not6.i, label %._crit_edge.thread.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.l
-  %i.cr = lshr i64 %i.o, 4
+  %i.cr = lshr i64 %i.o, 4                        ; 2 uses
   %i.cs = and i64 %i.o, 15
   %.not9.i.i.i = icmp ne i64 %i.cs, 0
-  %i.ct = zext i1 %.not9.i.i.i to i64
-  %.sroa.05.0.i.i.i = add nuw nsw i64 %i.cr, %i.ct ; 4 uses
+  %i.ct = zext i1 %.not9.i.i.i to i64             ; 2 uses
+  %.sroa.05.0.i.i.i = add nuw nsw i64 %i.cr, %i.ct ; 3 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val10) ]
+  %4 = add nuw nsw i64 %i.cr, %i.ct
   %xtraiter = and i64 %.sroa.05.0.i.i.i, 1
-  %i.cu = icmp eq i64 %.sroa.05.0.i.i.i, 1
+  %i.cu = icmp eq i64 %4, 1
   br i1 %i.cu, label %.epil.preheader, label %.lr.ph.i.new
 
 .lr.ph.i.new:                                     ; preds = %.lr.ph.i

@@ -203,7 +203,7 @@ middle.block:                                     ; preds = %vector.body
   %invariant.gep65 = getelementptr [8 x i8], ptr %2, i64 %i.ag ; 4 uses
   %invariant.gep67 = getelementptr [8 x i8], ptr %5, i64 %i.ad ; 4 uses
   %i.ah = zext nneg i32 %0 to i64                 ; 2 uses
-  %min.iters.check84 = icmp ult i32 %0, 18
+  %min.iters.check84 = icmp ult i32 %0, 20
   br i1 %min.iters.check84, label %.lr.ph49.preheader101, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.lr.ph49.preheader
@@ -213,23 +213,27 @@ vector.scevcheck:                                 ; preds = %.lr.ph49.preheader
   br i1 %i.ai, label %.lr.ph49.preheader101, label %vector.memcheck75
 
 vector.memcheck75:                                ; preds = %vector.scevcheck
-  %8 = add nsw i64 %i.ad, %i.ab
-  %i.aj = shl nsw i64 %8, 3                       ; 2 uses
-  %scevgep76 = getelementptr i8, ptr %5, i64 %i.aj
+  %8 = shl nsw i64 %i.ad, 3                       ; 2 uses
+  %i.aj = shl nsw i64 %i.ab, 3                    ; 2 uses
+  %9 = getelementptr i8, ptr %5, i64 %8
+  %scevgep76 = getelementptr i8, ptr %9, i64 %i.aj
   %i.ak = add nsw i32 %0, -1
   %i.al = zext i32 %i.ak to i64
   %i.am = shl nuw nsw i64 %i.al, 3                ; 2 uses
-  %i.an = getelementptr i8, ptr %5, i64 %i.aj
+  %10 = getelementptr i8, ptr %5, i64 %8
+  %i.an = getelementptr i8, ptr %10, i64 %i.aj
   %i.ao = getelementptr i8, ptr %i.an, i64 %i.am
   %scevgep77 = getelementptr i8, ptr %i.ao, i64 8
-  %9 = add nsw i64 %i.ag, %i.ae
-  %i.ap = shl nsw i64 %9, 3                       ; 2 uses
-  %scevgep78.a = getelementptr i8, ptr %2, i64 %i.ap
-  %i.aq = getelementptr i8, ptr %2, i64 %i.ap
+  %11 = shl nsw i64 %i.ag, 3                      ; 2 uses
+  %i.ap = shl nsw i64 %i.ae, 3                    ; 2 uses
+  %12 = getelementptr i8, ptr %2, i64 %11
+  %scevgep78 = getelementptr i8, ptr %12, i64 %i.ap
+  %scevgep78.a = getelementptr i8, ptr %2, i64 %11
+  %i.aq = getelementptr i8, ptr %scevgep78.a, i64 %i.ap
   %i.ar = getelementptr i8, ptr %i.aq, i64 %i.am
   %scevgep79 = getelementptr i8, ptr %i.ar, i64 8
   %bound080 = icmp ult ptr %scevgep76, %scevgep79
-  %bound181 = icmp ult ptr %scevgep78.a, %scevgep77
+  %bound181 = icmp ult ptr %scevgep78, %scevgep77
   %found.conflict82 = and i1 %bound080, %bound181
   br i1 %found.conflict82, label %.lr.ph49.preheader101, label %vector.ph85
 

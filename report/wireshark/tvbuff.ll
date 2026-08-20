@@ -1,8 +1,8 @@
 inline.NumInlined: 297
 inline.NumDeleted: 61
 loop-unroll.NumCompletelyUnrolled: 1
-loop-unroll.NumRuntimeUnrolled: 3
-loop-unroll.NumUnrolled: 4
+loop-unroll.NumRuntimeUnrolled: 2
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@tvb_new_chain:bb.a
 bb.c:                                             ; preds = %bb.a
   %.not11.i = icmp eq ptr %i.a, null
@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 
 bb.d:                                             ; preds = %bb.b
   %i.d = lshr i32 %1, 3                           ; 14 uses
-  %i.e = and i32 %1, 7                            ; 11 uses
+  %i.e = and i32 %1, 7                            ; 9 uses
   %i.f = trunc nuw nsw i32 %i.e to i8
   %i.g = sub nuw nsw i8 8, %i.f                   ; 2 uses
   %i.h = lshr i32 %2, 3
@@ -303,7 +303,7 @@ bb.o:                                             ; preds = %bb.m
   unreachable
 
 ensure_contiguous_unsigned_no_exception.exit.i:   ; preds = %bb.n, %bb.l
-  %.0.i.i = phi ptr [ %i.ak, %bb.l ], [ %i.ap, %bb.n ] ; 7 uses
+  %.0.i.i = phi ptr [ %i.ak, %bb.l ], [ %i.ap, %bb.n ] ; 5 uses
   %.0.i.i143 = ptrtoaddr ptr %.0.i.i to i64
   %i.aq = icmp eq ptr %.0.i.i, null
   br i1 %i.aq, label %bb.p, label %.lr.ph99
@@ -318,9 +318,9 @@ bb.q:                                             ; preds = %bb.h, %bb.k, %bb.j,
   unreachable
 
 .lr.ph99:                                         ; preds = %ensure_contiguous_unsigned_no_exception.exit.i
-  %i.ar = zext nneg i32 %spec.select to i64       ; 9 uses
-  %i.as = tail call noalias ptr @g_malloc(i64 noundef %i.ar) #17 ; 8 uses
-  %i.at = zext nneg i8 %i.g to i32                ; 4 uses
+  %i.ar = zext nneg i32 %spec.select to i64       ; 6 uses
+  %i.as = tail call noalias ptr @g_malloc(i64 noundef %i.ar) #17 ; 5 uses
+  %i.at = zext nneg i8 %i.g to i32                ; 2 uses
   %.pre = load i8, ptr %.0.i.i, align 1           ; 3 uses
   %min.iters.check144 = icmp samesign ult i32 %spec.select, 16
   br i1 %min.iters.check144, label %scalar.ph.preheader, label %vector.memcheck142
@@ -366,57 +366,23 @@ middle.block155:                                  ; preds = %vector.body151
   br i1 %cmp.n156, label %.loopexit, label %scalar.ph.preheader
 
 scalar.ph.preheader:                              ; preds = %vector.memcheck142, %.lr.ph99, %middle.block155
-  %.ph = phi i8 [ %.pre, %vector.memcheck142 ], [ %.pre, %.lr.ph99 ], [ %vector.recur.extract, %middle.block155 ] ; 2 uses
-  %indvars.iv103.ph = phi i64 [ 0, %vector.memcheck142 ], [ 0, %.lr.ph99 ], [ %n.vec146, %middle.block155 ] ; 4 uses
-  %xtraiter158 = and i64 %i.ar, 1
-  %lcmp.mod159.not = icmp eq i64 %xtraiter158, 0
-  br i1 %lcmp.mod159.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
+  %.ph = phi i8 [ %.pre, %vector.memcheck142 ], [ %.pre, %.lr.ph99 ], [ %vector.recur.extract, %middle.block155 ]
+  %indvars.iv103.ph = phi i64 [ 0, %vector.memcheck142 ], [ 0, %.lr.ph99 ], [ %n.vec146, %middle.block155 ]
+  br label %scalar.ph
 
-scalar.ph.prol:                                   ; preds = %scalar.ph.preheader
-  %3 = zext i8 %.ph to i32
-  %4 = shl nuw nsw i32 %3, %i.e
-  %indvars.iv.next104.prol = or disjoint i64 %indvars.iv103.ph, 1 ; 2 uses
-  %5 = getelementptr i8, ptr %.0.i.i, i64 %indvars.iv.next104.prol
-  %6 = load i8, ptr %5, align 1                   ; 2 uses
-  %7 = zext i8 %6 to i32
-  %8 = lshr i32 %7, %i.at
-  %9 = or i32 %8, %4
-  %10 = trunc i32 %9 to i8
-  %11 = getelementptr i8, ptr %i.as, i64 %indvars.iv103.ph
-  store i8 %10, ptr %11, align 1
-  br label %scalar.ph.prol.loopexit
-
-scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %scalar.ph.preheader
-  %.unr = phi i8 [ %.ph, %scalar.ph.preheader ], [ %6, %scalar.ph.prol ]
-  %indvars.iv103.unr = phi i64 [ %indvars.iv103.ph, %scalar.ph.preheader ], [ %indvars.iv.next104.prol, %scalar.ph.prol ]
-  %12 = add nsw i64 %i.ar, -1
-  %13 = icmp eq i64 %indvars.iv103.ph, %12
-  br i1 %13, label %.loopexit, label %scalar.ph
-
-scalar.ph:                                        ; preds = %scalar.ph.prol.loopexit, %scalar.ph
-  %i.bi = phi i8 [ %i.bm, %scalar.ph ], [ %.unr, %scalar.ph.prol.loopexit ]
-  %indvars.iv103 = phi i64 [ %indvars.iv.next104.1, %scalar.ph ], [ %indvars.iv103.unr, %scalar.ph.prol.loopexit ] ; 3 uses
-  %14 = zext i8 %i.bi to i32
-  %15 = shl nuw nsw i32 %14, %i.e
-  %indvars.iv.next104 = add nuw nsw i64 %indvars.iv103, 1 ; 2 uses
-  %16 = getelementptr i8, ptr %.0.i.i, i64 %indvars.iv.next104
-  %17 = load i8, ptr %16, align 1                 ; 2 uses
-  %18 = zext i8 %17 to i32
-  %19 = lshr i32 %18, %i.at
-  %20 = or i32 %19, %15
-  %21 = trunc i32 %20 to i8
-  %22 = getelementptr i8, ptr %i.as, i64 %indvars.iv103
-  store i8 %21, ptr %22, align 1
-  %i.bj = zext i8 %17 to i32
+scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
+  %i.bi = phi i8 [ %i.bm, %scalar.ph ], [ %.ph, %scalar.ph.preheader ]
+  %indvars.iv103 = phi i64 [ %indvars.iv.next104.1, %scalar.ph ], [ %indvars.iv103.ph, %scalar.ph.preheader ] ; 2 uses
+  %i.bj = zext i8 %i.bi to i32
   %i.bk = shl nuw nsw i32 %i.bj, %i.e
-  %indvars.iv.next104.1 = add nuw nsw i64 %indvars.iv103, 2 ; 3 uses
+  %indvars.iv.next104.1 = add nuw nsw i64 %indvars.iv103, 1 ; 3 uses
   %i.bl = getelementptr i8, ptr %.0.i.i, i64 %indvars.iv.next104.1
   %i.bm = load i8, ptr %i.bl, align 1             ; 2 uses
   %i.bn = zext i8 %i.bm to i32
   %i.bo = lshr i32 %i.bn, %i.at
   %i.bp = or i32 %i.bo, %i.bk
   %i.bq = trunc i32 %i.bp to i8
-  %i.br = getelementptr i8, ptr %i.as, i64 %indvars.iv.next104
+  %i.br = getelementptr i8, ptr %i.as, i64 %indvars.iv103
   store i8 %i.bq, ptr %i.br, align 1
   %exitcond107.not.1 = icmp eq i64 %indvars.iv.next104.1, %i.ar
   br i1 %exitcond107.not.1, label %.loopexit, label %scalar.ph, !llvm.loop !18
@@ -669,9 +635,9 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   store i8 %i.fe, ptr %i.ff, align 1
   br label %.loopexit
 
-.loopexit:                                        ; preds = %scalar.ph.prol.loopexit, %scalar.ph, %middle.block155, %._crit_edge
-  %.pre-phi = phi i64 [ %i.cp, %._crit_edge ], [ %i.ar, %middle.block155 ], [ %i.ar, %scalar.ph ], [ %i.ar, %scalar.ph.prol.loopexit ]
-  %.0 = phi ptr [ %i.cq, %._crit_edge ], [ %i.as, %middle.block155 ], [ %i.as, %scalar.ph ], [ %i.as, %scalar.ph.prol.loopexit ] ; 2 uses
+.loopexit:                                        ; preds = %scalar.ph, %middle.block155, %._crit_edge
+  %.pre-phi = phi i64 [ %i.cp, %._crit_edge ], [ %i.ar, %middle.block155 ], [ %i.ar, %scalar.ph ]
+  %.0 = phi ptr [ %i.cq, %._crit_edge ], [ %i.as, %middle.block155 ], [ %i.as, %scalar.ph ] ; 2 uses
   %i.fg = zext nneg i8 %i.j to i64
   %i.fh = getelementptr i8, ptr @left_aligned_bitmask, i64 %i.fg
   %i.fi = load i8, ptr %i.fh, align 1

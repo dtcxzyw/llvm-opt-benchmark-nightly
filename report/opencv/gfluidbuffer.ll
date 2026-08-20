@@ -204,8 +204,7 @@ bb.a:
   %i.k = add nsw i64 %i.c, -1
   %diff.check = icmp ult i64 %i.k, 31
   %invariant.op = add i64 %i.c, -1
-  %invariant.op56 = add i64 %i.j, -1
-  %invariant.op58 = add i64 %wide.trip.count, -1
+  %invariant.op58 = add i64 %i.j, -1
   %min.iters.check45 = icmp ult i32 %2, 32
   %i.l = and i64 %wide.trip.count, 28
   %n.vec = and i64 %wide.trip.count, 2147483616   ; 4 uses
@@ -224,20 +223,20 @@ iter.check:                                       ; preds = %.preheader.preheade
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.o = mul i64 %indvars.iv32, %wide.trip.count  ; 3 uses
+  %i.o = mul nuw nsw i64 %indvars.iv32, %wide.trip.count ; 3 uses
+  %4 = add nuw i64 %i.o, %wide.trip.count
   %.neg = xor i64 %indvars.iv32, -1
   %.neg55 = mul i64 %.neg, %wide.trip.count
-  %i.p = sub i64 %i.i, %i.o
+  %i.p = sub nsw i64 %i.i, %i.o
   %diff.check38 = icmp ugt i64 %i.p, -32
   %conflict.rdx = or i1 %diff.check, %diff.check38
   %.reass = add i64 %.neg55, %invariant.op
   %diff.check39 = icmp ult i64 %.reass, 31
   %conflict.rdx40 = or i1 %conflict.rdx, %diff.check39
-  %.reass57 = add i64 %i.o, %invariant.op56
+  %.reass57 = add i64 %i.o, %invariant.op58
   %diff.check41 = icmp ult i64 %.reass57, 31
   %conflict.rdx42 = or i1 %conflict.rdx40, %diff.check41
-  %.reass59 = add i64 %i.o, %invariant.op58
-  %diff.check43 = icmp ult i64 %.reass59, 31
+  %diff.check43 = icmp ult i64 %4, 32
   %conflict.rdx44 = or i1 %conflict.rdx42, %diff.check43
   br i1 %conflict.rdx44, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 

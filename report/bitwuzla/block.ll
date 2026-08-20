@@ -90,8 +90,8 @@ bb.b:                                             ; preds = %.lr.ph92, %bb.e
   br i1 %.not5095, label %.thread68, label %.lr.ph98.preheader
 
 .lr.ph98.preheader:                               ; preds = %.preheader
-  %i.t = add i64 %indvar, 1                       ; 3 uses
-  %min.iters.check = icmp ult i64 %i.t, 8
+  %i.t = add nuw nsw i64 %indvar, 1               ; 2 uses
+  %min.iters.check = icmp ult i64 %indvar, 7
   br i1 %min.iters.check, label %.lr.ph98.preheader134, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph98.preheader
@@ -131,7 +131,7 @@ middle.block:                                     ; preds = %vector.body
   br label %.lr.ph98
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.d
-  %indvar = phi i64 [ 0, %.lr.ph.preheader ], [ %indvar.next, %bb.d ] ; 2 uses
+  %indvar = phi i64 [ 0, %.lr.ph.preheader ], [ %indvar.next, %bb.d ] ; 3 uses
   %.044.idx82 = phi i64 [ 24, %.lr.ph.preheader ], [ %.044.add, %bb.d ] ; 3 uses
   %.04681 = phi i32 [ 0, %.lr.ph.preheader ], [ %i.ac, %bb.d ]
   %.044.ptr = getelementptr inbounds nuw i8, ptr %i.n, i64 %.044.idx82 ; 2 uses
@@ -534,8 +534,8 @@ bb.i:                                             ; preds = %bb.h
   br i1 %.not60110, label %.loopexit, label %.lr.ph113.preheader
 
 .lr.ph113.preheader:                              ; preds = %.preheader
-  %i.bg = add i64 %indvar, 1                      ; 3 uses
-  %min.iters.check = icmp ult i64 %i.bg, 8
+  %i.bg = add nuw nsw i64 %indvar, 1              ; 2 uses
+  %min.iters.check = icmp ult i64 %indvar, 7
   br i1 %min.iters.check, label %.lr.ph113.preheader162, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph113.preheader
@@ -575,7 +575,7 @@ middle.block:                                     ; preds = %vector.body
   br label %.lr.ph113
 
 .lr.ph107:                                        ; preds = %.lr.ph107.preheader, %bb.k
-  %indvar = phi i64 [ 0, %.lr.ph107.preheader ], [ %indvar.next, %bb.k ] ; 2 uses
+  %indvar = phi i64 [ 0, %.lr.ph107.preheader ], [ %indvar.next, %bb.k ] ; 3 uses
   %.046.idx105 = phi i64 [ 24, %.lr.ph107.preheader ], [ %.046.add, %bb.k ] ; 3 uses
   %.048104 = phi i32 [ 0, %.lr.ph107.preheader ], [ %i.bp, %bb.k ]
   %.046.ptr = getelementptr inbounds nuw i8, ptr %i.at, i64 %.046.idx105 ; 2 uses

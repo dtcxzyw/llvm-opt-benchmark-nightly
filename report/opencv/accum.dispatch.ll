@@ -112,18 +112,19 @@ bb.c:                                             ; preds = %bb.a
 
 .lr.ph43.i:                                       ; preds = %bb.c
   %i.ah = icmp sgt i32 %4, 0
-  %i.ai = sext i32 %4 to i64                      ; 3 uses
+  %i.ai = sext i32 %4 to i64                      ; 4 uses
   br i1 %i.ah, label %.lr.ph43.split.us.preheader.i, label %_ZN2cv12cpu_baseline12acc_general_IhfEEvPKT_PT0_PKhiii.exit
 
 .lr.ph43.split.us.preheader.i:                    ; preds = %.lr.ph43.i
   %wide.trip.count51.i = zext nneg i32 %3 to i64  ; 2 uses
   %wide.trip.count.i = zext nneg i32 %4 to i64    ; 7 uses
-  %i.aj = add nsw i64 %wide.trip.count51.i, -1
-  %i.ak = mul nsw i64 %i.aj, %i.ai                ; 2 uses
+  %i.aj = add nsw i64 %wide.trip.count51.i, -1    ; 2 uses
+  %i.ak = mul nsw i64 %i.aj, %i.ai
   %i.al = add i64 %i.ak, %wide.trip.count.i
   %i.am = shl i64 %i.al, 2
   %scevgep = getelementptr i8, ptr %1, i64 %i.am
-  %i.an = getelementptr i8, ptr %0, i64 %i.ak
+  %5 = mul nsw i64 %i.aj, %i.ai
+  %i.an = getelementptr i8, ptr %0, i64 %5
   %scevgep12 = getelementptr i8, ptr %i.an, i64 %wide.trip.count.i
   %min.iters.check = icmp ult i32 %4, 8
   %bound0 = icmp ult ptr %1, %scevgep12
@@ -526,18 +527,19 @@ bb.c:                                             ; preds = %bb.a
 
 .lr.ph43.i:                                       ; preds = %bb.c
   %i.ah = icmp sgt i32 %4, 0
-  %i.ai = sext i32 %4 to i64                      ; 3 uses
+  %i.ai = sext i32 %4 to i64                      ; 4 uses
   br i1 %i.ah, label %.lr.ph43.split.us.preheader.i, label %_ZN2cv12cpu_baseline12acc_general_IhdEEvPKT_PT0_PKhiii.exit
 
 .lr.ph43.split.us.preheader.i:                    ; preds = %.lr.ph43.i
   %wide.trip.count51.i = zext nneg i32 %3 to i64  ; 2 uses
   %wide.trip.count.i = zext nneg i32 %4 to i64    ; 7 uses
-  %i.aj = add nsw i64 %wide.trip.count51.i, -1
-  %i.ak = mul nsw i64 %i.aj, %i.ai                ; 2 uses
+  %i.aj = add nsw i64 %wide.trip.count51.i, -1    ; 2 uses
+  %i.ak = mul nsw i64 %i.aj, %i.ai
   %i.al = add i64 %i.ak, %wide.trip.count.i
   %i.am = shl i64 %i.al, 3
   %scevgep = getelementptr i8, ptr %1, i64 %i.am
-  %i.an = getelementptr i8, ptr %0, i64 %i.ak
+  %5 = mul nsw i64 %i.aj, %i.ai
+  %i.an = getelementptr i8, ptr %0, i64 %5
   %scevgep12 = getelementptr i8, ptr %i.an, i64 %wide.trip.count.i
   %min.iters.check = icmp ult i32 %4, 4
   %bound0 = icmp ult ptr %1, %scevgep12
@@ -940,18 +942,19 @@ bb.c:                                             ; preds = %bb.a
 
 .lr.ph47.i:                                       ; preds = %bb.c
   %i.ah = icmp sgt i32 %4, 0
-  %i.ai = sext i32 %4 to i64                      ; 3 uses
+  %i.ai = sext i32 %4 to i64                      ; 4 uses
   br i1 %i.ah, label %.lr.ph47.split.us.preheader.i, label %_ZN2cv12cpu_baseline15accSqr_general_IhfEEvPKT_PT0_PKhiii.exit
 
 .lr.ph47.split.us.preheader.i:                    ; preds = %.lr.ph47.i
   %wide.trip.count55.i = zext nneg i32 %3 to i64  ; 2 uses
   %wide.trip.count.i = zext nneg i32 %4 to i64    ; 7 uses
-  %i.aj = add nsw i64 %wide.trip.count55.i, -1
-  %i.ak = mul nsw i64 %i.aj, %i.ai                ; 2 uses
+  %i.aj = add nsw i64 %wide.trip.count55.i, -1    ; 2 uses
+  %i.ak = mul nsw i64 %i.aj, %i.ai
   %i.al = add i64 %i.ak, %wide.trip.count.i
   %i.am = shl i64 %i.al, 2
   %scevgep = getelementptr i8, ptr %1, i64 %i.am
-  %i.an = getelementptr i8, ptr %0, i64 %i.ak
+  %5 = mul nsw i64 %i.aj, %i.ai
+  %i.an = getelementptr i8, ptr %0, i64 %5
   %scevgep12 = getelementptr i8, ptr %i.an, i64 %wide.trip.count.i
   %min.iters.check = icmp ult i32 %4, 8
   %bound0 = icmp ult ptr %1, %scevgep12
@@ -1354,18 +1357,19 @@ bb.c:                                             ; preds = %bb.a
 
 .lr.ph47.i:                                       ; preds = %bb.c
   %i.ah = icmp sgt i32 %4, 0
-  %i.ai = sext i32 %4 to i64                      ; 3 uses
+  %i.ai = sext i32 %4 to i64                      ; 4 uses
   br i1 %i.ah, label %.lr.ph47.split.us.preheader.i, label %_ZN2cv12cpu_baseline15accSqr_general_IhdEEvPKT_PT0_PKhiii.exit
 
 .lr.ph47.split.us.preheader.i:                    ; preds = %.lr.ph47.i
   %wide.trip.count55.i = zext nneg i32 %3 to i64  ; 2 uses
   %wide.trip.count.i = zext nneg i32 %4 to i64    ; 7 uses
-  %i.aj = add nsw i64 %wide.trip.count55.i, -1
-  %i.ak = mul nsw i64 %i.aj, %i.ai                ; 2 uses
+  %i.aj = add nsw i64 %wide.trip.count55.i, -1    ; 2 uses
+  %i.ak = mul nsw i64 %i.aj, %i.ai
   %i.al = add i64 %i.ak, %wide.trip.count.i
   %i.am = shl i64 %i.al, 3
   %scevgep = getelementptr i8, ptr %1, i64 %i.am
-  %i.an = getelementptr i8, ptr %0, i64 %i.ak
+  %5 = mul nsw i64 %i.aj, %i.ai
+  %i.an = getelementptr i8, ptr %0, i64 %5
   %scevgep12 = getelementptr i8, ptr %i.an, i64 %wide.trip.count.i
   %min.iters.check = icmp ult i32 %4, 4
   %bound0 = icmp ult ptr %1, %scevgep12
@@ -1768,18 +1772,19 @@ bb.c:                                             ; preds = %bb.a
 
 .lr.ph54.i:                                       ; preds = %bb.c
   %i.au = icmp sgt i32 %5, 0
-  %i.av = sext i32 %5 to i64                      ; 4 uses
+  %i.av = sext i32 %5 to i64                      ; 5 uses
   br i1 %i.au, label %.lr.ph54.split.us.preheader.i, label %_ZN2cv12cpu_baseline16accProd_general_IhfEEvPKT_S4_PT0_PKhiii.exit
 
 .lr.ph54.split.us.preheader.i:                    ; preds = %.lr.ph54.i
   %wide.trip.count62.i = zext nneg i32 %4 to i64  ; 2 uses
   %wide.trip.count.i = zext nneg i32 %5 to i64    ; 7 uses
-  %i.aw = add nsw i64 %wide.trip.count62.i, -1
-  %i.ax = mul nsw i64 %i.aw, %i.av                ; 2 uses
+  %i.aw = add nsw i64 %wide.trip.count62.i, -1    ; 2 uses
+  %i.ax = mul nsw i64 %i.aw, %i.av
   %i.ay = add i64 %i.ax, %wide.trip.count.i
   %i.az = shl i64 %i.ay, 2
   %scevgep = getelementptr i8, ptr %2, i64 %i.az  ; 2 uses
-  %i.ba = add i64 %i.ax, %wide.trip.count.i       ; 2 uses
+  %6 = mul nsw i64 %i.aw, %i.av
+  %i.ba = add nsw i64 %6, %wide.trip.count.i      ; 2 uses
   %scevgep13 = getelementptr i8, ptr %0, i64 %i.ba
   %scevgep14 = getelementptr i8, ptr %1, i64 %i.ba
   %min.iters.check = icmp ult i32 %5, 8
@@ -2182,18 +2187,19 @@ bb.c:                                             ; preds = %bb.a
 
 .lr.ph54.i:                                       ; preds = %bb.c
   %i.ao = icmp sgt i32 %5, 0
-  %i.ap = sext i32 %5 to i64                      ; 4 uses
+  %i.ap = sext i32 %5 to i64                      ; 5 uses
   br i1 %i.ao, label %.lr.ph54.split.us.preheader.i, label %_ZN2cv12cpu_baseline16accProd_general_IhdEEvPKT_S4_PT0_PKhiii.exit
 
 .lr.ph54.split.us.preheader.i:                    ; preds = %.lr.ph54.i
   %wide.trip.count62.i = zext nneg i32 %4 to i64  ; 2 uses
   %wide.trip.count.i = zext nneg i32 %5 to i64    ; 7 uses
-  %i.aq = add nsw i64 %wide.trip.count62.i, -1
-  %i.ar = mul nsw i64 %i.aq, %i.ap                ; 2 uses
+  %i.aq = add nsw i64 %wide.trip.count62.i, -1    ; 2 uses
+  %i.ar = mul nsw i64 %i.aq, %i.ap
   %i.as = add i64 %i.ar, %wide.trip.count.i
   %i.at = shl i64 %i.as, 3
   %scevgep = getelementptr i8, ptr %2, i64 %i.at  ; 2 uses
-  %i.au = add i64 %i.ar, %wide.trip.count.i       ; 2 uses
+  %6 = mul nsw i64 %i.aq, %i.ap
+  %i.au = add nsw i64 %6, %wide.trip.count.i      ; 2 uses
   %scevgep13 = getelementptr i8, ptr %0, i64 %i.au
   %scevgep14 = getelementptr i8, ptr %1, i64 %i.au
   %min.iters.check = icmp eq i32 %5, 1
@@ -2596,18 +2602,19 @@ bb.c:                                             ; preds = %bb.a
 
 .lr.ph53.i:                                       ; preds = %bb.c
   %i.ao = icmp sgt i32 %4, 0
-  %i.ap = sext i32 %4 to i64                      ; 3 uses
+  %i.ap = sext i32 %4 to i64                      ; 4 uses
   br i1 %i.ao, label %.lr.ph53.split.us.preheader.i, label %_ZN2cv12cpu_baseline13accW_general_IhfEEvPKT_PT0_PKhiidi.exit
 
 .lr.ph53.split.us.preheader.i:                    ; preds = %.lr.ph53.i
   %wide.trip.count61.i = zext nneg i32 %3 to i64  ; 2 uses
   %wide.trip.count.i = zext nneg i32 %4 to i64    ; 7 uses
-  %i.aq = add nsw i64 %wide.trip.count61.i, -1
-  %i.ar = mul nsw i64 %i.aq, %i.ap                ; 2 uses
+  %i.aq = add nsw i64 %wide.trip.count61.i, -1    ; 2 uses
+  %i.ar = mul nsw i64 %i.aq, %i.ap
   %i.as = add i64 %i.ar, %wide.trip.count.i
   %i.at = shl i64 %i.as, 2
   %scevgep = getelementptr i8, ptr %1, i64 %i.at
-  %i.au = getelementptr i8, ptr %0, i64 %i.ar
+  %6 = mul nsw i64 %i.aq, %i.ap
+  %i.au = getelementptr i8, ptr %0, i64 %6
   %scevgep13 = getelementptr i8, ptr %i.au, i64 %wide.trip.count.i
   %min.iters.check = icmp ult i32 %4, 8
   %bound0 = icmp ult ptr %1, %scevgep13
@@ -3010,18 +3017,19 @@ bb.c:                                             ; preds = %bb.a
 
 .lr.ph53.i:                                       ; preds = %bb.c
   %i.an = icmp sgt i32 %4, 0
-  %i.ao = sext i32 %4 to i64                      ; 3 uses
+  %i.ao = sext i32 %4 to i64                      ; 4 uses
   br i1 %i.an, label %.lr.ph53.split.us.preheader.i, label %_ZN2cv12cpu_baseline13accW_general_IhdEEvPKT_PT0_PKhiidi.exit
 
 .lr.ph53.split.us.preheader.i:                    ; preds = %.lr.ph53.i
   %wide.trip.count61.i = zext nneg i32 %3 to i64  ; 2 uses
   %wide.trip.count.i = zext nneg i32 %4 to i64    ; 7 uses
-  %i.ap = add nsw i64 %wide.trip.count61.i, -1
-  %i.aq = mul nsw i64 %i.ap, %i.ao                ; 2 uses
+  %i.ap = add nsw i64 %wide.trip.count61.i, -1    ; 2 uses
+  %i.aq = mul nsw i64 %i.ap, %i.ao
   %i.ar = add i64 %i.aq, %wide.trip.count.i
   %i.as = shl i64 %i.ar, 3
   %scevgep = getelementptr i8, ptr %1, i64 %i.as
-  %i.at = getelementptr i8, ptr %0, i64 %i.aq
+  %6 = mul nsw i64 %i.ap, %i.ao
+  %i.at = getelementptr i8, ptr %0, i64 %6
   %scevgep13 = getelementptr i8, ptr %i.at, i64 %wide.trip.count.i
   %min.iters.check = icmp ult i32 %4, 4
   %bound0 = icmp ult ptr %1, %scevgep13
@@ -3424,18 +3432,19 @@ bb.c:                                             ; preds = %bb.a
 
 .lr.ph43.i.i:                                     ; preds = %bb.c
   %i.ah = icmp sgt i32 %4, 0
-  %i.ai = sext i32 %4 to i64                      ; 3 uses
+  %i.ai = sext i32 %4 to i64                      ; 4 uses
   br i1 %i.ah, label %.lr.ph43.split.us.preheader.i.i, label %_ZN2cv12cpu_baseline9acc_simd_EPKhPfS2_ii.exit
 
 .lr.ph43.split.us.preheader.i.i:                  ; preds = %.lr.ph43.i.i
   %wide.trip.count51.i.i = zext nneg i32 %3 to i64 ; 2 uses
   %wide.trip.count.i.i = zext nneg i32 %4 to i64  ; 7 uses
-  %i.aj = add nsw i64 %wide.trip.count51.i.i, -1
-  %i.ak = mul nsw i64 %i.aj, %i.ai                ; 2 uses
+  %i.aj = add nsw i64 %wide.trip.count51.i.i, -1  ; 2 uses
+  %i.ak = mul nsw i64 %i.aj, %i.ai
   %i.al = add i64 %i.ak, %wide.trip.count.i.i
   %i.am = shl i64 %i.al, 2
   %scevgep = getelementptr i8, ptr %1, i64 %i.am
-  %i.an = getelementptr i8, ptr %0, i64 %i.ak
+  %5 = mul nsw i64 %i.aj, %i.ai
+  %i.an = getelementptr i8, ptr %0, i64 %5
   %scevgep11 = getelementptr i8, ptr %i.an, i64 %wide.trip.count.i.i
   %min.iters.check = icmp ult i32 %4, 8
   %bound0 = icmp ult ptr %1, %scevgep11
@@ -3639,18 +3648,19 @@ bb.c:                                             ; preds = %bb.a
 
 .lr.ph47.i.i:                                     ; preds = %bb.c
   %i.ah = icmp sgt i32 %4, 0
-  %i.ai = sext i32 %4 to i64                      ; 3 uses
+  %i.ai = sext i32 %4 to i64                      ; 4 uses
   br i1 %i.ah, label %.lr.ph47.split.us.preheader.i.i, label %_ZN2cv12cpu_baseline12accSqr_simd_EPKhPfS2_ii.exit
 
 .lr.ph47.split.us.preheader.i.i:                  ; preds = %.lr.ph47.i.i
   %wide.trip.count55.i.i = zext nneg i32 %3 to i64 ; 2 uses
   %wide.trip.count.i.i = zext nneg i32 %4 to i64  ; 7 uses
-  %i.aj = add nsw i64 %wide.trip.count55.i.i, -1
-  %i.ak = mul nsw i64 %i.aj, %i.ai                ; 2 uses
+  %i.aj = add nsw i64 %wide.trip.count55.i.i, -1  ; 2 uses
+  %i.ak = mul nsw i64 %i.aj, %i.ai
   %i.al = add i64 %i.ak, %wide.trip.count.i.i
   %i.am = shl i64 %i.al, 2
   %scevgep = getelementptr i8, ptr %1, i64 %i.am
-  %i.an = getelementptr i8, ptr %0, i64 %i.ak
+  %5 = mul nsw i64 %i.aj, %i.ai
+  %i.an = getelementptr i8, ptr %0, i64 %5
   %scevgep11 = getelementptr i8, ptr %i.an, i64 %wide.trip.count.i.i
   %min.iters.check = icmp ult i32 %4, 8
   %bound0 = icmp ult ptr %1, %scevgep11
@@ -3874,18 +3884,19 @@ bb.c:                                             ; preds = %bb.a
 
 .lr.ph54.i.i:                                     ; preds = %bb.c
   %i.au = icmp sgt i32 %5, 0
-  %i.av = sext i32 %5 to i64                      ; 4 uses
+  %i.av = sext i32 %5 to i64                      ; 5 uses
   br i1 %i.au, label %.lr.ph54.split.us.preheader.i.i, label %_ZN2cv12cpu_baseline13accProd_simd_EPKhS2_PfS2_ii.exit
 
 .lr.ph54.split.us.preheader.i.i:                  ; preds = %.lr.ph54.i.i
   %wide.trip.count62.i.i = zext nneg i32 %4 to i64 ; 2 uses
   %wide.trip.count.i.i = zext nneg i32 %5 to i64  ; 7 uses
-  %i.aw = add nsw i64 %wide.trip.count62.i.i, -1
-  %i.ax = mul nsw i64 %i.aw, %i.av                ; 2 uses
+  %i.aw = add nsw i64 %wide.trip.count62.i.i, -1  ; 2 uses
+  %i.ax = mul nsw i64 %i.aw, %i.av
   %i.ay = add i64 %i.ax, %wide.trip.count.i.i
   %i.az = shl i64 %i.ay, 2
   %scevgep = getelementptr i8, ptr %2, i64 %i.az  ; 2 uses
-  %i.ba = add i64 %i.ax, %wide.trip.count.i.i     ; 2 uses
+  %6 = mul nsw i64 %i.aw, %i.av
+  %i.ba = add nsw i64 %6, %wide.trip.count.i.i    ; 2 uses
   %scevgep12 = getelementptr i8, ptr %0, i64 %i.ba
   %scevgep13 = getelementptr i8, ptr %1, i64 %i.ba
   %min.iters.check = icmp ult i32 %5, 8
@@ -4122,18 +4133,19 @@ bb.c:                                             ; preds = %bb.a
 
 .lr.ph53.i.i:                                     ; preds = %bb.c
   %i.ao = icmp sgt i32 %4, 0
-  %i.ap = sext i32 %4 to i64                      ; 3 uses
+  %i.ap = sext i32 %4 to i64                      ; 4 uses
   br i1 %i.ao, label %.lr.ph53.split.us.preheader.i.i, label %_ZN2cv12cpu_baseline10accW_simd_EPKhPfS2_iid.exit
 
 .lr.ph53.split.us.preheader.i.i:                  ; preds = %.lr.ph53.i.i
   %wide.trip.count61.i.i = zext nneg i32 %3 to i64 ; 2 uses
   %wide.trip.count.i.i = zext nneg i32 %4 to i64  ; 7 uses
-  %i.aq = add nsw i64 %wide.trip.count61.i.i, -1
-  %i.ar = mul nsw i64 %i.aq, %i.ap                ; 2 uses
+  %i.aq = add nsw i64 %wide.trip.count61.i.i, -1  ; 2 uses
+  %i.ar = mul nsw i64 %i.aq, %i.ap
   %i.as = add i64 %i.ar, %wide.trip.count.i.i
   %i.at = shl i64 %i.as, 2
   %scevgep = getelementptr i8, ptr %1, i64 %i.at
-  %i.au = getelementptr i8, ptr %0, i64 %i.ar
+  %6 = mul nsw i64 %i.aq, %i.ap
+  %i.au = getelementptr i8, ptr %0, i64 %6
   %scevgep12 = getelementptr i8, ptr %i.au, i64 %wide.trip.count.i.i
   %min.iters.check = icmp ult i32 %4, 8
   %bound0 = icmp ult ptr %1, %scevgep12
@@ -4346,18 +4358,19 @@ bb.c:                                             ; preds = %bb.a
 
 .lr.ph43.i.i:                                     ; preds = %bb.c
   %i.ah = icmp sgt i32 %4, 0
-  %i.ai = sext i32 %4 to i64                      ; 3 uses
+  %i.ai = sext i32 %4 to i64                      ; 4 uses
   br i1 %i.ah, label %.lr.ph43.split.us.preheader.i.i, label %_ZN2cv12cpu_baseline9acc_simd_EPKhPdS2_ii.exit
 
 .lr.ph43.split.us.preheader.i.i:                  ; preds = %.lr.ph43.i.i
   %wide.trip.count51.i.i = zext nneg i32 %3 to i64 ; 2 uses
   %wide.trip.count.i.i = zext nneg i32 %4 to i64  ; 7 uses
-  %i.aj = add nsw i64 %wide.trip.count51.i.i, -1
-  %i.ak = mul nsw i64 %i.aj, %i.ai                ; 2 uses
+  %i.aj = add nsw i64 %wide.trip.count51.i.i, -1  ; 2 uses
+  %i.ak = mul nsw i64 %i.aj, %i.ai
   %i.al = add i64 %i.ak, %wide.trip.count.i.i
   %i.am = shl i64 %i.al, 3
   %scevgep = getelementptr i8, ptr %1, i64 %i.am
-  %i.an = getelementptr i8, ptr %0, i64 %i.ak
+  %5 = mul nsw i64 %i.aj, %i.ai
+  %i.an = getelementptr i8, ptr %0, i64 %5
   %scevgep11 = getelementptr i8, ptr %i.an, i64 %wide.trip.count.i.i
   %min.iters.check = icmp ult i32 %4, 4
   %bound0 = icmp ult ptr %1, %scevgep11
@@ -4561,18 +4574,19 @@ bb.c:                                             ; preds = %bb.a
 
 .lr.ph47.i.i:                                     ; preds = %bb.c
   %i.ah = icmp sgt i32 %4, 0
-  %i.ai = sext i32 %4 to i64                      ; 3 uses
+  %i.ai = sext i32 %4 to i64                      ; 4 uses
   br i1 %i.ah, label %.lr.ph47.split.us.preheader.i.i, label %_ZN2cv12cpu_baseline12accSqr_simd_EPKhPdS2_ii.exit
 
 .lr.ph47.split.us.preheader.i.i:                  ; preds = %.lr.ph47.i.i
   %wide.trip.count55.i.i = zext nneg i32 %3 to i64 ; 2 uses
   %wide.trip.count.i.i = zext nneg i32 %4 to i64  ; 7 uses
-  %i.aj = add nsw i64 %wide.trip.count55.i.i, -1
-  %i.ak = mul nsw i64 %i.aj, %i.ai                ; 2 uses
+  %i.aj = add nsw i64 %wide.trip.count55.i.i, -1  ; 2 uses
+  %i.ak = mul nsw i64 %i.aj, %i.ai
   %i.al = add i64 %i.ak, %wide.trip.count.i.i
   %i.am = shl i64 %i.al, 3
   %scevgep = getelementptr i8, ptr %1, i64 %i.am
-  %i.an = getelementptr i8, ptr %0, i64 %i.ak
+  %5 = mul nsw i64 %i.aj, %i.ai
+  %i.an = getelementptr i8, ptr %0, i64 %5
   %scevgep11 = getelementptr i8, ptr %i.an, i64 %wide.trip.count.i.i
   %min.iters.check = icmp ult i32 %4, 4
   %bound0 = icmp ult ptr %1, %scevgep11
@@ -4786,18 +4800,19 @@ bb.c:                                             ; preds = %bb.a
 
 .lr.ph54.i.i:                                     ; preds = %bb.c
   %i.ao = icmp sgt i32 %5, 0
-  %i.ap = sext i32 %5 to i64                      ; 4 uses
+  %i.ap = sext i32 %5 to i64                      ; 5 uses
   br i1 %i.ao, label %.lr.ph54.split.us.preheader.i.i, label %_ZN2cv12cpu_baseline13accProd_simd_EPKhS2_PdS2_ii.exit
 
 .lr.ph54.split.us.preheader.i.i:                  ; preds = %.lr.ph54.i.i
   %wide.trip.count62.i.i = zext nneg i32 %4 to i64 ; 2 uses
   %wide.trip.count.i.i = zext nneg i32 %5 to i64  ; 7 uses
-  %i.aq = add nsw i64 %wide.trip.count62.i.i, -1
-  %i.ar = mul nsw i64 %i.aq, %i.ap                ; 2 uses
+  %i.aq = add nsw i64 %wide.trip.count62.i.i, -1  ; 2 uses
+  %i.ar = mul nsw i64 %i.aq, %i.ap
   %i.as = add i64 %i.ar, %wide.trip.count.i.i
   %i.at = shl i64 %i.as, 3
   %scevgep = getelementptr i8, ptr %2, i64 %i.at  ; 2 uses
-  %i.au = add i64 %i.ar, %wide.trip.count.i.i     ; 2 uses
+  %6 = mul nsw i64 %i.aq, %i.ap
+  %i.au = add nsw i64 %6, %wide.trip.count.i.i    ; 2 uses
   %scevgep12 = getelementptr i8, ptr %0, i64 %i.au
   %scevgep13 = getelementptr i8, ptr %1, i64 %i.au
   %min.iters.check = icmp eq i32 %5, 1
@@ -5023,18 +5038,19 @@ bb.c:                                             ; preds = %bb.a
 
 .lr.ph53.i.i:                                     ; preds = %bb.c
   %i.an = icmp sgt i32 %4, 0
-  %i.ao = sext i32 %4 to i64                      ; 3 uses
+  %i.ao = sext i32 %4 to i64                      ; 4 uses
   br i1 %i.an, label %.lr.ph53.split.us.preheader.i.i, label %_ZN2cv12cpu_baseline10accW_simd_EPKhPdS2_iid.exit
 
 .lr.ph53.split.us.preheader.i.i:                  ; preds = %.lr.ph53.i.i
   %wide.trip.count61.i.i = zext nneg i32 %3 to i64 ; 2 uses
   %wide.trip.count.i.i = zext nneg i32 %4 to i64  ; 7 uses
-  %i.ap = add nsw i64 %wide.trip.count61.i.i, -1
-  %i.aq = mul nsw i64 %i.ap, %i.ao                ; 2 uses
+  %i.ap = add nsw i64 %wide.trip.count61.i.i, -1  ; 2 uses
+  %i.aq = mul nsw i64 %i.ap, %i.ao
   %i.ar = add i64 %i.aq, %wide.trip.count.i.i
   %i.as = shl i64 %i.ar, 3
   %scevgep = getelementptr i8, ptr %1, i64 %i.as
-  %i.at = getelementptr i8, ptr %0, i64 %i.aq
+  %6 = mul nsw i64 %i.ap, %i.ao
+  %i.at = getelementptr i8, ptr %0, i64 %6
   %scevgep12 = getelementptr i8, ptr %i.at, i64 %wide.trip.count.i.i
   %min.iters.check = icmp ult i32 %4, 4
   %bound0 = icmp ult ptr %1, %scevgep12

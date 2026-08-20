@@ -1,8 +1,7 @@
 inline.NumInlined: 43
 inline.NumDeleted: 9
 loop-unroll.NumCompletelyUnrolled: 1
-loop-unroll.NumRuntimeUnrolled: 1
-loop-unroll.NumUnrolled: 2
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@k12_open:bb.a
   %i.at = getelementptr i8, ptr %i.e, i64 32
   br label %bb.j
@@ -204,15 +203,15 @@ bb.ae:                                            ; preds = %bb.ac
   ]
 
 bb.af:                                            ; preds = %bb.ae
-  %i.dg = getelementptr i8, ptr %i.bq, i64 24     ; 6 uses
+  %i.dg = getelementptr i8, ptr %i.bq, i64 24     ; 4 uses
   store i32 0, ptr %i.dg, align 8
   %i.dh = icmp ugt i16 %i.ca, 24
   br i1 %i.dh, label %.lr.ph, label %.loopexit
 
 .lr.ph:                                           ; preds = %bb.af
   %i.di = add nsw i32 %i.cb, -24                  ; 2 uses
-  %i.dj = getelementptr i8, ptr %i.bd, i64 60     ; 5 uses
-  %wide.trip.count = zext i32 %i.di to i64        ; 6 uses
+  %i.dj = getelementptr i8, ptr %i.bd, i64 60     ; 3 uses
+  %wide.trip.count = zext nneg i32 %i.di to i64   ; 4 uses
   %min.iters.check = icmp ult i32 %i.di, 8
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
@@ -261,54 +260,24 @@ middle.block:                                     ; preds = %vector.body
   br i1 %cmp.n, label %.loopexit, label %scalar.ph.preheader
 
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %.lr.ph, %middle.block
-  %indvars.iv.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph ], [ %n.vec, %middle.block ] ; 5 uses
-  %.ph = phi i32 [ 0, %vector.memcheck ], [ 0, %.lr.ph ], [ %i.dw, %middle.block ] ; 2 uses
-  %xtraiter = and i64 %wide.trip.count, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
+  %indvars.iv.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph ], [ %n.vec, %middle.block ]
+  %.ph = phi i32 [ 0, %vector.memcheck ], [ 0, %.lr.ph ], [ %i.dw, %middle.block ]
+  br label %scalar.ph
 
-scalar.ph.prol:                                   ; preds = %scalar.ph.preheader
-  %3 = getelementptr i8, ptr %i.dj, i64 %indvars.iv.ph
-  %4 = load i8, ptr %3, align 1
-  %5 = icmp eq i8 %4, -1
-  %6 = trunc nuw nsw i64 %indvars.iv.ph to i32
-  %7 = lshr exact i32 -2147483648, %6
-  %8 = select i1 %5, i32 %7, i32 0
-  %9 = or i32 %8, %.ph                            ; 2 uses
-  store i32 %9, ptr %i.dg, align 8
-  %indvars.iv.next.prol = or disjoint i64 %indvars.iv.ph, 1
-  br label %scalar.ph.prol.loopexit
-
-scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %scalar.ph.preheader
-  %indvars.iv.unr = phi i64 [ %indvars.iv.ph, %scalar.ph.preheader ], [ %indvars.iv.next.prol, %scalar.ph.prol ]
-  %.unr = phi i32 [ %.ph, %scalar.ph.preheader ], [ %9, %scalar.ph.prol ]
-  %10 = add nsw i64 %wide.trip.count, -1
-  %11 = icmp eq i64 %indvars.iv.ph, %10
-  br i1 %11, label %.loopexit, label %scalar.ph
-
-scalar.ph:                                        ; preds = %scalar.ph.prol.loopexit, %scalar.ph
-  %indvars.iv = phi i64 [ %indvars.iv.next.1, %scalar.ph ], [ %indvars.iv.unr, %scalar.ph.prol.loopexit ] ; 4 uses
-  %i.dx = phi i32 [ %i.ee, %scalar.ph ], [ %.unr, %scalar.ph.prol.loopexit ]
-  %12 = getelementptr i8, ptr %i.dj, i64 %indvars.iv
-  %13 = load i8, ptr %12, align 1
-  %14 = icmp eq i8 %13, -1
-  %15 = trunc nuw nsw i64 %indvars.iv to i32
-  %16 = lshr exact i32 -2147483648, %15
-  %17 = select i1 %14, i32 %16, i32 0
-  %18 = or i32 %17, %i.dx                         ; 2 uses
-  store i32 %18, ptr %i.dg, align 8
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %i.dy = getelementptr i8, ptr %i.dj, i64 %indvars.iv.next
+scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
+  %indvars.iv = phi i64 [ %indvars.iv.next.1, %scalar.ph ], [ %indvars.iv.ph, %scalar.ph.preheader ] ; 3 uses
+  %i.dx = phi i32 [ %i.ee, %scalar.ph ], [ %.ph, %scalar.ph.preheader ]
+  %i.dy = getelementptr i8, ptr %i.dj, i64 %indvars.iv
   %i.dz = load i8, ptr %i.dy, align 1
   %i.ea = icmp eq i8 %i.dz, -1
-  %i.eb = trunc nuw nsw i64 %indvars.iv.next to i32
+  %i.eb = trunc nuw nsw i64 %indvars.iv to i32
   %i.ec = lshr exact i32 -2147483648, %i.eb
   %i.ed = select i1 %i.ea, i32 %i.ec, i32 0
-  %i.ee = or i32 %i.ed, %18                       ; 2 uses
+  %i.ee = or i32 %i.ed, %i.dx                     ; 2 uses
   store i32 %i.ee, ptr %i.dg, align 8
-  %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %exitcond.not.1 = icmp eq i64 %indvars.iv.next.1, %wide.trip.count
-  br i1 %exitcond.not.1, label %.loopexit, label %scalar.ph, !llvm.loop !16
+  %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %3 = icmp samesign ult i64 %indvars.iv.next.1, %wide.trip.count
+  br i1 %3, label %scalar.ph, label %.loopexit, !llvm.loop !16
 
 bb.ag:                                            ; preds = %bb.ae
   %i.ef = icmp ult i16 %i.ca, 24
@@ -361,7 +330,7 @@ bb.ak:                                            ; preds = %bb.aj
   store i16 %.sink, ptr %i.ex, align 2
   br label %.loopexit
 
-.loopexit:                                        ; preds = %scalar.ph.prol.loopexit, %scalar.ph, %middle.block, %.loopexit.sink.split, %bb.aj, %bb.af, %bb.ae
+.loopexit:                                        ; preds = %scalar.ph, %middle.block, %.loopexit.sink.split, %bb.aj, %bb.af, %bb.ae
   %i.ey = zext nneg i32 %i.cw to i64
   %i.ez = getelementptr i8, ptr %i.bd, i64 %i.ey
   %i.fa = getelementptr i8, ptr %i.ez, i64 -1

@@ -204,12 +204,12 @@ bb.h:                                             ; preds = %bb.c
   br i1 %i.av, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %.sroa.0.0.i.i.i = call noundef range(i32 0, -1) i32 @llvm.umin.i32(i32 %.sroa.0.029.i, i32 6) ; 2 uses
-  %4 = mul nuw nsw i32 %.sroa.0.0.i.i.i, %.sroa.0.0.i.i.i ; 2 uses
   %.not.i11.i = icmp eq i32 %.sroa.0.029.i, 0
   br i1 %.not.i11.i, label %_ZN3std4sync4mpmc5utils7Backoff10spin_light17h9d96ea26e4e11cecE.exit22.i.backedge, label %.lr.ph.i12.i.preheader
 
 .lr.ph.i12.i.preheader:                           ; preds = %bb.i
+  %.sroa.0.0.i.i.i = call noundef range(i32 0, -1) i32 @llvm.umin.i32(i32 %.sroa.0.029.i, i32 6) ; 2 uses
+  %4 = mul nuw nsw i32 %.sroa.0.0.i.i.i, %.sroa.0.0.i.i.i ; 2 uses
   %xtraiter70 = and i32 %4, 5                     ; 3 uses
   %i.aw = icmp ult i32 %.sroa.0.029.i, 3
   br i1 %i.aw, label %.lr.ph.i12.i.epil.preheader, label %.lr.ph.i12.i.preheader.new
@@ -269,12 +269,12 @@ bb.l:                                             ; preds = %bb.k, %bb.d
   br i1 %i.bd, label %bb.n, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %.sroa.0.0.i.i15.i = call noundef range(i32 0, -1) i32 @llvm.umin.i32(i32 %.sroa.0.029.i, i32 6) ; 2 uses
-  %5 = mul nuw nsw i32 %.sroa.0.0.i.i15.i, %.sroa.0.0.i.i15.i ; 2 uses
   %.not.i16.i = icmp eq i32 %.sroa.0.029.i, 0
   br i1 %.not.i16.i, label %_ZN3std4sync4mpmc5utils7Backoff10spin_light17h9d96ea26e4e11cecE.exit22.i.backedge, label %.lr.ph.i17.i.preheader
 
 .lr.ph.i17.i.preheader:                           ; preds = %bb.m
+  %.sroa.0.0.i.i15.i = call noundef range(i32 0, -1) i32 @llvm.umin.i32(i32 %.sroa.0.029.i, i32 6) ; 2 uses
+  %5 = mul nuw nsw i32 %.sroa.0.0.i.i15.i, %.sroa.0.0.i.i15.i ; 2 uses
   %xtraiter76 = and i32 %5, 5                     ; 3 uses
   %i.be = icmp ult i32 %.sroa.0.029.i, 3
   br i1 %i.be, label %.lr.ph.i17.i.epil.preheader, label %.lr.ph.i17.i.preheader.new
@@ -677,12 +677,12 @@ bb.h:                                             ; preds = %bb.c
   br i1 %i.az, label %"_ZN3std4sync4mpmc5array16Channel$LT$T$GT$10start_send17h934fa77414d31991E.exit", label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %.sroa.0.0.i.i.i = call noundef range(i32 0, -1) i32 @llvm.umin.i32(i32 %.sroa.0.02933.i, i32 6) ; 2 uses
-  %5 = mul nuw nsw i32 %.sroa.0.0.i.i.i, %.sroa.0.0.i.i.i ; 2 uses
   %.not.i11.i = icmp eq i32 %.sroa.0.02933.i, 0
   br i1 %.not.i11.i, label %_ZN3std4sync4mpmc5utils7Backoff10spin_light17h9d96ea26e4e11cecE.exit22.i, label %.lr.ph.i12.i.preheader
 
 .lr.ph.i12.i.preheader:                           ; preds = %bb.i
+  %.sroa.0.0.i.i.i = call noundef range(i32 0, -1) i32 @llvm.umin.i32(i32 %.sroa.0.02933.i, i32 6) ; 2 uses
+  %5 = mul nuw nsw i32 %.sroa.0.0.i.i.i, %.sroa.0.0.i.i.i ; 2 uses
   %xtraiter105 = and i32 %5, 5                    ; 3 uses
   %i.ba = icmp ult i32 %.sroa.0.02933.i, 3
   br i1 %i.ba, label %.lr.ph.i12.i.epil.preheader, label %.lr.ph.i12.i.preheader.new
@@ -749,12 +749,12 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   br i1 %i.bk, label %"_ZN3std4sync4mpmc5array16Channel$LT$T$GT$5write17hf99cc1ddacac4cebE.exit.thread", label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %.sroa.0.0.i.i15.i = call noundef range(i32 0, -1) i32 @llvm.umin.i32(i32 %.sroa.0.02933.i, i32 6) ; 2 uses
-  %6 = mul nuw nsw i32 %.sroa.0.0.i.i15.i, %.sroa.0.0.i.i15.i ; 2 uses
   %.not.i16.i = icmp eq i32 %.sroa.0.02933.i, 0
   br i1 %.not.i16.i, label %_ZN3std4sync4mpmc5utils7Backoff10spin_light17h9d96ea26e4e11cecE.exit22.i, label %.lr.ph.i17.i.preheader
 
 .lr.ph.i17.i.preheader:                           ; preds = %bb.m
+  %.sroa.0.0.i.i15.i = call noundef range(i32 0, -1) i32 @llvm.umin.i32(i32 %.sroa.0.02933.i, i32 6) ; 2 uses
+  %6 = mul nuw nsw i32 %.sroa.0.0.i.i15.i, %.sroa.0.0.i.i15.i ; 2 uses
   %xtraiter111 = and i32 %6, 5                    ; 3 uses
   %i.bl = icmp ult i32 %.sroa.0.02933.i, 3
   br i1 %i.bl, label %.lr.ph.i17.i.epil.preheader, label %.lr.ph.i17.i.preheader.new

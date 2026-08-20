@@ -33,7 +33,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c
   %i.k = zext nneg i8 %i.i to i32
   %i.l = mul nuw nsw i32 %i.k, 212                ; 2 uses
-  %i.m = or disjoint i32 %i.l, 2048               ; 2 uses
+  %i.m = or disjoint i32 %i.l, 2048
   %i.n = add nuw nsw i32 %i.m, %i.l
   %.not27 = icmp samesign ugt i32 %i.n, %i.b
   br i1 %.not27, label %.loopexit, label %.lr.ph.preheader
@@ -42,15 +42,15 @@ bb.d:                                             ; preds = %bb.c
   %i.o = zext nneg i8 %i.i to i64                 ; 2 uses
   %i.p = mul nuw nsw i64 %i.o, 424
   %i.q = or disjoint i64 %i.p, 2048
-  %i.r = mul nuw nsw i64 %i.o, 212
-  %1 = zext nneg i32 %i.m to i64
+  %i.r = mul nuw nsw i64 %i.o, 212                ; 3 uses
+  %1 = or disjoint i64 %i.r, 2048
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.e
-  %indvars.iv.a = phi i64 [ %i.q, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.e ] ; 2 uses
-  %.029 = phi i64 [ %1, %.lr.ph.preheader ], [ %indvars.iv.a, %bb.e ]
+  %indvars.iv.a = phi i64 [ %1, %.lr.ph.preheader ], [ %indvars.iv.next31, %bb.e ] ; 2 uses
+  %.029 = phi i64 [ %i.q, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.e ]
   %.02228 = phi i32 [ 0, %.lr.ph.preheader ], [ %i.w, %bb.e ]
-  %i.s = getelementptr inbounds nuw i8, ptr %i.e, i64 %.029 ; 2 uses
+  %i.s = getelementptr inbounds nuw i8, ptr %i.e, i64 %indvars.iv.a ; 2 uses
   %i.t = load i16, ptr %i.s, align 1, !tbaa !14
   %i.u = getelementptr inbounds nuw i8, ptr %i.s, i64 212
   %i.v = load i16, ptr %i.u, align 1, !tbaa !14
@@ -59,9 +59,10 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %.lr.ph
   %i.w = add nuw nsw i32 %.02228, 1               ; 2 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv.a, %i.r ; 2 uses
+  %indvars.iv.next = add nuw nsw i64 %.029, %i.r  ; 2 uses
   %i.x = trunc nuw i64 %indvars.iv.next to i32
   %.not = icmp slt i32 %i.b, %i.x
+  %indvars.iv.next31 = add nuw nsw i64 %indvars.iv.a, %i.r
   br i1 %.not, label %.critedge.loopexit, label %.lr.ph, !llvm.loop !15
 
 .critedge.loopexit:                               ; preds = %bb.e

@@ -204,8 +204,7 @@ compute_exp_strategy.exit.i:                      ; preds = %bb.r, %.loopexit.i.
   %indvars.iv76.i.i = phi i64 [ %i.it, %.lr.ph70.split.preheader.i.i ], [ %indvars.iv.next77.i.i, %._crit_edge.i5.i ] ; 8 uses
   %i.ix = getelementptr inbounds nuw [4 x i8], ptr %i.in, i64 %indvars.iv76.i.i ; 3 uses
   %i.iy = getelementptr inbounds nuw [6 x i8], ptr %i.io, i64 %indvars.iv76.i.i ; 2 uses
-  %i.iz = icmp eq i64 %indvars.iv76.i.i, 0        ; 5 uses
-  %5 = zext i1 %i.iz to i32                       ; 3 uses
+  %i.iz = icmp eq i64 %indvars.iv76.i.i, 0        ; 6 uses
   %i.ja = icmp sgt i32 %i.iw, 0
   br i1 %i.ja, label %.lr.ph66.i.i, label %._crit_edge.i5.i
 
@@ -218,8 +217,9 @@ compute_exp_strategy.exit.i:                      ; preds = %bb.r, %.loopexit.i.
   %i.jg = getelementptr inbounds nuw [6 x i8], ptr %i.ip, i64 %indvars.iv76.i.i ; 2 uses
   %i.jh = zext i1 %i.iz to i64                    ; 9 uses
   %i.ji = getelementptr inbounds nuw [768 x i8], ptr @exponent_group_tab, i64 %i.jh
-  %6 = xor i32 %5, 1
-  %i.jj = zext nneg i32 %6 to i64                 ; 2 uses
+  %5 = xor i1 %i.iz, true
+  %i.jj = zext i1 %5 to i64                       ; 2 uses
+  %6 = sext i1 %i.iz to i64                       ; 2 uses
   %invariant.op = sub i64 1, %i.jh
   %invariant.op571 = sub i64 1, %i.jh
   br label %bb.s
@@ -299,8 +299,7 @@ bb.w:                                             ; preds = %.lr.ph.i8.i
   %i.kt = getelementptr i8, ptr %i.ks, i64 -256
   %i.ku = sext i32 %i.jv to i64
   %i.kv = getelementptr inbounds i8, ptr %i.kt, i64 %i.ku
-  %i.kw = load i8, ptr %i.kv, align 1, !tbaa !28  ; 9 uses
-  %7 = zext i8 %i.kw to i32                       ; 2 uses
+  %i.kw = load i8, ptr %i.kv, align 1, !tbaa !28  ; 8 uses
   switch i8 %i.kq, label %.loopexit128.i.i.i [
     i8 2, label %bb.x
     i8 3, label %bb.y
@@ -514,16 +513,15 @@ bb.ae:                                            ; preds = %bb.ad
   br i1 %.not124137.i.i.i, label %encode_exponents_blk_ch.exit.i.i, label %.lr.ph151.preheader.i.i.i
 
 .lr.ph151.preheader.i.i.i:                        ; preds = %bb.ae
-  %8 = mul nuw nsw i32 %7, 6
-  %9 = sub nuw nsw i32 %8, %5
-  %10 = zext nneg i32 %9 to i64
-  %11 = zext i8 %i.kw to i64
-  %i.nq = mul nuw nsw i64 %11, 3
+  %7 = zext i8 %i.kw to i64                       ; 2 uses
+  %8 = mul nuw nsw i64 %7, 6
+  %9 = add nsw i64 %8, %6
+  %i.nq = mul nuw nsw i64 %7, 3
   br label %.lr.ph151.i.i.i
 
 .lr.ph151.i.i.i:                                  ; preds = %.lr.ph151.i.i.i, %.lr.ph151.preheader.i.i.i
   %indvars.iv187.i.i.i = phi i64 [ %i.nq, %.lr.ph151.preheader.i.i.i ], [ %indvars.iv.next188.i.i.i, %.lr.ph151.i.i.i ] ; 3 uses
-  %indvars.iv185.i.i.i = phi i64 [ %10, %.lr.ph151.preheader.i.i.i ], [ %indvars.iv.next186.i.i.i, %.lr.ph151.i.i.i ] ; 2 uses
+  %indvars.iv185.i.i.i = phi i64 [ %9, %.lr.ph151.preheader.i.i.i ], [ %indvars.iv.next186.i.i.i, %.lr.ph151.i.i.i ] ; 2 uses
   %i.nr = sub nuw nsw i64 %indvars.iv187.i.i.i, %i.jh
   %i.ns = getelementptr inbounds nuw i8, ptr %.065.i.i, i64 %i.nr
   %i.nt = load i8, ptr %i.ns, align 1, !tbaa !28  ; 2 uses
@@ -540,16 +538,15 @@ bb.af:                                            ; preds = %bb.ad
   br i1 %.not124137.i.i.i, label %encode_exponents_blk_ch.exit.i.i, label %.lr.ph147.preheader.i.i.i
 
 .lr.ph147.preheader.i.i.i:                        ; preds = %bb.af
-  %12 = mul nuw nsw i32 %7, 12
-  %13 = sub nuw nsw i32 %12, %5
-  %14 = zext nneg i32 %13 to i64
-  %15 = zext i8 %i.kw to i64
-  %i.nx = mul nuw nsw i64 %15, 3
+  %10 = zext i8 %i.kw to i64                      ; 2 uses
+  %11 = mul nuw nsw i64 %10, 12
+  %12 = add nsw i64 %11, %6
+  %i.nx = mul nuw nsw i64 %10, 3
   br label %.lr.ph147.i.i.i
 
 .lr.ph147.i.i.i:                                  ; preds = %.lr.ph147.i.i.i, %.lr.ph147.preheader.i.i.i
   %indvars.iv180.i.i.i = phi i64 [ %i.nx, %.lr.ph147.preheader.i.i.i ], [ %indvars.iv.next181.i.i.i, %.lr.ph147.i.i.i ] ; 3 uses
-  %indvars.iv178.i.i.i = phi i64 [ %14, %.lr.ph147.preheader.i.i.i ], [ %indvars.iv.next179.i.i.i, %.lr.ph147.i.i.i ] ; 2 uses
+  %indvars.iv178.i.i.i = phi i64 [ %12, %.lr.ph147.preheader.i.i.i ], [ %indvars.iv.next179.i.i.i, %.lr.ph147.i.i.i ] ; 2 uses
   %i.ny = sub nuw nsw i64 %indvars.iv180.i.i.i, %i.jh
   %i.nz = getelementptr inbounds nuw i8, ptr %.065.i.i, i64 %i.ny
   %i.oa = load i8, ptr %i.nz, align 1, !tbaa !28

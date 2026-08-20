@@ -203,7 +203,7 @@ middle.block523:                                  ; preds = %vector.body516
   %i.fm = sext i32 %i.ex to i64                   ; 2 uses
   %i.fn = add nsw i64 %i.fl, 1
   %i.fo = call i64 @llvm.smax.i64(i64 %i.fn, i64 %i.fm)
-  %i.fp = sub i64 %i.fo, %i.fl                    ; 3 uses
+  %i.fp = sub nsw i64 %i.fo, %i.fl                ; 3 uses
   %min.iters.check = icmp ult i64 %i.fp, 8
   br i1 %min.iters.check, label %.lr.ph426.preheader560, label %vector.ph
 
@@ -264,7 +264,7 @@ middle.block:                                     ; preds = %vector.body
   %i.gg = sext i32 %i.ex to i64                   ; 2 uses
   %i.gh = add nsw i64 %i.gf, 1
   %i.gi = call i64 @llvm.smax.i64(i64 %i.gh, i64 %i.gg)
-  %i.gj = sub i64 %i.gi, %i.gf                    ; 3 uses
+  %i.gj = sub nsw i64 %i.gi, %i.gf                ; 3 uses
   %min.iters.check545 = icmp ult i64 %i.gj, 8
   br i1 %min.iters.check545, label %.lr.ph413.preheader564, label %vector.ph546
 

@@ -204,7 +204,7 @@ iter.check:                                       ; preds = %.preheader
   %i.fk = zext i16 %i.fc to i64                   ; 7 uses
   %i.fl = zext nneg i32 %i.fh to i64              ; 2 uses
   %i.fm = add nuw nsw i64 %i.fk, 1
-  %umax197 = tail call i64 @llvm.umax.i64(i64 %i.fm, i64 %i.fl)
+  %umax197 = tail call i64 @llvm.umax.i64(i64 %i.fl, i64 %i.fm)
   %i.fn = sub nsw i64 %umax197, %i.fk             ; 7 uses
   %min.iters.check199 = icmp ult i64 %i.fn, 4
   br i1 %min.iters.check199, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check

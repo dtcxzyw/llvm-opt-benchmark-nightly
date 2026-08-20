@@ -204,9 +204,9 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %bb.h
   %i.aw = sext i32 %i.ar to i64
   %i.ax = getelementptr inbounds i8, ptr %i.o, i64 %i.aw ; 4 uses
-  %.val493 = load i8, ptr %i.ax, align 1, !tbaa !14 ; 2 uses
+  %.val493 = load i8, ptr %i.ax, align 1, !tbaa !14
   %i.ay = getelementptr i8, ptr %i.ax, i64 1
-  %.val494 = load i8, ptr %i.ay, align 1, !tbaa !14 ; 2 uses
+  %.val494 = load i8, ptr %i.ay, align 1, !tbaa !14
   %i.az = zext i8 %.val493 to i16
   %i.ba = shl nuw i16 %i.az, 8                    ; 2 uses
   %i.bb = zext i8 %.val494 to i16
@@ -232,7 +232,8 @@ bb.k:                                             ; preds = %bb.j
   %i.bm = getelementptr inbounds nuw i8, ptr %0, i64 92
   %i.bn = load i32, ptr %i.bm, align 4, !tbaa !220 ; 4 uses
   %.not457 = icmp sgt i16 %i.ba, -1
-  %i.bo = and i16 %i.bc, 4095
+  %i.bo = and i16 %i.bc, 4095                     ; 2 uses
+  %11 = zext nneg i16 %i.bo to i32
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #22
   store i32 0, ptr %i.a, align 4, !tbaa !18
   %i.bp = icmp ne i32 %2, 0                       ; 3 uses
@@ -300,11 +301,6 @@ bb.n:                                             ; preds = %bb.m, %._crit_edge
   %i.cz = add nsw i64 %i.cv, %i.bw
   %i.da = shl nsw i64 %i.cz, 2
   %smax661 = tail call i32 @llvm.smax.i32(i32 %i.bv, i32 1)
-  %11 = zext i8 %.val493 to i32
-  %12 = shl nuw nsw i32 %11, 8
-  %13 = zext i8 %.val494 to i32
-  %.masked = and i32 %12, 3840
-  %14 = or disjoint i32 %.masked, %13
   %wide.trip.count622 = zext nneg i32 %smax621 to i64 ; 6 uses
   %.idx = shl nsw i64 %i.cv, 2
   %i.db = getelementptr i8, ptr %i.bz, i64 %.idx
@@ -707,8 +703,8 @@ middle.block:                                     ; preds = %vector.body
 .thread522:                                       ; preds = %bb.z, %bb.y, %bb.t, %bb.v, %_ZN2cvL23stbtt__GetVarTupleScaleEPKNS_14stbtt_fontinfoEPKhS4_S4_.exit, %._crit_edge591
   %.9526 = phi i32 [ %.3392.lcssa, %._crit_edge591 ], [ %i.ed, %_ZN2cvL23stbtt__GetVarTupleScaleEPKNS_14stbtt_fontinfoEPKhS4_S4_.exit ], [ %i.ed, %bb.t ], [ %i.ed, %bb.v ], [ %i.ed, %bb.y ], [ %i.ed, %bb.z ]
   %i.vh = add nuw nsw i32 %.0394592, 1            ; 2 uses
-  %exitcond664.not = icmp eq i32 %i.vh, %14
-  br i1 %exitcond664.not, label %.preheader, label %bb.o, !llvm.loop !294
+  %12 = icmp samesign ult i32 %i.vh, %11
+  br i1 %12, label %bb.o, label %.preheader, !llvm.loop !294
 
 .lr.ph598:                                        ; preds = %.lr.ph598, %.lr.ph598.preheader.new
   %indvars.iv665 = phi i64 [ 0, %.lr.ph598.preheader.new ], [ %indvars.iv.next666.1, %.lr.ph598 ] ; 4 uses

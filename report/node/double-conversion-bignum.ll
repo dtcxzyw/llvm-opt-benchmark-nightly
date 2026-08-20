@@ -204,11 +204,11 @@ _ZN6icu_7817double_conversion6Bignum14EnsureCapacityEi.exit.i: ; preds = %_ZN6ic
   br i1 %i.am, label %_ZN6icu_7817double_conversion6Bignum14EnsureCapacityEi.exit.i, label %.lr.ph20.i.loopexit, !llvm.loop !24
 
 _ZN6icu_7817double_conversion6Bignum5AlignERKS1_.exit: ; preds = %bb.a, %.lr.ph20.i
-  %i.an = phi i16 [ %i.d, %bb.a ], [ %.pre68, %.lr.ph20.i ]
+  %i.an = phi i16 [ %i.d, %bb.a ], [ %.pre68, %.lr.ph20.i ] ; 2 uses
   %i.ao = phi i16 [ %i.b, %bb.a ], [ %i.aj, %.lr.ph20.i ]
   %i.ap = phi i16 [ %.pre67, %bb.a ], [ %i.ai, %.lr.ph20.i ] ; 2 uses
   %i.aq = sext i16 %i.ap to i32                   ; 3 uses
-  %i.ar = sext i16 %i.ao to i32                   ; 4 uses
+  %i.ar = sext i16 %i.ao to i32                   ; 5 uses
   %i.as = add nsw i32 %i.ar, %i.aq
   %i.at = load i16, ptr %1, align 4               ; 2 uses
   %i.au = sext i16 %i.at to i32
@@ -224,7 +224,7 @@ bb.d:                                             ; preds = %_ZN6icu_7817double_
   unreachable
 
 _ZN6icu_7817double_conversion6Bignum14EnsureCapacityEi.exit: ; preds = %_ZN6icu_7817double_conversion6Bignum5AlignERKS1_.exit
-  %i.ay = sub nsw i32 %i.av, %i.ar                ; 3 uses
+  %i.ay = sub nsw i32 %i.av, %i.ar                ; 2 uses
   %i.az = icmp sgt i32 %i.ay, %i.aq
   br i1 %i.az, label %.lr.ph, label %.preheader42
 
@@ -251,7 +251,10 @@ _ZN6icu_7817double_conversion6Bignum14EnsureCapacityEi.exit: ; preds = %_ZN6icu_
 .lr.ph47:                                         ; preds = %.preheader42
   %i.bl = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 2 uses
   %i.bm = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %i.bn = sext i32 %i.ay to i64
+  %2 = sext i16 %i.an to i64
+  %3 = sub nsw i32 0, %i.ar
+  %i.bn = sext i32 %3 to i64
+  %4 = add nsw i64 %2, %i.bn
   br label %bb.e
 
 .preheader:                                       ; preds = %bb.g
@@ -264,7 +267,7 @@ _ZN6icu_7817double_conversion6Bignum14EnsureCapacityEi.exit: ; preds = %_ZN6icu_
   br label %bb.h
 
 bb.e:                                             ; preds = %.lr.ph47, %bb.g
-  %indvars.iv58 = phi i64 [ %i.bn, %.lr.ph47 ], [ %indvars.iv.next59, %bb.g ] ; 4 uses
+  %indvars.iv58 = phi i64 [ %4, %.lr.ph47 ], [ %indvars.iv.next59, %bb.g ] ; 4 uses
   %indvars.iv = phi i64 [ 0, %.lr.ph47 ], [ %indvars.iv.next, %bb.g ] ; 2 uses
   %.046 = phi i32 [ 0, %.lr.ph47 ], [ %i.cc, %bb.g ]
   %i.bq = load i16, ptr %0, align 4
@@ -667,18 +670,20 @@ scalar.ph124.preheader:                           ; preds = %.preheader51, %midd
   br label %scalar.ph124
 
 .preheader:                                       ; preds = %.loopexit, %_ZN6icu_7817double_conversion6Bignum14EnsureCapacityEi.exit.preheader, %.preheader52
-  %.lcssa109 = phi i32 [ %i.p, %.preheader52 ], [ %i.b, %_ZN6icu_7817double_conversion6Bignum14EnsureCapacityEi.exit.preheader ], [ %i.p, %.loopexit ] ; 3 uses
+  %.lcssa109 = phi i32 [ %i.p, %.preheader52 ], [ %i.b, %_ZN6icu_7817double_conversion6Bignum14EnsureCapacityEi.exit.preheader ], [ %i.p, %.loopexit ] ; 2 uses
   %.0.lcssa = phi i64 [ 0, %.preheader52 ], [ 0, %_ZN6icu_7817double_conversion6Bignum14EnsureCapacityEi.exit.preheader ], [ %i.bb, %.loopexit ]
   %i.ao = icmp slt i32 %.lcssa109, %i.c
   br i1 %i.ao, label %.lr.ph67, label %._crit_edge68
 
 .lr.ph67:                                         ; preds = %.preheader
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 2 uses
-  %i.aq = sext i16 %i.a to i64                    ; 2 uses
-  %i.ar = sext i32 %.lcssa109 to i64
+  %i.aq = sext i32 %.lcssa109 to i64              ; 4 uses
+  %i.ar = sext i16 %i.a to i64                    ; 2 uses
   %wide.trip.count = sext i32 %i.c to i64
-  %invariant.gep117 = getelementptr [4 x i8], ptr %0, i64 %i.aq ; 2 uses
-  %invariant.gep119 = getelementptr [4 x i8], ptr %i.ap, i64 %i.aq ; 2 uses
+  %invariant.gep117 = getelementptr [4 x i8], ptr %0, i64 %i.ar ; 2 uses
+  %invariant.gep119 = getelementptr [4 x i8], ptr %i.ap, i64 %i.ar ; 2 uses
+  %1 = add nsw i64 %i.aq, 2
+  %2 = xor i64 %i.aq, -1
   br label %bb.f
 
 scalar.ph124:                                     ; preds = %scalar.ph124.preheader, %scalar.ph124
@@ -763,10 +768,11 @@ _ZN6icu_7817double_conversion6Bignum5ClampEv.exit: ; preds = %bb.c, %bb.d, %.cri
   ret void
 
 bb.f:                                             ; preds = %.lr.ph67, %._crit_edge
-  %indvars.iv101 = phi i64 [ %i.ar, %.lr.ph67 ], [ %indvars.iv.next102, %._crit_edge ] ; 3 uses
-  %indvars.iv92.in = phi i32 [ %.lcssa109, %.lr.ph67 ], [ %indvars.iv92, %._crit_edge ]
+  %indvar = phi i64 [ 0, %.lr.ph67 ], [ %indvar.next, %._crit_edge ] ; 3 uses
+  %indvars.iv101 = phi i64 [ %i.aq, %.lr.ph67 ], [ %indvars.iv.next102, %._crit_edge ] ; 3 uses
+  %indvars.iv92.in = phi i64 [ %i.aq, %.lr.ph67 ], [ %indvars.iv92, %._crit_edge ]
   %.266 = phi i64 [ %.0.lcssa, %.lr.ph67 ], [ %i.dl, %._crit_edge ] ; 3 uses
-  %indvars.iv92 = add i32 %indvars.iv92.in, 1     ; 2 uses
+  %indvars.iv92 = add nsw i64 %indvars.iv92.in, 1 ; 2 uses
   %indvars103 = trunc i64 %indvars.iv101 to i32
   %i.bz = load i16, ptr %0, align 4               ; 3 uses
   %i.ca = sext i16 %i.bz to i32                   ; 3 uses
@@ -776,20 +782,26 @@ bb.f:                                             ; preds = %.lr.ph67, %._crit_e
   br i1 %i.cd, label %.lr.ph63.preheader, label %._crit_edge
 
 .lr.ph63.preheader:                               ; preds = %bb.f
-  %i.ce = sub i32 %indvars.iv92, %i.ca
-  %i.cf = sext i32 %i.ce to i64                   ; 4 uses
-  %i.cg = sext i16 %i.bz to i64                   ; 2 uses
+  %3 = sub i64 %2, %indvar
+  %4 = add i64 %1, %indvar
+  %i.ce = sub nsw i32 0, %i.ca
+  %i.cf = sext i32 %i.ce to i64
+  %5 = add nsw i64 %indvars.iv92, %i.cf           ; 3 uses
+  %i.cg = sext i16 %i.bz to i64                   ; 4 uses
   %i.ch = sext i16 %i.bz to i64                   ; 3 uses
-  %i.ci = sub nsw i64 %i.cg, %i.cf                ; 3 uses
-  %min.iters.check142 = icmp ult i64 %i.ci, 4
+  %i.ci = sub i64 %4, %i.cg
+  %smax = tail call i64 @llvm.smax.i64(i64 %i.ci, i64 %i.cg)
+  %6 = add i64 %smax, %3
+  %7 = add i64 %6, %i.cg                          ; 3 uses
+  %min.iters.check142 = icmp ult i64 %7, 4
   br i1 %min.iters.check142, label %.lr.ph63.preheader162, label %vector.ph143
 
 vector.ph143:                                     ; preds = %.lr.ph63.preheader
-  %n.vec144 = and i64 %i.ci, -4                   ; 4 uses
-  %i.cj = sub nsw i64 %i.ch, %n.vec144
-  %i.ck = add nsw i64 %n.vec144, %i.cf
+  %n.vec144 = and i64 %7, -4                      ; 4 uses
+  %i.cj = sub i64 %i.ch, %n.vec144
+  %i.ck = add i64 %5, %n.vec144
   %i.cl = insertelement <2 x i64> <i64 poison, i64 0>, i64 %.266, i64 0
-  %invariant.gep176 = getelementptr [4 x i8], ptr %invariant.gep119, i64 %i.cf
+  %invariant.gep176 = getelementptr [4 x i8], ptr %invariant.gep119, i64 %5
   br label %vector.body145
 
 vector.body145:                                   ; preds = %vector.body145, %vector.ph143
@@ -823,12 +835,12 @@ vector.body145:                                   ; preds = %vector.body145, %ve
 middle.block156:                                  ; preds = %vector.body145
   %bin.rdx157 = add <2 x i64> %i.cy, %i.cx
   %i.da = tail call i64 @llvm.vector.reduce.add.v2i64(<2 x i64> %bin.rdx157) ; 2 uses
-  %cmp.n158 = icmp eq i64 %i.ci, %n.vec144
+  %cmp.n158 = icmp eq i64 %7, %n.vec144
   br i1 %cmp.n158, label %._crit_edge, label %.lr.ph63.preheader162
 
 .lr.ph63.preheader162:                            ; preds = %.lr.ph63.preheader, %middle.block156
   %indvars.iv96.in.ph = phi i64 [ %i.ch, %.lr.ph63.preheader ], [ %i.cj, %middle.block156 ]
-  %indvars.iv94.ph = phi i64 [ %i.cf, %.lr.ph63.preheader ], [ %i.ck, %middle.block156 ]
+  %indvars.iv94.ph = phi i64 [ %5, %.lr.ph63.preheader ], [ %i.ck, %middle.block156 ]
   %.362.ph = phi i64 [ %.266, %.lr.ph63.preheader ], [ %i.da, %middle.block156 ]
   br label %.lr.ph63
 
@@ -858,6 +870,7 @@ middle.block156:                                  ; preds = %vector.body145
   %i.dl = lshr i64 %.3.lcssa, 28
   %indvars.iv.next102 = add nsw i64 %indvars.iv101, 1 ; 2 uses
   %exitcond104.not = icmp eq i64 %indvars.iv.next102, %wide.trip.count
+  %indvar.next = add i64 %indvar, 1
   br i1 %exitcond104.not, label %._crit_edge68, label %bb.f, !llvm.loop !44
 }
 

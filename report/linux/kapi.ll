@@ -201,19 +201,21 @@ thread-pre-split.i:                               ; preds = %bb.g
   br i1 %i.ac, label %.lr.ph12.i, label %pps_add_offset.exit
 
 .lr.ph12.i:                                       ; preds = %thread-pre-split.i
-  %i.ad = icmp samesign ult i32 %.fr.i, -1000000000 ; 2 uses
+  %i.ad = icmp samesign ult i32 %.fr.i, -1000000000 ; 3 uses
   %umin.i.neg66 = sext i1 %i.ad to i32
   %umin.i = zext i1 %i.ad to i32
   %.neg = tail call i32 @llvm.usub.sat.i32(i32 -1000000000, i32 %.fr.i)
   %i.ae = add nsw i32 %.neg, %umin.i.neg66
-  %i.af = udiv i32 %i.ae, 1000000000
-  %i.ag = add nuw nsw i32 %i.af, %umin.i          ; 2 uses
+  %i.af = udiv i32 %i.ae, 1000000000              ; 2 uses
+  %i.ag = add nuw nsw i32 %i.af, %umin.i
   %i.ah = mul i32 %i.ag, 1000000000
   %i.ai = add nsw i32 %.fr.i, 1000000000
   %i.aj = add i32 %i.ai, %i.ah
-  %4 = xor i32 %i.ag, -1
-  %5 = sext i32 %4 to i64
-  %i.ak = add i64 %i.c, %5
+  %umin17.i = zext i1 %i.ad to i64
+  %4 = zext nneg i32 %i.af to i64
+  %5 = add nuw nsw i64 %4, %umin17.i
+  %6 = xor i64 %5, -1
+  %i.ak = add i64 %i.c, %6
   br label %pps_add_offset.exit
 
 pps_add_offset.exit:                              ; preds = %thread-pre-split.i.thread, %thread-pre-split.i, %.lr.ph12.i
@@ -277,19 +279,21 @@ thread-pre-split.i37:                             ; preds = %bb.j
   br i1 %i.bf, label %.lr.ph12.i40, label %pps_add_offset.exit44
 
 .lr.ph12.i40:                                     ; preds = %thread-pre-split.i37
-  %i.bg = icmp samesign ult i32 %.fr.i35, -1000000000 ; 2 uses
+  %i.bg = icmp samesign ult i32 %.fr.i35, -1000000000 ; 3 uses
   %umin.i41.neg67 = sext i1 %i.bg to i32
   %umin.i41 = zext i1 %i.bg to i32
   %.neg65 = tail call i32 @llvm.usub.sat.i32(i32 -1000000000, i32 %.fr.i35)
   %i.bh = add nsw i32 %.neg65, %umin.i41.neg67
-  %i.bi = udiv i32 %i.bh, 1000000000
-  %i.bj = add nuw nsw i32 %i.bi, %umin.i41        ; 2 uses
+  %i.bi = udiv i32 %i.bh, 1000000000              ; 2 uses
+  %i.bj = add nuw nsw i32 %i.bi, %umin.i41
   %i.bk = mul i32 %i.bj, 1000000000
   %i.bl = add nsw i32 %.fr.i35, 1000000000
   %i.bm = add i32 %i.bl, %i.bk
-  %6 = xor i32 %i.bj, -1
-  %7 = sext i32 %6 to i64
-  %i.bn = add i64 %.sroa.0.176, %7
+  %umin17.i42 = zext i1 %i.bg to i64
+  %7 = zext nneg i32 %i.bi to i64
+  %8 = add nuw nsw i64 %7, %umin17.i42
+  %9 = xor i64 %8, -1
+  %i.bn = add i64 %.sroa.0.176, %9
   br label %pps_add_offset.exit44
 
 pps_add_offset.exit44:                            ; preds = %thread-pre-split.i37.thread, %thread-pre-split.i37, %.lr.ph12.i40

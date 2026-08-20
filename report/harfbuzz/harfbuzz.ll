@@ -204,10 +204,10 @@ bb.j:                                             ; preds = %bb.i
 
 .lr.ph.preheader.i:                               ; preds = %.critedge.i
   %i.p = zext nneg i32 %.0.lcssa.i to i64
-  %scevgep.i = getelementptr i8, ptr %i.a, i64 %i.p
+  %scevgep.i = getelementptr nuw i8, ptr %i.a, i64 %i.p
   %narrow.i = sub nuw nsw i32 4, %.0.lcssa.i
   %i.q = zext nneg i32 %narrow.i to i64
-  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.i, i8 32, i64 %i.q, i1 false), !tbaa !61
+  call void @llvm.memset.p0.i64(ptr nonnull align 1 %scevgep.i, i8 32, i64 %i.q, i1 false), !tbaa !61
   br label %._crit_edge.i
 
 ._crit_edge.i:                                    ; preds = %.lr.ph.preheader.i, %.critedge.i
@@ -290,10 +290,10 @@ bb.j:                                             ; preds = %bb.i
 
 .lr.ph.preheader:                                 ; preds = %.critedge
   %i.p = zext nneg i32 %.0.lcssa to i64
-  %scevgep = getelementptr i8, ptr %i.a, i64 %i.p
+  %scevgep = getelementptr nuw i8, ptr %i.a, i64 %i.p
   %narrow = sub nuw nsw i32 4, %.0.lcssa
   %i.q = zext nneg i32 %narrow to i64
-  call void @llvm.memset.p0.i64(ptr align 1 %scevgep, i8 32, i64 %i.q, i1 false), !tbaa !61
+  call void @llvm.memset.p0.i64(ptr nonnull align 1 %scevgep, i8 32, i64 %i.q, i1 false), !tbaa !61
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.lr.ph.preheader, %.critedge
@@ -696,10 +696,10 @@ bb.j:                                             ; preds = %bb.i
 
 .lr.ph.preheader.i:                               ; preds = %.critedge.i
   %i.p = zext nneg i32 %.0.lcssa.i to i64
-  %scevgep.i = getelementptr i8, ptr %i.a, i64 %i.p
+  %scevgep.i = getelementptr nuw i8, ptr %i.a, i64 %i.p
   %narrow.i = sub nuw nsw i32 4, %.0.lcssa.i
   %i.q = zext nneg i32 %narrow.i to i64
-  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.i, i8 32, i64 %i.q, i1 false), !tbaa !61
+  call void @llvm.memset.p0.i64(ptr nonnull align 1 %scevgep.i, i8 32, i64 %i.q, i1 false), !tbaa !61
   br label %hb_tag_from_string.exit
 
 hb_tag_from_string.exit.thread:                   ; preds = %bb.b, %bb.a
@@ -1102,7 +1102,7 @@ bb.t:                                             ; preds = %bb.s
 .lr.ph.preheader.i:                               ; preds = %.preheader58.3.i, %.preheader58.2.i, %.preheader58.1.i
   %.1.lcssa.ph.ph.i = phi i32 [ 1, %.preheader58.1.i ], [ 3, %.preheader58.3.i ], [ 2, %.preheader58.2.i ] ; 2 uses
   %i.ez = zext nneg i32 %.1.lcssa.ph.ph.i to i64
-  %scevgep.i = getelementptr i8, ptr %i.b, i64 %i.ez
+  %scevgep.i = getelementptr nuw i8, ptr %i.b, i64 %i.ez
   %narrow.i = sub nuw nsw i32 4, %.1.lcssa.ph.ph.i
   %i.fa = zext nneg i32 %narrow.i to i64
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep.i, i8 32, i64 %i.fa, i1 false), !tbaa !61
@@ -1364,7 +1364,7 @@ bb.ae:                                            ; preds = %bb.ad
 .lr.ph.preheader.i80:                             ; preds = %.preheader58.3.i91, %.preheader58.2.i89, %.preheader58.1.i78
   %.1.lcssa.ph.ph.i81 = phi i32 [ 1, %.preheader58.1.i78 ], [ 3, %.preheader58.3.i91 ], [ 2, %.preheader58.2.i89 ] ; 2 uses
   %i.kx = zext nneg i32 %.1.lcssa.ph.ph.i81 to i64
-  %scevgep.i82 = getelementptr i8, ptr %i.a, i64 %i.kx
+  %scevgep.i82 = getelementptr nuw i8, ptr %i.a, i64 %i.kx
   %narrow.i83 = sub nuw nsw i32 4, %.1.lcssa.ph.ph.i81
   %i.ky = zext nneg i32 %narrow.i83 to i64
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep.i82, i8 32, i64 %i.ky, i1 false), !tbaa !61
@@ -1767,10 +1767,10 @@ bb.jg:                                            ; preds = %bb.jf
 
 .lr.ph.preheader.i:                               ; preds = %.critedge.i
   %i.aed = zext nneg i32 %.0.lcssa.i to i64
-  %scevgep.i = getelementptr i8, ptr %i.b, i64 %i.aed
+  %scevgep.i = getelementptr nuw i8, ptr %i.b, i64 %i.aed
   %narrow.i = sub nuw nsw i32 4, %.0.lcssa.i
   %i.aee = zext nneg i32 %narrow.i to i64
-  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.i, i8 32, i64 %i.aee, i1 false), !tbaa !61
+  call void @llvm.memset.p0.i64(ptr nonnull align 1 %scevgep.i, i8 32, i64 %i.aee, i1 false), !tbaa !61
   br label %._crit_edge.i
 
 ._crit_edge.i:                                    ; preds = %.lr.ph.preheader.i, %.critedge.i
@@ -2125,7 +2125,7 @@ bb.kj:                                            ; preds = %bb.ki
 .lr.ph.preheader.i150:                            ; preds = %.preheader.1, %.preheader.2, %.lr.ph.preheader.i150.loopexit
   %.0.lcssa.i148230 = phi i32 [ 3, %.lr.ph.preheader.i150.loopexit ], [ 2, %.preheader.2 ], [ 1, %.preheader.1 ] ; 2 uses
   %i.aio = zext nneg i32 %.0.lcssa.i148230 to i64
-  %scevgep.i151 = getelementptr i8, ptr %i.a, i64 %i.aio
+  %scevgep.i151 = getelementptr nuw i8, ptr %i.a, i64 %i.aio
   %narrow.i152 = sub nuw nsw i32 4, %.0.lcssa.i148230
   %i.aip = zext nneg i32 %narrow.i152 to i64
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep.i151, i8 32, i64 %i.aip, i1 false), !tbaa !61
@@ -2528,10 +2528,10 @@ bb.r:                                             ; preds = %bb.q
 
 .lr.ph.preheader.i:                               ; preds = %.critedge.i
   %i.al = zext nneg i32 %.0.lcssa.i to i64
-  %scevgep.i = getelementptr i8, ptr %i.b, i64 %i.al
+  %scevgep.i = getelementptr nuw i8, ptr %i.b, i64 %i.al
   %narrow.i = sub nuw nsw i32 4, %.0.lcssa.i
   %i.am = zext nneg i32 %narrow.i to i64
-  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.i, i8 32, i64 %i.am, i1 false), !tbaa !61
+  call void @llvm.memset.p0.i64(ptr nonnull align 1 %scevgep.i, i8 32, i64 %i.am, i1 false), !tbaa !61
   br label %._crit_edge.i
 
 ._crit_edge.i:                                    ; preds = %.lr.ph.preheader.i, %.critedge.i
@@ -2934,7 +2934,7 @@ bb.e:                                             ; preds = %_ZNK2OT7ArrayOfINS_
   %i.s = tail call noundef i16 @llvm.bswap.i16(i16 %i.r)
   %i.t = zext i16 %i.s to i32
   %i.u = trunc nuw nsw i64 %indvars.iv.i to i32
-  %i.v = add i32 %i.t, %i.u                       ; 2 uses
+  %i.v = add nuw nsw i32 %i.t, %i.u               ; 2 uses
   %i.w = load i8, ptr %i.i, align 8, !tbaa !1166, !range !220, !noundef !74
   %i.x = trunc nuw i8 %i.w to i1
   br i1 %i.x, label %bb.f, label %bb.g, !prof !48
@@ -3337,7 +3337,7 @@ bb.e:                                             ; preds = %_ZNK2OT7ArrayOfINS_
   %i.da = tail call noundef i16 @llvm.bswap.i16(i16 %i.cz)
   %i.db = zext i16 %i.da to i32
   %i.dc = trunc nuw nsw i64 %indvars.iv.i.i to i32
-  %i.dd = add i32 %i.db, %i.dc                    ; 7 uses
+  %i.dd = add nuw nsw i32 %i.db, %i.dc            ; 7 uses
   %i.de = load i8, ptr %i.cg, align 8, !tbaa !1166, !range !220, !noundef !74
   %i.df = trunc nuw i8 %i.de to i1
   %i.dg = load i8, ptr %i.cf, align 8, !tbaa !413, !range !220, !noundef !74
@@ -3740,7 +3740,7 @@ bb.bd:                                            ; preds = %_ZNK2OT7ArrayOfINS_
   %i.mn = tail call noundef i16 @llvm.bswap.i16(i16 %i.mm)
   %i.mo = zext i16 %i.mn to i32
   %i.mp = trunc nuw nsw i64 %indvars.iv.i.i134 to i32
-  %i.mq = add i32 %i.mo, %i.mp                    ; 7 uses
+  %i.mq = add nuw nsw i32 %i.mo, %i.mp            ; 7 uses
   %i.mr = load i8, ptr %i.lt, align 8, !tbaa !1166, !range !220, !noundef !74
   %i.ms = trunc nuw i8 %i.mr to i1
   %i.mt = load i8, ptr %i.ls, align 8, !tbaa !413, !range !220, !noundef !74
@@ -4143,7 +4143,7 @@ bb.dc:                                            ; preds = %_ZNK2OT7ArrayOfINS_
   %i.wa = tail call noundef i16 @llvm.bswap.i16(i16 %i.vz)
   %i.wb = zext i16 %i.wa to i32
   %i.wc = trunc nuw nsw i64 %indvars.iv.i.i154 to i32
-  %i.wd = add i32 %i.wb, %i.wc                    ; 7 uses
+  %i.wd = add nuw nsw i32 %i.wb, %i.wc            ; 7 uses
   %i.we = load i8, ptr %i.vg, align 8, !tbaa !1166, !range !220, !noundef !74
   %i.wf = trunc nuw i8 %i.we to i1
   %i.wg = load i8, ptr %i.vf, align 8, !tbaa !413, !range !220, !noundef !74
@@ -4546,7 +4546,7 @@ bb.e:                                             ; preds = %bb.d
   %i.q = zext i16 %i.p to i32                     ; 2 uses
   %i.r = add i32 %.01828, %i.q                    ; 2 uses
   %i.s = trunc nuw nsw i64 %indvars.iv to i32
-  %i.t = add i32 %i.s, %i.q                       ; 2 uses
+  %i.t = add nuw nsw i32 %i.s, %i.q               ; 2 uses
   %i.u = load i8, ptr %i.h, align 8, !tbaa !1166, !range !220, !noundef !74
   %i.v = trunc nuw i8 %i.u to i1
   br i1 %i.v, label %_ZN14hb_sparseset_tI23hb_bit_set_invertible_tE9add_rangeEjj.exit.thread, label %_ZN14hb_sparseset_tI23hb_bit_set_invertible_tE9add_rangeEjj.exit, !prof !48
@@ -4949,7 +4949,7 @@ bb.j:                                             ; preds = %bb.i
   %i.av = call noundef i16 @llvm.bswap.i16(i16 %i.au)
   %i.aw = zext i16 %i.av to i32
   %i.ax = trunc nuw nsw i64 %indvars.iv to i32
-  %i.ay = add i32 %i.ax, %i.aw                    ; 3 uses
+  %i.ay = add nuw nsw i32 %i.ax, %i.aw            ; 3 uses
   %i.az = lshr i32 %i.ay, 9                       ; 3 uses
   %i.ba = load atomic i32, ptr %i.am monotonic, align 4 ; 2 uses
   %i.bb = load i32, ptr %i.an, align 4, !tbaa !1699 ; 3 uses
@@ -5352,7 +5352,7 @@ bb.u:                                             ; preds = %_ZNK2OT7ArrayOfINS_
   %i.bx = tail call noundef i16 @llvm.bswap.i16(i16 %i.bw)
   %i.by = zext i16 %i.bx to i32
   %i.bz = trunc nuw nsw i64 %indvars.iv to i32    ; 2 uses
-  %i.ca = add i32 %i.bz, %i.by                    ; 3 uses
+  %i.ca = add nuw nsw i32 %i.bz, %i.by            ; 3 uses
   %i.cb = lshr i32 %i.ca, 9                       ; 3 uses
   %i.cc = load atomic i32, ptr %i.n monotonic, align 4 ; 2 uses
   %i.cd = load i32, ptr %i.o, align 4, !tbaa !1699 ; 3 uses
@@ -5444,7 +5444,7 @@ bb.ab:                                            ; preds = %_ZNK14hb_sparseset_
   %i.dl = load i16, ptr %i.m, align 1, !tbaa !62
   %i.dm = tail call noundef i16 @llvm.bswap.i16(i16 %i.dl)
   %i.dn = zext i16 %i.dm to i32
-  %i.do = add i32 %i.bz, %i.dn                    ; 2 uses
+  %i.do = add nuw nsw i32 %i.bz, %i.dn            ; 2 uses
   %i.dp = load i8, ptr %i.s, align 8, !tbaa !1166, !range !220, !noundef !74
   %i.dq = trunc nuw i8 %i.dp to i1
   br i1 %i.dq, label %bb.ac, label %bb.ad, !prof !48

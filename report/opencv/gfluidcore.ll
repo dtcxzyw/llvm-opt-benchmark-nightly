@@ -204,11 +204,12 @@ bb.k:                                             ; preds = %bb.i
   br i1 %or.cond258, label %.preheader164.preheader, label %_ZN2cv4gapi5fluid12run_arithm_sIhhEEvRNS1_6BufferERKNS1_4ViewEPKfNS1_6ArithmEf.exit
 
 .preheader164.preheader:                          ; preds = %bb.k
-  %i.di = zext nneg i32 %i.df to i64              ; 6 uses
-  %wide.trip.count437 = zext nneg i32 %i.dd to i64 ; 2 uses
-  %i.dj = mul nuw nsw i64 %wide.trip.count437, %i.di ; 2 uses
+  %i.di = zext nneg i32 %i.df to i64              ; 7 uses
+  %wide.trip.count437 = zext nneg i32 %i.dd to i64 ; 3 uses
+  %i.dj = mul nuw nsw i64 %wide.trip.count437, %i.di
   %scevgep751 = getelementptr i8, ptr %i.db, i64 %i.dj ; 2 uses
-  %i.dk = shl nuw nsw i64 %i.dj, 1
+  %9 = mul nuw nsw i64 %wide.trip.count437, %i.di
+  %i.dk = shl nuw nsw i64 %9, 1
   %scevgep752 = getelementptr i8, ptr %i.cz, i64 %i.dk
   %i.dl = shl nuw nsw i64 %i.di, 2
   %scevgep753 = getelementptr i8, ptr %i.au, i64 %i.dl
@@ -303,11 +304,12 @@ bb.l:                                             ; preds = %bb.i
   br i1 %or.cond259, label %.preheader166.preheader, label %_ZN2cv4gapi5fluid12run_arithm_sIhhEEvRNS1_6BufferERKNS1_4ViewEPKfNS1_6ArithmEf.exit
 
 .preheader166.preheader:                          ; preds = %bb.l
-  %i.fa = zext nneg i32 %i.ex to i64              ; 6 uses
-  %wide.trip.count427 = zext nneg i32 %i.ev to i64 ; 2 uses
-  %i.fb = mul nuw nsw i64 %wide.trip.count427, %i.fa ; 2 uses
+  %i.fa = zext nneg i32 %i.ex to i64              ; 7 uses
+  %wide.trip.count427 = zext nneg i32 %i.ev to i64 ; 3 uses
+  %i.fb = mul nuw nsw i64 %wide.trip.count427, %i.fa
   %scevgep728 = getelementptr i8, ptr %i.et, i64 %i.fb ; 2 uses
-  %i.fc = shl nuw nsw i64 %i.fb, 1
+  %10 = mul nuw nsw i64 %wide.trip.count427, %i.fa
+  %i.fc = shl nuw nsw i64 %10, 1
   %scevgep729 = getelementptr i8, ptr %i.er, i64 %i.fc
   %i.fd = shl nuw nsw i64 %i.fa, 2
   %scevgep730 = getelementptr i8, ptr %i.au, i64 %i.fd
@@ -402,11 +404,12 @@ bb.m:                                             ; preds = %bb.i
   br i1 %or.cond260, label %.preheader168.preheader, label %_ZN2cv4gapi5fluid12run_arithm_sIhhEEvRNS1_6BufferERKNS1_4ViewEPKfNS1_6ArithmEf.exit
 
 .preheader168.preheader:                          ; preds = %bb.m
-  %i.gs = zext nneg i32 %i.gp to i64              ; 6 uses
-  %wide.trip.count417 = zext nneg i32 %i.gn to i64 ; 2 uses
-  %i.gt = mul nuw nsw i64 %wide.trip.count417, %i.gs ; 2 uses
+  %i.gs = zext nneg i32 %i.gp to i64              ; 7 uses
+  %wide.trip.count417 = zext nneg i32 %i.gn to i64 ; 3 uses
+  %i.gt = mul nuw nsw i64 %wide.trip.count417, %i.gs
   %scevgep705 = getelementptr i8, ptr %i.gl, i64 %i.gt ; 2 uses
-  %i.gu = shl nuw i64 %i.gt, 2
+  %11 = mul nuw nsw i64 %wide.trip.count417, %i.gs
+  %i.gu = shl nuw i64 %11, 2
   %scevgep706 = getelementptr i8, ptr %i.gj, i64 %i.gu
   %i.gv = shl nuw nsw i64 %i.gs, 2
   %scevgep707 = getelementptr i8, ptr %i.au, i64 %i.gv
@@ -690,12 +693,13 @@ bb.q:                                             ; preds = %bb.n
   br i1 %or.cond263, label %.preheader174.preheader, label %_ZN2cv4gapi5fluid12run_arithm_sIhhEEvRNS1_6BufferERKNS1_4ViewEPKfNS1_6ArithmEf.exit
 
 .preheader174.preheader:                          ; preds = %bb.q
-  %i.lv = zext nneg i32 %i.ls to i64              ; 6 uses
-  %wide.trip.count387 = zext nneg i32 %i.lq to i64 ; 2 uses
-  %i.lw = mul nuw nsw i64 %wide.trip.count387, %i.lv ; 2 uses
+  %i.lv = zext nneg i32 %i.ls to i64              ; 7 uses
+  %wide.trip.count387 = zext nneg i32 %i.lq to i64 ; 3 uses
+  %i.lw = mul nuw nsw i64 %wide.trip.count387, %i.lv
   %i.lx = shl nuw nsw i64 %i.lw, 1
   %scevgep654 = getelementptr i8, ptr %i.lo, i64 %i.lx ; 2 uses
-  %scevgep655 = getelementptr i8, ptr %i.lm, i64 %i.lw
+  %12 = mul nuw nsw i64 %wide.trip.count387, %i.lv
+  %scevgep655 = getelementptr i8, ptr %i.lm, i64 %12
   %i.ly = shl nuw nsw i64 %i.lv, 2
   %scevgep656 = getelementptr i8, ptr %i.au, i64 %i.ly
   %min.iters.check665 = icmp ult i32 %i.ls, 4
@@ -1047,12 +1051,13 @@ bb.v:                                             ; preds = %bb.s
   br i1 %or.cond267, label %.preheader182.preheader, label %_ZN2cv4gapi5fluid12run_arithm_sIhhEEvRNS1_6BufferERKNS1_4ViewEPKfNS1_6ArithmEf.exit
 
 .preheader182.preheader:                          ; preds = %bb.v
-  %i.sb = zext nneg i32 %i.ry to i64              ; 6 uses
-  %wide.trip.count347 = zext nneg i32 %i.rw to i64 ; 2 uses
-  %i.sc = mul nuw nsw i64 %wide.trip.count347, %i.sb ; 2 uses
+  %i.sb = zext nneg i32 %i.ry to i64              ; 7 uses
+  %wide.trip.count347 = zext nneg i32 %i.rw to i64 ; 3 uses
+  %i.sc = mul nuw nsw i64 %wide.trip.count347, %i.sb
   %i.sd = shl nuw nsw i64 %i.sc, 1
   %scevgep591 = getelementptr i8, ptr %i.ru, i64 %i.sd ; 2 uses
-  %scevgep592 = getelementptr i8, ptr %i.rs, i64 %i.sc
+  %13 = mul nuw nsw i64 %wide.trip.count347, %i.sb
+  %scevgep592 = getelementptr i8, ptr %i.rs, i64 %13
   %i.se = shl nuw nsw i64 %i.sb, 2
   %scevgep593 = getelementptr i8, ptr %i.au, i64 %i.se
   %min.iters.check602 = icmp ult i32 %i.ry, 4
@@ -1224,12 +1229,13 @@ bb.y:                                             ; preds = %bb.x
   br i1 %or.cond269, label %.preheader186.preheader, label %_ZN2cv4gapi5fluid12run_arithm_sIhhEEvRNS1_6BufferERKNS1_4ViewEPKfNS1_6ArithmEf.exit
 
 .preheader186.preheader:                          ; preds = %bb.y
-  %i.ux = zext nneg i32 %i.uu to i64              ; 8 uses
-  %wide.trip.count327 = zext nneg i32 %i.us to i64 ; 2 uses
-  %i.uy = mul nuw nsw i64 %wide.trip.count327, %i.ux ; 2 uses
+  %i.ux = zext nneg i32 %i.uu to i64              ; 9 uses
+  %wide.trip.count327 = zext nneg i32 %i.us to i64 ; 3 uses
+  %i.uy = mul nuw nsw i64 %wide.trip.count327, %i.ux
   %i.uz = shl nuw i64 %i.uy, 2
   %scevgep = getelementptr i8, ptr %i.uq, i64 %i.uz ; 2 uses
-  %scevgep558 = getelementptr i8, ptr %i.uo, i64 %i.uy
+  %14 = mul nuw nsw i64 %wide.trip.count327, %i.ux
+  %scevgep558 = getelementptr i8, ptr %i.uo, i64 %14
   %i.va = shl nuw nsw i64 %i.ux, 2
   %scevgep559 = getelementptr i8, ptr %i.au, i64 %i.va
   %min.iters.check565 = icmp ult i32 %i.uu, 8
@@ -1632,11 +1638,12 @@ bb.k:                                             ; preds = %bb.i
   br i1 %or.cond119, label %.preheader79.preheader, label %_ZN2cv4gapi5fluid12run_arithm_sIhhEEvRNS1_6BufferERKNS1_4ViewEPKfNS1_6ArithmEf.exit
 
 .preheader79.preheader:                           ; preds = %bb.k
-  %i.cn = zext nneg i32 %i.ck to i64              ; 6 uses
-  %wide.trip.count190 = zext nneg i32 %i.ci to i64 ; 2 uses
-  %i.co = mul nuw nsw i64 %wide.trip.count190, %i.cn ; 2 uses
+  %i.cn = zext nneg i32 %i.ck to i64              ; 7 uses
+  %wide.trip.count190 = zext nneg i32 %i.ci to i64 ; 3 uses
+  %i.co = mul nuw nsw i64 %wide.trip.count190, %i.cn
   %scevgep325 = getelementptr i8, ptr %i.cg, i64 %i.co ; 2 uses
-  %i.cp = shl nuw nsw i64 %i.co, 1
+  %9 = mul nuw nsw i64 %wide.trip.count190, %i.cn
+  %i.cp = shl nuw nsw i64 %9, 1
   %scevgep326 = getelementptr i8, ptr %i.ce, i64 %i.cp
   %i.cq = shl nuw nsw i64 %i.cn, 2
   %scevgep327 = getelementptr i8, ptr %i.r, i64 %i.cq
@@ -1731,11 +1738,12 @@ bb.l:                                             ; preds = %bb.i
   br i1 %or.cond120, label %.preheader81.preheader, label %_ZN2cv4gapi5fluid12run_arithm_sIhhEEvRNS1_6BufferERKNS1_4ViewEPKfNS1_6ArithmEf.exit
 
 .preheader81.preheader:                           ; preds = %bb.l
-  %i.ef = zext nneg i32 %i.ec to i64              ; 6 uses
-  %wide.trip.count180 = zext nneg i32 %i.ea to i64 ; 2 uses
-  %i.eg = mul nuw nsw i64 %wide.trip.count180, %i.ef ; 2 uses
+  %i.ef = zext nneg i32 %i.ec to i64              ; 7 uses
+  %wide.trip.count180 = zext nneg i32 %i.ea to i64 ; 3 uses
+  %i.eg = mul nuw nsw i64 %wide.trip.count180, %i.ef
   %scevgep302 = getelementptr i8, ptr %i.dy, i64 %i.eg ; 2 uses
-  %i.eh = shl nuw i64 %i.eg, 2
+  %10 = mul nuw nsw i64 %wide.trip.count180, %i.ef
+  %i.eh = shl nuw i64 %10, 2
   %scevgep303 = getelementptr i8, ptr %i.dw, i64 %i.eh
   %i.ei = shl nuw nsw i64 %i.ef, 2
   %scevgep304 = getelementptr i8, ptr %i.r, i64 %i.ei
@@ -1927,12 +1935,13 @@ bb.p:                                             ; preds = %bb.o
   br i1 %or.cond122, label %.preheader85.preheader, label %_ZN2cv4gapi5fluid12run_arithm_sIhhEEvRNS1_6BufferERKNS1_4ViewEPKfNS1_6ArithmEf.exit
 
 .preheader85.preheader:                           ; preds = %bb.p
-  %i.ho = zext nneg i32 %i.hl to i64              ; 8 uses
-  %wide.trip.count160 = zext nneg i32 %i.hj to i64 ; 2 uses
-  %i.hp = mul nuw nsw i64 %wide.trip.count160, %i.ho ; 2 uses
+  %i.ho = zext nneg i32 %i.hl to i64              ; 9 uses
+  %wide.trip.count160 = zext nneg i32 %i.hj to i64 ; 3 uses
+  %i.hp = mul nuw nsw i64 %wide.trip.count160, %i.ho
   %i.hq = shl nuw i64 %i.hp, 2
   %scevgep = getelementptr i8, ptr %i.hh, i64 %i.hq ; 2 uses
-  %scevgep267 = getelementptr i8, ptr %i.hf, i64 %i.hp
+  %11 = mul nuw nsw i64 %wide.trip.count160, %i.ho
+  %scevgep267 = getelementptr i8, ptr %i.hf, i64 %11
   %i.hr = shl nuw nsw i64 %i.ho, 2
   %scevgep268 = getelementptr i8, ptr %i.r, i64 %i.hr
   %min.iters.check274 = icmp ult i32 %i.hl, 8

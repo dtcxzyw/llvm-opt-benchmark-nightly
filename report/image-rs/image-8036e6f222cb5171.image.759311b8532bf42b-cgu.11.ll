@@ -204,7 +204,7 @@ bb.cm:                                            ; preds = %bb.cl
   %i.np = add nuw nsw i64 %.sroa.051.0213, 4
   %i.nq = add nsw i64 %.sroa.077.0214, -1         ; 2 uses
   %i.nr = add nsw i64 %i.du, %.sroa.051.0213      ; 16 uses
-  %i.ns = add i64 %i.nr, %i.dz                    ; 4 uses
+  %i.ns = add nuw nsw i64 %i.nr, %i.dz            ; 4 uses
   %i.nt = icmp ugt i64 %i.ns, %i.dw
   br i1 %i.nt, label %bb.dx, label %bb.dw, !prof !154
 
@@ -442,7 +442,7 @@ bb.dy:                                            ; preds = %bb.fc, %bb.fa, %bb.
 bb.dz:                                            ; preds = %bb.dw
   %i.rc = getelementptr inbounds nuw i8, ptr %i.dy, i64 %i.ns
   tail call void @_RNvNtCsksn9slvsHfS_10image_webp11loop_filter26subblock_filter_horizontal(i8 noundef %.sroa.5.0.i, i8 noundef %spec.store.select.i, i8 noundef %i.bc, ptr noalias nofree noundef nonnull %i.rc, i64 noundef 8)
-  %i.rd = add i64 %i.nr, %i.eb                    ; 4 uses
+  %i.rd = add nuw nsw i64 %i.nr, %i.eb            ; 4 uses
   %i.re = icmp ugt i64 %i.rd, %i.dw
   br i1 %i.re, label %bb.dx, label %bb.ea, !prof !154
 
@@ -454,7 +454,7 @@ bb.ea:                                            ; preds = %bb.dz
 bb.eb:                                            ; preds = %bb.ea
   %i.rh = getelementptr inbounds nuw i8, ptr %i.dy, i64 %i.rd
   tail call void @_RNvNtCsksn9slvsHfS_10image_webp11loop_filter26subblock_filter_horizontal(i8 noundef %.sroa.5.0.i, i8 noundef %spec.store.select.i, i8 noundef %i.bc, ptr noalias nofree noundef nonnull %i.rh, i64 noundef 8)
-  %i.ri = add i64 %i.nr, %i.ed                    ; 4 uses
+  %i.ri = add nuw nsw i64 %i.nr, %i.ed            ; 4 uses
   %i.rj = icmp ugt i64 %i.ri, %i.dw
   br i1 %i.rj, label %bb.dx, label %bb.ec, !prof !154
 
@@ -466,7 +466,7 @@ bb.ec:                                            ; preds = %bb.eb
 bb.ed:                                            ; preds = %bb.ec
   %i.rm = getelementptr inbounds nuw i8, ptr %i.dy, i64 %i.ri
   tail call void @_RNvNtCsksn9slvsHfS_10image_webp11loop_filter26subblock_filter_horizontal(i8 noundef %.sroa.5.0.i, i8 noundef %spec.store.select.i, i8 noundef %i.bc, ptr noalias nofree noundef nonnull %i.rm, i64 noundef 8)
-  %i.rn = add i64 %i.nr, %i.ef                    ; 4 uses
+  %i.rn = add nuw nsw i64 %i.nr, %i.ef            ; 4 uses
   %i.ro = icmp ugt i64 %i.rn, %i.dw
   br i1 %i.ro, label %bb.dx, label %bb.ee, !prof !154
 
@@ -478,7 +478,7 @@ bb.ee:                                            ; preds = %bb.ed
 bb.ef:                                            ; preds = %bb.ee
   %i.rr = getelementptr inbounds nuw i8, ptr %i.dy, i64 %i.rn
   tail call void @_RNvNtCsksn9slvsHfS_10image_webp11loop_filter26subblock_filter_horizontal(i8 noundef %.sroa.5.0.i, i8 noundef %spec.store.select.i, i8 noundef %i.bc, ptr noalias nofree noundef nonnull %i.rr, i64 noundef 8)
-  %i.rs = add i64 %i.nr, %i.eh                    ; 4 uses
+  %i.rs = add nuw nsw i64 %i.nr, %i.eh            ; 4 uses
   %i.rt = icmp ugt i64 %i.rs, %i.dw
   br i1 %i.rt, label %bb.dx, label %bb.eg, !prof !154
 
@@ -490,7 +490,7 @@ bb.eg:                                            ; preds = %bb.ef
 bb.eh:                                            ; preds = %bb.eg
   %i.rw = getelementptr inbounds nuw i8, ptr %i.dy, i64 %i.rs
   tail call void @_RNvNtCsksn9slvsHfS_10image_webp11loop_filter26subblock_filter_horizontal(i8 noundef %.sroa.5.0.i, i8 noundef %spec.store.select.i, i8 noundef %i.bc, ptr noalias nofree noundef nonnull %i.rw, i64 noundef 8)
-  %i.rx = add i64 %i.nr, %i.ej                    ; 4 uses
+  %i.rx = add nuw nsw i64 %i.nr, %i.ej            ; 4 uses
   %i.ry = icmp ugt i64 %i.rx, %i.dw
   br i1 %i.ry, label %bb.dx, label %bb.ei, !prof !154
 
@@ -502,7 +502,7 @@ bb.ei:                                            ; preds = %bb.eh
 bb.ej:                                            ; preds = %bb.ei
   %i.sb = getelementptr inbounds nuw i8, ptr %i.dy, i64 %i.rx
   tail call void @_RNvNtCsksn9slvsHfS_10image_webp11loop_filter26subblock_filter_horizontal(i8 noundef %.sroa.5.0.i, i8 noundef %spec.store.select.i, i8 noundef %i.bc, ptr noalias nofree noundef nonnull %i.sb, i64 noundef 8)
-  %i.sc = add i64 %i.nr, %i.el                    ; 4 uses
+  %i.sc = add nuw nsw i64 %i.nr, %i.el            ; 4 uses
   %i.sd = icmp ugt i64 %i.sc, %i.dw
   br i1 %i.sd, label %bb.dx, label %bb.ek, !prof !154
 
@@ -514,7 +514,7 @@ bb.ek:                                            ; preds = %bb.ej
 bb.el:                                            ; preds = %bb.ek
   %i.sg = getelementptr inbounds nuw i8, ptr %i.dy, i64 %i.sc
   tail call void @_RNvNtCsksn9slvsHfS_10image_webp11loop_filter26subblock_filter_horizontal(i8 noundef %.sroa.5.0.i, i8 noundef %spec.store.select.i, i8 noundef %i.bc, ptr noalias nofree noundef nonnull %i.sg, i64 noundef 8)
-  %i.sh = add i64 %i.nr, %i.en                    ; 4 uses
+  %i.sh = add nuw nsw i64 %i.nr, %i.en            ; 4 uses
   %i.si = icmp ugt i64 %i.sh, %i.dw
   br i1 %i.si, label %bb.dx, label %bb.em, !prof !154
 
@@ -526,7 +526,7 @@ bb.em:                                            ; preds = %bb.el
 bb.en:                                            ; preds = %bb.em
   %i.sl = getelementptr inbounds nuw i8, ptr %i.dy, i64 %i.sh
   tail call void @_RNvNtCsksn9slvsHfS_10image_webp11loop_filter26subblock_filter_horizontal(i8 noundef %.sroa.5.0.i, i8 noundef %spec.store.select.i, i8 noundef %i.bc, ptr noalias nofree noundef nonnull %i.sl, i64 noundef 8)
-  %i.sm = add i64 %i.nr, %i.ep                    ; 4 uses
+  %i.sm = add nuw nsw i64 %i.nr, %i.ep            ; 4 uses
   %i.sn = icmp ugt i64 %i.sm, %i.dw
   br i1 %i.sn, label %bb.dx, label %bb.eo, !prof !154
 
@@ -538,7 +538,7 @@ bb.eo:                                            ; preds = %bb.en
 bb.ep:                                            ; preds = %bb.eo
   %i.sq = getelementptr inbounds nuw i8, ptr %i.dy, i64 %i.sm
   tail call void @_RNvNtCsksn9slvsHfS_10image_webp11loop_filter26subblock_filter_horizontal(i8 noundef %.sroa.5.0.i, i8 noundef %spec.store.select.i, i8 noundef %i.bc, ptr noalias nofree noundef nonnull %i.sq, i64 noundef 8)
-  %i.sr = add i64 %i.nr, %i.er                    ; 4 uses
+  %i.sr = add nuw nsw i64 %i.nr, %i.er            ; 4 uses
   %i.ss = icmp ugt i64 %i.sr, %i.dw
   br i1 %i.ss, label %bb.dx, label %bb.eq, !prof !154
 
@@ -550,7 +550,7 @@ bb.eq:                                            ; preds = %bb.ep
 bb.er:                                            ; preds = %bb.eq
   %i.sv = getelementptr inbounds nuw i8, ptr %i.dy, i64 %i.sr
   tail call void @_RNvNtCsksn9slvsHfS_10image_webp11loop_filter26subblock_filter_horizontal(i8 noundef %.sroa.5.0.i, i8 noundef %spec.store.select.i, i8 noundef %i.bc, ptr noalias nofree noundef nonnull %i.sv, i64 noundef 8)
-  %i.sw = add i64 %i.nr, %i.et                    ; 4 uses
+  %i.sw = add nuw nsw i64 %i.nr, %i.et            ; 4 uses
   %i.sx = icmp ugt i64 %i.sw, %i.dw
   br i1 %i.sx, label %bb.dx, label %bb.es, !prof !154
 
@@ -562,7 +562,7 @@ bb.es:                                            ; preds = %bb.er
 bb.et:                                            ; preds = %bb.es
   %i.ta = getelementptr inbounds nuw i8, ptr %i.dy, i64 %i.sw
   tail call void @_RNvNtCsksn9slvsHfS_10image_webp11loop_filter26subblock_filter_horizontal(i8 noundef %.sroa.5.0.i, i8 noundef %spec.store.select.i, i8 noundef %i.bc, ptr noalias nofree noundef nonnull %i.ta, i64 noundef 8)
-  %i.tb = add i64 %i.nr, %i.ev                    ; 4 uses
+  %i.tb = add nuw nsw i64 %i.nr, %i.ev            ; 4 uses
   %i.tc = icmp ugt i64 %i.tb, %i.dw
   br i1 %i.tc, label %bb.dx, label %bb.eu, !prof !154
 
@@ -574,7 +574,7 @@ bb.eu:                                            ; preds = %bb.et
 bb.ev:                                            ; preds = %bb.eu
   %i.tf = getelementptr inbounds nuw i8, ptr %i.dy, i64 %i.tb
   tail call void @_RNvNtCsksn9slvsHfS_10image_webp11loop_filter26subblock_filter_horizontal(i8 noundef %.sroa.5.0.i, i8 noundef %spec.store.select.i, i8 noundef %i.bc, ptr noalias nofree noundef nonnull %i.tf, i64 noundef 8)
-  %i.tg = add i64 %i.nr, %i.ex                    ; 4 uses
+  %i.tg = add nuw nsw i64 %i.nr, %i.ex            ; 4 uses
   %i.th = icmp ugt i64 %i.tg, %i.dw
   br i1 %i.th, label %bb.dx, label %bb.ew, !prof !154
 
@@ -586,7 +586,7 @@ bb.ew:                                            ; preds = %bb.ev
 bb.ex:                                            ; preds = %bb.ew
   %i.tk = getelementptr inbounds nuw i8, ptr %i.dy, i64 %i.tg
   tail call void @_RNvNtCsksn9slvsHfS_10image_webp11loop_filter26subblock_filter_horizontal(i8 noundef %.sroa.5.0.i, i8 noundef %spec.store.select.i, i8 noundef %i.bc, ptr noalias nofree noundef nonnull %i.tk, i64 noundef 8)
-  %i.tl = add i64 %i.nr, %i.ez                    ; 4 uses
+  %i.tl = add nuw nsw i64 %i.nr, %i.ez            ; 4 uses
   %i.tm = icmp ugt i64 %i.tl, %i.dw
   br i1 %i.tm, label %bb.dx, label %bb.ey, !prof !154
 
@@ -598,7 +598,7 @@ bb.ey:                                            ; preds = %bb.ex
 bb.ez:                                            ; preds = %bb.ey
   %i.tp = getelementptr inbounds nuw i8, ptr %i.dy, i64 %i.tl
   tail call void @_RNvNtCsksn9slvsHfS_10image_webp11loop_filter26subblock_filter_horizontal(i8 noundef %.sroa.5.0.i, i8 noundef %spec.store.select.i, i8 noundef %i.bc, ptr noalias nofree noundef nonnull %i.tp, i64 noundef 8)
-  %i.tq = add i64 %i.nr, %i.fb                    ; 4 uses
+  %i.tq = add nuw nsw i64 %i.nr, %i.fb            ; 4 uses
   %i.tr = icmp ugt i64 %i.tq, %i.dw
   br i1 %i.tr, label %bb.dx, label %bb.fa, !prof !154
 
@@ -610,7 +610,7 @@ bb.fa:                                            ; preds = %bb.ez
 bb.fb:                                            ; preds = %bb.fa
   %i.tu = getelementptr inbounds nuw i8, ptr %i.dy, i64 %i.tq
   tail call void @_RNvNtCsksn9slvsHfS_10image_webp11loop_filter26subblock_filter_horizontal(i8 noundef %.sroa.5.0.i, i8 noundef %spec.store.select.i, i8 noundef %i.bc, ptr noalias nofree noundef nonnull %i.tu, i64 noundef 8)
-  %i.tv = add i64 %i.nr, %i.fd                    ; 4 uses
+  %i.tv = add nuw nsw i64 %i.nr, %i.fd            ; 4 uses
   %i.tw = icmp ugt i64 %i.tv, %i.dw
   br i1 %i.tw, label %bb.dx, label %bb.fc, !prof !154
 
@@ -631,7 +631,7 @@ bb.fc:                                            ; preds = %bb.fb
   %i.ua = add nuw nsw i64 %.sroa.046.0218, 4
   %i.ub = add nsw i64 %.sroa.076.0217, -1         ; 2 uses
   %i.uc = add nsw i64 %i.du, %.sroa.046.0218      ; 16 uses
-  %i.ud = add i64 %i.uc, %i.dz                    ; 4 uses
+  %i.ud = add nuw nsw i64 %i.uc, %i.dz            ; 4 uses
   %i.ue = icmp ugt i64 %i.ud, %i.dw
   br i1 %i.ue, label %bb.ff, label %bb.fe, !prof !154
 
@@ -694,7 +694,7 @@ bb.fd:                                            ; preds = %.preheader149, %.pr
   %.sroa.069.0223 = phi i64 [ %i.wa, %.loopexit143 ], [ 4, %bb.fd ] ; 2 uses
   %i.vi = add nuw nsw i64 %.sroa.069.0223, %i.ui
   %i.vj = mul i64 %i.vi, %i.d
-  %i.vk = add i64 %i.vj, %i.uj                    ; 16 uses
+  %i.vk = add nuw nsw i64 %i.vj, %i.uj            ; 16 uses
   tail call void @_RNvNtCsksn9slvsHfS_10image_webp11loop_filter24subblock_filter_vertical(i8 noundef %.sroa.5.0.i, i8 noundef %spec.store.select.i, i8 noundef %i.bc, ptr noalias nofree noundef nonnull %i.ul, i64 noundef %i.un, i64 noundef %i.vk, i64 noundef %i.d)
   %i.vl = or disjoint i64 %i.vk, 1
   tail call void @_RNvNtCsksn9slvsHfS_10image_webp11loop_filter24subblock_filter_vertical(i8 noundef %.sroa.5.0.i, i8 noundef %spec.store.select.i, i8 noundef %i.bc, ptr noalias nofree noundef nonnull %i.ul, i64 noundef %i.un, i64 noundef %i.vl, i64 noundef %i.d)
@@ -736,7 +736,7 @@ bb.fd:                                            ; preds = %.preheader149, %.pr
   %.sroa.064.0227 = phi i64 [ %i.wu, %.loopexit ], [ 4, %bb.fd ] ; 2 uses
   %i.wc = add nuw nsw i64 %.sroa.064.0227, %i.ui
   %i.wd = mul i64 %i.wc, %i.d
-  %i.we = add i64 %i.wd, %i.uj                    ; 16 uses
+  %i.we = add nuw nsw i64 %i.wd, %i.uj            ; 16 uses
   tail call void @_RNvNtCsksn9slvsHfS_10image_webp11loop_filter23simple_segment_vertical(i8 noundef %i.bc, ptr noalias nofree noundef nonnull %i.ul, i64 noundef %i.un, i64 noundef %i.we, i64 noundef %i.d)
   %i.wf = or disjoint i64 %i.we, 1
   tail call void @_RNvNtCsksn9slvsHfS_10image_webp11loop_filter23simple_segment_vertical(i8 noundef %i.bc, ptr noalias nofree noundef nonnull %i.ul, i64 noundef %i.un, i64 noundef %i.wf, i64 noundef %i.d)
@@ -791,7 +791,7 @@ bb.fg:                                            ; preds = %bb.gk, %bb.gi, %bb.
 bb.fh:                                            ; preds = %bb.fe
   %i.wy = getelementptr inbounds nuw i8, ptr %i.dy, i64 %i.ud
   tail call void @_RNvNtCsksn9slvsHfS_10image_webp11loop_filter25simple_segment_horizontal(i8 noundef %i.bc, ptr noalias nofree noundef nonnull %i.wy, i64 noundef 8)
-  %i.wz = add i64 %i.uc, %i.eb                    ; 4 uses
+  %i.wz = add nuw nsw i64 %i.uc, %i.eb            ; 4 uses
   %i.xa = icmp ugt i64 %i.wz, %i.dw
   br i1 %i.xa, label %bb.ff, label %bb.fi, !prof !154
 
@@ -803,7 +803,7 @@ bb.fi:                                            ; preds = %bb.fh
 bb.fj:                                            ; preds = %bb.fi
   %i.xd = getelementptr inbounds nuw i8, ptr %i.dy, i64 %i.wz
   tail call void @_RNvNtCsksn9slvsHfS_10image_webp11loop_filter25simple_segment_horizontal(i8 noundef %i.bc, ptr noalias nofree noundef nonnull %i.xd, i64 noundef 8)
-  %i.xe = add i64 %i.uc, %i.ed                    ; 4 uses
+  %i.xe = add nuw nsw i64 %i.uc, %i.ed            ; 4 uses
   %i.xf = icmp ugt i64 %i.xe, %i.dw
   br i1 %i.xf, label %bb.ff, label %bb.fk, !prof !154
 
@@ -815,7 +815,7 @@ bb.fk:                                            ; preds = %bb.fj
 bb.fl:                                            ; preds = %bb.fk
   %i.xi = getelementptr inbounds nuw i8, ptr %i.dy, i64 %i.xe
   tail call void @_RNvNtCsksn9slvsHfS_10image_webp11loop_filter25simple_segment_horizontal(i8 noundef %i.bc, ptr noalias nofree noundef nonnull %i.xi, i64 noundef 8)
-  %i.xj = add i64 %i.uc, %i.ef                    ; 4 uses
+  %i.xj = add nuw nsw i64 %i.uc, %i.ef            ; 4 uses
   %i.xk = icmp ugt i64 %i.xj, %i.dw
   br i1 %i.xk, label %bb.ff, label %bb.fm, !prof !154
 
@@ -827,7 +827,7 @@ bb.fm:                                            ; preds = %bb.fl
 bb.fn:                                            ; preds = %bb.fm
   %i.xn = getelementptr inbounds nuw i8, ptr %i.dy, i64 %i.xj
   tail call void @_RNvNtCsksn9slvsHfS_10image_webp11loop_filter25simple_segment_horizontal(i8 noundef %i.bc, ptr noalias nofree noundef nonnull %i.xn, i64 noundef 8)
-  %i.xo = add i64 %i.uc, %i.eh                    ; 4 uses
+  %i.xo = add nuw nsw i64 %i.uc, %i.eh            ; 4 uses
   %i.xp = icmp ugt i64 %i.xo, %i.dw
   br i1 %i.xp, label %bb.ff, label %bb.fo, !prof !154
 
@@ -839,7 +839,7 @@ bb.fo:                                            ; preds = %bb.fn
 bb.fp:                                            ; preds = %bb.fo
   %i.xs = getelementptr inbounds nuw i8, ptr %i.dy, i64 %i.xo
   tail call void @_RNvNtCsksn9slvsHfS_10image_webp11loop_filter25simple_segment_horizontal(i8 noundef %i.bc, ptr noalias nofree noundef nonnull %i.xs, i64 noundef 8)
-  %i.xt = add i64 %i.uc, %i.ej                    ; 4 uses
+  %i.xt = add nuw nsw i64 %i.uc, %i.ej            ; 4 uses
   %i.xu = icmp ugt i64 %i.xt, %i.dw
   br i1 %i.xu, label %bb.ff, label %bb.fq, !prof !154
 
@@ -851,7 +851,7 @@ bb.fq:                                            ; preds = %bb.fp
 bb.fr:                                            ; preds = %bb.fq
   %i.xx = getelementptr inbounds nuw i8, ptr %i.dy, i64 %i.xt
   tail call void @_RNvNtCsksn9slvsHfS_10image_webp11loop_filter25simple_segment_horizontal(i8 noundef %i.bc, ptr noalias nofree noundef nonnull %i.xx, i64 noundef 8)
-  %i.xy = add i64 %i.uc, %i.el                    ; 4 uses
+  %i.xy = add nuw nsw i64 %i.uc, %i.el            ; 4 uses
   %i.xz = icmp ugt i64 %i.xy, %i.dw
   br i1 %i.xz, label %bb.ff, label %bb.fs, !prof !154
 
@@ -863,7 +863,7 @@ bb.fs:                                            ; preds = %bb.fr
 bb.ft:                                            ; preds = %bb.fs
   %i.yc = getelementptr inbounds nuw i8, ptr %i.dy, i64 %i.xy
   tail call void @_RNvNtCsksn9slvsHfS_10image_webp11loop_filter25simple_segment_horizontal(i8 noundef %i.bc, ptr noalias nofree noundef nonnull %i.yc, i64 noundef 8)
-  %i.yd = add i64 %i.uc, %i.en                    ; 4 uses
+  %i.yd = add nuw nsw i64 %i.uc, %i.en            ; 4 uses
   %i.ye = icmp ugt i64 %i.yd, %i.dw
   br i1 %i.ye, label %bb.ff, label %bb.fu, !prof !154
 
@@ -875,7 +875,7 @@ bb.fu:                                            ; preds = %bb.ft
 bb.fv:                                            ; preds = %bb.fu
   %i.yh = getelementptr inbounds nuw i8, ptr %i.dy, i64 %i.yd
   tail call void @_RNvNtCsksn9slvsHfS_10image_webp11loop_filter25simple_segment_horizontal(i8 noundef %i.bc, ptr noalias nofree noundef nonnull %i.yh, i64 noundef 8)
-  %i.yi = add i64 %i.uc, %i.ep                    ; 4 uses
+  %i.yi = add nuw nsw i64 %i.uc, %i.ep            ; 4 uses
   %i.yj = icmp ugt i64 %i.yi, %i.dw
   br i1 %i.yj, label %bb.ff, label %bb.fw, !prof !154
 
@@ -887,7 +887,7 @@ bb.fw:                                            ; preds = %bb.fv
 bb.fx:                                            ; preds = %bb.fw
   %i.ym = getelementptr inbounds nuw i8, ptr %i.dy, i64 %i.yi
   tail call void @_RNvNtCsksn9slvsHfS_10image_webp11loop_filter25simple_segment_horizontal(i8 noundef %i.bc, ptr noalias nofree noundef nonnull %i.ym, i64 noundef 8)
-  %i.yn = add i64 %i.uc, %i.er                    ; 4 uses
+  %i.yn = add nuw nsw i64 %i.uc, %i.er            ; 4 uses
   %i.yo = icmp ugt i64 %i.yn, %i.dw
   br i1 %i.yo, label %bb.ff, label %bb.fy, !prof !154
 
@@ -899,7 +899,7 @@ bb.fy:                                            ; preds = %bb.fx
 bb.fz:                                            ; preds = %bb.fy
   %i.yr = getelementptr inbounds nuw i8, ptr %i.dy, i64 %i.yn
   tail call void @_RNvNtCsksn9slvsHfS_10image_webp11loop_filter25simple_segment_horizontal(i8 noundef %i.bc, ptr noalias nofree noundef nonnull %i.yr, i64 noundef 8)
-  %i.ys = add i64 %i.uc, %i.et                    ; 4 uses
+  %i.ys = add nuw nsw i64 %i.uc, %i.et            ; 4 uses
   %i.yt = icmp ugt i64 %i.ys, %i.dw
   br i1 %i.yt, label %bb.ff, label %bb.ga, !prof !154
 
@@ -911,7 +911,7 @@ bb.ga:                                            ; preds = %bb.fz
 bb.gb:                                            ; preds = %bb.ga
   %i.yw = getelementptr inbounds nuw i8, ptr %i.dy, i64 %i.ys
   tail call void @_RNvNtCsksn9slvsHfS_10image_webp11loop_filter25simple_segment_horizontal(i8 noundef %i.bc, ptr noalias nofree noundef nonnull %i.yw, i64 noundef 8)
-  %i.yx = add i64 %i.uc, %i.ev                    ; 4 uses
+  %i.yx = add nuw nsw i64 %i.uc, %i.ev            ; 4 uses
   %i.yy = icmp ugt i64 %i.yx, %i.dw
   br i1 %i.yy, label %bb.ff, label %bb.gc, !prof !154
 
@@ -923,7 +923,7 @@ bb.gc:                                            ; preds = %bb.gb
 bb.gd:                                            ; preds = %bb.gc
   %i.zb = getelementptr inbounds nuw i8, ptr %i.dy, i64 %i.yx
   tail call void @_RNvNtCsksn9slvsHfS_10image_webp11loop_filter25simple_segment_horizontal(i8 noundef %i.bc, ptr noalias nofree noundef nonnull %i.zb, i64 noundef 8)
-  %i.zc = add i64 %i.uc, %i.ex                    ; 4 uses
+  %i.zc = add nuw nsw i64 %i.uc, %i.ex            ; 4 uses
   %i.zd = icmp ugt i64 %i.zc, %i.dw
   br i1 %i.zd, label %bb.ff, label %bb.ge, !prof !154
 
@@ -935,7 +935,7 @@ bb.ge:                                            ; preds = %bb.gd
 bb.gf:                                            ; preds = %bb.ge
   %i.zg = getelementptr inbounds nuw i8, ptr %i.dy, i64 %i.zc
   tail call void @_RNvNtCsksn9slvsHfS_10image_webp11loop_filter25simple_segment_horizontal(i8 noundef %i.bc, ptr noalias nofree noundef nonnull %i.zg, i64 noundef 8)
-  %i.zh = add i64 %i.uc, %i.ez                    ; 4 uses
+  %i.zh = add nuw nsw i64 %i.uc, %i.ez            ; 4 uses
   %i.zi = icmp ugt i64 %i.zh, %i.dw
   br i1 %i.zi, label %bb.ff, label %bb.gg, !prof !154
 
@@ -947,7 +947,7 @@ bb.gg:                                            ; preds = %bb.gf
 bb.gh:                                            ; preds = %bb.gg
   %i.zl = getelementptr inbounds nuw i8, ptr %i.dy, i64 %i.zh
   tail call void @_RNvNtCsksn9slvsHfS_10image_webp11loop_filter25simple_segment_horizontal(i8 noundef %i.bc, ptr noalias nofree noundef nonnull %i.zl, i64 noundef 8)
-  %i.zm = add i64 %i.uc, %i.fb                    ; 4 uses
+  %i.zm = add nuw nsw i64 %i.uc, %i.fb            ; 4 uses
   %i.zn = icmp ugt i64 %i.zm, %i.dw
   br i1 %i.zn, label %bb.ff, label %bb.gi, !prof !154
 
@@ -959,7 +959,7 @@ bb.gi:                                            ; preds = %bb.gh
 bb.gj:                                            ; preds = %bb.gi
   %i.zq = getelementptr inbounds nuw i8, ptr %i.dy, i64 %i.zm
   tail call void @_RNvNtCsksn9slvsHfS_10image_webp11loop_filter25simple_segment_horizontal(i8 noundef %i.bc, ptr noalias nofree noundef nonnull %i.zq, i64 noundef 8)
-  %i.zr = add i64 %i.uc, %i.fd                    ; 4 uses
+  %i.zr = add nuw nsw i64 %i.uc, %i.fd            ; 4 uses
   %i.zs = icmp ugt i64 %i.zr, %i.dw
   br i1 %i.zs, label %bb.ff, label %bb.gk, !prof !154
 

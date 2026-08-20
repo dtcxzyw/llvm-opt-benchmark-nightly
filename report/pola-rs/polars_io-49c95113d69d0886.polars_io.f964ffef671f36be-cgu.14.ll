@@ -203,14 +203,15 @@ bb.k:                                             ; preds = %bb.b
   br i1 %.not6.i, label %._crit_edge.thread.i, label %.lr.ph.i17, !dbg !2573
 
 .lr.ph.i17:                                       ; preds = %bb.k
-  %i.cw = lshr i64 %i.l, 4, !dbg !2589
+  %i.cw = lshr i64 %i.l, 4, !dbg !2589            ; 2 uses
   %i.cx = and i64 %i.l, 15, !dbg !2605
   %.not10.i.i.i = icmp ne i64 %i.cx, 0, !dbg !2607
-  %i.cy = zext i1 %.not10.i.i.i to i64, !dbg !2607
-  %.sroa.05.0.i.i.i = add nuw nsw i64 %i.cw, %i.cy, !dbg !2607 ; 4 uses
+  %i.cy = zext i1 %.not10.i.i.i to i64, !dbg !2607 ; 2 uses
+  %.sroa.05.0.i.i.i = add nuw nsw i64 %i.cw, %i.cy, !dbg !2607 ; 3 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val11) ]
+  %5 = add nuw nsw i64 %i.cw, %i.cy, !dbg !2573
   %xtraiter = and i64 %.sroa.05.0.i.i.i, 1, !dbg !2573
-  %i.cz = icmp eq i64 %.sroa.05.0.i.i.i, 1, !dbg !2573
+  %i.cz = icmp eq i64 %5, 1, !dbg !2573
   br i1 %i.cz, label %.epil.preheader, label %.lr.ph.i17.new, !dbg !2573
 
 .lr.ph.i17.new:                                   ; preds = %.lr.ph.i17
@@ -613,14 +614,15 @@ bb.k:                                             ; preds = %bb.b
   br i1 %.not6.i, label %._crit_edge.thread.i, label %.lr.ph.i17, !dbg !3172
 
 .lr.ph.i17:                                       ; preds = %bb.k
-  %i.cw = lshr i64 %i.l, 4, !dbg !3176
+  %i.cw = lshr i64 %i.l, 4, !dbg !3176            ; 2 uses
   %i.cx = and i64 %i.l, 15, !dbg !3181
   %.not10.i.i.i = icmp ne i64 %i.cx, 0, !dbg !3182
-  %i.cy = zext i1 %.not10.i.i.i to i64, !dbg !3182
-  %.sroa.05.0.i.i.i = add nuw nsw i64 %i.cw, %i.cy, !dbg !3182 ; 4 uses
+  %i.cy = zext i1 %.not10.i.i.i to i64, !dbg !3182 ; 2 uses
+  %.sroa.05.0.i.i.i = add nuw nsw i64 %i.cw, %i.cy, !dbg !3182 ; 3 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val11) ]
+  %5 = add nuw nsw i64 %i.cw, %i.cy, !dbg !3172
   %xtraiter = and i64 %.sroa.05.0.i.i.i, 1, !dbg !3172
-  %i.cz = icmp eq i64 %.sroa.05.0.i.i.i, 1, !dbg !3172
+  %i.cz = icmp eq i64 %5, 1, !dbg !3172
   br i1 %i.cz, label %.epil.preheader, label %.lr.ph.i17.new, !dbg !3172
 
 .lr.ph.i17.new:                                   ; preds = %.lr.ph.i17
@@ -1023,14 +1025,15 @@ bb.k:                                             ; preds = %bb.b
   br i1 %.not6.i, label %._crit_edge.thread.i, label %.lr.ph.i17, !dbg !3656
 
 .lr.ph.i17:                                       ; preds = %bb.k
-  %i.cw = lshr i64 %i.l, 4, !dbg !3660
+  %i.cw = lshr i64 %i.l, 4, !dbg !3660            ; 2 uses
   %i.cx = and i64 %i.l, 15, !dbg !3665
   %.not10.i.i.i = icmp ne i64 %i.cx, 0, !dbg !3666
-  %i.cy = zext i1 %.not10.i.i.i to i64, !dbg !3666
-  %.sroa.05.0.i.i.i = add nuw nsw i64 %i.cw, %i.cy, !dbg !3666 ; 4 uses
+  %i.cy = zext i1 %.not10.i.i.i to i64, !dbg !3666 ; 2 uses
+  %.sroa.05.0.i.i.i = add nuw nsw i64 %i.cw, %i.cy, !dbg !3666 ; 3 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val11) ]
+  %5 = add nuw nsw i64 %i.cw, %i.cy, !dbg !3656
   %xtraiter = and i64 %.sroa.05.0.i.i.i, 1, !dbg !3656
-  %i.cz = icmp eq i64 %.sroa.05.0.i.i.i, 1, !dbg !3656
+  %i.cz = icmp eq i64 %5, 1, !dbg !3656
   br i1 %i.cz, label %.epil.preheader, label %.lr.ph.i17.new, !dbg !3656
 
 .lr.ph.i17.new:                                   ; preds = %.lr.ph.i17
@@ -1433,14 +1436,15 @@ bb.k:                                             ; preds = %bb.b
   br i1 %.not6.i, label %._crit_edge.thread.i, label %.lr.ph.i17, !dbg !4140
 
 .lr.ph.i17:                                       ; preds = %bb.k
-  %i.cw = lshr i64 %i.l, 4, !dbg !4144
+  %i.cw = lshr i64 %i.l, 4, !dbg !4144            ; 2 uses
   %i.cx = and i64 %i.l, 15, !dbg !4149
   %.not10.i.i.i = icmp ne i64 %i.cx, 0, !dbg !4150
-  %i.cy = zext i1 %.not10.i.i.i to i64, !dbg !4150
-  %.sroa.05.0.i.i.i = add nuw nsw i64 %i.cw, %i.cy, !dbg !4150 ; 4 uses
+  %i.cy = zext i1 %.not10.i.i.i to i64, !dbg !4150 ; 2 uses
+  %.sroa.05.0.i.i.i = add nuw nsw i64 %i.cw, %i.cy, !dbg !4150 ; 3 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val11) ]
+  %5 = add nuw nsw i64 %i.cw, %i.cy, !dbg !4140
   %xtraiter = and i64 %.sroa.05.0.i.i.i, 1, !dbg !4140
-  %i.cz = icmp eq i64 %.sroa.05.0.i.i.i, 1, !dbg !4140
+  %i.cz = icmp eq i64 %5, 1, !dbg !4140
   br i1 %i.cz, label %.epil.preheader, label %.lr.ph.i17.new, !dbg !4140
 
 .lr.ph.i17.new:                                   ; preds = %.lr.ph.i17
@@ -1843,14 +1847,15 @@ bb.k:                                             ; preds = %bb.b
   br i1 %.not6.i, label %._crit_edge.thread.i, label %.lr.ph.i17, !dbg !4624
 
 .lr.ph.i17:                                       ; preds = %bb.k
-  %i.cw = lshr i64 %i.l, 4, !dbg !4628
+  %i.cw = lshr i64 %i.l, 4, !dbg !4628            ; 2 uses
   %i.cx = and i64 %i.l, 15, !dbg !4633
   %.not10.i.i.i = icmp ne i64 %i.cx, 0, !dbg !4634
-  %i.cy = zext i1 %.not10.i.i.i to i64, !dbg !4634
-  %.sroa.05.0.i.i.i = add nuw nsw i64 %i.cw, %i.cy, !dbg !4634 ; 4 uses
+  %i.cy = zext i1 %.not10.i.i.i to i64, !dbg !4634 ; 2 uses
+  %.sroa.05.0.i.i.i = add nuw nsw i64 %i.cw, %i.cy, !dbg !4634 ; 3 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val11) ]
+  %5 = add nuw nsw i64 %i.cw, %i.cy, !dbg !4624
   %xtraiter = and i64 %.sroa.05.0.i.i.i, 1, !dbg !4624
-  %i.cz = icmp eq i64 %.sroa.05.0.i.i.i, 1, !dbg !4624
+  %i.cz = icmp eq i64 %5, 1, !dbg !4624
   br i1 %i.cz, label %.epil.preheader, label %.lr.ph.i17.new, !dbg !4624
 
 .lr.ph.i17.new:                                   ; preds = %.lr.ph.i17
@@ -2253,14 +2258,15 @@ bb.k:                                             ; preds = %bb.b
   br i1 %.not6.i, label %._crit_edge.thread.i, label %.lr.ph.i17, !dbg !5108
 
 .lr.ph.i17:                                       ; preds = %bb.k
-  %i.cw = lshr i64 %i.l, 4, !dbg !5112
+  %i.cw = lshr i64 %i.l, 4, !dbg !5112            ; 2 uses
   %i.cx = and i64 %i.l, 15, !dbg !5117
   %.not10.i.i.i = icmp ne i64 %i.cx, 0, !dbg !5118
-  %i.cy = zext i1 %.not10.i.i.i to i64, !dbg !5118
-  %.sroa.05.0.i.i.i = add nuw nsw i64 %i.cw, %i.cy, !dbg !5118 ; 4 uses
+  %i.cy = zext i1 %.not10.i.i.i to i64, !dbg !5118 ; 2 uses
+  %.sroa.05.0.i.i.i = add nuw nsw i64 %i.cw, %i.cy, !dbg !5118 ; 3 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val11) ]
+  %5 = add nuw nsw i64 %i.cw, %i.cy, !dbg !5108
   %xtraiter = and i64 %.sroa.05.0.i.i.i, 1, !dbg !5108
-  %i.cz = icmp eq i64 %.sroa.05.0.i.i.i, 1, !dbg !5108
+  %i.cz = icmp eq i64 %5, 1, !dbg !5108
   br i1 %i.cz, label %.epil.preheader, label %.lr.ph.i17.new, !dbg !5108
 
 .lr.ph.i17.new:                                   ; preds = %.lr.ph.i17
@@ -2663,14 +2669,15 @@ bb.k:                                             ; preds = %bb.b
   br i1 %.not6.i, label %._crit_edge.thread.i, label %.lr.ph.i17, !dbg !5593
 
 .lr.ph.i17:                                       ; preds = %bb.k
-  %i.cw = lshr i64 %i.l, 4, !dbg !5597
+  %i.cw = lshr i64 %i.l, 4, !dbg !5597            ; 2 uses
   %i.cx = and i64 %i.l, 15, !dbg !5602
   %.not10.i.i.i = icmp ne i64 %i.cx, 0, !dbg !5603
-  %i.cy = zext i1 %.not10.i.i.i to i64, !dbg !5603
-  %.sroa.05.0.i.i.i = add nuw nsw i64 %i.cw, %i.cy, !dbg !5603 ; 4 uses
+  %i.cy = zext i1 %.not10.i.i.i to i64, !dbg !5603 ; 2 uses
+  %.sroa.05.0.i.i.i = add nuw nsw i64 %i.cw, %i.cy, !dbg !5603 ; 3 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val11) ]
+  %5 = add nuw nsw i64 %i.cw, %i.cy, !dbg !5593
   %xtraiter = and i64 %.sroa.05.0.i.i.i, 1, !dbg !5593
-  %i.cz = icmp eq i64 %.sroa.05.0.i.i.i, 1, !dbg !5593
+  %i.cz = icmp eq i64 %5, 1, !dbg !5593
   br i1 %i.cz, label %.epil.preheader, label %.lr.ph.i17.new, !dbg !5593
 
 .lr.ph.i17.new:                                   ; preds = %.lr.ph.i17
@@ -3073,14 +3080,15 @@ bb.k:                                             ; preds = %bb.b
   br i1 %.not6.i, label %._crit_edge.thread.i, label %.lr.ph.i16, !dbg !6077
 
 .lr.ph.i16:                                       ; preds = %bb.k
-  %i.cs = lshr i64 %i.l, 4, !dbg !6081
+  %i.cs = lshr i64 %i.l, 4, !dbg !6081            ; 2 uses
   %i.ct = and i64 %i.l, 15, !dbg !6086
   %.not10.i.i.i = icmp ne i64 %i.ct, 0, !dbg !6087
-  %i.cu = zext i1 %.not10.i.i.i to i64, !dbg !6087
-  %.sroa.05.0.i.i.i = add nuw nsw i64 %i.cs, %i.cu, !dbg !6087 ; 4 uses
+  %i.cu = zext i1 %.not10.i.i.i to i64, !dbg !6087 ; 2 uses
+  %.sroa.05.0.i.i.i = add nuw nsw i64 %i.cs, %i.cu, !dbg !6087 ; 3 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val11) ]
+  %4 = add nuw nsw i64 %i.cs, %i.cu, !dbg !6077
   %xtraiter = and i64 %.sroa.05.0.i.i.i, 1, !dbg !6077
-  %i.cv = icmp eq i64 %.sroa.05.0.i.i.i, 1, !dbg !6077
+  %i.cv = icmp eq i64 %4, 1, !dbg !6077
   br i1 %i.cv, label %.epil.preheader, label %.lr.ph.i16.new, !dbg !6077
 
 .lr.ph.i16.new:                                   ; preds = %.lr.ph.i16
@@ -3483,14 +3491,15 @@ bb.k:                                             ; preds = %bb.b
   br i1 %.not6.i, label %._crit_edge.thread.i, label %.lr.ph.i16, !dbg !6554
 
 .lr.ph.i16:                                       ; preds = %bb.k
-  %i.cs = lshr i64 %i.l, 4, !dbg !6558
+  %i.cs = lshr i64 %i.l, 4, !dbg !6558            ; 2 uses
   %i.ct = and i64 %i.l, 15, !dbg !6563
   %.not10.i.i.i = icmp ne i64 %i.ct, 0, !dbg !6564
-  %i.cu = zext i1 %.not10.i.i.i to i64, !dbg !6564
-  %.sroa.05.0.i.i.i = add nuw nsw i64 %i.cs, %i.cu, !dbg !6564 ; 4 uses
+  %i.cu = zext i1 %.not10.i.i.i to i64, !dbg !6564 ; 2 uses
+  %.sroa.05.0.i.i.i = add nuw nsw i64 %i.cs, %i.cu, !dbg !6564 ; 3 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val11) ]
+  %4 = add nuw nsw i64 %i.cs, %i.cu, !dbg !6554
   %xtraiter = and i64 %.sroa.05.0.i.i.i, 1, !dbg !6554
-  %i.cv = icmp eq i64 %.sroa.05.0.i.i.i, 1, !dbg !6554
+  %i.cv = icmp eq i64 %4, 1, !dbg !6554
   br i1 %i.cv, label %.epil.preheader, label %.lr.ph.i16.new, !dbg !6554
 
 .lr.ph.i16.new:                                   ; preds = %.lr.ph.i16
@@ -3893,14 +3902,15 @@ bb.k:                                             ; preds = %bb.b
   br i1 %.not6.i, label %._crit_edge.thread.i, label %.lr.ph.i16, !dbg !7031
 
 .lr.ph.i16:                                       ; preds = %bb.k
-  %i.cs = lshr i64 %i.l, 4, !dbg !7035
+  %i.cs = lshr i64 %i.l, 4, !dbg !7035            ; 2 uses
   %i.ct = and i64 %i.l, 15, !dbg !7040
   %.not10.i.i.i = icmp ne i64 %i.ct, 0, !dbg !7041
-  %i.cu = zext i1 %.not10.i.i.i to i64, !dbg !7041
-  %.sroa.05.0.i.i.i = add nuw nsw i64 %i.cs, %i.cu, !dbg !7041 ; 4 uses
+  %i.cu = zext i1 %.not10.i.i.i to i64, !dbg !7041 ; 2 uses
+  %.sroa.05.0.i.i.i = add nuw nsw i64 %i.cs, %i.cu, !dbg !7041 ; 3 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val11) ]
+  %4 = add nuw nsw i64 %i.cs, %i.cu, !dbg !7031
   %xtraiter = and i64 %.sroa.05.0.i.i.i, 1, !dbg !7031
-  %i.cv = icmp eq i64 %.sroa.05.0.i.i.i, 1, !dbg !7031
+  %i.cv = icmp eq i64 %4, 1, !dbg !7031
   br i1 %i.cv, label %.epil.preheader, label %.lr.ph.i16.new, !dbg !7031
 
 .lr.ph.i16.new:                                   ; preds = %.lr.ph.i16
@@ -4303,14 +4313,15 @@ bb.k:                                             ; preds = %bb.b
   br i1 %.not6.i, label %._crit_edge.thread.i, label %.lr.ph.i16, !dbg !7508
 
 .lr.ph.i16:                                       ; preds = %bb.k
-  %i.cs = lshr i64 %i.l, 4, !dbg !7512
+  %i.cs = lshr i64 %i.l, 4, !dbg !7512            ; 2 uses
   %i.ct = and i64 %i.l, 15, !dbg !7517
   %.not10.i.i.i = icmp ne i64 %i.ct, 0, !dbg !7518
-  %i.cu = zext i1 %.not10.i.i.i to i64, !dbg !7518
-  %.sroa.05.0.i.i.i = add nuw nsw i64 %i.cs, %i.cu, !dbg !7518 ; 4 uses
+  %i.cu = zext i1 %.not10.i.i.i to i64, !dbg !7518 ; 2 uses
+  %.sroa.05.0.i.i.i = add nuw nsw i64 %i.cs, %i.cu, !dbg !7518 ; 3 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val11) ]
+  %4 = add nuw nsw i64 %i.cs, %i.cu, !dbg !7508
   %xtraiter = and i64 %.sroa.05.0.i.i.i, 1, !dbg !7508
-  %i.cv = icmp eq i64 %.sroa.05.0.i.i.i, 1, !dbg !7508
+  %i.cv = icmp eq i64 %4, 1, !dbg !7508
   br i1 %i.cv, label %.epil.preheader, label %.lr.ph.i16.new, !dbg !7508
 
 .lr.ph.i16.new:                                   ; preds = %.lr.ph.i16
@@ -4713,14 +4724,15 @@ bb.m:                                             ; preds = %bb.b
   br i1 %.not6.i, label %._crit_edge.thread.i, label %.lr.ph.i16, !dbg !7991
 
 .lr.ph.i16:                                       ; preds = %bb.m
-  %i.cw = lshr i64 %i.l, 4, !dbg !7995
+  %i.cw = lshr i64 %i.l, 4, !dbg !7995            ; 2 uses
   %i.cx = and i64 %i.l, 15, !dbg !8000
   %.not10.i.i.i = icmp ne i64 %i.cx, 0, !dbg !8001
-  %i.cy = zext i1 %.not10.i.i.i to i64, !dbg !8001
-  %.sroa.05.0.i.i.i = add nuw nsw i64 %i.cw, %i.cy, !dbg !8001 ; 4 uses
+  %i.cy = zext i1 %.not10.i.i.i to i64, !dbg !8001 ; 2 uses
+  %.sroa.05.0.i.i.i = add nuw nsw i64 %i.cw, %i.cy, !dbg !8001 ; 3 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val11) ]
+  %5 = add nuw nsw i64 %i.cw, %i.cy, !dbg !7991
   %xtraiter = and i64 %.sroa.05.0.i.i.i, 1, !dbg !7991
-  %i.cz = icmp eq i64 %.sroa.05.0.i.i.i, 1, !dbg !7991
+  %i.cz = icmp eq i64 %5, 1, !dbg !7991
   br i1 %i.cz, label %.epil.preheader, label %.lr.ph.i16.new, !dbg !7991
 
 .lr.ph.i16.new:                                   ; preds = %.lr.ph.i16

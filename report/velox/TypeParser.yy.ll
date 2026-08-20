@@ -201,14 +201,14 @@ bb.a:
   %i.l = sext i8 %i.k to i64
   %i.m = getelementptr inbounds i8, ptr @_ZN8facebook5velox9functions9prestosql6Parser7yypact_E, i64 %i.l
   %i.n = load i8, ptr %i.m, align 1, !tbaa !28    ; 4 uses
+  %3 = sext i8 %i.n to i32                        ; 3 uses
   %i.o = icmp eq i8 %i.n, -27
   br i1 %i.o, label %.critedge, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %3 = sext i8 %i.n to i32                        ; 2 uses
   %i.p = icmp slt i8 %i.n, 0
-  %i.q = sub nsw i32 0, %3
-  %i.r = select i1 %i.p, i32 %i.q, i32 0          ; 2 uses
+  %i.q = sub nsw i32 0, %3                        ; 2 uses
+  %i.r = select i1 %i.p, i32 %i.q, i32 0
   %i.s = sub nsw i32 98, %3
   %i.t = tail call i32 @llvm.smin.i32(i32 %i.s, i32 21) ; 2 uses
   %.not4345 = icmp slt i32 %i.r, %i.t
@@ -216,14 +216,18 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph:                                           ; preds = %bb.b
   %.not = icmp eq ptr %1, null
-  %i.u = sext i32 %i.r to i64                     ; 9 uses
-  %i.v = sext i8 %i.n to i64
+  %i.u = sext i32 %i.q to i64
+  %smax50 = tail call i32 @llvm.smax.i32(i32 %3, i32 0)
+  %4 = zext nneg i32 %smax50 to i64               ; 2 uses
+  %5 = add nsw i64 %i.u, %4                       ; 8 uses
+  %i.v = sext i8 %i.n to i64                      ; 2 uses
   %i.w = sext i32 %i.t to i64                     ; 3 uses
   %invariant.gep62 = getelementptr i8, ptr @_ZN8facebook5velox9functions9prestosql6Parser8yycheck_E, i64 %i.v ; 4 uses
   br i1 %.not, label %iter.check, label %.lr.ph.split
 
 iter.check:                                       ; preds = %.lr.ph
-  %i.x = sub nsw i64 %i.w, %i.u                   ; 7 uses
+  %6 = add nsw i64 %i.w, %i.v
+  %i.x = sub nsw i64 %6, %4                       ; 7 uses
   %min.iters.check = icmp ult i64 %i.x, 4
   br i1 %min.iters.check, label %.lr.ph.split.us.preheader, label %vector.main.loop.iter.check
 
@@ -234,11 +238,11 @@ vector.main.loop.iter.check:                      ; preds = %iter.check
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
   %i.y = and i64 %i.x, 12
   %n.vec = and i64 %i.x, -16                      ; 4 uses
-  %i.z = add nsw i64 %n.vec, %i.u                 ; 2 uses
-  %broadcast.splatinsert = insertelement <8 x i64> poison, i64 %i.u, i64 0
+  %i.z = add nsw i64 %5, %n.vec                   ; 2 uses
+  %broadcast.splatinsert = insertelement <8 x i64> poison, i64 %5, i64 0
   %broadcast.splat = shufflevector <8 x i64> %broadcast.splatinsert, <8 x i64> poison, <8 x i32> zeroinitializer
   %induction = add nsw <8 x i64> %broadcast.splat, <i64 0, i64 1, i64 2, i64 3, i64 4, i64 5, i64 6, i64 7>
-  %invariant.gep = getelementptr i8, ptr %invariant.gep62, i64 %i.u
+  %invariant.gep = getelementptr i8, ptr %invariant.gep62, i64 %5
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -280,15 +284,15 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %bc.resume.val = phi i64 [ %i.z, %vec.epilog.iter.check ], [ %i.u, %vector.main.loop.iter.check ]
+  %bc.resume.val = phi i64 [ %i.z, %vec.epilog.iter.check ], [ %5, %vector.main.loop.iter.check ]
   %bc.merge.rdx = phi i32 [ %i.ao, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %n.vec68 = and i64 %i.x, -4                     ; 3 uses
-  %i.ap = add nsw i64 %n.vec68, %i.u
+  %i.ap = add nsw i64 %5, %n.vec68
   %i.aq = insertelement <4 x i32> <i32 poison, i32 0, i32 0, i32 0>, i32 %bc.merge.rdx, i64 0
   %broadcast.splatinsert69 = insertelement <4 x i64> poison, i64 %bc.resume.val, i64 0
   %broadcast.splat70 = shufflevector <4 x i64> %broadcast.splatinsert69, <4 x i64> poison, <4 x i32> zeroinitializer
   %induction71 = add nsw <4 x i64> %broadcast.splat70, <i64 0, i64 1, i64 2, i64 3>
-  %invariant.gep87 = getelementptr i8, ptr %invariant.gep62, i64 %i.u
+  %invariant.gep87 = getelementptr i8, ptr %invariant.gep62, i64 %5
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
@@ -314,7 +318,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br i1 %cmp.n78, label %.loopexit, label %.lr.ph.split.us.preheader
 
 .lr.ph.split.us.preheader:                        ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
-  %indvars.iv50.ph = phi i64 [ %i.u, %iter.check ], [ %i.z, %vec.epilog.iter.check ], [ %i.ap, %vec.epilog.middle.block ]
+  %indvars.iv50.ph = phi i64 [ %5, %iter.check ], [ %i.z, %vec.epilog.iter.check ], [ %i.ap, %vec.epilog.middle.block ]
   %.03846.us.ph = phi i32 [ 0, %iter.check ], [ %i.ao, %vec.epilog.iter.check ], [ %i.ay, %vec.epilog.middle.block ]
   br label %.lr.ph.split.us
 
@@ -330,11 +334,11 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.bd = zext i1 %or.cond.us to i32
   %spec.select = add nuw nsw i32 %.03846.us, %i.bd ; 2 uses
   %indvars.iv.next51 = add nsw i64 %indvars.iv50, 1 ; 2 uses
-  %.not43.us = icmp slt i64 %indvars.iv.next51, %i.w
-  br i1 %.not43.us, label %.lr.ph.split.us, label %.loopexit, !llvm.loop !118
+  %exitcond55.not = icmp eq i64 %indvars.iv.next51, %i.w
+  br i1 %exitcond55.not, label %.loopexit, label %.lr.ph.split.us, !llvm.loop !118
 
 .lr.ph.split:                                     ; preds = %.lr.ph, %bb.e
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.e ], [ %i.u, %.lr.ph ] ; 4 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.e ], [ %5, %.lr.ph ] ; 4 uses
   %.03846 = phi i32 [ %.1, %bb.e ], [ 0, %.lr.ph ] ; 4 uses
   %gep = getelementptr i8, ptr %invariant.gep62, i64 %indvars.iv
   %i.be = load i8, ptr %gep, align 1, !tbaa !28
@@ -359,8 +363,8 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %.lr.ph.split, %bb.d
   %.1 = phi i32 [ %.03846, %.lr.ph.split ], [ %i.bk, %bb.d ] ; 2 uses
   %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
-  %.not43 = icmp slt i64 %indvars.iv.next, %i.w
-  br i1 %.not43, label %.lr.ph.split, label %.critedge, !llvm.loop !120
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.w
+  br i1 %exitcond.not, label %.critedge, label %.lr.ph.split, !llvm.loop !120
 
 .critedge:                                        ; preds = %bb.e, %bb.b, %bb.a
   %.2 = phi i32 [ 0, %bb.a ], [ 0, %bb.b ], [ %.1, %bb.e ] ; 2 uses
@@ -414,28 +418,32 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.r = sext i8 %i.q to i64
   %i.s = getelementptr inbounds i8, ptr @_ZN8facebook5velox9functions9prestosql6Parser7yypact_E, i64 %i.r
   %i.t = load i8, ptr %i.s, align 1, !tbaa !28    ; 4 uses
+  %4 = sext i8 %i.t to i32                        ; 3 uses
   %i.u = icmp eq i8 %i.t, -27
   br i1 %i.u, label %.critedge.i, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %4 = sext i8 %i.t to i32                        ; 2 uses
   %i.v = icmp slt i8 %i.t, 0
-  %i.w = sub nsw i32 0, %4
-  %i.x = select i1 %i.v, i32 %i.w, i32 0          ; 2 uses
+  %i.w = sub nsw i32 0, %4                        ; 2 uses
+  %i.x = select i1 %i.v, i32 %i.w, i32 0
   %i.y = sub nsw i32 98, %4
   %i.z = tail call i32 @llvm.smin.i32(i32 %i.y, i32 21) ; 2 uses
   %.not4345.i = icmp slt i32 %i.x, %i.z
   br i1 %.not4345.i, label %.lr.ph.i, label %.critedge.i
 
 .lr.ph.i:                                         ; preds = %bb.e
-  %i.aa = sext i32 %i.x to i64                    ; 9 uses
-  %i.ab = sext i8 %i.t to i64
+  %i.aa = sext i32 %i.w to i64
+  %smax50.i = tail call i32 @llvm.smax.i32(i32 %4, i32 0)
+  %5 = zext nneg i32 %smax50.i to i64             ; 2 uses
+  %6 = add nsw i64 %5, %i.aa                      ; 8 uses
+  %i.ab = sext i8 %i.t to i64                     ; 2 uses
   %i.ac = sext i32 %i.z to i64                    ; 3 uses
   %invariant.gep62.i = getelementptr i8, ptr @_ZN8facebook5velox9functions9prestosql6Parser8yycheck_E, i64 %i.ab ; 4 uses
   br i1 %.not, label %.lr.ph.split.i, label %iter.check
 
 iter.check:                                       ; preds = %.lr.ph.i
-  %i.ad = sub nsw i64 %i.ac, %i.aa                ; 7 uses
+  %7 = add nsw i64 %i.ac, %i.ab
+  %i.ad = sub nsw i64 %7, %5                      ; 7 uses
   %min.iters.check = icmp ult i64 %i.ad, 4
   br i1 %min.iters.check, label %.lr.ph.split.us.i.preheader, label %vector.main.loop.iter.check
 
@@ -446,11 +454,11 @@ vector.main.loop.iter.check:                      ; preds = %iter.check
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
   %i.ae = and i64 %i.ad, 12
   %n.vec = and i64 %i.ad, -16                     ; 4 uses
-  %i.af = add nsw i64 %n.vec, %i.aa               ; 2 uses
-  %broadcast.splatinsert = insertelement <8 x i64> poison, i64 %i.aa, i64 0
+  %i.af = add nsw i64 %6, %n.vec                  ; 2 uses
+  %broadcast.splatinsert = insertelement <8 x i64> poison, i64 %6, i64 0
   %broadcast.splat = shufflevector <8 x i64> %broadcast.splatinsert, <8 x i64> poison, <8 x i32> zeroinitializer
   %induction = add nsw <8 x i64> %broadcast.splat, <i64 0, i64 1, i64 2, i64 3, i64 4, i64 5, i64 6, i64 7>
-  %invariant.gep = getelementptr i8, ptr %invariant.gep62.i, i64 %i.aa
+  %invariant.gep = getelementptr i8, ptr %invariant.gep62.i, i64 %6
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -492,15 +500,15 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %bc.resume.val = phi i64 [ %i.af, %vec.epilog.iter.check ], [ %i.aa, %vector.main.loop.iter.check ]
+  %bc.resume.val = phi i64 [ %i.af, %vec.epilog.iter.check ], [ %6, %vector.main.loop.iter.check ]
   %bc.merge.rdx = phi i32 [ %i.au, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %n.vec25 = and i64 %i.ad, -4                    ; 3 uses
-  %i.av = add nsw i64 %n.vec25, %i.aa
+  %i.av = add nsw i64 %6, %n.vec25
   %i.aw = insertelement <4 x i32> <i32 poison, i32 0, i32 0, i32 0>, i32 %bc.merge.rdx, i64 0
   %broadcast.splatinsert26 = insertelement <4 x i64> poison, i64 %bc.resume.val, i64 0
   %broadcast.splat27 = shufflevector <4 x i64> %broadcast.splatinsert26, <4 x i64> poison, <4 x i32> zeroinitializer
   %induction28 = add nsw <4 x i64> %broadcast.splat27, <i64 0, i64 1, i64 2, i64 3>
-  %invariant.gep43 = getelementptr i8, ptr %invariant.gep62.i, i64 %i.aa
+  %invariant.gep43 = getelementptr i8, ptr %invariant.gep62.i, i64 %6
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
@@ -526,7 +534,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br i1 %cmp.n35, label %_ZNK8facebook5velox9functions9prestosql6Parser7context15expected_tokensEPNS3_11symbol_kind16symbol_kind_typeEi.exit, label %.lr.ph.split.us.i.preheader
 
 .lr.ph.split.us.i.preheader:                      ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
-  %indvars.iv50.i.ph = phi i64 [ %i.aa, %iter.check ], [ %i.af, %vec.epilog.iter.check ], [ %i.av, %vec.epilog.middle.block ]
+  %indvars.iv50.i.ph = phi i64 [ %6, %iter.check ], [ %i.af, %vec.epilog.iter.check ], [ %i.av, %vec.epilog.middle.block ]
   %.03846.us.i.ph = phi i32 [ 0, %iter.check ], [ %i.au, %vec.epilog.iter.check ], [ %i.be, %vec.epilog.middle.block ]
   br label %.lr.ph.split.us.i
 
@@ -546,7 +554,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br i1 %exitcond.not, label %_ZNK8facebook5velox9functions9prestosql6Parser7context15expected_tokensEPNS3_11symbol_kind16symbol_kind_typeEi.exit, label %.lr.ph.split.us.i, !llvm.loop !125
 
 .lr.ph.split.i:                                   ; preds = %.lr.ph.i, %bb.h
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.h ], [ %i.aa, %.lr.ph.i ] ; 4 uses
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.h ], [ %6, %.lr.ph.i ] ; 4 uses
   %.03846.i = phi i32 [ %.1.i, %bb.h ], [ 0, %.lr.ph.i ] ; 4 uses
   %gep.i = getelementptr i8, ptr %invariant.gep62.i, i64 %indvars.iv.i
   %i.bk = load i8, ptr %gep.i, align 1, !tbaa !28
@@ -625,28 +633,31 @@ bb.b:                                             ; preds = %bb.a
   %i.r = sext i8 %i.q to i64
   %i.s = getelementptr inbounds i8, ptr @_ZN8facebook5velox9functions9prestosql6Parser7yypact_E, i64 %i.r
   %i.t = load i8, ptr %i.s, align 1, !tbaa !28    ; 4 uses
+  %4 = sext i8 %i.t to i32                        ; 3 uses
   %i.u = icmp eq i8 %i.t, -27
   br i1 %i.u, label %.critedge.i.i.thread, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %4 = sext i8 %i.t to i32                        ; 2 uses
   %i.v = icmp slt i8 %i.t, 0
-  %i.w = sub nsw i32 0, %4
-  %i.x = select i1 %i.v, i32 %i.w, i32 0          ; 2 uses
+  %i.w = sub nsw i32 0, %4                        ; 2 uses
+  %i.x = select i1 %i.v, i32 %i.w, i32 0
   %i.y = sub nsw i32 98, %4
   %i.z = tail call i32 @llvm.smin.i32(i32 %i.y, i32 21) ; 2 uses
   %.not4345.i.i = icmp slt i32 %i.x, %i.z
   br i1 %.not4345.i.i, label %.lr.ph.i.i, label %.critedge.i.i.thread
 
 .lr.ph.i.i:                                       ; preds = %bb.c
-  %i.aa = sext i32 %i.x to i64
+  %i.aa = sext i32 %i.w to i64
+  %smax50.i.i = tail call i32 @llvm.smax.i32(i32 %4, i32 0)
+  %5 = zext nneg i32 %smax50.i.i to i64
+  %6 = add nsw i64 %5, %i.aa
   %i.ab = sext i8 %i.t to i64
   %i.ac = sext i32 %i.z to i64
   %invariant.gep62.i.i = getelementptr i8, ptr @_ZN8facebook5velox9functions9prestosql6Parser8yycheck_E, i64 %i.ab
   br label %.lr.ph.split.i.i
 
 .lr.ph.split.i.i:                                 ; preds = %.lr.ph.i.i, %bb.f
-  %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i, %bb.f ], [ %i.aa, %.lr.ph.i.i ] ; 4 uses
+  %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i, %bb.f ], [ %6, %.lr.ph.i.i ] ; 4 uses
   %.03846.i.i = phi i32 [ %.1.i.i, %bb.f ], [ 0, %.lr.ph.i.i ] ; 4 uses
   %gep.i.i = getelementptr i8, ptr %invariant.gep62.i.i, i64 %indvars.iv.i.i
   %i.ad = load i8, ptr %gep.i.i, align 1, !tbaa !28
@@ -1047,6 +1058,9 @@ declare i32 @llvm.smin.i32(i32, i32) #25
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #26
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #25
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #25

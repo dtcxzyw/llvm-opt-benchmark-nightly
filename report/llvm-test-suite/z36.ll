@@ -203,8 +203,8 @@ bb.o:                                             ; preds = %bb.o, %bb.n
   br i1 %i.ao, label %bb.o, label %.preheader342, !llvm.loop !33
 
 .preheader342:                                    ; preds = %bb.o, %.preheader342
-  %indvars.iv437 = phi i32 [ %indvars.iv.next438, %.preheader342 ], [ 0, %bb.o ] ; 5 uses
-  %indvar = phi i64 [ %indvar.next, %.preheader342 ], [ 0, %bb.o ] ; 2 uses
+  %indvars.iv437 = phi i32 [ %indvars.iv.next438, %.preheader342 ], [ 0, %bb.o ] ; 3 uses
+  %indvar = phi i64 [ %indvar.next, %.preheader342 ], [ 0, %bb.o ] ; 4 uses
   %indvars.iv431 = phi i64 [ %indvars.iv.next432, %.preheader342 ], [ %indvars.iv, %bb.o ] ; 4 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %i.n, i64 %indvars.iv431
   %i.aq = load i8, ptr %i.ap, align 1, !tbaa !12  ; 3 uses
@@ -214,7 +214,7 @@ bb.o:                                             ; preds = %bb.o, %bb.n
   %i.au = icmp ugt i8 %i.at, 1
   %indvars.iv.next432 = add nuw nsw i64 %indvars.iv431, 1
   %indvar.next = add i64 %indvar, 1
-  %indvars.iv.next438 = add i32 %indvars.iv437, 1 ; 2 uses
+  %indvars.iv.next438 = add nuw i32 %indvars.iv437, 1 ; 2 uses
   br i1 %i.au, label %.preheader342, label %bb.p, !llvm.loop !34
 
 bb.p:                                             ; preds = %.preheader342
@@ -574,9 +574,9 @@ bb.an:                                            ; preds = %bb.am
   call void @llvm.memset.p0.i64(ptr nonnull align 1 %scevgep, i8 48, i64 %indvar, i1 false), !tbaa !12
   %wide.trip.count = zext i32 %indvars.iv437 to i64 ; 3 uses
   %invariant.gep = getelementptr inbounds nuw i8, ptr %i.n, i64 %indvars.iv ; 5 uses
+  %1 = add i64 %indvar, -1
   %xtraiter = and i64 %wide.trip.count, 3         ; 3 uses
-  %1 = add i32 %indvars.iv437, -1
-  %i.hf = icmp ult i32 %1, 3
+  %i.hf = icmp ult i64 %1, 3
   br i1 %i.hf, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
 
 .lr.ph.preheader.new:                             ; preds = %.lr.ph.preheader
@@ -948,12 +948,11 @@ bb.bf:                                            ; preds = %.critedge
 .lr.ph406.preheader:                              ; preds = %.loopexit337, %bb.bb
   %i.mv = getelementptr inbounds nuw i8, ptr %.0279412, i64 8 ; 3 uses
   %i.mw = load ptr, ptr %i.mv, align 8, !tbaa !12
-  %2 = sext i32 %indvars.iv437 to i64
   %invariant.gep536 = getelementptr i8, ptr %i.n, i64 %indvars.iv
   br label %.lr.ph406.outer
 
 .lr.ph406.outer:                                  ; preds = %.thread509, %.lr.ph406.preheader
-  %indvars.iv450.ph = phi i64 [ %indvars.iv.next451, %.thread509 ], [ %2, %.lr.ph406.preheader ]
+  %indvars.iv450.ph = phi i64 [ %indvars.iv.next451, %.thread509 ], [ %indvar, %.lr.ph406.preheader ]
   %.not325 = phi i1 [ false, %.thread509 ], [ true, %.lr.ph406.preheader ]
   br label %.lr.ph406
 

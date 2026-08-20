@@ -203,14 +203,15 @@ _RNvMsa_NtCs37Y8JGf013z_9hashbrown3rawNtB5_13RawTableInner23prepare_rehash_in_pl
   br label %._crit_edge
 
 .lr.ph.i:                                         ; preds = %bb.a
-  %i.e = lshr i64 %i.c, 4
+  %i.e = lshr i64 %i.c, 4                         ; 2 uses
   %i.f = and i64 %i.c, 15
   %.not10.i.i.i = icmp ne i64 %i.f, 0
-  %i.g = zext i1 %.not10.i.i.i to i64
-  %.sroa.05.0.i.i.i = add nuw nsw i64 %i.e, %i.g  ; 4 uses
+  %i.g = zext i1 %.not10.i.i.i to i64             ; 2 uses
+  %.sroa.05.0.i.i.i = add nuw nsw i64 %i.e, %i.g  ; 3 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val15) ]
+  %4 = add nuw nsw i64 %i.e, %i.g
   %xtraiter = and i64 %.sroa.05.0.i.i.i, 1
-  %i.h = icmp eq i64 %.sroa.05.0.i.i.i, 1
+  %i.h = icmp eq i64 %4, 1
   br i1 %i.h, label %.epil.preheader, label %.lr.ph.i.new
 
 .lr.ph.i.new:                                     ; preds = %.lr.ph.i

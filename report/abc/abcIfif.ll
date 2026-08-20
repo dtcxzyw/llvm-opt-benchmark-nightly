@@ -168,7 +168,7 @@ bb.a:
   %i.a = alloca [6 x ptr], align 16               ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #14
   %i.b = getelementptr i8, ptr %1, i64 28
-  %.val.i = load i32, ptr %i.b, align 4, !tbaa !36 ; 4 uses
+  %.val.i = load i32, ptr %i.b, align 4, !tbaa !36 ; 5 uses
   %i.c = icmp sgt i32 %.val.i, 0
   br i1 %i.c, label %.lr.ph48.i, label %._crit_edge
 
@@ -182,7 +182,7 @@ bb.a:
   %.val34.val.val.i = load ptr, ptr %i.f, align 8, !tbaa !41
   %i.g = getelementptr i8, ptr %0, i64 24
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %wide.trip.count.i = zext nneg i32 %.val.i to i64 ; 3 uses
+  %wide.trip.count.i = zext nneg i32 %.val.i to i64
   br label %bb.b
 
 bb.b:                                             ; preds = %.loopexit.i, %.lr.ph48.i
@@ -261,12 +261,13 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.am = load ptr, ptr %i.al, align 8, !tbaa !14
   %i.an = getelementptr inbounds nuw i8, ptr %i.am, i64 16 ; 3 uses
-  %xtraiter = and i64 %wide.trip.count.i, 1
+  %wide.trip.count = zext nneg i32 %.val.i to i64 ; 2 uses
+  %xtraiter = and i64 %wide.trip.count, 1
   %i.ao = icmp eq i32 %.val.i, 1
   br i1 %i.ao, label %.epil.preheader, label %.lr.ph.new
 
 .lr.ph.new:                                       ; preds = %.lr.ph
-  %unroll_iter = and i64 %wide.trip.count.i, 2147483646
+  %unroll_iter = and i64 %wide.trip.count, 2147483646
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.f, %.lr.ph.new
@@ -494,7 +495,7 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 148
   %i.e = load i32, ptr %i.d, align 4, !tbaa !51   ; 2 uses
   %i.f = getelementptr i8, ptr %1, i64 28
-  %.val.i = load i32, ptr %i.f, align 4, !tbaa !36 ; 6 uses
+  %.val.i = load i32, ptr %i.f, align 4, !tbaa !36 ; 7 uses
   %i.g = icmp sgt i32 %.val.i, 0
   br i1 %i.g, label %.lr.ph48.i, label %._crit_edge
 
@@ -508,7 +509,7 @@ bb.a:
   %.val34.val.val.i = load ptr, ptr %i.j, align 8, !tbaa !41
   %i.k = getelementptr i8, ptr %0, i64 24
   %i.l = sext i32 %i.e to i64
-  %wide.trip.count.i = zext nneg i32 %.val.i to i64 ; 4 uses
+  %wide.trip.count.i = zext nneg i32 %.val.i to i64 ; 3 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.c, i64 16 ; 2 uses
   br label %bb.b
 
@@ -614,8 +615,9 @@ bb.f:                                             ; preds = %.lr.ph
   br i1 %exitcond39.peel.not, label %._crit_edge, label %.lr.ph.split.peel.next
 
 .lr.ph.split.peel.next:                           ; preds = %bb.f
+  %wide.trip.count38 = zext nneg i32 %.val.i to i64
   %invariant.gep43 = getelementptr [4 x i8], ptr %.val28, i64 %i.ao ; 3 uses
-  %i.bl = add nsw i64 %wide.trip.count.i, -1      ; 3 uses
+  %i.bl = add nsw i64 %wide.trip.count38, -1      ; 3 uses
   %xtraiter52 = and i64 %i.bl, 1
   %i.bm = icmp eq i32 %.val.i, 2
   br i1 %i.bm, label %.epil.preheader51, label %.lr.ph.split.peel.next.new

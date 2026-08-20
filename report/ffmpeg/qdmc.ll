@@ -203,7 +203,7 @@ bb.ax:                                            ; preds = %lin_calc.exit.i.i, 
   %i.vn = getelementptr i8, ptr %i.b, i64 %i.vm
   %scevgep278 = getelementptr i8, ptr %i.vn, i64 623944
   %gep79.i.i = getelementptr [2 x i8], ptr %invariant.gep78.i.i, i64 %indvars.iv.i169.i ; 2 uses
-  %i.vo = load i16, ptr %gep79.i.i, align 2, !tbaa !89 ; 2 uses
+  %i.vo = load i16, ptr %gep79.i.i, align 2, !tbaa !89 ; 3 uses
   %i.vp = zext i16 %i.vo to i32                   ; 5 uses
   %.not.i170.i = icmp sgt i32 %i.ul, %i.vp
   br i1 %.not.i170.i, label %bb.ay, label %._crit_edge.i171.i
@@ -536,7 +536,7 @@ scalar.ph413:                                     ; preds = %scalar.ph413.prehea
   %i.abz = getelementptr [4 x i8], ptr %i.ua, i64 %i.aby
   %i.aca = getelementptr [4 x i8], ptr %i.abz, i64 %i.wd ; 5 uses
   %i.acb = add nuw nsw i32 %i.wc, %i.vp
-  %i.acc = zext nneg i32 %i.acb to i64            ; 5 uses
+  %i.acc = zext nneg i32 %i.acb to i64            ; 4 uses
   %i.acd = and i32 %i.wb, 65532
   %i.ace = xor i32 %i.vp, -1
   %i.acf = add nsw i32 %i.wa, %i.ace
@@ -547,22 +547,25 @@ scalar.ph413:                                     ; preds = %scalar.ph413.prehea
   br i1 %min.iters.check284, label %scalar.ph283.preheader, label %vector.memcheck273
 
 vector.memcheck273:                               ; preds = %.lr.ph61.i.i.i
-  %i.acj = shl nuw nsw i64 %i.acc, 2              ; 2 uses
-  %scevgep275 = getelementptr i8, ptr %scevgep274, i64 %i.acj
+  %5 = shl nsw i32 %i.wb, 2
+  %6 = and i32 %5, 262128
+  %7 = zext nneg i32 %6 to i64                    ; 3 uses
+  %8 = zext i16 %i.vo to i64
+  %i.acj = shl nuw nsw i64 %8, 2                  ; 2 uses
+  %9 = getelementptr i8, ptr %scevgep274, i64 %i.acj
+  %scevgep275 = getelementptr i8, ptr %9, i64 %7
   %i.ack = xor i32 %i.vp, -1
   %i.acl = add nsw i32 %i.wa, %i.ack
   %i.acm = sub nsw i32 %i.acl, %i.wc
   %i.acn = zext i32 %i.acm to i64
   %i.aco = shl nuw nsw i64 %i.acn, 2              ; 2 uses
-  %i.acp = getelementptr i8, ptr %scevgep276, i64 %i.aco
-  %scevgep277.a = getelementptr i8, ptr %i.acp, i64 %i.acj
-  %5 = shl nsw i32 %i.wb, 2
-  %6 = and i32 %5, 262128
-  %7 = zext nneg i32 %6 to i64
+  %i.acp = getelementptr i8, ptr %scevgep276, i64 %i.acj
+  %scevgep277.a = getelementptr i8, ptr %i.acp, i64 %7
+  %scevgep277 = getelementptr i8, ptr %scevgep277.a, i64 %i.aco
   %i.acq = getelementptr i8, ptr %scevgep278, i64 %i.aco
   %scevgep279 = getelementptr i8, ptr %i.acq, i64 %7
   %bound0280 = icmp ult ptr %scevgep275, %scevgep279
-  %bound1281 = icmp ult ptr %i.aca, %scevgep277.a
+  %bound1281 = icmp ult ptr %i.aca, %scevgep277
   %found.conflict282 = and i1 %bound0280, %bound1281
   br i1 %found.conflict282, label %scalar.ph283.preheader, label %vector.ph285
 

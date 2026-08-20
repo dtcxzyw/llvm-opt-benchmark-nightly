@@ -203,8 +203,8 @@ bb.l:                                             ; preds = %.lr.ph.i
 bb.m:                                             ; preds = %.lr.ph.i, %.lr.ph.i, %.lr.ph.i
   %i.ch = add nuw nsw i64 %.02133.i, 1
   %i.ci = zext nneg i32 %i.cb to i64
-  %i.cj = add nuw i64 %i.ch, %i.ci
-  %.not.i13 = icmp ult i64 %i.cj, %.sink.i
+  %i.cj = add nuw nsw i64 %i.ch, %i.ci
+  %.not.i13 = icmp samesign ult i64 %i.cj, %.sink.i
   br i1 %.not.i13, label %bb.n, label %bb.o
 
 .thread27.i:                                      ; preds = %.lr.ph.i

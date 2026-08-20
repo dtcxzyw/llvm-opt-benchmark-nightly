@@ -204,10 +204,10 @@ bb.bj:                                            ; preds = %bb.bi
 
 bb.bk:                                            ; preds = %.preheader199.preheader, %bb.bj, %bb.bi, %.loopexit201
   %i.sv = getelementptr inbounds nuw i8, ptr %0, i64 28 ; 5 uses
-  %i.sw = load i16, ptr %i.sv, align 4, !tbaa !135
+  %i.sw = load i16, ptr %i.sv, align 4, !tbaa !135 ; 3 uses
   %i.sx = zext i16 %i.sw to i32
   %i.sy = getelementptr inbounds nuw i8, ptr %0, i64 30 ; 5 uses
-  %i.sz = load i16, ptr %i.sy, align 2, !tbaa !123
+  %i.sz = load i16, ptr %i.sy, align 2, !tbaa !123 ; 3 uses
   %i.ta = zext i16 %i.sz to i32
   %i.tb = mul nuw i32 %i.ta, %i.sx                ; 8 uses
   %i.tc = load ptr, ptr %0, align 8, !tbaa !97
@@ -244,14 +244,17 @@ bb.bn:                                            ; preds = %.preheader197
 
 iter.check:                                       ; preds = %bb.bn
   %i.ts = load ptr, ptr %i.i, align 8, !tbaa !116 ; 16 uses
-  %wide.trip.count = zext i32 %i.tb to i64        ; 9 uses
+  %wide.trip.count = zext i32 %i.tb to i64        ; 7 uses
   %min.iters.check = icmp ult i32 %i.tb, 9
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.tt = shl nuw nsw i64 %wide.trip.count, 1
+  %1 = zext i16 %i.sz to i64
+  %2 = zext i16 %i.sw to i64
+  %3 = mul nuw nsw i64 %1, %2                     ; 2 uses
+  %i.tt = shl nuw nsw i64 %3, 1
   %scevgep = getelementptr i8, ptr %i.tr, i64 %i.tt
-  %i.tu = shl nuw nsw i64 %wide.trip.count, 3
+  %i.tu = shl nuw nsw i64 %3, 3
   %i.tv = getelementptr i8, ptr %i.ts, i64 %i.tu
   %scevgep484 = getelementptr i8, ptr %i.tv, i64 -6
   %bound0 = icmp ult ptr %i.tr, %scevgep484
@@ -519,14 +522,17 @@ bb.bt:                                            ; preds = %bb.bs
 iter.check521:                                    ; preds = %bb.bt
   %i.yl = load ptr, ptr %i.i, align 8, !tbaa !116 ; 2 uses
   %invariant.gep.1 = getelementptr inbounds nuw i8, ptr %i.yl, i64 4 ; 15 uses
-  %wide.trip.count.1 = zext i32 %i.tb to i64      ; 9 uses
+  %wide.trip.count.1 = zext i32 %i.tb to i64      ; 7 uses
   %min.iters.check503 = icmp ult i32 %i.tb, 9
   br i1 %min.iters.check503, label %vec.epilog.scalar.ph522.preheader, label %vector.memcheck497
 
 vector.memcheck497:                               ; preds = %iter.check521
-  %i.ym = shl nuw nsw i64 %wide.trip.count.1, 1
+  %4 = zext i16 %i.sz to i64
+  %5 = zext i16 %i.sw to i64
+  %6 = mul nuw nsw i64 %4, %5                     ; 2 uses
+  %i.ym = shl nuw nsw i64 %6, 1
   %scevgep498 = getelementptr i8, ptr %i.yk, i64 %i.ym
-  %i.yn = shl nuw nsw i64 %wide.trip.count.1, 3
+  %i.yn = shl nuw nsw i64 %6, 3
   %i.yo = getelementptr i8, ptr %i.yl, i64 %i.yn
   %scevgep499 = getelementptr i8, ptr %i.yo, i64 -2
   %bound0500 = icmp ult ptr %i.yk, %scevgep499

@@ -201,7 +201,7 @@ bb.e:                                             ; preds = %bb.b
   %i.e = getelementptr i8, ptr %0, i64 8
   %i.f = load ptr, ptr %i.e, align 8              ; 3 uses
   %i.g = getelementptr i8, ptr %0, i64 1
-  %i.h = load i8, ptr %i.g, align 1               ; 4 uses
+  %i.h = load i8, ptr %i.g, align 1               ; 5 uses
   %i.i = zext i8 %i.h to i32                      ; 2 uses
   %.not.i = icmp eq i8 %i.h, 0
   br i1 %.not.i, label %._crit_edge.i, label %.lr.ph.i
@@ -224,7 +224,7 @@ bb.f:                                             ; preds = %bb.f, %.lr.ph.i
 
 ._crit_edge.i:                                    ; preds = %bb.f, %bb.e
   %i.o = getelementptr i8, ptr %0, i64 2
-  %i.p = load i8, ptr %i.o, align 2               ; 2 uses
+  %i.p = load i8, ptr %i.o, align 2               ; 3 uses
   %i.q = zext i8 %i.p to i32
   %i.r = add nuw nsw i32 %i.q, %i.i               ; 3 uses
   %.not60.i = icmp eq i8 %i.p, 0
@@ -250,9 +250,9 @@ bb.g:                                             ; preds = %bb.g, %.lr.ph40.i
 ._crit_edge41.i:                                  ; preds = %bb.g, %._crit_edge.i
   %.1.lcssa.i = phi i32 [ %i.i, %._crit_edge.i ], [ %i.r, %bb.g ] ; 2 uses
   %i.y = getelementptr i8, ptr %0, i64 3
-  %i.z = load i8, ptr %i.y, align 1
+  %i.z = load i8, ptr %i.y, align 1               ; 2 uses
   %i.aa = zext i8 %i.z to i32
-  %i.ab = add nuw nsw i32 %i.r, %i.aa             ; 2 uses
+  %i.ab = add nuw nsw i32 %i.r, %i.aa
   %i.ac = icmp samesign ult i32 %.1.lcssa.i, %i.ab
   br i1 %i.ac, label %.lr.ph45.i, label %._crit_edge46.i
 
@@ -260,7 +260,11 @@ bb.g:                                             ; preds = %bb.g, %.lr.ph40.i
   %i.ad = getelementptr i8, ptr %0, i64 32
   %i.ae = getelementptr i8, ptr %0, i64 24
   %i.af = zext nneg i32 %.1.lcssa.i to i64
-  %i.ag = zext nneg i32 %i.ab to i64
+  %1 = zext i8 %i.h to i64
+  %2 = zext i8 %i.p to i64
+  %3 = add nuw nsw i64 %1, %2
+  %i.ag = zext i8 %i.z to i64
+  %4 = add nuw nsw i64 %3, %i.ag
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.j, %.lr.ph45.i
@@ -277,7 +281,7 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.i, %bb.h
   %indvars.iv.next55.i = add nuw nsw i64 %indvars.iv54.i, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next55.i, %i.ag
+  %exitcond.not = icmp eq i64 %indvars.iv.next55.i, %4
   br i1 %exitcond.not, label %._crit_edge46.i, label %bb.h, !llvm.loop !88
 
 ._crit_edge46.i:                                  ; preds = %bb.j, %._crit_edge41.i

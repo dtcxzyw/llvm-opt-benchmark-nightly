@@ -203,7 +203,7 @@ bb.i:                                             ; preds = %bb.g
   br i1 %i.w, label %bb.j, label %bb.ad
 
 bb.j:                                             ; preds = %bb.i
-  %i.x = zext i32 %i.e to i64
+  %i.x = zext i32 %i.e to i64                     ; 3 uses
   %i.y = shl nuw nsw i64 %i.x, 4
   %i.z = mul i64 %i.y, %i.m                       ; 2 uses
   %i.aa = call noalias ptr @malloc(i64 noundef %i.z) #19 ; 10 uses
@@ -279,10 +279,10 @@ bb.s:                                             ; preds = %bb.q
   br i1 %i.bg, label %.preheader205.us.preheader, label %._crit_edge211.thread
 
 .preheader205.us.preheader:                       ; preds = %.preheader205.lr.ph
-  %i.bh = zext nneg i32 %i.e to i64               ; 5 uses
-  %xtraiter = and i64 %i.bh, 1
+  %i.bh = zext nneg i32 %i.e to i64               ; 3 uses
+  %xtraiter = and i64 %i.x, 1
   %i.bi = icmp eq i32 %i.e, 1
-  %unroll_iter = and i64 %i.bh, 2147483646
+  %unroll_iter = and i64 %i.x, 2147483646
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   %lcmp.mod294 = trunc i32 %i.e to i1
   br label %.preheader205.us

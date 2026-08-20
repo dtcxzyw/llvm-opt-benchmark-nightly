@@ -23,7 +23,7 @@ bb.b:                                             ; preds = %bb.c, %bb.a
   %i.c = lshr i64 %store_forwarded, 30
   %i.d = xor i64 %i.c, %store_forwarded
   %i.e = mul nuw nsw i64 %i.d, 1812433253
-  %i.f = add nuw i64 %i.e, %indvars.iv            ; 2 uses
+  %i.f = add nuw nsw i64 %i.e, %indvars.iv        ; 2 uses
   %i.g = and i64 %i.f, 4294967295                 ; 2 uses
   store i64 %i.g, ptr %i.b, align 8, !tbaa !8
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 3 uses
@@ -61,7 +61,7 @@ bb.b:                                             ; preds = %bb.c, %bb.a
   %i.b = lshr i64 %store_forwarded, 30
   %i.c = xor i64 %i.b, %store_forwarded
   %i.d = mul nuw nsw i64 %i.c, 1812433253
-  %i.e = add nuw i64 %i.d, %indvars.iv.i          ; 2 uses
+  %i.e = add nuw nsw i64 %i.d, %indvars.iv.i      ; 2 uses
   %i.f = and i64 %i.e, 4294967295                 ; 2 uses
   store i64 %i.f, ptr %i.a, align 8, !tbaa !8
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 3 uses
@@ -182,7 +182,7 @@ bb.c:                                             ; preds = %bb.d, %bb.b
   %i.c = lshr i64 %store_forwarded, 30
   %i.d = xor i64 %i.c, %store_forwarded
   %i.e = mul nuw nsw i64 %i.d, 1812433253
-  %i.f = add nuw i64 %i.e, %indvars.iv.i          ; 2 uses
+  %i.f = add nuw nsw i64 %i.e, %indvars.iv.i      ; 2 uses
   %i.g = and i64 %i.f, 4294967295                 ; 2 uses
   store i64 %i.g, ptr %i.b, align 8, !tbaa !8
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 3 uses
@@ -274,7 +274,7 @@ bb.c:                                             ; preds = %bb.d, %bb.b
   %i.c = lshr i64 %store_forwarded, 30
   %i.d = xor i64 %i.c, %store_forwarded
   %i.e = mul nuw nsw i64 %i.d, 1812433253
-  %i.f = add nuw i64 %i.e, %indvars.iv.i.i        ; 2 uses
+  %i.f = add nuw nsw i64 %i.e, %indvars.iv.i.i    ; 2 uses
   %i.g = and i64 %i.f, 4294967295                 ; 2 uses
   store i64 %i.g, ptr %i.b, align 8, !tbaa !8
   %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1 ; 3 uses
@@ -367,7 +367,7 @@ bb.c:                                             ; preds = %bb.d, %bb.b
   %i.c = lshr i64 %store_forwarded, 30
   %i.d = xor i64 %i.c, %store_forwarded
   %i.e = mul nuw nsw i64 %i.d, 1812433253
-  %i.f = add nuw i64 %i.e, %indvars.iv.i.i        ; 2 uses
+  %i.f = add nuw nsw i64 %i.e, %indvars.iv.i.i    ; 2 uses
   %i.g = and i64 %i.f, 4294967295                 ; 2 uses
   store i64 %i.g, ptr %i.b, align 8, !tbaa !8
   %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1 ; 3 uses
@@ -461,7 +461,7 @@ bb.c:                                             ; preds = %bb.d, %bb.b
   %i.c = lshr i64 %store_forwarded, 30
   %i.d = xor i64 %i.c, %store_forwarded
   %i.e = mul nuw nsw i64 %i.d, 1812433253
-  %i.f = add nuw i64 %i.e, %indvars.iv.i.i        ; 2 uses
+  %i.f = add nuw nsw i64 %i.e, %indvars.iv.i.i    ; 2 uses
   %i.g = and i64 %i.f, 4294967295                 ; 2 uses
   store i64 %i.g, ptr %i.b, align 8, !tbaa !8
   %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1 ; 3 uses
@@ -555,7 +555,7 @@ bb.c:                                             ; preds = %bb.d, %bb.b
   %i.c = lshr i64 %store_forwarded, 30
   %i.d = xor i64 %i.c, %store_forwarded
   %i.e = mul nuw nsw i64 %i.d, 1812433253
-  %i.f = add nuw i64 %i.e, %indvars.iv.i.i        ; 2 uses
+  %i.f = add nuw nsw i64 %i.e, %indvars.iv.i.i    ; 2 uses
   %i.g = and i64 %i.f, 4294967295                 ; 2 uses
   store i64 %i.g, ptr %i.b, align 8, !tbaa !8
   %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1 ; 3 uses
@@ -650,7 +650,7 @@ bb.c:                                             ; preds = %bb.d, %bb.b
   %i.c = lshr i64 %store_forwarded, 30
   %i.d = xor i64 %i.c, %store_forwarded
   %i.e = mul nuw nsw i64 %i.d, 1812433253
-  %i.f = add nuw i64 %i.e, %indvars.iv.i.i        ; 2 uses
+  %i.f = add nuw nsw i64 %i.e, %indvars.iv.i.i    ; 2 uses
   %i.g = and i64 %i.f, 4294967295                 ; 2 uses
   store i64 %i.g, ptr %i.b, align 8, !tbaa !8
   %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1 ; 3 uses

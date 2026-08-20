@@ -204,7 +204,7 @@ bb.o:                                             ; preds = %._crit_edge.i.i
   %.0123150.i.i = phi double [ %i.gc, %.loopexit140.i.i ], [ 1.000000e+00, %bb.o ] ; 2 uses
   %.0124149.i.i = phi double [ %i.gd, %.loopexit140.i.i ], [ 1.000000e+00, %bb.o ]
   %i.gm = phi <2 x double> [ %i.gl, %.loopexit140.i.i ], [ <double 1.000000e+00, double -1.000000e+00>, %bb.o ] ; 2 uses
-  %i.gn = add i32 %indvar87, 3                    ; 2 uses
+  %i.gn = add nuw i32 %indvar87, 3                ; 2 uses
   %smin = tail call i32 @llvm.smin.i32(i32 %i.gn, i32 2)
   %i.go = sub i32 %i.gn, %smin                    ; 2 uses
   %i.gp = zext i32 %i.go to i64
@@ -503,16 +503,16 @@ bb.s:                                             ; preds = %bb.m
   br label %bb.t
 
 .lr.ph106.preheader.i.i:                          ; preds = %._crit_edge107.i.i, %.lr.ph112.i.i
-  %indvar = phi i64 [ %indvar.next, %._crit_edge107.i.i ], [ 0, %.lr.ph112.i.i ] ; 2 uses
+  %indvar = phi i64 [ %indvar.next, %._crit_edge107.i.i ], [ 0, %.lr.ph112.i.i ] ; 3 uses
   %indvars.iv132.i.i = phi i64 [ %indvars.iv.next133.i.i, %._crit_edge107.i.i ], [ 1, %.lr.ph112.i.i ] ; 2 uses
   %indvars.iv.i5.i = phi i64 [ %indvars.iv.next.i6.i, %._crit_edge107.i.i ], [ 3, %.lr.ph112.i.i ] ; 4 uses
   %.086109.i.i = phi double [ %i.ms, %._crit_edge107.i.i ], [ 0.000000e+00, %.lr.ph112.i.i ]
-  %i.mp = add i64 %indvar, 2                      ; 3 uses
+  %i.mp = add nuw nsw i64 %indvar, 2              ; 2 uses
   %i.mq = getelementptr inbounds nuw [8 x i8], ptr %i.mk, i64 %indvars.iv132.i.i
   %i.mr = load double, ptr %i.mq, align 8, !tbaa !49
   %i.ms = fadd double %.086109.i.i, %i.mr         ; 2 uses
   %i.mt = fdiv double %i.ms, %i.mm                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.mp, 4
+  %min.iters.check = icmp ult i64 %indvar, 2
   br i1 %min.iters.check, label %.lr.ph106.i.i.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph106.preheader.i.i

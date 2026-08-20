@@ -204,16 +204,15 @@ bb.j:                                             ; preds = %bb.i
   br i1 %i.aj, label %_ZN5ImGui26TableSetColumnDisplayOrderEP10ImGuiTableii.exit, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %1 = sext i16 %i.ai to i32
   %i.ak = icmp slt i16 %i.ac, %i.ai
-  %i.al = select i1 %i.ak, i32 -1, i32 1          ; 3 uses
+  %i.al = select i1 %i.ak, i32 -1, i32 1          ; 2 uses
   store i16 %i.ac, ptr %i.ah, align 2, !tbaa !327
-  %2 = add nsw i32 %i.al, %1
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.an = load ptr, ptr %i.am, align 8, !tbaa !297 ; 6 uses
   %i.ao = trunc nsw i32 %i.al to i16
-  %i.ap = sext i32 %2 to i64
-  %i.aq = sext i32 %i.al to i64
+  %i.ap = sext i32 %i.al to i64                   ; 2 uses
+  %i.aq = sext i16 %i.ai to i64
+  %1 = add nsw i64 %i.ap, %i.aq
   %sext.i = sext i16 %i.ac to i64
   br label %bb.l
 
@@ -234,7 +233,7 @@ bb.k:                                             ; preds = %bb.j
   br label %bb.n
 
 bb.l:                                             ; preds = %bb.l, %bb.k
-  %indvars.iv.i = phi i64 [ %i.ap, %bb.k ], [ %indvars.iv.next.i, %bb.l ] ; 3 uses
+  %indvars.iv.i = phi i64 [ %1, %bb.k ], [ %indvars.iv.next.i, %bb.l ] ; 3 uses
   %i.av = getelementptr inbounds [2 x i8], ptr %i.an, i64 %indvars.iv.i
   %i.aw = load i16, ptr %i.av, align 2, !tbaa !324
   %i.ax = sext i16 %i.aw to i64
@@ -243,7 +242,7 @@ bb.l:                                             ; preds = %bb.l, %bb.k
   %i.ba = load i16, ptr %i.az, align 2, !tbaa !327
   %i.bb = sub i16 %i.ba, %i.ao
   store i16 %i.bb, ptr %i.az, align 2, !tbaa !327
-  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, %i.aq
+  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, %i.ap
   %i.bc = icmp eq i64 %indvars.iv.i, %sext.i
   br i1 %i.bc, label %.preheader.i, label %bb.l, !llvm.loop !355
 
@@ -646,22 +645,22 @@ bb.a:
   %i.c = sext i32 %1 to i64
   %i.d = getelementptr inbounds [120 x i8], ptr %i.b, i64 %i.c
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 90 ; 2 uses
-  %i.f = load i16, ptr %i.e, align 2, !tbaa !327
-  %i.g = sext i16 %i.f to i32                     ; 3 uses
+  %i.f = load i16, ptr %i.e, align 2, !tbaa !327  ; 2 uses
+  %i.g = sext i16 %i.f to i32                     ; 2 uses
   %i.h = icmp eq i32 %2, %i.g
   br i1 %i.h, label %bb.f, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.i = icmp slt i32 %2, %i.g
-  %i.j = select i1 %i.i, i32 -1, i32 1            ; 3 uses
+  %i.j = select i1 %i.i, i32 -1, i32 1            ; 2 uses
   %i.k = trunc i32 %2 to i16
   store i16 %i.k, ptr %i.e, align 2, !tbaa !327
-  %3 = add nsw i32 %i.j, %i.g
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !297  ; 6 uses
   %i.n = trunc nsw i32 %i.j to i16
-  %i.o = sext i32 %3 to i64
-  %i.p = sext i32 %i.j to i64
+  %i.o = sext i32 %i.j to i64                     ; 2 uses
+  %i.p = sext i16 %i.f to i64
+  %3 = add nsw i64 %i.o, %i.p
   %sext = sext i32 %2 to i64
   br label %bb.c
 
@@ -682,7 +681,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.e
 
 bb.c:                                             ; preds = %bb.b, %bb.c
-  %indvars.iv = phi i64 [ %i.o, %bb.b ], [ %indvars.iv.next, %bb.c ] ; 3 uses
+  %indvars.iv = phi i64 [ %3, %bb.b ], [ %indvars.iv.next, %bb.c ] ; 3 uses
   %i.u = getelementptr inbounds [2 x i8], ptr %i.m, i64 %indvars.iv
   %i.v = load i16, ptr %i.u, align 2, !tbaa !324
   %i.w = sext i16 %i.v to i64
@@ -691,7 +690,7 @@ bb.c:                                             ; preds = %bb.b, %bb.c
   %i.z = load i16, ptr %i.y, align 2, !tbaa !327
   %i.aa = sub i16 %i.z, %i.n
   store i16 %i.aa, ptr %i.y, align 2, !tbaa !327
-  %indvars.iv.next = add nsw i64 %indvars.iv, %i.p
+  %indvars.iv.next = add nsw i64 %indvars.iv, %i.o
   %i.ab = icmp eq i64 %indvars.iv, %sext
   br i1 %i.ab, label %.preheader, label %bb.c, !llvm.loop !355
 

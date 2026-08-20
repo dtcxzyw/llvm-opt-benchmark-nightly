@@ -203,11 +203,11 @@ bb.u:                                             ; preds = %bb.s, %bb.r
 
 .lr.ph85.preheader:                               ; preds = %.preheader
   %i.bm = zext nneg i32 %.4.lcssa to i64          ; 2 uses
-  %scevgep104 = getelementptr i8, ptr %i.a, i64 %i.bm
-  %scevgep105 = getelementptr i8, ptr %i.b, i64 %i.bm
+  %scevgep104 = getelementptr nuw i8, ptr %i.a, i64 %i.bm
+  %scevgep105 = getelementptr nuw i8, ptr %i.b, i64 %i.bm
   %narrow = sub nuw nsw i32 16, %.4.lcssa
   %i.bn = zext nneg i32 %narrow to i64
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %scevgep104, ptr align 1 %scevgep105, i64 %i.bn, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %scevgep104, ptr nonnull align 1 %scevgep105, i64 %i.bn, i1 false)
   br label %._crit_edge
 
 .lr.ph83:                                         ; preds = %.loopexit, %bb.x
@@ -610,9 +610,9 @@ bb.g:                                             ; preds = %bb.f
   store i8 %i.dt, ptr %i.dk, align 1
   %i.du = getelementptr i8, ptr %.242, i64 2
   %.3 = load i8, ptr %i.dq, align 1
+  %indvars.iv.next = add nsw i64 %indvars.iv, %i.e
   %i.dv = add nsw i32 %.03848, -1
   %.not56 = icmp eq i32 %.03848, 0
-  %indvars.iv.next = add i64 %indvars.iv, %i.e
   br i1 %.not56, label %.loopexit, label %.split, !llvm.loop !19
 
 .loopexit:                                        ; preds = %bb.e, %bb.f, %bb.g, %.split.us.preheader, %.split.us.1, %.split.us.2, %.split.us.3, %.split.us.4, %.split.us.5, %.split.us.6, %.split.us.7, %.split.us.8, %.split.us.9, %.split.us.10, %.split.us.11, %.split.us.12, %.split.us.13, %.split.us.14, %.split.us.15, %bb.c, %bb.a

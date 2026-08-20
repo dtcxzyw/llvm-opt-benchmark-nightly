@@ -203,7 +203,7 @@ bb.j:                                             ; preds = %bb.l
 bb.k:                                             ; preds = %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit
   %i.bg = load i16, ptr %i.p, align 8, !tbaa !510
   %i.bh = zext i16 %i.bg to i64
-  %i.bi = add nuw i64 %.065105, %i.bh             ; 2 uses
+  %i.bi = add nuw nsw i64 %.065105, %i.bh         ; 2 uses
   %.not.i77 = icmp eq ptr %i.aq, null
   br i1 %.not.i77, label %bb.l, label %_ZN6duckdb21TemplatedValidityMaskImE10SetInvalidEm.exit
 
@@ -606,7 +606,7 @@ bb.h:                                             ; preds = %bb.j
 
 bb.i:                                             ; preds = %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit.i
   %i.dm = zext i16 %.pre124.i to i64
-  %i.dn = add nuw i64 %.065105.i, %i.dm           ; 2 uses
+  %i.dn = add nuw nsw i64 %.065105.i, %i.dm       ; 2 uses
   %.not.i77.i = icmp eq ptr %i.cp, null
   br i1 %.not.i77.i, label %bb.j, label %_ZN6duckdb21TemplatedValidityMaskImE10SetInvalidEm.exit.i
 
@@ -1009,7 +1009,7 @@ bb.k:                                             ; preds = %bb.m
 
 bb.l:                                             ; preds = %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit.i
   %i.ct = zext i16 %.pre120.i to i64
-  %i.cu = add nuw i64 %.065105.i, %i.ct           ; 2 uses
+  %i.cu = add nuw nsw i64 %.065105.i, %i.ct       ; 2 uses
   %.not.i77.i = icmp eq ptr %i.bw, null
   br i1 %.not.i77.i, label %bb.m, label %_ZN6duckdb21TemplatedValidityMaskImE10SetInvalidEm.exit.i
 
@@ -1412,7 +1412,7 @@ bb.h:                                             ; preds = %bb.j
 
 bb.i:                                             ; preds = %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit.i
   %i.eb = zext i16 %.pre124.i to i64
-  %i.ec = add nuw i64 %.065105.i, %i.eb           ; 2 uses
+  %i.ec = add nuw nsw i64 %.065105.i, %i.eb       ; 2 uses
   %.not.i77.i = icmp eq ptr %i.de, null
   br i1 %.not.i77.i, label %bb.j, label %_ZN6duckdb21TemplatedValidityMaskImE10SetInvalidEm.exit.i
 
@@ -1815,7 +1815,7 @@ bb.h:                                             ; preds = %bb.j
 
 bb.i:                                             ; preds = %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit.i
   %i.dk = zext i16 %.pre124.i to i64
-  %i.dl = add nuw i64 %.065105.i, %i.dk           ; 2 uses
+  %i.dl = add nuw nsw i64 %.065105.i, %i.dk       ; 2 uses
   %.not.i77.i = icmp eq ptr %i.cn, null
   br i1 %.not.i77.i, label %bb.j, label %_ZN6duckdb21TemplatedValidityMaskImE10SetInvalidEm.exit.i
 
@@ -2218,7 +2218,7 @@ bb.h:                                             ; preds = %bb.j
 
 bb.i:                                             ; preds = %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit.i
   %i.dk = zext i16 %.pre124.i to i64
-  %i.dl = add nuw i64 %.065105.i, %i.dk           ; 2 uses
+  %i.dl = add nuw nsw i64 %.065105.i, %i.dk       ; 2 uses
   %.not.i77.i = icmp eq ptr %i.cn, null
   br i1 %.not.i77.i, label %bb.j, label %_ZN6duckdb21TemplatedValidityMaskImE10SetInvalidEm.exit.i
 
@@ -2621,7 +2621,7 @@ bb.h:                                             ; preds = %bb.j
 
 bb.i:                                             ; preds = %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit.i
   %i.dh = zext i16 %.pre128.i to i64
-  %i.di = add nuw i64 %.065109.i, %i.dh           ; 2 uses
+  %i.di = add nuw nsw i64 %.065109.i, %i.dh       ; 2 uses
   %.not.i81.i = icmp eq ptr %i.ck, null
   br i1 %.not.i81.i, label %bb.j, label %_ZN6duckdb21TemplatedValidityMaskImE10SetInvalidEm.exit.i
 
@@ -3024,7 +3024,7 @@ bb.k:                                             ; preds = %bb.m
 
 bb.l:                                             ; preds = %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit.i
   %i.ct = zext i16 %.pre120.i to i64
-  %i.cu = add nuw i64 %.065105.i, %i.ct           ; 2 uses
+  %i.cu = add nuw nsw i64 %.065105.i, %i.ct       ; 2 uses
   %.not.i77.i = icmp eq ptr %i.bw, null
   br i1 %.not.i77.i, label %bb.m, label %_ZN6duckdb21TemplatedValidityMaskImE10SetInvalidEm.exit.i
 
@@ -3427,7 +3427,7 @@ bb.h:                                             ; preds = %bb.j
 
 bb.i:                                             ; preds = %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit.i
   %i.eb = zext i16 %.pre124.i to i64
-  %i.ec = add nuw i64 %.065105.i, %i.eb           ; 2 uses
+  %i.ec = add nuw nsw i64 %.065105.i, %i.eb       ; 2 uses
   %.not.i77.i = icmp eq ptr %i.de, null
   br i1 %.not.i77.i, label %bb.j, label %_ZN6duckdb21TemplatedValidityMaskImE10SetInvalidEm.exit.i
 
@@ -3830,7 +3830,7 @@ bb.h:                                             ; preds = %bb.j
 
 bb.i:                                             ; preds = %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit.i
   %i.dk = zext i16 %.pre124.i to i64
-  %i.dl = add nuw i64 %.065105.i, %i.dk           ; 2 uses
+  %i.dl = add nuw nsw i64 %.065105.i, %i.dk       ; 2 uses
   %.not.i77.i = icmp eq ptr %i.cn, null
   br i1 %.not.i77.i, label %bb.j, label %_ZN6duckdb21TemplatedValidityMaskImE10SetInvalidEm.exit.i
 
@@ -4233,7 +4233,7 @@ bb.h:                                             ; preds = %bb.j
 
 bb.i:                                             ; preds = %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit.i
   %i.dk = zext i16 %.pre124.i to i64
-  %i.dl = add nuw i64 %.065105.i, %i.dk           ; 2 uses
+  %i.dl = add nuw nsw i64 %.065105.i, %i.dk       ; 2 uses
   %.not.i77.i = icmp eq ptr %i.cn, null
   br i1 %.not.i77.i, label %bb.j, label %_ZN6duckdb21TemplatedValidityMaskImE10SetInvalidEm.exit.i
 
@@ -4636,7 +4636,7 @@ bb.h:                                             ; preds = %bb.j
 
 bb.i:                                             ; preds = %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit.i
   %i.dh = zext i16 %.pre128.i to i64
-  %i.di = add nuw i64 %.065109.i, %i.dh           ; 2 uses
+  %i.di = add nuw nsw i64 %.065109.i, %i.dh       ; 2 uses
   %.not.i81.i = icmp eq ptr %i.ck, null
   br i1 %.not.i81.i, label %bb.j, label %_ZN6duckdb21TemplatedValidityMaskImE10SetInvalidEm.exit.i
 
@@ -5039,7 +5039,7 @@ bb.h:                                             ; preds = %bb.j
 
 bb.i:                                             ; preds = %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit.i
   %i.dk = zext i16 %.pre124.i to i64
-  %i.dl = add nuw i64 %.065105.i, %i.dk           ; 2 uses
+  %i.dl = add nuw nsw i64 %.065105.i, %i.dk       ; 2 uses
   %.not.i77.i = icmp eq ptr %i.cn, null
   br i1 %.not.i77.i, label %bb.j, label %_ZN6duckdb21TemplatedValidityMaskImE10SetInvalidEm.exit.i
 
@@ -5442,7 +5442,7 @@ bb.h:                                             ; preds = %bb.j
 
 bb.i:                                             ; preds = %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit.i
   %i.dk = zext i16 %.pre124.i to i64
-  %i.dl = add nuw i64 %.065105.i, %i.dk           ; 2 uses
+  %i.dl = add nuw nsw i64 %.065105.i, %i.dk       ; 2 uses
   %.not.i77.i = icmp eq ptr %i.cn, null
   br i1 %.not.i77.i, label %bb.j, label %_ZN6duckdb21TemplatedValidityMaskImE10SetInvalidEm.exit.i
 
@@ -5845,7 +5845,7 @@ bb.j:                                             ; preds = %bb.l
 
 bb.k:                                             ; preds = %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit.i
   %i.cd = zext i16 %.pre124.i to i64
-  %i.ce = add nuw i64 %.065109.i, %i.cd           ; 2 uses
+  %i.ce = add nuw nsw i64 %.065109.i, %i.cd       ; 2 uses
   %.not.i81.i = icmp eq ptr %i.bg, null
   br i1 %.not.i81.i, label %bb.l, label %_ZN6duckdb21TemplatedValidityMaskImE10SetInvalidEm.exit.i
 
@@ -6248,7 +6248,7 @@ bb.w:                                             ; preds = %bb.y, %.noexc84.i
 
 bb.x:                                             ; preds = %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit.i
   %i.dz = zext i16 %.pre159.i to i64
-  %i.ea = add nuw i64 %.065144.i, %i.dz           ; 2 uses
+  %i.ea = add nuw nsw i64 %.065144.i, %i.dz       ; 2 uses
   %.not.i87.i = icmp eq ptr %i.cj, null
   br i1 %.not.i87.i, label %bb.y, label %_ZN6duckdb21TemplatedValidityMaskImE10SetInvalidEm.exit.i
 
@@ -6651,7 +6651,7 @@ bb.al:                                            ; preds = %bb.an
 
 bb.am:                                            ; preds = %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit.i
   %i.hb = zext i16 %.pre127.i to i64
-  %i.hc = add nuw i64 %.065108.i, %i.hb           ; 2 uses
+  %i.hc = add nuw nsw i64 %.065108.i, %i.hb       ; 2 uses
   %.not.i80.i = icmp eq ptr %i.ge, null
   br i1 %.not.i80.i, label %bb.an, label %_ZN6duckdb21TemplatedValidityMaskImE10SetInvalidEm.exit.i
 
@@ -7054,7 +7054,7 @@ bb.bx:                                            ; preds = %bb.bz
 
 bb.by:                                            ; preds = %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit.i86
   %i.nz = zext i16 %.pre127.i88 to i64
-  %i.oa = add nuw i64 %.065108.i82, %i.nz         ; 2 uses
+  %i.oa = add nuw nsw i64 %.065108.i82, %i.nz     ; 2 uses
   %.not.i80.i110 = icmp eq ptr %i.nb, null
   br i1 %.not.i80.i110, label %bb.bz, label %_ZN6duckdb21TemplatedValidityMaskImE10SetInvalidEm.exit.i111
 

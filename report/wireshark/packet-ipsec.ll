@@ -204,7 +204,7 @@ declare noundef i32 @__isoc99_sscanf(ptr noundef readonly captures(none), ptr no
 ; Function Attrs: nofree nosync nounwind null_pointer_is_valid sspstrong memory(argmem: readwrite) uwtable
 define internal fastcc i32 @get_ipv6_suffix(ptr noundef %0, ptr nofree noundef readonly captures(none) %1) unnamed_addr #14 {
 bb.a:
-  %i.a = alloca [33 x i8], align 16               ; 26 uses
+  %i.a = alloca [33 x i8], align 16               ; 25 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #19
   %i.b = tail call i64 @strlen(ptr noundef %1) #21
   %i.c = trunc i64 %i.b to i32                    ; 2 uses
@@ -499,18 +499,13 @@ iter.check133:                                    ; preds = %.loopexit
   br i1 %min.iters.check121, label %vec.epilog.scalar.ph134.preheader, label %vector.scevcheck119
 
 vector.scevcheck119:                              ; preds = %iter.check133
-  %i.cz = add nsw i64 %wide.trip.count, -1        ; 3 uses
-  %i.da = sub nsw i32 32, %.4                     ; 3 uses
+  %i.cz = add nsw i64 %wide.trip.count, -1        ; 2 uses
+  %i.da = sub nsw i32 32, %.4                     ; 2 uses
   %i.db = trunc nsw i64 %i.cz to i32
   %i.dc = add i32 %i.da, %i.db
   %i.dd = icmp slt i32 %i.dc, %i.da
   %i.de = icmp ugt i64 %i.cz, 4294967295
-  %2 = or i1 %i.dd, %i.de
-  %3 = sext i32 %i.da to i64
-  %scevgep = getelementptr i8, ptr %i.a, i64 %3   ; 2 uses
-  %4 = getelementptr i8, ptr %scevgep, i64 %i.cz
-  %5 = icmp ult ptr %4, %scevgep
-  %i.df = or i1 %2, %5
+  %i.df = or i1 %i.dd, %i.de
   %i.dg = add nsw i32 %.4, -33
   %diff.check = icmp ult i32 %i.dg, 31
   %or.cond145 = select i1 %i.df, i1 true, i1 %diff.check

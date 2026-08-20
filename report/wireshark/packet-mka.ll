@@ -201,14 +201,14 @@ bb.ab:                                            ; preds = %bb.aa, %bb.w
   %i.ft = call ptr @tvb_memdup(ptr noundef %i.fs, ptr noundef %0, i32 noundef %.0113150.i, i64 noundef 12) ; 3 uses
   %.not138.i = icmp samesign uge i32 %.0149.i, %i.fi
   %i.fu = zext i1 %.not138.i to i32
-  %.0118.i = add nuw i32 %.0149.i, %i.fu          ; 4 uses
+  %.0118.i = add nuw nsw i32 %.0149.i, %i.fu      ; 4 uses
   %i.fv = load ptr, ptr @mka_mi_sci_map, align 8
   %i.fw = call ptr @wmem_map_lookup(ptr noundef %i.fv, ptr noundef %i.ft) ; 2 uses
   %.not139.i = icmp eq ptr %i.fw, null
   br i1 %.not139.i, label %bb.ac, label %.sink.split.i
 
 .sink.split.i:                                    ; preds = %.lr.ph.split.i
-  %i.fx = zext i32 %.0118.i to i64
+  %i.fx = zext nneg i32 %.0118.i to i64
   %i.fy = inttoptr i64 %i.fx to ptr
   %.sink.i = select i1 %.not140.i, ptr inttoptr (i64 4294967295 to ptr), ptr %i.fy
   %i.fz = call ptr @wmem_map_insert(ptr noundef nonnull %.0116.i, ptr noundef nonnull %i.fw, ptr noundef nonnull %.sink.i) ; 0 uses
@@ -231,7 +231,7 @@ bb.ae:                                            ; preds = %bb.ac
   br i1 %i.gf, label %bb.af, label %bb.ag
 
 bb.af:                                            ; preds = %bb.ae
-  %i.gg = add i32 %.0118.i, -1
+  %i.gg = add nsw i32 %.0118.i, -1
   %i.gh = call ptr @wmem_array_index(ptr noundef %.0115.i, i32 noundef %i.gg)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef align 1 dereferenceable(12) %i.gh, ptr noundef align 1 dereferenceable(12) %i.ft, i64 noundef 12, i1 noundef false) #16
   br label %bb.ah

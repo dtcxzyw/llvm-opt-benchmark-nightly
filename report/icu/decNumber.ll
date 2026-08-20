@@ -204,7 +204,7 @@ bb.r:                                             ; preds = %bb.q
 bb.s:                                             ; preds = %bb.r, %bb.q
   %.0258 = phi ptr [ %i.bp, %bb.r ], [ null, %bb.q ] ; 2 uses
   %.0247 = phi ptr [ %i.bp, %bb.r ], [ %i.e, %bb.q ] ; 7 uses
-  %.0247390 = ptrtoaddr ptr %.0247 to i64         ; 2 uses
+  %.0247390 = ptrtoaddr ptr %.0247 to i64         ; 3 uses
   %i.bq = icmp eq ptr %.0255, null
   %i.br = icmp eq ptr %.0251, null
   %or.cond = select i1 %i.bq, i1 true, i1 %i.br
@@ -403,11 +403,12 @@ bb.y:                                             ; preds = %.unr-lcssa440, %.ep
   br i1 %i.eq, label %.lr.ph346.preheader, label %.preheader321
 
 .lr.ph346.preheader:                              ; preds = %._crit_edge342
-  %i.er = shl nuw nsw i64 %i.bv, 3                ; 2 uses
-  %i.es = add i64 %i.er, %.0247390                ; 2 uses
-  %i.et = add i64 %i.es, %.idx
-  %i.eu = add i64 %i.es, 8
-  %umax = call i64 @llvm.umax.i64(i64 %i.et, i64 %i.eu)
+  %5 = add i64 %.idx, %.0247390
+  %i.er = shl nuw nsw i64 %i.bv, 3                ; 3 uses
+  %i.es = add i64 %5, %i.er
+  %i.et = add i64 %i.er, %.0247390
+  %i.eu = add i64 %i.et, 8
+  %umax = call i64 @llvm.umax.i64(i64 %i.es, i64 %i.eu)
   %i.ev = xor i64 %.0247390, -1
   %i.ew = add i64 %umax, %i.ev
   %i.ex = sub i64 %i.ew, %i.er

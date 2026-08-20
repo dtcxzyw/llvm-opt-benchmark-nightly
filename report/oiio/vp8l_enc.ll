@@ -204,9 +204,9 @@ EncoderAnalyze.exit.loopexit298.unr-lcssa:        ; preds = %.preheader.i
   br label %EncoderAnalyze.exit
 
 EncoderAnalyze.exit:                              ; preds = %.preheader.i.epil.preheader, %EncoderAnalyze.exit.loopexit298.unr-lcssa, %EncoderAnalyze.exit.loopexit.unr-lcssa, %.preheader.i.us.epil
-  %i.pm = phi i64 [ %i.nx, %EncoderAnalyze.exit.loopexit.unr-lcssa ], [ %i.nx, %.preheader.i.us.epil ], [ %i.nv, %EncoderAnalyze.exit.loopexit298.unr-lcssa ], [ %i.nv, %.preheader.i.epil.preheader ]
+  %i.pm = phi i64 [ %i.nx, %EncoderAnalyze.exit.loopexit.unr-lcssa ], [ %i.nx, %.preheader.i.us.epil ], [ %i.nv, %EncoderAnalyze.exit.loopexit298.unr-lcssa ], [ %i.nv, %.preheader.i.epil.preheader ] ; 2 uses
   %.2268 = phi i32 [ %.2269, %EncoderAnalyze.exit.loopexit.unr-lcssa ], [ %.2269, %.preheader.i.us.epil ], [ %.1193, %EncoderAnalyze.exit.loopexit298.unr-lcssa ], [ %.1193, %.preheader.i.epil.preheader ] ; 2 uses
-  %.2197266 = phi i32 [ %.2197267, %EncoderAnalyze.exit.loopexit.unr-lcssa ], [ %.2197267, %.preheader.i.us.epil ], [ %.2197, %EncoderAnalyze.exit.loopexit298.unr-lcssa ], [ %.2197, %.preheader.i.epil.preheader ] ; 3 uses
+  %.2197266 = phi i32 [ %.2197267, %EncoderAnalyze.exit.loopexit.unr-lcssa ], [ %.2197267, %.preheader.i.us.epil ], [ %.2197, %EncoderAnalyze.exit.loopexit298.unr-lcssa ], [ %.2197, %.preheader.i.epil.preheader ] ; 2 uses
   %i.pn = load ptr, ptr %i.e, align 8, !tbaa !15  ; 2 uses
   %i.po = getelementptr inbounds nuw i8, ptr %i.pn, i64 8
   %i.pp = load i32, ptr %i.po, align 8, !tbaa !18
@@ -246,10 +246,11 @@ bb.x:                                             ; preds = %bb.w
 
 .lr.ph:                                           ; preds = %bb.x
   %i.qh = getelementptr inbounds nuw i8, ptr %7, i64 32
-  %i.qi = sub nsw i32 %.2197266, %i.qg
-  %narrow = mul nsw i32 %i.qi, 28
-  %11 = sext i32 %narrow to i64
-  %scevgep = getelementptr i8, ptr %3, i64 %11
+  %i.qi = sub nsw i32 0, %i.qg
+  %11 = sext i32 %i.qi to i64
+  %12 = add nsw i64 %i.pm, %11
+  %13 = mul nsw i64 %12, 28
+  %scevgep = getelementptr i8, ptr %3, i64 %13
   %i.qj = lshr i64 %i.pm, 1
   %i.qk = mul nuw nsw i64 %i.qj, 28
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.qh, ptr align 4 %scevgep, i64 %i.qk, i1 false)

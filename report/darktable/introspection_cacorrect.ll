@@ -204,13 +204,13 @@ vec.epilog.scalar.ph3851:                         ; preds = %vec.epilog.scalar.p
   br i1 %i.bvt, label %.lr.ph2066, label %.preheader1908.1
 
 bb.ad:                                            ; preds = %.lr.ph2045, %._crit_edge2043
-  %indvars.iv2469 = phi i32 [ 516, %.lr.ph2045 ], [ %indvars.iv.next2470, %._crit_edge2043 ] ; 2 uses
+  %indvars.iv2469 = phi i32 [ 512, %.lr.ph2045 ], [ %indvars.iv.next2470, %._crit_edge2043 ] ; 2 uses
   %.016942044 = phi i32 [ 4, %.lr.ph2045 ], [ %i.edn, %._crit_edge2043 ] ; 2 uses
   %i.ecx = shl nuw i32 %.016942044, 1
   %i.ecy = and i32 %i.ecx, 14                     ; 2 uses
   %i.ecz = shl nuw nsw i32 %i.ecy, 1
-  %i.eda = lshr i32 %i.q, %i.ecz
-  %i.edb = and i32 %i.eda, 1                      ; 3 uses
+  %i.eda = lshr i32 %i.q, %i.ecz                  ; 2 uses
+  %i.edb = and i32 %i.eda, 1                      ; 2 uses
   %i.edc = or disjoint i32 %i.edb, 4              ; 2 uses
   %i.edd = icmp slt i32 %i.edc, %i.dwn
   br i1 %i.edd, label %.lr.ph2042, label %._crit_edge2043
@@ -223,8 +223,11 @@ bb.ad:                                            ; preds = %.lr.ph2045, %._crit
   %i.edi = zext nneg i32 %i.edh to i64
   %i.edj = getelementptr inbounds nuw [8 x i8], ptr %i.k, i64 %i.edi
   %i.edk = load ptr, ptr %i.edj, align 8, !tbaa !59 ; 9 uses
-  %i.edl = or disjoint i32 %indvars.iv2469, %i.edb
+  %i.edl = or disjoint i32 %indvars.iv2469, 4
   %i.edm = sext i32 %i.edl to i64
+  %6 = and i32 %i.eda, 1
+  %7 = zext nneg i32 %6 to i64
+  %8 = or disjoint i64 %i.edm, %7
   br label %bb.ae
 
 ._crit_edge2043:                                  ; preds = %bb.ae, %bb.ad
@@ -234,7 +237,7 @@ bb.ad:                                            ; preds = %.lr.ph2045, %._crit
   br i1 %i.edo, label %bb.ad, label %.preheader1942
 
 bb.ae:                                            ; preds = %.lr.ph2042, %bb.ae
-  %indvars.iv2471 = phi i64 [ %i.edm, %.lr.ph2042 ], [ %indvars.iv.next2472, %bb.ae ] ; 11 uses
+  %indvars.iv2471 = phi i64 [ %8, %.lr.ph2042 ], [ %indvars.iv.next2472, %bb.ae ] ; 11 uses
   %.016932039 = phi i32 [ %i.edc, %.lr.ph2042 ], [ %i.eic, %bb.ae ]
   %i.edp = getelementptr inbounds nuw [4 x i8], ptr %i.bts, i64 %indvars.iv2471 ; 3 uses
   %i.edq = load float, ptr %i.edp, align 4, !tbaa !58
@@ -377,13 +380,16 @@ bb.ae:                                            ; preds = %.lr.ph2042, %bb.ae
   br i1 %i.eii, label %bb.ah, label %.preheader1908.1
 
 bb.af:                                            ; preds = %.lr.ph2066, %bb.ag
-  %indvars.iv2482 = phi i32 [ 1032, %.lr.ph2066 ], [ %indvars.iv.next2483, %bb.ag ] ; 3 uses
+  %indvar3769 = phi i32 [ 0, %.lr.ph2066 ], [ %indvar.next3770, %bb.ag ] ; 2 uses
+  %indvars.iv2482 = phi i32 [ 1024, %.lr.ph2066 ], [ %indvars.iv.next2483, %bb.ag ] ; 2 uses
   %.016882065 = phi i32 [ 8, %.lr.ph2066 ], [ %i.ent, %bb.ag ] ; 2 uses
+  %9 = shl i32 %indvar3769, 7
+  %10 = add i32 %9, 1032
   %i.eij = shl nuw i32 %.016882065, 1
   %i.eik = and i32 %i.eij, 14                     ; 2 uses
   %i.eil = shl nuw nsw i32 %i.eik, 1
-  %i.eim = lshr i32 %i.q, %i.eil
-  %i.ein = and i32 %i.eim, 1                      ; 6 uses
+  %i.eim = lshr i32 %i.q, %i.eil                  ; 2 uses
+  %i.ein = and i32 %i.eim, 1                      ; 5 uses
   %i.eio = or disjoint i32 %i.ein, 8              ; 4 uses
   %i.eip = icmp slt i32 %i.eio, %i.eie
   br i1 %i.eip, label %.lr.ph2052, label %bb.ag
@@ -410,8 +416,11 @@ bb.af:                                            ; preds = %.lr.ph2066, %bb.ag
   %.promoted2059 = load float, ptr %i.ejc, align 4, !tbaa !58 ; 3 uses
   %.promoted2061 = load float, ptr %i.ejd, align 4, !tbaa !58 ; 3 uses
   %.promoted2063 = load float, ptr %i.eje, align 4, !tbaa !58 ; 3 uses
-  %i.ejf = or disjoint i32 %indvars.iv2482, %i.ein
-  %i.ejg = sext i32 %i.ejf to i64                 ; 4 uses
+  %i.ejf = or disjoint i32 %indvars.iv2482, 8
+  %i.ejg = sext i32 %i.ejf to i64
+  %11 = and i32 %i.eim, 1
+  %12 = zext nneg i32 %11 to i64
+  %13 = or disjoint i64 %i.ejg, %12               ; 4 uses
   %i.ejh = sub i32 %i.eif, %i.ein                 ; 2 uses
   %i.eji = lshr i32 %i.ejh, 1
   %narrow4054 = add nuw i32 %i.eji, 1
@@ -420,7 +429,7 @@ bb.af:                                            ; preds = %.lr.ph2066, %bb.ag
   br i1 %min.iters.check3771, label %scalar.ph3770.preheader, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.lr.ph2052
-  %i.ejk = or disjoint i32 %indvars.iv2482, %i.ein
+  %i.ejk = or disjoint i32 %10, %i.ein
   %i.ejl = add i32 %i.eih, %i.ein
   %i.ejm = or i32 %i.ejl, 1
   %i.ejn = icmp ult i32 %i.ejm, %i.ejk
@@ -432,7 +441,7 @@ vector.ph3772:                                    ; preds = %vector.scevcheck
   %i.ejq = select i1 %i.ejp, i64 8, i64 %i.ejo
   %n.vec3773 = sub nsw i64 %i.ejj, %i.ejq         ; 3 uses
   %i.ejr = shl nsw i64 %n.vec3773, 1
-  %i.ejs = add nsw i64 %i.ejr, %i.ejg
+  %i.ejs = add nsw i64 %13, %i.ejr
   %i.ejt = trunc i64 %n.vec3773 to i32
   %i.eju = shl i32 %i.ejt, 1
   %i.ejv = add i32 %i.eio, %i.eju
@@ -453,7 +462,7 @@ vector.body3774:                                  ; preds = %vector.body3774, %v
   %vec.phi3780 = phi <8 x float> [ %i.eka, %vector.ph3772 ], [ %i.emb, %vector.body3774 ]
   %vec.phi3781 = phi <8 x float> [ %i.ekb, %vector.ph3772 ], [ %i.ely, %vector.body3774 ]
   %i.ekc = shl nuw i64 %index3775, 1
-  %i.ekd = add nuw i64 %i.ekc, %i.ejg             ; 3 uses
+  %i.ekd = add nuw i64 %13, %i.ekc                ; 3 uses
   %i.eke = getelementptr [4 x i8], ptr %i.bts, i64 %i.ekd ; 6 uses
   %i.ekf = getelementptr inbounds nuw i8, ptr %i.eke, i64 508
   %wide.vec3782 = load <16 x float>, ptr %i.ekf, align 4, !tbaa !58 ; 2 uses
@@ -490,8 +499,8 @@ vector.body3774:                                  ; preds = %vector.body3774, %v
   %i.ekw = getelementptr inbounds nuw [4 x i8], ptr %i.btv, i64 %i.ekv
   %wide.load3797 = load <8 x float>, ptr %i.ekw, align 4, !tbaa !58
   %i.ekx = fmul reassoc nsz arcp contract afn <8 x float> %wide.load3797, splat (float 2.500000e-01)
-  %6 = or disjoint i32 %i.eku, 1
-  %i.eky = zext nneg i32 %6 to i64                ; 3 uses
+  %14 = add nuw nsw i32 %i.eku, 1
+  %i.eky = zext nneg i32 %14 to i64               ; 3 uses
   %i.ekz = getelementptr inbounds nuw [4 x i8], ptr %i.btv, i64 %i.eky
   %wide.load3798 = load <8 x float>, ptr %i.ekz, align 4, !tbaa !58
   %i.ela = add nsw i32 %i.eku, -1
@@ -586,7 +595,7 @@ middle.block3814:                                 ; preds = %vector.body3774
   br label %scalar.ph3770.preheader
 
 scalar.ph3770.preheader:                          ; preds = %vector.scevcheck, %.lr.ph2052, %middle.block3814
-  %indvars.iv2484.ph = phi i64 [ %i.ejg, %vector.scevcheck ], [ %i.ejg, %.lr.ph2052 ], [ %i.ejs, %middle.block3814 ]
+  %indvars.iv2484.ph = phi i64 [ %13, %vector.scevcheck ], [ %13, %.lr.ph2052 ], [ %i.ejs, %middle.block3814 ]
   %.ph = phi float [ %.promoted2063, %vector.scevcheck ], [ %.promoted2063, %.lr.ph2052 ], [ %i.enn, %middle.block3814 ]
   %.ph4184 = phi float [ %.promoted2061, %vector.scevcheck ], [ %.promoted2061, %.lr.ph2052 ], [ %i.eno, %middle.block3814 ]
   %.ph4185 = phi float [ %.promoted2059, %vector.scevcheck ], [ %.promoted2059, %.lr.ph2052 ], [ %i.enp, %middle.block3814 ]
@@ -609,6 +618,7 @@ bb.ag:                                            ; preds = %._crit_edge2053, %b
   %i.ent = add nuw nsw i32 %.016882065, 1         ; 2 uses
   %i.enu = icmp slt i32 %i.ent, %i.bvs
   %indvars.iv.next2483 = add i32 %indvars.iv2482, 128
+  %indvar.next3770 = add i32 %indvar3769, 1
   br i1 %i.enu, label %bb.af, label %.preheader1940
 
 scalar.ph3770:                                    ; preds = %scalar.ph3770.preheader, %scalar.ph3770
@@ -1011,13 +1021,13 @@ bb.dz:                                            ; preds = %.lr.ph2205, %bb.dz
   br label %bb.ei
 
 bb.ea:                                            ; preds = %.lr.ph2217, %._crit_edge2214
-  %indvars.iv2732 = phi i32 [ 1032, %.lr.ph2217 ], [ %indvars.iv.next2733, %._crit_edge2214 ] ; 2 uses
+  %indvars.iv2732 = phi i32 [ 1024, %.lr.ph2217 ], [ %indvars.iv.next2733, %._crit_edge2214 ] ; 2 uses
   %.016192215 = phi i32 [ 8, %.lr.ph2217 ], [ %i.idf, %._crit_edge2214 ] ; 3 uses
   %i.icf = shl nuw i32 %.016192215, 1
   %i.icg = and i32 %i.icf, 14                     ; 2 uses
   %i.ich = shl nuw nsw i32 %i.icg, 1
-  %i.ici = lshr i32 %i.q, %i.ich
-  %i.icj = and i32 %i.ici, 1                      ; 3 uses
+  %i.ici = lshr i32 %i.q, %i.ich                  ; 2 uses
+  %i.icj = and i32 %i.ici, 1                      ; 2 uses
   %i.ick = or disjoint i32 %i.icj, 8              ; 2 uses
   %i.icl = icmp slt i32 %i.ick, %i.hzq
   br i1 %i.icl, label %.lr.ph2213, label %._crit_edge2214
@@ -1040,7 +1050,9 @@ bb.ea:                                            ; preds = %.lr.ph2217, %._crit
   %i.ida = shl nsw i32 %i.icz, 7
   %i.idb = getelementptr inbounds nuw [4 x i8], ptr %i.j, i64 %i.icq
   %i.idc = load float, ptr %i.idb, align 4, !tbaa !58
-  %i.idd = or disjoint i32 %indvars.iv2732, %i.icj
+  %15 = and i32 %i.ici, 1
+  %16 = or disjoint i32 %indvars.iv2732, %15
+  %i.idd = or disjoint i32 %16, 8
   %i.ide = zext i32 %i.idd to i64
   br label %bb.eb
 

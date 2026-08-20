@@ -204,7 +204,7 @@ bb.m:                                             ; preds = %.lr.ph
 _ZN4core5slice4sort6shared9smallsort11insert_tail17h0c22ec019fae6c40E.exit.i: ; preds = %._crit_edge, %.lr.ph.i
   %i.dw = icmp samesign ult i64 %.sroa.08.110.i, %i.c ; 2 uses
   %i.dx = zext i1 %i.dw to i64
-  %.sroa.08.1.i = add nuw i64 %.sroa.08.110.i, %i.dx
+  %.sroa.08.1.i = add nuw nsw i64 %.sroa.08.110.i, %i.dx
   br i1 %i.dw, label %.lr.ph.i, label %.loopexit.i
 
 _ZN4core5slice4sort6shared9smallsort31small_sort_general_with_scratch17hcfc7e6f78f3ed48fE.exit: ; preds = %bb.a, %bb.i
@@ -607,7 +607,7 @@ bb.m:                                             ; preds = %.lr.ph
 _ZN4core5slice4sort6shared9smallsort11insert_tail17h0fe227e8025ea247E.exit.i: ; preds = %._crit_edge, %.lr.ph.i
   %i.gx = icmp samesign ult i64 %.sroa.08.110.i, %i.c ; 2 uses
   %i.gy = zext i1 %i.gx to i64
-  %.sroa.08.1.i = add nuw i64 %.sroa.08.110.i, %i.gy
+  %.sroa.08.1.i = add nuw nsw i64 %.sroa.08.110.i, %i.gy
   br i1 %i.gx, label %.lr.ph.i, label %.loopexit.i
 
 _ZN4core5slice4sort6shared9smallsort31small_sort_general_with_scratch17h6551473da9a17f0bE.exit: ; preds = %bb.a, %bb.i
@@ -1010,7 +1010,7 @@ bb.m:                                             ; preds = %.lr.ph
 _ZN4core5slice4sort6shared9smallsort11insert_tail17hb3bb0afc83d5845eE.exit.i: ; preds = %._crit_edge, %.lr.ph.i
   %i.gx = icmp samesign ult i64 %.sroa.08.110.i, %i.c ; 2 uses
   %i.gy = zext i1 %i.gx to i64
-  %.sroa.08.1.i = add nuw i64 %.sroa.08.110.i, %i.gy
+  %.sroa.08.1.i = add nuw nsw i64 %.sroa.08.110.i, %i.gy
   br i1 %i.gx, label %.lr.ph.i, label %.loopexit.i
 
 _ZN4core5slice4sort6shared9smallsort31small_sort_general_with_scratch17h1daca740b90eb2f8E.exit: ; preds = %bb.a, %bb.i
@@ -1413,7 +1413,7 @@ bb.k:                                             ; preds = %bb.j
 _ZN4core5slice4sort6shared9smallsort11insert_tail17h77183f6f53db260fE.exit.i.i: ; preds = %._crit_edge169, %.lr.ph.i.i
   %i.fz = icmp samesign ult i64 %.sroa.08.110.i.i, %i.j ; 2 uses
   %i.ga = zext i1 %i.fz to i64
-  %.sroa.08.1.i.i = add nuw i64 %.sroa.08.110.i.i, %i.ga
+  %.sroa.08.1.i.i = add nuw nsw i64 %.sroa.08.110.i.i, %i.ga
   br i1 %i.fz, label %.lr.ph.i.i, label %.loopexit.i.i
 
 _ZN4core5slice4sort6shared9smallsort18small_sort_general17h8b5a8fb8c09d9ea0E.exit: ; preds = %._crit_edge, %bb.i

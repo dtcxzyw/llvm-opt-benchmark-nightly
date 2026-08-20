@@ -203,7 +203,7 @@ bb.p:                                             ; preds = %bb.m
   br label %bb.q
 
 ._crit_edge.loopexit:                             ; preds = %bb.o
-  %i.ea = trunc nuw nsw i64 %indvars.iv.next to i32
+  %i.ea = trunc nuw i64 %indvars.iv.next to i32
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.h
@@ -606,7 +606,7 @@ bb.q:                                             ; preds = %bb.m
   br label %bb.r
 
 ._crit_edge.loopexit:                             ; preds = %bb.p
-  %i.cr = trunc nuw nsw i64 %indvars.iv.next to i32
+  %i.cr = trunc nuw i64 %indvars.iv.next to i32
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.h

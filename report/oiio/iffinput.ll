@@ -204,10 +204,10 @@ bb.ev:                                            ; preds = %bb.es
   %i.aeo = zext nneg i8 %i.aen to i64
   %i.aep = load i8, ptr %i.ah, align 1, !tbaa !29
   %i.aeq = zext i8 %i.aep to i64
-  %i.aer = mul nuw nsw i64 %i.aeo, %i.aeq         ; 3 uses
+  %i.aer = mul nuw nsw i64 %i.aeo, %i.aeq         ; 4 uses
   %i.aes = add nuw nsw i64 %i.aer, %i.aeg
   %i.aet = zext i16 %i.adz to i64
-  %i.aeu = mul nuw nsw i64 %i.aes, %i.aet         ; 2 uses
+  %i.aeu = mul nuw nsw i64 %i.aes, %i.aet         ; 3 uses
   %i.aev = getelementptr inbounds nuw i8, ptr %i.adv, i64 %i.aeu
   %i.aew = getelementptr inbounds nuw i8, ptr %i.aev, i64 %i.aer ; 6 uses
   %i.aex = and i64 %.0239923, 4294967295          ; 10 uses
@@ -216,13 +216,14 @@ bb.ev:                                            ; preds = %bb.es
   br i1 %min.iters.check1424, label %.lr.ph.preheader1437, label %vector.memcheck1413
 
 vector.memcheck1413:                              ; preds = %.lr.ph.preheader
-  %7 = add nuw nsw i64 %i.aer, %i.aeu             ; 2 uses
-  %scevgep1415.a = getelementptr i8, ptr %scevgep1414, i64 %7
-  %i.aez = getelementptr i8, ptr %scevgep1417, i64 %7
+  %7 = getelementptr i8, ptr %scevgep1414, i64 %i.aer
+  %scevgep1415 = getelementptr i8, ptr %7, i64 %i.aeu
+  %scevgep1415.a = getelementptr i8, ptr %scevgep1417, i64 %i.aer
+  %i.aez = getelementptr i8, ptr %scevgep1415.a, i64 %i.aeu
   %scevgep1418 = getelementptr i8, ptr %i.aez, i64 %i.aex
   %i.afa = getelementptr i8, ptr %scevgep1419, i64 %i.aeh
   %scevgep1420 = getelementptr i8, ptr %i.afa, i64 %i.aex
-  %bound01421 = icmp ult ptr %scevgep1415.a, %scevgep1420
+  %bound01421 = icmp ult ptr %scevgep1415, %scevgep1420
   %bound11422 = icmp ult ptr %i.aek, %scevgep1418
   %found.conflict1423 = and i1 %bound01421, %bound11422
   br i1 %found.conflict1423, label %.lr.ph.preheader1437, label %vector.ph1425

@@ -181,8 +181,8 @@ bb.e:                                             ; preds = %bb.d
   %.2243 = phi i64 [ %.0241, %bb.c ], [ %spec.store.select, %bb.e ]
   %i.aa = sext i32 %.1238 to i64                  ; 2 uses
   %i.ab = getelementptr inbounds i8, ptr @yypact, i64 %i.aa
-  %i.ac = load i8, ptr %i.ab, align 1             ; 6 uses
-  %i.ad = sext i8 %i.ac to i32                    ; 2 uses
+  %i.ac = load i8, ptr %i.ab, align 1             ; 5 uses
+  %i.ad = sext i8 %i.ac to i32                    ; 4 uses
   %i.ae = icmp eq i8 %i.ac, -29
   br i1 %i.ae, label %bb.s, label %bb.f
 
@@ -585,18 +585,19 @@ bb.cg:                                            ; preds = %bb.cf
   %i.lq = zext i8 %i.lp to i64
   br label %.lr.ph.preheader
 
-.lr.ph.preheader:                                 ; preds = %bb.cf, %bb.cg
+.lr.ph.preheader:                                 ; preds = %bb.cg, %bb.cf
   %i.lr = phi i64 [ %i.lq, %bb.cg ], [ 2, %bb.cf ]
-  %1 = icmp slt i8 %i.ac, 0
-  %2 = sub nsw i32 0, %i.ad
-  %3 = select i1 %1, i32 %2, i32 0                ; 2 uses
-  %4 = sext i32 %3 to i64
+  %1 = sub nsw i32 0, %i.ad                       ; 2 uses
+  %2 = sext i32 %1 to i64
+  %smax = call i32 @llvm.smax.i32(i32 %i.ad, i32 0)
+  %3 = zext nneg i32 %smax to i64
+  %4 = add nsw i64 %2, %3
   %i.ls = sext i8 %i.ac to i64
   %invariant.gep = getelementptr i8, ptr @yycheck, i64 %i.ls
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.ci
-  %indvars.iv = phi i64 [ %4, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.ci ] ; 6 uses
+  %indvars.iv = phi i64 [ %4, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.ci ] ; 5 uses
   %.0229393 = phi i32 [ 0, %.lr.ph.preheader ], [ %.1230, %bb.ci ] ; 2 uses
   %.0233391 = phi i64 [ 0, %.lr.ph.preheader ], [ %.1234, %bb.ci ] ; 2 uses
   %gep = getelementptr i8, ptr %invariant.gep, i64 %indvars.iv
@@ -619,9 +620,9 @@ bb.ch:                                            ; preds = %.lr.ph
 bb.ci:                                            ; preds = %.lr.ph, %bb.ch
   %.1234 = phi i64 [ %i.mb, %bb.ch ], [ %.0233391, %.lr.ph ] ; 2 uses
   %.1230 = phi i32 [ %i.mc, %bb.ch ], [ %.0229393, %.lr.ph ] ; 2 uses
-  %indvars.iv.next = add nsw i64 %indvars.iv, 1
-  %5 = icmp slt i64 %indvars.iv, 39
-  br i1 %5, label %.lr.ph, label %._crit_edge.loopexit, !llvm.loop !9
+  %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next, 40
+  br i1 %exitcond.not, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !9
 
 ._crit_edge.loopexit:                             ; preds = %bb.ci
   %i.md = add i64 %.1234, 25
@@ -649,13 +650,16 @@ yystpcpy.exit326:                                 ; preds = %yystpcpy.exit
   br i1 %i.me, label %.lr.ph398.preheader, label %.loopexit
 
 .lr.ph398.preheader:                              ; preds = %yystpcpy.exit326
-  %i.mn = sext i32 %3 to i64
+  %i.mn = sext i32 %1 to i64
+  %smax440 = call i32 @llvm.smax.i32(i32 %i.ad, i32 0)
+  %5 = zext nneg i32 %smax440 to i64
+  %6 = add nsw i64 %i.mn, %5
   %i.mo = sext i8 %i.ac to i64
   %invariant.gep489 = getelementptr i8, ptr @yycheck, i64 %i.mo
   br label %.lr.ph398
 
 .lr.ph398:                                        ; preds = %.lr.ph398.preheader, %bb.cm
-  %indvars.iv440 = phi i64 [ %i.mn, %.lr.ph398.preheader ], [ %indvars.iv.next441, %bb.cm ] ; 6 uses
+  %indvars.iv440 = phi i64 [ %6, %.lr.ph398.preheader ], [ %indvars.iv.next441, %bb.cm ] ; 5 uses
   %.0228397 = phi ptr [ %.05.i323, %.lr.ph398.preheader ], [ %.1, %bb.cm ] ; 2 uses
   %.2396 = phi i32 [ 0, %.lr.ph398.preheader ], [ %.3, %bb.cm ] ; 3 uses
   %gep490 = getelementptr i8, ptr %invariant.gep489, i64 %indvars.iv440
@@ -703,9 +707,9 @@ yystpcpy.exit334:                                 ; preds = %bb.cl
 bb.cm:                                            ; preds = %.lr.ph398, %yystpcpy.exit334
   %.3 = phi i32 [ %i.nc, %yystpcpy.exit334 ], [ %.2396, %.lr.ph398 ]
   %.1 = phi ptr [ %.05.i331, %yystpcpy.exit334 ], [ %.0228397, %.lr.ph398 ]
-  %indvars.iv.next441 = add nsw i64 %indvars.iv440, 1
-  %6 = icmp slt i64 %indvars.iv440, 39
-  br i1 %6, label %.lr.ph398, label %.loopexit, !llvm.loop !11
+  %indvars.iv.next441 = add nsw i64 %indvars.iv440, 1 ; 2 uses
+  %exitcond444.not = icmp eq i64 %indvars.iv.next441, 40
+  br i1 %exitcond444.not, label %.loopexit, label %.lr.ph398, !llvm.loop !11
 
 .thread349:                                       ; preds = %bb.ce
   call void @ia_error(ptr noundef nonnull @.str.8)
@@ -1107,6 +1111,9 @@ declare i64 @llvm.umin.i64(i64, i64) #12
 
 ; Function Attrs: nofree nounwind
 declare noundef i64 @fwrite(ptr noundef readonly captures(none), i64 noundef, i64 noundef, ptr noundef captures(none)) local_unnamed_addr #13
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #12
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

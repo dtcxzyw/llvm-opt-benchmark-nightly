@@ -204,23 +204,23 @@ bb.o:                                             ; preds = %._crit_edge301._cri
   %i.ec = getelementptr inbounds nuw i8, ptr %i.eb, i64 4
   %i.ed = load i32, ptr %i.ec, align 4
   %i.ee = lshr i32 %i.ed, 3                       ; 4 uses
-  %i.ef = and i32 %i.ee, 31                       ; 4 uses
+  %i.ef = and i32 %i.ee, 31                       ; 2 uses
   %i.eg = ashr i32 %i.dq, 1
   %i.eh = sext i32 %i.eg to i64
   %i.ei = getelementptr inbounds [8 x i8], ptr %.val248, i64 %i.eh
   %i.ej = load ptr, ptr %i.ei, align 8, !tbaa !27
   %i.ek = getelementptr inbounds nuw i8, ptr %i.ej, i64 4
   %i.el = load i32, ptr %i.ek, align 4
-  %i.em = lshr i32 %i.el, 3                       ; 2 uses
-  %i.en = and i32 %i.em, 31                       ; 3 uses
+  %i.em = lshr i32 %i.el, 3                       ; 3 uses
+  %i.en = and i32 %i.em, 31                       ; 2 uses
   %i.eo = ashr i32 %i.ds, 1
   %i.ep = sext i32 %i.eo to i64
   %i.eq = getelementptr inbounds [8 x i8], ptr %.val248, i64 %i.ep
   %i.er = load ptr, ptr %i.eq, align 8, !tbaa !27
   %i.es = getelementptr inbounds nuw i8, ptr %i.er, i64 4
   %i.et = load i32, ptr %i.es, align 4
-  %i.eu = lshr i32 %i.et, 3                       ; 2 uses
-  %i.ev = and i32 %i.eu, 31                       ; 3 uses
+  %i.eu = lshr i32 %i.et, 3                       ; 3 uses
+  %i.ev = and i32 %i.eu, 31                       ; 2 uses
   %i.ew = xor i32 %i.dw, 1
   store i32 %i.ew, ptr %2, align 4, !tbaa !43
   store i32 %i.ds, ptr %i.dp, align 4, !tbaa !43
@@ -239,11 +239,12 @@ bb.o:                                             ; preds = %._crit_edge301._cri
   br i1 %.not355, label %.preheader284, label %.lr.ph309
 
 .lr.ph309:                                        ; preds = %.preheader285
-  %6 = add nuw nsw i32 %i.en, %i.ef
-  %i.ez = and i32 %i.ee, 31
+  %i.ez = and i32 %i.ee, 31                       ; 2 uses
   %i.fa = zext nneg i32 %i.ez to i64
   %scevgep391 = getelementptr i8, ptr %i.a, i64 %i.fa
-  %i.fb = zext nneg i32 %6 to i64
+  %6 = and i32 %i.em, 31
+  %narrow = add nuw nsw i32 %i.ez, %6
+  %i.fb = zext nneg i32 %narrow to i64
   %scevgep392 = getelementptr i8, ptr %4, i64 %i.fb
   %i.fc = and i32 %i.eu, 31
   %i.fd = zext nneg i32 %i.fc to i64
@@ -255,12 +256,13 @@ bb.o:                                             ; preds = %._crit_edge301._cri
   br i1 %.not356, label %.preheader282, label %.lr.ph313.preheader
 
 .lr.ph313.preheader:                              ; preds = %.preheader284
-  %7 = add nuw nsw i32 %i.ef, %i.ev
-  %i.fe = zext nneg i32 %7 to i64
-  %scevgep402 = getelementptr i8, ptr %i.a, i64 %i.fe
-  %8 = and i32 %i.ee, 31
-  %9 = zext nneg i32 %8 to i64
-  %scevgep403 = getelementptr i8, ptr %4, i64 %9
+  %7 = and i32 %i.eu, 31
+  %8 = and i32 %i.ee, 31                          ; 2 uses
+  %i.fe = zext nneg i32 %8 to i64
+  %narrow476 = add nuw nsw i32 %7, %8
+  %9 = zext nneg i32 %narrow476 to i64
+  %scevgep402 = getelementptr i8, ptr %i.a, i64 %9
+  %scevgep403 = getelementptr i8, ptr %4, i64 %i.fe
   %i.ff = and i32 %i.em, 31
   %i.fg = zext nneg i32 %i.ff to i64
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %scevgep402, ptr align 1 %scevgep403, i64 %i.fg, i1 false), !tbaa !140

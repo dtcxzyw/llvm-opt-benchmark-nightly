@@ -204,11 +204,11 @@ _ZN14arrow_vendored17double_conversion6Bignum14EnsureCapacityEi.exit.i: ; preds 
   br i1 %i.ak, label %_ZN14arrow_vendored17double_conversion6Bignum14EnsureCapacityEi.exit.i, label %.lr.ph20.i, !llvm.loop !33
 
 _ZN14arrow_vendored17double_conversion6Bignum5AlignERKS1_.exit: ; preds = %bb.a, %.lr.ph20.i
-  %i.al = phi i16 [ %i.d, %bb.a ], [ %.pre66, %.lr.ph20.i ]
+  %i.al = phi i16 [ %i.d, %bb.a ], [ %.pre66, %.lr.ph20.i ] ; 2 uses
   %i.am = phi i16 [ %i.b, %bb.a ], [ %i.ah, %.lr.ph20.i ]
   %i.an = phi i16 [ %.pre, %bb.a ], [ %i.ag, %.lr.ph20.i ] ; 4 uses
   %i.ao = sext i16 %i.an to i32                   ; 4 uses
-  %i.ap = sext i16 %i.am to i32                   ; 4 uses
+  %i.ap = sext i16 %i.am to i32                   ; 5 uses
   %i.aq = add nsw i32 %i.ap, %i.ao
   %i.ar = load i16, ptr %1, align 4, !tbaa !7     ; 4 uses
   %i.as = sext i16 %i.ar to i32                   ; 2 uses
@@ -224,7 +224,7 @@ bb.d:                                             ; preds = %_ZN14arrow_vendored
   unreachable
 
 _ZN14arrow_vendored17double_conversion6Bignum14EnsureCapacityEi.exit: ; preds = %_ZN14arrow_vendored17double_conversion6Bignum5AlignERKS1_.exit
-  %i.aw = sub nsw i32 %i.at, %i.ap                ; 3 uses
+  %i.aw = sub nsw i32 %i.at, %i.ap                ; 2 uses
   %i.ax = icmp sgt i32 %i.aw, %i.ao
   br i1 %i.ax, label %.lr.ph, label %.preheader42
 
@@ -249,7 +249,10 @@ _ZN14arrow_vendored17double_conversion6Bignum14EnsureCapacityEi.exit: ; preds = 
 .lr.ph47:                                         ; preds = %.preheader42
   %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 6 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 3 uses
-  %i.bk = sext i32 %i.aw to i64                   ; 2 uses
+  %2 = sext i16 %i.al to i64
+  %3 = sub nsw i32 0, %i.ap
+  %i.bk = sext i32 %3 to i64
+  %4 = add nsw i64 %2, %i.bk                      ; 2 uses
   %i.bl = sext i16 %i.an to i64                   ; 3 uses
   %wide.trip.count = zext nneg i32 %i.as to i64   ; 2 uses
   %xtraiter = and i64 %wide.trip.count, 1
@@ -265,7 +268,7 @@ _ZN14arrow_vendored17double_conversion6Bignum14EnsureCapacityEi.exit: ; preds = 
   br i1 %lcmp.mod.not, label %.preheader, label %.epil.preheader
 
 .epil.preheader:                                  ; preds = %.preheader.unr-lcssa, %.lr.ph47
-  %indvars.iv58.epil.init = phi i64 [ %i.bk, %.lr.ph47 ], [ %indvars.iv.next59.1, %.preheader.unr-lcssa ] ; 4 uses
+  %indvars.iv58.epil.init = phi i64 [ %4, %.lr.ph47 ], [ %indvars.iv.next59.1, %.preheader.unr-lcssa ] ; 4 uses
   %indvars.iv.epil.init = phi i64 [ 0, %.lr.ph47 ], [ %indvars.iv.next.1, %.preheader.unr-lcssa ]
   %.046.epil.init = phi i32 [ 0, %.lr.ph47 ], [ %i.cx, %.preheader.unr-lcssa ]
   %lcmp.mod77 = trunc i16 %i.ar to i1
@@ -304,7 +307,7 @@ bb.e:                                             ; preds = %.epil.preheader
   br label %bb.k
 
 bb.f:                                             ; preds = %bb.j, %.lr.ph47.new
-  %indvars.iv58 = phi i64 [ %i.bk, %.lr.ph47.new ], [ %indvars.iv.next59.1, %bb.j ] ; 5 uses
+  %indvars.iv58 = phi i64 [ %4, %.lr.ph47.new ], [ %indvars.iv.next59.1, %bb.j ] ; 5 uses
   %indvars.iv = phi i64 [ 0, %.lr.ph47.new ], [ %indvars.iv.next.1, %bb.j ] ; 3 uses
   %.046 = phi i32 [ 0, %.lr.ph47.new ], [ %i.cx, %bb.j ]
   %niter = phi i64 [ 0, %.lr.ph47.new ], [ %niter.next.1, %bb.j ]

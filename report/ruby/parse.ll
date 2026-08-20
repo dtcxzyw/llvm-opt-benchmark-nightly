@@ -204,29 +204,32 @@ bb.b:                                             ; preds = %bb.a
   %i.c = sext i16 %.val.val.i to i64
   %i.d = getelementptr [2 x i8], ptr @yypact, i64 %i.c
   %i.e = load i16, ptr %i.d, align 2, !tbaa !58   ; 3 uses
-  %i.f = sext i16 %i.e to i32                     ; 3 uses
+  %i.f = sext i16 %i.e to i32                     ; 4 uses
   %i.g = icmp eq i16 %i.e, -1154
   br i1 %i.g, label %.critedge.i.i.thread, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.h = icmp slt i16 %i.e, 0
-  %i.i = sub nsw i32 0, %i.f
-  %i.j = select i1 %i.h, i32 %i.i, i32 0          ; 2 uses
+  %i.i = sub nsw i32 0, %i.f                      ; 2 uses
+  %i.j = select i1 %i.h, i32 %i.i, i32 0
   %i.k = sub nsw i32 16093, %i.f
   %i.l = tail call i32 @llvm.smin.i32(i32 %i.k, i32 162) ; 2 uses
   %.not422.i.i = icmp slt i32 %i.j, %i.l
   br i1 %.not422.i.i, label %.lr.ph.i.i, label %.critedge.i.i.thread
 
 .lr.ph.i.i:                                       ; preds = %bb.c
-  %i.m = sext i32 %i.j to i64
+  %i.m = sext i32 %i.i to i64
+  %smax7.i.i = tail call i32 @llvm.smax.i32(i32 %i.f, i32 0)
+  %2 = zext nneg i32 %smax7.i.i to i64
+  %3 = add nsw i64 %2, %i.m
   %i.n = sext i32 %i.l to i64
   br label %.lr.ph.split.i.i
 
 .lr.ph.split.i.i:                                 ; preds = %.lr.ph.i.i, %bb.g
-  %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i, %bb.g ], [ %i.m, %.lr.ph.i.i ] ; 4 uses
+  %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i, %bb.g ], [ %3, %.lr.ph.i.i ] ; 4 uses
   %.0363.i.i = phi i32 [ %.1.i.i, %bb.g ], [ 0, %.lr.ph.i.i ] ; 5 uses
   %i.o = trunc nsw i64 %indvars.iv.i.i to i32     ; 2 uses
-  %i.p = add nsw i32 %i.o, %i.f
+  %i.p = add i32 %i.o, %i.f
   %i.q = sext i32 %i.p to i64                     ; 2 uses
   %i.r = getelementptr [2 x i8], ptr @yycheck, i64 %i.q
   %i.s = load i16, ptr %i.r, align 2, !tbaa !58

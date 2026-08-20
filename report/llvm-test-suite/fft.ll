@@ -57,7 +57,7 @@ bb.d:                                             ; preds = %bb.b
   %i.y = fsub double 2.000000e+00, %i.x
   %i.z = fmul double %i.x, %i.y
   %i.aa = tail call double @sqrt(double noundef %i.z) #8, !tbaa !4
-  %i.ab = zext nneg i32 %i.b to i64               ; 6 uses
+  %i.ab = zext nneg i32 %i.b to i64               ; 7 uses
   %i.ac = getelementptr inbounds nuw [4 x i8], ptr %i.j, i64 %i.ab
   store float 1.000000e+00, ptr %i.ac, align 4, !tbaa !15
   store float 0.000000e+00, ptr %i.j, align 4, !tbaa !15
@@ -192,8 +192,8 @@ bb.g:                                             ; preds = %bb.f, %._crit_edge.
   br i1 %.not69.i, label %make_sintbl.exit, label %.lr.ph66.preheader.i
 
 .lr.ph66.preheader.i:                             ; preds = %.preheader.i
-  %i.ca = zext nneg i32 %i.r to i64               ; 2 uses
-  %wide.trip.count79.i = zext nneg i32 %i.bz to i64 ; 5 uses
+  %i.ca = zext nneg i32 %i.r to i64               ; 3 uses
+  %wide.trip.count79.i = zext nneg i32 %i.bz to i64 ; 3 uses
   %invariant.gep.i = getelementptr inbounds nuw [4 x i8], ptr %i.j, i64 %i.ca ; 6 uses
   %min.iters.check = icmp samesign ult i32 %i.bz, 8
   br i1 %min.iters.check, label %.lr.ph66.i.preheader, label %vector.memcheck
@@ -230,7 +230,8 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph66.i.preheader:                             ; preds = %vector.memcheck, %.lr.ph66.preheader.i, %middle.block
   %indvars.iv76.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph66.preheader.i ], [ %n.vec, %middle.block ] ; 3 uses
-  %xtraiter196 = and i64 %wide.trip.count79.i, 3  ; 2 uses
+  %3 = add nuw nsw i64 %i.ab, %i.ca               ; 2 uses
+  %xtraiter196 = and i64 %3, 3                    ; 2 uses
   %lcmp.mod197.not = icmp eq i64 %xtraiter196, 0
   br i1 %lcmp.mod197.not, label %.lr.ph66.i.prol.loopexit, label %.lr.ph66.i.prol
 
@@ -249,7 +250,7 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph66.i.prol.loopexit:                         ; preds = %.lr.ph66.i.prol, %.lr.ph66.i.preheader
   %indvars.iv76.i.unr = phi i64 [ %indvars.iv76.i.ph, %.lr.ph66.i.preheader ], [ %indvars.iv.next77.i.prol, %.lr.ph66.i.prol ]
-  %i.cn = sub nsw i64 %indvars.iv76.i.ph, %wide.trip.count79.i
+  %i.cn = sub nsw i64 %indvars.iv76.i.ph, %3
   %i.co = icmp ugt i64 %i.cn, -4
   br i1 %i.co, label %make_sintbl.exit, label %.lr.ph66.i
 

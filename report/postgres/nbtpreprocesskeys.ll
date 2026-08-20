@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %.lr.ph23
   br i1 %i.ad, label %.lr.ph.preheader, label %.loopexit13
 
 .lr.ph.preheader:                                 ; preds = %.preheader
-  %i.ae = sub i64 %indvars.iv40, %i.ac            ; 3 uses
+  %i.ae = sub nsw i64 %indvars.iv40, %i.ac        ; 3 uses
   %min.iters.check = icmp ult i64 %i.ae, 8
   br i1 %min.iters.check, label %.lr.ph.preheader69, label %vector.ph
 

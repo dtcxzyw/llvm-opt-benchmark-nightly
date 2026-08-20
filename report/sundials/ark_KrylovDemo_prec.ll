@@ -204,9 +204,9 @@ bb.a:
   %scevgep155 = getelementptr i8, ptr %i.aj, i64 %i.ar ; 2 uses
   %scevgep156 = getelementptr i8, ptr %i.a, i64 %i.ar
   %scevgep157 = getelementptr i8, ptr %i.ak, i64 %i.ar
-  %i.at = mul i64 %indvars.iv96, %i.z             ; 2 uses
+  %i.at = mul nuw nsw i64 %indvars.iv96, %i.z     ; 2 uses
   %i.au = trunc i64 %i.at to i32                  ; 2 uses
-  %i.av = mul i64 %indvars.iv96, %i.y             ; 2 uses
+  %i.av = mul nuw nsw i64 %indvars.iv96, %i.y     ; 2 uses
   %i.aw = trunc i64 %i.av to i32                  ; 2 uses
   %i.ax = trunc nuw nsw i64 %indvars.iv96 to i32
   %i.ay = uitofp nneg i32 %i.ax to double
@@ -231,8 +231,8 @@ bb.a:
 
 bb.b:                                             ; preds = %.split, %._crit_edge
   %indvars.iv92 = phi i64 [ 0, %.split ], [ %indvars.iv.next93, %._crit_edge ] ; 7 uses
-  %i.bj = mul i64 %indvars.iv92, %i.s             ; 3 uses
-  %i.bk = add i64 %i.at, %i.bj                    ; 2 uses
+  %i.bj = mul nuw nsw i64 %indvars.iv92, %i.s     ; 3 uses
+  %i.bk = add nuw i64 %i.at, %i.bj                ; 2 uses
   %i.bl = trunc i64 %i.bk to i32
   %sext = shl i64 %i.bk, 32                       ; 2 uses
   %i.bm = ashr exact i64 %sext, 32
@@ -255,8 +255,8 @@ bb.b:                                             ; preds = %.split, %._crit_edg
   %scevgep119 = getelementptr i8, ptr %scevgep118, i64 %i.bv
   %scevgep120 = getelementptr i8, ptr %i.a, i64 %i.bn
   %scevgep122 = getelementptr i8, ptr %scevgep121, i64 %i.bn
-  %i.bw = mul i64 %indvars.iv92, %i.s             ; 3 uses
-  %i.bx = add i64 %i.av, %i.bw
+  %i.bw = mul nuw nsw i64 %indvars.iv92, %i.s     ; 3 uses
+  %i.bx = add nuw i64 %i.av, %i.bw
   %i.by = trunc i64 %i.bx to i32                  ; 4 uses
   %i.bz = trunc i64 %i.bw to i32
   %i.ca = add i32 %i.bf, %i.bz                    ; 2 uses

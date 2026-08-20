@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.d, %.lr.ph.i
   br i1 %i.h, label %.lr.ph.i.i.i.i.i.preheader.i, label %bb.c
 
 .lr.ph.i.i.i.i.i.preheader.i:                     ; preds = %bb.b
-  %i.i = add i64 %indvar, 1
+  %i.i = add nuw nsw i64 %indvar, 1
   %i.j = lshr exact i64 %.sroa.09.021.i.idx, 4    ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %.pn20.i, i64 32 ; 2 uses
   %xtraiter62 = and i64 %i.i, 3                   ; 2 uses
@@ -607,7 +607,7 @@ bb.w:                                             ; preds = %bb.v, %bb.s
   %i.cl = add i64 %smin379, %.0131312.us.us
   %smax = call i64 @llvm.smax.i64(i64 %i.ci, i64 %i.cl)
   %i.cm = xor i64 %i.cj, -1
-  %i.cn = add i64 %smax, %i.cm
+  %i.cn = add nsw i64 %smax, %i.cm
   %i.co = mul i64 %i.be, %i.cn
   %i.cp = sub nsw i64 %1, %.0131312.us.us         ; 2 uses
   %.sroa.speculated213.us.us = call i64 @llvm.smin.i64(i64 %., i64 %i.cp) ; 3 uses
@@ -1010,7 +1010,7 @@ bb.w:                                             ; preds = %bb.v, %bb.s
   %i.cx = add i64 %smin383, %.0134310.us.us
   %smax = call i64 @llvm.smax.i64(i64 %i.cu, i64 %i.cx)
   %i.cy = xor i64 %i.cv, -1
-  %i.cz = add i64 %smax, %i.cy
+  %i.cz = add nsw i64 %smax, %i.cy
   %i.da = mul i64 %i.bi, %i.cz
   %i.db = add i64 %i.ct, %i.da
   %i.dc = sub nsw i64 %1, %.0134310.us.us         ; 2 uses
@@ -1413,10 +1413,10 @@ bb.j:                                             ; preds = %.preheader, %bb.i
   %.0118460 = phi i8 [ 1, %.preheader ], [ %.4, %bb.i ] ; 6 uses
   %.0120459 = phi i1 [ false, %.preheader ], [ %.2122, %bb.i ] ; 3 uses
   %.0123458 = phi i1 [ undef, %.preheader ], [ %.1124, %bb.i ] ; 8 uses
-  %i.w = add i64 %.0116461, -1                    ; 2 uses
-  %i.x = add i64 %.0116461, -2
-  %i.y = add i64 %.0116461, -1                    ; 2 uses
-  %i.z = add i64 %.0116461, -2
+  %i.w = add nsw i64 %.0116461, -1                ; 2 uses
+  %i.x = add nsw i64 %.0116461, -2
+  %i.y = add nsw i64 %.0116461, -1                ; 2 uses
+  %i.z = add nsw i64 %.0116461, -2
   %i.aa = sub i64 %i.g, %indvar                   ; 3 uses
   %i.ab = shl i64 %indvar, 4
   %i.ac = shl i64 %indvar, 3
@@ -1425,11 +1425,11 @@ bb.j:                                             ; preds = %.preheader, %bb.i
   %i.af = add i64 %i.b, %i.ae
   %i.ag = shl i64 %indvar, 3                      ; 2 uses
   %i.ah = add i64 %i.ag, 8
-  %i.ai = add i64 %.0116461, 1
+  %i.ai = add nuw nsw i64 %.0116461, 1
   %i.aj = xor i64 %indvar, -1
-  %i.ak = add i64 %.0116461, 2
+  %i.ak = add nuw i64 %.0116461, 2
   %i.al = shl i64 %indvar, 4                      ; 2 uses
-  %i.am = add i64 %.0116461, 2
+  %i.am = add nuw i64 %.0116461, 2
   %i.an = shl i64 %indvar, 3                      ; 2 uses
   %i.ao = shl i64 %indvar, 3
   %i.ap = shl i64 %indvar, 4
@@ -1508,7 +1508,7 @@ _ZNK5Eigen9DenseBaseINS_12CwiseUnaryOpINS_8internal13scalar_abs_opIdEEKNS_5Block
 
 _ZNK5Eigen9DenseBaseINS_12CwiseUnaryOpINS_8internal13scalar_abs_opIdEEKNS_5BlockINS_8DiagonalINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi0EEELin1ELi1ELb0EEEEEE8maxCoeffIlEEdPT_.exit: ; preds = %_ZNK5Eigen9DenseBaseINS_12CwiseUnaryOpINS_8internal13scalar_abs_opIdEEKNS_5BlockINS_8DiagonalINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi0EEELin1ELi1ELb0EEEEEE8maxCoeffIlEEdPT_.exit.unr-lcssa, %.lr.ph.i.i.i.i.epil.preheader
   %.sroa.0.1.i.i.lcssa = phi i64 [ %.sroa.0.1.i.i.1, %_ZNK5Eigen9DenseBaseINS_12CwiseUnaryOpINS_8internal13scalar_abs_opIdEEKNS_5BlockINS_8DiagonalINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi0EEELin1ELi1ELb0EEEEEE8maxCoeffIlEEdPT_.exit.unr-lcssa ], [ %.sroa.0.1.i.i.epil, %.lr.ph.i.i.i.i.epil.preheader ] ; 7 uses
-  %i.bz = add i64 %.sroa.0.1.i.i.lcssa, %.0116461 ; 13 uses
+  %i.bz = add nuw i64 %.sroa.0.1.i.i.lcssa, %.0116461 ; 13 uses
   %i.ca = trunc i64 %i.bz to i32
   %i.cb = load ptr, ptr %1, align 8, !tbaa !800
   %i.cc = getelementptr inbounds nuw [4 x i8], ptr %i.cb, i64 %.0116461
@@ -1762,7 +1762,7 @@ vector.memcheck522:                               ; preds = %.lr.ph.i17.i.i.i.i.
   %i.fn = mul i64 %i.fm, %i.bz
   %i.fo = getelementptr i8, ptr %scevgep526, i64 %i.fn
   %scevgep527 = getelementptr i8, ptr %i.fo, i64 %i.fj
-  %i.fp = add i64 %i.ai, %.sroa.0.1.i.i.lcssa
+  %i.fp = add nuw i64 %i.ai, %.sroa.0.1.i.i.lcssa
   %i.fq = mul i64 %i.fm, %i.fp
   %scevgep528 = getelementptr i8, ptr %i.au, i64 %i.fq
   %bound0529 = icmp ult ptr %scevgep524, %scevgep528
@@ -2165,7 +2165,7 @@ bb.b:                                             ; preds = %bb.d, %.lr.ph.i
   br i1 %i.h, label %.lr.ph.i.i.i.i.i.preheader.i, label %bb.c
 
 .lr.ph.i.i.i.i.i.preheader.i:                     ; preds = %bb.b
-  %i.i = add i64 %indvar, 1
+  %i.i = add nuw nsw i64 %indvar, 1
   %i.j = lshr exact i64 %.sroa.09.021.i.idx, 4    ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %.pn20.i, i64 32 ; 2 uses
   %xtraiter62 = and i64 %i.i, 3                   ; 2 uses
@@ -2568,7 +2568,7 @@ bb.b:                                             ; preds = %bb.d, %.lr.ph.i
   br i1 %i.h, label %.lr.ph.i.i.i.i.i.preheader.i, label %bb.c
 
 .lr.ph.i.i.i.i.i.preheader.i:                     ; preds = %bb.b
-  %i.i = add i64 %indvar, 1
+  %i.i = add nuw nsw i64 %indvar, 1
   %i.j = lshr exact i64 %.sroa.09.021.i.idx, 4    ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %.pn20.i, i64 32 ; 2 uses
   %xtraiter62 = and i64 %i.i, 3                   ; 2 uses
@@ -2971,7 +2971,7 @@ bb.b:                                             ; preds = %bb.d, %.lr.ph.i
   br i1 %i.h, label %.lr.ph.i.i.i.i.i.preheader.i, label %bb.c
 
 .lr.ph.i.i.i.i.i.preheader.i:                     ; preds = %bb.b
-  %i.i = add i64 %indvar, 1
+  %i.i = add nuw nsw i64 %indvar, 1
   %i.j = lshr exact i64 %.sroa.09.021.i.idx, 4    ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %.pn20.i, i64 32 ; 2 uses
   %xtraiter62 = and i64 %i.i, 3                   ; 2 uses

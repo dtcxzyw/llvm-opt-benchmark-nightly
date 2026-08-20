@@ -204,14 +204,15 @@ _RNvMsa_NtCs7GWc7oqutCf_9hashbrown3rawNtB5_13RawTableInner23prepare_rehash_in_pl
   br label %_RNvMsa_NtCs7GWc7oqutCf_9hashbrown3rawNtB5_13RawTableInner15rehash_in_place.exit
 
 .lr.ph.i.i:                                       ; preds = %bb.m
-  %i.dm = lshr i64 %i.h, 4
+  %i.dm = lshr i64 %i.h, 4                        ; 2 uses
   %i.dn = and i64 %i.h, 15
   %.not10.i.i.i.i = icmp ne i64 %i.dn, 0
-  %i.do = zext i1 %.not10.i.i.i.i to i64
-  %.sroa.05.0.i.i.i.i = add nuw nsw i64 %i.dm, %i.do ; 4 uses
+  %i.do = zext i1 %.not10.i.i.i.i to i64          ; 2 uses
+  %.sroa.05.0.i.i.i.i = add nuw nsw i64 %i.dm, %i.do ; 3 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val25.i) ]
+  %4 = add nuw nsw i64 %i.dm, %i.do
   %xtraiter = and i64 %.sroa.05.0.i.i.i.i, 1
-  %i.dp = icmp eq i64 %.sroa.05.0.i.i.i.i, 1
+  %i.dp = icmp eq i64 %4, 1
   br i1 %i.dp, label %.epil.preheader, label %.lr.ph.i.i.new
 
 .lr.ph.i.i.new:                                   ; preds = %.lr.ph.i.i
@@ -614,12 +615,12 @@ bb.ah:                                            ; preds = %bb.ag
   br label %.backedge.i.i
 
 _RNvMs6_NtCs6JMX4GRUq9U_4core3numm15overflowing_pow.exit.i21.i.i: ; preds = %bb.ae
-  %..i.i.i.i5 = tail call noundef range(i32 0, 7) i32 @llvm.umin.i32(i32 %.sroa.0.047.i.i, i32 6) ; 2 uses
-  %2 = mul nuw nsw i32 %..i.i.i.i5, %..i.i.i.i5   ; 2 uses
   %.not.i22.i.i = icmp eq i32 %.sroa.0.047.i.i, 0
   br i1 %.not.i22.i.i, label %_RNvMs1_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc5utilsNtB5_7Backoff10spin_light.exit.i.i, label %.lr.ph.i25.i.i.preheader
 
 .lr.ph.i25.i.i.preheader:                         ; preds = %_RNvMs6_NtCs6JMX4GRUq9U_4core3numm15overflowing_pow.exit.i21.i.i
+  %..i.i.i.i5 = tail call noundef range(i32 0, 7) i32 @llvm.umin.i32(i32 %.sroa.0.047.i.i, i32 6) ; 2 uses
+  %2 = mul nuw nsw i32 %..i.i.i.i5, %..i.i.i.i5   ; 2 uses
   %xtraiter = and i32 %2, 5                       ; 3 uses
   %i.ed = icmp ult i32 %.sroa.0.047.i.i, 3
   br i1 %i.ed, label %.lr.ph.i25.i.i.epil.preheader, label %.lr.ph.i25.i.i.preheader.new

@@ -203,14 +203,14 @@ bb.f:                                             ; preds = %bb.e
 .lr.ph.preheader:                                 ; preds = %.thread, %bb.f
   %.084 = phi i32 [ 6, %.thread ], [ 2, %bb.f ]   ; 2 uses
   %i.aa = zext nneg i32 %.084 to i64              ; 2 uses
-  %scevgep = getelementptr i8, ptr %i.b, i64 %i.aa
+  %scevgep = getelementptr nuw i8, ptr %i.b, i64 %i.aa
   %i.ab = sub nuw nsw i32 14, %.084
   %i.ac = or disjoint i32 %i.ab, 1
   %i.ad = add nsw i32 %3, -1
   %i.ae = call i32 @llvm.umin.i32(i32 %i.ac, i32 %i.ad)
   %narrow = add nuw nsw i32 %i.ae, 1
   %i.af = zext nneg i32 %narrow to i64
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef align 2 %scevgep, ptr noundef align 1 %2, i64 %i.af, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %scevgep, ptr noundef align 1 %2, i64 %i.af, i1 false)
   br label %.lr.ph
 
 .preheader63:                                     ; preds = %.lr.ph
@@ -223,10 +223,10 @@ bb.f:                                             ; preds = %bb.e
   %.049.lcssa91 = phi i32 [ %i.al, %.preheader63 ], [ %3, %bb.f ]
   %.051.lcssa89 = phi ptr [ %i.ak, %.preheader63 ], [ %2, %bb.f ]
   %i.ai = zext nneg i32 %.1.lcssa92 to i64
-  %scevgep74 = getelementptr i8, ptr %i.b, i64 %i.ai
+  %scevgep74 = getelementptr nuw i8, ptr %i.b, i64 %i.ai
   %narrow80 = sub nuw nsw i32 16, %.1.lcssa92
   %i.aj = zext nneg i32 %narrow80 to i64
-  call void @llvm.memset.p0.i64(ptr align 1 %scevgep74, i8 0, i64 %i.aj, i1 false)
+  call void @llvm.memset.p0.i64(ptr nonnull align 1 %scevgep74, i8 0, i64 %i.aj, i1 false)
   br label %._crit_edge
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph

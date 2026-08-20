@@ -204,9 +204,9 @@ bb.c:                                             ; preds = %_ZNSt6vectorIfSaIfE
   %indvars.iv299 = phi i64 [ %indvars.iv.next300, %_ZNSt6vectorIfSaIfEED2Ev.exit211 ], [ 128, %vector.body439 ] ; 20 uses
   %.0179282 = phi float [ %.1, %_ZNSt6vectorIfSaIfEED2Ev.exit211 ], [ f0x7F7FFFFF, %vector.body439 ] ; 2 uses
   %.0180281 = phi i32 [ %.1181, %_ZNSt6vectorIfSaIfEED2Ev.exit211 ], [ 128, %vector.body439 ]
-  %i.bj = add i64 %indvar, 127
+  %i.bj = add nuw nsw i64 %indvar, 127
   %i.bk = sub i64 0, %indvar
-  %i.bl = add i64 %indvar, 127
+  %i.bl = add nuw nsw i64 %indvar, 127
   %i.bm = shl nuw nsw i64 %indvar, 2
   %i.bn = shl nuw nsw i64 %indvars.iv299, 2       ; 4 uses
   %i.bo = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.bn) #39
@@ -609,7 +609,7 @@ bb.x:                                             ; preds = %bb.w, %bb.r
   br i1 %i.it, label %.lr.ph280.preheader, label %.lr.ph.i.preheader
 
 .lr.ph280.preheader:                              ; preds = %bb.x
-  %i.mn = sub i64 %indvars.iv299, %.pre-phi       ; 3 uses
+  %i.mn = sub nsw i64 %indvars.iv299, %.pre-phi   ; 3 uses
   %min.iters.check = icmp ult i64 %i.mn, 8
   br i1 %min.iters.check, label %.lr.ph280.preheader453, label %vector.ph
 

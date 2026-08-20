@@ -201,13 +201,17 @@ vec.epilog.middle.block362:                       ; preds = %vec.epilog.vector.b
   br i1 %min.iters.check380, label %.lr.ph198.preheader515, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph198.preheader
-  %i.ce = mul nuw nsw i64 %wide.trip.count, 12    ; 2 uses
+  %i.ce = mul nuw nsw i64 %wide.trip.count, 12    ; 3 uses
   %i.cf = add nsw i64 %i.ce, -5
   %diff.check366 = icmp ult i64 %i.cf, 31
-  %i.cg = shl nuw nsw i64 %wide.trip.count228, 2
-  %i.ch = add nuw nsw i64 %i.ce, %i.cg
-  %i.ci = icmp samesign ult i64 %i.ch, 36
-  %conflict.rdx371 = or i1 %diff.check366, %i.ci
+  %i.cg = shl nuw nsw i64 %wide.trip.count228, 2  ; 2 uses
+  %4 = add nuw nsw i64 %i.ce, %i.cg
+  %diff.check368 = icmp samesign ult i64 %4, 32
+  %conflict.rdx369 = or i1 %diff.check366, %diff.check368
+  %5 = add nuw nsw i64 %i.ce, %i.cg
+  %i.ch = add nsw i64 %5, -5
+  %i.ci = icmp ult i64 %i.ch, 31
+  %conflict.rdx371 = or i1 %conflict.rdx369, %i.ci
   %i.cj = shl nuw nsw i64 %wide.trip.count, 2
   %i.ck = or disjoint i64 %i.cj, 3
   %diff.check372 = icmp samesign ult i64 %i.ck, 31
