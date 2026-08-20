@@ -203,8 +203,9 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 28
+  %4 = getelementptr inbounds nuw i8, ptr %1, i64 12
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 20
-  %i.g = getelementptr inbounds nuw i8, ptr %1, i64 4
+  %i.g = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.i = getelementptr inbounds nuw i8, ptr %2, i64 40
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 40
@@ -218,21 +219,24 @@ bb.a:
   %i.r = shufflevector <2 x float> %i.q, <2 x float> poison, <4 x i32> <i32 1, i32 0, i32 1, i32 0> ; 2 uses
   %i.s = load <2 x float>, ptr %i.b, align 4, !tbaa !30
   %i.t = shufflevector <2 x float> %i.s, <2 x float> poison, <4 x i32> <i32 1, i32 0, i32 1, i32 0> ; 2 uses
-  %i.u = fadd nsz <4 x float> %i.r, %i.t          ; 2 uses
+  %i.u = fadd nsz <4 x float> %i.r, %i.t
   %i.v = fsub nsz <4 x float> %i.r, %i.t
-  %i.w = shufflevector <4 x float> %i.u, <4 x float> %i.v, <4 x i32> <i32 0, i32 5, i32 6, i32 3> ; 3 uses
+  %i.w = shufflevector <4 x float> %i.u, <4 x float> %i.v, <4 x i32> <i32 0, i32 5, i32 6, i32 3> ; 4 uses
   %i.x = load <4 x float>, ptr %i.c, align 4, !tbaa !30 ; 3 uses
   %i.y = shufflevector <4 x float> %i.x, <4 x float> poison, <4 x i32> <i32 2, i32 3, i32 0, i32 1> ; 2 uses
-  %i.z = fadd nsz <4 x float> %i.x, %i.y          ; 2 uses
+  %i.z = fadd nsz <4 x float> %i.x, %i.y
   %i.aa = fsub nsz <4 x float> %i.x, %i.y
-  %i.ab = shufflevector <4 x float> %i.z, <4 x float> %i.aa, <4 x i32> <i32 3, i32 5, i32 6, i32 0> ; 3 uses
-  %i.ac = fadd nsz <4 x float> %i.w, %i.ab        ; 3 uses
+  %i.ab = shufflevector <4 x float> %i.z, <4 x float> %i.aa, <4 x i32> <i32 3, i32 5, i32 6, i32 0> ; 4 uses
+  %i.ac = fadd nsz <4 x float> %i.w, %i.ab        ; 4 uses
   %i.ad = fsub nsz <4 x float> %i.w, %i.ab        ; 2 uses
   %i.ae = shufflevector <4 x float> %i.ac, <4 x float> %i.ad, <4 x i32> <i32 0, i32 1, i32 2, i32 7> ; 2 uses
-  %4 = shufflevector <4 x float> %i.u, <4 x float> %i.ac, <4 x i32> <i32 3, i32 4, i32 5, i32 6>
-  %5 = shufflevector <4 x float> %i.z, <4 x float> <float poison, float -0.000000e+00, float -0.000000e+00, float -0.000000e+00>, <4 x i32> <i32 0, i32 5, i32 6, i32 7>
-  %6 = fadd nsz <4 x float> %4, %5                ; 3 uses
-  store <4 x float> %6, ptr %1, align 4, !tbaa !30
+  %foldExtExtBinop = fadd nsz <4 x float> %i.w, %i.ab ; 2 uses
+  %5 = extractelement <4 x float> %foldExtExtBinop, i64 3 ; 2 uses
+  store float %5, ptr %1, align 4, !tbaa !49
+  %6 = extractelement <4 x float> %i.ac, i64 2
+  store float %6, ptr %4, align 4, !tbaa !51
+  %7 = shufflevector <4 x float> %i.ac, <4 x float> poison, <2 x i32> <i32 0, i32 1>
+  store <2 x float> %7, ptr %i.g, align 4, !tbaa !30
   %i.af = insertelement <2 x float> poison, float %i.a, i64 0 ; 2 uses
   %i.ag = insertelement <2 x float> %i.af, float %i.p, i64 1
   %i.ah = shufflevector <2 x float> %i.af, <2 x float> poison, <2 x i32> zeroinitializer
@@ -278,9 +282,9 @@ bb.a:
   %i.bq = shufflevector <2 x float> %i.ap, <2 x float> %i.bc, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   %i.br = shufflevector <2 x float> %i.at, <2 x float> %i.bg, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   %i.bs = fadd nsz <4 x float> %i.bq, %i.br       ; 3 uses
-  %foldExtExtBinop116 = fadd nsz <4 x float> %6, %i.bs
-  %7 = extractelement <4 x float> %foldExtExtBinop116, i64 0
-  store float %7, ptr %1, align 4, !tbaa !49
+  %8 = extractelement <4 x float> %i.bs, i64 0
+  %9 = fadd nsz float %5, %8
+  store float %9, ptr %1, align 4, !tbaa !49
   %foldExtExtBinop118 = fadd nsz <4 x float> %i.ak, %i.bp
   %i.bt = extractelement <4 x float> %foldExtExtBinop118, i64 3
   store float %i.bt, ptr %i.e, align 4, !tbaa !51
@@ -290,7 +294,8 @@ bb.a:
   %i.bw = shufflevector <4 x float> %i.bp, <4 x float> poison, <2 x i32> <i32 1, i32 2>
   %i.bx = fadd nsz <2 x float> %i.bv, %i.bw
   store <2 x float> %i.bx, ptr %i.f, align 4, !tbaa !30
-  %i.by = shufflevector <4 x float> %6, <4 x float> %i.ac, <4 x i32> <i32 0, i32 4, i32 5, i32 6>
+  %10 = shufflevector <4 x float> %foldExtExtBinop, <4 x float> poison, <4 x i32> <i32 3, i32 poison, i32 poison, i32 poison>
+  %i.by = shufflevector <4 x float> %10, <4 x float> %i.ac, <4 x i32> <i32 0, i32 4, i32 5, i32 6>
   %i.bz = fsub nsz <4 x float> %i.by, %i.bs
   store <4 x float> %i.bz, ptr %i.n, align 4, !tbaa !30
   %i.ca = shufflevector <4 x float> %i.bs, <4 x float> %i.bp, <4 x i32> <i32 1, i32 2, i32 3, i32 4>

@@ -203,9 +203,10 @@ bb.l:                                             ; preds = %bb.k
   %.sroa.15270.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cr, i64 40
   store float %i.cf, ptr %.sroa.15270.0..sroa_idx, align 4
   %.sroa.16273.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cr, i64 44
-  store float %i.cl, ptr %.sroa.16273.0..sroa_idx, align 4
-  %.sroa.17276.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cr, i64 48
-  store <4 x float> <float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float 1.000000e+00>, ptr %.sroa.17276.0..sroa_idx, align 4
+  %45 = insertelement <4 x float> <float poison, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00>, float %i.cl, i64 0
+  store <4 x float> %45, ptr %.sroa.16273.0..sroa_idx, align 4
+  %.sroa.17276.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cr, i64 60
+  store float 1.000000e+00, ptr %.sroa.17276.0..sroa_idx, align 4, !tbaa !8
   %i.cu = load ptr, ptr %i.cq, align 8, !tbaa !145
   %i.cv = getelementptr inbounds nuw i8, ptr %i.cu, i64 64 ; 2 uses
   store ptr %i.cv, ptr %i.cq, align 8, !tbaa !145
@@ -608,9 +609,10 @@ bb.l:                                             ; preds = %bb.k
   %.sroa.15268.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cr, i64 40
   store float %i.cf, ptr %.sroa.15268.0..sroa_idx, align 4
   %.sroa.16271.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cr, i64 44
-  store float %i.cl, ptr %.sroa.16271.0..sroa_idx, align 4
-  %.sroa.17274.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cr, i64 48
-  store <4 x float> <float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float 1.000000e+00>, ptr %.sroa.17274.0..sroa_idx, align 4
+  %45 = insertelement <4 x float> <float poison, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00>, float %i.cl, i64 0
+  store <4 x float> %45, ptr %.sroa.16271.0..sroa_idx, align 4
+  %.sroa.17274.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cr, i64 60
+  store float 1.000000e+00, ptr %.sroa.17274.0..sroa_idx, align 4, !tbaa !8
   %i.cu = load ptr, ptr %i.cq, align 8, !tbaa !145
   %i.cv = getelementptr inbounds nuw i8, ptr %i.cu, i64 64 ; 2 uses
   store ptr %i.cv, ptr %i.cq, align 8, !tbaa !145

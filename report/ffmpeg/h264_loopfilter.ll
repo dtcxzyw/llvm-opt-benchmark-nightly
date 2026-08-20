@@ -201,9 +201,7 @@ bb.fx:                                            ; preds = %bb.fw
   %i.bsn = getelementptr inbounds nuw i8, ptr %0, i64 34072 ; 2 uses
   %i.bso = getelementptr inbounds nuw i8, ptr %0, i64 31088
   %i.bsp = getelementptr inbounds nuw i8, ptr %1, i64 28628 ; 2 uses
-  %9 = getelementptr inbounds nuw i8, ptr %1, i64 28629
   %i.bsq = getelementptr inbounds nuw i8, ptr %1, i64 28630
-  %10 = getelementptr inbounds nuw i8, ptr %1, i64 28631
   %i.bsr = getelementptr inbounds nuw i8, ptr %0, i64 30640
   %i.bss = getelementptr inbounds nuw i8, ptr %i.t, i64 1
   %i.bst = getelementptr inbounds nuw i8, ptr %i.t, i64 2
@@ -262,27 +260,24 @@ bb.ga:                                            ; preds = %bb.fz
   br i1 %.not481.i, label %bb.gb, label %bb.gc
 
 bb.gb:                                            ; preds = %bb.ga
-  %11 = load i8, ptr %i.bsp, align 4, !tbaa !84
-  %.not482.i = icmp eq i8 %11, 0
-  %12 = select i1 %.not482.i, i16 1, i16 2
-  %13 = load i8, ptr %9, align 1, !tbaa !84
-  %.not484.i = icmp eq i8 %13, 0
-  %14 = select i1 %.not484.i, i16 1, i16 2
+  %9 = load <2 x i8>, ptr %i.bsp, align 4, !tbaa !84
+  %10 = icmp eq <2 x i8> %9, zeroinitializer
+  %11 = select <2 x i1> %10, <2 x i16> splat (i16 1), <2 x i16> splat (i16 2)
+  %12 = shufflevector <2 x i16> %11, <2 x i16> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %13 = shufflevector <4 x i16> %12, <4 x i16> <i16 poison, i16 poison, i16 2, i16 2>, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
   br label %bb.gc
 
 bb.gc:                                            ; preds = %bb.ga, %bb.gb
-  %.sroa.0807.0 = phi i16 [ %12, %bb.gb ], [ 2, %bb.ga ] ; 2 uses
-  %15 = phi i16 [ %14, %bb.gb ], [ 2, %bb.ga ]    ; 2 uses
+  %14 = phi <4 x i16> [ %13, %bb.gb ], [ splat (i16 2), %bb.ga ] ; 2 uses
   %.not485.i = icmp sgt i16 %i.buc, -1
   br i1 %.not485.i, label %bb.gd, label %.loopexit
 
 bb.gd:                                            ; preds = %bb.gc
-  %16 = load i8, ptr %i.bsq, align 2, !tbaa !84
-  %.not486.i = icmp eq i8 %16, 0
-  %17 = select i1 %.not486.i, i16 1, i16 2
-  %18 = load i8, ptr %10, align 1, !tbaa !84
-  %.not488.i = icmp eq i8 %18, 0
-  %19 = select i1 %.not488.i, i16 1, i16 2
+  %15 = load <2 x i8>, ptr %i.bsq, align 2, !tbaa !84
+  %16 = icmp eq <2 x i8> %15, zeroinitializer
+  %17 = select <2 x i1> %16, <2 x i16> splat (i16 1), <2 x i16> splat (i16 2)
+  %18 = shufflevector <2 x i16> %17, <2 x i16> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %19 = shufflevector <4 x i16> %14, <4 x i16> %18, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
   br label %.loopexit
 
 .loopexit.loopexit:                               ; preds = %bb.fz
@@ -292,22 +287,12 @@ bb.gd:                                            ; preds = %bb.gc
   %i.buh = load <4 x i8>, ptr %i.bsp, align 4, !tbaa !84
   %i.bui = load <4 x i8>, ptr %i.bug, align 1, !tbaa !84
   %i.buj = or <4 x i8> %i.bui, %i.buh
-  %i.buk = icmp eq <4 x i8> %i.buj, zeroinitializer ; 4 uses
-  %20 = extractelement <4 x i1> %i.buk, i64 0
-  %21 = select i1 %20, i16 1, i16 2
-  %22 = extractelement <4 x i1> %i.buk, i64 1
-  %23 = select i1 %22, i16 1, i16 2
-  %24 = extractelement <4 x i1> %i.buk, i64 2
-  %25 = select i1 %24, i16 1, i16 2
-  %26 = extractelement <4 x i1> %i.buk, i64 3
-  %27 = select i1 %26, i16 1, i16 2
+  %i.buk = icmp eq <4 x i8> %i.buj, zeroinitializer
+  %20 = select <4 x i1> %i.buk, <4 x i16> splat (i16 1), <4 x i16> splat (i16 2)
   br label %.loopexit
 
 .loopexit:                                        ; preds = %bb.gd, %bb.gc, %bb.fy, %.loopexit.loopexit
-  %.sroa.26.0 = phi i16 [ %27, %.loopexit.loopexit ], [ 3, %bb.fy ], [ %19, %bb.gd ], [ 2, %bb.gc ] ; 5 uses
-  %.sroa.18.1 = phi i16 [ %25, %.loopexit.loopexit ], [ 3, %bb.fy ], [ %17, %bb.gd ], [ 2, %bb.gc ] ; 5 uses
-  %.sroa.11.0 = phi i16 [ %23, %.loopexit.loopexit ], [ 3, %bb.fy ], [ %15, %bb.gd ], [ %15, %bb.gc ] ; 5 uses
-  %.sroa.0807.1 = phi i16 [ %21, %.loopexit.loopexit ], [ 3, %bb.fy ], [ %.sroa.0807.0, %bb.gd ], [ %.sroa.0807.0, %bb.gc ] ; 5 uses
+  %21 = phi <4 x i16> [ %20, %.loopexit.loopexit ], [ splat (i16 3), %bb.fy ], [ %19, %bb.gd ], [ %14, %bb.gc ] ; 20 uses
   %i.bul = load ptr, ptr %i.bsm, align 8, !tbaa !83 ; 2 uses
   %i.bum = getelementptr inbounds i8, ptr %i.bul, i64 %i.bg
   %i.bun = load i8, ptr %i.bum, align 1, !tbaa !84
@@ -338,19 +323,23 @@ bb.ge:                                            ; preds = %.loopexit
   %i.bvi = getelementptr inbounds nuw i8, ptr %4, i64 %i.bvh
   call void @llvm.lifetime.start.p0(ptr nonnull %i.t) #5
   %i.bvj = getelementptr inbounds nuw [4 x i8], ptr @tc0_table, i64 %i.bvd ; 4 uses
-  %i.bvk = zext nneg i16 %.sroa.0807.1 to i64
+  %22 = extractelement <4 x i16> %21, i64 0
+  %i.bvk = zext nneg i16 %22 to i64
   %i.bvl = getelementptr inbounds nuw i8, ptr %i.bvj, i64 %i.bvk
   %i.bvm = load i8, ptr %i.bvl, align 1, !tbaa !84
   store i8 %i.bvm, ptr %i.t, align 1, !tbaa !84
-  %i.bvn = zext nneg i16 %.sroa.11.0 to i64
+  %23 = extractelement <4 x i16> %21, i64 1
+  %i.bvn = zext nneg i16 %23 to i64
   %i.bvo = getelementptr inbounds nuw i8, ptr %i.bvj, i64 %i.bvn
   %i.bvp = load i8, ptr %i.bvo, align 1, !tbaa !84
   store i8 %i.bvp, ptr %i.bss, align 1, !tbaa !84
-  %i.bvq = zext nneg i16 %.sroa.18.1 to i64
+  %24 = extractelement <4 x i16> %21, i64 2
+  %i.bvq = zext nneg i16 %24 to i64
   %i.bvr = getelementptr inbounds nuw i8, ptr %i.bvj, i64 %i.bvq
   %i.bvs = load i8, ptr %i.bvr, align 1, !tbaa !84
   store i8 %i.bvs, ptr %i.bst, align 1, !tbaa !84
-  %i.bvt = zext nneg i16 %.sroa.26.0 to i64
+  %25 = extractelement <4 x i16> %21, i64 3
+  %i.bvt = zext nneg i16 %25 to i64
   %i.bvu = getelementptr inbounds nuw i8, ptr %i.bvj, i64 %i.bvt
   %i.bvv = load i8, ptr %i.bvu, align 1, !tbaa !84
   store i8 %i.bvv, ptr %i.bsu, align 1, !tbaa !84
@@ -408,19 +397,23 @@ bb.gh:                                            ; preds = %bb.gg
   %i.bxd = getelementptr inbounds nuw i8, ptr %5, i64 %i.bwq
   call void @llvm.lifetime.start.p0(ptr nonnull %i.u) #5
   %i.bxe = getelementptr inbounds nuw [4 x i8], ptr @tc0_table, i64 %i.bwz ; 4 uses
-  %i.bxf = zext nneg i16 %.sroa.0807.1 to i64
+  %26 = extractelement <4 x i16> %21, i64 0
+  %i.bxf = zext nneg i16 %26 to i64
   %i.bxg = getelementptr inbounds nuw i8, ptr %i.bxe, i64 %i.bxf
   %i.bxh = load i8, ptr %i.bxg, align 1, !tbaa !84
   store i8 %i.bxh, ptr %i.u, align 1, !tbaa !84
-  %i.bxi = zext nneg i16 %.sroa.11.0 to i64
+  %27 = extractelement <4 x i16> %21, i64 1
+  %i.bxi = zext nneg i16 %27 to i64
   %i.bxj = getelementptr inbounds nuw i8, ptr %i.bxe, i64 %i.bxi
   %i.bxk = load i8, ptr %i.bxj, align 1, !tbaa !84
   store i8 %i.bxk, ptr %i.bth, align 1, !tbaa !84
-  %i.bxl = zext nneg i16 %.sroa.18.1 to i64
+  %28 = extractelement <4 x i16> %21, i64 2
+  %i.bxl = zext nneg i16 %28 to i64
   %i.bxm = getelementptr inbounds nuw i8, ptr %i.bxe, i64 %i.bxl
   %i.bxn = load i8, ptr %i.bxm, align 1, !tbaa !84
   store i8 %i.bxn, ptr %i.bti, align 1, !tbaa !84
-  %i.bxo = zext nneg i16 %.sroa.26.0 to i64
+  %29 = extractelement <4 x i16> %21, i64 3
+  %i.bxo = zext nneg i16 %29 to i64
   %i.bxp = getelementptr inbounds nuw i8, ptr %i.bxe, i64 %i.bxo
   %i.bxq = load i8, ptr %i.bxp, align 1, !tbaa !84
   store i8 %i.bxq, ptr %i.btj, align 1, !tbaa !84
@@ -449,19 +442,23 @@ bb.gi:                                            ; preds = %filter_mb_edgeh.exi
   %i.bye = getelementptr inbounds nuw i8, ptr %6, i64 %i.bwq
   call void @llvm.lifetime.start.p0(ptr nonnull %i.v) #5
   %i.byf = getelementptr inbounds nuw [4 x i8], ptr @tc0_table, i64 %i.bya ; 4 uses
-  %i.byg = zext nneg i16 %.sroa.0807.1 to i64
+  %30 = extractelement <4 x i16> %21, i64 0
+  %i.byg = zext nneg i16 %30 to i64
   %i.byh = getelementptr inbounds nuw i8, ptr %i.byf, i64 %i.byg
   %i.byi = load i8, ptr %i.byh, align 1, !tbaa !84
   store i8 %i.byi, ptr %i.v, align 1, !tbaa !84
-  %i.byj = zext nneg i16 %.sroa.11.0 to i64
+  %31 = extractelement <4 x i16> %21, i64 1
+  %i.byj = zext nneg i16 %31 to i64
   %i.byk = getelementptr inbounds nuw i8, ptr %i.byf, i64 %i.byj
   %i.byl = load i8, ptr %i.byk, align 1, !tbaa !84
   store i8 %i.byl, ptr %i.btk, align 1, !tbaa !84
-  %i.bym = zext nneg i16 %.sroa.18.1 to i64
+  %32 = extractelement <4 x i16> %21, i64 2
+  %i.bym = zext nneg i16 %32 to i64
   %i.byn = getelementptr inbounds nuw i8, ptr %i.byf, i64 %i.bym
   %i.byo = load i8, ptr %i.byn, align 1, !tbaa !84
   store i8 %i.byo, ptr %i.btl, align 1, !tbaa !84
-  %i.byp = zext nneg i16 %.sroa.26.0 to i64
+  %33 = extractelement <4 x i16> %21, i64 3
+  %i.byp = zext nneg i16 %33 to i64
   %i.byq = getelementptr inbounds nuw i8, ptr %i.byf, i64 %i.byp
   %i.byr = load i8, ptr %i.byq, align 1, !tbaa !84
   store i8 %i.byr, ptr %i.btm, align 1, !tbaa !84
@@ -485,22 +482,26 @@ bb.gk:                                            ; preds = %bb.gj
   %i.bzb = getelementptr inbounds nuw i8, ptr %5, i64 %i.bwq
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #5
   %i.bzc = getelementptr inbounds nuw [4 x i8], ptr @tc0_table, i64 %i.byx ; 4 uses
-  %i.bzd = zext nneg i16 %.sroa.0807.1 to i64
+  %34 = extractelement <4 x i16> %21, i64 0
+  %i.bzd = zext nneg i16 %34 to i64
   %i.bze = getelementptr inbounds nuw i8, ptr %i.bzc, i64 %i.bzd
   %i.bzf = load i8, ptr %i.bze, align 1, !tbaa !84
   %i.bzg = add i8 %i.bzf, 1
   store i8 %i.bzg, ptr %i.g, align 1, !tbaa !84
-  %i.bzh = zext nneg i16 %.sroa.11.0 to i64
+  %35 = extractelement <4 x i16> %21, i64 1
+  %i.bzh = zext nneg i16 %35 to i64
   %i.bzi = getelementptr inbounds nuw i8, ptr %i.bzc, i64 %i.bzh
   %i.bzj = load i8, ptr %i.bzi, align 1, !tbaa !84
   %i.bzk = add i8 %i.bzj, 1
   store i8 %i.bzk, ptr %i.bsz, align 1, !tbaa !84
-  %i.bzl = zext nneg i16 %.sroa.18.1 to i64
+  %36 = extractelement <4 x i16> %21, i64 2
+  %i.bzl = zext nneg i16 %36 to i64
   %i.bzm = getelementptr inbounds nuw i8, ptr %i.bzc, i64 %i.bzl
   %i.bzn = load i8, ptr %i.bzm, align 1, !tbaa !84
   %i.bzo = add i8 %i.bzn, 1
   store i8 %i.bzo, ptr %i.bta, align 1, !tbaa !84
-  %i.bzp = zext nneg i16 %.sroa.26.0 to i64
+  %37 = extractelement <4 x i16> %21, i64 3
+  %i.bzp = zext nneg i16 %37 to i64
   %i.bzq = getelementptr inbounds nuw i8, ptr %i.bzc, i64 %i.bzp
   %i.bzr = load i8, ptr %i.bzq, align 1, !tbaa !84
   %i.bzs = add i8 %i.bzr, 1
@@ -530,22 +531,26 @@ bb.gl:                                            ; preds = %filter_mb_edgech.ex
   %i.cag = getelementptr inbounds nuw i8, ptr %6, i64 %i.bwq
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #5
   %i.cah = getelementptr inbounds nuw [4 x i8], ptr @tc0_table, i64 %i.cac ; 4 uses
-  %i.cai = zext nneg i16 %.sroa.0807.1 to i64
+  %38 = extractelement <4 x i16> %21, i64 0
+  %i.cai = zext nneg i16 %38 to i64
   %i.caj = getelementptr inbounds nuw i8, ptr %i.cah, i64 %i.cai
   %i.cak = load i8, ptr %i.caj, align 1, !tbaa !84
   %i.cal = add i8 %i.cak, 1
   store i8 %i.cal, ptr %i.h, align 1, !tbaa !84
-  %i.cam = zext nneg i16 %.sroa.11.0 to i64
+  %39 = extractelement <4 x i16> %21, i64 1
+  %i.cam = zext nneg i16 %39 to i64
   %i.can = getelementptr inbounds nuw i8, ptr %i.cah, i64 %i.cam
   %i.cao = load i8, ptr %i.can, align 1, !tbaa !84
   %i.cap = add i8 %i.cao, 1
   store i8 %i.cap, ptr %i.bte, align 1, !tbaa !84
-  %i.caq = zext nneg i16 %.sroa.18.1 to i64
+  %40 = extractelement <4 x i16> %21, i64 2
+  %i.caq = zext nneg i16 %40 to i64
   %i.car = getelementptr inbounds nuw i8, ptr %i.cah, i64 %i.caq
   %i.cas = load i8, ptr %i.car, align 1, !tbaa !84
   %i.cat = add i8 %i.cas, 1
   store i8 %i.cat, ptr %i.btf, align 1, !tbaa !84
-  %i.cau = zext nneg i16 %.sroa.26.0 to i64
+  %41 = extractelement <4 x i16> %21, i64 3
+  %i.cau = zext nneg i16 %41 to i64
   %i.cav = getelementptr inbounds nuw i8, ptr %i.cah, i64 %i.cau
   %i.caw = load i8, ptr %i.cav, align 1, !tbaa !84
   %i.cax = add i8 %i.caw, 1

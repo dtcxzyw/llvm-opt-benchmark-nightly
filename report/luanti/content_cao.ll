@@ -203,7 +203,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.threa
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #28
   %i.dg = load <2 x float>, ptr %i.df, align 8, !tbaa !33
   %i.dh = fmul nsz <2 x float> %i.dg, splat (float 1.000000e+01)
-  %i.di = fmul nsz <2 x float> %i.dh, splat (float 5.000000e-01) ; 4 uses
+  %i.di = fmul nsz <2 x float> %i.dh, splat (float 5.000000e-01) ; 5 uses
   %i.dj = fneg nsz <2 x float> %i.di              ; 3 uses
   store <2 x float> %i.dj, ptr %8, align 16, !tbaa !33
   %i.dk = getelementptr inbounds nuw i8, ptr %8, i64 8
@@ -231,10 +231,11 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.threa
   %i.dx = getelementptr inbounds nuw i8, ptr %8, i64 76
   store i16 0, ptr %i.dx, align 4, !tbaa !505
   %i.dy = getelementptr inbounds nuw i8, ptr %8, i64 80 ; 3 uses
-  %32 = extractelement <2 x float> %i.di, i64 1   ; 5 uses
-  store <2 x float> %i.di, ptr %i.dy, align 16, !tbaa !33
-  %i.dz = getelementptr inbounds nuw i8, ptr %8, i64 88
-  store <4 x float> <float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float 1.000000e+00>, ptr %i.dz, align 8, !tbaa !33
+  %32 = shufflevector <2 x float> %i.di, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %33 = shufflevector <4 x float> %32, <4 x float> <float poison, float poison, float 0.000000e+00, float 0.000000e+00>, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
+  store <4 x float> %33, ptr %i.dy, align 16, !tbaa !33
+  %i.dz = getelementptr inbounds nuw i8, ptr %8, i64 96
+  store <2 x float> <float 0.000000e+00, float 1.000000e+00>, ptr %i.dz, align 16, !tbaa !33
   %i.ea = getelementptr inbounds nuw i8, ptr %8, i64 104
   store i32 -1, ptr %i.ea, align 8, !tbaa !504
   %i.eb = getelementptr inbounds nuw i8, ptr %8, i64 108
@@ -245,9 +246,11 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.threa
   %i.ee = extractelement <2 x float> %i.dj, i64 0
   store float %i.ee, ptr %i.ed, align 8, !tbaa !263
   %i.ef = getelementptr inbounds nuw i8, ptr %8, i64 124
-  store float %32, ptr %i.ef, align 4, !tbaa !264
-  %i.eg = getelementptr inbounds nuw i8, ptr %8, i64 128
-  store <4 x float> <float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float 1.000000e+00>, ptr %i.eg, align 16, !tbaa !33
+  %34 = shufflevector <2 x float> %i.di, <2 x float> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 poison>
+  %35 = shufflevector <4 x float> %34, <4 x float> <float poison, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00>, <4 x i32> <i32 0, i32 5, i32 6, i32 7>
+  store <4 x float> %35, ptr %i.ef, align 4, !tbaa !33
+  %i.eg = getelementptr inbounds nuw i8, ptr %8, i64 140
+  store float 1.000000e+00, ptr %i.eg, align 4, !tbaa !146
   %i.eh = getelementptr inbounds nuw i8, ptr %8, i64 144
   store i32 -1, ptr %i.eh, align 16, !tbaa !504
   %i.ei = getelementptr inbounds nuw i8, ptr %8, i64 148
@@ -261,12 +264,13 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.threa
 
 .preheader292.preheader:                          ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i
   %i.en = getelementptr inbounds nuw i8, ptr %8, i64 4
-  %i.eo = fsub nsz float %32, %32                 ; 2 uses
+  %36 = extractelement <2 x float> %i.di, i64 1   ; 4 uses
+  %i.eo = fsub nsz float %36, %36                 ; 2 uses
   store float %i.eo, ptr %i.en, align 4, !tbaa !507
   %i.ep = getelementptr inbounds nuw i8, ptr %8, i64 44
   store float %i.eo, ptr %i.ep, align 4, !tbaa !507
   %i.eq = getelementptr inbounds nuw i8, ptr %8, i64 84
-  %i.er = fadd nsz float %32, %32                 ; 2 uses
+  %i.er = fadd nsz float %36, %36                 ; 2 uses
   store float %i.er, ptr %i.eq, align 4, !tbaa !507
   %i.es = getelementptr inbounds nuw i8, ptr %8, i64 124
   store float %i.er, ptr %i.es, align 4, !tbaa !507

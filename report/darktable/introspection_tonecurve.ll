@@ -204,16 +204,15 @@ bb.h:                                             ; preds = %bb.g
   %i.cp = fmul reassoc nsz arcp contract afn <2 x float> %i.co, splat (float 6.553600e+04)
   %i.cq = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %i.cj
   %i.cr = fptosi <2 x float> %i.cp to <2 x i32>
-  %i.cs = tail call <2 x i32> @llvm.smax.v2i32(<2 x i32> %i.cr, <2 x i32> zeroinitializer) ; 2 uses
-  %6 = extractelement <2 x i32> %i.cs, i64 0
-  %7 = tail call i32 @llvm.umin.i32(i32 %6, i32 65535)
+  %i.cs = tail call <2 x i32> @llvm.smax.v2i32(<2 x i32> %i.cr, <2 x i32> zeroinitializer)
+  %6 = tail call <2 x i32> @llvm.umin.v2i32(<2 x i32> %i.cs, <2 x i32> splat (i32 65535)) ; 2 uses
+  %7 = extractelement <2 x i32> %6, i64 0
   %i.ct = zext nneg i32 %7 to i64
   %i.cu = getelementptr inbounds nuw [4 x i8], ptr %i.be, i64 %i.ct
   %i.cv = load float, ptr %i.cu, align 4, !tbaa !12
   store float %i.cv, ptr %i.cq, align 4, !tbaa !12
-  %i.cw = extractelement <2 x i32> %i.cs, i64 1
-  %8 = tail call i32 @llvm.umin.i32(i32 %i.cw, i32 65535)
-  %i.cx = zext nneg i32 %8 to i64
+  %i.cw = extractelement <2 x i32> %6, i64 1
+  %i.cx = zext nneg i32 %i.cw to i64
   %i.cy = getelementptr inbounds nuw [4 x i8], ptr %i.bj, i64 %i.cx
   %i.cz = load float, ptr %i.cy, align 4, !tbaa !12
   %i.da = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %i.cl
@@ -614,6 +613,9 @@ declare <8 x float> @llvm.masked.load.v8f32.p0(ptr captures(none), <8 x i1>, <8 
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x i32> @llvm.smax.v2i32(<2 x i32>, <2 x i32>) #8
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x i32> @llvm.umin.v2i32(<2 x i32>, <2 x i32>) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x i32> @llvm.smax.v4i32(<4 x i32>, <4 x i32>) #8

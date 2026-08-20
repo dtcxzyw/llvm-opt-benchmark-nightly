@@ -65,8 +65,7 @@ bb.a:
   %i.k = shl nuw nsw i32 %i.j, 4
   %i.l = zext i32 %i.b to i64                     ; 2 uses
   %i.m = getelementptr [4 x i8], ptr %i.a, i64 %i.l ; 4 uses
-  %4 = getelementptr i8, ptr %i.m, i64 -4         ; 2 uses
-  %i.n = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
+  %i.n = getelementptr i8, ptr %i.m, i64 -4       ; 2 uses
   %.not75 = icmp eq i32 %i.b, 8
   %i.o = zext nneg i32 %i.k to i64                ; 2 uses
   %i.p = getelementptr i8, ptr %i.m, i64 -3       ; 2 uses
@@ -94,6 +93,7 @@ bb.a:
   %i.ab = getelementptr inbounds nuw i8, ptr %i.a, i64 11 ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %i.a, i64 11
   %i.ad = getelementptr inbounds nuw i8, ptr %i.a, i64 15 ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 19 ; 2 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %i.a, i64 20 ; 2 uses
   %i.af = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.ag = getelementptr inbounds nuw i8, ptr %i.a, i64 24 ; 2 uses
@@ -118,7 +118,7 @@ bb.a:
   %i.at = zext i8 %i.as to i64
   %i.au = getelementptr inbounds nuw i8, ptr @sbox, i64 %i.at
   %i.av = load i8, ptr %i.au, align 1, !tbaa !13
-  %i.aw = load i8, ptr %4, align 4, !tbaa !13
+  %i.aw = load i8, ptr %i.n, align 4, !tbaa !13
   %i.ax = zext i8 %i.aw to i64
   %i.ay = getelementptr inbounds nuw i8, ptr @sbox, i64 %i.ax
   %i.az = getelementptr inbounds nuw i8, ptr @rcon, i64 %indvars.iv173
@@ -153,10 +153,8 @@ bb.a:
   %i.bx = load <4 x i8>, ptr %i.ab, align 1, !tbaa !13
   %i.by = xor <4 x i8> %i.bx, %i.bw               ; 4 uses
   store <4 x i8> %i.by, ptr %i.ab, align 1, !tbaa !13
-  %5 = load i8, ptr %i.ac, align 1, !tbaa !13
-  %6 = load i8, ptr %i.ad, align 1, !tbaa !13
-  %7 = xor i8 %6, %5                              ; 2 uses
-  store i8 %7, ptr %i.ad, align 1, !tbaa !13
+  %5 = load <16 x i8>, ptr %i.ac, align 1
+  %6 = shufflevector <16 x i8> %5, <16 x i8> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
   %i.bz = extractelement <4 x i8> %i.by, i64 1
   %i.ca = zext i8 %i.bz to i64
   %i.cb = getelementptr inbounds nuw i8, ptr @sbox, i64 %i.ca
@@ -169,16 +167,19 @@ bb.a:
   %i.ci = zext i8 %i.ch to i64
   %i.cj = getelementptr inbounds nuw i8, ptr @sbox, i64 %i.ci
   %i.ck = load i8, ptr %i.cj, align 1, !tbaa !13
-  %8 = zext i8 %7 to i64
-  %9 = getelementptr inbounds nuw i8, ptr @sbox, i64 %8
-  %10 = load i8, ptr %9, align 1, !tbaa !13
-  %11 = load <4 x i8>, ptr %i.n, align 16, !tbaa !13
-  %12 = insertelement <4 x i8> poison, i8 %i.cc, i64 0
-  %13 = insertelement <4 x i8> %12, i8 %i.cg, i64 1
-  %14 = insertelement <4 x i8> %13, i8 %i.ck, i64 2
-  %15 = insertelement <4 x i8> %14, i8 %10, i64 3
-  %16 = xor <4 x i8> %11, %15
-  store <4 x i8> %16, ptr %i.n, align 16, !tbaa !13
+  %7 = load <4 x i8>, ptr %i.ad, align 1, !tbaa !13
+  %8 = insertelement <4 x i8> %6, i8 %i.cc, i64 1
+  %9 = insertelement <4 x i8> %8, i8 %i.cg, i64 2
+  %10 = insertelement <4 x i8> %9, i8 %i.ck, i64 3
+  %11 = xor <4 x i8> %7, %10                      ; 2 uses
+  store <4 x i8> %11, ptr %i.ad, align 1, !tbaa !13
+  %12 = extractelement <4 x i8> %11, i64 0
+  %13 = zext i8 %12 to i64
+  %14 = getelementptr inbounds nuw i8, ptr @sbox, i64 %13
+  %15 = load i8, ptr %14, align 1, !tbaa !13
+  %16 = load i8, ptr %4, align 1, !tbaa !13
+  %17 = xor i8 %16, %15
+  store i8 %17, ptr %4, align 1, !tbaa !13
   %i.cl = load <4 x i8>, ptr %i.af, align 16, !tbaa !13
   %i.cm = load <4 x i8>, ptr %i.ae, align 4, !tbaa !13
   %i.cn = xor <4 x i8> %i.cm, %i.cl               ; 2 uses
@@ -220,7 +221,7 @@ bb.a:
   %i.dk = load i8, ptr %i.t, align 2, !tbaa !13
   %i.dl = xor i8 %i.dk, %i.dj
   store i8 %i.dl, ptr %i.t, align 2, !tbaa !13
-  %i.dm = load i8, ptr %4, align 4, !tbaa !13
+  %i.dm = load i8, ptr %i.n, align 4, !tbaa !13
   %i.dn = zext i8 %i.dm to i64
   %i.do = getelementptr inbounds nuw i8, ptr @sbox, i64 %i.dn
   %i.dp = load i8, ptr %i.do, align 1, !tbaa !13

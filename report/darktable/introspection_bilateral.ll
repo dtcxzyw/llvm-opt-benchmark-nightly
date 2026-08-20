@@ -143,7 +143,7 @@ bb.a:
   %i.a = alloca [196 x float], align 16           ; 3 uses
   %6 = alloca %class.PermutohedralLattice, align 8 ; 10 uses
   %i.b = alloca [5 x float], align 16             ; 8 uses
-  %i.c = alloca [4 x float], align 16             ; 6 uses
+  %i.c = alloca [4 x float], align 16             ; 7 uses
   %i.d = alloca [4 x float], align 16             ; 6 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 132
   %i.f = load i32, ptr %i.e, align 4, !tbaa !11
@@ -546,6 +546,7 @@ bb.k:                                             ; preds = %.preheader, %bb.k
   %i.lg = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.lh = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %i.li = getelementptr inbounds nuw i8, ptr %i.c, i64 8
+  %7 = getelementptr inbounds nuw i8, ptr %i.c, i64 12
   br i1 %.not334, label %._crit_edge283.split, label %.lr.ph
 
 ._crit_edge283.split:                             ; preds = %._crit_edge, %.lr.ph282, %.preheader276.preheader
@@ -583,8 +584,8 @@ bb.l:                                             ; preds = %.lr.ph, %bb.m
   store float %i.lu, ptr %i.lh, align 16, !tbaa !37
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #17
   store <2 x float> %i.lq, ptr %i.c, align 16, !tbaa !37
-  %7 = insertelement <2 x float> <float poison, float 1.000000e+00>, float %i.lt, i64 0
-  store <2 x float> %7, ptr %i.li, align 8, !tbaa !37
+  store float %i.lt, ptr %i.li, align 8, !tbaa !37
+  store float 1.000000e+00, ptr %7, align 4, !tbaa !37
   %i.lv = add i64 %.0210279, %i.lj
   invoke void @_ZNK20PermutohedralLatticeILi5ELi4EE5splatEPfS1_mi(ptr noundef nonnull align 8 dereferenceable(48) %6, ptr noundef nonnull %i.b, ptr noundef nonnull %i.c, i64 noundef %i.lv, i32 noundef 0)
           to label %bb.m unwind label %bb.n

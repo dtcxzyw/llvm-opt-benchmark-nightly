@@ -203,6 +203,8 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 12
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(36) %i.b, i8 0, i64 36, i1 false)
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 60
+  store float 1.000000e+00, ptr %2, align 4, !tbaa !13
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 124
   %i.e = load float, ptr %i.d, align 4, !tbaa !146
@@ -280,8 +282,7 @@ bb.a:
   %i.bq = extractelement <2 x float> %i.bo, i64 0
   store float %i.bq, ptr %i.bm, align 4, !tbaa !13
   %i.br = getelementptr inbounds nuw i8, ptr %0, i64 56
-  %2 = insertelement <2 x float> <float poison, float 1.000000e+00>, float %i.bp, i64 0
-  store <2 x float> %2, ptr %i.br, align 4, !tbaa !13
+  store float %i.bp, ptr %i.br, align 4, !tbaa !13
   %i.bs = getelementptr inbounds nuw i8, ptr %1, i64 136
   %i.bt = load float, ptr %i.bs, align 8, !tbaa !146 ; 3 uses
   %i.bu = fcmp oeq float %i.bt, 1.000000e+00
