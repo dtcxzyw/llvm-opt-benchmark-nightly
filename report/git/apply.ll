@@ -204,21 +204,17 @@ bb.i:                                             ; preds = %.preheader.i.i, %bb
   %.0.i.i.i761 = phi i64 [ 0, %.preheader.i.i ], [ %i.bp, %bb.h ]
   %.03.i.i.i760 = phi i64 [ %.073124.i.i, %.preheader.i.i ], [ %i.bn, %bb.h ]
   %.04.i.i.i759 = phi ptr [ %.072125.i.i, %.preheader.i.i ], [ %i.bo, %bb.h ] ; 2 uses
-  %i.bp = add i64 %.0.i.i.i761, 1                 ; 2 uses
+  %i.bp = add nuw i64 %.0.i.i.i761, 1             ; 2 uses
   %i.bq = load i8, ptr %.04.i.i.i759, align 1, !tbaa !59
   %i.br = icmp eq i8 %i.bq, 10
   br i1 %i.br, label %linelen.exit.i.i, label %bb.h, !llvm.loop !86
 
 linelen.exit.i.i:                                 ; preds = %bb.i, %bb.h
-  %.1.i.i.i = phi i64 [ %i.bp, %bb.i ], [ %.073124.i.i, %bb.h ] ; 13 uses
-  %.not76.i.i = icmp eq i64 %.1.i.i.i, 0
-  br i1 %.not76.i.i, label %parse_chunk.exit.thread, label %20
+  %.1.i.i.i = phi i64 [ %i.bp, %bb.i ], [ %.073124.i.i, %bb.h ] ; 12 uses
+  %20 = icmp ult i64 %.1.i.i.i, 6
+  br i1 %20, label %.thread.i.i, label %bb.j
 
-20:                                               ; preds = %linelen.exit.i.i
-  %21 = icmp ult i64 %.1.i.i.i, 6
-  br i1 %21, label %.thread.i.i, label %bb.j
-
-bb.j:                                             ; preds = %20
+bb.j:                                             ; preds = %linelen.exit.i.i
   %i.bs = load i32, ptr %.072125.i.i, align 1
   %i.bt = icmp ne i32 757088320, %i.bs
   %i.bu = zext i1 %i.bt to i32
@@ -316,7 +312,7 @@ bb.v:                                             ; preds = %.lr.ph766
   %.0.i93.i.i765 = phi i64 [ %i.dg, %bb.v ], [ 0, %bb.u ]
   %.03.i92.i.i764 = phi i64 [ %i.de, %bb.v ], [ %i.dd, %bb.u ]
   %.04.i91.i.i763 = phi ptr [ %i.df, %bb.v ], [ %i.cz, %bb.u ] ; 2 uses
-  %i.dg = add i64 %.0.i93.i.i765, 1               ; 2 uses
+  %i.dg = add nuw i64 %.0.i93.i.i765, 1           ; 2 uses
   %i.dh = load i8, ptr %.04.i91.i.i763, align 1, !tbaa !59
   %i.di = icmp eq i8 %i.dh, 10
   br i1 %i.di, label %.linelen.exit96.i.i_crit_edge, label %bb.v, !llvm.loop !86
@@ -588,7 +584,7 @@ bb.bc:                                            ; preds = %bb.n, %bb.m
   call void @llvm.lifetime.end.p0(ptr nonnull %18) #21
   br label %parse_chunk.exit.thread
 
-.thread.i.i:                                      ; preds = %.thread110.i.i, %bb.w, %linelen.exit96.i.i, %bb.t, %bb.s, %bb.r, %20
+.thread.i.i:                                      ; preds = %.thread110.i.i, %bb.w, %linelen.exit96.i.i, %bb.t, %bb.s, %bb.r, %linelen.exit.i.i
   %i.hj = add i64 %.1.i.i.i, %.068127.i.i
   %i.hk = sub i64 %.073124.i.i, %.1.i.i.i         ; 2 uses
   %i.hl = getelementptr inbounds nuw i8, ptr %.072125.i.i, i64 %.1.i.i.i
@@ -779,7 +775,7 @@ bb.bs:                                            ; preds = %bb.bq, %bb.br
   %.0.i.i.i.i771 = phi i64 [ 0, %bb.bq ], [ %i.ju, %bb.br ]
   %.03.i.i.i.i770 = phi i64 [ %.075134.i.i, %bb.bq ], [ %i.js, %bb.br ]
   %.04.i.i.i.i769 = phi ptr [ %.077133.i.i, %bb.bq ], [ %i.jt, %bb.br ] ; 2 uses
-  %i.ju = add i64 %.0.i.i.i.i771, 1               ; 2 uses
+  %i.ju = add nuw i64 %.0.i.i.i.i771, 1           ; 2 uses
   %i.jv = load i8, ptr %.04.i.i.i.i769, align 1, !tbaa !59
   %i.jw = icmp eq i8 %i.jv, 10
   br i1 %i.jw, label %linelen.exit.i.i.i, label %bb.br, !llvm.loop !86
@@ -974,7 +970,7 @@ bb.cn:                                            ; preds = %_.exit.i.i.i.i, %bb
   %.0.i35.i.i.i.i777 = phi i32 [ 0, %_.exit.i.i.i.i ], [ %i.lx, %bb.cm ]
   %.03.i34.i.i.i.i776 = phi i64 [ %i.lu, %_.exit.i.i.i.i ], [ %i.lv, %bb.cm ]
   %.04.i33.i.i.i.i775 = phi ptr [ %i.lj, %_.exit.i.i.i.i ], [ %i.lw, %bb.cm ] ; 2 uses
-  %i.lx = add i32 %.0.i35.i.i.i.i777, 1           ; 2 uses
+  %i.lx = add nuw i32 %.0.i35.i.i.i.i777, 1       ; 2 uses
   %i.ly = load i8, ptr %.04.i33.i.i.i.i775, align 1, !tbaa !59
   %i.lz = icmp eq i8 %i.ly, 10
   br i1 %i.lz, label %.thread48.i.i.i.i, label %bb.cm, !llvm.loop !86
@@ -1026,7 +1022,7 @@ recount_diff.exit.i.i.i:                          ; preds = %.loopexit.i.i.i.i, 
   %.0.i181.i.i.i780 = phi i64 [ %i.mj, %.preheader.i.i.i ], [ 0, %.lr.ph.i.i.i ]
   %.03.i180.i.i.i779 = phi i64 [ %i.mh, %.preheader.i.i.i ], [ %.0147245.i.i.i, %.lr.ph.i.i.i ]
   %.04.i179.i.i.i778 = phi ptr [ %i.mi, %.preheader.i.i.i ], [ %.0146246.i.i.i, %.lr.ph.i.i.i ] ; 2 uses
-  %i.mj = add i64 %.0.i181.i.i.i780, 1            ; 2 uses
+  %i.mj = add nuw i64 %.0.i181.i.i.i780, 1        ; 2 uses
   %i.mk = load i8, ptr %.04.i179.i.i.i778, align 1, !tbaa !59
   %i.ml = icmp eq i8 %i.mk, 10
   br i1 %i.ml, label %linelen.exit184.i.i.i, label %.preheader.i.i.i, !llvm.loop !86
@@ -1079,7 +1075,7 @@ bb.cr:                                            ; preds = %bb.cq
   %.0.i.i189.i.i.i783 = phi i64 [ %i.nb, %.preheader.i186.i.i.i ], [ 0, %bb.cr ]
   %.03.i.i188.i.i.i782 = phi i64 [ %i.mz, %.preheader.i186.i.i.i ], [ %i.mt, %bb.cr ]
   %.04.i.i187.i.i.i781 = phi ptr [ %i.na, %.preheader.i186.i.i.i ], [ %i.mv, %bb.cr ] ; 2 uses
-  %i.nb = add i64 %.0.i.i189.i.i.i783, 1          ; 2 uses
+  %i.nb = add nuw i64 %.0.i.i189.i.i.i783, 1      ; 2 uses
   %i.nc = load i8, ptr %.04.i.i187.i.i.i781, align 1, !tbaa !59
   %i.nd = icmp eq i8 %i.nc, 10
   br i1 %i.nd, label %linelen.exit.i191.i.i.i, label %.preheader.i186.i.i.i, !llvm.loop !86
@@ -1482,7 +1478,7 @@ bb.ep:                                            ; preds = %.lr.ph788
   %.0.i.i148787 = phi i64 [ %i.uw, %bb.ep ], [ 0, %.thread.i ]
   %.03.i.i786 = phi i64 [ %i.uu, %bb.ep ], [ %i.ut, %.thread.i ]
   %.04.i.i785 = phi ptr [ %i.uv, %bb.ep ], [ %i.us, %.thread.i ] ; 2 uses
-  %i.uw = add i64 %.0.i.i148787, 1                ; 2 uses
+  %i.uw = add nuw i64 %.0.i.i148787, 1            ; 2 uses
   %i.ux = load i8, ptr %.04.i.i785, align 1, !tbaa !59
   %i.uy = icmp eq i8 %i.ux, 10
   br i1 %i.uy, label %.linelen.exit.i_crit_edge, label %bb.ep, !llvm.loop !86
@@ -1727,8 +1723,8 @@ parse_chunk.exit:                                 ; preds = %..thread167_crit_ed
   %i.yc = icmp slt i32 %i.yb, 0
   br i1 %i.yc, label %parse_chunk.exit.thread, label %bb.fk
 
-parse_chunk.exit.thread:                          ; preds = %bb.g, %parse_binary.exit.thread.i, %bb.ez, %parse_single_patch.exit.i, %find_header.exit.i, %parse_chunk.exit, %bb.o, %.thread.i.i, %bb.q, %linelen.exit.i.i, %_.exit94.i.i, %_.exit91.i.i, %.thread.i124.i, %parse_traditional_patch.exit, %_.exit.i150, %parse_binary.exit.thread.thread.i, %bb.bc
-  %.383.i246 = phi i32 [ -128, %.thread.i124.i ], [ -1, %parse_binary.exit.thread.thread.i ], [ -128, %parse_traditional_patch.exit ], [ -1, %bb.o ], [ -128, %bb.bc ], [ -128, %_.exit.i150 ], [ -128, %_.exit94.i.i ], [ -128, %_.exit91.i.i ], [ -1, %linelen.exit.i.i ], [ -128, %bb.q ], [ -1, %.thread.i.i ], [ -1, %bb.ez ], [ -1, %parse_binary.exit.thread.i ], [ -1, %bb.g ], [ %.4.i.i, %find_header.exit.i ], [ -128, %parse_single_patch.exit.i ], [ %i.yb, %parse_chunk.exit ]
+parse_chunk.exit.thread:                          ; preds = %bb.g, %parse_binary.exit.thread.i, %bb.ez, %parse_single_patch.exit.i, %find_header.exit.i, %parse_chunk.exit, %bb.q, %.thread.i.i, %bb.o, %parse_traditional_patch.exit, %_.exit94.i.i, %_.exit91.i.i, %.thread.i124.i, %_.exit.i150, %parse_binary.exit.thread.thread.i, %bb.bc
+  %.383.i246 = phi i32 [ -128, %.thread.i124.i ], [ -1, %parse_binary.exit.thread.thread.i ], [ -128, %_.exit.i150 ], [ -128, %bb.bc ], [ -128, %parse_traditional_patch.exit ], [ -128, %bb.q ], [ -128, %_.exit94.i.i ], [ -128, %_.exit91.i.i ], [ -1, %bb.o ], [ -1, %.thread.i.i ], [ -1, %bb.ez ], [ -1, %parse_binary.exit.thread.i ], [ -1, %bb.g ], [ %.4.i.i, %find_header.exit.i ], [ -128, %parse_single_patch.exit.i ], [ %i.yb, %parse_chunk.exit ]
   call void @release_patch(ptr noundef %i.ba)
   call void @free(ptr noundef %i.ba) #21
   %i.yd = icmp eq i32 %.383.i246, -128
@@ -2131,7 +2127,7 @@ bb.ms:                                            ; preds = %st_mult.exit.i.i.i.
   %i.arx = add i32 %i.arv, %i.arw
   %.1.i.i.i.i.i.i.1 = select i1 %.not.i.i75.i.i.i.i.1, i32 %i.arx, i32 %.1.i.i.i.i.i.i ; 3 uses
   %i.ary = add nuw i64 %.089.i.i.i.i.i.i, 2       ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %hash_line.exit.loopexit.i.i.i.i.i.unr-lcssa, label %.lr.ph.i.i.i.i.i.i, !llvm.loop !191
 
@@ -2534,7 +2530,7 @@ bb.b:                                             ; preds = %.lr.ph
   %.0.i158 = phi i64 [ %i.e, %bb.b ], [ 0, %bb.a ]
   %.03.i157 = phi i64 [ %i.c, %bb.b ], [ %i.a, %bb.a ]
   %.04.i156 = phi ptr [ %i.d, %bb.b ], [ %i.b, %bb.a ] ; 2 uses
-  %i.e = add i64 %.0.i158, 1                      ; 2 uses
+  %i.e = add nuw i64 %.0.i158, 1                  ; 2 uses
   %i.f = load i8, ptr %.04.i156, align 1, !tbaa !59
   %i.g = icmp eq i8 %i.f, 10
   br i1 %i.g, label %.linelen.exit_crit_edge159, label %bb.b, !llvm.loop !86
@@ -2587,7 +2583,7 @@ bb.f:                                             ; preds = %.lr.ph165
   %.0.i99164 = phi i64 [ %i.u, %bb.f ], [ 0, %bb.e ]
   %.03.i98163 = phi i64 [ %i.s, %bb.f ], [ %.086, %bb.e ]
   %.04.i97162 = phi ptr [ %i.t, %bb.f ], [ %.084, %bb.e ] ; 2 uses
-  %i.u = add i64 %.0.i99164, 1                    ; 2 uses
+  %i.u = add nuw i64 %.0.i99164, 1                ; 2 uses
   %i.v = load i8, ptr %.04.i97162, align 1, !tbaa !59
   %i.w = icmp eq i8 %i.v, 10
   br i1 %i.w, label %.linelen.exit102_crit_edge167, label %bb.f, !llvm.loop !86
@@ -2990,7 +2986,7 @@ bb.au:                                            ; preds = %st_mult.exit.i262.i
   %i.iv = add i32 %i.it, %i.iu
   %.1.i.i259.i.1 = select i1 %.not.i.i258.i.1, i32 %i.iv, i32 %.1.i.i259.i ; 3 uses
   %i.iw = add nuw i64 %.089.i.i257.i, 2           ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %hash_line.exit.loopexit.i.i.unr-lcssa, label %.lr.ph.i.i255.i, !llvm.loop !191
 
@@ -3164,7 +3160,7 @@ bb.bc:                                            ; preds = %st_mult.exit.i278.i
   %i.lt = add i32 %i.lr, %i.ls
   %.1.i.i273.i.1 = select i1 %.not.i.i272.i.1, i32 %i.lt, i32 %.1.i.i273.i ; 3 uses
   %i.lu = add nuw i64 %.089.i.i271.i, 2           ; 2 uses
-  %niter575.next.1 = add i64 %niter575, 2         ; 2 uses
+  %niter575.next.1 = add nuw i64 %niter575, 2     ; 2 uses
   %niter575.ncmp.1 = icmp eq i64 %niter575.next.1, %unroll_iter574
   br i1 %niter575.ncmp.1, label %hash_line.exit.loopexit.i275.i.unr-lcssa, label %.lr.ph.i.i269.i, !llvm.loop !191
 
@@ -3567,7 +3563,7 @@ bb.cl:                                            ; preds = %bb.cl, %.new
   %i.sr = load i64, ptr %i.sq, align 8, !tbaa !189
   %i.ss = getelementptr inbounds nuw i8, ptr %i.so, i64 %i.sr ; 3 uses
   %indvars.iv.next203.i.i.i.7 = add nuw nsw i64 %indvars.iv202.i.i.i, 8 ; 2 uses
-  %niter581.next.7 = add i64 %niter581, 8         ; 2 uses
+  %niter581.next.7 = add nuw i64 %niter581, 8     ; 2 uses
   %niter581.ncmp.7 = icmp eq i64 %niter581.next.7, %unroll_iter580
   br i1 %niter581.ncmp.7, label %.preheader158.i.i.i.unr-lcssa, label %bb.cl, !llvm.loop !251
 
@@ -3970,7 +3966,7 @@ bb.f:                                             ; preds = %st_mult.exit.i, %._
   %i.ay = add i32 %i.aw, %i.ax
   %.1.i.i.1 = select i1 %.not.i.i.1, i32 %i.ay, i32 %.1.i.i ; 3 uses
   %i.az = add nuw i64 %.089.i.i, 2                ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %hash_line.exit.loopexit.i.unr-lcssa, label %.lr.ph.i.i, !llvm.loop !191
 

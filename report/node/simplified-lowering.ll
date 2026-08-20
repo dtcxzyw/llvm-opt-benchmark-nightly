@@ -201,9 +201,7 @@ bb.e:                                             ; preds = %_ZNK2v88internal8co
   %i.bb = phi ptr [ %i.al, %_ZNK2v88internal8compiler4Node7InputAtEi.exit.us.us ], [ %i.ax, %_ZNK2v88internal8compiler4Node7InputAtEi.exit.thread.us.us ]
   %i.bc = phi ptr [ %i.z, %_ZNK2v88internal8compiler4Node7InputAtEi.exit.us.us ], [ %i.ao, %_ZNK2v88internal8compiler4Node7InputAtEi.exit.thread.us.us ]
   %i.bd = xor i64 %indvars.iv119, -1
-  %sext143 = shl i64 %i.bd, 32
-  %8 = ashr exact i64 %sext143, 32
-  %i.be = getelementptr inbounds [24 x i8], ptr %i.bc, i64 %8
+  %i.be = getelementptr inbounds [24 x i8], ptr %i.bc, i64 %i.bd
   call void @_ZN2v88internal8compiler4Node9RemoveUseEPNS2_3UseE(ptr noundef nonnull align 8 dereferenceable(32) %i.bb, ptr noundef nonnull %i.be) #16
   store ptr null, ptr %i.ba, align 8
   br label %_ZN2v88internal8compiler4Node12ReplaceInputEiPS2_.exit.us.us
@@ -279,9 +277,7 @@ _ZN2v88internal8compiler4Node9GetUsePtrEi.exit.i: ; preds = %_ZNK2v88internal8co
   %i.cj = phi ptr [ %i.by, %_ZNK2v88internal8compiler4Node7InputAtEi.exit ], [ %i.cf, %_ZNK2v88internal8compiler4Node7InputAtEi.exit.thread ] ; 2 uses
   %i.ck = phi ptr [ %i.bg, %_ZNK2v88internal8compiler4Node7InputAtEi.exit ], [ %i.bn, %_ZNK2v88internal8compiler4Node7InputAtEi.exit.thread ]
   %i.cl = xor i64 %indvars.iv, -1
-  %sext = shl i64 %i.cl, 32
-  %9 = ashr exact i64 %sext, 32
-  %i.cm = getelementptr inbounds [24 x i8], ptr %i.ck, i64 %9 ; 2 uses
+  %i.cm = getelementptr inbounds [24 x i8], ptr %i.ck, i64 %i.cl ; 2 uses
   %.not14.i = icmp eq ptr %i.cj, null
   br i1 %.not14.i, label %bb.h, label %bb.g
 

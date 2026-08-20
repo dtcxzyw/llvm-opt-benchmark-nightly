@@ -204,7 +204,7 @@ bb.h:                                             ; preds = %_ZN5QHashI7QString3
   br i1 %i.ac, label %.loopexit, label %.lr.ph92
 
 bb.i:                                             ; preds = %.lr.ph92
-  %i.ad = add i64 %i.af, 1                        ; 2 uses
+  %i.ad = add nuw i64 %i.af, 1                    ; 2 uses
   %i.ae = icmp eq i64 %i.ad, %i.ab
   br i1 %i.ae, label %.loopexit, label %.lr.ph92, !llvm.loop !328
 
@@ -216,7 +216,7 @@ bb.i:                                             ; preds = %.lr.ph92
   %i.aj = getelementptr i8, ptr %i.ah, i64 %i.ai
   %i.ak = load i8, ptr %i.aj, align 1
   %.not.i.i.i.i = icmp eq i8 %i.ak, -1
-  br i1 %.not.i.i.i.i, label %bb.i, label %..loopexit.loopexit_crit_edge94, !llvm.loop !328
+  br i1 %.not.i.i.i.i, label %bb.i, label %_ZNK5QHashI7QString31LuaDbgTreeSectionExpansionStateE8iteratorneERKS3_.exit.thread.preheader, !llvm.loop !328
 
 bb.j:                                             ; preds = %bb.d
   %i.al = landingpad { ptr, i32 }
@@ -375,18 +375,14 @@ _ZN7QStringD2Ev.exit:                             ; preds = %bb.aa, %_ZN17QArray
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #24
   br label %bb.aq
 
-..loopexit.loopexit_crit_edge94:                  ; preds = %.lr.ph92
-  br label %.loopexit, !llvm.loop !328
+.loopexit:                                        ; preds = %bb.i, %bb.h, %_ZN5QHashI7QString31LuaDbgTreeSectionExpansionStateE6detachEv.exit.i
+  %.sroa.0.0.i.i = phi ptr [ %i.w, %_ZN5QHashI7QString31LuaDbgTreeSectionExpansionStateE6detachEv.exit.i ], [ null, %bb.h ], [ null, %bb.i ] ; 2 uses
+  %.not94 = icmp eq ptr %.sroa.0.0.i.i, null
+  br i1 %.not94, label %._crit_edge57, label %_ZNK5QHashI7QString31LuaDbgTreeSectionExpansionStateE8iteratorneERKS3_.exit.thread.preheader
 
-.loopexit:                                        ; preds = %bb.i, %bb.h, %..loopexit.loopexit_crit_edge94, %_ZN5QHashI7QString31LuaDbgTreeSectionExpansionStateE6detachEv.exit.i
-  %.sroa.0.0.i.i = phi ptr [ %i.w, %_ZN5QHashI7QString31LuaDbgTreeSectionExpansionStateE6detachEv.exit.i ], [ %i.w, %..loopexit.loopexit_crit_edge94 ], [ null, %bb.h ], [ null, %bb.i ] ; 2 uses
-  %.sroa.5.0.i.i = phi i64 [ 0, %_ZN5QHashI7QString31LuaDbgTreeSectionExpansionStateE6detachEv.exit.i ], [ %i.af, %..loopexit.loopexit_crit_edge94 ], [ 0, %bb.h ], [ 0, %bb.i ] ; 2 uses
-  %7 = icmp ne ptr %.sroa.0.0.i.i, null
-  %8 = icmp ne i64 %.sroa.5.0.i.i, 0
-  %or.cond54 = or i1 %7, %8
-  br i1 %or.cond54, label %_ZNK5QHashI7QString31LuaDbgTreeSectionExpansionStateE8iteratorneERKS3_.exit.thread.preheader, label %._crit_edge57
-
-_ZNK5QHashI7QString31LuaDbgTreeSectionExpansionStateE8iteratorneERKS3_.exit.thread.preheader: ; preds = %.loopexit
+_ZNK5QHashI7QString31LuaDbgTreeSectionExpansionStateE8iteratorneERKS3_.exit.thread.preheader: ; preds = %.lr.ph92, %.loopexit
+  %.sroa.5.0.i.i87 = phi i64 [ 0, %.loopexit ], [ %i.af, %.lr.ph92 ]
+  %.sroa.0.0.i.i86 = phi ptr [ %.sroa.0.0.i.i, %.loopexit ], [ %i.w, %.lr.ph92 ]
   %.pre62 = load ptr, ptr %3, align 8
   br label %_ZNK5QHashI7QString31LuaDbgTreeSectionExpansionStateE8iteratorneERKS3_.exit.thread
 
@@ -403,8 +399,8 @@ bb.ae:                                            ; preds = %bb.g
 _ZNK5QHashI7QString31LuaDbgTreeSectionExpansionStateE8iteratorneERKS3_.exit.thread: ; preds = %_ZNK5QHashI7QString31LuaDbgTreeSectionExpansionStateE8iteratorneERKS3_.exit.thread.preheader, %_ZN5QHashI7QString31LuaDbgTreeSectionExpansionStateE8iteratorppEv.exit
   %i.bp = phi ptr [ %i.fp, %_ZN5QHashI7QString31LuaDbgTreeSectionExpansionStateE8iteratorppEv.exit ], [ %i.w, %_ZNK5QHashI7QString31LuaDbgTreeSectionExpansionStateE8iteratorneERKS3_.exit.thread.preheader ] ; 7 uses
   %i.bq = phi ptr [ %i.fq, %_ZN5QHashI7QString31LuaDbgTreeSectionExpansionStateE8iteratorppEv.exit ], [ %.pre62, %_ZNK5QHashI7QString31LuaDbgTreeSectionExpansionStateE8iteratorneERKS3_.exit.thread.preheader ] ; 7 uses
-  %.sroa.10.056 = phi i64 [ %.sroa.10.1, %_ZN5QHashI7QString31LuaDbgTreeSectionExpansionStateE8iteratorppEv.exit ], [ %.sroa.5.0.i.i, %_ZNK5QHashI7QString31LuaDbgTreeSectionExpansionStateE8iteratorneERKS3_.exit.thread.preheader ] ; 5 uses
-  %.sroa.037.055 = phi ptr [ %.sroa.037.1, %_ZN5QHashI7QString31LuaDbgTreeSectionExpansionStateE8iteratorppEv.exit ], [ %.sroa.0.0.i.i, %_ZNK5QHashI7QString31LuaDbgTreeSectionExpansionStateE8iteratorneERKS3_.exit.thread.preheader ] ; 3 uses
+  %.sroa.10.056 = phi i64 [ %.sroa.10.1, %_ZN5QHashI7QString31LuaDbgTreeSectionExpansionStateE8iteratorppEv.exit ], [ %.sroa.5.0.i.i87, %_ZNK5QHashI7QString31LuaDbgTreeSectionExpansionStateE8iteratorneERKS3_.exit.thread.preheader ] ; 5 uses
+  %.sroa.037.055 = phi ptr [ %.sroa.037.1, %_ZN5QHashI7QString31LuaDbgTreeSectionExpansionStateE8iteratorppEv.exit ], [ %.sroa.0.0.i.i86, %_ZNK5QHashI7QString31LuaDbgTreeSectionExpansionStateE8iteratorneERKS3_.exit.thread.preheader ] ; 3 uses
   %i.br = getelementptr i8, ptr %.sroa.037.055, i64 32
   %i.bs = load ptr, ptr %i.br, align 8            ; 2 uses
   %i.bt = lshr i64 %.sroa.10.056, 7               ; 2 uses

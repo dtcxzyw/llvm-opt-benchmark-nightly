@@ -201,7 +201,6 @@ bb.g:                                             ; preds = %bb.b
 
 .peel.next:                                       ; preds = %bb.e, %bb.p
   %.sroa.0.049 = phi ptr [ %i.au, %bb.p ], [ %i.u, %bb.e ] ; 2 uses
-  %.sroa.10.048 = phi i64 [ %6, %bb.p ], [ 1, %bb.e ]
   %i.x = load ptr, ptr %.sroa.0.049, align 8, !tbaa !32 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #16
   call void @llvm.experimental.noalias.scope.decl(metadata !59)
@@ -288,12 +287,9 @@ _ZNSt10unique_ptrIvN3ade21IMemoryAccessListener19AccessHandleDeleterEED2Ev.exit3
 
 bb.p:                                             ; preds = %bb.j, %_ZNSt6vectorISt10unique_ptrIvN3ade21IMemoryAccessListener19AccessHandleDeleterEESaIS4_EE12emplace_backIJS4_EEERS4_DpOT_.exit, %_ZNSt6vectorISt10unique_ptrIvN3ade21IMemoryAccessListener19AccessHandleDeleterEESaIS4_EE12emplace_backIJS4_EEERS4_DpOT_.exit.thread
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #16
-  %6 = add nuw i64 %.sroa.10.048, 1               ; 2 uses
   %i.au = getelementptr inbounds nuw i8, ptr %.sroa.0.049, i64 8 ; 2 uses
-  %7 = icmp eq i64 %6, -1
   %i.av = icmp eq ptr %i.au, %i.d
-  %narrow.i.i.i.i.i.i.i = select i1 %7, i1 true, i1 %i.av
-  br i1 %narrow.i.i.i.i.i.i.i, label %_ZNK3ade4util5Range13IterableRangeINS1_8ZipRangeIJNS1_9IotaRangeImLi1EEERSt6vectorIPNS_21IMemoryAccessListenerESaIS8_EEEEEE8iteratorneERKSE_.exit, label %.peel.next, !llvm.loop !67
+  br i1 %i.av, label %_ZNK3ade4util5Range13IterableRangeINS1_8ZipRangeIJNS1_9IotaRangeImLi1EEERSt6vectorIPNS_21IMemoryAccessListenerESaIS8_EEEEEE8iteratorneERKSE_.exit, label %.peel.next, !llvm.loop !67
 
 bb.q:                                             ; preds = %_ZNSt10unique_ptrIvN3ade21IMemoryAccessListener19AccessHandleDeleterEED2Ev.exit32, %bb.g
   %.pn24.pn = phi { ptr, i32 } [ %.pn, %_ZNSt10unique_ptrIvN3ade21IMemoryAccessListener19AccessHandleDeleterEED2Ev.exit32 ], [ %lpad.loopexit.split-lp64, %bb.g ]

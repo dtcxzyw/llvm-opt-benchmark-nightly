@@ -204,7 +204,7 @@ bb.bf:                                            ; preds = %.lr.ph.i.i, %bb.cl
   %i.eo = phi ptr [ %.sroa.13.0, %.lr.ph.i.i ], [ %i.en, %bb.cl ]
   %i.ep = phi i64 [ 0, %.lr.ph.i.i ], [ %i.er, %bb.cl ]
   %i.eq = phi ptr [ %i.ca, %.lr.ph.i.i ], [ %i.hb, %bb.cl ] ; 2 uses
-  %i.er = add i64 %i.ep, 1                        ; 3 uses
+  %i.er = add nuw i64 %i.ep, 1                    ; 2 uses
   %i.es = getelementptr inbounds nuw i8, ptr %i.eo, i64 536
   %i.et = load i16, ptr %i.es, align 8, !noalias !422 ; 4 uses
   %i.eu = zext i16 %i.et to i64                   ; 10 uses
@@ -453,8 +453,6 @@ bb.bz:                                            ; preds = %bb.bv
   %i.ig = getelementptr [8 x i8], ptr %i.if, i64 %.sroa.06.0.i.i.i
   %i.ih = shl nuw nsw i64 %i.hy, 3
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.ia, ptr noundef nonnull readonly align 8 dereferenceable(1) %i.ig, i64 %i.ih, i1 false), !alias.scope !489, !noalias !470
-  %4 = icmp ne i64 %i.er, 0
-  tail call void @llvm.assume(i1 %4)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !493)
   %xtraiter = and i64 %i.hy, 3                    ; 3 uses
   %i.ii = icmp ult i16 %i.hw, 3
@@ -495,7 +493,7 @@ bb.ca:                                            ; preds = %bb.ca, %.new
   %i.jb = trunc nuw nsw i64 %i.it to i16
   %i.jc = getelementptr inbounds nuw i8, ptr %i.ja, i64 536
   store i16 %i.jb, ptr %i.jc, align 8, !noalias !496
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.unr-lcssa, label %bb.ca
 
@@ -898,7 +896,7 @@ bb.bf:                                            ; preds = %.lr.ph.i.i, %bb.cl
   %i.eo = phi ptr [ %.sroa.13.0, %.lr.ph.i.i ], [ %i.en, %bb.cl ]
   %i.ep = phi i64 [ 0, %.lr.ph.i.i ], [ %i.er, %bb.cl ]
   %i.eq = phi ptr [ %i.ca, %.lr.ph.i.i ], [ %i.hb, %bb.cl ] ; 2 uses
-  %i.er = add i64 %i.ep, 1                        ; 3 uses
+  %i.er = add nuw i64 %i.ep, 1                    ; 2 uses
   %i.es = getelementptr inbounds nuw i8, ptr %i.eo, i64 536
   %i.et = load i16, ptr %i.es, align 8, !noalias !622 ; 4 uses
   %i.eu = zext i16 %i.et to i64                   ; 10 uses
@@ -1147,8 +1145,6 @@ bb.bz:                                            ; preds = %bb.bv
   %i.ig = getelementptr [8 x i8], ptr %i.if, i64 %.sroa.06.0.i.i.i
   %i.ih = shl nuw nsw i64 %i.hy, 3
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.ia, ptr noundef nonnull readonly align 8 dereferenceable(1) %i.ig, i64 %i.ih, i1 false), !alias.scope !688, !noalias !669
-  %4 = icmp ne i64 %i.er, 0
-  tail call void @llvm.assume(i1 %4)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !692)
   %xtraiter = and i64 %i.hy, 3                    ; 3 uses
   %i.ii = icmp ult i16 %i.hw, 3
@@ -1189,7 +1185,7 @@ bb.ca:                                            ; preds = %bb.ca, %.new
   %i.jb = trunc nuw nsw i64 %i.it to i16
   %i.jc = getelementptr inbounds nuw i8, ptr %i.ja, i64 536
   store i16 %i.jb, ptr %i.jc, align 8, !noalias !695
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.unr-lcssa, label %bb.ca
 

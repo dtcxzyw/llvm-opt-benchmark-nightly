@@ -204,7 +204,7 @@ _ZNR9hb_iter_tI10hb_array_tIN12hb_hashmap_tIjPN5graph6LookupELb0EE6item_tEERS6_E
   %i.ki = add i64 %i.ke, %i.kh                    ; 3 uses
   %i.kj = add i64 %i.kf, %i.kh                    ; 3 uses
   %i.kk = getelementptr inbounds nuw i8, ptr %.070261.i, i64 96 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.lr.ph271.i.unr-lcssa, label %.lr.ph262.i
 
@@ -607,7 +607,7 @@ bb.do:                                            ; preds = %_ZN5graph7graph_t13
 _ZN5graph7graph_t13check_successEb.exit.1:        ; preds = %bb.do, %_ZN5graph7graph_t13check_successEb.exit
   %i.abv = phi i8 [ %i.abl, %_ZN5graph7graph_t13check_successEb.exit ], [ 0, %bb.do ] ; 2 uses
   %indvars.iv.next323.1 = add nuw nsw i64 %indvars.iv322, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge295.loopexit.unr-lcssa, label %bb.dm, !llvm.loop !382
 
@@ -1010,7 +1010,7 @@ bb.e:                                             ; preds = %bb.e, %.lr.ph.new
   %i.bk = getelementptr inbounds nuw i8, ptr %i.bj, i64 1568
   store i64 9223372036854775807, ptr %i.bk, align 8, !tbaa !386
   %indvars.iv.next.7 = add nuw nsw i64 %indvars.iv, 8 ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %._crit_edge.loopexit.unr-lcssa, label %bb.e, !llvm.loop !420
 
@@ -1413,7 +1413,7 @@ _ZN5graph6Lookup27fix_existing_subtable_linksERNS_24gsubgpos_graph_context_tEjRK
   %i.cu = load i32, ptr %i.ct, align 4, !tbaa !513
   %i.cv = add i32 %i.cu, %i.cs                    ; 3 uses
   %i.cw = getelementptr inbounds nuw i8, ptr %.077200, i64 192 ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph
 
@@ -1816,7 +1816,7 @@ _ZNK2OT6Layout6Common8Coverage4iterEv.exit:       ; preds = %bb.g, %bb.h, %_ZNK2
   br label %bb.m
 
 bb.m:                                             ; preds = %_ZN13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE8__next__Ev.exit, %_ZNK2OT6Layout6Common8Coverage4iterEv.exit
-  %.sroa.33.sroa.0.0 = phi i32 [ 0, %_ZNK2OT6Layout6Common8Coverage4iterEv.exit ], [ %i.dq, %_ZN13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE8__next__Ev.exit ] ; 9 uses
+  %.sroa.33.sroa.0.0 = phi i32 [ 0, %_ZNK2OT6Layout6Common8Coverage4iterEv.exit ], [ %i.dq, %_ZN13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE8__next__Ev.exit ] ; 8 uses
   %.sroa.27.0 = phi i32 [ %.sroa.11.2, %_ZNK2OT6Layout6Common8Coverage4iterEv.exit ], [ %.sroa.27.1, %_ZN13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE8__next__Ev.exit ] ; 6 uses
   %.sroa.22.0 = phi i32 [ 0, %_ZNK2OT6Layout6Common8Coverage4iterEv.exit ], [ %.sroa.22.2, %_ZN13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE8__next__Ev.exit ] ; 7 uses
   %.sroa.13.0 = phi i32 [ %.sroa.7.0, %_ZNK2OT6Layout6Common8Coverage4iterEv.exit ], [ %.sroa.13.2, %_ZN13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE8__next__Ev.exit ] ; 10 uses
@@ -1837,10 +1837,8 @@ _ZNK9hb_iter_tIN2OT6Layout6Common8Coverage6iter_tEjEcvbEv.exit.i.i.i.i.i: ; pred
   %i.cg = load i16, ptr %i.cd, align 1, !tbaa !152
   %i.ch = tail call noundef i16 @llvm.bswap.i16(i16 %i.cg)
   %i.ci = zext i16 %i.ch to i32
-  %13 = icmp uge i32 %.sroa.13.0, %i.ci
-  %.not.i.i.i23 = icmp eq i32 %.sroa.33.sroa.0.0, -1
-  %or.cond = select i1 %13, i1 true, i1 %.not.i.i.i23
-  br i1 %or.cond, label %"_ZorI13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE24hb_filter_iter_factory_tIZN5graph8Coverage14clone_coverageERNSA_24gsubgpos_graph_context_tEjjjjjEUl9hb_pair_tIjjEE_RK4$_19ETnPN12hb_enable_ifIXsr17hb_is_iterator_ofIT_NSM_6item_tEEE5valueEvE4typeELPv0EEDTclclsr3stdE7forwardIT0_Efp0_Eclsr3stdE7forwardISM_Efp_EEEOSM_OSS_.exit", label %bb.p
+  %.not242 = icmp ult i32 %.sroa.13.0, %i.ci
+  br i1 %.not242, label %bb.p, label %"_ZorI13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE24hb_filter_iter_factory_tIZN5graph8Coverage14clone_coverageERNSA_24gsubgpos_graph_context_tEjjjjjEUl9hb_pair_tIjjEE_RK4$_19ETnPN12hb_enable_ifIXsr17hb_is_iterator_ofIT_NSM_6item_tEEE5valueEvE4typeELPv0EEDTclclsr3stdE7forwardIT0_Efp0_Eclsr3stdE7forwardISM_Efp_EEEOSM_OSS_.exit"
 
 bb.p:                                             ; preds = %_ZNK9hb_iter_tIN2OT6Layout6Common8Coverage6iter_tEjEcvbEv.exit.i.i.i.i.i
   tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #15
@@ -2243,15 +2241,13 @@ _ZN13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE8__n
   %.sroa.27.1 = phi i32 [ 0, %.sink.split.i.i.i.i ], [ %.sroa.27.0284, %bb.q ], [ %i.dm, %bb.t ], [ 0, %bb.s ], [ %i.du, %bb.u ] ; 2 uses
   %.sroa.22.2 = phi i32 [ %i.dr, %.sink.split.i.i.i.i ], [ %.sroa.22.0285, %bb.q ], [ %i.dr, %bb.t ], [ %.sroa.22.0285, %bb.s ], [ %i.dt, %bb.u ] ; 2 uses
   %.sroa.13.2 = phi i32 [ %i.dg, %.sink.split.i.i.i.i ], [ %i.ct, %bb.q ], [ %i.dd, %bb.t ], [ %i.dd, %bb.s ], [ %.sroa.13.0286, %bb.u ] ; 3 uses
-  %i.dv = add nuw i32 %.sroa.33.sroa.0.0283, 1    ; 3 uses
+  %i.dv = add nuw i32 %.sroa.33.sroa.0.0283, 1    ; 2 uses
   tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #15
   %i.dw = load i16, ptr %i.ck, align 1, !tbaa !152
   %i.dx = tail call noundef i16 @llvm.bswap.i16(i16 %i.dw)
   %i.dy = zext i16 %i.dx to i32
-  %11 = icmp uge i32 %.sroa.13.2, %i.dy
-  %.not.i.i.i18 = icmp eq i32 %i.dv, -1
-  %or.cond112 = select i1 %11, i1 true, i1 %.not.i.i.i18
-  br i1 %or.cond112, label %"_ZorI13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE24hb_filter_iter_factory_tIZN5graph14PairPosFormat16shrinkERNSA_24gsubgpos_graph_context_tEjjEUl9hb_pair_tIjjEE_RK4$_19ETnPN12hb_enable_ifIXsr17hb_is_iterator_ofIT_NSM_6item_tEEE5valueEvE4typeELPv0EEDTclclsr3stdE7forwardIT0_Efp0_Eclsr3stdE7forwardISM_Efp_EEEOSM_OSS_.exit.loopexit", label %.lr.ph, !llvm.loop !777
+  %.not236 = icmp ult i32 %.sroa.13.2, %i.dy
+  br i1 %.not236, label %.lr.ph, label %"_ZorI13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE24hb_filter_iter_factory_tIZN5graph14PairPosFormat16shrinkERNSA_24gsubgpos_graph_context_tEjjEUl9hb_pair_tIjjEE_RK4$_19ETnPN12hb_enable_ifIXsr17hb_is_iterator_ofIT_NSM_6item_tEEE5valueEvE4typeELPv0EEDTclclsr3stdE7forwardIT0_Efp0_Eclsr3stdE7forwardISM_Efp_EEEOSM_OSS_.exit.loopexit", !llvm.loop !777
 
 "_ZorI13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE24hb_filter_iter_factory_tIZN5graph14PairPosFormat16shrinkERNSA_24gsubgpos_graph_context_tEjjEUl9hb_pair_tIjjEE_RK4$_19ETnPN12hb_enable_ifIXsr17hb_is_iterator_ofIT_NSM_6item_tEEE5valueEvE4typeELPv0EEDTclclsr3stdE7forwardIT0_Efp0_Eclsr3stdE7forwardISM_Efp_EEEOSM_OSS_.exit.loopexit": ; preds = %_ZN9hb_iter_tI13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE9hb_pair_tIjjEEdeEv.exit.i.i.i.thread, %_ZN13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE8__next__Ev.exit, %_ZN9hb_iter_tI13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE9hb_pair_tIjjEEdeEv.exit.i.i.i
   %.sroa.33.sroa.0.0.lcssa.ph = phi i32 [ %.sroa.33.sroa.0.0283, %_ZN9hb_iter_tI13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE9hb_pair_tIjjEEdeEv.exit.i.i.i ], [ %i.dv, %_ZN13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE8__next__Ev.exit ], [ %.sroa.33.sroa.0.0283, %_ZN9hb_iter_tI13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE9hb_pair_tIjjEEdeEv.exit.i.i.i.thread ]
@@ -2654,7 +2650,7 @@ bb.v:                                             ; preds = %bb.u, %.lr.ph.i165.
   %i.eu = phi i32 [ %i.eo, %.lr.ph.i165.1 ], [ %.sroa.speculated14.i.1, %bb.u ] ; 3 uses
   %.1.i.1 = phi i32 [ %.1.i, %.lr.ph.i165.1 ], [ %.sroa.speculated.i.1, %bb.u ] ; 3 uses
   %i.ev = getelementptr inbounds nuw i8, ptr %.025.i, i64 24 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit.i.unr-lcssa, label %.lr.ph.i165
 
@@ -2856,7 +2852,7 @@ _ZN11hb_vector_tIN22hb_serialize_context_t8object_t6link_tELb0EE5qsortEv.exit.i:
   store i32 %i.hl, ptr %i.hm, align 4, !tbaa !291
   %i.hn = add i32 %.01821.i, 16                   ; 2 uses
   %i.ho = getelementptr inbounds nuw i8, ptr %.022.i, i64 96 ; 2 uses
-  %niter448.next.7 = add i64 %niter448, 8         ; 2 uses
+  %niter448.next.7 = add nuw i64 %niter448, 8     ; 2 uses
   %niter448.ncmp.7 = icmp eq i64 %niter448.next.7, %unroll_iter447
   br i1 %niter448.ncmp.7, label %._crit_edge.loopexit.i178.unr-lcssa, label %.lr.ph.i177
 
@@ -3259,7 +3255,7 @@ _ZNK2OT6Layout6Common8Coverage4iterEv.exit:       ; preds = %bb.g, %bb.h, %_ZNK2
   br label %bb.m
 
 bb.m:                                             ; preds = %_ZN13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE8__next__Ev.exit, %_ZNK2OT6Layout6Common8Coverage4iterEv.exit
-  %.sroa.33.sroa.0.0 = phi i32 [ 0, %_ZNK2OT6Layout6Common8Coverage4iterEv.exit ], [ %i.dq, %_ZN13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE8__next__Ev.exit ] ; 9 uses
+  %.sroa.33.sroa.0.0 = phi i32 [ 0, %_ZNK2OT6Layout6Common8Coverage4iterEv.exit ], [ %i.dq, %_ZN13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE8__next__Ev.exit ] ; 8 uses
   %.sroa.27.0 = phi i32 [ %.sroa.11.2, %_ZNK2OT6Layout6Common8Coverage4iterEv.exit ], [ %.sroa.27.1, %_ZN13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE8__next__Ev.exit ] ; 6 uses
   %.sroa.22.0 = phi i32 [ 0, %_ZNK2OT6Layout6Common8Coverage4iterEv.exit ], [ %.sroa.22.2, %_ZN13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE8__next__Ev.exit ] ; 7 uses
   %.sroa.13.0 = phi i32 [ %.sroa.7.0, %_ZNK2OT6Layout6Common8Coverage4iterEv.exit ], [ %.sroa.13.2, %_ZN13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE8__next__Ev.exit ] ; 10 uses
@@ -3280,10 +3276,8 @@ _ZNK9hb_iter_tIN2OT6Layout6Common8Coverage6iter_tEjEcvbEv.exit.i.i.i.i.i: ; pred
   %i.cg = load i16, ptr %i.cd, align 1, !tbaa !152
   %i.ch = tail call noundef i16 @llvm.bswap.i16(i16 %i.cg)
   %i.ci = zext i16 %i.ch to i32
-  %11 = icmp uge i32 %.sroa.13.0, %i.ci
-  %.not.i.i.i22 = icmp eq i32 %.sroa.33.sroa.0.0, -1
-  %or.cond = select i1 %11, i1 true, i1 %.not.i.i.i22
-  br i1 %or.cond, label %"_ZorI13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE24hb_filter_iter_factory_tIZN5graph8Coverage15filter_coverageERNSA_24gsubgpos_graph_context_tEjjjEUl9hb_pair_tIjjEE_RK4$_19ETnPN12hb_enable_ifIXsr17hb_is_iterator_ofIT_NSM_6item_tEEE5valueEvE4typeELPv0EEDTclclsr3stdE7forwardIT0_Efp0_Eclsr3stdE7forwardISM_Efp_EEEOSM_OSS_.exit", label %bb.p
+  %.not234 = icmp ult i32 %.sroa.13.0, %i.ci
+  br i1 %.not234, label %bb.p, label %"_ZorI13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE24hb_filter_iter_factory_tIZN5graph8Coverage15filter_coverageERNSA_24gsubgpos_graph_context_tEjjjEUl9hb_pair_tIjjEE_RK4$_19ETnPN12hb_enable_ifIXsr17hb_is_iterator_ofIT_NSM_6item_tEEE5valueEvE4typeELPv0EEDTclclsr3stdE7forwardIT0_Efp0_Eclsr3stdE7forwardISM_Efp_EEEOSM_OSS_.exit"
 
 bb.p:                                             ; preds = %_ZNK9hb_iter_tIN2OT6Layout6Common8Coverage6iter_tEjEcvbEv.exit.i.i.i.i.i
   tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #15
@@ -3686,7 +3680,7 @@ _ZNK2OT6Layout6Common8Coverage4iterEv.exit:       ; preds = %._crit_edge343, %bb
   br label %bb.bl
 
 bb.bl:                                            ; preds = %_ZN13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE8__next__Ev.exit, %_ZNK2OT6Layout6Common8Coverage4iterEv.exit
-  %.sroa.33.sroa.0.0 = phi i32 [ 0, %_ZNK2OT6Layout6Common8Coverage4iterEv.exit ], [ %i.md, %_ZN13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE8__next__Ev.exit ] ; 7 uses
+  %.sroa.33.sroa.0.0 = phi i32 [ 0, %_ZNK2OT6Layout6Common8Coverage4iterEv.exit ], [ %i.md, %_ZN13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE8__next__Ev.exit ] ; 6 uses
   %.sroa.27.0 = phi i32 [ %.sroa.11.2, %_ZNK2OT6Layout6Common8Coverage4iterEv.exit ], [ %.sroa.27.1, %_ZN13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE8__next__Ev.exit ] ; 6 uses
   %.sroa.22.0 = phi i32 [ 0, %_ZNK2OT6Layout6Common8Coverage4iterEv.exit ], [ %.sroa.22.2, %_ZN13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE8__next__Ev.exit ] ; 7 uses
   %.sroa.13.0 = phi i32 [ %.sroa.7.0, %_ZNK2OT6Layout6Common8Coverage4iterEv.exit ], [ %.sroa.13.2, %_ZN13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE8__next__Ev.exit ] ; 10 uses
@@ -3707,10 +3701,8 @@ _ZNK9hb_iter_tIN2OT6Layout6Common8Coverage6iter_tEjEcvbEv.exit.i.i.i.i.i: ; pred
   %i.kt = load i16, ptr %i.kq, align 1, !tbaa !152
   %i.ku = call noundef i16 @llvm.bswap.i16(i16 %i.kt)
   %i.kv = zext i16 %i.ku to i32
-  %16 = icmp uge i32 %.sroa.13.0, %i.kv
-  %.not.i.i.i122 = icmp eq i32 %.sroa.33.sroa.0.0, -1
-  %or.cond = select i1 %16, i1 true, i1 %.not.i.i.i122
-  br i1 %or.cond, label %"_ZorI13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE24hb_filter_iter_factory_tIZN5graph20LigatureSubstFormat16shrinkERNSA_24gsubgpos_graph_context_tEjj11hb_vector_tIjLb0EEjEUl9hb_pair_tIjjEE_RK4$_19ETnPN12hb_enable_ifIXsr17hb_is_iterator_ofIT_NSO_6item_tEEE5valueEvE4typeELPv0EEDTclclsr3stdE7forwardIT0_Efp0_Eclsr3stdE7forwardISO_Efp_EEEOSO_OSU_.exit", label %bb.bo
+  %.not488 = icmp ult i32 %.sroa.13.0, %i.kv
+  br i1 %.not488, label %bb.bo, label %"_ZorI13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE24hb_filter_iter_factory_tIZN5graph20LigatureSubstFormat16shrinkERNSA_24gsubgpos_graph_context_tEjj11hb_vector_tIjLb0EEjEUl9hb_pair_tIjjEE_RK4$_19ETnPN12hb_enable_ifIXsr17hb_is_iterator_ofIT_NSO_6item_tEEE5valueEvE4typeELPv0EEDTclclsr3stdE7forwardIT0_Efp0_Eclsr3stdE7forwardISO_Efp_EEEOSO_OSU_.exit"
 
 bb.bo:                                            ; preds = %_ZNK9hb_iter_tIN2OT6Layout6Common8Coverage6iter_tEjEcvbEv.exit.i.i.i.i.i
   call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #15

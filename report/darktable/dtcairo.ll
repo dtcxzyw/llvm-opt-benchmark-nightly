@@ -203,8 +203,9 @@ bb.a:
   %.sroa.0.4.vec.extract.i.2 = extractelement <2 x float> %i.q, i64 1
   %i.u = fpext reassoc nsz arcp contract afn float %.sroa.0.4.vec.extract.i.2 to double
   tail call void @cairo_line_to(ptr noundef %0, double noundef %i.t, double noundef %i.u) #8
+  %2 = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.v = load <2 x float>, ptr %i.o, align 4      ; 2 uses
-  %i.w = load <2 x float>, ptr %1, align 4        ; 2 uses
+  %i.w = load <2 x float>, ptr %2, align 4        ; 2 uses
   %.sroa.02.0.vec.extract.i.3 = extractelement <2 x float> %i.v, i64 0
   %i.x = fpext reassoc nsz arcp contract afn float %.sroa.02.0.vec.extract.i.3 to double
   %.sroa.02.4.vec.extract.i.3 = extractelement <2 x float> %i.v, i64 1

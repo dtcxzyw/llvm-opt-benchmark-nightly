@@ -203,10 +203,9 @@ bb.g:                                             ; preds = %bb.f
   %i.bn = icmp eq i16 %i.af, %i.bm
   br i1 %i.bn, label %.lr.ph110, label %.critedge2
 
-.lr.ph63:                                         ; preds = %9
-  %7 = add i32 %.062108, 1
+.lr.ph63:                                         ; preds = %bb.h
   %i.bo = load ptr, ptr %6, align 8
-  %i.bp = sext i32 %10 to i64                     ; 2 uses
+  %i.bp = sext i32 %7 to i64                      ; 2 uses
   %i.bq = getelementptr inbounds [24 x i8], ptr %i.bo, i64 %i.bp ; 2 uses
   %i.br = getelementptr inbounds nuw i8, ptr %i.bq, i64 8
   %i.bs = load i16, ptr %i.br, align 8
@@ -216,9 +215,8 @@ bb.g:                                             ; preds = %bb.f
 .lr.ph110:                                        ; preds = %.lr.ph63.preheader, %.lr.ph63
   %i.bu = phi ptr [ %i.bq, %.lr.ph63 ], [ %i.bk, %.lr.ph63.preheader ] ; 4 uses
   %i.bv = phi i64 [ %i.bp, %.lr.ph63 ], [ %i.bj, %.lr.ph63.preheader ]
-  %.25261109 = phi i32 [ %10, %.lr.ph63 ], [ %i.bg, %.lr.ph63.preheader ] ; 2 uses
-  %.062108 = phi i32 [ %7, %.lr.ph63 ], [ 1, %.lr.ph63.preheader ] ; 2 uses
-  %i.bw = phi i32 [ %11, %.lr.ph63 ], [ %.pre82, %.lr.ph63.preheader ] ; 2 uses
+  %.062108 = phi i32 [ %7, %.lr.ph63 ], [ %i.bg, %.lr.ph63.preheader ] ; 2 uses
+  %i.bw = phi i32 [ %8, %.lr.ph63 ], [ %.pre82, %.lr.ph63.preheader ] ; 2 uses
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bu, i64 4
   %i.by = load i16, ptr %i.bx, align 4
   %i.bz = icmp eq i16 %i.ar, %i.by
@@ -240,26 +238,19 @@ bb.h:                                             ; preds = %.lr.ph110
   %i.cl = getelementptr inbounds nuw i8, ptr %i.ck, i64 16
   %i.cm = load ptr, ptr %i.cl, align 8
   call void @pfree(ptr noundef %i.cm) #7
-  %.not57 = icmp eq i32 %.062108, 0
-  br i1 %.not57, label %9, label %8
-
-8:                                                ; preds = %bb.h
   call void @pushOperator(ptr noundef %1, i8 noundef signext 2, i16 noundef signext 0) #7
-  br label %9
+  %7 = add nsw i32 %.062108, 1                    ; 5 uses
+  %8 = load i32, ptr %i.b, align 4                ; 6 uses
+  %9 = icmp slt i32 %7, %8
+  br i1 %9, label %.lr.ph63, label %..critedge2.loopexit_crit_edge, !llvm.loop !10
 
-9:                                                ; preds = %8, %bb.h
-  %10 = add nsw i32 %.25261109, 1                 ; 5 uses
-  %11 = load i32, ptr %i.b, align 4               ; 6 uses
-  %12 = icmp slt i32 %10, %11
-  br i1 %12, label %.lr.ph63, label %..critedge2.loopexit_crit_edge, !llvm.loop !10
-
-..critedge2.loopexit_crit_edge:                   ; preds = %9
+..critedge2.loopexit_crit_edge:                   ; preds = %bb.h
   br label %.critedge2, !llvm.loop !10
 
 .critedge2:                                       ; preds = %.lr.ph63, %.lr.ph110, %.lr.ph63.preheader, %..critedge2.loopexit_crit_edge, %bb.g, %bb.f
-  %i.cn = phi i32 [ %i.ai, %bb.f ], [ %.pre82, %bb.g ], [ %.pre82, %.lr.ph63.preheader ], [ %11, %..critedge2.loopexit_crit_edge ], [ %i.bw, %.lr.ph110 ], [ %11, %.lr.ph63 ]
-  %i.co = phi i32 [ %i.aj, %bb.f ], [ %.pre82, %bb.g ], [ %.pre82, %.lr.ph63.preheader ], [ %11, %..critedge2.loopexit_crit_edge ], [ %i.bw, %.lr.ph110 ], [ %11, %.lr.ph63 ]
-  %.252.lcssa = phi i32 [ %.15169, %bb.f ], [ %i.bg, %bb.g ], [ %i.bg, %.lr.ph63.preheader ], [ %10, %..critedge2.loopexit_crit_edge ], [ %.25261109, %.lr.ph110 ], [ %10, %.lr.ph63 ] ; 3 uses
+  %i.cn = phi i32 [ %i.ai, %bb.f ], [ %.pre82, %bb.g ], [ %.pre82, %.lr.ph63.preheader ], [ %8, %..critedge2.loopexit_crit_edge ], [ %i.bw, %.lr.ph110 ], [ %8, %.lr.ph63 ]
+  %i.co = phi i32 [ %i.aj, %bb.f ], [ %.pre82, %bb.g ], [ %.pre82, %.lr.ph63.preheader ], [ %8, %..critedge2.loopexit_crit_edge ], [ %i.bw, %.lr.ph110 ], [ %8, %.lr.ph63 ]
+  %.252.lcssa = phi i32 [ %.15169, %bb.f ], [ %i.bg, %bb.g ], [ %i.bg, %.lr.ph63.preheader ], [ %7, %..critedge2.loopexit_crit_edge ], [ %.062108, %.lr.ph110 ], [ %7, %.lr.ph63 ] ; 3 uses
   %.not56 = icmp eq i32 %.04770, 0
   br i1 %.not56, label %bb.j, label %bb.i
 

@@ -203,11 +203,10 @@ bb.h:                                             ; preds = %bb.g, %bb.f
 
 .preheader:                                       ; preds = %bb.h, %bb.m
   %.02132 = phi i32 [ 1, %bb.h ], [ %i.be, %bb.m ] ; 2 uses
-  %i.an = shl nuw nsw i32 %.02132, 19
-  %.masked = and i32 %i.an, 16252928              ; 2 uses
+  %i.an = shl nuw nsw i32 %.02132, 19             ; 2 uses
   %i.ao = load i32, ptr %2, align 4
   %i.ap = and i32 %i.ao, -33030145
-  %i.aq = or disjoint i32 %.masked, %i.ap
+  %i.aq = or disjoint i32 %i.an, %i.ap
   store i32 %i.aq, ptr %2, align 4
   %i.ar = load ptr, ptr @sequence_analysis_channel_hash, align 8
   %i.as = call ptr @wmem_map_lookup(ptr noundef %i.ar, ptr noundef nonnull %2) ; 4 uses
@@ -230,8 +229,8 @@ bb.j:                                             ; preds = %.preheader
 bb.k:                                             ; preds = %.preheader, %bb.j
   %i.aw = load i32, ptr %2, align 4
   %i.ax = and i32 %i.aw, -33030145
-  %i.ay = or disjoint i32 %.masked, %i.ax
-  %3 = or disjoint i32 %i.ay, 16777216
+  %i.ay = or disjoint i32 %i.an, %i.ax
+  %3 = add nuw nsw i32 %i.ay, 16777216
   store i32 %3, ptr %2, align 4
   %i.az = load ptr, ptr @sequence_analysis_channel_hash, align 8
   %i.ba = call ptr @wmem_map_lookup(ptr noundef %i.az, ptr noundef nonnull %2) ; 4 uses

@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %_ZSt13move_backward
 
 .peel.next:                                       ; preds = %bb.f, %bb.l
   %.sroa.0.023 = phi ptr [ %.sroa.0.0, %bb.l ], [ %.sroa.0.0.peel, %bb.f ] ; 6 uses
-  %.pn22 = phi ptr [ %.sroa.0.023, %bb.l ], [ %.sroa.0.021, %bb.f ] ; 2 uses
+  %.pn22 = phi ptr [ %.sroa.0.023, %bb.l ], [ %.sroa.0.021, %bb.f ]
   %i.ak = load ptr, ptr %.sroa.0.023, align 8, !tbaa !309 ; 2 uses
   %i.al = load ptr, ptr %0, align 8, !tbaa !309   ; 2 uses
   %i.am = getelementptr i8, ptr %i.ak, i64 80
@@ -276,10 +276,10 @@ bb.j:                                             ; preds = %_ZNK7rocksdb21UserC
 "_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN7rocksdb6DBImpl9PromoteL0EPNS2_18ColumnFamilyHandleEiE3$_0EclINS_17__normal_iteratorIPPNS2_12FileMetaDataESt6vectorISB_SaISB_EEEESG_EEbT_T0_.exit.thread": ; preds = %bb.j, %"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN7rocksdb6DBImpl9PromoteL0EPNS2_18ColumnFamilyHandleEiE3$_0EclINS_17__normal_iteratorIPPNS2_12FileMetaDataESt6vectorISB_SaISB_EEEESG_EEbT_T0_.exit"
   %i.bj = load ptr, ptr %.sroa.0.023, align 8, !tbaa !309
   %i.bk = ptrtoint ptr %.sroa.0.023 to i64
-  %i.bl = sub i64 %i.bk, %i.h                     ; 3 uses
+  %i.bl = sub i64 %i.bk, %i.h                     ; 2 uses
   %i.bm = ashr exact i64 %i.bl, 3                 ; 2 uses
   %i.bn = icmp sgt i64 %i.bm, 1
-  br i1 %i.bn, label %bb.k, label %5, !prof !432
+  br i1 %i.bn, label %bb.k, label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPPN7rocksdb12FileMetaDataESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit, !prof !432
 
 bb.k:                                             ; preds = %"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN7rocksdb6DBImpl9PromoteL0EPNS2_18ColumnFamilyHandleEiE3$_0EclINS_17__normal_iteratorIPPNS2_12FileMetaDataESt6vectorISB_SaISB_EEEESG_EEbT_T0_.exit.thread"
   %i.bo = getelementptr inbounds nuw i8, ptr %.pn22, i64 16
@@ -288,17 +288,7 @@ bb.k:                                             ; preds = %"_ZN9__gnu_cxx5__op
   call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.bq, ptr noundef nonnull align 8 dereferenceable(1) %0, i64 %i.bl, i1 false)
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPPN7rocksdb12FileMetaDataESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit
 
-5:                                                ; preds = %"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN7rocksdb6DBImpl9PromoteL0EPNS2_18ColumnFamilyHandleEiE3$_0EclINS_17__normal_iteratorIPPNS2_12FileMetaDataESt6vectorISB_SaISB_EEEESG_EEbT_T0_.exit.thread"
-  %6 = icmp eq i64 %i.bl, 8
-  br i1 %6, label %7, label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPPN7rocksdb12FileMetaDataESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit
-
-7:                                                ; preds = %5
-  %8 = getelementptr inbounds nuw i8, ptr %.pn22, i64 8
-  %9 = load ptr, ptr %0, align 8, !tbaa !309
-  store ptr %9, ptr %8, align 8, !tbaa !309
-  br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPPN7rocksdb12FileMetaDataESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit
-
-_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPPN7rocksdb12FileMetaDataESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit: ; preds = %bb.k, %5, %7
+_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPPN7rocksdb12FileMetaDataESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit: ; preds = %"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN7rocksdb6DBImpl9PromoteL0EPNS2_18ColumnFamilyHandleEiE3$_0EclINS_17__normal_iteratorIPPNS2_12FileMetaDataESt6vectorISB_SaISB_EEEESG_EEbT_T0_.exit.thread", %bb.k
   store ptr %i.bj, ptr %0, align 8, !tbaa !309
   br label %bb.l
 

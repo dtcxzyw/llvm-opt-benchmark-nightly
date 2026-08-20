@@ -201,9 +201,8 @@ bb.bn:                                            ; preds = %bb.bm
   br i1 %i.fm, label %ares_uri_parse_path.exit.thread70, label %.lr.ph.i.i44
 
 ares_uri_chis_path_enc.exit.thread.i:             ; preds = %bb.bo, %bb.bo, %bb.bo, %bb.bo, %bb.bo, %bb.bo, %bb.bo, %bb.bo, %bb.bo, %bb.bo, %bb.bo, %bb.bo, %ares_uri_chis_unreserved.exit.i.i.i, %.lr.ph.i.i44, %.lr.ph.i.i44, %.lr.ph.i.i44, %.lr.ph.i.i44, %.lr.ph.i.i44, %.lr.ph.i.i44, %.lr.ph.i.i44
-  %i.fn = add nuw i64 %.014.i.i45, 1              ; 2 uses
-  %.not.i.i46 = icmp eq i64 %i.fn, -1
-  br i1 %.not.i.i46, label %ares_uri_str_isvalid.exit.i47, label %.lr.ph.i.i44
+  %i.fn = add nuw i64 %.014.i.i45, 1
+  br label %.lr.ph.i.i44
 
 .lr.ph.i.i44:                                     ; preds = %bb.bn, %ares_uri_chis_path_enc.exit.thread.i
   %.014.i.i45 = phi i64 [ %i.fn, %ares_uri_chis_path_enc.exit.thread.i ], [ 0, %bb.bn ] ; 2 uses
@@ -245,7 +244,7 @@ bb.bo:                                            ; preds = %ares_uri_chis_unres
     i8 37, label %ares_uri_chis_path_enc.exit.thread.i
   ]
 
-ares_uri_str_isvalid.exit.i47:                    ; preds = %.lr.ph.i.i44, %ares_uri_chis_path_enc.exit.thread.i
+ares_uri_str_isvalid.exit.i47:                    ; preds = %.lr.ph.i.i44
   %i.fu = load i8, ptr %.pre93, align 1, !tbaa !18 ; 2 uses
   %.not115.i.i = icmp eq i8 %i.fu, 0
   br i1 %.not115.i.i, label %ares_uri_parse_path.exit, label %.lr.ph.i19.i
@@ -521,9 +520,8 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.w, label %.thread.i, label %.lr.ph.i.i
 
 ares_uri_chis_query_enc.exit.thread.i:            ; preds = %ares_uri_chis_query_enc.exit.i, %.lr.ph.i.i, %.lr.ph.i.i
-  %i.x = add nuw i64 %.014.i.i, 1                 ; 2 uses
-  %.not.i.i = icmp eq i64 %i.x, -1
-  br i1 %.not.i.i, label %ares_uri_str_isvalid.exit.i, label %.lr.ph.i.i
+  %i.x = add nuw i64 %.014.i.i, 1
+  br label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.k, %ares_uri_chis_query_enc.exit.thread.i
   %.014.i.i = phi i64 [ %i.x, %ares_uri_chis_query_enc.exit.thread.i ], [ 0, %bb.k ] ; 2 uses
@@ -570,7 +568,7 @@ ares_uri_chis_query_enc.exit.i:                   ; preds = %bb.l, %switch.looku
   %.not99.i = and i1 %i.ah, %narrow.i.i.not101.i
   br i1 %.not99.i, label %.thread.i, label %ares_uri_chis_query_enc.exit.thread.i
 
-ares_uri_str_isvalid.exit.i:                      ; preds = %.lr.ph.i.i, %ares_uri_chis_query_enc.exit.thread.i
+ares_uri_str_isvalid.exit.i:                      ; preds = %.lr.ph.i.i
   %i.ai = load i8, ptr %i.v, align 1, !tbaa !18   ; 2 uses
   %.not115.i.i = icmp eq i8 %i.ai, 0
   br i1 %.not115.i.i, label %.loopexit.i, label %.lr.ph.i40.i
@@ -723,9 +721,8 @@ bb.aa:                                            ; preds = %bb.z
   br i1 %i.br, label %.thread.i, label %.lr.ph.i43.i
 
 ares_uri_chis_query_enc.exit81.thread.i:          ; preds = %ares_uri_chis_query_enc.exit81.i, %.lr.ph.i43.i, %.lr.ph.i43.i
-  %i.bs = add nuw i64 %.014.i44.i, 1              ; 2 uses
-  %.not.i47.i = icmp eq i64 %i.bs, -1
-  br i1 %.not.i47.i, label %ares_uri_str_isvalid.exit49.i, label %.lr.ph.i43.i
+  %i.bs = add nuw i64 %.014.i44.i, 1
+  br label %.lr.ph.i43.i
 
 .lr.ph.i43.i:                                     ; preds = %bb.aa, %ares_uri_chis_query_enc.exit81.thread.i
   %.014.i44.i = phi i64 [ %i.bs, %ares_uri_chis_query_enc.exit81.thread.i ], [ 0, %bb.aa ] ; 2 uses
@@ -772,7 +769,7 @@ ares_uri_chis_query_enc.exit81.i:                 ; preds = %bb.ab, %switch.look
   %.not106.i = and i1 %i.cc, %narrow.i.i76.not108.i
   br i1 %.not106.i, label %.thread.i, label %ares_uri_chis_query_enc.exit81.thread.i
 
-ares_uri_str_isvalid.exit49.i:                    ; preds = %.lr.ph.i43.i, %ares_uri_chis_query_enc.exit81.thread.i
+ares_uri_str_isvalid.exit49.i:                    ; preds = %.lr.ph.i43.i
   %i.cd = load i8, ptr %i.bq, align 1, !tbaa !18  ; 2 uses
   %.not115.i50.i = icmp eq i8 %i.cd, 0
   br i1 %.not115.i50.i, label %ares_uri_decode_inplace.exit72.i, label %.lr.ph.i51.i
@@ -1029,9 +1026,8 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.m, label %ares_uri_str_isvalid.exit.thread, label %.lr.ph.i
 
 ares_uri_chis_fragment_enc.exit.thread:           ; preds = %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %.lr.ph.i, %.lr.ph.i, %.lr.ph.i, %.lr.ph.i, %.lr.ph.i, %.lr.ph.i, %.lr.ph.i, %.lr.ph.i, %ares_uri_chis_unreserved.exit.i.i.i
-  %i.n = add nuw i64 %.014.i, 1                   ; 2 uses
-  %.not.i = icmp eq i64 %i.n, -1
-  br i1 %.not.i, label %ares_uri_str_isvalid.exit, label %.lr.ph.i
+  %i.n = add nuw i64 %.014.i, 1
+  br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.f, %ares_uri_chis_fragment_enc.exit.thread
   %.014.i = phi i64 [ %i.n, %ares_uri_chis_fragment_enc.exit.thread ], [ 0, %bb.f ] ; 2 uses
@@ -1074,7 +1070,7 @@ bb.g:                                             ; preds = %ares_uri_chis_unres
     i8 37, label %ares_uri_chis_fragment_enc.exit.thread
   ]
 
-ares_uri_str_isvalid.exit:                        ; preds = %.lr.ph.i, %ares_uri_chis_fragment_enc.exit.thread
+ares_uri_str_isvalid.exit:                        ; preds = %.lr.ph.i
   %i.u = call fastcc i32 @ares_uri_decode_inplace(ptr noundef nonnull %.pre28, i32 noundef 0, ptr noundef %i.c) ; 2 uses
   %.not21 = icmp eq i32 %i.u, 0
   %.pre27 = load ptr, ptr %i.b, align 8, !tbaa !24 ; 2 uses

@@ -204,9 +204,8 @@ bb.cv:                                            ; preds = %bb.cu, %.lr.ph.i
   %i.th = getelementptr inbounds nuw [12 x i8], ptr %i.tg, i64 %indvars.iv ; 5 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 3 uses
   %i.ti = getelementptr inbounds nuw [12 x i8], ptr %i.tg, i64 %indvars.iv.next ; 5 uses
-  %6 = add nuw nsw i64 %indvars.iv, 2
-  %7 = and i64 %6, 4294967295
-  %8 = getelementptr inbounds nuw [12 x i8], ptr %i.tg, i64 %7 ; 3 uses
+  %6 = getelementptr inbounds nuw [12 x i8], ptr %i.tg, i64 %indvars.iv ; 3 uses
+  %7 = getelementptr inbounds nuw i8, ptr %6, i64 24
   %i.tj = getelementptr inbounds nuw i8, ptr %.1599693, i64 16 ; 4 uses
   store i32 3, ptr %.1599693, align 8
   %i.tk = invoke noalias noundef nonnull dereferenceable(12) ptr @_Znam(i64 noundef 12) #27
@@ -373,7 +372,7 @@ bb.dg:                                            ; preds = %bb.de
   br label %_ZNSt10unique_ptrIN6Assimp10SubdividerESt14default_deleteIS1_EED2Ev.exit412
 
 bb.dh:                                            ; preds = %bb.dd
-  %i.wl = load i32, ptr %8, align 4
+  %i.wl = load i32, ptr %7, align 4
   %i.wm = zext i32 %i.wl to i64
   %i.wn = load ptr, ptr %i.c, align 8
   %i.wo = getelementptr inbounds nuw [12 x i8], ptr %i.wn, i64 %i.wm ; 2 uses
@@ -392,10 +391,10 @@ bb.dh:                                            ; preds = %bb.dd
   br i1 %.not307, label %bb.dj, label %bb.di
 
 bb.di:                                            ; preds = %bb.dh
-  %i.wx = getelementptr inbounds nuw i8, ptr %8, i64 4
+  %i.wx = getelementptr inbounds nuw i8, ptr %6, i64 28
   %i.wy = load float, ptr %i.wx, align 4
   store float %i.wy, ptr %.7, align 4
-  %i.wz = getelementptr inbounds nuw i8, ptr %8, i64 8
+  %i.wz = getelementptr inbounds nuw i8, ptr %6, i64 32
   %i.xa = load float, ptr %i.wz, align 4
   %i.xb = getelementptr inbounds nuw i8, ptr %.7, i64 4
   store float %i.xa, ptr %i.xb, align 4
@@ -798,7 +797,7 @@ bb.j:                                             ; preds = %.lr.ph.split, %bb.i
   %i.ag = phi ptr [ %0, %.lr.ph.split ], [ %i.ah, %bb.i ]
   %.02663133 = phi i32 [ 0, %.lr.ph.split ], [ %i.ai, %bb.i ]
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 1 ; 8 uses
-  %i.ai = add i32 %.02663133, 1                   ; 3 uses
+  %i.ai = add nuw i32 %.02663133, 1               ; 3 uses
   %i.aj = icmp eq i32 %i.o, %i.ai
   br i1 %i.aj, label %bb.k, label %bb.l
 

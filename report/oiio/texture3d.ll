@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %.split.us
   %gep.3 = getelementptr inbounds nuw i8, ptr %invariant.gep, i64 %.idx.3
   store float %i.ck, ptr %gep.3, align 4, !tbaa !156
   %indvars.iv.next189.3 = add nuw nsw i64 %indvars.iv188, 4 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.loopexit.us.loopexit.unr-lcssa, label %.lr.ph176.us, !llvm.loop !182
 
@@ -607,7 +607,7 @@ bb.s:                                             ; preds = %bb.r
   %i.gx = call float @llvm.fmuladd.f32(float %8, float %i.gu, float %i.gw)
   store float %i.gx, ptr %i.gv, align 4, !tbaa !156
   %indvars.iv.next209.1 = add nuw nsw i64 %indvars.iv208, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.loopexit184.loopexit306.unr-lcssa, label %.lr.ph192, !llvm.loop !238
 
@@ -1010,7 +1010,7 @@ bb.ig:                                            ; preds = %._crit_edge.i396
   %i.bfz = fsub float 1.000000e+00, %i.aw         ; 3 uses
   %i.bga = fsub float 1.000000e+00, %i.ao         ; 5 uses
   %wide.trip.count153.i399 = zext nneg i32 %7 to i64 ; 4 uses
-  %i.bgb = load <8 x ptr>, ptr %i.e, align 16, !tbaa !95 ; 19 uses
+  %i.bgb = load <8 x ptr>, ptr %i.e, align 16, !tbaa !95 ; 18 uses
   %min.iters.check985 = icmp ult i32 %7, 12
   br i1 %min.iters.check985, label %scalar.ph984.preheader, label %vector.memcheck865
 
@@ -1049,12 +1049,11 @@ vector.memcheck865:                               ; preds = %.lr.ph148.i398
   %i.bgt = insertelement <8 x ptr> %i.bgs, ptr %scevgep874, i64 6
   %i.bgu = insertelement <8 x ptr> %i.bgt, ptr %scevgep875, i64 7 ; 2 uses
   %i.bgv = icmp ult <8 x ptr> %i.bgm, %i.bgu
-  %21 = shufflevector <8 x ptr> %i.bgb, <8 x ptr> poison, <8 x i32> <i32 poison, i32 1, i32 0, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
-  %i.bgw = insertelement <8 x ptr> %21, ptr %12, i64 0
-  %22 = shufflevector <8 x ptr> %i.bgw, <8 x ptr> %i.bgb, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 10, i32 13, i32 12, i32 15> ; 2 uses
+  %21 = shufflevector <8 x ptr> %i.bgb, <8 x ptr> poison, <8 x i32> <i32 poison, i32 1, i32 0, i32 3, i32 2, i32 5, i32 4, i32 7>
+  %i.bgw = insertelement <8 x ptr> %21, ptr %12, i64 0 ; 2 uses
   %i.bgx = insertelement <8 x ptr> poison, ptr %scevgep866, i64 0
   %i.bgy = shufflevector <8 x ptr> %i.bgx, <8 x ptr> poison, <8 x i32> zeroinitializer
-  %i.bgz = icmp ult <8 x ptr> %22, %i.bgy
+  %i.bgz = icmp ult <8 x ptr> %i.bgw, %i.bgy
   %i.bha = and <8 x i1> %i.bgv, %i.bgz
   %bound0912 = icmp ult ptr %10, %scevgep876
   %bound1913 = icmp ult ptr %i.bgk, %scevgep866
@@ -1064,7 +1063,7 @@ vector.memcheck865:                               ; preds = %.lr.ph148.i398
   %i.bhd = icmp ult <8 x ptr> %i.bhc, %i.bgu
   %i.bhe = insertelement <8 x ptr> poison, ptr %scevgep867, i64 0
   %i.bhf = shufflevector <8 x ptr> %i.bhe, <8 x ptr> poison, <8 x i32> zeroinitializer
-  %i.bhg = icmp ult <8 x ptr> %22, %i.bhf
+  %i.bhg = icmp ult <8 x ptr> %i.bgw, %i.bhf
   %i.bhh = and <8 x i1> %i.bhd, %i.bhg
   %bound0948 = icmp ult ptr %11, %scevgep876
   %bound1949 = icmp ult ptr %i.bgk, %scevgep867
@@ -1467,7 +1466,7 @@ bb.n:                                             ; preds = %bb.n, %.preheader46
   %i.bz = add i128 %i.bo, %i.by                   ; 3 uses
   %indvars.iv.next65.1 = add nuw nsw i64 %indvars.iv64, 2 ; 2 uses
   %indvars.iv.next63.1 = add nsw i64 %indvars.iv62, -2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.unr-lcssa, label %bb.n, !llvm.loop !702
 
@@ -1558,7 +1557,7 @@ bb.q:                                             ; preds = %.lr.ph58, %._crit_e
   store i32 %i.dc, ptr %i.dd, align 4, !tbaa !3
   %i.de = lshr i128 %.3.lcssa, 32
   %indvars.iv.next89 = add nsw i64 %indvars.iv88, 1 ; 2 uses
-  %indvars.iv.next79 = add i32 %indvars.iv78, 1
+  %indvars.iv.next79 = add nuw i32 %indvars.iv78, 1
   %exitcond91.not = icmp eq i64 %indvars.iv.next89, %wide.trip.count
   %indvar.next = add i32 %indvar, 1
   br i1 %exitcond91.not, label %._crit_edge59.loopexit, label %bb.q, !llvm.loop !704

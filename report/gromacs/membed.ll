@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %bb.f, %.lr.ph.i.new
   store float %i.cm, ptr %i.cn, align 4, !tbaa !15
   %indvars.iv.next.i.1 = add nsw i64 %indvars.iv.i, 2 ; 3 uses
   %indvars.iv.next37.i.1 = add nuw nsw i64 %indvars.iv36.i, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit.i.unr-lcssa, label %bb.f, !llvm.loop !30
 
@@ -607,11 +607,12 @@ bb.hz:                                            ; preds = %._crit_edge.i295
   br i1 %i.acn, label %.preheader68.i, label %.loopexit660
 
 .preheader68.i:                                   ; preds = %.noexc305, %bb.ig
-  %indvars.iv100.i = phi i64 [ %indvars.iv.next101.i, %bb.ig ], [ 0, %.noexc305 ] ; 5 uses
+  %indvars.iv100.i = phi i64 [ %indvars.iv.next101.i, %bb.ig ], [ 0, %.noexc305 ] ; 9 uses
   %.06283.i = phi i32 [ %.163.lcssa108.i, %bb.ig ], [ 0, %.noexc305 ] ; 2 uses
-  %i.aco = load ptr, ptr %i.acj, align 8, !tbaa !29
-  %52 = getelementptr inbounds nuw [12 x i8], ptr %i.aco, i64 %indvars.iv100.i ; 9 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %52, i8 0, i64 12, i1 false), !tbaa !15
+  %52 = mul nuw nsw i64 %indvars.iv100.i, 12
+  %i.aco = load ptr, ptr %i.acj, align 8, !tbaa !29 ; 5 uses
+  %scevgep.i = getelementptr nuw i8, ptr %i.aco, i64 %52
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %scevgep.i, i8 0, i64 12, i1 false), !tbaa !15
   %i.acp = load ptr, ptr %i.jh, align 8, !tbaa !25
   %i.acq = getelementptr inbounds nuw [4 x i8], ptr %i.acp, i64 %indvars.iv100.i
   %i.acr = load i32, ptr %i.acq, align 4, !tbaa !26 ; 2 uses
@@ -624,7 +625,8 @@ bb.hz:                                            ; preds = %._crit_edge.i295
   %i.acv = load ptr, ptr %i.acu, align 8, !tbaa !28
   %i.acw = sext i32 %.06283.i to i64
   %wide.trip.count98.i = zext nneg i32 %i.acr to i64
-  %i.acx = getelementptr inbounds nuw i8, ptr %52, i64 8 ; 4 uses
+  %53 = getelementptr inbounds nuw [12 x i8], ptr %i.aco, i64 %indvars.iv100.i ; 5 uses
+  %i.acx = getelementptr inbounds nuw i8, ptr %53, i64 8 ; 4 uses
   br label %bb.ia
 
 bb.ia:                                            ; preds = %bb.id, %.lr.ph78.i
@@ -658,11 +660,11 @@ bb.ib:                                            ; preds = %bb.ia
 bb.ic:                                            ; preds = %bb.ib
   %i.ado = load float, ptr %i.acx, align 4, !tbaa !15
   %i.adp = fadd float %i.adi, %i.ado
-  %i.adq = load <2 x float>, ptr %52, align 4, !tbaa !15
+  %i.adq = load <2 x float>, ptr %53, align 4, !tbaa !15
   %i.adr = insertelement <2 x float> poison, float %i.ade, i64 0
   %i.ads = insertelement <2 x float> %i.adr, float %i.adf, i64 1
   %i.adt = fadd <2 x float> %i.ads, %i.adq
-  store <2 x float> %i.adt, ptr %52, align 4, !tbaa !15
+  store <2 x float> %i.adt, ptr %53, align 4, !tbaa !15
   store float %i.adp, ptr %i.acx, align 4, !tbaa !15
   %i.adu = add nsw i32 %.06475.i, 1
   br label %bb.id
@@ -683,11 +685,11 @@ bb.ie:                                            ; preds = %._crit_edge79.i
   %i.adx = uitofp nneg i32 %.165.i to double
   %i.ady = fdiv double 1.000000e+00, %i.adx
   %i.adz = fptrunc double %i.ady to float         ; 2 uses
-  %i.aea = load <2 x float>, ptr %52, align 4, !tbaa !15
+  %i.aea = load <2 x float>, ptr %53, align 4, !tbaa !15
   %i.aeb = insertelement <2 x float> poison, float %i.adz, i64 0
   %i.aec = shufflevector <2 x float> %i.aeb, <2 x float> poison, <2 x i32> zeroinitializer
   %i.aed = fmul <2 x float> %i.aea, %i.aec
-  store <2 x float> %i.aed, ptr %52, align 4, !tbaa !15
+  store <2 x float> %i.aed, ptr %53, align 4, !tbaa !15
   %i.aee = load float, ptr %i.acx, align 4, !tbaa !15
   %i.aef = fmul float %i.aee, %i.adz
   store float %i.aef, ptr %i.acx, align 4, !tbaa !15
@@ -698,20 +700,23 @@ bb.ie:                                            ; preds = %._crit_edge79.i
   br i1 %i.cp, label %._crit_edge103.i, label %bb.if
 
 ._crit_edge103.i:                                 ; preds = %._crit_edge79.thread.i
-  %.phi.trans.insert.i.a = getelementptr inbounds nuw i8, ptr %52, i64 8
+  %.phi.trans.insert.i = getelementptr inbounds nuw [12 x i8], ptr %i.aco, i64 %indvars.iv100.i
+  %.phi.trans.insert.i.a = getelementptr inbounds nuw i8, ptr %.phi.trans.insert.i, i64 8
   %.pre.i296 = load float, ptr %.phi.trans.insert.i.a, align 4, !tbaa !15
   br label %bb.ig
 
 bb.if:                                            ; preds = %._crit_edge79.thread.i
   %i.aeg = load float, ptr %i.xm, align 4, !tbaa !278 ; 2 uses
-  %i.aeh = getelementptr inbounds nuw i8, ptr %52, i64 8
+  %54 = getelementptr inbounds nuw [12 x i8], ptr %i.aco, i64 %indvars.iv100.i
+  %i.aeh = getelementptr inbounds nuw i8, ptr %54, i64 8
   store float %i.aeg, ptr %i.aeh, align 4, !tbaa !15
   br label %bb.ig
 
 bb.ig:                                            ; preds = %bb.if, %._crit_edge103.i
   %i.aei = phi float [ %.pre.i296, %._crit_edge103.i ], [ %i.aeg, %bb.if ]
   %i.aej = load ptr, ptr @stderr, align 8, !tbaa !161
-  %i.aek = load <2 x float>, ptr %52, align 4, !tbaa !15
+  %55 = getelementptr inbounds nuw [12 x i8], ptr %i.aco, i64 %indvars.iv100.i
+  %i.aek = load <2 x float>, ptr %55, align 4, !tbaa !15
   %i.ael = fpext <2 x float> %i.aek to <2 x double> ; 2 uses
   %i.aem = fpext float %i.aei to double
   %i.aen = trunc nuw nsw i64 %indvars.iv100.i to i32
@@ -845,7 +850,7 @@ bb.ih:                                            ; preds = %bb.ih, %.lr.ph.i308
   store float %i.ahx, ptr %i.ahy, align 4, !tbaa !15
   %indvars.iv.next.i312.1 = add nsw i64 %indvars.iv.i311, 2 ; 3 uses
   %indvars.iv.next37.i313.1 = add nuw nsw i64 %indvars.iv36.i310, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit.i.unr-lcssa, label %bb.ih, !llvm.loop !30
 

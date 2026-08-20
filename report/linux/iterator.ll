@@ -203,8 +203,7 @@ bb.m:                                             ; preds = %.lr.ph.preheader.i
   %i.bt = add i64 %.174..i, %.07193.i             ; 4 uses
   %indvars.iv.next102.i = add nuw nsw i64 %indvars.iv101.i, 1 ; 2 uses
   %.not82.i = icmp ult i64 %i.bt, %2
-  %5 = and i64 %indvars.iv.next102.i, 4294967295
-  %.not83.i = icmp ugt i64 %3, %5
+  %.not83.i = icmp ugt i64 %3, %indvars.iv.next102.i
   %or.cond86.i = select i1 %.not82.i, i1 %.not83.i, i1 false
   br i1 %or.cond86.i, label %bb.n, label %._crit_edge.loopexit.i
 
@@ -508,8 +507,7 @@ bb.ac:                                            ; preds = %.lr.ph.preheader.i4
   %i.fx = add i64 %.174..i60, %.07193.i58         ; 4 uses
   %indvars.iv.next102.i61 = add nuw nsw i64 %indvars.iv101.i56, 1 ; 2 uses
   %.not82.i62 = icmp ult i64 %i.fx, %2
-  %6 = and i64 %indvars.iv.next102.i61, 4294967295
-  %.not83.i63 = icmp ugt i64 %3, %6
+  %.not83.i63 = icmp ugt i64 %3, %indvars.iv.next102.i61
   %or.cond86.i64 = select i1 %.not82.i62, i1 %.not83.i63, i1 false
   br i1 %or.cond86.i64, label %bb.ad, label %._crit_edge.loopexit.i52
 

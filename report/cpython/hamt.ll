@@ -203,10 +203,9 @@ bb.bv:                                            ; preds = %bb.bu
 
 _Py_XNewRef.exit206:                              ; preds = %bb.bt, %bb.bu, %bb.bv
   %.val = phi i64 [ %.val254, %bb.bt ], [ %.val254, %bb.bu ], [ %.val.pre, %bb.bv ] ; 2 uses
-  %6 = add nuw nsw i64 %indvars.iv250, 2
-  %7 = and i64 %6, 4294967295
-  %8 = getelementptr [8 x i8], ptr %i.hs, i64 %7
-  store ptr %i.kd, ptr %8, align 8, !tbaa !45
+  %6 = getelementptr [8 x i8], ptr %i.hs, i64 %indvars.iv250
+  %7 = getelementptr i8, ptr %6, i64 16
+  store ptr %i.kd, ptr %7, align 8, !tbaa !45
   %indvars.iv.next251 = add nuw nsw i64 %indvars.iv250, 1 ; 2 uses
   %i.kh = and i64 %.val, 4294967295
   %i.ki = icmp samesign ult i64 %indvars.iv.next251, %i.kh

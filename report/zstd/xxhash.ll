@@ -203,7 +203,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.y = load i32, ptr %i.x, align 4, !tbaa !20
   %i.z = and i32 %i.y, 15                         ; 2 uses
-  %i.aa = zext nneg i32 %i.z to i64               ; 4 uses
+  %i.aa = zext nneg i32 %i.z to i64               ; 3 uses
   %i.ab = icmp samesign ugt i32 %i.z, 3
   br i1 %i.ab, label %XXH_readLE32_align.exit.i.preheader, label %.preheader.i
 
@@ -226,14 +226,13 @@ XXH_readLE32_align.exit.i.prol:                   ; preds = %XXH_readLE32_align.
   %i.ah = getelementptr inbounds nuw i8, ptr %.01719.i.prol, i64 4 ; 3 uses
   %i.ai = tail call i32 @llvm.fshl.i32(i32 %i.ag, i32 %i.ag, i32 17)
   %i.aj = mul i32 %i.ai, 668265263                ; 3 uses
-  %i.ak = add nsw i64 %.01520.i.prol, -4          ; 3 uses
+  %i.ak = add nsw i64 %.01520.i.prol, -4          ; 2 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
   br i1 %prol.iter.cmp.not, label %XXH_readLE32_align.exit.i.prol.loopexit, label %XXH_readLE32_align.exit.i.prol, !llvm.loop !22
 
 XXH_readLE32_align.exit.i.prol.loopexit:          ; preds = %XXH_readLE32_align.exit.i.prol, %XXH_readLE32_align.exit.i.preheader
   %.021.i.unr = phi i32 [ %i.v, %XXH_readLE32_align.exit.i.preheader ], [ %i.aj, %XXH_readLE32_align.exit.i.prol ]
-  %.01520.i.unr = phi i64 [ %i.aa, %XXH_readLE32_align.exit.i.preheader ], [ %i.ak, %XXH_readLE32_align.exit.i.prol ]
   %.01719.i.unr = phi ptr [ %i.w, %XXH_readLE32_align.exit.i.preheader ], [ %i.ah, %XXH_readLE32_align.exit.i.prol ]
   %.lcssa25.unr = phi ptr [ poison, %XXH_readLE32_align.exit.i.preheader ], [ %i.ah, %XXH_readLE32_align.exit.i.prol ]
   %.lcssa24.unr = phi i32 [ poison, %XXH_readLE32_align.exit.i.preheader ], [ %i.aj, %XXH_readLE32_align.exit.i.prol ]
@@ -241,10 +240,10 @@ XXH_readLE32_align.exit.i.prol.loopexit:          ; preds = %XXH_readLE32_align.
   %i.al = icmp ult i64 %i.ac, 12
   br i1 %i.al, label %.preheader.i, label %XXH_readLE32_align.exit.i
 
-.preheader.i:                                     ; preds = %XXH_readLE32_align.exit.i.prol.loopexit, %XXH_readLE32_align.exit.i, %bb.d
-  %.017.lcssa.i = phi ptr [ %i.w, %bb.d ], [ %.lcssa25.unr, %XXH_readLE32_align.exit.i.prol.loopexit ], [ %i.bm, %XXH_readLE32_align.exit.i ] ; 2 uses
-  %.015.lcssa.i = phi i64 [ %i.aa, %bb.d ], [ %.lcssa23.unr, %XXH_readLE32_align.exit.i.prol.loopexit ], [ %1, %XXH_readLE32_align.exit.i ] ; 5 uses
-  %.0.lcssa.i = phi i32 [ %i.v, %bb.d ], [ %.lcssa24.unr, %XXH_readLE32_align.exit.i.prol.loopexit ], [ %i.bo, %XXH_readLE32_align.exit.i ] ; 3 uses
+.preheader.i:                                     ; preds = %XXH_readLE32_align.exit.i.prol.loopexit, %bb.d
+  %.017.lcssa.i = phi ptr [ %i.w, %bb.d ], [ %.lcssa25.unr, %XXH_readLE32_align.exit.i.prol.loopexit ] ; 2 uses
+  %.015.lcssa.i = phi i64 [ %i.aa, %bb.d ], [ %.lcssa23.unr, %XXH_readLE32_align.exit.i.prol.loopexit ] ; 5 uses
+  %.0.lcssa.i = phi i32 [ %i.v, %bb.d ], [ %.lcssa24.unr, %XXH_readLE32_align.exit.i.prol.loopexit ] ; 3 uses
   %.not24.i = icmp eq i64 %.015.lcssa.i, 0
   br i1 %.not24.i, label %XXH32_finalize.exit, label %.lr.ph.i.preheader
 
@@ -280,7 +279,6 @@ XXH_readLE32_align.exit.i.prol.loopexit:          ; preds = %XXH_readLE32_align.
 
 XXH_readLE32_align.exit.i:                        ; preds = %XXH_readLE32_align.exit.i.prol.loopexit, %XXH_readLE32_align.exit.i
   %.021.i = phi i32 [ %i.bo, %XXH_readLE32_align.exit.i ], [ %.021.i.unr, %XXH_readLE32_align.exit.i.prol.loopexit ]
-  %.01520.i = phi i64 [ %1, %XXH_readLE32_align.exit.i ], [ %.01520.i.unr, %XXH_readLE32_align.exit.i.prol.loopexit ]
   %.01719.i = phi ptr [ %i.bm, %XXH_readLE32_align.exit.i ], [ %.01719.i.unr, %XXH_readLE32_align.exit.i.prol.loopexit ] ; 5 uses
   %.0.i.i = load i32, ptr %.01719.i, align 1, !tbaa !8
   %i.av = mul i32 %.0.i.i, -1028477379
@@ -303,12 +301,10 @@ XXH_readLE32_align.exit.i:                        ; preds = %XXH_readLE32_align.
   %.0.i.i.3 = load i32, ptr %i.bh, align 1, !tbaa !8
   %i.bk = mul i32 %.0.i.i.3, -1028477379
   %i.bl = add i32 %i.bk, %i.bj                    ; 2 uses
-  %i.bm = getelementptr inbounds nuw i8, ptr %.01719.i, i64 16 ; 2 uses
+  %i.bm = getelementptr inbounds nuw i8, ptr %.01719.i, i64 16
   %i.bn = tail call i32 @llvm.fshl.i32(i32 %i.bl, i32 %i.bl, i32 17)
-  %i.bo = mul i32 %i.bn, 668265263                ; 2 uses
-  %1 = add nsw i64 %.01520.i, -16                 ; 3 uses
-  %2 = icmp ugt i64 %1, 3
-  br i1 %2, label %XXH_readLE32_align.exit.i, label %.preheader.i, !llvm.loop !15
+  %i.bo = mul i32 %i.bn, 668265263
+  br label %XXH_readLE32_align.exit.i, !llvm.loop !15
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.prol.loopexit, %.lr.ph.i
   %.127.i = phi i32 [ %i.cq, %.lr.ph.i ], [ %.127.i.unr, %.lr.ph.i.prol.loopexit ]

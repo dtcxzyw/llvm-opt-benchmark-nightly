@@ -201,10 +201,9 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.g, %.lr.ph.i
   %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.g ] ; 2 uses
   %i.l = load ptr, ptr %i.k, align 8
-  %1 = add nuw nsw i64 %indvars.iv.i, 2
-  %2 = and i64 %1, 4294967295
-  %3 = getelementptr inbounds nuw [8 x i8], ptr %i.l, i64 %2
-  %i.m = load ptr, ptr %3, align 8
+  %1 = getelementptr inbounds nuw [8 x i8], ptr %i.l, i64 %indvars.iv.i
+  %2 = getelementptr inbounds nuw i8, ptr %1, i64 16
+  %i.m = load ptr, ptr %2, align 8
   tail call void @aio_wait_bh_oneshot(ptr noundef %i.m, ptr noundef nonnull @dummy_bh, ptr noundef null) #13
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %i.n = load i32, ptr %i.i, align 8
@@ -607,10 +606,9 @@ trace_virtio_scsi_tmf_resp.exit.i.i.i.i:          ; preds = %bb.av, %bb.au, %bb.
 .lr.ph.i.i.i:                                     ; preds = %bb.ar, %bb.ax
   %indvars.iv.i.i.i = phi i64 [ %indvars.iv.next.i.i.i, %bb.ax ], [ 0, %bb.ar ] ; 2 uses
   %i.go = load ptr, ptr %i.t, align 8
-  %2 = add nuw nsw i64 %indvars.iv.i.i.i, 2
-  %3 = and i64 %2, 4294967295
-  %4 = getelementptr inbounds nuw [8 x i8], ptr %i.go, i64 %3
-  %i.gp = load ptr, ptr %4, align 8               ; 2 uses
+  %2 = getelementptr inbounds nuw [8 x i8], ptr %i.go, i64 %indvars.iv.i.i.i
+  %3 = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %i.gp = load ptr, ptr %3, align 8               ; 2 uses
   %i.gq = call i32 @g_hash_table_add(ptr noundef %i.fn, ptr noundef %i.gp) #13
   %.not106.i.i.i = icmp eq i32 %i.gq, 0
   br i1 %.not106.i.i.i, label %bb.ax, label %bb.aw

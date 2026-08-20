@@ -204,7 +204,7 @@ bb.k:                                             ; preds = %bb.k, %.lr.ph107.ne
   %i.gv = getelementptr inbounds nuw [2 x i8], ptr %i.j, i64 %i.gb
   store i16 %i.gu, ptr %i.gv, align 2, !tbaa !16
   %i.gw = add nuw i64 %.066106, 2                 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge108.loopexit.unr-lcssa, label %bb.k, !llvm.loop !55
 
@@ -607,8 +607,7 @@ _ZNSt6vectorItSaItEE6resizeEmRKt.exit17:          ; preds = %bb.h, %bb.i, %bb.j,
   ret void
 
 bb.k:                                             ; preds = %.lr.ph, %bb.m
-  %i.ax = phi i64 [ 1, %.lr.ph ], [ %4, %bb.m ]   ; 3 uses
-  %.021 = phi i32 [ 1, %.lr.ph ], [ %3, %bb.m ]
+  %i.ax = phi i64 [ 1, %.lr.ph ], [ %4, %bb.m ]   ; 4 uses
   %.01220 = phi i32 [ 0, %.lr.ph ], [ %.1, %bb.m ] ; 4 uses
   %i.ay = getelementptr inbounds nuw [4 x i8], ptr %i.au, i64 %i.ax
   %i.az = load i32, ptr %i.ay, align 4, !tbaa !56 ; 2 uses
@@ -637,8 +636,8 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.k, %bb.l
   %.1 = phi i32 [ %i.bi, %bb.l ], [ %.01220, %bb.k ]
-  %3 = add i32 %.021, 1                           ; 2 uses
-  %4 = zext i32 %3 to i64                         ; 2 uses
+  %3 = add nuw nsw i64 %i.ax, 1
+  %4 = and i64 %3, 4294967295                     ; 2 uses
   %.not = icmp ult i64 %i.av, %4
   br i1 %.not, label %._crit_edge, label %bb.k, !llvm.loop !316
 }

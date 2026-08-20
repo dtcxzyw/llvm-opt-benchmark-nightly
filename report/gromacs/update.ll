@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.d, %.lr.ph.new
   %i.cr = getelementptr inbounds nuw [4 x i8], ptr %i.p, i64 %indvars.iv.next42.2
   store float %i.cq, ptr %i.cr, align 4, !tbaa !177
   %indvars.iv.next42.3 = add nuw nsw i64 %indvars.iv41, 4 ; 2 uses
-  %niter63.next.3 = add i64 %niter63, 4           ; 2 uses
+  %niter63.next.3 = add nuw i64 %niter63, 4       ; 2 uses
   %niter63.ncmp.3 = icmp eq i64 %niter63.next.3, %unroll_iter62
   br i1 %niter63.ncmp.3, label %.loopexit30.loopexit55.unr-lcssa, label %bb.d, !llvm.loop !288
 
@@ -261,7 +261,7 @@ bb.e:                                             ; preds = %bb.e, %.lr.ph37.new
   %i.ea = getelementptr inbounds nuw [4 x i8], ptr %i.cw, i64 %indvars.iv.next
   store float %i.dz, ptr %i.ea, align 4, !tbaa !291
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.loopexit30.loopexit56.unr-lcssa, label %bb.e, !llvm.loop !293
 
@@ -664,7 +664,7 @@ _ZNSt14_Bit_referenceaSEb.exit.i.i.i.i.i.i.1:     ; preds = %bb.ad, %bb.ac
   %.sroa.55.1.i.i.i.i.i.i.1 = select i1 %i.fv, i32 0, i32 %i.fu ; 3 uses
   %.sroa.03.1.idx.i.i.i.i.i.i.1 = select i1 %i.fv, i64 8, i64 0
   %.sroa.03.1.i.i.i.i.i.i.1 = getelementptr inbounds nuw i8, ptr %.sroa.03.1.i.i.i.i.i.i, i64 %.sroa.03.1.idx.i.i.i.i.i.i.1 ; 3 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1.not = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1.not, label %_ZNSt6vectorIbSaIbEE15_M_copy_alignedESt19_Bit_const_iteratorS2_St13_Bit_iterator.exit.loopexit.unr-lcssa, label %.lr.ph.i.i.i.i.i.i, !llvm.loop !328
 
@@ -1067,7 +1067,7 @@ _ZNSt6vectorIdSaIdEEC2EmRKS0_.exit:               ; preds = %_ZSt6fill_nIPdmdET_
   %i.bw = fpext <2 x float> %i.bv to <2 x double>
   store <2 x double> %i.bw, ptr %i.bu, align 8, !tbaa !268
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %.preheader124, !llvm.loop !460
 
@@ -1213,7 +1213,7 @@ bb.c:                                             ; preds = %._crit_edge
   %i.fc = getelementptr inbounds nuw i8, ptr %i.et, i64 32
   store float %i.fb, ptr %i.fc, align 4, !tbaa !177
   %indvars.iv.next202.1 = add nuw nsw i64 %indvars.iv201, 2 ; 2 uses
-  %niter257.next.1 = add i64 %niter257, 2         ; 2 uses
+  %niter257.next.1 = add nuw i64 %niter257, 2     ; 2 uses
   %niter257.ncmp.1 = icmp eq i64 %niter257.next.1, %unroll_iter256
   br i1 %niter257.ncmp.1, label %._crit_edge145.loopexit.unr-lcssa, label %.preheader119, !llvm.loop !482
 
@@ -1616,7 +1616,7 @@ bb.bl:                                            ; preds = %bb.bk
 bb.bm:                                            ; preds = %.split14.us.i.i, %.lr.ph.i.i129
   %indvars.iv.i.i130 = phi i64 [ %i.arr, %.lr.ph.i.i129 ], [ %indvars.iv.next.i.i131, %.split14.us.i.i ] ; 9 uses
   %indvar.i.i = phi i64 [ 0, %.lr.ph.i.i129 ], [ %indvar.next.i.i, %.split14.us.i.i ] ; 2 uses
-  %i.art = add nsw i64 %indvar.i.i, %i.arr
+  %i.art = add i64 %indvar.i.i, %i.arr
   %i.aru = mul i64 %i.art, 12                     ; 3 uses
   %scevgep18.i.i = getelementptr i8, ptr %i.cp, i64 %i.aru
   %scevgep19.i.i = getelementptr i8, ptr %i.co, i64 %i.aru
@@ -2019,6 +2019,7 @@ bb.cv:                                            ; preds = %bb.ct, %bb.cu
   %i.bjt = fpext float %i.bix to double           ; 3 uses
   %i.bju = sext i32 %i.cf to i64                  ; 2 uses
   %i.bjv = sub i32 %spec.select.i, %i.cf
+  %wide.trip.count.i = zext i32 %i.bjv to i64
   br label %bb.cw
 
 bb.cw:                                            ; preds = %.split13.us.i, %.lr.ph.i
@@ -2421,8 +2422,7 @@ bb.dq:                                            ; preds = %.split.i.preheader2
   %.us-phi.i = phi i64 [ %.sroa.8.014.i, %.split.us.preheader.i ], [ %.sroa.8.3.i.us.2, %.split13.us.i.loopexit ], [ %.sroa.8.3.i.2, %.split13.us.i.loopexit288 ]
   %indvars.iv.next26.i = add nsw i64 %indvars.iv25.i, 1
   %indvar.next.i = add nuw nsw i64 %indvar.i, 1   ; 2 uses
-  %lftr.wideiv311 = trunc i64 %indvar.next.i to i32
-  %exitcond312 = icmp eq i32 %i.bjv, %lftr.wideiv311
+  %exitcond312 = icmp eq i64 %indvar.next.i, %wide.trip.count.i
   br i1 %exitcond312, label %.loopexit269, label %bb.cw, !llvm.loop !958
 
 .loopexit269:                                     ; preds = %.split13.us.i, %bb.cv
@@ -2516,6 +2516,7 @@ bb.dw:                                            ; preds = %bb.dv, %bb.du
   %i.bze = fpext float %i.bxs to double           ; 3 uses
   %i.bzf = sext i32 %i.cf to i64                  ; 2 uses
   %i.bzg = sub i32 %spec.select.i, %i.cf
+  %wide.trip.count.i150 = zext i32 %i.bzg to i64
   br label %bb.dx
 
 bb.dx:                                            ; preds = %.split6.us.i, %.lr.ph.i147
@@ -2523,7 +2524,7 @@ bb.dx:                                            ; preds = %.split6.us.i, %.lr.
   %indvar.i151 = phi i64 [ 0, %.lr.ph.i147 ], [ %indvar.next.i157, %.split6.us.i ] ; 2 uses
   %.0418.i = phi i32 [ 0, %.lr.ph.i147 ], [ %.1.i153, %.split6.us.i ]
   %.0427.i = phi i32 [ 0, %.lr.ph.i147 ], [ %.143.i, %.split6.us.i ]
-  %i.bzh = add nsw i64 %indvar.i151, %i.bzf
+  %i.bzh = add i64 %indvar.i151, %i.bzf
   %i.bzi = mul i64 %i.bzh, 12
   %scevgep.i152 = getelementptr i8, ptr %i.cr, i64 %i.bzi
   %i.bzj = getelementptr inbounds [4 x i8], ptr %i.bxx, i64 %indvars.iv.i150
@@ -2648,8 +2649,7 @@ bb.ef:                                            ; preds = %.split.2.i
 .split6.us.i:                                     ; preds = %bb.ef, %bb.ee, %.split.us.preheader.i160
   %indvars.iv.next.i156 = add nsw i64 %indvars.iv.i150, 1
   %indvar.next.i157 = add nuw nsw i64 %indvar.i151, 1 ; 2 uses
-  %lftr.wideiv309 = trunc i64 %indvar.next.i157 to i32
-  %exitcond310 = icmp eq i32 %i.bzg, %lftr.wideiv309
+  %exitcond310 = icmp eq i64 %indvar.next.i157, %wide.trip.count.i150
   br i1 %exitcond310, label %_ZL12do_update_mdiiflPKN3gmx11BasicVectorIfEEPS1_S4_S3_19TemperatureCoupling16PressureCouplingiiNS_8ArrayRefIKtEE16AccelerationTypeS9_NS7_IS2_EEPA3_KfNS7_ISC_EESB_PK14gmx_ekindata_tSE_PKdRKNS_14BasicMatrix3x3IfEEb.exit, label %bb.dx, !llvm.loop !972
 
 bb.eg:                                            ; preds = %bb.dt
@@ -2698,7 +2698,8 @@ bb.ei:                                            ; preds = %bb.eh, %bb.eg
 .lr.ph.i166:                                      ; preds = %bb.ei
   %i.cdc = icmp eq ptr %i.ccc, %i.ccd
   %i.cdd = sext i32 %i.cf to i64                  ; 4 uses
-  %i.cde = sub i32 %spec.select.i, %i.cf          ; 2 uses
+  %i.cde = sub i32 %spec.select.i, %i.cf
+  %wide.trip.count69.i = zext i32 %i.cde to i64   ; 2 uses
   br i1 %i.cdc, label %.lr.ph.split.us.preheader.i, label %.lr.ph.split.i
 
 .lr.ph.split.us.preheader.i:                      ; preds = %.lr.ph.i166
@@ -2724,7 +2725,7 @@ bb.ei:                                            ; preds = %bb.eh, %bb.eg
   br i1 %.not37.us.i, label %bb.ej, label %.split.us47.1.i
 
 .split.us.us.preheader.i:                         ; preds = %.lr.ph.split.us.i
-  %i.cdo = add nsw i64 %indvar59.i, %i.cdd
+  %i.cdo = add i64 %indvar59.i, %i.cdd
   %i.cdp = mul i64 %i.cdo, 12                     ; 2 uses
   %scevgep62.i = getelementptr i8, ptr %i.co, i64 %i.cdp
   %scevgep61.i = getelementptr i8, ptr %i.cp, i64 %i.cdp
@@ -2783,8 +2784,7 @@ bb.em:                                            ; preds = %.split.us47.2.i
 .split42.us46.i:                                  ; preds = %bb.em, %bb.el, %.split.us.us.preheader.i
   %indvars.iv.next67.i = add nsw i64 %indvars.iv66.i, 1
   %indvar.next60.i = add nuw nsw i64 %indvar59.i, 1 ; 2 uses
-  %lftr.wideiv307 = trunc i64 %indvar.next60.i to i32
-  %exitcond308 = icmp eq i32 %i.cde, %lftr.wideiv307
+  %exitcond308 = icmp eq i64 %indvar.next60.i, %wide.trip.count69.i
   br i1 %exitcond308, label %_ZL12do_update_mdiiflPKN3gmx11BasicVectorIfEEPS1_S4_S3_19TemperatureCoupling16PressureCouplingiiNS_8ArrayRefIKtEE16AccelerationTypeS9_NS7_IS2_EEPA3_KfNS7_ISC_EESB_PK14gmx_ekindata_tSE_PKdRKNS_14BasicMatrix3x3IfEEb.exit, label %.lr.ph.split.us.i, !llvm.loop !984
 
 .lr.ph.split.i:                                   ; preds = %.lr.ph.i166, %.split42.us.i
@@ -2809,7 +2809,7 @@ bb.em:                                            ; preds = %.split.us47.2.i
   br i1 %.not37.i, label %bb.en, label %.split.1.i173
 
 .split.us.preheader.i180:                         ; preds = %.lr.ph.split.i
-  %i.cey = add nsw i64 %indvar.i170, %i.cdd
+  %i.cey = add i64 %indvar.i170, %i.cdd
   %i.cez = mul i64 %i.cey, 12                     ; 2 uses
   %scevgep52.i = getelementptr i8, ptr %i.co, i64 %i.cez
   %scevgep.i181 = getelementptr i8, ptr %i.cp, i64 %i.cez
@@ -2870,8 +2870,7 @@ bb.eq:                                            ; preds = %.split.2.i175
 .split42.us.i:                                    ; preds = %bb.eq, %bb.ep, %.split.us.preheader.i180
   %indvars.iv.next.i176 = add nsw i64 %indvars.iv.i169, 1
   %indvar.next.i177 = add nuw nsw i64 %indvar.i170, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvar.next.i177 to i32
-  %exitcond = icmp eq i32 %i.cde, %lftr.wideiv
+  %exitcond = icmp eq i64 %indvar.next.i177, %wide.trip.count69.i
   br i1 %exitcond, label %_ZL12do_update_mdiiflPKN3gmx11BasicVectorIfEEPS1_S4_S3_19TemperatureCoupling16PressureCouplingiiNS_8ArrayRefIKtEE16AccelerationTypeS9_NS7_IS2_EEPA3_KfNS7_ISC_EESB_PK14gmx_ekindata_tSE_PKdRKNS_14BasicMatrix3x3IfEEb.exit, label %.lr.ph.split.i, !llvm.loop !984
 
 bb.er:                                            ; preds = %bb.c

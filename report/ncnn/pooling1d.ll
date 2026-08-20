@@ -203,9 +203,9 @@ bb.b:                                             ; preds = %bb.a
   %i.h = load i32, ptr %0, align 4, !tbaa !40     ; 2 uses
   call void @__kmpc_for_static_init_4(ptr nonnull @1, i32 %i.h, i32 34, ptr nonnull %i.d, ptr nonnull %i.a, ptr nonnull %i.b, ptr nonnull %i.c, i32 1, i32 1)
   %i.i = load i32, ptr %i.b, align 4, !tbaa !40
-  %i.j = call i32 @llvm.smin.i32(i32 %i.i, i32 %i.g) ; 5 uses
+  %i.j = call i32 @llvm.smin.i32(i32 %i.i, i32 %i.g) ; 4 uses
   store i32 %i.j, ptr %i.b, align 4, !tbaa !40
-  %i.k = load i32, ptr %i.a, align 4, !tbaa !40   ; 5 uses
+  %i.k = load i32, ptr %i.a, align 4, !tbaa !40   ; 4 uses
   %.not41 = icmp sgt i32 %i.k, %i.j
   br i1 %.not41, label %._crit_edge.split, label %.lr.ph
 
@@ -240,13 +240,14 @@ bb.b:                                             ; preds = %bb.a
   %i.ae = shl nuw nsw i64 %i.ad, 2                ; 5 uses
   %i.af = add nsw i32 %i.j, 1
   %i.ag = sub i32 %i.af, %i.k                     ; 2 uses
-  %7 = sub i32 %i.j, %i.k
-  %xtraiter = and i32 %i.ag, 3                    ; 3 uses
+  %wide.trip.count = zext i32 %i.ag to i64        ; 2 uses
+  %xtraiter = and i64 %wide.trip.count, 3         ; 3 uses
+  %7 = add i32 %i.ag, -1
   %i.ah = icmp ult i32 %7, 3
   br i1 %i.ah, label %.lr.ph39.epil.preheader, label %.lr.ph39.preheader.new
 
 .lr.ph39.preheader.new:                           ; preds = %.lr.ph39.preheader
-  %unroll_iter = and i32 %i.ag, -4
+  %unroll_iter = and i64 %wide.trip.count, 4294967292
   br label %.lr.ph39
 
 .lr.ph39.us.preheader:                            ; preds = %.lr.ph.split
@@ -329,51 +330,51 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
 
 .lr.ph39:                                         ; preds = %.lr.ph39, %.lr.ph39.preheader.new
   %indvar = phi i64 [ 0, %.lr.ph39.preheader.new ], [ %indvar.next.3, %.lr.ph39 ] ; 5 uses
-  %niter = phi i32 [ 0, %.lr.ph39.preheader.new ], [ %niter.next.3, %.lr.ph39 ]
-  %i.be = add nsw i64 %indvar, %i.ac
+  %niter = phi i64 [ 0, %.lr.ph39.preheader.new ], [ %niter.next.3, %.lr.ph39 ]
+  %i.be = add i64 %indvar, %i.ac
   %i.bf = mul i64 %factor.op.mul43, %i.be
   %scevgep = getelementptr i8, ptr %i.r, i64 %i.bf
   call void @llvm.memset.p0.i64(ptr align 4 %scevgep, i8 0, i64 %i.ae, i1 false), !tbaa !56
   %indvar.next = or disjoint i64 %indvar, 1
-  %i.bg = add nsw i64 %indvar.next, %i.ac
+  %i.bg = add i64 %indvar.next, %i.ac
   %i.bh = mul i64 %factor.op.mul43, %i.bg
   %scevgep.1 = getelementptr i8, ptr %i.r, i64 %i.bh
   call void @llvm.memset.p0.i64(ptr align 4 %scevgep.1, i8 0, i64 %i.ae, i1 false), !tbaa !56
   %indvar.next.1 = or disjoint i64 %indvar, 2
-  %i.bi = add nsw i64 %indvar.next.1, %i.ac
+  %i.bi = add i64 %indvar.next.1, %i.ac
   %i.bj = mul i64 %factor.op.mul43, %i.bi
   %scevgep.2 = getelementptr i8, ptr %i.r, i64 %i.bj
   call void @llvm.memset.p0.i64(ptr align 4 %scevgep.2, i8 0, i64 %i.ae, i1 false), !tbaa !56
   %indvar.next.2 = or disjoint i64 %indvar, 3
-  %i.bk = add nsw i64 %indvar.next.2, %i.ac
+  %i.bk = add i64 %indvar.next.2, %i.ac
   %i.bl = mul i64 %factor.op.mul43, %i.bk
   %scevgep.3 = getelementptr i8, ptr %i.r, i64 %i.bl
   call void @llvm.memset.p0.i64(ptr align 4 %scevgep.3, i8 0, i64 %i.ae, i1 false), !tbaa !56
   %indvar.next.3 = add nuw nsw i64 %indvar, 4     ; 2 uses
-  %niter.next.3 = add i32 %niter, 4               ; 2 uses
-  %niter.ncmp.3 = icmp eq i32 %niter.next.3, %unroll_iter
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
+  %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %._crit_edge.split.loopexit72.unr-lcssa, label %.lr.ph39
 
 ._crit_edge.split.loopexit72.unr-lcssa:           ; preds = %.lr.ph39
-  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %._crit_edge.split, label %.lr.ph39.epil.preheader
 
 .lr.ph39.epil.preheader:                          ; preds = %._crit_edge.split.loopexit72.unr-lcssa, %.lr.ph39.preheader
   %indvar.epil.init = phi i64 [ 0, %.lr.ph39.preheader ], [ %indvar.next.3, %._crit_edge.split.loopexit72.unr-lcssa ]
-  %lcmp.mod73 = icmp ne i32 %xtraiter, 0
+  %lcmp.mod73 = icmp ne i64 %xtraiter, 0
   call void @llvm.assume(i1 %lcmp.mod73)
   br label %.lr.ph39.epil
 
 .lr.ph39.epil:                                    ; preds = %.lr.ph39.epil, %.lr.ph39.epil.preheader
   %indvar.epil = phi i64 [ %indvar.epil.init, %.lr.ph39.epil.preheader ], [ %indvar.next.epil, %.lr.ph39.epil ] ; 2 uses
-  %epil.iter = phi i32 [ 0, %.lr.ph39.epil.preheader ], [ %epil.iter.next, %.lr.ph39.epil ]
+  %epil.iter = phi i64 [ 0, %.lr.ph39.epil.preheader ], [ %epil.iter.next, %.lr.ph39.epil ]
   %i.bm = add i64 %indvar.epil, %i.ac
   %i.bn = mul i64 %factor.op.mul43, %i.bm
   %scevgep.epil = getelementptr i8, ptr %i.r, i64 %i.bn
   call void @llvm.memset.p0.i64(ptr align 4 %scevgep.epil, i8 0, i64 %i.ae, i1 false), !tbaa !56
   %indvar.next.epil = add nuw nsw i64 %indvar.epil, 1
-  %epil.iter.next = add i32 %epil.iter, 1         ; 2 uses
-  %epil.iter.cmp.not = icmp eq i32 %epil.iter.next, %xtraiter
+  %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
+  %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
   br i1 %epil.iter.cmp.not, label %._crit_edge.split, label %.lr.ph39.epil, !llvm.loop !101
 
 ._crit_edge.split:                                ; preds = %._crit_edge.split.loopexit72.unr-lcssa, %.lr.ph39.epil, %._crit_edge40.split.us.us, %.lr.ph, %bb.b

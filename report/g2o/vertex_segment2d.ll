@@ -204,7 +204,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a, %_ZN5Eigen9DenseBaseINS_5BlockINS_6MatrixIdLi4ELi4ELi0ELi4ELi4EEELin1ELi1ELb0EEEEdVERKd.exit
   %.03254 = phi i64 [ 0, %bb.a ], [ %i.p, %_ZN5Eigen9DenseBaseINS_5BlockINS_6MatrixIdLi4ELi4ELi0ELi4ELi4EEELin1ELi1ELb0EEEEdVERKd.exit ] ; 15 uses
-  %i.m = add nsw i64 %.03254, -1                  ; 2 uses
+  %i.m = add nuw i64 %.03254, 3
   %i.n = add nsw i64 %.03254, -2
   %i.o = sub nuw nsw i64 3, %.03254               ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #20
@@ -231,18 +231,13 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not52, label %_ZNK5Eigen10MatrixBaseINS_5BlockINS_6MatrixIdLi4ELi4ELi0ELi4ELi4EEELi1ELin1ELb0EEEE11squaredNormEv.exit, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %bb.c
-  %xtraiter = and i64 %i.m, 3                     ; 3 uses
+  %xtraiter = and i64 %i.m, 3                     ; 2 uses
   %i.x = icmp ult i64 %i.n, 3
-  br i1 %i.x, label %.lr.ph.i.i.i.i.epil.preheader, label %.lr.ph.i.i.i.i.preheader.new
+  br i1 %i.x, label %.lr.ph.i.i.i.i.epil.preheader, label %.lr.ph.i.i.i.i
 
-.lr.ph.i.i.i.i.preheader.new:                     ; preds = %.lr.ph.i.i.i.i.preheader
-  %unroll_iter = and i64 %i.m, -4
-  br label %.lr.ph.i.i.i.i
-
-.lr.ph.i.i.i.i:                                   ; preds = %.lr.ph.i.i.i.i, %.lr.ph.i.i.i.i.preheader.new
-  %.01725.i.i.i.i = phi i64 [ 1, %.lr.ph.i.i.i.i.preheader.new ], [ %6, %.lr.ph.i.i.i.i ] ; 5 uses
-  %.02324.i.i.i.i = phi double [ %i.w, %.lr.ph.i.i.i.i.preheader.new ], [ %i.at, %.lr.ph.i.i.i.i ]
-  %niter = phi i64 [ 0, %.lr.ph.i.i.i.i.preheader.new ], [ %niter.next.3, %.lr.ph.i.i.i.i ]
+.lr.ph.i.i.i.i:                                   ; preds = %.lr.ph.i.i.i.i.preheader, %.lr.ph.i.i.i.i
+  %.01725.i.i.i.i = phi i64 [ %niter.next.3, %.lr.ph.i.i.i.i ], [ 1, %.lr.ph.i.i.i.i.preheader ] ; 5 uses
+  %.02324.i.i.i.i = phi double [ %i.at, %.lr.ph.i.i.i.i ], [ %i.w, %.lr.ph.i.i.i.i.preheader ]
   %.idx.i.i.i.i.i.i.i = shl i64 %.01725.i.i.i.i, 5
   %i.y = getelementptr i8, ptr %i.s, i64 %.idx.i.i.i.i.i.i.i
   %i.z = load double, ptr %i.y, align 8, !tbaa !44 ; 2 uses
@@ -265,26 +260,18 @@ bb.c:                                             ; preds = %bb.b
   %i.aq = getelementptr i8, ptr %i.ap, i64 96
   %i.ar = load double, ptr %i.aq, align 8, !tbaa !44 ; 2 uses
   %i.as = fmul double %i.ar, %i.ar
-  %i.at = fadd double %i.an, %i.as                ; 3 uses
-  %6 = add nuw nsw i64 %.01725.i.i.i.i, 4         ; 2 uses
-  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
-  %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
-  br i1 %niter.ncmp.3, label %_ZNK5Eigen10MatrixBaseINS_5BlockINS_6MatrixIdLi4ELi4ELi0ELi4ELi4EEELi1ELin1ELb0EEEE11squaredNormEv.exit.loopexit.unr-lcssa, label %.lr.ph.i.i.i.i, !llvm.loop !127
+  %i.at = fadd double %i.an, %i.as
+  %niter.next.3 = add nuw nsw i64 %.01725.i.i.i.i, 4
+  br label %.lr.ph.i.i.i.i, !llvm.loop !127
 
-_ZNK5Eigen10MatrixBaseINS_5BlockINS_6MatrixIdLi4ELi4ELi0ELi4ELi4EEELi1ELin1ELb0EEEE11squaredNormEv.exit.loopexit.unr-lcssa: ; preds = %.lr.ph.i.i.i.i
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %_ZNK5Eigen10MatrixBaseINS_5BlockINS_6MatrixIdLi4ELi4ELi0ELi4ELi4EEELi1ELin1ELb0EEEE11squaredNormEv.exit, label %.lr.ph.i.i.i.i.epil.preheader
-
-.lr.ph.i.i.i.i.epil.preheader:                    ; preds = %_ZNK5Eigen10MatrixBaseINS_5BlockINS_6MatrixIdLi4ELi4ELi0ELi4ELi4EEELi1ELin1ELb0EEEE11squaredNormEv.exit.loopexit.unr-lcssa, %.lr.ph.i.i.i.i.preheader
-  %.01725.i.i.i.i.epil.init = phi i64 [ 1, %.lr.ph.i.i.i.i.preheader ], [ %6, %_ZNK5Eigen10MatrixBaseINS_5BlockINS_6MatrixIdLi4ELi4ELi0ELi4ELi4EEELi1ELin1ELb0EEEE11squaredNormEv.exit.loopexit.unr-lcssa ]
-  %.02324.i.i.i.i.epil.init = phi double [ %i.w, %.lr.ph.i.i.i.i.preheader ], [ %i.at, %_ZNK5Eigen10MatrixBaseINS_5BlockINS_6MatrixIdLi4ELi4ELi0ELi4ELi4EEELi1ELin1ELb0EEEE11squaredNormEv.exit.loopexit.unr-lcssa ]
+.lr.ph.i.i.i.i.epil.preheader:                    ; preds = %.lr.ph.i.i.i.i.preheader
   %lcmp.mod81 = icmp ne i64 %xtraiter, 0
   call void @llvm.assume(i1 %lcmp.mod81)
   br label %.lr.ph.i.i.i.i.epil
 
 .lr.ph.i.i.i.i.epil:                              ; preds = %.lr.ph.i.i.i.i.epil, %.lr.ph.i.i.i.i.epil.preheader
-  %.01725.i.i.i.i.epil = phi i64 [ %i.ay, %.lr.ph.i.i.i.i.epil ], [ %.01725.i.i.i.i.epil.init, %.lr.ph.i.i.i.i.epil.preheader ] ; 2 uses
-  %.02324.i.i.i.i.epil = phi double [ %i.ax, %.lr.ph.i.i.i.i.epil ], [ %.02324.i.i.i.i.epil.init, %.lr.ph.i.i.i.i.epil.preheader ]
+  %.01725.i.i.i.i.epil = phi i64 [ %i.ay, %.lr.ph.i.i.i.i.epil ], [ 1, %.lr.ph.i.i.i.i.epil.preheader ] ; 2 uses
+  %.02324.i.i.i.i.epil = phi double [ %i.ax, %.lr.ph.i.i.i.i.epil ], [ %i.w, %.lr.ph.i.i.i.i.epil.preheader ]
   %epil.iter = phi i64 [ %epil.iter.next, %.lr.ph.i.i.i.i.epil ], [ 0, %.lr.ph.i.i.i.i.epil.preheader ]
   %.idx.i.i.i.i.i.i.i.epil = shl i64 %.01725.i.i.i.i.epil, 5
   %i.au = getelementptr i8, ptr %i.s, i64 %.idx.i.i.i.i.i.i.i.epil
@@ -296,8 +283,8 @@ _ZNK5Eigen10MatrixBaseINS_5BlockINS_6MatrixIdLi4ELi4ELi0ELi4ELi4EEELi1ELin1ELb0E
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
   br i1 %epil.iter.cmp.not, label %_ZNK5Eigen10MatrixBaseINS_5BlockINS_6MatrixIdLi4ELi4ELi0ELi4ELi4EEELi1ELin1ELb0EEEE11squaredNormEv.exit, label %.lr.ph.i.i.i.i.epil, !llvm.loop !128
 
-_ZNK5Eigen10MatrixBaseINS_5BlockINS_6MatrixIdLi4ELi4ELi0ELi4ELi4EEELi1ELin1ELb0EEEE11squaredNormEv.exit: ; preds = %_ZNK5Eigen10MatrixBaseINS_5BlockINS_6MatrixIdLi4ELi4ELi0ELi4ELi4EEELi1ELin1ELb0EEEE11squaredNormEv.exit.loopexit.unr-lcssa, %.lr.ph.i.i.i.i.epil, %bb.c
-  %.0.i.i = phi double [ %i.w, %bb.c ], [ %i.at, %_ZNK5Eigen10MatrixBaseINS_5BlockINS_6MatrixIdLi4ELi4ELi0ELi4ELi4EEELi1ELin1ELb0EEEE11squaredNormEv.exit.loopexit.unr-lcssa ], [ %i.ax, %.lr.ph.i.i.i.i.epil ]
+_ZNK5Eigen10MatrixBaseINS_5BlockINS_6MatrixIdLi4ELi4ELi0ELi4ELi4EEELi1ELin1ELb0EEEE11squaredNormEv.exit: ; preds = %.lr.ph.i.i.i.i.epil, %bb.c
+  %.0.i.i = phi double [ %i.w, %bb.c ], [ %i.ax, %.lr.ph.i.i.i.i.epil ]
   %i.az = fsub double %i.u, %.0.i.i
   br label %bb.d
 
@@ -666,7 +653,7 @@ _ZN5Eigen8internal31generic_dense_assignment_kernelINS0_9evaluatorINS_5BlockINS_
   %i.ca = fmul double %i.bx, %i.bz
   %i.cb = fadd double %i.bu, %i.ca                ; 3 uses
   %i.cc = add nuw nsw i64 %.01725.i.i.i.i.i.us.i, 4 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_ZN5Eigen8internal31generic_dense_assignment_kernelINS0_9evaluatorINS_5BlockINS_6MatrixIdLi4ELi4ELi0ELi4ELi4EEELin1ELi1ELb0EEEEENS2_INS_7ProductINS3_IS5_Lin1ELin1ELb0EEENS_9TransposeIKNS3_IS5_Li1ELin1ELb0EEEEELi1EEEEENS0_13sub_assign_opIddEELi0EE11assignCoeffEl.exit.loopexit.us.i.unr-lcssa, label %.lr.ph.i.i.i.i.i.us.i, !llvm.loop !194
 
@@ -895,7 +882,7 @@ _ZN5Eigen8internal31generic_dense_assignment_kernelINS0_9evaluatorINS_5BlockINS_
   %i.gb = fmul double %i.fy, %i.ga
   %i.gc = fadd double %i.fv, %i.gb                ; 3 uses
   %i.gd = add nuw nsw i64 %.01725.i.i.i.i.i.us.i25, 4 ; 2 uses
-  %niter118.next.3 = add i64 %niter118, 4         ; 2 uses
+  %niter118.next.3 = add nuw i64 %niter118, 4     ; 2 uses
   %niter118.ncmp.3 = icmp eq i64 %niter118.next.3, %unroll_iter117
   br i1 %niter118.ncmp.3, label %_ZN5Eigen8internal31generic_dense_assignment_kernelINS0_9evaluatorINS_5BlockINS_6MatrixIdLi4ELi4ELi0ELi4ELi4EEELin1ELi1ELb0EEEEENS2_INS_7ProductINS3_IS5_Lin1ELin1ELb0EEENS_9TransposeIKNS3_IS5_Li1ELin1ELb0EEEEELi1EEEEENS0_13sub_assign_opIddEELi0EE11assignCoeffEl.exit.loopexit.us.i29.unr-lcssa, label %.lr.ph.i.i.i.i.i.us.i24, !llvm.loop !194
 

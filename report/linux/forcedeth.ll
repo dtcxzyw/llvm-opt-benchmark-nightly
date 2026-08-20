@@ -204,8 +204,7 @@ bb.cj:                                            ; preds = %.thread442, %bb.cd,
   br label %bb.ck
 
 bb.ck:                                            ; preds = %bb.cj, %bb.dd
-  %.1322455 = phi i32 [ 1, %bb.cj ], [ %i.py, %bb.dd ] ; 3 uses
-  %2 = and i32 %.1322455, 31                      ; 2 uses
+  %.1322455 = phi i32 [ 1, %bb.cj ], [ %i.py, %bb.dd ] ; 4 uses
   call void @_raw_spin_lock_irq(ptr noundef %i.f) #16
   %.val.i414 = load ptr, ptr %i.fn, align 32      ; 3 uses
   %i.nm = getelementptr i8, ptr %.val.i414, i64 384 ; 2 uses
@@ -222,7 +221,7 @@ bb.cl:                                            ; preds = %bb.ck
   br label %bb.cm
 
 bb.cm:                                            ; preds = %bb.cl, %bb.ck
-  %i.nq = shl nuw nsw i32 %2, 5                   ; 3 uses
+  %i.nq = shl nuw nsw i32 %.1322455, 5            ; 3 uses
   %i.nr = or disjoint i32 %i.nq, 2
   call void asm sideeffect "movl $0,$1", "r,*m,~{memory},~{dirflag},~{fpsr},~{flags}"(i32 %i.nr, ptr elementtype(i32) %i.nn) #17, !srcloc !12
   %.val22.i = load ptr, ptr %i.fn, align 32       ; 2 uses
@@ -329,7 +328,7 @@ bb.cw:                                            ; preds = %mii_rw.exit425
   %i.oz = lshr i32 %.0.i424, 10
   %i.pa = and i32 %i.oz, 63
   %i.pb = getelementptr i8, ptr %i.e, i64 3444
-  store i32 %2, ptr %i.pb, align 4
+  store i32 %.1322455, ptr %i.pb, align 4
   %i.pc = or disjoint i32 %i.pa, %i.oy            ; 2 uses
   %i.pd = getelementptr i8, ptr %i.e, i64 3452
   %i.pe = icmp eq i32 %i.pc, 32
@@ -732,7 +731,7 @@ bb.a:
   %i.af = add i32 %i.ac, %i.z
   %i.ag = add i32 %i.af, %i.ae                    ; 3 uses
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !116
 
@@ -1135,7 +1134,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.af = getelementptr i8, ptr %i.ae, i64 3892
   store i16 %i.ad, ptr %i.af, align 4
   %indvars.iv.next.7 = add nuw nsw i64 %indvars.iv, 8 ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !144
 
@@ -1538,7 +1537,7 @@ bb.a:
   %i.ab = add i32 %i.y, %i.v
   %i.ac = add i32 %i.ab, %i.aa                    ; 3 uses
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !159
 

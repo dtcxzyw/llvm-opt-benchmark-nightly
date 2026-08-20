@@ -201,6 +201,7 @@ bb.a:
   %sext36.i.us = add i64 %sext.i.us, 4294967296
   %i.ac = ashr exact i64 %sext36.i.us, 32
   %i.ad = getelementptr i8, ptr %.029.i.us53, i64 %i.ac
+  %3 = add nuw i32 %.0.us52, 1                    ; 2 uses
   %i.ae = icmp eq i32 %3, %i.f
   br i1 %i.ae, label %.split.us, label %.lr.ph, !llvm.loop !20
 
@@ -225,9 +226,8 @@ check_kparam_locked.exit.i.us:                    ; preds = %.lr.ph
   %i.al = load ptr, ptr %i.t, align 8
   %i.am = getelementptr i8, ptr %i.al, i64 %i.aa
   store ptr %i.am, ptr %i.t, align 8
-  %3 = add i32 %.0.us52, 1                        ; 3 uses
   %i.an = icmp eq i8 %i.ai, 44
-  br i1 %i.an, label %.cont12.split.us, label %.split20.us, !llvm.loop !20
+  br i1 %i.an, label %.cont12.split.us, label %param_array.exit, !llvm.loop !20
 
 .cont12.split:                                    ; preds = %.cont12.split.preheader, %.else
   %i.ao = phi i32 [ %i.bb, %.else ], [ 0, %.cont12.split.preheader ]
@@ -272,17 +272,16 @@ check_kparam_locked.exit.i:                       ; preds = %bb.b
   %i.bc = icmp eq i8 %i.au, 44
   br i1 %i.bc, label %.cont12.split, label %.split20.us, !llvm.loop !20
 
-.split20.us:                                      ; preds = %.else, %.then.us
-  %.us-phi21 = phi i32 [ %3, %.then.us ], [ %i.bb, %.else ]
-  %i.bd = icmp eq i32 %.us-phi21, 0
+.split20.us:                                      ; preds = %.else
+  %i.bd = icmp eq i32 %i.bb, 0
   br i1 %i.bd, label %bb.c, label %param_array.exit
 
 bb.c:                                             ; preds = %.split20.us
   %i.be = call i32 (ptr, ...) @_printk(ptr noundef nonnull @.str.26, ptr noundef %i.e, i32 noundef 1) #17 ; 0 uses
   br label %param_array.exit
 
-param_array.exit:                                 ; preds = %check_kparam_locked.exit.i, %check_kparam_locked.exit.i.us, %.split.us, %.split20.us, %bb.c
-  %.2.i = phi i32 [ -22, %bb.c ], [ 0, %.split20.us ], [ -22, %.split.us ], [ %i.ak, %check_kparam_locked.exit.i.us ], [ %i.aw, %check_kparam_locked.exit.i ]
+param_array.exit:                                 ; preds = %check_kparam_locked.exit.i, %.then.us, %check_kparam_locked.exit.i.us, %.split.us, %.split20.us, %bb.c
+  %.2.i = phi i32 [ -22, %bb.c ], [ 0, %.split20.us ], [ -22, %.split.us ], [ %i.ak, %check_kparam_locked.exit.i.us ], [ 0, %.then.us ], [ %i.aw, %check_kparam_locked.exit.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #16
   ret i32 %.2.i
 }

@@ -203,7 +203,7 @@ bb.n:                                             ; preds = %_ZNSt6vectorIN5Ipop
   store i32 %i.bk, ptr %i.bj, align 4, !tbaa !38
   %i.bl = getelementptr inbounds nuw i8, ptr %.sroa.0252.0283, i64 24 ; 2 uses
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.unr-lcssa, label %.lr.ph, !llvm.loop !39
 
@@ -606,7 +606,7 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph.new
   %i.ar = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %indvars.iv.next.2
   store double %i.aq, ptr %i.ar, align 8, !tbaa !55
   %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.preheader.loopexit.unr-lcssa, label %bb.c, !llvm.loop !58
 
@@ -664,7 +664,7 @@ bb.d:                                             ; preds = %bb.d, %.lr.ph15.new
   %i.by = fadd double %i.bs, %i.bx
   store double %i.by, ptr %i.bw, align 8, !tbaa !55
   %indvars.iv.next18.1 = add nuw nsw i64 %indvars.iv17, 2 ; 2 uses
-  %niter30.next.1 = add i64 %niter30, 2           ; 2 uses
+  %niter30.next.1 = add nuw i64 %niter30, 2       ; 2 uses
   %niter30.ncmp.1 = icmp eq i64 %niter30.next.1, %unroll_iter29
   br i1 %niter30.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %bb.d, !llvm.loop !59
 }
@@ -931,7 +931,7 @@ bb.k:                                             ; preds = %bb.a
   br i1 %i.ae, label %_ZSt26__unguarded_insertion_sortIN9__gnu_cxx17__normal_iteratorIPN5Ipopt21TripletToCSRConverter12TripletEntryESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_less_iterEEvT_SC_T0_.exit, label %.preheader.i17
 
 .preheader.i17:                                   ; preds = %bb.k
-  %.sroa.0.016.i18 = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
+  %.sroa.0.016.i18 = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 3 uses
   %.not17.i19 = icmp eq ptr %.sroa.0.016.i18, %1
   br i1 %.not17.i19, label %_ZSt26__unguarded_insertion_sortIN9__gnu_cxx17__normal_iteratorIPN5Ipopt21TripletToCSRConverter12TripletEntryESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_less_iterEEvT_SC_T0_.exit, label %.lr.ph.i20
 
@@ -941,7 +941,7 @@ bb.k:                                             ; preds = %bb.a
 
 bb.l:                                             ; preds = %bb.s, %.lr.ph.i20
   %.sroa.0.019.i21 = phi ptr [ %.sroa.0.016.i18, %.lr.ph.i20 ], [ %.sroa.0.0.i31, %bb.s ] ; 6 uses
-  %.pn18.i22 = phi ptr [ %0, %.lr.ph.i20 ], [ %.sroa.0.019.i21, %bb.s ] ; 4 uses
+  %.pn18.i22 = phi ptr [ %0, %.lr.ph.i20 ], [ %.sroa.0.019.i21, %bb.s ] ; 3 uses
   %i.ag = load i32, ptr %.sroa.0.019.i21, align 4, !tbaa !35 ; 5 uses
   %i.ah = load i32, ptr %0, align 4, !tbaa !35    ; 2 uses
   %i.ai = icmp slt i32 %i.ag, %i.ah
@@ -961,16 +961,12 @@ _ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN5Ipopt21Triplet
 _ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN5Ipopt21TripletToCSRConverter12TripletEntryESt6vectorIS6_SaIS6_EEEESB_EEbT_T0_.exit.thread.i36: ; preds = %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN5Ipopt21TripletToCSRConverter12TripletEntryESt6vectorIS6_SaIS6_EEEESB_EEbT_T0_.exit.i35, %bb.l
   %.sroa.062.0.copyload = load <3 x i32>, ptr %.sroa.0.019.i21, align 4
   %i.ao = ptrtoint ptr %.sroa.0.019.i21 to i64
-  %i.ap = sub i64 %i.ao, %i.b                     ; 4 uses
+  %i.ap = sub i64 %i.ao, %i.b                     ; 3 uses
   %i.aq = icmp sgt i64 %i.ap, 12
   br i1 %i.aq, label %bb.n, label %bb.o, !prof !64
 
 bb.n:                                             ; preds = %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN5Ipopt21TripletToCSRConverter12TripletEntryESt6vectorIS6_SaIS6_EEEESB_EEbT_T0_.exit.thread.i36
-  %2 = getelementptr inbounds nuw i8, ptr %.pn18.i22, i64 24
-  %.neg27.i38 = udiv exact i64 %i.ap, 12
-  %.neg27.neg.i39 = sub nsw i64 0, %.neg27.i38
-  %3 = getelementptr inbounds [12 x i8], ptr %2, i64 %.neg27.neg.i39
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %3, ptr noundef nonnull align 4 dereferenceable(1) %0, i64 %i.ap, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %.sroa.0.016.i18, ptr noundef nonnull align 4 dereferenceable(1) %0, i64 %i.ap, i1 false)
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN5Ipopt21TripletToCSRConverter12TripletEntryESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit.i37
 
 bb.o:                                             ; preds = %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN5Ipopt21TripletToCSRConverter12TripletEntryESt6vectorIS6_SaIS6_EEEESB_EEbT_T0_.exit.thread.i36

@@ -204,7 +204,7 @@ bb.h:                                             ; preds = %"_ZSt25__unguarded_
   br i1 %i.ab, label %"_ZSt6__sortIN9__gnu_cxx17__normal_iteratorIPN7rocksdb18CompactionFileInfoESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZNS2_7blob_db10BlobDBImpl24ProcessCompactionJobInfoERKNS2_17CompactionJobInfoEE3$_0EEEvT_SI_T0_.exit", label %.lr.ph.i12.i.i, !llvm.loop !588
 
 .preheader.i25.i.i:                               ; preds = %bb.b
-  %.sroa.0.016.i26.i.i = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
+  %.sroa.0.016.i26.i.i = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
   %i.ac = icmp eq ptr %.sroa.0.016.i26.i.i, %1
   br i1 %i.ac, label %"_ZSt6__sortIN9__gnu_cxx17__normal_iteratorIPN7rocksdb18CompactionFileInfoESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZNS2_7blob_db10BlobDBImpl24ProcessCompactionJobInfoERKNS2_17CompactionJobInfoEE3$_0EEEvT_SI_T0_.exit", label %.lr.ph.i27.i.i
 
@@ -214,7 +214,7 @@ bb.h:                                             ; preds = %"_ZSt25__unguarded_
 
 bb.i:                                             ; preds = %bb.o, %.lr.ph.i27.i.i
   %.sroa.0.018.i28.i.i = phi ptr [ %.sroa.0.016.i26.i.i, %.lr.ph.i27.i.i ], [ %.sroa.0.0.i40.i.i, %bb.o ] ; 7 uses
-  %.pn17.i29.i.i = phi ptr [ %0, %.lr.ph.i27.i.i ], [ %.sroa.0.018.i28.i.i, %bb.o ] ; 5 uses
+  %.pn17.i29.i.i = phi ptr [ %0, %.lr.ph.i27.i.i ], [ %.sroa.0.018.i28.i.i, %bb.o ] ; 4 uses
   %i.ae = getelementptr i8, ptr %.pn17.i29.i.i, i64 32
   %.val.i.i30.i.i = load i64, ptr %i.ae, align 8, !tbaa !579 ; 4 uses
   %.val1.i.i31.i.i = load i64, ptr %i.ad, align 8, !tbaa !579
@@ -225,16 +225,12 @@ bb.j:                                             ; preds = %bb.i
   call void @llvm.lifetime.start.p0(ptr nonnull %2)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %2, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.018.i28.i.i, i64 24, i1 false), !tbaa.struct !578
   %i.ag = ptrtoint ptr %.sroa.0.018.i28.i.i to i64
-  %i.ah = sub i64 %i.ag, %i.c                     ; 4 uses
+  %i.ah = sub i64 %i.ag, %i.c                     ; 3 uses
   %i.ai = icmp sgt i64 %i.ah, 24
   br i1 %i.ai, label %bb.k, label %bb.l, !prof !585
 
 bb.k:                                             ; preds = %bb.j
-  %4 = getelementptr inbounds nuw i8, ptr %.pn17.i29.i.i, i64 48
-  %.neg22.i46.i.i = udiv exact i64 %i.ah, 24
-  %.neg22.neg.i47.i.i = sub nsw i64 0, %.neg22.i46.i.i
-  %5 = getelementptr inbounds [24 x i8], ptr %4, i64 %.neg22.neg.i47.i.i
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %5, ptr noundef nonnull align 8 dereferenceable(1) %0, i64 %i.ah, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sroa.0.016.i26.i.i, ptr noundef nonnull align 8 dereferenceable(1) %0, i64 %i.ah, i1 false)
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN7rocksdb18CompactionFileInfoESt6vectorIS3_SaIS3_EEEES8_ET0_T_SA_S9_.exit.i45.i.i
 
 bb.l:                                             ; preds = %bb.j

@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %_ZSt13move_backward
 
 .peel.next:                                       ; preds = %bb.f, %bb.l
   %.sroa.0.023 = phi ptr [ %.sroa.0.0, %bb.l ], [ %.sroa.0.0.peel, %bb.f ] ; 6 uses
-  %.pn22 = phi ptr [ %.sroa.0.023, %bb.l ], [ %.sroa.0.021, %bb.f ] ; 2 uses
+  %.pn22 = phi ptr [ %.sroa.0.023, %bb.l ], [ %.sroa.0.021, %bb.f ]
   %i.av = load ptr, ptr %.sroa.0.023, align 8, !tbaa !350 ; 3 uses
   %i.aw = load ptr, ptr %0, align 8, !tbaa !350   ; 3 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %i.av, i64 48
@@ -290,10 +290,10 @@ _ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7rocksdb14VersionBuilder3Rep13BySmallestKe
 _ZNK7rocksdb21InternalKeyComparator7CompareERKNS_11InternalKeyES3_.exit.thread.i.i.thread: ; preds = %bb.j, %_ZNK7rocksdb21InternalKeyComparator7CompareERKNS_11InternalKeyES3_.exit.thread.i.i, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7rocksdb14VersionBuilder3Rep13BySmallestKeyEEclINS_17__normal_iteratorIPPNS2_12FileMetaDataESt6vectorISA_SaISA_EEEESF_EEbT_T0_.exit
   %i.cf = load ptr, ptr %.sroa.0.023, align 8, !tbaa !350
   %i.cg = ptrtoint ptr %.sroa.0.023 to i64
-  %i.ch = sub i64 %i.cg, %i.h                     ; 3 uses
+  %i.ch = sub i64 %i.cg, %i.h                     ; 2 uses
   %i.ci = ashr exact i64 %i.ch, 3                 ; 2 uses
   %i.cj = icmp sgt i64 %i.ci, 1
-  br i1 %i.cj, label %bb.k, label %5, !prof !862
+  br i1 %i.cj, label %bb.k, label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPPN7rocksdb12FileMetaDataESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit, !prof !862
 
 bb.k:                                             ; preds = %_ZNK7rocksdb21InternalKeyComparator7CompareERKNS_11InternalKeyES3_.exit.thread.i.i.thread
   %i.ck = getelementptr inbounds nuw i8, ptr %.pn22, i64 16
@@ -302,17 +302,7 @@ bb.k:                                             ; preds = %_ZNK7rocksdb21Inter
   call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.cm, ptr noundef nonnull align 8 dereferenceable(1) %0, i64 %i.ch, i1 false)
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPPN7rocksdb12FileMetaDataESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit
 
-5:                                                ; preds = %_ZNK7rocksdb21InternalKeyComparator7CompareERKNS_11InternalKeyES3_.exit.thread.i.i.thread
-  %6 = icmp eq i64 %i.ch, 8
-  br i1 %6, label %7, label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPPN7rocksdb12FileMetaDataESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit
-
-7:                                                ; preds = %5
-  %8 = getelementptr inbounds nuw i8, ptr %.pn22, i64 8
-  %9 = load ptr, ptr %0, align 8, !tbaa !350
-  store ptr %9, ptr %8, align 8, !tbaa !350
-  br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPPN7rocksdb12FileMetaDataESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit
-
-_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPPN7rocksdb12FileMetaDataESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit: ; preds = %bb.k, %5, %7
+_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPPN7rocksdb12FileMetaDataESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit: ; preds = %_ZNK7rocksdb21InternalKeyComparator7CompareERKNS_11InternalKeyES3_.exit.thread.i.i.thread, %bb.k
   store ptr %i.cf, ptr %0, align 8, !tbaa !350
   br label %bb.l
 

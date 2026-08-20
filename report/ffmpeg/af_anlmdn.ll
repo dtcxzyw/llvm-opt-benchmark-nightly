@@ -203,8 +203,6 @@ bb.f:                                             ; preds = %bb.b
 .lr.ph145.split.us.preheader:                     ; preds = %.lr.ph145
   %i.cr = trunc nsw i64 %indvars.iv161 to i32
   %i.cs = sub i32 %i.cr, %i.d
-  %4 = sext i32 %i.cs to i64
-  %invariant.gep = getelementptr [4 x i8], ptr %i.u, i64 %4
   br label %.lr.ph145.split.us
 
 .lr.ph145.split.us:                               ; preds = %.lr.ph145.split.us.preheader, %bb.j
@@ -233,9 +231,12 @@ bb.i:                                             ; preds = %bb.h
   %i.db = getelementptr inbounds nuw [4 x i8], ptr %i.an, i64 %i.da
   %i.dc = load float, ptr %i.db, align 4, !tbaa !13 ; 2 uses
   %i.dd = icmp sge i64 %indvars.iv156, %i.bu
-  %5 = zext i1 %i.dd to i64
-  %gep = getelementptr [4 x i8], ptr %invariant.gep, i64 %indvars.iv156
-  %i.de = getelementptr [4 x i8], ptr %gep, i64 %5
+  %4 = zext i1 %i.dd to i32
+  %5 = trunc i64 %indvars.iv156 to i32
+  %6 = add i32 %i.cs, %5
+  %7 = add nsw i32 %6, %4
+  %8 = sext i32 %7 to i64
+  %i.de = getelementptr inbounds [4 x i8], ptr %i.u, i64 %8
   %i.df = load float, ptr %i.de, align 4, !tbaa !13
   %i.dg = tail call nsz float @llvm.fmuladd.f32(float %i.dc, float %i.df, float %.0131142.us)
   %i.dh = fadd nsz float %.0129143.us, %i.dc

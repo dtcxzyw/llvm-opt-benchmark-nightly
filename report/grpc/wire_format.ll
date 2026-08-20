@@ -204,14 +204,14 @@ _ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN6google8protobu
 bb.h:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %4)
   %i.n = icmp eq ptr %0, %1
-  %.sroa.0.016.i21 = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
+  %.sroa.0.016.i21 = getelementptr i8, ptr %0, i64 24 ; 3 uses
   %.not17.i22 = icmp eq ptr %.sroa.0.016.i21, %1
-  %or.cond = select i1 %i.n, i1 true, i1 %.not17.i22
+  %or.cond = or i1 %i.n, %.not17.i22
   br i1 %or.cond, label %_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPN6google8protobuf6MapKeyESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterINS3_8internal12MapKeySorter16MapKeyComparatorEEEEvT_SG_T0_.exit37, label %.lr.ph.i23
 
 .lr.ph.i23:                                       ; preds = %bb.h, %bb.n
   %.sroa.0.019.i24 = phi ptr [ %.sroa.0.0.i28, %bb.n ], [ %.sroa.0.016.i21, %bb.h ] ; 8 uses
-  %.pn18.i25 = phi ptr [ %.sroa.0.019.i24, %bb.n ], [ %0, %bb.h ] ; 4 uses
+  %.pn18.i25 = phi ptr [ %.sroa.0.019.i24, %bb.n ], [ %0, %bb.h ] ; 3 uses
   %i.o = call noundef zeroext i1 @_ZNK6google8protobuf8internal12MapKeySorter16MapKeyComparatorclERKNS0_6MapKeyES6_(ptr noundef nonnull align 1 dereferenceable(1) %4, ptr noundef nonnull align 8 dereferenceable(20) %.sroa.0.019.i24, ptr noundef nonnull align 8 dereferenceable(20) %0)
   br i1 %i.o, label %bb.i, label %bb.m
 
@@ -219,16 +219,12 @@ bb.i:                                             ; preds = %.lr.ph.i23
   call void @llvm.lifetime.start.p0(ptr nonnull %5)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.019.i24, i64 24, i1 false), !tbaa.struct !181
   %i.p = ptrtoint ptr %.sroa.0.019.i24 to i64
-  %i.q = sub i64 %i.p, %i.b                       ; 4 uses
+  %i.q = sub i64 %i.p, %i.b                       ; 3 uses
   %i.r = icmp sgt i64 %i.q, 24
   br i1 %i.r, label %bb.j, label %bb.k, !prof !21
 
 bb.j:                                             ; preds = %bb.i
-  %12 = getelementptr inbounds nuw i8, ptr %.pn18.i25, i64 48
-  %.neg23.i35 = udiv exact i64 %i.q, 24
-  %.neg23.neg.i36 = sub nsw i64 0, %.neg23.i35
-  %13 = getelementptr inbounds [24 x i8], ptr %12, i64 %.neg23.neg.i36
-  call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %13, ptr noundef nonnull align 8 dereferenceable(1) %0, i64 %i.q, i1 false)
+  call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sroa.0.016.i21, ptr noundef nonnull align 8 dereferenceable(1) %0, i64 %i.q, i1 false)
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN6google8protobuf6MapKeyESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit.i34
 
 bb.k:                                             ; preds = %bb.i

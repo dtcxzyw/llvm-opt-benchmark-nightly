@@ -1,4 +1,3 @@
-loop-unroll.NumUnrolled: 1
 begin_hunk_0_@cli_bm_addpatt:bb.a
   %.0105135 = phi i16 [ 0, %.lr.ph ], [ %i.bg, %bb.p ] ; 5 uses
   %i.an = zext i16 %.0105135 to i64               ; 2 uses
@@ -200,7 +199,7 @@ declare ptr @mpool_realloc2(ptr noundef, ptr noundef, i64 noundef) local_unnamed
 declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 
 ; Function Attrs: nounwind uwtable
-define range(i32 0, 21) i32 @cli_bm_init(ptr nofree noundef captures(none) %0) local_unnamed_addr #0 {
+define noundef range(i32 0, 21) i32 @cli_bm_init(ptr nofree noundef captures(none) %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 408 ; 3 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !40   ; 2 uses
@@ -213,7 +212,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   %i.c = tail call ptr @mpool_calloc(ptr noundef nonnull %i.b, i64 noundef 63496, i64 noundef 1) #9 ; 2 uses
-  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 6 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   store ptr %i.c, ptr %i.d, align 8, !tbaa !46
   %.not16 = icmp eq ptr %i.c, null
   br i1 %.not16, label %.loopexit, label %bb.d
@@ -233,29 +232,15 @@ bb.e:                                             ; preds = %bb.d
   br label %.loopexit
 
 .preheader:                                       ; preds = %bb.d, %.preheader
-  %indvars.iv = phi i64 [ %indvars.iv.next.3, %.preheader ], [ 0, %bb.d ] ; 5 uses
-  %1 = load ptr, ptr %i.d, align 8, !tbaa !46
-  %2 = getelementptr inbounds nuw i8, ptr %1, i64 %indvars.iv
-  store i8 1, ptr %2, align 1, !tbaa !42
-  %3 = load ptr, ptr %i.d, align 8, !tbaa !46
-  %4 = getelementptr inbounds nuw i8, ptr %3, i64 %indvars.iv
-  %5 = getelementptr inbounds nuw i8, ptr %4, i64 1
-  store i8 1, ptr %5, align 1, !tbaa !42
-  %6 = load ptr, ptr %i.d, align 8, !tbaa !46
-  %7 = getelementptr inbounds nuw i8, ptr %6, i64 %indvars.iv
-  %8 = getelementptr inbounds nuw i8, ptr %7, i64 2
-  store i8 1, ptr %8, align 1, !tbaa !42
+  %indvars.iv = phi i64 [ %indvars.iv.next.3, %.preheader ], [ 0, %bb.d ] ; 2 uses
   %i.j = load ptr, ptr %i.d, align 8, !tbaa !46
-  %9 = getelementptr inbounds nuw i8, ptr %i.j, i64 %indvars.iv
-  %i.k = getelementptr inbounds nuw i8, ptr %9, i64 3
+  %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 %indvars.iv
   store i8 1, ptr %i.k, align 1, !tbaa !42
-  %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
-  %exitcond.not.3 = icmp eq i64 %indvars.iv.next.3, 63496
-  br i1 %exitcond.not.3, label %.loopexit, label %.preheader
+  %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv, 1
+  br label %.preheader
 
-.loopexit:                                        ; preds = %.preheader, %bb.c, %bb.e
-  %.014 = phi i32 [ 20, %bb.c ], [ 20, %bb.e ], [ 0, %.preheader ]
-  ret i32 %.014
+.loopexit:                                        ; preds = %bb.c, %bb.e
+  ret i32 20
 }
 
 ; Function Attrs: noreturn nounwind
@@ -492,22 +477,22 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
-  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
+  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !41
   %.not32 = icmp eq ptr %i.j, null
   br i1 %.not32, label %bb.l, label %.preheader
 
 .preheader:                                       ; preds = %bb.e
-  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 408 ; 4 uses
+  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 408 ; 3 uses
   br label %bb.f
 
-bb.f:                                             ; preds = %.preheader, %._crit_edge
-  %indvars.iv = phi i64 [ 0, %.preheader ], [ %indvars.iv.next, %._crit_edge ] ; 2 uses
+bb.f:                                             ; preds = %bb.k, %.preheader
+  %indvars.iv = phi i64 [ 0, %.preheader ], [ %indvars.iv.next, %bb.k ] ; 2 uses
   %i.l = load ptr, ptr %i.i, align 8, !tbaa !41
   %i.m = getelementptr inbounds nuw [8 x i8], ptr %i.l, i64 %indvars.iv
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !43   ; 2 uses
   %.not3336 = icmp eq ptr %i.n, null
-  br i1 %.not3336, label %._crit_edge, label %.lr.ph
+  br i1 %.not3336, label %bb.k, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.f, %bb.j
   %.02637 = phi ptr [ %i.p, %bb.j ], [ %i.n, %bb.f ] ; 5 uses
@@ -540,20 +525,13 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   %i.x = load ptr, ptr %i.k, align 8, !tbaa !40
   tail call void @mpool_free(ptr noundef %i.x, ptr noundef nonnull %.02637) #9
   %.not33 = icmp eq ptr %i.p, null
-  br i1 %.not33, label %._crit_edge, label %.lr.ph
+  br i1 %.not33, label %bb.k, label %.lr.ph
 
-._crit_edge:                                      ; preds = %bb.j, %bb.f
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, 63496
-  br i1 %exitcond.not, label %bb.k, label %bb.f
+bb.k:                                             ; preds = %bb.j, %bb.f
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
+  br label %bb.f
 
-bb.k:                                             ; preds = %._crit_edge
-  %1 = load ptr, ptr %i.k, align 8, !tbaa !40
-  %2 = load ptr, ptr %i.i, align 8, !tbaa !41
-  tail call void @mpool_free(ptr noundef %1, ptr noundef %2) #9
-  br label %bb.l
-
-bb.l:                                             ; preds = %bb.k, %bb.e
+bb.l:                                             ; preds = %bb.e
   ret void
 }
 

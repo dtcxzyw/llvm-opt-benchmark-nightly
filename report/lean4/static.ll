@@ -205,21 +205,21 @@ bb.a:
   br i1 %i.c, label %mi_heap_strndup.exit, label %.preheader.i.i
 
 .preheader.i.i:                                   ; preds = %bb.a, %.preheader.i.i
-  %.0.i.i = phi i64 [ %i.i, %.preheader.i.i ], [ 0, %bb.a ] ; 6 uses
+  %.0.i.i = phi i64 [ %i.i, %.preheader.i.i ], [ 0, %bb.a ] ; 7 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 %.0.i.i
   %i.e = load i8, ptr %i.d, align 1, !tbaa !27
   %i.f = icmp ne i8 %i.e, 0
   %i.g = icmp ult i64 %.0.i.i, %1
   %i.h = and i1 %i.g, %i.f
-  %i.i = add i64 %.0.i.i, 1                       ; 3 uses
+  %i.i = add nuw i64 %.0.i.i, 1                   ; 2 uses
   br i1 %i.h, label %.preheader.i.i, label %_Z11_mi_strnlenPKcm.exit.i, !llvm.loop !42
 
 _Z11_mi_strnlenPKcm.exit.i:                       ; preds = %.preheader.i.i
-  %i.j = icmp ult i64 %i.i, 1025
+  %i.j = icmp ult i64 %.0.i.i, 1024
   br i1 %i.j, label %bb.b, label %mi_heap_malloc.exit.i, !prof !26
 
 bb.b:                                             ; preds = %_Z11_mi_strnlenPKcm.exit.i
-  %i.k = add nsw i64 %.0.i.i, 8
+  %i.k = add nuw nsw i64 %.0.i.i, 8
   %i.l = lshr i64 %i.k, 3
   %i.m = getelementptr inbounds nuw i8, ptr %i.b, i64 248
   %i.n = getelementptr inbounds nuw [8 x i8], ptr %i.m, i64 %i.l
@@ -622,14 +622,14 @@ vector.body:                                      ; preds = %vector.body.interim
   br i1 %.not110, label %vector.body.interim, label %vector.early.exit
 
 vector.body.interim:                              ; preds = %vector.body
-  %vec.ind.next = add <16 x i64> %vec.ind, splat (i64 16)
+  %vec.ind.next = add nuw <16 x i64> %vec.ind, splat (i64 16)
   %index.next = add nuw i64 %index, 16            ; 2 uses
   %i.ci = icmp eq i64 %index.next, %n.vec
   br i1 %i.ci, label %middle.block, label %vector.body, !llvm.loop !166
 
 middle.block:                                     ; preds = %vector.body.interim
   %cmp.n = icmp eq i64 %i.cc, %n.vec
-  br i1 %cmp.n, label %.critedge.i.i, label %scalar.ph.preheader
+  br i1 %cmp.n, label %bb.s, label %scalar.ph.preheader
 
 scalar.ph.preheader:                              ; preds = %.preheader.i.i, %middle.block
   %.027.i.i.ph = phi i64 [ 0, %.preheader.i.i ], [ %n.vec, %middle.block ]
@@ -649,35 +649,36 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   br i1 %.not.i64.i, label %.critedge.i.i, label %bb.r
 
 bb.r:                                             ; preds = %scalar.ph
-  %i.co = add i64 %.027.i.i, 1                    ; 3 uses
+  %i.co = add nuw i64 %.027.i.i, 1                ; 3 uses
   %i.cp = add i64 %i.co, %.02328.i.i
   %i.cq = icmp ult i64 %i.cp, %i.by
-  br i1 %i.cq, label %scalar.ph, label %.critedge.i.i, !llvm.loop !169
+  br i1 %i.cq, label %scalar.ph, label %bb.s, !llvm.loop !169
 
-.critedge.i.i:                                    ; preds = %bb.r, %scalar.ph, %vector.early.exit, %middle.block
-  %.0.lcssa.i.i = phi i64 [ %n.vec, %middle.block ], [ %i.ck, %vector.early.exit ], [ %i.co, %bb.r ], [ %.027.i.i, %scalar.ph ] ; 11 uses
-  %.not26.i.i = icmp eq i64 %.0.lcssa.i.i, 0
+.critedge.i.i:                                    ; preds = %scalar.ph, %vector.early.exit
+  %.027.i.i.lcssa = phi i64 [ %i.ck, %vector.early.exit ], [ %.027.i.i, %scalar.ph ] ; 2 uses
+  %.not26.i.i = icmp eq i64 %.027.i.i.lcssa, 0
   br i1 %.not26.i.i, label %bb.bq, label %bb.s
 
-bb.s:                                             ; preds = %.critedge.i.i
+bb.s:                                             ; preds = %bb.r, %middle.block, %.critedge.i.i
+  %.0.lcssa34.i.i = phi i64 [ %.027.i.i.lcssa, %.critedge.i.i ], [ %n.vec, %middle.block ], [ %i.co, %bb.r ] ; 10 uses
   %i.cr = add i64 %.02328.i.i, %i.bc              ; 2 uses
-  %i.cs = shl i64 %.0.lcssa.i.i, 25               ; 17 uses
+  %i.cs = shl i64 %.0.lcssa34.i.i, 25             ; 17 uses
   %i.ct = load atomic ptr, ptr %i.aw seq_cst, align 8 ; 4 uses
   %i.cu = shl i64 %i.cr, 25
   %i.cv = getelementptr inbounds nuw i8, ptr %i.ct, i64 %i.cu ; 6 uses
   %i.cw = load ptr, ptr %i.ax, align 8, !tbaa !150
   %i.cx = lshr i64 %i.cr, 6                       ; 6 uses
   %i.cy = and i64 %.02328.i.i, 63                 ; 9 uses
-  %i.cz = add i64 %.0.lcssa.i.i, %i.cy
+  %i.cz = add i64 %.0.lcssa34.i.i, %i.cy
   %i.da = icmp ult i64 %i.cz, 65                  ; 2 uses
   br i1 %i.da, label %bb.t, label %_ZL15mi_bitmap_mask_mm.exit24.i.i.i, !prof !26
 
 bb.t:                                             ; preds = %bb.s
-  %i.db = icmp ugt i64 %.0.lcssa.i.i, 63
+  %i.db = icmp ugt i64 %.0.lcssa34.i.i, 63
   br i1 %i.db, label %_ZL21mi_bitmap_mask_acrossmmmPmS_S_.exit.i.i, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
-  %notmask.i.i.i.i = shl nsw i64 -1, %.0.lcssa.i.i
+  %notmask.i.i.i.i = shl nsw i64 -1, %.0.lcssa34.i.i
   %i.dc = xor i64 %notmask.i.i.i.i, -1
   %i.dd = shl i64 %i.dc, %i.cy
   br label %_ZL21mi_bitmap_mask_acrossmmmPmS_S_.exit.i.i
@@ -689,7 +690,7 @@ _ZL15mi_bitmap_mask_mm.exit24.i.i.i:              ; preds = %bb.s
   %i.dg = xor i64 %notmask.i22.i.i.i, -1
   %i.dh = shl i64 %i.dg, %i.cy
   %.0.i23.i.i.i = select i1 %i.df, i64 -1, i64 %i.dh ; 2 uses
-  %i.di = sub i64 %.0.lcssa.i.i, %i.de            ; 2 uses
+  %i.di = sub i64 %.0.lcssa34.i.i, %i.de          ; 2 uses
   %i.dj = lshr i64 %i.di, 6                       ; 2 uses
   %i.dk = and i64 %i.di, 63                       ; 2 uses
   %i.dl = icmp eq i64 %i.dk, 0
@@ -934,7 +935,7 @@ bb.ao:                                            ; preds = %_Z17_mi_prim_decomm
 
 bb.ap:                                            ; preds = %bb.ag, %mi_option_is_enabled.exit.i78.i
   %i.ga = icmp eq ptr %i.ct, null
-  %or.cond.i.i.i98.i = or i1 %i.eg, %i.ga
+  %or.cond.i.i.i98.i = or i1 %i.ga, %i.eg
   br i1 %or.cond.i.i.i98.i, label %_Z15_mi_os_purge_exPvmbm.exit84.i, label %bb.aq
 
 bb.aq:                                            ; preds = %bb.ap
@@ -1129,7 +1130,7 @@ bb.bh:                                            ; preds = %_ZL24mi_atomic_maxi
 
 _Z17_mi_stat_decreaseP15mi_stat_count_sm.exit.i.i: ; preds = %bb.bh, %_ZL24mi_atomic_maxi64_relaxedPVll.exit.i.i.i92.i, %bb.bf
   %i.it = icmp eq ptr %i.ct, null
-  %or.cond.i.i.i.i = or i1 %i.hv, %i.it
+  %or.cond.i.i.i.i = or i1 %i.it, %i.hv
   br i1 %or.cond.i.i.i.i, label %_Z15_mi_os_purge_exPvmbm.exit84.i, label %bb.bi
 
 bb.bi:                                            ; preds = %_Z17_mi_stat_decreaseP15mi_stat_count_sm.exit.i.i
@@ -1185,11 +1186,11 @@ _Z15_mi_os_purge_exPvmbm.exit84.i:                ; preds = %bb.au, %_ZL12unix_m
   br i1 %i.da, label %bb.bn, label %_ZL15mi_bitmap_mask_mm.exit24.i.i.i.i, !prof !26
 
 bb.bn:                                            ; preds = %_Z15_mi_os_purge_exPvmbm.exit84.i
-  %i.jr = icmp ugt i64 %.0.lcssa.i.i, 63
+  %i.jr = icmp ugt i64 %.0.lcssa34.i.i, 63
   br i1 %i.jr, label %_Z25_mi_bitmap_unclaim_acrossPSt6atomicImEmmm.exit.thread.thread.i.i, label %_Z25_mi_bitmap_unclaim_acrossPSt6atomicImEmmm.exit.thread.i.i
 
 _Z25_mi_bitmap_unclaim_acrossPSt6atomicImEmmm.exit.thread.i.i: ; preds = %bb.bn
-  %notmask.i.i.i.i.i = shl nsw i64 -1, %.0.lcssa.i.i
+  %notmask.i.i.i.i.i = shl nsw i64 -1, %.0.lcssa34.i.i
   %i.js = xor i64 %notmask.i.i.i.i.i, -1
   %i.jt = shl i64 %i.js, %i.cy
   %i.ju = xor i64 %i.jt, -1                       ; 2 uses
@@ -1203,7 +1204,7 @@ _ZL15mi_bitmap_mask_mm.exit24.i.i.i.i:            ; preds = %_Z15_mi_os_purge_ex
   %notmask.i22.i.i.i.i = shl nsw i64 -1, %i.jx
   %i.jz = xor i64 %notmask.i22.i.i.i.i, -1
   %i.ka = shl i64 %i.jz, %i.cy
-  %i.kb = sub i64 %.0.lcssa.i.i, %i.jx            ; 4 uses
+  %i.kb = sub i64 %.0.lcssa34.i.i, %i.jx          ; 4 uses
   %i.kc = lshr i64 %i.kb, 6                       ; 7 uses
   %i.kd = and i64 %i.kb, 63                       ; 2 uses
   %notmask.i25.i.i.i.i = shl nsw i64 -1, %i.kd    ; 2 uses
@@ -1347,15 +1348,16 @@ bb.bp:                                            ; preds = %._crit_edge.i34.i.i
   br label %_ZL14mi_arena_purgeP10mi_arena_smm.exit.i
 
 _ZL14mi_arena_purgeP10mi_arena_smm.exit.i:        ; preds = %bb.bp, %._crit_edge.i34.i.i, %._crit_edge.thread.i42.i.i, %_Z25_mi_bitmap_unclaim_acrossPSt6atomicImEmmm.exit.thread.thread.i.i, %_Z25_mi_bitmap_unclaim_acrossPSt6atomicImEmmm.exit.i.i, %_Z25_mi_bitmap_unclaim_acrossPSt6atomicImEmmm.exit.thread.i.i
-  %i.lq = icmp eq i64 %.0.lcssa.i.i, %.145145.i
+  %i.lq = icmp eq i64 %.0.lcssa34.i.i, %.145145.i
   %spec.select.i.i = select i1 %i.lq, i1 true, i1 %.02229.i.i
   %i.lr = freeze i1 %spec.select.i.i
   br label %bb.bq
 
 bb.bq:                                            ; preds = %_ZL14mi_arena_purgeP10mi_arena_smm.exit.i, %.critedge.i.i
+  %.0.lcssa35.i.i = phi i64 [ %.0.lcssa34.i.i, %_ZL14mi_arena_purgeP10mi_arena_smm.exit.i ], [ 0, %.critedge.i.i ]
   %.2.i.i = phi i1 [ %i.lr, %_ZL14mi_arena_purgeP10mi_arena_smm.exit.i ], [ %.02229.i.i, %.critedge.i.i ] ; 2 uses
   %i.ls = add i64 %.02328.i.i, 1
-  %i.lt = add i64 %i.ls, %.0.lcssa.i.i            ; 2 uses
+  %i.lt = add i64 %i.ls, %.0.lcssa35.i.i          ; 2 uses
   %i.lu = icmp ult i64 %i.lt, %i.by
   br i1 %i.lu, label %.preheader.i.i, label %_ZL20mi_arena_purge_rangeP10mi_arena_smmmm.exit.i, !llvm.loop !174
 
@@ -1758,7 +1760,7 @@ bb.u:                                             ; preds = %_Z17_mi_stat_increa
   %.neg91 = add nsw i64 %i.cx, %.neg
   %i.cz = sub i64 %.neg91, %i.cy
   %i.da = add i64 %i.cz, %reass.mul               ; 2 uses
-  %i.db = add i64 %.049110, 2
+  %i.db = add nuw i64 %.049110, 2
   %i.dc = udiv i64 %i.da, %i.db
   %i.dd = mul i64 %i.dc, %0
   %i.de = icmp sgt i64 %i.dd, %i.be
@@ -2161,7 +2163,7 @@ bb.bp:                                            ; preds = %bb.bp, %.lr.ph.i259
   store i8 %i.fq, ptr %i.fm, align 1, !tbaa !27
   store i8 %i.fn, ptr %i.fp, align 1, !tbaa !27
   %i.fr = add nuw nsw i64 %.04257.i, 2            ; 2 uses
-  %niter453.next.1 = add i64 %niter453, 2         ; 2 uses
+  %niter453.next.1 = add nuw i64 %niter453, 2     ; 2 uses
   %niter453.ncmp.1 = icmp eq i64 %niter453.next.1, %unroll_iter452
   br i1 %niter453.ncmp.1, label %_ZL7mi_outsPKcPPcS1_.exit.loopexit437.unr-lcssa, label %bb.bp, !llvm.loop !280
 
@@ -2396,7 +2398,7 @@ bb.ct:                                            ; preds = %bb.ct, %.lr.ph.i267
   store i8 %i.ip, ptr %i.il, align 1, !tbaa !27
   store i8 %i.im, ptr %i.io, align 1, !tbaa !27
   %i.iq = add nuw nsw i64 %.04257.i268, 2         ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZL7mi_outsPKcPPcS1_.exit.loopexit438.unr-lcssa, label %bb.ct, !llvm.loop !280
 
@@ -2799,7 +2801,7 @@ _ZL27mi_segment_ensure_committedP12mi_segment_sPhm.exit.thread: ; preds = %_ZL23
   %i.if = getelementptr inbounds nuw i8, ptr %.pn60, i64 424
   store i64 1, ptr %i.if, align 8, !tbaa !20
   %i.ig = add nuw i64 %.04761, 4                  ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !400
 

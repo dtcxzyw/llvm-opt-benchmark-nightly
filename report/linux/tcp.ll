@@ -204,14 +204,12 @@ bb.ag:                                            ; preds = %bb.s
   %.021.i = phi i32 [ %i.bx, %.lr.ph.i ], [ 1, %.preheader.i ]
   %.01320.i = phi i8 [ %i.bv, %.lr.ph.i ], [ 1, %.preheader.i ]
   %.01419.i = phi i32 [ %spec.select.i, %.lr.ph.i ], [ 1, %.preheader.i ]
-  %i.bv = add nuw i8 %.01320.i, 1                 ; 3 uses
+  %i.bv = add nuw i8 %.01320.i, 1                 ; 2 uses
   %i.bw = shl i32 %.01419.i, 1
   %spec.select.i = call i32 @llvm.smin.i32(i32 %i.bw, i32 120) ; 2 uses
   %i.bx = add i32 %spec.select.i, %.021.i         ; 2 uses
   %i.by = icmp sgt i32 %i.bt, %i.bx
-  %6 = icmp ne i8 %i.bv, -1
-  %7 = select i1 %i.by, i1 %6, i1 false
-  br i1 %7, label %.lr.ph.i, label %secs_to_retrans.exit, !llvm.loop !132
+  br i1 %i.by, label %.lr.ph.i, label %secs_to_retrans.exit, !llvm.loop !132
 
 secs_to_retrans.exit:                             ; preds = %.lr.ph.i, %bb.ag, %.preheader.i
   %.1.i = phi i8 [ 0, %bb.ag ], [ 1, %.preheader.i ], [ %i.bv, %.lr.ph.i ]
@@ -614,7 +612,7 @@ copy_from_sockptr_offset.exit.thread.us:          ; preds = %.lr.ph, %bb.i
   %.02334.us = phi i64 [ %i.j, %bb.i ], [ %i.c, %.lr.ph ]
   %i.g = getelementptr i8, ptr %1, i64 %.02135.us
   %i.h = load i64, ptr %i.g, align 1              ; 5 uses
-  %i.i = add i64 %.02135.us, 8
+  %i.i = add nuw i64 %.02135.us, 8
   %i.j = add nsw i64 %.02334.us, -8               ; 2 uses
   %i.k = trunc i64 %i.h to i32
   %i.l = lshr i64 %i.h, 32                        ; 4 uses
@@ -687,7 +685,7 @@ copy_from_sockptr_offset.exit:                    ; preds = %.lr.ph, %bb.r
   br i1 %.not, label %bb.j, label %.critedge
 
 bb.j:                                             ; preds = %copy_from_sockptr_offset.exit
-  %i.ag = add i64 %.02135, 8
+  %i.ag = add nuw i64 %.02135, 8
   %i.ah = add nsw i64 %.02334, -8                 ; 2 uses
   %i.ai = load i32, ptr %4, align 8
   switch i32 %i.ai, label %bb.r [
@@ -1090,7 +1088,7 @@ bb.w:                                             ; preds = %bb.b
   %i.ca = shl i32 %spec.select.i.2, 1
   %spec.select.i.3 = call i32 @llvm.smin.i32(i32 %i.ca, i32 120) ; 3 uses
   %i.cb = add i32 %spec.select.i.3, %i.bz         ; 3 uses
-  %niter.next.3 = add i8 %niter, 4                ; 2 uses
+  %niter.next.3 = add nuw i8 %niter, 4            ; 2 uses
   %niter.ncmp.3 = icmp eq i8 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.sink.split.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !139
 

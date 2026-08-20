@@ -203,7 +203,7 @@ bb.o:                                             ; preds = %bb.m, %bb.n
   ret void
 
 bb.p:                                             ; preds = %.lr.ph105, %.loopexit
-  %.sroa.058.0103 = phi i32 [ 1, %.lr.ph105 ], [ %i.hw, %.loopexit ] ; 9 uses
+  %.sroa.058.0103 = phi i32 [ 1, %.lr.ph105 ], [ %i.hw, %.loopexit ] ; 8 uses
   %i.dq = tail call noundef i32 @llvm.abs.i32(i32 %.sroa.058.0103, i1 true) ; 2 uses
   %i.dr = zext nneg i32 %i.dq to i64              ; 4 uses
   %i.ds = load ptr, ptr %i.cm, align 8, !tbaa !185 ; 4 uses
@@ -254,9 +254,7 @@ bb.r:                                             ; preds = %_ZN7CaDiCaL8Interna
   br i1 %.not79, label %_ZN7CaDiCaL8Internal6frozenEi.exit, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  %2 = icmp slt i32 %.sroa.058.0103, 1
-  %3 = select i1 %2, i8 -2, i8 -3
-  %i.eu = and i8 %i.em, %3
+  %i.eu = and i8 %i.em, -3
   store i8 %i.eu, ptr %i.el, align 1
   %i.ev = tail call noundef i32 @llvm.fshl.i32(i32 %i.eh, i32 %i.eg, i32 1) ; 5 uses
   %i.ew = load ptr, ptr %i.cq, align 8, !tbaa !195 ; 4 uses
@@ -456,7 +454,7 @@ _ZN7CaDiCaL4heapINS_20block_more_occs_sizeEE9push_backEj.exit.1: ; preds = %bb.a
   br label %.loopexit
 
 .loopexit:                                        ; preds = %_ZN7CaDiCaL8Internal6frozenEi.exit, %bb.z, %_ZN7CaDiCaL4heapINS_20block_more_occs_sizeEE9push_backEj.exit.1, %.split, %bb.p
-  %i.hw = add i32 %.sroa.058.0103, 1
+  %i.hw = add nuw i32 %.sroa.058.0103, 1
   %.not76 = icmp eq i32 %.sroa.058.0103, %i.cl
   br i1 %.not76, label %._crit_edge106, label %bb.p
 }

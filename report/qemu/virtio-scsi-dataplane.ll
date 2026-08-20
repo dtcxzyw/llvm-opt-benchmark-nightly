@@ -153,10 +153,9 @@ bb.o:                                             ; preds = %bb.m
 .lr.ph66:                                         ; preds = %bb.o, %.lr.ph66
   %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph66 ], [ 0, %bb.o ] ; 2 uses
   %i.ax = load ptr, ptr %i.u, align 8
-  %2 = add nuw nsw i64 %indvars.iv, 2
-  %3 = and i64 %2, 4294967295
-  %4 = getelementptr inbounds nuw [8 x i8], ptr %i.ax, i64 %3
-  store ptr %i.av, ptr %4, align 8
+  %2 = getelementptr inbounds nuw [8 x i8], ptr %i.ax, i64 %indvars.iv
+  %3 = getelementptr inbounds nuw i8, ptr %2, i64 16
+  store ptr %i.av, ptr %3, align 8
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.ay = load i32, ptr %i.g, align 8
   %i.az = zext i32 %i.ay to i64
@@ -285,13 +284,13 @@ bb.g:                                             ; preds = %bb.f
 .lr.ph:                                           ; preds = %.preheader, %bb.h
   %.06171 = phi i32 [ %i.ae, %bb.h ], [ 2, %.preheader ] ; 3 uses
   %.06270 = phi i32 [ %i.af, %bb.h ], [ 0, %.preheader ] ; 2 uses
-  %i.ac = add i32 %.06270, 2
+  %i.ac = add nuw i32 %.06270, 2
   %i.ad = tail call fastcc i32 @virtio_scsi_set_host_notifier(ptr noundef nonnull %i.f, i32 noundef %i.ac)
   %.not67 = icmp eq i32 %i.ad, 0
   br i1 %.not67, label %bb.h, label %.loopexit68
 
 bb.h:                                             ; preds = %.lr.ph
-  %i.ae = add i32 %.06171, 1
+  %i.ae = add nuw i32 %.06171, 1
   %i.af = add nuw i32 %.06270, 1                  ; 2 uses
   %i.ag = load i32, ptr %i.t, align 8
   %i.ah = icmp ult i32 %i.af, %i.ag
@@ -330,7 +329,7 @@ bb.i:                                             ; preds = %._crit_edge
 bb.j:                                             ; preds = %.lr.ph74, %bb.j
   %.16372 = phi i32 [ 0, %.lr.ph74 ], [ %i.be, %bb.j ] ; 3 uses
   %i.av = load ptr, ptr %i.am, align 8
-  %i.aw = add i32 %.16372, 2
+  %i.aw = add nuw i32 %.16372, 2
   %i.ax = sext i32 %i.aw to i64
   %i.ay = getelementptr inbounds [8 x i8], ptr %i.av, i64 %i.ax
   %i.az = load ptr, ptr %i.ay, align 8

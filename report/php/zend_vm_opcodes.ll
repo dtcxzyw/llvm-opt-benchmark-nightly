@@ -199,7 +199,7 @@ define dso_local zeroext range(i8 0, -44) i8 @zend_get_opcode_id(ptr nofree noun
 bb.a:
   br label %bb.b
 
-bb.b:                                             ; preds = %bb.a, %bb.d
+bb.b:                                             ; preds = %bb.d, %bb.a
   %indvars.iv = phi i64 [ 0, %bb.a ], [ %indvars.iv.next, %bb.d ] ; 3 uses
   %i.a = trunc nuw i64 %indvars.iv to i8          ; 2 uses
   switch i8 %i.a, label %bb.c [
@@ -215,13 +215,11 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.e, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b, %bb.b
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, 210
-  br i1 %exitcond.not, label %bb.e, label %bb.b, !llvm.loop !17
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
+  br label %bb.b
 
-bb.e:                                             ; preds = %bb.c, %bb.d
-  %.2 = phi i8 [ -45, %bb.d ], [ %i.a, %bb.c ]
-  ret i8 %.2
+bb.e:                                             ; preds = %bb.c
+  ret i8 %i.a
 }
 
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: read)
@@ -253,6 +251,4 @@ attributes #3 = { nounwind willreturn memory(read) }
 !14 = !{!"p1 omnipotent char", !15, i64 0}
 !15 = !{!"any pointer", !10, i64 0}
 !16 = !{!9, !9, i64 0}
-!17 = distinct !{!17, !18}
-!18 = !{!"llvm.loop.mustprogress"}
 end_hunk_0

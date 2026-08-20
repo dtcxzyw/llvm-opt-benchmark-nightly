@@ -204,13 +204,9 @@ bb.bt:                                            ; preds = %_ZN4ncnn3MatD2Ev.ex
   %.118957591.us = phi ptr [ %.01894.lcssa, %.preheader6888.us.preheader ], [ %i.ewu, %._crit_edge7580.us ] ; 2 uses
   %.066287590.us = phi <8 x float> [ zeroinitializer, %.preheader6888.us.preheader ], [ %.us-phi7587.us, %._crit_edge7580.us ] ; 2 uses
   %.066337589.us = phi <8 x float> [ zeroinitializer, %.preheader6888.us.preheader ], [ %.us-phi7586.us, %._crit_edge7580.us ] ; 2 uses
-  %13 = trunc nuw i64 %indvars.iv8385 to i32
-  %14 = lshr exact i32 %13, 2                     ; 2 uses
-  %15 = zext nneg i32 %14 to i64
-  %16 = or disjoint i32 %14, 1
-  %17 = zext nneg i32 %16 to i64
+  %13 = lshr exact i64 %indvars.iv8385, 2         ; 2 uses
+  %14 = or disjoint i64 %13, 1
   %i.ewm = lshr exact i64 %indvars.iv8385, 3
-  %18 = and i64 %i.ewm, 536870911
   br i1 %i.evv, label %.lr.ph7579.split.us.us.preheader, label %._crit_edge7580.us
 
 .lr.ph7579.split.us.us.preheader:                 ; preds = %.preheader6888.us
@@ -333,7 +329,7 @@ _ZN4ncnn3MatD2Ev.exit2225.us.us:                  ; preds = %bb.bx
   %i.eym = load i32, ptr %i.boi, align 4, !tbaa !25, !noalias !187
   %i.eyn = load ptr, ptr %0, align 8, !tbaa !19, !noalias !187 ; 2 uses
   %i.eyo = load i64, ptr %i.bpa, align 8, !tbaa !17, !noalias !187 ; 2 uses
-  %i.eyp = mul i64 %i.eyo, %15
+  %i.eyp = mul i64 %i.eyo, %13
   %i.eyq = load i64, ptr %i.bpb, align 8, !tbaa !30, !noalias !187 ; 3 uses
   %i.eyr = mul i64 %i.eyp, %i.eyq
   %i.eys = getelementptr inbounds nuw i8, ptr %i.eyn, i64 %i.eyr
@@ -344,7 +340,7 @@ _ZN4ncnn3MatD2Ev.exit2225.us.us:                  ; preds = %bb.bx
   %i.eyx = shl nsw i32 %i.exh, 2
   %i.eyy = sext i32 %i.eyx to i64                 ; 2 uses
   %i.eyz = getelementptr inbounds [2 x i8], ptr %i.eyw, i64 %i.eyy
-  %i.eza = mul i64 %i.eyo, %17
+  %i.eza = mul i64 %i.eyo, %14
   %i.ezb = mul i64 %i.eza, %i.eyq
   %i.ezc = getelementptr inbounds nuw i8, ptr %i.eyn, i64 %i.ezb
   %i.ezd = getelementptr inbounds nuw i8, ptr %i.ezc, i64 %i.eyv
@@ -365,7 +361,7 @@ _ZN4ncnn3MatD2Ev.exit2226.us.us:                  ; preds = %bb.bx
   %i.ezp = load i32, ptr %i.boi, align 4, !tbaa !25, !noalias !190
   %i.ezq = load ptr, ptr %0, align 8, !tbaa !19, !noalias !190
   %i.ezr = load i64, ptr %i.bpa, align 8, !tbaa !17, !noalias !190
-  %i.ezs = mul i64 %i.ezr, %18
+  %i.ezs = mul i64 %i.ezr, %i.ewm
   %i.ezt = load i64, ptr %i.bpb, align 8, !tbaa !30, !noalias !190 ; 2 uses
   %i.ezu = mul i64 %i.ezs, %i.ezt
   %i.ezv = getelementptr inbounds nuw i8, ptr %i.ezq, i64 %i.ezu
@@ -490,7 +486,6 @@ bb.by:                                            ; preds = %.sink.split8893, %b
   %.066187660.us.us = phi <4 x float> [ zeroinitializer, %.preheader6887.us.us.preheader ], [ %.46622.us.us.us, %._crit_edge7642.split.us.us.us ]
   %.066237659.us.us = phi <4 x float> [ zeroinitializer, %.preheader6887.us.us.preheader ], [ %.46627.us.us.us, %._crit_edge7642.split.us.us.us ]
   %i.fcb = lshr exact i64 %indvars.iv8411, 2
-  %19 = and i64 %i.fcb, 1073741823
   %i.fcc = or disjoint i64 %indvars.iv8411, 1
   %i.fcd = or disjoint i64 %indvars.iv8411, 2
   %i.fce = or disjoint i64 %indvars.iv8411, 3
@@ -555,7 +550,7 @@ _ZN4ncnn3MatD2Ev.exit2222.us.us.us.us:            ; preds = %bb.cb
   %i.fcv = load i32, ptr %i.boi, align 4, !tbaa !25, !noalias !196
   %i.fcw = load ptr, ptr %0, align 8, !tbaa !19, !noalias !196
   %i.fcx = load i64, ptr %i.bpa, align 8, !tbaa !17, !noalias !196
-  %i.fcy = mul i64 %i.fcx, %19
+  %i.fcy = mul i64 %i.fcx, %i.fcb
   %i.fcz = load i64, ptr %i.bpb, align 8, !tbaa !30, !noalias !196 ; 2 uses
   %i.fda = mul i64 %i.fcy, %i.fcz
   %i.fdb = getelementptr inbounds nuw i8, ptr %i.fcw, i64 %i.fda
@@ -958,13 +953,9 @@ bb.cw:                                            ; preds = %_ZN4ncnn3MatD2Ev.ex
   %indvars.iv8487 = phi i64 [ %i.fyz, %.preheader6870.us.preheader ], [ %indvars.iv.next8488, %._crit_edge7852.us ] ; 11 uses
   %.118497859.us = phi ptr [ %.01848.lcssa, %.preheader6870.us.preheader ], [ %i.fzi, %._crit_edge7852.us ] ; 2 uses
   %.066057858.us = phi <8 x float> [ zeroinitializer, %.preheader6870.us.preheader ], [ %.us-phi7856.us, %._crit_edge7852.us ] ; 2 uses
-  %20 = trunc nuw i64 %indvars.iv8487 to i32
-  %21 = lshr exact i32 %20, 2                     ; 2 uses
-  %22 = zext nneg i32 %21 to i64
-  %23 = or disjoint i32 %21, 1
-  %24 = zext nneg i32 %23 to i64
+  %15 = lshr exact i64 %indvars.iv8487, 2         ; 2 uses
+  %16 = or disjoint i64 %15, 1
   %i.fza = lshr exact i64 %indvars.iv8487, 3
-  %25 = and i64 %i.fza, 536870911
   br i1 %i.fyj, label %.lr.ph7851.split.us.us.preheader, label %._crit_edge7852.us
 
 .lr.ph7851.split.us.us.preheader:                 ; preds = %.preheader6870.us
@@ -1084,7 +1075,7 @@ _ZN4ncnn3MatD2Ev.exit2207.us.us:                  ; preds = %bb.da
   %i.gba = load i32, ptr %i.ekz, align 4, !tbaa !25, !noalias !238
   %i.gbb = load ptr, ptr %0, align 8, !tbaa !19, !noalias !238 ; 2 uses
   %i.gbc = load i64, ptr %i.elr, align 8, !tbaa !17, !noalias !238 ; 2 uses
-  %i.gbd = mul i64 %i.gbc, %22
+  %i.gbd = mul i64 %i.gbc, %15
   %i.gbe = load i64, ptr %i.els, align 8, !tbaa !30, !noalias !238 ; 3 uses
   %i.gbf = mul i64 %i.gbd, %i.gbe
   %i.gbg = getelementptr inbounds nuw i8, ptr %i.gbb, i64 %i.gbf
@@ -1095,7 +1086,7 @@ _ZN4ncnn3MatD2Ev.exit2207.us.us:                  ; preds = %bb.da
   %i.gbl = shl nsw i32 %i.fzv, 2
   %i.gbm = sext i32 %i.gbl to i64                 ; 2 uses
   %i.gbn = getelementptr inbounds [2 x i8], ptr %i.gbk, i64 %i.gbm
-  %i.gbo = mul i64 %i.gbc, %24
+  %i.gbo = mul i64 %i.gbc, %16
   %i.gbp = mul i64 %i.gbo, %i.gbe
   %i.gbq = getelementptr inbounds nuw i8, ptr %i.gbb, i64 %i.gbp
   %i.gbr = getelementptr inbounds nuw i8, ptr %i.gbq, i64 %i.gbj
@@ -1116,7 +1107,7 @@ _ZN4ncnn3MatD2Ev.exit2208.us.us:                  ; preds = %bb.da
   %i.gcd = load i32, ptr %i.ekz, align 4, !tbaa !25, !noalias !241
   %i.gce = load ptr, ptr %0, align 8, !tbaa !19, !noalias !241
   %i.gcf = load i64, ptr %i.elr, align 8, !tbaa !17, !noalias !241
-  %i.gcg = mul i64 %i.gcf, %25
+  %i.gcg = mul i64 %i.gcf, %i.fza
   %i.gch = load i64, ptr %i.els, align 8, !tbaa !30, !noalias !241 ; 2 uses
   %i.gci = mul i64 %i.gcg, %i.gch
   %i.gcj = getelementptr inbounds nuw i8, ptr %i.gce, i64 %i.gci
@@ -1230,7 +1221,6 @@ bb.db:                                            ; preds = %.sink.split8901, %b
   %.218507917.us.us = phi ptr [ %.11849.lcssa, %.preheader6869.us.us.preheader ], [ %i.ghl, %._crit_edge7902.split.us.us.us ] ; 3 uses
   %.065417916.us.us = phi <4 x float> [ zeroinitializer, %.preheader6869.us.us.preheader ], [ %.46545.us.us.us, %._crit_edge7902.split.us.us.us ]
   %i.gei = lshr exact i64 %indvars.iv8513, 2
-  %26 = and i64 %i.gei, 1073741823
   %i.gej = or disjoint i64 %indvars.iv8513, 1
   %i.gek = or disjoint i64 %indvars.iv8513, 2
   %i.gel = or disjoint i64 %indvars.iv8513, 3
@@ -1292,7 +1282,7 @@ _ZN4ncnn3MatD2Ev.exit2204.us.us.us.us:            ; preds = %bb.de
   %i.gfc = load i32, ptr %i.ekz, align 4, !tbaa !25, !noalias !247
   %i.gfd = load ptr, ptr %0, align 8, !tbaa !19, !noalias !247
   %i.gfe = load i64, ptr %i.elr, align 8, !tbaa !17, !noalias !247
-  %i.gff = mul i64 %i.gfe, %26
+  %i.gff = mul i64 %i.gfe, %i.gei
   %i.gfg = load i64, ptr %i.els, align 8, !tbaa !30, !noalias !247 ; 2 uses
   %i.gfh = mul i64 %i.gff, %i.gfg
   %i.gfi = getelementptr inbounds nuw i8, ptr %i.gfd, i64 %i.gfh
@@ -1695,7 +1685,7 @@ begin_hunk_2_@_ZN4ncnnL43deconvolution_transform_kernel_packed_bf16sERKNS_3MatER
   store <16 x i16> %i.aze, ptr %i.ayz, align 2, !tbaa !43
   %i.azf = getelementptr inbounds nuw i8, ptr %.178621912, i64 128 ; 3 uses
   %indvars.iv.next2512.3 = add nuw nsw i64 %indvars.iv2511, 4 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %._crit_edge1914.unr-lcssa, label %.preheader1804, !llvm.loop !360
 
@@ -2098,7 +2088,7 @@ vec.epilog.middle.block3057:                      ; preds = %vec.epilog.vector.b
   store <16 x i16> %i.cqc, ptr %i.cpy, align 2, !tbaa !43
   %i.cqd = getelementptr inbounds nuw i8, ptr %.17372165.us, i64 128 ; 3 uses
   %indvars.iv.next2711.1 = add nuw nsw i64 %indvars.iv2710, 2 ; 2 uses
-  %niter3425.next.1 = add i64 %niter3425, 2       ; 2 uses
+  %niter3425.next.1 = add nuw i64 %niter3425, 2   ; 2 uses
   %niter3425.ncmp.1 = icmp eq i64 %niter3425.next.1, %unroll_iter3424
   br i1 %niter3425.ncmp.1, label %._crit_edge2167.us.unr-lcssa, label %.preheader1751.us, !llvm.loop !402
 
@@ -2501,7 +2491,7 @@ vec.epilog.middle.block3152:                      ; preds = %vec.epilog.vector.b
   store <16 x i16> %i.ddb, ptr %i.dcw, align 2, !tbaa !43
   %i.ddc = getelementptr inbounds nuw i8, ptr %.17132269.us, i64 128 ; 3 uses
   %indvars.iv.next2787.3 = add nuw nsw i64 %indvars.iv2786, 4 ; 2 uses
-  %niter3433.next.3 = add i64 %niter3433, 4       ; 2 uses
+  %niter3433.next.3 = add nuw i64 %niter3433, 4   ; 2 uses
   %niter3433.ncmp.3 = icmp eq i64 %niter3433.next.3, %unroll_iter3432
   br i1 %niter3433.ncmp.3, label %._crit_edge2271.us.unr-lcssa, label %.preheader1732.us, !llvm.loop !419
 

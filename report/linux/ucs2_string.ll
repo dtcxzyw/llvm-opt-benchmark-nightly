@@ -62,12 +62,10 @@ bb.a:
   %.06.i = phi i64 [ %i.c, %.lr.ph.i ], [ 0, %bb.a ]
   %.045.i = phi ptr [ %i.b, %.lr.ph.i ], [ %0, %bb.a ]
   %i.b = getelementptr i8, ptr %.045.i, i64 2     ; 2 uses
-  %i.c = add nuw i64 %.06.i, 1                    ; 3 uses
+  %i.c = add nuw i64 %.06.i, 1                    ; 2 uses
   %i.d = load i16, ptr %i.b, align 2
-  %1 = icmp ne i16 %i.d, 0
-  %2 = icmp ne i64 %i.c, -1
-  %3 = select i1 %1, i1 %2, i1 false
-  br i1 %3, label %.lr.ph.i, label %ucs2_strnlen.exit, !llvm.loop !10
+  %.not1 = icmp eq i16 %i.d, 0
+  br i1 %.not1, label %ucs2_strnlen.exit, label %.lr.ph.i, !llvm.loop !10
 
 ucs2_strnlen.exit:                                ; preds = %.lr.ph.i, %bb.a
   %.0.lcssa.i = phi i64 [ 0, %bb.a ], [ %i.c, %.lr.ph.i ]

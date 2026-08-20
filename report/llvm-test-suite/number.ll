@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.a
   %i.br = trunc i32 %.0.1 to i8
   %i.bs = getelementptr inbounds i8, ptr %.177119, i64 -2 ; 3 uses
   store i8 %i.br, ptr %i.bl, align 1, !tbaa !15
-  %niter.next.1 = add i32 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i32 %niter, 2           ; 2 uses
   %niter.ncmp.1.not = icmp eq i32 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1.not, label %.loopexit112.loopexit.unr-lcssa, label %.lr.ph122, !llvm.loop !41
 
@@ -286,7 +286,7 @@ bb.c:                                             ; preds = %bb.a
   %i.da = trunc i32 %.1.1 to i8
   %i.db = getelementptr inbounds i8, ptr %.379128, i64 -2 ; 3 uses
   store i8 %i.da, ptr %i.cp, align 1, !tbaa !15
-  %niter197.next.1 = add i32 %niter197, 2         ; 2 uses
+  %niter197.next.1 = add nuw i32 %niter197, 2     ; 2 uses
   %niter197.ncmp.1 = icmp eq i32 %niter197.next.1, %unroll_iter196
   br i1 %niter197.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph131, !llvm.loop !42
 
@@ -689,9 +689,8 @@ bb.t:                                             ; preds = %._crit_edge354, %bb
   %i.gb = mul nsw i32 %.0188, %i.ga
   %i.gc = sub nsw i32 %i.fz, %i.gb
   %i.gd = mul nsw i32 %i.gc, 10
-  %4 = add i64 %indvars.iv, 2
-  %5 = and i64 %4, 4294967295
-  %i.ge = getelementptr inbounds nuw i8, ptr %i.bw, i64 %5
+  %4 = getelementptr inbounds nuw i8, ptr %i.bw, i64 %indvars.iv
+  %i.ge = getelementptr inbounds nuw i8, ptr %4, i64 2
   %i.gf = load i8, ptr %i.ge, align 1, !tbaa !15
   %i.gg = sext i8 %i.gf to i32                    ; 2 uses
   %i.gh = add nsw i32 %i.gd, %i.gg

@@ -204,7 +204,7 @@ _ZNKSt6vectorI10aiVector3tIfESaIS1_EE12_M_check_lenEmPKc.exit.i: ; preds = %bb.e
   br label %_ZNSt6vectorI10aiVector3tIfESaIS1_EE6resizeEm.exit
 
 .lr.ph224:                                        ; preds = %.preheader212, %.lr.ph224
-  %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph224 ], [ 0, %.preheader212 ] ; 2 uses
+  %indvars.iv = phi i64 [ %i.dt, %.lr.ph224 ], [ 0, %.preheader212 ] ; 2 uses
   %.sroa.13188.0220 = phi float [ %.sroa.speculated191, %.lr.ph224 ], [ 1.000000e+10, %.preheader212 ] ; 2 uses
   %.sroa.13176.0217 = phi float [ %.sroa.speculated, %.lr.ph224 ], [ -1.000000e+10, %.preheader212 ] ; 2 uses
   %i.dh = phi <2 x float> [ %i.dr, %.lr.ph224 ], [ splat (float -1.000000e+10), %.preheader212 ] ; 2 uses
@@ -221,8 +221,8 @@ _ZNKSt6vectorI10aiVector3tIfESaIS1_EE12_M_check_lenEmPKc.exit.i: ; preds = %bb.e
   %i.dr = select <2 x i1> %i.dq, <2 x float> %i.dn, <2 x float> %i.dh ; 3 uses
   %i.ds = fcmp olt float %.sroa.13176.0217, %i.dl
   %.sroa.speculated = select i1 %i.ds, float %i.dl, float %.sroa.13176.0217 ; 2 uses
-  %indvars.iv.next = add i64 %indvars.iv, 1       ; 2 uses
-  %i.dt = and i64 %indvars.iv.next, 4294967295
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
+  %i.dt = and i64 %indvars.iv.next, 4294967295    ; 2 uses
   %i.du = icmp ugt i64 %i.ad, %i.dt
   br i1 %i.du, label %.lr.ph224, label %._crit_edge.loopexit, !llvm.loop !13
 
@@ -625,14 +625,14 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.e = icmp eq ptr %0, %1
-  %.sroa.0.015.i = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
+  %.sroa.0.015.i = getelementptr i8, ptr %0, i64 24 ; 3 uses
   %.not16.i = icmp eq ptr %.sroa.0.015.i, %1
-  %or.cond = select i1 %i.e, i1 true, i1 %.not16.i
+  %or.cond = or i1 %i.e, %.not16.i
   br i1 %or.cond, label %common.ret21, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.b, %bb.h
   %.sroa.0.018.i = phi ptr [ %.sroa.0.0.i, %bb.h ], [ %.sroa.0.015.i, %bb.b ] ; 7 uses
-  %.pn17.i = phi ptr [ %.sroa.0.018.i, %bb.h ], [ %0, %bb.b ] ; 5 uses
+  %.pn17.i = phi ptr [ %.sroa.0.018.i, %bb.h ], [ %0, %bb.b ] ; 4 uses
   %i.f = load double, ptr %.sroa.0.018.i, align 8 ; 4 uses
   %i.g = load double, ptr %0, align 8
   %i.h = fcmp olt double %i.f, %i.g
@@ -642,16 +642,12 @@ bb.c:                                             ; preds = %.lr.ph.i
   call void @llvm.lifetime.start.p0(ptr nonnull %2)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %2, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.018.i, i64 24, i1 false)
   %i.i = ptrtoint ptr %.sroa.0.018.i to i64
-  %i.j = sub i64 %i.i, %i.b                       ; 4 uses
+  %i.j = sub i64 %i.i, %i.b                       ; 3 uses
   %i.k = icmp sgt i64 %i.j, 24
   br i1 %i.k, label %bb.d, label %bb.e, !prof !137
 
 bb.d:                                             ; preds = %bb.c
-  %3 = getelementptr inbounds nuw i8, ptr %.pn17.i, i64 48
-  %.neg23.i = udiv exact i64 %i.j, 24
-  %.neg23.neg.i = sub nsw i64 0, %.neg23.i
-  %4 = getelementptr inbounds [24 x i8], ptr %3, i64 %.neg23.neg.i
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %4, ptr noundef nonnull align 8 dereferenceable(1) %0, i64 %i.j, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sroa.0.015.i, ptr noundef nonnull align 8 dereferenceable(1) %0, i64 %i.j, i1 false)
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIP11aiVectorKeySt6vectorIS2_SaIS2_EEEES7_ET0_T_S9_S8_.exit.i
 
 bb.e:                                             ; preds = %bb.c

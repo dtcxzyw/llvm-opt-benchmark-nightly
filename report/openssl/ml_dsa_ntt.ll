@@ -52,16 +52,17 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.a, %._crit_edge39
-  %.03041 = phi i32 [ 256, %bb.a ], [ %i.a, %._crit_edge39 ] ; 2 uses
+  %.03041 = phi i32 [ 256, %bb.a ], [ %i.a, %._crit_edge39 ] ; 3 uses
   %.03140 = phi i32 [ 1, %bb.a ], [ %i.ax, %._crit_edge39 ] ; 3 uses
-  %i.a = lshr i32 %.03041, 1                      ; 3 uses
+  %i.a = lshr i32 %.03041, 1                      ; 4 uses
   %i.b = icmp sgt i32 %.03140, 0
   br i1 %i.b, label %.lr.ph38, label %._crit_edge39
 
 .lr.ph38:                                         ; preds = %bb.b
   %i.c = and i32 %.03041, 510
   %i.d = zext nneg i32 %i.c to i64
-  %i.e = zext nneg i32 %i.a to i64                ; 2 uses
+  %i.e = zext nneg i32 %i.a to i64
+  %1 = and i32 %.03041, 510
   %i.f = zext nneg i32 %.03140 to i64             ; 2 uses
   %.not = icmp eq i32 %i.a, 0
   %invariant.gep47 = getelementptr inbounds nuw [4 x i8], ptr @zetas_montgomery, i64 %i.f
@@ -69,9 +70,9 @@ bb.b:                                             ; preds = %bb.a, %._crit_edge3
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph38, %._crit_edge
-  %indvars.iv44.a = phi i64 [ 0, %.lr.ph38 ], [ %indvars.iv.next45.a, %._crit_edge ] ; 2 uses
-  %indvars.iv = phi i64 [ 0, %.lr.ph38 ], [ %indvars.iv.next.a, %._crit_edge ] ; 3 uses
-  %1 = add nuw nsw i64 %indvars.iv, %i.e
+  %indvars.iv44.a = phi i64 [ 0, %.lr.ph38 ], [ %indvars.iv.next.a, %._crit_edge ] ; 2 uses
+  %indvars.iv44 = phi i32 [ %i.a, %.lr.ph38 ], [ %indvars.iv.next45, %._crit_edge ] ; 2 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph38 ], [ %indvars.iv.next45.a, %._crit_edge ] ; 2 uses
   br i1 %.not, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.c
@@ -130,13 +131,15 @@ bb.d:                                             ; preds = %.lr.ph, %bb.d
   %i.aw = or i32 %i.av, %i.as
   store i32 %i.aw, ptr %gep, align 4, !tbaa !8
   %indvars.iv.next43 = add nuw nsw i64 %indvars.iv42, 1 ; 2 uses
-  %2 = icmp samesign ult i64 %indvars.iv.next43, %1
-  br i1 %2, label %bb.d, label %._crit_edge, !llvm.loop !12
+  %lftr.wideiv = trunc i64 %indvars.iv.next43 to i32
+  %exitcond.not = icmp eq i32 %indvars.iv44, %lftr.wideiv
+  br i1 %exitcond.not, label %._crit_edge, label %bb.d, !llvm.loop !12
 
 ._crit_edge:                                      ; preds = %bb.d, %bb.c
-  %indvars.iv.next.a = add nuw nsw i64 %indvars.iv, %i.d
-  %indvars.iv.next45.a = add nuw nsw i64 %indvars.iv44.a, 1 ; 2 uses
-  %exitcond.not.a = icmp eq i64 %indvars.iv.next45.a, %i.f
+  %indvars.iv.next.a = add nuw nsw i64 %indvars.iv44.a, 1 ; 2 uses
+  %indvars.iv.next45.a = add nuw nsw i64 %indvars.iv, %i.d
+  %indvars.iv.next45 = add nuw i32 %indvars.iv44, %1
+  %exitcond.not.a = icmp eq i64 %indvars.iv.next.a, %i.f
   br i1 %exitcond.not.a, label %._crit_edge39, label %bb.c, !llvm.loop !13
 
 ._crit_edge39:                                    ; preds = %._crit_edge, %bb.b
@@ -155,7 +158,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a, %._crit_edge48
   %.03750 = phi i32 [ 256, %bb.a ], [ %i.a, %._crit_edge48 ] ; 2 uses
-  %.03849 = phi i32 [ 1, %bb.a ], [ %.pre-phi, %._crit_edge48 ] ; 4 uses
+  %.03849 = phi i32 [ 1, %bb.a ], [ %.pre-phi, %._crit_edge48 ] ; 3 uses
   %i.a = lshr i32 %.03750, 1                      ; 3 uses
   %.not = icmp eq i32 %i.a, 0
   br i1 %.not, label %.._crit_edge48_crit_edge, label %.lr.ph47
@@ -166,9 +169,9 @@ bb.b:                                             ; preds = %bb.a, %._crit_edge4
 
 .lr.ph47:                                         ; preds = %bb.b
   %reass.add = and i32 %.03750, 510
-  %i.b = shl i32 %.03849, 1                       ; 3 uses
-  %i.c = zext nneg i32 %i.b to i64
-  %i.d = sext i32 %.03849 to i64
+  %i.b = shl i32 %.03849, 1                       ; 2 uses
+  %i.c = zext i32 %i.b to i64                     ; 2 uses
+  %i.d = sext i32 %.03849 to i64                  ; 2 uses
   %i.e = zext nneg i32 %reass.add to i64
   %wide.trip.count62 = zext nneg i32 %i.a to i64
   %i.f = getelementptr [4 x i8], ptr @zetas_montgomery, i64 %i.e
@@ -177,14 +180,13 @@ bb.b:                                             ; preds = %bb.a, %._crit_edge4
 
 .lr.ph:                                           ; preds = %._crit_edge, %.lr.ph47
   %indvars.iv57.a = phi i64 [ 0, %.lr.ph47 ], [ %indvars.iv.next58.a, %._crit_edge ] ; 2 uses
-  %indvars.iv55 = phi i32 [ %.03849, %.lr.ph47 ], [ %indvars.iv.next56, %._crit_edge ] ; 2 uses
+  %indvars.iv57 = phi i64 [ %i.d, %.lr.ph47 ], [ %indvars.iv.next58, %._crit_edge ] ; 2 uses
   %indvars.iv = phi i64 [ 0, %.lr.ph47 ], [ %indvars.iv.next, %._crit_edge ] ; 2 uses
   %i.g = xor i64 %indvars.iv57.a, -1
   %i.h = getelementptr [4 x i8], ptr %i.f, i64 %i.g
   %i.i = load i32, ptr %i.h, align 4, !tbaa !8
   %i.j = sub i32 8380417, %i.i
-  %1 = zext i32 %i.j to i64
-  %wide.trip.count = zext i32 %indvars.iv55 to i64
+  %wide.trip.count = zext i32 %i.j to i64
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph, %bb.c
@@ -208,7 +210,7 @@ bb.c:                                             ; preds = %.lr.ph, %bb.c
   %i.x = add i32 %i.l, 8380417
   %i.y = sub i32 %i.x, %i.m
   %i.z = zext i32 %i.y to i64
-  %i.aa = mul nuw i64 %i.z, %1                    ; 2 uses
+  %i.aa = mul nuw i64 %i.z, %wide.trip.count      ; 2 uses
   %i.ab = mul i64 %i.aa, 4236238847
   %i.ac = and i64 %i.ab, 4294967295
   %i.ad = mul nuw nsw i64 %i.ac, 8380417
@@ -227,13 +229,13 @@ bb.c:                                             ; preds = %.lr.ph, %bb.c
   %i.ap = or i32 %i.ao, %i.al
   store i32 %i.ap, ptr %gep, align 4, !tbaa !8
   %indvars.iv.next53 = add nuw nsw i64 %indvars.iv52, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next53, %wide.trip.count
+  %exitcond.not = icmp eq i64 %indvars.iv.next53, %indvars.iv57
   br i1 %exitcond.not, label %._crit_edge, label %bb.c, !llvm.loop !15
 
 ._crit_edge:                                      ; preds = %bb.c
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, %i.c
   %indvars.iv.next58.a = add nuw nsw i64 %indvars.iv57.a, 1 ; 2 uses
-  %indvars.iv.next56 = add i32 %indvars.iv55, %i.b
+  %indvars.iv.next58 = add nuw nsw i64 %indvars.iv57, %i.c
   %exitcond63.not = icmp eq i64 %indvars.iv.next58.a, %wide.trip.count62
   br i1 %exitcond63.not, label %._crit_edge48, label %.lr.ph, !llvm.loop !16
 

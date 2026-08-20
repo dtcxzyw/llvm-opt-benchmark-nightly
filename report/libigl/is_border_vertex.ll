@@ -203,18 +203,17 @@ bb.j:                                             ; preds = %bb.h
   br label %bb.n
 
 .lr.ph:                                           ; preds = %_ZNSt6vectorIbSaIbEEC2EmRKS0_.exit, %.lr.ph
-  %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph ], [ 0, %_ZNSt6vectorIbSaIbEEC2EmRKS0_.exit ] ; 3 uses
+  %indvars.iv = phi i64 [ %i.cu, %.lr.ph ], [ 0, %_ZNSt6vectorIbSaIbEEC2EmRKS0_.exit ] ; 3 uses
   %i.cn = lshr i64 %indvars.iv, 6
-  %.zext = and i64 %i.cn, 67108863
-  %i.co = getelementptr inbounds nuw [8 x i8], ptr %i.cb, i64 %.zext ; 2 uses
+  %i.co = getelementptr inbounds nuw [8 x i8], ptr %i.cb, i64 %i.cn ; 2 uses
   %i.cp = and i64 %indvars.iv, 63
   %i.cq = shl nuw i64 1, %i.cp
   %i.cr = xor i64 %i.cq, -1
   %i.cs = load i64, ptr %i.co, align 8, !tbaa !33
   %i.ct = and i64 %i.cs, %i.cr
   store i64 %i.ct, ptr %i.co, align 8, !tbaa !33
-  %indvars.iv.next = add i64 %indvars.iv, 1       ; 2 uses
-  %i.cu = and i64 %indvars.iv.next, 4294967295
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
+  %i.cu = and i64 %indvars.iv.next, 4294967295    ; 2 uses
   %i.cv = icmp ugt i64 %i.ch, %i.cu
   br i1 %i.cv, label %.lr.ph, label %.preheader53, !llvm.loop !34
 
@@ -562,18 +561,17 @@ bb.j:                                             ; preds = %bb.h
   br label %bb.q
 
 .lr.ph:                                           ; preds = %_ZNSt6vectorIbSaIbEEC2EmRKS0_.exit, %.lr.ph
-  %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph ], [ 0, %_ZNSt6vectorIbSaIbEEC2EmRKS0_.exit ] ; 3 uses
+  %indvars.iv = phi i64 [ %i.cs, %.lr.ph ], [ 0, %_ZNSt6vectorIbSaIbEEC2EmRKS0_.exit ] ; 3 uses
   %i.cl = lshr i64 %indvars.iv, 6
-  %.zext = and i64 %i.cl, 67108863
-  %i.cm = getelementptr inbounds nuw [8 x i8], ptr %i.bz, i64 %.zext ; 2 uses
+  %i.cm = getelementptr inbounds nuw [8 x i8], ptr %i.bz, i64 %i.cl ; 2 uses
   %i.cn = and i64 %indvars.iv, 63
   %i.co = shl nuw i64 1, %i.cn
   %i.cp = xor i64 %i.co, -1
   %i.cq = load i64, ptr %i.cm, align 8, !tbaa !33
   %i.cr = and i64 %i.cq, %i.cp
   store i64 %i.cr, ptr %i.cm, align 8, !tbaa !33
-  %indvars.iv.next = add i64 %indvars.iv, 1       ; 2 uses
-  %i.cs = and i64 %indvars.iv.next, 4294967295
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
+  %i.cs = and i64 %indvars.iv.next, 4294967295    ; 2 uses
   %i.ct = icmp ugt i64 %i.cf, %i.cs
   br i1 %i.ct, label %.lr.ph, label %.preheader55, !llvm.loop !46
 

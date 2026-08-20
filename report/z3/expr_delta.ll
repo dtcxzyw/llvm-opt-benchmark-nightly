@@ -137,7 +137,7 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 7 uses
-  %wide.trip.count = zext i32 %2 to i64
+  %wide.trip.count = zext i32 %2 to i64           ; 2 uses
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %.thread47
@@ -345,8 +345,7 @@ _ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0
   %i.bt = add i32 %i.bp, 1
   store i32 %i.bt, ptr %i.bq, align 4, !tbaa !17
   %indvars.iv.next69 = add nuw nsw i64 %indvars.iv68, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next69 to i32
-  %exitcond71.not = icmp eq i32 %2, %lftr.wideiv
+  %exitcond71.not = icmp eq i64 %indvars.iv.next69, %wide.trip.count
   br i1 %exitcond71.not, label %.critedge, label %.lr.ph59
 
 bb.r:                                             ; preds = %bb.p

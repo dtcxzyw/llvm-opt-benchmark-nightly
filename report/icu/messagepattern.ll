@@ -203,7 +203,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.new
   %reass.mul.1 = mul i32 %reass.add.1, 37
   %i.bh = add i32 %reass.mul.1, %i.bf             ; 3 uses
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %bb.b, !llvm.loop !61
 }
@@ -250,7 +250,7 @@ bb.e:                                             ; preds = %_ZNK6icu_7813Unicod
   %i.q = lshr i16 %.fr53.i, 5
   %i.r = zext nneg i16 %i.q to i32
   %i.s = load i32, ptr %i.k, align 4              ; 2 uses
-  %i.t = select i1 %i.p, i32 %i.s, i32 %i.r       ; 5 uses
+  %i.t = select i1 %i.p, i32 %i.s, i32 %i.r       ; 4 uses
   %.not.i4 = icmp sgt i32 %i.t, 0
   br i1 %.not.i4, label %bb.f, label %_ZN6icu_7814MessagePattern14parseArgNumberERKNS_13UnicodeStringEii.exit
 
@@ -290,6 +290,7 @@ bb.i:                                             ; preds = %bb.h
 .lr.ph.i:                                         ; preds = %bb.g, %bb.i
   %.0.i525 = phi i8 [ 0, %bb.i ], [ 1, %bb.g ]    ; 2 uses
   %.026.i24 = phi i32 [ %i.ah, %bb.i ], [ 0, %bb.g ] ; 2 uses
+  %zext13 = zext nneg i32 %i.t to i64             ; 2 uses
   %wide.trip.count14 = zext i32 %i.w to i64       ; 2 uses
   br i1 %.not.i.i.i.i, label %.lr.ph.split.us.i, label %.lr.ph.split.i
 
@@ -316,8 +317,7 @@ bb.j:                                             ; preds = %_ZNK6icu_7813Unicod
   %i.ap = add i32 %i.ao, %i.al
   %.228.us.i = select i1 %i.am, i32 %.12749.us.i, i32 %i.ap ; 2 uses
   %.2.us.i = select i1 %i.am, i8 1, i8 %.150.us.i ; 2 uses
-  %lftr.wideiv16 = trunc i64 %indvars.iv.next57.i to i32
-  %exitcond17 = icmp eq i32 %i.t, %lftr.wideiv16
+  %exitcond17 = icmp eq i64 %indvars.iv.next57.i, %zext13
   br i1 %exitcond17, label %._crit_edge.i, label %.lr.ph.split.us.i, !llvm.loop !62
 
 .lr.ph.split.i:                                   ; preds = %.lr.ph.i, %bb.k
@@ -343,8 +343,7 @@ bb.k:                                             ; preds = %_ZNK6icu_7813Unicod
   %i.ax = add i32 %i.aw, %i.at
   %.228.i = select i1 %i.au, i32 %.12749.i, i32 %i.ax ; 2 uses
   %.2.i = select i1 %i.au, i8 1, i8 %.150.i       ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next.i to i32
-  %exitcond12 = icmp eq i32 %i.t, %lftr.wideiv
+  %exitcond12 = icmp eq i64 %indvars.iv.next.i, %zext13
   br i1 %exitcond12, label %._crit_edge.i, label %.lr.ph.split.i, !llvm.loop !62
 
 ._crit_edge.i:                                    ; preds = %bb.k, %bb.j

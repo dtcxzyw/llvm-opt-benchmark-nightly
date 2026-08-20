@@ -203,13 +203,13 @@ _ZNK6vectorIPN2dd6solver8equationELb0EjE4sizeEv.exit38..critedge39.loopexit_crit
 .critedge39.loopexit:                             ; preds = %bb.e, %_ZNK6vectorIPN2dd6solver8equationELb0EjE4sizeEv.exit38..critedge39.loopexit_crit_edge
   %i.d = phi ptr [ %i.k, %_ZNK6vectorIPN2dd6solver8equationELb0EjE4sizeEv.exit38..critedge39.loopexit_crit_edge ], [ %i.ax, %bb.e ] ; 2 uses
   %i.e = icmp eq ptr %i.d, null
-  %indvars.iv.next = add i32 %indvars.iv, 1
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
   br i1 %i.e, label %.critedge, label %_ZNK6vectorIPN2dd6solver8equationELb0EjE4sizeEv.exit
 
 _ZNK6vectorIPN2dd6solver8equationELb0EjE4sizeEv.exit: ; preds = %bb.a, %.critedge39.loopexit
   %i.f = phi ptr [ %i.d, %.critedge39.loopexit ], [ %i.b, %bb.a ] ; 3 uses
   %indvars.iv47 = phi i64 [ %indvars.iv.next48, %.critedge39.loopexit ], [ 0, %bb.a ] ; 6 uses
-  %indvars.iv = phi i32 [ %indvars.iv.next, %.critedge39.loopexit ], [ 1, %bb.a ] ; 2 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %.critedge39.loopexit ], [ 1, %bb.a ] ; 2 uses
   %i.g = getelementptr inbounds i8, ptr %i.f, i64 -4
   %i.h = load i32, ptr %i.g, align 4, !tbaa !19
   %i.i = zext i32 %i.h to i64
@@ -220,14 +220,13 @@ _ZNK6vectorIPN2dd6solver8equationELb0EjE4sizeEv.exit: ; preds = %bb.a, %.critedg
   ret void
 
 _ZNK6vectorIPN2dd6solver8equationELb0EjE4sizeEv.exit38.lr.ph: ; preds = %_ZNK6vectorIPN2dd6solver8equationELb0EjE4sizeEv.exit
-  %1 = zext i32 %indvars.iv to i64
   %indvars.iv.next48 = add nuw nsw i64 %indvars.iv47, 1
   br label %_ZNK6vectorIPN2dd6solver8equationELb0EjE4sizeEv.exit38
 
 _ZNK6vectorIPN2dd6solver8equationELb0EjE4sizeEv.exit38: ; preds = %_ZNK6vectorIPN2dd6solver8equationELb0EjE4sizeEv.exit38.lr.ph, %bb.e
   %i.k = phi ptr [ %i.f, %_ZNK6vectorIPN2dd6solver8equationELb0EjE4sizeEv.exit38.lr.ph ], [ %i.ax, %bb.e ] ; 3 uses
   %i.l = phi ptr [ %i.f, %_ZNK6vectorIPN2dd6solver8equationELb0EjE4sizeEv.exit38.lr.ph ], [ %i.ay, %bb.e ] ; 5 uses
-  %indvars.iv44 = phi i64 [ %1, %_ZNK6vectorIPN2dd6solver8equationELb0EjE4sizeEv.exit38.lr.ph ], [ %indvars.iv.next45, %bb.e ] ; 5 uses
+  %indvars.iv44 = phi i64 [ %indvars.iv, %_ZNK6vectorIPN2dd6solver8equationELb0EjE4sizeEv.exit38.lr.ph ], [ %indvars.iv.next45, %bb.e ] ; 5 uses
   %i.m = getelementptr inbounds i8, ptr %i.l, i64 -4
   %i.n = load i32, ptr %i.m, align 4, !tbaa !19
   %i.o = zext i32 %i.n to i64

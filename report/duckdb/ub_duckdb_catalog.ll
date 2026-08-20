@@ -203,7 +203,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.z
 
 ._crit_edge:                                      ; preds = %bb.ao, %bb.b
-  %i.j = load ptr, ptr %0, align 8, !tbaa !412    ; 73 uses
+  %i.j = load ptr, ptr %0, align 8, !tbaa !412    ; 72 uses
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !412  ; 8 uses
   %.not.i.i = icmp eq ptr %i.j, %i.l
@@ -486,17 +486,17 @@ bb.t:                                             ; preds = %_ZSt13move_backward
 
 .peel.next.i20.i.i.i:                             ; preds = %bb.t, %bb.x
   %.sroa.0.021.i21.i.i.i = phi ptr [ %.sroa.0.0.i23.i.i.i, %bb.x ], [ %.sroa.0.0.peel.i18.i.i.i, %bb.t ] ; 6 uses
-  %.pn20.i22.i.i.i = phi ptr [ %.sroa.0.021.i21.i.i.i, %bb.x ], [ %.sroa.0.018.i15.i.i.i, %bb.t ] ; 2 uses
+  %.pn20.i22.i.i.i = phi ptr [ %.sroa.0.021.i21.i.i.i, %bb.x ], [ %.sroa.0.018.i15.i.i.i, %bb.t ]
   %i.ao = call fastcc noundef zeroext i1 @"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN6duckdb7Catalog13GetAllSchemasERNS2_13ClientContextEE3$_0EclINS_17__normal_iteratorIPSt17reference_wrapperINS2_18SchemaCatalogEntryEESt6vectorISC_SaISC_EEEESH_EEbT_T0_"(ptr nonnull %.sroa.0.021.i21.i.i.i, ptr %i.j)
   br i1 %i.ao, label %bb.u, label %bb.w
 
 bb.u:                                             ; preds = %.peel.next.i20.i.i.i
   %.sroa.06.0.copyload.i25.i.i.i = load ptr, ptr %.sroa.0.021.i21.i.i.i, align 8
   %i.ap = ptrtoint ptr %.sroa.0.021.i21.i.i.i to i64
-  %i.aq = sub i64 %i.ap, %i.n                     ; 3 uses
+  %i.aq = sub i64 %i.ap, %i.n                     ; 2 uses
   %i.ar = ashr exact i64 %i.aq, 3                 ; 2 uses
   %i.as = icmp sgt i64 %i.ar, 1
-  br i1 %i.as, label %bb.v, label %5, !prof !354
+  br i1 %i.as, label %bb.v, label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPSt17reference_wrapperIN6duckdb18SchemaCatalogEntryEESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit.i26.i.i.i, !prof !354
 
 bb.v:                                             ; preds = %bb.u
   %i.at = getelementptr inbounds nuw i8, ptr %.pn20.i22.i.i.i, i64 16
@@ -505,17 +505,7 @@ bb.v:                                             ; preds = %bb.u
   call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.av, ptr noundef nonnull align 8 dereferenceable(1) %i.j, i64 %i.aq, i1 false)
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPSt17reference_wrapperIN6duckdb18SchemaCatalogEntryEESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit.i26.i.i.i
 
-5:                                                ; preds = %bb.u
-  %6 = icmp eq i64 %i.aq, 8
-  br i1 %6, label %7, label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPSt17reference_wrapperIN6duckdb18SchemaCatalogEntryEESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit.i26.i.i.i
-
-7:                                                ; preds = %5
-  %8 = getelementptr inbounds nuw i8, ptr %.pn20.i22.i.i.i, i64 8
-  %9 = load i64, ptr %i.j, align 8
-  store i64 %9, ptr %8, align 8
-  br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPSt17reference_wrapperIN6duckdb18SchemaCatalogEntryEESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit.i26.i.i.i
-
-_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPSt17reference_wrapperIN6duckdb18SchemaCatalogEntryEESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit.i26.i.i.i: ; preds = %7, %5, %bb.v
+_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPSt17reference_wrapperIN6duckdb18SchemaCatalogEntryEESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit.i26.i.i.i: ; preds = %bb.v, %bb.u
   store ptr %.sroa.06.0.copyload.i25.i.i.i, ptr %i.j, align 8
   br label %bb.x
 

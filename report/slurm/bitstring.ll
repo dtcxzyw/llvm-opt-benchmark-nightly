@@ -201,7 +201,7 @@ bb.a:
   %i.k = load i64, ptr %i.j, align 8
   %i.l = and i64 %i.k, %i.i
   store i64 %i.l, ptr %i.j, align 8
-  %i.m = add i64 %i.e, 64                         ; 2 uses
+  %i.m = add nuw i64 %i.e, 64                     ; 2 uses
   %.not = icmp ugt i64 %i.m, %.
   br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !17
 
@@ -275,7 +275,7 @@ bb.a:
   %i.k = load i64, ptr %i.j, align 8
   %i.l = or i64 %i.k, %i.i
   store i64 %i.l, ptr %i.j, align 8
-  %i.m = add i64 %i.e, 64                         ; 2 uses
+  %i.m = add nuw i64 %i.e, 64                     ; 2 uses
   %.not = icmp ugt i64 %i.m, %.
   br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !19
 
@@ -322,7 +322,7 @@ bb.a:
   %i.h = tail call range(i64 0, 65) i64 @llvm.ctpop.i64(i64 %i.g)
   %i.i = trunc nuw nsw i64 %i.h to i32
   %i.j = add nuw nsw i32 %.019, %i.i              ; 2 uses
-  %i.k = add i64 %i.c, 64                         ; 2 uses
+  %i.k = add nuw i64 %i.c, 64                     ; 2 uses
   %.not = icmp ugt i64 %i.k, %i.b
   br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !20
 
@@ -453,12 +453,12 @@ bb.g:                                             ; preds = %bb.f, %._crit_edge
 define dso_local i32 @bit_clear_count(ptr nofree noundef readonly captures(none) %0) #3 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.b = load i64, ptr %i.a, align 8              ; 5 uses
+  %i.b = load i64, ptr %i.a, align 8              ; 6 uses
   %.not17.i = icmp ult i64 %i.b, 64
   br i1 %.not17.i, label %._crit_edge.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.a, %.lr.ph.i
-  %i.c = phi i64 [ %i.k, %.lr.ph.i ], [ 64, %bb.a ] ; 3 uses
+  %i.c = phi i64 [ %i.k, %.lr.ph.i ], [ 64, %bb.a ] ; 2 uses
   %.019.i = phi i32 [ %i.j, %.lr.ph.i ], [ 0, %bb.a ]
   %.01418.i = phi i64 [ %i.c, %.lr.ph.i ], [ 0, %bb.a ]
   %i.d = ashr exact i64 %.01418.i, 3
@@ -468,13 +468,17 @@ bb.a:
   %i.h = tail call range(i64 0, 65) i64 @llvm.ctpop.i64(i64 %i.g)
   %i.i = trunc nuw nsw i64 %i.h to i32
   %i.j = add nuw nsw i32 %.019.i, %i.i            ; 2 uses
-  %i.k = add i64 %i.c, 64                         ; 2 uses
+  %i.k = add nuw i64 %i.c, 64                     ; 2 uses
   %.not.i = icmp ugt i64 %i.k, %i.b
-  br i1 %.not.i, label %._crit_edge.i, label %.lr.ph.i, !llvm.loop !20
+  br i1 %.not.i, label %._crit_edge.i.loopexit, label %.lr.ph.i, !llvm.loop !20
 
-._crit_edge.i:                                    ; preds = %.lr.ph.i, %bb.a
-  %.014.lcssa.i = phi i64 [ 0, %bb.a ], [ %i.c, %.lr.ph.i ] ; 2 uses
-  %.0.lcssa.i = phi i32 [ 0, %bb.a ], [ %i.j, %.lr.ph.i ] ; 2 uses
+._crit_edge.i.loopexit:                           ; preds = %.lr.ph.i
+  %1 = and i64 %i.b, -64
+  br label %._crit_edge.i
+
+._crit_edge.i:                                    ; preds = %._crit_edge.i.loopexit, %bb.a
+  %.014.lcssa.i = phi i64 [ 0, %bb.a ], [ %1, %._crit_edge.i.loopexit ] ; 2 uses
+  %.0.lcssa.i = phi i32 [ 0, %bb.a ], [ %i.j, %._crit_edge.i.loopexit ] ; 2 uses
   %i.l = icmp slt i64 %.014.lcssa.i, %i.b
   br i1 %i.l, label %bb.b, label %bit_set_count.exit
 
@@ -877,7 +881,7 @@ bb.a:
   %i.l = load i64, ptr %i.k, align 8
   %i.m = and i64 %i.l, %i.j
   store i64 %i.m, ptr %i.k, align 8
-  %i.n = add i64 %i.e, 64                         ; 2 uses
+  %i.n = add nuw i64 %i.e, 64                     ; 2 uses
   %.not = icmp ugt i64 %i.n, %.
   br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !43
 
@@ -928,7 +932,7 @@ bb.a:
   %i.l = load i64, ptr %i.k, align 8
   %i.m = or i64 %i.l, %i.j
   store i64 %i.m, ptr %i.k, align 8
-  %i.n = add i64 %i.e, 64                         ; 2 uses
+  %i.n = add nuw i64 %i.e, 64                     ; 2 uses
   %.not = icmp ugt i64 %i.n, %.
   br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !44
 
@@ -1331,12 +1335,12 @@ declare ptr @__ctype_toupper_loc() local_unnamed_addr #7
 define dso_local void @bit_consolidate(ptr nofree noundef captures(none) %0) local_unnamed_addr #2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.b = load i64, ptr %i.a, align 8              ; 7 uses
+  %i.b = load i64, ptr %i.a, align 8              ; 8 uses
   %.not17.i = icmp ult i64 %i.b, 64
   br i1 %.not17.i, label %._crit_edge.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.a, %.lr.ph.i
-  %i.c = phi i64 [ %i.k, %.lr.ph.i ], [ 64, %bb.a ] ; 3 uses
+  %i.c = phi i64 [ %i.k, %.lr.ph.i ], [ 64, %bb.a ] ; 2 uses
   %.019.i = phi i32 [ %i.j, %.lr.ph.i ], [ 0, %bb.a ]
   %.01418.i = phi i64 [ %i.c, %.lr.ph.i ], [ 0, %bb.a ]
   %i.d = ashr exact i64 %.01418.i, 3
@@ -1346,13 +1350,17 @@ bb.a:
   %i.h = tail call range(i64 0, 65) i64 @llvm.ctpop.i64(i64 %i.g)
   %i.i = trunc nuw nsw i64 %i.h to i32
   %i.j = add nuw nsw i32 %.019.i, %i.i            ; 2 uses
-  %i.k = add i64 %i.c, 64                         ; 2 uses
+  %i.k = add nuw i64 %i.c, 64                     ; 2 uses
   %.not.i = icmp ugt i64 %i.k, %i.b
-  br i1 %.not.i, label %._crit_edge.i, label %.lr.ph.i, !llvm.loop !20
+  br i1 %.not.i, label %._crit_edge.i.loopexit, label %.lr.ph.i, !llvm.loop !20
 
-._crit_edge.i:                                    ; preds = %.lr.ph.i, %bb.a
-  %.014.lcssa.i = phi i64 [ 0, %bb.a ], [ %i.c, %.lr.ph.i ] ; 2 uses
-  %.0.lcssa.i = phi i32 [ 0, %bb.a ], [ %i.j, %.lr.ph.i ] ; 2 uses
+._crit_edge.i.loopexit:                           ; preds = %.lr.ph.i
+  %1 = and i64 %i.b, -64
+  br label %._crit_edge.i
+
+._crit_edge.i:                                    ; preds = %._crit_edge.i.loopexit, %bb.a
+  %.014.lcssa.i = phi i64 [ 0, %bb.a ], [ %1, %._crit_edge.i.loopexit ] ; 2 uses
+  %.0.lcssa.i = phi i32 [ 0, %bb.a ], [ %i.j, %._crit_edge.i.loopexit ] ; 2 uses
   %i.l = icmp slt i64 %.014.lcssa.i, %i.b
   br i1 %i.l, label %bb.b, label %bit_set_count.exit
 

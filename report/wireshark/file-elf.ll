@@ -201,7 +201,7 @@ value_guard.exit980:                              ; preds = %value_guard.exit980
 
 ._crit_edge:                                      ; preds = %.loopexit, %value_guard.exit947, %value_guard.exit951
   %.2884.lcssa = phi i64 [ %.0882.lcssa, %value_guard.exit951 ], [ %.0882.lcssa, %value_guard.exit947 ], [ %.3885, %.loopexit ] ; 3 uses
-  %.4879.lcssa = phi i32 [ %.2877.lcssa, %value_guard.exit951 ], [ %.2877.lcssa, %value_guard.exit947 ], [ %.5880, %.loopexit ] ; 6 uses
+  %.4879.lcssa = phi i32 [ %.2877.lcssa, %value_guard.exit951 ], [ %.2877.lcssa, %value_guard.exit947 ], [ %.5880, %.loopexit ] ; 5 uses
   %i.afc = load i32, ptr @ett_elf_info, align 4
   %i.afd = call ptr @proto_tree_add_subtree(ptr noundef %i.ac, ptr noundef %0, i32 noundef 0, i32 noundef 0, i32 noundef %i.afc, ptr noundef nonnull %i.l, ptr noundef nonnull @.str.672) ; 5 uses
   %i.afe = load ptr, ptr %i.l, align 8            ; 2 uses
@@ -230,7 +230,7 @@ proto_item_set_generated.exit:                    ; preds = %._crit_edge, %bb.fw
   br i1 %.not1122, label %._crit_edge1118, label %.lr.ph1114.preheader
 
 .lr.ph1114.preheader:                             ; preds = %proto_item_set_generated.exit
-  %i.afo = zext i32 %.4879.lcssa to i64           ; 2 uses
+  %i.afo = zext i32 %.4879.lcssa to i64           ; 3 uses
   br label %.lr.ph1114
 
 .preheader:                                       ; preds = %._crit_edge1112
@@ -267,8 +267,7 @@ bb.fy:                                            ; preds = %.lr.ph1111
 
 bb.fz:                                            ; preds = %.lr.ph1111, %bb.fy
   %indvars.iv.next1160 = add nuw nsw i64 %indvars.iv1159, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next1160 to i32
-  %exitcond.not = icmp eq i32 %.4879.lcssa, %lftr.wideiv
+  %exitcond.not = icmp eq i64 %indvars.iv.next1160, %i.afo
   br i1 %exitcond.not, label %._crit_edge1112, label %.lr.ph1111, !llvm.loop !17
 
 ._crit_edge1112:                                  ; preds = %bb.fz, %.lr.ph1114

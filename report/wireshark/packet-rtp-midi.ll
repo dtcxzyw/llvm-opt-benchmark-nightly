@@ -203,7 +203,7 @@ decode_sj_chapter_f.exit.i:                       ; preds = %bb.gp, %bb.go, %dec
 
 bb.gq:                                            ; preds = %decode_sj_chapter_f.exit.i
   %.neg.i = sub i32 %i.acp, %.3.i
-  %i.amx = add i32 %.neg.i, %i.acu                ; 12 uses
+  %i.amx = add i32 %.neg.i, %i.acu                ; 11 uses
   %i.amy = tail call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef %.3.i)
   %i.amz = load i32, ptr @ett_rtp_midi_sj_chapter_x, align 4
   %i.ana = tail call ptr @proto_tree_add_subtree(ptr noundef %i.ado, ptr noundef %0, i32 noundef %.3.i, i32 noundef %i.amx, i32 noundef %i.amz, ptr noundef null, ptr noundef nonnull @.str.1182) ; 12 uses
@@ -322,23 +322,19 @@ bb.gz:                                            ; preds = %bb.gy
   br i1 %.not141.i.i, label %bb.ha, label %.thread.i148
 
 bb.ha:                                            ; preds = %.lr.ph.i.i
-  %i.aoy = add i32 %.01226.i.i, 1                 ; 3 uses
-  %i.aoz = add i32 %.45.i.i, 1                    ; 2 uses
+  %i.aoy = add nuw i32 %.01226.i.i, 1             ; 2 uses
+  %i.aoz = add nuw i32 %.45.i.i, 1                ; 2 uses
   %exitcond.not.i.i = icmp eq i32 %i.aoz, %i.amx
-  br i1 %exitcond.not.i.i, label %._crit_edge.i.i, label %.lr.ph.i.i, !llvm.loop !10
+  br i1 %exitcond.not.i.i, label %bb.hb, label %.lr.ph.i.i, !llvm.loop !10
 
 .thread.i148:                                     ; preds = %.lr.ph.i.i
   %i.apa = load i32, ptr @hf_rtp_midi_sj_chapter_x_data, align 4
   %i.apb = tail call ptr @proto_tree_add_item(ptr noundef %i.aou, i32 noundef %i.apa, ptr noundef %0, i32 noundef %.41324.i.ph.i, i32 noundef %.01226.i.i, i32 noundef 0) ; 0 uses
-  %i.apc = add i32 %.45.i.i, 1                    ; 2 uses
+  %i.apc = add nuw i32 %.45.i.i, 1                ; 2 uses
   %exitcond.not.i3.i = icmp eq i32 %i.apc, %i.amx
   br i1 %exitcond.not.i3.i, label %decode_sj_chapter_x.exit.i, label %.lr.ph.i.outer.i, !llvm.loop !10
 
-._crit_edge.i.i:                                  ; preds = %bb.ha
-  %.not140.i.i = icmp eq i32 %i.aoy, 0
-  br i1 %.not140.i.i, label %decode_sj_chapter_x.exit.i, label %bb.hb
-
-bb.hb:                                            ; preds = %._crit_edge.i.i
+bb.hb:                                            ; preds = %bb.ha
   %i.apd = load i32, ptr @hf_rtp_midi_sj_chapter_x_invalid_data, align 4
   %i.ape = tail call ptr @proto_tree_add_item(ptr noundef %i.aou, i32 noundef %i.apd, ptr noundef %0, i32 noundef %.41324.i.ph.i, i32 noundef %i.aoy, i32 noundef 0) ; 0 uses
   br label %decode_sj_chapter_x.exit.i
@@ -353,8 +349,8 @@ bb.hc:                                            ; preds = %._crit_edge.thread.
   %i.api = tail call ptr @proto_tree_add_item(ptr noundef %i.ana, i32 noundef %i.apg, ptr noundef %0, i32 noundef %.3131.i.i, i32 noundef %i.aph, i32 noundef 0) ; 0 uses
   br label %decode_sj_chapter_x.exit.i
 
-decode_sj_chapter_x.exit.i:                       ; preds = %.thread.i148, %bb.hc, %._crit_edge.thread.i.i, %bb.hb, %._crit_edge.i.i
-  %.1127.i.i = phi i32 [ %.3.i89.i, %._crit_edge.thread.i.i ], [ %i.amx, %bb.hc ], [ %i.amx, %bb.hb ], [ %i.amx, %._crit_edge.i.i ], [ %i.amx, %.thread.i148 ] ; 4 uses
+decode_sj_chapter_x.exit.i:                       ; preds = %.thread.i148, %bb.hc, %._crit_edge.thread.i.i, %bb.hb
+  %.1127.i.i = phi i32 [ %.3.i89.i, %._crit_edge.thread.i.i ], [ %i.amx, %bb.hc ], [ %i.amx, %bb.hb ], [ %i.amx, %.thread.i148 ] ; 4 uses
   %i.apj = icmp slt i32 %.1127.i.i, 0
   br i1 %i.apj, label %decode_system_journal.exit, label %bb.hd
 

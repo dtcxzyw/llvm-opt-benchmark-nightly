@@ -91,7 +91,6 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.67 = private unnamed_addr constant [5 x i8] c"copy\00", align 1
 @.str.68 = private unnamed_addr constant [3 x i8] c"to\00", align 1
 @.str.69 = private unnamed_addr constant [27 x i8] c"size_t overflow: %lu * %lu\00", align 1
-@.str.70 = private unnamed_addr constant [27 x i8] c"size_t overflow: %lu + %lu\00", align 1
 @.str.71 = private unnamed_addr constant [34 x i8] c"cannot use UNKNOWN step as a base\00", align 1
 @.str.72 = private unnamed_addr constant [32 x i8] c"cannot use WRITE step as a base\00", align 1
 @.str.73 = private unnamed_addr constant [39 x i8] c"unhandled midx compaction step type %d\00", align 1
@@ -494,25 +493,17 @@ bb.fg:                                            ; preds = %._crit_edge.i50.i, 
   %.not5462.i.i = icmp eq ptr %i.xn, null
   br i1 %.not5462.i.i, label %repack_make_midx_append_plan.exit.i, label %st_add.exit.i.i
 
-.lr.ph68.i.i:                                     ; preds = %bb.fi
-  %exitcond.i.i = icmp eq i64 %i.yp, -1
-  br i1 %exitcond.i.i, label %21, label %st_add.exit.i.i, !llvm.loop !129
-
-21:                                               ; preds = %.lr.ph68.i.i
-  call void (ptr, ...) @die(ptr noundef nonnull @.str.70, i64 noundef -1, i64 noundef 1) #14
-  unreachable
-
-st_add.exit.i.i:                                  ; preds = %bb.fg, %.lr.ph68.i.i
-  %.05063.i.i377 = phi ptr [ %i.zd, %.lr.ph68.i.i ], [ %i.xn, %bb.fg ] ; 3 uses
-  %.24864.i.i376 = phi ptr [ %.349.i.i, %.lr.ph68.i.i ], [ %.147.i.i, %bb.fg ] ; 2 uses
-  %.14565.i.i375 = phi i64 [ %i.yp, %.lr.ph68.i.i ], [ %.044.i.i, %bb.fg ] ; 3 uses
-  %.366.i.i374 = phi i64 [ %.5.i.i, %.lr.ph68.i.i ], [ %.2.i.i, %bb.fg ] ; 3 uses
-  %i.yp = add nuw i64 %.14565.i.i375, 1           ; 4 uses
-  %.not79.i.i = icmp ult i64 %.14565.i.i375, %.366.i.i374
+st_add.exit.i.i:                                  ; preds = %bb.fg, %bb.fi
+  %.366.i.i = phi i64 [ %.5.i.i, %bb.fi ], [ %.2.i.i, %bb.fg ] ; 3 uses
+  %.14565.i.i = phi i64 [ %i.yp, %bb.fi ], [ %.044.i.i, %bb.fg ] ; 3 uses
+  %.24864.i.i = phi ptr [ %.349.i.i, %bb.fi ], [ %.147.i.i, %bb.fg ] ; 2 uses
+  %.05063.i.i = phi ptr [ %i.zd, %bb.fi ], [ %i.xn, %bb.fg ] ; 3 uses
+  %i.yp = add nuw i64 %.14565.i.i, 1              ; 3 uses
+  %.not79.i.i = icmp ult i64 %.14565.i.i, %.366.i.i
   br i1 %.not79.i.i, label %bb.fi, label %st_add.exit55.i.i
 
 st_add.exit55.i.i:                                ; preds = %st_add.exit.i.i
-  %i.yq = mul i64 %.366.i.i374, 3
+  %i.yq = mul i64 %.366.i.i, 3
   %i.yr = add i64 %i.yq, 48
   %i.ys = lshr i64 %i.yr, 1
   %spec.select.i.i = call i64 @llvm.umax.i64(i64 %i.ys, i64 %i.yp) ; 4 uses
@@ -525,26 +516,26 @@ bb.fh:                                            ; preds = %st_add.exit55.i.i
 
 st_mult.exit.i51.i:                               ; preds = %st_add.exit55.i.i
   %i.yu = shl nuw i64 %spec.select.i.i, 6
-  %i.yv = call ptr @xrealloc(ptr noundef %.24864.i.i376, i64 noundef %i.yu) #13
+  %i.yv = call ptr @xrealloc(ptr noundef %.24864.i.i, i64 noundef %i.yu) #13
   br label %bb.fi
 
 bb.fi:                                            ; preds = %st_mult.exit.i51.i, %st_add.exit.i.i
-  %.349.i.i = phi ptr [ %i.yv, %st_mult.exit.i51.i ], [ %.24864.i.i376, %st_add.exit.i.i ] ; 3 uses
-  %.5.i.i = phi i64 [ %spec.select.i.i, %st_mult.exit.i51.i ], [ %.366.i.i374, %st_add.exit.i.i ]
-  %i.yw = getelementptr inbounds nuw [64 x i8], ptr %.349.i.i, i64 %.14565.i.i375 ; 4 uses
+  %.349.i.i = phi ptr [ %i.yv, %st_mult.exit.i51.i ], [ %.24864.i.i, %st_add.exit.i.i ] ; 3 uses
+  %.5.i.i = phi i64 [ %spec.select.i.i, %st_mult.exit.i51.i ], [ %.366.i.i, %st_add.exit.i.i ]
+  %i.yw = getelementptr inbounds nuw [64 x i8], ptr %.349.i.i, i64 %.14565.i.i ; 4 uses
   %i.yx = getelementptr inbounds nuw i8, ptr %i.yw, i64 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.yx, i8 0, i64 56, i1 false)
   %i.yy = getelementptr inbounds nuw i8, ptr %i.yw, i64 56
   store i32 1, ptr %i.yy, align 8, !tbaa !113
-  store ptr %.05063.i.i377, ptr %i.yw, align 8, !tbaa !25
-  %i.yz = getelementptr inbounds nuw i8, ptr %.05063.i.i377, i64 60
+  store ptr %.05063.i.i, ptr %i.yw, align 8, !tbaa !25
+  %i.yz = getelementptr inbounds nuw i8, ptr %.05063.i.i, i64 60
   %i.za = load i32, ptr %i.yz, align 4, !tbaa !123
   %i.zb = getelementptr inbounds nuw i8, ptr %i.yw, i64 40
   store i32 %i.za, ptr %i.zb, align 8, !tbaa !115
-  %i.zc = getelementptr inbounds nuw i8, ptr %.05063.i.i377, i64 160
+  %i.zc = getelementptr inbounds nuw i8, ptr %.05063.i.i, i64 160
   %i.zd = load ptr, ptr %i.zc, align 8, !tbaa !122 ; 2 uses
   %.not54.i.i = icmp eq ptr %i.zd, null
-  br i1 %.not54.i.i, label %.lr.ph.i9, label %.lr.ph68.i.i, !llvm.loop !129
+  br i1 %.not54.i.i, label %.lr.ph.i9, label %st_add.exit.i.i, !llvm.loop !129
 
 repack_make_midx_append_plan.exit.i:              ; preds = %bb.fg, %repack_make_midx_compaction_plan.exit.i
   %.065.i = phi ptr [ %.4178.i.i, %repack_make_midx_compaction_plan.exit.i ], [ %.147.i.i, %bb.fg ] ; 2 uses

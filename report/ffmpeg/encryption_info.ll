@@ -202,7 +202,7 @@ bb.e:                                             ; preds = %bb.e, %.lr.ph.new
   store i32 %i.be, ptr %i.bf, align 4, !tbaa !26
   %i.bg = getelementptr inbounds nuw i8, ptr %.04246, i64 16 ; 2 uses
   %i.bh = add nuw nsw i64 %.047, 2                ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %bb.e, !llvm.loop !27
 
@@ -343,7 +343,7 @@ bb.f:                                             ; preds = %bb.f, %.lr.ph.new
   store i32 %i.bl, ptr %i.bm, align 1, !tbaa !21
   %i.bn = getelementptr inbounds nuw i8, ptr %.04653, i64 16 ; 2 uses
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %bb.f, !llvm.loop !31
 
@@ -611,7 +611,7 @@ bb.h:                                             ; preds = %bb.h, %.lr.ph.new
   %i.au = getelementptr inbounds nuw i8, ptr %i.ap, i64 %i.s ; 3 uses
   %i.av = sub i64 %.16577, %i.al                  ; 3 uses
   %i.aw = add nuw nsw i64 %.078, 2                ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %bb.h, !llvm.loop !47
 
@@ -662,7 +662,7 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a, %bb.d
   %.077 = phi i64 [ %.1, %bb.d ], [ 4, %bb.a ]
-  %.05576 = phi i32 [ %i.k, %bb.d ], [ 0, %bb.a ] ; 2 uses
+  %.05576 = phi i32 [ %i.k, %bb.d ], [ 0, %bb.a ]
   %.05975 = phi ptr [ %i.v, %bb.d ], [ %0, %bb.a ] ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %.05975, i64 8
   %i.b = load i32, ptr %i.a, align 8, !tbaa !37
@@ -673,10 +673,8 @@ bb.a:
   %i.g = add nuw nsw i64 %.077, 16
   %i.h = add nuw nsw i64 %i.g, %i.c
   %i.i = add nuw nsw i64 %i.h, %i.f               ; 3 uses
-  %2 = icmp eq i32 %.05576, -1
   %i.j = icmp ugt i64 %i.i, 4294967295
-  %or.cond = select i1 %2, i1 true, i1 %i.j
-  br i1 %or.cond, label %.loopexit, label %bb.b
+  br i1 %i.j, label %.loopexit, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph
   %i.k = add nuw i32 %.05576, 1                   ; 2 uses

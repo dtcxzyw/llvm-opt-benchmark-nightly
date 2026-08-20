@@ -201,14 +201,16 @@ bb.d:                                             ; preds = %bb.c
   %i.y = sub i32 %i.x, %i.w
   store i32 %i.y, ptr %i.a, align 8
   %.not.i = icmp eq i32 %i.x, %i.w
-  br i1 %.not.i, label %lm4549_audio_transfer.exit, label %.lr.ph.i
+  br i1 %.not.i, label %lm4549_audio_transfer.exit, label %.lr.ph.preheader.i
 
-.lr.ph.i:                                         ; preds = %bb.d, %.lr.ph.i
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %.lr.ph.i ], [ 0, %bb.d ] ; 3 uses
-  %2 = trunc nuw i64 %indvars.iv.i to i32
-  %3 = add i32 %i.w, %2
-  %4 = zext i32 %3 to i64
-  %i.z = getelementptr inbounds nuw [2 x i8], ptr %i.q, i64 %4
+.lr.ph.preheader.i:                               ; preds = %bb.d
+  %2 = zext nneg i32 %i.w to i64
+  %invariant.gep.i = getelementptr inbounds nuw [2 x i8], ptr %i.q, i64 %2
+  br label %.lr.ph.i
+
+.lr.ph.i:                                         ; preds = %.lr.ph.i, %.lr.ph.preheader.i
+  %indvars.iv.i = phi i64 [ 0, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %.lr.ph.i ] ; 3 uses
+  %i.z = getelementptr inbounds nuw [2 x i8], ptr %invariant.gep.i, i64 %indvars.iv.i
   %i.aa = load i16, ptr %i.z, align 2
   %i.ab = getelementptr inbounds nuw [2 x i8], ptr %i.q, i64 %indvars.iv.i
   store i16 %i.aa, ptr %i.ab, align 2
@@ -282,14 +284,16 @@ bb.c:                                             ; preds = %bb.b
   %i.ae = sub i32 %i.ad, %i.ac
   store i32 %i.ae, ptr %i.a, align 8
   %.not.i = icmp eq i32 %i.ad, %i.ac
-  br i1 %.not.i, label %lm4549_audio_transfer.exit, label %.lr.ph.i
+  br i1 %.not.i, label %lm4549_audio_transfer.exit, label %.lr.ph.preheader.i
 
-.lr.ph.i:                                         ; preds = %bb.c, %.lr.ph.i
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %.lr.ph.i ], [ 0, %bb.c ] ; 3 uses
-  %3 = trunc nuw i64 %indvars.iv.i to i32
-  %4 = add i32 %i.ac, %3
-  %5 = zext i32 %4 to i64
-  %i.af = getelementptr inbounds nuw [2 x i8], ptr %i.f, i64 %5
+.lr.ph.preheader.i:                               ; preds = %bb.c
+  %3 = zext nneg i32 %i.ac to i64
+  %invariant.gep.i = getelementptr inbounds nuw [2 x i8], ptr %i.f, i64 %3
+  br label %.lr.ph.i
+
+.lr.ph.i:                                         ; preds = %.lr.ph.i, %.lr.ph.preheader.i
+  %indvars.iv.i = phi i64 [ 0, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %.lr.ph.i ] ; 3 uses
+  %i.af = getelementptr inbounds nuw [2 x i8], ptr %invariant.gep.i, i64 %indvars.iv.i
   %i.ag = load i16, ptr %i.af, align 2
   %i.ah = getelementptr inbounds nuw [2 x i8], ptr %i.f, i64 %indvars.iv.i
   store i16 %i.ag, ptr %i.ah, align 2

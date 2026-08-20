@@ -203,13 +203,13 @@ bb.ak:                                            ; preds = %bb.aj, %.thread311.
   %i.ady = load i64, ptr %i.wz, align 8, !tbaa !98 ; 4 uses
   %i.adz = mul nsw i64 %i.ady, %i.adx
   %i.aea = getelementptr inbounds i8, ptr %i.adw, i64 %i.adz ; 15 uses
-  %2 = trunc nuw nsw i64 %indvars.iv388 to i32
-  %3 = lshr exact i32 %2, 1                       ; 5 uses
+  %2 = lshr exact i64 %indvars.iv388, 1           ; 3 uses
   %.not208 = icmp eq i64 %indvars.iv388, 0        ; 3 uses
   %i.aeb = load ptr, ptr %i.wx, align 8, !tbaa !91
   %i.aec = getelementptr inbounds i8, ptr %i.aeb, i64 %indvars.iv396
   %i.aed = load i8, ptr %i.aec, align 1, !tbaa !60
   %i.aee = zext i8 %i.aed to i32                  ; 4 uses
+  %3 = trunc nuw i64 %2 to i32                    ; 2 uses
   %i.aef = shl nuw nsw i32 1, %3
   %i.aeg = and i32 %i.aef, %i.aee
   %.not207 = icmp eq i32 %i.aeg, 0
@@ -377,7 +377,8 @@ bb.an:                                            ; preds = %select.unfold308
 .thread311:                                       ; preds = %bb.an, %select.unfold308
   %.pre-phi = phi i32 [ %i.aee, %select.unfold308 ], [ %.pre403, %bb.an ]
   %i.ain = getelementptr inbounds nuw i8, ptr %i.aea, i64 4 ; 3 uses
-  %i.aio = shl nuw nsw i32 2, %3
+  %4 = trunc i64 %2 to i32                        ; 2 uses
+  %i.aio = shl nuw nsw i32 2, %4
   %i.aip = and i32 %i.aio, %.pre-phi
   %.not207.1 = icmp eq i32 %i.aip, 0
   br i1 %.not207.1, label %bb.ao, label %select.unfold308.1
@@ -390,7 +391,8 @@ bb.an:                                            ; preds = %select.unfold308
 
 .thread311.thread:                                ; preds = %.critedge240
   %i.ais = getelementptr inbounds nuw i8, ptr %i.aea, i64 4 ; 2 uses
-  %i.ait = shl nuw nsw i32 2, %3
+  %5 = trunc i64 %2 to i32                        ; 2 uses
+  %i.ait = shl nuw nsw i32 2, %5
   %i.aiu = and i32 %i.ait, %i.aee
   %.not207.1413 = icmp eq i32 %i.aiu, 0
   br i1 %.not207.1413, label %.critedge240.1, label %select.unfold308.1
@@ -400,7 +402,8 @@ bb.ao:                                            ; preds = %.thread311
 
 .critedge240.1:                                   ; preds = %.thread311.thread, %bb.ao
   %i.aiv = phi ptr [ %i.ain, %bb.ao ], [ %i.ais, %.thread311.thread ]
-  %i.aiw = add nsw i32 %3, -1
+  %6 = phi i32 [ %4, %bb.ao ], [ %5, %.thread311.thread ]
+  %i.aiw = add nsw i32 %6, -1
   %i.aix = shl nuw nsw i32 1, %i.aiw
   %i.aiy = and i32 %i.adj, %i.aix
   %.not210.1 = icmp eq i32 %i.aiy, 0

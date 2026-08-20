@@ -204,7 +204,7 @@ bb.i:                                             ; preds = %bb.g
   tail call void @llvm.x86.sse2.pause() #34
   tail call void @llvm.x86.sse2.pause() #34
   tail call void @llvm.x86.sse2.pause() #34
-  %niter.next.7 = add i32 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i32 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i32 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN3std4sync4mpmc5utils7Backoff10spin_heavy17h4febe83a2b9b9332E.exit.i.loopexit.unr-lcssa, label %.lr.ph.i.i
 
@@ -350,7 +350,7 @@ bb.g:                                             ; preds = %bb.e
   call void @llvm.x86.sse2.pause() #34, !noalias !1639
   call void @llvm.x86.sse2.pause() #34, !noalias !1639
   call void @llvm.x86.sse2.pause() #34, !noalias !1639
-  %niter.next.7 = add i32 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i32 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i32 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN3std4sync4mpmc5utils7Backoff10spin_heavy17h4febe83a2b9b9332E.exit.i.loopexit.unr-lcssa, label %.lr.ph.i.i
 
@@ -428,7 +428,7 @@ bb.i:                                             ; preds = %bb.h
   call void @llvm.x86.sse2.pause() #34, !noalias !1639
   call void @llvm.x86.sse2.pause() #34, !noalias !1639
   call void @llvm.x86.sse2.pause() #34, !noalias !1639
-  %niter75.next.7 = add i32 %niter75, 8           ; 2 uses
+  %niter75.next.7 = add nuw i32 %niter75, 8       ; 2 uses
   %niter75.ncmp.7 = icmp eq i32 %niter75.next.7, %unroll_iter74
   br i1 %niter75.ncmp.7, label %._crit_edge.loopexit.i.i.unr-lcssa, label %.lr.ph.i12.i
 
@@ -497,7 +497,7 @@ _ZN3std4sync4mpmc5utils7Backoff10spin_light17h9d96ea26e4e11cecE.exit22.i.backedg
   call void @llvm.x86.sse2.pause() #34, !noalias !1639
   call void @llvm.x86.sse2.pause() #34, !noalias !1639
   call void @llvm.x86.sse2.pause() #34, !noalias !1639
-  %niter81.next.7 = add i32 %niter81, 8           ; 2 uses
+  %niter81.next.7 = add nuw i32 %niter81, 8       ; 2 uses
   %niter81.ncmp.7 = icmp eq i32 %niter81.next.7, %unroll_iter80
   br i1 %niter81.ncmp.7, label %._crit_edge.loopexit.i20.i.unr-lcssa, label %.lr.ph.i17.i
 
@@ -900,7 +900,7 @@ bb.g:                                             ; preds = %bb.e
   call void @llvm.x86.sse2.pause() #34, !noalias !1715
   call void @llvm.x86.sse2.pause() #34, !noalias !1715
   call void @llvm.x86.sse2.pause() #34, !noalias !1715
-  %niter.next.7 = add i32 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i32 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i32 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN3std4sync4mpmc5utils7Backoff10spin_heavy17h4febe83a2b9b9332E.exit.i.loopexit.unr-lcssa, label %.lr.ph.i.i
 
@@ -977,7 +977,7 @@ bb.i:                                             ; preds = %bb.h
   call void @llvm.x86.sse2.pause() #34, !noalias !1715
   call void @llvm.x86.sse2.pause() #34, !noalias !1715
   call void @llvm.x86.sse2.pause() #34, !noalias !1715
-  %niter110.next.7 = add i32 %niter110, 8         ; 2 uses
+  %niter110.next.7 = add nuw i32 %niter110, 8     ; 2 uses
   %niter110.ncmp.7 = icmp eq i32 %niter110.next.7, %unroll_iter109
   br i1 %niter110.ncmp.7, label %._crit_edge.loopexit.i.i.unr-lcssa, label %.lr.ph.i12.i
 
@@ -1049,7 +1049,7 @@ bb.m:                                             ; preds = %bb.l
   call void @llvm.x86.sse2.pause() #34, !noalias !1715
   call void @llvm.x86.sse2.pause() #34, !noalias !1715
   call void @llvm.x86.sse2.pause() #34, !noalias !1715
-  %niter116.next.7 = add i32 %niter116, 8         ; 2 uses
+  %niter116.next.7 = add nuw i32 %niter116, 8     ; 2 uses
   %niter116.ncmp.7 = icmp eq i32 %niter116.next.7, %unroll_iter115
   br i1 %niter116.ncmp.7, label %._crit_edge.loopexit.i20.i.unr-lcssa, label %.lr.ph.i17.i
 
@@ -1452,7 +1452,7 @@ bb.p:                                             ; preds = %bb.m
   br i1 %i.br, label %bb.q, label %bb.r
 
 .preheader.i:                                     ; preds = %.lr.ph444
-  %i.bs = add i16 %.sroa.055.0.i442, 1            ; 2 uses
+  %i.bs = add nuw i16 %.sroa.055.0.i442, 1        ; 2 uses
   %exitcond127.not.i = icmp eq i16 %i.bs, %umax126.i
   br i1 %exitcond127.not.i, label %.outer.i, label %.lr.ph444
 
@@ -1496,13 +1496,12 @@ bb.v:                                             ; preds = %bb.n
 
 bb.w:                                             ; preds = %bb.v, %bb.u
   %.sroa.030.0.i = phi i16 [ %i.ba, %bb.u ], [ 1, %bb.v ] ; 2 uses
-  %umax.i = call i16 @llvm.umax.i16(i16 %.sroa.030.0.i, i16 1)
   %exitcond.not.i437 = icmp ult i16 %.sroa.030.0.i, 2
   br i1 %exitcond.not.i437, label %._crit_edge, label %.lr.ph440
 
 bb.x:                                             ; preds = %.lr.ph440
-  %i.cc = add i16 %.sroa.057.0.i438, 1            ; 2 uses
-  %exitcond.not.i = icmp eq i16 %i.cc, %umax.i
+  %i.cc = add nuw i16 %.sroa.057.0.i438, 1        ; 2 uses
+  %exitcond.not.i = icmp eq i16 %.sroa.030.0.i, %i.cc
   br i1 %exitcond.not.i, label %._crit_edge, label %.lr.ph440
 
 .lr.ph440:                                        ; preds = %bb.w, %bb.x
@@ -1905,7 +1904,7 @@ bb.bf:                                            ; preds = %.preheader.i
   store i8 24, ptr %i.ga, align 8
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ga, i64 1
   store i8 0, ptr %.sroa.4.0..sroa_idx.i, align 1
-  %i.gb = add i64 %i.fr, 1
+  %i.gb = add nuw i64 %i.fr, 1
   %exitcond.not.i = icmp eq i64 %i.fr, %.sroa.07.0.i
   br i1 %exitcond.not.i, label %.loopexit.i, label %.preheader.i
 

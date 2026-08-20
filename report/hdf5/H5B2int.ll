@@ -203,7 +203,7 @@ bb.w:                                             ; preds = %bb.w, %.new
   %i.fu = load i64, ptr %i.ft, align 8, !tbaa !45
   %i.fv = add i64 %i.fu, %i.fr                    ; 3 uses
   %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.unr-lcssa, label %bb.w, !llvm.loop !50
 
@@ -267,7 +267,7 @@ bb.y:                                             ; preds = %bb.y, %.new318
   %i.gt = load i64, ptr %i.gs, align 8, !tbaa !45
   %i.gu = add i64 %i.gt, %i.gq                    ; 3 uses
   %indvars.iv.next301.3 = add nuw nsw i64 %indvars.iv300, 4 ; 2 uses
-  %niter328.next.3 = add i64 %niter328, 4         ; 2 uses
+  %niter328.next.3 = add nuw i64 %niter328, 4     ; 2 uses
   %niter328.ncmp.3 = icmp eq i64 %niter328.next.3, %unroll_iter327
   br i1 %niter328.ncmp.3, label %.unr-lcssa319, label %bb.y, !llvm.loop !53
 
@@ -670,7 +670,7 @@ bb.p:                                             ; preds = %bb.o, %bb.n
   %i.es = load i64, ptr %i.er, align 8, !tbaa !45
   %i.et = add i64 %i.es, %i.ep                    ; 3 uses
   %indvars.iv.next414.3 = add nuw nsw i64 %indvars.iv413, 4 ; 2 uses
-  %niter437.next.3 = add i64 %niter437, 4         ; 2 uses
+  %niter437.next.3 = add nuw i64 %niter437, 4     ; 2 uses
   %niter437.ncmp.3 = icmp eq i64 %niter437.next.3, %unroll_iter436
   br i1 %niter437.ncmp.3, label %._crit_edge408.loopexit.unr-lcssa, label %.lr.ph407, !llvm.loop !77
 
@@ -729,9 +729,9 @@ bb.q:                                             ; preds = %._crit_edge408
   br i1 %or.cond.i, label %.lr.ph.i, label %.thread355, !prof !55
 
 .lr.ph.i:                                         ; preds = %bb.q
-  %4 = add nuw nsw i32 %i.co, 1
   %i.fr = load i16, ptr %.2277, align 2, !tbaa !49
   %i.fs = zext i16 %i.fr to i32                   ; 2 uses
+  %4 = add nuw nsw i32 %i.co, 1
   %i.ft = add nuw nsw i32 %4, %i.fs
   %i.fu = add nuw nsw i32 %i.fs, 1
   %i.fv = add nsw i32 %i.g, -1
@@ -769,8 +769,8 @@ bb.t:                                             ; preds = %bb.s
   br label %bb.af
 
 bb.u:                                             ; preds = %bb.m
-  %i.gj = sub i16 %i.bp, %i.bw                    ; 6 uses
-  %i.gk = zext i16 %i.gj to i64                   ; 7 uses
+  %i.gj = sub i16 %i.bp, %i.bw                    ; 5 uses
+  %i.gk = zext i16 %i.gj to i64                   ; 8 uses
   %i.gl = getelementptr inbounds nuw [8 x i8], ptr %i.by, i64 %i.gk
   %i.gm = load i64, ptr %i.gl, align 8, !tbaa !19
   %i.gn = getelementptr inbounds nuw i8, ptr %.2268, i64 %i.gm
@@ -886,7 +886,7 @@ bb.x:                                             ; preds = %bb.w
   %i.jp = load i64, ptr %i.jo, align 8, !tbaa !45
   %i.jq = add i64 %i.jp, %i.jm                    ; 3 uses
   %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !79
 
@@ -935,12 +935,11 @@ bb.y:                                             ; preds = %._crit_edge
 
 .lr.ph.i316:                                      ; preds = %bb.y
   %i.kg = add nsw i32 %i.g, -1
-  %zext = zext i16 %i.gj to i64
   br label %bb.aa
 
 bb.z:                                             ; preds = %bb.aa
   %indvars.iv.next.i318 = add nuw nsw i64 %indvars.iv.i317, 1 ; 2 uses
-  %i.kh = icmp eq i64 %indvars.iv.next.i318, %zext
+  %i.kh = icmp eq i64 %indvars.iv.next.i318, %i.gk
   br i1 %i.kh, label %.thread370, label %bb.aa, !llvm.loop !56
 
 bb.aa:                                            ; preds = %bb.z, %.lr.ph.i316
@@ -1343,7 +1342,7 @@ bb.u:                                             ; preds = %bb.t
   %i.gu = load i64, ptr %i.gt, align 8, !tbaa !45
   %i.gv = add i64 %i.gu, %i.gr                    ; 3 uses
   %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !81
 
@@ -1400,9 +1399,9 @@ bb.v:                                             ; preds = %._crit_edge
   br i1 %or.cond.i, label %.lr.ph.i, label %.thread653, !prof !55
 
 .lr.ph.i:                                         ; preds = %bb.v
-  %5 = add nuw nsw i32 %i.ft, 1
   %i.hs = load i16, ptr %.2526, align 2, !tbaa !49
   %i.ht = zext i16 %i.hs to i32                   ; 2 uses
+  %5 = add nuw nsw i32 %i.ft, 1
   %i.hu = add nuw nsw i32 %5, %i.ht
   %i.hv = add nuw nsw i32 %i.ht, 1
   %i.hw = add nsw i32 %i.g, -1
@@ -1451,10 +1450,10 @@ bb.z:                                             ; preds = %.thread653, %bb.q
   br i1 %i.il, label %bb.aa, label %bb.ai
 
 bb.aa:                                            ; preds = %bb.z
-  %i.im = sub nuw nsw i32 %i.ik, %.pre-phi        ; 7 uses
+  %i.im = sub nuw nsw i32 %i.ik, %.pre-phi        ; 6 uses
   %i.in = getelementptr inbounds nuw i8, ptr %0, i64 360 ; 4 uses
   %i.io = load ptr, ptr %i.in, align 8, !tbaa !36 ; 2 uses
-  %i.ip = zext nneg i32 %i.im to i64              ; 6 uses
+  %i.ip = zext nneg i32 %i.im to i64              ; 7 uses
   %i.iq = getelementptr inbounds nuw [8 x i8], ptr %i.io, i64 %i.ip
   %i.ir = load i64, ptr %i.iq, align 8, !tbaa !19
   %i.is = getelementptr inbounds nuw i8, ptr %.2514, i64 %i.ir
@@ -1571,7 +1570,7 @@ bb.ad:                                            ; preds = %bb.ac
   %i.lq = load i64, ptr %i.lp, align 8, !tbaa !45
   %i.lr = add i64 %i.lq, %i.ln                    ; 3 uses
   %indvars.iv.next804.3 = add nuw nsw i64 %indvars.iv803, 4 ; 2 uses
-  %niter861.next.3 = add i64 %niter861, 4         ; 2 uses
+  %niter861.next.3 = add nuw i64 %niter861, 4     ; 2 uses
   %niter861.ncmp.3 = icmp eq i64 %niter861.next.3, %unroll_iter860
   br i1 %niter861.ncmp.3, label %._crit_edge782.loopexit.unr-lcssa, label %.lr.ph781, !llvm.loop !83
 
@@ -1623,8 +1622,7 @@ bb.ae:                                            ; preds = %._crit_edge782
 
 bb.af:                                            ; preds = %bb.ag
   %indvars.iv.next.i591 = add nuw nsw i64 %indvars.iv.i590, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next.i591 to i32
-  %exitcond808 = icmp eq i32 %i.im, %lftr.wideiv
+  %exitcond808 = icmp eq i64 %indvars.iv.next.i591, %i.ip
   br i1 %exitcond808, label %.thread670, label %bb.ag, !llvm.loop !56
 
 bb.ag:                                            ; preds = %bb.af, %.lr.ph.i589
@@ -1661,10 +1659,10 @@ bb.ai:                                            ; preds = %.thread670, %bb.z
   br i1 %i.mu, label %bb.aj, label %bb.ar
 
 bb.aj:                                            ; preds = %bb.ai
-  %i.mv = sub nuw nsw i32 %i.mt, %i.df            ; 6 uses
+  %i.mv = sub nuw nsw i32 %i.mt, %i.df            ; 5 uses
   %i.mw = getelementptr inbounds nuw i8, ptr %0, i64 360 ; 4 uses
   %i.mx = load ptr, ptr %i.mw, align 8, !tbaa !36 ; 2 uses
-  %i.my = zext nneg i32 %i.mv to i64              ; 6 uses
+  %i.my = zext nneg i32 %i.mv to i64              ; 7 uses
   %i.mz = getelementptr inbounds nuw [8 x i8], ptr %i.mx, i64 %i.my
   %i.na = load i64, ptr %i.mz, align 8, !tbaa !19
   %i.nb = getelementptr inbounds nuw i8, ptr %.2511, i64 %i.na
@@ -1775,7 +1773,7 @@ bb.am:                                            ; preds = %bb.al
   %i.pt = load i64, ptr %i.ps, align 8, !tbaa !45
   %i.pu = add i64 %i.pt, %i.pq                    ; 3 uses
   %indvars.iv.next810.3 = add nuw nsw i64 %indvars.iv809, 4 ; 2 uses
-  %niter868.next.3 = add i64 %niter868, 4         ; 2 uses
+  %niter868.next.3 = add nuw i64 %niter868, 4     ; 2 uses
   %niter868.ncmp.3 = icmp eq i64 %niter868.next.3, %unroll_iter867
   br i1 %niter868.ncmp.3, label %._crit_edge788.loopexit.unr-lcssa, label %.lr.ph787, !llvm.loop !85
 
@@ -1828,8 +1826,7 @@ bb.an:                                            ; preds = %._crit_edge788
 
 bb.ao:                                            ; preds = %bb.ap
   %indvars.iv.next.i599 = add nuw nsw i64 %indvars.iv.i598, 1 ; 2 uses
-  %lftr.wideiv814 = trunc i64 %indvars.iv.next.i599 to i32
-  %exitcond815 = icmp eq i32 %i.mv, %lftr.wideiv814
+  %exitcond815 = icmp eq i64 %indvars.iv.next.i599, %i.my
   br i1 %exitcond815, label %.thread688, label %bb.ap, !llvm.loop !56
 
 bb.ap:                                            ; preds = %bb.ao, %.lr.ph.i597
@@ -1966,7 +1963,7 @@ bb.as:                                            ; preds = %bb.ar
   %i.tv = load i64, ptr %i.tu, align 8, !tbaa !45
   %i.tw = add i64 %i.tv, %i.ts                    ; 3 uses
   %indvars.iv.next817.3 = add nuw nsw i64 %indvars.iv816, 4 ; 2 uses
-  %niter875.next.3 = add i64 %niter875, 4         ; 2 uses
+  %niter875.next.3 = add nuw i64 %niter875, 4     ; 2 uses
   %niter875.ncmp.3 = icmp eq i64 %niter875.next.3, %unroll_iter874
   br i1 %niter875.ncmp.3, label %._crit_edge794.unr-lcssa, label %.lr.ph793, !llvm.loop !87
 
@@ -2010,7 +2007,6 @@ bb.as:                                            ; preds = %bb.ar
   br i1 %i.uj, label %bb.at, label %.thread706
 
 bb.at:                                            ; preds = %._crit_edge794
-  %6 = add nuw nsw i32 %i.rt, %i.ra
   %i.uk = load i8, ptr @H5B2_init_g, align 1, !tbaa !8, !range !10, !noundef !11
   %i.ul = trunc nuw i8 %i.uk to i1
   %i.um = load i8, ptr @H5_libterm_g, align 1, !range !10
@@ -2020,13 +2016,14 @@ bb.at:                                            ; preds = %._crit_edge794
   br i1 %i.up, label %.lr.ph.i605, label %.thread706, !prof !55
 
 .lr.ph.i605:                                      ; preds = %bb.at
+  %6 = add nuw nsw i32 %i.rt, %i.ra
   %i.uq = add nsw i32 %i.g, -1
+  %wide.trip.count.i606 = zext nneg i32 %6 to i64
   br label %bb.av
 
 bb.au:                                            ; preds = %bb.av
   %indvars.iv.next.i607 = add nuw nsw i64 %indvars.iv.i606, 1 ; 2 uses
-  %lftr.wideiv.i608 = trunc i64 %indvars.iv.next.i607 to i32
-  %exitcond.not.i609 = icmp eq i32 %6, %lftr.wideiv.i608
+  %exitcond.not.i609 = icmp eq i64 %indvars.iv.next.i607, %wide.trip.count.i606
   br i1 %exitcond.not.i609, label %.thread706, label %bb.av, !llvm.loop !56
 
 bb.av:                                            ; preds = %bb.au, %.lr.ph.i605
@@ -2429,7 +2426,7 @@ bb.r:                                             ; preds = %bb.q
   %i.fy = load i64, ptr %i.fx, align 8, !tbaa !45
   %i.fz = add i64 %i.fy, %i.fv                    ; 3 uses
   %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !89
 
@@ -2491,12 +2488,12 @@ bb.s:                                             ; preds = %._crit_edge
 .lr.ph.i:                                         ; preds = %bb.s
   %i.gz = add nsw i32 %i.g, -1
   %i.ha = zext nneg i32 %i.gp to i64
+  %wide.trip.count.i = zext i32 %i.gr to i64
   br label %bb.u
 
 bb.t:                                             ; preds = %bb.u
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
-  %lftr.wideiv.i = trunc i64 %indvars.iv.next.i to i32
-  %exitcond.not.i = icmp eq i32 %i.gr, %lftr.wideiv.i
+  %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
   br i1 %exitcond.not.i, label %H5B2__update_child_flush_depends.exit.thread, label %bb.u, !llvm.loop !56
 
 bb.u:                                             ; preds = %bb.t, %.lr.ph.i

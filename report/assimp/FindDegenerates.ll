@@ -203,7 +203,7 @@ bb.d:                                             ; preds = %.lr.ph183, %.thread
 
 bb.e:                                             ; preds = %.lr.ph180, %.thread146
   %i.ad = phi i32 [ %i.x, %.lr.ph180 ], [ %i.dt, %.thread146 ] ; 3 uses
-  %indvars.iv199 = phi i64 [ 0, %.lr.ph180 ], [ %indvars.iv.next200.pre-phi, %.thread146 ] ; 4 uses
+  %indvars.iv199 = phi i64 [ 0, %.lr.ph180 ], [ %indvars.iv.next200.pre-phi, %.thread146 ] ; 5 uses
   %i.ae = phi i32 [ %i.ab, %.lr.ph180 ], [ %i.du, %.thread146 ] ; 6 uses
   %.090176 = phi i1 [ true, %.lr.ph180 ], [ %.5, %.thread146 ] ; 3 uses
   %i.af = load ptr, ptr %i.ac, align 8            ; 4 uses
@@ -311,7 +311,7 @@ bb.n:                                             ; preds = %bb.m, %._crit_edge.
 
 .thread:                                          ; preds = %bb.n, %._crit_edge.i.i.i.i, %.loopexit
   %i.ax = icmp ugt i32 %i.ae, 4
-  %i.ay = trunc nuw i64 %indvars.iv199 to i32     ; 2 uses
+  %i.ay = trunc i64 %indvars.iv199 to i32
   %i.az = add i32 %i.ay, 2
   %.sroa.speculated = call i32 @llvm.umin.i32(i32 %i.az, i32 %i.ae)
   %.0138 = select i1 %i.ax, i32 %.sroa.speculated, i32 %i.ae ; 2 uses
@@ -321,13 +321,14 @@ bb.n:                                             ; preds = %bb.m, %._crit_edge.
   br i1 %.not113169, label %.lr.ph174, label %.thread142
 
 .lr.ph174:                                        ; preds = %.thread
+  %3 = trunc nuw i64 %indvars.iv199 to i32
   %i.bc = trunc nuw i64 %i.ba to i32
   br label %bb.o
 
 bb.o:                                             ; preds = %.lr.ph174, %_ZNK10aiVector3tIfEeqERKS0_.exit.thread
   %i.bd = phi i32 [ %i.ad, %.lr.ph174 ], [ %i.ct, %_ZNK10aiVector3tIfEeqERKS0_.exit.thread ] ; 5 uses
   %.085173 = phi i32 [ %i.bc, %.lr.ph174 ], [ %.085, %_ZNK10aiVector3tIfEeqERKS0_.exit.thread ] ; 5 uses
-  %.085.in172 = phi i32 [ %i.ay, %.lr.ph174 ], [ %.186, %_ZNK10aiVector3tIfEeqERKS0_.exit.thread ]
+  %.085.in172 = phi i32 [ %3, %.lr.ph174 ], [ %.186, %_ZNK10aiVector3tIfEeqERKS0_.exit.thread ]
   %.191171 = phi i1 [ %.090176, %.lr.ph174 ], [ %.3, %_ZNK10aiVector3tIfEeqERKS0_.exit.thread ] ; 4 uses
   %.1139170 = phi i32 [ %.0138, %.lr.ph174 ], [ %.2140, %_ZNK10aiVector3tIfEeqERKS0_.exit.thread ] ; 4 uses
   %i.be = load ptr, ptr %i.q, align 8             ; 2 uses

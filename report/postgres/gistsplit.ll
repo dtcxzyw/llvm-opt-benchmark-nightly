@@ -203,7 +203,7 @@ bb.aj:                                            ; preds = %.lr.ph161.1
 
 bb.ak:                                            ; preds = %bb.aj, %.lr.ph161.1
   %.1.1 = phi i32 [ %i.ey, %bb.aj ], [ %.1, %.lr.ph161.1 ] ; 3 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge162.loopexit.unr-lcssa, label %.lr.ph161, !llvm.loop !10
 
@@ -416,7 +416,7 @@ bb.a:
   %i.v = ashr exact i64 %sext.1, 29
   %i.w = getelementptr inbounds i8, ptr %i.i, i64 %i.v
   store ptr %i.u, ptr %i.w, align 8
-  %niter66.next.1 = add i64 %niter66, 2           ; 2 uses
+  %niter66.next.1 = add nuw i64 %niter66, 2       ; 2 uses
   %niter66.ncmp.1 = icmp eq i64 %niter66.next.1, %unroll_iter65
   br i1 %niter66.ncmp.1, label %gistunionsubkeyvec.exit.loopexit.unr-lcssa, label %.lr.ph.i.us, !llvm.loop !13
 
@@ -466,7 +466,7 @@ bb.a:
 bb.b:                                             ; preds = %._crit_edge23.i.1, %.lr.ph.i.1
   %.1.i.1 = phi i32 [ %.1.i, %.lr.ph.i.1 ], [ %i.an, %._crit_edge23.i.1 ] ; 3 uses
   %indvars.iv.next.i.1 = add nuw nsw i64 %indvars.iv.i, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %gistunionsubkeyvec.exit.loopexit59.unr-lcssa, label %.lr.ph.i, !llvm.loop !13
 
@@ -578,7 +578,7 @@ gistunionsubkeyvec.exit:                          ; preds = %gistunionsubkeyvec.
   %i.bw = ashr exact i64 %sext49.1, 29
   %i.bx = getelementptr inbounds i8, ptr %i.bj, i64 %i.bw
   store ptr %i.bv, ptr %i.bx, align 8
-  %niter77.next.1 = add i64 %niter77, 2           ; 2 uses
+  %niter77.next.1 = add nuw i64 %niter77, 2       ; 2 uses
   %niter77.ncmp.1 = icmp eq i64 %niter77.next.1, %unroll_iter76
   br i1 %niter77.ncmp.1, label %gistunionsubkeyvec.exit26.loopexit.unr-lcssa, label %.lr.ph.i14.us, !llvm.loop !13
 
@@ -628,7 +628,7 @@ gistunionsubkeyvec.exit:                          ; preds = %gistunionsubkeyvec.
 bb.c:                                             ; preds = %._crit_edge23.i22.1, %.lr.ph.i14.1
   %.1.i24.1 = phi i32 [ %.1.i24, %.lr.ph.i14.1 ], [ %i.co, %._crit_edge23.i22.1 ] ; 3 uses
   %indvars.iv.next.i25.1 = add nuw nsw i64 %indvars.iv.i15, 2 ; 2 uses
-  %niter72.next.1 = add i64 %niter72, 2           ; 2 uses
+  %niter72.next.1 = add nuw i64 %niter72, 2       ; 2 uses
   %niter72.ncmp.1 = icmp eq i64 %niter72.next.1, %unroll_iter71
   br i1 %niter72.ncmp.1, label %gistunionsubkeyvec.exit26.loopexit57.unr-lcssa, label %.lr.ph.i14, !llvm.loop !13
 
@@ -770,9 +770,9 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.ax = load i64, ptr %i.t, align 8
   store i64 %i.ax, ptr %i.v, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #7
-  %i.ay = load i32, ptr %1, align 8               ; 2 uses
+  %i.ay = load i32, ptr %1, align 8
   %i.az = add i32 %i.ay, 65535
-  %i.ba = and i32 %i.az, 65535                    ; 3 uses
+  %i.ba = and i32 %i.az, 65535                    ; 4 uses
   %i.bb = shl nuw nsw i32 %i.ba, 1
   %i.bc = add nuw nsw i32 %i.bb, 4                ; 2 uses
   store i32 %i.bc, ptr %i.c, align 4
@@ -790,13 +790,10 @@ bb.e:                                             ; preds = %bb.d, %bb.c
 
 .lr.ph.i:                                         ; preds = %bb.e
   %i.bi = lshr i32 %i.ba, 1
-  %13 = trunc i32 %i.ay to i16
-  %umax = tail call i16 @llvm.umax.i16(i16 %13, i16 2)
-  %wide.trip.count = zext i16 %umax to i32
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.i, %.lr.ph.i
-  %indvars.iv = phi i32 [ %indvars.iv.next, %bb.i ], [ 1, %.lr.ph.i ] ; 3 uses
+  %indvars.iv = phi i32 [ 1, %.lr.ph.i ], [ %indvars.iv.next, %bb.i ] ; 4 uses
   %.not44.i = icmp samesign ult i32 %i.bi, %indvars.iv
   %i.bj = trunc nuw i32 %indvars.iv to i16        ; 2 uses
   br i1 %.not44.i, label %bb.h, label %bb.g
@@ -824,8 +821,8 @@ bb.h:                                             ; preds = %bb.f
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g
-  %indvars.iv.next = add nuw nsw i32 %indvars.iv, 1 ; 2 uses
-  %exitcond = icmp eq i32 %indvars.iv.next, %wide.trip.count
+  %indvars.iv.next = add nuw nsw i32 %indvars.iv, 1
+  %exitcond = icmp eq i32 %indvars.iv, %i.ba
   br i1 %exitcond, label %genericPickSplit.exit, label %bb.f, !llvm.loop !14
 
 genericPickSplit.exit:                            ; preds = %bb.i, %bb.e
@@ -1222,7 +1219,7 @@ bb.ak:                                            ; preds = %bb.aj, %bb.ai
   %.116.i.1 = phi i32 [ %.116.i, %bb.aj ], [ %i.ik, %bb.ai ] ; 3 uses
   %.1.i120.1 = phi ptr [ %i.il, %bb.aj ], [ %.1.i120, %bb.ai ] ; 2 uses
   %indvars.iv.next.i121.1 = add nuw nsw i64 %indvars.iv.i119, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %removeDontCares.exit.loopexit.unr-lcssa, label %.lr.ph.i118, !llvm.loop !17
 
@@ -1325,7 +1322,7 @@ bb.ar:                                            ; preds = %bb.aq, %bb.ap
   %.116.i130.1 = phi i32 [ %.116.i130, %bb.aq ], [ %i.jo, %bb.ap ] ; 3 uses
   %.1.i131.1 = phi ptr [ %i.jp, %bb.aq ], [ %.1.i131, %bb.ap ] ; 2 uses
   %indvars.iv.next.i132.1 = add nuw nsw i64 %indvars.iv.i127, 2 ; 2 uses
-  %niter8.next.1 = add i64 %niter8, 2             ; 2 uses
+  %niter8.next.1 = add nuw i64 %niter8, 2         ; 2 uses
   %niter8.ncmp.1 = icmp eq i64 %niter8.next.1, %unroll_iter7
   br i1 %niter8.ncmp.1, label %removeDontCares.exit134.loopexit.unr-lcssa, label %.lr.ph.i126, !llvm.loop !17
 
@@ -1541,9 +1538,6 @@ declare i32 @llvm.cttz.i32(i32, i1 immarg) #5
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #6
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i16 @llvm.umax.i16(i16, i16) #4
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

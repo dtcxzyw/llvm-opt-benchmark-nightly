@@ -24,7 +24,6 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.3 = private unnamed_addr constant [5 x i8] c"%s@0\00", align 1
 @reuse = internal unnamed_addr global i1 false, align 1
 @.str.4 = private unnamed_addr constant [6 x i8] c"%s@%u\00", align 1
-@.str.5 = private unnamed_addr constant [85 x i8] c"Whoa! What are you doing starting that many jobs concurrently? We are out of jobids!\00", align 1
 @.str.6 = private unnamed_addr constant [37 x i8] c"PRTE ERROR: %s in file %s at line %d\00", align 1
 @.str.7 = private unnamed_addr constant [22 x i8] c"base/plm_base_jobid.c\00", align 1
 
@@ -130,26 +129,18 @@ bb.b:                                             ; preds = %bb.a
   %.pre = load i32, ptr getelementptr inbounds nuw (i8, ptr @prte_plm_globals, i64 8), align 8, !tbaa !37
   br label %bb.d
 
-.preheader:                                       ; preds = %bb.b, %1
-  %.01320 = phi i32 [ %2, %1 ], [ 1, %bb.b ]      ; 4 uses
+.preheader:                                       ; preds = %bb.b, %.preheader
+  %.01320 = phi i32 [ %1, %.preheader ], [ 1, %bb.b ] ; 4 uses
   %i.f = load ptr, ptr @prte_plm_globals, align 8, !tbaa !11
   %i.g = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) %i.a, i64 noundef 254, ptr noundef nonnull @.str.4, ptr noundef %i.f, i32 noundef %.01320) #8 ; 0 uses
   %i.h = call ptr @prte_get_job_data_object(ptr noundef nonnull %i.a) #8
   %i.i = icmp eq ptr %i.h, null
-  br i1 %i.i, label %bb.c, label %1
+  %1 = add nuw i32 %.01320, 1
+  br i1 %i.i, label %bb.c, label %.preheader
 
 bb.c:                                             ; preds = %.preheader
   store i32 %.01320, ptr getelementptr inbounds nuw (i8, ptr @prte_plm_globals, i64 8), align 8, !tbaa !37
   br label %bb.d
-
-1:                                                ; preds = %.preheader
-  %2 = add nuw i32 %.01320, 1                     ; 2 uses
-  %.not16.not = icmp eq i32 %2, -1
-  br i1 %.not16.not, label %.critedge, label %.preheader, !llvm.loop !38
-
-.critedge:                                        ; preds = %1
-  call void (i32, ptr, ...) @pmix_output(i32 noundef 0, ptr noundef nonnull @.str.5) #8
-  br label %bb.h
 
 bb.d:                                             ; preds = %._crit_edge, %bb.c
   %i.j = phi i32 [ %.pre, %._crit_edge ], [ %.01320, %bb.c ]
@@ -183,8 +174,8 @@ bb.g:                                             ; preds = %bb.f
   store i32 1, ptr getelementptr inbounds nuw (i8, ptr @prte_plm_globals, i64 8), align 8, !tbaa !37
   br label %bb.h
 
-bb.h:                                             ; preds = %bb.f, %bb.g, %bb.e, %bb.d, %bb.a, %.critedge
-  %.014 = phi i32 [ -2, %.critedge ], [ 0, %bb.a ], [ %i.p, %bb.e ], [ %i.p, %bb.d ], [ 0, %bb.g ], [ 0, %bb.f ]
+bb.h:                                             ; preds = %bb.f, %bb.g, %bb.e, %bb.d, %bb.a
+  %.014 = phi i32 [ 0, %bb.f ], [ 0, %bb.a ], [ %i.p, %bb.e ], [ %i.p, %bb.d ], [ 0, %bb.g ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #8
   ret i32 %.014
@@ -255,6 +246,4 @@ attributes #8 = { nounwind }
 !35 = !{!"p1 _ZTS14prte_job_map_t", !10, i64 0}
 !36 = !{!"", !18, i64 0, !17, i64 120, !27, i64 392}
 !37 = !{!12, !5, i64 8}
-!38 = distinct !{!38, !39}
-!39 = !{!"llvm.loop.mustprogress"}
 end_hunk_0

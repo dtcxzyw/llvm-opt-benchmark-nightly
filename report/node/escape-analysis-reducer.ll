@@ -203,9 +203,7 @@ _ZN2v88internal8compiler4Node9GetUsePtrEi.exit.i: ; preds = %_ZN2v88internal8com
   %i.ar = phi ptr [ %i.ap, %_ZN2v88internal8compiler4Node11GetInputPtrEi.exit.thread.i ], [ %i.an, %_ZN2v88internal8compiler4Node11GetInputPtrEi.exit.i ] ; 2 uses
   %i.as = phi ptr [ %1, %_ZN2v88internal8compiler4Node11GetInputPtrEi.exit.thread.i ], [ %i.ai, %_ZN2v88internal8compiler4Node11GetInputPtrEi.exit.i ]
   %i.at = xor i64 %indvars.iv, -1
-  %sext = shl i64 %i.at, 32
-  %3 = ashr exact i64 %sext, 32
-  %i.au = getelementptr inbounds [24 x i8], ptr %i.as, i64 %3 ; 2 uses
+  %i.au = getelementptr inbounds [24 x i8], ptr %i.as, i64 %i.at ; 2 uses
   %.not14.i = icmp eq ptr %i.ar, null
   br i1 %.not14.i, label %bb.h, label %bb.g
 

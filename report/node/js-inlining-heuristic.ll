@@ -203,7 +203,7 @@ _ZNK2v88internal8compiler4Node7InputAtEi.exit.1:  ; preds = %bb.p, %_ZNK2v88inte
   %i.ch = getelementptr inbounds nuw [8 x i8], ptr %i.bd, i64 %indvars.iv.next
   store ptr %i.cg, ptr %i.ch, align 8
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !19
 
@@ -606,9 +606,7 @@ _ZN2v88internal8compiler4Node9GetUsePtrEi.exit.i: ; preds = %_ZN2v88internal8com
   %i.ax = phi ptr [ %i.av, %_ZN2v88internal8compiler4Node11GetInputPtrEi.exit.thread.i ], [ %i.at, %_ZN2v88internal8compiler4Node11GetInputPtrEi.exit.i ] ; 2 uses
   %i.ay = phi ptr [ %.1, %_ZN2v88internal8compiler4Node11GetInputPtrEi.exit.thread.i ], [ %i.ao, %_ZN2v88internal8compiler4Node11GetInputPtrEi.exit.i ]
   %i.az = xor i64 %indvars.iv, -1
-  %sext = shl i64 %i.az, 32
-  %5 = ashr exact i64 %sext, 32
-  %i.ba = getelementptr inbounds [24 x i8], ptr %i.ay, i64 %5 ; 2 uses
+  %i.ba = getelementptr inbounds [24 x i8], ptr %i.ay, i64 %i.az ; 2 uses
   %.not14.i = icmp eq ptr %i.ax, null
   br i1 %.not14.i, label %bb.m, label %bb.l
 

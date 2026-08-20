@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %.lr.ph
 .lr.ph:                                           ; preds = %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtCsileJQcQObtj_7hir_def10expr_store4path11GenericArgsECs8K4cjrcxBsw_6hir_ty.exit, %bb.d
   %.sroa.0.0.i.i1 = phi i64 [ %i.m, %bb.d ], [ 0, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtCsileJQcQObtj_7hir_def10expr_store4path11GenericArgsECs8K4cjrcxBsw_6hir_ty.exit ] ; 2 uses
   %i.l = getelementptr inbounds nuw [72 x i8], ptr %i.h, i64 %.sroa.0.0.i.i1
-  %i.m = add i64 %.sroa.0.0.i.i1, 1               ; 4 uses
+  %i.m = add nuw i64 %.sroa.0.0.i.i1, 1           ; 4 uses
   invoke fastcc void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtCsileJQcQObtj_7hir_def10expr_store4path21AssociatedTypeBindingECs8K4cjrcxBsw_6hir_ty(ptr noalias nofree noundef align 8 dereferenceable(72) %i.l)
           to label %bb.d unwind label %bb.f, !noalias !296, !inline_history !299
 
@@ -608,7 +608,7 @@ bb.b:                                             ; preds = %.lr.ph
 .lr.ph:                                           ; preds = %bb.a, %bb.b
   %.sroa.0.0.i5 = phi i64 [ %i.f, %bb.b ], [ 0, %bb.a ] ; 2 uses
   %i.e = getelementptr inbounds nuw [72 x i8], ptr %i.a, i64 %.sroa.0.0.i5
-  %i.f = add i64 %.sroa.0.0.i5, 1                 ; 4 uses
+  %i.f = add nuw i64 %.sroa.0.0.i5, 1             ; 4 uses
   invoke fastcc void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtCsileJQcQObtj_7hir_def10expr_store4path21AssociatedTypeBindingECs8K4cjrcxBsw_6hir_ty(ptr noalias nofree noundef align 8 dereferenceable(72) %i.e)
           to label %bb.b unwind label %bb.d, !inline_history !320
 
@@ -1011,7 +1011,7 @@ _RNvMNtCshzWfHUSfYae_4core5sliceSTooE12split_at_mutCs8K4cjrcxBsw_6hir_ty.exit11.
   %i.bm = getelementptr inbounds nuw i8, ptr %i.bi, i64 16
   store i128 %i.bl, ptr %i.bm, align 16, !alias.scope !969, !noalias !970
   %i.bn = add nuw nsw i64 %.sroa.0.016.i.i.i, 2   ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_RNvMNtCshzWfHUSfYae_4core5sliceSTooE7reverseCs8K4cjrcxBsw_6hir_ty.exit.i.loopexit.unr-lcssa, label %_RNvMNtCshzWfHUSfYae_4core5sliceSTooE12split_at_mutCs8K4cjrcxBsw_6hir_ty.exit11.i.i.i
 
@@ -1311,7 +1311,7 @@ _RNvMNtCshzWfHUSfYae_4core5sliceSn12split_at_mutCs8K4cjrcxBsw_6hir_ty.exit11.i.i
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.ar, ptr noundef nonnull align 16 dereferenceable(16) %i.as, i64 16, i1 false), !alias.scope !991, !noalias !992
   store i128 %i.at, ptr %i.as, align 16, !alias.scope !993, !noalias !994
   %i.au = add nuw nsw i64 %.sroa.0.016.i.i.i, 2   ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_RNvMNtCshzWfHUSfYae_4core5sliceSn7reverseCs8K4cjrcxBsw_6hir_ty.exit.i.loopexit.unr-lcssa, label %_RNvMNtCshzWfHUSfYae_4core5sliceSn12split_at_mutCs8K4cjrcxBsw_6hir_ty.exit11.i.i.i
 
@@ -1714,7 +1714,7 @@ bb.g:                                             ; preds = %bb.f
   call void @llvm.lifetime.end.p0(ptr nonnull %i.x)
   br label %.loopexit236
 
-.loopexit236:                                     ; preds = %.preheader, %.preheader.preheader550, %bb.o, %bb.q, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs39E2wp1vf7X_6intern6symbol6SymbolECs8K4cjrcxBsw_6hir_ty.exit197, %bb.g, %.thread215, %.thread215
+.loopexit236:                                     ; preds = %.lr.ph605, %.preheader.preheader550, %bb.o, %bb.q, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs39E2wp1vf7X_6intern6symbol6SymbolECs8K4cjrcxBsw_6hir_ty.exit197, %bb.g, %.thread215, %.thread215
   call void @llvm.lifetime.start.p0(ptr nonnull %i.u)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.t)
   call void @_RNvMNtNtCsileJQcQObtj_7hir_def10expr_store4pathNtB2_4Path8segments(ptr noalias nofree noundef nonnull sret([32 x i8]) align 8 captures(none) dereferenceable(32) %i.t, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %0)
@@ -1979,7 +1979,7 @@ bb.n:                                             ; preds = %.thread215
 
 .preheader.preheader550:                          ; preds = %.preheader.preheader
   %exitcond.not603 = icmp eq i8 %i.dv, 1
-  br i1 %exitcond.not603, label %.loopexit236, label %.lr.ph605
+  br i1 %exitcond.not603, label %.loopexit236, label %bb.s
 
 bb.o:                                             ; preds = %.thread215
   %i.dy = tail call noundef i8 @_RNvMs1_NtCs8K4cjrcxBsw_6hir_ty7displayNtB5_12HirFormatter9write_fmt(ptr noalias nofree noundef nonnull align 8 dereferenceable(192) %1, ptr noundef nonnull @1685, ptr noundef nonnull inttoptr (i64 11 to ptr)) ; 2 uses
@@ -2007,22 +2007,18 @@ bb.q:                                             ; preds = %bb.n
   %.not158 = icmp eq i8 %i.ek, -2
   br i1 %.not158, label %.loopexit236, label %.loopexit237
 
-.preheader:                                       ; preds = %bb.r
-  %exitcond.not = icmp eq i8 %i.el, %i.dv
-  br i1 %exitcond.not, label %.loopexit236, label %.lr.ph605, !llvm.loop !10396
+.lr.ph605:                                        ; preds = %bb.r
+  %i.el = add nuw i8 %.sroa.0120.0605, 1          ; 2 uses
+  %.not155 = icmp eq i8 %i.el, %i.dv
+  br i1 %.not155, label %.loopexit236, label %bb.s, !llvm.loop !10396
 
-.lr.ph605:                                        ; preds = %.preheader.preheader550, %.preheader
-  %.sroa.0120.0604 = phi i8 [ %i.el, %.preheader ], [ 1, %.preheader.preheader550 ] ; 2 uses
-  %i.el = add i8 %.sroa.0120.0604, 1              ; 2 uses
-  %.not155 = icmp eq i8 %.sroa.0120.0604, 0
-  br i1 %.not155, label %bb.r, label %bb.s
-
-bb.r:                                             ; preds = %bb.s, %.lr.ph605
+bb.r:                                             ; preds = %bb.s
   %i.em = tail call noundef i8 @_RNvMs1_NtCs8K4cjrcxBsw_6hir_ty7displayNtB5_12HirFormatter9write_fmt(ptr noalias nofree noundef nonnull align 8 dereferenceable(192) %1, ptr noundef nonnull @1684, ptr noundef nonnull inttoptr (i64 11 to ptr)) ; 2 uses
   %.not157 = icmp eq i8 %i.em, -2
-  br i1 %.not157, label %.preheader, label %.loopexit237, !llvm.loop !10396
+  br i1 %.not157, label %.lr.ph605, label %.loopexit237, !llvm.loop !10396
 
-bb.s:                                             ; preds = %.lr.ph605
+bb.s:                                             ; preds = %.preheader.preheader550, %.lr.ph605
+  %.sroa.0120.0605 = phi i8 [ %i.el, %.lr.ph605 ], [ 1, %.preheader.preheader550 ]
   %i.en = tail call noundef i8 @_RNvMs1_NtCs8K4cjrcxBsw_6hir_ty7displayNtB5_12HirFormatter9write_fmt(ptr noalias nofree noundef nonnull align 8 dereferenceable(192) %1, ptr noundef nonnull @1683, ptr noundef nonnull inttoptr (i64 5 to ptr)) ; 2 uses
   %.not156 = icmp eq i8 %i.en, -2
   br i1 %.not156, label %bb.r, label %.loopexit237
