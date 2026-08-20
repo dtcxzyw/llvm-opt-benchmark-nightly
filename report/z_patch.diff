@@ -1,0 +1,186 @@
+diff --git a/llvm/lib/Analysis/ScalarEvolution.cpp b/llvm/lib/Analysis/ScalarEvolution.cpp
+index 35d650377d719..e1fd4eaea29aa 100644
+--- a/llvm/lib/Analysis/ScalarEvolution.cpp
++++ b/llvm/lib/Analysis/ScalarEvolution.cpp
+@@ -1380,11 +1380,12 @@ static const SCEV *getPreStartForExtend(const SCEVAddRecExpr *AR, Type *Ty,
+   // `Step`:
+ 
+   // 1. NSW/NUW flags on the step increment.
++  // Any flags valid on AR are valid on PreAR.
+   auto PreStartFlags =
+-    ScalarEvolution::maskFlags(SA->getNoWrapFlags(), SCEV::FlagNUW);
++      ScalarEvolution::maskFlags(SA->getNoWrapFlags(), SCEV::FlagNUW);
+   const SCEV *PreStart = SE->getAddExpr(DiffOps, PreStartFlags);
+   const SCEVAddRecExpr *PreAR = dyn_cast<SCEVAddRecExpr>(
+-      SE->getAddRecExpr(PreStart, Step, L, SCEV::FlagAnyWrap));
++      SE->getAddRecExpr(PreStart, Step, L, AR->getNoWrapFlags()));
+ 
+   // "{S,+,X} is <nsw>/<nuw>" and "the backedge is taken at least once" implies
+   // "S+X does not sign/unsign-overflow".
+@@ -1401,15 +1402,8 @@ static const SCEV *getPreStartForExtend(const SCEVAddRecExpr *AR, Type *Ty,
+   const SCEV *OperandExtendedStart =
+       SE->getAddExpr((SE->*GetExtendExpr)(PreStart, WideTy, Depth),
+                      (SE->*GetExtendExpr)(Step, WideTy, Depth));
+-  if ((SE->*GetExtendExpr)(Start, WideTy, Depth) == OperandExtendedStart) {
+-    if (PreAR && any(AR->getNoWrapFlags(WrapType))) {
+-      // If we know `AR` == {`PreStart`+`Step`,+,`Step`} is `WrapType` (FlagNSW
+-      // or FlagNUW) and that `PreStart` + `Step` is `WrapType` too, then
+-      // `PreAR` == {`PreStart`,+,`Step`} is also `WrapType`.  Cache this fact.
+-      SE->setNoWrapFlags(const_cast<SCEVAddRecExpr *>(PreAR), WrapType);
+-    }
++  if ((SE->*GetExtendExpr)(Start, WideTy, Depth) == OperandExtendedStart)
+     return PreStart;
+-  }
+ 
+   // 3. Loop precondition.
+   ICmpInst::Predicate Pred;
+diff --git a/llvm/test/Transforms/IndVarSimplify/finite-exit-comparisons.ll b/llvm/test/Transforms/IndVarSimplify/finite-exit-comparisons.ll
+index e006d9f6696ca..b374ccd01be72 100644
+--- a/llvm/test/Transforms/IndVarSimplify/finite-exit-comparisons.ll
++++ b/llvm/test/Transforms/IndVarSimplify/finite-exit-comparisons.ll
+@@ -10,12 +10,15 @@ target datalayout = "e-p:64:64:64-i1:8:8-i8:8:8-i16:16:16-i32:32:32-i64:64:64-f3
+ define void @slt_constant_rhs(i16 %n.raw, i8 %start) mustprogress {
+ ; CHECK-LABEL: @slt_constant_rhs(
+ ; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[TMP1:%.*]] = zext i8 [[START:%.*]] to i16
+ ; CHECK-NEXT:    [[TMP0:%.*]] = trunc i16 254 to i8
+ ; CHECK-NEXT:    br label [[FOR_BODY:%.*]]
+ ; CHECK:       for.body:
+-; CHECK-NEXT:    [[IV:%.*]] = phi i8 [ [[IV_NEXT:%.*]], [[FOR_BODY]] ], [ [[START:%.*]], [[ENTRY:%.*]] ]
+-; CHECK-NEXT:    [[IV_NEXT]] = add i8 [[IV]], 1
++; CHECK-NEXT:    [[INDVARS_IV:%.*]] = phi i16 [ [[INDVARS_IV_NEXT:%.*]], [[FOR_BODY]] ], [ [[TMP1]], [[ENTRY:%.*]] ]
++; CHECK-NEXT:    [[IV:%.*]] = trunc nuw i16 [[INDVARS_IV]] to i8
++; CHECK-NEXT:    [[IV_NEXT:%.*]] = add i8 [[IV]], 1
+ ; CHECK-NEXT:    [[CMP:%.*]] = icmp ult i8 [[IV_NEXT]], [[TMP0]]
++; CHECK-NEXT:    [[INDVARS_IV_NEXT]] = add nuw nsw i16 [[INDVARS_IV]], 1
+ ; CHECK-NEXT:    br i1 [[CMP]], label [[FOR_BODY]], label [[FOR_END:%.*]]
+ ; CHECK:       for.end:
+ ; CHECK-NEXT:    ret void
+@@ -38,13 +41,16 @@ for.end:                                          ; preds = %for.body, %entry
+ define void @slt_constant_rhs_maythrow(i16 %n.raw, i8 %start) mustprogress {
+ ; CHECK-LABEL: @slt_constant_rhs_maythrow(
+ ; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[TMP1:%.*]] = zext i8 [[START:%.*]] to i16
+ ; CHECK-NEXT:    [[TMP0:%.*]] = trunc i16 254 to i8
+ ; CHECK-NEXT:    br label [[FOR_BODY:%.*]]
+ ; CHECK:       for.body:
+-; CHECK-NEXT:    [[IV:%.*]] = phi i8 [ [[IV_NEXT:%.*]], [[FOR_BODY]] ], [ [[START:%.*]], [[ENTRY:%.*]] ]
+-; CHECK-NEXT:    [[IV_NEXT]] = add i8 [[IV]], 1
++; CHECK-NEXT:    [[INDVARS_IV:%.*]] = phi i16 [ [[INDVARS_IV_NEXT:%.*]], [[FOR_BODY]] ], [ [[TMP1]], [[ENTRY:%.*]] ]
++; CHECK-NEXT:    [[IV:%.*]] = trunc nuw i16 [[INDVARS_IV]] to i8
++; CHECK-NEXT:    [[IV_NEXT:%.*]] = add i8 [[IV]], 1
+ ; CHECK-NEXT:    call void @unknown()
+ ; CHECK-NEXT:    [[CMP:%.*]] = icmp ult i8 [[IV_NEXT]], [[TMP0]]
++; CHECK-NEXT:    [[INDVARS_IV_NEXT]] = add nuw nsw i16 [[INDVARS_IV]], 1
+ ; CHECK-NEXT:    br i1 [[CMP]], label [[FOR_BODY]], label [[FOR_END:%.*]]
+ ; CHECK:       for.end:
+ ; CHECK-NEXT:    ret void
+@@ -470,12 +476,15 @@ for.end:                                          ; preds = %for.body, %entry
+ define void @sle_constant_rhs(i16 %n.raw, i8 %start) mustprogress {
+ ; CHECK-LABEL: @sle_constant_rhs(
+ ; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[TMP1:%.*]] = zext i8 [[START:%.*]] to i16
+ ; CHECK-NEXT:    [[TMP0:%.*]] = trunc i16 254 to i8
+ ; CHECK-NEXT:    br label [[FOR_BODY:%.*]]
+ ; CHECK:       for.body:
+-; CHECK-NEXT:    [[IV:%.*]] = phi i8 [ [[IV_NEXT:%.*]], [[FOR_BODY]] ], [ [[START:%.*]], [[ENTRY:%.*]] ]
+-; CHECK-NEXT:    [[IV_NEXT]] = add i8 [[IV]], 1
++; CHECK-NEXT:    [[INDVARS_IV:%.*]] = phi i16 [ [[INDVARS_IV_NEXT:%.*]], [[FOR_BODY]] ], [ [[TMP1]], [[ENTRY:%.*]] ]
++; CHECK-NEXT:    [[IV:%.*]] = trunc nuw i16 [[INDVARS_IV]] to i8
++; CHECK-NEXT:    [[IV_NEXT:%.*]] = add i8 [[IV]], 1
+ ; CHECK-NEXT:    [[CMP:%.*]] = icmp ule i8 [[IV_NEXT]], [[TMP0]]
++; CHECK-NEXT:    [[INDVARS_IV_NEXT]] = add nuw nsw i16 [[INDVARS_IV]], 1
+ ; CHECK-NEXT:    br i1 [[CMP]], label [[FOR_BODY]], label [[FOR_END:%.*]]
+ ; CHECK:       for.end:
+ ; CHECK-NEXT:    ret void
+@@ -578,12 +587,15 @@ for.end:                                          ; preds = %for.body, %entry
+ define void @ult_constant_rhs(i16 %n.raw, i8 %start) mustprogress {
+ ; CHECK-LABEL: @ult_constant_rhs(
+ ; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[TMP1:%.*]] = zext i8 [[START:%.*]] to i16
+ ; CHECK-NEXT:    [[TMP0:%.*]] = trunc i16 254 to i8
+ ; CHECK-NEXT:    br label [[FOR_BODY:%.*]]
+ ; CHECK:       for.body:
+-; CHECK-NEXT:    [[IV:%.*]] = phi i8 [ [[IV_NEXT:%.*]], [[FOR_BODY]] ], [ [[START:%.*]], [[ENTRY:%.*]] ]
+-; CHECK-NEXT:    [[IV_NEXT]] = add i8 [[IV]], 1
++; CHECK-NEXT:    [[INDVARS_IV:%.*]] = phi i16 [ [[INDVARS_IV_NEXT:%.*]], [[FOR_BODY]] ], [ [[TMP1]], [[ENTRY:%.*]] ]
++; CHECK-NEXT:    [[IV:%.*]] = trunc nuw i16 [[INDVARS_IV]] to i8
++; CHECK-NEXT:    [[IV_NEXT:%.*]] = add i8 [[IV]], 1
+ ; CHECK-NEXT:    [[CMP:%.*]] = icmp ult i8 [[IV_NEXT]], [[TMP0]]
++; CHECK-NEXT:    [[INDVARS_IV_NEXT]] = add nuw nsw i16 [[INDVARS_IV]], 1
+ ; CHECK-NEXT:    br i1 [[CMP]], label [[FOR_BODY]], label [[FOR_END:%.*]]
+ ; CHECK:       for.end:
+ ; CHECK-NEXT:    ret void
+@@ -713,12 +725,15 @@ for.end:                                          ; preds = %for.body, %entry
+ define void @ule_constant_rhs(i16 %n.raw, i8 %start) mustprogress {
+ ; CHECK-LABEL: @ule_constant_rhs(
+ ; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[TMP1:%.*]] = zext i8 [[START:%.*]] to i16
+ ; CHECK-NEXT:    [[TMP0:%.*]] = trunc i16 254 to i8
+ ; CHECK-NEXT:    br label [[FOR_BODY:%.*]]
+ ; CHECK:       for.body:
+-; CHECK-NEXT:    [[IV:%.*]] = phi i8 [ [[IV_NEXT:%.*]], [[FOR_BODY]] ], [ [[START:%.*]], [[ENTRY:%.*]] ]
+-; CHECK-NEXT:    [[IV_NEXT]] = add i8 [[IV]], 1
++; CHECK-NEXT:    [[INDVARS_IV:%.*]] = phi i16 [ [[INDVARS_IV_NEXT:%.*]], [[FOR_BODY]] ], [ [[TMP1]], [[ENTRY:%.*]] ]
++; CHECK-NEXT:    [[IV:%.*]] = trunc nuw i16 [[INDVARS_IV]] to i8
++; CHECK-NEXT:    [[IV_NEXT:%.*]] = add i8 [[IV]], 1
+ ; CHECK-NEXT:    [[CMP:%.*]] = icmp ule i8 [[IV_NEXT]], [[TMP0]]
++; CHECK-NEXT:    [[INDVARS_IV_NEXT]] = add nuw nsw i16 [[INDVARS_IV]], 1
+ ; CHECK-NEXT:    br i1 [[CMP]], label [[FOR_BODY]], label [[FOR_END:%.*]]
+ ; CHECK:       for.end:
+ ; CHECK-NEXT:    ret void
+@@ -932,15 +947,18 @@ for.end:                                          ; preds = %for.body, %entry
+ define i16 @ult_multiuse_profit(i16 %n.raw, i8 %start) mustprogress {
+ ; CHECK-LABEL: @ult_multiuse_profit(
+ ; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[TMP3:%.*]] = zext i8 [[START:%.*]] to i16
+ ; CHECK-NEXT:    [[TMP0:%.*]] = trunc i16 254 to i8
+ ; CHECK-NEXT:    br label [[FOR_BODY:%.*]]
+ ; CHECK:       for.body:
+-; CHECK-NEXT:    [[IV:%.*]] = phi i8 [ [[IV_NEXT:%.*]], [[FOR_BODY]] ], [ [[START]], [[ENTRY:%.*]] ]
+-; CHECK-NEXT:    [[IV_NEXT]] = add i8 [[IV]], 1
++; CHECK-NEXT:    [[INDVARS_IV:%.*]] = phi i16 [ [[INDVARS_IV_NEXT:%.*]], [[FOR_BODY]] ], [ [[TMP3]], [[ENTRY:%.*]] ]
++; CHECK-NEXT:    [[IV:%.*]] = trunc nuw i16 [[INDVARS_IV]] to i8
++; CHECK-NEXT:    [[IV_NEXT:%.*]] = add i8 [[IV]], 1
+ ; CHECK-NEXT:    [[CMP:%.*]] = icmp ult i8 [[IV_NEXT]], [[TMP0]]
++; CHECK-NEXT:    [[INDVARS_IV_NEXT]] = add nuw nsw i16 [[INDVARS_IV]], 1
+ ; CHECK-NEXT:    br i1 [[CMP]], label [[FOR_BODY]], label [[FOR_END:%.*]]
+ ; CHECK:       for.end:
+-; CHECK-NEXT:    [[TMP1:%.*]] = add i8 [[START:%.*]], 1
++; CHECK-NEXT:    [[TMP1:%.*]] = add i8 [[START]], 1
+ ; CHECK-NEXT:    [[TMP2:%.*]] = zext i8 [[TMP1]] to i16
+ ; CHECK-NEXT:    [[UMAX:%.*]] = call i16 @llvm.umax.i16(i16 [[TMP2]], i16 254)
+ ; CHECK-NEXT:    ret i16 [[UMAX]]
+@@ -962,14 +980,17 @@ for.end:                                          ; preds = %for.body, %entry
+ define i16 @ult_multiuse_profit2(i16 %n.raw, i8 %start) mustprogress {
+ ; CHECK-LABEL: @ult_multiuse_profit2(
+ ; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[TMP1:%.*]] = zext i8 [[START:%.*]] to i16
+ ; CHECK-NEXT:    [[TMP0:%.*]] = trunc i16 254 to i8
+ ; CHECK-NEXT:    br label [[FOR_BODY:%.*]]
+ ; CHECK:       for.body:
+-; CHECK-NEXT:    [[IV:%.*]] = phi i8 [ [[IV_NEXT:%.*]], [[FOR_BODY]] ], [ [[START:%.*]], [[ENTRY:%.*]] ]
++; CHECK-NEXT:    [[INDVARS_IV:%.*]] = phi i16 [ [[INDVARS_IV_NEXT:%.*]], [[FOR_BODY]] ], [ [[TMP1]], [[ENTRY:%.*]] ]
+ ; CHECK-NEXT:    [[IV2:%.*]] = phi i16 [ [[ZEXT:%.*]], [[FOR_BODY]] ], [ 0, [[ENTRY]] ]
+-; CHECK-NEXT:    [[IV_NEXT]] = add i8 [[IV]], 1
++; CHECK-NEXT:    [[IV:%.*]] = trunc nuw i16 [[INDVARS_IV]] to i8
++; CHECK-NEXT:    [[IV_NEXT:%.*]] = add i8 [[IV]], 1
+ ; CHECK-NEXT:    [[ZEXT]] = zext i8 [[IV_NEXT]] to i16
+ ; CHECK-NEXT:    [[CMP:%.*]] = icmp ult i8 [[IV_NEXT]], [[TMP0]]
++; CHECK-NEXT:    [[INDVARS_IV_NEXT]] = add nuw nsw i16 [[INDVARS_IV]], 1
+ ; CHECK-NEXT:    br i1 [[CMP]], label [[FOR_BODY]], label [[FOR_END:%.*]]
+ ; CHECK:       for.end:
+ ; CHECK-NEXT:    [[IV2_LCSSA:%.*]] = phi i16 [ [[IV2]], [[FOR_BODY]] ]
+diff --git a/llvm/test/Transforms/IndVarSimplify/monotonic_checks.ll b/llvm/test/Transforms/IndVarSimplify/monotonic_checks.ll
+index 1f8bf5fecb248..21e390c691808 100644
+--- a/llvm/test/Transforms/IndVarSimplify/monotonic_checks.ll
++++ b/llvm/test/Transforms/IndVarSimplify/monotonic_checks.ll
+@@ -129,7 +129,7 @@ define i32 @test_02_neg(ptr %p) {
+ ; CHECK-NEXT:    br label [[LOOP:%.*]]
+ ; CHECK:       loop:
+ ; CHECK-NEXT:    [[IV:%.*]] = phi i32 [ [[LEN]], [[ENTRY:%.*]] ], [ [[IV_NEXT:%.*]], [[BACKEDGE:%.*]] ]
+-; CHECK-NEXT:    [[IV_NEXT]] = add i32 [[IV]], 1
++; CHECK-NEXT:    [[IV_NEXT]] = add nsw i32 [[IV]], 1
+ ; CHECK-NEXT:    [[RC:%.*]] = icmp sgt i32 [[IV_NEXT]], [[LEN]]
+ ; CHECK-NEXT:    br i1 [[RC]], label [[BACKEDGE]], label [[FAIL:%.*]]
+ ; CHECK:       backedge:
