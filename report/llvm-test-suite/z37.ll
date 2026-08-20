@@ -203,8 +203,8 @@ bb.b:                                             ; preds = %bb.b, %bb.a
 .lr.ph193:                                        ; preds = %.preheader168
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 60 ; 2 uses
   %i.r = icmp ne i32 %1, 0
-  %9 = insertelement <2 x i32> poison, i32 %2, i64 0
-  %10 = shufflevector <2 x i32> %9, <2 x i32> poison, <4 x i32> <i32 0, i32 0, i32 poison, i32 poison>
+  %9 = insertelement <4 x i32> <i32 poison, i32 poison, i32 0, i32 0>, i32 %2, i64 0
+  %10 = shufflevector <4 x i32> %9, <4 x i32> poison, <4 x i32> <i32 0, i32 0, i32 2, i32 3>
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph193, %._crit_edge.thread
@@ -427,7 +427,7 @@ bb.x:                                             ; preds = %bb.j, %bb.i, %bb.l,
   %.2131 = phi i32 [ %.1130173, %bb.g ], [ %i.as, %bb.i ], [ %.1130173, %bb.k ], [ %.1130173, %.critedge4 ], [ %.1130173, %bb.l ], [ %.1130173, %bb.j ] ; 6 uses
   %.1117 = phi i32 [ %.0116178, %bb.g ], [ 1, %bb.i ], [ %.0116178, %bb.k ], [ %.0116178, %.critedge4 ], [ %.0116178, %bb.l ], [ %.0116178, %bb.j ] ; 2 uses
   %.1 = phi i32 [ %.0115179, %bb.g ], [ %.0115179, %bb.i ], [ 1, %bb.k ], [ %.0115179, %.critedge4 ], [ %.0115179, %bb.l ], [ %.0115179, %bb.j ] ; 2 uses
-  %i.cz = phi <4 x i32> [ %i.z, %bb.g ], [ %i.z, %bb.i ], [ %i.bc, %bb.k ], [ %i.z, %.critedge4 ], [ %i.z, %bb.l ], [ %i.z, %bb.j ] ; 6 uses
+  %i.cz = phi <4 x i32> [ %i.z, %bb.g ], [ %i.z, %bb.i ], [ %i.bc, %bb.k ], [ %i.z, %.critedge4 ], [ %i.z, %bb.l ], [ %i.z, %bb.j ] ; 5 uses
   %sext222 = shl i64 %.6.in, 32
   %i.da = ashr exact i64 %sext222, 32
   br label %bb.y
@@ -515,9 +515,8 @@ bb.ah:                                            ; preds = %bb.ae, %bb.ag, %bb.
 bb.ai:                                            ; preds = %bb.ah
   %i.ea = getelementptr inbounds nuw [10 x i8], ptr %6, i64 %i.dq
   %i.eb = insertelement <4 x i32> %i.cz, i32 %.2131, i64 3
-  %i.ec = sub nsw <4 x i32> %i.cz, %10
-  %11 = shufflevector <4 x i32> %i.ec, <4 x i32> %i.eb, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
-  %i.ed = trunc <4 x i32> %11 to <4 x i16>
+  %i.ec = sub nsw <4 x i32> %i.eb, %10
+  %i.ed = trunc <4 x i32> %i.ec to <4 x i16>
   store <4 x i16> %i.ed, ptr %i.ea, align 2, !tbaa !34
   %i.ee = extractelement <4 x i32> %i.cz, i64 3   ; 2 uses
   %i.ef = icmp eq i32 %i.ee, 0

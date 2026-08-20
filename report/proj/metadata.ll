@@ -203,9 +203,9 @@ bb.m:                                             ; preds = %_ZNSt10unique_ptrIN
 define hidden void @_ZNK5osgeo4proj8metadata21GeographicBoundingBox7Private12intersectionERKS3_(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.std::unique_ptr.18") align 8 captures(none) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %2) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %3 = alloca %"class.std::unique_ptr.18", align 8 ; 6 uses
-  %4 = alloca %"struct.osgeo::proj::metadata::GeographicBoundingBox::Private", align 16 ; 6 uses
+  %4 = alloca %"struct.osgeo::proj::metadata::GeographicBoundingBox::Private", align 16 ; 5 uses
   %5 = alloca %"class.std::unique_ptr.18", align 8 ; 7 uses
-  %6 = alloca %"struct.osgeo::proj::metadata::GeographicBoundingBox::Private", align 8 ; 7 uses
+  %6 = alloca %"struct.osgeo::proj::metadata::GeographicBoundingBox::Private", align 16 ; 6 uses
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.a = load <2 x double>, ptr %.phi.trans.insert, align 8, !tbaa !57
   %i.b = load <2 x double>, ptr %1, align 8, !tbaa !57
@@ -217,14 +217,13 @@ tailrecurse:                                      ; preds = %bb.t, %bb.a
   %i.c = phi <2 x double> [ %i.b, %bb.a ], [ %i.g, %bb.t ] ; 10 uses
   %i.d = phi <2 x double> [ %i.a, %bb.a ], [ %i.f, %bb.t ] ; 10 uses
   %i.e = getelementptr inbounds nuw i8, ptr %.tr122, i64 16
-  %i.f = load <2 x double>, ptr %i.e, align 8, !tbaa !57 ; 12 uses
+  %i.f = load <2 x double>, ptr %i.e, align 8, !tbaa !57 ; 13 uses
   %i.g = load <2 x double>, ptr %.tr122, align 8, !tbaa !57 ; 13 uses
   %i.h = fcmp olt <2 x double> %i.d, %i.g
   %i.i = extractelement <2 x i1> %i.h, i64 1
-  %7 = extractelement <2 x double> %i.c, i64 1
-  %8 = extractelement <2 x double> %i.f, i64 1    ; 3 uses
-  %9 = fcmp ogt double %7, %8
-  %or.cond117 = select i1 %i.i, i1 true, i1 %9
+  %7 = fcmp ogt <2 x double> %i.c, %i.f
+  %8 = extractelement <2 x i1> %7, i64 1
+  %or.cond117 = select i1 %i.i, i1 true, i1 %8
   br i1 %or.cond117, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %tailrecurse
@@ -349,19 +348,16 @@ bb.n:                                             ; preds = %bb.l
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #35
   store <2 x double> %i.g, ptr %4, align 16, !tbaa !57
   %i.bk = getelementptr inbounds nuw i8, ptr %4, i64 16
-  store double 1.800000e+02, ptr %i.bk, align 16, !tbaa !51
-  %10 = getelementptr inbounds nuw i8, ptr %4, i64 24
-  store double %8, ptr %10, align 8, !tbaa !52
+  %9 = insertelement <2 x double> %i.f, double 1.800000e+02, i64 0
+  store <2 x double> %9, ptr %i.bk, align 16, !tbaa !57
   call void @_ZNK5osgeo4proj8metadata21GeographicBoundingBox7Private12intersectionERKS3_(ptr dead_on_unwind nonnull writable sret(%"class.std::unique_ptr.18") align 8 %3, ptr noundef nonnull align 8 dereferenceable(32) %.tr121, ptr noundef nonnull align 8 dereferenceable(32) %4)
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #35
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #35
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #35
-  store double -1.800000e+02, ptr %6, align 8, !tbaa !47
-  %11 = getelementptr inbounds nuw i8, ptr %6, i64 8
-  %12 = shufflevector <2 x double> %i.g, <2 x double> %i.f, <2 x i32> <i32 1, i32 2>
-  store <2 x double> %12, ptr %11, align 8, !tbaa !57
-  %i.bl = getelementptr inbounds nuw i8, ptr %6, i64 24
-  store double %8, ptr %i.bl, align 8, !tbaa !52
+  %10 = insertelement <2 x double> %i.g, double -1.800000e+02, i64 0
+  store <2 x double> %10, ptr %6, align 16, !tbaa !57
+  %i.bl = getelementptr inbounds nuw i8, ptr %6, i64 16
+  store <2 x double> %i.f, ptr %i.bl, align 16, !tbaa !57
   invoke void @_ZNK5osgeo4proj8metadata21GeographicBoundingBox7Private12intersectionERKS3_(ptr dead_on_unwind nonnull writable sret(%"class.std::unique_ptr.18") align 8 %5, ptr noundef nonnull align 8 dereferenceable(32) %.tr121, ptr noundef nonnull align 8 dereferenceable(32) %6)
           to label %bb.o unwind label %bb.q
 

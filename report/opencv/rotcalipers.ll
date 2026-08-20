@@ -203,6 +203,8 @@ bb.w:                                             ; preds = %bb.v
   %i.gg = shufflevector <2 x float> %i.gf, <2 x float> poison, <2 x i32> <i32 1, i32 0>
   %i.gh = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.gd, <2 x float> %i.ga, <2 x float> %i.gg)
   %i.gi = insertelement <2 x float> poison, float %i.fv, i64 0
+  %9 = shufflevector <2 x float> %i.gi, <2 x float> poison, <2 x i32> zeroinitializer
+  %10 = fmul <2 x float> %9, %i.gh
   %i.gj = fmul <2 x float> %i.fj, %i.gb           ; 4 uses
   %i.gk = fmul <2 x float> %i.fk, %i.fj           ; 4 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #12
@@ -218,31 +220,27 @@ bb.y:                                             ; preds = %bb.x, %bb.w
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #12
   %i.gl = extractelement <2 x float> %i.gj, i64 0
   %i.gm = extractelement <2 x float> %i.gk, i64 0
-  %9 = fpext <2 x float> %i.gj to <2 x double>    ; 3 uses
-  %10 = fpext <2 x float> %i.gk to <2 x double>   ; 3 uses
-  %11 = fmul <2 x double> %10, %10
-  %12 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %9, <2 x double> %9, <2 x double> %11)
-  %13 = call <2 x double> @llvm.sqrt.v2f64(<2 x double> %12)
-  %14 = fptrunc <2 x double> %13 to <2 x float>   ; 2 uses
-  %15 = shufflevector <2 x float> %14, <2 x float> poison, <4 x i32> <i32 poison, i32 poison, i32 1, i32 0>
-  %16 = shufflevector <2 x float> %i.gj, <2 x float> %i.gk, <4 x i32> <i32 0, i32 2, i32 poison, i32 poison>
-  %17 = shufflevector <2 x float> %i.gj, <2 x float> %i.gk, <4 x i32> <i32 1, i32 3, i32 poison, i32 poison>
-  %18 = fadd <4 x float> %16, %17
-  %19 = shufflevector <4 x float> %18, <4 x float> %15, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
-  %20 = shufflevector <2 x float> %i.gi, <2 x float> poison, <4 x i32> <i32 0, i32 0, i32 poison, i32 poison>
-  %21 = shufflevector <2 x float> %i.gh, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %22 = fmul <4 x float> %20, %21
-  %23 = shufflevector <4 x float> %22, <4 x float> <float poison, float poison, float -0.000000e+00, float -0.000000e+00>, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
-  %24 = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %19, <4 x float> <float 5.000000e-01, float 5.000000e-01, float 1.000000e+00, float 1.000000e+00>, <4 x float> %23)
-  store <4 x float> %24, ptr %0, align 4, !tbaa !27
+  %11 = shufflevector <2 x float> %i.gj, <2 x float> %i.gk, <2 x i32> <i32 0, i32 2>
+  %12 = shufflevector <2 x float> %i.gj, <2 x float> %i.gk, <2 x i32> <i32 1, i32 3>
+  %13 = fadd <2 x float> %11, %12
+  %14 = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %13, <2 x float> splat (float 5.000000e-01), <2 x float> %10)
+  store <2 x float> %14, ptr %0, align 4, !tbaa !27
+  %15 = fpext <2 x float> %i.gj to <2 x double>   ; 3 uses
+  %16 = fpext <2 x float> %i.gk to <2 x double>   ; 3 uses
+  %17 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  %18 = fmul <2 x double> %16, %16
+  %19 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %15, <2 x double> %15, <2 x double> %18)
+  %20 = call <2 x double> @llvm.sqrt.v2f64(<2 x double> %19)
+  %21 = fptrunc <2 x double> %20 to <2 x float>   ; 2 uses
+  %22 = shufflevector <2 x float> %21, <2 x float> poison, <2 x i32> <i32 1, i32 0>
+  store <2 x float> %22, ptr %17, align 4, !tbaa !27
   %i.gn = fcmp oeq float %i.gl, 0.000000e+00
   %i.go = fcmp ogt float %i.gm, 0.000000e+00
   %or.cond = select i1 %i.gn, i1 %i.go, i1 false
   br i1 %or.cond, label %bb.z, label %bb.ac
 
 bb.z:                                             ; preds = %bb.y
-  %25 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store <2 x float> %14, ptr %25, align 4, !tbaa !27
+  store <2 x float> %21, ptr %17, align 4, !tbaa !27
   br label %bb.al
 
 bb.aa:                                            ; preds = %bb.j
@@ -256,8 +254,8 @@ bb.ab:                                            ; preds = %bb.m
   br label %bb.ao
 
 bb.ac:                                            ; preds = %bb.y
-  %i.gr = extractelement <2 x double> %9, i64 0
-  %i.gs = extractelement <2 x double> %10, i64 0
+  %i.gr = extractelement <2 x double> %15, i64 0
+  %i.gs = extractelement <2 x double> %16, i64 0
   %i.gt = call double @atan2(double noundef %i.gr, double noundef %i.gs) #12
   %i.gu = fneg double %i.gt
   br label %bb.al
@@ -547,9 +545,6 @@ declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.sqrt.v2f64(<2 x double>) #4
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <4 x float> @llvm.fmuladd.v4f32(<4 x float>, <4 x float>, <4 x float>) #4
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

@@ -203,38 +203,37 @@ declare dso_local void @_dev_err(ptr noundef, ptr noundef, ...) local_unnamed_ad
 declare dso_local void @kfree(ptr noundef) local_unnamed_addr #2
 
 ; Function Attrs: fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong
-define internal zeroext i16 @pci_dev_attrs_are_visible(ptr noundef %0, ptr nofree noundef readnone captures(address) %1, i32 %2) #0 align 16 prefalign(16) {
+define internal zeroext i16 @pci_dev_attrs_are_visible(ptr noundef %0, ptr nofree noundef readonly captures(address) %1, i32 %2) #0 align 16 prefalign(16) {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 -200
   %i.b = icmp eq ptr %1, @dev_attr_boot_vga
-  br i1 %i.b, label %bb.b, label %bb.d
+  br i1 %i.b, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr i8, ptr %0, i64 -132
   %.val = load i32, ptr %i.c, align 4
   %i.d = lshr i32 %.val, 8
   switch i32 %i.d, label %.thread [
-    i32 768, label %bb.c
-    i32 1, label %bb.c
+    i32 768, label %bb.e
+    i32 1, label %bb.e
   ]
 
-bb.c:                                             ; preds = %bb.b, %bb.b
-  %3 = load i16, ptr getelementptr inbounds nuw (i8, ptr @dev_attr_boot_vga, i64 8), align 8
-  br label %.thread
+bb.c:                                             ; preds = %bb.a
+  %3 = icmp eq ptr %1, @dev_attr_serial_number
+  br i1 %3, label %bb.d, label %.thread
 
-bb.d:                                             ; preds = %bb.a
-  %i.e = icmp eq ptr %1, @dev_attr_serial_number
-  br i1 %i.e, label %bb.e, label %.thread
-
-bb.e:                                             ; preds = %bb.d
+bb.d:                                             ; preds = %bb.c
   %4 = tail call i64 @pci_get_dsn(ptr noundef %i.a) #9
-  %.not = icmp eq i64 %4, 0
-  %i.f = load i16, ptr getelementptr inbounds nuw (i8, ptr @dev_attr_serial_number, i64 8), align 8
-  %spec.select = select i1 %.not, i16 0, i16 %i.f
+  %i.e = icmp eq i64 %4, 0
+  br i1 %i.e, label %.thread, label %bb.e
+
+bb.e:                                             ; preds = %bb.d, %bb.b, %bb.b
+  %5 = getelementptr i8, ptr %1, i64 8
+  %i.f = load i16, ptr %5, align 8
   br label %.thread
 
-.thread:                                          ; preds = %bb.b, %bb.e, %bb.d, %bb.c
-  %.0 = phi i16 [ %3, %bb.c ], [ 0, %bb.d ], [ %spec.select, %bb.e ], [ 0, %bb.b ]
+.thread:                                          ; preds = %bb.e, %bb.b, %bb.c, %bb.d
+  %.0 = phi i16 [ 0, %bb.c ], [ 0, %bb.b ], [ 0, %bb.d ], [ %i.f, %bb.e ]
   ret i16 %.0
 }
 

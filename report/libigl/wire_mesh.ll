@@ -204,7 +204,7 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_ZN3igl8copyleft4cgal9wire_meshIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENS4_IiLin1ELin1ELi0ELin1ELin1EEENS4_IdLin1ELi1ELi0ELin1ELi1EEES5_S6_NS4_IiLin1ELi1ELi0ELin1ELi1EEEEEvRKNS3_10MatrixBaseIT_EERKNS9_IT0_EERKNS9_IT1_EEibRNS3_15PlainObjectBaseIT2_EERNSM_IT3_EERNSM_IT4_EE(ptr noundef nonnull align 1 dereferenceable(1) %0, ptr noundef nonnull align 1 dereferenceable(1) %1, ptr noundef nonnull align 1 dereferenceable(1) %2, i32 noundef %3, i1 noundef zeroext %4, ptr noundef nonnull align 8 dereferenceable(24) %5, ptr noundef nonnull align 8 dereferenceable(24) %6, ptr noundef nonnull align 8 dereferenceable(16) %7) local_unnamed_addr #2 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
-  %8 = alloca %"class.Eigen::Matrix.226", align 16 ; 9 uses
+  %8 = alloca %"class.Eigen::Matrix.226", align 16 ; 7 uses
   %9 = alloca %"class.Eigen::JacobiSVD", align 16 ; 11 uses
   %10 = alloca %"struct.Eigen::internal::evaluator.169", align 8 ; 5 uses
   %11 = alloca %"struct.Eigen::internal::evaluator.173", align 8 ; 5 uses
@@ -423,9 +423,7 @@ _ZNSt6vectorIiSaIiEEC2EmRKiRKS0_.exit:            ; preds = %.noexc186, %_ZNSt6v
   br label %.lr.ph518
 
 .lr.ph518:                                        ; preds = %.lr.ph518.unr-lcssa, %.epil.preheader
-  %.sroa.8379.0..sroa_idx = getelementptr inbounds nuw i8, ptr %16, i64 16 ; 2 uses
-  %28 = getelementptr inbounds nuw i8, ptr %8, i64 16
-  %i.bs = getelementptr inbounds nuw i8, ptr %8, i64 32
+  %i.bs = getelementptr inbounds nuw i8, ptr %16, i64 16 ; 2 uses
   %i.bt = getelementptr inbounds nuw i8, ptr %8, i64 8
   %i.bu = getelementptr inbounds nuw i8, ptr %8, i64 24
   %i.bv = getelementptr inbounds nuw i8, ptr %8, i64 40
@@ -828,7 +826,7 @@ bb.w:                                             ; preds = %bb.s, %_ZNSt6vector
 
 .thread:                                          ; preds = %bb.w
   store <2 x double> %.sroa.0376.8.vec.insert, ptr %16, align 16
-  store double %i.id, ptr %.sroa.8379.0..sroa_idx, align 16, !tbaa !95
+  store double %i.id, ptr %i.bs, align 16, !tbaa !95
   br label %bb.y
 
 _ZNK5Eigen10MatrixBaseINS_6MatrixIdLi1ELi3ELi1ELi1ELi3EEEE10normalizedEv.exit: ; preds = %bb.w
@@ -837,7 +835,7 @@ _ZNK5Eigen10MatrixBaseINS_6MatrixIdLi1ELi3ELi1ELi1ELi3EEEE10normalizedEv.exit: ;
   %i.il = fdiv <2 x double> %.sroa.0376.8.vec.insert, %i.ik ; 5 uses
   store <2 x double> %i.il, ptr %16, align 16, !tbaa !95, !alias.scope !96
   %i.im = fdiv double %i.id, %.scalar.i           ; 5 uses
-  store double %i.im, ptr %.sroa.8379.0..sroa_idx, align 16, !tbaa !17, !alias.scope !96
+  store double %i.im, ptr %i.bs, align 16, !tbaa !17, !alias.scope !96
   %.pre605 = fmul <2 x double> %i.il, %i.il       ; 2 uses
   %shift866 = shufflevector <2 x double> %.pre605, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop867 = fadd <2 x double> %.pre605, %shift866
@@ -870,12 +868,10 @@ bb.y:                                             ; preds = %bb.x, %_ZNK5Eigen10
 bb.z:                                             ; preds = %bb.y
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #23, !noalias !99
   store double 0.000000e+00, ptr %8, align 16, !tbaa !17, !noalias !102
-  store double 0.000000e+00, ptr %28, align 16, !tbaa !17, !noalias !102
-  store double 1.000000e+00, ptr %i.bs, align 16, !tbaa !17, !noalias !102
-  %.sroa.061.0.vec.extract64.i.i = extractelement <2 x double> %i.is, i64 0
-  store double %.sroa.061.0.vec.extract64.i.i, ptr %i.bt, align 8, !tbaa !17, !noalias !99
-  %.sroa.061.8.vec.extract66.i.i = extractelement <2 x double> %i.is, i64 1
-  store double %.sroa.061.8.vec.extract66.i.i, ptr %i.bu, align 8, !tbaa !17, !noalias !99
+  %28 = insertelement <2 x double> %i.is, double 0.000000e+00, i64 1
+  store <2 x double> %28, ptr %i.bt, align 8, !tbaa !17, !noalias !99
+  %29 = shufflevector <2 x double> %i.is, <2 x double> <double poison, double 1.000000e+00>, <2 x i32> <i32 1, i32 3>
+  store <2 x double> %29, ptr %i.bu, align 8, !tbaa !17, !noalias !99
   store double %i.it, ptr %i.bv, align 8, !tbaa !17, !noalias !99
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #23, !noalias !99
   store i32 0, ptr %i.bx, align 4, !tbaa !105, !noalias !99
