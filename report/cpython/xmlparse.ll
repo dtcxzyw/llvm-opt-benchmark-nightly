@@ -204,23 +204,27 @@ bb.ci:                                            ; preds = %.loopexit686
 .thread674:                                       ; preds = %bb.ch, %.loopexit694, %bb.ci, %._crit_edge767
   %.10446 = phi i32 [ 0, %._crit_edge767 ], [ %i.pi, %bb.ci ], [ 0, %.loopexit694 ], [ %i.pg, %bb.ch ] ; 2 uses
   %i.pj = icmp slt i32 %.10446, %.4455.lcssa
-  br i1 %i.pj, label %.lr.ph795, label %.preheader685
+  br i1 %i.pj, label %.lr.ph795.preheader, label %.preheader685
+
+.lr.ph795.preheader:                              ; preds = %.thread674
+  %7 = sext i32 %.10446 to i64
+  br label %.lr.ph795
 
 .preheader685:                                    ; preds = %.lr.ph795, %.thread674
   %.0424796 = load ptr, ptr %4, align 8, !tbaa !336 ; 2 uses
   %.not538797 = icmp eq ptr %.0424796, null
   br i1 %.not538797, label %._crit_edge800, label %.lr.ph799
 
-.lr.ph795:                                        ; preds = %.thread674, %.lr.ph795
-  %.11447794 = phi i32 [ %8, %.lr.ph795 ], [ %.10446, %.thread674 ] ; 2 uses
-  %7 = sext i32 %.11447794 to i64
-  %i.pk = getelementptr [8 x i8], ptr %i.cl, i64 %7
+.lr.ph795:                                        ; preds = %.lr.ph795.preheader, %.lr.ph795
+  %indvars.iv863 = phi i64 [ %7, %.lr.ph795.preheader ], [ %indvars.iv.next864, %.lr.ph795 ] ; 2 uses
+  %i.pk = getelementptr [8 x i8], ptr %i.cl, i64 %indvars.iv863
   %i.pl = load ptr, ptr %i.pk, align 8, !tbaa !49
   %i.pm = getelementptr i8, ptr %i.pl, i64 -1
   store i8 0, ptr %i.pm, align 1, !tbaa !10
-  %8 = add i32 %.11447794, 2                      ; 2 uses
-  %9 = icmp slt i32 %8, %.4455.lcssa
-  br i1 %9, label %.lr.ph795, label %.preheader685, !llvm.loop !384
+  %indvars.iv.next864 = add nsw i64 %indvars.iv863, 2 ; 2 uses
+  %indvars = trunc i64 %indvars.iv.next864 to i32
+  %8 = icmp sgt i32 %.4455.lcssa, %indvars
+  br i1 %8, label %.lr.ph795, label %.preheader685, !llvm.loop !384
 
 .lr.ph799:                                        ; preds = %.preheader685, %.lr.ph799
   %.0424798 = phi ptr [ %.0424, %.lr.ph799 ], [ %.0424796, %.preheader685 ] ; 2 uses

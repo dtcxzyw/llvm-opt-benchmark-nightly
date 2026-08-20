@@ -203,17 +203,17 @@ bb.l:                                             ; preds = %bb.k
   br label %bb.m
 
 bb.m:                                             ; preds = %.backedge.i, %.lr.ph.i25
-  %indvars.iv.a = phi i64 [ %indvars.iv.next.a, %.backedge.i ], [ %i.at, %.lr.ph.i25 ] ; 5 uses
-  %.076.i = phi i32 [ %.062.i, %.backedge.i ], [ 0, %.lr.ph.i25 ] ; 2 uses
-  %.16075.i.a = phi i32 [ %.061.i, %.backedge.i ], [ %.059.i, %.lr.ph.i25 ] ; 2 uses
-  %.064.in74.i = phi i64 [ %indvars.iv.a, %.backedge.i ], [ %i.au, %.lr.ph.i25 ]
-  %i.av = getelementptr [8 x i8], ptr %i.as, i64 %indvars.iv.a
+  %indvars.iv.a = phi i64 [ %indvars.iv.next.a, %.backedge.i ], [ %i.au, %.lr.ph.i25 ] ; 2 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %.backedge.i ], [ %i.at, %.lr.ph.i25 ] ; 4 uses
+  %.16075.i.a = phi i32 [ %.062.i, %.backedge.i ], [ 0, %.lr.ph.i25 ] ; 2 uses
+  %.16075.i = phi i32 [ %.061.i, %.backedge.i ], [ %.059.i, %.lr.ph.i25 ] ; 2 uses
+  %i.av = getelementptr [8 x i8], ptr %i.as, i64 %indvars.iv
   %i.aw = load ptr, ptr %i.av, align 8            ; 5 uses
-  %i.ax = getelementptr [8 x i8], ptr %i.as, i64 %.064.in74.i
+  %i.ax = getelementptr [8 x i8], ptr %i.as, i64 %indvars.iv.a
   %i.ay = load ptr, ptr %i.ax, align 8            ; 2 uses
   %i.az = getelementptr i8, ptr %i.ay, i64 48     ; 2 uses
   %i.ba = load i32, ptr %i.az, align 8
-  %i.bb = sub i32 %.076.i, %i.ba
+  %i.bb = sub i32 %.16075.i.a, %i.ba
   %i.bc = sext i32 %i.bb to i64
   %i.bd = getelementptr i8, ptr %i.aw, i64 144    ; 3 uses
   %i.be = load i64, ptr %i.bd, align 8
@@ -221,14 +221,14 @@ bb.m:                                             ; preds = %.backedge.i, %.lr.p
   store i64 %i.bf, ptr %i.bd, align 8
   %i.bg = getelementptr i8, ptr %i.ay, i64 52     ; 2 uses
   %i.bh = load i32, ptr %i.bg, align 4
-  %i.bi = sub i32 %.16075.i.a, %i.bh
+  %i.bi = sub i32 %.16075.i, %i.bh
   %i.bj = sext i32 %i.bi to i64
   %i.bk = getelementptr i8, ptr %i.aw, i64 152    ; 3 uses
   %i.bl = load i64, ptr %i.bk, align 8
   %i.bm = add i64 %i.bl, %i.bj
   store i64 %i.bm, ptr %i.bk, align 8
-  store i32 %.076.i, ptr %i.az, align 8
-  store i32 %.16075.i.a, ptr %i.bg, align 4
+  store i32 %.16075.i.a, ptr %i.az, align 8
+  store i32 %.16075.i, ptr %i.bg, align 4
   %i.bn = load i64, ptr %i.bd, align 8            ; 3 uses
   %.not69.i = icmp eq i64 %i.bn, 0
   br i1 %.not69.i, label %bb.o, label %bb.n
@@ -257,16 +257,17 @@ bb.p:                                             ; preds = %bb.o
   %i.ca = getelementptr i8, ptr %i.aw, i64 52
   %i.cb = load i32, ptr %i.ca, align 4
   %i.cc = icmp ne i32 %.061.i, %i.cb
-  %i.cd = icmp sgt i64 %indvars.iv.a, 0
+  %i.cd = icmp sgt i64 %indvars.iv, 0
   %or.cond79.i = and i1 %i.cd, %i.cc
   br i1 %or.cond79.i, label %.backedge.i, label %.thread.i
 
 bb.q:                                             ; preds = %bb.o
-  %.old.i = icmp sgt i64 %indvars.iv.a, 0
+  %.old.i = icmp sgt i64 %indvars.iv, 0
   br i1 %.old.i, label %.backedge.i, label %.thread.i
 
 .backedge.i:                                      ; preds = %bb.q, %bb.p
-  %indvars.iv.next.a = add nsw i64 %indvars.iv.a, -1
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
+  %indvars.iv.next.a = add i64 %indvars.iv.a, -1
   br label %bb.m, !llvm.loop !49
 
 .thread.i:                                        ; preds = %bb.q, %bb.p, %bb.l
@@ -669,17 +670,17 @@ bb.as:                                            ; preds = %bb.ar
   br label %bb.at
 
 bb.at:                                            ; preds = %.backedge.i.i, %.lr.ph.i89.i
-  %indvars.iv.i.a = phi i64 [ %indvars.iv.next.i.a, %.backedge.i.i ], [ %i.ju, %.lr.ph.i89.i ] ; 5 uses
-  %.076.i90.i = phi i32 [ %.062.i.i, %.backedge.i.i ], [ 0, %.lr.ph.i89.i ] ; 2 uses
-  %.16075.i.i.a = phi i32 [ %.061.i.i, %.backedge.i.i ], [ %.059.i.i, %.lr.ph.i89.i ] ; 2 uses
-  %.064.in74.i.i = phi i64 [ %indvars.iv.i.a, %.backedge.i.i ], [ %i.jv, %.lr.ph.i89.i ]
-  %i.jw = getelementptr [8 x i8], ptr %i.jt, i64 %indvars.iv.i.a
+  %indvars.iv.i.a = phi i64 [ %indvars.iv.next.i.a, %.backedge.i.i ], [ %i.jv, %.lr.ph.i89.i ] ; 2 uses
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %.backedge.i.i ], [ %i.ju, %.lr.ph.i89.i ] ; 4 uses
+  %.16075.i.i.a = phi i32 [ %.062.i.i, %.backedge.i.i ], [ 0, %.lr.ph.i89.i ] ; 2 uses
+  %.16075.i.i = phi i32 [ %.061.i.i, %.backedge.i.i ], [ %.059.i.i, %.lr.ph.i89.i ] ; 2 uses
+  %i.jw = getelementptr [8 x i8], ptr %i.jt, i64 %indvars.iv.i
   %i.jx = load ptr, ptr %i.jw, align 8            ; 5 uses
-  %i.jy = getelementptr [8 x i8], ptr %i.jt, i64 %.064.in74.i.i
+  %i.jy = getelementptr [8 x i8], ptr %i.jt, i64 %indvars.iv.i.a
   %i.jz = load ptr, ptr %i.jy, align 8            ; 2 uses
   %i.ka = getelementptr i8, ptr %i.jz, i64 48     ; 2 uses
   %i.kb = load i32, ptr %i.ka, align 8
-  %i.kc = sub i32 %.076.i90.i, %i.kb
+  %i.kc = sub i32 %.16075.i.i.a, %i.kb
   %i.kd = sext i32 %i.kc to i64
   %i.ke = getelementptr i8, ptr %i.jx, i64 144    ; 3 uses
   %i.kf = load i64, ptr %i.ke, align 8
@@ -687,14 +688,14 @@ bb.at:                                            ; preds = %.backedge.i.i, %.lr
   store i64 %i.kg, ptr %i.ke, align 8
   %i.kh = getelementptr i8, ptr %i.jz, i64 52     ; 2 uses
   %i.ki = load i32, ptr %i.kh, align 4
-  %i.kj = sub i32 %.16075.i.i.a, %i.ki
+  %i.kj = sub i32 %.16075.i.i, %i.ki
   %i.kk = sext i32 %i.kj to i64
   %i.kl = getelementptr i8, ptr %i.jx, i64 152    ; 3 uses
   %i.km = load i64, ptr %i.kl, align 8
   %i.kn = add i64 %i.km, %i.kk
   store i64 %i.kn, ptr %i.kl, align 8
-  store i32 %.076.i90.i, ptr %i.ka, align 8
-  store i32 %.16075.i.i.a, ptr %i.kh, align 4
+  store i32 %.16075.i.i.a, ptr %i.ka, align 8
+  store i32 %.16075.i.i, ptr %i.kh, align 4
   %i.ko = load i64, ptr %i.ke, align 8            ; 3 uses
   %.not69.i.i = icmp eq i64 %i.ko, 0
   br i1 %.not69.i.i, label %bb.av, label %bb.au
@@ -723,16 +724,17 @@ bb.aw:                                            ; preds = %bb.av
   %i.lb = getelementptr i8, ptr %i.jx, i64 52
   %i.lc = load i32, ptr %i.lb, align 4
   %i.ld = icmp ne i32 %.061.i.i, %i.lc
-  %i.le = icmp sgt i64 %indvars.iv.i.a, 0
+  %i.le = icmp sgt i64 %indvars.iv.i, 0
   %or.cond79.i.i = and i1 %i.le, %i.ld
   br i1 %or.cond79.i.i, label %.backedge.i.i, label %.thread.i.i
 
 bb.ax:                                            ; preds = %bb.av
-  %.old.i.i = icmp sgt i64 %indvars.iv.i.a, 0
+  %.old.i.i = icmp sgt i64 %indvars.iv.i, 0
   br i1 %.old.i.i, label %.backedge.i.i, label %.thread.i.i
 
 .backedge.i.i:                                    ; preds = %bb.ax, %bb.aw
-  %indvars.iv.next.i.a = add nsw i64 %indvars.iv.i.a, -1
+  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1
+  %indvars.iv.next.i.a = add i64 %indvars.iv.i.a, -1
   br label %bb.at, !llvm.loop !49
 
 .thread.i.i:                                      ; preds = %bb.ax, %bb.aw, %bb.as
@@ -1135,31 +1137,31 @@ current_hweight.exit287:                          ; preds = %.current_hweight.ex
   %i.wq = getelementptr i8, ptr %.pn427, i64 328  ; 2 uses
   %i.wr = zext nneg i32 %.02728.i.pre-phi to i64
   %.phi.trans.insert.i291 = sext i32 %i.wk to i64
-  %.phi.trans.insert34.i = getelementptr [8 x i8], ptr %i.wq, i64 %.phi.trans.insert.i291
-  %.pre.i292 = load ptr, ptr %.phi.trans.insert34.i, align 8
   br label %bb.cc
 
 bb.cc:                                            ; preds = %bb.cc, %.lr.ph.i290
-  %6 = phi ptr [ %.pre.i292, %.lr.ph.i290 ], [ %i.wt, %bb.cc ]
+  %indvars.iv33.i = phi i64 [ %.phi.trans.insert.i291, %.lr.ph.i290 ], [ %indvars.iv.next34.i, %bb.cc ] ; 2 uses
   %indvars.iv.i293 = phi i64 [ %i.wr, %.lr.ph.i290 ], [ %indvars.iv.next.i294, %bb.cc ] ; 3 uses
   %.031.i = phi i64 [ 65536, %.lr.ph.i290 ], [ %i.xe, %bb.cc ]
   %.02630.i = phi i32 [ %i.wp, %.lr.ph.i290 ], [ %i.xo, %bb.cc ]
-  %i.ws = getelementptr [8 x i8], ptr %i.wq, i64 %indvars.iv.i293
-  %i.wt = load ptr, ptr %i.ws, align 8            ; 4 uses
-  %i.wu = getelementptr i8, ptr %i.wt, i64 152
+  %6 = getelementptr [8 x i8], ptr %i.wq, i64 %indvars.iv.i293
+  %7 = load ptr, ptr %6, align 8                  ; 3 uses
+  %i.ws = getelementptr [8 x i8], ptr %i.wq, i64 %indvars.iv33.i
+  %i.wt = load ptr, ptr %i.ws, align 8
+  %i.wu = getelementptr i8, ptr %7, i64 152
   %i.wv = load i64, ptr %i.wu, align 8
   %i.ww = zext i32 %.02630.i to i64               ; 2 uses
   %i.wx = add i64 %i.wv, %i.ww
-  %i.wy = getelementptr i8, ptr %6, i64 52
+  %i.wy = getelementptr i8, ptr %i.wt, i64 52
   %i.wz = load i32, ptr %i.wy, align 4
   %i.xa = zext i32 %i.wz to i64
   %i.xb = sub i64 %i.wx, %i.xa                    ; 2 uses
   %i.xc = and i64 %.031.i, 4294967295
   %i.xd = mul nuw i64 %i.xc, %i.ww
   %i.xe = udiv i64 %i.xd, %i.xb                   ; 2 uses
-  %i.xf = getelementptr i8, ptr %i.wt, i64 144
+  %i.xf = getelementptr i8, ptr %7, i64 144
   %i.xg = load i64, ptr %i.xf, align 8            ; 2 uses
-  %i.xh = getelementptr i8, ptr %i.wt, i64 48
+  %i.xh = getelementptr i8, ptr %7, i64 48
   %i.xi = load i32, ptr %i.xh, align 8
   %i.xj = zext i32 %i.xi to i64
   %i.xk = mul i64 %i.xb, %i.xj
@@ -1169,6 +1171,7 @@ bb.cc:                                            ; preds = %bb.cc, %.lr.ph.i290
   %i.xo = trunc i64 %i.xn to i32
   %indvars.iv.next.i294 = add nsw i64 %indvars.iv.i293, -1
   %.not.i295.a = icmp eq i64 %indvars.iv.i293, 0
+  %indvars.iv.next34.i = add nsw i64 %indvars.iv33.i, -1
   br i1 %.not.i295.a, label %._crit_edge.loopexit.i296, label %bb.cc, !llvm.loop !89
 
 ._crit_edge.loopexit.i296:                        ; preds = %bb.cc

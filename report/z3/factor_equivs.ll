@@ -203,8 +203,8 @@ _ZN15obj_equiv_classI4expr11ast_managerE3endEv.exit: ; preds = %_ZN15obj_equiv_c
   ret void
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.lr.ph, %_ZN15obj_equiv_classI4expr11ast_managerE14equiv_iteratorppEv.exit
-  %.sroa.573.087 = phi i32 [ %.sroa.2.0.i, %.lr.ph.i.lr.ph ], [ %.sroa.573.1, %_ZN15obj_equiv_classI4expr11ast_managerE14equiv_iteratorppEv.exit ] ; 6 uses
-  %.sroa.565.8.insert.ext = zext i32 %.sroa.573.087 to i64 ; 3 uses
+  %.sroa.573.087 = phi i32 [ %.sroa.2.0.i, %.lr.ph.i.lr.ph ], [ %.sroa.573.1, %_ZN15obj_equiv_classI4expr11ast_managerE14equiv_iteratorppEv.exit ] ; 5 uses
+  %.sroa.565.8.insert.ext = zext i32 %.sroa.573.087 to i64 ; 4 uses
   br label %bb.b
 
 bb.b:                                             ; preds = %_ZN15obj_equiv_classI4expr11ast_managerE8iteratorppEv.exit.i, %.lr.ph.i
@@ -290,26 +290,27 @@ _ZNK16basic_union_find7is_rootEj.exit.us.i:       ; preds = %_ZNK16basic_union_f
   br i1 %i.au, label %_ZN15obj_equiv_classI4expr11ast_managerE14equiv_iteratorppEv.exit, label %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit.us.i, !llvm.loop !66
 
 _ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit.i52: ; preds = %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit.i52.preheader, %_ZNK16basic_union_find7is_rootEj.exit.i
-  %4 = phi i32 [ %5, %_ZNK16basic_union_find7is_rootEj.exit.i ], [ %.sroa.573.087, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit.i52.preheader ]
-  %5 = add i32 %4, 1                              ; 8 uses
-  %.not.i53 = icmp eq i32 %5, %i.an
+  %indvars.iv = phi i64 [ %.sroa.565.8.insert.ext, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit.i52.preheader ], [ %indvars.iv.next, %_ZNK16basic_union_find7is_rootEj.exit.i ]
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 3 uses
+  %indvars = trunc i64 %indvars.iv.next to i32    ; 6 uses
+  %.not.i53 = icmp eq i32 %i.an, %indvars
   %brmerge116 = or i1 %.not.i53, %i.ap
   br i1 %brmerge116, label %_ZN15obj_equiv_classI4expr11ast_managerE14equiv_iteratorppEv.exit, label %_ZNK16basic_union_find12get_num_varsEv.exit.i.i
 
 _ZNK16basic_union_find12get_num_varsEv.exit.i.i:  ; preds = %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit.i52
   %i.av = load i32, ptr %i.ao, align 4, !tbaa !18
-  %.not.i.i54 = icmp ult i32 %5, %i.av
+  %.not.i.i54 = icmp ugt i32 %i.av, %indvars
   br i1 %.not.i.i54, label %_ZNK16basic_union_find7is_rootEj.exit.i, label %_ZN15obj_equiv_classI4expr11ast_managerE14equiv_iteratorppEv.exit
 
 _ZNK16basic_union_find7is_rootEj.exit.i:          ; preds = %_ZNK16basic_union_find12get_num_varsEv.exit.i.i
-  %6 = zext i32 %5 to i64
-  %i.aw = getelementptr inbounds nuw [4 x i8], ptr %i.db, i64 %6
+  %4 = and i64 %indvars.iv.next, 4294967295
+  %i.aw = getelementptr inbounds nuw [4 x i8], ptr %i.db, i64 %4
   %i.ax = load i32, ptr %i.aw, align 4, !tbaa !18
-  %i.ay = icmp eq i32 %i.ax, %5
+  %i.ay = icmp eq i32 %i.ax, %indvars
   br i1 %i.ay, label %_ZN15obj_equiv_classI4expr11ast_managerE14equiv_iteratorppEv.exit, label %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit.i52, !llvm.loop !66
 
 _ZN15obj_equiv_classI4expr11ast_managerE14equiv_iteratorppEv.exit: ; preds = %_ZNK16basic_union_find12get_num_varsEv.exit.i.i, %_ZNK16basic_union_find7is_rootEj.exit.i, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit.i52, %_ZNK16basic_union_find12get_num_varsEv.exit.i.us.i, %_ZNK16basic_union_find7is_rootEj.exit.us.i, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit.us.i
-  %.sroa.573.1 = phi i32 [ %indvars.i, %_ZNK16basic_union_find12get_num_varsEv.exit.i.us.i ], [ %indvars.i, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit.us.i ], [ %indvars.i, %_ZNK16basic_union_find7is_rootEj.exit.us.i ], [ %5, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit.i52 ], [ %5, %_ZNK16basic_union_find7is_rootEj.exit.i ], [ %5, %_ZNK16basic_union_find12get_num_varsEv.exit.i.i ] ; 2 uses
+  %.sroa.573.1 = phi i32 [ %indvars.i, %_ZNK16basic_union_find12get_num_varsEv.exit.i.us.i ], [ %indvars.i, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit.us.i ], [ %indvars.i, %_ZNK16basic_union_find7is_rootEj.exit.us.i ], [ %indvars, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit.i52 ], [ %indvars, %_ZNK16basic_union_find7is_rootEj.exit.i ], [ %indvars, %_ZNK16basic_union_find12get_num_varsEv.exit.i.i ] ; 2 uses
   %.not77 = icmp eq i32 %.sroa.573.1, %.sroa.2.0.i34
   br i1 %.not77, label %._crit_edge88, label %.lr.ph.i
 
@@ -580,8 +581,8 @@ _ZN15obj_equiv_classI4expr11ast_managerE3endEv.exit: ; preds = %_ZN15obj_equiv_c
   %i.w = phi ptr [ %.fr7.i.i, %.lr.ph111 ], [ %i.ax, %_ZN15obj_equiv_classI4expr11ast_managerE14equiv_iteratorppEv.exit ]
   %i.x = phi ptr [ %.fr7.i.i, %.lr.ph111 ], [ %i.ay, %_ZN15obj_equiv_classI4expr11ast_managerE14equiv_iteratorppEv.exit ]
   %.0110 = phi i1 [ false, %.lr.ph111 ], [ %.2.lcssa, %_ZN15obj_equiv_classI4expr11ast_managerE14equiv_iteratorppEv.exit ]
-  %.sroa.585.0109 = phi i32 [ %.sroa.2.0.i, %.lr.ph111 ], [ %.sroa.585.1, %_ZN15obj_equiv_classI4expr11ast_managerE14equiv_iteratorppEv.exit ] ; 6 uses
-  %.sroa.4.8.insert.ext = zext i32 %.sroa.585.0109 to i64
+  %.sroa.585.0109 = phi i32 [ %.sroa.2.0.i, %.lr.ph111 ], [ %.sroa.585.1, %_ZN15obj_equiv_classI4expr11ast_managerE14equiv_iteratorppEv.exit ] ; 5 uses
+  %.sroa.4.8.insert.ext = zext i32 %.sroa.585.0109 to i64 ; 2 uses
   br label %.lr.ph106
 
 ._crit_edge107:                                   ; preds = %_ZN15obj_equiv_classI4expr11ast_managerE8iteratorppEv.exit52
@@ -617,8 +618,9 @@ _ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit.
   %i.ah = load i32, ptr %i.ag, align 4, !tbaa !18 ; 2 uses
   %i.ai = getelementptr inbounds i8, ptr %i.dq, i64 -4 ; 2 uses
   %i.aj = icmp eq ptr %i.dq, null                 ; 2 uses
-  %3 = add i32 %.sroa.585.0109, 1                 ; 8 uses
-  %.not.i40.peel = icmp eq i32 %3, %i.ah          ; 3 uses
+  %indvars.iv.next.peel = add nuw nsw i64 %.sroa.4.8.insert.ext, 1 ; 3 uses
+  %indvars.peel = trunc i64 %indvars.iv.next.peel to i32 ; 6 uses
+  %.not.i40.peel = icmp eq i32 %i.ah, %indvars.peel ; 3 uses
   %brmerge146.peel = select i1 %.not.i40.peel, i1 true, i1 %i.aj
   %.lcssa142.mux.peel = select i1 %.not.i40.peel, ptr %i.dq, ptr null
   %.mux147.peel = select i1 %.not.i40.peel, ptr %i.dr, ptr null
@@ -626,14 +628,14 @@ _ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit.
 
 _ZNK16basic_union_find12get_num_varsEv.exit.i.i.peel: ; preds = %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit.i39.preheader
   %i.ak = load i32, ptr %i.ai, align 4, !tbaa !18
-  %.not.i.i41.peel = icmp ult i32 %3, %i.ak
+  %.not.i.i41.peel = icmp ugt i32 %i.ak, %indvars.peel
   br i1 %.not.i.i41.peel, label %_ZNK16basic_union_find7is_rootEj.exit.i.peel, label %_ZN15obj_equiv_classI4expr11ast_managerE14equiv_iteratorppEv.exit
 
 _ZNK16basic_union_find7is_rootEj.exit.i.peel:     ; preds = %_ZNK16basic_union_find12get_num_varsEv.exit.i.i.peel
-  %4 = zext i32 %3 to i64
-  %i.al = getelementptr inbounds nuw [4 x i8], ptr %i.dq, i64 %4
+  %3 = and i64 %indvars.iv.next.peel, 4294967295
+  %i.al = getelementptr inbounds nuw [4 x i8], ptr %i.dq, i64 %3
   %i.am = load i32, ptr %i.al, align 4, !tbaa !18
-  %i.an = icmp eq i32 %i.am, %3
+  %i.an = icmp eq i32 %i.am, %indvars.peel
   br i1 %i.an, label %_ZN15obj_equiv_classI4expr11ast_managerE14equiv_iteratorppEv.exit, label %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit.i39
 
 _ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit.us.i: ; preds = %_ZNK16basic_union_find7is_rootEj.exit.us.i.peel, %_ZNK16basic_union_find7is_rootEj.exit.us.i
@@ -657,22 +659,23 @@ _ZNK16basic_union_find7is_rootEj.exit.us.i:       ; preds = %_ZNK16basic_union_f
   br i1 %i.as, label %_ZN15obj_equiv_classI4expr11ast_managerE14equiv_iteratorppEv.exit, label %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit.us.i, !llvm.loop !78
 
 _ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit.i39: ; preds = %_ZNK16basic_union_find7is_rootEj.exit.i.peel, %_ZNK16basic_union_find7is_rootEj.exit.i
-  %5 = phi i32 [ %6, %_ZNK16basic_union_find7is_rootEj.exit.i ], [ %3, %_ZNK16basic_union_find7is_rootEj.exit.i.peel ]
-  %6 = add nuw i32 %5, 1                          ; 8 uses
-  %.not.i40 = icmp eq i32 %6, %i.ah               ; 3 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %_ZNK16basic_union_find7is_rootEj.exit.i ], [ %indvars.iv.next.peel, %_ZNK16basic_union_find7is_rootEj.exit.i.peel ]
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 3 uses
+  %indvars = trunc i64 %indvars.iv.next to i32    ; 6 uses
+  %.not.i40 = icmp eq i32 %i.ah, %indvars         ; 3 uses
   %brmerge146 = select i1 %.not.i40, i1 true, i1 %i.aj
   br i1 %brmerge146, label %_ZN15obj_equiv_classI4expr11ast_managerE14equiv_iteratorppEv.exit.loopexit162.loopexit.split.loop.exit182, label %_ZNK16basic_union_find12get_num_varsEv.exit.i.i
 
 _ZNK16basic_union_find12get_num_varsEv.exit.i.i:  ; preds = %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit.i39
   %i.at = load i32, ptr %i.ai, align 4, !tbaa !18
-  %.not.i.i41 = icmp ult i32 %6, %i.at
+  %.not.i.i41 = icmp ugt i32 %i.at, %indvars
   br i1 %.not.i.i41, label %_ZNK16basic_union_find7is_rootEj.exit.i, label %_ZN15obj_equiv_classI4expr11ast_managerE14equiv_iteratorppEv.exit
 
 _ZNK16basic_union_find7is_rootEj.exit.i:          ; preds = %_ZNK16basic_union_find12get_num_varsEv.exit.i.i
-  %7 = zext i32 %6 to i64
-  %i.au = getelementptr inbounds nuw [4 x i8], ptr %i.dq, i64 %7
+  %4 = and i64 %indvars.iv.next, 4294967295
+  %i.au = getelementptr inbounds nuw [4 x i8], ptr %i.dq, i64 %4
   %i.av = load i32, ptr %i.au, align 4, !tbaa !18
-  %i.aw = icmp eq i32 %i.av, %6
+  %i.aw = icmp eq i32 %i.av, %indvars
   br i1 %i.aw, label %_ZN15obj_equiv_classI4expr11ast_managerE14equiv_iteratorppEv.exit, label %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit.i39, !llvm.loop !80
 
 _ZN15obj_equiv_classI4expr11ast_managerE14equiv_iteratorppEv.exit.loopexit.loopexit.split.loop.exit191: ; preds = %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit.us.i
@@ -688,7 +691,7 @@ _ZN15obj_equiv_classI4expr11ast_managerE14equiv_iteratorppEv.exit.loopexit162.lo
 _ZN15obj_equiv_classI4expr11ast_managerE14equiv_iteratorppEv.exit: ; preds = %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit.i39.preheader, %_ZNK16basic_union_find12get_num_varsEv.exit.i.i.peel, %_ZNK16basic_union_find7is_rootEj.exit.i.peel, %_ZNK16basic_union_find7is_rootEj.exit.i, %_ZNK16basic_union_find12get_num_varsEv.exit.i.i, %_ZN15obj_equiv_classI4expr11ast_managerE14equiv_iteratorppEv.exit.loopexit162.loopexit.split.loop.exit182, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit.us.i.preheader, %_ZNK16basic_union_find12get_num_varsEv.exit.i.us.i.peel, %_ZNK16basic_union_find7is_rootEj.exit.us.i.peel, %_ZNK16basic_union_find7is_rootEj.exit.us.i, %_ZNK16basic_union_find12get_num_varsEv.exit.i.us.i, %_ZN15obj_equiv_classI4expr11ast_managerE14equiv_iteratorppEv.exit.loopexit.loopexit.split.loop.exit191
   %i.ax = phi ptr [ %i.dp, %_ZNK16basic_union_find7is_rootEj.exit.us.i ], [ %.mux.peel, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit.us.i.preheader ], [ %i.dp, %_ZNK16basic_union_find12get_num_varsEv.exit.i.us.i.peel ], [ %i.dp, %_ZNK16basic_union_find7is_rootEj.exit.us.i.peel ], [ %i.dp, %_ZNK16basic_union_find12get_num_varsEv.exit.i.us.i ], [ %.mux.le, %_ZN15obj_equiv_classI4expr11ast_managerE14equiv_iteratorppEv.exit.loopexit.loopexit.split.loop.exit191 ], [ %.lcssa142.mux.peel, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit.i39.preheader ], [ %i.dq, %_ZNK16basic_union_find12get_num_varsEv.exit.i.i.peel ], [ %i.dq, %_ZNK16basic_union_find7is_rootEj.exit.i.peel ], [ %i.dq, %_ZNK16basic_union_find12get_num_varsEv.exit.i.i ], [ %.lcssa142.mux.le, %_ZN15obj_equiv_classI4expr11ast_managerE14equiv_iteratorppEv.exit.loopexit162.loopexit.split.loop.exit182 ], [ %i.dq, %_ZNK16basic_union_find7is_rootEj.exit.i ]
   %i.ay = phi ptr [ %i.dp, %_ZNK16basic_union_find7is_rootEj.exit.us.i ], [ %.mux144.peel, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit.us.i.preheader ], [ %i.dp, %_ZNK16basic_union_find12get_num_varsEv.exit.i.us.i.peel ], [ %i.dp, %_ZNK16basic_union_find7is_rootEj.exit.us.i.peel ], [ %i.dp, %_ZNK16basic_union_find12get_num_varsEv.exit.i.us.i ], [ %.mux144.le, %_ZN15obj_equiv_classI4expr11ast_managerE14equiv_iteratorppEv.exit.loopexit.loopexit.split.loop.exit191 ], [ %.mux147.peel, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit.i39.preheader ], [ %i.dq, %_ZNK16basic_union_find12get_num_varsEv.exit.i.i.peel ], [ %i.dq, %_ZNK16basic_union_find7is_rootEj.exit.i.peel ], [ %i.dq, %_ZNK16basic_union_find12get_num_varsEv.exit.i.i ], [ %.mux147.le, %_ZN15obj_equiv_classI4expr11ast_managerE14equiv_iteratorppEv.exit.loopexit162.loopexit.split.loop.exit182 ], [ %i.dq, %_ZNK16basic_union_find7is_rootEj.exit.i ]
-  %.sroa.585.1 = phi i32 [ %indvars.i, %_ZN15obj_equiv_classI4expr11ast_managerE14equiv_iteratorppEv.exit.loopexit.loopexit.split.loop.exit191 ], [ %indvars.i.peel, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit.us.i.preheader ], [ %indvars.i.peel, %_ZNK16basic_union_find12get_num_varsEv.exit.i.us.i.peel ], [ %indvars.i.peel, %_ZNK16basic_union_find7is_rootEj.exit.us.i.peel ], [ %indvars.i, %_ZNK16basic_union_find7is_rootEj.exit.us.i ], [ %indvars.i, %_ZNK16basic_union_find12get_num_varsEv.exit.i.us.i ], [ %3, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit.i39.preheader ], [ %3, %_ZNK16basic_union_find12get_num_varsEv.exit.i.i.peel ], [ %3, %_ZNK16basic_union_find7is_rootEj.exit.i.peel ], [ %6, %_ZNK16basic_union_find7is_rootEj.exit.i ], [ %6, %_ZNK16basic_union_find12get_num_varsEv.exit.i.i ], [ %6, %_ZN15obj_equiv_classI4expr11ast_managerE14equiv_iteratorppEv.exit.loopexit162.loopexit.split.loop.exit182 ] ; 2 uses
+  %.sroa.585.1 = phi i32 [ %indvars.i, %_ZN15obj_equiv_classI4expr11ast_managerE14equiv_iteratorppEv.exit.loopexit.loopexit.split.loop.exit191 ], [ %indvars.i.peel, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit.us.i.preheader ], [ %indvars.i.peel, %_ZNK16basic_union_find12get_num_varsEv.exit.i.us.i.peel ], [ %indvars.i.peel, %_ZNK16basic_union_find7is_rootEj.exit.us.i.peel ], [ %indvars.i, %_ZNK16basic_union_find7is_rootEj.exit.us.i ], [ %indvars.i, %_ZNK16basic_union_find12get_num_varsEv.exit.i.us.i ], [ %indvars.peel, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit.i39.preheader ], [ %indvars.peel, %_ZNK16basic_union_find12get_num_varsEv.exit.i.i.peel ], [ %indvars.peel, %_ZNK16basic_union_find7is_rootEj.exit.i.peel ], [ %indvars, %_ZNK16basic_union_find7is_rootEj.exit.i ], [ %indvars, %_ZNK16basic_union_find12get_num_varsEv.exit.i.i ], [ %indvars, %_ZN15obj_equiv_classI4expr11ast_managerE14equiv_iteratorppEv.exit.loopexit162.loopexit.split.loop.exit182 ] ; 2 uses
   %.not = icmp eq i32 %.sroa.585.1, %.sroa.2.0.i26
   br i1 %.not, label %._crit_edge112, label %.lr.ph106.preheader
 

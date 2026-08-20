@@ -203,17 +203,16 @@ bb.h:                                             ; preds = %.lr.ph, %.critedge
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #26
   %i.au = load ptr, ptr %i.ac, align 8, !tbaa !56
   call void %i.au(ptr noundef nonnull %2, ptr noundef nonnull %3, ptr noundef nonnull @.str.91) #26
+  %6 = zext i32 %.07592 to i64
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.i
   %indvars.iv = phi i64 [ 0, %bb.h ], [ %indvars.iv.next, %bb.i ] ; 3 uses
   %.07490 = phi i64 [ 0, %bb.h ], [ %i.bf, %bb.i ] ; 2 uses
-  %6 = trunc nuw nsw i64 %indvars.iv to i32
-  %7 = add i32 %.07592, %6
   %i.av = getelementptr inbounds nuw i8, ptr %i.b, i64 %.07490
   %i.aw = load ptr, ptr %i.ad, align 8, !tbaa !191
-  %8 = zext i32 %7 to i64
-  %i.ax = getelementptr inbounds nuw [8 x i8], ptr %i.aw, i64 %8
+  %7 = getelementptr inbounds nuw [8 x i8], ptr %i.aw, i64 %indvars.iv
+  %i.ax = getelementptr inbounds nuw [8 x i8], ptr %7, i64 %6
   %i.ay = load ptr, ptr %i.ax, align 8, !tbaa !55 ; 2 uses
   %i.az = load i32, ptr %i.ay, align 8, !tbaa !50
   %i.ba = call ptr @hwloc_obj_type_string(i32 noundef %i.az) #31
@@ -250,17 +249,16 @@ bb.j:                                             ; preds = %.lr.ph96, %bb.l
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #26
   %i.bo = load ptr, ptr %i.ap, align 8, !tbaa !56
   call void %i.bo(ptr noundef nonnull %2, ptr noundef nonnull %4, ptr noundef nonnull @.str.91) #26
+  %8 = zext i32 %.07295 to i64
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.k
   %indvars.iv111 = phi i64 [ 0, %bb.j ], [ %indvars.iv.next112, %bb.k ] ; 3 uses
   %.07193 = phi i64 [ 0, %bb.j ], [ %i.bv, %bb.k ] ; 2 uses
-  %9 = trunc nuw nsw i64 %indvars.iv111 to i32
-  %10 = add i32 %.07295, %9
   %i.bp = getelementptr inbounds nuw i8, ptr %i.d, i64 %.07193
   %i.bq = load ptr, ptr %i.aq, align 8, !tbaa !242
-  %11 = zext i32 %10 to i64
-  %i.br = getelementptr inbounds nuw [8 x i8], ptr %i.bq, i64 %11
+  %9 = getelementptr inbounds nuw [8 x i8], ptr %i.bq, i64 %indvars.iv111
+  %i.br = getelementptr inbounds nuw [8 x i8], ptr %9, i64 %8
   %i.bs = load i64, ptr %i.br, align 8, !tbaa !201
   %i.bt = call i32 (ptr, ptr, ...) @sprintf(ptr noundef nonnull dereferenceable(1) %i.bp, ptr noundef nonnull dereferenceable(1) @.str.94, i64 noundef %i.bs) #26
   %i.bu = sext i32 %i.bt to i64
@@ -306,17 +304,16 @@ bb.m:                                             ; preds = %.lr.ph100, %bb.o
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #26
   %i.ck = load ptr, ptr %i.cf, align 8, !tbaa !56
   call void %i.ck(ptr noundef nonnull %2, ptr noundef nonnull %5, ptr noundef nonnull @.str.95) #26
+  %10 = zext i32 %.06999 to i64
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %bb.n
   %indvars.iv115 = phi i64 [ 0, %bb.m ], [ %indvars.iv.next116, %bb.n ] ; 3 uses
   %.06897 = phi i64 [ 0, %bb.m ], [ %i.cr, %bb.n ] ; 2 uses
-  %12 = trunc nuw nsw i64 %indvars.iv115 to i32
-  %13 = add i32 %.06999, %12
   %i.cl = getelementptr inbounds nuw i8, ptr %i.f, i64 %.06897
   %i.cm = load ptr, ptr %i.cg, align 8, !tbaa !200
-  %14 = zext i32 %13 to i64
-  %i.cn = getelementptr inbounds nuw [8 x i8], ptr %i.cm, i64 %14
+  %11 = getelementptr inbounds nuw [8 x i8], ptr %i.cm, i64 %indvars.iv115
+  %i.cn = getelementptr inbounds nuw [8 x i8], ptr %11, i64 %10
   %i.co = load i64, ptr %i.cn, align 8, !tbaa !201
   %i.cp = call i32 (ptr, ptr, ...) @sprintf(ptr noundef nonnull dereferenceable(1) %i.cl, ptr noundef nonnull dereferenceable(1) @.str.94, i64 noundef %i.co) #26
   %i.cq = sext i32 %i.cp to i64

@@ -204,7 +204,7 @@ _ZN13mpzzp_manager5resetER3mpz.exit.preheader:    ; preds = %bb.n
   br label %bb.o
 
 bb.o:                                             ; preds = %.lr.ph, %_ZN13mpzzp_manager3addERK3mpzS2_RS0_.exit
-  %.097227 = phi i32 [ %4, %.lr.ph ], [ %.096.lcssa, %_ZN13mpzzp_manager3addERK3mpzS2_RS0_.exit ] ; 7 uses
+  %.097227 = phi i32 [ %4, %.lr.ph ], [ %.096.lcssa, %_ZN13mpzzp_manager3addERK3mpzS2_RS0_.exit ] ; 5 uses
   %i.bb = load ptr, ptr %0, align 8, !tbaa !249, !nonnull !51, !align !52
   %i.bc = invoke noundef zeroext i1 @_ZN8reslimit3incEv(ptr noundef nonnull align 8 dereferenceable(40) %i.bb)
           to label %.noexc128 unwind label %.loopexit
@@ -232,7 +232,7 @@ bb.r:                                             ; preds = %bb.p
 
 _ZN10polynomial7manager3imp10checkpointEv.exit:   ; preds = %.noexc128
   %i.bf = load ptr, ptr %i.ay, align 8, !tbaa !131 ; 4 uses
-  %i.bg = zext i32 %.097227 to i64                ; 5 uses
+  %i.bg = zext i32 %.097227 to i64                ; 6 uses
   %i.bh = getelementptr inbounds nuw [8 x i8], ptr %i.bf, i64 %i.bg
   %i.bi = load ptr, ptr %i.bh, align 8, !tbaa !132 ; 3 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %i.bi, i64 12
@@ -373,10 +373,11 @@ _ZNK10polynomial8monomial9degree_ofEj.exit:       ; preds = %bb.s, %_ZNK10polyno
 
 .preheader.preheader:                             ; preds = %_ZNK10polynomial8monomial9degree_ofEj.exit
   %i.da = add i32 %.097227, 1
-  %umax = call i32 @llvm.umax.i32(i32 %5, i32 %i.da) ; 3 uses
-  %9 = add i32 %umax, -1                          ; 2 uses
-  %exitcond.not362 = icmp eq i32 %.097227, %9
-  br i1 %exitcond.not362, label %_ZNK10polynomial8monomial9degree_ofEj.exit154._crit_edge, label %.lr.ph364
+  %umax = call i32 @llvm.umax.i32(i32 %5, i32 %i.da) ; 2 uses
+  %indvars.iv.next364 = add nuw nsw i64 %i.bg, 1  ; 2 uses
+  %indvars365 = trunc i64 %indvars.iv.next364 to i32 ; 2 uses
+  %9 = icmp ugt i32 %5, %indvars365
+  br i1 %9, label %.lr.ph364, label %_ZNK10polynomial8monomial9degree_ofEj.exit154._crit_edge
 
 .lr.ph.i:                                         ; preds = %_ZN10polynomial7manager3imp10checkpointEv.exit, %_ZNK10polynomial8monomial8index_ofEj.exit.i, %_ZNK10polynomial8monomial9degree_ofEj.exit, %.preheader.i.i.preheader, %bb.x, %.lr.ph352.5, %.preheader.i.i, %.preheader.i.i.1, %.preheader.i.i.2, %.preheader.i.i.3, %.preheader.i.i.4
   %wide.trip.count.i = zext i32 %5 to i64
@@ -600,14 +601,16 @@ bb.aw:                                            ; preds = %bb.av
           to label %.critedge unwind label %bb.au
 
 .preheader:                                       ; preds = %_ZNK10polynomial8monomial9degree_ofEj.exit154
-  %exitcond.not = icmp eq i32 %.096363, %9
-  br i1 %exitcond.not, label %_ZNK10polynomial8monomial9degree_ofEj.exit154._crit_edge, label %.lr.ph364
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv.next366, 1 ; 2 uses
+  %indvars = trunc i64 %indvars.iv.next to i32    ; 2 uses
+  %10 = icmp ugt i32 %5, %indvars
+  br i1 %10, label %.lr.ph364, label %_ZNK10polynomial8monomial9degree_ofEj.exit154._crit_edge
 
 .lr.ph364:                                        ; preds = %.preheader.preheader, %.preheader
-  %.096363.in = phi i32 [ %.096363, %.preheader ], [ %.097227, %.preheader.preheader ]
-  %.096363 = add i32 %.096363.in, 1               ; 4 uses
-  %10 = zext i32 %.096363 to i64
-  %i.fx = getelementptr inbounds nuw [8 x i8], ptr %i.bf, i64 %10
+  %.096363.in = phi i32 [ %indvars, %.preheader ], [ %indvars365, %.preheader.preheader ]
+  %indvars.iv.next366 = phi i64 [ %indvars.iv.next, %.preheader ], [ %indvars.iv.next364, %.preheader.preheader ] ; 2 uses
+  %11 = and i64 %indvars.iv.next366, 4294967295
+  %i.fx = getelementptr inbounds nuw [8 x i8], ptr %i.bf, i64 %11
   %i.fy = load ptr, ptr %i.fx, align 8, !tbaa !132 ; 3 uses
   %i.fz = getelementptr inbounds nuw i8, ptr %i.fy, i64 12
   %i.ga = load i32, ptr %i.fz, align 4, !tbaa !27 ; 3 uses
@@ -750,7 +753,7 @@ _ZNK10polynomial8monomial9degree_ofEj.exit154:    ; preds = %bb.bc, %.preheader.
   br i1 %i.hp, label %_ZNK10polynomial8monomial9degree_ofEj.exit154._crit_edge, label %.preheader
 
 _ZNK10polynomial8monomial9degree_ofEj.exit154._crit_edge: ; preds = %.preheader, %_ZNK10polynomial8monomial9degree_ofEj.exit154, %.preheader.preheader
-  %.096.lcssa = phi i32 [ %umax, %.preheader.preheader ], [ %umax, %.preheader ], [ %.096363, %_ZNK10polynomial8monomial9degree_ofEj.exit154 ] ; 5 uses
+  %.096.lcssa = phi i32 [ %umax, %.preheader.preheader ], [ %umax, %.preheader ], [ %.096363.in, %_ZNK10polynomial8monomial9degree_ofEj.exit154 ] ; 5 uses
   %.2 = phi i32 [ 0, %.preheader.preheader ], [ 0, %.preheader ], [ %.0.i144, %_ZNK10polynomial8monomial9degree_ofEj.exit154 ]
   %i.hq = icmp ult i32 %.097227, %.096.lcssa
   br i1 %i.hq, label %.lr.ph.i156, label %_ZN10polynomial10polynomial16max_smaller_thanEjjj.exit182.thread
@@ -1153,7 +1156,7 @@ _ZN22basic_interval_managerI12mpbq_managerLb0EE5resetERNS1_8intervalE.exit: ; pr
   br label %_ZN13mpbqi_manager3addERKN22basic_interval_managerI12mpbq_managerLb0EE8intervalERK3mpzRS3_.exit
 
 _ZN13mpbqi_manager3addERKN22basic_interval_managerI12mpbq_managerLb0EE8intervalERK3mpzRS3_.exit: ; preds = %bb.cg, %_ZN22basic_interval_managerI12mpbq_managerLb0EE5resetERNS1_8intervalE.exit
-  %.097 = phi i32 [ %4, %_ZN22basic_interval_managerI12mpbq_managerLb0EE5resetERNS1_8intervalE.exit ], [ %.096.lcssa, %bb.cg ] ; 8 uses
+  %.097 = phi i32 [ %4, %_ZN22basic_interval_managerI12mpbq_managerLb0EE5resetERNS1_8intervalE.exit ], [ %.096.lcssa, %bb.cg ] ; 6 uses
   %i.bt = icmp ult i32 %.097, %5
   br i1 %i.bt, label %bb.q, label %.critedge
 
@@ -1185,7 +1188,7 @@ bb.t:                                             ; preds = %bb.r
 
 _ZN10polynomial7manager3imp10checkpointEv.exit:   ; preds = %.noexc127
   %i.by = load ptr, ptr %i.br, align 8, !tbaa !131 ; 4 uses
-  %i.bz = zext i32 %.097 to i64                   ; 5 uses
+  %i.bz = zext i32 %.097 to i64                   ; 6 uses
   %i.ca = getelementptr inbounds nuw [8 x i8], ptr %i.by, i64 %i.bz
   %i.cb = load ptr, ptr %i.ca, align 8, !tbaa !132 ; 3 uses
   %i.cc = getelementptr inbounds nuw i8, ptr %i.cb, i64 12
@@ -1326,10 +1329,11 @@ _ZNK10polynomial8monomial9degree_ofEj.exit:       ; preds = %bb.u, %_ZNK10polyno
 
 .preheader.preheader:                             ; preds = %_ZNK10polynomial8monomial9degree_ofEj.exit
   %i.dt = add i32 %.097, 1
-  %umax = call i32 @llvm.umax.i32(i32 %5, i32 %i.dt) ; 3 uses
-  %9 = add i32 %umax, -1                          ; 2 uses
-  %exitcond.not348 = icmp eq i32 %.097, %9
-  br i1 %exitcond.not348, label %_ZNK10polynomial8monomial9degree_ofEj.exit152._crit_edge, label %.lr.ph350
+  %umax = call i32 @llvm.umax.i32(i32 %5, i32 %i.dt) ; 2 uses
+  %indvars.iv.next350 = add nuw nsw i64 %i.bz, 1  ; 2 uses
+  %indvars351 = trunc i64 %indvars.iv.next350 to i32 ; 2 uses
+  %9 = icmp ugt i32 %5, %indvars351
+  br i1 %9, label %.lr.ph350, label %_ZNK10polynomial8monomial9degree_ofEj.exit152._crit_edge
 
 .lr.ph.i:                                         ; preds = %_ZN10polynomial7manager3imp10checkpointEv.exit, %_ZNK10polynomial8monomial8index_ofEj.exit.i, %_ZNK10polynomial8monomial9degree_ofEj.exit, %.preheader.i.i.preheader, %bb.z, %.lr.ph338.5, %.preheader.i.i, %.preheader.i.i.1, %.preheader.i.i.2, %.preheader.i.i.3, %.preheader.i.i.4
   %wide.trip.count.i = zext i32 %5 to i64
@@ -1549,14 +1553,16 @@ bb.ay:                                            ; preds = %bb.ax
           to label %.critedge unwind label %bb.aw
 
 .preheader:                                       ; preds = %_ZNK10polynomial8monomial9degree_ofEj.exit152
-  %exitcond.not = icmp eq i32 %.096349, %9
-  br i1 %exitcond.not, label %_ZNK10polynomial8monomial9degree_ofEj.exit152._crit_edge, label %.lr.ph350
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv.next352, 1 ; 2 uses
+  %indvars = trunc i64 %indvars.iv.next to i32    ; 2 uses
+  %10 = icmp ugt i32 %5, %indvars
+  br i1 %10, label %.lr.ph350, label %_ZNK10polynomial8monomial9degree_ofEj.exit152._crit_edge
 
 .lr.ph350:                                        ; preds = %.preheader.preheader, %.preheader
-  %.096349.in = phi i32 [ %.096349, %.preheader ], [ %.097, %.preheader.preheader ]
-  %.096349 = add i32 %.096349.in, 1               ; 4 uses
-  %10 = zext i32 %.096349 to i64
-  %i.go = getelementptr inbounds nuw [8 x i8], ptr %i.by, i64 %10
+  %.096349.in = phi i32 [ %indvars, %.preheader ], [ %indvars351, %.preheader.preheader ]
+  %indvars.iv.next352 = phi i64 [ %indvars.iv.next, %.preheader ], [ %indvars.iv.next350, %.preheader.preheader ] ; 2 uses
+  %11 = and i64 %indvars.iv.next352, 4294967295
+  %i.go = getelementptr inbounds nuw [8 x i8], ptr %i.by, i64 %11
   %i.gp = load ptr, ptr %i.go, align 8, !tbaa !132 ; 3 uses
   %i.gq = getelementptr inbounds nuw i8, ptr %i.gp, i64 12
   %i.gr = load i32, ptr %i.gq, align 4, !tbaa !27 ; 3 uses
@@ -1699,7 +1705,7 @@ _ZNK10polynomial8monomial9degree_ofEj.exit152:    ; preds = %bb.be, %.preheader.
   br i1 %i.ig, label %_ZNK10polynomial8monomial9degree_ofEj.exit152._crit_edge, label %.preheader
 
 _ZNK10polynomial8monomial9degree_ofEj.exit152._crit_edge: ; preds = %.preheader, %_ZNK10polynomial8monomial9degree_ofEj.exit152, %.preheader.preheader
-  %.096.lcssa = phi i32 [ %umax, %.preheader.preheader ], [ %umax, %.preheader ], [ %.096349, %_ZNK10polynomial8monomial9degree_ofEj.exit152 ] ; 4 uses
+  %.096.lcssa = phi i32 [ %umax, %.preheader.preheader ], [ %umax, %.preheader ], [ %.096349.in, %_ZNK10polynomial8monomial9degree_ofEj.exit152 ] ; 4 uses
   %.2 = phi i32 [ 0, %.preheader.preheader ], [ 0, %.preheader ], [ %.0.i142, %_ZNK10polynomial8monomial9degree_ofEj.exit152 ]
   %i.ih = icmp ult i32 %.097, %.096.lcssa
   br i1 %i.ih, label %.lr.ph.i154, label %_ZN10polynomial10polynomial16max_smaller_thanEjjj.exit180.thread
@@ -2102,7 +2108,7 @@ _ZN11mpq_managerILb0EE5resetER3mpq.exit:          ; preds = %.noexc128
   br label %bb.q
 
 bb.q:                                             ; preds = %.lr.ph, %_ZN11mpq_managerILb0EE3mulERK3mpqS3_RS1_.exit187
-  %.097222 = phi i32 [ %4, %.lr.ph ], [ %.096.lcssa, %_ZN11mpq_managerILb0EE3mulERK3mpqS3_RS1_.exit187 ] ; 7 uses
+  %.097222 = phi i32 [ %4, %.lr.ph ], [ %.096.lcssa, %_ZN11mpq_managerILb0EE3mulERK3mpqS3_RS1_.exit187 ] ; 5 uses
   %i.bt = load ptr, ptr %0, align 8, !tbaa !249, !nonnull !51, !align !52
   %i.bu = invoke noundef zeroext i1 @_ZN8reslimit3incEv(ptr noundef nonnull align 8 dereferenceable(40) %i.bt)
           to label %.noexc130 unwind label %.loopexit
@@ -2130,7 +2136,7 @@ bb.t:                                             ; preds = %bb.r
 
 _ZN10polynomial7manager3imp10checkpointEv.exit:   ; preds = %.noexc130
   %i.bx = load ptr, ptr %i.br, align 8, !tbaa !131 ; 4 uses
-  %i.by = zext i32 %.097222 to i64                ; 5 uses
+  %i.by = zext i32 %.097222 to i64                ; 6 uses
   %i.bz = getelementptr inbounds nuw [8 x i8], ptr %i.bx, i64 %i.by
   %i.ca = load ptr, ptr %i.bz, align 8, !tbaa !132 ; 3 uses
   %i.cb = getelementptr inbounds nuw i8, ptr %i.ca, i64 12
@@ -2271,10 +2277,11 @@ _ZNK10polynomial8monomial9degree_ofEj.exit:       ; preds = %bb.u, %_ZNK10polyno
 
 .preheader.preheader:                             ; preds = %_ZNK10polynomial8monomial9degree_ofEj.exit
   %i.ds = add i32 %.097222, 1
-  %umax = call i32 @llvm.umax.i32(i32 %5, i32 %i.ds) ; 3 uses
-  %9 = add i32 %umax, -1                          ; 2 uses
-  %exitcond.not357 = icmp eq i32 %.097222, %9
-  br i1 %exitcond.not357, label %_ZNK10polynomial8monomial9degree_ofEj.exit151._crit_edge, label %.lr.ph359
+  %umax = call i32 @llvm.umax.i32(i32 %5, i32 %i.ds) ; 2 uses
+  %indvars.iv.next359 = add nuw nsw i64 %i.by, 1  ; 2 uses
+  %indvars360 = trunc i64 %indvars.iv.next359 to i32 ; 2 uses
+  %9 = icmp ugt i32 %5, %indvars360
+  br i1 %9, label %.lr.ph359, label %_ZNK10polynomial8monomial9degree_ofEj.exit151._crit_edge
 
 .lr.ph.i:                                         ; preds = %_ZN10polynomial7manager3imp10checkpointEv.exit, %_ZNK10polynomial8monomial8index_ofEj.exit.i, %_ZNK10polynomial8monomial9degree_ofEj.exit, %.preheader.i.i.preheader, %bb.z, %.lr.ph347.5, %.preheader.i.i, %.preheader.i.i.1, %.preheader.i.i.2, %.preheader.i.i.3, %.preheader.i.i.4
   %wide.trip.count.i = zext i32 %5 to i64
@@ -2482,14 +2489,16 @@ bb.ay:                                            ; preds = %bb.ax
           to label %.critedge unwind label %bb.aw
 
 .preheader:                                       ; preds = %_ZNK10polynomial8monomial9degree_ofEj.exit151
-  %exitcond.not = icmp eq i32 %.096358, %9
-  br i1 %exitcond.not, label %_ZNK10polynomial8monomial9degree_ofEj.exit151._crit_edge, label %.lr.ph359
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv.next361, 1 ; 2 uses
+  %indvars = trunc i64 %indvars.iv.next to i32    ; 2 uses
+  %10 = icmp ugt i32 %5, %indvars
+  br i1 %10, label %.lr.ph359, label %_ZNK10polynomial8monomial9degree_ofEj.exit151._crit_edge
 
 .lr.ph359:                                        ; preds = %.preheader.preheader, %.preheader
-  %.096358.in = phi i32 [ %.096358, %.preheader ], [ %.097222, %.preheader.preheader ]
-  %.096358 = add i32 %.096358.in, 1               ; 4 uses
-  %10 = zext i32 %.096358 to i64
-  %i.gj = getelementptr inbounds nuw [8 x i8], ptr %i.bx, i64 %10
+  %.096358.in = phi i32 [ %indvars, %.preheader ], [ %indvars360, %.preheader.preheader ]
+  %indvars.iv.next361 = phi i64 [ %indvars.iv.next, %.preheader ], [ %indvars.iv.next359, %.preheader.preheader ] ; 2 uses
+  %11 = and i64 %indvars.iv.next361, 4294967295
+  %i.gj = getelementptr inbounds nuw [8 x i8], ptr %i.bx, i64 %11
   %i.gk = load ptr, ptr %i.gj, align 8, !tbaa !132 ; 3 uses
   %i.gl = getelementptr inbounds nuw i8, ptr %i.gk, i64 12
   %i.gm = load i32, ptr %i.gl, align 4, !tbaa !27 ; 3 uses
@@ -2632,7 +2641,7 @@ _ZNK10polynomial8monomial9degree_ofEj.exit151:    ; preds = %bb.be, %.preheader.
   br i1 %i.ib, label %_ZNK10polynomial8monomial9degree_ofEj.exit151._crit_edge, label %.preheader
 
 _ZNK10polynomial8monomial9degree_ofEj.exit151._crit_edge: ; preds = %.preheader, %_ZNK10polynomial8monomial9degree_ofEj.exit151, %.preheader.preheader
-  %.096.lcssa = phi i32 [ %umax, %.preheader.preheader ], [ %umax, %.preheader ], [ %.096358, %_ZNK10polynomial8monomial9degree_ofEj.exit151 ] ; 5 uses
+  %.096.lcssa = phi i32 [ %umax, %.preheader.preheader ], [ %umax, %.preheader ], [ %.096358.in, %_ZNK10polynomial8monomial9degree_ofEj.exit151 ] ; 5 uses
   %.2 = phi i32 [ 0, %.preheader.preheader ], [ 0, %.preheader ], [ %.0.i141, %_ZNK10polynomial8monomial9degree_ofEj.exit151 ]
   %i.ic = icmp ult i32 %.097222, %.096.lcssa
   br i1 %i.ic, label %.lr.ph.i153, label %_ZN10polynomial10polynomial16max_smaller_thanEjjj.exit179.thread
@@ -3035,7 +3044,7 @@ bb.l:                                             ; preds = %bb.k
   br label %bb.m
 
 bb.m:                                             ; preds = %.preheader179, %bb.ca
-  %.097 = phi i32 [ %.096.lcssa, %bb.ca ], [ %4, %.preheader179 ] ; 8 uses
+  %.097 = phi i32 [ %.096.lcssa, %bb.ca ], [ %4, %.preheader179 ] ; 6 uses
   %i.af = icmp ult i32 %.097, %5
   br i1 %i.af, label %bb.n, label %.critedge
 
@@ -3067,7 +3076,7 @@ bb.q:                                             ; preds = %bb.o
 
 _ZN10polynomial7manager3imp10checkpointEv.exit:   ; preds = %.noexc
   %i.ak = load ptr, ptr %i.ad, align 8, !tbaa !131 ; 4 uses
-  %i.al = zext i32 %.097 to i64                   ; 5 uses
+  %i.al = zext i32 %.097 to i64                   ; 6 uses
   %i.am = getelementptr inbounds nuw [8 x i8], ptr %i.ak, i64 %i.al
   %i.an = load ptr, ptr %i.am, align 8, !tbaa !132 ; 3 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %i.an, i64 12
@@ -3208,10 +3217,11 @@ _ZNK10polynomial8monomial9degree_ofEj.exit:       ; preds = %bb.r, %_ZNK10polyno
 
 .preheader.preheader:                             ; preds = %_ZNK10polynomial8monomial9degree_ofEj.exit
   %i.cf = add i32 %.097, 1
-  %umax = call i32 @llvm.umax.i32(i32 %5, i32 %i.cf) ; 3 uses
-  %9 = add i32 %umax, -1                          ; 2 uses
-  %exitcond.not334 = icmp eq i32 %.097, %9
-  br i1 %exitcond.not334, label %_ZNK10polynomial8monomial9degree_ofEj.exit144._crit_edge, label %.lr.ph336
+  %umax = call i32 @llvm.umax.i32(i32 %5, i32 %i.cf) ; 2 uses
+  %indvars.iv.next336 = add nuw nsw i64 %i.al, 1  ; 2 uses
+  %indvars337 = trunc i64 %indvars.iv.next336 to i32 ; 2 uses
+  %9 = icmp ugt i32 %5, %indvars337
+  br i1 %9, label %.lr.ph336, label %_ZNK10polynomial8monomial9degree_ofEj.exit144._crit_edge
 
 .lr.ph.i:                                         ; preds = %_ZN10polynomial7manager3imp10checkpointEv.exit, %_ZNK10polynomial8monomial8index_ofEj.exit.i, %_ZNK10polynomial8monomial9degree_ofEj.exit, %.preheader.i.i.preheader, %bb.w, %.lr.ph324.5, %.preheader.i.i, %.preheader.i.i.1, %.preheader.i.i.2, %.preheader.i.i.3, %.preheader.i.i.4
   %wide.trip.count.i = zext i32 %5 to i64
@@ -3419,14 +3429,16 @@ bb.av:                                            ; preds = %bb.au
           to label %.critedge unwind label %bb.at
 
 .preheader:                                       ; preds = %_ZNK10polynomial8monomial9degree_ofEj.exit144
-  %exitcond.not = icmp eq i32 %.096335, %9
-  br i1 %exitcond.not, label %_ZNK10polynomial8monomial9degree_ofEj.exit144._crit_edge, label %.lr.ph336
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv.next338, 1 ; 2 uses
+  %indvars = trunc i64 %indvars.iv.next to i32    ; 2 uses
+  %10 = icmp ugt i32 %5, %indvars
+  br i1 %10, label %.lr.ph336, label %_ZNK10polynomial8monomial9degree_ofEj.exit144._crit_edge
 
 .lr.ph336:                                        ; preds = %.preheader.preheader, %.preheader
-  %.096335.in = phi i32 [ %.096335, %.preheader ], [ %.097, %.preheader.preheader ]
-  %.096335 = add i32 %.096335.in, 1               ; 4 uses
-  %10 = zext i32 %.096335 to i64
-  %i.ew = getelementptr inbounds nuw [8 x i8], ptr %i.ak, i64 %10
+  %.096335.in = phi i32 [ %indvars, %.preheader ], [ %indvars337, %.preheader.preheader ]
+  %indvars.iv.next338 = phi i64 [ %indvars.iv.next, %.preheader ], [ %indvars.iv.next336, %.preheader.preheader ] ; 2 uses
+  %11 = and i64 %indvars.iv.next338, 4294967295
+  %i.ew = getelementptr inbounds nuw [8 x i8], ptr %i.ak, i64 %11
   %i.ex = load ptr, ptr %i.ew, align 8, !tbaa !132 ; 3 uses
   %i.ey = getelementptr inbounds nuw i8, ptr %i.ex, i64 12
   %i.ez = load i32, ptr %i.ey, align 4, !tbaa !27 ; 3 uses
@@ -3569,7 +3581,7 @@ _ZNK10polynomial8monomial9degree_ofEj.exit144:    ; preds = %bb.bb, %.preheader.
   br i1 %i.go, label %_ZNK10polynomial8monomial9degree_ofEj.exit144._crit_edge, label %.preheader
 
 _ZNK10polynomial8monomial9degree_ofEj.exit144._crit_edge: ; preds = %.preheader, %_ZNK10polynomial8monomial9degree_ofEj.exit144, %.preheader.preheader
-  %.096.lcssa = phi i32 [ %umax, %.preheader.preheader ], [ %umax, %.preheader ], [ %.096335, %_ZNK10polynomial8monomial9degree_ofEj.exit144 ] ; 4 uses
+  %.096.lcssa = phi i32 [ %umax, %.preheader.preheader ], [ %umax, %.preheader ], [ %.096335.in, %_ZNK10polynomial8monomial9degree_ofEj.exit144 ] ; 4 uses
   %.2 = phi i32 [ 0, %.preheader.preheader ], [ 0, %.preheader ], [ %.0.i134, %_ZNK10polynomial8monomial9degree_ofEj.exit144 ]
   %i.gp = icmp ult i32 %.097, %.096.lcssa
   br i1 %i.gp, label %.lr.ph.i146, label %_ZN10polynomial10polynomial16max_smaller_thanEjjj.exit172.thread

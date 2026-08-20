@@ -204,28 +204,30 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 define internal fastcc range(i32 -22, 1) i32 @swap_dup_entries_cluster(ptr %.80.val, i64 noundef range(i64 0, 288230376151711744) %0, i32 noundef %1) unnamed_addr #0 align 16 {
 bb.a:
   %i.a = trunc i64 %0 to i32
-  %i.b = and i32 %i.a, 255                        ; 3 uses
+  %i.b = and i32 %i.a, 255                        ; 2 uses
   %i.c = add i32 %i.b, %1
   %i.d = lshr i64 %0, 8
   %i.e = getelementptr [40 x i8], ptr %.80.val, i64 %i.d ; 8 uses
   tail call void @_raw_spin_lock(ptr noundef %i.e) #19
   %i.f = getelementptr i8, ptr %i.e, i64 8        ; 4 uses
   %i.g = getelementptr i8, ptr %i.e, i64 16       ; 4 uses
+  %2 = and i64 %0, 255
   br label %.outer
 
 .outer:                                           ; preds = %bb.a, %bb.j
-  %.1.ph = phi i32 [ %i.b, %bb.a ], [ %3, %bb.j ] ; 4 uses
-  %2 = zext i32 %.1.ph to i64                     ; 7 uses
+  %indvars.iv.ph = phi i64 [ %2, %bb.a ], [ %indvars.iv.next, %bb.j ] ; 10 uses
+  %3 = trunc nuw i64 %indvars.iv.ph to i32        ; 2 uses
   br label %bb.b
 
 bb.b:                                             ; preds = %.outer, %__swap_cluster_dup_entry.exit
   %i.h = load volatile ptr, ptr %i.f, align 8     ; 3 uses
-  %i.i = getelementptr [8 x i8], ptr %i.h, i64 %2
+  %i.i = getelementptr [8 x i8], ptr %i.h, i64 %indvars.iv.ph
   %i.j = load volatile i64, ptr %i.i, align 8     ; 7 uses
   %i.k = icmp eq i64 %i.j, -8
   br i1 %i.k, label %bb.c, label %.critedge.i, !prof !18
 
 bb.c:                                             ; preds = %bb.b
+  %4 = trunc nuw i64 %indvars.iv.ph to i32
   tail call void asm sideeffect "852: nop\0A\09.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 852b - ., 3; .popsection", "i,~{dirflag},~{fpsr},~{flags}"(i32 852) #17, !srcloc !45
   tail call void asm sideeffect "1:\09 ud2 \0A.pushsection __bug_table,\22aw\22\0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A\092:\0A\09\09.long 1b - .\09# bug_entry::bug_addr\0A\09.long ${0:c} - .\09# bug_entry::format\0A\09.long ${1:c} - .\09# bug_entry::file\0A\09.word ${2:c}\09# bug_entry::line\0A\09.word ${3:c}\09# bug_entry::flags\0A\09.org 2b + ${4:c}\0A.popsection\0A.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 1b - ., 8; .popsection", "i,i,i,i,i,~{dirflag},~{fpsr},~{flags}"(ptr nonnull @.str.1, ptr nonnull @.str.2, i32 1648, i32 2307, i64 16) #17, !srcloc !46
   tail call void asm sideeffect "853: nop\0A\09.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 853b - ., 4; .popsection", "i,~{dirflag},~{fpsr},~{flags}"(i32 853) #17, !srcloc !47
@@ -237,12 +239,13 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not.i, label %bb.d, label %.critedge81.i
 
 bb.d:                                             ; preds = %.critedge.i
-  %i.m = getelementptr [8 x i8], ptr %i.h, i64 %2
+  %i.m = getelementptr [8 x i8], ptr %i.h, i64 %indvars.iv.ph
   %i.n = and i64 %i.j, 3
   %.not83.i = icmp eq i64 %i.n, 2
   br i1 %.not83.i, label %.critedge81.thread.i, label %bb.e, !prof !15
 
 bb.e:                                             ; preds = %bb.d
+  %5 = trunc nuw i64 %indvars.iv.ph to i32
   tail call void asm sideeffect "854: nop\0A\09.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 854b - ., 3; .popsection", "i,~{dirflag},~{fpsr},~{flags}"(i32 854) #17, !srcloc !48
   tail call void asm sideeffect "1:\09 ud2 \0A.pushsection __bug_table,\22aw\22\0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A\092:\0A\09\09.long 1b - .\09# bug_entry::bug_addr\0A\09.long ${0:c} - .\09# bug_entry::format\0A\09.long ${1:c} - .\09# bug_entry::file\0A\09.word ${2:c}\09# bug_entry::line\0A\09.word ${3:c}\09# bug_entry::flags\0A\09.org 2b + ${4:c}\0A.popsection\0A.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 1b - ., 8; .popsection", "i,i,i,i,i,~{dirflag},~{fpsr},~{flags}"(ptr nonnull @.str.1, ptr nonnull @.str.2, i32 1652, i32 2307, i64 16) #17, !srcloc !49
   tail call void asm sideeffect "855: nop\0A\09.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 855b - ., 4; .popsection", "i,~{dirflag},~{fpsr},~{flags}"(i32 855) #17, !srcloc !50
@@ -253,7 +256,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.o, label %.critedge81.thread.i.loopexit, label %bb.f, !prof !51
 
 .critedge81.thread.i.loopexit:                    ; preds = %.critedge81.i
-  %i.p = getelementptr [8 x i8], ptr %i.h, i64 %2
+  %i.p = getelementptr [8 x i8], ptr %i.h, i64 %indvars.iv.ph
   br label %.critedge81.thread.i
 
 .critedge81.thread.i:                             ; preds = %.critedge81.thread.i.loopexit, %bb.d
@@ -275,16 +278,16 @@ bb.g:                                             ; preds = %bb.f
   br i1 %.not79.i, label %__swap_cluster_dup_entry.exit, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %i.w = getelementptr [4 x i8], ptr %i.v, i64 %2
+  %i.w = getelementptr [4 x i8], ptr %i.v, i64 %indvars.iv.ph
   store i32 15, ptr %i.w, align 4
   %i.x = or i64 %i.j, -1152921504606846976
   %i.y = load ptr, ptr %i.f, align 8
-  %i.z = getelementptr [8 x i8], ptr %i.y, i64 %2
+  %i.z = getelementptr [8 x i8], ptr %i.y, i64 %indvars.iv.ph
   store volatile i64 %i.x, ptr %i.z, align 8
   br label %bb.j
 
 bb.i:                                             ; preds = %bb.f
-  %i.aa = getelementptr [4 x i8], ptr %i.v, i64 %2 ; 2 uses
+  %i.aa = getelementptr [4 x i8], ptr %i.v, i64 %indvars.iv.ph ; 2 uses
   %i.ab = load i32, ptr %i.aa, align 4
   %i.ac = add i32 %i.ab, 1
   store i32 %i.ac, ptr %i.aa, align 4
@@ -292,27 +295,30 @@ bb.i:                                             ; preds = %bb.f
 
 __swap_cluster_dup_entry.exit:                    ; preds = %bb.g
   tail call void @_raw_spin_unlock(ptr noundef %i.e) #19
-  %i.ad = tail call fastcc i32 @swap_extend_table_alloc(ptr noundef %i.e, i32 noundef %.1.ph, i32 noundef 2080) #18 ; 2 uses
+  %i.ad = tail call fastcc i32 @swap_extend_table_alloc(ptr noundef %i.e, i32 noundef %3, i32 noundef 2080) #18 ; 2 uses
   tail call void @_raw_spin_lock(ptr noundef %i.e) #19
   %.not31 = icmp eq i32 %i.ad, 0
   br i1 %.not31, label %bb.b, label %__swap_cluster_dup_entry.exit.thread3
 
 bb.j:                                             ; preds = %bb.h, %bb.i, %.critedge81.thread.i
-  %3 = add i32 %.1.ph, 1                          ; 2 uses
-  %4 = icmp ult i32 %3, %i.c
-  br i1 %4, label %.outer, label %.loopexit, !llvm.loop !52
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv.ph, 1 ; 2 uses
+  %indvars = trunc i64 %indvars.iv.next to i32
+  %6 = icmp ugt i32 %i.c, %indvars
+  br i1 %6, label %.outer, label %.loopexit, !llvm.loop !52
 
 __swap_cluster_dup_entry.exit.thread3:            ; preds = %__swap_cluster_dup_entry.exit, %bb.c, %bb.e
+  %.117 = phi i32 [ %5, %bb.e ], [ %4, %bb.c ], [ %3, %__swap_cluster_dup_entry.exit ] ; 2 uses
   %.026 = phi i32 [ -2, %bb.e ], [ -22, %bb.c ], [ %i.ad, %__swap_cluster_dup_entry.exit ]
-  %i.ae = icmp ugt i32 %.1.ph, %i.b
+  %i.ae = icmp ugt i32 %.117, %i.b
   br i1 %i.ae, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %__swap_cluster_dup_entry.exit.thread3
+  %7 = zext i32 %.117 to i64
   %i.af = and i64 %0, 255
   br label %bb.k
 
 bb.k:                                             ; preds = %.lr.ph, %__swap_cluster_put_entry.exit
-  %indvars.iv = phi i64 [ %2, %.lr.ph ], [ %i.ag, %__swap_cluster_put_entry.exit ]
+  %indvars.iv = phi i64 [ %7, %.lr.ph ], [ %i.ag, %__swap_cluster_put_entry.exit ]
   %i.ag = add nsw i64 %indvars.iv, -1             ; 5 uses
   %i.ah = load volatile ptr, ptr %i.f, align 8
   %i.ai = getelementptr [8 x i8], ptr %i.ah, i64 %i.ag ; 2 uses
@@ -678,18 +684,19 @@ bb.a:
   %i.f = sub i16 %i.d, %i.e
   store i16 %i.f, ptr %i.c, align 4
   %i.g = getelementptr i8, ptr %1, i64 8
+  %4 = zext i32 %2 to i64                         ; 2 uses
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.b, %bb.a
-  %.039 = phi i32 [ %2, %bb.a ], [ %5, %bb.b ]    ; 2 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.b ], [ %4, %bb.a ] ; 2 uses
   %i.h = load volatile ptr, ptr %i.g, align 8
-  %4 = zext i32 %.039 to i64
-  %i.i = getelementptr [8 x i8], ptr %i.h, i64 %4 ; 2 uses
+  %i.i = getelementptr [8 x i8], ptr %i.h, i64 %indvars.iv ; 2 uses
   %i.j = load volatile i64, ptr %i.i, align 8     ; 0 uses
   store volatile i64 0, ptr %i.i, align 8
-  %5 = add i32 %.039, 1                           ; 2 uses
-  %6 = icmp ult i32 %5, %i.a
-  br i1 %6, label %bb.b, label %bb.c, !llvm.loop !62
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %indvars = trunc i64 %indvars.iv.next to i32
+  %5 = icmp ugt i32 %i.a, %indvars
+  br i1 %5, label %bb.b, label %bb.c, !llvm.loop !62
 
 bb.c:                                             ; preds = %bb.b
   %i.k = ptrtoint ptr %1 to i64
@@ -698,8 +705,7 @@ bb.c:                                             ; preds = %bb.b
   %i.n = sdiv exact i64 %i.m, 40
   %i.o = shl i64 %i.n, 8
   %i.p = and i64 %i.o, 4294967040
-  %7 = zext i32 %2 to i64
-  %i.q = add nuw nsw i64 %i.p, %7                 ; 3 uses
+  %i.q = add nuw nsw i64 %i.p, %4                 ; 3 uses
   %i.r = zext i32 %3 to i64                       ; 4 uses
   %i.s = add nsw i64 %i.r, -1
   %i.t = add nsw i64 %i.s, %i.q                   ; 2 uses
@@ -1102,8 +1108,9 @@ bb.c:                                             ; preds = %.preheader
 bb.d:                                             ; preds = %bb.c, %bb.b, %.preheader
   %.1.i = phi i32 [ %i.h, %bb.b ], [ %.028.i, %bb.c ], [ %.028.i, %.preheader ] ; 2 uses
   %indvars.iv.next.a = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not.a = icmp eq i64 %indvars.iv.next.a, 256
-  br i1 %exitcond.not.a, label %bb.e, label %.preheader, !llvm.loop !203
+  %2 = and i64 %indvars.iv.next.a, 4294967040
+  %exitcond.not.a = icmp eq i64 %2, 0
+  br i1 %exitcond.not.a, label %.preheader, label %bb.e, !llvm.loop !203
 
 bb.e:                                             ; preds = %bb.d
   %i.i = getelementptr i8, ptr %i.c, i64 4

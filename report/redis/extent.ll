@@ -201,14 +201,13 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.e
   %i.ac = getelementptr inbounds nuw i8, ptr %1, i64 58400 ; 3 uses
   %i.ad = load i32, ptr %i.ac, align 8, !tbaa !50 ; 2 uses
+  %9 = zext i32 %i.ad to i64
+  %invariant.gep.i.i = getelementptr inbounds nuw [8 x i8], ptr @je_sz_pind2sz_tab, i64 %9
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.h, %bb.f
-  %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i, %bb.h ], [ 0, %bb.f ] ; 2 uses
-  %9 = trunc i64 %indvars.iv.i.i to i32           ; 2 uses
-  %10 = add i32 %i.ad, %9
-  %.pn.i.i.i = zext i32 %10 to i64
-  %storemerge.in.i.i.i = getelementptr inbounds nuw [8 x i8], ptr @je_sz_pind2sz_tab, i64 %.pn.i.i.i
+  %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i, %bb.h ], [ 0, %bb.f ] ; 3 uses
+  %storemerge.in.i.i.i = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep.i.i, i64 %indvars.iv.i.i
   %storemerge.i.i.i = load i64, ptr %storemerge.in.i.i.i, align 8, !tbaa !51 ; 4 uses
   %i.ae = icmp ult i64 %storemerge.i.i.i, %i.aa
   br i1 %i.ae, label %bb.h, label %exp_grow_size_prepare.exit.i.i
@@ -221,6 +220,7 @@ bb.h:                                             ; preds = %bb.g
   br i1 %i.ag, label %extent_alloc_retained.exit, label %bb.g, !llvm.loop !52
 
 exp_grow_size_prepare.exit.i.i:                   ; preds = %bb.g
+  %10 = trunc nuw nsw i64 %indvars.iv.i.i to i32
   %i.ah = getelementptr inbounds nuw i8, ptr %1, i64 58392 ; 3 uses
   %i.ai = load ptr, ptr %i.ah, align 8, !tbaa !49
   %i.aj = tail call ptr @je_edata_cache_get(ptr noundef %0, ptr noundef %i.ai) #9 ; 14 uses
@@ -451,7 +451,7 @@ bb.aj:                                            ; preds = %bb.ai
 
 bb.ak:                                            ; preds = %bb.ai, %bb.ah, %bb.ag
   %i.dj = load i32, ptr %i.ac, align 8, !tbaa !50
-  %i.dk = add i32 %9, 1
+  %i.dk = add i32 %10, 1
   %i.dl = add i32 %i.dk, %i.dj
   %i.dm = getelementptr inbounds nuw i8, ptr %1, i64 58404
   %i.dn = load i32, ptr %i.dm, align 4, !tbaa !63

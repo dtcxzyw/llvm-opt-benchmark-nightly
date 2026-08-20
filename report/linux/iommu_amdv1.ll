@@ -204,14 +204,14 @@ _pt_iter_first.exit:                              ; preds = %bb.b, %bb.c, %.thre
   %i.av = add nsw i32 %i.d, -1                    ; 2 uses
   %i.aw = add nuw nsw i32 %i.e, 21
   %i.ax = getelementptr i8, ptr %0, i64 33
+  %4 = zext i16 %.0.i.i60 to i64
   %invariant.op = or disjoint i64 %i.at, 6917529027641081857
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.p, %_pt_iter_first.exit
-  %.sroa.14.0 = phi ptr [ null, %_pt_iter_first.exit ], [ %.sroa.14.1, %bb.p ]
-  %.sroa.28.0 = phi i16 [ %.0.i.i60, %_pt_iter_first.exit ], [ %5, %bb.p ] ; 2 uses
-  %4 = zext i16 %.sroa.28.0 to i64
-  %i.ay = getelementptr [8 x i8], ptr %3, i64 %4  ; 3 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.p ], [ %4, %_pt_iter_first.exit ] ; 2 uses
+  %.sroa.14.0 = phi ptr [ %.sroa.14.1, %bb.p ], [ null, %_pt_iter_first.exit ]
+  %i.ay = getelementptr [8 x i8], ptr %3, i64 %indvars.iv ; 3 uses
   %i.az = load volatile i64, ptr %i.ay, align 8   ; 4 uses
   %i.ba = and i64 %i.az, 1
   %.not.i28 = icmp eq i64 %i.ba, 0
@@ -296,7 +296,8 @@ bb.l:                                             ; preds = %bb.j, %bb.k
   ]
 
 bb.m:                                             ; preds = %bb.l
-  %5 = add i16 %.sroa.28.0, 1                     ; 3 uses
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 3 uses
+  %indvars = trunc i64 %indvars.iv.next to i16
   %i.cf = load i64, ptr %i.j, align 8
   %i.cg = load i8, ptr %i.g, align 8
   %i.ch = icmp eq i8 %i.cg, %i.a
@@ -317,8 +318,8 @@ bb.o:                                             ; preds = %bb.m
 
 pt_index_to_va.exit:                              ; preds = %bb.n, %bb.o
   %.0.i.i31 = phi i32 [ %i.cj, %bb.n ], [ %i.co, %bb.o ] ; 2 uses
-  %6 = zext i16 %5 to i64
-  %i.cp = shl i64 %6, %.pre-phi
+  %5 = and i64 %indvars.iv.next, 65535
+  %i.cp = shl i64 %5, %.pre-phi
   %i.cq = icmp eq i32 %.0.i.i31, 64
   %i.cr = zext nneg i32 %.0.i.i31 to i64
   %notmask.i.i = shl nsw i64 -1, %i.cr
@@ -326,7 +327,7 @@ pt_index_to_va.exit:                              ; preds = %bb.n, %bb.o
   %i.ct = select i1 %i.cq, i64 0, i64 %i.cs
   %.0.i7.i32 = or i64 %i.ct, %i.cp
   store i64 %.0.i7.i32, ptr %i.j, align 8
-  %.not24 = icmp ult i16 %5, %.0.i7.i
+  %.not24 = icmp ugt i16 %.0.i7.i, %indvars
   br i1 %.not24, label %bb.p, label %amdv1pt_load_entry_raw.exit.thread
 
 bb.p:                                             ; preds = %pt_index_to_va.exit

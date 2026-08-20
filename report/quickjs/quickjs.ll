@@ -204,12 +204,12 @@ bb.j:                                             ; preds = %._crit_edge.i, %bb.
   %.lcssa45.i = phi i64 [ %i.bd, %bb.j ], [ %i.bk, %.lr.ph.i ]
   %i.bo = getelementptr inbounds nuw [4 x i8], ptr %i.av, i64 %.lcssa45.i
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %indvars.i = trunc i64 %indvars.iv.next to i32
   %i.bp = trunc nuw i64 %indvars.iv to i32
   store i32 %i.bp, ptr %i.bo, align 4, !tbaa !8
   %i.bq = load i32, ptr %i.a, align 4, !tbaa !1870 ; 2 uses
-  %3 = zext i32 %i.bq to i64
-  %4 = icmp samesign ult i64 %indvars.iv.next, %3
-  br i1 %4, label %bb.j, label %.loopexit, !llvm.loop !1931
+  %3 = icmp ugt i32 %i.bq, %indvars.i
+  br i1 %3, label %bb.j, label %.loopexit, !llvm.loop !1931
 
 .loopexit:                                        ; preds = %._crit_edge.i, %JS_DupAtom.exit
   %i.br = phi i32 [ %i.aa, %JS_DupAtom.exit ], [ %i.bq, %._crit_edge.i ]

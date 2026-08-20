@@ -204,36 +204,42 @@ bb.h:                                             ; preds = %.lr.ph22
 
 .lr.ph29:                                         ; preds = %.critedge4.i
   %i.ah = zext nneg i32 %i.ae to i64
+  %3 = zext i32 %.promoted26 to i64
   br label %bb.i
 
 bb.i:                                             ; preds = %.lr.ph29, %bb.j
-  %indvars.iv.a = phi i64 [ %i.ah, %.lr.ph29 ], [ %indvars.iv.next, %bb.j ] ; 3 uses
-  %3 = phi ptr [ %i.ac, %.lr.ph29 ], [ %i.an, %bb.j ] ; 3 uses
-  %.5.i28.a = phi ptr [ %.4.i, %.lr.ph29 ], [ %3, %bb.j ] ; 2 uses
-  %4 = phi i32 [ %.promoted26, %.lr.ph29 ], [ %6, %bb.j ] ; 2 uses
-  %.0.copyload.i.i = load i64, ptr %.5.i28.a, align 1, !noalias !617 ; 2 uses
+  %indvars.iv.a = phi i64 [ %3, %.lr.ph29 ], [ %indvars.iv.next63, %bb.j ] ; 3 uses
+  %indvars.iv = phi i64 [ %i.ah, %.lr.ph29 ], [ %indvars.iv.next, %bb.j ] ; 3 uses
+  %.5.i28.a = phi ptr [ %i.ac, %.lr.ph29 ], [ %i.an, %bb.j ] ; 3 uses
+  %.5.i28 = phi ptr [ %.4.i, %.lr.ph29 ], [ %.5.i28.a, %bb.j ] ; 2 uses
+  %.0.copyload.i.i = load i64, ptr %.5.i28, align 1, !noalias !617 ; 2 uses
   %i.ai = add i64 %.0.copyload.i.i, 5063812098665367110
   %i.aj = add i64 %.0.copyload.i.i, -3472328296227680304 ; 2 uses
   %i.ak = or i64 %i.ai, %i.aj
   %i.al = and i64 %i.ak, -9187201950435737472
   %.not.i.i = icmp eq i64 %i.al, 0
-  br i1 %.not.i.i, label %bb.j, label %.thread
+  br i1 %.not.i.i, label %bb.j, label %.thread.loopexit
 
 bb.j:                                             ; preds = %bb.i
-  %5 = zext i32 %4 to i64
-  %i.am = getelementptr inbounds nuw i8, ptr %i.m, i64 %5
+  %i.am = getelementptr inbounds nuw i8, ptr %i.m, i64 %indvars.iv.a
   store i64 %i.aj, ptr %i.am, align 1
-  %i.an = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
+  %i.an = getelementptr inbounds nuw i8, ptr %.5.i28.a, i64 8 ; 2 uses
   %i.ao = icmp ule ptr %i.an, %1
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv.a, 8
-  %i.ap = icmp samesign ult i64 %indvars.iv.a, 760
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 8
+  %i.ap = icmp samesign ult i64 %indvars.iv, 760
   %i.aq = select i1 %i.ao, i1 %i.ap, i1 false
-  %6 = trunc nuw nsw i64 %indvars.iv.a to i32     ; 2 uses
-  br i1 %i.aq, label %bb.i, label %.thread
+  %indvars.iv.next63 = add nuw nsw i64 %indvars.iv.a, 8
+  br i1 %i.aq, label %bb.i, label %.thread.loopexit
 
-.thread:                                          ; preds = %bb.j, %bb.i, %.critedge4.i
-  %.lcssa27 = phi i32 [ %.promoted26, %.critedge4.i ], [ %4, %bb.i ], [ %6, %bb.j ] ; 3 uses
-  %.5.i.lcssa = phi ptr [ %.4.i, %.critedge4.i ], [ %.5.i28.a, %bb.i ], [ %3, %bb.j ] ; 3 uses
+.thread.loopexit:                                 ; preds = %bb.i, %bb.j
+  %.lcssa27.ph.in = phi i64 [ %indvars.iv, %bb.j ], [ %indvars.iv.a, %bb.i ]
+  %.5.i.lcssa.ph = phi ptr [ %.5.i28.a, %bb.j ], [ %.5.i28, %bb.i ]
+  %.lcssa27.ph = trunc i64 %.lcssa27.ph.in to i32
+  br label %.thread
+
+.thread:                                          ; preds = %.thread.loopexit, %.critedge4.i
+  %.lcssa27 = phi i32 [ %.promoted26, %.critedge4.i ], [ %.lcssa27.ph, %.thread.loopexit ] ; 3 uses
+  %.5.i.lcssa = phi ptr [ %.4.i, %.critedge4.i ], [ %.5.i.lcssa.ph, %.thread.loopexit ] ; 3 uses
   store i32 %.lcssa27, ptr %2, align 4
   %.not101.i37 = icmp eq ptr %.5.i.lcssa, %1
   br i1 %.not101.i37, label %.critedge6.i, label %.lr.ph39

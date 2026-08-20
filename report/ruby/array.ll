@@ -204,7 +204,7 @@ rb_alloc_tmp_buffer2.exit:                        ; preds = %bb.e
   br label %bb.g
 
 bb.g:                                             ; preds = %rb_alloc_tmp_buffer2.exit, %bb.d
-  %i.v = phi ptr [ %i.p, %bb.d ], [ %i.u, %rb_alloc_tmp_buffer2.exit ] ; 5 uses
+  %i.v = phi ptr [ %i.p, %bb.d ], [ %i.u, %rb_alloc_tmp_buffer2.exit ] ; 6 uses
   %.0..0..0..0.60 = load volatile i64, ptr %i.c, align 8, !tbaa !15
   %i.w = inttoptr i64 %.0..0..0..0.60 to ptr
   %i.x = getelementptr i8, ptr %i.w, i64 8
@@ -433,7 +433,7 @@ bb.s:                                             ; preds = %bb.q
   %i.cu = inttoptr i64 %.296 to ptr               ; 6 uses
   %i.cv = getelementptr i8, ptr %i.cu, i64 16     ; 3 uses
   %i.cw = getelementptr i8, ptr %i.cu, i64 32
-  %i.cx = sext i32 %0 to i64
+  %i.cx = sext i32 %0 to i64                      ; 2 uses
   %i.cy = getelementptr [4 x i8], ptr %i.v, i64 %i.cx ; 2 uses
   br label %.loopexit
 
@@ -686,12 +686,11 @@ RB_FL_UNSET.exit:                                 ; preds = %bb.aq, %bb.ap, %bb.
   br label %bb.ar
 
 bb.ar:                                            ; preds = %bb.av, %RB_FL_UNSET.exit
-  %3 = phi i32 [ %i.gl, %RB_FL_UNSET.exit ], [ %i.ha, %bb.av ]
-  %.0 = phi i32 [ %0, %RB_FL_UNSET.exit ], [ %5, %bb.av ] ; 2 uses
-  %4 = sext i32 %.0 to i64                        ; 2 uses
-  %i.gm = getelementptr [4 x i8], ptr %i.v, i64 %4
-  %i.gn = sext i32 %3 to i64
-  %i.go = getelementptr [8 x i8], ptr %.0.i.i, i64 %4
+  %.0 = phi i32 [ %.pre, %bb.av ], [ %i.gl, %RB_FL_UNSET.exit ]
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.av ], [ %i.cx, %RB_FL_UNSET.exit ] ; 3 uses
+  %i.gm = getelementptr [4 x i8], ptr %i.v, i64 %indvars.iv
+  %i.gn = sext i32 %.0 to i64
+  %i.go = getelementptr [8 x i8], ptr %.0.i.i, i64 %indvars.iv
   %i.gp = load i64, ptr %i.go, align 8, !tbaa !15
   %i.gq = inttoptr i64 %i.gp to ptr               ; 2 uses
   %i.gr = load i64, ptr %i.gq, align 8, !tbaa !11 ; 2 uses
@@ -716,16 +715,19 @@ rb_array_len.exit129:                             ; preds = %bb.as, %bb.at
 
 bb.au:                                            ; preds = %rb_array_len.exit129
   store i32 0, ptr %i.gm, align 4, !tbaa !7
-  %5 = add i32 %.0, -1                            ; 3 uses
-  %6 = icmp slt i32 %5, 0
-  br i1 %6, label %ary_new.exit.thread, label %bb.av
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 4 uses
+  %3 = and i64 %indvars.iv.next, 2147483648
+  %.not176 = icmp eq i64 %3, 0
+  br i1 %.not176, label %bb.av, label %ary_new.exit.thread
 
 bb.av:                                            ; preds = %bb.au
-  %7 = zext nneg i32 %5 to i64
-  %i.gy = getelementptr [4 x i8], ptr %i.v, i64 %7 ; 2 uses
+  %4 = and i64 %indvars.iv.next, 2147483647
+  %i.gy = getelementptr [4 x i8], ptr %i.v, i64 %4 ; 2 uses
   %i.gz = load i32, ptr %i.gy, align 4, !tbaa !7
-  %i.ha = add i32 %i.gz, 1                        ; 2 uses
+  %i.ha = add i32 %i.gz, 1
   store i32 %i.ha, ptr %i.gy, align 4, !tbaa !7
+  %.phi.trans.insert = getelementptr [4 x i8], ptr %i.v, i64 %indvars.iv.next
+  %.pre = load i32, ptr %.phi.trans.insert, align 4, !tbaa !7
   br label %bb.ar, !llvm.loop !179
 
 .thread139:                                       ; preds = %rb_array_len.exit, %rb_array_len.exit.thread

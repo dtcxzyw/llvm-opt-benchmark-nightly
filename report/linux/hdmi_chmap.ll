@@ -204,27 +204,31 @@ bb.q:                                             ; preds = %bb.a
 .preheader55.i:                                   ; preds = %bb.t, %.preheader55.lr.ph.i
   %indvars.iv.i19.a = phi i64 [ 0, %.preheader55.lr.ph.i ], [ %indvars.iv.next.i21.a, %bb.t ] ; 4 uses
   %.04663.i = phi i32 [ 0, %.preheader55.lr.ph.i ], [ %i.ca, %bb.t ]
+  %7 = zext i32 %.04663.i to i64
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.s, %.preheader55.i
-  %.1.i = phi i32 [ %10, %bb.s ], [ %.04663.i, %.preheader55.i ] ; 4 uses
-  %7 = sub i32 7, %.1.i
-  %8 = sext i32 %7 to i64
-  %9 = getelementptr [4 x i8], ptr %i.bu, i64 %8
-  %i.bw = load i32, ptr %9, align 4
+  %indvars.iv.i19 = phi i64 [ %7, %.preheader55.i ], [ %indvars.iv.next.i21, %bb.s ] ; 3 uses
+  %8 = shl i64 %indvars.iv.i19, 32
+  %sext.i = sub i64 30064771072, %8
+  %9 = ashr exact i64 %sext.i, 30
+  %10 = getelementptr i8, ptr %i.bu, i64 %9
+  %i.bw = load i32, ptr %10, align 4
   %.not.i20 = icmp eq i32 %i.bw, 0
   br i1 %.not.i20, label %bb.s, label %bb.t
 
 bb.s:                                             ; preds = %bb.r
-  %10 = add i32 %.1.i, 1                          ; 2 uses
-  %i.bx = icmp sgt i32 %10, 7
+  %indvars.iv.next.i21 = add nuw nsw i64 %indvars.iv.i19, 1 ; 2 uses
+  %indvars.i = trunc i64 %indvars.iv.next.i21 to i32
+  %i.bx = icmp sgt i32 %indvars.i, 7
   br i1 %i.bx, label %.loopexit56.loopexit.i, label %bb.r, !llvm.loop !16
 
 bb.t:                                             ; preds = %bb.r
+  %11 = trunc i64 %indvars.iv.i19 to i32          ; 2 uses
   %i.by = trunc nuw nsw i64 %indvars.iv.i19.a to i32
   %i.bz = shl i32 %i.by, 4
-  %i.ca = add i32 %.1.i, 1                        ; 2 uses
-  %i.cb = or i32 %.1.i, %i.bz
+  %i.ca = add i32 %11, 1                          ; 2 uses
+  %i.cb = or i32 %i.bz, %11
   %i.cc = getelementptr [4 x i8], ptr %i.bn, i64 %indvars.iv.i19.a
   store i32 %i.cb, ptr %i.cc, align 4
   %indvars.iv.next.i21.a = add nuw nsw i64 %indvars.iv.i19.a, 1 ; 3 uses

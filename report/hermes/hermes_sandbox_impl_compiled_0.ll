@@ -204,26 +204,27 @@ bb.b:                                             ; preds = %bb.a
 
 .preheader389:                                    ; preds = %bb.b
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
+  %4 = zext i32 %1 to i64
   br label %bb.c
 
 bb.c:                                             ; preds = %.preheader389, %bb.c
-  %.0294 = phi i32 [ %i.j, %bb.c ], [ %2, %.preheader389 ] ; 2 uses
-  %.0 = phi i32 [ %5, %bb.c ], [ %1, %.preheader389 ] ; 2 uses
-  %i.g = zext i32 %.0294 to i64
+  %indvars.iv409 = phi i64 [ %4, %.preheader389 ], [ %indvars.iv.next410, %bb.c ] ; 2 uses
+  %.0 = phi i32 [ %2, %.preheader389 ], [ %i.j, %bb.c ] ; 2 uses
+  %i.g = zext i32 %.0 to i64
   %.val356 = load ptr, ptr %i.f, align 8, !tbaa !21
   %i.h = getelementptr inbounds nuw i8, ptr %.val356, i64 %i.g
   %.0.copyload.i = load i8, ptr %i.h, align 1     ; 2 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i8 %.0.copyload.i) #16, !srcloc !33
-  %4 = zext i32 %.0 to i64
   %.val362 = load ptr, ptr %i.f, align 8, !tbaa !21
-  %i.i = getelementptr inbounds nuw i8, ptr %.val362, i64 %4
+  %i.i = getelementptr inbounds nuw i8, ptr %.val362, i64 %indvars.iv409
   store i8 %.0.copyload.i, ptr %i.i, align 1
-  %i.j = add i32 %.0294, 1                        ; 2 uses
-  %5 = add i32 %.0, 1                             ; 4 uses
-  %i.k = and i32 %5, 3
+  %i.j = add i32 %.0, 1                           ; 2 uses
+  %indvars.iv.next410 = add nuw nsw i64 %indvars.iv409, 1 ; 2 uses
+  %indvars = trunc i64 %indvars.iv.next410 to i32 ; 3 uses
+  %i.k = and i32 %indvars, 3
   %.not313 = icmp ne i32 %i.k, 0
-  %6 = icmp ult i32 %5, %i.a
-  %or.cond317 = and i1 %6, %.not313
+  %5 = icmp ugt i32 %i.a, %indvars
+  %or.cond317 = and i1 %5, %.not313
   br i1 %or.cond317, label %bb.c, label %.loopexit390
 
 bb.d:                                             ; preds = %bb.a
@@ -286,7 +287,7 @@ bb.f:                                             ; preds = %.preheader391, %bb.
 
 .loopexit390:                                     ; preds = %bb.c, %bb.b
   %.2296 = phi i32 [ %2, %bb.b ], [ %i.j, %bb.c ] ; 3 uses
-  %.2 = phi i32 [ %1, %bb.b ], [ %5, %bb.c ]      ; 4 uses
+  %.2 = phi i32 [ %1, %bb.b ], [ %indvars, %bb.c ] ; 4 uses
   %i.ah = and i32 %i.a, -4                        ; 3 uses
   %i.ai = icmp ult i32 %i.a, 64
   br i1 %i.ai, label %.loopexit388, label %bb.g

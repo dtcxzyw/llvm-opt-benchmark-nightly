@@ -203,19 +203,24 @@ bb.h:                                             ; preds = %bb.g
 
 .preheader.i:                                     ; preds = %bb.h
   %i.ag = load ptr, ptr @KnownAssignedXidsValid, align 8
-  %.037.i21 = add i32 %i.e, 1                     ; 2 uses
-  %1 = icmp slt i32 %.037.i21, %i.g
-  br i1 %1, label %.lr.ph, label %.critedge.i
+  %1 = zext i32 %i.e to i64
+  %indvars.iv.next.i21 = add nuw nsw i64 %1, 1    ; 2 uses
+  %indvars.i22 = trunc i64 %indvars.iv.next.i21 to i32 ; 2 uses
+  %2 = icmp sgt i32 %i.g, %indvars.i22
+  br i1 %2, label %.lr.ph, label %.critedge.i
 
 bb.i:                                             ; preds = %.lr.ph
-  %.037.i = add i32 %.037.i22, 1                  ; 2 uses
-  %2 = icmp slt i32 %.037.i, %i.g
-  br i1 %2, label %.lr.ph, label %.critedge.i, !llvm.loop !79
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.next.i23, 1 ; 2 uses
+  %indvars.i = trunc i64 %indvars.iv.next.i to i32 ; 2 uses
+  %3 = icmp sgt i32 %i.g, %indvars.i
+  br i1 %3, label %.lr.ph, label %.critedge.i, !llvm.loop !79
 
 .lr.ph:                                           ; preds = %.preheader.i, %bb.i
-  %.037.i22 = phi i32 [ %.037.i, %bb.i ], [ %.037.i21, %.preheader.i ] ; 3 uses
-  %3 = sext i32 %.037.i22 to i64
-  %i.ah = getelementptr inbounds i8, ptr %i.ag, i64 %3
+  %.037.i22 = phi i32 [ %indvars.i, %bb.i ], [ %indvars.i22, %.preheader.i ]
+  %indvars.iv.next.i23 = phi i64 [ %indvars.iv.next.i, %bb.i ], [ %indvars.iv.next.i21, %.preheader.i ] ; 2 uses
+  %sext.i = shl i64 %indvars.iv.next.i23, 32
+  %4 = ashr exact i64 %sext.i, 32
+  %i.ah = getelementptr inbounds i8, ptr %i.ag, i64 %4
   %i.ai = load i8, ptr %i.ah, align 1, !range !4, !noundef !5
   %i.aj = trunc nuw i8 %i.ai to i1
   br i1 %i.aj, label %.thread55.sink.split.i, label %bb.i, !llvm.loop !79

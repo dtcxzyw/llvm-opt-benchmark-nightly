@@ -204,21 +204,21 @@ bb.e:                                             ; preds = %bb.d
 .lr.ph97.split.preheader:                         ; preds = %bb.e
   %i.z = add nsw i32 %spec.store.select, -1
   %i.aa = zext i32 %i.v to i64
+  %4 = zext i32 %i.t to i64
   br label %.lr.ph97.split
 
 .lr.ph97.split:                                   ; preds = %.lr.ph97.split.preheader, %_not_clustered.exit.thread
   %i.ab = phi i32 [ %i.w, %.lr.ph97.split.preheader ], [ %i.ap, %_not_clustered.exit.thread ] ; 3 uses
   %i.ac = phi ptr [ %i.o, %.lr.ph97.split.preheader ], [ %i.aq, %_not_clustered.exit.thread ] ; 4 uses
-  %indvars.iv.a = phi i64 [ %i.aa, %.lr.ph97.split.preheader ], [ %indvars.iv.next, %_not_clustered.exit.thread ] ; 2 uses
-  %.05395 = phi i32 [ %i.t, %.lr.ph97.split.preheader ], [ %5, %_not_clustered.exit.thread ] ; 2 uses
+  %indvars.iv.a = phi i64 [ %4, %.lr.ph97.split.preheader ], [ %indvars.iv.next104, %_not_clustered.exit.thread ] ; 3 uses
+  %indvars.iv = phi i64 [ %i.aa, %.lr.ph97.split.preheader ], [ %indvars.iv.next, %_not_clustered.exit.thread ]
   %i.ad = getelementptr inbounds nuw [8 x i8], ptr %i.ac, i64 %i.q
   %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !264 ; 2 uses
   %.not.i = icmp eq ptr %i.ae, null
   br i1 %.not.i, label %_not_clustered.exit.thread, label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph97.split
-  %4 = zext i32 %.05395 to i64
-  %i.af = getelementptr inbounds nuw [8 x i8], ptr %i.ae, i64 %4 ; 2 uses
+  %i.af = getelementptr inbounds nuw [8 x i8], ptr %i.ae, i64 %indvars.iv.a ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 4
   %i.ah = load i32, ptr %i.ag, align 4, !tbaa !271
   %i.ai = icmp eq i32 %i.ah, 0
@@ -235,7 +235,8 @@ _not_clustered.exit:                              ; preds = %bb.f
   br i1 %.not70, label %_not_clustered.exit.thread, label %bb.g
 
 bb.g:                                             ; preds = %_not_clustered.exit
-  tail call fastcc void @_add_expand_cluster(i32 noundef %i.p, i32 noundef %.05395, i32 noundef %2, i32 noundef %i.z)
+  %5 = trunc nuw i64 %indvars.iv.a to i32
+  tail call fastcc void @_add_expand_cluster(i32 noundef %i.p, i32 noundef %5, i32 noundef %2, i32 noundef %i.z)
   %.pre = load ptr, ptr @db.1, align 8, !tbaa !261
   %.pre108 = load i32, ptr @db.4, align 8, !tbaa !262
   br label %_not_clustered.exit.thread
@@ -243,11 +244,11 @@ bb.g:                                             ; preds = %_not_clustered.exit
 _not_clustered.exit.thread:                       ; preds = %.lr.ph97.split, %bb.f, %_not_clustered.exit, %bb.g
   %i.ap = phi i32 [ %i.ab, %.lr.ph97.split ], [ %i.ab, %bb.f ], [ %i.ab, %_not_clustered.exit ], [ %.pre108, %bb.g ] ; 2 uses
   %i.aq = phi ptr [ %i.ac, %.lr.ph97.split ], [ %i.ac, %bb.f ], [ %i.ac, %_not_clustered.exit ], [ %.pre, %bb.g ]
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv.a, 1 ; 2 uses
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.ar = tail call i32 @llvm.umin.i32(i32 %i.ap, i32 %i.u)
   %i.as = zext i32 %i.ar to i64
   %i.at = icmp samesign ult i64 %indvars.iv.next, %i.as
-  %5 = trunc nuw i64 %indvars.iv.a to i32
+  %indvars.iv.next104 = add nuw nsw i64 %indvars.iv.a, 1
   br i1 %i.at, label %.lr.ph97.split, label %.loopexit91, !llvm.loop !283
 
 .loopexit91:                                      ; preds = %_not_clustered.exit.thread, %bb.e, %bb.d, %.thread
@@ -349,21 +350,21 @@ bb.o:                                             ; preds = %bb.n
 .lr.ph100.split.preheader:                        ; preds = %bb.o
   %i.cr = add nsw i32 %spec.store.select, -1
   %i.cs = zext i32 %i.cn to i64
+  %6 = zext i32 %i.cl to i64
   br label %.lr.ph100.split
 
 .lr.ph100.split:                                  ; preds = %.lr.ph100.split.preheader, %_not_clustered.exit82.thread
   %i.ct = phi i32 [ %i.co, %.lr.ph100.split.preheader ], [ %i.dh, %_not_clustered.exit82.thread ] ; 3 uses
   %i.cu = phi ptr [ %i.ch, %.lr.ph100.split.preheader ], [ %i.di, %_not_clustered.exit82.thread ] ; 4 uses
-  %indvars.iv104 = phi i64 [ %i.cs, %.lr.ph100.split.preheader ], [ %indvars.iv.next105, %_not_clustered.exit82.thread ] ; 2 uses
-  %.098 = phi i32 [ %i.cl, %.lr.ph100.split.preheader ], [ %7, %_not_clustered.exit82.thread ] ; 2 uses
+  %indvars.iv104 = phi i64 [ %6, %.lr.ph100.split.preheader ], [ %indvars.iv.next111, %_not_clustered.exit82.thread ] ; 3 uses
+  %indvars.iv108 = phi i64 [ %i.cs, %.lr.ph100.split.preheader ], [ %indvars.iv.next105, %_not_clustered.exit82.thread ]
   %i.cv = getelementptr inbounds nuw [8 x i8], ptr %i.cu, i64 %i.ci
   %i.cw = load ptr, ptr %i.cv, align 8, !tbaa !264 ; 2 uses
   %.not.i79 = icmp eq ptr %i.cw, null
   br i1 %.not.i79, label %_not_clustered.exit82.thread, label %bb.p
 
 bb.p:                                             ; preds = %.lr.ph100.split
-  %6 = zext i32 %.098 to i64
-  %i.cx = getelementptr inbounds nuw [8 x i8], ptr %i.cw, i64 %6 ; 2 uses
+  %i.cx = getelementptr inbounds nuw [8 x i8], ptr %i.cw, i64 %indvars.iv104 ; 2 uses
   %i.cy = getelementptr inbounds nuw i8, ptr %i.cx, i64 4
   %i.cz = load i32, ptr %i.cy, align 4, !tbaa !271
   %i.da = icmp eq i32 %i.cz, 0
@@ -380,7 +381,8 @@ _not_clustered.exit82:                            ; preds = %bb.p
   br i1 %.not69, label %_not_clustered.exit82.thread, label %bb.q
 
 bb.q:                                             ; preds = %_not_clustered.exit82
-  tail call fastcc void @_add_expand_cluster(i32 noundef %i.ce, i32 noundef %.098, i32 noundef %2, i32 noundef %i.cr)
+  %7 = trunc nuw i64 %indvars.iv104 to i32
+  tail call fastcc void @_add_expand_cluster(i32 noundef %i.ce, i32 noundef %7, i32 noundef %2, i32 noundef %i.cr)
   %.pre109 = load ptr, ptr @db.1, align 8, !tbaa !261
   %.pre111 = load i32, ptr @db.4, align 8, !tbaa !262
   br label %_not_clustered.exit82.thread
@@ -388,11 +390,11 @@ bb.q:                                             ; preds = %_not_clustered.exit
 _not_clustered.exit82.thread:                     ; preds = %.lr.ph100.split, %bb.p, %_not_clustered.exit82, %bb.q
   %i.dh = phi i32 [ %i.ct, %.lr.ph100.split ], [ %i.ct, %bb.p ], [ %i.ct, %_not_clustered.exit82 ], [ %.pre111, %bb.q ] ; 2 uses
   %i.di = phi ptr [ %i.cu, %.lr.ph100.split ], [ %i.cu, %bb.p ], [ %i.cu, %_not_clustered.exit82 ], [ %.pre109, %bb.q ]
-  %indvars.iv.next105 = add nuw nsw i64 %indvars.iv104, 1 ; 2 uses
+  %indvars.iv.next105 = add nuw nsw i64 %indvars.iv108, 1 ; 2 uses
   %i.dj = tail call i32 @llvm.umin.i32(i32 %i.dh, i32 %i.cm)
   %i.dk = zext i32 %i.dj to i64
   %i.dl = icmp samesign ult i64 %indvars.iv.next105, %i.dk
-  %7 = trunc nuw i64 %indvars.iv104 to i32
+  %indvars.iv.next111 = add nuw nsw i64 %indvars.iv104, 1
   br i1 %i.dl, label %.lr.ph100.split, label %.loopexit, !llvm.loop !284
 
 .loopexit:                                        ; preds = %_not_clustered.exit82.thread, %bb.o, %._crit_edge, %bb.n, %_not_clustered.exit78.thread

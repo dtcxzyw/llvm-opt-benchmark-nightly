@@ -203,41 +203,47 @@ bb.f:                                             ; preds = %bb.e
 
 .split.loop.exit80.i:                             ; preds = %bb.f, %.split.loop.exit.i
   %i.et = phi i64 [ %.lcssa, %.split.loop.exit.i ], [ %i.er, %bb.f ] ; 2 uses
-  %.251.i = phi i32 [ %i.es, %.split.loop.exit.i ], [ -1, %bb.f ] ; 6 uses
+  %.251.i = phi i32 [ %i.es, %.split.loop.exit.i ], [ -1, %bb.f ] ; 7 uses
   %i.eu = icmp ult i64 %i.et, %i.ef
   br i1 %i.eu, label %.preheader.i.preheader, label %compute_tier_limits.exit
 
 .preheader.i.preheader:                           ; preds = %.split.loop.exit80.i
   %exitcond75.not.i22 = icmp eq i32 %.251.i, 127
-  br i1 %exitcond75.not.i22, label %._crit_edge, label %.lr.ph.a
+  br i1 %exitcond75.not.i22, label %.split.loop.exit87.i.thread, label %.lr.ph
+
+.lr.ph:                                           ; preds = %.preheader.i.preheader
+  %1 = zext i32 %.251.i to i64
+  br label %.lr.ph.a
 
 .preheader.i:                                     ; preds = %.lr.ph.a
-  %exitcond75.not.i = icmp eq i32 %.143.i, 127
-  br i1 %exitcond75.not.i, label %._crit_edge, label %.lr.ph.a
+  %exitcond75.not.i = icmp eq i64 %indvars.iv.next76.i, 127
+  br i1 %exitcond75.not.i, label %.split.loop.exit87.i.thread, label %.lr.ph.a
 
-.lr.ph.a:                                         ; preds = %.preheader.i.preheader, %.preheader.i
-  %.143.in.i24 = phi i32 [ %.143.i, %.preheader.i ], [ %.251.i, %.preheader.i.preheader ]
-  %.2.i23 = phi i64 [ %i.ex, %.preheader.i ], [ %i.et, %.preheader.i.preheader ]
-  %.143.i = add i32 %.143.in.i24, 1               ; 4 uses
-  %1 = zext nneg i32 %.143.i to i64
-  %i.ev = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %1
+.lr.ph.a:                                         ; preds = %.lr.ph, %.preheader.i
+  %.2.i26 = phi i64 [ %i.et, %.lr.ph ], [ %i.ex, %.preheader.i ]
+  %.2.i23 = phi i64 [ %1, %.lr.ph ], [ %indvars.iv.next76.i, %.preheader.i ]
+  %indvars.iv.next76.i = add i64 %.2.i23, 1       ; 4 uses
+  %2 = and i64 %indvars.iv.next76.i, 4294967295
+  %i.ev = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %2
   %i.ew = load i64, ptr %i.ev, align 8, !tbaa !61
-  %i.ex = add i64 %i.ew, %.2.i23                  ; 2 uses
+  %i.ex = add i64 %i.ew, %.2.i26                  ; 2 uses
   %.not58.i = icmp ult i64 %i.ex, %i.ef
   br i1 %.not58.i, label %.preheader.i, label %._crit_edge
 
-._crit_edge:                                      ; preds = %.preheader.i, %.lr.ph.a, %.preheader.i.preheader
-  %.3.i = phi i32 [ -1, %.preheader.i.preheader ], [ -1, %.preheader.i ], [ %.143.i, %.lr.ph.a ] ; 2 uses
-  %i.ey = icmp slt i32 %.3.i, 0
-  %spec.select.i = select i1 %i.ey, i32 %.251.i, i32 %.3.i
+._crit_edge:                                      ; preds = %.lr.ph.a
+  %indvars.le.i = trunc i64 %indvars.iv.next76.i to i32 ; 2 uses
+  %i.ey = icmp slt i32 %indvars.le.i, 0
+  br i1 %i.ey, label %.split.loop.exit87.i.thread, label %compute_tier_limits.exit
+
+.split.loop.exit87.i.thread:                      ; preds = %.preheader.i, %.preheader.i.preheader, %._crit_edge
   br label %compute_tier_limits.exit
 
-compute_tier_limits.exit:                         ; preds = %vector.ph, %.split.loop.exit80.i, %._crit_edge
-  %.35263.i = phi i32 [ %.251.i, %._crit_edge ], [ %.251.i, %.split.loop.exit80.i ], [ -1, %vector.ph ] ; 2 uses
-  %2 = phi i32 [ %spec.select.i, %._crit_edge ], [ %.251.i, %.split.loop.exit80.i ], [ -1, %vector.ph ]
+compute_tier_limits.exit:                         ; preds = %.split.loop.exit87.i.thread, %._crit_edge, %vector.ph, %.split.loop.exit80.i
+  %.35263.i = phi i32 [ -1, %vector.ph ], [ %.251.i, %.split.loop.exit80.i ], [ %.251.i, %._crit_edge ], [ %.251.i, %.split.loop.exit87.i.thread ] ; 2 uses
+  %3 = phi i32 [ -1, %vector.ph ], [ %.251.i, %.split.loop.exit80.i ], [ %indvars.le.i, %._crit_edge ], [ %.251.i, %.split.loop.exit87.i.thread ]
   %i.ez = icmp slt i32 %.35263.i, 0               ; 2 uses
   %.453.i = select i1 %i.ez, i32 2, i32 %.35263.i
-  %.4.i = select i1 %i.ez, i32 6, i32 %2
+  %.4.i = select i1 %i.ez, i32 6, i32 %3
   %i.fa = getelementptr inbounds nuw i8, ptr %0, i64 1208
   %i.fb = getelementptr inbounds nuw [4 x i8], ptr %i.fa, i64 %i.c
   store i32 %.453.i, ptr %i.fb, align 4, !tbaa !64
@@ -508,38 +514,44 @@ bb.f:                                             ; preds = %bb.e
 
 .split.loop.exit80.i:                             ; preds = %bb.f, %.split.loop.exit.i
   %i.es = phi i64 [ %.lcssa240, %.split.loop.exit.i ], [ %i.eq, %bb.f ] ; 2 uses
-  %.251.i = phi i32 [ %i.er, %.split.loop.exit.i ], [ -1, %bb.f ] ; 6 uses
+  %.251.i = phi i32 [ %i.er, %.split.loop.exit.i ], [ -1, %bb.f ] ; 7 uses
   %i.et = icmp ult i64 %i.es, %i.ee
   br i1 %i.et, label %.preheader.i.preheader, label %vector.body225
 
 .preheader.i.preheader:                           ; preds = %.split.loop.exit80.i
   %exitcond75.not.i216 = icmp eq i32 %.251.i, 127
-  br i1 %exitcond75.not.i216, label %._crit_edge220, label %.lr.ph219
+  br i1 %exitcond75.not.i216, label %.split.loop.exit87.i.thread, label %.lr.ph221
+
+.lr.ph221:                                        ; preds = %.preheader.i.preheader
+  %2 = zext i32 %.251.i to i64
+  br label %.lr.ph219
 
 .preheader.i:                                     ; preds = %.lr.ph219
-  %exitcond75.not.i = icmp eq i32 %.143.i, 127
-  br i1 %exitcond75.not.i, label %._crit_edge220, label %.lr.ph219
+  %exitcond75.not.i = icmp eq i64 %indvars.iv.next76.i, 127
+  br i1 %exitcond75.not.i, label %.split.loop.exit87.i.thread, label %.lr.ph219
 
-.lr.ph219:                                        ; preds = %.preheader.i.preheader, %.preheader.i
-  %.143.in.i218 = phi i32 [ %.143.i, %.preheader.i ], [ %.251.i, %.preheader.i.preheader ]
-  %.2.i217 = phi i64 [ %i.ew, %.preheader.i ], [ %i.es, %.preheader.i.preheader ]
-  %.143.i = add i32 %.143.in.i218, 1              ; 4 uses
-  %2 = zext nneg i32 %.143.i to i64
-  %i.eu = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %2
+.lr.ph219:                                        ; preds = %.lr.ph221, %.preheader.i
+  %.2.i220 = phi i64 [ %i.es, %.lr.ph221 ], [ %i.ew, %.preheader.i ]
+  %.2.i217 = phi i64 [ %2, %.lr.ph221 ], [ %indvars.iv.next76.i, %.preheader.i ]
+  %indvars.iv.next76.i = add i64 %.2.i217, 1      ; 4 uses
+  %3 = and i64 %indvars.iv.next76.i, 4294967295
+  %i.eu = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %3
   %i.ev = load i64, ptr %i.eu, align 8, !tbaa !61
-  %i.ew = add i64 %i.ev, %.2.i217                 ; 2 uses
+  %i.ew = add i64 %i.ev, %.2.i220                 ; 2 uses
   %.not58.i = icmp ult i64 %i.ew, %i.ee
   br i1 %.not58.i, label %.preheader.i, label %._crit_edge220
 
-._crit_edge220:                                   ; preds = %.preheader.i, %.lr.ph219, %.preheader.i.preheader
-  %.3.i = phi i32 [ -1, %.preheader.i.preheader ], [ -1, %.preheader.i ], [ %.143.i, %.lr.ph219 ] ; 2 uses
-  %i.ex = icmp slt i32 %.3.i, 0
-  %spec.select.i = select i1 %i.ex, i32 %.251.i, i32 %.3.i
+._crit_edge220:                                   ; preds = %.lr.ph219
+  %indvars.le.i = trunc i64 %indvars.iv.next76.i to i32 ; 2 uses
+  %i.ex = icmp slt i32 %indvars.le.i, 0
+  br i1 %i.ex, label %.split.loop.exit87.i.thread, label %vector.body225
+
+.split.loop.exit87.i.thread:                      ; preds = %.preheader.i, %.preheader.i.preheader, %._crit_edge220
   br label %vector.body225
 
-vector.body225:                                   ; preds = %vector.ph, %.split.loop.exit80.i, %._crit_edge220
-  %.35263.i = phi i32 [ %.251.i, %._crit_edge220 ], [ %.251.i, %.split.loop.exit80.i ], [ -1, %vector.ph ] ; 2 uses
-  %3 = phi i32 [ %spec.select.i, %._crit_edge220 ], [ %.251.i, %.split.loop.exit80.i ], [ -1, %vector.ph ]
+vector.body225:                                   ; preds = %.split.loop.exit87.i.thread, %._crit_edge220, %vector.ph, %.split.loop.exit80.i
+  %.35263.i = phi i32 [ -1, %vector.ph ], [ %.251.i, %.split.loop.exit80.i ], [ %.251.i, %._crit_edge220 ], [ %.251.i, %.split.loop.exit87.i.thread ] ; 2 uses
+  %4 = phi i32 [ -1, %vector.ph ], [ %.251.i, %.split.loop.exit80.i ], [ %indvars.le.i, %._crit_edge220 ], [ %.251.i, %.split.loop.exit87.i.thread ]
   %i.ey = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   %wide.load229 = load <2 x i64>, ptr %i.d, align 8, !tbaa !61
   %wide.load230 = load <2 x i64>, ptr %i.ey, align 8, !tbaa !61
@@ -733,7 +745,7 @@ vector.body225:                                   ; preds = %vector.ph, %.split.
   %i.jt = tail call i64 @llvm.vector.reduce.add.v2i64(<2 x i64> %bin.rdx233) ; 2 uses
   %i.ju = icmp slt i32 %.35263.i, 0               ; 2 uses
   %.453.i = select i1 %i.ju, i32 2, i32 %.35263.i ; 3 uses
-  %.4.i = select i1 %i.ju, i32 6, i32 %3          ; 3 uses
+  %.4.i = select i1 %i.ju, i32 6, i32 %4          ; 3 uses
   %i.jv = select i1 %1, ptr @.str, ptr @.str.1
   %reass.sub = sub i32 %.4.i, %.453.i
   %i.jw = add i32 %reass.sub, -5

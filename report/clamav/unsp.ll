@@ -202,7 +202,7 @@ bb.j:                                             ; preds = %.lr.ph, %select.unf
   %.0284621 = phi i32 [ 1, %.lr.ph ], [ %.3287, %select.unfold ] ; 11 uses
   %.0288614 = phi i32 [ 1, %.lr.ph ], [ %.2290, %select.unfold ] ; 11 uses
   %.0291607 = phi i32 [ 1, %.lr.ph ], [ %.2293, %select.unfold ] ; 7 uses
-  %.0294606 = phi i32 [ 0, %.lr.ph ], [ %.3297, %select.unfold ] ; 24 uses
+  %.0294606 = phi i32 [ 0, %.lr.ph ], [ %.3297, %select.unfold ] ; 17 uses
   %.0298605 = phi i32 [ 0, %.lr.ph ], [ %.3301, %select.unfold ]
   %.0308598 = phi i32 [ %6, %.lr.ph ], [ %.3311, %select.unfold ] ; 4 uses
   %i.bt = shl i32 %.0276635, 4                    ; 2 uses
@@ -605,7 +605,7 @@ bb.fw:                                            ; preds = %bb.fv
   %i.aan = zext nneg i32 %i.aam to i64            ; 2 uses
   %.not366 = icmp ugt i32 %i.aam, %8
   %or.cond379 = select i1 %.not348, i1 true, i1 %.not366
-  %.pre = zext i32 %.0294606 to i64               ; 3 uses
+  %.pre = zext i32 %.0294606 to i64               ; 11 uses
   br i1 %or.cond379, label %split, label %bb.fx
 
 bb.fx:                                            ; preds = %bb.fw
@@ -633,110 +633,110 @@ bb.fy:                                            ; preds = %bb.fx
   br i1 %or.cond383, label %iter.check904, label %split
 
 iter.check904:                                    ; preds = %bb.fy
+  %narrow = add nuw nsw i32 %.0270, 1
   %i.aba = add i32 %.0294606, 1
   %umax888 = tail call i32 @llvm.umax.i32(i32 %8, i32 %i.aba)
   %i.abb = xor i32 %.0294606, -1
   %i.abc = add i32 %umax888, %i.abb
-  %10 = add nuw nsw i32 %.0270, 1
-  %umin889 = tail call i32 @llvm.umin.i32(i32 %i.abc, i32 %10) ; 3 uses
-  %11 = add nuw nsw i32 %umin889, 1               ; 5 uses
-  %min.iters.check = icmp samesign ult i32 %umin889, 3
+  %10 = tail call i32 @llvm.umin.i32(i32 %narrow, i32 %i.abc) ; 3 uses
+  %narrow925 = add nuw nsw i32 %10, 1
+  %11 = zext nneg i32 %narrow925 to i64           ; 5 uses
+  %min.iters.check = icmp samesign ult i32 %10, 3
   br i1 %min.iters.check, label %.preheader.preheader, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %iter.check904
   %i.abd = add i32 %.0294606, 1
   %umax = tail call i32 @llvm.umax.i32(i32 %8, i32 %i.abd)
-  %12 = xor i32 %.0294606, -1
-  %13 = add i32 %umax, %12
-  %14 = add nuw nsw i32 %.0270, 1
-  %umin = tail call i32 @llvm.umin.i32(i32 %13, i32 %14) ; 2 uses
-  %15 = xor i32 %.0294606, -1
-  %16 = icmp ugt i32 %umin, %15
-  %17 = xor i32 %i.aat, -1
-  %18 = icmp ugt i32 %umin, %17
-  %19 = or i1 %16, %18
+  %12 = sub i32 %.0294606, %umax
+  %13 = sub nuw nsw i32 -2, %.0270
+  %umin = tail call i32 @llvm.umax.i32(i32 %12, i32 %13)
+  %14 = icmp ult i32 %umin, %i.aat
   %i.abe = sub nsw i64 %i.aau, %.pre
-  %diff.check = icmp ugt i64 %i.abe, -32
-  %or.cond926 = select i1 %19, i1 true, i1 %diff.check
+  %diff.check = icmp ugt i64 %i.abe, -16
+  %or.cond926 = select i1 %14, i1 true, i1 %diff.check
   br i1 %or.cond926, label %.preheader.preheader, label %vector.main.loop.iter.check890
 
 vector.main.loop.iter.check890:                   ; preds = %vector.scevcheck
-  %min.iters.check891 = icmp samesign ult i32 %umin889, 31
+  %min.iters.check891 = icmp samesign ult i32 %10, 15
   br i1 %min.iters.check891, label %vec.epilog.ph908, label %vector.ph892
 
 vector.ph892:                                     ; preds = %vector.main.loop.iter.check890
-  %20 = and i32 %11, 28
-  %n.vec893 = and i32 %11, 262112                 ; 5 uses
-  %21 = add i32 %.0294606, %n.vec893              ; 3 uses
-  %i.abf = sub nsw i32 %i.aam, %n.vec893
-  %22 = add i32 %.0294606, 15
+  %15 = and i64 %11, 12
+  %n.vec893 = and i64 %11, 2147483632             ; 6 uses
+  %16 = add nuw nsw i64 %n.vec893, %.pre          ; 2 uses
+  %17 = trunc nuw nsw i64 %n.vec893 to i32
+  %i.abf = sub nsw i32 %i.aam, %17
+  %18 = add nuw nsw i64 %.pre, 15
   br label %vector.body896
 
 vector.body896:                                   ; preds = %vector.body896, %vector.ph892
-  %index897 = phi i32 [ 0, %vector.ph892 ], [ %index.next899, %vector.body896 ] ; 2 uses
-  %23 = phi i32 [ %22, %vector.ph892 ], [ %30, %vector.body896 ] ; 2 uses
-  %24 = add i32 %.0294606, %index897              ; 2 uses
-  %25 = sub i32 %24, %.1292
-  %26 = zext i32 %25 to i64
-  %27 = getelementptr inbounds nuw i8, ptr %7, i64 %26 ; 2 uses
-  %i.abg = getelementptr inbounds nuw i8, ptr %27, i64 16
-  %wide.load = load <16 x i8>, ptr %27, align 1, !tbaa !8
+  %index897 = phi i64 [ 0, %vector.ph892 ], [ %index.next898, %vector.body896 ] ; 2 uses
+  %19 = phi i64 [ %18, %vector.ph892 ], [ %24, %vector.body896 ] ; 2 uses
+  %20 = add nuw i64 %index897, %.pre              ; 2 uses
+  %21 = trunc nuw i64 %20 to i32
+  %22 = sub i32 %21, %.1292
+  %23 = zext i32 %22 to i64
+  %i.abg = getelementptr inbounds nuw i8, ptr %7, i64 %23
   %wide.load898 = load <16 x i8>, ptr %i.abg, align 1, !tbaa !8 ; 2 uses
-  %28 = zext i32 %24 to i64
-  %29 = getelementptr inbounds nuw i8, ptr %7, i64 %28 ; 2 uses
-  %i.abh = getelementptr inbounds nuw i8, ptr %29, i64 16
-  store <16 x i8> %wide.load, ptr %29, align 1, !tbaa !8
+  %i.abh = getelementptr inbounds nuw i8, ptr %7, i64 %20
   store <16 x i8> %wide.load898, ptr %i.abh, align 1, !tbaa !8
-  %index.next899 = add nuw i32 %index897, 32      ; 2 uses
-  %30 = add i32 %23, 32
-  %i.abi = icmp eq i32 %index.next899, %n.vec893
+  %index.next898 = add nuw i64 %index897, 16      ; 2 uses
+  %24 = add nuw nsw i64 %19, 16
+  %i.abi = icmp eq i64 %index.next898, %n.vec893
   br i1 %i.abi, label %middle.block900, label %vector.body896, !llvm.loop !29
 
 middle.block900:                                  ; preds = %vector.body896
   %i.abj = extractelement <16 x i8> %wide.load898, i64 15
-  %i.abk = add i32 %23, 17
-  %31 = icmp ult i32 %i.abk, %8
-  %cmp.n901 = icmp eq i32 %11, %n.vec893
+  %25 = trunc nuw nsw i64 %n.vec893 to i32
+  %26 = add i32 %.0294606, %25
+  %27 = trunc i64 %19 to i32
+  %i.abk = add i32 %27, 1
+  %28 = icmp ugt i32 %8, %i.abk
+  %cmp.n901 = icmp eq i64 %n.vec893, %11
   br i1 %cmp.n901, label %.loopexit, label %vec.epilog.iter.check906
 
 vec.epilog.iter.check906:                         ; preds = %middle.block900
-  %min.epilog.iters.check907 = icmp eq i32 %20, 0
+  %min.epilog.iters.check907 = icmp eq i64 %15, 0
   br i1 %min.epilog.iters.check907, label %.preheader.preheader, label %vec.epilog.ph908, !prof !30
 
 vec.epilog.ph908:                                 ; preds = %vector.main.loop.iter.check890, %vec.epilog.iter.check906
-  %vec.epilog.resume.val902 = phi i32 [ %n.vec893, %vec.epilog.iter.check906 ], [ 0, %vector.main.loop.iter.check890 ]
-  %bc.resume.val = phi i32 [ %21, %vec.epilog.iter.check906 ], [ %.0294606, %vector.main.loop.iter.check890 ]
-  %n.vec909 = and i32 %11, 262140                 ; 4 uses
-  %32 = add i32 %.0294606, %n.vec909              ; 2 uses
-  %i.abl = sub nsw i32 %i.aam, %n.vec909
-  %33 = add i32 %bc.resume.val, 3
+  %vec.epilog.resume.val901 = phi i64 [ %n.vec893, %vec.epilog.iter.check906 ], [ 0, %vector.main.loop.iter.check890 ]
+  %bc.resume.val = phi i64 [ %16, %vec.epilog.iter.check906 ], [ %.pre, %vector.main.loop.iter.check890 ]
+  %n.vec908 = and i64 %11, 2147483644             ; 5 uses
+  %29 = add nuw nsw i64 %n.vec908, %.pre
+  %30 = trunc nuw nsw i64 %n.vec908 to i32
+  %i.abl = sub nsw i32 %i.aam, %30
+  %31 = add nuw nsw i64 %bc.resume.val, 3
   br label %vec.epilog.vector.body915
 
 vec.epilog.vector.body915:                        ; preds = %vec.epilog.vector.body915, %vec.epilog.ph908
-  %index916 = phi i32 [ %vec.epilog.resume.val902, %vec.epilog.ph908 ], [ %index.next919, %vec.epilog.vector.body915 ] ; 2 uses
-  %34 = phi i32 [ %33, %vec.epilog.ph908 ], [ %37, %vec.epilog.vector.body915 ] ; 2 uses
-  %35 = add i32 %.0294606, %index916              ; 2 uses
-  %i.abm = sub i32 %35, %.1292
+  %index915 = phi i64 [ %vec.epilog.resume.val901, %vec.epilog.ph908 ], [ %index.next918, %vec.epilog.vector.body915 ] ; 2 uses
+  %32 = phi i64 [ %31, %vec.epilog.ph908 ], [ %35, %vec.epilog.vector.body915 ] ; 2 uses
+  %33 = add nuw i64 %index915, %.pre              ; 2 uses
+  %34 = trunc nuw i64 %33 to i32
+  %i.abm = sub i32 %34, %.1292
   %i.abn = zext i32 %i.abm to i64
   %i.abo = getelementptr inbounds nuw i8, ptr %7, i64 %i.abn
   %wide.load918 = load <4 x i8>, ptr %i.abo, align 1, !tbaa !8 ; 2 uses
-  %36 = zext i32 %35 to i64
-  %i.abp = getelementptr inbounds nuw i8, ptr %7, i64 %36
+  %i.abp = getelementptr inbounds nuw i8, ptr %7, i64 %33
   store <4 x i8> %wide.load918, ptr %i.abp, align 1, !tbaa !8
-  %index.next919 = add nuw i32 %index916, 4       ; 2 uses
-  %37 = add i32 %34, 4
-  %i.abq = icmp eq i32 %index.next919, %n.vec909
+  %index.next918 = add nuw i64 %index915, 4       ; 2 uses
+  %35 = add nuw nsw i64 %32, 4
+  %i.abq = icmp eq i64 %index.next918, %n.vec908
   br i1 %i.abq, label %vec.epilog.middle.block921, label %vec.epilog.vector.body915, !llvm.loop !31
 
 vec.epilog.middle.block921:                       ; preds = %vec.epilog.vector.body915
   %i.abr = extractelement <4 x i8> %wide.load918, i64 3
-  %i.abs = add i32 %34, 1
-  %38 = icmp ult i32 %i.abs, %8
-  %cmp.n922 = icmp eq i32 %11, %n.vec909
+  %36 = trunc nuw nsw i64 %n.vec908 to i32
+  %37 = add i32 %.0294606, %36
+  %38 = trunc i64 %32 to i32
+  %i.abs = add i32 %38, 1
+  %39 = icmp ugt i32 %8, %i.abs
+  %cmp.n922 = icmp eq i64 %n.vec908, %11
   br i1 %cmp.n922, label %.loopexit, label %.preheader.preheader
 
 .preheader.preheader:                             ; preds = %vector.scevcheck, %iter.check904, %vec.epilog.iter.check906, %vec.epilog.middle.block921
-  %.2296.ph = phi i32 [ %.0294606, %vector.scevcheck ], [ %.0294606, %iter.check904 ], [ %21, %vec.epilog.iter.check906 ], [ %32, %vec.epilog.middle.block921 ]
+  %indvars.iv676.ph = phi i64 [ %.pre, %vector.scevcheck ], [ %.pre, %iter.check904 ], [ %16, %vec.epilog.iter.check906 ], [ %29, %vec.epilog.middle.block921 ]
   %.1271.ph = phi i32 [ %i.aam, %vector.scevcheck ], [ %i.aam, %iter.check904 ], [ %i.abf, %vec.epilog.iter.check906 ], [ %i.abl, %vec.epilog.middle.block921 ]
   br label %.preheader
 
@@ -746,26 +746,27 @@ split:                                            ; preds = %bb.fy, %bb.fx, %bb.
   br label %.thread551
 
 .preheader:                                       ; preds = %.preheader.preheader, %.preheader
-  %.2296 = phi i32 [ %41, %.preheader ], [ %.2296.ph, %.preheader.preheader ] ; 3 uses
-  %.1271 = phi i32 [ %i.aby, %.preheader ], [ %.1271.ph, %.preheader.preheader ]
-  %i.abu = sub i32 %.2296, %.1292
+  %indvars.iv676 = phi i64 [ %indvars.iv.next677, %.preheader ], [ %indvars.iv676.ph, %.preheader.preheader ] ; 3 uses
+  %.2296 = phi i32 [ %i.aby, %.preheader ], [ %.1271.ph, %.preheader.preheader ]
+  %40 = trunc nuw i64 %indvars.iv676 to i32
+  %i.abu = sub i32 %40, %.1292
   %i.abv = zext i32 %i.abu to i64
   %i.abw = getelementptr inbounds nuw i8, ptr %7, i64 %i.abv
   %i.abx = load i8, ptr %i.abw, align 1, !tbaa !8 ; 2 uses
-  %39 = zext i32 %.2296 to i64
-  %40 = getelementptr inbounds nuw i8, ptr %7, i64 %39
-  store i8 %i.abx, ptr %40, align 1, !tbaa !8
-  %41 = add i32 %.2296, 1                         ; 3 uses
-  %i.aby = add nsw i32 %.1271, -1                 ; 2 uses
+  %41 = getelementptr inbounds nuw i8, ptr %7, i64 %indvars.iv676
+  store i8 %i.abx, ptr %41, align 1, !tbaa !8
+  %indvars.iv.next677 = add nuw nsw i64 %indvars.iv676, 1 ; 2 uses
+  %indvars = trunc i64 %indvars.iv.next677 to i32 ; 2 uses
+  %i.aby = add nsw i32 %.2296, -1                 ; 2 uses
   %i.abz = icmp ne i32 %i.aby, 0
-  %42 = icmp ult i32 %41, %8                      ; 2 uses
+  %42 = icmp ugt i32 %8, %indvars                 ; 2 uses
   %i.aca = and i1 %42, %i.abz
   br i1 %i.aca, label %.preheader, label %.loopexit, !llvm.loop !32
 
 .loopexit:                                        ; preds = %.preheader, %vec.epilog.middle.block921, %middle.block900
   %.lcssa877 = phi i8 [ %i.abr, %vec.epilog.middle.block921 ], [ %i.abj, %middle.block900 ], [ %i.abx, %.preheader ]
-  %.lcssa876.a = phi i32 [ %32, %vec.epilog.middle.block921 ], [ %21, %middle.block900 ], [ %41, %.preheader ]
-  %.lcssa875 = phi i1 [ %38, %vec.epilog.middle.block921 ], [ %31, %middle.block900 ], [ %42, %.preheader ]
+  %.lcssa876.a = phi i32 [ %37, %vec.epilog.middle.block921 ], [ %26, %middle.block900 ], [ %indvars, %.preheader ]
+  %.lcssa875 = phi i1 [ %39, %vec.epilog.middle.block921 ], [ %28, %middle.block900 ], [ %42, %.preheader ]
   %i.acb = zext i8 %.lcssa877 to i32
   br i1 %.lcssa875, label %select.unfold, label %.thread551
 
@@ -1168,7 +1169,7 @@ attributes #7 = { nounwind }
 !27 = !{!20, !5, i64 28}
 !28 = !{!20, !5, i64 20}
 !29 = distinct !{!29, !17, !18}
-!30 = !{!"branch_weights", i32 4, i32 28}
+!30 = !{!"branch_weights", i32 4, i32 12}
 !31 = distinct !{!31, !17, !18}
 !32 = distinct !{!32, !17}
 end_hunk_2

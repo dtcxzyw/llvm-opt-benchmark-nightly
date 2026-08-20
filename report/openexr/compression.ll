@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.h, %bb.c
   %.047 = phi i32 [ %i.n, %bb.c ], [ %.2, %bb.h ]
   %.046.idx = phi i64 [ %.add, %bb.c ], [ %.046.add, %bb.h ] ; 2 uses
-  %.0 = phi i32 [ 3, %bb.c ], [ %4, %bb.h ]
+  %.0 = phi i32 [ 3, %bb.c ], [ %umax, %bb.h ]    ; 2 uses
   %.046.ptr = getelementptr inbounds i8, ptr %.050, i64 %.046.idx ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %.046.ptr, i64 2
   %i.u = load i16, ptr %i.t, align 2, !tbaa !93   ; 2 uses
@@ -216,35 +216,40 @@ bb.d:                                             ; preds = %bb.h, %bb.c
   %i.aa = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %i.z
   %i.ab = load i32, ptr %i.aa, align 4, !tbaa !31
   %i.ac = load i16, ptr %.046.ptr, align 2, !tbaa !91
-  %i.ad = zext i16 %i.ac to i32
+  %i.ad = zext i16 %i.ac to i32                   ; 2 uses
   %i.ae = shl nuw nsw i32 %i.v, 9
+  %3 = zext i32 %.0 to i64
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.g, %bb.d
-  %.148 = phi i32 [ %.047, %bb.d ], [ %.2, %bb.g ] ; 2 uses
-  %.1 = phi i32 [ %.0, %bb.d ], [ %4, %bb.g ]     ; 3 uses
-  %3 = zext i32 %.1 to i64                        ; 2 uses
-  %i.af = getelementptr inbounds nuw [4 x i8], ptr %i.e, i64 %3
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.g ], [ %3, %bb.d ] ; 4 uses
+  %.1 = phi i32 [ %.2, %bb.g ], [ %.047, %bb.d ]  ; 2 uses
+  %i.af = getelementptr inbounds nuw [4 x i8], ptr %i.e, i64 %indvars.iv
   %i.ag = load i32, ptr %i.af, align 4, !tbaa !31
   %i.ah = add i32 %i.ag, %i.ab
-  %i.ai = getelementptr inbounds nuw [8 x i8], ptr %.ptr, i64 %3
+  %i.ai = getelementptr inbounds nuw [8 x i8], ptr %.ptr, i64 %indvars.iv
   %i.aj = load i32, ptr %i.ai, align 4, !tbaa !304
   %i.ak = add i32 %i.ah, %i.aj                    ; 2 uses
-  %i.al = icmp ult i32 %i.ak, %.148
+  %i.al = icmp ult i32 %i.ak, %.1
   br i1 %i.al, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
-  %i.am = or i32 %.1, %i.ae
+  %4 = trunc nuw i64 %indvars.iv to i32
+  %i.am = or i32 %i.ae, %4
   store i32 %i.am, ptr %i.q, align 4, !tbaa !182
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.e, %bb.f
-  %.2 = phi i32 [ %i.ak, %bb.f ], [ %.148, %bb.e ] ; 3 uses
-  %4 = add i32 %.1, 1                             ; 3 uses
-  %.not58 = icmp ugt i32 %4, %i.ad
+  %.2 = phi i32 [ %i.ak, %bb.f ], [ %.1, %bb.e ]  ; 3 uses
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %indvars = trunc i64 %indvars.iv.next to i32
+  %.not58 = icmp ugt i32 %indvars, %i.ad
   br i1 %.not58, label %bb.h, label %bb.e, !llvm.loop !305
 
 bb.h:                                             ; preds = %bb.g
+  %5 = add i32 %.0, 1
+  %6 = add nuw nsw i32 %i.ad, 1
+  %umax = tail call i32 @llvm.umax.i32(i32 %5, i32 %6)
   %.046.add = add nsw i64 %.046.idx, 4            ; 2 uses
   %.not59 = icmp eq i64 %.046.add, -4
   br i1 %.not59, label %.loopexit.loopexit, label %bb.d, !llvm.loop !306

@@ -201,7 +201,7 @@ define internal fastcc void @submit_requests(ptr nofree noundef readonly capture
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 552
   %i.b = load ptr, ptr %i.a, align 8              ; 3 uses
-  %i.c = sext i32 %2 to i64
+  %i.c = sext i32 %2 to i64                       ; 2 uses
   %i.d = getelementptr inbounds [8 x i8], ptr %1, i64 %i.c ; 3 uses
   %i.e = load ptr, ptr %i.d, align 8              ; 4 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 152 ; 6 uses
@@ -233,7 +233,6 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph64.preheader:                               ; preds = %.preheader
   %i.s = sext i32 %.161 to i64
-  %5 = sext i32 %2 to i64
   br label %.lr.ph64
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
@@ -248,21 +247,22 @@ bb.b:                                             ; preds = %bb.a
   br i1 %exitcond.not, label %.preheader, label %.lr.ph, !llvm.loop !23
 
 .lr.ph64:                                         ; preds = %.lr.ph64.preheader, %.lr.ph64
-  %indvars.iv66.a = phi i64 [ %i.s, %.lr.ph64.preheader ], [ %indvars.iv.next67.a, %.lr.ph64 ] ; 3 uses
-  %.1.in62 = phi i64 [ %5, %.lr.ph64.preheader ], [ %indvars.iv66.a, %.lr.ph64 ]
-  %i.x = getelementptr inbounds [8 x i8], ptr %1, i64 %indvars.iv66.a ; 2 uses
+  %indvars.iv66.a = phi i64 [ %i.c, %.lr.ph64.preheader ], [ %indvars.iv.next67.a, %.lr.ph64 ] ; 2 uses
+  %.1.in62 = phi i64 [ %i.s, %.lr.ph64.preheader ], [ %indvars.iv.next67, %.lr.ph64 ] ; 2 uses
+  %i.x = getelementptr inbounds [8 x i8], ptr %1, i64 %.1.in62 ; 2 uses
   %i.y = load ptr, ptr %i.x, align 8              ; 2 uses
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 152
   %i.aa = getelementptr inbounds nuw i8, ptr %i.y, i64 184
   %i.ab = load i64, ptr %i.aa, align 8
   tail call void @qemu_iovec_concat(ptr noundef nonnull %i.f, ptr noundef nonnull %i.z, i64 noundef 0, i64 noundef %i.ab) #14
   %i.ac = load ptr, ptr %i.x, align 8
-  %i.ad = getelementptr inbounds [8 x i8], ptr %1, i64 %.1.in62
+  %i.ad = getelementptr inbounds [8 x i8], ptr %1, i64 %indvars.iv66.a
   %i.ae = load ptr, ptr %i.ad, align 8
   %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 208
   store ptr %i.ac, ptr %i.af, align 8
-  %indvars.iv.next67.a = add nsw i64 %indvars.iv66.a, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next67.a to i32
+  %indvars.iv.next67 = add nsw i64 %.1.in62, 1    ; 2 uses
+  %indvars.iv.next67.a = add nsw i64 %indvars.iv66.a, 1
+  %lftr.wideiv = trunc i64 %indvars.iv.next67 to i32
   %exitcond69.not = icmp eq i32 %i.q, %lftr.wideiv
   br i1 %exitcond69.not, label %._crit_edge, label %.lr.ph64, !llvm.loop !24
 

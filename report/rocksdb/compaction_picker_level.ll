@@ -203,9 +203,9 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %.lr.ph, %_ZNSt6vectorIPN7rocksdb12FileMetaDataESaIS2_EE9push_backERKS2_.exit
   %i.bg = phi ptr [ %i.d, %.lr.ph ], [ %i.ed, %_ZNSt6vectorIPN7rocksdb12FileMetaDataESaIS2_EE9push_backERKS2_.exit ]
-  %indvars.iv.a = phi i64 [ %i.be, %.lr.ph ], [ %indvars.iv.next, %_ZNSt6vectorIPN7rocksdb12FileMetaDataESaIS2_EE9push_backERKS2_.exit ] ; 4 uses
+  %indvars.iv.a = phi i64 [ %i.bf, %.lr.ph ], [ %indvars.iv.next104, %_ZNSt6vectorIPN7rocksdb12FileMetaDataESaIS2_EE9push_backERKS2_.exit ] ; 2 uses
+  %indvars.iv = phi i64 [ %i.be, %.lr.ph ], [ %indvars.iv.next, %_ZNSt6vectorIPN7rocksdb12FileMetaDataESaIS2_EE9push_backERKS2_.exit ] ; 3 uses
   %8 = phi ptr [ %i.ar, %.lr.ph ], [ %i.ef, %_ZNSt6vectorIPN7rocksdb12FileMetaDataESaIS2_EE9push_backERKS2_.exit ]
-  %.047.in86 = phi i64 [ %i.bf, %.lr.ph ], [ %indvars.iv.a, %_ZNSt6vectorIPN7rocksdb12FileMetaDataESaIS2_EE9push_backERKS2_.exit ]
   %.04885 = phi i64 [ %i.al, %.lr.ph ], [ %i.df, %_ZNSt6vectorIPN7rocksdb12FileMetaDataESaIS2_EE9push_backERKS2_.exit ] ; 5 uses
   %i.bh = load ptr, ptr %i.b, align 8, !tbaa !206
   %i.bi = ptrtoint ptr %i.bg to i64
@@ -215,7 +215,7 @@ bb.e:                                             ; preds = %.lr.ph, %_ZNSt6vect
   br i1 %i.bl, label %bb.f, label %.critedge
 
 bb.f:                                             ; preds = %bb.e
-  %i.bm = getelementptr inbounds nuw [8 x i8], ptr %8, i64 %indvars.iv.a
+  %i.bm = getelementptr inbounds nuw [8 x i8], ptr %8, i64 %indvars.iv
   %i.bn = load ptr, ptr %i.bm, align 8, !tbaa !234 ; 6 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bn, i64 188
   %i.bp = load i8, ptr %i.bo, align 4, !tbaa !236, !range !249, !noundef !53
@@ -254,7 +254,7 @@ bb.i:                                             ; preds = %bb.h
   %i.cc = shl i64 %i.cb, 29
   %sext = add i64 %i.cc, -4294967296
   %i.cd = ashr i64 %sext, 32
-  %i.ce = icmp slt i64 %indvars.iv.a, %i.cd
+  %i.ce = icmp slt i64 %indvars.iv, %i.cd
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #26
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #26
   br i1 %i.ce, label %bb.j, label %.critedge3
@@ -272,7 +272,7 @@ bb.j:                                             ; preds = %bb.i
   store ptr %i.ck, ptr %4, align 8
   store i64 %i.cn, ptr %i.bb, align 8
   %i.co = load ptr, ptr %i.ai, align 8, !tbaa !206
-  %i.cp = getelementptr [8 x i8], ptr %i.co, i64 %.047.in86
+  %i.cp = getelementptr [8 x i8], ptr %i.co, i64 %indvars.iv.a
   %i.cq = getelementptr i8, ptr %i.cp, i64 16
   %i.cr = load ptr, ptr %i.cq, align 8, !tbaa !234 ; 2 uses
   %i.cs = getelementptr inbounds nuw i8, ptr %i.cr, i64 48
@@ -384,7 +384,7 @@ _ZNSt6vectorIPN7rocksdb12FileMetaDataESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__
 
 _ZNSt6vectorIPN7rocksdb12FileMetaDataESaIS2_EE9push_backERKS2_.exit: ; preds = %_ZNSt6vectorIPN7rocksdb12FileMetaDataESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i, %bb.n
   %i.ed = phi ptr [ %i.eb, %_ZNSt6vectorIPN7rocksdb12FileMetaDataESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i ], [ %i.dm, %bb.n ]
-  %indvars.iv.next = add nsw i64 %indvars.iv.a, 1 ; 2 uses
+  %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
   %i.ee = load ptr, ptr %i.ap, align 8, !tbaa !207
   %i.ef = load ptr, ptr %i.ai, align 8, !tbaa !206 ; 2 uses
   %i.eg = ptrtoint ptr %i.ee to i64
@@ -393,6 +393,7 @@ _ZNSt6vectorIPN7rocksdb12FileMetaDataESaIS2_EE9push_backERKS2_.exit: ; preds = %
   %sext116 = shl i64 %i.ei, 29
   %i.ej = ashr i64 %sext116, 32
   %i.ek = icmp slt i64 %indvars.iv.next, %i.ej
+  %indvars.iv.next104 = add nsw i64 %indvars.iv.a, 1
   br i1 %i.ek, label %bb.e, label %.critedge, !llvm.loop !362
 
 .critedge:                                        ; preds = %_ZNSt6vectorIPN7rocksdb12FileMetaDataESaIS2_EE9push_backERKS2_.exit, %bb.e, %bb.f, %bb.h, %_ZNK7rocksdb10Comparator23CompareWithoutTimestampERKNS_5SliceES3_.exit, %bb.l, %bb.d

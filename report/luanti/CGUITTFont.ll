@@ -204,13 +204,13 @@ bb.c:                                             ; preds = %_ZNK3gui11SGUITTGly
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 104
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 112
+  %2 = zext i32 %spec.select to i64
   br label %bb.d
 
 bb.d:                                             ; preds = %_ZNK3gui11SGUITTGlyph8isLoadedEv.exit32.thread, %bb.c
-  %.1 = phi i32 [ %spec.select, %bb.c ], [ %3, %_ZNK3gui11SGUITTGlyph8isLoadedEv.exit32.thread ] ; 2 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %_ZNK3gui11SGUITTGlyph8isLoadedEv.exit32.thread ], [ %2, %bb.c ] ; 2 uses
   %i.ag = load ptr, ptr %i.c, align 8, !tbaa !178
-  %2 = zext i32 %.1 to i64
-  %i.ah = call i32 @FT_Get_Char_Index(ptr noundef %i.ag, i64 noundef %2) ; 3 uses
+  %i.ah = call i32 @FT_Get_Char_Index(ptr noundef %i.ag, i64 noundef %indvars.iv) ; 3 uses
   %.not = icmp eq i32 %i.ah, 0
   br i1 %.not, label %_ZNK3gui11SGUITTGlyph8isLoadedEv.exit32.thread, label %bb.e
 
@@ -288,9 +288,10 @@ _ZN3gui15CGUITTGlyphPage18pushGlyphToBePagedEPKNS_11SGUITTGlyphEPN5video6IImageE
   br label %_ZNK3gui11SGUITTGlyph8isLoadedEv.exit32.thread
 
 _ZNK3gui11SGUITTGlyph8isLoadedEv.exit32.thread:   ; preds = %bb.e, %_ZNK3gui11SGUITTGlyph8isLoadedEv.exit32, %_ZN3gui15CGUITTGlyphPage18pushGlyphToBePagedEPKNS_11SGUITTGlyphEPN5video6IImageE.exit, %bb.d
-  %3 = add i32 %.1, 1                             ; 2 uses
-  %4 = icmp ult i32 %3, %i.ab
-  br i1 %4, label %bb.d, label %_ZNK3gui11SGUITTGlyph8isLoadedEv.exit.thread, !llvm.loop !242
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %indvars = trunc i64 %indvars.iv.next to i32
+  %3 = icmp ugt i32 %i.ab, %indvars
+  br i1 %3, label %bb.d, label %_ZNK3gui11SGUITTGlyph8isLoadedEv.exit.thread, !llvm.loop !242
 
 _ZNK3gui11SGUITTGlyph8isLoadedEv.exit.thread:     ; preds = %_ZNK3gui11SGUITTGlyph8isLoadedEv.exit32.thread, %bb.b, %_ZNK3gui11SGUITTGlyph8isLoadedEv.exit, %bb.a
   ret i32 %i.f

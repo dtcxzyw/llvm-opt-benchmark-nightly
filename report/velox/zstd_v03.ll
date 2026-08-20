@@ -204,62 +204,58 @@ scalar.ph140:                                     ; preds = %scalar.ph140.prehea
   %i.fu = shl nuw i32 1, %i.ft
   %i.fv = zext i8 %i.fq to i64
   %i.fw = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.fv ; 2 uses
-  %i.fx = load i32, ptr %i.fw, align 4, !tbaa !28 ; 9 uses
-  %i.fy = add i32 %i.fu, %i.fx                    ; 4 uses
+  %i.fx = load i32, ptr %i.fw, align 4, !tbaa !28 ; 4 uses
+  %i.fy = add i32 %i.fu, %i.fx                    ; 3 uses
   %i.fz = shl nuw nsw i32 %i.fo, 8
   %i.ga = add nsw i32 %i.fs, %i.eo
   %.sroa.6.0.insert.ext.i.i.i = shl nsw i32 %i.ga, 16
   %.sroa.6.0.insert.shift.i.i.i = and i32 %.sroa.6.0.insert.ext.i.i.i, 16711680
   %i.gb = or disjoint i32 %.sroa.6.0.insert.shift.i.i.i, %i.fz
   %.sroa.0.0.insert.insert.i.reass.i.i = or disjoint i32 %i.gb, %invariant.op.i.i ; 2 uses
+  %9 = zext i32 %i.fx to i64                      ; 3 uses
   %i.gc = add i32 %i.fx, 1
   %i.gd = tail call i32 @llvm.umax.i32(i32 %i.fy, i32 %i.gc)
-  %9 = sub i32 %i.gd, %i.fx                       ; 3 uses
-  %min.iters.check129 = icmp ult i32 %9, 16
-  br i1 %min.iters.check129, label %scalar.ph128.preheader, label %vector.scevcheck
+  %10 = xor i32 %i.fx, -1
+  %11 = add i32 %i.gd, %10                        ; 2 uses
+  %12 = zext i32 %11 to i64
+  %13 = add nuw nsw i64 %12, 1                    ; 2 uses
+  %min.iters.check129 = icmp ult i32 %11, 7
+  br i1 %min.iters.check129, label %scalar.ph128.preheader, label %vector.ph130
 
-vector.scevcheck:                                 ; preds = %.lr.ph53.i.i.i
-  %10 = add i32 %i.fx, 1
-  %umax = tail call i32 @llvm.umax.i32(i32 %i.fy, i32 %10)
-  %11 = add i32 %umax, -1
-  %12 = icmp ult i32 %11, %i.fx
-  br i1 %12, label %scalar.ph128.preheader, label %vector.ph130
-
-vector.ph130:                                     ; preds = %vector.scevcheck
-  %n.vec131 = and i32 %9, -8                      ; 3 uses
-  %13 = add i32 %i.fx, %n.vec131
+vector.ph130:                                     ; preds = %.lr.ph53.i.i.i
+  %n.vec131 = and i64 %13, 8589934584             ; 3 uses
+  %14 = add nuw nsw i64 %n.vec131, %9
   %broadcast.splatinsert132 = insertelement <4 x i32> poison, i32 %.sroa.0.0.insert.insert.i.reass.i.i, i64 0
   %broadcast.splat133 = shufflevector <4 x i32> %broadcast.splatinsert132, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
+  %invariant.gep = getelementptr [4 x i8], ptr %i.ez, i64 %9
   br label %vector.body134
 
 vector.body134:                                   ; preds = %vector.body134, %vector.ph130
-  %index135 = phi i32 [ 0, %vector.ph130 ], [ %index.next136, %vector.body134 ] ; 2 uses
-  %14 = add i32 %i.fx, %index135
-  %15 = zext i32 %14 to i64
-  %i.ge = getelementptr inbounds nuw [4 x i8], ptr %i.ez, i64 %15 ; 2 uses
+  %index135 = phi i64 [ 0, %vector.ph130 ], [ %index.next136, %vector.body134 ] ; 2 uses
+  %i.ge = getelementptr [4 x i8], ptr %invariant.gep, i64 %index135 ; 2 uses
   %i.gf = getelementptr inbounds nuw i8, ptr %i.ge, i64 16
   store <4 x i32> %broadcast.splat133, ptr %i.ge, align 4
   store <4 x i32> %broadcast.splat133, ptr %i.gf, align 4
-  %index.next136 = add nuw i32 %index135, 8       ; 2 uses
-  %i.gg = icmp eq i32 %index.next136, %n.vec131
+  %index.next136 = add nuw i64 %index135, 8       ; 2 uses
+  %i.gg = icmp eq i64 %index.next136, %n.vec131
   br i1 %i.gg, label %middle.block137, label %vector.body134, !llvm.loop !85
 
 middle.block137:                                  ; preds = %vector.body134
-  %cmp.n138 = icmp eq i32 %9, %n.vec131
+  %cmp.n138 = icmp eq i64 %13, %n.vec131
   br i1 %cmp.n138, label %.loopexit, label %scalar.ph128.preheader
 
-scalar.ph128.preheader:                           ; preds = %vector.scevcheck, %.lr.ph53.i.i.i, %middle.block137
-  %.0.i.i.i.ph = phi i32 [ %i.fx, %vector.scevcheck ], [ %i.fx, %.lr.ph53.i.i.i ], [ %13, %middle.block137 ]
+scalar.ph128.preheader:                           ; preds = %.lr.ph53.i.i.i, %middle.block137
+  %indvars.iv56.i.i.i.ph = phi i64 [ %9, %.lr.ph53.i.i.i ], [ %14, %middle.block137 ]
   br label %scalar.ph128
 
 scalar.ph128:                                     ; preds = %scalar.ph128.preheader, %scalar.ph128
-  %.0.i.i.i = phi i32 [ %16, %scalar.ph128 ], [ %.0.i.i.i.ph, %scalar.ph128.preheader ] ; 2 uses
-  %16 = add i32 %.0.i.i.i, 1                      ; 2 uses
-  %17 = zext i32 %.0.i.i.i to i64
-  %i.gh = getelementptr inbounds nuw [4 x i8], ptr %i.ez, i64 %17
+  %indvars.iv56.i.i.i = phi i64 [ %indvars.iv.next57.i.i.i, %scalar.ph128 ], [ %indvars.iv56.i.i.i.ph, %scalar.ph128.preheader ] ; 2 uses
+  %indvars.iv.next57.i.i.i = add nuw nsw i64 %indvars.iv56.i.i.i, 1 ; 2 uses
+  %indvars.i.i.i = trunc i64 %indvars.iv.next57.i.i.i to i32
+  %i.gh = getelementptr inbounds nuw [4 x i8], ptr %i.ez, i64 %indvars.iv56.i.i.i
   store i32 %.sroa.0.0.insert.insert.i.reass.i.i, ptr %i.gh, align 4
-  %18 = icmp ult i32 %16, %i.fy
-  br i1 %18, label %scalar.ph128, label %.loopexit, !llvm.loop !86
+  %15 = icmp ugt i32 %i.fy, %indvars.i.i.i
+  br i1 %15, label %scalar.ph128, label %.loopexit, !llvm.loop !86
 
 .loopexit:                                        ; preds = %scalar.ph128, %middle.block137
   store i32 %i.fy, ptr %i.fw, align 4, !tbaa !28
@@ -662,7 +658,7 @@ attributes #19 = { nounwind allocsize(0) }
 !83 = distinct !{!83, !38, !46, !47}
 !84 = distinct !{!84, !38, !47, !46}
 !85 = distinct !{!85, !38, !46, !47}
-!86 = distinct !{!86, !38, !46}
+!86 = distinct !{!86, !38, !47, !46}
 !87 = distinct !{!87, !38}
 !88 = distinct !{!88, !38, !46, !47}
 !89 = distinct !{!89, !38, !47, !46}

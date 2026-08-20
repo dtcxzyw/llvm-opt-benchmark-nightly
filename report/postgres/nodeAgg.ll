@@ -203,29 +203,30 @@ bb.ae:                                            ; preds = %bb.ad
   %i.fy = load ptr, ptr %i.h, align 8
   %i.fz = getelementptr inbounds nuw i8, ptr %i.fy, i64 8
   %.pre196.i = load i32, ptr %i.bv, align 4
+  %1 = sext i32 %.pre196.i to i64
   br label %bb.af
 
 bb.af:                                            ; preds = %bb.ag, %bb.ae
-  %1 = phi i32 [ %3, %bb.ag ], [ %.pre196.i, %bb.ae ] ; 3 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.ag ], [ %1, %bb.ae ] ; 3 uses
   %i.ga = load ptr, ptr %i.fz, align 8
-  %2 = sext i32 %1 to i64
-  %i.gb = getelementptr inbounds [4 x i8], ptr %i.ga, i64 %2
+  %i.gb = getelementptr inbounds [4 x i8], ptr %i.ga, i64 %indvars.iv
   %i.gc = load i32, ptr %i.gb, align 4
   %i.gd = icmp sgt i32 %i.gc, 0
   br i1 %i.gd, label %bb.ag, label %bb.ah
 
 bb.ag:                                            ; preds = %bb.af
-  %3 = add i32 %1, 1                              ; 4 uses
-  store i32 %3, ptr %i.bv, align 4
-  %.not148.i = icmp slt i32 %3, %.1130227.i
-  br i1 %.not148.i, label %bb.af, label %bb.ah, !llvm.loop !33
+  %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
+  %indvars = trunc i64 %indvars.iv.next to i32    ; 2 uses
+  store i32 %indvars, ptr %i.bv, align 4
+  %.not148.i = icmp sgt i32 %.1130227.i, %indvars
+  br i1 %.not148.i, label %bb.af, label %.backedge.i, !llvm.loop !33
 
-bb.ah:                                            ; preds = %bb.ag, %bb.af
-  %4 = phi i32 [ %3, %bb.ag ], [ %1, %bb.af ]
-  %.not149.i = icmp slt i32 %4, %.1130227.i
-  br i1 %.not149.i, label %bb.aj, label %.backedge.i
+bb.ah:                                            ; preds = %bb.af
+  %2 = trunc nsw i64 %indvars.iv to i32
+  %3 = icmp sgt i32 %.1130227.i, %2
+  br i1 %3, label %bb.aj, label %.backedge.i
 
-.backedge.i:                                      ; preds = %bb.bs, %bb.br, %bb.ah
+.backedge.i:                                      ; preds = %bb.ag, %bb.bs, %bb.br, %bb.ah
   %i.ge = load i8, ptr %i.e, align 1, !range !6, !noundef !7
   %i.gf = trunc nuw i8 %i.ge to i1
   br i1 %i.gf, label %agg_retrieve_direct.exit.thread, label %bb.j, !llvm.loop !34

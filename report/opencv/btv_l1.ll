@@ -203,24 +203,24 @@ bb.cs:                                            ; preds = %.noexc235.i, %.lr.p
   br i1 %i.os, label %bb.cs, label %.preheader.i.i, !llvm.loop !128
 
 bb.ct:                                            ; preds = %.noexc239.i, %.lr.ph11.i.i
-  %indvars.iv13.i.i.a = phi i64 [ %i.of, %.lr.ph11.i.i ], [ %indvars.iv.next14.i.i.a, %.noexc239.i ] ; 5 uses
-  %.0.in9.i.i = phi i64 [ %i.lt, %.lr.ph11.i.i ], [ %indvars.iv13.i.i.a, %.noexc239.i ] ; 3 uses
+  %indvars.iv13.i.i.a = phi i64 [ %i.lt, %.lr.ph11.i.i ], [ %indvars.iv.next14.i.i.a, %.noexc239.i ] ; 4 uses
+  %.0.in9.i.i = phi i64 [ %i.of, %.lr.ph11.i.i ], [ %indvars.iv.next14.i.i, %.noexc239.i ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %51) #31
   %i.ot = load ptr, ptr %i.ka, align 8, !tbaa !90 ; 2 uses
-  %i.ou = getelementptr inbounds nuw [208 x i8], ptr %i.ot, i64 %.0.in9.i.i
+  %i.ou = getelementptr inbounds nuw [208 x i8], ptr %i.ot, i64 %indvars.iv13.i.i.a
   store i32 0, ptr %i.np, align 8, !tbaa !105
   store i32 0, ptr %i.nq, align 4, !tbaa !106
   store i32 16842752, ptr %51, align 8, !tbaa !101
   store ptr %i.ou, ptr %i.nr, align 8, !tbaa !104
   call void @llvm.lifetime.start.p0(ptr nonnull %52) #31
   %i.ov = load ptr, ptr %i.aj, align 8, !tbaa !90
-  %i.ow = getelementptr inbounds nuw [208 x i8], ptr %i.ov, i64 %indvars.iv13.i.i.a
+  %i.ow = getelementptr inbounds nuw [208 x i8], ptr %i.ov, i64 %.0.in9.i.i
   store i32 0, ptr %i.ns, align 8, !tbaa !105
   store i32 0, ptr %i.nt, align 4, !tbaa !106
   store i32 16842752, ptr %52, align 8, !tbaa !101
   store ptr %i.ow, ptr %i.nu, align 8, !tbaa !104
   call void @llvm.lifetime.start.p0(ptr nonnull %53) #31
-  %i.ox = getelementptr inbounds nuw [208 x i8], ptr %i.ot, i64 %indvars.iv13.i.i.a
+  %i.ox = getelementptr inbounds nuw [208 x i8], ptr %i.ot, i64 %.0.in9.i.i
   store i64 0, ptr %i.nw, align 8
   store i32 33619968, ptr %53, align 8, !tbaa !101
   store ptr %i.ox, ptr %i.nv, align 8, !tbaa !104
@@ -237,20 +237,20 @@ bb.ct:                                            ; preds = %.noexc239.i, %.lr.p
   call void @llvm.lifetime.end.p0(ptr nonnull %51) #31
   call void @llvm.lifetime.start.p0(ptr nonnull %54) #31
   %i.oz = load ptr, ptr %i.kb, align 8, !tbaa !90 ; 2 uses
-  %i.pa = getelementptr inbounds nuw [208 x i8], ptr %i.oz, i64 %.0.in9.i.i
+  %i.pa = getelementptr inbounds nuw [208 x i8], ptr %i.oz, i64 %indvars.iv13.i.i.a
   store i32 0, ptr %i.nx, align 8, !tbaa !105
   store i32 0, ptr %i.ny, align 4, !tbaa !106
   store i32 16842752, ptr %54, align 8, !tbaa !101
   store ptr %i.pa, ptr %i.nz, align 8, !tbaa !104
   call void @llvm.lifetime.start.p0(ptr nonnull %55) #31
   %i.pb = load ptr, ptr %i.w, align 8, !tbaa !90
-  %i.pc = getelementptr inbounds nuw [208 x i8], ptr %i.pb, i64 %.0.in9.i.i
+  %i.pc = getelementptr inbounds nuw [208 x i8], ptr %i.pb, i64 %indvars.iv13.i.i.a
   store i32 0, ptr %i.oa, align 8, !tbaa !105
   store i32 0, ptr %i.ob, align 4, !tbaa !106
   store i32 16842752, ptr %55, align 8, !tbaa !101
   store ptr %i.pc, ptr %i.oc, align 8, !tbaa !104
   call void @llvm.lifetime.start.p0(ptr nonnull %56) #31
-  %i.pd = getelementptr inbounds nuw [208 x i8], ptr %i.oz, i64 %indvars.iv13.i.i.a
+  %i.pd = getelementptr inbounds nuw [208 x i8], ptr %i.oz, i64 %.0.in9.i.i
   store i64 0, ptr %i.oe, align 8
   store i32 33619968, ptr %56, align 8, !tbaa !101
   store ptr %i.pd, ptr %i.od, align 8, !tbaa !104
@@ -265,8 +265,9 @@ bb.ct:                                            ; preds = %.noexc239.i, %.lr.p
   call void @llvm.lifetime.end.p0(ptr nonnull %56) #31
   call void @llvm.lifetime.end.p0(ptr nonnull %55) #31
   call void @llvm.lifetime.end.p0(ptr nonnull %54) #31
-  %indvars.iv.next14.i.i.a = add nsw i64 %indvars.iv13.i.i.a, 1 ; 2 uses
-  %lftr.wideiv.i.i = trunc i64 %indvars.iv.next14.i.i.a to i32
+  %indvars.iv.next14.i.i = add nsw i64 %.0.in9.i.i, 1 ; 2 uses
+  %indvars.iv.next14.i.i.a = add nsw i64 %indvars.iv13.i.i.a, 1
+  %lftr.wideiv.i.i = trunc i64 %indvars.iv.next14.i.i to i32
   %exitcond.not.i219.i = icmp eq i32 %lftr.wideiv.i.i, %i.lf
   br i1 %exitcond.not.i219.i, label %.loopexit404.i, label %bb.ct, !llvm.loop !129
 

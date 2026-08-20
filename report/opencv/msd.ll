@@ -204,7 +204,7 @@ bb.a:
   %i.j = load i32, ptr %i.i, align 8, !tbaa !44
   %i.k = shl nsw i32 %.fr689, 1
   %i.l = or disjoint i32 %i.k, 1                  ; 2 uses
-  %i.m = add nsw i32 %i.d, %.fr689                ; 11 uses
+  %i.m = add i32 %i.d, %.fr689                    ; 11 uses
   %i.n = mul nsw i32 %i.l, %i.l
   %i.o = mul nsw i32 %i.n, %.fr690
   %i.p = sext i32 %.fr690 to i64                  ; 3 uses
@@ -346,7 +346,7 @@ bb.f:                                             ; preds = %.lr.ph
 
 .lr.ph547.preheader:                              ; preds = %.lr.ph554.split
   %i.be = sext i32 %i.av to i64                   ; 2 uses
-  %5 = zext nneg i32 %i.m to i64                  ; 2 uses
+  %5 = sext i32 %i.m to i64                       ; 2 uses
   %i.bf = add nuw i32 %.fr689, 1                  ; 2 uses
   %i.bg = sext i32 %2 to i64                      ; 2 uses
   %i.bh = sext i32 %i.at to i64
@@ -749,6 +749,7 @@ middle.block924:                                  ; preds = %vector.body921
   %i.hp = sext i32 %i.ee to i64
   %i.hq = sext i32 %i.d to i64                    ; 2 uses
   %i.hr = sext i32 %.0382679 to i64
+  %6 = zext i32 %i.m to i64
   %wide.trip.count785 = zext nneg i32 %smax784 to i64 ; 5 uses
   %invariant.gep902 = getelementptr [4 x i8], ptr %4, i64 %i.he
   %wide.trip.count816 = zext nneg i32 %smax784 to i64
@@ -1086,18 +1087,18 @@ bb.al:                                            ; preds = %bb.ah, %.loopexit51
   br i1 %.not410.not, label %bb.ah, label %._crit_edge593.split, !llvm.loop !68
 
 .loopexit511:                                     ; preds = %_ZN2cv11xfeatures2d16MSDDetector_Impl18computeAvgDistanceERSt6vectorIiSaIiEEi.exit458, %_ZN2cv11xfeatures2d16MSDDetector_Impl18computeAvgDistanceERSt6vectorIiSaIiEEi.exit443
-  %indvars.iv.next834 = add nsw i64 %indvars.iv833.a, 1 ; 2 uses
-  %indvars.iv.next797 = add i32 %indvars.iv796, 1
-  %6 = trunc nsw i64 %indvars.iv833.a to i32
+  %indvars.iv.next834 = add nsw i64 %indvars.iv833, 1 ; 2 uses
+  %indvars.iv.next797 = add i32 %.0382.in680, 1
+  %indvars.iv.next836 = add i64 %indvars.iv833.a, 1
   %lftr.wideiv836 = trunc i64 %indvars.iv.next834 to i32
   %exitcond837.not = icmp eq i32 %i.gp, %lftr.wideiv836
   br i1 %exitcond837.not, label %.preheader, label %.preheader512, !llvm.loop !73
 
 .preheader512:                                    ; preds = %.preheader512.lr.ph, %.loopexit511
-  %indvars.iv833.a = phi i64 [ %i.hr, %.preheader512.lr.ph ], [ %indvars.iv.next834, %.loopexit511 ] ; 10 uses
-  %indvars.iv796 = phi i32 [ %i.hf, %.preheader512.lr.ph ], [ %indvars.iv.next797, %.loopexit511 ] ; 2 uses
-  %.0382.in680 = phi i32 [ %i.m, %.preheader512.lr.ph ], [ %6, %.loopexit511 ] ; 2 uses
-  %i.mj = sext i32 %indvars.iv796 to i64          ; 2 uses
+  %indvars.iv833.a = phi i64 [ %6, %.preheader512.lr.ph ], [ %indvars.iv.next836, %.loopexit511 ] ; 3 uses
+  %indvars.iv833 = phi i64 [ %i.hr, %.preheader512.lr.ph ], [ %indvars.iv.next834, %.loopexit511 ] ; 9 uses
+  %.0382.in680 = phi i32 [ %i.hf, %.preheader512.lr.ph ], [ %indvars.iv.next797, %.loopexit511 ] ; 2 uses
+  %i.mj = sext i32 %.0382.in680 to i64            ; 2 uses
   br i1 %.not.i.i.i.i, label %._crit_edge614, label %.lr.ph613.preheader
 
 .lr.ph613.preheader:                              ; preds = %.preheader512
@@ -1128,19 +1129,20 @@ middle.block944:                                  ; preds = %vector.body941
   br label %.lr.ph686
 
 ._crit_edge614:                                   ; preds = %.lr.ph613, %middle.block944, %.preheader512
-  %i.mn = add nsw i64 %indvars.iv833.a, %i.hq     ; 4 uses
+  %i.mn = add nsw i64 %indvars.iv833, %i.hq       ; 4 uses
   br i1 %.not407624, label %._crit_edge639.split, label %.lr.ph638.split
 
 .lr.ph638.split:                                  ; preds = %._crit_edge614
-  %i.mo = add nsw i64 %indvars.iv833.a, %i.hi
-  %i.mp = sub i32 %.0382.in680, %.fr689
+  %i.mo = add nsw i64 %indvars.iv833, %i.hi
+  %7 = trunc i64 %indvars.iv833.a to i32
+  %i.mp = sub i32 %7, %.fr689
   %i.mq = sext i32 %i.mp to i64
   br i1 %.not408615, label %.lr.ph638.split.split.us, label %.lr.ph628
 
 .lr.ph638.split.split.us:                         ; preds = %.lr.ph638.split
-  %i.mr = trunc i64 %indvars.iv833.a to i32
+  %i.mr = trunc i64 %indvars.iv833 to i32
   %i.ms = sub i32 %i.mr, %i.d                     ; 2 uses
-  %i.mt = trunc nsw i64 %indvars.iv833.a to i32   ; 2 uses
+  %i.mt = trunc nsw i64 %indvars.iv833 to i32     ; 2 uses
   br i1 %i.hc, label %.lr.ph628.us.us, label %.lr.ph628.us
 
 .lr.ph628.us.us:                                  ; preds = %.lr.ph638.split.split.us, %._crit_edge629.split.us.split.us.us.us
@@ -1345,14 +1347,15 @@ bb.aw:                                            ; preds = %.loopexit508.us.us6
 _ZN2cv11xfeatures2d16MSDDetector_Impl18computeAvgDistanceERSt6vectorIiSaIiEEi.exit443: ; preds = %.lr.ph.i438, %._crit_edge639.split
   %.08.lcssa.i442 = phi float [ 0.000000e+00, %._crit_edge639.split ], [ %i.ov, %.lr.ph.i438 ]
   %i.oy = fdiv float %.08.lcssa.i442, %i.dy
-  %i.oz = mul nsw i64 %indvars.iv833.a, %i.ae     ; 2 uses
+  %i.oz = mul nsw i64 %indvars.iv833, %i.ae       ; 2 uses
   %gep903 = getelementptr [4 x i8], ptr %invariant.gep902, i64 %i.oz
   store float %i.oy, ptr %gep903, align 4, !tbaa !26
   br i1 %i.ef, label %.preheader510.lr.ph, label %.loopexit511
 
 .preheader510.lr.ph:                              ; preds = %_ZN2cv11xfeatures2d16MSDDetector_Impl18computeAvgDistanceERSt6vectorIiSaIiEEi.exit443
-  %i.pa = add nsw i64 %indvars.iv833.a, %i.hi
-  %i.pb = sub i32 %.0382.in680, %.fr689
+  %i.pa = add nsw i64 %indvars.iv833, %i.hi
+  %8 = trunc i64 %indvars.iv833.a to i32
+  %i.pb = sub i32 %8, %.fr689
   %i.pc = sext i32 %i.pb to i64
   %invariant.gep900 = getelementptr [4 x i8], ptr %4, i64 %i.oz
   br label %.preheader510
@@ -1360,7 +1363,7 @@ _ZN2cv11xfeatures2d16MSDDetector_Impl18computeAvgDistanceERSt6vectorIiSaIiEEi.ex
 .lr.ph628:                                        ; preds = %.lr.ph638.split, %._crit_edge629.split
   %indvars.iv798 = phi i64 [ %indvars.iv.next799, %._crit_edge629.split ], [ %i.mj, %.lr.ph638.split ] ; 5 uses
   %.6635 = phi i32 [ %.8, %._crit_edge629.split ], [ 0, %.lr.ph638.split ]
-  %i.pd = icmp eq i64 %indvars.iv798, %indvars.iv833.a
+  %i.pd = icmp eq i64 %indvars.iv798, %indvars.iv833
   %i.pe = add nsw i64 %indvars.iv798, %i.hi
   %i.pf = trunc nsw i64 %indvars.iv798 to i32
   %i.pg = add i32 %i.pf, %i.gx
@@ -1552,7 +1555,7 @@ _ZN2cv11xfeatures2d16MSDDetector_Impl18computeAvgDistanceERSt6vectorIiSaIiEEi.ex
 .lr.ph669:                                        ; preds = %.lr.ph669.preheader, %._crit_edge670
   %indvars.iv824 = phi i64 [ %i.mj, %.lr.ph669.preheader ], [ %indvars.iv.next825, %._crit_edge670 ] ; 5 uses
   %.9673 = phi i32 [ 0, %.lr.ph669.preheader ], [ %.11, %._crit_edge670 ]
-  %i.sa = icmp eq i64 %indvars.iv824, %indvars.iv833.a
+  %i.sa = icmp eq i64 %indvars.iv824, %indvars.iv833
   %i.sb = add nsw i64 %indvars.iv824, %i.hi
   %i.sc = trunc nsw i64 %indvars.iv824 to i32
   %i.sd = add i32 %i.sc, %i.gx

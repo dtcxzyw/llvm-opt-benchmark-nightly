@@ -203,15 +203,16 @@ middle.block92:                                   ; preds = %vector.body91
   %i.q = getelementptr inbounds nuw i8, ptr %i.e, i64 266
   store i16 -1, ptr %i.q, align 2, !tbaa !52
   call void @ff_vlc_init_table_sparse(ptr noundef nonnull @dc_alpha_run_vlc_le, i32 noundef 160, i32 noundef 5, i32 noundef 134, ptr noundef nonnull %i.c, i32 noundef 1, i32 noundef 1, ptr noundef nonnull %i.a, i32 noundef 2, i32 noundef 2, ptr noundef nonnull %i.e, i32 noundef 2, i32 noundef 2, i32 noundef 12) #9
+  %scevgep78 = getelementptr inbounds nuw i8, ptr %i.d, i64 1
   br label %vector.ph93
 
 vector.ph93:                                      ; preds = %middle.block92, %vector.ph93
   %.not = phi i1 [ true, %middle.block92 ], [ false, %vector.ph93 ] ; 3 uses
   %.067 = phi i16 [ 0, %middle.block92 ], [ 1, %vector.ph93 ] ; 2 uses
-  %.25666 = phi i32 [ 0, %middle.block92 ], [ %i.ag, %vector.ph93 ] ; 3 uses
+  %.25666 = phi i32 [ 0, %middle.block92 ], [ %i.ag, %vector.ph93 ] ; 2 uses
   %i.r = shl nuw nsw i16 %.067, 1
   %i.s = or disjoint i16 %i.r, 1
-  %i.t = sext i32 %.25666 to i64                  ; 3 uses
+  %i.t = sext i32 %.25666 to i64                  ; 6 uses
   %i.u = getelementptr inbounds [2 x i8], ptr %i.b, i64 %i.t
   store i16 %i.s, ptr %i.u, align 2, !tbaa !52
   %i.v = getelementptr inbounds i8, ptr %i.d, i64 %i.t
@@ -219,11 +220,10 @@ vector.ph93:                                      ; preds = %middle.block92, %ve
   %i.w = select i1 %.not, i16 1, i16 -1
   %i.x = getelementptr inbounds [2 x i8], ptr %i.f, i64 %i.t
   store i16 %i.w, ptr %i.x, align 2, !tbaa !52
-  %.35763 = add i32 %.25666, 1
-  %0 = sext i32 %.35763 to i64                    ; 4 uses
-  %scevgep78 = getelementptr i8, ptr %i.d, i64 %0
-  store i32 84215045, ptr %scevgep78, align 1
-  %i.y = add nsw i64 %0, 4                        ; 2 uses
+  %scevgep79 = getelementptr i8, ptr %scevgep78, i64 %i.t
+  store i32 84215045, ptr %scevgep79, align 1
+  %0 = add nsw i64 %i.t, 1                        ; 2 uses
+  %i.y = add nsw i64 %i.t, 5                      ; 2 uses
   %i.z = shl nuw nsw i16 %.067, 2
   %i.aa = insertelement <4 x i16> poison, i16 %i.z, i64 0
   %i.ab = shufflevector <4 x i16> %i.aa, <4 x i16> poison, <4 x i32> zeroinitializer

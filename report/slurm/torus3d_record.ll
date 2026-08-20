@@ -201,7 +201,6 @@ bb.c:                                             ; preds = %._crit_edge, %bb.b
   br i1 %.not66.i, label %._crit_edge62.i, label %.preheader35.i
 
 .preheader35.i:                                   ; preds = %.preheader35.lr.ph.i, %._crit_edge54.i
-  %indvars.iv39 = phi i64 [ %indvars.iv.next40, %._crit_edge54.i ], [ 1, %.preheader35.lr.ph.i ] ; 2 uses
   %i.am = phi i16 [ %i.au, %._crit_edge54.i ], [ %i.ah, %.preheader35.lr.ph.i ] ; 2 uses
   %i.an = phi i16 [ %i.av, %._crit_edge54.i ], [ %i.al, %.preheader35.lr.ph.i ] ; 3 uses
   %i.ao = phi i16 [ %i.aw, %._crit_edge54.i ], [ %i.al, %.preheader35.lr.ph.i ] ; 2 uses
@@ -213,12 +212,12 @@ bb.c:                                             ; preds = %._crit_edge, %bb.b
   br i1 %.not67.i, label %._crit_edge54.i, label %.preheader.lr.ph.i
 
 .preheader.lr.ph.i:                               ; preds = %.preheader35.i
+  %indvars.i44.i = trunc nuw i64 %.pre109.i to i16 ; 4 uses
   %i.ap = load i16, ptr %i.aj, align 8            ; 2 uses
   %.not68.i = icmp eq i16 %i.ap, 0
   br i1 %.not68.i, label %._crit_edge54.i, label %.preheader.preheader.i
 
 .preheader.preheader.i:                           ; preds = %.preheader.lr.ph.i
-  %2 = trunc nuw i64 %.pre109.i to i16            ; 3 uses
   %i.aq = trunc nuw i64 %indvars.iv102.i to i16   ; 2 uses
   br label %.preheader.i
 
@@ -254,7 +253,6 @@ bb.c:                                             ; preds = %._crit_edge, %bb.b
   %.1.lcssa.i = phi i32 [ %.02859.i, %.preheader.lr.ph.i ], [ %.2.lcssa.i, %._crit_edge54.loopexit72.i ], [ %.02859.i, %.preheader35.i ]
   %i.ax = zext i16 %i.au to i64
   %i.ay = icmp samesign ult i64 %.pre109.i, %i.ax
-  %indvars.iv.next40 = add nuw nsw i64 %indvars.iv39, 1
   br i1 %i.ay, label %.preheader35.i, label %._crit_edge62.i, !llvm.loop !36
 
 ._crit_edge.loopexit.i:                           ; preds = %bb.r
@@ -386,20 +384,19 @@ bb.j:                                             ; preds = %bb.i
   br i1 %.not233.i.i, label %.thread167.split.us.split.preheader.i.i, label %.thread167.split.us.split.us.i.i
 
 .thread167.split.us.split.preheader.i.i:          ; preds = %.thread167.split.us.i.i
-  %3 = zext i16 %i.cw to i64
-  %4 = icmp samesign ult i64 %.pre109.i, %3
-  br i1 %4, label %.preheader178.us.i.i, label %.split.us.i.i
+  %2 = icmp ugt i16 %i.cw, %indvars.i44.i
+  br i1 %2, label %.preheader178.us.i.i, label %.split.us.i.i
 
 .thread167.split.us.split.us.i.i:                 ; preds = %.thread167.split.us.i.i
-  %spec.select.i.i = call i16 @llvm.umax.i16(i16 %2, i16 %i.cw)
+  %spec.select.i.i = call i16 @llvm.umax.i16(i16 %indvars.i44.i, i16 %i.cw)
   br label %.split.us.i.i
 
 .thread167.split.us.split.i.loopexit.i:           ; preds = %.thread170.us.i.i
-  %indvars.iv.next42 = add nuw nsw i64 %indvars.iv41, 1 ; 3 uses
-  %5 = load i16, ptr %i.ag, align 4
-  %6 = zext i16 %5 to i64
-  %7 = icmp samesign ult i64 %indvars.iv.next42, %6
-  br i1 %7, label %.preheader178.us.i.i, label %.split.us.i.i.loopexit29, !llvm.loop !39
+  %indvars.iv.next42 = add nuw i64 %indvars.iv41, 1 ; 2 uses
+  %indvars94.i = trunc i64 %indvars.iv.next42 to i16 ; 2 uses
+  %3 = load i16, ptr %i.ag, align 4
+  %4 = icmp ugt i16 %3, %indvars94.i
+  br i1 %4, label %.preheader178.us.i.i, label %.split.us.i.i, !llvm.loop !39
 
 bb.k:                                             ; preds = %bb.m
   %indvars.iv.next245.i.i = add nuw nsw i64 %indvars.iv244.i.i, 1 ; 2 uses
@@ -412,7 +409,7 @@ bb.l:                                             ; preds = %.preheader177.us206
   %i.cy = zext i16 %i.cx to i64
   %i.cz = load i16, ptr %i.ai, align 2
   %i.da = zext i16 %i.cz to i64
-  %i.db = mul nuw nsw i64 %indvars.iv41, %i.da
+  %i.db = mul nuw nsw i64 %5, %i.da
   %reass.add.i156.us.i.i = add nuw nsw i64 %i.db, %indvars.iv250.i.i
   %reass.mul.i157.us.i.i = mul nuw nsw i64 %reass.add.i156.us.i.i, %i.cy
   %i.dc = add nuw nsw i64 %reass.mul.i157.us.i.i, %indvars.iv244.i.i
@@ -438,24 +435,21 @@ bb.m:                                             ; preds = %bb.l
   br label %bb.l
 
 .preheader178.us.i.i:                             ; preds = %.thread167.split.us.split.preheader.i.i, %.thread167.split.us.split.i.loopexit.i
-  %indvars.iv41 = phi i64 [ %indvars.iv.next42, %.thread167.split.us.split.i.loopexit.i ], [ %indvars.iv39, %.thread167.split.us.split.preheader.i.i ] ; 3 uses
+  %indvars.iv41 = phi i64 [ %indvars.iv.next42, %.thread167.split.us.split.i.loopexit.i ], [ %.pre109.i, %.thread167.split.us.split.preheader.i.i ] ; 3 uses
+  %5 = and i64 %indvars.iv41, 65535
   br label %.preheader177.us206.i.i
 
 .thread167.split.i.i:                             ; preds = %.thread167.i.i
   %i.dj = load i16, ptr %i.ag, align 4
-  %umax243.i.i = call i16 @llvm.umax.i16(i16 %i.dj, i16 %2)
+  %umax243.i.i = call i16 @llvm.umax.i16(i16 %i.dj, i16 %indvars.i44.i)
   br label %.split.us.i.i
 
-.split.us.i.i.loopexit29:                         ; preds = %.thread167.split.us.split.i.loopexit.i
-  %8 = trunc nuw i64 %indvars.iv.next42 to i16
+.split.us.i.i.loopexit:                           ; preds = %bb.m, %bb.l
+  %i.dk = trunc i64 %indvars.iv41 to i16
   br label %.split.us.i.i
 
-.split.us.i.i.loopexit:                           ; preds = %bb.l, %bb.m
-  %i.dk = trunc nuw i64 %indvars.iv41 to i16
-  br label %.split.us.i.i
-
-.split.us.i.i:                                    ; preds = %.split.us.i.i.loopexit, %.split.us.i.i.loopexit29, %.thread167.split.i.i, %.thread167.split.us.split.us.i.i, %.thread167.split.us.split.preheader.i.i
-  %.us-phi210.i.i = phi i16 [ %spec.select.i.i, %.thread167.split.us.split.us.i.i ], [ %umax243.i.i, %.thread167.split.i.i ], [ %2, %.thread167.split.us.split.preheader.i.i ], [ %8, %.split.us.i.i.loopexit29 ], [ %i.dk, %.split.us.i.i.loopexit ] ; 2 uses
+.split.us.i.i:                                    ; preds = %.thread167.split.us.split.i.loopexit.i, %.split.us.i.i.loopexit, %.thread167.split.i.i, %.thread167.split.us.split.us.i.i, %.thread167.split.us.split.preheader.i.i
+  %.us-phi210.i.i = phi i16 [ %spec.select.i.i, %.thread167.split.us.split.us.i.i ], [ %umax243.i.i, %.thread167.split.i.i ], [ %indvars.i44.i, %.thread167.split.us.split.preheader.i.i ], [ %i.dk, %.split.us.i.i.loopexit ], [ %indvars94.i, %.thread167.split.us.split.i.loopexit.i ] ; 2 uses
   %i.dl = zext i16 %.us-phi210.i.i to i64         ; 3 uses
   %i.dm = icmp samesign ult i64 %indvars.iv102.i, %i.dl ; 2 uses
   br i1 %i.dm, label %.preheader176.lr.ph.i.i, label %._crit_edge219.split.i.i

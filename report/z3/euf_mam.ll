@@ -204,44 +204,48 @@ bb.b:                                             ; preds = %.lr.ph96, %.critedg
 
 bb.c:                                             ; preds = %.loopexit70, %bb.b
   %.pre127 = phi i32 [ %.pre, %bb.b ], [ %.pre124138, %.loopexit70 ] ; 2 uses
-  %i.r = phi i32 [ %.pre, %bb.b ], [ %i.au, %.loopexit70 ] ; 3 uses
-  %.052 = phi i32 [ %i.m, %bb.b ], [ %.153102, %.loopexit70 ] ; 3 uses
+  %i.r = phi i32 [ %.pre, %bb.b ], [ %i.au, %.loopexit70 ] ; 5 uses
+  %.052 = phi i32 [ %i.m, %bb.b ], [ %.153102, %.loopexit70 ] ; 2 uses
+  %2 = zext i32 %.052 to i64
   %i.s = add i32 %.052, 1
-  %umax = tail call i32 @llvm.umax.i32(i32 %i.r, i32 %i.s) ; 3 uses
-  %2 = add i32 %umax, -1                          ; 2 uses
-  %exitcond.not173 = icmp eq i32 %.052, %2
-  br i1 %exitcond.not173, label %.loopexit71, label %.lr.ph175
+  %umax = tail call i32 @llvm.umax.i32(i32 %i.r, i32 %i.s) ; 2 uses
+  %indvars.iv.next181 = add nuw nsw i64 %2, 1     ; 2 uses
+  %indvars182 = trunc i64 %indvars.iv.next181 to i32 ; 2 uses
+  %3 = icmp ugt i32 %i.r, %indvars182
+  br i1 %3, label %.lr.ph175, label %.loopexit71
 
 bb.d:                                             ; preds = %.lr.ph175
-  %exitcond.not = icmp eq i32 %.153, %2
-  br i1 %exitcond.not, label %.loopexit71, label %.lr.ph175, !llvm.loop !166
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv.next183, 1 ; 2 uses
+  %indvars = trunc i64 %indvars.iv.next to i32    ; 2 uses
+  %4 = icmp ugt i32 %i.r, %indvars
+  br i1 %4, label %.lr.ph175, label %.loopexit71, !llvm.loop !166
 
 .lr.ph175:                                        ; preds = %bb.c, %bb.d
-  %.153.in174 = phi i32 [ %.153, %bb.d ], [ %.052, %bb.c ]
-  %.153 = add i32 %.153.in174, 1                  ; 5 uses
-  %3 = zext i32 %.153 to i64                      ; 3 uses
-  %i.t = getelementptr inbounds nuw i8, ptr %i.f, i64 %3
+  %.153.in174 = phi i32 [ %indvars, %bb.d ], [ %indvars182, %bb.c ] ; 2 uses
+  %indvars.iv.next183 = phi i64 [ %indvars.iv.next, %bb.d ], [ %indvars.iv.next181, %bb.c ] ; 2 uses
+  %5 = and i64 %indvars.iv.next183, 4294967295    ; 3 uses
+  %i.t = getelementptr inbounds nuw i8, ptr %i.f, i64 %5
   %i.u = load i8, ptr %i.t, align 1, !tbaa !164, !range !140, !noundef !136
   %i.v = trunc nuw i8 %i.u to i1
   br i1 %i.v, label %bb.d, label %bb.e, !llvm.loop !166
 
 bb.e:                                             ; preds = %.lr.ph175
-  %i.w = getelementptr inbounds nuw i8, ptr %i.f, i64 %3
+  %i.w = getelementptr inbounds nuw i8, ptr %i.f, i64 %5
   %i.x = load ptr, ptr %i.h, align 8, !tbaa !167
-  %i.y = getelementptr inbounds nuw [8 x i8], ptr %i.x, i64 %3
+  %i.y = getelementptr inbounds nuw [8 x i8], ptr %i.x, i64 %5
   %i.z = load ptr, ptr %i.y, align 8, !tbaa !8
   %i.aa = load ptr, ptr %i.i, align 8, !tbaa !108
   %i.ab = getelementptr inbounds nuw [8 x i8], ptr %i.aa, i64 %indvars.iv109
   store ptr %i.z, ptr %i.ab, align 8, !tbaa !8
   store i8 1, ptr %i.w, align 1, !tbaa !164
-  store i32 %.153, ptr %i.l, align 4, !tbaa !60
+  store i32 %.153.in174, ptr %i.l, align 4, !tbaa !60
   %.pre122 = load i32, ptr %i.g, align 8, !tbaa !162 ; 2 uses
   br label %.loopexit71
 
 .loopexit71:                                      ; preds = %bb.d, %bb.c, %bb.e
   %.pre126 = phi i32 [ %.pre122, %bb.e ], [ %.pre127, %bb.c ], [ %.pre127, %bb.d ] ; 2 uses
   %i.ac = phi i32 [ %.pre122, %bb.e ], [ %i.r, %bb.c ], [ %i.r, %bb.d ] ; 2 uses
-  %.153102 = phi i32 [ %.153, %bb.e ], [ %umax, %bb.c ], [ %umax, %bb.d ] ; 2 uses
+  %.153102 = phi i32 [ %.153.in174, %bb.e ], [ %umax, %bb.c ], [ %umax, %bb.d ] ; 2 uses
   %i.ad = icmp eq i32 %.153102, %i.ac
   br i1 %i.ad, label %.critedge.loopexit, label %.preheader69.preheader
 
