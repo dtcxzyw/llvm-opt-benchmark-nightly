@@ -205,7 +205,7 @@ bb.dr:                                            ; preds = %.loopexit552
   %i.ka = load float, ptr %i.cj, align 8          ; 6 uses
   %i.kb = getelementptr inbounds nuw i8, ptr %.3, i64 56 ; 6 uses
   %i.kc = getelementptr inbounds nuw i8, ptr %.3, i64 64 ; 10 uses
-  %i.kd = load ptr, ptr %i.kc, align 8            ; 6 uses
+  %i.kd = load ptr, ptr %i.kc, align 8            ; 7 uses
   %i.ke = getelementptr inbounds nuw i8, ptr %.3, i64 72 ; 6 uses
   %i.kf = load ptr, ptr %i.ke, align 8
   %.not.i273 = icmp eq ptr %i.kd, %i.kf
@@ -214,8 +214,9 @@ bb.dr:                                            ; preds = %.loopexit552
 bb.ds:                                            ; preds = %bb.dr
   store <2 x float> %i.jz, ptr %i.kd, align 4
   %.sroa.11.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.kd, i64 8
-  %13 = insertelement <2 x float> <float poison, float 1.000000e+00>, float %i.ka, i64 0
-  store <2 x float> %13, ptr %.sroa.11.0..sroa_idx, align 4
+  store float %i.ka, ptr %.sroa.11.0..sroa_idx, align 4
+  %.sroa.12.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.kd, i64 12
+  store float 1.000000e+00, ptr %.sroa.12.0..sroa_idx, align 4
   %i.kg = load ptr, ptr %i.kc, align 8
   %i.kh = getelementptr inbounds nuw i8, ptr %i.kg, i64 16 ; 2 uses
   store ptr %i.kh, ptr %i.kc, align 8
@@ -251,11 +252,12 @@ _ZNKSt6vectorI9aiColor4tIfESaIS1_EE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb.d
           to label %.noexc276 unwind label %.loopexit559 ; 5 uses
 
 .noexc276:                                        ; preds = %_ZNKSt6vectorI9aiColor4tIfESaIS1_EE12_M_check_lenEmPKc.exit.i.i
-  %i.ku = getelementptr inbounds nuw i8, ptr %i.kt, i64 %i.kl ; 2 uses
+  %i.ku = getelementptr inbounds nuw i8, ptr %i.kt, i64 %i.kl ; 3 uses
   store <2 x float> %i.jz, ptr %i.ku, align 4
   %.sroa.11.0..sroa_idx461 = getelementptr inbounds nuw i8, ptr %i.ku, i64 8
-  %14 = insertelement <2 x float> <float poison, float 1.000000e+00>, float %i.ka, i64 0
-  store <2 x float> %14, ptr %.sroa.11.0..sroa_idx461, align 4
+  store float %i.ka, ptr %.sroa.11.0..sroa_idx461, align 4
+  %.sroa.12.0..sroa_idx471 = getelementptr inbounds nuw i8, ptr %i.ku, i64 12
+  store float 1.000000e+00, ptr %.sroa.12.0..sroa_idx471, align 4
   %.not10.i.i.i.i.i = icmp eq ptr %i.ki, %i.kd
   br i1 %.not10.i.i.i.i.i, label %_ZNSt6vectorI9aiColor4tIfESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit22.i.i, label %.lr.ph.i.i.i.i.i
 
@@ -287,15 +289,16 @@ _ZNSt6vectorI9aiColor4tIfESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__n
 
 _ZNSt6vectorI9aiColor4tIfESaIS1_EE9push_backERKS1_.exit: ; preds = %_ZNSt6vectorI9aiColor4tIfESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i, %bb.ds
   %i.kz = phi ptr [ %i.ky, %_ZNSt6vectorI9aiColor4tIfESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i ], [ %.pre681, %bb.ds ] ; 4 uses
-  %i.la = phi ptr [ %i.kx, %_ZNSt6vectorI9aiColor4tIfESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i ], [ %i.kh, %bb.ds ] ; 3 uses
+  %i.la = phi ptr [ %i.kx, %_ZNSt6vectorI9aiColor4tIfESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i ], [ %i.kh, %bb.ds ] ; 4 uses
   %.not.i277 = icmp eq ptr %i.la, %i.kz
   br i1 %.not.i277, label %bb.dw, label %bb.dv
 
 bb.dv:                                            ; preds = %_ZNSt6vectorI9aiColor4tIfESaIS1_EE9push_backERKS1_.exit
   store <2 x float> %i.jz, ptr %i.la, align 4
   %.sroa.11.0..sroa_idx463 = getelementptr inbounds nuw i8, ptr %i.la, i64 8
-  %15 = insertelement <2 x float> <float poison, float 1.000000e+00>, float %i.ka, i64 0
-  store <2 x float> %15, ptr %.sroa.11.0..sroa_idx463, align 4
+  store float %i.ka, ptr %.sroa.11.0..sroa_idx463, align 4
+  %.sroa.12.0..sroa_idx473 = getelementptr inbounds nuw i8, ptr %i.la, i64 12
+  store float 1.000000e+00, ptr %.sroa.12.0..sroa_idx473, align 4
   %i.lb = load ptr, ptr %i.kc, align 8
   %i.lc = getelementptr inbounds nuw i8, ptr %i.lb, i64 16 ; 2 uses
   store ptr %i.lc, ptr %i.kc, align 8
@@ -324,11 +327,12 @@ _ZNKSt6vectorI9aiColor4tIfESaIS1_EE12_M_check_lenEmPKc.exit.i.i278: ; preds = %b
           to label %.noexc291 unwind label %.loopexit559 ; 5 uses
 
 .noexc291:                                        ; preds = %_ZNKSt6vectorI9aiColor4tIfESaIS1_EE12_M_check_lenEmPKc.exit.i.i278
-  %i.lp = getelementptr inbounds nuw i8, ptr %i.lo, i64 %i.lg ; 2 uses
+  %i.lp = getelementptr inbounds nuw i8, ptr %i.lo, i64 %i.lg ; 3 uses
   store <2 x float> %i.jz, ptr %i.lp, align 4
   %.sroa.11.0..sroa_idx465 = getelementptr inbounds nuw i8, ptr %i.lp, i64 8
-  %16 = insertelement <2 x float> <float poison, float 1.000000e+00>, float %i.ka, i64 0
-  store <2 x float> %16, ptr %.sroa.11.0..sroa_idx465, align 4
+  store float %i.ka, ptr %.sroa.11.0..sroa_idx465, align 4
+  %.sroa.12.0..sroa_idx475 = getelementptr inbounds nuw i8, ptr %i.lp, i64 12
+  store float 1.000000e+00, ptr %.sroa.12.0..sroa_idx475, align 4
   %.not10.i.i.i.i.i281 = icmp eq ptr %i.ld, %i.kz
   br i1 %.not10.i.i.i.i.i281, label %_ZNSt6vectorI9aiColor4tIfESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit22.i.i286, label %.lr.ph.i.i.i.i.i282
 
@@ -360,15 +364,16 @@ _ZNSt6vectorI9aiColor4tIfESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__n
 
 _ZNSt6vectorI9aiColor4tIfESaIS1_EE9push_backERKS1_.exit292: ; preds = %_ZNSt6vectorI9aiColor4tIfESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i289, %bb.dv
   %i.lu = phi ptr [ %i.lt, %_ZNSt6vectorI9aiColor4tIfESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i289 ], [ %.pre682, %bb.dv ] ; 4 uses
-  %i.lv = phi ptr [ %i.ls, %_ZNSt6vectorI9aiColor4tIfESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i289 ], [ %i.lc, %bb.dv ] ; 3 uses
+  %i.lv = phi ptr [ %i.ls, %_ZNSt6vectorI9aiColor4tIfESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i289 ], [ %i.lc, %bb.dv ] ; 4 uses
   %.not.i293 = icmp eq ptr %i.lv, %i.lu
   br i1 %.not.i293, label %bb.dz, label %bb.dy
 
 bb.dy:                                            ; preds = %_ZNSt6vectorI9aiColor4tIfESaIS1_EE9push_backERKS1_.exit292
   store <2 x float> %i.jz, ptr %i.lv, align 4
   %.sroa.11.0..sroa_idx467 = getelementptr inbounds nuw i8, ptr %i.lv, i64 8
-  %17 = insertelement <2 x float> <float poison, float 1.000000e+00>, float %i.ka, i64 0
-  store <2 x float> %17, ptr %.sroa.11.0..sroa_idx467, align 4
+  store float %i.ka, ptr %.sroa.11.0..sroa_idx467, align 4
+  %.sroa.12.0..sroa_idx477 = getelementptr inbounds nuw i8, ptr %i.lv, i64 12
+  store float 1.000000e+00, ptr %.sroa.12.0..sroa_idx477, align 4
   %i.lw = load ptr, ptr %i.kc, align 8
   %i.lx = getelementptr inbounds nuw i8, ptr %i.lw, i64 16
   store ptr %i.lx, ptr %i.kc, align 8

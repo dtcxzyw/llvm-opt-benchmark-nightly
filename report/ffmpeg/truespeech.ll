@@ -71,7 +71,7 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %3, i64 32
   %i.f = load i32, ptr %i.e, align 8, !tbaa !36   ; 7 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.h = load ptr, ptr %i.g, align 8, !tbaa !29   ; 149 uses
+  %i.h = load ptr, ptr %i.g, align 8, !tbaa !29   ; 147 uses
   %i.i = sdiv i32 %i.f, 32                        ; 2 uses
   %.off = add i32 %i.f, 31
   %.not = icmp ult i32 %.off, 63
@@ -146,9 +146,7 @@ bb.f:                                             ; preds = %bb.e
   %i.bd = getelementptr inbounds nuw i8, ptr %i.h, i64 806 ; 2 uses
   %i.be = getelementptr inbounds nuw i8, ptr %i.h, i64 808 ; 2 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %i.h, i64 810 ; 2 uses
-  %i.bg = getelementptr inbounds nuw i8, ptr %i.h, i64 812 ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %i.h, i64 814
-  %5 = getelementptr inbounds nuw i8, ptr %i.h, i64 816
+  %i.bg = getelementptr inbounds nuw i8, ptr %i.h, i64 812
   %i.bh = getelementptr inbounds nuw i8, ptr %i.h, i64 818
   %i.bi = getelementptr inbounds nuw i8, ptr %i.h, i64 820 ; 2 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %i.h, i64 724 ; 3 uses
@@ -551,28 +549,27 @@ begin_hunk_1_@truespeech_decode_frame:bb.a
   %i.tn = insertelement <4 x i32> %i.tm, i32 %i.tk, i64 1
   %i.to = insertelement <4 x i32> %i.tn, i32 %i.tj, i64 2
   %i.tp = insertelement <4 x i32> %i.to, i32 %i.ti, i64 3
-  %i.tq = lshr <4 x i32> %i.tp, splat (i32 15)    ; 5 uses
-  %i.tr = lshr i32 %i.te, 15                      ; 2 uses
+  %i.tq = lshr <4 x i32> %i.tp, splat (i32 15)    ; 6 uses
+  %i.tr = lshr i32 %i.te, 15                      ; 3 uses
   %i.ts = lshr i32 %i.tf, 15                      ; 2 uses
   %i.tt = lshr i32 %i.tg, 15                      ; 2 uses
   %i.tu = lshr i32 %i.th, 15                      ; 2 uses
-  %6 = trunc i32 %i.tu to i16                     ; 2 uses
-  store i16 %6, ptr %i.bc, align 4, !tbaa !47
-  %i.tv = trunc i32 %i.tt to i16                  ; 2 uses
-  store i16 %i.tv, ptr %i.bd, align 2, !tbaa !47
-  %i.tw = trunc i32 %i.ts to i16                  ; 2 uses
-  store i16 %i.tw, ptr %i.be, align 8, !tbaa !47
-  %i.tx = trunc i32 %i.tr to i16                  ; 2 uses
-  store i16 %i.tx, ptr %i.bf, align 2, !tbaa !47
+  %i.tv = trunc i32 %i.tu to i16                  ; 2 uses
+  store i16 %i.tv, ptr %i.bc, align 4, !tbaa !47
+  %i.tw = trunc i32 %i.tt to i16                  ; 2 uses
+  store i16 %i.tw, ptr %i.bd, align 2, !tbaa !47
+  %i.tx = trunc i32 %i.ts to i16                  ; 2 uses
+  store i16 %i.tx, ptr %i.be, align 8, !tbaa !47
   %i.ty = bitcast <4 x i32> %i.tq to <8 x i16>
-  %i.tz = extractelement <8 x i16> %i.ty, i64 0   ; 3 uses
-  store i16 %i.tz, ptr %i.bg, align 4, !tbaa !47
+  %i.tz = extractelement <8 x i16> %i.ty, i64 4   ; 2 uses
+  %4 = insertelement <4 x i32> poison, i32 %i.tr, i64 0
   %i.ua = bitcast <4 x i32> %i.tq to <8 x i16>
-  %i.ub = extractelement <8 x i16> %i.ua, i64 2   ; 3 uses
-  store i16 %i.ub, ptr %4, align 2, !tbaa !47
-  %7 = bitcast <4 x i32> %i.tq to <8 x i16>
-  %8 = extractelement <8 x i16> %7, i64 4         ; 3 uses
-  store i16 %8, ptr %5, align 16, !tbaa !47
+  %i.ub = extractelement <8 x i16> %i.ua, i64 2   ; 2 uses
+  %5 = bitcast <4 x i32> %i.tq to <8 x i16>
+  %6 = extractelement <8 x i16> %5, i64 0         ; 2 uses
+  %7 = shufflevector <4 x i32> %4, <4 x i32> %i.tq, <4 x i32> <i32 0, i32 4, i32 5, i32 6>
+  %8 = trunc <4 x i32> %7 to <4 x i16>
+  store <4 x i16> %8, ptr %i.bf, align 2, !tbaa !47
   %i.uc = bitcast <4 x i32> %i.tq to <8 x i16>
   %i.ud = extractelement <8 x i16> %i.uc, i64 6   ; 3 uses
   store i16 %i.ud, ptr %i.bh, align 2, !tbaa !47
@@ -606,6 +603,7 @@ begin_hunk_1_@truespeech_decode_frame:bb.a
   br label %truespeech_filters_merge.exit
 
 .preheader.i:                                     ; preds = %bb.g
+  %9 = trunc i32 %i.tr to i16
   %i.uv = load <8 x i32>, ptr %i.bj, align 4, !tbaa !30
   %i.uw = shufflevector <8 x i32> %i.uv, <8 x i32> poison, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
   %i.ux = trunc <16 x i32> %i.uw to <16 x i16>
@@ -613,10 +611,10 @@ begin_hunk_1_@truespeech_decode_frame:bb.a
   br label %truespeech_filters_merge.exit
 
 truespeech_filters_merge.exit:                    ; preds = %.preheader34.i, %.preheader.i
-  %i.uy = phi i16 [ %.pre78, %.preheader34.i ], [ %i.tx, %.preheader.i ] ; 2 uses
-  %i.uz = phi i16 [ %.pre77, %.preheader34.i ], [ %i.tw, %.preheader.i ] ; 2 uses
-  %i.va = phi i16 [ %.pre76, %.preheader34.i ], [ %i.tv, %.preheader.i ] ; 2 uses
-  %i.vb = phi i16 [ %.pre, %.preheader34.i ], [ %6, %.preheader.i ] ; 2 uses
+  %i.uy = phi i16 [ %.pre78, %.preheader34.i ], [ %9, %.preheader.i ] ; 2 uses
+  %i.uz = phi i16 [ %.pre77, %.preheader34.i ], [ %i.tx, %.preheader.i ] ; 2 uses
+  %i.va = phi i16 [ %.pre76, %.preheader34.i ], [ %i.tw, %.preheader.i ] ; 2 uses
+  %i.vb = phi i16 [ %.pre, %.preheader34.i ], [ %i.tv, %.preheader.i ] ; 2 uses
   store i16 %i.vb, ptr %i.bm, align 16, !tbaa !47
   store i16 %i.vb, ptr %i.bn, align 16, !tbaa !47
   store i16 %i.va, ptr %i.bo, align 2, !tbaa !47
@@ -625,12 +623,12 @@ truespeech_filters_merge.exit:                    ; preds = %.preheader34.i, %.p
   store i16 %i.uz, ptr %i.br, align 4, !tbaa !47
   store i16 %i.uy, ptr %i.bs, align 2, !tbaa !47
   store i16 %i.uy, ptr %i.bt, align 2, !tbaa !47
-  store i16 %i.tz, ptr %i.bu, align 8, !tbaa !47
-  store i16 %i.tz, ptr %i.bv, align 8, !tbaa !47
+  store i16 %6, ptr %i.bu, align 8, !tbaa !47
+  store i16 %6, ptr %i.bv, align 8, !tbaa !47
   store i16 %i.ub, ptr %i.bw, align 2, !tbaa !47
   store i16 %i.ub, ptr %i.bx, align 2, !tbaa !47
-  store i16 %8, ptr %i.by, align 4, !tbaa !47
-  store i16 %8, ptr %i.bz, align 4, !tbaa !47
+  store i16 %i.tz, ptr %i.by, align 4, !tbaa !47
+  store i16 %i.tz, ptr %i.bz, align 4, !tbaa !47
   store i16 %i.ud, ptr %i.ca, align 2, !tbaa !47
   store i16 %i.ud, ptr %i.cb, align 2, !tbaa !47
   %scevgep = getelementptr i8, ptr %.073, i64 480

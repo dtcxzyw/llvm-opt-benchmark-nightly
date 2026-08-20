@@ -204,7 +204,7 @@ bb.a:
   %i.a = alloca [1024 x float], align 16          ; 4 uses
   %i.b = alloca [18 x float], align 16            ; 19 uses
   %i.c = alloca [18 x float], align 16            ; 5 uses
-  %i.d = alloca [9 x float], align 16             ; 9 uses
+  %i.d = alloca [9 x float], align 16             ; 10 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 72
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !41
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 3616
@@ -539,14 +539,25 @@ bb.ah:                                            ; preds = %bb.ag
 .preheader132:                                    ; preds = %bb.ah, %bb.ag, %bb.af
   %.sroa.92.3 = phi i32 [ 2, %bb.ah ], [ 0, %bb.ag ], [ 1, %bb.af ]
   %i.ff = getelementptr inbounds nuw i8, ptr %i.d, i64 4
+  %6 = fmul nsz float %i.bn, 2.300000e+00
   %i.fg = icmp samesign uge i32 %.sroa.0.3, %.sroa.14.5
   %i.fh = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %i.fi = getelementptr inbounds nuw i8, ptr %i.d, i64 20
   %i.fj = load <4 x float>, ptr %i.ff, align 4, !tbaa !49 ; 5 uses
   %i.fk = extractelement <4 x float> %i.fj, i64 0 ; 3 uses
+  %7 = fcmp nsz ogt float %i.bn, %i.fk
+  %8 = select nsz i1 %7, float %i.bn, float %i.fk
+  %9 = fcmp nsz uge float %8, 4.000000e+04
   %i.fl = load float, ptr %i.fi, align 4, !tbaa !49 ; 3 uses
   %i.fm = load <4 x float>, ptr %i.fh, align 8, !tbaa !49 ; 4 uses
   %i.fn = fmul nsz <4 x float> %i.fj, splat (float 2.300000e+00) ; 2 uses
+  %10 = extractelement <4 x float> %i.fn, i64 0
+  %11 = fcmp nsz uge float %i.bn, %10
+  %or.cond121.not372 = or i1 %11, %9
+  %12 = fcmp nsz uge float %i.fk, %6
+  %or.cond123.not369 = or i1 %12, %or.cond121.not372 ; 2 uses
+  %.sroa.14.0 = select i1 %or.cond123.not369, i32 %.sroa.14.5, i32 0 ; 4 uses
+  %.not367 = select i1 %or.cond123.not369, i1 true, i1 %i.fg
   %i.fo = fcmp nsz ogt <4 x float> %i.fj, %i.fm
   %i.fp = select <4 x i1> %i.fo, <4 x float> %i.fj, <4 x float> %i.fm
   %i.fq = fcmp nsz olt <4 x float> %i.fp, splat (float 4.000000e+04)
@@ -561,57 +572,50 @@ bb.ah:                                            ; preds = %bb.ag
   %i.fz = insertelement <4 x i32> %i.fy, i32 %.sroa.58.3, i64 3
   %i.ga = select <4 x i1> %i.fv, <4 x i32> zeroinitializer, <4 x i32> %i.fz ; 7 uses
   %i.gb = getelementptr inbounds nuw i8, ptr %i.d, i64 24
-  %6 = getelementptr inbounds nuw i8, ptr %i.d, i64 28
-  %7 = extractelement <4 x float> %i.fn, i64 0
-  %8 = extractelement <4 x float> %i.fr, i64 3
-  %9 = fmul nsz float %i.bn, 2.300000e+00
-  %i.gc = fcmp nsz ogt float %i.bn, %i.fk
-  %i.gd = select nsz i1 %i.gc, float %i.bn, float %i.fk
-  %10 = fcmp nsz uge float %i.gd, 4.000000e+04
-  %11 = fcmp nsz uge float %i.bn, %7
-  %or.cond121.not372 = or i1 %11, %10
-  %12 = fcmp nsz uge float %i.fk, %9
-  %or.cond123.not369 = or i1 %12, %or.cond121.not372 ; 2 uses
-  %.not367 = select i1 %or.cond123.not369, i1 true, i1 %i.fg
-  %13 = load <2 x float>, ptr %6, align 4, !tbaa !49 ; 4 uses
-  %14 = load <2 x float>, ptr %i.gb, align 8, !tbaa !49 ; 5 uses
-  %15 = fcmp nsz ogt <2 x float> %14, %13
-  %16 = extractelement <2 x float> %14, i64 0     ; 3 uses
-  %i.ge = fcmp nsz ogt float %i.fl, %16
-  %17 = select <2 x i1> %15, <2 x float> %14, <2 x float> %13
-  %i.gf = select nsz i1 %i.ge, float %i.fl, float %16
-  %18 = fcmp nsz olt <2 x float> %17, splat (float 4.000000e+04)
-  %i.gg = fcmp nsz olt float %i.gf, 4.000000e+04
-  %19 = fmul nsz <2 x float> %13, splat (float 2.300000e+00)
-  %20 = fmul nsz <2 x float> %14, splat (float 2.300000e+00) ; 2 uses
-  %21 = fcmp nsz olt <2 x float> %14, %19
-  %22 = extractelement <2 x float> %20, i64 0
-  %i.gh = fcmp nsz olt float %i.fl, %22
-  %23 = and <2 x i1> %21, %18
-  %or.cond121.5 = and i1 %i.gh, %i.gg
-  %24 = fcmp nsz olt <2 x float> %13, %20
-  %25 = fcmp nsz olt float %16, %8
-  %26 = and <2 x i1> %24, %23
-  %or.cond123.5 = and i1 %25, %or.cond121.5
-  %27 = insertelement <2 x i32> poison, i32 %.sroa.80.3, i64 0
-  %28 = insertelement <2 x i32> %27, i32 %.sroa.92.3, i64 1
-  %29 = select <2 x i1> %26, <2 x i32> zeroinitializer, <2 x i32> %28 ; 3 uses
+  %13 = load float, ptr %i.gb, align 8, !tbaa !49 ; 7 uses
+  %i.gc = fcmp nsz ogt float %i.fl, %13
+  %i.gd = select nsz i1 %i.gc, float %i.fl, float %13
+  %14 = fcmp nsz olt float %i.gd, 4.000000e+04
+  %15 = fmul nsz float %13, 2.300000e+00          ; 2 uses
+  %16 = fcmp nsz olt float %i.fl, %15
+  %or.cond121.5 = and i1 %16, %14
+  %17 = extractelement <4 x float> %i.fr, i64 3
+  %18 = fcmp nsz olt float %13, %17
+  %or.cond123.5 = and i1 %18, %or.cond121.5
   %.sroa.69.4 = select i1 %or.cond123.5, i32 0, i32 %.sroa.69.3 ; 4 uses
-  %.sroa.14.0 = select i1 %or.cond123.not369, i32 %.sroa.14.5, i32 0 ; 4 uses
-  %30 = insertelement <4 x i32> poison, i32 %.sroa.14.0, i64 0
-  %31 = insertelement <4 x i32> %30, i32 %.sroa.69.4, i64 1
-  %32 = shufflevector <2 x i32> %29, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %33 = shufflevector <4 x i32> %31, <4 x i32> %32, <8 x i32> <i32 0, i32 1, i32 4, i32 5, i32 poison, i32 poison, i32 poison, i32 poison>
-  %34 = shufflevector <4 x i32> %i.ga, <4 x i32> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
-  %35 = shufflevector <8 x i32> %33, <8 x i32> %34, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 10, i32 11>
-  %36 = tail call i32 @llvm.vector.reduce.add.v8i32(<8 x i32> %35)
+  %19 = getelementptr inbounds nuw i8, ptr %i.d, i64 28
+  %20 = load float, ptr %19, align 4, !tbaa !49   ; 7 uses
+  %i.ge = fcmp nsz ogt float %13, %20
+  %i.gf = select nsz i1 %i.ge, float %13, float %20
+  %i.gg = fcmp nsz olt float %i.gf, 4.000000e+04
+  %21 = fmul nsz float %20, 2.300000e+00          ; 2 uses
+  %22 = fcmp nsz olt float %13, %21
+  %or.cond121.6 = and i1 %22, %i.gg
+  %i.gh = fcmp nsz olt float %20, %15
+  %or.cond123.6 = and i1 %i.gh, %or.cond121.6
+  %.sroa.80.4 = select i1 %or.cond123.6, i32 0, i32 %.sroa.80.3 ; 5 uses
+  %23 = getelementptr inbounds nuw i8, ptr %i.d, i64 32
+  %24 = load float, ptr %23, align 16, !tbaa !49  ; 4 uses
+  %25 = fcmp nsz ogt float %20, %24
+  %26 = select nsz i1 %25, float %20, float %24
+  %27 = fcmp nsz olt float %26, 4.000000e+04
+  %28 = fmul nsz float %24, 2.300000e+00
+  %29 = fcmp nsz olt float %20, %28
+  %or.cond121.7 = and i1 %29, %27
+  %30 = fcmp nsz olt float %24, %21
+  %or.cond123.7 = and i1 %30, %or.cond121.7
+  %.sroa.92.4 = select i1 %or.cond123.7, i32 0, i32 %.sroa.92.3 ; 4 uses
+  %31 = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.ga)
+  %op.rdx = add i32 %31, %.sroa.14.0
+  %op.rdx398 = add nuw nsw i32 %.sroa.69.4, %.sroa.80.4
+  %op.rdx399 = add i32 %op.rdx, %op.rdx398
+  %op.rdx400 = add i32 %op.rdx399, %.sroa.92.4
   %i.gi = getelementptr inbounds nuw i8, ptr %i.j, i64 9308 ; 2 uses
   %i.gj = load i32, ptr %i.gi, align 4, !tbaa !75
   %.not111 = icmp eq i32 %i.gj, 0
   %i.gk = select i1 %.not111, i1 %.not367, i1 false
   %.sroa.0.1 = select i1 %i.gk, i32 %.sroa.0.3, i32 0 ; 2 uses
-  %37 = extractelement <2 x i32> %29, i64 1       ; 3 uses
-  %.not112 = icmp eq i32 %37, 0                   ; 2 uses
+  %.not112 = icmp eq i32 %.sroa.92.4, 0           ; 2 uses
   %i.gl = zext i1 %.not112 to i32
   store i32 %i.gl, ptr %i.gi, align 4, !tbaa !75
   %i.gm = getelementptr inbounds nuw i8, ptr %i.j, i64 9304
@@ -620,9 +624,8 @@ bb.ah:                                            ; preds = %bb.ag
   %spec.store.select124 = select i1 %.not113, i32 %.sroa.0.1, i32 0 ; 3 uses
   %i.go = icmp eq i32 %i.gn, 2
   %i.gp = sub nsw i32 0, %spec.store.select124
-  %i.gq = icmp ne i32 %36, %i.gp
+  %i.gq = icmp ne i32 %op.rdx400, %i.gp
   %or.cond = select i1 %i.go, i1 true, i1 %i.gq   ; 2 uses
-  %38 = extractelement <2 x i32> %29, i64 0       ; 4 uses
   br i1 %or.cond, label %.preheader.preheader, label %bb.aj
 
 .preheader.preheader:                             ; preds = %.preheader132
@@ -652,14 +655,14 @@ bb.ah:                                            ; preds = %bb.ag
   %.not117.5 = icmp ne i32 %.sroa.69.4, 0
   %.not377 = select i1 %.not117.5, i1 %i.gy, i1 false ; 2 uses
   %.sroa.69.5 = select i1 %.not377, i32 %.sroa.69.4, i32 0 ; 2 uses
-  %.not117.6 = icmp eq i32 %38, 0
+  %.not117.6 = icmp eq i32 %.sroa.80.4, 0
   %i.hg = select i1 %.not117.6, i1 true, i1 %.not377 ; 3 uses
-  %.sroa.80.5 = select i1 %i.hg, i32 0, i32 %38
+  %.sroa.80.5 = select i1 %i.hg, i32 0, i32 %.sroa.80.4
   br i1 %.not112, label %bb.aj, label %bb.ai
 
 bb.ai:                                            ; preds = %.preheader.preheader
-  %spec.select357 = select i1 %i.hg, i32 0, i32 %38
-  %spec.select358 = select i1 %i.hg, i32 %37, i32 0
+  %spec.select357 = select i1 %i.hg, i32 0, i32 %.sroa.80.4
+  %spec.select358 = select i1 %i.hg, i32 %.sroa.92.4, i32 0
   br label %bb.aj
 
 .split:                                           ; preds = %bb.a
@@ -671,8 +674,8 @@ bb.ai:                                            ; preds = %.preheader.preheade
 bb.aj:                                            ; preds = %bb.ai, %.preheader132, %.preheader.preheader
   %.sroa.14.2 = phi i32 [ %.sroa.14.0, %.preheader132 ], [ %.sroa.14.1, %.preheader.preheader ], [ %.sroa.14.1, %bb.ai ]
   %.sroa.69.0 = phi i32 [ %.sroa.69.4, %.preheader132 ], [ %.sroa.69.5, %.preheader.preheader ], [ %.sroa.69.5, %bb.ai ]
-  %.sroa.80.0 = phi i32 [ %38, %.preheader132 ], [ %.sroa.80.5, %.preheader.preheader ], [ %spec.select357, %bb.ai ] ; 2 uses
-  %.sroa.92.0 = phi i32 [ %37, %.preheader132 ], [ 0, %.preheader.preheader ], [ %spec.select358, %bb.ai ]
+  %.sroa.80.0 = phi i32 [ %.sroa.80.4, %.preheader132 ], [ %.sroa.80.5, %.preheader.preheader ], [ %spec.select357, %bb.ai ] ; 2 uses
+  %.sroa.92.0 = phi i32 [ %.sroa.92.4, %.preheader132 ], [ 0, %.preheader.preheader ], [ %spec.select358, %bb.ai ]
   %i.hj = phi <4 x i32> [ %i.ga, %.preheader132 ], [ %i.hf, %.preheader.preheader ], [ %i.hf, %bb.ai ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #11
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #11
@@ -1075,7 +1078,7 @@ declare <4 x double> @llvm.exp2.v4f64(<4 x double>) #6
 declare <4 x float> @llvm.fmuladd.v4f32(<4 x float>, <4 x float>, <4 x float>) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.vector.reduce.add.v8i32(<8 x i32>) #6
+declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.usub.sat.i64(i64, i64) #6

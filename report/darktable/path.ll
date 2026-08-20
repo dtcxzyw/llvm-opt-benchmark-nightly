@@ -204,9 +204,11 @@ bb.ba:                                            ; preds = %.thread599
   %i.gb = call i32 @dt_dev_distort_backtransform(ptr noundef %i.ga, ptr noundef nonnull %i.a, i64 noundef 1) #25 ; 0 uses
   %i.gc = load <2 x float>, ptr %i.a, align 8, !tbaa !11
   %i.gd = fdiv reassoc nsz arcp contract afn <2 x float> %i.gc, %i.am ; 2 uses
-  store <2 x float> %i.gd, ptr %i.fu, align 4, !tbaa !11
-  %11 = getelementptr inbounds nuw i8, ptr %i.fu, i64 8
-  store <4 x float> splat (float -1.000000e+00), ptr %11, align 4, !tbaa !11
+  %11 = getelementptr inbounds nuw i8, ptr %i.fu, i64 16
+  store <2 x float> splat (float -1.000000e+00), ptr %11, align 4, !tbaa !11
+  %12 = shufflevector <2 x float> %i.gd, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %13 = shufflevector <4 x float> %12, <4 x float> <float poison, float poison, float -1.000000e+00, float -1.000000e+00>, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
+  store <4 x float> %13, ptr %i.fu, align 4, !tbaa !11
   %i.ge = getelementptr inbounds nuw i8, ptr %i.fu, i64 32
   store i32 1, ptr %i.ge, align 4, !tbaa !194
   %i.gf = fcmp reassoc nsz arcp contract afn olt float %i.ax, 5.000000e-04

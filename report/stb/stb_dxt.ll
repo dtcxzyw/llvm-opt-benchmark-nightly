@@ -149,8 +149,6 @@ bb.a:
   %i.m = lshr i16 %1, 5
   %i.n = lshr i16 %1, 11
   %i.o = and i16 %i.m, 63
-  %3 = mul nuw nsw i16 %i.o, 65
-  %4 = mul nuw nsw i16 %i.n, 33
   %i.p = lshr i16 %2, 5
   %i.q = lshr i16 %2, 11
   %i.r = insertelement <4 x i16> poison, i16 %1, i64 0
@@ -159,19 +157,21 @@ bb.a:
   %i.u = insertelement <4 x i16> %i.t, i16 %2, i64 3
   %i.v = and <4 x i16> %i.u, <i16 31, i16 -1, i16 63, i16 31>
   %i.w = mul nuw nsw <4 x i16> %i.v, <i16 33, i16 33, i16 65, i16 33> ; 4 uses
-  %i.x = extractelement <4 x i16> %i.w, i64 3
-  %i.y = extractelement <4 x i16> %i.w, i64 2
-  %i.z = extractelement <4 x i16> %i.w, i64 1
+  %i.x = extractelement <4 x i16> %i.w, i64 2
+  %i.y = extractelement <4 x i16> %i.w, i64 1
+  %i.z = extractelement <4 x i16> %i.w, i64 3
   %i.aa = extractelement <4 x i16> %i.w, i64 0
+  %3 = mul nuw nsw i16 %i.o, 65
+  %4 = mul nuw nsw i16 %i.n, 33
   %i.ab = lshr i16 %3, 4                          ; 3 uses
   %i.ac = lshr i16 %4, 2                          ; 3 uses
   %i.ad = trunc nuw i16 %i.ac to i8
   store i8 %i.ad, ptr %0, align 1, !tbaa !8
   %i.ae = trunc nuw i16 %i.ab to i8
   store i8 %i.ae, ptr %i.a, align 1, !tbaa !8
-  %i.af = lshr i16 %i.x, 2                        ; 3 uses
-  %i.ag = lshr i16 %i.y, 4                        ; 3 uses
-  %i.ah = lshr i16 %i.z, 2                        ; 3 uses
+  %i.af = lshr i16 %i.z, 2                        ; 3 uses
+  %i.ag = lshr i16 %i.x, 4                        ; 3 uses
+  %i.ah = lshr i16 %i.y, 2                        ; 3 uses
   %i.ai = lshr i16 %i.aa, 2                       ; 3 uses
   %i.aj = trunc nuw i16 %i.ai to i8
   store i8 %i.aj, ptr %i.b, align 1, !tbaa !8
@@ -574,8 +574,6 @@ bb.q:                                             ; preds = %.thread
   %i.cf = lshr i16 %i.br, 5
   %i.cg = lshr i16 %i.br, 11
   %i.ch = and i16 %i.cf, 63
-  %3 = mul nuw nsw i16 %i.ch, 65
-  %4 = mul nuw nsw i16 %i.cg, 33
   %i.ci = lshr i16 %i.bs, 5
   %i.cj = lshr i16 %i.bs, 11
   %i.ck = insertelement <4 x i16> poison, i16 %i.br, i64 0
@@ -584,19 +582,21 @@ bb.q:                                             ; preds = %.thread
   %i.cn = insertelement <4 x i16> %i.cm, i16 %i.bs, i64 3
   %i.co = and <4 x i16> %i.cn, <i16 31, i16 -1, i16 63, i16 31>
   %i.cp = mul nuw nsw <4 x i16> %i.co, <i16 33, i16 33, i16 65, i16 33> ; 4 uses
-  %i.cq = extractelement <4 x i16> %i.cp, i64 3
-  %i.cr = extractelement <4 x i16> %i.cp, i64 2
-  %i.cs = extractelement <4 x i16> %i.cp, i64 1
+  %i.cq = extractelement <4 x i16> %i.cp, i64 2
+  %i.cr = extractelement <4 x i16> %i.cp, i64 1
+  %i.cs = extractelement <4 x i16> %i.cp, i64 3
   %i.ct = extractelement <4 x i16> %i.cp, i64 0
+  %3 = mul nuw nsw i16 %i.ch, 65
+  %4 = mul nuw nsw i16 %i.cg, 33
   %i.cu = lshr i16 %3, 4                          ; 3 uses
   %i.cv = lshr i16 %4, 2                          ; 3 uses
   %i.cw = trunc nuw i16 %i.cv to i8
   store i8 %i.cw, ptr %i.c, align 16, !tbaa !8
   %i.cx = trunc nuw i16 %i.cu to i8
   store i8 %i.cx, ptr %i.bt, align 1, !tbaa !8
-  %i.cy = lshr i16 %i.cq, 2                       ; 3 uses
-  %i.cz = lshr i16 %i.cr, 4                       ; 3 uses
-  %i.da = lshr i16 %i.cs, 2                       ; 3 uses
+  %i.cy = lshr i16 %i.cs, 2                       ; 3 uses
+  %i.cz = lshr i16 %i.cq, 4                       ; 3 uses
+  %i.da = lshr i16 %i.cr, 2                       ; 3 uses
   %i.db = lshr i16 %i.ct, 2                       ; 3 uses
   %i.dc = trunc nuw i16 %i.db to i8
   store i8 %i.dc, ptr %i.bu, align 2, !tbaa !8

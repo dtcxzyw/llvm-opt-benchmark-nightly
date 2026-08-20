@@ -204,7 +204,7 @@ bb.i:                                             ; preds = %._crit_edge171, %_Z
   br label %thread-pre-split
 
 bb.j:                                             ; preds = %.lr.ph170, %_ZNSt6vectorIN4core8CMatrix4IfEESaIS2_EE9push_backERKS2_.exit
-  %i.bl = phi ptr [ %.promoted173, %.lr.ph170 ], [ %i.gh, %_ZNSt6vectorIN4core8CMatrix4IfEESaIS2_EE9push_backERKS2_.exit ] ; 28 uses
+  %i.bl = phi ptr [ %.promoted173, %.lr.ph170 ], [ %i.gh, %_ZNSt6vectorIN4core8CMatrix4IfEESaIS2_EE9push_backERKS2_.exit ] ; 26 uses
   %.sroa.0120.0169 = phi ptr [ %i.bc, %.lr.ph170 ], [ %i.gk, %_ZNSt6vectorIN4core8CMatrix4IfEESaIS2_EE9push_backERKS2_.exit ] ; 2 uses
   %i.bm = phi ptr [ %.promoted, %.lr.ph170 ], [ %i.gj, %_ZNSt6vectorIN4core8CMatrix4IfEESaIS2_EE9push_backERKS2_.exit ] ; 9 uses
   %i.bn = phi ptr [ %.promoted173, %.lr.ph170 ], [ %i.gi, %_ZNSt6vectorIN4core8CMatrix4IfEESaIS2_EE9push_backERKS2_.exit ] ; 20 uses
@@ -390,10 +390,10 @@ bb.p:                                             ; preds = %bb.j
   %i.et = fmul float %i.es, %i.do                 ; 2 uses
   %i.eu = shufflevector <2 x float> %i.eq, <2 x float> poison, <4 x i32> <i32 0, i32 0, i32 poison, i32 1>
   %i.ev = insertelement <4 x float> %i.eu, float 0.000000e+00, i64 2
-  %i.ew = fmul <4 x float> %i.ev, %i.ec           ; 3 uses
+  %i.ew = fmul <4 x float> %i.ev, %i.ec           ; 2 uses
   %i.ex = insertelement <2 x float> poison, float %i.er, i64 0
   %i.ey = shufflevector <2 x float> %i.ex, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.ez = fmul <2 x float> %i.ey, %i.ej           ; 2 uses
+  %i.ez = fmul <2 x float> %i.ey, %i.ej           ; 3 uses
   %i.fa = getelementptr inbounds nuw i8, ptr %i.bo, i64 76
   %i.fb = load float, ptr %i.fa, align 4, !tbaa !284, !noalias !279 ; 2 uses
   %i.fc = fmul float %i.fb, %i.du                 ; 2 uses
@@ -409,13 +409,8 @@ bb.p:                                             ; preds = %bb.j
 bb.q:                                             ; preds = %bb.p
   store float %i.et, ptr %i.bl, align 4
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bl, i64 4
-  %4 = shufflevector <4 x float> %i.ew, <4 x float> poison, <2 x i32> <i32 0, i32 1>
-  store <2 x float> %4, ptr %.sroa.6.0..sroa_idx, align 4
-  %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bl, i64 12
-  store float 0.000000e+00, ptr %.sroa.8.0..sroa_idx, align 4
-  %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bl, i64 16
-  %5 = extractelement <4 x float> %i.ew, i64 3
-  store float %5, ptr %.sroa.9.0..sroa_idx, align 4
+  %4 = insertelement <4 x float> %i.ew, float 0.000000e+00, i64 2
+  store <4 x float> %4, ptr %.sroa.6.0..sroa_idx, align 4
   %.sroa.10.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bl, i64 20
   store <2 x float> %i.ez, ptr %.sroa.10.0..sroa_idx, align 4
   %.sroa.12.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bl, i64 28
@@ -467,12 +462,16 @@ _ZNKSt6vectorIN4core8CMatrix4IfEESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i: ; preds
           to label %.noexc65 unwind label %.loopexit132 ; 5 uses
 
 .noexc65:                                         ; preds = %_ZNKSt6vectorIN4core8CMatrix4IfEESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i
-  %i.fw = getelementptr inbounds nuw i8, ptr %i.fv, i64 %i.fn ; 8 uses
+  %i.fw = getelementptr inbounds nuw i8, ptr %i.fv, i64 %i.fn ; 9 uses
   store float %i.et, ptr %i.fw, align 4
-  %.sroa.6.0..sroa_idx89.a = getelementptr inbounds nuw i8, ptr %i.fw, i64 4
-  store <4 x float> %i.ew, ptr %.sroa.6.0..sroa_idx89.a, align 4
-  %.sroa.10.0..sroa_idx97 = getelementptr inbounds nuw i8, ptr %i.fw, i64 20
-  store <2 x float> %i.ez, ptr %.sroa.10.0..sroa_idx97, align 4
+  %.sroa.6.0..sroa_idx89 = getelementptr inbounds nuw i8, ptr %i.fw, i64 4
+  store <4 x float> %i.ew, ptr %.sroa.6.0..sroa_idx89, align 4
+  %.sroa.6.0..sroa_idx89.a = getelementptr inbounds nuw i8, ptr %i.fw, i64 20
+  %5 = extractelement <2 x float> %i.ez, i64 0
+  store float %5, ptr %.sroa.6.0..sroa_idx89.a, align 4
+  %.sroa.10.0..sroa_idx97 = getelementptr inbounds nuw i8, ptr %i.fw, i64 24
+  %6 = extractelement <2 x float> %i.ez, i64 1
+  store float %6, ptr %.sroa.10.0..sroa_idx97, align 4
   %.sroa.12.0..sroa_idx101 = getelementptr inbounds nuw i8, ptr %i.fw, i64 28
   store float 0.000000e+00, ptr %.sroa.12.0..sroa_idx101, align 4
   %.sroa.13.0..sroa_idx103 = getelementptr inbounds nuw i8, ptr %i.fw, i64 32

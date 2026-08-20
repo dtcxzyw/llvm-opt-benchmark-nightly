@@ -204,7 +204,7 @@ $_ZGVZN5Eigen8internal20manage_caching_sizesENS_6ActionEPlS2_S2_E12m_cacheSizes 
 define weak_odr dso_local void @_ZN3igl26directed_edge_orientationsIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENS2_IiLin1ELin1ELi0ELin1ELin1EEEEEvRKNS1_10MatrixBaseIT_EERKNS5_IT0_EERSt6vectorINS1_10QuaternionIdLi0EEENS1_17aligned_allocatorISG_EEE(ptr noundef nonnull align 1 dereferenceable(1) %0, ptr noundef nonnull align 1 dereferenceable(1) %1, ptr noundef nonnull align 8 dereferenceable(24) %2) local_unnamed_addr #0 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
   %3 = alloca %"class.Eigen::Matrix.58", align 8  ; 4 uses
-  %4 = alloca %"class.Eigen::Matrix.67", align 16 ; 9 uses
+  %4 = alloca %"class.Eigen::Matrix.67", align 16 ; 7 uses
   %5 = alloca %"class.Eigen::JacobiSVD", align 16 ; 11 uses
   %6 = alloca %"class.Eigen::CwiseBinaryOp", align 8 ; 15 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
@@ -245,19 +245,17 @@ _ZNSt6vectorIN5Eigen10QuaternionIdLi0EEENS0_17aligned_allocatorIS2_EEE6resizeEm.
 
 .lr.ph:                                           ; preds = %_ZNSt6vectorIN5Eigen10QuaternionIdLi0EEENS0_17aligned_allocatorIS2_EEE6resizeEm.exit
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %.sroa.422.0..sroa_idx = getelementptr inbounds nuw i8, ptr %6, i64 16
-  %.sroa.523.0..sroa_idx = getelementptr inbounds nuw i8, ptr %6, i64 24
-  %.sroa.624.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %6, i64 32
-  %.sroa.725.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %6, i64 40
-  %.sroa.826.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %6, i64 48
-  %i.q = getelementptr inbounds nuw i8, ptr %6, i64 56
-  %.sroa.418.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %6, i64 72
-  %.sroa.519.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %6, i64 80
-  %.sroa.6.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %6, i64 88
-  %.sroa.7.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %6, i64 96
-  %.sroa.8.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %6, i64 104
-  %i.r = getelementptr inbounds nuw i8, ptr %4, i64 16
-  %i.s = getelementptr inbounds nuw i8, ptr %4, i64 32
+  %.sroa.624.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %6, i64 16
+  %.sroa.725.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %6, i64 24
+  %.sroa.826.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %6, i64 32
+  %i.q = getelementptr inbounds nuw i8, ptr %6, i64 40
+  %.sroa.418.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %6, i64 48
+  %.sroa.519.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %6, i64 56
+  %.sroa.6.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %6, i64 72
+  %.sroa.7.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %6, i64 80
+  %.sroa.8.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %6, i64 88
+  %i.r = getelementptr inbounds nuw i8, ptr %6, i64 96
+  %i.s = getelementptr inbounds nuw i8, ptr %6, i64 104
   %i.t = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.u = getelementptr inbounds nuw i8, ptr %4, i64 24
   %i.v = getelementptr inbounds nuw i8, ptr %4, i64 40
@@ -290,17 +288,17 @@ bb.f:                                             ; preds = %.lr.ph, %_ZN5Eigen1
   %i.ao = sext i32 %i.an to i64                   ; 2 uses
   %i.ap = getelementptr inbounds [8 x i8], ptr %i.ak, i64 %i.ao
   store ptr %i.al, ptr %6, align 8
-  store i64 %i.am, ptr %.sroa.422.0..sroa_idx, align 8
-  store ptr %0, ptr %.sroa.523.0..sroa_idx, align 8
-  store i64 %i.aj, ptr %.sroa.624.0..sroa_idx.a, align 8
-  store i64 0, ptr %.sroa.725.0..sroa_idx.a, align 8
-  store i64 1, ptr %.sroa.826.0..sroa_idx.a, align 8
-  store ptr %i.ap, ptr %i.q, align 8
-  store i64 %i.am, ptr %.sroa.418.0..sroa_idx.a, align 8
-  store ptr %0, ptr %.sroa.519.0..sroa_idx.a, align 8
-  store i64 %i.ao, ptr %.sroa.6.0..sroa_idx.a, align 8
-  store i64 0, ptr %.sroa.7.0..sroa_idx.a, align 8
-  store i64 1, ptr %.sroa.8.0..sroa_idx.a, align 8
+  store i64 %i.am, ptr %.sroa.624.0..sroa_idx.a, align 8
+  store ptr %0, ptr %.sroa.725.0..sroa_idx.a, align 8
+  store i64 %i.aj, ptr %.sroa.826.0..sroa_idx.a, align 8
+  store i64 0, ptr %i.q, align 8
+  store i64 1, ptr %.sroa.418.0..sroa_idx.a, align 8
+  store ptr %i.ap, ptr %.sroa.519.0..sroa_idx.a, align 8
+  store i64 %i.am, ptr %.sroa.6.0..sroa_idx.a, align 8
+  store ptr %0, ptr %.sroa.7.0..sroa_idx.a, align 8
+  store i64 %i.ao, ptr %.sroa.8.0..sroa_idx.a, align 8
+  store i64 0, ptr %i.r, align 8
+  store i64 1, ptr %i.s, align 8
   %i.aq = load ptr, ptr %2, align 8, !tbaa !17
   %i.ar = getelementptr inbounds nuw [32 x i8], ptr %i.aq, i64 %indvars.iv ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #20
@@ -325,12 +323,10 @@ bb.g:                                             ; preds = %bb.f
   %.sroa.speculated.i = select i1 %i.bb, double -1.000000e+00, double %i.az
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #20
   store double 1.000000e+00, ptr %4, align 16, !tbaa !30, !noalias !32
-  store double 0.000000e+00, ptr %i.r, align 16, !tbaa !30, !noalias !32
-  store double 0.000000e+00, ptr %i.s, align 16, !tbaa !30, !noalias !32
-  %.sroa.059.0.vec.extract62.i = extractelement <2 x double> %i.at, i64 0
-  store double %.sroa.059.0.vec.extract62.i, ptr %i.t, align 8, !tbaa !30
-  %.sroa.059.8.vec.extract64.i = extractelement <2 x double> %i.at, i64 1
-  store double %.sroa.059.8.vec.extract64.i, ptr %i.u, align 8, !tbaa !30
+  %7 = insertelement <2 x double> %i.at, double 0.000000e+00, i64 1
+  store <2 x double> %7, ptr %i.t, align 8, !tbaa !30
+  %8 = shufflevector <2 x double> %i.at, <2 x double> <double poison, double 0.000000e+00>, <2 x i32> <i32 1, i32 3>
+  store <2 x double> %8, ptr %i.u, align 8, !tbaa !30
   store double %i.av, ptr %i.v, align 8, !tbaa !30
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #20
   store i32 0, ptr %i.x, align 4, !tbaa !35

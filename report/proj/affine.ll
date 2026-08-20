@@ -201,6 +201,8 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   %i.dk = shufflevector <2 x double> %i.di, <2 x double> %i.ct, <2 x i32> <i32 1, i32 2>
   %i.dl = extractelement <2 x double> %i.di, i64 0
   %i.dm = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.dk, <2 x double> %i.dc, <2 x double> %i.db) ; 2 uses
+  %1 = shufflevector <2 x double> %i.dh, <2 x double> %i.dm, <2 x i32> <i32 0, i32 3>
+  %2 = fneg <2 x double> %1                       ; 2 uses
   %i.dn = shufflevector <2 x double> %i.cx, <2 x double> %i.di, <2 x i32> <i32 0, i32 2>
   %i.do = shufflevector <2 x double> %i.cu, <2 x double> %i.cx, <2 x i32> <i32 0, i32 2>
   %i.dp = fneg <2 x double> %i.do
@@ -219,8 +221,6 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   %i.ec = shufflevector <2 x double> %i.eb, <2 x double> %i.cv, <2 x i32> <i32 0, i32 2>
   %i.ed = fmul <2 x double> %i.dv, %i.ec
   %i.ee = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.dx, <2 x double> %i.dy, <2 x double> %i.ed) ; 2 uses
-  %1 = shufflevector <2 x double> %i.dm, <2 x double> %i.ee, <2 x i32> <i32 1, i32 2>
-  %2 = fneg <2 x double> %1                       ; 2 uses
   %i.ef = fmul <2 x double> %i.cw, %i.eb
   %i.eg = insertelement <2 x double> poison, double %i.cl, i64 0
   %i.eh = shufflevector <2 x double> %i.eg, <2 x double> poison, <2 x i32> zeroinitializer
@@ -255,7 +255,7 @@ bb.o:                                             ; preds = %bb.n, %bb.m
   br label %_ZL24computeReverseParametersP8PJconsts.exit
 
 bb.p:                                             ; preds = %bb.l
-  %3 = shufflevector <2 x double> %i.dh, <2 x double> %2, <2 x i32> <i32 1, i32 2>
+  %3 = shufflevector <2 x double> %i.dh, <2 x double> %2, <2 x i32> <i32 1, i32 3>
   %i.eu = insertelement <2 x double> poison, double %i.em, i64 0 ; 2 uses
   %i.ev = shufflevector <2 x double> %i.eu, <2 x double> poison, <2 x i32> zeroinitializer ; 4 uses
   %i.ew = fdiv <2 x double> %3, %i.ev
@@ -265,12 +265,12 @@ bb.p:                                             ; preds = %bb.l
   %i.ez = fdiv <2 x double> %i.ey, %i.ev
   %i.fa = getelementptr inbounds nuw i8, ptr %i.cj, i64 128
   store <2 x double> %i.ez, ptr %i.fa, align 8, !tbaa !46
-  %4 = shufflevector <2 x double> %i.ee, <2 x double> %2, <2 x i32> <i32 1, i32 3>
-  %i.fb = fdiv <2 x double> %4, %i.ev
+  %4 = fneg <2 x double> %i.ee
+  %5 = shufflevector <2 x double> %i.ee, <2 x double> %4, <2 x i32> <i32 1, i32 2>
+  %i.fb = fdiv <2 x double> %5, %i.ev
   %i.fc = getelementptr inbounds nuw i8, ptr %i.cj, i64 144
   store <2 x double> %i.fb, ptr %i.fc, align 8, !tbaa !46
-  %5 = fneg <2 x double> %i.dh
-  %i.fd = shufflevector <2 x double> %i.du, <2 x double> %5, <2 x i32> <i32 0, i32 2>
+  %i.fd = shufflevector <2 x double> %i.du, <2 x double> %2, <2 x i32> <i32 0, i32 2>
   %i.fe = fdiv <2 x double> %i.fd, %i.ev
   %i.ff = getelementptr inbounds nuw i8, ptr %i.cj, i64 160
   store <2 x double> %i.fe, ptr %i.ff, align 8, !tbaa !46

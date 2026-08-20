@@ -204,7 +204,6 @@ bb.a:
   %i.ak = extractelement <2 x i64> %i.c, i64 0
   %i.al = tail call i64 @llvm.fshl.i64(i64 %i.ak, i64 %i.ai, i64 60)
   %i.am = load i64, ptr %1, align 8, !tbaa !16
-  %2 = tail call noundef i64 @llvm.bitreverse.i64(i64 %i.am) ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.ao = load <2 x i64>, ptr %i.an, align 8, !tbaa !16
   %i.ap = tail call <2 x i64> @llvm.bitreverse.v2i64(<2 x i64> %i.ao) ; 2 uses
@@ -239,6 +238,7 @@ bb.a:
   %i.bs = tail call i64 @llvm.fshl.i64(i64 %i.br, i64 %i.bp, i64 60)
   %i.bt = extractelement <2 x i64> %i.ap, i64 0   ; 2 uses
   %i.bu = tail call i64 @llvm.fshl.i64(i64 %i.bt, i64 %i.br, i64 60)
+  %2 = tail call noundef i64 @llvm.bitreverse.i64(i64 %i.am) ; 2 uses
   %i.bv = tail call i64 @llvm.fshl.i64(i64 %2, i64 %i.bt, i64 60)
   %i.bw = insertelement <2 x i64> %i.c, i64 %2, i64 1
   %i.bx = lshr <2 x i64> %i.bw, splat (i64 4)     ; 2 uses

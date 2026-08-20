@@ -204,7 +204,7 @@ define internal void @spline16_kernel(float noundef %0, float noundef %1, ptr no
   %i.d = shufflevector <4 x float> %i.c, <4 x float> poison, <4 x i32> zeroinitializer
   %i.e = insertelement <4 x float> <float f0xBEAAAAAB, float poison, float poison, float f0x3EAAAAAB>, float %i.a, i64 1
   %i.f = insertelement <4 x float> %i.e, float %i.b, i64 2
-  %i.g = tail call nsz <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.d, <4 x float> %i.f, <4 x float> <float 8.000000e-01, float -2.000000e-01, float 8.000000e-01, float -2.000000e-01>) ; 2 uses
+  %i.g = tail call nsz <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.d, <4 x float> %i.f, <4 x float> <float 8.000000e-01, float -2.000000e-01, float 8.000000e-01, float -2.000000e-01>) ; 3 uses
   %i.h = fadd nsz float %1, -1.800000e+00
   %i.i = fsub nsz float 1.200000e+00, %1
   %i.j = shufflevector <4 x float> %i.g, <4 x float> poison, <2 x i32> <i32 3, i32 poison>
@@ -243,12 +243,15 @@ define internal void @spline16_kernel(float noundef %0, float noundef %1, ptr no
   %i.ao = getelementptr inbounds nuw i8, ptr %3, i64 6
   %i.ap = getelementptr inbounds nuw i8, ptr %2, i64 38
   %i.aq = getelementptr inbounds nuw i8, ptr %4, i64 6
-  %6 = shufflevector <4 x float> %i.g, <4 x float> %i.p, <4 x i32> <i32 0, i32 1, i32 2, i32 4>
-  %7 = insertelement <4 x float> <float poison, float poison, float 1.000000e+00, float 1.000000e+00>, float %0, i64 0 ; 2 uses
-  %8 = shufflevector <4 x float> %7, <4 x float> poison, <4 x i32> <i32 0, i32 0, i32 2, i32 3>
-  %9 = tail call nsz <4 x float> @llvm.fmuladd.v4f32(<4 x float> %6, <4 x float> %8, <4 x float> <float f0xBEEEEEEF, float 1.000000e+00, float -0.000000e+00, float -0.000000e+00>) ; 2 uses
-  %10 = shufflevector <4 x float> %7, <4 x float> <float poison, float 1.000000e+00, float poison, float poison>, <4 x i32> <i32 0, i32 5, i32 0, i32 0>
-  %i.ar = fmul nsz <4 x float> %10, %9            ; 4 uses
+  %6 = shufflevector <4 x float> %i.g, <4 x float> poison, <2 x i32> <i32 0, i32 1>
+  %7 = insertelement <2 x float> poison, float %0, i64 0 ; 2 uses
+  %8 = shufflevector <2 x float> %7, <2 x float> poison, <2 x i32> zeroinitializer
+  %9 = tail call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %6, <2 x float> %8, <2 x float> <float f0xBEEEEEEF, float 1.000000e+00>) ; 2 uses
+  %10 = shufflevector <2 x float> %7, <2 x float> <float poison, float 1.000000e+00>, <4 x i32> <i32 0, i32 3, i32 0, i32 0>
+  %11 = shufflevector <4 x float> %i.g, <4 x float> %i.p, <4 x i32> <i32 poison, i32 poison, i32 2, i32 4>
+  %12 = shufflevector <2 x float> %9, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %13 = shufflevector <4 x float> %12, <4 x float> %11, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
+  %i.ar = fmul nsz <4 x float> %10, %13           ; 4 uses
   %i.as = insertelement <4 x float> poison, float %i.s, i64 0
   %i.at = shufflevector <4 x float> %i.as, <4 x float> poison, <4 x i32> zeroinitializer
   %i.au = fmul nsz <4 x float> %i.ar, %i.at       ; 4 uses
@@ -308,7 +311,7 @@ define internal void @spline16_kernel(float noundef %0, float noundef %1, ptr no
   %i.ci = load i16, ptr %i.ch, align 2, !tbaa !17
   %i.cj = getelementptr inbounds nuw i8, ptr %4, i64 10
   store i16 %i.ci, ptr %i.cj, align 2, !tbaa !17
-  %i.ck = extractelement <4 x float> %9, i64 1    ; 3 uses
+  %i.ck = extractelement <2 x float> %9, i64 1    ; 3 uses
   %i.cl = fmul nsz float %i.ck, %i.u
   %i.cm = fmul nsz float %i.cl, 1.638500e+04
   %i.cn = tail call i64 @llvm.lrint.i64.f32(float %i.cm)
@@ -711,11 +714,11 @@ declare <16 x i64> @llvm.lrint.v16i64.v16f32(<16 x float>) #10
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x float> @llvm.fmuladd.v4f32(<4 x float>, <4 x float>, <4 x float>) #10
 
-; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x float> @llvm.asin.v2f32(<2 x float>) #12
-
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #10
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x float> @llvm.asin.v2f32(<2 x float>) #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.ceil.v2f32(<2 x float>) #10

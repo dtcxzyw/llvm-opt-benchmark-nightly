@@ -204,7 +204,7 @@ bb.s:                                             ; preds = %bb.a
 
 _ZL9_box_meanILm1ELb0EEvPfmmmj.exit.sink.split:   ; preds = %._crit_edge.us.i152, %.preheader.i153, %._crit_edge.us.i124, %.preheader.i136, %._crit_edge.us.i88, %.preheader.i96, %._crit_edge.us.i51, %.preheader.i57, %._crit_edge.us.i, %.preheader.i, %.preheader25.i147, %.preheader25.i105, %.preheader25.i66, %.preheader25.i37, %.preheader25.i
   %.sink = phi ptr [ %i.yg, %.preheader25.i105 ], [ %i.pt, %.preheader25.i66 ], [ %i.gr, %.preheader25.i37 ], [ %i.l, %.preheader25.i ], [ %i.yg, %.preheader.i136 ], [ %i.ahv, %.preheader25.i147 ], [ %i.ahv, %.preheader.i153 ], [ %i.yg, %._crit_edge.us.i124 ], [ %i.l, %._crit_edge.us.i ], [ %i.l, %.preheader.i ], [ %i.gr, %._crit_edge.us.i51 ], [ %i.gr, %.preheader.i57 ], [ %i.pt, %._crit_edge.us.i88 ], [ %i.pt, %.preheader.i96 ], [ %i.ahv, %._crit_edge.us.i152 ]
-  tail call void @free(ptr noundef nonnull %.sink) #12
+  tail call void @free(ptr noundef nonnull %.sink) #11
   br label %_ZL9_box_meanILm1ELb0EEvPfmmmj.exit
 
 _ZL9_box_meanILm1ELb0EEvPfmmmj.exit:              ; preds = %_ZL9_box_meanILm1ELb0EEvPfmmmj.exit.sink.split, %_ZL20_alloc_scratch_spacemmmmPm.exit.i144, %_ZL20_alloc_scratch_spacemmmmPm.exit.i102, %_ZL20_alloc_scratch_spacemmmmPm.exit.i63, %_ZL20_alloc_scratch_spacemmmmPm.exit.i34, %_ZL20_alloc_scratch_spacemmmmPm.exit.i
@@ -237,7 +237,7 @@ bb.d:                                             ; preds = %bb.b
 
 bb.e:                                             ; preds = %bb.c
   tail call fastcc void @_ZL16_blur_horizontalILm4ELb1EEvPfmmS0_(ptr noundef %0, i64 noundef %1, i64 noundef %3, ptr noundef %i.c)
-  tail call void @free(ptr noundef nonnull %i.c) #12
+  tail call void @free(ptr noundef nonnull %i.c) #11
   br label %bb.n
 
 bb.f:                                             ; preds = %bb.c
@@ -551,31 +551,35 @@ bb.i:                                             ; preds = %.preheader145.i
   %i.dm = ashr exact i64 %sext80.peel.i, 32
   %i.dn = mul nsw i64 %i.dm, 9                    ; 2 uses
   %i.do = getelementptr inbounds nuw [4 x i8], ptr %i.g, i64 %i.dn
-  %i.dp = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.dn ; 4 uses
+  %i.dp = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.dn ; 6 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !388)
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(36) %i.do, ptr noundef nonnull readonly align 4 dereferenceable(36) %i.dp, i64 36, i1 false), !tbaa !18, !alias.scope !391, !noalias !393
-  %i.dq = getelementptr inbounds nuw i8, ptr %i.dp, i64 12
-  %5 = load <4 x float>, ptr %i.dq, align 4, !tbaa !18, !alias.scope !396, !noalias !397
-  %6 = fadd reassoc nsz arcp contract afn <4 x float> %5, %i.dj ; 4 uses
-  %7 = tail call <8 x float> @llvm.masked.load.v8f32.p0(ptr nonnull align 4 %i.dp, <8 x i1> <i1 true, i1 true, i1 true, i1 false, i1 false, i1 false, i1 false, i1 true>, <8 x float> poison), !tbaa !18, !alias.scope !396, !noalias !397
-  %8 = shufflevector <8 x float> %7, <8 x float> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 7>
-  %9 = insertelement <4 x float> poison, float %.sroa.0300.0.i, i64 0
-  %10 = insertelement <4 x float> %9, float %.sroa.13.0.i, i64 1
-  %11 = insertelement <4 x float> %10, float %.sroa.23.0.i, i64 2
-  %12 = insertelement <4 x float> %11, float %.sroa.73.0.i, i64 3
-  %13 = fadd reassoc nsz arcp contract afn <4 x float> %8, %12 ; 6 uses
+  %5 = getelementptr inbounds nuw i8, ptr %i.dp, i64 8
+  %6 = getelementptr inbounds nuw i8, ptr %i.dp, i64 12
+  %i.dq = getelementptr inbounds nuw i8, ptr %i.dp, i64 28
+  %7 = load float, ptr %i.dq, align 4, !tbaa !18, !alias.scope !396, !noalias !397
+  %8 = load float, ptr %5, align 4, !tbaa !18, !alias.scope !396, !noalias !397
+  %9 = fadd reassoc nsz arcp contract afn float %7, %.sroa.73.0.i ; 4 uses
+  %10 = load <4 x float>, ptr %6, align 4, !tbaa !18, !alias.scope !396, !noalias !397
+  %11 = fadd reassoc nsz arcp contract afn <4 x float> %10, %i.dj ; 4 uses
+  %12 = fadd reassoc nsz arcp contract afn float %8, %.sroa.23.0.i ; 4 uses
+  %13 = load <2 x float>, ptr %i.dp, align 4, !tbaa !18, !alias.scope !396, !noalias !397
+  %14 = insertelement <2 x float> poison, float %.sroa.0300.0.i, i64 0
+  %15 = insertelement <2 x float> %14, float %.sroa.13.0.i, i64 1
+  %16 = fadd reassoc nsz arcp contract afn <2 x float> %13, %15 ; 4 uses
   %i.dr = getelementptr inbounds nuw i8, ptr %i.dp, i64 32
   %i.ds = load float, ptr %i.dr, align 4, !tbaa !18, !alias.scope !396, !noalias !397
   %i.dt = fadd reassoc nsz arcp contract afn float %i.ds, %.sroa.83.0.i ; 4 uses
   %i.du = uitofp reassoc nsz arcp contract afn i64 %i.dl to float ; 2 uses
-  %i.dv = extractelement <4 x float> %13, i64 0   ; 2 uses
-  %i.dw = extractelement <4 x float> %13, i64 1   ; 2 uses
-  %14 = extractelement <4 x float> %13, i64 2     ; 2 uses
-  %15 = extractelement <4 x float> %13, i64 3     ; 2 uses
-  %16 = shufflevector <4 x float> %13, <4 x float> %6, <8 x i32> <i32 0, i32 1, i32 2, i32 4, i32 5, i32 6, i32 7, i32 3>
+  %i.dv = extractelement <2 x float> %16, i64 0   ; 2 uses
+  %i.dw = extractelement <2 x float> %16, i64 1   ; 2 uses
+  %17 = shufflevector <2 x float> %16, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %18 = shufflevector <4 x float> %17, <4 x float> %11, <8 x i32> <i32 0, i32 1, i32 poison, i32 4, i32 5, i32 6, i32 7, i32 poison>
+  %19 = insertelement <8 x float> %18, float %12, i64 2
+  %20 = insertelement <8 x float> %19, float %9, i64 7
   %i.dx = insertelement <8 x float> poison, float %i.du, i64 0
   %i.dy = shufflevector <8 x float> %i.dx, <8 x float> poison, <8 x i32> zeroinitializer
-  %i.dz = fdiv reassoc nsz arcp contract afn <8 x float> %16, %i.dy
+  %i.dz = fdiv reassoc nsz arcp contract afn <8 x float> %20, %i.dy
   store <8 x float> %i.dz, ptr %0, align 4, !tbaa !18, !alias.scope !398, !noalias !401
   %i.ea = fdiv reassoc nsz arcp contract afn float %i.dt, %i.du
   %i.eb = getelementptr inbounds nuw i8, ptr %0, i64 32
@@ -622,34 +626,45 @@ bb.i:                                             ; preds = %.preheader145.i
 .lr.ph:                                           ; preds = %.peel.next291.i.preheader, %.peel.next291.i
   %.068177.i131 = phi i64 [ %i.fr, %.peel.next291.i ], [ 1, %.peel.next291.i.preheader ] ; 3 uses
   %.1178.i130 = phi i64 [ %i.ez, %.peel.next291.i ], [ %i.dl, %.peel.next291.i.preheader ]
-  %.sroa.83.1.i129.a = phi float [ %i.fj, %.peel.next291.i ], [ %i.dt, %.peel.next291.i.preheader ]
-  %i.ex = phi <4 x float> [ %i.fg, %.peel.next291.i ], [ %6, %.peel.next291.i.preheader ]
-  %17 = phi <4 x float> [ %20, %.peel.next291.i ], [ %13, %.peel.next291.i.preheader ]
+  %.sroa.83.1.i129 = phi float [ %i.fj, %.peel.next291.i ], [ %i.dt, %.peel.next291.i.preheader ]
+  %.sroa.73.1.i128 = phi float [ %29, %.peel.next291.i ], [ %9, %.peel.next291.i.preheader ]
+  %.sroa.83.1.i129.a = phi float [ %26, %.peel.next291.i ], [ %12, %.peel.next291.i.preheader ]
+  %i.ex = phi <4 x float> [ %i.fg, %.peel.next291.i ], [ %11, %.peel.next291.i.preheader ]
+  %21 = phi <2 x float> [ %23, %.peel.next291.i ], [ %16, %.peel.next291.i.preheader ]
   %i.ey = add nuw i64 %.068177.i131, %3
   %i.ez = add i64 %.1178.i130, 1                  ; 3 uses
   %sext80.i = shl i64 %i.ey, 32
   %i.fa = ashr exact i64 %sext80.i, 32
   %i.fb = mul nsw i64 %i.fa, 9                    ; 2 uses
   %i.fc = getelementptr inbounds nuw [4 x i8], ptr %i.g, i64 %i.fb
-  %i.fd = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.fb ; 4 uses
+  %i.fd = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.fb ; 6 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !405)
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(36) %i.fc, ptr noundef nonnull readonly align 4 dereferenceable(36) %i.fd, i64 36, i1 false), !tbaa !18, !alias.scope !407, !noalias !409
+  %22 = load <2 x float>, ptr %i.fd, align 4, !tbaa !18, !alias.scope !412, !noalias !413
+  %23 = fadd reassoc nsz arcp contract afn <2 x float> %22, %21 ; 6 uses
+  %24 = getelementptr inbounds nuw i8, ptr %i.fd, i64 8
+  %25 = load float, ptr %24, align 4, !tbaa !18, !alias.scope !412, !noalias !413
+  %26 = fadd reassoc nsz arcp contract afn float %25, %.sroa.83.1.i129.a ; 4 uses
   %i.fe = getelementptr inbounds nuw i8, ptr %i.fd, i64 12
   %i.ff = load <4 x float>, ptr %i.fe, align 4, !tbaa !18, !alias.scope !412, !noalias !413
   %i.fg = fadd reassoc nsz arcp contract afn <4 x float> %i.ff, %i.ex ; 4 uses
+  %27 = getelementptr inbounds nuw i8, ptr %i.fd, i64 28
+  %28 = load float, ptr %27, align 4, !tbaa !18, !alias.scope !412, !noalias !413
+  %29 = fadd reassoc nsz arcp contract afn float %28, %.sroa.73.1.i128 ; 4 uses
   %i.fh = getelementptr inbounds nuw i8, ptr %i.fd, i64 32
   %i.fi = load float, ptr %i.fh, align 4, !tbaa !18, !alias.scope !412, !noalias !413
-  %i.fj = fadd reassoc nsz arcp contract afn float %i.fi, %.sroa.83.1.i129.a ; 4 uses
+  %i.fj = fadd reassoc nsz arcp contract afn float %i.fi, %.sroa.83.1.i129 ; 4 uses
   %.idx81.i = mul i64 %.068177.i131, 36
   %i.fk = getelementptr inbounds nuw i8, ptr %0, i64 %.idx81.i ; 2 uses
   %i.fl = uitofp reassoc nsz arcp contract afn i64 %i.ez to float ; 2 uses
-  %18 = tail call <8 x float> @llvm.masked.load.v8f32.p0(ptr nonnull align 4 %i.fd, <8 x i1> <i1 true, i1 true, i1 true, i1 false, i1 false, i1 false, i1 false, i1 true>, <8 x float> poison), !tbaa !18, !alias.scope !412, !noalias !413
-  %19 = shufflevector <8 x float> %18, <8 x float> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 7>
-  %20 = fadd reassoc nsz arcp contract afn <4 x float> %19, %17 ; 10 uses
-  %21 = shufflevector <4 x float> %20, <4 x float> %i.fg, <8 x i32> <i32 0, i32 1, i32 2, i32 4, i32 5, i32 6, i32 7, i32 3>
+  %30 = shufflevector <4 x float> %i.fg, <4 x float> poison, <8 x i32> <i32 poison, i32 poison, i32 poison, i32 0, i32 1, i32 2, i32 3, i32 poison>
+  %31 = shufflevector <2 x float> %23, <2 x float> poison, <8 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %32 = shufflevector <8 x float> %31, <8 x float> %30, <8 x i32> <i32 0, i32 1, i32 poison, i32 11, i32 12, i32 13, i32 14, i32 poison>
+  %33 = insertelement <8 x float> %32, float %26, i64 2
+  %34 = insertelement <8 x float> %33, float %29, i64 7
   %i.fm = insertelement <8 x float> poison, float %i.fl, i64 0
   %i.fn = shufflevector <8 x float> %i.fm, <8 x float> poison, <8 x i32> zeroinitializer
-  %i.fo = fdiv reassoc nsz arcp contract afn <8 x float> %21, %i.fn
+  %i.fo = fdiv reassoc nsz arcp contract afn <8 x float> %34, %i.fn
   store <8 x float> %i.fo, ptr %i.fk, align 4, !tbaa !18, !alias.scope !398, !noalias !401
   %i.fp = fdiv reassoc nsz arcp contract afn float %i.fj, %i.fl
   %i.fq = getelementptr inbounds nuw i8, ptr %i.fk, i64 32
@@ -659,28 +674,24 @@ bb.i:                                             ; preds = %.preheader145.i
   br i1 %.not.i, label %..critedge.i.loopexit_crit_edge, label %.peel.next291.i, !llvm.loop !404
 
 ..critedge.i.loopexit_crit_edge:                  ; preds = %.lr.ph
-  %22 = extractelement <4 x float> %20, i64 0
-  %23 = extractelement <4 x float> %20, i64 1
-  %i.fs = extractelement <4 x float> %20, i64 2
-  %i.ft = extractelement <4 x float> %20, i64 3
+  %i.fs = extractelement <2 x float> %23, i64 0
+  %i.ft = extractelement <2 x float> %23, i64 1
   br label %.critedge.i, !llvm.loop !404
 
 .critedge.i.loopexit:                             ; preds = %.peel.next291.i
-  %24 = extractelement <4 x float> %20, i64 3
-  %25 = extractelement <4 x float> %20, i64 2
-  %i.fu = extractelement <4 x float> %20, i64 1
-  %i.fv = extractelement <4 x float> %20, i64 0
+  %i.fu = extractelement <2 x float> %23, i64 1
+  %i.fv = extractelement <2 x float> %23, i64 0
   br label %.critedge.i
 
 .critedge.i:                                      ; preds = %.critedge.i.loopexit, %.peel.next291.i.preheader, %..critedge.i.loopexit_crit_edge, %bb.i, %.preheader145.i
-  %.sroa.0300.2.i = phi nsz float [ %i.dv, %bb.i ], [ %.sroa.0300.0.i, %.preheader145.i ], [ %i.dv, %.peel.next291.i.preheader ], [ %22, %..critedge.i.loopexit_crit_edge ], [ %i.fv, %.critedge.i.loopexit ] ; 2 uses
-  %.sroa.13.2.i = phi nsz float [ %i.dw, %bb.i ], [ %.sroa.13.0.i, %.preheader145.i ], [ %i.dw, %.peel.next291.i.preheader ], [ %23, %..critedge.i.loopexit_crit_edge ], [ %i.fu, %.critedge.i.loopexit ] ; 2 uses
-  %.sroa.23.2.i = phi nsz float [ %14, %bb.i ], [ %.sroa.23.0.i, %.preheader145.i ], [ %14, %.peel.next291.i.preheader ], [ %i.fs, %..critedge.i.loopexit_crit_edge ], [ %25, %.critedge.i.loopexit ] ; 2 uses
-  %.sroa.73.2.i = phi nsz float [ %15, %bb.i ], [ %.sroa.73.0.i, %.preheader145.i ], [ %15, %.peel.next291.i.preheader ], [ %i.ft, %..critedge.i.loopexit_crit_edge ], [ %24, %.critedge.i.loopexit ] ; 2 uses
+  %.sroa.0300.2.i = phi nsz float [ %i.dv, %bb.i ], [ %.sroa.0300.0.i, %.preheader145.i ], [ %i.dv, %.peel.next291.i.preheader ], [ %i.fs, %..critedge.i.loopexit_crit_edge ], [ %i.fv, %.critedge.i.loopexit ] ; 2 uses
+  %.sroa.13.2.i = phi nsz float [ %i.dw, %bb.i ], [ %.sroa.13.0.i, %.preheader145.i ], [ %i.dw, %.peel.next291.i.preheader ], [ %i.ft, %..critedge.i.loopexit_crit_edge ], [ %i.fu, %.critedge.i.loopexit ] ; 2 uses
+  %.sroa.23.2.i = phi nsz float [ %12, %bb.i ], [ %.sroa.23.0.i, %.preheader145.i ], [ %12, %.peel.next291.i.preheader ], [ %26, %..critedge.i.loopexit_crit_edge ], [ %26, %.critedge.i.loopexit ] ; 2 uses
+  %.sroa.73.2.i = phi nsz float [ %9, %bb.i ], [ %.sroa.73.0.i, %.preheader145.i ], [ %9, %.peel.next291.i.preheader ], [ %29, %..critedge.i.loopexit_crit_edge ], [ %29, %.critedge.i.loopexit ] ; 2 uses
   %.sroa.83.2.i = phi nsz float [ %i.dt, %bb.i ], [ %.sroa.83.0.i, %.preheader145.i ], [ %i.dt, %.peel.next291.i.preheader ], [ %i.fj, %..critedge.i.loopexit_crit_edge ], [ %i.fj, %.critedge.i.loopexit ] ; 3 uses
   %.068.lcssa.i = phi i64 [ 1, %bb.i ], [ 0, %.preheader145.i ], [ %i.dk, %.peel.next291.i.preheader ], [ %i.fr, %..critedge.i.loopexit_crit_edge ], [ %i.dk, %.critedge.i.loopexit ] ; 4 uses
   %.1.lcssa.i = phi i64 [ %i.dl, %bb.i ], [ %i.h, %.preheader145.i ], [ %1, %.peel.next291.i.preheader ], [ %i.ez, %..critedge.i.loopexit_crit_edge ], [ %1, %.critedge.i.loopexit ] ; 4 uses
-  %i.fw = phi <4 x float> [ %6, %bb.i ], [ %i.dj, %.preheader145.i ], [ %6, %.peel.next291.i.preheader ], [ %i.fg, %..critedge.i.loopexit_crit_edge ], [ %i.fg, %.critedge.i.loopexit ] ; 2 uses
+  %i.fw = phi <4 x float> [ %11, %bb.i ], [ %i.dj, %.preheader145.i ], [ %11, %.peel.next291.i.preheader ], [ %i.fg, %..critedge.i.loopexit_crit_edge ], [ %i.fg, %.critedge.i.loopexit ] ; 2 uses
   %i.fx = icmp ule i64 %.068.lcssa.i, %3
   %i.fy = icmp ult i64 %.068.lcssa.i, %1
   %i.fz = and i1 %i.fx, %i.fy
@@ -688,14 +699,14 @@ bb.i:                                             ; preds = %.preheader145.i
 
 .lr.ph196.i:                                      ; preds = %.critedge.i
   %i.ga = uitofp reassoc nsz arcp contract afn i64 %.1.lcssa.i to float ; 2 uses
-  %26 = insertelement <4 x float> poison, float %.sroa.0300.2.i, i64 0
-  %27 = insertelement <4 x float> %26, float %.sroa.13.2.i, i64 1
-  %28 = insertelement <4 x float> %27, float %.sroa.23.2.i, i64 2
-  %29 = insertelement <4 x float> %28, float %.sroa.73.2.i, i64 3
-  %30 = shufflevector <4 x float> %29, <4 x float> %i.fw, <8 x i32> <i32 0, i32 1, i32 2, i32 4, i32 5, i32 6, i32 7, i32 3>
+  %35 = shufflevector <4 x float> %i.fw, <4 x float> poison, <8 x i32> <i32 poison, i32 poison, i32 poison, i32 0, i32 1, i32 2, i32 3, i32 poison>
+  %36 = insertelement <8 x float> %35, float %.sroa.0300.2.i, i64 0
+  %37 = insertelement <8 x float> %36, float %.sroa.13.2.i, i64 1
+  %38 = insertelement <8 x float> %37, float %.sroa.23.2.i, i64 2
+  %39 = insertelement <8 x float> %38, float %.sroa.73.2.i, i64 7
   %i.gb = insertelement <8 x float> poison, float %i.ga, i64 0
   %i.gc = shufflevector <8 x float> %i.gb, <8 x float> poison, <8 x i32> zeroinitializer
-  %i.gd = fdiv reassoc nsz arcp contract afn <8 x float> %30, %i.gc
+  %i.gd = fdiv reassoc nsz arcp contract afn <8 x float> %39, %i.gc
   %i.ge = fdiv reassoc nsz arcp contract afn float %.sroa.83.2.i, %i.ga
   br label %bb.j
 
@@ -937,7 +948,7 @@ _ZL16_blur_horizontalILm9ELb1EEvPfmmS0_.exit:     ; preds = %.peel.next298.i.pro
   br i1 %.not, label %bb.k, label %bb.n
 
 bb.k:                                             ; preds = %_ZL16_blur_horizontalILm9ELb1EEvPfmmS0_.exit
-  tail call void @free(ptr noundef nonnull %i.g) #12
+  tail call void @free(ptr noundef nonnull %i.g) #11
   br label %bb.n
 
 bb.l:                                             ; preds = %bb.h
@@ -1340,7 +1351,7 @@ _ZL20_alloc_scratch_spacemmmmPm.exit:             ; preds = %.lr.ph.i.i, %bb.c
 
 bb.d:                                             ; preds = %_ZL20_alloc_scratch_spacemmmmPm.exit
   tail call fastcc void @_ZL18_blur_vertical_1chILb1EEvPfmmmS0_m(ptr noundef %0, i64 noundef %1, i64 noundef %i.k, i64 noundef %4, ptr noundef %i.q)
-  tail call void @free(ptr noundef nonnull %i.q) #12
+  tail call void @free(ptr noundef nonnull %i.q) #11
   br label %bb.f
 
 bb.e:                                             ; preds = %bb.b, %bb.a
@@ -1743,7 +1754,7 @@ _ZL13_box_min_vertILm1EEvjPfS0_ijm.exit.i:        ; preds = %bb.r, %.preheader.i
   br i1 %exitcond244.not.i, label %._crit_edge.i, label %bb.o, !llvm.loop !1005
 
 ._crit_edge.i:                                    ; preds = %_ZL13_box_min_vertILm1EEvjPfS0_ijm.exit.i, %.preheader.i
-  tail call void @free(ptr noundef %i.o) #12
+  tail call void @free(ptr noundef %i.o) #11
   br label %_ZL12_box_min_1chPfmmj.exit
 
 bb.s:                                             ; preds = %bb.a
@@ -2146,7 +2157,7 @@ _ZL13_box_max_vertILm1EEvjPfS0_mjm.exit.i:        ; preds = %bb.r, %.preheader.i
   br i1 %exitcond239.not.i, label %._crit_edge.i, label %bb.o, !llvm.loop !1135
 
 ._crit_edge.i:                                    ; preds = %_ZL13_box_max_vertILm1EEvjPfS0_mjm.exit.i, %.preheader.i
-  tail call void @free(ptr noundef %i.o) #12
+  tail call void @free(ptr noundef %i.o) #11
   br label %_ZL12_box_max_1chPfmmj.exit
 
 bb.s:                                             ; preds = %bb.a
@@ -2549,14 +2560,11 @@ declare <8 x float> @llvm.masked.gather.v8f32.v8p0(<8 x ptr>, <8 x i1>, <8 x flo
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(read)
 declare <4 x float> @llvm.masked.gather.v4f32.v4p0(<4 x ptr>, <4 x i1>, <4 x float>) #9
 
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
-declare <8 x float> @llvm.masked.load.v8f32.p0(ptr captures(none), <8 x i1>, <8 x float>) #10
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(write)
+declare void @llvm.masked.scatter.v8f32.v8p0(<8 x float>, <8 x ptr>, <8 x i1>) #10
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(write)
-declare void @llvm.masked.scatter.v8f32.v8p0(<8 x float>, <8 x ptr>, <8 x i1>) #11
-
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(write)
-declare void @llvm.masked.scatter.v4f32.v4p0(<4 x float>, <4 x ptr>, <4 x i1>) #11
+declare void @llvm.masked.scatter.v4f32.v4p0(<4 x float>, <4 x ptr>, <4 x i1>) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <8 x float> @llvm.minnum.v8f32(<8 x float>, <8 x float>) #7
@@ -2592,9 +2600,8 @@ attributes #6 = { nocallback nofree nosync nounwind willreturn memory(argmem: re
 attributes #7 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #8 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
 attributes #9 = { nocallback nofree nosync nounwind willreturn memory(read) }
-attributes #10 = { nocallback nofree nosync nounwind willreturn memory(argmem: read) }
-attributes #11 = { nocallback nofree nosync nounwind willreturn memory(write) }
-attributes #12 = { nounwind }
+attributes #10 = { nocallback nofree nosync nounwind willreturn memory(write) }
+attributes #11 = { nounwind }
 
 !llvm.module.flags = !{!0, !1, !2, !3, !4}
 !llvm.ident = !{!5}

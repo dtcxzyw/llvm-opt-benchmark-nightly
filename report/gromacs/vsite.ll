@@ -204,22 +204,14 @@ _ZN3gmxL12pbc_rvec_subEPK5t_pbcPKfS4_Pf.exit52.i.i: ; preds = %bb.bi, %bb.bh
   %i.blx = fmul float %i.bjt, %i.blt              ; 4 uses
   %i.bly = extractelement <2 x float> %i.blu, i64 1 ; 4 uses
   %i.blz = fmul float %i.bjt, %i.bly              ; 3 uses
-  %10 = fneg float %i.blz                         ; 2 uses
   %i.bma = getelementptr inbounds [12 x i8], ptr %1, i64 %i.bkc ; 3 uses
   %i.bmb = getelementptr inbounds nuw i8, ptr %i.bma, i64 8 ; 2 uses
   %i.bmc = getelementptr inbounds [12 x i8], ptr %1, i64 %i.blg ; 3 uses
   %i.bmd = getelementptr inbounds nuw i8, ptr %i.bmc, i64 8 ; 2 uses
-  %11 = fmul float %i.ble, %i.blz
-  %12 = call float @llvm.fmuladd.f32(float %i.bjr, float %i.blv, float %11)
-  %13 = call float @llvm.fmuladd.f32(float %i.blo, float %i.blx, float %12) ; 2 uses
-  %14 = extractelement <2 x float> %i.blh, i64 1  ; 2 uses
-  %i.bme = fmul float %14, %10
-  %i.bmf = call float @llvm.fmuladd.f32(float %i.aoe, float %i.blv, float %i.bme)
-  %i.bmg = call float @llvm.fmuladd.f32(float %i.blm, float %i.blx, float %i.bmf) ; 2 uses
-  %15 = fsub float %i.blv, %i.bmg
-  %16 = fsub float %15, %13                       ; 2 uses
-  %17 = fadd float %i.blr, %16
-  store float %17, ptr %i.blq, align 4, !tbaa !89
+  %i.bme = fmul float %i.ble, %i.blz
+  %i.bmf = call float @llvm.fmuladd.f32(float %i.bjr, float %i.blv, float %i.bme)
+  %i.bmg = call float @llvm.fmuladd.f32(float %i.blo, float %i.blx, float %i.bmf) ; 2 uses
+  %10 = fneg float %i.blz                         ; 2 uses
   %i.bmh = load <2 x float>, ptr %i.bls, align 4, !tbaa !89
   %i.bmi = fmul float %i.blc, %10
   %i.bmj = fmul float %i.bjr, %i.bly
@@ -230,7 +222,8 @@ _ZN3gmxL12pbc_rvec_subEPK5t_pbcPKfS4_Pf.exit52.i.i: ; preds = %bb.bi, %bb.bh
   %i.bmo = fmul float %i.blf, %i.blz
   %i.bmp = fmul float %i.aoe, %i.bly
   %i.bmq = call float @llvm.fmuladd.f32(float %i.bln, float %i.blw, float %i.bmo)
-  %i.bmr = call float @llvm.fmuladd.f32(float %14, float %i.blw, float %i.bmp)
+  %11 = extractelement <2 x float> %i.blh, i64 1  ; 2 uses
+  %i.bmr = call float @llvm.fmuladd.f32(float %11, float %i.blw, float %i.bmp)
   %i.bms = call float @llvm.fmuladd.f32(float %i.aoe, float %i.blt, float %i.bmq) ; 3 uses
   %i.bmt = call float @llvm.fmuladd.f32(float %i.bll, float %i.blx, float %i.bmr) ; 2 uses
   %i.bmu = fsub float %i.blt, %i.bms
@@ -245,18 +238,25 @@ _ZN3gmxL12pbc_rvec_subEPK5t_pbcPKfS4_Pf.exit52.i.i: ; preds = %bb.bi, %bb.bh
   %i.bnc = fadd float %i.bms, %i.bnb
   store float %i.bnc, ptr %i.bmb, align 4, !tbaa !89
   %i.bnd = load float, ptr %i.bmd, align 4, !tbaa !89
-  %i.bne = fadd float %i.bmm, %i.bnd
+  %12 = fadd float %i.bmm, %i.bnd
+  %13 = fmul float %11, %10
+  %14 = call float @llvm.fmuladd.f32(float %i.aoe, float %i.blv, float %13)
+  %15 = call float @llvm.fmuladd.f32(float %i.blm, float %i.blx, float %14) ; 2 uses
+  %16 = fsub float %i.blv, %15
+  %17 = fsub float %16, %i.bmg                    ; 2 uses
+  %i.bne = fadd float %i.blr, %17
+  store float %i.bne, ptr %i.blq, align 4, !tbaa !89
   %i.bnf = load <2 x float>, ptr %i.bma, align 4, !tbaa !89
-  %i.bng = insertelement <2 x float> poison, float %i.bmg, i64 0
+  %i.bng = insertelement <2 x float> poison, float %15, i64 0
   %i.bnh = insertelement <2 x float> %i.bng, float %i.bmt, i64 1 ; 2 uses
   %i.bni = fadd <2 x float> %i.bnh, %i.bnf
   store <2 x float> %i.bni, ptr %i.bma, align 4, !tbaa !89
   %i.bnj = load <2 x float>, ptr %i.bmc, align 4, !tbaa !89
-  %i.bnk = insertelement <2 x float> poison, float %13, i64 0
+  %i.bnk = insertelement <2 x float> poison, float %i.bmg, i64 0
   %i.bnl = insertelement <2 x float> %i.bnk, float %i.bmn, i64 1 ; 2 uses
   %i.bnm = fadd <2 x float> %i.bnl, %i.bnj
   store <2 x float> %i.bnm, ptr %i.bmc, align 4, !tbaa !89
-  store float %i.bne, ptr %i.bmd, align 4, !tbaa !89
+  store float %12, ptr %i.bmd, align 4, !tbaa !89
   br i1 %.not.i130.i, label %bb.bj, label %_ZN3gmxL12pbc_rvec_subEPK5t_pbcPKfS4_Pf.exit55.i.i
 
 _ZN3gmxL12pbc_rvec_subEPK5t_pbcPKfS4_Pf.exit55.i.i: ; preds = %_ZN3gmxL12pbc_rvec_subEPK5t_pbcPKfS4_Pf.exit52.i.i
@@ -284,7 +284,7 @@ bb.bk:                                            ; preds = %bb.bj
   store <2 x float> %i.bny, ptr %i.bnt, align 4, !tbaa !89
   store float %i.bnw, ptr %i.bnu, align 4, !tbaa !89
   %i.bnz = load float, ptr %i.ang, align 4, !tbaa !89
-  %i.boa = fadd float %16, %i.bnz
+  %i.boa = fadd float %17, %i.bnz
   store float %i.boa, ptr %i.ang, align 4, !tbaa !89
   %i.bob = load <2 x float>, ptr %i.anh, align 4, !tbaa !89
   %i.boc = fadd <2 x float> %i.bmz, %i.bob

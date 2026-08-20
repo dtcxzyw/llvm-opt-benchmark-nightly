@@ -204,7 +204,7 @@ define void @_Z30calc_compact_unitcell_verticesiPA3_KfPA3_f(i32 noundef %0, ptr 
   %i.o = getelementptr inbounds nuw i8, ptr %2, i64 80
   %i.p = getelementptr inbounds nuw i8, ptr %2, i64 96
   %i.q = getelementptr inbounds nuw i8, ptr %2, i64 100
-  %i.r = load <2 x float>, ptr %i.b, align 4, !tbaa !23 ; 6 uses
+  %i.r = load <2 x float>, ptr %i.b, align 4, !tbaa !23 ; 7 uses
   %i.s = load float, ptr %i.c, align 4, !tbaa !23 ; 11 uses
   %i.t = load <3 x float>, ptr %i.d, align 4, !tbaa !23 ; 3 uses
   %i.u = extractelement <3 x float> %i.t, i64 0
@@ -212,39 +212,37 @@ define void @_Z30calc_compact_unitcell_verticesiPA3_KfPA3_f(i32 noundef %0, ptr 
   %i.w = fneg <3 x float> %i.t
   %i.x = insertelement <3 x i1> poison, i1 %i.v, i64 0
   %i.y = shufflevector <3 x i1> %i.x, <3 x i1> poison, <3 x i32> zeroinitializer
-  %i.z = select <3 x i1> %i.y, <3 x float> %i.w, <3 x float> %i.t ; 9 uses
-  %i.aa = extractelement <3 x float> %i.z, i64 0  ; 2 uses
-  %i.ab = extractelement <2 x float> %i.r, i64 0  ; 4 uses
+  %i.z = select <3 x i1> %i.y, <3 x float> %i.w, <3 x float> %i.t ; 10 uses
+  %3 = extractelement <3 x float> %i.z, i64 0     ; 2 uses
+  %i.aa = extractelement <2 x float> %i.r, i64 0  ; 4 uses
+  %i.ab = extractelement <3 x float> %i.z, i64 2  ; 2 uses
   %i.ac = load <3 x float>, ptr %i.e, align 4, !tbaa !23 ; 3 uses
   %i.ad = extractelement <3 x float> %i.ac, i64 0
   %i.ae = fcmp olt float %i.ad, 0.000000e+00
   %i.af = fneg <3 x float> %i.ac
   %i.ag = insertelement <3 x i1> poison, i1 %i.ae, i64 0
   %i.ah = shufflevector <3 x i1> %i.ag, <3 x i1> poison, <3 x i32> zeroinitializer
-  %i.ai = select <3 x i1> %i.ah, <3 x float> %i.af, <3 x float> %i.ac ; 14 uses
-  %3 = shufflevector <3 x float> %i.ai, <3 x float> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
-  %4 = extractelement <3 x float> %i.ai, i64 0    ; 3 uses
-  %foldExtExtBinop = fadd <3 x float> %i.z, %i.ai ; 3 uses
-  %i.aj = extractelement <3 x float> %foldExtExtBinop, i64 0 ; 3 uses
+  %i.ai = select <3 x i1> %i.ah, <3 x float> %i.af, <3 x float> %i.ac ; 13 uses
+  %i.aj = extractelement <3 x float> %i.ai, i64 0 ; 3 uses
   %i.ak = fadd <3 x float> %i.z, %i.ai
   %i.al = shufflevector <3 x float> %i.ak, <3 x float> poison, <8 x i32> <i32 1, i32 2, i32 0, i32 1, i32 2, i32 0, i32 1, i32 2> ; 3 uses
   %i.am = extractelement <3 x float> %i.ai, i64 1 ; 2 uses
-  %i.an = extractelement <3 x float> %i.ai, i64 2
-  %i.ao = fneg float %4                           ; 2 uses
-  %i.ap = load float, ptr %1, align 4, !tbaa !23  ; 15 uses
+  %i.an = extractelement <3 x float> %i.ai, i64 2 ; 2 uses
+  %i.ao = fneg float %i.aj                        ; 2 uses
+  %i.ap = load float, ptr %1, align 4, !tbaa !23  ; 14 uses
   %i.aq = fneg float %i.ap
   %i.ar = shufflevector <3 x float> %i.z, <3 x float> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 0> ; 5 uses
-  %5 = shufflevector <2 x float> %i.r, <2 x float> poison, <4 x i32> <i32 poison, i32 0, i32 0, i32 poison> ; 3 uses
-  %i.as = insertelement <4 x float> %5, float %i.ap, i64 0
+  %4 = shufflevector <2 x float> %i.r, <2 x float> poison, <4 x i32> <i32 poison, i32 0, i32 poison, i32 poison> ; 2 uses
+  %i.as = insertelement <4 x float> %4, float %i.ap, i64 0
   %i.at = insertelement <4 x float> %i.as, float %i.s, i64 2
   %i.au = shufflevector <4 x float> %i.at, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 0>
   %i.av = fsub <4 x float> %i.ar, %i.au           ; 9 uses
   %i.aw = insertelement <4 x float> %i.ar, float %i.ap, i64 3
-  %i.ax = insertelement <4 x float> %5, float 0.000000e+00, i64 3
+  %i.ax = insertelement <4 x float> %4, float 0.000000e+00, i64 3
   %i.ay = insertelement <4 x float> %i.ax, float %i.ap, i64 0
   %i.az = insertelement <4 x float> %i.ay, float %i.s, i64 2
   %i.ba = fsub <4 x float> %i.aw, %i.az
-  %i.bb = shufflevector <3 x float> %i.ai, <3 x float> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 2> ; 5 uses
+  %i.bb = shufflevector <3 x float> %i.ai, <3 x float> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 2> ; 4 uses
   %i.bc = insertelement <4 x float> %i.bb, float -0.000000e+00, i64 3
   %i.bd = fadd <4 x float> %i.ba, %i.bc           ; 9 uses
   %i.be = shufflevector <4 x float> %i.ar, <4 x float> %i.bd, <4 x i32> <i32 0, i32 1, i32 2, i32 4>
@@ -256,42 +254,43 @@ define void @_Z30calc_compact_unitcell_verticesiPA3_KfPA3_f(i32 noundef %0, ptr 
   %i.bj = extractelement <4 x float> %i.av, i64 1 ; 4 uses
   %i.bk = fadd float %i.bj, %i.am                 ; 3 uses
   %i.bl = fadd float %i.bj, %i.bk
-  %i.bm = fsub float %i.bl, %i.ab
+  %i.bm = fsub float %i.bl, %i.aa
   store float %i.bm, ptr %i.f, align 4, !tbaa !23
-  %i.bn = extractelement <4 x float> %i.av, i64 2
+  %5 = extractelement <4 x float> %i.av, i64 2
+  %foldExtExtBinop = fadd <4 x float> %i.av, %i.bd
+  %i.bn = extractelement <4 x float> %foldExtExtBinop, i64 2
+  %6 = fsub float %i.bn, %i.s
+  store float %6, ptr %i.g, align 4, !tbaa !23
   %i.bo = extractelement <4 x float> %i.av, i64 0
   %i.bp = shufflevector <4 x float> %i.av, <4 x float> poison, <2 x i32> <i32 0, i32 1>
   %i.bq = shufflevector <2 x float> %i.r, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
   %i.br = insertelement <2 x float> %i.bq, float %i.ap, i64 0
   %i.bs = fsub <2 x float> %i.bp, %i.br
-  %i.bt = shufflevector <3 x float> %i.ai, <3 x float> poison, <2 x i32> <i32 0, i32 1>
+  %i.bt = shufflevector <3 x float> %i.ai, <3 x float> poison, <2 x i32> <i32 0, i32 1> ; 2 uses
   %i.bu = fsub <2 x float> %i.bs, %i.bt
   store <2 x float> %i.bu, ptr %i.h, align 4, !tbaa !23
   %i.bv = shufflevector <4 x float> %i.av, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 2>
   %i.bw = insertelement <4 x float> <float 0.000000e+00, float 0.000000e+00, float poison, float 0.000000e+00>, float %i.s, i64 2
   %i.bx = fsub <4 x float> %i.bv, %i.bw
   %i.by = fsub <4 x float> %i.bx, %i.bb
-  %6 = shufflevector <3 x float> %i.z, <3 x float> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 2> ; 2 uses
+  %7 = shufflevector <3 x float> %i.z, <3 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 2>
   %i.bz = shufflevector <4 x float> %i.by, <4 x float> poison, <4 x i32> <i32 2, i32 0, i32 1, i32 3>
-  %i.ca = shufflevector <4 x float> %6, <4 x float> <float poison, float poison, float -0.000000e+00, float poison>, <4 x i32> <i32 6, i32 0, i32 1, i32 3>
+  %i.ca = shufflevector <4 x float> %7, <4 x float> <float poison, float poison, float -0.000000e+00, float poison>, <4 x i32> <i32 6, i32 0, i32 1, i32 3>
   %i.cb = fadd <4 x float> %i.bz, %i.ca
   store <4 x float> %i.cb, ptr %i.i, align 4, !tbaa !23
   %i.cc = fsub float %i.am, %i.bj
-  %i.cd = fadd float %i.cc, %i.ab
+  %i.cd = fadd float %i.cc, %i.aa
   store float %i.cd, ptr %i.k, align 4, !tbaa !23
-  %i.ce = fsub float %i.an, %i.bn
+  %i.ce = fsub float %i.an, %5
   %i.cf = fadd float %i.ce, %i.s
   store float %i.cf, ptr %i.l, align 4, !tbaa !23
   %i.cg = fsub float %i.ap, %i.bo
   %i.ch = extractelement <4 x float> %i.bd, i64 0 ; 2 uses
   %i.ci = fsub float %i.cg, %i.ch
   store float %i.ci, ptr %i.m, align 4, !tbaa !23
-  %i.cj = fsub float %i.ab, %i.bj
+  %i.cj = fsub float %i.aa, %i.bj
   %i.ck = fsub float %i.cj, %i.bk
   store float %i.ck, ptr %i.n, align 4, !tbaa !23
-  %7 = fadd float %i.aj, %i.ap
-  %8 = fadd float %7, %i.aa
-  store float %8, ptr %i.p, align 4, !tbaa !23
   %i.cl = shufflevector <2 x float> %i.r, <2 x float> poison, <3 x i32> <i32 0, i32 1, i32 poison> ; 3 uses
   %i.cm = shufflevector <3 x float> %i.cl, <3 x float> %i.z, <8 x i32> <i32 0, i32 1, i32 3, i32 4, i32 5, i32 poison, i32 poison, i32 poison> ; 2 uses
   %i.cn = shufflevector <4 x float> %i.bd, <4 x float> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison> ; 3 uses
@@ -302,10 +301,6 @@ define void @_Z30calc_compact_unitcell_verticesiPA3_KfPA3_f(i32 noundef %0, ptr 
   %i.cs = fadd <8 x float> %i.cp, %i.cr
   store <8 x float> %i.cs, ptr %i.q, align 4, !tbaa !23
   %i.ct = getelementptr inbounds nuw i8, ptr %2, i64 132
-  %foldExtExtBinop202 = fadd <3 x float> %foldExtExtBinop, %i.ai
-  %9 = extractelement <3 x float> %foldExtExtBinop202, i64 0
-  %10 = fadd float %9, %i.ap
-  store float %10, ptr %i.ct, align 4, !tbaa !23
   %i.cu = getelementptr inbounds nuw i8, ptr %2, i64 136
   %i.cv = shufflevector <8 x float> %i.al, <8 x float> poison, <2 x i32> <i32 0, i32 1> ; 2 uses
   %i.cw = shufflevector <3 x float> %i.ai, <3 x float> poison, <2 x i32> <i32 1, i32 2> ; 2 uses
@@ -314,14 +309,13 @@ define void @_Z30calc_compact_unitcell_verticesiPA3_KfPA3_f(i32 noundef %0, ptr 
   %i.cz = fadd <2 x float> %i.cx, %i.cy
   store <2 x float> %i.cz, ptr %i.cu, align 4, !tbaa !23
   %i.da = getelementptr inbounds nuw i8, ptr %2, i64 144
-  %11 = fsub float %i.aq, %i.aj
-  %12 = fsub float %11, %i.aa
-  store float %12, ptr %i.da, align 4, !tbaa !23
-  %13 = getelementptr inbounds nuw i8, ptr %2, i64 148
+  %8 = getelementptr inbounds nuw i8, ptr %2, i64 148
+  %foldExtExtBinop202 = fadd <3 x float> %i.z, %i.ai ; 3 uses
+  %9 = extractelement <3 x float> %foldExtExtBinop202, i64 0 ; 3 uses
   %i.db = insertelement <8 x float> %i.cm, float %i.s, i64 1
   %i.dc = shufflevector <8 x float> %i.db, <8 x float> %i.cn, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 8, i32 9, i32 10> ; 2 uses
-  %i.dd = fneg <8 x float> %i.dc                  ; 3 uses
-  %i.de = shufflevector <3 x float> %i.z, <3 x float> poison, <2 x i32> <i32 0, i32 1> ; 2 uses
+  %i.dd = fneg <8 x float> %i.dc                  ; 5 uses
+  %i.de = shufflevector <3 x float> %i.z, <3 x float> poison, <2 x i32> <i32 0, i32 1> ; 3 uses
   %i.df = fneg <2 x float> %i.de
   %i.dg = shufflevector <8 x float> %i.dd, <8 x float> %i.cq, <4 x i32> <i32 poison, i32 poison, i32 4, i32 8>
   %i.dh = shufflevector <2 x float> %i.df, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
@@ -331,103 +325,117 @@ define void @_Z30calc_compact_unitcell_verticesiPA3_KfPA3_f(i32 noundef %0, ptr 
   %i.dl = insertelement <4 x float> %i.bb, float %i.ap, i64 3
   %i.dm = fadd <4 x float> %i.dk, %i.dl
   store <4 x float> %i.dm, ptr %i.j, align 4, !tbaa !23
-  %i.dn = shufflevector <8 x float> %i.dd, <8 x float> poison, <4 x i32> <i32 poison, i32 5, i32 6, i32 7> ; 2 uses
+  %i.dn = shufflevector <8 x float> %i.dd, <8 x float> poison, <4 x i32> <i32 poison, i32 5, i32 6, i32 7>
   %i.do = insertelement <4 x float> %i.dn, float %i.s, i64 0
   %i.dp = shufflevector <4 x float> %i.av, <4 x float> poison, <4 x i32> <i32 2, i32 0, i32 1, i32 2>
   %i.dq = fsub <4 x float> %i.do, %i.dp
   %i.dr = shufflevector <4 x float> %i.bd, <4 x float> %i.ar, <4 x i32> <i32 2, i32 4, i32 5, i32 6>
   %i.ds = fsub <4 x float> %i.dq, %i.dr
   store <4 x float> %i.ds, ptr %i.o, align 4, !tbaa !23
-  %i.dt = shufflevector <3 x float> %foldExtExtBinop, <3 x float> poison, <8 x i32> <i32 poison, i32 poison, i32 0, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %10 = fadd float %9, %i.ap
+  %11 = fadd float %10, %3
+  store float %11, ptr %i.p, align 4, !tbaa !23
+  %foldExtExtBinop204 = fadd <3 x float> %foldExtExtBinop202, %i.ai
+  %12 = extractelement <3 x float> %foldExtExtBinop204, i64 0
+  %13 = fadd float %12, %i.ap
+  store float %13, ptr %i.ct, align 4, !tbaa !23
+  %14 = fsub float %i.aq, %9
+  %15 = fsub float %14, %3
+  store float %15, ptr %i.da, align 4, !tbaa !23
+  %i.dt = shufflevector <3 x float> %foldExtExtBinop202, <3 x float> poison, <8 x i32> <i32 poison, i32 poison, i32 0, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
   %i.du = shufflevector <8 x float> %i.al, <8 x float> %i.dt, <8 x i32> <i32 0, i32 1, i32 10, i32 0, i32 1, i32 10, i32 0, i32 1>
   %i.dv = fsub <8 x float> %i.dd, %i.du
   %i.dw = shufflevector <3 x float> %i.z, <3 x float> %i.ai, <8 x i32> <i32 1, i32 2, i32 poison, i32 poison, i32 poison, i32 3, i32 4, i32 5>
   %i.dx = shufflevector <8 x float> %i.dw, <8 x float> %i.dc, <8 x i32> <i32 0, i32 1, i32 13, i32 14, i32 15, i32 5, i32 6, i32 7>
   %i.dy = fsub <8 x float> %i.dv, %i.dx
-  store <8 x float> %i.dy, ptr %13, align 4, !tbaa !23
+  store <8 x float> %i.dy, ptr %8, align 4, !tbaa !23
   %i.dz = getelementptr inbounds nuw i8, ptr %2, i64 180
-  %i.ea = fsub float %i.ao, %i.aj
+  %i.ea = fsub float %i.ao, %9
   %i.eb = fsub float %i.ea, %i.ap
   store float %i.eb, ptr %i.dz, align 4, !tbaa !23
   %i.ec = getelementptr inbounds nuw i8, ptr %2, i64 184
-  %i.ed = fneg <2 x float> %i.cw                  ; 3 uses
+  %i.ed = fneg <2 x float> %i.cw                  ; 2 uses
   %i.ee = fsub <2 x float> %i.ed, %i.cv
   %i.ef = fsub <2 x float> %i.ee, %i.cy
   store <2 x float> %i.ef, ptr %i.ec, align 4, !tbaa !23
   %i.eg = getelementptr inbounds nuw i8, ptr %2, i64 192
   %i.eh = getelementptr inbounds nuw i8, ptr %2, i64 200
+  %16 = getelementptr inbounds nuw i8, ptr %2, i64 204
+  %17 = getelementptr inbounds nuw i8, ptr %2, i64 212
   %i.ei = getelementptr inbounds nuw i8, ptr %2, i64 216
   %i.ej = getelementptr inbounds nuw i8, ptr %2, i64 220
+  %18 = fsub float %i.aj, %i.ap                   ; 4 uses
   %i.ek = shufflevector <2 x float> %i.r, <2 x float> poison, <3 x i32> <i32 poison, i32 0, i32 poison>
   %i.el = insertelement <3 x float> %i.ek, float %i.ap, i64 0
   %i.em = insertelement <3 x float> %i.el, float %i.s, i64 2 ; 2 uses
-  %i.en = fsub <3 x float> %i.ai, %i.em           ; 4 uses
-  %i.eo = shufflevector <3 x float> %i.en, <3 x float> poison, <8 x i32> <i32 1, i32 2, i32 0, i32 1, i32 2, i32 0, i32 1, i32 2> ; 2 uses
-  %14 = shufflevector <3 x float> %i.en, <3 x float> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 2> ; 3 uses
-  %15 = shufflevector <3 x float> %i.ai, <3 x float> %i.cl, <8 x i32> <i32 1, i32 2, i32 poison, i32 poison, i32 poison, i32 poison, i32 3, i32 poison>
-  %16 = shufflevector <3 x float> %i.em, <3 x float> poison, <8 x i32> <i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 0, i32 poison, i32 2>
-  %17 = shufflevector <8 x float> %15, <8 x float> %16, <8 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 13, i32 6, i32 15>
-  %18 = shufflevector <8 x float> %17, <8 x float> %i.cn, <8 x i32> <i32 0, i32 1, i32 8, i32 9, i32 10, i32 5, i32 6, i32 7> ; 3 uses
-  %19 = fadd <8 x float> %18, %i.eo
-  %20 = fsub <8 x float> %18, %i.eo
-  %21 = shufflevector <8 x float> %19, <8 x float> %20, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 13, i32 14, i32 15> ; 2 uses
-  %22 = shufflevector <3 x float> %i.cl, <3 x float> %i.z, <8 x i32> <i32 poison, i32 poison, i32 poison, i32 0, i32 poison, i32 3, i32 4, i32 5>
-  %23 = shufflevector <8 x float> %22, <8 x float> %18, <8 x i32> <i32 11, i32 12, i32 13, i32 3, i32 15, i32 5, i32 6, i32 7> ; 2 uses
-  %24 = fadd <8 x float> %21, %23
-  %25 = fsub <8 x float> %21, %23
-  %26 = shufflevector <8 x float> %24, <8 x float> %25, <8 x i32> <i32 0, i32 1, i32 10, i32 11, i32 12, i32 5, i32 6, i32 7>
-  store <8 x float> %26, ptr %i.ej, align 4, !tbaa !23
-  %27 = getelementptr inbounds nuw i8, ptr %2, i64 252
-  %28 = insertelement <4 x float> %i.ar, float %i.ao, i64 3
-  %29 = shufflevector <4 x float> %i.bb, <4 x float> %i.bd, <4 x i32> <i32 0, i32 1, i32 2, i32 4>
-  %30 = getelementptr inbounds nuw i8, ptr %2, i64 268
-  %31 = getelementptr inbounds nuw i8, ptr %2, i64 272
-  %foldExtExtBinop204 = fadd <4 x float> %i.av, %i.bd
-  %32 = extractelement <4 x float> %foldExtExtBinop204, i64 2
-  %33 = fsub float %32, %i.s
-  store float %33, ptr %i.g, align 4, !tbaa !23
-  %34 = extractelement <3 x float> %i.en, i64 1   ; 2 uses
-  %35 = extractelement <3 x float> %i.en, i64 2   ; 2 uses
-  %36 = fsub float %4, %i.ap                      ; 2 uses
-  %37 = shufflevector <4 x float> %i.bd, <4 x float> %14, <4 x i32> <i32 2, i32 poison, i32 5, i32 6>
-  %38 = shufflevector <4 x float> %37, <4 x float> %3, <4 x i32> <i32 0, i32 4, i32 2, i32 3>
-  %39 = insertelement <4 x float> <float 0.000000e+00, float poison, float 0.000000e+00, float 0.000000e+00>, float %i.ap, i64 1
-  %40 = fsub <4 x float> %38, %39                 ; 3 uses
-  %41 = fsub float %34, %i.ab
-  %42 = fsub float %36, %i.ap
-  %43 = insertelement <2 x float> poison, float %42, i64 0
-  %44 = insertelement <2 x float> %43, float %41, i64 1
-  %45 = fsub <2 x float> %44, %i.de
-  store <2 x float> %45, ptr %i.eg, align 4, !tbaa !23
-  %46 = fsub float %35, %i.s
-  %47 = shufflevector <4 x float> %14, <4 x float> %40, <4 x i32> <i32 5, i32 1, i32 poison, i32 3>
-  %i.ep = insertelement <4 x float> %47, float %46, i64 2
-  %48 = fsub <4 x float> %i.ep, %6
-  %49 = shufflevector <4 x float> %48, <4 x float> poison, <4 x i32> <i32 2, i32 0, i32 1, i32 3>
-  %50 = shufflevector <4 x float> %i.bb, <4 x float> <float poison, float poison, float -0.000000e+00, float poison>, <4 x i32> <i32 6, i32 0, i32 1, i32 3>
-  %51 = fadd <4 x float> %49, %50
-  store <4 x float> %51, ptr %i.eh, align 4, !tbaa !23
-  %52 = fadd float %36, %4
-  %53 = fadd float %52, %i.ch
-  store float %53, ptr %i.ei, align 4, !tbaa !23
-  %54 = shufflevector <4 x float> %40, <4 x float> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 1>
-  %55 = shufflevector <4 x float> %54, <4 x float> %14, <4 x i32> <i32 0, i32 5, i32 6, i32 3>
-  %56 = fsub <4 x float> %28, %55
-  %i.eq = fsub <4 x float> %56, %29
-  store <4 x float> %i.eq, ptr %27, align 4, !tbaa !23
-  %57 = extractelement <2 x float> %i.ed, i64 0
-  %58 = fsub float %57, %34
-  %59 = fsub float %58, %i.bk
-  store float %59, ptr %30, align 4, !tbaa !23
-  %60 = extractelement <2 x float> %i.ed, i64 1
-  %61 = fsub float %60, %35
-  %62 = insertelement <4 x float> %i.dn, float %61, i64 0
-  %63 = fsub <4 x float> %62, %40
-  %64 = insertelement <4 x float> %5, float -0.000000e+00, i64 0
-  %65 = insertelement <4 x float> %64, float %i.ap, i64 1
-  %66 = insertelement <4 x float> %65, float %i.s, i64 3
-  %67 = fadd <4 x float> %63, %66
-  store <4 x float> %67, ptr %31, align 4, !tbaa !23
+  %i.en = fsub <3 x float> %i.ai, %i.em           ; 6 uses
+  %i.eo = shufflevector <3 x float> %i.en, <3 x float> poison, <8 x i32> <i32 1, i32 2, i32 0, i32 1, i32 2, i32 0, i32 1, i32 2> ; 3 uses
+  %19 = extractelement <3 x float> %i.en, i64 1
+  %20 = fsub float %19, %i.aa
+  %21 = fsub float %18, %i.ap
+  %22 = insertelement <2 x float> poison, float %21, i64 0
+  %23 = insertelement <2 x float> %22, float %20, i64 1
+  %24 = fsub <2 x float> %23, %i.de
+  store <2 x float> %24, ptr %i.eg, align 4, !tbaa !23
+  %25 = extractelement <3 x float> %i.en, i64 2   ; 2 uses
+  %26 = fsub float %25, %i.s
+  %27 = fsub float %26, %i.ab
+  store float %27, ptr %i.eh, align 4, !tbaa !23
+  %28 = shufflevector <3 x float> %i.en, <3 x float> poison, <2 x i32> <i32 poison, i32 1>
+  %29 = insertelement <2 x float> %28, float %18, i64 0
+  %30 = fsub <2 x float> %29, %i.de
+  %31 = fadd <2 x float> %30, %i.bt
+  store <2 x float> %31, ptr %16, align 4, !tbaa !23
+  %32 = fsub float %25, %i.ab
+  %33 = fadd float %32, %i.an
+  store float %33, ptr %17, align 4, !tbaa !23
+  %34 = fadd float %18, %i.aj
+  %35 = fadd float %34, %i.ch
+  store float %35, ptr %i.ei, align 4, !tbaa !23
+  %36 = shufflevector <3 x float> %i.ai, <3 x float> %i.cl, <8 x i32> <i32 1, i32 2, i32 poison, i32 poison, i32 poison, i32 poison, i32 3, i32 poison>
+  %37 = shufflevector <3 x float> %i.em, <3 x float> poison, <8 x i32> <i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 0, i32 poison, i32 2>
+  %38 = shufflevector <8 x float> %36, <8 x float> %37, <8 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 13, i32 6, i32 15>
+  %39 = shufflevector <8 x float> %38, <8 x float> %i.cn, <8 x i32> <i32 0, i32 1, i32 8, i32 9, i32 10, i32 5, i32 6, i32 7> ; 3 uses
+  %40 = fadd <8 x float> %39, %i.eo
+  %41 = fsub <8 x float> %39, %i.eo
+  %42 = shufflevector <8 x float> %40, <8 x float> %41, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 13, i32 14, i32 15> ; 2 uses
+  %43 = shufflevector <3 x float> %i.cl, <3 x float> %i.z, <8 x i32> <i32 poison, i32 poison, i32 poison, i32 0, i32 poison, i32 3, i32 4, i32 5>
+  %44 = shufflevector <8 x float> %43, <8 x float> %39, <8 x i32> <i32 11, i32 12, i32 13, i32 3, i32 15, i32 5, i32 6, i32 7> ; 2 uses
+  %45 = fadd <8 x float> %42, %44
+  %46 = fsub <8 x float> %42, %44
+  %47 = shufflevector <8 x float> %45, <8 x float> %46, <8 x i32> <i32 0, i32 1, i32 10, i32 11, i32 12, i32 5, i32 6, i32 7>
+  store <8 x float> %47, ptr %i.ej, align 4, !tbaa !23
+  %48 = getelementptr inbounds nuw i8, ptr %2, i64 252
+  %49 = insertelement <4 x float> %i.ar, float %i.ao, i64 3
+  %50 = shufflevector <3 x float> %i.en, <3 x float> poison, <4 x i32> <i32 poison, i32 1, i32 2, i32 poison>
+  %i.ep = insertelement <4 x float> poison, float %18, i64 0
+  %51 = shufflevector <4 x float> %i.ep, <4 x float> poison, <4 x i32> <i32 0, i32 poison, i32 0, i32 0> ; 2 uses
+  %52 = shufflevector <4 x float> %51, <4 x float> %50, <4 x i32> <i32 0, i32 5, i32 6, i32 3>
+  %53 = fsub <4 x float> %49, %52
+  %54 = shufflevector <4 x float> %i.bb, <4 x float> %i.bd, <4 x i32> <i32 0, i32 1, i32 2, i32 4>
+  %55 = fsub <4 x float> %53, %54
+  store <4 x float> %55, ptr %48, align 4, !tbaa !23
+  %56 = getelementptr inbounds nuw i8, ptr %2, i64 268
+  %57 = shufflevector <8 x float> %i.dd, <8 x float> poison, <4 x i32> <i32 poison, i32 poison, i32 5, i32 6>
+  %58 = shufflevector <2 x float> %i.ed, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %59 = shufflevector <4 x float> %58, <4 x float> %57, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
+  %60 = shufflevector <3 x float> %i.en, <3 x float> poison, <4 x i32> <i32 1, i32 2, i32 poison, i32 1>
+  %61 = shufflevector <4 x float> %60, <4 x float> %51, <4 x i32> <i32 0, i32 1, i32 6, i32 3>
+  %i.eq = fsub <4 x float> %59, %61               ; 2 uses
+  %62 = shufflevector <2 x float> %i.r, <2 x float> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
+  %63 = shufflevector <4 x float> %i.bd, <4 x float> %62, <4 x i32> <i32 poison, i32 2, i32 poison, i32 4>
+  %64 = insertelement <4 x float> %63, float %i.bk, i64 0
+  %65 = insertelement <4 x float> %64, float %i.ap, i64 2 ; 2 uses
+  %66 = fsub <4 x float> %i.eq, %65
+  %67 = fadd <4 x float> %i.eq, %65
+  %68 = shufflevector <4 x float> %66, <4 x float> %67, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
+  store <4 x float> %68, ptr %56, align 4, !tbaa !23
+  %shift = shufflevector <8 x float> %i.dd, <8 x float> poison, <8 x i32> <i32 poison, i32 7, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %foldExtExtBinop206 = fsub <8 x float> %shift, %i.eo
+  %69 = extractelement <8 x float> %foldExtExtBinop206, i64 1
+  %70 = fadd float %69, %i.s
+  %71 = getelementptr inbounds nuw i8, ptr %2, i64 284
+  store float %70, ptr %71, align 4, !tbaa !23
   call void @_Z15calc_box_centeriPA3_KfPf(i32 noundef %0, ptr noundef nonnull %1, ptr noundef nonnull %i.a)
   %.phi.trans.insert191 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %.pre192 = load float, ptr %.phi.trans.insert191, align 4, !tbaa !23
