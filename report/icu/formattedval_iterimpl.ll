@@ -201,7 +201,7 @@ bb.a:
 .lr.ph.us.preheader:                              ; preds = %bb.a
   %i.f = lshr i32 %i.c, 2
   %smax = add nsw i32 %i.f, -1
-  %wide.trip.count = zext nneg i32 %smax to i64
+  %wide.trip.count = zext i32 %smax to i64
   br label %.lr.ph.us
 
 .lr.ph.us:                                        ; preds = %.thread.us, %.lr.ph.us.preheader

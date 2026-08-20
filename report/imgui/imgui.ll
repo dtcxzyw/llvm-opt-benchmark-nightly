@@ -204,17 +204,17 @@ bb.a:
   %.sroa.0.0.copyload.i = load <2 x float>, ptr %i.l, align 8 ; 5 uses
   store <2 x float> %.sroa.0.0.copyload.i, ptr %1, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #41
-  %i.m = extractelement <2 x float> %.sroa.0.0.copyload.i, i64 0
+  %i.m = extractelement <2 x float> %.sroa.0.0.copyload.i, i64 0 ; 2 uses
   %i.n = fmul <2 x float> %i.f, <float 9.000000e+00, float 3.500000e+01> ; 3 uses
-  %i.o = fadd <2 x float> %i.n, <float -0.000000e+00, float -1.000000e+00> ; 4 uses
-  %9 = shufflevector <2 x float> %i.o, <2 x float> <float poison, float -0.000000e+00>, <2 x i32> <i32 1, i32 3>
-  %10 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %9, <2 x float> <float 3.000000e+00, float 0.000000e+00>, <2 x float> %.sroa.0.0.copyload.i)
-  %i.p = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.o, <2 x float> <float 2.000000e+00, float 3.000000e+00>, <2 x float> %10)
+  %i.o = fadd <2 x float> %i.n, <float -0.000000e+00, float -1.000000e+00> ; 3 uses
+  %9 = extractelement <2 x float> %i.o, i64 1     ; 3 uses
+  %10 = tail call float @llvm.fmuladd.f32(float %9, float 3.000000e+00, float %i.m)
+  %11 = insertelement <2 x float> %.sroa.0.0.copyload.i, float %10, i64 0
+  %i.p = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.o, <2 x float> <float 2.000000e+00, float 3.000000e+00>, <2 x float> %11)
   %i.q = fadd <2 x float> %i.p, splat (float 1.000000e+01) ; 2 uses
   store <2 x float> %i.q, ptr %2, align 8, !tbaa !8
   %i.r = fadd float %i.m, 5.000000e+00
-  %11 = extractelement <2 x float> %i.o, i64 1    ; 2 uses
-  %i.s = fsub float %i.r, %11
+  %i.s = fsub float %i.r, %9
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #41
   %i.t = fsub <2 x float> %i.q, %.sroa.0.0.copyload.i
   store <2 x float> %i.t, ptr %3, align 8
@@ -248,7 +248,7 @@ _ZN5ImGui10GetKeyDataE8ImGuiKey.exit.i.i:         ; preds = %bb.b, %_ZN5ImGui9Is
   %i.af = load <2 x i32>, ptr %i.ae, align 8, !tbaa !205
   %i.ag = sitofp <2 x i32> %i.af to <2 x float>   ; 2 uses
   %i.ah = extractelement <2 x float> %i.ag, i64 1
-  %i.ai = call float @llvm.fmuladd.f32(float %i.ah, float %11, float %i.s)
+  %i.ai = call float @llvm.fmuladd.f32(float %i.ah, float %9, float %i.s)
   %i.aj = shufflevector <2 x float> %i.ag, <2 x float> poison, <2 x i32> zeroinitializer
   %i.ak = insertelement <2 x float> %.sroa.0.0.copyload.i, float %i.ai, i64 0
   %i.al = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.aj, <2 x float> %i.ac, <2 x float> %i.ak) ; 2 uses
@@ -651,7 +651,7 @@ bb.k:                                             ; preds = %_ZN5ImGui19FindRend
   br label %_ZN5ImGui12CalcTextSizeEPKcS1_bf.exit
 
 _ZN5ImGui12CalcTextSizeEPKcS1_bf.exit:            ; preds = %bb.j, %bb.k
-  %.sroa.0.0.i = phi <2 x float> [ %.sroa.0.4.vec.insert.i, %bb.j ], [ %.sroa.0.0.vec.insert.i, %bb.k ] ; 3 uses
+  %.sroa.0.0.i = phi <2 x float> [ %.sroa.0.4.vec.insert.i, %bb.j ], [ %.sroa.0.0.vec.insert.i, %bb.k ] ; 4 uses
   store <2 x float> %.sroa.0.0.i, ptr %2, align 8
   %i.bj = getelementptr inbounds nuw i8, ptr %i.c, i64 280
   %i.bk = getelementptr inbounds nuw i8, ptr %i.c, i64 336
@@ -660,17 +660,17 @@ _ZN5ImGui12CalcTextSizeEPKcS1_bf.exit:            ; preds = %bb.j, %bb.k
   %i.bn = insertelement <2 x float> <float 0.000000e+00, float poison>, float %i.bl, i64 1
   %i.bo = fadd <2 x float> %i.bm, %i.bn           ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #41
+  %5 = extractelement <2 x float> %.sroa.0.0.i, i64 0
   %i.bp = getelementptr inbounds nuw i8, ptr %i.a, i64 3284
   %i.bq = load float, ptr %i.bp, align 4, !tbaa !1734
-  %5 = getelementptr inbounds nuw i8, ptr %3, i64 4
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #41
+  %6 = tail call float @llvm.fmuladd.f32(float %i.bq, float 2.000000e+00, float %5) ; 2 uses
   %i.br = extractelement <2 x float> %.sroa.0.0.i, i64 1
-  %6 = insertelement <2 x float> <float poison, float -0.000000e+00>, float %i.bq, i64 0
-  %7 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %6, <2 x float> <float 2.000000e+00, float 0.000000e+00>, <2 x float> %.sroa.0.0.i) ; 2 uses
-  %8 = extractelement <2 x float> %7, i64 0
-  store float %8, ptr %3, align 4, !tbaa !227
-  store float %i.br, ptr %5, align 4, !tbaa !228
-  %i.bs = fadd <2 x float> %i.bo, %7
+  store float %6, ptr %3, align 4, !tbaa !227
+  %7 = getelementptr inbounds nuw i8, ptr %3, i64 4
+  store float %i.br, ptr %7, align 4, !tbaa !228
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #41
+  %8 = insertelement <2 x float> %.sroa.0.0.i, float %6, i64 0
+  %i.bs = fadd <2 x float> %i.bo, %8
   store <2 x float> %i.bo, ptr %4, align 8
   %i.bt = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 3 uses
   store <2 x float> %i.bs, ptr %i.bt, align 8

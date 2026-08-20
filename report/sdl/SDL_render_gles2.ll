@@ -204,7 +204,7 @@ bb.l:                                             ; preds = %GLES2_TexSubImage2D
   %i.ce = add nsw i32 %i.cd, 1
   %i.cf = sdiv i32 %i.ce, 2                       ; 3 uses
   %i.cg = load i32, ptr %i.t, align 4             ; 3 uses
-  %i.ch = add nsw i32 %i.cg, 1
+  %i.ch = add i32 %i.cg, 1
   %i.ci = sdiv i32 %i.ch, 2                       ; 5 uses
   %i.cj = load i32, ptr %i.ai, align 8
   %i.ck = load i32, ptr %i.ak, align 4
@@ -241,7 +241,7 @@ bb.n:                                             ; preds = %bb.m
   br i1 %i.cw, label %.lr.ph.i95.epil.preheader, label %.lr.ph.i95.preheader.new
 
 .lr.ph.i95.preheader.new:                         ; preds = %.lr.ph.i95.preheader
-  %unroll_iter171 = and i32 %i.ci, 1073741820
+  %unroll_iter171 = and i32 %i.ci, -4
   br label %.lr.ph.i95
 
 .lr.ph.i95:                                       ; preds = %.lr.ph.i95, %.lr.ph.i95.preheader.new
@@ -319,7 +319,7 @@ GLES2_TexSubImage2D.exit100:                      ; preds = %bb.l, %bb.n, %.loop
   %i.eb = add nsw i32 %i.ea, 1
   %i.ec = sdiv i32 %i.eb, 2                       ; 3 uses
   %i.ed = load i32, ptr %i.t, align 4             ; 3 uses
-  %i.ee = add nsw i32 %i.ed, 1
+  %i.ee = add i32 %i.ed, 1
   %i.ef = sdiv i32 %i.ee, 2                       ; 5 uses
   %i.eg = load i32, ptr %i.ai, align 8
   %i.eh = load i32, ptr %i.ak, align 4
@@ -354,7 +354,7 @@ bb.p:                                             ; preds = %bb.o
   br i1 %i.er, label %.lr.ph.i110.epil.preheader, label %.lr.ph.i110.preheader.new
 
 .lr.ph.i110.preheader.new:                        ; preds = %.lr.ph.i110.preheader
-  %unroll_iter177 = and i32 %i.ef, 1073741820
+  %unroll_iter177 = and i32 %i.ef, -4
   br label %.lr.ph.i110
 
 .lr.ph.i110:                                      ; preds = %.lr.ph.i110, %.lr.ph.i110.preheader.new
@@ -432,7 +432,7 @@ bb.r:                                             ; preds = %bb.q
   %i.fv = add nsw i32 %i.fu, 1
   %i.fw = sdiv i32 %i.fv, 2                       ; 2 uses
   %i.fx = load i32, ptr %i.t, align 4             ; 3 uses
-  %i.fy = add nsw i32 %i.fx, 1
+  %i.fy = add i32 %i.fx, 1
   %i.fz = sdiv i32 %i.fy, 2                       ; 5 uses
   %.off = add i32 %i.fu, 2
   %i.ga = icmp ult i32 %.off, 3
@@ -469,7 +469,7 @@ bb.t:                                             ; preds = %bb.s
   br i1 %i.gn, label %.lr.ph.i125.epil.preheader, label %.lr.ph.i125.preheader.new
 
 .lr.ph.i125.preheader.new:                        ; preds = %.lr.ph.i125.preheader
-  %unroll_iter165 = and i32 %i.fz, 1073741820
+  %unroll_iter165 = and i32 %i.fz, -4
   br label %.lr.ph.i125
 
 .lr.ph.i125:                                      ; preds = %.lr.ph.i125, %.lr.ph.i125.preheader.new
@@ -635,7 +635,7 @@ bb.f:                                             ; preds = %bb.e
   %i.ai = add nsw i32 %i.ah, 1
   %i.aj = sdiv i32 %i.ai, 2                       ; 3 uses
   %i.ak = load i32, ptr %i.t, align 4             ; 3 uses
-  %i.al = add nsw i32 %i.ak, 1
+  %i.al = add i32 %i.ak, 1
   %i.am = sdiv i32 %i.al, 2                       ; 5 uses
   %i.an = getelementptr inbounds nuw i8, ptr %i.d, i64 16 ; 3 uses
   %i.ao = load i32, ptr %i.an, align 8
@@ -672,7 +672,7 @@ bb.h:                                             ; preds = %bb.g
   br i1 %i.ba, label %.lr.ph.i.epil.preheader, label %.lr.ph.i.preheader.new
 
 .lr.ph.i.preheader.new:                           ; preds = %.lr.ph.i.preheader
-  %unroll_iter = and i32 %i.am, 1073741820
+  %unroll_iter = and i32 %i.am, -4
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i, %.lr.ph.i.preheader.new
@@ -741,7 +741,7 @@ GLES2_TexSubImage2D.exit:                         ; preds = %bb.f, %bb.h, %.loop
   %i.bx = add nsw i32 %i.bw, 1
   %i.by = sdiv i32 %i.bx, 2                       ; 3 uses
   %i.bz = load i32, ptr %i.t, align 4             ; 3 uses
-  %i.ca = add nsw i32 %i.bz, 1
+  %i.ca = add i32 %i.bz, 1
   %i.cb = sdiv i32 %i.ca, 2                       ; 5 uses
   %i.cc = load i32, ptr %i.an, align 8
   %i.cd = load i32, ptr %i.ap, align 4
@@ -776,7 +776,7 @@ bb.j:                                             ; preds = %bb.i
   br i1 %i.cn, label %.lr.ph.i55.epil.preheader, label %.lr.ph.i55.preheader.new
 
 .lr.ph.i55.preheader.new:                         ; preds = %.lr.ph.i55.preheader
-  %unroll_iter95 = and i32 %i.cb, 1073741820
+  %unroll_iter95 = and i32 %i.cb, -4
   br label %.lr.ph.i55
 
 .lr.ph.i55:                                       ; preds = %.lr.ph.i55, %.lr.ph.i55.preheader.new
@@ -1032,7 +1032,7 @@ bb.f:                                             ; preds = %bb.e
   %i.ai = add nsw i32 %i.ah, 1
   %i.aj = sdiv i32 %i.ai, 2                       ; 2 uses
   %i.ak = load i32, ptr %i.t, align 4             ; 3 uses
-  %i.al = add nsw i32 %i.ak, 1
+  %i.al = add i32 %i.ak, 1
   %i.am = sdiv i32 %i.al, 2                       ; 5 uses
   %.off = add i32 %i.ah, 2
   %i.an = icmp ult i32 %.off, 3
@@ -1066,7 +1066,7 @@ bb.h:                                             ; preds = %bb.g
   br i1 %i.ax, label %.lr.ph.i.epil.preheader, label %.lr.ph.i.preheader.new
 
 .lr.ph.i.preheader.new:                           ; preds = %.lr.ph.i.preheader
-  %unroll_iter = and i32 %i.am, 1073741820
+  %unroll_iter = and i32 %i.am, -4
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i, %.lr.ph.i.preheader.new
