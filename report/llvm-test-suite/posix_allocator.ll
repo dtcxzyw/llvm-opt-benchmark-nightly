@@ -203,7 +203,7 @@ min.iters.checked618:                             ; preds = %for.body56.lr.ph
 
 vector.body614:                                   ; preds = %min.iters.checked618, %vector.body614
   %index627 = phi i64 [ %index.next628, %vector.body614 ], [ 0, %min.iters.checked618 ] ; 3 uses
-  %index.next628 = add i64 %index627, 4           ; 2 uses
+  %index.next628 = add nuw i64 %index627, 4       ; 2 uses
   %i.at = getelementptr inbounds i8, ptr %.pre607, i64 %index627
   %wide.load664 = load i32, ptr %i.at, align 1, !tbaa !8, !alias.scope !84
   %i.au = getelementptr i8, ptr %buffer, i64 %index627
@@ -606,16 +606,14 @@ while.condthread-pre-split:                       ; preds = %if.end37
   br i1 %cmp40261, label %while.body, label %while.cond41thread-pre-split
 
 while.body:                                       ; preds = %while.condthread-pre-split, %while.body
-  %exponent_base_10.0262 = phi i32 [ %dec, %while.body ], [ 0, %while.condthread-pre-split ]
   %i.b = phi double [ %mul, %while.body ], [ %arg1, %while.condthread-pre-split ]
   %mul = fmul double %i.b, 1.000000e+01           ; 3 uses
-  %dec = add nsw i32 %exponent_base_10.0262, -1   ; 2 uses
   %cmp40 = fcmp olt double %mul, 1.000000e+00
   br i1 %cmp40, label %while.body, label %while.cond41thread-pre-split
 
 while.cond41thread-pre-split:                     ; preds = %while.body, %while.condthread-pre-split
   %.pr246 = phi double [ %arg1, %while.condthread-pre-split ], [ %mul, %while.body ] ; 3 uses
-  %exponent_base_10.0.lcssa = phi i32 [ 0, %while.condthread-pre-split ], [ %dec, %while.body ] ; 2 uses
+  %exponent_base_10.0.lcssa = phi i32 [ 0, %while.condthread-pre-split ], [ -1, %while.body ] ; 2 uses
   %cmp42257 = fcmp ult double %.pr246, 1.000000e+01
   br i1 %cmp42257, label %while.end44, label %while.body43
 

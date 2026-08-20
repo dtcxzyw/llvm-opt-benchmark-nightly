@@ -47,25 +47,19 @@ bb.g:                                             ; preds = %bb.e, %bb.c
   %i.n = icmp eq i64 %.sroa.01.4.extract.shift, 0
   br i1 %i.n, label %.lr.ph, label %.preheader161
 
-.preheader161.loopexit:                           ; preds = %.lr.ph
-  %1 = add nsw i32 %.0132163, -20
-  br label %.preheader161
-
-.preheader161:                                    ; preds = %.preheader161.loopexit, %.preheader162
-  %.0143.lcssa = phi i32 [ %.sroa.01.4.extract.trunc, %.preheader162 ], [ %i.p, %.preheader161.loopexit ] ; 3 uses
-  %.0132.lcssa = phi i32 [ 1, %.preheader162 ], [ %1, %.preheader161.loopexit ]
-  %.0124.lcssa = phi i32 [ %.sroa.01.0.extract.trunc, %.preheader162 ], [ %i.q, %.preheader161.loopexit ] ; 2 uses
+.preheader161:                                    ; preds = %.lr.ph, %.preheader162
+  %.0143.lcssa = phi i32 [ %.sroa.01.4.extract.trunc, %.preheader162 ], [ %i.p, %.lr.ph ] ; 3 uses
+  %.0132.lcssa = phi i32 [ 1, %.preheader162 ], [ -20, %.lr.ph ]
+  %.0124.lcssa = phi i32 [ %.sroa.01.0.extract.trunc, %.preheader162 ], [ %i.q, %.lr.ph ] ; 2 uses
   %i.o = icmp ult i32 %.0143.lcssa, 1048576
   br i1 %i.o, label %.lr.ph169, label %._crit_edge
 
 .lr.ph:                                           ; preds = %.preheader162, %.lr.ph
-  %.0124164 = phi i32 [ %i.q, %.lr.ph ], [ %.sroa.01.0.extract.trunc, %.preheader162 ] ; 2 uses
-  %.0132163 = phi i32 [ %2, %.lr.ph ], [ 0, %.preheader162 ] ; 2 uses
-  %2 = add nsw i32 %.0132163, -21
-  %i.p = lshr i32 %.0124164, 11                   ; 2 uses
-  %i.q = shl i32 %.0124164, 21                    ; 2 uses
+  %.0132163 = phi i32 [ %i.q, %.lr.ph ], [ %.sroa.01.0.extract.trunc, %.preheader162 ] ; 2 uses
+  %i.p = lshr i32 %.0132163, 11                   ; 2 uses
+  %i.q = shl i32 %.0132163, 21                    ; 2 uses
   %i.r = icmp eq i32 %i.p, 0
-  br i1 %i.r, label %.lr.ph, label %.preheader161.loopexit, !llvm.loop !3
+  br i1 %i.r, label %.lr.ph, label %.preheader161, !llvm.loop !3
 
 .lr.ph169:                                        ; preds = %.preheader161, %.lr.ph169
   %.0131168 = phi i32 [ %i.t, %.lr.ph169 ], [ 0, %.preheader161 ]

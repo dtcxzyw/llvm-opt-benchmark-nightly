@@ -178,33 +178,30 @@ bb.l:                                             ; preds = %bb.j
 
 bb.m:                                             ; preds = %.loopexit90
   %i.ab = getelementptr inbounds nuw i8, ptr %.066, i64 %i.aa
-  %i.ac = getelementptr inbounds i8, ptr %i.ab, i64 %.neg ; 3 uses
-  br label %bb.n
-
-bb.n:                                             ; preds = %bb.o, %bb.m
-  %.1.idx = phi i64 [ 0, %bb.m ], [ %.1.add87, %bb.o ] ; 4 uses
-  %.1.ptr = getelementptr inbounds i8, ptr %i.ac, i64 %.1.idx
-  %i.ad = load i8, ptr %.1.ptr, align 1, !tbaa !11
-  switch i8 %i.ad, label %bb.p [
-    i8 48, label %bb.o
-    i8 46, label %.loopexit
+  %i.ac = getelementptr inbounds i8, ptr %i.ab, i64 %.neg ; 4 uses
+  %5 = load i8, ptr %i.ac, align 1, !tbaa !11
+  switch i8 %5, label %.critedge [
+    i8 48, label %bb.n
+    i8 46, label %bb.q
   ]
 
-bb.o:                                             ; preds = %bb.n
-  %.1.add87 = add nsw i64 %.1.idx, -1
-  br label %bb.n, !llvm.loop !14
+bb.n:                                             ; preds = %bb.m
+  %.1.ptr = getelementptr inbounds i8, ptr %i.ac, i64 -1
+  %i.ad = load i8, ptr %.1.ptr, align 1, !tbaa !11
+  br label %bb.o
 
-bb.p:                                             ; preds = %bb.n
-  %.1.add = add nsw i64 %.1.idx, 1
-  br label %.loopexit
+bb.o:                                             ; preds = %bb.o, %bb.n
+  switch i8 %i.ad, label %bb.q [
+    i8 48, label %bb.o
+    i8 46, label %bb.p
+  ], !llvm.loop !14
 
-.loopexit:                                        ; preds = %bb.n, %bb.p
-  %.2.idx = phi i64 [ %.1.add, %bb.p ], [ %.1.idx, %bb.n ] ; 2 uses
-  %.not86 = icmp eq i64 %.2.idx, 1
-  br i1 %.not86, label %.critedge, label %bb.q
+bb.p:                                             ; preds = %bb.o
+  br label %bb.q
 
-bb.q:                                             ; preds = %.loopexit
-  %.2.ptr = getelementptr inbounds i8, ptr %i.ac, i64 %.2.idx
+bb.q:                                             ; preds = %bb.m, %bb.o, %bb.p
+  %.2.idx103 = phi i64 [ 0, %bb.o ], [ 0, %bb.m ], [ -1, %bb.p ]
+  %.2.ptr = getelementptr inbounds i8, ptr %i.ac, i64 %.2.idx103
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ac, i64 1
   tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(2) %.2.ptr, ptr noundef nonnull align 1 dereferenceable(2) %i.ae, i64 %i.w, i1 false)
   br label %.critedge
@@ -221,7 +218,7 @@ bb.t:                                             ; preds = %bb.r
   %i.ag = tail call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef %.066, i64 noundef %.065, ptr noundef nonnull @.str.3, i32 noundef %i.s, i32 noundef %.067) #6 ; 0 uses
   br label %.critedge
 
-.critedge:                                        ; preds = %bb.q, %.loopexit, %.loopexit90, %bb.g, %bb.s, %bb.t, %bb.d
+.critedge:                                        ; preds = %bb.m, %bb.q, %.loopexit90, %bb.g, %bb.s, %bb.t, %bb.d
   ret ptr %0
 }
 
@@ -267,5 +264,6 @@ attributes #7 = { nounwind willreturn memory(read) }
 !11 = !{!6, !6, i64 0}
 !12 = distinct !{!12, !13}
 !13 = !{!"llvm.loop.mustprogress"}
-!14 = distinct !{!14, !13}
+!14 = distinct !{!14, !13, !15}
+!15 = !{!"llvm.loop.peeled.count", i32 1}
 end_hunk_0

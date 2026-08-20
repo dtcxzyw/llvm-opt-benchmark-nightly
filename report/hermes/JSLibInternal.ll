@@ -204,7 +204,7 @@ bb.k:                                             ; preds = %_ZN6hermes2vm15Hand
   br label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph, %bb.p
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.p ] ; 4 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.p ] ; 3 uses
   %.sroa.14.0248 = phi i32 [ 0, %.lr.ph ], [ %i.cs, %bb.p ]
   %.sroa.0208.0247 = phi i64 [ %i.ac, %.lr.ph ], [ %i.cp, %bb.p ]
   %i.bn = load ptr, ptr %i.d, align 8, !tbaa !50
@@ -218,9 +218,7 @@ bb.l:                                             ; preds = %.lr.ph, %bb.p
   %i.bs = zext i32 %i.br to i64
   %i.bt = icmp samesign ult i64 %indvars.iv, %i.bs
   %i.bu = load ptr, ptr %1, align 8
-  %9 = sub nsw i64 0, %indvars.iv
-  %10 = getelementptr inbounds [8 x i8], ptr %i.bu, i64 %9
-  %i.bv = getelementptr inbounds i8, ptr %10, i64 -8
+  %i.bv = getelementptr inbounds i8, ptr %i.bu, i64 -8
   %.sroa.02.0.i = select i1 %i.bt, ptr %i.bv, ptr @_ZN6hermes2vm15HandleRootOwner15undefinedValue_E
   %i.bw = call ptr @_ZN6hermes2vm12toString_RJSERNS0_7RuntimeENS0_6HandleINS0_11HermesValueEEE(ptr noundef nonnull align 8 dereferenceable(9816) %0, ptr nonnull %.sroa.02.0.i) #16 ; 2 uses
   %.not241 = icmp eq ptr %i.bw, inttoptr (i64 -1 to ptr)

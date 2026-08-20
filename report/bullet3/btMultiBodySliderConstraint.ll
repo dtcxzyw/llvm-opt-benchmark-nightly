@@ -204,7 +204,7 @@ bb.l:                                             ; preds = %bb.z
   ret void
 
 bb.m:                                             ; preds = %.loopexit, %bb.z
-  %indvars.iv = phi i64 [ 0, %.loopexit ], [ %indvars.iv.next, %bb.z ] ; 6 uses
+  %indvars.iv = phi i64 [ 0, %.loopexit ], [ %indvars.iv.next, %bb.z ] ; 5 uses
   %i.ue = load i32, ptr %i.tt, align 4, !tbaa !90 ; 8 uses
   %i.uf = load i32, ptr %i.tu, align 8, !tbaa !94
   %i.ug = icmp eq i32 %i.ue, %i.uf
@@ -257,7 +257,7 @@ bb.q:                                             ; preds = %bb.q, %.lr.ph.i.i.i
   %i.uv = getelementptr inbounds nuw [224 x i8], ptr %i.uu, i64 %indvars.iv.next.i.i.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(224) %i.ut, ptr noundef nonnull align 8 dereferenceable(224) %i.uv, i64 224, i1 false), !tbaa.struct !96
   %indvars.iv.next.i.i.i.1 = add nuw nsw i64 %indvars.iv.i.i.i, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZNK20btAlignedObjectArrayI27btMultiBodySolverConstraintE4copyEiiPS0_.exit.i.i.loopexit.unr-lcssa, label %bb.q, !llvm.loop !101
 
@@ -368,9 +368,7 @@ bb.x:                                             ; preds = %bb.w
 
 bb.y:                                             ; preds = %bb.w
   %.cmp = icmp eq i64 %indvars.iv, 2
-  %14 = trunc i64 %indvars.iv to i32
-  %15 = add i32 %14, -3
-  %i.wn = select i1 %.cmp, i32 2, i32 %15         ; 2 uses
+  %i.wn = select i1 %.cmp, i32 2, i32 -1          ; 2 uses
   %i.wo = sext i32 %i.wn to i64                   ; 3 uses
   %i.wp = getelementptr inbounds [4 x i8], ptr %5, i64 %i.wo
   %i.wq = getelementptr inbounds [4 x i8], ptr %i.d, i64 %i.wo

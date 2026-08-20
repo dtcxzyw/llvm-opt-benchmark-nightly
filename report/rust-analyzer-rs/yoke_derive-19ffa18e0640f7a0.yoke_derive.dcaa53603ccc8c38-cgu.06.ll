@@ -201,7 +201,7 @@ _RNvMsa_NtCsfjX3T6UU9IB_9hashbrown3rawNtB5_13RawTableInner23prepare_rehash_in_pl
   br i1 %.not11.i, label %_RNvMsa_NtCsfjX3T6UU9IB_9hashbrown3rawNtB5_13RawTableInner15rehash_in_placeCsiWAYywJt434_11yoke_derive.exit.thread, label %.lr.ph.i15
 
 .lr.ph.i15:                                       ; preds = %_RNvMsa_NtCsfjX3T6UU9IB_9hashbrown3rawNtB5_13RawTableInner23prepare_rehash_in_placeCsiWAYywJt434_11yoke_derive.exit.i, %bb.s
-  %.sroa.0.010.i = phi i64 [ %i.eq, %bb.s ], [ 0, %_RNvMsa_NtCsfjX3T6UU9IB_9hashbrown3rawNtB5_13RawTableInner23prepare_rehash_in_placeCsiWAYywJt434_11yoke_derive.exit.i ] ; 9 uses
+  %.sroa.0.010.i = phi i64 [ %i.eq, %bb.s ], [ 0, %_RNvMsa_NtCsfjX3T6UU9IB_9hashbrown3rawNtB5_13RawTableInner23prepare_rehash_in_placeCsiWAYywJt434_11yoke_derive.exit.i ] ; 8 uses
   %i.eq = add nuw i64 %.sroa.0.010.i, 1           ; 2 uses
   %i.er = load ptr, ptr %0, align 8               ; 2 uses
   %i.es = getelementptr inbounds nuw i8, ptr %i.er, i64 %.sroa.0.010.i
@@ -212,13 +212,11 @@ _RNvMsa_NtCsfjX3T6UU9IB_9hashbrown3rawNtB5_13RawTableInner23prepare_rehash_in_pl
 bb.k:                                             ; preds = %.lr.ph.i15
   %.neg.i = mul i64 %i.eq, -24
   %i.eu = getelementptr inbounds i8, ptr %i.er, i64 %.neg.i ; 2 uses
-  %3 = sub nsw i64 0, %.sroa.0.010.i
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.r, %bb.k
   %i.ev = load ptr, ptr %0, align 8
-  %4 = getelementptr inbounds [24 x i8], ptr %i.ev, i64 %3
-  %i.ew = getelementptr inbounds i8, ptr %4, i64 -24
+  %i.ew = getelementptr inbounds i8, ptr %i.ev, i64 -24
   %i.ex = invoke i64 @_RINvYNtNtNtCscAsMj0W7j8b_3std4hash6random11RandomStateNtNtCshzWfHUSfYae_4core4hash11BuildHasher8hash_oneRNtCs1K5DUQUZc67_11proc_macro25IdentECsiWAYywJt434_11yoke_derive(ptr align 8 %2, ptr nonnull align 8 %i.ew)
           to label %_RNCINvMs6_NtCsfjX3T6UU9IB_9hashbrown3rawINtB8_8RawTableTNtCs1K5DUQUZc67_11proc_macro25IdentuEE14reserve_rehashNCINvNtBa_3map11make_hasherBS_uNtNtNtCscAsMj0W7j8b_3std4hash6random11RandomStateE0E0CsiWAYywJt434_11yoke_derive.exit.i unwind label %.loopexit.split-lp.i ; 4 uses
 
@@ -351,7 +349,7 @@ bb.o:                                             ; preds = %_RNvMsa_NtCsfjX3T6U
 bb.p:                                             ; preds = %_RNvMsa_NtCsfjX3T6UU9IB_9hashbrown3rawNtB5_13RawTableInner17find_insert_indexCsiWAYywJt434_11yoke_derive.exit.i
   %i.gu = lshr i64 %i.ex, 57
   %i.gv = trunc nuw nsw i64 %i.gu to i8           ; 2 uses
-  %i.gw = add i64 %.sroa.0.010.i, -16
+  %i.gw = add nuw i64 %.sroa.0.010.i, -16
   %i.gx = and i64 %i.gb, %i.gw
   %i.gy = load ptr, ptr %0, align 8
   %i.gz = getelementptr inbounds nuw i8, ptr %i.gy, i64 %.sroa.0.010.i
@@ -363,7 +361,7 @@ bb.p:                                             ; preds = %_RNvMsa_NtCsfjX3T6U
   br label %bb.s
 
 bb.q:                                             ; preds = %bb.o
-  %i.hd = add i64 %.sroa.0.010.i, -16
+  %i.hd = add nuw i64 %.sroa.0.010.i, -16
   %i.he = load i64, ptr %i.ad, align 8
   %i.hf = and i64 %i.he, %i.hd
   %i.hg = load ptr, ptr %0, align 8
@@ -766,7 +764,7 @@ bb.b:                                             ; preds = %.lr.ph
 .lr.ph:                                           ; preds = %bb.a, %bb.b
   %.sroa.0.07 = phi i64 [ %i.d, %bb.b ], [ 0, %bb.a ] ; 2 uses
   %i.c = getelementptr inbounds nuw [24 x i8], ptr %0, i64 %.sroa.0.07
-  %i.d = add i64 %.sroa.0.07, 1                   ; 4 uses
+  %i.d = add nuw i64 %.sroa.0.07, 1               ; 4 uses
   invoke void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtCs1K5DUQUZc67_11proc_macro25IdentEBD_(ptr align 8 %i.c)
           to label %bb.b unwind label %bb.d
 
@@ -813,7 +811,7 @@ bb.b:                                             ; preds = %.lr.ph
 .lr.ph:                                           ; preds = %bb.a, %bb.b
   %.sroa.0.07 = phi i64 [ %i.d, %bb.b ], [ 0, %bb.a ] ; 2 uses
   %i.c = getelementptr inbounds nuw [312 x i8], ptr %0, i64 %.sroa.0.07
-  %i.d = add i64 %.sroa.0.07, 1                   ; 4 uses
+  %i.d = add nuw i64 %.sroa.0.07, 1               ; 4 uses
   invoke void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCsgFSQ9XOTBNe_3syn8generics14WherePredicateEBF_(ptr align 8 %i.c)
           to label %bb.b unwind label %bb.d
 

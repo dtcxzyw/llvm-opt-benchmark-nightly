@@ -201,8 +201,8 @@ bb.i:                                             ; preds = %bb.g
 .loopexit:                                        ; preds = %bb.h, %bb.i
   %.1 = phi i32 [ %i.at, %bb.i ], [ %i.an, %bb.h ] ; 3 uses
   %.0 = phi i32 [ %i.au, %bb.i ], [ 0, %bb.h ]    ; 2 uses
-  %i.av = sub i32 %.0, %.1                        ; 2 uses
-  %i.aw = zext i32 %i.av to i64                   ; 2 uses
+  %i.av = sub i32 %.0, %.1
+  %i.aw = zext i32 %i.av to i64                   ; 3 uses
   %i.ax = tail call ptr @bit_alloc(i64 noundef %i.aw) #11 ; 4 uses
   store ptr %i.ax, ptr %i.c, align 8
   %i.ay = tail call ptr @bit_alloc(i64 noundef %i.aw) #11 ; 4 uses
@@ -241,8 +241,7 @@ bb.m:                                             ; preds = %bb.l
 bb.n:                                             ; preds = %bb.l, %bb.m
   %indvars.iv.next91 = add nuw nsw i64 %indvars.iv90, 1
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next to i32
-  %exitcond.not = icmp eq i32 %i.av, %lftr.wideiv
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.aw
   br i1 %exitcond.not, label %._crit_edge, label %bb.j, !llvm.loop !15
 
 ._crit_edge:                                      ; preds = %bb.n, %.loopexit

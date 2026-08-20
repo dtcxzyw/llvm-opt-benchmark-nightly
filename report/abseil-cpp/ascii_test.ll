@@ -204,11 +204,12 @@ bb.o:                                             ; preds = %bb.n
   %i.bo = load i8, ptr %i.bn, align 1, !tbaa !22  ; 3 uses
   store i8 %i.bo, ptr %i.g, align 1, !tbaa !22
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #18
-  %i.bp = trunc i64 %indvars.iv to i32
-  %29 = add i32 %i.bp, -32                        ; 2 uses
-  store i32 %29, ptr %i.h, align 4, !tbaa !72
-  %30 = sext i8 %i.bo to i32
-  %i.bq = icmp eq i32 %29, %30
+  %29 = add nuw nsw i64 %indvars.iv, 4294967264   ; 2 uses
+  %i.bp = trunc nuw i64 %29 to i32
+  store i32 %i.bp, ptr %i.h, align 4, !tbaa !72
+  %30 = sext i8 %i.bo to i64
+  %31 = and i64 %30, 4294967295
+  %i.bq = icmp eq i64 %29, %31
   br i1 %i.bq, label %bb.p, label %bb.q
 
 bb.p:                                             ; preds = %bb.o

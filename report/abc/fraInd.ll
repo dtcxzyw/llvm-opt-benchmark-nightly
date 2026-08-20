@@ -203,7 +203,7 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph.new
   %i.cp = getelementptr inbounds [8 x i8], ptr %.val51.val55.1, i64 %i.co
   store ptr %i.ch, ptr %i.cp, align 8, !tbaa !47
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.critedge.preheader.loopexit.unr-lcssa, label %bb.c, !llvm.loop !55
 
@@ -606,13 +606,14 @@ Fra_FramesConstrainNode.exit168:                  ; preds = %Aig_ObjPhaseReal.ex
   br i1 %i.lh, label %.lr.ph197, label %.critedge6.preheader, !llvm.loop !72
 
 .critedge8:                                       ; preds = %.critedge8.lr.ph, %Fra_ObjChild0Fra.exit179
-  %indvars.iv218 = phi i64 [ 0, %.critedge8.lr.ph ], [ %indvars.iv.next219, %Fra_ObjChild0Fra.exit179 ] ; 2 uses
-  %i.li = trunc nuw nsw i64 %indvars.iv218 to i32 ; 2 uses
+  %indvars.iv218 = phi i64 [ 0, %.critedge8.lr.ph ], [ %indvars.iv.next219, %Fra_ObjChild0Fra.exit179 ] ; 3 uses
+  %i.li = trunc i64 %indvars.iv218 to i32
   %.reass = add i32 %invariant.op, %i.li
   %i.lj = sext i32 %.reass to i64
   %i.lk = getelementptr inbounds [8 x i8], ptr %.val3.i170, i64 %i.lj
   %i.ll = load ptr, ptr %i.lk, align 8, !tbaa !51
-  %.reass200 = add i32 %invariant.op199, %i.li
+  %1 = trunc i64 %indvars.iv218 to i32
+  %.reass200 = add i32 %invariant.op199, %1
   %i.lm = sext i32 %.reass200 to i64
   %i.ln = getelementptr inbounds [8 x i8], ptr %.val4.i173, i64 %i.lm
   %i.lo = load ptr, ptr %i.ln, align 8, !tbaa !51 ; 2 uses

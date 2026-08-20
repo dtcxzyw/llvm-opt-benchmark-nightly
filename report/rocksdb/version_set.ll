@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %_ZNSt6vectorImSaImE
 
 bb.f:                                             ; preds = %.lr.ph117, %bb.k
   %i.ci = phi i32 [ %i.cc, %.lr.ph117 ], [ %i.de, %bb.k ] ; 2 uses
-  %indvars.iv158 = phi i64 [ 0, %.lr.ph117 ], [ %indvars.iv.next159, %bb.k ] ; 6 uses
+  %indvars.iv158 = phi i64 [ 0, %.lr.ph117 ], [ %indvars.iv.next159, %bb.k ] ; 5 uses
   %i.cj = trunc nuw nsw i64 %indvars.iv158 to i32
   switch i32 %i.cj, label %bb.i [
     i32 0, label %bb.g
@@ -228,10 +228,9 @@ bb.h:                                             ; preds = %bb.g
   br label %bb.k
 
 bb.i:                                             ; preds = %bb.f
-  %3 = add nsw i64 %indvars.iv158, -1             ; 2 uses
   %i.cm = load ptr, ptr %i.bb, align 8, !tbaa !160
-  %4 = getelementptr inbounds nuw [8 x i8], ptr %i.cm, i64 %3
-  %i.cn = load i64, ptr %4, align 8, !tbaa !439
+  %3 = getelementptr inbounds nuw i8, ptr %i.cm, i64 -8
+  %i.cn = load i64, ptr %3, align 8, !tbaa !439
   %i.co = load double, ptr %i.cf, align 8, !tbaa !1237
   %i.cp = tail call noundef i64 @_ZN7rocksdb21MultiplyCheckOverflowEmd(i64 noundef %i.cn, double noundef %i.co)
   %i.cq = load ptr, ptr %i.ch, align 8, !tbaa !978
@@ -245,8 +244,8 @@ bb.i:                                             ; preds = %bb.f
   br i1 %.not.i.not, label %_ZNK7rocksdb16MutableCFOptions27MaxBytesMultiplerAdditionalEi.exit, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %5 = getelementptr inbounds nuw [4 x i8], ptr %i.cr, i64 %3
-  %i.cw = load i32, ptr %5, align 4, !tbaa !143
+  %4 = getelementptr inbounds nuw i8, ptr %i.cr, i64 -4
+  %i.cw = load i32, ptr %4, align 4, !tbaa !143
   %i.cx = sitofp i32 %i.cw to double
   br label %_ZNK7rocksdb16MutableCFOptions27MaxBytesMultiplerAdditionalEi.exit
 
@@ -541,7 +540,7 @@ bb.w:                                             ; preds = %bb.v, %bb.u, %bb.t
   %i.gr = phi i32 [ %i.gh, %bb.u ], [ %i.gh, %bb.t ], [ %i.gj, %bb.v ] ; 3 uses
   %i.gs = phi i32 [ -1, %bb.u ], [ %i.gi, %bb.t ], [ %i.gj, %bb.v ] ; 2 uses
   %i.gt = add nsw i32 %.065134, -2                ; 2 uses
-  %niter.next.1 = add i32 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i32 %niter, 2           ; 2 uses
   %niter.ncmp.1.not = icmp eq i32 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1.not, label %._crit_edge137.loopexit.unr-lcssa, label %bb.q, !llvm.loop !1244
 
@@ -944,7 +943,7 @@ bb.i:                                             ; preds = %.lr.ph223.3
 bb.j:                                             ; preds = %bb.i, %.lr.ph223.3
   %.3128.3 = phi i32 [ %.3128.2, %.lr.ph223.3 ], [ %spec.select.3, %bb.i ] ; 3 uses
   %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.loopexit205.loopexit.unr-lcssa, label %.lr.ph223, !llvm.loop !1369
 
@@ -1328,7 +1327,7 @@ bb.aq:                                            ; preds = %.lr.ph.i145.3
 bb.ar:                                            ; preds = %bb.aq, %.lr.ph.i145.3
   %.1.i.3 = phi i8 [ %i.il, %bb.aq ], [ %.1.i.2, %.lr.ph.i145.3 ] ; 3 uses
   %i.im = add nuw i64 %.027.i, 4                  ; 2 uses
-  %niter349.next.3 = add i64 %niter349, 4         ; 2 uses
+  %niter349.next.3 = add nuw i64 %niter349, 4     ; 2 uses
   %niter349.ncmp.3 = icmp eq i64 %niter349.next.3, %unroll_iter348
   br i1 %niter349.ncmp.3, label %._crit_edge.i.loopexit.unr-lcssa, label %.lr.ph.i145, !llvm.loop !1381
 
@@ -1731,7 +1730,7 @@ bb.ag:                                            ; preds = %bb.af
 
 .critedge.1:                                      ; preds = %bb.ag, %bb.af, %bb.ae, %.critedge
   %i.eo = add nuw i64 %.sroa.5.045, 2             ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.loopexit.loopexit86.unr-lcssa, label %.lr.ph.split.split.split
 

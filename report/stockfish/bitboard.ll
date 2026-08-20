@@ -203,10 +203,8 @@ bb.c:                                             ; preds = %bb.a, %bb.p
   br i1 %i.o, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %2 = add nuw nsw i64 %indvars.iv, 4294967295
-  %3 = and i64 %2, 4294967295
-  %gep8 = getelementptr inbounds nuw [32 x i8], ptr %invariant.gep, i64 %3
-  %i.p = getelementptr inbounds nuw i8, ptr %gep8, i64 8
+  %gep8 = getelementptr inbounds nuw [32 x i8], ptr %invariant.gep, i64 %indvars.iv
+  %i.p = getelementptr inbounds nuw i8, ptr %gep8, i64 137438953448
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !36
   %i.r = sext i32 %.02110 to i64
   %i.s = getelementptr inbounds [8 x i8], ptr %i.q, i64 %i.r

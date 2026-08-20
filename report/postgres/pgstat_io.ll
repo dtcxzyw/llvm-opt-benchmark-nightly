@@ -83,9 +83,7 @@ bb.a:
 
 .preheader:                                       ; preds = %.preheader38, %bb.bc
   %indvars.iv = phi i64 [ 0, %.preheader38 ], [ %indvars.iv.next, %bb.bc ] ; 17 uses
-  %2 = trunc i64 %indvars.iv to i32
-  %3 = add i32 %2, -4
-  %i.n = icmp ult i32 %3, -2
+  %i.n = icmp samesign ult i64 %indvars.iv, 2
   %or.cond3.i.i = and i1 %i.i, %i.n               ; 8 uses
   %i.o = icmp ne i64 %indvars.iv, 3
   %or.cond5.i.i = and i1 %i.j, %i.o               ; 8 uses

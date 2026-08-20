@@ -203,10 +203,10 @@ bb.o:                                             ; preds = %bb.k
 define internal range(i32 0, 2097152) i32 @lv_text_utf8_prev(ptr nofree noundef readonly captures(address_is_null) %0, ptr nofree noundef captures(none) %1) #3 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 4 uses
-  %i.b = load i32, ptr %1, align 4, !tbaa !9      ; 5 uses
+  %i.b = load i32, ptr %1, align 4, !tbaa !9      ; 2 uses
   %i.c = add i32 %i.b, -1                         ; 4 uses
   store i32 %i.c, ptr %1, align 4, !tbaa !9
-  %i.d = zext i32 %i.c to i64
+  %i.d = zext i32 %i.c to i64                     ; 4 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 %i.d
   %i.f = load i8, ptr %i.e, align 1, !tbaa !8     ; 2 uses
   %i.g = zext i8 %i.f to i32                      ; 3 uses
@@ -227,10 +227,10 @@ lv_text_utf8_size.exit:                           ; preds = %bb.a
   br i1 %.not, label %.loopexit, label %bb.b
 
 bb.b:                                             ; preds = %lv_text_utf8_size.exit
-  %i.o = add i32 %i.b, -2                         ; 4 uses
+  %i.o = add i32 %i.b, -2                         ; 2 uses
   store i32 %i.o, ptr %1, align 4, !tbaa !9
-  %2 = zext i32 %i.o to i64
-  %i.p = getelementptr inbounds nuw i8, ptr %0, i64 %2
+  %indvars.iv.next = add nsw i64 %i.d, -1         ; 3 uses
+  %i.p = getelementptr inbounds nuw i8, ptr %0, i64 %indvars.iv.next
   %i.q = load i8, ptr %i.p, align 1, !tbaa !8     ; 2 uses
   %i.r = zext i8 %i.q to i32                      ; 3 uses
   %i.s = icmp sgt i8 %i.q, -1
@@ -246,14 +246,15 @@ bb.b:                                             ; preds = %lv_text_utf8_size.e
   br i1 %or.cond19.1, label %.critedge, label %lv_text_utf8_size.exit.1
 
 lv_text_utf8_size.exit.1:                         ; preds = %bb.b
-  %.not.1 = icmp eq i32 %i.o, 0
+  %.not.1 = icmp eq i64 %indvars.iv.next, 0
   br i1 %.not.1, label %.loopexit, label %bb.c
 
 bb.c:                                             ; preds = %lv_text_utf8_size.exit.1
-  %i.z = add i32 %i.b, -3                         ; 4 uses
+  %2 = trunc nuw i64 %indvars.iv.next to i32
+  %i.z = add i32 %2, -1                           ; 2 uses
   store i32 %i.z, ptr %1, align 4, !tbaa !9
-  %3 = zext i32 %i.z to i64
-  %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 %3
+  %indvars.iv.next.1 = add nsw i64 %i.d, -2       ; 3 uses
+  %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 %indvars.iv.next.1
   %i.ab = load i8, ptr %i.aa, align 1, !tbaa !8   ; 2 uses
   %i.ac = zext i8 %i.ab to i32                    ; 3 uses
   %i.ad = icmp sgt i8 %i.ab, -1
@@ -269,14 +270,15 @@ bb.c:                                             ; preds = %lv_text_utf8_size.e
   br i1 %or.cond19.2, label %.critedge, label %lv_text_utf8_size.exit.2
 
 lv_text_utf8_size.exit.2:                         ; preds = %bb.c
-  %.not.2 = icmp eq i32 %i.z, 0
+  %.not.2 = icmp eq i64 %indvars.iv.next.1, 0
   br i1 %.not.2, label %.loopexit, label %bb.d
 
 bb.d:                                             ; preds = %lv_text_utf8_size.exit.2
-  %i.ak = add i32 %i.b, -4                        ; 4 uses
+  %3 = trunc nuw i64 %indvars.iv.next.1 to i32
+  %i.ak = add i32 %3, -1                          ; 2 uses
   store i32 %i.ak, ptr %1, align 4, !tbaa !9
-  %4 = zext i32 %i.ak to i64
-  %i.al = getelementptr inbounds nuw i8, ptr %0, i64 %4
+  %indvars.iv.next.2 = add nsw i64 %i.d, -3       ; 3 uses
+  %i.al = getelementptr inbounds nuw i8, ptr %0, i64 %indvars.iv.next.2
   %i.am = load i8, ptr %i.al, align 1, !tbaa !8   ; 2 uses
   %i.an = zext i8 %i.am to i32                    ; 3 uses
   %i.ao = icmp sgt i8 %i.am, -1
@@ -292,11 +294,12 @@ bb.d:                                             ; preds = %lv_text_utf8_size.e
   br i1 %or.cond19.3, label %.critedge, label %lv_text_utf8_size.exit.3
 
 lv_text_utf8_size.exit.3:                         ; preds = %bb.d
-  %.not.3 = icmp eq i32 %i.ak, 0
+  %.not.3 = icmp eq i64 %indvars.iv.next.2, 0
   br i1 %.not.3, label %.loopexit, label %bb.e
 
 bb.e:                                             ; preds = %lv_text_utf8_size.exit.3
-  %i.av = add i32 %i.b, -5
+  %4 = trunc nuw i64 %indvars.iv.next.2 to i32
+  %i.av = add i32 %4, -1
   store i32 %i.av, ptr %1, align 4, !tbaa !9
   br label %.loopexit
 
@@ -699,6 +702,7 @@ bb.ab:                                            ; preds = %.thread112, %bb.aa
 
 .lr.ph194.preheader:                              ; preds = %.critedge92
   %i.dx = zext i32 %.pre to i64
+  %wide.trip.count235 = zext i32 %1 to i64
   br label %.lr.ph194
 
 .lr.ph194:                                        ; preds = %.lr.ph194.preheader, %bb.ac
@@ -710,8 +714,7 @@ bb.ab:                                            ; preds = %.thread112, %bb.aa
 
 bb.ac:                                            ; preds = %.lr.ph194
   %indvars.iv.next233 = add nuw nsw i64 %indvars.iv232, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next233 to i32
-  %exitcond235.not = icmp eq i32 %1, %lftr.wideiv
+  %exitcond235.not = icmp eq i64 %indvars.iv.next233, %wide.trip.count235
   br i1 %exitcond235.not, label %.critedge4, label %.lr.ph194, !llvm.loop !25
 
 .critedge4.loopexit.loopexit.split.loop.exit277:  ; preds = %.lr.ph194
@@ -1114,7 +1117,7 @@ lv_text_utf8_size.exit.i:                         ; preds = %bb.f, %bb.e, %bb.d,
   br i1 %exitcond.not.i, label %lv_text_utf8_get_byte_id.exit, label %.lr.ph.i, !llvm.loop !10
 
 lv_text_utf8_get_byte_id.exit:                    ; preds = %.lr.ph.i, %lv_text_utf8_size.exit.i, %bb.b
-  %.010.lcssa.i = phi i32 [ 0, %bb.b ], [ %.01012.i, %.lr.ph.i ], [ %i.o, %lv_text_utf8_size.exit.i ] ; 14 uses
+  %.010.lcssa.i = phi i32 [ 0, %bb.b ], [ %.01012.i, %.lr.ph.i ], [ %i.o, %lv_text_utf8_size.exit.i ] ; 12 uses
   %i.q = zext i32 %.010.lcssa.i to i64            ; 10 uses
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 %i.q
   %.not16.i18 = icmp eq i32 %2, 0
@@ -1158,7 +1161,7 @@ lv_text_utf8_size.exit.i23:                       ; preds = %bb.j, %bb.i, %bb.h,
   br i1 %exitcond.not.i25, label %lv_text_utf8_get_byte_id.exit27, label %.lr.ph.i19, !llvm.loop !10
 
 lv_text_utf8_get_byte_id.exit27:                  ; preds = %.lr.ph.i19, %lv_text_utf8_size.exit.i23, %lv_text_utf8_get_byte_id.exit
-  %.010.lcssa.i26 = phi i32 [ 0, %lv_text_utf8_get_byte_id.exit ], [ %.01012.i21, %.lr.ph.i19 ], [ %i.ae, %lv_text_utf8_size.exit.i23 ] ; 6 uses
+  %.010.lcssa.i26 = phi i32 [ 0, %lv_text_utf8_get_byte_id.exit ], [ %.01012.i21, %.lr.ph.i19 ], [ %i.ae, %lv_text_utf8_size.exit.i23 ] ; 5 uses
   %i.ag = zext i32 %.010.lcssa.i26 to i64         ; 3 uses
   %i.ah = sub i64 %i.b, %i.ag                     ; 2 uses
   %.not28 = icmp ult i64 %i.ah, %i.q
@@ -1181,18 +1184,11 @@ vector.scevcheck:                                 ; preds = %iter.check
   %i.aq = add i32 %.010.lcssa.i, 1
   %i.ar = zext i32 %i.aq to i64
   %i.as = tail call i64 @llvm.usub.sat.i64(i64 %i.ap, i64 %i.ar) ; 2 uses
-  %i.at = trunc i64 %i.as to i32                  ; 3 uses
+  %i.at = trunc i64 %i.as to i32
   %i.au = sub i32 -2, %.010.lcssa.i
-  %3 = icmp ult i32 %i.au, %i.at
-  %4 = xor i32 %.010.lcssa.i, -1
-  %i.av = icmp ult i32 %4, %i.at
+  %i.av = icmp ult i32 %i.au, %i.at
   %i.aw = icmp ugt i64 %i.as, 4294967295
-  %5 = or i1 %i.av, %i.aw
-  %6 = add i32 %.010.lcssa.i, %.010.lcssa.i26
-  %7 = xor i32 %6, -1
-  %8 = icmp ult i32 %7, %i.at
-  %9 = or i1 %3, %5
-  %i.ax = or i1 %8, %9
+  %i.ax = or i1 %i.av, %i.aw
   br i1 %i.ax, label %.lr.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %vector.scevcheck

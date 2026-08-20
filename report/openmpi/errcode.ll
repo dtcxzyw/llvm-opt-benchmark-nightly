@@ -201,16 +201,19 @@ bb.a:
   br i1 %.not.not412, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.a
+  %0 = zext i32 %i.b to i64
   %.pre415.pre416 = load i8, ptr @opal_uses_threads, align 1, !tbaa !27, !range !29
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.h
-  %.pre415 = phi i8 [ %.pre415417, %bb.h ], [ %.pre415.pre416, %.lr.ph.preheader ] ; 2 uses
-  %.0.in413 = phi i32 [ %.0414, %bb.h ], [ %i.b, %.lr.ph.preheader ] ; 2 uses
-  %.0414 = add nsw i32 %.0.in413, 1               ; 5 uses
-  %i.d = icmp slt i32 %.0.in413, -1
+  %.pre415 = phi i8 [ %.pre415.pre416, %.lr.ph.preheader ], [ %.pre415417, %bb.h ] ; 2 uses
+  %indvars.iv = phi i64 [ %0, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.h ] ; 2 uses
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 4 uses
+  %indvars = trunc i64 %indvars.iv.next to i32    ; 2 uses
+  %1 = trunc nuw i64 %indvars.iv to i32
+  %i.d = icmp slt i32 %1, -1
   %i.e = load i32, ptr getelementptr inbounds nuw (i8, ptr @ompi_mpi_errcodes, i64 88), align 8
-  %i.f = icmp sle i32 %i.e, %.0414
+  %i.f = icmp sle i32 %i.e, %indvars
   %i.g = select i1 %i.d, i1 true, i1 %i.f, !prof !30
   br i1 %i.g, label %opal_pointer_array_get_item.exit, label %bb.b, !prof !30
 
@@ -220,8 +223,8 @@ bb.b:                                             ; preds = %.lr.ph
 
 .thread.i:                                        ; preds = %bb.b
   %i.i = load ptr, ptr getelementptr inbounds nuw (i8, ptr @ompi_mpi_errcodes, i64 112), align 8, !tbaa !31
-  %0 = zext nneg i32 %.0414 to i64
-  %i.j = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %0
+  %2 = and i64 %indvars.iv.next, 4294967295
+  %i.j = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %2
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !23
   br label %opal_pointer_array_get_item.exit.thread
 
@@ -230,8 +233,8 @@ bb.c:                                             ; preds = %bb.b
   %.pre.i = load i8, ptr @opal_uses_threads, align 1, !tbaa !27, !range !29
   %i.m = trunc nuw i8 %.pre.i to i1
   %i.n = load ptr, ptr getelementptr inbounds nuw (i8, ptr @ompi_mpi_errcodes, i64 112), align 8, !tbaa !31
-  %1 = zext nneg i32 %.0414 to i64
-  %i.o = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %1
+  %3 = and i64 %indvars.iv.next, 4294967295
+  %i.o = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %3
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !23   ; 2 uses
   br i1 %i.m, label %bb.d, label %opal_pointer_array_get_item.exit.thread, !prof !35
 
@@ -298,7 +301,7 @@ opal_obj_run_destructors.exit:                    ; preds = %.lr.ph.i, %bb.g
 bb.h:                                             ; preds = %opal_thread_add_fetch_32.exit, %opal_obj_run_destructors.exit
   %.pre415417 = phi i8 [ %.pre415418504, %opal_thread_add_fetch_32.exit ], [ %.pre415.pre, %opal_obj_run_destructors.exit ]
   %i.ai = load i32, ptr @ompi_mpi_errcode_lastused, align 4, !tbaa !14
-  %.not.not = icmp slt i32 %.0414, %i.ai
+  %.not.not = icmp sgt i32 %i.ai, %indvars
   br i1 %.not.not, label %.lr.ph, label %._crit_edge, !llvm.loop !40
 
 ._crit_edge:                                      ; preds = %bb.h, %bb.a

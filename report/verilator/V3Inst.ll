@@ -204,7 +204,7 @@ bb.kh:                                            ; preds = %_ZN12AstNodeDType8s
 bb.ki:                                            ; preds = %.preheader1669, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit1482
   %.0341 = phi ptr [ %.23431601, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit1482 ], [ null, %.preheader1669 ] ; 6 uses
   %.0339 = phi ptr [ %.1340, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit1482 ], [ null, %.preheader1669 ] ; 4 uses
-  %.0338 = phi i32 [ %i.ccu, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit1482 ], [ 0, %.preheader1669 ] ; 6 uses
+  %.0338 = phi i32 [ %i.ccu, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit1482 ], [ 0, %.preheader1669 ] ; 5 uses
   %i.azu = load ptr, ptr %i.axw, align 8, !tbaa !58 ; 2 uses
   %i.azv = getelementptr inbounds nuw i8, ptr %i.azu, i64 24 ; 2 uses
   %i.azw = load ptr, ptr %i.azv, align 8, !tbaa !29 ; 3 uses
@@ -369,8 +369,7 @@ bb.kt:                                            ; preds = %_ZNK17AstNodeArrayD
   %.sroa.01516.4.extract.shift = lshr i64 %.sroa.2.0.insert.ext.i, 32
   %.sroa.01516.4.extract.trunc = trunc nuw i64 %.sroa.01516.4.extract.shift to i32
   %i.bcb = icmp slt i32 %.sroa.01516.0.extract.trunc, %.sroa.01516.4.extract.trunc
-  %76 = sub nsw i32 0, %.0338                     ; 3 uses
-  %i.bcc = select i1 %i.bcb, i32 %.0338, i32 %76
+  %i.bcc = select i1 %i.bcb, i32 %.0338, i32 0
   %i.bcd = add nsw i32 %i.bcc, %i.bbq
   store i32 %i.bcd, ptr %i.l, align 4, !tbaa !115
   call void @llvm.lifetime.start.p0(ptr nonnull %53) #24
@@ -773,7 +772,7 @@ bb.nx:                                            ; preds = %_ZN7AstNode2isI8Ast
   %i.btl = getelementptr inbounds nuw i8, ptr %i.brm, i64 164
   %i.btm = load i32, ptr %i.btl, align 4, !tbaa !61
   %i.btn = icmp slt i32 %i.btk, %i.btm
-  %i.bto = select i1 %i.btn, i32 %.0338, i32 %76
+  %i.bto = select i1 %i.btn, i32 %.0338, i32 0
   %i.btp = add nsw i32 %i.bto, %i.btk
   %i.btq = getelementptr inbounds nuw i8, ptr %i.brr, i64 72
   %i.btr = load ptr, ptr %i.btq, align 8, !tbaa !39
@@ -1020,7 +1019,7 @@ bb.or:                                            ; preds = %_ZNK17AstNodeArrayD
   %.sroa.01511.4.extract.shift = lshr i64 %.sroa.2.0.insert.ext.i1385, 32
   %.sroa.01511.4.extract.trunc = trunc nuw i64 %.sroa.01511.4.extract.shift to i32
   %i.bwo = icmp slt i32 %.sroa.01511.0.extract.trunc, %.sroa.01511.4.extract.trunc
-  %i.bwp = select i1 %i.bwo, i32 %.0338, i32 %76
+  %i.bwp = select i1 %i.bwo, i32 %.0338, i32 0
   %i.bwq = add nsw i32 %i.bwp, %i.bwd
   br label %_ZN7AstNode4castI19AstUnpackArrayDType12AstNodeDTypeEEPT_PT0_.exit1372.thread.sink.split
 

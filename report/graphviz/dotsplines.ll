@@ -204,15 +204,17 @@ bb.cj:                                            ; preds = %bb.ch, %bb.ci, %bb.
   %i.acf = fmul double %.0260, 5.000000e-01
   call void @makeSelfEdge(ptr noundef %i.acc, i64 noundef %i.acd, double noundef %i.ace, double noundef %i.acf, ptr noundef nonnull @sinfo) #24
   %.not795 = icmp eq i32 %.0262.lcssa1037, 0
-  br i1 %.not795, label %.loopexit581, label %.lr.ph754
+  br i1 %.not795, label %.loopexit581, label %.lr.ph754.preheader
 
-.lr.ph754:                                        ; preds = %bb.cj, %bb.cl
-  %indvars.iv879 = phi i64 [ %indvars.iv.next880, %bb.cl ], [ 0, %bb.cj ] ; 2 uses
+.lr.ph754.preheader:                              ; preds = %bb.cj
+  %36 = zext i32 %.0263760 to i64
+  br label %.lr.ph754
+
+.lr.ph754:                                        ; preds = %.lr.ph754.preheader, %bb.cl
+  %indvars.iv879 = phi i64 [ 0, %.lr.ph754.preheader ], [ %indvars.iv.next880, %bb.cl ] ; 2 uses
   %i.acg = load ptr, ptr %35, align 8, !tbaa !104
-  %36 = trunc nuw i64 %indvars.iv879 to i32
-  %37 = add i32 %.0263760, %36
-  %38 = zext i32 %37 to i64
-  %i.ach = call i64 @gv_list_get_(ptr noundef nonnull byval(%struct.list_t_) align 8 %35, i64 noundef %38) #24
+  %37 = add nuw nsw i64 %indvars.iv879, %36
+  %i.ach = call i64 @gv_list_get_(ptr noundef nonnull byval(%struct.list_t_) align 8 %35, i64 noundef %37) #24
   %i.aci = getelementptr inbounds nuw [8 x i8], ptr %i.acg, i64 %i.ach
   %i.acj = load ptr, ptr %i.aci, align 8, !tbaa !78
   %i.ack = getelementptr inbounds nuw i8, ptr %i.acj, i64 16
@@ -466,7 +468,7 @@ bb.cy:                                            ; preds = %bb.cx, %.lr.ph729.1
 bb.cz:                                            ; preds = %bb.cy, %bb.cx
   %.1231.i.1 = phi i1 [ true, %bb.cy ], [ %.1231.i, %bb.cx ] ; 3 uses
   %indvars.iv.next854.1 = add nuw nsw i64 %indvars.iv853, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge730.unr-lcssa, label %.lr.ph729, !llvm.loop !148
 
@@ -869,17 +871,19 @@ bb.a:
   %i.j = getelementptr inbounds nuw i8, ptr %i.h, i64 8
   %.not5.i = icmp eq ptr %1, null
   %i.k = icmp ne ptr %0, null
+  %3 = zext nneg i32 %.0212 to i64
+  %4 = sext i32 %2 to i64
+  %5 = sext i32 %i.i to i64
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %.backedge
-  %.0213 = phi i32 [ %.0212, %.lr.ph ], [ %.021, %.backedge ] ; 3 uses
-  %i.l = icmp slt i32 %.0213, %i.i
+  %indvars.iv = phi i64 [ %3, %.lr.ph ], [ %indvars.iv.next, %.backedge ] ; 3 uses
+  %i.l = icmp slt i64 %indvars.iv, %5
   br i1 %i.l, label %bb.c, label %.critedge
 
 bb.c:                                             ; preds = %bb.b
   %i.m = load ptr, ptr %i.j, align 8, !tbaa !96
-  %3 = zext nneg i32 %.0213 to i64
-  %i.n = getelementptr inbounds nuw [8 x i8], ptr %i.m, i64 %3
+  %i.n = getelementptr inbounds nuw [8 x i8], ptr %i.m, i64 %indvars.iv
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !65   ; 12 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 16
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !19   ; 7 uses
@@ -1103,8 +1107,8 @@ bb.u:                                             ; preds = %bb.t
   br i1 %not..not64.1.i, label %.backedge, label %.critedge
 
 .backedge:                                        ; preds = %bb.p, %bb.n, %bb.h, %.split
-  %.021 = add nsw i32 %.0213, %2                  ; 2 uses
-  %i.fa = icmp sgt i32 %.021, -1
+  %indvars.iv.next = add nsw i64 %indvars.iv, %4  ; 2 uses
+  %i.fa = icmp sgt i64 %indvars.iv.next, -1
   br i1 %i.fa, label %bb.b, label %.critedge, !llvm.loop !324
 
 .critedge:                                        ; preds = %bb.b, %.backedge, %bb.d, %.split, %bb.e, %.thread.i, %bb.o, %bb.r, %bb.q, %bb.t, %bb.s, %bb.u, %bb.c, %bb.a

@@ -187,7 +187,7 @@ bb.m:                                             ; preds = %bb.l
 bb.n:                                             ; preds = %bb.l, %bb.m
   %i.at = phi i32 [ %.sroa.0.0.extract.trunc.i72, %bb.m ], [ %.0, %bb.l ]
   %i.au = getelementptr inbounds nuw i8, ptr %i.c, i64 84 ; 7 uses
-  %i.av = load i32, ptr %i.au, align 4, !tbaa !21 ; 7 uses
+  %i.av = load i32, ptr %i.au, align 4, !tbaa !21 ; 5 uses
   %.not.i73 = icmp eq i32 %i.av, -1               ; 2 uses
   br i1 %.not.i73, label %lv_label_revert_dots.exit, label %bb.o
 
@@ -281,7 +281,7 @@ bb.u:                                             ; preds = %bb.t
 bb.v:                                             ; preds = %bb.u
   %i.cj = getelementptr inbounds nuw i8, ptr %i.c, i64 80
   %i.ck = load ptr, ptr %i.cd, align 8, !tbaa !8
-  %i.cl = zext i32 %i.av to i64                   ; 2 uses
+  %i.cl = zext i32 %i.av to i64                   ; 4 uses
   %i.cm = getelementptr inbounds nuw i8, ptr %i.ck, i64 %i.cl
   %i.cn = call ptr @lv_strncpy(ptr noundef nonnull %i.cj, ptr noundef %i.cm, i64 noundef 4) #6 ; 0 uses
   %i.co = load ptr, ptr %i.cd, align 8, !tbaa !8  ; 2 uses
@@ -293,9 +293,8 @@ bb.v:                                             ; preds = %bb.u
 bb.w:                                             ; preds = %bb.v
   store i8 46, ptr %i.cp, align 1, !tbaa !24
   %i.cr = load ptr, ptr %i.cd, align 8, !tbaa !8  ; 2 uses
-  %6 = add nuw i32 %i.av, 1
-  %7 = zext i32 %6 to i64
-  %i.cs = getelementptr inbounds nuw i8, ptr %i.cr, i64 %7 ; 2 uses
+  %6 = getelementptr inbounds nuw i8, ptr %i.cr, i64 %i.cl
+  %i.cs = getelementptr inbounds nuw i8, ptr %6, i64 1 ; 2 uses
   %i.ct = load i8, ptr %i.cs, align 1, !tbaa !24
   %.not21.1.i = icmp eq i8 %i.ct, 0
   br i1 %.not21.1.i, label %.critedge.i, label %bb.x
@@ -303,9 +302,8 @@ bb.w:                                             ; preds = %bb.v
 bb.x:                                             ; preds = %bb.w
   store i8 46, ptr %i.cs, align 1, !tbaa !24
   %i.cu = load ptr, ptr %i.cd, align 8, !tbaa !8  ; 2 uses
-  %8 = add i32 %i.av, 2
-  %9 = zext i32 %8 to i64
-  %i.cv = getelementptr inbounds nuw i8, ptr %i.cu, i64 %9 ; 2 uses
+  %7 = getelementptr inbounds nuw i8, ptr %i.cu, i64 %i.cl
+  %i.cv = getelementptr inbounds nuw i8, ptr %7, i64 2 ; 2 uses
   %i.cw = load i8, ptr %i.cv, align 1, !tbaa !24
   %.not21.2.i = icmp eq i8 %i.cw, 0
   br i1 %.not21.2.i, label %.critedge.i, label %bb.y
@@ -708,7 +706,7 @@ bb.d:                                             ; preds = %bb.c
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 5 uses
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !8
-  %i.j = zext i32 %1 to i64                       ; 2 uses
+  %i.j = zext i32 %1 to i64                       ; 4 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.i, i64 %i.j
   %i.l = tail call ptr @lv_strncpy(ptr noundef nonnull %i.g, ptr noundef %i.k, i64 noundef 4) #6 ; 0 uses
   %i.m = load ptr, ptr %i.h, align 8, !tbaa !8    ; 2 uses
@@ -720,9 +718,8 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.d
   store i8 46, ptr %i.n, align 1, !tbaa !24
   %i.p = load ptr, ptr %i.h, align 8, !tbaa !8    ; 2 uses
-  %2 = add nuw i32 %1, 1
-  %3 = zext i32 %2 to i64
-  %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 %3 ; 2 uses
+  %2 = getelementptr inbounds nuw i8, ptr %i.p, i64 %i.j
+  %i.q = getelementptr inbounds nuw i8, ptr %2, i64 1 ; 2 uses
   %i.r = load i8, ptr %i.q, align 1, !tbaa !24
   %.not21.1 = icmp eq i8 %i.r, 0
   br i1 %.not21.1, label %.critedge, label %bb.f
@@ -730,9 +727,8 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.e
   store i8 46, ptr %i.q, align 1, !tbaa !24
   %i.s = load ptr, ptr %i.h, align 8, !tbaa !8    ; 2 uses
-  %4 = add i32 %1, 2
-  %5 = zext i32 %4 to i64
-  %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 %5 ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %i.s, i64 %i.j
+  %i.t = getelementptr inbounds nuw i8, ptr %3, i64 2 ; 2 uses
   %i.u = load i8, ptr %i.t, align 1, !tbaa !24
   %.not21.2 = icmp eq i8 %i.u, 0
   br i1 %.not21.2, label %.critedge, label %bb.g

@@ -204,23 +204,15 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 bb.em:                                            ; preds = %.lr.ph2270, %._crit_edge2268
   %indvars.iv2594 = phi i64 [ 0, %.lr.ph2270 ], [ %indvars.iv.next2595, %._crit_edge2268 ] ; 3 uses
   %i.ccd = getelementptr inbounds nuw i8, ptr %i.cbw, i64 %indvars.iv2594
-  %i.cce = load i8, ptr %i.ccd, align 1, !tbaa !45 ; 7 uses
-  %i.ccf = zext i8 %i.cce to i64                  ; 27 uses
+  %i.cce = load i8, ptr %i.ccd, align 1, !tbaa !45 ; 5 uses
+  %i.ccf = zext i8 %i.cce to i64                  ; 26 uses
   %i.ccg = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.ccf
   %i.cch = load i8, ptr %i.ccg, align 1, !tbaa !45 ; 2 uses
   %.not18672264 = icmp eq i8 %i.cce, 0
-  br i1 %.not18672264, label %._crit_edge2268, label %iter.check3348
+  br i1 %.not18672264, label %._crit_edge2268, label %vector.scevcheck3334
 
-iter.check3348:                                   ; preds = %bb.em
-  %min.iters.check3335 = icmp ult i8 %i.cce, 4
-  br i1 %min.iters.check3335, label %.lr.ph2267.preheader, label %vector.scevcheck3334
-
-vector.scevcheck3334:                             ; preds = %iter.check3348
-  %1 = add i8 %i.cce, -1
-  %2 = zext i8 %i.cce to i32
-  %3 = add nsw i32 %2, -1
-  %4 = zext i8 %1 to i32
-  %i.cci = icmp ult i32 %3, %4
+vector.scevcheck3334:                             ; preds = %bb.em
+  %i.cci = icmp ult i8 %i.cce, 4
   br i1 %i.cci, label %.lr.ph2267.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %vector.scevcheck3334
@@ -382,8 +374,8 @@ vec.epilog.middle.block3358:                      ; preds = %vec.epilog.vector.b
   %cmp.n3359 = icmp eq i64 %n.vec3353, %i.ccf
   br i1 %cmp.n3359, label %._crit_edge2268, label %.lr.ph2267.preheader
 
-.lr.ph2267.preheader:                             ; preds = %vector.memcheck, %vector.scevcheck3334, %iter.check3348, %vec.epilog.iter.check3350, %vec.epilog.middle.block3358
-  %indvars.iv.ph = phi i64 [ %i.ccf, %iter.check3348 ], [ %i.ccf, %vector.scevcheck3334 ], [ %i.ccf, %vector.memcheck ], [ %i.cco, %vec.epilog.iter.check3350 ], [ %i.cez, %vec.epilog.middle.block3358 ] ; 6 uses
+.lr.ph2267.preheader:                             ; preds = %vector.memcheck, %vector.scevcheck3334, %vec.epilog.iter.check3350, %vec.epilog.middle.block3358
+  %indvars.iv.ph = phi i64 [ %i.ccf, %vector.scevcheck3334 ], [ %i.ccf, %vector.memcheck ], [ %i.cco, %vec.epilog.iter.check3350 ], [ %i.cez, %vec.epilog.middle.block3358 ] ; 6 uses
   %i.cfi = trunc nuw i64 %indvars.iv.ph to i8
   %xtraiter = and i8 %i.cfi, 1
   %lcmp.mod.not = icmp eq i8 %xtraiter, 0
@@ -786,7 +778,7 @@ bb.iu:                                            ; preds = %bb.iu, %.lr.ph2367.
   %i.exq = add nsw i32 %i.exp, 1
   store i32 %i.exq, ptr %i.exj, align 4, !tbaa !81
   %indvars.iv.next2703.1 = add nuw nsw i64 %indvars.iv2702, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge2368.loopexit.unr-lcssa, label %bb.iu, !llvm.loop !110
 

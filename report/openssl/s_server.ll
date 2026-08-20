@@ -203,15 +203,14 @@ bb.s:                                             ; preds = %bb.r
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.ae, %.lr.ph75.i.i
-  %.04674.i.i = phi i32 [ 0, %.lr.ph75.i.i ], [ %i.cl, %bb.ae ] ; 5 uses
+  %.04674.i.i = phi i32 [ 0, %.lr.ph75.i.i ], [ %i.cl, %bb.ae ] ; 4 uses
   %.05173.i.i = phi ptr [ %i.bb, %.lr.ph75.i.i ], [ %.152.i.i, %bb.ae ]
   %.not65.i.i = icmp eq i32 %.04674.i.i, 0
   br i1 %.not65.i.i, label %bb.v, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
   %i.bj = load ptr, ptr %i.h, align 8, !tbaa !12
-  %2 = add nsw i32 %.04674.i.i, -1
-  %i.bk = call ptr @OPENSSL_sk_value(ptr noundef %i.bj, i32 noundef %2) #15
+  %i.bk = call ptr @OPENSSL_sk_value(ptr noundef %i.bj, i32 noundef -1) #15
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.u, %bb.t
@@ -370,15 +369,14 @@ bb.ao:                                            ; preds = %bb.an
   br label %bb.ap
 
 bb.ap:                                            ; preds = %get_ocsp_resp_from_responder_single.exit.i, %.lr.ph.i29
-  %.02135.i = phi i32 [ 0, %.lr.ph.i29 ], [ %i.gi, %get_ocsp_resp_from_responder_single.exit.i ] ; 3 uses
+  %.02135.i = phi i32 [ 0, %.lr.ph.i29 ], [ %i.gi, %get_ocsp_resp_from_responder_single.exit.i ] ; 2 uses
   %.02234.i = phi ptr [ %i.cz, %.lr.ph.i29 ], [ %.1.i, %get_ocsp_resp_from_responder_single.exit.i ]
   %.not29.i = icmp eq i32 %.02135.i, 0
   br i1 %.not29.i, label %bb.ar, label %bb.aq
 
 bb.aq:                                            ; preds = %bb.ap
   %i.dm = load ptr, ptr %i.g, align 8, !tbaa !12
-  %3 = add nsw i32 %.02135.i, -1
-  %i.dn = call ptr @OPENSSL_sk_value(ptr noundef %i.dm, i32 noundef %3) #15
+  %i.dn = call ptr @OPENSSL_sk_value(ptr noundef %i.dm, i32 noundef -1) #15
   br label %bb.ar
 
 bb.ar:                                            ; preds = %bb.aq, %bb.ap

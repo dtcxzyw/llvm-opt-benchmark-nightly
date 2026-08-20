@@ -203,16 +203,15 @@ bb.c:                                             ; preds = %bb.b
   %i.am = getelementptr inbounds nuw i8, ptr %i.r, i64 24
   %i.an = load i32, ptr %i.am, align 8, !tbaa !156
   %i.ao = sext i32 %i.an to i64
+  %3 = zext i32 %i.v to i64
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.d, %bb.c
   %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i, %bb.d ], [ 0, %bb.c ] ; 3 uses
   %i.ap = icmp slt i64 %indvars.iv.i.i, %i.ao
   tail call void @llvm.assume(i1 %i.ap)
-  %3 = trunc i64 %indvars.iv.i.i to i32
-  %4 = add i32 %i.v, %3
-  %5 = zext i32 %4 to i64                         ; 3 uses
-  %i.aq = getelementptr inbounds nuw [4 x i8], ptr %i.t, i64 %5
+  %4 = add nuw nsw i64 %indvars.iv.i.i, %3        ; 3 uses
+  %i.aq = getelementptr inbounds nuw [4 x i8], ptr %i.t, i64 %4
   %i.ar = load i32, ptr %i.aq, align 4, !tbaa !85
   %.not.i.i = icmp eq i32 %i.ar, %i.aa
   %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1
@@ -221,10 +220,10 @@ bb.d:                                             ; preds = %bb.d, %bb.c
 scdf_is_edge_feasible.exit:                       ; preds = %bb.d
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.at = load ptr, ptr %i.as, align 8, !tbaa !159
-  %i.au = lshr i64 %5, 6
+  %i.au = lshr i64 %4, 6
   %i.av = getelementptr inbounds nuw [8 x i8], ptr %i.at, i64 %i.au
   %i.aw = load i64, ptr %i.av, align 8, !tbaa !160
-  %i.ax = and i64 %5, 63
+  %i.ax = and i64 %4, 63
   %i.ay = lshr i64 %i.aw, %i.ax
   %i.az = trunc i64 %i.ay to i1
   br i1 %i.az, label %bb.e, label %.loopexit
@@ -265,16 +264,15 @@ bb.f:                                             ; preds = %.lr.ph, %bb.i
   %i.ca = getelementptr inbounds nuw i8, ptr %i.br, i64 16
   %i.cb = load ptr, ptr %i.ca, align 8, !tbaa !162
   %i.cc = sext i32 %i.bx to i64
+  %5 = zext i32 %i.bz to i64
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.g, %bb.f
   %indvars.iv.i.i35 = phi i64 [ %indvars.iv.next.i.i37, %bb.g ], [ 0, %bb.f ] ; 3 uses
   %i.cd = icmp slt i64 %indvars.iv.i.i35, %i.cc
   call void @llvm.assume(i1 %i.cd)
-  %6 = trunc i64 %indvars.iv.i.i35 to i32
-  %7 = add i32 %i.bz, %6
-  %8 = zext i32 %7 to i64                         ; 3 uses
-  %i.ce = getelementptr inbounds nuw [4 x i8], ptr %i.cb, i64 %8
+  %6 = add nuw nsw i64 %indvars.iv.i.i35, %5      ; 3 uses
+  %i.ce = getelementptr inbounds nuw [4 x i8], ptr %i.cb, i64 %6
   %i.cf = load i32, ptr %i.ce, align 4, !tbaa !85
   %.not.i.i36 = icmp eq i32 %i.cf, %i.bp
   %indvars.iv.next.i.i37 = add nuw nsw i64 %indvars.iv.i.i35, 1
@@ -282,10 +280,10 @@ bb.g:                                             ; preds = %bb.g, %bb.f
 
 scdf_is_edge_feasible.exit38:                     ; preds = %bb.g
   %i.cg = load ptr, ptr %i.ag, align 8, !tbaa !159
-  %i.ch = lshr i64 %8, 6
+  %i.ch = lshr i64 %6, 6
   %i.ci = getelementptr inbounds nuw [8 x i8], ptr %i.cg, i64 %i.ch
   %i.cj = load i64, ptr %i.ci, align 8, !tbaa !160
-  %i.ck = and i64 %8, 63
+  %i.ck = and i64 %6, 63
   %i.cl = lshr i64 %i.cj, %i.ck
   %i.cm = trunc i64 %i.cl to i1
   br i1 %i.cm, label %bb.h, label %bb.i

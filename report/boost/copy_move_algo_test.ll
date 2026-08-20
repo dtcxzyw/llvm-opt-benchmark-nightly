@@ -204,15 +204,11 @@ _ZNKSt6vectorIN5boost9container4test24movable_and_copyable_intESaIS3_EE12_M_chec
 
 vector.body289:                                   ; preds = %vector.body289, %.lr.ph.preheader
   %index290 = phi i64 [ 0, %.lr.ph.preheader ], [ %index.next293, %vector.body289 ] ; 2 uses
-  %vec.ind291 = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %.lr.ph.preheader ], [ %vec.ind.next294, %vector.body289 ] ; 3 uses
-  %2 = sub nsw <4 x i32> zeroinitializer, %vec.ind291
-  %3 = sub <4 x i32> splat (i32 -4), %vec.ind291
   %i.br = getelementptr inbounds nuw [4 x i8], ptr %i.bo, i64 %index290 ; 2 uses
   %i.bs = getelementptr inbounds nuw i8, ptr %i.br, i64 16
-  store <4 x i32> %2, ptr %i.br, align 4, !tbaa !13
-  store <4 x i32> %3, ptr %i.bs, align 4, !tbaa !13
+  store <4 x i32> zeroinitializer, ptr %i.br, align 4, !tbaa !13
+  store <4 x i32> zeroinitializer, ptr %i.bs, align 4, !tbaa !13
   %index.next293 = add nuw i64 %index290, 8       ; 2 uses
-  %vec.ind.next294 = add <4 x i32> %vec.ind291, splat (i32 8)
   %i.bt = icmp eq i64 %index.next293, %n.vec288
   br i1 %i.bt, label %middle.block295, label %vector.body289, !llvm.loop !21
 
@@ -235,11 +231,9 @@ bb.g:                                             ; preds = %_ZNKSt6vectorIN5boo
   br label %bb.r
 
 .lr.ph:                                           ; preds = %middle.block295, %.lr.ph
-  %indvars.iv218 = phi i64 [ %indvars.iv.next219, %.lr.ph ], [ %n.vec288, %middle.block295 ] ; 3 uses
-  %4 = trunc nuw i64 %indvars.iv218 to i32
-  %5 = sub nsw i32 0, %4
+  %indvars.iv218 = phi i64 [ %indvars.iv.next219, %.lr.ph ], [ %n.vec288, %middle.block295 ] ; 2 uses
   %i.by = getelementptr inbounds nuw [4 x i8], ptr %i.bo, i64 %indvars.iv218
-  store i32 %5, ptr %i.by, align 4, !tbaa !13
+  store i32 0, ptr %i.by, align 4, !tbaa !13
   %indvars.iv.next219 = add nuw nsw i64 %indvars.iv218, 1 ; 2 uses
   %exitcond221.not = icmp eq i64 %indvars.iv.next219, %wide.trip.count
   br i1 %exitcond221.not, label %.loopexit307, label %.lr.ph, !llvm.loop !24

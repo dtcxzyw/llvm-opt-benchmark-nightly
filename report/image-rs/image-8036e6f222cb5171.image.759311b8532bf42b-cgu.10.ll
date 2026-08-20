@@ -204,7 +204,7 @@ bb.a:
   br i1 %i.j, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %.lr.ph.split.us.i.i
-  %i.k = add i64 %.sroa.0.03.us.i.i, -16
+  %i.k = add nuw i64 %.sroa.0.03.us.i.i, -16
   %i.l = load i64, ptr %i.c, align 8, !noalias !152, !noundef !10
   %i.m = and i64 %i.l, %i.k
   store i8 -1, ptr %i.h, align 1, !noalias !152
@@ -236,7 +236,7 @@ bb.d:                                             ; preds = %bb.e, %.lr.ph.split
 
 bb.e:                                             ; preds = %.lr.ph.split.i.i
   %.neg.i.i = xor i64 %.sroa.0.03.i.i, -1
-  %i.x = add i64 %.sroa.0.03.i.i, -16
+  %i.x = add nuw i64 %.sroa.0.03.i.i, -16
   %i.y = load i64, ptr %i.c, align 8, !noalias !152, !noundef !10
   %i.z = and i64 %i.y, %i.x
   store i8 -1, ptr %i.u, align 1, !noalias !152
@@ -279,25 +279,23 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.g, %.lr.ph.i.i
-  %.sroa.0.01.i.i = phi i64 [ 0, %.lr.ph.i.i ], [ %i.a, %bb.g ] ; 3 uses
+  %.sroa.0.01.i.i = phi i64 [ 0, %.lr.ph.i.i ], [ %i.a, %bb.g ] ; 2 uses
   %i.a = add nuw i64 %.sroa.0.01.i.i, 1           ; 2 uses
-  %i.b = load ptr, ptr %.8.val, align 8, !nonnull !10, !noundef !10 ; 2 uses
+  %i.b = load ptr, ptr %.8.val, align 8, !nonnull !10, !noundef !10 ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 %.sroa.0.01.i.i
   %i.d = load i8, ptr %i.c, align 1, !noundef !10
   %i.e = icmp sgt i8 %i.d, -1
   br i1 %i.e, label %bb.c, label %bb.g
 
 bb.c:                                             ; preds = %bb.b
-  %0 = sub nsw i64 0, %.sroa.0.01.i.i
-  %1 = getelementptr inbounds [392 x i8], ptr %i.b, i64 %0 ; 3 uses
-  %i.f = getelementptr inbounds i8, ptr %1, i64 -392
+  %i.f = getelementptr inbounds i8, ptr %i.b, i64 -392
   invoke void @_RNvXsv_Cs8zlGlznUR0G_8smallvecINtB5_8SmallVecAhj18_ENtNtNtCsj6eKBz9Db1c_4core3ops4drop4Drop4dropCsa5QsYiPB8Gl_5image(ptr noalias nofree noundef nonnull align 8 dereferenceable(392) %i.f)
           to label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueTNtNtNtCsdsTQD3x2eOp_3exr4meta9attribute4TextNtBE_14AttributeValueEECsa5QsYiPB8Gl_5image.exit.i.i unwind label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.g = landingpad { ptr, i32 }
           cleanup
-  %i.h = getelementptr inbounds i8, ptr %1, i64 -352
+  %i.h = getelementptr inbounds i8, ptr %i.b, i64 -352
   invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCsdsTQD3x2eOp_3exr4meta9attribute14AttributeValueECsa5QsYiPB8Gl_5image(ptr noalias nofree noundef align 8 dereferenceable(352) %i.h) #28
           to label %bb.f unwind label %bb.e
 
@@ -311,7 +309,7 @@ bb.f:                                             ; preds = %bb.d
   resume { ptr, i32 } %i.g
 
 _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueTNtNtNtCsdsTQD3x2eOp_3exr4meta9attribute4TextNtBE_14AttributeValueEECsa5QsYiPB8Gl_5image.exit.i.i: ; preds = %bb.c
-  %i.j = getelementptr inbounds i8, ptr %1, i64 -352
+  %i.j = getelementptr inbounds i8, ptr %i.b, i64 -352
   tail call fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCsdsTQD3x2eOp_3exr4meta9attribute14AttributeValueECsa5QsYiPB8Gl_5image(ptr noalias nofree noundef align 8 dereferenceable(352) %i.j)
   br label %bb.g
 
@@ -714,7 +712,7 @@ bb.s:                                             ; preds = %bb.am
 
 .lr.ph239:                                        ; preds = %bb.r, %bb.s
   %.sroa.036.0.i238 = phi i16 [ %i.bv, %bb.s ], [ 0, %bb.r ]
-  %i.bv = add i16 %.sroa.036.0.i238, 1            ; 2 uses
+  %i.bv = add nuw i16 %.sroa.036.0.i238, 1        ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.x), !noalias !396
   store i16 0, ptr %i.x, align 2, !noalias !396
   %i.bw = call noundef ptr @_RNvXNtNtCs4wP2HXfJTCR_5alloc2io6cursorINtNtNtCsj6eKBz9Db1c_4core2io6cursor6CursorRShENtNtB4_4read4Read10read_exactCsa5QsYiPB8Gl_5image(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.ae, ptr noalias nofree noundef nonnull %i.x, i64 noundef 2), !noalias !400 ; 4 uses
@@ -1079,7 +1077,7 @@ bb.bg:                                            ; preds = %bb.ca
 
 .lr.ph:                                           ; preds = %bb.bf, %bb.bg
   %.sroa.036.0.i34236 = phi i16 [ %i.em, %bb.bg ], [ 0, %bb.bf ]
-  %i.em = add i16 %.sroa.036.0.i34236, 1          ; 2 uses
+  %i.em = add nuw i16 %.sroa.036.0.i34236, 1      ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j), !noalias !483
   store i16 0, ptr %i.j, align 2, !noalias !483
   %i.en = call noundef ptr @_RNvXNtNtCs4wP2HXfJTCR_5alloc2io6cursorINtNtNtCsj6eKBz9Db1c_4core2io6cursor6CursorRShENtNtB4_4read4Read10read_exactCsa5QsYiPB8Gl_5image(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.ae, ptr noalias nofree noundef nonnull %i.j, i64 noundef 2), !noalias !487 ; 4 uses
@@ -1482,7 +1480,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.i.new
   %i.u = bitcast <16 x i8> %.lobit.i.i.1 to <2 x i64>
   %i.v = or <2 x i64> %i.u, splat (i64 -9187201950435737472)
   store <2 x i64> %i.v, ptr %i.t, align 16
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.i.unr-lcssa, label %bb.b
 
@@ -1607,7 +1605,7 @@ bb.h:                                             ; preds = %_RNvMsa_NtCs37Y8JGf
 bb.i:                                             ; preds = %_RNvMsa_NtCs37Y8JGf013z_9hashbrown3rawNtB5_13RawTableInner17find_insert_index.exit
   %i.bu = lshr i64 %i.aj, 57
   %i.bv = trunc nuw nsw i64 %i.bu to i8           ; 2 uses
-  %i.bw = add i64 %.sroa.0.06, -16
+  %i.bw = add nuw i64 %.sroa.0.06, -16
   %i.bx = and i64 %.val14, %i.bw
   %i.by = getelementptr inbounds nuw i8, ptr %.val, i64 %.sroa.0.06
   store i8 %i.bv, ptr %i.by, align 1
@@ -1618,7 +1616,7 @@ bb.i:                                             ; preds = %_RNvMsa_NtCs37Y8JGf
   br label %bb.l
 
 bb.j:                                             ; preds = %bb.h
-  %i.cc = add i64 %.sroa.0.06, -16
+  %i.cc = add nuw i64 %.sroa.0.06, -16
   %i.cd = load i64, ptr %i.b, align 8, !noundef !10
   %i.ce = and i64 %i.cd, %i.cc
   %i.cf = load ptr, ptr %0, align 8, !nonnull !10, !noundef !10

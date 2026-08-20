@@ -201,12 +201,11 @@ _ZN7testing15AssertionResultD2Ev.exit335:         ; preds = %bb.bv, %_ZNKSt14def
 
 bb.bx:                                            ; preds = %bb.bx, %_ZN7testing15AssertionResultD2Ev.exit335
   %indvars.iv809 = phi i64 [ %indvars.iv.next810, %bb.bx ], [ 1, %_ZN7testing15AssertionResultD2Ev.exit335 ] ; 2 uses
-  %indvars.iv807 = phi i64 [ %indvars.iv.next808, %bb.bx ], [ 0, %_ZN7testing15AssertionResultD2Ev.exit335 ] ; 2 uses
-  %indvars.iv = phi i64 [ %indvars.iv.next.a, %bb.bx ], [ 7, %_ZN7testing15AssertionResultD2Ev.exit335 ] ; 2 uses
-  %indvars.iv.i.i354 = phi i64 [ %indvars.iv.next.i.i355, %bb.bx ], [ 0, %_ZN7testing15AssertionResultD2Ev.exit335 ] ; 3 uses
-  %indvars.iv.next.i.i355 = add nuw nsw i64 %indvars.iv.i.i354, 1
-  %indvars.iv.next.a = add i64 %indvars.iv, -1
-  %indvars.iv.next808 = add i64 %indvars.iv807, -1
+  %indvars.iv807 = phi i64 [ %indvars.iv.next808, %bb.bx ], [ 0, %_ZN7testing15AssertionResultD2Ev.exit335 ]
+  %indvars.iv = phi i64 [ %indvars.iv.next808, %bb.bx ], [ 7, %_ZN7testing15AssertionResultD2Ev.exit335 ]
+  %indvars.iv.i.i354 = phi i64 [ %indvars.iv.next.a, %bb.bx ], [ 0, %_ZN7testing15AssertionResultD2Ev.exit335 ] ; 3 uses
+  %indvars.iv.next.a = add nuw nsw i64 %indvars.iv.i.i354, 1
+  %indvars.iv.next808 = add i64 %indvars.iv, -1   ; 2 uses
   %indvars.iv.next810 = add nuw i64 %indvars.iv809, 1
   switch i64 %indvars.iv.i.i354, label %bb.bx [
     i64 10, label %.preheader.i.i357.preheader
@@ -214,8 +213,7 @@ bb.bx:                                            ; preds = %bb.bx, %_ZN7testing
   ]
 
 .preheader.i.i357.preheader:                      ; preds = %bb.bx, %bb.bx
-  %umin = call i64 @llvm.umin.i64(i64 %indvars.iv, i64 %indvars.iv807)
-  %i.hm = add i64 %umin, %indvars.iv809
+  %i.hm = add i64 %indvars.iv807, %indvars.iv809
   %i.hn = sub nsw i64 %i.hm, %indvars.iv.i.i354
   %sext20.i.i361 = shl i64 %i.hn, 32
   %i.ho = ashr exact i64 %sext20.i.i361, 32
@@ -618,12 +616,11 @@ _ZN7testing15AssertionResultD2Ev.exit558:         ; preds = %bb.eo, %_ZNKSt14def
 
 bb.eq:                                            ; preds = %bb.eq, %_ZN7testing15AssertionResultD2Ev.exit558
   %indvars.iv816 = phi i64 [ %indvars.iv.next817, %bb.eq ], [ 1, %_ZN7testing15AssertionResultD2Ev.exit558 ] ; 2 uses
-  %indvars.iv813 = phi i64 [ %indvars.iv.next814, %bb.eq ], [ 0, %_ZN7testing15AssertionResultD2Ev.exit558 ] ; 2 uses
-  %indvars.iv811 = phi i64 [ %indvars.iv.next812.a, %bb.eq ], [ 7, %_ZN7testing15AssertionResultD2Ev.exit558 ] ; 2 uses
-  %indvars.iv.i.i567 = phi i64 [ %indvars.iv.next.i.i568, %bb.eq ], [ 0, %_ZN7testing15AssertionResultD2Ev.exit558 ] ; 3 uses
-  %indvars.iv.next.i.i568 = add nuw nsw i64 %indvars.iv.i.i567, 1
-  %indvars.iv.next812.a = add i64 %indvars.iv811, -1
-  %indvars.iv.next814 = add i64 %indvars.iv813, -1
+  %indvars.iv813 = phi i64 [ %indvars.iv.next814, %bb.eq ], [ 0, %_ZN7testing15AssertionResultD2Ev.exit558 ]
+  %indvars.iv811 = phi i64 [ %indvars.iv.next814, %bb.eq ], [ 7, %_ZN7testing15AssertionResultD2Ev.exit558 ]
+  %indvars.iv.i.i567 = phi i64 [ %indvars.iv.next812.a, %bb.eq ], [ 0, %_ZN7testing15AssertionResultD2Ev.exit558 ] ; 3 uses
+  %indvars.iv.next812.a = add nuw nsw i64 %indvars.iv.i.i567, 1
+  %indvars.iv.next814 = add i64 %indvars.iv811, -1 ; 2 uses
   %indvars.iv.next817 = add nuw i64 %indvars.iv816, 1
   switch i64 %indvars.iv.i.i567, label %bb.eq [
     i64 10, label %.preheader.i.i570.preheader
@@ -631,8 +628,7 @@ bb.eq:                                            ; preds = %bb.eq, %_ZN7testing
   ]
 
 .preheader.i.i570.preheader:                      ; preds = %bb.eq, %bb.eq
-  %umin815 = call i64 @llvm.umin.i64(i64 %indvars.iv811, i64 %indvars.iv813)
-  %i.pu = add i64 %umin815, %indvars.iv816
+  %i.pu = add i64 %indvars.iv813, %indvars.iv816
   %i.pv = sub nsw i64 %i.pu, %indvars.iv.i.i567
   %sext20.i.i573 = shl i64 %i.pv, 32
   %i.pw = ashr exact i64 %sext20.i.i573, 32

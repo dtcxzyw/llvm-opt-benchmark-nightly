@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.f, %bb.e
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.preheader.loopexit.unr-lcssa, label %bb.c, !llvm.loop !188
 
@@ -372,7 +372,7 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h, %bb.g
   %indvars.iv.next.i.1 = add nuw nsw i64 %indvars.iv.i, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.preheader.i.loopexit.unr-lcssa, label %bb.e, !llvm.loop !188
 
@@ -775,7 +775,7 @@ bb.c:                                             ; preds = %._crit_edge
   %i.u = xor i64 %i.t, 126
   tail call fastcc void @"_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPN6google8protobuf8internal17TailCallTableInfo12FieldOptionsESt6vectorIS6_SaIS6_EEEElNS0_5__ops15_Iter_comp_iterIZNKS3_10Reflection18CreateTcParseTableEvE3$_0EEEvT_SH_T0_T1_"(ptr %.sroa.0155.3, ptr nonnull %.sroa.15.2, i64 noundef %i.u)
   %i.v = icmp sgt i64 %i.q, 384
-  %scevgep.i.i.i = getelementptr i8, ptr %.sroa.0155.3, i64 24 ; 2 uses
+  %scevgep.i.i.i = getelementptr i8, ptr %.sroa.0155.3, i64 24 ; 3 uses
   br i1 %i.v, label %.lr.ph.i.i.i.i, label %bb.i
 
 .lr.ph.i.i.i.i:                                   ; preds = %bb.c, %bb.h
@@ -894,7 +894,7 @@ bb.i:                                             ; preds = %bb.c
 
 .lr.ph.i32.i.i.i:                                 ; preds = %bb.i, %bb.o
   %.sroa.0.020.i33.i.i.i = phi ptr [ %.sroa.0.0.i45.i.i.i, %bb.o ], [ %scevgep.i.i.i, %bb.i ] ; 8 uses
-  %.pn19.i34.i.i.i = phi ptr [ %.sroa.0.020.i33.i.i.i, %bb.o ], [ %.sroa.0155.3, %bb.i ] ; 5 uses
+  %.pn19.i34.i.i.i = phi ptr [ %.sroa.0.020.i33.i.i.i, %bb.o ], [ %.sroa.0155.3, %bb.i ] ; 4 uses
   %.val.i.i35.i.i.i = load ptr, ptr %.sroa.0.020.i33.i.i.i, align 8, !tbaa !595 ; 2 uses
   %.val1.i.i36.i.i.i = load ptr, ptr %.sroa.0155.3, align 8, !tbaa !595
   %i.am = getelementptr i8, ptr %.val.i.i35.i.i.i, i64 4 ; 2 uses
@@ -908,16 +908,12 @@ bb.j:                                             ; preds = %.lr.ph.i32.i.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %1)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.020.i33.i.i.i, i64 24, i1 false), !tbaa.struct !598
   %i.ap = ptrtoint ptr %.sroa.0.020.i33.i.i.i to i64
-  %i.aq = sub i64 %i.ap, %i.p                     ; 4 uses
+  %i.aq = sub i64 %i.ap, %i.p                     ; 3 uses
   %i.ar = icmp sgt i64 %i.aq, 24
   br i1 %i.ar, label %bb.k, label %bb.l, !prof !7
 
 bb.k:                                             ; preds = %bb.j
-  %7 = getelementptr inbounds nuw i8, ptr %.pn19.i34.i.i.i, i64 48
-  %.neg24.i55.i.i.i = udiv exact i64 %i.aq, 24
-  %.neg24.neg.i56.i.i.i = sub nsw i64 0, %.neg24.i55.i.i.i
-  %8 = getelementptr inbounds [24 x i8], ptr %7, i64 %.neg24.neg.i56.i.i.i
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %8, ptr noundef nonnull align 8 dereferenceable(1) %.sroa.0155.3, i64 %i.aq, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep.i.i.i, ptr noundef nonnull align 8 dereferenceable(1) %.sroa.0155.3, i64 %i.aq, i1 false)
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN6google8protobuf8internal17TailCallTableInfo12FieldOptionsESt6vectorIS6_SaIS6_EEEESB_ET0_T_SD_SC_.exit.i54.i.i.i
 
 bb.l:                                             ; preds = %bb.j
@@ -1320,7 +1316,7 @@ bb.b:                                             ; preds = %bb.b, %.new
   store i64 0, ptr %i.ac, align 8, !tbaa !252
   %i.ad = load ptr, ptr %i.ab, align 8, !tbaa !250
   store i8 0, ptr %i.ad, align 1, !tbaa !31
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.unr-lcssa, label %bb.b, !llvm.loop !799
 

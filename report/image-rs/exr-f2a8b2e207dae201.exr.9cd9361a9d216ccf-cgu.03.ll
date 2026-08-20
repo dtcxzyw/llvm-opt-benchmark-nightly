@@ -204,12 +204,12 @@ bb.p:                                             ; preds = %bb.p, %.lr.ph.i.i.n
   %i.ei = bitcast <16 x i8> %.lobit.i.i.i.1 to <2 x i64>
   %i.ej = or <2 x i64> %i.ei, splat (i64 -9187201950435737472)
   store <2 x i64> %i.ej, ptr %i.eh, align 16, !noalias !44
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.i.i.unr-lcssa, label %bb.p
 
 .lr.ph.i13:                                       ; preds = %bb.x, %._crit_edge.i.i
-  %.sroa.0.06.i = phi i64 [ %i.ek, %bb.x ], [ 0, %._crit_edge.i.i ] ; 10 uses
+  %.sroa.0.06.i = phi i64 [ %i.ek, %bb.x ], [ 0, %._crit_edge.i.i ] ; 9 uses
   %i.ek = add nuw i64 %.sroa.0.06.i, 1
   %i.el = load ptr, ptr %0, align 8, !alias.scope !44, !nonnull !9, !noundef !9 ; 2 uses
   %i.em = getelementptr inbounds nuw i8, ptr %i.el, i64 %.sroa.0.06.i
@@ -221,13 +221,11 @@ bb.q:                                             ; preds = %.lr.ph.i13
   %.neg.i = xor i64 %.sroa.0.06.i, -1
   %.neg11.i = shl i64 %.neg.i, 3
   %i.eo = getelementptr inbounds i8, ptr %i.el, i64 %.neg11.i ; 2 uses
-  %4 = sub nsw i64 0, %.sroa.0.06.i
   br label %_RNvNtCsj6eKBz9Db1c_4core3ptr25swap_nonoverlapping_bytes.exit.i
 
 _RNvNtCsj6eKBz9Db1c_4core3ptr25swap_nonoverlapping_bytes.exit.i: ; preds = %bb.w, %bb.q
   %i.ep = load ptr, ptr %0, align 8, !alias.scope !47, !noalias !50, !nonnull !9, !noundef !9
-  %5 = getelementptr inbounds [8 x i8], ptr %i.ep, i64 %4
-  %i.eq = getelementptr inbounds i8, ptr %5, i64 -8
+  %i.eq = getelementptr inbounds i8, ptr %i.ep, i64 -8
   %i.er = invoke noundef i64 @_RINvYNtNtNtCsaKJjC64KgbL_3std4hash6random11RandomStateNtNtCsj6eKBz9Db1c_4core4hash11BuildHasher8hash_oneRRINtNtBU_6option6OptionNtNtNtCsdsTQD3x2eOp_3exr4meta9attribute4TextEEB28_(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %2, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.eq)
           to label %_RNCINvMs6_NtCs37Y8JGf013z_9hashbrown3rawINtB8_8RawTableTRINtNtCsj6eKBz9Db1c_4core6option6OptionNtNtNtCsdsTQD3x2eOp_3exr4meta9attribute4TextEuEE14reserve_rehashNCINvNtBa_3map11make_hasherBS_uNtNtNtCsaKJjC64KgbL_3std4hash6random11RandomStateE0E0B1B_.exit.i unwind label %bb.r ; 3 uses
 
@@ -313,7 +311,7 @@ bb.t:                                             ; preds = %_RNvMsa_NtCs37Y8JGf
 bb.u:                                             ; preds = %_RNvMsa_NtCs37Y8JGf013z_9hashbrown3rawNtB5_13RawTableInner17find_insert_index.exit.i
   %i.ge = lshr i64 %i.er, 57
   %i.gf = trunc nuw nsw i64 %i.ge to i8           ; 2 uses
-  %i.gg = add i64 %.sroa.0.06.i, -16
+  %i.gg = add nuw i64 %.sroa.0.06.i, -16
   %i.gh = and i64 %.val12.i, %i.gg
   %i.gi = getelementptr inbounds nuw i8, ptr %.val.i17, i64 %.sroa.0.06.i
   store i8 %i.gf, ptr %i.gi, align 1
@@ -324,7 +322,7 @@ bb.u:                                             ; preds = %_RNvMsa_NtCs37Y8JGf
   br label %bb.x
 
 bb.v:                                             ; preds = %bb.t
-  %i.gm = add i64 %.sroa.0.06.i, -16
+  %i.gm = add nuw i64 %.sroa.0.06.i, -16
   %i.gn = load i64, ptr %i.h, align 8, !alias.scope !44, !noundef !9
   %i.go = and i64 %i.gn, %i.gm
   %i.gp = load ptr, ptr %0, align 8, !alias.scope !44, !nonnull !9, !noundef !9
@@ -516,7 +514,7 @@ bb.a:
   br i1 %i.j, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %.lr.ph.split.us.i.i
-  %i.k = add i64 %.sroa.0.03.us.i.i, -16
+  %i.k = add nuw i64 %.sroa.0.03.us.i.i, -16
   %i.l = load i64, ptr %i.c, align 8, !noalias !59, !noundef !9
   %i.m = and i64 %i.l, %i.k
   store i8 -1, ptr %i.h, align 1, !noalias !59
@@ -548,7 +546,7 @@ bb.d:                                             ; preds = %bb.e, %.lr.ph.split
 
 bb.e:                                             ; preds = %.lr.ph.split.i.i
   %.neg.i.i = xor i64 %.sroa.0.03.i.i, -1
-  %i.x = add i64 %.sroa.0.03.i.i, -16
+  %i.x = add nuw i64 %.sroa.0.03.i.i, -16
   %i.y = load i64, ptr %i.c, align 8, !noalias !59, !noundef !9
   %i.z = and i64 %i.y, %i.x
   store i8 -1, ptr %i.u, align 1, !noalias !59

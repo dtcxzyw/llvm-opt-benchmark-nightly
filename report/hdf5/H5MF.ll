@@ -196,9 +196,9 @@ select.unfold.thread:                             ; preds = %.critedge
   br label %bb.k
 
 bb.i:                                             ; preds = %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c
-  %i.y = phi i32 [ %i.l, %bb.c ], [ %i.j, %bb.h ], [ %i.j, %bb.g ], [ %i.j, %bb.f ], [ %i.j, %bb.e ], [ %i.j, %bb.d ] ; 5 uses
+  %i.y = phi i32 [ %i.l, %bb.c ], [ %i.j, %bb.h ], [ %i.j, %bb.g ], [ %i.j, %bb.f ], [ %i.j, %bb.e ], [ %i.j, %bb.d ] ; 3 uses
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 1880
-  %i.aa = load i32, ptr %i.z, align 4, !tbaa !14  ; 4 uses
+  %i.aa = load i32, ptr %i.z, align 4, !tbaa !14  ; 2 uses
   %i.ab = icmp eq i32 %i.aa, %i.y
   br i1 %i.ab, label %select.unfold, label %.preheader.1
 
@@ -206,21 +206,9 @@ bb.i:                                             ; preds = %bb.h, %bb.g, %bb.f,
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 1876
   %i.ad = load i32, ptr %i.ac, align 4, !tbaa !14
   %.not35.1 = icmp eq i32 %i.ad, %i.y
-  br i1 %.not35.1, label %.preheader.4, label %select.unfold
+  br i1 %.not35.1, label %bb.j, label %select.unfold
 
-.preheader.4:                                     ; preds = %.preheader.1
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 1888
-  %2 = load i32, ptr %1, align 4, !tbaa !14
-  %.not35.4 = icmp eq i32 %2, %i.y
-  br i1 %.not35.4, label %.preheader.5, label %select.unfold
-
-.preheader.5:                                     ; preds = %.preheader.4
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 1892
-  %4 = load i32, ptr %3, align 4, !tbaa !14
-  %.not35.5 = icmp eq i32 %4, %i.y
-  br i1 %.not35.5, label %bb.j, label %select.unfold
-
-bb.j:                                             ; preds = %.preheader.5
+bb.j:                                             ; preds = %.preheader.1
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 1840
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(28) %i.ae, i8 1, i64 28, i1 false)
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 1852
@@ -229,11 +217,11 @@ bb.j:                                             ; preds = %.preheader.5
   store i32 2, ptr %i.ag, align 8, !tbaa !14
   br label %bb.m
 
-select.unfold:                                    ; preds = %.preheader.1, %.preheader.4, %.preheader.5, %bb.i
-  %5 = phi i32 [ %i.y, %bb.i ], [ %i.aa, %.preheader.1 ], [ %i.aa, %.preheader.5 ], [ %i.aa, %.preheader.4 ]
+select.unfold:                                    ; preds = %.preheader.1, %bb.i
+  %1 = phi i32 [ %i.y, %bb.i ], [ %i.aa, %.preheader.1 ]
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 1840
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(28) %i.ah, i8 0, i64 28, i1 false)
-  switch i32 %5, label %bb.m [
+  switch i32 %1, label %bb.m [
     i32 3, label %bb.k
     i32 0, label %bb.k
   ]

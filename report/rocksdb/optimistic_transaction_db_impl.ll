@@ -204,13 +204,12 @@ bb.e:                                             ; preds = %bb.c
 
 .preheader.i.i.i.i:                               ; preds = %bb.e, %.preheader.i.i.i.i
   %.idx8.i.i.i.i = phi i64 [ %.add9.i.i.i.i, %.preheader.i.i.i.i ], [ %.idx.i.i.i.i, %bb.e ]
-  %.add9.i.i.i.i = add nsw i64 %.idx8.i.i.i.i, -40 ; 3 uses
+  %.add9.i.i.i.i = add nuw nsw i64 %.idx8.i.i.i.i, -40 ; 2 uses
   %.ptr11.i.i.i.i = getelementptr inbounds i8, ptr %i.o, i64 %.add9.i.i.i.i
   tail call void @_ZN7rocksdb4port5MutexD1Ev(ptr noundef nonnull align 8 dead_on_return(40) dereferenceable(40) %.ptr11.i.i.i.i) #22
-  %4 = icmp eq i64 %.add9.i.i.i.i, 8
-  br i1 %4, label %.loopexit.i.i.i.i, label %.preheader.i.i.i.i
+  br label %.preheader.i.i.i.i
 
-.loopexit.i.i.i.i:                                ; preds = %.preheader.i.i.i.i, %bb.e
+.loopexit.i.i.i.i:                                ; preds = %bb.e
   tail call void @_ZdaPvm(ptr noundef nonnull %i.o, i64 noundef %i.n) #21
   br label %_ZNSt15__allocated_ptrISaISt23_Sp_counted_ptr_inplaceIN7rocksdb18OccLockBucketsImplILb0EEESaIvELN9__gnu_cxx12_Lock_policyE2EEEED2Ev.exit9
 

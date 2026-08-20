@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   br label %_ZNSt6vectorIPN6casadi6SXElemESaIS2_EED2Ev.exit
 
 bb.e:                                             ; preds = %.lr.ph321, %bb.bh
-  %.0111319 = phi i64 [ 0, %.lr.ph321 ], [ %i.ip, %bb.bh ] ; 4 uses
+  %.0111319 = phi i64 [ 0, %.lr.ph321 ], [ %i.ip, %bb.bh ] ; 3 uses
   %i.ad = icmp eq i64 %.0111319, 0                ; 3 uses
   %i.ae = load i64, ptr %i.d, align 8, !tbaa !151 ; 5 uses
   br i1 %i.ad, label %bb.f, label %.preheader235
@@ -607,9 +607,7 @@ _ZN6casadi14casadi_projectINS_6SXElemEEEvPKT_PKxPS2_S6_S7_.exit196: ; preds = %.
 bb.aq:                                            ; preds = %._crit_edge307
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #20
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #20
-  %16 = add nsw i64 %.0111319, -1
-  %17 = uitofp nneg i64 %16 to double
-  invoke void @_ZN6casadi6SXElemC1Ed(ptr noundef nonnull align 8 dereferenceable(8) %14, double noundef %17)
+  invoke void @_ZN6casadi6SXElemC1Ed(ptr noundef nonnull align 8 dereferenceable(8) %14, double noundef f0x43F0000000000000)
           to label %bb.ar unwind label %bb.as
 
 bb.ar:                                            ; preds = %bb.aq
@@ -1012,7 +1010,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit207: ; preds = %.b
 bb.r:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit204, %bb.bp
   %i.gz = phi i64 [ %i.et, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit204 ], [ %i.tj, %bb.bp ]
   %.068583 = phi i64 [ 0, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit204 ], [ %i.td, %bb.bp ] ; 7 uses
-  %i.ha = sub nsw i64 1, %.068583
+  %i.ha = sub nuw nsw i64 1, %.068583
   %i.hb = select i1 %i.dc, i64 %i.ha, i64 %.068583 ; 2 uses
   br i1 %i.dc, label %bb.v, label %bb.s
 

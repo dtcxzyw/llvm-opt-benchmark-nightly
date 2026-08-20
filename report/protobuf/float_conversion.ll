@@ -204,14 +204,12 @@ bb.i:                                             ; preds = %_ZN4absl12lts_20250
 
 .preheader.i:                                     ; preds = %bb.i, %.preheader.i
   %.095102.i = phi i64 [ %i.bi, %.preheader.i ], [ %i.bh, %bb.i ]
-  %4 = phi i32 [ %5, %.preheader.i ], [ 0, %bb.i ]
   %i.bi = mul nuw i64 %.095102.i, 10              ; 3 uses
-  %5 = add nsw i32 %4, -1                         ; 2 uses
   %.not57.i = icmp ugt i64 %i.bi, %i.as
   br i1 %.not57.i, label %.loopexit.i, label %.preheader.i, !llvm.loop !58
 
 .loopexit.i:                                      ; preds = %.preheader.i
-  store i32 %5, ptr %3, align 4, !tbaa !3
+  store i32 -1, ptr %3, align 4, !tbaa !3
   br label %bb.j
 
 bb.j:                                             ; preds = %.loopexit.i, %bb.i
@@ -563,14 +561,12 @@ bb.ab:                                            ; preds = %_ZN4absl12lts_20250
 
 .preheader.i28:                                   ; preds = %bb.ab, %.preheader.i28
   %.094101.i = phi i128 [ %i.gh, %.preheader.i28 ], [ %i.gg, %bb.ab ]
-  %6 = phi i32 [ %7, %.preheader.i28 ], [ 0, %bb.ab ]
   %i.gh = mul nuw i128 %.094101.i, 10             ; 3 uses
-  %7 = add nsw i32 %6, -1                         ; 2 uses
   %.not57.i29 = icmp ugt i128 %i.gh, %i.fr
   br i1 %.not57.i29, label %.loopexit.i30, label %.preheader.i28, !llvm.loop !65
 
 .loopexit.i30:                                    ; preds = %.preheader.i28
-  store i32 %7, ptr %3, align 4, !tbaa !3
+  store i32 -1, ptr %3, align 4, !tbaa !3
   br label %bb.ac
 
 bb.ac:                                            ; preds = %.loopexit.i30, %bb.ab
@@ -973,7 +969,7 @@ bb.b:                                             ; preds = %.unr-lcssa, %.prehe
   %i.az = trunc i64 %i.ay to i32
   store i32 %i.az, ptr %i.au, align 4, !tbaa !3
   %i.ba = lshr i64 %i.ay, 32                      ; 3 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.unr-lcssa, label %.preheader.i.i.i.i.i.i, !llvm.loop !128
 
@@ -1376,14 +1372,12 @@ bb.i:                                             ; preds = %_ZN4absl12lts_20250
 
 .preheader.i:                                     ; preds = %bb.i, %.preheader.i
   %.094101.i = phi i64 [ %i.bi, %.preheader.i ], [ %i.bh, %bb.i ]
-  %5 = phi i32 [ %6, %.preheader.i ], [ 0, %bb.i ]
   %i.bi = mul nuw i64 %.094101.i, 10              ; 3 uses
-  %6 = add nsw i32 %5, -1                         ; 2 uses
   %.not57.i = icmp ugt i64 %i.bi, %i.as
   br i1 %.not57.i, label %.loopexit.i, label %.preheader.i, !llvm.loop !179
 
 .loopexit.i:                                      ; preds = %.preheader.i
-  store i32 %6, ptr %4, align 4, !tbaa !3
+  store i32 -1, ptr %4, align 4, !tbaa !3
   br label %bb.j
 
 bb.j:                                             ; preds = %.loopexit.i, %bb.i
@@ -1719,14 +1713,12 @@ bb.ab:                                            ; preds = %_ZN4absl12lts_20250
 
 .preheader.i45:                                   ; preds = %bb.ab, %.preheader.i45
   %.094101.i46 = phi i128 [ %i.gb, %.preheader.i45 ], [ %i.ga, %bb.ab ]
-  %7 = phi i32 [ %8, %.preheader.i45 ], [ 0, %bb.ab ]
   %i.gb = mul nuw i128 %.094101.i46, 10           ; 3 uses
-  %8 = add nsw i32 %7, -1                         ; 2 uses
   %.not57.i47 = icmp ugt i128 %i.gb, %i.fn
   br i1 %.not57.i47, label %.loopexit.i48, label %.preheader.i45, !llvm.loop !183
 
 .loopexit.i48:                                    ; preds = %.preheader.i45
-  store i32 %8, ptr %4, align 4, !tbaa !3
+  store i32 -1, ptr %4, align 4, !tbaa !3
   br label %bb.ac
 
 bb.ac:                                            ; preds = %.loopexit.i48, %bb.ab

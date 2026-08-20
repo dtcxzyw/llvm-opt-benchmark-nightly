@@ -204,7 +204,7 @@ bb.h:                                             ; preds = %bb.h, %.lr.ph.new
   %i.ap = getelementptr inbounds nuw [32 x i8], ptr %i.ac, i64 %indvars.iv.next.2
   store ptr %i.ao, ptr %i.ap, align 8, !tbaa !105
   %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %._crit_edge.loopexit.unr-lcssa, label %bb.h, !llvm.loop !190
 
@@ -607,7 +607,7 @@ bb.o:                                             ; preds = %bb.o, %.lr.ph.i.new
   %i.cv = getelementptr inbounds nuw [8 x i8], ptr %i.ce, i64 %indvars.iv.next.i.2
   store ptr %i.cu, ptr %i.cv, align 8, !tbaa !60
   %indvars.iv.next.i.3 = add nuw nsw i64 %indvars.iv.i, 4 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %._crit_edge.i.loopexit.unr-lcssa, label %bb.o, !llvm.loop !333
 
@@ -726,7 +726,7 @@ bb.v:                                             ; preds = %bb.u
 
 bb.w:                                             ; preds = %bb.v, %bb.u
   %indvars.iv.next.i.i.1 = add nuw nsw i64 %indvars.iv.i.i, 2 ; 2 uses
-  %niter83.next.1 = add i64 %niter83, 2           ; 2 uses
+  %niter83.next.1 = add nuw i64 %niter83, 2       ; 2 uses
   %niter83.ncmp.1 = icmp eq i64 %niter83.next.1, %unroll_iter82
   br i1 %niter83.ncmp.1, label %zend_jit_setup_hot_counters_ex.exit.i.loopexit.unr-lcssa, label %bb.s, !llvm.loop !341
 
@@ -1129,7 +1129,7 @@ bb.ab:                                            ; preds = %bb.ab, %.lr.ph187.n
   %i.en = getelementptr inbounds [8 x i8], ptr %i.em, i64 %i.da
   store ptr null, ptr %i.en, align 8, !tbaa !146
   %indvars.iv.next236.3 = add nuw nsw i64 %indvars.iv235, 4 ; 2 uses
-  %niter319.next.3 = add i64 %niter319, 4         ; 2 uses
+  %niter319.next.3 = add nuw i64 %niter319, 4     ; 2 uses
   %niter319.ncmp.3 = icmp eq i64 %niter319.next.3, %unroll_iter318
   br i1 %niter319.ncmp.3, label %.loopexit166.loopexit.unr-lcssa, label %bb.ab, !llvm.loop !356
 
@@ -1407,7 +1407,7 @@ bb.aq:                                            ; preds = %bb.aq, %.lr.ph205.n
   %i.iy = getelementptr inbounds [8 x i8], ptr %i.ix, i64 %i.ie
   store ptr null, ptr %i.iy, align 8, !tbaa !146
   %indvars.iv.next233.3 = add nuw nsw i64 %indvars.iv232, 4 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.loopexit.loopexit.unr-lcssa, label %bb.aq, !llvm.loop !367
 
@@ -1810,7 +1810,7 @@ define hidden range(i32 -1, 1) i32 @zend_jit_check_support() local_unnamed_addr 
 bb.a:
   %i.a = load ptr, ptr @zend_execute_ex, align 8, !tbaa !60
   %.not = icmp eq ptr %i.a, @execute_ex
-  br i1 %.not, label %.preheader, label %bb.b
+  br i1 %.not, label %bb.d, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.b = load i8, ptr @zend_dtrace_enabled, align 1, !tbaa !446, !range !81, !noundef !82
@@ -1823,22 +1823,17 @@ bb.c:                                             ; preds = %bb.b
   %.not7 = icmp eq i32 %i.e, 0
   br i1 %.not7, label %.sink.split9, label %.sink.split9.sink.split
 
-.preheader:                                       ; preds = %bb.a, %bb.e
-  %.08 = phi i32 [ %i.h, %bb.e ], [ 0, %bb.a ]    ; 3 uses
-  %.0.off = add nsw i32 %.08, -57
-  %switch = icmp ult i32 %.0.off, 2
-  br i1 %switch, label %bb.e, label %bb.d
-
-bb.d:                                             ; preds = %.preheader
+bb.d:                                             ; preds = %bb.a, %bb.e
+  %.08 = phi i32 [ %i.h, %bb.e ], [ 0, %bb.a ]    ; 2 uses
   %i.f = trunc i32 %.08 to i8
   %i.g = tail call ptr @zend_get_user_opcode_handler(i8 noundef zeroext %i.f) #34
   %.not6 = icmp eq ptr %i.g, null
   br i1 %.not6, label %bb.e, label %.sink.split9.sink.split
 
-bb.e:                                             ; preds = %.preheader, %bb.d
+bb.e:                                             ; preds = %bb.d
   %i.h = add nuw nsw i32 %.08, 1                  ; 2 uses
   %exitcond.not = icmp eq i32 %i.h, 257
-  br i1 %exitcond.not, label %bb.f, label %.preheader, !llvm.loop !450
+  br i1 %exitcond.not, label %bb.f, label %bb.d, !llvm.loop !450
 
 bb.f:                                             ; preds = %bb.e
   %i.i = load i64, ptr getelementptr inbounds nuw (i8, ptr @jit_globals, i64 16), align 8, !tbaa !451
@@ -2241,7 +2236,7 @@ bb.hw:                                            ; preds = %bb.hv
 
 bb.hx:                                            ; preds = %bb.hw, %bb.hv, %bb.hu
   %indvars.iv.next1163.i.1 = add nuw nsw i64 %indvars.iv1162.i, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.loopexit.i.loopexit.unr-lcssa, label %bb.hr, !llvm.loop !507
 
@@ -2644,7 +2639,7 @@ bb.dp:                                            ; preds = %zend_arena_alloc.ex
   %i.zi = getelementptr inbounds nuw i8, ptr %i.ze, i64 12
   store i32 -1, ptr %i.zi, align 4, !tbaa !251
   %indvars.iv.next329.1 = add nuw nsw i64 %indvars.iv328, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.preheader137.loopexit.unr-lcssa, label %.lr.ph202, !llvm.loop !577
 
@@ -3047,7 +3042,7 @@ bb.b:                                             ; preds = %bb.b, %.new
   %i.aj = load i64, ptr %i.ai, align 8, !tbaa !298
   %i.ak = add i64 %i.aj, %i.ab                    ; 3 uses
   %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %zend_string_alloc.exit.unr-lcssa, label %bb.b, !llvm.loop !745
 
@@ -3450,7 +3445,7 @@ bb.j:                                             ; preds = %bb.j, %.lr.ph.i10.n
   %i.aq = getelementptr inbounds nuw [32 x i8], ptr %i.ad, i64 %indvars.iv.next.i12.2
   store ptr %i.ap, ptr %i.aq, align 8, !tbaa !105
   %indvars.iv.next.i12.3 = add nuw nsw i64 %indvars.iv.i11, 4 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %._crit_edge.i.loopexit.unr-lcssa, label %bb.j, !llvm.loop !774
 
@@ -3574,7 +3569,7 @@ bb.r:                                             ; preds = %bb.q
 
 bb.s:                                             ; preds = %bb.r, %bb.q
   %indvars.iv.next.i.i.1 = add nuw nsw i64 %indvars.iv.i.i, 2 ; 2 uses
-  %niter21.next.1 = add i64 %niter21, 2           ; 2 uses
+  %niter21.next.1 = add nuw i64 %niter21, 2       ; 2 uses
   %niter21.ncmp.1 = icmp eq i64 %niter21.next.1, %unroll_iter20
   br i1 %niter21.ncmp.1, label %zend_jit_restart_hot_counters.exit.loopexit.unr-lcssa, label %bb.o, !llvm.loop !341
 

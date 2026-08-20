@@ -94,6 +94,7 @@ bb.a:
   br i1 %.not53, label %.loopexit, label %.preheader48.split.us.preheader
 
 .preheader48.split.us.preheader:                  ; preds = %.preheader48
+  %wide.trip.count60 = zext i32 %.pre59 to i64
   %wide.trip.count = zext i32 %.fr52 to i64
   %exitcond57.not64 = icmp eq i32 %.pre59, 0
   br i1 %exitcond57.not64, label %.loopexit, label %.preheader.us.preheader
@@ -111,10 +112,7 @@ bb.b:                                             ; preds = %bb.c
 
 bb.c:                                             ; preds = %.preheader.us, %bb.b
   %indvars.iv = phi i64 [ 0, %.preheader.us ], [ %indvars.iv.next, %bb.b ] ; 2 uses
-  %5 = trunc nuw i64 %indvars.iv to i32
-  %6 = add i32 %i.m, %5
-  %7 = zext i32 %6 to i64
-  %i.i = getelementptr inbounds nuw [4 x i8], ptr %i.f, i64 %7
+  %i.i = getelementptr inbounds nuw [4 x i8], ptr %invariant.gep, i64 %indvars.iv
   %i.j = load float, ptr %i.i, align 4, !tbaa !35 ; 2 uses
   %i.k = fcmp olt float %i.j, %i.h
   %i.l = fcmp ogt float %i.j, %i.g
@@ -122,13 +120,17 @@ bb.c:                                             ; preds = %.preheader.us, %bb.
   br i1 %or.cond.us, label %.thread45, label %bb.b
 
 .preheader.us:                                    ; preds = %.preheader.us.preheader, %._crit_edge.us
-  %.038.us65 = phi i32 [ %8, %._crit_edge.us ], [ 0, %.preheader.us.preheader ] ; 3 uses
-  %i.m = mul i32 %.038.us65, %.fr52
+  %.038.us65 = phi i32 [ %6, %._crit_edge.us ], [ 0, %.preheader.us.preheader ] ; 2 uses
+  %indvars.iv5769 = phi i64 [ %indvars.iv.next58, %._crit_edge.us ], [ 0, %.preheader.us.preheader ]
+  %i.m = mul i32 %.fr52, %.038.us65
+  %5 = zext i32 %i.m to i64
+  %invariant.gep = getelementptr inbounds nuw [4 x i8], ptr %i.f, i64 %5
   br label %bb.c
 
 ._crit_edge.us:                                   ; preds = %bb.b
-  %8 = add i32 %.038.us65, 1                      ; 2 uses
-  %exitcond57.not = icmp eq i32 %8, %.pre59
+  %indvars.iv.next58 = add nuw nsw i64 %indvars.iv5769, 1 ; 3 uses
+  %6 = trunc nuw i64 %indvars.iv.next58 to i32
+  %exitcond57.not = icmp eq i64 %indvars.iv.next58, %wide.trip.count60
   br i1 %exitcond57.not, label %.loopexit, label %.preheader.us
 
 .thread45:                                        ; preds = %bb.c

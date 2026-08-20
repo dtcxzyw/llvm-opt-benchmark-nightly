@@ -204,18 +204,17 @@ _ZNSt8__detail14__to_chars_lenImEEjT_i.exit.i:    ; preds = %bb.av
 bb.aw:                                            ; preds = %_ZNSt8__detail14__to_chars_lenImEEjT_i.exit.i
   %i.mp = load ptr, ptr %23, align 8, !tbaa !27, !alias.scope !71 ; 6 uses
   %i.mq = getelementptr inbounds nuw i8, ptr %23, i64 8
-  %i.mr = load i64, ptr %i.mq, align 8, !tbaa !14, !alias.scope !71 ; 4 uses
+  %i.mr = load i64, ptr %i.mq, align 8, !tbaa !14, !alias.scope !71 ; 3 uses
   %i.ms = add i64 %i.mr, 4294967295
-  %i.mt = and i64 %i.ms, 4294967295
+  %i.mt = and i64 %i.ms, 4294967295               ; 2 uses
   %i.mu = getelementptr inbounds nuw i8, ptr %i.mp, i64 %i.mt
   store i8 48, ptr %i.mu, align 1, !tbaa !17
   %i.mv = add i64 %i.mr, 4294967294
   %i.mw = and i64 %i.mv, 4294967295
   %i.mx = getelementptr inbounds nuw i8, ptr %i.mp, i64 %i.mw
   store i8 48, ptr %i.mx, align 1, !tbaa !17
-  %50 = add i64 %i.mr, 4294967293
-  %51 = and i64 %50, 4294967295
-  %i.my = getelementptr inbounds nuw i8, ptr %i.mp, i64 %51
+  %50 = getelementptr i8, ptr %i.mp, i64 %i.mt
+  %i.my = getelementptr i8, ptr %50, i64 -2
   store i8 48, ptr %i.my, align 1, !tbaa !17
   %i.mz = add i64 %i.mr, 4294967292
   %i.na = and i64 %i.mz, 4294967295

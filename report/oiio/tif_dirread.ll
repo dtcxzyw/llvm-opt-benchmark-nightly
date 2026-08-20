@@ -203,7 +203,7 @@ bb.i:                                             ; preds = %bb.g, %bb.h
 
 .peel.next:                                       ; preds = %bb.i, %bb.m
   %i.af = phi i32 [ %i.au, %bb.m ], [ %i.ad, %bb.i ]
-  %.06585 = phi i32 [ %i.at, %bb.m ], [ 1, %bb.i ] ; 6 uses
+  %.06585 = phi i32 [ %i.at, %bb.m ], [ 1, %bb.i ] ; 5 uses
   %i.ag = add i32 %i.af, -1
   %i.ah = icmp eq i32 %.06585, %i.ag
   %i.ai = tail call fastcc i64 @_TIFFGetStrileOffsetOrByteCountValue(ptr noundef nonnull %0, i32 noundef %.06585, ptr noundef nonnull %i.b, ptr noundef nonnull %i.c, ptr noundef null) ; 2 uses
@@ -224,9 +224,8 @@ bb.k:                                             ; preds = %.peel.next
 
 bb.l:                                             ; preds = %bb.k
   %i.ap = tail call fastcc i64 @_TIFFGetStrileOffsetOrByteCountValue(ptr noundef nonnull %0, i32 noundef %.06585, ptr noundef nonnull %i.u, ptr noundef nonnull %i.v, ptr noundef null)
-  %1 = add i32 %.06585, -1                        ; 2 uses
-  %i.aq = tail call fastcc i64 @_TIFFGetStrileOffsetOrByteCountValue(ptr noundef nonnull %0, i32 noundef %1, ptr noundef nonnull %i.u, ptr noundef nonnull %i.v, ptr noundef null)
-  %i.ar = tail call fastcc i64 @_TIFFGetStrileOffsetOrByteCountValue(ptr noundef nonnull %0, i32 noundef %1, ptr noundef nonnull %i.b, ptr noundef nonnull %i.c, ptr noundef null)
+  %i.aq = tail call fastcc i64 @_TIFFGetStrileOffsetOrByteCountValue(ptr noundef nonnull %0, i32 noundef -1, ptr noundef nonnull %i.u, ptr noundef nonnull %i.v, ptr noundef null)
+  %i.ar = tail call fastcc i64 @_TIFFGetStrileOffsetOrByteCountValue(ptr noundef nonnull %0, i32 noundef -1, ptr noundef nonnull %i.b, ptr noundef nonnull %i.c, ptr noundef null)
   %i.as = add i64 %i.ar, %i.aq
   %.not77 = icmp eq i64 %i.ap, %i.as
   br i1 %.not77, label %bb.m, label %.thread
@@ -629,7 +628,7 @@ bb.i:                                             ; preds = %bb.h
   %i.am = add i64 %i.ah, %spec.select.1           ; 2 uses
   %i.an = sub i64 %i.ai, %spec.select.1           ; 2 uses
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.unr-lcssa, label %.preheader
 

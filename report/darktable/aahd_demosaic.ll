@@ -203,7 +203,7 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph363, %._crit_edge360
   %indvars.iv = phi i32 [ 4, %.lr.ph363 ], [ %indvars.iv.next, %._crit_edge360 ] ; 3 uses
   %i.l = phi ptr [ %i.b, %.lr.ph363 ], [ %i.kn, %._crit_edge360 ] ; 5 uses
-  %.0322361 = phi i32 [ 0, %.lr.ph363 ], [ %i.km, %._crit_edge360 ] ; 12 uses
+  %.0322361 = phi i32 [ 0, %.lr.ph363 ], [ %i.km, %._crit_edge360 ] ; 11 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 544
   %i.n = load i32, ptr %i.m, align 8, !tbaa !95   ; 4 uses
   %.not.i = icmp eq i32 %i.n, 0
@@ -280,11 +280,10 @@ _ZN6LibRaw3FCFEii.exit.i335:                      ; preds = %bb.h
   %i.ar = getelementptr inbounds nuw i8, ptr %i.an, i64 381828
   %i.as = load i32, ptr %i.ar, align 4, !tbaa !98
   %.not.i.i334 = icmp eq i32 %i.as, 0             ; 3 uses
-  %1 = add nsw i32 %.0322361, -1
   %i.at = xor i32 %i.ao, -1
   %i.au = lshr i32 %.0322361, 1
   %i.av = add nsw i32 %i.au, %i.at
-  %.sink13.i.i336 = select i1 %.not.i.i334, i32 %1, i32 %i.av
+  %.sink13.i.i336 = select i1 %.not.i.i334, i32 -1, i32 %i.av
   %.sink.i.i337 = select i1 %.not.i.i334, i32 %i.ao, i32 %.0322361
   %.sink11.i.i338 = select i1 %.not.i.i334, i32 %.0322361, i32 %.0.i403408
   %i.aw = zext i16 %i.aq to i32
@@ -687,8 +686,8 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.e, %.lr.ph.i
   %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.e ] ; 2 uses
-  %i.v = trunc nuw nsw i64 %indvars.iv.i to i32
-  %.reass.i = add i32 %invariant.op.i, %i.v
+  %i.v = trunc i64 %indvars.iv.i to i32
+  %.reass.i = add nuw i32 %invariant.op.i, %i.v
   %i.w = sext i32 %.reass.i to i64                ; 3 uses
   %i.x = getelementptr inbounds [6 x i8], ptr %i.g, i64 %i.w ; 3 uses
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 4 ; 2 uses
@@ -781,7 +780,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %bb.e
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.e ] ; 2 uses
-  %i.q = trunc nuw nsw i64 %indvars.iv to i32
+  %i.q = trunc i64 %indvars.iv to i32
   %.reass = add i32 %invariant.op, %i.q
   %i.r = sext i32 %.reass to i64                  ; 3 uses
   %i.s = getelementptr inbounds [6 x i8], ptr %i.g, i64 %i.r ; 3 uses

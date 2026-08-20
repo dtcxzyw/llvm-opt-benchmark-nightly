@@ -204,7 +204,7 @@ middle.block:                                     ; preds = %vector.body
   %i.bf = icmp eq i8 %i.be, %i.an
   %i.bg = zext i1 %i.bf to i32
   %spec.select.i = add i32 %.079.i, %i.bg         ; 2 uses
-  %indvars.iv.next.i = add i64 %indvars.iv.i, 1   ; 2 uses
+  %indvars.iv.next.i = add nuw i64 %indvars.iv.i, 1 ; 2 uses
   %i.bh = and i64 %indvars.iv.next.i, 4294967295
   %i.bi = icmp ugt i64 %i.n, %i.bh
   br i1 %i.bi, label %.lr.ph.i, label %_ZN5boost13re_detail_50011count_charsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEcEEjRKT_T0_.exit, !llvm.loop !1810
@@ -270,7 +270,7 @@ scalar.ph106:                                     ; preds = %scalar.ph106.prehea
   %i.cb = icmp eq i8 %i.ca, %i.an
   %i.cc = zext i1 %i.cb to i32
   %spec.select.i36 = add i32 %.079.i35, %i.cc     ; 2 uses
-  %indvars.iv.next.i37 = add i64 %indvars.iv.i34, 1 ; 2 uses
+  %indvars.iv.next.i37 = add nuw i64 %indvars.iv.i34, 1 ; 2 uses
   %i.cd = and i64 %indvars.iv.next.i37, 4294967295
   %i.ce = icmp ugt i64 %.fr80, %i.cd
   br i1 %i.ce, label %scalar.ph106, label %_ZN5boost13re_detail_50011count_charsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEcEEjRKT_T0_.exit39, !llvm.loop !1812
@@ -338,7 +338,7 @@ middle.block138:                                  ; preds = %vector.body131
   %i.cx = icmp eq i8 %i.cw, %i.an
   %i.cy = zext i1 %i.cx to i32
   %spec.select.i44 = add i32 %.079.i43, %i.cy     ; 2 uses
-  %indvars.iv.next.i45 = add i64 %indvars.iv.i42, 1 ; 2 uses
+  %indvars.iv.next.i45 = add nuw i64 %indvars.iv.i42, 1 ; 2 uses
   %i.cz = and i64 %indvars.iv.next.i45, 4294967295
   %i.da = icmp samesign ugt i64 %i.n, %i.cz
   br i1 %i.da, label %.lr.ph.i41, label %_ZN5boost13re_detail_50011count_charsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEcEEjRKT_T0_.exit47, !llvm.loop !1814
@@ -406,7 +406,7 @@ scalar.ph144:                                     ; preds = %scalar.ph144.prehea
   %i.dv = icmp eq i8 %i.du, %i.an
   %i.dw = zext i1 %i.dv to i32
   %spec.select.i52 = add i32 %.079.i51, %i.dw     ; 2 uses
-  %indvars.iv.next.i53 = add i64 %indvars.iv.i50, 1 ; 2 uses
+  %indvars.iv.next.i53 = add nuw i64 %indvars.iv.i50, 1 ; 2 uses
   %i.dx = and i64 %indvars.iv.next.i53, 4294967295
   %i.dy = icmp ugt i64 %i.dc, %i.dx
   br i1 %i.dy, label %scalar.ph144, label %_ZN5boost13re_detail_50011count_charsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEcEEjRKT_T0_.exit55, !llvm.loop !1816
@@ -809,7 +809,7 @@ bb.el:                                            ; preds = %bb.ek
   %i.abc = add i64 %i.abb, %i.aax
   %i.abd = xor i64 %i.abc, %i.aau                 ; 3 uses
   %i.abe = getelementptr inbounds nuw i8, ptr %.0810.i, i64 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit.i.unr-lcssa, label %.lr.ph.i, !llvm.loop !1981
 
@@ -1212,7 +1212,7 @@ bb.cq:                                            ; preds = %bb.co
   %i.vk = add i64 %i.vj, %i.vf
   %i.vl = xor i64 %i.vk, %i.vc                    ; 3 uses
   %i.vm = getelementptr inbounds nuw i8, ptr %.0810.i, i64 2 ; 2 uses
-  %niter992.next.1 = add i64 %niter992, 2         ; 2 uses
+  %niter992.next.1 = add nuw i64 %niter992, 2     ; 2 uses
   %niter992.ncmp.1 = icmp eq i64 %niter992.next.1, %unroll_iter991
   br i1 %niter992.ncmp.1, label %._crit_edge.loopexit.i.unr-lcssa, label %.lr.ph.i, !llvm.loop !1981
 
@@ -1420,7 +1420,7 @@ bb.da:                                            ; preds = %.lr.ph, %.lr.ph
   %i.yv = add i64 %i.yu, %i.yq
   %i.yw = xor i64 %i.yv, %i.yn                    ; 3 uses
   %i.yx = getelementptr inbounds nuw i8, ptr %.0810.i517, i64 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit.i519.unr-lcssa, label %.lr.ph.i515, !llvm.loop !1981
 
@@ -1823,7 +1823,7 @@ bb.fk:                                            ; preds = %.lr.ph743
   %i.amf = add i64 %i.ame, %i.ama
   %i.amg = xor i64 %i.amf, %i.alx                 ; 3 uses
   %i.amh = getelementptr inbounds nuw i8, ptr %.0810.i537, i64 2 ; 2 uses
-  %niter1010.next.1 = add i64 %niter1010, 2       ; 2 uses
+  %niter1010.next.1 = add nuw i64 %niter1010, 2   ; 2 uses
   %niter1010.ncmp.1 = icmp eq i64 %niter1010.next.1, %unroll_iter1009
   br i1 %niter1010.ncmp.1, label %._crit_edge.loopexit.i539.unr-lcssa, label %.lr.ph.i535, !llvm.loop !1981
 
@@ -1973,7 +1973,7 @@ bb.fr:                                            ; preds = %.lr.ph737
   %i.aom = add i64 %i.aol, %i.aoh
   %i.aon = xor i64 %i.aom, %i.aoe                 ; 3 uses
   %i.aoo = getelementptr inbounds nuw i8, ptr %.0810.i545, i64 2 ; 2 uses
-  %niter1001.next.1 = add i64 %niter1001, 2       ; 2 uses
+  %niter1001.next.1 = add nuw i64 %niter1001, 2   ; 2 uses
   %niter1001.ncmp.1 = icmp eq i64 %niter1001.next.1, %unroll_iter1000
   br i1 %niter1001.ncmp.1, label %._crit_edge.loopexit.i547.unr-lcssa, label %.lr.ph.i543, !llvm.loop !1981
 
@@ -2376,7 +2376,7 @@ bb.a:
   %i.u = add i64 %i.t, %i.p
   %i.v = xor i64 %i.u, %i.m                       ; 3 uses
   %i.w = getelementptr inbounds nuw i8, ptr %.0810.i.i, i64 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit.i.i.unr-lcssa, label %.lr.ph.i.i, !llvm.loop !1981
 
@@ -2779,7 +2779,7 @@ _ZNSt12_Vector_baseISt4pairIdSt13unordered_mapINSt7__cxx1112basic_stringIcSt11ch
   br label %bb.a
 
 bb.a:                                             ; preds = %.loopexit, %.lr.ph82
-  %.02381 = phi i64 [ 0, %.lr.ph82 ], [ %i.ec, %.loopexit ] ; 5 uses
+  %.02381 = phi i64 [ 0, %.lr.ph82 ], [ %i.ec, %.loopexit ] ; 4 uses
   %i.bb = load i64, ptr @_ZN5fLI6418FLAGS_bm_max_itersE, align 8, !tbaa !54
   %i.bc = trunc i64 %i.bb to i32                  ; 2 uses
   %i.bd = load i32, ptr @_ZN3fLI18FLAGS_bm_min_itersE, align 4, !tbaa !44 ; 2 uses
@@ -3046,8 +3046,6 @@ _ZN5folly6detail12TimeIterDataD2Ev.exit55:        ; preds = %_ZNSt10_HashtableIN
 .lr.ph.preheader.i.i:                             ; preds = %.split.loop.exit79
   %i.ei = getelementptr inbounds nuw i8, ptr %i.eg, i64 64 ; 2 uses
   %.val1.i.pre.i.i = load double, ptr %i.eg, align 8, !tbaa !6657 ; 2 uses
-  %8 = add nuw i64 %.02381, 288230376151711743
-  %9 = and i64 %8, 288230376151711743
   %xtraiter143 = and i64 %.02381, 3               ; 2 uses
   %lcmp.mod144.not = icmp eq i64 %xtraiter143, 0
   br i1 %lcmp.mod144.not, label %.lr.ph.i.i.prol.loopexit, label %.lr.ph.i.i.prol
@@ -3059,25 +3057,23 @@ _ZN5folly6detail12TimeIterDataD2Ev.exit55:        ; preds = %_ZNSt10_HashtableIN
   %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph.i.i.prol ], [ 0, %.lr.ph.preheader.i.i ]
   %.val.i.i.i.prol = load double, ptr %i.ej, align 8, !tbaa !6657 ; 2 uses
   %i.ek = fcmp olt double %.val.i.i.i.prol, %.val1.i.i.i.prol ; 2 uses
-  %spec.select.i.i.prol = select i1 %i.ek, ptr %i.ej, ptr %.sroa.02.09.i.i.prol ; 3 uses
+  %spec.select.i.i.prol = select i1 %i.ek, ptr %i.ej, ptr %.sroa.02.09.i.i.prol ; 2 uses
   %i.el = getelementptr inbounds nuw i8, ptr %i.ej, i64 64 ; 2 uses
   %i.em = select i1 %i.ek, double %.val.i.i.i.prol, double %.val1.i.i.i.prol ; 2 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter143
   br i1 %prol.iter.cmp.not, label %.lr.ph.i.i.prol.loopexit, label %.lr.ph.i.i.prol, !llvm.loop !6720
 
-.lr.ph.i.i.prol.loopexit:                         ; preds = %.lr.ph.i.i.prol, %.lr.ph.preheader.i.i
-  %spec.select.i.i.lcssa.unr = phi ptr [ poison, %.lr.ph.preheader.i.i ], [ %spec.select.i.i.prol, %.lr.ph.i.i.prol ]
+.lr.ph.i.i.prol.loopexit:                         ; preds = %.lr.ph.preheader.i.i, %.lr.ph.i.i.prol
   %.val1.i.i.i.unr = phi double [ %.val1.i.pre.i.i, %.lr.ph.preheader.i.i ], [ %i.em, %.lr.ph.i.i.prol ]
   %.unr = phi ptr [ %i.ei, %.lr.ph.preheader.i.i ], [ %i.el, %.lr.ph.i.i.prol ]
   %.sroa.02.09.i.i.unr = phi ptr [ %i.eg, %.lr.ph.preheader.i.i ], [ %spec.select.i.i.prol, %.lr.ph.i.i.prol ]
-  %10 = icmp samesign ult i64 %9, 3
-  br i1 %10, label %"_ZSt11min_elementIN9__gnu_cxx17__normal_iteratorIPSt4pairIdSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN5folly10UserMetricESt4hashIS9_ESt8equal_toIS9_ESaIS2_IKS9_SB_EEEESt6vectorISK_SaISK_EEEEZNSA_L29runBenchmarkGetNSPerIterationERKSt8functionIFNSA_6detail12TimeIterDataEjEEdlE3$_0ET_SY_SY_T0_.exit", label %.lr.ph.i.i
+  br label %.lr.ph.i.i
 
-.lr.ph.i.i:                                       ; preds = %.lr.ph.i.i.prol.loopexit, %.lr.ph.i.i
-  %.val1.i.i.i = phi double [ %i.fa, %.lr.ph.i.i ], [ %.val1.i.i.i.unr, %.lr.ph.i.i.prol.loopexit ] ; 2 uses
-  %i.en = phi ptr [ %i.ey, %.lr.ph.i.i ], [ %.unr, %.lr.ph.i.i.prol.loopexit ] ; 6 uses
-  %.sroa.02.09.i.i = phi ptr [ %spec.select.i.i.3, %.lr.ph.i.i ], [ %.sroa.02.09.i.i.unr, %.lr.ph.i.i.prol.loopexit ]
+.lr.ph.i.i:                                       ; preds = %.lr.ph.i.i, %.lr.ph.i.i.prol.loopexit
+  %.val1.i.i.i = phi double [ %.val1.i.i.i.unr, %.lr.ph.i.i.prol.loopexit ], [ %i.fa, %.lr.ph.i.i ] ; 2 uses
+  %i.en = phi ptr [ %.unr, %.lr.ph.i.i.prol.loopexit ], [ %i.ey, %.lr.ph.i.i ] ; 6 uses
+  %.sroa.02.09.i.i = phi ptr [ %.sroa.02.09.i.i.unr, %.lr.ph.i.i.prol.loopexit ], [ %spec.select.i.i.3, %.lr.ph.i.i ]
   %.val.i.i.i = load double, ptr %i.en, align 8, !tbaa !6657 ; 2 uses
   %i.eo = fcmp olt double %.val.i.i.i, %.val1.i.i.i ; 2 uses
   %spec.select.i.i = select i1 %i.eo, ptr %i.en, ptr %.sroa.02.09.i.i
@@ -3101,8 +3097,8 @@ _ZN5folly6detail12TimeIterDataD2Ev.exit55:        ; preds = %_ZNSt10_HashtableIN
   %i.fa = select i1 %i.ex, double %.val.i.i.i.3, double %i.ew
   br i1 %i.ez, label %"_ZSt11min_elementIN9__gnu_cxx17__normal_iteratorIPSt4pairIdSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN5folly10UserMetricESt4hashIS9_ESt8equal_toIS9_ESaIS2_IKS9_SB_EEEESt6vectorISK_SaISK_EEEEZNSA_L29runBenchmarkGetNSPerIterationERKSt8functionIFNSA_6detail12TimeIterDataEjEEdlE3$_0ET_SY_SY_T0_.exit", label %.lr.ph.i.i, !llvm.loop !6721
 
-"_ZSt11min_elementIN9__gnu_cxx17__normal_iteratorIPSt4pairIdSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN5folly10UserMetricESt4hashIS9_ESt8equal_toIS9_ESaIS2_IKS9_SB_EEEESt6vectorISK_SaISK_EEEEZNSA_L29runBenchmarkGetNSPerIterationERKSt8functionIFNSA_6detail12TimeIterDataEjEEdlE3$_0ET_SY_SY_T0_.exit": ; preds = %.lr.ph.i.i.prol.loopexit, %.lr.ph.i.i, %.split.loop.exit79
-  %.sroa.02.2.i.i = phi ptr [ %i.eg, %.split.loop.exit79 ], [ %spec.select.i.i.lcssa.unr, %.lr.ph.i.i.prol.loopexit ], [ %spec.select.i.i.3, %.lr.ph.i.i ] ; 5 uses
+"_ZSt11min_elementIN9__gnu_cxx17__normal_iteratorIPSt4pairIdSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN5folly10UserMetricESt4hashIS9_ESt8equal_toIS9_ESaIS2_IKS9_SB_EEEESt6vectorISK_SaISK_EEEEZNSA_L29runBenchmarkGetNSPerIterationERKSt8functionIFNSA_6detail12TimeIterDataEjEEdlE3$_0ET_SY_SY_T0_.exit": ; preds = %.lr.ph.i.i, %.split.loop.exit79
+  %.sroa.02.2.i.i = phi ptr [ %i.eg, %.split.loop.exit79 ], [ %spec.select.i.i.3, %.lr.ph.i.i ] ; 5 uses
   %i.fb = load double, ptr %.sroa.02.2.i.i, align 8, !tbaa !113 ; 2 uses
   %i.fc = fcmp ogt double %i.fb, 0.000000e+00
   %i.fd = getelementptr inbounds nuw i8, ptr %.sroa.02.2.i.i, i64 8

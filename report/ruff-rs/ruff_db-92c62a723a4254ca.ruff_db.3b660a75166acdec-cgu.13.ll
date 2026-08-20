@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.c, %.new
   %i.u = icmp eq i64 %i.t, 0
   %narrow.i.i.i.1 = and i1 %.sroa.7.0.i.i, %i.u   ; 3 uses
   %i.v = add nuw i64 %.sroa.01.0.i.i, 2           ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterNtNtCskLngH8kgpZI_15ruff_python_ast9generated14AnyRootNodeRefENtNtNtNtBb_4iter6traits8iterator8Iterator4foldTjjbENCNvMs0_NtNtCs56aZGHL6Dc6_7ruff_db6parsed7indexedNtB2N_12IndexedNodes17extend_from_nodes0EB2R_.exit.i.unr-lcssa, label %bb.c
 
@@ -326,7 +326,7 @@ _RNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtB
   %i.bd = getelementptr inbounds nuw i8, ptr %.sroa.075.0105.i, i64 16 ; 2 uses
   %i.be = add nuw nsw i64 %.sroa.777.0106.i, 1
   %i.bf = load i64, ptr %.sroa.075.0105.i, align 8, !range !1163, !alias.scope !1142, !noalias !1164, !noundef !3 ; 2 uses
-  %i.bg = mul nuw nsw i64 %.sroa.777.0106.i, 5    ; 3 uses
+  %i.bg = mul nuw nsw i64 %.sroa.777.0106.i, 5    ; 2 uses
   %i.bh = add nuw nsw i64 %i.bg, %i.ax            ; 3 uses
   %i.bi = lshr i64 %i.bh, 6                       ; 4 uses
   %i.bj = load i64, ptr %i.h, align 8, !alias.scope !1165, !noalias !1148, !noundef !3 ; 2 uses
@@ -365,12 +365,9 @@ bb.i:                                             ; preds = %bb.g
 
 bb.j:                                             ; preds = %bb.i
   %i.ca = load ptr, ptr %i.k, align 8, !alias.scope !1165, !noalias !1148, !nonnull !3, !noundef !3
-  %1 = sub nsw i64 0, %i.bg
-  %2 = and i64 %1, 63
-  %3 = lshr i64 %i.bf, %2
   %i.cb = getelementptr inbounds nuw [8 x i8], ptr %i.ca, i64 %i.bv ; 2 uses
   %i.cc = load i64, ptr %i.cb, align 8, !noundef !3
-  %i.cd = or i64 %i.cc, %3
+  %i.cd = or i64 %i.cc, %i.bf
   store i64 %i.cd, ptr %i.cb, align 8
   br label %_RNvMs0_NtNtCs56aZGHL6Dc6_7ruff_db6parsed7indexedNtB5_12IndexedNodes10write_bits.exit.i
 

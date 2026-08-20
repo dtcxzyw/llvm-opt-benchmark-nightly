@@ -203,9 +203,7 @@ bb.bh:                                            ; preds = %bb.bg
 bb.bi:                                            ; preds = %bb.bh, %bb.bg, %switch.early.test.i, %switch.early.test.i, %bb.bf
   %.0102.i = phi i32 [ %i.vj, %bb.bh ], [ %i.uk, %switch.early.test.i ], [ %i.uk, %bb.bg ], [ %i.uk, %switch.early.test.i ], [ %i.uk, %bb.bf ] ; 3 uses
   %.not120.i = icmp eq i64 %indvars.iv, 2
-  %1 = trunc i64 %indvars.iv to i32
-  %2 = add i32 %1, -4
-  %i.vk = icmp ult i32 %2, -2
+  %i.vk = icmp samesign ult i64 %indvars.iv, 2
   %or.cond7.i = and i1 %i.vk, %narrow
   br i1 %or.cond7.i, label %bb.bj, label %bb.bl
 
@@ -608,9 +606,7 @@ get_vlc2.exit._crit_edge.i:                       ; preds = %.thread171.i, %get_
   %or.cond.i.i = and i1 %i.ne, %i.nf
   %i.ng = load i32, ptr %i.ab, align 4, !tbaa !61
   %i.nh = icmp ne i32 %i.ng, 0
-  %1 = trunc i64 %indvars.iv to i32
-  %2 = add i32 %1, -4
-  %i.ni = icmp ult i32 %2, -2
+  %i.ni = icmp samesign ult i64 %indvars.iv, 2
   %or.cond13.i.i = and i1 %i.ni, %i.nh            ; 3 uses
   br i1 %or.cond.i.i, label %bb.z, label %bb.v
 

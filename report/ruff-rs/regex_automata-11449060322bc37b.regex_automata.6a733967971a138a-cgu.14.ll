@@ -204,7 +204,7 @@ bb.a:
   br i1 %exitcond.not.i21.not, label %.lr.ph, label %._crit_edge
 
 bb.b:                                             ; preds = %bb.c
-  %i.n = add i64 %i.s, 1
+  %i.n = add nuw i64 %i.s, 1
   %i.o = add nuw i64 %i.s, %i.e                   ; 2 uses
   %i.p = add nuw i64 %i.s, %i.g
   %exitcond.not.i = icmp eq i64 %i.s, %i.l
@@ -607,11 +607,9 @@ bb.h:                                             ; preds = %bb.g
 
 .peel.next:                                       ; preds = %.peel.next.preheader, %bb.i
   %.sroa.0.0228275 = phi ptr [ %i.bs, %bb.i ], [ %i.bg, %.peel.next.preheader ] ; 2 uses
-  %.sroa.8.0274 = phi i64 [ %3, %bb.i ], [ 1, %.peel.next.preheader ] ; 2 uses
   %i.bp = load i32, ptr %.sroa.0.0228275, align 4, !noundef !3
   call void @llvm.lifetime.start.p0(ptr nonnull %i.q)
-  %2 = add nsw i64 %.sroa.8.0274, -1
-  store i64 %2, ptr %i.q, align 8
+  store i64 -1, ptr %i.q, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.p)
   %i.bq = zext i32 %i.bp to i64
   store i64 %i.bq, ptr %i.p, align 8
@@ -627,7 +625,6 @@ bb.h:                                             ; preds = %bb.g
   br i1 %i.br, label %.loopexit, label %bb.i
 
 bb.i:                                             ; preds = %.peel.next
-  %3 = add nuw nsw i64 %.sroa.8.0274, 1
   %i.bs = getelementptr inbounds nuw i8, ptr %.sroa.0.0228275, i64 4 ; 2 uses
   %i.bt = icmp eq ptr %i.bs, %i.az
   br i1 %i.bt, label %._crit_edge278, label %.peel.next, !llvm.loop !533

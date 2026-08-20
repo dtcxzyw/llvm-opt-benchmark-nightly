@@ -203,10 +203,8 @@ bb.o:                                             ; preds = %bb.n
   %i.dv = getelementptr inbounds nuw i8, ptr %i.du, i64 4
   %i.dw = load i32, ptr %i.dv, align 4, !tbaa !46
   %i.dx = shl i32 %i.dw, 1
-  %1 = trunc i64 %indvars.iv289 to i32
-  %2 = add i32 %1, -256
-  %3 = icmp ult i32 %2, -255
-  %i.dy = zext i1 %3 to i32
+  %1 = icmp eq i64 %indvars.iv289, 0
+  %i.dy = zext i1 %1 to i32
   %i.dz = or disjoint i32 %i.dx, %i.dy
   %i.ea = getelementptr inbounds nuw [8 x i8], ptr %i.s, i64 %indvars.iv289
   store i32 %i.dz, ptr %i.ea, align 4, !tbaa !48

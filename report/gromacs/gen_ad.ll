@@ -204,7 +204,7 @@ bb.cz:                                            ; preds = %._crit_edge.i415, %
   %or.cond.i418.7 = select i1 %i.ajj, i1 %i.ajk, i1 false
   %spec.select.i419.7 = select i1 %or.cond.i418.7, i32 %i.ahw, i32 %spec.select.i419.6 ; 3 uses
   %indvars.iv.next.i420.7 = add nuw nsw i64 %indvars.iv.i417, 8 ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %._crit_edge.i415.loopexit.unr-lcssa, label %.lr.ph.i416, !llvm.loop !105
 
@@ -607,7 +607,7 @@ bb.dt:                                            ; preds = %_ZNSt6vectorIiSaIiE
 
 bb.du:                                            ; preds = %.lr.ph1487, %._crit_edge1485
   %indvars.iv1648 = phi i64 [ 0, %.lr.ph1487 ], [ %indvars.iv.next1649, %._crit_edge1485 ] ; 32 uses
-  %indvars1650 = trunc i64 %indvars.iv1648 to i32 ; 6 uses
+  %indvars1650 = trunc i64 %indvars.iv1648 to i32 ; 4 uses
   %i.apa = load i64, ptr %5, align 8
   %i.apb = inttoptr i64 %i.apa to ptr             ; 2 uses
   %i.apc = getelementptr inbounds nuw [280 x i8], ptr %i.apb, i64 %indvars.iv1648 ; 2 uses
@@ -620,7 +620,6 @@ bb.du:                                            ; preds = %.lr.ph1487, %._crit
 
 .lr.ph1459:                                       ; preds = %bb.du
   %i.aph = add nuw nsw i32 %indvars1650, 1        ; 3 uses
-  %34 = add nsw i32 %indvars1650, -1              ; 3 uses
   br label %bb.dv
 
 ._crit_edge1460.loopexit:                         ; preds = %_ZNSt6vectorIiSaIiEED2Ev.exit506
@@ -640,7 +639,6 @@ bb.du:                                            ; preds = %.lr.ph1487, %._crit
 
 .lr.ph1484:                                       ; preds = %._crit_edge1460
   %i.apn = add nuw nsw i32 %indvars1650, 1        ; 3 uses
-  %35 = add nsw i32 %indvars1650, -1              ; 3 uses
   br label %bb.fk
 
 bb.dv:                                            ; preds = %.lr.ph1459, %_ZNSt6vectorIiSaIiEED2Ev.exit506
@@ -913,7 +911,7 @@ bb.er:                                            ; preds = %bb.eq
 
 _ZSt4findIN3gmx12ArrayRefIterIKiEEiET_S4_S4_RKT0_.exit.thread: ; preds = %._crit_edge.i.i.i466, %._crit_edge.i.i.i, %.preheader1191, %bb.er, %bb.eq, %_ZSt4findIN3gmx12ArrayRefIterIKiEEiET_S4_S4_RKT0_.exit487, %_ZSt4findIN3gmx12ArrayRefIterIKiEEiET_S4_S4_RKT0_.exit, %bb.ef, %bb.eg
   %.0253 = phi ptr [ %i.apu, %bb.ef ], [ %i.apu, %bb.eg ], [ %i.apu, %_ZSt4findIN3gmx12ArrayRefIterIKiEEiET_S4_S4_RKT0_.exit ], [ %i.arn, %bb.er ], [ %i.arn, %bb.eq ], [ %i.arn, %_ZSt4findIN3gmx12ArrayRefIterIKiEEiET_S4_S4_RKT0_.exit487 ], [ %i.aps, %.preheader1191 ], [ %i.apu, %._crit_edge.i.i.i ], [ %i.arn, %._crit_edge.i.i.i466 ]
-  %.0252 = phi i32 [ %34, %bb.ef ], [ %i.arm, %bb.eg ], [ %34, %_ZSt4findIN3gmx12ArrayRefIterIKiEEiET_S4_S4_RKT0_.exit ], [ %i.atf, %bb.er ], [ %i.aph, %bb.eq ], [ %i.aph, %_ZSt4findIN3gmx12ArrayRefIterIKiEEiET_S4_S4_RKT0_.exit487 ], [ %indvars1650, %.preheader1191 ], [ %34, %._crit_edge.i.i.i ], [ %i.aph, %._crit_edge.i.i.i466 ]
+  %.0252 = phi i32 [ -1, %bb.ef ], [ %i.arm, %bb.eg ], [ -1, %_ZSt4findIN3gmx12ArrayRefIterIKiEEiET_S4_S4_RKT0_.exit ], [ %i.atf, %bb.er ], [ %i.aph, %bb.eq ], [ %i.aph, %_ZSt4findIN3gmx12ArrayRefIterIKiEEiET_S4_S4_RKT0_.exit487 ], [ %indvars1650, %.preheader1191 ], [ -1, %._crit_edge.i.i.i ], [ %i.aph, %._crit_edge.i.i.i466 ]
   %i.atg = invoke i64 @_Z15search_res_atomPKciPK7t_atomsS0_b(ptr noundef nonnull %.0253, i32 noundef %.0252, ptr noundef nonnull %0, ptr noundef nonnull @.str.1, i1 noundef zeroext true)
           to label %bb.es unwind label %.loopexit1192 ; 2 uses
 
@@ -1316,7 +1314,7 @@ bb.gg:                                            ; preds = %bb.gf
   br label %_ZSt4findIN3gmx12ArrayRefIterIKiEEiET_S4_S4_RKT0_.exit532.thread
 
 _ZSt4findIN3gmx12ArrayRefIterIKiEEiET_S4_S4_RKT0_.exit532.thread: ; preds = %._crit_edge.i.i.i537, %._crit_edge.i.i.i511, %.preheader, %bb.gg, %bb.gf, %_ZSt4findIN3gmx12ArrayRefIterIKiEEiET_S4_S4_RKT0_.exit558, %_ZSt4findIN3gmx12ArrayRefIterIKiEEiET_S4_S4_RKT0_.exit532, %bb.fu, %bb.fv
-  %.01151 = phi i32 [ %indvars1650, %.preheader ], [ %i.axn, %bb.fv ], [ %35, %bb.fu ], [ %35, %_ZSt4findIN3gmx12ArrayRefIterIKiEEiET_S4_S4_RKT0_.exit532 ], [ %i.apn, %bb.gf ], [ %i.azg, %bb.gg ], [ %i.apn, %_ZSt4findIN3gmx12ArrayRefIterIKiEEiET_S4_S4_RKT0_.exit558 ], [ %35, %._crit_edge.i.i.i511 ], [ %i.apn, %._crit_edge.i.i.i537 ]
+  %.01151 = phi i32 [ %indvars1650, %.preheader ], [ %i.axn, %bb.fv ], [ -1, %bb.fu ], [ -1, %_ZSt4findIN3gmx12ArrayRefIterIKiEEiET_S4_S4_RKT0_.exit532 ], [ %i.apn, %bb.gf ], [ %i.azg, %bb.gg ], [ %i.apn, %_ZSt4findIN3gmx12ArrayRefIterIKiEEiET_S4_S4_RKT0_.exit558 ], [ -1, %._crit_edge.i.i.i511 ], [ %i.apn, %._crit_edge.i.i.i537 ]
   %.0240 = phi ptr [ %i.avt, %.preheader ], [ %i.avv, %bb.fv ], [ %i.avv, %bb.fu ], [ %i.avv, %_ZSt4findIN3gmx12ArrayRefIterIKiEEiET_S4_S4_RKT0_.exit532 ], [ %i.axo, %bb.gf ], [ %i.axo, %bb.gg ], [ %i.axo, %_ZSt4findIN3gmx12ArrayRefIterIKiEEiET_S4_S4_RKT0_.exit558 ], [ %i.avv, %._crit_edge.i.i.i511 ], [ %i.axo, %._crit_edge.i.i.i537 ]
   %i.azh = invoke i64 @_Z15search_res_atomPKciPK7t_atomsS0_b(ptr noundef nonnull %.0240, i32 noundef %.01151, ptr noundef nonnull %0, ptr noundef nonnull @.str.2, i1 noundef zeroext true)
           to label %bb.gh unwind label %.loopexit1187 ; 2 uses

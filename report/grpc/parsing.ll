@@ -203,22 +203,22 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.r
 
 .lr.ph:                                           ; preds = %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e, %bb.e
+  %102 = zext nneg i32 %i.s to i64
   %i.t = sub nuw nsw i32 24, %i.s
   %i.u = zext nneg i32 %i.t to i64
   %scevgep = getelementptr i8, ptr %i.m, i64 %i.u
   br label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph, %bb.o
-  %102 = phi i32 [ %i.s, %.lr.ph ], [ %104, %bb.o ] ; 3 uses
+  %indvars.iv = phi i64 [ %102, %.lr.ph ], [ %indvars.iv.next, %bb.o ] ; 4 uses
   %.097289 = phi ptr [ %i.m, %.lr.ph ], [ %i.bu, %bb.o ] ; 2 uses
-  %.not138 = icmp eq i32 %102, 24
+  %.not138 = icmp eq i64 %indvars.iv, 24
   br i1 %.not138, label %.critedge, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
   %i.v = load i8, ptr %.097289, align 1, !tbaa !262 ; 4 uses
   %i.w = zext i8 %i.v to i32
-  %103 = zext i32 %102 to i64                     ; 2 uses
-  %i.x = getelementptr inbounds nuw i8, ptr @.str.2, i64 %103
+  %i.x = getelementptr inbounds nuw i8, ptr @.str.2, i64 %indvars.iv
   %i.y = load i8, ptr %i.x, align 1, !tbaa !262   ; 2 uses
   %i.z = sext i8 %i.y to i32
   %.not148 = icmp eq i32 %i.w, %i.z
@@ -252,7 +252,7 @@ bb.h:                                             ; preds = %bb.g
   %i.ak = getelementptr inbounds nuw i8, ptr %77, i64 56
   store ptr @_ZN4absl12lts_2025051219str_format_internal13FormatArgImpl8DispatchIiEEbNS2_4DataENS1_24FormatConversionSpecImplEPv, ptr %i.ak, align 8, !tbaa !270, !noalias !267
   %i.al = getelementptr inbounds nuw i8, ptr %77, i64 64
-  %i.am = inttoptr i64 %103 to ptr
+  %i.am = inttoptr i64 %indvars.iv to ptr
   store ptr %i.am, ptr %i.al, align 8, !tbaa !262, !noalias !267
   %i.an = getelementptr inbounds nuw i8, ptr %77, i64 72
   store ptr @_ZN4absl12lts_2025051219str_format_internal13FormatArgImpl8DispatchIjEEbNS2_4DataENS1_24FormatConversionSpecImplEPv, ptr %i.an, align 8, !tbaa !270, !noalias !267
@@ -369,8 +369,9 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit166: ; preds = %bb
 
 bb.o:                                             ; preds = %bb.g
   %i.bu = getelementptr inbounds nuw i8, ptr %.097289, i64 1 ; 2 uses
-  %104 = add nsw i32 %102, 1                      ; 2 uses
-  store i32 %104, ptr %i.r, align 8, !tbaa !8
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %indvars = trunc i64 %indvars.iv.next to i32
+  store i32 %indvars, ptr %i.r, align 8, !tbaa !8
   %.not137 = icmp eq ptr %i.bu, %i.o
   br i1 %.not137, label %_ZN4absl12lts_202505126StatusD2Ev.exit167, label %bb.f, !llvm.loop !283
 

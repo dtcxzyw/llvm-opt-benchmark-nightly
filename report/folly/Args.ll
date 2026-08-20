@@ -201,7 +201,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit189: ; preds = %bb
   br i1 %.not171545.not.i, label %_ZNSt8optionalIN5folly12_GLOBAL__N_115cli_parse_errorEEaSIS2_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS3_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES6_ISt6__and_IJSt9is_scalarIS2_ES7_IS2_NSt5decayISA_E4typeEEEEESt16is_constructibleIS2_JSA_EESt13is_assignableIRS2_SA_EEERS3_E4typeEOSA_.exit218.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit189, %bb.ga
-  %.0127555.i = phi i64 [ %i.up, %bb.ga ], [ 0, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit189 ] ; 12 uses
+  %.0127555.i = phi i64 [ %i.up, %bb.ga ], [ 0, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit189 ] ; 11 uses
   %.0128554.i = phi i64 [ %.5.ph.i, %bb.ga ], [ 1, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit189 ] ; 25 uses
   %.0132553.i = phi i64 [ %.5137.ph.i, %bb.ga ], [ 1, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit189 ] ; 25 uses
   %.0138552.i = phi i64 [ %.2140.ph.i, %bb.ga ], [ 0, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit189 ] ; 9 uses
@@ -371,8 +371,7 @@ bb.cv:                                            ; preds = %bb.cu
   br i1 %i.my, label %bb.cx, label %bb.cw
 
 bb.cw:                                            ; preds = %bb.cv
-  %34 = add i64 %.0127555.i, -1
-  store i64 %34, ptr %i.a, align 8, !tbaa !41, !noalias !4835
+  store i64 -1, ptr %i.a, align 8, !tbaa !41, !noalias !4835
   store i64 %.0132553.i, ptr %i.f, align 8, !tbaa !41, !noalias !4835
   %i.mz = add i64 %.0128554.i, -1
   store i64 %i.mz, ptr %i.g, align 8, !tbaa !41, !noalias !4835

@@ -204,7 +204,7 @@ bb.du:                                            ; preds = %triPath.exit, %free
   store i64 %i.akb, ptr %i.ajy, align 8, !tbaa !86
   %i.akc = getelementptr inbounds nuw i8, ptr %.02.i, i64 256 ; 2 uses
   %indvars.iv.next.i117.7 = add nuw nsw i64 %indvars.iv.i116, 8 ; 2 uses
-  %niter440.next.7 = add i64 %niter440, 8         ; 2 uses
+  %niter440.next.7 = add nuw i64 %niter440, 8     ; 2 uses
   %niter440.ncmp.7 = icmp eq i64 %niter440.next.7, %unroll_iter439
   br i1 %niter440.ncmp.7, label %resetGraph.exit.loopexit.unr-lcssa, label %.lr.ph.i115, !llvm.loop !168
 
@@ -343,22 +343,28 @@ bb.j:                                             ; preds = %bb.a, %bb.i, %bb.h,
   %i.ax = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 2 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %5, i64 20 ; 2 uses
   %.not = icmp eq i32 %4, 0
-  br i1 %.not, label %.lr.ph.split.us, label %.lr.ph.split.preheader
+  br i1 %.not, label %.lr.ph.split.us.preheader, label %.lr.ph.split.preheader
 
 .lr.ph.split.preheader:                           ; preds = %.lr.ph
   %i.az = sext i32 %i.e to i64
   %i.ba = sext i32 %i.av to i64
   br label %.lr.ph.split
 
-.lr.ph.split.us:                                  ; preds = %.lr.ph, %.lr.ph.split.us
-  %.03.us = phi i32 [ %7, %.lr.ph.split.us ], [ %i.e, %.lr.ph ] ; 5 uses
-  %6 = icmp slt i32 %.03.us, %i.av
-  %7 = add i32 %.03.us, 1                         ; 3 uses
-  %.sroa.7.0.us = select i1 %6, i32 %7, i32 %i.e  ; 3 uses
+.lr.ph.split.us.preheader:                        ; preds = %.lr.ph
+  %6 = zext i32 %i.e to i64
+  br label %.lr.ph.split.us
+
+.lr.ph.split.us:                                  ; preds = %.lr.ph.split.us.preheader, %.lr.ph.split.us
+  %indvars.iv6 = phi i64 [ %6, %.lr.ph.split.us.preheader ], [ %indvars.iv.next7, %.lr.ph.split.us ] ; 3 uses
+  %7 = trunc nuw i64 %indvars.iv6 to i32          ; 3 uses
+  %8 = icmp sgt i32 %i.av, %7
+  %indvars.iv.next7 = add nuw nsw i64 %indvars.iv6, 1 ; 2 uses
+  %indvars = trunc i64 %indvars.iv.next7 to i32   ; 2 uses
+  %.sroa.7.0.us = select i1 %8, i32 %indvars, i32 %i.e ; 3 uses
   %i.bb = load ptr, ptr %i.aw, align 8, !tbaa !18 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #18
-  %spec.select.i.us = call i32 @llvm.smax.i32(i32 %.03.us, i32 %.sroa.7.0.us)
-  %spec.select13.i.us = call i32 @llvm.smin.i32(i32 %.03.us, i32 %.sroa.7.0.us)
+  %spec.select.i.us = call i32 @llvm.smax.i32(i32 %7, i32 %.sroa.7.0.us)
+  %spec.select13.i.us = call i32 @llvm.smin.i32(i32 %7, i32 %.sroa.7.0.us)
   store i32 %spec.select13.i.us, ptr %i.ax, align 8, !tbaa !46
   store i32 %spec.select.i.us, ptr %i.ay, align 4, !tbaa !46
   %i.bc = load ptr, ptr %i.bb, align 8, !tbaa !61
@@ -368,11 +374,10 @@ bb.j:                                             ; preds = %bb.a, %bb.i, %bb.h,
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #18
   %.sroa.7.0.insert.ext.us = zext i32 %.sroa.7.0.us to i64
   %.sroa.7.0.insert.shift.us = shl nuw i64 %.sroa.7.0.insert.ext.us, 32
-  %.sroa.0.0.insert.ext.us = zext i32 %.03.us to i64
-  %.sroa.0.0.insert.insert.us = or disjoint i64 %.sroa.7.0.insert.shift.us, %.sroa.0.0.insert.ext.us
+  %.sroa.0.0.insert.insert.us = or disjoint i64 %.sroa.7.0.insert.shift.us, %indvars.iv6
   call fastcc void @addTriEdge(ptr noundef nonnull %i.ap, i32 noundef %3, i32 noundef %i.bf, i64 %.sroa.0.0.insert.insert.us)
-  %exitcond6.not = icmp eq i32 %7, %i.g
-  br i1 %exitcond6.not, label %._crit_edge, label %.lr.ph.split.us, !llvm.loop !171
+  %9 = icmp sgt i32 %i.g, %indvars
+  br i1 %9, label %.lr.ph.split.us, label %._crit_edge, !llvm.loop !171
 
 .lr.ph.split:                                     ; preds = %.lr.ph.split.preheader, %bb.l
   %indvars.iv = phi i64 [ %i.az, %.lr.ph.split.preheader ], [ %indvars.iv.next, %bb.l ] ; 5 uses

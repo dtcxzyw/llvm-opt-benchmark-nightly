@@ -201,7 +201,7 @@ bb.bd:                                            ; preds = %Abc_Clock.exit335, 
   br label %bb.be
 
 bb.be:                                            ; preds = %Abc_Clock.exit391, %bb.bd
-  %.0236 = phi i32 [ 0, %bb.bd ], [ %i.vh, %Abc_Clock.exit391 ] ; 7 uses
+  %.0236 = phi i32 [ 0, %bb.bd ], [ %i.vh, %Abc_Clock.exit391 ] ; 6 uses
   %.1 = phi i64 [ %.0234, %bb.bd ], [ %.2, %Abc_Clock.exit391 ] ; 4 uses
   %i.jd = load i32, ptr %i.cq, align 4, !tbaa !63 ; 3 uses
   %.not264 = icmp eq i32 %i.jd, 0
@@ -308,9 +308,8 @@ Abc_Clock.exit341:                                ; preds = %bb.bm, %bb.bn
   br label %bb.bo
 
 bb.bo:                                            ; preds = %Abc_Clock.exit341, %Abc_Clock.exit339
-  %44 = add nsw i32 %.0236, -1
   %i.ku = load i32, ptr %i.bs, align 8, !tbaa !47 ; 3 uses
-  %i.kv = add nsw i32 %44, %i.ku
+  %i.kv = add nsw i32 %i.ku, -1
   store i32 %i.kv, ptr %i.cv, align 4, !tbaa !13
   switch i32 %i.jy, label %bb.cf [
     i32 0, label %bb.bp

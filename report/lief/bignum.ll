@@ -203,7 +203,7 @@ bb.g:                                             ; preds = %bb.f
 
 .preheader:                                       ; preds = %.preheader.preheader, %bb.p
   %.097 = phi i64 [ %.2.7, %bb.p ], [ 0, %.preheader.preheader ]
-  %.04496 = phi i64 [ %i.fb, %bb.p ], [ %i.y, %.preheader.preheader ] ; 16 uses
+  %.04496 = phi i64 [ %i.fb, %bb.p ], [ %i.y, %.preheader.preheader ] ; 10 uses
   %.17095 = phi ptr [ %.3.7, %bb.p ], [ %.069, %.preheader.preheader ] ; 11 uses
   %i.z = load ptr, ptr %0, align 8, !tbaa !15
   %i.aa = getelementptr [8 x i8], ptr %i.z, i64 %.04496
@@ -211,10 +211,8 @@ bb.g:                                             ; preds = %bb.f
   %i.ac = load i64, ptr %i.ab, align 8, !tbaa !19 ; 10 uses
   %i.ad = lshr i64 %i.ac, 56                      ; 2 uses
   %i.ae = or i64 %i.ad, %.097
-  %or.cond3.not77 = icmp ne i64 %i.ae, 0
-  %.not60 = icmp eq i64 %.04496, -6
-  %or.cond61 = or i1 %.not60, %or.cond3.not77
-  br i1 %or.cond61, label %.thread, label %bb.h
+  %.not60 = icmp eq i64 %i.ae, 0
+  br i1 %.not60, label %bb.h, label %.thread
 
 .thread:                                          ; preds = %.preheader
   %sum.shift = lshr i64 %i.ac, 60
@@ -240,10 +238,8 @@ bb.h:                                             ; preds = %.preheader
   %i.ap = lshr i64 %i.ac, 48                      ; 2 uses
   %i.aq = trunc nuw nsw i64 %i.ap to i32
   %i.ar = and i32 %i.aq, 255                      ; 2 uses
-  %7 = icmp ne i32 %i.ar, 0
-  %.not60.1 = icmp eq i64 %.04496, -5
-  %8 = or i1 %7, %.not60.1
-  br i1 %8, label %.thread156, label %bb.i
+  %.not60.1 = icmp eq i32 %i.ar, 0
+  br i1 %.not60.1, label %bb.i, label %.thread156
 
 .thread156:                                       ; preds = %bb.h, %.thread
   %i.as = phi i32 [ %i.ao, %.thread ], [ %i.ar, %bb.h ]
@@ -273,10 +269,8 @@ bb.i:                                             ; preds = %bb.h
   %i.bg = lshr i64 %i.ac, 40                      ; 2 uses
   %i.bh = trunc nuw nsw i64 %i.bg to i32
   %i.bi = and i32 %i.bh, 255                      ; 2 uses
-  %9 = icmp ne i32 %i.bi, 0
-  %.not60.2 = icmp eq i64 %.04496, -4
-  %10 = or i1 %9, %.not60.2
-  br i1 %10, label %.thread164, label %bb.j
+  %.not60.2 = icmp eq i32 %i.bi, 0
+  br i1 %.not60.2, label %bb.j, label %.thread164
 
 .thread164:                                       ; preds = %bb.i, %.thread156
   %i.bj = phi i32 [ %i.bf, %.thread156 ], [ %i.bi, %bb.i ]
@@ -306,10 +300,8 @@ bb.j:                                             ; preds = %bb.i
   %i.bx = lshr i64 %i.ac, 32                      ; 2 uses
   %i.by = trunc nuw i64 %i.bx to i32
   %i.bz = and i32 %i.by, 255                      ; 2 uses
-  %11 = icmp ne i32 %i.bz, 0
-  %.not60.3 = icmp eq i64 %.04496, -3
-  %12 = or i1 %11, %.not60.3
-  br i1 %12, label %.thread172, label %bb.k
+  %.not60.3 = icmp eq i32 %i.bz, 0
+  br i1 %.not60.3, label %bb.k, label %.thread172
 
 .thread172:                                       ; preds = %bb.j, %.thread164
   %i.ca = phi i32 [ %i.bw, %.thread164 ], [ %i.bz, %bb.j ]
@@ -339,10 +331,8 @@ bb.k:                                             ; preds = %bb.j
   %i.co = lshr i64 %i.ac, 24                      ; 2 uses
   %i.cp = trunc i64 %i.co to i32
   %i.cq = and i32 %i.cp, 255                      ; 2 uses
-  %13 = icmp ne i32 %i.cq, 0
-  %.not60.4 = icmp eq i64 %.04496, -2
-  %14 = or i1 %13, %.not60.4
-  br i1 %14, label %.thread180, label %bb.l
+  %.not60.4 = icmp eq i32 %i.cq, 0
+  br i1 %.not60.4, label %bb.l, label %.thread180
 
 .thread180:                                       ; preds = %bb.k, %.thread172
   %i.cr = phi i32 [ %i.cn, %.thread172 ], [ %i.cq, %bb.k ]
@@ -372,10 +362,8 @@ bb.l:                                             ; preds = %bb.k
   %i.df = lshr i64 %i.ac, 16                      ; 2 uses
   %i.dg = trunc i64 %i.df to i32
   %i.dh = and i32 %i.dg, 255                      ; 2 uses
-  %15 = icmp ne i32 %i.dh, 0
-  %.not60.5 = icmp eq i64 %.04496, -1
-  %16 = or i1 %15, %.not60.5
-  br i1 %16, label %.thread188, label %bb.m
+  %.not60.5 = icmp eq i32 %i.dh, 0
+  br i1 %.not60.5, label %bb.m, label %.thread188
 
 .thread188:                                       ; preds = %bb.l, %.thread180
   %i.di = phi i32 [ %i.de, %.thread180 ], [ %i.dh, %bb.l ]
@@ -523,7 +511,7 @@ mbedtls_mpi_mod_int.exit.us.i:                    ; preds = %bb.s, %.lr.ph235
 bb.t:                                             ; preds = %mbedtls_mpi_mod_int.exit.us.i
   %i.fs = getelementptr inbounds i8, ptr %.0.us.i234, i64 -1 ; 5 uses
   store i8 %spec.select.sink.i.us.i, ptr %i.fs, align 1, !tbaa !29
-  %i.ft = add i64 %.019.us.i233, 1                ; 5 uses
+  %i.ft = add nuw i64 %.019.us.i233, 1            ; 5 uses
   %i.fu = load i16, ptr %i.q, align 2, !tbaa !8   ; 2 uses
   %.not44.i.i.us.i = icmp eq i16 %i.fu, 0
   br i1 %.not44.i.i.us.i, label %mpi_write_hlp.exit, label %.lr.ph.i.i.us.i
@@ -615,7 +603,7 @@ bb.z:                                             ; preds = %mbedtls_mpi_mod_int
   %i.gz = or disjoint i8 %i.gw, 48
   %.sink.i = select i1 %i.gv, i8 %i.gz, i8 %i.gy
   store i8 %.sink.i, ptr %i.gx, align 1, !tbaa !29
-  %i.ha = add i64 %.019.i229, 1                   ; 5 uses
+  %i.ha = add nuw i64 %.019.i229, 1               ; 5 uses
   %i.hb = load i16, ptr %i.q, align 2, !tbaa !8   ; 2 uses
   %.not44.i.i.i = icmp eq i16 %i.hb, 0
   br i1 %.not44.i.i.i, label %mpi_write_hlp.exit, label %.lr.ph.i.i.i

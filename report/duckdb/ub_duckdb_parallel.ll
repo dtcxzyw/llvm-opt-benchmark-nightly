@@ -204,7 +204,7 @@ bb.ad:                                            ; preds = %bb.v, %bb.x, %bb.w
 bb.ae:                                            ; preds = %.lr.ph, %_ZNSt10unique_ptrIN6duckdb9DataChunkESt14default_deleteIS1_EED2Ev.exit
   %i.ft = phi ptr [ %i.fi, %.lr.ph ], [ %i.ki, %_ZNSt10unique_ptrIN6duckdb9DataChunkESt14default_deleteIS1_EED2Ev.exit ]
   %i.fu = phi ptr [ %i.fh, %.lr.ph ], [ %i.kh, %_ZNSt10unique_ptrIN6duckdb9DataChunkESt14default_deleteIS1_EED2Ev.exit ]
-  %.0135 = phi i64 [ 0, %.lr.ph ], [ %i.kg, %_ZNSt10unique_ptrIN6duckdb9DataChunkESt14default_deleteIS1_EED2Ev.exit ] ; 4 uses
+  %.0135 = phi i64 [ 0, %.lr.ph ], [ %i.kg, %_ZNSt10unique_ptrIN6duckdb9DataChunkESt14default_deleteIS1_EED2Ev.exit ] ; 3 uses
   %i.fv = icmp eq i64 %.0135, 0
   br i1 %i.fv, label %bb.af, label %bb.ag
 
@@ -214,8 +214,7 @@ bb.af:                                            ; preds = %bb.ae
           to label %_ZN6duckdb12optional_ptrINS_16PhysicalOperatorELb1EEdeEv.exit unwind label %bb.ba
 
 bb.ag:                                            ; preds = %bb.ae
-  %9 = add i64 %.0135, -1
-  %i.fx = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZN6duckdb6vectorISt17reference_wrapperINS_16PhysicalOperatorEELb1ESaIS3_EEixEm(ptr noundef nonnull align 8 dereferenceable(24) %i.ft, i64 noundef %9)
+  %i.fx = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZN6duckdb6vectorISt17reference_wrapperINS_16PhysicalOperatorEELb1ESaIS3_EEixEm(ptr noundef nonnull align 8 dereferenceable(24) %i.ft, i64 noundef -1)
           to label %_ZN6duckdb12optional_ptrINS_16PhysicalOperatorELb1EEdeEv.exit unwind label %bb.ba
 
 _ZN6duckdb12optional_ptrINS_16PhysicalOperatorELb1EEdeEv.exit: ; preds = %bb.ag, %bb.af
@@ -618,7 +617,7 @@ bb.c:                                             ; preds = %bb.a
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.cr, i8 0, i64 16, i1 false)
   store i8 1, ptr %i.cv, align 1, !tbaa !1651
   %i.cw = add nuw i64 %.011.i.i, 2                ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.lr.ph.preheader.i.unr-lcssa, label %.lr.ph.i.i, !llvm.loop !1921
 
@@ -687,7 +686,7 @@ bb.c:                                             ; preds = %bb.a
   %i.dv = getelementptr inbounds nuw i8, ptr %i.du, i64 4665
   store i8 0, ptr %i.dv, align 1, !tbaa !1651
   %i.dw = add nuw i64 %.06.i, 8                   ; 2 uses
-  %niter8.next.7 = add i64 %niter8, 8             ; 2 uses
+  %niter8.next.7 = add nuw i64 %niter8, 8         ; 2 uses
   %niter8.ncmp.7 = icmp eq i64 %niter8.next.7, %unroll_iter7
   br i1 %niter8.ncmp.7, label %_ZN17duckdb_moodycamel15ConcurrentQueueIN6duckdb10shared_ptrINS1_4TaskELb1EEENS_28ConcurrentQueueDefaultTraitsEE27populate_initial_block_listEm.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !1922
 

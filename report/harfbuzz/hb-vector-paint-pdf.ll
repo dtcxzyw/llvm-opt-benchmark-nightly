@@ -204,12 +204,11 @@ _ZN15hb_vector_buf_t10append_strEPKc.exit738:     ; preds = %_ZN15hb_vector_buf_
 bb.jg:                                            ; preds = %.lr.ph, %_ZN15hb_vector_buf_t10append_strEPKc.exit795
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %_ZN15hb_vector_buf_t10append_strEPKc.exit795 ] ; 4 uses
   %i.aon = load i32, ptr %i.bo, align 4, !tbaa !8
-  %3 = trunc nuw i64 %indvars.iv to i32
-  %4 = add nuw i64 %indvars.iv, 4
-  %5 = and i64 %4, 4294967295
-  %6 = getelementptr inbounds nuw [4 x i8], ptr %.sroa.11.0.ph, i64 %5
-  store i32 %i.aon, ptr %6, align 4, !tbaa !74
-  %i.aoo = add i32 %3, 5
+  %3 = getelementptr inbounds nuw [4 x i8], ptr %.sroa.11.0.ph, i64 %indvars.iv
+  %4 = getelementptr inbounds nuw i8, ptr %3, i64 16
+  store i32 %i.aon, ptr %4, align 4, !tbaa !74
+  %5 = trunc i64 %indvars.iv to i32
+  %i.aoo = add i32 %5, 5
   %i.aop = call noundef zeroext i1 @_ZN15hb_vector_buf_t15append_unsignedEj(ptr noundef nonnull align 8 dereferenceable(20) %1, i32 noundef %i.aoo) ; 0 uses
   %i.aoq = load i32, ptr %i.bo, align 4, !tbaa !8 ; 2 uses
   %i.aor = call { i32, i1 } @llvm.uadd.with.overflow.i32(i32 %i.aoq, i32 7) ; 2 uses
@@ -612,7 +611,7 @@ bb.a:
   %i.n = fmul float %i.m, 1.000000e-01
   %i.o = fmul float %i.n, 1.000000e-01
   %i.p = fmul float %i.o, 1.000000e-01            ; 3 uses
-  %niter.next.7 = add i32 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i32 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i32 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !439
 
@@ -1015,7 +1014,8 @@ bb.ca:                                            ; preds = %._crit_edge.us.i, %
   %i.ld = getelementptr inbounds nuw i8, ptr %i.kk, i64 %i.lc ; 2 uses
   %i.le = load i8, ptr %i.ld, align 1, !tbaa !104 ; 2 uses
   %i.lf = getelementptr inbounds nuw i8, ptr %i.ld, i64 1 ; 2 uses
-  %i.lg = mul i32 %3, %i.la                       ; 2 uses
+  %i.lg = mul i32 %3, %i.la
+  %15 = zext i32 %i.lg to i64                     ; 2 uses
   %i.lh = load i8, ptr %i.ky, align 1, !tbaa !104 ; 3 uses
   %i.li = load i8, ptr %i.lf, align 1, !tbaa !104 ; 4 uses
   switch i8 %i.le, label %bb.ce [
@@ -1053,14 +1053,13 @@ bb.cf:                                            ; preds = %bb.ce
 bb.cg:                                            ; preds = %bb.cf, %bb.ce
   %i.ls = phi i8 [ %i.lr, %bb.cf ], [ -1, %bb.ce ]
   %i.lt = load ptr, ptr %i.kx, align 8, !tbaa !12
-  %15 = zext i32 %i.lg to i64
   %i.lu = getelementptr inbounds nuw i8, ptr %i.lt, i64 %15
   store i8 %i.ls, ptr %i.lu, align 1, !tbaa !104
   br i1 %exitcond.peel.not.i, label %._crit_edge.us.i, label %.peel.next.i
 
 .peel.next.i:                                     ; preds = %bb.cg, %bb.cn
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.cn ], [ 1, %bb.cg ] ; 6 uses
-  %i.lv = add nsw i64 %indvars.iv.i, -1           ; 2 uses
+  %i.lv = add nuw nsw i64 %indvars.iv.i, 4294967295 ; 2 uses
   %i.lw = getelementptr inbounds nuw i8, ptr %i.kz, i64 %i.lv
   %i.lx = load i8, ptr %i.lw, align 1, !tbaa !104 ; 4 uses
   %.in.us.i = getelementptr inbounds nuw i8, ptr %i.ky, i64 %indvars.iv.i
@@ -1130,10 +1129,8 @@ bb.cm:                                            ; preds = %bb.cl
 bb.cn:                                            ; preds = %bb.cm, %bb.cl
   %i.ne = phi i8 [ %i.nd, %bb.cm ], [ -1, %bb.cl ]
   %i.nf = load ptr, ptr %i.kx, align 8, !tbaa !12
-  %16 = trunc nuw i64 %indvars.iv.i to i32
-  %17 = add i32 %i.lg, %16
-  %18 = zext i32 %17 to i64
-  %i.ng = getelementptr inbounds nuw i8, ptr %i.nf, i64 %18
+  %16 = getelementptr inbounds nuw i8, ptr %i.nf, i64 %indvars.iv.i
+  %i.ng = getelementptr inbounds nuw i8, ptr %16, i64 %15
   store i8 %i.ne, ptr %i.ng, align 1, !tbaa !104
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %i.ku

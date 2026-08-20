@@ -203,13 +203,12 @@ bb.p:                                             ; preds = %.preheader
 
 .preheader33.i:                                   ; preds = %bb.p, %.preheader33.i
   %.idx22.i = phi i64 [ %.add23.i, %.preheader33.i ], [ %.idx.i, %bb.p ]
-  %.add23.i = add nsw i64 %.idx22.i, -40          ; 3 uses
+  %.add23.i = add nuw nsw i64 %.idx22.i, -40      ; 2 uses
   %.ptr25.i = getelementptr inbounds i8, ptr %i.t, i64 %.add23.i
   call void @_ZN6icu_786LocaleD1Ev(ptr noundef nonnull align 8 dead_on_return(40) dereferenceable(40) %.ptr25.i) #16
-  %3 = icmp eq i64 %.add23.i, 8
-  br i1 %3, label %.loopexit34.i, label %.preheader33.i
+  br label %.preheader33.i
 
-.loopexit34.i:                                    ; preds = %.preheader33.i, %bb.p
+.loopexit34.i:                                    ; preds = %bb.p
   call void @_ZN6icu_787UMemorydaEPv(ptr noundef nonnull %i.t) #16
   br label %bb.u
 

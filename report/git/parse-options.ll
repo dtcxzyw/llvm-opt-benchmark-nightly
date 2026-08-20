@@ -203,7 +203,7 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.d, %bb.a
-  %indvars.iv109.i = phi i32 [ %indvars.iv.next110.i, %bb.d ], [ -1, %bb.a ] ; 2 uses
+  %indvars.iv109.i = phi i64 [ %indvars.iv.next110.i, %bb.d ], [ 4294967296, %bb.a ] ; 2 uses
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.d ], [ 0, %bb.a ] ; 6 uses
   %.070.i = phi i32 [ %.1.i, %bb.d ], [ 0, %bb.a ] ; 4 uses
   %i.b = getelementptr inbounds nuw [96 x i8], ptr %3, i64 %indvars.iv.i
@@ -220,7 +220,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c, %bb.b
   %.1.i = phi i32 [ %i.d, %bb.c ], [ %.070.i, %bb.b ]
   %indvars.iv.next.i = add nuw i64 %indvars.iv.i, 1
-  %indvars.iv.next110.i = add nsw i32 %indvars.iv109.i, 1
+  %indvars.iv.next110.i = add nuw i64 %indvars.iv109.i, 1
   br label %bb.b, !llvm.loop !89
 
 bb.e:                                             ; preds = %bb.b
@@ -244,7 +244,6 @@ st_mult.exit.i:                                   ; preds = %bb.e
   br i1 %.not.i, label %preprocess_options.exit, label %.lr.ph.preheader.i
 
 .lr.ph.preheader.i:                               ; preds = %st_mult.exit.i
-  %8 = add i32 %indvars.iv109.i, 1
   %wide.trip.count118.i = and i64 %indvars.iv.i, 4294967295 ; 2 uses
   br label %.lr.ph.i
 
@@ -309,7 +308,6 @@ bb.m:                                             ; preds = %bb.l
   unreachable
 
 bb.n:                                             ; preds = %bb.l
-  %9 = trunc nuw nsw i64 %indvars.iv107.i to i32
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %i.n, ptr noundef nonnull readonly align 8 dereferenceable(96) %i.x, i64 96, i1 false)
   store i32 %i.q, ptr %i.p, align 4, !tbaa !33
   store ptr %i.s, ptr %i.r, align 8, !tbaa !32
@@ -328,7 +326,8 @@ bb.o:                                             ; preds = %bb.k, %bb.j
   br i1 %exitcond.not.i, label %.loopexit.i, label %bb.j, !llvm.loop !90
 
 .loopexit.i:                                      ; preds = %bb.o, %bb.n
-  %.087.i = phi i32 [ %9, %bb.n ], [ %8, %bb.o ]  ; 2 uses
+  %.087.in.i = phi i64 [ %indvars.iv107.i, %bb.n ], [ %indvars.iv109.i, %bb.o ] ; 2 uses
+  %.087.i = trunc i64 %.087.in.i to i32
   %i.ai = icmp eq i32 %.087.i, %indvars56.le
   %i.aj = load ptr, ptr %i.r, align 8, !tbaa !32  ; 2 uses
   br i1 %i.ai, label %bb.p, label %bb.q
@@ -343,8 +342,8 @@ bb.q:                                             ; preds = %.loopexit.i
   %i.am = sext i32 %i.al to i64
   %i.an = getelementptr inbounds [8 x i8], ptr %i.ak, i64 %i.am ; 3 uses
   store ptr %i.aj, ptr %i.an, align 8, !tbaa !57
-  %10 = zext nneg i32 %.087.i to i64
-  %i.ao = getelementptr inbounds nuw [96 x i8], ptr %3, i64 %10
+  %8 = and i64 %.087.in.i, 4294967295
+  %i.ao = getelementptr inbounds nuw [96 x i8], ptr %3, i64 %8
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ao, i64 8
   %i.aq = load ptr, ptr %i.ap, align 8, !tbaa !32
   %i.ar = getelementptr i8, ptr %i.an, i64 8

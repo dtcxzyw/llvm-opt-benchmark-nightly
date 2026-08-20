@@ -24,7 +24,7 @@ bb.a:
 define linkonce_odr noundef double @_ZNK14arrow_vendored17double_conversion23StringToDoubleConverter12StringToIeeeIPKcEEdT_ibPi(ptr noundef nonnull align 8 dereferenceable(42) %0, ptr noundef %1, i32 noundef %2, i1 noundef zeroext %3, ptr noundef %4) local_unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = ptrtoaddr ptr %1 to i64                  ; 9 uses
-  %i.b = alloca ptr, align 8                      ; 36 uses
+  %i.b = alloca ptr, align 8                      ; 35 uses
   %i.c = alloca i8, align 1                       ; 4 uses
   %i.d = alloca [782 x i8], align 16              ; 11 uses
   %i.e = alloca i8, align 1                       ; 3 uses
@@ -427,12 +427,11 @@ bb.bo:                                            ; preds = %bb.bl
   br i1 %or.cond651, label %.lr.ph474, label %.loopexit
 
 .lr.ph474:                                        ; preds = %bb.bo, %bb.bq
-  %.0157473 = phi i32 [ %7, %bb.bq ], [ 0, %bb.bo ]
   %5 = call fastcc noundef zeroext i1 @_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_(ptr noundef %i.b, i16 noundef zeroext %i.jg, i32 noundef 10, ptr nonnull %i.h)
+  %6 = load ptr, ptr %i.b, align 8, !tbaa !7      ; 3 uses
   br i1 %5, label %bb.bp, label %bb.bq
 
 bb.bp:                                            ; preds = %.lr.ph474
-  %6 = load ptr, ptr %i.b, align 8, !tbaa !7
   %i.jn = ptrtoint ptr %6 to i64
   %i.jo = ptrtoint ptr %1 to i64
   %i.jp = sub i64 %i.jn, %i.jo
@@ -442,16 +441,14 @@ bb.bp:                                            ; preds = %.lr.ph474
   br label %.thread370
 
 bb.bq:                                            ; preds = %.lr.ph474
-  %7 = add nsw i32 %.0157473, -1                  ; 2 uses
-  %8 = load ptr, ptr %i.b, align 8, !tbaa !7      ; 2 uses
-  %i.js = load i8, ptr %8, align 1, !tbaa !15     ; 2 uses
+  %i.js = load i8, ptr %6, align 1, !tbaa !15     ; 2 uses
   %i.jt = icmp eq i8 %i.js, 48
   br i1 %i.jt, label %.lr.ph474, label %.loopexit, !llvm.loop !35
 
 .loopexit:                                        ; preds = %bb.bq, %bb.bo
   %i.ju = phi i8 [ %i.jl, %bb.bo ], [ %i.js, %bb.bq ] ; 2 uses
-  %.promoted476 = phi ptr [ %.promoted476.pre, %bb.bo ], [ %8, %bb.bq ] ; 2 uses
-  %.1158 = phi i32 [ 0, %bb.bo ], [ %7, %bb.bq ]  ; 2 uses
+  %.promoted476 = phi ptr [ %.promoted476.pre, %bb.bo ], [ %6, %bb.bq ] ; 2 uses
+  %.1158 = phi i32 [ 0, %bb.bo ], [ -1, %bb.bq ]  ; 2 uses
   %i.jv = add i8 %i.ju, -48
   %or.cond229478 = icmp ult i8 %i.jv, 10
   br i1 %or.cond229478, label %.lr.ph484, label %.critedge11.loopexit
@@ -716,7 +713,7 @@ bb.cv:                                            ; preds = %bb.cu, %bb.ca
   %i.mu = and i32 %i.i, 20
   %or.cond25.not = icmp ne i32 %i.mu, 0
   %.not220 = icmp eq ptr %.promoted492, %i.h      ; 2 uses
-  %or.cond407 = or i1 %or.cond25.not, %.not220
+  %or.cond407 = select i1 %or.cond25.not, i1 true, i1 %.not220
   br i1 %or.cond407, label %bb.cx, label %bb.cw
 
 bb.cw:                                            ; preds = %bb.cv
@@ -726,7 +723,7 @@ bb.cw:                                            ; preds = %bb.cv
 
 bb.cx:                                            ; preds = %bb.cv
   %.promoted.i300545 = ptrtoaddr ptr %.promoted492 to i64 ; 2 uses
-  %or.cond408 = or i1 %i.k, %.not220
+  %or.cond408 = select i1 %i.k, i1 true, i1 %.not220
   br i1 %or.cond408, label %_ZN14arrow_vendored17double_conversionL17AdvanceToNonspaceIPKcEEbPT_S4_.exit307, label %.lr.ph.i302.preheader
 
 .lr.ph.i302.preheader:                            ; preds = %bb.cx
@@ -774,7 +771,7 @@ _ZN14arrow_vendored17double_conversionL17AdvanceToNonspaceIPKcEEbPT_S4_.exit307:
   %.promoted.i308547.pre-phi = phi i64 [ %i.na, %_ZN14arrow_vendored17double_conversionL17AdvanceToNonspaceIPKcEEbPT_S4_.exit307.loopexit ], [ %.promoted.i300545, %bb.cx ]
   %.promoted497 = phi ptr [ %scevgep546, %_ZN14arrow_vendored17double_conversionL17AdvanceToNonspaceIPKcEEbPT_S4_.exit307.loopexit ], [ %.promoted492, %bb.cx ] ; 6 uses
   %.not6.not.i309 = icmp eq ptr %.promoted497, %i.h
-  %or.cond409 = or i1 %.not223, %.not6.not.i309
+  %or.cond409 = select i1 %.not223, i1 true, i1 %.not6.not.i309
   br i1 %or.cond409, label %_ZN14arrow_vendored17double_conversionL17AdvanceToNonspaceIPKcEEbPT_S4_.exit315, label %.lr.ph.i310.preheader
 
 .lr.ph.i310.preheader:                            ; preds = %_ZN14arrow_vendored17double_conversionL17AdvanceToNonspaceIPKcEEbPT_S4_.exit307
@@ -955,7 +952,7 @@ bb.a:
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr noundef double @_ZNK14arrow_vendored17double_conversion23StringToDoubleConverter12StringToIeeeIPKtEEdT_ibPi(ptr noundef nonnull align 8 dereferenceable(42) %0, ptr noundef %1, i32 noundef %2, i1 noundef zeroext %3, ptr noundef %4) local_unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = alloca ptr, align 8                      ; 31 uses
+  %i.a = alloca ptr, align 8                      ; 30 uses
   %i.b = alloca i8, align 1                       ; 4 uses
   %i.c = alloca [782 x i8], align 16              ; 11 uses
   %i.d = alloca i8, align 1                       ; 3 uses
@@ -1358,12 +1355,11 @@ bb.bo:                                            ; preds = %bb.bl
   br i1 %or.cond649, label %.lr.ph474, label %.loopexit
 
 .lr.ph474:                                        ; preds = %bb.bo, %bb.bq
-  %.0157473 = phi i32 [ %7, %bb.bq ], [ 0, %bb.bo ]
   %5 = call fastcc noundef zeroext i1 @_ZN14arrow_vendored17double_conversionL7AdvanceIPKtEEbPT_tiRS4_(ptr noundef %i.a, i16 noundef zeroext %i.ih, i32 noundef 10, ptr nonnull %i.g)
+  %6 = load ptr, ptr %i.a, align 8, !tbaa !39     ; 3 uses
   br i1 %5, label %bb.bp, label %bb.bq
 
 bb.bp:                                            ; preds = %.lr.ph474
-  %6 = load ptr, ptr %i.a, align 8, !tbaa !39
   %i.io = ptrtoint ptr %6 to i64
   %i.ip = ptrtoint ptr %1 to i64
   %i.iq = sub i64 %i.io, %i.ip
@@ -1374,16 +1370,14 @@ bb.bp:                                            ; preds = %.lr.ph474
   br label %.thread370
 
 bb.bq:                                            ; preds = %.lr.ph474
-  %7 = add nsw i32 %.0157473, -1                  ; 2 uses
-  %8 = load ptr, ptr %i.a, align 8, !tbaa !39     ; 2 uses
-  %i.iu = load i16, ptr %8, align 2, !tbaa !41    ; 2 uses
+  %i.iu = load i16, ptr %6, align 2, !tbaa !41    ; 2 uses
   %i.iv = icmp eq i16 %i.iu, 48
   br i1 %i.iv, label %.lr.ph474, label %.loopexit, !llvm.loop !45
 
 .loopexit:                                        ; preds = %bb.bq, %bb.bo
   %i.iw = phi i16 [ %i.im, %bb.bo ], [ %i.iu, %bb.bq ] ; 2 uses
-  %.promoted476 = phi ptr [ %.promoted476.pre, %bb.bo ], [ %8, %bb.bq ] ; 2 uses
-  %.1158 = phi i32 [ 0, %bb.bo ], [ %7, %bb.bq ]  ; 2 uses
+  %.promoted476 = phi ptr [ %.promoted476.pre, %bb.bo ], [ %6, %bb.bq ] ; 2 uses
+  %.1158 = phi i32 [ 0, %bb.bo ], [ -1, %bb.bq ]  ; 2 uses
   %i.ix = add i16 %i.iw, -48
   %or.cond229478 = icmp ult i16 %i.ix, 10
   br i1 %or.cond229478, label %.lr.ph484, label %.critedge11.loopexit

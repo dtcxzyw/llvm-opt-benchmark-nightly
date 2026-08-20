@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.c, %.new
   %i.o = or i1 %i.n, %i.m, !dbg !61088
   %..i.i.i.i.1 = select i1 %i.o, double %..i.i.i.i, double %.val.i.1, !dbg !61097 ; 3 uses
   %i.p = add nuw i64 %.sroa.04.0.i, 2, !dbg !61098 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2, !dbg !61101  ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2, !dbg !61101 ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter, !dbg !61101
   br i1 %niter.ncmp.1, label %_RINvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB7_4IterdENtNtNtNtBb_4iter6traits8iterator8Iterator4folddNCINvNtNtBY_8adapters6copied9copy_foldddNvYdNtNtCs2mZqlW55729_12polars_utils7min_max6MinMax17max_propagate_nanE0ECskY9G75ZWc4U_11polars_expr.exit.loopexit.unr-lcssa, label %bb.c, !dbg !61101
 
@@ -268,7 +268,7 @@ bb.c:                                             ; preds = %bb.c, %.new
   %i.o = or i1 %i.n, %i.m, !dbg !61135
   %..i.i.i.i.1 = select i1 %i.o, double %..i.i.i.i, double %.val.i.1, !dbg !61144 ; 3 uses
   %i.p = add nuw i64 %.sroa.04.0.i, 2, !dbg !61145 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2, !dbg !61148  ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2, !dbg !61148 ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter, !dbg !61148
   br i1 %niter.ncmp.1, label %_RINvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB7_4IterdENtNtNtNtBb_4iter6traits8iterator8Iterator4folddNCINvNtNtBY_8adapters6copied9copy_foldddNvYdNtNtCs2mZqlW55729_12polars_utils7min_max6MinMax17min_propagate_nanE0ECskY9G75ZWc4U_11polars_expr.exit.loopexit.unr-lcssa, label %bb.c, !dbg !61148
 
@@ -460,7 +460,7 @@ bb.c:                                             ; preds = %bb.c, %.new
   store double %i.o, ptr %i.q, align 8, !dbg !61311, !noalias !61314
   %i.r = add i64 %i.g, 2, !dbg !61319             ; 3 uses
   %i.s = add nuw i64 %.sroa.01.0.i, 2, !dbg !61322 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2, !dbg !61325  ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2, !dbg !61325 ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter, !dbg !61325
   br i1 %niter.ncmp.1, label %_RINvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB7_4IterdENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtBY_8adapters6copied9copy_foldduNCINvNtB1K_3map8map_folddduNCINvNtNtCskY9G75ZWc4U_11polars_expr8dispatch12trigonometry3cotNtNtCs1LHh8CLbVkQ_11polars_core9datatypes11Float64TypeE0NCINvNvBS_8for_each4calldNCINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB5b_3VecdE14extend_trustedINtB2m_3MapINtB1I_6CopiedBF_EB2I_EE0E0E0E0EB2R_.exit.loopexit.unr-lcssa, label %bb.c, !dbg !61325
 
@@ -668,7 +668,7 @@ bb.c:                                             ; preds = %bb.c, %.new
   store double %i.w, ptr %i.y, align 8, !dbg !61487, !noalias !61490
   %i.z = add i64 %i.g, 4, !dbg !61495             ; 3 uses
   %i.aa = add nuw i64 %.sroa.01.0.i, 4, !dbg !61498 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4, !dbg !61501  ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4, !dbg !61501 ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter, !dbg !61501
   br i1 %niter.ncmp.3, label %_RINvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB7_4IterdENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtBY_8adapters6copied9copy_foldduNCINvNtB1K_3map8map_folddduNCINvNtNtCskY9G75ZWc4U_11polars_expr8dispatch12trigonometry3tanNtNtCs1LHh8CLbVkQ_11polars_core9datatypes11Float64TypeE0NCINvNvBS_8for_each4calldNCINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB5b_3VecdE14extend_trustedINtB2m_3MapINtB1I_6CopiedBF_EB2I_EE0E0E0E0EB2R_.exit.loopexit.unr-lcssa, label %bb.c, !dbg !61501
 
@@ -762,7 +762,7 @@ bb.c:                                             ; preds = %bb.c, %.new
   store double %i.w, ptr %i.y, align 8, !dbg !61576, !noalias !61579
   %i.z = add i64 %i.g, 4, !dbg !61584             ; 3 uses
   %i.aa = add nuw i64 %.sroa.01.0.i, 4, !dbg !61587 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4, !dbg !61590  ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4, !dbg !61590 ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter, !dbg !61590
   br i1 %niter.ncmp.3, label %_RINvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB7_4IterdENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtBY_8adapters6copied9copy_foldduNCINvNtB1K_3map8map_folddduNCINvNtNtCskY9G75ZWc4U_11polars_expr8dispatch12trigonometry4coshNtNtCs1LHh8CLbVkQ_11polars_core9datatypes11Float64TypeE0NCINvNvBS_8for_each4calldNCINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB5c_3VecdE14extend_trustedINtB2m_3MapINtB1I_6CopiedBF_EB2I_EE0E0E0E0EB2R_.exit.loopexit.unr-lcssa, label %bb.c, !dbg !61590
 
@@ -856,7 +856,7 @@ bb.c:                                             ; preds = %bb.c, %.new
   store double %i.w, ptr %i.y, align 8, !dbg !61665, !noalias !61668
   %i.z = add i64 %i.g, 4, !dbg !61673             ; 3 uses
   %i.aa = add nuw i64 %.sroa.01.0.i, 4, !dbg !61676 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4, !dbg !61679  ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4, !dbg !61679 ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter, !dbg !61679
   br i1 %niter.ncmp.3, label %_RINvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB7_4IterdENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtBY_8adapters6copied9copy_foldduNCINvNtB1K_3map8map_folddduNCINvNtNtCskY9G75ZWc4U_11polars_expr8dispatch12trigonometry4sinhNtNtCs1LHh8CLbVkQ_11polars_core9datatypes11Float64TypeE0NCINvNvBS_8for_each4calldNCINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB5c_3VecdE14extend_trustedINtB2m_3MapINtB1I_6CopiedBF_EB2I_EE0E0E0E0EB2R_.exit.loopexit.unr-lcssa, label %bb.c, !dbg !61679
 
@@ -950,7 +950,7 @@ bb.c:                                             ; preds = %bb.c, %.new
   store double %i.w, ptr %i.y, align 8, !dbg !61754, !noalias !61757
   %i.z = add i64 %i.g, 4, !dbg !61762             ; 3 uses
   %i.aa = add nuw i64 %.sroa.01.0.i, 4, !dbg !61765 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4, !dbg !61768  ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4, !dbg !61768 ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter, !dbg !61768
   br i1 %niter.ncmp.3, label %_RINvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB7_4IterdENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtBY_8adapters6copied9copy_foldduNCINvNtB1K_3map8map_folddduNCINvNtNtCskY9G75ZWc4U_11polars_expr8dispatch12trigonometry4tanhNtNtCs1LHh8CLbVkQ_11polars_core9datatypes11Float64TypeE0NCINvNvBS_8for_each4calldNCINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB5c_3VecdE14extend_trustedINtB2m_3MapINtB1I_6CopiedBF_EB2I_EE0E0E0E0EB2R_.exit.loopexit.unr-lcssa, label %bb.c, !dbg !61768
 
@@ -1044,7 +1044,7 @@ bb.c:                                             ; preds = %bb.c, %.new
   store double %i.w, ptr %i.y, align 8, !dbg !61843, !noalias !61846
   %i.z = add i64 %i.g, 4, !dbg !61851             ; 3 uses
   %i.aa = add nuw i64 %.sroa.01.0.i, 4, !dbg !61854 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4, !dbg !61857  ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4, !dbg !61857 ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter, !dbg !61857
   br i1 %niter.ncmp.3, label %_RINvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB7_4IterdENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtBY_8adapters6copied9copy_foldduNCINvNtB1K_3map8map_folddduNCINvNtNtCskY9G75ZWc4U_11polars_expr8dispatch12trigonometry6arccosNtNtCs1LHh8CLbVkQ_11polars_core9datatypes11Float64TypeE0NCINvNvBS_8for_each4calldNCINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB5e_3VecdE14extend_trustedINtB2m_3MapINtB1I_6CopiedBF_EB2I_EE0E0E0E0EB2R_.exit.loopexit.unr-lcssa, label %bb.c, !dbg !61857
 
@@ -1138,7 +1138,7 @@ bb.c:                                             ; preds = %bb.c, %.new
   store double %i.w, ptr %i.y, align 8, !dbg !61932, !noalias !61935
   %i.z = add i64 %i.g, 4, !dbg !61940             ; 3 uses
   %i.aa = add nuw i64 %.sroa.01.0.i, 4, !dbg !61943 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4, !dbg !61946  ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4, !dbg !61946 ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter, !dbg !61946
   br i1 %niter.ncmp.3, label %_RINvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB7_4IterdENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtBY_8adapters6copied9copy_foldduNCINvNtB1K_3map8map_folddduNCINvNtNtCskY9G75ZWc4U_11polars_expr8dispatch12trigonometry6arcsinNtNtCs1LHh8CLbVkQ_11polars_core9datatypes11Float64TypeE0NCINvNvBS_8for_each4calldNCINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB5e_3VecdE14extend_trustedINtB2m_3MapINtB1I_6CopiedBF_EB2I_EE0E0E0E0EB2R_.exit.loopexit.unr-lcssa, label %bb.c, !dbg !61946
 
@@ -1232,7 +1232,7 @@ bb.c:                                             ; preds = %bb.c, %.new
   store double %i.w, ptr %i.y, align 8, !dbg !62021, !noalias !62024
   %i.z = add i64 %i.g, 4, !dbg !62029             ; 3 uses
   %i.aa = add nuw i64 %.sroa.01.0.i, 4, !dbg !62032 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4, !dbg !62035  ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4, !dbg !62035 ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter, !dbg !62035
   br i1 %niter.ncmp.3, label %_RINvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB7_4IterdENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtBY_8adapters6copied9copy_foldduNCINvNtB1K_3map8map_folddduNCINvNtNtCskY9G75ZWc4U_11polars_expr8dispatch12trigonometry6arctanNtNtCs1LHh8CLbVkQ_11polars_core9datatypes11Float64TypeE0NCINvNvBS_8for_each4calldNCINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB5e_3VecdE14extend_trustedINtB2m_3MapINtB1I_6CopiedBF_EB2I_EE0E0E0E0EB2R_.exit.loopexit.unr-lcssa, label %bb.c, !dbg !62035
 
@@ -1635,7 +1635,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g, %bb.f
   store double %.sroa.0.0.i.i.i.i.1, ptr %i.q, align 8, !dbg !62962, !noalias !62965
   %i.r = add i64 %i.g, 2, !dbg !62974             ; 3 uses
   %i.s = add nuw i64 %.sroa.01.0.i, 2, !dbg !62977 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2, !dbg !62980  ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2, !dbg !62980 ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter, !dbg !62980
   br i1 %niter.ncmp.1, label %_RINvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB7_4IterdENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtBY_8adapters6copied9copy_foldduNCINvNtB1K_3map8map_folddduNCINvNvNtNtCskY9G75ZWc4U_11polars_expr8dispatch4misc4sign9sign_implNtNtCs1LHh8CLbVkQ_11polars_core9datatypes11Float64TypeE0NCINvNvBS_8for_each4calldNCINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB5f_3VecdE14extend_trustedINtB2m_3MapINtB1I_6CopiedBF_EB2I_EE0E0E0E0EB2T_.exit.loopexit.unr-lcssa, label %bb.c, !dbg !62980
 
@@ -2038,7 +2038,7 @@ bb.c:                                             ; preds = %bb.c, %.new
   store double %i.t, ptr %i.v, align 8, !dbg !63640, !noalias !63643
   %i.w = add i64 %i.h, 2, !dbg !63648             ; 3 uses
   %i.x = add nuw i64 %.sroa.01.0.i, 2, !dbg !63651 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2, !dbg !63654  ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2, !dbg !63654 ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter, !dbg !63654
   br i1 %niter.ncmp.1, label %_RINvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB7_4IterdENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtBY_8adapters6copied9copy_foldduNCINvNtB1K_3map8map_folddduQNCINvNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops5arity35broadcast_binary_elementwise_valuesNtNtB2U_9datatypes11Float64TypeB4l_B4l_NCNvYNtNtB2U_6series6SeriesNtNtNtNtCsePnBjWcsLF5_10polars_ops6series3ops3log9LogSeries3logs0_0dE0NCINvNvBS_8for_each4calldNCINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB75_3VecdE14extend_trustedINtB2m_3MapINtB1I_6CopiedBF_EB2I_EE0E0E0E0ECskY9G75ZWc4U_11polars_expr.exit.loopexit.unr-lcssa, label %bb.c, !dbg !63654
 
@@ -2124,7 +2124,7 @@ bb.c:                                             ; preds = %bb.c, %.new
   store double %i.t, ptr %i.v, align 8, !dbg !63738, !noalias !63741
   %i.w = add i64 %i.h, 2, !dbg !63746             ; 3 uses
   %i.x = add nuw i64 %.sroa.01.0.i, 2, !dbg !63749 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2, !dbg !63752  ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2, !dbg !63752 ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter, !dbg !63752
   br i1 %niter.ncmp.1, label %_RINvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB7_4IterdENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtBY_8adapters6copied9copy_foldduNCINvNtB1K_3map8map_folddduQNCINvNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops5arity35broadcast_binary_elementwise_valuesNtNtB2U_9datatypes11Float64TypeB4l_B4l_NCNvYNtNtB2U_6series6SeriesNtNtNtNtCsePnBjWcsLF5_10polars_ops6series3ops3log9LogSeries3logs0_0dEs_0NCINvNvBS_8for_each4calldNCINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB77_3VecdE14extend_trustedINtB2m_3MapINtB1I_6CopiedBF_EB2I_EE0E0E0E0ECskY9G75ZWc4U_11polars_expr.exit.loopexit.unr-lcssa, label %bb.c, !dbg !63752
 
@@ -2316,7 +2316,7 @@ bb.c:                                             ; preds = %bb.c, %.new
   %i.o = or i1 %i.n, %i.m, !dbg !63895
   %..i.i.i.i.1 = select i1 %i.o, float %..i.i.i.i, float %.val.i.1, !dbg !63904 ; 3 uses
   %i.p = add nuw i64 %.sroa.04.0.i, 2, !dbg !63905 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2, !dbg !63908  ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2, !dbg !63908 ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter, !dbg !63908
   br i1 %niter.ncmp.1, label %_RINvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB7_4IterfENtNtNtNtBb_4iter6traits8iterator8Iterator4foldfNCINvNtNtBY_8adapters6copied9copy_foldffNvYfNtNtCs2mZqlW55729_12polars_utils7min_max6MinMax17max_propagate_nanE0ECskY9G75ZWc4U_11polars_expr.exit.loopexit.unr-lcssa, label %bb.c, !dbg !63908
 
@@ -2380,7 +2380,7 @@ bb.c:                                             ; preds = %bb.c, %.new
   %i.o = or i1 %i.n, %i.m, !dbg !63942
   %..i.i.i.i.1 = select i1 %i.o, float %..i.i.i.i, float %.val.i.1, !dbg !63951 ; 3 uses
   %i.p = add nuw i64 %.sroa.04.0.i, 2, !dbg !63952 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2, !dbg !63955  ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2, !dbg !63955 ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter, !dbg !63955
   br i1 %niter.ncmp.1, label %_RINvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB7_4IterfENtNtNtNtBb_4iter6traits8iterator8Iterator4foldfNCINvNtNtBY_8adapters6copied9copy_foldffNvYfNtNtCs2mZqlW55729_12polars_utils7min_max6MinMax17min_propagate_nanE0ECskY9G75ZWc4U_11polars_expr.exit.loopexit.unr-lcssa, label %bb.c, !dbg !63955
 
@@ -2571,7 +2571,7 @@ bb.c:                                             ; preds = %bb.c, %.new
   store float %i.o, ptr %i.q, align 4, !dbg !64116, !noalias !64119
   %i.r = add i64 %i.g, 2, !dbg !64124             ; 3 uses
   %i.s = add nuw i64 %.sroa.01.0.i, 2, !dbg !64127 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2, !dbg !64130  ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2, !dbg !64130 ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter, !dbg !64130
   br i1 %niter.ncmp.1, label %_RINvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB7_4IterfENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtBY_8adapters6copied9copy_foldfuNCINvNtB1K_3map8map_foldffuNCINvNtNtCskY9G75ZWc4U_11polars_expr8dispatch12trigonometry3cotNtNtCs1LHh8CLbVkQ_11polars_core9datatypes11Float32TypeE0NCINvNvBS_8for_each4callfNCINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB5b_3VecfE14extend_trustedINtB2m_3MapINtB1I_6CopiedBF_EB2I_EE0E0E0E0EB2R_.exit.loopexit.unr-lcssa, label %bb.c, !dbg !64130
 
@@ -2778,7 +2778,7 @@ bb.c:                                             ; preds = %bb.c, %.new
   store float %i.w, ptr %i.y, align 4, !dbg !64292, !noalias !64295
   %i.z = add i64 %i.g, 4, !dbg !64300             ; 3 uses
   %i.aa = add nuw i64 %.sroa.01.0.i, 4, !dbg !64303 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4, !dbg !64306  ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4, !dbg !64306 ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter, !dbg !64306
   br i1 %niter.ncmp.3, label %_RINvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB7_4IterfENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtBY_8adapters6copied9copy_foldfuNCINvNtB1K_3map8map_foldffuNCINvNtNtCskY9G75ZWc4U_11polars_expr8dispatch12trigonometry3tanNtNtCs1LHh8CLbVkQ_11polars_core9datatypes11Float32TypeE0NCINvNvBS_8for_each4callfNCINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB5b_3VecfE14extend_trustedINtB2m_3MapINtB1I_6CopiedBF_EB2I_EE0E0E0E0EB2R_.exit.loopexit.unr-lcssa, label %bb.c, !dbg !64306
 
@@ -2872,7 +2872,7 @@ bb.c:                                             ; preds = %bb.c, %.new
   store float %i.w, ptr %i.y, align 4, !dbg !64381, !noalias !64384
   %i.z = add i64 %i.g, 4, !dbg !64389             ; 3 uses
   %i.aa = add nuw i64 %.sroa.01.0.i, 4, !dbg !64392 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4, !dbg !64395  ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4, !dbg !64395 ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter, !dbg !64395
   br i1 %niter.ncmp.3, label %_RINvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB7_4IterfENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtBY_8adapters6copied9copy_foldfuNCINvNtB1K_3map8map_foldffuNCINvNtNtCskY9G75ZWc4U_11polars_expr8dispatch12trigonometry4coshNtNtCs1LHh8CLbVkQ_11polars_core9datatypes11Float32TypeE0NCINvNvBS_8for_each4callfNCINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB5c_3VecfE14extend_trustedINtB2m_3MapINtB1I_6CopiedBF_EB2I_EE0E0E0E0EB2R_.exit.loopexit.unr-lcssa, label %bb.c, !dbg !64395
 
@@ -2966,7 +2966,7 @@ bb.c:                                             ; preds = %bb.c, %.new
   store float %i.w, ptr %i.y, align 4, !dbg !64470, !noalias !64473
   %i.z = add i64 %i.g, 4, !dbg !64478             ; 3 uses
   %i.aa = add nuw i64 %.sroa.01.0.i, 4, !dbg !64481 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4, !dbg !64484  ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4, !dbg !64484 ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter, !dbg !64484
   br i1 %niter.ncmp.3, label %_RINvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB7_4IterfENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtBY_8adapters6copied9copy_foldfuNCINvNtB1K_3map8map_foldffuNCINvNtNtCskY9G75ZWc4U_11polars_expr8dispatch12trigonometry4sinhNtNtCs1LHh8CLbVkQ_11polars_core9datatypes11Float32TypeE0NCINvNvBS_8for_each4callfNCINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB5c_3VecfE14extend_trustedINtB2m_3MapINtB1I_6CopiedBF_EB2I_EE0E0E0E0EB2R_.exit.loopexit.unr-lcssa, label %bb.c, !dbg !64484
 
@@ -3060,7 +3060,7 @@ bb.c:                                             ; preds = %bb.c, %.new
   store float %i.w, ptr %i.y, align 4, !dbg !64559, !noalias !64562
   %i.z = add i64 %i.g, 4, !dbg !64567             ; 3 uses
   %i.aa = add nuw i64 %.sroa.01.0.i, 4, !dbg !64570 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4, !dbg !64573  ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4, !dbg !64573 ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter, !dbg !64573
   br i1 %niter.ncmp.3, label %_RINvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB7_4IterfENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtBY_8adapters6copied9copy_foldfuNCINvNtB1K_3map8map_foldffuNCINvNtNtCskY9G75ZWc4U_11polars_expr8dispatch12trigonometry4tanhNtNtCs1LHh8CLbVkQ_11polars_core9datatypes11Float32TypeE0NCINvNvBS_8for_each4callfNCINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB5c_3VecfE14extend_trustedINtB2m_3MapINtB1I_6CopiedBF_EB2I_EE0E0E0E0EB2R_.exit.loopexit.unr-lcssa, label %bb.c, !dbg !64573
 
@@ -3154,7 +3154,7 @@ bb.c:                                             ; preds = %bb.c, %.new
   store float %i.w, ptr %i.y, align 4, !dbg !64648, !noalias !64651
   %i.z = add i64 %i.g, 4, !dbg !64656             ; 3 uses
   %i.aa = add nuw i64 %.sroa.01.0.i, 4, !dbg !64659 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4, !dbg !64662  ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4, !dbg !64662 ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter, !dbg !64662
   br i1 %niter.ncmp.3, label %_RINvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB7_4IterfENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtBY_8adapters6copied9copy_foldfuNCINvNtB1K_3map8map_foldffuNCINvNtNtCskY9G75ZWc4U_11polars_expr8dispatch12trigonometry6arccosNtNtCs1LHh8CLbVkQ_11polars_core9datatypes11Float32TypeE0NCINvNvBS_8for_each4callfNCINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB5e_3VecfE14extend_trustedINtB2m_3MapINtB1I_6CopiedBF_EB2I_EE0E0E0E0EB2R_.exit.loopexit.unr-lcssa, label %bb.c, !dbg !64662
 
@@ -3248,7 +3248,7 @@ bb.c:                                             ; preds = %bb.c, %.new
   store float %i.w, ptr %i.y, align 4, !dbg !64737, !noalias !64740
   %i.z = add i64 %i.g, 4, !dbg !64745             ; 3 uses
   %i.aa = add nuw i64 %.sroa.01.0.i, 4, !dbg !64748 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4, !dbg !64751  ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4, !dbg !64751 ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter, !dbg !64751
   br i1 %niter.ncmp.3, label %_RINvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB7_4IterfENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtBY_8adapters6copied9copy_foldfuNCINvNtB1K_3map8map_foldffuNCINvNtNtCskY9G75ZWc4U_11polars_expr8dispatch12trigonometry6arcsinNtNtCs1LHh8CLbVkQ_11polars_core9datatypes11Float32TypeE0NCINvNvBS_8for_each4callfNCINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB5e_3VecfE14extend_trustedINtB2m_3MapINtB1I_6CopiedBF_EB2I_EE0E0E0E0EB2R_.exit.loopexit.unr-lcssa, label %bb.c, !dbg !64751
 
@@ -3342,7 +3342,7 @@ bb.c:                                             ; preds = %bb.c, %.new
   store float %i.w, ptr %i.y, align 4, !dbg !64826, !noalias !64829
   %i.z = add i64 %i.g, 4, !dbg !64834             ; 3 uses
   %i.aa = add nuw i64 %.sroa.01.0.i, 4, !dbg !64837 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4, !dbg !64840  ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4, !dbg !64840 ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter, !dbg !64840
   br i1 %niter.ncmp.3, label %_RINvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB7_4IterfENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtBY_8adapters6copied9copy_foldfuNCINvNtB1K_3map8map_foldffuNCINvNtNtCskY9G75ZWc4U_11polars_expr8dispatch12trigonometry6arctanNtNtCs1LHh8CLbVkQ_11polars_core9datatypes11Float32TypeE0NCINvNvBS_8for_each4callfNCINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB5e_3VecfE14extend_trustedINtB2m_3MapINtB1I_6CopiedBF_EB2I_EE0E0E0E0EB2R_.exit.loopexit.unr-lcssa, label %bb.c, !dbg !64840
 
@@ -3745,7 +3745,7 @@ bb.c:                                             ; preds = %bb.c, %.new
   store float %i.t, ptr %i.v, align 4, !dbg !66454, !noalias !66457
   %i.w = add i64 %i.h, 2, !dbg !66462             ; 3 uses
   %i.x = add nuw i64 %.sroa.01.0.i, 2, !dbg !66465 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2, !dbg !66468  ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2, !dbg !66468 ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter, !dbg !66468
   br i1 %niter.ncmp.1, label %_RINvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB7_4IterfENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtBY_8adapters6copied9copy_foldfuNCINvNtB1K_3map8map_foldffuQNCINvNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops5arity35broadcast_binary_elementwise_valuesNtNtB2U_9datatypes11Float32TypeB4l_B4l_NCNvYNtNtB2U_6series6SeriesNtNtNtNtCsePnBjWcsLF5_10polars_ops6series3ops3log9LogSeries3logs_0fE0NCINvNvBS_8for_each4callfNCINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB74_3VecfE14extend_trustedINtB2m_3MapINtB1I_6CopiedBF_EB2I_EE0E0E0E0ECskY9G75ZWc4U_11polars_expr.exit.loopexit.unr-lcssa, label %bb.c, !dbg !66468
 
@@ -3831,7 +3831,7 @@ bb.c:                                             ; preds = %bb.c, %.new
   store float %i.t, ptr %i.v, align 4, !dbg !66552, !noalias !66555
   %i.w = add i64 %i.h, 2, !dbg !66560             ; 3 uses
   %i.x = add nuw i64 %.sroa.01.0.i, 2, !dbg !66563 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2, !dbg !66566  ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2, !dbg !66566 ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter, !dbg !66566
   br i1 %niter.ncmp.1, label %_RINvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB7_4IterfENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtBY_8adapters6copied9copy_foldfuNCINvNtB1K_3map8map_foldffuQNCINvNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops5arity35broadcast_binary_elementwise_valuesNtNtB2U_9datatypes11Float32TypeB4l_B4l_NCNvYNtNtB2U_6series6SeriesNtNtNtNtCsePnBjWcsLF5_10polars_ops6series3ops3log9LogSeries3logs_0fEs_0NCINvNvBS_8for_each4callfNCINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB76_3VecfE14extend_trustedINtB2m_3MapINtB1I_6CopiedBF_EB2I_EE0E0E0E0ECskY9G75ZWc4U_11polars_expr.exit.loopexit.unr-lcssa, label %bb.c, !dbg !66566
 
@@ -4234,7 +4234,7 @@ bb.c:                                             ; preds = %bb.c, %.new
   %.val.i.1 = load i128, ptr %i.i, align 16, !dbg !68473, !noundef !14
   %.sroa.0.0.i.i.i.i.1 = tail call noundef i128 @llvm.smax.i128(i128 %.sroa.0.0.i.i.i.i, i128 %.val.i.1), !dbg !68474 ; 3 uses
   %i.j = add nuw i64 %.sroa.04.0.i, 2, !dbg !68482 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2, !dbg !68485  ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2, !dbg !68485 ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter, !dbg !68485
   br i1 %niter.ncmp.1, label %_RINvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB7_4IternENtNtNtNtBb_4iter6traits8iterator8Iterator4foldnNCINvNtNtBY_8adapters6copied9copy_foldnnNvYnNtNtCs2mZqlW55729_12polars_utils7min_max6MinMax14max_ignore_nanE0ECskY9G75ZWc4U_11polars_expr.exit.loopexit.unr-lcssa, label %bb.c, !dbg !68485
 
@@ -4289,7 +4289,7 @@ bb.c:                                             ; preds = %bb.c, %.new
   %.val.i.1 = load i128, ptr %i.i, align 16, !dbg !68518, !noundef !14
   %.sroa.0.0.i.i.i.i.1 = tail call noundef i128 @llvm.smin.i128(i128 %.sroa.0.0.i.i.i.i, i128 %.val.i.1), !dbg !68519 ; 3 uses
   %i.j = add nuw i64 %.sroa.04.0.i, 2, !dbg !68527 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2, !dbg !68530  ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2, !dbg !68530 ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter, !dbg !68530
   br i1 %niter.ncmp.1, label %_RINvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB7_4IternENtNtNtNtBb_4iter6traits8iterator8Iterator4foldnNCINvNtNtBY_8adapters6copied9copy_foldnnNvYnNtNtCs2mZqlW55729_12polars_utils7min_max6MinMax14min_ignore_nanE0ECskY9G75ZWc4U_11polars_expr.exit.loopexit.unr-lcssa, label %bb.c, !dbg !68530
 
@@ -4692,7 +4692,7 @@ bb.c:                                             ; preds = %bb.c, %.new
   %i.n = getelementptr i8, ptr %i.m, i64 48, !dbg !69720
   store i128 1, ptr %i.n, align 16, !dbg !69732, !noalias !69735
   %i.o = add i64 %i.g, 4, !dbg !69746             ; 3 uses
-  %niter.next.3 = add i64 %niter, 4, !dbg !69749  ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4, !dbg !69749 ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter, !dbg !69749
   br i1 %niter.ncmp.3, label %_RINvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB7_4IternENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtBY_8adapters6copied9copy_foldnuNCINvNtB1K_3map8map_foldnnuQNCINvNtNtCskY9G75ZWc4U_11polars_expr8dispatch3pow21pow_on_chunked_arraysNtNtCs1LHh8CLbVkQ_11polars_core9datatypes10Int128TypeNtB3V_10UInt32TypeE0NCINvNvBS_8for_each4callnNCINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB5C_3VecnE14extend_trustedINtB2m_3MapINtB1I_6CopiedBF_EB2I_EE0E0E0E0EB2S_.exit.loopexit.unr-lcssa, label %bb.c, !dbg !69749
 
@@ -4754,7 +4754,7 @@ bb.c:                                             ; preds = %bb.c, %.new
   %.val.i.1 = load i128, ptr %i.i, align 16, !dbg !69795, !noundef !14
   %.sroa.0.0.i.i.i.i.1 = tail call noundef i128 @llvm.umax.i128(i128 %.sroa.0.0.i.i.i.i, i128 %.val.i.1), !dbg !69796 ; 3 uses
   %i.j = add nuw i64 %.sroa.04.0.i, 2, !dbg !69804 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2, !dbg !69807  ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2, !dbg !69807 ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter, !dbg !69807
   br i1 %niter.ncmp.1, label %_RINvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB7_4IteroENtNtNtNtBb_4iter6traits8iterator8Iterator4foldoNCINvNtNtBY_8adapters6copied9copy_foldooNvYoNtNtCs2mZqlW55729_12polars_utils7min_max6MinMax14max_ignore_nanE0ECskY9G75ZWc4U_11polars_expr.exit.loopexit.unr-lcssa, label %bb.c, !dbg !69807
 
@@ -4809,7 +4809,7 @@ bb.c:                                             ; preds = %bb.c, %.new
   %.val.i.1 = load i128, ptr %i.i, align 16, !dbg !69840, !noundef !14
   %.sroa.0.0.i.i.i.i.1 = tail call noundef i128 @llvm.umin.i128(i128 %.sroa.0.0.i.i.i.i, i128 %.val.i.1), !dbg !69841 ; 3 uses
   %i.j = add nuw i64 %.sroa.04.0.i, 2, !dbg !69849 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2, !dbg !69852  ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2, !dbg !69852 ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter, !dbg !69852
   br i1 %niter.ncmp.1, label %_RINvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB7_4IteroENtNtNtNtBb_4iter6traits8iterator8Iterator4foldoNCINvNtNtBY_8adapters6copied9copy_foldooNvYoNtNtCs2mZqlW55729_12polars_utils7min_max6MinMax14min_ignore_nanE0ECskY9G75ZWc4U_11polars_expr.exit.loopexit.unr-lcssa, label %bb.c, !dbg !69852
 
@@ -4946,7 +4946,7 @@ bb.c:                                             ; preds = %bb.c, %.new
   store i128 %spec.select.i.i.i.i.1, ptr %i.m, align 16, !dbg !70010, !noalias !70013
   %i.n = add i64 %i.g, 2, !dbg !70022             ; 3 uses
   %i.o = add nuw i64 %.sroa.01.0.i, 2, !dbg !70025 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2, !dbg !70028  ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2, !dbg !70028 ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter, !dbg !70028
   br i1 %niter.ncmp.1, label %_RINvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB7_4IteroENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtBY_8adapters6copied9copy_foldouNCINvNtB1K_3map8map_foldoouNCINvNvNtNtCskY9G75ZWc4U_11polars_expr8dispatch4misc4sign9sign_implNtNtCs1LHh8CLbVkQ_11polars_core9datatypes11UInt128TypeE0NCINvNvBS_8for_each4calloNCINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB5f_3VecoE14extend_trustedINtB2m_3MapINtB1I_6CopiedBF_EB2I_EE0E0E0E0EB2T_.exit.loopexit.unr-lcssa, label %bb.c, !dbg !70028
 
@@ -5095,7 +5095,7 @@ bb.c:                                             ; preds = %bb.c, %.new
   %i.n = getelementptr i8, ptr %i.m, i64 48, !dbg !70208
   store i128 1, ptr %i.n, align 16, !dbg !70220, !noalias !70223
   %i.o = add i64 %i.g, 4, !dbg !70234             ; 3 uses
-  %niter.next.3 = add i64 %niter, 4, !dbg !70237  ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4, !dbg !70237 ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter, !dbg !70237
   br i1 %niter.ncmp.3, label %_RINvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB7_4IteroENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtBY_8adapters6copied9copy_foldouNCINvNtB1K_3map8map_foldoouQNCINvNtNtCskY9G75ZWc4U_11polars_expr8dispatch3pow21pow_on_chunked_arraysNtNtCs1LHh8CLbVkQ_11polars_core9datatypes11UInt128TypeNtB3V_10UInt32TypeE0NCINvNvBS_8for_each4calloNCINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB5D_3VecoE14extend_trustedINtB2m_3MapINtB1I_6CopiedBF_EB2I_EE0E0E0E0EB2S_.exit.loopexit.unr-lcssa, label %bb.c, !dbg !70237
 
@@ -5498,7 +5498,7 @@ bb.c:                                             ; preds = %bb.c, %.new
   store i64 %.val16.i.1, ptr %i.s, align 8, !dbg !71325, !noalias !71328
   %i.t = add i64 %i.g, 2, !dbg !71333             ; 3 uses
   %i.u = add nuw i64 %.sroa.01.0.i, 2, !dbg !71336 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2, !dbg !71339  ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2, !dbg !71339 ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter, !dbg !71339
   br i1 %niter.ncmp.1, label %_RINvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB7_4IterxENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtBY_8adapters6copied9copy_foldxuNCINvNtB1K_3map8map_foldxTmxEuNCINvNtNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops4sort8arg_sort17arg_sort_no_nullsINtB2m_3MapIB4g_IBG_INtNtCsgZ49sUHp3tW_5alloc5boxed3BoxDNtNtCs8774dFTUdNv_12polars_arrow5array5ArrayEL_EENCNvMs_NtB2U_8downcastINtB2W_12ChunkedArrayNtNtB2Y_9datatypes9Int64TypeE13downcast_iter0ENCINvB2S_16arg_sort_numericB6D_E0EINtB1I_6CopiedBF_ExEs_0NCINvNvBS_8for_each4callB2G_NCINvMsj_NtB4E_3vecINtB8T_3VecB2G_E14extend_trustedIB4g_B7V_B2L_EE0E0E0E0ECskY9G75ZWc4U_11polars_expr.exit.loopexit.unr-lcssa, label %bb.c, !dbg !71339
 
@@ -5901,7 +5901,7 @@ bb.d:                                             ; preds = %bb.c
   %i.al = add i32 %i.aj, %i.ak, !dbg !85245
   %i.am = zext i8 %.sroa.5.0.i.i.3 to i32, !dbg !85254
   %i.an = add i32 %i.al, %i.am, !dbg !85256       ; 3 uses
-  %niter.next.3 = add i64 %niter, 4, !dbg !85268  ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4, !dbg !85268 ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter, !dbg !85268
   br i1 %niter.ncmp.3, label %_RNvMNtNtNtCslnrARR2vGZ9_6memchr4arch3all9rabinkarpNtB2_6Finder3new.exit.i.loopexit.unr-lcssa, label %.lr.ph.i, !dbg !85268, !llvm.loop !85276
 
@@ -6304,9 +6304,9 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !144036), !dbg !144035
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !dbg !144039, !noalias !144036
-  %i.k = add i32 %.val3, %.val2, !dbg !144043     ; 4 uses
+  %i.k = add i32 %.val3, %.val2, !dbg !144043     ; 5 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.g, ptr noundef nonnull readonly align 8 dereferenceable(32) %.val1, i64 32, i1 false), !dbg !144044, !noalias !144036
-  %i.l = zext i32 %.val3 to i64, !dbg !144045     ; 3 uses
+  %i.l = zext i32 %.val3 to i64, !dbg !144045     ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.g, i64 32, !dbg !144039
   store i32 %.val2, ptr %i.m, align 8, !dbg !144039, !noalias !144036
   %i.n = getelementptr inbounds nuw i8, ptr %i.g, i64 36, !dbg !144039
@@ -6326,6 +6326,7 @@ bb.a:
   %i.t = getelementptr inbounds nuw i8, ptr %i.g, i64 8
   %i.u = load i64, ptr %i.t, align 8, !alias.scope !144070, !noalias !144071, !noundef !14
   %i.v = zext i32 %.val2 to i64, !dbg !144069
+  %wide.trip.count.i.i.i = zext i32 %i.k to i64, !dbg !144058
   br label %bb.b, !dbg !144069
 
 bb.b:                                             ; preds = %_RNCINvNvNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator8position5checkmNCNCNvNtNtCskY9G75ZWc4U_11polars_expr8dispatch15groups_dispatch17forward_fill_nulls_00E0B1r_.exit.i.i.i, %.lr.ph.i.i.i
@@ -6344,9 +6345,9 @@ bb.b:                                             ; preds = %_RNCINvNvNtNtNtNtCs
   br i1 %i.af, label %bb.c, label %_RNCINvNvNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator8position5checkmNCNCNvNtNtCskY9G75ZWc4U_11polars_expr8dispatch15groups_dispatch17forward_fill_nulls_00E0B1r_.exit.i.i.i, !dbg !144096
 
 _RNCINvNvNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator8position5checkmNCNCNvNtNtCskY9G75ZWc4U_11polars_expr8dispatch15groups_dispatch17forward_fill_nulls_00E0B1r_.exit.i.i.i: ; preds = %bb.b
-  %indvars.iv.next.i.i.i = add nuw nsw i64 %indvars.iv.i.i.i, 1, !dbg !144097
-  %i.ag = add nuw nsw i64 %i.w, 1, !dbg !144104   ; 2 uses
-  %exitcond.i.i = icmp eq i64 %i.ag, %i.l, !dbg !144058
+  %indvars.iv.next.i.i.i = add nuw nsw i64 %indvars.iv.i.i.i, 1, !dbg !144097 ; 2 uses
+  %i.ag = add nuw i64 %i.w, 1, !dbg !144104
+  %exitcond.i.i = icmp eq i64 %indvars.iv.next.i.i.i, %wide.trip.count.i.i.i, !dbg !144058
   br i1 %exitcond.i.i, label %.loopexit.i.i, label %bb.b, !dbg !144069
 
 bb.c:                                             ; preds = %bb.b
@@ -6714,7 +6715,7 @@ bb.b:                                             ; preds = %_RNCINvNvNtNtNtNtCs
   br i1 %i.t, label %bb.c, label %_RNCINvNvNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator8position5checkmNCNCNvNtNtCskY9G75ZWc4U_11polars_expr8dispatch15groups_dispatch18backward_fill_nulls_00E0B1r_.exit.i.i.i, !dbg !144503
 
 _RNCINvNvNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator8position5checkmNCNCNvNtNtCskY9G75ZWc4U_11polars_expr8dispatch15groups_dispatch18backward_fill_nulls_00E0B1r_.exit.i.i.i: ; preds = %bb.b
-  %i.u = add i64 %i.j, 1, !dbg !144504            ; 2 uses
+  %i.u = add nuw i64 %i.j, 1, !dbg !144504        ; 2 uses
   %exitcond.not.i.i = icmp eq i64 %i.u, %i.g, !dbg !144452
   br i1 %exitcond.not.i.i, label %.loopexit.i.i, label %bb.b, !dbg !144469
 
@@ -7117,7 +7118,7 @@ bb.c:                                             ; preds = %bb.c, %.new
   %i.aq = zext nneg i8 %i.ap to i32, !dbg !144905
   %i.ar = add i32 %i.ac, %i.aq, !dbg !144909      ; 3 uses
   %i.as = add nuw nsw i64 %.sroa.04.0.i.i, 2, !dbg !144913 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2, !dbg !144916 ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2, !dbg !144916 ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter, !dbg !144916
   br i1 %niter.ncmp.1, label %_RNCNCNvNtNtCskY9G75ZWc4U_11polars_expr8dispatch15groups_dispatch10null_count00B9_.exit.loopexit.unr-lcssa, label %bb.c, !dbg !144916
 

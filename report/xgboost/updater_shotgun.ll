@@ -203,6 +203,7 @@ bb.at:                                            ; preds = %bb.ap, %bb.as, %bb.
   %i.gp = mul i32 %i.gn, %i.go
   %i.gq = load ptr, ptr %i.bi, align 8, !tbaa !365
   %i.gr = load ptr, ptr %i.k, align 8, !tbaa !147
+  %13 = zext i32 %i.gp to i64
   %wide.trip.count = zext i32 %i.gn to i64
   br label %bb.au
 
@@ -239,10 +240,8 @@ _ZSt4sortIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEEZN7xgboost6linear2
 
 bb.au:                                            ; preds = %.lr.ph, %_ZN7xgboost6linear15CoordinateDeltaEddddd.exit
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %_ZN7xgboost6linear15CoordinateDeltaEddddd.exit ] ; 3 uses
-  %13 = trunc nuw i64 %indvars.iv to i32
-  %14 = add i32 %i.gp, %13
-  %15 = zext i32 %14 to i64                       ; 2 uses
-  %i.hh = getelementptr inbounds nuw [16 x i8], ptr %i.gq, i64 %15 ; 2 uses
+  %14 = add nuw nsw i64 %indvars.iv, %13          ; 2 uses
+  %i.hh = getelementptr inbounds nuw [16 x i8], ptr %i.gq, i64 %14 ; 2 uses
   %i.hi = getelementptr inbounds nuw i8, ptr %i.hh, i64 8
   %i.hj = load double, ptr %i.hi, align 8, !tbaa !396 ; 2 uses
   %i.hk = fcmp olt double %i.hj, f0x3EE4F8B580000000
@@ -287,7 +286,7 @@ bb.ax:                                            ; preds = %bb.av
 _ZN7xgboost6linear15CoordinateDeltaEddddd.exit:   ; preds = %bb.au, %bb.aw, %bb.ax
   %.1.i = phi double [ 0.000000e+00, %bb.au ], [ %.sroa.speculated22.i, %bb.aw ], [ %.sroa.speculated.i, %bb.ax ]
   %i.ik = fptrunc double %.1.i to float
-  %i.il = getelementptr inbounds nuw [4 x i8], ptr %i.gr, i64 %15
+  %i.il = getelementptr inbounds nuw [4 x i8], ptr %i.gr, i64 %14
   store float %i.ik, ptr %i.il, align 4, !tbaa !109
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
@@ -690,7 +689,9 @@ _ZN7xgboost8BatchSetINS_7CSCPageEED2Ev.exit:      ; preds = %_ZN7xgboost13BatchI
   %i.da = fpext float %8 to double                ; 2 uses
   %i.db = getelementptr inbounds nuw i8, ptr %3, i64 24
   %i.dc = sext i32 %i.cw to i64
+  %14 = zext i32 %i.cx to i64
   %wide.trip.count = zext i32 %i.cv to i64
+  %invariant.gep = getelementptr inbounds nuw [16 x i8], ptr %i.cy, i64 %14
   br label %bb.al
 
 bb.ab:                                            ; preds = %_ZN7xgboost8BatchSetINS_7CSCPageEE3endEv.exit, %_ZN7xgboost6common11ParallelForIjZNS_6linear21GreedyFeatureSelector11NextFeatureEPKNS_7ContextEiRKNS_3gbm13GBLinearModelEiRKSt6vectorINS_6detail20GradientPairInternalIfEESaISE_EEPNS_7DMatrixEffEUljE_EEvT_iOT0_.exit
@@ -798,13 +799,10 @@ bb.ak:                                            ; preds = %bb.ag, %bb.aj, %bb.
   br label %bb.ap
 
 bb.al:                                            ; preds = %.lr.ph, %_ZN7xgboost6linear15CoordinateDeltaEddddd.exit
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %_ZN7xgboost6linear15CoordinateDeltaEddddd.exit ] ; 3 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %_ZN7xgboost6linear15CoordinateDeltaEddddd.exit ] ; 4 uses
   %.02958 = phi double [ 0.000000e+00, %.lr.ph ], [ %.1, %_ZN7xgboost6linear15CoordinateDeltaEddddd.exit ] ; 2 uses
   %.03057 = phi i32 [ 0, %.lr.ph ], [ %.131, %_ZN7xgboost6linear15CoordinateDeltaEddddd.exit ]
-  %14 = trunc nuw i64 %indvars.iv to i32          ; 2 uses
-  %15 = add i32 %i.cx, %14
-  %16 = zext i32 %15 to i64
-  %i.ed = getelementptr inbounds nuw [16 x i8], ptr %i.cy, i64 %16 ; 2 uses
+  %i.ed = getelementptr inbounds nuw [16 x i8], ptr %invariant.gep, i64 %indvars.iv ; 2 uses
   %i.ee = getelementptr inbounds nuw i8, ptr %i.ed, i64 8
   %i.ef = load double, ptr %i.ee, align 8, !tbaa !396 ; 2 uses
   %i.eg = fcmp olt double %i.ef, f0x3EE4F8B580000000
@@ -852,7 +850,8 @@ _ZN7xgboost6linear15CoordinateDeltaEddddd.exit:   ; preds = %bb.al, %bb.an, %bb.
   %i.fh = call noundef float @llvm.fabs.f32(float %i.fg)
   %i.fi = fpext float %i.fh to double             ; 2 uses
   %i.fj = fcmp olt double %.02958, %i.fi          ; 2 uses
-  %.131 = select i1 %i.fj, i32 %14, i32 %.03057   ; 2 uses
+  %15 = trunc nuw i64 %indvars.iv to i32
+  %.131 = select i1 %i.fj, i32 %15, i32 %.03057   ; 2 uses
   %.1 = select i1 %i.fj, double %i.fi, double %.02958
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count

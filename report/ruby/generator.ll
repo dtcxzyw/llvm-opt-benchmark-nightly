@@ -204,24 +204,22 @@ bb.ar:                                            ; preds = %bb.aq
   %.081.i.i.i = phi i64 [ %i.kv, %round_digit.exit94.i.i.i ], [ %i.fo, %round_digit.exit.thread.9.i.i.i ]
   %.279.i.i.i = phi i32 [ %.380.i.i.i, %round_digit.exit94.i.i.i ], [ undef, %round_digit.exit.thread.9.i.i.i ]
   %.075.i.i.i = phi i64 [ %i.lf, %round_digit.exit94.i.i.i ], [ %i.ft, %round_digit.exit.thread.9.i.i.i ]
-  %.2.i.i.i = phi i32 [ %.3.i.i.i, %round_digit.exit94.i.i.i ], [ %.174.9.i.i.i, %round_digit.exit.thread.9.i.i.i ] ; 3 uses
-  %.172.i.i.i = phi i32 [ %3, %round_digit.exit94.i.i.i ], [ 0, %round_digit.exit.thread.9.i.i.i ]
+  %.172.i.i.i = phi i32 [ %.3.i.i.i, %round_digit.exit94.i.i.i ], [ %.174.9.i.i.i, %round_digit.exit.thread.9.i.i.i ] ; 3 uses
   %.0.i.i.i = phi ptr [ %.1.i.i.i, %round_digit.exit94.i.i.i ], [ getelementptr inbounds nuw (i8, ptr @tens, i64 144), %round_digit.exit.thread.9.i.i.i ] ; 4 uses
   %i.ku = mul i64 %.075.i.i.i, 10                 ; 2 uses
   %i.kv = mul i64 %.081.i.i.i, 10                 ; 4 uses
-  %3 = add nsw i32 %.172.i.i.i, -1                ; 2 uses
   %i.kw = lshr i64 %i.ku, %i.fp                   ; 2 uses
   %i.kx = and i64 %i.kw, 4294967295
   %i.ky = icmp ne i64 %i.kx, 0
-  %i.kz = icmp ne i32 %.2.i.i.i, 0
+  %i.kz = icmp ne i32 %.172.i.i.i, 0
   %or.cond4.i.i.i = select i1 %i.ky, i1 true, i1 %i.kz
   br i1 %or.cond4.i.i.i, label %bb.as, label %bb.at
 
 bb.as:                                            ; preds = %.preheader.i.i.i
   %i.la = trunc i64 %i.kw to i8
   %i.lb = add i8 %i.la, 48
-  %i.lc = add nsw i32 %.2.i.i.i, 1
-  %i.ld = sext i32 %.2.i.i.i to i64
+  %i.lc = add nsw i32 %.172.i.i.i, 1
+  %i.ld = sext i32 %.172.i.i.i to i64
   %i.le = getelementptr inbounds i8, ptr %i.a, i64 %i.ld
   store i8 %i.lb, ptr %i.le, align 1, !tbaa !79
   br label %bb.at
@@ -233,7 +231,7 @@ bb.at:                                            ; preds = %bb.as, %.preheader.
   br i1 %.not.i36.i.i, label %bb.au, label %bb.ax
 
 bb.au:                                            ; preds = %bb.at
-  %i.lg = add nsw i32 %3, %.024.i                 ; 3 uses
+  %i.lg = add nsw i32 %.024.i, -1                 ; 3 uses
   %i.lh = load i64, ptr %.0.i.i.i, align 8, !tbaa !10
   %i.li = mul i64 %i.lh, %i.fn                    ; 5 uses
   %i.lj = icmp uge i64 %i.lf, %i.li

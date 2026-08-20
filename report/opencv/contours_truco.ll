@@ -204,13 +204,12 @@ bb.e:                                             ; preds = %_ZNSt6vectorIN2cv6P
   br label %bb.n
 
 bb.f:                                             ; preds = %_ZNSt6vectorIN2cv6Point_IiEESaIS2_EE9push_backERKS2_.exit.i.i.i.i, %_ZNSt6vectorIN2cv6Point_IiEESaIS2_EE7reserveEm.exit.i.i.i.i
-  %.050199.i.i.i.i = phi i64 [ 0, %_ZNSt6vectorIN2cv6Point_IiEESaIS2_EE7reserveEm.exit.i.i.i.i ], [ %i.an, %_ZNSt6vectorIN2cv6Point_IiEESaIS2_EE9push_backERKS2_.exit.i.i.i.i ] ; 5 uses
+  %.050199.i.i.i.i = phi i64 [ 0, %_ZNSt6vectorIN2cv6Point_IiEESaIS2_EE7reserveEm.exit.i.i.i.i ], [ %i.an, %_ZNSt6vectorIN2cv6Point_IiEESaIS2_EE9push_backERKS2_.exit.i.i.i.i ] ; 4 uses
   %.sroa.0162.0198.i.i.i.i = phi ptr [ %i.ah, %_ZNSt6vectorIN2cv6Point_IiEESaIS2_EE7reserveEm.exit.i.i.i.i ], [ %.sroa.0162.2.i.i.i.i, %_ZNSt6vectorIN2cv6Point_IiEESaIS2_EE9push_backERKS2_.exit.i.i.i.i ] ; 10 uses
   %.sroa.27.0197.i.i.i.i = phi ptr [ %i.ai, %_ZNSt6vectorIN2cv6Point_IiEESaIS2_EE7reserveEm.exit.i.i.i.i ], [ %.sroa.27.2.i.i.i.i, %_ZNSt6vectorIN2cv6Point_IiEESaIS2_EE9push_backERKS2_.exit.i.i.i.i ] ; 8 uses
   %.sroa.15.0196.i.i.i.i = phi ptr [ %i.ah, %_ZNSt6vectorIN2cv6Point_IiEESaIS2_EE7reserveEm.exit.i.i.i.i ], [ %.sroa.15.1.i.i.i.i, %_ZNSt6vectorIN2cv6Point_IiEESaIS2_EE9push_backERKS2_.exit.i.i.i.i ] ; 4 uses
   %i.al = icmp eq i64 %.050199.i.i.i.i, 0
-  %6 = add nsw i64 %.050199.i.i.i.i, -1
-  %i.am = select i1 %i.al, i64 %i.aj, i64 %6
+  %i.am = select i1 %i.al, i64 %i.aj, i64 -1
   %i.an = add nuw nsw i64 %.050199.i.i.i.i, 1     ; 3 uses
   %i.ao = load ptr, ptr %i.u, align 8, !tbaa !35  ; 3 uses
   %i.ap = getelementptr inbounds nuw [8 x i8], ptr %i.ao, i64 %.050199.i.i.i.i ; 3 uses

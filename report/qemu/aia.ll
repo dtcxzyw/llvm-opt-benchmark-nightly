@@ -51,12 +51,13 @@ bb.d:                                             ; preds = %bb.c
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
-  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %.lr.ph ] ; 2 uses
-  %i.g = trunc nuw nsw i64 %indvars.iv to i32     ; 2 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %.lr.ph ] ; 3 uses
+  %i.g = trunc nuw nsw i64 %indvars.iv to i32
   %i.h = mul i32 %2, %i.g
   %i.i = zext i32 %i.h to i64
   %i.j = add i64 %i.e, %i.i
-  %i.k = add i32 %9, %i.g
+  %13 = trunc i64 %indvars.iv to i32
+  %i.k = add i32 %9, %13
   %i.l = tail call ptr @riscv_imsic_create(i64 noundef %i.j, i32 noundef %i.k, i1 noundef zeroext true, i32 noundef 1, i32 noundef %11) #5 ; 0 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
@@ -89,7 +90,7 @@ bb.f:                                             ; preds = %.lr.ph55, %bb.f
   %indvars.iv57 = phi i64 [ 0, %.lr.ph55 ], [ %indvars.iv.next58, %bb.f ] ; 3 uses
   %i.v = shl i64 %indvars.iv57, %i.u
   %i.w = add i64 %i.t, %i.v
-  %i.x = trunc nuw nsw i64 %indvars.iv57 to i32
+  %i.x = trunc i64 %indvars.iv57 to i32
   %i.y = add i32 %9, %i.x
   %i.z = tail call ptr @riscv_imsic_create(i64 noundef %i.w, i32 noundef %i.y, i1 noundef zeroext false, i32 noundef %i.m, i32 noundef %11) #5 ; 0 uses
   %indvars.iv.next58 = add nuw nsw i64 %indvars.iv57, 1 ; 2 uses

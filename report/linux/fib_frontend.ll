@@ -201,8 +201,7 @@ bb.o:                                             ; preds = %bb.n, %.lr.ph
   %.161.lcssa = phi i32 [ %.060108, %bb.k ], [ %.262, %bb.o ]
   %.1.lcssa = phi i32 [ 0, %bb.k ], [ %i.az, %bb.o ]
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %3 = and i64 %indvars.iv.next, 4294967295
-  %exitcond.not = icmp eq i64 %3, 256
+  %exitcond.not = icmp eq i64 %indvars.iv.next, 256
   br i1 %exitcond.not, label %.loopexit, label %bb.k, !llvm.loop !47
 
 .loopexit:                                        ; preds = %._crit_edge, %bb.n, %bb.j

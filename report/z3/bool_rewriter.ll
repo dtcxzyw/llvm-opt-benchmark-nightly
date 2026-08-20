@@ -203,7 +203,7 @@ bb.q:                                             ; preds = %bb.f
   store i32 0, ptr %i.at, align 8, !tbaa !141
   %i.au = getelementptr inbounds nuw i8, ptr %5, i64 12 ; 3 uses
   store i32 16, ptr %i.au, align 4, !tbaa !142
-  %wide.trip.count = zext i32 %1 to i64           ; 3 uses
+  %wide.trip.count = zext i32 %1 to i64           ; 4 uses
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.q, %.thread
@@ -606,8 +606,7 @@ bb.bf:                                            ; preds = %.noexc125, %bb.bd
   %i.gq = add i32 %i.gl, 1
   store i32 %i.gq, ptr %i.gn, align 4, !tbaa !134
   %indvars.iv.next176 = add nuw nsw i64 %indvars.iv175, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next176 to i32
-  %exitcond178.not = icmp eq i32 %1, %lftr.wideiv
+  %exitcond178.not = icmp eq i64 %indvars.iv.next176, %wide.trip.count
   br i1 %exitcond178.not, label %.loopexit, label %bb.bb, !llvm.loop !155
 
 bb.bg:                                            ; preds = %bb.be, %_ZN11ast_manager5mk_eqEP4exprS1_.exit, %bb.bb

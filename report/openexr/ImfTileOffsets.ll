@@ -203,7 +203,7 @@ middle.block:                                     ; preds = %vector.body
 
 ._crit_edge:                                      ; preds = %.lr.ph, %.preheader38
   %.130.lcssa = phi i64 [ %.02944, %.preheader38 ], [ %i.cg, %.lr.ph ] ; 2 uses
-  %indvars.iv.next71 = add i64 %indvars.iv70, 1   ; 2 uses
+  %indvars.iv.next71 = add nuw i64 %indvars.iv70, 1 ; 2 uses
   %i.bw = and i64 %indvars.iv.next71, 4294967295
   %i.bx = icmp ugt i64 %i.h, %i.bw
   br i1 %i.bx, label %.preheader38, label %._crit_edge45, !llvm.loop !72
@@ -220,7 +220,7 @@ middle.block:                                     ; preds = %vector.body
   %i.ce = sub i64 %i.cc, %i.cd
   %i.cf = ashr exact i64 %i.ce, 3
   %i.cg = add i64 %i.cf, %.13042                  ; 2 uses
-  %indvars.iv.next = add i64 %indvars.iv, 1       ; 2 uses
+  %indvars.iv.next = add nuw i64 %indvars.iv, 1   ; 2 uses
   %i.ch = and i64 %indvars.iv.next, 4294967295
   %i.ci = icmp ugt i64 %i.p, %i.ch
   br i1 %i.ci, label %.lr.ph, label %._crit_edge, !llvm.loop !73
@@ -623,7 +623,7 @@ bb.b:                                             ; preds = %.noexc103
 
 ._crit_edge:                                      ; preds = %.lr.ph, %.preheader115
   %.1.lcssa = phi i64 [ %.069120, %.preheader115 ], [ %i.cf, %.lr.ph ] ; 7 uses
-  %indvars.iv.next160 = add i64 %indvars.iv159, 1 ; 2 uses
+  %indvars.iv.next160 = add nuw i64 %indvars.iv159, 1 ; 2 uses
   %i.bv = and i64 %indvars.iv.next160, 4294967295
   %i.bw = icmp ugt i64 %i.h, %i.bv
   br i1 %i.bw, label %.preheader115, label %._crit_edge121, !llvm.loop !94
@@ -640,7 +640,7 @@ bb.b:                                             ; preds = %.noexc103
   %i.cd = sub i64 %i.cb, %i.cc
   %i.ce = ashr exact i64 %i.cd, 3
   %i.cf = add i64 %i.ce, %.1118                   ; 2 uses
-  %indvars.iv.next = add i64 %indvars.iv, 1       ; 2 uses
+  %indvars.iv.next = add nuw i64 %indvars.iv, 1   ; 2 uses
   %i.cg = and i64 %indvars.iv.next, 4294967295
   %i.ch = icmp ugt i64 %i.p, %i.cg
   br i1 %i.ch, label %.lr.ph, label %._crit_edge, !llvm.loop !95
@@ -684,7 +684,7 @@ bb.c:                                             ; preds = %._crit_edge136
   %i.cx = xor i64 %i.cw, 126
   tail call fastcc void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPN7Imf_3_412_GLOBAL__N_17tileposESt6vectorIS4_SaIS4_EEEElNS0_5__ops15_Iter_less_iterEEvT_SC_T0_T1_(ptr %.sroa.0107.0, ptr %.0.i.i.i.i.i, i64 noundef %i.cx)
   %i.cy = icmp sgt i64 %i.ct, 384
-  %scevgep.i.i.i = getelementptr i8, ptr %.sroa.0107.0, i64 24 ; 3 uses
+  %scevgep.i.i.i = getelementptr i8, ptr %.sroa.0107.0, i64 24 ; 4 uses
   br i1 %i.cy, label %.lr.ph.i.i.i.i, label %bb.i
 
 .lr.ph.i.i.i.i:                                   ; preds = %bb.c, %bb.h
@@ -787,7 +787,7 @@ bb.i:                                             ; preds = %bb.c
 
 .lr.ph.i26.i.i.i:                                 ; preds = %bb.i, %bb.o
   %.sroa.0.019.i27.i.i.i = phi ptr [ %.sroa.0.0.i36.i.i.i, %bb.o ], [ %scevgep.i.i.i, %bb.i ] ; 7 uses
-  %.pn18.i28.i.i.i = phi ptr [ %.sroa.0.019.i27.i.i.i, %bb.o ], [ %.sroa.0107.0, %bb.i ] ; 5 uses
+  %.pn18.i28.i.i.i = phi ptr [ %.sroa.0.019.i27.i.i.i, %bb.o ], [ %.sroa.0107.0, %bb.i ] ; 4 uses
   %.val2.i.i29.i.i.i = load i64, ptr %.sroa.0.019.i27.i.i.i, align 8, !tbaa !96 ; 4 uses
   %.val3.i.i30.i.i.i = load i64, ptr %.sroa.0107.0, align 8, !tbaa !96
   %i.di = icmp ult i64 %.val2.i.i29.i.i.i, %.val3.i.i30.i.i.i
@@ -797,16 +797,12 @@ bb.j:                                             ; preds = %.lr.ph.i26.i.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %5)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.019.i27.i.i.i, i64 24, i1 false), !tbaa.struct !92
   %i.dj = ptrtoint ptr %.sroa.0.019.i27.i.i.i to i64
-  %i.dk = sub i64 %i.dj, %i.cs                    ; 4 uses
+  %i.dk = sub i64 %i.dj, %i.cs                    ; 3 uses
   %i.dl = icmp sgt i64 %i.dk, 24
   br i1 %i.dl, label %bb.k, label %bb.l, !prof !98
 
 bb.k:                                             ; preds = %bb.j
-  %7 = getelementptr inbounds nuw i8, ptr %.pn18.i28.i.i.i, i64 48
-  %.neg23.i44.i.i.i = udiv exact i64 %i.dk, 24
-  %.neg23.neg.i45.i.i.i = sub nsw i64 0, %.neg23.i44.i.i.i
-  %8 = getelementptr inbounds [24 x i8], ptr %7, i64 %.neg23.neg.i45.i.i.i
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %8, ptr noundef nonnull align 8 dereferenceable(1) %.sroa.0107.0, i64 %i.dk, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep.i.i.i, ptr noundef nonnull align 8 dereferenceable(1) %.sroa.0107.0, i64 %i.dk, i1 false)
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN7Imf_3_412_GLOBAL__N_17tileposESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit.i43.i.i.i
 
 bb.l:                                             ; preds = %bb.j
@@ -885,14 +881,14 @@ _ZSt4sortIN9__gnu_cxx17__normal_iteratorIPN7Imf_3_412_GLOBAL__N_17tileposESt6vec
 
 ._crit_edge132:                                   ; preds = %._crit_edge128, %.preheader114
   %.175.lcssa = phi i64 [ %.074134, %.preheader114 ], [ %.2.lcssa, %._crit_edge128 ]
-  %indvars.iv.next172 = add i64 %indvars.iv171, 1 ; 2 uses
+  %indvars.iv.next172 = add nuw i64 %indvars.iv171, 1 ; 2 uses
   %i.ea = and i64 %indvars.iv.next172, 4294967295
   %i.eb = icmp ugt i64 %i.h, %i.ea
   br i1 %i.eb, label %.preheader114, label %._crit_edge136, !llvm.loop !103
 
 ._crit_edge128:                                   ; preds = %.lr.ph127, %.preheader113
   %.2.lcssa = phi i64 [ %.175130, %.preheader113 ], [ %i.el, %.lr.ph127 ] ; 2 uses
-  %indvars.iv.next168 = add i64 %indvars.iv167, 1 ; 2 uses
+  %indvars.iv.next168 = add nuw i64 %indvars.iv167, 1 ; 2 uses
   %i.ec = and i64 %indvars.iv.next168, 4294967295
   %i.ed = icmp ugt i64 %i.cp, %i.ec
   br i1 %i.ed, label %.preheader113, label %._crit_edge132, !llvm.loop !104
@@ -912,7 +908,7 @@ _ZSt4sortIN9__gnu_cxx17__normal_iteratorIPN7Imf_3_412_GLOBAL__N_17tileposESt6vec
   %i.ek = getelementptr inbounds nuw i8, ptr %i.eg, i64 16
   store i32 %i.cq, ptr %i.ek, align 8, !tbaa !107
   %i.el = add i64 %.2125, 1                       ; 2 uses
-  %indvars.iv.next164 = add i64 %indvars.iv163, 1 ; 2 uses
+  %indvars.iv.next164 = add nuw i64 %indvars.iv163, 1 ; 2 uses
   %i.em = and i64 %indvars.iv.next164, 4294967295
   %i.en = icmp ugt i64 %i.dy, %i.em
   br i1 %i.en, label %.lr.ph127, label %._crit_edge128, !llvm.loop !108
@@ -1098,7 +1094,7 @@ bb.p:                                             ; preds = %bb.s
   %i.hm = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.hf
   store i32 %i.hl, ptr %i.hm, align 4, !tbaa !21
   %i.hn = add nuw i64 %.068137, 2                 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge139.loopexit.unr-lcssa, label %.lr.ph138, !llvm.loop !118
 

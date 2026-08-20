@@ -204,18 +204,17 @@ _ZNSt7__cxx119to_stringEj.exit:                   ; preds = %bb.y, %_ZNKSt7__cxx
   call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_M_constructEmc(ptr noundef nonnull align 8 dereferenceable(32) %44, i64 noundef 6, i8 noundef signext 0) #19
   %i.io = load ptr, ptr %44, align 8, !tbaa !73, !alias.scope !184 ; 6 uses
   %i.ip = getelementptr inbounds nuw i8, ptr %44, i64 8 ; 2 uses
-  %i.iq = load i64, ptr %i.ip, align 8, !tbaa !71, !alias.scope !184 ; 4 uses
+  %i.iq = load i64, ptr %i.ip, align 8, !tbaa !71, !alias.scope !184 ; 3 uses
   %i.ir = add i64 %i.iq, 4294967295
-  %i.is = and i64 %i.ir, 4294967295
+  %i.is = and i64 %i.ir, 4294967295               ; 2 uses
   %i.it = getelementptr inbounds nuw i8, ptr %i.io, i64 %i.is
   store i8 52, ptr %i.it, align 1, !tbaa !51
   %i.iu = add i64 %i.iq, 4294967294
   %i.iv = and i64 %i.iu, 4294967295
   %i.iw = getelementptr inbounds nuw i8, ptr %i.io, i64 %i.iv
   store i8 56, ptr %i.iw, align 1, !tbaa !51
-  %48 = add i64 %i.iq, 4294967293
-  %49 = and i64 %48, 4294967295
-  %i.ix = getelementptr inbounds nuw i8, ptr %i.io, i64 %49
+  %48 = getelementptr i8, ptr %i.io, i64 %i.is
+  %i.ix = getelementptr i8, ptr %48, i64 -2
   store i8 51, ptr %i.ix, align 1, !tbaa !51
   %i.iy = add i64 %i.iq, 4294967292
   %i.iz = and i64 %i.iy, 4294967295
@@ -618,18 +617,17 @@ _ZNSt7__cxx119to_stringEj.exit:                   ; preds = %bb.y, %_ZNKSt7__cxx
   call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_M_constructEmc(ptr noundef nonnull align 8 dereferenceable(32) %44, i64 noundef 5, i8 noundef signext 0) #19
   %i.ih = load ptr, ptr %44, align 8, !tbaa !73, !alias.scope !288 ; 5 uses
   %i.ii = getelementptr inbounds nuw i8, ptr %44, i64 8 ; 2 uses
-  %i.ij = load i64, ptr %i.ii, align 8, !tbaa !71, !alias.scope !288 ; 4 uses
+  %i.ij = load i64, ptr %i.ii, align 8, !tbaa !71, !alias.scope !288 ; 3 uses
   %i.ik = add i64 %i.ij, 4294967295
-  %i.il = and i64 %i.ik, 4294967295
+  %i.il = and i64 %i.ik, 4294967295               ; 2 uses
   %i.im = getelementptr inbounds nuw i8, ptr %i.ih, i64 %i.il
   store i8 56, ptr %i.im, align 1, !tbaa !51
   %i.in = add i64 %i.ij, 4294967294
   %i.io = and i64 %i.in, 4294967295
   %i.ip = getelementptr inbounds nuw i8, ptr %i.ih, i64 %i.io
   store i8 50, ptr %i.ip, align 1, !tbaa !51
-  %48 = add i64 %i.ij, 4294967293
-  %49 = and i64 %48, 4294967295
-  %i.iq = getelementptr inbounds nuw i8, ptr %i.ih, i64 %49
+  %48 = getelementptr i8, ptr %i.ih, i64 %i.il
+  %i.iq = getelementptr i8, ptr %48, i64 -2
   store i8 53, ptr %i.iq, align 1, !tbaa !51
   %i.ir = add i64 %i.ij, 4294967292
   %i.is = and i64 %i.ir, 4294967295

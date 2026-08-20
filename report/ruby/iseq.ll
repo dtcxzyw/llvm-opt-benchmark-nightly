@@ -204,7 +204,7 @@ bb.ay:                                            ; preds = %bb.ax
   %i.fm = getelementptr [8 x i8], ptr %i.fk, i64 %i.fl
   call void @rb_gc_mark_and_move(ptr noundef %i.fm) #20
   %i.fn = add nsw i32 %.089154, 1                 ; 2 uses
-  %i.fo = add i32 %.090153, 1
+  %i.fo = add nuw i32 %.090153, 1
   %i.fp = load i32, ptr %i.fd, align 8, !tbaa !97
   %i.fq = icmp slt i32 %i.fn, %i.fp
   br i1 %i.fq, label %.lr.ph155, label %.loopexit145, !llvm.loop !142
@@ -592,16 +592,15 @@ param_keyword_size.exit:                          ; preds = %bb.e, %bb.f
 
 .lr.ph71:                                         ; preds = %param_keyword_size.exit
   %i.bl = add i32 %i.bc, %i.bb
+  %1 = zext i32 %i.bl to i64
   %wide.trip.count = zext i32 %i.av to i64
+  %invariant.gep = getelementptr [16 x i8], ptr %i.bj, i64 %1
   br label %bb.g
 
 bb.g:                                             ; preds = %.lr.ph71, %bb.h
   %indvars.iv = phi i64 [ 0, %.lr.ph71 ], [ %indvars.iv.next, %bb.h ] ; 2 uses
   %.169 = phi i64 [ %i.bh, %.lr.ph71 ], [ %.3, %bb.h ] ; 3 uses
-  %1 = trunc nuw i64 %indvars.iv to i32
-  %2 = add i32 %i.bl, %1
-  %3 = zext i32 %2 to i64
-  %i.bm = getelementptr [16 x i8], ptr %i.bj, i64 %3
+  %i.bm = getelementptr [16 x i8], ptr %invariant.gep, i64 %indvars.iv
   %i.bn = getelementptr i8, ptr %i.bm, i64 8
   %i.bo = load ptr, ptr %i.bn, align 8, !tbaa !44 ; 3 uses
   %.not59 = icmp eq ptr %i.bo, null
@@ -1004,8 +1003,8 @@ bb.w:                                             ; preds = %bb.ag, %bb.v
 bb.x:                                             ; preds = %bb.w
   %i.di = sext i32 %.05270.i to i64
   %i.dj = mul nuw nsw i64 %indvars.iv79.i, 9
-  %i.dk = add nsw i64 %i.dj, -9
-  %i.dl = shl i64 %i.di, %i.dk
+  %i.dk = add nuw nsw i64 %i.dj, 4294967287
+  %i.dl = shl nuw nsw i64 %i.di, %i.dk
   %i.dm = load i64, ptr %i.dh, align 8, !tbaa !164
   %i.dn = or i64 %i.dm, %i.dl
   store i64 %i.dn, ptr %i.dh, align 8, !tbaa !164
@@ -1408,7 +1407,7 @@ bb.v:                                             ; preds = %bb.u
 bb.w:                                             ; preds = %bb.v, %bb.u
   %i.et = tail call i64 @rb_ary_push(i64 noundef %i.dp, i64 noundef %i.em) #20 ; 0 uses
   %indvars.iv.next819 = add nuw nsw i64 %indvars.iv818, 1 ; 2 uses
-  %i.eu = add i32 %.0351724, 1
+  %i.eu = add nuw i32 %.0351724, 1
   %i.ev = load i32, ptr %i.aw, align 8, !tbaa !97
   %i.ew = trunc nuw i64 %indvars.iv.next819 to i32
   %i.ex = icmp sgt i32 %i.ev, %i.ew

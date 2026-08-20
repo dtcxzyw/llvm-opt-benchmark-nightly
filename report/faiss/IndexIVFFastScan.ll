@@ -204,7 +204,7 @@ bb.bf:                                            ; preds = %bb.be
   %i.hc = load ptr, ptr %i.hb, align 8, !tbaa !85
   %i.hd = getelementptr inbounds nuw [8 x i8], ptr %i.hc, i64 %i.go
   store i64 %i.gy, ptr %i.hd, align 8, !tbaa !61
-  %i.he = sub nsw i64 %.0205, %.090208
+  %i.he = sub nuw nsw i64 %.0205, %.090208
   %i.hf = load i64, ptr %i.bs, align 8, !tbaa !41 ; 3 uses
   %i.hg = mul i64 %i.hf, %i.he
   %i.hh = getelementptr inbounds nuw i8, ptr %.sroa.0.0, i64 %i.hg
@@ -607,7 +607,7 @@ bb.w:                                             ; preds = %"_ZSt25__unguarded_
   br i1 %i.cp, label %"_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPZNK5faiss16IndexIVFFastScan16search_implem_14ElPKflPfPlRKNS3_15CoarseQuantizedEiRKNS2_30FastScanDistancePostProcessingEPKNS2_19SearchParametersIVFEE2QCSt6vectorISH_SaISH_EEEEZNKS3_16search_implem_14ElS5_lS6_S7_SA_iSD_SG_E3$_0EvT_SO_T0_.exit", label %.lr.ph.i15.i.i.i, !llvm.loop !217
 
 .preheader.i28.i.i.i:                             ; preds = %bb.q
-  %.sroa.0.017.i29.i.i.i = getelementptr inbounds nuw i8, ptr %.val.pre, i64 12 ; 2 uses
+  %.sroa.0.017.i29.i.i.i = getelementptr inbounds nuw i8, ptr %.val.pre, i64 12 ; 3 uses
   %i.cq = icmp eq ptr %.sroa.0.017.i29.i.i.i, %i.dk
   br i1 %i.cq, label %"_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPZNK5faiss16IndexIVFFastScan16search_implem_14ElPKflPfPlRKNS3_15CoarseQuantizedEiRKNS2_30FastScanDistancePostProcessingEPKNS2_19SearchParametersIVFEE2QCSt6vectorISH_SaISH_EEEEZNKS3_16search_implem_14ElS5_lS6_S7_SA_iSD_SG_E3$_0EvT_SO_T0_.exit", label %.lr.ph.i30.i.i.i
 
@@ -617,7 +617,7 @@ bb.w:                                             ; preds = %"_ZSt25__unguarded_
 
 bb.x:                                             ; preds = %bb.ad, %.lr.ph.i30.i.i.i
   %.sroa.0.019.i31.i.i.i = phi ptr [ %.sroa.0.017.i29.i.i.i, %.lr.ph.i30.i.i.i ], [ %.sroa.0.0.i43.i.i.i, %bb.ad ] ; 7 uses
-  %.pn18.i32.i.i.i = phi ptr [ %.val.pre, %.lr.ph.i30.i.i.i ], [ %.sroa.0.019.i31.i.i.i, %bb.ad ] ; 5 uses
+  %.pn18.i32.i.i.i = phi ptr [ %.val.pre, %.lr.ph.i30.i.i.i ], [ %.sroa.0.019.i31.i.i.i, %bb.ad ] ; 4 uses
   %i.cs = getelementptr i8, ptr %.pn18.i32.i.i.i, i64 16
   %.val2.i.i33.i.i.i = load i32, ptr %i.cs, align 4, !tbaa !212 ; 4 uses
   %.val3.i.i34.i.i.i = load i32, ptr %i.cr, align 4, !tbaa !212
@@ -627,16 +627,12 @@ bb.x:                                             ; preds = %bb.ad, %.lr.ph.i30.
 bb.y:                                             ; preds = %bb.x
   %.sroa.0220.0.copyload = load <3 x i32>, ptr %.sroa.0.019.i31.i.i.i, align 4
   %i.cu = ptrtoint ptr %.sroa.0.019.i31.i.i.i to i64
-  %i.cv = sub i64 %i.cu, %i.bq                    ; 4 uses
+  %i.cv = sub i64 %i.cu, %i.bq                    ; 3 uses
   %i.cw = icmp sgt i64 %i.cv, 12
   br i1 %i.cw, label %bb.z, label %bb.aa, !prof !66
 
 bb.z:                                             ; preds = %bb.y
-  %19 = getelementptr inbounds nuw i8, ptr %.pn18.i32.i.i.i, i64 24
-  %.neg23.i49.i.i.i = udiv exact i64 %i.cv, 12
-  %.neg23.neg.i50.i.i.i = sub nsw i64 0, %.neg23.i49.i.i.i
-  %20 = getelementptr inbounds [12 x i8], ptr %19, i64 %.neg23.neg.i50.i.i.i
-  call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %20, ptr noundef nonnull align 4 dereferenceable(1) %.val.pre, i64 %i.cv, i1 false)
+  call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %.sroa.0.017.i29.i.i.i, ptr noundef nonnull align 4 dereferenceable(1) %.val.pre, i64 %i.cv, i1 false)
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPZNK5faiss16IndexIVFFastScan16search_implem_14ElPKflPfPlRKNS3_15CoarseQuantizedEiRKNS2_30FastScanDistancePostProcessingEPKNS2_19SearchParametersIVFEE2QCSt6vectorISH_SaISH_EEEESM_ET0_T_SO_SN_.exit.i48.i.i.i
 
 bb.aa:                                            ; preds = %bb.y
@@ -1039,7 +1035,7 @@ bb.ab:                                            ; preds = %"_ZSt25__unguarded_
   br i1 %i.cv, label %.loopexit361, label %.lr.ph.i15.i.i.i, !llvm.loop !242
 
 .preheader.i28.i.i.i:                             ; preds = %bb.v
-  %.sroa.0.017.i29.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.0292.2.us, i64 12 ; 2 uses
+  %.sroa.0.017.i29.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.0292.2.us, i64 12 ; 3 uses
   %i.cw = icmp eq ptr %.sroa.0.017.i29.i.i.i, %.sroa.15293.2.us
   br i1 %i.cw, label %.loopexit361, label %.lr.ph.i30.i.i.i
 
@@ -1049,7 +1045,7 @@ bb.ab:                                            ; preds = %"_ZSt25__unguarded_
 
 bb.ac:                                            ; preds = %bb.ai, %.lr.ph.i30.i.i.i
   %.sroa.0.019.i31.i.i.i = phi ptr [ %.sroa.0.017.i29.i.i.i, %.lr.ph.i30.i.i.i ], [ %.sroa.0.0.i43.i.i.i, %bb.ai ] ; 7 uses
-  %.pn18.i32.i.i.i = phi ptr [ %.sroa.0292.2.us, %.lr.ph.i30.i.i.i ], [ %.sroa.0.019.i31.i.i.i, %bb.ai ] ; 5 uses
+  %.pn18.i32.i.i.i = phi ptr [ %.sroa.0292.2.us, %.lr.ph.i30.i.i.i ], [ %.sroa.0.019.i31.i.i.i, %bb.ai ] ; 4 uses
   %i.cy = getelementptr i8, ptr %.pn18.i32.i.i.i, i64 16
   %.val2.i.i33.i.i.i = load i32, ptr %i.cy, align 4, !tbaa !238 ; 4 uses
   %.val3.i.i34.i.i.i = load i32, ptr %i.cx, align 4, !tbaa !238
@@ -1059,16 +1055,12 @@ bb.ac:                                            ; preds = %bb.ai, %.lr.ph.i30.
 bb.ad:                                            ; preds = %bb.ac
   %.sroa.0933.0.copyload = load <3 x i32>, ptr %.sroa.0.019.i31.i.i.i, align 4
   %i.da = ptrtoint ptr %.sroa.0.019.i31.i.i.i to i64
-  %i.db = sub i64 %i.da, %i.bw                    ; 4 uses
+  %i.db = sub i64 %i.da, %i.bw                    ; 3 uses
   %i.dc = icmp sgt i64 %i.db, 12
   br i1 %i.dc, label %bb.ae, label %bb.af, !prof !66
 
 bb.ae:                                            ; preds = %bb.ad
-  %14 = getelementptr inbounds nuw i8, ptr %.pn18.i32.i.i.i, i64 24
-  %.neg23.i49.i.i.i = udiv exact i64 %i.db, 12
-  %.neg23.neg.i50.i.i.i = sub nsw i64 0, %.neg23.i49.i.i.i
-  %15 = getelementptr inbounds [12 x i8], ptr %14, i64 %.neg23.neg.i50.i.i.i
-  call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %15, ptr noundef nonnull align 4 dereferenceable(1) %.sroa.0292.2.us, i64 %i.db, i1 false)
+  call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %.sroa.0.017.i29.i.i.i, ptr noundef nonnull align 4 dereferenceable(1) %.sroa.0292.2.us, i64 %i.db, i1 false)
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPZNK5faiss16IndexIVFFastScan16search_implem_12ElPKfRNS2_24SIMDResultHandlerToFloatERKNS3_15CoarseQuantizedEPmSB_RKNS2_30FastScanDistancePostProcessingEPKNS2_19SearchParametersIVFERNS2_19FastScanCodeScannerEE2QCSt6vectorISK_SaISK_EEEESP_ET0_T_SR_SQ_.exit.i48.i.i.i
 
 bb.af:                                            ; preds = %bb.ad
@@ -1471,7 +1463,7 @@ bb.k:                                             ; preds = %bb.j, %bb.i
 
 bb.l:                                             ; preds = %bb.k
   %i.bp = load i64, ptr %i.ay, align 8, !tbaa !268
-  %i.bq = add i64 %.0292.us, %i.bm                ; 3 uses
+  %i.bq = add nuw i64 %.0292.us, %i.bm            ; 3 uses
   %i.br = load ptr, ptr %11, align 8
   %i.bs = mul i64 %i.bq, %i.f
   %i.bt = getelementptr inbounds nuw i8, ptr %i.br, i64 %i.bs

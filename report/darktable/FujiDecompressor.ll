@@ -203,7 +203,7 @@ bb.y:                                             ; preds = %bb.x
   br label %switch.lookup
 
 switch.lookup:                                    ; preds = %_ZSt4fillIPiiEvT_S1_RKT0_.exit.i.i.i.i, %bb.y
-  %.017.i97.i.i.i.i = phi i32 [ 0, %bb.y ], [ %i.atm, %_ZSt4fillIPiiEvT_S1_RKT0_.exit.i.i.i.i ] ; 8 uses
+  %.017.i97.i.i.i.i = phi i32 [ 0, %bb.y ], [ %i.atm, %_ZSt4fillIPiiEvT_S1_RKT0_.exit.i.i.i.i ] ; 7 uses
   %i.op = shl nuw nsw i32 %.017.i97.i.i.i.i, 1
   %i.oq = and i32 %i.op, 2
   %i.or = zext nneg i32 %i.oq to i64
@@ -236,8 +236,6 @@ switch.lookup:                                    ; preds = %_ZSt4fillIPiiEvT_S1
   %i.pi = urem i32 %.017.i97.i.i.i.i, 3
   %i.pj = zext nneg i32 %i.pi to i64              ; 2 uses
   %i.pk = getelementptr inbounds nuw [328 x i8], ptr %i.el, i64 %i.pj ; 2 uses
-  %12 = add nsw i32 %.017.i97.i.i.i.i, -1
-  %or.cond4.i.i.i.i.i.i = icmp ult i32 %12, 2
   %i.pl = icmp eq i32 %.017.i97.i.i.i.i, 5
   %i.pm = getelementptr inbounds nuw [328 x i8], ptr %i.em, i64 %i.pj ; 2 uses
   %i.pn = load i32, ptr %.sroa.2.0..sroa_idx.i.i.i.i.i.i, align 8 ; 5 uses
@@ -266,7 +264,6 @@ bb.z:                                             ; preds = %.loopexit.i.i.i.i.i
   %.not48.i.i.i.i.i.i = icmp eq i32 %i.qb, 0      ; 4 uses
   %or.cond106.v.i.i.i.i.i.i = select i1 %.not48.i.i.i.i.i.i, i32 5, i32 3
   %or.cond106.i.i.i.i.i.i = icmp eq i32 %.017.i97.i.i.i.i, %or.cond106.v.i.i.i.i.i.i
-  %brmerge.i.i.i.i.i = or i1 %or.cond4.i.i.i.i.i.i, %or.cond106.i.i.i.i.i.i
   %i.qc = load i32, ptr %i.eh, align 4            ; 7 uses
   %i.qd = load i32, ptr %i.ei, align 8            ; 5 uses
   %i.qe = load i32, ptr %i.eg, align 8            ; 6 uses
@@ -302,7 +299,7 @@ bb.ad:                                            ; preds = %bb.ab
   br i1 %.not48.i.i.i.i.i.i, label %_ZNK8rawspeed12_GLOBAL__N_121fuji_compressed_block36fuji_decode_interpolation_even_innerENS0_8xt_linesEi.exit.i.i.i.i.i.i, label %_ZNK8rawspeed12_GLOBAL__N_121fuji_compressed_block36fuji_decode_interpolation_even_innerENS0_8xt_linesEi.exit69.i.i.i.i.i.i
 
 bb.ae:                                            ; preds = %bb.aa
-  br i1 %brmerge.i.i.i.i.i, label %_ZNK8rawspeed12_GLOBAL__N_121fuji_compressed_block36fuji_decode_interpolation_even_innerENS0_8xt_linesEi.exit69.i.i.i.i.i.i, label %bb.af
+  br i1 %or.cond106.i.i.i.i.i.i, label %_ZNK8rawspeed12_GLOBAL__N_121fuji_compressed_block36fuji_decode_interpolation_even_innerENS0_8xt_linesEi.exit69.i.i.i.i.i.i, label %bb.af
 
 _ZNK8rawspeed12_GLOBAL__N_121fuji_compressed_block36fuji_decode_interpolation_even_innerENS0_8xt_linesEi.exit69.i.i.i.i.i.i: ; preds = %bb.ae, %bb.ad, %bb.ac, %bb.ab, %bb.ab
   %i.ql = and i32 %indvars.iv.i.sroa.phi78.sroa.speculated.in.i.i.i.i, 255 ; 3 uses

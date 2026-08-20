@@ -87,13 +87,13 @@ bb.a:
   %i.a = alloca ptr, align 8                      ; 10 uses
   %i.b = alloca [8 x double], align 16            ; 5 uses
   %i.c = alloca [8 x double], align 16            ; 5 uses
-  %i.d = alloca [8 x double], align 16            ; 6 uses
-  %i.e = alloca [8 x double], align 16            ; 6 uses
+  %i.d = alloca [8 x double], align 16            ; 5 uses
+  %i.e = alloca [8 x double], align 16            ; 5 uses
   %i.f = alloca double, align 8                   ; 6 uses
   %i.g = alloca double, align 8                   ; 6 uses
   %i.h = alloca double, align 8                   ; 8 uses
   %i.i = alloca double, align 8                   ; 8 uses
-  %i.j = alloca [8 x double], align 16            ; 10 uses
+  %i.j = alloca [8 x double], align 16            ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #14
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #14
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #14
@@ -361,7 +361,7 @@ check_retval.exit101:                             ; preds = %bb.z
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i) #14
   store double 0.000000e+00, ptr %i.i, align 8, !tbaa !19
   %i.dl = icmp sgt i32 %i.dh, 2
-  %i.dm = select i1 %i.dl, double 1.000000e-01, double 1.000000e-03 ; 7 uses
+  %i.dm = select i1 %i.dl, double 1.000000e-01, double 1.000000e-03 ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j) #14
   store double 1.000000e-03, ptr %i.t, align 16, !tbaa !32
   store i32 0, ptr %2, align 16, !tbaa !33
@@ -376,7 +376,6 @@ check_retval.exit101:                             ; preds = %bb.z
   store i32 %.ph112, ptr %i.o, align 4, !tbaa !34
   store ptr %.ph, ptr %i.p, align 16, !tbaa !25
   %exp2 = call double @exp2(double -0.000000e+00) #14 ; 0 uses
-  store double %i.dm, ptr %i.j, align 16, !tbaa !19
   %exp2.1 = call double @exp2(double -1.000000e+00) #14 ; 0 uses
   %i.dp = getelementptr inbounds nuw i8, ptr %i.j, i64 8
   %exp2.2 = call double @exp2(double -2.000000e+00) #14 ; 0 uses
@@ -418,11 +417,9 @@ bb.aa:                                            ; preds = %.preheader
   %i.eg = phi double [ %i.ef, %bb.aa ], [ 0.000000e+00, %.preheader ]
   %i.eh = call i64 @N_VGetLength(ptr noundef %i.dk) #14
   %i.ei = sitofp i64 %i.eh to double
-  %i.ej = fdiv double %i.eg, %i.ei                ; 2 uses
-  store double %i.ej, ptr %i.d, align 16, !tbaa !19
+  %i.ej = fdiv double %i.eg, %i.ei
   %i.ek = load double, ptr %i.dz, align 8, !tbaa !35
-  %i.el = call double @llvm.fabs.f64(double %i.ek) ; 2 uses
-  store double %i.el, ptr %i.e, align 16, !tbaa !19
+  %i.el = call double @llvm.fabs.f64(double %i.ek)
   %i.em = call double @llvm.log.f64(double %i.dm) ; 2 uses
   %i.en = call double @log(double noundef %i.ej) #14 ; 2 uses
   %i.eo = call double @llvm.log.f64(double %i.dm)
@@ -490,7 +487,7 @@ bb.ad:                                            ; preds = %bb.ab, %bb.ac
   %i.gg = fadd <4 x double> %i.fc, %i.gf          ; 5 uses
   %i.gh = call double @log(double noundef %i.fe) #14
   %i.gi = call double @llvm.fmuladd.f64(double %i.gb, double %i.gh, double %.0183) ; 2 uses
-  %i.gj = add nsw i64 %indvars.iv, -1             ; 5 uses
+  %i.gj = add nuw nsw i64 %indvars.iv, 4294967295 ; 5 uses
   %i.gk = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %i.gj
   %i.gl = load double, ptr %i.gk, align 8, !tbaa !19
   %i.gm = fdiv double %i.fo, %i.gl

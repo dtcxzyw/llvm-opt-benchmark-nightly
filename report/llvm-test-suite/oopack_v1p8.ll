@@ -170,16 +170,14 @@ vector.ph:
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %vec.ind = phi <2 x i32> [ <i32 0, i32 1>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 7 uses
+  %vec.ind = phi <2 x i32> [ <i32 0, i32 1>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 5 uses
   %step.add = add <2 x i32> %vec.ind, splat (i32 2)
   %i.a = and <2 x i32> %vec.ind, splat (i32 1)
   %i.b = and <2 x i32> %vec.ind, splat (i32 1)
   %i.c = icmp eq <2 x i32> %i.a, zeroinitializer
   %i.d = icmp eq <2 x i32> %i.b, zeroinitializer
-  %1 = sub nsw <2 x i32> zeroinitializer, %vec.ind
-  %2 = sub <2 x i32> splat (i32 -2), %vec.ind
-  %i.e = select <2 x i1> %i.c, <2 x i32> %vec.ind, <2 x i32> %1
-  %i.f = select <2 x i1> %i.d, <2 x i32> %step.add, <2 x i32> %2
+  %i.e = select <2 x i1> %i.c, <2 x i32> %vec.ind, <2 x i32> zeroinitializer
+  %i.f = select <2 x i1> %i.d, <2 x i32> %step.add, <2 x i32> zeroinitializer
   %i.g = sitofp <2 x i32> %i.e to <2 x double>
   %i.h = sitofp <2 x i32> %i.f to <2 x double>
   %i.i = getelementptr inbounds nuw [8 x i8], ptr @U, i64 %index ; 2 uses

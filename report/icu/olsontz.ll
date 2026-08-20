@@ -201,7 +201,7 @@ bb.l:                                             ; preds = %_ZNK6icu_7813OlsonT
   br i1 %exitcond.peel.not, label %.thread31, label %.peel.next
 
 .peel.next:                                       ; preds = %bb.l, %bb.s
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.s ], [ 1, %bb.l ] ; 6 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.s ], [ 1, %bb.l ] ; 5 uses
   %i.cb = icmp slt i64 %indvars.iv, %i.aj
   br i1 %i.cb, label %bb.m, label %bb.n
 
@@ -278,8 +278,7 @@ bb.r:                                             ; preds = %_ZNK6icu_7813OlsonT
 
 _ZNK6icu_7813OlsonTimeZone11dstOffsetAtEs.exit28: ; preds = %bb.r
   %i.du = load ptr, ptr %i.ah, align 8, !tbaa !33
-  %1 = getelementptr i8, ptr %i.du, i64 %indvars.iv
-  %i.dv = getelementptr i8, ptr %1, i64 -1
+  %i.dv = getelementptr inbounds nuw i8, ptr %i.du, i64 -1
   %i.dw = load i8, ptr %i.dv, align 1, !tbaa !47
   %i.dx = zext i8 %i.dw to i64
   %i.dy = load ptr, ptr %i.ai, align 8, !tbaa !35

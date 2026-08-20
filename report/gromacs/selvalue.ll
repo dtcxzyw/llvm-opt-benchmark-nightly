@@ -203,13 +203,12 @@ bb.k:                                             ; preds = %.preheader61
 
 .preheader:                                       ; preds = %bb.k, %.preheader
   %.idx37 = phi i64 [ %.add38, %.preheader ], [ %.idx, %bb.k ]
-  %.add38 = add nsw i64 %.idx37, -152             ; 3 uses
+  %.add38 = add nuw nsw i64 %.idx37, -152         ; 2 uses
   %.ptr40 = getelementptr inbounds i8, ptr %i.bb, i64 %.add38
   tail call void @_ZN13gmx_ana_pos_tD1Ev(ptr noundef nonnull align 8 dead_on_return(148) dereferenceable(148) %.ptr40) #10
-  %2 = icmp eq i64 %.add38, 8
-  br i1 %2, label %.loopexit42, label %.preheader
+  br label %.preheader
 
-.loopexit42:                                      ; preds = %.preheader, %bb.k
+.loopexit42:                                      ; preds = %bb.k
   tail call void @_ZdaPvm(ptr noundef nonnull %i.bb, i64 noundef %i.ba) #11
   resume { ptr, i32 } %i.bf
 

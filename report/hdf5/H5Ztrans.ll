@@ -203,7 +203,7 @@ bb.h:                                             ; preds = %bb.g
   br i1 %.not119, label %._crit_edge, label %.peel.next
 
 .peel.next:                                       ; preds = %.lr.ph, %bb.n
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.n ], [ 1, %.lr.ph ] ; 6 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.n ], [ 1, %.lr.ph ] ; 5 uses
   %.05693 = phi i32 [ %.157, %bb.n ], [ %spec.select, %.lr.ph ] ; 5 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 %indvars.iv
   %i.aj = load i8, ptr %i.ai, align 1, !tbaa !22  ; 2 uses
@@ -215,10 +215,8 @@ bb.h:                                             ; preds = %bb.g
   br i1 %.not71, label %bb.n, label %bb.i
 
 bb.i:                                             ; preds = %.peel.next
-  %.not72 = icmp ne i64 %indvars.iv, 0
   %i.ao = icmp ugt i64 %i.ac, %indvars.iv
-  %or.cond81 = and i1 %.not72, %i.ao
-  br i1 %or.cond81, label %bb.j, label %bb.m
+  br i1 %i.ao, label %bb.j, label %bb.m
 
 bb.j:                                             ; preds = %bb.i
   switch i8 %i.aj, label %bb.m [
@@ -265,7 +263,7 @@ bb.m:                                             ; preds = %switch.early.test, 
 
 bb.n:                                             ; preds = %switch.early.test, %switch.early.test, %bb.l, %.peel.next, %bb.m
   %.157 = phi i32 [ %.05693, %switch.early.test ], [ %.05693, %.peel.next ], [ %i.bg, %bb.m ], [ %.05693, %bb.l ], [ %.05693, %switch.early.test ] ; 2 uses
-  %indvars.iv.next = add i64 %indvars.iv, 1       ; 2 uses
+  %indvars.iv.next = add nuw i64 %indvars.iv, 1   ; 2 uses
   %i.bh = and i64 %indvars.iv.next, 4294967295
   %i.bi = icmp ugt i64 %i.z, %i.bh
   br i1 %i.bi, label %.peel.next, label %._crit_edge, !llvm.loop !591
@@ -553,7 +551,7 @@ bb.l:                                             ; preds = %.lr.ph, %bb.l
   %i.an = and i16 %i.am, 1
   %i.ao = zext nneg i16 %i.an to i32
   %spec.select = add i32 %.03855, %i.ao           ; 4 uses
-  %indvars.iv.next = add i64 %indvars.iv, 1       ; 2 uses
+  %indvars.iv.next = add nuw i64 %indvars.iv, 1   ; 2 uses
   %i.ap = and i64 %indvars.iv.next, 4294967295
   %i.aq = icmp ugt i64 %i.ab, %i.ap
   br i1 %i.aq, label %bb.l, label %._crit_edge, !llvm.loop !600

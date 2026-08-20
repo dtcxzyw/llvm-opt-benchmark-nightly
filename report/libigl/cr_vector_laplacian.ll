@@ -204,7 +204,7 @@ middle.block:                                     ; preds = %vector.body
   %i.ar = getelementptr inbounds [4 x i8], ptr %i.c, i64 %.05582.i.i.i.i
   %i.as = load i32, ptr %i.ar, align 4, !tbaa !22
   %i.at = tail call noundef i32 @llvm.smax.i32(i32 %.181.i.i.i.i, i32 %i.as) ; 2 uses
-  %i.au = add nsw i64 %.05582.i.i.i.i, 1          ; 2 uses
+  %i.au = add nuw nsw i64 %.05582.i.i.i.i, 1      ; 2 uses
   %exitcond.not.i.i.i.i = icmp eq i64 %i.au, %i.h
   br i1 %exitcond.not.i.i.i.i, label %_ZNK5Eigen9DenseBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE8maxCoeffEv.exit, label %.lr.ph84.i.i.i.i, !llvm.loop !26
 
@@ -323,7 +323,7 @@ bb.j:                                             ; preds = %_ZNSt6vectorIN5Eige
   br i1 %exitcond956.not, label %._crit_edge, label %.preheader, !llvm.loop !29
 
 bb.k:                                             ; preds = %.preheader, %_ZNSt6vectorIN5Eigen7TripletIdiEESaIS2_EE12emplace_backIJRKiidEEERS2_DpOT_.exit
-  %indvars.iv = phi i64 [ 0, %.preheader ], [ %indvars.iv.next, %_ZNSt6vectorIN5Eigen7TripletIdiEESaIS2_EE12emplace_backIJRKiidEEERS2_DpOT_.exit ] ; 16 uses
+  %indvars.iv = phi i64 [ 0, %.preheader ], [ %indvars.iv.next, %_ZNSt6vectorIN5Eigen7TripletIdiEESaIS2_EE12emplace_backIJRKiidEEERS2_DpOT_.exit ] ; 15 uses
   %.sroa.62.2720 = phi ptr [ %.sroa.62.0724, %.preheader ], [ %.sroa.62.17, %_ZNSt6vectorIN5Eigen7TripletIdiEESaIS2_EE12emplace_backIJRKiidEEERS2_DpOT_.exit ] ; 7 uses
   %.sroa.29.1719 = phi ptr [ %.sroa.29.0723, %.preheader ], [ %.sroa.29.12, %_ZNSt6vectorIN5Eigen7TripletIdiEESaIS2_EE12emplace_backIJRKiidEEERS2_DpOT_.exit ] ; 5 uses
   %.sroa.0.2718 = phi ptr [ %.sroa.0.0722, %.preheader ], [ %.sroa.0.17, %_ZNSt6vectorIN5Eigen7TripletIdiEESaIS2_EE12emplace_backIJRKiidEEERS2_DpOT_.exit ] ; 8 uses
@@ -340,9 +340,7 @@ bb.k:                                             ; preds = %.preheader, %_ZNSt6
   %i.cf = getelementptr [8 x i8], ptr %i.ca, i64 %i.ce
   %i.cg = load double, ptr %i.cf, align 8, !tbaa !31
   %.cmp375 = icmp eq i64 %indvars.iv, 0
-  %9 = add nuw i64 %indvars.iv, 4294967295
-  %10 = and i64 %9, 4294967295
-  %i.ch = select i1 %.cmp375, i64 2, i64 %10      ; 10 uses
+  %i.ch = select i1 %.cmp375, i64 2, i64 4294967295 ; 10 uses
   %i.ci = mul nsw i64 %i.by, %i.ch
   %i.cj = getelementptr [8 x i8], ptr %i.ca, i64 %i.ci
   %i.ck = load double, ptr %i.cj, align 8, !tbaa !31 ; 2 uses
@@ -745,7 +743,7 @@ vector.ph:                                        ; preds = %.lr.ph.i.i.i.i.i.i.
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.ap = add i64 %i.ah, %index                   ; 2 uses
+  %i.ap = add nuw i64 %i.ah, %index               ; 2 uses
   %i.aq = getelementptr inbounds [8 x i8], ptr %i.ad, i64 %i.ap
   %i.ar = getelementptr inbounds [8 x i8], ptr %i.l, i64 %i.ap
   %wide.load = load <2 x double>, ptr %i.ar, align 8, !tbaa !31
@@ -774,7 +772,7 @@ middle.block:                                     ; preds = %vector.body
   %i.ax = load double, ptr %i.aw, align 8, !tbaa !31
   %.scalar.i.i.i.i.i.i.i.i.i.i.prol = tail call noundef double @llvm.sqrt.f64(double %i.ax)
   store double %.scalar.i.i.i.i.i.i.i.i.i.i.prol, ptr %i.av, align 8, !tbaa !31
-  %i.ay = add nsw i64 %.05.i.i.i.i.i.i.prol, 1    ; 2 uses
+  %i.ay = add nuw nsw i64 %.05.i.i.i.i.i.i.prol, 1 ; 2 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
   br i1 %prol.iter.cmp.not, label %.lr.ph.i.i.i.i.i.i.prol.loopexit, label %.lr.ph.i.i.i.i.i.i.prol, !llvm.loop !108
@@ -792,25 +790,25 @@ middle.block:                                     ; preds = %vector.body
   %i.bd = load double, ptr %i.bc, align 8, !tbaa !31
   %.scalar.i.i.i.i.i.i.i.i.i.i = tail call noundef double @llvm.sqrt.f64(double %i.bd)
   store double %.scalar.i.i.i.i.i.i.i.i.i.i, ptr %i.bb, align 8, !tbaa !31
-  %i.be = add nsw i64 %.05.i.i.i.i.i.i, 1         ; 2 uses
+  %i.be = add nuw nsw i64 %.05.i.i.i.i.i.i, 1     ; 2 uses
   %i.bf = getelementptr inbounds [8 x i8], ptr %i.ad, i64 %i.be
   %i.bg = getelementptr inbounds [8 x i8], ptr %i.l, i64 %i.be
   %i.bh = load double, ptr %i.bg, align 8, !tbaa !31
   %.scalar.i.i.i.i.i.i.i.i.i.i.1 = tail call noundef double @llvm.sqrt.f64(double %i.bh)
   store double %.scalar.i.i.i.i.i.i.i.i.i.i.1, ptr %i.bf, align 8, !tbaa !31
-  %i.bi = add nsw i64 %.05.i.i.i.i.i.i, 2         ; 2 uses
+  %i.bi = add nuw nsw i64 %.05.i.i.i.i.i.i, 2     ; 2 uses
   %i.bj = getelementptr inbounds [8 x i8], ptr %i.ad, i64 %i.bi
   %i.bk = getelementptr inbounds [8 x i8], ptr %i.l, i64 %i.bi
   %i.bl = load double, ptr %i.bk, align 8, !tbaa !31
   %.scalar.i.i.i.i.i.i.i.i.i.i.2 = tail call noundef double @llvm.sqrt.f64(double %i.bl)
   store double %.scalar.i.i.i.i.i.i.i.i.i.i.2, ptr %i.bj, align 8, !tbaa !31
-  %i.bm = add nsw i64 %.05.i.i.i.i.i.i, 3         ; 2 uses
+  %i.bm = add nuw nsw i64 %.05.i.i.i.i.i.i, 3     ; 2 uses
   %i.bn = getelementptr inbounds [8 x i8], ptr %i.ad, i64 %i.bm
   %i.bo = getelementptr inbounds [8 x i8], ptr %i.l, i64 %i.bm
   %i.bp = load double, ptr %i.bo, align 8, !tbaa !31
   %.scalar.i.i.i.i.i.i.i.i.i.i.3 = tail call noundef double @llvm.sqrt.f64(double %i.bp)
   store double %.scalar.i.i.i.i.i.i.i.i.i.i.3, ptr %i.bn, align 8, !tbaa !31
-  %i.bq = add nsw i64 %.05.i.i.i.i.i.i, 4         ; 2 uses
+  %i.bq = add nuw nsw i64 %.05.i.i.i.i.i.i, 4     ; 2 uses
   %exitcond.not.i.i.i.i.i.i.3 = icmp eq i64 %i.bq, %i.af
   br i1 %exitcond.not.i.i.i.i.i.i.3, label %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE12_set_noaliasINS_13MatrixWrapperIKNS_12CwiseUnaryOpINS_8internal14scalar_sqrt_opIdEEKNS_12ArrayWrapperIKS2_EEEEEEEERS2_RKNS_9DenseBaseIT_EE.exit, label %.lr.ph.i.i.i.i.i.i, !llvm.loop !109
 

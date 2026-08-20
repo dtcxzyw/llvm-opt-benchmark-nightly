@@ -204,7 +204,7 @@ bb.aw:                                            ; preds = %_ZNKRSt8optionalIiE
   %i.py = getelementptr inbounds nuw i8, ptr %i.po, i64 241
   store i8 1, ptr %i.py, align 1, !tbaa !117
   %indvars.iv.next101.i.3 = add nuw nsw i64 %indvars.iv100.i, 4 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.loopexit.i163.loopexit.unr-lcssa, label %.lr.ph65.i, !llvm.loop !118
 
@@ -607,7 +607,7 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.
   br i1 %i.di, label %bb.as, label %bb.ar
 
 bb.p:                                             ; preds = %.lr.ph, %bb.aq
-  %.083125 = phi i32 [ 0, %.lr.ph ], [ %i.gg, %bb.aq ] ; 5 uses
+  %.083125 = phi i32 [ 0, %.lr.ph ], [ %i.gg, %bb.aq ] ; 4 uses
   %i.dj = load ptr, ptr %i.g, align 8, !tbaa !162 ; 3 uses
   %i.dk = load ptr, ptr %i.h, align 8, !tbaa !73
   %.not.i = icmp eq ptr %i.dj, %i.dk
@@ -710,8 +710,7 @@ bb.ae:                                            ; preds = %bb.z
 
 bb.af:                                            ; preds = %bb.ae
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #22
-  %8 = add nsw i32 %.083125, -1
-  call void (ptr, ptr, ...) @_ZN3gmx12formatStringB5cxx11EPKcz(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %5, ptr noundef nonnull @.str.12, i32 noundef %8)
+  call void (ptr, ptr, ...) @_ZN3gmx12formatStringB5cxx11EPKcz(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %5, ptr noundef nonnull @.str.12, i32 noundef -1)
   %i.eu = load ptr, ptr %i.dp, align 8, !tbaa !86 ; 6 uses
   %i.ev = getelementptr inbounds i8, ptr %i.dn, i64 -200 ; 4 uses
   %i.ew = icmp eq ptr %i.eu, %i.ev

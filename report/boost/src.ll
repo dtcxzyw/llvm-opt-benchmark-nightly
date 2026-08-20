@@ -205,7 +205,7 @@ _ZN5boost4json11storage_ptrD2Ev.exit12.i:         ; preds = %bb.m, %bb.l, %bb.k
 
 .lr.ph.i15.i:                                     ; preds = %_ZN5boost4json11storage_ptrD2Ev.exit12.i, %.lr.ph.i15.i
   %.idx = phi i64 [ %.add, %.lr.ph.i15.i ], [ %.sroa.8.029.i.idx, %_ZN5boost4json11storage_ptrD2Ev.exit12.i ] ; 2 uses
-  %.add = add nsw i64 %.idx, -24                  ; 2 uses
+  %.add = add nuw nsw i64 %.idx, -24              ; 2 uses
   %.ptr11 = getelementptr inbounds i8, ptr %i.m, i64 %.add
   tail call void @_ZN5boost4json5valueD1Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %.ptr11) #47
   %i.aw = icmp sgt i64 %.idx, 32
@@ -608,7 +608,7 @@ bb.i:                                             ; preds = %bb.i, %.lr.ph.i.i.n
   %i.cx = trunc i128 %i.cu to i64
   store i64 %i.cx, ptr %i.cq, align 8, !tbaa !15
   %i.cy = add nuw nsw i64 %.016.i.i, 2            ; 2 uses
-  %niter617.next.1 = add i64 %niter617, 2         ; 2 uses
+  %niter617.next.1 = add nuw i64 %niter617, 2     ; 2 uses
   %niter617.ncmp.1 = icmp eq i64 %niter617.next.1, %unroll_iter616
   br i1 %niter617.ncmp.1, label %._crit_edge.i.i.unr-lcssa, label %bb.i, !llvm.loop !994
 
@@ -829,7 +829,7 @@ _ZN5boost4json6detail8charconv6detail10fast_float12is_truncatedIcEEbNS4_4spanIKT
   %i.fr = trunc i128 %i.fo to i64
   store i64 %i.fr, ptr %i.fk, align 8, !tbaa !15
   %i.fs = add nuw nsw i64 %.016.i.i85, 2          ; 2 uses
-  %niter624.next.1 = add i64 %niter624, 2         ; 2 uses
+  %niter624.next.1 = add nuw i64 %niter624, 2     ; 2 uses
   %niter624.ncmp.1 = icmp eq i64 %niter624.next.1, %unroll_iter623
   br i1 %niter624.ncmp.1, label %._crit_edge.i.i88.unr-lcssa, label %.lr.ph.i.i84, !llvm.loop !994
 
@@ -951,7 +951,7 @@ bb.p:                                             ; preds = %bb.p, %.lr.ph.i.i10
   %i.hp = trunc i128 %i.hm to i64
   store i64 %i.hp, ptr %i.hi, align 8, !tbaa !15
   %i.hq = add nuw nsw i64 %.016.i.i105, 2         ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.i.i108.unr-lcssa, label %bb.p, !llvm.loop !994
 
@@ -1259,7 +1259,7 @@ bb.y:                                             ; preds = %bb.y, %.lr.ph.i.i12
   %i.ml = trunc i128 %i.mi to i64
   store i64 %i.ml, ptr %i.me, align 8, !tbaa !15
   %i.mm = add nuw nsw i64 %.016.i.i126, 2         ; 2 uses
-  %niter640.next.1 = add i64 %niter640, 2         ; 2 uses
+  %niter640.next.1 = add nuw i64 %niter640, 2     ; 2 uses
   %niter640.ncmp.1 = icmp eq i64 %niter640.next.1, %unroll_iter639
   br i1 %niter640.ncmp.1, label %._crit_edge.i.i129.unr-lcssa, label %bb.y, !llvm.loop !994
 
@@ -1424,7 +1424,7 @@ bb.aa:                                            ; preds = %.lr.ph411
   %i.or = trunc i128 %i.oo to i64
   store i64 %i.or, ptr %i.ok, align 8, !tbaa !15
   %i.os = add nuw nsw i64 %.016.i.i147, 2         ; 2 uses
-  %niter647.next.1 = add i64 %niter647, 2         ; 2 uses
+  %niter647.next.1 = add nuw i64 %niter647, 2     ; 2 uses
   %niter647.ncmp.1 = icmp eq i64 %niter647.next.1, %unroll_iter646
   br i1 %niter647.ncmp.1, label %._crit_edge.i.i150.unr-lcssa, label %.lr.ph.i.i146, !llvm.loop !994
 
@@ -1546,7 +1546,7 @@ bb.ac:                                            ; preds = %bb.ac, %.lr.ph.i.i1
   %i.qp = trunc i128 %i.qm to i64
   store i64 %i.qp, ptr %i.qi, align 8, !tbaa !15
   %i.qq = add nuw nsw i64 %.016.i.i167, 2         ; 2 uses
-  %niter632.next.1 = add i64 %niter632, 2         ; 2 uses
+  %niter632.next.1 = add nuw i64 %niter632, 2     ; 2 uses
   %niter632.ncmp.1 = icmp eq i64 %niter632.next.1, %unroll_iter631
   br i1 %niter632.ncmp.1, label %._crit_edge.i.i170.unr-lcssa, label %bb.ac, !llvm.loop !994
 
@@ -1949,7 +1949,7 @@ bb.c:                                             ; preds = %.lr.ph30, %bb.e
   %i.ai = trunc i128 %i.af to i64
   store i64 %i.ai, ptr %i.ab, align 8, !tbaa !15
   %i.aj = add nuw nsw i64 %.016.i, 2              ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.i.unr-lcssa, label %.lr.ph.i, !llvm.loop !994
 
@@ -2046,7 +2046,7 @@ bb.g:                                             ; preds = %bb.g, %.lr.ph.i10.n
   %i.bx = trunc i128 %i.bu to i64
   store i64 %i.bx, ptr %i.bq, align 8, !tbaa !15
   %i.by = add nuw nsw i64 %.016.i11, 2            ; 2 uses
-  %niter74.next.1 = add i64 %niter74, 2           ; 2 uses
+  %niter74.next.1 = add nuw i64 %niter74, 2       ; 2 uses
   %niter74.ncmp.1 = icmp eq i64 %niter74.next.1, %unroll_iter73
   br i1 %niter74.ncmp.1, label %._crit_edge.i14.unr-lcssa, label %bb.g, !llvm.loop !994
 
@@ -2177,7 +2177,7 @@ bb.f:                                             ; preds = %bb.f, %.lr.ph.i.new
   %i.aj = trunc i128 %i.ag to i64
   store i64 %i.aj, ptr %i.ac, align 8, !tbaa !15
   %i.ak = add nuw nsw i64 %.016.i, 2              ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.i.unr-lcssa, label %bb.f, !llvm.loop !994
 
@@ -2271,7 +2271,7 @@ bb.l:                                             ; preds = %bb.l, %.lr.ph.i37.u
   %i.bp = trunc i128 %i.bm to i64
   store i64 %i.bp, ptr %i.bi, align 8, !tbaa !15
   %i.bq = add nuw nsw i64 %.016.i38.us, 2         ; 2 uses
-  %niter124.next.1 = add i64 %niter124, 2         ; 2 uses
+  %niter124.next.1 = add nuw i64 %niter124, 2     ; 2 uses
   %niter124.ncmp.1 = icmp eq i64 %niter124.next.1, %unroll_iter123
   br i1 %niter124.ncmp.1, label %._crit_edge.i41.us.unr-lcssa, label %bb.l, !llvm.loop !994
 
@@ -2444,20 +2444,21 @@ _ZN5boost4json6detail8charconv6detail10fast_float8stackvecILt62EE10try_extendENS
 
 .lr.ph.i50:                                       ; preds = %.critedge34
   %i.dr = getelementptr i8, ptr %0, i64 -8
+  %5 = zext i16 %.promoted.i to i64
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.w, %.lr.ph.i50
-  %5 = phi i16 [ %.promoted.i, %.lr.ph.i50 ], [ %7, %bb.w ] ; 2 uses
-  %6 = zext i16 %5 to i64
-  %i.ds = getelementptr [8 x i8], ptr %i.dr, i64 %6
+  %indvars.iv.i = phi i64 [ %5, %.lr.ph.i50 ], [ %indvars.iv.next.i, %bb.w ] ; 2 uses
+  %i.ds = getelementptr [8 x i8], ptr %i.dr, i64 %indvars.iv.i
   %i.dt = load i64, ptr %i.ds, align 8, !tbaa !15
   %i.du = icmp eq i64 %i.dt, 0
   br i1 %i.du, label %bb.w, label %.critedge32
 
 bb.w:                                             ; preds = %bb.v
-  %7 = add i16 %5, -1                             ; 3 uses
-  store i16 %7, ptr %i.a, align 8, !tbaa !991
-  %.not.i51 = icmp eq i16 %7, 0
+  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1 ; 2 uses
+  %indvars.i = trunc i64 %indvars.iv.next.i to i16 ; 2 uses
+  store i16 %indvars.i, ptr %i.a, align 8, !tbaa !991
+  %.not.i51 = icmp eq i16 %indvars.i, 0
   br i1 %.not.i51, label %.critedge32, label %bb.v, !llvm.loop !1017
 
 .critedge32:                                      ; preds = %bb.w, %bb.v, %bb.g, %.critedge34, %_ZN5boost4json6detail8charconv6detail10fast_float8stackvecILt62EE10try_extendENS4_4spanImEE.exit
@@ -2606,9 +2607,7 @@ bb.o:                                             ; preds = %bb.n
 
 .lr.ph282:                                        ; preds = %.preheader270, %.lr.ph282
   %.3281 = phi ptr [ %i.am, %.lr.ph282 ], [ %i.ai, %.preheader270 ]
-  %.0217280 = phi i64 [ %6, %.lr.ph282 ], [ 0, %.preheader270 ]
   %i.am = getelementptr inbounds nuw i8, ptr %.3281, i64 1 ; 4 uses
-  %6 = add nsw i64 %.0217280, -1                  ; 2 uses
   %i.an = load i8, ptr %i.am, align 1, !tbaa !19  ; 2 uses
   %i.ao = icmp eq i8 %i.an, 48
   %i.ap = icmp ne ptr %i.am, %1
@@ -2617,7 +2616,7 @@ bb.o:                                             ; preds = %bb.n
 
 ._crit_edge:                                      ; preds = %.lr.ph282, %.preheader270
   %i.ar = phi i8 [ %.pre, %.preheader270 ], [ %i.an, %.lr.ph282 ]
-  %.0217.lcssa = phi i64 [ 0, %.preheader270 ], [ %6, %.lr.ph282 ]
+  %.0217.lcssa = phi i64 [ 0, %.preheader270 ], [ -1, %.lr.ph282 ]
   %.3.lcssa = phi ptr [ %i.ai, %.preheader270 ], [ %i.am, %.lr.ph282 ] ; 2 uses
   %i.as = icmp eq ptr %.3.lcssa, %1
   br i1 %i.as, label %_ZN5boost4json6detail8charconv6detail10from_charsImEENS2_19from_chars_result_tIcEEPKcS8_RT_i.exit.thread, label %._crit_edge305

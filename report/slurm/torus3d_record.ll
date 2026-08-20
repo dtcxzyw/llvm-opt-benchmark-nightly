@@ -201,7 +201,7 @@ bb.s:                                             ; preds = %bb.s, %bb.q
   %i.bu = load ptr, ptr %i.bn, align 8
   %i.bv = getelementptr inbounds nuw [4 x i8], ptr %i.bu, i64 %indvars.iv.i
   store i32 -2, ptr %i.bv, align 4
-  %indvars.iv.next.i = add i64 %indvars.iv.i, 1   ; 2 uses
+  %indvars.iv.next.i = add nuw i64 %indvars.iv.i, 1 ; 2 uses
   %i.bw = and i64 %indvars.iv.next.i, 4294967295
   %i.bx = icmp samesign ugt i64 %i.ax, %i.bw
   br i1 %i.bx, label %bb.s, label %bb.r, !llvm.loop !8
@@ -604,7 +604,7 @@ bb.g:                                             ; preds = %bb.f
 
 .thread.i.i:                                      ; preds = %.preheader, %bb.f, %..thread_crit_edge.i.i
   %i.cc = phi i16 [ %.pre.i.i, %..thread_crit_edge.i.i ], [ %.pre284.i.i, %bb.f ], [ %.pre284.i.i, %.preheader ]
-  %indvars124.i = trunc i64 %indvars.iv.next82.i to i16 ; 3 uses
+  %indvars124.i = trunc nuw i64 %indvars.iv.next82.i to i16
   %i.cd = zext i16 %i.cc to i64
   %i.ce = icmp samesign ult i64 %.pre110.i, %i.cd
   br i1 %i.ce, label %.preheader179.us.i.i, label %.thread167.i.i
@@ -738,7 +738,7 @@ bb.m:                                             ; preds = %bb.l
 
 .preheader176.lr.ph.i.i:                          ; preds = %.split.us.i.i
   %i.du = icmp samesign uge i64 %indvars.iv97.i, %i.cu
-  %i.dv = and i64 %indvars.iv.next82.i, 65535
+  %i.dv = and i64 %indvars.iv.next82.i, 65535     ; 2 uses
   %i.dw = icmp samesign uge i64 %indvars.iv.i, %i.dv
   %brmerge.i.i = or i1 %i.dw, %i.du
   br i1 %brmerge.i.i, label %._crit_edge219.split.i.i, label %.preheader176.i.i
@@ -778,8 +778,7 @@ bb.n:                                             ; preds = %bb.n, %.preheader17
   %i.ed = and i64 %i.ec, 4294967295
   call void @bit_set(ptr noundef %i.ae, i64 noundef %i.ed) #10
   %indvars.iv.next254.i.i = add nuw nsw i64 %indvars.iv253.i.i, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next254.i.i to i16
-  %exitcond = icmp eq i16 %lftr.wideiv, %indvars124.i
+  %exitcond = icmp eq i64 %indvars.iv.next254.i.i, %i.dv
   br i1 %exitcond, label %._crit_edge.i.i, label %bb.n, !llvm.loop !43
 
 bb.o:                                             ; preds = %._crit_edge219.split.i.i
@@ -814,7 +813,7 @@ bb.p:                                             ; preds = %bb.o, %._crit_edge2
 
 .preheader174.lr.ph.i.i:                          ; preds = %bb.p
   %i.ev = icmp samesign uge i64 %indvars.iv97.i, %i.cu
-  %i.ew = and i64 %indvars.iv.next82.i, 65535
+  %i.ew = and i64 %indvars.iv.next82.i, 65535     ; 2 uses
   %i.ex = icmp samesign uge i64 %indvars.iv.i, %i.ew
   %brmerge232.i.i = or i1 %i.ex, %i.ev
   br i1 %brmerge232.i.i, label %_build_region.exit.i, label %.preheader174.i.i
@@ -859,8 +858,7 @@ bb.q:                                             ; preds = %bb.q, %.preheader.i
   %i.fn = load ptr, ptr %i.fm, align 8
   %i.fo = call i32 @hostlist_push_host(ptr noundef %i.eu, ptr noundef %i.fn) #10 ; 0 uses
   %indvars.iv.next269.i.i = add nuw nsw i64 %indvars.iv268.i.i, 1 ; 2 uses
-  %lftr.wideiv44 = trunc i64 %indvars.iv.next269.i.i to i16
-  %exitcond45 = icmp eq i16 %lftr.wideiv44, %indvars124.i
+  %exitcond45 = icmp eq i64 %indvars.iv.next269.i.i, %i.ew
   br i1 %exitcond45, label %._crit_edge222.i.i, label %bb.q, !llvm.loop !46
 
 _build_region.exit.i:                             ; preds = %._crit_edge224.i.i, %.preheader174.lr.ph.i.i, %bb.p

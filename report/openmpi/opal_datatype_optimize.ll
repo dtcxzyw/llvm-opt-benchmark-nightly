@@ -201,7 +201,7 @@ bb.n:                                             ; preds = %bb.m, %bb.l
   %i.cx = getelementptr inbounds nuw i8, ptr %.034.i.i, i64 34
   %i.cy = load i16, ptr %i.cx, align 2, !tbaa !21
   %i.cz = icmp eq i16 %i.cy, 0
-  %indvars.iv.next.i = add i64 %indvars.iv.i, 1
+  %indvars.iv.next.i = add nuw i64 %indvars.iv.i, 1
   br i1 %i.cz, label %.lr.ph.i.i, label %GET_FIRST_NON_LOOP.exit.i, !llvm.loop !22
 
 GET_FIRST_NON_LOOP.exit.i:                        ; preds = %.lr.ph.i.i
@@ -227,11 +227,15 @@ bb.o:                                             ; preds = %GET_FIRST_NON_LOOP.
   %i.dn = load i64, ptr %i.dm, align 8, !tbaa !21 ; 2 uses
   %.0361459.i = add nuw i32 %.05.i.i, 2
   %i.do = icmp ult i32 %.0361459.i, %i.dd
-  br i1 %i.do, label %.lr.ph.i37, label %.loopexit.i
+  br i1 %i.do, label %.lr.ph.preheader.i, label %.loopexit.i
 
-.lr.ph.i37:                                       ; preds = %bb.o, %bb.q
-  %indvars.iv543.i = phi i64 [ %indvars.iv.next544.i, %bb.q ], [ %indvars.iv.i, %bb.o ] ; 2 uses
-  %storemerge460.i = phi i64 [ %i.ed, %bb.q ], [ %i.dn, %bb.o ]
+.lr.ph.preheader.i:                               ; preds = %bb.o
+  %wide.trip.count.i = zext i32 %i.dd to i64
+  br label %.lr.ph.i37
+
+.lr.ph.i37:                                       ; preds = %bb.q, %.lr.ph.preheader.i
+  %indvars.iv543.i = phi i64 [ %indvars.iv.i, %.lr.ph.preheader.i ], [ %indvars.iv.next544.i, %bb.q ] ; 2 uses
+  %storemerge460.i = phi i64 [ %i.dn, %.lr.ph.preheader.i ], [ %i.ed, %bb.q ]
   %i.dp = trunc nuw i64 %indvars.iv543.i to i32
   %i.dq = add i32 %.0389462.i, %i.dp
   %i.dr = zext i32 %i.dq to i64
@@ -258,9 +262,8 @@ bb.q:                                             ; preds = %.lr.ph.i37
   %i.eb = getelementptr inbounds nuw i8, ptr %i.ds, i64 8
   %i.ec = load i64, ptr %i.eb, align 8, !tbaa !48
   %i.ed = add i64 %i.ec, %storemerge460.i         ; 2 uses
-  %indvars.iv.next544.i = add i64 %indvars.iv543.i, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next544.i to i32
-  %exitcond = icmp eq i32 %i.dd, %lftr.wideiv
+  %indvars.iv.next544.i = add nuw nsw i64 %indvars.iv543.i, 1 ; 2 uses
+  %exitcond = icmp eq i64 %indvars.iv.next544.i, %wide.trip.count.i
   br i1 %exitcond, label %.loopexit.i, label %.lr.ph.i37, !llvm.loop !49
 
 .loopexit.i:                                      ; preds = %bb.q, %bb.o
@@ -364,6 +367,7 @@ bb.y:                                             ; preds = %bb.x
 .preheader.lr.ph.i:                               ; preds = %.preheader431.i
   %i.ft = add nsw i32 %i.cw, %.0389462.i
   %i.fu = getelementptr inbounds nuw i8, ptr %i.ba, i64 24
+  %2 = zext i32 %i.ft to i64
   br label %.preheader.i
 
 .preheader.i:                                     ; preds = %._crit_edge490.i, %.preheader.lr.ph.i
@@ -405,10 +409,8 @@ bb.y:                                             ; preds = %bb.x
   %.4488.i = phi ptr [ %i.hr, %bb.aa ], [ %.3496.i, %.preheader.i ] ; 7 uses
   %.4378486.i = phi i32 [ %i.hs, %bb.aa ], [ %.3377493.i, %.preheader.i ]
   %i.gh = load ptr, ptr %i.a, align 8, !tbaa !8
-  %2 = trunc nuw i64 %indvars.iv546.i to i32
-  %3 = add i32 %i.ft, %2
-  %4 = zext i32 %3 to i64
-  %i.gi = getelementptr inbounds nuw [32 x i8], ptr %i.gh, i64 %4 ; 6 uses
+  %3 = getelementptr inbounds nuw [32 x i8], ptr %i.gh, i64 %indvars.iv546.i
+  %i.gi = getelementptr inbounds nuw [32 x i8], ptr %3, i64 %2 ; 6 uses
   %i.gj = load i16, ptr %i.gi, align 8, !tbaa !45
   %i.gk = or i16 %i.gj, 256
   store i16 %i.gk, ptr %.4488.i, align 8, !tbaa !21
