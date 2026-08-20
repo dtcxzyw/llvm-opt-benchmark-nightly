@@ -203,9 +203,8 @@ bb.b:                                             ; preds = %bb.a, %aptx_process
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.c, %.lr.ph.i.i
-  %indvars.iv.i.i = phi i64 [ 0, %.lr.ph.i.i ], [ %indvars.iv.next.i.i, %bb.c ] ; 4 uses
+  %indvars.iv.i.i = phi i64 [ 0, %.lr.ph.i.i ], [ %indvars.iv.next.i.i, %bb.c ] ; 3 uses
   %.03343.i.i = phi i64 [ 0, %.lr.ph.i.i ], [ %i.fd, %bb.c ]
-  %2 = sub nsw i64 0, %indvars.iv.i.i
   %i.em = xor i64 %indvars.iv.i.i, -1
   %i.en = getelementptr inbounds [4 x i8], ptr %i.ei, i64 %i.em
   %i.eo = load i32, ptr %i.en, align 4, !tbaa !14
@@ -223,8 +222,7 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph.i.i
   %.neg42.i.i = add i32 %i.es, %.neg.i.neg45.i.i
   %i.ey = sub i32 %.neg42.i.i, %i.ev              ; 2 uses
   store i32 %i.ey, ptr %i.er, align 4, !tbaa !14
-  %3 = getelementptr inbounds [4 x i8], ptr %i.ei, i64 %2
-  %i.ez = load i32, ptr %3, align 4, !tbaa !14
+  %i.ez = load i32, ptr %i.ei, align 4, !tbaa !14
   %i.fa = sext i32 %i.ez to i64
   %i.fb = sext i32 %i.ey to i64
   %i.fc = mul nsw i64 %i.fb, %i.fa

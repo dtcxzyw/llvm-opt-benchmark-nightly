@@ -201,6 +201,7 @@ bb.b:                                             ; preds = %bb.a
 .preheader:                                       ; preds = %bb.b
   %i.d = getelementptr i8, ptr %0, i64 136
   %i.e = getelementptr i8, ptr %0, i64 8
+  %3 = zext i32 %1 to i64
   %wide.trip.count = zext i32 %2 to i64
   br label %bb.c
 
@@ -210,10 +211,8 @@ bb.c:                                             ; preds = %.preheader, %bb.c
   %i.g = load ptr, ptr %i.d, align 8
   %i.h = load ptr, ptr %i.g, align 8
   %i.i = load i64, ptr %i.e, align 8
-  %3 = trunc nuw i64 %indvars.iv to i32
-  %4 = add i32 %1, %3
-  %5 = zext i32 %4 to i64
-  %i.j = mul i64 %i.i, %5
+  %4 = add nuw nsw i64 %indvars.iv, %3
+  %i.j = mul i64 %i.i, %4
   %i.k = getelementptr i8, ptr %i.h, i64 %i.j
   tail call void %i.f(ptr noundef %i.k)
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses

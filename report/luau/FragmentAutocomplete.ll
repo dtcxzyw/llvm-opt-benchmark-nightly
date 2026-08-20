@@ -203,7 +203,7 @@ bb.d:                                             ; preds = %.thread.i, %.lr.ph.
   %.03569.i = phi ptr [ %5, %.lr.ph.i ], [ %i.ab, %.thread.i ] ; 2 uses
   %.03668.i = phi i8 [ 0, %.lr.ph.i ], [ %.2.i, %.thread.i ] ; 2 uses
   %.03767.i = phi i8 [ 0, %.lr.ph.i ], [ %.138.i, %.thread.i ] ; 2 uses
-  %.04166.i = phi i64 [ 0, %.lr.ph.i ], [ %i.aa, %.thread.i ] ; 4 uses
+  %.04166.i = phi i64 [ 0, %.lr.ph.i ], [ %i.aa, %.thread.i ] ; 3 uses
   %.04365.i = phi i64 [ 0, %.lr.ph.i ], [ %.144.i, %.thread.i ] ; 3 uses
   %.04664.i = phi i64 [ 0, %.lr.ph.i ], [ %.147.i, %.thread.i ] ; 4 uses
   %.063.i = phi i64 [ 0, %.lr.ph.i ], [ %.122.i, %.thread.i ] ; 2 uses
@@ -233,8 +233,7 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.f
   %i.w = icmp ugt i64 %.04664.i, %i.n             ; 2 uses
-  %16 = add i64 %.04166.i, -1
-  %spec.select.i = select i1 %i.w, i64 %16, i64 %.02562.i
+  %spec.select.i = select i1 %i.w, i64 -1, i64 %.02562.i
   %spec.select54.i = zext i1 %i.w to i8
   br label %.thread.i
 
@@ -637,7 +636,7 @@ bb.g:                                             ; preds = %.thread.i, %.lr.ph.
   %.03569.i = phi ptr [ %4, %.lr.ph.i ], [ %i.aq, %.thread.i ] ; 2 uses
   %.03668.i = phi i8 [ 0, %.lr.ph.i ], [ %.2.i, %.thread.i ] ; 2 uses
   %.03767.i = phi i8 [ 0, %.lr.ph.i ], [ %.138.i, %.thread.i ] ; 2 uses
-  %.04166.i = phi i64 [ 0, %.lr.ph.i ], [ %i.ap, %.thread.i ] ; 4 uses
+  %.04166.i = phi i64 [ 0, %.lr.ph.i ], [ %i.ap, %.thread.i ] ; 3 uses
   %.04365.i = phi i64 [ 0, %.lr.ph.i ], [ %.144.i, %.thread.i ] ; 3 uses
   %.04664.i = phi i64 [ 0, %.lr.ph.i ], [ %.147.i, %.thread.i ] ; 4 uses
   %.063.i = phi i64 [ 0, %.lr.ph.i ], [ %.122.i, %.thread.i ] ; 2 uses
@@ -667,8 +666,7 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.i
   %i.al = icmp ugt i64 %.04664.i, %i.ac           ; 2 uses
-  %15 = add i64 %.04166.i, -1
-  %spec.select.i = select i1 %i.al, i64 %15, i64 %.02562.i
+  %spec.select.i = select i1 %i.al, i64 -1, i64 %.02562.i
   %spec.select54.i = zext i1 %i.al to i8
   br label %.thread.i
 

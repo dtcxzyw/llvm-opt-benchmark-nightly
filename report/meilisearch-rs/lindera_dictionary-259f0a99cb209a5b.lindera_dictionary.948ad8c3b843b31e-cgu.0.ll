@@ -204,7 +204,7 @@ bb.ed:                                            ; preds = %bb.ec
 bb.ee:                                            ; preds = %.preheader.i.i.i.i.i.i.i.i
   %i.wf = getelementptr inbounds nuw [8 x i8], ptr %i.wa, i64 %.val20.i.i.i.i.i.i.i.i.i.i.i
   store i64 %i.we, ptr %i.wf, align 8, !noalias !5348
-  %i.wg = add i64 %.val20.i.i.i.i.i.i.i.i.i.i.i, 1 ; 2 uses
+  %i.wg = add nuw i64 %.val20.i.i.i.i.i.i.i.i.i.i.i, 1 ; 2 uses
   %i.wh = icmp eq i64 %i.wg, %i.vx
   br i1 %i.wh, label %_ZN4core4iter6traits8iterator8Iterator7collect17h587556dc9458ff9eE.exit.i.i, label %.preheader.i.i.i.i.i.i.i.i
 
@@ -422,7 +422,7 @@ bb.ep:                                            ; preds = %_ZN4core5alloc6layo
   store ptr inttoptr (i64 1 to ptr), ptr %.sroa.43.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i.3, align 8, !noalias !5387
   %.sroa.54.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i.3 = getelementptr inbounds nuw i8, ptr %i.xw, i64 88
   store i64 0, ptr %.sroa.54.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i.3, align 8, !noalias !5387
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.lr.ph.preheader.i.unr-lcssa, label %.lr.ph.i.i.i.i.i.i.i.i.i.i
 
@@ -825,7 +825,7 @@ bb.g:                                             ; preds = %bb.d
   store <2 x i64> %i.ap, ptr %i.am, align 1, !alias.scope !7195, !noalias !7193
   store <2 x i64> %i.ao, ptr %i.an, align 1, !alias.scope !7201, !noalias !7190
   %i.aq = add nuw nsw i64 %.sroa.0.014.i.i, 2     ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %"_ZN4core5slice29_$LT$impl$u20$$u5b$T$u5d$$GT$7reverse17h065073bf2b8ac653E.exit.loopexit.unr-lcssa", label %.lr.ph.i.i
 
@@ -1228,7 +1228,7 @@ bb.c:                                             ; preds = %bb.e, %.lr.ph.i.i
 
 bb.d:                                             ; preds = %bb.c
   %.neg.i.i = xor i64 %.sroa.0.03.i.i, -1
-  %i.k = add i64 %.sroa.0.03.i.i, -16
+  %i.k = add nuw i64 %.sroa.0.03.i.i, -16
   %i.l = load i64, ptr %i.c, align 8, !noalias !8506, !noundef !6
   %i.m = and i64 %i.l, %i.k
   store i8 -1, ptr %i.h, align 1, !noalias !8506
@@ -1631,24 +1631,22 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %"_ZN4core3ptr117drop_in_place$LT$$LP$alloc..string..String$C$lindera_dictionary..dictionary..character_definition..CategoryId$RP$$GT$17h4d6d18d44fc2fe63E.exit.i.i", %.lr.ph.i.i
-  %.sroa.0.01.i.i = phi i64 [ 0, %.lr.ph.i.i ], [ %i.a, %"_ZN4core3ptr117drop_in_place$LT$$LP$alloc..string..String$C$lindera_dictionary..dictionary..character_definition..CategoryId$RP$$GT$17h4d6d18d44fc2fe63E.exit.i.i" ] ; 3 uses
+  %.sroa.0.01.i.i = phi i64 [ 0, %.lr.ph.i.i ], [ %i.a, %"_ZN4core3ptr117drop_in_place$LT$$LP$alloc..string..String$C$lindera_dictionary..dictionary..character_definition..CategoryId$RP$$GT$17h4d6d18d44fc2fe63E.exit.i.i" ] ; 2 uses
   %i.a = add nuw i64 %.sroa.0.01.i.i, 1           ; 2 uses
-  %i.b = load ptr, ptr %.8.val, align 8, !nonnull !6, !noundef !6 ; 2 uses
+  %i.b = load ptr, ptr %.8.val, align 8, !nonnull !6, !noundef !6 ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 %.sroa.0.01.i.i
   %i.d = load i8, ptr %i.c, align 1, !noundef !6
   %i.e = icmp sgt i8 %i.d, -1
   br i1 %i.e, label %bb.c, label %"_ZN4core3ptr117drop_in_place$LT$$LP$alloc..string..String$C$lindera_dictionary..dictionary..character_definition..CategoryId$RP$$GT$17h4d6d18d44fc2fe63E.exit.i.i"
 
 bb.c:                                             ; preds = %bb.b
-  %0 = sub nsw i64 0, %.sroa.0.01.i.i
-  %1 = getelementptr inbounds [32 x i8], ptr %i.b, i64 %0 ; 2 uses
-  %i.f = getelementptr inbounds i8, ptr %1, i64 -32
+  %i.f = getelementptr inbounds i8, ptr %i.b, i64 -32
   %.val.i.i = load i64, ptr %i.f, align 8, !alias.scope !8608 ; 2 uses
   %i.g = icmp eq i64 %.val.i.i, 0
   br i1 %i.g, label %"_ZN4core3ptr117drop_in_place$LT$$LP$alloc..string..String$C$lindera_dictionary..dictionary..character_definition..CategoryId$RP$$GT$17h4d6d18d44fc2fe63E.exit.i.i", label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.h = getelementptr i8, ptr %1, i64 -24
+  %i.h = getelementptr i8, ptr %i.b, i64 -24
   %.val6.i.i = load ptr, ptr %i.h, align 8, !nonnull !6, !noundef !6
   tail call void @_RNvCskdKJRKLKjqM_7___rustc14___rust_dealloc(ptr noundef nonnull %.val6.i.i, i64 noundef %.val.i.i, i64 noundef range(i64 1, -9223372036854775807) 1) #47, !noalias !8611
   br label %"_ZN4core3ptr117drop_in_place$LT$$LP$alloc..string..String$C$lindera_dictionary..dictionary..character_definition..CategoryId$RP$$GT$17h4d6d18d44fc2fe63E.exit.i.i"
@@ -2051,7 +2049,7 @@ _ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i.us.i: ; pre
   %.sroa.5.0..sroa.0.0.sroa_idx.us.i.3 = getelementptr inbounds nuw i8, ptr %.sroa.0.010.us14.i, i64 88
   store i64 0, ptr %.sroa.5.0..sroa.0.0.sroa_idx.us.i.3, align 8, !noalias !10897
   %i.ad = getelementptr inbounds nuw i8, ptr %.sroa.0.010.us14.i, i64 96 ; 3 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %._crit_edge.loopexit.i.unr-lcssa, label %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i.us.i
 
@@ -2454,7 +2452,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.i.new
   %i.u = bitcast <16 x i8> %.lobit.i.i.1 to <2 x i64>
   %i.v = or <2 x i64> %i.u, splat (i64 -9187201950435737472)
   store <2 x i64> %i.v, ptr %i.t, align 16
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.i.unr-lcssa, label %bb.b
 

@@ -203,7 +203,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.i.new
   %i.ah = getelementptr inbounds nuw i8, ptr %i.af, i64 80
   store i32 0, ptr %i.ah, align 8, !tbaa !111
   %indvars.iv.next.i.3 = add nuw nsw i64 %indvars.iv.i, 4 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %vec_wl_clean.exit.loopexit.unr-lcssa, label %bb.b, !llvm.loop !177
 
@@ -606,7 +606,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.new
   %i.z = getelementptr inbounds nuw i8, ptr %.val.val.3, i64 %i.y
   store i8 0, ptr %i.z, align 1, !tbaa !104
   %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %._crit_edge.loopexit.unr-lcssa, label %bb.b, !llvm.loop !190
 
@@ -741,10 +741,9 @@ bb.h:                                             ; preds = %.lr.ph.split.us._cr
   br i1 %.not53, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %.lr.ph.split
+  %i.ap = trunc nuw i64 %indvars.iv to i32
   %4 = icmp eq i8 %i.ao, 1
-  %i.ap = trunc nuw i64 %indvars.iv to i32        ; 2 uses
-  %5 = sub nsw i32 0, %i.ap
-  %i.aq = select i1 %4, i32 %5, i32 %i.ap
+  %i.aq = select i1 %4, i32 0, i32 %i.ap
   %i.ar = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef nonnull %.048, ptr noundef nonnull @.str.4, i32 noundef %i.aq) #30 ; 0 uses
   %.pre = load ptr, ptr %i.t, align 8, !tbaa !61
   br label %bb.j

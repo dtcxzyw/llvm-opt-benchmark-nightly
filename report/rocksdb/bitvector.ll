@@ -203,11 +203,9 @@ bb.h:                                             ; preds = %._crit_edge.i, %.lr
   %i.an = trunc i64 %.01519.i to i32
   %i.ao = getelementptr inbounds nuw [4 x i8], ptr %i.ag, i64 %.01420.i
   store i32 %i.an, ptr %i.ao, align 4, !tbaa !53
-  %i.ap = shl nuw i64 %.01420.i, 2                ; 7 uses
-  %2 = add i64 %i.ap, 4
-  %.sroa.speculated.i = tail call i64 @llvm.umin.i64(i64 %i.ak, i64 %2)
-  %3 = icmp ult i64 %i.ap, %.sroa.speculated.i
-  br i1 %3, label %iter.check, label %._crit_edge.i
+  %i.ap = shl nuw i64 %.01420.i, 2                ; 6 uses
+  %2 = icmp ugt i64 %i.ak, %i.ap
+  br i1 %2, label %iter.check, label %._crit_edge.i
 
 iter.check:                                       ; preds = %bb.h
   %min.iters.check = icmp ult i64 %i.am, 4
@@ -297,7 +295,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 ._crit_edge.i:                                    ; preds = %.lr.ph.i, %middle.block, %vec.epilog.middle.block, %bb.h
   %.1.lcssa.i = phi i64 [ %.01519.i, %bb.h ], [ %i.bq, %vec.epilog.middle.block ], [ %i.bh, %middle.block ], [ %i.bv, %.lr.ph.i ] ; 5 uses
   %i.br = add nuw i64 %.01420.i, 1                ; 2 uses
-  %indvars.iv.next.i = add i64 %indvars.iv.i, 4
+  %indvars.iv.next.i = add nuw i64 %indvars.iv.i, 4
   %exitcond25.not.i = icmp eq i64 %i.br, %i.ai
   br i1 %exitcond25.not.i, label %_ZN7rocksdb10trie_index9Bitvector12BuildRankLUTEv.exit, label %bb.h, !llvm.loop !89
 

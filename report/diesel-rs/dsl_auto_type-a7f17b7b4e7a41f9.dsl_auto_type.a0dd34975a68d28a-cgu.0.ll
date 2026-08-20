@@ -201,7 +201,7 @@ _RNvMsa_NtCsfKiFC1ztrmh_9hashbrown3rawNtB5_13RawTableInner23prepare_rehash_in_pl
   br i1 %.not11.i, label %_RNvMsa_NtCsfKiFC1ztrmh_9hashbrown3rawNtB5_13RawTableInner15rehash_in_placeCsdOh5Xhm0ZW8_13dsl_auto_type.exit.thread, label %.lr.ph.i13
 
 .lr.ph.i13:                                       ; preds = %_RNvMsa_NtCsfKiFC1ztrmh_9hashbrown3rawNtB5_13RawTableInner23prepare_rehash_in_placeCsdOh5Xhm0ZW8_13dsl_auto_type.exit.i, %bb.w
-  %.sroa.0.010.i = phi i64 [ %i.el, %bb.w ], [ 0, %_RNvMsa_NtCsfKiFC1ztrmh_9hashbrown3rawNtB5_13RawTableInner23prepare_rehash_in_placeCsdOh5Xhm0ZW8_13dsl_auto_type.exit.i ] ; 10 uses
+  %.sroa.0.010.i = phi i64 [ %i.el, %bb.w ], [ 0, %_RNvMsa_NtCsfKiFC1ztrmh_9hashbrown3rawNtB5_13RawTableInner23prepare_rehash_in_placeCsdOh5Xhm0ZW8_13dsl_auto_type.exit.i ] ; 9 uses
   %i.el = add nuw i64 %.sroa.0.010.i, 1
   %i.em = load ptr, ptr %0, align 8               ; 2 uses
   %i.en = getelementptr inbounds nuw i8, ptr %i.em, i64 %.sroa.0.010.i
@@ -213,13 +213,11 @@ bb.n:                                             ; preds = %.lr.ph.i13
   %.neg.i = xor i64 %.sroa.0.010.i, -1
   %.neg10.i = shl i64 %.neg.i, 8
   %i.ep = getelementptr inbounds i8, ptr %i.em, i64 %.neg10.i ; 2 uses
-  %4 = sub nsw i64 0, %.sroa.0.010.i
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.v, %bb.n
   %i.eq = load ptr, ptr %0, align 8
-  %5 = getelementptr inbounds [256 x i8], ptr %i.eq, i64 %4
-  %i.er = getelementptr inbounds i8, ptr %5, i64 -256
+  %i.er = getelementptr inbounds i8, ptr %i.eq, i64 -256
   %i.es = invoke i64 @_RNCINvNtCsfKiFC1ztrmh_9hashbrown3map11make_hasherRNtCsf5uYjtxkodL_11proc_macro25IdentNtNtNtCsdOh5Xhm0ZW8_13dsl_auto_type9auto_type19local_variables_map24LetStatementInferredTypeNtNtNtCsgczF5crJ4sT_3std4hash6random11RandomStateE0B1r_(ptr nonnull align 8 %i.v, ptr nonnull align 8 %i.er)
           to label %_RNCINvMs6_NtCsfKiFC1ztrmh_9hashbrown3rawINtB8_8RawTableTRNtCsf5uYjtxkodL_11proc_macro25IdentNtNtNtCsdOh5Xhm0ZW8_13dsl_auto_type9auto_type19local_variables_map24LetStatementInferredTypeEE14reserve_rehashNCINvNtBa_3map11make_hasherBS_B1s_NtNtNtCsgczF5crJ4sT_3std4hash6random11RandomStateE0E0B1y_.exit.i unwind label %.loopexit.split-lp.i ; 4 uses
 
@@ -355,7 +353,7 @@ bb.s:                                             ; preds = %bb.r
 bb.t:                                             ; preds = %bb.r
   %i.gn = lshr i64 %i.es, 57
   %i.go = trunc nuw nsw i64 %i.gn to i8           ; 2 uses
-  %i.gp = add i64 %.sroa.0.010.i, -16
+  %i.gp = add nuw i64 %.sroa.0.010.i, -16
   %i.gq = and i64 %i.ft, %i.gp
   %i.gr = load ptr, ptr %0, align 8
   %i.gs = getelementptr inbounds nuw i8, ptr %i.gr, i64 %.sroa.0.010.i
@@ -367,7 +365,7 @@ bb.t:                                             ; preds = %bb.r
   br label %bb.w
 
 bb.u:                                             ; preds = %bb.s
-  %i.gw = add i64 %.sroa.0.010.i, -16
+  %i.gw = add nuw i64 %.sroa.0.010.i, -16
   %i.gx = load i64, ptr %i.ab, align 8
   %i.gy = and i64 %i.gx, %i.gw
   %i.gz = load ptr, ptr %0, align 8

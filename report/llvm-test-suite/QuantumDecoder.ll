@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %.loopexit145
 
 bb.d:                                             ; preds = %bb.c
   store i32 50, ptr %i.av, align 4, !tbaa !10
-  %i.az = load i32, ptr %0, align 4, !tbaa !8     ; 6 uses
+  %i.az = load i32, ptr %0, align 4, !tbaa !8     ; 5 uses
   %.not59 = icmp eq i32 %i.az, 0
   br i1 %.not59, label %.lr.ph57.preheader, label %.lr.ph.preheader
 
@@ -254,7 +254,7 @@ middle.block110:                                  ; preds = %vector.body106
 
 .lr.ph57.preheader:                               ; preds = %bb.d, %.preheader50
   %i.bm = phi i32 [ %i.bl, %.preheader50 ], [ -1, %bb.d ] ; 2 uses
-  %i.bn = zext i32 %i.az to i64
+  %i.bn = zext i32 %i.az to i64                   ; 2 uses
   %wide.trip.count78 = zext i32 %i.bm to i64
   br label %.lr.ph57
 
@@ -432,8 +432,7 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.e, %bb.f
   %indvars.iv.next72 = add nuw nsw i64 %indvars.iv71, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next72 to i32
-  %exitcond74.not = icmp eq i32 %i.az, %lftr.wideiv
+  %exitcond74.not = icmp eq i64 %indvars.iv.next72, %i.bn
   br i1 %exitcond74.not, label %.loopexit49, label %bb.e, !llvm.loop !101
 
 vec.epilog.scalar.ph132:                          ; preds = %vec.epilog.scalar.ph132.prol.loopexit, %vec.epilog.scalar.ph132

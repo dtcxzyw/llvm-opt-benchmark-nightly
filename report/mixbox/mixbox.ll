@@ -204,26 +204,24 @@ bb.bx:                                            ; preds = %bb.bc
   br i1 %.not26.i, label %.split.us.i, label %.preheader.split.preheader.i
 
 .preheader.split.preheader.i:                     ; preds = %.preheader.i
-  %i.pa = mul nuw nsw i64 %indvars.iv.i, 3        ; 2 uses
-  %2 = add nuw nsw i64 %i.pa, 4294967293
-  %3 = and i64 %2, 4294967295
-  %i.pb = getelementptr inbounds nuw i8, ptr @_ZZL10mixbox_lutvE12decompressed, i64 %3 ; 3 uses
+  %i.pa = mul nuw nsw i64 %indvars.iv.i, 3
+  %2 = getelementptr inbounds nuw i8, ptr @_ZZL10mixbox_lutvE12decompressed, i64 %i.pa ; 7 uses
+  %i.pb = getelementptr inbounds nuw i8, ptr %2, i64 4294967293
   %i.pc = load i8, ptr %i.pb, align 1, !tbaa !9
-  %4 = getelementptr inbounds nuw i8, ptr @_ZZL10mixbox_lutvE12decompressed, i64 %i.pa ; 4 uses
-  %i.pd = load i8, ptr %4, align 1, !tbaa !9
+  %i.pd = load i8, ptr %2, align 1, !tbaa !9
   %i.pe = add i8 %i.pc, -127
   %i.pf = add i8 %i.pe, %i.pd
-  store i8 %i.pf, ptr %4, align 1, !tbaa !9
-  %i.pg = getelementptr inbounds nuw i8, ptr %i.pb, i64 1
+  store i8 %i.pf, ptr %2, align 1, !tbaa !9
+  %i.pg = getelementptr inbounds nuw i8, ptr %2, i64 4294967294
   %i.ph = load i8, ptr %i.pg, align 1, !tbaa !9
-  %i.pi = getelementptr inbounds nuw i8, ptr %4, i64 1 ; 2 uses
+  %i.pi = getelementptr inbounds nuw i8, ptr %2, i64 1 ; 2 uses
   %i.pj = load i8, ptr %i.pi, align 1, !tbaa !9
   %i.pk = add i8 %i.ph, -127
   %i.pl = add i8 %i.pk, %i.pj
   store i8 %i.pl, ptr %i.pi, align 1, !tbaa !9
-  %i.pm = getelementptr inbounds nuw i8, ptr %i.pb, i64 2
+  %i.pm = getelementptr inbounds nuw i8, ptr %2, i64 4294967295
   %i.pn = load i8, ptr %i.pm, align 1, !tbaa !9
-  %i.po = getelementptr inbounds nuw i8, ptr %4, i64 2 ; 2 uses
+  %i.po = getelementptr inbounds nuw i8, ptr %2, i64 2 ; 2 uses
   %i.pp = load i8, ptr %i.po, align 1, !tbaa !9
   %i.pq = add i8 %i.pn, -127
   %i.pr = add i8 %i.pq, %i.pp
@@ -424,7 +422,7 @@ define internal fastcc noundef range(i32 0, 2) i32 @_ZL14zbuild_huffmanP8zhuffma
   %i.ae = add nsw i32 %i.ad, 1
   store i32 %i.ae, ptr %i.ac, align 4, !tbaa !32
   %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !46
 

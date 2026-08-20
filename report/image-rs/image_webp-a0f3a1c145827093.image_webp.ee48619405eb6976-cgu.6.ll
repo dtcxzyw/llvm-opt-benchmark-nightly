@@ -203,7 +203,7 @@ bb.y:                                             ; preds = %thread-pre-split, %
   br i1 %.not81, label %bb.ac, label %.preheader
 
 .preheader:                                       ; preds = %.lr.ph196
-  %i.iu = zext i8 %.sroa.033.0193 to i64          ; 2 uses
+  %i.iu = zext i8 %.sroa.033.0193 to i64          ; 3 uses
   %i.iv = icmp ult i8 %.sroa.033.0193, 16
   br i1 %i.iv, label %.lr.ph189, label %.invoke320
 
@@ -233,20 +233,18 @@ bb.ac:                                            ; preds = %bb.af, %.lr.ph196
   br i1 %i.iy, label %._crit_edge197, label %.lr.ph196
 
 .lr.ph189:                                        ; preds = %.preheader, %bb.ad
-  %indvars.iv.a = phi i64 [ %indvars.iv.next, %bb.ad ], [ %i.iu, %.preheader ] ; 4 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.ad ], [ %i.iu, %.preheader ] ; 2 uses
+  %indvars.iv.a = phi i64 [ %7, %bb.ad ], [ %i.iu, %.preheader ] ; 2 uses
   %i.iz = getelementptr inbounds nuw [4 x i8], ptr %i.g, i64 %indvars.iv.a
   %i.ja = load i32, ptr %i.iz, align 4, !noundef !12 ; 2 uses
   %i.jb = icmp eq i32 %i.ja, 0
   br i1 %i.jb, label %bb.ad, label %bb.ae
 
-.preheader._crit_edge.loopexit:                   ; preds = %bb.ad
-  %7 = and i64 %indvars.iv.next, 255
-  br label %.invoke320
-
 bb.ad:                                            ; preds = %.lr.ph189
-  %indvars.iv.next = add nsw i64 %indvars.iv.a, -1 ; 3 uses
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 3 uses
+  %7 = and i64 %indvars.iv.next, 255              ; 2 uses
   %i.jc = icmp ult i64 %indvars.iv.next, 16
-  br i1 %i.jc, label %.lr.ph189, label %.preheader._crit_edge.loopexit
+  br i1 %i.jc, label %.lr.ph189, label %.invoke320
 
 bb.ae:                                            ; preds = %.lr.ph189
   %i.jd = icmp ult i64 %i.ir, %1
@@ -254,17 +252,17 @@ bb.ae:                                            ; preds = %.lr.ph189
 
 bb.af:                                            ; preds = %bb.ae
   %i.je = getelementptr inbounds nuw [4 x i8], ptr %i.g, i64 %indvars.iv.a
-  %i.jf = trunc nuw nsw i64 %indvars.iv.a to i8   ; 2 uses
+  %i.jf = trunc nuw nsw i64 %indvars.iv to i8     ; 2 uses
   %i.jg = getelementptr inbounds nuw i8, ptr %2, i64 %i.ir
   store i8 %i.jf, ptr %i.jg, align 1
   %i.jh = add i32 %i.ja, -1
   store i32 %i.jh, ptr %i.je, align 4
   br label %bb.ac
 
-.invoke320:                                       ; preds = %bb.ae, %.preheader, %.preheader._crit_edge.loopexit
-  %i.ji = phi i64 [ %7, %.preheader._crit_edge.loopexit ], [ %i.iu, %.preheader ], [ %i.ir, %bb.ae ]
-  %i.jj = phi i64 [ 16, %.preheader._crit_edge.loopexit ], [ 16, %.preheader ], [ %1, %bb.ae ]
-  %i.jk = phi ptr [ @37, %.preheader._crit_edge.loopexit ], [ @37, %.preheader ], [ @38, %bb.ae ]
+.invoke320:                                       ; preds = %bb.ae, %.preheader, %bb.ad
+  %i.ji = phi i64 [ %7, %bb.ad ], [ %i.ir, %bb.ae ], [ %i.iu, %.preheader ]
+  %i.jj = phi i64 [ 16, %bb.ad ], [ %1, %bb.ae ], [ 16, %.preheader ]
+  %i.jk = phi ptr [ @37, %bb.ad ], [ @38, %bb.ae ], [ @37, %.preheader ]
   invoke void @_RNvNtCsj6eKBz9Db1c_4core9panicking18panic_bounds_check(i64 noundef %i.ji, i64 noundef %i.jj, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.jk) #14
           to label %.cont321 unwind label %bb.x
 

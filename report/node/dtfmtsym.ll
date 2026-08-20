@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.g
   br label %.critedge
 
 .preheader22:                                     ; preds = %_ZN6icu_78L21newUnicodeStringArrayEm.exit, %bb.g
-  %indvars.iv36 = phi i64 [ %indvars.iv.next37, %bb.g ], [ %indvars.iv32, %_ZN6icu_78L21newUnicodeStringArrayEm.exit ] ; 3 uses
+  %indvars.iv36 = phi i64 [ -1, %bb.g ], [ %indvars.iv32, %_ZN6icu_78L21newUnicodeStringArrayEm.exit ] ; 2 uses
   %i.bs = load ptr, ptr %i.f, align 8
   %i.bt = getelementptr inbounds nuw [8 x i8], ptr %i.bs, i64 %indvars.iv36
   %i.bu = load ptr, ptr %i.bt, align 8            ; 4 uses
@@ -234,7 +234,6 @@ bb.f:                                             ; preds = %.preheader22
   br label %bb.g
 
 bb.g:                                             ; preds = %.preheader22, %.loopexit
-  %indvars.iv.next37 = add nsw i64 %indvars.iv36, -1
   %i.cd = icmp sgt i64 %indvars.iv36, 0
   br i1 %i.cd, label %.preheader22, label %bb.e, !llvm.loop !77
 

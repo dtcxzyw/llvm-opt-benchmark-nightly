@@ -201,20 +201,18 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueTReINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtCs1UvybGPDVxf_9indicatif5style15ProgressTrackerEL_EEEB1h_.exit.i.i, %.lr.ph.i.i
-  %.sroa.0.01.i.i = phi i64 [ 0, %.lr.ph.i.i ], [ %i.a, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueTReINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtCs1UvybGPDVxf_9indicatif5style15ProgressTrackerEL_EEEB1h_.exit.i.i ] ; 3 uses
+  %.sroa.0.01.i.i = phi i64 [ 0, %.lr.ph.i.i ], [ %i.a, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueTReINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtCs1UvybGPDVxf_9indicatif5style15ProgressTrackerEL_EEEB1h_.exit.i.i ] ; 2 uses
   %i.a = add nuw i64 %.sroa.0.01.i.i, 1           ; 2 uses
-  %i.b = load ptr, ptr %.8.val, align 8, !nonnull !4, !noundef !4 ; 2 uses
+  %i.b = load ptr, ptr %.8.val, align 8, !nonnull !4, !noundef !4 ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 %.sroa.0.01.i.i
   %i.d = load i8, ptr %i.c, align 1, !noundef !4
   %i.e = icmp sgt i8 %i.d, -1
   br i1 %i.e, label %bb.c, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueTReINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtCs1UvybGPDVxf_9indicatif5style15ProgressTrackerEL_EEEB1h_.exit.i.i
 
 bb.c:                                             ; preds = %bb.b
-  %0 = sub nsw i64 0, %.sroa.0.01.i.i
-  %1 = getelementptr inbounds [32 x i8], ptr %i.b, i64 %0 ; 2 uses
-  %i.f = getelementptr i8, ptr %1, i64 -16
+  %i.f = getelementptr i8, ptr %i.b, i64 -16
   %.val.i.i = load ptr, ptr %i.f, align 8         ; 5 uses
-  %i.g = getelementptr i8, ptr %1, i64 -8
+  %i.g = getelementptr i8, ptr %i.b, i64 -8
   %.val6.i.i = load ptr, ptr %i.g, align 8, !nonnull !4, !align !9, !noundef !4 ; 5 uses
   %i.h = load ptr, ptr %.val6.i.i, align 8, !invariant.load !4 ; 2 uses
   %.not.i.i.i.i = icmp eq ptr %i.h, null

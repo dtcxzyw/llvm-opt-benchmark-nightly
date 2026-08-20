@@ -163,20 +163,17 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.d, %bb.a
   %indvars.iv.i = phi i64 [ 33, %bb.a ], [ %indvars.iv.next.i, %bb.d ] ; 5 uses
-  %i.e = trunc nuw nsw i64 %indvars.iv.i to i32   ; 2 uses
+  %i.e = trunc nuw nsw i64 %indvars.iv.i to i32
   %i.f = and i32 %i.e, 95
   %i.g = add nsw i32 %i.f, -91
   %narrow.i.i.i = icmp ult i32 %i.g, -26
-  %0 = add i32 %i.e, -58
-  %i.h = icmp ult i32 %0, -10
-  %narrow.i.not.i = and i1 %i.h, %narrow.i.i.i
-  %1 = icmp ne i64 %indvars.iv.i, 95
-  %or.cond.i = and i1 %1, %narrow.i.not.i
+  %i.h = icmp samesign ult i64 %indvars.iv.i, 48
+  %or.cond.i = and i1 %i.h, %narrow.i.i.i
   br i1 %or.cond.i, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #20
-  %i.i = trunc i64 %indvars.iv.i to i8
+  %i.i = trunc nuw nsw i64 %indvars.iv.i to i8
   store i8 %i.i, ptr %i.a, align 1, !tbaa !15
   %i.j = call fastcc i64 @register_static_symid(i64 noundef %indvars.iv.i, ptr noundef nonnull %i.a, i64 noundef 1, ptr noundef %i.d) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #20

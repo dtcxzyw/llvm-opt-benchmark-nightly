@@ -203,7 +203,9 @@ bb.m:                                             ; preds = %bb.l
   br label %.body
 
 _ZN12AstInitArrayC2EP8FileLineP12AstNodeDTypeP11AstNodeExpr.exit: ; preds = %_ZN7AstNode6dtypepEP12AstNodeDType.exit.i, %bb.l
+  %3 = zext i32 %..i to i64
   %i.bo = add nuw i32 %i.at, 1
+  %wide.trip.count = zext i32 %i.bo to i64
   br label %bb.u
 
 bb.n:                                             ; preds = %bb.w
@@ -282,10 +284,8 @@ bb.t:                                             ; preds = %bb.j
 
 bb.u:                                             ; preds = %_ZN12AstInitArrayC2EP8FileLineP12AstNodeDTypeP11AstNodeExpr.exit, %bb.w
   %indvars.iv = phi i64 [ 0, %_ZN12AstInitArrayC2EP8FileLineP12AstNodeDTypeP11AstNodeExpr.exit ], [ %indvars.iv.next, %bb.w ] ; 3 uses
-  %3 = trunc nuw i64 %indvars.iv to i32
-  %4 = add i32 %..i, %3
-  %5 = zext i32 %4 to i64
-  %i.cm = tail call noundef ptr @_ZNK12AstInitArray23getIndexDefaultedValuepEm(ptr noundef nonnull align 8 dereferenceable(200) %i.am, i64 noundef %5) ; 2 uses
+  %4 = add nuw nsw i64 %indvars.iv, %3
+  %i.cm = tail call noundef ptr @_ZNK12AstInitArray23getIndexDefaultedValuepEm(ptr noundef nonnull align 8 dereferenceable(200) %i.am, i64 noundef %4) ; 2 uses
   %.not40 = icmp eq ptr %i.cm, null
   br i1 %.not40, label %bb.w, label %bb.v
 
@@ -296,8 +296,7 @@ bb.v:                                             ; preds = %bb.u
 
 bb.w:                                             ; preds = %bb.v, %bb.u
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next to i32
-  %exitcond.not = icmp eq i32 %i.bo, %lftr.wideiv
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %bb.n, label %bb.u, !llvm.loop !359
 
 .noexc.i:                                         ; preds = %_ZN15SimulateVisitor14fetchValueNullEP7AstNode.exit, %bb.h

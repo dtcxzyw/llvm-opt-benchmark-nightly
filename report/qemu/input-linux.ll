@@ -201,7 +201,7 @@ bb.x:                                             ; preds = %bb.w
   br label %bb.aj
 
 bb.y:                                             ; preds = %.preheader, %bb.ae
-  %indvars.iv = phi i64 [ 0, %.preheader ], [ %indvars.iv.next, %bb.ae ] ; 6 uses
+  %indvars.iv = phi i64 [ 0, %.preheader ], [ %indvars.iv.next, %bb.ae ] ; 5 uses
   %i.bn = trunc nuw nsw i64 %indvars.iv to i32
   %i.bo = lshr i64 %indvars.iv, 3
   %i.bp = and i64 %i.bo, 536870911                ; 2 uses
@@ -215,12 +215,9 @@ bb.y:                                             ; preds = %.preheader, %bb.ae
   br i1 %.not72, label %bb.ae, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
-  %3 = icmp samesign ugt i64 %indvars.iv, 255
-  %4 = trunc i64 %indvars.iv to i32
-  %5 = add i32 %4, -704
-  %or.cond.i = icmp ult i32 %5, -352
-  %.0.i = and i1 %3, %or.cond.i
-  br i1 %.0.i, label %bb.aa, label %bb.ab
+  %3 = add nsw i64 %indvars.iv, -256
+  %or.cond.i = icmp ult i64 %3, 96
+  br i1 %or.cond.i, label %bb.aa, label %bb.ab
 
 bb.aa:                                            ; preds = %bb.z
   %i.bw = load i32, ptr %i.bj, align 8

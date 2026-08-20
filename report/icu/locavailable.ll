@@ -117,13 +117,12 @@ bb.g:                                             ; preds = %bb.e
 
 .preheader:                                       ; preds = %bb.g, %.preheader
   %.idx16 = phi i64 [ %.add17, %.preheader ], [ %.idx, %bb.g ]
-  %.add17 = add nsw i64 %.idx16, -40              ; 3 uses
+  %.add17 = add nuw nsw i64 %.idx16, -40          ; 2 uses
   %.ptr19 = getelementptr inbounds i8, ptr %i.n, i64 %.add17
   call void @_ZN6icu_786LocaleD1Ev(ptr noundef nonnull align 8 dead_on_return(40) dereferenceable(40) %.ptr19) #14
-  %2 = icmp eq i64 %.add17, 8
-  br i1 %2, label %.loopexit, label %.preheader
+  br label %.preheader
 
-.loopexit:                                        ; preds = %.preheader, %bb.g
+.loopexit:                                        ; preds = %bb.g
   call void @_ZN6icu_787UMemorydaEPv(ptr noundef nonnull %i.n) #14
   br label %common.resume
 

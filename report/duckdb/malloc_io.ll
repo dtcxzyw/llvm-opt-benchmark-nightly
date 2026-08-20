@@ -201,19 +201,18 @@ bb.cb:                                            ; preds = %bb.bz, %bb.bv, %bb.
 bb.cc:                                            ; preds = %bb.cc, %bb.cb
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.cc ], [ 64, %bb.cb ] ; 2 uses
   %.232.i.i = phi i64 [ %i.gz, %bb.cc ], [ %.0407, %bb.cb ] ; 3 uses
-  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1 ; 2 uses
+  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1 ; 3 uses
   %i.gv = and i64 %.232.i.i, 7                    ; 2 uses
   %i.gw = getelementptr inbounds nuw i8, ptr @.str.4, i64 %i.gv
   %i.gx = load i8, ptr %i.gw, align 1, !tbaa !7
-  %4 = and i64 %indvars.iv.next.i, 4294967295     ; 2 uses
-  %i.gy = getelementptr inbounds nuw i8, ptr %i.c, i64 %4
+  %i.gy = getelementptr inbounds nuw i8, ptr %i.c, i64 %indvars.iv.next.i
   store i8 %i.gx, ptr %i.gy, align 1, !tbaa !7
   %i.gz = lshr i64 %.232.i.i, 3
   %.not34.i.i = icmp ult i64 %.232.i.i, 8
   br i1 %.not34.i.i, label %u2s.exit.i482, label %bb.cc
 
 u2s.exit.i482:                                    ; preds = %bb.cc
-  %i.ha = getelementptr inbounds nuw i8, ptr %i.c, i64 %4 ; 2 uses
+  %i.ha = getelementptr inbounds nuw i8, ptr %i.c, i64 %indvars.iv.next.i ; 2 uses
   %i.hb = trunc nuw i8 %.0386 to i1
   %i.hc = sub i64 65, %indvars.iv.i
   %i.hd = and i64 %i.hc, 4294967295               ; 2 uses
@@ -616,19 +615,18 @@ bb.ej:                                            ; preds = %bb.eh, %bb.ed, %bb.
 bb.ek:                                            ; preds = %bb.ek, %bb.ej
   %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i, %bb.ek ], [ 64, %bb.ej ] ; 2 uses
   %.131.i.i = phi i64 [ %i.nb, %bb.ek ], [ %.0398, %bb.ej ] ; 2 uses
-  %indvars.iv.next.i.i = add nsw i64 %indvars.iv.i.i, -1 ; 2 uses
+  %indvars.iv.next.i.i = add nsw i64 %indvars.iv.i.i, -1 ; 3 uses
   %i.mx = and i64 %.131.i.i, 15
   %i.my = getelementptr inbounds nuw i8, ptr %i.mw, i64 %i.mx
   %i.mz = load i8, ptr %i.my, align 1, !tbaa !7
-  %5 = and i64 %indvars.iv.next.i.i, 4294967295   ; 2 uses
-  %i.na = getelementptr inbounds nuw i8, ptr %i.e, i64 %5
+  %i.na = getelementptr inbounds nuw i8, ptr %i.e, i64 %indvars.iv.next.i.i
   store i8 %i.mz, ptr %i.na, align 1, !tbaa !7
   %i.nb = lshr i64 %.131.i.i, 4                   ; 2 uses
   %.not.i.i = icmp eq i64 %i.nb, 0
   br i1 %.not.i.i, label %u2s.exit.i484, label %bb.ek
 
 u2s.exit.i484:                                    ; preds = %bb.ek
-  %i.nc = getelementptr inbounds nuw i8, ptr %i.e, i64 %5 ; 3 uses
+  %i.nc = getelementptr inbounds nuw i8, ptr %i.e, i64 %indvars.iv.next.i.i ; 3 uses
   %i.nd = trunc nuw i8 %.0386 to i1
   %i.ne = sub i64 65, %indvars.iv.i.i
   %i.nf = and i64 %i.ne, 4294967295               ; 2 uses
@@ -956,19 +954,18 @@ bb.fr:                                            ; preds = %bb.fq, %bb.fp
 bb.fs:                                            ; preds = %bb.fs, %bb.fr
   %indvars.iv.i.i486 = phi i64 [ %indvars.iv.next.i.i488, %bb.fs ], [ 64, %bb.fr ] ; 2 uses
   %.131.i.i487 = phi i64 [ %i.rl, %bb.fs ], [ %i.rg, %bb.fr ] ; 2 uses
-  %indvars.iv.next.i.i488 = add nsw i64 %indvars.iv.i.i486, -1 ; 2 uses
+  %indvars.iv.next.i.i488 = add nsw i64 %indvars.iv.i.i486, -1 ; 3 uses
   %i.rh = and i64 %.131.i.i487, 15
   %i.ri = getelementptr inbounds nuw i8, ptr @.str.2, i64 %i.rh
   %i.rj = load i8, ptr %i.ri, align 1, !tbaa !7
-  %6 = and i64 %indvars.iv.next.i.i488, 4294967295 ; 2 uses
-  %i.rk = getelementptr inbounds nuw i8, ptr %i.f, i64 %6
+  %i.rk = getelementptr inbounds nuw i8, ptr %i.f, i64 %indvars.iv.next.i.i488
   store i8 %i.rj, ptr %i.rk, align 1, !tbaa !7
   %i.rl = lshr i64 %.131.i.i487, 4                ; 2 uses
   %.not.i.i489 = icmp eq i64 %i.rl, 0
   br i1 %.not.i.i489, label %x2s.exit492, label %bb.fs
 
 x2s.exit492:                                      ; preds = %bb.fs
-  %i.rm = getelementptr inbounds nuw i8, ptr %i.f, i64 %6 ; 2 uses
+  %i.rm = getelementptr inbounds nuw i8, ptr %i.f, i64 %indvars.iv.next.i.i488 ; 2 uses
   %i.rn = sub i64 65, %indvars.iv.i.i486
   %i.ro = and i64 %i.rn, 4294967295
   %i.rp = getelementptr inbounds i8, ptr %i.rm, i64 -2 ; 2 uses

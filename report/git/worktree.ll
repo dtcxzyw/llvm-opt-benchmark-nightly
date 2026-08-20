@@ -201,12 +201,10 @@ bb.cv:                                            ; preds = %strbuf_setlen.exit.
 
 bb.cw:                                            ; preds = %strbuf_setlen.exit91.i, %.lr.ph.i107
   %.056131.i = phi i32 [ 0, %.lr.ph.i107 ], [ %i.mk, %strbuf_setlen.exit91.i ]
-  %i.mk = add i32 %.056131.i, 1                   ; 3 uses
+  %i.mk = add nuw i32 %.056131.i, 1               ; 2 uses
   %i.ml = load i32, ptr %i.mg, align 4, !tbaa !49
   %i.mm = icmp eq i32 %i.ml, 17
-  %22 = icmp ne i32 %i.mk, 0
-  %or.cond.i = select i1 %i.mm, i1 %22, i1 false
-  br i1 %or.cond.i, label %bb.cy, label %bb.cx
+  br i1 %i.mm, label %bb.cy, label %bb.cx
 
 bb.cx:                                            ; preds = %bb.cw
   %i.mn = call fastcc ptr @_(ptr noundef nonnull @.str.67)

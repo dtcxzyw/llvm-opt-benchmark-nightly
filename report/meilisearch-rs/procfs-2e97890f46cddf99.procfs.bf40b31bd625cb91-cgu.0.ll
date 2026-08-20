@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.e, %.lr.ph.i.i
 
 bb.d:                                             ; preds = %bb.c
   %.neg.i.i = xor i64 %.sroa.0.03.i.i, -1
-  %i.k = add i64 %.sroa.0.03.i.i, -16
+  %i.k = add nuw i64 %.sroa.0.03.i.i, -16
   %i.l = load i64, ptr %i.c, align 8, !noalias !4518, !noundef !11
   %i.m = and i64 %i.l, %i.k
   store i8 -1, ptr %i.h, align 1, !noalias !4518
@@ -607,23 +607,19 @@ bb.d:                                             ; preds = %.lr.ph, %"_ZN5alloc
   %i.y = phi i64 [ 0, %.lr.ph ], [ %i.bg, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17h3b66f724c12bddacE.exit" ] ; 3 uses
   %.sroa.06.0111 = phi i64 [ 0, %.lr.ph ], [ %i.z, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17h3b66f724c12bddacE.exit" ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k)
-  %i.z = add i64 %.sroa.06.0111, 2                ; 7 uses
+  %i.z = add nuw i64 %.sroa.06.0111, 2            ; 8 uses
   switch i64 %.sroa.06.0111, label %bb.e [
     i64 -2, label %bb.j
     i64 0, label %.thread
   ]
 
-3:                                                ; preds = %bb.e
-  %4 = icmp eq i64 %i.z, 0
-  br i1 %4, label %.lr.ph.i, label %.thread
-
 bb.e:                                             ; preds = %bb.d
   %i.aa = getelementptr inbounds nuw i8, ptr %1, i64 %.sroa.06.0111
   %i.ab = load i8, ptr %i.aa, align 1, !alias.scope !15838, !noundef !11
   %i.ac = icmp sgt i8 %i.ab, -65
-  br i1 %i.ac, label %3, label %bb.j
+  br i1 %i.ac, label %.thread, label %bb.j
 
-.thread:                                          ; preds = %bb.d, %3
+.thread:                                          ; preds = %bb.e, %bb.d
   %.not6.i = icmp ult i64 %i.z, %2
   br i1 %.not6.i, label %bb.f, label %.split7.i
 
@@ -661,7 +657,7 @@ bb.h:                                             ; preds = %"_ZN4core3ptr42drop
           cleanup
   br label %"_ZN4core3ptr42drop_in_place$LT$alloc..string..String$GT$17h584a56b883fe66d7E.exit"
 
-.lr.ph.i:                                         ; preds = %3, %.split7.i, %bb.f
+.lr.ph.i:                                         ; preds = %.split7.i, %bb.f
   %i.ai = getelementptr inbounds nuw i8, ptr %1, i64 %.sroa.06.0111 ; 3 uses
   store ptr %i.ai, ptr %i.k, align 8
   store i64 2, ptr %i.w, align 8
@@ -698,7 +694,8 @@ bb.i:                                             ; preds = %.lr.ph.i
   br i1 %.not.i56, label %.loopexit152, label %.loopexit151
 
 bb.j:                                             ; preds = %bb.d, %bb.f, %bb.e, %.split7.i
-  invoke void @_ZN4core3str16slice_error_fail17h34415ed9969dc080E(ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %1, i64 noundef %2, i64 noundef %.sroa.06.0111, i64 noundef %i.z, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @532) #43
+  %.lcssa112 = phi i64 [ 0, %bb.d ], [ %i.z, %bb.f ], [ %i.z, %bb.e ], [ %i.z, %.split7.i ]
+  invoke void @_ZN4core3str16slice_error_fail17h34415ed9969dc080E(ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %1, i64 noundef %2, i64 noundef %.sroa.06.0111, i64 noundef %.lcssa112, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @532) #43
           to label %bb.k unwind label %.loopexit.split-lp
 
 bb.k:                                             ; preds = %bb.j
@@ -1101,7 +1098,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.i.new
   %i.u = bitcast <16 x i8> %.lobit.i.i.1 to <2 x i64>
   %i.v = or <2 x i64> %i.u, splat (i64 -9187201950435737472)
   store <2 x i64> %i.v, ptr %i.t, align 16
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.i.unr-lcssa, label %bb.b
 

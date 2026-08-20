@@ -201,8 +201,8 @@ bb.af:                                            ; preds = %bb.ae
   %i.fr = getelementptr inbounds nuw i8, ptr %i.fe, i64 104
   %i.fs = load ptr, ptr %i.fr, align 8, !tbaa !57 ; 3 uses
   %i.ft = getelementptr inbounds nuw i8, ptr %i.fe, i64 32
-  %i.fu = load i32, ptr %i.ft, align 8, !tbaa !57 ; 5 uses
-  %i.fv = zext i32 %i.fu to i64
+  %i.fu = load i32, ptr %i.ft, align 8, !tbaa !57 ; 3 uses
+  %i.fv = zext i32 %i.fu to i64                   ; 3 uses
   %i.fw = getelementptr inbounds nuw [32 x i8], ptr %i.fs, i64 %i.fv ; 5 uses
   %i.fx = getelementptr inbounds nuw i8, ptr %i.fw, i64 28
   %i.fy = load i8, ptr %i.fx, align 4, !tbaa !44
@@ -283,8 +283,7 @@ bb.ak:                                            ; preds = %bb.al, %.preheader.
 
 bb.al:                                            ; preds = %bb.ak
   %indvars.iv.next95.i = add nuw nsw i64 %indvars.iv94.i, 1 ; 2 uses
-  %lftr.wideiv97.i = trunc i64 %indvars.iv.next95.i to i32
-  %exitcond98.not.i = icmp eq i32 %i.fu, %lftr.wideiv97.i
+  %exitcond98.not.i = icmp eq i64 %indvars.iv.next95.i, %i.fv
   br i1 %exitcond98.not.i, label %.loopexit.i, label %bb.ak, !llvm.loop !69
 
 .preheader.split.i:                               ; preds = %bb.am, %.preheader.split.preheader.i
@@ -301,8 +300,7 @@ bb.al:                                            ; preds = %bb.ak
 
 bb.am:                                            ; preds = %.preheader.split.i
   %indvars.iv.next91.i = add nuw nsw i64 %indvars.iv90.i, 1 ; 2 uses
-  %lftr.wideiv.i = trunc i64 %indvars.iv.next91.i to i32
-  %exitcond93.not.i = icmp eq i32 %i.fu, %lftr.wideiv.i
+  %exitcond93.not.i = icmp eq i64 %indvars.iv.next91.i, %i.fv
   br i1 %exitcond93.not.i, label %.loopexit.i, label %.preheader.split.i, !llvm.loop !69
 
 .loopexit.i:                                      ; preds = %bb.am, %bb.al, %._crit_edge.i

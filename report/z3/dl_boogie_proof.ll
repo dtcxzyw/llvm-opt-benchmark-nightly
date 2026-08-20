@@ -204,8 +204,7 @@ bb.az:                                            ; preds = %.noexc134, %bb.ax
   store ptr %i.ge, ptr %i.hb, align 8, !tbaa !30
   %i.hc = add i32 %i.gx, 1
   store i32 %i.hc, ptr %i.gz, align 4, !tbaa !31
-  %i.hd = add nuw i64 %indvars.iv288, 1
-  %.sroa.0.0.insert.ext.i = and i64 %i.hd, 4294967295
+  %i.hd = add nuw nsw i64 %indvars.iv288, 1
   %i.he = load ptr, ptr %9, align 8, !tbaa !24    ; 4 uses
   %i.hf = icmp eq ptr %i.he, null
   br i1 %i.hf, label %bb.bb, label %bb.ba
@@ -233,7 +232,7 @@ bb.bc:                                            ; preds = %bb.ba, %.noexc137
   %i.hm = phi ptr [ %.pre.i136, %.noexc137 ], [ %i.he, %bb.ba ]
   %i.hn = zext i32 %i.hl to i64
   %i.ho = getelementptr inbounds nuw [8 x i8], ptr %i.hm, i64 %i.hn
-  store i64 %.sroa.0.0.insert.ext.i, ptr %i.ho, align 4
+  store i64 %i.hd, ptr %i.ho, align 4
   %i.hp = load ptr, ptr %9, align 8, !tbaa !24
   %i.hq = getelementptr inbounds i8, ptr %i.hp, i64 -4 ; 2 uses
   %i.hr = load i32, ptr %i.hq, align 4, !tbaa !31

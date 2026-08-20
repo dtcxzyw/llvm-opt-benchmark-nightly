@@ -106,8 +106,7 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIfLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exi
 .lr.ph:                                           ; preds = %_ZN5Eigen15PlainObjectBaseINS_6MatrixIfLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.m = and i64 %i.c, 2147483647
-  %.tr = trunc i64 %i.c to i32
-  %4 = shl nuw i32 %.tr, 1
+  %4 = shl i64 %i.c, 33
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph, %._crit_edge58
@@ -131,7 +130,6 @@ bb.d:                                             ; preds = %.lr.ph, %._crit_edg
   %indvars.iv = phi i64 [ 0, %.preheader52.lr.ph ], [ %indvars.iv.next, %.preheader52 ] ; 3 uses
   %i.u = add nuw nsw i64 %indvars.iv, %indvars.iv67 ; 3 uses
   %i.v = mul nuw nsw i64 %indvars.iv, 3           ; 3 uses
-  %5 = trunc nuw i64 %i.u to i32
   %sext70 = shl i64 %i.u, 32
   %i.w = ashr exact i64 %sext70, 30
   %i.x = getelementptr i8, ptr %i.q, i64 %i.w     ; 3 uses
@@ -162,18 +160,19 @@ bb.d:                                             ; preds = %.lr.ph, %._crit_edg
   %i.aq = load float, ptr %i.ap, align 4, !tbaa !17
   %i.ar = getelementptr i8, ptr %i.aj, i64 100
   store float %i.aq, ptr %i.ar, align 4, !tbaa !17
-  %6 = add i32 %4, %5
-  %7 = sext i32 %6 to i64
-  %8 = getelementptr [4 x i8], ptr %i.q, i64 %7   ; 3 uses
+  %5 = shl i64 %i.u, 32
+  %sext72 = add i64 %4, %5
+  %6 = ashr exact i64 %sext72, 30
+  %7 = getelementptr i8, ptr %i.q, i64 %6         ; 3 uses
   %i.as = getelementptr [4 x i8], ptr %2, i64 %i.v ; 3 uses
   %i.at = getelementptr i8, ptr %i.as, i64 8
-  %i.au = load float, ptr %8, align 4, !tbaa !17
+  %i.au = load float, ptr %7, align 4, !tbaa !17
   store float %i.au, ptr %i.at, align 4, !tbaa !17
-  %i.av = getelementptr [4 x i8], ptr %8, i64 %i.r
+  %i.av = getelementptr [4 x i8], ptr %7, i64 %i.r
   %i.aw = load float, ptr %i.av, align 4, !tbaa !17
   %i.ax = getelementptr i8, ptr %i.as, i64 56
   store float %i.aw, ptr %i.ax, align 4, !tbaa !17
-  %i.ay = getelementptr [4 x i8], ptr %8, i64 %i.t
+  %i.ay = getelementptr [4 x i8], ptr %7, i64 %i.t
   %i.az = load float, ptr %i.ay, align 4, !tbaa !17
   %i.ba = getelementptr i8, ptr %i.as, i64 104
   store float %i.az, ptr %i.ba, align 4, !tbaa !17
@@ -512,7 +511,7 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exi
   %i.ax = getelementptr i8, ptr %i.cx, i64 %.idx.i.i.i.us.3
   store double %i.aw, ptr %i.ax, align 8, !tbaa !37
   %indvars.iv.next77.3 = add nuw nsw i64 %indvars.iv76, 4 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %._crit_edge.us.unr-lcssa, label %.preheader.us.new, !llvm.loop !43
 
@@ -915,7 +914,7 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIfLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exi
   %i.ax = getelementptr i8, ptr %i.dr, i64 %.idx.i.i.i.us.3
   store float %i.aw, ptr %i.ax, align 4, !tbaa !17
   %indvars.iv.next77.3 = add nuw nsw i64 %indvars.iv76, 4 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %._crit_edge.us.unr-lcssa, label %.preheader.us.new, !llvm.loop !75
 

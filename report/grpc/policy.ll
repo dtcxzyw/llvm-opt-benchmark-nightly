@@ -196,13 +196,12 @@ bb.m:                                             ; preds = %bb.l
   br label %.lr.ph.peel.next.i
 
 .lr.ph.peel.next.i:                               ; preds = %.lr.ph.peel.next.i.preheader, %bb.n
-  %.053116.i = phi i64 [ %i.bt, %bb.n ], [ 1, %.lr.ph.peel.next.i.preheader ] ; 3 uses
+  %.053116.i = phi i64 [ %i.bt, %bb.n ], [ 1, %.lr.ph.peel.next.i.preheader ] ; 2 uses
   %.054115.i = phi i32 [ %spec.select.i, %bb.n ], [ %spec.select.peel.i, %.lr.ph.peel.next.i.preheader ]
   %i.bl = call ptr @OPENSSL_sk_value(ptr noundef nonnull %i.ak, i64 noundef %.053116.i) #5 ; 2 uses
   %i.bm = load ptr, ptr %i.bl, align 8, !tbaa !38
   %i.bn = call i32 @OBJ_obj2nid(ptr noundef %i.bm) #5
-  %8 = add i64 %.053116.i, -1
-  %i.bo = call ptr @OPENSSL_sk_value(ptr noundef nonnull %i.ak, i64 noundef %8) #5
+  %i.bo = call ptr @OPENSSL_sk_value(ptr noundef nonnull %i.ak, i64 noundef -1) #5
   %i.bp = load ptr, ptr %i.bo, align 8, !tbaa !38
   %i.bq = load ptr, ptr %i.bl, align 8, !tbaa !38
   %i.br = call i32 @OBJ_cmp(ptr noundef %i.bp, ptr noundef %i.bq) #5

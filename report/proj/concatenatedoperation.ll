@@ -201,7 +201,7 @@ bb.dq:                                            ; preds = %bb.dp, %bb.cz
 
 bb.dr:                                            ; preds = %.lr.ph, %_ZNSt12__shared_ptrIN5osgeo4proj3crs3CRSELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit1102
   %i.mf = phi ptr [ %i.jg, %.lr.ph ], [ %i.ckk, %_ZNSt12__shared_ptrIN5osgeo4proj3crs3CRSELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit1102 ]
-  %.02731643 = phi i64 [ 0, %.lr.ph ], [ %i.cki, %_ZNSt12__shared_ptrIN5osgeo4proj3crs3CRSELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit1102 ] ; 14 uses
+  %.02731643 = phi i64 [ 0, %.lr.ph ], [ %i.cki, %_ZNSt12__shared_ptrIN5osgeo4proj3crs3CRSELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit1102 ] ; 13 uses
   %i.mg = getelementptr inbounds nuw [16 x i8], ptr %i.mf, i64 %.02731643 ; 28 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %17) #25
   %i.mh = load ptr, ptr %i.mg, align 8, !tbaa !42
@@ -604,9 +604,8 @@ bb.kc:                                            ; preds = %bb.jy, %bb.kb
 
 bb.kd:                                            ; preds = %bb.kc
   call void @llvm.lifetime.start.p0(ptr nonnull %29) #25
-  %91 = add nsw i64 %.02731643, -1                ; 6 uses
-  %92 = getelementptr inbounds nuw [16 x i8], ptr %i.aay, i64 %91
-  %i.abo = load ptr, ptr %92, align 8, !tbaa !42
+  %91 = getelementptr inbounds nuw i8, ptr %i.aay, i64 -16
+  %i.abo = load ptr, ptr %91, align 8, !tbaa !42
   invoke void @_ZNK5osgeo4proj9operation19CoordinateOperation9targetCRSEv(ptr dead_on_unwind nonnull writable sret(%"class.std::shared_ptr.41") align 8 %29, ptr noundef nonnull align 8 dereferenceable(72) %i.abo)
           to label %bb.ke unwind label %bb.mu
 
@@ -764,8 +763,8 @@ bb.kw:                                            ; preds = %bb.kv
 bb.kx:                                            ; preds = %bb.kw
   call void @llvm.lifetime.start.p0(ptr nonnull %30) #25
   %i.adh = load ptr, ptr %2, align 8, !tbaa !19
-  %93 = getelementptr inbounds nuw [16 x i8], ptr %i.adh, i64 %91
-  %i.adi = load ptr, ptr %93, align 8, !tbaa !42
+  %92 = getelementptr inbounds nuw i8, ptr %i.adh, i64 -16
+  %i.adi = load ptr, ptr %92, align 8, !tbaa !42
   invoke void @_ZNK5osgeo4proj9operation19CoordinateOperation9sourceCRSEv(ptr dead_on_unwind nonnull writable sret(%"class.std::shared_ptr.41") align 8 %30, ptr noundef nonnull align 8 dereferenceable(72) %i.adi)
           to label %bb.ky unwind label %bb.mv
 
@@ -777,8 +776,8 @@ bb.ky:                                            ; preds = %bb.kx
 bb.kz:                                            ; preds = %bb.ky
   call void @llvm.lifetime.start.p0(ptr nonnull %31) #25
   %i.adk = load ptr, ptr %2, align 8, !tbaa !19
-  %94 = getelementptr inbounds nuw [16 x i8], ptr %i.adk, i64 %91
-  %i.adl = load ptr, ptr %94, align 8, !tbaa !42
+  %93 = getelementptr inbounds nuw i8, ptr %i.adk, i64 -16
+  %i.adl = load ptr, ptr %93, align 8, !tbaa !42
   invoke void @_ZNK5osgeo4proj9operation19CoordinateOperation9sourceCRSEv(ptr dead_on_unwind nonnull writable sret(%"class.std::shared_ptr.41") align 8 %31, ptr noundef nonnull align 8 dereferenceable(72) %i.adl)
           to label %bb.la unwind label %bb.mw
 
@@ -899,8 +898,8 @@ bb.ln:                                            ; preds = %_ZN9__gnu_cxx27__ex
 bb.lo:                                            ; preds = %.critedge446
   call void @llvm.lifetime.start.p0(ptr nonnull %32) #25
   %i.aex = load ptr, ptr %2, align 8, !tbaa !19
-  %95 = getelementptr inbounds nuw [16 x i8], ptr %i.aex, i64 %91
-  %i.aey = load ptr, ptr %95, align 8, !tbaa !42
+  %94 = getelementptr inbounds nuw i8, ptr %i.aex, i64 -16
+  %i.aey = load ptr, ptr %94, align 8, !tbaa !42
   invoke void @_ZNK5osgeo4proj9operation19CoordinateOperation9sourceCRSEv(ptr dead_on_unwind nonnull writable sret(%"class.std::shared_ptr.41") align 8 %32, ptr noundef nonnull align 8 dereferenceable(72) %i.aey)
           to label %bb.lp unwind label %bb.na
 
@@ -1040,8 +1039,8 @@ _ZNSt12__shared_ptrIN5osgeo4proj3crs3CRSELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %32) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %33) #25
   %i.agn = load ptr, ptr %2, align 8, !tbaa !19
-  %96 = getelementptr inbounds nuw [16 x i8], ptr %i.agn, i64 %91
-  %i.ago = load ptr, ptr %96, align 8, !tbaa !42  ; 2 uses
+  %95 = getelementptr inbounds nuw i8, ptr %i.agn, i64 -16
+  %i.ago = load ptr, ptr %95, align 8, !tbaa !42  ; 2 uses
   %i.agp = load ptr, ptr %i.ago, align 8, !tbaa !11
   %i.agq = getelementptr inbounds nuw i8, ptr %i.agp, i64 32
   %i.agr = load ptr, ptr %i.agq, align 8
@@ -1049,13 +1048,13 @@ _ZNSt12__shared_ptrIN5osgeo4proj3crs3CRSELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit
           to label %bb.mg unwind label %bb.nb
 
 bb.mg:                                            ; preds = %_ZNSt12__shared_ptrIN5osgeo4proj3crs3CRSELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit656
-  %i.ags = load ptr, ptr %2, align 8, !tbaa !19
-  %97 = getelementptr inbounds nuw [16 x i8], ptr %i.ags, i64 %91 ; 2 uses
-  %i.agt = getelementptr inbounds nuw i8, ptr %97, i64 8
+  %i.ags = load ptr, ptr %2, align 8, !tbaa !19   ; 2 uses
+  %96 = getelementptr inbounds nuw i8, ptr %i.ags, i64 -16
+  %i.agt = getelementptr inbounds nuw i8, ptr %i.ags, i64 -8
   %i.agu = load <2 x ptr>, ptr %33, align 16, !tbaa !25
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %33, i8 0, i64 16, i1 false)
   %i.agv = load ptr, ptr %i.agt, align 8, !tbaa !22 ; 8 uses
-  store <2 x ptr> %i.agu, ptr %97, align 8, !tbaa !25
+  store <2 x ptr> %i.agu, ptr %96, align 8, !tbaa !25
   %.not.i.i.i.i.i657 = icmp eq ptr %i.agv, null
   br i1 %.not.i.i.i.i.i657, label %_ZN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj9operation19CoordinateOperationEEEaSEOS8_.exit661, label %bb.mh
 

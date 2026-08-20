@@ -203,10 +203,12 @@ bb.a:
   %i.v = getelementptr inbounds nuw i8, ptr %4, i64 48 ; 4 uses
   %i.w = zext nneg i32 %i.q to i64
   %wide.trip.count = zext nneg i32 %2 to i64
+  %11 = getelementptr inbounds nuw i8, ptr %1, i64 -4
+  %12 = getelementptr inbounds nuw i8, ptr %0, i64 -8
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.dc
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.dc ] ; 14 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.dc ] ; 13 uses
   %.0282483 = phi i1 [ false, %.lr.ph ], [ %.2284, %bb.dc ] ; 29 uses
   %.0285482 = phi i1 [ false, %.lr.ph ], [ %.2287, %bb.dc ] ; 30 uses
   %.0288481 = phi i32 [ 2, %.lr.ph ], [ %.2290, %bb.dc ] ; 29 uses
@@ -511,17 +513,14 @@ bb.ag:                                            ; preds = %bb.af
   br i1 %or.cond359, label %bb.ak, label %bb.ah
 
 bb.ah:                                            ; preds = %bb.ag
-  %11 = add nsw i64 %indvars.iv, -1               ; 2 uses
-  %12 = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %11
-  %i.em = load i32, ptr %12, align 4
+  %i.em = load i32, ptr %11, align 4
   %i.en = icmp eq i32 %i.em, 4
   br i1 %i.en, label %bb.ai, label %bb.ak
 
 bb.ai:                                            ; preds = %bb.ah
   %i.eo = tail call ptr @__ctype_b_loc() #17
   %i.ep = load ptr, ptr %i.eo, align 8
-  %13 = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %11
-  %i.eq = load ptr, ptr %13, align 8
+  %i.eq = load ptr, ptr %12, align 8
   %i.er = load i8, ptr %i.eq, align 1
   %i.es = zext i8 %i.er to i64
   %i.et = getelementptr inbounds nuw [2 x i8], ptr %i.ep, i64 %i.es

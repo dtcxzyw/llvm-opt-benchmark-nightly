@@ -204,8 +204,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   call void @je_cache_bin_init(ptr noundef nonnull %i.ak, ptr noundef %i.am, ptr noundef nonnull %2, ptr noundef nonnull %i.b) #13
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #13
   %indvars.iv.next7 = add nuw nsw i64 %indvars.iv6, 1 ; 2 uses
-  %3 = and i64 %indvars.iv.next7, 4294967295
-  %exitcond.not = icmp eq i64 %3, 39
+  %exitcond.not = icmp eq i64 %indvars.iv.next7, 39
   br i1 %exitcond.not, label %._crit_edge.loopexit, label %.lr.ph3, !llvm.loop !143
 }
 
@@ -608,8 +607,7 @@ tcache_ncached_max_compute.exit:                  ; preds = %bb.i, %bb.j
   %i.bv = getelementptr inbounds nuw [2 x i8], ptr %i.bu, i64 %indvars.iv29
   tail call void @je_cache_bin_info_init(ptr noundef %i.bv, i16 noundef zeroext 0) #13
   %indvars.iv.next30 = add nuw nsw i64 %indvars.iv29, 1 ; 2 uses
-  %2 = and i64 %indvars.iv.next30, 4294967295
-  %exitcond.not = icmp eq i64 %2, 39
+  %exitcond.not = icmp eq i64 %indvars.iv.next30, 39
   br i1 %exitcond.not, label %._crit_edge.loopexit, label %.lr.ph25, !llvm.loop !151
 
 bb.k:                                             ; preds = %._crit_edge, %bb.h, %sz_size2index.exit

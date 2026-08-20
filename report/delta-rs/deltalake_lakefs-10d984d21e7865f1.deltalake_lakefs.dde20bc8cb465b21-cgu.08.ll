@@ -204,12 +204,12 @@ bb.q:                                             ; preds = %bb.q, %.lr.ph.i.i.n
   %i.gy = bitcast <16 x i8> %.lobit.i.i.i.1 to <2 x i64>
   %i.gz = or <2 x i64> %i.gy, splat (i64 -9187201950435737472)
   store <2 x i64> %i.gz, ptr %i.gx, align 16, !noalias !59
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.i.i.unr-lcssa, label %bb.q
 
 bb.r:                                             ; preds = %bb.z, %._crit_edge.i.i
-  %.sroa.04.06.i = phi i64 [ 0, %._crit_edge.i.i ], [ %i.ha, %bb.z ] ; 9 uses
+  %.sroa.04.06.i = phi i64 [ 0, %._crit_edge.i.i ], [ %i.ha, %bb.z ] ; 8 uses
   %i.ha = add nuw i64 %.sroa.04.06.i, 1           ; 2 uses
   %i.hb = load ptr, ptr %0, align 8, !alias.scope !59, !nonnull !8, !noundef !8 ; 3 uses
   %i.hc = getelementptr inbounds nuw i8, ptr %i.hb, i64 %.sroa.04.06.i
@@ -220,7 +220,6 @@ bb.r:                                             ; preds = %bb.z, %._crit_edge.
 bb.s:                                             ; preds = %bb.r
   %.neg.i = mul i64 %i.ha, -40
   %i.hf = getelementptr inbounds i8, ptr %i.hb, i64 %.neg.i ; 7 uses
-  %4 = sub nsw i64 0, %.sroa.04.06.i
   %i.hg = getelementptr inbounds nuw i8, ptr %i.hf, i64 8 ; 2 uses
   %i.hh = getelementptr inbounds nuw i8, ptr %i.hf, i64 16 ; 2 uses
   %i.hi = getelementptr inbounds nuw i8, ptr %i.hf, i64 24 ; 2 uses
@@ -230,8 +229,7 @@ bb.s:                                             ; preds = %bb.r
 _RNvNtCsbvkFyIu7lgC_4core3ptr25swap_nonoverlapping_bytes.exit.i: ; preds = %.preheader.i.preheader.i, %bb.s
   %i.hk = phi ptr [ %.pre.i, %.preheader.i.preheader.i ], [ %i.hb, %bb.s ]
   call void @llvm.experimental.noalias.scope.decl(metadata !62)
-  %5 = getelementptr inbounds [40 x i8], ptr %i.hk, i64 %4
-  %i.hl = getelementptr inbounds i8, ptr %5, i64 -40
+  %i.hl = getelementptr inbounds i8, ptr %i.hk, i64 -40
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !65
   %i.hm = load <2 x i64>, ptr %i.gr, align 8, !noalias !67 ; 3 uses
   %i.hn = shufflevector <2 x i64> %i.hm, <2 x i64> poison, <2 x i32> zeroinitializer
@@ -432,7 +430,7 @@ bb.w:                                             ; preds = %_RNvMsa_NtNtCsbZMnT
 bb.x:                                             ; preds = %_RNvMsa_NtNtCsbZMnTeWjWd9_9hashbrown3raw5innerNtB5_13RawTableInner16find_insert_slot.exit.i
   %i.lq = lshr i64 %i.kb, 57
   %i.lr = trunc nuw nsw i64 %i.lq to i8           ; 2 uses
-  %i.ls = add i64 %.sroa.04.06.i, -16
+  %i.ls = add nuw i64 %.sroa.04.06.i, -16
   %i.lt = and i64 %.val12.i, %i.ls
   %i.lu = getelementptr inbounds nuw i8, ptr %.val.i19, i64 %.sroa.04.06.i
   store i8 %i.lr, ptr %i.lu, align 1
@@ -443,7 +441,7 @@ bb.x:                                             ; preds = %_RNvMsa_NtNtCsbZMnT
   br label %bb.z
 
 bb.y:                                             ; preds = %bb.w
-  %i.ly = add i64 %.sroa.04.06.i, -16
+  %i.ly = add nuw i64 %.sroa.04.06.i, -16
   %i.lz = load i64, ptr %i.j, align 8, !alias.scope !59, !noundef !8
   %i.ma = and i64 %i.lz, %i.ly
   %i.mb = load ptr, ptr %0, align 8, !alias.scope !59, !nonnull !8, !noundef !8
@@ -666,7 +664,7 @@ bb.c:                                             ; preds = %bb.e, %.lr.ph.i.i
 
 bb.d:                                             ; preds = %bb.c
   %.neg.i.i = xor i64 %.sroa.04.03.i.i, -1
-  %i.k = add i64 %.sroa.04.03.i.i, -16
+  %i.k = add nuw i64 %.sroa.04.03.i.i, -16
   %i.l = load i64, ptr %i.c, align 8, !noalias !107, !noundef !8
   %i.m = and i64 %i.l, %i.k
   store i8 -1, ptr %i.h, align 1, !noalias !107

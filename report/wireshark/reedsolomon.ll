@@ -189,7 +189,7 @@ bb.f:                                             ; preds = %modnn.exit24.i, %ge
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.h, %.lr.ph.preheader.i
-  %indvars.iv32.i = phi i64 [ %indvars.iv.i1, %.lr.ph.preheader.i ], [ %indvars.iv.next33.i, %bb.h ] ; 3 uses
+  %indvars.iv32.i = phi i64 [ %indvars.iv.i1, %.lr.ph.preheader.i ], [ -1, %bb.h ] ; 2 uses
   %i.l = getelementptr [4 x i8], ptr @Gg, i64 %indvars.iv32.i ; 3 uses
   %i.m = load i32, ptr %i.l, align 4              ; 2 uses
   %.not.i3 = icmp eq i32 %i.m, 0
@@ -225,7 +225,6 @@ modnn.exit.i:                                     ; preds = %.lr.ph.i.i, %bb.g
 bb.h:                                             ; preds = %modnn.exit.i, %.lr.ph.i
   %storemerge20.i = phi i32 [ %i.ac, %modnn.exit.i ], [ %i.o, %.lr.ph.i ]
   store i32 %storemerge20.i, ptr %i.l, align 4
-  %indvars.iv.next33.i = add nsw i64 %indvars.iv32.i, -1
   %i.ad = icmp sgt i64 %indvars.iv32.i, 1
   br i1 %i.ad, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !11
 
@@ -628,7 +627,7 @@ begin_hunk_1_@eras_dec_rs:bb.a
   br i1 %.not242, label %bb.k, label %bb.i
 
 bb.i:                                             ; preds = %.lr.ph341
-  %i.yi = sub nsw i64 %indvars.iv439, %indvars.iv417
+  %i.yi = sub nuw nsw i64 %indvars.iv439, %indvars.iv417
   %i.yj = getelementptr [4 x i8], ptr %i.b, i64 %i.yi
   %i.yk = load i32, ptr %i.yj, align 4            ; 2 uses
   %.not243 = icmp eq i32 %i.yk, 255

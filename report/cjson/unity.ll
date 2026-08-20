@@ -203,15 +203,13 @@ bb.j:                                             ; preds = %bb.h
 
 .preheader83:                                     ; preds = %.lr.ph, %bb.j
   %.168.lcssa = phi double [ %.067, %bb.j ], [ %i.o, %.lr.ph ] ; 3 uses
-  %.063.lcssa = phi i32 [ 0, %bb.j ], [ %1, %.lr.ph ] ; 2 uses
+  %.063.lcssa = phi i32 [ 0, %bb.j ], [ -6, %.lr.ph ] ; 2 uses
   %i.n = fcmp olt double %.168.lcssa, 1.000000e+05
   br i1 %i.n, label %.lr.ph89, label %.preheader82
 
 .lr.ph:                                           ; preds = %bb.j, %.lr.ph
-  %.06385 = phi i32 [ %1, %.lr.ph ], [ 0, %bb.j ]
   %.16884 = phi double [ %i.o, %.lr.ph ], [ %.067, %bb.j ]
   %i.o = fmul nnan double %.16884, 1.000000e+06   ; 3 uses
-  %1 = add nsw i32 %.06385, -6                    ; 2 uses
   %i.p = fcmp olt double %i.o, f0x3FB99999A0000000
   br i1 %i.p, label %.lr.ph, label %.preheader83
 

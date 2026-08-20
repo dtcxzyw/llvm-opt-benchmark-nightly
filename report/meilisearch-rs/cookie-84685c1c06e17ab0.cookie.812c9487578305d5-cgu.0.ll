@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.e, %.lr.ph.i.i
 
 bb.d:                                             ; preds = %bb.c
   %.neg.i.i = xor i64 %.sroa.0.03.i.i, -1
-  %i.k = add i64 %.sroa.0.03.i.i, -16
+  %i.k = add nuw i64 %.sroa.0.03.i.i, -16
   %i.l = load i64, ptr %i.c, align 8, !noalias !5, !noundef !3
   %i.m = and i64 %i.l, %i.k
   store i8 -1, ptr %i.h, align 1, !noalias !5
@@ -607,13 +607,13 @@ bb.r:                                             ; preds = %bb.r, %.lr.ph.i.i14
   %i.ef = bitcast <16 x i8> %.lobit.i.i.i.1 to <2 x i64>
   %i.eg = or <2 x i64> %i.ef, splat (i64 -9187201950435737472)
   store <2 x i64> %i.eg, ptr %i.ee, align 16, !noalias !2548
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.i.i15.unr-lcssa, label %bb.r
 
 .lr.ph.i:                                         ; preds = %bb.aa, %._crit_edge.i.i15
   %.sroa.0.17.i = phi i64 [ %.sroa.0.1.i, %bb.aa ], [ 1, %._crit_edge.i.i15 ] ; 3 uses
-  %.sroa.0.06.i = phi i64 [ %.sroa.0.17.i, %bb.aa ], [ 0, %._crit_edge.i.i15 ] ; 8 uses
+  %.sroa.0.06.i = phi i64 [ %.sroa.0.17.i, %bb.aa ], [ 0, %._crit_edge.i.i15 ] ; 7 uses
   %i.eh = load ptr, ptr %0, align 8, !alias.scope !2548, !nonnull !3, !noundef !3 ; 3 uses
   %i.ei = getelementptr inbounds nuw i8, ptr %i.eh, i64 %.sroa.0.06.i
   %i.ej = load i8, ptr %i.ei, align 1, !noundef !3
@@ -624,13 +624,11 @@ bb.s:                                             ; preds = %.lr.ph.i
   %.neg.i = mul i64 %.sroa.0.06.i, -168
   %i.ek = getelementptr i8, ptr %i.eh, i64 %.neg.i
   %i.el = getelementptr i8, ptr %i.ek, i64 -168   ; 2 uses
-  %4 = sub nsw i64 0, %.sroa.0.06.i
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.z, %bb.s
   %i.em = phi ptr [ %.pre.i25, %bb.z ], [ %i.eh, %bb.s ]
-  %5 = getelementptr inbounds [168 x i8], ptr %i.em, i64 %4
-  %i.en = getelementptr inbounds i8, ptr %5, i64 -168
+  %i.en = getelementptr inbounds i8, ptr %i.em, i64 -168
   %i.eo = invoke fastcc noundef i64 @_ZN4core4hash11BuildHasher8hash_one17h60662d48bfc71a04E(i64 %.val.i.i.i, i64 %.val1.i.i.i, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(168) %i.en)
           to label %"_ZN9hashbrown3raw21RawTable$LT$T$C$A$GT$14reserve_rehash28_$u7b$$u7b$closure$u7d$$u7d$17hc280d0065ce340bdE.exit.i" unwind label %bb.u ; 3 uses
 
@@ -716,7 +714,7 @@ bb.w:                                             ; preds = %_ZN9hashbrown3raw13
 bb.x:                                             ; preds = %_ZN9hashbrown3raw13RawTableInner16find_insert_slot17h8e144e2bab241514E.exit.i
   %i.gb = lshr i64 %i.eo, 57
   %i.gc = trunc nuw nsw i64 %i.gb to i8           ; 2 uses
-  %i.gd = add i64 %.sroa.0.06.i, -16
+  %i.gd = add nuw i64 %.sroa.0.06.i, -16
   %i.ge = and i64 %.val10.i, %i.gd
   %i.gf = getelementptr inbounds nuw i8, ptr %.val.i18, i64 %.sroa.0.06.i
   store i8 %i.gc, ptr %i.gf, align 1
@@ -727,7 +725,7 @@ bb.x:                                             ; preds = %_ZN9hashbrown3raw13
   br label %bb.aa
 
 bb.y:                                             ; preds = %bb.w
-  %i.gj = add i64 %.sroa.0.06.i, -16
+  %i.gj = add nuw i64 %.sroa.0.06.i, -16
   %i.gk = load i64, ptr %i.h, align 8, !alias.scope !2548, !noundef !3
   %i.gl = and i64 %i.gk, %i.gj
   %i.gm = load ptr, ptr %0, align 8, !alias.scope !2548, !nonnull !3, !noundef !3

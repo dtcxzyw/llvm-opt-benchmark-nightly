@@ -203,7 +203,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %i.ad, label %bb.d, label %bb.i
 
 bb.d:                                             ; preds = %bb.c
-  %i.ae = add i32 %i.o, -1                        ; 4 uses
+  %i.ae = add i32 %i.o, -1                        ; 2 uses
   %i.af = add i32 %i.ae, %.041                    ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.aa, i64 8
   %i.ah = load i32, ptr %i.ag, align 8, !tbaa !9
@@ -218,13 +218,15 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d
-  %4 = getelementptr inbounds nuw i8, ptr %i.aa, i64 24
-  %5 = load ptr, ptr %4, align 8, !tbaa !16       ; 3 uses
   %i.al = icmp sgt i32 %.041, 0
   br i1 %i.al, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.f
+  %4 = getelementptr inbounds nuw i8, ptr %i.aa, i64 24
+  %5 = load ptr, ptr %4, align 8, !tbaa !16
+  %6 = zext i32 %i.ae to i64
   %wide.trip.count = zext nneg i32 %.041 to i64   ; 2 uses
+  %invariant.gep = getelementptr inbounds nuw [16 x i8], ptr %5, i64 %6 ; 3 uses
   %xtraiter = and i64 %wide.trip.count, 1
   %i.am = icmp eq i32 %.041, 1
   br i1 %i.am, label %.epil.preheader, label %.lr.ph.new
@@ -242,10 +244,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %lcmp.mod47 = trunc i32 %.041 to i1
   tail call void @llvm.assume(i1 %lcmp.mod47)
   %i.an = getelementptr inbounds nuw [16 x i8], ptr %i.k, i64 %indvars.iv.epil.init
-  %6 = trunc nuw nsw i64 %indvars.iv.epil.init to i32
-  %7 = add i32 %i.ae, %6
-  %8 = zext i32 %7 to i64
-  %i.ao = getelementptr inbounds nuw [16 x i8], ptr %5, i64 %8
+  %i.ao = getelementptr inbounds nuw [16 x i8], ptr %invariant.gep, i64 %indvars.iv.epil.init
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ao, ptr noundef nonnull align 8 dereferenceable(16) %i.an, i64 16, i1 false), !tbaa.struct !29
   br label %._crit_edge
 
@@ -260,20 +259,14 @@ bb.g:                                             ; preds = %bb.g, %.lr.ph.new
   %indvars.iv = phi i64 [ 0, %.lr.ph.new ], [ %indvars.iv.next.1, %bb.g ] ; 4 uses
   %niter = phi i64 [ 0, %.lr.ph.new ], [ %niter.next.1, %bb.g ]
   %i.as = getelementptr inbounds nuw [16 x i8], ptr %i.k, i64 %indvars.iv
-  %9 = trunc nuw nsw i64 %indvars.iv to i32
-  %10 = add i32 %i.ae, %9
-  %11 = zext i32 %10 to i64
-  %i.at = getelementptr inbounds nuw [16 x i8], ptr %5, i64 %11
+  %i.at = getelementptr inbounds nuw [16 x i8], ptr %invariant.gep, i64 %indvars.iv
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.at, ptr noundef nonnull align 8 dereferenceable(16) %i.as, i64 16, i1 false), !tbaa.struct !29
   %indvars.iv.next = or disjoint i64 %indvars.iv, 1 ; 2 uses
   %i.au = getelementptr inbounds nuw [16 x i8], ptr %i.k, i64 %indvars.iv.next
-  %12 = trunc nuw nsw i64 %indvars.iv.next to i32
-  %13 = add i32 %i.ae, %12
-  %14 = zext i32 %13 to i64
-  %i.av = getelementptr inbounds nuw [16 x i8], ptr %5, i64 %14
+  %i.av = getelementptr inbounds nuw [16 x i8], ptr %invariant.gep, i64 %indvars.iv.next
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.av, ptr noundef nonnull align 8 dereferenceable(16) %i.au, i64 16, i1 false), !tbaa.struct !29
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %bb.g, !llvm.loop !102
 
@@ -506,7 +499,7 @@ bb.d:                                             ; preds = %bb.d, %.lr.ph.new
   %i.as = getelementptr inbounds nuw [16 x i8], ptr %i.af, i64 %indvars.iv.next
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.as, ptr noundef nonnull align 8 dereferenceable(16) %i.ar, i64 16, i1 false), !tbaa.struct !29
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %bb.d, !llvm.loop !103
 }
@@ -609,7 +602,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.new
   %i.al = getelementptr inbounds nuw [16 x i8], ptr %i.t, i64 %indvars.iv.next
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.al, ptr noundef nonnull align 8 dereferenceable(16) %i.ak, i64 16, i1 false), !tbaa.struct !29
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.preheader.loopexit.unr-lcssa, label %bb.b, !llvm.loop !105
 
@@ -992,7 +985,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   %i.ao = getelementptr inbounds nuw i8, ptr %i.am, i64 12
   store i32 0, ptr %i.ao, align 4, !tbaa !17
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !122
 }

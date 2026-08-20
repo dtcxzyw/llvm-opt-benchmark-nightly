@@ -201,6 +201,7 @@ bb.p:                                             ; preds = %._crit_edge.i
   %i.bx = getelementptr inbounds nuw i8, ptr %1, i64 200
   %i.by = getelementptr inbounds nuw i8, ptr %1, i64 208 ; 5 uses
   %.not135.i = icmp eq ptr %2, null
+  %8 = zext i32 %5 to i64
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.am, %.lr.ph159.i
@@ -369,15 +370,13 @@ bb.ah:                                            ; preds = %bb.ag
 bb.ai:                                            ; preds = %bb.ah, %bb.ag, %bb.af, %bb.ad, %bb.ab
   %.5.i = phi i32 [ -1, %bb.ad ], [ %i.et, %bb.ah ], [ %.4.i, %bb.ag ], [ -1, %bb.af ], [ -1, %bb.ab ] ; 2 uses
   %.2.i = phi ptr [ %i.dy, %bb.ad ], [ %spec.select.i, %bb.ah ], [ %.0115146149.i, %bb.ag ], [ null, %bb.af ], [ null, %bb.ab ]
-  %8 = trunc nuw i64 %indvars.iv168.i to i32
-  %9 = add i32 %5, %8                             ; 2 uses
-  %10 = and i32 %9, 1023
-  %i.ev = icmp eq i32 %10, 0
+  %9 = add nuw nsw i64 %indvars.iv168.i, %8       ; 2 uses
+  %10 = and i64 %9, 1023
+  %i.ev = icmp eq i64 %10, 0
   br i1 %i.ev, label %bb.aj, label %bb.ak
 
 bb.aj:                                            ; preds = %bb.ai
-  %11 = zext i32 %9 to i64
-  call void @display_progress(ptr noundef %4, i64 noundef %11) #9
+  call void @display_progress(ptr noundef %4, i64 noundef %9) #9
   br label %bb.ak
 
 bb.ak:                                            ; preds = %bb.aj, %bb.ai

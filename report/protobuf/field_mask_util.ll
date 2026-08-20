@@ -203,6 +203,8 @@ _ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10map_paramsINSt7__cx
 .lr.ph:                                           ; preds = %.preheader
   %i.az = add i8 %1, 1
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 256
+  %3 = zext i8 %i.az to i64
+  %invariant.gep = getelementptr inbounds nuw [8 x i8], ptr %i.ba, i64 %3
   br label %bb.f
 
 ._crit_edge:                                      ; preds = %bb.f, %.preheader
@@ -217,10 +219,7 @@ _ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10map_paramsINSt7__cx
 
 bb.f:                                             ; preds = %.lr.ph, %bb.f
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.f ] ; 2 uses
-  %3 = trunc nuw i64 %indvars.iv to i8
-  %4 = add i8 %i.az, %3
-  %5 = zext i8 %4 to i64
-  %i.bd = getelementptr inbounds nuw [8 x i8], ptr %i.ba, i64 %5
+  %i.bd = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep, i64 %indvars.iv
   %i.be = load ptr, ptr %i.bd, align 8, !tbaa !103
   call fastcc void @_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10map_paramsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt10unique_ptrIN6google8protobuf4util12_GLOBAL__N_113FieldMaskTree4NodeESt14default_deleteISG_EESt4lessIS9_ESaISt4pairIKS9_SJ_EELi256ELb0EEEE16clear_and_deleteEPSR_PSP_(ptr noundef %i.be)
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses

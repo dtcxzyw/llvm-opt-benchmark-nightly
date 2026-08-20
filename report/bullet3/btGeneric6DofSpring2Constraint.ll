@@ -203,7 +203,7 @@ define dso_local noundef i32 @_ZN30btGeneric6DofSpring2Constraint15setLinearLimi
   %i.av = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 4 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %0, i64 800 ; 2 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 784 ; 2 uses
-  %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 992 ; 2 uses
+  %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 992
   %i.az = load i32, ptr %i.s, align 4, !tbaa !87  ; 2 uses
   %.not.peel = icmp eq i32 %i.az, 0
   %i.ba = load i8, ptr %i.t, align 8, !tbaa !15, !range !97 ; 2 uses
@@ -381,6 +381,10 @@ bb.m:                                             ; preds = %bb.l, %bb.k, %bb.j,
 
 .peel.newph:                                      ; preds = %.split71.peel, %bb.b
   %.1.peel = phi i32 [ %i.do, %.split71.peel ], [ %2, %bb.b ]
+  %11 = getelementptr inbounds nuw i8, ptr %0, i64 377957123036
+  %12 = getelementptr inbounds nuw i8, ptr %0, i64 377957123024
+  %13 = getelementptr inbounds nuw i8, ptr %0, i64 377957123028
+  %14 = getelementptr inbounds nuw i8, ptr %0, i64 377957123024
   br label %bb.n
 
 .loopexit:                                        ; preds = %bb.ad
@@ -388,7 +392,7 @@ bb.m:                                             ; preds = %bb.l, %bb.k, %bb.j,
   ret i32 %.1
 
 bb.n:                                             ; preds = %.peel.newph, %bb.ad
-  %indvars.iv = phi i64 [ 1, %.peel.newph ], [ %indvars.iv.next.pre-phi, %bb.ad ] ; 31 uses
+  %indvars.iv = phi i64 [ 1, %.peel.newph ], [ %indvars.iv.next.pre-phi, %bb.ad ] ; 30 uses
   %.07090 = phi i32 [ %.1.peel, %.peel.newph ], [ %.1, %bb.ad ] ; 3 uses
   %i.dp = getelementptr inbounds nuw [4 x i8], ptr %i.s, i64 %indvars.iv
   %i.dq = load i32, ptr %i.dp, align 4, !tbaa !87 ; 2 uses
@@ -525,7 +529,6 @@ bb.v:                                             ; preds = %bb.u, %bb.t
   store float %i.ga, ptr %i.e, align 4, !tbaa !104
   %i.gb = add nuw nsw i64 %indvars.iv, 1          ; 2 uses
   %.cmp.not = icmp eq i64 %indvars.iv, 2
-  %11 = add i64 %indvars.iv, 4294967295
   %i.gc = select i1 %.cmp.not, i64 0, i64 %i.gb
   %i.gd = getelementptr inbounds nuw [88 x i8], ptr %i.ay, i64 %i.gc ; 4 uses
   %i.ge = getelementptr inbounds nuw i8, ptr %i.gd, i64 84
@@ -564,10 +567,7 @@ bb.y:                                             ; preds = %bb.x
 
 .thread:                                          ; preds = %bb.w, %bb.v, %bb.v, %.thread.fold.split, %bb.y, %bb.x
   %i.gs = phi i1 [ %i.gr, %bb.y ], [ false, %.thread.fold.split ], [ true, %bb.v ], [ true, %bb.v ], [ %or.cond82, %bb.w ], [ true, %bb.x ]
-  %12 = and i64 %11, 4294967295
-  %13 = getelementptr inbounds nuw [88 x i8], ptr %i.ay, i64 %12 ; 4 uses
-  %14 = getelementptr inbounds nuw i8, ptr %13, i64 84
-  %i.gt = load i32, ptr %14, align 4, !tbaa !91
+  %i.gt = load i32, ptr %11, align 4, !tbaa !91
   switch i32 %i.gt, label %.split71 [
     i32 1, label %bb.ac
     i32 2, label %bb.ac
@@ -576,23 +576,20 @@ bb.y:                                             ; preds = %bb.x
   ]
 
 bb.z:                                             ; preds = %.thread
-  %15 = getelementptr inbounds nuw i8, ptr %13, i64 72
-  %i.gu = load float, ptr %15, align 8, !tbaa !92
+  %i.gu = load float, ptr %14, align 8, !tbaa !92
   %i.gv = tail call float @llvm.fabs.f32(float %i.gu)
   %i.gw = fpext float %i.gv to double
   %or.cond83 = fcmp ogt double %i.gw, 1.000000e-03
   br i1 %or.cond83, label %bb.ac, label %.split71
 
 bb.aa:                                            ; preds = %.thread
-  %16 = getelementptr inbounds nuw i8, ptr %13, i64 72
-  %i.gx = load float, ptr %16, align 8, !tbaa !92
+  %i.gx = load float, ptr %12, align 8, !tbaa !92
   %i.gy = fpext float %i.gx to double
   %i.gz = fcmp olt double %i.gy, -1.000000e-03
   br i1 %i.gz, label %bb.ac, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
-  %17 = getelementptr inbounds nuw i8, ptr %13, i64 76
-  %i.ha = load float, ptr %17, align 4, !tbaa !93
+  %i.ha = load float, ptr %13, align 4, !tbaa !93
   %i.hb = fpext float %i.ha to double
   %i.hc = fcmp ogt double %i.hb, 1.000000e-03
   br label %bb.ac

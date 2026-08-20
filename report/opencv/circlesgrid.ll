@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %.noexc
   %i.ae = phi ptr [ %i.cg, %_ZNSt6vectorIfSaIfEE9push_backERKf.exit ], [ %i.b, %.lr.ph.preheader ]
   %i.af = phi i64 [ %i.ck, %_ZNSt6vectorIfSaIfEE9push_backERKf.exit ], [ %i.g, %.lr.ph.preheader ] ; 2 uses
   %i.ag = phi i64 [ %i.cj, %_ZNSt6vectorIfSaIfEE9push_backERKf.exit ], [ %i.f, %.lr.ph.preheader ]
-  %.040130 = phi i64 [ %i.ah, %_ZNSt6vectorIfSaIfEE9push_backERKf.exit ], [ 0, %.lr.ph.preheader ] ; 3 uses
+  %.040130 = phi i64 [ %i.ah, %_ZNSt6vectorIfSaIfEE9push_backERKf.exit ], [ 0, %.lr.ph.preheader ] ; 2 uses
   %.sroa.15.0129 = phi ptr [ %.sroa.15.1, %_ZNSt6vectorIfSaIfEE9push_backERKf.exit ], [ null, %.lr.ph.preheader ] ; 5 uses
   %.sroa.10.0128 = phi ptr [ %.sroa.10.1, %_ZNSt6vectorIfSaIfEE9push_backERKf.exit ], [ null, %.lr.ph.preheader ] ; 3 uses
   %.sroa.097.0127 = phi ptr [ %.sroa.097.1, %_ZNSt6vectorIfSaIfEE9push_backERKf.exit ], [ null, %.lr.ph.preheader ] ; 7 uses
@@ -216,10 +216,9 @@ bb.b:                                             ; preds = %.noexc
   %.val64 = load float, ptr %i.al, align 4, !tbaa !132
   %i.am = getelementptr i8, ptr %i.al, i64 4
   %.val65 = load float, ptr %i.am, align 4, !tbaa !134
-  %17 = add i64 %.040130, -1
   %sext = shl i64 %i.ag, 29
   %i.an = ashr exact i64 %sext, 32
-  %i.ao = add i64 %17, %i.an
+  %i.ao = add nsw i64 %i.an, -1
   %i.ap = urem i64 %i.ao, %i.af
   %i.aq = getelementptr inbounds nuw [8 x i8], ptr %i.ad, i64 %i.ap
   %i.ar = load <2 x float>, ptr %i.ak, align 4, !tbaa !46 ; 2 uses
@@ -622,7 +621,7 @@ _ZNK2cv5Rect_IfE8containsIfEEbRKNS_6Point_IT_EE.exit.1: ; preds = %bb.l
 _ZNK2cv5Rect_IfE8containsIfEEbRKNS_6Point_IT_EE.exit.thread.1: ; preds = %_ZNK2cv5Rect_IfE8containsIfEEbRKNS_6Point_IT_EE.exit.1, %bb.l, %_ZNK2cv5Rect_IfE8containsIfEEbRKNS_6Point_IT_EE.exit.thread
   %i.bu = phi i32 [ %i.bj, %_ZNK2cv5Rect_IfE8containsIfEEbRKNS_6Point_IT_EE.exit.thread ], [ %spec.select.1, %_ZNK2cv5Rect_IfE8containsIfEEbRKNS_6Point_IT_EE.exit.1 ], [ %i.bj, %bb.l ] ; 3 uses
   %i.bv = add nuw i64 %.048, 2                    ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.unr-lcssa, label %bb.j, !llvm.loop !339
 
@@ -1025,7 +1024,7 @@ bb.an:                                            ; preds = %._crit_edge187.thre
   %i.go = trunc nuw nsw i64 %indvars.iv.next246.2 to i32
   %spec.select117.3 = select i1 %i.gn, i32 %i.go, i32 %spec.select117.2 ; 3 uses
   %indvars.iv.next246.3 = add nuw nsw i64 %indvars.iv245, 4 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %._crit_edge187.unr-lcssa, label %.lr.ph186, !llvm.loop !435
 

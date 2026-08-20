@@ -201,7 +201,7 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 ; Function Attrs: mustprogress uwtable
 define internal fastcc void @_ZN14arrow_vendored17double_conversionL21GenerateCountedDigitsEiPiPNS0_6BignumES3_NS0_6VectorIcEES1_(i32 noundef %0, ptr nofree noundef captures(none) %1, ptr noundef nonnull %2, ptr noundef nonnull %3, ptr nofree captures(none) %4, ptr nofree noundef writeonly captures(none) %5) unnamed_addr #0 {
 bb.a:
-  %i.a = add i32 %0, -1                           ; 5 uses
+  %i.a = add i32 %0, -1                           ; 4 uses
   %i.b = icmp sgt i32 %0, 1
   br i1 %i.b, label %.lr.ph.preheader, label %._crit_edge37.critedge
 
@@ -220,7 +220,7 @@ bb.a:
   %i.i = sext i32 %i.a to i64
   %i.j = getelementptr inbounds i8, ptr %4, i64 %i.i
   store i8 %i.h, ptr %i.j, align 1, !tbaa !9
-  %.phi.trans.insert.a = zext nneg i32 %i.a to i64
+  %.phi.trans.insert.a = zext nneg i32 %i.a to i64 ; 2 uses
   %.phi.trans.insert40 = getelementptr inbounds nuw i8, ptr %4, i64 %.phi.trans.insert.a
   %.pre = load i8, ptr %.phi.trans.insert40, align 1, !tbaa !9
   br label %.lr.ph36
@@ -238,22 +238,20 @@ bb.a:
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !14
 
 .lr.ph36:                                         ; preds = %._crit_edge, %bb.b
-  %i.o = phi i8 [ %i.s, %bb.b ], [ %.pre, %._crit_edge ]
-  %.034 = phi i32 [ %7, %bb.b ], [ %i.a, %._crit_edge ] ; 3 uses
+  %i.o = phi i8 [ %.pre, %._crit_edge ], [ %i.s, %bb.b ]
+  %indvars.iv40 = phi i64 [ %.phi.trans.insert.a, %._crit_edge ], [ %indvars.iv.next41, %bb.b ] ; 3 uses
   %.not = icmp eq i8 %i.o, 58
   br i1 %.not, label %bb.b, label %._crit_edge37
 
 bb.b:                                             ; preds = %.lr.ph36
-  %6 = zext nneg i32 %.034 to i64
-  %i.p = getelementptr inbounds nuw i8, ptr %4, i64 %6
+  %i.p = getelementptr inbounds nuw i8, ptr %4, i64 %indvars.iv40
   store i8 48, ptr %i.p, align 1, !tbaa !9
-  %7 = add nsw i32 %.034, -1                      ; 2 uses
-  %8 = zext nneg i32 %7 to i64
-  %i.q = getelementptr inbounds nuw i8, ptr %4, i64 %8 ; 2 uses
+  %indvars.iv.next41 = add nsw i64 %indvars.iv40, -1 ; 2 uses
+  %i.q = getelementptr inbounds nuw i8, ptr %4, i64 %indvars.iv.next41 ; 2 uses
   %i.r = load i8, ptr %i.q, align 1, !tbaa !9
   %i.s = add i8 %i.r, 1                           ; 2 uses
   store i8 %i.s, ptr %i.q, align 1, !tbaa !9
-  %i.t = icmp sgt i32 %.034, 1
+  %i.t = icmp sgt i64 %indvars.iv40, 1
   br i1 %i.t, label %.lr.ph36, label %._crit_edge37, !llvm.loop !15
 
 ._crit_edge37.critedge:                           ; preds = %bb.a

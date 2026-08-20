@@ -201,10 +201,9 @@ bb.p:                                             ; preds = %bb.i
   br label %bb.ab
 
 .lr.ph:                                           ; preds = %bb.n, %_ZN5boost9container8devectorIiNS0_13new_allocatorIiEENS0_12devector_optIvvLm3EEEE9push_backEOi.exit13
-  %.033 = phi i32 [ %i.bu, %_ZN5boost9container8devectorIiNS0_13new_allocatorIiEENS0_12devector_optIvvLm3EEEE9push_backEOi.exit13 ], [ 0, %bb.n ] ; 2 uses
+  %.033 = phi i32 [ %i.bu, %_ZN5boost9container8devectorIiNS0_13new_allocatorIiEENS0_12devector_optIvvLm3EEEE9push_backEOi.exit13 ], [ 0, %bb.n ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #23
-  %1 = sub nsw i32 0, %.033                       ; 2 uses
-  store i32 %1, ptr %i.c, align 4, !tbaa !17
+  store i32 0, ptr %i.c, align 4, !tbaa !17
   %i.bn = load i64, ptr %i.h, align 8, !tbaa !72  ; 2 uses
   %i.bo = load i64, ptr %i.g, align 8, !tbaa !74  ; 3 uses
   %.not.i.i19 = icmp eq i64 %i.bn, %i.bo
@@ -213,7 +212,7 @@ bb.p:                                             ; preds = %bb.i
 
 bb.q:                                             ; preds = %.lr.ph
   %i.bq = getelementptr inbounds nuw [4 x i8], ptr %i.bp, i64 %i.bo
-  store i32 %1, ptr %i.bq, align 4, !tbaa !17
+  store i32 0, ptr %i.bq, align 4, !tbaa !17
   %i.br = add i64 %i.bo, 1
   store i64 %i.br, ptr %i.g, align 8, !tbaa !74
   br label %_ZN5boost9container8devectorIiNS0_13new_allocatorIiEENS0_12devector_optIvvLm3EEEE9push_backEOi.exit13
@@ -495,10 +494,9 @@ bb.p:                                             ; preds = %bb.i
   br label %bb.al
 
 .lr.ph:                                           ; preds = %bb.n, %_ZN5boost9container8devectorIiNS0_13new_allocatorIiEENS0_12devector_optIvvLm10EEEE9push_backEOi.exit23
-  %.01553 = phi i32 [ %i.bw, %_ZN5boost9container8devectorIiNS0_13new_allocatorIiEENS0_12devector_optIvvLm10EEEE9push_backEOi.exit23 ], [ 0, %bb.n ] ; 2 uses
+  %.01553 = phi i32 [ %i.bw, %_ZN5boost9container8devectorIiNS0_13new_allocatorIiEENS0_12devector_optIvvLm10EEEE9push_backEOi.exit23 ], [ 0, %bb.n ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #23
-  %1 = sub nsw i32 0, %.01553                     ; 2 uses
-  store i32 %1, ptr %i.c, align 4, !tbaa !17
+  store i32 0, ptr %i.c, align 4, !tbaa !17
   %i.bp = load i64, ptr %i.j, align 8, !tbaa !86  ; 2 uses
   %i.bq = load i64, ptr %i.i, align 8, !tbaa !88  ; 3 uses
   %.not.i.i29 = icmp eq i64 %i.bp, %i.bq
@@ -507,7 +505,7 @@ bb.p:                                             ; preds = %bb.i
 
 bb.q:                                             ; preds = %.lr.ph
   %i.bs = getelementptr inbounds nuw [4 x i8], ptr %i.br, i64 %i.bq
-  store i32 %1, ptr %i.bs, align 4, !tbaa !17
+  store i32 0, ptr %i.bs, align 4, !tbaa !17
   %i.bt = add i64 %i.bq, 1
   store i64 %i.bt, ptr %i.i, align 8, !tbaa !88
   br label %_ZN5boost9container8devectorIiNS0_13new_allocatorIiEENS0_12devector_optIvvLm10EEEE9push_backEOi.exit23
@@ -614,10 +612,9 @@ bb.aa:                                            ; preds = %bb.v
   br label %bb.al
 
 .lr.ph57:                                         ; preds = %bb.z, %_ZN5boost9container8devectorIiNS0_13new_allocatorIiEENS0_12devector_optIvvLm10EEEE9push_backEOi.exit21
-  %.055 = phi i32 [ %i.dk, %_ZN5boost9container8devectorIiNS0_13new_allocatorIiEENS0_12devector_optIvvLm10EEEE9push_backEOi.exit21 ], [ 0, %bb.z ] ; 2 uses
+  %.055 = phi i32 [ %i.dk, %_ZN5boost9container8devectorIiNS0_13new_allocatorIiEENS0_12devector_optIvvLm10EEEE9push_backEOi.exit21 ], [ 0, %bb.z ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #23
-  %2 = sub nsw i32 0, %.055                       ; 2 uses
-  store i32 %2, ptr %i.e, align 4, !tbaa !17
+  store i32 0, ptr %i.e, align 4, !tbaa !17
   %i.dd = load i64, ptr %i.j, align 8, !tbaa !86  ; 2 uses
   %i.de = load i64, ptr %i.i, align 8, !tbaa !88  ; 3 uses
   %.not.i.i37 = icmp eq i64 %i.dd, %i.de
@@ -626,7 +623,7 @@ bb.aa:                                            ; preds = %bb.v
 
 bb.ab:                                            ; preds = %.lr.ph57
   %i.dg = getelementptr inbounds nuw [4 x i8], ptr %i.df, i64 %i.de
-  store i32 %2, ptr %i.dg, align 4, !tbaa !17
+  store i32 0, ptr %i.dg, align 4, !tbaa !17
   %i.dh = add i64 %i.de, 1
   store i64 %i.dh, ptr %i.i, align 8, !tbaa !88
   br label %_ZN5boost9container8devectorIiNS0_13new_allocatorIiEENS0_12devector_optIvvLm10EEEE9push_backEOi.exit21

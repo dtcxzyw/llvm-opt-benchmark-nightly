@@ -201,7 +201,7 @@ bb.s:                                             ; preds = %_ZNSt3mapIN4cvc58in
   br label %_ZNSt3mapIN4cvc58internal12NodeTemplateILb1EEEjSt4lessIS3_ESaISt4pairIKS3_jEEEixERS7_.exit
 
 bb.t:                                             ; preds = %.lr.ph, %bb.bi
-  %.028278 = phi i32 [ 0, %.lr.ph ], [ %i.ky, %bb.bi ] ; 6 uses
+  %.028278 = phi i32 [ 0, %.lr.ph ], [ %i.ky, %bb.bi ] ; 5 uses
   %i.cr = load ptr, ptr %i.bt, align 8, !tbaa !8  ; 2 uses
   %.not10.i.i.i.i36 = icmp eq ptr %i.cr, null
   br i1 %.not10.i.i.i.i36, label %.critedge.i46, label %.lr.ph.i.i.i.i37
@@ -442,17 +442,11 @@ _ZNK4cvc58internal12NodeTemplateILb1EEixEi.exit62: ; preds = %bb.ag, %bb.ah, %bb
   %i.gs = icmp eq i32 %i.gr, 1023
   %i.gt = select i1 %i.gs, i32 -1, i32 %i.gr
   %i.gu = invoke noundef i32 @_ZN4cvc58internal4kind10metaKindOfENS1_6Kind_tE(i32 noundef %i.gt)
-          to label %.noexc64 unwind label %bb.bg
+          to label %.noexc64 unwind label %bb.bg  ; 0 uses
 
 .noexc64:                                         ; preds = %_ZNK4cvc58internal12NodeTemplateILb1EEixEi.exit62
-  %34 = add i32 %.028278, -1
-  %35 = icmp eq i32 %i.gu, 2
-  %36 = zext i1 %35 to i32
-  %spec.select.i.i63 = add nuw nsw i32 %34, %36
-  %i.gv = getelementptr inbounds nuw i8, ptr %i.gn, i64 24
-  %37 = sext i32 %spec.select.i.i63 to i64
-  %38 = getelementptr inbounds [8 x i8], ptr %i.gv, i64 %37
-  %i.gw = load ptr, ptr %38, align 8, !tbaa !58, !noalias !70 ; 8 uses
+  %i.gv = getelementptr inbounds nuw i8, ptr %i.gn, i64 16
+  %i.gw = load ptr, ptr %i.gv, align 8, !tbaa !58, !noalias !70 ; 8 uses
   %i.gx = load i64, ptr %i.gw, align 8, !noalias !70 ; 4 uses
   %i.gy = lshr i64 %i.gx, 40
   %i.gz = trunc nuw nsw i64 %i.gy to i32

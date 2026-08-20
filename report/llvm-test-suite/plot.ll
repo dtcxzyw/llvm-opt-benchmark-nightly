@@ -87,6 +87,7 @@ bb.a:
 .preheader:                                       ; preds = %.lr.ph, %bb.a
   %.028.lcssa = phi i32 [ 0, %bb.a ], [ %i.g, %.lr.ph ] ; 3 uses
   %i.e = add nuw nsw i32 %.028.lcssa, 5
+  %1 = zext i32 %i.e to i64
   %i.f = add i32 %.028.lcssa, 1
   %wide.trip.count = zext i32 %i.f to i64
   br label %bb.b
@@ -106,10 +107,8 @@ bb.b:                                             ; preds = %.preheader, %bb.b
   %i.k = srem i32 %i.j, 10
   %i.l = trunc nsw i32 %i.k to i8
   %i.m = add nsw i8 %i.l, 48
-  %1 = trunc nuw nsw i64 %indvars.iv to i32
-  %2 = sub i32 %i.e, %1
-  %3 = zext nneg i32 %2 to i64
-  %i.n = getelementptr inbounds nuw i8, ptr %i.a, i64 %3
+  %2 = sub nuw nsw i64 %1, %indvars.iv
+  %i.n = getelementptr inbounds nuw i8, ptr %i.a, i64 %2
   store i8 %i.m, ptr %i.n, align 1, !tbaa !8
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.o = mul nuw nsw i32 %.136, 10

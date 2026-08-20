@@ -204,7 +204,7 @@ _ZN4core8aabbox3dIfE16addInternalPointERKNS_8vector3dIfEE.exit.i: ; preds = %.lr
   %i.ci = fcmp olt float %i.ch, %.sroa.0.2.i78
   %.sroa.0.2.i77 = select i1 %i.ci, float %i.ch, float %.sroa.0.2.i78 ; 2 uses
   %i.cj = select <4 x i1> %i.ce, <4 x float> %i.bt, <4 x float> %i.cb ; 3 uses
-  %indvars.iv.next = add i64 %indvars.iv, 1       ; 2 uses
+  %indvars.iv.next = add nuw i64 %indvars.iv, 1   ; 2 uses
   %i.ck = and i64 %indvars.iv.next, 65535
   %i.cl = icmp ugt i64 %i.g, %i.ck
   br i1 %i.cl, label %_ZN4core8aabbox3dIfE16addInternalPointERKNS_8vector3dIfEE.exit.i, label %.lr.ph135, !llvm.loop !120
@@ -254,9 +254,8 @@ bb.d:                                             ; preds = %.lr.ph135, %._crit_
   %.sroa.30.2.i37120.lcssa145 = phi float [ %.sroa.30.2.i37120.lcssa146, %bb.d ], [ %.sroa.30.2.i37120, %_ZN4core8aabbox3dIfE16addInternalPointERKNS_8vector3dIfEE.exit.i53 ] ; 2 uses
   %.sroa.0.2.i49105.lcssa = phi float [ %.sroa.0.2.i49105.lcssa132133, %bb.d ], [ %.sroa.0.2.i49103, %_ZN4core8aabbox3dIfE16addInternalPointERKNS_8vector3dIfEE.exit.i53 ] ; 2 uses
   %i.dh = phi <4 x float> [ %i.cm, %bb.d ], [ %i.fl, %_ZN4core8aabbox3dIfE16addInternalPointERKNS_8vector3dIfEE.exit.i53 ] ; 2 uses
-  %indvars.iv.next157 = add i64 %indvars.iv156, 1 ; 2 uses
-  %3 = and i64 %indvars.iv.next157, 65535
-  %i.di = icmp ugt i64 %i.g, %3
+  %indvars.iv.next157 = add nuw i64 %indvars.iv156, 1 ; 2 uses
+  %i.di = icmp ugt i64 %i.g, %indvars.iv.next157
   br i1 %i.di, label %bb.d, label %._crit_edge136, !llvm.loop !124
 
 _ZN4core8aabbox3dIfE16addInternalPointERKNS_8vector3dIfEE.exit.i53: ; preds = %.lr.ph109, %_ZN4core8aabbox3dIfE16addInternalPointERKNS_8vector3dIfEE.exit.i53
@@ -659,7 +658,7 @@ bb.s:                                             ; preds = %.lr.ph129, %bb.s
   %i.dg = getelementptr inbounds nuw [2 x i8], ptr %i.by, i64 %i.df
   %i.dh = trunc nuw i64 %indvars.iv to i16
   store i16 %i.dh, ptr %i.dg, align 2, !tbaa !205
-  %indvars.iv.next = add i64 %indvars.iv, 1       ; 2 uses
+  %indvars.iv.next = add nuw i64 %indvars.iv, 1   ; 2 uses
   %i.di = and i64 %indvars.iv.next, 65535
   %i.dj = icmp samesign ugt i64 %i.i, %i.di
   br i1 %i.dj, label %bb.s, label %_ZNSt6vectorIPN5scene11SkinnedMesh6SJointESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i, !llvm.loop !239
@@ -706,7 +705,7 @@ bb.w:                                             ; preds = %bb.v, %bb.u
   %i.ea = getelementptr inbounds nuw i8, ptr %i.dr, i64 388
   %i.eb = trunc nuw i64 %indvars.iv143 to i16
   store i16 %i.eb, ptr %i.ea, align 4, !tbaa !240
-  %indvars.iv.next144 = add i64 %indvars.iv143, 1 ; 2 uses
+  %indvars.iv.next144 = add nuw i64 %indvars.iv143, 1 ; 2 uses
   %i.ec = and i64 %indvars.iv.next144, 65535
   %i.ed = icmp ugt i64 %i.i, %i.ec
   br i1 %i.ed, label %bb.u, label %.lr.ph133, !llvm.loop !268

@@ -204,7 +204,7 @@ bb.r:                                             ; preds = %._crit_edge298
   br label %.lr.ph310
 
 .lr.ph310:                                        ; preds = %.lr.ph310.preheader, %bb.t
-  %indvars.iv341 = phi i64 [ 0, %.lr.ph310.preheader ], [ %indvars.iv.next342, %bb.t ] ; 7 uses
+  %indvars.iv341 = phi i64 [ 0, %.lr.ph310.preheader ], [ %indvars.iv.next342, %bb.t ] ; 6 uses
   %indvars.iv329 = phi i64 [ 1, %.lr.ph310.preheader ], [ %indvars.iv.next330, %bb.t ] ; 5 uses
   %i.ki = getelementptr inbounds nuw [12 x i8], ptr %4, i64 %indvars.iv341 ; 2 uses
   %indvars.iv.next342 = add nuw nsw i64 %indvars.iv341, 1 ; 3 uses
@@ -272,9 +272,7 @@ bb.s:                                             ; preds = %._crit_edge305
   %i.lg = sext i32 %.0236.lcssa to i64            ; 2 uses
   %i.lh = getelementptr inbounds [12 x i8], ptr %4, i64 %i.lg
   %.sroa.0.0.copyload373 = load <3 x i32>, ptr %i.lh, align 4
-  %5 = trunc i64 %indvars.iv341 to i32
-  %6 = xor i32 %5, -1
-  %i.li = add i32 %.0236.lcssa, %6
+  %i.li = add i32 %.0236.lcssa, -1
   %i.lj = zext i32 %i.li to i64                   ; 2 uses
   %i.lk = mul nuw nsw i64 %i.lj, 12
   %i.ll = sub nsw i64 %i.lg, %i.lj

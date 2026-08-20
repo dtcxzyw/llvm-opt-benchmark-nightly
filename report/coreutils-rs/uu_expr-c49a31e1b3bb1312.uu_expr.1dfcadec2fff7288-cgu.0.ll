@@ -204,6 +204,7 @@ _RNvMsa_NtCs7GWc7oqutCf_9hashbrown3rawNtB5_13RawTableInner23prepare_rehash_in_pl
   %.20.i = tail call i64 @llvm.umin.i64(i64 %i.h, i64 16)
   %i.dq = getelementptr inbounds nuw i8, ptr %.val25.i, i64 %..i12
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.dq, ptr nonnull align 1 %.val25.i, i64 %.20.i, i1 false), !noalias !212
+  %4 = getelementptr inbounds i8, ptr %.val25.i, i64 -8
   %.val.i.i.i = load i64, ptr %2, align 8
   %i.dr = getelementptr inbounds nuw i8, ptr %2, i64 8
   %.val1.i.i.i = load i64, ptr %i.dr, align 8
@@ -226,12 +227,12 @@ bb.n:                                             ; preds = %bb.n, %.lr.ph.i.i.n
   %i.dy = bitcast <16 x i8> %.lobit.i.i.i.1 to <2 x i64>
   %i.dz = or <2 x i64> %i.dy, splat (i64 -9187201950435737472)
   store <2 x i64> %i.dz, ptr %i.dx, align 16, !noalias !212
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.i.i.unr-lcssa, label %bb.n
 
 .lr.ph.i13:                                       ; preds = %bb.t, %._crit_edge.i.i
-  %.sroa.014.04.i = phi i64 [ %i.ea, %bb.t ], [ 0, %._crit_edge.i.i ] ; 8 uses
+  %.sroa.014.04.i = phi i64 [ %i.ea, %bb.t ], [ 0, %._crit_edge.i.i ] ; 7 uses
   %i.ea = add nuw i64 %.sroa.014.04.i, 1
   %i.eb = getelementptr inbounds nuw i8, ptr %.val25.i, i64 %.sroa.014.04.i ; 3 uses
   %i.ec = load i8, ptr %i.eb, align 1, !noalias !212, !noundef !4
@@ -241,14 +242,11 @@ bb.n:                                             ; preds = %bb.n, %.lr.ph.i.i.n
 bb.o:                                             ; preds = %.lr.ph.i13
   %.neg.i = xor i64 %.sroa.014.04.i, -1
   %.neg23.i = shl i64 %.neg.i, 3
-  %4 = getelementptr inbounds i8, ptr %.val25.i, i64 %.neg23.i ; 3 uses
-  %5 = sub nsw i64 0, %.sroa.014.04.i
-  %6 = getelementptr inbounds [8 x i8], ptr %.val25.i, i64 %5
-  %i.ed = getelementptr inbounds i8, ptr %6, i64 -8
+  %i.ed = getelementptr inbounds i8, ptr %.val25.i, i64 %.neg23.i ; 3 uses
   br label %_RNvNtCs6JMX4GRUq9U_4core3ptr25swap_nonoverlapping_bytes.exit.i
 
 _RNvNtCs6JMX4GRUq9U_4core3ptr25swap_nonoverlapping_bytes.exit.i: ; preds = %.preheader.preheader.i, %bb.o
-  %i.ee = tail call fastcc noundef i64 @_RINvYNtNtNtCs2vKOLqTMYjT_3std4hash6random11RandomStateNtNtCs6JMX4GRUq9U_4core4hash11BuildHasher8hash_oneRNtCsh036I4OHgIr_6uucore8CharByteECs2zCsf9UsIrc_7uu_expr(i64 %.val.i.i.i, i64 %.val1.i.i.i, ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) dereferenceable(8) %i.ed) #24, !noalias !215 ; 3 uses
+  %i.ee = tail call fastcc noundef i64 @_RINvYNtNtNtCs2vKOLqTMYjT_3std4hash6random11RandomStateNtNtCs6JMX4GRUq9U_4core4hash11BuildHasher8hash_oneRNtCsh036I4OHgIr_6uucore8CharByteECs2zCsf9UsIrc_7uu_expr(i64 %.val.i.i.i, i64 %.val1.i.i.i, ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) dereferenceable(8) %4) #24, !noalias !215 ; 3 uses
   %.sroa.0.07.i.i = and i64 %i.ee, %i.f           ; 5 uses
   %i.ef = getelementptr inbounds nuw i8, ptr %.val25.i, i64 %.sroa.0.07.i.i
   %.sroa.0.0.copyload.i68.i.i = load <16 x i8>, ptr %i.ef, align 1, !noalias !219
@@ -321,16 +319,16 @@ bb.q:                                             ; preds = %_RNvMsa_NtCs7GWc7oq
 .preheader.preheader.i:                           ; preds = %bb.q
   tail call void @llvm.experimental.noalias.scope.decl(metadata !222)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !225)
-  %.sroa.0.0.copyload.i.i.i.i = load i64, ptr %4, align 1, !alias.scope !222, !noalias !227
+  %.sroa.0.0.copyload.i.i.i.i = load i64, ptr %i.ed, align 1, !alias.scope !222, !noalias !227
   %.sroa.02.0.copyload.i.i.i.i = load i64, ptr %i.ff, align 1, !alias.scope !225, !noalias !228
-  store i64 %.sroa.02.0.copyload.i.i.i.i, ptr %4, align 1, !alias.scope !222, !noalias !227
+  store i64 %.sroa.02.0.copyload.i.i.i.i, ptr %i.ed, align 1, !alias.scope !222, !noalias !227
   store i64 %.sroa.0.0.copyload.i.i.i.i, ptr %i.ff, align 1, !alias.scope !225, !noalias !228
   br label %_RNvNtCs6JMX4GRUq9U_4core3ptr25swap_nonoverlapping_bytes.exit.i
 
 bb.r:                                             ; preds = %_RNvMsa_NtCs7GWc7oqutCf_9hashbrown3rawNtB5_13RawTableInner17find_insert_index.exit.i
   %i.fp = lshr i64 %i.ee, 57
   %i.fq = trunc nuw nsw i64 %i.fp to i8           ; 2 uses
-  %i.fr = add i64 %.sroa.014.04.i, -16
+  %i.fr = add nuw i64 %.sroa.014.04.i, -16
   %i.fs = and i64 %i.fr, %i.f
   store i8 %i.fq, ptr %i.eb, align 1, !noalias !212
   %i.ft = getelementptr i8, ptr %.val25.i, i64 %i.fs
@@ -339,13 +337,13 @@ bb.r:                                             ; preds = %_RNvMsa_NtCs7GWc7oq
   br label %bb.t
 
 bb.s:                                             ; preds = %bb.q
-  %i.fv = add i64 %.sroa.014.04.i, -16
+  %i.fv = add nuw i64 %.sroa.014.04.i, -16
   %i.fw = and i64 %i.fv, %i.f
   store i8 -1, ptr %i.eb, align 1, !noalias !212
   %i.fx = getelementptr i8, ptr %.val25.i, i64 %i.fw
   %i.fy = getelementptr i8, ptr %i.fx, i64 16
   store i8 -1, ptr %i.fy, align 1, !noalias !212
-  %i.fz = load i64, ptr %4, align 1, !noalias !212
+  %i.fz = load i64, ptr %i.ed, align 1, !noalias !212
   store i64 %i.fz, ptr %i.ff, align 1, !noalias !212
   br label %bb.t
 
@@ -748,7 +746,7 @@ bb.l:                                             ; preds = %bb.l, %.new
   %i.cf = trunc nuw nsw i64 %i.bx to i16
   %i.cg = getelementptr inbounds nuw i8, ptr %i.ce, i64 492
   store i16 %i.cf, ptr %i.cg, align 4
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_RINvMsp_NtNtNtCs7tKScEop1B6_5alloc11collections5btree4nodeINtB6_7NodeRefNtNtB6_6marker3MutmINtNtCs6JMX4GRUq9U_4core6result6ResultNtNtCs2zCsf9UsIrc_7uu_expr11syntax_tree8NumOrStrNtB27_9ExprErrorENtB1a_8InternalE30correct_childrens_parent_linksINtNtNtB1w_3ops5range5RangejEEB27_.exit.loopexit.unr-lcssa, label %bb.l
 }
@@ -1151,7 +1149,7 @@ bb.aj:                                            ; preds = %bb.aj, %_RINvNtNtNt
   %i.ha = trunc nuw nsw i64 %i.gs to i16
   %i.hb = getelementptr inbounds nuw i8, ptr %i.gz, i64 492
   store i16 %i.ha, ptr %i.hb, align 4, !noalias !1765
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_RINvMsW_NtNtNtCs7tKScEop1B6_5alloc11collections5btree4nodeINtB6_6HandleINtB6_7NodeRefNtNtB6_6marker3MutmINtNtCs6JMX4GRUq9U_4core6result6ResultNtNtCs2zCsf9UsIrc_7uu_expr11syntax_tree8NumOrStrNtB2k_9ExprErrorENtB1n_8InternalENtB1n_2KVE5splitNtNtBc_5alloc6GlobalEB2k_.exit.i.i.i.unr-lcssa, label %bb.aj
 

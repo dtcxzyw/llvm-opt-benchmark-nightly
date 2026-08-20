@@ -201,7 +201,7 @@ bb.ad:                                            ; preds = %bb.ac
   br i1 %i.cc, label %.lr.ph, label %.thread161.i
 
 .lr.ph:                                           ; preds = %bb.ad, %.loopexit.i
-  %indvars.iv = phi i64 [ %indvars.iv.next, %.loopexit.i ], [ 0, %bb.ad ] ; 5 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %.loopexit.i ], [ 0, %bb.ad ] ; 4 uses
   %i.cd = getelementptr inbounds nuw [16 x i8], ptr %i.bx, i64 %indvars.iv ; 2 uses
   %i.ce = load ptr, ptr %i.cd, align 8
   %i.cf = getelementptr inbounds nuw i8, ptr %i.cd, i64 8
@@ -215,14 +215,11 @@ bb.ad:                                            ; preds = %bb.ac
   br i1 %.not150164.i, label %.loopexit163.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.preheader.i, %.lr.ph.i
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %.lr.ph.i ], [ %indvars.iv, %.preheader.i ]
-  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1 ; 3 uses
   %i.ci = load ptr, ptr %i.ca, align 8
-  %4 = getelementptr inbounds [8 x i8], ptr %i.ci, i64 %indvars.iv.next.i
+  %4 = getelementptr inbounds i8, ptr %i.ci, i64 -8
   %i.cj = load ptr, ptr %4, align 8
   call void @SDL_free_REAL(ptr noundef %i.cj) #6
-  %.not150.i = icmp eq i64 %indvars.iv.next.i, 0
-  br i1 %.not150.i, label %.loopexit163.i, label %.lr.ph.i, !llvm.loop !3
+  br label %.lr.ph.i
 
 .loopexit.i:                                      ; preds = %.lr.ph
   %i.ck = load ptr, ptr %i.ca, align 8
@@ -232,14 +229,14 @@ bb.ad:                                            ; preds = %bb.ac
   %i.cm = load i32, ptr %i.g, align 4             ; 2 uses
   %i.cn = sext i32 %i.cm to i64
   %i.co = icmp slt i64 %indvars.iv.next, %i.cn
-  br i1 %i.co, label %.lr.ph, label %.thread161.i, !llvm.loop !5
+  br i1 %i.co, label %.lr.ph, label %.thread161.i, !llvm.loop !3
 
 .thread161.i:                                     ; preds = %.loopexit.i, %bb.ad
   %.lcssa = phi i32 [ %i.cb, %bb.ad ], [ %i.cm, %.loopexit.i ]
   %i.cp = add nsw i32 %.lcssa, %.6.i
   br label %bb.af
 
-.loopexit163.i:                                   ; preds = %.lr.ph.i, %.preheader.i, %bb.j, %bb.h, %bb.f, %bb.d, %bb.b
+.loopexit163.i:                                   ; preds = %.preheader.i, %bb.j, %bb.h, %bb.f, %bb.d, %bb.b
   %i.cq = getelementptr inbounds nuw i8, ptr %i.c, i64 64
   %i.cr = load ptr, ptr %i.cq, align 8
   call void @SDL_free_REAL(ptr noundef %i.cr) #6
@@ -385,7 +382,7 @@ bb.i:                                             ; preds = %bb.h, %bb.f, %.lr.p
   %.2.i = phi ptr [ %i.ak, %bb.h ], [ %.05984.i, %bb.f ], [ %.05984.i, %.lr.ph.i ] ; 2 uses
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %i.ao = icmp ugt i64 %i.an, %indvars.iv.next.i
-  br i1 %i.ao, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !6
+  br i1 %i.ao, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !5
 
 ._crit_edge.i:                                    ; preds = %bb.i, %bb.e
   %.059.lcssa.i = phi ptr [ %i.w, %bb.e ], [ %.2.i, %bb.i ] ; 2 uses
@@ -399,7 +396,7 @@ bb.j:                                             ; preds = %._crit_edge.i
 
 bb.k:                                             ; preds = %bb.j, %._crit_edge.i
   %.059.lcssa.sink.i = phi ptr [ null, %bb.j ], [ %.059.lcssa.i, %._crit_edge.i ]
-  call void %i.c(ptr noundef %i.e, ptr noundef %.059.lcssa.sink.i, i32 noundef -1) #6, !inline_history !7
+  call void %i.c(ptr noundef %i.e, ptr noundef %.059.lcssa.sink.i, i32 noundef -1) #6, !inline_history !6
   call void @SDL_free_REAL(ptr noundef %.059.lcssa.i) #6
   call void @SDL_free_REAL(ptr noundef nonnull %i.v) #6
   call void @SDL_DestroyEnvironment_REAL(ptr noundef nonnull %i.h) #6
@@ -414,7 +411,7 @@ bb.k:                                             ; preds = %bb.j, %._crit_edge.
   call void @SDL_free_REAL(ptr noundef %.063.ph.i) #6
   call void @SDL_DestroyEnvironment_REAL(ptr noundef %i.h) #6
   call void @SDL_DestroyProcess_REAL(ptr noundef %.057.ph.i) #6
-  call void %i.c(ptr noundef %i.e, ptr noundef null, i32 noundef -1) #6, !inline_history !7
+  call void %i.c(ptr noundef %i.e, ptr noundef null, i32 noundef -1) #6, !inline_history !6
   br label %run_zenity.exit
 
 run_zenity.exit:                                  ; preds = %bb.k, %.critedge.i
@@ -448,7 +445,7 @@ bb.a:
   %i.i = load i32, ptr %i.c, align 4
   %i.j = sext i32 %i.i to i64
   %i.k = icmp slt i64 %indvars.iv.next, %i.j
-  br i1 %i.k, label %.lr.ph, label %.loopexit, !llvm.loop !8
+  br i1 %i.k, label %.lr.ph, label %.loopexit, !llvm.loop !7
 
 .loopexit:                                        ; preds = %.lr.ph, %.preheader, %bb.a
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 64
@@ -567,7 +564,7 @@ bb.d:                                             ; preds = %bb.b
 
 bb.e:                                             ; preds = %bb.b, %bb.d
   %i.c = getelementptr inbounds nuw i8, ptr %.0, i64 1
-  br label %bb.b, !llvm.loop !9
+  br label %bb.b, !llvm.loop !8
 }
 
 declare void @SDL_free_REAL(ptr noundef) local_unnamed_addr #2
@@ -607,8 +604,7 @@ attributes #7 = { nounwind allocsize(1) }
 !3 = distinct !{!3, !4}
 !4 = !{!"llvm.loop.mustprogress"}
 !5 = distinct !{!5, !4}
-!6 = distinct !{!6, !4}
-!7 = distinct !{null}
+!6 = distinct !{null}
+!7 = distinct !{!7, !4}
 !8 = distinct !{!8, !4}
-!9 = distinct !{!9, !4}
 end_hunk_0

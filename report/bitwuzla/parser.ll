@@ -204,7 +204,7 @@ bb.nn:                                            ; preds = %bb.nm
 
 bb.no:                                            ; preds = %.peel.next, %bb.qd
   %.03772652 = phi i64 [ %i.buv, %.peel.next ], [ %i.cib, %bb.qd ] ; 8 uses
-  %.03782651 = phi i64 [ 1, %.peel.next ], [ %i.cia, %bb.qd ] ; 13 uses
+  %.03782651 = phi i64 [ 1, %.peel.next ], [ %i.cia, %bb.qd ] ; 12 uses
   %i.buw = load ptr, ptr %i.e, align 8, !tbaa !173
   %i.bux = getelementptr inbounds nuw [152 x i8], ptr %i.buw, i64 %.03772652 ; 3 uses
   %i.buy = getelementptr inbounds nuw i8, ptr %i.bux, i64 40
@@ -607,10 +607,9 @@ bb.pf:                                            ; preds = %bb.pe
   %i.cdx = getelementptr inbounds nuw [16 x i8], ptr %i.cdw, i64 %.03782651
   call void @_ZNK8bitwuzla4Term4sortEv(ptr dead_on_unwind nonnull writable sret(%"class.bitwuzla::Sort") align 8 %119, ptr noundef nonnull align 8 dereferenceable(16) %i.cdx)
   call void @llvm.lifetime.start.p0(ptr nonnull %120) #30
-  %274 = add i64 %.03782651, -1                   ; 2 uses
   %i.cdy = load ptr, ptr %2, align 8, !tbaa !309
-  %275 = getelementptr inbounds nuw [16 x i8], ptr %i.cdy, i64 %274
-  invoke void @_ZNK8bitwuzla4Term4sortEv(ptr dead_on_unwind nonnull writable sret(%"class.bitwuzla::Sort") align 8 %120, ptr noundef nonnull align 8 dereferenceable(16) %275)
+  %274 = getelementptr inbounds nuw i8, ptr %i.cdy, i64 -16
+  invoke void @_ZNK8bitwuzla4Term4sortEv(ptr dead_on_unwind nonnull writable sret(%"class.bitwuzla::Sort") align 8 %120, ptr noundef nonnull align 8 dereferenceable(16) %274)
           to label %bb.pg unwind label %bb.pr
 
 bb.pg:                                            ; preds = %bb.pf
@@ -632,7 +631,7 @@ bb.ph:                                            ; preds = %bb.pg
   call void @llvm.lifetime.start.p0(ptr nonnull %125) #30
   call void @llvm.lifetime.start.p0(ptr nonnull %126) #30
   call void @llvm.lifetime.start.p0(ptr nonnull %127) #30
-  call void @_ZNSt7__cxx119to_stringEm(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %127, i64 noundef %274)
+  call void @_ZNSt7__cxx119to_stringEm(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %127, i64 noundef -1)
   invoke void @_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_OS8_(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %126, ptr noundef nonnull @.str.161, ptr noundef nonnull align 8 dereferenceable(32) %127)
           to label %bb.pi unwind label %bb.pu
 
@@ -1035,7 +1034,8 @@ bb.sx:                                            ; preds = %bb.sw
   call void @_ZNK8bitwuzla4Term4sortEv(ptr dead_on_unwind nonnull writable sret(%"class.bitwuzla::Sort") align 8 %161, ptr noundef nonnull align 8 dereferenceable(16) %i.cqq)
   call void @llvm.lifetime.start.p0(ptr nonnull %162) #30
   %i.cqr = load ptr, ptr %2, align 8, !tbaa !309
-  invoke void @_ZNK8bitwuzla4Term4sortEv(ptr dead_on_unwind nonnull writable sret(%"class.bitwuzla::Sort") align 8 %162, ptr noundef nonnull align 8 dereferenceable(16) %i.cqr)
+  %275 = getelementptr inbounds nuw i8, ptr %i.cqr, i64 -16
+  invoke void @_ZNK8bitwuzla4Term4sortEv(ptr dead_on_unwind nonnull writable sret(%"class.bitwuzla::Sort") align 8 %162, ptr noundef nonnull align 8 dereferenceable(16) %275)
           to label %bb.sy unwind label %.loopexit.split-lp4153
 
 bb.sy:                                            ; preds = %bb.sx
@@ -1056,7 +1056,7 @@ bb.ta:                                            ; preds = %bb.sz, %bb.sw
 
 .lr.ph2649:                                       ; preds = %bb.ta, %bb.vd
   %.03712647 = phi i64 [ %i.das, %bb.vd ], [ %i.cqt, %bb.ta ] ; 4 uses
-  %.03722646 = phi i64 [ %i.dar, %bb.vd ], [ 2, %bb.ta ] ; 7 uses
+  %.03722646 = phi i64 [ %i.dar, %bb.vd ], [ 2, %bb.ta ] ; 6 uses
   %i.cqu = load ptr, ptr %i.e, align 8, !tbaa !173
   %i.cqv = getelementptr inbounds nuw [152 x i8], ptr %i.cqu, i64 %.03712647 ; 3 uses
   %i.cqw = getelementptr inbounds nuw i8, ptr %i.cqv, i64 40
@@ -1459,10 +1459,9 @@ bb.ug:                                            ; preds = %bb.tt
   %i.cwo = getelementptr inbounds nuw [16 x i8], ptr %i.cwn, i64 %.03722646
   call void @_ZNK8bitwuzla4Term4sortEv(ptr dead_on_unwind nonnull writable sret(%"class.bitwuzla::Sort") align 8 %161, ptr noundef nonnull align 8 dereferenceable(16) %i.cwo)
   call void @llvm.lifetime.start.p0(ptr nonnull %162) #30
-  %276 = add i64 %.03722646, -1                   ; 2 uses
   %i.cwp = load ptr, ptr %2, align 8, !tbaa !309
-  %277 = getelementptr inbounds nuw [16 x i8], ptr %i.cwp, i64 %276
-  invoke void @_ZNK8bitwuzla4Term4sortEv(ptr dead_on_unwind nonnull writable sret(%"class.bitwuzla::Sort") align 8 %162, ptr noundef nonnull align 8 dereferenceable(16) %277)
+  %276 = getelementptr inbounds nuw i8, ptr %i.cwp, i64 -16
+  invoke void @_ZNK8bitwuzla4Term4sortEv(ptr dead_on_unwind nonnull writable sret(%"class.bitwuzla::Sort") align 8 %162, ptr noundef nonnull align 8 dereferenceable(16) %276)
           to label %bb.uh unwind label %.loopexit4152
 
 bb.uh:                                            ; preds = %bb.ug
@@ -1479,7 +1478,6 @@ bb.ui:                                            ; preds = %bb.uh
 .loopexit2802:                                    ; preds = %bb.ui, %bb.sz
   %.03712647.lcssa4101 = phi i64 [ %i.cpe, %bb.sz ], [ %.03712647, %bb.ui ]
   %.03722646.lcssa4094 = phi i64 [ 1, %bb.sz ], [ %.03722646, %bb.ui ]
-  %.lcssa4088 = phi i64 [ 0, %bb.sz ], [ %276, %bb.ui ]
   call void @llvm.lifetime.start.p0(ptr nonnull %163) #30
   call void @llvm.lifetime.start.p0(ptr nonnull %164) #30
   call void @llvm.lifetime.start.p0(ptr nonnull %165) #30
@@ -1487,7 +1485,7 @@ bb.ui:                                            ; preds = %bb.uh
   call void @llvm.lifetime.start.p0(ptr nonnull %167) #30
   call void @llvm.lifetime.start.p0(ptr nonnull %168) #30
   call void @llvm.lifetime.start.p0(ptr nonnull %169) #30
-  call void @_ZNSt7__cxx119to_stringEm(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %169, i64 noundef %.lcssa4088)
+  call void @_ZNSt7__cxx119to_stringEm(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %169, i64 noundef -1)
   invoke void @_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_OS8_(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %168, ptr noundef nonnull @.str.161, ptr noundef nonnull align 8 dereferenceable(32) %169)
           to label %bb.uj unwind label %bb.uu
 
@@ -1890,74 +1888,66 @@ _ZNSt8__detail14__to_chars_lenImEEjT_i.exit.i2372: ; preds = %_ZNKSt7__cxx1112ba
 bb.adt:                                           ; preds = %_ZNSt8__detail14__to_chars_lenImEEjT_i.exit.i2372
   %i.elg = load ptr, ptr %259, align 8, !tbaa !149, !alias.scope !905 ; 20 uses
   %i.elh = getelementptr inbounds nuw i8, ptr %259, i64 8 ; 2 uses
-  %i.eli = load i64, ptr %i.elh, align 8, !tbaa !28, !alias.scope !905 ; 18 uses
+  %i.eli = load i64, ptr %i.elh, align 8, !tbaa !28, !alias.scope !905 ; 10 uses
   %i.elj = add i64 %i.eli, 4294967295
-  %i.elk = and i64 %i.elj, 4294967295
+  %i.elk = and i64 %i.elj, 4294967295             ; 9 uses
   %i.ell = getelementptr inbounds nuw i8, ptr %i.elg, i64 %i.elk
   store i8 53, ptr %i.ell, align 1, !tbaa !30
   %i.elm = add i64 %i.eli, 4294967294
   %i.eln = and i64 %i.elm, 4294967295
   %i.elo = getelementptr inbounds nuw i8, ptr %i.elg, i64 %i.eln
   store i8 49, ptr %i.elo, align 1, !tbaa !30
-  %278 = add i64 %i.eli, 4294967293
-  %279 = and i64 %278, 4294967295
-  %i.elp = getelementptr inbounds nuw i8, ptr %i.elg, i64 %279
+  %277 = getelementptr i8, ptr %i.elg, i64 %i.elk
+  %i.elp = getelementptr i8, ptr %277, i64 -2
   store i8 54, ptr %i.elp, align 1, !tbaa !30
   %i.elq = add i64 %i.eli, 4294967292
   %i.elr = and i64 %i.elq, 4294967295
   %i.els = getelementptr inbounds nuw i8, ptr %i.elg, i64 %i.elr
   store i8 49, ptr %i.els, align 1, !tbaa !30
-  %280 = add i64 %i.eli, 4294967291
-  %281 = and i64 %280, 4294967295
-  %i.elt = getelementptr inbounds nuw i8, ptr %i.elg, i64 %281
+  %278 = getelementptr i8, ptr %i.elg, i64 %i.elk
+  %i.elt = getelementptr i8, ptr %278, i64 -4
   store i8 53, ptr %i.elt, align 1, !tbaa !30
   %i.elu = add i64 %i.eli, 4294967290
   %i.elv = and i64 %i.elu, 4294967295
   %i.elw = getelementptr inbounds nuw i8, ptr %i.elg, i64 %i.elv
   store i8 53, ptr %i.elw, align 1, !tbaa !30
-  %282 = add i64 %i.eli, 4294967289
-  %283 = and i64 %282, 4294967295
-  %i.elx = getelementptr inbounds nuw i8, ptr %i.elg, i64 %283
+  %279 = getelementptr i8, ptr %i.elg, i64 %i.elk
+  %i.elx = getelementptr i8, ptr %279, i64 -6
   store i8 57, ptr %i.elx, align 1, !tbaa !30
   %i.ely = add i64 %i.eli, 4294967288
   %i.elz = and i64 %i.ely, 4294967295
   %i.ema = getelementptr inbounds nuw i8, ptr %i.elg, i64 %i.elz
   store i8 48, ptr %i.ema, align 1, !tbaa !30
-  %284 = add i64 %i.eli, 4294967287
-  %285 = and i64 %284, 4294967295
-  %i.emb = getelementptr inbounds nuw i8, ptr %i.elg, i64 %285
+  %280 = getelementptr i8, ptr %i.elg, i64 %i.elk
+  %i.emb = getelementptr i8, ptr %280, i64 -8
   store i8 55, ptr %i.emb, align 1, !tbaa !30
   %i.emc = add i64 %i.eli, 4294967286
   %i.emd = and i64 %i.emc, 4294967295
   %i.eme = getelementptr inbounds nuw i8, ptr %i.elg, i64 %i.emd
   store i8 51, ptr %i.eme, align 1, !tbaa !30
-  %286 = add i64 %i.eli, 4294967285
-  %287 = and i64 %286, 4294967295
-  %i.emf = getelementptr inbounds nuw i8, ptr %i.elg, i64 %287
+  %281 = getelementptr i8, ptr %i.elg, i64 %i.elk
+  %i.emf = getelementptr i8, ptr %281, i64 -10
   store i8 55, ptr %i.emf, align 1, !tbaa !30
   %i.emg = add i64 %i.eli, 4294967284
   %i.emh = and i64 %i.emg, 4294967295
   %i.emi = getelementptr inbounds nuw i8, ptr %i.elg, i64 %i.emh
   store i8 48, ptr %i.emi, align 1, !tbaa !30
-  %288 = add i64 %i.eli, 4294967283
-  %289 = and i64 %288, 4294967295
-  %i.emj = getelementptr inbounds nuw i8, ptr %i.elg, i64 %289
+  %282 = getelementptr i8, ptr %i.elg, i64 %i.elk
+  %i.emj = getelementptr i8, ptr %282, i64 -12
   store i8 52, ptr %i.emj, align 1, !tbaa !30
   %i.emk = add i64 %i.eli, 4294967282
   %i.eml = and i64 %i.emk, 4294967295
   %i.emm = getelementptr inbounds nuw i8, ptr %i.elg, i64 %i.eml
   store i8 52, ptr %i.emm, align 1, !tbaa !30
-  %290 = add i64 %i.eli, 4294967281
-  %291 = and i64 %290, 4294967295
-  %i.emn = getelementptr inbounds nuw i8, ptr %i.elg, i64 %291
+  %283 = getelementptr i8, ptr %i.elg, i64 %i.elk
+  %i.emn = getelementptr i8, ptr %283, i64 -14
   store i8 55, ptr %i.emn, align 1, !tbaa !30
   %i.emo = add i64 %i.eli, 4294967280
   %i.emp = and i64 %i.emo, 4294967295
   %i.emq = getelementptr inbounds nuw i8, ptr %i.elg, i64 %i.emp
   store i8 54, ptr %i.emq, align 1, !tbaa !30
-  %292 = add i64 %i.eli, 4294967279
-  %293 = and i64 %292, 4294967295
-  %i.emr = getelementptr inbounds nuw i8, ptr %i.elg, i64 %293
+  %284 = getelementptr i8, ptr %i.elg, i64 %i.elk
+  %i.emr = getelementptr i8, ptr %284, i64 -16
   store i8 52, ptr %i.emr, align 1, !tbaa !30
   %i.ems = add i64 %i.eli, 4294967278
   %i.emt = and i64 %i.ems, 4294967295

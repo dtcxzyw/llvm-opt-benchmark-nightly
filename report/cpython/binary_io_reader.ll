@@ -203,7 +203,7 @@ bb.ab:                                            ; preds = %bb.z
   br label %decode_varint_u32.exit
 
 decode_varint_u32.exit:                           ; preds = %bb.y, %bb.aa, %bb.ab
-  %.0.i = phi i32 [ %i.cd, %bb.ab ], [ 0, %bb.aa ], [ 0, %bb.y ] ; 5 uses
+  %.0.i = phi i32 [ %i.cd, %bb.ab ], [ 0, %bb.aa ], [ 0, %bb.y ] ; 4 uses
   %i.ce = load i64, ptr %i.a, align 8, !tbaa !43  ; 3 uses
   %i.cf = icmp eq i64 %i.ce, %i.bu
   br i1 %i.cf, label %bb.ac, label %bb.ad
@@ -217,7 +217,7 @@ bb.ad:                                            ; preds = %decode_varint_u32.e
   %i.ch = load i64, ptr %i.r, align 8, !tbaa !41  ; 2 uses
   %i.ci = sub i64 %i.ch, %i.ce
   %i.cj = lshr i64 %i.ci, 1                       ; 2 uses
-  %i.ck = zext i32 %.0.i to i64                   ; 7 uses
+  %i.ck = zext i32 %.0.i to i64                   ; 8 uses
   %i.cl = icmp samesign ult i64 %i.cj, %i.ck
   br i1 %i.cl, label %bb.ae, label %bb.af
 
@@ -385,10 +385,8 @@ Py_DECREF.exit245:                                ; preds = %emit_batch.exit, %b
   br i1 %.0.i263, label %bb.au, label %.critedge
 
 bb.au:                                            ; preds = %Py_DECREF.exit245
-  %3 = trunc nuw i64 %indvars.iv to i32
-  %4 = sub i32 %.0.i, %3
-  %5 = zext i32 %4 to i64
-  %i.eo = tail call ptr @PyList_New(i64 noundef %5) #11 ; 2 uses
+  %3 = sub nuw nsw i64 %i.ck, %indvars.iv
+  %i.eo = tail call ptr @PyList_New(i64 noundef %3) #11 ; 2 uses
   %.not230 = icmp eq ptr %i.eo, null
   br i1 %.not230, label %.critedge, label %._crit_edge497
 

@@ -203,10 +203,12 @@ bb.a:
   %i.f = load double, ptr %i.e, align 8, !tbaa !25 ; 20 uses
   %i.g = getelementptr inbounds nuw i8, ptr %3, i64 32
   %i.h = load double, ptr %i.g, align 8, !tbaa !16 ; 16 uses
-  %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8
+  %4 = getelementptr inbounds i8, ptr %i.a, i64 -8
+  %5 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
+  %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 40
   %i.j = getelementptr inbounds nuw i8, ptr %i.a, i64 40
-  %i.k = getelementptr inbounds nuw i8, ptr %i.a, i64 40
-  %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 48
+  %i.k = getelementptr inbounds nuw i8, ptr %i.a, i64 48
+  %i.l = getelementptr inbounds i8, ptr %i.a, i64 -8
   %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 80
   %i.n = getelementptr inbounds nuw i8, ptr %i.b, i64 40
   %i.o = getelementptr inbounds nuw i8, ptr %i.a, i64 80
@@ -251,7 +253,7 @@ bb.a:
   br label %.preheader
 
 .preheader:                                       ; preds = %bb.a, %.split.us
-  %indvars.iv = phi i64 [ 1, %bb.a ], [ %indvars.iv.next, %.split.us ] ; 47 uses
+  %indvars.iv = phi i64 [ 1, %bb.a ], [ %indvars.iv.next, %.split.us ] ; 45 uses
   %i.bb = add nsw i64 %indvars.iv, -1             ; 2 uses
   %i.bc = icmp eq i64 %indvars.iv, 1
   %i.bd = icmp eq i64 %indvars.iv, 5              ; 10 uses
@@ -267,8 +269,8 @@ bb.a:
 
 .split.us.loopexit:                               ; preds = %.preheader
   %i.bj = load double, ptr %i.a, align 8, !tbaa !14
-  %i.bk = load double, ptr %i.i, align 8, !tbaa !14
-  %i.bl = load double, ptr %i.j, align 8, !tbaa !14 ; 2 uses
+  %i.bk = load double, ptr %5, align 8, !tbaa !14
+  %i.bl = load double, ptr %i.i, align 8, !tbaa !14 ; 2 uses
   %i.bm = fmul double %i.f, %i.bl
   %i.bn = insertelement <2 x double> poison, double %i.bj, i64 0
   %i.bo = shufflevector <2 x double> %i.bn, <2 x double> poison, <2 x i32> zeroinitializer
@@ -283,11 +285,9 @@ bb.a:
   %i.bx = fadd double %i.bu, %i.bm
   %i.by = fadd double %i.bw, %i.bx
   store double %i.by, ptr %i.b, align 8, !tbaa !14
-  %i.bz = load double, ptr %i.k, align 8, !tbaa !14
-  %i.ca = load double, ptr %i.l, align 8, !tbaa !14
-  %4 = getelementptr [8 x i8], ptr %i.a, i64 %indvars.iv
-  %5 = getelementptr i8, ptr %4, i64 -8
-  %i.cb = load double, ptr %5, align 8, !tbaa !14 ; 2 uses
+  %i.bz = load double, ptr %i.j, align 8, !tbaa !14
+  %i.ca = load double, ptr %i.k, align 8, !tbaa !14
+  %i.cb = load double, ptr %i.l, align 8, !tbaa !14 ; 2 uses
   %i.cc = load double, ptr %i.m, align 8, !tbaa !14 ; 2 uses
   %i.cd = fsub double %i.cc, %i.cb
   %i.ce = fmul double %i.f, %i.cd
@@ -508,9 +508,7 @@ bb.a:
 
 .preheader.split.2:                               ; preds = %.thread.1, %.preheader.split.1
   %i.jr = phi double [ %i.jq, %.thread.1 ], [ 0.000000e+00, %.preheader.split.1 ]
-  %6 = getelementptr [8 x i8], ptr %i.a, i64 %indvars.iv
-  %7 = getelementptr i8, ptr %6, i64 -8
-  %i.js = load double, ptr %7, align 8, !tbaa !14 ; 2 uses
+  %i.js = load double, ptr %4, align 8, !tbaa !14 ; 2 uses
   %i.jt = add nuw nsw i64 %indvars.iv, 9          ; 3 uses
   %i.ju = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %i.jt
   %i.jv = load double, ptr %i.ju, align 8, !tbaa !14 ; 2 uses

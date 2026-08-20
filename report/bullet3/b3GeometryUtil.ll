@@ -150,7 +150,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph
 define dso_local void @_ZN14b3GeometryUtil29getPlaneEquationsFromVerticesER20b3AlignedObjectArrayI9b3Vector3ES3_(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(25) %0, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(25) %1) local_unnamed_addr #2 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 3 uses
-  %i.b = load i32, ptr %i.a, align 4, !tbaa !9    ; 5 uses
+  %i.b = load i32, ptr %i.a, align 4, !tbaa !9    ; 4 uses
   %i.c = icmp sgt i32 %i.b, 0
   br i1 %i.c, label %.lr.ph97, label %._crit_edge
 
@@ -161,7 +161,7 @@ bb.a:
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 4 uses
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 4 uses
   %i.i = zext nneg i32 %i.b to i64
-  %wide.trip.count113 = zext nneg i32 %i.b to i64 ; 2 uses
+  %wide.trip.count113 = zext nneg i32 %i.b to i64 ; 3 uses
   br label %bb.b
 
 .loopexit90:                                      ; preds = %.loopexit89, %bb.b
@@ -373,7 +373,7 @@ bb.l:                                             ; preds = %bb.l, %.lr.ph.i.i.i
   %i.dg = getelementptr inbounds nuw [16 x i8], ptr %i.df, i64 %indvars.iv.next.i.i.i
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.de, ptr noundef nonnull align 16 dereferenceable(16) %i.dg, i64 16, i1 false), !tbaa.struct !26
   %indvars.iv.next.i.i.i.1138 = add nuw nsw i64 %indvars.iv.i.i.i, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZNK20b3AlignedObjectArrayI9b3Vector3E4copyEiiPS0_.exit.i.i.loopexit.unr-lcssa, label %bb.l, !llvm.loop !27
 
@@ -571,7 +571,7 @@ bb.v:                                             ; preds = %bb.v, %.lr.ph.i.i.i
   %i.gf = getelementptr inbounds nuw [16 x i8], ptr %i.ge, i64 %indvars.iv.next.i.i.i.1
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.gd, ptr noundef nonnull align 16 dereferenceable(16) %i.gf, i64 16, i1 false), !tbaa.struct !26
   %indvars.iv.next.i.i.i.1.1 = add nuw nsw i64 %indvars.iv.i.i.i.1, 2 ; 2 uses
-  %niter145.next.1 = add i64 %niter145, 2         ; 2 uses
+  %niter145.next.1 = add nuw i64 %niter145, 2     ; 2 uses
   %niter145.ncmp.1 = icmp eq i64 %niter145.next.1, %unroll_iter144
   br i1 %niter145.ncmp.1, label %_ZNK20b3AlignedObjectArrayI9b3Vector3E4copyEiiPS0_.exit.i.i.1.loopexit.unr-lcssa, label %bb.v, !llvm.loop !27
 
@@ -633,8 +633,7 @@ _ZN20b3AlignedObjectArrayI9b3Vector3E9push_backERKS0_.exit.1: ; preds = %_ZN20b3
 
 _Z8notExistRK9b3Vector3RK20b3AlignedObjectArrayIS_E.exit.1: ; preds = %bb.p, %bb.r, %_ZN20b3AlignedObjectArrayI9b3Vector3E9push_backERKS0_.exit.1, %_Z8notExistRK9b3Vector3RK20b3AlignedObjectArrayIS_E.exit
   %indvars.iv.next102 = add nuw nsw i64 %indvars.iv101, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next102 to i32
-  %exitcond.not = icmp eq i32 %i.b, %lftr.wideiv
+  %exitcond.not = icmp eq i64 %indvars.iv.next102, %wide.trip.count113
   br i1 %exitcond.not, label %.loopexit89, label %bb.d, !llvm.loop !31
 }
 
@@ -645,7 +644,7 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 define dso_local void @_ZN14b3GeometryUtil29getVerticesFromPlaneEquationsERK20b3AlignedObjectArrayI9b3Vector3ERS2_(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(25) %0, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(25) %1) local_unnamed_addr #2 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 2 uses
-  %i.b = load i32, ptr %i.a, align 4, !tbaa !9    ; 5 uses
+  %i.b = load i32, ptr %i.a, align 4, !tbaa !9    ; 4 uses
   %i.c = icmp sgt i32 %i.b, 0
   br i1 %i.c, label %.lr.ph128, label %._crit_edge
 
@@ -656,7 +655,7 @@ bb.a:
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 6 uses
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
   %i.i = zext nneg i32 %i.b to i64
-  %wide.trip.count143 = zext nneg i32 %i.b to i64 ; 2 uses
+  %wide.trip.count143 = zext nneg i32 %i.b to i64 ; 3 uses
   br label %bb.b
 
 .loopexit123:                                     ; preds = %.loopexit122, %bb.b
@@ -899,7 +898,7 @@ bb.m:                                             ; preds = %bb.m, %.lr.ph.i.i.i
   %i.eu = getelementptr inbounds nuw [16 x i8], ptr %i.et, i64 %indvars.iv.next.i.i.i
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.es, ptr noundef nonnull align 16 dereferenceable(16) %i.eu, i64 16, i1 false), !tbaa.struct !26
   %indvars.iv.next.i.i.i.1 = add nuw nsw i64 %indvars.iv.i.i.i, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZNK20b3AlignedObjectArrayI9b3Vector3E4copyEiiPS0_.exit.i.i.loopexit.unr-lcssa, label %bb.m, !llvm.loop !27
 
@@ -959,8 +958,7 @@ _ZN20b3AlignedObjectArrayI9b3Vector3E9push_backERKS0_.exit: ; preds = %.loopexit
 
 _ZN14b3GeometryUtil19isPointInsidePlanesERK20b3AlignedObjectArrayI9b3Vector3ERKS1_f.exit: ; preds = %bb.j, %bb.g, %_ZN20b3AlignedObjectArrayI9b3Vector3E9push_backERKS0_.exit, %bb.f, %bb.e, %bb.d
   %indvars.iv.next132 = add nuw nsw i64 %indvars.iv131, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next132 to i32
-  %exitcond.not = icmp eq i32 %i.b, %lftr.wideiv
+  %exitcond.not = icmp eq i64 %indvars.iv.next132, %wide.trip.count143
   br i1 %exitcond.not, label %.loopexit122, label %bb.d, !llvm.loop !34
 }
 

@@ -203,7 +203,7 @@ bb.av:                                            ; preds = %.loopexit165
   %i.eu = xor i64 %i.et, 126
   call fastcc void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPN7Imf_3_412_GLOBAL__N_17tileposESt6vectorIS4_SaIS4_EEEElNS0_5__ops15_Iter_less_iterEEvT_SC_T0_T1_(ptr %.sroa.0.1, ptr %.sroa.12.0, i64 noundef %i.eu)
   %i.ev = icmp sgt i64 %i.eq, 384
-  %scevgep.i.i.i = getelementptr i8, ptr %.sroa.0.1, i64 24 ; 3 uses
+  %scevgep.i.i.i = getelementptr i8, ptr %.sroa.0.1, i64 24 ; 4 uses
   br i1 %i.ev, label %.lr.ph.i.i.i.i, label %bb.bb
 
 .lr.ph.i.i.i.i:                                   ; preds = %bb.av, %bb.ba
@@ -302,7 +302,7 @@ bb.bb:                                            ; preds = %bb.av
 
 .lr.ph.i26.i.i.i:                                 ; preds = %bb.bb, %bb.bh
   %.sroa.0.019.i27.i.i.i = phi ptr [ %.sroa.0.0.i36.i.i.i, %bb.bh ], [ %scevgep.i.i.i, %bb.bb ] ; 7 uses
-  %.pn18.i28.i.i.i = phi ptr [ %.sroa.0.019.i27.i.i.i, %bb.bh ], [ %.sroa.0.1, %bb.bb ] ; 5 uses
+  %.pn18.i28.i.i.i = phi ptr [ %.sroa.0.019.i27.i.i.i, %bb.bh ], [ %.sroa.0.1, %bb.bb ] ; 4 uses
   %.val2.i.i29.i.i.i = load i64, ptr %.sroa.0.019.i27.i.i.i, align 8, !tbaa !201 ; 4 uses
   %.val3.i.i30.i.i.i = load i64, ptr %.sroa.0.1, align 8, !tbaa !201
   %i.ff = icmp ult i64 %.val2.i.i29.i.i.i, %.val3.i.i30.i.i.i
@@ -312,16 +312,12 @@ bb.bc:                                            ; preds = %.lr.ph.i26.i.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %5)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.019.i27.i.i.i, i64 24, i1 false), !tbaa.struct !196
   %i.fg = ptrtoint ptr %.sroa.0.019.i27.i.i.i to i64
-  %i.fh = sub i64 %i.fg, %i.ep                    ; 4 uses
+  %i.fh = sub i64 %i.fg, %i.ep                    ; 3 uses
   %i.fi = icmp sgt i64 %i.fh, 24
   br i1 %i.fi, label %bb.bd, label %bb.be, !prof !212
 
 bb.bd:                                            ; preds = %bb.bc
-  %11 = getelementptr inbounds nuw i8, ptr %.pn18.i28.i.i.i, i64 48
-  %.neg23.i44.i.i.i = udiv exact i64 %i.fh, 24
-  %.neg23.neg.i45.i.i.i = sub nsw i64 0, %.neg23.i44.i.i.i
-  %12 = getelementptr inbounds [24 x i8], ptr %11, i64 %.neg23.neg.i45.i.i.i
-  call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %12, ptr noundef nonnull align 8 dereferenceable(1) %.sroa.0.1, i64 %i.fh, i1 false)
+  call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep.i.i.i, ptr noundef nonnull align 8 dereferenceable(1) %.sroa.0.1, i64 %i.fh, i1 false)
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN7Imf_3_412_GLOBAL__N_17tileposESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit.i43.i.i.i
 
 bb.be:                                            ; preds = %bb.bc

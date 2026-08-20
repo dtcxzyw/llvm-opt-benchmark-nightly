@@ -203,10 +203,8 @@ bb.s:                                             ; preds = %bb.r, %bb.p
 
 bb.t:                                             ; preds = %bb.s
   %i.fc = load ptr, ptr %i.bp, align 8, !tbaa !40
-  %2 = add nuw nsw i64 %indvars.iv.i.i, 4294967295
-  %3 = and i64 %2, 4294967295
-  %i.fd = getelementptr inbounds nuw [64 x i8], ptr %i.fc, i64 %3
-  %i.fe = getelementptr inbounds nuw i8, ptr %i.fd, i64 44
+  %i.fd = getelementptr inbounds nuw [64 x i8], ptr %i.fc, i64 %indvars.iv.i.i
+  %i.fe = getelementptr inbounds nuw i8, ptr %i.fd, i64 274877906924
   %i.ff = load i32, ptr %i.fe, align 4, !tbaa !87 ; 2 uses
   store i32 %i.ff, ptr %i.fa, align 4, !tbaa !87
   br label %bb.u
@@ -283,7 +281,7 @@ bb.v:                                             ; preds = %bb.v, %.lr.ph147.i.
   %i.gw = zext i32 %i.gv to i64
   %i.gx = add i64 %i.gr, %i.gw                    ; 2 uses
   %indvars.iv.next154.i.i.3 = add nuw nsw i64 %indvars.iv153.i.i, 4 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %._crit_edge148.i.i.loopexit.unr-lcssa, label %bb.v, !llvm.loop !92
 

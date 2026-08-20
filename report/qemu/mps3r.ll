@@ -203,16 +203,12 @@ bb.m:                                             ; preds = %.lr.ph227, %bb.m
   tail call void @sysbus_mmio_map(ptr noundef %i.hy, i32 noundef 0, i64 noundef 3759177728) #5
   tail call void @g_free(ptr noundef %i.hu) #5
   %i.hz = tail call noalias ptr (ptr, ...) @g_strdup_printf(ptr noundef nonnull @.str.23, i32 noundef 4) #5 ; 2 uses
-  %i.ia = getelementptr inbounds nuw i8, ptr %i.a, i64 39568 ; 4 uses
+  %i.ia = getelementptr inbounds nuw i8, ptr %i.a, i64 39568 ; 3 uses
   tail call void @object_initialize_child_internal(ptr noundef nonnull %i.a, ptr noundef %i.hz, ptr noundef nonnull %i.ia, i64 noundef 1136, ptr noundef nonnull @.str.24) #5
   %i.ib = tail call ptr @object_dynamic_cast_assert(ptr noundef nonnull %i.ia, ptr noundef nonnull @.str.67, ptr noundef nonnull @.str.68, i32 noundef 20, ptr noundef nonnull @__func__.SYS_BUS_DEVICE) #5
   %i.ic = tail call zeroext i1 @sysbus_realize(ptr noundef %i.ib, ptr noundef nonnull @error_fatal) #5 ; 0 uses
   %i.id = tail call ptr @object_dynamic_cast_assert(ptr noundef nonnull %i.ia, ptr noundef nonnull @.str.67, ptr noundef nonnull @.str.68, i32 noundef 20, ptr noundef nonnull @__func__.SYS_BUS_DEVICE) #5
   tail call void @sysbus_mmio_map(ptr noundef %i.id, i32 noundef 0, i64 noundef 3759181824) #5
-  %1 = tail call ptr @object_dynamic_cast_assert(ptr noundef nonnull %i.ia, ptr noundef nonnull @.str.49, ptr noundef nonnull @.str.50, i32 noundef 78, ptr noundef nonnull @__func__.DEVICE) #5
-  %2 = tail call ptr @qdev_get_child_bus(ptr noundef %1, ptr noundef nonnull @.str.25) #5
-  %3 = getelementptr inbounds nuw i8, ptr %2, i64 69
-  store i8 1, ptr %3, align 1
   tail call void @g_free(ptr noundef %i.hz) #5
   %i.ie = getelementptr inbounds nuw i8, ptr %i.a, i64 40704 ; 4 uses
   %i.if = tail call noalias ptr (ptr, ...) @g_strdup_printf(ptr noundef nonnull @.str.26, i32 noundef 0) #5 ; 2 uses

@@ -203,7 +203,7 @@ bb.d:                                             ; preds = %bb.b, %bb.c
   br i1 %i.u, label %bb.i, label %bb.j
 
 .lr.ph:                                           ; preds = %bb.d, %_buttons_get_from_pos.exit
-  %.045 = phi i32 [ %i.af, %_buttons_get_from_pos.exit ], [ 0, %bb.d ] ; 5 uses
+  %.045 = phi i32 [ %i.af, %_buttons_get_from_pos.exit ], [ 0, %bb.d ] ; 4 uses
   %.03144 = phi i32 [ %spec.select38, %_buttons_get_from_pos.exit ], [ 0, %bb.d ]
   %.val39 = load ptr, ptr %i.e, align 8, !tbaa !79 ; 3 uses
   switch i32 %.045, label %bb.g [
@@ -224,8 +224,7 @@ bb.f:                                             ; preds = %.lr.ph
 bb.g:                                             ; preds = %.lr.ph
   %i.z = getelementptr inbounds nuw i8, ptr %.val39, i64 72
   %i.aa = load ptr, ptr %i.z, align 8, !tbaa !95
-  %2 = add nsw i32 %.045, -1
-  %i.ab = tail call ptr @g_list_nth_data(ptr noundef %i.aa, i32 noundef %2) #15 ; 2 uses
+  %i.ab = tail call ptr @g_list_nth_data(ptr noundef %i.aa, i32 noundef -1) #15 ; 2 uses
   %.not.i = icmp eq ptr %i.ab, null
   br i1 %.not.i, label %_buttons_get_from_pos.exit, label %bb.h
 

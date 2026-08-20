@@ -203,7 +203,7 @@ bb.e:                                             ; preds = %bb.e, %.lr.ph.new
   %i.aq = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %indvars.iv.next
   store i32 %i.ap, ptr %i.aq, align 4, !tbaa !8
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.preheader63.loopexit.unr-lcssa, label %bb.e, !llvm.loop !76
 
@@ -238,7 +238,7 @@ bb.f:                                             ; preds = %bb.f, %.lr.ph70.new
   %i.bh = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %indvars.iv.next84
   store i32 %i.bg, ptr %i.bh, align 4, !tbaa !8
   %indvars.iv.next84.1 = add nuw nsw i64 %indvars.iv83, 2 ; 2 uses
-  %niter118.next.1 = add i64 %niter118, 2         ; 2 uses
+  %niter118.next.1 = add nuw i64 %niter118, 2     ; 2 uses
   %niter118.ncmp.1 = icmp eq i64 %niter118.next.1, %unroll_iter117
   br i1 %niter118.ncmp.1, label %.loopexit62.loopexit.unr-lcssa, label %bb.f, !llvm.loop !78
 
@@ -641,7 +641,7 @@ bb.o:                                             ; preds = %bb.n
   br i1 %i.dc, label %bb.z, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  %i.dd = add i32 %.0138189, %i.cn
+  %i.dd = add nuw i32 %.0138189, %i.cn
   %i.de = urem i32 %i.dd, %i.cs                   ; 5 uses
   %i.df = load ptr, ptr %i.cr, align 8, !tbaa !21
   %i.dg = sext i32 %i.de to i64                   ; 2 uses
@@ -1044,10 +1044,10 @@ bb.p:                                             ; preds = %bb.o, %bb.m, %.lr.p
 .lr.ph:                                           ; preds = %bb.p, %bb.x
   %i.ez = phi i32 [ %i.ha, %bb.x ], [ %i.ex, %bb.p ] ; 2 uses
   %.0128 = phi i32 [ %i.fc, %bb.x ], [ %.2.peel, %bb.p ]
-  %.0109125 = phi i32 [ %i.hb, %bb.x ], [ 1, %bb.p ] ; 5 uses
+  %.0109125 = phi i32 [ %i.hb, %bb.x ], [ 1, %bb.p ] ; 4 uses
   %i.fa = load <2 x i32>, ptr %i.ba, align 8, !tbaa !8
   store <2 x i32> %i.fa, ptr %i.az, align 8, !tbaa !8
-  %i.fb = add i32 %.0109125, %i.cd
+  %i.fb = add nuw i32 %.0109125, %i.cd
   %i.fc = urem i32 %i.fb, %i.ez                   ; 2 uses
   %i.fd = load ptr, ptr %i.ce, align 8, !tbaa !21
   %i.fe = sext i32 %i.fc to i64                   ; 4 uses
@@ -1103,13 +1103,12 @@ bb.r:                                             ; preds = %bb.q
   br i1 %.not116, label %bb.u, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  %6 = add i32 %.0109125, -1                      ; 2 uses
-  store i32 %6, ptr %i.bj, align 8, !tbaa !64
+  store i32 -1, ptr %i.bj, align 8, !tbaa !64
   call void @lv_draw_line(ptr noundef %1, ptr noundef nonnull %2) #8
   br i1 %or.cond, label %bb.t, label %bb.u
 
 bb.t:                                             ; preds = %bb.s
-  store i32 %6, ptr %i.bo, align 8, !tbaa !65
+  store i32 -1, ptr %i.bo, align 8, !tbaa !65
   call void @lv_draw_rect(ptr noundef %1, ptr noundef nonnull %3, ptr noundef nonnull %4) #8
   br label %bb.u
 

@@ -159,7 +159,7 @@ middle.block:                                     ; preds = %vector.body
   %i.ap = getelementptr inbounds [4 x i8], ptr %i.c, i64 %.05582.i.i.i.i
   %i.aq = load i32, ptr %i.ap, align 4, !tbaa !19
   %i.ar = tail call noundef i32 @llvm.smax.i32(i32 %.181.i.i.i.i, i32 %i.aq) ; 2 uses
-  %i.as = add nsw i64 %.05582.i.i.i.i, 1          ; 2 uses
+  %i.as = add nuw nsw i64 %.05582.i.i.i.i, 1      ; 2 uses
   %exitcond.not.i.i.i.i = icmp eq i64 %i.as, %i.f
   br i1 %exitcond.not.i.i.i.i, label %_ZNK5Eigen9DenseBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE8maxCoeffEv.exit, label %.lr.ph84.i.i.i.i, !llvm.loop !23
 
@@ -324,7 +324,7 @@ middle.block688:                                  ; preds = %vector.body681
   %i.cy = getelementptr inbounds [4 x i8], ptr %i.bj, i64 %.05582.i.i.i.i111
   %i.cz = load i32, ptr %i.cy, align 4, !tbaa !19
   %i.da = tail call noundef i32 @llvm.smax.i32(i32 %.181.i.i.i.i112, i32 %i.cz) ; 2 uses
-  %i.db = add nsw i64 %.05582.i.i.i.i111, 1       ; 2 uses
+  %i.db = add nuw nsw i64 %.05582.i.i.i.i111, 1   ; 2 uses
   %exitcond.not.i.i.i.i113 = icmp eq i64 %i.db, %i.bo
   br i1 %exitcond.not.i.i.i.i113, label %_ZNK5Eigen9DenseBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE8maxCoeffEv.exit126, label %.lr.ph84.i.i.i.i110, !llvm.loop !27
 
@@ -444,7 +444,7 @@ bb.o:                                             ; preds = %_ZNSt6vectorIN5Eige
   br i1 %exitcond465.not, label %._crit_edge, label %.preheader, !llvm.loop !30
 
 bb.p:                                             ; preds = %.preheader, %_ZNSt6vectorIN5Eigen7TripletIdiEESaIS2_EE12emplace_backIJiRKidEEERS2_DpOT_.exit193
-  %indvars.iv = phi i64 [ 0, %.preheader ], [ %indvars.iv.next, %_ZNSt6vectorIN5Eigen7TripletIdiEESaIS2_EE12emplace_backIJiRKidEEERS2_DpOT_.exit193 ] ; 11 uses
+  %indvars.iv = phi i64 [ 0, %.preheader ], [ %indvars.iv.next, %_ZNSt6vectorIN5Eigen7TripletIdiEESaIS2_EE12emplace_backIJiRKidEEERS2_DpOT_.exit193 ] ; 10 uses
   %.sroa.37.2381 = phi ptr [ %.sroa.37.0385, %.preheader ], [ %.sroa.37.10, %_ZNSt6vectorIN5Eigen7TripletIdiEESaIS2_EE12emplace_backIJiRKidEEERS2_DpOT_.exit193 ] ; 7 uses
   %.sroa.19.1380 = phi ptr [ %.sroa.19.0384, %.preheader ], [ %.sroa.19.7, %_ZNSt6vectorIN5Eigen7TripletIdiEESaIS2_EE12emplace_backIJiRKidEEERS2_DpOT_.exit193 ] ; 5 uses
   %.sroa.0.2379 = phi ptr [ %.sroa.0.0383, %.preheader ], [ %.sroa.0.10, %_ZNSt6vectorIN5Eigen7TripletIdiEESaIS2_EE12emplace_backIJiRKidEEERS2_DpOT_.exit193 ] ; 8 uses
@@ -458,9 +458,7 @@ bb.p:                                             ; preds = %.preheader, %_ZNSt6
   %i.el = getelementptr [4 x i8], ptr %i.ek, i64 %i.ej
   %i.em = load i32, ptr %i.el, align 4, !tbaa !19 ; 4 uses
   %.cmp = icmp eq i64 %indvars.iv, 0
-  %9 = add nuw i64 %indvars.iv, 4294967295
-  %10 = and i64 %9, 4294967295
-  %i.en = select i1 %.cmp, i64 2, i64 %10         ; 2 uses
+  %i.en = select i1 %.cmp, i64 2, i64 4294967295  ; 2 uses
   %i.eo = mul nsw i64 %i.ei, %i.en
   %i.ep = getelementptr [4 x i8], ptr %i.ek, i64 %i.eo
   %i.eq = load i32, ptr %i.ep, align 4, !tbaa !19 ; 4 uses

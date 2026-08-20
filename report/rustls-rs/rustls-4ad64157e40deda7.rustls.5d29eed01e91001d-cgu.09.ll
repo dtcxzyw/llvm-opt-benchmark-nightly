@@ -203,7 +203,7 @@ bb.d:                                             ; preds = %bb.b
 .lr.ph.split.us:                                  ; preds = %.lr.ph, %bb.g
   %.sroa.019.067.us = phi i64 [ %i.al, %bb.g ], [ 0, %.lr.ph ] ; 2 uses
   %i.al = add nuw i64 %.sroa.019.067.us, 1        ; 2 uses
-  %5 = tail call i64 @llvm.uadd.sat.i64(i64 %i.af, i64 %.sroa.019.067.us) ; 2 uses
+  %5 = add nuw i64 %i.af, %.sroa.019.067.us       ; 2 uses
   %i.am = icmp eq i64 %5, %i.ah
   br i1 %i.am, label %bb.f, label %bb.e
 
@@ -304,7 +304,7 @@ _RINvMNtCs7ZUl82OSlxp_6rustls12common_stateNtB3_11CommonState19check_required_si
 .lr.ph.split:                                     ; preds = %.lr.ph, %bb.ai
   %.sroa.019.067 = phi i64 [ %i.bf, %bb.ai ], [ 0, %.lr.ph ] ; 2 uses
   %i.bf = add nuw i64 %.sroa.019.067, 1           ; 2 uses
-  %6 = tail call i64 @llvm.uadd.sat.i64(i64 %i.af, i64 %.sroa.019.067) ; 2 uses
+  %6 = add nuw i64 %i.af, %.sroa.019.067          ; 2 uses
   %i.bg = icmp eq i64 %6, %i.ah
   br i1 %i.bg, label %bb.aj, label %bb.ah
 
@@ -706,9 +706,6 @@ declare hidden noundef zeroext i1 @_RNvXs1g_NtCsj6eKBz9Db1c_4core3fmtRNtNtNtCs7Z
 
 ; Function Attrs: cold noinline noreturn nonlazybind uwtable
 declare void @_RNvNtNtCsj6eKBz9Db1c_4core9panicking11panic_const23panic_const_div_by_zero(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24)) unnamed_addr #14
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.uadd.sat.i64(i64, i64) #16
 
 ; Function Attrs: nonlazybind uwtable
 declare void @_RNvXs1_NtNtCs7ZUl82OSlxp_6rustls4msgs10fragmenterNtB5_7ChunkerNtNtNtNtCsj6eKBz9Db1c_4core4iter6traits8iterator8Iterator4next(ptr dead_on_unwind noalias nofree noundef writable sret([40 x i8]) align 8 captures(none) dereferenceable(40), ptr noalias nofree noundef align 8 dereferenceable(40)) unnamed_addr #0

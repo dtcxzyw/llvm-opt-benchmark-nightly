@@ -203,11 +203,11 @@ bb.ci:                                            ; preds = %bb.ch
 
 bb.cj:                                            ; preds = %bb.ci, %_ZNSt6vectorI21ChatFormattedFragmentSaIS0_EE9push_backERKS0_.exit250
   %.0112596 = phi i64 [ -1, %bb.ci ], [ %.2114, %_ZNSt6vectorI21ChatFormattedFragmentSaIS0_EE9push_backERKS0_.exit250 ]
-  %.1116595 = phi i32 [ %.0115.ph, %bb.ci ], [ %i.abb, %_ZNSt6vectorI21ChatFormattedFragmentSaIS0_EE9push_backERKS0_.exit250 ] ; 7 uses
+  %.1116595 = phi i32 [ %.0115.ph, %bb.ci ], [ %i.abb, %_ZNSt6vectorI21ChatFormattedFragmentSaIS0_EE9push_backERKS0_.exit250 ] ; 6 uses
   %.0401593 = phi i32 [ %i.sk, %bb.ci ], [ %i.abc, %_ZNSt6vectorI21ChatFormattedFragmentSaIS0_EE9push_backERKS0_.exit250 ]
   %.0401.fr = freeze i32 %.0401593                ; 4 uses
   %i.sl = load i64, ptr %i.bb, align 8, !tbaa !72
-  %i.sm = zext i32 %.1116595 to i64               ; 4 uses
+  %i.sm = zext i32 %.1116595 to i64               ; 5 uses
   %i.sn = trunc i64 %i.sl to i32
   %i.so = sub i32 %i.sn, %.1116595                ; 5 uses
   %i.sp = load i8, ptr %i.by, align 8, !tbaa !33, !range !45, !noundef !98
@@ -251,17 +251,16 @@ bb.cp:                                            ; preds = %bb.co, %bb.cj
   br label %.lr.ph577
 
 .lr.ph577:                                        ; preds = %.lr.ph577.preheader, %.lr.ph577
-  %indvars.iv = phi i64 [ 0, %.lr.ph577.preheader ], [ %indvars.iv.next, %.lr.ph577 ] ; 2 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph577.preheader ], [ %indvars.iv.next, %.lr.ph577 ] ; 3 uses
   %.0109575 = phi i32 [ 0, %.lr.ph577.preheader ], [ %spec.select150, %.lr.ph577 ]
-  %16 = trunc nuw i64 %indvars.iv to i32          ; 2 uses
-  %17 = add i32 %.1116595, %16
-  %18 = zext i32 %17 to i64
-  %19 = load ptr, ptr %i.sj, align 8, !tbaa !71
-  %i.sx = getelementptr inbounds nuw [4 x i8], ptr %19, i64 %18
+  %16 = load ptr, ptr %i.sj, align 8, !tbaa !71
+  %17 = getelementptr inbounds nuw [4 x i8], ptr %16, i64 %indvars.iv
+  %i.sx = getelementptr inbounds nuw [4 x i8], ptr %17, i64 %i.sm
   %i.sy = load i32, ptr %i.sx, align 4, !tbaa !76
   %i.sz = call i32 @iswspace(i32 noundef %i.sy) #26
   %.not141 = icmp eq i32 %i.sz, 0
-  %spec.select150 = select i1 %.not141, i32 %.0109575, i32 %16 ; 2 uses
+  %18 = trunc nuw i64 %indvars.iv to i32
+  %spec.select150 = select i1 %.not141, i32 %.0109575, i32 %18 ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge578, label %.lr.ph577, !llvm.loop !102
@@ -664,7 +663,7 @@ bb.d:                                             ; preds = %bb.c
   %i.as = zext nneg i8 %i.ar to i32
   %spec.select.3 = add i32 %spec.select.2, %i.as  ; 3 uses
   %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.loopexit41.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !114
 

@@ -201,7 +201,7 @@ _RNvMsa_NtCsfjX3T6UU9IB_9hashbrown3rawNtB5_13RawTableInner23prepare_rehash_in_pl
   br i1 %.not11.i, label %_RNvMsa_NtCsfjX3T6UU9IB_9hashbrown3rawNtB5_13RawTableInner15rehash_in_placeCs1O2ilwARLXE_12serde_derive.exit.thread, label %.lr.ph.i12
 
 .lr.ph.i12:                                       ; preds = %_RNvMsa_NtCsfjX3T6UU9IB_9hashbrown3rawNtB5_13RawTableInner23prepare_rehash_in_placeCs1O2ilwARLXE_12serde_derive.exit.i, %bb.ae
-  %.sroa.0.010.i = phi i64 [ %i.fi, %bb.ae ], [ 0, %_RNvMsa_NtCsfjX3T6UU9IB_9hashbrown3rawNtB5_13RawTableInner23prepare_rehash_in_placeCs1O2ilwARLXE_12serde_derive.exit.i ] ; 9 uses
+  %.sroa.0.010.i = phi i64 [ %i.fi, %bb.ae ], [ 0, %_RNvMsa_NtCsfjX3T6UU9IB_9hashbrown3rawNtB5_13RawTableInner23prepare_rehash_in_placeCs1O2ilwARLXE_12serde_derive.exit.i ] ; 8 uses
   %i.fi = add nuw i64 %.sroa.0.010.i, 1           ; 2 uses
   %i.fj = load ptr, ptr %0, align 8               ; 2 uses
   %i.fk = getelementptr inbounds nuw i8, ptr %i.fj, i64 %.sroa.0.010.i
@@ -212,13 +212,11 @@ _RNvMsa_NtCsfjX3T6UU9IB_9hashbrown3rawNtB5_13RawTableInner23prepare_rehash_in_pl
 bb.v:                                             ; preds = %.lr.ph.i12
   %.neg.i = mul i64 %i.fi, -24
   %i.fm = getelementptr inbounds i8, ptr %i.fj, i64 %.neg.i ; 2 uses
-  %3 = sub nsw i64 0, %.sroa.0.010.i
   br label %bb.w
 
 bb.w:                                             ; preds = %bb.ad, %bb.v
   %i.fn = load ptr, ptr %0, align 8
-  %4 = getelementptr inbounds [24 x i8], ptr %i.fn, i64 %3
-  %i.fo = getelementptr inbounds i8, ptr %4, i64 -24
+  %i.fo = getelementptr inbounds i8, ptr %i.fn, i64 -24
   %i.fp = invoke i64 @_RNCINvNtCsfjX3T6UU9IB_9hashbrown3map11make_hasherNtCs1K5DUQUZc67_11proc_macro25IdentuNtNtNtCscAsMj0W7j8b_3std4hash6random11RandomStateE0Cs1O2ilwARLXE_12serde_derive(ptr nonnull align 8 %i.u, ptr nonnull align 8 %i.fo) #25
           to label %_RNCINvMs6_NtCsfjX3T6UU9IB_9hashbrown3rawINtB8_8RawTableTNtCs1K5DUQUZc67_11proc_macro25IdentuEE14reserve_rehashNCINvNtBa_3map11make_hasherBS_uNtNtNtCscAsMj0W7j8b_3std4hash6random11RandomStateE0E0Cs1O2ilwARLXE_12serde_derive.exit.i unwind label %.loopexit.split-lp.i ; 4 uses
 
@@ -355,7 +353,7 @@ bb.aa:                                            ; preds = %bb.z
 bb.ab:                                            ; preds = %bb.z
   %i.hm = lshr i64 %i.fp, 57
   %i.hn = trunc nuw nsw i64 %i.hm to i8           ; 2 uses
-  %i.ho = add i64 %.sroa.0.010.i, -16
+  %i.ho = add nuw i64 %.sroa.0.010.i, -16
   %i.hp = and i64 %i.gt, %i.ho
   %i.hq = load ptr, ptr %0, align 8
   %i.hr = getelementptr inbounds nuw i8, ptr %i.hq, i64 %.sroa.0.010.i
@@ -367,7 +365,7 @@ bb.ab:                                            ; preds = %bb.z
   br label %bb.ae
 
 bb.ac:                                            ; preds = %bb.aa
-  %i.hv = add i64 %.sroa.0.010.i, -16
+  %i.hv = add nuw i64 %.sroa.0.010.i, -16
   %i.hw = load i64, ptr %i.aa, align 8
   %i.hx = and i64 %i.hw, %i.hv
   %i.hy = load ptr, ptr %0, align 8
@@ -770,7 +768,7 @@ bb.c:                                             ; preds = %bb.f, %bb.b
   br i1 %exitcond.not, label %._crit_edge.loopexit, label %bb.b
 
 bb.d:                                             ; preds = %bb.b
-  %i.t = add i64 %.sroa.0.07, -16
+  %i.t = add nuw i64 %.sroa.0.07, -16
   %i.u = getelementptr inbounds nuw i8, ptr %i.o, i64 8
   %i.v = load i64, ptr %i.u, align 8
   %i.w = and i64 %i.v, %i.t

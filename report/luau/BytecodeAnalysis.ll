@@ -203,7 +203,7 @@ bb.h:                                             ; preds = %"_ZSt25__unguarded_
   br i1 %.not.i25.i.i.i.i, label %"_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPN4Luau7CodeGen19BytecodeRegTypeInfoESt6vectorIS4_SaIS4_EEEEZNS3_L25prepareRegTypeInfoLookupsERNS3_16BytecodeTypeInfoEE3$_0EvT_SD_T0_.exit.i", label %.lr.ph.i13.i.i.i.i, !llvm.loop !164
 
 .preheader.i34.i.i.i.i:                           ; preds = %bb.b
-  %.sroa.0.016.i35.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.f, i64 12 ; 2 uses
+  %.sroa.0.016.i35.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.f, i64 12 ; 3 uses
   %.not17.i36.i.i.i.i = icmp eq ptr %.sroa.0.016.i35.i.i.i.i, %i.h
   br i1 %.not17.i36.i.i.i.i, label %"_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPN4Luau7CodeGen19BytecodeRegTypeInfoESt6vectorIS4_SaIS4_EEEEZNS3_L25prepareRegTypeInfoLookupsERNS3_16BytecodeTypeInfoEE3$_0EvT_SD_T0_.exit.i", label %.lr.ph.i37.i.i.i.i
 
@@ -214,7 +214,7 @@ bb.h:                                             ; preds = %"_ZSt25__unguarded_
 
 bb.i:                                             ; preds = %bb.o, %.lr.ph.i37.i.i.i.i
   %.sroa.0.019.i38.i.i.i.i = phi ptr [ %.sroa.0.016.i35.i.i.i.i, %.lr.ph.i37.i.i.i.i ], [ %.sroa.0.0.i57.i.i.i.i, %bb.o ] ; 7 uses
-  %.pn18.i39.i.i.i.i = phi ptr [ %i.f, %.lr.ph.i37.i.i.i.i ], [ %.sroa.0.019.i38.i.i.i.i, %bb.o ] ; 7 uses
+  %.pn18.i39.i.i.i.i = phi ptr [ %i.f, %.lr.ph.i37.i.i.i.i ], [ %.sroa.0.019.i38.i.i.i.i, %bb.o ] ; 6 uses
   %i.as = getelementptr i8, ptr %.pn18.i39.i.i.i.i, i64 13
   %.val.i.i40.i.i.i.i = load i8, ptr %i.as, align 1, !tbaa !118 ; 7 uses
   %i.at = getelementptr i8, ptr %.pn18.i39.i.i.i.i, i64 20
@@ -231,16 +231,12 @@ bb.j:                                             ; preds = %bb.i
   call void @llvm.lifetime.start.p0(ptr nonnull %2)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %2, ptr noundef nonnull align 4 dereferenceable(12) %.sroa.0.019.i38.i.i.i.i, i64 12, i1 false), !tbaa.struct !159
   %i.aw = ptrtoint ptr %.sroa.0.019.i38.i.i.i.i to i64
-  %i.ax = sub i64 %i.aw, %i.j                     ; 4 uses
+  %i.ax = sub i64 %i.aw, %i.j                     ; 3 uses
   %i.ay = icmp sgt i64 %i.ax, 12
   br i1 %i.ay, label %bb.k, label %bb.l, !prof !160
 
 bb.k:                                             ; preds = %bb.j
-  %5 = getelementptr inbounds nuw i8, ptr %.pn18.i39.i.i.i.i, i64 24
-  %.neg23.i67.i.i.i.i = udiv exact i64 %i.ax, 12
-  %.neg23.neg.i68.i.i.i.i = sub nsw i64 0, %.neg23.i67.i.i.i.i
-  %6 = getelementptr inbounds [12 x i8], ptr %5, i64 %.neg23.neg.i68.i.i.i.i
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %6, ptr noundef nonnull align 4 dereferenceable(1) %i.f, i64 %i.ax, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %.sroa.0.016.i35.i.i.i.i, ptr noundef nonnull align 4 dereferenceable(1) %i.f, i64 %i.ax, i1 false)
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN4Luau7CodeGen19BytecodeRegTypeInfoESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit.i66.i.i.i.i
 
 bb.l:                                             ; preds = %bb.j
@@ -438,7 +434,7 @@ bb.t:                                             ; preds = %bb.t, %.lr.ph.i.new
   %i.dv = getelementptr inbounds nuw [4 x i8], ptr %.pre.i, i64 %i.du
   %i.dw = getelementptr inbounds nuw i8, ptr %i.dv, i64 4
   store i32 %i.dr, ptr %i.dw, align 4, !tbaa !137
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.preheader.i.loopexit.unr-lcssa, label %bb.t, !llvm.loop !168
 
@@ -470,7 +466,7 @@ bb.v:                                             ; preds = %.lr.ph25.i.1
 
 bb.w:                                             ; preds = %bb.v, %.lr.ph25.i.1
   %i.eh = add nuw i64 %.024.i, 2                  ; 2 uses
-  %niter1775.next.1 = add i64 %niter1775, 2       ; 2 uses
+  %niter1775.next.1 = add nuw i64 %niter1775, 2   ; 2 uses
   %niter1775.ncmp.1 = icmp eq i64 %niter1775.next.1, %unroll_iter1774
   br i1 %niter1775.ncmp.1, label %_ZN4Luau7CodeGenL25prepareRegTypeInfoLookupsERNS0_16BytecodeTypeInfoE.exit.loopexit.unr-lcssa, label %.lr.ph25.i, !llvm.loop !169
 
