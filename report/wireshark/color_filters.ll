@@ -203,9 +203,9 @@ g_strdup_inline.exit26.i:                         ; preds = %bb.x, %bb.w, %bb.v
 bb.y:                                             ; preds = %g_strdup_inline.exit26.i
   %i.co = getelementptr i8, ptr %i.cg, i64 32
   store ptr %i.cn, ptr %i.co, align 8
-  %i.cp = load ptr, ptr @color_filter_list, align 8
+  %i.cp = load ptr, ptr %2, align 8
   %i.cq = call ptr @g_slist_append(ptr noundef %i.cp, ptr noundef %i.cg)
-  store ptr %i.cq, ptr @color_filter_list, align 8
+  store ptr %i.cq, ptr %2, align 8
   br label %bb.aa
 
 bb.z:                                             ; preds = %g_strdup_inline.exit26.i

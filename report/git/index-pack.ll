@@ -204,7 +204,7 @@ bb.gc:                                            ; preds = %bb.gb
 
 bb.gd:                                            ; preds = %.thread.i.i.i, %bb.gc
   %.02448.i.i.i = phi ptr [ %.02449.i.i.i, %.thread.i.i.i ], [ %i.oj, %bb.gc ] ; 2 uses
-  %.0.i.i.i.a = phi ptr [ %i.vk, %.thread.i.i.i ], [ @unpack_entry_data.fixed_buf, %bb.gc ] ; 4 uses
+  %.0.i.i.i.a = phi ptr [ %i.vk, %.thread.i.i.i ], [ @unpack_entry_data.fixed_buf, %bb.gc ] ; 7 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(160) %19, i8 0, i64 160, i1 false)
   call void @git_inflate_init(ptr noundef nonnull %19) #24
   store ptr %.0.i.i.i.a, ptr %i.od, align 8, !tbaa !96
@@ -397,7 +397,7 @@ bb.gv:                                            ; preds = %bb.gu
   unreachable
 
 use.exit95.i:                                     ; preds = %bb.gu
-  store ptr @unpack_entry_data.fixed_buf, ptr %i.od, align 8, !tbaa !96
+  store ptr %.0.i.i.i.a, ptr %i.od, align 8, !tbaa !96
   store i64 8192, ptr %i.oe, align 8, !tbaa !100
   %i.yj = icmp eq i32 %i.xg, 0
   br i1 %i.yj, label %.split.us.split.us.i.i.i, label %.split28.us.i.i.i, !llvm.loop !104
@@ -767,8 +767,8 @@ use.exit71.i:                                     ; preds = %bb.ie
   %i.aed = load ptr, ptr %i.od, align 8, !tbaa !96
   %i.aee = ptrtoint ptr %i.aed to i64
   %i.aef = sub i64 %i.aee, ptrtoint (ptr @unpack_entry_data.fixed_buf to i64)
-  call void @git_hash_update(ptr noundef nonnull %20, ptr noundef nonnull @unpack_entry_data.fixed_buf, i64 noundef %i.aef) #24
-  store ptr @unpack_entry_data.fixed_buf, ptr %i.od, align 8, !tbaa !96
+  call void @git_hash_update(ptr noundef nonnull %20, ptr noundef nonnull %.0.i.i.i.a, i64 noundef %i.aef) #24
+  store ptr %.0.i.i.i.a, ptr %i.od, align 8, !tbaa !96
   store i64 8192, ptr %i.oe, align 8, !tbaa !100
   %i.aeg = icmp eq i32 %i.ada, 0
   br i1 %i.aeg, label %.split.split.us.i.i.i, label %.split28.us.i.i.i, !llvm.loop !104

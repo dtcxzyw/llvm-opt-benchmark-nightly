@@ -203,7 +203,7 @@ bb.bb:                                            ; preds = %bb.ba
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h)
   %i.em = load ptr, ptr %i.ee, align 8, !nonnull !5, !align !212, !noundef !5
   %i.en = invoke noundef nonnull ptr @_RNvMsr_Cs8Xq8PKFYOms_3hirNtB5_8Function4name(ptr noalias nofree noundef nonnull readonly align 4 captures(none) dereferenceable(12) %i.b, ptr noundef nonnull %i.em, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(560) @68)
-          to label %bb.be unwind label %bb.az     ; 3 uses
+          to label %bb.be unwind label %bb.az     ; 4 uses
 
 bb.bc:                                            ; preds = %bb.ba
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h)
@@ -240,7 +240,7 @@ bb.bh:                                            ; preds = %bb.bf, %bb.bg
           to label %bb.ay unwind label %bb.bw
 
 bb.bi:                                            ; preds = %bb.bf
-  invoke fastcc void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs33K2ylI4knu_10hir_expand4name4NameECsiU5vK8fN4ZC_11ide_assists(ptr nonnull @_RNvNvNtNtCs39E2wp1vf7X_6intern6symbol7symbols4then10SYMBOL_STR)
+  invoke fastcc void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs33K2ylI4knu_10hir_expand4name4NameECsiU5vK8fN4ZC_11ide_assists(ptr nonnull %i.en)
           to label %bb.bj unwind label %bb.az
 
 bb.bj:                                            ; preds = %bb.bi

@@ -201,7 +201,7 @@ bb.b:                                             ; preds = %._crit_edge41, %bb.
 
 .lr.ph.i:                                         ; preds = %.lr.ph40, %bb.f
   %i.h = phi ptr [ %i.q, %bb.f ], [ %i.g, %.lr.ph40 ]
-  %i.i = phi ptr [ %i.p, %bb.f ], [ %i.f, %.lr.ph40 ] ; 2 uses
+  %i.i = phi ptr [ %i.p, %bb.f ], [ %i.f, %.lr.ph40 ] ; 5 uses
   %i.j = load ptr, ptr @head, align 8
   %i.k = icmp eq ptr %i.j, @dummy
   br i1 %i.k, label %bb.c, label %bb.e
@@ -221,9 +221,9 @@ bb.e:                                             ; preds = %bb.c, %.lr.ph.i
   br i1 %i.n, label %bb.f, label %._crit_edge36
 
 bb.f:                                             ; preds = %bb.e
-  store ptr null, ptr @dummy, align 8
-  %i.o = atomicrmw xchg ptr @tail, ptr @dummy seq_cst, align 8
-  store atomic ptr @dummy, ptr %i.o release, align 8
+  store ptr null, ptr %i.i, align 8
+  %i.o = atomicrmw xchg ptr @tail, ptr %i.i seq_cst, align 8
+  store atomic ptr %i.i, ptr %i.o release, align 8
   %i.p = load ptr, ptr @head, align 8             ; 2 uses
   %i.q = load atomic ptr, ptr %i.p acquire, align 8 ; 2 uses
   %.not.i = icmp eq ptr %i.q, null
@@ -242,7 +242,7 @@ bb.f:                                             ; preds = %bb.e
 
 .lr.ph.i16:                                       ; preds = %.lr.ph35, %bb.j
   %i.t = phi ptr [ %i.ac, %bb.j ], [ %i.s, %.lr.ph35 ]
-  %i.u = phi ptr [ %i.ab, %bb.j ], [ %i.r, %.lr.ph35 ] ; 2 uses
+  %i.u = phi ptr [ %i.ab, %bb.j ], [ %i.r, %.lr.ph35 ] ; 5 uses
   %i.v = load ptr, ptr @head, align 8
   %i.w = icmp eq ptr %i.v, @dummy
   br i1 %i.w, label %bb.g, label %bb.i
@@ -262,9 +262,9 @@ bb.i:                                             ; preds = %bb.g, %.lr.ph.i16
   br i1 %i.z, label %bb.j, label %try_dequeue.exit24
 
 bb.j:                                             ; preds = %bb.i
-  store ptr null, ptr @dummy, align 8
-  %i.aa = atomicrmw xchg ptr @tail, ptr @dummy seq_cst, align 8
-  store atomic ptr @dummy, ptr %i.aa release, align 8
+  store ptr null, ptr %i.u, align 8
+  %i.aa = atomicrmw xchg ptr @tail, ptr %i.u seq_cst, align 8
+  store atomic ptr %i.u, ptr %i.aa release, align 8
   %i.ab = load ptr, ptr @head, align 8            ; 2 uses
   %i.ac = load atomic ptr, ptr %i.ab acquire, align 8 ; 2 uses
   %.not.i18 = icmp eq ptr %i.ac, null
@@ -279,7 +279,7 @@ try_dequeue.exit19.thread:                        ; preds = %bb.j, %.lr.ph35
 
 .lr.ph.i21:                                       ; preds = %try_dequeue.exit19.thread, %bb.n
   %i.af = phi ptr [ %i.ao, %bb.n ], [ %i.ae, %try_dequeue.exit19.thread ]
-  %i.ag = phi ptr [ %i.an, %bb.n ], [ %i.ad, %try_dequeue.exit19.thread ] ; 2 uses
+  %i.ag = phi ptr [ %i.an, %bb.n ], [ %i.ad, %try_dequeue.exit19.thread ] ; 5 uses
   %i.ah = load ptr, ptr @head, align 8
   %i.ai = icmp eq ptr %i.ah, @dummy
   br i1 %i.ai, label %bb.k, label %bb.m
@@ -299,9 +299,9 @@ bb.m:                                             ; preds = %bb.k, %.lr.ph.i21
   br i1 %i.al, label %bb.n, label %try_dequeue.exit24
 
 bb.n:                                             ; preds = %bb.m
-  store ptr null, ptr @dummy, align 8
-  %i.am = atomicrmw xchg ptr @tail, ptr @dummy seq_cst, align 8
-  store atomic ptr @dummy, ptr %i.am release, align 8
+  store ptr null, ptr %i.ag, align 8
+  %i.am = atomicrmw xchg ptr @tail, ptr %i.ag seq_cst, align 8
+  store atomic ptr %i.ag, ptr %i.am release, align 8
   %i.an = load ptr, ptr @head, align 8            ; 2 uses
   %i.ao = load atomic ptr, ptr %i.an acquire, align 8 ; 2 uses
   %.not.i23 = icmp eq ptr %i.ao, null

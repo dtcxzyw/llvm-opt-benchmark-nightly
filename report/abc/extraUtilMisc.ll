@@ -204,16 +204,16 @@ define void @Extra_Transpose32(ptr nofree noundef captures(none) %0) local_unnam
   %i.co = shufflevector <4 x i32> %i.cn, <4 x i32> %i.cj, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
   %i.cp = xor <4 x i32> %i.cm, %i.co
   %i.cq = and <4 x i32> %i.cp, splat (i32 252645135) ; 3 uses
+  %1 = load <4 x i32>, ptr %0, align 4, !tbaa !17 ; 2 uses
   %i.cr = load <2 x i32>, ptr %i.m, align 4, !tbaa !17 ; 2 uses
   %i.cs = lshr <2 x i32> %i.cr, splat (i32 4)
-  %1 = load <4 x i32>, ptr %0, align 4, !tbaa !17 ; 2 uses
   %2 = shufflevector <4 x i32> %1, <4 x i32> poison, <2 x i32> <i32 0, i32 1>
   %3 = xor <2 x i32> %i.cs, %2
+  %4 = and <2 x i32> %3, splat (i32 252645135)
   %i.ct = shufflevector <4 x i32> %i.cq, <4 x i32> poison, <4 x i32> <i32 poison, i32 poison, i32 0, i32 1>
-  %i.cu = shufflevector <2 x i32> %3, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %i.cu = shufflevector <2 x i32> %4, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison> ; 2 uses
   %i.cv = shufflevector <4 x i32> %i.cu, <4 x i32> %i.ct, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
-  %4 = and <4 x i32> %i.cv, <i32 252645135, i32 252645135, i32 -1, i32 -1> ; 2 uses
-  %i.cw = xor <4 x i32> %1, %4
+  %i.cw = xor <4 x i32> %1, %i.cv
   store <4 x i32> %i.cw, ptr %0, align 4, !tbaa !17
   %i.cx = shl nuw <4 x i32> %i.cq, <i32 4, i32 4, i32 0, i32 0>
   %i.cy = xor <4 x i32> %i.cj, %i.cx
@@ -259,12 +259,12 @@ define void @Extra_Transpose32(ptr nofree noundef captures(none) %0) local_unnam
   %i.eh = xor <2 x i32> %i.ef, %i.eg
   %i.ei = shufflevector <2 x i32> %i.eh, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %i.ej = shufflevector <4 x i32> %i.ei, <4 x i32> %i.dw, <4 x i32> <i32 0, i32 1, i32 6, i32 7> ; 2 uses
-  %i.ek = and <4 x i32> %i.ej, <i32 252645135, i32 252645135, i32 4, i32 4> ; 2 uses
+  %i.ek = and <4 x i32> %i.ej, <i32 252645135, i32 252645135, i32 poison, i32 poison>
   %i.el = shl nuw <4 x i32> %i.ej, <i32 252645135, i32 252645135, i32 4, i32 4>
-  %i.em = shufflevector <4 x i32> %i.ek, <4 x i32> %i.el, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
+  %i.em = shufflevector <4 x i32> %i.ek, <4 x i32> %i.el, <4 x i32> <i32 0, i32 1, i32 6, i32 7> ; 2 uses
   %i.en = xor <4 x i32> %i.ed, %i.em
   store <4 x i32> %i.en, ptr %i.ad, align 4, !tbaa !17
-  %i.eo = shufflevector <4 x i32> %4, <4 x i32> %i.ek, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  %i.eo = shufflevector <4 x i32> %i.cu, <4 x i32> %i.em, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
   %i.ep = shl nuw <4 x i32> %i.eo, splat (i32 4)
   %i.eq = shufflevector <2 x i32> %i.cr, <2 x i32> %i.ee, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   %i.er = xor <4 x i32> %i.eq, %i.ep              ; 4 uses

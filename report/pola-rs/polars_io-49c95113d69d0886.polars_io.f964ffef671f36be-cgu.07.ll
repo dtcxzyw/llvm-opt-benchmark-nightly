@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %.noexc5.i
   %i.w = load i64, ptr %i.b, align 8, !dbg !22383, !range !494, !noalias !22377, !noundef !13
   %i.x = trunc nuw i64 %i.w to i1, !dbg !22386    ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %i.b, i64 8, !dbg !22387
-  %.sroa.56.8.copyload.i.i = load ptr, ptr %i.y, align 8, !dbg !22387, !noalias !22332 ; 4 uses
+  %.sroa.56.8.copyload.i.i = load ptr, ptr %i.y, align 8, !dbg !22387, !noalias !22332 ; 6 uses
   br i1 %i.x, label %bb.h, label %bb.j, !dbg !22386
 
 bb.g:                                             ; preds = %bb.l, %bb.f
@@ -238,11 +238,11 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.ad, label %bb.m, label %bb.l, !dbg !22430, !prof !1829
 
 bb.l:                                             ; preds = %bb.k
-  invoke void @_RNvNvXsA_NtCsbm5zPlkZccl_4pyo38instanceINtB7_2PypENtNtNtCscgRAwXFJnXP_4core3ops4drop4Drop4drop9drop_slow(ptr noundef nonnull @_Py_NoneStruct)
+  invoke void @_RNvNvXsA_NtCsbm5zPlkZccl_4pyo38instanceINtB7_2PypENtNtNtCscgRAwXFJnXP_4core3ops4drop4Drop4drop9drop_slow(ptr noundef nonnull %.sroa.56.8.copyload.i.i)
           to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsbm5zPlkZccl_4pyo38instance2PyNtNtNtBL_5types3any5PyAnyEECslpwjCj2YNBy_9polars_io.exit33.i.i unwind label %bb.g, !dbg !22432, !noalias !22332
 
 bb.m:                                             ; preds = %bb.k
-  call void @_Py_DecRef(ptr noundef nonnull @_Py_NoneStruct) #39, !dbg !22433, !noalias !22332
+  call void @_Py_DecRef(ptr noundef nonnull %.sroa.56.8.copyload.i.i) #39, !dbg !22433, !noalias !22332
   br label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsbm5zPlkZccl_4pyo38instance2PyNtNtNtBL_5types3any5PyAnyEECslpwjCj2YNBy_9polars_io.exit33.i.i, !dbg !22435
 
 _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsbm5zPlkZccl_4pyo38instance2PyNtNtNtBL_5types3any5PyAnyEECslpwjCj2YNBy_9polars_io.exit33.i.i: ; preds = %bb.m, %bb.l, %bb.j

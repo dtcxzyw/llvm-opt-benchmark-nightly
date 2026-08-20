@@ -204,7 +204,7 @@ bb.a:
   %i.b = load i64, ptr %i.a, align 8, !dbg !253955, !range !268, !noundef !14
   %i.c = trunc nuw i64 %i.b to i1, !dbg !253957
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 8, !dbg !253958
-  %.sroa.05.0.copyload = load ptr, ptr %i.d, align 8, !dbg !253958 ; 3 uses
+  %.sroa.05.0.copyload = load ptr, ptr %i.d, align 8, !dbg !253958 ; 4 uses
   br i1 %i.c, label %bb.b, label %bb.c, !dbg !253957
 
 bb.b:                                             ; preds = %bb.a
@@ -220,7 +220,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.e, label %bb.d, label %bb.e, !dbg !253969
 
 bb.d:                                             ; preds = %bb.c
-  call void @_Py_DecRef(ptr noundef nonnull @_Py_NotImplementedStruct) #25, !dbg !253971
+  call void @_Py_DecRef(ptr noundef nonnull %.sroa.05.0.copyload) #25, !dbg !253971
   call void @_Py_IncRef(ptr noundef nonnull @_Py_NotImplementedStruct) #25, !dbg !253974
   br label %bb.e, !dbg !253996
 
@@ -242,7 +242,7 @@ bb.a:
   %i.b = load i64, ptr %i.a, align 8, !dbg !254005, !range !268, !noundef !14
   %i.c = trunc nuw i64 %i.b to i1, !dbg !254007
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 8, !dbg !254008
-  %.sroa.05.0.copyload = load ptr, ptr %i.d, align 8, !dbg !254008 ; 3 uses
+  %.sroa.05.0.copyload = load ptr, ptr %i.d, align 8, !dbg !254008 ; 4 uses
   br i1 %i.c, label %bb.b, label %bb.c, !dbg !254007
 
 bb.b:                                             ; preds = %bb.a
@@ -258,7 +258,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.e, label %bb.d, label %bb.e, !dbg !254019
 
 bb.d:                                             ; preds = %bb.c
-  call void @_Py_DecRef(ptr noundef nonnull @_Py_NotImplementedStruct) #25, !dbg !254021
+  call void @_Py_DecRef(ptr noundef nonnull %.sroa.05.0.copyload) #25, !dbg !254021
   call void @_Py_IncRef(ptr noundef nonnull @_Py_NotImplementedStruct) #25, !dbg !254024
   br label %bb.e, !dbg !254038
 
@@ -280,7 +280,7 @@ bb.a:
   %i.b = load i64, ptr %i.a, align 8, !dbg !254047, !range !268, !noundef !14
   %i.c = trunc nuw i64 %i.b to i1, !dbg !254049
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 8, !dbg !254050
-  %.sroa.05.0.copyload = load ptr, ptr %i.d, align 8, !dbg !254050 ; 3 uses
+  %.sroa.05.0.copyload = load ptr, ptr %i.d, align 8, !dbg !254050 ; 4 uses
   br i1 %i.c, label %bb.b, label %bb.c, !dbg !254049
 
 bb.b:                                             ; preds = %bb.a
@@ -296,7 +296,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.e, label %bb.d, label %bb.e, !dbg !254061
 
 bb.d:                                             ; preds = %bb.c
-  call void @_Py_DecRef(ptr noundef nonnull @_Py_NotImplementedStruct) #25, !dbg !254063
+  call void @_Py_DecRef(ptr noundef nonnull %.sroa.05.0.copyload) #25, !dbg !254063
   call void @_Py_IncRef(ptr noundef nonnull @_Py_NotImplementedStruct) #25, !dbg !254066
   br label %bb.e, !dbg !254080
 
@@ -318,7 +318,7 @@ bb.a:
   %i.b = load i64, ptr %i.a, align 8, !dbg !254089, !range !268, !noundef !14
   %i.c = trunc nuw i64 %i.b to i1, !dbg !254091
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 8, !dbg !254092
-  %.sroa.05.0.copyload = load ptr, ptr %i.d, align 8, !dbg !254092 ; 3 uses
+  %.sroa.05.0.copyload = load ptr, ptr %i.d, align 8, !dbg !254092 ; 4 uses
   br i1 %i.c, label %bb.b, label %bb.c, !dbg !254091
 
 bb.b:                                             ; preds = %bb.a
@@ -334,7 +334,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.e, label %bb.d, label %bb.e, !dbg !254103
 
 bb.d:                                             ; preds = %bb.c
-  call void @_Py_DecRef(ptr noundef nonnull @_Py_NotImplementedStruct) #25, !dbg !254105
+  call void @_Py_DecRef(ptr noundef nonnull %.sroa.05.0.copyload) #25, !dbg !254105
   call void @_Py_IncRef(ptr noundef nonnull @_Py_NotImplementedStruct) #25, !dbg !254108
   br label %bb.e, !dbg !254122
 
@@ -356,7 +356,7 @@ bb.a:
   %i.b = load i64, ptr %i.a, align 8, !dbg !254131, !range !268, !noundef !14
   %i.c = trunc nuw i64 %i.b to i1, !dbg !254133
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 8, !dbg !254134
-  %.sroa.05.0.copyload = load ptr, ptr %i.d, align 8, !dbg !254134 ; 3 uses
+  %.sroa.05.0.copyload = load ptr, ptr %i.d, align 8, !dbg !254134 ; 4 uses
   br i1 %i.c, label %bb.b, label %bb.c, !dbg !254133
 
 bb.b:                                             ; preds = %bb.a
@@ -372,7 +372,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.e, label %bb.d, label %bb.e, !dbg !254145
 
 bb.d:                                             ; preds = %bb.c
-  call void @_Py_DecRef(ptr noundef nonnull @_Py_NotImplementedStruct) #25, !dbg !254147
+  call void @_Py_DecRef(ptr noundef nonnull %.sroa.05.0.copyload) #25, !dbg !254147
   call void @_Py_IncRef(ptr noundef nonnull @_Py_NotImplementedStruct) #25, !dbg !254150
   br label %bb.e, !dbg !254164
 
@@ -394,7 +394,7 @@ bb.a:
   %i.b = load i64, ptr %i.a, align 8, !dbg !254173, !range !268, !noundef !14
   %i.c = trunc nuw i64 %i.b to i1, !dbg !254175
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 8, !dbg !254176
-  %.sroa.05.0.copyload = load ptr, ptr %i.d, align 8, !dbg !254176 ; 3 uses
+  %.sroa.05.0.copyload = load ptr, ptr %i.d, align 8, !dbg !254176 ; 4 uses
   br i1 %i.c, label %bb.b, label %bb.c, !dbg !254175
 
 bb.b:                                             ; preds = %bb.a
@@ -410,7 +410,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.e, label %bb.d, label %bb.e, !dbg !254187
 
 bb.d:                                             ; preds = %bb.c
-  call void @_Py_DecRef(ptr noundef nonnull @_Py_NotImplementedStruct) #25, !dbg !254189
+  call void @_Py_DecRef(ptr noundef nonnull %.sroa.05.0.copyload) #25, !dbg !254189
   call void @_Py_IncRef(ptr noundef nonnull @_Py_NotImplementedStruct) #25, !dbg !254192
   br label %bb.e, !dbg !254206
 

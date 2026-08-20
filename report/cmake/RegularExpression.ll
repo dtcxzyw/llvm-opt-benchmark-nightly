@@ -204,16 +204,16 @@ bb.aw:                                            ; preds = %bb.av, %bb.av, %bb.
   %i.ey = getelementptr inbounds nuw i8, ptr %i.eq, i64 3 ; 3 uses
   store i8 0, ptr %i.ex, align 1, !tbaa !16
   store ptr %i.ey, ptr %i.ep, align 8, !tbaa !35
-  %2 = icmp eq ptr %i.ey, @_ZN5cmsysL8regdummyE
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
-  br i1 %2, label %._crit_edge95.thread, label %.lr.ph94.split.preheader
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
+  %3 = icmp eq ptr %i.ey, @_ZN5cmsysL8regdummyE
+  br i1 %3, label %._crit_edge95.thread, label %.lr.ph94.split.preheader
 
 .lr.ph94.split.preheader:                         ; preds = %.lr.ph94
   %.pre109 = load ptr, ptr %0, align 8, !tbaa !32
   br label %.lr.ph94.split
 
 ._crit_edge95.thread:                             ; preds = %.lr.ph94, %.lr.ph94.thread
-  %i.ez = phi ptr [ %i.ev, %.lr.ph94.thread ], [ %3, %.lr.ph94 ] ; 2 uses
+  %i.ez = phi ptr [ %i.ev, %.lr.ph94.thread ], [ %2, %.lr.ph94 ] ; 2 uses
   %.promoted96 = load ptr, ptr %0, align 8, !tbaa !32
   %.promoted98 = load i64, ptr %i.ez, align 8, !tbaa !36
   %i.fa = add nsw i32 %.085, -1
@@ -244,9 +244,9 @@ bb.ax:                                            ; preds = %.lr.ph94.split
   br label %_ZN5cmsys13RegExpCompile4regcEc.exit80
 
 bb.ay:                                            ; preds = %.lr.ph94.split
-  %i.fk = load i64, ptr %3, align 8, !tbaa !36
+  %i.fk = load i64, ptr %2, align 8, !tbaa !36
   %i.fl = add nsw i64 %i.fk, 1
-  store i64 %i.fl, ptr %3, align 8, !tbaa !36
+  store i64 %i.fl, ptr %2, align 8, !tbaa !36
   br label %_ZN5cmsys13RegExpCompile4regcEc.exit80
 
 _ZN5cmsys13RegExpCompile4regcEc.exit80:           ; preds = %bb.ax, %bb.ay
