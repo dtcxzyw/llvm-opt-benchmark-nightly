@@ -1,0 +1,1528 @@
+diff --git a/llvm/lib/Analysis/ScalarEvolution.cpp b/llvm/lib/Analysis/ScalarEvolution.cpp
+index 52a03d2cad62d..df79bc05889ad 100644
+--- a/llvm/lib/Analysis/ScalarEvolution.cpp
++++ b/llvm/lib/Analysis/ScalarEvolution.cpp
+@@ -2533,12 +2533,16 @@ static SCEV::NoWrapFlags StrengthenNoWrapFlags(ScalarEvolution *SE,
+     }
+   }
+ 
+-  // <0,+,nonnegative><nw> is also nuw
+-  // TODO: Add corresponding nsw case
++  // Strengthen an affine AddRec's flags provided the actual AddRec is given.
++  // <nonnegative,+,nonnegative><nw> is also nuw
++  // <nonpositive,+,nonpositive><nw> is also nsw
+   if (Type == scAddRecExpr && ScalarEvolution::hasFlags(Flags, SCEV::FlagNW) &&
+-      !ScalarEvolution::hasFlags(Flags, SCEV::FlagNUW) && Ops.size() == 2 &&
+-      Ops[0]->isZero() && IsKnownNonNegative(Ops[1]))
+-    Flags = ScalarEvolution::setFlags(Flags, SCEV::FlagNUW);
++      Ops.size() == 2) {
++    if (SE->isKnownNonNegative(Ops[0]) && SE->isKnownNonNegative(Ops[1]))
++      Flags = ScalarEvolution::setFlags(Flags, SCEV::FlagNUW);
++    if (SE->isKnownNonPositive(Ops[0]) && SE->isKnownNonPositive(Ops[1]))
++      Flags = ScalarEvolution::setFlags(Flags, SCEV::FlagNSW);
++  }
+ 
+   // both (udiv X, Y) * Y and Y * (udiv X, Y) are always NUW
+   if (Type == scMulExpr && !ScalarEvolution::hasFlags(Flags, SCEV::FlagNUW) &&
+diff --git a/llvm/test/Analysis/ScalarEvolution/backedge-taken-count-guard-info.ll b/llvm/test/Analysis/ScalarEvolution/backedge-taken-count-guard-info.ll
+index a5b7b166aaa97..069e304b6a579 100644
+--- a/llvm/test/Analysis/ScalarEvolution/backedge-taken-count-guard-info.ll
++++ b/llvm/test/Analysis/ScalarEvolution/backedge-taken-count-guard-info.ll
+@@ -118,7 +118,7 @@ define void @test_guards_across_loops(i32 %N) {
+ ; CHECK-NEXT:    %iv.2 = phi i32 [ 0, %loop.1 ], [ %iv.2.next, %loop.2 ]
+ ; CHECK-NEXT:    --> {0,+,1}<nuw><%loop.2> U: full-set S: full-set Exits: (1 + %N) LoopDispositions: { %loop.2: Computable }
+ ; CHECK-NEXT:    %iv.2.next = add i32 %iv.2, 1
+-; CHECK-NEXT:    --> {1,+,1}<nw><%loop.2> U: full-set S: full-set Exits: (2 + %N) LoopDispositions: { %loop.2: Computable }
++; CHECK-NEXT:    --> {1,+,1}<nuw><%loop.2> U: [1,0) S: [1,0) Exits: (2 + %N) LoopDispositions: { %loop.2: Computable }
+ ; CHECK-NEXT:  Determining loop execution counts for: @test_guards_across_loops
+ ; CHECK-NEXT:  Loop %loop.2: backedge-taken count is (1 + (zext i32 %N to i64))<nuw><nsw>
+ ; CHECK-NEXT:  Loop %loop.2: constant max backedge-taken count is i64 4294967296
+diff --git a/llvm/test/Analysis/ScalarEvolution/different-loops-recs.ll b/llvm/test/Analysis/ScalarEvolution/different-loops-recs.ll
+index a13da89b4d6e9..16375d54c3f2a 100644
+--- a/llvm/test/Analysis/ScalarEvolution/different-loops-recs.ll
++++ b/llvm/test/Analysis/ScalarEvolution/different-loops-recs.ll
+@@ -43,17 +43,17 @@ define void @test_00(i1 %arg) {
+ ; CHECK-NEXT:    %sum4 = add i32 %sum3, %phi6
+ ; CHECK-NEXT:    --> {159,+,6}<%loop2> U: [159,1006) S: [159,1006) Exits: 1005 LoopDispositions: { %loop2: Computable }
+ ; CHECK-NEXT:    %s1 = add i32 %phi1, %phi4
+-; CHECK-NEXT:    --> {{\{\{}}73,+,1}<nuw><nsw><%loop1>,+,1}<nw><%loop2> U: [73,379) S: [73,379) --> 378 U: [378,379) S: [378,379)
++; CHECK-NEXT:    --> {{\{\{}}73,+,1}<nuw><nsw><%loop1>,+,1}<nuw><%loop2> U: [73,379) S: [73,379) --> 378 U: [378,379) S: [378,379)
+ ; CHECK-NEXT:    %s2 = add i32 %phi5, %phi2
+-; CHECK-NEXT:    --> {{\{\{}}57,+,2}<nuw><nsw><%loop1>,+,2}<nw><%loop2> U: [57,668) S: [57,668) --> 667 U: [667,668) S: [667,668)
++; CHECK-NEXT:    --> {{\{\{}}57,+,2}<nuw><nsw><%loop1>,+,2}<nuw><%loop2> U: [57,668) S: [57,668) --> 667 U: [667,668) S: [667,668)
+ ; CHECK-NEXT:    %s3 = add i32 %sum1, %sum3
+-; CHECK-NEXT:    --> {{\{\{}}130,+,3}<nuw><nsw><%loop1>,+,3}<nw><%loop2> U: [130,1046) S: [130,1046) --> 1045 U: [1045,1046) S: [1045,1046)
++; CHECK-NEXT:    --> {{\{\{}}130,+,3}<nuw><nsw><%loop1>,+,3}<nuw><%loop2> U: [130,1046) S: [130,1046) --> 1045 U: [1045,1046) S: [1045,1046)
+ ; CHECK-NEXT:    %s4 = add i32 %sum4, %sum2
+-; CHECK-NEXT:    --> {{\{\{}}179,+,6}<nuw><nsw><%loop1>,+,6}<nw><%loop2> U: [179,2010) S: [179,2010) --> 2009 U: [2009,2010) S: [2009,2010)
++; CHECK-NEXT:    --> {{\{\{}}179,+,6}<nuw><nsw><%loop1>,+,6}<nuw><%loop2> U: [179,2010) S: [179,2010) --> 2009 U: [2009,2010) S: [2009,2010)
+ ; CHECK-NEXT:    %s5 = add i32 %phi3, %sum3
+-; CHECK-NEXT:    --> {{\{\{}}122,+,3}<nuw><nsw><%loop1>,+,3}<nw><%loop2> U: [122,1038) S: [122,1038) --> 1037 U: [1037,1038) S: [1037,1038)
++; CHECK-NEXT:    --> {{\{\{}}122,+,3}<nuw><nsw><%loop1>,+,3}<nuw><%loop2> U: [122,1038) S: [122,1038) --> 1037 U: [1037,1038) S: [1037,1038)
+ ; CHECK-NEXT:    %s6 = add i32 %sum2, %phi6
+-; CHECK-NEXT:    --> {{\{\{}}63,+,6}<nuw><nsw><%loop1>,+,3}<nw><%loop2> U: [63,1471) S: [63,1471) --> 1470 U: [1470,1471) S: [1470,1471)
++; CHECK-NEXT:    --> {{\{\{}}63,+,6}<nuw><nsw><%loop1>,+,3}<nuw><%loop2> U: [63,1471) S: [63,1471) --> 1470 U: [1470,1471) S: [1470,1471)
+ ; CHECK-NEXT:  Determining loop execution counts for: @test_00
+ ; CHECK-NEXT:  Loop %loop2: backedge-taken count is i32 141
+ ; CHECK-NEXT:  Loop %loop2: constant max backedge-taken count is i32 141
+@@ -518,15 +518,15 @@ define void @test_06() {
+ ; CHECK-NEXT:    %phi3.inc = add i32 %phi3, 3
+ ; CHECK-NEXT:    --> {33,+,3}<nuw><nsw><%loop3> U: [33,1003) S: [33,1003) Exits: 1002 LoopDispositions: { %loop3: Computable }
+ ; CHECK-NEXT:    %s1 = add i32 %phi1, %phi2
+-; CHECK-NEXT:    --> {{\{\{}}30,+,1}<nuw><nsw><%loop1>,+,2}<nw><%loop2> U: [30,1998) S: [30,1998) --> 1997 U: [1997,1998) S: [1997,1998)
++; CHECK-NEXT:    --> {{\{\{}}30,+,1}<nuw><nsw><%loop1>,+,2}<nuw><%loop2> U: [30,1998) S: [30,1998) --> 1997 U: [1997,1998) S: [1997,1998)
+ ; CHECK-NEXT:    %s2 = add i32 %phi2, %phi1
+ ; CHECK-NEXT:    --> {{\{\{}}30,+,1}<nuw><nsw><%loop1>,+,2}<nuw><nsw><%loop2> U: [30,1998) S: [30,1998) --> 1997 U: [1997,1998) S: [1997,1998)
+ ; CHECK-NEXT:    %s3 = add i32 %phi1, %phi3
+-; CHECK-NEXT:    --> {{\{\{}}40,+,1}<nuw><nsw><%loop1>,+,3}<nw><%loop3> U: [40,1999) S: [40,1999) --> 1998 U: [1998,1999) S: [1998,1999)
++; CHECK-NEXT:    --> {{\{\{}}40,+,1}<nuw><nsw><%loop1>,+,3}<nuw><%loop3> U: [40,1999) S: [40,1999) --> 1998 U: [1998,1999) S: [1998,1999)
+ ; CHECK-NEXT:    %s4 = add i32 %phi3, %phi1
+ ; CHECK-NEXT:    --> {{\{\{}}40,+,1}<nuw><nsw><%loop1>,+,3}<nuw><nsw><%loop3> U: [40,1999) S: [40,1999) --> 1998 U: [1998,1999) S: [1998,1999)
+ ; CHECK-NEXT:    %s5 = add i32 %phi2, %phi3
+-; CHECK-NEXT:    --> {{\{\{}}50,+,2}<nuw><nsw><%loop2>,+,3}<nw><%loop3> U: [50,1998) S: [50,1998) --> 1997 U: [1997,1998) S: [1997,1998)
++; CHECK-NEXT:    --> {{\{\{}}50,+,2}<nuw><nsw><%loop2>,+,3}<nuw><%loop3> U: [50,1998) S: [50,1998) --> 1997 U: [1997,1998) S: [1997,1998)
+ ; CHECK-NEXT:    %s6 = add i32 %phi3, %phi2
+ ; CHECK-NEXT:    --> {{\{\{}}50,+,2}<nuw><nsw><%loop2>,+,3}<nuw><nsw><%loop3> U: [50,1998) S: [50,1998) --> 1997 U: [1997,1998) S: [1997,1998)
+ ; CHECK-NEXT:  Determining loop execution counts for: @test_06
+@@ -596,15 +596,15 @@ define void @test_07() {
+ ; CHECK-NEXT:    %phi1.inc = add i32 %phi1, 1
+ ; CHECK-NEXT:    --> {11,+,1}<nuw><nsw><%loop1> U: [11,12) S: [11,12) Exits: 11 LoopDispositions: { %loop1: Computable, %loop2: Invariant }
+ ; CHECK-NEXT:    %s1 = add i32 %phi1, %phi2
+-; CHECK-NEXT:    --> {{\{\{}}30,+,1}<nuw><nsw><%loop1>,+,2}<nw><%loop2> U: [30,1009) S: [30,1009) --> 1008 U: [1008,1009) S: [1008,1009)
++; CHECK-NEXT:    --> {{\{\{}}30,+,1}<nuw><nsw><%loop1>,+,2}<nuw><%loop2> U: [30,1009) S: [30,1009) --> 1008 U: [1008,1009) S: [1008,1009)
+ ; CHECK-NEXT:    %s2 = add i32 %phi2, %phi1
+ ; CHECK-NEXT:    --> {{\{\{}}30,+,1}<nuw><nsw><%loop1>,+,2}<nuw><nsw><%loop2> U: [30,1009) S: [30,1009) --> 1008 U: [1008,1009) S: [1008,1009)
+ ; CHECK-NEXT:    %s3 = add i32 %phi1, %phi3
+-; CHECK-NEXT:    --> {{\{\{}}40,+,3}<nuw><nsw><%loop3>,+,1}<nw><%loop1> U: [40,1010) S: [40,1010) --> 1009 U: [1009,1010) S: [1009,1010)
++; CHECK-NEXT:    --> {{\{\{}}40,+,3}<nuw><nsw><%loop3>,+,1}<nuw><%loop1> U: [40,1010) S: [40,1010) --> 1009 U: [1009,1010) S: [1009,1010)
+ ; CHECK-NEXT:    %s4 = add i32 %phi3, %phi1
+ ; CHECK-NEXT:    --> {{\{\{}}40,+,3}<nuw><nsw><%loop3>,+,1}<nuw><nsw><%loop1> U: [40,1010) S: [40,1010) --> 1009 U: [1009,1010) S: [1009,1010)
+ ; CHECK-NEXT:    %s5 = add i32 %phi2, %phi3
+-; CHECK-NEXT:    --> {{\{\{}}50,+,3}<nuw><nsw><%loop3>,+,2}<nw><%loop2> U: [50,1998) S: [50,1998) --> 1997 U: [1997,1998) S: [1997,1998)
++; CHECK-NEXT:    --> {{\{\{}}50,+,3}<nuw><nsw><%loop3>,+,2}<nuw><%loop2> U: [50,1998) S: [50,1998) --> 1997 U: [1997,1998) S: [1997,1998)
+ ; CHECK-NEXT:    %s6 = add i32 %phi3, %phi2
+ ; CHECK-NEXT:    --> {{\{\{}}50,+,3}<nuw><nsw><%loop3>,+,2}<nuw><nsw><%loop2> U: [50,1998) S: [50,1998) --> 1997 U: [1997,1998) S: [1997,1998)
+ ; CHECK-NEXT:  Determining loop execution counts for: @test_07
+diff --git a/llvm/test/Analysis/ScalarEvolution/exit-count-select-safe.ll b/llvm/test/Analysis/ScalarEvolution/exit-count-select-safe.ll
+index c200c8c5e7734..862b51cd92956 100644
+--- a/llvm/test/Analysis/ScalarEvolution/exit-count-select-safe.ll
++++ b/llvm/test/Analysis/ScalarEvolution/exit-count-select-safe.ll
+@@ -7,7 +7,7 @@ define i32 @logical_and_2ops(i32 %n, i32 %m) {
+ ; CHECK-NEXT:    %i = phi i32 [ 0, %entry ], [ %i.next, %loop ]
+ ; CHECK-NEXT:    --> {0,+,1}<nuw><%loop> U: full-set S: full-set Exits: (%n umin_seq %m) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %i.next = add i32 %i, 1
+-; CHECK-NEXT:    --> {1,+,1}<nw><%loop> U: full-set S: full-set Exits: (1 + (%n umin_seq %m)) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    --> {1,+,1}<nuw><%loop> U: [1,0) S: [1,0) Exits: (1 + (%n umin_seq %m)) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %cond = select i1 %cond_p0, i1 %cond_p1, i1 false
+ ; CHECK-NEXT:    --> (%cond_p0 umin_seq %cond_p1) U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %loop: Variant }
+ ; CHECK-NEXT:  Determining loop execution counts for: @logical_and_2ops
+@@ -35,7 +35,7 @@ define i32 @logical_or_2ops(i32 %n, i32 %m) {
+ ; CHECK-NEXT:    %i = phi i32 [ 0, %entry ], [ %i.next, %loop ]
+ ; CHECK-NEXT:    --> {0,+,1}<nuw><%loop> U: full-set S: full-set Exits: (%n umin_seq %m) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %i.next = add i32 %i, 1
+-; CHECK-NEXT:    --> {1,+,1}<nw><%loop> U: full-set S: full-set Exits: (1 + (%n umin_seq %m)) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    --> {1,+,1}<nuw><%loop> U: [1,0) S: [1,0) Exits: (1 + (%n umin_seq %m)) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %cond = select i1 %cond_p0, i1 true, i1 %cond_p1
+ ; CHECK-NEXT:    --> (true + ((true + %cond_p0) umin_seq (true + %cond_p1))) U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %loop: Variant }
+ ; CHECK-NEXT:  Determining loop execution counts for: @logical_or_2ops
+@@ -63,7 +63,7 @@ define i32 @logical_and_3ops(i32 %n, i32 %m, i32 %k) {
+ ; CHECK-NEXT:    %i = phi i32 [ 0, %entry ], [ %i.next, %loop ]
+ ; CHECK-NEXT:    --> {0,+,1}<nuw><%loop> U: full-set S: full-set Exits: (%n umin_seq %m umin_seq %k) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %i.next = add i32 %i, 1
+-; CHECK-NEXT:    --> {1,+,1}<nw><%loop> U: full-set S: full-set Exits: (1 + (%n umin_seq %m umin_seq %k)) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    --> {1,+,1}<nuw><%loop> U: [1,0) S: [1,0) Exits: (1 + (%n umin_seq %m umin_seq %k)) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %cond_p3 = select i1 %cond_p0, i1 %cond_p1, i1 false
+ ; CHECK-NEXT:    --> (%cond_p0 umin_seq %cond_p1) U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %loop: Variant }
+ ; CHECK-NEXT:    %cond = select i1 %cond_p3, i1 %cond_p2, i1 false
+@@ -95,7 +95,7 @@ define i32 @logical_or_3ops(i32 %n, i32 %m, i32 %k) {
+ ; CHECK-NEXT:    %i = phi i32 [ 0, %entry ], [ %i.next, %loop ]
+ ; CHECK-NEXT:    --> {0,+,1}<nuw><%loop> U: full-set S: full-set Exits: (%n umin_seq %m umin_seq %k) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %i.next = add i32 %i, 1
+-; CHECK-NEXT:    --> {1,+,1}<nw><%loop> U: full-set S: full-set Exits: (1 + (%n umin_seq %m umin_seq %k)) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    --> {1,+,1}<nuw><%loop> U: [1,0) S: [1,0) Exits: (1 + (%n umin_seq %m umin_seq %k)) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %cond_p3 = select i1 %cond_p0, i1 true, i1 %cond_p1
+ ; CHECK-NEXT:    --> (true + ((true + %cond_p0) umin_seq (true + %cond_p1))) U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %loop: Variant }
+ ; CHECK-NEXT:    %cond = select i1 %cond_p3, i1 true, i1 %cond_p2
+@@ -127,7 +127,7 @@ define i32 @logical_or_3ops_duplicate(i32 %n, i32 %m, i32 %k) {
+ ; CHECK-NEXT:    %i = phi i32 [ 0, %entry ], [ %i.next, %loop ]
+ ; CHECK-NEXT:    --> {0,+,1}<nuw><%loop> U: full-set S: full-set Exits: (%n umin_seq %m umin_seq %k) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %i.next = add i32 %i, 1
+-; CHECK-NEXT:    --> {1,+,1}<nw><%loop> U: full-set S: full-set Exits: (1 + (%n umin_seq %m umin_seq %k)) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    --> {1,+,1}<nuw><%loop> U: [1,0) S: [1,0) Exits: (1 + (%n umin_seq %m umin_seq %k)) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %cond_p4 = select i1 %cond_p0, i1 true, i1 %cond_p1
+ ; CHECK-NEXT:    --> (true + ((true + %cond_p0) umin_seq (true + %cond_p1))) U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %loop: Variant }
+ ; CHECK-NEXT:    %cond_p5 = select i1 %cond_p4, i1 true, i1 %cond_p2
+@@ -163,7 +163,7 @@ define i32 @logical_or_3ops_redundant_uminseq_operand(i32 %n, i32 %m, i32 %k) {
+ ; CHECK-NEXT:    %i = phi i32 [ 0, %entry ], [ %i.next, %loop ]
+ ; CHECK-NEXT:    --> {0,+,1}<nuw><%loop> U: full-set S: full-set Exits: ((%n umin %m) umin_seq %k) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %i.next = add i32 %i, 1
+-; CHECK-NEXT:    --> {1,+,1}<nw><%loop> U: full-set S: full-set Exits: (1 + ((%n umin %m) umin_seq %k)) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    --> {1,+,1}<nuw><%loop> U: [1,0) S: [1,0) Exits: (1 + ((%n umin %m) umin_seq %k)) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %umin = call i32 @llvm.umin.i32(i32 %n, i32 %m)
+ ; CHECK-NEXT:    --> (%n umin %m) U: full-set S: full-set Exits: (%n umin %m) LoopDispositions: { %loop: Invariant }
+ ; CHECK-NEXT:    %cond_p3 = select i1 %cond_p0, i1 true, i1 %cond_p1
+@@ -198,7 +198,7 @@ define i32 @logical_or_3ops_redundant_umin_operand(i32 %n, i32 %m, i32 %k) {
+ ; CHECK-NEXT:    %i = phi i32 [ 0, %entry ], [ %i.next, %loop ]
+ ; CHECK-NEXT:    --> {0,+,1}<nuw><%loop> U: full-set S: full-set Exits: (%n umin_seq %k umin_seq %m) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %i.next = add i32 %i, 1
+-; CHECK-NEXT:    --> {1,+,1}<nw><%loop> U: full-set S: full-set Exits: (1 + (%n umin_seq %k umin_seq %m)) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    --> {1,+,1}<nuw><%loop> U: [1,0) S: [1,0) Exits: (1 + (%n umin_seq %k umin_seq %m)) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %umin = call i32 @llvm.umin.i32(i32 %n, i32 %m)
+ ; CHECK-NEXT:    --> (%n umin %m) U: full-set S: full-set Exits: (%n umin %m) LoopDispositions: { %loop: Invariant }
+ ; CHECK-NEXT:    %cond_p3 = select i1 %cond_p0, i1 true, i1 %cond_p1
+@@ -233,7 +233,7 @@ define i32 @logical_or_4ops_redundant_operand_across_umins(i32 %n, i32 %m, i32 %
+ ; CHECK-NEXT:    %i = phi i32 [ 0, %entry ], [ %i.next, %loop ]
+ ; CHECK-NEXT:    --> {0,+,1}<nuw><%loop> U: full-set S: full-set Exits: ((%n umin %m) umin_seq %k umin_seq %q) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %i.next = add i32 %i, 1
+-; CHECK-NEXT:    --> {1,+,1}<nw><%loop> U: full-set S: full-set Exits: (1 + ((%n umin %m) umin_seq %k umin_seq %q)) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    --> {1,+,1}<nuw><%loop> U: [1,0) S: [1,0) Exits: (1 + ((%n umin %m) umin_seq %k umin_seq %q)) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %umin = call i32 @llvm.umin.i32(i32 %n, i32 %m)
+ ; CHECK-NEXT:    --> (%n umin %m) U: full-set S: full-set Exits: (%n umin %m) LoopDispositions: { %loop: Invariant }
+ ; CHECK-NEXT:    %umin2 = call i32 @llvm.umin.i32(i32 %n, i32 %q)
+@@ -271,7 +271,7 @@ define i32 @logical_or_3ops_operand_wise_redundant_umin(i32 %n, i32 %m, i32 %k)
+ ; CHECK-NEXT:    %i = phi i32 [ 0, %entry ], [ %i.next, %loop ]
+ ; CHECK-NEXT:    --> {0,+,1}<nuw><%loop> U: full-set S: full-set Exits: ((%n umin %m) umin_seq %k) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %i.next = add i32 %i, 1
+-; CHECK-NEXT:    --> {1,+,1}<nw><%loop> U: full-set S: full-set Exits: (1 + ((%n umin %m) umin_seq %k)) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    --> {1,+,1}<nuw><%loop> U: [1,0) S: [1,0) Exits: (1 + ((%n umin %m) umin_seq %k)) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %umin = call i32 @llvm.umin.i32(i32 %n, i32 %m)
+ ; CHECK-NEXT:    --> (%n umin %m) U: full-set S: full-set Exits: (%n umin %m) LoopDispositions: { %loop: Invariant }
+ ; CHECK-NEXT:    %umin2 = call i32 @llvm.umin.i32(i32 %n, i32 %k)
+@@ -309,7 +309,7 @@ define i32 @logical_or_3ops_partially_redundant_umin(i32 %n, i32 %m, i32 %k) {
+ ; CHECK-NEXT:    %i = phi i32 [ 0, %entry ], [ %i.next, %loop ]
+ ; CHECK-NEXT:    --> {0,+,1}<nuw><%loop> U: full-set S: full-set Exits: (%n umin_seq (%m umin %k)) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %i.next = add i32 %i, 1
+-; CHECK-NEXT:    --> {1,+,1}<nw><%loop> U: full-set S: full-set Exits: (1 + (%n umin_seq (%m umin %k))) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    --> {1,+,1}<nuw><%loop> U: [1,0) S: [1,0) Exits: (1 + (%n umin_seq (%m umin %k))) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %umin = call i32 @llvm.umin.i32(i32 %n, i32 %m)
+ ; CHECK-NEXT:    --> (%n umin %m) U: full-set S: full-set Exits: (%n umin %m) LoopDispositions: { %loop: Invariant }
+ ; CHECK-NEXT:    %umin2 = call i32 @llvm.umin.i32(i32 %umin, i32 %k)
+@@ -343,7 +343,7 @@ define i32 @logical_or_5ops_redundant_opearand_of_inner_uminseq(i32 %a, i32 %b,
+ ; CHECK-NEXT:    %first.i = phi i32 [ 0, %entry ], [ %first.i.next, %first.loop ]
+ ; CHECK-NEXT:    --> {0,+,1}<nuw><%first.loop> U: full-set S: full-set Exits: (%e umin_seq %d umin_seq %a) LoopDispositions: { %first.loop: Computable }
+ ; CHECK-NEXT:    %first.i.next = add i32 %first.i, 1
+-; CHECK-NEXT:    --> {1,+,1}<nw><%first.loop> U: full-set S: full-set Exits: (1 + (%e umin_seq %d umin_seq %a)) LoopDispositions: { %first.loop: Computable }
++; CHECK-NEXT:    --> {1,+,1}<nuw><%first.loop> U: [1,0) S: [1,0) Exits: (1 + (%e umin_seq %d umin_seq %a)) LoopDispositions: { %first.loop: Computable }
+ ; CHECK-NEXT:    %cond_p3 = select i1 %cond_p0, i1 true, i1 %cond_p1
+ ; CHECK-NEXT:    --> (true + ((true + %cond_p0) umin_seq (true + %cond_p1))) U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %first.loop: Variant }
+ ; CHECK-NEXT:    %cond_p4 = select i1 %cond_p3, i1 true, i1 %cond_p2
+@@ -351,7 +351,7 @@ define i32 @logical_or_5ops_redundant_opearand_of_inner_uminseq(i32 %a, i32 %b,
+ ; CHECK-NEXT:    %i = phi i32 [ 0, %first.loop.exit ], [ %i.next, %loop ]
+ ; CHECK-NEXT:    --> {0,+,1}<nuw><%loop> U: full-set S: full-set Exits: (%a umin_seq %b umin_seq ((%e umin_seq %d) umin %c)) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %i.next = add i32 %i, 1
+-; CHECK-NEXT:    --> {1,+,1}<nw><%loop> U: full-set S: full-set Exits: (1 + (%a umin_seq %b umin_seq ((%e umin_seq %d) umin %c))) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    --> {1,+,1}<nuw><%loop> U: [1,0) S: [1,0) Exits: (1 + (%a umin_seq %b umin_seq ((%e umin_seq %d) umin %c))) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %umin = call i32 @llvm.umin.i32(i32 %c, i32 %d)
+ ; CHECK-NEXT:    --> (%c umin %d) U: full-set S: full-set Exits: (%c umin %d) LoopDispositions: { %loop: Invariant }
+ ; CHECK-NEXT:    %umin2 = call i32 @llvm.umin.i32(i32 %umin, i32 %first.i)
+@@ -503,7 +503,7 @@ define i64 @uminseq_vs_ptrtoint_complexity(i64 %n, i64 %m, ptr %ptr) {
+ ; CHECK-NEXT:    %i = phi i64 [ 0, %entry ], [ %i.next, %loop ]
+ ; CHECK-NEXT:    --> {0,+,1}<nuw><%loop> U: full-set S: full-set Exits: (%n umin_seq %m) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %i.next = add i64 %i, 1
+-; CHECK-NEXT:    --> {1,+,1}<nw><%loop> U: full-set S: full-set Exits: (1 + (%n umin_seq %m)) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    --> {1,+,1}<nuw><%loop> U: [1,0) S: [1,0) Exits: (1 + (%n umin_seq %m)) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %cond = select i1 %cond_p0, i1 %cond_p1, i1 false
+ ; CHECK-NEXT:    --> (%cond_p0 umin_seq %cond_p1) U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %loop: Variant }
+ ; CHECK-NEXT:    %ptr.int = ptrtoint ptr %ptr to i64
+@@ -539,7 +539,7 @@ define i32 @logical_and_implies_poison1(i32 %n) {
+ ; CHECK-NEXT:    %i = phi i32 [ 0, %entry ], [ %i.next, %loop ]
+ ; CHECK-NEXT:    --> {0,+,1}<nuw><%loop> U: full-set S: full-set Exits: ((1 + %n) umin %n) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %i.next = add i32 %i, 1
+-; CHECK-NEXT:    --> {1,+,1}<nw><%loop> U: full-set S: full-set Exits: (1 + ((1 + %n) umin %n)) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    --> {1,+,1}<nuw><%loop> U: [1,0) S: [1,0) Exits: (1 + ((1 + %n) umin %n)) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %cond = select i1 %cond_p0, i1 %cond_p1, i1 false
+ ; CHECK-NEXT:    --> (%cond_p0 umin %cond_p1) U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %loop: Variant }
+ ; CHECK-NEXT:  Determining loop execution counts for: @logical_and_implies_poison1
+@@ -570,7 +570,7 @@ define i32 @logical_and_implies_poison2(i32 %n) {
+ ; CHECK-NEXT:    %i = phi i32 [ 0, %entry ], [ %i.next, %loop ]
+ ; CHECK-NEXT:    --> {0,+,1}<nuw><%loop> U: full-set S: full-set Exits: ((1 + %n) umin %n) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %i.next = add i32 %i, 1
+-; CHECK-NEXT:    --> {1,+,1}<nw><%loop> U: full-set S: full-set Exits: (1 + ((1 + %n) umin %n)) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    --> {1,+,1}<nuw><%loop> U: [1,0) S: [1,0) Exits: (1 + ((1 + %n) umin %n)) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %cond = select i1 %cond_p0, i1 %cond_p1, i1 false
+ ; CHECK-NEXT:    --> (%cond_p1 umin %cond_p0) U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %loop: Variant }
+ ; CHECK-NEXT:  Determining loop execution counts for: @logical_and_implies_poison2
+@@ -601,7 +601,7 @@ define i32 @logical_and_implies_poison3(i32 %n, i32 %m) {
+ ; CHECK-NEXT:    %i = phi i32 [ 0, %entry ], [ %i.next, %loop ]
+ ; CHECK-NEXT:    --> {0,+,1}<nuw><%loop> U: full-set S: full-set Exits: ((%n + %m) umin %n) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %i.next = add i32 %i, 1
+-; CHECK-NEXT:    --> {1,+,1}<nw><%loop> U: full-set S: full-set Exits: (1 + ((%n + %m) umin %n)) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    --> {1,+,1}<nuw><%loop> U: [1,0) S: [1,0) Exits: (1 + ((%n + %m) umin %n)) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %cond = select i1 %cond_p0, i1 %cond_p1, i1 false
+ ; CHECK-NEXT:    --> (%cond_p1 umin %cond_p0) U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %loop: Variant }
+ ; CHECK-NEXT:  Determining loop execution counts for: @logical_and_implies_poison3
+@@ -632,7 +632,7 @@ define i32 @logical_and_implies_poison_wrong_direction(i32 %n, i32 %m) {
+ ; CHECK-NEXT:    %i = phi i32 [ 0, %entry ], [ %i.next, %loop ]
+ ; CHECK-NEXT:    --> {0,+,1}<nuw><%loop> U: full-set S: full-set Exits: (%n umin_seq (%n + %m)) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %i.next = add i32 %i, 1
+-; CHECK-NEXT:    --> {1,+,1}<nw><%loop> U: full-set S: full-set Exits: (1 + (%n umin_seq (%n + %m))) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    --> {1,+,1}<nuw><%loop> U: [1,0) S: [1,0) Exits: (1 + (%n umin_seq (%n + %m))) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %cond = select i1 %cond_p0, i1 %cond_p1, i1 false
+ ; CHECK-NEXT:    --> (%cond_p0 umin_seq %cond_p1) U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %loop: Variant }
+ ; CHECK-NEXT:  Determining loop execution counts for: @logical_and_implies_poison_wrong_direction
+@@ -661,7 +661,7 @@ define i32 @logical_and_implies_poison_noundef(i32 %n, i32 noundef %m) {
+ ; CHECK-NEXT:    %i = phi i32 [ 0, %entry ], [ %i.next, %loop ]
+ ; CHECK-NEXT:    --> {0,+,1}<nuw><%loop> U: full-set S: full-set Exits: (%n umin %m) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %i.next = add i32 %i, 1
+-; CHECK-NEXT:    --> {1,+,1}<nw><%loop> U: full-set S: full-set Exits: (1 + (%n umin %m)) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    --> {1,+,1}<nuw><%loop> U: [1,0) S: [1,0) Exits: (1 + (%n umin %m)) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %cond = select i1 %cond_p0, i1 %cond_p1, i1 false
+ ; CHECK-NEXT:    --> (%cond_p0 umin %cond_p1) U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %loop: Variant }
+ ; CHECK-NEXT:  Determining loop execution counts for: @logical_and_implies_poison_noundef
+@@ -689,7 +689,7 @@ define i32 @logical_and_implies_poison_noundef_wrong_direction(i32 %n, i32 nound
+ ; CHECK-NEXT:    %i = phi i32 [ 0, %entry ], [ %i.next, %loop ]
+ ; CHECK-NEXT:    --> {0,+,1}<nuw><%loop> U: full-set S: full-set Exits: (%m umin_seq %n) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %i.next = add i32 %i, 1
+-; CHECK-NEXT:    --> {1,+,1}<nw><%loop> U: full-set S: full-set Exits: (1 + (%m umin_seq %n)) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    --> {1,+,1}<nuw><%loop> U: [1,0) S: [1,0) Exits: (1 + (%m umin_seq %n)) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %cond = select i1 %cond_p0, i1 %cond_p1, i1 false
+ ; CHECK-NEXT:    --> (%cond_p0 umin_seq %cond_p1) U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %loop: Variant }
+ ; CHECK-NEXT:  Determining loop execution counts for: @logical_and_implies_poison_noundef_wrong_direction
+@@ -721,7 +721,7 @@ define i32 @logical_and_implies_poison_complex1(i32 %n, i32 %m) {
+ ; CHECK-NEXT:    %i = phi i32 [ 0, %entry ], [ %i.next, %loop ]
+ ; CHECK-NEXT:    --> {0,+,1}<nuw><%loop> U: full-set S: full-set Exits: ((%n + %m) umin (1 + %n + %m)) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %i.next = add i32 %i, 1
+-; CHECK-NEXT:    --> {1,+,1}<nw><%loop> U: full-set S: full-set Exits: (1 + ((%n + %m) umin (1 + %n + %m))) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    --> {1,+,1}<nuw><%loop> U: [1,0) S: [1,0) Exits: (1 + ((%n + %m) umin (1 + %n + %m))) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %cond = select i1 %cond_p0, i1 %cond_p1, i1 false
+ ; CHECK-NEXT:    --> (%cond_p0 umin %cond_p1) U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %loop: Variant }
+ ; CHECK-NEXT:  Determining loop execution counts for: @logical_and_implies_poison_complex1
+@@ -755,7 +755,7 @@ define i32 @logical_and_implies_poison_complex2(i32 %n, i32 %m, i32 %l) {
+ ; CHECK-NEXT:    %i = phi i32 [ 0, %entry ], [ %i.next, %loop ]
+ ; CHECK-NEXT:    --> {0,+,1}<nuw><%loop> U: full-set S: full-set Exits: ((%n + %m) umin (%n + %m + %l)) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %i.next = add i32 %i, 1
+-; CHECK-NEXT:    --> {1,+,1}<nw><%loop> U: full-set S: full-set Exits: (1 + ((%n + %m) umin (%n + %m + %l))) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    --> {1,+,1}<nuw><%loop> U: [1,0) S: [1,0) Exits: (1 + ((%n + %m) umin (%n + %m + %l))) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %cond = select i1 %cond_p0, i1 %cond_p1, i1 false
+ ; CHECK-NEXT:    --> (%cond_p0 umin %cond_p1) U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %loop: Variant }
+ ; CHECK-NEXT:  Determining loop execution counts for: @logical_and_implies_poison_complex2
+@@ -789,7 +789,7 @@ define i32 @logical_and_implies_poison_complex_wrong_direction(i32 %n, i32 %m, i
+ ; CHECK-NEXT:    %i = phi i32 [ 0, %entry ], [ %i.next, %loop ]
+ ; CHECK-NEXT:    --> {0,+,1}<nuw><%loop> U: full-set S: full-set Exits: ((%n + %m) umin_seq (%n + %m + %l)) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %i.next = add i32 %i, 1
+-; CHECK-NEXT:    --> {1,+,1}<nw><%loop> U: full-set S: full-set Exits: (1 + ((%n + %m) umin_seq (%n + %m + %l))) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    --> {1,+,1}<nuw><%loop> U: [1,0) S: [1,0) Exits: (1 + ((%n + %m) umin_seq (%n + %m + %l))) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %cond = select i1 %cond_p0, i1 %cond_p1, i1 false
+ ; CHECK-NEXT:    --> (%cond_p0 umin_seq %cond_p1) U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %loop: Variant }
+ ; CHECK-NEXT:  Determining loop execution counts for: @logical_and_implies_poison_complex_wrong_direction
+@@ -821,7 +821,7 @@ define i32 @logical_and_implies_multiple_ops(i32 %n, i32 %m) {
+ ; CHECK-NEXT:    %i = phi i32 [ 0, %entry ], [ %i.next, %loop ]
+ ; CHECK-NEXT:    --> {0,+,1}<nuw><%loop> U: full-set S: full-set Exits: (((1 + %n) umin %n) umin_seq %m) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %i.next = add i32 %i, 1
+-; CHECK-NEXT:    --> {1,+,1}<nw><%loop> U: full-set S: full-set Exits: (1 + (((1 + %n) umin %n) umin_seq %m)) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    --> {1,+,1}<nuw><%loop> U: [1,0) S: [1,0) Exits: (1 + (((1 + %n) umin %n) umin_seq %m)) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %cond = select i1 %cond_p0, i1 %cond_p1, i1 false
+ ; CHECK-NEXT:    --> (%cond_p0 umin %cond_p1) U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %loop: Variant }
+ ; CHECK-NEXT:    %cond2 = select i1 %cond, i1 %cond_p2, i1 false
+@@ -856,7 +856,7 @@ define i32 @logical_and_implies_multiple_ops2(i32 %n, i32 %m) {
+ ; CHECK-NEXT:    %i = phi i32 [ 0, %entry ], [ %i.next, %loop ]
+ ; CHECK-NEXT:    --> {0,+,1}<nuw><%loop> U: full-set S: full-set Exits: (%n umin_seq ((1 + %n) umin %m)) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %i.next = add i32 %i, 1
+-; CHECK-NEXT:    --> {1,+,1}<nw><%loop> U: full-set S: full-set Exits: (1 + (%n umin_seq ((1 + %n) umin %m))) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    --> {1,+,1}<nuw><%loop> U: [1,0) S: [1,0) Exits: (1 + (%n umin_seq ((1 + %n) umin %m))) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %cond = select i1 %cond_p0, i1 %cond_p1, i1 false
+ ; CHECK-NEXT:    --> (%cond_p0 umin_seq %cond_p1) U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %loop: Variant }
+ ; CHECK-NEXT:    %cond2 = select i1 %cond, i1 %cond_p2, i1 false
+@@ -891,7 +891,7 @@ define i32 @logical_and_implies_multiple_ops3(i32 %n, i32 %m) {
+ ; CHECK-NEXT:    %i = phi i32 [ 0, %entry ], [ %i.next, %loop ]
+ ; CHECK-NEXT:    --> {0,+,1}<nuw><%loop> U: full-set S: full-set Exits: (%m umin_seq ((1 + %n) umin %n)) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %i.next = add i32 %i, 1
+-; CHECK-NEXT:    --> {1,+,1}<nw><%loop> U: full-set S: full-set Exits: (1 + (%m umin_seq ((1 + %n) umin %n))) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    --> {1,+,1}<nuw><%loop> U: [1,0) S: [1,0) Exits: (1 + (%m umin_seq ((1 + %n) umin %n))) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %cond = select i1 %cond_p0, i1 %cond_p1, i1 false
+ ; CHECK-NEXT:    --> (%cond_p0 umin_seq %cond_p1) U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %loop: Variant }
+ ; CHECK-NEXT:    %cond2 = select i1 %cond, i1 %cond_p2, i1 false
+@@ -992,7 +992,7 @@ define i32 @logical_and_not_zero_needs_context(i32 %n, i32 %m) {
+ ; CHECK-NEXT:    %i = phi i32 [ 0, %entry ], [ %i.next, %loop ]
+ ; CHECK-NEXT:    --> {0,+,1}<nuw><%loop> U: full-set S: full-set Exits: (%n umin_seq %m) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %i.next = add i32 %i, 1
+-; CHECK-NEXT:    --> {1,+,1}<nw><%loop> U: full-set S: full-set Exits: (1 + (%n umin_seq %m)) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    --> {1,+,1}<nuw><%loop> U: [1,0) S: [1,0) Exits: (1 + (%n umin_seq %m)) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %cond = select i1 %cond_p0, i1 %cond_p1, i1 false
+ ; CHECK-NEXT:    --> (%cond_p0 umin_seq %cond_p1) U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %loop: Variant }
+ ; CHECK-NEXT:  Determining loop execution counts for: @logical_and_not_zero_needs_context
+diff --git a/llvm/test/Analysis/ScalarEvolution/flags-from-poison-noautogen.ll b/llvm/test/Analysis/ScalarEvolution/flags-from-poison-noautogen.ll
+index 52843d6176a6f..898010b34d125 100644
+--- a/llvm/test/Analysis/ScalarEvolution/flags-from-poison-noautogen.ll
++++ b/llvm/test/Analysis/ScalarEvolution/flags-from-poison-noautogen.ll
+@@ -19,9 +19,9 @@ define void @subrecurrences(i32 %outer_l, i32 %inner_l, i32 %val) {
+ ; CHECK-NEXT:    %i_idx.inc = add nsw i32 %i_idx, 1
+ ; CHECK-NEXT:    --> {1,+,1}<nuw><%inner> U: [1,0) S: [1,0) Exits: (1 + %inner_l) LoopDispositions: { %inner: Computable, %outer: Uniform }
+ ; CHECK-NEXT:    %v = sub nsw i32 %i_idx, %o_idx.inc
+-; CHECK-NEXT:    --> {{\{\{}}-1,+,-1}<nw><%outer>,+,1}<nsw><%inner> U: full-set S: full-set Exits: {(-1 + %inner_l),+,-1}<nw><%outer> LoopDispositions: { %inner: Computable, %outer: Variant }
++; CHECK-NEXT:    --> {{\{\{}}-1,+,-1}<nsw><%outer>,+,1}<nsw><%inner> U: full-set S: full-set Exits: {(-1 + %inner_l),+,-1}<nw><%outer> LoopDispositions: { %inner: Computable, %outer: Variant }
+ ; CHECK-NEXT:    %forub = udiv i32 1, %v
+-; CHECK-NEXT:    --> (1 /u {{\{\{}}-1,+,-1}<nw><%outer>,+,1}<nsw><%inner>) U: [0,2) S: [0,2) Exits: (1 /u {(-1 + %inner_l),+,-1}<nw><%outer>) LoopDispositions: { %inner: Computable, %outer: Variant }
++; CHECK-NEXT:    --> (1 /u {{\{\{}}-1,+,-1}<nsw><%outer>,+,1}<nsw><%inner>) U: [0,2) S: [0,2) Exits: (1 /u {(-1 + %inner_l),+,-1}<nw><%outer>) LoopDispositions: { %inner: Computable, %outer: Variant }
+ ; CHECK-NEXT:  Determining loop execution counts for: @subrecurrences
+ ; CHECK-NEXT:  Loop %inner: backedge-taken count is %inner_l
+ ; CHECK-NEXT:  Loop %inner: constant max backedge-taken count is i32 -1
+diff --git a/llvm/test/Analysis/ScalarEvolution/increasing-or-decreasing-iv.ll b/llvm/test/Analysis/ScalarEvolution/increasing-or-decreasing-iv.ll
+index 0caa0a3f0f15c..51c2eb8980235 100644
+--- a/llvm/test/Analysis/ScalarEvolution/increasing-or-decreasing-iv.ll
++++ b/llvm/test/Analysis/ScalarEvolution/increasing-or-decreasing-iv.ll
+@@ -179,7 +179,7 @@ define void @f3(i1 %c) {
+ ; CHECK-NEXT:    %iv.zext = zext i16 %iv to i64
+ ; CHECK-NEXT:    --> {(zext i16 %start to i64),+,(zext i16 %step to i64)}<nuw><%loop> U: [0,64644) S: [0,64644) Exits: ((zext i16 %start to i64) + (127 * (zext i16 %step to i64))<nuw><nsw>) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %iv.next = add i16 %iv, %step
+-; CHECK-NEXT:    --> {(%step + %start),+,%step}<nw><%loop> U: full-set S: full-set Exits: ((128 * %step)<nuw> + %start) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    --> {(%step + %start),+,%step}<nuw><%loop> U: [1,0) S: [1,0) Exits: ((128 * %step)<nuw> + %start) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %loop.iv.inc = add i16 %loop.iv, 1
+ ; CHECK-NEXT:    --> {1,+,1}<nuw><nsw><%loop> U: [1,129) S: [1,129) Exits: 128 LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:  Determining loop execution counts for: @f3
+diff --git a/llvm/test/Analysis/ScalarEvolution/max-backedge-taken-count-guard-info-rewrite-expressions.ll b/llvm/test/Analysis/ScalarEvolution/max-backedge-taken-count-guard-info-rewrite-expressions.ll
+index fac1e2a9e6986..39d3281f25693 100644
+--- a/llvm/test/Analysis/ScalarEvolution/max-backedge-taken-count-guard-info-rewrite-expressions.ll
++++ b/llvm/test/Analysis/ScalarEvolution/max-backedge-taken-count-guard-info-rewrite-expressions.ll
+@@ -810,7 +810,7 @@ define void @rewrite_add_rec() {
+ ; CHECK-NEXT:    %inner.iv = phi i64 [ 0, %inner.ph ], [ %inner.iv.next, %inner ]
+ ; CHECK-NEXT:    --> {0,+,2}<nuw><%inner> U: [0,-1) S: [-9223372036854775808,9223372036854775807) Exits: (-2 + (2 * ({9,+,-1}<nsw><%outer.header> /u 2))<nuw><nsw>)<nsw> LoopDispositions: { %inner: Computable, %outer.header: Uniform }
+ ; CHECK-NEXT:    %inner.iv.next = add i64 %inner.iv, 2
+-; CHECK-NEXT:    --> {2,+,2}<nw><%inner> U: [0,-1) S: [-9223372036854775808,9223372036854775807) Exits: (2 * ({9,+,-1}<nsw><%outer.header> /u 2))<nuw><nsw> LoopDispositions: { %inner: Computable, %outer.header: Uniform }
++; CHECK-NEXT:    --> {2,+,2}<nuw><%inner> U: [2,-1) S: [-9223372036854775808,9223372036854775807) Exits: (2 * ({9,+,-1}<nsw><%outer.header> /u 2))<nuw><nsw> LoopDispositions: { %inner: Computable, %outer.header: Uniform }
+ ; CHECK-NEXT:    %iv.next = add i64 %iv, 1
+ ; CHECK-NEXT:    --> {1,+,1}<nuw><nsw><%outer.header> U: [1,11) S: [1,11) Exits: 10 LoopDispositions: { %outer.header: Computable, %inner: Invariant }
+ ; CHECK-NEXT:  Determining loop execution counts for: @rewrite_add_rec
+diff --git a/llvm/test/Analysis/ScalarEvolution/max-backedge-taken-count-guard-info.ll b/llvm/test/Analysis/ScalarEvolution/max-backedge-taken-count-guard-info.ll
+index 85cb371f6a3d3..3d044aceb9697 100644
+--- a/llvm/test/Analysis/ScalarEvolution/max-backedge-taken-count-guard-info.ll
++++ b/llvm/test/Analysis/ScalarEvolution/max-backedge-taken-count-guard-info.ll
+@@ -774,9 +774,9 @@ define void @crash(ptr %ptr) {
+ ; CHECK-LABEL: 'crash'
+ ; CHECK-NEXT:  Classifying expressions for: @crash
+ ; CHECK-NEXT:    %text.addr.5 = phi ptr [ %incdec.ptr112, %while.cond111 ], [ null, %while.body ]
+-; CHECK-NEXT:    --> {null,+,-1}<nw><%while.cond111> U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %while.cond111: Computable, %while.body: Uniform }
++; CHECK-NEXT:    --> {null,+,-1}<nsw><%while.cond111> U: [-9223372036854775808,1) S: [-9223372036854775808,1) Exits: <<Unknown>> LoopDispositions: { %while.cond111: Computable, %while.body: Uniform }
+ ; CHECK-NEXT:    %incdec.ptr112 = getelementptr inbounds i8, ptr %text.addr.5, i64 -1
+-; CHECK-NEXT:    --> {(-1 + null)<nuw><nsw>,+,-1}<nw><%while.cond111> U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %while.cond111: Computable, %while.body: Uniform }
++; CHECK-NEXT:    --> {(-1 + null)<nuw><nsw>,+,-1}<nsw><%while.cond111> U: [-9223372036854775808,0) S: [-9223372036854775808,0) Exits: <<Unknown>> LoopDispositions: { %while.cond111: Computable, %while.body: Uniform }
+ ; CHECK-NEXT:    %lastout.2271 = phi ptr [ %incdec.ptr126, %while.body125 ], [ %ptr, %while.end117 ]
+ ; CHECK-NEXT:    --> {%ptr,+,1}<nuw><%while.body125> U: full-set S: full-set Exits: {(-2 + (-1 * (ptrtoaddr ptr %ptr to i64)) + %ptr),+,-1}<nw><%while.cond111> LoopDispositions: { %while.body125: Computable }
+ ; CHECK-NEXT:    %incdec.ptr126 = getelementptr inbounds i8, ptr %lastout.2271, i64 1
+diff --git a/llvm/test/Analysis/ScalarEvolution/mul-udiv-folds.ll b/llvm/test/Analysis/ScalarEvolution/mul-udiv-folds.ll
+index e5972e021aeef..e4f373ba46e15 100644
+--- a/llvm/test/Analysis/ScalarEvolution/mul-udiv-folds.ll
++++ b/llvm/test/Analysis/ScalarEvolution/mul-udiv-folds.ll
+@@ -165,7 +165,7 @@ define void @btc_depends_on_div_mul(i64 %x) {
+ ; CHECK-NEXT:    %iv = phi i64 [ 0, %entry ], [ %iv.next, %loop ]
+ ; CHECK-NEXT:    --> {0,+,2}<nuw><%loop> U: [0,-1) S: [-9223372036854775808,9223372036854775807) Exits: (-2 + (2 * ((2 * %x) /u 32))<nuw><nsw>)<nsw> LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %iv.next = add i64 %iv, 2
+-; CHECK-NEXT:    --> {2,+,2}<nw><%loop> U: [0,-1) S: [-9223372036854775808,9223372036854775807) Exits: (2 * ((2 * %x) /u 32))<nuw><nsw> LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    --> {2,+,2}<nuw><%loop> U: [2,-1) S: [-9223372036854775808,9223372036854775807) Exits: (2 * ((2 * %x) /u 32))<nuw><nsw> LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:  Determining loop execution counts for: @btc_depends_on_div_mul
+ ; CHECK-NEXT:  Loop %loop: backedge-taken count is ((-2 + (2 * ((2 * %x) /u 32))<nuw><nsw>)<nsw> /u 2)
+ ; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i64 9223372036854775807
+diff --git a/llvm/test/Analysis/ScalarEvolution/ptrtoint.ll b/llvm/test/Analysis/ScalarEvolution/ptrtoint.ll
+index 0a6d25b30d6d9..46fc8250bf923 100644
+--- a/llvm/test/Analysis/ScalarEvolution/ptrtoint.ll
++++ b/llvm/test/Analysis/ScalarEvolution/ptrtoint.ll
+@@ -619,7 +619,7 @@ define void @ptrtoint_of_integer(ptr %arg, i64 %arg1, i1 %arg2) local_unnamed_ad
+ ; X64-NEXT:    %i9 = phi i64 [ 1, %bb7 ], [ %i11, %bb10 ]
+ ; X64-NEXT:    --> {1,+,1}<nuw><%bb8> U: [1,0) S: [1,0) Exits: <<Unknown>> LoopDispositions: { %bb8: Computable }
+ ; X64-NEXT:    %i11 = add nuw i64 %i9, 1
+-; X64-NEXT:    --> {2,+,1}<nw><%bb8> U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %bb8: Computable }
++; X64-NEXT:    --> {2,+,1}<nuw><%bb8> U: [2,0) S: [2,0) Exits: <<Unknown>> LoopDispositions: { %bb8: Computable }
+ ; X64-NEXT:  Determining loop execution counts for: @ptrtoint_of_integer
+ ; X64-NEXT:  Loop %bb8: <multiple exits> Unpredictable backedge-taken count.
+ ; X64-NEXT:    exit count for bb8: ***COULDNOTCOMPUTE***
+@@ -638,7 +638,7 @@ define void @ptrtoint_of_integer(ptr %arg, i64 %arg1, i1 %arg2) local_unnamed_ad
+ ; X32-NEXT:    %i9 = phi i64 [ 1, %bb7 ], [ %i11, %bb10 ]
+ ; X32-NEXT:    --> {1,+,1}<nuw><%bb8> U: [1,0) S: [1,0) Exits: <<Unknown>> LoopDispositions: { %bb8: Computable }
+ ; X32-NEXT:    %i11 = add nuw i64 %i9, 1
+-; X32-NEXT:    --> {2,+,1}<nw><%bb8> U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %bb8: Computable }
++; X32-NEXT:    --> {2,+,1}<nuw><%bb8> U: [2,0) S: [2,0) Exits: <<Unknown>> LoopDispositions: { %bb8: Computable }
+ ; X32-NEXT:  Determining loop execution counts for: @ptrtoint_of_integer
+ ; X32-NEXT:  Loop %bb8: <multiple exits> Unpredictable backedge-taken count.
+ ; X32-NEXT:    exit count for bb8: ***COULDNOTCOMPUTE***
+@@ -687,6 +687,22 @@ define i64 @ptrtoint_signbits(i1 %c) {
+ ; CHECK-NEXT:    %a = ptrtoint ptr %p to i64
+ ; CHECK-NEXT:    --> %a U: full-set S: full-set
+ ; CHECK-NEXT:  Determining loop execution counts for: @ptrtoint_signbits
++;
++; X64-LABEL: 'ptrtoint_signbits'
++; X64-NEXT:  Classifying expressions for: @ptrtoint_signbits
++; X64-NEXT:    %p = select i1 %c, ptr null, ptr inttoptr (i64 -1 to ptr)
++; X64-NEXT:    --> %p U: [-1,1) S: [-1,1)
++; X64-NEXT:    %a = ptrtoint ptr %p to i64
++; X64-NEXT:    --> %a U: full-set S: full-set
++; X64-NEXT:  Determining loop execution counts for: @ptrtoint_signbits
++;
++; X32-LABEL: 'ptrtoint_signbits'
++; X32-NEXT:  Classifying expressions for: @ptrtoint_signbits
++; X32-NEXT:    %p = select i1 %c, ptr null, ptr inttoptr (i64 -1 to ptr)
++; X32-NEXT:    --> %p U: [-1,1) S: [-1,1)
++; X32-NEXT:    %a = ptrtoint ptr %p to i64
++; X32-NEXT:    --> %a U: [0,4294967296) S: [0,4294967296)
++; X32-NEXT:  Determining loop execution counts for: @ptrtoint_signbits
+ ;
+   %p = select i1 %c, ptr null, ptr inttoptr (i64 -1 to ptr)
+   %a = ptrtoint ptr %p to i64
+@@ -715,6 +731,48 @@ define void @ptrtoint_iv_start(ptr %arg, ptr %dst) {
+ ; CHECK-NEXT:  Loop %loop: Unpredictable constant max backedge-taken count.
+ ; CHECK-NEXT:  Loop %loop: Unpredictable symbolic max backedge-taken count.
+ ;
++; X64-LABEL: 'ptrtoint_iv_start'
++; X64-NEXT:  Classifying expressions for: @ptrtoint_iv_start
++; X64-NEXT:    %start = ptrtoint ptr %arg to i64
++; X64-NEXT:    --> %start U: full-set S: full-set
++; X64-NEXT:    %p = phi ptr [ %arg, %entry ], [ %p.next, %loop ]
++; X64-NEXT:    --> {%arg,+,8}<%loop> U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %loop: Computable }
++; X64-NEXT:    %pi = phi i64 [ %start, %entry ], [ %pi.next, %loop ]
++; X64-NEXT:    --> {%start,+,8}<%loop> U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %loop: Computable }
++; X64-NEXT:    %cur = ptrtoint ptr %p to i64
++; X64-NEXT:    --> {(ptrtoaddr ptr %arg to i64),+,8}<%loop> U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %loop: Computable }
++; X64-NEXT:    %off = sub i64 %cur, %pi
++; X64-NEXT:    --> ((-1 * %start) + (ptrtoaddr ptr %arg to i64)) U: full-set S: full-set Exits: ((-1 * %start) + (ptrtoaddr ptr %arg to i64)) LoopDispositions: { %loop: Invariant }
++; X64-NEXT:    %p.next = getelementptr i8, ptr %p, i64 8
++; X64-NEXT:    --> {(8 + %arg),+,8}<%loop> U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %loop: Computable }
++; X64-NEXT:    %pi.next = add i64 %pi, 8
++; X64-NEXT:    --> {(8 + %start),+,8}<%loop> U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %loop: Computable }
++; X64-NEXT:  Determining loop execution counts for: @ptrtoint_iv_start
++; X64-NEXT:  Loop %loop: Unpredictable backedge-taken count.
++; X64-NEXT:  Loop %loop: Unpredictable constant max backedge-taken count.
++; X64-NEXT:  Loop %loop: Unpredictable symbolic max backedge-taken count.
++;
++; X32-LABEL: 'ptrtoint_iv_start'
++; X32-NEXT:  Classifying expressions for: @ptrtoint_iv_start
++; X32-NEXT:    %start = ptrtoint ptr %arg to i64
++; X32-NEXT:    --> %start U: [0,4294967296) S: [0,4294967296)
++; X32-NEXT:    %p = phi ptr [ %arg, %entry ], [ %p.next, %loop ]
++; X32-NEXT:    --> {%arg,+,8}<%loop> U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %loop: Computable }
++; X32-NEXT:    %pi = phi i64 [ %start, %entry ], [ %pi.next, %loop ]
++; X32-NEXT:    --> {%start,+,8}<%loop> U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %loop: Computable }
++; X32-NEXT:    %cur = ptrtoint ptr %p to i64
++; X32-NEXT:    --> %cur U: [0,4294967296) S: [0,4294967296) Exits: <<Unknown>> LoopDispositions: { %loop: Variant }
++; X32-NEXT:    %off = sub i64 %cur, %pi
++; X32-NEXT:    --> ({(-1 * %start)<nsw>,+,-8}<%loop> + %cur) U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %loop: Variant }
++; X32-NEXT:    %p.next = getelementptr i8, ptr %p, i64 8
++; X32-NEXT:    --> {(8 + %arg),+,8}<%loop> U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %loop: Computable }
++; X32-NEXT:    %pi.next = add i64 %pi, 8
++; X32-NEXT:    --> {(8 + %start)<nuw><nsw>,+,8}<%loop> U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %loop: Computable }
++; X32-NEXT:  Determining loop execution counts for: @ptrtoint_iv_start
++; X32-NEXT:  Loop %loop: Unpredictable backedge-taken count.
++; X32-NEXT:  Loop %loop: Unpredictable constant max backedge-taken count.
++; X32-NEXT:  Loop %loop: Unpredictable symbolic max backedge-taken count.
++;
+ entry:
+   %start = ptrtoint ptr %arg to i64
+   br label %loop
+diff --git a/llvm/test/Analysis/ScalarEvolution/ranges.ll b/llvm/test/Analysis/ScalarEvolution/ranges.ll
+index cf54b1e63ad39..dee8e34ab633f 100644
+--- a/llvm/test/Analysis/ScalarEvolution/ranges.ll
++++ b/llvm/test/Analysis/ScalarEvolution/ranges.ll
+@@ -486,7 +486,7 @@ define void @truncate(i16 %n) {
+ ; CHECK-NEXT:    %iv = phi i16 [ 0, %entry ], [ %iv.inc, %loop ]
+ ; CHECK-NEXT:    --> {0,+,9}<nuw><%loop> U: [0,-6) S: [0,-6) Exits: (9 * ((((-1 * (1 umin %n))<nuw><nsw> + %n) /u 9) + (1 umin %n))) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %iv.inc = add nuw i16 %iv, 9
+-; CHECK-NEXT:    --> {9,+,9}<nw><%loop> U: [9,3) S: [9,3) Exits: (9 + (9 * ((((-1 * (1 umin %n))<nuw><nsw> + %n) /u 9) + (1 umin %n)))) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    --> {9,+,9}<nuw><%loop> U: [9,-6) S: [9,0) Exits: (9 + (9 * ((((-1 * (1 umin %n))<nuw><nsw> + %n) /u 9) + (1 umin %n)))) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %t = trunc i16 %iv.inc to i8
+ ; CHECK-NEXT:    --> {9,+,9}<%loop> U: full-set S: full-set Exits: (9 + (9 * (trunc i16 ((((-1 * (1 umin %n))<nuw><nsw> + %n) /u 9) + (1 umin %n)) to i8))) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:  Determining loop execution counts for: @truncate
+diff --git a/llvm/test/Analysis/ScalarEvolution/trip-count-implied-addrec.ll b/llvm/test/Analysis/ScalarEvolution/trip-count-implied-addrec.ll
+index 2ee2ec53f6c9e..0da70da5ac06f 100644
+--- a/llvm/test/Analysis/ScalarEvolution/trip-count-implied-addrec.ll
++++ b/llvm/test/Analysis/ScalarEvolution/trip-count-implied-addrec.ll
+@@ -138,18 +138,10 @@ for.end:                                          ; preds = %for.body, %entry
+ define void @rhs_mustexit_1(i16 %n.raw) mustprogress {
+ ; CHECK-LABEL: 'rhs_mustexit_1'
+ ; CHECK-NEXT:  Determining loop execution counts for: @rhs_mustexit_1
+-; CHECK-NEXT:  Loop %for.body: Unpredictable backedge-taken count.
+-; CHECK-NEXT:  Loop %for.body: Unpredictable constant max backedge-taken count.
+-; CHECK-NEXT:  Loop %for.body: Unpredictable symbolic max backedge-taken count.
+-; CHECK-NEXT:  Loop %for.body: Predicated backedge-taken count is (-1 + (1 umax (-1 + (zext i8 (trunc i16 %n.raw to i8) to i16))<nsw>))
+-; CHECK-NEXT:   Predicates:
+-; CHECK-NEXT:      {1,+,1}<nw><%for.body> Added Flags: <nusw>
+-; CHECK-NEXT:  Loop %for.body: Predicated constant max backedge-taken count is i16 -2
+-; CHECK-NEXT:   Predicates:
+-; CHECK-NEXT:      {1,+,1}<nw><%for.body> Added Flags: <nusw>
+-; CHECK-NEXT:  Loop %for.body: Predicated symbolic max backedge-taken count is (-1 + (1 umax (-1 + (zext i8 (trunc i16 %n.raw to i8) to i16))<nsw>))
+-; CHECK-NEXT:   Predicates:
+-; CHECK-NEXT:      {1,+,1}<nw><%for.body> Added Flags: <nusw>
++; CHECK-NEXT:  Loop %for.body: backedge-taken count is (-1 + (1 umax (-1 + (zext i8 (trunc i16 %n.raw to i8) to i16))<nsw>))
++; CHECK-NEXT:  Loop %for.body: constant max backedge-taken count is i16 -2
++; CHECK-NEXT:  Loop %for.body: symbolic max backedge-taken count is (-1 + (1 umax (-1 + (zext i8 (trunc i16 %n.raw to i8) to i16))<nsw>))
++; CHECK-NEXT:  Loop %for.body: Trip multiple is 1
+ ;
+ entry:
+   %n.and = and i16 %n.raw, 255
+@@ -245,9 +237,10 @@ for.end:                                          ; preds = %for.body, %entry
+ define void @neg_rhs_wrong_range(i16 %n.raw) mustprogress {
+ ; CHECK-LABEL: 'neg_rhs_wrong_range'
+ ; CHECK-NEXT:  Determining loop execution counts for: @neg_rhs_wrong_range
+-; CHECK-NEXT:  Loop %for.body: Unpredictable backedge-taken count.
+-; CHECK-NEXT:  Loop %for.body: Unpredictable constant max backedge-taken count.
+-; CHECK-NEXT:  Loop %for.body: Unpredictable symbolic max backedge-taken count.
++; CHECK-NEXT:  Loop %for.body: backedge-taken count is ((-1 + (2 umax (-1 + (zext i8 (trunc i16 %n.raw to i8) to i16))<nsw>)) /u 2)
++; CHECK-NEXT:  Loop %for.body: constant max backedge-taken count is i16 32766
++; CHECK-NEXT:  Loop %for.body: symbolic max backedge-taken count is ((-1 + (2 umax (-1 + (zext i8 (trunc i16 %n.raw to i8) to i16))<nsw>)) /u 2)
++; CHECK-NEXT:  Loop %for.body: Trip multiple is 1
+ ;
+ entry:
+   %n.and = and i16 %n.raw, 255
+diff --git a/llvm/test/Analysis/ScalarEvolution/trip-count-non-unit-stride.ll b/llvm/test/Analysis/ScalarEvolution/trip-count-non-unit-stride.ll
+index b52b4a984296c..4e4740f4b20e1 100644
+--- a/llvm/test/Analysis/ScalarEvolution/trip-count-non-unit-stride.ll
++++ b/llvm/test/Analysis/ScalarEvolution/trip-count-non-unit-stride.ll
+@@ -10,7 +10,7 @@ define void @test_preinc_ult(i64 %len) {
+ ; CHECK-NEXT:    %iv = phi i64 [ 0, %start ], [ %iv.inc2, %latch ]
+ ; CHECK-NEXT:    --> {0,+,2}<nuw><%loop> U: [0,-1) S: [-9223372036854775808,9223372036854775807) Exits: <<Unknown>> LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %iv.inc2 = add nuw i64 %iv, 2
+-; CHECK-NEXT:    --> {2,+,2}<nw><%loop> U: [0,-1) S: [-9223372036854775808,9223372036854775807) Exits: <<Unknown>> LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    --> {2,+,2}<nuw><%loop> U: [2,-1) S: [-9223372036854775808,9223372036854775807) Exits: <<Unknown>> LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:  Determining loop execution counts for: @test_preinc_ult
+ ; CHECK-NEXT:  Loop %loop: <multiple exits> Unpredictable backedge-taken count.
+ ; CHECK-NEXT:    exit count for loop: ***COULDNOTCOMPUTE***
+@@ -45,7 +45,7 @@ define void @test_postinc_ult(i64 %len) {
+ ; CHECK-NEXT:    %iv.inc = add nuw i64 %iv, 1
+ ; CHECK-NEXT:    --> {1,+,2}<nuw><%loop> U: [1,0) S: [1,0) Exits: <<Unknown>> LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %iv.inc2 = add nuw i64 %iv, 2
+-; CHECK-NEXT:    --> {2,+,2}<nw><%loop> U: [0,-1) S: [-9223372036854775808,9223372036854775807) Exits: <<Unknown>> LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    --> {2,+,2}<nuw><%loop> U: [2,-1) S: [-9223372036854775808,9223372036854775807) Exits: <<Unknown>> LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:  Determining loop execution counts for: @test_postinc_ult
+ ; CHECK-NEXT:  Loop %loop: <multiple exits> Unpredictable backedge-taken count.
+ ; CHECK-NEXT:    exit count for loop: ***COULDNOTCOMPUTE***
+@@ -148,7 +148,7 @@ define void @test_preinc_sgt(i64 %lim) {
+ ; CHECK-NEXT:    %iv = phi i64 [ 0, %start ], [ %iv.inc2, %latch ]
+ ; CHECK-NEXT:    --> {0,+,-2}<nsw><%loop> U: [0,-1) S: [-9223372036854775808,1) Exits: <<Unknown>> LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %iv.inc2 = add nsw i64 %iv, -2
+-; CHECK-NEXT:    --> {-2,+,-2}<nw><%loop> U: [0,-1) S: [-9223372036854775808,9223372036854775807) Exits: <<Unknown>> LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    --> {-2,+,-2}<nsw><%loop> U: [-9223372036854775808,-1) S: [-9223372036854775808,-1) Exits: <<Unknown>> LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:  Determining loop execution counts for: @test_preinc_sgt
+ ; CHECK-NEXT:  Loop %loop: <multiple exits> Unpredictable backedge-taken count.
+ ; CHECK-NEXT:    exit count for loop: ***COULDNOTCOMPUTE***
+@@ -183,7 +183,7 @@ define void @test_postinc_sgt(i64 %lim) {
+ ; CHECK-NEXT:    %iv.inc = add nsw i64 %iv, -1
+ ; CHECK-NEXT:    --> {-1,+,-2}<nsw><%loop> U: [-9223372036854775808,0) S: [-9223372036854775808,0) Exits: <<Unknown>> LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %iv.inc2 = add nsw i64 %iv, -2
+-; CHECK-NEXT:    --> {-2,+,-2}<nw><%loop> U: [0,-1) S: [-9223372036854775808,9223372036854775807) Exits: <<Unknown>> LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    --> {-2,+,-2}<nsw><%loop> U: [-9223372036854775808,-1) S: [-9223372036854775808,-1) Exits: <<Unknown>> LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:  Determining loop execution counts for: @test_postinc_sgt
+ ; CHECK-NEXT:  Loop %loop: <multiple exits> Unpredictable backedge-taken count.
+ ; CHECK-NEXT:    exit count for loop: ***COULDNOTCOMPUTE***
+diff --git a/llvm/test/Analysis/ScalarEvolution/umin-umax-folds.ll b/llvm/test/Analysis/ScalarEvolution/umin-umax-folds.ll
+index b97afae894621..08aa0a1482606 100644
+--- a/llvm/test/Analysis/ScalarEvolution/umin-umax-folds.ll
++++ b/llvm/test/Analysis/ScalarEvolution/umin-umax-folds.ll
+@@ -79,7 +79,7 @@ define void @uge_sext_x_zext_x(i32 %len) {
+ ; CHECK-NEXT:    %iv = phi i64 [ 0, %entry ], [ %iv.next, %loop ]
+ ; CHECK-NEXT:    --> {0,+,1}<nuw><%loop> U: full-set S: full-set Exits: (sext i32 %len to i64) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %iv.next = add i64 %iv, 1
+-; CHECK-NEXT:    --> {1,+,1}<nw><%loop> U: full-set S: full-set Exits: (1 + (sext i32 %len to i64))<nsw> LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    --> {1,+,1}<nuw><%loop> U: [1,0) S: [1,0) Exits: (1 + (sext i32 %len to i64))<nsw> LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %sel = select i1 %cmp1, i64 %len.zext, i64 %len.sext
+ ; CHECK-NEXT:    --> (sext i32 %len to i64) U: [-2147483648,2147483648) S: [-2147483648,2147483648) Exits: (sext i32 %len to i64) LoopDispositions: { %loop: Invariant }
+ ; CHECK-NEXT:  Determining loop execution counts for: @uge_sext_x_zext_x
+@@ -147,7 +147,7 @@ define void @ugt_sext_x_zext_x(i32 %len) {
+ ; CHECK-NEXT:    %iv = phi i64 [ 0, %entry ], [ %iv.next, %loop ]
+ ; CHECK-NEXT:    --> {0,+,1}<nuw><%loop> U: full-set S: full-set Exits: (sext i32 %len to i64) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %iv.next = add i64 %iv, 1
+-; CHECK-NEXT:    --> {1,+,1}<nw><%loop> U: full-set S: full-set Exits: (1 + (sext i32 %len to i64))<nsw> LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    --> {1,+,1}<nuw><%loop> U: [1,0) S: [1,0) Exits: (1 + (sext i32 %len to i64))<nsw> LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %umax = select i1 %cmp1, i64 %len.zext, i64 %len.sext
+ ; CHECK-NEXT:    --> (sext i32 %len to i64) U: [-2147483648,2147483648) S: [-2147483648,2147483648) Exits: (sext i32 %len to i64) LoopDispositions: { %loop: Invariant }
+ ; CHECK-NEXT:  Determining loop execution counts for: @ugt_sext_x_zext_x
+@@ -249,7 +249,7 @@ define void @slt_sext_x_zext_x(i32 %len) {
+ ; CHECK-NEXT:    %iv = phi i64 [ 0, %entry ], [ %iv.next, %loop ]
+ ; CHECK-NEXT:    --> {0,+,1}<nuw><%loop> U: full-set S: full-set Exits: (sext i32 %len to i64) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %iv.next = add i64 %iv, 1
+-; CHECK-NEXT:    --> {1,+,1}<nw><%loop> U: full-set S: full-set Exits: (1 + (sext i32 %len to i64))<nsw> LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    --> {1,+,1}<nuw><%loop> U: [1,0) S: [1,0) Exits: (1 + (sext i32 %len to i64))<nsw> LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %umin = select i1 %cmp1, i64 %len.zext, i64 %len.sext
+ ; CHECK-NEXT:    --> (sext i32 %len to i64) U: [-2147483648,2147483648) S: [-2147483648,2147483648) Exits: (sext i32 %len to i64) LoopDispositions: { %loop: Invariant }
+ ; CHECK-NEXT:  Determining loop execution counts for: @slt_sext_x_zext_x
+diff --git a/llvm/test/Transforms/IndVarSimplify/X86/eliminate-trunc.ll b/llvm/test/Transforms/IndVarSimplify/X86/eliminate-trunc.ll
+index a506739ad6cc8..0783332c9f107 100644
+--- a/llvm/test/Transforms/IndVarSimplify/X86/eliminate-trunc.ll
++++ b/llvm/test/Transforms/IndVarSimplify/X86/eliminate-trunc.ll
+@@ -119,12 +119,12 @@ define void @test_04(i32 %n) {
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    [[SMAX:%.*]] = call i32 @llvm.smax.i32(i32 [[N:%.*]], i32 -2147483647)
+ ; CHECK-NEXT:    [[TMP0:%.*]] = add i32 [[SMAX]], 1
++; CHECK-NEXT:    [[WIDE_TRIP_COUNT:%.*]] = sext i32 [[TMP0]] to i64
+ ; CHECK-NEXT:    br label [[LOOP:%.*]]
+ ; CHECK:       loop:
+ ; CHECK-NEXT:    [[IV:%.*]] = phi i64 [ -2147483647, [[ENTRY:%.*]] ], [ [[IV_NEXT:%.*]], [[LOOP]] ]
+ ; CHECK-NEXT:    [[IV_NEXT]] = add nsw i64 [[IV]], 1
+-; CHECK-NEXT:    [[LFTR_WIDEIV:%.*]] = trunc i64 [[IV_NEXT]] to i32
+-; CHECK-NEXT:    [[EXITCOND:%.*]] = icmp ne i32 [[LFTR_WIDEIV]], [[TMP0]]
++; CHECK-NEXT:    [[EXITCOND:%.*]] = icmp ne i64 [[IV_NEXT]], [[WIDE_TRIP_COUNT]]
+ ; CHECK-NEXT:    br i1 [[EXITCOND]], label [[LOOP]], label [[EXIT:%.*]]
+ ; CHECK:       exit:
+ ; CHECK-NEXT:    ret void
+@@ -147,12 +147,12 @@ define void @test_05(i32 %n) {
+ ; CHECK-LABEL: @test_05(
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    [[TMP0:%.*]] = add i32 [[N:%.*]], 1
++; CHECK-NEXT:    [[WIDE_TRIP_COUNT:%.*]] = sext i32 [[TMP0]] to i64
+ ; CHECK-NEXT:    br label [[LOOP:%.*]]
+ ; CHECK:       loop:
+ ; CHECK-NEXT:    [[IV:%.*]] = phi i64 [ -2147483648, [[ENTRY:%.*]] ], [ [[IV_NEXT:%.*]], [[LOOP]] ]
+ ; CHECK-NEXT:    [[IV_NEXT]] = add nsw i64 [[IV]], 1
+-; CHECK-NEXT:    [[LFTR_WIDEIV:%.*]] = trunc i64 [[IV_NEXT]] to i32
+-; CHECK-NEXT:    [[EXITCOND:%.*]] = icmp ne i32 [[LFTR_WIDEIV]], [[TMP0]]
++; CHECK-NEXT:    [[EXITCOND:%.*]] = icmp ne i64 [[IV_NEXT]], [[WIDE_TRIP_COUNT]]
+ ; CHECK-NEXT:    br i1 [[EXITCOND]], label [[LOOP]], label [[EXIT:%.*]]
+ ; CHECK:       exit:
+ ; CHECK-NEXT:    ret void
+@@ -223,12 +223,12 @@ define void @test_01_unsigned(i32 %n) {
+ ; CHECK-LABEL: @test_01_unsigned(
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    [[TMP0:%.*]] = add i32 [[N:%.*]], 1
++; CHECK-NEXT:    [[WIDE_TRIP_COUNT:%.*]] = zext i32 [[TMP0]] to i64
+ ; CHECK-NEXT:    br label [[LOOP:%.*]]
+ ; CHECK:       loop:
+ ; CHECK-NEXT:    [[IV:%.*]] = phi i64 [ 0, [[ENTRY:%.*]] ], [ [[IV_NEXT:%.*]], [[LOOP]] ]
+ ; CHECK-NEXT:    [[IV_NEXT]] = add nuw nsw i64 [[IV]], 1
+-; CHECK-NEXT:    [[LFTR_WIDEIV:%.*]] = trunc i64 [[IV_NEXT]] to i32
+-; CHECK-NEXT:    [[EXITCOND:%.*]] = icmp ne i32 [[LFTR_WIDEIV]], [[TMP0]]
++; CHECK-NEXT:    [[EXITCOND:%.*]] = icmp ne i64 [[IV_NEXT]], [[WIDE_TRIP_COUNT]]
+ ; CHECK-NEXT:    br i1 [[EXITCOND]], label [[LOOP]], label [[EXIT:%.*]]
+ ; CHECK:       exit:
+ ; CHECK-NEXT:    ret void
+@@ -300,12 +300,12 @@ define void @test_04_unsigned(i32 %n) {
+ ; CHECK-LABEL: @test_04_unsigned(
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    [[TMP0:%.*]] = add i32 [[N:%.*]], 1
++; CHECK-NEXT:    [[WIDE_TRIP_COUNT:%.*]] = zext i32 [[TMP0]] to i64
+ ; CHECK-NEXT:    br label [[LOOP:%.*]]
+ ; CHECK:       loop:
+ ; CHECK-NEXT:    [[IV:%.*]] = phi i64 [ 0, [[ENTRY:%.*]] ], [ [[IV_NEXT:%.*]], [[LOOP]] ]
+ ; CHECK-NEXT:    [[IV_NEXT]] = add nuw nsw i64 [[IV]], 1
+-; CHECK-NEXT:    [[LFTR_WIDEIV:%.*]] = trunc i64 [[IV_NEXT]] to i32
+-; CHECK-NEXT:    [[EXITCOND:%.*]] = icmp ne i32 [[LFTR_WIDEIV]], [[TMP0]]
++; CHECK-NEXT:    [[EXITCOND:%.*]] = icmp ne i64 [[IV_NEXT]], [[WIDE_TRIP_COUNT]]
+ ; CHECK-NEXT:    br i1 [[EXITCOND]], label [[LOOP]], label [[EXIT:%.*]]
+ ; CHECK:       exit:
+ ; CHECK-NEXT:    ret void
+@@ -328,12 +328,12 @@ define void @test_05_unsigned(i32 %n) {
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    [[UMAX:%.*]] = call i32 @llvm.umax.i32(i32 [[N:%.*]], i32 1)
+ ; CHECK-NEXT:    [[TMP0:%.*]] = add i32 [[UMAX]], 1
++; CHECK-NEXT:    [[WIDE_TRIP_COUNT:%.*]] = zext i32 [[TMP0]] to i64
+ ; CHECK-NEXT:    br label [[LOOP:%.*]]
+ ; CHECK:       loop:
+ ; CHECK-NEXT:    [[IV:%.*]] = phi i64 [ 1, [[ENTRY:%.*]] ], [ [[IV_NEXT:%.*]], [[LOOP]] ]
+ ; CHECK-NEXT:    [[IV_NEXT]] = add nuw nsw i64 [[IV]], 1
+-; CHECK-NEXT:    [[LFTR_WIDEIV:%.*]] = trunc i64 [[IV_NEXT]] to i32
+-; CHECK-NEXT:    [[EXITCOND:%.*]] = icmp ne i32 [[LFTR_WIDEIV]], [[TMP0]]
++; CHECK-NEXT:    [[EXITCOND:%.*]] = icmp ne i64 [[IV_NEXT]], [[WIDE_TRIP_COUNT]]
+ ; CHECK-NEXT:    br i1 [[EXITCOND]], label [[LOOP]], label [[EXIT:%.*]]
+ ; CHECK:       exit:
+ ; CHECK-NEXT:    ret void
+diff --git a/llvm/test/Transforms/IndVarSimplify/X86/overflow-intrinsics.ll b/llvm/test/Transforms/IndVarSimplify/X86/overflow-intrinsics.ll
+index 9b9bc68ba7ad8..8fe3bec86c08b 100644
+--- a/llvm/test/Transforms/IndVarSimplify/X86/overflow-intrinsics.ll
++++ b/llvm/test/Transforms/IndVarSimplify/X86/overflow-intrinsics.ll
+@@ -241,12 +241,12 @@ define void @f_ssub_overflow(ptr nocapture %a) {
+ ; CHECK-NEXT:    [[INDVARS_IV:%.*]] = phi i64 [ [[INDVARS_IV_NEXT:%.*]], %[[CONT:.*]] ], [ -2147483642, %[[ENTRY]] ]
+ ; CHECK-NEXT:    [[ARRAYIDX:%.*]] = getelementptr inbounds i8, ptr [[A]], i64 [[INDVARS_IV]]
+ ; CHECK-NEXT:    store i8 0, ptr [[ARRAYIDX]], align 1
+-; CHECK-NEXT:    br i1 true, label %[[TRAP:.*]], label %[[CONT]], !nosanitize [[META0]]
++; CHECK-NEXT:    [[INDVARS_IV_NEXT]] = add nsw i64 [[INDVARS_IV]], -1
++; CHECK-NEXT:    br i1 false, label %[[TRAP:.*]], label %[[CONT]], !nosanitize [[META0]]
+ ; CHECK:       [[TRAP]]:
+ ; CHECK-NEXT:    tail call void @llvm.trap(), !nosanitize [[META0]]
+ ; CHECK-NEXT:    unreachable, !nosanitize [[META0]]
+ ; CHECK:       [[CONT]]:
+-; CHECK-NEXT:    [[INDVARS_IV_NEXT]] = add nsw i64 [[INDVARS_IV]], -1
+ ; CHECK-NEXT:    br i1 true, label %[[FOR_BODY]], label %[[FOR_COND_CLEANUP]]
+ ;
+ entry:
+diff --git a/llvm/test/Transforms/IndVarSimplify/ada-loops.ll b/llvm/test/Transforms/IndVarSimplify/ada-loops.ll
+index 83f2f212a4385..e580f378011c4 100644
+--- a/llvm/test/Transforms/IndVarSimplify/ada-loops.ll
++++ b/llvm/test/Transforms/IndVarSimplify/ada-loops.ll
+@@ -29,8 +29,7 @@ define void @kinds__sbytezero(ptr nocapture %a) nounwind {
+ ; CHECK-NEXT:    [[TMP3:%.*]] = add nsw i32 [[INDVARS_IV_NEXT]], 128
+ ; CHECK-NEXT:    [[TMP4:%.*]] = getelementptr [256 x i32], ptr [[A]], i32 0, i32 [[TMP3]]
+ ; CHECK-NEXT:    store i32 0, ptr [[TMP4]], align 4
+-; CHECK-NEXT:    [[TMP0:%.*]] = icmp eq i32 [[INDVARS_IV_NEXT]], 127
+-; CHECK-NEXT:    br i1 [[TMP0]], label [[RETURN:%.*]], label [[BB]]
++; CHECK-NEXT:    br i1 false, label [[RETURN:%.*]], label [[BB]]
+ ; CHECK:       return:
+ ; CHECK-NEXT:    ret void
+ ;
+@@ -66,8 +65,7 @@ define void @kinds__ubytezero(ptr nocapture %a) nounwind {
+ ; CHECK-NEXT:    [[INDVARS_IV_NEXT]] = add nuw nsw i32 [[INDVARS_IV]], 1
+ ; CHECK-NEXT:    [[TMP3:%.*]] = getelementptr [256 x i32], ptr [[A]], i32 0, i32 [[INDVARS_IV_NEXT]]
+ ; CHECK-NEXT:    store i32 0, ptr [[TMP3]], align 4
+-; CHECK-NEXT:    [[TMP0:%.*]] = icmp eq i32 [[INDVARS_IV_NEXT]], 255
+-; CHECK-NEXT:    br i1 [[TMP0]], label [[RETURN:%.*]], label [[BB]]
++; CHECK-NEXT:    br i1 false, label [[RETURN:%.*]], label [[BB]]
+ ; CHECK:       return:
+ ; CHECK-NEXT:    ret void
+ ;
+diff --git a/llvm/test/Transforms/IndVarSimplify/add-nsw-zext-fold.ll b/llvm/test/Transforms/IndVarSimplify/add-nsw-zext-fold.ll
+index 1de41e47a8569..0235386c31b8e 100644
+--- a/llvm/test/Transforms/IndVarSimplify/add-nsw-zext-fold.ll
++++ b/llvm/test/Transforms/IndVarSimplify/add-nsw-zext-fold.ll
+@@ -19,16 +19,12 @@ define void @add_nsw_zext_fold_results_in_sext(i64 %len) {
+ ; CHECK-NEXT:    [[TMP1:%.*]] = zext nneg i32 [[ADD_I]] to i64
+ ; CHECK-NEXT:    br label %[[LOOP:.*]]
+ ; CHECK:       [[LOOP]]:
+-; CHECK-NEXT:    [[INDVARS_IV:%.*]] = phi i64 [ [[TMP1]], %[[LOOP_PREHEADER]] ], [ [[INDVARS_IV_NEXT:%.*]], %[[LOOP]] ]
+-; CHECK-NEXT:    [[IV:%.*]] = trunc nuw i64 [[INDVARS_IV]] to i32
+-; CHECK-NEXT:    [[IV_NEXT:%.*]] = add i32 [[IV]], 1
+-; CHECK-NEXT:    [[SH_PROM:%.*]] = zext nneg i32 [[IV_NEXT]] to i64
++; CHECK-NEXT:    [[INDVARS_IV:%.*]] = phi i64 [ [[TMP1]], %[[LOOP_PREHEADER]] ], [ [[SH_PROM:%.*]], %[[LOOP]] ]
++; CHECK-NEXT:    [[SH_PROM]] = add nuw nsw i64 [[INDVARS_IV]], 1
+ ; CHECK-NEXT:    [[SHR:%.*]] = lshr i64 1, [[SH_PROM]]
+ ; CHECK-NEXT:    [[TMP0:%.*]] = trunc nuw nsw i64 [[SHR]] to i32
+ ; CHECK-NEXT:    call void @foo(i32 [[TMP0]])
+-; CHECK-NEXT:    [[EC:%.*]] = icmp eq i32 [[IV_NEXT]], 0
+-; CHECK-NEXT:    [[INDVARS_IV_NEXT]] = add nuw nsw i64 [[INDVARS_IV]], 1
+-; CHECK-NEXT:    br i1 [[EC]], label %[[EXIT_LOOPEXIT:.*]], label %[[LOOP]]
++; CHECK-NEXT:    br i1 false, label %[[EXIT_LOOPEXIT:.*]], label %[[LOOP]]
+ ; CHECK:       [[EXIT_LOOPEXIT]]:
+ ; CHECK-NEXT:    br label %[[EXIT]]
+ ; CHECK:       [[EXIT]]:
+diff --git a/llvm/test/Transforms/IndVarSimplify/eliminate-exit.ll b/llvm/test/Transforms/IndVarSimplify/eliminate-exit.ll
+index b20891d2f9ed8..839476192d246 100644
+--- a/llvm/test/Transforms/IndVarSimplify/eliminate-exit.ll
++++ b/llvm/test/Transforms/IndVarSimplify/eliminate-exit.ll
+@@ -10,7 +10,7 @@ define void @ult(i64 %n, i64 %m) {
+ ; CHECK-NEXT:    br label [[LOOP:%.*]]
+ ; CHECK:       loop:
+ ; CHECK-NEXT:    [[IV:%.*]] = phi i64 [ [[IV_NEXT:%.*]], [[LATCH:%.*]] ], [ 0, [[LOOP_PREHEADER]] ]
+-; CHECK-NEXT:    [[IV_NEXT]] = add i64 [[IV]], 1
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw i64 [[IV]], 1
+ ; CHECK-NEXT:    [[CMP1:%.*]] = icmp ult i64 [[IV]], [[N]]
+ ; CHECK-NEXT:    br i1 [[CMP1]], label [[LATCH]], label [[EXIT_LOOPEXIT:%.*]]
+ ; CHECK:       latch:
+@@ -46,7 +46,7 @@ define void @ugt(i64 %n, i64 %m) {
+ ; CHECK-NEXT:    br label [[LOOP:%.*]]
+ ; CHECK:       loop:
+ ; CHECK-NEXT:    [[IV:%.*]] = phi i64 [ [[IV_NEXT:%.*]], [[LATCH:%.*]] ], [ 0, [[LOOP_PREHEADER]] ]
+-; CHECK-NEXT:    [[IV_NEXT]] = add i64 [[IV]], 1
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw i64 [[IV]], 1
+ ; CHECK-NEXT:    br i1 true, label [[LATCH]], label [[EXIT_LOOPEXIT:%.*]]
+ ; CHECK:       latch:
+ ; CHECK-NEXT:    call void @side_effect()
+@@ -82,7 +82,7 @@ define void @ule(i64 %n, i64 %m) {
+ ; CHECK-NEXT:    br label [[LOOP:%.*]]
+ ; CHECK:       loop:
+ ; CHECK-NEXT:    [[IV:%.*]] = phi i64 [ [[IV_NEXT:%.*]], [[LATCH:%.*]] ], [ 0, [[LOOP_PREHEADER]] ]
+-; CHECK-NEXT:    [[IV_NEXT]] = add i64 [[IV]], 1
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw i64 [[IV]], 1
+ ; CHECK-NEXT:    [[CMP1:%.*]] = icmp ult i64 [[IV]], [[N]]
+ ; CHECK-NEXT:    br i1 [[CMP1]], label [[LATCH]], label [[EXIT_LOOPEXIT:%.*]]
+ ; CHECK:       latch:
+@@ -119,7 +119,7 @@ define void @uge(i64 %n, i64 %m) {
+ ; CHECK-NEXT:    br label [[LOOP:%.*]]
+ ; CHECK:       loop:
+ ; CHECK-NEXT:    [[IV:%.*]] = phi i64 [ [[IV_NEXT:%.*]], [[LATCH:%.*]] ], [ 0, [[LOOP_PREHEADER]] ]
+-; CHECK-NEXT:    [[IV_NEXT]] = add i64 [[IV]], 1
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw i64 [[IV]], 1
+ ; CHECK-NEXT:    [[CMP1:%.*]] = icmp ult i64 [[IV]], [[N]]
+ ; CHECK-NEXT:    br i1 [[CMP1]], label [[LATCH]], label [[EXIT_LOOPEXIT:%.*]]
+ ; CHECK:       latch:
+diff --git a/llvm/test/Transforms/IndVarSimplify/finite-exit-comparisons.ll b/llvm/test/Transforms/IndVarSimplify/finite-exit-comparisons.ll
+index e006d9f6696ca..e55429371faaa 100644
+--- a/llvm/test/Transforms/IndVarSimplify/finite-exit-comparisons.ll
++++ b/llvm/test/Transforms/IndVarSimplify/finite-exit-comparisons.ll
+@@ -103,7 +103,7 @@ define void @slt_non_constant_rhs(i16 %n) mustprogress {
+ ; CHECK-NEXT:    br label [[FOR_BODY:%.*]]
+ ; CHECK:       for.body:
+ ; CHECK-NEXT:    [[IV:%.*]] = phi i8 [ [[IV_NEXT:%.*]], [[FOR_BODY]] ], [ 0, [[ENTRY:%.*]] ]
+-; CHECK-NEXT:    [[IV_NEXT]] = add i8 [[IV]], 1
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw i8 [[IV]], 1
+ ; CHECK-NEXT:    [[ZEXT:%.*]] = zext i8 [[IV_NEXT]] to i16
+ ; CHECK-NEXT:    [[CMP:%.*]] = icmp slt i16 [[ZEXT]], [[N:%.*]]
+ ; CHECK-NEXT:    br i1 [[CMP]], label [[FOR_BODY]], label [[FOR_END:%.*]]
+@@ -338,7 +338,7 @@ define void @ne_non_constant_rhs(i16 %n) mustprogress {
+ ; CHECK-NEXT:    br label [[FOR_BODY:%.*]]
+ ; CHECK:       for.body:
+ ; CHECK-NEXT:    [[IV:%.*]] = phi i8 [ [[IV_NEXT:%.*]], [[FOR_BODY]] ], [ 0, [[ENTRY:%.*]] ]
+-; CHECK-NEXT:    [[IV_NEXT]] = add i8 [[IV]], 1
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw i8 [[IV]], 1
+ ; CHECK-NEXT:    [[ZEXT:%.*]] = zext i8 [[IV_NEXT]] to i16
+ ; CHECK-NEXT:    [[CMP:%.*]] = icmp ne i16 [[ZEXT]], [[N:%.*]]
+ ; CHECK-NEXT:    br i1 [[CMP]], label [[FOR_BODY]], label [[FOR_END:%.*]]
+@@ -392,7 +392,7 @@ define void @eq_non_constant_rhs(i16 %n) mustprogress {
+ ; CHECK-NEXT:    br label [[FOR_BODY:%.*]]
+ ; CHECK:       for.body:
+ ; CHECK-NEXT:    [[IV:%.*]] = phi i8 [ [[IV_NEXT:%.*]], [[FOR_BODY]] ], [ 0, [[ENTRY:%.*]] ]
+-; CHECK-NEXT:    [[IV_NEXT]] = add i8 [[IV]], 1
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw i8 [[IV]], 1
+ ; CHECK-NEXT:    [[ZEXT:%.*]] = zext i8 [[IV_NEXT]] to i16
+ ; CHECK-NEXT:    [[CMP:%.*]] = icmp eq i16 [[ZEXT]], [[N:%.*]]
+ ; CHECK-NEXT:    br i1 [[CMP]], label [[FOR_BODY]], label [[FOR_END:%.*]]
+@@ -446,7 +446,7 @@ define void @sgt_non_constant_rhs(i16 %n) mustprogress {
+ ; CHECK-NEXT:    br label [[FOR_BODY:%.*]]
+ ; CHECK:       for.body:
+ ; CHECK-NEXT:    [[IV:%.*]] = phi i8 [ [[IV_NEXT:%.*]], [[FOR_BODY]] ], [ 0, [[ENTRY:%.*]] ]
+-; CHECK-NEXT:    [[IV_NEXT]] = add i8 [[IV]], 1
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw i8 [[IV]], 1
+ ; CHECK-NEXT:    [[ZEXT:%.*]] = zext i8 [[IV_NEXT]] to i16
+ ; CHECK-NEXT:    [[CMP:%.*]] = icmp sgt i16 [[ZEXT]], [[N:%.*]]
+ ; CHECK-NEXT:    br i1 [[CMP]], label [[FOR_BODY]], label [[FOR_END:%.*]]
+@@ -608,7 +608,7 @@ define void @ult_non_constant_rhs(i16 %n) mustprogress {
+ ; CHECK-NEXT:    br label [[FOR_BODY:%.*]]
+ ; CHECK:       for.body:
+ ; CHECK-NEXT:    [[IV:%.*]] = phi i8 [ [[IV_NEXT:%.*]], [[FOR_BODY]] ], [ 0, [[ENTRY:%.*]] ]
+-; CHECK-NEXT:    [[IV_NEXT]] = add i8 [[IV]], 1
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw i8 [[IV]], 1
+ ; CHECK-NEXT:    [[ZEXT:%.*]] = zext i8 [[IV_NEXT]] to i16
+ ; CHECK-NEXT:    [[CMP:%.*]] = icmp ult i16 [[ZEXT]], [[N:%.*]]
+ ; CHECK-NEXT:    br i1 [[CMP]], label [[FOR_BODY]], label [[FOR_END:%.*]]
+@@ -689,7 +689,7 @@ define void @ugt_non_constant_rhs(i16 %n) mustprogress {
+ ; CHECK-NEXT:    br label [[FOR_BODY:%.*]]
+ ; CHECK:       for.body:
+ ; CHECK-NEXT:    [[IV:%.*]] = phi i8 [ [[IV_NEXT:%.*]], [[FOR_BODY]] ], [ 0, [[ENTRY:%.*]] ]
+-; CHECK-NEXT:    [[IV_NEXT]] = add i8 [[IV]], 1
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw i8 [[IV]], 1
+ ; CHECK-NEXT:    [[ZEXT:%.*]] = zext i8 [[IV_NEXT]] to i16
+ ; CHECK-NEXT:    [[CMP:%.*]] = icmp ugt i16 [[ZEXT]], [[N:%.*]]
+ ; CHECK-NEXT:    br i1 [[CMP]], label [[FOR_BODY]], label [[FOR_END:%.*]]
+@@ -743,7 +743,7 @@ define void @ule_non_constant_rhs(i16 %n) mustprogress {
+ ; CHECK-NEXT:    br label [[FOR_BODY:%.*]]
+ ; CHECK:       for.body:
+ ; CHECK-NEXT:    [[IV:%.*]] = phi i8 [ [[IV_NEXT:%.*]], [[FOR_BODY]] ], [ 0, [[ENTRY:%.*]] ]
+-; CHECK-NEXT:    [[IV_NEXT]] = add i8 [[IV]], 1
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw i8 [[IV]], 1
+ ; CHECK-NEXT:    [[ZEXT:%.*]] = zext i8 [[IV_NEXT]] to i16
+ ; CHECK-NEXT:    [[CMP:%.*]] = icmp ule i16 [[ZEXT]], [[N:%.*]]
+ ; CHECK-NEXT:    br i1 [[CMP]], label [[FOR_BODY]], label [[FOR_END:%.*]]
+@@ -854,7 +854,7 @@ define void @slt_non_constant_lhs(i16 %n) mustprogress {
+ ; CHECK-NEXT:    br label [[FOR_BODY:%.*]]
+ ; CHECK:       for.body:
+ ; CHECK-NEXT:    [[IV:%.*]] = phi i8 [ [[IV_NEXT:%.*]], [[FOR_BODY]] ], [ 0, [[ENTRY:%.*]] ]
+-; CHECK-NEXT:    [[IV_NEXT]] = add i8 [[IV]], 1
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw i8 [[IV]], 1
+ ; CHECK-NEXT:    [[ZEXT:%.*]] = zext i8 [[IV_NEXT]] to i16
+ ; CHECK-NEXT:    [[CMP:%.*]] = icmp slt i16 [[N:%.*]], [[ZEXT]]
+ ; CHECK-NEXT:    br i1 [[CMP]], label [[FOR_BODY]], label [[FOR_END:%.*]]
+@@ -908,7 +908,7 @@ define void @ult_non_constant_lhs(i16 %n) mustprogress {
+ ; CHECK-NEXT:    br label [[FOR_BODY:%.*]]
+ ; CHECK:       for.body:
+ ; CHECK-NEXT:    [[IV:%.*]] = phi i8 [ [[IV_NEXT:%.*]], [[FOR_BODY]] ], [ 0, [[ENTRY:%.*]] ]
+-; CHECK-NEXT:    [[IV_NEXT]] = add i8 [[IV]], 1
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw i8 [[IV]], 1
+ ; CHECK-NEXT:    [[ZEXT:%.*]] = zext i8 [[IV_NEXT]] to i16
+ ; CHECK-NEXT:    [[CMP:%.*]] = icmp ult i16 [[N:%.*]], [[ZEXT]]
+ ; CHECK-NEXT:    br i1 [[CMP]], label [[FOR_BODY]], label [[FOR_END:%.*]]
+@@ -935,12 +935,12 @@ define i16 @ult_multiuse_profit(i16 %n.raw, i8 %start) mustprogress {
+ ; CHECK-NEXT:    [[TMP0:%.*]] = trunc i16 254 to i8
+ ; CHECK-NEXT:    br label [[FOR_BODY:%.*]]
+ ; CHECK:       for.body:
+-; CHECK-NEXT:    [[IV:%.*]] = phi i8 [ [[IV_NEXT:%.*]], [[FOR_BODY]] ], [ [[START]], [[ENTRY:%.*]] ]
++; CHECK-NEXT:    [[IV:%.*]] = phi i8 [ [[IV_NEXT:%.*]], [[FOR_BODY]] ], [ [[START:%.*]], [[ENTRY:%.*]] ]
+ ; CHECK-NEXT:    [[IV_NEXT]] = add i8 [[IV]], 1
+ ; CHECK-NEXT:    [[CMP:%.*]] = icmp ult i8 [[IV_NEXT]], [[TMP0]]
+ ; CHECK-NEXT:    br i1 [[CMP]], label [[FOR_BODY]], label [[FOR_END:%.*]]
+ ; CHECK:       for.end:
+-; CHECK-NEXT:    [[TMP1:%.*]] = add i8 [[START:%.*]], 1
++; CHECK-NEXT:    [[TMP1:%.*]] = add i8 [[START]], 1
+ ; CHECK-NEXT:    [[TMP2:%.*]] = zext i8 [[TMP1]] to i16
+ ; CHECK-NEXT:    [[UMAX:%.*]] = call i16 @llvm.umax.i16(i16 [[TMP2]], i16 254)
+ ; CHECK-NEXT:    ret i16 [[UMAX]]
+diff --git a/llvm/test/Transforms/IndVarSimplify/floating-point-iv.ll b/llvm/test/Transforms/IndVarSimplify/floating-point-iv.ll
+index d45785b7818cf..97ab2ee8b76ec 100644
+--- a/llvm/test/Transforms/IndVarSimplify/floating-point-iv.ll
++++ b/llvm/test/Transforms/IndVarSimplify/floating-point-iv.ll
+@@ -335,8 +335,7 @@ define void @fcmp_neg1() nounwind {
+ ; CHECK-NEXT:    br label [[BB:%.*]]
+ ; CHECK:       bb:
+ ; CHECK-NEXT:    [[IV:%.*]] = phi i64 [ 0, [[ENTRY:%.*]] ], [ [[IV_NEXT:%.*]], [[BACKEDGE:%.*]] ]
+-; CHECK-NEXT:    [[CMP1:%.*]] = icmp ult i64 [[IV]], -20
+-; CHECK-NEXT:    br i1 [[CMP1]], label [[BACKEDGE]], label [[RETURN:%.*]]
++; CHECK-NEXT:    br i1 true, label [[BACKEDGE]], label [[RETURN:%.*]]
+ ; CHECK:       backedge:
+ ; CHECK-NEXT:    [[IV_FP:%.*]] = sitofp i64 [[IV]] to double
+ ; CHECK-NEXT:    [[TMP0:%.*]] = tail call i32 @foo(double [[IV_FP]]) #[[ATTR0]]
+diff --git a/llvm/test/Transforms/IndVarSimplify/infer-poison-flags.ll b/llvm/test/Transforms/IndVarSimplify/infer-poison-flags.ll
+index 6b28b933687e4..c5800421b7e13 100644
+--- a/llvm/test/Transforms/IndVarSimplify/infer-poison-flags.ll
++++ b/llvm/test/Transforms/IndVarSimplify/infer-poison-flags.ll
+@@ -38,8 +38,7 @@ define void @add_cr_nuw() {
+ ; CHECK-NEXT:    [[I:%.*]] = phi i32 [ 0, [[ENTRY:%.*]] ], [ [[I_NEXT:%.*]], [[LOOP]] ]
+ ; CHECK-NEXT:    [[I_NEXT]] = add nuw i32 [[I]], 1
+ ; CHECK-NEXT:    store i32 [[I]], ptr @A, align 4
+-; CHECK-NEXT:    [[C:%.*]] = icmp ne i32 [[I_NEXT]], -1
+-; CHECK-NEXT:    br i1 [[C]], label [[LOOP]], label [[LOOPEXIT:%.*]]
++; CHECK-NEXT:    br i1 true, label [[LOOP]], label [[LOOPEXIT:%.*]]
+ ; CHECK:       loopexit:
+ ; CHECK-NEXT:    ret void
+ ;
+@@ -90,10 +89,9 @@ define void @add_cr_none() {
+ ; CHECK-NEXT:    br label [[LOOP:%.*]]
+ ; CHECK:       loop:
+ ; CHECK-NEXT:    [[I:%.*]] = phi i32 [ 10, [[ENTRY:%.*]] ], [ [[I_NEXT:%.*]], [[LOOP]] ]
+-; CHECK-NEXT:    [[I_NEXT]] = add i32 [[I]], 1
++; CHECK-NEXT:    [[I_NEXT]] = add nuw i32 [[I]], 1
+ ; CHECK-NEXT:    store i32 [[I]], ptr @A, align 4
+-; CHECK-NEXT:    [[C:%.*]] = icmp ne i32 [[I_NEXT]], 0
+-; CHECK-NEXT:    br i1 [[C]], label [[LOOP]], label [[LOOPEXIT:%.*]]
++; CHECK-NEXT:    br i1 true, label [[LOOP]], label [[LOOPEXIT:%.*]]
+ ; CHECK:       loopexit:
+ ; CHECK-NEXT:    ret void
+ ;
+@@ -117,7 +115,7 @@ define void @add_unknown_none(i32 %n) {
+ ; CHECK-NEXT:    br label [[LOOP:%.*]]
+ ; CHECK:       loop:
+ ; CHECK-NEXT:    [[I:%.*]] = phi i32 [ 0, [[ENTRY:%.*]] ], [ [[I_NEXT:%.*]], [[LOOP]] ]
+-; CHECK-NEXT:    [[I_NEXT]] = add i32 [[I]], 1
++; CHECK-NEXT:    [[I_NEXT]] = add nuw i32 [[I]], 1
+ ; CHECK-NEXT:    store i32 [[I]], ptr @A, align 4
+ ; CHECK-NEXT:    [[C:%.*]] = icmp ne i32 [[I_NEXT]], [[N:%.*]]
+ ; CHECK-NEXT:    br i1 [[C]], label [[LOOP]], label [[LOOPEXIT:%.*]]
+diff --git a/llvm/test/Transforms/IndVarSimplify/lftr-dead-ivs.ll b/llvm/test/Transforms/IndVarSimplify/lftr-dead-ivs.ll
+index fd6f2b694a729..1a0e6132daab5 100644
+--- a/llvm/test/Transforms/IndVarSimplify/lftr-dead-ivs.ll
++++ b/llvm/test/Transforms/IndVarSimplify/lftr-dead-ivs.ll
+@@ -25,17 +25,14 @@ define void @neg_dynamically_dead_inbounds(i1 %always_false) #0 {
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    br label [[LOOP:%.*]]
+ ; CHECK:       loop:
+-; CHECK-NEXT:    [[I_0:%.*]] = phi i8 [ 0, [[ENTRY:%.*]] ], [ [[TMP4:%.*]], [[CONT:%.*]] ]
+-; CHECK-NEXT:    [[P_0:%.*]] = phi ptr [ @data, [[ENTRY]] ], [ [[TMP3:%.*]], [[CONT]] ]
++; CHECK-NEXT:    [[P_0:%.*]] = phi ptr [ @data, [[ENTRY:%.*]] ], [ [[TMP3:%.*]], [[CONT:%.*]] ]
+ ; CHECK-NEXT:    [[TMP3]] = getelementptr inbounds i8, ptr [[P_0]], i64 1
+ ; CHECK-NEXT:    br i1 [[ALWAYS_FALSE:%.*]], label [[NEVER_EXECUTED:%.*]], label [[CONT]]
+ ; CHECK:       never_executed:
+ ; CHECK-NEXT:    store volatile i8 0, ptr [[TMP3]], align 1
+ ; CHECK-NEXT:    br label [[CONT]]
+ ; CHECK:       cont:
+-; CHECK-NEXT:    [[TMP4]] = add nuw i8 [[I_0]], 1
+-; CHECK-NEXT:    [[EXITCOND:%.*]] = icmp ne i8 [[TMP4]], -10
+-; CHECK-NEXT:    br i1 [[EXITCOND]], label [[LOOP]], label [[EXIT:%.*]]
++; CHECK-NEXT:    br i1 true, label [[LOOP]], label [[EXIT:%.*]]
+ ; CHECK:       exit:
+ ; CHECK-NEXT:    ret void
+ ;
+@@ -68,17 +65,14 @@ define void @neg_dynamically_dead_inbounds2(ptr %a, i1 %always_false) #0 {
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    br label [[LOOP:%.*]]
+ ; CHECK:       loop:
+-; CHECK-NEXT:    [[I_0:%.*]] = phi i8 [ 0, [[ENTRY:%.*]] ], [ [[TMP4:%.*]], [[CONT:%.*]] ]
+-; CHECK-NEXT:    [[P_0:%.*]] = phi ptr [ [[A:%.*]], [[ENTRY]] ], [ [[TMP3:%.*]], [[CONT]] ]
++; CHECK-NEXT:    [[P_0:%.*]] = phi ptr [ [[A:%.*]], [[ENTRY:%.*]] ], [ [[TMP3:%.*]], [[CONT:%.*]] ]
+ ; CHECK-NEXT:    [[TMP3]] = getelementptr inbounds i8, ptr [[P_0]], i64 1
+ ; CHECK-NEXT:    br i1 [[ALWAYS_FALSE:%.*]], label [[NEVER_EXECUTED:%.*]], label [[CONT]]
+ ; CHECK:       never_executed:
+ ; CHECK-NEXT:    store volatile i8 0, ptr [[TMP3]], align 1
+ ; CHECK-NEXT:    br label [[CONT]]
+ ; CHECK:       cont:
+-; CHECK-NEXT:    [[TMP4]] = add nuw i8 [[I_0]], 1
+-; CHECK-NEXT:    [[EXITCOND:%.*]] = icmp ne i8 [[TMP4]], -10
+-; CHECK-NEXT:    br i1 [[EXITCOND]], label [[LOOP]], label [[EXIT:%.*]]
++; CHECK-NEXT:    br i1 true, label [[LOOP]], label [[EXIT:%.*]]
+ ; CHECK:       exit:
+ ; CHECK-NEXT:    ret void
+ ;
+@@ -112,8 +106,7 @@ define void @dom_store_preinc() #0 {
+ ; CHECK-NEXT:    [[P_0:%.*]] = phi ptr [ @data, [[ENTRY:%.*]] ], [ [[TMP3:%.*]], [[LOOP]] ]
+ ; CHECK-NEXT:    store volatile i8 0, ptr [[P_0]], align 1
+ ; CHECK-NEXT:    [[TMP3]] = getelementptr inbounds i8, ptr [[P_0]], i64 1
+-; CHECK-NEXT:    [[EXITCOND:%.*]] = icmp ne ptr [[P_0]], getelementptr nuw (i8, ptr @data, i64 245)
+-; CHECK-NEXT:    br i1 [[EXITCOND]], label [[LOOP]], label [[EXIT:%.*]]
++; CHECK-NEXT:    br i1 true, label [[LOOP]], label [[EXIT:%.*]]
+ ; CHECK:       exit:
+ ; CHECK-NEXT:    ret void
+ ;
+@@ -141,8 +134,7 @@ define void @dom_store_postinc() #0 {
+ ; CHECK-NEXT:    [[P_0:%.*]] = phi ptr [ @data, [[ENTRY:%.*]] ], [ [[TMP3:%.*]], [[LOOP]] ]
+ ; CHECK-NEXT:    [[TMP3]] = getelementptr inbounds i8, ptr [[P_0]], i64 1
+ ; CHECK-NEXT:    store volatile i8 0, ptr [[TMP3]], align 1
+-; CHECK-NEXT:    [[EXITCOND:%.*]] = icmp ne ptr [[TMP3]], getelementptr nuw (i8, ptr @data, i64 246)
+-; CHECK-NEXT:    br i1 [[EXITCOND]], label [[LOOP]], label [[EXIT:%.*]]
++; CHECK-NEXT:    br i1 true, label [[LOOP]], label [[EXIT:%.*]]
+ ; CHECK:       exit:
+ ; CHECK-NEXT:    ret void
+ ;
+@@ -170,8 +162,7 @@ define i8 @dom_load() #0 {
+ ; CHECK-NEXT:    [[P_0:%.*]] = phi ptr [ @data, [[ENTRY:%.*]] ], [ [[TMP3:%.*]], [[LOOP]] ]
+ ; CHECK-NEXT:    [[TMP3]] = getelementptr inbounds i8, ptr [[P_0]], i64 1
+ ; CHECK-NEXT:    [[V:%.*]] = load i8, ptr [[TMP3]], align 1
+-; CHECK-NEXT:    [[EXITCOND:%.*]] = icmp ne ptr [[TMP3]], getelementptr nuw (i8, ptr @data, i64 246)
+-; CHECK-NEXT:    br i1 [[EXITCOND]], label [[LOOP]], label [[EXIT:%.*]]
++; CHECK-NEXT:    br i1 true, label [[LOOP]], label [[EXIT:%.*]]
+ ; CHECK:       exit:
+ ; CHECK-NEXT:    [[V_LCSSA:%.*]] = phi i8 [ [[V]], [[LOOP]] ]
+ ; CHECK-NEXT:    ret i8 [[V_LCSSA]]
+@@ -197,13 +188,10 @@ define i64 @dom_div(i64 %input) #0 {
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    br label [[LOOP:%.*]]
+ ; CHECK:       loop:
+-; CHECK-NEXT:    [[I_0:%.*]] = phi i8 [ 0, [[ENTRY:%.*]] ], [ [[TMP4:%.*]], [[LOOP]] ]
+-; CHECK-NEXT:    [[I_1:%.*]] = phi i64 [ [[INPUT:%.*]], [[ENTRY]] ], [ [[TMP3:%.*]], [[LOOP]] ]
++; CHECK-NEXT:    [[I_1:%.*]] = phi i64 [ [[INPUT:%.*]], [[ENTRY:%.*]] ], [ [[TMP3:%.*]], [[LOOP]] ]
+ ; CHECK-NEXT:    [[TMP3]] = add nuw nsw i64 [[I_1]], 1
+ ; CHECK-NEXT:    [[V:%.*]] = udiv i64 5, [[TMP3]]
+-; CHECK-NEXT:    [[TMP4]] = add nuw i8 [[I_0]], 1
+-; CHECK-NEXT:    [[EXITCOND:%.*]] = icmp ne i8 [[TMP4]], -10
+-; CHECK-NEXT:    br i1 [[EXITCOND]], label [[LOOP]], label [[EXIT:%.*]]
++; CHECK-NEXT:    br i1 true, label [[LOOP]], label [[EXIT:%.*]]
+ ; CHECK:       exit:
+ ; CHECK-NEXT:    [[V_LCSSA:%.*]] = phi i64 [ [[V]], [[LOOP]] ]
+ ; CHECK-NEXT:    ret i64 [[V_LCSSA]]
+@@ -231,10 +219,7 @@ define void @neg_dead_int_iv() #0 {
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    br label [[LOOP:%.*]]
+ ; CHECK:       loop:
+-; CHECK-NEXT:    [[I_1:%.*]] = phi i64 [ -2, [[ENTRY:%.*]] ], [ [[TMP3:%.*]], [[LOOP]] ]
+-; CHECK-NEXT:    [[TMP3]] = add nsw i64 [[I_1]], 1
+-; CHECK-NEXT:    [[EXITCOND:%.*]] = icmp ne i64 [[TMP3]], 244
+-; CHECK-NEXT:    br i1 [[EXITCOND]], label [[LOOP]], label [[EXIT:%.*]]
++; CHECK-NEXT:    br i1 true, label [[LOOP]], label [[EXIT:%.*]]
+ ; CHECK:       exit:
+ ; CHECK-NEXT:    ret void
+ ;
+diff --git a/llvm/test/Transforms/IndVarSimplify/lftr-multi-exit.ll b/llvm/test/Transforms/IndVarSimplify/lftr-multi-exit.ll
+index 0898c6c2dae34..a2cdcaaff59db 100644
+--- a/llvm/test/Transforms/IndVarSimplify/lftr-multi-exit.ll
++++ b/llvm/test/Transforms/IndVarSimplify/lftr-multi-exit.ll
+@@ -172,7 +172,7 @@ define void @unanalyzeable_latch(i32 %n) {
+ ; CHECK-NEXT:    [[EXITCOND:%.*]] = icmp ne i32 [[IV]], [[N:%.*]]
+ ; CHECK-NEXT:    br i1 [[EXITCOND]], label [[LATCH]], label [[EXIT:%.*]]
+ ; CHECK:       latch:
+-; CHECK-NEXT:    [[IV_NEXT]] = add i32 [[IV]], 1
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw i32 [[IV]], 1
+ ; CHECK-NEXT:    store i32 [[IV]], ptr @A, align 4
+ ; CHECK-NEXT:    [[VOL:%.*]] = load volatile i32, ptr @A, align 4
+ ; CHECK-NEXT:    [[C:%.*]] = icmp ult i32 [[VOL]], 1000
+@@ -208,7 +208,7 @@ define void @single_exit_no_latch(i32 %n) {
+ ; CHECK-NEXT:    [[EXITCOND:%.*]] = icmp ne i32 [[IV]], [[N:%.*]]
+ ; CHECK-NEXT:    br i1 [[EXITCOND]], label [[LATCH]], label [[EXIT:%.*]]
+ ; CHECK:       latch:
+-; CHECK-NEXT:    [[IV_NEXT]] = add i32 [[IV]], 1
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw i32 [[IV]], 1
+ ; CHECK-NEXT:    store i32 [[IV]], ptr @A, align 4
+ ; CHECK-NEXT:    br label [[LOOP]]
+ ; CHECK:       exit:
+@@ -247,7 +247,7 @@ define void @no_latch_exit(i32 %n, i32 %m) {
+ ; CHECK-NEXT:    br i1 [[EXITCOND1]], label [[LATCH]], label [[EXIT]]
+ ; CHECK:       latch:
+ ; CHECK-NEXT:    store volatile i32 [[IV]], ptr @A, align 4
+-; CHECK-NEXT:    [[IV_NEXT]] = add i32 [[IV]], 1
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw i32 [[IV]], 1
+ ; CHECK-NEXT:    br label [[LOOP]]
+ ; CHECK:       exit:
+ ; CHECK-NEXT:    ret void
+diff --git a/llvm/test/Transforms/IndVarSimplify/lftr-pr31181.ll b/llvm/test/Transforms/IndVarSimplify/lftr-pr31181.ll
+index e836a7dfccea0..caabc87a8fa48 100644
+--- a/llvm/test/Transforms/IndVarSimplify/lftr-pr31181.ll
++++ b/llvm/test/Transforms/IndVarSimplify/lftr-pr31181.ll
+@@ -194,9 +194,8 @@ define i32 @switch_to_different_iv_post_inc(ptr %ptr, i1 %always_false) {
+ ; CHECK-NEXT:    br label [[ALWAYS_TAKEN]]
+ ; CHECK:       always_taken:
+ ; CHECK-NEXT:    [[IV_INC]] = add nsw i32 [[IV]], 1
+-; CHECK-NEXT:    [[IV2_INC]] = add nuw i32 [[IV2]], 1
+-; CHECK-NEXT:    [[EXITCOND:%.*]] = icmp ne i32 [[IV2_INC]], -2147483627
+-; CHECK-NEXT:    br i1 [[EXITCOND]], label [[FOR_COND]], label [[FOR_END:%.*]]
++; CHECK-NEXT:    [[IV2_INC]] = add nuw nsw i32 [[IV2]], 1
++; CHECK-NEXT:    br i1 true, label [[FOR_COND]], label [[FOR_END:%.*]]
+ ; CHECK:       for.end:
+ ; CHECK-NEXT:    ret i32 0
+ ;
+@@ -233,8 +232,7 @@ define i32 @switch_to_different_iv_pre_inc(ptr %ptr, i1 %always_false) {
+ ; CHECK-NEXT:    [[IV:%.*]] = phi i32 [ -2147483648, [[ENTRY:%.*]] ], [ [[IV_INC:%.*]], [[ALWAYS_TAKEN:%.*]] ]
+ ; CHECK-NEXT:    [[IV2:%.*]] = phi i32 [ 0, [[ENTRY]] ], [ [[IV2_INC:%.*]], [[ALWAYS_TAKEN]] ]
+ ; CHECK-NEXT:    store i32 [[IV]], ptr [[PTR:%.*]], align 4
+-; CHECK-NEXT:    [[EXITCOND:%.*]] = icmp ne i32 [[IV2]], -2147483628
+-; CHECK-NEXT:    br i1 [[EXITCOND]], label [[FOR_BODY:%.*]], label [[FOR_END:%.*]]
++; CHECK-NEXT:    br i1 true, label [[FOR_BODY:%.*]], label [[FOR_END:%.*]]
+ ; CHECK:       for.body:
+ ; CHECK-NEXT:    br i1 [[ALWAYS_FALSE:%.*]], label [[NEVER_TAKEN:%.*]], label [[ALWAYS_TAKEN]]
+ ; CHECK:       never_taken:
+@@ -242,7 +240,7 @@ define i32 @switch_to_different_iv_pre_inc(ptr %ptr, i1 %always_false) {
+ ; CHECK-NEXT:    br label [[ALWAYS_TAKEN]]
+ ; CHECK:       always_taken:
+ ; CHECK-NEXT:    [[IV_INC]] = add nsw i32 [[IV]], 1
+-; CHECK-NEXT:    [[IV2_INC]] = add nuw i32 [[IV2]], 1
++; CHECK-NEXT:    [[IV2_INC]] = add nuw nsw i32 [[IV2]], 1
+ ; CHECK-NEXT:    br label [[FOR_COND]]
+ ; CHECK:       for.end:
+ ; CHECK-NEXT:    ret i32 0
+@@ -288,8 +286,7 @@ define i32 @switch_to_different_iv_first_poison(ptr %ptr, i1 %always_false) {
+ ; CHECK:       always_taken:
+ ; CHECK-NEXT:    [[IV2_INC]] = add nuw nsw i32 [[IV2]], 1
+ ; CHECK-NEXT:    [[IV_INC]] = add nsw i32 [[IV]], 1
+-; CHECK-NEXT:    [[EXITCOND:%.*]] = icmp ne i32 [[IV2_INC]], -2147483628
+-; CHECK-NEXT:    br i1 [[EXITCOND]], label [[FOR_COND]], label [[FOR_END:%.*]]
++; CHECK-NEXT:    br i1 true, label [[FOR_COND]], label [[FOR_END:%.*]]
+ ; CHECK:       for.end:
+ ; CHECK-NEXT:    ret i32 0
+ ;
+@@ -329,10 +326,9 @@ define i32 @switch_to_different_iv_second_poison(ptr %ptr, i1 %always_false) {
+ ; CHECK-NEXT:    store volatile i32 [[IV2]], ptr [[PTR]], align 4
+ ; CHECK-NEXT:    br label [[ALWAYS_TAKEN]]
+ ; CHECK:       always_taken:
+-; CHECK-NEXT:    [[IV2_INC]] = add nsw i32 [[IV2]], 1
++; CHECK-NEXT:    [[IV2_INC]] = add nuw nsw i32 [[IV2]], 1
+ ; CHECK-NEXT:    [[IV_INC]] = add nsw i32 [[IV]], 1
+-; CHECK-NEXT:    [[EXITCOND:%.*]] = icmp ne i32 [[IV2_INC]], -2147483629
+-; CHECK-NEXT:    br i1 [[EXITCOND]], label [[FOR_COND]], label [[FOR_END:%.*]]
++; CHECK-NEXT:    br i1 true, label [[FOR_COND]], label [[FOR_END:%.*]]
+ ; CHECK:       for.end:
+ ; CHECK-NEXT:    ret i32 0
+ ;
+diff --git a/llvm/test/Transforms/IndVarSimplify/lftr-pr41998.ll b/llvm/test/Transforms/IndVarSimplify/lftr-pr41998.ll
+index b7f4756b2757f..8b89cae7560cf 100644
+--- a/llvm/test/Transforms/IndVarSimplify/lftr-pr41998.ll
++++ b/llvm/test/Transforms/IndVarSimplify/lftr-pr41998.ll
+@@ -8,13 +8,13 @@ define void @test_int(i32 %start, ptr %p) {
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    [[TMP0:%.*]] = trunc i32 [[START:%.*]] to i3
+ ; CHECK-NEXT:    [[TMP1:%.*]] = sub i3 0, [[TMP0]]
++; CHECK-NEXT:    [[WIDE_TRIP_COUNT:%.*]] = zext i3 [[TMP1]] to i32
+ ; CHECK-NEXT:    br label [[LOOP:%.*]]
+ ; CHECK:       loop:
+ ; CHECK-NEXT:    [[I2:%.*]] = phi i32 [ 0, [[ENTRY:%.*]] ], [ [[I2_INC:%.*]], [[LOOP]] ]
+ ; CHECK-NEXT:    [[I2_INC]] = add nuw nsw i32 [[I2]], 1
+ ; CHECK-NEXT:    store volatile i32 [[I2_INC]], ptr [[P:%.*]], align 4
+-; CHECK-NEXT:    [[LFTR_WIDEIV:%.*]] = trunc i32 [[I2_INC]] to i3
+-; CHECK-NEXT:    [[EXITCOND:%.*]] = icmp eq i3 [[LFTR_WIDEIV]], [[TMP1]]
++; CHECK-NEXT:    [[EXITCOND:%.*]] = icmp eq i32 [[I2_INC]], [[WIDE_TRIP_COUNT]]
+ ; CHECK-NEXT:    br i1 [[EXITCOND]], label [[END:%.*]], label [[LOOP]]
+ ; CHECK:       end:
+ ; CHECK-NEXT:    ret void
+diff --git a/llvm/test/Transforms/IndVarSimplify/lftr.ll b/llvm/test/Transforms/IndVarSimplify/lftr.ll
+index 5ee62ba357ab6..17d7735820361 100644
+--- a/llvm/test/Transforms/IndVarSimplify/lftr.ll
++++ b/llvm/test/Transforms/IndVarSimplify/lftr.ll
+@@ -196,8 +196,7 @@ define void @test_zext(ptr %a) #0 {
+ ; CHECK-NEXT:    [[T2:%.*]] = load i8, ptr [[DOT0]], align 1
+ ; CHECK-NEXT:    [[T3]] = getelementptr inbounds i8, ptr [[P_0]], i64 1
+ ; CHECK-NEXT:    store i8 [[T2]], ptr [[P_0]], align 1
+-; CHECK-NEXT:    [[EXITCOND:%.*]] = icmp ne ptr [[P_0]], getelementptr inbounds nuw (i8, ptr @data, i64 239)
+-; CHECK-NEXT:    br i1 [[EXITCOND]], label [[LOOP]], label [[EXIT:%.*]]
++; CHECK-NEXT:    br i1 true, label [[LOOP]], label [[EXIT:%.*]]
+ ; CHECK:       exit:
+ ; CHECK-NEXT:    ret void
+ ;
+@@ -366,9 +365,8 @@ define i32 @extend_const_postinc() #0 {
+ ; CHECK:       do.body:
+ ; CHECK-NEXT:    [[INDVARS_IV:%.*]] = phi i32 [ [[INDVARS_IV_NEXT:%.*]], [[DO_BODY]] ], [ 0, [[ENTRY:%.*]] ]
+ ; CHECK-NEXT:    call void @bar(i32 [[INDVARS_IV]]) #[[ATTR2]]
+-; CHECK-NEXT:    [[CMP:%.*]] = icmp eq i32 [[INDVARS_IV]], 255
+ ; CHECK-NEXT:    [[INDVARS_IV_NEXT]] = add nuw nsw i32 [[INDVARS_IV]], 1
+-; CHECK-NEXT:    br i1 [[CMP]], label [[DO_END:%.*]], label [[DO_BODY]]
++; CHECK-NEXT:    br i1 false, label [[DO_END:%.*]], label [[DO_BODY]]
+ ; CHECK:       do.end:
+ ; CHECK-NEXT:    ret i32 0
+ ;
+diff --git a/llvm/test/Transforms/IndVarSimplify/pr55925.ll b/llvm/test/Transforms/IndVarSimplify/pr55925.ll
+index 2ad187add4e10..58364be62e283 100644
+--- a/llvm/test/Transforms/IndVarSimplify/pr55925.ll
++++ b/llvm/test/Transforms/IndVarSimplify/pr55925.ll
+@@ -18,9 +18,9 @@ define void @test(ptr %p) personality ptr undef {
+ ; CHECK-NEXT:    [[RES:%.*]] = invoke i32 @foo(i32 returned [[TMP0]])
+ ; CHECK-NEXT:            to label [[LOOP_LATCH]] unwind label [[EXIT:%.*]]
+ ; CHECK:       loop.latch:
++; CHECK-NEXT:    [[INDVARS_IV_NEXT]] = add nuw i64 [[INDVARS_IV]], 1
+ ; CHECK-NEXT:    [[TMP1:%.*]] = trunc nuw i64 [[INDVARS_IV]] to i32
+ ; CHECK-NEXT:    [[TMP2:%.*]] = call i32 @foo(i32 [[TMP1]])
+-; CHECK-NEXT:    [[INDVARS_IV_NEXT]] = add i64 [[INDVARS_IV]], 1
+ ; CHECK-NEXT:    br label [[LOOP]]
+ ; CHECK:       exit:
+ ; CHECK-NEXT:    [[LP:%.*]] = landingpad { ptr, i32 }
+@@ -64,8 +64,8 @@ define void @test_critedge(i1 %c, ptr %p) personality ptr undef {
+ ; CHECK-NEXT:    br label [[LOOP_LATCH]]
+ ; CHECK:       loop.latch:
+ ; CHECK-NEXT:    [[PHI:%.*]] = phi i32 [ [[TMP1]], [[LOOP_INVOKE]] ], [ 0, [[LOOP_OTHER]] ]
++; CHECK-NEXT:    [[INDVARS_IV_NEXT]] = add nuw i64 [[INDVARS_IV]], 1
+ ; CHECK-NEXT:    [[TMP2:%.*]] = call i32 @foo(i32 [[PHI]])
+-; CHECK-NEXT:    [[INDVARS_IV_NEXT]] = add i64 [[INDVARS_IV]], 1
+ ; CHECK-NEXT:    br label [[LOOP]]
+ ; CHECK:       exit:
+ ; CHECK-NEXT:    [[LP:%.*]] = landingpad { ptr, i32 }
+diff --git a/llvm/test/Transforms/IndVarSimplify/pr79861.ll b/llvm/test/Transforms/IndVarSimplify/pr79861.ll
+index 6625094496139..7dc3786b62f4d 100644
+--- a/llvm/test/Transforms/IndVarSimplify/pr79861.ll
++++ b/llvm/test/Transforms/IndVarSimplify/pr79861.ll
+@@ -48,7 +48,7 @@ define void @add_nowrap_flags(i64 %n) {
+ ; CHECK-NEXT:    [[IV:%.*]] = phi i64 [ 0, [[ENTRY:%.*]] ], [ [[IV_INC:%.*]], [[LOOP]] ]
+ ; CHECK-NEXT:    [[ADD1:%.*]] = add i64 [[IV]], 123
+ ; CHECK-NEXT:    call void @use(i64 [[ADD1]])
+-; CHECK-NEXT:    [[IV_INC]] = add i64 [[IV]], 1
++; CHECK-NEXT:    [[IV_INC]] = add nuw i64 [[IV]], 1
+ ; CHECK-NEXT:    [[EXIT_COND:%.*]] = icmp eq i64 [[IV_INC]], [[N]]
+ ; CHECK-NEXT:    br i1 [[EXIT_COND]], label [[EXIT:%.*]], label [[LOOP]]
+ ; CHECK:       exit:
+@@ -82,7 +82,7 @@ define void @expander_or_disjoint(i64 %n) {
+ ; CHECK-NEXT:    br label [[LOOP:%.*]]
+ ; CHECK:       loop:
+ ; CHECK-NEXT:    [[IV:%.*]] = phi i64 [ 0, [[ENTRY:%.*]] ], [ [[IV_INC:%.*]], [[LOOP]] ]
+-; CHECK-NEXT:    [[IV_INC]] = add i64 [[IV]], 1
++; CHECK-NEXT:    [[IV_INC]] = add nuw i64 [[IV]], 1
+ ; CHECK-NEXT:    [[ADD:%.*]] = add i64 [[IV]], [[OR]]
+ ; CHECK-NEXT:    call void @use(i64 [[ADD]])
+ ; CHECK-NEXT:    [[EXITCOND:%.*]] = icmp ne i64 [[IV_INC]], [[TMP0]]
+diff --git a/llvm/test/Transforms/IndVarSimplify/rlev-add-me.ll b/llvm/test/Transforms/IndVarSimplify/rlev-add-me.ll
+index 9ae7d0af2a43e..396e889a44c90 100644
+--- a/llvm/test/Transforms/IndVarSimplify/rlev-add-me.ll
++++ b/llvm/test/Transforms/IndVarSimplify/rlev-add-me.ll
+@@ -12,11 +12,11 @@ define i32 @test(i32 %n) {
+ ; CHECK-NEXT:    br label [[HEADER:%.*]]
+ ; CHECK:       header:
+ ; CHECK-NEXT:    [[IV:%.*]] = phi i32 [ 0, [[ENTRY:%.*]] ], [ [[IV_NEXT:%.*]], [[LATCH:%.*]] ]
+-; CHECK-NEXT:    [[V:%.*]] = load volatile i32, ptr @G
++; CHECK-NEXT:    [[V:%.*]] = load volatile i32, ptr @G, align 4
+ ; CHECK-NEXT:    [[CMP1:%.*]] = icmp eq i32 [[V]], 0
+ ; CHECK-NEXT:    br i1 [[CMP1]], label [[LATCH]], label [[EXIT1:%.*]]
+ ; CHECK:       latch:
+-; CHECK-NEXT:    [[IV_NEXT]] = add i32 [[IV]], 1
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw i32 [[IV]], 1
+ ; CHECK-NEXT:    [[EXITCOND:%.*]] = icmp ne i32 [[IV_NEXT]], [[TMP0]]
+ ; CHECK-NEXT:    br i1 [[EXITCOND]], label [[HEADER]], label [[EXIT2:%.*]]
+ ; CHECK:       exit1:
+@@ -50,11 +50,11 @@ define i32 @test2(i32 %n) {
+ ; CHECK-NEXT:    br label [[HEADER:%.*]]
+ ; CHECK:       header:
+ ; CHECK-NEXT:    [[IV:%.*]] = phi i32 [ 0, [[ENTRY:%.*]] ], [ [[IV_NEXT:%.*]], [[LATCH:%.*]] ]
+-; CHECK-NEXT:    [[V:%.*]] = load volatile i32, ptr @G
++; CHECK-NEXT:    [[V:%.*]] = load volatile i32, ptr @G, align 4
+ ; CHECK-NEXT:    [[CMP1:%.*]] = icmp eq i32 [[V]], 0
+ ; CHECK-NEXT:    br i1 [[CMP1]], label [[LATCH]], label [[EXIT1:%.*]]
+ ; CHECK:       latch:
+-; CHECK-NEXT:    [[IV_NEXT]] = add i32 [[IV]], 1
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw i32 [[IV]], 1
+ ; CHECK-NEXT:    [[EXITCOND:%.*]] = icmp ne i32 [[IV_NEXT]], [[TMP0]]
+ ; CHECK-NEXT:    br i1 [[EXITCOND]], label [[HEADER]], label [[EXIT2:%.*]]
+ ; CHECK:       exit1:
+@@ -88,7 +88,7 @@ define i32 @neg_wrong_loop(i32 %n) {
+ ; CHECK:       wrong_loop:
+ ; CHECK-NEXT:    [[IV2:%.*]] = phi i32 [ 0, [[ENTRY:%.*]] ], [ [[IV2_NEXT:%.*]], [[WRONG_LOOP]] ]
+ ; CHECK-NEXT:    [[IV2_NEXT]] = add i32 [[IV2]], 1
+-; CHECK-NEXT:    [[UNKNOWN:%.*]] = load volatile i32, ptr @G
++; CHECK-NEXT:    [[UNKNOWN:%.*]] = load volatile i32, ptr @G, align 4
+ ; CHECK-NEXT:    [[CMP_UNK:%.*]] = icmp eq i32 [[UNKNOWN]], 0
+ ; CHECK-NEXT:    br i1 [[CMP_UNK]], label [[HEADER_PREHEADER:%.*]], label [[WRONG_LOOP]]
+ ; CHECK:       header.preheader:
+@@ -97,11 +97,11 @@ define i32 @neg_wrong_loop(i32 %n) {
+ ; CHECK-NEXT:    br label [[HEADER:%.*]]
+ ; CHECK:       header:
+ ; CHECK-NEXT:    [[IV:%.*]] = phi i32 [ 0, [[HEADER_PREHEADER]] ], [ [[IV_NEXT:%.*]], [[LATCH:%.*]] ]
+-; CHECK-NEXT:    [[V:%.*]] = load volatile i32, ptr @G
++; CHECK-NEXT:    [[V:%.*]] = load volatile i32, ptr @G, align 4
+ ; CHECK-NEXT:    [[CMP1:%.*]] = icmp eq i32 [[V]], 0
+ ; CHECK-NEXT:    br i1 [[CMP1]], label [[LATCH]], label [[EXIT1:%.*]]
+ ; CHECK:       latch:
+-; CHECK-NEXT:    [[IV_NEXT]] = add i32 [[IV]], 1
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw i32 [[IV]], 1
+ ; CHECK-NEXT:    [[EXITCOND:%.*]] = icmp ne i32 [[IV_NEXT]], [[TMP0]]
+ ; CHECK-NEXT:    br i1 [[EXITCOND]], label [[HEADER]], label [[EXIT2:%.*]]
+ ; CHECK:       exit1:
+@@ -151,11 +151,11 @@ define i32 @test3(i32 %n) {
+ ; CHECK:       header:
+ ; CHECK-NEXT:    [[IV:%.*]] = phi i32 [ 0, [[ENTRY:%.*]] ], [ [[IV_NEXT:%.*]], [[LATCH:%.*]] ]
+ ; CHECK-NEXT:    [[EXPR:%.*]] = udiv i32 [[IV]], 5
+-; CHECK-NEXT:    [[V:%.*]] = load volatile i32, ptr @G
++; CHECK-NEXT:    [[V:%.*]] = load volatile i32, ptr @G, align 4
+ ; CHECK-NEXT:    [[CMP1:%.*]] = icmp eq i32 [[V]], 0
+ ; CHECK-NEXT:    br i1 [[CMP1]], label [[LATCH]], label [[EXIT1:%.*]]
+ ; CHECK:       latch:
+-; CHECK-NEXT:    [[IV_NEXT]] = add i32 [[IV]], 1
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw i32 [[IV]], 1
+ ; CHECK-NEXT:    [[EXITCOND:%.*]] = icmp ne i32 [[IV_NEXT]], [[TMP0]]
+ ; CHECK-NEXT:    br i1 [[EXITCOND]], label [[HEADER]], label [[EXIT2:%.*]]
+ ; CHECK:       exit1:
+@@ -195,11 +195,11 @@ define i32 @bounded_find(i32 %n) {
+ ; CHECK:       header:
+ ; CHECK-NEXT:    [[IV:%.*]] = phi i32 [ 0, [[ENTRY:%.*]] ], [ [[IV_NEXT:%.*]], [[LATCH:%.*]] ]
+ ; CHECK-NEXT:    [[ADDR:%.*]] = getelementptr i32, ptr @G, i32 [[IV]]
+-; CHECK-NEXT:    [[V:%.*]] = load i32, ptr [[ADDR]]
++; CHECK-NEXT:    [[V:%.*]] = load i32, ptr [[ADDR]], align 4
+ ; CHECK-NEXT:    [[CMP1:%.*]] = icmp eq i32 [[V]], 0
+ ; CHECK-NEXT:    br i1 [[CMP1]], label [[LATCH]], label [[EXIT1:%.*]]
+ ; CHECK:       latch:
+-; CHECK-NEXT:    [[IV_NEXT]] = add i32 [[IV]], 1
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw i32 [[IV]], 1
+ ; CHECK-NEXT:    [[EXITCOND:%.*]] = icmp ne i32 [[IV_NEXT]], [[TMP0]]
+ ; CHECK-NEXT:    br i1 [[EXITCOND]], label [[HEADER]], label [[EXIT2:%.*]]
+ ; CHECK:       exit1:
+diff --git a/llvm/test/Transforms/IndVarSimplify/strengthen-overflow.ll b/llvm/test/Transforms/IndVarSimplify/strengthen-overflow.ll
+index 4a230b781d2db..47bad1f5f055e 100644
+--- a/llvm/test/Transforms/IndVarSimplify/strengthen-overflow.ll
++++ b/llvm/test/Transforms/IndVarSimplify/strengthen-overflow.ll
+@@ -402,7 +402,7 @@ define void @test_shl_unbounded(ptr %p, i64 %n) {
+ ; CHECK-NEXT:    [[OFF:%.*]] = shl i64 [[IV]], 2
+ ; CHECK-NEXT:    [[GEP:%.*]] = getelementptr i8, ptr [[P:%.*]], i64 [[OFF]]
+ ; CHECK-NEXT:    store i8 0, ptr [[GEP]], align 1
+-; CHECK-NEXT:    [[IV_NEXT]] = add i64 [[IV]], 1
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw i64 [[IV]], 1
+ ; CHECK-NEXT:    [[EC:%.*]] = icmp eq i64 [[IV_NEXT]], [[N:%.*]]
+ ; CHECK-NEXT:    br i1 [[EC]], label [[EXIT:%.*]], label [[LOOP]]
+ ; CHECK:       exit:
+diff --git a/llvm/test/Transforms/LoopStrengthReduce/ARM/illegal-addr-modes.ll b/llvm/test/Transforms/LoopStrengthReduce/ARM/illegal-addr-modes.ll
+index 3844e00ae0a4f..434ee01668fa4 100644
+--- a/llvm/test/Transforms/LoopStrengthReduce/ARM/illegal-addr-modes.ll
++++ b/llvm/test/Transforms/LoopStrengthReduce/ARM/illegal-addr-modes.ll
+@@ -40,7 +40,7 @@ define ptr @negativeOneCase(ptr returned %a, ptr nocapture readonly %b, i32 %n)
+ ; CHECK:       while.body5:
+ ; CHECK-NEXT:    [[TMP1:%.*]] = load i8, ptr [[SCEVGEP1]], align 1
+ ; CHECK-NEXT:    store i8 [[TMP1]], ptr [[SCEVGEP2]], align 1
+-; CHECK-NEXT:    [[LSR_IV_NEXT]] = add i32 [[LSR_IV]], 1
++; CHECK-NEXT:    [[LSR_IV_NEXT]] = add nuw i32 [[LSR_IV]], 1
+ ; CHECK-NEXT:    br label [[WHILE_COND2]]
+ ; CHECK:       while.end8:
+ ; CHECK-NEXT:    [[SCEVGEP:%.*]] = getelementptr i8, ptr [[INCDEC_PTR]], i32 [[N]]
+diff --git a/llvm/test/Transforms/LoopStrengthReduce/X86/pr46943.ll b/llvm/test/Transforms/LoopStrengthReduce/X86/pr46943.ll
+index 89523b4487d49..7eaa6f86db608 100644
+--- a/llvm/test/Transforms/LoopStrengthReduce/X86/pr46943.ll
++++ b/llvm/test/Transforms/LoopStrengthReduce/X86/pr46943.ll
+@@ -15,7 +15,7 @@ define i8 @drop_nuw() {
+ ; CHECK:       loop:
+ ; CHECK-NEXT:    [[IV:%.*]] = phi i8 [ 0, [[ENTRY:%.*]] ], [ [[IV_NEXT:%.*]], [[LOOP]] ]
+ ; CHECK-NEXT:    call void @use(i8 zeroext [[IV]])
+-; CHECK-NEXT:    [[IV_NEXT]] = add i8 [[IV]], 1
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw i8 [[IV]], 1
+ ; CHECK-NEXT:    [[CMP:%.*]] = icmp eq i8 [[IV_NEXT]], 0
+ ; CHECK-NEXT:    br i1 [[CMP]], label [[EXIT:%.*]], label [[LOOP]]
+ ; CHECK:       exit:
+diff --git a/llvm/test/Transforms/LoopStrengthReduce/duplicated-phis.ll b/llvm/test/Transforms/LoopStrengthReduce/duplicated-phis.ll
+index 9e0cfb1e39f61..aa0d37f3c3357 100644
+--- a/llvm/test/Transforms/LoopStrengthReduce/duplicated-phis.ll
++++ b/llvm/test/Transforms/LoopStrengthReduce/duplicated-phis.ll
+@@ -23,7 +23,7 @@ define i64 @test_duplicated_phis(i64 noundef %N) {
+ ; CHECK-NEXT:    br label %[[FOR_BODY:.*]]
+ ; CHECK:       [[FOR_BODY]]:
+ ; CHECK-NEXT:    [[I_07:%.*]] = phi i64 [ 0, %[[FOR_BODY_PREHEADER_NEW]] ], [ [[INC_3:%.*]], %[[FOR_BODY]] ]
+-; CHECK-NEXT:    [[INC_3]] = add i64 [[I_07]], 4
++; CHECK-NEXT:    [[INC_3]] = add nuw i64 [[I_07]], 4
+ ; CHECK-NEXT:    [[NITER_NCMP_3_NOT:%.*]] = icmp eq i64 [[UNROLL_ITER]], [[INC_3]]
+ ; CHECK-NEXT:    br i1 [[NITER_NCMP_3_NOT]], label %[[FOR_END_LOOPEXIT_UNR_LCSSA_LOOPEXIT:.*]], label %[[FOR_BODY]]
+ ; CHECK:       [[FOR_END_LOOPEXIT_UNR_LCSSA_LOOPEXIT]]:
+diff --git a/llvm/test/Transforms/LoopStrengthReduce/post-inc-icmpzero.ll b/llvm/test/Transforms/LoopStrengthReduce/post-inc-icmpzero.ll
+index 24b8b0a2417df..2e8a415eb2f16 100644
+--- a/llvm/test/Transforms/LoopStrengthReduce/post-inc-icmpzero.ll
++++ b/llvm/test/Transforms/LoopStrengthReduce/post-inc-icmpzero.ll
+@@ -61,7 +61,7 @@ define void @_Z15IntegerToStringjjR7Vector2(i32 %i, i32 %radix, ptr nocapture %r
+ ; CHECK-NEXT:    [[SCEVGEP1:%.*]] = getelementptr i8, ptr [[SCEVGEP]], i64 [[LSR_IV]]
+ ; CHECK-NEXT:    [[INST29:%.*]] = load i16, ptr [[LSR_IV6]], align 2
+ ; CHECK-NEXT:    store i16 [[INST29]], ptr [[SCEVGEP1]], align 2
+-; CHECK-NEXT:    [[LSR_IV_NEXT]] = add i64 [[LSR_IV]], 2
++; CHECK-NEXT:    [[LSR_IV_NEXT]] = add nuw i64 [[LSR_IV]], 2
+ ; CHECK-NEXT:    [[SCEVGEP7]] = getelementptr i8, ptr [[LSR_IV6]], i64 2
+ ; CHECK-NEXT:    [[CMP27:%.*]] = icmp eq i64 [[LSR_IV_NEXT]], 0
+ ; CHECK-NEXT:    br i1 [[CMP27]], label [[FOR_END_LOOPEXIT:%.*]], label [[FOR_BODY]]
+diff --git a/llvm/test/Transforms/LoopVectorize/AArch64/predicated-costs.ll b/llvm/test/Transforms/LoopVectorize/AArch64/predicated-costs.ll
+index 533240f48967f..7b8f4181f680e 100644
+--- a/llvm/test/Transforms/LoopVectorize/AArch64/predicated-costs.ll
++++ b/llvm/test/Transforms/LoopVectorize/AArch64/predicated-costs.ll
+@@ -17,32 +17,6 @@ define void @test_predicated_load_cast_hint(ptr %dst.1, ptr %dst.2, ptr %src, i8
+ ; CHECK-NEXT:    [[TMP2:%.*]] = add nuw nsw i32 [[TMP1]], 1
+ ; CHECK-NEXT:    br label %[[VECTOR_SCEVCHECK:.*]]
+ ; CHECK:       [[VECTOR_SCEVCHECK]]:
+-; CHECK-NEXT:    [[SMAX:%.*]] = call i32 @llvm.smax.i32(i32 [[N_SUB]], i32 4)
+-; CHECK-NEXT:    [[TMP3:%.*]] = add nsw i32 [[SMAX]], -1
+-; CHECK-NEXT:    [[TMP4:%.*]] = lshr i32 [[TMP3]], 2
+-; CHECK-NEXT:    [[TMP5:%.*]] = trunc i32 [[TMP4]] to i8
+-; CHECK-NEXT:    [[MUL:%.*]] = call { i8, i1 } @llvm.umul.with.overflow.i8(i8 4, i8 [[TMP5]])
+-; CHECK-NEXT:    [[MUL_RESULT:%.*]] = extractvalue { i8, i1 } [[MUL]], 0
+-; CHECK-NEXT:    [[MUL_OVERFLOW:%.*]] = extractvalue { i8, i1 } [[MUL]], 1
+-; CHECK-NEXT:    [[TMP6:%.*]] = add i8 4, [[MUL_RESULT]]
+-; CHECK-NEXT:    [[TMP7:%.*]] = icmp ult i8 [[TMP6]], 4
+-; CHECK-NEXT:    [[TMP8:%.*]] = or i1 [[TMP7]], [[MUL_OVERFLOW]]
+-; CHECK-NEXT:    [[TMP9:%.*]] = icmp ugt i32 [[TMP4]], 255
+-; CHECK-NEXT:    [[TMP10:%.*]] = or i1 [[TMP8]], [[TMP9]]
+-; CHECK-NEXT:    [[TMP11:%.*]] = shl i64 [[OFF]], 3
+-; CHECK-NEXT:    [[SCEVGEP:%.*]] = getelementptr i8, ptr [[DST_1]], i64 [[TMP11]]
+-; CHECK-NEXT:    [[TMP12:%.*]] = zext i32 [[TMP4]] to i64
+-; CHECK-NEXT:    [[MUL1:%.*]] = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 512, i64 [[TMP12]])
+-; CHECK-NEXT:    [[MUL_RESULT2:%.*]] = extractvalue { i64, i1 } [[MUL1]], 0
+-; CHECK-NEXT:    [[MUL_OVERFLOW3:%.*]] = extractvalue { i64, i1 } [[MUL1]], 1
+-; CHECK-NEXT:    [[TMP14:%.*]] = getelementptr i8, ptr [[SCEVGEP]], i64 [[MUL_RESULT2]]
+-; CHECK-NEXT:    [[TMP15:%.*]] = icmp ult ptr [[TMP14]], [[SCEVGEP]]
+-; CHECK-NEXT:    [[TMP16:%.*]] = or i1 [[TMP15]], [[MUL_OVERFLOW3]]
+-; CHECK-NEXT:    [[TMP17:%.*]] = or i1 [[TMP10]], [[TMP16]]
+-; CHECK-NEXT:    br i1 [[TMP17]], label %[[SCALAR_PH:.*]], label %[[VECTOR_MEMCHECK:.*]]
+-; CHECK:       [[VECTOR_MEMCHECK]]:
+-; CHECK-NEXT:    [[SCEVGEP4:%.*]] = getelementptr i8, ptr [[DST_2]], i64 1
+-; CHECK-NEXT:    [[SCEVGEP5:%.*]] = getelementptr i8, ptr [[SRC]], i64 1
+ ; CHECK-NEXT:    [[TMP18:%.*]] = shl i64 [[OFF]], 3
+ ; CHECK-NEXT:    [[SCEVGEP6:%.*]] = getelementptr i8, ptr [[DST_1]], i64 [[TMP18]]
+ ; CHECK-NEXT:    [[SMAX7:%.*]] = call i32 @llvm.smax.i32(i32 [[N_SUB]], i32 4)
+@@ -53,20 +27,22 @@ define void @test_predicated_load_cast_hint(ptr %dst.1, ptr %dst.2, ptr %src, i8
+ ; CHECK-NEXT:    [[TMP23:%.*]] = add i64 [[TMP22]], [[TMP18]]
+ ; CHECK-NEXT:    [[TMP24:%.*]] = add i64 [[TMP23]], 8
+ ; CHECK-NEXT:    [[SCEVGEP8:%.*]] = getelementptr i8, ptr [[DST_1]], i64 [[TMP24]]
+-; CHECK-NEXT:    [[BOUND0:%.*]] = icmp ult ptr [[DST_2]], [[SCEVGEP5]]
+-; CHECK-NEXT:    [[BOUND1:%.*]] = icmp ult ptr [[SRC]], [[SCEVGEP4]]
++; CHECK-NEXT:    [[SCEVGEP2:%.*]] = getelementptr i8, ptr [[DST_2]], i64 1
++; CHECK-NEXT:    [[SCEVGEP4:%.*]] = getelementptr i8, ptr [[SRC]], i64 1
++; CHECK-NEXT:    [[BOUND0:%.*]] = icmp ult ptr [[SCEVGEP6]], [[SCEVGEP2]]
++; CHECK-NEXT:    [[BOUND1:%.*]] = icmp ult ptr [[DST_2]], [[SCEVGEP8]]
+ ; CHECK-NEXT:    [[FOUND_CONFLICT:%.*]] = and i1 [[BOUND0]], [[BOUND1]]
+-; CHECK-NEXT:    [[BOUND09:%.*]] = icmp ult ptr [[DST_2]], [[SCEVGEP8]]
+ ; CHECK-NEXT:    [[BOUND110:%.*]] = icmp ult ptr [[SCEVGEP6]], [[SCEVGEP4]]
+-; CHECK-NEXT:    [[FOUND_CONFLICT11:%.*]] = and i1 [[BOUND09]], [[BOUND110]]
++; CHECK-NEXT:    [[BOUND15:%.*]] = icmp ult ptr [[SRC]], [[SCEVGEP8]]
++; CHECK-NEXT:    [[FOUND_CONFLICT11:%.*]] = and i1 [[BOUND110]], [[BOUND15]]
+ ; CHECK-NEXT:    [[CONFLICT_RDX:%.*]] = or i1 [[FOUND_CONFLICT]], [[FOUND_CONFLICT11]]
+-; CHECK-NEXT:    [[BOUND012:%.*]] = icmp ult ptr [[SRC]], [[SCEVGEP8]]
+-; CHECK-NEXT:    [[BOUND113:%.*]] = icmp ult ptr [[SCEVGEP6]], [[SCEVGEP5]]
++; CHECK-NEXT:    [[BOUND012:%.*]] = icmp ult ptr [[DST_2]], [[SCEVGEP4]]
++; CHECK-NEXT:    [[BOUND113:%.*]] = icmp ult ptr [[SRC]], [[SCEVGEP2]]
+ ; CHECK-NEXT:    [[FOUND_CONFLICT14:%.*]] = and i1 [[BOUND012]], [[BOUND113]]
+ ; CHECK-NEXT:    [[CONFLICT_RDX15:%.*]] = or i1 [[CONFLICT_RDX]], [[FOUND_CONFLICT14]]
+-; CHECK-NEXT:    br i1 [[CONFLICT_RDX15]], label %[[SCALAR_PH]], label %[[VECTOR_PH:.*]]
++; CHECK-NEXT:    br i1 [[CONFLICT_RDX15]], label %[[SCALAR_PH:.*]], label %[[VECTOR_PH:.*]]
+ ; CHECK:       [[VECTOR_PH]]:
+-; CHECK-NEXT:    [[TMP27:%.*]] = load i8, ptr [[SRC]], align 1, !alias.scope [[META0:![0-9]+]], !noalias [[META3:![0-9]+]]
++; CHECK-NEXT:    [[TMP27:%.*]] = load i8, ptr [[SRC]], align 1, !alias.scope [[META0:![0-9]+]]
+ ; CHECK-NEXT:    [[BROADCAST_SPLATINSERT:%.*]] = insertelement <2 x i8> poison, i8 [[TMP27]], i64 0
+ ; CHECK-NEXT:    [[BROADCAST_SPLAT:%.*]] = shufflevector <2 x i8> [[BROADCAST_SPLATINSERT]], <2 x i8> poison, <2 x i32> zeroinitializer
+ ; CHECK-NEXT:    [[TMP25:%.*]] = zext <2 x i8> [[BROADCAST_SPLAT]] to <2 x i64>
+@@ -84,7 +60,7 @@ define void @test_predicated_load_cast_hint(ptr %dst.1, ptr %dst.2, ptr %src, i8
+ ; CHECK-NEXT:    [[TMP115:%.*]] = getelementptr [16 x i64], ptr [[DST_1]], i64 [[TMP114]], i64 [[OFF]]
+ ; CHECK-NEXT:    [[TMP116:%.*]] = extractelement <2 x i64> [[TMP25]], i64 0
+ ; CHECK-NEXT:    [[TMP117:%.*]] = or i64 [[TMP116]], 1
+-; CHECK-NEXT:    store i64 [[TMP117]], ptr [[TMP115]], align 8, !alias.scope [[META3]]
++; CHECK-NEXT:    store i64 [[TMP117]], ptr [[TMP115]], align 8, !alias.scope [[META3:![0-9]+]], !noalias [[META5:![0-9]+]]
+ ; CHECK-NEXT:    br label %[[PRED_STORE_CONTINUE20]]
+ ; CHECK:       [[PRED_STORE_CONTINUE20]]:
+ ; CHECK-NEXT:    [[TMP42:%.*]] = extractelement <2 x i1> [[ACTIVE_LANE_MASK]], i64 1
+@@ -94,7 +70,7 @@ define void @test_predicated_load_cast_hint(ptr %dst.1, ptr %dst.2, ptr %src, i8
+ ; CHECK-NEXT:    [[TMP121:%.*]] = getelementptr [16 x i64], ptr [[DST_1]], i64 [[TMP120]], i64 [[OFF]]
+ ; CHECK-NEXT:    [[TMP122:%.*]] = extractelement <2 x i64> [[TMP25]], i64 1
+ ; CHECK-NEXT:    [[TMP123:%.*]] = or i64 [[TMP122]], 1
+-; CHECK-NEXT:    store i64 [[TMP123]], ptr [[TMP121]], align 8, !alias.scope [[META3]]
++; CHECK-NEXT:    store i64 [[TMP123]], ptr [[TMP121]], align 8, !alias.scope [[META3]], !noalias [[META5]]
+ ; CHECK-NEXT:    br label %[[PRED_STORE_CONTINUE22]]
+ ; CHECK:       [[PRED_STORE_CONTINUE22]]:
+ ; CHECK-NEXT:    [[INDEX_NEXT]] = add i32 [[INDEX]], 2
+@@ -102,9 +78,9 @@ define void @test_predicated_load_cast_hint(ptr %dst.1, ptr %dst.2, ptr %src, i8
+ ; CHECK-NEXT:    [[TMP47:%.*]] = extractelement <2 x i1> [[ACTIVE_LANE_MASK_NEXT]], i64 0
+ ; CHECK-NEXT:    [[TMP48:%.*]] = xor i1 [[TMP47]], true
+ ; CHECK-NEXT:    [[VEC_IND_NEXT]] = add <2 x i8> [[VEC_IND]], splat (i8 8)
+-; CHECK-NEXT:    br i1 [[TMP48]], label %[[MIDDLE_BLOCK:.*]], label %[[VECTOR_BODY]], !llvm.loop [[LOOP5:![0-9]+]]
++; CHECK-NEXT:    br i1 [[TMP48]], label %[[MIDDLE_BLOCK:.*]], label %[[VECTOR_BODY]], !llvm.loop [[LOOP7:![0-9]+]]
+ ; CHECK:       [[MIDDLE_BLOCK]]:
+-; CHECK-NEXT:    store i8 0, ptr [[DST_2]], align 1, !alias.scope [[META9:![0-9]+]], !noalias [[META11:![0-9]+]]
++; CHECK-NEXT:    store i8 0, ptr [[DST_2]], align 1, !alias.scope [[META11:![0-9]+]], !noalias [[META0]]
+ ; CHECK-NEXT:    br label %[[EXIT:.*]]
+ ; CHECK:       [[SCALAR_PH]]:
+ ; CHECK-NEXT:    br label %[[LOOP:.*]]
+@@ -503,17 +479,17 @@ exit:
+ ; CHECK: [[META2]] = distinct !{[[META2]], !"LVerDomain"}
+ ; CHECK: [[META3]] = !{[[META4:![0-9]+]]}
+ ; CHECK: [[META4]] = distinct !{[[META4]], [[META2]]}
+-; CHECK: [[LOOP5]] = distinct !{[[LOOP5]], [[META6:![0-9]+]], [[META7:![0-9]+]], [[META8:![0-9]+]]}
+-; CHECK: [[META6]] = !{!"llvm.loop.mustprogress"}
+-; CHECK: [[META7]] = !{!"llvm.loop.isvectorized", i32 1}
+-; CHECK: [[META8]] = !{!"llvm.loop.unroll.runtime.disable"}
+-; CHECK: [[META9]] = !{[[META10:![0-9]+]]}
+-; CHECK: [[META10]] = distinct !{[[META10]], [[META2]]}
+-; CHECK: [[META11]] = !{[[META1]], [[META4]]}
+-; CHECK: [[LOOP12]] = distinct !{[[LOOP12]], [[META6]], [[META7]]}
+-; CHECK: [[LOOP13]] = distinct !{[[LOOP13]], [[META7]], [[META8]]}
+-; CHECK: [[LOOP14]] = distinct !{[[LOOP14]], [[META8]], [[META7]]}
+-; CHECK: [[LOOP15]] = distinct !{[[LOOP15]], [[META7]], [[META8]]}
+-; CHECK: [[LOOP16]] = distinct !{[[LOOP16]], [[META8]], [[META7]]}
++; CHECK: [[META5]] = !{[[META6:![0-9]+]], [[META1]]}
++; CHECK: [[META6]] = distinct !{[[META6]], [[META2]]}
++; CHECK: [[LOOP7]] = distinct !{[[LOOP7]], [[META8:![0-9]+]], [[META9:![0-9]+]], [[META10:![0-9]+]]}
++; CHECK: [[META8]] = !{!"llvm.loop.mustprogress"}
++; CHECK: [[META9]] = !{!"llvm.loop.isvectorized", i32 1}
++; CHECK: [[META10]] = !{!"llvm.loop.unroll.runtime.disable"}
++; CHECK: [[META11]] = !{[[META6]]}
++; CHECK: [[LOOP12]] = distinct !{[[LOOP12]], [[META8]], [[META9]]}
++; CHECK: [[LOOP13]] = distinct !{[[LOOP13]], [[META9]], [[META10]]}
++; CHECK: [[LOOP14]] = distinct !{[[LOOP14]], [[META10]], [[META9]]}
++; CHECK: [[LOOP15]] = distinct !{[[LOOP15]], [[META9]], [[META10]]}
++; CHECK: [[LOOP16]] = distinct !{[[LOOP16]], [[META10]], [[META9]]}
+ ; CHECK: [[PROF17]] = !{!"branch_weights", i32 0, i32 1}
+ ;.
