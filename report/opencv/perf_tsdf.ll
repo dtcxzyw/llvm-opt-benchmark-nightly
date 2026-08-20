@@ -203,9 +203,10 @@ bb.d:                                             ; preds = %bb.c
   %.sroa.58.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.af, i64 40
   store float %i.eg, ptr %.sroa.58.0..sroa_idx, align 4
   %.sroa.63.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.af, i64 44
-  store float %i.ey, ptr %.sroa.63.0..sroa_idx, align 4
-  %.sroa.69.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.af, i64 48
-  store <4 x float> <float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float 1.000000e+00>, ptr %.sroa.69.0..sroa_idx, align 4
+  %4 = insertelement <4 x float> <float poison, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00>, float %i.ey, i64 0
+  store <4 x float> %4, ptr %.sroa.63.0..sroa_idx, align 4
+  %.sroa.69.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.af, i64 60
+  store float 1.000000e+00, ptr %.sroa.69.0..sroa_idx, align 4, !tbaa !15
   %i.fa = getelementptr inbounds nuw i8, ptr %i.af, i64 64 ; 2 uses
   store ptr %i.fa, ptr %i.ad, align 8, !tbaa !193
   br label %_ZNSt6vectorIN2cv7Affine3IfEESaIS2_EE9push_backERKS2_.exit

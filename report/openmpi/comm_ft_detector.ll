@@ -201,7 +201,7 @@ opal_thread_add_fetch_32.exit:                    ; preds = %bb.e, %bb.d, %bb.a,
 }
 
 ; Function Attrs: nounwind uwtable
-define range(i32 -7, 1) i32 @ompi_comm_start_detector(ptr nofree noundef readnone captures(address) %0) local_unnamed_addr #0 {
+define range(i32 -7, 1) i32 @ompi_comm_start_detector(ptr noundef %0) local_unnamed_addr #0 {
 bb.a:
   %1 = alloca %struct.timeval, align 8            ; 5 uses
   %.not = icmp eq ptr %0, @ompi_mpi_comm_world
@@ -210,11 +210,13 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.a = tail call double @PMPI_Wtime() #10       ; 2 uses
   store double %i.a, ptr @startdate, align 8, !tbaa !12
-  store ptr @ompi_mpi_comm_world, ptr @comm_world_detector, align 8, !tbaa !75
-  %ompi_mpi_comm_world.val = load ptr, ptr getelementptr inbounds nuw (i8, ptr @ompi_mpi_comm_world, i64 264), align 8, !tbaa !68
+  store ptr %0, ptr @comm_world_detector, align 8, !tbaa !75
+  %2 = getelementptr i8, ptr %0, i64 264
+  %ompi_mpi_comm_world.val = load ptr, ptr %2, align 8, !tbaa !68
   %i.b = getelementptr i8, ptr %ompi_mpi_comm_world.val, i64 16
   %ompi_mpi_comm_world.val.val = load i32, ptr %i.b, align 8, !tbaa !69 ; 4 uses
-  %ompi_mpi_comm_world.val43 = load i32, ptr getelementptr inbounds nuw (i8, ptr @ompi_mpi_comm_world, i64 220), align 4, !tbaa !36 ; 2 uses
+  %3 = getelementptr i8, ptr %0, i64 220
+  %ompi_mpi_comm_world.val43 = load i32, ptr %3, align 4, !tbaa !36 ; 2 uses
   %i.c = add nsw i32 %ompi_mpi_comm_world.val43, %ompi_mpi_comm_world.val.val ; 2 uses
   %i.d = add nsw i32 %i.c, -1
   %i.e = srem i32 %i.d, %ompi_mpi_comm_world.val.val
@@ -327,7 +329,7 @@ bb.l:                                             ; preds = %bb.a, %bb.k
 define internal fastcc void @fd_heartbeat_send(ptr noundef %0) unnamed_addr #0 {
 bb.a:
   %1 = alloca %struct.fd_heartbeat_t, align 4     ; 7 uses
-  %i.a = load ptr, ptr %0, align 8, !tbaa !75
+  %i.a = load ptr, ptr %0, align 8, !tbaa !75     ; 4 uses
   %.not = icmp eq ptr %i.a, @ompi_mpi_comm_world
   br i1 %.not, label %bb.b, label %fd_heartbeat_rdma_put.exit
 
@@ -426,9 +428,11 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %bb.f
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #10
-  %ompi_mpi_comm_world.val = load i32, ptr getelementptr inbounds nuw (i8, ptr @ompi_mpi_comm_world, i64 216), align 8, !tbaa !139
+  %2 = getelementptr i8, ptr %i.a, i64 216
+  %ompi_mpi_comm_world.val = load i32, ptr %2, align 8, !tbaa !139
   store i32 %ompi_mpi_comm_world.val, ptr %1, align 4, !tbaa !140
-  %i.aw = load i32, ptr getelementptr inbounds nuw (i8, ptr @ompi_mpi_comm_world, i64 232), align 8, !tbaa !73
+  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 232
+  %i.aw = load i32, ptr %3, align 8, !tbaa !73
   %i.ax = getelementptr inbounds nuw i8, ptr %1, i64 4
   store i32 %i.aw, ptr %i.ax, align 4, !tbaa !141
   %i.ay = load i32, ptr @comm_heartbeat_recv_cb_type, align 4, !tbaa !17
@@ -441,7 +445,8 @@ bb.p:                                             ; preds = %bb.f
   store i32 %i.bc, ptr %i.bd, align 4, !tbaa !58
   %i.be = getelementptr inbounds nuw i8, ptr %0, i64 20
   %i.bf = load i32, ptr %i.be, align 4, !tbaa !72
-  %ompi_mpi_comm_world.val20 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @ompi_mpi_comm_world, i64 272), align 8, !tbaa !76
+  %4 = getelementptr i8, ptr %i.a, i64 272
+  %ompi_mpi_comm_world.val20 = load ptr, ptr %4, align 8, !tbaa !76
   %i.bg = getelementptr inbounds nuw i8, ptr %ompi_mpi_comm_world.val20, i64 32 ; 2 uses
   %i.bh = load ptr, ptr %i.bg, align 8, !tbaa !77
   %i.bi = sext i32 %i.bf to i64                   ; 2 uses

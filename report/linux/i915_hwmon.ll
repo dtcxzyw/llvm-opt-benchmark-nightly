@@ -203,7 +203,7 @@ declare dso_local void @finish_wait(ptr noundef, ptr noundef) local_unnamed_addr
 declare dso_local i32 @snb_pcode_write_p(ptr noundef, i32 noundef, i32 noundef, i32 noundef, i32 noundef) local_unnamed_addr #2
 
 ; Function Attrs: fn_ret_thunk_extern mustprogress nofree norecurse noredzone nosync nounwind null_pointer_is_valid sspstrong willreturn memory(read, inaccessiblemem: none, target_mem: none)
-define internal zeroext i16 @hwm_attributes_visible(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readnone captures(address) %1, i32 %2) #4 align 16 prefalign(16) {
+define internal zeroext i16 @hwm_attributes_visible(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(address) %1, i32 %2) #4 align 16 prefalign(16) {
 bb.a:
   %i.a = icmp eq ptr %1, @sensor_dev_attr_power1_max_interval
   br i1 %i.a, label %bb.b, label %bb.c
@@ -215,12 +215,15 @@ bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr i8, ptr %i.c, i64 352
   %i.e = load i32, ptr %i.d, align 8
   %i.f = icmp eq i32 %i.e, 0
-  %3 = load i16, ptr getelementptr inbounds nuw (i8, ptr @sensor_dev_attr_power1_max_interval, i64 8), align 8
-  %spec.select = select i1 %i.f, i16 0, i16 %3
+  br i1 %i.f, label %bb.c, label %3
+
+3:                                                ; preds = %bb.b
+  %4 = getelementptr i8, ptr %1, i64 8
+  %5 = load i16, ptr %4, align 8
   br label %bb.c
 
-bb.c:                                             ; preds = %bb.a, %bb.b
-  %.0 = phi i16 [ %spec.select, %bb.b ], [ 0, %bb.a ]
+bb.c:                                             ; preds = %bb.a, %3, %bb.b
+  %.0 = phi i16 [ 0, %bb.b ], [ %5, %3 ], [ 0, %bb.a ]
   ret i16 %.0
 }
 

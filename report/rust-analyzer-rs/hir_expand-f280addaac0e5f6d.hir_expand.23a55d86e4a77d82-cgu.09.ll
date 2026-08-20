@@ -1,4 +1,4 @@
-inline.NumInlined: 1298
+inline.NumInlined: 1295
 inline.NumDeleted: 549
 loop-unroll.NumCompletelyUnrolled: 1
 loop-unroll.NumRuntimeUnrolled: 1
@@ -204,8 +204,8 @@ bb.c:                                             ; preds = %bb.b
   %.not.i.i = icmp eq i64 %i.n, -2
   br i1 %.not.i.i, label %.loopexit437.i, label %bb.b
 
-.thread413.i:                                     ; preds = %.loopexit418.i, %.loopexit.split-lp419.loopexit.i, %.loopexit.split-lp419.loopexit.split-lp.i, %bb.af, %.loopexit.split-lp428.i, %bb.an, %bb.ar, %.thread.thread510.i, %.body.i, %.loopexit.split-lp433.i, %.loopexit432.i
-  %.pn92.i = phi { ptr, i32 } [ %i.bh, %bb.an ], [ %lpad.loopexit.split-lp430.i, %.loopexit.split-lp428.i ], [ %lpad.thr_comm508.i, %.thread.thread510.i ], [ %.pn90496.i, %bb.ar ], [ %eh.lpad-body.i, %.body.i ], [ %lpad.loopexit434.i, %.loopexit432.i ], [ %lpad.loopexit.split-lp435.i, %.loopexit.split-lp433.i ], [ %i.bd, %bb.af ], [ %lpad.loopexit.split-lp424.i, %.loopexit.split-lp419.loopexit.split-lp.i ], [ %lpad.loopexit420.i, %.loopexit418.i ], [ %lpad.loopexit423.i, %.loopexit.split-lp419.loopexit.i ]
+.thread413.i:                                     ; preds = %bb.ar, %.thread.thread510.i, %bb.an, %.loopexit.split-lp419.i, %.body.i, %.loopexit.split-lp433.i, %.loopexit432.i
+  %.pn92.i = phi { ptr, i32 } [ %i.bh, %bb.an ], [ %.pn84.i, %.loopexit.split-lp419.i ], [ %lpad.thr_comm508.i, %.thread.thread510.i ], [ %.pn90496.i, %bb.ar ], [ %eh.lpad-body.i, %.body.i ], [ %lpad.loopexit434.i, %.loopexit432.i ], [ %lpad.loopexit.split-lp435.i, %.loopexit.split-lp433.i ]
   invoke void @_RNvXsw_Csjpcu9PwIgok_8smallvecINtB5_8SmallVecANtNtCs33K2ylI4knu_10hir_expand4name4Namej1_ENtNtNtCshzWfHUSfYae_4core3ops4drop4Drop4dropBM_(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.i)
           to label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtCsjpcu9PwIgok_8smallvec8SmallVecANtNtCs33K2ylI4knu_10hir_expand4name4Namej1_EEB1f_.exit.i unwind label %bb.aa, !noalias !633
 
@@ -222,7 +222,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.b
   %.sroa.7272.4.copyload273.i = load i32, ptr %.sroa.612.0..sroa_idx.i.i, align 4, !noalias !634
   %.sroa.9.4..sroa.612.0..sroa_idx.i.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.e, i64 16
-  %.sroa.9.4.copyload274.i = load ptr, ptr %.sroa.9.4..sroa.612.0..sroa_idx.i.sroa_idx.i, align 8, !noalias !634 ; 12 uses
+  %.sroa.9.4.copyload274.i = load ptr, ptr %.sroa.9.4..sroa.612.0..sroa_idx.i.sroa_idx.i, align 8, !noalias !634 ; 15 uses
   %.sroa.10275.4..sroa.612.0..sroa_idx.i.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.e, i64 24
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.25.i, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.10275.4..sroa.612.0..sroa_idx.i.sroa_idx.i, i64 16, i1 false), !noalias !624
   %.sroa.10275.sroa.4.0..sroa.10275.4..sroa.612.0..sroa_idx.i.sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.e, i64 40 ; 2 uses
@@ -346,7 +346,7 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %bb.o
   %i.ab = icmp eq ptr %.sroa.9.4.copyload274.i, @_RNvNvNtNtCs39E2wp1vf7X_6intern6symbol7symbols6crate_10SYMBOL_STR
-  br i1 %i.ab, label %.thread375.i, label %bb.q
+  br i1 %i.ab, label %4, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !noalias !624
@@ -449,11 +449,15 @@ _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtCs4dcH4YgJDq_2tt5IdentECs33K2ylI4knu_1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g), !noalias !624
   br label %.thread375.i
 
-bb.aa:                                            ; preds = %bb.ar, %bb.af, %.body.i, %.thread413.i
+bb.aa:                                            ; preds = %bb.ar, %bb.an, %bb.af, %.loopexit.split-lp419.i, %.body.i, %.thread413.i
   %i.az = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
   call void @_RNvNtCshzWfHUSfYae_4core9panicking16panic_in_cleanup() #32, !noalias !633
   unreachable
+
+4:                                                ; preds = %bb.p
+  invoke fastcc void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs39E2wp1vf7X_6intern6symbol6SymbolECs33K2ylI4knu_10hir_expand(ptr nonnull %.sroa.9.4.copyload274.i)
+          to label %.thread375.i unwind label %.thread.thread510.i, !noalias !624
 
 bb.ab:                                            ; preds = %bb.ag, %.preheader.i
   %.sroa.037.0.i = phi i8 [ %i.be, %bb.ag ], [ 1, %.preheader.i ] ; 4 uses
@@ -483,20 +487,25 @@ bb.ac:                                            ; preds = %.lr.ph.i197.i
   %.not.i206.i = icmp eq i64 %i.bc, -2
   br i1 %.not.i206.i, label %.thread410.i, label %.lr.ph.i197.i
 
+.loopexit.split-lp419.i:                          ; preds = %.loopexit.split-lp428.i, %bb.af, %.loopexit.split-lp419.loopexit.split-lp.i, %.loopexit.split-lp419.loopexit.i, %.loopexit418.i
+  %.pn84.i = phi { ptr, i32 } [ %i.bd, %bb.af ], [ %lpad.loopexit.split-lp424.i, %.loopexit.split-lp419.loopexit.split-lp.i ], [ %lpad.loopexit420.i, %.loopexit418.i ], [ %lpad.loopexit423.i, %.loopexit.split-lp419.loopexit.i ], [ %lpad.loopexit.split-lp430.i, %.loopexit.split-lp428.i ]
+  invoke fastcc void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs39E2wp1vf7X_6intern6symbol6SymbolECs33K2ylI4knu_10hir_expand(ptr nonnull %.sroa.9.4.copyload274.i) #31
+          to label %.thread413.i unwind label %bb.aa, !noalias !624
+
 .loopexit418.i:                                   ; preds = %bb.ac
   %lpad.loopexit420.i = landingpad { ptr, i32 }
           cleanup
-  br label %.thread413.i
+  br label %.loopexit.split-lp419.i
 
 .loopexit.split-lp419.loopexit.i:                 ; preds = %bb.ab
   %lpad.loopexit423.i = landingpad { ptr, i32 }
           cleanup
-  br label %.thread413.i
+  br label %.loopexit.split-lp419.i
 
 .loopexit.split-lp419.loopexit.split-lp.i:        ; preds = %bb.al
   %lpad.loopexit.split-lp424.i = landingpad { ptr, i32 }
           cleanup
-  br label %.thread413.i
+  br label %.loopexit.split-lp419.i
 
 bb.ad:                                            ; preds = %.lr.ph.i197.i
   %.sroa.8287.4.copyload.i = load ptr, ptr %.sroa.8287.4..sroa.612.0..sroa_idx.i199.sroa_idx.i, align 8, !noalias !653 ; 6 uses
@@ -519,12 +528,12 @@ bb.af:                                            ; preds = %bb.ai, %bb.ah
   %i.bd = landingpad { ptr, i32 }
           cleanup
   invoke fastcc void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs39E2wp1vf7X_6intern6symbol6SymbolECs33K2ylI4knu_10hir_expand(ptr nonnull %.sroa.8287.4.copyload.i) #31
-          to label %.thread413.i unwind label %bb.aa, !noalias !624
+          to label %.loopexit.split-lp419.i unwind label %bb.aa, !noalias !624
 
 .loopexit.split-lp428.i:                          ; preds = %bb.aj
   %lpad.loopexit.split-lp430.i = landingpad { ptr, i32 }
           cleanup
-  br label %.thread413.i
+  br label %.loopexit.split-lp419.i
 
 bb.ag:                                            ; preds = %bb.ae
   %i.be = add i8 %.sroa.037.0.i, 1
@@ -558,7 +567,8 @@ bb.am:                                            ; preds = %bb.g
 bb.an:                                            ; preds = %bb.am
   %i.bh = landingpad { ptr, i32 }
           cleanup
-  br label %.thread413.i
+  invoke fastcc void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs39E2wp1vf7X_6intern6symbol6SymbolECs33K2ylI4knu_10hir_expand(ptr nonnull %.sroa.9.4.copyload274.i) #31
+          to label %.thread413.i unwind label %bb.aa, !noalias !633
 
 bb.ao:                                            ; preds = %bb.am
   %i.bi = extractvalue { i32, i32 } %i.bg, 0      ; 2 uses
@@ -568,11 +578,11 @@ bb.ao:                                            ; preds = %bb.am
   %.sroa.029.1.i = select i1 %.not86.i, i8 2, i8 4
   br label %.thread375.i
 
-.thread375.i:                                     ; preds = %bb.p, %bb.ap, %bb.ao, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtCs4dcH4YgJDq_2tt5IdentECs33K2ylI4knu_10hir_expand.exit.i, %bb.n, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs39E2wp1vf7X_6intern6symbol6SymbolECs33K2ylI4knu_10hir_expand.exit227.i
-  %.sroa.029.0383.i = phi i8 [ %.sroa.029.0.i, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs39E2wp1vf7X_6intern6symbol6SymbolECs33K2ylI4knu_10hir_expand.exit227.i ], [ %.sroa.029.0.i, %bb.ap ], [ 0, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtCs4dcH4YgJDq_2tt5IdentECs33K2ylI4knu_10hir_expand.exit.i ], [ %.sroa.029.1.i, %bb.ao ], [ 1, %bb.n ], [ 2, %bb.p ]
-  %.sroa.8.0382.i = phi i8 [ %.sroa.8.0.i, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs39E2wp1vf7X_6intern6symbol6SymbolECs33K2ylI4knu_10hir_expand.exit227.i ], [ %.sroa.8.0.i, %bb.ap ], [ undef, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtCs4dcH4YgJDq_2tt5IdentECs33K2ylI4knu_10hir_expand.exit.i ], [ undef, %bb.ao ], [ 0, %bb.n ], [ undef, %bb.p ]
-  %.sroa.9.sroa.4.0381.i = phi i32 [ undef, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs39E2wp1vf7X_6intern6symbol6SymbolECs33K2ylI4knu_10hir_expand.exit227.i ], [ undef, %bb.ap ], [ undef, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtCs4dcH4YgJDq_2tt5IdentECs33K2ylI4knu_10hir_expand.exit.i ], [ %.sroa.9.sroa.4.1.i, %bb.ao ], [ 0, %bb.n ], [ undef, %bb.p ]
-  %.sroa.9.sroa.3.0380.i = phi i32 [ undef, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs39E2wp1vf7X_6intern6symbol6SymbolECs33K2ylI4knu_10hir_expand.exit227.i ], [ undef, %bb.ap ], [ undef, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtCs4dcH4YgJDq_2tt5IdentECs33K2ylI4knu_10hir_expand.exit.i ], [ %i.bi, %bb.ao ], [ 0, %bb.n ], [ undef, %bb.p ]
+.thread375.i:                                     ; preds = %bb.ap, %bb.ao, %4, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtCs4dcH4YgJDq_2tt5IdentECs33K2ylI4knu_10hir_expand.exit.i, %bb.n, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs39E2wp1vf7X_6intern6symbol6SymbolECs33K2ylI4knu_10hir_expand.exit227.i
+  %.sroa.029.0383.i = phi i8 [ %.sroa.029.0.i, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs39E2wp1vf7X_6intern6symbol6SymbolECs33K2ylI4knu_10hir_expand.exit227.i ], [ %.sroa.029.0.i, %bb.ap ], [ 0, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtCs4dcH4YgJDq_2tt5IdentECs33K2ylI4knu_10hir_expand.exit.i ], [ %.sroa.029.1.i, %bb.ao ], [ 2, %4 ], [ 1, %bb.n ]
+  %.sroa.8.0382.i = phi i8 [ %.sroa.8.0.i, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs39E2wp1vf7X_6intern6symbol6SymbolECs33K2ylI4knu_10hir_expand.exit227.i ], [ %.sroa.8.0.i, %bb.ap ], [ undef, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtCs4dcH4YgJDq_2tt5IdentECs33K2ylI4knu_10hir_expand.exit.i ], [ undef, %bb.ao ], [ undef, %4 ], [ 0, %bb.n ]
+  %.sroa.9.sroa.4.0381.i = phi i32 [ undef, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs39E2wp1vf7X_6intern6symbol6SymbolECs33K2ylI4knu_10hir_expand.exit227.i ], [ undef, %bb.ap ], [ undef, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtCs4dcH4YgJDq_2tt5IdentECs33K2ylI4knu_10hir_expand.exit.i ], [ %.sroa.9.sroa.4.1.i, %bb.ao ], [ undef, %4 ], [ 0, %bb.n ]
+  %.sroa.9.sroa.3.0380.i = phi i32 [ undef, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs39E2wp1vf7X_6intern6symbol6SymbolECs33K2ylI4knu_10hir_expand.exit227.i ], [ undef, %bb.ap ], [ undef, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtCs4dcH4YgJDq_2tt5IdentECs33K2ylI4knu_10hir_expand.exit.i ], [ %i.bi, %bb.ao ], [ undef, %4 ], [ 0, %bb.n ]
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.25.i)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !624
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.f, ptr noundef nonnull align 8 dereferenceable(40) %i.j, i64 40, i1 false), !noalias !624
@@ -596,7 +606,7 @@ bb.aq:                                            ; preds = %.thread375.i
   store i32 %.sroa.9.sroa.4.0381.i, ptr %.sroa.642.sroa.5.0..sroa.642.0..sroa_idx.sroa_idx.i, align 8, !alias.scope !621, !noalias !635
   br label %_RNvNtCs33K2ylI4knu_10hir_expand8mod_path15convert_path_tt.exit
 
-.thread.thread510.i:                              ; preds = %.noexc194.i, %bb.z, %bb.y
+.thread.thread510.i:                              ; preds = %4, %.noexc194.i, %bb.z, %bb.y
   %lpad.thr_comm508.i = landingpad { ptr, i32 }
           cleanup
   br label %.thread413.i

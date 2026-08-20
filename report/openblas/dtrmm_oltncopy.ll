@@ -35,7 +35,7 @@ bb.a:
 
 .preheader159.split.us:                           ; preds = %.preheader159.split.us.preheader, %bb.t
   %.0142.us = phi i64 [ %i.bw, %bb.t ], [ %5, %.preheader159.split.us.preheader ] ; 12 uses
-  %.0135.us = phi ptr [ %.4139.us, %bb.t ], [ %6, %.preheader159.split.us.preheader ] ; 7 uses
+  %.0135.us = phi ptr [ %.4139.us, %bb.t ], [ %6, %.preheader159.split.us.preheader ] ; 8 uses
   %.0132.us = phi i64 [ %i.bx, %bb.t ], [ %i.a, %.preheader159.split.us.preheader ] ; 2 uses
   %.not.us = icmp sgt i64 %4, %.0142.us
   br i1 %.not.us, label %bb.c, label %bb.b
@@ -73,8 +73,9 @@ bb.e:                                             ; preds = %bb.d
   %i.ac = load double, ptr %i.ab, align 8, !tbaa !8
   store <2 x double> %i.aa, ptr %.0135.us, align 8, !tbaa !8
   %i.ad = getelementptr inbounds nuw i8, ptr %.0135.us, i64 16
-  %7 = insertelement <2 x double> <double 0.000000e+00, double poison>, double %i.ac, i64 1
-  store <2 x double> %7, ptr %i.ad, align 8, !tbaa !8
+  store double 0.000000e+00, ptr %i.ad, align 8, !tbaa !8
+  %7 = getelementptr inbounds nuw i8, ptr %.0135.us, i64 24
+  store double %i.ac, ptr %7, align 8, !tbaa !8
   %i.ae = getelementptr inbounds nuw i8, ptr %.1126.us.ph, i64 16
   %i.af = getelementptr inbounds nuw i8, ptr %.1.us.ph, i64 16
   br label %.preheader157.us.prol.loopexit.unr-lcssa
@@ -110,7 +111,7 @@ bb.g:                                             ; preds = %.preheader157.us.pr
   br i1 %i.p, label %.loopexit158.us, label %.preheader157.us
 
 .preheader157.us:                                 ; preds = %.preheader157.us.prol.loopexit, %bb.p
-  %.1136.us = phi ptr [ %.2137.us.1, %bb.p ], [ %.1136.us.unr, %.preheader157.us.prol.loopexit ] ; 8 uses
+  %.1136.us = phi ptr [ %.2137.us.1, %bb.p ], [ %.1136.us.unr, %.preheader157.us.prol.loopexit ] ; 10 uses
   %.0133.us = phi i64 [ %i.bq, %bb.p ], [ %.0133.us.unr, %.preheader157.us.prol.loopexit ] ; 2 uses
   %.0129.us = phi i64 [ %i.bp, %bb.p ], [ %.0129.us.unr, %.preheader157.us.prol.loopexit ] ; 4 uses
   %.1126.us = phi ptr [ %.2127.us.1, %bb.p ], [ %.1126.us.unr, %.preheader157.us.prol.loopexit ] ; 4 uses
@@ -128,8 +129,9 @@ bb.i:                                             ; preds = %bb.h
   %i.aq = load double, ptr %i.ap, align 8, !tbaa !8
   store <2 x double> %i.ao, ptr %.1136.us, align 8, !tbaa !8
   %i.ar = getelementptr inbounds nuw i8, ptr %.1136.us, i64 16
-  %8 = insertelement <2 x double> <double 0.000000e+00, double poison>, double %i.aq, i64 1
-  store <2 x double> %8, ptr %i.ar, align 8, !tbaa !8
+  store double 0.000000e+00, ptr %i.ar, align 8, !tbaa !8
+  %8 = getelementptr inbounds nuw i8, ptr %.1136.us, i64 24
+  store double %i.aq, ptr %8, align 8, !tbaa !8
   %i.as = getelementptr inbounds nuw i8, ptr %.1126.us, i64 16
   %i.at = getelementptr inbounds nuw i8, ptr %.1.us, i64 16
   br label %.preheader157.us.1
@@ -166,8 +168,9 @@ bb.m:                                             ; preds = %bb.l
   %i.bf = load double, ptr %i.be, align 8, !tbaa !8
   store <2 x double> %i.bd, ptr %.2137.us, align 8, !tbaa !8
   %i.bg = getelementptr inbounds nuw i8, ptr %.1136.us, i64 48
-  %9 = insertelement <2 x double> <double 0.000000e+00, double poison>, double %i.bf, i64 1
-  store <2 x double> %9, ptr %i.bg, align 8, !tbaa !8
+  store double 0.000000e+00, ptr %i.bg, align 8, !tbaa !8
+  %9 = getelementptr inbounds nuw i8, ptr %.1136.us, i64 56
+  store double %i.bf, ptr %9, align 8, !tbaa !8
   %i.bh = getelementptr inbounds nuw i8, ptr %.2127.us, i64 16
   %i.bi = getelementptr inbounds nuw i8, ptr %.2.us, i64 16
   br label %bb.p

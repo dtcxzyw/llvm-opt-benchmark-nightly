@@ -204,7 +204,7 @@ bb.a:
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden void @_ZN2cv4GArgC2IRNS_5gimpl6RcDescETnNSt9enable_ifIXntsr6detail7is_gargIT_EE5valueEiE4typeELi0EEEOS6_(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(48) %1) unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %2 = alloca %"struct.cv::gimpl::RcDesc", align 16 ; 9 uses
+  %2 = alloca %"struct.cv::gimpl::RcDesc", align 8 ; 9 uses
   store i32 1, ptr %0, align 8, !tbaa !339
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 4
   store i32 0, ptr %i.a, align 4, !tbaa !350
@@ -212,16 +212,18 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #28
   call void @_ZN2cv6detail9WrapValueINS_5gimpl6RcDescEvE4wrapERKS3_(ptr dead_on_unwind nonnull writable sret(%"struct.cv::gimpl::RcDesc") align 8 %2, ptr noundef nonnull align 8 dereferenceable(48) %1)
   %i.c = invoke noalias noundef nonnull dereferenceable(56) ptr @_Znwm(i64 noundef 56) #31
-          to label %.noexc unwind label %bb.e     ; 4 uses
+          to label %.noexc unwind label %bb.e     ; 5 uses
 
 .noexc:                                           ; preds = %bb.a
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN2cv4util3any11holder_implINS_5gimpl6RcDescEEE, i64 16), ptr %i.c, align 8, !tbaa !10
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 8
-  %i.e = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
-  %3 = load i64, ptr %i.e, align 8, !tbaa !361
-  %4 = load <2 x i64>, ptr %2, align 16
-  store <2 x i64> %4, ptr %i.d, align 8
-  %i.f = getelementptr inbounds nuw [8 x i8], ptr @constinit.24, i64 %3
+  %3 = load i64, ptr %2, align 8
+  store i64 %3, ptr %i.d, align 8
+  %i.e = getelementptr inbounds nuw i8, ptr %i.c, i64 16
+  %4 = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
+  %5 = load i64, ptr %4, align 8, !tbaa !361      ; 2 uses
+  store i64 %5, ptr %i.e, align 8, !tbaa !361
+  %i.f = getelementptr inbounds nuw [8 x i8], ptr @constinit.24, i64 %5
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !365
   %i.h = getelementptr inbounds nuw i8, ptr %i.c, i64 24
   %i.i = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
@@ -237,7 +239,7 @@ bb.b:                                             ; preds = %.noexc
 
 bb.c:                                             ; preds = %.noexc
   store ptr %i.c, ptr %i.b, align 8, !tbaa !351
-  %i.l = load i64, ptr %i.e, align 8, !tbaa !361
+  %i.l = load i64, ptr %4, align 8, !tbaa !361
   %i.m = getelementptr inbounds nuw [8 x i8], ptr @constinit, i64 %i.l
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !365
   invoke void %i.n(ptr noundef nonnull %i.i)
@@ -640,15 +642,17 @@ bb.a:
   br i1 %.not14.i.i, label %_ZSt12__relocate_aIPN2cv5gimpl4DataES3_SaIS2_EET0_T_S6_S5_RT1_.exit, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.a, %_ZSt19__relocate_object_aIN2cv5gimpl4DataES2_SaIS2_EEvPT_PT0_RT1_.exit.i.i
-  %.016.i.i = phi ptr [ %i.ae, %_ZSt19__relocate_object_aIN2cv5gimpl4DataES2_SaIS2_EEvPT_PT0_RT1_.exit.i.i ], [ %2, %bb.a ] ; 6 uses
+  %.016.i.i = phi ptr [ %i.ae, %_ZSt19__relocate_object_aIN2cv5gimpl4DataES2_SaIS2_EEvPT_PT0_RT1_.exit.i.i ], [ %2, %bb.a ] ; 7 uses
   %.0915.i.i = phi ptr [ %i.ad, %_ZSt19__relocate_object_aIN2cv5gimpl4DataES2_SaIS2_EEvPT_PT0_RT1_.exit.i.i ], [ %0, %bb.a ] ; 7 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !885)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !888)
-  %i.a = getelementptr inbounds nuw i8, ptr %.0915.i.i, i64 8 ; 2 uses
-  %4 = load i64, ptr %i.a, align 8, !tbaa !438, !alias.scope !888, !noalias !885
-  %5 = load <2 x i64>, ptr %.0915.i.i, align 8, !alias.scope !888, !noalias !885
-  store <2 x i64> %5, ptr %.016.i.i, align 8, !alias.scope !885, !noalias !888
-  %i.b = getelementptr inbounds nuw [8 x i8], ptr @constinit.23, i64 %4
+  %4 = load i64, ptr %.0915.i.i, align 8, !alias.scope !888, !noalias !885
+  store i64 %4, ptr %.016.i.i, align 8, !alias.scope !885, !noalias !888
+  %i.a = getelementptr inbounds nuw i8, ptr %.016.i.i, i64 8
+  %5 = getelementptr inbounds nuw i8, ptr %.0915.i.i, i64 8 ; 2 uses
+  %6 = load i64, ptr %5, align 8, !tbaa !438, !alias.scope !888, !noalias !885 ; 2 uses
+  store i64 %6, ptr %i.a, align 8, !tbaa !438, !alias.scope !885, !noalias !888
+  %i.b = getelementptr inbounds nuw [8 x i8], ptr @constinit.23, i64 %6
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !365, !noalias !890
   %i.d = getelementptr inbounds nuw i8, ptr %.016.i.i, i64 16
   %i.e = getelementptr inbounds nuw i8, ptr %.0915.i.i, i64 16 ; 2 uses
@@ -700,7 +704,7 @@ bb.d:                                             ; preds = %_ZN2cv5gimpl4DataC2
   unreachable
 
 _ZN2cv4util7variantIJNS0_9monostateESt8functionIFvRNS_6detail9VectorRefEEES3_IFvRNS4_9OpaqueRefEEEEED2Ev.exit.i.i.i.i: ; preds = %_ZN2cv5gimpl4DataC2EOS1_.exit.i.i.i
-  %i.y = load i64, ptr %i.a, align 8, !tbaa !438, !alias.scope !888, !noalias !885
+  %i.y = load i64, ptr %5, align 8, !tbaa !438, !alias.scope !888, !noalias !885
   %i.z = getelementptr inbounds nuw [8 x i8], ptr @constinit.22, i64 %i.y
   %i.aa = load ptr, ptr %i.z, align 8, !tbaa !365, !noalias !890
   invoke void %i.aa(ptr noundef nonnull %i.e)
@@ -1103,15 +1107,17 @@ _ZNKSt6vectorIN2cv5gimpl6RcDescESaIS2_EE12_M_check_lenEmPKc.exit: ; preds = %bb.
   br i1 %.not12.i.i.i, label %_ZNSt6vectorIN2cv5gimpl6RcDescESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %_ZNKSt6vectorIN2cv5gimpl6RcDescESaIS2_EE12_M_check_lenEmPKc.exit, %_ZSt19__relocate_object_aIN2cv5gimpl6RcDescES2_SaIS2_EEvPT_PT0_RT1_.exit.i.i.i
-  %.014.i.i.i = phi ptr [ %i.ak, %_ZSt19__relocate_object_aIN2cv5gimpl6RcDescES2_SaIS2_EEvPT_PT0_RT1_.exit.i.i.i ], [ %i.u, %_ZNKSt6vectorIN2cv5gimpl6RcDescESaIS2_EE12_M_check_lenEmPKc.exit ] ; 3 uses
+  %.014.i.i.i = phi ptr [ %i.ak, %_ZSt19__relocate_object_aIN2cv5gimpl6RcDescES2_SaIS2_EEvPT_PT0_RT1_.exit.i.i.i ], [ %i.u, %_ZNKSt6vectorIN2cv5gimpl6RcDescESaIS2_EE12_M_check_lenEmPKc.exit ] ; 4 uses
   %.0913.i.i.i = phi ptr [ %i.aj, %_ZSt19__relocate_object_aIN2cv5gimpl6RcDescES2_SaIS2_EEvPT_PT0_RT1_.exit.i.i.i ], [ %i.c, %_ZNKSt6vectorIN2cv5gimpl6RcDescESaIS2_EE12_M_check_lenEmPKc.exit ] ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1304)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1307)
-  %i.x = getelementptr inbounds nuw i8, ptr %.0913.i.i.i, i64 8 ; 2 uses
-  %2 = load i64, ptr %i.x, align 8, !tbaa !361, !alias.scope !1307, !noalias !1304
-  %3 = load <2 x i64>, ptr %.0913.i.i.i, align 8, !alias.scope !1307, !noalias !1304
-  store <2 x i64> %3, ptr %.014.i.i.i, align 8, !alias.scope !1304, !noalias !1307
-  %i.y = getelementptr inbounds nuw [8 x i8], ptr @constinit.24, i64 %2
+  %2 = load i64, ptr %.0913.i.i.i, align 8, !alias.scope !1307, !noalias !1304
+  store i64 %2, ptr %.014.i.i.i, align 8, !alias.scope !1304, !noalias !1307
+  %i.x = getelementptr inbounds nuw i8, ptr %.014.i.i.i, i64 8
+  %3 = getelementptr inbounds nuw i8, ptr %.0913.i.i.i, i64 8 ; 2 uses
+  %4 = load i64, ptr %3, align 8, !tbaa !361, !alias.scope !1307, !noalias !1304 ; 2 uses
+  store i64 %4, ptr %i.x, align 8, !tbaa !361, !alias.scope !1304, !noalias !1307
+  %i.y = getelementptr inbounds nuw [8 x i8], ptr @constinit.24, i64 %4
   %i.z = load ptr, ptr %i.y, align 8, !tbaa !365, !noalias !1309
   %i.aa = getelementptr inbounds nuw i8, ptr %.014.i.i.i, i64 16
   %i.ab = getelementptr inbounds nuw i8, ptr %.0913.i.i.i, i64 16 ; 2 uses
@@ -1126,7 +1132,7 @@ bb.e:                                             ; preds = %.lr.ph.i.i.i
   unreachable
 
 _ZN2cv5gimpl6RcDescC2EOS1_.exit.i.i.i.i:          ; preds = %.lr.ph.i.i.i
-  %i.ae = load i64, ptr %i.x, align 8, !tbaa !361, !alias.scope !1307, !noalias !1304
+  %i.ae = load i64, ptr %3, align 8, !tbaa !361, !alias.scope !1307, !noalias !1304
   %i.af = getelementptr inbounds nuw [8 x i8], ptr @constinit, i64 %i.ae
   %i.ag = load ptr, ptr %i.af, align 8, !tbaa !365, !noalias !1309
   invoke void %i.ag(ptr noundef nonnull %i.ab)

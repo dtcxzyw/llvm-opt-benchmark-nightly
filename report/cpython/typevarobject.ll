@@ -203,7 +203,7 @@ bb.t:                                             ; preds = %bb.s
 bb.u:                                             ; preds = %.thread100, %bb.s
   %i.ay = phi ptr [ %i.aq, %.thread100 ], [ %i.n, %bb.s ] ; 3 uses
   %i.az = phi i1 [ false, %.thread100 ], [ %i.av, %bb.s ]
-  %.15395109 = phi ptr [ %.153.ph, %.thread100 ], [ %.052, %bb.s ] ; 2 uses
+  %.15395109 = phi ptr [ %.153.ph, %.thread100 ], [ %.052, %bb.s ] ; 3 uses
   %.15196108 = phi ptr [ %.151.ph, %.thread100 ], [ %.050, %bb.s ] ; 3 uses
   %i.ba = phi i1 [ %i.ar, %.thread100 ], [ %i.as, %bb.s ]
   %i.bb = phi i1 [ false, %.thread100 ], [ %i.at, %bb.s ]
@@ -211,7 +211,8 @@ bb.u:                                             ; preds = %.thread100, %bb.s
   br i1 %i.bc, label %bb.v, label %bb.x
 
 bb.v:                                             ; preds = %bb.u
-  %_Py_NoneStruct.val.i.i = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_Py_NoneStruct, i64 8), align 8, !tbaa !23 ; 4 uses
+  %3 = getelementptr i8, ptr %.15395109, i64 8
+  %_Py_NoneStruct.val.i.i = load ptr, ptr %3, align 8, !tbaa !23 ; 4 uses
   %i.bd = load i32, ptr %_Py_NoneStruct.val.i.i, align 8, !tbaa !31 ; 2 uses
   %i.be = icmp ugt i32 %i.bd, -1073741825
   br i1 %i.be, label %type_check.exit.thread.i, label %bb.w
