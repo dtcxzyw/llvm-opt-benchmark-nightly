@@ -204,32 +204,33 @@ _ZZN3igl12parallel_forIiZNS_16per_face_normalsIN5Eigen6MatrixIdLin1ELin1ELi0ELin
   %i.ds = fmul double %i.dr, %i.dq
   %i.dt = extractelement <2 x double> %i.di, i64 0
   %i.du = extractelement <2 x double> %i.dl, i64 1
+  %3 = tail call double @llvm.fmuladd.f64(double %i.dt, double %i.du, double %i.ds) ; 3 uses
   %i.dv = fneg <2 x double> %i.dl
   %i.dw = fmul <2 x double> %i.di, %i.dv
   %i.dx = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.dd, <2 x double> %i.do, <2 x double> %i.dw) ; 4 uses
-  %3 = fmul <2 x double> %i.dx, %i.dx             ; 2 uses
-  %4 = extractelement <2 x double> %3, i64 1
-  %i.dy = extractelement <2 x double> %3, i64 0
-  %5 = extractelement <2 x double> %i.dx, i64 0
-  %6 = tail call double @llvm.fmuladd.f64(double %i.dt, double %i.du, double %i.ds) ; 3 uses
-  %7 = fmul double %6, %6
-  %8 = fadd double %4, %7
-  %9 = fadd double %i.dy, %8                      ; 2 uses
-  %10 = fcmp oeq double %9, 0.000000e+00          ; 3 uses
-  %.scalar.i.i.i.i.1 = tail call double @llvm.sqrt.f64(double %9) ; 2 uses
-  %11 = fdiv double %5, %.scalar.i.i.i.i.1
-  %i.dz = insertelement <2 x double> %i.dx, double %6, i64 0
+  %4 = fmul double %3, %3
+  %5 = fmul <2 x double> %i.dx, %i.dx             ; 2 uses
+  %i.dy = extractelement <2 x double> %5, i64 1
+  %6 = fadd double %i.dy, %4
+  %7 = extractelement <2 x double> %5, i64 0
+  %8 = fadd double %7, %6                         ; 2 uses
+  %9 = fcmp oeq double %8, 0.000000e+00           ; 2 uses
+  %.scalar.i.i.i.i.1 = tail call double @llvm.sqrt.f64(double %8) ; 2 uses
+  %10 = extractelement <2 x double> %i.dx, i64 0
+  %11 = fdiv double %10, %.scalar.i.i.i.i.1
+  %.sink8 = select i1 %9, double 0.000000e+00, double %11
+  %i.dz = insertelement <2 x double> %i.dx, double %3, i64 0
   %i.ea = insertelement <2 x double> poison, double %.scalar.i.i.i.i.1, i64 0
   %i.eb = shufflevector <2 x double> %i.ea, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.ec = fdiv <2 x double> %i.dz, %i.eb          ; 2 uses
-  %.sink8 = select i1 %10, double 0.000000e+00, double %11
-  %12 = extractelement <2 x double> %i.ec, i64 0
-  %.sink7 = select i1 %10, double 0.000000e+00, double %12
-  %13 = extractelement <2 x double> %i.ec, i64 1
-  %storemerge.i.i.i.1 = select i1 %10, double 0.000000e+00, double %13
+  %i.ec = fdiv <2 x double> %i.dz, %i.eb
+  %12 = insertelement <2 x i1> poison, i1 %9, i64 0
+  %13 = shufflevector <2 x i1> %12, <2 x i1> poison, <2 x i32> zeroinitializer
+  %14 = select <2 x i1> %13, <2 x double> zeroinitializer, <2 x double> %i.ec ; 2 uses
   store double %.sink8, ptr %i.cw, align 8, !tbaa !51
-  store double %.sink7, ptr %i.cx, align 8, !tbaa !51
-  store double %storemerge.i.i.i.1, ptr %i.cy, align 8, !tbaa !51
+  %15 = extractelement <2 x double> %14, i64 0
+  store double %15, ptr %i.cx, align 8, !tbaa !51
+  %16 = extractelement <2 x double> %14, i64 1
+  store double %16, ptr %i.cy, align 8, !tbaa !51
   ret void
 }
 

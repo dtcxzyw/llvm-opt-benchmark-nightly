@@ -203,7 +203,7 @@ bb.a:
 define void @_ZN3g2o17EdgeSE3ProjectXYZ14linearizeOplusEv(ptr nofree noundef nonnull readonly align 16 captures(none) dereferenceable(360) %0) unnamed_addr #5 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %.sroa.2.i.i.i.i.i.i.i.i.i.i = alloca <2 x double>, align 16 ; 5 uses
-  %1 = alloca %"class.Eigen::Matrix.152", align 16 ; 7 uses
+  %1 = alloca %"class.Eigen::Matrix.152", align 16 ; 6 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !50   ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 8
@@ -264,26 +264,24 @@ bb.a:
   %i.aj = fadd <2 x double> %.sroa.11.32.copyload, %i.af ; 5 uses
   %i.ak = fadd double %.sroa.13.32.copyload, %i.ai ; 5 uses
   %.sroa.037.0.vec.extract = extractelement <2 x double> %i.aj, i64 0 ; 2 uses
-  %.sroa.037.8.vec.extract = extractelement <2 x double> %i.aj, i64 1 ; 6 uses
-  %i.al = fmul double %i.ak, %i.ak                ; 6 uses
+  %.sroa.037.8.vec.extract = extractelement <2 x double> %i.aj, i64 1 ; 4 uses
+  %i.al = fmul double %i.ak, %i.ak                ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #21
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 328 ; 6 uses
-  %i.an = getelementptr inbounds nuw i8, ptr %1, i64 32
-  %i.ao = getelementptr inbounds nuw i8, ptr %1, i64 8
-  store <2 x double> zeroinitializer, ptr %i.ao, align 8, !tbaa !55
+  %i.an = getelementptr inbounds nuw i8, ptr %1, i64 16
+  %i.ao = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 336 ; 5 uses
-  %2 = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.aq = load <2 x double>, ptr %i.am, align 8, !tbaa !55 ; 3 uses
-  %3 = extractelement <2 x double> %i.aq, i64 0
-  store double %3, ptr %1, align 16, !tbaa !55
-  %4 = extractelement <2 x double> %i.aq, i64 1
-  store double %4, ptr %2, align 8, !tbaa !55
+  %2 = insertelement <2 x double> %i.aq, double 0.000000e+00, i64 1
+  store <2 x double> %2, ptr %1, align 16, !tbaa !55
+  %3 = insertelement <2 x double> %i.aq, double 0.000000e+00, i64 0
+  store <2 x double> %3, ptr %i.an, align 16, !tbaa !55
   %i.ar = fneg <2 x double> %i.aj                 ; 2 uses
   %i.as = insertelement <2 x double> poison, double %i.ak, i64 0
   %i.at = shufflevector <2 x double> %i.as, <2 x double> poison, <2 x i32> zeroinitializer
   %i.au = fdiv <2 x double> %i.ar, %i.at          ; 2 uses
   %i.av = fmul <2 x double> %i.aq, %i.au
-  store <2 x double> %i.av, ptr %i.an, align 16, !tbaa !55
+  store <2 x double> %i.av, ptr %i.ao, align 16, !tbaa !55
   %i.aw = fdiv double -1.000000e+00, %i.ak        ; 3 uses
   %i.ax = fmul double %.sroa.041.0.copyload, 2.000000e+00 ; 2 uses
   %i.ay = fmul double %.sroa.543.0.copyload, 2.000000e+00 ; 3 uses
@@ -376,36 +374,36 @@ bb.a:
   %i.dw = load ptr, ptr %i.dv, align 16, !tbaa !159, !nonnull !147, !align !148
   %i.dx = load ptr, ptr %i.dw, align 8, !tbaa !160 ; 12 uses
   store double %i.du, ptr %i.dx, align 8, !tbaa !55
-  %foldExtExtBinop = fmul <2 x double> %i.aj, %i.aj
-  %5 = extractelement <2 x double> %foldExtExtBinop, i64 0
-  %i.dy = fdiv double %5, %i.al
-  %6 = fadd double %i.dy, 1.000000e+00
-  %7 = fneg double %6
-  %8 = load double, ptr %i.am, align 8, !tbaa !157
-  %9 = fmul double %8, %7
-  %i.dz = getelementptr i8, ptr %i.dx, i64 16
-  store double %9, ptr %i.dz, align 8, !tbaa !55
-  %10 = fdiv double %.sroa.037.8.vec.extract, %i.ak
-  %11 = load double, ptr %i.am, align 8, !tbaa !157
-  %12 = fmul double %10, %11
-  %13 = getelementptr i8, ptr %i.dx, i64 32
-  store double %12, ptr %13, align 8, !tbaa !55
-  %14 = load double, ptr %i.am, align 8, !tbaa !157
-  %i.ea = fmul double %i.aw, %14
-  %15 = getelementptr i8, ptr %i.dx, i64 48
-  store double %i.ea, ptr %15, align 8, !tbaa !55
-  %16 = getelementptr i8, ptr %i.dx, i64 64
-  store double 0.000000e+00, ptr %16, align 8, !tbaa !55
-  %17 = fdiv double %.sroa.037.0.vec.extract, %i.al
+  %4 = load double, ptr %i.am, align 8, !tbaa !157
+  %5 = getelementptr i8, ptr %i.dx, i64 16
+  %i.dy = fdiv double %.sroa.037.8.vec.extract, %i.ak
+  %6 = getelementptr i8, ptr %i.dx, i64 32
+  %7 = getelementptr i8, ptr %i.dx, i64 48
+  %8 = getelementptr i8, ptr %i.dx, i64 64
+  %9 = fdiv double %.sroa.037.0.vec.extract, %i.al
+  %i.dz = getelementptr i8, ptr %i.dx, i64 80
+  %10 = fmul <2 x double> %i.aj, %i.aj
+  %11 = insertelement <2 x double> poison, double %i.al, i64 0
+  %12 = shufflevector <2 x double> %11, <2 x double> poison, <2 x i32> zeroinitializer
+  %13 = fdiv <2 x double> %10, %12
+  %14 = fadd <2 x double> %13, splat (double 1.000000e+00) ; 2 uses
+  %15 = extractelement <2 x double> %14, i64 0
+  %16 = fneg double %15
+  %i.ea = fmul double %4, %16
+  store double %i.ea, ptr %5, align 8, !tbaa !55
+  %17 = load double, ptr %i.am, align 8, !tbaa !157
+  %18 = fmul double %i.dy, %17
+  store double %18, ptr %6, align 8, !tbaa !55
   %i.eb = load double, ptr %i.am, align 8, !tbaa !157
-  %i.ec = fmul double %17, %i.eb
-  %18 = getelementptr i8, ptr %i.dx, i64 80
-  store double %i.ec, ptr %18, align 8, !tbaa !55
-  %i.ed = fmul double %.sroa.037.8.vec.extract, %.sroa.037.8.vec.extract
-  %19 = fdiv double %i.ed, %i.al
-  %20 = fadd double %19, 1.000000e+00
-  %21 = load double, ptr %i.ap, align 16, !tbaa !161
-  %i.ee = fmul double %20, %21
+  %i.ec = fmul double %i.aw, %i.eb
+  store double %i.ec, ptr %7, align 8, !tbaa !55
+  store double 0.000000e+00, ptr %8, align 8, !tbaa !55
+  %19 = load double, ptr %i.am, align 8, !tbaa !157
+  %i.ed = fmul double %9, %19
+  store double %i.ed, ptr %i.dz, align 8, !tbaa !55
+  %20 = load double, ptr %i.ap, align 16, !tbaa !161
+  %21 = extractelement <2 x double> %14, i64 1
+  %i.ee = fmul double %21, %20
   %i.ef = getelementptr i8, ptr %i.dx, i64 8
   store double %i.ee, ptr %i.ef, align 8, !tbaa !55
   %i.eg = extractelement <2 x double> %i.ar, i64 0

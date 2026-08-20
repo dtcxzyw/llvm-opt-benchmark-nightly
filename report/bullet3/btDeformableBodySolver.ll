@@ -204,6 +204,7 @@ begin_hunk_0_@_ZN22btDeformableBodySolver15applyTransformsEf:bb.a
   %i.yp = insertelement <4 x float> <float poison, float -0.000000e+00, float poison, float poison>, float %i.ym, i64 0
   %i.yq = shufflevector <4 x float> %i.yp, <4 x float> poison, <4 x i32> <i32 0, i32 0, i32 0, i32 1>
   %i.yr = extractelement <4 x float> %i.yk, i64 1
+  %10 = call noundef float @llvm.fmuladd.f32(float %i.xq, float %i.vv, float %i.yr) ; 2 uses
   %i.ys = call float @llvm.fmuladd.f32(float %i.xr, float %i.wd, float %i.ya)
   %i.yt = call noundef float @llvm.fmuladd.f32(float %i.xi, float %i.vv, float %i.ys) ; 2 uses
   %i.yu = call float @llvm.fmuladd.f32(float %i.xs, float %i.wd, float %i.yb)
@@ -215,7 +216,6 @@ begin_hunk_0_@_ZN22btDeformableBodySolver15applyTransformsEf:bb.a
   %i.za = insertelement <4 x float> %i.yz, float %i.xx, i64 2
   %i.zb = insertelement <4 x float> %i.za, float %i.xy, i64 3
   %i.zc = fmul <4 x float> %i.yx, %i.zb
-  %10 = call noundef float @llvm.fmuladd.f32(float %i.xq, float %i.vv, float %i.yr) ; 2 uses
   %i.zd = insertelement <2 x float> poison, float %i.yt, i64 0
   %i.ze = shufflevector <2 x float> %i.zd, <2 x float> poison, <2 x i32> zeroinitializer
   %i.zf = fmul <2 x float> %i.ln, %i.ze

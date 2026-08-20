@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %.backedge, %bb.a
   %.sroa.0117.0 = phi i32 [ %.sroa.0117.0.copyload, %bb.a ], [ %.sroa.0117.0.be, %.backedge ] ; 4 uses
   %i.k = phi <2 x i32> [ %i.e, %bb.a ], [ %.be, %.backedge ] ; 5 uses
   %i.l = phi <4 x i32> [ %i.f, %bb.a ], [ %.be339, %.backedge ] ; 10 uses
-  %i.m = extractelement <2 x i32> %i.k, i64 0     ; 29 uses
+  %i.m = extractelement <2 x i32> %i.k, i64 0     ; 31 uses
   %.sroa.27156.0325 = ptrtoaddr ptr %.sroa.27156.0 to i64
   switch i32 %.sroa.0117.0, label %.thread [
     i32 11, label %split
@@ -607,10 +607,13 @@ bb.af:                                            ; preds = %.noexc93, %bb.ad
   %i.kq = phi i32 [ %.pre2.i92, %.noexc93 ], [ %i.km, %bb.ad ] ; 2 uses
   %i.kr = phi ptr [ %.pre.i90, %.noexc93 ], [ %i.kj, %bb.ad ] ; 2 uses
   %i.ks = zext i32 %i.kq to i64
-  %i.kt = getelementptr inbounds nuw [48 x i8], ptr %i.kr, i64 %i.ks ; 6 uses
+  %i.kt = getelementptr inbounds nuw [48 x i8], ptr %i.kr, i64 %i.ks ; 7 uses
   store i32 5, ptr %i.kt, align 8, !tbaa !77
-  %.sroa.5102.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.kt, i64 4
-  store <2 x i32> %i.k, ptr %.sroa.5102.0..sroa_idx.a, align 4, !tbaa !15
+  %.sroa.5102.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.kt, i64 4
+  store i32 %i.m, ptr %.sroa.5102.0..sroa_idx, align 4, !tbaa !15
+  %.sroa.5102.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.kt, i64 8
+  %6 = extractelement <2 x i32> %i.k, i64 1
+  store i32 %6, ptr %.sroa.5102.0..sroa_idx.a, align 8, !tbaa !15
   %.sroa.7105.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.kt, i64 16
   store ptr %i.fb, ptr %.sroa.7105.0..sroa_idx, align 8, !tbaa !72
   %.sroa.8106.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.kt, i64 24
@@ -756,10 +759,13 @@ bb.am:                                            ; preds = %.noexc98, %bb.ak
   %i.nj = phi i32 [ %.pre2.i97, %.noexc98 ], [ %i.nf, %bb.ak ] ; 2 uses
   %i.nk = phi ptr [ %.pre.i95, %.noexc98 ], [ %i.nc, %bb.ak ] ; 2 uses
   %i.nl = zext i32 %i.nj to i64
-  %i.nm = getelementptr inbounds nuw [48 x i8], ptr %i.nk, i64 %i.nl ; 6 uses
+  %i.nm = getelementptr inbounds nuw [48 x i8], ptr %i.nk, i64 %i.nl ; 7 uses
   store i32 4, ptr %i.nm, align 8, !tbaa !77
-  %.sroa.5.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.nm, i64 4
-  store <2 x i32> %i.k, ptr %.sroa.5.0..sroa_idx.a, align 4, !tbaa !15
+  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.nm, i64 4
+  store i32 %i.m, ptr %.sroa.5.0..sroa_idx, align 4, !tbaa !15
+  %.sroa.5.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.nm, i64 8
+  %7 = extractelement <2 x i32> %i.k, i64 1
+  store i32 %7, ptr %.sroa.5.0..sroa_idx.a, align 8, !tbaa !15
   %.sroa.7100.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.nm, i64 16
   store ptr %.sroa.27156.0, ptr %.sroa.7100.0..sroa_idx, align 8, !tbaa !72
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.nm, i64 24

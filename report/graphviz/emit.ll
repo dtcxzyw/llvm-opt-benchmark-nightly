@@ -204,7 +204,7 @@ bb.s:                                             ; preds = %bb.r, %bb.q
   %i.cr = load ptr, ptr %i.b, align 8, !tbaa !78
   %i.cs = getelementptr inbounds nuw i8, ptr %i.cr, i64 32
   %i.ct = load <2 x double>, ptr %i.cs, align 8, !tbaa !105 ; 16 uses
-  %i.cu = extractelement <2 x double> %i.ct, i64 0 ; 3 uses
+  %i.cu = extractelement <2 x double> %i.ct, i64 0 ; 4 uses
   %i.cv = load ptr, ptr @N_style, align 8, !tbaa !225
   %i.cw = tail call ptr @late_nnstring(ptr noundef nonnull %1, ptr noundef %i.cv, ptr noundef nonnull @.str.13) #27 ; 2 uses
   %i.cx = load i8, ptr %i.cw, align 1, !tbaa !8
@@ -360,8 +360,11 @@ bb.ag:                                            ; preds = %bb.af
 
 bb.ah:                                            ; preds = %bb.ag
   store i32 1, ptr %i.fn, align 4, !tbaa !132
-  %i.fo = tail call fastcc ptr @gv_calloc(i64 noundef 2, i64 noundef 16) ; 3 uses
-  store <2 x double> %i.ct, ptr %i.fo, align 8, !tbaa !105
+  %i.fo = tail call fastcc ptr @gv_calloc(i64 noundef 2, i64 noundef 16) ; 4 uses
+  store double %i.cu, ptr %i.fo, align 8, !tbaa !129
+  %2 = getelementptr inbounds nuw i8, ptr %i.fo, i64 8
+  %3 = extractelement <2 x double> %i.ct, i64 1
+  store double %3, ptr %2, align 8, !tbaa !136
   %.idx187.i = shl i64 %i.ee, 5
   %i.fp = getelementptr i8, ptr %i.eg, i64 %.idx187.i ; 2 uses
   %i.fq = getelementptr i8, ptr %i.fp, i64 -16

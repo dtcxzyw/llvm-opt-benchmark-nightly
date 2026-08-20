@@ -203,16 +203,12 @@ bb.c:                                             ; preds = %bb.b
   %i.c = insertelement <128 x i32> poison, i32 %0, i64 0
   %i.d = shufflevector <128 x i32> %i.c, <128 x i32> poison, <128 x i32> zeroinitializer
   %i.e = add nsw <128 x i32> %i.d, <i32 -37, i32 -48, i32 -60, i32 -63, i32 -127, i32 -162, i32 -188, i32 -697, i32 -706, i32 -710, i32 -722, i32 -741, i32 -751, i32 -4053, i32 -5867, i32 -5941, i32 -7401, i32 -7406, i32 -7413, i32 -8192, i32 -8208, i32 -8219, i32 -8234, i32 -8240, i32 -8251, i32 -8255, i32 -8257, i32 -8263, i32 -8277, i32 -8288, i32 -8294, i32 -8308, i32 -8314, i32 -8320, i32 -8330, i32 -8352, i32 -8451, i32 -8458, i32 -8473, i32 -8478, i32 -8495, i32 -8499, i32 -8501, i32 -8512, i32 -8517, i32 -8592, i32 -8597, i32 -8609, i32 -8615, i32 -8623, i32 -8661, i32 -8692, i32 -8972, i32 -8994, i32 -9003, i32 -9085, i32 -9115, i32 -9140, i32 -9180, i32 -9186, i32 -9216, i32 -9280, i32 -9312, i32 -9372, i32 -9450, i32 -9472, i32 -9656, i32 -9666, i32 -9728, i32 -9840, i32 -10102, i32 -10132, i32 -10176, i32 -10183, i32 -10496, i32 -10649, i32 -10716, i32 -10750, i32 -11008, i32 -11056, i32 -11077, i32 -11079, i32 -11085, i32 -11126, i32 -11160, i32 -11197, i32 -11210, i32 -11782, i32 -11790, i32 -11818, i32 -11824, i32 -11843, i32 -12272, i32 -12289, i32 -12337, i32 -12443, i32 -12690, i32 -12694, i32 -12736, i32 -12832, i32 -12842, i32 -12881, i32 -12928, i32 -12938, i32 -12977, i32 -13144, i32 -42752, i32 -42775, i32 -42889, i32 -43056, i32 -65040, i32 -65073, i32 -65075, i32 -65093, i32 -65097, i32 -65101, i32 -65104, i32 -65119, i32 -65124, i32 -65281, i32 -65285, i32 -65296, i32 -65308, i32 -65311, i32 -65509, i32 -65513, i32 -65517, i32 -65529>
-  %i.f = insertelement <4 x i32> poison, i32 %0, i64 0 ; 2 uses
+  %i.f = insertelement <4 x i32> poison, i32 %0, i64 0 ; 3 uses
   %i.g = shufflevector <4 x i32> %i.f, <4 x i32> poison, <4 x i32> zeroinitializer ; 33 uses
-  %i.h = and <4 x i32> %i.g, <i32 2097148, i32 2097150, i32 2097150, i32 2097150> ; 21 uses
-  %i.i = extractelement <4 x i32> %i.h, i64 0     ; 14 uses
-  %1 = and i32 %0, 2097146                        ; 2 uses
-  %2 = and i32 %0, 2097144                        ; 14 uses
-  %i.j = extractelement <4 x i32> %i.h, i64 1     ; 51 uses
-  %3 = and i32 %0, 2097136                        ; 7 uses
-  %4 = and i32 %0, 2097142
-  %i.k = and i32 %0, 2097088
+  %i.h = and <4 x i32> %i.g, <i32 2097148, i32 2097150, i32 2097150, i32 2097150> ; 20 uses
+  %i.i = extractelement <4 x i32> %i.h, i64 1     ; 53 uses
+  %i.j = extractelement <4 x i32> %i.h, i64 0     ; 15 uses
+  %i.k = and i32 %0, 2097146                      ; 2 uses
   %i.l = icmp ult <128 x i32> %i.e, <i32 3, i32 10, i32 3, i32 2, i32 33, i32 4, i32 3, i32 9, i32 4, i32 12, i32 14, i32 5, i32 17, i32 4, i32 3, i32 2, i32 4, i32 4, i32 2, i32 11, i32 6, i32 2, i32 5, i32 9, i32 4, i32 2, i32 3, i32 11, i32 10, i32 5, i32 10, i32 6, i32 3, i32 10, i32 3, i32 31, i32 4, i32 10, i32 5, i32 6, i32 3, i32 2, i32 4, i32 5, i32 5, i32 5, i32 5, i32 2, i32 7, i32 31, i32 31, i32 268, i32 20, i32 7, i32 81, i32 30, i32 25, i32 40, i32 6, i32 29, i32 39, i32 11, i32 60, i32 78, i32 22, i32 183, i32 9, i32 54, i32 111, i32 248, i32 30, i32 44, i32 5, i32 31, i32 131, i32 63, i32 32, i32 258, i32 48, i32 21, i32 2, i32 6, i32 39, i32 32, i32 34, i32 12, i32 8, i32 3, i32 9, i32 5, i32 10, i32 2, i32 12, i32 3, i32 5, i32 2, i32 4, i32 10, i32 36, i32 10, i32 30, i32 15, i32 10, i32 39, i32 15, i32 168, i32 23, i32 9, i32 2, i32 6, i32 7, i32 2, i32 2, i32 2, i32 4, i32 3, i32 3, i32 3, i32 3, i32 3, i32 3, i32 10, i32 3, i32 2, i32 2, i32 4, i32 2, i32 3>
   %i.m = add nsw i32 %0, -65792
   %or.cond182 = icmp ult i32 %i.m, 3
@@ -222,29 +218,33 @@ bb.c:                                             ; preds = %bb.b
   %i.q = add nsw <64 x i32> %i.p, <i32 -66000, i32 -66273, i32 -118784, i32 -119040, i32 -119081, i32 -119141, i32 -119146, i32 -119149, i32 -119155, i32 -119171, i32 -119180, i32 -119214, i32 -119552, i32 -119648, i32 -119808, i32 -119894, i32 -119973, i32 -119977, i32 -119982, i32 -119997, i32 -120005, i32 -120071, i32 -120077, i32 -120086, i32 -120094, i32 -120123, i32 -120128, i32 -120138, i32 -120146, i32 -120488, i32 -120514, i32 -120540, i32 -120572, i32 -120598, i32 -120630, i32 -120656, i32 -120688, i32 -120714, i32 -120746, i32 -120772, i32 -120782, i32 -126976, i32 -127024, i32 -127136, i32 -127153, i32 -127169, i32 -127185, i32 -127232, i32 -127248, i32 -127280, i32 -127344, i32 -127462, i32 -127489, i32 -127504, i32 -127552, i32 -127744, i32 -127995, i32 -128000, i32 -128736, i32 -128752, i32 -128768, i32 -128896, i32 -129024, i32 -129040>
   %i.r = shufflevector <64 x i32> %i.o, <64 x i32> poison, <8 x i32> zeroinitializer
   %i.s = add nsw <8 x i32> %i.r, <i32 -129104, i32 -129120, i32 -129168, i32 -129296, i32 -129331, i32 -129344, i32 -129360, i32 -129408>
-  %or.cond3 = icmp eq i32 %i.j, 46
+  %or.cond3 = icmp eq i32 %i.i, 46
   %i.t = shufflevector <4 x i32> %i.h, <4 x i32> poison, <2 x i32> <i32 1, i32 1> ; 7 uses
-  %i.u = insertelement <2 x i32> %i.t, i32 %1, i64 1
+  %i.u = insertelement <2 x i32> %i.t, i32 %i.k, i64 1
   %i.v = icmp eq <2 x i32> %i.u, <i32 58, i32 178>
   %i.w = shufflevector <4 x i32> %i.h, <4 x i32> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1> ; 3 uses
   %i.x = icmp eq <4 x i32> %i.w, <i32 2404, i32 6146, i32 7410, i32 8206>
+  %1 = and i32 %0, 2097136                        ; 7 uses
   %i.y = shufflevector <4 x i32> %i.h, <4 x i32> poison, <4 x i32> <i32 1, i32 1, i32 0, i32 1> ; 2 uses
-  %5 = insertelement <4 x i32> %i.y, i32 %2, i64 1
-  %6 = insertelement <4 x i32> %5, i32 %3, i64 3  ; 2 uses
-  %7 = shufflevector <4 x i32> %6, <4 x i32> poison, <16 x i32> <i32 0, i32 1, i32 0, i32 0, i32 0, i32 0, i32 0, i32 2, i32 0, i32 3, i32 0, i32 0, i32 2, i32 0, i32 0, i32 0>
-  %8 = icmp eq <16 x i32> %7, <i32 8214, i32 8224, i32 8448, i32 8456, i32 8470, i32 8492, i32 8506, i32 8508, i32 8524, i32 8528, i32 8586, i32 8602, i32 8604, i32 8612, i32 8654, i32 8656>
-  %9 = shufflevector <4 x i32> %i.h, <4 x i32> %6, <5 x i32> <i32 5, i32 1, i32 7, i32 0, i32 poison>
-  %10 = insertelement <5 x i32> poison, i32 %4, i64 4
-  %11 = shufflevector <5 x i32> %9, <5 x i32> %10, <16 x i32> <i32 0, i32 1, i32 0, i32 2, i32 3, i32 1, i32 1, i32 1, i32 1, i32 3, i32 1, i32 1, i32 9, i32 1, i32 0, i32 2>
-  %12 = icmp eq <16 x i32> %11, <i32 8960, i32 8992, i32 9720, i32 10224, i32 11244, i32 11776, i32 11800, i32 11806, i32 11834, i32 11836, i32 12306, i32 12318, i32 12342, i32 12688, i32 12872, i32 12992>
-  %13 = shufflevector <4 x i32> %i.h, <4 x i32> poison, <3 x i32> <i32 poison, i32 1, i32 0>
-  %14 = insertelement <3 x i32> poison, i32 %i.k, i64 0
-  %15 = shufflevector <3 x i32> %14, <3 x i32> %13, <8 x i32> <i32 0, i32 4, i32 4, i32 5, i32 4, i32 4, i32 4, i32 4>
-  %16 = icmp eq <8 x i32> %15, <i32 19904, i32 42784, i32 43062, i32 65108, i32 65130, i32 65294, i32 65306, i32 65380>
-  %17 = shufflevector <4 x i32> %i.h, <4 x i32> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 0> ; 2 uses
-  %18 = icmp eq <4 x i32> %17, <i32 65438, i32 65504, i32 65532, i32 113824>
-  %19 = icmp ult <64 x i32> %i.q, <i32 45, i32 27, i32 246, i32 39, i32 60, i32 2, i32 3, i32 6, i32 8, i32 2, i32 30, i32 59, i32 87, i32 18, i32 85, i32 71, i32 2, i32 4, i32 12, i32 7, i32 65, i32 4, i32 8, i32 7, i32 28, i32 4, i32 5, i32 7, i32 340, i32 25, i32 25, i32 31, i32 25, i32 31, i32 25, i32 31, i32 25, i32 31, i32 25, i32 8, i32 50, i32 44, i32 100, i32 15, i32 15, i32 15, i32 37, i32 13, i32 31, i32 60, i32 61, i32 26, i32 2, i32 44, i32 9, i32 251, i32 5, i32 723, i32 13, i32 7, i32 116, i32 85, i32 12, i32 56>
-  %i.z = insertelement <4 x i32> %i.w, i32 %2, i64 2
+  %2 = and i32 %0, 2097142
+  %3 = insertelement <5 x i32> poison, i32 %2, i64 4
+  %4 = and i32 %0, 2097088
+  %5 = shufflevector <4 x i32> %i.h, <4 x i32> poison, <3 x i32> <i32 poison, i32 1, i32 0>
+  %6 = insertelement <3 x i32> poison, i32 %4, i64 0
+  %7 = shufflevector <3 x i32> %6, <3 x i32> %5, <8 x i32> <i32 0, i32 4, i32 4, i32 5, i32 4, i32 4, i32 4, i32 4>
+  %8 = icmp eq <8 x i32> %7, <i32 19904, i32 42784, i32 43062, i32 65108, i32 65130, i32 65294, i32 65306, i32 65380>
+  %9 = shufflevector <4 x i32> %i.h, <4 x i32> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 0> ; 2 uses
+  %10 = icmp eq <4 x i32> %9, <i32 65438, i32 65504, i32 65532, i32 113824>
+  %11 = icmp ult <64 x i32> %i.q, <i32 45, i32 27, i32 246, i32 39, i32 60, i32 2, i32 3, i32 6, i32 8, i32 2, i32 30, i32 59, i32 87, i32 18, i32 85, i32 71, i32 2, i32 4, i32 12, i32 7, i32 65, i32 4, i32 8, i32 7, i32 28, i32 4, i32 5, i32 7, i32 340, i32 25, i32 25, i32 31, i32 25, i32 31, i32 25, i32 31, i32 25, i32 31, i32 25, i32 8, i32 50, i32 44, i32 100, i32 15, i32 15, i32 15, i32 37, i32 13, i32 31, i32 60, i32 61, i32 26, i32 2, i32 44, i32 9, i32 251, i32 5, i32 723, i32 13, i32 7, i32 116, i32 85, i32 12, i32 56>
+  %12 = and i32 %0, 2097144                       ; 14 uses
+  %13 = insertelement <4 x i32> %i.y, i32 %12, i64 1
+  %14 = insertelement <4 x i32> %13, i32 %1, i64 3 ; 2 uses
+  %15 = shufflevector <4 x i32> %14, <4 x i32> poison, <16 x i32> <i32 0, i32 1, i32 0, i32 0, i32 0, i32 0, i32 0, i32 2, i32 0, i32 3, i32 0, i32 0, i32 2, i32 0, i32 0, i32 0>
+  %16 = icmp eq <16 x i32> %15, <i32 8214, i32 8224, i32 8448, i32 8456, i32 8470, i32 8492, i32 8506, i32 8508, i32 8524, i32 8528, i32 8586, i32 8602, i32 8604, i32 8612, i32 8654, i32 8656>
+  %17 = shufflevector <4 x i32> %i.h, <4 x i32> %14, <5 x i32> <i32 5, i32 1, i32 7, i32 0, i32 poison>
+  %18 = shufflevector <5 x i32> %17, <5 x i32> %3, <16 x i32> <i32 0, i32 1, i32 0, i32 2, i32 3, i32 1, i32 1, i32 1, i32 1, i32 3, i32 1, i32 1, i32 9, i32 1, i32 0, i32 2>
+  %19 = icmp eq <16 x i32> %18, <i32 8960, i32 8992, i32 9720, i32 10224, i32 11244, i32 11776, i32 11800, i32 11806, i32 11834, i32 11836, i32 12306, i32 12318, i32 12342, i32 12688, i32 12872, i32 12992>
+  %i.z = insertelement <4 x i32> %i.w, i32 %12, i64 2
   %i.aa = insertelement <4 x i32> %i.z, i32 %0, i64 3 ; 2 uses
   %i.ab = icmp eq <4 x i32> %i.aa, <i32 119966, i32 127568, i32 129312, i32 32>
   %i.ac = icmp ne <4 x i32> %i.aa, <i32 119966, i32 127568, i32 129312, i32 32>
@@ -256,19 +256,19 @@ bb.c:                                             ; preds = %bb.b
   %i.ai = shufflevector <128 x i1> %i.ag, <128 x i1> %i.ah, <128 x i32> <i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 72, i32 73, i32 128, i32 129, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
   %i.aj = shufflevector <4 x i1> %i.ab, <4 x i1> %i.ac, <128 x i32> <i32 0, i32 1, i32 2, i32 7, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
   %i.ak = shufflevector <128 x i1> %i.ai, <128 x i1> %i.aj, <128 x i32> <i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 72, i32 73, i32 74, i32 75, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 128, i32 129, i32 130, i32 131>
-  %i.al = shufflevector <64 x i1> %19, <64 x i1> poison, <128 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31, i32 32, i32 33, i32 34, i32 35, i32 36, i32 37, i32 38, i32 39, i32 40, i32 41, i32 42, i32 43, i32 44, i32 45, i32 46, i32 47, i32 48, i32 49, i32 50, i32 51, i32 52, i32 53, i32 54, i32 55, i32 56, i32 57, i32 58, i32 59, i32 60, i32 61, i32 62, i32 63, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %i.al = shufflevector <64 x i1> %11, <64 x i1> poison, <128 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31, i32 32, i32 33, i32 34, i32 35, i32 36, i32 37, i32 38, i32 39, i32 40, i32 41, i32 42, i32 43, i32 44, i32 45, i32 46, i32 47, i32 48, i32 49, i32 50, i32 51, i32 52, i32 53, i32 54, i32 55, i32 56, i32 57, i32 58, i32 59, i32 60, i32 61, i32 62, i32 63, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
   %i.am = shufflevector <128 x i1> %i.al, <128 x i1> %i.ak, <128 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31, i32 32, i32 33, i32 34, i32 35, i32 36, i32 37, i32 38, i32 39, i32 40, i32 41, i32 42, i32 43, i32 44, i32 45, i32 46, i32 47, i32 48, i32 49, i32 50, i32 51, i32 52, i32 53, i32 54, i32 55, i32 56, i32 57, i32 58, i32 59, i32 60, i32 61, i32 62, i32 63, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 200, i32 201, i32 202, i32 203, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 252, i32 253, i32 254, i32 255>
-  %i.an = shufflevector <16 x i1> %8, <16 x i1> poison, <128 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %i.an = shufflevector <16 x i1> %16, <16 x i1> poison, <128 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
   %i.ao = shufflevector <128 x i1> %i.am, <128 x i1> %i.an, <128 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31, i32 32, i32 33, i32 34, i32 35, i32 36, i32 37, i32 38, i32 39, i32 40, i32 41, i32 42, i32 43, i32 44, i32 45, i32 46, i32 47, i32 48, i32 49, i32 50, i32 51, i32 52, i32 53, i32 54, i32 55, i32 56, i32 57, i32 58, i32 59, i32 60, i32 61, i32 62, i32 63, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 72, i32 73, i32 74, i32 75, i32 poison, i32 poison, i32 poison, i32 poison, i32 128, i32 129, i32 130, i32 131, i32 132, i32 133, i32 134, i32 135, i32 136, i32 137, i32 138, i32 139, i32 140, i32 141, i32 142, i32 143, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 124, i32 125, i32 126, i32 127>
-  %i.ap = shufflevector <16 x i1> %12, <16 x i1> poison, <128 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %i.ap = shufflevector <16 x i1> %19, <16 x i1> poison, <128 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
   %i.aq = shufflevector <128 x i1> %i.ao, <128 x i1> %i.ap, <128 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31, i32 32, i32 33, i32 34, i32 35, i32 36, i32 37, i32 38, i32 39, i32 40, i32 41, i32 42, i32 43, i32 44, i32 45, i32 46, i32 47, i32 48, i32 49, i32 50, i32 51, i32 52, i32 53, i32 54, i32 55, i32 56, i32 57, i32 58, i32 59, i32 60, i32 61, i32 62, i32 63, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 72, i32 73, i32 74, i32 75, i32 poison, i32 poison, i32 poison, i32 poison, i32 80, i32 81, i32 82, i32 83, i32 84, i32 85, i32 86, i32 87, i32 88, i32 89, i32 90, i32 91, i32 92, i32 93, i32 94, i32 95, i32 128, i32 129, i32 130, i32 131, i32 132, i32 133, i32 134, i32 135, i32 136, i32 137, i32 138, i32 139, i32 140, i32 141, i32 142, i32 143, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 124, i32 125, i32 126, i32 127>
   %i.ar = shufflevector <8 x i1> %i.ad, <8 x i1> poison, <128 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
   %i.as = shufflevector <128 x i1> %i.aq, <128 x i1> %i.ar, <128 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31, i32 32, i32 33, i32 34, i32 35, i32 36, i32 37, i32 38, i32 39, i32 40, i32 41, i32 42, i32 43, i32 44, i32 45, i32 46, i32 47, i32 48, i32 49, i32 50, i32 51, i32 52, i32 53, i32 54, i32 55, i32 56, i32 57, i32 58, i32 59, i32 60, i32 61, i32 62, i32 63, i32 128, i32 129, i32 130, i32 131, i32 132, i32 133, i32 134, i32 135, i32 72, i32 73, i32 74, i32 75, i32 poison, i32 poison, i32 poison, i32 poison, i32 80, i32 81, i32 82, i32 83, i32 84, i32 85, i32 86, i32 87, i32 88, i32 89, i32 90, i32 91, i32 92, i32 93, i32 94, i32 95, i32 96, i32 97, i32 98, i32 99, i32 100, i32 101, i32 102, i32 103, i32 104, i32 105, i32 106, i32 107, i32 108, i32 109, i32 110, i32 111, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 124, i32 125, i32 126, i32 127>
-  %i.at = shufflevector <8 x i1> %16, <8 x i1> poison, <128 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %i.at = shufflevector <8 x i1> %8, <8 x i1> poison, <128 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
   %i.au = shufflevector <128 x i1> %i.as, <128 x i1> %i.at, <128 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31, i32 32, i32 33, i32 34, i32 35, i32 36, i32 37, i32 38, i32 39, i32 40, i32 41, i32 42, i32 43, i32 44, i32 45, i32 46, i32 47, i32 48, i32 49, i32 50, i32 51, i32 52, i32 53, i32 54, i32 55, i32 56, i32 57, i32 58, i32 59, i32 60, i32 61, i32 62, i32 63, i32 64, i32 65, i32 66, i32 67, i32 68, i32 69, i32 70, i32 71, i32 72, i32 73, i32 74, i32 75, i32 poison, i32 poison, i32 poison, i32 poison, i32 80, i32 81, i32 82, i32 83, i32 84, i32 85, i32 86, i32 87, i32 88, i32 89, i32 90, i32 91, i32 92, i32 93, i32 94, i32 95, i32 96, i32 97, i32 98, i32 99, i32 100, i32 101, i32 102, i32 103, i32 104, i32 105, i32 106, i32 107, i32 108, i32 109, i32 110, i32 111, i32 128, i32 129, i32 130, i32 131, i32 132, i32 133, i32 134, i32 135, i32 poison, i32 poison, i32 poison, i32 poison, i32 124, i32 125, i32 126, i32 127>
   %i.av = shufflevector <4 x i1> %i.x, <4 x i1> poison, <128 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
   %i.aw = shufflevector <128 x i1> %i.au, <128 x i1> %i.av, <128 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31, i32 32, i32 33, i32 34, i32 35, i32 36, i32 37, i32 38, i32 39, i32 40, i32 41, i32 42, i32 43, i32 44, i32 45, i32 46, i32 47, i32 48, i32 49, i32 50, i32 51, i32 52, i32 53, i32 54, i32 55, i32 56, i32 57, i32 58, i32 59, i32 60, i32 61, i32 62, i32 63, i32 64, i32 65, i32 66, i32 67, i32 68, i32 69, i32 70, i32 71, i32 72, i32 73, i32 74, i32 75, i32 128, i32 129, i32 130, i32 131, i32 80, i32 81, i32 82, i32 83, i32 84, i32 85, i32 86, i32 87, i32 88, i32 89, i32 90, i32 91, i32 92, i32 93, i32 94, i32 95, i32 96, i32 97, i32 98, i32 99, i32 100, i32 101, i32 102, i32 103, i32 104, i32 105, i32 106, i32 107, i32 108, i32 109, i32 110, i32 111, i32 112, i32 113, i32 114, i32 115, i32 116, i32 117, i32 118, i32 119, i32 poison, i32 poison, i32 poison, i32 poison, i32 124, i32 125, i32 126, i32 127>
-  %i.ax = shufflevector <4 x i1> %18, <4 x i1> poison, <128 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %i.ax = shufflevector <4 x i1> %10, <4 x i1> poison, <128 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
   %i.ay = shufflevector <128 x i1> %i.aw, <128 x i1> %i.ax, <128 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31, i32 32, i32 33, i32 34, i32 35, i32 36, i32 37, i32 38, i32 39, i32 40, i32 41, i32 42, i32 43, i32 44, i32 45, i32 46, i32 47, i32 48, i32 49, i32 50, i32 51, i32 52, i32 53, i32 54, i32 55, i32 56, i32 57, i32 58, i32 59, i32 60, i32 61, i32 62, i32 63, i32 64, i32 65, i32 66, i32 67, i32 68, i32 69, i32 70, i32 71, i32 72, i32 73, i32 74, i32 75, i32 76, i32 77, i32 78, i32 79, i32 80, i32 81, i32 82, i32 83, i32 84, i32 85, i32 86, i32 87, i32 88, i32 89, i32 90, i32 91, i32 92, i32 93, i32 94, i32 95, i32 96, i32 97, i32 98, i32 99, i32 100, i32 101, i32 102, i32 103, i32 104, i32 105, i32 106, i32 107, i32 108, i32 109, i32 110, i32 111, i32 112, i32 113, i32 114, i32 115, i32 116, i32 117, i32 118, i32 119, i32 128, i32 129, i32 130, i32 131, i32 124, i32 125, i32 126, i32 127>
   %i.az = insertelement <128 x i1> <i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 true, i1 poison>, i1 %i.b, i64 127
   %i.ba = and <128 x i1> %i.ay, %i.az
@@ -562,15 +562,15 @@ bb.cn:                                            ; preds = %bb.c
   %i.bm = insertelement <28 x i32> poison, i32 %0, i64 0
   %i.bn = shufflevector <28 x i32> %i.bm, <28 x i32> poison, <28 x i32> zeroinitializer
   %i.bo = add nsw <28 x i32> %i.bn, <i32 -192, i32 -216, i32 -248, i32 -452, i32 -661, i32 -688, i32 -736, i32 -7424, i32 -7468, i32 -7522, i32 -7531, i32 -7545, i32 -7579, i32 -8336, i32 -8544, i32 -8579, i32 -8581, i32 -11360, i32 -42786, i32 -42865, i32 -42891, i32 -42896, i32 -43003, i32 -43824, i32 -43872, i32 -64256, i32 -65313, i32 -65345>
-  %20 = and i32 %0, 2096896                       ; 3 uses
   %i.bp = shufflevector <4 x i32> %i.h, <4 x i32> poison, <4 x i32> <i32 0, i32 1, i32 1, i32 0>
-  %i.bq = insertelement <4 x i32> <i32 poison, i32 0, i32 0, i32 0>, i32 %2, i64 0 ; 2 uses
+  %i.bq = insertelement <4 x i32> <i32 poison, i32 0, i32 0, i32 0>, i32 %12, i64 0 ; 2 uses
   %i.br = shufflevector <4 x i32> %i.h, <4 x i32> %i.bq, <4 x i32> <i32 0, i32 4, i32 1, i32 0>
   %i.bs = icmp eq <4 x i32> %i.br, <i32 11388, i32 42928, i32 43000, i32 43868>
   %i.bt = icmp ult <28 x i32> %i.bo, <i32 23, i32 31, i32 195, i32 208, i32 27, i32 9, i32 5, i32 38, i32 49, i32 4, i32 13, i32 34, i32 36, i32 13, i32 35, i32 2, i32 4, i32 28, i32 78, i32 23, i32 4, i32 31, i32 5, i32 43, i32 5, i32 7, i32 26, i32 26>
+  %20 = and i32 %0, 2096896                       ; 2 uses
   %i.bu = shufflevector <4 x i32> %i.h, <4 x i32> poison, <4 x i32> <i32 0, i32 0, i32 0, i32 1>
-  %21 = insertelement <4 x i32> poison, i32 %20, i64 0
-  %22 = shufflevector <4 x i32> %i.h, <4 x i32> %21, <4 x i32> <i32 0, i32 0, i32 4, i32 1>
+  %21 = shufflevector <4 x i32> %i.h, <4 x i32> %i.f, <4 x i32> <i32 0, i32 0, i32 4, i32 1>
+  %22 = and <4 x i32> %21, <i32 -1, i32 -1, i32 2096896, i32 -1>
   %i.bv = icmp eq <4 x i32> %22, <i32 444, i32 448, i32 7680, i32 8490>
   %i.bw = shufflevector <28 x i1> %i.bt, <28 x i1> poison, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 poison, i32 poison, i32 poison, i32 poison>
   %i.bx = shufflevector <4 x i1> %i.bv, <4 x i1> poison, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
@@ -591,7 +591,7 @@ bb.co:                                            ; preds = %bb.cn
   %i.ch = insertelement <32 x i32> poison, i32 %0, i64 0
   %i.ci = shufflevector <32 x i32> %i.ch, <32 x i32> poison, <32 x i32> zeroinitializer ; 2 uses
   %i.cj = add nsw <32 x i32> %i.ci, <i32 -891, i32 -904, i32 -910, i32 -931, i32 -1008, i32 -1015, i32 -7462, i32 -7517, i32 -7526, i32 -7936, i32 -7960, i32 -7968, i32 -8008, i32 -8031, i32 -8064, i32 -8118, i32 -8127, i32 -8130, i32 -8134, i32 -8141, i32 -8150, i32 -8157, i32 -8160, i32 -8173, i32 -8178, i32 -8182, i32 -8189, i32 -65856, i32 -65909, i32 -65913, i32 -65932, i32 -119296>
-  %or.cond336 = icmp eq i32 %i.j, 65930
+  %or.cond336 = icmp eq i32 %i.i, 65930
   %i.ck = icmp ult <32 x i32> %i.cj, <i32 3, i32 3, i32 20, i32 63, i32 6, i32 9, i32 5, i32 5, i32 5, i32 22, i32 6, i32 38, i32 6, i32 31, i32 53, i32 7, i32 3, i32 3, i32 7, i32 3, i32 6, i32 3, i32 13, i32 3, i32 3, i32 7, i32 2, i32 53, i32 4, i32 17, i32 3, i32 66> ; 2 uses
   %i.cl = add nsw i32 %0, -119362
   %or.cond339 = icmp ult i32 %i.cl, 3
@@ -610,21 +610,22 @@ bb.cp:                                            ; preds = %bb.co
   %i.cs = insertelement <8 x i32> poison, i32 %0, i64 0
   %i.ct = shufflevector <8 x i32> %i.cs, <8 x i32> poison, <8 x i32> zeroinitializer ; 21 uses
   %i.cu = add nsw <8 x i32> %i.ct, <i32 -1024, i32 -1155, i32 -1162, i32 -7296, i32 -42560, i32 -42608, i32 -42612, i32 -42624>
+  %or.cond342 = icmp eq i32 %i.i, 1160
   %i.cv = and i32 %0, 2097120                     ; 6 uses
   %i.cw = insertelement <2 x i32> %i.t, i32 %0, i64 1 ; 2 uses
   %i.cx = and <2 x i32> %i.cw, <i32 -1, i32 2097120>
   %i.cy = shufflevector <2 x i32> %i.cx, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 0>
-  %23 = icmp ult <8 x i32> %i.cu, <i32 130, i32 2, i32 166, i32 9, i32 46, i32 3, i32 10, i32 28> ; 2 uses
-  %24 = insertelement <4 x i32> poison, i32 %i.cv, i64 0
-  %25 = shufflevector <4 x i32> %i.h, <4 x i32> %24, <4 x i32> <i32 1, i32 4, i32 0, i32 1>
-  %26 = icmp eq <4 x i32> %25, <i32 1160, i32 11744, i32 42652, i32 65070>
-  %27 = shufflevector <8 x i1> %23, <8 x i1> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  %rdx.op2444 = select <4 x i1> %27, <4 x i1> splat (i1 true), <4 x i1> %26
-  %28 = shufflevector <4 x i1> %rdx.op2444, <4 x i1> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
-  %29 = shufflevector <8 x i1> %28, <8 x i1> %23, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 12, i32 13, i32 14, i32 15>
-  %30 = bitcast <8 x i1> %29 to i8
-  %.not = icmp eq i8 %30, 0
-  br i1 %.not, label %bb.cq, label %switch.lookup
+  %or.cond345 = icmp eq i32 %i.cv, 11744
+  %23 = icmp ult <8 x i32> %i.cu, <i32 130, i32 2, i32 166, i32 9, i32 46, i32 3, i32 10, i32 28>
+  %24 = icmp eq i32 %i.j, 42652
+  %or.cond352 = icmp eq i32 %i.i, 65070
+  %25 = bitcast <8 x i1> %23 to i8
+  %26 = icmp ne i8 %25, 0
+  %op.rdx2444 = or i1 %26, %or.cond342
+  %op.rdx2445 = or i1 %or.cond345, %24
+  %op.rdx2446 = or i1 %op.rdx2444, %op.rdx2445
+  %op.rdx2447 = or i1 %op.rdx2446, %or.cond352
+  br i1 %op.rdx2447, label %switch.lookup, label %bb.cq
 
 bb.cq:                                            ; preds = %bb.cp
   %i.cz = add nsw <4 x i32> %i.g, <i32 -1329, i32 -1370, i32 -1377, i32 -1421>
@@ -638,9 +639,9 @@ bb.cq:                                            ; preds = %bb.cp
 
 bb.cr:                                            ; preds = %bb.cq
   %i.de = add nsw <8 x i32> %i.ct, <i32 -1425, i32 -1473, i32 -1488, i32 -1520, i32 -1523, i32 -64287, i32 -64298, i32 -64312>
-  %or.cond360 = icmp eq i32 %i.j, 1476
+  %or.cond360 = icmp eq i32 %i.i, 1476
   %i.df = icmp ult <8 x i32> %i.de, <i32 45, i32 2, i32 27, i32 3, i32 2, i32 10, i32 13, i32 5>
-  %or.cond367 = icmp eq i32 %i.j, 64320
+  %or.cond367 = icmp eq i32 %i.i, 64320
   %i.dg = add nsw i32 %0, -64323
   %or.cond368 = icmp ult i32 %i.dg, 2
   %i.dh = add nsw i32 %0, -64326
@@ -702,7 +703,7 @@ bb.cv:                                            ; preds = %bb.cu
   br i1 %i.en, label %switch.lookup, label %switch.early.test
 
 switch.early.test:                                ; preds = %bb.cv
-  switch i32 %i.j, label %bb.cw [
+  switch i32 %i.i, label %bb.cw [
     i32 2402, label %switch.lookup
     i32 2382, label %switch.lookup
   ]
@@ -738,13 +739,13 @@ bb.cx:                                            ; preds = %bb.cw
 
 bb.cy:                                            ; preds = %bb.cx
   %i.fj = add nsw <8 x i32> %i.ct, <i32 -2689, i32 -2693, i32 -2703, i32 -2707, i32 -2730, i32 -2741, i32 -2750, i32 -2753>
-  %or.cond481 = icmp eq i32 %i.j, 2738
+  %or.cond481 = icmp eq i32 %i.i, 2738
   %i.fk = icmp ult <8 x i32> %i.fj, <i32 2, i32 9, i32 3, i32 22, i32 7, i32 5, i32 3, i32 5>
   %i.fl = add nsw i32 %0, -2759
   %or.cond485 = icmp ult i32 %i.fl, 2
   %i.fm = add nsw i32 %0, -2763
   %or.cond486 = icmp ult i32 %i.fm, 2
-  %i.fn = icmp eq i32 %i.i, 2784
+  %i.fn = icmp eq i32 %i.j, 2784
   %i.fo = add nsw i32 %0, -2790
   %or.cond489 = icmp ult i32 %i.fo, 10
   %i.fp = bitcast <8 x i1> %i.fk to i8
@@ -794,7 +795,7 @@ bb.da:                                            ; preds = %bb.cz
   %i.gp = bitcast <8 x i1> %i.go to i8
   %i.gq = icmp ne i8 %i.gp, 0
   %op.rdx2422 = select i1 %i.gq, i1 true, i1 %or.cond519
-  %i.gr = and i32 %i.j, 2097118
+  %i.gr = and i32 %i.i, 2097118
   %op.rdx2423 = icmp eq i32 %i.gr, 2974
   %i.gs = freeze i1 %op.rdx2422
   %op.rdx2424 = or i1 %i.gs, %op.rdx2423
@@ -804,7 +805,7 @@ bb.db:                                            ; preds = %bb.da
   %i.gt = add nsw <8 x i32> %i.ct, <i32 -3073, i32 -3077, i32 -3086, i32 -3090, i32 -3114, i32 -3134, i32 -3137, i32 -3142>
   %i.gu = icmp ult <8 x i32> %i.gt, <i32 3, i32 8, i32 3, i32 23, i32 16, i32 3, i32 4, i32 3> ; 2 uses
   %i.gv = add nsw <4 x i32> %i.g, <i32 -3146, i32 -3157, i32 -3160, i32 -3174>
-  %i.gw = icmp eq i32 %i.i, 3168
+  %i.gw = icmp eq i32 %i.j, 3168
   %i.gx = icmp ult <4 x i32> %i.gv, <i32 4, i32 2, i32 3, i32 10>
   %i.gy = add nsw i32 %0, -3192
   %or.cond534 = icmp ult i32 %i.gy, 7
@@ -820,7 +821,7 @@ bb.db:                                            ; preds = %bb.da
   br i1 %op.rdx2420, label %switch.lookup, label %bb.dc
 
 bb.dc:                                            ; preds = %bb.db
-  %i.hf = icmp eq <4 x i32> %17, <i32 3202, i32 3274, i32 3276, i32 3296>
+  %i.hf = icmp eq <4 x i32> %9, <i32 3202, i32 3274, i32 3276, i32 3296>
   %i.hg = add nsw <8 x i32> %i.ct, <i32 -3205, i32 -3214, i32 -3218, i32 -3242, i32 -3253, i32 -3264, i32 -3271, i32 -3285>
   %i.hh = icmp ult <8 x i32> %i.hg, <i32 8, i32 3, i32 23, i32 10, i32 5, i32 5, i32 2, i32 2> ; 2 uses
   %i.hi = add nsw i32 %0, -3302
@@ -839,11 +840,11 @@ bb.dc:                                            ; preds = %bb.db
   br i1 %op.rdx2417, label %switch.lookup, label %bb.dd
 
 bb.dd:                                            ; preds = %bb.dc
-  %or.cond550 = icmp eq i32 %i.j, 3330
+  %or.cond550 = icmp eq i32 %i.i, 3330
   %i.hq = add nsw <8 x i32> %i.ct, <i32 -3333, i32 -3342, i32 -3346, i32 -3390, i32 -3393, i32 -3398, i32 -3402, i32 -3412>
   %i.hr = icmp ult <8 x i32> %i.hq, <i32 8, i32 3, i32 41, i32 3, i32 4, i32 3, i32 3, i32 3> ; 2 uses
   %i.hs = add nsw <4 x i32> %i.g, <i32 -3416, i32 -3423, i32 -3430, i32 -3440>
-  %or.cond561 = icmp eq i32 %i.j, 3426
+  %or.cond561 = icmp eq i32 %i.i, 3426
   %i.ht = icmp ult <4 x i32> %i.hs, <i32 7, i32 3, i32 10, i32 9>
   %i.hu = add nsw i32 %0, -3450
   %or.cond564 = icmp ult i32 %i.hu, 6
@@ -859,10 +860,10 @@ bb.dd:                                            ; preds = %bb.dc
   br i1 %op.rdx2414, label %switch.lookup, label %bb.de
 
 bb.de:                                            ; preds = %bb.dd
-  %or.cond565 = icmp eq i32 %i.j, 3458
+  %or.cond565 = icmp eq i32 %i.i, 3458
   %i.ib = add nsw <8 x i32> %i.ct, <i32 -3461, i32 -3482, i32 -3507, i32 -3520, i32 -3535, i32 -3538, i32 -3558, i32 -70113>
-  %or.cond572 = icmp eq i32 %2, 3544
-  %or.cond574 = icmp eq i32 %i.j, 3570
+  %or.cond572 = icmp eq i32 %12, 3544
+  %or.cond574 = icmp eq i32 %i.i, 3570
   %i.ic = icmp ult <8 x i32> %i.ib, <i32 18, i32 24, i32 9, i32 7, i32 3, i32 3, i32 10, i32 20>
   %i.id = bitcast <8 x i1> %i.ic to i8
   %i.ie = icmp ne i8 %i.id, 0
@@ -883,7 +884,7 @@ bb.df:                                            ; preds = %bb.de
   br i1 %i.ik, label %switch.lookup, label %switch.early.test2539
 
 switch.early.test2539:                            ; preds = %bb.df
-  switch i32 %i.j, label %bb.dg [
+  switch i32 %i.i, label %bb.dg [
     i32 3674, label %switch.lookup
     i32 3634, label %switch.lookup
   ]
@@ -908,10 +909,10 @@ bb.dg:                                            ; preds = %switch.early.test25
   br i1 %op.rdx2404, label %switch.lookup, label %bb.dh
 
 bb.dh:                                            ; preds = %bb.dg
-  %or.cond604 = icmp eq i32 %i.j, 3902
-  %or.cond605 = icmp eq i32 %2, 3904
-  %or.cond609 = icmp eq i32 %i.j, 3974
-  %or.cond615 = icmp eq i32 %i.j, 4046
+  %or.cond604 = icmp eq i32 %i.i, 3902
+  %or.cond605 = icmp eq i32 %12, 3904
+  %or.cond609 = icmp eq i32 %i.i, 3974
+  %or.cond615 = icmp eq i32 %i.i, 4046
   %i.iw = insertelement <16 x i32> <i32 poison, i32 0, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>, i32 %0, i64 0
   %i.ix = shufflevector <16 x i32> %i.iw, <16 x i32> poison, <16 x i32> <i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 1>
   %i.iy = add nsw <16 x i32> %i.ix, <i32 -3841, i32 -3861, i32 -3866, i32 -3872, i32 -3882, i32 -3913, i32 -3953, i32 -3968, i32 -3976, i32 -3981, i32 -3993, i32 -4030, i32 -4039, i32 -4048, i32 -4057, i32 3864> ; 2 uses
@@ -933,7 +934,7 @@ bb.di:                                            ; preds = %bb.dh
   %i.jh = insertelement <16 x i32> poison, i32 %0, i64 0
   %i.ji = shufflevector <16 x i32> %i.jh, <16 x i32> poison, <16 x i32> zeroinitializer ; 2 uses
   %i.jj = add nsw <16 x i32> %i.ji, <i32 -4096, i32 -4146, i32 -4153, i32 -4155, i32 -4157, i32 -4160, i32 -4170, i32 -4176, i32 -4186, i32 -4190, i32 -4194, i32 -4197, i32 -4199, i32 -4206, i32 -4209, i32 -4213>
-  %i.jk = insertelement <2 x i32> %i.t, i32 %3, i64 1
+  %i.jk = insertelement <2 x i32> %i.t, i32 %1, i64 1
   %i.jl = shufflevector <2 x i32> %i.jk, <2 x i32> poison, <5 x i32> <i32 0, i32 0, i32 0, i32 1, i32 0>
   %i.jm = icmp eq <5 x i32> %i.jl, <i32 4182, i32 4184, i32 4254, i32 43616, i32 43646>
   %i.jn = icmp ult <16 x i32> %i.jj, <i32 49, i32 6, i32 2, i32 2, i32 2, i32 10, i32 6, i32 6, i32 4, i32 3, i32 3, i32 2, i32 7, i32 3, i32 4, i32 13>
@@ -959,7 +960,7 @@ bb.dj:                                            ; preds = %bb.di
 
 bb.dk:                                            ; preds = %bb.dj
   %or.cond656 = icmp eq i32 %20, 4352
-  %or.cond657 = icmp eq i32 %i.j, 12334
+  %or.cond657 = icmp eq i32 %i.i, 12334
   %i.ka = add nsw <8 x i32> %i.ct, <i32 -12593, i32 -12800, i32 -12896, i32 -43360, i32 -44032, i32 -55216, i32 -55243, i32 -65440>
   %i.kb = icmp ult <8 x i32> %i.ka, <i32 94, i32 31, i32 31, i32 29, i32 11172, i32 23, i32 49, i32 31> ; 2 uses
   %i.kc = add nsw <4 x i32> %i.g, <i32 -65474, i32 -65482, i32 -65490, i32 -65498>
@@ -977,7 +978,7 @@ bb.dk:                                            ; preds = %bb.dj
 
 bb.dl:                                            ; preds = %bb.dk
   %i.kj = add nsw <32 x i32> %i.ci, <i32 -4608, i32 -4682, i32 -4688, i32 -4698, i32 -4704, i32 -4746, i32 -4752, i32 -4786, i32 -4792, i32 -4802, i32 -4808, i32 -4824, i32 -4882, i32 -4888, i32 -4957, i32 -4960, i32 -4969, i32 -5008, i32 -11648, i32 -11680, i32 -11688, i32 -11696, i32 -11704, i32 -11712, i32 -11720, i32 -11728, i32 -11736, i32 -43777, i32 -43785, i32 -43793, i32 -43808, i32 -43816>
-  %or.cond687 = icmp eq i32 %3, 4992
+  %or.cond687 = icmp eq i32 %1, 4992
   %i.kk = icmp ult <32 x i32> %i.kj, <i32 73, i32 4, i32 7, i32 4, i32 41, i32 4, i32 33, i32 4, i32 7, i32 4, i32 15, i32 57, i32 4, i32 67, i32 3, i32 9, i32 20, i32 10, i32 23, i32 7, i32 7, i32 7, i32 7, i32 7, i32 7, i32 7, i32 7, i32 6, i32 6, i32 6, i32 7, i32 7>
   %i.kl = bitcast <32 x i1> %i.kk to i32
   %i.km = icmp ne i32 %i.kl, 0
@@ -1018,7 +1019,7 @@ bb.dp:                                            ; preds = %bb.do
 
 bb.dq:                                            ; preds = %bb.dp
   %i.kw = add nsw <8 x i32> %i.ct, <i32 -6016, i32 -6071, i32 -6078, i32 -6087, i32 -6089, i32 -6100, i32 -6104, i32 -6112>
-  %or.cond715 = icmp eq i32 %i.j, 6068
+  %or.cond715 = icmp eq i32 %i.i, 6068
   %i.kx = icmp ult <8 x i32> %i.kw, <i32 52, i32 7, i32 8, i32 2, i32 11, i32 3, i32 3, i32 10>
   %i.ky = add nsw i32 %0, -6128
   %or.cond723 = icmp ult i32 %i.ky, 10
@@ -1032,7 +1033,7 @@ bb.dq:                                            ; preds = %bb.dp
   br i1 %op.rdx2392, label %switch.lookup, label %bb.dr
 
 bb.dr:                                            ; preds = %bb.dq
-  %or.cond725 = icmp eq i32 %i.j, 6144
+  %or.cond725 = icmp eq i32 %i.i, 6144
   %i.lc = add nsw <8 x i32> %i.ct, <i32 -6151, i32 -6155, i32 -6160, i32 -6176, i32 -6212, i32 -6272, i32 -6277, i32 -6279>
   %i.ld = icmp ult <8 x i32> %i.lc, <i32 4, i32 3, i32 10, i32 35, i32 52, i32 5, i32 2, i32 34>
   %i.le = add nsw i32 %0, -71264
@@ -1053,7 +1054,7 @@ bb.ds:                                            ; preds = %bb.dr
 
 bb.dt:                                            ; preds = %bb.ds
   %i.lk = add nsw <4 x i32> %i.g, <i32 -12449, i32 -12541, i32 -13008, i32 -13056>
-  %or.cond739 = icmp eq i32 %3, 12784
+  %or.cond739 = icmp eq i32 %1, 12784
   %i.ll = icmp ult <4 x i32> %i.lk, <i32 90, i32 2, i32 47, i32 88>
   %i.lm = add nsw i32 %0, -65382
   %or.cond742 = icmp ult i32 %i.lm, 10
@@ -1067,7 +1068,7 @@ bb.dt:                                            ; preds = %bb.ds
   br i1 %op.rdx2387, label %switch.lookup, label %bb.du
 
 bb.du:                                            ; preds = %bb.dt
-  %or.cond744 = icmp eq i32 %i.j, 746
+  %or.cond744 = icmp eq i32 %i.i, 746
   %i.lr = add nsw i32 %0, -12549
   %or.cond745 = icmp ult i32 %i.lr, 41
   %or.cond1933 = select i1 %or.cond744, i1 true, i1 %or.cond745
@@ -1109,7 +1110,7 @@ bb.dw:                                            ; preds = %bb.dv
 
 bb.dx:                                            ; preds = %bb.dw
   %or.cond764 = icmp eq i32 %i.cv, 66304
-  %or.cond765 = icmp eq i32 %i.i, 66336
+  %or.cond765 = icmp eq i32 %i.j, 66336
   %or.cond1950 = or i1 %or.cond764, %or.cond765
   br i1 %or.cond1950, label %switch.lookup, label %bb.dy
 
@@ -1130,7 +1131,7 @@ bb.ea:                                            ; preds = %bb.dz
   %i.ml = add nsw <16 x i32> %i.ji, <i32 -768, i32 -1157, i32 -1611, i32 -2385, i32 -6832, i32 -7376, i32 -7380, i32 -7394, i32 -7616, i32 -7675, i32 -8400, i32 -8413, i32 -8418, i32 -8421, i32 -12330, i32 -12441>
   %i.mm = icmp eq <2 x i32> %i.t, <i32 7416, i32 8204>
   %i.mn = icmp ult <16 x i32> %i.ml, <i32 112, i32 2, i32 11, i32 2, i32 14, i32 3, i32 13, i32 7, i32 54, i32 5, i32 13, i32 4, i32 3, i32 12, i32 4, i32 2> ; 2 uses
-  %or.cond787 = icmp eq i32 %3, 65024
+  %or.cond787 = icmp eq i32 %1, 65024
   %i.mo = insertelement <6 x i32> poison, i32 %0, i64 0
   %i.mp = shufflevector <6 x i32> %i.mo, <6 x i32> poison, <6 x i32> zeroinitializer ; 7 uses
   %i.mq = add nsw <6 x i32> %i.mp, <i32 -65056, i32 -119143, i32 -119163, i32 -119173, i32 -119210, i32 -917760>
@@ -1164,7 +1165,7 @@ bb.ec:                                            ; preds = %bb.eb
 bb.ed:                                            ; preds = %bb.ec
   %i.nf = add nsw i32 %0, -5952
   %or.cond799 = icmp ult i32 %i.nf, 18
-  %or.cond800 = icmp eq i32 %i.j, 5970
+  %or.cond800 = icmp eq i32 %i.i, 5970
   %or.cond1979 = or i1 %or.cond799, %or.cond800
   br i1 %or.cond1979, label %switch.lookup, label %bb.ee
 
@@ -1174,7 +1175,7 @@ bb.ee:                                            ; preds = %bb.ed
   %i.nh = add nsw i32 %0, -5998
   %or.cond802 = icmp ult i32 %i.nh, 3
   %or.cond1980 = select i1 %or.cond801, i1 true, i1 %or.cond802
-  %or.cond803 = icmp eq i32 %i.j, 6002
+  %or.cond803 = icmp eq i32 %i.i, 6002
   %or.cond1981 = or i1 %or.cond803, %or.cond1980
   br i1 %or.cond1981, label %switch.lookup, label %bb.ef
 
@@ -1187,7 +1188,7 @@ bb.ef:                                            ; preds = %bb.ee
   br i1 %i.nm, label %switch.lookup, label %switch.early.test2540
 
 switch.early.test2540:                            ; preds = %bb.ef
-  switch i32 %i.j, label %bb.eg [
+  switch i32 %i.i, label %bb.eg [
     i32 6468, label %switch.lookup
     i32 6448, label %switch.lookup
   ]
@@ -1202,7 +1203,7 @@ bb.eg:                                            ; preds = %switch.early.test25
 
 bb.eh:                                            ; preds = %bb.eg
   %i.np = add nsw <4 x i32> %i.g, <i32 -65536, i32 -65549, i32 -65576, i32 -65599>
-  %or.cond819 = icmp eq i32 %i.j, 65596
+  %or.cond819 = icmp eq i32 %i.i, 65596
   %i.nq = icmp ult <4 x i32> %i.np, <i32 12, i32 26, i32 19, i32 15>
   %i.nr = add nsw i32 %0, -65616
   %or.cond821 = icmp ult i32 %i.nr, 14
@@ -1254,7 +1255,7 @@ bb.em:                                            ; preds = %switch.early.test23
 bb.en:                                            ; preds = %bb.em
   %i.oc = add nsw i32 %0, -6656
   %or.cond2002 = icmp ult i32 %i.oc, 27
-  %or.cond834 = icmp eq i32 %i.j, 6686
+  %or.cond834 = icmp eq i32 %i.i, 6686
   %or.cond2003 = or i1 %or.cond2002, %or.cond834
   br i1 %or.cond2003, label %switch.lookup, label %bb.eo
 
@@ -1279,7 +1280,7 @@ bb.ep:                                            ; preds = %bb.eo
   %i.on = add nsw i32 %0, -6608
   %or.cond845 = icmp ult i32 %i.on, 10
   %or.cond2012 = select i1 %or.cond2011, i1 true, i1 %or.cond845
-  %or.cond846 = icmp eq i32 %i.j, 6622
+  %or.cond846 = icmp eq i32 %i.i, 6622
   %or.cond2013 = or i1 %or.cond846, %or.cond2012
   br i1 %or.cond2013, label %switch.lookup, label %bb.eq
 
@@ -1311,12 +1312,12 @@ bb.er:                                            ; preds = %switch.early.test25
   br i1 %or.cond854, label %switch.lookup, label %bb.es
 
 bb.es:                                            ; preds = %bb.er
-  %or.cond855 = icmp eq i32 %i.j, 43008
+  %or.cond855 = icmp eq i32 %i.i, 43008
   %i.ov = add nsw <4 x i32> %i.g, <i32 -43011, i32 -43015, i32 -43020, i32 -43043>
   %i.ow = icmp ult <4 x i32> %i.ov, <i32 3, i32 4, i32 23, i32 2>
   %i.ox = add nsw i32 %0, -43045
   %or.cond860 = icmp ult i32 %i.ox, 2
-  %or.cond861 = icmp eq i32 %i.i, 43048
+  %or.cond861 = icmp eq i32 %i.j, 43048
   %i.oy = bitcast <4 x i1> %i.ow to i4
   %i.oz = icmp ne i4 %i.oy, 0
   %op.rdx2370 = or i1 %or.cond855, %or.cond861
@@ -1327,7 +1328,7 @@ bb.es:                                            ; preds = %bb.er
 bb.et:                                            ; preds = %bb.es
   %i.pb = add nsw i32 %0, -66464
   %or.cond862 = icmp ult i32 %i.pb, 36
-  %or.cond863 = icmp eq i32 %2, 66504
+  %or.cond863 = icmp eq i32 %12, 66504
   %or.cond2026 = or i1 %or.cond862, %or.cond863
   %i.pc = add nsw i32 %0, -66513
   %or.cond864 = icmp ult i32 %i.pc, 5
@@ -1338,7 +1339,7 @@ bb.eu:                                            ; preds = %bb.et
   %i.pd = add nsw <6 x i32> %i.mp, <i32 -68097, i32 -68101, i32 -68117, i32 -68121, i32 -68152, i32 -68176>
   %i.pe = shufflevector <4 x i32> %i.h, <4 x i32> poison, <2 x i32> zeroinitializer
   %i.pf = icmp eq <2 x i32> %i.pe, <i32 68108, i32 68112>
-  %or.cond872 = icmp eq i32 %2, 68160
+  %or.cond872 = icmp eq i32 %12, 68160
   %i.pg = icmp ult <6 x i32> %i.pd, <i32 3, i32 2, i32 3, i32 27, i32 3, i32 9>
   %i.ph = shufflevector <6 x i1> %i.pg, <6 x i1> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 poison, i32 poison>
   %i.pi = shufflevector <2 x i1> %i.pf, <2 x i1> poison, <8 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
@@ -1350,7 +1351,7 @@ bb.eu:                                            ; preds = %bb.et
   br i1 %op.rdx2368, label %switch.lookup, label %bb.ev
 
 bb.ev:                                            ; preds = %bb.eu
-  %or.cond874 = icmp eq i32 %i.i, 6912
+  %or.cond874 = icmp eq i32 %i.j, 6912
   %i.pn = add nsw <8 x i32> %i.ct, <i32 -6917, i32 -6966, i32 -6973, i32 -6979, i32 -6981, i32 -6992, i32 -7002, i32 -7009>
   %i.po = icmp ult <8 x i32> %i.pn, <i32 47, i32 5, i32 5, i32 2, i32 7, i32 10, i32 7, i32 10>
   %i.pp = add nsw i32 %0, -7019
@@ -1380,14 +1381,14 @@ bb.ex:                                            ; preds = %bb.ew
 bb.ey:                                            ; preds = %bb.ex
   %i.pz = add nsw i32 %0, -43072
   %or.cond891 = icmp ult i32 %i.pz, 52
-  %or.cond892 = icmp eq i32 %i.i, 43124
+  %or.cond892 = icmp eq i32 %i.j, 43124
   %or.cond2050 = or i1 %or.cond891, %or.cond892
   br i1 %or.cond2050, label %switch.lookup, label %bb.ez
 
 bb.ez:                                            ; preds = %bb.ey
   %i.qa = add nsw i32 %0, -1984
   %or.cond2052 = icmp ult i32 %i.qa, 52
-  %or.cond896 = icmp eq i32 %i.j, 2036
+  %or.cond896 = icmp eq i32 %i.i, 2036
   %or.cond2053 = or i1 %or.cond2052, %or.cond896
   %i.qb = add nsw i32 %0, -2039
   %or.cond897 = icmp ult i32 %i.qb, 3
@@ -1395,11 +1396,11 @@ bb.ez:                                            ; preds = %bb.ey
   br i1 %or.cond2054, label %switch.lookup, label %bb.fa
 
 bb.fa:                                            ; preds = %bb.ez
-  %or.cond898 = icmp eq i32 %i.j, 7040
+  %or.cond898 = icmp eq i32 %i.i, 7040
   %i.qc = add nsw <4 x i32> %i.g, <i32 -7043, i32 -7074, i32 -7083, i32 -7088>
   %i.qd = shufflevector <4 x i32> %i.f, <4 x i32> poison, <2 x i32> <i32 0, i32 poison>
   %i.qe = and <2 x i32> %i.qd, <i32 2097150, i32 poison>
-  %i.qf = insertelement <2 x i32> %i.qe, i32 %2, i64 1
+  %i.qf = insertelement <2 x i32> %i.qe, i32 %12, i64 1
   %i.qg = shufflevector <2 x i32> %i.qf, <2 x i32> poison, <4 x i32> <i32 0, i32 0, i32 0, i32 1>
   %i.qh = icmp eq <4 x i32> %i.qg, <i32 7078, i32 7080, i32 7086, i32 7360>
   %i.qi = icmp ult <4 x i32> %i.qc, <i32 30, i32 4, i32 3, i32 10>
@@ -1415,7 +1416,7 @@ bb.fa:                                            ; preds = %bb.ez
 
 bb.fb:                                            ; preds = %bb.fa
   %i.qo = add nsw <4 x i32> %i.g, <i32 -7168, i32 -7227, i32 -7232, i32 -7245>
-  %i.qp = icmp eq i32 %i.i, 7220
+  %i.qp = icmp eq i32 %i.j, 7220
   %i.qq = icmp ult <4 x i32> %i.qo, <i32 52, i32 5, i32 10, i32 3>
   %i.qr = bitcast <4 x i1> %i.qq to i4
   %i.qs = icmp ne i4 %i.qr, 0
@@ -1425,7 +1426,7 @@ bb.fb:                                            ; preds = %bb.fa
 bb.fc:                                            ; preds = %bb.fb
   %i.qt = add nsw i32 %0, -7248
   %or.cond2072 = icmp ult i32 %i.qt, 46
-  %or.cond919 = icmp eq i32 %i.j, 7294
+  %or.cond919 = icmp eq i32 %i.i, 7294
   %or.cond2073 = or i1 %or.cond2072, %or.cond919
   br i1 %or.cond2073, label %switch.lookup, label %bb.fd
 
@@ -1435,26 +1436,26 @@ bb.fd:                                            ; preds = %bb.fc
   %i.qv = add nsw i32 %0, -42509
   %or.cond921 = icmp ult i32 %i.qv, 3
   %or.cond2074 = select i1 %or.cond920, i1 true, i1 %or.cond921
-  %or.cond922 = icmp eq i32 %3, 42512
+  %or.cond922 = icmp eq i32 %1, 42512
   %or.cond2075 = or i1 %or.cond922, %or.cond2074
   %i.qw = add nsw i32 %0, -42528
   %or.cond923 = icmp ult i32 %i.qw, 10
   %or.cond2076 = select i1 %or.cond2075, i1 true, i1 %or.cond923
-  %or.cond924 = icmp eq i32 %i.j, 42538
+  %or.cond924 = icmp eq i32 %i.i, 42538
   %or.cond2077 = or i1 %or.cond924, %or.cond2076
   br i1 %or.cond2077, label %switch.lookup, label %bb.fe
 
 bb.fe:                                            ; preds = %bb.fd
-  %or.cond925 = icmp eq i32 %i.j, 43136
+  %or.cond925 = icmp eq i32 %i.i, 43136
   %i.qx = add nsw i32 %0, -43138
   %or.cond926 = icmp ult i32 %i.qx, 50
   %or.cond2078 = select i1 %or.cond925, i1 true, i1 %or.cond926
   %i.qy = add nsw i32 %0, -43188
   %or.cond927 = icmp ult i32 %i.qy, 16
   %or.cond2079 = select i1 %or.cond2078, i1 true, i1 %or.cond927
-  %or.cond928 = icmp eq i32 %i.j, 43204
+  %or.cond928 = icmp eq i32 %i.i, 43204
   %or.cond2080 = or i1 %or.cond928, %or.cond2079
-  %or.cond929 = icmp eq i32 %i.j, 43214
+  %or.cond929 = icmp eq i32 %i.i, 43214
   %or.cond2081 = or i1 %or.cond929, %or.cond2080
   %i.qz = add nsw i32 %0, -43216
   %or.cond930 = icmp ult i32 %i.qz, 10
@@ -1469,7 +1470,7 @@ bb.ff:                                            ; preds = %bb.fe
 bb.fg:                                            ; preds = %bb.ff
   %i.rb = add nsw i32 %0, -43312
   %or.cond2085 = icmp ult i32 %i.rb, 34
-  %or.cond936 = icmp eq i32 %i.j, 43346
+  %or.cond936 = icmp eq i32 %i.i, 43346
   %or.cond2086 = or i1 %or.cond2085, %or.cond936
   br i1 %or.cond2086, label %switch.lookup, label %bb.fh
 
@@ -1491,7 +1492,7 @@ bb.fj:                                            ; preds = %bb.fi
 bb.fk:                                            ; preds = %bb.fj
   %i.rf = add nsw <4 x i32> %i.g, <i32 -43520, i32 -43584, i32 -43588, i32 -43600>
   %i.rg = icmp ult <4 x i32> %i.rf, <i32 55, i32 3, i32 8, i32 10>
-  %or.cond949 = icmp eq i32 %i.i, 43612
+  %or.cond949 = icmp eq i32 %i.j, 43612
   %i.rh = bitcast <4 x i1> %i.rg to i4
   %i.ri = icmp ne i4 %i.rh, 0
   %op.rdx2361 = or i1 %i.ri, %or.cond949
@@ -1549,14 +1550,14 @@ bb.fp:                                            ; preds = %bb.fo
 bb.fq:                                            ; preds = %bb.fp
   %i.sg = add nsw i32 %0, -42192
   %or.cond2118 = icmp ult i32 %i.sg, 46
-  %or.cond979 = icmp eq i32 %i.j, 42238
+  %or.cond979 = icmp eq i32 %i.i, 42238
   %or.cond2119 = or i1 %or.cond2118, %or.cond979
   br i1 %or.cond2119, label %switch.lookup, label %bb.fr
 
 bb.fr:                                            ; preds = %bb.fq
   %i.sh = add nsw i32 %0, -42656
   %or.cond2120 = icmp ult i32 %i.sh, 80
-  %or.cond982 = icmp eq i32 %i.j, 42736
+  %or.cond982 = icmp eq i32 %i.i, 42736
   %or.cond2121 = or i1 %or.cond2120, %or.cond982
   %i.si = add nsw i32 %0, -42738
   %or.cond983 = icmp ult i32 %i.si, 6
@@ -1573,7 +1574,7 @@ bb.fs:                                            ; preds = %bb.fr
   %i.sn = shufflevector <6 x i1> %i.sm, <6 x i1> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 poison, i32 poison>
   %i.so = shufflevector <2 x i1> %i.sl, <2 x i1> poison, <8 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
   %i.sp = shufflevector <8 x i1> %i.sn, <8 x i1> %i.so, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 8, i32 9>
-  %or.cond993 = icmp eq i32 %i.j, 43486
+  %or.cond993 = icmp eq i32 %i.i, 43486
   %i.sq = freeze <8 x i1> %i.sp
   %i.sr = bitcast <8 x i1> %i.sq to i8
   %i.ss = icmp ne i8 %i.sr, 0
@@ -1584,7 +1585,7 @@ bb.ft:                                            ; preds = %bb.fs
   %i.st = add nsw <6 x i32> %i.mp, <i32 -43744, i32 -43763, i32 -43968, i32 -44003, i32 -44009, i32 -44016>
   %i.su = shufflevector <4 x i32> %i.h, <4 x i32> poison, <2 x i32> <i32 0, i32 1>
   %i.sv = icmp eq <2 x i32> %i.su, <i32 43756, i32 43760>
-  %or.cond1001 = icmp eq i32 %i.j, 44006
+  %or.cond1001 = icmp eq i32 %i.i, 44006
   %i.sw = icmp ult <6 x i32> %i.st, <i32 11, i32 2, i32 35, i32 2, i32 2, i32 10>
   %i.sx = shufflevector <6 x i1> %i.sw, <6 x i1> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 poison, i32 poison>
   %i.sy = shufflevector <2 x i1> %i.sv, <2 x i1> poison, <8 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
@@ -1598,7 +1599,7 @@ bb.ft:                                            ; preds = %bb.fs
 bb.fu:                                            ; preds = %bb.ft
   %i.td = add nsw i32 %0, -67648
   %or.cond1004 = icmp ult i32 %i.td, 22
-  %or.cond1005 = icmp eq i32 %2, 67672
+  %or.cond1005 = icmp eq i32 %12, 67672
   %or.cond2141 = or i1 %or.cond1004, %or.cond1005
   br i1 %or.cond2141, label %switch.lookup, label %bb.fv
 
@@ -1610,14 +1611,14 @@ bb.fv:                                            ; preds = %bb.fu
 bb.fw:                                            ; preds = %bb.fv
   %i.tf = add nsw i32 %0, -68416
   %or.cond1008 = icmp ult i32 %i.tf, 22
-  %or.cond1009 = icmp eq i32 %2, 68440
+  %or.cond1009 = icmp eq i32 %12, 68440
   %or.cond2143 = or i1 %or.cond1008, %or.cond1009
   br i1 %or.cond2143, label %switch.lookup, label %bb.fx
 
 bb.fx:                                            ; preds = %bb.fw
   %i.tg = add nsw i32 %0, -68448
   %or.cond1010 = icmp ult i32 %i.tg, 19
-  %or.cond1011 = icmp eq i32 %2, 68472
+  %or.cond1011 = icmp eq i32 %12, 68472
   %or.cond2144 = or i1 %or.cond1010, %or.cond1011
   br i1 %or.cond2144, label %switch.lookup, label %bb.fy
 
@@ -1643,7 +1644,7 @@ bb.fz:                                            ; preds = %bb.fy
 bb.ga:                                            ; preds = %bb.fz
   %i.ts = add nsw i32 %0, -7104
   %or.cond1021 = icmp ult i32 %i.ts, 38
-  %or.cond1022 = icmp eq i32 %i.j, 7144
+  %or.cond1022 = icmp eq i32 %i.i, 7144
   %or.cond2152 = or i1 %or.cond1021, %or.cond1022
   %i.tt = add nsw i32 %0, -7146
   %or.cond1023 = icmp ult i32 %i.tt, 3
@@ -1651,9 +1652,9 @@ bb.ga:                                            ; preds = %bb.fz
   %i.tu = add nsw i32 %0, -7151
   %or.cond1024 = icmp ult i32 %i.tu, 3
   %or.cond2154 = select i1 %or.cond2153, i1 true, i1 %or.cond1024
-  %or.cond1025 = icmp eq i32 %i.j, 7154
+  %or.cond1025 = icmp eq i32 %i.i, 7154
   %or.cond2155 = or i1 %or.cond1025, %or.cond2154
-  %or.cond1026 = icmp eq i32 %i.i, 7164
+  %or.cond1026 = icmp eq i32 %i.j, 7164
   %or.cond2156 = or i1 %or.cond1026, %or.cond2155
   br i1 %or.cond2156, label %switch.lookup, label %bb.gb
 
@@ -1682,16 +1683,16 @@ bb.gd:                                            ; preds = %bb.gc
   %i.ub = add nsw i32 %0, -69942
   %or.cond1038 = icmp ult i32 %i.ub, 10
   %or.cond2165 = select i1 %or.cond2164, i1 true, i1 %or.cond1038
-  %or.cond1039 = icmp eq i32 %i.i, 69952
+  %or.cond1039 = icmp eq i32 %i.j, 69952
   %or.cond2166 = or i1 %or.cond1039, %or.cond2165
   br i1 %or.cond2166, label %switch.lookup, label %bb.ge
 
 bb.ge:                                            ; preds = %bb.gd
   %i.uc = add nsw i32 %0, -68000
   %or.cond1040 = icmp ult i32 %i.uc, 24
-  %i.ud = icmp eq i32 %i.i, 68028
+  %i.ud = icmp eq i32 %i.j, 68028
   %or.cond2168 = or i1 %or.cond1040, %i.ud
-  %or.cond1043 = icmp eq i32 %3, 68032
+  %or.cond1043 = icmp eq i32 %1, 68032
   %or.cond2169 = or i1 %or.cond1043, %or.cond2168
   %i.ue = add nsw i32 %0, -68050
   %or.cond1044 = icmp ult i32 %i.ue, 46
@@ -1710,7 +1711,7 @@ bb.gg:                                            ; preds = %bb.gf
   br i1 %.not2518, label %bb.gh, label %switch.lookup
 
 bb.gh:                                            ; preds = %bb.gg
-  %or.cond1050 = icmp eq i32 %i.j, 70016
+  %or.cond1050 = icmp eq i32 %i.i, 70016
   %i.ui = add nsw <8 x i32> %i.ct, <i32 -70019, i32 -70067, i32 -70070, i32 -70079, i32 -70081, i32 -70085, i32 -70090, i32 -70096>
   %i.uj = icmp ult <8 x i32> %i.ui, <i32 48, i32 3, i32 9, i32 2, i32 4, i32 5, i32 3, i32 10>
   %i.uk = add nsw i32 %0, -70109
@@ -1732,7 +1733,7 @@ bb.gi:                                            ; preds = %bb.gh
 bb.gj:                                            ; preds = %bb.gi
   %i.uq = add nsw i32 %0, -71296
   %or.cond1062 = icmp ult i32 %i.uq, 43
-  %or.cond1063 = icmp eq i32 %i.j, 71342
+  %or.cond1063 = icmp eq i32 %i.i, 71342
   %or.cond2184 = or i1 %or.cond1062, %or.cond1063
   %i.ur = add nsw i32 %0, -71344
   %or.cond1064 = icmp ult i32 %i.ur, 6
@@ -1814,7 +1815,7 @@ bb.gp:                                            ; preds = %switch.early.test25
   br i1 %i.vr, label %switch.lookup, label %switch.early.test2543
 
 switch.early.test2543:                            ; preds = %bb.gp
-  switch i32 %i.i, label %bb.gq [
+  switch i32 %i.j, label %bb.gq [
     i32 92992, label %switch.lookup
     i32 92988, label %switch.lookup
   ]
@@ -1822,7 +1823,7 @@ switch.early.test2543:                            ; preds = %bb.gp
 bb.gq:                                            ; preds = %switch.early.test2543
   %i.vs = add nsw <4 x i32> %i.g, <i32 -70144, i32 -70163, i32 -70188, i32 -70191>
   %i.vt = icmp ult <4 x i32> %i.vs, <i32 18, i32 25, i32 3, i32 3>
-  %i.vu = icmp eq i32 %1, 70194
+  %i.vu = icmp eq i32 %i.k, 70194
   %i.vv = add nsw i32 %0, -70200
   %or.cond1106 = icmp ult i32 %i.vv, 6
   %i.vw = bitcast <4 x i1> %i.vt to i4
@@ -1838,19 +1839,19 @@ bb.gr:                                            ; preds = %bb.gq
   %i.wa = add nsw i32 %0, -67392
   %or.cond1108 = icmp ult i32 %i.wa, 22
   %or.cond2221 = select i1 %or.cond1107, i1 true, i1 %or.cond1108
-  %or.cond1109 = icmp eq i32 %2, 67424
+  %or.cond1109 = icmp eq i32 %12, 67424
   %or.cond2222 = or i1 %or.cond1109, %or.cond2221
   br i1 %or.cond2222, label %switch.lookup, label %bb.gs
 
 bb.gs:                                            ; preds = %bb.gr
   %i.wb = add nsw i32 %0, -69968
   %or.cond1110 = icmp ult i32 %i.wb, 35
-  %or.cond1111 = icmp eq i32 %i.j, 70004
+  %or.cond1111 = icmp eq i32 %i.i, 70004
   %or.cond2223 = or i1 %or.cond1110, %or.cond1111
   br i1 %or.cond2223, label %switch.lookup, label %bb.gt
 
 bb.gt:                                            ; preds = %bb.gs
-  %or.cond1112 = icmp eq i32 %2, 68288
+  %or.cond1112 = icmp eq i32 %12, 68288
   %i.wc = add nsw <4 x i32> %i.g, <i32 -68297, i32 -68325, i32 -68331, i32 -68336>
   %i.wd = icmp ult <4 x i32> %i.wc, <i32 28, i32 2, i32 5, i32 7>
   %i.we = bitcast <4 x i1> %i.wd to i4
@@ -1882,7 +1883,7 @@ bb.gw:                                            ; preds = %bb.gv
   %i.wn = add nsw i32 %0, -92768
   %or.cond1128 = icmp ult i32 %i.wn, 10
   %or.cond2236 = select i1 %or.cond1127, i1 true, i1 %or.cond1128
-  %or.cond1129 = icmp eq i32 %i.j, 92782
+  %or.cond1129 = icmp eq i32 %i.i, 92782
   %or.cond2237 = or i1 %or.cond1129, %or.cond2236
   br i1 %or.cond2237, label %switch.lookup, label %bb.gx
 
@@ -1928,9 +1929,9 @@ switch.early.test2313:                            ; preds = %bb.hc
 bb.hd:                                            ; preds = %switch.early.test2313
   %i.wu = add nsw i32 %0, -71040
   %or.cond2246 = icmp ult i32 %i.wu, 54
-  %or.cond1146 = icmp eq i32 %i.i, 71096
+  %or.cond1146 = icmp eq i32 %i.j, 71096
   %or.cond2247 = or i1 %or.cond2246, %or.cond1146
-  %or.cond1147 = icmp eq i32 %i.j, 71100
+  %or.cond1147 = icmp eq i32 %i.i, 71100
   %or.cond2248 = or i1 %or.cond1147, %or.cond2247
   %i.wv = add nsw i32 %0, -71103
   %or.cond1148 = icmp ult i32 %i.wv, 2
@@ -1938,9 +1939,9 @@ bb.hd:                                            ; preds = %switch.early.test23
   %i.ww = add nsw i32 %0, -71105
   %or.cond1149 = icmp ult i32 %i.ww, 23
   %or.cond2250 = select i1 %or.cond2249, i1 true, i1 %or.cond1149
-  %or.cond1150 = icmp eq i32 %i.i, 71128
+  %or.cond1150 = icmp eq i32 %i.j, 71128
   %or.cond2251 = or i1 %or.cond1150, %or.cond2250
-  %or.cond1151 = icmp eq i32 %i.j, 71132
+  %or.cond1151 = icmp eq i32 %i.i, 71132
   %or.cond2252 = or i1 %or.cond1151, %or.cond2251
   br i1 %or.cond2252, label %switch.lookup, label %bb.he
 
@@ -1960,7 +1961,7 @@ bb.hf:                                            ; preds = %bb.he
   br i1 %i.xe, label %switch.lookup, label %switch.early.test2544
 
 switch.early.test2544:                            ; preds = %bb.hf
-  switch i32 %i.j, label %bb.hg [
+  switch i32 %i.i, label %bb.hg [
     i32 70852, label %switch.lookup
     i32 70850, label %switch.lookup
   ]
@@ -1991,7 +1992,7 @@ bb.hi:                                            ; preds = %bb.hh
 bb.hj:                                            ; preds = %bb.hi
   %i.xq = add nsw i32 %0, -67808
   %or.cond1176 = icmp ult i32 %i.xq, 19
-  %or.cond1177 = icmp eq i32 %i.j, 67828
+  %or.cond1177 = icmp eq i32 %i.i, 67828
   %or.cond2272 = or i1 %or.cond1176, %or.cond1177
   %i.xr = add nsw i32 %0, -67835
   %or.cond1178 = icmp ult i32 %i.xr, 5
@@ -2033,7 +2034,7 @@ bb.hn:                                            ; preds = %bb.hm
   %i.yg = add nsw i32 %0, -125264
   %or.cond1198 = icmp ult i32 %i.yg, 10
   %or.cond2289 = select i1 %or.cond2288, i1 true, i1 %or.cond1198
-  %or.cond1199 = icmp eq i32 %i.j, 125278
+  %or.cond1199 = icmp eq i32 %i.i, 125278
   %or.cond2290 = or i1 %or.cond1199, %or.cond2289
   br i1 %or.cond2290, label %switch.lookup, label %bb.ho
 
@@ -2060,15 +2061,15 @@ bb.hp:                                            ; preds = %bb.ho
   br i1 %i.ys, label %switch.lookup, label %switch.early.test2545
 
 switch.early.test2545:                            ; preds = %bb.hp
-  switch i32 %i.j, label %bb.hq [
+  switch i32 %i.i, label %bb.hq [
     i32 72882, label %switch.lookup
     i32 72816, label %switch.lookup
   ]
 
 bb.hq:                                            ; preds = %switch.early.test2545
   %i.yt = add nsw <4 x i32> %i.g, <i32 -70656, i32 -70722, i32 -70727, i32 -70731>
-  %or.cond1215 = icmp eq i32 %2, 70712
-  %or.cond1216 = icmp eq i32 %i.j, 70720
+  %or.cond1215 = icmp eq i32 %12, 70712
+  %or.cond1216 = icmp eq i32 %i.i, 70720
   %i.yu = icmp ult <4 x i32> %i.yt, <i32 56, i32 3, i32 4, i32 5>
   %i.yv = add nsw i32 %0, -70736
   %or.cond1220 = icmp ult i32 %i.yv, 10

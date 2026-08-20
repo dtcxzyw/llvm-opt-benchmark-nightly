@@ -204,20 +204,15 @@ bb.l:                                             ; preds = %_ZNSt6vectorIN2cv3V
   %i.in = insertelement <4 x float> %i.im, float %.sroa.0254.sroa.11.0.copyload.i.i.i, i64 2
   %i.io = insertelement <4 x float> <float poison, float -0.000000e+00, float poison, float poison>, float %.fca.1.extract7.i.i.i.i, i64 0
   %i.ip = shufflevector <4 x float> %i.io, <4 x float> poison, <4 x i32> <i32 0, i32 0, i32 0, i32 1>
-  %i.iq = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.in, <4 x float> %i.ip, <4 x float> %i.ii) ; 3 uses
-  %i.ir = load ptr, ptr %i.s, align 8, !tbaa !209 ; 8 uses
+  %i.iq = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.in, <4 x float> %i.ip, <4 x float> %i.ii) ; 2 uses
+  %i.ir = load ptr, ptr %i.s, align 8, !tbaa !209 ; 6 uses
   %i.is = load ptr, ptr %i.t, align 8, !tbaa !221
   %.not.i.i79.i.i.i.i = icmp eq ptr %i.ir, %i.is
   br i1 %.not.i.i79.i.i.i.i, label %bb.n, label %bb.m
 
 bb.m:                                             ; preds = %.noexc73.i.i.i
-  %13 = shufflevector <4 x float> %i.iq, <4 x float> poison, <2 x i32> <i32 0, i32 1>
-  store <2 x float> %13, ptr %i.ir, align 4, !tbaa !14
-  %14 = getelementptr inbounds nuw i8, ptr %i.ir, i64 8
-  %15 = extractelement <4 x float> %i.iq, i64 2
-  store float %15, ptr %14, align 4, !tbaa !14
-  %16 = getelementptr inbounds nuw i8, ptr %i.ir, i64 12
-  store float 0.000000e+00, ptr %16, align 4, !tbaa !14
+  %13 = insertelement <4 x float> %i.iq, float 0.000000e+00, i64 3
+  store <4 x float> %13, ptr %i.ir, align 4, !tbaa !14
   %i.it = getelementptr inbounds nuw i8, ptr %i.ir, i64 16
   store ptr %i.it, ptr %i.s, align 8, !tbaa !209
   br label %_ZNSt6vectorIN2cv3VecIfLi4EEESaIS2_EE9push_backEOS2_.exit80.i.i.i.i
@@ -539,20 +534,15 @@ bb.x:                                             ; preds = %_ZNSt6vectorIN2cv3V
   %i.oz = insertelement <4 x float> %i.oy, float %.sroa.0253.sroa.11.0.copyload.i.i.i, i64 2
   %i.pa = insertelement <4 x float> <float poison, float -0.000000e+00, float poison, float poison>, float %.fca.1.extract7.i86.i.i.i, i64 0
   %i.pb = shufflevector <4 x float> %i.pa, <4 x float> poison, <4 x i32> <i32 0, i32 0, i32 0, i32 1>
-  %i.pc = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.oz, <4 x float> %i.pb, <4 x float> %i.ou) ; 3 uses
-  %i.pd = load ptr, ptr %i.s, align 8, !tbaa !209 ; 8 uses
+  %i.pc = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.oz, <4 x float> %i.pb, <4 x float> %i.ou) ; 2 uses
+  %i.pd = load ptr, ptr %i.s, align 8, !tbaa !209 ; 6 uses
   %i.pe = load ptr, ptr %i.t, align 8, !tbaa !221
   %.not.i.i79.i89.i.i.i = icmp eq ptr %i.pd, %i.pe
   br i1 %.not.i.i79.i89.i.i.i, label %bb.z, label %bb.y
 
 bb.y:                                             ; preds = %.noexc92.i.i.i
-  %17 = shufflevector <4 x float> %i.pc, <4 x float> poison, <2 x i32> <i32 0, i32 1>
-  store <2 x float> %17, ptr %i.pd, align 4, !tbaa !14
-  %18 = getelementptr inbounds nuw i8, ptr %i.pd, i64 8
-  %19 = extractelement <4 x float> %i.pc, i64 2
-  store float %19, ptr %18, align 4, !tbaa !14
-  %20 = getelementptr inbounds nuw i8, ptr %i.pd, i64 12
-  store float 0.000000e+00, ptr %20, align 4, !tbaa !14
+  %14 = insertelement <4 x float> %i.pc, float 0.000000e+00, i64 3
+  store <4 x float> %14, ptr %i.pd, align 4, !tbaa !14
   %i.pf = getelementptr inbounds nuw i8, ptr %i.pd, i64 16
   store ptr %i.pf, ptr %i.s, align 8, !tbaa !209
   br label %_ZNSt6vectorIN2cv3VecIfLi4EEESaIS2_EE9push_backEOS2_.exit80.i90.i.i.i
@@ -865,20 +855,15 @@ bb.aj:                                            ; preds = %_ZNSt6vectorIN2cv3V
   %i.vl = insertelement <4 x float> %i.vk, float %.sroa.0252.sroa.11.0.copyload.i.i.i, i64 2
   %i.vm = insertelement <4 x float> <float poison, float -0.000000e+00, float poison, float poison>, float %.fca.1.extract7.i106.i.i.i, i64 0
   %i.vn = shufflevector <4 x float> %i.vm, <4 x float> poison, <4 x i32> <i32 0, i32 0, i32 0, i32 1>
-  %i.vo = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.vl, <4 x float> %i.vn, <4 x float> %i.vg) ; 3 uses
-  %i.vp = load ptr, ptr %i.s, align 8, !tbaa !209 ; 8 uses
+  %i.vo = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.vl, <4 x float> %i.vn, <4 x float> %i.vg) ; 2 uses
+  %i.vp = load ptr, ptr %i.s, align 8, !tbaa !209 ; 6 uses
   %i.vq = load ptr, ptr %i.t, align 8, !tbaa !221
   %.not.i.i79.i109.i.i.i = icmp eq ptr %i.vp, %i.vq
   br i1 %.not.i.i79.i109.i.i.i, label %bb.al, label %bb.ak
 
 bb.ak:                                            ; preds = %.noexc112.i.i.i
-  %21 = shufflevector <4 x float> %i.vo, <4 x float> poison, <2 x i32> <i32 0, i32 1>
-  store <2 x float> %21, ptr %i.vp, align 4, !tbaa !14
-  %22 = getelementptr inbounds nuw i8, ptr %i.vp, i64 8
-  %23 = extractelement <4 x float> %i.vo, i64 2
-  store float %23, ptr %22, align 4, !tbaa !14
-  %24 = getelementptr inbounds nuw i8, ptr %i.vp, i64 12
-  store float 0.000000e+00, ptr %24, align 4, !tbaa !14
+  %15 = insertelement <4 x float> %i.vo, float 0.000000e+00, i64 3
+  store <4 x float> %15, ptr %i.vp, align 4, !tbaa !14
   %i.vr = getelementptr inbounds nuw i8, ptr %i.vp, i64 16
   store ptr %i.vr, ptr %i.s, align 8, !tbaa !209
   br label %_ZNSt6vectorIN2cv3VecIfLi4EEESaIS2_EE9push_backEOS2_.exit80.i110.i.i.i

@@ -204,9 +204,9 @@ bb.c:                                             ; preds = %.loopexit116
 
 .preheader112.preheader:                          ; preds = %.preheader114
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.b, i64 56 ; 2 uses
+  %.pre = load float, ptr %.phi.trans.insert, align 8, !tbaa !318
   %.phi.trans.insert205 = getelementptr inbounds nuw i8, ptr %i.b, i64 60 ; 2 uses
-  %.pre206 = load float, ptr %.phi.trans.insert205, align 4, !tbaa !318
-  %.pre.a = load float, ptr %.phi.trans.insert, align 8, !tbaa !318
+  %.pre.a = load float, ptr %.phi.trans.insert205, align 4, !tbaa !318
   %i.eo = getelementptr inbounds nuw i8, ptr %i.c, i64 4
   %i.ep = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   %i.eq = getelementptr inbounds nuw i8, ptr %i.c, i64 12
@@ -231,15 +231,16 @@ bb.c:                                             ; preds = %.loopexit116
   br label %.preheader112
 
 .preheader112:                                    ; preds = %.preheader112.preheader, %bb.bb
-  %i.fj = phi float [ %i.ow, %bb.bb ], [ %.pre206, %.preheader112.preheader ] ; 2 uses
-  %i.fk = phi float [ %i.ox, %bb.bb ], [ %.pre.a, %.preheader112.preheader ] ; 2 uses
+  %i.fj = phi float [ %i.ow, %bb.bb ], [ %.pre.a, %.preheader112.preheader ] ; 2 uses
+  %i.fk = phi float [ %i.ox, %bb.bb ], [ %.pre, %.preheader112.preheader ] ; 2 uses
   %.198145 = phi i32 [ %i.pa, %bb.bb ], [ 0, %.preheader112.preheader ] ; 2 uses
-  %i.fl = phi <16 x float> [ %i.oy, %bb.bb ], [ %i.fi, %.preheader112.preheader ] ; 3 uses
+  %i.fl = phi <16 x float> [ %i.oy, %bb.bb ], [ %i.fi, %.preheader112.preheader ] ; 4 uses
   %i.fm = insertelement <16 x float> %i.fl, float %i.fk, i64 14
-  %i.fn = insertelement <16 x float> %i.fm, float %i.fj, i64 15 ; 3 uses
-  %i.fo = fcmp ogt <16 x float> %i.fn, zeroinitializer
-  %i.fp = fneg <16 x float> %i.fn
-  %i.fq = select <16 x i1> %i.fo, <16 x float> %i.fn, <16 x float> %i.fp ; 16 uses
+  %i.fn = insertelement <16 x float> %i.fm, float %i.fj, i64 15
+  %0 = shufflevector <16 x float> %i.fl, <16 x float> %i.fn, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 28, i32 29, i32 30, i32 31> ; 3 uses
+  %i.fo = fcmp ogt <16 x float> %0, zeroinitializer
+  %i.fp = fneg <16 x float> %0
+  %i.fq = select <16 x i1> %i.fo, <16 x float> %0, <16 x float> %i.fp ; 16 uses
   %i.fr = extractelement <16 x float> %i.fq, i64 0
   %i.fs = fadd float %i.fr, 0.000000e+00
   %i.ft = extractelement <16 x float> %i.fq, i64 1

@@ -203,27 +203,17 @@ bb.i:                                             ; preds = %bb.e
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.af = load <4 x float>, ptr %i.ad, align 16, !noalias !8
   %i.ag = load <4 x float>, ptr %i.ae, align 16, !noalias !8
-  %i.ah = call noundef <4 x float> @llvm.x86.sse.min.ps(<4 x float> %i.af, <4 x float> %i.ag) ; 2 uses
+  %i.ah = call noundef <4 x float> @llvm.x86.sse.min.ps(<4 x float> %i.af, <4 x float> %i.ag)
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.ak = load <4 x float>, ptr %i.ai, align 16, !noalias !13
   %i.al = load <4 x float>, ptr %i.aj, align 16, !noalias !13
-  %i.am = call noundef <4 x float> @llvm.x86.sse.max.ps(<4 x float> %i.ak, <4 x float> %i.al) ; 2 uses
-  %7 = shufflevector <4 x float> %i.ah, <4 x float> poison, <2 x i32> <i32 0, i32 1>
-  store <2 x float> %7, ptr %1, align 16
-  %.sroa.0.8.vec.extract = extractelement <4 x float> %i.ah, i64 2
-  %8 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  store float %.sroa.0.8.vec.extract, ptr %8, align 8
-  %9 = getelementptr inbounds nuw i8, ptr %1, i64 12
-  store float 0.000000e+00, ptr %9, align 4
+  %i.am = call noundef <4 x float> @llvm.x86.sse.max.ps(<4 x float> %i.ak, <4 x float> %i.al)
+  %7 = insertelement <4 x float> %i.ah, float 0.000000e+00, i64 3
+  store <4 x float> %7, ptr %1, align 16
   %i.an = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %10 = shufflevector <4 x float> %i.am, <4 x float> poison, <2 x i32> <i32 0, i32 1>
-  store <2 x float> %10, ptr %i.an, align 16
-  %.sroa.7.24.vec.extract = extractelement <4 x float> %i.am, i64 2
-  %11 = getelementptr inbounds nuw i8, ptr %1, i64 24
-  store float %.sroa.7.24.vec.extract, ptr %11, align 8
-  %12 = getelementptr inbounds nuw i8, ptr %1, i64 28
-  store float 0.000000e+00, ptr %12, align 4
+  %8 = insertelement <4 x float> %i.am, float 0.000000e+00, i64 3
+  store <4 x float> %8, ptr %i.an, align 16
   call void @_ZN6embree16DeviceEnterLeaveD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %4) #23
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #23
   br label %bb.q

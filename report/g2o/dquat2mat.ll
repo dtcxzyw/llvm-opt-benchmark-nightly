@@ -95,8 +95,6 @@ bb.a:
   %i.h = fadd double %i.f, %i.g                   ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 24
   store double 0.000000e+00, ptr %i.i, align 8, !tbaa !8
-  %11 = getelementptr inbounds nuw i8, ptr %0, i64 72
-  store double 0.000000e+00, ptr %11, align 8, !tbaa !8
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 96
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 120
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 168
@@ -105,24 +103,19 @@ bb.a:
   %i.o = insertelement <2 x double> %i.n, double %i.b, i64 1
   %i.p = fdiv <2 x double> splat (double 1.000000e+00), %i.o ; 3 uses
   %i.q = extractelement <2 x double> %i.p, i64 0  ; 2 uses
-  %12 = fmul double %i.q, -1.250000e-01           ; 2 uses
-  %i.r = fmul double %i.q, 2.500000e-01           ; 4 uses
+  %i.r = fmul double %i.q, -1.250000e-01          ; 2 uses
   %i.s = extractelement <2 x double> %i.p, i64 1
   %i.t = fmul double %i.s, 3.125000e-02           ; 2 uses
   %i.u = fmul double %i.t, %i.e                   ; 2 uses
   %i.v = fmul double %i.t, %i.h                   ; 2 uses
-  store double %12, ptr %i.j, align 8, !tbaa !8
-  store double %12, ptr %i.m, align 8, !tbaa !8
+  store double %i.r, ptr %i.j, align 8, !tbaa !8
+  store double %i.r, ptr %i.m, align 8, !tbaa !8
   %i.w = fmul <2 x double> %i.p, <double 1.000000e+00, double -3.125000e-02> ; 2 uses
   %i.x = insertelement <2 x double> <double 1.250000e-01, double poison>, double %i.e, i64 1
   %i.y = fmul <2 x double> %i.w, %i.x
   store <2 x double> %i.y, ptr %0, align 8, !tbaa !8
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 32
-  store double %i.r, ptr %i.z, align 8, !tbaa !8
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 56
-  store double 0.000000e+00, ptr %i.aa, align 8, !tbaa !8
-  %13 = getelementptr inbounds nuw i8, ptr %0, i64 80
-  store double %i.r, ptr %13, align 8, !tbaa !8
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 104
   store double %i.u, ptr %i.ab, align 8, !tbaa !8
   store <2 x double> zeroinitializer, ptr %i.k, align 8, !tbaa !8
@@ -137,8 +130,11 @@ bb.a:
   store double %i.af, ptr %i.ag, align 8, !tbaa !8
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 40
   store <2 x double> zeroinitializer, ptr %i.ah, align 8, !tbaa !8
-  %14 = getelementptr inbounds nuw i8, ptr %0, i64 64
-  store double %i.r, ptr %14, align 8, !tbaa !8
+  %11 = fmul double %i.q, 2.500000e-01            ; 3 uses
+  store double %11, ptr %i.z, align 8, !tbaa !8
+  %12 = insertelement <4 x double> <double 0.000000e+00, double poison, double 0.000000e+00, double poison>, double %11, i64 1
+  %13 = shufflevector <4 x double> %12, <4 x double> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 1>
+  store <4 x double> %13, ptr %i.aa, align 8, !tbaa !8
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 88
   store double 0.000000e+00, ptr %i.ai, align 8, !tbaa !8
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 112
@@ -146,7 +142,7 @@ bb.a:
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 136
   store <2 x double> zeroinitializer, ptr %i.ak, align 8, !tbaa !8
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 160
-  store double %i.r, ptr %i.al, align 8, !tbaa !8
+  store double %11, ptr %i.al, align 8, !tbaa !8
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 184
   store double 0.000000e+00, ptr %i.am, align 8, !tbaa !8
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 208
@@ -239,8 +235,6 @@ bb.a:
   store double 0.000000e+00, ptr %i.m, align 8, !tbaa !8
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 144
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 168
-  store double 0.000000e+00, ptr %i.o, align 8, !tbaa !8
-  %11 = getelementptr inbounds nuw i8, ptr %0, i64 192
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 8
   store <2 x double> zeroinitializer, ptr %i.i, align 8, !tbaa !8
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 56
@@ -248,7 +242,6 @@ bb.a:
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 104
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 128
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 152
-  %12 = getelementptr inbounds nuw i8, ptr %0, i64 176
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 200
   %i.v = insertelement <2 x double> poison, double %i.b, i64 0
   %i.w = insertelement <2 x double> %i.v, double %i.a, i64 1
@@ -270,20 +263,19 @@ bb.a:
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 136
   store double 0.000000e+00, ptr %i.af, align 8, !tbaa !8
   store <2 x double> zeroinitializer, ptr %i.t, align 8, !tbaa !8
-  %13 = getelementptr inbounds nuw i8, ptr %0, i64 184
-  store double 0.000000e+00, ptr %13, align 8, !tbaa !8
-  %14 = extractelement <2 x double> %i.x, i64 1
-  %15 = fmul double %14, 2.500000e-01             ; 4 uses
+  %11 = fmul <2 x double> %i.x, <double -3.125000e-02, double 1.000000e+00> ; 2 uses
+  %12 = shufflevector <2 x double> %i.x, <2 x double> %11, <2 x i32> <i32 1, i32 2>
+  %13 = insertelement <2 x double> <double 2.500000e-01, double poison>, double %i.e, i64 1
+  %14 = fmul <2 x double> %12, %13                ; 2 uses
+  %15 = extractelement <2 x double> %14, i64 0    ; 3 uses
   store double %15, ptr %i.j, align 8, !tbaa !8
   store double %15, ptr %i.n, align 8, !tbaa !8
-  %16 = fmul <2 x double> %i.x, <double -3.125000e-02, double 1.000000e+00> ; 2 uses
-  %17 = extractelement <2 x double> %16, i64 0
-  %18 = fmul double %17, %i.e
-  store double %18, ptr %11, align 8, !tbaa !8
   store double %15, ptr %i.s, align 8, !tbaa !8
-  store double %15, ptr %12, align 8, !tbaa !8
+  %16 = shufflevector <2 x double> %14, <2 x double> poison, <4 x i32> <i32 0, i32 poison, i32 1, i32 poison>
+  %17 = shufflevector <4 x double> <double 0.000000e+00, double poison, double 0.000000e+00, double poison>, <4 x double> %16, <4 x i32> <i32 0, i32 4, i32 2, i32 6>
+  store <4 x double> %17, ptr %i.o, align 8, !tbaa !8
   %i.ag = insertelement <2 x double> <double poison, double 1.250000e-01>, double %i.h, i64 0
-  %i.ah = fmul <2 x double> %16, %i.ag
+  %i.ah = fmul <2 x double> %11, %i.ag
   store <2 x double> %i.ah, ptr %i.u, align 8, !tbaa !8
   ret void
 }
@@ -686,8 +678,6 @@ bb.g:                                             ; preds = %bb.c
   %i.ft = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.fu = getelementptr inbounds nuw i8, ptr %0, i64 96
   %i.fv = getelementptr inbounds nuw i8, ptr %0, i64 120
-  store double 0.000000e+00, ptr %i.fv, align 8, !tbaa !8
-  %10 = getelementptr inbounds nuw i8, ptr %0, i64 144
   %i.fw = getelementptr inbounds nuw i8, ptr %0, i64 168
   store double 0.000000e+00, ptr %i.fw, align 8, !tbaa !8
   %i.fx = getelementptr inbounds nuw i8, ptr %0, i64 192
@@ -696,7 +686,6 @@ bb.g:                                             ; preds = %bb.c
   %i.fz = getelementptr inbounds nuw i8, ptr %0, i64 56
   store <2 x double> zeroinitializer, ptr %i.ft, align 8, !tbaa !8
   %i.ga = getelementptr inbounds nuw i8, ptr %0, i64 104
-  %11 = getelementptr inbounds nuw i8, ptr %0, i64 128
   %i.gb = getelementptr inbounds nuw i8, ptr %0, i64 152
   %i.gc = getelementptr inbounds nuw i8, ptr %0, i64 176
   %i.gd = getelementptr inbounds nuw i8, ptr %0, i64 200
@@ -707,30 +696,29 @@ bb.g:                                             ; preds = %bb.c
   %i.gi = extractelement <2 x double> %i.gh, i64 0
   %i.gj = fmul double %i.gi, %i.fn                ; 2 uses
   %i.gk = extractelement <2 x double> %i.gg, i64 1 ; 2 uses
-  %12 = fmul double %i.gk, 2.500000e-01           ; 4 uses
   %i.gl = insertelement <2 x double> <double poison, double -1.250000e-01>, double %i.fq, i64 0
   %i.gm = fmul <2 x double> %i.gh, %i.gl          ; 2 uses
   store double %i.gj, ptr %0, align 8, !tbaa !8
-  store double %12, ptr %i.fs, align 8, !tbaa !8
   store double %i.gj, ptr %i.fu, align 8, !tbaa !8
-  store double %12, ptr %10, align 8, !tbaa !8
   %i.gn = extractelement <2 x double> %i.gg, i64 0
   %i.go = fmul double %i.gn, -3.125000e-02        ; 2 uses
   %i.gp = fmul double %i.go, %i.fn
   store double %i.gp, ptr %i.fx, align 8, !tbaa !8
-  store double %12, ptr %11, align 8, !tbaa !8
-  store double %12, ptr %i.gc, align 8, !tbaa !8
-  %13 = fmul double %i.go, %i.fq
-  store double %13, ptr %i.gd, align 8, !tbaa !8
+  %10 = fmul double %i.go, %i.fq
+  store double %10, ptr %i.gd, align 8, !tbaa !8
   store <2 x double> %i.gm, ptr %i.fy, align 8, !tbaa !8
-  %i.gq = getelementptr inbounds nuw i8, ptr %0, i64 40
-  store double 0.000000e+00, ptr %i.gq, align 8, !tbaa !8
+  %11 = getelementptr inbounds nuw i8, ptr %0, i64 40
+  store double 0.000000e+00, ptr %11, align 8, !tbaa !8
   store <2 x double> zeroinitializer, ptr %i.fz, align 8, !tbaa !8
-  %14 = getelementptr inbounds nuw i8, ptr %0, i64 88
-  store double 0.000000e+00, ptr %14, align 8, !tbaa !8
+  %i.gq = getelementptr inbounds nuw i8, ptr %0, i64 88
+  store double 0.000000e+00, ptr %i.gq, align 8, !tbaa !8
   store <2 x double> %i.gm, ptr %i.ga, align 8, !tbaa !8
-  %15 = getelementptr inbounds nuw i8, ptr %0, i64 136
-  store double 0.000000e+00, ptr %15, align 8, !tbaa !8
+  %12 = fmul double %i.gk, 2.500000e-01           ; 3 uses
+  store double %12, ptr %i.fs, align 8, !tbaa !8
+  store double %12, ptr %i.gc, align 8, !tbaa !8
+  %13 = insertelement <4 x double> <double 0.000000e+00, double poison, double 0.000000e+00, double poison>, double %12, i64 1
+  %14 = shufflevector <4 x double> %13, <4 x double> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 1>
+  store <4 x double> %14, ptr %i.fv, align 8, !tbaa !8
   store <2 x double> zeroinitializer, ptr %i.gb, align 8, !tbaa !8
   %i.gr = getelementptr inbounds nuw i8, ptr %0, i64 184
   store double 0.000000e+00, ptr %i.gr, align 8, !tbaa !8
