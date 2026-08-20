@@ -204,7 +204,7 @@ bb.z:                                             ; preds = %bb.z, %.lr.ph252.sp
   %i.id = getelementptr inbounds nuw i8, ptr %i.ic, i64 8
   store i32 %i.hh, ptr %i.id, align 4, !tbaa !97
   %indvars.iv.next275.1 = add nuw nsw i64 %indvars.iv274, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.critedge8.loopexit.unr-lcssa, label %bb.z, !llvm.loop !98
 
@@ -300,7 +300,7 @@ bb.z:                                             ; preds = %bb.z, %.lr.ph252.sp
   %i.jy = getelementptr inbounds nuw i8, ptr %i.jx, i64 8
   store i32 %i.jb, ptr %i.jy, align 4, !tbaa !97
   %indvars.iv.next283.1 = add nuw nsw i64 %indvars.iv282, 2 ; 2 uses
-  %niter365.next.1 = add i64 %niter365, 2         ; 2 uses
+  %niter365.next.1 = add nuw i64 %niter365, 2     ; 2 uses
   %niter365.ncmp.1 = icmp eq i64 %niter365.next.1, %unroll_iter364
   br i1 %niter365.ncmp.1, label %.critedge10.loopexit.unr-lcssa, label %.lr.ph263.split, !llvm.loop !100
 
@@ -703,7 +703,7 @@ bb.c:                                             ; preds = %._crit_edge129, %bb
   %i.bm = load i32, ptr %i.bl, align 4, !tbaa !153
   %i.bn = xor i32 %i.bm, %i.bb                    ; 3 uses
   %indvars.iv.next.1 = add nsw i64 %indvars.iv, 2 ; 2 uses
-  %niter.next.1 = add i32 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i32 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i32 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !160
 
@@ -1106,8 +1106,7 @@ bb.f:                                             ; preds = %bb.f, %.lr.ph110.i
   %i.ca = add nsw i32 %i.bz, %i.bx                ; 2 uses
   store i32 %i.ca, ptr %i.am, align 4, !tbaa !150
   %indvars.iv.next120.i = add nuw nsw i64 %indvars.iv119.i, 1 ; 2 uses
-  %8 = and i64 %indvars.iv.next120.i, 4294967295
-  %exitcond = icmp eq i64 %8, %indvars.iv75
+  %exitcond = icmp eq i64 %indvars.iv.next120.i, %indvars.iv75
   br i1 %exitcond, label %Str_MuxChangeOnce.exit, label %bb.f, !llvm.loop !161
 
 Str_MuxChangeOnce.exit:                           ; preds = %bb.f, %._crit_edge.i

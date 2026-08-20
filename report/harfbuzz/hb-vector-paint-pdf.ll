@@ -204,12 +204,11 @@ _ZN15hb_vector_buf_t10append_strEPKc.exit738:     ; preds = %_ZN15hb_vector_buf_
 bb.jg:                                            ; preds = %.lr.ph, %_ZN15hb_vector_buf_t10append_strEPKc.exit795
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %_ZN15hb_vector_buf_t10append_strEPKc.exit795 ] ; 4 uses
   %i.aon = load i32, ptr %i.bo, align 4, !tbaa !8
-  %3 = trunc nuw i64 %indvars.iv to i32
-  %4 = add nuw i64 %indvars.iv, 4
-  %5 = and i64 %4, 4294967295
-  %6 = getelementptr inbounds nuw [4 x i8], ptr %.sroa.11.0.ph, i64 %5
-  store i32 %i.aon, ptr %6, align 4, !tbaa !74
-  %i.aoo = add i32 %3, 5
+  %3 = getelementptr inbounds nuw [4 x i8], ptr %.sroa.11.0.ph, i64 %indvars.iv
+  %4 = getelementptr inbounds nuw i8, ptr %3, i64 16
+  store i32 %i.aon, ptr %4, align 4, !tbaa !74
+  %5 = trunc i64 %indvars.iv to i32
+  %i.aoo = add i32 %5, 5
   %i.aop = call noundef zeroext i1 @_ZN15hb_vector_buf_t15append_unsignedEj(ptr noundef nonnull align 8 dereferenceable(20) %1, i32 noundef %i.aoo) ; 0 uses
   %i.aoq = load i32, ptr %i.bo, align 4, !tbaa !8 ; 2 uses
   %i.aor = call { i32, i1 } @llvm.uadd.with.overflow.i32(i32 %i.aoq, i32 7) ; 2 uses
@@ -612,7 +611,7 @@ bb.a:
   %i.n = fmul float %i.m, 1.000000e-01
   %i.o = fmul float %i.n, 1.000000e-01
   %i.p = fmul float %i.o, 1.000000e-01            ; 3 uses
-  %niter.next.7 = add i32 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i32 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i32 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !439
 

@@ -202,7 +202,7 @@ bb.i:                                             ; preds = %bb.h, %rb_Digest_MD
 bb.j:                                             ; preds = %bb.i
   %i.bh = icmp samesign ugt i32 %i.bb, 56
   %i.bi = sub nuw nsw i64 64, %i.bc
-  %i.bj = select i1 %i.bh, i64 %i.bi, i64 8       ; 4 uses
+  %i.bj = select i1 %i.bh, i64 %i.bi, i64 8       ; 5 uses
   %i.bk = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.bl = getelementptr inbounds nuw i8, ptr %i.bk, i64 %i.bc
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.bl, ptr noundef nonnull align 1 dereferenceable(1) %i.a, i64 %i.bj, i1 false)
@@ -212,29 +212,24 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.j
   %i.bo = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.bj ; 2 uses
-  %i.bp = sub nsw i64 8, %i.bj                    ; 3 uses
+  %i.bp = sub nsw i64 8, %i.bj                    ; 2 uses
   tail call fastcc void @md5_process(ptr noundef nonnull %0, ptr noundef nonnull %i.bk)
   %i.bq = icmp ugt i64 %i.bp, 63
   br i1 %i.bq, label %.lr.ph.i22, label %._crit_edge.i18
 
 .lr.ph.i22:                                       ; preds = %bb.k, %.lr.ph.i22
-  %.246.i23 = phi i64 [ %2, %.lr.ph.i22 ], [ %i.bp, %bb.k ]
   %.24145.i24 = phi ptr [ %i.br, %.lr.ph.i22 ], [ %i.bo, %bb.k ] ; 2 uses
   call fastcc void @md5_process(ptr noundef nonnull %0, ptr noundef nonnull %.24145.i24)
-  %i.br = getelementptr inbounds nuw i8, ptr %.24145.i24, i64 64 ; 2 uses
-  %2 = add i64 %.246.i23, -64                     ; 3 uses
-  %3 = icmp ugt i64 %2, 63
-  br i1 %3, label %.lr.ph.i22, label %._crit_edge.i18, !llvm.loop !10
+  %i.br = getelementptr inbounds nuw i8, ptr %.24145.i24, i64 64
+  br label %.lr.ph.i22
 
-._crit_edge.i18:                                  ; preds = %.lr.ph.i22, %bb.k
-  %.241.lcssa.i19 = phi ptr [ %i.bo, %bb.k ], [ %i.br, %.lr.ph.i22 ]
-  %.2.lcssa.i20 = phi i64 [ %i.bp, %bb.k ], [ %2, %.lr.ph.i22 ] ; 2 uses
-  %.not44.i21 = icmp eq i64 %.2.lcssa.i20, 0
+._crit_edge.i18:                                  ; preds = %bb.k
+  %.not44.i21 = icmp eq i64 %i.bj, 8
   br i1 %.not44.i21, label %rb_Digest_MD5_Update.exit25, label %._crit_edge.i18.thread
 
 ._crit_edge.i18.thread:                           ; preds = %bb.i, %._crit_edge.i18
-  %.2.lcssa.i2032 = phi i64 [ %.2.lcssa.i20, %._crit_edge.i18 ], [ 8, %bb.i ]
-  %.241.lcssa.i1931 = phi ptr [ %.241.lcssa.i19, %._crit_edge.i18 ], [ %i.a, %bb.i ]
+  %.2.lcssa.i2032 = phi i64 [ %i.bp, %._crit_edge.i18 ], [ 8, %bb.i ]
+  %.241.lcssa.i1931 = phi ptr [ %i.bo, %._crit_edge.i18 ], [ %i.a, %bb.i ]
   %i.bs = getelementptr inbounds nuw i8, ptr %0, i64 24
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.bs, ptr noundef nonnull align 1 dereferenceable(1) %.241.lcssa.i1931, i64 %.2.lcssa.i2032, i1 false)
   br label %rb_Digest_MD5_Update.exit25

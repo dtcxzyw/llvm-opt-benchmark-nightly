@@ -204,7 +204,7 @@ bb.l:                                             ; preds = %bb.l, %.new
   %i.cc = trunc nuw nsw i64 %i.bu to i16
   %i.cd = getelementptr inbounds nuw i8, ptr %i.cb, i64 1944
   store i16 %i.cc, ptr %i.cd, align 8
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_RINvMsp_NtNtNtCscdodAO9FK5_5alloc11collections5btree4nodeINtB6_7NodeRefNtNtB6_6marker3MutNtNtNtCs56aZGHL6Dc6_7ruff_db6system4path13SystemPathBufNtNtCsjNt1Wzngcv_9ty_server7session12ProjectStateNtB19_8InternalE30correct_childrens_parent_linksINtNtNtCs4NRVxsYgnAr_4core3ops5range5RangejEEB2m_.exit.loopexit.unr-lcssa, label %bb.l
 }
@@ -607,7 +607,7 @@ bb.l:                                             ; preds = %bb.l, %.new
   %i.cc = trunc nuw nsw i64 %i.bu to i16
   %i.cd = getelementptr inbounds nuw i8, ptr %i.cb, i64 1416
   store i16 %i.cc, ptr %i.cd, align 8
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_RINvMsp_NtNtNtCscdodAO9FK5_5alloc11collections5btree4nodeINtB6_7NodeRefNtNtB6_6marker3MutNtNtNtCs56aZGHL6Dc6_7ruff_db6system4path13SystemPathBufNtNtCsjNt1Wzngcv_9ty_server7session9WorkspaceNtB19_8InternalE30correct_childrens_parent_linksINtNtNtCs4NRVxsYgnAr_4core3ops5range5RangejEEB2m_.exit.loopexit.unr-lcssa, label %bb.l
 }
@@ -1010,7 +1010,7 @@ bb.bf:                                            ; preds = %.lr.ph.i.i, %bb.cl
   %i.ep = phi ptr [ %.sroa.13.0, %.lr.ph.i.i ], [ %i.eo, %bb.cl ]
   %i.eq = phi i64 [ 0, %.lr.ph.i.i ], [ %i.es, %bb.cl ]
   %i.er = phi ptr [ %i.ca, %.lr.ph.i.i ], [ %i.hg, %bb.cl ] ; 2 uses
-  %i.es = add i64 %i.eq, 1                        ; 3 uses
+  %i.es = add nuw i64 %i.eq, 1                    ; 2 uses
   %i.et = getelementptr inbounds nuw i8, ptr %i.ep, i64 624
   %i.eu = load i16, ptr %i.et, align 8, !noalias !1940 ; 4 uses
   %i.ev = zext i16 %i.eu to i64                   ; 10 uses
@@ -1263,8 +1263,6 @@ bb.bz:                                            ; preds = %bb.bv
   %i.il = getelementptr [8 x i8], ptr %i.ik, i64 %.sroa.06.0.i.i.i
   %i.im = shl nuw nsw i64 %i.id, 3
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.if, ptr noundef nonnull readonly align 8 dereferenceable(1) %i.il, i64 %i.im, i1 false), !alias.scope !2006, !noalias !1987
-  %4 = icmp ne i64 %i.es, 0
-  tail call void @llvm.assume(i1 %4)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2010)
   br label %bb.ca
 
@@ -1667,7 +1665,7 @@ bb.bf:                                            ; preds = %.lr.ph.i.i, %bb.cl
   %i.el = phi ptr [ %.sroa.13.0, %.lr.ph.i.i ], [ %i.ek, %bb.cl ]
   %i.em = phi i64 [ 0, %.lr.ph.i.i ], [ %i.eo, %bb.cl ]
   %i.en = phi ptr [ %i.bv, %.lr.ph.i.i ], [ %i.gz, %bb.cl ] ; 2 uses
-  %i.eo = add i64 %i.em, 1                        ; 3 uses
+  %i.eo = add nuw i64 %i.em, 1                    ; 2 uses
   %i.ep = getelementptr inbounds nuw i8, ptr %i.el, i64 1944
   %i.eq = load i16, ptr %i.ep, align 8, !noalias !2144 ; 4 uses
   %i.er = zext i16 %i.eq to i64                   ; 10 uses
@@ -1918,8 +1916,6 @@ bb.bz:                                            ; preds = %bb.bv
   %i.if = getelementptr [8 x i8], ptr %i.ie, i64 %.sroa.06.0.i.i.i
   %i.ig = shl nuw nsw i64 %i.hx, 3
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.hz, ptr noundef nonnull readonly align 8 dereferenceable(1) %i.if, i64 %i.ig, i1 false), !alias.scope !2210, !noalias !2191
-  %4 = icmp ne i64 %i.eo, 0
-  tail call void @llvm.assume(i1 %4)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2214)
   br label %bb.ca
 
@@ -2322,7 +2318,7 @@ bb.bf:                                            ; preds = %.lr.ph.i.i, %bb.cl
   %i.el = phi ptr [ %.sroa.13.0, %.lr.ph.i.i ], [ %i.ek, %bb.cl ]
   %i.em = phi i64 [ 0, %.lr.ph.i.i ], [ %i.eo, %bb.cl ]
   %i.en = phi ptr [ %i.bv, %.lr.ph.i.i ], [ %i.gz, %bb.cl ] ; 2 uses
-  %i.eo = add i64 %i.em, 1                        ; 3 uses
+  %i.eo = add nuw i64 %i.em, 1                    ; 2 uses
   %i.ep = getelementptr inbounds nuw i8, ptr %i.el, i64 1416
   %i.eq = load i16, ptr %i.ep, align 8, !noalias !2345 ; 4 uses
   %i.er = zext i16 %i.eq to i64                   ; 10 uses
@@ -2573,8 +2569,6 @@ bb.bz:                                            ; preds = %bb.bv
   %i.if = getelementptr [8 x i8], ptr %i.ie, i64 %.sroa.06.0.i.i.i
   %i.ig = shl nuw nsw i64 %i.hx, 3
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.hz, ptr noundef nonnull readonly align 8 dereferenceable(1) %i.if, i64 %i.ig, i1 false), !alias.scope !2411, !noalias !2392
-  %4 = icmp ne i64 %i.eo, 0
-  tail call void @llvm.assume(i1 %4)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2415)
   br label %bb.ca
 

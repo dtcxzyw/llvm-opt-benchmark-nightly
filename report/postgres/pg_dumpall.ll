@@ -203,13 +203,13 @@ bb.w:                                             ; preds = %bb.v
   br i1 %i.ep, label %.lr.ph.i152.us, label %.lr.ph69.i.us.preheader, !llvm.loop !20
 
 .lr.ph69.i.us.preheader:                          ; preds = %bb.w, %bb.v, %.lr.ph.i152.us
-  %.04968.i.us.ph = phi i32 [ 0, %bb.w ], [ %.05162.i.us, %bb.v ], [ %.05162.i.us, %.lr.ph.i152.us ]
+  %.04968.i.us.ph = phi i32 [ %.05162.i.us, %.lr.ph.i152.us ], [ %.05162.i.us, %bb.v ], [ 0, %bb.w ]
   br label %.lr.ph69.i.us
 
 .lr.ph69.i.us:                                    ; preds = %.lr.ph69.i.us.preheader, %bb.aa
-  %.04968.i.us = phi i32 [ %spec.store.select.i.us, %bb.aa ], [ %.04968.i.us.ph, %.lr.ph69.i.us.preheader ] ; 2 uses
-  %.15267.i.us = phi i32 [ %1, %bb.aa ], [ 0, %.lr.ph69.i.us.preheader ]
-  %i.eq = zext i32 %.04968.i.us to i64
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.aa ], [ 0, %.lr.ph69.i.us.preheader ]
+  %.15267.i.us = phi i32 [ %spec.store.select.i.us, %bb.aa ], [ %.04968.i.us.ph, %.lr.ph69.i.us.preheader ] ; 2 uses
+  %i.eq = zext i32 %.15267.i.us to i64
   %i.er = getelementptr inbounds nuw [16 x i8], ptr %i.dk, i64 %i.eq ; 3 uses
   %i.es = load i32, ptr %i.er, align 8
   %i.et = icmp eq i32 %i.es, 1
@@ -236,14 +236,13 @@ bb.z:                                             ; preds = %bb.y
   br label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z, %.lr.ph69.i.us
-  %i.fa = add i32 %.04968.i.us, 1                 ; 2 uses
+  %i.fa = add i32 %.15267.i.us, 1                 ; 2 uses
   %i.fb = zext i32 %i.fa to i64
   %.not55.i.us = icmp ugt i64 %i.dh, %i.fb
   %spec.store.select.i.us = select i1 %.not55.i.us, i32 %i.fa, i32 0
-  %1 = add i32 %.15267.i.us, 1                    ; 2 uses
-  %2 = zext i32 %1 to i64
-  %3 = icmp ugt i64 %i.dh, %2
-  br i1 %3, label %.lr.ph69.i.us, label %rolename_grow.exit.us, !llvm.loop !21
+  %indvars.iv.next = add nuw i64 %indvars.iv, 1   ; 2 uses
+  %exitcond319.not = icmp eq i64 %indvars.iv.next, %i.dh
+  br i1 %exitcond319.not, label %rolename_grow.exit.us, label %.lr.ph69.i.us, !llvm.loop !21
 
 rolename_grow.exit.us:                            ; preds = %bb.aa, %rolename_update_parameters.exit.i.us
   tail call void @pfree(ptr noundef %i.dk) #14

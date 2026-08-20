@@ -204,7 +204,7 @@ bb.ba:                                            ; preds = %.lr.ph
 .lr.ph:                                           ; preds = %"_ZN4core3ptr70drop_in_place$LT$core..option..Option$LT$alloc..string..String$GT$$GT$17h6193e72745deafaeE.exit61.i", %bb.ba
   %.sroa.0.0.i.i.i14 = phi i64 [ %i.dk, %bb.ba ], [ 0, %"_ZN4core3ptr70drop_in_place$LT$core..option..Option$LT$alloc..string..String$GT$$GT$17h6193e72745deafaeE.exit61.i" ] ; 2 uses
   %i.dj = getelementptr inbounds nuw [24 x i8], ptr %.val.i4, i64 %.sroa.0.0.i.i.i14
-  %i.dk = add i64 %.sroa.0.0.i.i.i14, 1           ; 4 uses
+  %i.dk = add nuw i64 %.sroa.0.0.i.i.i14, 1       ; 4 uses
   invoke fastcc void @"_ZN4core3ptr44drop_in_place$LT$actix_web..route..Route$GT$17hf2f7b8095add50eeE"(ptr noalias noundef readonly align 8 dereferenceable(24) %i.dj)
           to label %bb.ba unwind label %bb.bc, !noalias !387
 
@@ -607,7 +607,7 @@ bb.dc:                                            ; preds = %.lr.ph
 .lr.ph:                                           ; preds = %bb.db, %bb.dc
   %.sroa.0.0.i.i.i300 = phi i64 [ %i.le, %bb.dc ], [ 0, %bb.db ] ; 2 uses
   %i.ld = getelementptr inbounds nuw [192 x i8], ptr %.val.i, i64 %.sroa.0.0.i.i.i300
-  %i.le = add i64 %.sroa.0.0.i.i.i300, 1          ; 4 uses
+  %i.le = add nuw i64 %.sroa.0.0.i.i.i300, 1      ; 4 uses
   invoke fastcc void @"_ZN4core3ptr595drop_in_place$LT$$LP$actix_router..resource..ResourceDef$C$alloc..vec..Vec$LT$alloc..boxed..Box$LT$dyn$u20$actix_web..guard..Guard$GT$$GT$$C$alloc..boxed..Box$LT$dyn$u20$actix_service..Service$LT$actix_web..service..ServiceRequest$GT$$u2b$Response$u20$$u3d$$u20$actix_web..service..ServiceResponse$u2b$Future$u20$$u3d$$u20$core..pin..Pin$LT$alloc..boxed..Box$LT$dyn$u20$core..future..future..Future$u2b$Output$u20$$u3d$$u20$core..result..Result$LT$actix_web..service..ServiceResponse$C$actix_web..error..error..Error$GT$$GT$$GT$$u2b$Error$u20$$u3d$$u20$actix_web..error..error..Error$GT$$RP$$GT$17hf4bc6b0c2ddb35f6E"(ptr noalias noundef align 8 dereferenceable(192) %i.ld)
           to label %bb.dc unwind label %bb.de, !noalias !1603
 
@@ -1010,7 +1010,7 @@ bb.dc:                                            ; preds = %.lr.ph
 .lr.ph:                                           ; preds = %bb.db, %bb.dc
   %.sroa.0.0.i.i.i300 = phi i64 [ %i.le, %bb.dc ], [ 0, %bb.db ] ; 2 uses
   %i.ld = getelementptr inbounds nuw [192 x i8], ptr %.val.i, i64 %.sroa.0.0.i.i.i300
-  %i.le = add i64 %.sroa.0.0.i.i.i300, 1          ; 4 uses
+  %i.le = add nuw i64 %.sroa.0.0.i.i.i300, 1      ; 4 uses
   invoke fastcc void @"_ZN4core3ptr595drop_in_place$LT$$LP$actix_router..resource..ResourceDef$C$alloc..vec..Vec$LT$alloc..boxed..Box$LT$dyn$u20$actix_web..guard..Guard$GT$$GT$$C$alloc..boxed..Box$LT$dyn$u20$actix_service..Service$LT$actix_web..service..ServiceRequest$GT$$u2b$Response$u20$$u3d$$u20$actix_web..service..ServiceResponse$u2b$Future$u20$$u3d$$u20$core..pin..Pin$LT$alloc..boxed..Box$LT$dyn$u20$core..future..future..Future$u2b$Output$u20$$u3d$$u20$core..result..Result$LT$actix_web..service..ServiceResponse$C$actix_web..error..error..Error$GT$$GT$$GT$$u2b$Error$u20$$u3d$$u20$actix_web..error..error..Error$GT$$RP$$GT$17hf4bc6b0c2ddb35f6E"(ptr noalias noundef align 8 dereferenceable(192) %i.ld)
           to label %bb.dc unwind label %bb.de, !noalias !2619
 
@@ -1413,7 +1413,7 @@ bb.d:                                             ; preds = %bb.a
 .lr.ph10:                                         ; preds = %bb.d, %"_ZN4core3ptr53drop_in_place$LT$http..header..value..HeaderValue$GT$17ha529d5e1c8086c3fE.exit.i.i.i.i"
   %.sroa.0.0.i.i.i.i9 = phi i64 [ %i.aj, %"_ZN4core3ptr53drop_in_place$LT$http..header..value..HeaderValue$GT$17ha529d5e1c8086c3fE.exit.i.i.i.i" ], [ 0, %bb.d ] ; 2 uses
   %i.ai = getelementptr inbounds nuw [40 x i8], ptr %i.ad, i64 %.sroa.0.0.i.i.i.i9 ; 4 uses
-  %i.aj = add i64 %.sroa.0.0.i.i.i.i9, 1          ; 4 uses
+  %i.aj = add nuw i64 %.sroa.0.0.i.i.i.i9, 1      ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !3513)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !3516)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !3519)
@@ -1816,7 +1816,7 @@ bb.b:                                             ; preds = %.lr.ph
 .lr.ph:                                           ; preds = %bb.a, %bb.b
   %.sroa.0.0.i.i2 = phi i64 [ %i.i, %bb.b ], [ 0, %bb.a ] ; 2 uses
   %i.h = getelementptr inbounds nuw [192 x i8], ptr %i.a, i64 %.sroa.0.0.i.i2
-  %i.i = add i64 %.sroa.0.0.i.i2, 1               ; 4 uses
+  %i.i = add nuw i64 %.sroa.0.0.i.i2, 1           ; 4 uses
   invoke fastcc void @"_ZN4core3ptr595drop_in_place$LT$$LP$actix_router..resource..ResourceDef$C$alloc..vec..Vec$LT$alloc..boxed..Box$LT$dyn$u20$actix_web..guard..Guard$GT$$GT$$C$alloc..boxed..Box$LT$dyn$u20$actix_service..Service$LT$actix_web..service..ServiceRequest$GT$$u2b$Response$u20$$u3d$$u20$actix_web..service..ServiceResponse$u2b$Future$u20$$u3d$$u20$core..pin..Pin$LT$alloc..boxed..Box$LT$dyn$u20$core..future..future..Future$u2b$Output$u20$$u3d$$u20$core..result..Result$LT$actix_web..service..ServiceResponse$C$actix_web..error..error..Error$GT$$GT$$GT$$u2b$Error$u20$$u3d$$u20$actix_web..error..error..Error$GT$$RP$$GT$17hf4bc6b0c2ddb35f6E"(ptr noalias noundef align 8 dereferenceable(192) %i.h)
           to label %bb.b unwind label %bb.d, !noalias !3877
 
@@ -2219,7 +2219,7 @@ bb.b:                                             ; preds = %.lr.ph
 .lr.ph:                                           ; preds = %bb.a, %bb.b
   %.sroa.0.0.i.i2 = phi i64 [ %i.i, %bb.b ], [ 0, %bb.a ] ; 2 uses
   %i.h = getelementptr inbounds nuw [24 x i8], ptr %i.a, i64 %.sroa.0.0.i.i2
-  %i.i = add i64 %.sroa.0.0.i.i2, 1               ; 4 uses
+  %i.i = add nuw i64 %.sroa.0.0.i.i2, 1           ; 4 uses
   invoke fastcc void @"_ZN4core3ptr51drop_in_place$LT$actix_web..route..RouteService$GT$17h8edc918d5cf988c4E"(ptr noalias noundef readonly align 8 dereferenceable(24) %i.h)
           to label %bb.b unwind label %bb.d, !noalias !4192
 
@@ -2622,7 +2622,7 @@ bb.b:                                             ; preds = %.lr.ph
 .lr.ph:                                           ; preds = %bb.a, %bb.b
   %.sroa.0.0.i.i7 = phi i64 [ %i.f, %bb.b ], [ 0, %bb.a ] ; 2 uses
   %i.e = getelementptr inbounds nuw [64 x i8], ptr %.val, i64 %.sroa.0.0.i.i7
-  %i.f = add i64 %.sroa.0.0.i.i7, 1               ; 4 uses
+  %i.f = add nuw i64 %.sroa.0.0.i.i7, 1           ; 4 uses
   invoke fastcc void @"_ZN4core3ptr194drop_in_place$LT$regex_automata..util..pool..inner..CacheLine$LT$std..sync..poison..mutex..Mutex$LT$alloc..vec..Vec$LT$alloc..boxed..Box$LT$regex_automata..meta..regex..Cache$GT$$GT$$GT$$GT$$GT$17h97d69993dd3f721eE"(ptr noalias noundef readonly align 64 dereferenceable(64) %i.e)
           to label %bb.b unwind label %bb.d
 
@@ -3025,7 +3025,7 @@ bb.b:                                             ; preds = %.lr.ph
 .lr.ph:                                           ; preds = %bb.a, %bb.b
   %.sroa.0.0.i.i.i6 = phi i64 [ %i.f, %bb.b ], [ 0, %bb.a ] ; 2 uses
   %i.e = getelementptr inbounds nuw [24 x i8], ptr %.val.i, i64 %.sroa.0.0.i.i.i6
-  %i.f = add i64 %.sroa.0.0.i.i.i6, 1             ; 4 uses
+  %i.f = add nuw i64 %.sroa.0.0.i.i.i6, 1         ; 4 uses
   invoke fastcc void @"_ZN4core3ptr51drop_in_place$LT$actix_web..route..RouteService$GT$17h8edc918d5cf988c4E"(ptr noalias noundef readonly align 8 dereferenceable(24) %i.e)
           to label %bb.b unwind label %bb.d, !noalias !6059
 
@@ -3428,7 +3428,7 @@ bb.b:                                             ; preds = %.lr.ph
 .lr.ph:                                           ; preds = %bb.a, %bb.b
   %.sroa.0.0.i.i7 = phi i64 [ %i.f, %bb.b ], [ 0, %bb.a ] ; 2 uses
   %i.e = getelementptr inbounds nuw [192 x i8], ptr %.val, i64 %.sroa.0.0.i.i7
-  %i.f = add i64 %.sroa.0.0.i.i7, 1               ; 4 uses
+  %i.f = add nuw i64 %.sroa.0.0.i.i7, 1           ; 4 uses
   invoke fastcc void @"_ZN4core3ptr595drop_in_place$LT$$LP$actix_router..resource..ResourceDef$C$alloc..boxed..Box$LT$dyn$u20$actix_service..Service$LT$actix_web..service..ServiceRequest$GT$$u2b$Response$u20$$u3d$$u20$actix_web..service..ServiceResponse$u2b$Future$u20$$u3d$$u20$core..pin..Pin$LT$alloc..boxed..Box$LT$dyn$u20$core..future..future..Future$u2b$Output$u20$$u3d$$u20$core..result..Result$LT$actix_web..service..ServiceResponse$C$actix_web..error..error..Error$GT$$GT$$GT$$u2b$Error$u20$$u3d$$u20$actix_web..error..error..Error$GT$$C$alloc..vec..Vec$LT$alloc..boxed..Box$LT$dyn$u20$actix_web..guard..Guard$GT$$GT$$RP$$GT$17h7e860c0d05ff9e09E"(ptr noalias noundef align 8 dereferenceable(192) %i.e)
           to label %bb.b unwind label %bb.d
 
@@ -3499,7 +3499,7 @@ bb.b:                                             ; preds = %.lr.ph
 .lr.ph:                                           ; preds = %bb.a, %bb.b
   %.sroa.0.0.i.i7 = phi i64 [ %i.f, %bb.b ], [ 0, %bb.a ] ; 2 uses
   %i.e = getelementptr inbounds nuw [192 x i8], ptr %.val, i64 %.sroa.0.0.i.i7
-  %i.f = add i64 %.sroa.0.0.i.i7, 1               ; 4 uses
+  %i.f = add nuw i64 %.sroa.0.0.i.i7, 1           ; 4 uses
   invoke fastcc void @"_ZN4core3ptr595drop_in_place$LT$$LP$actix_router..resource..ResourceDef$C$alloc..vec..Vec$LT$alloc..boxed..Box$LT$dyn$u20$actix_web..guard..Guard$GT$$GT$$C$alloc..boxed..Box$LT$dyn$u20$actix_service..Service$LT$actix_web..service..ServiceRequest$GT$$u2b$Response$u20$$u3d$$u20$actix_web..service..ServiceResponse$u2b$Future$u20$$u3d$$u20$core..pin..Pin$LT$alloc..boxed..Box$LT$dyn$u20$core..future..future..Future$u2b$Output$u20$$u3d$$u20$core..result..Result$LT$actix_web..service..ServiceResponse$C$actix_web..error..error..Error$GT$$GT$$GT$$u2b$Error$u20$$u3d$$u20$actix_web..error..error..Error$GT$$RP$$GT$17hf4bc6b0c2ddb35f6E"(ptr noalias noundef align 8 dereferenceable(192) %i.e)
           to label %bb.b unwind label %bb.d
 
@@ -3902,7 +3902,7 @@ bb.b:                                             ; preds = %.lr.ph
 .lr.ph:                                           ; preds = %bb.a, %bb.b
   %.sroa.0.0.i.i7 = phi i64 [ %i.f, %bb.b ], [ 0, %bb.a ] ; 2 uses
   %i.e = getelementptr inbounds nuw [24 x i8], ptr %.val, i64 %.sroa.0.0.i.i7
-  %i.f = add i64 %.sroa.0.0.i.i7, 1               ; 4 uses
+  %i.f = add nuw i64 %.sroa.0.0.i.i7, 1           ; 4 uses
   invoke fastcc void @"_ZN4core3ptr44drop_in_place$LT$actix_web..route..Route$GT$17hf2f7b8095add50eeE"(ptr noalias noundef readonly align 8 dereferenceable(24) %i.e)
           to label %bb.b unwind label %bb.d
 
@@ -4024,7 +4024,7 @@ bb.a:
 .lr.ph:                                           ; preds = %bb.a, %"_ZN4core3ptr46drop_in_place$LT$regex_lite..string..Regex$GT$17h884ae02708a3a08eE.exit.i.i"
   %.sroa.0.0.i.i19 = phi i64 [ %i.f, %"_ZN4core3ptr46drop_in_place$LT$regex_lite..string..Regex$GT$17h884ae02708a3a08eE.exit.i.i" ], [ 0, %bb.a ] ; 2 uses
   %i.e = getelementptr inbounds nuw [56 x i8], ptr %.val, i64 %.sroa.0.0.i.i19 ; 4 uses
-  %i.f = add i64 %.sroa.0.0.i.i19, 1              ; 4 uses
+  %i.f = add nuw i64 %.sroa.0.0.i.i19, 1          ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !6316)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !6319)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !6322)
@@ -4427,7 +4427,7 @@ bb.b:                                             ; preds = %.lr.ph
 .lr.ph:                                           ; preds = %bb.a, %bb.b
   %.sroa.0.0.i.i7 = phi i64 [ %i.f, %bb.b ], [ 0, %bb.a ] ; 2 uses
   %i.e = getelementptr inbounds nuw [48 x i8], ptr %.val, i64 %.sroa.0.0.i.i7
-  %i.f = add i64 %.sroa.0.0.i.i7, 1               ; 4 uses
+  %i.f = add nuw i64 %.sroa.0.0.i.i7, 1           ; 4 uses
   invoke fastcc void @"_ZN4core3ptr62drop_in_place$LT$actix_web..middleware..logger..FormatText$GT$17hdf8051cec7b0e376E"(ptr noalias noundef align 8 dereferenceable(48) %i.e)
           to label %bb.b unwind label %bb.d
 
@@ -4830,7 +4830,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f
 
 .lr.ph.1.i:                                       ; preds = %.loopexit.i, %.lr.ph.1.i
   %.sroa.08.08.1.i = phi i64 [ %i.u, %.lr.ph.1.i ], [ %.sroa.0.0.i, %.loopexit.i ] ; 3 uses
-  %i.u = add i64 %.sroa.08.08.1.i, 1              ; 2 uses
+  %i.u = add nuw i64 %.sroa.08.08.1.i, 1          ; 2 uses
   %i.v = getelementptr inbounds nuw [32 x i8], ptr %i.p, i64 %.sroa.08.08.1.i
   %i.w = getelementptr inbounds nuw [32 x i8], ptr %i.q, i64 %.sroa.08.08.1.i ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.w, ptr noundef nonnull align 8 dereferenceable(32) %i.v, i64 32, i1 false), !alias.scope !7430
@@ -5035,7 +5035,7 @@ bb.v:                                             ; preds = %bb.u
 
 .lr.ph.i:                                         ; preds = %bb.h, %.lr.ph.i
   %.sroa.08.08.i = phi i64 [ %i.ck, %.lr.ph.i ], [ %.sroa.0.0.i, %bb.h ] ; 3 uses
-  %i.ck = add i64 %.sroa.08.08.i, 1               ; 2 uses
+  %i.ck = add nuw i64 %.sroa.08.08.i, 1           ; 2 uses
   %i.cl = getelementptr inbounds nuw [32 x i8], ptr %.sroa.0.0.ph.lcssa113, i64 %.sroa.08.08.i
   %i.cm = getelementptr inbounds nuw [32 x i8], ptr %2, i64 %.sroa.08.08.i ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.cm, ptr noundef nonnull align 8 dereferenceable(32) %i.cl, i64 32, i1 false), !alias.scope !7430
@@ -5438,7 +5438,7 @@ bb.b:                                             ; preds = %.lr.ph
 .lr.ph:                                           ; preds = %bb.a, %bb.b
   %.sroa.0.0.i6 = phi i64 [ %i.h, %bb.b ], [ 0, %bb.a ] ; 2 uses
   %i.g = getelementptr inbounds nuw [200 x i8], ptr %i.d, i64 %.sroa.0.0.i6
-  %i.h = add i64 %.sroa.0.0.i6, 1                 ; 4 uses
+  %i.h = add nuw i64 %.sroa.0.0.i6, 1             ; 4 uses
   invoke fastcc void @"_ZN4core3ptr378drop_in_place$LT$$LP$actix_router..resource..ResourceDef$C$actix_service..boxed..BoxServiceFactory$LT$$LP$$RP$$C$actix_web..service..ServiceRequest$C$actix_web..service..ServiceResponse$C$actix_web..error..error..Error$C$$LP$$RP$$GT$$C$core..cell..RefCell$LT$core..option..Option$LT$alloc..vec..Vec$LT$alloc..boxed..Box$LT$dyn$u20$actix_web..guard..Guard$GT$$GT$$GT$$GT$$RP$$GT$17hd68dfd595bbd791cE"(ptr noalias noundef align 8 dereferenceable(200) %i.g)
           to label %bb.b unwind label %bb.d
 
@@ -5841,14 +5841,10 @@ bb.u:                                             ; preds = %select.unfold.i.i.i
 
 bb.v:                                             ; preds = %._crit_edge.i.i.i.i.i.i.i.i.i.i.i.i.i.i, %bb.u
   %indvar = phi i64 [ %indvar.next, %._crit_edge.i.i.i.i.i.i.i.i.i.i.i.i.i.i ], [ 0, %bb.u ] ; 2 uses
-  %.sroa.01.0.i.i.i.i.i.i.i.i.i.i.i.i.i.i = phi i64 [ %i.dj, %._crit_edge.i.i.i.i.i.i.i.i.i.i.i.i.i.i ], [ 0, %bb.u ] ; 9 uses
-  %i.dj = add i64 %.sroa.01.0.i.i.i.i.i.i.i.i.i.i.i.i.i.i, 32 ; 2 uses
+  %.sroa.01.0.i.i.i.i.i.i.i.i.i.i.i.i.i.i = phi i64 [ %i.dj, %._crit_edge.i.i.i.i.i.i.i.i.i.i.i.i.i.i ], [ 0, %bb.u ] ; 8 uses
+  %i.dj = add nuw i64 %.sroa.01.0.i.i.i.i.i.i.i.i.i.i.i.i.i.i, 32 ; 2 uses
   %.not.i.i.i.i.i.i.i.i.i.i.i.i.i.i = icmp ugt i64 %i.dj, %i.di
-  br i1 %.not.i.i.i.i.i.i.i.i.i.i.i.i.i.i, label %.preheader.i.i.i.i.i.i.i.i.i.i.i.i.i.i, label %.preheader14.i.i.i.i.i.i.i.i.i.i.i.i.i.i
-
-.preheader14.i.i.i.i.i.i.i.i.i.i.i.i.i.i:         ; preds = %bb.v
-  %.not36.i.i.i.i.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %.sroa.01.0.i.i.i.i.i.i.i.i.i.i.i.i.i.i, -32
-  br i1 %.not36.i.i.i.i.i.i.i.i.i.i.i.i.i.i, label %.loopexit.i.i.i.i.i.i.i.i, label %._crit_edge.i.i.i.i.i.i.i.i.i.i.i.i.i.i
+  br i1 %.not.i.i.i.i.i.i.i.i.i.i.i.i.i.i, label %.preheader.i.i.i.i.i.i.i.i.i.i.i.i.i.i, label %._crit_edge.i.i.i.i.i.i.i.i.i.i.i.i.i.i
 
 .preheader.i.i.i.i.i.i.i.i.i.i.i.i.i.i:           ; preds = %bb.v
   %i.dk = icmp ult i64 %.sroa.01.0.i.i.i.i.i.i.i.i.i.i.i.i.i.i, %i.di
@@ -5945,7 +5941,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %exitcond.not.i.i.i.i.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.ek, %i.di
   br i1 %exitcond.not.i.i.i.i.i.i.i.i.i.i.i.i.i.i, label %_ZN4core5slice5ascii8is_ascii17h899e380db11233a2E.exit.i.i.i.i.i.i.i.i.i.i.i.i.i, label %.lr.ph25.i.i.i.i.i.i.i.i.i.i.i.i.i.i, !llvm.loop !9227
 
-._crit_edge.i.i.i.i.i.i.i.i.i.i.i.i.i.i:          ; preds = %.preheader14.i.i.i.i.i.i.i.i.i.i.i.i.i.i
+._crit_edge.i.i.i.i.i.i.i.i.i.i.i.i.i.i:          ; preds = %bb.v
   %i.el = getelementptr inbounds nuw i8, ptr %i.dh, i64 %.sroa.01.0.i.i.i.i.i.i.i.i.i.i.i.i.i.i
   %i.em = load <32 x i8>, ptr %i.el, align 1, !alias.scope !9217, !noalias !9220
   %i.en = icmp slt <32 x i8> %i.em, zeroinitializer
@@ -6089,7 +6085,7 @@ bb.ah:                                            ; preds = %.noexc52.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !9233
   br label %.loopexit.i.i.i.i.i.i.i.i
 
-.loopexit.i.i.i.i.i.i.i.i:                        ; preds = %._crit_edge.i.i.i.i.i.i.i.i.i.i.i.i.i.i, %.preheader14.i.i.i.i.i.i.i.i.i.i.i.i.i.i, %bb.ah, %bb.ag, %.noexc55.i.i, %bb.af, %bb.z, %_ZN4core5slice5ascii8is_ascii17h899e380db11233a2E.exit.i.i.i.i.i.i.i.i.i.i.i.i.i, %select.unfold.i.i.i.i.i.i.i.i
+.loopexit.i.i.i.i.i.i.i.i:                        ; preds = %._crit_edge.i.i.i.i.i.i.i.i.i.i.i.i.i.i, %bb.ah, %bb.ag, %.noexc55.i.i, %bb.af, %bb.z, %_ZN4core5slice5ascii8is_ascii17h899e380db11233a2E.exit.i.i.i.i.i.i.i.i.i.i.i.i.i, %select.unfold.i.i.i.i.i.i.i.i
   br i1 %i.dc, label %"_ZN97_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$alloc..vec..spec_extend..SpecExtend$LT$T$C$I$GT$$GT$11spec_extend17ha459e49e806ad5f2E.exit.i.i", label %.lr.ph.i.i.i.i.i.i.i.i.backedge
 
 .lr.ph.i.i.i.i.i.i.i.i.backedge:                  ; preds = %.loopexit.i.i.i.i.i.i.i.i, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17heca627093a1cf687E.exit.i.i.i.i"
@@ -6492,7 +6488,7 @@ bb.e:                                             ; preds = %.lr.ph
 .lr.ph:                                           ; preds = %.body181, %bb.e
   %.sroa.0.0.i.i.i1250 = phi i64 [ %i.at, %bb.e ], [ 0, %.body181 ] ; 2 uses
   %i.as = getelementptr inbounds nuw [48 x i8], ptr %.val.i, i64 %.sroa.0.0.i.i.i1250
-  %i.at = add i64 %.sroa.0.0.i.i.i1250, 1         ; 4 uses
+  %i.at = add nuw i64 %.sroa.0.0.i.i.i1250, 1     ; 4 uses
   invoke fastcc void @"_ZN4core3ptr62drop_in_place$LT$actix_web..middleware..logger..FormatText$GT$17hdf8051cec7b0e376E"(ptr noalias noundef align 8 dereferenceable(48) %i.as)
           to label %bb.e unwind label %bb.g, !noalias !10888
 
@@ -6895,7 +6891,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   store i64 0, ptr %i.y, align 8, !noalias !11621
   store <2 x i64> %i.z, ptr %.sroa.43.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i.3, align 8, !noalias !11621
   %i.aa = add nuw nsw i64 %i.j, 4                 ; 3 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %._crit_edge.i.i.i.i.i.i.i.i.i.i.loopexit.unr-lcssa, label %.lr.ph.i.i.i.i.i.i.i.i.i.i
 
@@ -7298,7 +7294,7 @@ bb.p:                                             ; preds = %bb.p, %.lr.ph.i.i13
   %i.ec = bitcast <16 x i8> %.lobit.i.i.i.1 to <2 x i64>
   %i.ed = or <2 x i64> %i.ec, splat (i64 -9187201950435737472)
   store <2 x i64> %i.ed, ptr %i.eb, align 16, !noalias !15375
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.i.i14.unr-lcssa, label %bb.p
 

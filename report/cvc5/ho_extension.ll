@@ -204,9 +204,8 @@ bb.by:                                            ; preds = %.lr.ph1125, %._crit
   %i.hl = ptrtoint ptr %i.hj to i64
   %i.hm = ptrtoint ptr %i.hk to i64
   %i.hn = sub i64 %i.hl, %i.hm
-  %i.ho = lshr exact i64 %i.hn, 3                 ; 2 uses
-  %70 = trunc i64 %i.ho to i32
-  %i.hp = and i64 %i.ho, 4294967295
+  %i.ho = lshr exact i64 %i.hn, 3
+  %i.hp = and i64 %i.ho, 4294967295               ; 2 uses
   %i.hq = icmp samesign ult i64 %indvars.iv.next1188, %i.hp
   br i1 %i.hq, label %.lr.ph1113, label %.loopexit740
 
@@ -609,8 +608,7 @@ _ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit608: ; preds = %bb.ok, %bb.oj, %bb
 bb.om:                                            ; preds = %bb.bz, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit606
   %.5180 = phi i32 [ %.4179, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit606 ], [ %.21771110, %bb.bz ] ; 2 uses
   %indvars.iv.next1185 = add nuw nsw i64 %indvars.iv1184, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next1185 to i32
-  %exitcond.not = icmp eq i32 %lftr.wideiv, %70
+  %exitcond.not = icmp eq i64 %indvars.iv.next1185, %i.hp
   br i1 %exitcond.not, label %.loopexit740, label %.lr.ph1113, !llvm.loop !598
 
 ._crit_edge1119:                                  ; preds = %.loopexit740, %bb.by

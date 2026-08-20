@@ -204,7 +204,7 @@ bb.l:                                             ; preds = %_RNvMs5_NtCs4wP2HXf
 
 bb.m:                                             ; preds = %.lr.ph151
   %i.bh = getelementptr inbounds nuw i8, ptr %.sroa.0.01.i.i.i149, i64 16 ; 2 uses
-  %i.bi = add i64 %.sroa.8.0.i.i.i148, 1
+  %i.bi = add nuw i64 %.sroa.8.0.i.i.i148, 1
   %i.bj = icmp eq ptr %i.bh, %i.bf
   br i1 %i.bj, label %_RNvMNtNtCsfu0rQaTkGUu_12clap_builder6output5usageNtB2_5Usage3new.exit, label %.lr.ph151
 
@@ -607,7 +607,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph
   %i.y = getelementptr inbounds nuw i8, ptr %.sroa.0.01.i.i188, i64 16 ; 2 uses
-  %i.z = add i64 %.sroa.8.0.i.i187, 1
+  %i.z = add nuw i64 %.sroa.8.0.i.i187, 1
   %i.aa = icmp eq ptr %i.y, %i.w
   br i1 %i.aa, label %_RINvMNtNtCsfu0rQaTkGUu_12clap_builder7builder3extNtB3_10Extensions3getNtNtB5_7styling6StylesEB7_.exit, label %.lr.ph
 
@@ -1010,7 +1010,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph
   %i.h = getelementptr inbounds nuw i8, ptr %.sroa.0.01.i6, i64 1 ; 2 uses
-  %i.i = add i64 %.sroa.8.0.i5, 1
+  %i.i = add nuw i64 %.sroa.8.0.i5, 1
   %i.j = icmp eq ptr %i.h, %i.f
   br i1 %i.j, label %_RINvMNtNtCsfu0rQaTkGUu_12clap_builder4util8flat_mapINtB3_7FlatMapNtNtNtB7_5error7context11ContextKindNtB13_12ContextValueE3getB11_EB7_.exit, label %.lr.ph
 
@@ -1343,7 +1343,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph
   %i.j = getelementptr inbounds nuw i8, ptr %.sroa.0.01.i.i27, i64 16 ; 2 uses
-  %i.k = add i64 %.sroa.8.0.i.i26, 1
+  %i.k = add nuw i64 %.sroa.8.0.i.i26, 1
   %i.l = icmp eq ptr %i.j, %i.h
   br i1 %i.l, label %_RINvMNtNtCsfu0rQaTkGUu_12clap_builder7builder3extNtB3_10Extensions3getNtNtB5_7styling6StylesEB7_.exit, label %.lr.ph
 
@@ -1746,7 +1746,7 @@ bb.aj:                                            ; preds = %bb.ap, %bb.ai
 
 bb.ak:                                            ; preds = %.lr.ph
   %i.gd = getelementptr inbounds nuw i8, ptr %.sroa.0.01.i.i.i10, i64 16 ; 2 uses
-  %i.ge = add i64 %.sroa.8.0.i.i.i9, 1
+  %i.ge = add nuw i64 %.sroa.8.0.i.i.i9, 1
   %i.gf = icmp eq ptr %i.gd, %i.gb
   br i1 %i.gf, label %_RNvMNtNtCsfu0rQaTkGUu_12clap_builder6output5usageNtB2_5Usage3new.exit, label %.lr.ph
 
@@ -1888,7 +1888,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph
   %i.h = getelementptr inbounds nuw i8, ptr %.sroa.0.01.i.i8, i64 16 ; 2 uses
-  %i.i = add i64 %.sroa.8.0.i.i7, 1
+  %i.i = add nuw i64 %.sroa.8.0.i.i7, 1
   %i.j = icmp eq ptr %i.h, %i.f
   br i1 %i.j, label %_RINvMNtNtCsfu0rQaTkGUu_12clap_builder7builder3extNtB3_10Extensions3getNtNtB5_7styling6StylesEB7_.exit, label %.lr.ph
 
@@ -2291,7 +2291,7 @@ _RNvXsC_NtCs4wP2HXfJTCR_5alloc6stringNtNtNtCsfu0rQaTkGUu_12clap_builder7builder3
 
 bb.d:                                             ; preds = %.lr.ph
   %i.da = getelementptr inbounds nuw i8, ptr %.sroa.0.01.i.i.i.i.i274, i64 16 ; 2 uses
-  %i.db = add i64 %.sroa.8.0.i.i.i.i.i273, 1
+  %i.db = add nuw i64 %.sroa.8.0.i.i.i.i.i273, 1
   %i.dc = icmp eq ptr %i.da, %i.cy
   br i1 %i.dc, label %_RNvMNtNtCsfu0rQaTkGUu_12clap_builder6parser9validatorNtB2_9Validator18validate_exclusive.exit, label %.lr.ph
 
@@ -2694,7 +2694,7 @@ _RNvXNtNtCs4wP2HXfJTCR_5alloc3vec21spec_from_iter_nestedINtB4_3VecNtNtNtCsfu0rQa
 
 bb.ar:                                            ; preds = %.lr.ph277
   %i.lp = getelementptr inbounds nuw i8, ptr %.sroa.0.01.i.i.i.i.i28276, i64 16 ; 2 uses
-  %i.lq = add i64 %.sroa.8.0.i.i.i.i.i27275, 1
+  %i.lq = add nuw i64 %.sroa.8.0.i.i.i.i.i27275, 1
   %i.lr = icmp eq ptr %i.lp, %i.ln
   br i1 %i.lr, label %_RNvMNtNtCsfu0rQaTkGUu_12clap_builder6output5usageNtB2_5Usage3new.exit.i.i, label %.lr.ph277
 
@@ -3097,7 +3097,7 @@ _RNvMs5_NtNtCsfu0rQaTkGUu_12clap_builder7builder7commandNtB5_7Command10color_hel
 
 bb.d:                                             ; preds = %.lr.ph
   %i.s = getelementptr inbounds nuw i8, ptr %.sroa.0.01.i.i.i17, i64 16 ; 2 uses
-  %i.t = add i64 %.sroa.8.0.i.i.i16, 1
+  %i.t = add nuw i64 %.sroa.8.0.i.i.i16, 1
   %i.u = icmp eq ptr %i.s, %i.q
   br i1 %i.u, label %_RNvMNtNtCsfu0rQaTkGUu_12clap_builder6output3fmtNtB2_9Colorizer12with_content.exit, label %.lr.ph
 
@@ -3212,7 +3212,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph
   %i.j = getelementptr inbounds nuw i8, ptr %.sroa.0.01.i.i.i6, i64 16 ; 2 uses
-  %i.k = add i64 %.sroa.8.0.i.i.i5, 1
+  %i.k = add nuw i64 %.sroa.8.0.i.i.i5, 1
   %i.l = icmp eq ptr %i.j, %i.h
   br i1 %i.l, label %_RNvMNtNtCsfu0rQaTkGUu_12clap_builder6output5usageNtB2_5Usage3new.exit, label %.lr.ph
 
@@ -3415,7 +3415,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph
   %i.m = getelementptr inbounds nuw i8, ptr %.sroa.0.01.i.i.i7, i64 16 ; 2 uses
-  %i.n = add i64 %.sroa.8.0.i.i.i6, 1
+  %i.n = add nuw i64 %.sroa.8.0.i.i.i6, 1
   %i.o = icmp eq ptr %i.m, %i.k
   br i1 %i.o, label %_RNvMNtNtCsfu0rQaTkGUu_12clap_builder6output5usageNtB2_5Usage3new.exit, label %.lr.ph
 
@@ -3818,7 +3818,7 @@ _RNvMs5_NtNtCsfu0rQaTkGUu_12clap_builder7builder7commandNtB5_7Command10color_hel
 
 bb.d:                                             ; preds = %.lr.ph
   %i.s = getelementptr inbounds nuw i8, ptr %.sroa.0.01.i.i.i17, i64 16 ; 2 uses
-  %i.t = add i64 %.sroa.8.0.i.i.i16, 1
+  %i.t = add nuw i64 %.sroa.8.0.i.i.i16, 1
   %i.u = icmp eq ptr %i.s, %i.q
   br i1 %i.u, label %_RNvMNtNtCsfu0rQaTkGUu_12clap_builder6output3fmtNtB2_9Colorizer12with_content.exit, label %.lr.ph
 
@@ -3933,7 +3933,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph
   %i.j = getelementptr inbounds nuw i8, ptr %.sroa.0.01.i.i.i6, i64 16 ; 2 uses
-  %i.k = add i64 %.sroa.8.0.i.i.i5, 1
+  %i.k = add nuw i64 %.sroa.8.0.i.i.i5, 1
   %i.l = icmp eq ptr %i.j, %i.h
   br i1 %i.l, label %_RNvMNtNtCsfu0rQaTkGUu_12clap_builder6output5usageNtB2_5Usage3new.exit, label %.lr.ph
 
@@ -4336,7 +4336,7 @@ _RNvXs4_NtCsj6eKBz9Db1c_4core6optionINtB5_6OptionNtNtNtCsfu0rQaTkGUu_12clap_buil
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ao, ptr noundef nonnull align 8 dereferenceable(24) %i.a, i64 24, i1 false), !noalias !3322
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !3322
   %i.ap = getelementptr inbounds nuw i8, ptr %.sroa.0.014.us.i, i64 96 ; 3 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %._crit_edge.loopexit.i.unr-lcssa, label %_RNvXs4_NtCsj6eKBz9Db1c_4core6optionINtB5_6OptionNtNtNtCsfu0rQaTkGUu_12clap_builder7builder10styled_str9StyledStrENtNtB7_5clone5Clone5cloneBQ_.exit.us.i
 
@@ -4739,7 +4739,7 @@ bb.ap:                                            ; preds = %bb.ap, %_RINvNtNtNt
   %i.jt = trunc nuw nsw i64 %i.jj to i16
   %i.ju = getelementptr inbounds nuw i8, ptr %i.jr, i64 448
   store i16 %i.jt, ptr %i.ju, align 8, !noalias !3558
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_RINvMsW_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree4nodeINtB6_6HandleINtB6_7NodeRefNtNtB6_6marker3MutTjNtNtBc_6string6StringERNtNtNtCsfu0rQaTkGUu_12clap_builder7builder3arg3ArgNtB1n_8InternalENtB1n_2KVE5splitNtNtBc_5alloc6GlobalEB28_.exit.i.i.i.i.unr-lcssa, label %bb.ap
 
@@ -5142,7 +5142,7 @@ bb.bi:                                            ; preds = %bb.bi, %_RINvNtNtNt
   %i.pp = trunc nuw nsw i64 %i.pf to i16
   %i.pq = getelementptr inbounds nuw i8, ptr %i.pn, i64 448
   store i16 %i.pp, ptr %i.pq, align 8, !noalias !4837
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_RINvMsW_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree4nodeINtB6_6HandleINtB6_7NodeRefNtNtB6_6marker3MutTjNtNtNtCsfu0rQaTkGUu_12clap_builder7builder10styled_str9StyledStrERNtNtB1J_7command7CommandNtB1n_8InternalENtB1n_2KVE5splitNtNtBc_5alloc6GlobalEB1L_.exit.i.i.i.i.unr-lcssa, label %bb.bi
 
@@ -5545,7 +5545,7 @@ _RNCNvMs4_NtNtNtNtCs4wP2HXfJTCR_5alloc11collections5btree3map5entryINtB7_11Vacan
   %.sroa.6.099.i.i.i = phi i64 [ %i.jb, %.loopexit43.i.i.i ], [ 0, %bb.an ]
   %.sroa.7.098.i.i.i = phi ptr [ %i.ll, %.loopexit43.i.i.i ], [ %i.ha, %bb.an ] ; 2 uses
   %.sroa.13.096.i.i.i = phi ptr [ %i.ly, %.loopexit43.i.i.i ], [ %i.hm, %bb.an ] ; 4 uses
-  %i.jb = add i64 %.sroa.6.099.i.i.i, 1           ; 3 uses
+  %i.jb = add nuw i64 %.sroa.6.099.i.i.i, 1       ; 2 uses
   %i.jc = getelementptr inbounds nuw i8, ptr %.sroa.0.0100.i.i.i, i64 360
   %i.jd = load i16, ptr %i.jc, align 8, !noalias !5049 ; 4 uses
   %i.je = zext i16 %i.jd to i64                   ; 10 uses
@@ -5753,8 +5753,6 @@ _RINvNtNtNtCs4wP2HXfJTCR_5alloc11collections5btree4node13move_to_sliceINtNtNtCsj
   %i.mq = getelementptr [8 x i8], ptr %i.mp, i64 %.sroa.06.0.i.i.i.i
   %i.mr = shl nuw nsw i64 %i.mj, 3
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.ml, ptr noundef nonnull readonly align 8 dereferenceable(1) %i.mq, i64 %i.mr, i1 false), !alias.scope !5118, !noalias !5094
-  %3 = icmp ne i64 %i.jb, 0
-  call void @llvm.assume(i1 %3)
   call void @llvm.experimental.noalias.scope.decl(metadata !5119)
   %xtraiter = and i64 %i.mj, 3                    ; 3 uses
   %i.ms = icmp ult i16 %i.mh, 3
@@ -5795,7 +5793,7 @@ bb.bd:                                            ; preds = %bb.bd, %_RINvNtNtNt
   %i.nl = trunc nuw nsw i64 %i.nd to i16
   %i.nm = getelementptr inbounds nuw i8, ptr %i.nk, i64 360
   store i16 %i.nl, ptr %i.nm, align 8, !noalias !5122
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_RINvMsW_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree4nodeINtB6_6HandleINtB6_7NodeRefNtNtB6_6marker3MutTjReERNtNtNtCsfu0rQaTkGUu_12clap_builder7builder7command7CommandNtB1n_8InternalENtB1n_2KVE5splitNtNtBc_5alloc6GlobalEB1P_.exit.i.i.i.i.unr-lcssa, label %bb.bd
 
@@ -6008,7 +6006,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph
   %i.i = getelementptr inbounds nuw i8, ptr %.sroa.0.01.i.i18, i64 16 ; 2 uses
-  %i.j = add i64 %.sroa.8.0.i.i17, 1
+  %i.j = add nuw i64 %.sroa.8.0.i.i17, 1
   %i.k = icmp eq ptr %i.i, %i.g
   br i1 %i.k, label %._crit_edge, label %.lr.ph
 
@@ -6411,7 +6409,7 @@ _RNvMs_NtCs4wP2HXfJTCR_5alloc3vecINtB4_3VecNtNtNtCsfu0rQaTkGUu_12clap_builder7bu
   %i.ch = getelementptr inbounds nuw i8, ptr %.sroa.0.018.i.i.i, i64 120
   store i64 %i.bj, ptr %i.ch, align 8, !noalias !5379
   %i.ci = getelementptr inbounds nuw i8, ptr %.sroa.0.018.i.i.i, i64 128 ; 3 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtNtCsfu0rQaTkGUu_12clap_builder7builder3str3StrEEB1e_.exit.i.loopexit.unr-lcssa, label %.lr.ph.i.i50.i
 
@@ -6814,7 +6812,7 @@ bb.bm:                                            ; preds = %bb.bm, %.new
   %..i.i.i.i.i.i.i.i.1 = call i64 @llvm.umax.i64(i64 %.val11.i.i.i.i.1, i64 %.sroa.0.0.i.i.i.i.i.i135)
   %.sroa.0.0.i.i.i.i.i.i135.1 = select i1 %i.rm, i64 %..i.i.i.i.i.i.i.i.1, i64 %.sroa.0.0.i.i.i.i.i.i135 ; 3 uses
   %i.rn = add nuw i64 %.sroa.04.0.i.i.i.i, 2      ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_RINvYINtNtNtNtCsj6eKBz9Db1c_4core4iter8adapters10filter_map9FilterMapINtNtB8_3map3MapINtNtNtBc_5slice4iter4IterNtNtCsfu0rQaTkGUu_12clap_builder7mkeymap3KeyENCNvMs4_B1N_NtB1N_7MKeyMap4keys0ENCNvMs3_NtNtB1P_7builder7commandNtB39_7Command11__build_selfs_0ENtNtNtBa_6traits8iterator8Iterator6reduceNvYjNtNtBc_3cmp3Ord3maxEB1P_.exit.loopexit.unr-lcssa, label %bb.bm
 
@@ -7217,7 +7215,7 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtNtC
 
 bb.g:                                             ; preds = %.lr.ph
   %i.aw = getelementptr inbounds nuw i8, ptr %.sroa.0.01.i.i49, i64 16 ; 2 uses
-  %i.ax = add i64 %.sroa.8.0.i.i48, 1
+  %i.ax = add nuw i64 %.sroa.8.0.i.i48, 1
   %i.ay = icmp eq ptr %i.aw, %i.au
   br i1 %i.ay, label %_RINvMNtNtCsfu0rQaTkGUu_12clap_builder7builder3extNtB3_10Extensions3getNtNtB5_7styling6StylesEB7_.exit, label %.lr.ph
 
@@ -7420,7 +7418,7 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %.lr.ph302
   %i.ar = getelementptr inbounds nuw i8, ptr %.sroa.0.01.i.i.i300, i64 16 ; 2 uses
-  %i.as = add i64 %.sroa.8.0.i.i.i299, 1
+  %i.as = add nuw i64 %.sroa.8.0.i.i.i299, 1
   %i.at = icmp eq ptr %i.ar, %i.ap
   br i1 %i.at, label %_RNvMNtNtCsfu0rQaTkGUu_12clap_builder6output5usageNtB2_5Usage3new.exit, label %.lr.ph302
 
@@ -7823,7 +7821,7 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %.lr.ph
   %i.as = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i3.i20, i64 16 ; 2 uses
-  %i.at = add i64 %.sroa.8.0.i.i19, 1
+  %i.at = add nuw i64 %.sroa.8.0.i.i19, 1
   %i.au = icmp eq ptr %i.as, %i.aq
   br i1 %i.au, label %._crit_edge, label %.lr.ph
 
@@ -8064,7 +8062,7 @@ bb.i:                                             ; preds = %bb.g
 
 bb.j:                                             ; preds = %.lr.ph307
   %i.av = getelementptr inbounds nuw i8, ptr %.sroa.0.01.i.i.i305, i64 16 ; 2 uses
-  %i.aw = add i64 %.sroa.8.0.i.i.i304, 1
+  %i.aw = add nuw i64 %.sroa.8.0.i.i.i304, 1
   %i.ax = icmp eq ptr %i.av, %i.at
   br i1 %i.ax, label %_RNvMNtNtCsfu0rQaTkGUu_12clap_builder6output5usageNtB2_5Usage3new.exit, label %.lr.ph307
 
@@ -8467,7 +8465,7 @@ bb.d:                                             ; preds = %bb.a
 
 bb.e:                                             ; preds = %.lr.ph
   %i.aa = getelementptr inbounds nuw i8, ptr %.sroa.0.01.i.i22, i64 16 ; 2 uses
-  %i.ab = add i64 %.sroa.8.0.i.i21, 1
+  %i.ab = add nuw i64 %.sroa.8.0.i.i21, 1
   %i.ac = icmp eq ptr %i.aa, %i.y
   br i1 %i.ac, label %_RINvMNtNtCsfu0rQaTkGUu_12clap_builder7builder3extNtB3_10Extensions3getNtNtB5_7styling6StylesEB7_.exit, label %.lr.ph
 
@@ -8870,7 +8868,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph
   %i.k = getelementptr inbounds nuw i8, ptr %.sroa.0.01.i.i.i7, i64 16 ; 2 uses
-  %i.l = add i64 %.sroa.8.0.i.i.i6, 1
+  %i.l = add nuw i64 %.sroa.8.0.i.i.i6, 1
   %i.m = icmp eq ptr %i.k, %i.i
   br i1 %i.m, label %_RNvMNtNtCsfu0rQaTkGUu_12clap_builder6output5usageNtB2_5Usage3new.exit, label %.lr.ph
 
@@ -9273,7 +9271,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph
   %i.j = getelementptr inbounds nuw i8, ptr %.sroa.0.01.i.i.i.i30, i64 16 ; 2 uses
-  %i.k = add i64 %.sroa.8.0.i.i.i.i29, 1
+  %i.k = add nuw i64 %.sroa.8.0.i.i.i.i29, 1
   %i.l = icmp eq ptr %i.j, %i.h
   br i1 %i.l, label %._crit_edge, label %.lr.ph
 
@@ -9335,7 +9333,7 @@ bb.g:                                             ; preds = %bb.e
 
 bb.h:                                             ; preds = %.lr.ph36
   %i.af = getelementptr inbounds nuw i8, ptr %.sroa.0.01.i.i.i15.i33, i64 16 ; 2 uses
-  %i.ag = add i64 %.sroa.8.0.i.i.i14.i32, 1
+  %i.ag = add nuw i64 %.sroa.8.0.i.i.i14.i32, 1
   %.not.not.not.i.not.not.not.not = icmp eq ptr %i.af, %i.h
   br i1 %.not.not.not.i.not.not.not.not, label %_RNvMs3_NtNtCsfu0rQaTkGUu_12clap_builder7builder7commandNtB5_7Command18get_max_term_width.exit.i, label %.lr.ph36
 
@@ -9408,7 +9406,7 @@ _RNvMs_NtNtCsfu0rQaTkGUu_12clap_builder6output13help_templateNtB4_12HelpTemplate
 
 bb.m:                                             ; preds = %.lr.ph39
   %i.bg = getelementptr inbounds nuw i8, ptr %.sroa.0.01.i.i38, i64 16 ; 2 uses
-  %i.bh = add i64 %.sroa.8.0.i.i37, 1
+  %i.bh = add nuw i64 %.sroa.8.0.i.i37, 1
   %i.bi = icmp eq ptr %i.bg, %i.h
   br i1 %i.bi, label %_RINvMNtNtCsfu0rQaTkGUu_12clap_builder7builder3extNtB3_10Extensions3getNtNtB5_7styling6StylesEB7_.exit, label %.lr.ph39
 
@@ -9811,7 +9809,7 @@ _RNCINvNtNtNtCsj6eKBz9Db1c_4core4iter8adapters3map8map_foldRNtNtNtCsfu0rQaTkGUu_
   store ptr %i.dd, ptr %.sroa.42.0..sroa_idx.i.i.i.i.i.i.i51.i, align 8, !noalias !8056
   %.sroa.53.0..sroa_idx.i.i.i.i.i.i.i52.i = getelementptr inbounds nuw i8, ptr %i.de, i64 16
   store i64 %.val12.i.i.i.i.i.i48.i, ptr %.sroa.53.0..sroa_idx.i.i.i.i.i.i.i52.i, align 8, !noalias !8056
-  %i.df = add i64 %i.cx, 1                        ; 2 uses
+  %i.df = add nuw i64 %i.cx, 1                    ; 2 uses
   %i.dg = icmp eq i64 %i.df, %i.aa
   br i1 %i.dg, label %_RNvXs_NtNtCs4wP2HXfJTCR_5alloc3vec21spec_from_iter_nestedINtB6_3VecNtNtNtCsaKJjC64KgbL_3std3ffi6os_str8OsStringEINtB4_18SpecFromIterNestedB13_INtNtNtNtCsj6eKBz9Db1c_4core4iter8adapters3map3MapINtNtNtB2p_5slice4iter4IterNtNtNtCsfu0rQaTkGUu_12clap_builder7builder6os_str5OsStrENvMB3x_B3v_12to_os_stringEE9from_iterB3B_.exit.i, label %.preheader.i.i.i46.i
 
@@ -10214,7 +10212,7 @@ _RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsfu0rQ
 
 bb.am:                                            ; preds = %.lr.ph379
   %i.kb = getelementptr inbounds nuw i8, ptr %.sroa.0.01.i.i.i378, i64 16 ; 2 uses
-  %i.kc = add i64 %.sroa.8.0.i.i.i377, 1
+  %i.kc = add nuw i64 %.sroa.8.0.i.i.i377, 1
   %i.kd = icmp eq ptr %i.kb, %i.jz
   br i1 %i.kd, label %_RNvMNtNtCsfu0rQaTkGUu_12clap_builder6output5usageNtB2_5Usage3new.exit, label %.lr.ph379
 
@@ -10335,7 +10333,7 @@ _RNvMNtNtCsfu0rQaTkGUu_12clap_builder6output5usageNtB2_5Usage3new.exit: ; preds 
 
 bb.ar:                                            ; preds = %.lr.ph382
   %i.li = getelementptr inbounds nuw i8, ptr %.sroa.0.01.i.i.i117381, i64 16 ; 2 uses
-  %i.lj = add i64 %.sroa.8.0.i.i.i116380, 1
+  %i.lj = add nuw i64 %.sroa.8.0.i.i.i116380, 1
   %i.lk = icmp eq ptr %i.li, %i.lg
   br i1 %i.lk, label %_RINvMNtNtCsfu0rQaTkGUu_12clap_builder7builder3extNtB3_10Extensions3getNtNtB5_7styling6StylesEB7_.exit.i, label %.lr.ph382
 
@@ -10690,7 +10688,7 @@ _RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsfu0rQ
 
 bb.bg:                                            ; preds = %.lr.ph391
   %i.nr = getelementptr inbounds nuw i8, ptr %.sroa.0.01.i.i.i138390, i64 16 ; 2 uses
-  %i.ns = add i64 %.sroa.8.0.i.i.i137389, 1
+  %i.ns = add nuw i64 %.sroa.8.0.i.i.i137389, 1
   %i.nt = icmp eq ptr %i.nr, %i.np
   br i1 %i.nt, label %_RNvMNtNtCsfu0rQaTkGUu_12clap_builder6output5usageNtB2_5Usage3new.exit147, label %.lr.ph391
 
@@ -10846,7 +10844,7 @@ _RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsfu0rQ
 
 bb.bp:                                            ; preds = %.lr.ph385
   %i.pc = getelementptr inbounds nuw i8, ptr %.sroa.0.01.i.i.i171384, i64 16 ; 2 uses
-  %i.pd = add i64 %.sroa.8.0.i.i.i170383, 1
+  %i.pd = add nuw i64 %.sroa.8.0.i.i.i170383, 1
   %i.pe = icmp eq ptr %i.pc, %i.pa
   br i1 %i.pe, label %_RNvMNtNtCsfu0rQaTkGUu_12clap_builder6output5usageNtB2_5Usage3new.exit180, label %.lr.ph385
 
@@ -11249,7 +11247,7 @@ _RNvXNtNtCs4wP2HXfJTCR_5alloc3vec21spec_from_iter_nestedINtB4_3VecNtNtB6_6string
 
 bb.cu:                                            ; preds = %.lr.ph388
   %i.vt = getelementptr inbounds nuw i8, ptr %.sroa.0.01.i.i.i213387, i64 16 ; 2 uses
-  %i.vu = add i64 %.sroa.8.0.i.i.i212386, 1
+  %i.vu = add nuw i64 %.sroa.8.0.i.i.i212386, 1
   %i.vv = icmp eq ptr %i.vt, %i.vr
   br i1 %i.vv, label %_RNvMNtNtCsfu0rQaTkGUu_12clap_builder6output5usageNtB2_5Usage3new.exit222, label %.lr.ph388
 
@@ -11402,7 +11400,7 @@ _RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsfu0rQ
 
 bb.dc:                                            ; preds = %.lr.ph
   %i.xe = getelementptr inbounds nuw i8, ptr %.sroa.0.01.i.i.i246373, i64 16 ; 2 uses
-  %i.xf = add i64 %.sroa.8.0.i.i.i245372, 1
+  %i.xf = add nuw i64 %.sroa.8.0.i.i.i245372, 1
   %i.xg = icmp eq ptr %i.xe, %i.xc
   br i1 %i.xg, label %_RNvMNtNtCsfu0rQaTkGUu_12clap_builder6output5usageNtB2_5Usage3new.exit255, label %.lr.ph
 
@@ -11519,7 +11517,7 @@ _RNvMNtNtCsfu0rQaTkGUu_12clap_builder6output5usageNtB2_5Usage3new.exit255: ; pre
 
 bb.dh:                                            ; preds = %.lr.ph376
   %i.yl = getelementptr inbounds nuw i8, ptr %.sroa.0.01.i.i.i277375, i64 16 ; 2 uses
-  %i.ym = add i64 %.sroa.8.0.i.i.i276374, 1
+  %i.ym = add nuw i64 %.sroa.8.0.i.i.i276374, 1
   %i.yn = icmp eq ptr %i.yl, %i.yj
   br i1 %i.yn, label %_RINvMNtNtCsfu0rQaTkGUu_12clap_builder7builder3extNtB3_10Extensions3getNtNtB5_7styling6StylesEB7_.exit.i282, label %.lr.ph376
 
@@ -11922,7 +11920,7 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6result6ResultuNtNtCsfu0rQaTkGUu
 
 bb.bz:                                            ; preds = %.lr.ph4580
   %i.xc = getelementptr inbounds nuw i8, ptr %.sroa.0.01.i.i.i5704579, i64 16 ; 2 uses
-  %i.xd = add i64 %.sroa.8.0.i.i.i5694578, 1
+  %i.xd = add nuw i64 %.sroa.8.0.i.i.i5694578, 1
   %i.xe = icmp eq ptr %i.xc, %i.xa
   br i1 %i.xe, label %_RNvMNtNtCsfu0rQaTkGUu_12clap_builder6output5usageNtB2_5Usage3new.exit578, label %.lr.ph4580
 
@@ -12077,7 +12075,7 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6result6ResultuNtNtCsfu0rQaTkGUu
 
 bb.ci:                                            ; preds = %.lr.ph4577
   %i.yp = getelementptr inbounds nuw i8, ptr %.sroa.0.01.i.i.i5384576, i64 16 ; 2 uses
-  %i.yq = add i64 %.sroa.8.0.i.i.i5374575, 1
+  %i.yq = add nuw i64 %.sroa.8.0.i.i.i5374575, 1
   %i.yr = icmp eq ptr %i.yp, %i.yn
   br i1 %i.yr, label %_RNvMNtNtCsfu0rQaTkGUu_12clap_builder6output5usageNtB2_5Usage3new.exit546, label %.lr.ph4577
 
@@ -12256,7 +12254,7 @@ bb.cq:                                            ; preds = %_RNvXs1_NtCs4wP2HXf
   %i.aar = getelementptr inbounds nuw i8, ptr %i.aaq, i64 8
   store i64 %.val12.i.i.i.i.i.i.1, ptr %i.aar, align 8, !noalias !8966
   %i.aas = add nuw i64 %i.aag, 2                  ; 2 uses
-  %niter5368.next.1 = add i64 %niter5368, 2       ; 2 uses
+  %niter5368.next.1 = add nuw i64 %niter5368, 2   ; 2 uses
   %niter5368.ncmp.1 = icmp eq i64 %niter5368.next.1, %unroll_iter5367
   br i1 %niter5368.ncmp.1, label %_RNvXs_NtNtCs4wP2HXfJTCR_5alloc3vec21spec_from_iter_nestedINtB6_3VecRNtNtNtCsaKJjC64KgbL_3std3ffi6os_str5OsStrEINtB4_18SpecFromIterNestedB13_INtNtNtNtCsj6eKBz9Db1c_4core4iter8adapters3map3MapINtNtNtB2n_5slice4iter4IterNtB16_8OsStringENCNvMCs3RZUOUhPFQ6_8clap_lexNtB3O_7RawArgs9remaining0EE9from_iterCsfu0rQaTkGUu_12clap_builder.exit.loopexit.unr-lcssa, label %.preheader.i.i.i
 
@@ -12659,7 +12657,7 @@ _RNvXs1_NtNtNtCsj6eKBz9Db1c_4core3ops8function5implsQNCNvMs2_NtNtCsfu0rQaTkGUu_1
 
 bb.eu:                                            ; preds = %.lr.ph4574
   %i.amx = getelementptr inbounds nuw i8, ptr %.sroa.0.01.i.i.i.i4594573, i64 16 ; 2 uses
-  %i.amy = add i64 %.sroa.8.0.i.i.i.i4584572, 1
+  %i.amy = add nuw i64 %.sroa.8.0.i.i.i.i4584572, 1
   %i.amz = icmp eq ptr %i.amx, %i.amv
   br i1 %i.amz, label %_RNvMNtNtCsfu0rQaTkGUu_12clap_builder6output5usageNtB2_5Usage3new.exit.i463, label %.lr.ph4574
 
@@ -13062,7 +13060,7 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6result6ResultuNtNtCsfu0rQaTkGUu
 
 bb.he:                                            ; preds = %.lr.ph4583
   %i.axd = getelementptr inbounds nuw i8, ptr %.sroa.0.01.i.i.i3804582, i64 16 ; 2 uses
-  %i.axe = add i64 %.sroa.8.0.i.i.i3794581, 1
+  %i.axe = add nuw i64 %.sroa.8.0.i.i.i3794581, 1
   %i.axf = icmp eq ptr %i.axd, %i.axb
   br i1 %i.axf, label %_RNvMNtNtCsfu0rQaTkGUu_12clap_builder6output5usageNtB2_5Usage3new.exit388, label %.lr.ph4583
 
@@ -13229,7 +13227,7 @@ _RNvMs5_NtNtCsfu0rQaTkGUu_12clap_builder7builder7commandNtB5_7Command15has_posit
 
 bb.hl:                                            ; preds = %.lr.ph4586
   %i.ayz = getelementptr inbounds nuw i8, ptr %.sroa.0.01.i.i.i3464585, i64 16 ; 2 uses
-  %i.aza = add i64 %.sroa.8.0.i.i.i3454584, 1
+  %i.aza = add nuw i64 %.sroa.8.0.i.i.i3454584, 1
   %i.azb = icmp eq ptr %i.ayz, %i.ayx
   br i1 %i.azb, label %_RNvMNtNtCsfu0rQaTkGUu_12clap_builder6output5usageNtB2_5Usage3new.exit354, label %.lr.ph4586
 
@@ -13632,7 +13630,7 @@ _RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsfu0rQ
 
 bb.jy:                                            ; preds = %.lr.ph4589
   %i.bld = getelementptr inbounds nuw i8, ptr %.sroa.0.01.i.i.i1984588, i64 16 ; 2 uses
-  %i.ble = add i64 %.sroa.8.0.i.i.i1974587, 1
+  %i.ble = add nuw i64 %.sroa.8.0.i.i.i1974587, 1
   %i.blf = icmp eq ptr %i.bld, %i.blb
   br i1 %i.blf, label %_RNvMNtNtCsfu0rQaTkGUu_12clap_builder6output5usageNtB2_5Usage3new.exit206, label %.lr.ph4589
 
@@ -13990,7 +13988,7 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6result6ResultuNtNtCsfu0rQaTkGUu
 
 bb.kz:                                            ; preds = %.lr.ph4595
   %i.bow = getelementptr inbounds nuw i8, ptr %.sroa.0.01.i.i.i1434594, i64 16 ; 2 uses
-  %i.box = add i64 %.sroa.8.0.i.i.i1424593, 1
+  %i.box = add nuw i64 %.sroa.8.0.i.i.i1424593, 1
   %i.boy = icmp eq ptr %i.bow, %i.bou
   br i1 %i.boy, label %_RNvMNtNtCsfu0rQaTkGUu_12clap_builder6output5usageNtB2_5Usage3new.exit151, label %.lr.ph4595
 
@@ -14393,7 +14391,7 @@ _RNvXNtNtCs4wP2HXfJTCR_5alloc3vec21spec_from_iter_nestedINtB4_3VecNtNtB6_6string
 
 bb.ni:                                            ; preds = %.lr.ph4592
   %i.bzp = getelementptr inbounds nuw i8, ptr %.sroa.0.01.i.i.i4591, i64 16 ; 2 uses
-  %i.bzq = add i64 %.sroa.8.0.i.i.i4590, 1
+  %i.bzq = add nuw i64 %.sroa.8.0.i.i.i4590, 1
   %i.bzr = icmp eq ptr %i.bzp, %i.bzn
   br i1 %i.bzr, label %_RNvMNtNtCsfu0rQaTkGUu_12clap_builder6output5usageNtB2_5Usage3new.exit, label %.lr.ph4592
 
@@ -14796,7 +14794,7 @@ bb.ow:                                            ; preds = %bb.ov
   %cond.i.i.i.i.i.i.i.3 = icmp ne i8 %.val.i.i.i.3, 0
   %i.cet = zext i1 %cond.i.i.i.i.i.i.i.3 to i64
   %i.ceu = add i64 %i.ceq, %i.cet                 ; 3 uses
-  %niter5381.next.3 = add i64 %niter5381, 4       ; 2 uses
+  %niter5381.next.3 = add nuw i64 %niter5381, 4   ; 2 uses
   %niter5381.ncmp.3 = icmp eq i64 %niter5381.next.3, %unroll_iter5380
   br i1 %niter5381.ncmp.3, label %_RNvXs1_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters6filterINtB5_6FilterINtNtNtCsfu0rQaTkGUu_12clap_builder4util8flat_map4IterNtNtB17_2id2IdNtNtNtNtB19_6parser7matches11matched_arg10MatchedArgENCNvMNtB2e_9validatorNtB34_9Validator8validate0ENtNtNtB9_6traits8iterator8Iterator5countB19_.exit.i.unr-lcssa, label %.lr.ph.i.i.i
 
@@ -15199,7 +15197,7 @@ bb.qs:                                            ; preds = %_RINvYINtNtNtCsj6eK
 
 bb.qt:                                            ; preds = %.lr.ph4599
   %i.cxk = getelementptr inbounds nuw i8, ptr %.sroa.0.01.i.i.i.i.i.i4597, i64 16 ; 2 uses
-  %i.cxl = add i64 %.sroa.8.0.i.i.i.i.i.i4596, 1
+  %i.cxl = add nuw i64 %.sroa.8.0.i.i.i.i.i.i4596, 1
   %i.cxm = icmp eq ptr %i.cxk, %i.cxi
   br i1 %i.cxm, label %_RNvMNtNtCsfu0rQaTkGUu_12clap_builder6output5usageNtB2_5Usage3new.exit.i.i.i, label %.lr.ph4599
 
@@ -15602,7 +15600,7 @@ _RNvXNtNtCs4wP2HXfJTCR_5alloc3vec21spec_from_iter_nestedINtB4_3VecNtNtB6_6string
 
 bb.uq:                                            ; preds = %.lr.ph4602
   %i.dsa = getelementptr inbounds nuw i8, ptr %.sroa.0.01.i.i.i.i4601, i64 16 ; 2 uses
-  %i.dsb = add i64 %.sroa.8.0.i.i.i.i4600, 1
+  %i.dsb = add nuw i64 %.sroa.8.0.i.i.i.i4600, 1
   %i.dsc = icmp eq ptr %i.dsa, %i.dry
   br i1 %i.dsc, label %_RNvMNtNtCsfu0rQaTkGUu_12clap_builder6output5usageNtB2_5Usage3new.exit.i, label %.lr.ph4602
 
@@ -16005,7 +16003,7 @@ _RNvXsC_NtCs4wP2HXfJTCR_5alloc6stringNtNtNtCsfu0rQaTkGUu_12clap_builder7builder3
 
 bb.ap:                                            ; preds = %.lr.ph380
   %i.fx = getelementptr inbounds nuw i8, ptr %.sroa.0.01.i.i.i.i379, i64 16 ; 2 uses
-  %i.fy = add i64 %.sroa.8.0.i.i.i.i378, 1
+  %i.fy = add nuw i64 %.sroa.8.0.i.i.i.i378, 1
   %i.fz = icmp eq ptr %i.fx, %i.fv
   br i1 %i.fz, label %_RNvMNtNtCsfu0rQaTkGUu_12clap_builder6output5usageNtB2_5Usage3new.exit.i, label %.lr.ph380
 
@@ -16292,7 +16290,7 @@ _RNvXsC_NtCs4wP2HXfJTCR_5alloc6stringNtNtNtCsfu0rQaTkGUu_12clap_builder7builder3
 
 bb.az:                                            ; preds = %.lr.ph377
   %i.hr = getelementptr inbounds nuw i8, ptr %.sroa.0.01.i.i.i43.i376, i64 16 ; 2 uses
-  %i.hs = add i64 %.sroa.8.0.i.i.i42.i375, 1
+  %i.hs = add nuw i64 %.sroa.8.0.i.i.i42.i375, 1
   %i.ht = icmp eq ptr %i.hr, %i.hp
   br i1 %i.ht, label %_RNvMNtNtCsfu0rQaTkGUu_12clap_builder6output5usageNtB2_5Usage3new.exit51.i, label %.lr.ph377
 
@@ -16632,7 +16630,7 @@ _RNvXsC_NtCs4wP2HXfJTCR_5alloc6stringNtNtNtCsfu0rQaTkGUu_12clap_builder7builder3
 
 bb.bp:                                            ; preds = %.lr.ph
   %i.kc = getelementptr inbounds nuw i8, ptr %.sroa.0.01.i.i.i129.i374, i64 16 ; 2 uses
-  %i.kd = add i64 %.sroa.8.0.i.i.i128.i373, 1
+  %i.kd = add nuw i64 %.sroa.8.0.i.i.i128.i373, 1
   %i.ke = icmp eq ptr %i.kc, %i.ka
   br i1 %i.ke, label %_RNvMNtNtCsfu0rQaTkGUu_12clap_builder6output5usageNtB2_5Usage3new.exit137.i, label %.lr.ph
 
@@ -17035,7 +17033,7 @@ _RNvMs_NtCs4wP2HXfJTCR_5alloc3vecINtB4_3VecNtNtNtCsfu0rQaTkGUu_12clap_builder4ut
   store i64 %.val12.i.i.i.i.i.1, ptr %i.ch, align 8, !noalias !12298
   %i.ci = add i64 %i.bx, 2                        ; 3 uses
   %i.cj = add nuw i64 %.sroa.01.0.i.i.i.i.i, 2    ; 2 uses
-  %niter122.next.1 = add i64 %niter122, 2         ; 2 uses
+  %niter122.next.1 = add nuw i64 %niter122, 2     ; 2 uses
   %niter122.ncmp.1 = icmp eq i64 %niter122.next.1, %unroll_iter121
   br i1 %niter122.ncmp.1, label %_RNvNtNtCsfu0rQaTkGUu_12clap_builder6parser9validator27gather_arg_direct_conflicts.exit.loopexit.unr-lcssa, label %.preheader.i.i
 
@@ -17095,7 +17093,7 @@ _RNvMs_NtCs4wP2HXfJTCR_5alloc3vecINtB4_3VecNtNtNtCsfu0rQaTkGUu_12clap_builder4ut
   store i64 %.val12.i.i.i.i25.i.1, ptr %i.df, align 8, !noalias !12321
   %i.dg = add i64 %i.cv, 2                        ; 3 uses
   %i.dh = add nuw i64 %.sroa.01.0.i.i.i.i23.i, 2  ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_RINvMsk_NtCs4wP2HXfJTCR_5alloc3vecINtB6_3VecNtNtNtCsfu0rQaTkGUu_12clap_builder4util2id2IdE14extend_trustedINtNtNtNtCsj6eKBz9Db1c_4core4iter8adapters6cloned6ClonedINtNtNtB1P_5slice4iter4IterBG_EEEBM_.exit28.i.loopexit.unr-lcssa, label %.preheader.i22.i
 
@@ -17498,7 +17496,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %.lr.ph
   %i.r = getelementptr inbounds nuw i8, ptr %.sroa.0.01.i.i.i.i11, i64 16 ; 2 uses
-  %i.s = add i64 %.sroa.8.0.i.i.i.i10, 1
+  %i.s = add nuw i64 %.sroa.8.0.i.i.i.i10, 1
   %i.t = icmp eq ptr %i.r, %i.p
   br i1 %i.t, label %_RNCNvXsF_NtNtCsfu0rQaTkGUu_12clap_builder7builder12value_parserNtB7_17FalseyValueParserNtB7_16TypedValueParser9parse_ref0Bb_.exit, label %.lr.ph
 
@@ -17727,7 +17725,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %.lr.ph
   %i.w = getelementptr inbounds nuw i8, ptr %.sroa.0.01.i.i.i.i19, i64 16 ; 2 uses
-  %i.x = add i64 %.sroa.8.0.i.i.i.i18, 1
+  %i.x = add nuw i64 %.sroa.8.0.i.i.i.i18, 1
   %i.y = icmp eq ptr %i.w, %i.u
   br i1 %i.y, label %_RNCNvXsI_NtNtCsfu0rQaTkGUu_12clap_builder7builder12value_parserNtB7_18BoolishValueParserNtB7_16TypedValueParser9parse_ref0Bb_.exit, label %.lr.ph
 
@@ -18056,7 +18054,7 @@ bb.d:                                             ; preds = %bb.b
 
 bb.e:                                             ; preds = %.lr.ph
   %i.w = getelementptr inbounds nuw i8, ptr %.sroa.0.01.i.i.i.i36, i64 16 ; 2 uses
-  %i.x = add i64 %.sroa.8.0.i.i.i.i35, 1
+  %i.x = add nuw i64 %.sroa.8.0.i.i.i.i35, 1
   %i.y = icmp eq ptr %i.w, %i.u
   br i1 %i.y, label %_RNCNvXsL_NtNtCsfu0rQaTkGUu_12clap_builder7builder12value_parserNtB7_25NonEmptyStringValueParserNtB7_16TypedValueParser9parse_refs_0Bb_.exit, label %.lr.ph
 
@@ -18459,7 +18457,7 @@ bb.s:                                             ; preds = %bb.r, %_RNCNvXsS_Nt
 
 bb.t:                                             ; preds = %.lr.ph
   %i.am = getelementptr inbounds nuw i8, ptr %.sroa.0.01.i.i.i40, i64 16 ; 2 uses
-  %i.an = add i64 %.sroa.8.0.i.i.i39, 1
+  %i.an = add nuw i64 %.sroa.8.0.i.i.i39, 1
   %i.ao = icmp eq ptr %i.am, %i.ak
   br i1 %i.ao, label %_RNvMNtNtCsfu0rQaTkGUu_12clap_builder6output5usageNtB2_5Usage3new.exit, label %.lr.ph
 
@@ -18862,7 +18860,7 @@ bb.b:                                             ; preds = %_RNvMNtCs4wP2HXfJTC
 
 bb.c:                                             ; preds = %.lr.ph
   %i.s = getelementptr inbounds nuw i8, ptr %.sroa.0.01.i.i.i.i80, i64 16 ; 2 uses
-  %i.t = add i64 %.sroa.8.0.i.i.i.i79, 1
+  %i.t = add nuw i64 %.sroa.8.0.i.i.i.i79, 1
   %i.u = icmp eq ptr %i.s, %i.q
   br i1 %i.u, label %_RNvMNtNtCsfu0rQaTkGUu_12clap_builder6output5usageNtB2_5Usage3new.exit.i, label %.lr.ph
 
@@ -19265,7 +19263,7 @@ bb.b:                                             ; preds = %_RNvMNtCs4wP2HXfJTC
 
 bb.c:                                             ; preds = %.lr.ph
   %i.y = getelementptr inbounds nuw i8, ptr %.sroa.0.01.i.i.i.i129, i64 16 ; 2 uses
-  %i.z = add i64 %.sroa.8.0.i.i.i.i128, 1
+  %i.z = add nuw i64 %.sroa.8.0.i.i.i.i128, 1
   %i.aa = icmp eq ptr %i.y, %i.w
   br i1 %i.aa, label %_RNvMNtNtCsfu0rQaTkGUu_12clap_builder6output5usageNtB2_5Usage3new.exit.i, label %.lr.ph
 
@@ -19668,7 +19666,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %.lr.ph
   %i.ap = getelementptr inbounds nuw i8, ptr %.sroa.0.01.i.i.i.i196, i64 16 ; 2 uses
-  %i.aq = add i64 %.sroa.8.0.i.i.i.i195, 1
+  %i.aq = add nuw i64 %.sroa.8.0.i.i.i.i195, 1
   %i.ar = icmp eq ptr %i.ap, %i.an
   br i1 %i.ar, label %_RNCNvXsu_NtNtCsfu0rQaTkGUu_12clap_builder7builder12value_parserINtB7_20RangedI64ValueParserhENtB7_16TypedValueParser9parse_refs0_0Bb_.exit, label %.lr.ph
 
@@ -20071,7 +20069,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %.lr.ph
   %i.ak = getelementptr inbounds nuw i8, ptr %.sroa.0.01.i.i.i.i174, i64 16 ; 2 uses
-  %i.al = add i64 %.sroa.8.0.i.i.i.i173, 1
+  %i.al = add nuw i64 %.sroa.8.0.i.i.i.i173, 1
   %i.am = icmp eq ptr %i.ak, %i.ai
   br i1 %i.am, label %_RNCNvXsu_NtNtCsfu0rQaTkGUu_12clap_builder7builder12value_parserNtB7_20RangedI64ValueParserNtB7_16TypedValueParser9parse_refs0_0Bb_.exit, label %.lr.ph
 

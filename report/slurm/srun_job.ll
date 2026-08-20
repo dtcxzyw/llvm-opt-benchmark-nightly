@@ -201,7 +201,7 @@ bb.cj:                                            ; preds = %bb.ci, %bb.ch
 
 bb.ck:                                            ; preds = %bb.cj
   call fastcc void @_print_job_information(ptr noundef %i.fr)
-  %i.fw = add nsw i32 %.2189389, 1                ; 12 uses
+  %i.fw = add nsw i32 %.2189389, 1                ; 10 uses
   call fastcc void @_set_env_vars(ptr noundef %i.fr, i32 noundef %i.fw)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i) #15
   %i.fx = load ptr, ptr %i.fr, align 8
@@ -213,9 +213,7 @@ bb.cl:                                            ; preds = %bb.ck
   store ptr null, ptr %i.h, align 8
   %i.fy = load i8, ptr @local_het_step, align 1, !range !8, !noundef !9
   %i.fz = trunc nuw i8 %i.fy to i1
-  %5 = icmp eq i32 %i.fw, -1
-  %or.cond.i.i = or i1 %5, %i.fz
-  br i1 %or.cond.i.i, label %bb.cm, label %bb.cn
+  br i1 %i.fz, label %bb.cm, label %bb.cn
 
 bb.cm:                                            ; preds = %bb.cl
   %i.ga = call ptr @xstrdup(ptr noundef nonnull @.str.84) #15
@@ -254,9 +252,7 @@ bb.cr:                                            ; preds = %bb.cq, %bb.ck
   store ptr null, ptr %i.g, align 8
   %i.gi = load i8, ptr @local_het_step, align 1, !range !8, !noundef !9
   %i.gj = trunc nuw i8 %i.gi to i1
-  %6 = icmp eq i32 %i.fw, -1                      ; 5 uses
-  %or.cond.i22.i = or i1 %6, %i.gj
-  br i1 %or.cond.i22.i, label %bb.cs, label %bb.ct
+  br i1 %i.gj, label %bb.cs, label %bb.ct
 
 bb.cs:                                            ; preds = %bb.cr
   %i.gk = call ptr @xstrdup(ptr noundef nonnull @.str.85) #15
@@ -293,8 +289,7 @@ bb.cw:                                            ; preds = %bb.cv, %bb.cu, %_bu
   store ptr null, ptr %i.f, align 8
   %i.gt = load i8, ptr @local_het_step, align 1, !range !8, !noundef !9
   %i.gu = trunc nuw i8 %i.gt to i1
-  %or.cond.i25.i = or i1 %6, %i.gu
-  br i1 %or.cond.i25.i, label %bb.cx, label %bb.cy
+  br i1 %i.gu, label %bb.cx, label %bb.cy
 
 bb.cx:                                            ; preds = %bb.cw
   %i.gv = call ptr @xstrdup(ptr noundef nonnull @.str.86) #15
@@ -331,8 +326,7 @@ bb.db:                                            ; preds = %bb.da, %bb.cz, %_bu
   store ptr null, ptr %i.e, align 8
   %i.he = load i8, ptr @local_het_step, align 1, !range !8, !noundef !9
   %i.hf = trunc nuw i8 %i.he to i1
-  %or.cond.i28.i = or i1 %6, %i.hf
-  br i1 %or.cond.i28.i, label %bb.dc, label %bb.dd
+  br i1 %i.hf, label %bb.dc, label %bb.dd
 
 bb.dc:                                            ; preds = %bb.db
   %i.hg = call ptr @xstrdup(ptr noundef nonnull @.str.87) #15
@@ -375,8 +369,7 @@ bb.dh:                                            ; preds = %bb.dg
   store ptr null, ptr %i.d, align 8
   %i.hr = load i8, ptr @local_het_step, align 1, !range !8, !noundef !9
   %i.hs = trunc nuw i8 %i.hr to i1
-  %or.cond.i31.i = or i1 %6, %i.hs
-  br i1 %or.cond.i31.i, label %bb.di, label %bb.dj
+  br i1 %i.hs, label %bb.di, label %bb.dj
 
 bb.di:                                            ; preds = %bb.dh
   %i.ht = call ptr @xstrdup(ptr noundef nonnull @.str.88) #15
@@ -421,8 +414,7 @@ bb.do:                                            ; preds = %bb.dn
   store ptr null, ptr %i.c, align 8
   %i.id = load i8, ptr @local_het_step, align 1, !range !8, !noundef !9
   %i.ie = trunc nuw i8 %i.id to i1
-  %or.cond.i34.i = or i1 %6, %i.ie
-  br i1 %or.cond.i34.i, label %bb.dp, label %bb.dq
+  br i1 %i.ie, label %bb.dp, label %bb.dq
 
 bb.dp:                                            ; preds = %bb.do
   %i.if = call ptr @xstrdup(ptr noundef nonnull @.str.89) #15

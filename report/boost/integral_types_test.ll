@@ -203,7 +203,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit56: ; preds = %_ZN
   br label %bb.u
 
 bb.j:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit56, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit72
-  %storemerge201 = phi i16 [ -32768, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit56 ], [ %27, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit72 ] ; 3 uses
+  %indvars.iv = phi i32 [ 32768, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit56 ], [ %indvars.iv.next, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit72 ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %17) #32
   call void @llvm.experimental.noalias.scope.decl(metadata !443)
   store ptr %i.bz, ptr %17, align 8, !tbaa !27, !alias.scope !443
@@ -213,9 +213,7 @@ bb.j:                                             ; preds = %_ZNSt7__cxx1112basi
   store ptr %8, ptr %i.cb, align 8, !tbaa !154, !noalias !443
   store ptr %i.cd, ptr %i.cc, align 8, !tbaa !156, !noalias !443
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #32, !noalias !443
-  %25 = call noundef i16 @llvm.abs.i16(i16 %storemerge201, i1 false)
-  %26 = zext i16 %25 to i32
-  store i32 %26, ptr %7, align 8, !tbaa !157, !noalias !443
+  store i32 %indvars.iv, ptr %7, align 8, !tbaa !157, !noalias !443
   store ptr %i.cd, ptr %i.ce, align 8, !tbaa !159, !noalias !443
   store i8 48, ptr %i.cf, align 8, !tbaa !160, !noalias !443
   store i32 48, ptr %i.cg, align 4, !tbaa !161, !noalias !443
@@ -250,7 +248,8 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 _ZN5boost12lexical_castINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEsEET_RKT0_.exit64: ; preds = %_ZN5boost6detail22lexical_converter_implINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEsE11try_convertERKsRS7_.exit.i.i62
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #32, !noalias !443
   call void @llvm.lifetime.start.p0(ptr nonnull %18) #32
-  invoke void @_Z6to_strIcsENSt7__cxx1112basic_stringIT_St11char_traitsIS2_ESaIS2_EEET0_(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %18, i16 noundef signext %storemerge201)
+  %25 = trunc nuw i32 %indvars.iv to i16
+  invoke void @_Z6to_strIcsENSt7__cxx1112basic_stringIT_St11char_traitsIS2_ESaIS2_EEET0_(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %18, i16 noundef signext %25)
           to label %bb.k unwind label %bb.s
 
 bb.k:                                             ; preds = %_ZN5boost12lexical_castINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEsEET_RKT0_.exit64
@@ -300,8 +299,8 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i70
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit72: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit69, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i70
   call void @llvm.lifetime.end.p0(ptr nonnull %17) #32
-  %27 = add nuw nsw i16 %storemerge201, 1         ; 2 uses
-  %exitcond.not = icmp eq i16 %27, -32268
+  %indvars.iv.next = add nuw nsw i32 %indvars.iv, 1 ; 2 uses
+  %exitcond.not = icmp eq i32 %indvars.iv.next, 33268
   br i1 %exitcond.not, label %.preheader173, label %bb.j, !llvm.loop !446
 
 bb.o:                                             ; preds = %_ZN5boost12lexical_castINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEsEET_RKT0_.exit
@@ -704,7 +703,7 @@ _ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEED2Ev.exit55: ; preds = %_ZN
   br label %bb.u
 
 bb.j:                                             ; preds = %_ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEED2Ev.exit55, %_ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEED2Ev.exit70
-  %storemerge196 = phi i16 [ -32768, %_ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEED2Ev.exit55 ], [ %27, %_ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEED2Ev.exit70 ] ; 3 uses
+  %indvars.iv = phi i32 [ 32768, %_ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEED2Ev.exit55 ], [ %indvars.iv.next, %_ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEED2Ev.exit70 ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %17) #32
   call void @llvm.experimental.noalias.scope.decl(metadata !534)
   store ptr %i.cj, ptr %17, align 8, !tbaa !165, !alias.scope !534
@@ -714,9 +713,7 @@ bb.j:                                             ; preds = %_ZNSt7__cxx1112basi
   store ptr %8, ptr %i.cl, align 8, !tbaa !172, !noalias !534
   store ptr %i.cn, ptr %i.cm, align 8, !tbaa !174, !noalias !534
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #32, !noalias !534
-  %25 = call noundef i16 @llvm.abs.i16(i16 %storemerge196, i1 false)
-  %26 = zext i16 %25 to i32
-  store i32 %26, ptr %7, align 8, !tbaa !175, !noalias !534
+  store i32 %indvars.iv, ptr %7, align 8, !tbaa !175, !noalias !534
   store ptr %i.cn, ptr %i.co, align 8, !tbaa !177, !noalias !534
   store i32 48, ptr %i.cp, align 8, !tbaa !178, !noalias !534
   store i32 48, ptr %i.cq, align 4, !tbaa !179, !noalias !534
@@ -753,7 +750,8 @@ _ZNKSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE11_M_is_localEv.exit.i.i.i
 _ZN5boost12lexical_castINSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEEEsEET_RKT0_.exit63: ; preds = %_ZN5boost6detail22lexical_converter_implINSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEEEsE11try_convertERKsRS7_.exit.i.i61
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #32, !noalias !534
   call void @llvm.lifetime.start.p0(ptr nonnull %18) #32
-  invoke void @_Z6to_strIwsENSt7__cxx1112basic_stringIT_St11char_traitsIS2_ESaIS2_EEET0_(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string.9") align 8 %18, i16 noundef signext %storemerge196)
+  %25 = trunc nuw i32 %indvars.iv to i16
+  invoke void @_Z6to_strIwsENSt7__cxx1112basic_stringIT_St11char_traitsIS2_ESaIS2_EEET0_(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string.9") align 8 %18, i16 noundef signext %25)
           to label %bb.k unwind label %bb.s
 
 bb.k:                                             ; preds = %_ZN5boost12lexical_castINSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEEEsEET_RKT0_.exit63
@@ -805,8 +803,8 @@ _ZNKSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE11_M_is_localEv.exit.i.i68
 
 _ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEED2Ev.exit70: ; preds = %_ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEED2Ev.exit67, %_ZNKSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE11_M_is_localEv.exit.i.i68
   call void @llvm.lifetime.end.p0(ptr nonnull %17) #32
-  %27 = add nuw nsw i16 %storemerge196, 1         ; 2 uses
-  %exitcond.not = icmp eq i16 %27, -32268
+  %indvars.iv.next = add nuw nsw i32 %indvars.iv, 1 ; 2 uses
+  %exitcond.not = icmp eq i32 %indvars.iv.next, 33268
   br i1 %exitcond.not, label %.preheader168, label %bb.j, !llvm.loop !537
 
 bb.o:                                             ; preds = %_ZN5boost12lexical_castINSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEEEsEET_RKT0_.exit
@@ -1209,8 +1207,7 @@ bb.j:                                             ; preds = %_ZNSt7__cxx1112basi
   store ptr %8, ptr %i.cb, align 8, !tbaa !824, !noalias !932
   store ptr %i.cd, ptr %i.cc, align 8, !tbaa !826, !noalias !932
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #32, !noalias !932
-  %25 = call noundef i32 @llvm.abs.i32(i32 %storemerge201, i1 false)
-  store i32 %25, ptr %7, align 8, !tbaa !827, !noalias !932
+  store i32 %storemerge201, ptr %7, align 8, !tbaa !827, !noalias !932
   store ptr %i.cd, ptr %i.ce, align 8, !tbaa !829, !noalias !932
   store i8 48, ptr %i.cf, align 8, !tbaa !830, !noalias !932
   store i32 48, ptr %i.cg, align 4, !tbaa !831, !noalias !932
@@ -1613,8 +1610,7 @@ bb.j:                                             ; preds = %_ZNSt7__cxx1112basi
   store ptr %8, ptr %i.cl, align 8, !tbaa !835, !noalias !1010
   store ptr %i.cn, ptr %i.cm, align 8, !tbaa !837, !noalias !1010
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #32, !noalias !1010
-  %25 = call noundef i32 @llvm.abs.i32(i32 %storemerge196, i1 false)
-  store i32 %25, ptr %7, align 8, !tbaa !838, !noalias !1010
+  store i32 %storemerge196, ptr %7, align 8, !tbaa !838, !noalias !1010
   store ptr %i.cn, ptr %i.co, align 8, !tbaa !840, !noalias !1010
   store i32 48, ptr %i.cp, align 8, !tbaa !841, !noalias !1010
   store i32 48, ptr %i.cq, align 4, !tbaa !842, !noalias !1010
@@ -2017,8 +2013,7 @@ bb.j:                                             ; preds = %_ZNSt7__cxx1112basi
   store ptr %8, ptr %i.cb, align 8, !tbaa !1273, !noalias !1387
   store ptr %i.cd, ptr %i.cc, align 8, !tbaa !1275, !noalias !1387
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #32, !noalias !1387
-  %25 = call noundef i64 @llvm.abs.i64(i64 %storemerge201, i1 false)
-  store i64 %25, ptr %7, align 8, !tbaa !1276, !noalias !1387
+  store i64 %storemerge201, ptr %7, align 8, !tbaa !1276, !noalias !1387
   store ptr %i.cd, ptr %i.ce, align 8, !tbaa !1278, !noalias !1387
   store i8 48, ptr %i.cf, align 8, !tbaa !1279, !noalias !1387
   store i32 48, ptr %i.cg, align 4, !tbaa !1280, !noalias !1387
@@ -2421,8 +2416,7 @@ bb.j:                                             ; preds = %_ZNSt7__cxx1112basi
   store ptr %8, ptr %i.cl, align 8, !tbaa !1284, !noalias !1472
   store ptr %i.cn, ptr %i.cm, align 8, !tbaa !1286, !noalias !1472
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #32, !noalias !1472
-  %25 = call noundef i64 @llvm.abs.i64(i64 %storemerge196, i1 false)
-  store i64 %25, ptr %7, align 8, !tbaa !1287, !noalias !1472
+  store i64 %storemerge196, ptr %7, align 8, !tbaa !1287, !noalias !1472
   store ptr %i.cn, ptr %i.co, align 8, !tbaa !1289, !noalias !1472
   store i32 48, ptr %i.cp, align 8, !tbaa !1290, !noalias !1472
   store i32 48, ptr %i.cq, align 4, !tbaa !1291, !noalias !1472
@@ -2825,8 +2819,7 @@ bb.j:                                             ; preds = %_ZNSt7__cxx1112basi
   store ptr %8, ptr %i.cb, align 8, !tbaa !1273, !noalias !1839
   store ptr %i.cd, ptr %i.cc, align 8, !tbaa !1275, !noalias !1839
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #32, !noalias !1839
-  %25 = call noundef i64 @llvm.abs.i64(i64 %storemerge201, i1 false)
-  store i64 %25, ptr %7, align 8, !tbaa !1737, !noalias !1839
+  store i64 %storemerge201, ptr %7, align 8, !tbaa !1737, !noalias !1839
   store ptr %i.cd, ptr %i.ce, align 8, !tbaa !1739, !noalias !1839
   store i8 48, ptr %i.cf, align 8, !tbaa !1740, !noalias !1839
   store i32 48, ptr %i.cg, align 4, !tbaa !1741, !noalias !1839
@@ -3229,8 +3222,7 @@ bb.j:                                             ; preds = %_ZNSt7__cxx1112basi
   store ptr %8, ptr %i.cl, align 8, !tbaa !1284, !noalias !1924
   store ptr %i.cn, ptr %i.cm, align 8, !tbaa !1286, !noalias !1924
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #32, !noalias !1924
-  %25 = call noundef i64 @llvm.abs.i64(i64 %storemerge196, i1 false)
-  store i64 %25, ptr %7, align 8, !tbaa !1745, !noalias !1924
+  store i64 %storemerge196, ptr %7, align 8, !tbaa !1745, !noalias !1924
   store ptr %i.cn, ptr %i.co, align 8, !tbaa !1747, !noalias !1924
   store i32 48, ptr %i.cp, align 8, !tbaa !1748, !noalias !1924
   store i32 48, ptr %i.cq, align 4, !tbaa !1749, !noalias !1924

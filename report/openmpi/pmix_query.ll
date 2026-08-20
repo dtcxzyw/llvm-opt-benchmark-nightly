@@ -201,19 +201,14 @@ bb.f:                                             ; preds = %.preheader70
   br i1 %i.x, label %.preheader, label %bb.h
 
 .preheader:                                       ; preds = %bb.f, %.preheader
-  %.0 = phi i64 [ %i.ab, %.preheader ], [ 0, %bb.f ] ; 4 uses
+  %.0 = phi i64 [ %i.ab, %.preheader ], [ 0, %bb.f ] ; 3 uses
   %i.y = load ptr, ptr %i.t, align 8, !tbaa !49
   %i.z = getelementptr inbounds nuw [552 x i8], ptr %i.y, i64 %.0
   %i.aa = tail call zeroext i1 @PMIx_Info_is_end(ptr noundef %i.z) #13
-  %4 = icmp eq i64 %.0, -1                        ; 2 uses
-  %.not69 = or i1 %4, %i.aa
   %i.ab = add nuw i64 %.0, 1
-  br i1 %.not69, label %5, label %.preheader, !llvm.loop !167
+  br i1 %i.aa, label %bb.g, label %.preheader, !llvm.loop !167
 
-5:                                                ; preds = %.preheader
-  br i1 %4, label %.loopexit71, label %bb.g
-
-bb.g:                                             ; preds = %5
+bb.g:                                             ; preds = %.preheader
   store i64 %.0, ptr %i.v, align 8, !tbaa !46
   br label %bb.h
 
@@ -333,8 +328,8 @@ bb.n:                                             ; preds = %.lr.ph75, %bb.n
   tail call void @event_active(ptr noundef nonnull %i.bx, i32 noundef 4, i16 noundef signext 1) #13
   br label %.loopexit71
 
-.loopexit71:                                      ; preds = %5, %bb.d, %bb.e, %._crit_edge79
-  %.062 = phi i32 [ -31, %bb.d ], [ 0, %._crit_edge79 ], [ -27, %bb.e ], [ -27, %5 ]
+.loopexit71:                                      ; preds = %bb.d, %bb.e, %._crit_edge79
+  %.062 = phi i32 [ -27, %bb.e ], [ 0, %._crit_edge79 ], [ -31, %bb.d ]
   ret i32 %.062
 }
 

@@ -201,10 +201,9 @@ bb.s:                                             ; preds = %bb.s, %bb.q
   %i.bu = load ptr, ptr %i.bn, align 8
   %i.bv = getelementptr inbounds nuw [4 x i8], ptr %i.bu, i64 %indvars.iv.i.a
   store i32 -2, ptr %i.bv, align 4
-  %indvars.iv.next.i.a = add i64 %indvars.iv.i.a, 1 ; 2 uses
-  %1 = and i64 %indvars.iv.next.i.a, 4294967295
-  %2 = icmp samesign ugt i64 %i.ax, %1
-  br i1 %2, label %bb.s, label %bb.r, !llvm.loop !8
+  %indvars.iv.next.i.a = add nuw nsw i64 %indvars.iv.i.a, 1 ; 2 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next.i.a, %i.ax
+  br i1 %exitcond.not, label %bb.r, label %bb.s, !llvm.loop !8
 
 bb.t:                                             ; preds = %bb.r
   %i.bw = icmp sgt i32 %i.bt, 0
@@ -607,9 +606,9 @@ bb.c:                                             ; preds = %._crit_edge, %bb.b
   br i1 %.not69.i, label %._crit_edge.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.preheader.i
-  %i.au = trunc nuw i64 %indvars.iv97.i to i16    ; 3 uses
-  %2 = add i16 %i.au, 2
-  %3 = trunc nuw i64 %.pre110.i to i16
+  %i.au = trunc nuw i64 %.pre110.i to i16
+  %2 = trunc nuw i64 %indvars.iv97.i to i16       ; 3 uses
+  %3 = add i16 %2, 2
   br label %bb.d
 
 ._crit_edge54.loopexit72.i:                       ; preds = %._crit_edge.i
@@ -746,7 +745,7 @@ bb.j:                                             ; preds = %bb.i
   br i1 %i.ct, label %.preheader179.us.i.i, label %.thread167.i.loopexit71.i
 
 .preheader179.lr.ph.split.i.i:                    ; preds = %.preheader179.lr.ph.i.i
-  %umax.i.i = call i16 @llvm.umax.i16(i16 %i.cc, i16 %2)
+  %umax.i.i = call i16 @llvm.umax.i16(i16 %i.cc, i16 %3)
   br label %.thread167.i.i
 
 .thread167.i.loopexit71.i:                        ; preds = %..critedge.loopexit_crit_edge.us.i.i
@@ -758,7 +757,7 @@ bb.j:                                             ; preds = %bb.i
   br label %.thread167.i.i
 
 .thread167.i.i:                                   ; preds = %.thread167.i.loopexit.i, %.thread167.i.loopexit71.i, %.preheader179.lr.ph.split.i.i, %.thread.i.i
-  %.0119184.i.i = phi i16 [ %umax.i.i, %.preheader179.lr.ph.split.i.i ], [ %3, %.thread.i.i ], [ %i.cu, %.thread167.i.loopexit71.i ], [ %i.cv, %.thread167.i.loopexit.i ]
+  %.0119184.i.i = phi i16 [ %umax.i.i, %.preheader179.lr.ph.split.i.i ], [ %i.au, %.thread.i.i ], [ %i.cu, %.thread167.i.loopexit71.i ], [ %i.cv, %.thread167.i.loopexit.i ]
   %.0119184.fr.i.i = freeze i16 %.0119184.i.i     ; 2 uses
   %i.cw = zext i16 %.0119184.fr.i.i to i64        ; 6 uses
   %i.cx = icmp samesign ult i64 %indvars.iv97.i, %i.cw
@@ -906,13 +905,13 @@ bb.p:                                             ; preds = %bb.o, %._crit_edge2
   %i.en = trunc nuw i64 %indvars.iv.i to i16      ; 2 uses
   store i16 %i.en, ptr %i.em, align 8
   %i.eo = getelementptr inbounds nuw i8, ptr %i.em, i64 2
-  store i16 %i.au, ptr %i.eo, align 2
+  store i16 %2, ptr %i.eo, align 2
   %i.ep = getelementptr inbounds nuw i8, ptr %i.em, i64 4
   store i16 %i.ar, ptr %i.ep, align 4
   %i.eq = sub i16 %indvars124.i, %i.en
   %i.er = getelementptr inbounds nuw i8, ptr %i.em, i64 6
   store i16 %i.eq, ptr %i.er, align 2
-  %i.es = sub i16 %.0119184.fr.i.i, %i.au
+  %i.es = sub i16 %.0119184.fr.i.i, %2
   %i.et = getelementptr inbounds nuw i8, ptr %i.em, i64 8
   store i16 %i.es, ptr %i.et, align 8
   %i.eu = sub i16 %.us-phi210.i.i, %i.ar

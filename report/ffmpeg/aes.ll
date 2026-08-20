@@ -64,8 +64,7 @@ bb.a:
   %i.j = add nuw nsw i32 %i.b, 7                  ; 2 uses
   %i.k = shl nuw nsw i32 %i.j, 4
   %i.l = zext i32 %i.b to i64                     ; 2 uses
-  %i.m = getelementptr [4 x i8], ptr %i.a, i64 %i.l ; 4 uses
-  %4 = getelementptr i8, ptr %i.m, i64 -4         ; 2 uses
+  %i.m = getelementptr [4 x i8], ptr %i.a, i64 %i.l ; 5 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
   %.not75 = icmp eq i32 %i.b, 8
   %i.o = zext nneg i32 %i.k to i64                ; 2 uses
@@ -118,7 +117,7 @@ bb.a:
   %i.at = zext i8 %i.as to i64
   %i.au = getelementptr inbounds nuw i8, ptr @sbox, i64 %i.at
   %i.av = load i8, ptr %i.au, align 1, !tbaa !13
-  %i.aw = load i8, ptr %4, align 4, !tbaa !13
+  %i.aw = load i8, ptr %i.m, align 4, !tbaa !13
   %i.ax = zext i8 %i.aw to i64
   %i.ay = getelementptr inbounds nuw i8, ptr @sbox, i64 %i.ax
   %i.az = getelementptr inbounds nuw i8, ptr @rcon, i64 %indvars.iv173
@@ -220,7 +219,7 @@ bb.a:
   %i.dw = load i8, ptr %i.t, align 2, !tbaa !13
   %i.dx = xor i8 %i.dw, %i.dv
   store i8 %i.dx, ptr %i.t, align 2, !tbaa !13
-  %i.dy = load i8, ptr %4, align 4, !tbaa !13
+  %i.dy = load i8, ptr %i.m, align 4, !tbaa !13
   %i.dz = zext i8 %i.dy to i64
   %i.ea = getelementptr inbounds nuw i8, ptr @sbox, i64 %i.dz
   %i.eb = load i8, ptr %i.ea, align 1, !tbaa !13

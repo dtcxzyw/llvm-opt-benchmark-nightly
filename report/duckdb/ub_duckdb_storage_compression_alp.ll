@@ -203,7 +203,7 @@ _ZN6duckdb3alp8AlpUtils33FindFirstValueNotInPositionsArrayIfEET_PKS3_PKtm.exit.i
   %i.da = getelementptr inbounds nuw [4 x i8], ptr %.pre, i64 %i.cz
   store float %.08.i.i, ptr %i.da, align 4, !tbaa !149
   %i.db = add nuw i64 %.07.i.i, 4                 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_ZN6duckdb3alp8AlpUtils27FindAndReplaceNullsInVectorIfEEvPT_PKtmm.exit.loopexit163.unr-lcssa, label %.lr.ph.i8.i, !llvm.loop !158
 
@@ -606,7 +606,7 @@ bb.g:                                             ; preds = %bb.g, %.lr.ph.i.new
   %i.ad = sub i64 %i.k, %i.ac
   %i.ae = call noundef i64 @llvm.umin.i64(i64 %i.ad, i64 1024)
   %i.af = add i64 %i.ae, %i.ac                    ; 3 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %._crit_edge.i.unr-lcssa, label %bb.g, !llvm.loop !230
 
@@ -758,7 +758,7 @@ bb.g:                                             ; preds = %bb.g, %.lr.ph.i.new
   %i.af = sub i64 %i.m, %i.ae
   %i.ag = tail call noundef i64 @llvm.umin.i64(i64 %i.af, i64 1024)
   %i.ah = add i64 %i.ag, %i.ae                    ; 3 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %._crit_edge.i.unr-lcssa, label %bb.g, !llvm.loop !230
 
@@ -1145,7 +1145,7 @@ _ZN6duckdb3alp8AlpUtils33FindFirstValueNotInPositionsArrayIdEET_PKS3_PKtm.exit.i
   %i.da = getelementptr inbounds nuw [8 x i8], ptr %.pre, i64 %i.cz
   store double %.08.i.i, ptr %i.da, align 8, !tbaa !255
   %i.db = add nuw i64 %.07.i.i, 4                 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_ZN6duckdb3alp8AlpUtils27FindAndReplaceNullsInVectorIdEEvPT_PKtmm.exit.loopexit163.unr-lcssa, label %.lr.ph.i8.i, !llvm.loop !260
 
@@ -1548,7 +1548,7 @@ bb.g:                                             ; preds = %bb.g, %.lr.ph.i.new
   %i.ad = sub i64 %i.k, %i.ac
   %i.ae = call noundef i64 @llvm.umin.i64(i64 %i.ad, i64 1024)
   %i.af = add i64 %i.ae, %i.ac                    ; 3 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %._crit_edge.i.unr-lcssa, label %bb.g, !llvm.loop !290
 
@@ -1700,7 +1700,7 @@ bb.g:                                             ; preds = %bb.g, %.lr.ph.i.new
   %i.af = sub i64 %i.m, %i.ae
   %i.ag = tail call noundef i64 @llvm.umin.i64(i64 %i.af, i64 1024)
   %i.ah = add i64 %i.ag, %i.ae                    ; 3 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %._crit_edge.i.unr-lcssa, label %bb.g, !llvm.loop !290
 
@@ -2103,7 +2103,7 @@ bb.v:                                             ; preds = %._crit_edge112
 
 .noexc41:                                         ; preds = %bb.v
   %i.da = icmp sgt i64 %i.cv, 384
-  %scevgep.i = getelementptr i8, ptr %.pre124, i64 24 ; 3 uses
+  %scevgep.i = getelementptr i8, ptr %.pre124, i64 24 ; 4 uses
   br i1 %i.da, label %.lr.ph.i.i, label %bb.ab
 
 .lr.ph.i.i:                                       ; preds = %.noexc41, %bb.aa
@@ -2193,7 +2193,7 @@ bb.ab:                                            ; preds = %.noexc41
 
 .lr.ph.i21.i:                                     ; preds = %bb.ab, %bb.ah
   %.sroa.0.021.i22.i = phi ptr [ %.sroa.0.0.i26.i, %bb.ah ], [ %scevgep.i, %bb.ab ] ; 8 uses
-  %.pn20.i23.i = phi ptr [ %.sroa.0.021.i22.i, %bb.ah ], [ %.pre124, %bb.ab ] ; 4 uses
+  %.pn20.i23.i = phi ptr [ %.sroa.0.021.i22.i, %bb.ah ], [ %.pre124, %bb.ab ] ; 3 uses
   %i.dk = call noundef zeroext i1 @_ZN6duckdb3alp14AlpCompressionIfLb1EE22CompareALPCombinationsERKNS0_14AlpCombinationES5_(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.021.i22.i, ptr noundef nonnull align 8 dereferenceable(24) %.pre124), !inline_history !371
   br i1 %i.dk, label %bb.ac, label %bb.ag
 
@@ -2201,16 +2201,12 @@ bb.ac:                                            ; preds = %.lr.ph.i21.i
   call void @llvm.lifetime.start.p0(ptr nonnull %3)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %3, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.021.i22.i, i64 24, i1 false), !tbaa.struct !372
   %i.dl = ptrtoint ptr %.sroa.0.021.i22.i to i64
-  %i.dm = sub i64 %i.dl, %i.cu                    ; 4 uses
+  %i.dm = sub i64 %i.dl, %i.cu                    ; 3 uses
   %i.dn = icmp sgt i64 %i.dm, 24
   br i1 %i.dn, label %bb.ad, label %bb.ae, !prof !300
 
 bb.ad:                                            ; preds = %bb.ac
-  %10 = getelementptr inbounds nuw i8, ptr %.pn20.i23.i, i64 48
-  %.neg25.i33.i = udiv exact i64 %i.dm, 24
-  %.neg25.neg.i34.i = sub nsw i64 0, %.neg25.i33.i
-  %11 = getelementptr inbounds [24 x i8], ptr %10, i64 %.neg25.neg.i34.i
-  call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %11, ptr noundef nonnull align 8 dereferenceable(1) %.pre124, i64 %i.dm, i1 false)
+  call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep.i, ptr noundef nonnull align 8 dereferenceable(1) %.pre124, i64 %i.dm, i1 false)
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN6duckdb3alp14AlpCombinationESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit.i32.i
 
 bb.ae:                                            ; preds = %bb.ac
@@ -2613,7 +2609,7 @@ bb.l:                                             ; preds = %bb.l, %.lr.ph97.new
   %i.ck = getelementptr inbounds nuw [4 x i8], ptr %i.bk, i64 %i.cd
   store float %i.ci, ptr %i.ck, align 4, !tbaa !149
   %i.cl = add nuw nsw i64 %.08496, 2              ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %bb.l, !llvm.loop !420
 
@@ -3016,7 +3012,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit:    ; preds = %_ZNK6duckdb15Select
   %i.cj = getelementptr [4 x i8], ptr %i.ak, i64 %i.ce
   store float %i.ci, ptr %i.cj, align 4, !tbaa !149
   %i.ck = add nuw i64 %.03645, 4                  ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.loopexit.loopexit82.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit, !llvm.loop !480
 
@@ -3169,7 +3165,7 @@ _ZN6duckdb3alp8AlpUtils33FindFirstValueNotInPositionsArrayIfEET_PKS3_PKtm.exit.i
   %i.ag = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %i.af
   store float %.08.i.i, ptr %i.ag, align 4, !tbaa !149
   %i.ah = add nuw i64 %.07.i.i, 4                 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_ZN6duckdb3alp8AlpUtils27FindAndReplaceNullsInVectorIfEEvPT_PKtmm.exit.loopexit.unr-lcssa, label %.lr.ph.i8.i, !llvm.loop !158
 
@@ -3557,7 +3553,7 @@ bb.l:                                             ; preds = %bb.l, %.lr.ph110.ne
   %i.cl = getelementptr inbounds nuw [4 x i8], ptr %i.bl, i64 %i.ce
   store float %i.cj, ptr %i.cl, align 4, !tbaa !149
   %i.cm = add nuw nsw i64 %.096109, 2             ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %bb.l, !llvm.loop !494
 
@@ -3960,7 +3956,7 @@ scalar.ph37:                                      ; preds = %scalar.ph37.prehead
   %i.dw = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.dv
   store float %i.ds, ptr %i.dw, align 4, !tbaa !149
   %i.dx = add nuw nsw i64 %.034.i.i, 4            ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_ZN6duckdb14AlpVectorStateIfE10LoadValuesILb0EEEvPfm.exit.loopexit.unr-lcssa, label %.lr.ph35.i.i, !llvm.loop !527
 
@@ -4363,7 +4359,7 @@ bb.u:                                             ; preds = %._crit_edge112
 
 .noexc41:                                         ; preds = %bb.u
   %i.da = icmp sgt i64 %i.cv, 384
-  %scevgep.i = getelementptr i8, ptr %.pre124, i64 24 ; 3 uses
+  %scevgep.i = getelementptr i8, ptr %.pre124, i64 24 ; 4 uses
   br i1 %i.da, label %.lr.ph.i.i, label %bb.aa
 
 .lr.ph.i.i:                                       ; preds = %.noexc41, %bb.z
@@ -4453,7 +4449,7 @@ bb.aa:                                            ; preds = %.noexc41
 
 .lr.ph.i21.i:                                     ; preds = %bb.aa, %bb.ag
   %.sroa.0.021.i22.i = phi ptr [ %.sroa.0.0.i26.i, %bb.ag ], [ %scevgep.i, %bb.aa ] ; 8 uses
-  %.pn20.i23.i = phi ptr [ %.sroa.0.021.i22.i, %bb.ag ], [ %.pre124, %bb.aa ] ; 4 uses
+  %.pn20.i23.i = phi ptr [ %.sroa.0.021.i22.i, %bb.ag ], [ %.pre124, %bb.aa ] ; 3 uses
   %i.dk = call noundef zeroext i1 @_ZN6duckdb3alp14AlpCompressionIdLb1EE22CompareALPCombinationsERKNS0_14AlpCombinationES5_(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.021.i22.i, ptr noundef nonnull align 8 dereferenceable(24) %.pre124), !inline_history !371
   br i1 %i.dk, label %bb.ab, label %bb.af
 
@@ -4461,16 +4457,12 @@ bb.ab:                                            ; preds = %.lr.ph.i21.i
   call void @llvm.lifetime.start.p0(ptr nonnull %3)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %3, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.021.i22.i, i64 24, i1 false), !tbaa.struct !372
   %i.dl = ptrtoint ptr %.sroa.0.021.i22.i to i64
-  %i.dm = sub i64 %i.dl, %i.cu                    ; 4 uses
+  %i.dm = sub i64 %i.dl, %i.cu                    ; 3 uses
   %i.dn = icmp sgt i64 %i.dm, 24
   br i1 %i.dn, label %bb.ac, label %bb.ad, !prof !300
 
 bb.ac:                                            ; preds = %bb.ab
-  %10 = getelementptr inbounds nuw i8, ptr %.pn20.i23.i, i64 48
-  %.neg25.i33.i = udiv exact i64 %i.dm, 24
-  %.neg25.neg.i34.i = sub nsw i64 0, %.neg25.i33.i
-  %11 = getelementptr inbounds [24 x i8], ptr %10, i64 %.neg25.neg.i34.i
-  call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %11, ptr noundef nonnull align 8 dereferenceable(1) %.pre124, i64 %i.dm, i1 false)
+  call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep.i, ptr noundef nonnull align 8 dereferenceable(1) %.pre124, i64 %i.dm, i1 false)
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN6duckdb3alp14AlpCombinationESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit.i32.i
 
 bb.ad:                                            ; preds = %bb.ab
@@ -4873,7 +4865,7 @@ bb.k:                                             ; preds = %bb.k, %.lr.ph97.new
   %i.ck = getelementptr inbounds nuw [8 x i8], ptr %i.bk, i64 %i.cd
   store double %i.ci, ptr %i.ck, align 8, !tbaa !255
   %i.cl = add nuw nsw i64 %.08496, 2              ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %bb.k, !llvm.loop !556
 
@@ -5276,7 +5268,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit:    ; preds = %_ZNK6duckdb15Select
   %i.cj = getelementptr [8 x i8], ptr %i.ak, i64 %i.ce
   store double %i.ci, ptr %i.cj, align 8, !tbaa !255
   %i.ck = add nuw i64 %.03645, 4                  ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.loopexit.loopexit82.unr-lcssa, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit, !llvm.loop !574
 
@@ -5429,7 +5421,7 @@ _ZN6duckdb3alp8AlpUtils33FindFirstValueNotInPositionsArrayIdEET_PKS3_PKtm.exit.i
   %i.ag = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %i.af
   store double %.08.i.i, ptr %i.ag, align 8, !tbaa !255
   %i.ah = add nuw i64 %.07.i.i, 4                 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_ZN6duckdb3alp8AlpUtils27FindAndReplaceNullsInVectorIdEEvPT_PKtmm.exit.loopexit.unr-lcssa, label %.lr.ph.i8.i, !llvm.loop !260
 
@@ -5814,7 +5806,7 @@ bb.k:                                             ; preds = %bb.k, %.lr.ph110.ne
   %i.cl = getelementptr inbounds nuw [8 x i8], ptr %i.bl, i64 %i.ce
   store double %i.cj, ptr %i.cl, align 8, !tbaa !255
   %i.cm = add nuw nsw i64 %.096109, 2             ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %bb.k, !llvm.loop !586
 
@@ -6217,7 +6209,7 @@ scalar.ph37:                                      ; preds = %scalar.ph37.prehead
   %i.dw = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %i.dv
   store double %i.ds, ptr %i.dw, align 8, !tbaa !255
   %i.dx = add nuw nsw i64 %.034.i.i, 4            ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_ZN6duckdb14AlpVectorStateIdE10LoadValuesILb0EEEvPdm.exit.loopexit.unr-lcssa, label %.lr.ph35.i.i, !llvm.loop !613
 

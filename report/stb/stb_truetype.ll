@@ -203,7 +203,7 @@ stbtt__buf_get8.exit.i13.1:                       ; preds = %bb.e, %stbtt__buf_g
   %.sroa.6.4.1 = phi i32 [ %i.ah, %bb.e ], [ %.sroa.6.4, %stbtt__buf_get8.exit.i13 ] ; 3 uses
   %i.an = phi i32 [ %i.ah, %bb.e ], [ %i.af, %stbtt__buf_get8.exit.i13 ] ; 2 uses
   %.0.i.i14.1 = phi i32 [ %i.am, %bb.e ], [ %i.ag, %stbtt__buf_get8.exit.i13 ] ; 3 uses
-  %niter.next.1 = add i32 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i32 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i32 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.lr.ph.i18.preheader.unr-lcssa, label %.lr.ph.i, !llvm.loop !15
 
@@ -277,7 +277,7 @@ bb.h:                                             ; preds = %stbtt__buf_get8.exi
 stbtt__buf_get8.exit.i23.1:                       ; preds = %bb.h, %stbtt__buf_get8.exit.i23
   %i.bm = phi i32 [ %i.bg, %bb.h ], [ %i.be, %stbtt__buf_get8.exit.i23 ] ; 2 uses
   %.0.i.i24.1 = phi i32 [ %i.bl, %bb.h ], [ %i.bf, %stbtt__buf_get8.exit.i23 ] ; 3 uses
-  %niter64.next.1 = add i32 %niter64, 2           ; 2 uses
+  %niter64.next.1 = add nuw i32 %niter64, 2       ; 2 uses
   %niter64.ncmp.1 = icmp eq i32 %niter64.next.1, %unroll_iter63
   br i1 %niter64.ncmp.1, label %stbtt__buf_get.exit26.loopexit.unr-lcssa, label %.lr.ph.i18, !llvm.loop !15
 
@@ -680,7 +680,7 @@ stbtt__buf_get8.exit.i13.i.1:                     ; preds = %bb.bz, %stbtt__buf_
   %.sroa.6.4.i.1 = phi i32 [ %i.of, %bb.bz ], [ %.sroa.6.4.i, %stbtt__buf_get8.exit.i13.i ] ; 3 uses
   %i.ol = phi i32 [ %i.of, %bb.bz ], [ %i.od, %stbtt__buf_get8.exit.i13.i ] ; 2 uses
   %.0.i.i14.i.1 = phi i32 [ %i.ok, %bb.bz ], [ %i.oe, %stbtt__buf_get8.exit.i13.i ] ; 3 uses
-  %niter605.next.1 = add i32 %niter605, 2         ; 2 uses
+  %niter605.next.1 = add nuw i32 %niter605, 2     ; 2 uses
   %niter605.ncmp.1 = icmp eq i32 %niter605.next.1, %unroll_iter604
   br i1 %niter605.ncmp.1, label %.lr.ph.i18.i.preheader.unr-lcssa, label %.lr.ph.i.i241, !llvm.loop !15
 
@@ -754,7 +754,7 @@ bb.cc:                                            ; preds = %stbtt__buf_get8.exi
 stbtt__buf_get8.exit.i23.i.1:                     ; preds = %bb.cc, %stbtt__buf_get8.exit.i23.i
   %i.pk = phi i32 [ %i.pe, %bb.cc ], [ %i.pc, %stbtt__buf_get8.exit.i23.i ] ; 2 uses
   %.0.i.i24.i.1 = phi i32 [ %i.pj, %bb.cc ], [ %i.pd, %stbtt__buf_get8.exit.i23.i ] ; 3 uses
-  %niter613.next.1 = add i32 %niter613, 2         ; 2 uses
+  %niter613.next.1 = add nuw i32 %niter613, 2     ; 2 uses
   %niter613.ncmp.1 = icmp eq i32 %niter613.next.1, %unroll_iter612
   br i1 %niter613.ncmp.1, label %stbtt__buf_get.exit26.i.loopexit.unr-lcssa, label %.lr.ph.i18.i, !llvm.loop !15
 
@@ -1157,7 +1157,7 @@ bb.r:                                             ; preds = %bb.q, %bb.p, %bb.o
   %i.da = getelementptr inbounds nuw i8, ptr %i.cz, i64 26
   store i8 %.1325.1, ptr %i.da, align 2, !tbaa !48
   %indvars.iv.next430.1 = add nuw nsw i64 %indvars.iv429, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.preheader391.preheader.unr-lcssa, label %bb.j, !llvm.loop !55
 
@@ -1560,7 +1560,7 @@ stbtt__buf_get8.exit.i43.1:                       ; preds = %bb.i, %stbtt__buf_g
 ; Function Attrs: nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define range(i32 0, 2) i32 @stbtt__run_charstring(ptr nofree noundef readonly captures(none) %0, i32 noundef %1, ptr nofree noundef %2) local_unnamed_addr #12 {
 bb.a:
-  %i.a = alloca [48 x float], align 16            ; 46 uses
+  %i.a = alloca [48 x float], align 16            ; 45 uses
   %3 = alloca [10 x %struct.stbtt__buf], align 16 ; 4 uses
   %4 = alloca %struct.stbtt__buf, align 8         ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #29
@@ -1598,7 +1598,7 @@ stbtt__buf_get8.exit.lr.ph:                       ; preds = %bb.a
   %i.v = getelementptr inbounds nuw i8, ptr %i.a, i64 32 ; 3 uses
   %i.w = getelementptr inbounds nuw i8, ptr %i.a, i64 40 ; 2 uses
   %i.x = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 44 uses
-  %i.y = getelementptr inbounds nuw i8, ptr %2, i64 20 ; 16 uses
+  %i.y = getelementptr inbounds nuw i8, ptr %2, i64 20 ; 14 uses
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 156
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 96
   %.sroa.3.0..sroa_idx62 = getelementptr inbounds nuw i8, ptr %0, i64 104
@@ -2001,7 +2001,7 @@ stbtt__csctx_rline_to.exit311:                    ; preds = %stbtt__track_vertex
 
 ._crit_edge:                                      ; preds = %stbtt__csctx_rline_to.exit311
   %i.mu = trunc nuw nsw i64 %indvars.iv.next415 to i32
-  %i.mv = add nuw nsw i32 %i.mu, 5                ; 2 uses
+  %i.mv = add nuw nsw i32 %i.mu, 5
   %.not268 = icmp slt i32 %i.mv, %.0253360
   br i1 %.not268, label %bb.ct, label %.critedge
 
@@ -2009,37 +2009,35 @@ bb.ct:                                            ; preds = %._crit_edge
   %i.mw = add nuw i32 %.0253360, 2147483640
   %i.mx = and i32 %i.mw, 2147483646
   %narrow = add nuw i32 %i.mx, 3
-  %i.my = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv.next415 ; 4 uses
+  %i.my = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv.next415 ; 3 uses
   %i.mz = load float, ptr %i.my, align 4, !tbaa !74
   %i.na = zext nneg i32 %narrow to i64
   %i.nb = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.na
   %i.nc = load float, ptr %i.nb, align 4, !tbaa !74
   %i.nd = getelementptr inbounds nuw i8, ptr %i.my, i64 8
-  %5 = load float, ptr %i.nd, align 4, !tbaa !74
-  %i.ne = getelementptr inbounds nuw i8, ptr %i.my, i64 12
-  %6 = load float, ptr %i.ne, align 4, !tbaa !74
-  %7 = getelementptr inbounds nuw i8, ptr %i.my, i64 16
-  %8 = load float, ptr %7, align 4, !tbaa !74
-  %9 = zext nneg i32 %i.mv to i64
-  %10 = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %9
-  %11 = load float, ptr %10, align 4, !tbaa !74
-  %12 = load float, ptr %i.x, align 8, !tbaa !73
-  %13 = fadd float %i.mz, %12                     ; 2 uses
-  %14 = load float, ptr %i.y, align 4, !tbaa !75
-  %15 = fadd float %i.nc, %14                     ; 2 uses
-  %16 = fadd float %5, %13                        ; 2 uses
-  %17 = fadd float %6, %15                        ; 2 uses
-  %18 = fadd float %8, %16                        ; 2 uses
-  store float %18, ptr %i.x, align 8, !tbaa !73
-  %19 = fadd float %11, %17                       ; 2 uses
-  store float %19, ptr %i.y, align 4, !tbaa !75
-  %20 = fptosi float %18 to i32
+  %i.ne = getelementptr inbounds nuw i8, ptr %i.my, i64 16
+  %5 = load <2 x float>, ptr %i.nd, align 4, !tbaa !74
+  %6 = load <2 x float>, ptr %i.ne, align 4, !tbaa !74
+  %7 = load <2 x float>, ptr %i.x, align 8, !tbaa !74
+  %8 = insertelement <2 x float> poison, float %i.mz, i64 0
+  %9 = insertelement <2 x float> %8, float %i.nc, i64 1
+  %10 = fadd <2 x float> %9, %7                   ; 3 uses
+  %11 = fadd <2 x float> %5, %10                  ; 3 uses
+  %12 = fadd <2 x float> %6, %11                  ; 3 uses
+  store <2 x float> %12, ptr %i.x, align 8, !tbaa !74
+  %13 = extractelement <2 x float> %12, i64 0
+  %14 = fptosi float %13 to i32
+  %15 = extractelement <2 x float> %12, i64 1
+  %16 = fptosi float %15 to i32
+  %17 = extractelement <2 x float> %10, i64 0
+  %18 = fptosi float %17 to i32
+  %19 = extractelement <2 x float> %10, i64 1
   %i.nf = fptosi float %19 to i32
-  %21 = fptosi float %13 to i32
-  %i.ng = fptosi float %15 to i32
-  %22 = fptosi float %16 to i32
-  %i.nh = fptosi float %17 to i32
-  tail call void @stbtt__csctx_v(ptr noundef nonnull %2, i8 noundef zeroext 4, i32 noundef %20, i32 noundef %i.nf, i32 noundef %21, i32 noundef %i.ng, i32 noundef %22, i32 noundef %i.nh)
+  %20 = extractelement <2 x float> %11, i64 0
+  %i.ng = fptosi float %20 to i32
+  %21 = extractelement <2 x float> %11, i64 1
+  %i.nh = fptosi float %21 to i32
+  tail call void @stbtt__csctx_v(ptr noundef nonnull %2, i8 noundef zeroext 4, i32 noundef %14, i32 noundef %16, i32 noundef %18, i32 noundef %i.nf, i32 noundef %i.ng, i32 noundef %i.nh)
   br label %.thread
 
 bb.cu:                                            ; preds = %stbtt__buf_get8.exit, %stbtt__buf_get8.exit
@@ -2442,7 +2440,7 @@ bb.b:                                             ; preds = %.lr.ph148, %._crit_
   %i.cb = trunc i32 %i.ca to i8
   store i8 %i.cb, ptr %i.bo, align 1, !tbaa !14
   %indvars.iv.next165.1 = add nuw nsw i64 %indvars.iv164, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.loopexit.loopexit208.unr-lcssa, label %.lr.ph120, !llvm.loop !192
 
@@ -2845,7 +2843,7 @@ bb.t:                                             ; preds = %._crit_edge.i, %.lr
   %i.lm = trunc i32 %i.ll to i8
   store i8 %i.lm, ptr %i.la, align 1, !tbaa !14
   %indvars.iv.next165.i.1 = add nuw nsw i64 %indvars.iv164.i, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.loopexit.i.loopexit362.unr-lcssa, label %.lr.ph120.i, !llvm.loop !192
 
@@ -3180,7 +3178,7 @@ bb.w:                                             ; preds = %._crit_edge.i166, %
   %i.rt = trunc i32 %i.rs to i8
   store i8 %i.rt, ptr %i.rh, align 1, !tbaa !14
   %indvars.iv.next180.i168.1 = add nuw nsw i64 %indvars.iv179.i167, 2 ; 2 uses
-  %niter388.next.1 = add i64 %niter388, 2         ; 2 uses
+  %niter388.next.1 = add nuw i64 %niter388, 2     ; 2 uses
   %niter388.ncmp.1 = icmp eq i64 %niter388.next.1, %unroll_iter387
   br i1 %niter388.ncmp.1, label %.loopexit.i164.loopexit358.unr-lcssa, label %.lr.ph135.i, !llvm.loop !199
 
@@ -3583,7 +3581,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.new
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ax, i64 84
   %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
   store i64 0, ptr %i.ay, align 4
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %._crit_edge.loopexit.unr-lcssa, label %bb.b, !llvm.loop !225
 

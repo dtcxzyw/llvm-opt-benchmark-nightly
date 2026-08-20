@@ -204,7 +204,7 @@ bb.s:                                             ; preds = %bb.s, %.lr.ph.i.new
   %i.dj = getelementptr inbounds nuw i8, ptr %i.dh, i64 8
   store i8 0, ptr %i.dj, align 8, !tbaa !52
   %indvars.iv.next.i.3 = add nuw nsw i64 %indvars.iv.i, 4 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %._crit_edge.i.loopexit.unr-lcssa, label %bb.s, !llvm.loop !81
 
@@ -607,7 +607,7 @@ bb.a:
   br i1 %epil.iter.cmp.not, label %.preheader139, label %.lr.ph.epil, !llvm.loop !176
 
 .preheader139:                                    ; preds = %.preheader139.loopexit.unr-lcssa, %.lr.ph.epil, %bb.a
-  %i.v = load i32, ptr getelementptr inbounds nuw (i8, ptr @dpb, i64 32), align 8, !tbaa !99 ; 5 uses
+  %i.v = load i32, ptr getelementptr inbounds nuw (i8, ptr @dpb, i64 32), align 8, !tbaa !99 ; 4 uses
   %.not174 = icmp eq i32 %i.v, 0
   br i1 %.not174, label %.lr.ph148.preheader, label %.lr.ph144
 
@@ -650,7 +650,7 @@ bb.a:
   %i.at = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv.next.2
   store i32 %i.as, ptr %i.at, align 4, !tbaa !4
   %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.preheader139.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !178
 
@@ -661,7 +661,7 @@ bb.a:
 
 .lr.ph148.preheader:                              ; preds = %.preheader139, %.preheader138
   %i.av = phi i32 [ %i.au, %.preheader138 ], [ -1, %.preheader139 ]
-  %i.aw = zext i32 %i.v to i64
+  %i.aw = zext i32 %i.v to i64                    ; 2 uses
   %wide.trip.count196 = zext i32 %i.av to i64
   br label %.lr.ph148
 
@@ -818,8 +818,7 @@ bb.i:                                             ; preds = %._crit_edge227, %bb
 
 bb.j:                                             ; preds = %bb.g, %bb.h, %bb.i
   %indvars.iv.next190 = add nuw nsw i64 %indvars.iv189, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next190 to i32
-  %exitcond192.not = icmp eq i32 %i.v, %lftr.wideiv
+  %exitcond192.not = icmp eq i64 %indvars.iv.next190, %i.aw
   br i1 %exitcond192.not, label %.loopexit137, label %bb.f, !llvm.loop !190
 
 .lr.ph151:                                        ; preds = %.lr.ph151.preheader255, %.lr.ph151

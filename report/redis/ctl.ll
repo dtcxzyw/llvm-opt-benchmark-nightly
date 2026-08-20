@@ -204,11 +204,10 @@ bb.p:                                             ; preds = %.lr.ph
 
 bb.q:                                             ; preds = %.lr.ph
   %i.bj = add nuw nsw i64 %indvars.iv, 2
-  %1 = and i64 %i.bj, 4294967295
   br label %arenas_i2a_impl.exit.i
 
 arenas_i2a_impl.exit.i:                           ; preds = %bb.q, %bb.p, %.lr.ph
-  %.0.i.i = phi i64 [ 0, %.lr.ph ], [ 1, %bb.p ], [ %1, %bb.q ]
+  %.0.i.i = phi i64 [ 0, %.lr.ph ], [ 1, %bb.p ], [ %i.bj, %bb.q ]
   %i.bk = getelementptr inbounds nuw [8 x i8], ptr %i.bh, i64 %.0.i.i
   %i.bl = load ptr, ptr %i.bk, align 8, !tbaa !33
   %i.bm = icmp eq ptr %i.bl, null
@@ -237,11 +236,10 @@ bb.t:                                             ; preds = %bb.s
 
 bb.u:                                             ; preds = %bb.s
   %i.bt = add nuw nsw i64 %indvars.iv, 2
-  %2 = and i64 %i.bt, 4294967295
   br label %arenas_i2a_impl.exit23.i
 
 arenas_i2a_impl.exit23.i:                         ; preds = %bb.u, %bb.t, %bb.s
-  %.0.i22.i = phi i64 [ 0, %bb.s ], [ 1, %bb.t ], [ %2, %bb.u ]
+  %.0.i22.i = phi i64 [ 0, %bb.s ], [ 1, %bb.t ], [ %i.bt, %bb.u ]
   %i.bu = getelementptr inbounds nuw [8 x i8], ptr %i.bs, i64 %.0.i22.i
   store ptr %i.bo, ptr %i.bu, align 8, !tbaa !33
   br label %bb.v
@@ -644,15 +642,12 @@ bb.e:                                             ; preds = %tsd_fetch_impl.exit
   %i.as = load i32, ptr %i.ar, align 8, !tbaa !44
   %i.at = zext i32 %i.as to i64
   %i.au = icmp eq i64 %indvars.iv38, %i.at
-  br i1 %i.au, label %arenas_i.exit32, label %1
-
-1:                                                ; preds = %bb.e
-  %2 = add nuw nsw i64 %indvars.iv38, 2
-  %3 = and i64 %2, 4294967295
+  %1 = add nuw nsw i64 %indvars.iv38, 2
+  %spec.select = select i1 %i.au, i64 0, i64 %1
   br label %arenas_i.exit32
 
-arenas_i.exit32:                                  ; preds = %tsd_fetch_impl.exit.i, %bb.d, %bb.e, %1
-  %.0.i.i.i = phi i64 [ 0, %tsd_fetch_impl.exit.i ], [ 0, %bb.e ], [ %3, %1 ], [ 1, %bb.d ]
+arenas_i.exit32:                                  ; preds = %bb.e, %tsd_fetch_impl.exit.i, %bb.d
+  %.0.i.i.i = phi i64 [ 0, %tsd_fetch_impl.exit.i ], [ %spec.select, %bb.e ], [ 1, %bb.d ]
   %i.av = getelementptr inbounds nuw i8, ptr %i.ap, i64 24
   %i.aw = getelementptr inbounds nuw [8 x i8], ptr %i.av, i64 %.0.i.i.i
   %i.ax = load ptr, ptr %i.aw, align 8, !tbaa !33
@@ -1055,7 +1050,7 @@ arena_get.exit:                                   ; preds = %arena_get.exit, %ar
   %i.ab = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %indvars.iv.next.2
   store ptr %i.aa, ptr %i.ab, align 8, !tbaa !64
   %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.lr.ph.preheader.unr-lcssa, label %arena_get.exit, !llvm.loop !190
 

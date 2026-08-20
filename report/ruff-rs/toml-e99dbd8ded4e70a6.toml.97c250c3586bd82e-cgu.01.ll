@@ -201,13 +201,12 @@ bb.ao:                                            ; preds = %.preheader307
   br i1 %i.fg, label %.loopexit, label %.preheader.preheader
 
 .preheader.preheader:                             ; preds = %bb.ao
-  %umax = call i64 @llvm.umax.i64(i64 %.sroa.0.0.i233, i64 1)
   %exitcond.not402 = icmp ult i64 %.sroa.0.0.i233, 2
   br i1 %exitcond.not402, label %.preheader._crit_edge, label %.lr.ph404
 
 .preheader:                                       ; preds = %.lr.ph404
-  %i.fh = add i64 %.sroa.0218.0403, 1             ; 2 uses
-  %exitcond.not = icmp eq i64 %i.fh, %umax
+  %i.fh = add nuw i64 %.sroa.0218.0403, 1         ; 2 uses
+  %exitcond.not = icmp eq i64 %.sroa.0.0.i233, %i.fh
   br i1 %exitcond.not, label %.preheader._crit_edge, label %.lr.ph404
 
 .lr.ph404:                                        ; preds = %.preheader.preheader, %.preheader
@@ -608,9 +607,6 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #14
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #12
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.vector.reduce.add.v2i64(<2 x i64>) #12

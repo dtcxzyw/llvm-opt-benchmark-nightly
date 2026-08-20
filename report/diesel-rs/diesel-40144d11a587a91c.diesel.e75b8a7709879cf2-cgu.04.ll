@@ -204,7 +204,7 @@ bb.bf:                                            ; preds = %.lr.ph.i.i, %bb.cl
   %i.ep = phi ptr [ %.sroa.13.0, %.lr.ph.i.i ], [ %i.eo, %bb.cl ]
   %i.eq = phi i64 [ 0, %.lr.ph.i.i ], [ %i.es, %bb.cl ]
   %i.er = phi ptr [ %i.ca, %.lr.ph.i.i ], [ %i.hg, %bb.cl ] ; 2 uses
-  %i.es = add i64 %i.eq, 1                        ; 3 uses
+  %i.es = add nuw i64 %i.eq, 1                    ; 2 uses
   %i.et = getelementptr inbounds nuw i8, ptr %i.ep, i64 624
   %i.eu = load i16, ptr %i.et, align 8, !noalias !352 ; 4 uses
   %i.ev = zext i16 %i.eu to i64                   ; 10 uses
@@ -457,8 +457,6 @@ bb.bz:                                            ; preds = %bb.bv
   %i.il = getelementptr [8 x i8], ptr %i.ik, i64 %.sroa.06.0.i.i.i
   %i.im = shl nuw nsw i64 %i.id, 3
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.if, ptr noundef nonnull readonly align 8 dereferenceable(1) %i.il, i64 %i.im, i1 false), !alias.scope !419, !noalias !400
-  %4 = icmp ne i64 %i.es, 0
-  tail call void @llvm.assume(i1 %4)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !423)
   br label %bb.ca
 

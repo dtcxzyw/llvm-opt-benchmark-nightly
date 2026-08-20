@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %.lr.ph
 .lr.ph:                                           ; preds = %bb.a, %bb.b
   %.sroa.0.0.i5 = phi i64 [ %i.f, %bb.b ], [ 0, %bb.a ] ; 2 uses
   %i.e = getelementptr inbounds nuw [72 x i8], ptr %i.a, i64 %.sroa.0.0.i5
-  %i.f = add i64 %.sroa.0.0.i5, 1                 ; 4 uses
+  %i.f = add nuw i64 %.sroa.0.0.i5, 1             ; 4 uses
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCskLngH8kgpZI_15ruff_python_ast9generated4ExprECs8CpBcHC8tKo_21ruff_python_formatter(ptr noalias noundef align 8 dereferenceable(72) %i.e)
           to label %bb.b unwind label %bb.d, !inline_history !346
 
@@ -607,7 +607,7 @@ bb.b:                                             ; preds = %.lr.ph
 .lr.ph:                                           ; preds = %bb.a, %bb.b
   %.sroa.0.0.i5 = phi i64 [ %i.f, %bb.b ], [ 0, %bb.a ] ; 2 uses
   %i.e = getelementptr inbounds nuw [72 x i8], ptr %i.a, i64 %.sroa.0.0.i5
-  %i.f = add i64 %.sroa.0.0.i5, 1                 ; 4 uses
+  %i.f = add nuw i64 %.sroa.0.0.i5, 1             ; 4 uses
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCskLngH8kgpZI_15ruff_python_ast9generated4ExprECs8CpBcHC8tKo_21ruff_python_formatter(ptr noalias noundef align 8 dereferenceable(72) %i.e)
           to label %bb.b unwind label %bb.d, !noalias !482, !inline_history !485
 
@@ -1010,7 +1010,7 @@ bb.bh:                                            ; preds = %.lr.ph
 .lr.ph:                                           ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCskLngH8kgpZI_15ruff_python_ast9generated11ExprCompareECs8CpBcHC8tKo_21ruff_python_formatter.exit, %bb.bh
   %.sroa.0.0.i.i154 = phi i64 [ %i.di, %bb.bh ], [ 0, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCskLngH8kgpZI_15ruff_python_ast9generated11ExprCompareECs8CpBcHC8tKo_21ruff_python_formatter.exit ] ; 2 uses
   %i.dh = getelementptr inbounds nuw [72 x i8], ptr %i.dd, i64 %.sroa.0.0.i.i154
-  %i.di = add i64 %.sroa.0.0.i.i154, 1            ; 4 uses
+  %i.di = add nuw i64 %.sroa.0.0.i.i154, 1        ; 4 uses
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCskLngH8kgpZI_15ruff_python_ast9generated4ExprECs8CpBcHC8tKo_21ruff_python_formatter(ptr noalias noundef align 8 dereferenceable(72) %i.dh)
           to label %bb.bh unwind label %bb.bj, !noalias !629, !inline_history !632
 
@@ -1413,7 +1413,7 @@ bb.l:                                             ; preds = %bb.l, %.new
   %i.bu = trunc nuw nsw i64 %i.bk to i16
   %i.bv = getelementptr inbounds nuw i8, ptr %i.bs, i64 360
   store i16 %i.bu, ptr %i.bv, align 8
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_RINvMsp_NtNtNtCscdodAO9FK5_5alloc11collections5btree4nodeINtB6_7NodeRefNtNtB6_6marker3MutNtNtCscuBBDlOF0VN_8schemars8generate9SchemaUidNtNtB8_7set_val9SetValZSTNtB19_8InternalE30correct_childrens_parent_linksINtNtNtCs4NRVxsYgnAr_4core3ops5range5RangejEECs8CpBcHC8tKo_21ruff_python_formatter.exit.loopexit.unr-lcssa, label %bb.l
 }
@@ -1816,7 +1816,7 @@ bb.bb:                                            ; preds = %.lr.ph.i.i, %bb.cj
   %i.ed = phi ptr [ %.sroa.13.0, %.lr.ph.i.i ], [ %i.ec, %bb.cj ]
   %i.ee = phi i64 [ 0, %.lr.ph.i.i ], [ %i.eg, %bb.cj ]
   %i.ef = phi ptr [ %i.br, %.lr.ph.i.i ], [ %i.gv, %bb.cj ] ; 2 uses
-  %i.eg = add i64 %i.ee, 1                        ; 3 uses
+  %i.eg = add nuw i64 %i.ee, 1                    ; 2 uses
   %i.eh = getelementptr inbounds nuw i8, ptr %i.ed, i64 624
   %i.ei = load i16, ptr %i.eh, align 8, !noalias !981 ; 4 uses
   %i.ej = zext i16 %i.ei to i64                   ; 10 uses
@@ -2077,8 +2077,6 @@ bb.bx:                                            ; preds = %bb.bt
   %i.ib = getelementptr [8 x i8], ptr %i.ia, i64 %.sroa.06.0.i.i.i
   %i.ic = shl nuw nsw i64 %i.ht, 3
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.hv, ptr noundef nonnull readonly align 8 dereferenceable(1) %i.ib, i64 %i.ic, i1 false), !alias.scope !1046, !noalias !1028
-  %4 = icmp ne i64 %i.eg, 0
-  tail call void @llvm.assume(i1 %4)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1050)
   br label %bb.by
 
@@ -2481,7 +2479,7 @@ bb.aw:                                            ; preds = %.lr.ph.i.i, %bb.by
   %i.dd = phi ptr [ %.sroa.14.0, %.lr.ph.i.i ], [ %i.dc, %bb.by ]
   %i.de = phi i64 [ 0, %.lr.ph.i.i ], [ %i.dg, %bb.by ]
   %i.df = phi ptr [ %i.bf, %.lr.ph.i.i ], [ %i.fq, %bb.by ] ; 2 uses
-  %i.dg = add i64 %i.de, 1                        ; 3 uses
+  %i.dg = add nuw i64 %i.de, 1                    ; 2 uses
   %i.dh = getelementptr inbounds nuw i8, ptr %i.dd, i64 360
   %i.di = load i16, ptr %i.dh, align 8, !noalias !1179 ; 4 uses
   %i.dj = zext i16 %i.di to i64                   ; 8 uses
@@ -2717,8 +2715,6 @@ bb.bp:                                            ; preds = %bb.bl
   %i.gq = getelementptr [8 x i8], ptr %i.gp, i64 %.sroa.06.0.i.i.i
   %i.gr = shl nuw nsw i64 %i.gi, 3
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.gk, ptr noundef nonnull readonly align 8 dereferenceable(1) %i.gq, i64 %i.gr, i1 false), !alias.scope !1231, !noalias !1217
-  %2 = icmp ne i64 %i.dg, 0
-  tail call void @llvm.assume(i1 %2)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1235)
   br label %bb.bq
 

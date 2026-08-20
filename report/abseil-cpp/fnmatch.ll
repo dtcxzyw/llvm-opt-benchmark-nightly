@@ -38,7 +38,7 @@ bb.a:
   br i1 %i.g, label %bb.b, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofEcm.exit
 
 bb.b:                                             ; preds = %.lr.ph.i
-  %i.h = add i64 %.06.i, 1                        ; 2 uses
+  %i.h = add nuw i64 %.06.i, 1                    ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.h, %.sroa.035.077
   br i1 %exitcond.not.i, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofEcm.exit, label %.lr.ph.i, !llvm.loop !10
 
@@ -80,25 +80,22 @@ _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i:     ; preds = %bb.f, %bb.g
   ]
 
 bb.g:                                             ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i
-  %i.t = add i64 %.0111420.i.i, 1                 ; 2 uses
+  %i.t = add nuw i64 %.0111420.i.i, 1             ; 2 uses
   %exitcond.not.i.i = icmp eq i64 %i.t, %.sroa.035.077
   br i1 %exitcond.not.i.i, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit.thread, label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i
 
 _ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit: ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i
   %.not14 = icmp eq i64 %.0111420.i.i, -1
-  %spec.select82 = select i1 %.not14, i64 %.sroa.035.077, i64 %.0111420.i.i
-  br label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit.thread
+  %spec.select82 = select i1 %.not14, i64 %.sroa.035.077, i64 %.0111420.i.i ; 2 uses
+  %4 = icmp eq i64 %spec.select82, 0
+  br i1 %4, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findES2_m.exit.thread52, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit.thread
 
 _ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit.thread: ; preds = %bb.g, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit
-  %.sroa.0.0 = phi i64 [ %spec.select82, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit ], [ %.sroa.035.077, %bb.g ] ; 8 uses
-  %4 = icmp eq i64 %.sroa.0.0, 0
-  br i1 %4, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findES2_m.exit.thread52, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit.thread.thread
-
-_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit.thread.thread: ; preds = %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit.thread
+  %.sroa.0.0 = phi i64 [ %spec.select82, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit ], [ %.sroa.035.077, %bb.g ] ; 5 uses
   %.not2531.i.i = icmp ult i64 %.sroa.024.079, %.sroa.0.0
   br i1 %.not2531.i.i, label %.critedge, label %.lr.ph.i.i17
 
-.lr.ph.i.i17:                                     ; preds = %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit.thread.thread
+.lr.ph.i.i17:                                     ; preds = %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit.thread
   %i.u = getelementptr inbounds nuw i8, ptr %.sroa.1030.078, i64 %.sroa.024.079
   %i.v = sext i8 %i.j to i32
   %i.w = ptrtoint ptr %i.u to i64
@@ -118,7 +115,7 @@ _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i18:   ; preds = %bb.h
   br i1 %.not26.i.i, label %.critedge, label %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i
 
 _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i:   ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i18
-  %bcmp.i.i = tail call i32 @bcmp(ptr nonnull %i.y, ptr nonnull %.sroa.12.076, i64 %.sroa.0.0)
+  %bcmp.i.i = tail call i32 @bcmp(ptr noundef nonnull dereferenceable(1) %i.y, ptr noundef nonnull dereferenceable(1) %.sroa.12.076, i64 %.sroa.0.0)
   %i.z = icmp eq i32 %bcmp.i.i, 0
   br i1 %i.z, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findES2_m.exit, label %bb.i
 
@@ -136,11 +133,12 @@ _ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findES2_m.exit: ; preds = %_ZNSt1
   %.not15 = icmp eq i64 %i.af, -1
   br i1 %.not15, label %.critedge, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findES2_m.exit.thread52
 
-_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findES2_m.exit.thread52: ; preds = %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit.thread, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findES2_m.exit
-  %.1.i.i55 = phi i64 [ %i.af, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findES2_m.exit ], [ 0, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit.thread ]
-  %i.ag = getelementptr inbounds nuw i8, ptr %.sroa.12.076, i64 %.sroa.0.0
-  %i.ah = sub i64 %.sroa.035.077, %.sroa.0.0
-  %i.ai = add i64 %.1.i.i55, %.sroa.0.0           ; 2 uses
+_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findES2_m.exit.thread52: ; preds = %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findES2_m.exit
+  %.sroa.0.060 = phi i64 [ %.sroa.0.0, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findES2_m.exit ], [ 0, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit ] ; 3 uses
+  %.1.i.i55 = phi i64 [ %i.af, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findES2_m.exit ], [ 0, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit ]
+  %i.ag = getelementptr inbounds nuw i8, ptr %.sroa.12.076, i64 %.sroa.0.060
+  %i.ah = sub i64 %.sroa.035.077, %.sroa.0.060
+  %i.ai = add i64 %.1.i.i55, %.sroa.0.060         ; 2 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %.sroa.1030.078, i64 %i.ai
   %i.ak = sub i64 %.sroa.024.079, %i.ai
   br label %bb.l
@@ -166,8 +164,8 @@ bb.l:                                             ; preds = %_ZNKSt17basic_strin
   %i.aq = icmp eq i64 %.sroa.035.1, 0
   br i1 %i.aq, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !13
 
-.critedge:                                        ; preds = %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit.thread.thread, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findES2_m.exit, %bb.j, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i18, %bb.i, %bb.h, %._crit_edge, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofEcm.exit
-  %.3 = phi i1 [ %spec.select, %._crit_edge ], [ %i.i, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofEcm.exit ], [ false, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i18 ], [ false, %bb.h ], [ false, %bb.i ], [ false, %bb.j ], [ false, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findES2_m.exit ], [ false, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit.thread.thread ]
+.critedge:                                        ; preds = %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit.thread, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findES2_m.exit, %bb.j, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i18, %bb.i, %bb.h, %._crit_edge, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofEcm.exit
+  %.3 = phi i1 [ %spec.select, %._crit_edge ], [ %i.i, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofEcm.exit ], [ false, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i18 ], [ false, %bb.h ], [ false, %bb.i ], [ false, %bb.j ], [ false, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findES2_m.exit ], [ false, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit.thread ]
   ret i1 %.3
 }
 

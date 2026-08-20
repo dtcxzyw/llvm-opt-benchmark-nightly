@@ -204,7 +204,7 @@ vector.body:                                      ; preds = %.preheader.us, %vec
   %i.gk = shl <4 x i16> %i.gj, splat (i16 2)
   %i.gl = or disjoint <4 x i16> %i.gk, %i.gi
   store <4 x i16> %i.gl, ptr %i.gc, align 2, !tbaa !198
-  %indvars.iv.next221.epil = add i64 %indvars.iv220.epil, 4
+  %indvars.iv.next221.epil = add nuw i64 %indvars.iv220.epil, 4
   %epil.iter.next = add i32 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i32 %epil.iter.next, %xtraiter
   br i1 %epil.iter.cmp.not, label %.split207, label %.split.us.epil, !llvm.loop !209
@@ -301,7 +301,7 @@ vector.body:                                      ; preds = %.preheader.us, %vec
   %i.ix = or disjoint <4 x i16> %i.iw, %i.iu
   store <4 x i16> %i.ix, ptr %i.io, align 2, !tbaa !198
   %indvars.iv.next221.3 = add nuw nsw i64 %indvars.iv220, 16 ; 2 uses
-  %niter.next.3 = add i32 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i32 %niter, 4           ; 2 uses
   %niter.ncmp.3.not = icmp eq i32 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3.not, label %.split207.unr-lcssa, label %.split.us, !llvm.loop !211
 
@@ -704,8 +704,7 @@ _ZNSt6vectorItSaItEE6resizeEmRKt.exit17:          ; preds = %bb.h, %bb.i, %bb.j,
   ret void
 
 bb.k:                                             ; preds = %.lr.ph, %bb.m
-  %i.ax = phi i64 [ 1, %.lr.ph ], [ %4, %bb.m ]   ; 3 uses
-  %.021 = phi i32 [ 1, %.lr.ph ], [ %3, %bb.m ]
+  %i.ax = phi i64 [ 1, %.lr.ph ], [ %4, %bb.m ]   ; 4 uses
   %.01220 = phi i32 [ 0, %.lr.ph ], [ %.1, %bb.m ] ; 4 uses
   %i.ay = getelementptr inbounds nuw [4 x i8], ptr %i.au, i64 %i.ax
   %i.az = load i32, ptr %i.ay, align 4, !tbaa !21 ; 2 uses
@@ -734,8 +733,8 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.k, %bb.l
   %.1 = phi i32 [ %i.bi, %bb.l ], [ %.01220, %bb.k ]
-  %3 = add i32 %.021, 1                           ; 2 uses
-  %4 = zext i32 %3 to i64                         ; 2 uses
+  %3 = add nuw nsw i64 %i.ax, 1
+  %4 = and i64 %3, 4294967295                     ; 2 uses
   %.not = icmp ult i64 %i.av, %4
   br i1 %.not, label %._crit_edge, label %bb.k, !llvm.loop !244
 }

@@ -204,7 +204,7 @@ bb.n:                                             ; preds = %bb.n, %.lr.ph.i.i.n
   %i.dz = bitcast <16 x i8> %.lobit.i.i.i.1 to <2 x i64>
   %i.ea = or <2 x i64> %i.dz, splat (i64 -9187201950435737472)
   store <2 x i64> %i.ea, ptr %i.dy, align 16, !noalias !97
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.i.i.unr-lcssa, label %bb.n
 
@@ -382,7 +382,7 @@ _RNvNtCs7tKScEop1B6_5alloc5boxed14box_new_uninit.exit.i: ; preds = %bb.a
 
 bb.c:                                             ; preds = %.lr.ph
   %i.l = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i3, i64 16 ; 2 uses
-  %i.m = add i64 %.sroa.8.0.i.i2, 1
+  %i.m = add nuw i64 %.sroa.8.0.i.i2, 1
   %i.n = icmp eq ptr %i.l, %i.j
   br i1 %i.n, label %._crit_edge, label %.lr.ph
 
@@ -785,7 +785,7 @@ _RNCNvMs4_NtNtNtNtCs7tKScEop1B6_5alloc11collections5btree3map5entryINtB7_11Vacan
   %.sroa.8.0120.i.i.i = phi i64 [ %i.aai, %bb.dm ], [ 0, %bb.cs ]
   %.sroa.9.0119.i.i.i = phi ptr [ %i.acr, %bb.dm ], [ %i.yw, %bb.cs ] ; 2 uses
   %.sroa.0.sroa.0.0117.i.i.i = phi i64 [ %.sroa.034.0.copyload.i.i.i, %bb.dm ], [ %.sroa.019.i.sroa.0.0.copyload.i.i.i, %bb.cs ] ; 4 uses
-  %i.aai = add i64 %.sroa.8.0120.i.i.i, 1         ; 3 uses
+  %i.aai = add nuw i64 %.sroa.8.0120.i.i.i, 1     ; 2 uses
   %i.aaj = getelementptr inbounds nuw i8, ptr %.sroa.7.0121.i.i.i, i64 888
   %i.aak = load i16, ptr %i.aaj, align 8, !noalias !1795 ; 4 uses
   %i.aal = zext i16 %i.aak to i64                 ; 8 uses
@@ -988,8 +988,6 @@ _RINvNtNtNtCs7tKScEop1B6_5alloc11collections5btree4node13move_to_sliceINtNtNtCs6
   %i.ado = getelementptr [8 x i8], ptr %i.adn, i64 %.sroa.06.0.i.i.i.i
   %i.adp = shl nuw nsw i64 %i.adh, 3
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.adj, ptr noundef nonnull readonly align 8 dereferenceable(1) %i.ado, i64 %i.adp, i1 false), !alias.scope !1854, !noalias !1834
-  %4 = icmp ne i64 %i.aai, 0
-  call void @llvm.assume(i1 %4)
   call void @llvm.experimental.noalias.scope.decl(metadata !1855)
   %xtraiter = and i64 %i.adh, 3                   ; 3 uses
   %i.adq = icmp ult i16 %i.adf, 3
@@ -1034,7 +1032,7 @@ bb.di:                                            ; preds = %bb.di, %_RINvNtNtNt
   %i.aen = trunc nuw nsw i64 %i.aed to i16
   %i.aeo = getelementptr inbounds nuw i8, ptr %i.ael, i64 888
   store i16 %i.aen, ptr %i.aeo, align 8, !noalias !1858
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_RINvMsW_NtNtNtCs7tKScEop1B6_5alloc11collections5btree4nodeINtB6_6HandleINtB6_7NodeRefNtNtB6_6marker3MutNtCsgy7pbN39oAf_6uu_ptx7WordRefNtNtB8_7set_val9SetValZSTNtB1n_8InternalENtB1n_2KVE5splitNtNtBc_5alloc6GlobalEB1F_.exit.i.i.i.i.unr-lcssa, label %bb.di
 

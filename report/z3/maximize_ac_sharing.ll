@@ -204,10 +204,10 @@ _ZN10ptr_bufferI4exprLj128EE6appendEjPKPS0_.exit: ; preds = %_ZN6bufferIP4exprLb
 
 .preheader.lr.ph:                                 ; preds = %.preheader.lr.ph.preheader, %.loopexit168
   %indvar = phi i32 [ 0, %.preheader.lr.ph.preheader ], [ %indvar.next, %.loopexit168 ] ; 3 uses
-  %.181206354 = phi i32 [ %.080, %.preheader.lr.ph.preheader ], [ %i.ez, %.loopexit168 ] ; 7 uses
+  %.181206354 = phi i32 [ %.080, %.preheader.lr.ph.preheader ], [ %i.ez, %.loopexit168 ] ; 6 uses
   %i.fb = xor i32 %indvar, -1
   %i.fc = add i32 %.080, %i.fb
-  %i.fd = zext i32 %.181206354 to i64
+  %i.fd = zext i32 %.181206354 to i64             ; 2 uses
   %i.fe = load ptr, ptr %8, align 8               ; 2 uses
   %i.ff = load i32, ptr %1, align 8, !tbaa !42
   %i.fg = load i32, ptr %i.eu, align 8, !tbaa !43 ; 3 uses
@@ -460,8 +460,7 @@ bb.ae:                                            ; preds = %.loopexit
 
 .loopexit163:                                     ; preds = %bb.y, %_ZNK14core_hashtableI14ptr_hash_entryIN19maximize_ac_sharing5entryEE12obj_ptr_hashIS2_E8deref_eqIS2_EE6equalsERKPS2_SB_.exit30.thread.i, %bb.ac, %.preheader.i
   %indvars.iv.next232 = add nuw nsw i64 %indvars.iv231, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next232 to i32
-  %exitcond234.not = icmp eq i32 %.181206354, %lftr.wideiv
+  %exitcond234.not = icmp eq i64 %indvars.iv.next232, %i.fd
   br i1 %exitcond234.not, label %.loopexit166, label %bb.t, !llvm.loop !75
 
 .loopexit166:                                     ; preds = %.loopexit163
@@ -864,7 +863,7 @@ bb.f:                                             ; preds = %.lr.ph.i.1
 bb.g:                                             ; preds = %bb.f, %bb.e
   %.1.i.1 = phi i32 [ %i.w, %bb.f ], [ %.1.i, %bb.e ] ; 3 uses
   %i.x = getelementptr inbounds nuw i8, ptr %.013.i, i64 32 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.i.unr-lcssa, label %.lr.ph.i, !llvm.loop !101
 

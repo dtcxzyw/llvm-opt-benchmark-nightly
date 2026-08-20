@@ -204,7 +204,7 @@ _ZN2v88internal10ZoneVectorINS0_8compiler10turboshaft27MaybeRegisterRepresentati
   %.02331.epil = phi ptr [ %i.ai, %.lr.ph.epil ], [ %.02331.epil.init, %.lr.ph.epil.preheader ] ; 2 uses
   %epil.iter = phi i64 [ %epil.iter.next, %.lr.ph.epil ], [ 0, %.lr.ph.epil.preheader ]
   %.sroa.0.0.copyload.epil = load i8, ptr %.02331.epil, align 1
-  %i.af = add i64 %.132.epil, 1                   ; 2 uses
+  %i.af = add nuw i64 %.132.epil, 1               ; 2 uses
   %i.ag = load ptr, ptr %i.f, align 8
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 %.132.epil
   store i8 %.sroa.0.0.copyload.epil, ptr %i.ah, align 1
@@ -607,10 +607,9 @@ bb.j:                                             ; preds = %bb.d
 
 _ZNK2v88internal8compiler10turboshaft13FastApiCallOp23argument_representationEj.exit: ; preds = %bb.c, %bb.d, %bb.d, %bb.d, %bb.d, %bb.f, %bb.g, %bb.h, %bb.i
   %.sroa.0.0.i = phi i8 [ 8, %bb.i ], [ 3, %bb.c ], [ 1, %bb.f ], [ 4, %bb.g ], [ 3, %bb.h ], [ 0, %bb.d ], [ 0, %bb.d ], [ 0, %bb.d ], [ 0, %bb.d ]
-  %2 = add nuw nsw i64 %indvars.iv, 3
-  %3 = and i64 %2, 4294967295
-  %4 = load ptr, ptr %i.f, align 8
-  %i.bb = getelementptr inbounds nuw i8, ptr %4, i64 %3
+  %2 = load ptr, ptr %i.f, align 8
+  %3 = getelementptr inbounds nuw i8, ptr %2, i64 %indvars.iv
+  %i.bb = getelementptr inbounds nuw i8, ptr %3, i64 3
   store i8 %.sroa.0.0.i, ptr %i.bb, align 1
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
   %i.bc = load ptr, ptr %i.y, align 8

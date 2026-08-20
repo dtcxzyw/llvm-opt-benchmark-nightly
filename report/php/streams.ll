@@ -203,7 +203,7 @@ bb.a:
   br i1 %.not, label %bb.i, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.a = tail call ptr @_php_stream_opendir(ptr noundef %0, i32 noundef 8, ptr noundef %3) ; 6 uses
+  %i.a = tail call ptr @_php_stream_opendir(ptr noundef %0, i32 noundef 8, ptr noundef %3) ; 5 uses
   %.not47 = icmp eq ptr %i.a, null
   br i1 %.not47, label %bb.i, label %.split41
 
@@ -213,7 +213,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not62, label %.lr.ph, label %select.unfold50._crit_edge
 
 .lr.ph:                                           ; preds = %.split41, %.split
-  %indvars.iv = phi i64 [ %indvars.iv.next, %.split ], [ 0, %.split41 ] ; 6 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %.split ], [ 0, %.split41 ] ; 5 uses
   %.03656 = phi i32 [ %.2, %.split ], [ 0, %.split41 ] ; 5 uses
   %.03755 = phi ptr [ %.138, %.split ], [ null, %.split41 ] ; 3 uses
   %i.c = zext i32 %.03656 to i64
@@ -239,7 +239,7 @@ bb.f:                                             ; preds = %bb.c, %bb.e
   br label %zend_string_init.exit
 
 zend_string_init.exit:                            ; preds = %bb.f, %.lr.ph
-  %.138 = phi ptr [ %i.i, %bb.f ], [ %.03755, %.lr.ph ] ; 5 uses
+  %.138 = phi ptr [ %i.i, %bb.f ], [ %.03755, %.lr.ph ] ; 4 uses
   %.2 = phi i32 [ %.1, %bb.f ], [ %.03656, %.lr.ph ] ; 2 uses
   %i.j = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %5) #26 ; 4 uses
   %i.k = and i64 %i.j, -8
@@ -259,24 +259,16 @@ zend_string_init.exit:                            ; preds = %bb.f, %.lr.ph
   %i.s = getelementptr inbounds nuw [8 x i8], ptr %.138, i64 %indvars.iv
   store ptr %i.m, ptr %i.s, align 8, !tbaa !161
   %i.t = icmp ult i32 %.2, 10
-  br i1 %i.t, label %bb.h, label %6
+  br i1 %i.t, label %bb.h, label %.split
 
-6:                                                ; preds = %zend_string_init.exit
-  %exitcond = icmp eq i64 %indvars.iv, 4294967295
-  br i1 %exitcond, label %.thread, label %.split
-
-.thread:                                          ; preds = %6
-  %7 = call i32 @_php_stream_free(ptr noundef nonnull %i.a, i32 noundef 3) ; 0 uses
-  br label %.lr.ph61.preheader
-
-.split:                                           ; preds = %6
+.split:                                           ; preds = %zend_string_init.exit
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.u = call i64 @_php_stream_read(ptr noundef nonnull %i.a, ptr noundef nonnull %5, i64 noundef 4097)
   %.not63 = icmp eq i64 %i.u, 4097
   br i1 %.not63, label %.lr.ph, label %select.unfold50._crit_edge.loopexit
 
 select.unfold50._crit_edge.loopexit:              ; preds = %.split
-  %indvars.le = trunc i64 %indvars.iv.next to i32
+  %indvars.le = trunc nuw i64 %indvars.iv.next to i32
   br label %select.unfold50._crit_edge
 
 select.unfold50._crit_edge:                       ; preds = %select.unfold50._crit_edge.loopexit, %.split41
@@ -295,28 +287,22 @@ bb.g:                                             ; preds = %select.unfold50._cr
   br label %bb.i
 
 bb.h:                                             ; preds = %zend_string_init.exit, %bb.d
-  %.239 = phi ptr [ %.138, %zend_string_init.exit ], [ %.03755, %bb.d ] ; 2 uses
+  %.239 = phi ptr [ %.03755, %bb.d ], [ %.138, %zend_string_init.exit ] ; 2 uses
   %i.z = call i32 @_php_stream_free(ptr noundef nonnull %i.a, i32 noundef 3) ; 0 uses
   %.not64 = icmp eq i64 %indvars.iv, 0
-  br i1 %.not64, label %._crit_edge, label %.lr.ph61.preheader
-
-.lr.ph61.preheader:                               ; preds = %.thread, %bb.h
-  %.23979 = phi ptr [ %.138, %.thread ], [ %.239, %bb.h ] ; 2 uses
-  %.03557.lcssa78 = phi i64 [ 4294967295, %.thread ], [ %indvars.iv, %bb.h ]
-  br label %.lr.ph61
+  br i1 %.not64, label %._crit_edge, label %.lr.ph61
 
 ._crit_edge:                                      ; preds = %.lr.ph61, %bb.h
-  %.23980 = phi ptr [ %.239, %bb.h ], [ %.23979, %.lr.ph61 ]
-  call void @_efree(ptr noundef %.23980) #25
+  call void @_efree(ptr noundef %.239) #25
   br label %bb.i
 
-.lr.ph61:                                         ; preds = %.lr.ph61.preheader, %.lr.ph61
-  %indvars.iv67 = phi i64 [ 0, %.lr.ph61.preheader ], [ %indvars.iv.next68, %.lr.ph61 ] ; 2 uses
-  %i.aa = getelementptr inbounds nuw [8 x i8], ptr %.23979, i64 %indvars.iv67
+.lr.ph61:                                         ; preds = %bb.h, %.lr.ph61
+  %indvars.iv67 = phi i64 [ %indvars.iv.next68, %.lr.ph61 ], [ 0, %bb.h ] ; 2 uses
+  %i.aa = getelementptr inbounds nuw [8 x i8], ptr %.239, i64 %indvars.iv67
   %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !161
   call void @_efree(ptr noundef %i.ab) #25
   %indvars.iv.next68 = add nuw nsw i64 %indvars.iv67, 1 ; 2 uses
-  %exitcond71.not = icmp eq i64 %indvars.iv.next68, %.03557.lcssa78
+  %exitcond71.not = icmp eq i64 %indvars.iv.next68, %indvars.iv
   br i1 %exitcond71.not, label %._crit_edge, label %.lr.ph61, !llvm.loop !199
 
 bb.i:                                             ; preds = %select.unfold50._crit_edge, %bb.g, %bb.b, %bb.a, %._crit_edge

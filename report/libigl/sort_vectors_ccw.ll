@@ -204,7 +204,7 @@ bb.g:                                             ; preds = %bb.f
   store i64 3, ptr %i.at, align 8, !tbaa !139, !alias.scope !136
   %i.dy = getelementptr inbounds nuw [8 x i8], ptr %i.ad, i64 %.073150 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #16
-  %i.dz = sub nuw nsw i64 2, %.073150             ; 6 uses
+  %i.dz = sub nuw nsw i64 2, %.073150             ; 5 uses
   %i.ea = getelementptr inbounds nuw i8, ptr %i.dx, i64 8
   store ptr %i.ea, ptr %1, align 8, !tbaa !149
   store i64 %i.dz, ptr %i.au, align 8, !tbaa !22
@@ -350,18 +350,17 @@ bb.m:                                             ; preds = %bb.l
   %i.gc = getelementptr inbounds nuw i8, ptr %i.gb, i64 24
   %i.gd = load double, ptr %i.gc, align 8, !tbaa !29 ; 2 uses
   %i.ge = fmul double %i.gd, %i.gd
-  %i.gf = fadd double %i.ga, %i.ge                ; 2 uses
-  %i.gg = add nuw nsw i64 %.05283.i.i.i.i.i, 4    ; 2 uses
-  %exitcond.not.i.i.i.i.i.3 = icmp eq i64 %i.gg, %i.dz
-  br i1 %exitcond.not.i.i.i.i.i.3, label %_ZNK5Eigen10MatrixBaseINS_5BlockINS1_INS_6MatrixIdLi3ELi3ELi0ELi3ELi3EEELi3ELi1ELb1EEELin1ELi1ELb0EEEE4normEv.exit, label %.lr.ph85.i.i.i.i.i, !llvm.loop !170
+  %i.gf = fadd double %i.ga, %i.ge
+  %i.gg = add nuw nsw i64 %.05283.i.i.i.i.i, 4
+  br label %.lr.ph85.i.i.i.i.i, !llvm.loop !170
 
 bb.n:                                             ; preds = %bb.l
   %i.gh = load double, ptr %gep, align 8, !tbaa !29 ; 2 uses
   %i.gi = fmul double %i.gh, %i.gh
   br label %_ZNK5Eigen10MatrixBaseINS_5BlockINS1_INS_6MatrixIdLi3ELi3ELi0ELi3ELi3EEELi3ELi1ELb1EEELin1ELi1ELb0EEEE4normEv.exit
 
-_ZNK5Eigen10MatrixBaseINS_5BlockINS1_INS_6MatrixIdLi3ELi3ELi0ELi3ELi3EEELi3ELi1ELb1EEELin1ELi1ELb0EEEE4normEv.exit: ; preds = %.lr.ph85.i.i.i.i.i, %bb.m, %bb.n
-  %.0.i.i.i = phi double [ %i.gi, %bb.n ], [ %i.fh, %bb.m ], [ %i.gf, %.lr.ph85.i.i.i.i.i ]
+_ZNK5Eigen10MatrixBaseINS_5BlockINS1_INS_6MatrixIdLi3ELi3ELi0ELi3ELi3EEELi3ELi1ELb1EEELin1ELi1ELb0EEEE4normEv.exit: ; preds = %bb.m, %bb.n
+  %.0.i.i.i = phi double [ %i.gi, %bb.n ], [ %i.fh, %bb.m ]
   %.scalar.i90 = call noundef double @llvm.sqrt.f64(double %.0.i.i.i) ; 2 uses
   store double %.scalar.i90, ptr %i.ez, align 8, !tbaa !29
   br label %.sink.split
@@ -764,7 +763,7 @@ _ZN5Eigen10MatrixBaseINS_3MapINS_6MatrixIdLi1ELin1ELi1ELi1ELi3EEELi0ENS_6StrideI
   %i.lt = fsub double %i.ls, %i.lr
   store double %i.lt, ptr %i.lo, align 8, !tbaa !29
   %i.lu = add nuw nsw i64 %.05.i.i.i.i.i.i9, 2    ; 2 uses
-  %niter159.next.1 = add i64 %niter159, 2         ; 2 uses
+  %niter159.next.1 = add nuw i64 %niter159, 2     ; 2 uses
   %niter159.ncmp.1 = icmp eq i64 %niter159.next.1, %unroll_iter158
   br i1 %niter159.ncmp.1, label %_ZN5Eigen10MatrixBaseINS_5BlockINS1_INS_6MatrixIdLi3ELi3ELi0ELi3ELi3EEELin1ELin1ELb0EEELi1ELin1ELb0EEEEmIINS_13CwiseBinaryOpINS_8internal17scalar_product_opIddEEKNS_14CwiseNullaryOpINS9_18scalar_constant_opIdEEKNS2_IdLi1ELin1ELi1ELi1ELi3EEEEEKNS_3MapISF_Li0ENS_6StrideILi0ELi0EEEEEEEEERS5_RKNS0_IT_EE.exit.loopexit.unr-lcssa, label %.lr.ph.i.i.i.i.i.i8, !llvm.loop !206
 

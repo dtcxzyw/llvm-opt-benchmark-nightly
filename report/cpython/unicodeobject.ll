@@ -204,7 +204,7 @@ bb.h:                                             ; preds = %_PyUnicode_DATA.exi
   %i.cm = shl nuw i64 1, %i.cl
   %i.cn = or i64 %i.cm, %i.ch                     ; 3 uses
   %i.co = getelementptr i8, ptr %.037.i, i64 16   ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %make_bloom_mask.exit.loopexit238.unr-lcssa, label %.lr.ph.i, !llvm.loop !601
 
@@ -607,7 +607,7 @@ bb.e:                                             ; preds = %bb.b
 .preheader81.i:                                   ; preds = %bb.e, %bb.n
   %.049100.i = phi ptr [ %i.aa, %bb.n ], [ %i.b, %bb.e ] ; 6 uses
   %.05199.i = phi i64 [ %.253.ph.i, %bb.n ], [ 0, %bb.e ] ; 2 uses
-  %.05498.i = phi ptr [ %.256.ph.i, %bb.n ], [ null, %bb.e ] ; 6 uses
+  %.05498.i = phi ptr [ %.256.ph.i, %bb.n ], [ null, %bb.e ] ; 7 uses
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.j, %.preheader81.i
@@ -663,7 +663,7 @@ bb.l:                                             ; preds = %bb.k
 .lr.ph.i:                                         ; preds = %.preheader.i, %bb.m
   %.094.i = phi ptr [ %i.w, %bb.m ], [ %.049100.i, %.preheader.i ] ; 2 uses
   %.04493.i = phi ptr [ %i.v, %bb.m ], [ %.05498.i, %.preheader.i ] ; 2 uses
-  %.04592.i = phi i64 [ %i.x, %bb.m ], [ 0, %.preheader.i ] ; 2 uses
+  %.04592.i = phi i64 [ %i.x, %bb.m ], [ 0, %.preheader.i ] ; 3 uses
   %i.s = load i8, ptr %.04493.i, align 1, !tbaa !205
   %i.t = load i8, ptr %.094.i, align 1, !tbaa !205
   %i.u = icmp eq i8 %i.s, %i.t
@@ -672,20 +672,19 @@ bb.l:                                             ; preds = %bb.k
 bb.m:                                             ; preds = %.lr.ph.i
   %i.v = getelementptr i8, ptr %.04493.i, i64 1   ; 2 uses
   %i.w = getelementptr i8, ptr %.094.i, i64 1     ; 2 uses
-  %i.x = add i64 %.04592.i, 1                     ; 2 uses
+  %i.x = add nuw i64 %.04592.i, 1                 ; 2 uses
   %i.y = icmp ult ptr %i.v, %i.m
   %i.z = icmp ult ptr %i.w, %.046.lcssa.i
   %or.cond.i = and i1 %i.z, %i.y
-  br i1 %or.cond.i, label %.lr.ph.i, label %.critedge3.i, !llvm.loop !719
+  br i1 %or.cond.i, label %.lr.ph.i, label %bb.n, !llvm.loop !719
 
-.critedge3.i:                                     ; preds = %bb.m, %.lr.ph.i
-  %.045.lcssa.i = phi i64 [ %i.x, %bb.m ], [ %.04592.i, %.lr.ph.i ] ; 2 uses
-  %.not66.i = icmp eq i64 %.045.lcssa.i, 0
+.critedge3.i:                                     ; preds = %.lr.ph.i
+  %.not66.i = icmp eq i64 %.04592.i, 0
   br i1 %.not66.i, label %search_longest_common_leading_whitespace.exit.thread, label %bb.n
 
-bb.n:                                             ; preds = %.critedge3.i, %bb.l, %.critedge.i
-  %.256.ph.i = phi ptr [ %.049100.i, %bb.l ], [ %.05498.i, %.critedge3.i ], [ %.05498.i, %.critedge.i ]
-  %.253.ph.i = phi i64 [ %i.r, %bb.l ], [ %.045.lcssa.i, %.critedge3.i ], [ %.05199.i, %.critedge.i ] ; 6 uses
+bb.n:                                             ; preds = %bb.m, %.critedge3.i, %bb.l, %.critedge.i
+  %.256.ph.i = phi ptr [ %.049100.i, %bb.l ], [ %.05498.i, %.critedge3.i ], [ %.05498.i, %.critedge.i ], [ %.05498.i, %bb.m ]
+  %.253.ph.i = phi i64 [ %i.r, %bb.l ], [ %.04592.i, %.critedge3.i ], [ %.05199.i, %.critedge.i ], [ %i.x, %bb.m ] ; 6 uses
   %i.aa = getelementptr i8, ptr %.150.lcssa.i, i64 1 ; 2 uses
   %.not70.i = icmp ult ptr %i.aa, %i.h
   br i1 %.not70.i, label %.preheader81.i, label %search_longest_common_leading_whitespace.exit, !llvm.loop !720
@@ -1088,7 +1087,7 @@ bb.z:                                             ; preds = %.thread.us.i, %bb.u
   %i.cv = add nsw i64 %i.al, %i.cu
   %.171.i.1 = select i1 %i.ct, i64 %i.cv, i64 %.171.i ; 3 uses
   %i.cw = add nuw nsw i64 %.068100.i, 2           ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.i.unr-lcssa, label %.lr.ph.i68, !llvm.loop !780
 
@@ -1491,7 +1490,7 @@ bb.af:                                            ; preds = %bb.ae, %bb.ac, %bb.
   %i.dv = add nsw i64 %i.bi, %i.du
   %.171.i.1 = select i1 %i.dt, i64 %i.dv, i64 %.171.i ; 3 uses
   %i.dw = add nuw nsw i64 %.068100.i, 2           ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.i.unr-lcssa, label %.lr.ph.i73, !llvm.loop !804
 
@@ -1678,7 +1677,7 @@ bb.a:
   br i1 %i.c, label %._crit_edge, label %.lr.ph38
 
 .lr.ph:                                           ; preds = %.lr.ph38
-  %i.d = add i64 %i.f, 1                          ; 2 uses
+  %i.d = add nuw i64 %i.f, 1                      ; 2 uses
   %i.e = icmp eq i64 %i.d, %4
   br i1 %i.e, label %._crit_edge, label %.lr.ph38
 
@@ -1918,7 +1917,7 @@ bb.n:                                             ; preds = %.split.us
   br i1 %i.ce, label %ucs1lib__two_way_count.exit, label %.lr.ph250
 
 .lr.ph.i:                                         ; preds = %.lr.ph250
-  %i.cf = add i64 %i.ch, 1                        ; 2 uses
+  %i.cf = add nuw i64 %i.ch, 1                    ; 2 uses
   %i.cg = icmp eq i64 %i.cf, %i.cb
   br i1 %i.cg, label %ucs1lib__two_way_count.exit, label %.lr.ph250
 
@@ -2321,7 +2320,7 @@ bb.a:
   br i1 %i.c, label %._crit_edge, label %.lr.ph38
 
 .lr.ph:                                           ; preds = %.lr.ph38
-  %i.d = add i64 %i.f, 1                          ; 2 uses
+  %i.d = add nuw i64 %i.f, 1                      ; 2 uses
   %i.e = icmp eq i64 %i.d, %4
   br i1 %i.e, label %._crit_edge, label %.lr.ph38
 
@@ -2561,7 +2560,7 @@ bb.n:                                             ; preds = %.split.us
   br i1 %i.ce, label %ucs2lib__two_way_count.exit, label %.lr.ph250
 
 .lr.ph.i:                                         ; preds = %.lr.ph250
-  %i.cf = add i64 %i.ch, 1                        ; 2 uses
+  %i.cf = add nuw i64 %i.ch, 1                    ; 2 uses
   %i.cg = icmp eq i64 %i.cf, %i.cb
   br i1 %i.cg, label %ucs2lib__two_way_count.exit, label %.lr.ph250
 
@@ -2964,7 +2963,7 @@ bb.a:
   br i1 %i.c, label %._crit_edge, label %.lr.ph38
 
 .lr.ph:                                           ; preds = %.lr.ph38
-  %i.d = add i64 %i.f, 1                          ; 2 uses
+  %i.d = add nuw i64 %i.f, 1                      ; 2 uses
   %i.e = icmp eq i64 %i.d, %4
   br i1 %i.e, label %._crit_edge, label %.lr.ph38
 
@@ -3204,7 +3203,7 @@ bb.n:                                             ; preds = %.split.us
   br i1 %i.ce, label %ucs4lib__two_way_count.exit, label %.lr.ph250
 
 .lr.ph.i:                                         ; preds = %.lr.ph250
-  %i.cf = add i64 %i.ch, 1                        ; 2 uses
+  %i.cf = add nuw i64 %i.ch, 1                    ; 2 uses
   %i.cg = icmp eq i64 %i.cf, %i.cb
   br i1 %i.cg, label %ucs4lib__two_way_count.exit, label %.lr.ph250
 
@@ -3607,7 +3606,7 @@ PyUnicode_READ.exit:                              ; preds = %bb.b, %bb.c, %bb.d
   %i.w = add nuw nsw i64 %.03647, 2               ; 2 uses
   %i.x = getelementptr [4 x i8], ptr %3, i64 %i.r
   store i32 %i.v, ptr %i.x, align 4, !tbaa !7
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.preheader.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !959
 
@@ -3674,7 +3673,7 @@ PyUnicode_READ.exit46:                            ; preds = %bb.e, %bb.f, %bb.g
   %i.at = getelementptr i8, ptr %i.as, i64 4
   store i32 %i.aq, ptr %i.at, align 4, !tbaa !7
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %niter73.next.1 = add i64 %niter73, 2           ; 2 uses
+  %niter73.next.1 = add nuw i64 %niter73, 2       ; 2 uses
   %niter73.ncmp.1 = icmp eq i64 %niter73.next.1, %unroll_iter72
   br i1 %niter73.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph51, !llvm.loop !960
 
@@ -3929,7 +3928,7 @@ PyUnicode_READ.exit.us:                           ; preds = %.lr.ph27, %._crit_e
   %i.s = getelementptr i8, ptr %i.r, i64 4
   store i32 %i.p, ptr %i.s, align 4, !tbaa !7
   %indvars.iv.next51.1 = add nuw nsw i64 %indvars.iv50, 2 ; 2 uses
-  %niter87.next.1 = add i64 %niter87, 2           ; 2 uses
+  %niter87.next.1 = add nuw i64 %niter87, 2       ; 2 uses
   %niter87.ncmp.1 = icmp eq i64 %niter87.next.1, %unroll_iter86
   br i1 %niter87.ncmp.1, label %._crit_edge.us.loopexit.unr-lcssa, label %.lr.ph.us, !llvm.loop !964
 
@@ -4002,7 +4001,7 @@ PyUnicode_READ.exit.us33:                         ; preds = %.lr.ph27, %._crit_e
   %i.ap = getelementptr i8, ptr %i.ao, i64 4
   store i32 %i.am, ptr %i.ap, align 4, !tbaa !7
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.us40.loopexit.unr-lcssa, label %.lr.ph.us39, !llvm.loop !964
 
@@ -4074,7 +4073,7 @@ PyUnicode_READ.exit:                              ; preds = %.lr.ph27, %._crit_e
   %i.bl = getelementptr i8, ptr %i.bk, i64 4
   store i32 %i.bi, ptr %i.bl, align 4, !tbaa !7
   %indvars.iv.next57.1 = add nuw nsw i64 %indvars.iv56, 2 ; 2 uses
-  %niter93.next.1 = add i64 %niter93, 2           ; 2 uses
+  %niter93.next.1 = add nuw i64 %niter93, 2       ; 2 uses
   %niter93.ncmp.1 = icmp eq i64 %niter93.next.1, %unroll_iter92
   br i1 %niter93.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !964
 
@@ -4199,7 +4198,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.y = getelementptr i8, ptr %i.x, i64 4
   store i32 %i.v, ptr %i.y, align 4, !tbaa !7
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !966
 
@@ -4602,7 +4601,7 @@ PyUnicode_READ.exit.i:                            ; preds = %bb.d, %bb.c, %bb.b
   %i.x = getelementptr i8, ptr %i.w, i64 4
   store i32 %i.u, ptr %i.x, align 4, !tbaa !7
   %indvars.iv.next.i.1 = add nuw nsw i64 %indvars.iv.i, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.i.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !978
 
@@ -4697,7 +4696,7 @@ PyUnicode_READ.exit.us.us:                        ; preds = %.lr.ph35.split.us, 
   %i.s = getelementptr i8, ptr %i.r, i64 4
   store i32 %i.p, ptr %i.s, align 4, !tbaa !7
   %indvars.iv.next68.1 = add nuw nsw i64 %indvars.iv67, 2 ; 2 uses
-  %niter118.next.1 = add i64 %niter118, 2         ; 2 uses
+  %niter118.next.1 = add nuw i64 %niter118, 2     ; 2 uses
   %niter118.ncmp.1 = icmp eq i64 %niter118.next.1, %unroll_iter117
   br i1 %niter118.ncmp.1, label %._crit_edge.us.us.loopexit.unr-lcssa, label %.lr.ph.us.us, !llvm.loop !978
 
@@ -4770,7 +4769,7 @@ PyUnicode_READ.exit.us.us42:                      ; preds = %.lr.ph35.split.us, 
   %i.ap = getelementptr i8, ptr %i.ao, i64 4
   store i32 %i.am, ptr %i.ap, align 4, !tbaa !7
   %indvars.iv.next62.1 = add nuw nsw i64 %indvars.iv61, 2 ; 2 uses
-  %niter112.next.1 = add i64 %niter112, 2         ; 2 uses
+  %niter112.next.1 = add nuw i64 %niter112, 2     ; 2 uses
   %niter112.ncmp.1 = icmp eq i64 %niter112.next.1, %unroll_iter111
   br i1 %niter112.ncmp.1, label %._crit_edge.us.us49.loopexit.unr-lcssa, label %.lr.ph.us.us48, !llvm.loop !978
 
@@ -4842,7 +4841,7 @@ PyUnicode_READ.exit.us:                           ; preds = %.lr.ph35.split.us, 
   %i.bl = getelementptr i8, ptr %i.bk, i64 4
   store i32 %i.bi, ptr %i.bl, align 4, !tbaa !7
   %indvars.iv.next74.1 = add nuw nsw i64 %indvars.iv73, 2 ; 2 uses
-  %niter124.next.1 = add i64 %niter124, 2         ; 2 uses
+  %niter124.next.1 = add nuw i64 %niter124, 2     ; 2 uses
   %niter124.ncmp.1 = icmp eq i64 %niter124.next.1, %unroll_iter123
   br i1 %niter124.ncmp.1, label %._crit_edge.us.loopexit.unr-lcssa, label %.lr.ph.us, !llvm.loop !978
 
@@ -4936,7 +4935,7 @@ PyUnicode_READ.exit:                              ; preds = %bb.b, %bb.c, %bb.d
   %i.cn = getelementptr i8, ptr %i.cm, i64 4
   store i32 %i.ck, ptr %i.cn, align 4, !tbaa !7
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !978
 
@@ -5310,7 +5309,7 @@ bb.h:                                             ; preds = %bb.g, %bb.e
   %i.aa = getelementptr i8, ptr %i.z, i64 4
   store i32 %i.x, ptr %i.aa, align 4, !tbaa !7
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !981
 

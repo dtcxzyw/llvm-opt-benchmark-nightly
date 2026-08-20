@@ -203,7 +203,7 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.c, %bb.c
   %i.j = add nuw nsw i64 %2, 1
-  %i.k = tail call ptr @cli_max_calloc(i64 noundef 1, i64 noundef %i.j) #9 ; 11 uses
+  %i.k = tail call ptr @cli_max_calloc(i64 noundef 1, i64 noundef %i.j) #9 ; 10 uses
   %.not120 = icmp eq ptr %i.k, null
   br i1 %.not120, label %.loopexit127, label %bb.e
 
@@ -229,7 +229,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %.not123202, label %.lr.ph205, label %._crit_edge
 
 .lr.phthread-pre-split:                           ; preds = %.lr.ph205
-  %i.q = add i64 %.086138203, 1                   ; 2 uses
+  %i.q = add nuw i64 %.086138203, 1               ; 2 uses
   %.pr = load i8, ptr %i.r, align 1, !tbaa !47    ; 2 uses
   %.not123 = icmp slt i8 %.pr, -64
   br i1 %.not123, label %.lr.ph205, label %._crit_edge
@@ -293,7 +293,7 @@ bb.l:                                             ; preds = %bb.k
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %bb.k, %bb.j, %bb.i, %bb.h, %bb.g, %._crit_edge.thread, %._crit_edge
-  %.086.lcssa191 = phi i64 [ %.086.lcssa, %._crit_edge ], [ %.086.lcssa190, %bb.i ], [ %.086.lcssa190, %._crit_edge.thread ], [ %.086.lcssa190, %bb.l ], [ %.086.lcssa190, %bb.g ], [ %.086.lcssa190, %bb.j ], [ %.086.lcssa190, %bb.h ], [ %.086.lcssa190, %bb.k ] ; 4 uses
+  %.086.lcssa191 = phi i64 [ %.086.lcssa, %._crit_edge ], [ %.086.lcssa190, %bb.i ], [ %.086.lcssa190, %._crit_edge.thread ], [ %.086.lcssa190, %bb.l ], [ %.086.lcssa190, %bb.g ], [ %.086.lcssa190, %bb.j ], [ %.086.lcssa190, %bb.h ], [ %.086.lcssa190, %bb.k ] ; 3 uses
   %.087.lcssa189 = phi ptr [ %.087.lcssa, %._crit_edge ], [ %.087.lcssa188, %bb.i ], [ %.087.lcssa188, %._crit_edge.thread ], [ %.087.lcssa188, %bb.l ], [ %.087.lcssa188, %bb.g ], [ %.087.lcssa188, %bb.j ], [ %.087.lcssa188, %bb.h ], [ %.087.lcssa188, %bb.k ]
   %.0.lcssa = phi i64 [ 0, %._crit_edge ], [ 4, %bb.i ], [ 1, %._crit_edge.thread ], [ %spec.select, %bb.l ], [ 2, %bb.g ], [ 5, %bb.j ], [ 3, %bb.h ], [ 6, %bb.k ] ; 2 uses
   %.not124 = icmp eq i64 %.086.lcssa191, %.0.lcssa
@@ -301,10 +301,6 @@ bb.m:                                             ; preds = %bb.l, %bb.k, %bb.j,
 
 bb.n:                                             ; preds = %bb.m
   tail call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.93, i64 noundef %.086.lcssa191, i64 noundef %.0.lcssa) #9
-  %.not125144 = icmp eq i64 %.086.lcssa191, 0
-  br i1 %.not125144, label %.loopexit127, label %.lr.ph148.preheader
-
-.lr.ph148.preheader:                              ; preds = %bb.n
   tail call void @llvm.memset.p0.i64(ptr nonnull align 1 %.087.lcssa189, i8 0, i64 %.086.lcssa191, i1 false), !tbaa !47
   br label %.loopexit127
 
@@ -531,8 +527,8 @@ bb.am:                                            ; preds = %bb.al, %bb.aa
   call void @free(ptr noundef %i.aj) #9
   br label %.loopexit127
 
-.loopexit127:                                     ; preds = %.lr.ph148.preheader, %bb.n, %bb.o, %bb.d, %bb.m, %bb.f, %bb.e, %bb.am, %bb.ab, %bb.y, %bb.b
-  %.1102 = phi ptr [ %i.k, %bb.e ], [ %i.g, %bb.b ], [ null, %bb.y ], [ %.2, %bb.am ], [ null, %bb.ab ], [ null, %bb.d ], [ %i.k, %bb.m ], [ null, %bb.o ], [ %i.k, %bb.f ], [ %i.k, %bb.n ], [ %i.k, %.lr.ph148.preheader ]
+.loopexit127:                                     ; preds = %bb.n, %bb.o, %bb.d, %bb.m, %bb.f, %bb.e, %bb.am, %bb.ab, %bb.y, %bb.b
+  %.1102 = phi ptr [ %i.k, %bb.e ], [ %i.g, %bb.b ], [ null, %bb.y ], [ %.2, %bb.am ], [ null, %bb.ab ], [ null, %bb.d ], [ %i.k, %bb.m ], [ null, %bb.o ], [ %i.k, %bb.f ], [ %i.k, %bb.n ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #9
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #9
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #9

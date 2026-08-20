@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph.i.i.i
   %i.x = getelementptr inbounds nuw [16 x i8], ptr %i.w, i64 %indvars.iv.next.i.i.i
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.v, ptr noundef nonnull align 4 dereferenceable(16) %i.x, i64 16, i1 false), !tbaa.struct !38
   %indvars.iv.next.i.i.i.1 = add nuw nsw i64 %indvars.iv.i.i.i, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZNK20btAlignedObjectArrayI9btVector3E4copyEiiPS0_.exit.i.i.loopexit.unr-lcssa, label %bb.c, !llvm.loop !39
 
@@ -311,7 +311,7 @@ bb.i:                                             ; preds = %bb.i, %.lr.ph.i.i.i
   %i.bd = load i32, ptr %i.bc, align 2
   store i32 %i.bd, ptr %i.ba, align 2
   %indvars.iv.next.i.i.i24.3 = add nuw nsw i64 %indvars.iv.i.i.i23, 4 ; 2 uses
-  %niter64.next.3 = add i64 %niter64, 4           ; 2 uses
+  %niter64.next.3 = add nuw i64 %niter64, 4       ; 2 uses
   %niter64.ncmp.3 = icmp eq i64 %niter64.next.3, %unroll_iter63
   br i1 %niter64.ncmp.3, label %_ZNK20btAlignedObjectArrayIN7ConvexH8HalfEdgeEE4copyEiiPS1_.exit.i.i.loopexit.unr-lcssa, label %bb.i, !llvm.loop !43
 
@@ -416,7 +416,7 @@ bb.p:                                             ; preds = %bb.p, %.lr.ph.i.i.i
   %i.ca = getelementptr inbounds nuw [20 x i8], ptr %i.bz, i64 %indvars.iv.next.i.i.i40
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %i.by, ptr noundef nonnull align 4 dereferenceable(20) %i.ca, i64 20, i1 false), !tbaa.struct !46
   %indvars.iv.next.i.i.i40.1 = add nuw nsw i64 %indvars.iv.i.i.i39, 2 ; 2 uses
-  %niter71.next.1 = add i64 %niter71, 2           ; 2 uses
+  %niter71.next.1 = add nuw i64 %niter71, 2       ; 2 uses
   %niter71.ncmp.1 = icmp eq i64 %niter71.next.1, %unroll_iter70
   br i1 %niter71.ncmp.1, label %_ZNK20btAlignedObjectArrayI7btPlaneE4copyEiiPS0_.exit.i.i.loopexit.unr-lcssa, label %bb.p, !llvm.loop !47
 
@@ -819,26 +819,25 @@ bb.a:
   %i.b = load float, ptr %0, align 4, !tbaa !9    ; 4 uses
   %i.c = fneg float %i.b
   %i.d = fmul float %i.b, -0.000000e+00
-  %i.e = load <2 x float>, ptr %i.a, align 4, !tbaa !9 ; 4 uses
-  %i.f = extractelement <2 x float> %i.e, i64 1   ; 2 uses
+  %i.e = load <2 x float>, ptr %i.a, align 4, !tbaa !9 ; 3 uses
+  %i.f = extractelement <2 x float> %i.e, i64 1   ; 3 uses
   %i.g = fmul float %i.f, 0.000000e+00
   %i.h = extractelement <2 x float> %i.e, i64 0   ; 2 uses
   %i.i = fsub float %i.h, %i.g                    ; 2 uses
+  %1 = tail call float @llvm.fmuladd.f32(float %i.f, float 0.000000e+00, float %i.c) ; 2 uses
   %i.j = fmul float %i.h, -0.000000e+00           ; 2 uses
+  %2 = tail call float @llvm.fmuladd.f32(float %i.b, float 0.000000e+00, float %i.j) ; 2 uses
   %i.k = fneg float %i.f
   %i.l = insertelement <2 x float> poison, float %i.k, i64 0
   %i.m = insertelement <2 x float> %i.l, float %i.d, i64 1
   %i.n = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.e, <2 x float> zeroinitializer, <2 x float> %i.m) ; 3 uses
   %i.o = fadd float %i.j, %i.b                    ; 2 uses
-  %1 = insertelement <2 x float> %i.e, float %i.b, i64 0
-  %2 = insertelement <2 x float> poison, float %i.j, i64 0
-  %i.p = insertelement <2 x float> %2, float %i.c, i64 1
-  %3 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %1, <2 x float> zeroinitializer, <2 x float> %i.p) ; 4 uses
-  %4 = shufflevector <2 x float> %i.n, <2 x float> %3, <2 x i32> <i32 3, i32 1> ; 2 uses
-  %i.q = fmul <2 x float> %4, %4
+  %i.p = insertelement <2 x float> %i.n, float %1, i64 0 ; 2 uses
+  %i.q = fmul <2 x float> %i.p, %i.p
   %i.r = shufflevector <2 x float> %i.n, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
   %i.s = insertelement <2 x float> %i.r, float %i.i, i64 0 ; 2 uses
   %i.t = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.s, <2 x float> %i.s, <2 x float> %i.q)
+  %3 = insertelement <2 x float> poison, float %2, i64 0
   %i.u = insertelement <2 x float> %3, float %i.o, i64 1 ; 2 uses
   %i.v = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.u, <2 x float> %i.u, <2 x float> %i.t)
   %i.w = tail call <2 x float> @llvm.sqrt.v2f32(<2 x float> %i.v) ; 2 uses
@@ -848,10 +847,10 @@ bb.a:
   %sqrt.i.sqrt.i8 = select i1 %i.z, float %i.x, float %i.y
   %i.aa = insertelement <2 x i1> poison, i1 %i.z, i64 0
   %i.ab = shufflevector <2 x i1> %i.aa, <2 x i1> poison, <2 x i32> zeroinitializer
-  %i.ac = insertelement <2 x float> %3, float %i.i, i64 0
-  %5 = select <2 x i1> %i.ab, <2 x float> %i.ac, <2 x float> %i.n
-  %6 = extractelement <2 x float> %3, i64 0
-  %.46 = select i1 %i.z, float %6, float %i.o
+  %i.ac = insertelement <2 x float> poison, float %i.i, i64 0
+  %4 = insertelement <2 x float> %i.ac, float %1, i64 1
+  %5 = select <2 x i1> %i.ab, <2 x float> %4, <2 x float> %i.n
+  %.46 = select i1 %i.z, float %2, float %i.o
   %i.ad = fdiv float 1.000000e+00, %sqrt.i.sqrt.i8 ; 2 uses
   %i.ae = insertelement <2 x float> poison, float %i.ad, i64 0
   %i.af = shufflevector <2 x float> %i.ae, <2 x float> poison, <2 x i32> zeroinitializer
@@ -1254,7 +1253,7 @@ bb.g:                                             ; preds = %bb.f
 ._crit_edge15.1:                                  ; preds = %bb.g, %bb.f, %bb.e, %._crit_edge15
   %.1.1 = phi ptr [ %.1, %bb.e ], [ %.1, %bb.f ], [ %.pre.1, %bb.g ], [ %.pre.1, %._crit_edge15 ] ; 3 uses
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.unr-lcssa, label %bb.a, !llvm.loop !77
 
@@ -1609,14 +1608,14 @@ bb.a:
   %i.u = fneg float %i.j
   %i.v = insertelement <2 x float> %i.o, float %i.i, i64 1
   %i.w = fneg <2 x float> %i.v                    ; 3 uses
-  %4 = shufflevector <2 x float> %i.w, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
-  %5 = insertelement <2 x float> %4, float %i.l, i64 1
-  %6 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.p, <2 x float> zeroinitializer, <2 x float> %5) ; 4 uses
-  %7 = fmul <2 x float> %6, %6
-  %8 = extractelement <2 x float> %i.w, i64 0
-  %9 = tail call float @llvm.fmuladd.f32(float %i.j, float 0.000000e+00, float %8) ; 2 uses
-  %i.x = insertelement <2 x float> %i.q, float %9, i64 1 ; 2 uses
-  %i.y = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.x, <2 x float> %i.x, <2 x float> %7)
+  %4 = extractelement <2 x float> %i.w, i64 0
+  %5 = tail call float @llvm.fmuladd.f32(float %i.j, float 0.000000e+00, float %4) ; 2 uses
+  %6 = shufflevector <2 x float> %i.w, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %7 = insertelement <2 x float> %6, float %i.l, i64 1
+  %8 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.p, <2 x float> zeroinitializer, <2 x float> %7) ; 4 uses
+  %9 = fmul <2 x float> %8, %8
+  %i.x = insertelement <2 x float> %i.q, float %5, i64 1 ; 2 uses
+  %i.y = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.x, <2 x float> %i.x, <2 x float> %9)
   %i.z = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.t, <2 x float> %i.t, <2 x float> %i.y)
   %i.aa = tail call <2 x float> @llvm.sqrt.v2f32(<2 x float> %i.z) ; 2 uses
   %i.ab = extractelement <2 x float> %i.aa, i64 0 ; 2 uses
@@ -1625,11 +1624,11 @@ bb.a:
   %sqrt.i.sqrt.i8.i = select i1 %i.ad, float %i.ab, float %i.ac
   %i.ae = insertelement <2 x i1> poison, i1 %i.ad, i64 0
   %i.af = shufflevector <2 x i1> %i.ae, <2 x i1> poison, <2 x i32> zeroinitializer
-  %i.ag = insertelement <2 x float> %6, float %i.r, i64 1
-  %i.ah = shufflevector <2 x float> %6, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %i.ag = insertelement <2 x float> %8, float %i.r, i64 1
+  %i.ah = shufflevector <2 x float> %8, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
   %i.ai = insertelement <2 x float> %i.ah, float %i.m, i64 1
   %i.aj = select <2 x i1> %i.af, <2 x float> %i.ag, <2 x float> %i.ai
-  %..i = select i1 %i.ad, float %i.n, float %9
+  %..i = select i1 %i.ad, float %i.n, float %5
   %i.ak = fdiv float 1.000000e+00, %sqrt.i.sqrt.i8.i ; 2 uses
   %i.al = insertelement <2 x float> poison, float %i.ak, i64 0
   %i.am = shufflevector <2 x float> %i.al, <2 x float> poison, <2 x i32> zeroinitializer
@@ -2032,7 +2031,7 @@ bb.al:                                            ; preds = %bb.ak
 ._crit_edge15.i.1:                                ; preds = %bb.al, %bb.ak, %bb.aj, %._crit_edge15.i
   %.1.i.1 = phi ptr [ %.1.i, %bb.aj ], [ %.1.i, %bb.ak ], [ %.pre.i224.1, %bb.al ], [ %.pre.i224.1, %._crit_edge15.i ] ; 3 uses
   %indvars.iv.next.i.1 = add nuw nsw i64 %indvars.iv.i, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.unr-lcssa, label %bb.af, !llvm.loop !77
 
@@ -2435,7 +2434,7 @@ bb.o:                                             ; preds = %bb.o, %.lr.ph.i.i.i
   %i.df = getelementptr inbounds nuw [16 x i8], ptr %i.de, i64 %indvars.iv.next.i.i.i121
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.dd, ptr noundef nonnull align 4 dereferenceable(16) %i.df, i64 16, i1 false), !tbaa.struct !38
   %indvars.iv.next.i.i.i121.1 = add nuw nsw i64 %indvars.iv.i.i.i120, 2 ; 2 uses
-  %niter284.next.1 = add i64 %niter284, 2         ; 2 uses
+  %niter284.next.1 = add nuw i64 %niter284, 2     ; 2 uses
   %niter284.ncmp.1 = icmp eq i64 %niter284.next.1, %unroll_iter283
   br i1 %niter284.ncmp.1, label %_ZNK20btAlignedObjectArrayI9btVector3E4copyEiiPS0_.exit.i.i115.loopexit.unr-lcssa, label %bb.o, !llvm.loop !39
 
@@ -2780,7 +2779,7 @@ bb.af:                                            ; preds = %bb.af, %.lr.ph.i.i.
   %i.ho = getelementptr inbounds nuw [16 x i8], ptr %i.hn, i64 %indvars.iv.next.i.i.i158
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.hm, ptr noundef nonnull align 4 dereferenceable(16) %i.ho, i64 16, i1 false), !tbaa.struct !38
   %indvars.iv.next.i.i.i158.1 = add nuw nsw i64 %indvars.iv.i.i.i157, 2 ; 2 uses
-  %niter299.next.1 = add i64 %niter299, 2         ; 2 uses
+  %niter299.next.1 = add nuw i64 %niter299, 2     ; 2 uses
   %niter299.ncmp.1 = icmp eq i64 %niter299.next.1, %unroll_iter298
   br i1 %niter299.ncmp.1, label %_ZNK20btAlignedObjectArrayI9btVector3E4copyEiiPS0_.exit.i.i152.loopexit.unr-lcssa, label %bb.af, !llvm.loop !39
 
@@ -3183,7 +3182,7 @@ bb.f:                                             ; preds = %bb.f, %.loopexit.ne
   %i.av = select <4 x i1> %i.at, <4 x float> %i.as, <4 x float> %i.ao ; 3 uses
   %i.aw = select <4 x i1> %i.au, <4 x float> %i.as, <4 x float> %i.ap ; 3 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aq, i64 %i.r ; 2 uses
-  %niter.next.1 = add i32 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i32 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i32 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.unr-lcssa, label %bb.f, !llvm.loop !155
 

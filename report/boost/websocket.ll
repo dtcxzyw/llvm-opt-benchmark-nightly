@@ -203,20 +203,16 @@ _ZN5boost4asio6detail27conditionally_enabled_mutexINS1_16futex_slim_mutexEE11sco
   br i1 %or.cond.i, label %.preheader.i, label %_ZN5boost4asio6detail11timer_queueINS1_18chrono_time_traitsINSt6chrono3_V212steady_clockENS0_11wait_traitsIS6_EEEENS0_17execution_context9allocatorIvEEE12cancel_timerERNSD_14per_timer_dataERNS1_8op_queueINS1_19scheduler_operationEEEm.exit
 
 .preheader.i:                                     ; preds = %_ZN5boost4asio6detail27conditionally_enabled_mutexINS1_16futex_slim_mutexEE11scoped_lockC2ERS4_.exit
-  %.pr.pre.i = load ptr, ptr %2, align 8, !tbaa !148
+  %.pr.pre.i = load ptr, ptr %2, align 8, !tbaa !148 ; 2 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.aj = getelementptr inbounds nuw i8, ptr %6, i64 8
-  br label %7
+  %.not18.i42 = icmp eq ptr %.pr.pre.i, null
+  br i1 %.not18.i42, label %.thread28.i, label %bb.h
 
-7:                                                ; preds = %bb.m, %.preheader.i
-  %8 = phi ptr [ null, %.preheader.i ], [ %9, %bb.m ] ; 2 uses
-  %9 = phi ptr [ %.pr.pre.i, %.preheader.i ], [ %.pr35.i, %bb.m ] ; 8 uses
-  %.01532.i = phi i64 [ 0, %.preheader.i ], [ %10, %bb.m ]
-  %.not18.i = icmp eq ptr %9, null
-  br i1 %.not18.i, label %.thread28.i, label %bb.h
-
-bb.h:                                             ; preds = %7
-  %i.ak = getelementptr inbounds nuw i8, ptr %9, i64 24
+bb.h:                                             ; preds = %.preheader.i, %bb.m
+  %7 = phi ptr [ %.pr35.i, %bb.m ], [ %.pr.pre.i, %.preheader.i ] ; 7 uses
+  %8 = phi ptr [ %7, %bb.m ], [ null, %.preheader.i ] ; 2 uses
+  %i.ak = getelementptr inbounds nuw i8, ptr %7, i64 24
   %i.al = load i64, ptr getelementptr inbounds nuw (i8, ptr @_ZN5boost6system6detail17system_cat_holderIvE8instanceE, i64 8), align 8, !tbaa !83, !noalias !1058
   %i.am = and i64 %i.al, -2
   %switch.i.i.i.i.i = icmp eq i64 %i.am, -5572340897628102704
@@ -235,9 +231,9 @@ _ZN5boost6system10error_codeaSINS_4asio5error12basic_errorsEEERNSt9enable_ifIXsr
 bb.i:                                             ; preds = %_ZN5boost6system10error_codeaSINS_4asio5error12basic_errorsEEERNSt9enable_ifIXsr18is_error_code_enumIT_EE5valueES1_E4typeES7_.exit.thread.i, %_ZN5boost6system10error_codeaSINS_4asio5error12basic_errorsEEERNSt9enable_ifIXsr18is_error_code_enumIT_EE5valueES1_E4typeES7_.exit.i
   %i.ar = phi i64 [ 3, %_ZN5boost6system10error_codeaSINS_4asio5error12basic_errorsEEERNSt9enable_ifIXsr18is_error_code_enumIT_EE5valueES1_E4typeES7_.exit.thread.i ], [ 2, %_ZN5boost6system10error_codeaSINS_4asio5error12basic_errorsEEERNSt9enable_ifIXsr18is_error_code_enumIT_EE5valueES1_E4typeES7_.exit.i ]
   store i64 125, ptr %i.ak, align 8
-  %.sroa.5.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %9, i64 32
+  %.sroa.5.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %7, i64 32
   store ptr @_ZN5boost6system6detail17system_cat_holderIvE8instanceE, ptr %.sroa.5.0..sroa_idx.i.i, align 8, !tbaa !17
-  %.sroa.6.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %9, i64 40
+  %.sroa.6.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %7, i64 40
   store i64 %i.ar, ptr %.sroa.6.0..sroa_idx.i.i, align 8, !tbaa !13
   %i.as = load ptr, ptr %2, align 8, !tbaa !148   ; 3 uses
   %.not.i.i9 = icmp eq ptr %i.as, null
@@ -259,24 +255,19 @@ bb.l:                                             ; preds = %bb.k, %bb.j
 
 bb.m:                                             ; preds = %bb.l, %bb.i
   %.pr35.i = phi ptr [ %i.at, %bb.l ], [ null, %bb.i ] ; 2 uses
-  store ptr null, ptr %9, align 8, !tbaa !149
+  store ptr null, ptr %7, align 8, !tbaa !149
   %.not.i21.i = icmp eq ptr %8, null
   %..i.i = select i1 %.not.i21.i, ptr %6, ptr %8
-  store ptr %9, ptr %..i.i, align 8, !tbaa !173
-  store ptr %9, ptr %i.aj, align 8, !tbaa !174
-  %10 = add nuw i64 %.01532.i, 1                  ; 2 uses
-  %.not17.i10 = icmp eq i64 %10, -1
-  br i1 %.not17.i10, label %._crit_edge.i11, label %7
+  store ptr %7, ptr %..i.i, align 8, !tbaa !173
+  store ptr %7, ptr %i.aj, align 8, !tbaa !174
+  %.not17.i10 = icmp eq ptr %.pr35.i, null
+  br i1 %.not17.i10, label %.thread28.i, label %bb.h
 
-._crit_edge.i11:                                  ; preds = %bb.m
-  %11 = icmp eq ptr %.pr35.i, null
-  br i1 %11, label %.thread28.i, label %_ZN5boost4asio6detail11timer_queueINS1_18chrono_time_traitsINSt6chrono3_V212steady_clockENS0_11wait_traitsIS6_EEEENS0_17execution_context9allocatorIvEEE12cancel_timerERNSD_14per_timer_dataERNS1_8op_queueINS1_19scheduler_operationEEEm.exit
-
-.thread28.i:                                      ; preds = %7, %._crit_edge.i11
+.thread28.i:                                      ; preds = %bb.m, %.preheader.i
   invoke void @_ZN5boost4asio6detail11timer_queueINS1_18chrono_time_traitsINSt6chrono3_V212steady_clockENS0_11wait_traitsIS6_EEEENS0_17execution_context9allocatorIvEEE12remove_timerERNSD_14per_timer_dataE(ptr noundef nonnull align 8 dereferenceable(56) %1, ptr noundef nonnull align 8 dereferenceable(40) %2)
           to label %_ZN5boost4asio6detail11timer_queueINS1_18chrono_time_traitsINSt6chrono3_V212steady_clockENS0_11wait_traitsIS6_EEEENS0_17execution_context9allocatorIvEEE12cancel_timerERNSD_14per_timer_dataERNS1_8op_queueINS1_19scheduler_operationEEEm.exit unwind label %bb.ae
 
-_ZN5boost4asio6detail11timer_queueINS1_18chrono_time_traitsINSt6chrono3_V212steady_clockENS0_11wait_traitsIS6_EEEENS0_17execution_context9allocatorIvEEE12cancel_timerERNSD_14per_timer_dataERNS1_8op_queueINS1_19scheduler_operationEEEm.exit: ; preds = %._crit_edge.i11, %_ZN5boost4asio6detail27conditionally_enabled_mutexINS1_16futex_slim_mutexEE11scoped_lockC2ERS4_.exit, %.thread28.i
+_ZN5boost4asio6detail11timer_queueINS1_18chrono_time_traitsINSt6chrono3_V212steady_clockENS0_11wait_traitsIS6_EEEENS0_17execution_context9allocatorIvEEE12cancel_timerERNSD_14per_timer_dataERNS1_8op_queueINS1_19scheduler_operationEEEm.exit: ; preds = %_ZN5boost4asio6detail27conditionally_enabled_mutexINS1_16futex_slim_mutexEE11scoped_lockC2ERS4_.exit, %.thread28.i
   %i.av = load ptr, ptr %3, align 8, !tbaa !465   ; 2 uses
   %.not.i.i12 = icmp eq ptr %i.av, null
   br i1 %.not.i.i12, label %_ZN5boost4asio6detail8op_queueINS1_7wait_opEE4pushIS3_EEvRNS2_IT_EE.exit.i, label %bb.n

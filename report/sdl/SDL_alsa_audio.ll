@@ -204,7 +204,7 @@ bb.h:                                             ; preds = %bb.g, %._crit_edge.
   br label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %._crit_edge.i.i.i, %.lr.ph.i.preheader.i.i
-  %indvars.iv28.i.i.i = phi i64 [ %indvars.iv.next29.i.i.i, %._crit_edge.i.i.i ], [ 1, %.lr.ph.i.preheader.i.i ] ; 3 uses
+  %indvars.iv28.i.i.i = phi i64 [ 1, %.lr.ph.i.preheader.i.i ], [ %indvars.iv.next29.i.i.i, %._crit_edge.i.i.i ] ; 3 uses
   %i.ag = getelementptr inbounds nuw [4 x i8], ptr %i.ac, i64 %indvars.iv28.i.i.i
   %i.ah = load i32, ptr %i.ag, align 4
   br label %bb.j
@@ -246,11 +246,10 @@ alsa_chmap_has_duplicate_position.exit.i.i:       ; preds = %._crit_edge.i.i.i, 
 
 .lr.ph:                                           ; preds = %.lr.ph58.i.i, %bb.k
   %indvars.iv.i.i76 = phi i64 [ %indvars.iv.next.i.i, %bb.k ], [ 0, %.lr.ph58.i.i ]
-  %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i76, 1 ; 3 uses
-  %1 = and i64 %indvars.iv.next.i.i, 4294967295   ; 2 uses
-  %i.as = getelementptr inbounds nuw [4 x i8], ptr %i.n, i64 %1
+  %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i76, 1 ; 4 uses
+  %i.as = getelementptr inbounds nuw [4 x i8], ptr %i.n, i64 %indvars.iv.next.i.i
   %i.at = load i32, ptr %i.as, align 4
-  %i.au = getelementptr inbounds nuw [4 x i8], ptr %i.am, i64 %1
+  %i.au = getelementptr inbounds nuw [4 x i8], ptr %i.am, i64 %indvars.iv.next.i.i
   %i.av = load i32, ptr %i.au, align 4
   %.not46.i.i = icmp eq i32 %i.at, %i.av
   br i1 %.not46.i.i, label %bb.k, label %.thread.i.i, !llvm.loop !22
@@ -333,7 +332,7 @@ bb.p:                                             ; preds = %bb.o, %._crit_edge.
   br label %.lr.ph.i.i7.i
 
 .lr.ph.i.i7.i:                                    ; preds = %._crit_edge.i.i12.i, %.lr.ph.i.preheader.i5.i
-  %indvars.iv28.i.i8.i = phi i64 [ %indvars.iv.next29.i.i13.i, %._crit_edge.i.i12.i ], [ 1, %.lr.ph.i.preheader.i5.i ] ; 3 uses
+  %indvars.iv28.i.i8.i = phi i64 [ 1, %.lr.ph.i.preheader.i5.i ], [ %indvars.iv.next29.i.i13.i, %._crit_edge.i.i12.i ] ; 3 uses
   %i.bs = getelementptr inbounds nuw [4 x i8], ptr %i.bo, i64 %indvars.iv28.i.i8.i
   %i.bt = load i32, ptr %i.bs, align 4
   br label %bb.r
@@ -460,7 +459,7 @@ bb.aa:                                            ; preds = %bb.y
 ..loopexit_crit_edge.i.i.1:                       ; preds = %bb.z, %bb.aa
   %.1.i.i.1 = phi i32 [ %i.cv, %bb.aa ], [ %.1.i.i, %bb.z ] ; 3 uses
   %indvars.iv.next83.i.i.1 = add nuw nsw i64 %indvars.iv82.i.i, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge71.split.i.i.unr-lcssa, label %.preheader.i.i, !llvm.loop !26
 
@@ -554,7 +553,7 @@ bb.ah:                                            ; preds = %bb.ag, %._crit_edge
   br label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %._crit_edge.i.i37, %.lr.ph.i.preheader.i
-  %indvars.iv28.i.i = phi i64 [ %indvars.iv.next29.i.i, %._crit_edge.i.i37 ], [ 1, %.lr.ph.i.preheader.i ] ; 3 uses
+  %indvars.iv28.i.i = phi i64 [ 1, %.lr.ph.i.preheader.i ], [ %indvars.iv.next29.i.i, %._crit_edge.i.i37 ] ; 3 uses
   %i.du = getelementptr inbounds nuw [4 x i8], ptr %i.dq, i64 %indvars.iv28.i.i
   %i.dv = load i32, ptr %i.du, align 4
   br label %bb.aj
@@ -681,7 +680,7 @@ bb.as:                                            ; preds = %bb.aq
 ..loopexit_crit_edge.i.1:                         ; preds = %bb.ar, %bb.as
   %.1.i.1 = phi i32 [ %i.ex, %bb.as ], [ %.1.i, %bb.ar ] ; 3 uses
   %indvars.iv.next87.i.1 = add nuw nsw i64 %indvars.iv86.i, 2 ; 2 uses
-  %niter89.next.1 = add i64 %niter89, 2           ; 2 uses
+  %niter89.next.1 = add nuw i64 %niter89, 2       ; 2 uses
   %niter89.ncmp.1 = icmp eq i64 %niter89.next.1, %unroll_iter88
   br i1 %niter89.ncmp.1, label %._crit_edge75.split.i.unr-lcssa, label %.preheader.i, !llvm.loop !30
 

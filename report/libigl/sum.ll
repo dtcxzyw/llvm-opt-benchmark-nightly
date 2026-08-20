@@ -203,10 +203,9 @@ _ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIbLi0EiEEE13InnerIteratorC2ERKS
   br i1 %i.ah, label %.lr.ph.split.us.i.preheader.us, label %.lr.ph.split.i.preheader.us
 
 ._crit_edge.i.us:                                 ; preds = %.lr.ph.split.i.us.us.prol.loopexit, %.lr.ph.split.i.us.us, %.lr.ph.split.us.i.us.us.prol.loopexit, %.lr.ph.split.us.i.us.us, %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIbLi0EiEEE13InnerIteratorC2ERKS3_l.exit.i.us
-  %indvars.iv.next.i.us = add i64 %indvars.iv.i.us, 1 ; 2 uses
-  %4 = and i64 %indvars.iv.next.i.us, 4294967295
-  %5 = icmp samesign ugt i64 %i.l, %4
-  br i1 %5, label %.lr.ph12.i.split.us, label %_ZN3igl8for_eachIbZNS_5reduxIbZNS_3sumIbN5Eigen6MatrixIiLin1ELi1ELi0ELin1ELi1EEEEEvRKNS3_12SparseMatrixIT_Li0EiEEiRNS3_15PlainObjectBaseIT0_EEEUliiE_S5_EEvSA_iRKSC_RNSB_IT1_EEEUliibE_EEvSA_SH_.exit, !llvm.loop !50
+  %indvars.iv.next.i.us = add nuw nsw i64 %indvars.iv.i.us, 1 ; 2 uses
+  %exitcond33.not = icmp eq i64 %indvars.iv.next.i.us, %i.l
+  br i1 %exitcond33.not, label %_ZN3igl8for_eachIbZNS_5reduxIbZNS_3sumIbN5Eigen6MatrixIiLin1ELi1ELi0ELin1ELi1EEEEEvRKNS3_12SparseMatrixIT_Li0EiEEiRNS3_15PlainObjectBaseIT0_EEEUliiE_S5_EEvSA_iRKSC_RNSB_IT1_EEEUliibE_EEvSA_SH_.exit, label %.lr.ph12.i.split.us, !llvm.loop !50
 
 .lr.ph.split.us.i.preheader.us:                   ; preds = %.lr.ph.i.us
   %.pre13.i.us.i.promoted.us = load i32, ptr %.pre13.i.us.i.us, align 4 ; 2 uses
@@ -457,10 +456,9 @@ _ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIbLi0EiEEE13InnerIteratorC2ERKS
   br i1 %exitcond15.not.i.us.3, label %._crit_edge.i.us22, label %.lr.ph.split.us.i.us, !llvm.loop !54
 
 ._crit_edge.i.us22:                               ; preds = %.lr.ph.split.i.us.prol.loopexit, %.lr.ph.split.i.us, %.lr.ph.split.us.i.us.prol.loopexit, %.lr.ph.split.us.i.us, %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIbLi0EiEEE13InnerIteratorC2ERKS3_l.exit.i.us19
-  %indvars.iv.next.i.us23 = add i64 %indvars.iv.i.us18, 1 ; 2 uses
-  %6 = and i64 %indvars.iv.next.i.us23, 4294967295
-  %7 = icmp samesign ugt i64 %i.l, %6
-  br i1 %7, label %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIbLi0EiEEE13InnerIteratorC2ERKS3_l.exit.i.us19, label %_ZN3igl8for_eachIbZNS_5reduxIbZNS_3sumIbN5Eigen6MatrixIiLin1ELi1ELi0ELin1ELi1EEEEEvRKNS3_12SparseMatrixIT_Li0EiEEiRNS3_15PlainObjectBaseIT0_EEEUliiE_S5_EEvSA_iRKSC_RNSB_IT1_EEEUliibE_EEvSA_SH_.exit, !llvm.loop !50
+  %indvars.iv.next.i.us23 = add nuw nsw i64 %indvars.iv.i.us18, 1 ; 2 uses
+  %exitcond32.not = icmp eq i64 %indvars.iv.next.i.us23, %i.l
+  br i1 %exitcond32.not, label %_ZN3igl8for_eachIbZNS_5reduxIbZNS_3sumIbN5Eigen6MatrixIiLin1ELi1ELi0ELin1ELi1EEEEEvRKNS3_12SparseMatrixIT_Li0EiEEiRNS3_15PlainObjectBaseIT0_EEEUliiE_S5_EEvSA_iRKSC_RNSB_IT1_EEEUliibE_EEvSA_SH_.exit, label %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIbLi0EiEEE13InnerIteratorC2ERKS3_l.exit.i.us19, !llvm.loop !50
 
 _ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIbLi0EiEEE13InnerIteratorC2ERKS3_l.exit.i: ; preds = %.lr.ph12.i.split, %._crit_edge.i
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %._crit_edge.i ], [ 0, %.lr.ph12.i.split ] ; 4 uses
@@ -572,10 +570,9 @@ _ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIbLi0EiEEE13InnerIteratorC2ERKS
   br i1 %exitcond15.not.i.3, label %._crit_edge.i, label %.lr.ph.split.us.i, !llvm.loop !54
 
 ._crit_edge.i:                                    ; preds = %.lr.ph.split.i.prol.loopexit, %.lr.ph.split.i, %.lr.ph.split.us.i.prol.loopexit, %.lr.ph.split.us.i, %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIbLi0EiEEE13InnerIteratorC2ERKS3_l.exit.i
-  %indvars.iv.next.i = add i64 %indvars.iv.i, 1   ; 2 uses
-  %8 = and i64 %indvars.iv.next.i, 4294967295
-  %9 = icmp samesign ugt i64 %i.l, %8
-  br i1 %9, label %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIbLi0EiEEE13InnerIteratorC2ERKS3_l.exit.i, label %_ZN3igl8for_eachIbZNS_5reduxIbZNS_3sumIbN5Eigen6MatrixIiLin1ELi1ELi0ELin1ELi1EEEEEvRKNS3_12SparseMatrixIT_Li0EiEEiRNS3_15PlainObjectBaseIT0_EEEUliiE_S5_EEvSA_iRKSC_RNSB_IT1_EEEUliibE_EEvSA_SH_.exit, !llvm.loop !50
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next.i, %i.l
+  br i1 %exitcond.not, label %_ZN3igl8for_eachIbZNS_5reduxIbZNS_3sumIbN5Eigen6MatrixIiLin1ELi1ELi0ELin1ELi1EEEEEvRKNS3_12SparseMatrixIT_Li0EiEEiRNS3_15PlainObjectBaseIT0_EEEUliiE_S5_EEvSA_iRKSC_RNSB_IT1_EEEUliibE_EEvSA_SH_.exit, label %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIbLi0EiEEE13InnerIteratorC2ERKS3_l.exit.i, !llvm.loop !50
 
 .lr.ph.split.i:                                   ; preds = %.lr.ph.split.i.prol.loopexit, %.lr.ph.split.i
   %.sroa.8.09.i = phi i64 [ %i.jb, %.lr.ph.split.i ], [ %.sroa.8.09.i.unr, %.lr.ph.split.i.prol.loopexit ] ; 4 uses

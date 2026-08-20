@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.y = load i32, ptr %i.x, align 4, !tbaa !17
   %i.z = and i32 %i.y, 15                         ; 2 uses
-  %i.aa = zext nneg i32 %i.z to i64               ; 4 uses
+  %i.aa = zext nneg i32 %i.z to i64               ; 3 uses
   %i.ab = icmp samesign ugt i32 %i.z, 3
   br i1 %i.ab, label %.lr.ph.i.i.preheader, label %.preheader.i.i
 
@@ -227,14 +227,13 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.ai = getelementptr inbounds nuw i8, ptr %.01618.i.i.prol, i64 4 ; 3 uses
   %i.aj = tail call i32 @llvm.fshl.i32(i32 %i.ah, i32 %i.ah, i32 17)
   %i.ak = mul i32 %i.aj, 668265263                ; 3 uses
-  %i.al = add nsw i64 %.01419.i.i.prol, -4        ; 3 uses
+  %i.al = add nsw i64 %.01419.i.i.prol, -4        ; 2 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
   br i1 %prol.iter.cmp.not, label %.lr.ph.i.i.prol.loopexit, label %.lr.ph.i.i.prol, !llvm.loop !21
 
 .lr.ph.i.i.prol.loopexit:                         ; preds = %.lr.ph.i.i.prol, %.lr.ph.i.i.preheader
   %.020.i.i.unr = phi i32 [ %i.v, %.lr.ph.i.i.preheader ], [ %i.ak, %.lr.ph.i.i.prol ]
-  %.01419.i.i.unr = phi i64 [ %i.aa, %.lr.ph.i.i.preheader ], [ %i.al, %.lr.ph.i.i.prol ]
   %.01618.i.i.unr = phi ptr [ %i.w, %.lr.ph.i.i.preheader ], [ %i.ai, %.lr.ph.i.i.prol ]
   %.lcssa16.unr = phi ptr [ poison, %.lr.ph.i.i.preheader ], [ %i.ai, %.lr.ph.i.i.prol ]
   %.lcssa15.unr = phi i32 [ poison, %.lr.ph.i.i.preheader ], [ %i.ak, %.lr.ph.i.i.prol ]
@@ -242,10 +241,10 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.am = icmp ult i64 %i.ac, 12
   br i1 %i.am, label %.preheader.i.i, label %.lr.ph.i.i
 
-.preheader.i.i:                                   ; preds = %.lr.ph.i.i.prol.loopexit, %.lr.ph.i.i, %bb.d
-  %.016.lcssa.i.i = phi ptr [ %i.w, %bb.d ], [ %.lcssa16.unr, %.lr.ph.i.i.prol.loopexit ], [ %i.br, %.lr.ph.i.i ] ; 2 uses
-  %.014.lcssa.i.i = phi i64 [ %i.aa, %bb.d ], [ %.lcssa14.unr, %.lr.ph.i.i.prol.loopexit ], [ %2, %.lr.ph.i.i ] ; 5 uses
-  %.0.lcssa.i.i = phi i32 [ %i.v, %bb.d ], [ %.lcssa15.unr, %.lr.ph.i.i.prol.loopexit ], [ %i.bt, %.lr.ph.i.i ] ; 3 uses
+.preheader.i.i:                                   ; preds = %.lr.ph.i.i.prol.loopexit, %bb.d
+  %.016.lcssa.i.i = phi ptr [ %i.w, %bb.d ], [ %.lcssa16.unr, %.lr.ph.i.i.prol.loopexit ] ; 2 uses
+  %.014.lcssa.i.i = phi i64 [ %i.aa, %bb.d ], [ %.lcssa14.unr, %.lr.ph.i.i.prol.loopexit ] ; 5 uses
+  %.0.lcssa.i.i = phi i32 [ %i.v, %bb.d ], [ %.lcssa15.unr, %.lr.ph.i.i.prol.loopexit ] ; 3 uses
   %.not23.i.i = icmp eq i64 %.014.lcssa.i.i, 0
   br i1 %.not23.i.i, label %XXH_INLINE_XXH32_digest.exit, label %.lr.ph27.i.i.preheader
 
@@ -281,7 +280,6 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 
 .lr.ph.i.i:                                       ; preds = %.lr.ph.i.i.prol.loopexit, %.lr.ph.i.i
   %.020.i.i = phi i32 [ %i.bt, %.lr.ph.i.i ], [ %.020.i.i.unr, %.lr.ph.i.i.prol.loopexit ]
-  %.01419.i.i = phi i64 [ %2, %.lr.ph.i.i ], [ %.01419.i.i.unr, %.lr.ph.i.i.prol.loopexit ]
   %.01618.i.i = phi ptr [ %i.br, %.lr.ph.i.i ], [ %.01618.i.i.unr, %.lr.ph.i.i.prol.loopexit ] ; 5 uses
   %i.aw = load i32, ptr %.01618.i.i, align 4, !tbaa !18
   %i.ax = mul i32 %i.aw, -1028477379
@@ -304,12 +302,10 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.bo = load i32, ptr %i.bl, align 4, !tbaa !18
   %i.bp = mul i32 %i.bo, -1028477379
   %i.bq = add i32 %i.bp, %i.bn                    ; 2 uses
-  %i.br = getelementptr inbounds nuw i8, ptr %.01618.i.i, i64 16 ; 2 uses
+  %i.br = getelementptr inbounds nuw i8, ptr %.01618.i.i, i64 16
   %i.bs = tail call i32 @llvm.fshl.i32(i32 %i.bq, i32 %i.bq, i32 17)
-  %i.bt = mul i32 %i.bs, 668265263                ; 2 uses
-  %2 = add nsw i64 %.01419.i.i, -16               ; 3 uses
-  %3 = icmp ugt i64 %2, 3
-  br i1 %3, label %.lr.ph.i.i, label %.preheader.i.i, !llvm.loop !24
+  %i.bt = mul i32 %i.bs, 668265263
+  br label %.lr.ph.i.i, !llvm.loop !24
 
 .lr.ph27.i.i:                                     ; preds = %.lr.ph27.i.i.prol.loopexit, %.lr.ph27.i.i
   %.126.i.i = phi i32 [ %i.cv, %.lr.ph27.i.i ], [ %.126.i.i.unr, %.lr.ph27.i.i.prol.loopexit ]

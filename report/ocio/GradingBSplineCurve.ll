@@ -201,13 +201,11 @@ _ZNSt6vectorIN16OpenColorIO_v2_519GradingControlPointESaIS1_EE9push_backEOS1_.ex
   br label %bb.t
 
 .lr.ph170.preheader.i:                            ; preds = %.lr.ph172.i.preheader, %._crit_edge.i
-  %i.ha = phi i64 [ %8, %._crit_edge.i ], [ 1, %.lr.ph172.i.preheader ]
-  %indvars.iv.next.i496 = phi i64 [ %indvars.iv.next.i, %._crit_edge.i ], [ 1, %.lr.ph172.i.preheader ] ; 4 uses
+  %i.ha = phi i64 [ %9, %._crit_edge.i ], [ 1, %.lr.ph172.i.preheader ] ; 3 uses
+  %7 = phi i32 [ %8, %._crit_edge.i ], [ 1, %.lr.ph172.i.preheader ]
   %i.hb = phi ptr [ %i.hj, %._crit_edge.i ], [ %i.gk, %.lr.ph172.i.preheader ] ; 3 uses
   %i.hc = phi ptr [ %i.hi, %._crit_edge.i ], [ %i.gk, %.lr.ph172.i.preheader ] ; 2 uses
-  %indvars.iv.i495 = phi i64 [ %indvars.iv.next.i496, %._crit_edge.i ], [ 0, %.lr.ph172.i.preheader ]
-  %7 = trunc nuw i64 %indvars.iv.i495 to i32
-  %indvars.i = trunc i64 %indvars.iv.next.i496 to i32
+  %indvars.i493 = phi i32 [ %indvars.i, %._crit_edge.i ], [ 0, %.lr.ph172.i.preheader ]
   %i.hd = load float, ptr %i.hb, align 4, !tbaa !99
   br label %.lr.ph170.i
 
@@ -218,18 +216,19 @@ _ZNSt6vectorIN16OpenColorIO_v2_519GradingControlPointESaIS1_EE9push_backEOS1_.ex
   %i.hh = load i64, ptr %i.hf, align 4
   store i64 %i.hh, ptr %i.hb, align 4
   store i64 %i.hg, ptr %i.hf, align 4
+  %indvars.i = trunc nuw i64 %i.ha to i32         ; 2 uses
   %i.hi = load ptr, ptr %5, align 8, !tbaa !51    ; 3 uses
-  %i.hj = getelementptr inbounds nuw [8 x i8], ptr %i.hi, i64 %indvars.iv.next.i496
-  %indvars.iv.next.i = add i64 %indvars.iv.next.i496, 1 ; 2 uses
-  %8 = and i64 %indvars.iv.next.i, 4294967295     ; 2 uses
-  %i.hk = icmp samesign ugt i64 %i.bq, %8
+  %i.hj = getelementptr inbounds nuw [8 x i8], ptr %i.hi, i64 %i.ha
+  %8 = add nuw i32 %indvars.i, 1                  ; 2 uses
+  %9 = zext i32 %8 to i64                         ; 2 uses
+  %i.hk = icmp samesign ugt i64 %i.bq, %9
   br i1 %i.hk, label %.lr.ph170.preheader.i, label %._crit_edge173.i.loopexit
 
 .lr.ph170.i:                                      ; preds = %.lr.ph170.i, %.lr.ph170.preheader.i
   %i.hl = phi i64 [ %i.hq, %.lr.ph170.i ], [ %i.ha, %.lr.ph170.preheader.i ]
-  %.090169.i = phi i32 [ %i.hp, %.lr.ph170.i ], [ %indvars.i, %.lr.ph170.preheader.i ] ; 2 uses
+  %.090169.i = phi i32 [ %i.hp, %.lr.ph170.i ], [ %7, %.lr.ph170.preheader.i ] ; 2 uses
   %.091168.i = phi float [ %.1.i, %.lr.ph170.i ], [ %i.hd, %.lr.ph170.preheader.i ] ; 2 uses
-  %.092167.i = phi i32 [ %.193.i, %.lr.ph170.i ], [ %7, %.lr.ph170.preheader.i ]
+  %.092167.i = phi i32 [ %.193.i, %.lr.ph170.i ], [ %indvars.i493, %.lr.ph170.preheader.i ]
   %i.hm = getelementptr inbounds nuw [8 x i8], ptr %i.hc, i64 %i.hl
   %i.hn = load float, ptr %i.hm, align 4, !tbaa !99 ; 2 uses
   %i.ho = fcmp olt float %i.hn, %.091168.i        ; 2 uses
@@ -244,13 +243,12 @@ _ZNSt6vectorIN16OpenColorIO_v2_519GradingControlPointESaIS1_EE9push_backEOS1_.ex
   br i1 %switch114, label %.loopexit.i, label %bb.w
 
 bb.t:                                             ; preds = %bb.v, %.lr.ph176.i
-  %i.hs = phi i64 [ 1, %.lr.ph176.i ], [ %12, %bb.v ]
-  %.089174.i = phi i32 [ 1, %.lr.ph176.i ], [ %11, %bb.v ] ; 2 uses
+  %i.hs = phi i64 [ 1, %.lr.ph176.i ], [ %13, %bb.v ] ; 3 uses
   %i.ht = getelementptr inbounds nuw [8 x i8], ptr %i.gn, i64 %i.hs ; 2 uses
   %i.hu = load float, ptr %i.ht, align 4, !tbaa !99
-  %9 = add i32 %.089174.i, -1
-  %10 = zext i32 %9 to i64
-  %i.hv = getelementptr inbounds nuw [8 x i8], ptr %i.gn, i64 %10
+  %10 = add nuw nsw i64 %i.hs, 4294967295
+  %11 = and i64 %10, 4294967295
+  %i.hv = getelementptr inbounds nuw [8 x i8], ptr %i.gn, i64 %11
   %i.hw = load float, ptr %i.hv, align 4, !tbaa !99 ; 2 uses
   %i.hx = fsub float %i.hu, %i.hw
   %i.hy = fcmp olt float %i.hx, %i.gz
@@ -262,9 +260,9 @@ bb.u:                                             ; preds = %bb.t
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.u, %bb.t
-  %11 = add i32 %.089174.i, 1                     ; 2 uses
-  %12 = zext i32 %11 to i64                       ; 2 uses
-  %i.ia = icmp ugt i64 %i.gx, %12
+  %12 = add nuw nsw i64 %i.hs, 1
+  %13 = and i64 %12, 4294967295                   ; 2 uses
+  %i.ia = icmp ugt i64 %i.gx, %13
   br i1 %i.ia, label %bb.t, label %._crit_edge177.i, !llvm.loop !150
 
 bb.w:                                             ; preds = %._crit_edge177.i
@@ -277,14 +275,13 @@ bb.w:                                             ; preds = %._crit_edge177.i
   br label %bb.x
 
 bb.x:                                             ; preds = %bb.z, %bb.w
-  %i.ih = phi i64 [ 1, %bb.w ], [ %16, %bb.z ]
-  %.0179.i = phi i32 [ 1, %bb.w ], [ %15, %bb.z ] ; 2 uses
+  %i.ih = phi i64 [ 1, %bb.w ], [ %17, %bb.z ]    ; 3 uses
   %i.ii = getelementptr inbounds nuw [8 x i8], ptr %i.gn, i64 %i.ih
   %i.ij = getelementptr inbounds nuw i8, ptr %i.ii, i64 4 ; 2 uses
   %i.ik = load float, ptr %i.ij, align 4, !tbaa !102
-  %13 = add i32 %.0179.i, -1
-  %14 = zext i32 %13 to i64
-  %i.il = getelementptr inbounds nuw [8 x i8], ptr %i.gn, i64 %14
+  %14 = add nuw nsw i64 %i.ih, 4294967295
+  %15 = and i64 %14, 4294967295
+  %i.il = getelementptr inbounds nuw [8 x i8], ptr %i.gn, i64 %15
   %i.im = getelementptr inbounds nuw i8, ptr %i.il, i64 4
   %i.in = load float, ptr %i.im, align 4, !tbaa !102 ; 2 uses
   %i.io = fsub float %i.ik, %i.in
@@ -297,9 +294,9 @@ bb.y:                                             ; preds = %bb.x
   br label %bb.z
 
 bb.z:                                             ; preds = %bb.y, %bb.x
-  %15 = add i32 %.0179.i, 1                       ; 2 uses
-  %16 = zext i32 %15 to i64                       ; 2 uses
-  %i.ir = icmp ugt i64 %i.gx, %16
+  %16 = add nuw nsw i64 %i.ih, 1
+  %17 = and i64 %16, 4294967295                   ; 2 uses
+  %i.ir = icmp ugt i64 %i.gx, %17
   br i1 %i.ir, label %bb.x, label %.loopexit.i, !llvm.loop !151
 
 .loopexit.i:                                      ; preds = %bb.z, %._crit_edge177.i, %._crit_edge173.i
@@ -702,7 +699,7 @@ _ZNSt6vectorIfSaIfEE9push_backEOf.exit189.i:      ; preds = %_ZNSt6vectorIfSaIfE
   %i.uh = load float, ptr %i.ug, align 4, !tbaa !60
   %i.ui = fneg float %i.uh
   %i.uj = call float @llvm.fmuladd.f32(float %i.uf, float 3.000000e+00, float %i.ui)
-  %i.uk = fmul float %i.uj, 5.000000e-01
+  %i.uk = fmul float %i.uj, 5.000000e-01          ; 2 uses
   store float %i.uk, ptr %i.ue, align 4, !tbaa !60
   br label %bb.cn
 
@@ -1001,7 +998,7 @@ _ZNSt6vectorIfSaIfEE9push_backERKf.exit209.i:     ; preds = %_ZNSt6vectorIfSaIfE
   %i.yx = call float @llvm.fmuladd.f32(float %i.yt, float 3.000000e+00, float %i.yw)
   %i.yy = fmul float %i.yx, 5.000000e-01          ; 2 uses
   %i.yz = fcmp ogt float %i.yy, f0x3C23D70A
-  %.sroa.speculated.i = select i1 %i.yz, float %i.yy, float f0x3C23D70A
+  %.sroa.speculated.i = select i1 %i.yz, float %i.yy, float f0x3C23D70A ; 2 uses
   store float %.sroa.speculated.i, ptr %i.ys, align 4, !tbaa !60
   br label %bb.cn
 
@@ -1011,6 +1008,7 @@ _ZNSt6vectorIfSaIfEE9push_backERKf.exit209.i:     ; preds = %_ZNSt6vectorIfSaIfE
   br label %.thread285.i
 
 bb.cn:                                            ; preds = %_ZNSt6vectorIfSaIfEE9push_backERKf.exit209.i, %_ZNSt6vectorIfSaIfEE9push_backEOf.exit189.i
+  %18 = phi float [ %.sroa.speculated.i, %_ZNSt6vectorIfSaIfEE9push_backERKf.exit209.i ], [ %i.uk, %_ZNSt6vectorIfSaIfEE9push_backEOf.exit189.i ]
   %i.zb = phi ptr [ %i.ys, %_ZNSt6vectorIfSaIfEE9push_backERKf.exit209.i ], [ %i.ue, %_ZNSt6vectorIfSaIfEE9push_backEOf.exit189.i ] ; 6 uses
   br i1 %.not389.i, label %._crit_edge388.i, label %.lr.ph387.i
 
@@ -1018,24 +1016,24 @@ bb.cn:                                            ; preds = %_ZNSt6vectorIfSaIfE
   br i1 %switch, label %bb.cq, label %_ZNSt6vectorIfSaIfEE9push_backERKf.exit169.i
 
 .lr.ph387.i:                                      ; preds = %bb.cn, %.thread.i
-  %indvars.iv.i133 = phi i64 [ %indvars.iv.next.i134, %.thread.i ], [ 0, %bb.cn ] ; 3 uses
-  %17 = getelementptr inbounds nuw [4 x i8], ptr %i.zb, i64 %indvars.iv.i133 ; 2 uses
-  %18 = load float, ptr %17, align 4, !tbaa !60   ; 4 uses
-  %i.zc = call float @llvm.fabs.f32(float %18)
-  %indvars.iv.next.i134 = add i64 %indvars.iv.i133, 1 ; 2 uses
-  %i.zd = and i64 %indvars.iv.next.i134, 4294967295 ; 2 uses
+  %19 = phi float [ %22, %.thread.i ], [ %18, %bb.cn ] ; 4 uses
+  %20 = phi i64 [ %i.zd, %.thread.i ], [ 0, %bb.cn ] ; 3 uses
+  %21 = getelementptr inbounds nuw [4 x i8], ptr %i.zb, i64 %20
+  %i.zc = call float @llvm.fabs.f32(float %19)
+  %indvars.iv.next.i134 = add nuw nsw i64 %20, 1
+  %i.zd = and i64 %indvars.iv.next.i134, 4294967295 ; 3 uses
   %i.ze = getelementptr inbounds nuw [4 x i8], ptr %i.zb, i64 %i.zd ; 2 uses
-  %i.zf = load float, ptr %i.ze, align 4, !tbaa !60 ; 3 uses
+  %i.zf = load float, ptr %i.ze, align 4, !tbaa !60 ; 5 uses
   %i.zg = call float @llvm.fabs.f32(float %i.zf)
   %i.zh = fcmp ogt float %i.zc, %i.zg
   %.0118.i = select i1 %i.zh, float 8.000000e-01, float 2.000000e-01
-  %i.zi = fsub float %i.zf, %18
-  %i.zj = call float @llvm.fmuladd.f32(float %.0118.i, float %i.zi, float %18) ; 2 uses
+  %i.zi = fsub float %i.zf, %19
+  %i.zj = call float @llvm.fmuladd.f32(float %.0118.i, float %i.zi, float %19) ; 2 uses
   %i.zk = fcmp une float %i.zj, 0.000000e+00
   br i1 %i.zk, label %bb.co, label %.thread.i
 
 bb.co:                                            ; preds = %.lr.ph387.i
-  %i.zl = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0259.0.lcssa.i, i64 %indvars.iv.i133
+  %i.zl = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0259.0.lcssa.i, i64 %20
   %i.zm = load float, ptr %i.zl, align 4, !tbaa !60
   %i.zn = fmul float %i.zm, 1.500000e+00
   %i.zo = fdiv float %i.zn, %i.zj                 ; 3 uses
@@ -1043,13 +1041,14 @@ bb.co:                                            ; preds = %.lr.ph387.i
   br i1 %i.zp, label %bb.cp, label %.thread.i
 
 bb.cp:                                            ; preds = %bb.co
-  %i.zq = fmul float %18, %i.zo
-  store float %i.zq, ptr %17, align 4, !tbaa !60
-  %i.zr = fmul float %i.zf, %i.zo
+  %i.zq = fmul float %19, %i.zo
+  store float %i.zq, ptr %21, align 4, !tbaa !60
+  %i.zr = fmul float %i.zf, %i.zo                 ; 2 uses
   store float %i.zr, ptr %i.ze, align 4, !tbaa !60
   br label %.thread.i
 
 .thread.i:                                        ; preds = %bb.cp, %bb.co, %.lr.ph387.i
+  %22 = phi float [ %i.zf, %.lr.ph387.i ], [ %i.zr, %bb.cp ], [ %i.zf, %bb.co ]
   %i.zs = icmp ugt i64 %i.nd, %i.zd
   br i1 %i.zs, label %.lr.ph387.i, label %._crit_edge388.i, !llvm.loop !165
 

@@ -204,7 +204,7 @@ bb.a:
   %23 = alloca %struct.t_inputrec, align 8        ; 14 uses
   %24 = alloca %"class.gmx::TopologyInformation", align 8 ; 15 uses
   %25 = alloca %"class.std::__cxx11::basic_string", align 8 ; 12 uses
-  %26 = alloca %"class.std::unique_ptr.96", align 8 ; 10 uses
+  %26 = alloca %"class.std::unique_ptr.96", align 8 ; 9 uses
   %27 = alloca %"class.std::unique_ptr.96", align 8 ; 5 uses
   %28 = alloca %struct.gmx_localtop_t, align 8    ; 20 uses
   %29 = alloca %"class.std::filesystem::__cxx11::path", align 8 ; 9 uses
@@ -607,7 +607,7 @@ bb.fk:                                            ; preds = %_ZNSt13unordered_ma
 bb.fl:                                            ; preds = %bb.eg
   %i.aev = load i32, ptr %i.k, align 4, !tbaa !9  ; 2 uses
   %i.aew = load ptr, ptr %i.l, align 8, !tbaa !10
-  %i.aex = load ptr, ptr %26, align 8             ; 2 uses
+  %i.aex = load ptr, ptr %26, align 8             ; 3 uses
   %fputc.i371 = call i32 @fputc(i32 10, ptr %i.cf) ; 0 uses
   %i.aey = call i64 @fwrite(ptr nonnull @.str.92, i64 51, i64 1, ptr %i.cf) ; 0 uses
   %i.aez = load i32, ptr %i.jg, align 4, !tbaa !222
@@ -888,17 +888,17 @@ bb.ft:                                            ; preds = %"_ZSt25__unguarded_
   br i1 %.not.i20.i.i.i.i.1, label %"_ZSt4sortIP10t_dr_statsZL10dump_statsP8_IO_FILEiRK12t_disresdataRK15InteractionListN3gmx8ArrayRefIK9t_iparamsEEP11t_dr_resultiPiP7t_atomsE3$_0EvT_SL_T0_.exit.i", label %.lr.ph.i.i.i.i.i376, !llvm.loop !326
 
 .preheader.i.i.i.i.i:                             ; preds = %bb.fm
+  %.016.i26.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.afb, i64 36 ; 2 uses
   %.not17.i.i.i.i.i = icmp eq i32 %i.agz, 1
   br i1 %.not17.i.i.i.i.i, label %"_ZSt4sortIP10t_dr_statsZL10dump_statsP8_IO_FILEiRK12t_disresdataRK15InteractionListN3gmx8ArrayRefIK9t_iparamsEEP11t_dr_resultiPiP7t_atomsE3$_0EvT_SL_T0_.exit.i", label %.lr.ph.i27.i.i.i.i
 
 .lr.ph.i27.i.i.i.i:                               ; preds = %.preheader.i.i.i.i.i
-  %.016.i26.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.afb, i64 36
   %i.aip = getelementptr i8, ptr %i.afb, i64 24
   br label %bb.fu
 
 bb.fu:                                            ; preds = %bb.ga, %.lr.ph.i27.i.i.i.i
   %.019.i28.i.i.i.i = phi ptr [ %.016.i26.i.i.i.i, %.lr.ph.i27.i.i.i.i ], [ %.0.i38.i.i.i.i, %bb.ga ] ; 7 uses
-  %.pn18.i29.i.i.i.i = phi ptr [ %i.afb, %.lr.ph.i27.i.i.i.i ], [ %.019.i28.i.i.i.i, %bb.ga ] ; 5 uses
+  %.pn18.i29.i.i.i.i = phi ptr [ %i.afb, %.lr.ph.i27.i.i.i.i ], [ %.019.i28.i.i.i.i, %bb.ga ] ; 4 uses
   %i.aiq = getelementptr i8, ptr %.pn18.i29.i.i.i.i, i64 60
   %.0.val.i30.i.i.i.i = load float, ptr %i.aiq, align 4, !tbaa !318 ; 4 uses
   %.val.i31.i.i.i.i = load float, ptr %i.aip, align 4, !tbaa !318
@@ -909,16 +909,12 @@ bb.fv:                                            ; preds = %bb.fu
   call void @llvm.lifetime.start.p0(ptr nonnull %11)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(36) %11, ptr noundef nonnull align 4 dereferenceable(36) %.019.i28.i.i.i.i, i64 36, i1 false), !tbaa.struct !322
   %i.ais = ptrtoint ptr %.019.i28.i.i.i.i to i64
-  %i.ait = sub i64 %i.ais, %i.ahd                 ; 4 uses
+  %i.ait = sub i64 %i.ais, %i.ahd                 ; 3 uses
   %i.aiu = icmp sgt i64 %i.ait, 36
   br i1 %i.aiu, label %bb.fw, label %bb.fx, !prof !323
 
 bb.fw:                                            ; preds = %bb.fv
-  %53 = getelementptr inbounds nuw i8, ptr %.pn18.i29.i.i.i.i, i64 72
-  %.neg24.i45.i.i.i.i = udiv exact i64 %i.ait, 36
-  %.neg24.neg.i46.i.i.i.i = sub nsw i64 0, %.neg24.i45.i.i.i.i
-  %54 = getelementptr inbounds [36 x i8], ptr %53, i64 %.neg24.neg.i46.i.i.i.i
-  call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %54, ptr noundef nonnull align 4 dereferenceable(1) %i.afb, i64 %i.ait, i1 false)
+  call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %.016.i26.i.i.i.i, ptr noundef nonnull align 4 dereferenceable(1) %i.afb, i64 %i.ait, i1 false)
   br label %_ZSt13move_backwardIP10t_dr_statsS1_ET0_T_S3_S2_.exit.i44.i.i.i.i
 
 bb.fx:                                            ; preds = %bb.fv
@@ -1136,7 +1132,7 @@ bb.gf:                                            ; preds = %bb.ge, %.lr.ph.spli
   %.2.us.us.us.us.us152.1.i.i.1 = phi i32 [ %.149.us.us.us.us.us149.1.i.i.1, %bb.ge ], [ %.2.us.us.us.us.us152.1.i.i, %.lr.ph.split.us.us.us.us.split.us140.1.i.i.1 ] ; 3 uses
   %.147.us.us.us.us.us153.1.i.i.1 = phi i32 [ %i.alq, %bb.ge ], [ %.147.us.us.us.us.us153.1.i.i, %.lr.ph.split.us.us.us.us.split.us140.1.i.i.1 ] ; 3 uses
   %indvars.iv.next223.1.i.i.1 = add nuw nsw i64 %indvars.iv222.1.i.i, 2 ; 2 uses
-  %niter1180.next.1 = add i64 %niter1180, 2       ; 2 uses
+  %niter1180.next.1 = add nuw i64 %niter1180, 2   ; 2 uses
   %niter1180.ncmp.1 = icmp eq i64 %niter1180.next.1, %unroll_iter1179
   br i1 %niter1180.ncmp.1, label %._crit_edge.split.us.us.us.us.1.i.i.unr-lcssa, label %.lr.ph.split.us.us.us.us.split.us140.1.i.i, !llvm.loop !327
 
@@ -1248,7 +1244,7 @@ bb.gk:                                            ; preds = %bb.gj, %.lr.ph.spli
   %.2.us.us.us.us.us174.2.i.i.1 = phi i32 [ %.149.us.us.us.us.us171.2.i.i.1, %bb.gj ], [ %.2.us.us.us.us.us174.2.i.i, %.lr.ph.split.us.us.us.us.split.us162.2.i.i.1 ] ; 3 uses
   %.147.us.us.us.us.us175.2.i.i.1 = phi i32 [ %i.ang, %bb.gj ], [ %.147.us.us.us.us.us175.2.i.i, %.lr.ph.split.us.us.us.us.split.us162.2.i.i.1 ] ; 3 uses
   %indvars.iv.next218.2.i.i.1 = add nuw nsw i64 %indvars.iv217.2.i.i, 2 ; 2 uses
-  %niter1190.next.1 = add i64 %niter1190, 2       ; 2 uses
+  %niter1190.next.1 = add nuw i64 %niter1190, 2   ; 2 uses
   %niter1190.ncmp.1 = icmp eq i64 %niter1190.next.1, %unroll_iter1189
   br i1 %niter1190.ncmp.1, label %._crit_edge.split.us.us.us.us.2.i.i.unr-lcssa, label %.lr.ph.split.us.us.us.us.split.us162.2.i.i, !llvm.loop !327
 
@@ -1360,7 +1356,7 @@ bb.gq:                                            ; preds = %bb.gp, %.lr.ph.spli
   %.2.us.us.us.us.us.i.i.1 = phi i32 [ %.149.us.us.us.us.us.i.i.1, %bb.gp ], [ %.2.us.us.us.us.us.i.i, %.lr.ph.split.us.us.us.us.split.us.i.i.1 ] ; 3 uses
   %.147.us.us.us.us.us.i.i.1 = phi i32 [ %i.aow, %bb.gp ], [ %.147.us.us.us.us.us.i.i, %.lr.ph.split.us.us.us.us.split.us.i.i.1 ] ; 3 uses
   %indvars.iv.next228.i.i.1 = add nuw nsw i64 %indvars.iv227.i.i, 2 ; 2 uses
-  %niter1170.next.1 = add i64 %niter1170, 2       ; 2 uses
+  %niter1170.next.1 = add nuw i64 %niter1170, 2   ; 2 uses
   %niter1170.ncmp.1 = icmp eq i64 %niter1170.next.1, %unroll_iter1169
   br i1 %niter1170.ncmp.1, label %._crit_edge.split.us.us.us.us.i.i.unr-lcssa, label %.lr.ph.split.us.us.us.us.split.us.i.i, !llvm.loop !327
 
@@ -1498,7 +1494,7 @@ bb.gr:                                            ; preds = %.lr.ph.split.us.us.
   %.149.us102.us.us.1.i.i.3 = add nuw nsw i32 %.149.us102.us.us.1.i.i.2, %i.ara ; 3 uses
   %i.arb = fadd float %i.aqv, %.0.us100.us.us.1.i.i.3 ; 3 uses
   %indvars.iv.next.1.i.i.3 = add nuw nsw i64 %indvars.iv.1.i.i, 4 ; 2 uses
-  %niter1151.next.3 = add i64 %niter1151, 4       ; 2 uses
+  %niter1151.next.3 = add nuw i64 %niter1151, 4   ; 2 uses
   %niter1151.ncmp.3 = icmp eq i64 %niter1151.next.3, %unroll_iter1150
   br i1 %niter1151.ncmp.3, label %.lr.ph.split.split.split.us128.us.preheader.2.i.i.unr-lcssa, label %.lr.ph.split.split.split.us93.us.us.1.i.i, !llvm.loop !327
 
@@ -1593,7 +1589,7 @@ bb.gr:                                            ; preds = %.lr.ph.split.us.us.
   %.149.us121.us.2.i.i.3 = add nuw nsw i32 %.149.us121.us.2.i.i.2, %i.aso ; 3 uses
   %i.asp = fadd float %i.asj, %.0.us119.us.2.i.i.3 ; 3 uses
   %indvars.iv.next208.2.i.i.3 = add nuw nsw i64 %indvars.iv207.2.i.i, 4 ; 2 uses
-  %niter1160.next.3 = add i64 %niter1160, 4       ; 2 uses
+  %niter1160.next.3 = add nuw i64 %niter1160, 4   ; 2 uses
   %niter1160.ncmp.3 = icmp eq i64 %niter1160.next.3, %unroll_iter1159
   br i1 %niter1160.ncmp.3, label %._crit_edge.split.us129.us.2.i.i.unr-lcssa, label %.lr.ph.split.split.split.us128.us.2.i.i, !llvm.loop !327
 
@@ -1688,7 +1684,7 @@ bb.gr:                                            ; preds = %.lr.ph.split.us.us.
   %.149.us84.us.us.i.i.3 = add nuw nsw i32 %.149.us84.us.us.i.i.2, %i.auc ; 3 uses
   %i.aud = fadd float %i.atx, %.0.us82.us.us.i.i.3 ; 3 uses
   %indvars.iv.next201.i.i.3 = add nuw nsw i64 %indvars.iv200.i.i, 4 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.lr.ph.split.split.split.us93.us.us.preheader.1.i.i.unr-lcssa, label %.lr.ph.split.split.split.us.us.us.i.i, !llvm.loop !327
 
@@ -1832,9 +1828,8 @@ bb.gy:                                            ; preds = %bb.gx
           to label %bb.gz unwind label %bb.hc
 
 bb.gz:                                            ; preds = %bb.gy
-  %55 = load ptr, ptr %26, align 8, !tbaa !109
   %i.aww = load i32, ptr %i.fh, align 8, !tbaa !212
-  invoke void @_Z14write_sto_confRKNSt10filesystem7__cxx114pathEPKcPK7t_atomsPA3_KfSB_7PbcTypeSB_(ptr noundef nonnull align 8 dereferenceable(40) %52, ptr noundef nonnull @.str.67, ptr noundef %55, ptr noundef %.0, ptr noundef null, i32 noundef %i.aww, ptr noundef nonnull %i.j)
+  invoke void @_Z14write_sto_confRKNSt10filesystem7__cxx114pathEPKcPK7t_atomsPA3_KfSB_7PbcTypeSB_(ptr noundef nonnull align 8 dereferenceable(40) %52, ptr noundef nonnull @.str.67, ptr noundef %i.aex, ptr noundef %.0, ptr noundef null, i32 noundef %i.aww, ptr noundef nonnull %i.j)
           to label %bb.ha unwind label %bb.hd
 
 bb.ha:                                            ; preds = %bb.gz
@@ -2237,7 +2232,7 @@ bb.q:                                             ; preds = %bb.q, %.lr.ph.i144.
   %.1.i.7 = select i1 %i.fz, i32 %i.ga, i32 %.1.i.6 ; 3 uses
   %indvars.iv.next.i147.7 = add nuw nsw i64 %indvars.iv.i146, 8 ; 2 uses
   %i.gb = select i1 %i.fz, float %i.fy, float %i.fv ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %._crit_edge.loopexit.i.unr-lcssa, label %bb.q, !llvm.loop !378
 
