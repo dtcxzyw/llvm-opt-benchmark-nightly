@@ -205,19 +205,18 @@ bb.l:                                             ; preds = %bb.h
 bb.m:                                             ; preds = %bb.l, %._crit_edge130
   %indvars.iv = phi i64 [ %i.aw, %bb.l ], [ %indvars.iv.next, %._crit_edge130 ] ; 2 uses
   %i.ax = getelementptr inbounds nuw [8 x i8], ptr @_ZN13duckdb_brotli16kBrotliShellGapsE, i64 %indvars.iv
-  %i.ay = load i64, ptr %i.ax, align 8, !tbaa !19 ; 5 uses
+  %i.ay = load i64, ptr %i.ax, align 8, !tbaa !19 ; 4 uses
   %i.az = icmp ult i64 %i.ay, %.1.lcssa
   br i1 %i.az, label %.lr.ph129, label %._crit_edge130
 
 .lr.ph129:                                        ; preds = %bb.m, %.critedge.i
-  %.044.i127 = phi i64 [ %i.bm, %.critedge.i ], [ %i.ay, %bb.m ] ; 5 uses
+  %.044.i127 = phi i64 [ %i.bm, %.critedge.i ], [ %i.ay, %bb.m ] ; 3 uses
   %i.ba = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %.044.i127
   %i.bb = load i64, ptr %i.ba, align 4            ; 3 uses
   %.sroa.0101.0.extract.trunc = trunc i64 %i.bb to i32 ; 2 uses
   %.sroa.5104.0.extract.shift = lshr i64 %i.bb, 48
   %.sroa.5104.0.extract.trunc = trunc nuw i64 %.sroa.5104.0.extract.shift to i16
-  %.not.i121 = icmp ult i64 %.044.i127, %i.ay
-  br i1 %.not.i121, label %.critedge.i, label %.lr.ph124
+  br label %.lr.ph124
 
 .lr.ph124:                                        ; preds = %.lr.ph129, %bb.n
   %.0.i122 = phi i64 [ %i.bc, %bb.n ], [ %.044.i127, %.lr.ph129 ] ; 4 uses
@@ -244,9 +243,9 @@ bb.n:                                             ; preds = %.split172, %_ZL15So
   %.not.i = icmp ult i64 %i.bc, %i.ay
   br i1 %.not.i, label %.critedge.i, label %.lr.ph124, !llvm.loop !21
 
-.critedge.i:                                      ; preds = %bb.n, %_ZL15SortHuffmanTreePKN13duckdb_brotli11HuffmanTreeES2_.exit83, %.split172, %.lr.ph129
-  %.0.i.lcssa = phi i64 [ %.044.i127, %.lr.ph129 ], [ %.0.i122, %.split172 ], [ %.0.i122, %_ZL15SortHuffmanTreePKN13duckdb_brotli11HuffmanTreeES2_.exit83 ], [ %i.bc, %bb.n ]
-  %i.bl = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %.0.i.lcssa
+.critedge.i:                                      ; preds = %bb.n, %_ZL15SortHuffmanTreePKN13duckdb_brotli11HuffmanTreeES2_.exit83, %.split172
+  %.0.i.lcssa.ph = phi i64 [ %i.bc, %bb.n ], [ %.0.i122, %_ZL15SortHuffmanTreePKN13duckdb_brotli11HuffmanTreeES2_.exit83 ], [ %.0.i122, %.split172 ]
+  %i.bl = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %.0.i.lcssa.ph
   store i64 %i.bb, ptr %i.bl, align 4
   %i.bm = add nuw i64 %.044.i127, 1               ; 2 uses
   %exitcond.not = icmp eq i64 %i.bm, %.1.lcssa

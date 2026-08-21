@@ -204,10 +204,10 @@ _ZL14prepareReorderPKhiPiPhS2_.exit:              ; preds = %.lr.ph.i, %middle.b
   br label %.lr.ph.us
 
 bb.d:                                             ; preds = %.lr.ph.us, %bb.e
-  %indvar = phi i64 [ 0, %.lr.ph.us ], [ %indvar.next, %bb.e ] ; 2 uses
+  %indvar = phi i32 [ 0, %.lr.ph.us ], [ %indvar.next, %bb.e ] ; 2 uses
   %indvars.iv67.in = phi i32 [ %.02957.us, %.lr.ph.us ], [ %indvars.iv67, %bb.e ]
-  %indvars.iv = phi i64 [ %i.ba, %.lr.ph.us ], [ %indvars.iv.next, %bb.e ] ; 10 uses
-  %indvars.iv67 = add i32 %indvars.iv67.in, 1     ; 2 uses
+  %indvars.iv = phi i64 [ %i.ba, %.lr.ph.us ], [ %indvars.iv.next, %bb.e ] ; 9 uses
+  %indvars.iv67 = add i32 %indvars.iv67.in, 1     ; 4 uses
   %i.aa = getelementptr inbounds i8, ptr %0, i64 %indvars.iv
   %i.ab = load i8, ptr %i.aa, align 1, !tbaa !37
   %i.ac = icmp ult i8 %i.ab, %.045.us
@@ -216,10 +216,11 @@ bb.d:                                             ; preds = %.lr.ph.us, %bb.e
 bb.e:                                             ; preds = %bb.d
   %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
   %i.ad = icmp slt i64 %indvars.iv.next, %i.z
-  %indvar.next = add i64 %indvar, 1
+  %indvar.next = add i32 %indvar, 1
   br i1 %i.ad, label %bb.d, label %.critedge.thread.us, !llvm.loop !86
 
 .critedge.us:                                     ; preds = %.lr.ph
+  %indvars.iv.next79 = add i32 %indvars.iv78105, 1 ; 2 uses
   %indvars.iv.next66 = add nsw i64 %indvars.iv.next66101, 1 ; 2 uses
   %i.ae = icmp slt i64 %indvars.iv.next66, %i.z
   br i1 %i.ae, label %.lr.ph, label %.critedge2.us, !llvm.loop !87
@@ -227,6 +228,7 @@ bb.e:                                             ; preds = %bb.d
 .lr.ph:                                           ; preds = %.critedge.preheader.us, %.critedge.us
   %indvars.iv.next66101 = phi i64 [ %indvars.iv.next66, %.critedge.us ], [ %indvars.iv.next6699, %.critedge.preheader.us ] ; 5 uses
   %indvars.iv65100 = phi i64 [ %indvars.iv.next66101, %.critedge.us ], [ %indvars.iv, %.critedge.preheader.us ]
+  %indvars.iv78105 = phi i32 [ %indvars.iv.next79, %.critedge.us ], [ %indvars.iv67, %.critedge.preheader.us ] ; 2 uses
   %i.af = getelementptr inbounds i8, ptr %0, i64 %indvars.iv.next66101
   %i.ag = load i8, ptr %i.af, align 1, !tbaa !37
   %.not36.us = icmp ult i8 %i.ag, %.045.us
@@ -237,19 +239,21 @@ bb.e:                                             ; preds = %bb.d
   br label %.critedge2.us
 
 .critedge2.us:                                    ; preds = %.critedge.us, %.critedge.preheader.us, %.critedge2.us.split.loop.exit
-  %indvars.iv6598 = phi i64 [ %indvars.iv65100, %.critedge2.us.split.loop.exit ], [ %indvars.iv, %.critedge.preheader.us ], [ %indvars.iv.next66101, %.critedge.us ] ; 3 uses
+  %indvars.iv78103 = phi i32 [ %indvars.iv78105, %.critedge2.us.split.loop.exit ], [ %indvars.iv67, %.critedge.preheader.us ], [ %indvars.iv.next79, %.critedge.us ] ; 2 uses
+  %indvars.iv6598 = phi i64 [ %indvars.iv65100, %.critedge2.us.split.loop.exit ], [ %indvars.iv, %.critedge.preheader.us ], [ %indvars.iv.next66101, %.critedge.us ]
   %.lcssa = phi i32 [ %i.ah, %.critedge2.us.split.loop.exit ], [ %smax, %.critedge.preheader.us ], [ %smax, %.critedge.us ]
   %.lcssa85 = trunc i64 %indvars.iv6598 to i32    ; 2 uses
   %i.ai = add i32 %.lcssa85, %i.ay                ; 2 uses
-  %smax103 = tail call i64 @llvm.smax.i64(i64 %indvars.iv6598, i64 %indvars.iv)
-  %3 = add i64 %indvar, %i.ba
-  %reass.sub = sub i64 %smax103, %3
-  %i.aj = add i64 %reass.sub, 1                   ; 3 uses
-  %min.iters.check105 = icmp ult i64 %i.aj, 8
+  %3 = xor i32 %.02957.us, -1
+  %4 = sub i32 %3, %indvar
+  %5 = add i32 %indvars.iv78103, %4               ; 2 uses
+  %6 = zext i32 %5 to i64
+  %i.aj = add nuw nsw i64 %6, 1                   ; 2 uses
+  %min.iters.check105 = icmp ult i32 %5, 7
   br i1 %min.iters.check105, label %scalar.ph104.preheader, label %vector.ph106
 
 vector.ph106:                                     ; preds = %.critedge2.us
-  %n.vec107 = and i64 %i.aj, -8                   ; 3 uses
+  %n.vec107 = and i64 %i.aj, 8589934584           ; 3 uses
   %i.ak = add i64 %indvars.iv, %n.vec107
   %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %i.ai, i64 0
   %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
@@ -279,14 +283,15 @@ scalar.ph104.preheader:                           ; preds = %.critedge2.us, %mid
   br label %scalar.ph104
 
 scalar.ph104:                                     ; preds = %scalar.ph104.preheader, %scalar.ph104
-  %indvars.iv73 = phi i64 [ %indvars.iv.next74, %scalar.ph104 ], [ %indvars.iv73.ph, %scalar.ph104.preheader ] ; 3 uses
+  %indvars.iv73 = phi i64 [ %indvars.iv.next74, %scalar.ph104 ], [ %indvars.iv73.ph, %scalar.ph104.preheader ] ; 2 uses
   %i.ar = getelementptr inbounds [4 x i8], ptr %2, i64 %indvars.iv73 ; 2 uses
   %i.as = load i32, ptr %i.ar, align 4, !tbaa !53
   %i.at = sub i32 %i.ai, %i.as
   store i32 %i.at, ptr %i.ar, align 4, !tbaa !53
-  %indvars.iv.next74 = add nsw i64 %indvars.iv73, 1
-  %4 = icmp slt i64 %indvars.iv73, %indvars.iv6598
-  br i1 %4, label %scalar.ph104, label %.loopexit, !llvm.loop !89
+  %indvars.iv.next74 = add nsw i64 %indvars.iv73, 1 ; 2 uses
+  %lftr.wideiv = trunc i64 %indvars.iv.next74 to i32
+  %exitcond.not = icmp eq i32 %indvars.iv78103, %lftr.wideiv
+  br i1 %exitcond.not, label %.loopexit, label %scalar.ph104, !llvm.loop !89
 
 .loopexit:                                        ; preds = %scalar.ph104, %middle.block112
   %i.au = icmp ne i32 %.lcssa, %1
@@ -308,8 +313,8 @@ scalar.ph104:                                     ; preds = %scalar.ph104.prehea
   br i1 %i.az, label %.lr.ph, label %.critedge2.us
 
 .lr.ph.us:                                        ; preds = %.loopexit, %.lr.ph.lr.ph.us
-  %.02957.us = phi i32 [ 0, %.lr.ph.lr.ph.us ], [ %i.av, %.loopexit ] ; 2 uses
-  %i.ba = sext i32 %.02957.us to i64              ; 2 uses
+  %.02957.us = phi i32 [ 0, %.lr.ph.lr.ph.us ], [ %i.av, %.loopexit ] ; 3 uses
+  %i.ba = sext i32 %.02957.us to i64
   br label %bb.d
 
 _ZL14prepareReorderPKhiPiPhS2_.exit.thread:       ; preds = %.preheader.i, %.critedge.thread.us, %bb.b, %_ZL14prepareReorderPKhiPiPhS2_.exit, %bb.a
@@ -711,9 +716,6 @@ declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #7
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #8
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.smax.i64(i64, i64) #7
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

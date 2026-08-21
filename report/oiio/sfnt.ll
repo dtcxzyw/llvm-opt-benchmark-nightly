@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.d, %bb.a, %bb.f
 define internal ptr @sfnt_get_ps_name(ptr noundef %0) #0 {
 bb.a:
   %i.a = alloca [5 x i8], align 1                 ; 6 uses
-  %i.b = ptrtoaddr ptr %i.a to i64                ; 3 uses
+  %i.b = ptrtoaddr ptr %i.a to i64                ; 2 uses
   %i.c = alloca i32, align 4                      ; 6 uses
   %i.d = alloca i32, align 4                      ; 6 uses
   %i.e = alloca ptr, align 8                      ; 7 uses
@@ -608,8 +608,6 @@ bb.ar:                                            ; preds = %bb.aq
 
 .lr.ph303.preheader.i:                            ; preds = %bb.ar
   %.pre325.i = load ptr, ptr %i.e, align 8, !tbaa !694
-  %1 = sub i64 0, %i.b
-  %scevgep101 = getelementptr i8, ptr %i.a, i64 %1
   br label %.lr.ph303.i
 
 .lr.ph303.i:                                      ; preds = %bb.bs, %.lr.ph303.preheader.i
@@ -662,32 +660,24 @@ bb.aw:                                            ; preds = %bb.av, %bb.au
   %i.ho = urem i32 %.04477.i.i, 10
   %i.hp = trunc nuw nsw i32 %i.ho to i8
   %i.hq = or disjoint i8 %i.hp, 48
-  %i.hr = getelementptr i8, ptr %.04576.i.i, i64 1 ; 12 uses
+  %i.hr = getelementptr i8, ptr %.04576.i.i, i64 1 ; 10 uses
   store i8 %i.hq, ptr %.04576.i.i, align 1, !tbaa !16
   %i.hs = udiv i32 %.04477.i.i, 10
   %.not.i239.i = icmp samesign ult i32 %.04477.i.i, 10
   br i1 %.not.i239.i, label %iter.check, label %.lr.ph.i238.i, !llvm.loop !697
 
 iter.check:                                       ; preds = %.lr.ph.i238.i
-  %2 = ptrtoaddr ptr %i.hr to i64
   %i.ht = ptrtoaddr ptr %i.hr to i64
-  %3 = add i64 %i.ht, -1
-  %umin103 = call i64 @llvm.umin.i64(i64 %i.b, i64 %3)
-  %i.hu = sub i64 %2, %umin103                    ; 7 uses
+  %i.hu = sub i64 %i.ht, %i.b                     ; 7 uses
   %min.iters.check = icmp ult i64 %i.hu, 8
   br i1 %min.iters.check, label %.lr.ph80.i.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %4 = ptrtoaddr ptr %i.hr to i64
-  %scevgep = getelementptr i8, ptr %.047.i.i, i64 %4
   %i.hv = ptrtoaddr ptr %i.hr to i64
-  %5 = add i64 %i.hv, -1
-  %umin = call i64 @llvm.umin.i64(i64 %i.b, i64 %5) ; 2 uses
-  %i.hw = sub i64 0, %umin
-  %scevgep100 = getelementptr i8, ptr %scevgep, i64 %i.hw
-  %scevgep102 = getelementptr i8, ptr %scevgep101, i64 %umin
+  %i.hw = sub i64 %i.hv, %i.b
+  %scevgep102 = getelementptr i8, ptr %.047.i.i, i64 %i.hw
   %bound0 = icmp ult ptr %.047.i.i, %i.hr
-  %bound1 = icmp ult ptr %scevgep102, %scevgep100
+  %bound1 = icmp ult ptr %i.a, %scevgep102
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %.lr.ph80.i.i.preheader, label %vector.main.loop.iter.check
 
