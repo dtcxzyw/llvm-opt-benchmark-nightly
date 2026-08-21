@@ -204,7 +204,7 @@ declare i32 @ff_filter_get_nb_threads(ptr noundef) local_unnamed_addr #5
 define internal fastcc void @envelope(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef nonnull readonly captures(none) %1, i32 noundef %2, i32 noundef %3, i32 noundef %4) unnamed_addr #6 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 3 uses
-  %i.b = load i32, ptr %i.a, align 8, !tbaa !131
+  %i.b = load i32, ptr %i.a, align 8, !tbaa !131  ; 3 uses
   switch i32 %i.b, label %bb.c [
     i32 0, label %envelope_peak.exit
     i32 1, label %bb.b
@@ -249,14 +249,14 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.z = sext i32 %2 to i64                       ; 4 uses
   %i.aa = getelementptr inbounds [4 x i8], ptr %i.y, i64 %i.z
-  %i.ab = load i32, ptr %i.aa, align 4, !tbaa !44 ; 7 uses
+  %i.ab = load i32, ptr %i.aa, align 4, !tbaa !44 ; 6 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.ad = getelementptr inbounds [4 x i8], ptr %i.ac, i64 %i.z
-  %i.ae = load i32, ptr %i.ad, align 4, !tbaa !44 ; 7 uses
+  %i.ae = load i32, ptr %i.ad, align 4, !tbaa !44 ; 6 uses
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 96
   %i.ag = getelementptr inbounds [32 x i8], ptr %i.af, i64 %i.z
   %i.ah = getelementptr inbounds [8 x i8], ptr %i.ag, i64 %i.d
-  %i.ai = load ptr, ptr %i.ah, align 8, !tbaa !135 ; 6 uses
+  %i.ai = load ptr, ptr %i.ah, align 8, !tbaa !135 ; 5 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 224
   %i.ak = getelementptr inbounds [32 x i8], ptr %i.aj, i64 %i.z
   %i.al = getelementptr inbounds [8 x i8], ptr %i.ak, i64 %i.d
@@ -357,17 +357,12 @@ bb.m:                                             ; preds = %bb.l
 
 .lr.ph206.i:                                      ; preds = %.preheader.i
   %i.bt = getelementptr inbounds [8 x i8], ptr %1, i64 %i.d
-  %i.bu = load ptr, ptr %i.bt, align 8, !tbaa !71 ; 2 uses
+  %i.bu = load ptr, ptr %i.bt, align 8, !tbaa !71
   %i.bv = icmp slt i32 %i.ab, %i.ae
-  %i.bw = sext i32 %4 to i64                      ; 4 uses
-  %i.bx = sext i32 %i.f to i64                    ; 2 uses
-  %i.by = sext i32 %i.br to i64                   ; 2 uses
-  br i1 %i.bv, label %.lr.ph202.us.preheader.i, label %.critedge4.loopexit.preheader.i
-
-.critedge4.loopexit.preheader.i:                  ; preds = %.lr.ph206.i
-  %5 = sext i32 %i.ae to i64                      ; 0 uses
-  %6 = sext i32 %i.ab to i64                      ; 0 uses
-  br label %.critedge4.loopexit.i
+  %i.bw = sext i32 %4 to i64                      ; 2 uses
+  %i.bx = sext i32 %i.f to i64
+  %i.by = sext i32 %i.br to i64
+  br i1 %i.bv, label %.lr.ph202.us.preheader.i, label %._crit_edge207.i
 
 .lr.ph202.us.preheader.i:                         ; preds = %.lr.ph206.i
   %i.bz = sext i32 %i.ab to i64                   ; 2 uses
@@ -437,7 +432,7 @@ bb.t:                                             ; preds = %bb.s
 .critedge6.us.i:                                  ; preds = %bb.r, %.lr.ph69, %bb.t
   %indvars.iv.next248.i = add nsw i64 %indvars.iv247.i, 1 ; 2 uses
   %i.cp = icmp slt i64 %indvars.iv.next248.i, %i.by
-  br i1 %i.cp, label %.lr.ph202.us.i, label %._crit_edge207.i, !llvm.loop !141
+  br i1 %i.cp, label %.lr.ph202.us.i, label %.critedge4.loopexit.i, !llvm.loop !141
 
 .preheader179.i:                                  ; preds = %.preheader179.lr.ph.i, %.preheader179.i
   %indvars.iv224.i = phi i64 [ %indvars.iv.next225.i, %.preheader179.i ], [ %i.aw, %.preheader179.lr.ph.i ] ; 2 uses
@@ -488,19 +483,13 @@ bb.w:                                             ; preds = %bb.w, %.lr.ph198.i
   %i.dn = icmp slt i64 %indvars.iv.next228.i, %i.cx
   br i1 %i.dn, label %bb.w, label %envelope_peak.exit, !llvm.loop !142
 
-.critedge4.loopexit.i:                            ; preds = %.critedge4.loopexit.i, %.critedge4.loopexit.preheader.i
-  %indvars.iv233.i = phi i64 [ %i.bw, %.critedge4.loopexit.preheader.i ], [ %indvars.iv.next234.i, %.critedge4.loopexit.i ] ; 3 uses
-  %7 = mul nsw i64 %indvars.iv233.i, %i.bx
-  %8 = getelementptr inbounds i8, ptr %i.bu, i64 %7 ; 0 uses
-  %9 = sub nsw i64 %indvars.iv233.i, %i.bw
-  %10 = getelementptr inbounds [4 x i8], ptr %i.ai, i64 %9 ; 0 uses
-  %indvars.iv.next234.i = add nsw i64 %indvars.iv233.i, 1 ; 2 uses
-  %11 = icmp slt i64 %indvars.iv.next234.i, %i.by
-  br i1 %11, label %.critedge4.loopexit.i, label %._crit_edge207.i, !llvm.loop !141
+.critedge4.loopexit.i:                            ; preds = %.critedge6.us.i
+  %.pre = load i32, ptr %i.a, align 8, !tbaa !131
+  br label %._crit_edge207.i
 
-._crit_edge207.i:                                 ; preds = %.critedge4.loopexit.i, %.critedge6.us.i, %.preheader.i
-  %12 = load i32, ptr %i.a, align 8, !tbaa !131
-  %i.do = icmp eq i32 %12, 3
+._crit_edge207.i:                                 ; preds = %.lr.ph206.i, %.critedge4.loopexit.i, %.preheader.i
+  %5 = phi i32 [ %i.b, %.preheader.i ], [ %.pre, %.critedge4.loopexit.i ], [ %i.b, %.lr.ph206.i ]
+  %i.do = icmp eq i32 %5, 3
   br i1 %i.do, label %bb.x, label %bb.y
 
 bb.x:                                             ; preds = %._crit_edge207.i
@@ -547,7 +536,7 @@ envelope_peak.exit:                               ; preds = %bb.w, %bb.z, %bb.y,
 define internal fastcc void @envelope16(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef nonnull readonly captures(none) %1, i32 noundef %2, i32 noundef %3, i32 noundef %4) unnamed_addr #6 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 3 uses
-  %i.b = load i32, ptr %i.a, align 8, !tbaa !131
+  %i.b = load i32, ptr %i.a, align 8, !tbaa !131  ; 3 uses
   switch i32 %i.b, label %bb.c [
     i32 0, label %envelope_peak16.exit
     i32 1, label %bb.b
@@ -599,14 +588,14 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.ag = sext i32 %2 to i64                      ; 4 uses
   %i.ah = getelementptr inbounds [4 x i8], ptr %i.af, i64 %i.ag
-  %i.ai = load i32, ptr %i.ah, align 4, !tbaa !44 ; 7 uses
+  %i.ai = load i32, ptr %i.ah, align 4, !tbaa !44 ; 6 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.ak = getelementptr inbounds [4 x i8], ptr %i.aj, i64 %i.ag
-  %i.al = load i32, ptr %i.ak, align 4, !tbaa !44 ; 7 uses
+  %i.al = load i32, ptr %i.ak, align 4, !tbaa !44 ; 6 uses
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 96
   %i.an = getelementptr inbounds [32 x i8], ptr %i.am, i64 %i.ag
   %i.ao = getelementptr inbounds [8 x i8], ptr %i.an, i64 %i.d
-  %i.ap = load ptr, ptr %i.ao, align 8, !tbaa !135 ; 6 uses
+  %i.ap = load ptr, ptr %i.ao, align 8, !tbaa !135 ; 5 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 224
   %i.ar = getelementptr inbounds [32 x i8], ptr %i.aq, i64 %i.ag
   %i.as = getelementptr inbounds [8 x i8], ptr %i.ar, i64 %i.d
@@ -709,17 +698,12 @@ bb.m:                                             ; preds = %bb.l
 
 .lr.ph212.i:                                      ; preds = %.preheader.i
   %i.cc = getelementptr inbounds [8 x i8], ptr %1, i64 %i.d
-  %i.cd = load ptr, ptr %i.cc, align 8, !tbaa !71 ; 2 uses
+  %i.cd = load ptr, ptr %i.cc, align 8, !tbaa !71
   %i.ce = icmp slt i32 %i.ai, %i.al
-  %i.cf = sext i32 %4 to i64                      ; 4 uses
-  %i.cg = sext i32 %i.g to i64                    ; 2 uses
-  %i.ch = sext i32 %i.ca to i64                   ; 2 uses
-  br i1 %i.ce, label %.lr.ph208.us.preheader.i, label %.critedge4.loopexit.preheader.i
-
-.critedge4.loopexit.preheader.i:                  ; preds = %.lr.ph212.i
-  %5 = sext i32 %i.al to i64                      ; 0 uses
-  %6 = sext i32 %i.ai to i64                      ; 0 uses
-  br label %.critedge4.loopexit.i
+  %i.cf = sext i32 %4 to i64                      ; 2 uses
+  %i.cg = sext i32 %i.g to i64
+  %i.ch = sext i32 %i.ca to i64
+  br i1 %i.ce, label %.lr.ph208.us.preheader.i, label %._crit_edge213.i
 
 .lr.ph208.us.preheader.i:                         ; preds = %.lr.ph212.i
   %i.ci = sext i32 %i.ai to i64                   ; 2 uses
@@ -791,7 +775,7 @@ bb.t:                                             ; preds = %bb.s
 .critedge6.us.i:                                  ; preds = %bb.r, %.lr.ph69, %bb.t
   %indvars.iv.next254.i = add nsw i64 %indvars.iv253.i, 1 ; 2 uses
   %i.da = icmp slt i64 %indvars.iv.next254.i, %i.ch
-  br i1 %i.da, label %.lr.ph208.us.i, label %._crit_edge213.i, !llvm.loop !149
+  br i1 %i.da, label %.lr.ph208.us.i, label %.critedge4.loopexit.i, !llvm.loop !149
 
 .preheader185.i:                                  ; preds = %.preheader185.lr.ph.i, %.preheader185.i
   %indvars.iv230.i = phi i64 [ %indvars.iv.next231.i, %.preheader185.i ], [ %i.bd, %.preheader185.lr.ph.i ] ; 2 uses
@@ -842,19 +826,13 @@ bb.w:                                             ; preds = %bb.w, %.lr.ph204.i
   %i.dy = icmp slt i64 %indvars.iv.next234.i, %i.dk
   br i1 %i.dy, label %bb.w, label %envelope_peak16.exit, !llvm.loop !150
 
-.critedge4.loopexit.i:                            ; preds = %.critedge4.loopexit.i, %.critedge4.loopexit.preheader.i
-  %indvars.iv239.i = phi i64 [ %i.cf, %.critedge4.loopexit.preheader.i ], [ %indvars.iv.next240.i, %.critedge4.loopexit.i ] ; 3 uses
-  %7 = mul nsw i64 %indvars.iv239.i, %i.cg
-  %8 = getelementptr inbounds [2 x i8], ptr %i.cd, i64 %7 ; 0 uses
-  %9 = sub nsw i64 %indvars.iv239.i, %i.cf
-  %10 = getelementptr inbounds [4 x i8], ptr %i.ap, i64 %9 ; 0 uses
-  %indvars.iv.next240.i = add nsw i64 %indvars.iv239.i, 1 ; 2 uses
-  %11 = icmp slt i64 %indvars.iv.next240.i, %i.ch
-  br i1 %11, label %.critedge4.loopexit.i, label %._crit_edge213.i, !llvm.loop !149
+.critedge4.loopexit.i:                            ; preds = %.critedge6.us.i
+  %.pre = load i32, ptr %i.a, align 8, !tbaa !131
+  br label %._crit_edge213.i
 
-._crit_edge213.i:                                 ; preds = %.critedge4.loopexit.i, %.critedge6.us.i, %.preheader.i
-  %12 = load i32, ptr %i.a, align 8, !tbaa !131
-  %i.dz = icmp eq i32 %12, 3
+._crit_edge213.i:                                 ; preds = %.lr.ph212.i, %.critedge4.loopexit.i, %.preheader.i
+  %5 = phi i32 [ %i.b, %.preheader.i ], [ %.pre, %.critedge4.loopexit.i ], [ %i.b, %.lr.ph212.i ]
+  %i.dz = icmp eq i32 %5, 3
   br i1 %i.dz, label %bb.x, label %bb.y
 
 bb.x:                                             ; preds = %._crit_edge213.i

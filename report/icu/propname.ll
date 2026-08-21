@@ -203,7 +203,7 @@ bb.a:
 define ptr @uscript_getShortName_78(i32 noundef %0) local_unnamed_addr #2 {
 .lr.ph.i.i:
   %or.cond = icmp ult i32 %0, 213
-  br i1 %or.cond, label %.thread.i.i, label %_ZN6icu_7812PropNameData20getPropertyValueNameEiii.exit
+  br i1 %or.cond, label %.thread.i.i, label %_ZN6icu_7812PropNameData20getPropertyValueNameEiii.exit, !llvm.loop !14
 
 .thread.i.i:                                      ; preds = %.lr.ph.i.i
   %i.a = zext nneg i32 %0 to i64

@@ -1,8 +1,8 @@
 inline.NumInlined: 6
 inline.NumDeleted: 6
 loop-unroll.NumCompletelyUnrolled: 5
-loop-unroll.NumRuntimeUnrolled: 4
-loop-unroll.NumUnrolled: 13
+loop-unroll.NumRuntimeUnrolled: 5
+loop-unroll.NumUnrolled: 14
 begin_hunk_0_@fallbackSort:bb.a
   %i.es = load i32, ptr %i.er, align 4, !tbaa !20
   %i.et = and i32 %.1151, 31                      ; 2 uses
@@ -204,25 +204,98 @@ bb.o:                                             ; preds = %.lr.ph.i.i
   br i1 %.not55.not75.i.i, label %.lr.ph78.preheader.i.i, label %fallbackSimpleSort.exit.i
 
 .lr.ph78.preheader.i.i:                           ; preds = %.loopexit58.i.i
-  %i.hx = sext i32 %i.gx to i64                   ; 2 uses
-  %i.hy = add i32 %i.gx, 1                        ; 2 uses
-  %i.hz = sext i32 %i.gv to i64
-  %i.ia = sext i32 %i.hy to i64
-  br label %.lr.ph78.i.i.a
+  %i.hx = sext i32 %i.gx to i64                   ; 5 uses
+  %i.hy = add i32 %i.gx, 1                        ; 4 uses
+  %i.hz = sext i32 %i.gv to i64                   ; 3 uses
+  %i.ia = sext i32 %i.hy to i64                   ; 3 uses
+  %5 = sub nsw i64 %i.hx, %i.hz
+  %xtraiter555 = and i64 %5, 1
+  %lcmp.mod556.not = icmp eq i64 %xtraiter555, 0
+  br i1 %lcmp.mod556.not, label %.lr.ph78.i.i.prol.loopexit, label %.lr.ph78.i.i.prol
 
-.lr.ph78.i.i.a:                                   ; preds = %.critedge2.i.i, %.lr.ph78.preheader.i.i
-  %indvars.iv86.i.i.a = phi i64 [ %i.hx, %.lr.ph78.preheader.i.i ], [ %indvars.iv.next87.i.i.a, %.critedge2.i.i ] ; 4 uses
-  %indvars.iv.next87.i.i.a = add nsw i64 %indvars.iv86.i.i.a, -1 ; 3 uses
+.lr.ph78.i.i.prol:                                ; preds = %.lr.ph78.preheader.i.i
+  %indvars.iv.next87.i.i.prol = add nsw i64 %i.hx, -1 ; 2 uses
+  %6 = getelementptr inbounds [4 x i8], ptr %0, i64 %indvars.iv.next87.i.i.prol
+  %7 = load i32, ptr %6, align 4, !tbaa !20       ; 2 uses
+  %8 = sext i32 %7 to i64
+  %9 = getelementptr inbounds [4 x i8], ptr %1, i64 %8
+  %10 = load i32, ptr %9, align 4, !tbaa !20
+  br label %.lr.ph70.i.i.prol
+
+.lr.ph70.i.i.prol:                                ; preds = %17, %.lr.ph78.i.i.prol
+  %indvars.iv88.i.i.prol = phi i64 [ %indvars.iv.next89.i.i.prol, %17 ], [ %i.hx, %.lr.ph78.i.i.prol ] ; 3 uses
+  %11 = getelementptr inbounds [4 x i8], ptr %0, i64 %indvars.iv88.i.i.prol ; 2 uses
+  %12 = load i32, ptr %11, align 4, !tbaa !20     ; 2 uses
+  %13 = zext i32 %12 to i64
+  %14 = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %13
+  %15 = load i32, ptr %14, align 4, !tbaa !20
+  %16 = icmp ugt i32 %10, %15
+  br i1 %16, label %17, label %.critedge2.loopexit.i.i.prol
+
+17:                                               ; preds = %.lr.ph70.i.i.prol
+  %18 = getelementptr i8, ptr %11, i64 -4
+  store i32 %12, ptr %18, align 4, !tbaa !20
+  %indvars.iv.next89.i.i.prol = add nsw i64 %indvars.iv88.i.i.prol, 1 ; 2 uses
+  %lftr.wideiv.i.i.prol = trunc i64 %indvars.iv.next89.i.i.prol to i32
+  %exitcond.not.i.i.prol = icmp eq i32 %i.hy, %lftr.wideiv.i.i.prol
+  br i1 %exitcond.not.i.i.prol, label %.critedge2.loopexit.i.i.prol, label %.lr.ph70.i.i.prol, !llvm.loop !84
+
+.critedge2.loopexit.i.i.prol:                     ; preds = %17, %.lr.ph70.i.i.prol
+  %.1.lcssa.ph.i.i.prol = phi i64 [ %i.ia, %17 ], [ %indvars.iv88.i.i.prol, %.lr.ph70.i.i.prol ]
+  %19 = getelementptr [4 x i8], ptr %0, i64 %.1.lcssa.ph.i.i.prol
+  %20 = getelementptr i8, ptr %19, i64 -4
+  store i32 %7, ptr %20, align 4, !tbaa !20
+  br label %.lr.ph78.i.i.prol.loopexit
+
+.lr.ph78.i.i.prol.loopexit:                       ; preds = %.critedge2.loopexit.i.i.prol, %.lr.ph78.preheader.i.i
+  %indvars.iv86.i.i.unr = phi i64 [ %i.hx, %.lr.ph78.preheader.i.i ], [ %indvars.iv.next87.i.i.prol, %.critedge2.loopexit.i.i.prol ]
+  %21 = add nsw i64 %i.hx, -1
+  %22 = icmp eq i64 %21, %i.hz
+  br i1 %22, label %fallbackSimpleSort.exit.i, label %.lr.ph78.i.i
+
+.lr.ph78.i.i:                                     ; preds = %.lr.ph78.i.i.prol.loopexit, %.critedge2.i.i
+  %indvars.iv86.i.i = phi i64 [ %indvars.iv.next87.i.i.a, %.critedge2.i.i ], [ %indvars.iv86.i.i.unr, %.lr.ph78.i.i.prol.loopexit ] ; 3 uses
+  %indvars.iv.next87.i.i = add nsw i64 %indvars.iv86.i.i, -1 ; 2 uses
+  %23 = getelementptr inbounds [4 x i8], ptr %0, i64 %indvars.iv.next87.i.i
+  %24 = load i32, ptr %23, align 4, !tbaa !20     ; 2 uses
+  %25 = sext i32 %24 to i64
+  %26 = getelementptr inbounds [4 x i8], ptr %1, i64 %25
+  %27 = load i32, ptr %26, align 4, !tbaa !20
+  br label %.lr.ph70.i.i
+
+.lr.ph70.i.i:                                     ; preds = %34, %.lr.ph78.i.i
+  %indvars.iv88.i.i = phi i64 [ %indvars.iv.next89.i.i, %34 ], [ %indvars.iv86.i.i, %.lr.ph78.i.i ] ; 3 uses
+  %28 = getelementptr inbounds [4 x i8], ptr %0, i64 %indvars.iv88.i.i ; 2 uses
+  %29 = load i32, ptr %28, align 4, !tbaa !20     ; 2 uses
+  %30 = zext i32 %29 to i64
+  %31 = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %30
+  %32 = load i32, ptr %31, align 4, !tbaa !20
+  %33 = icmp ugt i32 %27, %32
+  br i1 %33, label %34, label %.lr.ph78.i.i.a
+
+34:                                               ; preds = %.lr.ph70.i.i
+  %35 = getelementptr i8, ptr %28, i64 -4
+  store i32 %29, ptr %35, align 4, !tbaa !20
+  %indvars.iv.next89.i.i = add nsw i64 %indvars.iv88.i.i, 1 ; 2 uses
+  %lftr.wideiv.i.i = trunc i64 %indvars.iv.next89.i.i to i32
+  %exitcond.not.i.i = icmp eq i32 %i.hy, %lftr.wideiv.i.i
+  br i1 %exitcond.not.i.i, label %.lr.ph78.i.i.a, label %.lr.ph70.i.i, !llvm.loop !84
+
+.lr.ph78.i.i.a:                                   ; preds = %34, %.lr.ph70.i.i
+  %indvars.iv86.i.i.a = phi i64 [ %i.ia, %34 ], [ %indvars.iv88.i.i, %.lr.ph70.i.i ]
+  %36 = getelementptr [4 x i8], ptr %0, i64 %indvars.iv86.i.i.a
+  %37 = getelementptr i8, ptr %36, i64 -4
+  store i32 %24, ptr %37, align 4, !tbaa !20
+  %indvars.iv.next87.i.i.a = add nsw i64 %indvars.iv86.i.i, -2 ; 3 uses
   %i.ib = getelementptr inbounds [4 x i8], ptr %0, i64 %indvars.iv.next87.i.i.a
   %i.ic = load i32, ptr %i.ib, align 4, !tbaa !20 ; 2 uses
   %i.id = sext i32 %i.ic to i64
   %i.ie = getelementptr inbounds [4 x i8], ptr %1, i64 %i.id
   %i.if = load i32, ptr %i.ie, align 4, !tbaa !20
-  %.not5668.i.i = icmp sgt i64 %indvars.iv86.i.i.a, %i.hx
-  br i1 %.not5668.i.i, label %.critedge2.i.i, label %.lr.ph70.i.i.a
+  br label %.lr.ph70.i.i.a
 
-.lr.ph70.i.i.a:                                   ; preds = %.lr.ph78.i.i.a, %bb.p
-  %indvars.iv88.i.i.a = phi i64 [ %indvars.iv.next89.i.i.a, %bb.p ], [ %indvars.iv86.i.i.a, %.lr.ph78.i.i.a ] ; 3 uses
+.lr.ph70.i.i.a:                                   ; preds = %bb.p, %.lr.ph78.i.i.a
+  %indvars.iv88.i.i.a = phi i64 [ %indvars.iv.next89.i.i.a, %bb.p ], [ %indvars.iv.next87.i.i, %.lr.ph78.i.i.a ] ; 3 uses
   %i.ig = getelementptr inbounds [4 x i8], ptr %0, i64 %indvars.iv88.i.i.a ; 2 uses
   %i.ih = load i32, ptr %i.ig, align 4, !tbaa !20 ; 2 uses
   %i.ii = zext i32 %i.ih to i64
@@ -239,15 +312,15 @@ bb.p:                                             ; preds = %.lr.ph70.i.i.a
   %exitcond.not.i.i.a = icmp eq i32 %i.hy, %lftr.wideiv.i.i.a
   br i1 %exitcond.not.i.i.a, label %.critedge2.i.i, label %.lr.ph70.i.i.a, !llvm.loop !84
 
-.critedge2.i.i:                                   ; preds = %bb.p, %.lr.ph70.i.i.a, %.lr.ph78.i.i.a
-  %.1.lcssa.i.i = phi i64 [ %indvars.iv86.i.i.a, %.lr.ph78.i.i.a ], [ %indvars.iv88.i.i.a, %.lr.ph70.i.i.a ], [ %i.ia, %bb.p ]
-  %i.in = getelementptr [4 x i8], ptr %0, i64 %.1.lcssa.i.i
+.critedge2.i.i:                                   ; preds = %bb.p, %.lr.ph70.i.i.a
+  %.1.lcssa.ph.i.i.1 = phi i64 [ %i.ia, %bb.p ], [ %indvars.iv88.i.i.a, %.lr.ph70.i.i.a ]
+  %i.in = getelementptr [4 x i8], ptr %0, i64 %.1.lcssa.ph.i.i.1
   %i.io = getelementptr i8, ptr %i.in, i64 -4
   store i32 %i.ic, ptr %i.io, align 4, !tbaa !20
   %.not55.not.i.i = icmp sgt i64 %indvars.iv.next87.i.i.a, %i.hz
-  br i1 %.not55.not.i.i, label %.lr.ph78.i.i.a, label %fallbackSimpleSort.exit.i, !llvm.loop !85
+  br i1 %.not55.not.i.i, label %.lr.ph78.i.i, label %fallbackSimpleSort.exit.i, !llvm.loop !85
 
-fallbackSimpleSort.exit.i:                        ; preds = %.critedge2.i.i, %.loopexit58.i.i, %bb.m
+fallbackSimpleSort.exit.i:                        ; preds = %.lr.ph78.i.i.prol.loopexit, %.critedge2.i.i, %.loopexit58.i.i, %bb.m
   %i.ip = icmp sgt i64 %indvars.iv.i, 1
   br i1 %i.ip, label %bb.j, label %fallbackQSort3.exit, !llvm.loop !86
 

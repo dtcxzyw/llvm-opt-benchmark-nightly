@@ -204,7 +204,7 @@ bb.hx:                                            ; preds = %bb.hw
   %i.xr = sext i32 %i.xq to i64
   %i.xs = getelementptr inbounds i8, ptr %i.xh, i64 %i.xr
   store ptr %i.xs, ptr %i.db, align 8
-  br label %NUM_numpart_to_char.exit
+  br label %NUM_numpart_to_char.exit, !llvm.loop !28
 
 bb.hy:                                            ; preds = %bb.ap
   br i1 %i.dm, label %bb.hz, label %bb.id
@@ -263,7 +263,7 @@ bb.ig:                                            ; preds = %bb.if
   %i.yl = sext i32 %i.yk to i64
   %i.ym = getelementptr inbounds i8, ptr %i.yb, i64 %i.yl
   store ptr %i.ym, ptr %i.db, align 8
-  br label %NUM_numpart_to_char.exit
+  br label %NUM_numpart_to_char.exit, !llvm.loop !28
 
 bb.ih:                                            ; preds = %bb.ap
   br i1 %i.dm, label %bb.ii, label %bb.ij
@@ -313,7 +313,7 @@ bb.in:                                            ; preds = %bb.im
   %i.za = sext i32 %i.yz to i64
   %i.zb = getelementptr inbounds i8, ptr %i.yq, i64 %i.za
   store ptr %i.zb, ptr %i.db, align 8
-  br label %NUM_numpart_to_char.exit
+  br label %NUM_numpart_to_char.exit, !llvm.loop !28
 
 bb.io:                                            ; preds = %bb.ao
   %i.zc = load ptr, ptr %i.db, align 8            ; 3 uses
@@ -337,7 +337,7 @@ NUM_numpart_from_char.exit:                       ; preds = %bb.eo, %bb.en, %bb.
   store ptr %i.zl, ptr %i.db, align 8
   br label %NUM_numpart_to_char.exit
 
-NUM_numpart_to_char.exit:                         ; preds = %bb.fp, %bb.fo, %.lr.ph.i, %bb.im, %.lr.ph.i386, %bb.in, %bb.if, %.lr.ph.i376, %bb.ig, %bb.hw, %.lr.ph.i366, %bb.hx, %bb.hm, %.lr.ph.i356, %.lr.ph.i356.1, %bb.hn, %bb.ho, %bb.hf, %.lr.ph.i346, %.lr.ph.i346.1, %bb.hg, %bb.hh, %bb.fn, %bb.ct, %bb.ar, %bb.io, %bb.ip, %bb.ap, %bb.ib, %bb.hs, %bb.hi, %bb.hj, %bb.hb, %bb.hc, %bb.fg, %bb.fh, %bb.ff, %bb.fb, %bb.ew, %bb.ev, %bb.er, %NUM_numpart_from_char.exit, %bb.ha
+NUM_numpart_to_char.exit:                         ; preds = %bb.fp, %bb.fo, %.lr.ph.i, %bb.hm, %.lr.ph.i356, %.lr.ph.i356.1, %bb.hn, %bb.ho, %bb.hf, %.lr.ph.i346, %.lr.ph.i346.1, %bb.hg, %bb.hh, %bb.im, %.lr.ph.i386, %bb.in, %bb.if, %.lr.ph.i376, %bb.ig, %bb.hw, %.lr.ph.i366, %bb.hx, %bb.fn, %bb.ct, %bb.ar, %bb.io, %bb.ip, %bb.ap, %bb.ib, %bb.hs, %bb.hi, %bb.hj, %bb.hb, %bb.hc, %bb.fg, %bb.fh, %bb.ff, %bb.fb, %bb.ew, %bb.ev, %bb.er, %NUM_numpart_from_char.exit, %bb.ha
   %i.zm = getelementptr inbounds nuw i8, ptr %.0255424, i64 24 ; 2 uses
   %i.zn = load i32, ptr %i.zm, align 8            ; 2 uses
   %.not280 = icmp eq i32 %i.zn, 1

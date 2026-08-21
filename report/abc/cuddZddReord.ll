@@ -203,14 +203,14 @@ bb.ai:                                            ; preds = %bb.ah
 .lr.ph.i209.i:                                    ; preds = %bb.x, %bb.ak
   %.052.i210.i = phi i32 [ %spec.select.i214.i, %bb.ak ], [ %i.bj, %bb.x ] ; 2 uses
   %.03951.i211.i = phi ptr [ %i.gs, %bb.ak ], [ null, %bb.x ] ; 3 uses
-  %.04250.i212.i = phi i32 [ %.03853.i213.i, %bb.ak ], [ %i.bg, %bb.x ] ; 4 uses
+  %.04250.i212.i = phi i32 [ %.03853.i213.i, %bb.ak ], [ %i.bg, %bb.x ] ; 3 uses
   %.03853.i213.i = add nsw i32 %.04250.i212.i, -1 ; 5 uses
   %i.gq = tail call i32 @cuddZddSwapInPlace(ptr noundef nonnull %0, i32 noundef %.03853.i213.i, i32 noundef %.04250.i212.i) ; 4 uses
   %i.gr = icmp eq i32 %i.gq, 0
   br i1 %i.gr, label %bb.al, label %bb.aj
 
 bb.aj:                                            ; preds = %.lr.ph.i209.i
-  %i.gs = tail call ptr @cuddDynamicAllocNode(ptr noundef nonnull %0) #14 ; 15 uses
+  %i.gs = tail call ptr @cuddDynamicAllocNode(ptr noundef nonnull %0) #14 ; 14 uses
   %i.gt = icmp eq ptr %i.gs, null
   br i1 %i.gt, label %bb.al, label %bb.ak
 
@@ -230,7 +230,7 @@ bb.ak:                                            ; preds = %bb.aj
   %spec.select.i214.i = tail call i32 @llvm.smin.i32(i32 %i.gq, i32 %.052.i210.i)
   %.not.not.i215.i = icmp sgt i32 %.03853.i213.i, %1
   %or.cond.i216.i = and i1 %.not.not.i215.i, %i.hb
-  br i1 %or.cond.i216.i, label %.lr.ph.i209.i, label %cuddZddSiftingUp.exit223.i, !llvm.loop !120
+  br i1 %or.cond.i216.i, label %.lr.ph.i209.i, label %.lr.ph.i226.i, !llvm.loop !120
 
 bb.al:                                            ; preds = %bb.aj, %.lr.ph.i209.i
   %.not4556.i217.i = icmp eq ptr %.03951.i211.i, null
@@ -256,14 +256,10 @@ bb.am:                                            ; preds = %bb.am, %.lr.ph58.i2
   store ptr %.257.i220.i, ptr %i.ay, align 8, !tbaa !94
   br label %cuddZddSiftingAux.exit.thread
 
-cuddZddSiftingUp.exit223.i:                       ; preds = %bb.ak
-  %.not.not49.i224.not.i = icmp sgt i32 %.04250.i212.i, %2
-  br i1 %.not.not49.i224.not.i, label %.lr.ph315.i, label %.lr.ph.i226.i
-
-.lr.ph.i226.i:                                    ; preds = %cuddZddSiftingUp.exit223.i, %bb.ao
-  %.052.i227.i = phi i32 [ %spec.select.i231.i, %bb.ao ], [ %i.bj, %cuddZddSiftingUp.exit223.i ] ; 2 uses
-  %.03951.i228.i = phi ptr [ %i.hj, %bb.ao ], [ null, %cuddZddSiftingUp.exit223.i ] ; 3 uses
-  %.04250.i229.i = phi i32 [ %.03853.i230.i, %bb.ao ], [ %.03853.i213.i, %cuddZddSiftingUp.exit223.i ] ; 3 uses
+.lr.ph.i226.i:                                    ; preds = %bb.ak, %bb.ao
+  %.052.i227.i = phi i32 [ %spec.select.i231.i, %bb.ao ], [ %i.bj, %bb.ak ] ; 2 uses
+  %.03951.i228.i = phi ptr [ %i.hj, %bb.ao ], [ null, %bb.ak ] ; 3 uses
+  %.04250.i229.i = phi i32 [ %.03853.i230.i, %bb.ao ], [ %.03853.i213.i, %bb.ak ] ; 3 uses
   %.03853.i230.i = add nsw i32 %.04250.i229.i, 1  ; 4 uses
   %i.hh = tail call i32 @cuddZddSwapInPlace(ptr noundef nonnull %0, i32 noundef %.04250.i229.i, i32 noundef %.03853.i230.i) ; 4 uses
   %i.hi = icmp eq i32 %i.hh, 0
@@ -434,8 +430,7 @@ bb.av:                                            ; preds = %bb.av, %.lr.ph307.i
   %.not114313.i = icmp eq ptr %.289389.i, null
   br i1 %.not114313.i, label %cuddZddSiftingAux.exit.thread, label %.lr.ph315.i
 
-.lr.ph315.i:                                      ; preds = %cuddZddSiftingUp.exit223.i, %.preheader.i
-  %.289389404.i = phi ptr [ %.289389.i, %.preheader.i ], [ %i.gs, %cuddZddSiftingUp.exit223.i ]
+.lr.ph315.i:                                      ; preds = %.preheader.i
   %.promoted316.i = load ptr, ptr %i.ay, align 8, !tbaa !94
   br label %bb.ax
 
@@ -453,7 +448,7 @@ bb.aw:                                            ; preds = %bb.aw, %.lr.ph311.i
 
 bb.ax:                                            ; preds = %bb.ax, %.lr.ph315.i
   %i.ji = phi ptr [ %.promoted316.i, %.lr.ph315.i ], [ %.390314.i, %bb.ax ]
-  %.390314.i = phi ptr [ %.289389404.i, %.lr.ph315.i ], [ %i.jk, %bb.ax ] ; 5 uses
+  %.390314.i = phi ptr [ %.289389.i, %.lr.ph315.i ], [ %i.jk, %bb.ax ] ; 5 uses
   %i.jj = getelementptr inbounds nuw i8, ptr %.390314.i, i64 16
   %i.jk = load ptr, ptr %i.jj, align 8, !tbaa !107 ; 2 uses
   %i.jl = getelementptr inbounds nuw i8, ptr %.390314.i, i64 4
