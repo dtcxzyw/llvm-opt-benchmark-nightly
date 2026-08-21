@@ -204,7 +204,7 @@ bb.u:                                             ; preds = %bb.w, %.lr.ph.i.i.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.dn, ptr noundef nonnull align 8 dereferenceable(24) %i.dm, i64 24, i1 false), !tbaa.struct !59
   %i.do = getelementptr inbounds i8, ptr %.078.i.i.i.i.i.i.i.i.i, i64 -64 ; 2 uses
   %i.dp = getelementptr inbounds i8, ptr %.069.i.i.i.i.i.i.i.i.i, i64 -64 ; 2 uses
-  %i.dq = load i32, ptr %i.do, align 4, !tbaa !29
+  %i.dq = load i32, ptr %i.do, align 8, !tbaa !29
   store i32 %i.dq, ptr %i.dp, align 8, !tbaa !56
   %i.dr = getelementptr inbounds i8, ptr %.078.i.i.i.i.i.i.i.i.i, i64 -56
   %i.ds = getelementptr inbounds i8, ptr %.069.i.i.i.i.i.i.i.i.i, i64 -56
@@ -357,7 +357,7 @@ bb.y:                                             ; preds = %bb.x
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ez, ptr noundef nonnull align 8 dereferenceable(24) %i.ey, i64 24, i1 false), !tbaa.struct !59
   %i.fa = getelementptr inbounds i8, ptr %.078.i.i.i.i.i.i54.i.i.i, i64 -64 ; 2 uses
   %i.fb = getelementptr inbounds i8, ptr %.069.i.i.i.i.i.i53.i.i.i, i64 -64 ; 2 uses
-  %i.fc = load i32, ptr %i.fa, align 4, !tbaa !29
+  %i.fc = load i32, ptr %i.fa, align 8, !tbaa !29
   store i32 %i.fc, ptr %i.fb, align 8, !tbaa !56
   %i.fd = getelementptr inbounds i8, ptr %.078.i.i.i.i.i.i54.i.i.i, i64 -56
   %i.fe = getelementptr inbounds i8, ptr %.069.i.i.i.i.i.i53.i.i.i, i64 -56

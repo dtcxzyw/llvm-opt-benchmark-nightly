@@ -205,10 +205,10 @@ bb.a:
   br i1 %.not, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(60) %5, i8 0, i64 60, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(60) %5, i8 0, i64 60, i1 false)
   %i.f = load i32, ptr %i.a, align 4, !tbaa !14
   %i.g = call i32 @tcgetattr(i32 noundef %i.f, ptr noundef nonnull %5) #34 ; 0 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(60) @oldtty, ptr noundef nonnull align 4 dereferenceable(60) %5, i64 60, i1 false), !tbaa.struct !154
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(60) @oldtty, ptr noundef nonnull align 16 dereferenceable(60) %5, i64 60, i1 false), !tbaa.struct !154
   %i.h = load <4 x i32>, ptr %5, align 16, !tbaa !14 ; 2 uses
   %i.i = and <4 x i32> %i.h, <i32 poison, i32 -1, i32 -305, i32 poison>
   %i.j = and <4 x i32> %i.h, <i32 -1516, i32 poison, i32 poison, i32 -32843>

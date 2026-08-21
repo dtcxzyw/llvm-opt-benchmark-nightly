@@ -94,22 +94,22 @@ pmix_tma_malloc.exit.i:                           ; preds = %bb.d, %bb.c
   %i.q = getelementptr inbounds nuw [552 x i8], ptr %.0.i.i, i64 %.014.i ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 520
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.r, i8 0, i64 32, i1 false)
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(516) %i.q, i8 0, i64 516, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(516) %i.q, i8 0, i64 516, i1 false)
   %i.s = getelementptr inbounds nuw [552 x i8], ptr %.0.i.i, i64 %.014.i ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 552
   %i.u = getelementptr inbounds nuw i8, ptr %i.s, i64 1072
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.u, i8 0, i64 32, i1 false)
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(516) %i.t, i8 0, i64 516, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(516) %i.t, i8 0, i64 516, i1 false)
   %i.v = getelementptr inbounds nuw [552 x i8], ptr %.0.i.i, i64 %.014.i ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 1104
   %i.x = getelementptr inbounds nuw i8, ptr %i.v, i64 1624
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.x, i8 0, i64 32, i1 false)
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(516) %i.w, i8 0, i64 516, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(516) %i.w, i8 0, i64 516, i1 false)
   %i.y = getelementptr inbounds nuw [552 x i8], ptr %.0.i.i, i64 %.014.i ; 2 uses
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 1656
   %i.aa = getelementptr inbounds nuw i8, ptr %i.y, i64 2176
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.aa, i8 0, i64 32, i1 false)
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(516) %i.z, i8 0, i64 516, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(516) %i.z, i8 0, i64 516, i1 false)
   %i.ab = add nuw i64 %.014.i, 4                  ; 2 uses
   %niter.next.3 = add i64 %niter, 4               ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
@@ -131,7 +131,7 @@ pmix_bfrops_base_tma_info_create.exit.loopexit.unr-lcssa: ; preds = %.preheader.
   %i.ac = getelementptr inbounds nuw [552 x i8], ptr %.0.i.i, i64 %.014.i.epil ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 520
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.ad, i8 0, i64 32, i1 false)
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(516) %i.ac, i8 0, i64 516, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(516) %i.ac, i8 0, i64 516, i1 false)
   %i.ae = add nuw i64 %.014.i.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
@@ -165,7 +165,7 @@ pmix_bfrops_base_tma_info_create.exit:            ; preds = %pmix_bfrops_base_tm
   br i1 %i.aq, label %pmix_bfrops_base_tma_info_xfer.exit.thread, label %bb.e, !prof !21
 
 bb.e:                                             ; preds = %.lr.ph.split
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(512) %i.al, i8 0, i64 512, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(512) %i.al, i8 0, i64 512, i1 false)
   br label %.preheader.i.i
 
 .preheader.i.i:                                   ; preds = %bb.g, %bb.e
@@ -422,22 +422,22 @@ pmix_tma_malloc.exit:                             ; preds = %bb.c, %bb.d
   %i.h = getelementptr inbounds nuw [552 x i8], ptr %.0.i, i64 %.014 ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 520
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.i, i8 0, i64 32, i1 false)
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(516) %i.h, i8 0, i64 516, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(516) %i.h, i8 0, i64 516, i1 false)
   %i.j = getelementptr inbounds nuw [552 x i8], ptr %.0.i, i64 %.014 ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 552
   %i.l = getelementptr inbounds nuw i8, ptr %i.j, i64 1072
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.l, i8 0, i64 32, i1 false)
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(516) %i.k, i8 0, i64 516, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(516) %i.k, i8 0, i64 516, i1 false)
   %i.m = getelementptr inbounds nuw [552 x i8], ptr %.0.i, i64 %.014 ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 1104
   %i.o = getelementptr inbounds nuw i8, ptr %i.m, i64 1624
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.o, i8 0, i64 32, i1 false)
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(516) %i.n, i8 0, i64 516, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(516) %i.n, i8 0, i64 516, i1 false)
   %i.p = getelementptr inbounds nuw [552 x i8], ptr %.0.i, i64 %.014 ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 1656
   %i.r = getelementptr inbounds nuw i8, ptr %i.p, i64 2176
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.r, i8 0, i64 32, i1 false)
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(516) %i.q, i8 0, i64 516, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(516) %i.q, i8 0, i64 516, i1 false)
   %i.s = add nuw i64 %.014, 4                     ; 2 uses
   %niter.next.3 = add i64 %niter, 4               ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
@@ -459,7 +459,7 @@ pmix_tma_malloc.exit:                             ; preds = %bb.c, %bb.d
   %i.t = getelementptr inbounds nuw [552 x i8], ptr %.0.i, i64 %.014.epil ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 520
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.u, i8 0, i64 32, i1 false)
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(516) %i.t, i8 0, i64 516, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(516) %i.t, i8 0, i64 516, i1 false)
   %i.v = add nuw i64 %.014.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
@@ -862,22 +862,22 @@ pmix_tma_malloc.exit.i:                           ; preds = %bb.cr, %bb.cq
   %i.hh = getelementptr inbounds nuw [552 x i8], ptr %.0.i.i, i64 %.014.i ; 2 uses
   %i.hi = getelementptr inbounds nuw i8, ptr %i.hh, i64 520
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.hi, i8 0, i64 32, i1 false)
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(516) %i.hh, i8 0, i64 516, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(516) %i.hh, i8 0, i64 516, i1 false)
   %i.hj = getelementptr inbounds nuw [552 x i8], ptr %.0.i.i, i64 %.014.i ; 2 uses
   %i.hk = getelementptr inbounds nuw i8, ptr %i.hj, i64 552
   %i.hl = getelementptr inbounds nuw i8, ptr %i.hj, i64 1072
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.hl, i8 0, i64 32, i1 false)
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(516) %i.hk, i8 0, i64 516, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(516) %i.hk, i8 0, i64 516, i1 false)
   %i.hm = getelementptr inbounds nuw [552 x i8], ptr %.0.i.i, i64 %.014.i ; 2 uses
   %i.hn = getelementptr inbounds nuw i8, ptr %i.hm, i64 1104
   %i.ho = getelementptr inbounds nuw i8, ptr %i.hm, i64 1624
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.ho, i8 0, i64 32, i1 false)
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(516) %i.hn, i8 0, i64 516, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(516) %i.hn, i8 0, i64 516, i1 false)
   %i.hp = getelementptr inbounds nuw [552 x i8], ptr %.0.i.i, i64 %.014.i ; 2 uses
   %i.hq = getelementptr inbounds nuw i8, ptr %i.hp, i64 1656
   %i.hr = getelementptr inbounds nuw i8, ptr %i.hp, i64 2176
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.hr, i8 0, i64 32, i1 false)
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(516) %i.hq, i8 0, i64 516, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(516) %i.hq, i8 0, i64 516, i1 false)
   %i.hs = add nuw i64 %.014.i, 4                  ; 2 uses
   %niter82.next.3 = add i64 %niter82, 4           ; 2 uses
   %niter82.ncmp.3 = icmp eq i64 %niter82.next.3, %unroll_iter81
@@ -906,7 +906,7 @@ bb.cs:                                            ; preds = %pmix_tma_malloc.exi
   %i.hv = getelementptr inbounds nuw [552 x i8], ptr %.0.i.i, i64 %.014.i.epil ; 2 uses
   %i.hw = getelementptr inbounds nuw i8, ptr %i.hv, i64 520
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.hw, i8 0, i64 32, i1 false)
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(516) %i.hv, i8 0, i64 516, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(516) %i.hv, i8 0, i64 516, i1 false)
   %i.hx = add nuw i64 %.014.i.epil, 1
   %epil.iter78.next = add i64 %epil.iter78, 1     ; 2 uses
   %epil.iter78.cmp.not = icmp eq i64 %epil.iter78.next, %xtraiter77
@@ -1220,7 +1220,7 @@ pmix_bfrops_base_tma_load_nspace.exit1132:        ; preds = %bb.dg, %pmix_strncp
   store i32 %i.mh, ptr %i.mi, align 8, !tbaa !295
   %i.mj = getelementptr inbounds nuw i8, ptr %i.lf, i64 260 ; 2 uses
   %i.mk = getelementptr inbounds nuw i8, ptr %i.lg, i64 260
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(512) %i.mj, i8 0, i64 512, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(512) %i.mj, i8 0, i64 512, i1 false)
   br label %.preheader.i1116
 
 .preheader.i1116:                                 ; preds = %bb.dj, %pmix_bfrops_base_tma_load_nspace.exit1132
@@ -1623,22 +1623,22 @@ pmix_bfrops_base_tma_info_create.exit1030.thread: ; preds = %pmix_tma_malloc.exi
   %i.ya = getelementptr inbounds nuw [552 x i8], ptr %.0.i.i1025, i64 %.014.i1027 ; 2 uses
   %i.yb = getelementptr inbounds nuw i8, ptr %i.ya, i64 520
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.yb, i8 0, i64 32, i1 false)
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(516) %i.ya, i8 0, i64 516, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(516) %i.ya, i8 0, i64 516, i1 false)
   %i.yc = getelementptr inbounds nuw [552 x i8], ptr %.0.i.i1025, i64 %.014.i1027 ; 2 uses
   %i.yd = getelementptr inbounds nuw i8, ptr %i.yc, i64 552
   %i.ye = getelementptr inbounds nuw i8, ptr %i.yc, i64 1072
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.ye, i8 0, i64 32, i1 false)
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(516) %i.yd, i8 0, i64 516, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(516) %i.yd, i8 0, i64 516, i1 false)
   %i.yf = getelementptr inbounds nuw [552 x i8], ptr %.0.i.i1025, i64 %.014.i1027 ; 2 uses
   %i.yg = getelementptr inbounds nuw i8, ptr %i.yf, i64 1104
   %i.yh = getelementptr inbounds nuw i8, ptr %i.yf, i64 1624
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.yh, i8 0, i64 32, i1 false)
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(516) %i.yg, i8 0, i64 516, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(516) %i.yg, i8 0, i64 516, i1 false)
   %i.yi = getelementptr inbounds nuw [552 x i8], ptr %.0.i.i1025, i64 %.014.i1027 ; 2 uses
   %i.yj = getelementptr inbounds nuw i8, ptr %i.yi, i64 1656
   %i.yk = getelementptr inbounds nuw i8, ptr %i.yi, i64 2176
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.yk, i8 0, i64 32, i1 false)
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(516) %i.yj, i8 0, i64 516, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(516) %i.yj, i8 0, i64 516, i1 false)
   %i.yl = add nuw i64 %.014.i1027, 4              ; 2 uses
   %niter.next.3 = add i64 %niter, 4               ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
@@ -1660,7 +1660,7 @@ pmix_bfrops_base_tma_info_create.exit1030.unr-lcssa: ; preds = %.preheader.i1026
   %i.ym = getelementptr inbounds nuw [552 x i8], ptr %.0.i.i1025, i64 %.014.i1027.epil ; 2 uses
   %i.yn = getelementptr inbounds nuw i8, ptr %i.ym, i64 520
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.yn, i8 0, i64 32, i1 false)
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(516) %i.ym, i8 0, i64 516, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(516) %i.ym, i8 0, i64 516, i1 false)
   %i.yo = add nuw i64 %.014.i1027.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter

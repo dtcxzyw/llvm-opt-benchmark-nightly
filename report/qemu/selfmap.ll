@@ -175,7 +175,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
 bb.h:                                             ; preds = %bb.g
   %i.cv = getelementptr inbounds nuw i8, ptr %i.aw, i64 88 ; 2 uses
   %i.cw = load ptr, ptr %i.h, align 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 %i.cv, ptr noundef nonnull align 1 %i.cw, i64 noundef range(i64 1, 0) %.0, i1 noundef false) #5
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 %i.cv, ptr noundef nonnull align 1 %i.cw, i64 noundef range(i64 1, 0) %.0, i1 noundef false) #5
   %i.cx = getelementptr inbounds nuw i8, ptr %i.aw, i64 80
   store ptr %i.cv, ptr %i.cx, align 8
   br label %bb.i

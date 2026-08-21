@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   %i.u = getelementptr inbounds nuw i8, ptr %i.m, i64 16
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(48) %i.u, ptr noundef nonnull align 16 dereferenceable(48) %.sroa.04.i.i.i.i, i64 48, i1 false)
   %i.v = getelementptr inbounds nuw i8, ptr %i.m, i64 64
-  store ptr null, ptr %i.v, align 8, !tbaa !270
+  store ptr null, ptr %i.v, align 16, !tbaa !270
   %i.w = getelementptr inbounds nuw i8, ptr %i.m, i64 72
   store i32 0, ptr %i.w, align 8, !tbaa !216
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN4CGAL10Lazy_rep_nINS_7Point_3INS_16Simple_cartesianINS_11Interval_ntILb0EEEEEEENS1_INS2_IN5boost14multiprecision6numberINS8_8backends16rational_adaptorINSA_15cpp_int_backendILm0ELm0ELNS8_16cpp_integer_typeE1ELNS8_18cpp_int_check_typeE0ESaIyEEEEELNS8_26expression_template_optionE1EEEEEEENS_23CartesianKernelFunctors17Construct_point_3IS5_EENSN_ISK_EENS_19Cartesian_converterISK_S5_NS_12NT_converterISJ_S4_EEEELb0EJNS_15Return_base_tagENS_13Lazy_exact_ntISJ_EESW_SW_EEE, i64 16), ptr %i.m, align 16, !tbaa !23
@@ -217,9 +217,9 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not.i.i.i.i.i.i.i.i.i.i.i, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.aa = load atomic i32, ptr %i.z monotonic, align 4
+  %i.aa = load atomic i32, ptr %i.z monotonic, align 8
   %i.ab = add nsw i32 %i.aa, 1
-  store atomic i32 %i.ab, ptr %i.z monotonic, align 4
+  store atomic i32 %i.ab, ptr %i.z monotonic, align 8
   %i.ac = getelementptr inbounds nuw i8, ptr %i.m, i64 96
   %i.ad = load ptr, ptr %4, align 8, !tbaa !36    ; 2 uses
   store ptr %i.ad, ptr %i.ac, align 16, !tbaa !36
@@ -622,7 +622,7 @@ bb.b:                                             ; preds = %bb.a
   %i.u = getelementptr inbounds nuw i8, ptr %i.m, i64 16 ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(144) %i.u, ptr noundef nonnull align 16 dereferenceable(144) %.sroa.0.i, i64 144, i1 false)
   %i.v = getelementptr inbounds nuw i8, ptr %i.m, i64 160
-  store ptr %i.u, ptr %i.v, align 8, !tbaa !233
+  store ptr %i.u, ptr %i.v, align 16, !tbaa !233
   %i.w = getelementptr inbounds nuw i8, ptr %i.m, i64 168
   store i32 0, ptr %i.w, align 8, !tbaa !216
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i)
@@ -635,9 +635,9 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not.i.i.i.i.i.i.i.i.i.i.i, label %bb.f, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.aa = load atomic i32, ptr %i.z monotonic, align 4
+  %i.aa = load atomic i32, ptr %i.z monotonic, align 8
   %i.ab = add nsw i32 %i.aa, 1
-  store atomic i32 %i.ab, ptr %i.z monotonic, align 4
+  store atomic i32 %i.ab, ptr %i.z monotonic, align 8
   %i.ac = getelementptr inbounds nuw i8, ptr %i.m, i64 184
   %i.ad = load ptr, ptr %4, align 8, !tbaa !36    ; 2 uses
   store ptr %i.ad, ptr %i.ac, align 8, !tbaa !36

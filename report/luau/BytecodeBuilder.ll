@@ -204,7 +204,7 @@ bb.h:                                             ; preds = %_ZNKSt8equal_toIN4L
   %i.ax = getelementptr inbounds nuw [48 x i8], ptr %i.aw, i64 %.01118 ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(44) %i.av, ptr noundef nonnull align 8 dereferenceable(44) %i.ax, i64 40, i1 false), !tbaa.struct !206
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ax, i64 40
-  %i.az = load i32, ptr %i.ay, align 4, !tbaa !25
+  %i.az = load i32, ptr %i.ay, align 8, !tbaa !25
   %i.ba = getelementptr inbounds nuw i8, ptr %i.av, i64 40
   store i32 %i.az, ptr %i.ba, align 8, !tbaa !391
   %.pre20 = load i64, ptr %i.a, align 8, !tbaa !205
@@ -607,7 +607,7 @@ bb.f:                                             ; preds = %_ZNKSt8equal_toIN4L
   %i.ai = getelementptr inbounds nuw [24 x i8], ptr %i.ah, i64 %.015 ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %i.ag, ptr noundef nonnull align 8 dereferenceable(20) %i.ai, i64 16, i1 false), !tbaa.struct !266
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ai, i64 16
-  %i.ak = load i32, ptr %i.aj, align 4, !tbaa !25
+  %i.ak = load i32, ptr %i.aj, align 8, !tbaa !25
   %i.al = getelementptr inbounds nuw i8, ptr %i.ag, i64 16
   store i32 %i.ak, ptr %i.al, align 8, !tbaa !310
   %.pre17 = load i64, ptr %i.a, align 8, !tbaa !264
@@ -1010,7 +1010,7 @@ bb.e:                                             ; preds = %bb.d
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i
 
 bb.f:                                             ; preds = %bb.d
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.f, ptr align 1 %i.r, i64 %i.v, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.f, ptr align 1 %i.r, i64 %i.v, i1 false)
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i: ; preds = %bb.f, %bb.e, %bb.d

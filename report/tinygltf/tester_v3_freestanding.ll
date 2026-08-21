@@ -205,8 +205,8 @@ tg3json__init_value.exit:                         ; preds = %tg3json_object_get_
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ac, ptr noundef nonnull align 8 dereferenceable(24) %3, i64 24, i1 false), !tbaa.struct !42
   %i.ad = getelementptr inbounds nuw i8, ptr %3, i64 4
   %i.ae = getelementptr inbounds nuw i8, ptr %3, i64 20
-  store <16 x i8> zeroinitializer, ptr %i.ad, align 1, !tbaa !12
-  store <4 x i8> zeroinitializer, ptr %i.ae, align 1, !tbaa !12
+  store <16 x i8> zeroinitializer, ptr %i.ad, align 4, !tbaa !12
+  store <4 x i8> zeroinitializer, ptr %i.ae, align 4, !tbaa !12
   store i32 0, ptr %3, align 8, !tbaa !13
   br label %tg3json__reserve_bytes.exit.thread
 
@@ -580,8 +580,8 @@ tg3json__init_value.exit54:                       ; preds = %.loopexit
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.es, ptr noundef nonnull align 8 dereferenceable(24) %3, i64 24, i1 false), !tbaa.struct !42
   %i.eu = getelementptr inbounds nuw i8, ptr %3, i64 4
   %i.ev = getelementptr inbounds nuw i8, ptr %3, i64 20
-  store <16 x i8> zeroinitializer, ptr %i.eu, align 1, !tbaa !12
-  store <4 x i8> zeroinitializer, ptr %i.ev, align 1, !tbaa !12
+  store <16 x i8> zeroinitializer, ptr %i.eu, align 4, !tbaa !12
+  store <4 x i8> zeroinitializer, ptr %i.ev, align 4, !tbaa !12
   store i32 0, ptr %3, align 8, !tbaa !13
   %i.ew = load i64, ptr %i.f, align 8, !tbaa !12
   %i.ex = add i64 %i.ew, 1
@@ -922,8 +922,8 @@ tg3json__init_value.exit:                         ; preds = %.tg3json__init_valu
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.bk, ptr noundef nonnull align 8 dereferenceable(24) %1, i64 24, i1 false), !tbaa.struct !42
   %i.bl = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.bm = getelementptr inbounds nuw i8, ptr %1, i64 20
-  store <16 x i8> zeroinitializer, ptr %i.bl, align 1, !tbaa !12
-  store <4 x i8> zeroinitializer, ptr %i.bm, align 1, !tbaa !12
+  store <16 x i8> zeroinitializer, ptr %i.bl, align 4, !tbaa !12
+  store <4 x i8> zeroinitializer, ptr %i.bm, align 4, !tbaa !12
   store i32 0, ptr %1, align 8, !tbaa !13
   br label %tg3json__reserve_bytes.exit.thread
 

@@ -205,7 +205,7 @@ _skip_piece_on_tags.exit.thread492:               ; preds = %bb.j, %_skip_piece_
 
 .preheader.i:                                     ; preds = %.split
   %i.az = getelementptr inbounds nuw i8, ptr %i.av, i64 96
-  store <4 x float> splat (float 1.000000e+00), ptr %i.az, align 4, !tbaa !147
+  store <4 x float> splat (float 1.000000e+00), ptr %i.az, align 16, !tbaa !147
   br label %get_output_format.exit
 
 get_output_format.exit470:                        ; preds = %_skip_piece_on_tags.exit.thread492
@@ -608,7 +608,7 @@ bb.cg:                                            ; preds = %bb.cf
 
 bb.ch:                                            ; preds = %bb.cg
   %i.mf = load ptr, ptr %2, align 8, !tbaa !36
-  %i.mg = load i32, ptr %0, align 8, !tbaa !11    ; 2 uses
+  %i.mg = load i32, ptr %0, align 16, !tbaa !11   ; 2 uses
   %i.mh = icmp sgt i32 %i.mg, 2
   br i1 %i.mh, label %.lr.ph.i474, label %dt_dev_pixelpipe_invalidate_cacheline.exit
 
@@ -628,13 +628,13 @@ bb.ci:                                            ; preds = %bb.ck, %.lr.ph.i474
   br i1 %i.mp, label %bb.cj, label %bb.ck
 
 bb.cj:                                            ; preds = %bb.ci
-  %.val.i477 = load ptr, ptr %i.mk, align 8, !tbaa !25
-  %.val8.i = load ptr, ptr %i.ml, align 8, !tbaa !27
+  %.val.i477 = load ptr, ptr %i.mk, align 16, !tbaa !25
+  %.val8.i = load ptr, ptr %i.ml, align 16, !tbaa !27
   %i.mq = getelementptr inbounds nuw [8 x i8], ptr %.val.i477, i64 %indvars.iv.i475
   store i64 0, ptr %i.mq, align 8, !tbaa !28
   %i.mr = getelementptr inbounds nuw [4 x i8], ptr %.val8.i, i64 %indvars.iv.i475
   store i32 0, ptr %i.mr, align 4, !tbaa !29
-  %.pre.i = load i32, ptr %0, align 8, !tbaa !11
+  %.pre.i = load i32, ptr %0, align 16, !tbaa !11
   br label %bb.ck
 
 bb.ck:                                            ; preds = %bb.cj, %bb.ci
@@ -812,7 +812,7 @@ bb.dd:                                            ; preds = %bb.dc, %bb.db
   %i.pl = getelementptr inbounds nuw i8, ptr %0, i64 600
   store i32 1, ptr %i.pl, align 8, !tbaa !144
   %i.pm = load ptr, ptr %2, align 8, !tbaa !36
-  %i.pn = load i32, ptr %0, align 8, !tbaa !11    ; 2 uses
+  %i.pn = load i32, ptr %0, align 16, !tbaa !11   ; 2 uses
   %i.po = icmp sgt i32 %i.pn, 2
   br i1 %i.po, label %.lr.ph.i480, label %dt_dev_pixelpipe_invalidate_cacheline.exit486
 
@@ -832,13 +832,13 @@ bb.de:                                            ; preds = %bb.dg, %.lr.ph.i480
   br i1 %i.pw, label %bb.df, label %bb.dg
 
 bb.df:                                            ; preds = %bb.de
-  %.val.i483 = load ptr, ptr %i.pr, align 8, !tbaa !25
-  %.val8.i484 = load ptr, ptr %i.ps, align 8, !tbaa !27
+  %.val.i483 = load ptr, ptr %i.pr, align 16, !tbaa !25
+  %.val8.i484 = load ptr, ptr %i.ps, align 16, !tbaa !27
   %i.px = getelementptr inbounds nuw [8 x i8], ptr %.val.i483, i64 %indvars.iv.i481
   store i64 0, ptr %i.px, align 8, !tbaa !28
   %i.py = getelementptr inbounds nuw [4 x i8], ptr %.val8.i484, i64 %indvars.iv.i481
   store i32 0, ptr %i.py, align 4, !tbaa !29
-  %.pre.i485 = load i32, ptr %0, align 8, !tbaa !11
+  %.pre.i485 = load i32, ptr %0, align 16, !tbaa !11
   br label %bb.dg
 
 bb.dg:                                            ; preds = %bb.df, %bb.de

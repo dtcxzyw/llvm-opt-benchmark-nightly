@@ -202,7 +202,7 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.e, %bb.d, %bb.f, %bb.c
-  %i.ai = load i32, ptr %i.h, align 4, !tbaa !8   ; 2 uses
+  %i.ai = load i32, ptr %i.h, align 8, !tbaa !8   ; 2 uses
   %i.aj = icmp eq i32 %i.ai, 0
   %spec.select44.1 = select i1 %i.aj, i32 2, i32 %i.ai
   %i.ak = sext i32 %spec.select44.1 to i64        ; 2 uses
@@ -262,7 +262,7 @@ bb.n:                                             ; preds = %bb.m
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %bb.m, %bb.l, %bb.k
-  %i.bi = load i32, ptr %i.j, align 4, !tbaa !8   ; 2 uses
+  %i.bi = load i32, ptr %i.j, align 8, !tbaa !8   ; 2 uses
   %i.bj = icmp eq i32 %i.bi, 0
   %spec.select44.3 = select i1 %i.bj, i32 4, i32 %i.bi
   %i.bk = sext i32 %spec.select44.3 to i64        ; 2 uses
@@ -322,7 +322,7 @@ bb.v:                                             ; preds = %bb.u
   br label %bb.w
 
 bb.w:                                             ; preds = %bb.v, %bb.u, %bb.t, %bb.s
-  %i.ci = load i32, ptr %i.l, align 4, !tbaa !8   ; 2 uses
+  %i.ci = load i32, ptr %i.l, align 8, !tbaa !8   ; 2 uses
   %i.cj = icmp eq i32 %i.ci, 0
   %spec.select44.5 = select i1 %i.cj, i32 6, i32 %i.ci
   %i.ck = sext i32 %spec.select44.5 to i64        ; 2 uses

@@ -205,7 +205,7 @@ begin_hunk_0_@_ZN5Catch21makeCommandLineParserERNS_10ConfigDataE:._crit_edge.i.i
   %i.bi = getelementptr inbounds nuw i8, ptr %i.bf, i64 16 ; 2 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %i.bf, i64 32 ; 2 uses
   store ptr %i.bj, ptr %i.bi, align 8, !tbaa !48
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(12) %i.bj, ptr noundef nonnull align 1 dereferenceable(13) @.str.341, i64 12, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %i.bj, ptr noundef nonnull align 1 dereferenceable(13) @.str.341, i64 12, i1 false)
   %i.bk = getelementptr inbounds nuw i8, ptr %64, i64 16 ; 2 uses
   %i.bl = getelementptr inbounds nuw i8, ptr %i.bf, i64 24
   store i64 12, ptr %i.bl, align 8, !tbaa !40
@@ -374,7 +374,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit.i.i536: ; pre
   %i.dj = getelementptr inbounds nuw i8, ptr %.pre, i64 16 ; 2 uses
   store ptr %i.dj, ptr %.pre, align 8, !tbaa !48
   %i.dk = load ptr, ptr %68, align 8, !tbaa !36
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(12) %i.dj, ptr noundef nonnull align 1 dereferenceable(12) %i.dk, i64 12, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %i.dj, ptr noundef nonnull align 1 dereferenceable(12) %i.dk, i64 12, i1 false)
   %i.dl = getelementptr inbounds nuw i8, ptr %.pre, i64 8
   store i64 12, ptr %i.dl, align 8, !tbaa !40
   %i.dm = getelementptr inbounds nuw i8, ptr %.pre, i64 28
@@ -558,7 +558,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit.i.i570: ; pre
   %i.fk = getelementptr inbounds nuw i8, ptr %.pre2353, i64 16 ; 2 uses
   store ptr %i.fk, ptr %.pre2353, align 8, !tbaa !48
   %i.fl = load ptr, ptr %72, align 8, !tbaa !36
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(11) %i.fk, ptr noundef nonnull align 1 dereferenceable(11) %i.fl, i64 11, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(11) %i.fk, ptr noundef nonnull align 1 dereferenceable(11) %i.fl, i64 11, i1 false)
   %i.fm = getelementptr inbounds nuw i8, ptr %.pre2353, i64 8
   store i64 11, ptr %i.fm, align 8, !tbaa !40
   %i.fn = getelementptr inbounds nuw i8, ptr %.pre2353, i64 27
@@ -742,7 +742,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit.i.i609: ; pre
   %i.hl = getelementptr inbounds nuw i8, ptr %.pre2355, i64 16 ; 2 uses
   store ptr %i.hl, ptr %.pre2355, align 8, !tbaa !48
   %i.hm = load ptr, ptr %76, align 8, !tbaa !36
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(9) %i.hl, ptr noundef nonnull align 1 dereferenceable(9) %i.hm, i64 9, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(9) %i.hl, ptr noundef nonnull align 1 dereferenceable(9) %i.hm, i64 9, i1 false)
   %i.hn = getelementptr inbounds nuw i8, ptr %.pre2355, i64 8
   store i64 9, ptr %i.hn, align 8, !tbaa !40
   %i.ho = getelementptr inbounds nuw i8, ptr %.pre2355, i64 25
@@ -925,7 +925,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit.i.i648: ; pre
   %i.jl = getelementptr inbounds nuw i8, ptr %.pre2357, i64 16 ; 2 uses
   store ptr %i.jl, ptr %.pre2357, align 8, !tbaa !48
   %i.jm = load ptr, ptr %80, align 8, !tbaa !36
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %i.jl, ptr noundef nonnull align 1 dereferenceable(7) %i.jm, i64 7, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(7) %i.jl, ptr noundef nonnull align 1 dereferenceable(7) %i.jm, i64 7, i1 false)
   %i.jn = getelementptr inbounds nuw i8, ptr %.pre2357, i64 8
   store i64 7, ptr %i.jn, align 8, !tbaa !40
   %i.jo = getelementptr inbounds nuw i8, ptr %.pre2357, i64 23
@@ -1109,7 +1109,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit.i.i687: ; pre
   %i.lm = getelementptr inbounds nuw i8, ptr %.pre2359, i64 16 ; 2 uses
   store ptr %i.lm, ptr %.pre2359, align 8, !tbaa !48
   %i.ln = load ptr, ptr %84, align 8, !tbaa !36
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(9) %i.lm, ptr noundef nonnull align 1 dereferenceable(9) %i.ln, i64 9, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(9) %i.lm, ptr noundef nonnull align 1 dereferenceable(9) %i.ln, i64 9, i1 false)
   %i.lo = getelementptr inbounds nuw i8, ptr %.pre2359, i64 8
   store i64 9, ptr %i.lo, align 8, !tbaa !40
   %i.lp = getelementptr inbounds nuw i8, ptr %.pre2359, i64 25
@@ -1293,7 +1293,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit.i.i726: ; pre
   %i.nn = getelementptr inbounds nuw i8, ptr %.pre2361, i64 16 ; 2 uses
   store ptr %i.nn, ptr %.pre2361, align 8, !tbaa !48
   %i.no = load ptr, ptr %88, align 8, !tbaa !36
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(12) %i.nn, ptr noundef nonnull align 1 dereferenceable(12) %i.no, i64 12, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %i.nn, ptr noundef nonnull align 1 dereferenceable(12) %i.no, i64 12, i1 false)
   %i.np = getelementptr inbounds nuw i8, ptr %.pre2361, i64 8
   store i64 12, ptr %i.np, align 8, !tbaa !40
   %i.nq = getelementptr inbounds nuw i8, ptr %.pre2361, i64 28
@@ -1432,7 +1432,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit.i.i764: ; pre
   %i.pe = getelementptr inbounds nuw i8, ptr %.pre2363, i64 16 ; 2 uses
   store ptr %i.pe, ptr %.pre2363, align 8, !tbaa !48
   %i.pf = load ptr, ptr %93, align 8, !tbaa !36
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(5) %i.pe, ptr noundef nonnull align 1 dereferenceable(5) %i.pf, i64 5, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(5) %i.pe, ptr noundef nonnull align 1 dereferenceable(5) %i.pf, i64 5, i1 false)
   %i.pg = getelementptr inbounds nuw i8, ptr %.pre2363, i64 8
   store i64 5, ptr %i.pg, align 8, !tbaa !40
   %i.ph = getelementptr inbounds nuw i8, ptr %.pre2363, i64 21
@@ -1560,7 +1560,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit.i.i806: ; pre
   %i.qs = getelementptr inbounds nuw i8, ptr %.pre2365, i64 16 ; 2 uses
   store ptr %i.qs, ptr %.pre2365, align 8, !tbaa !48
   %i.qt = load ptr, ptr %98, align 8, !tbaa !36
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(10) %i.qs, ptr noundef nonnull align 1 dereferenceable(10) %i.qt, i64 10, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(10) %i.qs, ptr noundef nonnull align 1 dereferenceable(10) %i.qt, i64 10, i1 false)
   %i.qu = getelementptr inbounds nuw i8, ptr %.pre2365, i64 8
   store i64 10, ptr %i.qu, align 8, !tbaa !40
   %i.qv = getelementptr inbounds nuw i8, ptr %.pre2365, i64 26
@@ -1698,7 +1698,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit.i.i845: ; pre
   %i.si = getelementptr inbounds nuw i8, ptr %.pre2367, i64 16 ; 2 uses
   store ptr %i.si, ptr %.pre2367, align 8, !tbaa !48
   %i.sj = load ptr, ptr %103, align 8, !tbaa !36
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(6) %i.si, ptr noundef nonnull align 1 dereferenceable(6) %i.sj, i64 6, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(6) %i.si, ptr noundef nonnull align 1 dereferenceable(6) %i.sj, i64 6, i1 false)
   %i.sk = getelementptr inbounds nuw i8, ptr %.pre2367, i64 8
   store i64 6, ptr %i.sk, align 8, !tbaa !40
   %i.sl = getelementptr inbounds nuw i8, ptr %.pre2367, i64 22
@@ -1870,7 +1870,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit.i.i883: ; pre
   %i.uf = getelementptr inbounds nuw i8, ptr %.pre2369, i64 16 ; 2 uses
   store ptr %i.uf, ptr %.pre2369, align 8, !tbaa !48
   %i.ug = load ptr, ptr %107, align 8, !tbaa !36
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %i.uf, ptr noundef nonnull align 1 dereferenceable(7) %i.ug, i64 7, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(7) %i.uf, ptr noundef nonnull align 1 dereferenceable(7) %i.ug, i64 7, i1 false)
   %i.uh = getelementptr inbounds nuw i8, ptr %.pre2369, i64 8
   store i64 7, ptr %i.uh, align 8, !tbaa !40
   %i.ui = getelementptr inbounds nuw i8, ptr %.pre2369, i64 23
@@ -2145,7 +2145,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit.i.i969: ; pre
   %i.xk = getelementptr inbounds nuw i8, ptr %.pre2373, i64 16 ; 2 uses
   store ptr %i.xk, ptr %.pre2373, align 8, !tbaa !48
   %i.xl = load ptr, ptr %117, align 8, !tbaa !36
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(6) %i.xk, ptr noundef nonnull align 1 dereferenceable(6) %i.xl, i64 6, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(6) %i.xk, ptr noundef nonnull align 1 dereferenceable(6) %i.xl, i64 6, i1 false)
   %i.xm = getelementptr inbounds nuw i8, ptr %.pre2373, i64 8
   store i64 6, ptr %i.xm, align 8, !tbaa !40
   %i.xn = getelementptr inbounds nuw i8, ptr %.pre2373, i64 22
@@ -2271,7 +2271,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit.i.i1012: ; pr
   %i.yw = getelementptr inbounds nuw i8, ptr %.pre2375, i64 16 ; 2 uses
   store ptr %i.yw, ptr %.pre2375, align 8, !tbaa !48
   %i.yx = load ptr, ptr %122, align 8, !tbaa !36
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(11) %i.yw, ptr noundef nonnull align 1 dereferenceable(11) %i.yx, i64 11, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(11) %i.yw, ptr noundef nonnull align 1 dereferenceable(11) %i.yx, i64 11, i1 false)
   %i.yy = getelementptr inbounds nuw i8, ptr %.pre2375, i64 8
   store i64 11, ptr %i.yy, align 8, !tbaa !40
   %i.yz = getelementptr inbounds nuw i8, ptr %.pre2375, i64 27
@@ -2409,7 +2409,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit.i.i1050: ; pr
   %i.aam = getelementptr inbounds nuw i8, ptr %.pre2377, i64 16 ; 2 uses
   store ptr %i.aam, ptr %.pre2377, align 8, !tbaa !48
   %i.aan = load ptr, ptr %127, align 8, !tbaa !36
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(14) %i.aam, ptr noundef nonnull align 1 dereferenceable(14) %i.aan, i64 14, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(14) %i.aam, ptr noundef nonnull align 1 dereferenceable(14) %i.aan, i64 14, i1 false)
   %i.aao = getelementptr inbounds nuw i8, ptr %.pre2377, i64 8
   store i64 14, ptr %i.aao, align 8, !tbaa !40
   %i.aap = getelementptr inbounds nuw i8, ptr %.pre2377, i64 30
@@ -2546,7 +2546,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit.i.i1093: ; pr
   %i.acb = getelementptr inbounds nuw i8, ptr %.pre2379, i64 16 ; 2 uses
   store ptr %i.acb, ptr %.pre2379, align 8, !tbaa !48
   %i.acc = load ptr, ptr %132, align 8, !tbaa !36
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(12) %i.acb, ptr noundef nonnull align 1 dereferenceable(12) %i.acc, i64 12, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %i.acb, ptr noundef nonnull align 1 dereferenceable(12) %i.acc, i64 12, i1 false)
   %i.acd = getelementptr inbounds nuw i8, ptr %.pre2379, i64 8
   store i64 12, ptr %i.acd, align 8, !tbaa !40
   %i.ace = getelementptr inbounds nuw i8, ptr %.pre2379, i64 28
@@ -2913,7 +2913,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit.i.i1170: ; pr
   %i.age = getelementptr inbounds nuw i8, ptr %.pre2381, i64 16 ; 2 uses
   store ptr %i.age, ptr %.pre2381, align 8, !tbaa !48
   %i.agf = load ptr, ptr %141, align 8, !tbaa !36
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(9) %i.age, ptr noundef nonnull align 1 dereferenceable(9) %i.agf, i64 9, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(9) %i.age, ptr noundef nonnull align 1 dereferenceable(9) %i.agf, i64 9, i1 false)
   %i.agg = getelementptr inbounds nuw i8, ptr %.pre2381, i64 8
   store i64 9, ptr %i.agg, align 8, !tbaa !40
   %i.agh = getelementptr inbounds nuw i8, ptr %.pre2381, i64 25
@@ -3104,7 +3104,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit.i.i1213: ; pr
   %i.aig = getelementptr inbounds nuw i8, ptr %.pre2383, i64 16 ; 2 uses
   store ptr %i.aig, ptr %.pre2383, align 8, !tbaa !48
   %i.aih = load ptr, ptr %146, align 8, !tbaa !36
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(11) %i.aig, ptr noundef nonnull align 1 dereferenceable(11) %i.aih, i64 11, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(11) %i.aig, ptr noundef nonnull align 1 dereferenceable(11) %i.aih, i64 11, i1 false)
   %i.aii = getelementptr inbounds nuw i8, ptr %.pre2383, i64 8
   store i64 11, ptr %i.aii, align 8, !tbaa !40
   %i.aij = getelementptr inbounds nuw i8, ptr %.pre2383, i64 27
@@ -3507,7 +3507,7 @@ define linkonce_odr dso_local void @_ZNK5Catch5clara6detail20ComposableParserImp
   %i.f = getelementptr inbounds nuw i8, ptr %i.c, i64 16 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.c, i64 32 ; 2 uses
   store ptr %i.g, ptr %i.f, align 8, !tbaa !48
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(12) %i.g, ptr noundef nonnull align 1 dereferenceable(13) @.str.341, i64 12, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %i.g, ptr noundef nonnull align 1 dereferenceable(13) @.str.341, i64 12, i1 false)
   %i.h = getelementptr inbounds nuw i8, ptr %6, i64 24
   %i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 24
   store i64 12, ptr %i.i, align 8, !tbaa !40
@@ -3801,7 +3801,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit.i.i41: ; pred
   %i.br = getelementptr inbounds nuw i8, ptr %i.bm, i64 16 ; 2 uses
   store ptr %i.br, ptr %i.bm, align 8, !tbaa !48
   %i.bs = load ptr, ptr %5, align 8, !tbaa !36
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(6) %i.br, ptr noundef nonnull align 1 dereferenceable(6) %i.bs, i64 6, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(6) %i.br, ptr noundef nonnull align 1 dereferenceable(6) %i.bs, i64 6, i1 false)
   %i.bt = getelementptr inbounds nuw i8, ptr %i.bm, i64 8
   store i64 6, ptr %i.bt, align 8, !tbaa !40
   %i.bu = getelementptr inbounds nuw i8, ptr %i.bm, i64 22
@@ -4204,7 +4204,7 @@ bb.c:                                             ; preds = %_ZNSt12__shared_ptr
 bb.d:                                             ; preds = %bb.c
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #56, !noalias !1586
   %i.o = load <2 x ptr>, ptr %4, align 16, !tbaa !648
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %4, i8 0, i64 16, i1 false)
   %i.p = load ptr, ptr %i.j, align 8, !tbaa !160  ; 8 uses
   store <2 x ptr> %i.o, ptr %3, align 16, !tbaa !648
   %.not.i.i.i.i = icmp eq ptr %i.p, null
@@ -4539,7 +4539,7 @@ bb.e:                                             ; preds = %_ZNSt12__shared_ptr
 bb.f:                                             ; preds = %bb.e
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #56, !noalias !1598
   %i.q = load <2 x ptr>, ptr %5, align 16, !tbaa !648
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %5, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %5, i8 0, i64 16, i1 false)
   %i.r = load ptr, ptr %i.l, align 8, !tbaa !160  ; 8 uses
   store <2 x ptr> %i.q, ptr %4, align 16, !tbaa !648
   %.not.i.i.i.i = icmp eq ptr %i.r, null
@@ -4812,7 +4812,7 @@ bb.ak:                                            ; preds = %_ZNSt12__shared_ptr
 bb.al:                                            ; preds = %bb.ak
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #56, !noalias !1604
   %i.cp = load <2 x ptr>, ptr %7, align 16, !tbaa !648
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %7, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %7, i8 0, i64 16, i1 false)
   %i.cq = load ptr, ptr %i.ck, align 8, !tbaa !160 ; 8 uses
   store <2 x ptr> %i.cp, ptr %6, align 16, !tbaa !648
   %.not.i.i.i.i36 = icmp eq ptr %i.cq, null
@@ -5215,7 +5215,7 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %3, i64 88 ; 3 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(33) %i.b, i8 0, i64 33, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #56
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %4, i8 0, i64 16, i1 false)
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 184 ; 2 uses
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !1986
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 192 ; 4 uses
@@ -5618,7 +5618,7 @@ _ZNSt6vectorISt10shared_ptrIN5Catch22CumulativeReporterBaseINS1_13JunitReporterE
   %i.fh = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.fi = getelementptr inbounds nuw i8, ptr %0, i64 176
   %i.fj = load <2 x ptr>, ptr %4, align 16, !tbaa !648
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %4, i8 0, i64 16, i1 false)
   %i.fk = load ptr, ptr %i.fi, align 8, !tbaa !160 ; 8 uses
   store <2 x ptr> %i.fj, ptr %i.fg, align 8, !tbaa !648
   %.not.i.i.i.i53 = icmp eq ptr %i.fk, null
@@ -6021,7 +6021,7 @@ bb.a:
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 384
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !3348, !nonnull !80, !align !104 ; 3 uses
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 104
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(160) %1, i8 0, i64 99, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(160) %1, i8 0, i64 99, i1 false)
   store ptr %i.l, ptr %i.m, align 8, !tbaa !3203
   %i.n = lshr i16 %i.j, 8
   %i.o = trunc nuw i16 %i.n to i8
@@ -6031,7 +6031,7 @@ bb.a:
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 120
   store i8 %i.p, ptr %i.r, align 8, !tbaa !3440
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 128
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.s, i8 0, i64 32, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.s, i8 0, i64 32, i1 false)
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 280
   %i.u = load i64, ptr %i.t, align 8, !tbaa !40
   %i.v = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.u
@@ -6075,7 +6075,7 @@ bb.e:                                             ; preds = %bb.d
   %i.aj = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.ak = load ptr, ptr %i.aj, align 16, !tbaa !3430
   store ptr %i.ak, ptr %i.ai, align 8, !tbaa !3430
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(160) %1, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(160) %1, i8 0, i64 24, i1 false)
   %i.al = getelementptr inbounds nuw i8, ptr %i.af, i64 24
   %i.am = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
   %i.an = load <2 x ptr>, ptr %i.am, align 8, !tbaa !124
@@ -6093,7 +6093,7 @@ bb.e:                                             ; preds = %bb.d
   %i.av = getelementptr inbounds nuw i8, ptr %1, i64 64
   %i.aw = load ptr, ptr %i.av, align 16, !tbaa !3450
   store ptr %i.aw, ptr %i.au, align 8, !tbaa !3450
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.as, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %i.as, i8 0, i64 24, i1 false)
   %i.ax = getelementptr inbounds nuw i8, ptr %i.af, i64 72
   %i.ay = getelementptr inbounds nuw i8, ptr %1, i64 72 ; 2 uses
   %i.az = load <2 x ptr>, ptr %i.ay, align 8, !tbaa !3433
@@ -6104,7 +6104,7 @@ bb.e:                                             ; preds = %bb.d
   store ptr %i.bc, ptr %i.ba, align 8, !tbaa !3434
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ay, i8 0, i64 24, i1 false)
   %i.bd = getelementptr inbounds nuw i8, ptr %i.af, i64 96
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.bd, ptr noundef nonnull align 8 dereferenceable(64) %i.z, i64 64, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.bd, ptr noundef nonnull align 16 dereferenceable(64) %i.z, i64 64, i1 false)
   store ptr %i.af, ptr %3, align 8, !tbaa !3451
   store ptr @_ZNSt17_Function_handlerIFbcENSt8__detail15_BracketMatcherINSt7__cxx1112regex_traitsIcEELb0ELb1EEEE9_M_invokeERKSt9_Any_dataOc, ptr %i.ag, align 8, !tbaa !3253
   store ptr @_ZNSt17_Function_handlerIFbcENSt8__detail15_BracketMatcherINSt7__cxx1112regex_traitsIcEELb0ELb1EEEE10_M_managerERSt9_Any_dataRKS8_St18_Manager_operation, ptr %i.ae, align 8, !tbaa !3256
@@ -6507,7 +6507,7 @@ bb.a:
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 384
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !3348, !nonnull !80, !align !104 ; 3 uses
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 104
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(160) %1, i8 0, i64 99, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(160) %1, i8 0, i64 99, i1 false)
   store ptr %i.l, ptr %i.m, align 8, !tbaa !3203
   %i.n = lshr i16 %i.j, 8
   %i.o = trunc nuw i16 %i.n to i8
@@ -6517,7 +6517,7 @@ bb.a:
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 120
   store i8 %i.p, ptr %i.r, align 8, !tbaa !3459
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 128
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.s, i8 0, i64 32, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.s, i8 0, i64 32, i1 false)
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 280
   %i.u = load i64, ptr %i.t, align 8, !tbaa !40
   %i.v = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.u
@@ -6561,7 +6561,7 @@ bb.e:                                             ; preds = %bb.d
   %i.aj = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.ak = load ptr, ptr %i.aj, align 16, !tbaa !3430
   store ptr %i.ak, ptr %i.ai, align 8, !tbaa !3430
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(160) %1, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(160) %1, i8 0, i64 24, i1 false)
   %i.al = getelementptr inbounds nuw i8, ptr %i.af, i64 24
   %i.am = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
   %i.an = load <2 x ptr>, ptr %i.am, align 8, !tbaa !124
@@ -6579,7 +6579,7 @@ bb.e:                                             ; preds = %bb.d
   %i.av = getelementptr inbounds nuw i8, ptr %1, i64 64
   %i.aw = load ptr, ptr %i.av, align 16, !tbaa !3450
   store ptr %i.aw, ptr %i.au, align 8, !tbaa !3450
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.as, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %i.as, i8 0, i64 24, i1 false)
   %i.ax = getelementptr inbounds nuw i8, ptr %i.af, i64 72
   %i.ay = getelementptr inbounds nuw i8, ptr %1, i64 72 ; 2 uses
   %i.az = load <2 x ptr>, ptr %i.ay, align 8, !tbaa !3433
@@ -6590,7 +6590,7 @@ bb.e:                                             ; preds = %bb.d
   store ptr %i.bc, ptr %i.ba, align 8, !tbaa !3434
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ay, i8 0, i64 24, i1 false)
   %i.bd = getelementptr inbounds nuw i8, ptr %i.af, i64 96
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.bd, ptr noundef nonnull align 8 dereferenceable(64) %i.z, i64 64, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.bd, ptr noundef nonnull align 16 dereferenceable(64) %i.z, i64 64, i1 false)
   store ptr %i.af, ptr %3, align 8, !tbaa !3463
   store ptr @_ZNSt17_Function_handlerIFbcENSt8__detail15_BracketMatcherINSt7__cxx1112regex_traitsIcEELb1ELb1EEEE9_M_invokeERKSt9_Any_dataOc, ptr %i.ag, align 8, !tbaa !3253
   store ptr @_ZNSt17_Function_handlerIFbcENSt8__detail15_BracketMatcherINSt7__cxx1112regex_traitsIcEELb1ELb1EEEE10_M_managerERSt9_Any_dataRKS8_St18_Manager_operation, ptr %i.ae, align 8, !tbaa !3256
@@ -6993,7 +6993,7 @@ bb.e:                                             ; preds = %bb.d
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i
 
 bb.f:                                             ; preds = %bb.d
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.c, ptr align 1 %i.m, i64 %i.q, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.c, ptr align 1 %i.m, i64 %i.q, i1 false)
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i: ; preds = %bb.f, %bb.e, %bb.d
