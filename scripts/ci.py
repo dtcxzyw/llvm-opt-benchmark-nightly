@@ -1080,7 +1080,7 @@ def run_opt_file(
     input_path = os.path.join(DATA_DIR, proj, "original", file)
     optimized_path = os.path.join(OPT_OUT_DIR, proj + "-s-" + file)
     try:
-        opt_timeout = _bounded_timeout(600, deadline)
+        opt_timeout = _bounded_timeout(1800, deadline)
         if opt_timeout <= 0:
             return "timeout"
 
@@ -1474,6 +1474,13 @@ def get_opt_log_preview() -> str:
     return f"## Errors\n```\n{preview}\n```\n"
 
 
+def has_opt_errors() -> bool:
+    if not os.path.exists(OPT_LOG_FILE):
+        return False
+    with open(OPT_LOG_FILE, "r") as f:
+        return any(line.strip() for line in f)
+
+
 def commit_grouped_diff_changes(kept_files: List[KeptDiff]):
     groups = [
         ("report: add > sub", lambda delta: delta > 0),
@@ -1703,7 +1710,13 @@ def update():
             pr_body += f"## Commits in this update:\n```\n{llvm_history}\n```\n\n"
 
         if stats_cmp:
-            pr_body += f"## Changes in statistics\n{stats_cmp}\n"
+            pr_body += f"## Changes in statistics\n"
+            if has_opt_errors():
+                pr_body += (
+                    "> Warning: opt errors occurred during this run "
+                    "(see Errors above); the statistics may be inaccurate.\n"
+                )
+            pr_body += f"{stats_cmp}\n"
         pr_body += f"## Diff report\n{report}\n"
         pr_body += get_artifact_download_note(artifact_pairs)
 
@@ -1992,9 +2005,15 @@ def test(user: str, comment_body: str, issue_url: str):
         pr_body += f"## Changes in compile-time\n{comptime_cmp}\n"
     if stats_cmp:
         if config.stats:
-            pr_body += f"## Changes in {config.stats}\n{stats_cmp}\n"
+            pr_body += f"## Changes in {config.stats}\n"
         else:
-            pr_body += f"## Changes in statistics\n{stats_cmp}\n"
+            pr_body += f"## Changes in statistics\n"
+        if has_opt_errors():
+            pr_body += (
+                "> Warning: opt errors occurred during this run "
+                "(see Errors above); the statistics may be inaccurate.\n"
+            )
+        pr_body += f"{stats_cmp}\n"
 
     kept_files = None
     artifact_pairs = 0
