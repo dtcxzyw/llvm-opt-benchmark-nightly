@@ -204,7 +204,7 @@ vector.early.exit:                                ; preds = %vector.body.interim
   br i1 %i.az, label %._crit_edge, label %.lr.ph
 
 bb.a:                                             ; preds = %.lr.ph
-  %.add27.i = add nuw nsw i64 %.idx25.i45, 1      ; 2 uses
+  %.add27.i = add nuw i64 %.idx25.i45, 1          ; 2 uses
   %i.ba = icmp eq i64 %.add27.i, 256
   br i1 %i.ba, label %._crit_edge, label %.lr.ph
 

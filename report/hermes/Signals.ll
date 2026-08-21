@@ -203,7 +203,7 @@ bb.b:                                             ; preds = %_ZL18UnregisterHand
   call void @_ZL19RemoveFilesToRemovev() #16
   br label %bb.c
 
-bb.c:                                             ; preds = %bb.b, %_ZL18UnregisterHandlersv.exit
+bb.c:                                             ; preds = %_ZL18UnregisterHandlersv.exit, %bb.b
   switch i32 %0, label %_ZSt4findIPKiiET_S2_S2_RKT0_.exit.thread12 [
     i32 1, label %_ZSt4findIPKiiET_S2_S2_RKT0_.exit.thread
     i32 2, label %_ZSt4findIPKiiET_S2_S2_RKT0_.exit.thread

@@ -201,7 +201,7 @@ bb.j:                                             ; preds = %bb.i
   store ptr %i.p, ptr %i.b, align 8
   %i.q = getelementptr i8, ptr %i.b, i64 8
   store i64 %i.m, ptr %i.q, align 8
-  br label %.thread.i20.i
+  br label %.thread.i20.i, !llvm.loop !147
 
 .thread.i20.i:                                    ; preds = %bb.j, %bb.i, %bb.h, %user_access_begin.exit.i19.i
   %.2.i21.i = phi i32 [ 0, %bb.j ], [ -22, %bb.i ], [ -14, %user_access_begin.exit.i19.i ], [ -14, %bb.h ]

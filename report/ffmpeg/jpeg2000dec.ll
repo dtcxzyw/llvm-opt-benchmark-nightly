@@ -204,6 +204,8 @@ bb.co:                                            ; preds = %bb.cm, %bb.cl
   %.promoted.i638929 = phi i32 [ %i.vz, %bytestream2_peek_byte.exit.i642 ], [ %i.uy, %bb.co ] ; 2 uses
   %.2925 = phi i32 [ %9, %bytestream2_peek_byte.exit.i642 ], [ %.1443.lcssa, %bb.co ]
   %.0453924 = phi i32 [ %i.wh, %bytestream2_peek_byte.exit.i642 ], [ %i.vg, %bb.co ]
+  %9 = shl nuw nsw i32 %.2925, 1                  ; 2 uses
+  %10 = shl i32 %.0453924, 1
   %i.vs = icmp eq i32 %.promoted.i638929, 0
   br i1 %i.vs, label %bb.cp, label %bb.cq
 
@@ -245,8 +247,6 @@ bytestream2_peek_byte.exit.i642:                  ; preds = %bb.cr, %bb.cq
   %.0.i11.i643 = phi i32 [ %i.we, %bb.cr ], [ 0, %bb.cq ]
   %i.wf = lshr i32 %.0.i11.i643, %i.vz
   %i.wg = and i32 %i.wf, 1
-  %9 = shl nuw nsw i32 %.2925, 1                  ; 2 uses
-  %10 = shl i32 %.0453924, 1
   %i.wh = or disjoint i32 %i.wg, %10              ; 2 uses
   %.not550 = icmp sgt i32 %9, %.0.i591
   br i1 %.not550, label %get_bits.exit698, label %.lr.ph927, !llvm.loop !329
@@ -267,6 +267,8 @@ bb.cs:                                            ; preds = %.preheader878, %byt
   %.promoted.i653936 = phi i32 [ %i.wr, %bytestream2_peek_byte.exit.i657 ], [ %.promoted935, %.preheader878 ] ; 2 uses
   %.1454 = phi i32 [ %i.wz, %bytestream2_peek_byte.exit.i657 ], [ 0, %.preheader878 ]
   %.3 = phi i32 [ %11, %bytestream2_peek_byte.exit.i657 ], [ %.1443.lcssa, %.preheader878 ]
+  %11 = shl nuw nsw i32 %.3, 1                    ; 2 uses
+  %12 = shl i32 %.1454, 1
   %i.wk = icmp eq i32 %.promoted.i653936, 0
   br i1 %i.wk, label %bb.ct, label %bb.cu
 
@@ -308,8 +310,6 @@ bytestream2_peek_byte.exit.i657:                  ; preds = %bb.cv, %bb.cu
   %.0.i11.i658 = phi i32 [ %i.ww, %bb.cv ], [ 0, %bb.cu ]
   %i.wx = lshr i32 %.0.i11.i658, %i.wr
   %i.wy = and i32 %i.wx, 1
-  %11 = shl nuw nsw i32 %.3, 1                    ; 2 uses
-  %12 = shl i32 %.1454, 1
   %i.wz = or disjoint i32 %i.wy, %12              ; 4 uses
   %i.xa = icmp sgt i32 %11, %.0.i591
   br i1 %i.xa, label %bb.cw, label %bb.cs

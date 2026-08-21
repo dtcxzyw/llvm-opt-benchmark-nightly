@@ -201,11 +201,11 @@ middle.block103:                                  ; preds = %vector.body93
   %.not4670 = icmp ult ptr %.04169, %F_floatmul.man2.F_floatmul.man1
   br i1 %.not4670, label %._crit_edge72, label %.preheader
 
-.preheader:                                       ; preds = %._crit_edge, %.lr.ph.i49.preheader
-  %.04171 = phi ptr [ %.041, %.lr.ph.i49.preheader ], [ %.04169, %._crit_edge ] ; 2 uses
+.preheader:                                       ; preds = %._crit_edge, %.lr.ph.i49
+  %.04171 = phi ptr [ %.041, %.lr.ph.i49 ], [ %.04169, %._crit_edge ] ; 2 uses
   %i.bt = load i8, ptr %.04171, align 1, !tbaa !8 ; 2 uses
   %i.bu = icmp sgt i8 %i.bt, 48
-  br i1 %i.bu, label %.lr.ph68, label %.lr.ph.i49.preheader
+  br i1 %i.bu, label %.lr.ph68, label %.lr.ph.i49
 
 .lr.ph68:                                         ; preds = %.preheader
   %i.bv = tail call i64 @strlen(ptr noundef nonnull readonly dereferenceable(1) %F_floatmul.man1.F_floatmul.man2) #14
@@ -215,14 +215,6 @@ middle.block103:                                  ; preds = %vector.body93
   %narrow = add nsw i8 %i.bt, -49
   %i.bz = sext i8 %narrow to i32
   br label %bb.e
-
-.lr.ph.i49.preheader:                             ; preds = %_F_stradd.exit, %.preheader
-  %strlen.i = tail call i64 @strlen(ptr nonnull dereferenceable(1) %F_floatmul.man1.F_floatmul.man2)
-  %endptr.i = getelementptr inbounds i8, ptr %F_floatmul.man1.F_floatmul.man2, i64 %strlen.i
-  store i16 48, ptr %endptr.i, align 1
-  %.041 = getelementptr i8, ptr %.04171, i64 -1   ; 2 uses
-  %.not46 = icmp ult ptr %.041, %F_floatmul.man2.F_floatmul.man1
-  br i1 %.not46, label %._crit_edge72, label %.preheader, !llvm.loop !43
 
 bb.e:                                             ; preds = %.lr.ph68, %_F_stradd.exit
   %.03867 = phi i32 [ 0, %.lr.ph68 ], [ %i.db, %_F_stradd.exit ] ; 2 uses
@@ -278,7 +270,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   %i.cw = icmp uge ptr %.136.i, @F_floatmul.prod  ; 2 uses
   %i.cx = icmp uge ptr %.134.i, %F_floatmul.man1.F_floatmul.man2 ; 2 uses
   %i.cy = select i1 %i.cw, i1 true, i1 %i.cx
-  br i1 %i.cy, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !44
+  br i1 %i.cy, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !43
 
 ._crit_edge.i:                                    ; preds = %bb.i
   br i1 %i.cr, label %bb.j, label %._crit_edge.thread.i
@@ -297,9 +289,17 @@ _F_stradd.exit:                                   ; preds = %bb.j, %._crit_edge.
   %i.da = tail call ptr @strcpy(ptr noundef nonnull dereferenceable(1) @F_floatmul.prod, ptr noundef nonnull dereferenceable(1) %.132.i) #13 ; 0 uses
   %i.db = add nuw nsw i32 %.03867, 1
   %exitcond.not = icmp eq i32 %.03867, %i.bz
-  br i1 %exitcond.not, label %.lr.ph.i49.preheader, label %bb.e, !llvm.loop !45
+  br i1 %exitcond.not, label %.lr.ph.i49, label %bb.e, !llvm.loop !44
 
-._crit_edge72:                                    ; preds = %.lr.ph.i49.preheader, %._crit_edge
+.lr.ph.i49:                                       ; preds = %_F_stradd.exit, %.preheader
+  %strlen.i = tail call i64 @strlen(ptr nonnull dereferenceable(1) %F_floatmul.man1.F_floatmul.man2)
+  %endptr.i = getelementptr inbounds i8, ptr %F_floatmul.man1.F_floatmul.man2, i64 %strlen.i
+  store i16 48, ptr %endptr.i, align 1
+  %.041 = getelementptr i8, ptr %.04171, i64 -1   ; 2 uses
+  %.not46 = icmp ult ptr %.041, %F_floatmul.man2.F_floatmul.man1
+  br i1 %.not46, label %._crit_edge72, label %.preheader, !llvm.loop !45
+
+._crit_edge72:                                    ; preds = %.lr.ph.i49, %._crit_edge
   %i.dc = load ptr, ptr @F_floatmul.result, align 8, !tbaa !30
   %i.dd = getelementptr inbounds nuw i8, ptr %i.dc, i64 8
   %i.de = load ptr, ptr %i.dd, align 8, !tbaa !28
@@ -541,7 +541,7 @@ bb.q:                                             ; preds = %bb.p, %bb.o
   %i.cf = icmp uge ptr %.136.i, @F_floatmagadd.man1 ; 2 uses
   %i.cg = icmp uge ptr %.134.i, @F_floatmagadd.man2 ; 2 uses
   %i.ch = select i1 %i.cf, i1 true, i1 %i.cg
-  br i1 %i.ch, label %.lr.ph.i48, label %._crit_edge.i, !llvm.loop !44
+  br i1 %i.ch, label %.lr.ph.i48, label %._crit_edge.i, !llvm.loop !43
 
 ._crit_edge.i:                                    ; preds = %bb.q
   br i1 %i.ca, label %bb.r, label %._crit_edge.thread.i

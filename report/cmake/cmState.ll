@@ -203,6 +203,12 @@ bb.a:
   %i.c = icmp eq i64 %.fr41.i.i.i.i, 0
   br i1 %i.c, label %.lr.ph.i.split.us.i.i.i.i.preheader, label %.lr.ph.i.split.split.i.i.i.i.preheader
 
+.lr.ph.i.split.split.i.i.i.i.preheader:           ; preds = %bb.a
+  %1 = load ptr, ptr %0, align 8                  ; 4 uses
+  %.029.val46.i.i.i.i.i = load i64, ptr getelementptr inbounds nuw (i8, ptr @_ZL17cmCacheEntryTypesB5cxx11, i64 8), align 8, !tbaa !38
+  %2 = icmp eq i64 %.fr41.i.i.i.i, %.029.val46.i.i.i.i.i
+  br i1 %2, label %"_ZN9__gnu_cxx5__ops10_Iter_predIZN7cmState16IsCacheEntryTypeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3$_0EclIPS9_EEbT_.exit.i.i.i.i.i", label %"_ZN9__gnu_cxx5__ops10_Iter_predIZN7cmState16IsCacheEntryTypeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3$_0EclIPS9_EEbT_.exit.thread59.i.i.i.i.i"
+
 .lr.ph.i.split.us.i.i.i.i.preheader:              ; preds = %bb.a
   %.029.val46.i.us.i.i.i.i = load i64, ptr getelementptr inbounds nuw (i8, ptr @_ZL17cmCacheEntryTypesB5cxx11, i64 8), align 8, !tbaa !38
   %i.d = icmp eq i64 %.029.val46.i.us.i.i.i.i, 0
@@ -226,15 +232,9 @@ bb.a:
   %or.cond49 = select i1 %or.cond48, i1 true, i1 %i.j
   br i1 %or.cond49, label %"_ZSt6any_ofIPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEZN7cmState16IsCacheEntryTypeERS6_E3$_0EbT_SB_T0_.exit", label %"_ZN9__gnu_cxx5__ops10_Iter_predIZN7cmState16IsCacheEntryTypeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3$_0EclIPS9_EEbT_.exit58.thread65.i.i.i.i.i"
 
-.lr.ph.i.split.split.i.i.i.i.preheader:           ; preds = %bb.a
-  %.pre.i.i.i.i = load ptr, ptr %0, align 8       ; 4 uses
-  %.029.val46.i.i.i.i.i = load i64, ptr getelementptr inbounds nuw (i8, ptr @_ZL17cmCacheEntryTypesB5cxx11, i64 8), align 8, !tbaa !38
-  %1 = icmp eq i64 %.fr41.i.i.i.i, %.029.val46.i.i.i.i.i
-  br i1 %1, label %"_ZN9__gnu_cxx5__ops10_Iter_predIZN7cmState16IsCacheEntryTypeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3$_0EclIPS9_EEbT_.exit.i.i.i.i.i", label %"_ZN9__gnu_cxx5__ops10_Iter_predIZN7cmState16IsCacheEntryTypeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3$_0EclIPS9_EEbT_.exit.thread59.i.i.i.i.i"
-
 "_ZN9__gnu_cxx5__ops10_Iter_predIZN7cmState16IsCacheEntryTypeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3$_0EclIPS9_EEbT_.exit.i.i.i.i.i": ; preds = %.lr.ph.i.split.split.i.i.i.i.preheader
   %.029.val45.i.i.i.i.i = load ptr, ptr @_ZL17cmCacheEntryTypesB5cxx11, align 8
-  %bcmp.i.i.i.i.i.i.i.i = tail call i32 @bcmp(ptr %.pre.i.i.i.i, ptr readonly %.029.val45.i.i.i.i.i, i64 %.fr41.i.i.i.i)
+  %bcmp.i.i.i.i.i.i.i.i = tail call i32 @bcmp(ptr %1, ptr readonly %.029.val45.i.i.i.i.i, i64 %.fr41.i.i.i.i)
   %i.k = icmp eq i32 %bcmp.i.i.i.i.i.i.i.i, 0
   br i1 %i.k, label %"_ZSt6any_ofIPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEZN7cmState16IsCacheEntryTypeERS6_E3$_0EbT_SB_T0_.exit", label %"_ZN9__gnu_cxx5__ops10_Iter_predIZN7cmState16IsCacheEntryTypeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3$_0EclIPS9_EEbT_.exit.thread59.i.thread.i.i.i.i"
 
@@ -250,7 +250,7 @@ bb.a:
 
 "_ZN9__gnu_cxx5__ops10_Iter_predIZN7cmState16IsCacheEntryTypeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3$_0EclIPS9_EEbT_.exit48.i.i.i.i.i": ; preds = %"_ZN9__gnu_cxx5__ops10_Iter_predIZN7cmState16IsCacheEntryTypeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3$_0EclIPS9_EEbT_.exit.thread59.i.i.i.i.i", %"_ZN9__gnu_cxx5__ops10_Iter_predIZN7cmState16IsCacheEntryTypeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3$_0EclIPS9_EEbT_.exit.thread59.i.thread.i.i.i.i"
   %.val42.i46.i.i.i.i = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZL17cmCacheEntryTypesB5cxx11, i64 32), align 8
-  %bcmp.i.i.i47.i.i.i.i.i = tail call i32 @bcmp(ptr %.pre.i.i.i.i, ptr readonly %.val42.i46.i.i.i.i, i64 %.fr41.i.i.i.i)
+  %bcmp.i.i.i47.i.i.i.i.i = tail call i32 @bcmp(ptr %1, ptr readonly %.val42.i46.i.i.i.i, i64 %.fr41.i.i.i.i)
   %i.n = icmp eq i32 %bcmp.i.i.i47.i.i.i.i.i, 0
   br i1 %i.n, label %"_ZSt6any_ofIPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEZN7cmState16IsCacheEntryTypeERS6_E3$_0EbT_SB_T0_.exit", label %"_ZN9__gnu_cxx5__ops10_Iter_predIZN7cmState16IsCacheEntryTypeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3$_0EclIPS9_EEbT_.exit48.thread60.i.i.i.i.i"
 
@@ -261,7 +261,7 @@ bb.a:
 
 "_ZN9__gnu_cxx5__ops10_Iter_predIZN7cmState16IsCacheEntryTypeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3$_0EclIPS9_EEbT_.exit50.i.i.i.i.i": ; preds = %"_ZN9__gnu_cxx5__ops10_Iter_predIZN7cmState16IsCacheEntryTypeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3$_0EclIPS9_EEbT_.exit48.thread60.i.i.i.i.i"
   %.val39.i.i.i.i.i = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZL17cmCacheEntryTypesB5cxx11, i64 64), align 8
-  %bcmp.i.i.i49.i.i.i.i.i = tail call i32 @bcmp(ptr %.pre.i.i.i.i, ptr readonly %.val39.i.i.i.i.i, i64 %.fr41.i.i.i.i)
+  %bcmp.i.i.i49.i.i.i.i.i = tail call i32 @bcmp(ptr %1, ptr readonly %.val39.i.i.i.i.i, i64 %.fr41.i.i.i.i)
   %i.p = icmp eq i32 %bcmp.i.i.i49.i.i.i.i.i, 0
   br i1 %i.p, label %"_ZSt6any_ofIPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEZN7cmState16IsCacheEntryTypeERS6_E3$_0EbT_SB_T0_.exit", label %"_ZN9__gnu_cxx5__ops10_Iter_predIZN7cmState16IsCacheEntryTypeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3$_0EclIPS9_EEbT_.exit50.thread61.i.thread.i.i.i.i"
 
@@ -277,7 +277,7 @@ bb.a:
 
 "_ZN9__gnu_cxx5__ops10_Iter_predIZN7cmState16IsCacheEntryTypeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3$_0EclIPS9_EEbT_.exit52.i.i.i.i.i": ; preds = %"_ZN9__gnu_cxx5__ops10_Iter_predIZN7cmState16IsCacheEntryTypeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3$_0EclIPS9_EEbT_.exit50.thread61.i.i.i.i.i", %"_ZN9__gnu_cxx5__ops10_Iter_predIZN7cmState16IsCacheEntryTypeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3$_0EclIPS9_EEbT_.exit50.thread61.i.thread.i.i.i.i"
   %.val36.i912.i.i.i.i = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZL17cmCacheEntryTypesB5cxx11, i64 96), align 8
-  %bcmp.i.i.i51.i.i.i.i.i = tail call i32 @bcmp(ptr %.pre.i.i.i.i, ptr readonly %.val36.i912.i.i.i.i, i64 %.fr41.i.i.i.i)
+  %bcmp.i.i.i51.i.i.i.i.i = tail call i32 @bcmp(ptr %1, ptr readonly %.val36.i912.i.i.i.i, i64 %.fr41.i.i.i.i)
   %i.s = icmp eq i32 %bcmp.i.i.i51.i.i.i.i.i, 0
   br i1 %i.s, label %"_ZSt6any_ofIPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEZN7cmState16IsCacheEntryTypeERS6_E3$_0EbT_SB_T0_.exit", label %._crit_edge.loopexit.i.i.i.i.i
 
@@ -325,8 +325,8 @@ bb.a:
 "_ZN9__gnu_cxx5__ops10_Iter_predIZN7cmState16IsCacheEntryTypeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3$_0EclIPS9_EEbT_.exit58.thread65.i.i.i.i.i": ; preds = %.lr.ph.i.split.us.i.i.i.i.preheader, %"_ZN9__gnu_cxx5__ops10_Iter_predIZN7cmState16IsCacheEntryTypeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3$_0EclIPS9_EEbT_.exit58.i.i.i.i.i", %"_ZN9__gnu_cxx5__ops10_Iter_predIZN7cmState16IsCacheEntryTypeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3$_0EclIPS9_EEbT_.exit56.thread64.i.i.i.i.i"
   br label %"_ZSt6any_ofIPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEZN7cmState16IsCacheEntryTypeERS6_E3$_0EbT_SB_T0_.exit"
 
-"_ZSt6any_ofIPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEZN7cmState16IsCacheEntryTypeERS6_E3$_0EbT_SB_T0_.exit": ; preds = %"_ZN9__gnu_cxx5__ops10_Iter_predIZN7cmState16IsCacheEntryTypeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3$_0EclIPS9_EEbT_.exit.i.i.i.i.i", %.lr.ph.i.split.us.i.i.i.i.preheader, %"_ZN9__gnu_cxx5__ops10_Iter_predIZN7cmState16IsCacheEntryTypeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3$_0EclIPS9_EEbT_.exit48.i.i.i.i.i", %"_ZN9__gnu_cxx5__ops10_Iter_predIZN7cmState16IsCacheEntryTypeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3$_0EclIPS9_EEbT_.exit52.i.i.i.i.i", %"_ZN9__gnu_cxx5__ops10_Iter_predIZN7cmState16IsCacheEntryTypeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3$_0EclIPS9_EEbT_.exit50.i.i.i.i.i", %"_ZN9__gnu_cxx5__ops10_Iter_predIZN7cmState16IsCacheEntryTypeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3$_0EclIPS9_EEbT_.exit54.i.i.i.i.i", %"_ZN9__gnu_cxx5__ops10_Iter_predIZN7cmState16IsCacheEntryTypeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3$_0EclIPS9_EEbT_.exit56.i.i.i.i.i", %"_ZN9__gnu_cxx5__ops10_Iter_predIZN7cmState16IsCacheEntryTypeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3$_0EclIPS9_EEbT_.exit58.i.i.i.i.i", %"_ZN9__gnu_cxx5__ops10_Iter_predIZN7cmState16IsCacheEntryTypeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3$_0EclIPS9_EEbT_.exit58.thread65.i.i.i.i.i"
-  %i.ad = phi i1 [ true, %"_ZN9__gnu_cxx5__ops10_Iter_predIZN7cmState16IsCacheEntryTypeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3$_0EclIPS9_EEbT_.exit56.i.i.i.i.i" ], [ true, %"_ZN9__gnu_cxx5__ops10_Iter_predIZN7cmState16IsCacheEntryTypeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3$_0EclIPS9_EEbT_.exit58.i.i.i.i.i" ], [ true, %"_ZN9__gnu_cxx5__ops10_Iter_predIZN7cmState16IsCacheEntryTypeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3$_0EclIPS9_EEbT_.exit50.i.i.i.i.i" ], [ true, %"_ZN9__gnu_cxx5__ops10_Iter_predIZN7cmState16IsCacheEntryTypeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3$_0EclIPS9_EEbT_.exit48.i.i.i.i.i" ], [ false, %"_ZN9__gnu_cxx5__ops10_Iter_predIZN7cmState16IsCacheEntryTypeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3$_0EclIPS9_EEbT_.exit58.thread65.i.i.i.i.i" ], [ true, %"_ZN9__gnu_cxx5__ops10_Iter_predIZN7cmState16IsCacheEntryTypeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3$_0EclIPS9_EEbT_.exit.i.i.i.i.i" ], [ true, %"_ZN9__gnu_cxx5__ops10_Iter_predIZN7cmState16IsCacheEntryTypeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3$_0EclIPS9_EEbT_.exit54.i.i.i.i.i" ], [ true, %"_ZN9__gnu_cxx5__ops10_Iter_predIZN7cmState16IsCacheEntryTypeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3$_0EclIPS9_EEbT_.exit52.i.i.i.i.i" ], [ true, %.lr.ph.i.split.us.i.i.i.i.preheader ]
+"_ZSt6any_ofIPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEZN7cmState16IsCacheEntryTypeERS6_E3$_0EbT_SB_T0_.exit": ; preds = %"_ZN9__gnu_cxx5__ops10_Iter_predIZN7cmState16IsCacheEntryTypeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3$_0EclIPS9_EEbT_.exit48.i.i.i.i.i", %"_ZN9__gnu_cxx5__ops10_Iter_predIZN7cmState16IsCacheEntryTypeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3$_0EclIPS9_EEbT_.exit52.i.i.i.i.i", %"_ZN9__gnu_cxx5__ops10_Iter_predIZN7cmState16IsCacheEntryTypeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3$_0EclIPS9_EEbT_.exit50.i.i.i.i.i", %"_ZN9__gnu_cxx5__ops10_Iter_predIZN7cmState16IsCacheEntryTypeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3$_0EclIPS9_EEbT_.exit.i.i.i.i.i", %.lr.ph.i.split.us.i.i.i.i.preheader, %"_ZN9__gnu_cxx5__ops10_Iter_predIZN7cmState16IsCacheEntryTypeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3$_0EclIPS9_EEbT_.exit54.i.i.i.i.i", %"_ZN9__gnu_cxx5__ops10_Iter_predIZN7cmState16IsCacheEntryTypeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3$_0EclIPS9_EEbT_.exit56.i.i.i.i.i", %"_ZN9__gnu_cxx5__ops10_Iter_predIZN7cmState16IsCacheEntryTypeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3$_0EclIPS9_EEbT_.exit58.i.i.i.i.i", %"_ZN9__gnu_cxx5__ops10_Iter_predIZN7cmState16IsCacheEntryTypeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3$_0EclIPS9_EEbT_.exit58.thread65.i.i.i.i.i"
+  %i.ad = phi i1 [ true, %"_ZN9__gnu_cxx5__ops10_Iter_predIZN7cmState16IsCacheEntryTypeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3$_0EclIPS9_EEbT_.exit56.i.i.i.i.i" ], [ true, %"_ZN9__gnu_cxx5__ops10_Iter_predIZN7cmState16IsCacheEntryTypeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3$_0EclIPS9_EEbT_.exit58.i.i.i.i.i" ], [ true, %"_ZN9__gnu_cxx5__ops10_Iter_predIZN7cmState16IsCacheEntryTypeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3$_0EclIPS9_EEbT_.exit50.i.i.i.i.i" ], [ true, %.lr.ph.i.split.us.i.i.i.i.preheader ], [ false, %"_ZN9__gnu_cxx5__ops10_Iter_predIZN7cmState16IsCacheEntryTypeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3$_0EclIPS9_EEbT_.exit58.thread65.i.i.i.i.i" ], [ true, %"_ZN9__gnu_cxx5__ops10_Iter_predIZN7cmState16IsCacheEntryTypeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3$_0EclIPS9_EEbT_.exit48.i.i.i.i.i" ], [ true, %"_ZN9__gnu_cxx5__ops10_Iter_predIZN7cmState16IsCacheEntryTypeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3$_0EclIPS9_EEbT_.exit54.i.i.i.i.i" ], [ true, %"_ZN9__gnu_cxx5__ops10_Iter_predIZN7cmState16IsCacheEntryTypeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3$_0EclIPS9_EEbT_.exit52.i.i.i.i.i" ], [ true, %"_ZN9__gnu_cxx5__ops10_Iter_predIZN7cmState16IsCacheEntryTypeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3$_0EclIPS9_EEbT_.exit.i.i.i.i.i" ]
   ret i1 %i.ad
 }
 

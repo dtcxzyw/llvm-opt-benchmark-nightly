@@ -204,7 +204,7 @@ _ZNK7httplib6detail26insertion_ordered_multimapINSt7__cxx1112basic_stringIcSt11c
   br i1 %exitcond.not.i.i40, label %.critedge, label %.lr.ph.i.split.i39, !llvm.loop !583
 
 _ZSt4nextIN7httplib6detail26insertion_ordered_multimapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS1_11case_ignore8equal_toEE10iterator_tISt4pairIS8_S8_EEEET_SG_NSt15iterator_traitsISG_E15difference_typeE.exit: ; preds = %bb.ae, %.lr.ph.i.split.us.i41, %.preheader.split.i.preheader, %bb.ad
-  %.sroa.5.6 = phi i64 [ %.sroa.5.3, %.lr.ph.i.split.us.i41 ], [ %i.la, %bb.ad ], [ %.0712.i.i, %.preheader.split.i.preheader ], [ %.sroa.5.2, %bb.ae ] ; 2 uses
+  %.sroa.5.6 = phi i64 [ %.0712.i.i, %.preheader.split.i.preheader ], [ %i.la, %bb.ad ], [ %.sroa.5.3, %.lr.ph.i.split.us.i41 ], [ %.sroa.5.2, %bb.ae ] ; 2 uses
   %.not84118 = icmp eq i64 %.sroa.5.6, %.pre30.i
   br i1 %.not84118, label %.critedge, label %.lr.ph
 

@@ -204,8 +204,8 @@ bb.a:
   br i1 %i.b, label %.lr.ph.preheader, label %_ZN9SampleICC6Read16ERSiPvi.exit.thread9
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %.pre = load ptr, ptr %0, align 8, !tbaa !16
   %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 1 ; 2 uses
+  %.pre = load ptr, ptr %0, align 8, !tbaa !16
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph.i.i.preheader
@@ -608,8 +608,8 @@ bb.g:                                             ; preds = %_ZNSt6vectorIfSaIfE
   br i1 %i.av, label %.lr.ph.preheader.i, label %_ZN9SampleICC6Read32ERSiPvi.exit15.thread.sink.split
 
 .lr.ph.preheader.i:                               ; preds = %bb.g
-  %.pre.i = load ptr, ptr %1, align 8, !tbaa !16
   %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 1 ; 2 uses
+  %.pre.i = load ptr, ptr %1, align 8, !tbaa !16
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.i.preheader.i, %.lr.ph.preheader.i
