@@ -206,8 +206,20 @@ bb.s:                                             ; preds = %bb.o, %bb.m
 ; Function Attrs: nonlazybind uwtable
 define noundef nonnull align 1 ptr @"_ZN122_$LT$meilisearch..routes..indexes..documents..DocumentsDeletionAggregator$u20$as$u20$meilisearch..analytics..Aggregate$GT$9aggregate17h97c5deb2a03ab0cbE"(ptr noalias noundef nonnull align 1 %0, ptr noalias noundef nonnull align 1 %1) unnamed_addr #2 personality ptr @rust_eh_personality {
 bb.a:
-  %2 = load <4 x i8>, ptr %0, align 1
-  %3 = load <4 x i8>, ptr %1, align 1
+  %2 = load i8, ptr %0, align 1, !range !233, !noundef !12
+  %3 = load i8, ptr %1, align 1, !range !233, !noundef !12
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 1
+  %5 = load i8, ptr %4, align 1, !range !233, !noundef !12
+  %6 = getelementptr inbounds nuw i8, ptr %1, i64 1
+  %7 = load i8, ptr %6, align 1, !range !233, !noundef !12
+  %8 = getelementptr inbounds nuw i8, ptr %0, i64 2
+  %9 = load i8, ptr %8, align 1, !range !233, !noundef !12
+  %10 = getelementptr inbounds nuw i8, ptr %1, i64 2
+  %11 = load i8, ptr %10, align 1, !range !233, !noundef !12
+  %12 = getelementptr inbounds nuw i8, ptr %0, i64 3
+  %13 = load i8, ptr %12, align 1, !range !233, !noundef !12
+  %14 = getelementptr inbounds nuw i8, ptr %1, i64 3
+  %15 = load i8, ptr %14, align 1, !range !233, !noundef !12
   tail call void @_RNvCskdKJRKLKjqM_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #79
   %i.a = tail call noundef dereferenceable_or_null(4) ptr @_RNvCskdKJRKLKjqM_7___rustc12___rust_alloc(i64 noundef 4, i64 noundef range(i64 1, -9223372036854775807) 1) #79 ; 3 uses
   %i.b = icmp eq ptr %i.a, null
@@ -228,8 +240,21 @@ bb.c:                                             ; preds = %bb.b
   resume { ptr, i32 } %i.c
 
 bb.d:                                             ; preds = %bb.a
-  %4 = or <4 x i8> %3, %2
-  store <4 x i8> %4, ptr %i.a, align 1
+  %16 = or i8 %15, %13
+  %.sroa.64.0.insert.ext = zext nneg i8 %16 to i32
+  %.sroa.64.0.insert.shift = shl nuw nsw i32 %.sroa.64.0.insert.ext, 24
+  %17 = or i8 %11, %9
+  %.sroa.53.0.insert.ext = zext nneg i8 %17 to i32
+  %.sroa.53.0.insert.shift = shl nuw nsw i32 %.sroa.53.0.insert.ext, 16
+  %18 = or i8 %7, %5
+  %.sroa.42.0.insert.ext = zext nneg i8 %18 to i32
+  %.sroa.42.0.insert.shift = shl nuw nsw i32 %.sroa.42.0.insert.ext, 8
+  %19 = or i8 %3, %2
+  %.sroa.01.0.insert.ext = zext nneg i8 %19 to i32
+  %.sroa.53.0.insert.insert = or disjoint i32 %.sroa.42.0.insert.shift, %.sroa.01.0.insert.ext
+  %.sroa.42.0.insert.insert = or disjoint i32 %.sroa.53.0.insert.insert, %.sroa.53.0.insert.shift
+  %.sroa.01.0.insert.insert = or disjoint i32 %.sroa.42.0.insert.insert, %.sroa.64.0.insert.shift
+  store i32 %.sroa.01.0.insert.insert, ptr %i.a, align 1
   tail call void @_RNvCskdKJRKLKjqM_7___rustc14___rust_dealloc(ptr noundef nonnull %1, i64 noundef 4, i64 noundef 1) #79
   tail call void @_RNvCskdKJRKLKjqM_7___rustc14___rust_dealloc(ptr noundef nonnull %0, i64 noundef 4, i64 noundef 1) #79
   ret ptr %i.a
@@ -632,7 +657,7 @@ bb.b:                                             ; preds = %bb.a
   %.promoted.i.i.i3 = ptrtoaddr ptr %.promoted.i.i.i to i64 ; 2 uses
   %i.d = mul i64 %i.c, 988218432520154551
   %i.e = mul i64 %.promoted.i.i.i3, -988218432520154551
-  %i.f = add i64 %i.d, %i.e
+  %i.f = add i64 %i.e, %i.d
   %i.g = lshr i64 %i.f, 3
   %i.h = add i64 %1, -1
   %i.i = tail call i64 @llvm.umin.i64(i64 %i.g, i64 %i.h) ; 2 uses
@@ -1035,7 +1060,7 @@ bb.a:
 .preheader:                                       ; preds = %bb.a
   %i.a = mul i64 %.pre49, 988218432520154551
   %i.b = mul i64 %.pre10, -988218432520154551
-  %i.c = add i64 %i.a, %i.b
+  %i.c = add i64 %i.b, %i.a
   %i.d = lshr i64 %i.c, 3
   %i.e = add i64 %1, -1
   %i.f = tail call i64 @llvm.umin.i64(i64 %i.d, i64 %i.e) ; 2 uses

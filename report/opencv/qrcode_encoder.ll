@@ -205,26 +205,46 @@ bb.a:
   %i.bd = or i8 %.pn, %i.bc
   %i.be = shl i64 %i.i, 3
   %.sink.idx.i33 = select i1 %i.ax, i64 0, i64 %i.be
-  %.sink.i34 = getelementptr inbounds nuw i8, ptr %i.g, i64 %.sink.idx.i33 ; 4 uses
+  %.sink.i34 = getelementptr inbounds nuw i8, ptr %i.g, i64 %.sink.idx.i33 ; 5 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %.sink.i34, i64 8
   %i.bg = load i8, ptr %i.bf, align 1, !tbaa !10
   %i.bh = shl i8 %i.bg, 7
-  %i.bi = or i8 %i.bd, %i.bh
+  %3 = or i8 %i.bd, %i.bh
+  %i.bi = or i8 %3, %i.l
+  %4 = zext i8 %i.bi to i16
   %i.bj = getelementptr inbounds nuw i8, ptr %.sink.i34, i64 7
   %i.bk = load i8, ptr %i.bj, align 1, !tbaa !10
+  %5 = and i8 %i.bk, 1
+  %6 = zext nneg i8 %5 to i16
+  %7 = shl nuw nsw i16 %6, 8
+  %8 = or disjoint i16 %7, %4
   %i.bl = getelementptr inbounds nuw i8, ptr %.sink.i34, i64 4
-  %3 = or i8 %i.bi, %i.l
-  %i.bm = load <2 x i8>, ptr %i.bl, align 1, !tbaa !10
-  %4 = load <4 x i8>, ptr %.sink.i34, align 1, !tbaa !10
-  %5 = shufflevector <2 x i8> %i.bm, <2 x i8> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %6 = shufflevector <4 x i8> %5, <4 x i8> %4, <8 x i32> <i32 poison, i32 poison, i32 1, i32 0, i32 7, i32 6, i32 5, i32 4>
-  %7 = insertelement <8 x i8> %6, i8 %3, i64 0
-  %8 = insertelement <8 x i8> %7, i8 %i.bk, i64 1
-  %9 = and <8 x i8> %8, <i8 -1, i8 1, i8 1, i8 1, i8 1, i8 1, i8 1, i8 1>
-  %10 = zext <8 x i8> %9 to <8 x i16>
-  %11 = shl nuw nsw <8 x i16> %10, <i16 0, i16 8, i16 9, i16 10, i16 11, i16 12, i16 13, i16 14>
-  %12 = tail call i16 @llvm.vector.reduce.or.v8i16(<8 x i16> %11)
-  store i16 %12, ptr %i.a, align 2, !tbaa !105
+  %9 = load <2 x i8>, ptr %i.bl, align 1, !tbaa !10
+  %10 = and <2 x i8> %9, splat (i8 1)
+  %11 = zext nneg <2 x i8> %10 to <2 x i16>
+  %12 = shl nuw nsw <2 x i16> %11, <i16 10, i16 9> ; 2 uses
+  %13 = extractelement <2 x i16> %12, i64 1
+  %14 = or disjoint i16 %8, %13
+  %15 = extractelement <2 x i16> %12, i64 0
+  %16 = or disjoint i16 %14, %15
+  %17 = getelementptr inbounds nuw i8, ptr %.sink.i34, i64 2
+  %i.bm = load <2 x i8>, ptr %17, align 1, !tbaa !10
+  %18 = and <2 x i8> %i.bm, splat (i8 1)
+  %19 = zext nneg <2 x i8> %18 to <2 x i16>
+  %20 = shl nuw nsw <2 x i16> %19, <i16 12, i16 11> ; 2 uses
+  %21 = extractelement <2 x i16> %20, i64 1
+  %22 = or i16 %16, %21
+  %23 = extractelement <2 x i16> %20, i64 0
+  %24 = or i16 %22, %23
+  %25 = load <2 x i8>, ptr %.sink.i34, align 1, !tbaa !10
+  %26 = and <2 x i8> %25, splat (i8 1)
+  %27 = zext nneg <2 x i8> %26 to <2 x i16>
+  %28 = shl nuw nsw <2 x i16> %27, <i16 14, i16 13> ; 2 uses
+  %29 = extractelement <2 x i16> %28, i64 1
+  %30 = or i16 %24, %29
+  %31 = extractelement <2 x i16> %28, i64 0
+  %32 = or i16 %30, %31
+  store i16 %32, ptr %i.a, align 2, !tbaa !105
   %i.bn = call noundef zeroext i1 @_ZN2cv17QRCodeDecoderImpl17correctFormatInfoERt(ptr nonnull align 8 poison, ptr noundef nonnull align 2 dereferenceable(2) %i.a) ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #27
   %i.bo = getelementptr inbounds nuw i8, ptr %1, i64 12
@@ -626,9 +646,6 @@ declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #23
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i16 @llvm.vector.reduce.or.v4i16(<4 x i16>) #23
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i16 @llvm.vector.reduce.or.v8i16(<8 x i16>) #23
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }
