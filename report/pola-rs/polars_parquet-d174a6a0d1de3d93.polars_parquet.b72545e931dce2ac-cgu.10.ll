@@ -204,10 +204,10 @@ bb.h:                                             ; preds = %bb.g
   %i.am = icmp slt i16 %i.al, 0, !dbg !18493
   br i1 %i.am, label %bb.j, label %bb.i, !dbg !18493
 
-._crit_edge.i.invoke:                             ; preds = %._crit_edge375, %bb.k, %bb.m, %.backedge.i
-  %i.an = phi i64 [ %i.be, %.backedge.i ], [ %12, %bb.k ], [ %i.bg, %bb.m ], [ %i.ag, %._crit_edge375 ]
-  %i.ao = phi i64 [ %i.m, %.backedge.i ], [ 16, %bb.k ], [ 16, %bb.m ], [ %i.m, %._crit_edge375 ]
-  %i.ap = phi ptr [ @512, %.backedge.i ], [ @514, %bb.k ], [ @515, %bb.m ], [ @512, %._crit_edge375 ]
+._crit_edge.i.invoke:                             ; preds = %._crit_edge375, %bb.m, %bb.k, %.backedge.i
+  %i.an = phi i64 [ %12, %bb.k ], [ %i.be, %.backedge.i ], [ %i.bg, %bb.m ], [ %i.ag, %._crit_edge375 ]
+  %i.ao = phi i64 [ 16, %bb.k ], [ %i.m, %.backedge.i ], [ 16, %bb.m ], [ %i.m, %._crit_edge375 ]
+  %i.ap = phi ptr [ @514, %bb.k ], [ @512, %.backedge.i ], [ @515, %bb.m ], [ @512, %._crit_edge375 ]
   invoke void @_RNvNtCscgRAwXFJnXP_4core9panicking18panic_bounds_check(i64 noundef %i.an, i64 noundef %i.ao, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.ap) #18
           to label %._crit_edge.i.cont unwind label %.loopexit.split-lp, !dbg !18494
 
@@ -235,27 +235,9 @@ bb.k:                                             ; preds = %bb.j
   %i.ax = getelementptr inbounds nuw i8, ptr %5, i64 %i.av, !dbg !18504
   %i.ay = trunc i32 %.sroa.05.047.i to i8, !dbg !18504
   store i8 %i.ay, ptr %i.ax, align 1, !dbg !18504, !alias.scope !18479, !noalias !18475
+  %12 = zext i32 %.sroa.05.047.i to i64, !dbg !18505 ; 2 uses
   %.first_iter.i = icmp ult i32 %.sroa.05.047.i, 16, !dbg !18505
-  %12 = zext nneg i32 %.sroa.05.047.i to i64, !dbg !18506 ; 2 uses
-  br i1 %.first_iter.i, label %.split.us, label %._crit_edge.i.invoke
-
-.split.us:                                        ; preds = %bb.k, %bb.l
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.l ], [ %12, %bb.k ] ; 5 uses
-  %i.az = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %indvars.iv, !dbg !18507
-  %i.ba = load i32, ptr %i.az, align 4, !dbg !18507, !noalias !18486, !noundef !14 ; 2 uses
-  %i.bb = icmp eq i32 %i.ba, -1, !dbg !18508
-  br i1 %i.bb, label %bb.l, label %.split378.us, !dbg !18508
-
-bb.l:                                             ; preds = %.split.us
-  %indvars.iv.next = add nsw i64 %indvars.iv, -1, !dbg !18509
-  %.not.i.us = icmp eq i64 %indvars.iv, 0, !dbg !18505
-  br i1 %.not.i.us, label %.split382.us, label %.split.us, !dbg !18505
-
-.split378.us:                                     ; preds = %.split.us
-  %i.bc = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %indvars.iv
-  %i.bd = trunc nuw i64 %indvars.iv to i32
-  store i32 -1, ptr %i.bc, align 4, !dbg !18510, !noalias !18486
-  br label %.backedge.i, !dbg !18511
+  br i1 %.first_iter.i, label %.split.us, label %._crit_edge.i.invoke, !dbg !18506
 
 13:                                               ; preds = %bb.j
   invoke void @_RNvNtCscgRAwXFJnXP_4core9panicking18panic_bounds_check(i64 noundef %i.av, i64 noundef range(i64 0, -9223372036854775808) %6, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @513) #18
@@ -263,6 +245,24 @@ bb.l:                                             ; preds = %.split.us
 
 .noexc210:                                        ; preds = %13
   unreachable, !dbg !18504
+
+.split.us:                                        ; preds = %bb.k, %bb.l
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.l ], [ %12, %bb.k ] ; 5 uses
+  %i.az = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %indvars.iv, !dbg !18506
+  %i.ba = load i32, ptr %i.az, align 4, !dbg !18506, !noalias !18486, !noundef !14 ; 2 uses
+  %i.bb = icmp eq i32 %i.ba, -1, !dbg !18507
+  br i1 %i.bb, label %bb.l, label %.split378.us, !dbg !18507
+
+bb.l:                                             ; preds = %.split.us
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1, !dbg !18508
+  %.not.i.us = icmp eq i64 %indvars.iv, 0, !dbg !18505
+  br i1 %.not.i.us, label %.split382.us, label %.split.us, !dbg !18505
+
+.split378.us:                                     ; preds = %.split.us
+  %i.bc = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %indvars.iv
+  %i.bd = trunc nuw i64 %indvars.iv to i32, !dbg !18509
+  store i32 -1, ptr %i.bc, align 4, !dbg !18510, !noalias !18486
+  br label %.backedge.i, !dbg !18511
 
 .backedge.i:                                      ; preds = %bb.n, %.split378.us
   %.sroa.05.0.be.i = phi i32 [ %i.aq, %bb.n ], [ %i.bd, %.split378.us ]
@@ -666,7 +666,7 @@ bb.ck:                                            ; preds = %middle.block463
   %i.nz = load float, ptr %i.ny, align 4, !dbg !32357, !noundef !14
   %i.oa = fsub float %i.nx, %i.nz, !dbg !32356
   %i.ob = fadd float %.sroa.0.1, %i.oa, !dbg !32358 ; 2 uses
-  %i.oc = add i64 %i.d, %.sroa.023.0222, !dbg !32359 ; 5 uses
+  %i.oc = add nuw i64 %i.d, %.sroa.023.0222, !dbg !32359 ; 5 uses
   %i.od = load i64, ptr %i.cb, align 8, !dbg !32303, !noundef !14
   %i.oe = add i64 %i.od, %.sroa.023.0222, !dbg !32305 ; 3 uses
   %exitcond313.not = icmp eq i64 %.sroa.023.0222, %i.bz, !dbg !32307
@@ -1069,10 +1069,10 @@ begin_hunk_2_@llvm.vector.reduce.fmin.v4f32
 !18503 = distinct !DILexicalBlock(scope: !18489, file: !18483, line: 44, column: 13)
 !18504 = !DILocation(line: 45, column: 13, scope: !18503, inlinedAt: !18485)
 !18505 = !DILocation(line: 47, column: 15, scope: !18489, inlinedAt: !18485)
-!18506 = !DILocation(line: 47, scope: !18489, inlinedAt: !18485)
-!18507 = !DILocation(line: 47, column: 33, scope: !18489, inlinedAt: !18485)
-!18508 = !DILocation(line: 47, column: 32, scope: !18489, inlinedAt: !18485)
-!18509 = !DILocation(line: 48, column: 13, scope: !18489, inlinedAt: !18485)
+!18506 = !DILocation(line: 47, column: 33, scope: !18489, inlinedAt: !18485)
+!18507 = !DILocation(line: 47, column: 32, scope: !18489, inlinedAt: !18485)
+!18508 = !DILocation(line: 48, column: 13, scope: !18489, inlinedAt: !18485)
+!18509 = !DILocation(line: 53, column: 19, scope: !18489, inlinedAt: !18485)
 !18510 = !DILocation(line: 54, column: 9, scope: !18489, inlinedAt: !18485)
 !18511 = !DILocation(line: 32, column: 5, scope: !18489, inlinedAt: !18485)
 !18512 = !DILocation(line: 38, column: 19, scope: !18489, inlinedAt: !18485)

@@ -203,7 +203,7 @@ _ZSt8_DestroyIPffEvT_S1_RSaIT0_E.exit.i.i228:     ; preds = %bb.ch
   %i.nb = mul nsw i64 %.0391, %i.na
   %i.nc = load ptr, ptr %i.ec, align 8, !tbaa !32 ; 2 uses
   %i.nd = getelementptr inbounds nuw [4 x i8], ptr %i.nc, i64 %i.nb
-  %i.ne = mul i64 %.0391, %i.aa
+  %i.ne = mul nuw nsw i64 %.0391, %i.aa
   %i.nf = getelementptr inbounds nuw [4 x i8], ptr %i.nc, i64 %i.ne
   %i.ng = shl nsw i64 %i.na, 2
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.nd, ptr nonnull align 4 %i.nf, i64 %i.ng, i1 false)
