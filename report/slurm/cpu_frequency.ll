@@ -202,7 +202,7 @@ bb.w:                                             ; preds = %bb.t, %.thread63, %
 
 bb.x:                                             ; preds = %bb.w
   %i.cb = getelementptr inbounds nuw i8, ptr %i.by, i64 284
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(10) %i.cb, ptr noundef nonnull align 1 dereferenceable(10) @.str.15, i64 10, i1 false) #10
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(10) %i.cb, ptr noundef nonnull align 1 dereferenceable(10) @.str.15, i64 10, i1 false) #10
   br label %_cpu_freq_govspec_string.exit
 
 _cpu_freq_govspec_string.exit:                    ; preds = %bb.w, %bb.x
@@ -280,7 +280,7 @@ bb.ac:                                            ; preds = %bb.ab
 
 bb.ad:                                            ; preds = %bb.ac
   %i.dj = getelementptr inbounds nuw i8, ptr %i.dg, i64 284
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(13) %i.dj, ptr noundef nonnull align 1 dereferenceable(13) @.str.7, i64 13, i1 false) #10
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(13) %i.dj, ptr noundef nonnull align 1 dereferenceable(13) @.str.7, i64 13, i1 false) #10
   br label %_cpu_freq_govspec_string.exit55
 
 bb.ae:                                            ; preds = %bb.ab
@@ -293,7 +293,7 @@ bb.ae:                                            ; preds = %bb.ab
 
 bb.af:                                            ; preds = %bb.ae
   %i.do = getelementptr inbounds nuw i8, ptr %i.dl, i64 284
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(9) %i.do, ptr noundef nonnull align 1 dereferenceable(9) @.str.9, i64 9, i1 false) #10
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(9) %i.do, ptr noundef nonnull align 1 dereferenceable(9) @.str.9, i64 9, i1 false) #10
   br label %_cpu_freq_govspec_string.exit55
 
 bb.ag:                                            ; preds = %bb.ab
@@ -306,7 +306,7 @@ bb.ag:                                            ; preds = %bb.ab
 
 bb.ah:                                            ; preds = %bb.ag
   %i.dt = getelementptr inbounds nuw i8, ptr %i.dq, i64 284
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(12) %i.dt, ptr noundef nonnull align 1 dereferenceable(12) @.str.11, i64 12, i1 false) #10
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.dt, ptr noundef nonnull align 1 dereferenceable(12) @.str.11, i64 12, i1 false) #10
   br label %_cpu_freq_govspec_string.exit55
 
 bb.ai:                                            ; preds = %bb.ab
@@ -319,7 +319,7 @@ bb.ai:                                            ; preds = %bb.ab
 
 bb.aj:                                            ; preds = %bb.ai
   %i.dy = getelementptr inbounds nuw i8, ptr %i.dv, i64 284
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(10) %i.dy, ptr noundef nonnull align 1 dereferenceable(10) @.str.13, i64 10, i1 false) #10
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(10) %i.dy, ptr noundef nonnull align 1 dereferenceable(10) @.str.13, i64 10, i1 false) #10
   br label %_cpu_freq_govspec_string.exit55
 
 bb.ak:                                            ; preds = %bb.ab
@@ -332,7 +332,7 @@ bb.ak:                                            ; preds = %bb.ab
 
 bb.al:                                            ; preds = %bb.ak
   %i.ed = getelementptr inbounds nuw i8, ptr %i.ea, i64 284
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(10) %i.ed, ptr noundef nonnull align 1 dereferenceable(10) @.str.15, i64 10, i1 false) #10
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(10) %i.ed, ptr noundef nonnull align 1 dereferenceable(10) @.str.15, i64 10, i1 false) #10
   br label %_cpu_freq_govspec_string.exit55
 
 bb.am:                                            ; preds = %bb.ab
@@ -345,7 +345,7 @@ bb.am:                                            ; preds = %bb.ab
 
 bb.an:                                            ; preds = %bb.am
   %i.ei = getelementptr inbounds nuw i8, ptr %i.ef, i64 284
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(10) %i.ei, ptr noundef nonnull align 1 dereferenceable(10) @.str.17, i64 10, i1 false) #10
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(10) %i.ei, ptr noundef nonnull align 1 dereferenceable(10) @.str.17, i64 10, i1 false) #10
   br label %_cpu_freq_govspec_string.exit55
 
 _cpu_freq_govspec_string.exit55:                  ; preds = %bb.an, %bb.am, %bb.al, %bb.ak, %bb.aj, %bb.ai, %bb.ah, %bb.ag, %bb.af, %bb.ae, %bb.ad, %bb.ac, %bb.ab, %.thread61, %thread-pre-split59, %bb.u

@@ -205,9 +205,9 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.a, i8 0, i64 16, i1 false)
-  store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVNSt7__cxx118numpunctIcEE, i64 16), ptr %i.a, align 8, !tbaa !42
+  store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVNSt7__cxx118numpunctIcEE, i64 16), ptr %i.a, align 16, !tbaa !42
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  store ptr null, ptr %i.b, align 8, !tbaa !618
+  store ptr null, ptr %i.b, align 16, !tbaa !618
   invoke void @_ZNSt7__cxx118numpunctIcE22_M_initialize_numpunctEP15__locale_struct(ptr noundef nonnull align 8 dereferenceable(24) %i.a, ptr noundef null)
           to label %bb.c unwind label %.body
 
@@ -219,7 +219,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.g
 
 bb.c:                                             ; preds = %bb.b
-  store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTV8numpunctIcE, i64 16), ptr %i.a, align 8, !tbaa !42
+  store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTV8numpunctIcE, i64 16), ptr %i.a, align 16, !tbaa !42
   invoke void @_ZNSt6localeC2I8numpunctIcEEERKS_PT_(ptr noundef nonnull align 8 dereferenceable(8) %9, ptr noundef nonnull align 8 dereferenceable(8) %10, ptr noundef nonnull %i.a)
           to label %bb.d unwind label %bb.f
 
@@ -622,9 +622,9 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.a, i8 0, i64 16, i1 false)
-  store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVNSt7__cxx118numpunctIcEE, i64 16), ptr %i.a, align 8, !tbaa !42
+  store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVNSt7__cxx118numpunctIcEE, i64 16), ptr %i.a, align 16, !tbaa !42
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  store ptr null, ptr %i.b, align 8, !tbaa !618
+  store ptr null, ptr %i.b, align 16, !tbaa !618
   invoke void @_ZNSt7__cxx118numpunctIcE22_M_initialize_numpunctEP15__locale_struct(ptr noundef nonnull align 8 dereferenceable(24) %i.a, ptr noundef null)
           to label %bb.c unwind label %.body
 
@@ -636,7 +636,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.g
 
 bb.c:                                             ; preds = %bb.b
-  store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTV8numpunctIcE, i64 16), ptr %i.a, align 8, !tbaa !42
+  store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTV8numpunctIcE, i64 16), ptr %i.a, align 16, !tbaa !42
   invoke void @_ZNSt6localeC2I8numpunctIcEEERKS_PT_(ptr noundef nonnull align 8 dereferenceable(8) %11, ptr noundef nonnull align 8 dereferenceable(8) %12, ptr noundef nonnull %i.a)
           to label %bb.d unwind label %bb.f
 
@@ -1039,9 +1039,9 @@ _ZN7testing15AssertionResultD2Ev.exit289:         ; preds = %bb.cu, %_ZNKSt14def
 
 bb.cw:                                            ; preds = %_ZN7testing15AssertionResultD2Ev.exit289
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.kf, i8 0, i64 16, i1 false)
-  store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVNSt7__cxx118numpunctIcEE, i64 16), ptr %i.kf, align 8, !tbaa !42
+  store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVNSt7__cxx118numpunctIcEE, i64 16), ptr %i.kf, align 16, !tbaa !42
   %i.kg = getelementptr inbounds nuw i8, ptr %i.kf, i64 16
-  store ptr null, ptr %i.kg, align 8, !tbaa !618
+  store ptr null, ptr %i.kg, align 16, !tbaa !618
   invoke void @_ZNSt7__cxx118numpunctIcE22_M_initialize_numpunctEP15__locale_struct(ptr noundef nonnull align 8 dereferenceable(24) %i.kf, ptr noundef null)
           to label %bb.cx unwind label %.body290
 
@@ -1053,7 +1053,7 @@ bb.cw:                                            ; preds = %_ZN7testing15Assert
   br label %bb.dc
 
 bb.cx:                                            ; preds = %bb.cw
-  store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTV11no_groupingIcE, i64 16), ptr %i.kf, align 8, !tbaa !42
+  store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTV11no_groupingIcE, i64 16), ptr %i.kf, align 16, !tbaa !42
   invoke void @_ZNSt6localeC2I11no_groupingIcEEERKS_PT_(ptr noundef nonnull align 8 dereferenceable(8) %39, ptr noundef nonnull align 8 dereferenceable(8) %40, ptr noundef nonnull %i.kf)
           to label %bb.cy unwind label %bb.db
 
@@ -1264,9 +1264,9 @@ _ZN7testing15AssertionResultD2Ev.exit317:         ; preds = %bb.do, %_ZNKSt14def
 
 bb.dq:                                            ; preds = %_ZN7testing15AssertionResultD2Ev.exit317
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.mg, i8 0, i64 16, i1 false)
-  store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVNSt7__cxx118numpunctIcEE, i64 16), ptr %i.mg, align 8, !tbaa !42
+  store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVNSt7__cxx118numpunctIcEE, i64 16), ptr %i.mg, align 16, !tbaa !42
   %i.mh = getelementptr inbounds nuw i8, ptr %i.mg, i64 16
-  store ptr null, ptr %i.mh, align 8, !tbaa !618
+  store ptr null, ptr %i.mh, align 16, !tbaa !618
   invoke void @_ZNSt7__cxx118numpunctIcE22_M_initialize_numpunctEP15__locale_struct(ptr noundef nonnull align 8 dereferenceable(24) %i.mg, ptr noundef null)
           to label %bb.dr unwind label %.body318
 
@@ -1278,7 +1278,7 @@ bb.dq:                                            ; preds = %_ZN7testing15Assert
   br label %bb.dw
 
 bb.dr:                                            ; preds = %bb.dq
-  store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTV16special_groupingIcE, i64 16), ptr %i.mg, align 8, !tbaa !42
+  store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTV16special_groupingIcE, i64 16), ptr %i.mg, align 16, !tbaa !42
   invoke void @_ZNSt6localeC2I16special_groupingIcEEERKS_PT_(ptr noundef nonnull align 8 dereferenceable(8) %45, ptr noundef nonnull align 8 dereferenceable(8) %46, ptr noundef nonnull %i.mg)
           to label %bb.ds unwind label %bb.dv
 
@@ -1675,9 +1675,9 @@ _ZN7testing15AssertionResultD2Ev.exit369:         ; preds = %bb.ey, %_ZNKSt14def
 
 bb.fa:                                            ; preds = %_ZN7testing15AssertionResultD2Ev.exit369
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.qf, i8 0, i64 16, i1 false)
-  store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVNSt7__cxx118numpunctIcEE, i64 16), ptr %i.qf, align 8, !tbaa !42
+  store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVNSt7__cxx118numpunctIcEE, i64 16), ptr %i.qf, align 16, !tbaa !42
   %i.qg = getelementptr inbounds nuw i8, ptr %i.qf, i64 16
-  store ptr null, ptr %i.qg, align 8, !tbaa !618
+  store ptr null, ptr %i.qg, align 16, !tbaa !618
   invoke void @_ZNSt7__cxx118numpunctIcE22_M_initialize_numpunctEP15__locale_struct(ptr noundef nonnull align 8 dereferenceable(24) %i.qf, ptr noundef null)
           to label %bb.fb unwind label %.body370
 
@@ -1689,7 +1689,7 @@ bb.fa:                                            ; preds = %_ZN7testing15Assert
   br label %bb.fg
 
 bb.fb:                                            ; preds = %bb.fa
-  store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTV14small_groupingIcE, i64 16), ptr %i.qf, align 8, !tbaa !42
+  store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTV14small_groupingIcE, i64 16), ptr %i.qf, align 16, !tbaa !42
   invoke void @_ZNSt6localeC2I14small_groupingIcEEERKS_PT_(ptr noundef nonnull align 8 dereferenceable(8) %55, ptr noundef nonnull align 8 dereferenceable(8) %56, ptr noundef nonnull %i.qf)
           to label %bb.fc unwind label %bb.ff
 
@@ -2092,9 +2092,9 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.a, i8 0, i64 16, i1 false)
-  store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVNSt7__cxx118numpunctIcEE, i64 16), ptr %i.a, align 8, !tbaa !42
+  store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVNSt7__cxx118numpunctIcEE, i64 16), ptr %i.a, align 16, !tbaa !42
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  store ptr null, ptr %i.b, align 8, !tbaa !618
+  store ptr null, ptr %i.b, align 16, !tbaa !618
   invoke void @_ZNSt7__cxx118numpunctIcE22_M_initialize_numpunctEP15__locale_struct(ptr noundef nonnull align 8 dereferenceable(24) %i.a, ptr noundef null)
           to label %bb.c unwind label %.body
 
@@ -2106,7 +2106,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.g
 
 bb.c:                                             ; preds = %bb.b
-  store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTV16special_groupingIcE, i64 16), ptr %i.a, align 8, !tbaa !42
+  store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTV16special_groupingIcE, i64 16), ptr %i.a, align 16, !tbaa !42
   invoke void @_ZNSt6localeC2I16special_groupingIcEEERKS_PT_(ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull align 8 dereferenceable(8) %3, ptr noundef nonnull %i.a)
           to label %bb.d unwind label %bb.f
 
@@ -2333,9 +2333,9 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.a, i8 0, i64 16, i1 false)
-  store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVNSt7__cxx118numpunctIcEE, i64 16), ptr %i.a, align 8, !tbaa !42
+  store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVNSt7__cxx118numpunctIcEE, i64 16), ptr %i.a, align 16, !tbaa !42
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  store ptr null, ptr %i.b, align 8, !tbaa !618
+  store ptr null, ptr %i.b, align 16, !tbaa !618
   invoke void @_ZNSt7__cxx118numpunctIcE22_M_initialize_numpunctEP15__locale_struct(ptr noundef nonnull align 8 dereferenceable(24) %i.a, ptr noundef null)
           to label %bb.c unwind label %.body
 
@@ -2347,7 +2347,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.g
 
 bb.c:                                             ; preds = %bb.b
-  store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTV16special_groupingIcE, i64 16), ptr %i.a, align 8, !tbaa !42
+  store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTV16special_groupingIcE, i64 16), ptr %i.a, align 16, !tbaa !42
   invoke void @_ZNSt6localeC2I16special_groupingIcEEERKS_PT_(ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull align 8 dereferenceable(8) %3, ptr noundef nonnull %i.a)
           to label %bb.d unwind label %bb.f
 
@@ -2618,9 +2618,9 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.a, i8 0, i64 16, i1 false)
-  store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVNSt7__cxx118numpunctIwEE, i64 16), ptr %i.a, align 8, !tbaa !42
+  store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVNSt7__cxx118numpunctIwEE, i64 16), ptr %i.a, align 16, !tbaa !42
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  store ptr null, ptr %i.b, align 8, !tbaa !791
+  store ptr null, ptr %i.b, align 16, !tbaa !791
   invoke void @_ZNSt7__cxx118numpunctIwE22_M_initialize_numpunctEP15__locale_struct(ptr noundef nonnull align 8 dereferenceable(24) %i.a, ptr noundef null)
           to label %bb.c unwind label %.body
 
@@ -2632,7 +2632,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.g
 
 bb.c:                                             ; preds = %bb.b
-  store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTV8numpunctIwE, i64 16), ptr %i.a, align 8, !tbaa !42
+  store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTV8numpunctIwE, i64 16), ptr %i.a, align 16, !tbaa !42
   invoke void @_ZNSt6localeC2I8numpunctIwEEERKS_PT_(ptr noundef nonnull align 8 dereferenceable(8) %13, ptr noundef nonnull align 8 dereferenceable(8) %14, ptr noundef nonnull %i.a)
           to label %bb.d unwind label %bb.f
 
@@ -3035,9 +3035,9 @@ _ZN7testing15AssertionResultD2Ev.exit212:         ; preds = %bb.bq, %_ZNKSt14def
 
 bb.bs:                                            ; preds = %_ZN7testing15AssertionResultD2Ev.exit212
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.gc, i8 0, i64 16, i1 false)
-  store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVNSt7__cxx118numpunctIwEE, i64 16), ptr %i.gc, align 8, !tbaa !42
+  store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVNSt7__cxx118numpunctIwEE, i64 16), ptr %i.gc, align 16, !tbaa !42
   %i.gd = getelementptr inbounds nuw i8, ptr %i.gc, i64 16
-  store ptr null, ptr %i.gd, align 8, !tbaa !791
+  store ptr null, ptr %i.gd, align 16, !tbaa !791
   invoke void @_ZNSt7__cxx118numpunctIwE22_M_initialize_numpunctEP15__locale_struct(ptr noundef nonnull align 8 dereferenceable(24) %i.gc, ptr noundef null)
           to label %bb.bt unwind label %.body213
 
@@ -3049,7 +3049,7 @@ bb.bs:                                            ; preds = %_ZN7testing15Assert
   br label %bb.by
 
 bb.bt:                                            ; preds = %bb.bs
-  store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTV11no_groupingIwE, i64 16), ptr %i.gc, align 8, !tbaa !42
+  store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTV11no_groupingIwE, i64 16), ptr %i.gc, align 16, !tbaa !42
   invoke void @_ZNSt6localeC2I11no_groupingIwEEERKS_PT_(ptr noundef nonnull align 8 dereferenceable(8) %34, ptr noundef nonnull align 8 dereferenceable(8) %35, ptr noundef nonnull %i.gc)
           to label %bb.bu unwind label %bb.bx
 
@@ -3260,9 +3260,9 @@ _ZN7testing15AssertionResultD2Ev.exit243:         ; preds = %bb.ck, %_ZNKSt14def
 
 bb.cm:                                            ; preds = %_ZN7testing15AssertionResultD2Ev.exit243
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.hz, i8 0, i64 16, i1 false)
-  store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVNSt7__cxx118numpunctIwEE, i64 16), ptr %i.hz, align 8, !tbaa !42
+  store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVNSt7__cxx118numpunctIwEE, i64 16), ptr %i.hz, align 16, !tbaa !42
   %i.ia = getelementptr inbounds nuw i8, ptr %i.hz, i64 16
-  store ptr null, ptr %i.ia, align 8, !tbaa !791
+  store ptr null, ptr %i.ia, align 16, !tbaa !791
   invoke void @_ZNSt7__cxx118numpunctIwE22_M_initialize_numpunctEP15__locale_struct(ptr noundef nonnull align 8 dereferenceable(24) %i.hz, ptr noundef null)
           to label %bb.cn unwind label %.body244
 
@@ -3274,7 +3274,7 @@ bb.cm:                                            ; preds = %_ZN7testing15Assert
   br label %bb.cs
 
 bb.cn:                                            ; preds = %bb.cm
-  store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTV16special_groupingIwE, i64 16), ptr %i.hz, align 8, !tbaa !42
+  store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTV16special_groupingIwE, i64 16), ptr %i.hz, align 16, !tbaa !42
   invoke void @_ZNSt6localeC2I16special_groupingIwEEERKS_PT_(ptr noundef nonnull align 8 dereferenceable(8) %40, ptr noundef nonnull align 8 dereferenceable(8) %41, ptr noundef nonnull %i.hz)
           to label %bb.co unwind label %bb.cr
 
@@ -3485,9 +3485,9 @@ _ZN7testing15AssertionResultD2Ev.exit273:         ; preds = %bb.de, %_ZNKSt14def
 
 bb.dg:                                            ; preds = %_ZN7testing15AssertionResultD2Ev.exit273
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.jw, i8 0, i64 16, i1 false)
-  store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVNSt7__cxx118numpunctIwEE, i64 16), ptr %i.jw, align 8, !tbaa !42
+  store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVNSt7__cxx118numpunctIwEE, i64 16), ptr %i.jw, align 16, !tbaa !42
   %i.jx = getelementptr inbounds nuw i8, ptr %i.jw, i64 16
-  store ptr null, ptr %i.jx, align 8, !tbaa !791
+  store ptr null, ptr %i.jx, align 16, !tbaa !791
   invoke void @_ZNSt7__cxx118numpunctIwE22_M_initialize_numpunctEP15__locale_struct(ptr noundef nonnull align 8 dereferenceable(24) %i.jw, ptr noundef null)
           to label %bb.dh unwind label %.body274
 
@@ -3499,7 +3499,7 @@ bb.dg:                                            ; preds = %_ZN7testing15Assert
   br label %bb.dm
 
 bb.dh:                                            ; preds = %bb.dg
-  store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTV14small_groupingIwE, i64 16), ptr %i.jw, align 8, !tbaa !42
+  store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTV14small_groupingIwE, i64 16), ptr %i.jw, align 16, !tbaa !42
   invoke void @_ZNSt6localeC2I14small_groupingIwEEERKS_PT_(ptr noundef nonnull align 8 dereferenceable(8) %46, ptr noundef nonnull align 8 dereferenceable(8) %47, ptr noundef nonnull %i.jw)
           to label %bb.di unwind label %bb.dl
 
@@ -3902,9 +3902,9 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.c, i8 0, i64 16, i1 false)
-  store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVNSt7__cxx118numpunctIcEE, i64 16), ptr %i.c, align 8, !tbaa !42
+  store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVNSt7__cxx118numpunctIcEE, i64 16), ptr %i.c, align 16, !tbaa !42
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 16
-  store ptr null, ptr %i.d, align 8, !tbaa !618
+  store ptr null, ptr %i.d, align 16, !tbaa !618
   invoke void @_ZNSt7__cxx118numpunctIcE22_M_initialize_numpunctEP15__locale_struct(ptr noundef nonnull align 8 dereferenceable(24) %i.c, ptr noundef null)
           to label %bb.c unwind label %.body
 
@@ -3916,7 +3916,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.l
 
 bb.c:                                             ; preds = %bb.b
-  store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTV16special_groupingIcE, i64 16), ptr %i.c, align 8, !tbaa !42
+  store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTV16special_groupingIcE, i64 16), ptr %i.c, align 16, !tbaa !42
   invoke void @_ZNSt6localeC2I16special_groupingIcEEERKS_PT_(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull %i.c)
           to label %bb.d unwind label %bb.k
 

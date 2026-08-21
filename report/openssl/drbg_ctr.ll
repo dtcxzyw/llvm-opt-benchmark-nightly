@@ -205,11 +205,11 @@ bb.a:
   store i8 %i.n, ptr %i.j, align 1, !tbaa !28
   %i.o = lshr i32 %i.m, 8
   %i.p = getelementptr inbounds nuw i8, ptr %i.h, i64 98 ; 3 uses
-  %i.q = load i8, ptr %i.p, align 1, !tbaa !28
+  %i.q = load i8, ptr %i.p, align 2, !tbaa !28
   %i.r = zext i8 %i.q to i32
   %i.s = add nuw nsw i32 %i.o, %i.r               ; 3 uses
   %i.t = trunc i32 %i.s to i8
-  store i8 %i.t, ptr %i.p, align 1, !tbaa !28
+  store i8 %i.t, ptr %i.p, align 2, !tbaa !28
   %i.u = lshr i32 %i.s, 8
   %i.v = getelementptr inbounds nuw i8, ptr %i.h, i64 97 ; 3 uses
   %i.w = load i8, ptr %i.v, align 1, !tbaa !28
@@ -219,11 +219,11 @@ bb.a:
   store i8 %i.z, ptr %i.v, align 1, !tbaa !28
   %i.aa = lshr i32 %i.y, 8
   %i.ab = getelementptr inbounds nuw i8, ptr %i.h, i64 96 ; 3 uses
-  %i.ac = load i8, ptr %i.ab, align 1, !tbaa !28
+  %i.ac = load i8, ptr %i.ab, align 4, !tbaa !28
   %i.ad = zext i8 %i.ac to i32
   %i.ae = add nuw nsw i32 %i.aa, %i.ad            ; 3 uses
   %i.af = trunc i32 %i.ae to i8
-  store i8 %i.af, ptr %i.ab, align 1, !tbaa !28
+  store i8 %i.af, ptr %i.ab, align 4, !tbaa !28
   %i.ag = lshr i32 %i.ae, 8
   %i.ah = getelementptr inbounds nuw i8, ptr %i.h, i64 95 ; 3 uses
   %i.ai = load i8, ptr %i.ah, align 1, !tbaa !28
@@ -233,11 +233,11 @@ bb.a:
   store i8 %i.al, ptr %i.ah, align 1, !tbaa !28
   %i.am = lshr i32 %i.ak, 8
   %i.an = getelementptr inbounds nuw i8, ptr %i.h, i64 94 ; 3 uses
-  %i.ao = load i8, ptr %i.an, align 1, !tbaa !28
+  %i.ao = load i8, ptr %i.an, align 2, !tbaa !28
   %i.ap = zext i8 %i.ao to i32
   %i.aq = add nuw nsw i32 %i.am, %i.ap            ; 3 uses
   %i.ar = trunc i32 %i.aq to i8
-  store i8 %i.ar, ptr %i.an, align 1, !tbaa !28
+  store i8 %i.ar, ptr %i.an, align 2, !tbaa !28
   %i.as = lshr i32 %i.aq, 8
   %i.at = getelementptr inbounds nuw i8, ptr %i.h, i64 93 ; 3 uses
   %i.au = load i8, ptr %i.at, align 1, !tbaa !28
@@ -247,11 +247,11 @@ bb.a:
   store i8 %i.ax, ptr %i.at, align 1, !tbaa !28
   %i.ay = lshr i32 %i.aw, 8
   %i.az = getelementptr inbounds nuw i8, ptr %i.h, i64 92 ; 3 uses
-  %i.ba = load i8, ptr %i.az, align 1, !tbaa !28
+  %i.ba = load i8, ptr %i.az, align 4, !tbaa !28
   %i.bb = zext i8 %i.ba to i32
   %i.bc = add nuw nsw i32 %i.ay, %i.bb            ; 3 uses
   %i.bd = trunc i32 %i.bc to i8
-  store i8 %i.bd, ptr %i.az, align 1, !tbaa !28
+  store i8 %i.bd, ptr %i.az, align 4, !tbaa !28
   %i.be = lshr i32 %i.bc, 8
   %i.bf = getelementptr inbounds nuw i8, ptr %i.h, i64 91 ; 3 uses
   %i.bg = load i8, ptr %i.bf, align 1, !tbaa !28
@@ -261,11 +261,11 @@ bb.a:
   store i8 %i.bj, ptr %i.bf, align 1, !tbaa !28
   %i.bk = lshr i32 %i.bi, 8
   %i.bl = getelementptr inbounds nuw i8, ptr %i.h, i64 90 ; 3 uses
-  %i.bm = load i8, ptr %i.bl, align 1, !tbaa !28
+  %i.bm = load i8, ptr %i.bl, align 2, !tbaa !28
   %i.bn = zext i8 %i.bm to i32
   %i.bo = add nuw nsw i32 %i.bk, %i.bn            ; 3 uses
   %i.bp = trunc i32 %i.bo to i8
-  store i8 %i.bp, ptr %i.bl, align 1, !tbaa !28
+  store i8 %i.bp, ptr %i.bl, align 2, !tbaa !28
   %i.bq = lshr i32 %i.bo, 8
   %i.br = getelementptr inbounds nuw i8, ptr %i.h, i64 89 ; 3 uses
   %i.bs = load i8, ptr %i.br, align 1, !tbaa !28
@@ -275,11 +275,11 @@ bb.a:
   store i8 %i.bv, ptr %i.br, align 1, !tbaa !28
   %i.bw = lshr i32 %i.bu, 8
   %i.bx = getelementptr inbounds nuw i8, ptr %i.h, i64 88 ; 3 uses
-  %i.by = load i8, ptr %i.bx, align 1, !tbaa !28
+  %i.by = load i8, ptr %i.bx, align 4, !tbaa !28
   %i.bz = zext i8 %i.by to i32
   %i.ca = add nuw nsw i32 %i.bw, %i.bz            ; 3 uses
   %i.cb = trunc i32 %i.ca to i8
-  store i8 %i.cb, ptr %i.bx, align 1, !tbaa !28
+  store i8 %i.cb, ptr %i.bx, align 4, !tbaa !28
   %i.cc = lshr i32 %i.ca, 8
   %i.cd = getelementptr inbounds nuw i8, ptr %i.h, i64 87 ; 3 uses
   %i.ce = load i8, ptr %i.cd, align 1, !tbaa !28
@@ -289,11 +289,11 @@ bb.a:
   store i8 %i.ch, ptr %i.cd, align 1, !tbaa !28
   %i.ci = lshr i32 %i.cg, 8
   %i.cj = getelementptr inbounds nuw i8, ptr %i.h, i64 86 ; 3 uses
-  %i.ck = load i8, ptr %i.cj, align 1, !tbaa !28
+  %i.ck = load i8, ptr %i.cj, align 2, !tbaa !28
   %i.cl = zext i8 %i.ck to i32
   %i.cm = add nuw nsw i32 %i.ci, %i.cl            ; 3 uses
   %i.cn = trunc i32 %i.cm to i8
-  store i8 %i.cn, ptr %i.cj, align 1, !tbaa !28
+  store i8 %i.cn, ptr %i.cj, align 2, !tbaa !28
   %i.co = lshr i32 %i.cm, 8
   %i.cp = getelementptr inbounds nuw i8, ptr %i.h, i64 85 ; 3 uses
   %i.cq = load i8, ptr %i.cp, align 1, !tbaa !28
@@ -302,10 +302,10 @@ bb.a:
   %i.ct = trunc i32 %i.cs to i8
   store i8 %i.ct, ptr %i.cp, align 1, !tbaa !28
   %i.cu = lshr i32 %i.cs, 8
-  %i.cv = load i8, ptr %i.i, align 1, !tbaa !28
+  %i.cv = load i8, ptr %i.i, align 4, !tbaa !28
   %i.cw = trunc nuw nsw i32 %i.cu to i8
   %i.cx = add i8 %i.cv, %i.cw                     ; 2 uses
-  store i8 %i.cx, ptr %i.i, align 1, !tbaa !28
+  store i8 %i.cx, ptr %i.i, align 4, !tbaa !28
   %i.cy = getelementptr inbounds nuw i8, ptr %i.e, i64 16
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.cy, ptr noundef nonnull align 4 dereferenceable(16) %i.i, i64 16, i1 false)
   %i.cz = getelementptr inbounds nuw i8, ptr %i.h, i64 40 ; 7 uses

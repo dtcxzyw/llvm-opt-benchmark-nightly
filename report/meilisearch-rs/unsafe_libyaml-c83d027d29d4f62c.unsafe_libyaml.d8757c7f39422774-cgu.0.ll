@@ -205,7 +205,7 @@ _ZN14unsafe_libyaml3api9yaml_free17hb7774c5cae98b8aeE.exit5.sink.split: ; preds 
   br label %_ZN14unsafe_libyaml3api9yaml_free17hb7774c5cae98b8aeE.exit5
 
 _ZN14unsafe_libyaml3api9yaml_free17hb7774c5cae98b8aeE.exit5: ; preds = %_ZN14unsafe_libyaml3api9yaml_free17hb7774c5cae98b8aeE.exit5.sink.split, %._crit_edge, %_ZN14unsafe_libyaml3api9yaml_free17hb7774c5cae98b8aeE.exit11, %_ZN14unsafe_libyaml3api9yaml_free17hb7774c5cae98b8aeE.exit9, %_ZN14unsafe_libyaml3api9yaml_free17hb7774c5cae98b8aeE.exit7, %bb.f, %bb.c
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(96) %0, i8 0, i64 96, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %0, i8 0, i64 96, i1 false)
   ret void
 
 bb.d:                                             ; preds = %bb.c
@@ -517,7 +517,7 @@ _ZN14unsafe_libyaml3api9yaml_free17hb7774c5cae98b8aeE.exit1.sink.split: ; preds 
   br label %_ZN14unsafe_libyaml3api9yaml_free17hb7774c5cae98b8aeE.exit1
 
 _ZN14unsafe_libyaml3api9yaml_free17hb7774c5cae98b8aeE.exit1: ; preds = %_ZN14unsafe_libyaml3api9yaml_free17hb7774c5cae98b8aeE.exit1.sink.split, %bb.j, %_ZN14unsafe_libyaml3api9yaml_free17hb7774c5cae98b8aeE.exit4, %bb.g, %bb.f, %_ZN14unsafe_libyaml3api9yaml_free17hb7774c5cae98b8aeE.exit, %bb.c
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(80) %0, i8 0, i64 80, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %0, i8 0, i64 80, i1 false)
   ret void
 
 bb.d:                                             ; preds = %bb.c
@@ -746,7 +746,7 @@ bb.m:                                             ; preds = %._crit_edge17
   br label %_ZN14unsafe_libyaml3api9yaml_free17hb7774c5cae98b8aeE.exit11
 
 _ZN14unsafe_libyaml3api9yaml_free17hb7774c5cae98b8aeE.exit11: ; preds = %._crit_edge17, %bb.m
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(480) %0, i8 0, i64 480, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(480) %0, i8 0, i64 480, i1 false)
   ret void
 }
 
@@ -962,7 +962,7 @@ bb.l:                                             ; preds = %_ZN14unsafe_libyaml
   br label %_ZN14unsafe_libyaml3api9yaml_free17hb7774c5cae98b8aeE.exit10
 
 _ZN14unsafe_libyaml3api9yaml_free17hb7774c5cae98b8aeE.exit10: ; preds = %_ZN14unsafe_libyaml3api9yaml_free17hb7774c5cae98b8aeE.exit9, %bb.l
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(408) %0, i8 0, i64 408, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(408) %0, i8 0, i64 408, i1 false)
   ret void
 }
 
@@ -1088,7 +1088,7 @@ bb.j:                                             ; preds = %._crit_edge26
   br label %_ZN14unsafe_libyaml3api9yaml_free17hb7774c5cae98b8aeE.exit14
 
 _ZN14unsafe_libyaml3api9yaml_free17hb7774c5cae98b8aeE.exit14: ; preds = %._crit_edge26, %bb.j
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(104) %0, i8 0, i64 104, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(104) %0, i8 0, i64 104, i1 false)
   ret void
 
 .lr.ph25:                                         ; preds = %_ZN14unsafe_libyaml3api9yaml_free17hb7774c5cae98b8aeE.exit10, %_ZN14unsafe_libyaml3api9yaml_free17hb7774c5cae98b8aeE.exit16
@@ -1491,7 +1491,7 @@ bb.bj:                                            ; preds = %_ZN14unsafe_libyaml
   %.sroa.11.0..sroa_idx.i31.i.i = getelementptr inbounds nuw i8, ptr %i.it, i64 44
   store i32 0, ptr %.sroa.11.0..sroa_idx.i31.i.i, align 4
   %.sroa.11.i18.sroa.4.0..sroa.11.0..sroa_idx.i31.sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.it, i64 48
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(24) %.sroa.11.i18.sroa.4.0..sroa.11.0..sroa_idx.i31.sroa_idx.i.i, ptr noundef nonnull align 4 dereferenceable(24) %.sroa.11.i18.sroa.4.i.i, i64 24, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.11.i18.sroa.4.0..sroa.11.0..sroa_idx.i31.sroa_idx.i.i, ptr noundef nonnull align 4 dereferenceable(24) %.sroa.11.i18.sroa.4.i.i, i64 24, i1 false)
   %.sroa.12.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.it, i64 72
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.12.0..sroa_idx.i.i.i, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.12.i.i.i, i64 24, i1 false)
   %i.iu = load ptr, ptr %i.ay, align 8, !noundef !5
@@ -1758,7 +1758,7 @@ bb.cj:                                            ; preds = %_ZN14unsafe_libyaml
   %.sroa.11.0..sroa_idx.i54.i.i = getelementptr inbounds nuw i8, ptr %i.mw, i64 44
   store i32 0, ptr %.sroa.11.0..sroa_idx.i54.i.i, align 4
   %.sroa.11.i37.sroa.4.0..sroa.11.0..sroa_idx.i54.sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.mw, i64 48
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(24) %.sroa.11.i37.sroa.4.0..sroa.11.0..sroa_idx.i54.sroa_idx.i.i, ptr noundef nonnull align 4 dereferenceable(24) %.sroa.11.i37.sroa.4.i.i, i64 24, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.11.i37.sroa.4.0..sroa.11.0..sroa_idx.i54.sroa_idx.i.i, ptr noundef nonnull align 4 dereferenceable(24) %.sroa.11.i37.sroa.4.i.i, i64 24, i1 false)
   %.sroa.12.0..sroa_idx.i55.i.i = getelementptr inbounds nuw i8, ptr %i.mw, i64 72
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.12.0..sroa_idx.i55.i.i, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.12.i38.i.i, i64 24, i1 false)
   %i.mx = load ptr, ptr %i.ay, align 8, !noundef !5
@@ -2161,7 +2161,7 @@ bb.ie:                                            ; preds = %bb.ic, %bb.id
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.aff, i64 28
   store i32 0, ptr %.sroa.9.0..sroa_idx, align 4
   %.sroa.9.sroa.5.0..sroa.9.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.aff, i64 32
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(24) %.sroa.9.sroa.5.0..sroa.9.0..sroa_idx.sroa_idx, ptr noundef nonnull align 4 dereferenceable(24) %.sroa.9.sroa.5, i64 24, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.9.sroa.5.0..sroa.9.0..sroa_idx.sroa_idx, ptr noundef nonnull align 4 dereferenceable(24) %.sroa.9.sroa.5, i64 24, i1 false)
   %.sroa.10.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.aff, i64 56
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.10.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.10, i64 24, i1 false)
   %i.afg = load ptr, ptr %i.aey, align 8, !noundef !5
@@ -2564,7 +2564,7 @@ bb.cc:                                            ; preds = %bb.ca, %bb.cb
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.jt, i64 28
   store i32 0, ptr %.sroa.9.0..sroa_idx, align 4
   %.sroa.9.sroa.5.0..sroa.9.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.jt, i64 32
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(24) %.sroa.9.sroa.5.0..sroa.9.0..sroa_idx.sroa_idx, ptr noundef nonnull align 4 dereferenceable(24) %.sroa.9.sroa.5, i64 24, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.9.sroa.5.0..sroa.9.0..sroa_idx.sroa_idx, ptr noundef nonnull align 4 dereferenceable(24) %.sroa.9.sroa.5, i64 24, i1 false)
   %.sroa.10.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.jt, i64 56
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.10.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.10, i64 24, i1 false)
   %i.ju = load ptr, ptr %i.jm, align 8, !noundef !5
@@ -2967,7 +2967,7 @@ bb.cj:                                            ; preds = %bb.ch, %bb.ci
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ol, i64 28
   store i32 0, ptr %.sroa.9.0..sroa_idx, align 4
   %.sroa.9.sroa.5.0..sroa.9.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.ol, i64 32
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(24) %.sroa.9.sroa.5.0..sroa.9.0..sroa_idx.sroa_idx, ptr noundef nonnull align 4 dereferenceable(24) %.sroa.9.sroa.5, i64 24, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.9.sroa.5.0..sroa.9.0..sroa_idx.sroa_idx, ptr noundef nonnull align 4 dereferenceable(24) %.sroa.9.sroa.5, i64 24, i1 false)
   %.sroa.10.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ol, i64 56
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.10.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.10, i64 24, i1 false)
   %i.om = load ptr, ptr %i.oe, align 8, !noundef !5

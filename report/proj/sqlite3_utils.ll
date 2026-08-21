@@ -202,10 +202,10 @@ _ZN5osgeo4proj12_GLOBAL__N_119InstallSqliteLogger12GetSingletonEv.exit: ; preds 
   %i.l = getelementptr inbounds nuw i8, ptr %i.i, i64 176 ; 6 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.i, i64 192 ; 4 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(208) %i.i, i8 0, i64 208, i1 false)
-  store ptr %i.m, ptr %i.l, align 8, !tbaa !22
+  store ptr %i.m, ptr %i.l, align 16, !tbaa !22
   %i.n = getelementptr inbounds nuw i8, ptr %i.i, i64 184 ; 3 uses
-  store i8 0, ptr %i.m, align 8, !tbaa !16
-  store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN5osgeo4proj12_GLOBAL__N_120pj_sqlite3_customvfsE, i64 16), ptr %i.i, align 8, !tbaa !8
+  store i8 0, ptr %i.m, align 16, !tbaa !16
+  store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN5osgeo4proj12_GLOBAL__N_120pj_sqlite3_customvfsE, i64 16), ptr %i.i, align 16, !tbaa !8
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #23
   %i.o = tail call noalias noundef nonnull dereferenceable(8) ptr @_Znwm(i64 noundef 8) #25 ; 6 uses
   store ptr %i.i, ptr %i.o, align 8, !tbaa !18
@@ -266,7 +266,7 @@ bb.i:                                             ; preds = %_ZNSolsEPKv.exit
           to label %_ZNKSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEE3strEv.exit unwind label %bb.h
 
 _ZNKSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEE3strEv.exit: ; preds = %bb.i, %bb.g
-  %i.aj = load ptr, ptr %i.l, align 8, !tbaa !10  ; 6 uses
+  %i.aj = load ptr, ptr %i.l, align 16, !tbaa !10 ; 6 uses
   %i.ak = icmp eq ptr %i.aj, %i.m
   %i.al = load ptr, ptr %6, align 8, !tbaa !10    ; 5 uses
   %i.am = icmp eq ptr %i.al, %i.q                 ; 2 uses
@@ -299,21 +299,21 @@ bb.l:                                             ; preds = %bb.j
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i: ; preds = %bb.l, %bb.k, %bb.j
   %i.aq = load i64, ptr %i.r, align 8, !tbaa !32  ; 2 uses
   store i64 %i.aq, ptr %i.n, align 8, !tbaa !32
-  %i.ar = load ptr, ptr %i.l, align 8, !tbaa !10
+  %i.ar = load ptr, ptr %i.l, align 16, !tbaa !10
   %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 %i.aq
   store i8 0, ptr %i.as, align 1, !tbaa !16
   %.pre.i = load ptr, ptr %6, align 8, !tbaa !10
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit
 
 .thread.i:                                        ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i
-  store ptr %i.al, ptr %i.l, align 8, !tbaa !10
+  store ptr %i.al, ptr %i.l, align 16, !tbaa !10
   %i.at = load <2 x i64>, ptr %i.r, align 8, !tbaa !16
   store <2 x i64> %i.at, ptr %i.n, align 8, !tbaa !16
   br label %bb.n
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit23.thread25.i: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i
-  %i.au = load i64, ptr %i.m, align 8, !tbaa !16
-  store ptr %i.al, ptr %i.l, align 8, !tbaa !10
+  %i.au = load i64, ptr %i.m, align 16, !tbaa !16
+  store ptr %i.al, ptr %i.l, align 16, !tbaa !10
   %i.av = load <2 x i64>, ptr %i.r, align 8, !tbaa !16
   store <2 x i64> %i.av, ptr %i.n, align 8, !tbaa !16
   %.not.i52 = icmp eq ptr %i.aj, null
@@ -349,9 +349,9 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZNSt
   %i.bc = load <2 x i32>, ptr %i.bb, align 4, !tbaa !42
   %i.bd = add <2 x i32> %i.bc, <i32 8, i32 0>
   store <2 x i32> %i.bd, ptr %i.k, align 4, !tbaa !42
-  %i.be = load ptr, ptr %i.l, align 8, !tbaa !10
+  %i.be = load ptr, ptr %i.l, align 16, !tbaa !10
   %i.bf = getelementptr inbounds nuw i8, ptr %i.i, i64 32
-  store ptr %i.be, ptr %i.bf, align 8, !tbaa !43
+  store ptr %i.be, ptr %i.bf, align 16, !tbaa !43
   %i.bg = invoke noalias noundef nonnull dereferenceable(16) ptr @_Znwm(i64 noundef 16) #25
           to label %bb.o unwind label %bb.u       ; 4 uses
 
@@ -364,7 +364,7 @@ bb.o:                                             ; preds = %_ZNSt7__cxx1112basi
   %i.bj = getelementptr inbounds nuw i8, ptr %i.i, i64 40
   store ptr %i.bg, ptr %i.bj, align 8, !tbaa !49
   %i.bk = getelementptr inbounds nuw i8, ptr %i.i, i64 48
-  store ptr @_ZN5osgeo4projL13VFSCustomOpenEP11sqlite3_vfsPKcP12sqlite3_fileiPi, ptr %i.bk, align 8, !tbaa !50
+  store ptr @_ZN5osgeo4projL13VFSCustomOpenEP11sqlite3_vfsPKcP12sqlite3_fileiPi, ptr %i.bk, align 16, !tbaa !50
   %i.bl = getelementptr inbounds nuw i8, ptr %i.h, i64 48
   %i.bm = load ptr, ptr %i.bl, align 8, !tbaa !51
   %i.bn = getelementptr inbounds nuw i8, ptr %i.i, i64 56
@@ -379,7 +379,7 @@ bb.p:                                             ; preds = %bb.o
 bb.q:                                             ; preds = %bb.o, %bb.p
   %i.bq = phi ptr [ %i.bp, %bb.p ], [ @_ZN5osgeo4projL15VFSCustomAccessEP11sqlite3_vfsPKciPi, %bb.o ]
   %i.br = getelementptr inbounds nuw i8, ptr %i.i, i64 64
-  store ptr %i.bq, ptr %i.br, align 8, !tbaa !54
+  store ptr %i.bq, ptr %i.br, align 16, !tbaa !54
   %i.bs = getelementptr inbounds nuw i8, ptr %i.h, i64 64
   %i.bt = getelementptr inbounds nuw i8, ptr %i.i, i64 72
   %i.bu = load <2 x ptr>, ptr %i.bs, align 8, !tbaa !55

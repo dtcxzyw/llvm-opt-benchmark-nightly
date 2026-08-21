@@ -205,18 +205,18 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 576 ; 3 uses
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 640
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 960
-  %i.o = load float, ptr %i.l, align 4, !tbaa !34
+  %i.o = load float, ptr %i.l, align 64, !tbaa !34
   %i.p = fmul reassoc nsz arcp contract afn float %i.o, f0x3F74A0AB
   %gep.1 = getelementptr inbounds nuw i8, ptr %i.k, i64 592 ; 3 uses
-  %i.q = load float, ptr %gep.1, align 4, !tbaa !34
+  %i.q = load float, ptr %gep.1, align 16, !tbaa !34
   %i.r = fmul reassoc nsz arcp contract afn float %i.q, -2.303930e-02
   %i.s = fadd reassoc nsz arcp contract afn float %i.r, %i.p
   %gep.2 = getelementptr inbounds nuw i8, ptr %i.k, i64 608 ; 3 uses
-  %i.t = load float, ptr %gep.2, align 4, !tbaa !34
+  %i.t = load float, ptr %gep.2, align 32, !tbaa !34
   %i.u = fmul reassoc nsz arcp contract afn float %i.t, 6.316360e-02
   %i.v = fadd reassoc nsz arcp contract afn float %i.u, %i.s ; 2 uses
-  store float %i.v, ptr %i.m, align 4, !tbaa !34
-  store float %i.v, ptr %i.n, align 4, !tbaa !34
+  store float %i.v, ptr %i.m, align 64, !tbaa !34
+  store float %i.v, ptr %i.n, align 64, !tbaa !34
   %invariant.gep.1 = getelementptr inbounds nuw i8, ptr %i.k, i64 580 ; 3 uses
   %i.w = load float, ptr %invariant.gep.1, align 4, !tbaa !34
   %i.x = fmul reassoc nsz arcp contract afn float %i.w, f0x3F74A0AB
@@ -231,33 +231,33 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.ae = getelementptr inbounds nuw i8, ptr %1, i64 644
   store float %i.ad, ptr %i.ae, align 4, !tbaa !34
   %gep37.1 = getelementptr inbounds nuw i8, ptr %1, i64 976
-  store float %i.ad, ptr %gep37.1, align 4, !tbaa !34
+  store float %i.ad, ptr %gep37.1, align 16, !tbaa !34
   %invariant.gep.2 = getelementptr inbounds nuw i8, ptr %i.k, i64 584 ; 3 uses
-  %i.af = load float, ptr %invariant.gep.2, align 4, !tbaa !34
+  %i.af = load float, ptr %invariant.gep.2, align 8, !tbaa !34
   %i.ag = fmul reassoc nsz arcp contract afn float %i.af, f0x3F74A0AB
   %gep.1.2 = getelementptr inbounds nuw i8, ptr %i.k, i64 600 ; 3 uses
-  %i.ah = load float, ptr %gep.1.2, align 4, !tbaa !34
+  %i.ah = load float, ptr %gep.1.2, align 8, !tbaa !34
   %i.ai = fmul reassoc nsz arcp contract afn float %i.ah, -2.303930e-02
   %i.aj = fadd reassoc nsz arcp contract afn float %i.ai, %i.ag
   %gep.2.2 = getelementptr inbounds nuw i8, ptr %i.k, i64 616 ; 3 uses
-  %i.ak = load float, ptr %gep.2.2, align 4, !tbaa !34
+  %i.ak = load float, ptr %gep.2.2, align 8, !tbaa !34
   %i.al = fmul reassoc nsz arcp contract afn float %i.ak, 6.316360e-02
   %i.am = fadd reassoc nsz arcp contract afn float %i.al, %i.aj ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %1, i64 648
-  store float %i.am, ptr %i.an, align 4, !tbaa !34
+  store float %i.am, ptr %i.an, align 8, !tbaa !34
   %gep37.2 = getelementptr inbounds nuw i8, ptr %1, i64 992
-  store float %i.am, ptr %gep37.2, align 4, !tbaa !34
+  store float %i.am, ptr %gep37.2, align 32, !tbaa !34
   %i.ao = getelementptr inbounds nuw i8, ptr %1, i64 656
   %invariant.gep36.1 = getelementptr inbounds nuw i8, ptr %1, i64 964
-  %i.ap = load float, ptr %i.l, align 4, !tbaa !34
+  %i.ap = load float, ptr %i.l, align 64, !tbaa !34
   %i.aq = fmul reassoc nsz arcp contract afn float %i.ap, -2.828950e-02
-  %i.ar = load float, ptr %gep.1, align 4, !tbaa !34
+  %i.ar = load float, ptr %gep.1, align 16, !tbaa !34
   %i.as = fmul reassoc nsz arcp contract afn float %i.ar, f0x3F8145C4
   %i.at = fadd reassoc nsz arcp contract afn float %i.as, %i.aq
-  %i.au = load float, ptr %gep.2, align 4, !tbaa !34
+  %i.au = load float, ptr %gep.2, align 32, !tbaa !34
   %i.av = fmul reassoc nsz arcp contract afn float %i.au, 2.100770e-02
   %i.aw = fadd reassoc nsz arcp contract afn float %i.av, %i.at ; 2 uses
-  store float %i.aw, ptr %i.ao, align 4, !tbaa !34
+  store float %i.aw, ptr %i.ao, align 16, !tbaa !34
   store float %i.aw, ptr %invariant.gep36.1, align 4, !tbaa !34
   %i.ax = load float, ptr %invariant.gep.1, align 4, !tbaa !34
   %i.ay = fmul reassoc nsz arcp contract afn float %i.ax, -2.828950e-02
@@ -271,30 +271,30 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   store float %i.be, ptr %i.bf, align 4, !tbaa !34
   %gep37.1.1 = getelementptr inbounds nuw i8, ptr %1, i64 980
   store float %i.be, ptr %gep37.1.1, align 4, !tbaa !34
-  %i.bg = load float, ptr %invariant.gep.2, align 4, !tbaa !34
+  %i.bg = load float, ptr %invariant.gep.2, align 8, !tbaa !34
   %i.bh = fmul reassoc nsz arcp contract afn float %i.bg, -2.828950e-02
-  %i.bi = load float, ptr %gep.1.2, align 4, !tbaa !34
+  %i.bi = load float, ptr %gep.1.2, align 8, !tbaa !34
   %i.bj = fmul reassoc nsz arcp contract afn float %i.bi, f0x3F8145C4
   %i.bk = fadd reassoc nsz arcp contract afn float %i.bj, %i.bh
-  %i.bl = load float, ptr %gep.2.2, align 4, !tbaa !34
+  %i.bl = load float, ptr %gep.2.2, align 8, !tbaa !34
   %i.bm = fmul reassoc nsz arcp contract afn float %i.bl, 2.100770e-02
   %i.bn = fadd reassoc nsz arcp contract afn float %i.bm, %i.bk ; 2 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %1, i64 664
-  store float %i.bn, ptr %i.bo, align 4, !tbaa !34
+  store float %i.bn, ptr %i.bo, align 8, !tbaa !34
   %gep37.2.1 = getelementptr inbounds nuw i8, ptr %1, i64 996
   store float %i.bn, ptr %gep37.2.1, align 4, !tbaa !34
   %i.bp = getelementptr inbounds nuw i8, ptr %1, i64 672
   %invariant.gep36.2 = getelementptr inbounds nuw i8, ptr %1, i64 968
-  %i.bq = load float, ptr %i.l, align 4, !tbaa !34
+  %i.bq = load float, ptr %i.l, align 64, !tbaa !34
   %i.br = fmul reassoc nsz arcp contract afn float %i.bq, 1.229820e-02
-  %i.bs = load float, ptr %gep.1, align 4, !tbaa !34
+  %i.bs = load float, ptr %gep.1, align 16, !tbaa !34
   %i.bt = fmul reassoc nsz arcp contract afn float %i.bs, -2.048300e-02
   %i.bu = fadd reassoc nsz arcp contract afn float %i.bt, %i.br
-  %i.bv = load float, ptr %gep.2, align 4, !tbaa !34
+  %i.bv = load float, ptr %gep.2, align 32, !tbaa !34
   %i.bw = fmul reassoc nsz arcp contract afn float %i.bv, f0x3FAA3A7C
   %i.bx = fadd reassoc nsz arcp contract afn float %i.bw, %i.bu ; 2 uses
-  store float %i.bx, ptr %i.bp, align 4, !tbaa !34
-  store float %i.bx, ptr %invariant.gep36.2, align 4, !tbaa !34
+  store float %i.bx, ptr %i.bp, align 32, !tbaa !34
+  store float %i.bx, ptr %invariant.gep36.2, align 8, !tbaa !34
   %i.by = load float, ptr %invariant.gep.1, align 4, !tbaa !34
   %i.bz = fmul reassoc nsz arcp contract afn float %i.by, 1.229820e-02
   %i.ca = load float, ptr %gep.1.1, align 4, !tbaa !34
@@ -306,19 +306,19 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.cg = getelementptr inbounds nuw i8, ptr %1, i64 676
   store float %i.cf, ptr %i.cg, align 4, !tbaa !34
   %gep37.1.2 = getelementptr inbounds nuw i8, ptr %1, i64 984
-  store float %i.cf, ptr %gep37.1.2, align 4, !tbaa !34
-  %i.ch = load float, ptr %invariant.gep.2, align 4, !tbaa !34
+  store float %i.cf, ptr %gep37.1.2, align 8, !tbaa !34
+  %i.ch = load float, ptr %invariant.gep.2, align 8, !tbaa !34
   %i.ci = fmul reassoc nsz arcp contract afn float %i.ch, 1.229820e-02
-  %i.cj = load float, ptr %gep.1.2, align 4, !tbaa !34
+  %i.cj = load float, ptr %gep.1.2, align 8, !tbaa !34
   %i.ck = fmul reassoc nsz arcp contract afn float %i.cj, -2.048300e-02
   %i.cl = fadd reassoc nsz arcp contract afn float %i.ck, %i.ci
-  %i.cm = load float, ptr %gep.2.2, align 4, !tbaa !34
+  %i.cm = load float, ptr %gep.2.2, align 8, !tbaa !34
   %i.cn = fmul reassoc nsz arcp contract afn float %i.cm, f0x3FAA3A7C
   %i.co = fadd reassoc nsz arcp contract afn float %i.cn, %i.cl ; 2 uses
   %i.cp = getelementptr inbounds nuw i8, ptr %1, i64 680
-  store float %i.co, ptr %i.cp, align 4, !tbaa !34
+  store float %i.co, ptr %i.cp, align 8, !tbaa !34
   %gep37.2.2 = getelementptr inbounds nuw i8, ptr %1, i64 1000
-  store float %i.co, ptr %gep37.2.2, align 4, !tbaa !34
+  store float %i.co, ptr %gep37.2.2, align 8, !tbaa !34
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.preheader33, %bb.d

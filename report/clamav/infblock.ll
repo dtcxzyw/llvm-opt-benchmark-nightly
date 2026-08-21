@@ -204,7 +204,7 @@ bb.g:                                             ; preds = %bb.f
   %i.ct = sub i32 %i.cs, %..i
   store i32 %i.ct, ptr %i.ah, align 8, !tbaa !27
   %i.cu = zext i32 %..i to i64                    ; 3 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.cm, ptr nonnull align 1 %i.ak, i64 %i.cu, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.cm, ptr nonnull align 8 %i.ak, i64 %i.cu, i1 false)
   %i.cv = load ptr, ptr %i.ai, align 8, !tbaa !28
   %i.cw = getelementptr inbounds nuw i8, ptr %i.cv, i64 %i.cu ; 3 uses
   store ptr %i.cw, ptr %i.ai, align 8, !tbaa !28
@@ -419,7 +419,7 @@ bb.aa:                                            ; preds = %bb.z
   %i.fo = sub i32 %i.fn, %..i817
   store i32 %i.fo, ptr %i.ah, align 8, !tbaa !27
   %i.fp = zext i32 %..i817 to i64                 ; 3 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.fh, ptr nonnull align 1 %i.ak, i64 %i.fp, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.fh, ptr nonnull align 8 %i.ak, i64 %i.fp, i1 false)
   %i.fq = load ptr, ptr %i.ai, align 8, !tbaa !28
   %i.fr = getelementptr inbounds nuw i8, ptr %i.fq, i64 %i.fp ; 3 uses
   store ptr %i.fr, ptr %i.ai, align 8, !tbaa !28
@@ -554,7 +554,7 @@ bb.al:                                            ; preds = %bb.ak
   %i.ho = sub i32 %i.hn, %..i825
   store i32 %i.ho, ptr %i.ah, align 8, !tbaa !27
   %i.hp = zext i32 %..i825 to i64                 ; 3 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.hh, ptr nonnull align 1 %i.ak, i64 %i.hp, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.hh, ptr nonnull align 8 %i.ak, i64 %i.hp, i1 false)
   %i.hq = load ptr, ptr %i.ai, align 8, !tbaa !28
   %i.hr = getelementptr inbounds nuw i8, ptr %i.hq, i64 %i.hp ; 3 uses
   store ptr %i.hr, ptr %i.ai, align 8, !tbaa !28
@@ -756,7 +756,7 @@ bb.bb:                                            ; preds = %bb.ba
   %i.km = sub i32 %i.kl, %..i833
   store i32 %i.km, ptr %i.ah, align 8, !tbaa !27
   %i.kn = zext i32 %..i833 to i64                 ; 3 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.kf, ptr nonnull align 1 %i.ak, i64 %i.kn, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.kf, ptr nonnull align 8 %i.ak, i64 %i.kn, i1 false)
   %i.ko = load ptr, ptr %i.ai, align 8, !tbaa !28
   %i.kp = getelementptr inbounds nuw i8, ptr %i.ko, i64 %i.kn ; 3 uses
   store ptr %i.kp, ptr %i.ai, align 8, !tbaa !28
@@ -947,7 +947,7 @@ bb.bj:                                            ; preds = %bb.bi
   %i.mw = sub i32 %i.mv, %..i841
   store i32 %i.mw, ptr %i.ah, align 8, !tbaa !27
   %i.mx = zext i32 %..i841 to i64                 ; 3 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.mp, ptr nonnull align 1 %i.ak, i64 %i.mx, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.mp, ptr nonnull align 8 %i.ak, i64 %i.mx, i1 false)
   %i.my = load ptr, ptr %i.ai, align 8, !tbaa !28
   %i.mz = getelementptr inbounds nuw i8, ptr %i.my, i64 %i.mx ; 3 uses
   store ptr %i.mz, ptr %i.ai, align 8, !tbaa !28
@@ -1146,7 +1146,7 @@ bb.bt:                                            ; preds = %bb.bs
   %i.px = sub i32 %i.pw, %..i849
   store i32 %i.px, ptr %i.ah, align 8, !tbaa !27
   %i.py = zext i32 %..i849 to i64                 ; 3 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.pq, ptr nonnull align 1 %i.ak, i64 %i.py, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.pq, ptr nonnull align 8 %i.ak, i64 %i.py, i1 false)
   %i.pz = load ptr, ptr %i.ai, align 8, !tbaa !28
   %i.qa = getelementptr inbounds nuw i8, ptr %i.pz, i64 %i.py ; 3 uses
   store ptr %i.qa, ptr %i.ai, align 8, !tbaa !28
@@ -1309,7 +1309,7 @@ bb.cb:                                            ; preds = %bb.ca
   %i.sr = sub i32 %i.sq, %..i857
   store i32 %i.sr, ptr %i.ah, align 8, !tbaa !27
   %i.ss = zext i32 %..i857 to i64                 ; 3 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.sk, ptr nonnull align 1 %i.ak, i64 %i.ss, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.sk, ptr nonnull align 8 %i.ak, i64 %i.ss, i1 false)
   %i.st = load ptr, ptr %i.ai, align 8, !tbaa !28
   %i.su = getelementptr inbounds nuw i8, ptr %i.st, i64 %i.ss ; 3 uses
   store ptr %i.su, ptr %i.ai, align 8, !tbaa !28
@@ -1439,7 +1439,7 @@ bb.cj:                                            ; preds = %bb.ci
   %i.uw = sub i32 %i.uv, %..i865
   store i32 %i.uw, ptr %i.ah, align 8, !tbaa !27
   %i.ux = zext i32 %..i865 to i64                 ; 3 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.up, ptr nonnull align 1 %i.ak, i64 %i.ux, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.up, ptr nonnull align 8 %i.ak, i64 %i.ux, i1 false)
   %i.uy = load ptr, ptr %i.ai, align 8, !tbaa !28
   %i.uz = getelementptr inbounds nuw i8, ptr %i.uy, i64 %i.ux ; 3 uses
   store ptr %i.uz, ptr %i.ai, align 8, !tbaa !28
@@ -1672,7 +1672,7 @@ bb.cu:                                            ; preds = %bb.ct
   %i.ya = sub i32 %i.xz, %..i873
   store i32 %i.ya, ptr %i.ah, align 8, !tbaa !27
   %i.yb = zext i32 %..i873 to i64                 ; 3 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.xt, ptr nonnull align 1 %i.ak, i64 %i.yb, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.xt, ptr nonnull align 8 %i.ak, i64 %i.yb, i1 false)
   %i.yc = load ptr, ptr %i.ai, align 8, !tbaa !28
   %i.yd = getelementptr inbounds nuw i8, ptr %i.yc, i64 %i.yb ; 3 uses
   store ptr %i.yd, ptr %i.ai, align 8, !tbaa !28
@@ -1816,7 +1816,7 @@ bb.dc:                                            ; preds = %bb.db
   %i.zu = sub i32 %i.zt, %..i881
   store i32 %i.zu, ptr %i.ah, align 8, !tbaa !27
   %i.zv = zext i32 %..i881 to i64                 ; 3 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.zn, ptr nonnull align 1 %i.ak, i64 %i.zv, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.zn, ptr nonnull align 8 %i.ak, i64 %i.zv, i1 false)
   %i.zw = load ptr, ptr %i.ai, align 8, !tbaa !28
   %i.zx = getelementptr inbounds nuw i8, ptr %i.zw, i64 %i.zv ; 3 uses
   store ptr %i.zx, ptr %i.ai, align 8, !tbaa !28
@@ -2007,7 +2007,7 @@ bb.dp:                                            ; preds = %bb.do
   %i.acv = sub i32 %i.acu, %..i889
   store i32 %i.acv, ptr %i.ah, align 8, !tbaa !27
   %i.acw = zext i32 %..i889 to i64                ; 3 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.aco, ptr nonnull align 1 %i.ak, i64 %i.acw, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.aco, ptr nonnull align 8 %i.ak, i64 %i.acw, i1 false)
   %i.acx = load ptr, ptr %i.ai, align 8, !tbaa !28
   %i.acy = getelementptr inbounds nuw i8, ptr %i.acx, i64 %i.acw ; 3 uses
   store ptr %i.acy, ptr %i.ai, align 8, !tbaa !28
@@ -2157,7 +2157,7 @@ bb.dv:                                            ; preds = %bb.du
   %i.afe = sub i32 %i.afd, %..i897
   store i32 %i.afe, ptr %i.ah, align 8, !tbaa !27
   %i.aff = zext i32 %..i897 to i64                ; 3 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.aex, ptr nonnull align 1 %i.ak, i64 %i.aff, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.aex, ptr nonnull align 8 %i.ak, i64 %i.aff, i1 false)
   %i.afg = load ptr, ptr %i.ai, align 8, !tbaa !28
   %i.afh = getelementptr inbounds nuw i8, ptr %i.afg, i64 %i.aff ; 3 uses
   store ptr %i.afh, ptr %i.ai, align 8, !tbaa !28
@@ -2327,7 +2327,7 @@ bb.ee:                                            ; preds = %bb.ed
   %i.aia = sub i32 %i.ahz, %..i905
   store i32 %i.aia, ptr %i.ah, align 8, !tbaa !27
   %i.aib = zext i32 %..i905 to i64                ; 3 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.aht, ptr nonnull align 1 %i.ak, i64 %i.aib, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.aht, ptr nonnull align 8 %i.ak, i64 %i.aib, i1 false)
   %i.aic = load ptr, ptr %i.ai, align 8, !tbaa !28
   %i.aid = getelementptr inbounds nuw i8, ptr %i.aic, i64 %i.aib ; 3 uses
   store ptr %i.aid, ptr %i.ai, align 8, !tbaa !28
@@ -2494,7 +2494,7 @@ bb.em:                                            ; preds = %.thread966
   %i.aks = sub i32 %i.akr, %..i913
   store i32 %i.aks, ptr %i.ah, align 8, !tbaa !27
   %i.akt = zext i32 %..i913 to i64                ; 3 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.akl, ptr nonnull align 1 %i.ak, i64 %i.akt, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.akl, ptr nonnull align 8 %i.ak, i64 %i.akt, i1 false)
   %i.aku = load ptr, ptr %i.ai, align 8, !tbaa !28
   %i.akv = getelementptr inbounds nuw i8, ptr %i.aku, i64 %i.akt ; 4 uses
   store ptr %i.akv, ptr %i.ai, align 8, !tbaa !28
@@ -2598,7 +2598,7 @@ bb.eq:                                            ; preds = %bb.ep
   %i.amm = sub i32 %i.aml, %..i921
   store i32 %i.amm, ptr %i.ah, align 8, !tbaa !27
   %i.amn = zext i32 %..i921 to i64                ; 3 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.amf, ptr nonnull align 1 %i.ak, i64 %i.amn, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.amf, ptr nonnull align 8 %i.ak, i64 %i.amn, i1 false)
   %i.amo = load ptr, ptr %i.ai, align 8, !tbaa !28
   %i.amp = getelementptr inbounds nuw i8, ptr %i.amo, i64 %i.amn ; 3 uses
   store ptr %i.amp, ptr %i.ai, align 8, !tbaa !28
@@ -2721,7 +2721,7 @@ bb.ex:                                            ; preds = %.thread971
   %i.aok = sub i32 %i.aoj, %..i929
   store i32 %i.aok, ptr %i.ah, align 8, !tbaa !27
   %i.aol = zext i32 %..i929 to i64                ; 3 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.aod, ptr nonnull align 1 %i.ak, i64 %i.aol, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.aod, ptr nonnull align 8 %i.ak, i64 %i.aol, i1 false)
   %i.aom = load ptr, ptr %i.ai, align 8, !tbaa !28
   %i.aon = getelementptr inbounds nuw i8, ptr %i.aom, i64 %i.aol ; 3 uses
   store ptr %i.aon, ptr %i.ai, align 8, !tbaa !28
@@ -2863,7 +2863,7 @@ bb.fh:                                            ; preds = %bb.fg
   %i.aqq = sub i32 %i.aqp, %..i937
   store i32 %i.aqq, ptr %i.ah, align 8, !tbaa !27
   %i.aqr = zext i32 %..i937 to i64                ; 3 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.aqj, ptr nonnull align 1 %i.ak, i64 %i.aqr, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.aqj, ptr nonnull align 8 %i.ak, i64 %i.aqr, i1 false)
   %i.aqs = load ptr, ptr %i.ai, align 8, !tbaa !28
   %i.aqt = getelementptr inbounds nuw i8, ptr %i.aqs, i64 %i.aqr ; 3 uses
   store ptr %i.aqt, ptr %i.ai, align 8, !tbaa !28
@@ -3006,7 +3006,7 @@ bb.e:                                             ; preds = %.backedge, %.peel.n
   %i.ai = sub i32 %i.ah, %.
   store i32 %i.ai, ptr %i.d, align 8, !tbaa !27
   %i.aj = zext i32 %. to i64                      ; 3 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ab, ptr nonnull align 1 %i.g, i64 %i.aj, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ab, ptr nonnull align 8 %i.g, i64 %i.aj, i1 false)
   %i.ak = load ptr, ptr %i.e, align 8, !tbaa !28
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 %i.aj ; 2 uses
   store ptr %i.al, ptr %i.e, align 8, !tbaa !28

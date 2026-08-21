@@ -205,15 +205,15 @@ bb.t:                                             ; preds = %.loopexit1154
 
 .preheader1145:                                   ; preds = %._crit_edge1214.split
   %i.if = mul nuw nsw i32 %i.h, %i.h              ; 24 uses
-  %i.ig = load i32, ptr %i.ap, align 4, !tbaa !57
+  %i.ig = load i32, ptr %i.ap, align 8, !tbaa !57
   %i.ih = udiv i32 %i.ig, %i.if
-  store i32 %i.ih, ptr %i.ap, align 4, !tbaa !57
+  store i32 %i.ih, ptr %i.ap, align 8, !tbaa !57
   %i.ii = load i32, ptr %i.al, align 4, !tbaa !57
   %i.ij = udiv i32 %i.ii, %i.if
   store i32 %i.ij, ptr %i.al, align 4, !tbaa !57
-  %i.ik = load i32, ptr %i.au, align 4, !tbaa !57
+  %i.ik = load i32, ptr %i.au, align 8, !tbaa !57
   %i.il = udiv i32 %i.ik, %i.if
-  store i32 %i.il, ptr %i.au, align 4, !tbaa !57
+  store i32 %i.il, ptr %i.au, align 8, !tbaa !57
   %i.im = load i32, ptr %i.am, align 4, !tbaa !57
   %i.in = udiv i32 %i.im, %i.if
   store i32 %i.in, ptr %i.am, align 4, !tbaa !57
@@ -222,29 +222,29 @@ bb.t:                                             ; preds = %.loopexit1154
   %i.iq = udiv i32 %i.ip, %i.if
   store i32 %i.iq, ptr %i.io, align 4, !tbaa !57
   %i.ir = getelementptr inbounds nuw i8, ptr %2, i64 48 ; 4 uses
-  %i.is = load i32, ptr %i.ir, align 4, !tbaa !57
+  %i.is = load i32, ptr %i.ir, align 8, !tbaa !57
   %i.it = udiv i32 %i.is, %i.if
-  store i32 %i.it, ptr %i.ir, align 4, !tbaa !57
+  store i32 %i.it, ptr %i.ir, align 8, !tbaa !57
   %i.iu = getelementptr inbounds nuw i8, ptr %2, i64 84 ; 3 uses
   %i.iv = load i32, ptr %i.iu, align 4, !tbaa !57
   %i.iw = udiv i32 %i.iv, %i.if
   store i32 %i.iw, ptr %i.iu, align 4, !tbaa !57
   %i.ix = getelementptr inbounds nuw i8, ptr %2, i64 120 ; 3 uses
-  %i.iy = load i32, ptr %i.ix, align 4, !tbaa !57
+  %i.iy = load i32, ptr %i.ix, align 8, !tbaa !57
   %i.iz = udiv i32 %i.iy, %i.if
-  store i32 %i.iz, ptr %i.ix, align 4, !tbaa !57
+  store i32 %i.iz, ptr %i.ix, align 8, !tbaa !57
   %i.ja = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 4 uses
-  %i.jb = load i32, ptr %i.ja, align 4, !tbaa !57
+  %i.jb = load i32, ptr %i.ja, align 8, !tbaa !57
   %i.jc = udiv i32 %i.jb, %i.if
-  store i32 %i.jc, ptr %i.ja, align 4, !tbaa !57
+  store i32 %i.jc, ptr %i.ja, align 8, !tbaa !57
   %i.jd = getelementptr inbounds nuw i8, ptr %2, i64 52 ; 4 uses
   %i.je = load i32, ptr %i.jd, align 4, !tbaa !57
   %i.jf = udiv i32 %i.je, %i.if
   store i32 %i.jf, ptr %i.jd, align 4, !tbaa !57
   %i.jg = getelementptr inbounds nuw i8, ptr %2, i64 88 ; 3 uses
-  %i.jh = load i32, ptr %i.jg, align 4, !tbaa !57
+  %i.jh = load i32, ptr %i.jg, align 8, !tbaa !57
   %i.ji = udiv i32 %i.jh, %i.if
-  store i32 %i.ji, ptr %i.jg, align 4, !tbaa !57
+  store i32 %i.ji, ptr %i.jg, align 8, !tbaa !57
   %i.jj = getelementptr inbounds nuw i8, ptr %2, i64 124 ; 3 uses
   %i.jk = load i32, ptr %i.jj, align 4, !tbaa !57
   %i.jl = udiv i32 %i.jk, %i.if
@@ -332,7 +332,7 @@ bb.u:                                             ; preds = %.preheader1150, %bb
   br i1 %or.cond986, label %bb.v, label %bb.w
 
 bb.v:                                             ; preds = %.lr.ph1185
-  %i.la = load i32, ptr %i.ar, align 4, !tbaa !57 ; 2 uses
+  %i.la = load i32, ptr %i.ar, align 8, !tbaa !57 ; 2 uses
   %i.lb = icmp ugt i32 %i.kg, %i.la
   %i.lc = add i32 %i.la, %i.h
   %i.ld = icmp ult i32 %.18861213, %i.lc
@@ -343,7 +343,7 @@ bb.w:                                             ; preds = %.lr.ph1185, %bb.v
   br i1 %exitcond1514.not, label %._crit_edge.thread, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
-  %i.le = load i32, ptr %i.az, align 4, !tbaa !57 ; 2 uses
+  %i.le = load i32, ptr %i.az, align 8, !tbaa !57 ; 2 uses
   %i.lf = icmp ugt i32 %i.ku, %i.le
   %i.lg = add i32 %i.le, %i.h
   %i.lh = zext i32 %i.lg to i64
@@ -376,7 +376,7 @@ bb.y:                                             ; preds = %bb.x
 
 .lr.ph1190:                                       ; preds = %.preheader1148
   %i.lp = add i32 %i.h, %indvars1532              ; 2 uses
-  %i.lq = load i32, ptr %i.as, align 4, !tbaa !57 ; 2 uses
+  %i.lq = load i32, ptr %i.as, align 8, !tbaa !57 ; 2 uses
   %i.lr = icmp ugt i32 %i.lp, %i.lq
   %i.ls = add i32 %i.lq, %i.h
   %i.lt = zext i32 %i.ls to i64
@@ -405,7 +405,7 @@ bb.ab:                                            ; preds = %bb.aa
   br i1 %or.cond992.1, label %bb.ac, label %._crit_edge1191.thread
 
 bb.ac:                                            ; preds = %bb.ab
-  %i.me = load i32, ptr %i.bc, align 4, !tbaa !57 ; 2 uses
+  %i.me = load i32, ptr %i.bc, align 8, !tbaa !57 ; 2 uses
   %i.mf = icmp ugt i32 %i.kg, %i.me
   %i.mg = add i32 %i.me, %i.h
   %i.mh = icmp ult i32 %.18861213, %i.mg
@@ -438,7 +438,7 @@ bb.ac:                                            ; preds = %bb.ab
   br i1 %or.cond998, label %bb.ad, label %bb.ae
 
 bb.ad:                                            ; preds = %.lr.ph1196
-  %i.mq = load i32, ptr %i.aw, align 4, !tbaa !57 ; 2 uses
+  %i.mq = load i32, ptr %i.aw, align 8, !tbaa !57 ; 2 uses
   %i.mr = icmp ugt i32 %i.kg, %i.mq
   %i.ms = add i32 %i.mq, %i.h
   %i.mt = icmp ult i32 %.18861213, %i.ms
@@ -449,7 +449,7 @@ bb.ae:                                            ; preds = %.lr.ph1196, %bb.ad
   br i1 %exitcond1524.not, label %._crit_edge1197.thread, label %bb.af
 
 bb.af:                                            ; preds = %bb.ae
-  %i.mu = load i32, ptr %i.bd, align 4, !tbaa !57 ; 2 uses
+  %i.mu = load i32, ptr %i.bd, align 8, !tbaa !57 ; 2 uses
   %i.mv = icmp ugt i32 %i.mk, %i.mu
   %i.mw = add i32 %i.mu, %i.h
   %i.mx = zext i32 %i.mw to i64
@@ -482,7 +482,7 @@ bb.ag:                                            ; preds = %bb.af
 
 .lr.ph1202:                                       ; preds = %.preheader1146
   %i.nf = add i32 %i.h, %indvars1532              ; 2 uses
-  %i.ng = load i32, ptr %i.ax, align 4, !tbaa !57 ; 2 uses
+  %i.ng = load i32, ptr %i.ax, align 8, !tbaa !57 ; 2 uses
   %i.nh = icmp ugt i32 %i.nf, %i.ng
   %i.ni = add i32 %i.ng, %i.h
   %i.nj = zext i32 %i.ni to i64
@@ -513,7 +513,7 @@ bb.aj:                                            ; preds = %bb.ah, %bb.ai
   br i1 %or.cond1004.1, label %bb.ak, label %bb.al
 
 bb.ak:                                            ; preds = %bb.aj
-  %i.nu = load i32, ptr %i.bg, align 4, !tbaa !57 ; 2 uses
+  %i.nu = load i32, ptr %i.bg, align 8, !tbaa !57 ; 2 uses
   %i.nv = icmp ugt i32 %i.kg, %i.nu
   %i.nw = add i32 %i.nu, %i.h
   %i.nx = icmp ult i32 %.18861213, %i.nw

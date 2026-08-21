@@ -205,11 +205,11 @@ bb.a:
   %.sroa.621.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 112
   %.sroa.10.0..sroa_idx15 = getelementptr inbounds nuw i8, ptr %i.e, i64 112 ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !noalias !100
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.10.0..sroa_idx15, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.621.0..sroa_idx, i64 16, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %.sroa.10.0..sroa_idx15, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.621.0..sroa_idx, i64 16, i1 false)
   %i.f = load <2 x ptr>, ptr %1, align 8
   store <2 x ptr> %i.f, ptr %i.e, align 16
   %.sroa.9.0..sroa_idx14 = getelementptr inbounds nuw i8, ptr %i.e, i64 16
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %.sroa.9.0..sroa_idx14, ptr noundef nonnull align 8 dereferenceable(96) %.sroa.520.0..sroa_idx, i64 96, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(96) %.sroa.9.0..sroa_idx14, ptr noundef nonnull align 8 dereferenceable(96) %.sroa.520.0..sroa_idx, i64 96, i1 false)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !101)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !95
   %i.g = load ptr, ptr %.sroa.10.0..sroa_idx15, align 16, !alias.scope !101, !noalias !100, !nonnull !12, !noundef !12
@@ -612,9 +612,9 @@ bb.a:
   %.sroa.43.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.g, i64 8
   store i8 %i.e, ptr %.sroa.43.0..sroa_idx.i.i, align 8, !noalias !2289
   %i.h = getelementptr i8, ptr %i.g, i64 16
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(14) %i.h, i8 0, i64 14, i1 false), !noalias !2296
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(14) %i.h, i8 0, i64 14, i1 false), !noalias !2296
   %i.i = getelementptr i8, ptr %i.g, i64 32
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(10) %i.i, i8 0, i64 10, i1 false), !noalias !2296
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(10) %i.i, i8 0, i64 10, i1 false), !noalias !2296
   %.sroa.8.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.g, i64 44
   store i32 0, ptr %.sroa.8.0..sroa_idx.i.i, align 4, !noalias !2289
   %i.j = add i64 %i.a, 1                          ; 2 uses

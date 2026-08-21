@@ -206,7 +206,7 @@ bb.b:                                             ; preds = %bb.a
 
 _ZSt11make_uniqueIN5osgeo4proj2io12WKTFormatter7PrivateEJEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_.exit: ; preds = %bb.a
   store ptr %i.a, ptr %0, align 8, !tbaa !20, !alias.scope !87
-  store i32 %1, ptr %i.a, align 8, !tbaa !72
+  store i32 %1, ptr %i.a, align 16, !tbaa !72
   switch i32 %1, label %bb.i [
     i32 2, label %bb.c
     i32 0, label %bb.d
@@ -237,7 +237,7 @@ bb.f:                                             ; preds = %bb.e, %_ZSt11make_u
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 4
   store i32 1, ptr %i.g, align 4, !tbaa !91
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  store i8 1, ptr %i.h, align 8, !tbaa !93
+  store i8 1, ptr %i.h, align 16, !tbaa !93
   %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 17
   store i8 0, ptr %i.i, align 1, !tbaa !92
   %i.j = getelementptr inbounds nuw i8, ptr %i.a, i64 18
@@ -640,22 +640,22 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !184)
   %i.a = tail call noalias noundef nonnull dereferenceable(176) ptr @_Znwm(i64 noundef 176) #43, !noalias !184 ; 13 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(176) %i.a, i8 0, i64 128, i1 false), !noalias !184
-  store i8 1, ptr %i.a, align 8, !tbaa !187, !noalias !184
+  store i8 1, ptr %i.a, align 16, !tbaa !187, !noalias !184
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 1
   store i8 1, ptr %i.b, align 1, !tbaa !200, !noalias !184
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  store ptr %i.c, ptr %i.d, align 8, !tbaa !201, !noalias !184
+  store ptr %i.c, ptr %i.d, align 16, !tbaa !201, !noalias !184
   store ptr %i.c, ptr %i.c, align 8, !tbaa !202, !noalias !184
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 32 ; 3 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 40
   store ptr %i.e, ptr %i.f, align 8, !tbaa !201, !noalias !184
-  store ptr %i.e, ptr %i.e, align 8, !tbaa !202, !noalias !184
+  store ptr %i.e, ptr %i.e, align 16, !tbaa !202, !noalias !184
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 48
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 80
   %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 96
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.g, i8 0, i64 32, i1 false), !noalias !184
-  store ptr %i.i, ptr %i.h, align 8, !tbaa !10, !noalias !184
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.g, i8 0, i64 32, i1 false), !noalias !184
+  store ptr %i.i, ptr %i.h, align 16, !tbaa !10, !noalias !184
   %i.j = getelementptr inbounds nuw i8, ptr %i.a, i64 113
   store i8 0, ptr %i.j, align 1, !tbaa !203, !noalias !184
   %i.k = getelementptr inbounds nuw i8, ptr %i.a, i64 120
@@ -1058,7 +1058,7 @@ bb.a:
   %19 = alloca %"class.std::shared_ptr.257", align 8 ; 7 uses
   %20 = alloca %"class.dropbox::oxygen::nn.310", align 8 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #41
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %2, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %2, i8 0, i64 16, i1 false)
   %i.b = icmp eq ptr %.0.val, null
   br i1 %i.b, label %.critedge, label %bb.b
 
@@ -1461,7 +1461,7 @@ bb.dd:                                            ; preds = %bb.dc
   br i1 %.not.i, label %.thread.i, label %bb.de
 
 .thread.i:                                        ; preds = %bb.dd, %bb.dc
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %15, i8 0, i64 16, i1 false), !alias.scope !1439
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %15, i8 0, i64 16, i1 false), !alias.scope !1439
   br label %bb.dh
 
 bb.de:                                            ; preds = %bb.dd
@@ -1864,7 +1864,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not.i, label %.thread.i, label %bb.d
 
 .thread.i:                                        ; preds = %bb.c, %bb.b
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %5, i8 0, i64 16, i1 false), !alias.scope !1564
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %5, i8 0, i64 16, i1 false), !alias.scope !1564
   br label %bb.g
 
 bb.d:                                             ; preds = %bb.c
@@ -2267,7 +2267,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.f, label %bb.d, label %.critedge
 
 .critedge:                                        ; preds = %bb.c, %bb.b
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %5, i8 0, i64 16, i1 false), !alias.scope !1570
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %5, i8 0, i64 16, i1 false), !alias.scope !1570
   br label %bb.g
 
 bb.d:                                             ; preds = %bb.c
@@ -2670,7 +2670,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not.i, label %.thread.i, label %bb.d
 
 .thread.i:                                        ; preds = %bb.c, %bb.b
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %5, i8 0, i64 16, i1 false), !alias.scope !1576
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %5, i8 0, i64 16, i1 false), !alias.scope !1576
   br label %bb.g
 
 bb.d:                                             ; preds = %bb.c
@@ -3073,7 +3073,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not.i, label %.thread.i, label %bb.d
 
 .thread.i:                                        ; preds = %bb.c, %bb.b
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %5, i8 0, i64 16, i1 false), !alias.scope !1582
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %5, i8 0, i64 16, i1 false), !alias.scope !1582
   br label %bb.g
 
 bb.d:                                             ; preds = %bb.c
@@ -3476,7 +3476,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not.i, label %.thread.i, label %bb.d
 
 .thread.i:                                        ; preds = %bb.c, %bb.b
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %5, i8 0, i64 16, i1 false), !alias.scope !1588
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %5, i8 0, i64 16, i1 false), !alias.scope !1588
   br label %bb.g
 
 bb.d:                                             ; preds = %bb.c
@@ -3879,7 +3879,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not.i, label %.thread.i, label %bb.d
 
 .thread.i:                                        ; preds = %bb.c, %bb.b
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %5, i8 0, i64 16, i1 false), !alias.scope !1594
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %5, i8 0, i64 16, i1 false), !alias.scope !1594
   br label %bb.g
 
 bb.d:                                             ; preds = %bb.c
@@ -4282,7 +4282,7 @@ bb.p:                                             ; preds = %bb.o
           to label %.critedge92 unwind label %bb.v
 
 _ZNK13proj_nlohmann10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS_14adl_serializerES2_IhSaIhEEE8containsIRA9_KcTnNSt9enable_ifIXntsr3std7is_sameINSt5decayIT_E4typeENS_12json_pointerISC_EEEE5valueEiE4typeELi0EEEbOSJ_.exit.thread: ; preds = %bb.m, %_ZNK13proj_nlohmann10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS_14adl_serializerES2_IhSaIhEEE8containsIRA9_KcTnNSt9enable_ifIXntsr3std7is_sameINSt5decayIT_E4typeENS_12json_pointerISC_EEEE5valueEiE4typeELi0EEEbOSJ_.exit
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %10, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %10, i8 0, i64 16, i1 false)
   br label %.critedge94
 
 .critedge92:                                      ; preds = %bb.p
@@ -4685,7 +4685,7 @@ bb.ak:                                            ; preds = %_ZNK13proj_nlohmann
   %i.cx = getelementptr inbounds nuw i8, ptr %8, i64 8
   %i.cy = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.cz = load <2 x ptr>, ptr %8, align 16, !tbaa !64
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %8, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %8, i8 0, i64 16, i1 false)
   %i.da = load ptr, ptr %i.cy, align 8, !tbaa !65 ; 8 uses
   store <2 x ptr> %i.cz, ptr %3, align 8, !tbaa !64
   %.not.i.i.i.i28 = icmp eq ptr %i.da, null
@@ -5088,7 +5088,7 @@ bb.a:
   %3 = alloca %"class.std::shared_ptr", align 16  ; 9 uses
   %4 = alloca %"class.dropbox::oxygen::nn.125", align 16 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #41
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %3, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %3, i8 0, i64 16, i1 false)
   %.not = icmp eq ptr %2, null
   br i1 %.not, label %bb.u, label %bb.b
 
@@ -5115,7 +5115,7 @@ bb.f:                                             ; preds = %bb.e
   %i.e = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.f = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.g = load <2 x ptr>, ptr %4, align 16, !tbaa !64
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %4, i8 0, i64 16, i1 false)
   %i.h = load ptr, ptr %i.f, align 8, !tbaa !65   ; 8 uses
   store <2 x ptr> %i.g, ptr %3, align 16, !tbaa !64
   %.not.i.i.i.i = icmp eq ptr %i.h, null
@@ -5518,10 +5518,10 @@ bb.b:                                             ; preds = %bb.a
 
 _ZSt11make_uniqueIN5osgeo4proj2io19PROJStringFormatter7PrivateEJEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_.exit: ; preds = %bb.a
   store ptr %i.a, ptr %0, align 8, !tbaa !1738, !alias.scope !1777
-  store i32 %1, ptr %i.a, align 8, !tbaa !1780
+  store i32 %1, ptr %i.a, align 16, !tbaa !1780
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 304
   %i.d = load ptr, ptr %2, align 8, !tbaa !217
-  store ptr %i.d, ptr %i.c, align 8, !tbaa !217
+  store ptr %i.d, ptr %i.c, align 16, !tbaa !217
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 312 ; 3 uses
   %i.f = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !65   ; 4 uses
@@ -5924,7 +5924,7 @@ bb.f:                                             ; preds = %bb.e
   %i.x = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.y = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.z = load <2 x ptr>, ptr %4, align 16, !tbaa !64
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %4, i8 0, i64 16, i1 false)
   %i.aa = load ptr, ptr %i.y, align 8, !tbaa !65  ; 8 uses
   store <2 x ptr> %i.z, ptr %1, align 8, !tbaa !64
   %.not.i.i.i.i = icmp eq ptr %i.aa, null
@@ -6327,7 +6327,7 @@ _ZNSt10unique_ptrIN5osgeo4proj2io13JSONFormatterESt14default_deleteIS3_EED2Ev.ex
   %i.h = load <2 x ptr>, ptr %1, align 8, !tbaa !64
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %1, i8 0, i64 16, i1 false)
   %i.i = load ptr, ptr %i.g, align 8, !tbaa !65   ; 8 uses
-  store <2 x ptr> %i.h, ptr %i.f, align 8, !tbaa !64
+  store <2 x ptr> %i.h, ptr %i.f, align 16, !tbaa !64
   %.not.i.i.i.i = icmp eq ptr %i.i, null
   br i1 %.not.i.i.i.i, label %_ZNSt10shared_ptrIN5osgeo4proj2io15DatabaseContextEEaSEOS4_.exit, label %bb.d
 
@@ -6730,7 +6730,7 @@ bb.w:                                             ; preds = %bb.v
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i41
 
 bb.x:                                             ; preds = %bb.v
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.gn, ptr align 1 %i.hf, i64 %i.hi, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.gn, ptr align 1 %i.hf, i64 %i.hi, i1 false)
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i41
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i41: ; preds = %bb.x, %bb.w, %bb.v

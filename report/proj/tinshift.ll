@@ -204,33 +204,33 @@ bb.a:
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 16
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(448) %i.l, i8 0, i64 448, i1 false)
   %i.m = getelementptr inbounds nuw i8, ptr %i.k, i64 16 ; 3 uses
-  store ptr %i.m, ptr %i.k, align 8, !tbaa !14
+  store ptr %i.m, ptr %i.k, align 16, !tbaa !14
   %i.n = getelementptr inbounds nuw i8, ptr %i.k, i64 8 ; 4 uses
   store i64 0, ptr %i.n, align 8, !tbaa !15
   %i.o = getelementptr inbounds nuw i8, ptr %i.k, i64 32
   %i.p = getelementptr inbounds nuw i8, ptr %i.k, i64 48 ; 2 uses
-  store ptr %i.p, ptr %i.o, align 8, !tbaa !14
-  store i8 0, ptr %i.p, align 8, !tbaa !16
+  store ptr %i.p, ptr %i.o, align 16, !tbaa !14
+  store i8 0, ptr %i.p, align 16, !tbaa !16
   %i.q = getelementptr inbounds nuw i8, ptr %i.k, i64 64
   %i.r = getelementptr inbounds nuw i8, ptr %i.k, i64 80 ; 2 uses
-  store ptr %i.r, ptr %i.q, align 8, !tbaa !14
-  store i8 0, ptr %i.r, align 8, !tbaa !16
+  store ptr %i.r, ptr %i.q, align 16, !tbaa !14
+  store i8 0, ptr %i.r, align 16, !tbaa !16
   %i.s = getelementptr inbounds nuw i8, ptr %i.k, i64 96
   %i.t = getelementptr inbounds nuw i8, ptr %i.k, i64 112 ; 2 uses
-  store ptr %i.t, ptr %i.s, align 8, !tbaa !14
-  store i8 0, ptr %i.t, align 8, !tbaa !16
+  store ptr %i.t, ptr %i.s, align 16, !tbaa !14
+  store i8 0, ptr %i.t, align 16, !tbaa !16
   %i.u = getelementptr inbounds nuw i8, ptr %i.k, i64 128
   %i.v = getelementptr inbounds nuw i8, ptr %i.k, i64 144 ; 2 uses
-  store ptr %i.v, ptr %i.u, align 8, !tbaa !14
-  store i8 0, ptr %i.v, align 8, !tbaa !16
+  store ptr %i.v, ptr %i.u, align 16, !tbaa !14
+  store i8 0, ptr %i.v, align 16, !tbaa !16
   %i.w = getelementptr inbounds nuw i8, ptr %i.k, i64 160
   %i.x = getelementptr inbounds nuw i8, ptr %i.k, i64 176 ; 2 uses
-  store ptr %i.x, ptr %i.w, align 8, !tbaa !14
-  store i8 0, ptr %i.x, align 8, !tbaa !16
+  store ptr %i.x, ptr %i.w, align 16, !tbaa !14
+  store i8 0, ptr %i.x, align 16, !tbaa !16
   %i.y = getelementptr inbounds nuw i8, ptr %i.k, i64 192
   %i.z = getelementptr inbounds nuw i8, ptr %i.k, i64 208 ; 2 uses
-  store ptr %i.z, ptr %i.y, align 8, !tbaa !14
-  store i8 0, ptr %i.z, align 8, !tbaa !16
+  store ptr %i.z, ptr %i.y, align 16, !tbaa !14
+  store i8 0, ptr %i.z, align 16, !tbaa !16
   %i.aa = getelementptr inbounds nuw i8, ptr %i.k, i64 232
   %i.ab = getelementptr inbounds nuw i8, ptr %i.k, i64 248 ; 2 uses
   store ptr %i.ab, ptr %i.aa, align 8, !tbaa !14
@@ -251,12 +251,12 @@ bb.a:
   %i.aj = getelementptr inbounds nuw i8, ptr %i.k, i64 384
   %i.ak = getelementptr inbounds nuw i8, ptr %i.k, i64 400 ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ai, i8 0, i64 24, i1 false)
-  store ptr %i.ak, ptr %i.aj, align 8, !tbaa !14
-  store i8 0, ptr %i.ak, align 8, !tbaa !16
+  store ptr %i.ak, ptr %i.aj, align 16, !tbaa !14
+  store i8 0, ptr %i.ak, align 16, !tbaa !16
   %i.al = getelementptr inbounds nuw i8, ptr %i.k, i64 416
   %i.am = getelementptr inbounds nuw i8, ptr %i.k, i64 432 ; 2 uses
-  store ptr %i.am, ptr %i.al, align 8, !tbaa !14
-  store i8 0, ptr %i.am, align 8, !tbaa !16
+  store ptr %i.am, ptr %i.al, align 16, !tbaa !14
+  store i8 0, ptr %i.am, align 16, !tbaa !16
   %i.an = getelementptr inbounds nuw i8, ptr %i.k, i64 449
   store i8 0, ptr %i.an, align 1, !tbaa !17
   %i.ao = getelementptr inbounds nuw i8, ptr %i.k, i64 452
@@ -443,7 +443,7 @@ bb.s:                                             ; preds = %_ZNSt14_Function_ba
           to label %_ZN8TINShiftL12getReqStringERKN13proj_nlohmann10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES3_IhSaIhEEEEPKc.exit unwind label %bb.bm
 
 _ZN8TINShiftL12getReqStringERKN13proj_nlohmann10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES3_IhSaIhEEEEPKc.exit: ; preds = %bb.s
-  %i.cg = load ptr, ptr %i.k, align 8, !tbaa !8   ; 6 uses
+  %i.cg = load ptr, ptr %i.k, align 16, !tbaa !8  ; 6 uses
   %i.ch = icmp eq ptr %i.cg, %i.m
   %i.ci = load ptr, ptr %9, align 8, !tbaa !8     ; 5 uses
   %i.cj = getelementptr inbounds nuw i8, ptr %9, i64 16 ; 4 uses
@@ -478,22 +478,22 @@ bb.v:                                             ; preds = %bb.t
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i: ; preds = %bb.v, %bb.u, %bb.t
   %i.cp = load i64, ptr %i.cl, align 8, !tbaa !15 ; 2 uses
   store i64 %i.cp, ptr %i.n, align 8, !tbaa !15
-  %i.cq = load ptr, ptr %i.k, align 8, !tbaa !8
+  %i.cq = load ptr, ptr %i.k, align 16, !tbaa !8
   %i.cr = getelementptr inbounds nuw i8, ptr %i.cq, i64 %i.cp
   store i8 0, ptr %i.cr, align 1, !tbaa !16
   %.pre.i = load ptr, ptr %9, align 8, !tbaa !8
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit
 
 .thread.i:                                        ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i
-  store ptr %i.ci, ptr %i.k, align 8, !tbaa !8
+  store ptr %i.ci, ptr %i.k, align 16, !tbaa !8
   %i.cs = getelementptr inbounds nuw i8, ptr %9, i64 8
   %i.ct = load <2 x i64>, ptr %i.cs, align 8, !tbaa !16
   store <2 x i64> %i.ct, ptr %i.n, align 8, !tbaa !16
   br label %bb.x
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit23.thread25.i: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i
-  %i.cu = load i64, ptr %i.m, align 8, !tbaa !16
-  store ptr %i.ci, ptr %i.k, align 8, !tbaa !8
+  %i.cu = load i64, ptr %i.m, align 16, !tbaa !16
+  store ptr %i.ci, ptr %i.k, align 16, !tbaa !8
   %i.cv = getelementptr inbounds nuw i8, ptr %9, i64 8
   %i.cw = load <2 x i64>, ptr %i.cv, align 8, !tbaa !16
   store <2 x i64> %i.cw, ptr %i.n, align 8, !tbaa !16

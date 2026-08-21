@@ -102,7 +102,7 @@ bb.f:                                             ; preds = %bb.e
   store ptr %i.o, ptr %i.l, align 8, !tbaa !14
   %i.p = load ptr, ptr %1, align 8, !tbaa !14
   %i.q = load i64, ptr %i.d, align 8, !tbaa !17
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.o, ptr align 1 %i.p, i64 %i.q, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.o, ptr align 1 %i.p, i64 %i.q, i1 false)
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
@@ -505,7 +505,7 @@ bb.gk:                                            ; preds = %bb.gj
   store ptr %i.sv, ptr %i.ss, align 8, !tbaa !14
   %i.sw = load ptr, ptr %i.sf, align 8, !tbaa !14
   %i.sx = load i64, ptr %i.sk, align 8, !tbaa !17
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.sv, ptr align 1 %i.sw, i64 %i.sx, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.sv, ptr align 1 %i.sw, i64 %i.sx, i1 false)
   br label %bb.gl
 
 bb.gl:                                            ; preds = %bb.gk, %bb.gj
@@ -557,7 +557,7 @@ bb.gr:                                            ; preds = %bb.gq
   store ptr %i.tn, ptr %i.tk, align 8, !tbaa !14
   %i.to = load ptr, ptr %i.sf, align 8, !tbaa !14
   %i.tp = load i64, ptr %i.tc, align 8, !tbaa !17
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.tn, ptr align 1 %i.to, i64 %i.tp, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.tn, ptr align 1 %i.to, i64 %i.tp, i1 false)
   br label %bb.gs
 
 bb.gs:                                            ; preds = %bb.gr, %bb.gq
@@ -609,7 +609,7 @@ bb.gy:                                            ; preds = %bb.gx
   store ptr %i.uf, ptr %i.uc, align 8, !tbaa !14
   %i.ug = load ptr, ptr %i.sf, align 8, !tbaa !14
   %i.uh = load i64, ptr %i.tu, align 8, !tbaa !17
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.uf, ptr align 1 %i.ug, i64 %i.uh, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.uf, ptr align 1 %i.ug, i64 %i.uh, i1 false)
   br label %bb.gz
 
 bb.gz:                                            ; preds = %bb.gy, %bb.gx
@@ -671,7 +671,7 @@ bb.hg:                                            ; preds = %bb.hf
   store ptr %i.va, ptr %i.uv, align 8, !tbaa !14
   %i.vb = load ptr, ptr %i.sf, align 8, !tbaa !14
   %i.vc = load i64, ptr %i.un, align 8, !tbaa !17
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.va, ptr align 1 %i.vb, i64 %i.vc, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.va, ptr align 1 %i.vb, i64 %i.vc, i1 false)
   br label %bb.hh
 
 bb.hh:                                            ; preds = %bb.hg, %bb.hf
@@ -737,7 +737,7 @@ bb.ho:                                            ; preds = %bb.hn
   store ptr %i.vx, ptr %i.vu, align 8, !tbaa !14
   %i.vy = load ptr, ptr %i.sf, align 8, !tbaa !14
   %i.vz = load i64, ptr %i.vm, align 8, !tbaa !17
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.vx, ptr align 1 %i.vy, i64 %i.vz, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.vx, ptr align 1 %i.vy, i64 %i.vz, i1 false)
   br label %bb.hp
 
 bb.hp:                                            ; preds = %bb.ho, %bb.hn
@@ -789,7 +789,7 @@ bb.hv:                                            ; preds = %bb.hu
   store ptr %i.wp, ptr %i.wm, align 8, !tbaa !14
   %i.wq = load ptr, ptr %i.sf, align 8, !tbaa !14
   %i.wr = load i64, ptr %i.we, align 8, !tbaa !17
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.wp, ptr align 1 %i.wq, i64 %i.wr, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.wp, ptr align 1 %i.wq, i64 %i.wr, i1 false)
   br label %bb.hw
 
 bb.hw:                                            ; preds = %bb.hv, %bb.hu
@@ -851,7 +851,7 @@ bb.id:                                            ; preds = %bb.ic
   store ptr %i.xk, ptr %i.xf, align 8, !tbaa !14
   %i.xl = load ptr, ptr %i.sf, align 8, !tbaa !14
   %i.xm = load i64, ptr %i.wx, align 8, !tbaa !17
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.xk, ptr align 1 %i.xl, i64 %i.xm, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.xk, ptr align 1 %i.xl, i64 %i.xm, i1 false)
   br label %bb.ie
 
 bb.ie:                                            ; preds = %bb.id, %bb.ic
@@ -917,7 +917,7 @@ bb.il:                                            ; preds = %bb.ik
   store ptr %i.yh, ptr %i.ye, align 8, !tbaa !14
   %i.yi = load ptr, ptr %i.sf, align 8, !tbaa !14
   %i.yj = load i64, ptr %i.xw, align 8, !tbaa !17
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.yh, ptr align 1 %i.yi, i64 %i.yj, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.yh, ptr align 1 %i.yi, i64 %i.yj, i1 false)
   br label %bb.im
 
 bb.im:                                            ; preds = %bb.il, %bb.ik
