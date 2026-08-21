@@ -31,12 +31,10 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.e
 
 bb.e:                                             ; preds = %.peel.next, %bb.e
-  %.02835 = phi i64 [ 1, %.peel.next ], [ %i.q, %bb.e ] ; 5 uses
+  %.02835 = phi i64 [ 1, %.peel.next ], [ %i.q, %bb.e ] ; 4 uses
   %.02934 = phi ptr [ %i.h, %.peel.next ], [ %i.p, %bb.e ] ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %.02934, i64 8
-  %5 = sub nsw i64 0, %.02835
-  %6 = getelementptr inbounds [8 x i8], ptr %i.c, i64 %5
-  %i.j = tail call double @ddot_k(i64 noundef %.02835, ptr noundef nonnull %i.i, i64 noundef 1, ptr noundef nonnull %6, i64 noundef 1) #2
+  %i.j = tail call double @ddot_k(i64 noundef %.02835, ptr noundef nonnull %i.i, i64 noundef 1, ptr noundef nonnull %i.c, i64 noundef 1) #2
   %i.k = xor i64 %.02835, -1
   %i.l = getelementptr [8 x i8], ptr %i.c, i64 %i.k ; 2 uses
   %i.m = load double, ptr %i.l, align 8, !tbaa !8

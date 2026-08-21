@@ -203,17 +203,12 @@ bb.a:
 .preheader:                                       ; preds = %.preheader.lr.ph, %._crit_edge42
   %i.g = phi i32 [ %i.b, %.preheader.lr.ph ], [ %i.m, %._crit_edge42 ]
   %i.h = phi ptr [ %.pre, %.preheader.lr.ph ], [ %i.n, %._crit_edge42 ] ; 4 uses
-  %indvars.iv50 = phi i64 [ 0, %.preheader.lr.ph ], [ %.pre59, %._crit_edge42 ] ; 5 uses
+  %indvars.iv50 = phi i64 [ 0, %.preheader.lr.ph ], [ %.pre59, %._crit_edge42 ] ; 4 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 24 ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.h, i64 32 ; 2 uses
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !76
   %i.l = load ptr, ptr %i.i, align 8, !tbaa !45
-  %1 = ptrtoint ptr %i.k to i64
-  %2 = ptrtoint ptr %i.l to i64
-  %3 = sub i64 %1, %2
-  %4 = ashr exact i64 %3, 2
-  %5 = sub nsw i64 0, %indvars.iv50
-  %.not45 = icmp eq i64 %4, %5
+  %.not45 = icmp eq ptr %i.k, %i.l
   %.pre59 = add nuw nsw i64 %indvars.iv50, 1      ; 6 uses
   br i1 %.not45, label %._crit_edge42, label %.lr.ph41
 

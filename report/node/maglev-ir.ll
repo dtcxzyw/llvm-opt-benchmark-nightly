@@ -204,10 +204,8 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph, %bb.h
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.h ] ; 2 uses
-  %2 = sub nsw i64 0, %indvars.iv
-  %3 = getelementptr inbounds [8 x i8], ptr %i.ah, i64 %2
-  %i.ai = load ptr, ptr %3, align 8               ; 3 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.h ]
+  %i.ai = load ptr, ptr %i.ah, align 8            ; 3 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ai, i64 8
   %i.ak = load i64, ptr %i.aj, align 8
   %i.al = and i64 %i.ak, 65535
@@ -610,7 +608,7 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.g, %bb.a
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.g ], [ 0, %bb.a ] ; 9 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.g ], [ 0, %bb.a ] ; 8 uses
   %i.i = load i32, ptr %i.a, align 4
   %i.j = tail call ptr @_ZN2v88internal8Builtins26CallInterfaceDescriptorForENS0_7BuiltinE(i32 noundef %i.i) #28 ; 2 uses
   %i.k = load i8, ptr %i.e, align 8, !range !21, !noundef !16
@@ -682,9 +680,7 @@ bb.g:                                             ; preds = %_ZNK2v88internal6ma
   %i.aw = shl nuw nsw i64 %i.av, 41
   %i.ax = or disjoint i64 %i.aw, 824633720825
   store i64 %i.ax, ptr %i.at, align 8
-  %1 = sub nsw i64 0, %indvars.iv
-  %2 = getelementptr inbounds [8 x i8], ptr %i.h, i64 %1
-  %i.ay = load ptr, ptr %2, align 8
+  %i.ay = load ptr, ptr %i.h, align 8
   %i.az = load ptr, ptr %0, align 8
   %i.ba = getelementptr inbounds nuw i8, ptr %i.az, i64 8
   %i.bb = load ptr, ptr %i.ba, align 8

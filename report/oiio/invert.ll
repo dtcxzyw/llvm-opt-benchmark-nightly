@@ -79,7 +79,7 @@ middle.block:                                     ; preds = %vector.body
   br i1 %exitcond.not.i, label %.preheader.i, label %.lr.ph.i, !llvm.loop !11
 
 bb.c:                                             ; preds = %._crit_edge126.split.us.i, %.lr.ph133.i
-  %indvars.iv.i = phi i64 [ 0, %.lr.ph133.i ], [ %indvars.iv.next.i, %._crit_edge126.split.us.i ] ; 11 uses
+  %indvars.iv.i = phi i64 [ 0, %.lr.ph133.i ], [ %indvars.iv.next.i, %._crit_edge126.split.us.i ] ; 10 uses
   %.0132.i = phi i32 [ %i.h, %.lr.ph133.i ], [ %i.di, %._crit_edge126.split.us.i ] ; 2 uses
   %.082131.i = phi i32 [ 1, %.lr.ph133.i ], [ %i.dh, %._crit_edge126.split.us.i ] ; 6 uses
   %.086130.i = phi ptr [ %0, %.lr.ph133.i ], [ %i.dj, %._crit_edge126.split.us.i ] ; 5 uses
@@ -166,13 +166,11 @@ bb.d:                                             ; preds = %._crit_edge.i
   br i1 %.not.i, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.be = getelementptr inbounds nuw [4 x i8], ptr %.198127.i, i64 %i.bd
-  %3 = sub nsw i64 0, %indvars.iv.i
-  %4 = getelementptr inbounds [4 x i8], ptr %i.be, i64 %3 ; 2 uses
+  %i.be = getelementptr inbounds nuw [4 x i8], ptr %.198127.i, i64 %i.bd ; 2 uses
   %i.bf = load i32, ptr %.198127.i, align 4, !tbaa !3
-  %i.bg = load i32, ptr %4, align 4, !tbaa !3
+  %i.bg = load i32, ptr %i.be, align 4, !tbaa !3
   store i32 %i.bg, ptr %.198127.i, align 4, !tbaa !3
-  store i32 %i.bf, ptr %4, align 4, !tbaa !3
+  store i32 %i.bf, ptr %i.be, align 4, !tbaa !3
   %i.bh = sub i32 %.296.i.lcssa, %i.af
   %i.bi = mul i32 %i.bh, %2
   %i.bj = zext i32 %i.bi to i64

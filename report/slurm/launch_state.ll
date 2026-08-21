@@ -201,10 +201,9 @@ bb.c:                                             ; preds = %.preheader19, %bb.d
   %scevgep = getelementptr nuw i8, ptr @active_job_id, i64 %i.j
   %i.k = getelementptr i8, ptr @active_job_id, i64 %i.j
   %scevgep26 = getelementptr i8, ptr %i.k, i64 24
-  %1 = sub nuw nsw i64 62, %indvars.iv
-  %i.l = mul nuw nsw i64 %1, 24
-  %i.m = add nuw nsw i64 %i.l, 24
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep, ptr noundef nonnull align 8 dereferenceable(1) %scevgep26, i64 %i.m, i1 false)
+  %i.l = mul nsw i64 %indvars.iv, -24
+  %i.m = add nsw i64 %i.l, 1512
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %scevgep, ptr align 8 %scevgep26, i64 %i.m, i1 false)
   br label %._crit_edge
 
 bb.d:                                             ; preds = %bb.c

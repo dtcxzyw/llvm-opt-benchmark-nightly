@@ -203,9 +203,8 @@ bb.k:                                             ; preds = %.preheader, %bb.k
   %indvars.iv = phi i64 [ %indvars.iv.next, %bb.k ], [ 0, %.preheader ] ; 2 uses
   %.062 = phi i32 [ %i.aq, %bb.k ], [ %.062.ph, %.preheader ] ; 2 uses
   %i.an = trunc i32 %.062 to i8
-  %i.ao = sub nsw i64 10, %indvars.iv
-  %3 = and i64 %i.ao, 4294967295
-  %i.ap = getelementptr inbounds nuw i8, ptr %.06482, i64 %3
+  %i.ao = sub nuw nsw i64 10, %indvars.iv
+  %i.ap = getelementptr inbounds nuw i8, ptr %.06482, i64 %i.ao
   store i8 %i.an, ptr %i.ap, align 1, !tbaa !12
   %i.aq = lshr i32 %.062, 8                       ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1

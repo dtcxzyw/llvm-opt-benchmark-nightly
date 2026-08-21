@@ -204,13 +204,11 @@ bb.g:                                             ; preds = %bb.c, %bb.e, %bb.f
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ae, i64 16 ; 2 uses
   %i.af = load <2 x i32>, ptr %.sroa.5.0..sroa_idx, align 8
   %.sroa.5.0.copyload = load i32, ptr %.sroa.5.0..sroa_idx, align 8 ; 2 uses
-  %3 = trunc nuw nsw i64 %indvars.iv86 to i32
   br label %bb.h
 
 bb.h:                                             ; preds = %.lr.ph79, %bb.k
-  %.077 = phi i32 [ %3, %.lr.ph79 ], [ %5, %bb.k ] ; 5 uses
-  %4 = zext nneg i32 %.077 to i64
-  %i.ag = getelementptr [24 x i8], ptr %i.f, i64 %4 ; 4 uses
+  %indvars.iv88 = phi i64 [ %indvars.iv86, %.lr.ph79 ], [ %indvars.iv.next89, %bb.k ] ; 5 uses
+  %i.ag = getelementptr [24 x i8], ptr %i.f, i64 %indvars.iv88 ; 4 uses
   %i.ah = getelementptr i8, ptr %i.ag, i64 -24
   %i.ai = getelementptr i8, ptr %i.ag, i64 -8
   %i.aj = load i32, ptr %i.ai, align 8            ; 2 uses
@@ -229,14 +227,13 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.j, %bb.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ag, ptr noundef nonnull align 8 dereferenceable(24) %i.ah, i64 24, i1 false)
-  %5 = add nsw i32 %.077, -1
-  %i.ap = icmp sgt i32 %.077, 1
+  %indvars.iv.next89 = add nsw i64 %indvars.iv88, -1
+  %i.ap = icmp sgt i64 %indvars.iv88, 1
   br i1 %i.ap, label %bb.h, label %.thread, !llvm.loop !44
 
 .thread:                                          ; preds = %bb.h, %bb.j, %bb.k
-  %.0.lcssa = phi i32 [ %.077, %bb.h ], [ %.077, %bb.j ], [ 0, %bb.k ]
-  %6 = sext i32 %.0.lcssa to i64
-  %i.aq = getelementptr inbounds [24 x i8], ptr %i.f, i64 %6 ; 3 uses
+  %.0.lcssa = phi i64 [ %indvars.iv88, %bb.h ], [ %indvars.iv88, %bb.j ], [ 0, %bb.k ]
+  %i.aq = getelementptr inbounds [24 x i8], ptr %i.f, i64 %.0.lcssa ; 3 uses
   store ptr %.sroa.0.0.copyload, ptr %i.aq, align 8
   %.sroa.4.0..sroa_idx9 = getelementptr inbounds nuw i8, ptr %i.aq, i64 8
   store double %.sroa.4.0.copyload, ptr %.sroa.4.0..sroa_idx9, align 8

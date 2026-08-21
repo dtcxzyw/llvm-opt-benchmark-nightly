@@ -204,14 +204,13 @@ bb.av:                                            ; preds = %bb.au
   br label %.lr.ph34.i
 
 .lr.ph34.i:                                       ; preds = %.outer.i, %.lr.ph34.lr.ph.i
-  %indvar = phi i64 [ %indvar.next, %.outer.i ], [ 0, %.lr.ph34.lr.ph.i ] ; 4 uses
+  %indvar = phi i64 [ %indvar.next, %.outer.i ], [ 0, %.lr.ph34.lr.ph.i ] ; 3 uses
   %.0.ph39.i = phi ptr [ %i.hh, %.outer.i ], [ %i.gr, %.lr.ph34.lr.ph.i ] ; 4 uses
   %.026.ph38.i = phi i32 [ %.02633.i, %.outer.i ], [ %i.gs, %.lr.ph34.lr.ph.i ] ; 2 uses
   %indvars193 = trunc i64 %indvar to i32          ; 2 uses
   %i.gt = shl i64 %indvar, 3
   %i.gu = getelementptr i8, ptr %0, i64 %i.gt
   %scevgep = getelementptr i8, ptr %i.gu, i64 2152
-  %2 = xor i64 %indvar, -1
   %i.gv = getelementptr i8, ptr %.0.ph39.i, i64 4
   %indvar.next = add nuw nsw i64 %indvar, 1       ; 2 uses
   %indvars = trunc i64 %indvar.next to i32        ; 2 uses
@@ -220,8 +219,8 @@ bb.av:                                            ; preds = %bb.au
 bb.aw:                                            ; preds = %._crit_edge.i, %.lr.ph34.i
   %.02633.i = phi i32 [ %.026.ph38.i, %.lr.ph34.i ], [ %i.hf, %._crit_edge.i ] ; 6 uses
   %i.gw = zext i32 %.02633.i to i64
-  %3 = add nsw i64 %2, %i.gw
-  %4 = shl nuw i64 %3, 3
+  %2 = shl nuw nsw i64 %i.gw, 3
+  %3 = add nsw i64 %2, -8
   %i.gx = load i32, ptr %i.am, align 8            ; 2 uses
   %i.gy = load i32, ptr %.0.ph39.i, align 4
   %i.gz = sub i32 %i.gx, %i.gy
@@ -245,7 +244,7 @@ bb.az:                                            ; preds = %bb.ay, %bb.ax
   br i1 %i.he, label %.lr.ph.preheader.i, label %._crit_edge.i
 
 .lr.ph.preheader.i:                               ; preds = %bb.az
-  call void @llvm.memmove.p0.p0.i64(ptr align 8 %.0.ph39.i, ptr align 8 %scevgep, i64 %4, i1 false)
+  call void @llvm.memmove.p0.p0.i64(ptr align 8 %.0.ph39.i, ptr align 8 %scevgep, i64 %3, i1 false)
   br label %._crit_edge.i
 
 ._crit_edge.i:                                    ; preds = %.lr.ph.preheader.i, %bb.az
@@ -648,7 +647,10 @@ bb.ek:                                            ; preds = %._crit_edge.i.i
   %scevgep.i.i.i = getelementptr i8, ptr %i.ws, i64 2152
   %scevgep27.i.i.i = getelementptr i8, ptr %i.ws, i64 2160
   %i.wt = getelementptr i8, ptr %.017.ph24.i.i.i, i64 4
+  %4 = add i8 %i.wq, -1
+  %5 = zext i8 %4 to i64
   %i.wu = trunc nuw i32 %.018.ph23.i.i.i to i8
+  %6 = add nuw nsw i64 %5, 4294967294
   br label %bb.el
 
 .loopexit.i.i.i:                                  ; preds = %.lr.ph.preheader.i.i.i, %bb.er
@@ -659,14 +661,10 @@ bb.ek:                                            ; preds = %._crit_edge.i.i
 bb.el:                                            ; preds = %.loopexit.i.i.i, %.lr.ph21.i.i.i
   %indvars.iv = phi i64 [ %indvars.iv.next, %.loopexit.i.i.i ], [ 0, %.lr.ph21.i.i.i ] ; 2 uses
   %i.ww = phi i8 [ %i.xm, %.loopexit.i.i.i ], [ %i.wq, %.lr.ph21.i.i.i ] ; 3 uses
-  %5 = trunc nuw i64 %indvars.iv to i8
-  %6 = xor i8 %5, -1
-  %7 = add i8 %i.wq, %6
-  %8 = zext i8 %7 to i64
-  %reass.sub.i.i.i = sub nsw i64 %8, %indvar.i.i.i
-  %i.wx = shl i64 %reass.sub.i.i.i, 3
-  %9 = add i64 %i.wx, 34359738352
-  %i.wy = and i64 %9, 34359738360
+  %7 = add nuw nsw i64 %indvar.i.i.i, %indvars.iv
+  %reass.sub.i.i.i = sub nsw i64 %6, %7
+  %i.wx = shl nuw nsw i64 %reass.sub.i.i.i, 3
+  %i.wy = and i64 %i.wx, 34359738360
   %i.wz = add nuw nsw i64 %i.wy, 8
   %i.xa = load i32, ptr %.017.ph24.i.i.i, align 4 ; 3 uses
   %i.xb = load i32, ptr %i.wt, align 4            ; 3 uses

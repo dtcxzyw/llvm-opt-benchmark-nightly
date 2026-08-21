@@ -203,6 +203,7 @@ bb.h:                                             ; preds = %bb.a
 
 .lr.ph.preheader.i82:                             ; preds = %.lr.ph28.i
   %wide.trip.count.i83 = zext nneg i32 %2 to i64
+  %9 = getelementptr inbounds i8, ptr %i.ku, i64 -1 ; 2 uses
   %i.la = add nsw i32 %1, -1
   %xtraiter536 = and i32 %1, 7                    ; 3 uses
   %i.lb = icmp ult i32 %i.la, 7
@@ -212,15 +213,12 @@ bb.h:                                             ; preds = %bb.a
   br label %.lr.ph.i84
 
 .lr.ph.i84:                                       ; preds = %._crit_edge.i88, %.lr.ph.preheader.i82
-  %indvars.iv.i85 = phi i64 [ 0, %.lr.ph.preheader.i82 ], [ %indvars.iv.next.i89, %._crit_edge.i88 ] ; 2 uses
+  %indvars.iv.i85 = phi i64 [ 0, %.lr.ph.preheader.i82 ], [ %indvars.iv.next.i89, %._crit_edge.i88 ]
   %.02125.i = phi ptr [ %0, %.lr.ph.preheader.i82 ], [ %i.md, %._crit_edge.i88 ] ; 2 uses
-  %9 = sub nsw i64 0, %indvars.iv.i85
-  %10 = getelementptr inbounds i8, ptr %i.ku, i64 %9
-  %11 = getelementptr inbounds i8, ptr %10, i64 -1 ; 2 uses
   br i1 %i.lb, label %.epil.preheader535, label %.lr.ph.i84.new
 
 .lr.ph.i84.new:                                   ; preds = %.lr.ph.i84, %.lr.ph.i84.new
-  %.01923.i86 = phi ptr [ %i.lz, %.lr.ph.i84.new ], [ %11, %.lr.ph.i84 ] ; 2 uses
+  %.01923.i86 = phi ptr [ %i.lz, %.lr.ph.i84.new ], [ %9, %.lr.ph.i84 ] ; 2 uses
   %.122.i = phi ptr [ %i.ly, %.lr.ph.i84.new ], [ %.02125.i, %.lr.ph.i84 ] ; 9 uses
   %niter542 = phi i32 [ %niter542.next.7, %.lr.ph.i84.new ], [ 0, %.lr.ph.i84 ]
   %i.lc = load i8, ptr %.122.i, align 1, !tbaa !9
@@ -263,7 +261,7 @@ bb.h:                                             ; preds = %bb.a
   br i1 %lcmp.mod538.not, label %._crit_edge.i88, label %.epil.preheader535
 
 .epil.preheader535:                               ; preds = %._crit_edge.i88.unr-lcssa, %.lr.ph.i84
-  %.01923.i86.epil.init = phi ptr [ %11, %.lr.ph.i84 ], [ %i.lz, %._crit_edge.i88.unr-lcssa ]
+  %.01923.i86.epil.init = phi ptr [ %9, %.lr.ph.i84 ], [ %i.lz, %._crit_edge.i88.unr-lcssa ]
   %.122.i.epil.init = phi ptr [ %.02125.i, %.lr.ph.i84 ], [ %i.ly, %._crit_edge.i88.unr-lcssa ]
   tail call void @llvm.assume(i1 %lcmp.mod540)
   br label %bb.i
@@ -307,6 +305,7 @@ bb.j:                                             ; preds = %bb.a
 
 .lr.ph.preheader.i90:                             ; preds = %.lr.ph30.i
   %wide.trip.count.i91 = zext nneg i32 %2 to i64
+  %10 = getelementptr inbounds i8, ptr %i.mj, i64 -1 ; 2 uses
   %i.mq = add nsw i32 %1, -1
   %xtraiter528 = and i32 %1, 7                    ; 3 uses
   %i.mr = icmp ult i32 %i.mq, 7
@@ -316,15 +315,12 @@ bb.j:                                             ; preds = %bb.a
   br label %.lr.ph.i92
 
 .lr.ph.i92:                                       ; preds = %._crit_edge.i97, %.lr.ph.preheader.i90
-  %indvars.iv.i93 = phi i64 [ 0, %.lr.ph.preheader.i90 ], [ %indvars.iv.next.i98, %._crit_edge.i97 ] ; 2 uses
+  %indvars.iv.i93 = phi i64 [ 0, %.lr.ph.preheader.i90 ], [ %indvars.iv.next.i98, %._crit_edge.i97 ]
   %.02327.i = phi ptr [ %0, %.lr.ph.preheader.i90 ], [ %i.nt, %._crit_edge.i97 ] ; 2 uses
-  %12 = sub nsw i64 0, %indvars.iv.i93
-  %13 = getelementptr inbounds i8, ptr %i.mj, i64 %12
-  %14 = getelementptr inbounds i8, ptr %13, i64 -1 ; 2 uses
   br i1 %i.mr, label %.epil.preheader527, label %.lr.ph.i92.new
 
 .lr.ph.i92.new:                                   ; preds = %.lr.ph.i92, %.lr.ph.i92.new
-  %.02125.i95 = phi ptr [ %i.np, %.lr.ph.i92.new ], [ %14, %.lr.ph.i92 ] ; 2 uses
+  %.02125.i95 = phi ptr [ %i.np, %.lr.ph.i92.new ], [ %10, %.lr.ph.i92 ] ; 2 uses
   %.124.i = phi ptr [ %i.no, %.lr.ph.i92.new ], [ %.02327.i, %.lr.ph.i92 ] ; 9 uses
   %niter534 = phi i32 [ %niter534.next.7, %.lr.ph.i92.new ], [ 0, %.lr.ph.i92 ]
   %i.ms = load i8, ptr %.124.i, align 1, !tbaa !9
@@ -367,7 +363,7 @@ bb.j:                                             ; preds = %bb.a
   br i1 %lcmp.mod530.not, label %._crit_edge.i97, label %.epil.preheader527
 
 .epil.preheader527:                               ; preds = %._crit_edge.i97.unr-lcssa, %.lr.ph.i92
-  %.02125.i95.epil.init = phi ptr [ %14, %.lr.ph.i92 ], [ %i.np, %._crit_edge.i97.unr-lcssa ]
+  %.02125.i95.epil.init = phi ptr [ %10, %.lr.ph.i92 ], [ %i.np, %._crit_edge.i97.unr-lcssa ]
   %.124.i.epil.init = phi ptr [ %.02327.i, %.lr.ph.i92 ], [ %i.no, %._crit_edge.i97.unr-lcssa ]
   tail call void @llvm.assume(i1 %lcmp.mod532)
   br label %bb.k
