@@ -24,8 +24,6 @@ module asm(target_features: "+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87", target_cpu:
 %"struct.std::__cxx11::basic_string<char>::_Alloc_hider" = type { ptr }
 %union.anon = type { i64, [8 x i8] }
 %struct.timespec = type { i64, i64 }
-%"class.std::bitset" = type { %"struct.std::_Base_bitset" }
-%"struct.std::_Base_bitset" = type { [2 x i64] }
 
 $_ZN14JoystickLayoutD2Ev = comdat any
 
@@ -428,7 +426,7 @@ bb.ag:                                            ; preds = %_ZN14JoystickLayout
 define dso_local noundef zeroext i1 @_ZN18JoystickController11handleEventERKN6SEvent14SJoystickEventE(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(504) %0, ptr noundef nonnull align 4 dereferenceable(44) %1) local_unnamed_addr #2 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %2 = alloca %struct.timespec, align 8           ; 5 uses
-  %3 = alloca %"class.std::bitset", align 8       ; 6 uses
+  %.sroa.0 = alloca [2 x i64], align 8            ; 6 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 42
   %i.b = load i8, ptr %i.a, align 2, !tbaa !92
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 104
@@ -450,8 +448,8 @@ bb.b:                                             ; preds = %bb.a
   %i.m = fdiv nsz float %i.l, 1.000000e+03
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 144 ; 2 uses
   store float %i.m, ptr %i.n, align 8, !tbaa !96
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #18
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %3, i8 0, i64 16, i1 false)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0, i8 0, i64 16, i1 false)
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !77   ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -488,11 +486,12 @@ bb.d:                                             ; preds = %bb.c
 _ZNSt6bitsetILm81EE3setEmb.exit:                  ; preds = %bb.c
   %i.ad = and i64 %i.ab, 63
   %i.ae = shl nuw i64 1, %i.ad
-  %i.af = lshr i64 %i.ab, 6
-  %4 = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %i.af ; 2 uses
-  %i.ag = load i64, ptr %4, align 8, !tbaa !28
+  %i.af = lshr i64 %i.ab, 3
+  %.sroa.0.0..sroa_stride = and i64 %i.af, 8
+  %.sroa.0.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %.sroa.0.0..sroa_stride ; 2 uses
+  %i.ag = load i64, ptr %.sroa.0.0..sroa_idx, align 8, !tbaa !28
   %i.ah = or i64 %i.ag, %i.ae
-  store i64 %i.ah, ptr %4, align 8, !tbaa !28
+  store i64 %i.ah, ptr %.sroa.0.0..sroa_idx, align 8, !tbaa !28
   br label %bb.e
 
 bb.e:                                             ; preds = %_ZNSt6bitsetILm81EE3setEmb.exit, %.lr.ph
@@ -529,11 +528,12 @@ bb.g:                                             ; preds = %bb.f
 _ZNSt6bitsetILm81EE3setEmb.exit42:                ; preds = %bb.f
   %i.av = and i64 %i.at, 63
   %i.aw = shl nuw i64 1, %i.av
-  %i.ax = lshr i64 %i.at, 6
-  %5 = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %i.ax ; 2 uses
-  %i.ay = load i64, ptr %5, align 8, !tbaa !28
+  %i.ax = lshr i64 %i.at, 3
+  %.sroa.0.0..sroa_stride74 = and i64 %i.ax, 8
+  %.sroa.0.0..sroa_idx76 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %.sroa.0.0..sroa_stride74 ; 2 uses
+  %i.ay = load i64, ptr %.sroa.0.0..sroa_idx76, align 8, !tbaa !28
   %i.az = or i64 %i.ay, %i.aw
-  store i64 %i.az, ptr %5, align 8, !tbaa !28
+  store i64 %i.az, ptr %.sroa.0.0..sroa_idx76, align 8, !tbaa !28
   br label %bb.h
 
 bb.h:                                             ; preds = %_ZNSt6bitsetILm81EE3setEmb.exit42, %.lr.ph88
@@ -587,16 +587,17 @@ bb.h:                                             ; preds = %_ZNSt6bitsetILm81EE
   %i.co = mul i16 %i.cm, %i.cn
   %i.cp = getelementptr inbounds nuw i8, ptr %0, i64 102
   store i16 %i.co, ptr %i.cp, align 2, !tbaa !19
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #18
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   br label %bb.r
 
 bb.i:                                             ; preds = %.preheader81, %_ZNSt6bitsetILm81EE9referenceaSERKS1_.exit
   %.03989 = phi i64 [ 0, %.preheader81 ], [ %i.dz, %_ZNSt6bitsetILm81EE9referenceaSERKS1_.exit ] ; 4 uses
   %i.cq = lshr i64 %.03989, 6                     ; 7 uses
-  %6 = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %i.cq
-  %7 = and i64 %.03989, 63
-  %i.cr = load i64, ptr %6, align 8, !tbaa !28
-  %i.cs = shl nuw i64 1, %7                       ; 10 uses
+  %3 = and i64 %.03989, 63
+  %.sroa.0.0..sroa_stride81 = shl nuw nsw i64 %i.cq, 3
+  %.sroa.0.0..sroa_idx83 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %.sroa.0.0..sroa_stride81
+  %i.cr = load i64, ptr %.sroa.0.0..sroa_idx83, align 8, !tbaa !28
+  %i.cs = shl nuw i64 1, %3                       ; 10 uses
   %i.ct = and i64 %i.cr, %i.cs
   %.not77 = icmp eq i64 %i.ct, 0
   br i1 %.not77, label %bb.m, label %bb.j

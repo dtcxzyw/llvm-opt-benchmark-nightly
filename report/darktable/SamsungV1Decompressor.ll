@@ -12,7 +12,6 @@ target triple = "x86_64-pc-linux-gnu"
 %"class.rawspeed::DataBuffer.base" = type { %"class.rawspeed::Buffer.base", i16 }
 %"class.rawspeed::Buffer.base" = type <{ ptr, i32 }>
 %struct.__va_list_tag = type { i32, i32, ptr, ptr }
-%"struct.std::array.63" = type { [2 x i32] }
 
 $_ZN8rawspeed14ThrowExceptionINS_19RawDecoderExceptionEEEvPKcz = comdat any
 
@@ -266,7 +265,7 @@ _ZN8rawspeed8RawImageD2Ev.exit:                   ; preds = %bb.a, %bb.c, %_ZN9_
 define hidden void @_ZNK8rawspeed21SamsungV1Decompressor10decompressEv(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(40) %0) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 iter.check:
   %.sroa.0.i.i.i = alloca i32, align 4            ; 5 uses
-  %1 = alloca %"struct.std::array.63", align 8    ; 6 uses
+  %.sroa.0 = alloca i64, align 8                  ; 7 uses
   %i.a = tail call noalias noundef nonnull dereferenceable(2048) ptr @_Znwm(i64 noundef 2048) #19 ; 164 uses
   store i16 0, ptr %i.a, align 1
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 2
@@ -669,8 +668,8 @@ _ZN8rawspeed14BitStreamerMSBCI2NS_11BitStreamerIS0_NS_39BitStreamerForwardSequen
   %.sroa.066.0187.us = phi i64 [ 0, %.lr.ph189.split.us.preheader ], [ %.sroa.066.2.us, %._crit_edge181.us ]
   %.sroa.8.0186.us = phi i32 [ 0, %.lr.ph189.split.us.preheader ], [ %.sroa.8.2.us, %._crit_edge181.us ]
   %.sroa.1769.0185.us = phi i32 [ 0, %.lr.ph189.split.us.preheader ], [ %.sroa.1769.2.us, %._crit_edge181.us ]
-  call void @llvm.lifetime.start.p0(ptr nonnull %1) #17
-  store i64 0, ptr %1, align 8
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
+  store i64 0, ptr %.sroa.0, align 8
   %i.gl = icmp samesign ugt i64 %indvars.iv233, 1
   br i1 %i.gl, label %bb.a, label %.lr.ph180.us
 
@@ -682,7 +681,7 @@ bb.a:                                             ; preds = %.lr.ph189.split.us
   %i.gp = getelementptr inbounds nuw [2 x i8], ptr %i.ez, i64 %i.go
   %i.gq = load <2 x i16>, ptr %i.gp, align 2, !tbaa !124
   %i.gr = zext <2 x i16> %i.gq to <2 x i32>
-  store <2 x i32> %i.gr, ptr %1, align 8
+  store <2 x i32> %i.gr, ptr %.sroa.0, align 8
   br label %.lr.ph180.us
 
 .lr.ph180.us:                                     ; preds = %bb.a, %.lr.ph189.split.us
@@ -788,11 +787,14 @@ _ZN8rawspeed21SamsungV1Decompressor11samsungDiffERNS_14BitStreamerMSBERKSt6vecto
   %.sroa.8.2.us = phi i32 [ %i.hu, %_ZN8rawspeed11BitStreamerINS_14BitStreamerMSBENS_39BitStreamerForwardSequentialReplenisherIS1_EEE4fillEi.exit.i.us ], [ %i.ii, %bb.g ] ; 2 uses
   %.sroa.066.2.us = phi i64 [ %i.hw, %_ZN8rawspeed11BitStreamerINS_14BitStreamerMSBENS_39BitStreamerForwardSequentialReplenisherIS1_EEE4fillEi.exit.i.us ], [ %i.ik, %bb.g ] ; 2 uses
   %.0.i.us = phi i32 [ 0, %_ZN8rawspeed11BitStreamerINS_14BitStreamerMSBENS_39BitStreamerForwardSequentialReplenisherIS1_EEE4fillEi.exit.i.us ], [ %.0.i.i.us, %bb.g ]
-  %i.in = and i64 %indvars.iv229, 1
-  %2 = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.in ; 2 uses
-  %i.io = load i32, ptr %2, align 4, !tbaa !19
+  %i.in = and i64 %indvars.iv229, 1               ; 2 uses
+  %.sroa.0.0..sroa_stride = shl nuw nsw i64 %i.in, 2
+  %.sroa.0.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %.sroa.0.0..sroa_stride
+  %i.io = load i32, ptr %.sroa.0.0..sroa_idx, align 4, !tbaa !19
   %i.ip = add nsw i32 %i.io, %.0.i.us             ; 3 uses
-  store i32 %i.ip, ptr %2, align 4, !tbaa !19
+  %.sroa.0.0..sroa_stride289 = shl nuw nsw i64 %i.in, 2
+  %.sroa.0.0..sroa_idx291 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %.sroa.0.0..sroa_stride289
+  store i32 %i.ip, ptr %.sroa.0.0..sroa_idx291, align 4, !tbaa !19
   %i.iq = icmp ult i32 %i.ip, 4096
   br i1 %i.iq, label %bb.h, label %.split191.us
 
@@ -805,7 +807,7 @@ bb.h:                                             ; preds = %_ZN8rawspeed21Samsu
   br i1 %exitcond232.not, label %._crit_edge181.us, label %bb.b, !llvm.loop !129
 
 ._crit_edge181.us:                                ; preds = %bb.h
-  call void @llvm.lifetime.end.p0(ptr nonnull %1) #17
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   %indvars.iv.next234 = add nuw nsw i64 %indvars.iv233, 1 ; 2 uses
   %exitcond237.not = icmp eq i64 %indvars.iv.next234, %wide.trip.count236
   br i1 %exitcond237.not, label %_ZNSt6vectorIN8rawspeed21SamsungV1Decompressor12encTableItemESaIS2_EED2Ev.exit, label %.lr.ph189.split.us, !llvm.loop !131
@@ -852,7 +854,7 @@ bb.m:                                             ; preds = %.split191.us
 
 bb.n:                                             ; preds = %bb.l, %bb.m
   %.pn.pn = phi { ptr, i32 } [ %i.iu, %bb.l ], [ %i.iv, %bb.m ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %1) #17
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   br label %_ZNSt6vectorIN8rawspeed21SamsungV1Decompressor12encTableItemESaIS2_EED2Ev.exit64
 
 _ZNSt6vectorIN8rawspeed21SamsungV1Decompressor12encTableItemESaIS2_EED2Ev.exit64: ; preds = %bb.n, %bb.j

@@ -162,7 +162,7 @@ bb.f:                                             ; preds = %Gia_ResubVarNum.exi
 ; Function Attrs: nounwind uwtable
 define noalias noundef ptr @Gia_ManDeriveTruths(ptr nofree readnone captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, ptr nofree noundef readonly captures(none) %3, ptr nofree noundef readonly captures(none) %4, i32 noundef %5) local_unnamed_addr #3 {
 bb.a:
-  %i.a = alloca [2 x ptr], align 16               ; 9 uses
+  %i.a = alloca [2 x ptr], align 16               ; 10 uses
   %i.b = getelementptr i8, ptr %4, i64 4          ; 2 uses
   %.val75 = load i32, ptr %i.b, align 4, !tbaa !8 ; 4 uses
   %i.c = icmp slt i32 %.val75, 7                  ; 2 uses
@@ -342,7 +342,6 @@ Vec_WrdStart.exit97:                              ; preds = %Abc_TtCopy.exit.loo
 
 .lr.ph125:                                        ; preds = %Vec_WrdStart.exit97
   %i.bx = getelementptr i8, ptr %2, i64 8         ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
   %i.by = icmp sgt i32 %5, 0                      ; 2 uses
   %i.bz = icmp sgt i32 %.fr139, 0
   %wide.trip.count.i99 = zext nneg i32 %.fr139 to i64 ; 2 uses
@@ -353,6 +352,7 @@ Vec_WrdStart.exit97:                              ; preds = %Abc_TtCopy.exit.loo
   %i.ca = sext i32 %5 to i64                      ; 2 uses
   %wide.trip.count164 = zext nneg i32 %i.i to i64
   %wide.trip.count159 = zext nneg i32 %smax158 to i64
+  %.8..8..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   br label %.lr.ph125.split.us
 
 .lr.ph125.split.us:                               ; preds = %.lr.ph125.split.us.preheader, %Abc_TtCountOnesVecMask.exit.thread.us
@@ -364,7 +364,7 @@ Vec_WrdStart.exit97:                              ; preds = %Abc_TtCopy.exit.loo
   %i.ce = or disjoint i64 %i.cb, 1                ; 2 uses
   %i.cf = mul nsw i64 %i.ce, %i.ca
   %i.cg = getelementptr inbounds [8 x i8], ptr %.val84.us, i64 %i.cf
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #15
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.ch = trunc nsw i64 %i.cb to i32
   %i.ci = shl i32 %i.ch, %i.k
   %i.cj = sext i32 %i.ci to i64
@@ -374,7 +374,7 @@ Vec_WrdStart.exit97:                              ; preds = %Abc_TtCopy.exit.loo
   %i.cm = shl i32 %i.cl, %i.k
   %i.cn = sext i32 %i.cm to i64
   %i.co = getelementptr inbounds [8 x i8], ptr %i.r, i64 %i.cn ; 3 uses
-  store ptr %i.co, ptr %6, align 8, !tbaa !29
+  store ptr %i.co, ptr %.8..8..sroa_idx, align 8, !tbaa !29
   br i1 %i.by, label %.lr.ph123.us, label %.lr.ph.i100.us.preheader
 
 .lr.ph123.us:                                     ; preds = %.lr.ph125.split.us, %bb.f
@@ -392,7 +392,6 @@ Vec_WrdStart.exit97:                              ; preds = %Abc_TtCopy.exit.loo
   %i.cy = getelementptr inbounds nuw [8 x i8], ptr %i.cg, i64 %i.ct
   %i.cz = load i64, ptr %i.cy, align 8, !tbaa !14
   %i.da = lshr i64 %i.cz, %i.cw                   ; 2 uses
-  %7 = and i64 %i.da, 1
   %i.db = trunc i64 %i.cx to i1                   ; 2 uses
   %i.dc = trunc i64 %i.da to i1                   ; 2 uses
   %or.cond.us = select i1 %i.db, i1 true, i1 %i.dc
@@ -407,8 +406,10 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
-  %8 = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %7
-  %i.dd = load ptr, ptr %8, align 8, !tbaa !29
+  %6 = shl i64 %i.da, 3
+  %.0..sroa_stride = and i64 %6, 8
+  %.0..0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 %.0..sroa_stride
+  %i.dd = load ptr, ptr %.0..0..sroa_idx, align 8, !tbaa !29
   %i.de = and i64 %i.cq, 63
   %i.df = shl nuw i64 1, %i.de
   %i.dg = ashr i32 %i.cr, 6
@@ -483,7 +484,7 @@ Abc_TtCountOnesVecMask.exit115.us:                ; preds = %Abc_TtCountOnes2.ex
   br label %Abc_TtCountOnesVecMask.exit.thread.us
 
 Abc_TtCountOnesVecMask.exit.thread.us:            ; preds = %Abc_TtCountOnesVecMask.exit115.us, %Abc_TtCountOnesVecMask.exit.us
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #15
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %indvars.iv.next162 = add nuw nsw i64 %indvars.iv161, 1 ; 2 uses
   %exitcond165.not = icmp eq i64 %indvars.iv.next162, %wide.trip.count164
   br i1 %exitcond165.not, label %._crit_edge126, label %.lr.ph125.split.us, !llvm.loop !32
@@ -495,6 +496,7 @@ Abc_TtCountOnesVecMask.exit.thread.us:            ; preds = %Abc_TtCountOnesVecM
   %i.ef = zext nneg i32 %5 to i64                 ; 2 uses
   %wide.trip.count153 = zext nneg i32 %i.i to i64
   %wide.trip.count148 = zext nneg i32 %i.w to i64
+  %.8..8..sroa_idx198 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   br label %.lr.ph123.us135
 
 .lr.ph123.us135:                                  ; preds = %.lr.ph123.us135.preheader, %._crit_edge.us136
@@ -506,7 +508,7 @@ Abc_TtCountOnesVecMask.exit.thread.us:            ; preds = %Abc_TtCountOnesVecM
   %i.ej = or disjoint i64 %i.eg, 1                ; 2 uses
   %i.ek = mul nuw nsw i64 %i.ej, %i.ef
   %i.el = getelementptr inbounds nuw [8 x i8], ptr %.val84.us128, i64 %i.ek
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #15
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.em = trunc nuw nsw i64 %i.eg to i32
   %i.en = shl i32 %i.em, %i.k
   %i.eo = sext i32 %i.en to i64
@@ -516,7 +518,7 @@ Abc_TtCountOnesVecMask.exit.thread.us:            ; preds = %Abc_TtCountOnesVecM
   %i.er = shl i32 %i.eq, %i.k
   %i.es = sext i32 %i.er to i64
   %i.et = getelementptr inbounds [8 x i8], ptr %i.r, i64 %i.es
-  store ptr %i.et, ptr %6, align 8, !tbaa !29
+  store ptr %i.et, ptr %.8..8..sroa_idx198, align 8, !tbaa !29
   br label %bb.i
 
 bb.i:                                             ; preds = %.lr.ph123.us135, %bb.m
@@ -534,7 +536,6 @@ bb.i:                                             ; preds = %.lr.ph123.us135, %b
   %i.fd = getelementptr inbounds nuw [8 x i8], ptr %i.el, i64 %i.ey
   %i.fe = load i64, ptr %i.fd, align 8, !tbaa !14
   %i.ff = lshr i64 %i.fe, %i.fb                   ; 2 uses
-  %9 = and i64 %i.ff, 1
   %i.fg = trunc i64 %i.fc to i1                   ; 2 uses
   %i.fh = trunc i64 %i.ff to i1                   ; 2 uses
   %or.cond.us131 = select i1 %i.fg, i1 true, i1 %i.fh
@@ -549,8 +550,10 @@ bb.k:                                             ; preds = %bb.j
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.j
-  %10 = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %9
-  %i.fi = load ptr, ptr %10, align 8, !tbaa !29
+  %7 = shl i64 %i.ff, 3
+  %.0..sroa_stride171 = and i64 %7, 8
+  %.0..0..sroa_idx197 = getelementptr inbounds nuw i8, ptr %i.a, i64 %.0..sroa_stride171
+  %i.fi = load ptr, ptr %.0..0..sroa_idx197, align 8, !tbaa !29
   %i.fj = and i64 %i.ev, 63
   %i.fk = shl nuw i64 1, %i.fj
   %i.fl = ashr i32 %i.ew, 6
@@ -567,7 +570,7 @@ bb.m:                                             ; preds = %bb.l, %bb.i
   br i1 %exitcond149.not, label %._crit_edge.us136, label %bb.i, !llvm.loop !30
 
 ._crit_edge.us136:                                ; preds = %bb.m
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #15
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %indvars.iv.next151 = add nuw nsw i64 %indvars.iv150, 1 ; 2 uses
   %exitcond154.not = icmp eq i64 %indvars.iv.next151, %wide.trip.count153
   br i1 %exitcond154.not, label %._crit_edge126, label %.lr.ph123.us135, !llvm.loop !32

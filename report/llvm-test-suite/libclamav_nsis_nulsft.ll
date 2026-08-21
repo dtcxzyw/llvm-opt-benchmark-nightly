@@ -67,9 +67,9 @@ define dso_local range(i32 3, 2) i32 @cli_scannulsft(i32 noundef %0, ptr noundef
 bb.a:
   %i.a = alloca [28 x i8], align 16               ; 7 uses
   %3 = alloca %struct.stat, align 8               ; 4 uses
-  %4 = alloca [4 x i8], align 4                   ; 8 uses
-  %5 = alloca %struct.nsis_st, align 8            ; 29 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #9
+  %.sroa.3.i.i = alloca [3 x i8], align 4         ; 10 uses
+  %4 = alloca %struct.nsis_st, align 8            ; 29 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #9
   tail call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str) #9
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !8    ; 2 uses
@@ -93,12 +93,12 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.ay
 
 bb.e:                                             ; preds = %bb.c, %bb.b, %bb.a
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(41288) %5, i8 0, i64 41288, i1 false)
-  store i32 %0, ptr %5, align 8, !tbaa !23
-  %i.h = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 5 uses
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(41288) %4, i8 0, i64 41288, i1 false)
+  store i32 %0, ptr %4, align 8, !tbaa !23
+  %i.h = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 5 uses
   store i64 %2, ptr %i.h, align 8, !tbaa !32
   %i.i = tail call ptr @cli_gentemp(ptr noundef null) #9 ; 6 uses
-  %i.j = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 3 uses
+  %i.j = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 3 uses
   store ptr %i.i, ptr %i.j, align 8, !tbaa !33
   %.not27 = icmp eq ptr %i.i, null
   br i1 %.not27, label %bb.ay, label %bb.f
@@ -127,21 +127,20 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   %i.n = load i32, ptr %i.m, align 4, !tbaa !22
   %i.o = add i32 %i.n, 1
   store i32 %i.o, ptr %i.m, align 4, !tbaa !22
-  %i.p = getelementptr inbounds nuw i8, ptr %5, i64 32 ; 3 uses
+  %i.p = getelementptr inbounds nuw i8, ptr %4, i64 32 ; 3 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.a, i64 20
-  %i.r = getelementptr inbounds nuw i8, ptr %5, i64 28
+  %i.r = getelementptr inbounds nuw i8, ptr %4, i64 28
   %i.s = getelementptr inbounds nuw i8, ptr %i.a, i64 24
-  %i.t = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 8 uses
+  %i.t = getelementptr inbounds nuw i8, ptr %4, i64 24 ; 8 uses
   %i.u = getelementptr inbounds nuw i8, ptr %3, i64 48
   %i.v = getelementptr inbounds nuw i8, ptr %i.a, i64 4 ; 10 uses
-  %6 = getelementptr inbounds nuw i8, ptr %5, i64 40256 ; 3 uses
-  %i.w = getelementptr inbounds nuw i8, ptr %5, i64 40257 ; 6 uses
-  %i.x = getelementptr inbounds nuw i8, ptr %4, i64 1
-  %i.y = getelementptr inbounds nuw i8, ptr %4, i64 2
-  %i.z = getelementptr inbounds nuw i8, ptr %4, i64 3
-  %i.aa = getelementptr inbounds nuw i8, ptr %1, i64 40
-  %i.ab = getelementptr inbounds nuw i8, ptr %5, i64 4 ; 3 uses
-  %i.ac = getelementptr inbounds nuw i8, ptr %5, i64 40260
+  %i.w = getelementptr inbounds nuw i8, ptr %4, i64 40256 ; 3 uses
+  %i.x = getelementptr inbounds nuw i8, ptr %4, i64 40257 ; 6 uses
+  %i.y = getelementptr inbounds nuw i8, ptr %1, i64 40
+  %i.z = getelementptr inbounds nuw i8, ptr %4, i64 4 ; 3 uses
+  %i.aa = getelementptr inbounds nuw i8, ptr %4, i64 40260
+  %i.ab = getelementptr inbounds nuw i8, ptr %.sroa.3.i.i, i64 1
+  %i.ac = getelementptr inbounds nuw i8, ptr %.sroa.3.i.i, i64 2
   br label %bb.k
 
 bb.k:                                             ; preds = %select.unfold, %bb.j
@@ -150,28 +149,28 @@ bb.k:                                             ; preds = %select.unfold, %bb.
   br i1 %.not.i, label %bb.m, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %i.ae = call fastcc i32 @nsis_unpack_next(ptr noundef nonnull %5, ptr noundef readonly %1)
+  %i.ae = call fastcc i32 @nsis_unpack_next(ptr noundef nonnull %4, ptr noundef readonly %1)
   br label %cli_nsis_unpack.exit
 
 bb.m:                                             ; preds = %bb.k
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #9
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #9
-  store i32 0, ptr %4, align 4
-  %i.af = load i32, ptr %5, align 8, !tbaa !23
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.3.i.i)
+  store i24 0, ptr %.sroa.3.i.i, align 4
+  %i.af = load i32, ptr %4, align 8, !tbaa !23
   %i.ag = call i32 @fstat(i32 noundef %i.af, ptr noundef nonnull %3) #9
   %i.ah = icmp eq i32 %i.ag, -1
   br i1 %i.ah, label %nsis_headers.exit.i, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  %i.ai = load i32, ptr %5, align 8, !tbaa !23
+  %i.ai = load i32, ptr %4, align 8, !tbaa !23
   %i.aj = load i64, ptr %i.h, align 8, !tbaa !32
   %i.ak = call i64 @lseek(i32 noundef %i.ai, i64 noundef %i.aj, i32 noundef 0) #9
   %i.al = icmp eq i64 %i.ak, -1
   br i1 %i.al, label %nsis_headers.exit.i, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %i.am = load i32, ptr %5, align 8, !tbaa !23
+  %i.am = load i32, ptr %4, align 8, !tbaa !23
   %i.an = call i32 @cli_readn(i32 noundef %i.am, ptr noundef nonnull %i.a, i32 noundef 28) #9
   %.not.i.i = icmp eq i32 %i.an, 28
   br i1 %.not.i.i, label %bb.p, label %nsis_headers.exit.i
@@ -215,7 +214,7 @@ bb.t:                                             ; preds = %bb.s, %bb.r, %bb.q
   br i1 %.not83.i.i, label %.loopexit._crit_edge.i.i, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.t
-  %i.az = load i32, ptr %5, align 8, !tbaa !23
+  %i.az = load i32, ptr %4, align 8, !tbaa !23
   %i.ba = call i32 @cli_readn(i32 noundef %i.az, ptr noundef nonnull %i.v, i32 noundef 4) #9
   %.not59.peel.i.i = icmp eq i32 %i.ba, 4
   br i1 %.not59.peel.i.i, label %bb.u, label %nsis_headers.exit.i
@@ -228,12 +227,12 @@ bb.u:                                             ; preds = %.lr.ph.i.i
   %i.be = icmp eq i32 %i.bd, 93
   %..i.peel.i.i = select i1 %i.be, i8 2, i8 3
   %.0.i.peel.i.i = select i1 %i.bc, i8 1, i8 %..i.peel.i.i
-  store i8 %.0.i.peel.i.i, ptr %6, align 8, !tbaa !41
+  store i8 %.0.i.peel.i.i, ptr %i.w, align 8, !tbaa !41
   %.not61.peel.i.i = icmp sgt i32 %.val.peel.i.i, -1
   br i1 %.not61.peel.i.i, label %bb.w, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
-  %i.bf = load i32, ptr %5, align 8, !tbaa !23
+  %i.bf = load i32, ptr %4, align 8, !tbaa !23
   %i.bg = call i32 @cli_readn(i32 noundef %i.bf, ptr noundef nonnull %i.v, i32 noundef 4) #9
   %.not62.peel.i.i = icmp eq i32 %i.bg, 4
   br i1 %.not62.peel.i.i, label %nsis_detcomp.exit71.peel.i.i, label %nsis_headers.exit.i
@@ -244,12 +243,13 @@ nsis_detcomp.exit71.peel.i.i:                     ; preds = %bb.v
   %.val.i68.peel.i.i = load i32, ptr %i.v, align 4
   %i.bj = and i32 %.val.i68.peel.i.i, 2147483647
   %i.bk = icmp eq i32 %i.bj, 93
-  %..i69.peel.i.i = select i1 %i.bk, i64 2, i64 3
-  %.0.i70.peel.i.i = select i1 %i.bi, i64 1, i64 %..i69.peel.i.i
-  %i.bl = getelementptr inbounds nuw i8, ptr %4, i64 %.0.i70.peel.i.i ; 2 uses
+  %..i69.peel.i.i = select i1 %i.bk, i64 1, i64 2
+  %.0.i70.peel.i.i = select i1 %i.bi, i64 0, i64 %..i69.peel.i.i ; 2 uses
+  %i.bl = getelementptr inbounds nuw i8, ptr %.sroa.3.i.i, i64 %.0.i70.peel.i.i
   %i.bm = load i8, ptr %i.bl, align 1, !tbaa !34
   %i.bn = add i8 %i.bm, 1
-  store i8 %i.bn, ptr %i.bl, align 1, !tbaa !34
+  %.sroa.3.i.i.0.i.i.0.i.i.0.i.0.i.0..sroa_idx85 = getelementptr inbounds nuw i8, ptr %.sroa.3.i.i, i64 %.0.i70.peel.i.i
+  store i8 %i.bn, ptr %.sroa.3.i.i.0.i.i.0.i.i.0.i.0.i.0..sroa_idx85, align 1, !tbaa !34
   %i.bo = add nsw i32 %i.bd, -4
   br label %bb.w
 
@@ -262,7 +262,7 @@ bb.w:                                             ; preds = %nsis_detcomp.exit71
   br i1 %i.br, label %.loopexit87.i.i, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
-  %i.bs = load i32, ptr %5, align 8, !tbaa !23
+  %i.bs = load i32, ptr %4, align 8, !tbaa !23
   %i.bt = sext i32 %.0.peel.i.i to i64
   %i.bu = call i64 @lseek(i32 noundef %i.bs, i64 noundef %i.bt, i32 noundef 1) #9
   %i.bv = icmp eq i64 %i.bu, -1
@@ -277,7 +277,7 @@ bb.y:                                             ; preds = %bb.x
 .peel.next.i.i:                                   ; preds = %bb.y, %bb.ad
   %.04782.i.i = phi i32 [ %i.cw, %bb.ad ], [ 1, %bb.y ] ; 2 uses
   %.04881.i.i = phi i32 [ %i.co, %bb.ad ], [ %i.bp, %bb.y ] ; 2 uses
-  %i.bz = load i32, ptr %5, align 8, !tbaa !23
+  %i.bz = load i32, ptr %4, align 8, !tbaa !23
   %i.ca = call i32 @cli_readn(i32 noundef %i.bz, ptr noundef nonnull %i.v, i32 noundef 4) #9
   %.not59.i.i = icmp eq i32 %i.ca, 4
   br i1 %.not59.i.i, label %bb.z, label %nsis_headers.exit.i
@@ -288,7 +288,7 @@ bb.z:                                             ; preds = %.peel.next.i.i
   br i1 %.not61.i.i, label %bb.ab, label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z
-  %i.cb = load i32, ptr %5, align 8, !tbaa !23
+  %i.cb = load i32, ptr %4, align 8, !tbaa !23
   %i.cc = call i32 @cli_readn(i32 noundef %i.cb, ptr noundef nonnull %i.v, i32 noundef 4) #9
   %.not62.i.i = icmp eq i32 %i.cc, 4
   br i1 %.not62.i.i, label %nsis_detcomp.exit71.i.i, label %nsis_headers.exit.i
@@ -300,12 +300,13 @@ nsis_detcomp.exit71.i.i:                          ; preds = %bb.aa
   %.val.i68.i.i = load i32, ptr %i.v, align 4
   %i.cg = and i32 %.val.i68.i.i, 2147483647
   %i.ch = icmp eq i32 %i.cg, 93
-  %..i69.i.i = select i1 %i.ch, i64 2, i64 3
-  %.0.i70.i.i = select i1 %i.cf, i64 1, i64 %..i69.i.i
-  %i.ci = getelementptr inbounds nuw i8, ptr %4, i64 %.0.i70.i.i ; 2 uses
+  %..i69.i.i = select i1 %i.ch, i64 1, i64 2
+  %.0.i70.i.i = select i1 %i.cf, i64 0, i64 %..i69.i.i ; 2 uses
+  %i.ci = getelementptr inbounds nuw i8, ptr %.sroa.3.i.i, i64 %.0.i70.i.i
   %i.cj = load i8, ptr %i.ci, align 1, !tbaa !34
   %i.ck = add i8 %i.cj, 1
-  store i8 %i.ck, ptr %i.ci, align 1, !tbaa !34
+  %.sroa.3.i.i.0.i.i.0.i.i.0.i.0.i.0..sroa_idx91 = getelementptr inbounds nuw i8, ptr %.sroa.3.i.i, i64 %.0.i70.i.i
+  store i8 %i.ck, ptr %.sroa.3.i.i.0.i.i.0.i.i.0.i.0.i.0..sroa_idx91, align 1, !tbaa !34
   %i.cl = add nsw i32 %i.cd, -4
   %i.cm = add i32 %.04881.i.i, 4
   br label %bb.ab
@@ -320,7 +321,7 @@ bb.ab:                                            ; preds = %nsis_detcomp.exit71
   br i1 %i.cq, label %.loopexit87.i.loopexit.i, label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab
-  %i.cr = load i32, ptr %5, align 8, !tbaa !23
+  %i.cr = load i32, ptr %4, align 8, !tbaa !23
   %i.cs = sext i32 %.0.i.i to i64
   %i.ct = call i64 @lseek(i32 noundef %i.cr, i64 noundef %i.cs, i32 noundef 1) #9
   %i.cu = icmp eq i64 %i.ct, -1
@@ -332,7 +333,7 @@ bb.ac:                                            ; preds = %bb.ab
 
 .loopexit87.i.i:                                  ; preds = %.loopexit87.i.loopexit.i, %bb.w
   %.04782.lcssa84.i.i = phi i1 [ false, %bb.w ], [ %i.cv, %.loopexit87.i.loopexit.i ]
-  store i8 1, ptr %i.w, align 1, !tbaa !42
+  store i8 1, ptr %i.x, align 1, !tbaa !42
   br label %.loopexit.i.i
 
 bb.ad:                                            ; preds = %bb.ac
@@ -348,28 +349,28 @@ bb.ad:                                            ; preds = %bb.ac
   br i1 %or.cond.i.i, label %bb.ae, label %.loopexit._crit_edge.i.i
 
 .loopexit._crit_edge.i.i:                         ; preds = %.loopexit.i.i, %bb.y, %bb.t
-  %.pre88.i.i = load i8, ptr %i.w, align 1, !tbaa !42
+  %.pre88.i.i = load i8, ptr %i.x, align 1, !tbaa !42
   %i.da = icmp eq i8 %.pre88.i.i, 0
   %i.db = select i1 %i.da, ptr @.str.37, ptr @.str.36
   br label %bb.af
 
 bb.ae:                                            ; preds = %.loopexit.i.i
-  store i8 0, ptr %i.w, align 1, !tbaa !42
+  store i8 0, ptr %i.x, align 1, !tbaa !42
   br label %bb.af
 
 bb.af:                                            ; preds = %bb.ae, %.loopexit._crit_edge.i.i
   %.not63.i.i = phi ptr [ %i.db, %.loopexit._crit_edge.i.i ], [ @.str.37, %bb.ae ]
   call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.35, ptr noundef nonnull %.not63.i.i) #9
-  %i.dc = load i8, ptr %i.w, align 1, !tbaa !42
+  %i.dc = load i8, ptr %i.x, align 1, !tbaa !42
   %.not64.i.i = icmp eq i8 %i.dc, 0
   br i1 %.not64.i.i, label %bb.ag, label %bb.ah
 
 bb.ag:                                            ; preds = %bb.af
-  %i.dd = load i8, ptr %i.x, align 1, !tbaa !34   ; 3 uses
+  %i.dd = load i8, ptr %.sroa.3.i.i, align 4, !tbaa !34 ; 3 uses
   %i.de = zext i8 %i.dd to i32
-  %i.df = load i8, ptr %i.y, align 2, !tbaa !34   ; 3 uses
+  %i.df = load i8, ptr %i.ab, align 1, !tbaa !34  ; 3 uses
   %i.dg = zext i8 %i.df to i32
-  %i.dh = load i8, ptr %i.z, align 1, !tbaa !34   ; 3 uses
+  %i.dh = load i8, ptr %i.ac, align 2, !tbaa !34  ; 3 uses
   %i.di = zext i8 %i.dh to i32
   call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.38, i32 noundef %i.de, i32 noundef %i.dg, i32 noundef %i.di) #9
   %i.dj = icmp ult i8 %i.dd, %i.df
@@ -378,11 +379,11 @@ bb.ag:                                            ; preds = %bb.af
   %i.dm = icmp ult i8 %i.dd, %i.dh
   %i.dn = select i1 %i.dm, i8 3, i8 1
   %i.do = select i1 %i.dj, i8 %i.dl, i8 %i.dn
-  store i8 %i.do, ptr %6, align 8, !tbaa !41
+  store i8 %i.do, ptr %i.w, align 8, !tbaa !41
   br label %bb.ah
 
 bb.ah:                                            ; preds = %bb.ag, %bb.af
-  %i.dp = load i32, ptr %5, align 8, !tbaa !23
+  %i.dp = load i32, ptr %4, align 8, !tbaa !23
   %i.dq = load i64, ptr %i.h, align 8, !tbaa !32
   %i.dr = add nsw i64 %i.dq, 28
   %i.ds = call i64 @lseek(i32 noundef %i.dp, i64 noundef %i.dr, i32 noundef 0) #9
@@ -390,12 +391,12 @@ bb.ah:                                            ; preds = %bb.ag, %bb.af
   br i1 %i.dt, label %nsis_headers.exit.i, label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ah
-  %i.du = call fastcc i32 @nsis_unpack_next(ptr noundef nonnull %5, ptr noundef readonly %1)
+  %i.du = call fastcc i32 @nsis_unpack_next(ptr noundef nonnull %4, ptr noundef readonly %1)
   br label %nsis_headers.exit.i
 
 nsis_headers.exit.i:                              ; preds = %bb.ac, %bb.aa, %.peel.next.i.i, %bb.ai, %bb.ah, %bb.x, %bb.v, %.lr.ph.i.i, %bb.o, %bb.n, %bb.m
   %.251.i.i = phi i32 [ %i.du, %bb.ai ], [ -123, %bb.ah ], [ -123, %bb.m ], [ -123, %bb.o ], [ -123, %bb.n ], [ -123, %bb.x ], [ -123, %bb.v ], [ -123, %.lr.ph.i.i ], [ -123, %.peel.next.i.i ], [ -123, %bb.aa ], [ -123, %bb.ac ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.3.i.i)
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #9
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
   br label %cli_nsis_unpack.exit
@@ -408,7 +409,7 @@ cli_nsis_unpack.exit:                             ; preds = %bb.l, %nsis_headers
   ]
 
 bb.aj:                                            ; preds = %cli_nsis_unpack.exit
-  %i.dw = load i32, ptr %i.aa, align 8, !tbaa !46
+  %i.dw = load i32, ptr %i.y, align 8, !tbaa !46
   %i.dx = and i32 %i.dw, 256
   %.not32 = icmp eq i32 %i.dx, 0
   br i1 %.not32, label %bb.ak, label %.thread.thread41
@@ -419,18 +420,18 @@ bb.aj:                                            ; preds = %cli_nsis_unpack.exi
   br label %.thread.thread
 
 bb.ak:                                            ; preds = %bb.aj
-  %i.dz = load i8, ptr %i.w, align 1, !tbaa !42
+  %i.dz = load i8, ptr %i.x, align 1, !tbaa !42
   %.not33 = icmp eq i8 %i.dz, 0
   br i1 %.not33, label %select.unfold, label %.thread.thread
 
 bb.al:                                            ; preds = %cli_nsis_unpack.exit
   %i.ea = load i32, ptr %i.p, align 8, !tbaa !35
   call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.5, i32 noundef %i.ea) #9
-  %i.eb = load i32, ptr %i.ab, align 4, !tbaa !49
+  %i.eb = load i32, ptr %i.z, align 4, !tbaa !49
   %i.ec = call i64 @lseek(i32 noundef %i.eb, i64 noundef 0, i32 noundef 0) #9 ; 0 uses
   %i.ed = load i32, ptr %i.p, align 8, !tbaa !35
   %i.ee = icmp eq i32 %i.ed, 1
-  %i.ef = load i32, ptr %i.ab, align 4, !tbaa !49 ; 2 uses
+  %i.ef = load i32, ptr %i.z, align 4, !tbaa !49  ; 2 uses
   br i1 %i.ee, label %bb.am, label %bb.an
 
 bb.am:                                            ; preds = %bb.al
@@ -443,14 +444,14 @@ bb.an:                                            ; preds = %bb.al
 
 bb.ao:                                            ; preds = %bb.an, %bb.am
   %.0 = phi i32 [ %i.eg, %bb.am ], [ %i.eh, %bb.an ] ; 2 uses
-  %i.ei = load i32, ptr %i.ab, align 4, !tbaa !49
+  %i.ei = load i32, ptr %i.z, align 4, !tbaa !49
   %i.ej = call i32 @close(i32 noundef %i.ei) #9   ; 0 uses
   %i.ek = load i8, ptr @cli_leavetemps_flag, align 1, !tbaa !34
   %.not31 = icmp eq i8 %i.ek, 0
   br i1 %.not31, label %bb.ap, label %select.unfold
 
 bb.ap:                                            ; preds = %bb.ao
-  %i.el = call i32 @unlink(ptr noundef nonnull %i.ac) #9 ; 0 uses
+  %i.el = call i32 @unlink(ptr noundef nonnull %i.aa) #9 ; 0 uses
   br label %select.unfold
 
 select.unfold:                                    ; preds = %bb.ak, %cli_nsis_unpack.exit, %bb.ap, %bb.ao
@@ -466,25 +467,25 @@ select.unfold:                                    ; preds = %bb.ak, %cli_nsis_un
 
 .thread.thread:                                   ; preds = %bb.ak, %select.unfold, %.thread.thread.loopexit62, %.thread.thread41
   %i.em = phi i32 [ %.1.fr, %.thread.thread.loopexit62 ], [ 1, %.thread.thread41 ], [ 0, %select.unfold ], [ 0, %bb.ak ]
-  %i.en = getelementptr inbounds nuw i8, ptr %5, i64 40258 ; 2 uses
+  %i.en = getelementptr inbounds nuw i8, ptr %4, i64 40258 ; 2 uses
   %i.eo = load i8, ptr %i.en, align 2, !tbaa !50
   %.not.i.i35 = icmp eq i8 %i.eo, 0
   br i1 %.not.i.i35, label %nsis_shutdown.exit.i, label %bb.aq
 
 bb.aq:                                            ; preds = %.thread.thread
-  %i.ep = load i8, ptr %6, align 8, !tbaa !41
+  %i.ep = load i8, ptr %i.w, align 8, !tbaa !41
   switch i8 %i.ep, label %bb.at [
     i8 1, label %bb.ar
     i8 2, label %bb.as
   ]
 
 bb.ar:                                            ; preds = %bb.aq
-  %i.eq = getelementptr inbounds nuw i8, ptr %5, i64 72
+  %i.eq = getelementptr inbounds nuw i8, ptr %4, i64 72
   %i.er = call i32 @nsis_BZ2_bzDecompressEnd(ptr noundef nonnull %i.eq) #9 ; 0 uses
   br label %bb.at
 
 bb.as:                                            ; preds = %bb.aq
-  %i.es = getelementptr inbounds nuw i8, ptr %5, i64 152
+  %i.es = getelementptr inbounds nuw i8, ptr %4, i64 152
   call void @lzmaShutdown(ptr noundef nonnull %i.es) #9
   br label %bb.at
 
@@ -493,12 +494,12 @@ bb.at:                                            ; preds = %bb.as, %bb.ar, %bb.
   br label %nsis_shutdown.exit.i
 
 nsis_shutdown.exit.i:                             ; preds = %bb.at, %.thread.thread
-  %i.et = load i8, ptr %i.w, align 1, !tbaa !42
+  %i.et = load i8, ptr %i.x, align 1, !tbaa !42
   %.not.i36 = icmp eq i8 %i.et, 0
   br i1 %.not.i36, label %cli_nsis_free.exit, label %bb.au
 
 bb.au:                                            ; preds = %nsis_shutdown.exit.i
-  %i.eu = getelementptr inbounds nuw i8, ptr %5, i64 40248
+  %i.eu = getelementptr inbounds nuw i8, ptr %4, i64 40248
   %i.ev = load ptr, ptr %i.eu, align 8, !tbaa !51 ; 2 uses
   %.not4.i = icmp eq ptr %i.ev, null
   br i1 %.not4.i, label %cli_nsis_free.exit, label %bb.av
@@ -527,7 +528,7 @@ bb.ax:                                            ; preds = %bb.aw, %cli_nsis_fr
 
 bb.ay:                                            ; preds = %bb.e, %bb.ax, %bb.g, %bb.d
   %.019 = phi i32 [ -100, %bb.d ], [ -118, %bb.g ], [ %i.em, %bb.ax ], [ -118, %bb.e ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #9
   ret i32 %.019
 }
 

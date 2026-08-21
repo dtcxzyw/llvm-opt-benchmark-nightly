@@ -205,6 +205,7 @@ bb.ab:                                            ; preds = %bb.z, %bb.aa, %.loo
 ; Function Attrs: nounwind uwtable
 define internal range(i32 0, 2) i32 @Abc_CommandAbc9SymFun(ptr nofree noundef captures(none) %0, i32 noundef %1, ptr noundef %2) #8 {
 bb.a:
+  %3 = alloca i64, align 8                        ; 6 uses
   tail call void (...) @Extra_UtilGetoptReset() #37
   br label %.outer
 
@@ -514,8 +515,10 @@ bb.af:                                            ; preds = %.lr.ph144, %Vec_Wrd
   %indvars.iv176 = phi i64 [ %i.db, %.lr.ph144 ], [ %indvars.iv.next177, %Vec_WrdPush.exit113 ] ; 2 uses
   %i.dc = getelementptr inbounds [8 x i8], ptr %2, i64 %indvars.iv176
   %i.dd = load ptr, ptr %i.dc, align 8, !tbaa !99 ; 3 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %3)
   %i.de = tail call i64 @strlen(ptr noundef nonnull readonly dereferenceable(1) %i.dd) #40 ; 2 uses
   %i.df = trunc i64 %i.de to i32
+  store i64 0, ptr %3, align 8
   %i.dg = icmp sgt i32 %i.df, 0
   br i1 %i.dg, label %.lr.ph.preheader.i.i, label %Abc_TtReadBin64.exit
 
@@ -524,8 +527,7 @@ bb.af:                                            ; preds = %.lr.ph144, %Vec_Wrd
   br label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.ah, %.lr.ph.preheader.i.i
-  %3 = phi i64 [ 0, %.lr.ph.preheader.i.i ], [ %4, %bb.ah ] ; 2 uses
-  %indvars.iv.i.i = phi i64 [ 0, %.lr.ph.preheader.i.i ], [ %indvars.iv.next.i.i, %bb.ah ] ; 3 uses
+  %indvars.iv.i.i = phi i64 [ 0, %.lr.ph.preheader.i.i ], [ %indvars.iv.next.i.i, %bb.ah ] ; 4 uses
   %i.dh = getelementptr inbounds nuw i8, ptr %i.dd, i64 %indvars.iv.i.i
   %i.di = load i8, ptr %i.dh, align 1, !tbaa !110
   switch i8 %i.di, label %Abc_TtReadBin.exit.i [
@@ -536,21 +538,31 @@ bb.af:                                            ; preds = %.lr.ph144, %Vec_Wrd
 bb.ag:                                            ; preds = %.lr.ph.i.i
   %i.dj = and i64 %indvars.iv.i.i, 63
   %i.dk = shl nuw i64 1, %i.dj
-  %i.dl = or i64 %i.dk, %3
+  %4 = lshr i64 %indvars.iv.i.i, 3
+  %.0..sroa_stride.i = and i64 %4, 536870904      ; 2 uses
+  %.0..0..0..0..0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 %.0..sroa_stride.i
+  %.0..0..0..0..0..i = load i64, ptr %.0..0..0..0..0..sroa_idx, align 8, !tbaa !123
+  %i.dl = or i64 %.0..0..0..0..0..i, %i.dk
+  %.0..0..0..0..0..sroa_idx291 = getelementptr inbounds nuw i8, ptr %3, i64 %.0..sroa_stride.i
+  store i64 %i.dl, ptr %.0..0..0..0..0..sroa_idx291, align 8, !tbaa !123
   br label %bb.ah
 
 bb.ah:                                            ; preds = %bb.ag, %.lr.ph.i.i
-  %4 = phi i64 [ %i.dl, %bb.ag ], [ %3, %.lr.ph.i.i ] ; 2 uses
   %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1 ; 2 uses
   %exitcond.not.i.i = icmp eq i64 %indvars.iv.next.i.i, %wide.trip.count.i.i
-  br i1 %exitcond.not.i.i, label %Abc_TtReadBin64.exit, label %.lr.ph.i.i, !llvm.loop !1271
+  br i1 %exitcond.not.i.i, label %Abc_TtReadBin.exit.thread.loopexit.i, label %.lr.ph.i.i, !llvm.loop !1271
 
 Abc_TtReadBin.exit.i:                             ; preds = %.lr.ph.i.i
   %i.dm = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.4471, ptr noundef nonnull %i.dd) ; 0 uses
   br label %Abc_TtReadBin64.exit
 
-Abc_TtReadBin64.exit:                             ; preds = %bb.ah, %bb.af, %Abc_TtReadBin.exit.i
-  %.0.i = phi i64 [ -1, %Abc_TtReadBin.exit.i ], [ 0, %bb.af ], [ %4, %bb.ah ]
+Abc_TtReadBin.exit.thread.loopexit.i:             ; preds = %bb.ah
+  %.0..0..0..0..0.6.pre.i = load i64, ptr %3, align 8, !tbaa !123
+  br label %Abc_TtReadBin64.exit
+
+Abc_TtReadBin64.exit:                             ; preds = %bb.af, %Abc_TtReadBin.exit.i, %Abc_TtReadBin.exit.thread.loopexit.i
+  %.0.i = phi i64 [ %.0..0..0..0..0.6.pre.i, %Abc_TtReadBin.exit.thread.loopexit.i ], [ 0, %bb.af ], [ -1, %Abc_TtReadBin.exit.i ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %3)
   %i.dn = load i32, ptr %i.cz, align 4, !tbaa !967 ; 7 uses
   %i.do = load i32, ptr %i.cw, align 8, !tbaa !1268
   %i.dp = icmp eq i32 %i.dn, %i.do

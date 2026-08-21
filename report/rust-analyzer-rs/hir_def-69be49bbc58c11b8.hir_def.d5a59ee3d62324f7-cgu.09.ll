@@ -205,9 +205,10 @@ bb.cb:                                            ; preds = %bb.by
   %i.rr = getelementptr inbounds nuw i8, ptr %i.q, i64 32 ; 5 uses
   store i64 0, ptr %i.rr, align 16, !noalias !4703
   call void @llvm.lifetime.start.p0(ptr nonnull %i.p), !noalias !4703
-  %i.rs = and i64 %i.rl, 7
-  %4 = getelementptr inbounds nuw [16 x i8], ptr @187, i64 %i.rs
-  %i.rt = load i128, ptr %4, align 16, !noalias !4703, !noundef !295
+  %4 = shl nsw i64 %i.rl, 4
+  %i.rs = and i64 %4, 112
+  %.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr @187, i64 %i.rs
+  %i.rt = load i128, ptr %.0..sroa_idx.i, align 16, !noalias !4703
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !noalias !4722
   %i.ru = getelementptr inbounds nuw i8, ptr %i.e, i64 32
   store i64 0, ptr %i.ru, align 16, !noalias !4722
@@ -610,9 +611,10 @@ bb.cb:                                            ; preds = %bb.by
   %i.rr = getelementptr inbounds nuw i8, ptr %i.q, i64 32 ; 5 uses
   store i64 0, ptr %i.rr, align 16, !noalias !4976
   call void @llvm.lifetime.start.p0(ptr nonnull %i.p), !noalias !4976
-  %i.rs = and i64 %i.rl, 7
-  %4 = getelementptr inbounds nuw [16 x i8], ptr @187, i64 %i.rs
-  %i.rt = load i128, ptr %4, align 16, !noalias !4976, !noundef !295
+  %4 = shl nsw i64 %i.rl, 4
+  %i.rs = and i64 %4, 112
+  %.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr @187, i64 %i.rs
+  %i.rt = load i128, ptr %.0..sroa_idx.i, align 16, !noalias !4976
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !noalias !4994
   %i.ru = getelementptr inbounds nuw i8, ptr %i.e, i64 32
   store i64 0, ptr %i.ru, align 16, !noalias !4994
@@ -1015,9 +1017,10 @@ bb.cb:                                            ; preds = %bb.by
   %i.rr = getelementptr inbounds nuw i8, ptr %i.q, i64 32 ; 5 uses
   store i64 0, ptr %i.rr, align 16, !noalias !5245
   call void @llvm.lifetime.start.p0(ptr nonnull %i.p), !noalias !5245
-  %i.rs = and i64 %i.rl, 7
-  %4 = getelementptr inbounds nuw [16 x i8], ptr @187, i64 %i.rs
-  %i.rt = load i128, ptr %4, align 16, !noalias !5245, !noundef !295
+  %4 = shl nsw i64 %i.rl, 4
+  %i.rs = and i64 %4, 112
+  %.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr @187, i64 %i.rs
+  %i.rt = load i128, ptr %.0..sroa_idx.i, align 16, !noalias !5245
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !noalias !5263
   %i.ru = getelementptr inbounds nuw i8, ptr %i.e, i64 32
   store i64 0, ptr %i.ru, align 16, !noalias !5263
@@ -1420,9 +1423,10 @@ bb.cb:                                            ; preds = %bb.by
   %i.rr = getelementptr inbounds nuw i8, ptr %i.q, i64 32 ; 5 uses
   store i64 0, ptr %i.rr, align 16, !noalias !5514
   call void @llvm.lifetime.start.p0(ptr nonnull %i.p), !noalias !5514
-  %i.rs = and i64 %i.rl, 7
-  %4 = getelementptr inbounds nuw [16 x i8], ptr @187, i64 %i.rs
-  %i.rt = load i128, ptr %4, align 16, !noalias !5514, !noundef !295
+  %4 = shl nsw i64 %i.rl, 4
+  %i.rs = and i64 %4, 112
+  %.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr @187, i64 %i.rs
+  %i.rt = load i128, ptr %.0..sroa_idx.i, align 16, !noalias !5514
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !noalias !5532
   %i.ru = getelementptr inbounds nuw i8, ptr %i.e, i64 32
   store i64 0, ptr %i.ru, align 16, !noalias !5532

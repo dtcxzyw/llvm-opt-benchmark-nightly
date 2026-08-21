@@ -205,10 +205,10 @@ bb.g:                                             ; preds = %bb.a, %bb.f, %bb.e,
 ; Function Attrs: mustprogress uwtable
 define void @_ZN6LibRaw20phase_one_load_raw_cEv(ptr noundef nonnull align 8 dereferenceable(768512) %0) local_unnamed_addr #6 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %1 = alloca [2 x i32], align 4                  ; 7 uses
-  %2 = alloca [2 x i32], align 4                  ; 7 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %1) #21
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #21
+  %.sroa.0194 = alloca i64, align 8               ; 8 uses
+  %.sroa.0 = alloca i64, align 8                  ; 8 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0194)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 5600 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 153476 ; 3 uses
   %i.c = load i32, ptr %i.b, align 4, !tbaa !162
@@ -377,9 +377,10 @@ vector.body:                                      ; preds = %vector.body, %vecto
 .lr.ph113:                                        ; preds = %.preheader93
   %i.cs = getelementptr inbounds nuw i8, ptr %0, i64 381760
   %i.ct = getelementptr inbounds nuw i8, ptr %0, i64 381584 ; 19 uses
-  %i.cu = getelementptr inbounds nuw i8, ptr %2, i64 4
-  %i.cv = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 2 uses
-  %i.cw = getelementptr inbounds nuw i8, ptr %0, i64 193784 ; 2 uses
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 193784 ; 2 uses
+  %i.cu = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 4
+  %i.cv = getelementptr inbounds nuw i8, ptr %.sroa.0194, i64 4
+  %i.cw = getelementptr inbounds nuw i8, ptr %.sroa.0194, i64 4
   br label %bb.j
 
 bb.j:                                             ; preds = %.lr.ph113, %.loopexit90
@@ -407,7 +408,7 @@ bb.l:                                             ; preds = %bb.k
   %i.dj = getelementptr inbounds nuw i8, ptr %i.dh, i64 16
   store i64 0, ptr %i.dj, align 8, !tbaa !177
   store i32 0, ptr %i.cu, align 4, !tbaa !11
-  store i32 0, ptr %2, align 4, !tbaa !11
+  store i32 0, ptr %.sroa.0, align 8, !tbaa !11
   %i.dk = load i16, ptr %i.g, align 2, !tbaa !75  ; 2 uses
   %.not117 = icmp eq i16 %i.dk, 0
   br i1 %.not117, label %._crit_edge108.thread, label %.lr.ph107.preheader
@@ -426,7 +427,7 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %.lr.ph107
   store i32 14, ptr %i.cv, align 4, !tbaa !11
-  store i32 14, ptr %1, align 4, !tbaa !11
+  store i32 14, ptr %.sroa.0194, align 8, !tbaa !11
   br label %.loopexit85
 
 .loopexit:                                        ; preds = %bb.ar, %bb.ao, %bb.al, %bb.ai, %bb.af, %bb.ab, %bb.y, %bb.v, %bb.s, %bb.p
@@ -681,7 +682,7 @@ bb.ae:                                            ; preds = %.noexc77, %.critedg
   %i.ih = getelementptr inbounds nuw [4 x i8], ptr @_ZZN6LibRaw20phase_one_load_raw_cEvE6length, i64 %i.if
   %i.ii = getelementptr inbounds nuw [4 x i8], ptr %i.ih, i64 %.096
   %i.ij = load i32, ptr %i.ii, align 4, !tbaa !11
-  store i32 %i.ij, ptr %1, align 4, !tbaa !11
+  store i32 %i.ij, ptr %.sroa.0194, align 8, !tbaa !11
   br label %.preheader.1
 
 .preheader.1:                                     ; preds = %bb.q, %bb.ae
@@ -899,13 +900,14 @@ bb.au:                                            ; preds = %.noexc77.1, %.crite
   %i.mx = getelementptr inbounds nuw [4 x i8], ptr @_ZZN6LibRaw20phase_one_load_raw_cEvE6length, i64 %i.mv
   %i.my = getelementptr inbounds nuw [4 x i8], ptr %i.mx, i64 %.096.1
   %i.mz = load i32, ptr %i.my, align 4, !tbaa !11
-  store i32 %i.mz, ptr %i.cv, align 4, !tbaa !11
+  store i32 %i.mz, ptr %i.cw, align 4, !tbaa !11
   br label %.loopexit85
 
 .loopexit85:                                      ; preds = %bb.au, %bb.ag, %bb.o, %bb.m
-  %i.na = and i64 %indvars.iv134, 1               ; 3 uses
-  %3 = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.na
-  %i.nb = load i32, ptr %3, align 4, !tbaa !11    ; 5 uses
+  %i.na = and i64 %indvars.iv134, 1               ; 4 uses
+  %.sroa.0194.0..sroa_stride = shl nuw nsw i64 %i.na, 2
+  %.sroa.0194.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0194, i64 %.sroa.0194.0..sroa_stride
+  %i.nb = load i32, ptr %.sroa.0194.0..sroa_idx, align 4, !tbaa !11 ; 5 uses
   switch i32 %i.nb, label %bb.ay [
     i32 14, label %bb.av
     i32 -1, label %bb.ax
@@ -950,8 +952,9 @@ bb.aw:                                            ; preds = %bb.av
   %i.nz = trunc nuw nsw i64 %i.ny to i32
   %i.oa = add nsw i32 %i.nr, -16
   store i32 %i.oa, ptr %i.nu, align 8, !tbaa !170
-  %4 = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.na
-  store i32 %i.nz, ptr %4, align 4, !tbaa !11
+  %.sroa.0.0..sroa_stride191 = shl nuw nsw i64 %i.na, 2
+  %.sroa.0.0..sroa_idx193 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %.sroa.0.0..sroa_stride191
+  store i32 %i.nz, ptr %.sroa.0.0..sroa_idx193, align 4, !tbaa !11
   %i.ob = trunc nuw i64 %i.ny to i16
   %i.oc = getelementptr inbounds nuw [2 x i8], ptr %i.o, i64 %indvars.iv134
   store i16 %i.ob, ptr %i.oc, align 2, !tbaa !77
@@ -1013,10 +1016,13 @@ bb.ba:                                            ; preds = %bb.ax, %._crit_edge
   %i.pi = add nsw i32 %i.nb, -1
   %.neg = shl nsw i32 -1, %i.pi
   %i.pj = add i32 %.0.i, %.neg
-  %5 = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.na ; 2 uses
-  %i.pk = load i32, ptr %5, align 4, !tbaa !11
+  %.sroa.0.0..sroa_stride188 = shl nuw nsw i64 %i.na, 2
+  %.sroa.0.0..sroa_idx190 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %.sroa.0.0..sroa_stride188
+  %i.pk = load i32, ptr %.sroa.0.0..sroa_idx190, align 4, !tbaa !11
   %i.pl = add i32 %i.pj, %i.pk                    ; 3 uses
-  store i32 %i.pl, ptr %5, align 4, !tbaa !11
+  %.sroa.0.0..sroa_stride = shl nuw nsw i64 %i.na, 2
+  %.sroa.0.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %.sroa.0.0..sroa_stride
+  store i32 %i.pl, ptr %.sroa.0.0..sroa_idx, align 4, !tbaa !11
   %i.pm = trunc i32 %i.pl to i16
   %i.pn = getelementptr inbounds nuw [2 x i8], ptr %i.o, i64 %indvars.iv134
   store i16 %i.pm, ptr %i.pn, align 2, !tbaa !77
@@ -1067,12 +1073,12 @@ bb.bf:                                            ; preds = %bb.bc, %bb.bd, %bb.
   br i1 %.not118, label %.loopexit90, label %.lr.ph111
 
 .lr.ph111:                                        ; preds = %.preheader89
-  %i.qd = load ptr, ptr %i.cw, align 8, !tbaa !76
+  %i.qd = load ptr, ptr %1, align 8, !tbaa !76
   br label %bb.bh
 
 bb.bg:                                            ; preds = %._crit_edge108.thread, %._crit_edge108
   %.lcssa176 = phi i32 [ 0, %._crit_edge108.thread ], [ %i.py, %._crit_edge108 ] ; 2 uses
-  %i.qe = load ptr, ptr %i.cw, align 8, !tbaa !76
+  %i.qe = load ptr, ptr %1, align 8, !tbaa !76
   %i.qf = zext nneg i32 %.lcssa176 to i64
   %i.qg = mul nuw nsw i64 %indvars.iv140, %i.qf
   %i.qh = getelementptr inbounds nuw [2 x i8], ptr %i.qe, i64 %i.qg
@@ -1112,8 +1118,8 @@ bb.bi:                                            ; preds = %bb.n, %.loopexit.sp
           to label %bb.bj unwind label %bb.bk
 
 bb.bj:                                            ; preds = %bb.bi
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #21
-  call void @llvm.lifetime.end.p0(ptr nonnull %1) #21
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0194)
   resume { ptr, i32 } %i.qx
 
 ._crit_edge114:                                   ; preds = %.loopexit90, %.preheader93
@@ -1123,8 +1129,8 @@ bb.bj:                                            ; preds = %bb.bi
   %i.ra = sub nsw i32 65532, %i.qz
   %i.rb = getelementptr inbounds nuw i8, ptr %0, i64 153096
   store i32 %i.ra, ptr %i.rb, align 8, !tbaa !185
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #21
-  call void @llvm.lifetime.end.p0(ptr nonnull %1) #21
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0194)
   ret void
 
 bb.bk:                                            ; preds = %bb.bi

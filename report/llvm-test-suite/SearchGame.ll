@@ -204,8 +204,8 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 ; Function Attrs: nofree nounwind uwtable
 define dso_local void @htstat() local_unnamed_addr #3 {
 .preheader21:
-  %i.a = alloca [8 x i32], align 16               ; 8 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #18
+  %i.a = alloca [8 x i32], align 16               ; 10 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.a, i8 0, i64 32, i1 false), !tbaa !4
   %i.b = load ptr, ptr @ht, align 8, !tbaa !13
   br label %bb.a
@@ -219,11 +219,13 @@ bb.a:                                             ; preds = %.preheader21, %bb.e
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.e = lshr i64 %.sroa.0.0.copyload, 61
-  %0 = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.e ; 2 uses
-  %i.f = load i32, ptr %0, align 4, !tbaa !4
+  %i.e = lshr i64 %.sroa.0.0.copyload, 59
+  %.0..sroa_stride32 = and i64 %i.e, 28           ; 2 uses
+  %.0..0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 %.0..sroa_stride32
+  %i.f = load i32, ptr %.0..0..sroa_idx, align 4, !tbaa !4
   %i.g = add nsw i32 %i.f, 1
-  store i32 %i.g, ptr %0, align 4, !tbaa !4
+  %.0..0..sroa_idx54 = getelementptr inbounds nuw i8, ptr %i.a, i64 %.0..sroa_stride32
+  store i32 %i.g, ptr %.0..0..sroa_idx54, align 4, !tbaa !4
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
@@ -232,12 +234,13 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %.not20, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.i = lshr i64 %.sroa.0.0.copyload, 58
-  %i.j = and i64 %i.i, 7
-  %1 = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.j ; 2 uses
-  %i.k = load i32, ptr %1, align 4, !tbaa !4
+  %i.i = lshr i64 %.sroa.0.0.copyload, 56
+  %i.j = and i64 %i.i, 28                         ; 2 uses
+  %.0..0..sroa_idx57 = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.j
+  %i.k = load i32, ptr %.0..0..sroa_idx57, align 4, !tbaa !4
   %i.l = add nsw i32 %i.k, 1
-  store i32 %i.l, ptr %1, align 4, !tbaa !4
+  %.0..0..sroa_idx60 = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.j
+  store i32 %i.l, ptr %.0..0..sroa_idx60, align 4, !tbaa !4
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.c, %bb.d
@@ -276,7 +279,7 @@ bb.f:                                             ; preds = %.preheader.preheade
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %.preheader.preheader
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #18
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret void
 }
 

@@ -205,7 +205,7 @@ bb.r:                                             ; preds = %bb.l
   call void @_ZN2cv3MatC1Ev(ptr noundef nonnull align 8 dereferenceable(208) %10) #17
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #17
   call void @_ZN2cv3MatC1Ev(ptr noundef nonnull align 8 dereferenceable(208) %11) #17
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #17
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %wide.trip.count439 = zext nneg i32 %i.f to i64 ; 8 uses
   br i1 %i.j, label %.lr.ph.split.us.preheader, label %.lr.ph.split.preheader
 
@@ -463,45 +463,44 @@ bb.s:                                             ; preds = %bb.r
   %i.ey = fdiv <2 x double> <double 1.000000e+02, double 1.000000e+00>, %i.ex ; 4 uses
   %i.ez = extractelement <2 x double> %i.ey, i64 1 ; 6 uses
   %i.fa = extractelement <2 x double> %i.ey, i64 0
-  %19 = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 2 uses
-  %i.fb = getelementptr inbounds nuw i8, ptr %8, i64 24 ; 2 uses
-  %i.fc = getelementptr inbounds nuw i8, ptr %8, i64 32
-  %i.fd = getelementptr inbounds nuw i8, ptr %8, i64 40
-  %i.fe = getelementptr inbounds nuw i8, ptr %8, i64 48 ; 2 uses
-  %i.ff = getelementptr inbounds nuw i8, ptr %8, i64 64 ; 2 uses
-  %i.fg = getelementptr inbounds nuw i8, ptr %8, i64 72 ; 2 uses
-  %i.fh = getelementptr inbounds nuw i8, ptr %8, i64 88 ; 2 uses
-  %i.fi = getelementptr inbounds nuw i8, ptr %8, i64 96 ; 2 uses
-  %i.fj = getelementptr inbounds nuw i8, ptr %8, i64 112 ; 2 uses
-  %i.fk = getelementptr inbounds nuw i8, ptr %8, i64 128 ; 2 uses
-  %i.fl = getelementptr inbounds nuw i8, ptr %8, i64 144 ; 2 uses
-  %i.fm = getelementptr inbounds nuw i8, ptr %8, i64 160 ; 2 uses
-  %i.fn = getelementptr inbounds nuw i8, ptr %8, i64 168 ; 2 uses
-  %i.fo = getelementptr inbounds nuw i8, ptr %8, i64 176
-  %i.fp = getelementptr inbounds nuw i8, ptr %8, i64 184 ; 2 uses
-  %i.fq = getelementptr inbounds nuw i8, ptr %8, i64 192 ; 2 uses
-  %i.fr = getelementptr inbounds nuw i8, ptr %8, i64 208 ; 2 uses
-  %i.fs = getelementptr inbounds nuw i8, ptr %8, i64 216 ; 2 uses
-  %i.ft = getelementptr inbounds nuw i8, ptr %8, i64 224 ; 2 uses
-  %i.fu = getelementptr inbounds nuw i8, ptr %8, i64 240 ; 2 uses
-  %i.fv = getelementptr inbounds nuw i8, ptr %8, i64 256 ; 2 uses
-  %i.fw = getelementptr inbounds nuw i8, ptr %8, i64 264 ; 2 uses
-  %i.fx = getelementptr inbounds nuw i8, ptr %8, i64 272
-  %i.fy = getelementptr inbounds nuw i8, ptr %8, i64 280 ; 2 uses
-  %i.fz = getelementptr inbounds nuw i8, ptr %9, i64 16
-  %i.ga = getelementptr inbounds nuw i8, ptr %9, i64 24
-  %i.gb = getelementptr inbounds nuw i8, ptr %9, i64 40
-  %i.gc = getelementptr inbounds nuw i8, ptr %9, i64 56
-  %i.gd = getelementptr inbounds nuw i8, ptr %14, i64 16
-  %i.ge = getelementptr inbounds nuw i8, ptr %14, i64 8
-  %i.gf = getelementptr inbounds nuw i8, ptr %15, i64 8
-  %i.gg = getelementptr inbounds nuw i8, ptr %15, i64 16
-  %i.gh = getelementptr inbounds nuw i8, ptr %16, i64 8
-  %i.gi = getelementptr inbounds nuw i8, ptr %16, i64 16
-  %i.gj = getelementptr inbounds nuw i8, ptr %11, i64 4
-  %i.gk = getelementptr inbounds nuw i8, ptr %11, i64 24
-  %i.gl = getelementptr inbounds nuw i8, ptr %11, i64 128
-  %i.gm = getelementptr inbounds nuw i8, ptr %i.a, i64 16
+  %i.fb = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 2 uses
+  %i.fc = getelementptr inbounds nuw i8, ptr %8, i64 24 ; 2 uses
+  %i.fd = getelementptr inbounds nuw i8, ptr %8, i64 32
+  %i.fe = getelementptr inbounds nuw i8, ptr %8, i64 40
+  %i.ff = getelementptr inbounds nuw i8, ptr %8, i64 48 ; 2 uses
+  %i.fg = getelementptr inbounds nuw i8, ptr %8, i64 64 ; 2 uses
+  %i.fh = getelementptr inbounds nuw i8, ptr %8, i64 72 ; 2 uses
+  %i.fi = getelementptr inbounds nuw i8, ptr %8, i64 88 ; 2 uses
+  %i.fj = getelementptr inbounds nuw i8, ptr %8, i64 96 ; 2 uses
+  %i.fk = getelementptr inbounds nuw i8, ptr %8, i64 112 ; 2 uses
+  %i.fl = getelementptr inbounds nuw i8, ptr %8, i64 128 ; 2 uses
+  %i.fm = getelementptr inbounds nuw i8, ptr %8, i64 144 ; 2 uses
+  %i.fn = getelementptr inbounds nuw i8, ptr %8, i64 160 ; 2 uses
+  %i.fo = getelementptr inbounds nuw i8, ptr %8, i64 168 ; 2 uses
+  %i.fp = getelementptr inbounds nuw i8, ptr %8, i64 176
+  %i.fq = getelementptr inbounds nuw i8, ptr %8, i64 184 ; 2 uses
+  %i.fr = getelementptr inbounds nuw i8, ptr %8, i64 192 ; 2 uses
+  %i.fs = getelementptr inbounds nuw i8, ptr %8, i64 208 ; 2 uses
+  %i.ft = getelementptr inbounds nuw i8, ptr %8, i64 216 ; 2 uses
+  %i.fu = getelementptr inbounds nuw i8, ptr %8, i64 224 ; 2 uses
+  %i.fv = getelementptr inbounds nuw i8, ptr %8, i64 240 ; 2 uses
+  %i.fw = getelementptr inbounds nuw i8, ptr %8, i64 256 ; 2 uses
+  %i.fx = getelementptr inbounds nuw i8, ptr %8, i64 264 ; 2 uses
+  %i.fy = getelementptr inbounds nuw i8, ptr %8, i64 272
+  %i.fz = getelementptr inbounds nuw i8, ptr %8, i64 280 ; 2 uses
+  %i.ga = getelementptr inbounds nuw i8, ptr %9, i64 16
+  %i.gb = getelementptr inbounds nuw i8, ptr %9, i64 24
+  %i.gc = getelementptr inbounds nuw i8, ptr %9, i64 40
+  %i.gd = getelementptr inbounds nuw i8, ptr %9, i64 56
+  %i.ge = getelementptr inbounds nuw i8, ptr %14, i64 16
+  %i.gf = getelementptr inbounds nuw i8, ptr %14, i64 8
+  %i.gg = getelementptr inbounds nuw i8, ptr %15, i64 8
+  %i.gh = getelementptr inbounds nuw i8, ptr %15, i64 16
+  %i.gi = getelementptr inbounds nuw i8, ptr %16, i64 8
+  %i.gj = getelementptr inbounds nuw i8, ptr %16, i64 16
+  %i.gk = getelementptr inbounds nuw i8, ptr %11, i64 4
+  %i.gl = getelementptr inbounds nuw i8, ptr %11, i64 24
+  %i.gm = getelementptr inbounds nuw i8, ptr %11, i64 128
   %.pn184.in = shl nuw nsw i32 %i.f, 1
   %.pn184 = uitofp nneg i32 %.pn184.in to double
   %.1143.in.in = fdiv double %.0138.lcssa, %.pn184
@@ -510,6 +509,7 @@ bb.s:                                             ; preds = %bb.r
   %wide.trip.count456 = zext nneg i32 %i.f to i64
   %i.gn = shufflevector <2 x double> %i.ey, <2 x double> poison, <2 x i32> <i32 1, i32 1> ; 16 uses
   %i.go = shufflevector <2 x double> %i.ey, <2 x double> poison, <2 x i32> zeroinitializer
+  %.16..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   br label %.lr.ph390
 
 .lr.ph390:                                        ; preds = %bb.af, %._crit_edge386
@@ -642,79 +642,79 @@ bb.aa:                                            ; preds = %bb.z
   %i.ja = load double, ptr %8, align 8, !tbaa !63
   %i.jb = fmul double %i.ez, %i.ja                ; 2 uses
   store double %i.jb, ptr %8, align 8, !tbaa !63
-  %i.jc = load <2 x double>, ptr %19, align 8, !tbaa !63
+  %i.jc = load <2 x double>, ptr %i.fb, align 8, !tbaa !63
   %i.jd = fmul <2 x double> %i.gn, %i.jc          ; 2 uses
-  store <2 x double> %i.jd, ptr %19, align 8, !tbaa !63
-  %i.je = load double, ptr %i.fd, align 8, !tbaa !63
-  %i.jf = load <2 x double>, ptr %i.fe, align 8, !tbaa !63
+  store <2 x double> %i.jd, ptr %i.fb, align 8, !tbaa !63
+  %i.je = load double, ptr %i.fe, align 8, !tbaa !63
+  %i.jf = load <2 x double>, ptr %i.ff, align 8, !tbaa !63
   %i.jg = fmul <2 x double> %i.gn, %i.jf          ; 2 uses
-  store <2 x double> %i.jg, ptr %i.fe, align 8, !tbaa !63
-  %i.jh = load double, ptr %i.ff, align 8, !tbaa !63
+  store <2 x double> %i.jg, ptr %i.ff, align 8, !tbaa !63
+  %i.jh = load double, ptr %i.fg, align 8, !tbaa !63
   %i.ji = fmul double %i.ez, %i.jh                ; 2 uses
-  store double %i.ji, ptr %i.ff, align 8, !tbaa !63
-  %i.jj = load <2 x double>, ptr %i.fh, align 8
+  store double %i.ji, ptr %i.fg, align 8, !tbaa !63
+  %i.jj = load <2 x double>, ptr %i.fi, align 8
   %i.jk = insertelement <2 x double> %i.jj, double %i.je, i64 1
   %i.jl = fmul <2 x double> %i.gn, %i.jk          ; 7 uses
   %i.jm = extractelement <2 x double> %i.jl, i64 0
-  store double %i.jm, ptr %i.fh, align 8, !tbaa !63
-  %i.jn = load <2 x double>, ptr %i.fj, align 8, !tbaa !63
+  store double %i.jm, ptr %i.fi, align 8, !tbaa !63
+  %i.jn = load <2 x double>, ptr %i.fk, align 8, !tbaa !63
   %i.jo = fmul <2 x double> %i.gn, %i.jn          ; 5 uses
-  store <2 x double> %i.jo, ptr %i.fj, align 8, !tbaa !63
-  %i.jp = load <2 x double>, ptr %i.fk, align 8, !tbaa !63
+  store <2 x double> %i.jo, ptr %i.fk, align 8, !tbaa !63
+  %i.jp = load <2 x double>, ptr %i.fl, align 8, !tbaa !63
   %i.jq = fmul <2 x double> %i.gn, %i.jp          ; 6 uses
-  store <2 x double> %i.jq, ptr %i.fk, align 8, !tbaa !63
-  %i.jr = load <2 x double>, ptr %i.fl, align 8, !tbaa !63
+  store <2 x double> %i.jq, ptr %i.fl, align 8, !tbaa !63
+  %i.jr = load <2 x double>, ptr %i.fm, align 8, !tbaa !63
   %i.js = fmul <2 x double> %i.gn, %i.jr
-  store <2 x double> %i.js, ptr %i.fl, align 8, !tbaa !63
-  %i.jt = load double, ptr %i.fm, align 8, !tbaa !63
+  store <2 x double> %i.js, ptr %i.fm, align 8, !tbaa !63
+  %i.jt = load double, ptr %i.fn, align 8, !tbaa !63
   %i.ju = fmul double %i.ez, %i.jt
-  store double %i.ju, ptr %i.fm, align 8, !tbaa !63
-  %i.jv = load double, ptr %i.fp, align 8, !tbaa !63
-  %i.jw = load <2 x double>, ptr %i.fq, align 8, !tbaa !63
+  store double %i.ju, ptr %i.fn, align 8, !tbaa !63
+  %i.jv = load double, ptr %i.fq, align 8, !tbaa !63
+  %i.jw = load <2 x double>, ptr %i.fr, align 8, !tbaa !63
   %i.jx = fmul <2 x double> %i.gn, %i.jw
-  store <2 x double> %i.jx, ptr %i.fq, align 8, !tbaa !63
-  %i.jy = load double, ptr %i.fr, align 8, !tbaa !63
+  store <2 x double> %i.jx, ptr %i.fr, align 8, !tbaa !63
+  %i.jy = load double, ptr %i.fs, align 8, !tbaa !63
   %i.jz = fmul double %i.ez, %i.jy
-  store double %i.jz, ptr %i.fr, align 8, !tbaa !63
-  %i.ka = load double, ptr %i.fs, align 8, !tbaa !63
-  %i.kb = load <2 x double>, ptr %i.fu, align 8, !tbaa !63
+  store double %i.jz, ptr %i.fs, align 8, !tbaa !63
+  %i.ka = load double, ptr %i.ft, align 8, !tbaa !63
+  %i.kb = load <2 x double>, ptr %i.fv, align 8, !tbaa !63
   %i.kc = fmul <2 x double> %i.gn, %i.kb
-  store <2 x double> %i.kc, ptr %i.fu, align 8, !tbaa !63
-  %i.kd = load double, ptr %i.fv, align 8, !tbaa !63
+  store <2 x double> %i.kc, ptr %i.fv, align 8, !tbaa !63
+  %i.kd = load double, ptr %i.fw, align 8, !tbaa !63
   %i.ke = fmul double %i.ez, %i.kd
-  store double %i.ke, ptr %i.fv, align 8, !tbaa !63
-  %i.kf = load double, ptr %i.fy, align 8, !tbaa !63
+  store double %i.ke, ptr %i.fw, align 8, !tbaa !63
+  %i.kf = load double, ptr %i.fz, align 8, !tbaa !63
   %i.kg = fmul double %i.ez, %i.kf                ; 4 uses
-  store double %i.kg, ptr %i.fy, align 8, !tbaa !63
-  %i.kh = load <2 x double>, ptr %i.fn, align 8, !tbaa !63 ; 2 uses
+  store double %i.kg, ptr %i.fz, align 8, !tbaa !63
+  %i.kh = load <2 x double>, ptr %i.fo, align 8, !tbaa !63 ; 2 uses
   %i.ki = shufflevector <2 x double> %i.kh, <2 x double> poison, <2 x i32> <i32 poison, i32 0>
   %i.kj = insertelement <2 x double> %i.ki, double %i.jv, i64 0 ; 2 uses
   %i.kk = fmul <2 x double> %i.gn, %i.kj          ; 11 uses
   %i.kl = extractelement <2 x double> %i.kk, i64 1 ; 3 uses
-  store double %i.kl, ptr %i.fn, align 8, !tbaa !63
+  store double %i.kl, ptr %i.fo, align 8, !tbaa !63
   %i.km = shufflevector <2 x double> %i.kh, <2 x double> %i.kj, <2 x i32> <i32 1, i32 2>
   %i.kn = fmul <2 x double> %i.gn, %i.km          ; 7 uses
   %i.ko = extractelement <2 x double> %i.kn, i64 0 ; 2 uses
-  store double %i.ko, ptr %i.fo, align 8, !tbaa !63
+  store double %i.ko, ptr %i.fp, align 8, !tbaa !63
   %i.kp = extractelement <2 x double> %i.kk, i64 0 ; 2 uses
-  store double %i.kp, ptr %i.fp, align 8, !tbaa !63
-  %i.kq = load <2 x double>, ptr %i.ft, align 8, !tbaa !63 ; 2 uses
+  store double %i.kp, ptr %i.fq, align 8, !tbaa !63
+  %i.kq = load <2 x double>, ptr %i.fu, align 8, !tbaa !63 ; 2 uses
   %i.kr = shufflevector <2 x double> %i.kq, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %i.ks = insertelement <2 x double> %i.kr, double %i.ka, i64 1
   %i.kt = fmul <2 x double> %i.gn, %i.ks          ; 4 uses
   %i.ku = extractelement <2 x double> %i.kt, i64 1 ; 3 uses
-  store double %i.ku, ptr %i.fs, align 8, !tbaa !63
+  store double %i.ku, ptr %i.ft, align 8, !tbaa !63
   %i.kv = fmul <2 x double> %i.gn, %i.kq          ; 8 uses
   %i.kw = extractelement <2 x double> %i.kv, i64 0 ; 3 uses
-  store <2 x double> %i.kv, ptr %i.ft, align 8, !tbaa !63
-  %i.kx = load <2 x double>, ptr %i.fw, align 8, !tbaa !63
+  store <2 x double> %i.kv, ptr %i.fu, align 8, !tbaa !63
+  %i.kx = load <2 x double>, ptr %i.fx, align 8, !tbaa !63
   %i.ky = shufflevector <2 x double> %i.kx, <2 x double> poison, <2 x i32> <i32 1, i32 0>
   %i.kz = fmul <2 x double> %i.gn, %i.ky          ; 11 uses
   %i.la = shufflevector <2 x double> %i.kz, <2 x double> poison, <2 x i32> <i32 1, i32 0>
   %i.lb = extractelement <2 x double> %i.kz, i64 1 ; 4 uses
-  store double %i.lb, ptr %i.fw, align 8, !tbaa !63
+  store double %i.lb, ptr %i.fx, align 8, !tbaa !63
   %i.lc = extractelement <2 x double> %i.kz, i64 0 ; 4 uses
-  store double %i.lc, ptr %i.fx, align 8, !tbaa !63
+  store double %i.lc, ptr %i.fy, align 8, !tbaa !63
   %i.ld = shufflevector <2 x double> %i.jl, <2 x double> poison, <2 x i32> <i32 1, i32 1> ; 2 uses
   %i.le = fmul <2 x double> %i.ld, %i.kn          ; 2 uses
   %i.lf = fneg double %i.kw                       ; 4 uses
@@ -752,21 +752,21 @@ bb.aa:                                            ; preds = %bb.z
   %i.mk = fmul <2 x double> %i.mf, %i.lr
   %i.ml = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.mk, <2 x double> %i.lq, <2 x double> %i.mj) ; 7 uses
   %i.mm = fneg double %i.ko                       ; 2 uses
-  %i.mn = load <2 x double>, ptr %i.fb, align 8, !tbaa !63 ; 2 uses
-  %i.mo = load <2 x double>, ptr %i.fg, align 8, !tbaa !63 ; 2 uses
+  %i.mn = load <2 x double>, ptr %i.fc, align 8, !tbaa !63 ; 2 uses
+  %i.mo = load <2 x double>, ptr %i.fh, align 8, !tbaa !63 ; 2 uses
   %i.mp = shufflevector <2 x double> %i.mn, <2 x double> %i.mo, <2 x i32> <i32 0, i32 2>
   %i.mq = fmul <2 x double> %i.gn, %i.mp          ; 8 uses
   %i.mr = extractelement <2 x double> %i.mq, i64 0
-  store double %i.mr, ptr %i.fb, align 8, !tbaa !63
+  store double %i.mr, ptr %i.fc, align 8, !tbaa !63
   %i.ms = shufflevector <2 x double> %i.mn, <2 x double> %i.mo, <2 x i32> <i32 1, i32 3>
   %i.mt = fmul <2 x double> %i.gn, %i.ms          ; 8 uses
   %i.mu = shufflevector <2 x double> %i.mt, <2 x double> %i.jl, <2 x i32> <i32 0, i32 3>
-  store <2 x double> %i.mu, ptr %i.fc, align 8, !tbaa !63
+  store <2 x double> %i.mu, ptr %i.fd, align 8, !tbaa !63
   %i.mv = shufflevector <2 x double> %i.mq, <2 x double> %i.mt, <2 x i32> <i32 1, i32 3>
-  store <2 x double> %i.mv, ptr %i.fg, align 8, !tbaa !63
-  %i.mw = load <2 x double>, ptr %i.fi, align 8, !tbaa !63
+  store <2 x double> %i.mv, ptr %i.fh, align 8, !tbaa !63
+  %i.mw = load <2 x double>, ptr %i.fj, align 8, !tbaa !63
   %i.mx = fmul <2 x double> %i.gn, %i.mw          ; 2 uses
-  store <2 x double> %i.mx, ptr %i.fi, align 8, !tbaa !63
+  store <2 x double> %i.mx, ptr %i.fj, align 8, !tbaa !63
   %i.my = shufflevector <2 x double> %i.mt, <2 x double> poison, <2 x i32> zeroinitializer ; 3 uses
   %i.mz = fmul <2 x double> %i.my, %i.ll
   %i.na = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.mz, <2 x double> %i.kz, <2 x double> %i.lj)
@@ -880,14 +880,14 @@ bb.ac:                                            ; preds = %bb.aa
   %i.qq = extractelement <2 x double> %i.jo, i64 0
   %i.qr = fadd double %i.qq, %i.qp
   %i.qs = fmul double %i.qr, 5.000000e-01
-  store double %i.qs, ptr %i.fz, align 16, !tbaa !63
+  store double %i.qs, ptr %i.ga, align 16, !tbaa !63
   %i.qt = fneg <2 x double> %i.jg
   %i.qu = fmul <2 x double> %i.px, %i.pz
   %i.qv = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.pw, <2 x double> %i.qb, <2 x double> %i.qu)
   %i.qw = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ls, <2 x double> %i.on, <2 x double> %i.qv)
   %i.qx = fdiv <2 x double> %i.qw, %i.qf
   %i.qy = fsub <2 x double> %i.qt, %i.qx
-  store <2 x double> %i.qy, ptr %i.ga, align 8, !tbaa !63
+  store <2 x double> %i.qy, ptr %i.gb, align 8, !tbaa !63
   %i.qz = fneg double %i.ji
   %i.ra = shufflevector <2 x double> %i.nq, <2 x double> %i.ml, <2 x i32> <i32 1, i32 3>
   %i.rb = fmul <2 x double> %i.mt, %i.ra
@@ -903,7 +903,7 @@ bb.ac:                                            ; preds = %bb.aa
   %i.rl = fadd <2 x double> %i.rj, %i.rh
   %i.rm = shufflevector <2 x double> %i.rk, <2 x double> %i.rl, <2 x i32> <i32 0, i32 3>
   %i.rn = fmul <2 x double> %i.rm, <double 1.000000e+00, double 5.000000e-01>
-  store <2 x double> %i.rn, ptr %i.gb, align 8, !tbaa !63
+  store <2 x double> %i.rn, ptr %i.gc, align 8, !tbaa !63
   %i.ro = shufflevector <2 x double> %i.nr, <2 x double> %i.ml, <2 x i32> <i32 1, i32 3>
   %i.rp = fmul <2 x double> %i.my, %i.ro
   %i.rq = shufflevector <2 x double> %i.nr, <2 x double> %i.ml, <2 x i32> <i32 0, i32 2>
@@ -913,19 +913,19 @@ bb.ac:                                            ; preds = %bb.aa
   %i.ru = fdiv <2 x double> %i.rt, %i.qf
   %i.rv = fadd <2 x double> %i.jd, %i.ru
   %i.rw = fmul <2 x double> %i.rv, splat (double 5.000000e-01)
-  store <2 x double> %i.rw, ptr %i.gc, align 8, !tbaa !63
+  store <2 x double> %i.rw, ptr %i.gd, align 8, !tbaa !63
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #17
   store i32 -1056833530, ptr %14, align 8, !tbaa !59
-  store ptr %9, ptr %i.ge, align 8, !tbaa !8
-  store i64 12884901891, ptr %i.gd, align 8
+  store ptr %9, ptr %i.gf, align 8, !tbaa !8
+  store i64 12884901891, ptr %i.ge, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #17
-  store i64 0, ptr %i.gg, align 8
+  store i64 0, ptr %i.gh, align 8
   store i32 33619968, ptr %15, align 8, !tbaa !59
-  store ptr %10, ptr %i.gf, align 8, !tbaa !8
+  store ptr %10, ptr %i.gg, align 8, !tbaa !8
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #17
-  store i64 0, ptr %i.gi, align 8
+  store i64 0, ptr %i.gj, align 8
   store i32 33619968, ptr %16, align 8, !tbaa !59
-  store ptr %11, ptr %i.gh, align 8, !tbaa !8
+  store ptr %11, ptr %i.gi, align 8, !tbaa !8
   invoke void @_ZN2cv17eigenNonSymmetricERKNS_11_InputArrayERKNS_12_OutputArrayES5_(ptr noundef nonnull align 8 dereferenceable(24) %14, ptr noundef nonnull align 8 dereferenceable(24) %15, ptr noundef nonnull align 8 dereferenceable(24) %16)
           to label %bb.ae unwind label %bb.ad
 
@@ -941,12 +941,12 @@ bb.ae:                                            ; preds = %bb.ac
   call void @llvm.lifetime.end.p0(ptr nonnull %16) #17
   call void @llvm.lifetime.end.p0(ptr nonnull %15) #17
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #17
-  %i.ry = load i32, ptr %i.gj, align 4, !tbaa !72
-  %i.rz = load ptr, ptr %i.gk, align 8, !tbaa !30 ; 5 uses
+  %i.ry = load i32, ptr %i.gk, align 4, !tbaa !72
+  %i.rz = load ptr, ptr %i.gl, align 8, !tbaa !30 ; 5 uses
   %i.sa = getelementptr inbounds nuw i8, ptr %i.rz, i64 16
   %i.sb = load double, ptr %i.sa, align 8, !tbaa !63
   %i.sc = icmp slt i32 %i.ry, 2                   ; 3 uses
-  %i.sd = load i64, ptr %i.gl, align 8            ; 3 uses
+  %i.sd = load i64, ptr %i.gm, align 8            ; 3 uses
   %.sink.idx.i215 = select i1 %i.sc, i64 0, i64 %i.sd
   %.sink.i216 = getelementptr inbounds nuw i8, ptr %i.rz, i64 %.sink.idx.i215 ; 2 uses
   %i.se = getelementptr inbounds nuw i8, ptr %.sink.i216, i64 16
@@ -974,7 +974,7 @@ bb.ae:                                            ; preds = %bb.ac
   %i.sx = fneg double %i.sw
   %i.sy = fmul double %i.sw, %i.sx
   %i.sz = call double @llvm.fmuladd.f64(double %i.ss, double %i.su, double %i.sy) ; 3 uses
-  store double %i.sz, ptr %i.gm, align 16, !tbaa !63
+  store double %i.sz, ptr %.16..sroa_idx, align 16, !tbaa !63
   %i.ta = extractelement <2 x double> %i.sp, i64 0 ; 2 uses
   %i.tb = extractelement <2 x double> %i.sp, i64 1 ; 2 uses
   %i.tc = fcmp olt double %i.ta, %i.tb
@@ -994,8 +994,9 @@ bb.ae:                                            ; preds = %bb.ac
   %i.tn = fmul double %i.tk, %i.tk
   %i.to = call double @llvm.fmuladd.f64(double %i.ti, double %i.ti, double %i.tn)
   %i.tp = call double @llvm.fmuladd.f64(double %i.tm, double %i.tm, double %i.to) ; 2 uses
-  %20 = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %.4
-  %i.tq = load double, ptr %20, align 8, !tbaa !63
+  %.0..sroa_stride = shl nuw nsw i64 %.4, 3
+  %.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 %.0..sroa_stride
+  %i.tq = load double, ptr %.0..sroa_idx, align 8, !tbaa !63
   %i.tr = fmul double %i.tp, f0x3EB0C6F7A0B5ED8D
   %i.ts = fcmp ogt double %i.tq, %i.tr
   br i1 %i.ts, label %bb.ag, label %bb.af
@@ -1171,7 +1172,7 @@ bb.ao:                                            ; preds = %bb.am
   br label %bb.aq
 
 bb.ap:                                            ; preds = %bb.ak, %bb.al, %bb.an
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #17
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @_ZN2cv3MatD1Ev(ptr noundef nonnull align 8 dead_on_return(208) dereferenceable(208) %11) #17
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #17
   call void @_ZN2cv3MatD1Ev(ptr noundef nonnull align 8 dead_on_return(208) dereferenceable(208) %10) #17
@@ -1186,7 +1187,7 @@ bb.ap:                                            ; preds = %bb.ak, %bb.al, %bb.
 
 bb.aq:                                            ; preds = %bb.y, %bb.ao, %bb.ad, %bb.ab
   %.pn185.pn = phi { ptr, i32 } [ %i.rx, %bb.ad ], [ %i.iy, %bb.y ], [ %i.ye, %bb.ao ], [ %i.pv, %bb.ab ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #17
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @_ZN2cv3MatD1Ev(ptr noundef nonnull align 8 dead_on_return(208) dereferenceable(208) %11) #17
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #17
   call void @_ZN2cv3MatD1Ev(ptr noundef nonnull align 8 dead_on_return(208) dereferenceable(208) %10) #17

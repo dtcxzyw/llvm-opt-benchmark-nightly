@@ -204,10 +204,10 @@ define void @cli_detect_swizz_str(ptr nofree noundef readonly captures(none) %0,
 bb.a:
   %i.a = alloca [4096 x i8], align 16             ; 6 uses
   %i.b = alloca [17576 x i8], align 16            ; 5 uses
-  %i.c = alloca [3 x i16], align 2                ; 7 uses
+  %i.c = alloca [3 x i16], align 2                ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #6
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #6
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 35172 ; 2 uses
   %i.e = load i32, ptr %i.d, align 4, !tbaa !34
   %i.f = add nsw i32 %i.e, 1
@@ -361,13 +361,15 @@ bb.l:                                             ; preds = %bb.k, %bb.i, %bb.j
 
 bb.m:                                             ; preds = %.preheader
   %spec.store.select = tail call i8 @llvm.umin.i8(i8 %i.bo, i8 3)
-  %i.bp = zext nneg i8 %spec.store.select to i64
-  %i.bq = add nuw nsw i64 %i.bp, 4294967295
-  %i.br = and i64 %i.bq, 4294967295
-  %4 = getelementptr inbounds nuw [2 x i8], ptr %i.c, i64 %i.br ; 2 uses
-  %i.bs = load i16, ptr %4, align 2, !tbaa !39
+  %4 = shl nuw nsw i8 %spec.store.select, 1
+  %i.bp = zext nneg i8 %4 to i64
+  %i.bq = add nuw nsw i64 %i.bp, 8589934590
+  %i.br = and i64 %i.bq, 8589934590               ; 2 uses
+  %.0..0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.br
+  %i.bs = load i16, ptr %.0..0..sroa_idx, align 2, !tbaa !39
   %i.bt = add i16 %i.bs, 1
-  store i16 %i.bt, ptr %4, align 2, !tbaa !39
+  %.0..0..sroa_idx145 = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.br
+  store i16 %i.bt, ptr %.0..0..sroa_idx145, align 2, !tbaa !39
   %i.bu = add i16 %.071105, 1
   br label %bb.n
 
@@ -456,7 +458,7 @@ bb.u:                                             ; preds = %swizz_j48.exit._cri
   br label %._crit_edge.thread
 
 ._crit_edge.thread:                               ; preds = %bb.a, %bb.o, %._crit_edge, %bb.u
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #6
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #6
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
   ret void
@@ -474,8 +476,8 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 ; Function Attrs: nounwind uwtable
 define range(i32 0, 2) i32 @cli_detect_swizz(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #0 {
 bb.a:
-  %i.a = alloca [10 x i32], align 16              ; 27 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
+  %i.a = alloca [10 x i32], align 16              ; 28 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 35156 ; 2 uses
   %i.c = load i32, ptr %i.b, align 4, !tbaa !43
   %i.d = zext i32 %i.c to i64
@@ -504,12 +506,14 @@ bb.b:                                             ; preds = %bb.a, %bb.d
 
 bb.c:                                             ; preds = %bb.b
   %i.p = zext i8 %spec.store.select to i64
-  %i.q = add nuw nsw i64 %i.p, 4294967295
-  %i.r = and i64 %i.q, 4294967295
-  %1 = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.r ; 2 uses
-  %i.s = load i32, ptr %1, align 4, !tbaa !29
+  %1 = shl nuw nsw i64 %i.p, 2
+  %i.q = add nuw nsw i64 %1, 17179869180
+  %i.r = and i64 %i.q, 17179869180                ; 2 uses
+  %.0..0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.r
+  %i.s = load i32, ptr %.0..0..sroa_idx, align 4, !tbaa !29
   %i.t = add i32 %i.s, 1
-  store i32 %i.t, ptr %1, align 4, !tbaa !29
+  %.0..0..sroa_idx168 = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.r
+  store i32 %i.t, ptr %.0..0..sroa_idx168, align 4, !tbaa !29
   %i.u = add i32 %.03040, 1
   br label %bb.d
 
@@ -836,7 +840,7 @@ bb.z:                                             ; preds = %bb.y
 
 bb.aa:                                            ; preds = %bb.z, %bb.y, %bb.x, %bb.w
   %.032 = phi i32 [ 0, %bb.w ], [ %..0, %bb.z ], [ 0, %bb.x ], [ 1, %bb.y ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret i32 %.032
 }
 

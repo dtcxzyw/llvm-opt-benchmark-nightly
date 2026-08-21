@@ -204,9 +204,9 @@ bb.b:                                             ; preds = %.sink.split, %bb.a
 define dso_local void @dumpX86Calls(ptr noundef %0, i64 noundef %1) local_unnamed_addr #0 {
 bb.a:
   %2 = alloca %struct.Dl_info, align 8            ; 4 uses
-  %i.a = alloca [256 x i64], align 16             ; 4 uses
+  %i.a = alloca [256 x i64], align 16             ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #24
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #24
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(2048) %i.a, i8 0, i64 2048, i1 false)
   %i.b = icmp ult i64 %1, 5
   br i1 %i.b, label %.loopexit, label %.lr.ph
@@ -240,15 +240,17 @@ bb.c:                                             ; preds = %bb.b
   br i1 %or.cond, label %bb.d, label %bb.g
 
 bb.d:                                             ; preds = %bb.c
-  %i.r = and i64 %i.l, 255
-  %3 = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %i.r ; 2 uses
-  %i.s = load i64, ptr %3, align 8, !tbaa !19
+  %3 = shl i64 %i.l, 3
+  %i.r = and i64 %3, 2040                         ; 2 uses
+  %.0..0..0..0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.r
+  %i.s = load i64, ptr %.0..0..0..0..sroa_idx, align 8, !tbaa !19
   %.not24 = icmp eq i64 %i.s, %i.l
   br i1 %.not24, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   %i.t = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.336, i64 noundef %i.l, ptr noundef nonnull %i.p) ; 0 uses
-  store i64 %i.l, ptr %3, align 8, !tbaa !19
+  %.0..0..0..0..sroa_idx43 = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.r
+  store i64 %i.l, ptr %.0..0..0..0..sroa_idx43, align 8, !tbaa !19
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d
@@ -262,7 +264,7 @@ bb.g:                                             ; preds = %bb.c, %bb.f, %bb.b
   br i1 %i.w, label %bb.b, label %.loopexit, !llvm.loop !214
 
 .loopexit:                                        ; preds = %bb.g, %bb.a
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #24
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #24
   ret void
 }
@@ -277,7 +279,7 @@ declare noundef i32 @printf(ptr noundef readonly captures(none), ...) local_unna
 define dso_local void @dumpCodeAroundEIP(ptr noundef %0) local_unnamed_addr #0 {
 bb.a:
   %1 = alloca %struct.Dl_info, align 8            ; 4 uses
-  %i.a = alloca [256 x i64], align 16             ; 4 uses
+  %i.a = alloca [256 x i64], align 16             ; 5 uses
   %i.b = alloca [65 x i8], align 16               ; 6 uses
   %2 = alloca %struct.Dl_info, align 8            ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #24
@@ -377,7 +379,7 @@ serverLogHexDump.exit:                            ; preds = %bb.j, %bb.g
   call void @serverLogRaw(i32 noundef 1027, ptr noundef nonnull @.str.332) #24
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #24
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #24
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #24
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(2048) %i.a, i8 0, i64 2048, i1 false)
   %i.av = icmp ult i64 %i.z, 5
   br i1 %i.av, label %dumpX86Calls.exit, label %.lr.ph.i17
@@ -410,15 +412,17 @@ bb.l:                                             ; preds = %bb.k
   br i1 %or.cond.i18, label %bb.m, label %bb.p
 
 bb.m:                                             ; preds = %bb.l
-  %i.bk = and i64 %i.be, 255
-  %3 = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %i.bk ; 2 uses
-  %i.bl = load i64, ptr %3, align 8, !tbaa !19
+  %3 = shl i64 %i.be, 3
+  %i.bk = and i64 %3, 2040                        ; 2 uses
+  %.0..0..0..0..0..0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.bk
+  %i.bl = load i64, ptr %.0..0..0..0..0..0..sroa_idx, align 8, !tbaa !19
   %.not24.i = icmp eq i64 %i.bl, %i.be
   br i1 %.not24.i, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
   %i.bm = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.336, i64 noundef %i.be, ptr noundef nonnull %i.bi) ; 0 uses
-  store i64 %i.be, ptr %3, align 8, !tbaa !19
+  %.0..0..0..0..0..0..sroa_idx31 = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.bk
+  store i64 %i.be, ptr %.0..0..0..0..0..0..sroa_idx31, align 8, !tbaa !19
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %bb.m
@@ -432,7 +436,7 @@ bb.p:                                             ; preds = %bb.o, %bb.l, %bb.k
   br i1 %i.bp, label %bb.k, label %dumpX86Calls.exit, !llvm.loop !214
 
 dumpX86Calls.exit:                                ; preds = %bb.p, %serverLogHexDump.exit
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #24
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #24
   br label %bb.q
 

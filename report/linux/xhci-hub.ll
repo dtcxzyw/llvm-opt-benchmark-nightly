@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 ; Function Attrs: fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong
 define dso_local i32 @xhci_hub_control(ptr noundef %0, i16 noundef zeroext %1, i16 noundef zeroext %2, i16 noundef zeroext %3, ptr nofree noundef captures(none) %4, i16 noundef zeroext %5) #1 align 16 prefalign(16) {
 bb.a:
-  %6 = alloca [4 x i8], align 4                   ; 5 uses
+  %.sroa.0.i = alloca i32, align 4                ; 6 uses
   %i.a = alloca i64, align 8                      ; 14 uses
   %i.b = tail call i32 @usb_hcd_is_primary_hcd(ptr noundef %0) #9
   %.not.i = icmp eq i32 %i.b, 0
@@ -324,7 +324,7 @@ xhci_usb3_hub_descriptor.exit.i:                  ; preds = %.lr.ph.i.i, %bb.g
   br label %xhci_hub_descriptor.exit
 
 bb.h:                                             ; preds = %bb.e
-  call void @llvm.lifetime.start.p0(ptr nonnull %6) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i)
   %i.as = getelementptr i8, ptr %.0.i, i64 1048
   %i.at = getelementptr i8, ptr %.0.i, i64 1056
   %i.au = load i32, ptr %i.at, align 8            ; 6 uses
@@ -349,7 +349,7 @@ bb.h:                                             ; preds = %bb.e
   store i8 %i.bf, ptr %4, align 1
   %i.bg = getelementptr i8, ptr %4, i64 5
   store i8 10, ptr %i.bg, align 1
-  store i32 0, ptr %6, align 4
+  store i32 0, ptr %.sroa.0.i, align 4
   %.not6.i.i = icmp eq i32 %i.au, 0
   br i1 %.not6.i.i, label %._crit_edge.thread.i.i, label %.lr.ph.preheader.i9.i
 
@@ -380,11 +380,12 @@ bb.i:                                             ; preds = %.lr.ph.i11.i
   %i.bp = and i8 %i.bo, 7
   %i.bq = shl nuw i8 1, %i.bp
   %i.br = lshr i64 %.pre.i.i, 3
-  %i.bs = and i64 %i.br, 536870911
-  %i.bt = getelementptr i8, ptr %6, i64 %i.bs     ; 2 uses
+  %i.bs = and i64 %i.br, 536870911                ; 2 uses
+  %i.bt = getelementptr inbounds nuw i8, ptr %.sroa.0.i, i64 %i.bs
   %i.bu = load i8, ptr %i.bt, align 1
   %i.bv = or i8 %i.bu, %i.bq
-  store i8 %i.bv, ptr %i.bt, align 1
+  %.sroa.0.i.0.i.0.i.0..sroa_idx340 = getelementptr inbounds nuw i8, ptr %.sroa.0.i, i64 %i.bs
+  store i8 %i.bv, ptr %.sroa.0.i.0.i.0.i.0..sroa_idx340, align 1
   br label %.lr.ph._crit_edge.i.i
 
 .lr.ph._crit_edge.i.i:                            ; preds = %bb.i, %.lr.ph.i11.i
@@ -405,11 +406,11 @@ bb.i:                                             ; preds = %.lr.ph.i11.i
   %i.ca = sdiv i32 %i.bz, 8
   %i.cb = tail call i32 @llvm.umax.i32(i32 %i.ca, i32 1)
   %umax.i.i = zext i32 %i.cb to i64
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef align 1 %i.by, ptr noundef nonnull align 4 dereferenceable(1) %6, i64 %umax.i.i, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef align 1 %i.by, ptr noundef nonnull align 4 dereferenceable(1) %.sroa.0.i, i64 %umax.i.i, i1 false)
   br label %xhci_usb2_hub_descriptor.exit.i
 
 xhci_usb2_hub_descriptor.exit.i:                  ; preds = %.lr.ph4.preheader.i.i, %._crit_edge.i.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i)
   br label %xhci_hub_descriptor.exit
 
 bb.j:                                             ; preds = %xhci_get_rhub.exit

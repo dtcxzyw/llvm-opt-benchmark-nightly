@@ -202,9 +202,9 @@ bb.ag:                                            ; preds = %bb.am
   br label %bb.ao
 
 bb.ah:                                            ; preds = %bb.af, %bb.am
-  %indvars.iv = phi i64 [ 0, %bb.af ], [ %indvars.iv.next, %bb.am ] ; 3 uses
+  %indvars.iv = phi i64 [ 0, %bb.af ], [ %indvars.iv.next, %bb.am ] ; 5 uses
   %.4594 = phi i32 [ %i.hp, %bb.af ], [ %.5.30, %bb.am ] ; 40 uses
-  %i.ig = lshr exact i64 %indvars.iv, 5           ; 3 uses
+  %i.ig = lshr exact i64 %indvars.iv, 5
   %i.ih = trunc nuw nsw i64 %i.ig to i32
   switch i32 %i.ih, label %bb.al [
     i32 0, label %bb.ai
@@ -220,8 +220,9 @@ bb.ai:                                            ; preds = %bb.ah
   br label %bb.am
 
 bb.aj:                                            ; preds = %bb.ah, %bb.ah
-  %4 = getelementptr [4 x i8], ptr %i.d, i64 %i.ig
-  %i.il = load i32, ptr %4, align 4
+  %.0..sroa_stride648 = lshr exact i64 %indvars.iv, 3
+  %.0..0..sroa_idx691 = getelementptr inbounds nuw i8, ptr %i.d, i64 %.0..sroa_stride648
+  %i.il = load i32, ptr %.0..0..sroa_idx691, align 4
   %i.im = call signext i8 @tvb_get_int8(ptr noundef %0, i32 noundef %.4594)
   %i.in = sext i8 %i.im to i32
   %i.io = call ptr (ptr, i32, ptr, i32, i32, ptr, ptr, ...) @proto_tree_add_bytes_format_value(ptr noundef %i.hj, i32 noundef %i.il, ptr noundef %0, i32 noundef %.4594, i32 noundef 32, ptr noundef null, ptr noundef nonnull @.str.186, i32 noundef %i.in)
@@ -234,8 +235,9 @@ bb.ak:                                            ; preds = %bb.ah
   br label %bb.am
 
 bb.al:                                            ; preds = %bb.ah
-  %5 = getelementptr [4 x i8], ptr %i.d, i64 %i.ig
-  %i.is = load i32, ptr %5, align 4
+  %.0..sroa_stride644 = lshr exact i64 %indvars.iv, 3
+  %.0..0..sroa_idx688 = getelementptr inbounds nuw i8, ptr %i.d, i64 %.0..sroa_stride644
+  %i.is = load i32, ptr %.0..0..sroa_idx688, align 4
   %i.it = call signext i8 @tvb_get_int8(ptr noundef %0, i32 noundef %.4594)
   %i.iu = sext i8 %i.it to i32
   %i.iv = call ptr (ptr, i32, ptr, i32, i32, ptr, ptr, ...) @proto_tree_add_bytes_format_value(ptr noundef %i.hj, i32 noundef %i.is, ptr noundef %0, i32 noundef %.4594, i32 noundef 32, ptr noundef null, ptr noundef nonnull @.str.188, i32 noundef %i.iu)
@@ -392,9 +394,9 @@ bb.an:                                            ; preds = %bb.at
   br label %bb.av
 
 bb.ao:                                            ; preds = %bb.ag, %bb.at
-  %indvars.iv616 = phi i64 [ 0, %bb.ag ], [ %indvars.iv.next617, %bb.at ] ; 3 uses
+  %indvars.iv616 = phi i64 [ 0, %bb.ag ], [ %indvars.iv.next617, %bb.at ] ; 5 uses
   %.6599 = phi i32 [ %.5.30, %bb.ag ], [ %.7.30, %bb.at ] ; 40 uses
-  %i.lp = lshr exact i64 %indvars.iv616, 5        ; 3 uses
+  %i.lp = lshr exact i64 %indvars.iv616, 5
   %i.lq = trunc nuw nsw i64 %i.lp to i32
   switch i32 %i.lq, label %bb.as [
     i32 0, label %bb.ap
@@ -410,8 +412,9 @@ bb.ap:                                            ; preds = %bb.ao
   br label %bb.at
 
 bb.aq:                                            ; preds = %bb.ao, %bb.ao
-  %6 = getelementptr [4 x i8], ptr %i.e, i64 %i.lp
-  %i.lu = load i32, ptr %6, align 4
+  %.0..sroa_stride633 = lshr exact i64 %indvars.iv616, 3
+  %.0..0..sroa_idx678 = getelementptr inbounds nuw i8, ptr %i.e, i64 %.0..sroa_stride633
+  %i.lu = load i32, ptr %.0..0..sroa_idx678, align 4
   %i.lv = call signext i8 @tvb_get_int8(ptr noundef %0, i32 noundef %.6599)
   %i.lw = sext i8 %i.lv to i32
   %i.lx = call ptr (ptr, i32, ptr, i32, i32, ptr, ptr, ...) @proto_tree_add_bytes_format_value(ptr noundef %i.hj, i32 noundef %i.lu, ptr noundef %0, i32 noundef %.6599, i32 noundef 32, ptr noundef null, ptr noundef nonnull @.str.186, i32 noundef %i.lw)
@@ -424,8 +427,9 @@ bb.ar:                                            ; preds = %bb.ao
   br label %bb.at
 
 bb.as:                                            ; preds = %bb.ao
-  %7 = getelementptr [4 x i8], ptr %i.e, i64 %i.lp
-  %i.mb = load i32, ptr %7, align 4
+  %.0..sroa_stride629 = lshr exact i64 %indvars.iv616, 3
+  %.0..0..sroa_idx675 = getelementptr inbounds nuw i8, ptr %i.e, i64 %.0..sroa_stride629
+  %i.mb = load i32, ptr %.0..0..sroa_idx675, align 4
   %i.mc = call signext i8 @tvb_get_int8(ptr noundef %0, i32 noundef %.6599)
   %i.md = sext i8 %i.mc to i32
   %i.me = call ptr (ptr, i32, ptr, i32, i32, ptr, ptr, ...) @proto_tree_add_bytes_format_value(ptr noundef %i.hj, i32 noundef %i.mb, ptr noundef %0, i32 noundef %.6599, i32 noundef 32, ptr noundef null, ptr noundef nonnull @.str.188, i32 noundef %i.md)
@@ -569,9 +573,9 @@ bb.au:                                            ; preds = %bb.ba
   br label %bb.bb
 
 bb.av:                                            ; preds = %bb.an, %bb.ba
-  %indvars.iv620 = phi i64 [ 0, %bb.an ], [ %indvars.iv.next621, %bb.ba ] ; 3 uses
+  %indvars.iv620 = phi i64 [ 0, %bb.an ], [ %indvars.iv.next621, %bb.ba ] ; 5 uses
   %.8604 = phi i32 [ %.7.30, %bb.an ], [ %.9.30, %bb.ba ] ; 41 uses
-  %i.ot = lshr exact i64 %indvars.iv620, 5        ; 3 uses
+  %i.ot = lshr exact i64 %indvars.iv620, 5
   %i.ou = trunc nuw nsw i64 %i.ot to i32
   switch i32 %i.ou, label %bb.az [
     i32 0, label %bb.aw
@@ -587,8 +591,9 @@ bb.aw:                                            ; preds = %bb.av
   br label %bb.ba
 
 bb.ax:                                            ; preds = %bb.av, %bb.av
-  %8 = getelementptr [4 x i8], ptr %i.f, i64 %i.ot
-  %i.oy = load i32, ptr %8, align 4
+  %.0..sroa_stride625 = lshr exact i64 %indvars.iv620, 3
+  %.0..0..sroa_idx672 = getelementptr inbounds nuw i8, ptr %i.f, i64 %.0..sroa_stride625
+  %i.oy = load i32, ptr %.0..0..sroa_idx672, align 4
   %i.oz = call signext i8 @tvb_get_int8(ptr noundef %0, i32 noundef %.8604)
   %i.pa = sext i8 %i.oz to i32
   %i.pb = call ptr (ptr, i32, ptr, i32, i32, ptr, ptr, ...) @proto_tree_add_bytes_format_value(ptr noundef %i.hj, i32 noundef %i.oy, ptr noundef %0, i32 noundef %.8604, i32 noundef 32, ptr noundef null, ptr noundef nonnull @.str.186, i32 noundef %i.pa)
@@ -601,8 +606,9 @@ bb.ay:                                            ; preds = %bb.av
   br label %bb.ba
 
 bb.az:                                            ; preds = %bb.av
-  %9 = getelementptr [4 x i8], ptr %i.f, i64 %i.ot
-  %i.pf = load i32, ptr %9, align 4
+  %.0..sroa_stride = lshr exact i64 %indvars.iv620, 3
+  %.0..0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.f, i64 %.0..sroa_stride
+  %i.pf = load i32, ptr %.0..0..sroa_idx, align 4
   %i.pg = call signext i8 @tvb_get_int8(ptr noundef %0, i32 noundef %.8604)
   %i.ph = sext i8 %i.pg to i32
   %i.pi = call ptr (ptr, i32, ptr, i32, i32, ptr, ptr, ...) @proto_tree_add_bytes_format_value(ptr noundef %i.hj, i32 noundef %i.pf, ptr noundef %0, i32 noundef %.8604, i32 noundef 32, ptr noundef null, ptr noundef nonnull @.str.188, i32 noundef %i.ph)

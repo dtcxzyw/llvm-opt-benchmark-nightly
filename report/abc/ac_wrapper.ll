@@ -205,8 +205,8 @@ _ZNSt14_Function_base13_Base_managerIZN3acd21ac_decomposition_impl18find_decompo
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr noundef i32 @_ZN3acd21ac_decomposition_impl19column_multiplicityILj3EEEjRKN5kitty18static_truth_tableILj11ELb0EEE(ptr noundef nonnull align 8 dereferenceable(500) %0, ptr noundef nonnull align 8 dereferenceable(256) %1) local_unnamed_addr #0 comdat align 2 {
 bb.a:
-  %i.a = alloca [4 x i64], align 16               ; 12 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
+  %i.a = alloca [4 x i64], align 16               ; 20 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.a, i8 0, i64 32, i1 false)
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 432
   %i.c = load i32, ptr %i.b, align 8, !tbaa !42   ; 2 uses
@@ -222,7 +222,7 @@ bb.b:                                             ; preds = %bb.c
   %i.i = tail call range(i64 0, 65) <4 x i64> @llvm.ctpop.v4i64(<4 x i64> %i.h)
   %i.j = tail call i64 @llvm.vector.reduce.add.v4i64(<4 x i64> %i.i)
   %i.k = trunc nuw nsw i64 %i.j to i32
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #12
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret i32 %i.k
 
 bb.c:                                             ; preds = %bb.a, %bb.c
@@ -231,74 +231,83 @@ bb.c:                                             ; preds = %bb.a, %bb.c
   %i.m = load i64, ptr %i.l, align 8, !tbaa !52   ; 16 uses
   %i.n = and i64 %i.m, 63
   %i.o = shl nuw i64 1, %i.n
-  %i.p = lshr i64 %i.m, 6
-  %i.q = and i64 %i.p, 3
-  %2 = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %i.q ; 2 uses
-  %i.r = load i64, ptr %2, align 8, !tbaa !52
+  %i.p = lshr i64 %i.m, 3
+  %i.q = and i64 %i.p, 24                         ; 2 uses
+  %.0..0..0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.q
+  %i.r = load i64, ptr %.0..0..0..sroa_idx, align 8, !tbaa !52
   %i.s = or i64 %i.r, %i.o
-  store i64 %i.s, ptr %2, align 8, !tbaa !52
+  %.0..0..0..sroa_idx74 = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.q
+  store i64 %i.s, ptr %.0..0..0..sroa_idx74, align 8, !tbaa !52
   %i.t = lshr i64 %i.m, 8
   %i.u = and i64 %i.t, 63
   %i.v = shl nuw i64 1, %i.u
-  %i.w = lshr i64 %i.m, 14
-  %i.x = and i64 %i.w, 3
-  %3 = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %i.x ; 2 uses
-  %i.y = load i64, ptr %3, align 8, !tbaa !52
+  %i.w = lshr i64 %i.m, 11
+  %i.x = and i64 %i.w, 24                         ; 2 uses
+  %.0..0..0..sroa_idx77 = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.x
+  %i.y = load i64, ptr %.0..0..0..sroa_idx77, align 8, !tbaa !52
   %i.z = or i64 %i.y, %i.v
-  store i64 %i.z, ptr %3, align 8, !tbaa !52
+  %.0..0..0..sroa_idx80 = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.x
+  store i64 %i.z, ptr %.0..0..0..sroa_idx80, align 8, !tbaa !52
   %i.aa = lshr i64 %i.m, 16
   %i.ab = and i64 %i.aa, 63
   %i.ac = shl nuw i64 1, %i.ab
-  %i.ad = lshr i64 %i.m, 22
-  %i.ae = and i64 %i.ad, 3
-  %4 = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %i.ae ; 2 uses
-  %i.af = load i64, ptr %4, align 8, !tbaa !52
+  %i.ad = lshr i64 %i.m, 19
+  %i.ae = and i64 %i.ad, 24                       ; 2 uses
+  %.0..0..0..sroa_idx83 = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.ae
+  %i.af = load i64, ptr %.0..0..0..sroa_idx83, align 8, !tbaa !52
   %i.ag = or i64 %i.af, %i.ac
-  store i64 %i.ag, ptr %4, align 8, !tbaa !52
+  %.0..0..0..sroa_idx86 = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.ae
+  store i64 %i.ag, ptr %.0..0..0..sroa_idx86, align 8, !tbaa !52
   %i.ah = lshr i64 %i.m, 24
   %i.ai = and i64 %i.ah, 63
   %i.aj = shl nuw i64 1, %i.ai
-  %i.ak = lshr i64 %i.m, 30
-  %i.al = and i64 %i.ak, 3
-  %5 = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %i.al ; 2 uses
-  %i.am = load i64, ptr %5, align 8, !tbaa !52
+  %i.ak = lshr i64 %i.m, 27
+  %i.al = and i64 %i.ak, 24                       ; 2 uses
+  %.0..0..0..sroa_idx89 = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.al
+  %i.am = load i64, ptr %.0..0..0..sroa_idx89, align 8, !tbaa !52
   %i.an = or i64 %i.am, %i.aj
-  store i64 %i.an, ptr %5, align 8, !tbaa !52
+  %.0..0..0..sroa_idx92 = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.al
+  store i64 %i.an, ptr %.0..0..0..sroa_idx92, align 8, !tbaa !52
   %i.ao = lshr i64 %i.m, 32
   %i.ap = and i64 %i.ao, 63
   %i.aq = shl nuw i64 1, %i.ap
-  %i.ar = lshr i64 %i.m, 38
-  %i.as = and i64 %i.ar, 3
-  %6 = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %i.as ; 2 uses
-  %i.at = load i64, ptr %6, align 8, !tbaa !52
+  %i.ar = lshr i64 %i.m, 35
+  %i.as = and i64 %i.ar, 24                       ; 2 uses
+  %.0..0..0..sroa_idx95 = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.as
+  %i.at = load i64, ptr %.0..0..0..sroa_idx95, align 8, !tbaa !52
   %i.au = or i64 %i.at, %i.aq
-  store i64 %i.au, ptr %6, align 8, !tbaa !52
+  %.0..0..0..sroa_idx98 = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.as
+  store i64 %i.au, ptr %.0..0..0..sroa_idx98, align 8, !tbaa !52
   %i.av = lshr i64 %i.m, 40
   %i.aw = and i64 %i.av, 63
   %i.ax = shl nuw i64 1, %i.aw
-  %i.ay = lshr i64 %i.m, 46
-  %i.az = and i64 %i.ay, 3
-  %7 = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %i.az ; 2 uses
-  %i.ba = load i64, ptr %7, align 8, !tbaa !52
+  %i.ay = lshr i64 %i.m, 43
+  %i.az = and i64 %i.ay, 24                       ; 2 uses
+  %.0..0..0..sroa_idx101 = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.az
+  %i.ba = load i64, ptr %.0..0..0..sroa_idx101, align 8, !tbaa !52
   %i.bb = or i64 %i.ba, %i.ax
-  store i64 %i.bb, ptr %7, align 8, !tbaa !52
+  %.0..0..0..sroa_idx104 = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.az
+  store i64 %i.bb, ptr %.0..0..0..sroa_idx104, align 8, !tbaa !52
   %i.bc = lshr i64 %i.m, 48
   %i.bd = and i64 %i.bc, 63
   %i.be = shl nuw i64 1, %i.bd
-  %i.bf = lshr i64 %i.m, 54
-  %i.bg = and i64 %i.bf, 3
-  %8 = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %i.bg ; 2 uses
-  %i.bh = load i64, ptr %8, align 8, !tbaa !52
+  %i.bf = lshr i64 %i.m, 51
+  %i.bg = and i64 %i.bf, 24                       ; 2 uses
+  %.0..0..0..sroa_idx107 = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.bg
+  %i.bh = load i64, ptr %.0..0..0..sroa_idx107, align 8, !tbaa !52
   %i.bi = or i64 %i.bh, %i.be
-  store i64 %i.bi, ptr %8, align 8, !tbaa !52
+  %.0..0..0..sroa_idx110 = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.bg
+  store i64 %i.bi, ptr %.0..0..0..sroa_idx110, align 8, !tbaa !52
   %i.bj = lshr i64 %i.m, 56
   %i.bk = and i64 %i.bj, 63
   %i.bl = shl nuw i64 1, %i.bk
-  %i.bm = lshr i64 %i.m, 62
-  %9 = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %i.bm ; 2 uses
-  %i.bn = load i64, ptr %9, align 8, !tbaa !52
+  %i.bm = lshr i64 %i.m, 59
+  %.0..sroa_stride19.7 = and i64 %i.bm, 24        ; 2 uses
+  %.0..0..0..sroa_idx113 = getelementptr inbounds nuw i8, ptr %i.a, i64 %.0..sroa_stride19.7
+  %i.bn = load i64, ptr %.0..0..0..sroa_idx113, align 8, !tbaa !52
   %i.bo = or i64 %i.bn, %i.bl
-  store i64 %i.bo, ptr %9, align 8, !tbaa !52
+  %.0..0..0..sroa_idx116 = getelementptr inbounds nuw i8, ptr %i.a, i64 %.0..sroa_stride19.7
+  store i64 %i.bo, ptr %.0..0..0..sroa_idx116, align 8, !tbaa !52
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %bb.b, label %bb.c, !llvm.loop !183
@@ -701,8 +710,8 @@ define linkonce_odr noundef zeroext i1 @_ZN3acd10acdXX_impl11verify_implEv(ptr n
 .preheader67:
   %1 = alloca [11 x %"struct.kitty::static_truth_table"], align 16 ; 9 uses
   %2 = alloca [6 x %"struct.kitty::static_truth_table"], align 16 ; 7 uses
-  %3 = alloca %"struct.kitty::static_truth_table", align 8 ; 5 uses
-  %4 = alloca %"struct.kitty::static_truth_table", align 8 ; 6 uses
+  %.sroa.0 = alloca [32 x i64], align 8           ; 5 uses
+  %3 = alloca %"struct.kitty::static_truth_table", align 8 ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #12
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(2816) %1, i8 0, i64 2816, i1 false)
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 568
@@ -855,8 +864,8 @@ _ZN5kitty14create_nth_varINS_18static_truth_tableILj11ELb0EEEEEvRT_hb.exit: ; pr
   br label %._crit_edge78
 
 ._crit_edge78:                                    ; preds = %.epil.preheader, %._crit_edge78.loopexit.unr-lcssa, %._crit_edge
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #12
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(256) %3, i8 0, i64 256, i1 false)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(256) %.sroa.0, i8 0, i64 256, i1 false)
   %i.aw = getelementptr inbounds nuw i8, ptr %0, i64 528
   %i.ax = load i64, ptr %i.aw, align 8, !tbaa !52
   %wide.trip.count126 = zext i32 %i.e to i64      ; 2 uses
@@ -902,8 +911,8 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph77.new
   br i1 %i.ay, label %.epil.preheader163, label %.lr.ph82.new
 
 bb.c:                                             ; preds = %bb.e
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #12
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(256) %4, i8 0, i64 256, i1 false)
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #12
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(256) %3, i8 0, i64 256, i1 false)
   %i.bo = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.bp = load i32, ptr %i.bo, align 4, !tbaa !92 ; 6 uses
   %.not108 = icmp eq i32 %i.bp, 0
@@ -986,11 +995,12 @@ bb.d:                                             ; preds = %._crit_edge83
   %i.cv = zext i32 %.04985 to i64                 ; 2 uses
   %i.cw = and i64 %i.cv, 63
   %i.cx = shl nuw i64 1, %i.cw
-  %i.cy = lshr i64 %i.cv, 6
-  %5 = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %i.cy ; 2 uses
-  %i.cz = load i64, ptr %5, align 8, !tbaa !52
+  %i.cy = lshr i64 %i.cv, 3
+  %.sroa.0.0..sroa_stride = and i64 %i.cy, 536870904
+  %.sroa.0.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %.sroa.0.0..sroa_stride ; 2 uses
+  %i.cz = load i64, ptr %.sroa.0.0..sroa_idx, align 8, !tbaa !52
   %i.da = or i64 %i.cz, %i.cx
-  store i64 %i.da, ptr %5, align 8, !tbaa !52
+  store i64 %i.da, ptr %.sroa.0.0..sroa_idx, align 8, !tbaa !52
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %._crit_edge83
@@ -1040,8 +1050,9 @@ bb.e:                                             ; preds = %bb.d, %._crit_edge8
 ._crit_edge89:                                    ; preds = %.epil.preheader170, %._crit_edge89.loopexit.unr-lcssa, %.preheader64.._crit_edge89_crit_edge
   %.pre-phi141 = phi i64 [ %.pre140, %.preheader64.._crit_edge89_crit_edge ], [ %i.dd, %._crit_edge89.loopexit.unr-lcssa ], [ %i.dd, %.epil.preheader170 ] ; 5 uses
   %.044.lcssa = phi i32 [ 0, %.preheader64.._crit_edge89_crit_edge ], [ %i.eg, %._crit_edge89.loopexit.unr-lcssa ], [ %i.dm, %.epil.preheader170 ]
-  %6 = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %.pre138
-  %i.dn = load i64, ptr %6, align 8, !tbaa !52
+  %.sroa.0.0..sroa_stride67 = shl nuw nsw i64 %.pre138, 3
+  %.sroa.0.0..sroa_idx69 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %.sroa.0.0..sroa_stride67
+  %i.dn = load i64, ptr %.sroa.0.0..sroa_idx69, align 8, !tbaa !52
   %i.do = lshr i64 %i.dn, %.pre-phi141
   %i.dp = trunc i64 %i.do to i32
   %i.dq = and i32 %i.dp, 1
@@ -1141,7 +1152,7 @@ bb.e:                                             ; preds = %bb.d, %._crit_edge8
 
 bb.f:                                             ; preds = %._crit_edge100
   %i.fm = shl nuw i64 1, %.pre-phi141
-  %i.fn = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %.pre138 ; 2 uses
+  %i.fn = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %.pre138 ; 2 uses
   %i.fo = load i64, ptr %i.fn, align 8, !tbaa !52
   %i.fp = or i64 %i.fo, %i.fm
   store i64 %i.fp, ptr %i.fn, align 8, !tbaa !52
@@ -1162,7 +1173,7 @@ bb.h:                                             ; preds = %bb.i
 bb.i:                                             ; preds = %.preheader, %bb.h
   %.0103 = phi i32 [ 0, %.preheader ], [ %i.fs, %bb.h ] ; 2 uses
   %i.ft = zext i32 %.0103 to i64                  ; 2 uses
-  %i.fu = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %i.ft
+  %i.fu = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %i.ft
   %i.fv = load i64, ptr %i.fu, align 8, !tbaa !52
   %i.fw = getelementptr inbounds nuw [8 x i8], ptr %i.df, i64 %i.ft
   %i.fx = load i64, ptr %i.fw, align 8, !tbaa !52
@@ -1171,14 +1182,14 @@ bb.i:                                             ; preds = %.preheader, %bb.h
 
 bb.j:                                             ; preds = %bb.i
   %i.fy = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) @_ZSt4cout, ptr noundef nonnull @.str.9, i64 noundef 30) #12 ; 0 uses
-  call void @_ZN3acd10acdXX_impl9report_ttERKN5kitty18static_truth_tableILj11ELb0EEE(ptr noundef nonnull align 8 dereferenceable(632) %0, ptr noundef nonnull align 8 dereferenceable(256) %4)
+  call void @_ZN3acd10acdXX_impl9report_ttERKN5kitty18static_truth_tableILj11ELb0EEE(ptr noundef nonnull align 8 dereferenceable(632) %0, ptr noundef nonnull align 8 dereferenceable(256) %3)
   %i.fz = call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) @_ZSt4cout, ptr noundef nonnull @.str.10, i64 noundef 12) #12 ; 0 uses
   call void @_ZN3acd10acdXX_impl9report_ttERKN5kitty18static_truth_tableILj11ELb0EEE(ptr noundef nonnull align 8 dereferenceable(632) %0, ptr noundef nonnull align 8 dereferenceable(256) %i.df)
   br label %.critedge
 
 .critedge:                                        ; preds = %bb.h, %bb.j
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #12
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #12
   ret i1 %.not

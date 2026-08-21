@@ -28,11 +28,11 @@ target triple = "x86_64-pc-linux-gnu"
 define ptr @Gia_ManExtractMfs(ptr noundef %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 6 uses
-  %i.b = alloca [6 x i64], align 16               ; 9 uses
+  %i.b = alloca [6 x i64], align 16               ; 11 uses
   %i.c = alloca i32, align 4                      ; 7 uses
   %i.d = alloca i32, align 4                      ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #20
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #20
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store i64 -6148914691236517206, ptr %i.b, align 16
   %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store i64 -3689348814741910324, ptr %i.e, align 8
@@ -435,6 +435,7 @@ bb.ay:                                            ; preds = %bb.ax, %bb.r
   br i1 %i.ir, label %.lr.ph530, label %.critedge4
 
 .lr.ph530:                                        ; preds = %._crit_edge524
+  %.0..0.624 = load i64, ptr %i.b, align 16
   %i.is = getelementptr i8, ptr %i.bl, i64 8
   %i.it = sext i32 %.1278.lcssa to i64
   %.val397.pre = load ptr, ptr %i.io, align 8, !tbaa !57
@@ -521,7 +522,7 @@ bb.bf:                                            ; preds = %Vec_IntGrow.exit.i4
   %i.kb = shl i32 %i.ka, 2
   %i.kc = ashr i32 %i.kb, 31
   %i.kd = sext i32 %i.kc to i64
-  %i.ke = xor i64 %i.kd, -6148914691236517206     ; 3 uses
+  %i.ke = xor i64 %.0..0.624, %i.kd               ; 3 uses
   %i.kf = getelementptr inbounds [8 x i8], ptr %.val363, i64 %indvars.iv581
   store i64 %i.ke, ptr %i.kf, align 8, !tbaa !54
   %.val386 = load i32, ptr %i.bu, align 4, !tbaa !47 ; 8 uses
@@ -631,6 +632,7 @@ bb.bp:                                            ; preds = %.critedge4
   br i1 %i.lp, label %.lr.ph565, label %._crit_edge566
 
 .lr.ph565:                                        ; preds = %bb.bp
+  %.0..0.625 = load i64, ptr %i.b, align 16
   %i.lq = getelementptr i8, ptr %i.bl, i64 8
   br label %bb.bq
 
@@ -924,10 +926,10 @@ bb.cp:                                            ; preds = %._crit_edge547
   br i1 %narrow.i.not, label %bb.cq, label %bb.cr
 
 bb.cq:                                            ; preds = %bb.cp
-  %i.pq = lshr i64 %.val407, 32
-  %i.pr = and i64 %i.pq, 536870911
-  %1 = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %i.pr
-  %i.ps = load i64, ptr %1, align 8, !tbaa !54
+  %i.pq = lshr i64 %.val407, 29
+  %i.pr = and i64 %i.pq, 4294967288
+  %.0..0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.pr
+  %i.ps = load i64, ptr %.0..0..sroa_idx, align 8, !tbaa !54
   %i.pt = shl i32 %i.pg, 2
   %i.pu = ashr i32 %i.pt, 31
   %i.pv = sext i32 %i.pu to i64
@@ -1172,7 +1174,7 @@ Vec_IntGrow.exit.i480:                            ; preds = %.lr.ph536, %bb.dg
   %i.su = getelementptr inbounds i8, ptr %.val354, i64 %i.si
   store i8 1, ptr %i.su, align 1, !tbaa !53
   %i.sv = getelementptr inbounds [8 x i8], ptr %.val363, i64 %i.si
-  store i64 -6148914691236517206, ptr %i.sv, align 8, !tbaa !54
+  store i64 %.0..0.625, ptr %i.sv, align 8, !tbaa !54
   %indvars.iv.next589 = add nuw nsw i64 %indvars.iv588, 1 ; 2 uses
   %exitcond592.not = icmp eq i64 %indvars.iv.next589, %wide.trip.count591
   br i1 %exitcond592.not, label %.preheader506, label %.lr.ph536, !llvm.loop !69
@@ -1315,7 +1317,7 @@ Vec_IntFree.exit:                                 ; preds = %bb.dn, %bb.do
   %i.uz = call ptr @Sfm_NtkConstruct(ptr noundef nonnull %i.am, i32 noundef %i.uw, i32 noundef %i.uy, ptr noundef nonnull %i.as, ptr noundef nonnull %i.ay, ptr noundef nonnull %i.be, ptr noundef nonnull %i.bl, ptr noundef nonnull %i.bt) #20
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #20
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #20
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #20
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #20
   ret ptr %i.uz
 }

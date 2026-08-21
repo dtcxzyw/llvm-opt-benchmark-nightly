@@ -205,9 +205,9 @@ declare void @_ZN6LibRaw11read_shortsEPtj(ptr noundef nonnull align 8 dereferenc
 define void @_ZN6LibRaw20kodak_65000_load_rawEv(ptr noundef nonnull align 8 dereferenceable(768512) %0) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = alloca [272 x i16], align 16             ; 5 uses
-  %1 = alloca [2 x i32], align 4                  ; 5 uses
+  %.sroa.0 = alloca i64, align 8                  ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
-  call void @llvm.lifetime.start.p0(ptr nonnull %1) #12
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 2 uses
   %i.c = load i16, ptr %i.b, align 4, !tbaa !75
   %.not36 = icmp eq i16 %i.c, 0
@@ -215,10 +215,10 @@ bb.a:
 
 .lr.ph34:                                         ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 22 ; 2 uses
-  %i.e = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 5600 ; 2 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 193784 ; 2 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 18 ; 2 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 5600 ; 2 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 193784 ; 2 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 18 ; 2 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 4
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph34, %._crit_edge31
@@ -232,8 +232,8 @@ bb.b:                                             ; preds = %.lr.ph34, %._crit_e
   %indvars.iv44 = phi i64 [ %indvars.iv.next45, %._crit_edge ], [ 0, %bb.b ] ; 5 uses
   %.in = phi i16 [ %i.av, %._crit_edge ], [ %i.i, %bb.b ] ; 2 uses
   %i.j = zext i16 %.in to i32
-  store i32 0, ptr %i.e, align 4, !tbaa !154
-  store i32 0, ptr %1, align 4, !tbaa !154
+  store i32 0, ptr %i.h, align 4, !tbaa !154
+  store i32 0, ptr %.sroa.0, align 8, !tbaa !154
   %i.k = trunc nuw nsw i64 %indvars.iv44 to i32
   %i.l = sub nuw nsw i32 %i.j, %i.k
   %spec.select = tail call i32 @llvm.umin.i32(i32 %i.l, i32 256) ; 2 uses
@@ -252,20 +252,23 @@ bb.b:                                             ; preds = %.lr.ph34, %._crit_e
   %i.p = getelementptr inbounds nuw [2 x i8], ptr %i.a, i64 %indvars.iv41
   %i.q = load i16, ptr %i.p, align 2, !tbaa !78
   %i.r = sext i16 %i.q to i32
-  %i.s = and i64 %indvars.iv41, 1
-  %2 = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.s ; 2 uses
-  %i.t = load i32, ptr %2, align 4, !tbaa !154
+  %i.s = and i64 %indvars.iv41, 1                 ; 2 uses
+  %.sroa.0.0..sroa_stride = shl nuw nsw i64 %i.s, 2
+  %.sroa.0.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %.sroa.0.0..sroa_stride
+  %i.t = load i32, ptr %.sroa.0.0..sroa_idx, align 4, !tbaa !154
   %i.u = add nsw i32 %i.t, %i.r                   ; 3 uses
-  store i32 %i.u, ptr %2, align 4, !tbaa !154
+  %.sroa.0.0..sroa_stride53 = shl nuw nsw i64 %i.s, 2
+  %.sroa.0.0..sroa_idx55 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %.sroa.0.0..sroa_stride53
+  store i32 %i.u, ptr %.sroa.0.0..sroa_idx55, align 4, !tbaa !154
   %or.cond.us = icmp ult i32 %i.u, 65535
   br i1 %or.cond.us, label %bb.c, label %.sink.split
 
 bb.c:                                             ; preds = %.lr.ph.split.us
   %i.v = zext nneg i32 %i.u to i64
-  %i.w = getelementptr inbounds nuw [2 x i8], ptr %i.f, i64 %i.v
+  %i.w = getelementptr inbounds nuw [2 x i8], ptr %i.e, i64 %i.v
   %i.x = load i16, ptr %i.w, align 2, !tbaa !78   ; 2 uses
-  %i.y = load ptr, ptr %i.g, align 8, !tbaa !95
-  %i.z = load i16, ptr %i.h, align 2, !tbaa !74
+  %i.y = load ptr, ptr %i.f, align 8, !tbaa !95
+  %i.z = load i16, ptr %i.g, align 2, !tbaa !74
   %i.aa = zext i16 %i.z to i32
   %i.ab = mul nuw nsw i32 %.02232, %i.aa
   %i.ac = zext nneg i32 %i.ab to i64
@@ -294,10 +297,10 @@ bb.d:                                             ; preds = %.sink.split, %bb.c
 
 bb.e:                                             ; preds = %.lr.ph.split
   %i.aj = zext nneg i16 %i.ai to i64
-  %i.ak = getelementptr inbounds nuw [2 x i8], ptr %i.f, i64 %i.aj
+  %i.ak = getelementptr inbounds nuw [2 x i8], ptr %i.e, i64 %i.aj
   %i.al = load i16, ptr %i.ak, align 2, !tbaa !78 ; 2 uses
-  %i.am = load ptr, ptr %i.g, align 8, !tbaa !95
-  %i.an = load i16, ptr %i.h, align 2, !tbaa !74
+  %i.am = load ptr, ptr %i.f, align 8, !tbaa !95
+  %i.an = load i16, ptr %i.g, align 2, !tbaa !74
   %i.ao = zext i16 %i.an to i32
   %i.ap = mul nuw nsw i32 %.02232, %i.ao
   %i.aq = zext nneg i32 %i.ap to i64
@@ -332,7 +335,7 @@ bb.f:                                             ; preds = %.sink.split50, %bb.
   br i1 %i.bb, label %bb.b, label %._crit_edge35, !llvm.loop !186
 
 ._crit_edge35:                                    ; preds = %._crit_edge31, %bb.a
-  call void @llvm.lifetime.end.p0(ptr nonnull %1) #12
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #12
   ret void
 }

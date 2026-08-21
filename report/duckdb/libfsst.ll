@@ -205,9 +205,9 @@ bb.al:                                            ; preds = %bb.z
 define linkonce_odr hidden void @_ZN7libfsst11SymbolTable8finalizeEh(ptr noundef nonnull align 8 dereferenceable(156186) %0, i8 noundef zeroext %1) local_unnamed_addr #7 comdat align 2 {
 bb.a:
   %i.a = alloca [256 x i8], align 16              ; 8 uses
-  %2 = alloca [8 x i8], align 1                   ; 11 uses
+  %.sroa.0 = alloca i64, align 8                  ; 12 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #22
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #22
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 156160
   %i.c = load i16, ptr %i.b, align 8, !tbaa !64   ; 4 uses
   %i.d = trunc i16 %i.c to i8
@@ -216,44 +216,44 @@ bb.a:
   %i.g = trunc i16 %i.f to i8
   %.neg = add i8 %1, %i.d
   %i.h = sub i8 %.neg, %i.g
-  store i8 %i.h, ptr %2, align 1, !tbaa !10
-  %i.i = getelementptr inbounds nuw i8, ptr %2, i64 1
+  store i8 %i.h, ptr %.sroa.0, align 8, !tbaa !10
+  %i.i = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 1
   store i8 %1, ptr %i.i, align 1, !tbaa !10
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 156170
   %i.k = load i16, ptr %i.j, align 2, !tbaa !34
   %i.l = trunc i16 %i.k to i8
   %i.m = add i8 %1, %i.l                          ; 3 uses
-  %i.n = getelementptr inbounds nuw i8, ptr %2, i64 2
-  store i8 %i.m, ptr %i.n, align 1, !tbaa !10
+  %i.n = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 2
+  store i8 %i.m, ptr %i.n, align 2, !tbaa !10
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 156172
   %i.p = load i16, ptr %i.o, align 4, !tbaa !34
   %i.q = trunc i16 %i.p to i8
   %i.r = add i8 %i.m, %i.q                        ; 2 uses
-  %i.s = getelementptr inbounds nuw i8, ptr %2, i64 3
+  %i.s = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 3
   store i8 %i.r, ptr %i.s, align 1, !tbaa !10
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 156174
   %i.u = load i16, ptr %i.t, align 2, !tbaa !34
   %i.v = trunc i16 %i.u to i8
   %i.w = add i8 %i.r, %i.v                        ; 2 uses
-  %i.x = getelementptr inbounds nuw i8, ptr %2, i64 4
-  store i8 %i.w, ptr %i.x, align 1, !tbaa !10
+  %i.x = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 4
+  store i8 %i.w, ptr %i.x, align 4, !tbaa !10
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 156176
   %i.z = load i16, ptr %i.y, align 8, !tbaa !34
   %i.aa = trunc i16 %i.z to i8
   %i.ab = add i8 %i.w, %i.aa                      ; 2 uses
-  %i.ac = getelementptr inbounds nuw i8, ptr %2, i64 5
+  %i.ac = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 5
   store i8 %i.ab, ptr %i.ac, align 1, !tbaa !10
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 156178
   %i.ae = load i16, ptr %i.ad, align 2, !tbaa !34
   %i.af = trunc i16 %i.ae to i8
   %i.ag = add i8 %i.ab, %i.af                     ; 2 uses
-  %i.ah = getelementptr inbounds nuw i8, ptr %2, i64 6
-  store i8 %i.ag, ptr %i.ah, align 1, !tbaa !10
+  %i.ah = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 6
+  store i8 %i.ag, ptr %i.ah, align 2, !tbaa !10
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 156180
   %i.aj = load i16, ptr %i.ai, align 4, !tbaa !34
   %i.ak = trunc i16 %i.aj to i8
   %i.al = add i8 %i.ag, %i.ak
-  %i.am = getelementptr inbounds nuw i8, ptr %2, i64 7
+  %i.am = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 7
   store i8 %i.al, ptr %i.am, align 1, !tbaa !10
   %i.an = zext i8 %1 to i16                       ; 2 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 156162 ; 2 uses
@@ -330,11 +330,12 @@ bb.f:                                             ; preds = %bb.c
 
 bb.g:                                             ; preds = %.lr.ph
   %i.bo = add nuw nsw i64 %i.az, 4294967295
-  %i.bp = and i64 %i.bo, 4294967295
-  %i.bq = getelementptr inbounds nuw i8, ptr %2, i64 %i.bp ; 2 uses
+  %i.bp = and i64 %i.bo, 4294967295               ; 2 uses
+  %i.bq = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %i.bp
   %i.br = load i8, ptr %i.bq, align 1, !tbaa !10  ; 2 uses
   %i.bs = add i8 %i.br, 1
-  store i8 %i.bs, ptr %i.bq, align 1, !tbaa !10
+  %.sroa.0.0..sroa_idx112 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %i.bp
+  store i8 %i.bs, ptr %.sroa.0.0..sroa_idx112, align 1, !tbaa !10
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.e, %bb.f, %bb.g
@@ -438,7 +439,7 @@ bb.p:                                             ; preds = %bb.n, %bb.o
   br i1 %exitcond93.not, label %.preheader, label %.preheader70, !llvm.loop !85
 
 bb.q:                                             ; preds = %bb.t
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #22
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #22
   ret void
 

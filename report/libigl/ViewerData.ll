@@ -37,10 +37,6 @@ module asm(target_features: "+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87", target_cpu:
 %"class.Eigen::internal::BlockImpl_dense" = type { %"class.Eigen::MapBase", ptr, %"class.Eigen::internal::variable_if_dynamic", %"class.Eigen::internal::variable_if_dynamic", i64 }
 %"class.Eigen::MapBase" = type { %"class.Eigen::MapBase.71" }
 %"class.Eigen::MapBase.71" = type { ptr, %"class.Eigen::internal::variable_if_dynamic", %"class.Eigen::internal::variable_if_dynamic" }
-%"class.Eigen::Matrix.222" = type { %"class.Eigen::PlainObjectBase.223" }
-%"class.Eigen::PlainObjectBase.223" = type { %"class.Eigen::DenseStorage.230" }
-%"class.Eigen::DenseStorage.230" = type { %"struct.Eigen::internal::plain_array.231" }
-%"struct.Eigen::internal::plain_array.231" = type { [3 x double] }
 %"struct.Eigen::internal::assign_op.544" = type { i8 }
 %"class.Eigen::CwiseBinaryOp.394" = type <{ [8 x i8], %"class.Eigen::CwiseNullaryOp.387", ptr, [8 x i8] }>
 %"class.Eigen::CwiseNullaryOp.387" = type { %"class.Eigen::internal::variable_if_dynamic", %"class.Eigen::internal::variable_if_dynamic", %"struct.Eigen::internal::scalar_constant_op" }
@@ -63,6 +59,10 @@ module asm(target_features: "+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87", target_cpu:
 %"class.Eigen::Matrix.21" = type { %"class.Eigen::PlainObjectBase.22" }
 %"class.Eigen::PlainObjectBase.22" = type { %"class.Eigen::DenseStorage.29" }
 %"class.Eigen::DenseStorage.29" = type { ptr, i64, i64 }
+%"class.Eigen::Matrix.222" = type { %"class.Eigen::PlainObjectBase.223" }
+%"class.Eigen::PlainObjectBase.223" = type { %"class.Eigen::DenseStorage.230" }
+%"class.Eigen::DenseStorage.230" = type { %"struct.Eigen::internal::plain_array.231" }
+%"struct.Eigen::internal::plain_array.231" = type { [3 x double] }
 %"struct.Eigen::internal::evaluator.708" = type { %"struct.Eigen::internal::binary_evaluator.709" }
 %"struct.Eigen::internal::binary_evaluator.709" = type { %"struct.Eigen::internal::binary_evaluator<Eigen::CwiseBinaryOp<Eigen::internal::scalar_sum_op<double>, const Eigen::Matrix<double, -1, -1>, const Eigen::Matrix<double, -1, -1>>>::Data" }
 %"struct.Eigen::internal::binary_evaluator<Eigen::CwiseBinaryOp<Eigen::internal::scalar_sum_op<double>, const Eigen::Matrix<double, -1, -1>, const Eigen::Matrix<double, -1, -1>>>::Data" = type { [8 x i8], %"struct.Eigen::internal::evaluator.419", %"struct.Eigen::internal::evaluator.419" }
@@ -465,17 +465,17 @@ bb.an:                                            ; preds = %bb.z, %bb.o, %bb.g,
 ; Function Attrs: mustprogress uwtable
 define dso_local void @_ZN3igl6opengl10ViewerData15compute_normalsEv(ptr noundef nonnull align 8 dereferenceable(1488) %0) local_unnamed_addr #1 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %1 = alloca %"class.Eigen::Matrix.222", align 8 ; 5 uses
-  %2 = alloca %"class.Eigen::Matrix.222", align 8 ; 5 uses
+  %.sroa.0 = alloca [3 x double], align 8         ; 5 uses
+  %.sroa.028 = alloca [3 x double], align 8       ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.b = load i64, ptr %i.a, align 8, !tbaa !76
   %i.c = icmp eq i64 %i.b, 2
   br i1 %i.c, label %bb.b, label %bb.g
 
 bb.b:                                             ; preds = %bb.a
-  call void @llvm.lifetime.start.p0(ptr nonnull %1) #25
-  %i.d = getelementptr inbounds nuw i8, ptr %1, i64 16
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %1, i8 0, i64 16, i1 false)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
+  %i.d = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 16
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0, i8 0, i64 16, i1 false)
   store double 1.000000e+00, ptr %i.d, align 8, !tbaa !80
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.f = load i64, ptr %i.e, align 8, !tbaa !115  ; 5 uses
@@ -526,8 +526,9 @@ bb.d:                                             ; preds = %_ZN5Eigen15PlainObj
   %i.t = mul nuw nsw i64 %.0810.i.i.i.i.i.i.i.i, %i.o
   %invariant.gep.i.i.i.i.i.i.i.i = getelementptr [8 x i8], ptr %i.q, i64 %i.t ; 2 uses
   %i.u = urem i64 %.0810.i.i.i.i.i.i.i.i, 3
-  %3 = getelementptr [8 x i8], ptr %1, i64 %i.u
-  %.pre.i.i.i.i.i.i.i.i = load double, ptr %3, align 8, !tbaa !80 ; 2 uses
+  %.sroa.0.0..sroa_stride = shl nuw nsw i64 %i.u, 3
+  %.sroa.0.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %.sroa.0.0..sroa_stride
+  %.pre.i.i.i.i.i.i.i.i = load double, ptr %.sroa.0.0..sroa_idx, align 8, !tbaa !80 ; 2 uses
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.preheader.i.i.i.i.i.i.i.i
@@ -566,10 +567,10 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   br i1 %exitcond.not.i.i.i.i.i.i.i.i, label %._crit_edge.i.i.i.i.i.i.i.i, label %scalar.ph, !llvm.loop !163
 
 _ZN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEaSINS_9ReplicateINS0_IdLi1ELi3ELi1ELi1ELi3EEELin1ELin1EEEEERS1_RKNS_9DenseBaseIT_EE.exit: ; preds = %._crit_edge.i.i.i.i.i.i.i.i, %bb.d
-  call void @llvm.lifetime.end.p0(ptr nonnull %1) #25
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #25
-  %i.aa = getelementptr inbounds nuw i8, ptr %2, i64 16
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %2, i8 0, i64 16, i1 false)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.028)
+  %i.aa = getelementptr inbounds nuw i8, ptr %.sroa.028, i64 16
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.028, i8 0, i64 16, i1 false)
   store double 1.000000e+00, ptr %i.aa, align 8, !tbaa !80
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.ac = load i64, ptr %i.ab, align 8, !tbaa !77 ; 5 uses
@@ -620,8 +621,9 @@ bb.f:                                             ; preds = %_ZN5Eigen15PlainObj
   %i.aq = mul nuw nsw i64 %.0810.i.i.i.i.i.i.i.i10, %i.al
   %invariant.gep.i.i.i.i.i.i.i.i11 = getelementptr [8 x i8], ptr %i.an, i64 %i.aq ; 2 uses
   %i.ar = urem i64 %.0810.i.i.i.i.i.i.i.i10, 3
-  %4 = getelementptr [8 x i8], ptr %2, i64 %i.ar
-  %.pre.i.i.i.i.i.i.i.i12 = load double, ptr %4, align 8, !tbaa !80 ; 2 uses
+  %.sroa.028.0..sroa_stride = shl nuw nsw i64 %i.ar, 3
+  %.sroa.028.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.028, i64 %.sroa.028.0..sroa_stride
+  %.pre.i.i.i.i.i.i.i.i12 = load double, ptr %.sroa.028.0..sroa_idx, align 8, !tbaa !80 ; 2 uses
   br i1 %min.iters.check38, label %scalar.ph37.preheader, label %vector.ph39
 
 vector.ph39:                                      ; preds = %.preheader.i.i.i.i.i.i.i.i9
@@ -660,7 +662,7 @@ scalar.ph37:                                      ; preds = %scalar.ph37.prehead
   br i1 %exitcond.not.i.i.i.i.i.i.i.i15, label %._crit_edge.i.i.i.i.i.i.i.i16, label %scalar.ph37, !llvm.loop !165
 
 _ZN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEaSINS_9ReplicateINS0_IdLi1ELi3ELi1ELi1ELi3EEELin1ELin1EEEEERS1_RKNS_9DenseBaseIT_EE.exit19: ; preds = %._crit_edge.i.i.i.i.i.i.i.i16, %bb.f
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #25
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.028)
   br label %bb.h
 
 bb.g:                                             ; preds = %bb.a

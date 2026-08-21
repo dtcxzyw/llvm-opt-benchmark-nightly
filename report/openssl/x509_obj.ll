@@ -15,7 +15,7 @@ define ptr @X509_NAME_oneline(ptr nofree noundef readonly captures(address_is_nu
 bb.a:
   %i.a = alloca [4 x i32], align 16               ; 13 uses
   %i.b = alloca [80 x i8], align 16               ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #6
   %i.c = icmp eq ptr %1, null
   br i1 %i.c, label %bb.b, label %bb.d
@@ -54,10 +54,10 @@ bb.e:                                             ; preds = %bb.c
   br i1 %i.n, label %.lr.ph176, label %._crit_edge177
 
 .lr.ph176:                                        ; preds = %.preheader
-  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %i.o = getelementptr inbounds nuw i8, ptr %i.a, i64 4
   %.not132 = icmp eq ptr %.0148.ph, null
-  %i.p = getelementptr inbounds nuw i8, ptr %.0148.ph, i64 8
+  %i.o = getelementptr inbounds nuw i8, ptr %.0148.ph, i64 8
+  %.4..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 4
+  %i.p = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.e
@@ -134,9 +134,10 @@ bb.l:                                             ; preds = %bb.k
   br i1 %.not138, label %.lr.ph.1, label %bb.m
 
 bb.m:                                             ; preds = %.lr.ph
-  %i.au = and i64 %indvars.iv, 2
-  %4 = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.au
-  store i32 1, ptr %4, align 8, !tbaa !27
+  %3 = shl i64 %indvars.iv, 2
+  %i.au = and i64 %3, 8
+  %.0..sroa_idx241 = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.au
+  store i32 1, ptr %.0..sroa_idx241, align 8, !tbaa !27
   br label %.lr.ph.1
 
 .lr.ph.1:                                         ; preds = %.lr.ph, %bb.m
@@ -147,9 +148,10 @@ bb.m:                                             ; preds = %.lr.ph
   br i1 %.not138.1, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %.lr.ph.1
-  %i.ax = and i64 %indvars.iv.next, 3
-  %5 = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.ax
-  store i32 1, ptr %5, align 4, !tbaa !27
+  %4 = shl i64 %indvars.iv.next, 2
+  %i.ax = and i64 %4, 12
+  %.0..sroa_idx244 = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.ax
+  store i32 1, ptr %.0..sroa_idx244, align 4, !tbaa !27
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %.lr.ph.1
@@ -159,8 +161,8 @@ bb.o:                                             ; preds = %bb.n, %.lr.ph.1
 
 ._crit_edge:                                      ; preds = %bb.o
   %.pre = load i32, ptr %i.a, align 16, !tbaa !27
-  %.pre194 = load i32, ptr %i.o, align 4, !tbaa !27
-  %.pre195 = load i32, ptr %3, align 8, !tbaa !27
+  %.pre194 = load i32, ptr %.4..sroa_idx, align 4, !tbaa !27
+  %.pre195 = load i32, ptr %i.p, align 8, !tbaa !27
   %i.ay = or i32 %.pre194, %.pre
   %i.az = or i32 %i.ay, %.pre195
   %i.ba = icmp eq i32 %i.az, 0
@@ -189,9 +191,10 @@ bb.r:                                             ; preds = %bb.p, %._crit_edge.
 .lr.ph165:                                        ; preds = %.lr.ph165.preheader, %bb.v
   %indvars.iv184 = phi i64 [ 0, %.lr.ph165.preheader ], [ %indvars.iv.next185, %bb.v ] ; 3 uses
   %.0114162 = phi i32 [ 0, %.lr.ph165.preheader ], [ %.1115, %bb.v ] ; 3 uses
-  %i.bc = and i64 %indvars.iv184, 3
-  %6 = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.bc
-  %i.bd = load i32, ptr %6, align 4, !tbaa !27
+  %5 = shl i64 %indvars.iv184, 2
+  %i.bc = and i64 %5, 12
+  %.0..sroa_idx237 = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.bc
+  %i.bd = load i32, ptr %.0..sroa_idx237, align 4, !tbaa !27
   %.not137 = icmp eq i32 %i.bd, 0
   br i1 %.not137, label %bb.v, label %bb.s
 
@@ -239,7 +242,7 @@ bb.x:                                             ; preds = %bb.w
   br i1 %.not135, label %.loopexit, label %bb.y
 
 bb.y:                                             ; preds = %bb.x
-  %i.bp = load ptr, ptr %i.p, align 8, !tbaa !8
+  %i.bp = load ptr, ptr %i.o, align 8, !tbaa !8
   br label %bb.aa
 
 bb.z:                                             ; preds = %bb.w
@@ -275,9 +278,10 @@ bb.aa:                                            ; preds = %bb.z, %bb.y
 .lr.ph170:                                        ; preds = %.lr.ph170.preheader, %bb.ag
   %indvars.iv189 = phi i64 [ 0, %.lr.ph170.preheader ], [ %indvars.iv.next190, %bb.ag ] ; 3 uses
   %.1107168 = phi ptr [ %i.ca, %.lr.ph170.preheader ], [ %.3, %bb.ag ] ; 7 uses
-  %i.ce = and i64 %indvars.iv189, 3
-  %7 = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.ce
-  %i.cf = load i32, ptr %7, align 4, !tbaa !27
+  %6 = shl i64 %indvars.iv189, 2
+  %i.ce = and i64 %6, 12
+  %.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.ce
+  %i.cf = load i32, ptr %.0..sroa_idx, align 4, !tbaa !27
   %.not136 = icmp eq i32 %i.cf, 0
   br i1 %.not136, label %bb.ag, label %bb.ab
 
@@ -363,7 +367,7 @@ bb.ai:                                            ; preds = %.thread154
 bb.aj:                                            ; preds = %.thread154, %bb.ai, %bb.d, %.loopexit, %.thread149
   %.0120 = phi ptr [ null, %.loopexit ], [ %.0119, %.thread149 ], [ null, %bb.d ], [ %.4, %bb.ai ], [ %.4, %.thread154 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #6
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret ptr %.0120
 }
 

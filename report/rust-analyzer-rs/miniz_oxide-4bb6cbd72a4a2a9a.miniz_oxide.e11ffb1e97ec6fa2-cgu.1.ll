@@ -69,7 +69,7 @@ target triple = "x86_64-unknown-linux-gnu"
 ; Function Attrs: nonlazybind uwtable
 define void @_RNvNtNtCsjkkKzr5dxZe_11miniz_oxide7inflate4core10decompress(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) %0, ptr noalias nofree noundef align 8 dereferenceable(10504) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %2, i64 noundef range(i64 0, -9223372036854775808) %3, ptr noalias nofree noundef nonnull %4, i64 noundef range(i64 0, -9223372036854775808) %5, i64 noundef %6, i32 noundef %7) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %8 = alloca [4 x i8], align 4                   ; 4 uses
+  %.sroa.03.i.i = alloca i32, align 4             ; 4 uses
   %i.a = alloca [24 x i8], align 8                ; 5 uses
   %i.b = alloca [12 x i8], align 4                ; 14 uses
   %i.c = alloca [24 x i8], align 8                ; 71 uses
@@ -465,10 +465,11 @@ bb.m:                                             ; preds = %.backedge
   store i64 3, ptr %i.a, align 8, !noalias !101
   store i64 11, ptr %i.am, align 8, !noalias !101
   %i.ek = load i32, ptr %i.y, align 4, !alias.scope !102, !noalias !103, !noundef !5 ; 2 uses
-  %i.el = and i32 %i.ek, 2
+  %8 = shl i32 %i.ek, 3
+  %i.el = and i32 %8, 16
   %i.em = zext nneg i32 %i.el to i64
-  %9 = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %i.em
-  %i.en = load i64, ptr %9, align 8, !noalias !101, !noundef !5
+  %.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.em
+  %i.en = load i64, ptr %.0..sroa_idx.i.i, align 8, !noalias !101
   %i.eo = add i64 %i.en, %i.eh                    ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !101
   %i.ep = icmp eq i32 %i.ek, 16
@@ -871,7 +872,7 @@ bb.ao:                                            ; preds = %.backedge
 
 bb.ap:                                            ; preds = %.backedge
   %i.lz = load i32, ptr %i.z, align 8, !noundef !5 ; 2 uses
-  %i.ma = and i32 %i.lz, 511                      ; 3 uses
+  %i.ma = and i32 %i.lz, 511                      ; 4 uses
   store i32 %i.ma, ptr %i.z, align 8
   %i.mb = icmp eq i32 %i.ma, 256
   br i1 %i.mb, label %.backedge.backedge, label %bb.dy
@@ -1274,14 +1275,14 @@ bb.ce:                                            ; preds = %bb.cd
   br i1 %or.cond.i.i, label %_RINvNtNtCsjkkKzr5dxZe_11miniz_oxide7inflate4core19decode_huffman_codeNCNvB2_10decompresss7_0EB6_.exit, label %bb.cf
 
 bb.cf:                                            ; preds = %bb.ce
-  call void @llvm.lifetime.start.p0(ptr nonnull %8), !noalias !541
-  store <4 x i8> <i8 2, i8 3, i8 7, i8 0>, ptr %8, align 4, !noalias !541
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.03.i.i), !noalias !541
+  store <4 x i8> <i8 2, i8 3, i8 7, i8 0>, ptr %.sroa.03.i.i, align 4, !noalias !541
   %i.zz = and i32 %.sroa.013.0.i290, 3
   %i.aaa = zext nneg i32 %i.zz to i64
-  %i.aab = getelementptr inbounds nuw i8, ptr %8, i64 %i.aaa
-  %i.aac = load i8, ptr %i.aab, align 1, !noalias !541, !noundef !5
+  %i.aab = getelementptr inbounds nuw i8, ptr %.sroa.03.i.i, i64 %i.aaa
+  %i.aac = load i8, ptr %i.aab, align 1, !noalias !541
   store i8 %i.aac, ptr %i.ab, align 4, !alias.scope !539, !noalias !540
-  call void @llvm.lifetime.end.p0(ptr nonnull %8), !noalias !541
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.03.i.i), !noalias !541
   br label %_RINvNtNtCsjkkKzr5dxZe_11miniz_oxide7inflate4core19decode_huffman_codeNCNvB2_10decompresss7_0EB6_.exit
 
 bb.cg:                                            ; preds = %bb.cd
@@ -1684,12 +1685,16 @@ bb.dy:                                            ; preds = %bb.ap
 bb.dz:                                            ; preds = %bb.dy
   %i.alp = add i32 %i.lz, 31
   %i.alq = and i32 %i.alp, 31                     ; 2 uses
-  %i.alr = zext nneg i32 %i.alq to i64            ; 2 uses
+  %i.alr = zext nneg i32 %i.alq to i64
   %i.als = getelementptr inbounds nuw i8, ptr @18, i64 %i.alr
-  %i.alt = load i8, ptr %i.als, align 1, !noundef !5
+  %i.alt = load i8, ptr %i.als, align 1
   store i8 %i.alt, ptr %i.ab, align 4
-  %10 = getelementptr inbounds nuw [2 x i8], ptr @19, i64 %i.alr
-  %i.alu = load i16, ptr %10, align 2, !noundef !5
+  %9 = shl nuw nsw i32 %i.ma, 1
+  %10 = add nuw nsw i32 %9, 62
+  %11 = and i32 %10, 62
+  %.0..sroa_stride77 = zext nneg i32 %11 to i64
+  %.0..sroa_idx79 = getelementptr inbounds nuw i8, ptr @19, i64 %.0..sroa_stride77
+  %i.alu = load i16, ptr %.0..sroa_idx79, align 2
   %i.alv = zext i16 %i.alu to i32
   store i32 %i.alv, ptr %i.z, align 8
   %i.alw = add nsw i32 %i.alq, -28
@@ -2092,9 +2097,10 @@ bb.r:                                             ; preds = %bb.q
   %i.db = and i32 %i.da, 31                       ; 2 uses
   %i.dc = zext nneg i32 %i.db to i64              ; 2 uses
   %i.dd = getelementptr inbounds nuw i8, ptr @18, i64 %i.dc
-  %i.de = load i8, ptr %i.dd, align 1, !noundef !5 ; 3 uses
-  %6 = getelementptr inbounds nuw [2 x i8], ptr @19, i64 %i.dc
-  %i.df = load i16, ptr %6, align 2, !noundef !5
+  %i.de = load i8, ptr %i.dd, align 1             ; 3 uses
+  %.0..sroa_stride61 = shl nuw nsw i64 %i.dc, 1
+  %.0..sroa_idx63 = getelementptr inbounds nuw i8, ptr @19, i64 %.0..sroa_stride61
+  %i.df = load i16, ptr %.0..sroa_idx63, align 2
   %i.dg = zext i16 %i.df to i32                   ; 2 uses
   %i.dh = icmp ult i32 %.sroa.23.3, 30
   br i1 %i.dh, label %_RNvMs_NtNtCsjkkKzr5dxZe_11miniz_oxide7inflate13output_bufferNtB4_12InputWrapper11read_u32_le.exit98, label %bb.s

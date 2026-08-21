@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.b, %bb.c
   %.0150 = phi i32 [ %i.p, %bb.c ], [ 0, %bb.b ]  ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #13
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(208) %i.f, i8 0, i64 208, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #13
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(208) %i.g, i8 0, i64 208, i1 false)
@@ -587,14 +587,15 @@ _ZNK6icu_7813UnicodeString6charAtEi.exit:         ; preds = %bb.af
   br i1 %or.cond, label %bb.ag, label %.thread295
 
 bb.ag:                                            ; preds = %_ZNK6icu_7813UnicodeString6charAtEi.exit
-  %7 = zext nneg i16 %i.gc to i64
   %i.ge = load i32, ptr %i.at, align 8
   %i.gf = add nsw i32 %i.ge, -1
   %i.gg = call noundef ptr @_ZNK6icu_787UVector9elementAtEi(ptr noundef nonnull align 8 dereferenceable(40) %i.q, i32 noundef %i.gf) #13
-  %i.gh = add nuw nsw i64 %7, 4294967231
-  %i.gi = and i64 %i.gh, 4294967295
-  %8 = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %i.gi
-  store ptr %i.gg, ptr %8, align 8
+  %7 = shl nuw nsw i16 %i.gc, 3
+  %8 = zext nneg i16 %7 to i64
+  %i.gh = add nuw nsw i64 %8, 34359737848
+  %i.gi = and i64 %i.gh, 34359738360
+  %.0..0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.f, i64 %i.gi
+  store ptr %i.gg, ptr %.0..0..sroa_idx, align 8
   br label %.thread295
 
 bb.ah:                                            ; preds = %bb.af
@@ -997,7 +998,7 @@ bb.cq:                                            ; preds = %.thread474, %_ZN6ic
 _ZN6icu_7812LocalPointerINS_7UVectorEED2Ev.exit244: ; preds = %bb.e, %bb.f, %bb.cq, %.thread485
   %.15484 = phi ptr [ %.15489, %.thread485 ], [ %.14480, %bb.cq ], [ null, %bb.f ], [ null, %bb.e ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #13
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #13
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
   call void @_ZN6icu_789UVector64D1Ev(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable(32) %3) #13
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #13
   br label %bb.cr

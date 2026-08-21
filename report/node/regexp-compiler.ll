@@ -50,8 +50,6 @@ module asm
 %"class.v8::internal::AlternativeGenerationList" = type { %"class.v8::internal::ZoneList.489", [10 x %"class.v8::internal::AlternativeGeneration"] }
 %"class.v8::internal::ZoneList.489" = type { ptr, i32, i32 }
 %"class.v8::internal::AlternativeGeneration" = type { %"class.v8::internal::Label", i8, %"class.v8::internal::Label", %"class.v8::internal::QuickCheckDetails" }
-%"class.std::bitset" = type { %"struct.std::_Base_bitset" }
-%"struct.std::_Base_bitset" = type { [2 x i64] }
 %"class.v8::internal::Analysis" = type <{ %"class.v8::internal::NodeVisitor", ptr, i8, [3 x i8], %"class.v8::base::Flags.0", i32, [4 x i8] }>
 %"class.v8::internal::NodeVisitor" = type { ptr }
 %"class.v8::base::Flags.0" = type { i32 }
@@ -454,16 +452,17 @@ bb.a:
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden noundef i32 @_ZN2v88internal19BoyerMooreLookahead16FindBestIntervalEiiPiS2_(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %0, i32 noundef %1, i32 noundef %2, ptr nofree noundef writeonly captures(none) %3, ptr nofree noundef writeonly captures(none) %4) local_unnamed_addr #2 align 2 {
 bb.a:
-  %5 = alloca %"class.std::bitset", align 8       ; 7 uses
+  %.sroa.041 = alloca [2 x i64], align 8          ; 9 uses
   %i.a = load i32, ptr %0, align 8                ; 2 uses
   %i.b = icmp sgt i32 %i.a, 0
   br i1 %i.b, label %.preheader.lr.ph, label %.critedge._crit_edge
 
 .preheader.lr.ph:                                 ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.d = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
-  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.f = getelementptr inbounds nuw i8, ptr %5, i64 8
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %.sroa.041, i64 8
+  %i.e = getelementptr inbounds nuw i8, ptr %.sroa.041, i64 8
+  %i.f = getelementptr inbounds nuw i8, ptr %.sroa.041, i64 8
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.lr.ph, %bb.o
@@ -502,8 +501,8 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.t, label %.critedge._crit_edge, label %bb.d
 
 bb.d:                                             ; preds = %.critedge
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #26
-  store i64 0, ptr %i.f, align 8
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.041)
+  store i64 0, ptr %i.d, align 8
   %i.u = icmp slt i32 %.136.lcssa, %i.g
   br i1 %i.u, label %.lr.ph, label %.critedge2
 
@@ -541,13 +540,13 @@ bb.f:                                             ; preds = %bb.e
   %.lcssa80.sink = phi i64 [ %i.w, %..critedge2_crit_edge50 ], [ %i.ad, %bb.f ]
   %.lcssa47.ph = phi i64 [ %i.x, %..critedge2_crit_edge50 ], [ %i.ac, %bb.f ]
   %.2.lcssa.ph = phi i32 [ %i.ae, %..critedge2_crit_edge50 ], [ %i.g, %bb.f ]
-  store i64 %.lcssa80.sink, ptr %i.d, align 8
+  store i64 %.lcssa80.sink, ptr %i.e, align 8
   br label %.critedge2
 
 .critedge2:                                       ; preds = %.critedge2.sink.split, %bb.d
   %.lcssa47 = phi i64 [ 0, %bb.d ], [ %.lcssa47.ph, %.critedge2.sink.split ] ; 2 uses
   %.2.lcssa = phi i32 [ %.136.lcssa, %bb.d ], [ %.2.lcssa.ph, %.critedge2.sink.split ] ; 4 uses
-  store i64 %.lcssa47, ptr %5, align 8
+  store i64 %.lcssa47, ptr %.sroa.041, align 8
   br label %bb.g
 
 bb.g:                                             ; preds = %_ZNSt6bitsetILm128EE5resetEm.exit, %.critedge2
@@ -562,7 +561,7 @@ bb.h:                                             ; preds = %bb.g
   br label %bb.i
 
 _ZNKSt6bitsetILm128EE9to_ullongEv.exit18.i:       ; preds = %bb.g
-  %.sroa.2.0.copyload = load i64, ptr %i.d, align 8 ; 2 uses
+  %.sroa.2.0.copyload = load i64, ptr %i.f, align 8 ; 2 uses
   %.not11.not.i = icmp eq i64 %.sroa.2.0.copyload, 0
   %i.ah = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.sroa.2.0.copyload, i1 false)
   %i.ai = trunc nuw nsw i64 %i.ah to i32
@@ -571,7 +570,7 @@ _ZNKSt6bitsetILm128EE9to_ullongEv.exit18.i:       ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h, %_ZNKSt6bitsetILm128EE9to_ullongEv.exit18.i
   %.2.i.ph = phi i32 [ %i.aj, %_ZNKSt6bitsetILm128EE9to_ullongEv.exit18.i ], [ %i.ag, %bb.h ] ; 3 uses
-  %i.ak = load ptr, ptr %i.e, align 8             ; 2 uses
+  %i.ak = load ptr, ptr %5, align 8               ; 2 uses
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 1088
   %i.am = load i32, ptr %i.al, align 4            ; 2 uses
   %i.an = icmp slt i32 %i.am, 1
@@ -606,12 +605,14 @@ _ZNSt6bitsetILm128EE5resetEm.exit:                ; preds = %_ZN2v88internal17Fr
   %i.ax = and i64 %.pre-phi, 63
   %i.ay = shl nuw i64 1, %i.ax
   %i.az = xor i64 %i.ay, -1
-  %i.ba = lshr i64 %.pre-phi, 6
-  %6 = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %i.ba ; 2 uses
-  %i.bb = load i64, ptr %6, align 8
+  %i.ba = lshr i64 %.pre-phi, 3
+  %.sroa.041.0..sroa_stride = and i64 %i.ba, 8    ; 2 uses
+  %.sroa.041.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.041, i64 %.sroa.041.0..sroa_stride
+  %i.bb = load i64, ptr %.sroa.041.0..sroa_idx, align 8
   %i.bc = and i64 %i.bb, %i.az
-  store i64 %i.bc, ptr %6, align 8
-  %.sroa.0.0.copyload.pre = load i64, ptr %5, align 8
+  %.sroa.041.0..sroa_idx122 = getelementptr inbounds nuw i8, ptr %.sroa.041, i64 %.sroa.041.0..sroa_stride
+  store i64 %i.bc, ptr %.sroa.041.0..sroa_idx122, align 8
+  %.sroa.0.0.copyload.pre = load i64, ptr %.sroa.041, align 8
   br label %bb.g, !llvm.loop !70
 
 _ZN2v88internal12_GLOBAL__N_117BitsetFirstSetBitESt6bitsetILm128EE.exit: ; preds = %_ZNKSt6bitsetILm128EE9to_ullongEv.exit18.i
@@ -620,7 +621,7 @@ _ZN2v88internal12_GLOBAL__N_117BitsetFirstSetBitESt6bitsetILm128EE.exit: ; preds
   br i1 %i.be, label %bb.m, label %bb.l
 
 bb.l:                                             ; preds = %_ZN2v88internal12_GLOBAL__N_117BitsetFirstSetBitESt6bitsetILm128EE.exit
-  %i.bf = load ptr, ptr %i.e, align 8
+  %i.bf = load ptr, ptr %5, align 8
   %i.bg = getelementptr inbounds nuw i8, ptr %i.bf, i64 48
   %i.bh = load i8, ptr %i.bg, align 8, !range !9, !noundef !10
   %i.bi = trunc nuw i8 %i.bh to i1
@@ -646,7 +647,7 @@ bb.n:                                             ; preds = %bb.m
 bb.o:                                             ; preds = %bb.n, %bb.m
   %i.bq = phi i32 [ %.pre, %bb.n ], [ %i.g, %bb.m ] ; 2 uses
   %.1 = phi i32 [ %i.bn, %bb.n ], [ %.057, %bb.m ] ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #26
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.041)
   %i.br = icmp slt i32 %.2.lcssa, %i.bq
   br i1 %i.br, label %.preheader, label %.critedge._crit_edge, !llvm.loop !71
 
@@ -658,7 +659,7 @@ bb.o:                                             ; preds = %bb.n, %bb.m
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden noundef i32 @_ZN2v88internal19BoyerMooreLookahead12GetSkipTableEiiNS0_12DirectHandleINS0_9ByteArrayEEES4_(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %0, i32 noundef %1, i32 noundef %2, ptr nofree readonly captures(none) %3, ptr nofree readonly captures(address_is_null) %4) local_unnamed_addr #2 align 2 {
 bb.a:
-  %5 = alloca %"class.std::bitset", align 8       ; 12 uses
+  %.sroa.034 = alloca [2 x i64], align 8          ; 16 uses
   %i.a = load i64, ptr %3, align 8
   %i.b = add i64 %i.a, -1
   %i.c = inttoptr i64 %i.b to ptr                 ; 2 uses
@@ -688,21 +689,23 @@ bb.b:                                             ; preds = %bb.a
 
 .split.preheader:                                 ; preds = %.thread
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %6 = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
   %i.q = sext i32 %2 to i64
   %i.r = sext i32 %1 to i64
+  %.sroa.034.8..sroa_idx107 = getelementptr inbounds nuw i8, ptr %.sroa.034, i64 8
+  %.sroa.034.8..sroa_idx108 = getelementptr inbounds nuw i8, ptr %.sroa.034, i64 8
   br label %.split
 
 .split.us.us.preheader:                           ; preds = %bb.b
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %7 = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
   %i.t = sext i32 %2 to i64
   %i.u = sext i32 %1 to i64
+  %.sroa.034.8..sroa_idx109 = getelementptr inbounds nuw i8, ptr %.sroa.034, i64 8
+  %.sroa.034.8..sroa_idx110 = getelementptr inbounds nuw i8, ptr %.sroa.034, i64 8
   br label %.split.us.us
 
 .split.us.us:                                     ; preds = %.split.us.us.preheader, %_ZN2v88internal12_GLOBAL__N_117BitsetFirstSetBitESt6bitsetILm128EE.exit.split.us.us
   %indvars.iv63 = phi i64 [ %i.t, %.split.us.us.preheader ], [ %indvars.iv.next64, %_ZN2v88internal12_GLOBAL__N_117BitsetFirstSetBitESt6bitsetILm128EE.exit.split.us.us ] ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #26
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.034)
   %i.v = load ptr, ptr %i.s, align 8
   %i.w = load ptr, ptr %i.v, align 8
   %i.x = getelementptr inbounds [8 x i8], ptr %i.w, i64 %indvars.iv63
@@ -710,8 +713,8 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.0.0.copyload.i28.us = load i64, ptr %i.y, align 8 ; 2 uses
   %.sroa.2.0..sroa_idx.i.us = getelementptr inbounds nuw i8, ptr %i.y, i64 8
   %.sroa.2.0.copyload.i.us = load i64, ptr %.sroa.2.0..sroa_idx.i.us, align 8 ; 2 uses
-  store i64 %.sroa.0.0.copyload.i28.us, ptr %5, align 8
-  store i64 %.sroa.2.0.copyload.i.us, ptr %7, align 8
+  store i64 %.sroa.0.0.copyload.i28.us, ptr %.sroa.034, align 8
+  store i64 %.sroa.2.0.copyload.i.us, ptr %.sroa.034.8..sroa_idx109, align 8
   br label %bb.c
 
 bb.c:                                             ; preds = %_ZNSt6bitsetILm128EE5resetEm.exit.us.us, %.split.us.us
@@ -744,17 +747,19 @@ _ZNSt6bitsetILm128EE5resetEm.exit.us.us:          ; preds = %bb.d, %.thread69
   %i.ah = and i64 %.sink75, 63
   %i.ai = shl nuw i64 1, %i.ah
   %i.aj = xor i64 %i.ai, -1
-  %i.ak = lshr i64 %.sink75, 6
-  %8 = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %i.ak ; 2 uses
-  %i.al = load i64, ptr %8, align 8
+  %i.ak = lshr i64 %.sink75, 3
+  %.sroa.034.0..sroa_stride.us.us = and i64 %i.ak, 8 ; 2 uses
+  %.sroa.034.0..sroa_idx103 = getelementptr inbounds nuw i8, ptr %.sroa.034, i64 %.sroa.034.0..sroa_stride.us.us
+  %i.al = load i64, ptr %.sroa.034.0..sroa_idx103, align 8
   %i.am = and i64 %i.al, %i.aj
-  store i64 %i.am, ptr %8, align 8
-  %.sroa.0.0.copyload.pr.us.us = load i64, ptr %5, align 8
-  %.sroa.2.0.copyload.pr.us.us = load i64, ptr %7, align 8
+  %.sroa.034.0..sroa_idx106 = getelementptr inbounds nuw i8, ptr %.sroa.034, i64 %.sroa.034.0..sroa_stride.us.us
+  store i64 %i.am, ptr %.sroa.034.0..sroa_idx106, align 8
+  %.sroa.0.0.copyload.pr.us.us = load i64, ptr %.sroa.034, align 8
+  %.sroa.2.0.copyload.pr.us.us = load i64, ptr %.sroa.034.8..sroa_idx110, align 8
   br label %bb.c, !llvm.loop !72
 
 _ZN2v88internal12_GLOBAL__N_117BitsetFirstSetBitESt6bitsetILm128EE.exit.split.us.us: ; preds = %_ZNKSt6bitsetILm128EE9to_ullongEv.exit18.i.us.us
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #26
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.034)
   %indvars.iv.next64 = add nsw i64 %indvars.iv63, -1
   %.not.us.not = icmp sgt i64 %indvars.iv63, %i.u
   br i1 %.not.us.not, label %.split.us.us, label %._crit_edge, !llvm.loop !73
@@ -766,7 +771,7 @@ _ZN2v88internal12_GLOBAL__N_117BitsetFirstSetBitESt6bitsetILm128EE.exit.split.us
 
 .split:                                           ; preds = %.split.preheader, %_ZN2v88internal12_GLOBAL__N_117BitsetFirstSetBitESt6bitsetILm128EE.exit.split
   %indvars.iv = phi i64 [ %i.q, %.split.preheader ], [ %indvars.iv.next, %_ZN2v88internal12_GLOBAL__N_117BitsetFirstSetBitESt6bitsetILm128EE.exit.split ] ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #26
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.034)
   %i.ao = load ptr, ptr %i.p, align 8
   %i.ap = load ptr, ptr %i.ao, align 8
   %i.aq = getelementptr inbounds [8 x i8], ptr %i.ap, i64 %indvars.iv
@@ -774,8 +779,8 @@ _ZN2v88internal12_GLOBAL__N_117BitsetFirstSetBitESt6bitsetILm128EE.exit.split.us
   %.sroa.0.0.copyload.i28 = load i64, ptr %i.ar, align 8 ; 2 uses
   %.sroa.2.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ar, i64 8
   %.sroa.2.0.copyload.i = load i64, ptr %.sroa.2.0..sroa_idx.i, align 8 ; 2 uses
-  store i64 %.sroa.0.0.copyload.i28, ptr %5, align 8
-  store i64 %.sroa.2.0.copyload.i, ptr %6, align 8
+  store i64 %.sroa.0.0.copyload.i28, ptr %.sroa.034, align 8
+  store i64 %.sroa.2.0.copyload.i, ptr %.sroa.034.8..sroa_idx107, align 8
   br label %bb.e
 
 bb.e:                                             ; preds = %_ZNSt6bitsetILm128EE5resetEm.exit, %.split
@@ -830,17 +835,19 @@ _ZNSt6bitsetILm128EE5resetEm.exit:                ; preds = %bb.g
   %i.br = and i64 %i.bb, 63
   %i.bs = shl nuw i64 1, %i.br
   %i.bt = xor i64 %i.bs, -1
-  %i.bu = lshr i64 %i.bb, 6
-  %9 = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %i.bu ; 2 uses
-  %i.bv = load i64, ptr %9, align 8
+  %i.bu = lshr i64 %i.bb, 3
+  %.sroa.034.0..sroa_stride = and i64 %i.bu, 8    ; 2 uses
+  %.sroa.034.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.034, i64 %.sroa.034.0..sroa_stride
+  %i.bv = load i64, ptr %.sroa.034.0..sroa_idx, align 8
   %i.bw = and i64 %i.bv, %i.bt
-  store i64 %i.bw, ptr %9, align 8
-  %.sroa.0.0.copyload.pr = load i64, ptr %5, align 8
-  %.sroa.2.0.copyload.pr = load i64, ptr %6, align 8
+  %.sroa.034.0..sroa_idx100 = getelementptr inbounds nuw i8, ptr %.sroa.034, i64 %.sroa.034.0..sroa_stride
+  store i64 %i.bw, ptr %.sroa.034.0..sroa_idx100, align 8
+  %.sroa.0.0.copyload.pr = load i64, ptr %.sroa.034, align 8
+  %.sroa.2.0.copyload.pr = load i64, ptr %.sroa.034.8..sroa_idx108, align 8
   br label %bb.e, !llvm.loop !72
 
 _ZN2v88internal12_GLOBAL__N_117BitsetFirstSetBitESt6bitsetILm128EE.exit.split: ; preds = %_ZNKSt6bitsetILm128EE9to_ullongEv.exit18.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #26
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.034)
   %indvars.iv.next = add nsw i64 %indvars.iv, -1
   %.not.not = icmp sgt i64 %indvars.iv, %i.r
   br i1 %.not.not, label %.split, label %._crit_edge, !llvm.loop !73

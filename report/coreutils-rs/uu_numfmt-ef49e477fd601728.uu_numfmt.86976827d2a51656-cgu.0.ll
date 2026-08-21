@@ -204,8 +204,9 @@ bb.c:                                             ; preds = %bb.b, %bb.d
   br i1 %i.o, label %bb.h, label %bb.e
 
 bb.d:                                             ; preds = %bb.a, %bb.b
-  %2 = getelementptr inbounds nuw [4 x i8], ptr @159, i64 %i.c
-  %i.p = load i32, ptr %2, align 4, !range !350, !noundef !18
+  %.0..sroa_stride = shl nuw nsw i64 %i.c, 2
+  %.0..sroa_idx = getelementptr inbounds nuw i8, ptr @159, i64 %.0..sroa_stride
+  %i.p = load i32, ptr %.0..sroa_idx, align 4
   br label %bb.c
 
 bb.e:                                             ; preds = %bb.c

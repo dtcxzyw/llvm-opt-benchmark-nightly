@@ -205,9 +205,10 @@ bb.c:                                             ; preds = %bb.b
   %i.q = lshr i64 %i.p, 32
   %i.r = or i64 %i.q, %i.p
   %i.s = mul i64 %i.r, 285870213051386505
-  %i.t = lshr i64 %i.s, 58
-  %2 = getelementptr inbounds nuw [8 x i8], ptr @__const._ZN6duckdb10CountZerosImE7LeadingEm.index64msb, i64 %i.t
-  %i.u = load i64, ptr %2, align 8, !tbaa !39
+  %i.t = lshr i64 %i.s, 55
+  %.0..sroa_stride.i.i.i = and i64 %i.t, 504
+  %.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr @__const._ZN6duckdb10CountZerosImE7LeadingEm.index64msb, i64 %.0..sroa_stride.i.i.i
+  %i.u = load i64, ptr %.0..sroa_idx.i.i.i, align 8, !tbaa !39
   br label %_ZN6duckdb17RadixPartitioning21RadixBitsOfPowerOfTwoEm.exit
 
 _ZN6duckdb17RadixPartitioning21RadixBitsOfPowerOfTwoEm.exit: ; preds = %bb.b, %bb.c
@@ -610,9 +611,10 @@ bb.b:                                             ; preds = %bb.a
   %i.x = lshr i64 %i.w, 32
   %i.y = or i64 %i.x, %i.w
   %i.z = mul i64 %i.y, 285870213051386505
-  %i.aa = lshr i64 %i.z, 58
-  %2 = getelementptr inbounds nuw [8 x i8], ptr @__const._ZN6duckdb10CountZerosImE7LeadingEm.index64msb, i64 %i.aa
-  %i.ab = load i64, ptr %2, align 8, !tbaa !39
+  %i.aa = lshr i64 %i.z, 55
+  %.0..sroa_stride.i.i.i.i = and i64 %i.aa, 504
+  %.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr @__const._ZN6duckdb10CountZerosImE7LeadingEm.index64msb, i64 %.0..sroa_stride.i.i.i.i
+  %i.ab = load i64, ptr %.0..sroa_idx.i.i.i.i, align 8, !tbaa !39
   %i.ac = tail call i64 @llvm.umin.i64(i64 %i.ab, i64 4)
   br label %_ZNK6duckdb13RadixHTConfig20InitialSinkRadixBitsEv.exit
 
@@ -661,9 +663,10 @@ bb.b:                                             ; preds = %bb.a
   %i.o = lshr i64 %i.n, 32
   %i.p = or i64 %i.o, %i.n
   %i.q = mul i64 %i.p, 285870213051386505
-  %i.r = lshr i64 %i.q, 58
-  %1 = getelementptr inbounds nuw [8 x i8], ptr @__const._ZN6duckdb10CountZerosImE7LeadingEm.index64msb, i64 %i.r
-  %i.s = load i64, ptr %1, align 8, !tbaa !39
+  %i.r = lshr i64 %i.q, 55
+  %.0..sroa_stride.i.i.i = and i64 %i.r, 504
+  %.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr @__const._ZN6duckdb10CountZerosImE7LeadingEm.index64msb, i64 %.0..sroa_stride.i.i.i
+  %i.s = load i64, ptr %.0..sroa_idx.i.i.i, align 8, !tbaa !39
   %i.t = tail call i64 @llvm.umin.i64(i64 %i.s, i64 4)
   br label %_ZN6duckdb17RadixPartitioning21RadixBitsOfPowerOfTwoEm.exit
 
@@ -700,9 +703,10 @@ bb.c:                                             ; preds = %bb.b
   %i.p = lshr i64 %i.o, 32
   %i.q = or i64 %i.p, %i.o
   %i.r = mul i64 %i.q, 285870213051386505
-  %i.s = lshr i64 %i.r, 58
-  %1 = getelementptr inbounds nuw [8 x i8], ptr @__const._ZN6duckdb10CountZerosImE7LeadingEm.index64msb, i64 %i.s
-  %i.t = load i64, ptr %1, align 8, !tbaa !39
+  %i.s = lshr i64 %i.r, 55
+  %.0..sroa_stride.i.i.i.i = and i64 %i.s, 504
+  %.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr @__const._ZN6duckdb10CountZerosImE7LeadingEm.index64msb, i64 %.0..sroa_stride.i.i.i.i
+  %i.t = load i64, ptr %.0..sroa_idx.i.i.i.i, align 8, !tbaa !39
   %i.u = tail call i64 @llvm.umin.i64(i64 %i.t, i64 4)
   br label %_ZNK6duckdb13RadixHTConfig20InitialSinkRadixBitsEv.exit
 
@@ -738,9 +742,10 @@ bb.e:                                             ; preds = %bb.d
   %i.ar = lshr i64 %i.aq, 32
   %i.as = or i64 %i.ar, %i.aq
   %i.at = mul i64 %i.as, 285870213051386505
-  %i.au = lshr i64 %i.at, 58
-  %2 = getelementptr inbounds nuw [8 x i8], ptr @__const._ZN6duckdb10CountZerosImE7LeadingEm.index64msb, i64 %i.au
-  %i.av = load i64, ptr %2, align 8, !tbaa !39
+  %i.au = lshr i64 %i.at, 55
+  %.0..sroa_stride.i.i.i = and i64 %i.au, 504
+  %.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr @__const._ZN6duckdb10CountZerosImE7LeadingEm.index64msb, i64 %.0..sroa_stride.i.i.i
+  %i.av = load i64, ptr %.0..sroa_idx.i.i.i, align 8, !tbaa !39
   br label %_ZN6duckdb17RadixPartitioning9RadixBitsImEEmT_.exit.i
 
 _ZN6duckdb17RadixPartitioning9RadixBitsImEEmT_.exit.i: ; preds = %bb.e, %bb.d
@@ -763,9 +768,10 @@ bb.f:                                             ; preds = %_ZN6duckdb17RadixPa
   %i.bh = lshr i64 %i.bg, 32
   %i.bi = or i64 %i.bh, %i.bg
   %i.bj = mul i64 %i.bi, 285870213051386505
-  %i.bk = lshr i64 %i.bj, 58
-  %3 = getelementptr inbounds nuw [8 x i8], ptr @__const._ZN6duckdb10CountZerosImE7LeadingEm.index64msb, i64 %i.bk
-  %i.bl = load i64, ptr %3, align 8, !tbaa !39
+  %i.bk = lshr i64 %i.bj, 55
+  %.0..sroa_stride.i.i.i.i.i = and i64 %i.bk, 504
+  %.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr @__const._ZN6duckdb10CountZerosImE7LeadingEm.index64msb, i64 %.0..sroa_stride.i.i.i.i.i
+  %i.bl = load i64, ptr %.0..sroa_idx.i.i.i.i.i, align 8, !tbaa !39
   %i.bm = tail call i64 @llvm.umin.i64(i64 %i.bl, i64 4)
   br label %_ZNK6duckdb13RadixHTConfig17ExternalRadixBitsEb.exit
 
@@ -885,9 +891,10 @@ bb.e:                                             ; preds = %bb.d
   %i.aa = lshr i64 %i.z, 32
   %i.ab = or i64 %i.aa, %i.z
   %i.ac = mul i64 %i.ab, 285870213051386505
-  %i.ad = lshr i64 %i.ac, 58
-  %2 = getelementptr inbounds nuw [8 x i8], ptr @__const._ZN6duckdb10CountZerosImE7LeadingEm.index64msb, i64 %i.ad
-  %i.ae = load i64, ptr %2, align 8, !tbaa !39
+  %i.ad = lshr i64 %i.ac, 55
+  %.0..sroa_stride.i.i = and i64 %i.ad, 504
+  %.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr @__const._ZN6duckdb10CountZerosImE7LeadingEm.index64msb, i64 %.0..sroa_stride.i.i
+  %i.ae = load i64, ptr %.0..sroa_idx.i.i, align 8, !tbaa !39
   br label %_ZN6duckdb17RadixPartitioning9RadixBitsImEEmT_.exit
 
 _ZN6duckdb17RadixPartitioning9RadixBitsImEEmT_.exit: ; preds = %bb.d, %bb.e
@@ -910,9 +917,10 @@ bb.f:                                             ; preds = %_ZN6duckdb17RadixPa
   %i.aq = lshr i64 %i.ap, 32
   %i.ar = or i64 %i.aq, %i.ap
   %i.as = mul i64 %i.ar, 285870213051386505
-  %i.at = lshr i64 %i.as, 58
-  %3 = getelementptr inbounds nuw [8 x i8], ptr @__const._ZN6duckdb10CountZerosImE7LeadingEm.index64msb, i64 %i.at
-  %i.au = load i64, ptr %3, align 8, !tbaa !39
+  %i.at = lshr i64 %i.as, 55
+  %.0..sroa_stride.i.i.i.i = and i64 %i.at, 504
+  %.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr @__const._ZN6duckdb10CountZerosImE7LeadingEm.index64msb, i64 %.0..sroa_stride.i.i.i.i
+  %i.au = load i64, ptr %.0..sroa_idx.i.i.i.i, align 8, !tbaa !39
   %i.av = tail call i64 @llvm.umin.i64(i64 %i.au, i64 4)
   br label %_ZNK6duckdb13RadixHTConfig20InitialSinkRadixBitsEv.exit
 
@@ -1315,9 +1323,10 @@ bb.bb:                                            ; preds = %bb.ba
   %i.fy = lshr i64 %i.fx, 32
   %i.fz = or i64 %i.fy, %i.fx
   %i.ga = mul i64 %i.fz, 285870213051386505
-  %i.gb = lshr i64 %i.ga, 58
-  %9 = getelementptr inbounds nuw [8 x i8], ptr @__const._ZN6duckdb10CountZerosImE7LeadingEm.index64msb, i64 %i.gb
-  %i.gc = load i64, ptr %9, align 8, !tbaa !39
+  %i.gb = lshr i64 %i.ga, 55
+  %.0..sroa_stride.i.i.i = and i64 %i.gb, 504
+  %.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr @__const._ZN6duckdb10CountZerosImE7LeadingEm.index64msb, i64 %.0..sroa_stride.i.i.i
+  %i.gc = load i64, ptr %.0..sroa_idx.i.i.i, align 8, !tbaa !39
   br label %_ZN6duckdb17RadixPartitioning21RadixBitsOfPowerOfTwoEm.exit
 
 _ZN6duckdb17RadixPartitioning21RadixBitsOfPowerOfTwoEm.exit: ; preds = %bb.ba, %bb.bb
