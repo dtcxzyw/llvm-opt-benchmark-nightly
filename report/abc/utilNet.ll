@@ -82,7 +82,7 @@ define void @Tn_PermTest() local_unnamed_addr #0 {
   br label %bb.a
 
 bb.a:                                             ; preds = %.lr.ph.a, %Tn_GetNextPerm.exit
-  %.127 = phi i32 [ 0, %.lr.ph.a ], [ %i.ao, %Tn_GetNextPerm.exit ] ; 2 uses
+  %.127 = phi i32 [ %i.ao, %Tn_GetNextPerm.exit ], [ 0, %.lr.ph.a ] ; 2 uses
   %i.l = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str, i32 noundef %.127) ; 0 uses
   %i.m = load i32, ptr %i.a, align 16, !tbaa !8   ; 4 uses
   %i.n = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.1, i32 noundef %i.m) ; 0 uses
@@ -115,7 +115,7 @@ bb.e:                                             ; preds = %bb.d
   %.not.i.4 = icmp slt i32 %i.w, %i.m
   br i1 %.not.i.4, label %.lr.ph.i16.preheader, label %Tn_GetNextPerm.exit
 
-.lr.ph.i16.preheader:                             ; preds = %bb.a, %bb.b, %bb.c, %bb.d, %bb.e
+.lr.ph.i16.preheader:                             ; preds = %bb.e, %bb.d, %bb.c, %bb.b, %bb.a
   %indvars.iv59.i.lcssa.sroa.phi = phi ptr [ %indvars.iv59.i.lcssa.sroa.gep, %bb.a ], [ %indvars.iv59.i.lcssa.sroa.gep60, %bb.b ], [ %indvars.iv59.i.lcssa.sroa.gep61, %bb.c ], [ %indvars.iv59.i.lcssa.sroa.gep62, %bb.d ], [ %i.a, %bb.e ]
   %indvars.iv59.i.lcssa = phi i64 [ 4, %bb.a ], [ 3, %bb.b ], [ 2, %bb.c ], [ 1, %bb.d ], [ 0, %bb.e ]
   %.not43.not.i.1 = phi i1 [ false, %bb.a ], [ false, %bb.b ], [ true, %bb.c ], [ true, %bb.d ], [ true, %bb.e ]
@@ -518,7 +518,7 @@ tn_vi_push.exit34.i.i:                            ; preds = %bb.h, %tn_vi_push.e
   %i.gr = phi ptr [ %i.gh, %.lr.ph.i.preheader.us.preheader.i.i ], [ %i.nf, %._crit_edge106.us.i.i ]
   %.promoted.us145.i.i = phi i32 [ 1000, %.lr.ph.i.preheader.us.preheader.i.i ], [ %.promoted.us147.i.i, %._crit_edge106.us.i.i ]
   %.promoted97.us141.i.i = phi i32 [ 3, %.lr.ph.i.preheader.us.preheader.i.i ], [ %.promoted97.us143.i.i, %._crit_edge106.us.i.i ]
-  %indvars.iv136.i.i = phi i64 [ 1, %.lr.ph.i.preheader.us.preheader.i.i ], [ %indvars.iv.next137.i.i, %._crit_edge106.us.i.i ] ; 17 uses
+  %indvars.iv136.i.i = phi i64 [ 1, %.lr.ph.i.preheader.us.preheader.i.i ], [ %indvars.iv.next137.i.i, %._crit_edge106.us.i.i ] ; 15 uses
   %min.iters.check616 = icmp samesign ult i64 %indvars.iv136.i.i, 8
   br i1 %min.iters.check616, label %.lr.ph.i.us.i.i.preheader, label %vector.ph617
 
@@ -857,10 +857,10 @@ bb.x:                                             ; preds = %.lr.ph584
 .lr.ph584:                                        ; preds = %tn_vi_push.exit72.us.i.i, %bb.x
   %indvars.iv59.in.i.us.i.i583 = phi i32 [ %indvars.iv59.i.us.i.i, %bb.x ], [ %i.ha, %tn_vi_push.exit72.us.i.i ] ; 3 uses
   %indvars.iv59.i.us.i.i = add nsw i32 %indvars.iv59.in.i.us.i.i583, -1 ; 2 uses
-  %i.mg = zext nneg i32 %indvars.iv59.in.i.us.i.i583 to i64 ; 5 uses
+  %i.mg = zext nneg i32 %indvars.iv59.in.i.us.i.i583 to i64 ; 4 uses
   %i.mh = getelementptr [4 x i8], ptr %i.m, i64 %i.mg ; 2 uses
   %i.mi = getelementptr i8, ptr %i.mh, i64 -8
-  %i.mj = load i32, ptr %i.mi, align 4, !tbaa !8  ; 3 uses
+  %i.mj = load i32, ptr %i.mi, align 4, !tbaa !8  ; 4 uses
   %i.mk = zext nneg i32 %indvars.iv59.i.us.i.i to i64 ; 2 uses
   %i.ml = getelementptr inbounds nuw [4 x i8], ptr %i.m, i64 %i.mk
   %i.mm = load i32, ptr %i.ml, align 4, !tbaa !8
@@ -869,14 +869,13 @@ bb.x:                                             ; preds = %.lr.ph584
 
 .critedge.preheader.i.us.i.i:                     ; preds = %.lr.ph584
   %i.mn = getelementptr i8, ptr %i.mh, i64 -8
-  %.not4350.i.us.i.i = icmp samesign ult i64 %indvars.iv136.i.i, %i.mg
-  br i1 %.not4350.i.us.i.i, label %.critedge2.i.us.i.i, label %.lr.ph.i73.us.i.i
+  br label %.lr.ph.i73.us.i.i
 
 .lr.ph.i73.us.i.i:                                ; preds = %.critedge.preheader.i.us.i.i, %.critedge.i.us.i.i
   %indvars.iv.i.us.i.i = phi i64 [ %indvars.iv.next.i.us.i.i, %.critedge.i.us.i.i ], [ %indvars.iv136.i.i, %.critedge.preheader.i.us.i.i ] ; 4 uses
   %i.mo = getelementptr [4 x i8], ptr %i.m, i64 %indvars.iv.i.us.i.i
   %i.mp = getelementptr i8, ptr %i.mo, i64 -4
-  %i.mq = load i32, ptr %i.mp, align 4, !tbaa !8
+  %i.mq = load i32, ptr %i.mp, align 4, !tbaa !8  ; 2 uses
   %.not44.i.us.i.i = icmp sgt i32 %i.mq, %i.mj
   br i1 %.not44.i.us.i.i, label %.critedge2.i.us.i.i, label %.critedge.i.us.i.i
 
@@ -885,13 +884,13 @@ bb.x:                                             ; preds = %.lr.ph584
   %.not43.not.i.us.i.i = icmp sgt i64 %indvars.iv.i.us.i.i, %i.mg
   br i1 %.not43.not.i.us.i.i, label %.lr.ph.i73.us.i.i, label %.critedge2.i.us.i.i, !llvm.loop !78
 
-.critedge2.i.us.i.i:                              ; preds = %.critedge.i.us.i.i, %.lr.ph.i73.us.i.i, %.critedge.preheader.i.us.i.i
-  %.041.lcssa.i.us.i.i = phi i64 [ %indvars.iv136.i.i, %.critedge.preheader.i.us.i.i ], [ %i.mk, %.critedge.i.us.i.i ], [ %indvars.iv.i.us.i.i, %.lr.ph.i73.us.i.i ]
-  %10 = getelementptr [4 x i8], ptr %i.m, i64 %.041.lcssa.i.us.i.i
-  %11 = getelementptr i8, ptr %10, i64 -4         ; 2 uses
-  %12 = load i32, ptr %11, align 4, !tbaa !8
-  store i32 %12, ptr %i.mn, align 4, !tbaa !8
-  store i32 %i.mj, ptr %11, align 4, !tbaa !8
+.critedge2.i.us.i.i:                              ; preds = %.critedge.i.us.i.i, %.lr.ph.i73.us.i.i
+  %.pre-phi.i.i = phi i64 [ %indvars.iv.i.us.i.i, %.lr.ph.i73.us.i.i ], [ %i.mk, %.critedge.i.us.i.i ]
+  %10 = phi i32 [ %i.mq, %.lr.ph.i73.us.i.i ], [ %i.mj, %.critedge.i.us.i.i ]
+  %11 = getelementptr [4 x i8], ptr %i.m, i64 %.pre-phi.i.i
+  %12 = getelementptr i8, ptr %11, i64 -4
+  store i32 %10, ptr %i.mn, align 4, !tbaa !8
+  store i32 %i.mj, ptr %12, align 4, !tbaa !8
   %i.mr = icmp samesign ugt i64 %indvars.iv136.i.i, %i.mg
   br i1 %i.mr, label %.lr.ph55.i.us.i.i, label %Tn_GetNextPerm.exit.us.i.i
 

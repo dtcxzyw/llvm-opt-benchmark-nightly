@@ -201,12 +201,12 @@ bb.g:                                             ; preds = %_ZNKSt8functionIFbR
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #23
   %i.ag = load ptr, ptr %3, align 8, !tbaa !26    ; 3 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.ai = load i64, ptr %i.ah, align 8, !tbaa !29 ; 3 uses
+  %i.ai = load i64, ptr %i.ah, align 8, !tbaa !29 ; 2 uses
   %.not.i.i.i.i = icmp eq i64 %i.ai, 0
   br i1 %.not.i.i.i.i, label %._crit_edge.i.i.i.i.thread.i.i.i, label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i.i.i.i
 
 _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i.i.i.i: ; preds = %bb.g, %bb.h
-  %.1.i.i.in.i.i.i.i = phi i64 [ %.1.i.i.i.i.i.i, %bb.h ], [ %i.ai, %bb.g ] ; 2 uses
+  %.1.i.i.in.i.i.i.i = phi i64 [ %.1.i.i.i.i.i.i, %bb.h ], [ %i.ai, %bb.g ] ; 5 uses
   %.1.i.i.i.i.i.i = add i64 %.1.i.i.in.i.i.i.i, -1 ; 3 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ag, i64 %.1.i.i.i.i.i.i
   %i.ak = load i8, ptr %i.aj, align 1, !tbaa !30
@@ -226,12 +226,11 @@ bb.h:                                             ; preds = %_ZNSt11char_traitsI
   br label %bb.k
 
 .loopexit.i.i.i:                                  ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i.i.i.i, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i.i.i.i
-  %.sroa.speculated.i.i.i.i.i = call i64 @llvm.umin.i64(i64 %i.ai, i64 %.1.i.i.in.i.i.i.i) ; 4 uses
   %i.am = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 7 uses
   store ptr %i.am, ptr %4, align 8, !tbaa !70
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #23
-  store i64 %.sroa.speculated.i.i.i.i.i, ptr %i.a, align 8, !tbaa !23
-  %i.an = icmp ugt i64 %.sroa.speculated.i.i.i.i.i, 15
+  store i64 %.1.i.i.in.i.i.i.i, ptr %i.a, align 8, !tbaa !23
+  %i.an = icmp ugt i64 %.1.i.i.in.i.i.i.i, 15
   br i1 %i.an, label %.noexc.i.i.i.i.i.i, label %._crit_edge.i.i.i.i.i.i.i
 
 .noexc.i.i.i.i.i.i:                               ; preds = %.loopexit.i.i.i
@@ -245,7 +244,7 @@ bb.h:                                             ; preds = %_ZNSt11char_traitsI
   br label %bb.j
 
 ._crit_edge.i.i.i.i.i.i.i:                        ; preds = %.loopexit.i.i.i
-  %cond.i.i = icmp eq i64 %.sroa.speculated.i.i.i.i.i, 1
+  %cond.i.i = icmp eq i64 %.1.i.i.in.i.i.i.i, 1
   br i1 %cond.i.i, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %._crit_edge.i.i.i.i.i.i.i
@@ -255,7 +254,7 @@ bb.i:                                             ; preds = %._crit_edge.i.i.i.i
 
 bb.j:                                             ; preds = %._crit_edge.i.i.i.i.i.i.i, %._crit_edge.i.i.i.i.i.i.thread.i
   %i.ar = phi ptr [ %i.ao, %._crit_edge.i.i.i.i.i.i.thread.i ], [ %i.am, %._crit_edge.i.i.i.i.i.i.i ]
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ar, ptr nonnull align 1 %i.ag, i64 %.sroa.speculated.i.i.i.i.i, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.ar, ptr noundef nonnull align 1 dereferenceable(1) %i.ag, i64 %.1.i.i.in.i.i.i.i, i1 false)
   %.pre.i = load i64, ptr %i.a, align 8, !tbaa !23
   %.pre5.i = load ptr, ptr %4, align 8, !tbaa !26
   br label %bb.k

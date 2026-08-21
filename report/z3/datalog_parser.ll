@@ -204,8 +204,6 @@ $_ZGVZN15wpa_parser_impl14parse_map_lineEPcRmR6symbolE7no_name = comdat any
 @.str.23 = private unnamed_addr constant [4 x i8] c"int\00", align 1
 @.str.24 = private unnamed_addr constant [12 x i8] c"end of line\00", align 1
 @.str.25 = private unnamed_addr constant [17 x i8] c"numeral or 'int'\00", align 1
-@.str.27 = private unnamed_addr constant [20 x i8] c"basic_string::erase\00", align 1
-@.str.28 = private unnamed_addr constant [55 x i8] c"%s: __pos (which is %zu) > this->size() (which is %zu)\00", align 1
 @.str.29 = private unnamed_addr constant [25 x i8] c"sort %s already declared\00", align 1
 @.str.30 = private unnamed_addr constant [31 x i8] c"Warning: could not open file '\00", align 1
 @.str.31 = private unnamed_addr constant [21 x i8] c"basic_string::append\00", align 1
@@ -608,7 +606,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e, %._cri
   store i64 %i.c, ptr %i.k, align 8, !tbaa !48
   %i.l = getelementptr inbounds nuw i8, ptr %i.i, i64 %i.c
   store i8 0, ptr %i.l, align 1, !tbaa !49
-  %i.m = load i64, ptr %i.k, align 8, !tbaa !48   ; 4 uses
+  %i.m = load i64, ptr %i.k, align 8, !tbaa !48   ; 2 uses
   %.not.i.i = icmp eq i64 %i.m, 0
   br i1 %.not.i.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE16find_last_not_ofEPKcm.exit, label %bb.h
 
@@ -617,7 +615,7 @@ bb.h:                                             ; preds = %bb.g
   br label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i
 
 _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i:     ; preds = %bb.h, %bb.i
-  %.1.i.i.in = phi i64 [ %.1.i.i, %bb.i ], [ %i.m, %bb.h ] ; 5 uses
+  %.1.i.i.in = phi i64 [ %.1.i.i, %bb.i ], [ %i.m, %bb.h ] ; 3 uses
   %.1.i.i = add i64 %.1.i.i.in, -1                ; 3 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 %.1.i.i
   %i.p = load i8, ptr %i.o, align 1, !tbaa !49    ; 2 uses
@@ -627,7 +625,7 @@ _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i:     ; preds = %bb.h, %bb.i
   %i.s = and i64 %i.r, 287948901175001088
   %memchr.bits = icmp eq i64 %i.s, 0
   %memchr.not = select i1 %memchr.bounds, i1 true, i1 %memchr.bits
-  br i1 %memchr.not, label %4, label %bb.i
+  br i1 %memchr.not, label %bb.k, label %bb.i
 
 bb.i:                                             ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i
   %.not15.i.i = icmp eq i64 %.1.i.i, 0
@@ -637,7 +635,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE16find_last_not_ofEPKcm.ex
   invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_assignERKS4_(ptr noundef nonnull align 8 dereferenceable(32) %2, ptr noundef nonnull align 8 dereferenceable(32) %3)
           to label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit unwind label %bb.j
 
-bb.j:                                             ; preds = %bb.k, %6, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE16find_last_not_ofEPKcm.exit
+bb.j:                                             ; preds = %bb.k, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE16find_last_not_ofEPKcm.exit
   %i.t = landingpad { ptr, i32 }
           cleanup
   %i.u = load ptr, ptr %3, align 8, !tbaa !61     ; 2 uses
@@ -650,18 +648,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: 
   call void @_ZdlPvm(ptr noundef %i.u, i64 noundef %i.x) #26
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
 
-4:                                                ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i
-  %5 = icmp ugt i64 %.1.i.i.in, %i.m
-  br i1 %5, label %6, label %bb.k
-
-6:                                                ; preds = %4
-  invoke void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.28, ptr noundef nonnull @.str.27, i64 noundef %.1.i.i.in, i64 noundef %i.m) #30
-          to label %.noexc15 unwind label %bb.j
-
-.noexc15:                                         ; preds = %6
-  unreachable
-
-bb.k:                                             ; preds = %4
+bb.k:                                             ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i
   store i64 %.1.i.i.in, ptr %i.k, align 8, !tbaa !48
   %i.y = getelementptr inbounds nuw i8, ptr %i.n, i64 %.1.i.i.in
   store i8 0, ptr %i.y, align 1, !tbaa !49
@@ -1063,9 +1050,6 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit: ; pre
 bb.i:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit, %.split, %bb.a
   ret void
 }
-
-; Function Attrs: noreturn
-declare void @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef, ...) local_unnamed_addr #12
 
 declare void @_ZNK6symbol3strB5cxx11Ev(ptr dead_on_unwind writable sret(%"class.std::__cxx11::basic_string") align 8, ptr noundef nonnull align 8 dereferenceable(8)) local_unnamed_addr #1
 
