@@ -204,12 +204,11 @@ bb.aq:                                            ; preds = %bb.ap
   br label %bb.au
 
 bb.ar:                                            ; preds = %bb.au
-  %.not628.i = icmp eq i32 %.0374475.i, 0
+  %.not628.i = icmp eq i64 %indvars.iv562.i, 0
   br i1 %.not628.i, label %.loopexit.loopexit.i, label %bb.as
 
 bb.as:                                            ; preds = %bb.ar
-  %1 = sext i32 %.0374475.i to i64
-  %i.ok = getelementptr [24 x i8], ptr %i.lw, i64 %1 ; 2 uses
+  %i.ok = getelementptr [24 x i8], ptr %i.lw, i64 %indvars.iv562.i ; 2 uses
   %i.ol = getelementptr i8, ptr %i.ok, i64 -24
   %i.om = load i32, ptr %i.ol, align 8, !tbaa !128
   %i.on = zext i32 %i.om to i64
@@ -218,14 +217,13 @@ bb.as:                                            ; preds = %bb.ar
   br i1 %i.op, label %.split.loop.exit, label %bb.at
 
 bb.at:                                            ; preds = %bb.as
-  %2 = add nsw i32 %.0374475.i, -2
+  %indvars.iv.next563.i.1 = add nsw i64 %indvars.iv562.i, -2
   br label %bb.au
 
 bb.au:                                            ; preds = %bb.at, %.loopexit443.i
-  %.0374475.i = phi i32 [ 8000, %.loopexit443.i ], [ %2, %bb.at ] ; 4 uses
+  %indvars.iv562.i = phi i64 [ 8000, %.loopexit443.i ], [ %indvars.iv.next563.i.1, %bb.at ] ; 4 uses
   %.1377474.i = phi i64 [ %.lcssa159, %.loopexit443.i ], [ %i.oo, %bb.at ]
-  %3 = zext nneg i32 %.0374475.i to i64
-  %i.oq = getelementptr inbounds nuw [24 x i8], ptr %i.lw, i64 %3 ; 2 uses
+  %i.oq = getelementptr inbounds nuw [24 x i8], ptr %i.lw, i64 %indvars.iv562.i ; 2 uses
   %i.or = load i32, ptr %i.oq, align 8, !tbaa !128
   %i.os = zext i32 %i.or to i64
   %i.ot = call i64 @llvm.usub.sat.i64(i64 %.1377474.i, i64 %i.os) ; 2 uses

@@ -204,34 +204,29 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %.lr.ph180.i
   %i.al = call i32 @LookInStream_Read2(ptr noundef nonnull %1, ptr noundef nonnull %i.b, i64 noundef %spec.select.i, i32 noundef 17) #8 ; 2 uses
   %.not136.i = icmp eq i32 %i.al, 0
-  br i1 %.not136.i, label %.lr.ph.preheader.i, label %.loopexit.i
+  br i1 %.not136.i, label %.lr.ph.i, label %.loopexit.i
 
-.lr.ph.preheader.i:                               ; preds = %bb.g
-  %7 = trunc nuw nsw i64 %spec.select.i to i32
-  br label %.lr.ph.i
-
-.lr.ph.i:                                         ; preds = %bb.h, %.lr.ph.preheader.i
-  %.0176.i = phi i32 [ %9, %bb.h ], [ %7, %.lr.ph.preheader.i ] ; 4 uses
-  %8 = zext nneg i32 %.0176.i to i64              ; 2 uses
-  %i.am = getelementptr i8, ptr %i.b, i64 %8
+.lr.ph.i:                                         ; preds = %bb.g, %bb.h
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.h ], [ %spec.select.i, %bb.g ] ; 5 uses
+  %i.am = getelementptr i8, ptr %i.b, i64 %indvars.iv.i
   %i.an = getelementptr i8, ptr %i.am, i64 -1
   %i.ao = load i8, ptr %i.an, align 1, !tbaa !8
   %.not137.i = icmp eq i8 %i.ao, 0
   br i1 %.not137.i, label %bb.h, label %.thread.i
 
 bb.h:                                             ; preds = %.lr.ph.i
-  %9 = add nsw i32 %.0176.i, -1
-  %i.ap = icmp sgt i32 %.0176.i, 1
+  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1
+  %i.ap = icmp sgt i64 %indvars.iv.i, 1
   br i1 %i.ap, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !36
 
 .thread.i:                                        ; preds = %.lr.ph.i
-  %10 = and i32 %.0176.i, 3
-  %.not139.i = icmp eq i32 %10, 0
+  %7 = and i64 %indvars.iv.i, 3
+  %.not139.i = icmp eq i64 %7, 0
   br i1 %.not139.i, label %bb.i, label %.loopexit.i
 
 bb.i:                                             ; preds = %.thread.i
   %i.aq = load i64, ptr %2, align 8, !tbaa !32
-  %i.ar = add nsw i64 %i.aq, %8                   ; 3 uses
+  %i.ar = add nsw i64 %i.aq, %indvars.iv.i        ; 3 uses
   store i64 %i.ar, ptr %2, align 8, !tbaa !32
   %i.as = icmp slt i64 %i.ar, 12
   br i1 %i.as, label %.loopexit.i, label %bb.j
@@ -271,7 +266,7 @@ bb.l:                                             ; preds = %bb.k
   br label %bb.m
 
 .loopexit.i:                                      ; preds = %bb.l, %bb.k, %bb.j, %bb.i, %.thread.i, %bb.f, %._crit_edge.i, %bb.g, %.lr.ph180.i
-  %.7114.ph.i = phi i32 [ 17, %._crit_edge.i ], [ %i.ak, %.lr.ph180.i ], [ %i.al, %bb.g ], [ 17, %bb.f ], [ 17, %bb.l ], [ 17, %bb.i ], [ %i.aw, %bb.k ], [ %i.av, %bb.j ], [ 17, %.thread.i ]
+  %.7114.ph.i = phi i32 [ %i.al, %bb.g ], [ 17, %._crit_edge.i ], [ %i.ak, %.lr.ph180.i ], [ 17, %bb.f ], [ 17, %bb.l ], [ 17, %bb.i ], [ %i.aw, %bb.k ], [ %i.av, %bb.j ], [ 17, %.thread.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #8
   br label %.thread74.sink.split
 
