@@ -204,8 +204,7 @@ bb.l:                                             ; preds = %._crit_edge.i32
 .preheader166.i:                                  ; preds = %._crit_edge188.i, %.preheader166.lr.ph.i
   %i.ev = phi i32 [ %.pre.i29, %.preheader166.lr.ph.i ], [ %i.he, %._crit_edge188.i ] ; 2 uses
   %i.ew = phi i32 [ %.pre.i29, %.preheader166.lr.ph.i ], [ %i.hf, %._crit_edge188.i ] ; 3 uses
-  %.1189.i = phi i32 [ 0, %.preheader166.lr.ph.i ], [ %i.ez, %._crit_edge188.i ] ; 7 uses
-  %invariant.op.i = sub nsw i32 0, %.1189.i
+  %.1189.i = phi i32 [ 0, %.preheader166.lr.ph.i ], [ %i.ez, %._crit_edge188.i ] ; 6 uses
   %i.ex = add nsw i32 %.1189.i, %i.ew             ; 2 uses
   %i.ey = icmp sgt i32 %i.ex, 0
   %i.ez = add nuw nsw i32 %.1189.i, 1             ; 3 uses
@@ -292,7 +291,7 @@ Ses_ManSelectVar.exit154.loopexit.i:              ; preds = %.lr.ph.i151.i, %mid
   %i.gg = or disjoint i32 %i.gf, 1
   store i32 %i.gg, ptr %i.b, align 4, !tbaa !10
   %i.gh = load i32, ptr %i.cl, align 4, !tbaa !251 ; 2 uses
-  %.not120183.i = icmp slt i32 %i.gh, %invariant.op.i
+  %.not120183.i = icmp slt i32 %i.gh, 0
   br i1 %.not120183.i, label %._crit_edge186.i, label %.lr.ph185.i
 
 .lr.ph185.i:                                      ; preds = %Ses_ManSelectVar.exit154.loopexit.i, %.lr.ph185.i
@@ -695,7 +694,7 @@ bb.cm:                                            ; preds = %bb.cm, %.lr.ph937.i
 
 .preheader877.lr.ph.i:                            ; preds = %.preheader878.i
   %.not849.i = icmp eq i32 %.5431972.i, 0
-  %invariant.op.i49 = sub nsw i32 1, %.5431972.i  ; 3 uses
+  %invariant.op.i49 = sub nuw nsw i32 1, %.5431972.i ; 3 uses
   br i1 %.not849.i, label %.preheader877.us.i, label %.preheader877.i.preheader
 
 .preheader877.i.preheader:                        ; preds = %.preheader877.lr.ph.i
@@ -1098,7 +1097,7 @@ bb.hs:                                            ; preds = %.loopexit870.i, %.l
   %i.bcz = phi i32 [ %i.bcs, %.lr.ph1008.i ], [ %i.bcw, %.loopexit870.i ] ; 5 uses
   %.84341007.i = phi i32 [ 0, %.lr.ph1008.i ], [ %i.bda, %.loopexit870.i ] ; 6 uses
   %i.bda = add nuw nsw i32 %.84341007.i, 1        ; 4 uses
-  %invariant.op1005.i = sub nsw i32 1, %.84341007.i ; 2 uses
+  %invariant.op1005.i = sub nuw nsw i32 1, %.84341007.i ; 2 uses
   %i.bdb = icmp slt i32 %i.bda, %i.bcz
   br i1 %i.bdb, label %.preheader869.lr.ph.i, label %.loopexit870.i
 
@@ -1389,7 +1388,7 @@ bb.hv:                                            ; preds = %.loopexit866.i, %.l
   br i1 %i.bhm, label %.lr.ph1018.i, label %.loopexit866.i
 
 .lr.ph1018.i:                                     ; preds = %bb.hv
-  %invariant.op1014.i = sub nsw i32 1, %.94351019.i ; 2 uses
+  %invariant.op1014.i = sub nuw nsw i32 1, %.94351019.i ; 2 uses
   %.not847.i = icmp eq i32 %.94351019.i, 0
   %.neg18.i769.i = xor i32 %.94351019.i, -1       ; 2 uses
   br label %bb.hw

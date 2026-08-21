@@ -204,13 +204,12 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %.lr.ph132, %._crit_edge127
   %.sroa.029.1131 = phi i64 [ 1, %.lr.ph132 ], [ %.sroa.029.1, %._crit_edge127 ] ; 3 uses
-  %.sroa.029.0130 = phi i64 [ 0, %.lr.ph132 ], [ %.sroa.029.1131, %._crit_edge127 ] ; 16 uses
+  %.sroa.029.0130 = phi i64 [ 0, %.lr.ph132 ], [ %.sroa.029.1131, %._crit_edge127 ] ; 15 uses
   %i.u = tail call noundef zeroext i1 @_ZN7similar16deadline_support17deadline_exceeded17hbf8d8876b55ae769E(i64 %9, i32 noundef %10)
   br i1 %i.u, label %._crit_edge133, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %11 = sub nsw i64 0, %.sroa.029.0130            ; 8 uses
-  %i.v = tail call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %.sroa.029.0130, i64 %11)
+  %i.v = tail call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %.sroa.029.0130, i64 0)
   switch i8 %i.v, label %.loopexit [
     i8 -1, label %.lr.ph126.preheader
     i8 0, label %bb.h
@@ -280,14 +279,14 @@ bb.m:                                             ; preds = %bb.l
   br i1 %.not48.peel, label %bb.n, label %.loopexit141
 
 bb.n:                                             ; preds = %bb.m, %bb.l, %bb.k
-  %.not.i.peel = icmp slt i64 %.sroa.7.1.peel, %11
+  %.not.i.peel = icmp slt i64 %.sroa.7.1.peel, 0
   %or.cond108.peel = select i1 %.sroa.11.1.peel, i1 true, i1 %.not.i.peel
   br i1 %or.cond108.peel, label %.lr.ph126.preheader, label %.lr.ph.peel.next
 
 .lr.ph.peel.next:                                 ; preds = %bb.n, %bb.ap
   %.sroa.7.0118 = phi i64 [ %.sroa.7.1, %bb.ap ], [ %.sroa.7.1.peel, %bb.n ] ; 5 uses
   %i.as = add nsw i64 %.sroa.7.0118, -1           ; 8 uses
-  %i.at = tail call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %i.as, i64 %11)
+  %i.at = tail call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %i.as, i64 0)
   switch i8 %i.at, label %.loopexit [
     i8 -1, label %.lr.ph126.preheader
     i8 0, label %bb.p
@@ -304,18 +303,18 @@ bb.o:                                             ; preds = %.lr.ph.peel.next
 bb.p:                                             ; preds = %bb.o, %.lr.ph.peel.next
   %.sroa.7.1 = phi i64 [ %i.as, %.lr.ph.peel.next ], [ %i.au, %bb.o ] ; 2 uses
   %.sroa.11.1 = phi i1 [ true, %.lr.ph.peel.next ], [ false, %bb.o ]
-  %i.av = icmp eq i64 %i.as, %11
+  %i.av = icmp eq i64 %i.as, 0
   br i1 %i.av, label %bb.ak, label %bb.aj
 
 .lr.ph126:                                        ; preds = %.lr.ph126.preheader, %bb.ag
   %not..sroa.1793.0124 = phi i64 [ 1, %bb.ag ], [ 0, %.lr.ph126.preheader ]
   %.sroa.792.0123 = phi i64 [ %.sroa.792.1, %bb.ag ], [ %.sroa.029.0130, %.lr.ph126.preheader ] ; 2 uses
-  %i.aw = sub i64 %.sroa.792.0123, %not..sroa.1793.0124 ; 13 uses
+  %i.aw = sub i64 %.sroa.792.0123, %not..sroa.1793.0124 ; 12 uses
   %.not.i.not.i58 = icmp sgt i64 %i.aw, %.sroa.792.0123
   br i1 %.not.i.not.i58, label %._crit_edge127, label %bb.q
 
 bb.q:                                             ; preds = %.lr.ph126
-  %i.ax = tail call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %i.aw, i64 %11)
+  %i.ax = tail call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %i.aw, i64 0)
   switch i8 %i.ax, label %bb.r [
     i8 -1, label %._crit_edge127
     i8 0, label %bb.t
@@ -332,12 +331,8 @@ bb.s:                                             ; preds = %bb.q
 bb.t:                                             ; preds = %bb.s, %bb.q
   %.sroa.792.1 = phi i64 [ %i.aw, %bb.q ], [ %i.ay, %bb.s ] ; 2 uses
   %.sroa.12.1 = phi i1 [ true, %bb.q ], [ false, %bb.s ]
-  %i.az = icmp eq i64 %i.aw, %11
-  br i1 %i.az, label %._crit_edge152, label %bb.u
-
-._crit_edge152:                                   ; preds = %bb.t
-  %.pre = add i64 %i.aw, 1
-  br label %bb.v
+  %i.az = icmp eq i64 %i.aw, 0
+  br i1 %i.az, label %bb.v, label %bb.u
 
 ._crit_edge127:                                   ; preds = %bb.ag, %bb.q, %.lr.ph126
   %i.ba = icmp slt i64 %.sroa.029.1131, %i.h      ; 2 uses
@@ -350,8 +345,8 @@ bb.u:                                             ; preds = %bb.t
   %.pre153 = add i64 %i.aw, -1                    ; 2 uses
   br i1 %.not43, label %._crit_edge151, label %bb.w
 
-bb.v:                                             ; preds = %._crit_edge152, %bb.w
-  %.pre-phi = phi i64 [ %.pre, %._crit_edge152 ], [ %i.bj, %bb.w ]
+bb.v:                                             ; preds = %bb.t, %bb.w
+  %.pre-phi = phi i64 [ %i.bj, %bb.w ], [ 1, %bb.t ]
   %i.bc = tail call noundef align 8 dereferenceable(8) ptr @"_ZN86_$LT$similar..algorithms..myers..V$u20$as$u20$core..ops..index..Index$LT$isize$GT$$GT$5index17h41b37358ef77507cE"(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %8, i64 noundef %.pre-phi, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @817)
   %i.bd = load i64, ptr %i.bc, align 8, !noundef !15
   br label %bb.x
@@ -459,7 +454,7 @@ bb.af:                                            ; preds = %bb.y
   br i1 %.not44, label %bb.ag, label %bb.ah
 
 bb.ag:                                            ; preds = %bb.af, %bb.ah, %bb.y
-  %.not.i57 = icmp slt i64 %.sroa.792.1, %11
+  %.not.i57 = icmp slt i64 %.sroa.792.1, 0
   %or.cond109 = or i1 %.sroa.12.1, %.not.i57
   br i1 %or.cond109, label %._crit_edge127, label %.lr.ph126
 
@@ -524,7 +519,7 @@ bb.ao:                                            ; preds = %bb.am
   br label %bb.an
 
 bb.ap:                                            ; preds = %bb.aq, %bb.ar, %bb.an
-  %.not.i = icmp slt i64 %.sroa.7.1, %11
+  %.not.i = icmp slt i64 %.sroa.7.1, 0
   %or.cond108 = select i1 %.sroa.11.1, i1 true, i1 %.not.i
   br i1 %or.cond108, label %.lr.ph126.preheader, label %.lr.ph.peel.next, !llvm.loop !21051
 
@@ -624,23 +619,19 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %.lr.ph150, %._crit_edge145
   %.sroa.029.1149 = phi i64 [ 1, %.lr.ph150 ], [ %.sroa.029.1, %._crit_edge145 ] ; 3 uses
-  %.sroa.029.0148 = phi i64 [ 0, %.lr.ph150 ], [ %.sroa.029.1149, %._crit_edge145 ] ; 7 uses
+  %.sroa.029.0148 = phi i64 [ 0, %.lr.ph150 ], [ %.sroa.029.1149, %._crit_edge145 ] ; 6 uses
   %i.y = tail call noundef zeroext i1 @_ZN7similar16deadline_support17deadline_exceeded17hbf8d8876b55ae769E(i64 %9, i32 noundef %10)
-  br i1 %i.y, label %._crit_edge151, label %.lr.ph.preheader
+  br i1 %i.y, label %._crit_edge151, label %.lr.ph
 
-.lr.ph.preheader:                                 ; preds = %bb.e
-  %11 = sub nsw i64 0, %.sroa.029.0148            ; 6 uses
-  br label %.lr.ph
-
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.an
-  %not..sroa.1497.0137 = phi i64 [ 1, %bb.an ], [ 0, %.lr.ph.preheader ]
-  %.sroa.7.0136 = phi i64 [ %.sroa.7.1, %bb.an ], [ %.sroa.029.0148, %.lr.ph.preheader ] ; 2 uses
-  %i.z = sub i64 %.sroa.7.0136, %not..sroa.1497.0137 ; 13 uses
+.lr.ph:                                           ; preds = %bb.e, %bb.an
+  %not..sroa.1497.0137 = phi i64 [ 1, %bb.an ], [ 0, %bb.e ]
+  %.sroa.7.0136 = phi i64 [ %.sroa.7.1, %bb.an ], [ %.sroa.029.0148, %bb.e ] ; 2 uses
+  %i.z = sub i64 %.sroa.7.0136, %not..sroa.1497.0137 ; 12 uses
   %.not.i.not.i = icmp sgt i64 %i.z, %.sroa.7.0136
   br i1 %.not.i.not.i, label %.lr.ph144.preheader, label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph
-  %i.aa = tail call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %i.z, i64 %11)
+  %i.aa = tail call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %i.z, i64 0)
   switch i8 %i.aa, label %bb.g [
     i8 -1, label %.lr.ph144.preheader
     i8 0, label %bb.i
@@ -657,22 +648,18 @@ bb.h:                                             ; preds = %bb.f
 bb.i:                                             ; preds = %bb.h, %bb.f
   %.sroa.7.1 = phi i64 [ %i.z, %bb.f ], [ %i.ab, %bb.h ] ; 2 uses
   %.sroa.11.1 = phi i1 [ true, %bb.f ], [ false, %bb.h ]
-  %i.ac = icmp eq i64 %i.z, %11
-  br i1 %i.ac, label %._crit_edge162, label %bb.ac
-
-._crit_edge162:                                   ; preds = %bb.i
-  %.pre167 = add i64 %i.z, 1
-  br label %bb.ad
+  %i.ac = icmp eq i64 %i.z, 0
+  br i1 %i.ac, label %bb.ad, label %bb.ac
 
 .lr.ph144:                                        ; preds = %.lr.ph144.preheader, %bb.z
   %not..sroa.17106.0142 = phi i64 [ 1, %bb.z ], [ 0, %.lr.ph144.preheader ]
   %.sroa.7105.0141 = phi i64 [ %.sroa.7105.1, %bb.z ], [ %.sroa.029.0148, %.lr.ph144.preheader ] ; 2 uses
-  %i.ad = sub i64 %.sroa.7105.0141, %not..sroa.17106.0142 ; 13 uses
+  %i.ad = sub i64 %.sroa.7105.0141, %not..sroa.17106.0142 ; 12 uses
   %.not.i.not.i58 = icmp sgt i64 %i.ad, %.sroa.7105.0141
   br i1 %.not.i.not.i58, label %._crit_edge145, label %bb.j
 
 bb.j:                                             ; preds = %.lr.ph144
-  %i.ae = tail call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %i.ad, i64 %11)
+  %i.ae = tail call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %i.ad, i64 0)
   switch i8 %i.ae, label %bb.k [
     i8 -1, label %._crit_edge145
     i8 0, label %bb.m
@@ -689,12 +676,8 @@ bb.l:                                             ; preds = %bb.j
 bb.m:                                             ; preds = %bb.l, %bb.j
   %.sroa.7105.1 = phi i64 [ %i.ad, %bb.j ], [ %i.af, %bb.l ] ; 2 uses
   %.sroa.12.1 = phi i1 [ true, %bb.j ], [ false, %bb.l ]
-  %i.ag = icmp eq i64 %i.ad, %11
-  br i1 %i.ag, label %._crit_edge164, label %bb.n
-
-._crit_edge164:                                   ; preds = %bb.m
-  %.pre = add i64 %i.ad, 1
-  br label %bb.o
+  %i.ag = icmp eq i64 %i.ad, 0
+  br i1 %i.ag, label %bb.o, label %bb.n
 
 ._crit_edge145:                                   ; preds = %bb.z, %bb.j, %.lr.ph144
   %i.ah = icmp slt i64 %.sroa.029.1149, %i.h      ; 2 uses
@@ -707,8 +690,8 @@ bb.n:                                             ; preds = %bb.m
   %.pre165 = add i64 %i.ad, -1                    ; 2 uses
   br i1 %.not43, label %._crit_edge163, label %bb.p
 
-bb.o:                                             ; preds = %._crit_edge164, %bb.p
-  %.pre-phi = phi i64 [ %.pre, %._crit_edge164 ], [ %i.aq, %bb.p ]
+bb.o:                                             ; preds = %bb.m, %bb.p
+  %.pre-phi = phi i64 [ %i.aq, %bb.p ], [ 1, %bb.m ]
   %i.aj = tail call noundef align 8 dereferenceable(8) ptr @"_ZN86_$LT$similar..algorithms..myers..V$u20$as$u20$core..ops..index..Index$LT$isize$GT$$GT$5index17h41b37358ef77507cE"(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %8, i64 noundef %.pre-phi, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @817)
   %i.ak = load i64, ptr %i.aj, align 8, !noundef !15
   br label %bb.q
@@ -809,8 +792,8 @@ bb.y:                                             ; preds = %bb.r
   br i1 %.not44, label %bb.z, label %bb.aa
 
 bb.z:                                             ; preds = %bb.y, %bb.aa, %bb.r
-  %.not.i57 = icmp slt i64 %.sroa.7105.1, %11
-  %or.cond122 = select i1 %.sroa.12.1, i1 true, i1 %.not.i57
+  %.not.i57 = icmp slt i64 %.sroa.7105.1, 0
+  %or.cond122 = or i1 %.sroa.12.1, %.not.i57
   br i1 %or.cond122, label %._crit_edge145, label %.lr.ph144
 
 bb.aa:                                            ; preds = %bb.y
@@ -833,8 +816,8 @@ bb.ac:                                            ; preds = %bb.i
   %.pre169 = add i64 %i.z, -1                     ; 2 uses
   br i1 %.not46, label %._crit_edge161, label %bb.ae
 
-bb.ad:                                            ; preds = %._crit_edge162, %bb.ae
-  %.pre-phi168 = phi i64 [ %.pre167, %._crit_edge162 ], [ %i.ci, %bb.ae ]
+bb.ad:                                            ; preds = %bb.i, %bb.ae
+  %.pre-phi168 = phi i64 [ %i.ci, %bb.ae ], [ 1, %bb.i ]
   %i.cb = tail call noundef align 8 dereferenceable(8) ptr @"_ZN86_$LT$similar..algorithms..myers..V$u20$as$u20$core..ops..index..Index$LT$isize$GT$$GT$5index17h41b37358ef77507cE"(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %7, i64 noundef %.pre-phi168, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @824)
   %i.cc = load i64, ptr %i.cb, align 8, !noundef !15
   br label %bb.af
@@ -928,8 +911,8 @@ _ZN7similar10algorithms5utils17common_prefix_len17hff27e7aa0186c89bE.exit: ; pre
   br label %bb.ag
 
 bb.an:                                            ; preds = %bb.ao, %bb.ap, %bb.ag
-  %.not.i = icmp slt i64 %.sroa.7.1, %11
-  %or.cond121 = select i1 %.sroa.11.1, i1 true, i1 %.not.i
+  %.not.i = icmp slt i64 %.sroa.7.1, 0
+  %or.cond121 = or i1 %.sroa.11.1, %.not.i
   br i1 %or.cond121, label %.lr.ph144.preheader, label %.lr.ph
 
 .lr.ph144.preheader:                              ; preds = %.lr.ph, %bb.f, %bb.an
@@ -1017,23 +1000,19 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %.lr.ph149, %._crit_edge144
   %.sroa.029.1148 = phi i64 [ 1, %.lr.ph149 ], [ %.sroa.029.1, %._crit_edge144 ] ; 3 uses
-  %.sroa.029.0147 = phi i64 [ 0, %.lr.ph149 ], [ %.sroa.029.1148, %._crit_edge144 ] ; 7 uses
+  %.sroa.029.0147 = phi i64 [ 0, %.lr.ph149 ], [ %.sroa.029.1148, %._crit_edge144 ] ; 6 uses
   %i.q = tail call noundef zeroext i1 @_ZN7similar16deadline_support17deadline_exceeded17hbf8d8876b55ae769E(i64 %11, i32 noundef %12)
-  br i1 %i.q, label %._crit_edge150, label %.lr.ph.preheader
+  br i1 %i.q, label %._crit_edge150, label %.lr.ph
 
-.lr.ph.preheader:                                 ; preds = %bb.e
-  %13 = sub nsw i64 0, %.sroa.029.0147            ; 6 uses
-  br label %.lr.ph
-
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.am
-  %not..sroa.1498.0136 = phi i64 [ 1, %bb.am ], [ 0, %.lr.ph.preheader ]
-  %.sroa.7.0135 = phi i64 [ %.sroa.7.1, %bb.am ], [ %.sroa.029.0147, %.lr.ph.preheader ] ; 2 uses
-  %i.r = sub i64 %.sroa.7.0135, %not..sroa.1498.0136 ; 13 uses
+.lr.ph:                                           ; preds = %bb.e, %bb.am
+  %not..sroa.1498.0136 = phi i64 [ 1, %bb.am ], [ 0, %bb.e ]
+  %.sroa.7.0135 = phi i64 [ %.sroa.7.1, %bb.am ], [ %.sroa.029.0147, %bb.e ] ; 2 uses
+  %i.r = sub i64 %.sroa.7.0135, %not..sroa.1498.0136 ; 12 uses
   %.not.i.not.i = icmp sgt i64 %i.r, %.sroa.7.0135
   br i1 %.not.i.not.i, label %.lr.ph143.preheader, label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph
-  %i.s = tail call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %i.r, i64 %13)
+  %i.s = tail call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %i.r, i64 0)
   switch i8 %i.s, label %bb.g [
     i8 -1, label %.lr.ph143.preheader
     i8 0, label %bb.i
@@ -1050,22 +1029,18 @@ bb.h:                                             ; preds = %bb.f
 bb.i:                                             ; preds = %bb.h, %bb.f
   %.sroa.7.1 = phi i64 [ %i.r, %bb.f ], [ %i.t, %bb.h ] ; 2 uses
   %.sroa.11.1 = phi i1 [ true, %bb.f ], [ false, %bb.h ]
-  %i.u = icmp eq i64 %i.r, %13
-  br i1 %i.u, label %._crit_edge163, label %bb.ac
-
-._crit_edge163:                                   ; preds = %bb.i
-  %.pre168 = add i64 %i.r, 1
-  br label %bb.ad
+  %i.u = icmp eq i64 %i.r, 0
+  br i1 %i.u, label %bb.ad, label %bb.ac
 
 .lr.ph143:                                        ; preds = %.lr.ph143.preheader, %bb.z
   %not..sroa.17107.0141 = phi i64 [ 1, %bb.z ], [ 0, %.lr.ph143.preheader ]
   %.sroa.7106.0140 = phi i64 [ %.sroa.7106.1, %bb.z ], [ %.sroa.029.0147, %.lr.ph143.preheader ] ; 2 uses
-  %i.v = sub i64 %.sroa.7106.0140, %not..sroa.17107.0141 ; 13 uses
+  %i.v = sub i64 %.sroa.7106.0140, %not..sroa.17107.0141 ; 12 uses
   %.not.i.not.i58 = icmp sgt i64 %i.v, %.sroa.7106.0140
   br i1 %.not.i.not.i58, label %._crit_edge144, label %bb.j
 
 bb.j:                                             ; preds = %.lr.ph143
-  %i.w = tail call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %i.v, i64 %13)
+  %i.w = tail call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %i.v, i64 0)
   switch i8 %i.w, label %bb.k [
     i8 -1, label %._crit_edge144
     i8 0, label %bb.m
@@ -1082,12 +1057,8 @@ bb.l:                                             ; preds = %bb.j
 bb.m:                                             ; preds = %bb.l, %bb.j
   %.sroa.7106.1 = phi i64 [ %i.v, %bb.j ], [ %i.x, %bb.l ] ; 2 uses
   %.sroa.12.1 = phi i1 [ true, %bb.j ], [ false, %bb.l ]
-  %i.y = icmp eq i64 %i.v, %13
-  br i1 %i.y, label %._crit_edge165, label %bb.n
-
-._crit_edge165:                                   ; preds = %bb.m
-  %.pre = add i64 %i.v, 1
-  br label %bb.o
+  %i.y = icmp eq i64 %i.v, 0
+  br i1 %i.y, label %bb.o, label %bb.n
 
 ._crit_edge144:                                   ; preds = %bb.z, %bb.j, %.lr.ph143
   %i.z = icmp slt i64 %.sroa.029.1148, %i.h       ; 2 uses
@@ -1100,8 +1071,8 @@ bb.n:                                             ; preds = %bb.m
   %.pre166 = add i64 %i.v, -1                     ; 2 uses
   br i1 %.not43, label %._crit_edge164, label %bb.p
 
-bb.o:                                             ; preds = %._crit_edge165, %bb.p
-  %.pre-phi = phi i64 [ %.pre, %._crit_edge165 ], [ %i.ai, %bb.p ]
+bb.o:                                             ; preds = %bb.m, %bb.p
+  %.pre-phi = phi i64 [ %i.ai, %bb.p ], [ 1, %bb.m ]
   %i.ab = tail call noundef align 8 dereferenceable(8) ptr @"_ZN86_$LT$similar..algorithms..myers..V$u20$as$u20$core..ops..index..Index$LT$isize$GT$$GT$5index17h41b37358ef77507cE"(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %10, i64 noundef %.pre-phi, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @817)
   %i.ac = load i64, ptr %i.ab, align 8, !noundef !15
   br label %bb.q
@@ -1211,8 +1182,8 @@ bb.y:                                             ; preds = %bb.r
   br i1 %.not44, label %bb.z, label %bb.aa
 
 bb.z:                                             ; preds = %bb.y, %bb.aa, %bb.r
-  %.not.i57 = icmp slt i64 %.sroa.7106.1, %13
-  %or.cond123 = select i1 %.sroa.12.1, i1 true, i1 %.not.i57
+  %.not.i57 = icmp slt i64 %.sroa.7106.1, 0
+  %or.cond123 = or i1 %.sroa.12.1, %.not.i57
   br i1 %or.cond123, label %._crit_edge144, label %.lr.ph143
 
 bb.aa:                                            ; preds = %bb.y
@@ -1235,8 +1206,8 @@ bb.ac:                                            ; preds = %bb.i
   %.pre170 = add i64 %i.r, -1                     ; 2 uses
   br i1 %.not46, label %._crit_edge162, label %bb.ae
 
-bb.ad:                                            ; preds = %._crit_edge163, %bb.ae
-  %.pre-phi169 = phi i64 [ %.pre168, %._crit_edge163 ], [ %i.ca, %bb.ae ]
+bb.ad:                                            ; preds = %bb.i, %bb.ae
+  %.pre-phi169 = phi i64 [ %i.ca, %bb.ae ], [ 1, %bb.i ]
   %i.bt = tail call noundef align 8 dereferenceable(8) ptr @"_ZN86_$LT$similar..algorithms..myers..V$u20$as$u20$core..ops..index..Index$LT$isize$GT$$GT$5index17h41b37358ef77507cE"(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %9, i64 noundef %.pre-phi169, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @824)
   %i.bu = load i64, ptr %i.bt, align 8, !noundef !15
   br label %bb.af
@@ -1341,8 +1312,8 @@ _ZN7similar10algorithms5utils17common_prefix_len17h2c6b24b85e9bc871E.exit: ; pre
   br label %bb.ag
 
 bb.am:                                            ; preds = %bb.an, %bb.ao, %bb.ag
-  %.not.i = icmp slt i64 %.sroa.7.1, %13
-  %or.cond122 = select i1 %.sroa.11.1, i1 true, i1 %.not.i
+  %.not.i = icmp slt i64 %.sroa.7.1, 0
+  %or.cond122 = or i1 %.sroa.11.1, %.not.i
   br i1 %or.cond122, label %.lr.ph143.preheader, label %.lr.ph
 
 .lr.ph143.preheader:                              ; preds = %.lr.ph, %bb.f, %bb.am
@@ -1745,13 +1716,12 @@ bb.m:                                             ; preds = %bb.l
 
 bb.n:                                             ; preds = %._crit_edge120.i, %.lr.ph125.i
   %.sroa.029.1124.i = phi i64 [ 1, %.lr.ph125.i ], [ %.sroa.029.1.i, %._crit_edge120.i ] ; 3 uses
-  %.sroa.029.0123.i = phi i64 [ 0, %.lr.ph125.i ], [ %.sroa.029.1124.i, %._crit_edge120.i ] ; 23 uses
+  %.sroa.029.0123.i = phi i64 [ 0, %.lr.ph125.i ], [ %.sroa.029.1124.i, %._crit_edge120.i ] ; 22 uses
   %i.ab = tail call noundef zeroext i1 @_ZN7similar16deadline_support17deadline_exceeded17hbf8d8876b55ae769E(i64 %9, i32 noundef range(i32 0, 1000000001) %10), !noalias !21255
   br i1 %i.ab, label %_ZN7similar10algorithms5myers17find_middle_snake17h2bb39926573160f1E.exit, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %11 = sub nsw i64 0, %.sroa.029.0123.i          ; 9 uses
-  %i.ac = tail call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %.sroa.029.0123.i, i64 %11) ; 2 uses
+  %i.ac = tail call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %.sroa.029.0123.i, i64 0) ; 2 uses
   switch i8 %i.ac, label %.loopexit.i [
     i8 -1, label %._crit_edge120.i
     i8 0, label %bb.q
@@ -1818,14 +1788,14 @@ bb.v:                                             ; preds = %bb.u
   br i1 %.not48.peel.i, label %bb.w, label %.loopexit129.i
 
 bb.w:                                             ; preds = %bb.v, %bb.u, %bb.t
-  %.not.i.peel.i = icmp slt i64 %.sroa.7.1.peel.i, %11
+  %.not.i.peel.i = icmp slt i64 %.sroa.7.1.peel.i, 0
   %or.cond108.peel.i = select i1 %.sroa.11.1.peel.i, i1 true, i1 %.not.i.peel.i
   br i1 %or.cond108.peel.i, label %.lr.ph119.preheader.i, label %.lr.ph.peel.next.i
 
 .lr.ph.peel.next.i:                               ; preds = %bb.w, %bb.ay
   %.sroa.7.0111.i = phi i64 [ %.sroa.7.1.i, %bb.ay ], [ %.sroa.7.1.peel.i, %bb.w ] ; 5 uses
   %i.az = add nsw i64 %.sroa.7.0111.i, -1         ; 8 uses
-  %i.ba = tail call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %i.az, i64 %11)
+  %i.ba = tail call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %i.az, i64 0)
   switch i8 %i.ba, label %.loopexit.i [
     i8 -1, label %.lr.ph119.preheader.i
     i8 0, label %bb.y
@@ -1842,7 +1812,7 @@ bb.x:                                             ; preds = %.lr.ph.peel.next.i
 bb.y:                                             ; preds = %bb.x, %.lr.ph.peel.next.i
   %.sroa.7.1.i = phi i64 [ %i.az, %.lr.ph.peel.next.i ], [ %i.bb, %bb.x ] ; 2 uses
   %.sroa.11.1.i = phi i1 [ true, %.lr.ph.peel.next.i ], [ false, %bb.x ]
-  %i.bc = icmp eq i64 %i.az, %11
+  %i.bc = icmp eq i64 %i.az, 0
   br i1 %i.bc, label %bb.at, label %bb.as
 
 .lr.ph119.preheader.i:                            ; preds = %bb.ay, %.lr.ph.peel.next.i, %bb.w
@@ -1913,14 +1883,14 @@ bb.af:                                            ; preds = %bb.ae
   br i1 %.not45.peel.i, label %bb.ag, label %.loopexit136.i
 
 bb.ag:                                            ; preds = %bb.af, %bb.ae, %bb.ad
-  %.not.i57.peel.i = icmp slt i64 %.sroa.792.1.peel.i, %11
+  %.not.i57.peel.i = icmp slt i64 %.sroa.792.1.peel.i, 0
   %or.cond109.peel.i = select i1 %.sroa.12.1.peel.i, i1 true, i1 %.not.i57.peel.i
   br i1 %or.cond109.peel.i, label %._crit_edge120.i, label %.lr.ph119.peel.next.i
 
 .lr.ph119.peel.next.i:                            ; preds = %bb.ag, %bb.aq
   %.sroa.792.0116.i = phi i64 [ %.sroa.792.1.i, %bb.aq ], [ %.sroa.792.1.peel.i, %bb.ag ] ; 5 uses
   %i.bz = add nsw i64 %.sroa.792.0116.i, -1       ; 8 uses
-  %i.ca = tail call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %i.bz, i64 %11)
+  %i.ca = tail call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %i.bz, i64 0)
   switch i8 %i.ca, label %.loopexit135.i [
     i8 -1, label %._crit_edge120.i
     i8 0, label %bb.ai
@@ -1937,7 +1907,7 @@ bb.ah:                                            ; preds = %.lr.ph119.peel.next
 bb.ai:                                            ; preds = %bb.ah, %.lr.ph119.peel.next.i
   %.sroa.792.1.i = phi i64 [ %i.bz, %.lr.ph119.peel.next.i ], [ %i.cb, %bb.ah ] ; 2 uses
   %.sroa.12.1.i = phi i1 [ true, %.lr.ph119.peel.next.i ], [ false, %bb.ah ]
-  %i.cc = icmp eq i64 %i.bz, %11
+  %i.cc = icmp eq i64 %i.bz, 0
   br i1 %i.cc, label %bb.ak, label %bb.aj
 
 ._crit_edge120.i:                                 ; preds = %bb.aq, %.lr.ph119.peel.next.i, %bb.o, %bb.ag, %.lr.ph119.preheader.i
@@ -2000,7 +1970,7 @@ bb.ap:                                            ; preds = %bb.an
   br i1 %.not44.i, label %bb.aq, label %bb.ar
 
 bb.aq:                                            ; preds = %bb.ar, %bb.ap, %bb.an
-  %.not.i57.i = icmp slt i64 %.sroa.792.1.i, %11
+  %.not.i57.i = icmp slt i64 %.sroa.792.1.i, 0
   %or.cond109.i = select i1 %.sroa.12.1.i, i1 true, i1 %.not.i57.i
   br i1 %or.cond109.i, label %._crit_edge120.i, label %.lr.ph119.peel.next.i, !llvm.loop !21258
 
@@ -2067,7 +2037,7 @@ bb.ax:                                            ; preds = %bb.av
   br label %bb.aw
 
 bb.ay:                                            ; preds = %bb.ba, %bb.az, %bb.aw
-  %.not.i.i = icmp slt i64 %.sroa.7.1.i, %11
+  %.not.i.i = icmp slt i64 %.sroa.7.1.i, 0
   %or.cond108.i = select i1 %.sroa.11.1.i, i1 true, i1 %.not.i.i
   br i1 %or.cond108.i, label %.lr.ph119.preheader.i, label %.lr.ph.peel.next.i, !llvm.loop !21259
 
@@ -2470,13 +2440,12 @@ bb.m:                                             ; preds = %bb.l
 
 bb.n:                                             ; preds = %._crit_edge120.i, %.lr.ph125.i
   %.sroa.029.1124.i = phi i64 [ 1, %.lr.ph125.i ], [ %.sroa.029.1.i, %._crit_edge120.i ] ; 3 uses
-  %.sroa.029.0123.i = phi i64 [ 0, %.lr.ph125.i ], [ %.sroa.029.1124.i, %._crit_edge120.i ] ; 23 uses
+  %.sroa.029.0123.i = phi i64 [ 0, %.lr.ph125.i ], [ %.sroa.029.1124.i, %._crit_edge120.i ] ; 22 uses
   %i.ab = tail call noundef zeroext i1 @_ZN7similar16deadline_support17deadline_exceeded17hbf8d8876b55ae769E(i64 %9, i32 noundef range(i32 0, 1000000001) %10), !noalias !21435
   br i1 %i.ab, label %_ZN7similar10algorithms5myers17find_middle_snake17h2f141d3ad4b372e7E.exit, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %11 = sub nsw i64 0, %.sroa.029.0123.i          ; 9 uses
-  %i.ac = tail call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %.sroa.029.0123.i, i64 %11) ; 2 uses
+  %i.ac = tail call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %.sroa.029.0123.i, i64 0) ; 2 uses
   switch i8 %i.ac, label %.loopexit.i [
     i8 -1, label %._crit_edge120.i
     i8 0, label %bb.q
@@ -2543,14 +2512,14 @@ bb.v:                                             ; preds = %bb.u
   br i1 %.not48.peel.i, label %bb.w, label %.loopexit129.i
 
 bb.w:                                             ; preds = %bb.v, %bb.u, %bb.t
-  %.not.i.peel.i = icmp slt i64 %.sroa.7.1.peel.i, %11
+  %.not.i.peel.i = icmp slt i64 %.sroa.7.1.peel.i, 0
   %or.cond108.peel.i = select i1 %.sroa.11.1.peel.i, i1 true, i1 %.not.i.peel.i
   br i1 %or.cond108.peel.i, label %.lr.ph119.preheader.i, label %.lr.ph.peel.next.i
 
 .lr.ph.peel.next.i:                               ; preds = %bb.w, %bb.ay
   %.sroa.7.0111.i = phi i64 [ %.sroa.7.1.i, %bb.ay ], [ %.sroa.7.1.peel.i, %bb.w ] ; 5 uses
   %i.az = add nsw i64 %.sroa.7.0111.i, -1         ; 8 uses
-  %i.ba = tail call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %i.az, i64 %11)
+  %i.ba = tail call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %i.az, i64 0)
   switch i8 %i.ba, label %.loopexit.i [
     i8 -1, label %.lr.ph119.preheader.i
     i8 0, label %bb.y
@@ -2567,7 +2536,7 @@ bb.x:                                             ; preds = %.lr.ph.peel.next.i
 bb.y:                                             ; preds = %bb.x, %.lr.ph.peel.next.i
   %.sroa.7.1.i = phi i64 [ %i.az, %.lr.ph.peel.next.i ], [ %i.bb, %bb.x ] ; 2 uses
   %.sroa.11.1.i = phi i1 [ true, %.lr.ph.peel.next.i ], [ false, %bb.x ]
-  %i.bc = icmp eq i64 %i.az, %11
+  %i.bc = icmp eq i64 %i.az, 0
   br i1 %i.bc, label %bb.at, label %bb.as
 
 .lr.ph119.preheader.i:                            ; preds = %bb.ay, %.lr.ph.peel.next.i, %bb.w
@@ -2638,14 +2607,14 @@ bb.af:                                            ; preds = %bb.ae
   br i1 %.not45.peel.i, label %bb.ag, label %.loopexit136.i
 
 bb.ag:                                            ; preds = %bb.af, %bb.ae, %bb.ad
-  %.not.i57.peel.i = icmp slt i64 %.sroa.792.1.peel.i, %11
+  %.not.i57.peel.i = icmp slt i64 %.sroa.792.1.peel.i, 0
   %or.cond109.peel.i = select i1 %.sroa.12.1.peel.i, i1 true, i1 %.not.i57.peel.i
   br i1 %or.cond109.peel.i, label %._crit_edge120.i, label %.lr.ph119.peel.next.i
 
 .lr.ph119.peel.next.i:                            ; preds = %bb.ag, %bb.aq
   %.sroa.792.0116.i = phi i64 [ %.sroa.792.1.i, %bb.aq ], [ %.sroa.792.1.peel.i, %bb.ag ] ; 5 uses
   %i.bz = add nsw i64 %.sroa.792.0116.i, -1       ; 8 uses
-  %i.ca = tail call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %i.bz, i64 %11)
+  %i.ca = tail call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %i.bz, i64 0)
   switch i8 %i.ca, label %.loopexit135.i [
     i8 -1, label %._crit_edge120.i
     i8 0, label %bb.ai
@@ -2662,7 +2631,7 @@ bb.ah:                                            ; preds = %.lr.ph119.peel.next
 bb.ai:                                            ; preds = %bb.ah, %.lr.ph119.peel.next.i
   %.sroa.792.1.i = phi i64 [ %i.bz, %.lr.ph119.peel.next.i ], [ %i.cb, %bb.ah ] ; 2 uses
   %.sroa.12.1.i = phi i1 [ true, %.lr.ph119.peel.next.i ], [ false, %bb.ah ]
-  %i.cc = icmp eq i64 %i.bz, %11
+  %i.cc = icmp eq i64 %i.bz, 0
   br i1 %i.cc, label %bb.ak, label %bb.aj
 
 ._crit_edge120.i:                                 ; preds = %bb.aq, %.lr.ph119.peel.next.i, %bb.o, %bb.ag, %.lr.ph119.preheader.i
@@ -2725,7 +2694,7 @@ bb.ap:                                            ; preds = %bb.an
   br i1 %.not44.i, label %bb.aq, label %bb.ar
 
 bb.aq:                                            ; preds = %bb.ar, %bb.ap, %bb.an
-  %.not.i57.i = icmp slt i64 %.sroa.792.1.i, %11
+  %.not.i57.i = icmp slt i64 %.sroa.792.1.i, 0
   %or.cond109.i = select i1 %.sroa.12.1.i, i1 true, i1 %.not.i57.i
   br i1 %or.cond109.i, label %._crit_edge120.i, label %.lr.ph119.peel.next.i, !llvm.loop !21438
 
@@ -2792,7 +2761,7 @@ bb.ax:                                            ; preds = %bb.av
   br label %bb.aw
 
 bb.ay:                                            ; preds = %bb.ba, %bb.az, %bb.aw
-  %.not.i.i = icmp slt i64 %.sroa.7.1.i, %11
+  %.not.i.i = icmp slt i64 %.sroa.7.1.i, 0
   %or.cond108.i = select i1 %.sroa.11.1.i, i1 true, i1 %.not.i.i
   br i1 %or.cond108.i, label %.lr.ph119.preheader.i, label %.lr.ph.peel.next.i, !llvm.loop !21439
 
@@ -3195,13 +3164,12 @@ bb.m:                                             ; preds = %bb.l
 
 bb.n:                                             ; preds = %._crit_edge120.i, %.lr.ph125.i
   %.sroa.029.1124.i = phi i64 [ 1, %.lr.ph125.i ], [ %.sroa.029.1.i, %._crit_edge120.i ] ; 3 uses
-  %.sroa.029.0123.i = phi i64 [ 0, %.lr.ph125.i ], [ %.sroa.029.1124.i, %._crit_edge120.i ] ; 23 uses
+  %.sroa.029.0123.i = phi i64 [ 0, %.lr.ph125.i ], [ %.sroa.029.1124.i, %._crit_edge120.i ] ; 22 uses
   %i.ab = tail call noundef zeroext i1 @_ZN7similar16deadline_support17deadline_exceeded17hbf8d8876b55ae769E(i64 %9, i32 noundef range(i32 0, 1000000001) %10), !noalias !21755
   br i1 %i.ab, label %_ZN7similar10algorithms5myers17find_middle_snake17h4543af9f3b03cbf2E.exit, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %11 = sub nsw i64 0, %.sroa.029.0123.i          ; 9 uses
-  %i.ac = tail call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %.sroa.029.0123.i, i64 %11) ; 2 uses
+  %i.ac = tail call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %.sroa.029.0123.i, i64 0) ; 2 uses
   switch i8 %i.ac, label %.loopexit.i [
     i8 -1, label %._crit_edge120.i
     i8 0, label %bb.q
@@ -3268,14 +3236,14 @@ bb.v:                                             ; preds = %bb.u
   br i1 %.not48.peel.i, label %bb.w, label %.loopexit129.i
 
 bb.w:                                             ; preds = %bb.v, %bb.u, %bb.t
-  %.not.i.peel.i = icmp slt i64 %.sroa.7.1.peel.i, %11
+  %.not.i.peel.i = icmp slt i64 %.sroa.7.1.peel.i, 0
   %or.cond108.peel.i = select i1 %.sroa.11.1.peel.i, i1 true, i1 %.not.i.peel.i
   br i1 %or.cond108.peel.i, label %.lr.ph119.preheader.i, label %.lr.ph.peel.next.i
 
 .lr.ph.peel.next.i:                               ; preds = %bb.w, %bb.ay
   %.sroa.7.0111.i = phi i64 [ %.sroa.7.1.i, %bb.ay ], [ %.sroa.7.1.peel.i, %bb.w ] ; 5 uses
   %i.az = add nsw i64 %.sroa.7.0111.i, -1         ; 8 uses
-  %i.ba = tail call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %i.az, i64 %11)
+  %i.ba = tail call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %i.az, i64 0)
   switch i8 %i.ba, label %.loopexit.i [
     i8 -1, label %.lr.ph119.preheader.i
     i8 0, label %bb.y
@@ -3292,7 +3260,7 @@ bb.x:                                             ; preds = %.lr.ph.peel.next.i
 bb.y:                                             ; preds = %bb.x, %.lr.ph.peel.next.i
   %.sroa.7.1.i = phi i64 [ %i.az, %.lr.ph.peel.next.i ], [ %i.bb, %bb.x ] ; 2 uses
   %.sroa.11.1.i = phi i1 [ true, %.lr.ph.peel.next.i ], [ false, %bb.x ]
-  %i.bc = icmp eq i64 %i.az, %11
+  %i.bc = icmp eq i64 %i.az, 0
   br i1 %i.bc, label %bb.at, label %bb.as
 
 .lr.ph119.preheader.i:                            ; preds = %bb.ay, %.lr.ph.peel.next.i, %bb.w
@@ -3363,14 +3331,14 @@ bb.af:                                            ; preds = %bb.ae
   br i1 %.not45.peel.i, label %bb.ag, label %.loopexit136.i
 
 bb.ag:                                            ; preds = %bb.af, %bb.ae, %bb.ad
-  %.not.i57.peel.i = icmp slt i64 %.sroa.792.1.peel.i, %11
+  %.not.i57.peel.i = icmp slt i64 %.sroa.792.1.peel.i, 0
   %or.cond109.peel.i = select i1 %.sroa.12.1.peel.i, i1 true, i1 %.not.i57.peel.i
   br i1 %or.cond109.peel.i, label %._crit_edge120.i, label %.lr.ph119.peel.next.i
 
 .lr.ph119.peel.next.i:                            ; preds = %bb.ag, %bb.aq
   %.sroa.792.0116.i = phi i64 [ %.sroa.792.1.i, %bb.aq ], [ %.sroa.792.1.peel.i, %bb.ag ] ; 5 uses
   %i.bz = add nsw i64 %.sroa.792.0116.i, -1       ; 8 uses
-  %i.ca = tail call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %i.bz, i64 %11)
+  %i.ca = tail call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %i.bz, i64 0)
   switch i8 %i.ca, label %.loopexit135.i [
     i8 -1, label %._crit_edge120.i
     i8 0, label %bb.ai
@@ -3387,7 +3355,7 @@ bb.ah:                                            ; preds = %.lr.ph119.peel.next
 bb.ai:                                            ; preds = %bb.ah, %.lr.ph119.peel.next.i
   %.sroa.792.1.i = phi i64 [ %i.bz, %.lr.ph119.peel.next.i ], [ %i.cb, %bb.ah ] ; 2 uses
   %.sroa.12.1.i = phi i1 [ true, %.lr.ph119.peel.next.i ], [ false, %bb.ah ]
-  %i.cc = icmp eq i64 %i.bz, %11
+  %i.cc = icmp eq i64 %i.bz, 0
   br i1 %i.cc, label %bb.ak, label %bb.aj
 
 ._crit_edge120.i:                                 ; preds = %bb.aq, %.lr.ph119.peel.next.i, %bb.o, %bb.ag, %.lr.ph119.preheader.i
@@ -3450,7 +3418,7 @@ bb.ap:                                            ; preds = %bb.an
   br i1 %.not44.i, label %bb.aq, label %bb.ar
 
 bb.aq:                                            ; preds = %bb.ar, %bb.ap, %bb.an
-  %.not.i57.i = icmp slt i64 %.sroa.792.1.i, %11
+  %.not.i57.i = icmp slt i64 %.sroa.792.1.i, 0
   %or.cond109.i = select i1 %.sroa.12.1.i, i1 true, i1 %.not.i57.i
   br i1 %or.cond109.i, label %._crit_edge120.i, label %.lr.ph119.peel.next.i, !llvm.loop !21758
 
@@ -3517,7 +3485,7 @@ bb.ax:                                            ; preds = %bb.av
   br label %bb.aw
 
 bb.ay:                                            ; preds = %bb.ba, %bb.az, %bb.aw
-  %.not.i.i = icmp slt i64 %.sroa.7.1.i, %11
+  %.not.i.i = icmp slt i64 %.sroa.7.1.i, 0
   %or.cond108.i = select i1 %.sroa.11.1.i, i1 true, i1 %.not.i.i
   br i1 %or.cond108.i, label %.lr.ph119.preheader.i, label %.lr.ph.peel.next.i, !llvm.loop !21759
 

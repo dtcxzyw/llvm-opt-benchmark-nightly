@@ -204,17 +204,17 @@ switch.early.test:                                ; preds = %bb.ey
 
 .lr.ph:                                           ; preds = %.preheader
   %i.su = load i32, ptr %38, align 4, !tbaa !440
-  %narrow.i404 = call i32 @llvm.smax.i32(i32 %i.su, i32 1) ; 2 uses
+  %narrow.i404 = call i32 @llvm.smax.i32(i32 %i.su, i32 1)
   %i.sv = getelementptr inbounds nuw i8, ptr %38, i64 12
+  %zext = zext nneg i32 %narrow.i404 to i64       ; 2 uses
   %wide.trip.count = zext nneg i32 %.fr to i64
   br label %bb.ez
 
 bb.ez:                                            ; preds = %.lr.ph, %bb.fh
   %indvars.iv = phi i64 [ 1, %.lr.ph ], [ %indvars.iv.next, %bb.fh ] ; 3 uses
-  %i.sw = sub nsw i64 4, %indvars.iv              ; 2 uses
-  %55 = trunc nsw i64 %i.sw to i32
-  %56 = icmp ugt i32 %narrow.i404, %55
-  br i1 %56, label %bb.fd, label %bb.fa
+  %i.sw = sub nuw nsw i64 4, %indvars.iv          ; 2 uses
+  %55 = icmp samesign ult i64 %i.sw, %zext
+  br i1 %55, label %bb.fd, label %bb.fa
 
 bb.fa:                                            ; preds = %bb.ez
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #26
@@ -249,10 +249,9 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i407: ; preds = %
   br label %.body410
 
 bb.fd:                                            ; preds = %bb.ez
-  %57 = trunc i64 %indvars.iv to i32
-  %58 = sub i32 5, %57
-  %59 = icmp ugt i32 %narrow.i404, %58
-  br i1 %59, label %bb.fh, label %bb.fe
+  %56 = sub nuw nsw i64 5, %indvars.iv
+  %57 = icmp samesign ult i64 %56, %zext
+  br i1 %57, label %bb.fh, label %bb.fe
 
 bb.fe:                                            ; preds = %bb.fd
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #26

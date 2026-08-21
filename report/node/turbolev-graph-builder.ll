@@ -204,7 +204,7 @@ _ZN2v84base11SmallVectorINS_8internal8compiler10turboshaft7OpIndexELm16ESaIS5_EE
   br i1 %.not23, label %bb.l, label %bb.k
 
 bb.d:                                             ; preds = %.lr.ph, %bb.j
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.j ] ; 4 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.j ] ; 3 uses
   %i.ae = load ptr, ptr %i.y, align 8             ; 2 uses
   %i.af = getelementptr inbounds nuw [4 x i8], ptr %i.ae, i64 %indvars.iv
   %i.ag = load i32, ptr %i.af, align 4            ; 4 uses
@@ -212,9 +212,7 @@ bb.d:                                             ; preds = %.lr.ph, %bb.j
   br i1 %.not, label %bb.j, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %5 = sub nsw i64 0, %indvars.iv
-  %6 = getelementptr inbounds [8 x i8], ptr %i.z, i64 %5
-  %i.ah = load ptr, ptr %6, align 8               ; 2 uses
+  %i.ah = load ptr, ptr %i.z, align 8             ; 2 uses
   %i.ai = load ptr, ptr %i.aa, align 8
   %i.aj = icmp eq ptr %i.ah, %i.ai
   br i1 %i.aj, label %bb.f, label %bb.h, !prof !7

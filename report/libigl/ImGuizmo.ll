@@ -203,9 +203,8 @@ bb.dz:                                            ; preds = %bb.ed, %bb.dx
   call void @llvm.lifetime.start.p0(ptr nonnull %36) #19
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(512) %36, i8 0, i64 512, i1 false), !tbaa !9
   %.cmp.i = icmp eq i64 %indvars.iv118.i, 2
-  %i.cub = sub nsw i64 1, %indvars.iv118.i
-  %65 = and i64 %i.cub, 4294967295
-  %i.cuc = select i1 %.cmp.i, i64 2, i64 %65
+  %i.cub = sub nuw nsw i64 1, %indvars.iv118.i
+  %i.cuc = select i1 %.cmp.i, i64 2, i64 %i.cub
   %i.cud = getelementptr inbounds nuw [4 x i8], ptr %i.cqr, i64 %i.cuc
   %i.cue = load float, ptr %i.cud, align 4
   %i.cuf = sub nuw nsw i64 3, %indvars.iv118.i    ; 2 uses

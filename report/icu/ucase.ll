@@ -203,24 +203,31 @@ bb.e:                                             ; preds = %bb.d
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.x = load i32, ptr %i.w, align 8, !tbaa !35   ; 3 uses
   %i.y = icmp sgt i32 %i.x, 0
-  br i1 %i.y, label %.lr.ph, label %.critedge
+  br i1 %i.y, label %.lr.ph.preheader, label %.critedge
 
-.lr.ph:                                           ; preds = %bb.e, %bb.f
-  %.01922 = phi i32 [ %4, %bb.f ], [ %i.x, %bb.e ] ; 4 uses
-  %3 = zext nneg i32 %.01922 to i64
-  %i.z = getelementptr [2 x i8], ptr %.018, i64 %3
+.lr.ph.preheader:                                 ; preds = %bb.e
+  %3 = zext nneg i32 %i.x to i64
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.f
+  %indvars.iv = phi i64 [ %3, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.f ] ; 4 uses
+  %i.z = getelementptr [2 x i8], ptr %.018, i64 %indvars.iv
   %i.aa = getelementptr i8, ptr %i.z, i64 -2
   %i.ab = load i16, ptr %i.aa, align 2, !tbaa !20
   %i.ac = icmp eq i16 %i.ab, 0
-  br i1 %i.ac, label %bb.f, label %.critedge
+  br i1 %i.ac, label %bb.f, label %.critedge.loopexit.split.loop.exit27
 
 bb.f:                                             ; preds = %.lr.ph
-  %4 = add nsw i32 %.01922, -1
-  %i.ad = icmp sgt i32 %.01922, 1
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
+  %i.ad = icmp sgt i64 %indvars.iv, 1
   br i1 %i.ad, label %.lr.ph, label %.critedge, !llvm.loop !37
 
-.critedge:                                        ; preds = %.lr.ph, %bb.f, %bb.e
-  %.019.lcssa = phi i32 [ %i.x, %bb.e ], [ 0, %bb.f ], [ %.01922, %.lr.ph ]
+.critedge.loopexit.split.loop.exit27:             ; preds = %.lr.ph
+  %4 = trunc nuw nsw i64 %indvars.iv to i32
+  br label %.critedge
+
+.critedge:                                        ; preds = %bb.f, %.critedge.loopexit.split.loop.exit27, %bb.e
+  %.019.lcssa = phi i32 [ %i.x, %bb.e ], [ %4, %.critedge.loopexit.split.loop.exit27 ], [ 0, %bb.f ]
   store ptr %.018, ptr %2, align 8, !tbaa !38
   %i.ae = invoke noundef nonnull align 8 dereferenceable(64) ptr @_ZN6icu_7813UnicodeString5setToEaNS_14ConstChar16PtrEi(ptr noundef nonnull align 8 dereferenceable(64) %1, i8 noundef signext 0, ptr noundef nonnull align 8 %2, i32 noundef %.019.lcssa)
           to label %bb.g unwind label %bb.i       ; 0 uses

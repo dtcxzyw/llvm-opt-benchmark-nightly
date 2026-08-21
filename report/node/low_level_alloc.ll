@@ -203,7 +203,11 @@ bb.h:                                             ; preds = %.lr.ph, %bb.i
 .critedge:                                        ; preds = %.critedge.loopexit, %.preheader
   %.pr = phi i32 [ %.pr.pre, %.critedge.loopexit ], [ %i.m, %.preheader ] ; 2 uses
   %i.aq = icmp sgt i32 %.pr, 0
-  br i1 %i.aq, label %.lr.ph28, label %.critedge2
+  br i1 %i.aq, label %.lr.ph28.preheader, label %.critedge2
+
+.lr.ph28.preheader:                               ; preds = %.critedge
+  %3 = zext nneg i32 %.pr to i64
+  br label %.lr.ph28
 
 bb.i:                                             ; preds = %bb.h
   %i.ar = getelementptr inbounds nuw [8 x i8], ptr %i.aj, i64 %indvars.iv
@@ -215,19 +219,19 @@ bb.i:                                             ; preds = %bb.h
   %.not24 = icmp eq i64 %indvars.iv.next, %i.au
   br i1 %.not24, label %.critedge.loopexit, label %bb.h, !llvm.loop !19
 
-.lr.ph28:                                         ; preds = %.critedge, %bb.j
-  %3 = phi i32 [ %5, %bb.j ], [ %.pr, %.critedge ] ; 3 uses
-  %4 = zext nneg i32 %3 to i64
-  %i.av = getelementptr [8 x i8], ptr %0, i64 %4
+.lr.ph28:                                         ; preds = %.lr.ph28.preheader, %bb.j
+  %indvars.iv31 = phi i64 [ %3, %.lr.ph28.preheader ], [ %indvars.iv.next32, %bb.j ] ; 3 uses
+  %i.av = getelementptr [8 x i8], ptr %0, i64 %indvars.iv31
   %i.aw = getelementptr i8, ptr %i.av, i64 32
   %i.ax = load ptr, ptr %i.aw, align 8
   %i.ay = icmp eq ptr %i.ax, null
   br i1 %i.ay, label %bb.j, label %.critedge2
 
 bb.j:                                             ; preds = %.lr.ph28
-  %5 = add nsw i32 %3, -1                         ; 2 uses
-  store i32 %5, ptr %i.a, align 8
-  %i.az = icmp sgt i32 %3, 1
+  %indvars.iv.next32 = add nsw i64 %indvars.iv31, -1 ; 2 uses
+  %4 = trunc nuw nsw i64 %indvars.iv.next32 to i32
+  store i32 %4, ptr %i.a, align 8
+  %i.az = icmp sgt i64 %indvars.iv31, 1
   br i1 %i.az, label %.lr.ph28, label %.critedge2, !llvm.loop !20
 
 .critedge2:                                       ; preds = %.lr.ph28, %bb.j, %.critedge

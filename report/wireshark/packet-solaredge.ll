@@ -204,15 +204,14 @@ bb.h:                                             ; preds = %bb.g
   br i1 %i.bm, label %.preheader.i, label %bb.j
 
 .preheader.i:                                     ; preds = %.lr.ph.i, %.preheader.i
-  %.048.i = phi i32 [ %6, %.preheader.i ], [ 15, %.lr.ph.i ] ; 3 uses
-  %5 = zext nneg i32 %.048.i to i64
-  %i.bn = getelementptr i8, ptr %i.h, i64 %5      ; 2 uses
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %.preheader.i ], [ 15, %.lr.ph.i ] ; 3 uses
+  %i.bn = getelementptr i8, ptr %i.h, i64 %indvars.iv.i ; 2 uses
   %i.bo = load i8, ptr %i.bn, align 1
   %i.bp = add i8 %i.bo, 1                         ; 2 uses
   store i8 %i.bp, ptr %i.bn, align 1
   %.not44.i = icmp eq i8 %i.bp, 0
-  %6 = add nsw i32 %.048.i, -1
-  %i.bq = icmp ne i32 %.048.i, 0
+  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1
+  %i.bq = icmp ne i64 %indvars.iv.i, 0
   %or.cond.i = and i1 %i.bq, %.not44.i
   br i1 %or.cond.i, label %.preheader.i, label %bb.i, !llvm.loop !8
 

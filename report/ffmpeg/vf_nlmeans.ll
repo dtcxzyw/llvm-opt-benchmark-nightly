@@ -67,6 +67,9 @@ bb.a:
 .lr.ph:                                           ; preds = %.preheader
   %i.q = load double, ptr %i.h, align 8, !tbaa !27
   %wide.trip.count = zext i32 %i.p to i64
+  %1 = fmul nsz double %i.q, 0.000000e+00
+  %2 = tail call nsz double @llvm.exp.f64(double %1)
+  %3 = fptrunc nsz double %2 to float
   br label %bb.b
 
 ._crit_edge:                                      ; preds = %bb.b, %.preheader
@@ -77,15 +80,9 @@ bb.a:
   br i1 %.not58, label %bb.c, label %bb.d
 
 bb.b:                                             ; preds = %.lr.ph, %bb.b
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.b ] ; 3 uses
-  %1 = trunc i64 %indvars.iv to i32
-  %2 = sub i32 0, %1
-  %3 = sitofp nsz i32 %2 to double
-  %4 = fmul nsz double %i.q, %3
-  %5 = tail call nsz double @llvm.exp.f64(double %4)
-  %6 = fptrunc nsz double %5 to float
+  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.b ] ; 2 uses
   %i.u = getelementptr inbounds nuw [4 x i8], ptr %i.n, i64 %indvars.iv
-  store float %6, ptr %i.u, align 4, !tbaa !31
+  store float %3, ptr %i.u, align 4, !tbaa !31
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge, label %bb.b, !llvm.loop !33

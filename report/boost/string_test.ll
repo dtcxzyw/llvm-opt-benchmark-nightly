@@ -204,7 +204,7 @@ bb.a:
   br i1 %or.cond, label %.loopexit, label %.lr.ph64
 
 .lr.ph:                                           ; preds = %bb.a, %.lr.ph
-  %.060 = phi i64 [ %i.bh, %.lr.ph ], [ 0, %bb.a ] ; 4 uses
+  %.060 = phi i64 [ %i.bh, %.lr.ph ], [ 0, %bb.a ] ; 3 uses
   %.sroa.046.059 = phi ptr [ %i.ah, %.lr.ph ], [ %i.a, %bb.a ] ; 5 uses
   %i.x = load ptr, ptr %1, align 8, !tbaa !63
   %i.y = ptrtoint ptr %i.x to i64
@@ -225,23 +225,19 @@ bb.a:
   %i.an = icmp eq ptr %i.am, %i.ah
   %i.ao = tail call noundef zeroext i1 @_ZN5boost6detail9test_implEPKcS2_iS2_b(ptr noundef nonnull @.str.527, ptr noundef nonnull @.str.514, i32 noundef 270, ptr noundef nonnull @__PRETTY_FUNCTION__._ZN5boost9intrusive4test30test_iterator_random_functionsINS_9container12basic_stringIcSt11char_traitsIcEvvEENS_7movelib16reverse_iteratorIPcEEEEvRKT_T0_SF_, i1 noundef zeroext %i.an) ; 0 uses
   %i.ap = load ptr, ptr %1, align 8, !tbaa !63
-  %3 = sub nsw i64 0, %.060                       ; 3 uses
   %i.aq = icmp eq ptr %i.ap, %i.a
   %i.ar = tail call noundef zeroext i1 @_ZN5boost6detail9test_implEPKcS2_iS2_b(ptr noundef nonnull @.str.528, ptr noundef nonnull @.str.514, i32 noundef 271, ptr noundef nonnull @__PRETTY_FUNCTION__._ZN5boost9intrusive4test30test_iterator_random_functionsINS_9container12basic_stringIcSt11char_traitsIcEvvEENS_7movelib16reverse_iteratorIPcEEEEvRKT_T0_SF_, i1 noundef zeroext %i.aq) ; 0 uses
   %i.as = load ptr, ptr %1, align 8, !tbaa !63
-  %4 = getelementptr inbounds i8, ptr %i.as, i64 %3
-  %i.at = icmp eq ptr %4, %.sroa.046.059
+  %i.at = icmp eq ptr %i.as, %.sroa.046.059
   %i.au = tail call noundef zeroext i1 @_ZN5boost6detail9test_implEPKcS2_iS2_b(ptr noundef nonnull @.str.529, ptr noundef nonnull @.str.514, i32 noundef 272, ptr noundef nonnull @__PRETTY_FUNCTION__._ZN5boost9intrusive4test30test_iterator_random_functionsINS_9container12basic_stringIcSt11char_traitsIcEvvEENS_7movelib16reverse_iteratorIPcEEEEvRKT_T0_SF_, i1 noundef zeroext %i.at) ; 0 uses
   %i.av = load ptr, ptr %1, align 8, !tbaa !63
-  %5 = getelementptr inbounds i8, ptr %i.av, i64 %3
-  %i.aw = icmp eq ptr %5, %.sroa.046.059
+  %i.aw = icmp eq ptr %i.av, %.sroa.046.059
   %i.ax = tail call noundef zeroext i1 @_ZN5boost6detail9test_implEPKcS2_iS2_b(ptr noundef nonnull @.str.530, ptr noundef nonnull @.str.514, i32 noundef 273, ptr noundef nonnull @__PRETTY_FUNCTION__._ZN5boost9intrusive4test30test_iterator_random_functionsINS_9container12basic_stringIcSt11char_traitsIcEvvEENS_7movelib16reverse_iteratorIPcEEEEvRKT_T0_SF_, i1 noundef zeroext %i.aw) ; 0 uses
   %i.ay = load ptr, ptr %1, align 8, !tbaa !63
   %i.az = icmp eq ptr %i.ay, %i.a
   %i.ba = tail call noundef zeroext i1 @_ZN5boost6detail9test_implEPKcS2_iS2_b(ptr noundef nonnull @.str.531, ptr noundef nonnull @.str.514, i32 noundef 274, ptr noundef nonnull @__PRETTY_FUNCTION__._ZN5boost9intrusive4test30test_iterator_random_functionsINS_9container12basic_stringIcSt11char_traitsIcEvvEENS_7movelib16reverse_iteratorIPcEEEEvRKT_T0_SF_, i1 noundef zeroext %i.az) ; 0 uses
   %i.bb = load ptr, ptr %1, align 8, !tbaa !63
-  %6 = getelementptr inbounds i8, ptr %i.bb, i64 %3
-  %i.bc = icmp eq ptr %6, %.sroa.046.059
+  %i.bc = icmp eq ptr %i.bb, %.sroa.046.059
   %i.bd = tail call noundef zeroext i1 @_ZN5boost6detail9test_implEPKcS2_iS2_b(ptr noundef nonnull @.str.532, ptr noundef nonnull @.str.514, i32 noundef 276, ptr noundef nonnull @__PRETTY_FUNCTION__._ZN5boost9intrusive4test30test_iterator_random_functionsINS_9container12basic_stringIcSt11char_traitsIcEvvEENS_7movelib16reverse_iteratorIPcEEEEvRKT_T0_SF_, i1 noundef zeroext %i.bc) ; 0 uses
   %i.be = load ptr, ptr %1, align 8, !tbaa !63
   %i.bf = icmp eq ptr %i.be, %i.a
@@ -316,7 +312,7 @@ bb.a:
   br i1 %or.cond, label %.loopexit, label %.lr.ph64
 
 .lr.ph:                                           ; preds = %bb.a, %.lr.ph
-  %.060 = phi i64 [ %i.bh, %.lr.ph ], [ 0, %bb.a ] ; 4 uses
+  %.060 = phi i64 [ %i.bh, %.lr.ph ], [ 0, %bb.a ] ; 3 uses
   %.sroa.046.059 = phi ptr [ %i.ah, %.lr.ph ], [ %i.a, %bb.a ] ; 5 uses
   %i.x = load ptr, ptr %1, align 8, !tbaa !674
   %i.y = ptrtoint ptr %i.x to i64
@@ -337,23 +333,19 @@ bb.a:
   %i.an = icmp eq ptr %i.am, %i.ah
   %i.ao = tail call noundef zeroext i1 @_ZN5boost6detail9test_implEPKcS2_iS2_b(ptr noundef nonnull @.str.527, ptr noundef nonnull @.str.514, i32 noundef 270, ptr noundef nonnull @__PRETTY_FUNCTION__._ZN5boost9intrusive4test30test_iterator_random_functionsINS_9container12basic_stringIcSt11char_traitsIcEvvEENS_7movelib16reverse_iteratorIPKcEEEEvRKT_T0_SG_, i1 noundef zeroext %i.an) ; 0 uses
   %i.ap = load ptr, ptr %1, align 8, !tbaa !674
-  %3 = sub nsw i64 0, %.060                       ; 3 uses
   %i.aq = icmp eq ptr %i.ap, %i.a
   %i.ar = tail call noundef zeroext i1 @_ZN5boost6detail9test_implEPKcS2_iS2_b(ptr noundef nonnull @.str.528, ptr noundef nonnull @.str.514, i32 noundef 271, ptr noundef nonnull @__PRETTY_FUNCTION__._ZN5boost9intrusive4test30test_iterator_random_functionsINS_9container12basic_stringIcSt11char_traitsIcEvvEENS_7movelib16reverse_iteratorIPKcEEEEvRKT_T0_SG_, i1 noundef zeroext %i.aq) ; 0 uses
   %i.as = load ptr, ptr %1, align 8, !tbaa !674
-  %4 = getelementptr inbounds i8, ptr %i.as, i64 %3
-  %i.at = icmp eq ptr %4, %.sroa.046.059
+  %i.at = icmp eq ptr %i.as, %.sroa.046.059
   %i.au = tail call noundef zeroext i1 @_ZN5boost6detail9test_implEPKcS2_iS2_b(ptr noundef nonnull @.str.529, ptr noundef nonnull @.str.514, i32 noundef 272, ptr noundef nonnull @__PRETTY_FUNCTION__._ZN5boost9intrusive4test30test_iterator_random_functionsINS_9container12basic_stringIcSt11char_traitsIcEvvEENS_7movelib16reverse_iteratorIPKcEEEEvRKT_T0_SG_, i1 noundef zeroext %i.at) ; 0 uses
   %i.av = load ptr, ptr %1, align 8, !tbaa !674
-  %5 = getelementptr inbounds i8, ptr %i.av, i64 %3
-  %i.aw = icmp eq ptr %5, %.sroa.046.059
+  %i.aw = icmp eq ptr %i.av, %.sroa.046.059
   %i.ax = tail call noundef zeroext i1 @_ZN5boost6detail9test_implEPKcS2_iS2_b(ptr noundef nonnull @.str.530, ptr noundef nonnull @.str.514, i32 noundef 273, ptr noundef nonnull @__PRETTY_FUNCTION__._ZN5boost9intrusive4test30test_iterator_random_functionsINS_9container12basic_stringIcSt11char_traitsIcEvvEENS_7movelib16reverse_iteratorIPKcEEEEvRKT_T0_SG_, i1 noundef zeroext %i.aw) ; 0 uses
   %i.ay = load ptr, ptr %1, align 8, !tbaa !674
   %i.az = icmp eq ptr %i.ay, %i.a
   %i.ba = tail call noundef zeroext i1 @_ZN5boost6detail9test_implEPKcS2_iS2_b(ptr noundef nonnull @.str.531, ptr noundef nonnull @.str.514, i32 noundef 274, ptr noundef nonnull @__PRETTY_FUNCTION__._ZN5boost9intrusive4test30test_iterator_random_functionsINS_9container12basic_stringIcSt11char_traitsIcEvvEENS_7movelib16reverse_iteratorIPKcEEEEvRKT_T0_SG_, i1 noundef zeroext %i.az) ; 0 uses
   %i.bb = load ptr, ptr %1, align 8, !tbaa !674
-  %6 = getelementptr inbounds i8, ptr %i.bb, i64 %3
-  %i.bc = icmp eq ptr %6, %.sroa.046.059
+  %i.bc = icmp eq ptr %i.bb, %.sroa.046.059
   %i.bd = tail call noundef zeroext i1 @_ZN5boost6detail9test_implEPKcS2_iS2_b(ptr noundef nonnull @.str.532, ptr noundef nonnull @.str.514, i32 noundef 276, ptr noundef nonnull @__PRETTY_FUNCTION__._ZN5boost9intrusive4test30test_iterator_random_functionsINS_9container12basic_stringIcSt11char_traitsIcEvvEENS_7movelib16reverse_iteratorIPKcEEEEvRKT_T0_SG_, i1 noundef zeroext %i.bc) ; 0 uses
   %i.be = load ptr, ptr %1, align 8, !tbaa !674
   %i.bf = icmp eq ptr %i.be, %i.a
@@ -756,7 +748,7 @@ bb.a:
   br i1 %or.cond, label %.loopexit, label %.lr.ph64
 
 .lr.ph:                                           ; preds = %bb.a, %.lr.ph
-  %.060 = phi i64 [ %i.bj, %.lr.ph ], [ 0, %bb.a ] ; 4 uses
+  %.060 = phi i64 [ %i.bj, %.lr.ph ], [ 0, %bb.a ] ; 3 uses
   %.sroa.046.059 = phi ptr [ %i.aj, %.lr.ph ], [ %i.a, %bb.a ] ; 5 uses
   %i.y = load ptr, ptr %1, align 8, !tbaa !682
   %i.z = ptrtoint ptr %i.y to i64
@@ -778,23 +770,19 @@ bb.a:
   %i.ap = icmp eq ptr %i.ao, %i.aj
   %i.aq = tail call noundef zeroext i1 @_ZN5boost6detail9test_implEPKcS2_iS2_b(ptr noundef nonnull @.str.527, ptr noundef nonnull @.str.514, i32 noundef 270, ptr noundef nonnull @__PRETTY_FUNCTION__._ZN5boost9intrusive4test30test_iterator_random_functionsINS_9container12basic_stringIwSt11char_traitsIwEvvEENS_7movelib16reverse_iteratorIPwEEEEvRKT_T0_SF_, i1 noundef zeroext %i.ap) ; 0 uses
   %i.ar = load ptr, ptr %1, align 8, !tbaa !682
-  %3 = sub nsw i64 0, %.060                       ; 3 uses
   %i.as = icmp eq ptr %i.ar, %i.a
   %i.at = tail call noundef zeroext i1 @_ZN5boost6detail9test_implEPKcS2_iS2_b(ptr noundef nonnull @.str.528, ptr noundef nonnull @.str.514, i32 noundef 271, ptr noundef nonnull @__PRETTY_FUNCTION__._ZN5boost9intrusive4test30test_iterator_random_functionsINS_9container12basic_stringIwSt11char_traitsIwEvvEENS_7movelib16reverse_iteratorIPwEEEEvRKT_T0_SF_, i1 noundef zeroext %i.as) ; 0 uses
   %i.au = load ptr, ptr %1, align 8, !tbaa !682
-  %4 = getelementptr inbounds [4 x i8], ptr %i.au, i64 %3
-  %i.av = icmp eq ptr %4, %.sroa.046.059
+  %i.av = icmp eq ptr %i.au, %.sroa.046.059
   %i.aw = tail call noundef zeroext i1 @_ZN5boost6detail9test_implEPKcS2_iS2_b(ptr noundef nonnull @.str.529, ptr noundef nonnull @.str.514, i32 noundef 272, ptr noundef nonnull @__PRETTY_FUNCTION__._ZN5boost9intrusive4test30test_iterator_random_functionsINS_9container12basic_stringIwSt11char_traitsIwEvvEENS_7movelib16reverse_iteratorIPwEEEEvRKT_T0_SF_, i1 noundef zeroext %i.av) ; 0 uses
   %i.ax = load ptr, ptr %1, align 8, !tbaa !682
-  %5 = getelementptr inbounds [4 x i8], ptr %i.ax, i64 %3
-  %i.ay = icmp eq ptr %5, %.sroa.046.059
+  %i.ay = icmp eq ptr %i.ax, %.sroa.046.059
   %i.az = tail call noundef zeroext i1 @_ZN5boost6detail9test_implEPKcS2_iS2_b(ptr noundef nonnull @.str.530, ptr noundef nonnull @.str.514, i32 noundef 273, ptr noundef nonnull @__PRETTY_FUNCTION__._ZN5boost9intrusive4test30test_iterator_random_functionsINS_9container12basic_stringIwSt11char_traitsIwEvvEENS_7movelib16reverse_iteratorIPwEEEEvRKT_T0_SF_, i1 noundef zeroext %i.ay) ; 0 uses
   %i.ba = load ptr, ptr %1, align 8, !tbaa !682
   %i.bb = icmp eq ptr %i.ba, %i.a
   %i.bc = tail call noundef zeroext i1 @_ZN5boost6detail9test_implEPKcS2_iS2_b(ptr noundef nonnull @.str.531, ptr noundef nonnull @.str.514, i32 noundef 274, ptr noundef nonnull @__PRETTY_FUNCTION__._ZN5boost9intrusive4test30test_iterator_random_functionsINS_9container12basic_stringIwSt11char_traitsIwEvvEENS_7movelib16reverse_iteratorIPwEEEEvRKT_T0_SF_, i1 noundef zeroext %i.bb) ; 0 uses
   %i.bd = load ptr, ptr %1, align 8, !tbaa !682
-  %6 = getelementptr inbounds [4 x i8], ptr %i.bd, i64 %3
-  %i.be = icmp eq ptr %6, %.sroa.046.059
+  %i.be = icmp eq ptr %i.bd, %.sroa.046.059
   %i.bf = tail call noundef zeroext i1 @_ZN5boost6detail9test_implEPKcS2_iS2_b(ptr noundef nonnull @.str.532, ptr noundef nonnull @.str.514, i32 noundef 276, ptr noundef nonnull @__PRETTY_FUNCTION__._ZN5boost9intrusive4test30test_iterator_random_functionsINS_9container12basic_stringIwSt11char_traitsIwEvvEENS_7movelib16reverse_iteratorIPwEEEEvRKT_T0_SF_, i1 noundef zeroext %i.be) ; 0 uses
   %i.bg = load ptr, ptr %1, align 8, !tbaa !682
   %i.bh = icmp eq ptr %i.bg, %i.a
@@ -870,7 +858,7 @@ bb.a:
   br i1 %or.cond, label %.loopexit, label %.lr.ph64
 
 .lr.ph:                                           ; preds = %bb.a, %.lr.ph
-  %.060 = phi i64 [ %i.bj, %.lr.ph ], [ 0, %bb.a ] ; 4 uses
+  %.060 = phi i64 [ %i.bj, %.lr.ph ], [ 0, %bb.a ] ; 3 uses
   %.sroa.046.059 = phi ptr [ %i.aj, %.lr.ph ], [ %i.a, %bb.a ] ; 5 uses
   %i.y = load ptr, ptr %1, align 8, !tbaa !690
   %i.z = ptrtoint ptr %i.y to i64
@@ -892,23 +880,19 @@ bb.a:
   %i.ap = icmp eq ptr %i.ao, %i.aj
   %i.aq = tail call noundef zeroext i1 @_ZN5boost6detail9test_implEPKcS2_iS2_b(ptr noundef nonnull @.str.527, ptr noundef nonnull @.str.514, i32 noundef 270, ptr noundef nonnull @__PRETTY_FUNCTION__._ZN5boost9intrusive4test30test_iterator_random_functionsINS_9container12basic_stringIwSt11char_traitsIwEvvEENS_7movelib16reverse_iteratorIPKwEEEEvRKT_T0_SG_, i1 noundef zeroext %i.ap) ; 0 uses
   %i.ar = load ptr, ptr %1, align 8, !tbaa !690
-  %3 = sub nsw i64 0, %.060                       ; 3 uses
   %i.as = icmp eq ptr %i.ar, %i.a
   %i.at = tail call noundef zeroext i1 @_ZN5boost6detail9test_implEPKcS2_iS2_b(ptr noundef nonnull @.str.528, ptr noundef nonnull @.str.514, i32 noundef 271, ptr noundef nonnull @__PRETTY_FUNCTION__._ZN5boost9intrusive4test30test_iterator_random_functionsINS_9container12basic_stringIwSt11char_traitsIwEvvEENS_7movelib16reverse_iteratorIPKwEEEEvRKT_T0_SG_, i1 noundef zeroext %i.as) ; 0 uses
   %i.au = load ptr, ptr %1, align 8, !tbaa !690
-  %4 = getelementptr inbounds [4 x i8], ptr %i.au, i64 %3
-  %i.av = icmp eq ptr %4, %.sroa.046.059
+  %i.av = icmp eq ptr %i.au, %.sroa.046.059
   %i.aw = tail call noundef zeroext i1 @_ZN5boost6detail9test_implEPKcS2_iS2_b(ptr noundef nonnull @.str.529, ptr noundef nonnull @.str.514, i32 noundef 272, ptr noundef nonnull @__PRETTY_FUNCTION__._ZN5boost9intrusive4test30test_iterator_random_functionsINS_9container12basic_stringIwSt11char_traitsIwEvvEENS_7movelib16reverse_iteratorIPKwEEEEvRKT_T0_SG_, i1 noundef zeroext %i.av) ; 0 uses
   %i.ax = load ptr, ptr %1, align 8, !tbaa !690
-  %5 = getelementptr inbounds [4 x i8], ptr %i.ax, i64 %3
-  %i.ay = icmp eq ptr %5, %.sroa.046.059
+  %i.ay = icmp eq ptr %i.ax, %.sroa.046.059
   %i.az = tail call noundef zeroext i1 @_ZN5boost6detail9test_implEPKcS2_iS2_b(ptr noundef nonnull @.str.530, ptr noundef nonnull @.str.514, i32 noundef 273, ptr noundef nonnull @__PRETTY_FUNCTION__._ZN5boost9intrusive4test30test_iterator_random_functionsINS_9container12basic_stringIwSt11char_traitsIwEvvEENS_7movelib16reverse_iteratorIPKwEEEEvRKT_T0_SG_, i1 noundef zeroext %i.ay) ; 0 uses
   %i.ba = load ptr, ptr %1, align 8, !tbaa !690
   %i.bb = icmp eq ptr %i.ba, %i.a
   %i.bc = tail call noundef zeroext i1 @_ZN5boost6detail9test_implEPKcS2_iS2_b(ptr noundef nonnull @.str.531, ptr noundef nonnull @.str.514, i32 noundef 274, ptr noundef nonnull @__PRETTY_FUNCTION__._ZN5boost9intrusive4test30test_iterator_random_functionsINS_9container12basic_stringIwSt11char_traitsIwEvvEENS_7movelib16reverse_iteratorIPKwEEEEvRKT_T0_SG_, i1 noundef zeroext %i.bb) ; 0 uses
   %i.bd = load ptr, ptr %1, align 8, !tbaa !690
-  %6 = getelementptr inbounds [4 x i8], ptr %i.bd, i64 %3
-  %i.be = icmp eq ptr %6, %.sroa.046.059
+  %i.be = icmp eq ptr %i.bd, %.sroa.046.059
   %i.bf = tail call noundef zeroext i1 @_ZN5boost6detail9test_implEPKcS2_iS2_b(ptr noundef nonnull @.str.532, ptr noundef nonnull @.str.514, i32 noundef 276, ptr noundef nonnull @__PRETTY_FUNCTION__._ZN5boost9intrusive4test30test_iterator_random_functionsINS_9container12basic_stringIwSt11char_traitsIwEvvEENS_7movelib16reverse_iteratorIPKwEEEEvRKT_T0_SG_, i1 noundef zeroext %i.be) ; 0 uses
   %i.bg = load ptr, ptr %1, align 8, !tbaa !690
   %i.bh = icmp eq ptr %i.bg, %i.a

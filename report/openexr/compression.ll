@@ -204,10 +204,10 @@ define internal fastcc noundef zeroext i1 @build_decode_table(ptr nofree noundef
   %i.b = alloca [16 x i32], align 16              ; 11 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #27
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #27
-  %8 = shl nuw nsw i32 %5, 2
-  %narrow = add nuw nsw i32 %8, 4
-  %9 = zext nneg i32 %narrow to i64
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1) %i.a, i8 0, i64 %9, i1 false), !tbaa !9
+  %8 = zext nneg i32 %5 to i64                    ; 2 uses
+  %9 = shl nuw nsw i64 %8, 2
+  %10 = add nuw nsw i64 %9, 4
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1) %i.a, i8 0, i64 %10, i1 false), !tbaa !9
   %.not = icmp eq i32 %2, 0                       ; 2 uses
   br i1 %.not, label %.preheader221.preheader, label %.lr.ph.preheader
 
@@ -289,20 +289,24 @@ define internal fastcc noundef zeroext i1 @build_decode_table(ptr nofree noundef
   br label %.preheader221
 
 .preheader221:                                    ; preds = %.preheader221.preheader, %bb.a
-  %.0185236 = phi i32 [ %11, %bb.a ], [ %5, %.preheader221.preheader ] ; 3 uses
-  %10 = zext i32 %.0185236 to i64
-  %i.ak = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %10
+  %indvars.iv290 = phi i64 [ %indvars.iv.next291, %bb.a ], [ %8, %.preheader221.preheader ] ; 3 uses
+  %i.ak = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv290
   %i.al = load i32, ptr %i.ak, align 4, !tbaa !9
   %i.am = icmp eq i32 %i.al, 0
-  br i1 %i.am, label %bb.a, label %.critedge
+  br i1 %i.am, label %bb.a, label %.critedge.split.loop.exit341
 
 bb.a:                                             ; preds = %.preheader221
-  %11 = add nsw i32 %.0185236, -1                 ; 2 uses
-  %12 = icmp ugt i32 %11, 1
-  br i1 %12, label %.preheader221, label %.critedge, !llvm.loop !340
+  %indvars.iv.next291 = add nsw i64 %indvars.iv290, -1 ; 2 uses
+  %11 = and i64 %indvars.iv.next291, 4294967294
+  %.not326 = icmp eq i64 %11, 0
+  br i1 %.not326, label %.critedge, label %.preheader221, !llvm.loop !340
 
-.critedge:                                        ; preds = %bb.a, %.preheader221
-  %.0185.lcssa = phi i32 [ 1, %bb.a ], [ %.0185236, %.preheader221 ] ; 7 uses
+.critedge.split.loop.exit341:                     ; preds = %.preheader221
+  %12 = trunc nuw i64 %indvars.iv290 to i32
+  br label %.critedge
+
+.critedge:                                        ; preds = %bb.a, %.critedge.split.loop.exit341
+  %.0185.lcssa = phi i32 [ %12, %.critedge.split.loop.exit341 ], [ 1, %bb.a ] ; 7 uses
   %.not198 = icmp eq ptr %7, null
   br i1 %.not198, label %bb.c, label %bb.b
 

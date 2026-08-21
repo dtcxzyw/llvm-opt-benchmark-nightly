@@ -204,7 +204,7 @@ bb.cl:                                            ; preds = %bb.da
   br i1 %i.auk, label %.preheader636.i, label %bb.dc
 
 bb.cm:                                            ; preds = %bb.da, %bb.ck
-  %indvars.iv744.i = phi i64 [ 0, %bb.ck ], [ %indvars.iv.next745.i, %bb.da ] ; 6 uses
+  %indvars.iv744.i = phi i64 [ 0, %bb.ck ], [ %indvars.iv.next745.i, %bb.da ] ; 5 uses
   %.0481680.i = phi i32 [ 2, %bb.ck ], [ %.2483.i, %bb.da ] ; 2 uses
   %.3507679.i = phi i32 [ %.2506.i, %bb.ck ], [ %.7.i, %bb.da ] ; 4 uses
   %i.aul = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %indvars.iv744.i
@@ -355,12 +355,9 @@ bb.cr:                                            ; preds = %bb.cp
   %i.axg = zext i8 %i.axf to i32
   %i.axh = add nuw nsw i32 %i.axg, %i.awt
   %i.axi = load i16, ptr %i.aue, align 2, !tbaa !47
-  %5 = zext i16 %i.axi to i64
-  %6 = sub nsw i64 2, %indvars.iv744.i
-  %7 = and i64 %6, 2032
-  %8 = xor i64 %7, %5
-  %9 = lshr i64 %8, 4
-  %i.axj = getelementptr inbounds nuw i8, ptr @lzma_rc_prices, i64 %9
+  %5 = lshr i16 %i.axi, 4
+  %6 = zext nneg i16 %5 to i64
+  %i.axj = getelementptr inbounds nuw i8, ptr @lzma_rc_prices, i64 %6
   %i.axk = load i8, ptr %i.axj, align 1, !tbaa !48
   %i.axl = zext i8 %i.axk to i32
   %i.axm = add nuw nsw i32 %i.axh, %i.axl

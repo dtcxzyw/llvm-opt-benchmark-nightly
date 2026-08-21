@@ -203,8 +203,7 @@ bb.a:
   br i1 %i.b, label %.critedge, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) @read_to_eol.buf) #12 ; 3 uses
-  %1 = trunc i64 %i.c to i32                      ; 2 uses
+  %i.c = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) @read_to_eol.buf) #12 ; 4 uses
   %i.d = shl i64 %i.c, 32
   %sext = add i64 %i.d, -4294967296
   %i.e = ashr exact i64 %sext, 32
@@ -214,11 +213,13 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not, label %.preheader, label %bb.c
 
 .preheader:                                       ; preds = %bb.b
+  %1 = trunc i64 %i.c to i32
   %i.h = icmp sgt i32 %1, 0
   br i1 %i.h, label %.lr.ph, label %.critedge
 
 .lr.ph:                                           ; preds = %.preheader
   %i.i = tail call ptr @__ctype_b_loc() #11
+  %2 = and i64 %i.c, 2147483647
   br label %bb.f
 
 bb.c:                                             ; preds = %bb.b
@@ -235,10 +236,9 @@ bb.e:                                             ; preds = %bb.c
   br label %.critedge
 
 bb.f:                                             ; preds = %.lr.ph, %bb.g
-  %.09 = phi i32 [ %1, %.lr.ph ], [ %3, %bb.g ]   ; 3 uses
+  %indvars.iv = phi i64 [ %2, %.lr.ph ], [ %indvars.iv.next, %bb.g ] ; 3 uses
   %i.k = load ptr, ptr %i.i, align 8, !tbaa !16
-  %2 = zext nneg i32 %.09 to i64
-  %i.l = getelementptr i8, ptr @read_to_eol.buf, i64 %2
+  %i.l = getelementptr i8, ptr @read_to_eol.buf, i64 %indvars.iv
   %i.m = getelementptr i8, ptr %i.l, i64 -1
   %i.n = load i8, ptr %i.m, align 1, !tbaa !12
   %i.o = zext i8 %i.n to i64
@@ -249,11 +249,10 @@ bb.f:                                             ; preds = %.lr.ph, %bb.g
   br i1 %.not7, label %.critedge, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %3 = add nsw i32 %.09, -1                       ; 2 uses
-  %4 = zext nneg i32 %3 to i64
-  %i.s = getelementptr inbounds nuw i8, ptr @read_to_eol.buf, i64 %4
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 2 uses
+  %i.s = getelementptr inbounds nuw i8, ptr @read_to_eol.buf, i64 %indvars.iv.next
   store i8 0, ptr %i.s, align 1, !tbaa !12
-  %i.t = icmp sgt i32 %.09, 1
+  %i.t = icmp sgt i64 %indvars.iv, 1
   br i1 %i.t, label %bb.f, label %.critedge, !llvm.loop !30
 
 .critedge:                                        ; preds = %bb.g, %bb.f, %.preheader, %bb.d, %bb.e, %bb.a

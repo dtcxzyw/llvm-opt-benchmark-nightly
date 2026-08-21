@@ -203,30 +203,33 @@ H5VM_vector_reduce_product.exit.i.unr-lcssa:      ; preds = %.lr.ph.i.i
 
 H5VM_vector_reduce_product.exit.i:                ; preds = %.lr.ph.i.i.epil, %H5VM_vector_reduce_product.exit.i.unr-lcssa
   %.lcssa54 = phi i64 [ %i.bb, %H5VM_vector_reduce_product.exit.i.unr-lcssa ], [ %i.be, %.lr.ph.i.i.epil ] ; 2 uses
+  %6 = getelementptr inbounds nuw i8, ptr %4, i64 %i.f ; 2 uses
   %.not47.i = icmp eq i64 %.lcssa54, 0
   br i1 %.not47.i, label %H5VM_stride_fill.exit, label %.lr.ph45.i
 
 .lr.ph45.i:                                       ; preds = %H5VM_vector_reduce_product.exit.i
-  %6 = getelementptr inbounds nuw i8, ptr %4, i64 %i.f ; 2 uses
   %i.bf = trunc i32 %5 to i8                      ; 2 uses
   %.02340.i = add i32 %.014.lcssa, -1             ; 2 uses
   %i.bg = icmp sgt i32 %.02340.i, -1
-  br i1 %i.bg, label %.lr.ph.us.i, label %.lr.ph45.split.i
+  br i1 %i.bg, label %.lr.ph.us.i.preheader, label %.lr.ph45.split.i
 
-.lr.ph.us.i:                                      ; preds = %.lr.ph45.i, %._crit_edge.us.i
-  %.02444.us.i = phi i64 [ %i.bq, %._crit_edge.us.i ], [ 0, %.lr.ph45.i ]
-  %.02543.us.i = phi ptr [ %i.bj, %._crit_edge.us.i ], [ %6, %.lr.ph45.i ] ; 2 uses
+.lr.ph.us.i.preheader:                            ; preds = %.lr.ph45.i
+  %7 = zext nneg i32 %.02340.i to i64
+  br label %.lr.ph.us.i
+
+.lr.ph.us.i:                                      ; preds = %.lr.ph.us.i.preheader, %._crit_edge.us.i
+  %.02444.us.i = phi i64 [ %i.bq, %._crit_edge.us.i ], [ 0, %.lr.ph.us.i.preheader ]
+  %.02543.us.i = phi ptr [ %i.bj, %._crit_edge.us.i ], [ %6, %.lr.ph.us.i.preheader ] ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr align 1 %.02543.us.i, i8 %i.bf, i64 %.0.lcssa, i1 false)
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.f, %.lr.ph.us.i
-  %.02342.us.i = phi i32 [ %.02340.i, %.lr.ph.us.i ], [ %.023.us.i, %bb.f ] ; 3 uses
-  %.12641.us.i = phi ptr [ %.02543.us.i, %.lr.ph.us.i ], [ %i.bj, %bb.f ]
-  %7 = zext nneg i32 %.02342.us.i to i64          ; 3 uses
-  %i.bh = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %7
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.f ], [ %7, %.lr.ph.us.i ] ; 5 uses
+  %.12641.us.i = phi ptr [ %i.bj, %bb.f ], [ %.02543.us.i, %.lr.ph.us.i ]
+  %i.bh = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %indvars.iv
   %i.bi = load i64, ptr %i.bh, align 8, !tbaa !8
   %i.bj = getelementptr inbounds nuw i8, ptr %.12641.us.i, i64 %i.bi ; 2 uses
-  %i.bk = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %7 ; 3 uses
+  %i.bk = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv ; 3 uses
   %i.bl = load i64, ptr %i.bk, align 8, !tbaa !8
   %i.bm = add i64 %i.bl, -1                       ; 2 uses
   store i64 %i.bm, ptr %i.bk, align 8, !tbaa !8
@@ -234,11 +237,11 @@ bb.e:                                             ; preds = %bb.f, %.lr.ph.us.i
   br i1 %.not30.us.i, label %bb.f, label %._crit_edge.us.i
 
 bb.f:                                             ; preds = %bb.e
-  %i.bn = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %7
+  %i.bn = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %indvars.iv
   %i.bo = load i64, ptr %i.bn, align 8, !tbaa !8
   store i64 %i.bo, ptr %i.bk, align 8, !tbaa !8
-  %.023.us.i = add nsw i32 %.02342.us.i, -1
-  %i.bp = icmp sgt i32 %.02342.us.i, 0
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
+  %i.bp = icmp sgt i64 %indvars.iv, 0
   br i1 %i.bp, label %bb.e, label %._crit_edge.us.i, !llvm.loop !16
 
 ._crit_edge.us.i:                                 ; preds = %bb.f, %bb.e
@@ -431,7 +434,7 @@ bb.c:                                             ; preds = %bb.a
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  %i.g = add i32 %0, -1                           ; 2 uses
+  %i.g = add i32 %0, -1
   %i.h = zext i32 %i.g to i64                     ; 5 uses
   %i.i = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %i.h ; 2 uses
   store i64 1, ptr %i.i, align 8, !tbaa !8
@@ -834,20 +837,19 @@ bb.au:                                            ; preds = %bb.at
   br i1 %or.cond147.i, label %.critedge.sink.split.i, label %.loopexit
 
 .lr.ph206:                                        ; preds = %.lr.ph.i.preheader, %.lr.ph.i
-  %i.ip = phi i64 [ %i.iw, %.lr.ph.i ], [ 1, %.lr.ph.i.preheader ] ; 3 uses
-  %i.iq = phi i64 [ %10, %.lr.ph.i ], [ %i.h, %.lr.ph.i.preheader ] ; 2 uses
-  %8 = phi i32 [ %9, %.lr.ph.i ], [ %i.g, %.lr.ph.i.preheader ] ; 4 uses
+  %i.ip = phi i64 [ %indvars.iv.next219, %.lr.ph.i ], [ %i.h, %.lr.ph.i.preheader ] ; 5 uses
+  %i.iq = phi i64 [ %i.iw, %.lr.ph.i ], [ 1, %.lr.ph.i.preheader ] ; 3 uses
   %.0163204 = phi i32 [ %8, %.lr.ph.i ], [ %0, %.lr.ph.i.preheader ] ; 2 uses
-  %i.ir = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %i.iq
+  %i.ir = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %i.ip
   %i.is = load i64, ptr %i.ir, align 8, !tbaa !8
-  %i.it = icmp eq i64 %i.is, %i.ip
+  %i.it = icmp eq i64 %i.is, %i.iq
   br i1 %i.it, label %bb.av, label %.loopexit
 
 bb.av:                                            ; preds = %.lr.ph206
-  %i.iu = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %i.iq
+  %i.iu = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %i.ip
   %i.iv = load i64, ptr %i.iu, align 8, !tbaa !8
-  %i.iw = mul i64 %i.iv, %i.ip                    ; 6 uses
-  %.not142.i = icmp eq i32 %8, 0
+  %i.iw = mul i64 %i.iv, %i.iq                    ; 6 uses
+  %.not142.i = icmp eq i64 %i.ip, 0
   br i1 %.not142.i, label %.loopexit192, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.av
@@ -861,11 +863,11 @@ bb.av:                                            ; preds = %.lr.ph206
   %i.jd = load i64, ptr %i.jc, align 8, !tbaa !8
   %i.je = add i64 %i.jd, %i.iw
   store i64 %i.je, ptr %i.jc, align 8, !tbaa !8
-  %9 = add i32 %8, -1                             ; 2 uses
-  %10 = zext i32 %9 to i64                        ; 2 uses
-  %i.jf = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %10
+  %indvars.iv.next219 = add nsw i64 %i.ip, -1     ; 2 uses
+  %i.jf = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %indvars.iv.next219
   %i.jg = load i64, ptr %i.jf, align 8, !tbaa !8
   %i.jh = icmp eq i64 %i.jg, %i.iw
+  %8 = trunc nuw i64 %i.ip to i32                 ; 2 uses
   br i1 %i.jh, label %.lr.ph206, label %.loopexit, !llvm.loop !20
 
 .critedge.sink.split.i:                           ; preds = %bb.al, %bb.au, %bb.aq, %bb.an
@@ -880,7 +882,7 @@ bb.av:                                            ; preds = %.lr.ph206
   %.1170.ph = phi i64 [ %.1182, %bb.ar ], [ %.0126.lcssa, %bb.al ], [ %.1182, %bb.as ], [ %.1182, %bb.at ], [ %.1182, %bb.au ], [ %.1177, %bb.ao ], [ %.0126.lcssa, %.lr.ph.i.preheader ], [ %.1177, %bb.ap ], [ %.1177, %bb.aq ], [ %.1172, %bb.am ], [ %.1172, %bb.an ], [ %.0126.lcssa, %.lr.ph206 ], [ %.0126.lcssa, %.lr.ph.i ]
   %.1128167.ph = phi i64 [ %.1128181, %bb.ar ], [ %.0127.lcssa, %bb.al ], [ %.1128181, %bb.as ], [ %.1128181, %bb.at ], [ %.1128181, %bb.au ], [ %.1128176, %bb.ao ], [ %.0127.lcssa, %.lr.ph.i.preheader ], [ %.1128176, %bb.ap ], [ %.1128176, %bb.aq ], [ %.1128169, %bb.am ], [ %.1128169, %bb.an ], [ %.0127.lcssa, %.lr.ph206 ], [ %.0127.lcssa, %.lr.ph.i ]
   %.1164.ph = phi i32 [ 4, %bb.ar ], [ 1, %bb.al ], [ 3, %bb.as ], [ 2, %bb.at ], [ 1, %bb.au ], [ 3, %bb.ao ], [ %0, %.lr.ph.i.preheader ], [ 2, %bb.ap ], [ 1, %bb.aq ], [ 2, %bb.am ], [ 1, %bb.an ], [ %8, %.lr.ph.i ], [ %.0163204, %.lr.ph206 ] ; 5 uses
-  %.1162.ph = phi i64 [ 1, %bb.ar ], [ 1, %bb.al ], [ %i.hk, %bb.as ], [ %i.hv, %bb.at ], [ %i.ih, %bb.au ], [ 1, %bb.ao ], [ 1, %.lr.ph.i.preheader ], [ %i.gk, %bb.ap ], [ %i.gv, %bb.aq ], [ 1, %bb.am ], [ %i.fw, %bb.an ], [ %i.iw, %.lr.ph.i ], [ %i.ip, %.lr.ph206 ] ; 6 uses
+  %.1162.ph = phi i64 [ 1, %bb.ar ], [ 1, %bb.al ], [ %i.hk, %bb.as ], [ %i.hv, %bb.at ], [ %i.ih, %bb.au ], [ 1, %bb.ao ], [ 1, %.lr.ph.i.preheader ], [ %i.gk, %bb.ap ], [ %i.gv, %bb.aq ], [ 1, %bb.am ], [ %i.fw, %bb.an ], [ %i.iw, %.lr.ph.i ], [ %i.iq, %.lr.ph206 ] ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
   %i.jk = zext i32 %.1164.ph to i64
   %i.jl = shl nuw nsw i64 %i.jk, 3
@@ -958,7 +960,7 @@ H5VM_vector_reduce_product.exit.i:                ; preds = %.lr.ph.i.i.epil, %H
 .lr.ph60.i:                                       ; preds = %H5VM_vector_reduce_product.exit.i
   %.03152.i = add i32 %.1164.ph, -1               ; 2 uses
   %i.kr = icmp sgt i32 %.03152.i, -1
-  br i1 %i.kr, label %.lr.ph.us.i, label %.lr.ph60.split.i.preheader
+  br i1 %i.kr, label %.lr.ph.us.i.preheader, label %.lr.ph60.split.i.preheader
 
 .lr.ph60.split.i.preheader:                       ; preds = %.lr.ph60.i
   %xtraiter268 = and i64 %.lcssa262, 3            ; 3 uses
@@ -969,25 +971,28 @@ H5VM_vector_reduce_product.exit.i:                ; preds = %.lr.ph.i.i.epil, %H
   %unroll_iter272 = and i64 %.lcssa262, -4
   br label %.lr.ph60.split.i
 
-.lr.ph.us.i:                                      ; preds = %.lr.ph60.i, %._crit_edge.us.i
-  %.03259.us.i = phi i64 [ %i.lf, %._crit_edge.us.i ], [ 0, %.lr.ph60.i ]
-  %.03358.us.i = phi ptr [ %i.kv, %._crit_edge.us.i ], [ %i.kq, %.lr.ph60.i ] ; 2 uses
-  %.03557.us.i = phi ptr [ %i.ky, %._crit_edge.us.i ], [ %i.kp, %.lr.ph60.i ] ; 2 uses
+.lr.ph.us.i.preheader:                            ; preds = %.lr.ph60.i
+  %9 = zext nneg i32 %.03152.i to i64
+  br label %.lr.ph.us.i
+
+.lr.ph.us.i:                                      ; preds = %.lr.ph.us.i.preheader, %._crit_edge.us.i
+  %.03259.us.i = phi i64 [ %i.lf, %._crit_edge.us.i ], [ 0, %.lr.ph.us.i.preheader ]
+  %.03358.us.i = phi ptr [ %i.kv, %._crit_edge.us.i ], [ %i.kq, %.lr.ph.us.i.preheader ] ; 2 uses
+  %.03557.us.i = phi ptr [ %i.ky, %._crit_edge.us.i ], [ %i.kp, %.lr.ph.us.i.preheader ] ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.03557.us.i, ptr align 1 %.03358.us.i, i64 %.1162.ph, i1 false)
   br label %bb.aw
 
 bb.aw:                                            ; preds = %bb.ax, %.lr.ph.us.i
-  %.03155.us.i = phi i32 [ %.03152.i, %.lr.ph.us.i ], [ %.031.us.i, %bb.ax ] ; 3 uses
-  %.13454.us.i = phi ptr [ %.03358.us.i, %.lr.ph.us.i ], [ %i.kv, %bb.ax ]
-  %.13653.us.i = phi ptr [ %.03557.us.i, %.lr.ph.us.i ], [ %i.ky, %bb.ax ]
-  %11 = zext nneg i32 %.03155.us.i to i64         ; 4 uses
-  %i.kt = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %11
+  %indvars.iv221 = phi i64 [ %indvars.iv.next222, %bb.ax ], [ %9, %.lr.ph.us.i ] ; 6 uses
+  %.13454.us.i = phi ptr [ %i.kv, %bb.ax ], [ %.03358.us.i, %.lr.ph.us.i ]
+  %.13653.us.i = phi ptr [ %i.ky, %bb.ax ], [ %.03557.us.i, %.lr.ph.us.i ]
+  %i.kt = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %indvars.iv221
   %i.ku = load i64, ptr %i.kt, align 8, !tbaa !8
   %i.kv = getelementptr inbounds nuw i8, ptr %.13454.us.i, i64 %i.ku ; 2 uses
-  %i.kw = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %11
+  %i.kw = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %indvars.iv221
   %i.kx = load i64, ptr %i.kw, align 8, !tbaa !8
   %i.ky = getelementptr inbounds nuw i8, ptr %.13653.us.i, i64 %i.kx ; 2 uses
-  %i.kz = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %11 ; 3 uses
+  %i.kz = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv221 ; 3 uses
   %i.la = load i64, ptr %i.kz, align 8, !tbaa !8
   %i.lb = add i64 %i.la, -1                       ; 2 uses
   store i64 %i.lb, ptr %i.kz, align 8, !tbaa !8
@@ -995,11 +1000,11 @@ bb.aw:                                            ; preds = %bb.ax, %.lr.ph.us.i
   br i1 %.not42.us.i, label %bb.ax, label %._crit_edge.us.i
 
 bb.ax:                                            ; preds = %bb.aw
-  %i.lc = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %11
+  %i.lc = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %indvars.iv221
   %i.ld = load i64, ptr %i.lc, align 8, !tbaa !8
   store i64 %i.ld, ptr %i.kz, align 8, !tbaa !8
-  %.031.us.i = add nsw i32 %.03155.us.i, -1
-  %i.le = icmp sgt i32 %.03155.us.i, 0
+  %indvars.iv.next222 = add nsw i64 %indvars.iv221, -1
+  %i.le = icmp sgt i64 %indvars.iv221, 0
   br i1 %i.le, label %bb.aw, label %._crit_edge.us.i, !llvm.loop !22
 
 ._crit_edge.us.i:                                 ; preds = %bb.ax, %bb.aw
