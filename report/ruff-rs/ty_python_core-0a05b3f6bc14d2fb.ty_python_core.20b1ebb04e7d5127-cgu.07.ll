@@ -204,7 +204,7 @@ _RINvCsheqz6YZvxwl_8smallvec10infallibleuECs2O29vuvTAEJ_14ty_python_core.exit: ;
 .lr.ph.preheader:                                 ; preds = %_RINvCsheqz6YZvxwl_8smallvec10infallibleuECs2O29vuvTAEJ_14ty_python_core.exit
   %i.aa = mul i64 %i.a, 3074457345618258603
   %i.ab = mul i64 %i.b, -3074457345618258603
-  %i.ac = add i64 %i.aa, %i.ab
+  %i.ac = add i64 %i.ab, %i.aa
   %i.ad = lshr i64 %i.ac, 2
   %i.ae = xor i64 %i.y, -1
   %i.af = add i64 %.sink.i.pre-phi, %i.ae

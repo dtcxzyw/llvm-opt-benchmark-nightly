@@ -205,7 +205,7 @@ bb.q:                                             ; preds = %bb.i
   store i32 %i.bi, ptr %i.bh, align 4, !tbaa !9
   %i.bj = sext i32 %3 to i64
   call void @llvm.memset.p0.i64(ptr align 1 %2, i8 0, i64 %i.bj, i1 false)
-  %i.bk = sub i32 0, %i.ar                        ; 4 uses
+  %i.bk = sub nsw i32 0, %i.ar                    ; 4 uses
   %i.bl = icmp sgt i32 %i.ar, 0
   %i.bm = getelementptr inbounds nuw i8, ptr %8, i64 8
   %i.bn = load i32, ptr %i.bm, align 8
@@ -608,7 +608,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit185: ; preds = %bb
   br label %.body
 
 bb.ao:                                            ; preds = %bb.ah
-  %i.cy = sub i32 0, %i.f                         ; 5 uses
+  %i.cy = sub nsw i32 0, %i.f                     ; 5 uses
   %i.cz = icmp sgt i32 %i.f, 0
   br i1 %i.cz, label %.preheader207.lr.ph, label %._crit_edge371
 

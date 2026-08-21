@@ -205,10 +205,10 @@ bb.g:                                             ; preds = %bb.f
   br i1 %.not8.i, label %_ZN5boost9container4moveIPNS0_4test24movable_and_copyable_intES4_EENS0_3dtl38disable_if_memtransfer_copy_assignableIT_T0_S8_E4typeES7_S7_S8_.exit, label %.lr.ph.i242.preheader
 
 .lr.ph.i242.preheader:                            ; preds = %.loopexit413
-  %7 = add i64 %i.c, %i.g
-  %i.el = add i64 %7, -4
-  %8 = shl i64 %i.d, 1
-  %i.em = sub i64 %i.el, %8                       ; 2 uses
+  %7 = shl i64 %i.d, 1
+  %i.el = add i64 %i.c, %i.g
+  %8 = add i64 %i.el, -4
+  %i.em = sub i64 %8, %7                          ; 2 uses
   %i.en = lshr i64 %i.em, 2
   %i.eo = add nuw nsw i64 %i.en, 1                ; 2 uses
   %min.iters.check513 = icmp ult i64 %i.em, 124
@@ -611,12 +611,12 @@ _ZN5boost9container24uninitialized_move_allocINS0_13new_allocatorINS0_4test24mov
 
 .lr.ph.i.i323.preheader:                          ; preds = %_ZN5boost9container24uninitialized_move_allocINS0_13new_allocatorINS0_4test24movable_and_copyable_intEEEPS4_S6_EENS0_3dtl41disable_if_memtransfer_copy_constructibleIT0_T1_SA_E4typeERT_S9_S9_SA_.exit320
   %i.np = shl i64 %1, 2
-  %9 = add i64 %i.h, %i.d
-  %i.nq = add i64 %9, %i.np
-  %i.nr = add i64 %i.nq, -4
-  %10 = shl i64 %4, 2
-  %i.ns = add i64 %10, %i.c
-  %i.nt = sub i64 %i.nr, %i.ns                    ; 2 uses
+  %9 = shl i64 %4, 2
+  %i.nq = add i64 %i.h, %i.d
+  %i.nr = add i64 %i.nq, %i.np
+  %10 = add i64 %i.nr, -4
+  %i.ns = add i64 %9, %i.c
+  %i.nt = sub i64 %10, %i.ns                      ; 2 uses
   %i.nu = lshr i64 %i.nt, 2
   %i.nv = add nuw nsw i64 %i.nu, 1                ; 2 uses
   %min.iters.check630 = icmp ult i64 %i.nt, 172
@@ -1019,12 +1019,12 @@ _ZN5boost9container26uninitialized_move_alloc_nINS0_13new_allocatorINS0_4test24m
 .lr.ph.i.i208.preheader:                          ; preds = %_ZN5boost9container26uninitialized_move_alloc_nINS0_13new_allocatorINS0_4test24movable_and_copyable_intEEEPS4_S6_EENS0_3dtl41disable_if_memtransfer_copy_constructibleIT0_T1_SA_E4typeERT_S9_mSA_.exit205
   %i.iq = shl nsw i64 %1, 2
   %i.ir = shl i64 %i.c, 1
-  %7 = add i64 %i.iq, %i.ir
-  %i.is = add i64 %7, -4
-  %i.it = add i64 %i.b, %i.h
-  %8 = shl i64 %4, 2
-  %i.iu = add i64 %i.it, %8
-  %i.iv = sub i64 %i.is, %i.iu                    ; 2 uses
+  %7 = shl i64 %4, 2
+  %i.is = add i64 %i.iq, %i.ir
+  %i.it = add i64 %i.is, -4
+  %8 = add i64 %i.b, %i.h
+  %i.iu = add i64 %8, %7
+  %i.iv = sub i64 %i.it, %i.iu                    ; 2 uses
   %i.iw = lshr i64 %i.iv, 2
   %i.ix = add nuw nsw i64 %i.iw, 1                ; 2 uses
   %min.iters.check328 = icmp ult i64 %i.iv, 188

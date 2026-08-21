@@ -205,9 +205,9 @@ _ZN4absl12lts_2026052618container_internal10btree_nodeINS1_15set_params_implIiJE
 .lr.ph.i47.preheader:                             ; preds = %_ZN4absl12lts_2026052618container_internal10btree_nodeINS1_15set_params_implIiJEEEE10transfer_nEmmmPS5_PSaIiE.exit
   %i.ay = zext i8 %i.ar to i64
   %i.az = shl nuw nsw i64 %i.ay, 2
-  %4 = add nsw i64 %i.az, -4
-  %5 = shl nuw nsw i64 %i.av, 2
-  %i.ba = sub nsw i64 %4, %5                      ; 2 uses
+  %4 = shl nuw nsw i64 %i.av, 2
+  %5 = add nsw i64 %i.az, -4
+  %i.ba = sub nsw i64 %5, %4                      ; 2 uses
   %i.bb = lshr exact i64 %i.ba, 2
   %i.bc = add nuw nsw i64 %i.bb, 1                ; 2 uses
   %min.iters.check66 = icmp ult i64 %i.ba, 28

@@ -205,11 +205,11 @@ bb.l:                                             ; preds = %bb.i
   br i1 %.not9.i120, label %_ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE23priv_uninitialized_copyIPKwPwEEmT_S9_T0_.exit, label %.lr.ph.i121.preheader
 
 .lr.ph.i121.preheader:                            ; preds = %bb.l
-  %5 = add i64 %i.av, %i.i
-  %i.bx = add i64 %5, -8
-  %6 = shl i64 %i.q, 2
-  %i.by = add i64 %6, %i.j
-  %i.bz = sub i64 %i.bx, %i.by                    ; 2 uses
+  %5 = shl i64 %i.q, 2
+  %i.bx = add i64 %i.av, %i.i
+  %6 = add i64 %i.bx, -8
+  %i.by = add i64 %5, %i.j
+  %i.bz = sub i64 %6, %i.by                       ; 2 uses
   %i.ca = lshr i64 %i.bz, 2
   %i.cb = add nuw nsw i64 %i.ca, 1                ; 2 uses
   %min.iters.check300 = icmp ult i64 %i.bz, 60
@@ -612,9 +612,9 @@ bb.j:                                             ; preds = %bb.i
 .lr.ph.i.preheader:                               ; preds = %bb.j
   %i.ax = getelementptr i8, ptr %i.u, i64 %.idx   ; 3 uses
   %i.ay = shl i64 %3, 2
-  %7 = add i64 %i.ay, -4
-  %8 = shl i64 %5, 2
-  %i.az = sub i64 %7, %8                          ; 2 uses
+  %7 = shl i64 %5, 2
+  %8 = add i64 %i.ay, -4
+  %i.az = sub i64 %8, %7                          ; 2 uses
   %i.ba = lshr exact i64 %i.az, 2
   %i.bb = add nuw nsw i64 %i.ba, 1                ; 2 uses
   %min.iters.check300 = icmp ult i64 %i.az, 28
@@ -1017,11 +1017,11 @@ bb.l:                                             ; preds = %bb.i
   br i1 %.not7.i, label %_ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE23priv_uninitialized_copyIN9__gnu_cxx17__normal_iteratorIPwNSt7__cxx1112basic_stringIwS3_SaIwEEEEES8_EEmT_SE_T0_.exit, label %.lr.ph.i117.preheader
 
 .lr.ph.i117.preheader:                            ; preds = %bb.l
-  %5 = add i64 %i.av, %i.i
-  %i.cm = add i64 %5, -8
-  %6 = shl i64 %i.q, 2
-  %i.cn = add i64 %6, %i.j
-  %i.co = sub i64 %i.cm, %i.cn                    ; 2 uses
+  %5 = shl i64 %i.q, 2
+  %i.cm = add i64 %i.av, %i.i
+  %6 = add i64 %i.cm, -8
+  %i.cn = add i64 %5, %i.j
+  %i.co = sub i64 %6, %i.cn                       ; 2 uses
   %i.cp = lshr i64 %i.co, 2
   %i.cq = add nuw nsw i64 %i.cp, 1                ; 2 uses
   %min.iters.check318 = icmp ult i64 %i.co, 60
