@@ -204,14 +204,12 @@ bb.f:                                             ; preds = %fread.inline.exit
   br label %bb.g
 
 bb.g:                                             ; preds = %.critedge.i, %bb.f
-  %.0130.i = phi i32 [ 0, %bb.f ], [ %i.nn, %.critedge.i ] ; 18 uses
+  %.0130.i = phi i32 [ 0, %bb.f ], [ %i.nn, %.critedge.i ] ; 16 uses
   %.0119.i = phi i32 [ 0, %bb.f ], [ %.5.i, %.critedge.i ] ; 11 uses
   %.0114.i = phi i32 [ 0, %bb.f ], [ %.4118.i, %.critedge.i ] ; 17 uses
   %.0112.i = phi i32 [ 1, %bb.f ], [ %.1113161.i, %.critedge.i ] ; 13 uses
   %.0.i210 = phi i32 [ 1, %bb.f ], [ %.4.i, %.critedge.i ] ; 14 uses
-  %2 = sext i32 %.0130.i to i64
-  %3 = sext i32 %.0130.i to i64
-  %i.ag = sext i32 %.0130.i to i64                ; 4 uses
+  %i.ag = sext i32 %.0130.i to i64                ; 6 uses
   %i.ah = getelementptr i8, ptr %i.r, i64 %i.ag   ; 6 uses
   %i.ai = load i8, ptr %i.ah, align 1
   switch i8 %i.ai, label %.critedge.i [
@@ -270,7 +268,7 @@ bb.m:                                             ; preds = %bb.l
 
 iter.check684:                                    ; preds = %.preheader165.i
   %i.be = sext i32 %.0114.i to i64                ; 6 uses
-  %i.bf = sub nsw i64 %2, %i.be                   ; 7 uses
+  %i.bf = sub nsw i64 %i.ag, %i.be                ; 7 uses
   %min.iters.check607 = icmp ult i64 %i.bf, 8
   br i1 %min.iters.check607, label %.lr.ph.i.preheader, label %vector.main.loop.iter.check608
 
@@ -673,7 +671,7 @@ bb.t:                                             ; preds = %bb.s
 
 iter.check:                                       ; preds = %.preheader163.i
   %i.gy = sext i32 %.0114.i to i64                ; 6 uses
-  %i.gz = sub nsw i64 %3, %i.gy                   ; 7 uses
+  %i.gz = sub nsw i64 %i.ag, %i.gy                ; 7 uses
   %min.iters.check = icmp ult i64 %i.gz, 8
   br i1 %min.iters.check, label %.lr.ph171.i.preheader, label %vector.main.loop.iter.check
 

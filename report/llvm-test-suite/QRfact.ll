@@ -203,8 +203,8 @@ bb.e:                                             ; preds = %.lr.ph
   %i.kz = sext i32 %i.ky to i64
   %smin202 = tail call i64 @llvm.smin.i64(i64 %i.kz, i64 %i.je)
   %smax203 = tail call i64 @llvm.smax.i64(i64 %i.jo, i64 %smin202)
-  %smax204 = tail call i64 @llvm.smax.i64(i64 %smax203, i64 %indvars.iv174) ; 2 uses
-  %smax205 = tail call i64 @llvm.smax.i64(i64 %i.jo, i64 %indvars.iv174) ; 2 uses
+  %smax204 = tail call i64 @llvm.smax.i64(i64 %smax203, i64 %indvars.iv174)
+  %smax205 = tail call i64 @llvm.smax.i64(i64 %i.jo, i64 %indvars.iv174)
   %smax = tail call i64 @llvm.smax.i64(i64 %i.jo, i64 %indvars.iv174)
   %i.la = shl i64 %smax, 3                        ; 2 uses
   %i.lb = add i32 %i.kv, %indvar
@@ -267,7 +267,7 @@ Givens.exit:                                      ; preds = %.lr.ph166, %bb.g, %
   %i.mi = tail call i64 @llvm.smax.i64(i64 %i.jo, i64 %i.mh)
   %i.mj = tail call i64 @llvm.smax.i64(i64 %i.mi, i64 %indvars.iv174)
   %i.mk = add i64 %i.mj, 1
-  %i.ml = sub i64 %i.mk, %smax178                 ; 3 uses
+  %i.ml = sub i64 %i.mk, %smax178                 ; 4 uses
   %min.iters.check = icmp ult i64 %i.ml, 2
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
@@ -324,10 +324,9 @@ scalar.ph.preheader:                              ; preds = %vector.memcheck, %.
   %i.my = sext i32 %i.mc to i64
   %i.mz = insertelement <2 x double> poison, double %.0149, i64 0
   %i.na = insertelement <2 x double> %i.mz, double %.0148, i64 1 ; 6 uses
-  %2 = add i64 %smax204, %smax205
-  %i.nb = and i64 %2, 1
+  %i.nb = and i64 %i.ml, 1
   %lcmp.mod.not.not = icmp eq i64 %i.nb, 0
-  br i1 %lcmp.mod.not.not, label %.prol.loopexit.unr-lcssa, label %.prol.loopexit
+  br i1 %lcmp.mod.not.not, label %.prol.loopexit, label %.prol.loopexit.unr-lcssa
 
 .prol.loopexit.unr-lcssa:                         ; preds = %.lr.ph162
   %i.nc = getelementptr inbounds [8 x i8], ptr %0, i64 %smax178

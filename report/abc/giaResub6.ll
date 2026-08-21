@@ -204,14 +204,13 @@ bb.ah:                                            ; preds = %Abc_ReadPla.exit._c
   %.fr126 = freeze i32 %i.fc                      ; 5 uses
   %.val56 = load ptr, ptr %i.an, align 8, !tbaa !23 ; 2 uses
   %i.fd = icmp sgt i32 %.fr126, 0
-  %wide.trip.count.i = zext i32 %.fr126 to i64    ; 12 uses
+  %wide.trip.count.i = zext i32 %.fr126 to i64    ; 11 uses
   br i1 %i.fd, label %.preheader102.us.preheader, label %.preheader100
 
 .preheader102.us.preheader:                       ; preds = %.preheader102.lr.ph
-  %.val56186 = ptrtoaddr ptr %.val56 to i64       ; 2 uses
+  %.val56186 = ptrtoaddr ptr %.val56 to i64
   %i.fe = zext nneg i32 %.fr126 to i64
   %wide.trip.count = zext nneg i32 %i.ey to i64
-  %1 = mul nsw i64 %wide.trip.count.i, -8
   %i.ff = mul nsw i64 %wide.trip.count.i, -8
   %min.iters.check191 = icmp ult i32 %.fr126, 4
   %n.vec193 = and i64 %wide.trip.count.i, 2147483644 ; 3 uses
@@ -226,10 +225,10 @@ bb.ah:                                            ; preds = %Abc_ReadPla.exit._c
   br label %.lr.ph18.i.us.us.preheader
 
 .lr.ph18.i.us.us.preheader:                       ; preds = %Abc_TtCopy.exit.us.us.1, %.preheader102.us.preheader
-  %indvar = phi i64 [ %indvar.next, %Abc_TtCopy.exit.us.us.1 ], [ 0, %.preheader102.us.preheader ] ; 3 uses
+  %indvar = phi i64 [ %indvar.next, %Abc_TtCopy.exit.us.us.1 ], [ 0, %.preheader102.us.preheader ] ; 2 uses
   %indvars.iv = phi i64 [ %indvars.iv.next, %Abc_TtCopy.exit.us.us.1 ], [ 1, %.preheader102.us.preheader ] ; 3 uses
-  %i.fg = mul i64 %1, %indvar
-  %i.fh = sub i64 %i.fg, %.val56186
+  %i.fg = mul i64 %i.ff, %indvar
+  %i.fh = sub i64 %i.fg, %.val56186               ; 2 uses
   %i.fi = shl nuw nsw i64 %indvars.iv, 1          ; 2 uses
   %i.fj = add nsw i64 %indvars.iv, -1
   %i.fk = mul nsw i64 %i.fj, %i.fe
@@ -240,9 +239,7 @@ bb.ah:                                            ; preds = %Abc_ReadPla.exit._c
 
 vector.memcheck188:                               ; preds = %.lr.ph18.i.us.us.preheader
   %i.fo = ptrtoaddr ptr %i.fn to i64
-  %2 = mul i64 %i.ff, %indvar
-  %3 = sub i64 %2, %.val56186
-  %i.fp = add i64 %3, %i.fo
+  %i.fp = add i64 %i.fh, %i.fo
   %i.fq = add i64 %i.fp, -1
   %diff.check189 = icmp ult i64 %i.fq, 31
   br i1 %diff.check189, label %.lr.ph18.i.us.us.preheader218, label %vector.body194

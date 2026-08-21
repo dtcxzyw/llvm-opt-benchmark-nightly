@@ -1,7 +1,7 @@
 inline.NumInlined: 358
 inline.NumDeleted: 137
-loop-unroll.NumCompletelyUnrolled: 6
-loop-unroll.NumUnrolled: 7
+loop-unroll.NumCompletelyUnrolled: 7
+loop-unroll.NumUnrolled: 8
 begin_hunk_0_@_ZNK6icu_7825RelativeDateTimeCacheData21getAbsoluteUnitStringEi17UDateAbsoluteUnit14UDateDirection:bb.a
 bb.b:                                             ; preds = %bb.c, %bb.a
   %.0 = phi i32 [ %1, %bb.a ], [ %i.j, %bb.c ]
@@ -203,8 +203,8 @@ bb.e:                                             ; preds = %bb.d
   %i.z = getelementptr inbounds nuw i8, ptr %i.i, i64 23144 ; 3 uses
   store ptr null, ptr %i.z, align 8, !tbaa !10
   %scevgep48.i = getelementptr inbounds nuw i8, ptr %i.i, i64 17304
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(5760) %scevgep48.i, i8 0, i64 5760, i1 false), !tbaa !21
   %20 = getelementptr inbounds nuw i8, ptr %i.i, i64 23128
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(5760) %scevgep48.i, i8 0, i64 5760, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #16
   store ptr getelementptr inbounds nuw inrange(-16, 32) (i8, ptr @_ZTVN6icu_7812_GLOBAL__N_122RelDateTimeFmtDataSinkE, i64 16), ptr %16, align 8, !tbaa !8
   %i.aa = getelementptr inbounds nuw i8, ptr %16, i64 24

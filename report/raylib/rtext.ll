@@ -204,10 +204,10 @@ bb.nb:                                            ; preds = %bb.na
 
 bb.nc:                                            ; preds = %bb.nb
   %i.bty = add i32 %i.bts, -4                     ; 4 uses
-  %i.btz = add nsw i32 %i.btv, -4                 ; 7 uses
+  %i.btz = add i32 %i.btv, -4                     ; 7 uses
   %i.bua = add i32 %i.btt, 4                      ; 6 uses
   %i.bub = add i32 %i.btw, 4                      ; 4 uses
-  %i.buc = sub i32 %i.bua, %i.bty                 ; 7 uses
+  %i.buc = sub i32 %i.bua, %i.bty                 ; 4 uses
   %i.bud = sub nsw i32 %i.bub, %i.btz             ; 2 uses
   store i32 %i.bty, ptr %i.btq, align 4
   store i32 %i.btz, ptr %i.btr, align 8
@@ -245,13 +245,13 @@ bb.nc:                                            ; preds = %bb.nb
 
 .preheader.i.i.preheader:                         ; preds = %.preheader.preheader.i.i
   %i.bur = add i32 %i.btt, 7
-  %i.bus = sub i32 %i.bur, %i.bts                 ; 9 uses
+  %i.bus = sub i32 %i.bur, %i.bts                 ; 8 uses
   %i.but = zext i32 %i.bus to i64
   %i.buu = add nuw nsw i64 %i.but, 1              ; 15 uses
   %i.buv = add i32 %i.btt, 3
   %i.buw = add i32 %i.btt, 3
   %i.bux = add i32 %i.btt, 3
-  %min.iters.check672 = icmp ult i32 %i.bus, 7    ; 2 uses
+  %min.iters.check672 = icmp ult i32 %i.bus, 7
   %min.iters.check700 = icmp ult i32 %i.bus, 31
   %i.buy = and i64 %i.buu, 24
   %n.vec702 = and i64 %i.buu, 8589934560          ; 4 uses
@@ -654,26 +654,22 @@ bb.pf:                                            ; preds = %bb.pe, %bb.pd, %bb.
   br i1 %exitcond.not.i.i162, label %.preheader485.i.i, label %bb.pb
 
 .preheader.i.i:                                   ; preds = %.preheader.i.i.preheader, %._crit_edge493.i.split.i
-  %indvar = phi i32 [ 0, %.preheader.i.i.preheader ], [ %indvar.next, %._crit_edge493.i.split.i ] ; 4 uses
-  %.0435494.i.i = phi i32 [ %i.btz, %.preheader.i.i.preheader ], [ %i.ctk, %._crit_edge493.i.split.i ] ; 3 uses
-  %10 = mul i32 %i.buc, %indvar                   ; 2 uses
-  %11 = mul i32 %i.buc, %indvar                   ; 2 uses
+  %.0435494.i.i = phi i32 [ %i.ctk, %._crit_edge493.i.split.i ], [ %i.btz, %.preheader.i.i.preheader ] ; 3 uses
   %i.cpg = sitofp i32 %.0435494.i.i to float
   %i.cph = fadd float %i.cpg, 5.000000e-01
   %i.cpi = fdiv float %i.cph, %i.yu
   %i.cpj = fpext float %i.cpi to double
-  %i.cpk = sub nsw i32 %.0435494.i.i, %i.btz
-  %i.cpl = mul nsw i32 %i.cpk, %i.buc             ; 7 uses
+  %i.cpk = sub i32 %.0435494.i.i, %i.btz
+  %i.cpl = mul i32 %i.cpk, %i.buc                 ; 11 uses
   %.reass.i.i = add i32 %i.cpl, %reass.sub.i.i    ; 15 uses
   %i.cpm = call double @fmod(double noundef %i.cpj, double noundef 1.000000e+00) #39 ; 2 uses
   %i.cpn = fcmp olt double %i.cpm, f0x3F847AE130000000
-  br i1 %i.cpn, label %iter.check658, label %.preheader.i.split.split.i
+  br i1 %i.cpn, label %iter.check658, label %iter.check710.a
 
 iter.check658:                                    ; preds = %.preheader.i.i
-  %12 = mul i32 %i.buc, %indvar                   ; 2 uses
-  %i.cpo = add i32 %12, %i.bus
-  %i.cpp = icmp slt i32 %i.cpo, %12
-  %or.cond723 = select i1 %min.iters.check646, i1 true, i1 %i.cpp
+  %i.cpo = add i32 %i.cpl, %i.bus
+  %i.cpp = icmp slt i32 %i.cpo, %i.cpl
+  %or.cond723 = or i1 %min.iters.check646, %i.cpp
   br i1 %or.cond723, label %._crit_edge.thread.i.us12.i.preheader, label %vector.main.loop.iter.check647
 
 vector.main.loop.iter.check647:                   ; preds = %iter.check658
@@ -776,17 +772,17 @@ vec.epilog.middle.block667:                       ; preds = %vec.epilog.vector.b
   %exitcond505.not.i.us15.i.3 = icmp eq i32 %i.bua, %lftr.wideiv.i.us14.i.3
   br i1 %exitcond505.not.i.us15.i.3, label %._crit_edge493.i.split.i, label %._crit_edge.thread.i.us12.i, !llvm.loop !34
 
-.preheader.i.split.split.i:                       ; preds = %.preheader.i.i
-  %13 = fcmp ogt double %i.cpm, f0x3FEFAE1490000000
-  br i1 %13, label %iter.check684, label %iter.check710.a
+iter.check710.a:                                  ; preds = %.preheader.i.i
+  %10 = fcmp ogt double %i.cpm, f0x3FEFAE1490000000
+  %i.cqw = add i32 %i.cpl, %i.bus
+  %i.cqx = icmp slt i32 %i.cqw, %i.cpl
+  %or.cond727 = or i1 %min.iters.check672, %i.cqx ; 2 uses
+  br i1 %10, label %iter.check684, label %iter.check710
 
-iter.check710.a:                                  ; preds = %.preheader.i.split.split.i
-  %i.cqw = add i32 %10, %i.bus
-  %i.cqx = icmp slt i32 %i.cqw, %10
-  %or.cond725 = select i1 %min.iters.check672, i1 true, i1 %i.cqx
-  br i1 %or.cond725, label %._crit_edge.thread.i.i.preheader, label %vector.main.loop.iter.check699
+iter.check710:                                    ; preds = %iter.check710.a
+  br i1 %or.cond727, label %._crit_edge.thread.i.i.preheader, label %vector.main.loop.iter.check699
 
-vector.main.loop.iter.check699:                   ; preds = %iter.check710.a
+vector.main.loop.iter.check699:                   ; preds = %iter.check710
   br i1 %min.iters.check700, label %vec.epilog.ph714, label %vector.body703
 
 vector.body703:                                   ; preds = %vector.main.loop.iter.check699, %vector.body703
@@ -826,8 +822,8 @@ vec.epilog.vector.body716:                        ; preds = %vec.epilog.vector.b
 vec.epilog.middle.block719:                       ; preds = %vec.epilog.vector.body716
   br i1 %cmp.n720, label %._crit_edge493.i.split.i, label %._crit_edge.thread.i.i.preheader
 
-._crit_edge.thread.i.i.preheader:                 ; preds = %iter.check710.a, %vec.epilog.iter.check712, %vec.epilog.middle.block719
-  %indvars.iv502.i.i.ph = phi i64 [ %i.buq, %iter.check710.a ], [ %i.buz, %vec.epilog.iter.check712 ], [ %i.bva, %vec.epilog.middle.block719 ] ; 3 uses
+._crit_edge.thread.i.i.preheader:                 ; preds = %iter.check710, %vec.epilog.iter.check712, %vec.epilog.middle.block719
+  %indvars.iv502.i.i.ph = phi i64 [ %i.buq, %iter.check710 ], [ %i.buz, %vec.epilog.iter.check712 ], [ %i.bva, %vec.epilog.middle.block719 ] ; 3 uses
   %i.crj = trunc i64 %indvars.iv502.i.i.ph to i32 ; 2 uses
   %i.crk = sub i32 %i.btt, %i.crj
   %i.crl = sub i32 %i.buv, %i.crj
@@ -859,10 +855,7 @@ vec.epilog.middle.block719:                       ; preds = %vec.epilog.vector.b
   %invariant.op862 = add i32 3, %.reass.i.i
   br label %._crit_edge.thread.i.i
 
-iter.check684:                                    ; preds = %.preheader.i.split.split.i
-  %14 = add i32 %11, %i.bus
-  %15 = icmp slt i32 %14, %11
-  %or.cond727 = select i1 %min.iters.check672, i1 true, i1 %15
+iter.check684:                                    ; preds = %iter.check710.a
   br i1 %or.cond727, label %._crit_edge.thread.i.us17.i.preheader, label %vector.main.loop.iter.check673
 
 vector.main.loop.iter.check673:                   ; preds = %iter.check684
@@ -995,7 +988,6 @@ vec.epilog.middle.block693:                       ; preds = %vec.epilog.vector.b
 ._crit_edge493.i.split.i:                         ; preds = %._crit_edge.thread.i.i.prol.loopexit, %._crit_edge.thread.i.i, %._crit_edge.thread.i.us17.i.prol.loopexit, %._crit_edge.thread.i.us17.i, %._crit_edge.thread.i.us12.i.prol.loopexit, %._crit_edge.thread.i.us12.i, %middle.block706, %vec.epilog.middle.block719, %middle.block680, %vec.epilog.middle.block693, %middle.block654, %vec.epilog.middle.block667
   %i.ctk = add nsw i32 %.0435494.i.i, 1           ; 2 uses
   %exitcond506.not.i.i = icmp eq i32 %i.ctk, %i.bub
-  %indvar.next = add i32 %indvar, 1
   br i1 %exitcond506.not.i.i, label %._crit_edge495.split.i.i, label %.preheader.i.i
 
 ._crit_edge495.split.i.i:                         ; preds = %._crit_edge493.i.split.i, %._crit_edge493.i.split.us.us.i, %.preheader.lr.ph.i.i, %.preheader485.i.i

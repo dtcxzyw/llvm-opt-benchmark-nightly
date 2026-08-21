@@ -203,7 +203,7 @@ bb.c:                                             ; preds = %bb.b
   %i.k = load i8, ptr %i.j, align 8, !tbaa !112, !range !27, !noundef !28
   %i.l = trunc nuw i8 %i.k to i1
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.n = load ptr, ptr %i.m, align 8              ; 9 uses
+  %i.n = load ptr, ptr %i.m, align 8              ; 8 uses
   br i1 %i.l, label %bb.d, label %.preheader90.preheader
 
 .preheader90.preheader:                           ; preds = %bb.c
@@ -381,16 +381,14 @@ _ZNK8interpol19smooth_cubic_splineIfE6matrixclEmm.exit77.1: ; preds = %_ZNK8inte
   br i1 %i.ca, label %.loopexit, label %.preheader.new, !llvm.loop !169
 
 .preheader90:                                     ; preds = %.preheader90.preheader, %._crit_edge
-  %.06693 = phi i64 [ %i.dq, %._crit_edge ], [ 0, %.preheader90.preheader ] ; 16 uses
-  %2 = shl i64 %.06693, 2
-  %scevgep112 = getelementptr i8, ptr %i.n, i64 %2
+  %.06693 = phi i64 [ %i.dq, %._crit_edge ], [ 0, %.preheader90.preheader ] ; 15 uses
   %i.cb = shl i64 %.06693, 3
   %scevgep113 = getelementptr i8, ptr %i.n, i64 %i.cb
   %.not99 = icmp eq i64 %.06693, 0
   br i1 %.not99, label %._crit_edge, label %iter.check
 
 iter.check:                                       ; preds = %.preheader90
-  %i.cc = getelementptr [4 x i8], ptr %i.n, i64 %.06693 ; 7 uses
+  %i.cc = getelementptr [4 x i8], ptr %i.n, i64 %.06693 ; 8 uses
   %i.cd = getelementptr inbounds nuw [4 x i8], ptr %i.e, i64 %.06693 ; 8 uses
   %.promoted = load float, ptr %i.cd, align 4, !tbaa !34 ; 4 uses
   %min.iters.check = icmp ugt i64 %.06693, 3
@@ -399,7 +397,7 @@ iter.check:                                       ; preds = %.preheader90
 
 vector.memcheck:                                  ; preds = %iter.check
   %bound0 = icmp ult ptr %i.e, %scevgep113
-  %bound1 = icmp ult ptr %scevgep112, %scevgep
+  %bound1 = icmp ult ptr %i.cc, %scevgep
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %_ZNK8interpol19smooth_cubic_splineIfE6matrixclEmm.exit80.preheader, label %vector.main.loop.iter.check
 

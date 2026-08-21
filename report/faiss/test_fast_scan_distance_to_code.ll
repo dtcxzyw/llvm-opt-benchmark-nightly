@@ -203,7 +203,7 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %bb.i
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(4000) %i.p, i8 0, i64 4000, i1 false)
   %i.q = invoke noalias noundef nonnull dereferenceable(8000) ptr @_Znwm(i64 noundef 8000) #23
-          to label %bb.k unwind label %bb.aa      ; 7 uses
+          to label %bb.k unwind label %bb.aa      ; 6 uses
 
 bb.k:                                             ; preds = %bb.j
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(8000) %i.q, i8 0, i64 8000, i1 false)
@@ -606,12 +606,10 @@ bb.az:                                            ; preds = %bb.av
   br label %bb.dl
 
 bb.ba:                                            ; preds = %bb.au, %_ZN5faiss15minheap_reorderIfEEmmPT_Pl.exit
-  %.0145692 = phi i64 [ 0, %bb.au ], [ %i.adv, %_ZN5faiss15minheap_reorderIfEEmmPT_Pl.exit ] ; 5 uses
-  %13 = mul nuw nsw i64 %.0145692, 80
-  %scevgep709 = getelementptr nuw i8, ptr %i.q, i64 %13 ; 2 uses
+  %.0145692 = phi i64 [ 0, %bb.au ], [ %i.adv, %_ZN5faiss15minheap_reorderIfEEmmPT_Pl.exit ] ; 4 uses
   %i.eg = mul nuw nsw i64 %.0145692, 10           ; 2 uses
   %i.eh = getelementptr inbounds nuw [4 x i8], ptr %i.p, i64 %i.eg ; 94 uses
-  %i.ei = getelementptr inbounds nuw [8 x i8], ptr %i.q, i64 %i.eg ; 87 uses
+  %i.ei = getelementptr [8 x i8], ptr %i.q, i64 %i.eg ; 89 uses
   %i.ej = getelementptr inbounds i8, ptr %i.eh, i64 -4 ; 17 uses
   %i.ek = getelementptr inbounds i8, ptr %i.ei, i64 -8 ; 17 uses
   %i.el = load float, ptr %i.eh, align 4, !tbaa !63 ; 6 uses
@@ -1014,7 +1012,7 @@ _ZN5faiss8heap_popINS_4CMinIflEEEEvmPNT_1TEPNS3_2TIE.exit.i.i: ; preds = %_ZN5fa
   br i1 %i.aaw, label %.lr.ph44.i.i.preheader, label %_ZN5faiss15minheap_reorderIfEEmmPT_Pl.exit
 
 .lr.ph44.i.i.preheader:                           ; preds = %._crit_edge.i.i
-  %scevgep710 = getelementptr i8, ptr %scevgep709, i64 %i.aav
+  %scevgep710 = getelementptr i8, ptr %i.ei, i64 %i.aav
   %i.aax = add i64 %.041.i.i, %i.aan
   %i.aay = shl i64 %i.aax, 3
   %i.aaz = sub i64 80, %i.aay
@@ -1164,7 +1162,7 @@ _ZN5faiss8heap_popINS_4CMaxIflEEEEvmPNT_1TEPNS3_2TIE.exit.i.i: ; preds = %_ZN5fa
   br i1 %i.adk, label %.lr.ph44.i.i309.preheader, label %_ZN5faiss15minheap_reorderIfEEmmPT_Pl.exit
 
 .lr.ph44.i.i309.preheader:                        ; preds = %._crit_edge.i.i307
-  %scevgep708 = getelementptr i8, ptr %scevgep709, i64 %i.adj
+  %scevgep708 = getelementptr i8, ptr %i.ei, i64 %i.adj
   %i.adl = add i64 %.041.i.i292, %i.adb
   %i.adm = shl i64 %i.adl, 3
   %i.adn = sub i64 80, %i.adm

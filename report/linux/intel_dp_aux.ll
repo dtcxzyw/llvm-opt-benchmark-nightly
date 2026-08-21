@@ -204,27 +204,28 @@ bb.ab:                                            ; preds = %.lr.ph234, %.crited
 .lr.ph:                                           ; preds = %.preheader, %intel_dp_aux_pack.exit
   %indvar = phi i32 [ %indvar.next, %intel_dp_aux_pack.exit ], [ 0, %.preheader ] ; 2 uses
   %.1231 = phi i32 [ %i.fj, %intel_dp_aux_pack.exit ], [ 0, %.preheader ] ; 4 uses
-  %8 = shl i32 %indvar, 2
-  %9 = sub i32 %2, %8
-  %10 = call i32 @llvm.umin.i32(i32 %9, i32 4)    ; 2 uses
-  %umin = zext nneg i32 %10 to i64                ; 2 uses
   %i.dp = ashr exact i32 %.1231, 2
   %i.dq = sext i32 %i.dp to i64
   %i.dr = getelementptr [4 x i8], ptr %7, i64 %i.dq
   %i.ds = sext i32 %.1231 to i64
   %i.dt = getelementptr i8, ptr %1, i64 %i.ds     ; 5 uses
-  %i.du = sub i32 %2, %.1231
+  %i.du = sub i32 %2, %.1231                      ; 2 uses
   %i.dv = icmp sgt i32 %i.du, 0
   br i1 %i.dv, label %.lr.ph.preheader.i, label %intel_dp_aux_pack.exit
 
 .lr.ph.preheader.i:                               ; preds = %.lr.ph
-  %xtraiter = and i64 %umin, 3                    ; 3 uses
+  %8 = shl i32 %indvar, 2
+  %9 = sub i32 %2, %8
+  %10 = call i32 @llvm.umin.i32(i32 %9, i32 4)
+  %11 = call i32 @llvm.umin.i32(i32 %i.du, i32 4)
+  %wide.trip.count.i = zext nneg i32 %11 to i64   ; 2 uses
+  %xtraiter = and i64 %wide.trip.count.i, 3       ; 3 uses
   %i.dw = add nsw i32 %10, -1
   %i.dx = icmp ult i32 %i.dw, 3
   br i1 %i.dx, label %.lr.ph.i.epil.preheader, label %.lr.ph.preheader.i.new
 
 .lr.ph.preheader.i.new:                           ; preds = %.lr.ph.preheader.i
-  %unroll_iter = and i64 %umin, 4
+  %unroll_iter = and i64 %wide.trip.count.i, 4
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i, %.lr.ph.preheader.i.new
@@ -541,7 +542,7 @@ __drm_to_dev.exit214:                             ; preds = %bb.aw, %bb.ax
   br label %.loopexit
 
 bb.ay:                                            ; preds = %bb.av
-  %spec.select = call i32 @llvm.umin.i32(i32 %i.ib, i32 %4) ; 4 uses
+  %spec.select = call i32 @llvm.umin.i32(i32 %i.ib, i32 %4) ; 5 uses
   %.not236 = icmp eq i32 %spec.select, 0
   br i1 %.not236, label %.loopexit, label %.lr.ph.preheader.i216.preheader
 
@@ -551,11 +552,10 @@ bb.ay:                                            ; preds = %bb.av
 
 .lr.ph.preheader.i216:                            ; preds = %.lr.ph.preheader.i216.preheader, %intel_dp_aux_unpack.exit
   %indvar275 = phi i32 [ 0, %.lr.ph.preheader.i216.preheader ], [ %indvar.next276, %intel_dp_aux_unpack.exit ] ; 2 uses
-  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader.i216.preheader ], [ %indvars.iv.next, %intel_dp_aux_unpack.exit ] ; 3 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader.i216.preheader ], [ %indvars.iv.next, %intel_dp_aux_unpack.exit ] ; 4 uses
   %i.ik = shl i32 %indvar275, 2
   %i.il = sub i32 %spec.select, %i.ik
-  %i.im = call i32 @llvm.umin.i32(i32 %i.il, i32 4) ; 2 uses
-  %umin277 = zext nneg i32 %i.im to i64           ; 2 uses
+  %i.im = call i32 @llvm.umin.i32(i32 %i.il, i32 4)
   %i.in = getelementptr i8, ptr %7, i64 %indvars.iv
   %i.io = load i32, ptr %i.in, align 4            ; 3 uses
   call void @intel_dmc_wl_get(ptr noundef %i.e, i32 %i.io) #10
@@ -566,13 +566,17 @@ bb.ay:                                            ; preds = %bb.av
   %i.is = call i32 %i.ir(ptr noundef %i.ip, i32 %i.io, i1 noundef zeroext true) #10, !inline_history !55 ; 5 uses
   call void @intel_dmc_wl_put(ptr noundef %i.e, i32 %i.io) #10
   %i.it = getelementptr i8, ptr %3, i64 %indvars.iv ; 5 uses
-  %xtraiter278 = and i64 %umin277, 3              ; 3 uses
+  %12 = trunc i64 %indvars.iv to i32
+  %13 = sub i32 %spec.select, %12
+  %14 = call i32 @llvm.umin.i32(i32 range(i32 -19, -2147483627) %13, i32 4)
+  %wide.trip.count.i217 = zext nneg i32 %14 to i64 ; 2 uses
+  %xtraiter278 = and i64 %wide.trip.count.i217, 3 ; 3 uses
   %i.iu = add nsw i32 %i.im, -1
   %i.iv = icmp ult i32 %i.iu, 3
   br i1 %i.iv, label %.lr.ph.i218.epil.preheader, label %.lr.ph.preheader.i216.new
 
 .lr.ph.preheader.i216.new:                        ; preds = %.lr.ph.preheader.i216
-  %unroll_iter282 = and i64 %umin277, 4
+  %unroll_iter282 = and i64 %wide.trip.count.i217, 4
   %i.iw = trunc i32 %i.is to i8
   br label %.lr.ph.i218
 

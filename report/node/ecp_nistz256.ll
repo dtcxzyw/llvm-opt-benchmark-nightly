@@ -203,8 +203,6 @@ bb.ab:                                            ; preds = %bb.aa
 
 bb.ac:                                            ; preds = %bb.al, %bb.ab
   %.0225257.i = phi i64 [ 0, %bb.ab ], [ %i.gy, %bb.al ] ; 7 uses
-  %9 = mul i64 %.0225257.i, 33
-  %scevgep.i = getelementptr i8, ptr %i.eo, i64 %9
   %i.fg = getelementptr inbounds nuw [1536 x i8], ptr %i.ex, i64 %.0225257.i ; 16 uses
   %i.fh = getelementptr inbounds nuw [8 x i8], ptr %.0143207256, i64 %.0225257.i ; 4 uses
   %i.fi = load ptr, ptr %i.fh, align 8, !tbaa !36
@@ -253,8 +251,9 @@ bb.ah:                                            ; preds = %bb.ag, %bb.af
 
 .lr.ph256.i:                                      ; preds = %.preheader252.i, %bb.ah
   %.0233.lcssa280.i = phi i32 [ %i.fx, %.preheader252.i ], [ 0, %bb.ah ] ; 2 uses
+  %9 = getelementptr inbounds nuw [33 x i8], ptr %i.eo, i64 %.0225257.i
   %i.fz = zext nneg i32 %.0233.lcssa280.i to i64
-  %scevgep266.i = getelementptr i8, ptr %scevgep.i, i64 %i.fz
+  %scevgep266.i = getelementptr i8, ptr %9, i64 %i.fz
   %narrow.i = sub nuw nsw i32 33, %.0233.lcssa280.i
   %i.ga = zext nneg i32 %narrow.i to i64
   call void @llvm.memset.p0.i64(ptr align 1 %scevgep266.i, i8 0, i64 %i.ga, i1 false), !tbaa !24

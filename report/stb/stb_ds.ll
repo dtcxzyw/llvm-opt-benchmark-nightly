@@ -127,7 +127,7 @@ bb.a:
   %i.e = ptrtoint ptr %i.d to i64
   %i.f = add i64 %i.e, 63
   %i.g = and i64 %i.f, -64
-  %i.h = inttoptr i64 %i.g to ptr                 ; 12 uses
+  %i.h = inttoptr i64 %i.g to ptr                 ; 7 uses
   %i.i = getelementptr inbounds nuw i8, ptr %malloc, i64 96
   store ptr %i.h, ptr %i.i, align 8, !tbaa !16
   %i.j = getelementptr inbounds nuw i8, ptr %malloc, i64 8 ; 2 uses
@@ -201,33 +201,25 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 .lr.ph:                                           ; preds = %.lr.ph, %.lr.ph.preheader.new
   %.0116131 = phi i64 [ 0, %.lr.ph.preheader.new ], [ %i.al, %.lr.ph ] ; 5 uses
   %niter = phi i64 [ 0, %.lr.ph.preheader.new ], [ %niter.next.3, %.lr.ph ]
-  %2 = shl nuw nsw i64 %.0116131, 7               ; 2 uses
-  %3 = getelementptr i8, ptr %i.h, i64 %2
-  %scevgep148 = getelementptr i8, ptr %3, i64 64
-  %scevgep = getelementptr nuw i8, ptr %i.h, i64 %2
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 64 dereferenceable(64) %scevgep, i8 0, i64 64, i1 false), !tbaa !13
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 64 dereferenceable(64) %scevgep148, i8 -1, i64 64, i1 false), !tbaa !13
-  %4 = shl i64 %.0116131, 7
-  %5 = or disjoint i64 %4, 128                    ; 2 uses
-  %i.ai = getelementptr i8, ptr %i.h, i64 %5
-  %scevgep148.1 = getelementptr i8, ptr %i.ai, i64 64
-  %scevgep.1 = getelementptr nuw i8, ptr %i.h, i64 %5
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 64 dereferenceable(64) %scevgep.1, i8 0, i64 64, i1 false), !tbaa !13
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 64 dereferenceable(64) %scevgep148.1, i8 -1, i64 64, i1 false), !tbaa !13
-  %6 = shl i64 %.0116131, 7
-  %7 = or disjoint i64 %6, 256                    ; 2 uses
-  %i.aj = getelementptr i8, ptr %i.h, i64 %7
-  %scevgep148.2 = getelementptr i8, ptr %i.aj, i64 64
-  %scevgep.2 = getelementptr nuw i8, ptr %i.h, i64 %7
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 64 dereferenceable(64) %scevgep.2, i8 0, i64 64, i1 false), !tbaa !13
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 64 dereferenceable(64) %scevgep148.2, i8 -1, i64 64, i1 false), !tbaa !13
-  %8 = shl i64 %.0116131, 7
-  %9 = or disjoint i64 %8, 384                    ; 2 uses
-  %i.ak = getelementptr i8, ptr %i.h, i64 %9
-  %scevgep148.3 = getelementptr i8, ptr %i.ak, i64 64
-  %scevgep.3 = getelementptr nuw i8, ptr %i.h, i64 %9
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 64 dereferenceable(64) %scevgep.3, i8 0, i64 64, i1 false), !tbaa !13
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 64 dereferenceable(64) %scevgep148.3, i8 -1, i64 64, i1 false), !tbaa !13
+  %2 = getelementptr inbounds nuw [128 x i8], ptr %i.h, i64 %.0116131 ; 2 uses
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 64 dereferenceable(64) %2, i8 0, i64 64, i1 false), !tbaa !13
+  %scevgep = getelementptr inbounds nuw i8, ptr %2, i64 64
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 64 dereferenceable(64) %scevgep, i8 -1, i64 64, i1 false), !tbaa !13
+  %3 = getelementptr inbounds nuw [128 x i8], ptr %i.h, i64 %.0116131 ; 2 uses
+  %i.ai = getelementptr inbounds nuw i8, ptr %3, i64 128
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 64 dereferenceable(64) %i.ai, i8 0, i64 64, i1 false), !tbaa !13
+  %scevgep.1 = getelementptr inbounds nuw i8, ptr %3, i64 192
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 64 dereferenceable(64) %scevgep.1, i8 -1, i64 64, i1 false), !tbaa !13
+  %4 = getelementptr inbounds nuw [128 x i8], ptr %i.h, i64 %.0116131 ; 2 uses
+  %i.aj = getelementptr inbounds nuw i8, ptr %4, i64 256
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 64 dereferenceable(64) %i.aj, i8 0, i64 64, i1 false), !tbaa !13
+  %scevgep.2 = getelementptr inbounds nuw i8, ptr %4, i64 320
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 64 dereferenceable(64) %scevgep.2, i8 -1, i64 64, i1 false), !tbaa !13
+  %5 = getelementptr inbounds nuw [128 x i8], ptr %i.h, i64 %.0116131 ; 2 uses
+  %i.ak = getelementptr inbounds nuw i8, ptr %5, i64 384
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 64 dereferenceable(64) %i.ak, i8 0, i64 64, i1 false), !tbaa !13
+  %scevgep.3 = getelementptr inbounds nuw i8, ptr %5, i64 448
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 64 dereferenceable(64) %scevgep.3, i8 -1, i64 64, i1 false), !tbaa !13
   %i.al = add nuw nsw i64 %.0116131, 4            ; 2 uses
   %niter.next.3 = add i64 %niter, 4               ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
@@ -246,12 +238,10 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 .lr.ph.epil:                                      ; preds = %.lr.ph.epil, %.lr.ph.epil.preheader
   %.0116131.epil = phi i64 [ %i.am, %.lr.ph.epil ], [ %.0116131.epil.init, %.lr.ph.epil.preheader ] ; 2 uses
   %epil.iter = phi i64 [ %epil.iter.next, %.lr.ph.epil ], [ 0, %.lr.ph.epil.preheader ]
-  %10 = shl nuw nsw i64 %.0116131.epil, 7         ; 2 uses
-  %11 = getelementptr i8, ptr %i.h, i64 %10
-  %scevgep148.epil = getelementptr i8, ptr %11, i64 64
-  %scevgep.epil = getelementptr nuw i8, ptr %i.h, i64 %10
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 64 dereferenceable(64) %scevgep.epil, i8 0, i64 64, i1 false), !tbaa !13
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 64 dereferenceable(64) %scevgep148.epil, i8 -1, i64 64, i1 false), !tbaa !13
+  %6 = getelementptr inbounds nuw [128 x i8], ptr %i.h, i64 %.0116131.epil ; 2 uses
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 64 dereferenceable(64) %6, i8 0, i64 64, i1 false), !tbaa !13
+  %scevgep.epil = getelementptr inbounds nuw i8, ptr %6, i64 64
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 64 dereferenceable(64) %scevgep.epil, i8 -1, i64 64, i1 false), !tbaa !13
   %i.am = add nuw nsw i64 %.0116131.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
@@ -654,9 +644,9 @@ bb.d:                                             ; preds = %bb.c
   store i64 %i.ah, ptr @stbds_hash_seed, align 8, !tbaa !13
   %i.ai = getelementptr inbounds nuw i8, ptr %malloc.i, i64 56
   store i64 %i.af, ptr %i.ai, align 8, !tbaa !31
-  %scevgep148.i = getelementptr i8, ptr %i.v, i64 64
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 64 dereferenceable(64) %i.v, i8 0, i64 64, i1 false), !tbaa !13
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 64 dereferenceable(64) %scevgep148.i, i8 -1, i64 64, i1 false), !tbaa !13
+  %5 = getelementptr inbounds nuw i8, ptr %i.v, i64 64
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 64 dereferenceable(64) %5, i8 -1, i64 64, i1 false), !tbaa !13
   %i.aj = icmp sgt i32 %4, 0
   %i.ak = zext i1 %i.aj to i8
   %i.al = getelementptr inbounds nuw i8, ptr %malloc.i, i64 89
@@ -1059,9 +1049,9 @@ stbds_log2.exit.i:
   store i64 %i.w, ptr @stbds_hash_seed, align 8, !tbaa !13
   %i.x = getelementptr inbounds nuw i8, ptr %malloc.i, i64 56
   store i64 %i.u, ptr %i.x, align 8, !tbaa !31
-  %scevgep148.i = getelementptr i8, ptr %i.k, i64 64
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 64 dereferenceable(64) %i.k, i8 0, i64 64, i1 false), !tbaa !13
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 64 dereferenceable(64) %scevgep148.i, i8 -1, i64 64, i1 false), !tbaa !13
+  %2 = getelementptr inbounds nuw i8, ptr %i.k, i64 64
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 64 dereferenceable(64) %2, i8 -1, i64 64, i1 false), !tbaa !13
   store ptr %malloc.i, ptr %i.d, align 8, !tbaa !40
   %i.y = trunc i32 %1 to i8
   %i.z = getelementptr inbounds nuw i8, ptr %malloc.i, i64 89

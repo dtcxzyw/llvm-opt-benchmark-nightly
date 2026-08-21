@@ -204,7 +204,7 @@ bb.ak:                                            ; preds = %bb.ai
 
 bb.al:                                            ; preds = %bb.ak, %bb.ah
   %i.hd = getelementptr inbounds nuw i8, ptr %1, i64 22640 ; 4 uses
-  %i.he = getelementptr inbounds nuw i8, ptr %1, i64 22656 ; 5 uses
+  %i.he = getelementptr i8, ptr %1, i64 22656     ; 5 uses
   %i.hf = getelementptr i8, ptr %0, i64 28496     ; 2 uses
   br label %.preheader124.i
 
@@ -330,9 +330,7 @@ h264_initialise_ref_list.exit:                    ; preds = %bb.aq
 bb.ar:                                            ; preds = %.lr.ph342, %._crit_edge340
   %i.jf = phi i32 [ %i.im, %.lr.ph342 ], [ %i.ot, %._crit_edge340 ]
   %indvar = phi i64 [ 0, %.lr.ph342 ], [ %indvar.next, %._crit_edge340 ] ; 6 uses
-  %i.jg = mul nuw nsw i64 %indvar, 2688           ; 2 uses
-  %3 = getelementptr i8, ptr %1, i64 %i.jg
-  %scevgep = getelementptr i8, ptr %3, i64 22656
+  %i.jg = mul nuw nsw i64 %indvar, 2688
   %i.jh = getelementptr i8, ptr %1, i64 %i.jg
   %scevgep376.a = getelementptr i8, ptr %i.jh, i64 22600
   %i.ji = getelementptr inbounds nuw [4 x i8], ptr %i.iq, i64 %indvar ; 2 uses
@@ -343,7 +341,7 @@ bb.ar:                                            ; preds = %.lr.ph342, %._crit_
 .lr.ph339:                                        ; preds = %bb.ar
   %i.jl = load i32, ptr %i.ip, align 8, !tbaa !111
   %i.jm = getelementptr inbounds nuw [256 x i8], ptr %i.ir, i64 %indvar
-  %i.jn = getelementptr inbounds nuw [2688 x i8], ptr %i.he, i64 %indvar ; 3 uses
+  %i.jn = getelementptr [2688 x i8], ptr %i.he, i64 %indvar ; 4 uses
   %i.jo = getelementptr inbounds nuw [4 x i8], ptr %i.hd, i64 %indvar
   br label %bb.as
 
@@ -576,7 +574,7 @@ bb.bj:                                            ; preds = %bb.bg, %bb.bh, %bb.
   %i.mu = mul nuw nsw i64 %i.mt, 56
   %i.mv = sub nsw i64 %i.mq, %i.mt
   %i.mw = mul nsw i64 %i.mv, 56                   ; 2 uses
-  %scevgep375 = getelementptr i8, ptr %scevgep, i64 %i.mw
+  %scevgep375 = getelementptr i8, ptr %i.jn, i64 %i.mw
   %scevgep377 = getelementptr i8, ptr %scevgep376.a, i64 %i.mw
   %i.mx = add nuw nsw i64 %i.mu, 56
   tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep375, ptr noundef nonnull align 8 dereferenceable(1) %scevgep377, i64 %i.mx, i1 false)
