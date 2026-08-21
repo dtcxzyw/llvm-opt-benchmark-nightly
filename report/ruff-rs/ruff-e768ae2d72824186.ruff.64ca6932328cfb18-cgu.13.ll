@@ -205,10 +205,10 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.9.0.copyload = load ptr, ptr %.sroa.9.0..sroa_idx, align 8
   br label %bb.c
 
-bb.c:                                             ; preds = %.backedge949, %bb.b
-  %.sroa.7.0 = phi ptr [ %.sroa.7.0.copyload, %bb.b ], [ %.sroa.7.1.ph, %.backedge949 ] ; 5 uses
-  %.sroa.5.0 = phi ptr [ %.sroa.5.0.copyload, %bb.b ], [ %.sroa.5.1558.ph, %.backedge949 ] ; 3 uses
-  %.sroa.0.0 = phi i64 [ %.sroa.0.0.copyload, %bb.b ], [ %.sroa.0.1560.ph, %.backedge949 ]
+bb.c:                                             ; preds = %.loopexit597.backedge, %bb.b
+  %.sroa.7.0 = phi ptr [ %.sroa.7.0.copyload, %bb.b ], [ %.sroa.7.1.ph, %.loopexit597.backedge ] ; 5 uses
+  %.sroa.5.0 = phi ptr [ %.sroa.5.0.copyload, %bb.b ], [ %.sroa.5.1558.ph, %.loopexit597.backedge ] ; 3 uses
+  %.sroa.0.0 = phi i64 [ %.sroa.0.0.copyload, %bb.b ], [ %.sroa.0.1560.ph, %.loopexit597.backedge ]
   %i.cg = trunc nuw i64 %.sroa.0.0 to i1
   br i1 %i.cg, label %bb.d, label %bb.e
 
@@ -231,12 +231,15 @@ _RINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chain17and_then_or_clearINtNtNtB6_7
   %.sroa.0.1560.ph = phi i64 [ 0, %bb.f ], [ 1, %bb.d ]
   %.sroa.5.1558.ph = phi ptr [ %.sroa.5.1.ph, %bb.f ], [ null, %bb.d ]
   %.sroa.7.1.ph = phi ptr [ %i.ci, %bb.f ], [ %.sroa.7.0, %bb.d ]
-  %.sroa.0.0.i212.ph = phi ptr [ %.sroa.7.0, %bb.f ], [ %.sroa.5.0, %bb.d ] ; 2 uses
-  %i.cj = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i212.ph, i64 2192
+  %.sroa.0.0.i212.ph = phi ptr [ %.sroa.7.0, %bb.f ], [ %.sroa.5.0, %bb.d ]
+  %i.cj = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i212.ph, i64 2192 ; 2 uses
   %i.ck = load i64, ptr %i.cj, align 8, !noundef !3
   %i.cl = and i64 %i.ck, 4503599627370496
   %i.cm = icmp eq i64 %i.cl, 0
-  br i1 %i.cm, label %bb.io, label %bb.iq
+  br i1 %i.cm, label %.loopexit597.backedge, label %bb.iq
+
+.loopexit597.backedge:                            ; preds = %_RINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chain17and_then_or_clearINtNtNtB6_7sources4once4OnceRNtNtCs3ZkgueCtkyH_14ruff_workspace8settings8SettingsEB1w_NvYB14_NtNtNtB6_6traits8iterator8Iterator4nextECs8EvorvD8vmS_4ruff.exit, %bb.ip, %bb.io
+  br label %bb.c
 
 _RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRNtNtCs3ZkgueCtkyH_14ruff_workspace8settings8SettingsE7or_elseNCNvXs_NtNtNtB5_4iter8adapters5chainINtB1P_5ChainINtNtNtB1T_7sources4once4OnceBI_EINtNtB1R_3map3MapINtNtNtB5_5slice4iter4IterTBJ_NtNtCs2AWtUsOyxgP_3std4path7PathBufEENCNvMs1_NtBN_8resolverNtB4w_8Resolver8settings0EENtNtNtB1T_6traits8iterator8Iterator4next0ECs8EvorvD8vmS_4ruff.exit: ; preds = %bb.e
   %i.cn = getelementptr inbounds nuw i8, ptr %i.ce, i64 24
@@ -639,19 +642,15 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCscdodAO9FK5_5alloc6string6StringECs
           cleanup
   br label %bb.ir
 
-bb.io:                                            ; preds = %bb.iq, %_RINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chain17and_then_or_clearINtNtNtB6_7sources4once4OnceRNtNtCs3ZkgueCtkyH_14ruff_workspace8settings8SettingsEB1w_NvYB14_NtNtNtB6_6traits8iterator8Iterator4nextECs8EvorvD8vmS_4ruff.exit
-  %1 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i212.ph, i64 2248
-  %i.sn = load i64, ptr %1, align 8, !noundef !3
-  %i.so = and i64 %i.sn, 262144
+bb.io:                                            ; preds = %bb.iq
+  %i.sn = load i64, ptr %i.cj, align 8
+  %i.so = and i64 %i.sn, 4503599627370496
   %i.sp = icmp eq i64 %i.so, 0
-  br i1 %i.sp, label %.backedge949, label %bb.ip
+  br i1 %i.sp, label %.loopexit597.backedge, label %bb.ip
 
 bb.ip:                                            ; preds = %bb.io
-  %i.sq = invoke noundef zeroext i1 @_RNvMs1_NtCsgQfI1edjipl_9hashbrown3mapINtB5_7HashMapNtNtCsEhZmuQNqkz_11ruff_linter5codes4RuleuNtCsjp5HOZs6k8V_10rustc_hash13FxBuildHasherE6insertCs8EvorvD8vmS_4ruff(ptr noalias noundef nonnull align 8 dereferenceable(32) %i.ce, i16 noundef 594)
-          to label %.backedge949 unwind label %.thread ; 0 uses
-
-.backedge949:                                     ; preds = %bb.ip, %bb.io
-  br label %bb.c
+  %i.sq = invoke noundef zeroext i1 @_RNvMs1_NtCsgQfI1edjipl_9hashbrown3mapINtB5_7HashMapNtNtCsEhZmuQNqkz_11ruff_linter5codes4RuleuNtCsjp5HOZs6k8V_10rustc_hash13FxBuildHasherE6insertCs8EvorvD8vmS_4ruff(ptr noalias noundef nonnull align 8 dereferenceable(32) %i.ce, i16 noundef 180)
+          to label %.loopexit597.backedge unwind label %.thread ; 0 uses
 
 bb.iq:                                            ; preds = %_RINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chain17and_then_or_clearINtNtNtB6_7sources4once4OnceRNtNtCs3ZkgueCtkyH_14ruff_workspace8settings8SettingsEB1w_NvYB14_NtNtNtB6_6traits8iterator8Iterator4nextECs8EvorvD8vmS_4ruff.exit
   %i.sr = invoke noundef zeroext i1 @_RNvMs1_NtCsgQfI1edjipl_9hashbrown3mapINtB5_7HashMapNtNtCsEhZmuQNqkz_11ruff_linter5codes4RuleuNtCsjp5HOZs6k8V_10rustc_hash13FxBuildHasherE6insertCs8EvorvD8vmS_4ruff(ptr noalias noundef nonnull align 8 dereferenceable(32) %i.ce, i16 noundef 180)

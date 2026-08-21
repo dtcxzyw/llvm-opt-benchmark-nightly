@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.c, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.d = lshr i64 %1, 1                           ; 8 uses
+  %i.d = lshr i64 %1, 1                           ; 7 uses
   %i.e = icmp samesign ugt i64 %1, 7
   %i.f = getelementptr inbounds nuw [80 x i8], ptr %0, i64 %i.d ; 2 uses
   %i.g = getelementptr inbounds nuw [80 x i8], ptr %2, i64 %i.d ; 2 uses
@@ -217,30 +217,93 @@ bb.d:                                             ; preds = %bb.b
 bb.e:                                             ; preds = %bb.c
   tail call fastcc void @_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort12sort4_stableTINtNtCs4wP2HXfJTCR_5alloc3vec3VechENtNtNtCshVVPy9isBpn_6webpki3crl5types16OwnedRevokedCertENCINvMNtB1f_5sliceSB19_7sort_byNCINvXs1o_NtNtNtB1f_11collections5btree3mapINtB3i_8BTreeMapB1a_B1J_EINtNtNtNtBa_4iter6traits7collect12FromIteratorB19_E9from_iterINtNtNtB4l_8adapters3map3MapINtNtB8_4iter4IterNtB1L_19BorrowedRevokedCertENCNvMs2_B1L_NtB1L_26BorrowedCertRevocationList8to_owned0EE0E0EB1P_(ptr noundef %0, ptr noundef %2)
   tail call fastcc void @_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort12sort4_stableTINtNtCs4wP2HXfJTCR_5alloc3vec3VechENtNtNtCshVVPy9isBpn_6webpki3crl5types16OwnedRevokedCertENCINvMNtB1f_5sliceSB19_7sort_byNCINvXs1o_NtNtNtB1f_11collections5btree3mapINtB3i_8BTreeMapB1a_B1J_EINtNtNtNtBa_4iter6traits7collect12FromIteratorB19_E9from_iterINtNtNtB4l_8adapters3map3MapINtNtB8_4iter4IterNtB1L_19BorrowedRevokedCertENCNvMs2_B1L_NtB1L_26BorrowedCertRevocationList8to_owned0EE0E0EB1P_(ptr noundef %i.f, ptr noundef %i.g)
-  br label %bb.g
+  br label %5
 
 bb.f:                                             ; preds = %bb.c
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %2, ptr noundef nonnull align 8 dereferenceable(80) %0, i64 80, i1 false)
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %i.g, ptr noundef nonnull align 8 dereferenceable(80) %i.f, i64 80, i1 false)
-  br label %bb.g
+  br label %5
 
-bb.g:                                             ; preds = %bb.e, %bb.f
-  %.sroa.0.0.a = phi i64 [ 4, %bb.e ], [ 1, %bb.f ] ; 4 uses
-  %i.h = sub nsw i64 %1, %i.d                     ; 2 uses
-  %5 = icmp samesign ult i64 %.sroa.0.0.a, %i.d
-  br i1 %5, label %.lr.ph, label %.loopexit
+5:                                                ; preds = %bb.e, %bb.f
+  %.sroa.0.0 = phi i64 [ 4, %bb.e ], [ 1, %bb.f ] ; 3 uses
+  %6 = icmp samesign ult i64 %.sroa.0.0, %i.d
+  br i1 %6, label %bb.g, label %.loopexit.1
 
-.loopexit:                                        ; preds = %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailTINtNtCs4wP2HXfJTCR_5alloc3vec3VechENtNtNtCshVVPy9isBpn_6webpki3crl5types16OwnedRevokedCertENCINvMNtB1e_5sliceSB18_7sort_byNCINvXs1o_NtNtNtB1e_11collections5btree3mapINtB3h_8BTreeMapB19_B1I_EINtNtNtNtBa_4iter6traits7collect12FromIteratorB18_E9from_iterINtNtNtB4k_8adapters3map3MapINtNtB8_4iter4IterNtB1K_19BorrowedRevokedCertENCNvMs2_B1K_NtB1K_26BorrowedCertRevocationList8to_owned0EE0E0EB1O_.exit, %bb.g
-  %6 = getelementptr inbounds nuw [80 x i8], ptr %0, i64 %i.d
-  %7 = getelementptr [80 x i8], ptr %2, i64 %i.d  ; 6 uses
-  %8 = icmp ult i64 %.sroa.0.0.a, %i.h
-  br i1 %8, label %.lr.ph.1, label %.loopexit.1
+bb.g:                                             ; preds = %5, %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailTINtNtCs4wP2HXfJTCR_5alloc3vec3VechENtNtNtCshVVPy9isBpn_6webpki3crl5types16OwnedRevokedCertENCINvMNtB1e_5sliceSB18_7sort_byNCINvXs1o_NtNtNtB1e_11collections5btree3mapINtB3h_8BTreeMapB19_B1I_EINtNtNtNtBa_4iter6traits7collect12FromIteratorB18_E9from_iterINtNtNtB4k_8adapters3map3MapINtNtB8_4iter4IterNtB1K_19BorrowedRevokedCertENCNvMs2_B1K_NtB1K_26BorrowedCertRevocationList8to_owned0EE0E0EB1O_.exit.us
+  %.sroa.0.0.a = phi i64 [ %29, %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailTINtNtCs4wP2HXfJTCR_5alloc3vec3VechENtNtNtCshVVPy9isBpn_6webpki3crl5types16OwnedRevokedCertENCINvMNtB1e_5sliceSB18_7sort_byNCINvXs1o_NtNtNtB1e_11collections5btree3mapINtB3h_8BTreeMapB19_B1I_EINtNtNtNtBa_4iter6traits7collect12FromIteratorB18_E9from_iterINtNtNtB4k_8adapters3map3MapINtNtB8_4iter4IterNtB1K_19BorrowedRevokedCertENCNvMs2_B1K_NtB1K_26BorrowedCertRevocationList8to_owned0EE0E0EB1O_.exit.us ], [ %.sroa.0.0, %5 ] ; 4 uses
+  %7 = getelementptr inbounds nuw [80 x i8], ptr %0, i64 %.sroa.0.0.a ; 2 uses
+  %.idx = mul nuw nsw i64 %.sroa.0.0.a, 80
+  %8 = getelementptr inbounds nuw i8, ptr %2, i64 %.idx ; 10 uses
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %8, ptr noundef nonnull align 8 dereferenceable(80) %7, i64 80, i1 false)
+  %9 = getelementptr i8, ptr %8, i64 8
+  %.val11.i.us = load ptr, ptr %9, align 8, !nonnull !6, !noundef !6 ; 3 uses
+  %10 = getelementptr i8, ptr %8, i64 16
+  %.val12.i.us = load i64, ptr %10, align 8, !noundef !6 ; 5 uses
+  %11 = getelementptr i8, ptr %8, i64 -72
+  %.val13.i.us = load ptr, ptr %11, align 8, !nonnull !6, !noundef !6
+  %12 = getelementptr i8, ptr %8, i64 -64
+  %.val14.i.us = load i64, ptr %12, align 8, !noundef !6 ; 2 uses
+  %spec.store.select.i.i.i.i.i30.us = tail call i64 @llvm.umin.i64(i64 range(i64 0, -9223372036854775808) %.val12.i.us, i64 range(i64 0, -9223372036854775808) %.val14.i.us)
+  %13 = tail call i32 @memcmp(ptr nonnull readonly %.val11.i.us, ptr nonnull readonly %.val13.i.us, i64 %spec.store.select.i.i.i.i.i30.us), !alias.scope !82 ; 2 uses
+  %14 = sext i32 %13 to i64
+  %15 = icmp eq i32 %13, 0
+  %i.h = sub nsw i64 %.val12.i.us, %.val14.i.us
+  %spec.select.i.i.i.i.i31.us = select i1 %15, i64 %i.h, i64 %14
+  %16 = icmp slt i64 %spec.select.i.i.i.i.i31.us, 0
+  br i1 %16, label %17, label %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailTINtNtCs4wP2HXfJTCR_5alloc3vec3VechENtNtNtCshVVPy9isBpn_6webpki3crl5types16OwnedRevokedCertENCINvMNtB1e_5sliceSB18_7sort_byNCINvXs1o_NtNtNtB1e_11collections5btree3mapINtB3h_8BTreeMapB19_B1I_EINtNtNtNtBa_4iter6traits7collect12FromIteratorB18_E9from_iterINtNtNtB4k_8adapters3map3MapINtNtB8_4iter4IterNtB1K_19BorrowedRevokedCertENCNvMs2_B1K_NtB1K_26BorrowedCertRevocationList8to_owned0EE0E0EB1O_.exit.us
 
-.lr.ph.1:                                         ; preds = %.loopexit, %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailTINtNtCs4wP2HXfJTCR_5alloc3vec3VechENtNtNtCshVVPy9isBpn_6webpki3crl5types16OwnedRevokedCertENCINvMNtB1e_5sliceSB18_7sort_byNCINvXs1o_NtNtNtB1e_11collections5btree3mapINtB3h_8BTreeMapB19_B1I_EINtNtNtNtBa_4iter6traits7collect12FromIteratorB18_E9from_iterINtNtNtB4k_8adapters3map3MapINtNtB8_4iter4IterNtB1K_19BorrowedRevokedCertENCNvMs2_B1K_NtB1K_26BorrowedCertRevocationList8to_owned0EE0E0EB1O_.exit.1
-  %.sroa.05.040.1 = phi i64 [ %i.ad, %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailTINtNtCs4wP2HXfJTCR_5alloc3vec3VechENtNtNtCshVVPy9isBpn_6webpki3crl5types16OwnedRevokedCertENCINvMNtB1e_5sliceSB18_7sort_byNCINvXs1o_NtNtNtB1e_11collections5btree3mapINtB3h_8BTreeMapB19_B1I_EINtNtNtNtBa_4iter6traits7collect12FromIteratorB18_E9from_iterINtNtNtB4k_8adapters3map3MapINtNtB8_4iter4IterNtB1K_19BorrowedRevokedCertENCNvMs2_B1K_NtB1K_26BorrowedCertRevocationList8to_owned0EE0E0EB1O_.exit.1 ], [ %.sroa.0.0.a, %.loopexit ] ; 4 uses
-  %i.i = getelementptr inbounds nuw [80 x i8], ptr %6, i64 %.sroa.05.040.1 ; 2 uses
+17:                                               ; preds = %bb.g
+  %.sroa.012.0.copyload.i.us = load i64, ptr %8, align 8
+  %18 = getelementptr inbounds nuw i8, ptr %7, i64 24
+  %.sroa.0.0.i32.us65 = getelementptr inbounds i8, ptr %8, i64 -80 ; 2 uses
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %8, ptr noundef nonnull align 8 dereferenceable(80) %.sroa.0.0.i32.us65, i64 80, i1 false)
+  %19 = icmp eq i64 %.sroa.0.0.a, 1
+  br i1 %19, label %._crit_edge, label %.loopexit
+
+20:                                               ; preds = %.loopexit
+  %.sroa.0.0.i32.us = getelementptr inbounds i8, ptr %.sroa.0.0.i32.us67, i64 -80 ; 3 uses
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %.sroa.0.0.i32.us67, ptr noundef nonnull align 8 dereferenceable(80) %.sroa.0.0.i32.us, i64 80, i1 false)
+  %21 = icmp eq ptr %.sroa.0.0.i32.us, %2
+  br i1 %21, label %._crit_edge, label %.loopexit
+
+.loopexit:                                        ; preds = %17, %20
+  %.sroa.0.0.i32.us67 = phi ptr [ %.sroa.0.0.i32.us, %20 ], [ %.sroa.0.0.i32.us65, %17 ] ; 5 uses
+  %.sroa.5.0.i.us66 = phi ptr [ %.sroa.0.0.i32.us67, %20 ], [ %8, %17 ] ; 3 uses
+  %22 = getelementptr i8, ptr %.sroa.5.0.i.us66, i64 -152
+  %.val9.i.us = load ptr, ptr %22, align 8, !nonnull !6, !noundef !6
+  %23 = getelementptr i8, ptr %.sroa.5.0.i.us66, i64 -144
+  %.val10.i.us = load i64, ptr %23, align 8, !noundef !6 ; 2 uses
+  %spec.store.select.i.i.i.i15.i.us = tail call i64 @llvm.umin.i64(i64 range(i64 0, -9223372036854775808) %.val12.i.us, i64 range(i64 0, -9223372036854775808) %.val10.i.us)
+  %24 = tail call i32 @memcmp(ptr nonnull readonly %.val11.i.us, ptr nonnull readonly %.val9.i.us, i64 %spec.store.select.i.i.i.i15.i.us), !alias.scope !86 ; 2 uses
+  %25 = sext i32 %24 to i64
+  %26 = icmp eq i32 %24, 0
+  %27 = sub nsw i64 %.val12.i.us, %.val10.i.us
+  %spec.select.i.i.i.i16.i.us = select i1 %26, i64 %27, i64 %25
+  %28 = icmp slt i64 %spec.select.i.i.i.i16.i.us, 0
+  br i1 %28, label %20, label %._crit_edge
+
+._crit_edge:                                      ; preds = %20, %.loopexit, %17
+  %.sroa.5.0.i.us.lcssa = phi ptr [ %8, %17 ], [ %.sroa.0.0.i32.us67, %20 ], [ %.sroa.5.0.i.us66, %.loopexit ] ; 3 uses
+  %.sroa.0.0.i32.us.lcssa = phi ptr [ %2, %17 ], [ %2, %20 ], [ %.sroa.0.0.i32.us67, %.loopexit ]
+  store i64 %.sroa.012.0.copyload.i.us, ptr %.sroa.0.0.i32.us.lcssa, align 8, !noalias !90
+  %.sroa.4.0..sroa.0.0.lcssa.sroa_idx.i.us = getelementptr inbounds i8, ptr %.sroa.5.0.i.us.lcssa, i64 -72
+  store ptr %.val11.i.us, ptr %.sroa.4.0..sroa.0.0.lcssa.sroa_idx.i.us, align 8, !noalias !90
+  %.sroa.5.0..sroa.0.0.lcssa.sroa_idx.i.us = getelementptr inbounds i8, ptr %.sroa.5.0.i.us.lcssa, i64 -64
+  store i64 %.val12.i.us, ptr %.sroa.5.0..sroa.0.0.lcssa.sroa_idx.i.us, align 8, !noalias !90
+  %.sroa.6.0..sroa.0.0.lcssa.sroa_idx.i.us = getelementptr inbounds i8, ptr %.sroa.5.0.i.us.lcssa, i64 -56
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %.sroa.6.0..sroa.0.0.lcssa.sroa_idx.i.us, ptr noundef nonnull align 8 dereferenceable(56) %18, i64 56, i1 false)
+  br label %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailTINtNtCs4wP2HXfJTCR_5alloc3vec3VechENtNtNtCshVVPy9isBpn_6webpki3crl5types16OwnedRevokedCertENCINvMNtB1e_5sliceSB18_7sort_byNCINvXs1o_NtNtNtB1e_11collections5btree3mapINtB3h_8BTreeMapB19_B1I_EINtNtNtNtBa_4iter6traits7collect12FromIteratorB18_E9from_iterINtNtNtB4k_8adapters3map3MapINtNtB8_4iter4IterNtB1K_19BorrowedRevokedCertENCNvMs2_B1K_NtB1K_26BorrowedCertRevocationList8to_owned0EE0E0EB1O_.exit.us
+
+_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailTINtNtCs4wP2HXfJTCR_5alloc3vec3VechENtNtNtCshVVPy9isBpn_6webpki3crl5types16OwnedRevokedCertENCINvMNtB1e_5sliceSB18_7sort_byNCINvXs1o_NtNtNtB1e_11collections5btree3mapINtB3h_8BTreeMapB19_B1I_EINtNtNtNtBa_4iter6traits7collect12FromIteratorB18_E9from_iterINtNtNtB4k_8adapters3map3MapINtNtB8_4iter4IterNtB1K_19BorrowedRevokedCertENCNvMs2_B1K_NtB1K_26BorrowedCertRevocationList8to_owned0EE0E0EB1O_.exit.us: ; preds = %._crit_edge, %bb.g
+  %29 = add nuw nsw i64 %.sroa.0.0.a, 1           ; 2 uses
+  %exitcond.not = icmp eq i64 %29, %i.d
+  br i1 %exitcond.not, label %.lr.ph.1, label %bb.g
+
+.lr.ph.1:                                         ; preds = %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailTINtNtCs4wP2HXfJTCR_5alloc3vec3VechENtNtNtCshVVPy9isBpn_6webpki3crl5types16OwnedRevokedCertENCINvMNtB1e_5sliceSB18_7sort_byNCINvXs1o_NtNtNtB1e_11collections5btree3mapINtB3h_8BTreeMapB19_B1I_EINtNtNtNtBa_4iter6traits7collect12FromIteratorB18_E9from_iterINtNtNtB4k_8adapters3map3MapINtNtB8_4iter4IterNtB1K_19BorrowedRevokedCertENCNvMs2_B1K_NtB1K_26BorrowedCertRevocationList8to_owned0EE0E0EB1O_.exit.us, %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailTINtNtCs4wP2HXfJTCR_5alloc3vec3VechENtNtNtCshVVPy9isBpn_6webpki3crl5types16OwnedRevokedCertENCINvMNtB1e_5sliceSB18_7sort_byNCINvXs1o_NtNtNtB1e_11collections5btree3mapINtB3h_8BTreeMapB19_B1I_EINtNtNtNtBa_4iter6traits7collect12FromIteratorB18_E9from_iterINtNtNtB4k_8adapters3map3MapINtNtB8_4iter4IterNtB1K_19BorrowedRevokedCertENCNvMs2_B1K_NtB1K_26BorrowedCertRevocationList8to_owned0EE0E0EB1O_.exit.1
+  %.sroa.05.040.1 = phi i64 [ %i.ad, %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailTINtNtCs4wP2HXfJTCR_5alloc3vec3VechENtNtNtCshVVPy9isBpn_6webpki3crl5types16OwnedRevokedCertENCINvMNtB1e_5sliceSB18_7sort_byNCINvXs1o_NtNtNtB1e_11collections5btree3mapINtB3h_8BTreeMapB19_B1I_EINtNtNtNtBa_4iter6traits7collect12FromIteratorB18_E9from_iterINtNtNtB4k_8adapters3map3MapINtNtB8_4iter4IterNtB1K_19BorrowedRevokedCertENCNvMs2_B1K_NtB1K_26BorrowedCertRevocationList8to_owned0EE0E0EB1O_.exit.1 ], [ %.sroa.0.0, %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailTINtNtCs4wP2HXfJTCR_5alloc3vec3VechENtNtNtCshVVPy9isBpn_6webpki3crl5types16OwnedRevokedCertENCINvMNtB1e_5sliceSB18_7sort_byNCINvXs1o_NtNtNtB1e_11collections5btree3mapINtB3h_8BTreeMapB19_B1I_EINtNtNtNtBa_4iter6traits7collect12FromIteratorB18_E9from_iterINtNtNtB4k_8adapters3map3MapINtNtB8_4iter4IterNtB1K_19BorrowedRevokedCertENCNvMs2_B1K_NtB1K_26BorrowedCertRevocationList8to_owned0EE0E0EB1O_.exit.us ] ; 4 uses
+  %i.i = getelementptr inbounds nuw [80 x i8], ptr %0, i64 %.sroa.05.040.1 ; 2 uses
   %.idx80 = mul nuw nsw i64 %.sroa.05.040.1, 80
-  %i.j = getelementptr inbounds nuw i8, ptr %7, i64 %.idx80 ; 10 uses
+  %i.j = getelementptr inbounds nuw i8, ptr %2, i64 %.idx80 ; 10 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %i.j, ptr noundef nonnull align 8 dereferenceable(80) %i.i, i64 80, i1 false)
   %i.k = getelementptr i8, ptr %i.j, i64 8
   %.val11.i.1 = load ptr, ptr %i.k, align 8, !nonnull !6, !noundef !6 ; 3 uses
@@ -270,7 +333,7 @@ bb.h:                                             ; preds = %.lr.ph.1
 bb.i:                                             ; preds = %.lr.ph73
   %.sroa.0.0.i32.1 = getelementptr inbounds i8, ptr %.sroa.0.0.i32.171, i64 -80 ; 3 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %.sroa.0.0.i32.171, ptr noundef nonnull align 8 dereferenceable(80) %.sroa.0.0.i32.1, i64 80, i1 false)
-  %i.v = icmp eq ptr %.sroa.0.0.i32.1, %7
+  %i.v = icmp eq ptr %.sroa.0.0.i32.1, %2
   br i1 %i.v, label %._crit_edge74, label %.lr.ph73
 
 .lr.ph73:                                         ; preds = %bb.h, %bb.i
@@ -291,7 +354,7 @@ bb.i:                                             ; preds = %.lr.ph73
 
 ._crit_edge74:                                    ; preds = %bb.i, %.lr.ph73, %bb.h
   %.sroa.5.0.i.1.lcssa = phi ptr [ %i.j, %bb.h ], [ %.sroa.0.0.i32.171, %bb.i ], [ %.sroa.5.0.i.170, %.lr.ph73 ] ; 3 uses
-  %.sroa.0.0.i32.lcssa.1 = phi ptr [ %7, %bb.h ], [ %7, %bb.i ], [ %.sroa.0.0.i32.171, %.lr.ph73 ]
+  %.sroa.0.0.i32.lcssa.1 = phi ptr [ %2, %bb.h ], [ %2, %bb.i ], [ %.sroa.0.0.i32.171, %.lr.ph73 ]
   store i64 %.sroa.012.0.copyload.i.1, ptr %.sroa.0.0.i32.lcssa.1, align 8, !noalias !90
   %.sroa.4.0..sroa.0.0.lcssa.sroa_idx.i.1 = getelementptr inbounds i8, ptr %.sroa.5.0.i.1.lcssa, i64 -72
   store ptr %.val11.i.1, ptr %.sroa.4.0..sroa.0.0.lcssa.sroa_idx.i.1, align 8, !noalias !90
@@ -302,16 +365,17 @@ bb.i:                                             ; preds = %.lr.ph73
   br label %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailTINtNtCs4wP2HXfJTCR_5alloc3vec3VechENtNtNtCshVVPy9isBpn_6webpki3crl5types16OwnedRevokedCertENCINvMNtB1e_5sliceSB18_7sort_byNCINvXs1o_NtNtNtB1e_11collections5btree3mapINtB3h_8BTreeMapB19_B1I_EINtNtNtNtBa_4iter6traits7collect12FromIteratorB18_E9from_iterINtNtNtB4k_8adapters3map3MapINtNtB8_4iter4IterNtB1K_19BorrowedRevokedCertENCNvMs2_B1K_NtB1K_26BorrowedCertRevocationList8to_owned0EE0E0EB1O_.exit.1
 
 _RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailTINtNtCs4wP2HXfJTCR_5alloc3vec3VechENtNtNtCshVVPy9isBpn_6webpki3crl5types16OwnedRevokedCertENCINvMNtB1e_5sliceSB18_7sort_byNCINvXs1o_NtNtNtB1e_11collections5btree3mapINtB3h_8BTreeMapB19_B1I_EINtNtNtNtBa_4iter6traits7collect12FromIteratorB18_E9from_iterINtNtNtB4k_8adapters3map3MapINtNtB8_4iter4IterNtB1K_19BorrowedRevokedCertENCNvMs2_B1K_NtB1K_26BorrowedCertRevocationList8to_owned0EE0E0EB1O_.exit.1: ; preds = %._crit_edge74, %.lr.ph.1
-  %i.ad = add nuw i64 %.sroa.05.040.1, 1          ; 2 uses
-  %exitcond.1.not = icmp eq i64 %i.ad, %i.h
+  %i.ad = add nuw nsw i64 %.sroa.05.040.1, 1      ; 2 uses
+  %exitcond.1.not = icmp eq i64 %i.ad, %i.d
   br i1 %exitcond.1.not, label %.loopexit.1, label %.lr.ph.1
 
-.loopexit.1:                                      ; preds = %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailTINtNtCs4wP2HXfJTCR_5alloc3vec3VechENtNtNtCshVVPy9isBpn_6webpki3crl5types16OwnedRevokedCertENCINvMNtB1e_5sliceSB18_7sort_byNCINvXs1o_NtNtNtB1e_11collections5btree3mapINtB3h_8BTreeMapB19_B1I_EINtNtNtNtBa_4iter6traits7collect12FromIteratorB18_E9from_iterINtNtNtB4k_8adapters3map3MapINtNtB8_4iter4IterNtB1K_19BorrowedRevokedCertENCNvMs2_B1K_NtB1K_26BorrowedCertRevocationList8to_owned0EE0E0EB1O_.exit.1, %.loopexit
+.loopexit.1:                                      ; preds = %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailTINtNtCs4wP2HXfJTCR_5alloc3vec3VechENtNtNtCshVVPy9isBpn_6webpki3crl5types16OwnedRevokedCertENCINvMNtB1e_5sliceSB18_7sort_byNCINvXs1o_NtNtNtB1e_11collections5btree3mapINtB3h_8BTreeMapB19_B1I_EINtNtNtNtBa_4iter6traits7collect12FromIteratorB18_E9from_iterINtNtNtB4k_8adapters3map3MapINtNtB8_4iter4IterNtB1K_19BorrowedRevokedCertENCNvMs2_B1K_NtB1K_26BorrowedCertRevocationList8to_owned0EE0E0EB1O_.exit.1, %5
   tail call void @llvm.experimental.noalias.scope.decl(metadata !95)
   %i.ae = add nsw i64 %1, -1                      ; 2 uses
-  %i.af = getelementptr inbounds nuw [80 x i8], ptr %0, i64 %i.ae
-  %i.ag = getelementptr inbounds nuw [80 x i8], ptr %2, i64 %i.ae
-  %i.ah = getelementptr i8, ptr %7, i64 -80
+  %30 = getelementptr inbounds nuw [80 x i8], ptr %0, i64 %i.ae
+  %i.af = getelementptr inbounds nuw [80 x i8], ptr %2, i64 %i.ae
+  %i.ag = getelementptr [80 x i8], ptr %2, i64 %i.d ; 2 uses
+  %i.ah = getelementptr i8, ptr %i.ag, i64 -80
   br label %.lr.ph.i
 
 ._crit_edge.i:                                    ; preds = %.lr.ph.i
@@ -325,10 +389,10 @@ _RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailTINtNtC
   %.sroa.0.010.i = phi ptr [ %i.az, %.lr.ph.i ], [ %0, %.loopexit.1 ] ; 2 uses
   %.sroa.04.09.i = phi i64 [ %i.am, %.lr.ph.i ], [ 0, %.loopexit.1 ]
   %.sroa.06.08.i = phi ptr [ %i.ay, %.lr.ph.i ], [ %2, %.loopexit.1 ] ; 4 uses
-  %.sroa.011.07.i = phi ptr [ %i.aw, %.lr.ph.i ], [ %7, %.loopexit.1 ] ; 4 uses
+  %.sroa.011.07.i = phi ptr [ %i.aw, %.lr.ph.i ], [ %i.ag, %.loopexit.1 ] ; 4 uses
   %.sroa.015.06.i = phi ptr [ %i.bk, %.lr.ph.i ], [ %i.ah, %.loopexit.1 ] ; 4 uses
-  %.sroa.017.05.i = phi ptr [ %i.bj, %.lr.ph.i ], [ %i.ag, %.loopexit.1 ] ; 4 uses
-  %.sroa.019.04.i = phi ptr [ %i.bl, %.lr.ph.i ], [ %i.af, %.loopexit.1 ] ; 2 uses
+  %.sroa.017.05.i = phi ptr [ %i.bj, %.lr.ph.i ], [ %i.af, %.loopexit.1 ] ; 4 uses
+  %.sroa.019.04.i = phi ptr [ %i.bl, %.lr.ph.i ], [ %30, %.loopexit.1 ] ; 2 uses
   %i.am = add nuw nsw i64 %.sroa.04.09.i, 1       ; 2 uses
   %i.an = getelementptr i8, ptr %.sroa.011.07.i, i64 8
   %.sroa.011.0.val.i = load ptr, ptr %i.an, align 8, !alias.scope !95, !nonnull !6, !noundef !6
@@ -412,76 +476,6 @@ bb.m:                                             ; preds = %bb.l
 
 _RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort19bidirectional_mergeTINtNtCs4wP2HXfJTCR_5alloc3vec3VechENtNtNtCshVVPy9isBpn_6webpki3crl5types16OwnedRevokedCertENCINvMNtB1m_5sliceSB1g_7sort_byNCINvXs1o_NtNtNtB1m_11collections5btree3mapINtB3p_8BTreeMapB1h_B1Q_EINtNtNtNtBa_4iter6traits7collect12FromIteratorB1g_E9from_iterINtNtNtB4s_8adapters3map3MapINtNtB8_4iter4IterNtB1S_19BorrowedRevokedCertENCNvMs2_B1S_NtB1S_26BorrowedCertRevocationList8to_owned0EE0E0EB1W_.exit: ; preds = %bb.k, %bb.a
   ret void
-
-.lr.ph:                                           ; preds = %bb.g, %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailTINtNtCs4wP2HXfJTCR_5alloc3vec3VechENtNtNtCshVVPy9isBpn_6webpki3crl5types16OwnedRevokedCertENCINvMNtB1e_5sliceSB18_7sort_byNCINvXs1o_NtNtNtB1e_11collections5btree3mapINtB3h_8BTreeMapB19_B1I_EINtNtNtNtBa_4iter6traits7collect12FromIteratorB18_E9from_iterINtNtNtB4k_8adapters3map3MapINtNtB8_4iter4IterNtB1K_19BorrowedRevokedCertENCNvMs2_B1K_NtB1K_26BorrowedCertRevocationList8to_owned0EE0E0EB1O_.exit
-  %.sroa.05.040 = phi i64 [ %32, %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailTINtNtCs4wP2HXfJTCR_5alloc3vec3VechENtNtNtCshVVPy9isBpn_6webpki3crl5types16OwnedRevokedCertENCINvMNtB1e_5sliceSB18_7sort_byNCINvXs1o_NtNtNtB1e_11collections5btree3mapINtB3h_8BTreeMapB19_B1I_EINtNtNtNtBa_4iter6traits7collect12FromIteratorB18_E9from_iterINtNtNtB4k_8adapters3map3MapINtNtB8_4iter4IterNtB1K_19BorrowedRevokedCertENCNvMs2_B1K_NtB1K_26BorrowedCertRevocationList8to_owned0EE0E0EB1O_.exit ], [ %.sroa.0.0.a, %bb.g ] ; 4 uses
-  %9 = getelementptr inbounds nuw [80 x i8], ptr %0, i64 %.sroa.05.040 ; 2 uses
-  %.idx = mul nuw nsw i64 %.sroa.05.040, 80
-  %10 = getelementptr inbounds nuw i8, ptr %2, i64 %.idx ; 10 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %10, ptr noundef nonnull align 8 dereferenceable(80) %9, i64 80, i1 false)
-  %11 = getelementptr i8, ptr %10, i64 8
-  %.val11.i = load ptr, ptr %11, align 8, !nonnull !6, !noundef !6 ; 3 uses
-  %12 = getelementptr i8, ptr %10, i64 16
-  %.val12.i = load i64, ptr %12, align 8, !noundef !6 ; 5 uses
-  %13 = getelementptr i8, ptr %10, i64 -72
-  %.val13.i = load ptr, ptr %13, align 8, !nonnull !6, !noundef !6
-  %14 = getelementptr i8, ptr %10, i64 -64
-  %.val14.i = load i64, ptr %14, align 8, !noundef !6 ; 2 uses
-  %spec.store.select.i.i.i.i.i30 = tail call i64 @llvm.umin.i64(i64 range(i64 0, -9223372036854775808) %.val12.i, i64 range(i64 0, -9223372036854775808) %.val14.i)
-  %15 = tail call i32 @memcmp(ptr nonnull readonly %.val11.i, ptr nonnull readonly %.val13.i, i64 %spec.store.select.i.i.i.i.i30), !alias.scope !82 ; 2 uses
-  %16 = sext i32 %15 to i64
-  %17 = icmp eq i32 %15, 0
-  %18 = sub nsw i64 %.val12.i, %.val14.i
-  %spec.select.i.i.i.i.i31 = select i1 %17, i64 %18, i64 %16
-  %19 = icmp slt i64 %spec.select.i.i.i.i.i31, 0
-  br i1 %19, label %20, label %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailTINtNtCs4wP2HXfJTCR_5alloc3vec3VechENtNtNtCshVVPy9isBpn_6webpki3crl5types16OwnedRevokedCertENCINvMNtB1e_5sliceSB18_7sort_byNCINvXs1o_NtNtNtB1e_11collections5btree3mapINtB3h_8BTreeMapB19_B1I_EINtNtNtNtBa_4iter6traits7collect12FromIteratorB18_E9from_iterINtNtNtB4k_8adapters3map3MapINtNtB8_4iter4IterNtB1K_19BorrowedRevokedCertENCNvMs2_B1K_NtB1K_26BorrowedCertRevocationList8to_owned0EE0E0EB1O_.exit
-
-20:                                               ; preds = %.lr.ph
-  %.sroa.012.0.copyload.i = load i64, ptr %10, align 8
-  %21 = getelementptr inbounds nuw i8, ptr %9, i64 24
-  %.sroa.0.0.i3261 = getelementptr inbounds i8, ptr %10, i64 -80 ; 2 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %10, ptr noundef nonnull align 8 dereferenceable(80) %.sroa.0.0.i3261, i64 80, i1 false)
-  %22 = icmp eq i64 %.sroa.05.040, 1
-  br i1 %22, label %._crit_edge, label %.lr.ph64
-
-23:                                               ; preds = %.lr.ph64
-  %.sroa.0.0.i32 = getelementptr inbounds i8, ptr %.sroa.0.0.i3263, i64 -80 ; 3 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %.sroa.0.0.i3263, ptr noundef nonnull align 8 dereferenceable(80) %.sroa.0.0.i32, i64 80, i1 false)
-  %24 = icmp eq ptr %.sroa.0.0.i32, %2
-  br i1 %24, label %._crit_edge, label %.lr.ph64
-
-.lr.ph64:                                         ; preds = %20, %23
-  %.sroa.0.0.i3263 = phi ptr [ %.sroa.0.0.i32, %23 ], [ %.sroa.0.0.i3261, %20 ] ; 5 uses
-  %.sroa.5.0.i62 = phi ptr [ %.sroa.0.0.i3263, %23 ], [ %10, %20 ] ; 3 uses
-  %25 = getelementptr i8, ptr %.sroa.5.0.i62, i64 -152
-  %.val9.i = load ptr, ptr %25, align 8, !nonnull !6, !noundef !6
-  %26 = getelementptr i8, ptr %.sroa.5.0.i62, i64 -144
-  %.val10.i = load i64, ptr %26, align 8, !noundef !6 ; 2 uses
-  %spec.store.select.i.i.i.i15.i = tail call i64 @llvm.umin.i64(i64 range(i64 0, -9223372036854775808) %.val12.i, i64 range(i64 0, -9223372036854775808) %.val10.i)
-  %27 = tail call i32 @memcmp(ptr nonnull readonly %.val11.i, ptr nonnull readonly %.val9.i, i64 %spec.store.select.i.i.i.i15.i), !alias.scope !86 ; 2 uses
-  %28 = sext i32 %27 to i64
-  %29 = icmp eq i32 %27, 0
-  %30 = sub nsw i64 %.val12.i, %.val10.i
-  %spec.select.i.i.i.i16.i = select i1 %29, i64 %30, i64 %28
-  %31 = icmp slt i64 %spec.select.i.i.i.i16.i, 0
-  br i1 %31, label %23, label %._crit_edge
-
-._crit_edge:                                      ; preds = %23, %.lr.ph64, %20
-  %.sroa.5.0.i.lcssa = phi ptr [ %10, %20 ], [ %.sroa.0.0.i3263, %23 ], [ %.sroa.5.0.i62, %.lr.ph64 ] ; 3 uses
-  %.sroa.0.0.i32.lcssa = phi ptr [ %2, %20 ], [ %2, %23 ], [ %.sroa.0.0.i3263, %.lr.ph64 ]
-  store i64 %.sroa.012.0.copyload.i, ptr %.sroa.0.0.i32.lcssa, align 8, !noalias !90
-  %.sroa.4.0..sroa.0.0.lcssa.sroa_idx.i = getelementptr inbounds i8, ptr %.sroa.5.0.i.lcssa, i64 -72
-  store ptr %.val11.i, ptr %.sroa.4.0..sroa.0.0.lcssa.sroa_idx.i, align 8, !noalias !90
-  %.sroa.5.0..sroa.0.0.lcssa.sroa_idx.i = getelementptr inbounds i8, ptr %.sroa.5.0.i.lcssa, i64 -64
-  store i64 %.val12.i, ptr %.sroa.5.0..sroa.0.0.lcssa.sroa_idx.i, align 8, !noalias !90
-  %.sroa.6.0..sroa.0.0.lcssa.sroa_idx.i = getelementptr inbounds i8, ptr %.sroa.5.0.i.lcssa, i64 -56
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %.sroa.6.0..sroa.0.0.lcssa.sroa_idx.i, ptr noundef nonnull align 8 dereferenceable(56) %21, i64 56, i1 false)
-  br label %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailTINtNtCs4wP2HXfJTCR_5alloc3vec3VechENtNtNtCshVVPy9isBpn_6webpki3crl5types16OwnedRevokedCertENCINvMNtB1e_5sliceSB18_7sort_byNCINvXs1o_NtNtNtB1e_11collections5btree3mapINtB3h_8BTreeMapB19_B1I_EINtNtNtNtBa_4iter6traits7collect12FromIteratorB18_E9from_iterINtNtNtB4k_8adapters3map3MapINtNtB8_4iter4IterNtB1K_19BorrowedRevokedCertENCNvMs2_B1K_NtB1K_26BorrowedCertRevocationList8to_owned0EE0E0EB1O_.exit
-
-_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailTINtNtCs4wP2HXfJTCR_5alloc3vec3VechENtNtNtCshVVPy9isBpn_6webpki3crl5types16OwnedRevokedCertENCINvMNtB1e_5sliceSB18_7sort_byNCINvXs1o_NtNtNtB1e_11collections5btree3mapINtB3h_8BTreeMapB19_B1I_EINtNtNtNtBa_4iter6traits7collect12FromIteratorB18_E9from_iterINtNtNtB4k_8adapters3map3MapINtNtB8_4iter4IterNtB1K_19BorrowedRevokedCertENCNvMs2_B1K_NtB1K_26BorrowedCertRevocationList8to_owned0EE0E0EB1O_.exit: ; preds = %._crit_edge, %.lr.ph
-  %32 = add nuw i64 %.sroa.05.040, 1              ; 2 uses
-  %exitcond.not = icmp eq i64 %32, %i.d
-  br i1 %exitcond.not, label %.loopexit, label %.lr.ph
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind nonlazybind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable

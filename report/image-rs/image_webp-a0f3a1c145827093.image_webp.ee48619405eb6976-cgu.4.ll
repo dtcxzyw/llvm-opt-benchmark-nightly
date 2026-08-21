@@ -205,7 +205,7 @@ bb.a:
   %i.d = alloca [16 x i8], align 8                ; 4 uses
   %i.e = alloca [16 x i8], align 8                ; 5 uses
   %i.f = alloca [16 x i8], align 8                ; 4 uses
-  %i.g = alloca [768 x i8], align 8               ; 20 uses
+  %i.g = alloca [768 x i8], align 8               ; 24 uses
   %i.h = icmp samesign ult i64 %1, 33
   br i1 %i.h, label %._crit_edge, label %.lr.ph
 
@@ -220,7 +220,7 @@ bb.b:                                             ; preds = %.backedge
   br i1 %i.l, label %._crit_edge160, label %.lr.ph159
 
 ._crit_edge:                                      ; preds = %.backedge, %bb.a
-  %.sroa.15.0.lcssa = phi i64 [ %1, %bb.a ], [ %.sroa.15.0.be, %.backedge ] ; 9 uses
+  %.sroa.15.0.lcssa = phi i64 [ %1, %bb.a ], [ %.sroa.15.0.be, %.backedge ] ; 8 uses
   %.sroa.0.0.lcssa = phi ptr [ %0, %bb.a ], [ %.sroa.0.0.be, %.backedge ] ; 18 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !44)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !noalias !44
@@ -230,7 +230,7 @@ bb.b:                                             ; preds = %.backedge
   br i1 %i.m, label %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort18small_sort_generalTjmENCINvMB8_SB1f_20sort_unstable_by_keymNCNvNtCsksn9slvsHfS_10image_webp7encoder18build_huffman_trees1_0E0EB20_.exit, label %bb.c
 
 bb.c:                                             ; preds = %._crit_edge
-  %i.n = lshr i64 %.sroa.15.0.lcssa, 1            ; 12 uses
+  %i.n = lshr i64 %.sroa.15.0.lcssa, 1            ; 11 uses
   %i.o = icmp samesign ugt i64 %.sroa.15.0.lcssa, 15
   br i1 %i.o, label %bb.e, label %bb.d
 
@@ -358,22 +358,62 @@ bb.g:                                             ; preds = %bb.d
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e
-  %.sroa.0.0.i.i = phi i64 [ 8, %bb.e ], [ 4, %bb.f ], [ 1, %bb.g ] ; 4 uses
-  %5 = sub nsw i64 %.sroa.15.0.lcssa, %i.n        ; 2 uses
+  %.sroa.0.0.i.i = phi i64 [ 8, %bb.e ], [ 4, %bb.f ], [ 1, %bb.g ] ; 3 uses
   %i.cq = icmp samesign ult i64 %.sroa.0.0.i.i, %i.n
-  br i1 %i.cq, label %.lr.ph.i.i, label %.loopexit.i.i
+  br i1 %i.cq, label %.loopexit.i.i, label %.loopexit.1.i.i
 
-.loopexit.i.i:                                    ; preds = %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailTjmENCINvMB8_SB18_20sort_unstable_by_keymNCNvNtCsksn9slvsHfS_10image_webp7encoder18build_huffman_trees1_0E0EB1T_.exit.i.i, %bb.h
-  %i.cr = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0.0.lcssa, i64 %i.n
-  %6 = getelementptr [16 x i8], ptr %i.g, i64 %i.n ; 6 uses
-  %i.cs = icmp ult i64 %.sroa.0.0.i.i, %5
-  br i1 %i.cs, label %.lr.ph.1.i.i, label %.loopexit.1.i.i
+.loopexit.i.i:                                    ; preds = %bb.h, %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailTjmENCINvMB8_SB18_20sort_unstable_by_keymNCNvNtCsksn9slvsHfS_10image_webp7encoder18build_huffman_trees1_0E0EB1T_.exit.us.i.i
+  %.sroa.05.012.us.i.i = phi i64 [ %15, %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailTjmENCINvMB8_SB18_20sort_unstable_by_keymNCNvNtCsksn9slvsHfS_10image_webp7encoder18build_huffman_trees1_0E0EB1T_.exit.us.i.i ], [ %.sroa.0.0.i.i, %bb.h ] ; 4 uses
+  %i.cr = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0.0.lcssa, i64 %.sroa.05.012.us.i.i
+  %.idx = shl nuw nsw i64 %.sroa.05.012.us.i.i, 4
+  %5 = getelementptr inbounds nuw i8, ptr %i.g, i64 %.idx ; 8 uses
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %5, ptr noundef nonnull align 8 dereferenceable(16) %i.cr, i64 16, i1 false), !alias.scope !53
+  %6 = getelementptr i8, ptr %5, i64 8
+  %.val9.i40.us.i.i = load i32, ptr %6, align 8, !alias.scope !50, !noalias !52, !noundef !6 ; 3 uses
+  %7 = getelementptr i8, ptr %5, i64 -8
+  %.val10.i.us.i.i = load i32, ptr %7, align 8, !alias.scope !50, !noalias !52, !noundef !6
+  %i.cs = icmp ult i32 %.val9.i40.us.i.i, %.val10.i.us.i.i
+  br i1 %i.cs, label %8, label %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailTjmENCINvMB8_SB18_20sort_unstable_by_keymNCNvNtCsksn9slvsHfS_10image_webp7encoder18build_huffman_trees1_0E0EB1T_.exit.us.i.i
 
-.lr.ph.1.i.i:                                     ; preds = %.loopexit.i.i, %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailTjmENCINvMB8_SB18_20sort_unstable_by_keymNCNvNtCsksn9slvsHfS_10image_webp7encoder18build_huffman_trees1_0E0EB1T_.exit.1.i.i
-  %.sroa.05.08.1.i.i = phi i64 [ %i.dd, %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailTjmENCINvMB8_SB18_20sort_unstable_by_keymNCNvNtCsksn9slvsHfS_10image_webp7encoder18build_huffman_trees1_0E0EB1T_.exit.1.i.i ], [ %.sroa.0.0.i.i, %.loopexit.i.i ] ; 4 uses
-  %i.ct = getelementptr inbounds nuw [16 x i8], ptr %i.cr, i64 %.sroa.05.08.1.i.i
+8:                                                ; preds = %.loopexit.i.i
+  %9 = load i64, ptr %5, align 8, !alias.scope !50, !noalias !52, !noundef !6
+  %.sroa.0.0.i41.us.i.i160 = getelementptr inbounds i8, ptr %5, i64 -16 ; 2 uses
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %5, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.0.i41.us.i.i160, i64 16, i1 false), !alias.scope !50, !noalias !52
+  %10 = icmp eq i64 %.sroa.05.012.us.i.i, 1
+  br i1 %10, label %._crit_edge165, label %.lr.ph164
+
+11:                                               ; preds = %.lr.ph164
+  %.sroa.0.0.i41.us.i.i = getelementptr inbounds i8, ptr %.sroa.0.0.i41.us.i.i162, i64 -16 ; 3 uses
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.0.i41.us.i.i162, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.0.i41.us.i.i, i64 16, i1 false), !alias.scope !50, !noalias !52
+  %12 = icmp eq ptr %.sroa.0.0.i41.us.i.i, %i.g
+  br i1 %12, label %._crit_edge165, label %.lr.ph164
+
+.lr.ph164:                                        ; preds = %8, %11
+  %.sroa.0.0.i41.us.i.i162 = phi ptr [ %.sroa.0.0.i41.us.i.i, %11 ], [ %.sroa.0.0.i41.us.i.i160, %8 ] ; 5 uses
+  %.sroa.5.0.i.us.i.i161 = phi ptr [ %.sroa.0.0.i41.us.i.i162, %11 ], [ %5, %8 ] ; 2 uses
+  %13 = getelementptr i8, ptr %.sroa.5.0.i.us.i.i161, i64 -24
+  %.val8.i42.us.i.i = load i32, ptr %13, align 8, !alias.scope !50, !noalias !52, !noundef !6
+  %14 = icmp ult i32 %.val9.i40.us.i.i, %.val8.i42.us.i.i
+  br i1 %14, label %11, label %._crit_edge165
+
+._crit_edge165:                                   ; preds = %11, %.lr.ph164, %8
+  %.sroa.5.0.i.us.i.i.lcssa = phi ptr [ %5, %8 ], [ %.sroa.0.0.i41.us.i.i162, %11 ], [ %.sroa.5.0.i.us.i.i161, %.lr.ph164 ]
+  %.sroa.0.0.i41.us.lcssa.i.i = phi ptr [ %i.g, %8 ], [ %i.g, %11 ], [ %.sroa.0.0.i41.us.i.i162, %.lr.ph164 ]
+  store i64 %9, ptr %.sroa.0.0.i41.us.lcssa.i.i, align 8, !alias.scope !50, !noalias !54
+  %.sroa.4.0..sroa.0.0.lcssa.sroa_idx.i.us.i.i = getelementptr inbounds i8, ptr %.sroa.5.0.i.us.i.i.lcssa, i64 -8
+  store i32 %.val9.i40.us.i.i, ptr %.sroa.4.0..sroa.0.0.lcssa.sroa_idx.i.us.i.i, align 8, !alias.scope !50, !noalias !54
+  br label %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailTjmENCINvMB8_SB18_20sort_unstable_by_keymNCNvNtCsksn9slvsHfS_10image_webp7encoder18build_huffman_trees1_0E0EB1T_.exit.us.i.i
+
+_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailTjmENCINvMB8_SB18_20sort_unstable_by_keymNCNvNtCsksn9slvsHfS_10image_webp7encoder18build_huffman_trees1_0E0EB1T_.exit.us.i.i: ; preds = %._crit_edge165, %.loopexit.i.i
+  %15 = add nuw nsw i64 %.sroa.05.012.us.i.i, 1   ; 2 uses
+  %exitcond.not.i.i = icmp eq i64 %15, %i.n
+  br i1 %exitcond.not.i.i, label %.lr.ph.1.i.i, label %.loopexit.i.i
+
+.lr.ph.1.i.i:                                     ; preds = %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailTjmENCINvMB8_SB18_20sort_unstable_by_keymNCNvNtCsksn9slvsHfS_10image_webp7encoder18build_huffman_trees1_0E0EB1T_.exit.us.i.i, %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailTjmENCINvMB8_SB18_20sort_unstable_by_keymNCNvNtCsksn9slvsHfS_10image_webp7encoder18build_huffman_trees1_0E0EB1T_.exit.1.i.i
+  %.sroa.05.08.1.i.i = phi i64 [ %i.dd, %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailTjmENCINvMB8_SB18_20sort_unstable_by_keymNCNvNtCsksn9slvsHfS_10image_webp7encoder18build_huffman_trees1_0E0EB1T_.exit.1.i.i ], [ %.sroa.0.0.i.i, %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailTjmENCINvMB8_SB18_20sort_unstable_by_keymNCNvNtCsksn9slvsHfS_10image_webp7encoder18build_huffman_trees1_0E0EB1T_.exit.us.i.i ] ; 4 uses
+  %i.ct = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0.0.lcssa, i64 %.sroa.05.08.1.i.i
   %.idx184 = shl nuw nsw i64 %.sroa.05.08.1.i.i, 4
-  %i.cu = getelementptr inbounds nuw i8, ptr %6, i64 %.idx184 ; 8 uses
+  %i.cu = getelementptr inbounds nuw i8, ptr %i.g, i64 %.idx184 ; 8 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.cu, ptr noundef nonnull align 8 dereferenceable(16) %i.ct, i64 16, i1 false), !alias.scope !53
   %i.cv = getelementptr i8, ptr %i.cu, i64 8
   %.val9.i40.1.i.i = load i32, ptr %i.cv, align 8, !alias.scope !50, !noalias !52, !noundef !6 ; 3 uses
@@ -392,7 +432,7 @@ bb.i:                                             ; preds = %.lr.ph.1.i.i
 bb.j:                                             ; preds = %.lr.ph177
   %.sroa.0.0.i41.1.i.i = getelementptr inbounds i8, ptr %.sroa.0.0.i41.1.i.i175, i64 -16 ; 3 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.0.i41.1.i.i175, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.0.i41.1.i.i, i64 16, i1 false), !alias.scope !50, !noalias !52
-  %i.da = icmp eq ptr %.sroa.0.0.i41.1.i.i, %6
+  %i.da = icmp eq ptr %.sroa.0.0.i41.1.i.i, %i.g
   br i1 %i.da, label %._crit_edge178, label %.lr.ph177
 
 .lr.ph177:                                        ; preds = %bb.i, %bb.j
@@ -405,22 +445,23 @@ bb.j:                                             ; preds = %.lr.ph177
 
 ._crit_edge178:                                   ; preds = %bb.j, %.lr.ph177, %bb.i
   %.sroa.5.0.i.1.i.i.lcssa = phi ptr [ %i.cu, %bb.i ], [ %.sroa.0.0.i41.1.i.i175, %bb.j ], [ %.sroa.5.0.i.1.i.i174, %.lr.ph177 ]
-  %.sroa.0.0.i41.lcssa.1.i.i = phi ptr [ %6, %bb.i ], [ %6, %bb.j ], [ %.sroa.0.0.i41.1.i.i175, %.lr.ph177 ]
+  %.sroa.0.0.i41.lcssa.1.i.i = phi ptr [ %i.g, %bb.i ], [ %i.g, %bb.j ], [ %.sroa.0.0.i41.1.i.i175, %.lr.ph177 ]
   store i64 %i.cy, ptr %.sroa.0.0.i41.lcssa.1.i.i, align 8, !alias.scope !50, !noalias !54
   %.sroa.4.0..sroa.0.0.lcssa.sroa_idx.i.1.i.i = getelementptr inbounds i8, ptr %.sroa.5.0.i.1.i.i.lcssa, i64 -8
   store i32 %.val9.i40.1.i.i, ptr %.sroa.4.0..sroa.0.0.lcssa.sroa_idx.i.1.i.i, align 8, !alias.scope !50, !noalias !54
   br label %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailTjmENCINvMB8_SB18_20sort_unstable_by_keymNCNvNtCsksn9slvsHfS_10image_webp7encoder18build_huffman_trees1_0E0EB1T_.exit.1.i.i
 
 _RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailTjmENCINvMB8_SB18_20sort_unstable_by_keymNCNvNtCsksn9slvsHfS_10image_webp7encoder18build_huffman_trees1_0E0EB1T_.exit.1.i.i: ; preds = %._crit_edge178, %.lr.ph.1.i.i
-  %i.dd = add nuw i64 %.sroa.05.08.1.i.i, 1       ; 2 uses
-  %exitcond.1.not.i.i = icmp eq i64 %i.dd, %5
+  %i.dd = add nuw nsw i64 %.sroa.05.08.1.i.i, 1   ; 2 uses
+  %exitcond.1.not.i.i = icmp eq i64 %i.dd, %i.n
   br i1 %exitcond.1.not.i.i, label %.loopexit.1.i.i, label %.lr.ph.1.i.i
 
-.loopexit.1.i.i:                                  ; preds = %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailTjmENCINvMB8_SB18_20sort_unstable_by_keymNCNvNtCsksn9slvsHfS_10image_webp7encoder18build_huffman_trees1_0E0EB1T_.exit.1.i.i, %.loopexit.i.i
+.loopexit.1.i.i:                                  ; preds = %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailTjmENCINvMB8_SB18_20sort_unstable_by_keymNCNvNtCsksn9slvsHfS_10image_webp7encoder18build_huffman_trees1_0E0EB1T_.exit.1.i.i, %bb.h
   %i.de = add nsw i64 %.sroa.15.0.lcssa, -1       ; 2 uses
-  %i.df = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0.0.lcssa, i64 %i.de
-  %i.dg = getelementptr inbounds nuw [16 x i8], ptr %i.g, i64 %i.de
-  %i.dh = getelementptr i8, ptr %6, i64 -16
+  %16 = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0.0.lcssa, i64 %i.de
+  %i.df = getelementptr inbounds nuw [16 x i8], ptr %i.g, i64 %i.de
+  %i.dg = getelementptr [16 x i8], ptr %i.g, i64 %i.n ; 2 uses
+  %i.dh = getelementptr i8, ptr %i.dg, i64 -16
   br label %.lr.ph.i.i.i
 
 ._crit_edge.i.i.i:                                ; preds = %.lr.ph.i.i.i
@@ -434,10 +475,10 @@ _RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailTjmENCI
   %.sroa.0.010.i.i.i = phi ptr [ %i.dp, %.lr.ph.i.i.i ], [ %.sroa.0.0.lcssa, %.loopexit.1.i.i ] ; 2 uses
   %.sroa.04.09.i.i.i = phi i64 [ %i.dm, %.lr.ph.i.i.i ], [ 0, %.loopexit.1.i.i ]
   %.sroa.06.08.i.i.i = phi ptr [ %.sroa.sel4.idx.sroa.sel.idx.i.sroa.sel.idx.sroa.sel.idx.sroa.sel, %.lr.ph.i.i.i ], [ %i.g, %.loopexit.1.i.i ] ; 3 uses
-  %.sroa.011.07.i.i.i = phi ptr [ %.sroa.sel.idx.sroa.sel.idx.i.sroa.sel.idx.sroa.sel.idx.sroa.sel, %.lr.ph.i.i.i ], [ %6, %.loopexit.1.i.i ] ; 3 uses
+  %.sroa.011.07.i.i.i = phi ptr [ %.sroa.sel.idx.sroa.sel.idx.i.sroa.sel.idx.sroa.sel.idx.sroa.sel, %.lr.ph.i.i.i ], [ %i.dg, %.loopexit.1.i.i ] ; 3 uses
   %.sroa.015.06.i.i.i = phi ptr [ %i.dv, %.lr.ph.i.i.i ], [ %i.dh, %.loopexit.1.i.i ] ; 3 uses
-  %.sroa.017.05.i.i.i = phi ptr [ %i.du, %.lr.ph.i.i.i ], [ %i.dg, %.loopexit.1.i.i ] ; 3 uses
-  %.sroa.019.04.i.i.i = phi ptr [ %i.dw, %.lr.ph.i.i.i ], [ %i.df, %.loopexit.1.i.i ] ; 2 uses
+  %.sroa.017.05.i.i.i = phi ptr [ %i.du, %.lr.ph.i.i.i ], [ %i.df, %.loopexit.1.i.i ] ; 3 uses
+  %.sroa.019.04.i.i.i = phi ptr [ %i.dw, %.lr.ph.i.i.i ], [ %16, %.loopexit.1.i.i ] ; 2 uses
   %i.dm = add nuw nsw i64 %.sroa.04.09.i.i.i, 1   ; 2 uses
   %i.dn = getelementptr i8, ptr %.sroa.011.07.i.i.i, i64 8
   %.sroa.011.0.val.i.i.i = load i32, ptr %i.dn, align 8, !alias.scope !59, !noalias !52, !noundef !6
@@ -498,53 +539,6 @@ bb.n:                                             ; preds = %bb.m
   %i.ea = shl nuw nsw i64 %.sroa.15.0.lcssa, 4
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %.sroa.0.0.lcssa, ptr nonnull align 8 %i.g, i64 %i.ea, i1 false), !alias.scope !53, !noalias !70
   resume { ptr, i32 } %i.dz
-
-.lr.ph.i.i:                                       ; preds = %bb.h, %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailTjmENCINvMB8_SB18_20sort_unstable_by_keymNCNvNtCsksn9slvsHfS_10image_webp7encoder18build_huffman_trees1_0E0EB1T_.exit.i.i
-  %.sroa.05.08.i.i = phi i64 [ %19, %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailTjmENCINvMB8_SB18_20sort_unstable_by_keymNCNvNtCsksn9slvsHfS_10image_webp7encoder18build_huffman_trees1_0E0EB1T_.exit.i.i ], [ %.sroa.0.0.i.i, %bb.h ] ; 4 uses
-  %7 = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0.0.lcssa, i64 %.sroa.05.08.i.i
-  %.idx = shl nuw nsw i64 %.sroa.05.08.i.i, 4
-  %8 = getelementptr inbounds nuw i8, ptr %i.g, i64 %.idx ; 8 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %8, ptr noundef nonnull align 8 dereferenceable(16) %7, i64 16, i1 false), !alias.scope !53
-  %9 = getelementptr i8, ptr %8, i64 8
-  %.val9.i40.i.i = load i32, ptr %9, align 8, !alias.scope !50, !noalias !52, !noundef !6 ; 3 uses
-  %10 = getelementptr i8, ptr %8, i64 -8
-  %.val10.i.i.i = load i32, ptr %10, align 8, !alias.scope !50, !noalias !52, !noundef !6
-  %11 = icmp ult i32 %.val9.i40.i.i, %.val10.i.i.i
-  br i1 %11, label %12, label %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailTjmENCINvMB8_SB18_20sort_unstable_by_keymNCNvNtCsksn9slvsHfS_10image_webp7encoder18build_huffman_trees1_0E0EB1T_.exit.i.i
-
-12:                                               ; preds = %.lr.ph.i.i
-  %13 = load i64, ptr %8, align 8, !alias.scope !50, !noalias !52, !noundef !6
-  %.sroa.0.0.i41.i.i162 = getelementptr inbounds i8, ptr %8, i64 -16 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %8, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.0.i41.i.i162, i64 16, i1 false), !alias.scope !50, !noalias !52
-  %14 = icmp eq i64 %.sroa.05.08.i.i, 1
-  br i1 %14, label %._crit_edge167, label %.lr.ph166
-
-15:                                               ; preds = %.lr.ph166
-  %.sroa.0.0.i41.i.i = getelementptr inbounds i8, ptr %.sroa.0.0.i41.i.i164, i64 -16 ; 3 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.0.i41.i.i164, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.0.i41.i.i, i64 16, i1 false), !alias.scope !50, !noalias !52
-  %16 = icmp eq ptr %.sroa.0.0.i41.i.i, %i.g
-  br i1 %16, label %._crit_edge167, label %.lr.ph166
-
-.lr.ph166:                                        ; preds = %12, %15
-  %.sroa.0.0.i41.i.i164 = phi ptr [ %.sroa.0.0.i41.i.i, %15 ], [ %.sroa.0.0.i41.i.i162, %12 ] ; 5 uses
-  %.sroa.5.0.i.i.i163 = phi ptr [ %.sroa.0.0.i41.i.i164, %15 ], [ %8, %12 ] ; 2 uses
-  %17 = getelementptr i8, ptr %.sroa.5.0.i.i.i163, i64 -24
-  %.val8.i42.i.i = load i32, ptr %17, align 8, !alias.scope !50, !noalias !52, !noundef !6
-  %18 = icmp ult i32 %.val9.i40.i.i, %.val8.i42.i.i
-  br i1 %18, label %15, label %._crit_edge167
-
-._crit_edge167:                                   ; preds = %15, %.lr.ph166, %12
-  %.sroa.5.0.i.i.i.lcssa = phi ptr [ %8, %12 ], [ %.sroa.0.0.i41.i.i164, %15 ], [ %.sroa.5.0.i.i.i163, %.lr.ph166 ]
-  %.sroa.0.0.i41.lcssa.i.i = phi ptr [ %i.g, %12 ], [ %i.g, %15 ], [ %.sroa.0.0.i41.i.i164, %.lr.ph166 ]
-  store i64 %13, ptr %.sroa.0.0.i41.lcssa.i.i, align 8, !alias.scope !50, !noalias !54
-  %.sroa.4.0..sroa.0.0.lcssa.sroa_idx.i.i.i = getelementptr inbounds i8, ptr %.sroa.5.0.i.i.i.lcssa, i64 -8
-  store i32 %.val9.i40.i.i, ptr %.sroa.4.0..sroa.0.0.lcssa.sroa_idx.i.i.i, align 8, !alias.scope !50, !noalias !54
-  br label %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailTjmENCINvMB8_SB18_20sort_unstable_by_keymNCNvNtCsksn9slvsHfS_10image_webp7encoder18build_huffman_trees1_0E0EB1T_.exit.i.i
-
-_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailTjmENCINvMB8_SB18_20sort_unstable_by_keymNCNvNtCsksn9slvsHfS_10image_webp7encoder18build_huffman_trees1_0E0EB1T_.exit.i.i: ; preds = %._crit_edge167, %.lr.ph.i.i
-  %19 = add nuw i64 %.sroa.05.08.i.i, 1           ; 2 uses
-  %exitcond.not.i.i = icmp eq i64 %19, %i.n
-  br i1 %exitcond.not.i.i, label %.loopexit.i.i, label %.lr.ph.i.i
 
 _RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort18small_sort_generalTjmENCINvMB8_SB1f_20sort_unstable_by_keymNCNvNtCsksn9slvsHfS_10image_webp7encoder18build_huffman_trees1_0E0EB20_.exit: ; preds = %._crit_edge, %bb.l
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g), !noalias !44

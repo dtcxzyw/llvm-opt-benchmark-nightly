@@ -84,7 +84,6 @@ target triple = "x86_64-pc-linux-gnu"
 %"class.boost::beast::http::param_list" = type { %"class.boost::core::basic_string_view" }
 %"class.std::invalid_argument" = type { %"class.std::logic_error" }
 %"struct.boost::beast::detail::sha1_context" = type { i64, i64, [5 x i32], [64 x i8] }
-%"struct.std::array.51" = type { [4 x i8] }
 %"class.boost::beast::http::param_list::const_iterator" = type { %"class.std::__cxx11::basic_string", %"struct.boost::beast::http::detail::param_iter" }
 %"class.boost::static_strings::basic_static_string.52" = type <{ %"class.boost::static_strings::detail::static_string_base<512, char, std::char_traits<char>>::size::basic_static_string", %"class.boost::static_strings::detail::static_string_base<512, char, std::char_traits<char>>::data::basic_static_string", i8 }>
 %"class.boost::static_strings::detail::static_string_base<512, char, std::char_traits<char>>::size::basic_static_string" = type { i16 }
@@ -487,7 +486,7 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define hidden void @_ZN5boost5beast9websocket6detail12mask_inplaceERKNS_4asio14mutable_bufferERSt5arrayIhLm4EE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %0, ptr nofree noundef nonnull align 1 captures(none) dereferenceable(4) %1) local_unnamed_addr #31 {
 bb.a:
-  %2 = alloca %"struct.std::array.51", align 4    ; 7 uses
+  %.sroa.0.i = alloca i32, align 4                ; 7 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load i64, ptr %i.a, align 8, !tbaa !844  ; 3 uses
   %i.c = load ptr, ptr %0, align 8, !tbaa !846    ; 2 uses
@@ -531,30 +530,30 @@ bb.a:
   br i1 %.not, label %bb.c, label %.preheader
 
 bb.b:                                             ; preds = %.preheader.2, %.preheader.1, %.preheader
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #48
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i)
   %i.u = load i32, ptr %1, align 1, !tbaa !20
-  store i32 %i.u, ptr %2, align 4, !tbaa !20
-  %i.v = getelementptr inbounds nuw i8, ptr %2, i64 %.021.lcssa
+  store i32 %i.u, ptr %.sroa.0.i, align 4, !tbaa !20
+  %i.v = getelementptr inbounds nuw i8, ptr %.sroa.0.i, i64 %.021.lcssa
   %i.w = load i8, ptr %i.v, align 1, !tbaa !20
   store i8 %i.w, ptr %1, align 1, !tbaa !20
   %i.x = add nuw nsw i64 %.021.lcssa, 1
   %i.y = and i64 %i.x, 3
-  %i.z = getelementptr inbounds nuw i8, ptr %2, i64 %i.y
+  %i.z = getelementptr inbounds nuw i8, ptr %.sroa.0.i, i64 %i.y
   %i.aa = load i8, ptr %i.z, align 1, !tbaa !20
   %i.ab = getelementptr inbounds nuw i8, ptr %1, i64 1
   store i8 %i.aa, ptr %i.ab, align 1, !tbaa !20
   %i.ac = xor i64 %.021.lcssa, 2
-  %i.ad = getelementptr inbounds nuw i8, ptr %2, i64 %i.ac
+  %i.ad = getelementptr inbounds nuw i8, ptr %.sroa.0.i, i64 %i.ac
   %i.ae = load i8, ptr %i.ad, align 1, !tbaa !20
   %i.af = getelementptr inbounds nuw i8, ptr %1, i64 2
   store i8 %i.ae, ptr %i.af, align 1, !tbaa !20
   %i.ag = add nuw nsw i64 %.021.lcssa, 3
   %i.ah = and i64 %i.ag, 3
-  %i.ai = getelementptr inbounds nuw i8, ptr %2, i64 %i.ah
+  %i.ai = getelementptr inbounds nuw i8, ptr %.sroa.0.i, i64 %i.ah
   %i.aj = load i8, ptr %i.ai, align 1, !tbaa !20
   %i.ak = getelementptr inbounds nuw i8, ptr %1, i64 3
   store i8 %i.aj, ptr %i.ak, align 1, !tbaa !20
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #48
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i)
   br label %bb.c
 
 .preheader:                                       ; preds = %._crit_edge

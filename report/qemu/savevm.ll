@@ -205,6 +205,7 @@ bb.a:
 ; Function Attrs: nounwind sspstrong uwtable
 define internal noundef zeroext i1 @configuration_post_load(ptr nofree noundef captures(none) %0, i32 %1, ptr noundef %2) #0 {
 bb.a:
+  %.sroa.0.i = alloca i64, align 8                ; 11 uses
   %i.a = load ptr, ptr @current_machine, align 8
   %i.b = tail call ptr @object_get_class(ptr noundef %i.a) #16
   %i.c = tail call ptr @object_class_dynamic_cast_assert(ptr noundef %i.b, ptr noundef nonnull @.str.57, ptr noundef nonnull @.str.58, i32 noundef 25, ptr noundef nonnull @__func__.MACHINE_GET_CLASS) #16
@@ -236,82 +237,53 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.c
   %i.o = tail call ptr @migrate_get_current() #16
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i)
+  store i64 0, ptr %.sroa.0.i, align 8
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 116
-  %i.q = load i32, ptr %i.p, align 4              ; 7 uses
+  %i.q = load i32, ptr %i.p, align 4              ; 5 uses
   %.not23.i = icmp eq i32 %i.q, 0
   br i1 %.not23.i, label %.preheader.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.e
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 120
-  %i.s = load ptr, ptr %i.r, align 8              ; 6 uses
-  %3 = add i32 %i.q, 2147483647
-  %or.cond = icmp ult i32 %3, -2147483645
-  br i1 %or.cond, label %scalar.ph.preheader, label %vector.ph
+  %i.s = load ptr, ptr %i.r, align 8              ; 3 uses
+  %xtraiter = and i32 %i.q, 1
+  %3 = icmp eq i32 %i.q, 1
+  br i1 %3, label %scalar.ph.prol, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i
-  %n.vec = and i32 %i.q, -4                       ; 3 uses
-  br label %vector.body
+  %n.vec = and i32 %i.q, -2
+  br label %scalar.ph
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i32 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %vec.phi = phi <2 x i64> [ zeroinitializer, %vector.ph ], [ %13, %vector.body ]
-  %vec.phi53 = phi <2 x i64> [ zeroinitializer, %vector.ph ], [ %14, %vector.body ]
-  %4 = sext i32 %index to i64
-  %5 = getelementptr inbounds [4 x i8], ptr %i.s, i64 %4 ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr %5, i64 8
-  %wide.load = load <2 x i32>, ptr %5, align 4
-  %wide.load54 = load <2 x i32>, ptr %6, align 4
-  %7 = and <2 x i32> %wide.load, splat (i32 63)
-  %8 = and <2 x i32> %wide.load54, splat (i32 63)
-  %9 = zext nneg <2 x i32> %7 to <2 x i64>
-  %10 = zext nneg <2 x i32> %8 to <2 x i64>
-  %11 = shl nuw <2 x i64> splat (i64 1), %9
-  %12 = shl nuw <2 x i64> splat (i64 1), %10
-  %13 = or <2 x i64> %11, %vec.phi                ; 2 uses
-  %14 = or <2 x i64> %12, %vec.phi53              ; 2 uses
-  %index.next = add nuw i32 %index, 4             ; 2 uses
-  %15 = icmp eq i32 %index.next, %n.vec
-  br i1 %15, label %middle.block, label %vector.body, !llvm.loop !69
-
-middle.block:                                     ; preds = %vector.body
-  %bin.rdx = or <2 x i64> %14, %13
-  %16 = tail call i64 @llvm.vector.reduce.or.v2i64(<2 x i64> %bin.rdx) ; 2 uses
-  %cmp.n = icmp eq i32 %i.q, %n.vec
-  br i1 %cmp.n, label %.preheader.i, label %scalar.ph.preheader
-
-scalar.ph.preheader:                              ; preds = %.lr.ph.i, %middle.block
-  %.01720.i.ph = phi i32 [ 0, %.lr.ph.i ], [ %n.vec, %middle.block ] ; 3 uses
-  %.ph = phi i64 [ 0, %.lr.ph.i ], [ %16, %middle.block ] ; 2 uses
-  %xtraiter = and i32 %i.q, 3                     ; 2 uses
+scalar.ph.preheader:                              ; preds = %scalar.ph
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0
   br i1 %lcmp.mod.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
 
-scalar.ph.prol:                                   ; preds = %scalar.ph.preheader, %scalar.ph.prol
-  %.01720.i.prol = phi i32 [ %21, %scalar.ph.prol ], [ %.01720.i.ph, %scalar.ph.preheader ] ; 2 uses
-  %17 = phi i64 [ %20, %scalar.ph.prol ], [ %.ph, %scalar.ph.preheader ]
-  %prol.iter = phi i32 [ %prol.iter.next, %scalar.ph.prol ], [ 0, %scalar.ph.preheader ]
+scalar.ph.prol:                                   ; preds = %scalar.ph.preheader, %.lr.ph.i
+  %.01720.i.prol = phi i32 [ 0, %.lr.ph.i ], [ %18, %scalar.ph.preheader ]
+  %lcmp.mod60 = trunc i32 %i.q to i1
+  tail call void @llvm.assume(i1 %lcmp.mod60)
   %i.t = sext i32 %.01720.i.prol to i64
   %i.u = getelementptr inbounds [4 x i8], ptr %i.s, i64 %i.t
   %i.v = load i32, ptr %i.u, align 4
-  %18 = and i32 %i.v, 63
-  %19 = zext nneg i32 %18 to i64
-  %i.w = shl nuw i64 1, %19
-  %20 = or i64 %i.w, %17                          ; 3 uses
-  %21 = add nuw i32 %.01720.i.prol, 1             ; 2 uses
-  %prol.iter.next = add i32 %prol.iter, 1         ; 2 uses
-  %prol.iter.cmp.not = icmp eq i32 %prol.iter.next, %xtraiter
-  br i1 %prol.iter.cmp.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol, !llvm.loop !72
+  %4 = zext i32 %i.v to i64                       ; 2 uses
+  %5 = and i64 %4, 63
+  %i.w = shl nuw i64 1, %5
+  %6 = lshr i64 %4, 3
+  %.sroa.0.0..sroa_stride.i.epil = and i64 %6, 536870904 ; 2 uses
+  %.sroa.0.i.0.i.0.i.0..sroa_idx66 = getelementptr inbounds nuw i8, ptr %.sroa.0.i, i64 %.sroa.0.0..sroa_stride.i.epil
+  %.sroa.0.i.0..sroa.0.i.0..sroa.0.i.0..sroa.0.0..sroa.0.0..i.epil = load i64, ptr %.sroa.0.i.0.i.0.i.0..sroa_idx66, align 8
+  %7 = or i64 %i.w, %.sroa.0.i.0..sroa.0.i.0..sroa.0.i.0..sroa.0.0..sroa.0.0..i.epil
+  %.sroa.0.i.0.i.0.i.0..sroa_idx69 = getelementptr inbounds nuw i8, ptr %.sroa.0.i, i64 %.sroa.0.0..sroa_stride.i.epil
+  store i64 %7, ptr %.sroa.0.i.0.i.0.i.0..sroa_idx69, align 8
+  br label %scalar.ph.prol.loopexit
 
-scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %scalar.ph.preheader
-  %.lcssa61.unr = phi i64 [ poison, %scalar.ph.preheader ], [ %20, %scalar.ph.prol ]
-  %.01720.i.unr = phi i32 [ %.01720.i.ph, %scalar.ph.preheader ], [ %21, %scalar.ph.prol ]
-  %.unr = phi i64 [ %.ph, %scalar.ph.preheader ], [ %20, %scalar.ph.prol ]
-  %22 = sub i32 %.01720.i.ph, %i.q
-  %23 = icmp ugt i32 %22, -4
-  br i1 %23, label %.preheader.i, label %scalar.ph
+scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.preheader, %scalar.ph.prol
+  %.sroa.0.i.0..sroa.0.i.0..sroa.0.i.0..sroa.0.0..sroa.0.0.26.pre.i = load i64, ptr %.sroa.0.i, align 8
+  br label %.preheader.i
 
-.preheader.i:                                     ; preds = %scalar.ph.prol.loopexit, %scalar.ph, %middle.block, %bb.e
-  %.lcssa.i = phi i64 [ 0, %bb.e ], [ %16, %middle.block ], [ %.lcssa61.unr, %scalar.ph.prol.loopexit ], [ %48, %scalar.ph ]
+.preheader.i:                                     ; preds = %scalar.ph.prol.loopexit, %bb.e
+  %.sroa.0.0..sroa.0.0.26.i = phi i64 [ %.sroa.0.i.0..sroa.0.i.0..sroa.0.i.0..sroa.0.0..sroa.0.0.26.pre.i, %scalar.ph.prol.loopexit ], [ 0, %bb.e ]
   %i.x = getelementptr inbounds nuw i8, ptr %i.o, i64 1080
   br label %.outer
 
@@ -320,43 +292,40 @@ scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %sc
   %.022.i.ph = phi i1 [ false, %.thread ], [ true, %.preheader.i ]
   br label %bb.f
 
-scalar.ph:                                        ; preds = %scalar.ph.prol.loopexit, %scalar.ph
-  %.01720.i = phi i32 [ %i.af, %scalar.ph ], [ %.01720.i.unr, %scalar.ph.prol.loopexit ] ; 5 uses
-  %24 = phi i64 [ %48, %scalar.ph ], [ %.unr, %scalar.ph.prol.loopexit ]
+scalar.ph:                                        ; preds = %scalar.ph, %vector.ph
+  %.01720.i = phi i32 [ 0, %vector.ph ], [ %18, %scalar.ph ] ; 3 uses
+  %niter = phi i32 [ 0, %vector.ph ], [ %i.af, %scalar.ph ]
   %i.y = sext i32 %.01720.i to i64
   %i.z = getelementptr inbounds [4 x i8], ptr %i.s, i64 %i.y
   %i.aa = load i32, ptr %i.z, align 4
-  %25 = and i32 %i.aa, 63
-  %i.ab = zext nneg i32 %25 to i64
-  %26 = shl nuw i64 1, %i.ab
-  %27 = or i64 %26, %24
-  %28 = add nuw i32 %.01720.i, 1
-  %29 = sext i32 %28 to i64
-  %30 = getelementptr inbounds [4 x i8], ptr %i.s, i64 %29
-  %31 = load i32, ptr %30, align 4
-  %32 = and i32 %31, 63
-  %33 = zext nneg i32 %32 to i64
-  %34 = shl nuw i64 1, %33
-  %35 = or i64 %34, %27
-  %36 = add nuw i32 %.01720.i, 2
-  %i.ac = sext i32 %36 to i64
-  %i.ad = getelementptr inbounds [4 x i8], ptr %i.s, i64 %i.ac
-  %37 = load i32, ptr %i.ad, align 4
-  %38 = and i32 %37, 63
-  %i.ae = zext nneg i32 %38 to i64
-  %39 = shl nuw i64 1, %i.ae
-  %40 = or i64 %39, %35
-  %41 = add nuw i32 %.01720.i, 3
-  %42 = sext i32 %41 to i64
-  %43 = getelementptr inbounds [4 x i8], ptr %i.s, i64 %42
-  %44 = load i32, ptr %43, align 4
-  %45 = and i32 %44, 63
-  %46 = zext nneg i32 %45 to i64
-  %47 = shl nuw i64 1, %46
-  %48 = or i64 %47, %40                           ; 2 uses
-  %i.af = add nuw i32 %.01720.i, 4                ; 2 uses
-  %exitcond.not.i.3 = icmp eq i32 %i.af, %i.q
-  br i1 %exitcond.not.i.3, label %.preheader.i, label %scalar.ph, !llvm.loop !74
+  %i.ab = zext i32 %i.aa to i64                   ; 2 uses
+  %8 = and i64 %i.ab, 63
+  %9 = shl nuw i64 1, %8
+  %10 = lshr i64 %i.ab, 3
+  %.sroa.0.0..sroa_stride.i = and i64 %10, 536870904 ; 2 uses
+  %.sroa.0.i.0.i.0.i.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0.i, i64 %.sroa.0.0..sroa_stride.i
+  %.sroa.0.i.0..sroa.0.i.0..sroa.0.i.0..sroa.0.0..sroa.0.0..i = load i64, ptr %.sroa.0.i.0.i.0.i.0..sroa_idx, align 8
+  %11 = or i64 %9, %.sroa.0.i.0..sroa.0.i.0..sroa.0.i.0..sroa.0.0..sroa.0.0..i
+  %.sroa.0.i.0.i.0.i.0..sroa_idx63 = getelementptr inbounds nuw i8, ptr %.sroa.0.i, i64 %.sroa.0.0..sroa_stride.i
+  store i64 %11, ptr %.sroa.0.i.0.i.0.i.0..sroa_idx63, align 8
+  %i.ac = sext i32 %.01720.i to i64
+  %i.ad = getelementptr [4 x i8], ptr %i.s, i64 %i.ac
+  %12 = getelementptr i8, ptr %i.ad, i64 4
+  %13 = load i32, ptr %12, align 4
+  %i.ae = zext i32 %13 to i64                     ; 2 uses
+  %14 = and i64 %i.ae, 63
+  %15 = shl nuw i64 1, %14
+  %16 = lshr i64 %i.ae, 3
+  %.sroa.0.0..sroa_stride.i.1 = and i64 %16, 536870904 ; 2 uses
+  %.sroa.0.i.0.i.0.i.0..sroa_idx72 = getelementptr inbounds nuw i8, ptr %.sroa.0.i, i64 %.sroa.0.0..sroa_stride.i.1
+  %.sroa.0.i.0..sroa.0.i.0..sroa.0.i.0..sroa.0.0..sroa.0.0..i.1 = load i64, ptr %.sroa.0.i.0.i.0.i.0..sroa_idx72, align 8
+  %17 = or i64 %15, %.sroa.0.i.0..sroa.0.i.0..sroa.0.i.0..sroa.0.0..sroa.0.0..i.1
+  %.sroa.0.i.0.i.0.i.0..sroa_idx75 = getelementptr inbounds nuw i8, ptr %.sroa.0.i, i64 %.sroa.0.0..sroa_stride.i.1
+  store i64 %17, ptr %.sroa.0.i.0.i.0.i.0..sroa_idx75, align 8
+  %18 = add nuw i32 %.01720.i, 2                  ; 2 uses
+  %i.af = add nuw i32 %niter, 2                   ; 2 uses
+  %exitcond.not.i.3 = icmp eq i32 %i.af, %n.vec
+  br i1 %exitcond.not.i.3, label %scalar.ph.preheader, label %scalar.ph, !llvm.loop !69
 
 bb.f:                                             ; preds = %.outer, %bb.h
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.h ], [ %indvars.iv.i.ph, %.outer ] ; 5 uses
@@ -367,7 +336,7 @@ bb.f:                                             ; preds = %.outer, %bb.h
   ]
 
 bb.g:                                             ; preds = %bb.f, %bb.f
-  %i.ah = lshr i64 %.lcssa.i, %indvars.iv.i
+  %i.ah = lshr i64 %.sroa.0.0..sroa.0.0.26.i, %indvars.iv.i
   %i.ai = trunc i64 %i.ah to i32
   %i.aj = and i32 %i.ai, 1                        ; 2 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %i.x, i64 %indvars.iv.i
@@ -379,7 +348,7 @@ bb.g:                                             ; preds = %bb.f, %bb.f
 bb.h:                                             ; preds = %bb.g, %bb.f
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond25.not.i = icmp eq i64 %indvars.iv.next.i, 21
-  br i1 %exitcond25.not.i, label %configuration_validate_capabilities.exit, label %bb.f, !llvm.loop !75
+  br i1 %exitcond25.not.i, label %configuration_validate_capabilities.exit, label %bb.f, !llvm.loop !70
 
 .thread:                                          ; preds = %bb.g
   %i.an = trunc nuw i8 %i.al to i1
@@ -390,12 +359,17 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   tail call void (ptr, ...) @error_report(ptr noundef nonnull @.str.105, ptr noundef %i.ao, ptr noundef nonnull %i.ap, ptr noundef nonnull %i.aq) #16
   %indvars.iv.next.i21 = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond25.not.i22 = icmp eq i64 %indvars.iv.next.i21, 21
-  br i1 %exitcond25.not.i22, label %configuration_validate_capabilities.exit.thread.a, label %.outer, !llvm.loop !75
+  br i1 %exitcond25.not.i22, label %configuration_validate_capabilities.exit.thread, label %.outer, !llvm.loop !70
+
+configuration_validate_capabilities.exit.thread:  ; preds = %.thread
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i)
+  br label %configuration_validate_capabilities.exit.thread.a
 
 configuration_validate_capabilities.exit:         ; preds = %bb.h
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i)
   br i1 %.022.i.ph, label %bb.i, label %configuration_validate_capabilities.exit.thread.a
 
-configuration_validate_capabilities.exit.thread.a: ; preds = %.thread, %configuration_validate_capabilities.exit
+configuration_validate_capabilities.exit.thread.a: ; preds = %configuration_validate_capabilities.exit.thread, %configuration_validate_capabilities.exit
   tail call void (ptr, ptr, i32, ptr, ptr, ...) @error_setg_internal(ptr noundef %2, ptr noundef nonnull @.str.3, i32 noundef 402, ptr noundef nonnull @__func__.configuration_post_load, ptr noundef nonnull @.str.104) #16
   br label %bb.i
 
@@ -798,9 +772,6 @@ declare i32 @llvm.umin.i32(i32, i32) #12
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #15
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.vector.reduce.or.v2i64(<2 x i64>) #12
-
 attributes #0 = { nounwind sspstrong uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "zero-call-used-regs"="used-gpr" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #2 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "zero-call-used-regs"="used-gpr" }
@@ -895,11 +866,6 @@ attributes #20 = { cold noreturn nounwind }
 !66 = distinct !{!66, !8}
 !67 = distinct !{!67, !8}
 !68 = !{ptr @qemu_savevm_state_cleanup}
-!69 = distinct !{!69, !8, !70, !71}
-!70 = !{!"llvm.loop.isvectorized", i32 1}
-!71 = !{!"llvm.loop.unroll.runtime.disable"}
-!72 = distinct !{!72, !73}
-!73 = !{!"llvm.loop.unroll.disable"}
-!74 = distinct !{!74, !8, !70}
-!75 = distinct !{!75, !8}
+!69 = distinct !{!69, !8}
+!70 = distinct !{!70, !8}
 end_hunk_1

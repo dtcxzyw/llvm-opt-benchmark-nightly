@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.c, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.d = lshr i64 %1, 1                           ; 8 uses
+  %i.d = lshr i64 %1, 1                           ; 7 uses
   %i.e = icmp samesign ugt i64 %1, 7
   %i.f = getelementptr inbounds nuw [56 x i8], ptr %0, i64 %i.d ; 2 uses
   %i.g = getelementptr inbounds nuw [56 x i8], ptr %2, i64 %i.d ; 2 uses
@@ -225,22 +225,15 @@ bb.f:                                             ; preds = %bb.c
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.e, %bb.f
-  %.sroa.0.0 = phi i64 [ 4, %bb.e ], [ 1, %bb.f ] ; 4 uses
-  %5 = sub nsw i64 %1, %i.d                       ; 2 uses
+  %.sroa.0.0 = phi i64 [ 4, %bb.e ], [ 1, %bb.f ] ; 3 uses
   %i.h = icmp samesign ult i64 %.sroa.0.0, %i.d
-  br i1 %i.h, label %.lr.ph, label %.loopexit47
+  br i1 %i.h, label %.lr.ph, label %.loopexit47.1
 
-.loopexit47:                                      ; preds = %_RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6shared9smallsort11insert_tailNtNtCsdcPuHeDsw6v_13project_model9workspace11PackageRootNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB18_7sort_byNCNvMCs85r3Sry2XhC_10load_cargoNtB2S_14ProjectFolders3news0_0E0EB2S_.exit, %bb.g
-  %6 = getelementptr inbounds nuw [56 x i8], ptr %0, i64 %i.d
-  %7 = getelementptr [56 x i8], ptr %2, i64 %i.d  ; 5 uses
-  %8 = icmp ult i64 %.sroa.0.0, %5
-  br i1 %8, label %.lr.ph.1, label %.loopexit47.1
-
-.lr.ph.1:                                         ; preds = %.loopexit47, %_RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6shared9smallsort11insert_tailNtNtCsdcPuHeDsw6v_13project_model9workspace11PackageRootNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB18_7sort_byNCNvMCs85r3Sry2XhC_10load_cargoNtB2S_14ProjectFolders3news0_0E0EB2S_.exit.1
-  %.sroa.05.061.1 = phi i64 [ %i.ae, %_RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6shared9smallsort11insert_tailNtNtCsdcPuHeDsw6v_13project_model9workspace11PackageRootNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB18_7sort_byNCNvMCs85r3Sry2XhC_10load_cargoNtB2S_14ProjectFolders3news0_0E0EB2S_.exit.1 ], [ %.sroa.0.0, %.loopexit47 ] ; 4 uses
-  %i.i = getelementptr inbounds nuw [56 x i8], ptr %6, i64 %.sroa.05.061.1
+.lr.ph.1:                                         ; preds = %_RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6shared9smallsort11insert_tailNtNtCsdcPuHeDsw6v_13project_model9workspace11PackageRootNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB18_7sort_byNCNvMCs85r3Sry2XhC_10load_cargoNtB2S_14ProjectFolders3news0_0E0EB2S_.exit, %_RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6shared9smallsort11insert_tailNtNtCsdcPuHeDsw6v_13project_model9workspace11PackageRootNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB18_7sort_byNCNvMCs85r3Sry2XhC_10load_cargoNtB2S_14ProjectFolders3news0_0E0EB2S_.exit.1
+  %.sroa.05.061.1 = phi i64 [ %i.ae, %_RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6shared9smallsort11insert_tailNtNtCsdcPuHeDsw6v_13project_model9workspace11PackageRootNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB18_7sort_byNCNvMCs85r3Sry2XhC_10load_cargoNtB2S_14ProjectFolders3news0_0E0EB2S_.exit.1 ], [ %.sroa.0.0, %_RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6shared9smallsort11insert_tailNtNtCsdcPuHeDsw6v_13project_model9workspace11PackageRootNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB18_7sort_byNCNvMCs85r3Sry2XhC_10load_cargoNtB2S_14ProjectFolders3news0_0E0EB2S_.exit ] ; 4 uses
+  %i.i = getelementptr inbounds nuw [56 x i8], ptr %0, i64 %.sroa.05.061.1
   %.idx.1 = mul nuw nsw i64 %.sroa.05.061.1, 56
-  %i.j = getelementptr inbounds nuw i8, ptr %7, i64 %.idx.1 ; 9 uses
+  %i.j = getelementptr inbounds nuw i8, ptr %2, i64 %.idx.1 ; 9 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.j, ptr noundef nonnull align 8 dereferenceable(56) %i.i, i64 56, i1 false)
   %i.k = getelementptr inbounds i8, ptr %i.j, i64 -56 ; 3 uses
   %i.l = getelementptr i8, ptr %i.j, i64 8        ; 2 uses
@@ -324,11 +317,11 @@ bb.j:                                             ; preds = %.noexc.i.1
 
 .backedge.i.1:                                    ; preds = %.noexc.i.1, %._crit_edge.i.i.i22.i.1
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %.sroa.0.012.i.1, ptr noundef nonnull align 8 dereferenceable(56) %i.v, i64 56, i1 false)
-  %i.ad = icmp eq ptr %i.v, %7
+  %i.ad = icmp eq ptr %i.v, %2
   br i1 %i.ad, label %.loopexit.i.1, label %bb.i
 
 .loopexit.i.1:                                    ; preds = %._crit_edge.i.i.i22.i.1, %.backedge.i.1, %.noexc.i.1, %.loopexit8.i.1
-  %.sroa.0.011.i.1 = phi ptr [ %.sroa.0.012.i.1, %.noexc.i.1 ], [ %i.k, %.loopexit8.i.1 ], [ %7, %.backedge.i.1 ], [ %.sroa.0.012.i.1, %._crit_edge.i.i.i22.i.1 ] ; 4 uses
+  %.sroa.0.011.i.1 = phi ptr [ %.sroa.0.012.i.1, %.noexc.i.1 ], [ %i.k, %.loopexit8.i.1 ], [ %2, %.backedge.i.1 ], [ %.sroa.0.012.i.1, %._crit_edge.i.i.i22.i.1 ] ; 4 uses
   store i64 %.sroa.026.0.copyload.i.1, ptr %.sroa.0.011.i.1, align 8, !noalias !55
   %.sroa.5.0..sroa.0.011.sroa_idx.i.1 = getelementptr inbounds nuw i8, ptr %.sroa.0.011.i.1, i64 8
   store ptr %.sroa.427.0.copyload.i.1, ptr %.sroa.5.0..sroa.0.011.sroa_idx.i.1, align 8, !noalias !55
@@ -341,14 +334,15 @@ bb.j:                                             ; preds = %.noexc.i.1
 
 _RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6shared9smallsort11insert_tailNtNtCsdcPuHeDsw6v_13project_model9workspace11PackageRootNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB18_7sort_byNCNvMCs85r3Sry2XhC_10load_cargoNtB2S_14ProjectFolders3news0_0E0EB2S_.exit.1: ; preds = %.lr.ph.i.i.i.i34.1, %.loopexit.i.1, %._crit_edge.i.i.i.i38.1
   %i.ae = add i64 %.sroa.05.061.1, 1              ; 2 uses
-  %exitcond.1.not = icmp eq i64 %i.ae, %5
+  %exitcond.1.not = icmp eq i64 %i.ae, %i.d
   br i1 %exitcond.1.not, label %.loopexit47.1, label %.lr.ph.1
 
-.loopexit47.1:                                    ; preds = %_RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6shared9smallsort11insert_tailNtNtCsdcPuHeDsw6v_13project_model9workspace11PackageRootNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB18_7sort_byNCNvMCs85r3Sry2XhC_10load_cargoNtB2S_14ProjectFolders3news0_0E0EB2S_.exit.1, %.loopexit47
+.loopexit47.1:                                    ; preds = %_RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6shared9smallsort11insert_tailNtNtCsdcPuHeDsw6v_13project_model9workspace11PackageRootNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB18_7sort_byNCNvMCs85r3Sry2XhC_10load_cargoNtB2S_14ProjectFolders3news0_0E0EB2S_.exit.1, %bb.g
   %i.af = add nsw i64 %1, -1                      ; 2 uses
-  %i.ag = getelementptr inbounds nuw [56 x i8], ptr %0, i64 %i.af
-  %i.ah = getelementptr inbounds nuw [56 x i8], ptr %2, i64 %i.af
-  %i.ai = getelementptr i8, ptr %7, i64 -56
+  %5 = getelementptr inbounds nuw [56 x i8], ptr %0, i64 %i.af
+  %i.ag = getelementptr inbounds nuw [56 x i8], ptr %2, i64 %i.af
+  %i.ah = getelementptr [56 x i8], ptr %2, i64 %i.d ; 2 uses
+  %i.ai = getelementptr i8, ptr %i.ah, i64 -56
   br label %.lr.ph.i
 
 ._crit_edge.i:                                    ; preds = %_RNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSNtNtCsdcPuHeDsw6v_13project_model9workspace11PackageRoot7sort_byNCNvMCs85r3Sry2XhC_10load_cargoNtB1F_14ProjectFolders3news0_0E0B1F_.exit34.i
@@ -362,10 +356,10 @@ _RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6shared9smallsort11insert_tailNtNtCsd
   %.sroa.0.013.i = phi ptr [ %i.be, %_RNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSNtNtCsdcPuHeDsw6v_13project_model9workspace11PackageRoot7sort_byNCNvMCs85r3Sry2XhC_10load_cargoNtB1F_14ProjectFolders3news0_0E0B1F_.exit34.i ], [ %0, %.loopexit47.1 ] ; 2 uses
   %.sroa.04.012.i = phi i64 [ %i.an, %_RNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSNtNtCsdcPuHeDsw6v_13project_model9workspace11PackageRoot7sort_byNCNvMCs85r3Sry2XhC_10load_cargoNtB1F_14ProjectFolders3news0_0E0B1F_.exit34.i ], [ 0, %.loopexit47.1 ]
   %.sroa.06.011.i = phi ptr [ %i.bd, %_RNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSNtNtCsdcPuHeDsw6v_13project_model9workspace11PackageRoot7sort_byNCNvMCs85r3Sry2XhC_10load_cargoNtB1F_14ProjectFolders3news0_0E0B1F_.exit34.i ], [ %2, %.loopexit47.1 ] ; 4 uses
-  %.sroa.011.010.i = phi ptr [ %i.bb, %_RNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSNtNtCsdcPuHeDsw6v_13project_model9workspace11PackageRoot7sort_byNCNvMCs85r3Sry2XhC_10load_cargoNtB1F_14ProjectFolders3news0_0E0B1F_.exit34.i ], [ %7, %.loopexit47.1 ] ; 4 uses
+  %.sroa.011.010.i = phi ptr [ %i.bb, %_RNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSNtNtCsdcPuHeDsw6v_13project_model9workspace11PackageRoot7sort_byNCNvMCs85r3Sry2XhC_10load_cargoNtB1F_14ProjectFolders3news0_0E0B1F_.exit34.i ], [ %i.ah, %.loopexit47.1 ] ; 4 uses
   %.sroa.015.09.i = phi ptr [ %i.bs, %_RNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSNtNtCsdcPuHeDsw6v_13project_model9workspace11PackageRoot7sort_byNCNvMCs85r3Sry2XhC_10load_cargoNtB1F_14ProjectFolders3news0_0E0B1F_.exit34.i ], [ %i.ai, %.loopexit47.1 ] ; 4 uses
-  %.sroa.017.08.i = phi ptr [ %i.br, %_RNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSNtNtCsdcPuHeDsw6v_13project_model9workspace11PackageRoot7sort_byNCNvMCs85r3Sry2XhC_10load_cargoNtB1F_14ProjectFolders3news0_0E0B1F_.exit34.i ], [ %i.ah, %.loopexit47.1 ] ; 4 uses
-  %.sroa.019.07.i = phi ptr [ %i.bt, %_RNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSNtNtCsdcPuHeDsw6v_13project_model9workspace11PackageRoot7sort_byNCNvMCs85r3Sry2XhC_10load_cargoNtB1F_14ProjectFolders3news0_0E0B1F_.exit34.i ], [ %i.ag, %.loopexit47.1 ] ; 2 uses
+  %.sroa.017.08.i = phi ptr [ %i.br, %_RNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSNtNtCsdcPuHeDsw6v_13project_model9workspace11PackageRoot7sort_byNCNvMCs85r3Sry2XhC_10load_cargoNtB1F_14ProjectFolders3news0_0E0B1F_.exit34.i ], [ %i.ag, %.loopexit47.1 ] ; 4 uses
+  %.sroa.019.07.i = phi ptr [ %i.bt, %_RNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSNtNtCsdcPuHeDsw6v_13project_model9workspace11PackageRoot7sort_byNCNvMCs85r3Sry2XhC_10load_cargoNtB1F_14ProjectFolders3news0_0E0B1F_.exit34.i ], [ %5, %.loopexit47.1 ] ; 2 uses
   %i.an = add nuw nsw i64 %.sroa.04.012.i, 1      ; 2 uses
   %i.ao = getelementptr i8, ptr %.sroa.011.010.i, i64 8
   %.sroa.011.0.val.i = load ptr, ptr %i.ao, align 8, !alias.scope !60, !nonnull !18, !noundef !18
@@ -647,7 +641,7 @@ bb.s:                                             ; preds = %.loopexit.split-lp7
 _RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6shared9smallsort11insert_tailNtNtCsdcPuHeDsw6v_13project_model9workspace11PackageRootNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB18_7sort_byNCNvMCs85r3Sry2XhC_10load_cargoNtB2S_14ProjectFolders3news0_0E0EB2S_.exit: ; preds = %.lr.ph.i.i.i.i34, %.loopexit.i, %._crit_edge.i.i.i.i38
   %i.cz = add i64 %.sroa.05.061, 1                ; 2 uses
   %exitcond.not = icmp eq i64 %i.cz, %i.d
-  br i1 %exitcond.not, label %.loopexit47, label %.lr.ph
+  br i1 %exitcond.not, label %.lr.ph.1, label %.lr.ph
 }
 
 ; Function Attrs: nonlazybind uwtable

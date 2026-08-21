@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %_RNvMNtCs4NRVxsYgnA
 
 .outer._crit_edge:                                ; preds = %.outer, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSThcE12split_at_mutCsb6FLkjZuKG_18ruff_python_parser.exit, %bb.a
   %.sroa.0.0.ph.lcssa119 = phi ptr [ %.sroa.0.0.ph128, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSThcE12split_at_mutCsb6FLkjZuKG_18ruff_python_parser.exit ], [ %0, %bb.a ], [ %i.kl, %.outer ] ; 18 uses
-  %.sroa.16.0.lcssa = phi i64 [ %.sroa.27.2.lcssa.i, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSThcE12split_at_mutCsb6FLkjZuKG_18ruff_python_parser.exit ], [ %1, %bb.a ], [ %i.jw, %.outer ] ; 10 uses
+  %.sroa.16.0.lcssa = phi i64 [ %.sroa.27.2.lcssa.i, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSThcE12split_at_mutCsb6FLkjZuKG_18ruff_python_parser.exit ], [ %1, %bb.a ], [ %i.jw, %.outer ] ; 9 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !3484)
   call void @llvm.experimental.noalias.scope.decl(metadata !3487)
   %i.g = icmp samesign ult i64 %.sroa.16.0.lcssa, 2
@@ -217,7 +217,7 @@ bb.c:                                             ; preds = %.outer._crit_edge
   br i1 %i.i, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.j = lshr i64 %.sroa.16.0.lcssa, 1            ; 12 uses
+  %i.j = lshr i64 %.sroa.16.0.lcssa, 1            ; 11 uses
   %i.k = icmp samesign ugt i64 %.sroa.16.0.lcssa, 15
   br i1 %i.k, label %bb.g, label %bb.f
 
@@ -345,22 +345,15 @@ bb.i:                                             ; preds = %bb.f
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h, %bb.g
-  %.sroa.0.0.i = phi i64 [ 8, %bb.g ], [ 4, %bb.h ], [ 1, %bb.i ] ; 4 uses
-  %7 = sub nsw i64 %.sroa.16.0.lcssa, %i.j        ; 2 uses
+  %.sroa.0.0.i = phi i64 [ 8, %bb.g ], [ 4, %bb.h ], [ 1, %bb.i ] ; 3 uses
   %i.ci = icmp samesign ult i64 %.sroa.0.0.i, %i.j
-  br i1 %i.ci, label %.lr.ph.i, label %.loopexit.i
+  br i1 %i.ci, label %.lr.ph.i, label %.loopexit.1.i
 
-.loopexit.i:                                      ; preds = %_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared9smallsort11insert_tailThcENCINvMNtCscdodAO9FK5_5alloc5sliceSB18_11sort_by_keyhNCNvMs_NtCs7CqHJXwM7TD_21unicode_normalization9decomposeINtB29_14DecompositionsNtNtNtBa_3str4iter5CharsE12sort_pending0E0ECsb6FLkjZuKG_18ruff_python_parser.exit.i, %bb.j
-  %8 = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.0.ph.lcssa119, i64 %i.j
-  %9 = getelementptr [8 x i8], ptr %2, i64 %i.j   ; 6 uses
-  %10 = icmp ult i64 %.sroa.0.0.i, %7
-  br i1 %10, label %.lr.ph.1.i, label %.loopexit.1.i
-
-.lr.ph.1.i:                                       ; preds = %.loopexit.i, %_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared9smallsort11insert_tailThcENCINvMNtCscdodAO9FK5_5alloc5sliceSB18_11sort_by_keyhNCNvMs_NtCs7CqHJXwM7TD_21unicode_normalization9decomposeINtB29_14DecompositionsNtNtNtBa_3str4iter5CharsE12sort_pending0E0ECsb6FLkjZuKG_18ruff_python_parser.exit.1.i
-  %.sroa.05.08.1.i = phi i64 [ %i.cv, %_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared9smallsort11insert_tailThcENCINvMNtCscdodAO9FK5_5alloc5sliceSB18_11sort_by_keyhNCNvMs_NtCs7CqHJXwM7TD_21unicode_normalization9decomposeINtB29_14DecompositionsNtNtNtBa_3str4iter5CharsE12sort_pending0E0ECsb6FLkjZuKG_18ruff_python_parser.exit.1.i ], [ %.sroa.0.0.i, %.loopexit.i ] ; 4 uses
-  %i.cj = getelementptr inbounds nuw [8 x i8], ptr %8, i64 %.sroa.05.08.1.i
+.lr.ph.1.i:                                       ; preds = %_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared9smallsort11insert_tailThcENCINvMNtCscdodAO9FK5_5alloc5sliceSB18_11sort_by_keyhNCNvMs_NtCs7CqHJXwM7TD_21unicode_normalization9decomposeINtB29_14DecompositionsNtNtNtBa_3str4iter5CharsE12sort_pending0E0ECsb6FLkjZuKG_18ruff_python_parser.exit.i, %_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared9smallsort11insert_tailThcENCINvMNtCscdodAO9FK5_5alloc5sliceSB18_11sort_by_keyhNCNvMs_NtCs7CqHJXwM7TD_21unicode_normalization9decomposeINtB29_14DecompositionsNtNtNtBa_3str4iter5CharsE12sort_pending0E0ECsb6FLkjZuKG_18ruff_python_parser.exit.1.i
+  %.sroa.05.08.1.i = phi i64 [ %i.cv, %_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared9smallsort11insert_tailThcENCINvMNtCscdodAO9FK5_5alloc5sliceSB18_11sort_by_keyhNCNvMs_NtCs7CqHJXwM7TD_21unicode_normalization9decomposeINtB29_14DecompositionsNtNtNtBa_3str4iter5CharsE12sort_pending0E0ECsb6FLkjZuKG_18ruff_python_parser.exit.1.i ], [ %.sroa.0.0.i, %_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared9smallsort11insert_tailThcENCINvMNtCscdodAO9FK5_5alloc5sliceSB18_11sort_by_keyhNCNvMs_NtCs7CqHJXwM7TD_21unicode_normalization9decomposeINtB29_14DecompositionsNtNtNtBa_3str4iter5CharsE12sort_pending0E0ECsb6FLkjZuKG_18ruff_python_parser.exit.i ] ; 4 uses
+  %i.cj = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.0.ph.lcssa119, i64 %.sroa.05.08.1.i
   %.idx328 = shl nuw nsw i64 %.sroa.05.08.1.i, 3
-  %i.ck = getelementptr inbounds nuw i8, ptr %9, i64 %.idx328 ; 3 uses
+  %i.ck = getelementptr inbounds nuw i8, ptr %2, i64 %.idx328 ; 3 uses
   %i.cl = load i64, ptr %i.cj, align 4, !alias.scope !3484, !noalias !3487 ; 3 uses
   store i64 %i.cl, ptr %i.ck, align 4, !alias.scope !3487, !noalias !3484
   %i.cm = getelementptr inbounds i8, ptr %i.ck, i64 -8 ; 3 uses
@@ -378,7 +371,7 @@ bb.j:                                             ; preds = %bb.i, %bb.h, %bb.g
 .preheader:                                       ; preds = %.lr.ph308
   %i.cr = load i64, ptr %i.ct, align 4, !alias.scope !3487, !noalias !3484
   store i64 %i.cr, ptr %.sroa.0.0.i41.1.i307, align 4, !alias.scope !3487, !noalias !3484
-  %i.cs = icmp eq ptr %i.ct, %9
+  %i.cs = icmp eq ptr %i.ct, %2
   br i1 %i.cs, label %._crit_edge309, label %.lr.ph308
 
 .lr.ph308:                                        ; preds = %.preheader.preheader, %.preheader
@@ -389,22 +382,23 @@ bb.j:                                             ; preds = %bb.i, %bb.h, %bb.g
   br i1 %i.cu, label %.preheader, label %._crit_edge309
 
 ._crit_edge309:                                   ; preds = %.preheader, %.lr.ph308, %.preheader.preheader
-  %.sroa.0.0.i41.lcssa.1.i = phi ptr [ %9, %.preheader.preheader ], [ %9, %.preheader ], [ %.sroa.0.0.i41.1.i307, %.lr.ph308 ]
+  %.sroa.0.0.i41.lcssa.1.i = phi ptr [ %2, %.preheader.preheader ], [ %2, %.preheader ], [ %.sroa.0.0.i41.1.i307, %.lr.ph308 ]
   %.sroa.0.sroa.0.0.insert.insert.i.1.i = and i64 %i.cl, -4294967041
   store i64 %.sroa.0.sroa.0.0.insert.insert.i.1.i, ptr %.sroa.0.0.i41.lcssa.1.i, align 4, !alias.scope !3487, !noalias !3489
   br label %_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared9smallsort11insert_tailThcENCINvMNtCscdodAO9FK5_5alloc5sliceSB18_11sort_by_keyhNCNvMs_NtCs7CqHJXwM7TD_21unicode_normalization9decomposeINtB29_14DecompositionsNtNtNtBa_3str4iter5CharsE12sort_pending0E0ECsb6FLkjZuKG_18ruff_python_parser.exit.1.i
 
 _RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared9smallsort11insert_tailThcENCINvMNtCscdodAO9FK5_5alloc5sliceSB18_11sort_by_keyhNCNvMs_NtCs7CqHJXwM7TD_21unicode_normalization9decomposeINtB29_14DecompositionsNtNtNtBa_3str4iter5CharsE12sort_pending0E0ECsb6FLkjZuKG_18ruff_python_parser.exit.1.i: ; preds = %._crit_edge309, %.lr.ph.1.i
   %i.cv = add nuw i64 %.sroa.05.08.1.i, 1         ; 2 uses
-  %exitcond.1.not.i = icmp eq i64 %i.cv, %7
+  %exitcond.1.not.i = icmp eq i64 %i.cv, %i.j
   br i1 %exitcond.1.not.i, label %.loopexit.1.i, label %.lr.ph.1.i
 
-.loopexit.1.i:                                    ; preds = %_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared9smallsort11insert_tailThcENCINvMNtCscdodAO9FK5_5alloc5sliceSB18_11sort_by_keyhNCNvMs_NtCs7CqHJXwM7TD_21unicode_normalization9decomposeINtB29_14DecompositionsNtNtNtBa_3str4iter5CharsE12sort_pending0E0ECsb6FLkjZuKG_18ruff_python_parser.exit.1.i, %.loopexit.i
+.loopexit.1.i:                                    ; preds = %_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared9smallsort11insert_tailThcENCINvMNtCscdodAO9FK5_5alloc5sliceSB18_11sort_by_keyhNCNvMs_NtCs7CqHJXwM7TD_21unicode_normalization9decomposeINtB29_14DecompositionsNtNtNtBa_3str4iter5CharsE12sort_pending0E0ECsb6FLkjZuKG_18ruff_python_parser.exit.1.i, %bb.j
   call void @llvm.experimental.noalias.scope.decl(metadata !3494)
   %i.cw = add nsw i64 %.sroa.16.0.lcssa, -1       ; 2 uses
-  %i.cx = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.0.ph.lcssa119, i64 %i.cw
-  %i.cy = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %i.cw
-  %i.cz = getelementptr i8, ptr %9, i64 -8
+  %7 = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.0.ph.lcssa119, i64 %i.cw
+  %i.cx = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %i.cw
+  %i.cy = getelementptr [8 x i8], ptr %2, i64 %i.j ; 2 uses
+  %i.cz = getelementptr i8, ptr %i.cy, i64 -8
   br label %.lr.ph.i.i
 
 ._crit_edge.i.i:                                  ; preds = %.lr.ph.i.i
@@ -418,10 +412,10 @@ _RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared9smallsort11insert_tailThcENCI
   %.sroa.0.010.i.i = phi ptr [ %i.dm, %.lr.ph.i.i ], [ %.sroa.0.0.ph.lcssa119, %.loopexit.1.i ] ; 2 uses
   %.sroa.04.09.i.i = phi i64 [ %i.de, %.lr.ph.i.i ], [ 0, %.loopexit.1.i ]
   %.sroa.06.08.i.i = phi ptr [ %i.dl, %.lr.ph.i.i ], [ %2, %.loopexit.1.i ] ; 3 uses
-  %.sroa.011.07.i.i = phi ptr [ %i.dj, %.lr.ph.i.i ], [ %9, %.loopexit.1.i ] ; 3 uses
+  %.sroa.011.07.i.i = phi ptr [ %i.dj, %.lr.ph.i.i ], [ %i.cy, %.loopexit.1.i ] ; 3 uses
   %.sroa.015.06.i.i = phi ptr [ %i.dr, %.lr.ph.i.i ], [ %i.cz, %.loopexit.1.i ] ; 3 uses
-  %.sroa.017.05.i.i = phi ptr [ %i.dq, %.lr.ph.i.i ], [ %i.cy, %.loopexit.1.i ] ; 3 uses
-  %.sroa.019.04.i.i = phi ptr [ %i.ds, %.lr.ph.i.i ], [ %i.cx, %.loopexit.1.i ] ; 2 uses
+  %.sroa.017.05.i.i = phi ptr [ %i.dq, %.lr.ph.i.i ], [ %i.cx, %.loopexit.1.i ] ; 3 uses
+  %.sroa.019.04.i.i = phi ptr [ %i.ds, %.lr.ph.i.i ], [ %7, %.loopexit.1.i ] ; 2 uses
   %i.de = add nuw nsw i64 %.sroa.04.09.i.i, 1     ; 2 uses
   %.sroa.011.0.val.i.i = load i8, ptr %.sroa.011.07.i.i, align 4, !alias.scope !3497, !noalias !3484, !noundef !18
   %.sroa.06.0.val.i.i = load i8, ptr %.sroa.06.08.i.i, align 4, !alias.scope !3497, !noalias !3484, !noundef !18
@@ -525,7 +519,7 @@ bb.n:                                             ; preds = %bb.m
 _RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared9smallsort11insert_tailThcENCINvMNtCscdodAO9FK5_5alloc5sliceSB18_11sort_by_keyhNCNvMs_NtCs7CqHJXwM7TD_21unicode_normalization9decomposeINtB29_14DecompositionsNtNtNtBa_3str4iter5CharsE12sort_pending0E0ECsb6FLkjZuKG_18ruff_python_parser.exit.i: ; preds = %._crit_edge304, %.lr.ph.i
   %i.eq = add nuw i64 %.sroa.05.08.i, 1           ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.eq, %i.j
-  br i1 %exitcond.not.i, label %.loopexit.i, label %.lr.ph.i
+  br i1 %exitcond.not.i, label %.lr.ph.1.i, label %.lr.ph.i
 
 .lr.ph._crit_edge:                                ; preds = %.lr.ph, %bb.b
   %.sroa.16.0121.lcssa = phi i64 [ %.sroa.27.2.lcssa.i, %bb.b ], [ %.sroa.16.0.ph127, %.lr.ph ]

@@ -204,7 +204,7 @@ _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCsbSS6DM8SDEO_5alloc3vec3VecNtNtBG_
 bb.ab:                                            ; preds = %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCsbSS6DM8SDEO_5alloc3vec3VecNtNtBG_6string6StringEECsiU5vK8fN4ZC_11ide_assists.exit.i, %bb.n
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g), !noalias !5122
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !noalias !5122
-  invoke void @_RNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers31generate_documentation_template14errors_builder(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.g, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %.sroa.0.0.copyload)
+  invoke void @_RNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers31generate_documentation_template14panics_builder(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.g, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %.sroa.0.0.copyload)
           to label %bb.ac unwind label %bb.m, !noalias !5122
 
 bb.ac:                                            ; preds = %bb.ab
@@ -287,7 +287,7 @@ _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCsbSS6DM8SDEO_5alloc3vec3VecNtNtBG_
 bb.al:                                            ; preds = %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCsbSS6DM8SDEO_5alloc3vec3VecNtNtBG_6string6StringEECsiU5vK8fN4ZC_11ide_assists.exit.1.i, %bb.ac
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g), !noalias !5122
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !noalias !5122
-  invoke void @_RNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers31generate_documentation_template14safety_builder(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.g, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %.sroa.0.0.copyload)
+  invoke void @_RNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers31generate_documentation_template14panics_builder(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.g, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %.sroa.0.0.copyload)
           to label %bb.am unwind label %bb.m, !noalias !5122
 
 bb.am:                                            ; preds = %bb.al
@@ -688,12 +688,6 @@ declare hidden void @_RNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers31generate_docu
 
 ; Function Attrs: nonlazybind uwtable
 declare hidden void @_RNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers31generate_documentation_template14panics_builder(ptr dead_on_unwind noalias nofree noundef writable sret([24 x i8]) align 8 captures(none) dereferenceable(24), ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(8)) unnamed_addr #0
-
-; Function Attrs: nonlazybind uwtable
-declare hidden void @_RNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers31generate_documentation_template14errors_builder(ptr dead_on_unwind noalias nofree noundef writable sret([24 x i8]) align 8 captures(none) dereferenceable(24), ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(8)) unnamed_addr #0
-
-; Function Attrs: nonlazybind uwtable
-declare hidden void @_RNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers31generate_documentation_template14safety_builder(ptr dead_on_unwind noalias nofree noundef writable sret([24 x i8]) align 8 captures(none) dereferenceable(24), ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(8)) unnamed_addr #0
 
 ; Function Attrs: nonlazybind uwtable
 declare hidden void @_RNvXs_NtNtCsbSS6DM8SDEO_5alloc3vec21spec_from_iter_nestedINtB6_3VecNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes9AssocItemEINtB4_18SpecFromIterNestedB13_INtNtNtNtCshzWfHUSfYae_4core4iter8adapters3map3MapINtNtNtB2E_5slice4iter4IterNtNtNtCsiU5vK8fN4ZC_11ide_assists8handlers31generate_enum_projection_method6MethodENCNCNvB3M_31generate_enum_projection_methods1_0s_0EE9from_iterB3Q_(ptr dead_on_unwind noalias nofree noundef writable sret([24 x i8]) align 8 captures(none) dereferenceable(24), ptr noalias nofree noundef readonly align 8 captures(address) dead_on_return dereferenceable(48)) unnamed_addr #0

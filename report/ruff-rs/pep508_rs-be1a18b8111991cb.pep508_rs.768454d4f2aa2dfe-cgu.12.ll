@@ -204,7 +204,7 @@ bb.a:
   %i.aw = alloca [56 x i8], align 8               ; 4 uses
   %i.ax = alloca [32 x i8], align 8               ; 7 uses
   %i.ay = alloca [24 x i8], align 8               ; 5 uses
-  %i.az = alloca [48 x i8], align 8               ; 19 uses
+  %i.az = alloca [48 x i8], align 8               ; 16 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.az)
   call void @_RNvMsk_NtNtCsaaRuwTSDeTG_9pep508_rs6marker4treeNtB5_10MarkerTree4kind(ptr noalias noundef nonnull sret([48 x i8]) align 8 captures(none) dereferenceable(48) %i.az, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %0)
   %i.ba = load i64, ptr %i.az, align 8, !range !141, !noundef !4
@@ -229,7 +229,7 @@ bb.b:                                             ; preds = %bb.a
   %i.be = icmp eq i64 %i.bc, 0
   br i1 %i.be, label %bb.c, label %bb.i
 
-bb.c:                                             ; preds = %_RNvMsF_NtCscdodAO9FK5_5alloc3vecINtB5_3VecIBv_NtNtNtCsaaRuwTSDeTG_9pep508_rs6marker4tree16MarkerExpressionEE8push_mutBO_.exit, %bb.b, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCsaaRuwTSDeTG_9pep508_rs6marker4tree16MarkerExpressionEEB13_.exit333.1, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCsaaRuwTSDeTG_9pep508_rs6marker4tree16MarkerExpressionEEB13_.exit324.1, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCsaaRuwTSDeTG_9pep508_rs6marker4tree16MarkerExpressionEEB13_.exit315.1, %_RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterINtCs5e9M2GLoJMY_8indexmap6BucketNtNtNtCsaaRuwTSDeTG_9pep508_rs6marker4tree10MarkerTreeINtCs6fe3SNoHupJ_14version_ranges6RangesNtNtB9_6string6StringEEENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextB1y_.exit, %_RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterINtCs5e9M2GLoJMY_8indexmap6BucketNtNtNtCsaaRuwTSDeTG_9pep508_rs6marker4tree10MarkerTreeINtCs6fe3SNoHupJ_14version_ranges6RangesNtNtCsgHAIXRTqFF5_9pep440_rs7version7VersionEEENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextB1y_.exit, %bb.a
+bb.c:                                             ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCsaaRuwTSDeTG_9pep508_rs6marker4tree16MarkerExpressionEEB13_.exit333.1, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCsaaRuwTSDeTG_9pep508_rs6marker4tree16MarkerExpressionEEB13_.exit324.1, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCsaaRuwTSDeTG_9pep508_rs6marker4tree16MarkerExpressionEEB13_.exit315.1, %_RNvMsF_NtCscdodAO9FK5_5alloc3vecINtB5_3VecIBv_NtNtNtCsaaRuwTSDeTG_9pep508_rs6marker4tree16MarkerExpressionEE8push_mutBO_.exit, %bb.b, %_RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterINtCs5e9M2GLoJMY_8indexmap6BucketNtNtNtCsaaRuwTSDeTG_9pep508_rs6marker4tree10MarkerTreeINtCs6fe3SNoHupJ_14version_ranges6RangesNtNtB9_6string6StringEEENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextB1y_.exit, %_RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterINtCs5e9M2GLoJMY_8indexmap6BucketNtNtNtCsaaRuwTSDeTG_9pep508_rs6marker4tree10MarkerTreeINtCs6fe3SNoHupJ_14version_ranges6RangesNtNtCsgHAIXRTqFF5_9pep440_rs7version7VersionEEENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextB1y_.exit, %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %i.az)
   ret void
 
@@ -360,9 +360,7 @@ bb.f:                                             ; preds = %bb.a
   %i.dw = getelementptr inbounds nuw i8, ptr %i.az, i64 16
   %i.dx = load i64, ptr %i.dw, align 8, !noundef !4 ; 9 uses
   %i.dy = getelementptr inbounds nuw i8, ptr %i.az, i64 24
-  %3 = load i64, ptr %i.dy, align 8, !noundef !4
-  %4 = getelementptr inbounds nuw i8, ptr %i.az, i64 32
-  %i.dz = load i64, ptr %4, align 8, !noundef !4
+  %i.dz = load i64, ptr %i.dy, align 8, !noundef !4 ; 2 uses
   %i.ea = getelementptr inbounds nuw i8, ptr %i.n, i64 8 ; 3 uses
   %i.eb = getelementptr inbounds nuw i8, ptr %i.n, i64 16 ; 3 uses
   %.not215 = icmp eq i64 %i.dx, 0                 ; 2 uses
@@ -374,7 +372,7 @@ bb.f:                                             ; preds = %bb.a
   %i.ef = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 8 uses
   %i.eg = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.w)
-  store i64 %3, ptr %i.w, align 8
+  store i64 %i.dz, ptr %i.w, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.v)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n)
   call void @_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsaaRuwTSDeTG_9pep508_rs(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.n, i64 noundef %i.dx, i1 noundef zeroext false, i64 noundef 1, i64 noundef 1)
@@ -390,9 +388,7 @@ bb.g:                                             ; preds = %bb.a
   %i.en = getelementptr inbounds nuw i8, ptr %i.az, i64 16
   %i.eo = load i64, ptr %i.en, align 8, !noundef !4 ; 9 uses
   %i.ep = getelementptr inbounds nuw i8, ptr %i.az, i64 24
-  %5 = load i64, ptr %i.ep, align 8, !noundef !4
-  %6 = getelementptr inbounds nuw i8, ptr %i.az, i64 32
-  %i.eq = load i64, ptr %6, align 8, !noundef !4
+  %i.eq = load i64, ptr %i.ep, align 8, !noundef !4 ; 2 uses
   %i.er = getelementptr inbounds nuw i8, ptr %i.m, i64 8 ; 3 uses
   %i.es = getelementptr inbounds nuw i8, ptr %i.m, i64 16 ; 3 uses
   %.not213 = icmp eq i64 %i.eo, 0                 ; 2 uses
@@ -404,7 +400,7 @@ bb.g:                                             ; preds = %bb.a
   %i.ew = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 8 uses
   %i.ex = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.t)
-  store i64 %5, ptr %i.t, align 8
+  store i64 %i.eq, ptr %i.t, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.s)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m)
   call void @_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsaaRuwTSDeTG_9pep508_rs(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.m, i64 noundef %i.eo, i1 noundef zeroext false, i64 noundef 1, i64 noundef 1)
@@ -416,16 +412,14 @@ bb.h:                                             ; preds = %bb.a
   %i.fa = getelementptr inbounds nuw i8, ptr %i.az, i64 8
   %i.fb = load ptr, ptr %i.fa, align 8, !nonnull !4, !align !142, !noundef !4 ; 3 uses
   %i.fc = getelementptr inbounds nuw i8, ptr %i.az, i64 16
-  %7 = load i64, ptr %i.fc, align 8, !noundef !4
-  %8 = getelementptr inbounds nuw i8, ptr %i.az, i64 24
-  %i.fd = load i64, ptr %8, align 8, !noundef !4
+  %i.fd = load i64, ptr %i.fc, align 8, !noundef !4 ; 2 uses
   %i.fe = getelementptr inbounds nuw i8, ptr %i.fb, i64 8 ; 4 uses
   %i.ff = getelementptr inbounds nuw i8, ptr %i.p, i64 32 ; 2 uses
   %.sroa.555.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.p, i64 8 ; 2 uses
   %i.fg = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 8 uses
   %i.fh = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.q)
-  store i64 %7, ptr %i.q, align 8
+  store i64 %i.fd, ptr %i.q, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.p)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.555)
   %i.fi = load i64, ptr %i.fb, align 8, !range !154, !noundef !4
@@ -828,7 +822,7 @@ bb.ei:                                            ; preds = %bb.eh
 
 bb.ej:                                            ; preds = %bb.ei, %bb.eh
   store i8 %i.du, ptr %i.ec, align 1
-  store i8 8, ptr %i.ed, align 8
+  store i8 7, ptr %i.ed, align 8
   store i64 %i.qm, ptr %i.ee, align 8
   store ptr %i.qn, ptr %.sroa.4195.0..sroa_idx, align 8
   store i64 %i.dx, ptr %.sroa.5196.0..sroa_idx, align 8
@@ -983,7 +977,7 @@ bb.ez:                                            ; preds = %bb.ey
 
 bb.fa:                                            ; preds = %bb.ez, %bb.ey
   store i8 %i.el, ptr %i.et, align 1
-  store i8 10, ptr %i.eu, align 8
+  store i8 9, ptr %i.eu, align 8
   store i64 %i.sc, ptr %i.ev, align 8
   store ptr %i.sd, ptr %.sroa.4201.0..sroa_idx, align 8
   store i64 %i.eo, ptr %.sroa.5202.0..sroa_idx, align 8
@@ -1140,7 +1134,7 @@ bb.fp:                                            ; preds = %_RINvNtCs4NRVxsYgnA
 
 bb.fq:                                            ; preds = %bb.fp, %bb.fo
   %.sroa.054.0.1 = phi i64 [ 1, %bb.fp ], [ 0, %bb.fo ]
-  store i8 1, ptr %i.ff, align 8
+  store i8 0, ptr %i.ff, align 8
   store i64 %.sroa.054.0.1, ptr %i.p, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.555.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.555, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.555)

@@ -205,7 +205,7 @@ bb.a:
   %i.n = alloca [56 x i8], align 8                ; 6 uses
   %i.o = alloca [48 x i8], align 8                ; 4 uses
   %i.p = alloca [1 x i8], align 1                 ; 7 uses
-  %2 = alloca [80 x i8], align 8                  ; 7 uses
+  %.sroa.11 = alloca [24 x i8], align 8           ; 6 uses
   %i.q = alloca [1 x i8], align 1                 ; 8 uses
   %i.r = alloca [1 x i8], align 1                 ; 5 uses
   %i.s = load ptr, ptr %1, align 8, !nonnull !6, !noundef !6
@@ -298,17 +298,12 @@ bb.p:                                             ; preds = %switch.lookup
   %i.z = getelementptr inbounds nuw i8, ptr %i.x, i64 16
   %i.aa = getelementptr inbounds nuw i8, ptr %i.x, i64 24
   %i.ab = getelementptr inbounds nuw i8, ptr %i.x, i64 32
-  call void @llvm.lifetime.start.p0(ptr nonnull %2)
-  %.sroa.037.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 2 uses
-  store ptr %i.z, ptr %.sroa.037.sroa.4.0..sroa_idx, align 8
-  %.sroa.037.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 32
-  store ptr %i.aa, ptr %.sroa.037.sroa.5.0..sroa_idx, align 8
-  %.sroa.037.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 40
-  store ptr %i.ab, ptr %.sroa.037.sroa.6.0..sroa_idx, align 8
-  %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 48
-  store i64 0, ptr %.sroa.2.0..sroa_idx, align 8
-  %.sroa.438.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 64
-  store i64 0, ptr %.sroa.438.0..sroa_idx, align 8
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.11)
+  store ptr %i.z, ptr %.sroa.11, align 8
+  %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.11, i64 8
+  store ptr %i.aa, ptr %.sroa.2.0..sroa_idx, align 8
+  %.sroa.438.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.11, i64 16
+  store ptr %i.ab, ptr %.sroa.438.0..sroa_idx, align 8
   %.sroa.42.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.i, i64 8
   %.sroa.53.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.i, i64 16
   %i.ac = getelementptr inbounds nuw i8, ptr %i.h, i64 16
@@ -354,10 +349,13 @@ bb.q:                                             ; preds = %switch.lookup
   br i1 %.not.i.i.i.i, label %.split.preheader.i._crit_edge, label %bb.r
 
 bb.r:                                             ; preds = %.lr.ph, %.split.i
-  %i.am = phi i64 [ %i.al, %.lr.ph ], [ %i.an, %.split.i ] ; 2 uses
+  %i.am = phi i64 [ %i.al, %.lr.ph ], [ %i.an, %.split.i ] ; 3 uses
   %i.an = add nuw nsw i64 %i.am, 1                ; 4 uses
-  %3 = getelementptr inbounds nuw [8 x i8], ptr %.sroa.037.sroa.4.0..sroa_idx, i64 %i.am
-  %i.ao = load ptr, ptr %3, align 8, !alias.scope !1554, !nonnull !6, !align !17, !noundef !6
+  %2 = icmp ult i64 %i.am, 3
+  call void @llvm.assume(i1 %2)
+  %.sroa.11.24..sroa_stride = shl nuw nsw i64 %i.am, 3
+  %.sroa.11.24..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.11, i64 %.sroa.11.24..sroa_stride
+  %i.ao = load ptr, ptr %.sroa.11.24..sroa_idx, align 8, !alias.scope !1554
   %i.ap = load ptr, ptr %i.ao, align 8, !alias.scope !1561, !noalias !1551, !align !17, !noundef !6 ; 6 uses
   %.not.i.i = icmp eq ptr %i.ap, null
   br i1 %.not.i.i, label %.split.i, label %_RNvXsI_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters7flattenINtB5_13FlattenCompatINtNtNtBb_5array4iter8IntoIterRINtNtBb_6option6OptionINtNtCscdodAO9FK5_5alloc5boxed3BoxNtNtCskLngH8kgpZI_15ruff_python_ast9generated4ExprEEKj3_EINtB1J_4IterB22_EENtNtNtB9_6traits8iterator8Iterator4nextCsEhZmuQNqkz_11ruff_linter.exit
@@ -428,7 +426,7 @@ bb.af:                                            ; preds = %_RNvXsI_NtNtNtCs4NR
   br label %.thread116
 
 .split.preheader.i._crit_edge:                    ; preds = %.split.preheader.i.backedge, %.split.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %2)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.11)
   br label %bb.ag
 
 bb.ag:                                            ; preds = %.thread108, %switch.lookup163, %bb.q, %bb.q, %.split.preheader.i._crit_edge

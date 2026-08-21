@@ -204,8 +204,8 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #2
 ; Function Attrs: nounwind uwtable
 define internal fastcc range(i32 -2147483648, 1) i32 @seq_parse_frame_data(ptr nofree noundef captures(none) initializes((500, 516)) %0, ptr noundef %1) unnamed_addr #1 {
 .preheader54.preheader:
-  %2 = alloca [4 x i32], align 16                 ; 7 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #4
+  %.sroa.2 = alloca [3 x i32], align 4            ; 7 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.2)
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 5 uses
   %i.b = load i32, ptr %i.a, align 4, !tbaa !40
   %i.c = add nsw i32 %i.b, 6144                   ; 2 uses
@@ -232,13 +232,12 @@ define internal fastcc range(i32 -2147483648, 1) i32 @seq_parse_frame_data(ptr n
   %i.o = tail call i32 @avio_r8(ptr noundef %1) #4 ; 2 uses
   %i.p = tail call i32 @avio_rl16(ptr noundef %1) #4 ; 3 uses
   %i.q = tail call i32 @avio_rl16(ptr noundef %1) #4 ; 5 uses
-  %3 = getelementptr inbounds nuw i8, ptr %2, i64 4
-  store i32 %i.q, ptr %3, align 4, !tbaa !62
+  store i32 %i.q, ptr %.sroa.2, align 4, !tbaa !62
   %i.r = tail call i32 @avio_rl16(ptr noundef %1) #4 ; 6 uses
-  %i.s = getelementptr inbounds nuw i8, ptr %2, i64 8
-  store i32 %i.r, ptr %i.s, align 8, !tbaa !62
+  %i.s = getelementptr inbounds nuw i8, ptr %.sroa.2, i64 4
+  store i32 %i.r, ptr %i.s, align 4, !tbaa !62
   %i.t = tail call i32 @avio_rl16(ptr noundef %1) #4 ; 2 uses
-  %i.u = getelementptr inbounds nuw i8, ptr %2, i64 12
+  %i.u = getelementptr inbounds nuw i8, ptr %.sroa.2, i64 8
   store i32 %i.t, ptr %i.u, align 4, !tbaa !62
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
   %.not50 = icmp eq i32 %i.p, 0
@@ -247,10 +246,10 @@ define internal fastcc range(i32 -2147483648, 1) i32 @seq_parse_frame_data(ptr n
 .lr.ph.preheader:                                 ; preds = %.preheader54.preheader
   %i.w = icmp eq i32 %i.q, 0
   %i.x = icmp eq i32 %i.r, 0
-  %spec.select84 = select i1 %i.x, i64 3, i64 2
-  %.0.lcssa.ph = select i1 %i.w, i64 %spec.select84, i64 1
-  %4 = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %.0.lcssa.ph
-  %i.y = load i32, ptr %4, align 4, !tbaa !62
+  %spec.select84 = select i1 %i.x, i64 8, i64 4
+  %.0.lcssa.ph = select i1 %i.w, i64 %spec.select84, i64 0
+  %.sroa.2.4..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.2, i64 %.0.lcssa.ph
+  %i.y = load i32, ptr %.sroa.2.4..sroa_idx, align 4, !tbaa !62
   %i.z = sub i32 %i.y, %i.p                       ; 4 uses
   %i.aa = icmp sgt i32 %i.m, 29
   br i1 %i.aa, label %seq_fill_buffer.exit.thread, label %bb.a
@@ -293,8 +292,8 @@ bb.c:                                             ; preds = %seq_fill_buffer.exi
 
 .lr.ph.preheader.1:                               ; preds = %bb.c
   %i.aw = icmp eq i32 %i.r, 0
-  %spec.select85.sroa.sel.v = select i1 %i.aw, i64 12, i64 8
-  %spec.select85.sroa.sel = getelementptr inbounds nuw i8, ptr %2, i64 %spec.select85.sroa.sel.v
+  %spec.select85.sroa.sel.v = select i1 %i.aw, i64 8, i64 4
+  %spec.select85.sroa.sel = getelementptr inbounds nuw i8, ptr %.sroa.2, i64 %spec.select85.sroa.sel.v
   %i.ax = load i32, ptr %spec.select85.sroa.sel, align 4, !tbaa !62
   %i.ay = sub i32 %i.ax, %i.q                     ; 4 uses
   %i.az = icmp sgt i32 %i.n, 29
@@ -403,7 +402,7 @@ bb.l:                                             ; preds = %bb.i
 
 seq_fill_buffer.exit.thread:                      ; preds = %bb.b, %bb.a, %.lr.ph.preheader, %.lr.ph.preheader.1, %bb.d, %bb.e, %.critedge.2, %bb.g, %bb.h, %bb.k, %bb.l, %bb.j
   %.045 = phi i32 [ -1094995529, %bb.j ], [ 0, %bb.k ], [ 0, %bb.l ], [ %i.as, %bb.b ], [ -1094995529, %bb.a ], [ -1094995529, %.lr.ph.preheader ], [ -1094995529, %.lr.ph.preheader.1 ], [ -1094995529, %bb.d ], [ %i.br, %bb.e ], [ -1094995529, %.critedge.2 ], [ -1094995529, %bb.g ], [ %i.co, %bb.h ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #4
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.2)
   ret i32 %.045
 }
 
