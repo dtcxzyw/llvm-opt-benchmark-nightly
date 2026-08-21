@@ -204,7 +204,7 @@ bb.h:                                             ; preds = %bb.g
   %i.cl = load i16, ptr %i.c, align 2, !tbaa !24  ; 2 uses
   %i.cm = zext i16 %i.cl to i32
   %i.cn = sub nsw i32 %i.ck, %i.cm
-  %i.co = add nsw i32 %i.cn, 1                    ; 9 uses
+  %i.co = add nsw i32 %i.cn, 1                    ; 8 uses
   %i.cp = zext i16 %i.ci to i32                   ; 2 uses
   %i.cq = load i16, ptr %i.e, align 2, !tbaa !24  ; 2 uses
   %i.cr = zext i16 %i.cq to i32
@@ -607,17 +607,14 @@ bb.ap:                                            ; preds = %bb.q
 
 .lr.ph1011.preheader:                             ; preds = %bb.ap
   %.pre1134 = load i16, ptr %i.d, align 2, !tbaa !24 ; 2 uses
-  %7 = zext i32 %i.co to i64
   br label %.lr.ph1011
 
 .lr.ph1011:                                       ; preds = %.lr.ph1011.preheader, %.thread794
-  %indvar = phi i64 [ 0, %.lr.ph1011.preheader ], [ %indvar.next, %.thread794 ] ; 2 uses
-  %i.ik = phi i16 [ %i.hv, %.lr.ph1011.preheader ], [ %i.mm, %.thread794 ]
-  %i.il = phi i16 [ %.pre1134, %.lr.ph1011.preheader ], [ %i.mn, %.thread794 ] ; 2 uses
-  %i.im = phi i16 [ %.pre1134, %.lr.ph1011.preheader ], [ %i.mo, %.thread794 ] ; 2 uses
-  %i.in = phi i16 [ %i.hx, %.lr.ph1011.preheader ], [ %i.mp, %.thread794 ] ; 2 uses
-  %.03211009 = phi i32 [ 0, %.lr.ph1011.preheader ], [ %i.mq, %.thread794 ] ; 2 uses
-  %8 = mul i64 %indvar, %7
+  %i.ik = phi i16 [ %i.mm, %.thread794 ], [ %i.hv, %.lr.ph1011.preheader ]
+  %i.il = phi i16 [ %i.mn, %.thread794 ], [ %.pre1134, %.lr.ph1011.preheader ] ; 2 uses
+  %i.im = phi i16 [ %i.mo, %.thread794 ], [ %.pre1134, %.lr.ph1011.preheader ] ; 2 uses
+  %i.in = phi i16 [ %i.mp, %.thread794 ], [ %i.hx, %.lr.ph1011.preheader ] ; 2 uses
+  %.03211009 = phi i32 [ %i.mq, %.thread794 ], [ 0, %.lr.ph1011.preheader ] ; 2 uses
   %i.io = load ptr, ptr %i.ac, align 8, !tbaa !18 ; 3 uses
   %i.ip = load i32, ptr %i.as, align 4, !tbaa !76
   %i.iq = load i8, ptr %i.ad, align 8, !tbaa !26
@@ -652,13 +649,11 @@ bb.ap:                                            ; preds = %bb.q
 
 bb.aq:                                            ; preds = %.lr.ph1007, %._crit_edge1003
   %i.ji = phi i16 [ %i.il, %.lr.ph1007 ], [ %i.mk, %._crit_edge1003 ]
-  %indvars.iv1116 = phi i64 [ 0, %.lr.ph1007 ], [ %indvars.iv.next1117, %._crit_edge1003 ] ; 3 uses
+  %indvars.iv1116 = phi i64 [ 0, %.lr.ph1007 ], [ %indvars.iv.next1117, %._crit_edge1003 ] ; 2 uses
   %i.jj = phi i16 [ %i.jg, %.lr.ph1007 ], [ %i.ml, %._crit_edge1003 ] ; 2 uses
-  %9 = add i64 %8, %indvars.iv1116
-  %10 = and i64 %9, 4294967295
   %i.jk = trunc nuw nsw i64 %indvars.iv1116 to i32
   %i.jl = add i32 %i.jh, %i.jk
-  %i.jm = zext i32 %i.jl to i64
+  %i.jm = zext i32 %i.jl to i64                   ; 2 uses
   %i.jn = load i8, ptr %i.ad, align 8, !tbaa !26
   %i.jo = lshr i8 %i.jn, 3
   %i.jp = zext nneg i8 %i.jo to i64               ; 2 uses
@@ -709,7 +704,7 @@ vector.memcheck:                                  ; preds = %iter.check
   %scevgep1396 = getelementptr i8, ptr %scevgep, i64 %i.kd
   %i.kf = getelementptr i8, ptr %scevgep1397, i64 %i.kd
   %scevgep1398 = getelementptr i8, ptr %i.kf, i64 %i.jr
-  %i.kg = mul nuw nsw i64 %10, %i.jp
+  %i.kg = mul nuw nsw i64 %i.jp, %i.jm
   %i.kh = add nuw nsw i64 %i.kg, 1
   %i.ki = mul nuw nsw i64 %i.kh, %i.jr
   %scevgep1399 = getelementptr i8, ptr %i.dv, i64 %i.ki
@@ -910,7 +905,6 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   store i16 %i.mp, ptr %i.j, align 2, !tbaa !24
   %i.mq = add nuw nsw i32 %.03211009, 1
   %.not456 = icmp ugt i16 %i.mp, %i.mm
-  %indvar.next = add i64 %indvar, 1
   br i1 %.not456, label %.thread796, label %.lr.ph1011, !llvm.loop !145
 
 .thread796:                                       ; preds = %.thread794, %bb.ap

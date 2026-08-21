@@ -204,7 +204,7 @@ define internal fastcc void @SetInitialProfile(ptr nofree noundef readonly captu
 bb.a:
   %i.a = load i64, ptr %0, align 8, !tbaa !14     ; 19 uses
   %i.b = tail call ptr @N_VGetArrayPointer(ptr noundef %1) #10 ; 3 uses
-  %i.c = tail call ptr @N_VGetArrayPointer(ptr noundef %2) #10 ; 2 uses
+  %i.c = tail call ptr @N_VGetArrayPointer(ptr noundef %2) #10
   %i.d = add nsw i64 %i.a, -1                     ; 3 uses
   %i.e = icmp sgt i64 %i.a, 0
   br i1 %i.e, label %.lr.ph58, label %._crit_edge68.split.critedge
@@ -329,19 +329,17 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   tail call void @N_VConst(double noundef 0.000000e+00, ptr noundef %2) #10
   %i.bf = tail call i32 @resHeat(double poison, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef nonnull %0) ; 0 uses
   tail call void @N_VScale(double noundef -1.000000e+00, ptr noundef %3, ptr noundef %2) #10
-  %i.bg = shl i64 %i.a, 3                         ; 2 uses
+  %i.bg = shl nuw i64 %i.a, 3
   %exitcond72.peel.not = icmp eq i64 %i.a, 1
   %.not = icmp eq i64 %i.a, 2
   %i.bh = add nsw i64 %i.a, -2
   br label %.lr.ph62
 
 .lr.ph62:                                         ; preds = %._crit_edge59.split, %._crit_edge63
-  %.165 = phi i64 [ %i.bq, %._crit_edge63 ], [ 0, %._crit_edge59.split ] ; 5 uses
-  %4 = mul i64 %i.bg, %.165
-  %scevgep74 = getelementptr i8, ptr %i.c, i64 %4
-  %i.bi = mul nuw nsw i64 %.165, %i.a
+  %.165 = phi i64 [ %i.bq, %._crit_edge63 ], [ 0, %._crit_edge59.split ] ; 4 uses
+  %i.bi = mul i64 %.165, %i.a
   %i.bj = icmp eq i64 %.165, 0
-  %i.bk = getelementptr [8 x i8], ptr %i.c, i64 %i.bi ; 2 uses
+  %i.bk = getelementptr [8 x i8], ptr %i.c, i64 %i.bi ; 3 uses
   br i1 %i.bj, label %._crit_edge63.sink.split, label %.lr.ph62.split
 
 .lr.ph62.split:                                   ; preds = %.lr.ph62
@@ -364,7 +362,7 @@ bb.b:                                             ; preds = %.lr.ph62.split
   br i1 %exitcond72.not, label %.lr.ph62.split.split.peel, label %.lr.ph62.split.split, !llvm.loop !33
 
 ._crit_edge63.sink.split:                         ; preds = %.lr.ph62.split, %.lr.ph62
-  tail call void @llvm.memset.p0.i64(ptr align 8 %scevgep74, i8 0, i64 %i.bg, i1 false), !tbaa !19
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.bk, i8 0, i64 %i.bg, i1 false), !tbaa !19
   br label %._crit_edge63
 
 .lr.ph62.split.split.peel:                        ; preds = %.lr.ph62.split.split.peel.next, %.lr.ph62.split.split

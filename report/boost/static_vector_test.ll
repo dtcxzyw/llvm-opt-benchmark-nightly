@@ -204,9 +204,8 @@ _ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2
 
 _ZN5boost9container13static_vectorI14counting_valueLm10EvEC2ERKS3_.exit.thread: ; preds = %_ZN5boost9container19vector_alloc_holderINS0_3dtl24static_storage_allocatorI14counting_valueLm10ELm0ELb1EEEmNS_11move_detail17integral_constantIjLj0EEEEC2IRKS5_EENS0_27vector_uninitialized_size_tEOT_m.exit.i.i.preheader, %_ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2_Lm10ELm0ELb1EEEvED2Ev.exit97
   %_ZZN14counting_value1cEvE2co.promoted.i.i.i = phi i64 [ %i.av, %_ZN5boost9container19vector_alloc_holderINS0_3dtl24static_storage_allocatorI14counting_valueLm10ELm0ELb1EEEmNS_11move_detail17integral_constantIjLj0EEEEC2IRKS5_EENS0_27vector_uninitialized_size_tEOT_m.exit.i.i.preheader ], [ %i.dy, %_ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2_Lm10ELm0ELb1EEEvED2Ev.exit97 ] ; 3 uses
-  %indvars.iv202 = phi i64 [ 0, %_ZN5boost9container19vector_alloc_holderINS0_3dtl24static_storage_allocatorI14counting_valueLm10ELm0ELb1EEEmNS_11move_detail17integral_constantIjLj0EEEEC2IRKS5_EENS0_27vector_uninitialized_size_tEOT_m.exit.i.i.preheader ], [ %indvars.iv.next203, %_ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2_Lm10ELm0ELb1EEEvED2Ev.exit97 ] ; 13 uses
+  %indvars.iv202 = phi i64 [ 0, %_ZN5boost9container19vector_alloc_holderINS0_3dtl24static_storage_allocatorI14counting_valueLm10ELm0ELb1EEEmNS_11move_detail17integral_constantIjLj0EEEEC2IRKS5_EENS0_27vector_uninitialized_size_tEOT_m.exit.i.i.preheader ], [ %indvars.iv.next203, %_ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2_Lm10ELm0ELb1EEEvED2Ev.exit97 ] ; 12 uses
   %indvars.iv198 = phi i32 [ 5, %_ZN5boost9container19vector_alloc_holderINS0_3dtl24static_storage_allocatorI14counting_valueLm10ELm0ELb1EEEmNS_11move_detail17integral_constantIjLj0EEEEC2IRKS5_EENS0_27vector_uninitialized_size_tEOT_m.exit.i.i.preheader ], [ %indvars.iv.next199, %_ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2_Lm10ELm0ELb1EEEvED2Ev.exit97 ] ; 2 uses
-  %1 = sub nsw i64 0, %indvars.iv202
   %smax = tail call i32 @llvm.smax.i32(i32 %indvars.iv198, i32 1)
   call void @llvm.lifetime.start.p0(ptr nonnull %0) #25
   store <4 x i32> <i32 0, i32 100, i32 1, i32 101>, ptr %0, align 16, !tbaa !18
@@ -242,8 +241,8 @@ bb.p:                                             ; preds = %_ZN5boost9container
   br i1 %.not8.i.i.i.i, label %_ZN5boost9container15move_backward_nIP14counting_valueS3_EENS0_3dtl38disable_if_memtransfer_copy_assignableIT_T0_S7_E4typeES6_mS7_.exit.i.i.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %bb.p
-  %i.bm = sub nsw i64 4, %indvars.iv202           ; 2 uses
-  %xtraiter = and i64 %1, 3                       ; 2 uses
+  %i.bm = sub nsw i64 4, %indvars.iv202           ; 3 uses
+  %xtraiter = and i64 %i.bm, 3                    ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.i.i.i.i.prol.loopexit, label %.lr.ph.i.i.i.i.prol
 
@@ -646,8 +645,6 @@ bb.c:                                             ; preds = %bb.a, %_ZN5boost9co
   %indvars.iv = phi i64 [ 5, %bb.a ], [ %indvars.iv.next, %_ZN5boost9container6vectorINS0_4test24movable_and_copyable_intENS0_3dtl24static_storage_allocatorIS3_Lm10ELm0ELb1EEEvED2Ev.exit ] ; 2 uses
   %.03888 = phi i64 [ 0, %bb.a ], [ %i.dw, %_ZN5boost9container6vectorINS0_4test24movable_and_copyable_intENS0_3dtl24static_storage_allocatorIS3_Lm10ELm0ELb1EEEvED2Ev.exit ] ; 10 uses
   %umax = call i64 @llvm.umax.i64(i64 %indvars.iv, i64 1)
-  %3 = shl nuw nsw i64 %.03888, 2                 ; 3 uses
-  %scevgep96 = getelementptr nuw i8, ptr %2, i64 %3 ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #25
   %i.b = load i64, ptr %i.a, align 8, !tbaa !300  ; 12 uses
   %i.c = icmp ugt i64 %i.b, 10
@@ -672,6 +669,8 @@ bb.e:                                             ; preds = %_ZN5boost9container
   br i1 %.not.i.i, label %bb.g, label %.thread, !prof !679
 
 .thread:                                          ; preds = %_ZN5boost9container19vector_alloc_holderINS0_3dtl24static_storage_allocatorINS0_4test24movable_and_copyable_intELm10ELm0ELb1EEEmNS_11move_detail17integral_constantIjLj0EEEEC2IRKS6_EENS0_27vector_uninitialized_size_tEOT_m.exit.i.i, %bb.e
+  %.idx63106 = shl nuw nsw i64 %.03888, 2         ; 3 uses
+  %3 = getelementptr i8, ptr %2, i64 %.idx63106   ; 6 uses
   %.idx = shl nuw nsw i64 %i.b, 2                 ; 3 uses
   %i.g = getelementptr i8, ptr %2, i64 %.idx      ; 11 uses
   %i.h = icmp samesign eq i64 %i.b, %.03888
@@ -685,7 +684,7 @@ bb.e:                                             ; preds = %_ZN5boost9container
   br label %.loopexit67
 
 bb.f:                                             ; preds = %.thread
-  %gepdiff = sub nsw i64 %.idx, %3                ; 4 uses
+  %gepdiff = sub nsw i64 %.idx, %.idx63106        ; 4 uses
   %i.j = ashr exact i64 %gepdiff, 2               ; 2 uses
   %.not.i.i.i.i.i = icmp ult i64 %i.j, 3
   %_ZN5boost9container4test24movable_and_copyable_int5countE.promoted76 = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !18, !noalias !2296 ; 3 uses
@@ -707,7 +706,7 @@ bb.f:                                             ; preds = %.thread
   %i.q = add i32 %_ZN5boost9container4test24movable_and_copyable_int5countE.promoted76, 3
   store i32 %i.q, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !18, !noalias !2296
   %i.r = add nsw i64 %.idx, -12
-  %.not8.i.i.i.i.i.i = icmp eq i64 %3, %i.r
+  %.not8.i.i.i.i.i.i = icmp eq i64 %.idx63106, %i.r
   br i1 %.not8.i.i.i.i.i.i, label %_ZN5boost9container13move_backwardIPNS0_4test24movable_and_copyable_intES4_EENS0_3dtl38disable_if_memtransfer_copy_assignableIT_T0_S8_E4typeES7_S7_S8_.exit.i.i.i.i.i, label %.lr.ph.i40.i.i.i.i.i.preheader
 
 .lr.ph.i40.i.i.i.i.i.preheader:                   ; preds = %.lr.ph.i.i10.i.i.i.i
@@ -781,15 +780,15 @@ bb.f:                                             ; preds = %.thread
   %i.ax = load i32, ptr %i.av, align 4, !tbaa !78, !noalias !2296
   store i32 %i.ax, ptr %i.aw, align 4, !tbaa !78, !noalias !2296
   store i32 0, ptr %i.av, align 4, !tbaa !78, !noalias !2296
-  %.not.i41.i.i.i.i.i.7 = icmp eq ptr %scevgep96, %i.av
+  %.not.i41.i.i.i.i.i.7 = icmp eq ptr %3, %i.av
   br i1 %.not.i41.i.i.i.i.i.7, label %_ZN5boost9container13move_backwardIPNS0_4test24movable_and_copyable_intES4_EENS0_3dtl38disable_if_memtransfer_copy_assignableIT_T0_S8_E4typeES7_S7_S8_.exit.i.i.i.i.i, label %.lr.ph.i40.i.i.i.i.i, !llvm.loop !686
 
 _ZN5boost9container13move_backwardIPNS0_4test24movable_and_copyable_intES4_EENS0_3dtl38disable_if_memtransfer_copy_assignableIT_T0_S8_E4typeES7_S7_S8_.exit.i.i.i.i.i: ; preds = %.lr.ph.i40.i.i.i.i.i.prol.loopexit, %.lr.ph.i40.i.i.i.i.i, %.lr.ph.i.i10.i.i.i.i
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %scevgep96, ptr noundef nonnull align 8 dereferenceable(12) %1, i64 12, i1 false), !tbaa !78, !noalias !2298
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %3, ptr noundef nonnull align 8 dereferenceable(12) %1, i64 12, i1 false), !tbaa !78, !noalias !2298
   br label %.loopexit67
 
 .lr.ph.i49.preheader.i.i.i.i.i:                   ; preds = %bb.f
-  %i.ay = getelementptr inbounds nuw i8, ptr %scevgep96, i64 12 ; 2 uses
+  %i.ay = getelementptr inbounds nuw i8, ptr %3, i64 12 ; 2 uses
   %i.az = sub nsw i64 %i.b, %.03888               ; 2 uses
   %i.ba = add i64 %i.az, 4611686018427387903
   %i.bb = and i64 %i.ba, 4611686018427387903
@@ -799,7 +798,7 @@ _ZN5boost9container13move_backwardIPNS0_4test24movable_and_copyable_intES4_EENS0
 
 .lr.ph.i49.i.i.i.i.i.prol:                        ; preds = %.lr.ph.i49.preheader.i.i.i.i.i, %.lr.ph.i49.i.i.i.i.i.prol
   %i.bc = phi i32 [ %i.be, %.lr.ph.i49.i.i.i.i.i.prol ], [ %_ZN5boost9container4test24movable_and_copyable_int5countE.promoted76, %.lr.ph.i49.preheader.i.i.i.i.i ] ; 2 uses
-  %.018.i.i.i.i.i.i.prol = phi ptr [ %i.bf, %.lr.ph.i49.i.i.i.i.i.prol ], [ %scevgep96, %.lr.ph.i49.preheader.i.i.i.i.i ] ; 3 uses
+  %.018.i.i.i.i.i.i.prol = phi ptr [ %i.bf, %.lr.ph.i49.i.i.i.i.i.prol ], [ %3, %.lr.ph.i49.preheader.i.i.i.i.i ] ; 3 uses
   %.01517.i.i.i.i.i.i.prol = phi ptr [ %i.bg, %.lr.ph.i49.i.i.i.i.i.prol ], [ %i.ay, %.lr.ph.i49.preheader.i.i.i.i.i ] ; 2 uses
   %prol.iter172 = phi i64 [ %prol.iter172.next, %.lr.ph.i49.i.i.i.i.i.prol ], [ 0, %.lr.ph.i49.preheader.i.i.i.i.i ]
   %i.bd = load i32, ptr %.018.i.i.i.i.i.i.prol, align 4, !tbaa !78, !noalias !2296
@@ -815,7 +814,7 @@ _ZN5boost9container13move_backwardIPNS0_4test24movable_and_copyable_intES4_EENS0
 .lr.ph.i49.i.i.i.i.i.prol.loopexit:               ; preds = %.lr.ph.i49.i.i.i.i.i.prol, %.lr.ph.i49.preheader.i.i.i.i.i
   %.lcssa.unr = phi i32 [ poison, %.lr.ph.i49.preheader.i.i.i.i.i ], [ %i.bc, %.lr.ph.i49.i.i.i.i.i.prol ]
   %.unr = phi i32 [ %_ZN5boost9container4test24movable_and_copyable_int5countE.promoted76, %.lr.ph.i49.preheader.i.i.i.i.i ], [ %i.be, %.lr.ph.i49.i.i.i.i.i.prol ]
-  %.018.i.i.i.i.i.i.unr = phi ptr [ %scevgep96, %.lr.ph.i49.preheader.i.i.i.i.i ], [ %i.bf, %.lr.ph.i49.i.i.i.i.i.prol ]
+  %.018.i.i.i.i.i.i.unr = phi ptr [ %3, %.lr.ph.i49.preheader.i.i.i.i.i ], [ %i.bf, %.lr.ph.i49.i.i.i.i.i.prol ]
   %.01517.i.i.i.i.i.i.unr = phi ptr [ %i.ay, %.lr.ph.i49.preheader.i.i.i.i.i ], [ %i.bg, %.lr.ph.i49.i.i.i.i.i.prol ]
   %i.bh = icmp samesign ult i64 %i.bb, 3
   br i1 %i.bh, label %.lr.ph.i.i52.i.i.i.i.i.preheader, label %.lr.ph.i49.i.i.i.i.i
@@ -854,7 +853,7 @@ _ZN5boost9container13move_backwardIPNS0_4test24movable_and_copyable_intES4_EENS0
 
 .lr.ph.i.i52.i.i.i.i.i.preheader:                 ; preds = %.lr.ph.i49.i.i.i.i.i.prol.loopexit, %.lr.ph.i.i52.i.i.i.i.i.preheader.unr-lcssa
   %.lcssa = phi i32 [ %.lcssa.unr, %.lr.ph.i49.i.i.i.i.i.prol.loopexit ], [ %i.bw, %.lr.ph.i.i52.i.i.i.i.i.preheader.unr-lcssa ]
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %scevgep96, ptr nonnull align 8 %1, i64 %gepdiff, i1 false), !tbaa !78, !noalias !2302
+  call void @llvm.memcpy.p0.p0.i64(ptr align 4 %3, ptr nonnull align 8 %1, i64 %gepdiff, i1 false), !tbaa !78, !noalias !2302
   %scevgep97 = getelementptr i8, ptr %1, i64 %gepdiff
   %i.bx = sub i64 12, %gepdiff
   call void @llvm.memcpy.p0.p0.i64(ptr align 4 %i.g, ptr align 4 %scevgep97, i64 %i.bx, i1 false), !tbaa !78, !noalias !2305
@@ -1120,8 +1119,6 @@ bb.c:                                             ; preds = %bb.a, %_ZN5boost9co
   %indvars.iv = phi i64 [ 5, %bb.a ], [ %indvars.iv.next, %_ZN5boost9container6vectorINS0_4test24movable_and_copyable_intENS0_3dtl24static_storage_allocatorIS3_Lm10ELm0ELb1EEEvED2Ev.exit ] ; 2 uses
   %.03886 = phi i64 [ 0, %bb.a ], [ %i.dz, %_ZN5boost9container6vectorINS0_4test24movable_and_copyable_intENS0_3dtl24static_storage_allocatorIS3_Lm10ELm0ELb1EEEvED2Ev.exit ] ; 10 uses
   %umax = call i64 @llvm.umax.i64(i64 %indvars.iv, i64 1)
-  %3 = shl nuw nsw i64 %.03886, 2                 ; 3 uses
-  %scevgep94 = getelementptr nuw i8, ptr %2, i64 %3 ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #25
   %i.b = load i64, ptr %i.a, align 8, !tbaa !300  ; 12 uses
   %i.c = icmp ugt i64 %i.b, 10
@@ -1147,6 +1144,8 @@ bb.e:                                             ; preds = %_ZN5boost9container
 
 .thread:                                          ; preds = %_ZN5boost9container19vector_alloc_holderINS0_3dtl24static_storage_allocatorINS0_4test24movable_and_copyable_intELm10ELm0ELb1EEEmNS_11move_detail17integral_constantIjLj0EEEEC2IRKS6_EENS0_27vector_uninitialized_size_tEOT_m.exit.i.i, %bb.e
   %i.g = load ptr, ptr %1, align 8, !tbaa !307, !noalias !2315 ; 4 uses
+  %.idx63104 = shl nuw nsw i64 %.03886, 2         ; 3 uses
+  %3 = getelementptr i8, ptr %2, i64 %.idx63104   ; 6 uses
   %.idx = shl nuw nsw i64 %i.b, 2                 ; 3 uses
   %i.h = getelementptr i8, ptr %2, i64 %.idx      ; 11 uses
   %i.i = icmp samesign eq i64 %i.b, %.03886
@@ -1160,7 +1159,7 @@ bb.e:                                             ; preds = %_ZN5boost9container
   br label %.loopexit
 
 bb.f:                                             ; preds = %.thread
-  %gepdiff = sub nsw i64 %.idx, %3                ; 3 uses
+  %gepdiff = sub nsw i64 %.idx, %.idx63104        ; 3 uses
   %i.k = ashr exact i64 %gepdiff, 2               ; 2 uses
   %.not.i.i.i.i.i = icmp ult i64 %i.k, 3
   %_ZN5boost9container4test24movable_and_copyable_int5countE.promoted76 = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !18, !noalias !2325 ; 3 uses
@@ -1182,7 +1181,7 @@ bb.f:                                             ; preds = %.thread
   %i.r = add i32 %_ZN5boost9container4test24movable_and_copyable_int5countE.promoted76, 3
   store i32 %i.r, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !18, !noalias !2325
   %i.s = add nsw i64 %.idx, -12
-  %.not8.i.i.i.i.i.i = icmp eq i64 %3, %i.s
+  %.not8.i.i.i.i.i.i = icmp eq i64 %.idx63104, %i.s
   br i1 %.not8.i.i.i.i.i.i, label %_ZN5boost9container13move_backwardIPNS0_4test24movable_and_copyable_intES4_EENS0_3dtl38disable_if_memtransfer_copy_assignableIT_T0_S8_E4typeES7_S7_S8_.exit.i.i.i.i.i, label %.lr.ph.i40.i.i.i.i.i.preheader
 
 .lr.ph.i40.i.i.i.i.i.preheader:                   ; preds = %.lr.ph.i.i10.i.i.i.i
@@ -1256,15 +1255,15 @@ bb.f:                                             ; preds = %.thread
   %i.ay = load i32, ptr %i.aw, align 4, !tbaa !78, !noalias !2325
   store i32 %i.ay, ptr %i.ax, align 4, !tbaa !78, !noalias !2325
   store i32 0, ptr %i.aw, align 4, !tbaa !78, !noalias !2325
-  %.not.i41.i.i.i.i.i.7 = icmp eq ptr %scevgep94, %i.aw
+  %.not.i41.i.i.i.i.i.7 = icmp eq ptr %3, %i.aw
   br i1 %.not.i41.i.i.i.i.i.7, label %_ZN5boost9container13move_backwardIPNS0_4test24movable_and_copyable_intES4_EENS0_3dtl38disable_if_memtransfer_copy_assignableIT_T0_S8_E4typeES7_S7_S8_.exit.i.i.i.i.i, label %.lr.ph.i40.i.i.i.i.i, !llvm.loop !686
 
 _ZN5boost9container13move_backwardIPNS0_4test24movable_and_copyable_intES4_EENS0_3dtl38disable_if_memtransfer_copy_assignableIT_T0_S8_E4typeES7_S7_S8_.exit.i.i.i.i.i: ; preds = %.lr.ph.i40.i.i.i.i.i.prol.loopexit, %.lr.ph.i40.i.i.i.i.i, %.lr.ph.i.i10.i.i.i.i
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %scevgep94, ptr noundef nonnull align 4 dereferenceable(12) %i.g, i64 12, i1 false), !tbaa !78, !noalias !2327
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %3, ptr noundef nonnull align 4 dereferenceable(12) %i.g, i64 12, i1 false), !tbaa !78, !noalias !2327
   br label %.loopexit
 
 .lr.ph.i49.preheader.i.i.i.i.i:                   ; preds = %bb.f
-  %i.az = getelementptr inbounds nuw i8, ptr %scevgep94, i64 12 ; 2 uses
+  %i.az = getelementptr inbounds nuw i8, ptr %3, i64 12 ; 2 uses
   %i.ba = sub nsw i64 %i.b, %.03886               ; 2 uses
   %i.bb = add i64 %i.ba, 4611686018427387903
   %i.bc = and i64 %i.bb, 4611686018427387903
@@ -1274,7 +1273,7 @@ _ZN5boost9container13move_backwardIPNS0_4test24movable_and_copyable_intES4_EENS0
 
 .lr.ph.i49.i.i.i.i.i.prol:                        ; preds = %.lr.ph.i49.preheader.i.i.i.i.i, %.lr.ph.i49.i.i.i.i.i.prol
   %i.bd = phi i32 [ %i.bf, %.lr.ph.i49.i.i.i.i.i.prol ], [ %_ZN5boost9container4test24movable_and_copyable_int5countE.promoted76, %.lr.ph.i49.preheader.i.i.i.i.i ]
-  %.018.i.i.i.i.i.i.prol = phi ptr [ %i.bg, %.lr.ph.i49.i.i.i.i.i.prol ], [ %scevgep94, %.lr.ph.i49.preheader.i.i.i.i.i ] ; 3 uses
+  %.018.i.i.i.i.i.i.prol = phi ptr [ %i.bg, %.lr.ph.i49.i.i.i.i.i.prol ], [ %3, %.lr.ph.i49.preheader.i.i.i.i.i ] ; 3 uses
   %.01517.i.i.i.i.i.i.prol = phi ptr [ %i.bh, %.lr.ph.i49.i.i.i.i.i.prol ], [ %i.az, %.lr.ph.i49.preheader.i.i.i.i.i ] ; 2 uses
   %prol.iter170 = phi i64 [ %prol.iter170.next, %.lr.ph.i49.i.i.i.i.i.prol ], [ 0, %.lr.ph.i49.preheader.i.i.i.i.i ]
   %i.be = load i32, ptr %.018.i.i.i.i.i.i.prol, align 4, !tbaa !78, !noalias !2325
@@ -1290,7 +1289,7 @@ _ZN5boost9container13move_backwardIPNS0_4test24movable_and_copyable_intES4_EENS0
 .lr.ph.i49.i.i.i.i.i.prol.loopexit:               ; preds = %.lr.ph.i49.i.i.i.i.i.prol, %.lr.ph.i49.preheader.i.i.i.i.i
   %.lcssa.unr = phi i32 [ poison, %.lr.ph.i49.preheader.i.i.i.i.i ], [ %i.bf, %.lr.ph.i49.i.i.i.i.i.prol ]
   %.unr = phi i32 [ %_ZN5boost9container4test24movable_and_copyable_int5countE.promoted76, %.lr.ph.i49.preheader.i.i.i.i.i ], [ %i.bf, %.lr.ph.i49.i.i.i.i.i.prol ]
-  %.018.i.i.i.i.i.i.unr = phi ptr [ %scevgep94, %.lr.ph.i49.preheader.i.i.i.i.i ], [ %i.bg, %.lr.ph.i49.i.i.i.i.i.prol ]
+  %.018.i.i.i.i.i.i.unr = phi ptr [ %3, %.lr.ph.i49.preheader.i.i.i.i.i ], [ %i.bg, %.lr.ph.i49.i.i.i.i.i.prol ]
   %.01517.i.i.i.i.i.i.unr = phi ptr [ %i.az, %.lr.ph.i49.preheader.i.i.i.i.i ], [ %i.bh, %.lr.ph.i49.i.i.i.i.i.prol ]
   %i.bi = icmp samesign ult i64 %i.bc, 3
   br i1 %i.bi, label %.lr.ph.i.i52.i.i.i.i.i.preheader, label %.lr.ph.i49.i.i.i.i.i
@@ -1326,7 +1325,7 @@ _ZN5boost9container13move_backwardIPNS0_4test24movable_and_copyable_intES4_EENS0
 .lr.ph.i.i52.i.i.i.i.i.preheader:                 ; preds = %.lr.ph.i49.i.i.i.i.i, %.lr.ph.i49.i.i.i.i.i.prol.loopexit
   %.lcssa = phi i32 [ %.lcssa.unr, %.lr.ph.i49.i.i.i.i.i.prol.loopexit ], [ %i.bu, %.lr.ph.i49.i.i.i.i.i ] ; 2 uses
   store i32 %.lcssa, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !18, !noalias !2325
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %scevgep94, ptr align 4 %i.g, i64 %gepdiff, i1 false), !tbaa !78, !noalias !2331
+  call void @llvm.memcpy.p0.p0.i64(ptr align 4 %3, ptr align 4 %i.g, i64 %gepdiff, i1 false), !tbaa !78, !noalias !2331
   %i.bx = sub nuw nsw i64 3, %i.k
   %scevgep95 = getelementptr i8, ptr %i.g, i64 %gepdiff
   br label %.lr.ph.i.i57.i.i.i.i.i.prol

@@ -202,21 +202,19 @@ bb.b:                                             ; preds = %bb.a
   %i.ar = getelementptr inbounds nuw i8, ptr %3, i64 216 ; 3 uses
   %i.as = getelementptr inbounds nuw i8, ptr %3, i64 13 ; 2 uses
   %i.at = getelementptr inbounds nuw i8, ptr %8, i64 34 ; 2 uses
-  %i.au = sext i32 %i.k to i64                    ; 2 uses
+  %i.au = sext i32 %i.k to i64
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph125, %._crit_edge
   %i.av = phi i32 [ %i.j, %.lr.ph125 ], [ %i.bg, %._crit_edge ]
-  %indvars.iv133 = phi i64 [ %i.au, %.lr.ph125 ], [ %indvars.iv.next134, %._crit_edge ] ; 5 uses
-  %indvar127 = phi i64 [ 0, %.lr.ph125 ], [ %indvar.next128, %._crit_edge ] ; 2 uses
-  %12 = add nsw i64 %indvar127, %i.au
+  %indvar127 = phi i64 [ %i.au, %.lr.ph125 ], [ %indvars.iv.next134, %._crit_edge ] ; 5 uses
   %i.aw = load i32, ptr %i.l, align 8, !tbaa !44
   %.not50 = icmp eq i32 %i.aw, 0
   br i1 %.not50, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.ax = load ptr, ptr %i.m, align 8, !tbaa !18
-  %i.ay = getelementptr inbounds nuw [4 x i8], ptr %i.ax, i64 %indvars.iv133
+  %i.ay = getelementptr inbounds nuw [4 x i8], ptr %i.ax, i64 %indvar127
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.c, %bb.d
@@ -241,18 +239,17 @@ bb.e:                                             ; preds = %bb.c, %bb.d
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.e
   %i.bg = phi i32 [ %.pre139, %._crit_edge.loopexit ], [ %i.av, %bb.e ] ; 2 uses
-  %indvars.iv.next134 = add nsw i64 %indvars.iv133, 1
+  %indvars.iv.next134 = add nsw i64 %indvar127, 1
   %i.bh = sext i32 %i.bg to i64
-  %.not.not = icmp slt i64 %indvars.iv133, %i.bh
-  %indvar.next128 = add nuw nsw i64 %indvar127, 1
+  %.not.not = icmp slt i64 %indvar127, %i.bh
   br i1 %.not.not, label %bb.c, label %._crit_edge126
 
 .noexc75:                                         ; preds = %.noexc75.lr.ph, %_ZN4ncnn3MatD2Ev.exit
   %indvar = phi i64 [ 0, %.noexc75.lr.ph ], [ %indvar.next, %_ZN4ncnn3MatD2Ev.exit ] ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #10
   %i.bi = load ptr, ptr %5, align 8, !tbaa !18, !noalias !368 ; 2 uses
-  %i.bj = load i64, ptr %i.q, align 8, !tbaa !20, !noalias !368 ; 2 uses
-  %i.bk = mul i64 %i.bj, %indvars.iv133
+  %i.bj = load i64, ptr %i.q, align 8, !tbaa !20, !noalias !368
+  %i.bk = mul i64 %i.bj, %indvar127               ; 2 uses
   %i.bl = load i64, ptr %i.r, align 8, !tbaa !48, !noalias !368 ; 4 uses
   %i.bm = mul i64 %i.bk, %i.bl
   %i.bn = getelementptr inbounds nuw i8, ptr %i.bi, i64 %i.bm
@@ -311,9 +308,8 @@ bb.i:                                             ; preds = %bb.h
 
 .lr.ph.preheader:                                 ; preds = %bb.i
   %i.cn = mul i64 %indvar, %i.bu
-  %13 = mul i64 %i.cn, %i.bt
-  %i.co = mul i64 %12, %i.bj
-  %i.cp = add i64 %13, %i.co
+  %i.co = mul i64 %i.cn, %i.bt
+  %i.cp = add i64 %i.co, %i.bk
   %i.cq = mul i64 %i.bl, %i.cp
   %scevgep = getelementptr i8, ptr %i.bi, i64 %i.cq
   %i.cr = and i64 %i.bv, 2147483647
@@ -492,7 +488,7 @@ bb.o:                                             ; preds = %._crit_edge136
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #10
   %i.eh = load ptr, ptr %9, align 8, !tbaa !18, !noalias !379
   %i.ei = load i64, ptr %i.af, align 8, !tbaa !20, !noalias !379
-  %i.ej = mul i64 %i.ei, %indvars.iv133
+  %i.ej = mul i64 %i.ei, %indvar127
   %i.ek = load i64, ptr %i.ag, align 8, !tbaa !48, !noalias !379 ; 3 uses
   %i.el = mul i64 %i.ej, %i.ek
   %i.em = getelementptr inbounds nuw i8, ptr %i.eh, i64 %i.el

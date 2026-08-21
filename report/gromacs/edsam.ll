@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %_Z11do_per_stepll.e
 
 bb.d:                                             ; preds = %.critedge
   %i.x = getelementptr inbounds nuw i8, ptr %6, i64 16
-  %i.y = load ptr, ptr %i.x, align 8, !tbaa !34   ; 4 uses
+  %i.y = load ptr, ptr %i.x, align 8, !tbaa !34   ; 3 uses
   %i.z = getelementptr inbounds nuw i8, ptr %6, i64 24
   %i.aa = load ptr, ptr %i.z, align 8, !tbaa !34  ; 2 uses
   %.not3035 = icmp eq ptr %i.y, %i.aa
@@ -224,9 +224,7 @@ bb.d:                                             ; preds = %.critedge
 bb.e:                                             ; preds = %.lr.ph, %bb.ah
   %indvar = phi i64 [ 0, %.lr.ph ], [ %indvar.next, %bb.ah ] ; 2 uses
   %.sroa.021.036 = phi ptr [ %i.y, %.lr.ph ], [ %i.abi, %bb.ah ] ; 63 uses
-  %i.af = mul i64 %indvar, 888                    ; 2 uses
-  %10 = getelementptr i8, ptr %i.y, i64 %i.af
-  %scevgep64 = getelementptr i8, ptr %10, i64 760
+  %i.af = mul i64 %indvar, 888
   %i.ag = getelementptr i8, ptr %i.y, i64 %i.af
   %scevgep65.a = getelementptr i8, ptr %i.ag, i64 764
   %i.ah = getelementptr inbounds nuw i8, ptr %.sroa.021.036, i64 792 ; 6 uses
@@ -629,7 +627,7 @@ _ZL15update_adaptionP5edpar.exit.i:               ; preds = %bb.l, %_ZL12flood_e
   br i1 %i.cj, label %iter.check, label %_ZL12flood_forcesP5edpar.exit.i
 
 iter.check:                                       ; preds = %.preheader.i71.i
-  %i.kb = getelementptr inbounds nuw i8, ptr %.sroa.021.036, i64 760 ; 7 uses
+  %i.kb = getelementptr inbounds nuw i8, ptr %.sroa.021.036, i64 760 ; 8 uses
   %i.kc = getelementptr inbounds nuw i8, ptr %.sroa.021.036, i64 808
   %i.kd = load ptr, ptr %i.kc, align 8, !tbaa !187 ; 9 uses
   %i.ke = getelementptr inbounds nuw i8, ptr %.sroa.021.036, i64 824
@@ -649,7 +647,7 @@ vector.memcheck:                                  ; preds = %iter.check
   %scevgep67.a = getelementptr i8, ptr %i.kf, i64 %i.kk
   %scevgep68 = getelementptr i8, ptr %i.kh, i64 %i.kk
   %bound0 = icmp ult ptr %i.kj, %scevgep65.a
-  %bound1 = icmp ult ptr %scevgep64, %scevgep
+  %bound1 = icmp ult ptr %i.kb, %scevgep
   %found.conflict = and i1 %bound0, %bound1
   %bound069 = icmp ult ptr %i.kj, %scevgep66.a
   %bound170 = icmp ult ptr %i.kd, %scevgep

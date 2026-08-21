@@ -204,20 +204,16 @@ bb.a:
   %.sroa.2.0.extract.shift = lshr i64 %3, 16
   %.sroa.2.0.extract.trunc = trunc i64 %.sroa.2.0.extract.shift to i16
   %.sroa.0.0.extract.trunc = trunc i64 %3 to i16
-  %i.d = sext i16 %.sroa.0.0.extract.trunc to i32 ; 2 uses
-  %i.e = sext i16 %.sroa.2.0.extract.trunc to i32 ; 2 uses
-  %4 = mul i32 %1, %i.e
-  %5 = add i32 %4, %i.d
+  %i.d = sext i16 %.sroa.0.0.extract.trunc to i32
+  %i.e = sext i16 %.sroa.2.0.extract.trunc to i32
   br label %iter.check
 
 iter.check:                                       ; preds = %.preheader1, %.loopexit7
-  %.05 = phi i32 [ 0, %.preheader1 ], [ %i.dx, %.loopexit7 ] ; 3 uses
+  %.05 = phi i32 [ 0, %.preheader1 ], [ %i.dx, %.loopexit7 ] ; 2 uses
   %.0314 = phi i64 [ 0, %.preheader1 ], [ %indvars.iv.next.1, %.loopexit7 ] ; 8 uses
-  %6 = add nsw i32 %.05, %i.e
-  %7 = mul nsw i32 %6, %1
-  %i.f = add i32 %7, %i.d                         ; 8 uses
-  %i.g = mul i32 %1, %.05
-  %i.h = add i32 %5, %i.g
+  %i.f = add nsw i32 %.05, %i.e
+  %i.g = mul nsw i32 %i.f, %1
+  %i.h = add i32 %i.g, %i.d                       ; 9 uses
   %i.i = icmp sgt i32 %i.h, 2147483558
   br i1 %i.i, label %vec.epilog.scalar.ph.preheader, label %vector.body
 
@@ -230,7 +226,7 @@ vector.body:                                      ; preds = %iter.check
   %i.m = icmp eq <8 x i8> %wide.load1, splat (i8 46)
   %i.n = sext <8 x i1> %i.l to <8 x i8>
   %i.o = sext <8 x i1> %i.m to <8 x i8>
-  %i.p = sext i32 %i.f to i64
+  %i.p = sext i32 %i.h to i64
   %i.q = getelementptr inbounds i8, ptr %0, i64 %i.p ; 4 uses
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 8
   store <8 x i8> %i.n, ptr %i.q, align 1, !tbaa !11
@@ -243,7 +239,7 @@ vector.body:                                      ; preds = %iter.check
   %i.x = getelementptr i8, ptr %i.q, i64 99
   store <8 x i8> %i.u, ptr %i.w, align 1, !tbaa !11
   store <8 x i8> %i.v, ptr %i.x, align 1, !tbaa !11
-  %i.y = add i32 %i.f, 16
+  %i.y = add i32 %i.h, 16
   %i.z = getelementptr i8, ptr @nk_custom_cursor_data, i64 %.0314 ; 2 uses
   %i.aa = getelementptr i8, ptr %i.z, i64 16
   %i.ab = getelementptr i8, ptr %i.z, i64 24
@@ -266,7 +262,7 @@ vector.body:                                      ; preds = %iter.check
   %i.ao = getelementptr i8, ptr %i.ah, i64 99
   store <8 x i8> %i.al, ptr %i.an, align 1, !tbaa !11
   store <8 x i8> %i.am, ptr %i.ao, align 1, !tbaa !11
-  %i.ap = add i32 %i.f, 32
+  %i.ap = add i32 %i.h, 32
   %i.aq = getelementptr i8, ptr @nk_custom_cursor_data, i64 %.0314 ; 2 uses
   %i.ar = getelementptr i8, ptr %i.aq, i64 32
   %i.as = getelementptr i8, ptr %i.aq, i64 40
@@ -289,7 +285,7 @@ vector.body:                                      ; preds = %iter.check
   %i.bf = getelementptr i8, ptr %i.ay, i64 99
   store <8 x i8> %i.bc, ptr %i.be, align 1, !tbaa !11
   store <8 x i8> %i.bd, ptr %i.bf, align 1, !tbaa !11
-  %i.bg = add i32 %i.f, 48
+  %i.bg = add i32 %i.h, 48
   %i.bh = getelementptr i8, ptr @nk_custom_cursor_data, i64 %.0314 ; 2 uses
   %i.bi = getelementptr i8, ptr %i.bh, i64 48
   %i.bj = getelementptr i8, ptr %i.bh, i64 56
@@ -312,7 +308,7 @@ vector.body:                                      ; preds = %iter.check
   %i.bw = getelementptr i8, ptr %i.bp, i64 99
   store <8 x i8> %i.bt, ptr %i.bv, align 1, !tbaa !11
   store <8 x i8> %i.bu, ptr %i.bw, align 1, !tbaa !11
-  %i.bx = add i32 %i.f, 64
+  %i.bx = add i32 %i.h, 64
   %i.by = getelementptr i8, ptr @nk_custom_cursor_data, i64 %.0314 ; 2 uses
   %i.bz = getelementptr i8, ptr %i.by, i64 64
   %i.ca = getelementptr i8, ptr %i.by, i64 72
@@ -336,7 +332,7 @@ vector.body:                                      ; preds = %iter.check
   store <8 x i8> %i.ck, ptr %i.cm, align 1, !tbaa !11
   store <8 x i8> %i.cl, ptr %i.cn, align 1, !tbaa !11
   %i.co = add i64 %.0314, 88
-  %i.cp = add i32 %i.f, 80
+  %i.cp = add i32 %i.h, 80
   %i.cq = getelementptr i8, ptr @nk_custom_cursor_data, i64 %.0314
   %i.cr = getelementptr i8, ptr %i.cq, i64 80
   %wide.load3 = load <8 x i8>, ptr %i.cr, align 1, !tbaa !11 ; 2 uses
@@ -360,7 +356,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %indvars.iv6 = phi i64 [ %indvars.iv6.ph, %vec.epilog.scalar.ph.preheader ], [ %indvars.iv.next7.1, %vec.epilog.scalar.ph ] ; 3 uses
   %indvars.iv = phi i64 [ %indvars.iv.ph, %vec.epilog.scalar.ph.preheader ], [ %indvars.iv.next.1, %vec.epilog.scalar.ph ] ; 3 uses
   %i.cz = trunc nuw nsw i64 %indvars.iv6 to i32
-  %i.da = add i32 %i.f, %i.cz
+  %i.da = add i32 %i.h, %i.cz
   %i.db = getelementptr inbounds i8, ptr @nk_custom_cursor_data, i64 %indvars.iv
   %i.dc = load i8, ptr %i.db, align 1, !tbaa !11  ; 2 uses
   %i.dd = icmp eq i8 %i.dc, 46
@@ -374,7 +370,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   store i8 %i.di, ptr %i.dj, align 1, !tbaa !11
   %i.dk = trunc i64 %indvars.iv6 to i32
   %i.dl = or disjoint i32 %i.dk, 1
-  %i.dm = add i32 %i.f, %i.dl
+  %i.dm = add i32 %i.h, %i.dl
   %i.dn = getelementptr i8, ptr @nk_custom_cursor_data, i64 %indvars.iv
   %i.do = getelementptr i8, ptr %i.dn, i64 1
   %i.dp = load i8, ptr %i.do, align 1, !tbaa !11  ; 2 uses

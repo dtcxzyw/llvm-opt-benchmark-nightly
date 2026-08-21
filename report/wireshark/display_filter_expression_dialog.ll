@@ -203,12 +203,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %or.cond, label %common.ret25, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.b, %_ZSt13move_backwardIN5QListIP15QTreeWidgetItemE8iteratorES4_ET0_T_S6_S5_.exit.i
-  %indvar.i = phi i64 [ %indvar.next.i, %_ZSt13move_backwardIN5QListIP15QTreeWidgetItemE8iteratorES4_ET0_T_S6_S5_.exit.i ], [ 0, %bb.b ] ; 2 uses
   %.sroa.0.022.i = phi ptr [ %.sroa.0.0.i, %_ZSt13move_backwardIN5QListIP15QTreeWidgetItemE8iteratorES4_ET0_T_S6_S5_.exit.i ], [ %.sroa.0.019.i, %bb.b ] ; 8 uses
-  %.pn21.i = phi ptr [ %.sroa.0.022.i, %_ZSt13move_backwardIN5QListIP15QTreeWidgetItemE8iteratorES4_ET0_T_S6_S5_.exit.i ], [ %0, %bb.b ] ; 2 uses
-  %3 = shl i64 %indvar.i, 3
-  %4 = getelementptr i8, ptr %0, i64 %3
-  %scevgep.i = getelementptr i8, ptr %4, i64 16
+  %.pn21.i = phi ptr [ %.sroa.0.022.i, %_ZSt13move_backwardIN5QListIP15QTreeWidgetItemE8iteratorES4_ET0_T_S6_S5_.exit.i ], [ %0, %bb.b ] ; 3 uses
   %i.g = load ptr, ptr %.sroa.0.022.i, align 8
   %i.h = load ptr, ptr %0, align 8
   %i.i = tail call noundef zeroext i1 %2(ptr noundef %i.g, ptr noundef %i.h), !inline_history !125
@@ -223,8 +219,9 @@ bb.c:                                             ; preds = %.lr.ph.i
   br i1 %i.n, label %.lr.ph.i.i.i.i.i.preheader.i, label %_ZSt13move_backwardIN5QListIP15QTreeWidgetItemE8iteratorES4_ET0_T_S6_S5_.exit.i
 
 .lr.ph.i.i.i.i.i.preheader.i:                     ; preds = %bb.c
+  %3 = getelementptr i8, ptr %.pn21.i, i64 16
   %i.o = mul nsw i64 %i.m, -8                     ; 2 uses
-  %scevgep24.i.a = getelementptr i8, ptr %scevgep.i, i64 %i.o
+  %scevgep24.i.a = getelementptr i8, ptr %3, i64 %i.o
   %scevgep25.i = getelementptr i8, ptr %.sroa.0.022.i, i64 %i.o
   tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %scevgep24.i.a, ptr align 8 %scevgep25.i, i64 %i.l, i1 false)
   br label %_ZSt13move_backwardIN5QListIP15QTreeWidgetItemE8iteratorES4_ET0_T_S6_S5_.exit.i
@@ -249,7 +246,6 @@ _ZSt13move_backwardIN5QListIP15QTreeWidgetItemE8iteratorES4_ET0_T_S6_S5_.exit.i:
   store ptr %i.j, ptr %.sink.i, align 8
   %.sroa.0.0.i = getelementptr i8, ptr %.sroa.0.022.i, i64 8 ; 2 uses
   %.not.i = icmp eq ptr %.sroa.0.0.i, %1
-  %indvar.next.i = add i64 %indvar.i, 1
   br i1 %.not.i, label %common.ret25, label %.lr.ph.i, !llvm.loop !128
 
 common.ret25:                                     ; preds = %bb.b, %_ZSt13move_backwardIN5QListIP15QTreeWidgetItemE8iteratorES4_ET0_T_S6_S5_.exit.i, %bb.e
@@ -652,18 +648,14 @@ _ZSt16__insertion_sortIN5QListIP15QTreeWidgetItemE8iteratorEN9__gnu_cxx5__ops15_
 
 .lr.ph.i.preheader:                               ; preds = %.lr.ph, %_ZSt16__insertion_sortIN5QListIP15QTreeWidgetItemE8iteratorEN9__gnu_cxx5__ops15_Iter_comp_iterIPFbPKS1_S9_EEEEvT_SD_T0_.exit.loopexit
   %i.i = phi i64 [ %i.y, %_ZSt16__insertion_sortIN5QListIP15QTreeWidgetItemE8iteratorEN9__gnu_cxx5__ops15_Iter_comp_iterIPFbPKS1_S9_EEEEvT_SD_T0_.exit.loopexit ], [ %i.b, %.lr.ph ]
-  %.sroa.031.035 = phi ptr [ %i.j, %_ZSt16__insertion_sortIN5QListIP15QTreeWidgetItemE8iteratorEN9__gnu_cxx5__ops15_Iter_comp_iterIPFbPKS1_S9_EEEEvT_SD_T0_.exit.loopexit ], [ %0, %.lr.ph ] ; 7 uses
+  %.sroa.031.035 = phi ptr [ %i.j, %_ZSt16__insertion_sortIN5QListIP15QTreeWidgetItemE8iteratorEN9__gnu_cxx5__ops15_Iter_comp_iterIPFbPKS1_S9_EEEEvT_SD_T0_.exit.loopexit ], [ %0, %.lr.ph ] ; 6 uses
   %i.j = getelementptr i8, ptr %.sroa.031.035, i64 %.idx ; 4 uses
   %.sroa.0.019.i = getelementptr i8, ptr %.sroa.031.035, i64 8
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %_ZSt13move_backwardIN5QListIP15QTreeWidgetItemE8iteratorES4_ET0_T_S6_S5_.exit.i
-  %indvar.i = phi i64 [ %indvar.next.i, %_ZSt13move_backwardIN5QListIP15QTreeWidgetItemE8iteratorES4_ET0_T_S6_S5_.exit.i ], [ 0, %.lr.ph.i.preheader ] ; 2 uses
   %.sroa.0.022.i = phi ptr [ %.sroa.0.0.i, %_ZSt13move_backwardIN5QListIP15QTreeWidgetItemE8iteratorES4_ET0_T_S6_S5_.exit.i ], [ %.sroa.0.019.i, %.lr.ph.i.preheader ] ; 8 uses
-  %.pn21.i = phi ptr [ %.sroa.0.022.i, %_ZSt13move_backwardIN5QListIP15QTreeWidgetItemE8iteratorES4_ET0_T_S6_S5_.exit.i ], [ %.sroa.031.035, %.lr.ph.i.preheader ] ; 2 uses
-  %4 = shl nuw i64 %indvar.i, 3
-  %5 = getelementptr i8, ptr %.sroa.031.035, i64 %4
-  %scevgep.i = getelementptr i8, ptr %5, i64 16
+  %.pn21.i = phi ptr [ %.sroa.0.022.i, %_ZSt13move_backwardIN5QListIP15QTreeWidgetItemE8iteratorES4_ET0_T_S6_S5_.exit.i ], [ %.sroa.031.035, %.lr.ph.i.preheader ] ; 3 uses
   %i.k = load ptr, ptr %.sroa.0.022.i, align 8
   %i.l = load ptr, ptr %.sroa.031.035, align 8
   %i.m = tail call noundef zeroext i1 %3(ptr noundef %i.k, ptr noundef %i.l), !inline_history !125
@@ -678,8 +670,9 @@ bb.b:                                             ; preds = %.lr.ph.i
   br i1 %i.r, label %.lr.ph.i.i.i.i.i.preheader.i, label %_ZSt13move_backwardIN5QListIP15QTreeWidgetItemE8iteratorES4_ET0_T_S6_S5_.exit.i
 
 .lr.ph.i.i.i.i.i.preheader.i:                     ; preds = %bb.b
+  %4 = getelementptr i8, ptr %.pn21.i, i64 16
   %i.s = mul nsw i64 %i.q, -8                     ; 2 uses
-  %scevgep24.i.a = getelementptr i8, ptr %scevgep.i, i64 %i.s
+  %scevgep24.i.a = getelementptr i8, ptr %4, i64 %i.s
   %scevgep25.i = getelementptr i8, ptr %.sroa.0.022.i, i64 %i.s
   tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %scevgep24.i.a, ptr align 8 %scevgep25.i, i64 %i.p, i1 false)
   br label %_ZSt13move_backwardIN5QListIP15QTreeWidgetItemE8iteratorES4_ET0_T_S6_S5_.exit.i
@@ -704,7 +697,6 @@ _ZSt13move_backwardIN5QListIP15QTreeWidgetItemE8iteratorES4_ET0_T_S6_S5_.exit.i:
   store ptr %i.n, ptr %.sink.i, align 8
   %.sroa.0.0.i = getelementptr i8, ptr %.sroa.0.022.i, i64 8 ; 2 uses
   %.not.i = icmp eq ptr %.sroa.0.0.i, %i.j
-  %indvar.next.i = add nuw nsw i64 %indvar.i, 1
   br i1 %.not.i, label %_ZSt16__insertion_sortIN5QListIP15QTreeWidgetItemE8iteratorEN9__gnu_cxx5__ops15_Iter_comp_iterIPFbPKS1_S9_EEEEvT_SD_T0_.exit.loopexit, label %.lr.ph.i, !llvm.loop !128
 
 _ZSt16__insertion_sortIN5QListIP15QTreeWidgetItemE8iteratorEN9__gnu_cxx5__ops15_Iter_comp_iterIPFbPKS1_S9_EEEEvT_SD_T0_.exit.loopexit: ; preds = %_ZSt13move_backwardIN5QListIP15QTreeWidgetItemE8iteratorES4_ET0_T_S6_S5_.exit.i
@@ -715,7 +707,7 @@ _ZSt16__insertion_sortIN5QListIP15QTreeWidgetItemE8iteratorEN9__gnu_cxx5__ops15_
   br i1 %.not, label %._crit_edge, label %.lr.ph.i.preheader, !llvm.loop !145
 
 ._crit_edge:                                      ; preds = %_ZSt16__insertion_sortIN5QListIP15QTreeWidgetItemE8iteratorEN9__gnu_cxx5__ops15_Iter_comp_iterIPFbPKS1_S9_EEEEvT_SD_T0_.exit.loopexit, %_ZSt16__insertion_sortIN5QListIP15QTreeWidgetItemE8iteratorEN9__gnu_cxx5__ops15_Iter_comp_iterIPFbPKS1_S9_EEEEvT_SD_T0_.exit.us, %bb.a
-  %.sroa.031.0.lcssa = phi ptr [ %0, %bb.a ], [ %i.e, %_ZSt16__insertion_sortIN5QListIP15QTreeWidgetItemE8iteratorEN9__gnu_cxx5__ops15_Iter_comp_iterIPFbPKS1_S9_EEEEvT_SD_T0_.exit.us ], [ %i.j, %_ZSt16__insertion_sortIN5QListIP15QTreeWidgetItemE8iteratorEN9__gnu_cxx5__ops15_Iter_comp_iterIPFbPKS1_S9_EEEEvT_SD_T0_.exit.loopexit ] ; 7 uses
+  %.sroa.031.0.lcssa = phi ptr [ %0, %bb.a ], [ %i.e, %_ZSt16__insertion_sortIN5QListIP15QTreeWidgetItemE8iteratorEN9__gnu_cxx5__ops15_Iter_comp_iterIPFbPKS1_S9_EEEEvT_SD_T0_.exit.us ], [ %i.j, %_ZSt16__insertion_sortIN5QListIP15QTreeWidgetItemE8iteratorEN9__gnu_cxx5__ops15_Iter_comp_iterIPFbPKS1_S9_EEEEvT_SD_T0_.exit.loopexit ] ; 6 uses
   %.lcssa = phi i64 [ %i.b, %bb.a ], [ %i.f, %_ZSt16__insertion_sortIN5QListIP15QTreeWidgetItemE8iteratorEN9__gnu_cxx5__ops15_Iter_comp_iterIPFbPKS1_S9_EEEEvT_SD_T0_.exit.us ], [ %i.y, %_ZSt16__insertion_sortIN5QListIP15QTreeWidgetItemE8iteratorEN9__gnu_cxx5__ops15_Iter_comp_iterIPFbPKS1_S9_EEEEvT_SD_T0_.exit.loopexit ]
   %i.ab = icmp eq ptr %.sroa.031.0.lcssa, %1
   %.sroa.0.019.i11 = getelementptr i8, ptr %.sroa.031.0.lcssa, i64 8 ; 2 uses
@@ -724,12 +716,8 @@ _ZSt16__insertion_sortIN5QListIP15QTreeWidgetItemE8iteratorEN9__gnu_cxx5__ops15_
   br i1 %or.cond33, label %_ZSt16__insertion_sortIN5QListIP15QTreeWidgetItemE8iteratorEN9__gnu_cxx5__ops15_Iter_comp_iterIPFbPKS1_S9_EEEEvT_SD_T0_.exit30, label %.lr.ph.i13
 
 .lr.ph.i13:                                       ; preds = %._crit_edge, %_ZSt13move_backwardIN5QListIP15QTreeWidgetItemE8iteratorES4_ET0_T_S6_S5_.exit.i18
-  %indvar.i14 = phi i64 [ %indvar.next.i22, %_ZSt13move_backwardIN5QListIP15QTreeWidgetItemE8iteratorES4_ET0_T_S6_S5_.exit.i18 ], [ 0, %._crit_edge ] ; 2 uses
   %.sroa.0.022.i15 = phi ptr [ %.sroa.0.0.i20, %_ZSt13move_backwardIN5QListIP15QTreeWidgetItemE8iteratorES4_ET0_T_S6_S5_.exit.i18 ], [ %.sroa.0.019.i11, %._crit_edge ] ; 8 uses
-  %.pn21.i16 = phi ptr [ %.sroa.0.022.i15, %_ZSt13move_backwardIN5QListIP15QTreeWidgetItemE8iteratorES4_ET0_T_S6_S5_.exit.i18 ], [ %.sroa.031.0.lcssa, %._crit_edge ] ; 2 uses
-  %6 = shl i64 %indvar.i14, 3
-  %7 = getelementptr i8, ptr %.sroa.031.0.lcssa, i64 %6
-  %scevgep.i17 = getelementptr i8, ptr %7, i64 16
+  %.pn21.i16 = phi ptr [ %.sroa.0.022.i15, %_ZSt13move_backwardIN5QListIP15QTreeWidgetItemE8iteratorES4_ET0_T_S6_S5_.exit.i18 ], [ %.sroa.031.0.lcssa, %._crit_edge ] ; 3 uses
   %i.ac = load ptr, ptr %.sroa.0.022.i15, align 8
   %i.ad = load ptr, ptr %.sroa.031.0.lcssa, align 8
   %i.ae = tail call noundef zeroext i1 %3(ptr noundef %i.ac, ptr noundef %i.ad), !inline_history !125
@@ -744,8 +732,9 @@ bb.d:                                             ; preds = %.lr.ph.i13
   br i1 %i.aj, label %.lr.ph.i.i.i.i.i.preheader.i27, label %_ZSt13move_backwardIN5QListIP15QTreeWidgetItemE8iteratorES4_ET0_T_S6_S5_.exit.i18
 
 .lr.ph.i.i.i.i.i.preheader.i27:                   ; preds = %bb.d
+  %5 = getelementptr i8, ptr %.pn21.i16, i64 16
   %i.ak = mul nsw i64 %i.ai, -8                   ; 2 uses
-  %scevgep24.i28 = getelementptr i8, ptr %scevgep.i17, i64 %i.ak
+  %scevgep24.i28 = getelementptr i8, ptr %5, i64 %i.ak
   %scevgep25.i29 = getelementptr i8, ptr %.sroa.0.022.i15, i64 %i.ak
   tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %scevgep24.i28, ptr align 8 %scevgep25.i29, i64 %i.ah, i1 false)
   br label %_ZSt13move_backwardIN5QListIP15QTreeWidgetItemE8iteratorES4_ET0_T_S6_S5_.exit.i18
@@ -770,7 +759,6 @@ _ZSt13move_backwardIN5QListIP15QTreeWidgetItemE8iteratorES4_ET0_T_S6_S5_.exit.i1
   store ptr %i.af, ptr %.sink.i19, align 8
   %.sroa.0.0.i20 = getelementptr i8, ptr %.sroa.0.022.i15, i64 8 ; 2 uses
   %.not.i21 = icmp eq ptr %.sroa.0.0.i20, %1
-  %indvar.next.i22 = add i64 %indvar.i14, 1
   br i1 %.not.i21, label %_ZSt16__insertion_sortIN5QListIP15QTreeWidgetItemE8iteratorEN9__gnu_cxx5__ops15_Iter_comp_iterIPFbPKS1_S9_EEEEvT_SD_T0_.exit30, label %.lr.ph.i13, !llvm.loop !128
 
 _ZSt16__insertion_sortIN5QListIP15QTreeWidgetItemE8iteratorEN9__gnu_cxx5__ops15_Iter_comp_iterIPFbPKS1_S9_EEEEvT_SD_T0_.exit30: ; preds = %_ZSt13move_backwardIN5QListIP15QTreeWidgetItemE8iteratorES4_ET0_T_S6_S5_.exit.i18, %._crit_edge

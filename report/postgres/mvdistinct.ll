@@ -53,8 +53,7 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph57, %generator_next.exit.thread
   %indvar = phi i32 [ 0, %.lr.ph57 ], [ %indvar.next, %generator_next.exit.thread ] ; 2 uses
   %.03455 = phi i32 [ 0, %.lr.ph57 ], [ %.1.lcssa, %generator_next.exit.thread ] ; 2 uses
-  %.03554 = phi i32 [ 2, %.lr.ph57 ], [ %i.gn, %generator_next.exit.thread ] ; 18 uses
-  %2 = zext i32 %.03554 to i64                    ; 2 uses
+  %.03554 = phi i32 [ 2, %.lr.ph57 ], [ %i.gn, %generator_next.exit.thread ] ; 17 uses
   %i.q = sub i32 %i.p, %indvar
   %smin = tail call i32 @llvm.smin.i32(i32 %i.q, i32 %.03554)
   %i.r = add i32 %smin, 1                         ; 2 uses
@@ -131,10 +130,10 @@ generator_init.exit:                              ; preds = %.lr.ph.i.i.epil.pre
 
 generator_next.exit.lr.ph:                        ; preds = %generator_init.exit
   %i.as = icmp sgt i32 %.03554, 0                 ; 3 uses
-  %wide.trip.count107.i = zext i32 %.03554 to i64 ; 2 uses
-  %xtraiter95 = and i64 %2, 1
+  %wide.trip.count107.i = zext i32 %.03554 to i64 ; 4 uses
+  %xtraiter95 = and i64 %wide.trip.count107.i, 1
   %i.at = icmp eq i32 %.03554, 1
-  %unroll_iter98 = and i64 %2, 2147483646
+  %unroll_iter98 = and i64 %wide.trip.count107.i, 2147483646
   %lcmp.mod96.not = icmp eq i64 %xtraiter95, 0
   %lcmp.mod97 = trunc i32 %.03554 to i1
   br label %generator_next.exit

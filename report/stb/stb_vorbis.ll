@@ -204,8 +204,8 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.f = load i32, ptr %1, align 8, !tbaa !104
   %i.g = sdiv i32 %4, %i.f                        ; 3 uses
-  %i.h = sext i32 %3 to i64                       ; 2 uses
-  %i.i = getelementptr inbounds [4 x i8], ptr %2, i64 %i.h
+  %i.h = sext i32 %3 to i64
+  %i.i = getelementptr [4 x i8], ptr %2, i64 %i.h
   %.not3557 = icmp sgt i32 %i.g, 0
   br i1 %.not3557, label %.lr.ph59, label %codebook_decode_step.exit
 
@@ -217,11 +217,8 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph59, %.loopexit
-  %indvars.iv = phi i64 [ 0, %.lr.ph59 ], [ %indvars.iv.next, %.loopexit ] ; 4 uses
-  %6 = add i64 %indvars.iv, %i.h
-  %7 = shl i64 %6, 2
-  %scevgep85 = getelementptr i8, ptr %2, i64 %7   ; 2 uses
-  %i.m = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %indvars.iv ; 7 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph59 ], [ %indvars.iv.next, %.loopexit ] ; 3 uses
+  %i.m = getelementptr [4 x i8], ptr %i.i, i64 %indvars.iv ; 9 uses
   %i.n = tail call i32 @codebook_decode_start(ptr noundef %0, ptr noundef nonnull readonly %1) ; 2 uses
   %i.o = icmp slt i32 %i.n, 0
   br i1 %i.o, label %codebook_decode_step.exit, label %bb.d
@@ -262,11 +259,11 @@ bb.d:                                             ; preds = %bb.c
 
 vector.memcheck84:                                ; preds = %.lr.ph.split.us.i.preheader
   %i.z = shl nuw nsw i64 %wide.trip.count34.i, 2
-  %scevgep86.a = getelementptr i8, ptr %scevgep85, i64 %i.z
+  %scevgep86.a = getelementptr i8, ptr %i.m, i64 %i.z
   %i.aa = add nsw i64 %i.x, %wide.trip.count34.i
   %i.ab = shl nsw i64 %i.aa, 2
   %scevgep87 = getelementptr i8, ptr %i.v, i64 %i.ab
-  %bound088 = icmp ult ptr %scevgep85, %scevgep87
+  %bound088 = icmp ult ptr %i.m, %scevgep87
   %bound189 = icmp ult ptr %invariant.gep37.i, %scevgep86.a
   %found.conflict90 = and i1 %bound088, %bound189
   br i1 %found.conflict90, label %.lr.ph.split.us.i.preheader105, label %vector.ph93
@@ -669,7 +666,7 @@ bb.by:                                            ; preds = %bb.bx
 bb.bz:                                            ; preds = %bb.by
   %i.oh = zext nneg i16 %i.of to i64
   %i.oi = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv795
-  %i.oj = load ptr, ptr %i.oi, align 8, !tbaa !62 ; 2 uses
+  %i.oj = load ptr, ptr %i.oi, align 8, !tbaa !62
   %i.ok = load i32, ptr %i.h, align 8, !tbaa !147
   %i.ol = load i32, ptr %i.aa, align 8, !tbaa !149 ; 3 uses
   %i.om = mul i32 %i.ol, %.1280704.us.us
@@ -678,8 +675,8 @@ bb.bz:                                            ; preds = %bb.by
   %i.op = getelementptr inbounds nuw [2120 x i8], ptr %i.oo, i64 %i.oh ; 13 uses
   %i.oq = load i32, ptr %i.op, align 8, !tbaa !104
   %i.or = sdiv i32 %i.ol, %i.oq                   ; 3 uses
-  %i.os = sext i32 %i.on to i64                   ; 2 uses
-  %i.ot = getelementptr inbounds [4 x i8], ptr %i.oj, i64 %i.os
+  %i.os = sext i32 %i.on to i64
+  %i.ot = getelementptr [4 x i8], ptr %i.oj, i64 %i.os
   %.not3557.i.us.us.us = icmp sgt i32 %i.or, 0
   br i1 %.not3557.i.us.us.us, label %.lr.ph59.i.us.us.us, label %.thread629.us.us.us
 
@@ -700,11 +697,8 @@ bb.bz:                                            ; preds = %bb.by
   br label %bb.ca
 
 bb.ca:                                            ; preds = %.loopexit.i.us.us.us, %.lr.ph59.i.us.us.us
-  %indvars.iv.i354.us.us.us = phi i64 [ 0, %.lr.ph59.i.us.us.us ], [ %indvars.iv.next.i355.us.us.us, %.loopexit.i.us.us.us ] ; 4 uses
-  %6 = add i64 %indvars.iv.i354.us.us.us, %i.os
-  %7 = shl i64 %6, 2
-  %scevgep = getelementptr i8, ptr %i.oj, i64 %7  ; 2 uses
-  %i.pf = getelementptr inbounds nuw [4 x i8], ptr %i.ot, i64 %indvars.iv.i354.us.us.us ; 7 uses
+  %indvars.iv.i354.us.us.us = phi i64 [ 0, %.lr.ph59.i.us.us.us ], [ %indvars.iv.next.i355.us.us.us, %.loopexit.i.us.us.us ] ; 3 uses
+  %i.pf = getelementptr [4 x i8], ptr %i.ot, i64 %indvars.iv.i354.us.us.us ; 9 uses
   %i.pg = load i8, ptr %i.ox, align 1, !tbaa !103
   %i.ph = icmp eq i8 %i.pg, 0
   br i1 %i.ph, label %.thread31.sink.split.i367, label %bb.cb
@@ -1107,11 +1101,11 @@ codebook_decode_start.exit373.us.us.us:           ; preds = %bb.es, %codebook_de
 
 vector.memcheck:                                  ; preds = %.lr.ph.split.us.i.i.us.us.us.preheader
   %i.wl = shl nuw nsw i64 %wide.trip.count34.i.i.us.us.us, 2
-  %scevgep985.a = getelementptr i8, ptr %scevgep, i64 %i.wl
+  %scevgep985.a = getelementptr i8, ptr %i.pf, i64 %i.wl
   %i.wm = add nsw i64 %i.wj, %wide.trip.count34.i.i.us.us.us
   %i.wn = shl nsw i64 %i.wm, 2
   %scevgep986 = getelementptr i8, ptr %i.wh, i64 %i.wn
-  %bound0 = icmp ult ptr %scevgep, %scevgep986
+  %bound0 = icmp ult ptr %i.pf, %scevgep986
   %bound1 = icmp ult ptr %invariant.gep37.i.i.us.us.us, %scevgep985.a
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %.lr.ph.split.us.i.i.us.us.us.preheader1017, label %vector.ph
