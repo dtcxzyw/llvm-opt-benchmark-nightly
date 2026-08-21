@@ -204,7 +204,6 @@ bb.r:                                             ; preds = %store_status.exit.i
   %.078201.i.i.i = phi i32 [ -1, %.lr.ph.i.i.i ], [ %.2.i.i.i, %store_status.exit.i.i.i ] ; 11 uses
   %.079200.i.i.i = phi i32 [ 0, %.lr.ph.i.i.i ], [ %.180.i.i.i, %store_status.exit.i.i.i ] ; 9 uses
   %.083199.i.i.i = phi i32 [ 0, %.lr.ph.i.i.i ], [ %i.fz, %store_status.exit.i.i.i ] ; 20 uses
-  %13 = sext i32 %.083199.i.i.i to i64
   %i.bh = load i32, ptr %i.ap, align 8
   %i.bi = and i32 %i.bh, 2
   %.not.i.i.not.i.i.i = icmp eq i32 %i.bi, 0
@@ -523,6 +522,7 @@ add_folio_for_migration.exit.i.i.i:               ; preds = %bb.aw, %bb.av
 .lr.ph.i.i.i.i:                                   ; preds = %add_folio_for_migration.exit.i.i.i
   %.not108.i.i.i = icmp eq i32 %.0.i116.i.i.i, 0
   %i.fb = select i1 %.not108.i.i.i, i32 %.1.i22.i.i, i32 %.0.i116.i.i.i
+  %13 = sext i32 %.083199.i.i.i to i64
   %i.fc = getelementptr [4 x i8], ptr %i.f, i64 %13
   %i.fd = call i64 @llvm.read_register.i64(metadata !0)
   %i.fe = call { ptr, i64 } asm sideeffect "call __put_user_${4:c}", "={cx},={rsp},0,{rax},i,{rsp},~{ebx},~{dirflag},~{fpsr},~{flags}"(ptr %i.fc, i32 range(i32 -2147483648, 64) %i.fb, i64 4, i64 %i.fd) #9, !srcloc !104 ; 2 uses
@@ -601,10 +601,10 @@ store_status.exit.i.i.i:                          ; preds = %bb.ba, %move_pages_
   br i1 %i.gb, label %bb.r, label %store_status.exit.thread160.i.i.i, !llvm.loop !108
 
 store_status.exit.thread160.i.i.i:                ; preds = %store_status.exit.i.i.i, %.lr.ph.i.i.i.i, %arch_test_bit.exit.i.i.i, %.split272.i.i.i, %bb.v, %bb.u, %bb.t, %bb.s, %bb.q
-  %.083194.i.i.i = phi i32 [ 0, %bb.q ], [ %.083199.i.i.i, %.lr.ph.i.i.i.i ], [ %.083199.i.i.i, %bb.s ], [ %.083199.i.i.i, %arch_test_bit.exit.i.i.i ], [ %.083199.i.i.i, %bb.v ], [ %.083199.i.i.i, %.split272.i.i.i ], [ %i.fz, %store_status.exit.i.i.i ], [ %.083199.i.i.i, %bb.u ], [ %.083199.i.i.i, %bb.t ] ; 3 uses
-  %.387.i.i.i = phi i32 [ 0, %bb.q ], [ -14, %.lr.ph.i.i.i.i ], [ -14, %bb.s ], [ -13, %arch_test_bit.exit.i.i.i ], [ -19, %bb.v ], [ -19, %.split272.i.i.i ], [ %.286.i.i.i, %store_status.exit.i.i.i ], [ -14, %bb.u ], [ -14, %bb.t ] ; 2 uses
-  %.382.i.i.i = phi i32 [ 0, %bb.q ], [ %.180.i.i.i, %.lr.ph.i.i.i.i ], [ %.079200.i.i.i, %bb.s ], [ %.079200.i.i.i, %arch_test_bit.exit.i.i.i ], [ %.079200.i.i.i, %bb.v ], [ %.079200.i.i.i, %.split272.i.i.i ], [ %.180.i.i.i, %store_status.exit.i.i.i ], [ %.079200.i.i.i, %bb.u ], [ %.079200.i.i.i, %bb.t ] ; 2 uses
-  %.3.i.i.i = phi i32 [ -1, %bb.q ], [ %.1.i22.i.i, %.lr.ph.i.i.i.i ], [ %.078201.i.i.i, %bb.s ], [ %.078201.i.i.i, %arch_test_bit.exit.i.i.i ], [ %.078201.i.i.i, %bb.v ], [ %.078201.i.i.i, %.split272.i.i.i ], [ %.2.i.i.i, %store_status.exit.i.i.i ], [ %.078201.i.i.i, %bb.u ], [ %.078201.i.i.i, %bb.t ] ; 2 uses
+  %.083194.i.i.i = phi i32 [ 0, %bb.q ], [ %i.fz, %store_status.exit.i.i.i ], [ %.083199.i.i.i, %bb.s ], [ %.083199.i.i.i, %arch_test_bit.exit.i.i.i ], [ %.083199.i.i.i, %bb.v ], [ %.083199.i.i.i, %.split272.i.i.i ], [ %.083199.i.i.i, %.lr.ph.i.i.i.i ], [ %.083199.i.i.i, %bb.u ], [ %.083199.i.i.i, %bb.t ] ; 2 uses
+  %.387.i.i.i = phi i32 [ 0, %bb.q ], [ %.286.i.i.i, %store_status.exit.i.i.i ], [ -14, %bb.s ], [ -13, %arch_test_bit.exit.i.i.i ], [ -19, %bb.v ], [ -19, %.split272.i.i.i ], [ -14, %.lr.ph.i.i.i.i ], [ -14, %bb.u ], [ -14, %bb.t ] ; 2 uses
+  %.382.i.i.i = phi i32 [ 0, %bb.q ], [ %.180.i.i.i, %store_status.exit.i.i.i ], [ %.079200.i.i.i, %bb.s ], [ %.079200.i.i.i, %arch_test_bit.exit.i.i.i ], [ %.079200.i.i.i, %bb.v ], [ %.079200.i.i.i, %.split272.i.i.i ], [ %.180.i.i.i, %.lr.ph.i.i.i.i ], [ %.079200.i.i.i, %bb.u ], [ %.079200.i.i.i, %bb.t ] ; 2 uses
+  %.3.i.i.i = phi i32 [ -1, %bb.q ], [ %.2.i.i.i, %store_status.exit.i.i.i ], [ %.078201.i.i.i, %bb.s ], [ %.078201.i.i.i, %arch_test_bit.exit.i.i.i ], [ %.078201.i.i.i, %bb.v ], [ %.078201.i.i.i, %.split272.i.i.i ], [ %.1.i22.i.i, %.lr.ph.i.i.i.i ], [ %.078201.i.i.i, %bb.u ], [ %.078201.i.i.i, %bb.t ] ; 2 uses
   %i.gc = load volatile ptr, ptr %12, align 8
   %.not.i130.i.i.i = icmp eq ptr %i.gc, %12
   br i1 %.not.i130.i.i.i, label %move_pages_and_store_status.exit139.i.i.i, label %bb.bc
@@ -637,17 +637,19 @@ bb.bd:                                            ; preds = %bb.bc
 
 bb.be:                                            ; preds = %bb.bc
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #9
-  %i.gn = sub i32 %.083194.i.i.i, %.382.i.i.i
+  %i.gn = sub i32 %.083194.i.i.i, %.382.i.i.i     ; 2 uses
   %i.go = icmp sgt i32 %i.gn, 0
   br i1 %i.go, label %.lr.ph.i.i134.i.i.i, label %move_pages_and_store_status.exit139.i.i.i
 
 bb.bf:                                            ; preds = %.lr.ph.i.i134.i.i.i
-  %i.gp = add i32 %.01214.i.i136.i.i.i, 1         ; 2 uses
-  %exitcond257.not.i.i.i = icmp eq i32 %i.gp, %.083194.i.i.i
-  br i1 %exitcond257.not.i.i.i, label %move_pages_and_store_status.exit139.i.i.i, label %.lr.ph.i.i134.i.i.i, !llvm.loop !103
+  %14 = add i32 %.01214.i.i136.i.i.i, 1
+  %i.gp = add nsw i32 %.in.i.i135.i.i.i, -1
+  %15 = icmp sgt i32 %.in.i.i135.i.i.i, 1
+  br i1 %15, label %.lr.ph.i.i134.i.i.i, label %move_pages_and_store_status.exit139.i.i.i, !llvm.loop !103
 
 .lr.ph.i.i134.i.i.i:                              ; preds = %bb.be, %bb.bf
-  %.01214.i.i136.i.i.i = phi i32 [ %i.gp, %bb.bf ], [ %.382.i.i.i, %bb.be ] ; 2 uses
+  %.in.i.i135.i.i.i = phi i32 [ %i.gp, %bb.bf ], [ %i.gn, %bb.be ] ; 2 uses
+  %.01214.i.i136.i.i.i = phi i32 [ %14, %bb.bf ], [ %.382.i.i.i, %bb.be ] ; 2 uses
   %i.gq = sext i32 %.01214.i.i136.i.i.i to i64
   %i.gr = getelementptr [4 x i8], ptr %i.f, i64 %i.gq
   %i.gs = call i64 @llvm.read_register.i64(metadata !0)

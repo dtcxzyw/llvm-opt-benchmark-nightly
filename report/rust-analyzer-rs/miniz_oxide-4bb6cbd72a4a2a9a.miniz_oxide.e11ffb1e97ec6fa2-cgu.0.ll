@@ -41,39 +41,38 @@ target triple = "x86_64-unknown-linux-gnu"
 @31 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"j\00\00\00\00\00\00\00\13\04\00\001\00\00\00" }>, align 8
 @32 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"j\00\00\00\00\00\00\00\12\04\00\00\1B\00\00\00" }>, align 8
 @33 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"j\00\00\00\00\00\00\00\10\04\00\00\1B\00\00\00" }>, align 8
-@34 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"j\00\00\00\00\00\00\00\86\03\00\00\15\00\00\00" }>, align 8
-@35 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"j\00\00\00\00\00\00\00d\03\00\00+\00\00\00" }>, align 8
-@36 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"j\00\00\00\00\00\00\00i\03\00\00\19\00\00\00" }>, align 8
-@37 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"j\00\00\00\00\00\00\00[\03\00\00)\00\00\00" }>, align 8
-@38 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"j\00\00\00\00\00\00\00F\03\00\00(\00\00\00" }>, align 8
-@39 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"j\00\00\00\00\00\00\00G\03\00\00-\00\00\00" }>, align 8
-@40 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"j\00\00\00\00\00\00\00P\03\00\00L\00\00\00" }>, align 8
-@41 = private unnamed_addr constant [47 x i8] c"assertion failed: d.params.flush_remaining == 0", align 1
-@42 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"j\00\00\00\00\00\00\00P\06\00\00\09\00\00\00" }>, align 8
-@43 = private unnamed_addr constant [128 x i8] c"\00\00\12\13\14\14\15\15\16\16\16\16\17\17\17\17\18\18\18\18\18\18\18\18\19\19\19\19\19\19\19\19\1A\1A\1A\1A\1A\1A\1A\1A\1A\1A\1A\1A\1A\1A\1A\1A\1B\1B\1B\1B\1B\1B\1B\1B\1B\1B\1B\1B\1B\1B\1B\1B\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1D\1D\1D\1D\1D\1D\1D\1D\1D\1D\1D\1D\1D\1D\1D\1D\1D\1D\1D\1D\1D\1D\1D\1D\1D\1D\1D\1D\1D\1D\1D\1D", align 1
-@44 = private unnamed_addr constant [512 x i8] c"\00\01\02\03\04\04\05\05\06\06\06\06\07\07\07\07\08\08\08\08\08\08\08\08\09\09\09\09\09\09\09\09\0A\0A\0A\0A\0A\0A\0A\0A\0A\0A\0A\0A\0A\0A\0A\0A\0B\0B\0B\0B\0B\0B\0B\0B\0B\0B\0B\0B\0B\0B\0B\0B\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11", align 1
-@45 = private unnamed_addr constant [256 x i8] c"\01\02\03\04\05\06\07\08\09\09\0A\0A\0B\0B\0C\0C\0D\0D\0D\0D\0E\0E\0E\0E\0F\0F\0F\0F\10\10\10\10\11\11\11\11\11\11\11\11\12\12\12\12\12\12\12\12\13\13\13\13\13\13\13\13\14\14\14\14\14\14\14\14\15\15\15\15\15\15\15\15\15\15\15\15\15\15\15\15\16\16\16\16\16\16\16\16\16\16\16\16\16\16\16\16\17\17\17\17\17\17\17\17\17\17\17\17\17\17\17\17\18\18\18\18\18\18\18\18\18\18\18\18\18\18\18\18\19\19\19\19\19\19\19\19\19\19\19\19\19\19\19\19\19\19\19\19\19\19\19\19\19\19\19\19\19\19\19\19\1A\1A\1A\1A\1A\1A\1A\1A\1A\1A\1A\1A\1A\1A\1A\1A\1A\1A\1A\1A\1A\1A\1A\1A\1A\1A\1A\1A\1A\1A\1A\1A\1B\1B\1B\1B\1B\1B\1B\1B\1B\1B\1B\1B\1B\1B\1B\1B\1B\1B\1B\1B\1B\1B\1B\1B\1B\1B\1B\1B\1B\1B\1B\1B\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1D", align 1
-@46 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"j\00\00\00\00\00\00\00\16\08\00\00\22\00\00\00" }>, align 8
-@47 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"j\00\00\00\00\00\00\00\BE\07\00\001\00\00\00" }>, align 8
-@48 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"j\00\00\00\00\00\00\00\C3\07\00\00\16\00\00\00" }>, align 8
-@49 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"j\00\00\00\00\00\00\00\C3\07\00\00-\00\00\00" }>, align 8
-@50 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"j\00\00\00\00\00\00\00\BE\07\00\00H\00\00\00" }>, align 8
-@51 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"j\00\00\00\00\00\00\00\EC\08\00\00H\00\00\00" }>, align 8
-@52 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"j\00\00\00\00\00\00\00\15\07\00\00\1E\00\00\00" }>, align 8
-@53 = private unnamed_addr constant [47 x i8] c"assertion failed: lookahead_size >= len_to_move", align 1
-@54 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"j\00\00\00\00\00\00\00\83\07\00\00\09\00\00\00" }>, align 8
-@55 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"j\00\00\00\00\00\00\00?\07\00\00.\00\00\00" }>, align 8
-@56 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"j\00\00\00\00\00\00\00\02\07\00\00\1E\00\00\00" }>, align 8
-@57 = private unnamed_addr constant [68 x i8] c"\00\00\00\00\01\00\00\00\03\00\00\00\07\00\00\00\0F\00\00\00\1F\00\00\00?\00\00\00\7F\00\00\00\FF\00\00\00\FF\01\00\00\FF\03\00\00\FF\07\00\00\FF\0F\00\00\FF\1F\00\00\FF?\00\00\FF\7F\00\00\FF\FF\00\00", align 4
-@58 = private unnamed_addr constant [256 x i8] c"\00\00\00\00\00\00\00\00\01\01\01\01\01\01\01\01\02\02\02\02\02\02\02\02\02\02\02\02\02\02\02\02\03\03\03\03\03\03\03\03\03\03\03\03\03\03\03\03\03\03\03\03\03\03\03\03\03\03\03\03\03\03\03\03\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\00", align 1
-@59 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"j\00\00\00\00\00\00\00\F7\05\00\00\17\00\00\00" }>, align 8
-@60 = private unnamed_addr constant [128 x i8] c"\00\00\08\08\09\09\09\09\0A\0A\0A\0A\0A\0A\0A\0A\0B\0B\0B\0B\0B\0B\0B\0B\0B\0B\0B\0B\0B\0B\0B\0B\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D", align 1
-@61 = private unnamed_addr constant [512 x i8] c"\00\00\00\00\01\01\01\01\02\02\02\02\02\02\02\02\03\03\03\03\03\03\03\03\03\03\03\03\03\03\03\03\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07", align 1
-@62 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"j\00\00\00\00\00\00\00v\08\00\00\12\00\00\00" }>, align 8
-@63 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"j\00\00\00\00\00\00\00v\08\00\000\00\00\00" }>, align 8
-@64 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"j\00\00\00\00\00\00\00u\08\00\00\17\00\00\00" }>, align 8
-@65 = private unnamed_addr constant [22 x i8] c"\00\00\01\00\06\00 \00\10\00 \00\80\00\00\01\00\02\00\03\DC\05", align 2
-@66 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"j\00\00\00\00\00\00\00\04\03\00\00\16\00\00\00" }>, align 8
+@34 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"j\00\00\00\00\00\00\00d\03\00\00+\00\00\00" }>, align 8
+@35 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"j\00\00\00\00\00\00\00i\03\00\00\19\00\00\00" }>, align 8
+@36 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"j\00\00\00\00\00\00\00[\03\00\00)\00\00\00" }>, align 8
+@37 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"j\00\00\00\00\00\00\00F\03\00\00(\00\00\00" }>, align 8
+@38 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"j\00\00\00\00\00\00\00G\03\00\00-\00\00\00" }>, align 8
+@39 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"j\00\00\00\00\00\00\00P\03\00\00L\00\00\00" }>, align 8
+@40 = private unnamed_addr constant [47 x i8] c"assertion failed: d.params.flush_remaining == 0", align 1
+@41 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"j\00\00\00\00\00\00\00P\06\00\00\09\00\00\00" }>, align 8
+@42 = private unnamed_addr constant [128 x i8] c"\00\00\12\13\14\14\15\15\16\16\16\16\17\17\17\17\18\18\18\18\18\18\18\18\19\19\19\19\19\19\19\19\1A\1A\1A\1A\1A\1A\1A\1A\1A\1A\1A\1A\1A\1A\1A\1A\1B\1B\1B\1B\1B\1B\1B\1B\1B\1B\1B\1B\1B\1B\1B\1B\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1D\1D\1D\1D\1D\1D\1D\1D\1D\1D\1D\1D\1D\1D\1D\1D\1D\1D\1D\1D\1D\1D\1D\1D\1D\1D\1D\1D\1D\1D\1D\1D", align 1
+@43 = private unnamed_addr constant [512 x i8] c"\00\01\02\03\04\04\05\05\06\06\06\06\07\07\07\07\08\08\08\08\08\08\08\08\09\09\09\09\09\09\09\09\0A\0A\0A\0A\0A\0A\0A\0A\0A\0A\0A\0A\0A\0A\0A\0A\0B\0B\0B\0B\0B\0B\0B\0B\0B\0B\0B\0B\0B\0B\0B\0B\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0E\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\0F\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\10\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11\11", align 1
+@44 = private unnamed_addr constant [256 x i8] c"\01\02\03\04\05\06\07\08\09\09\0A\0A\0B\0B\0C\0C\0D\0D\0D\0D\0E\0E\0E\0E\0F\0F\0F\0F\10\10\10\10\11\11\11\11\11\11\11\11\12\12\12\12\12\12\12\12\13\13\13\13\13\13\13\13\14\14\14\14\14\14\14\14\15\15\15\15\15\15\15\15\15\15\15\15\15\15\15\15\16\16\16\16\16\16\16\16\16\16\16\16\16\16\16\16\17\17\17\17\17\17\17\17\17\17\17\17\17\17\17\17\18\18\18\18\18\18\18\18\18\18\18\18\18\18\18\18\19\19\19\19\19\19\19\19\19\19\19\19\19\19\19\19\19\19\19\19\19\19\19\19\19\19\19\19\19\19\19\19\1A\1A\1A\1A\1A\1A\1A\1A\1A\1A\1A\1A\1A\1A\1A\1A\1A\1A\1A\1A\1A\1A\1A\1A\1A\1A\1A\1A\1A\1A\1A\1A\1B\1B\1B\1B\1B\1B\1B\1B\1B\1B\1B\1B\1B\1B\1B\1B\1B\1B\1B\1B\1B\1B\1B\1B\1B\1B\1B\1B\1B\1B\1B\1B\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1C\1D", align 1
+@45 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"j\00\00\00\00\00\00\00\16\08\00\00\22\00\00\00" }>, align 8
+@46 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"j\00\00\00\00\00\00\00\BE\07\00\001\00\00\00" }>, align 8
+@47 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"j\00\00\00\00\00\00\00\C3\07\00\00\16\00\00\00" }>, align 8
+@48 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"j\00\00\00\00\00\00\00\C3\07\00\00-\00\00\00" }>, align 8
+@49 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"j\00\00\00\00\00\00\00\BE\07\00\00H\00\00\00" }>, align 8
+@50 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"j\00\00\00\00\00\00\00\EC\08\00\00H\00\00\00" }>, align 8
+@51 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"j\00\00\00\00\00\00\00\15\07\00\00\1E\00\00\00" }>, align 8
+@52 = private unnamed_addr constant [47 x i8] c"assertion failed: lookahead_size >= len_to_move", align 1
+@53 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"j\00\00\00\00\00\00\00\83\07\00\00\09\00\00\00" }>, align 8
+@54 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"j\00\00\00\00\00\00\00?\07\00\00.\00\00\00" }>, align 8
+@55 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"j\00\00\00\00\00\00\00\02\07\00\00\1E\00\00\00" }>, align 8
+@56 = private unnamed_addr constant [68 x i8] c"\00\00\00\00\01\00\00\00\03\00\00\00\07\00\00\00\0F\00\00\00\1F\00\00\00?\00\00\00\7F\00\00\00\FF\00\00\00\FF\01\00\00\FF\03\00\00\FF\07\00\00\FF\0F\00\00\FF\1F\00\00\FF?\00\00\FF\7F\00\00\FF\FF\00\00", align 4
+@57 = private unnamed_addr constant [256 x i8] c"\00\00\00\00\00\00\00\00\01\01\01\01\01\01\01\01\02\02\02\02\02\02\02\02\02\02\02\02\02\02\02\02\03\03\03\03\03\03\03\03\03\03\03\03\03\03\03\03\03\03\03\03\03\03\03\03\03\03\03\03\03\03\03\03\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\00", align 1
+@58 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"j\00\00\00\00\00\00\00\F7\05\00\00\17\00\00\00" }>, align 8
+@59 = private unnamed_addr constant [128 x i8] c"\00\00\08\08\09\09\09\09\0A\0A\0A\0A\0A\0A\0A\0A\0B\0B\0B\0B\0B\0B\0B\0B\0B\0B\0B\0B\0B\0B\0B\0B\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0C\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D\0D", align 1
+@60 = private unnamed_addr constant [512 x i8] c"\00\00\00\00\01\01\01\01\02\02\02\02\02\02\02\02\03\03\03\03\03\03\03\03\03\03\03\03\03\03\03\03\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\06\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07", align 1
+@61 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"j\00\00\00\00\00\00\00v\08\00\00\12\00\00\00" }>, align 8
+@62 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"j\00\00\00\00\00\00\00v\08\00\000\00\00\00" }>, align 8
+@63 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"j\00\00\00\00\00\00\00u\08\00\00\17\00\00\00" }>, align 8
+@64 = private unnamed_addr constant [22 x i8] c"\00\00\01\00\06\00 \00\10\00 \00\80\00\00\01\00\02\00\03\DC\05", align 2
+@65 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"j\00\00\00\00\00\00\00\04\03\00\00\16\00\00\00" }>, align 8
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: write) uwtable
 define void @_RNvMs1_NtNtCsjkkKzr5dxZe_11miniz_oxide7deflate4coreNtB5_15CompressorOxide20set_format_and_level(ptr noalias nofree noundef writeonly align 8 captures(none) dereferenceable(65712) initializes((65584, 65592), (65664, 65668), (65706, 65707)) %0, i8 noundef range(i8 0, 3) %1, i8 noundef %2) unnamed_addr #0 personality ptr @rust_eh_personality {
@@ -83,7 +82,7 @@ bb.a:
   %.sroa.07.0.i5 = zext nneg i8 %i.b to i64
   %i.c = icmp ult i8 %2, 4
   %..i6 = select i1 %i.c, i32 16384, i32 0        ; 2 uses
-  %i.d = getelementptr inbounds nuw [2 x i8], ptr @65, i64 %.sroa.07.0.i5
+  %i.d = getelementptr inbounds nuw [2 x i8], ptr @64, i64 %.sroa.07.0.i5
   %i.e = load i16, ptr %i.d, align 2, !noundef !4
   %i.f = zext i16 %i.e to i32                     ; 2 uses
   br i1 %i.a, label %.split, label %.split3
@@ -139,7 +138,7 @@ bb.a:
   %.sroa.07.0.i5.i = zext nneg i8 %i.f to i64
   %i.g = icmp ult i32 %1, 4
   %..i6.i = select i1 %i.g, i32 16384, i32 0      ; 2 uses
-  %i.h = getelementptr inbounds nuw [2 x i8], ptr @65, i64 %.sroa.07.0.i5.i
+  %i.h = getelementptr inbounds nuw [2 x i8], ptr @64, i64 %.sroa.07.0.i5.i
   %i.i = load i16, ptr %i.h, align 2, !noalias !5, !noundef !4
   %i.j = zext i16 %i.i to i32                     ; 2 uses
   br i1 %i.d, label %.split.i, label %.split3.i
@@ -192,7 +191,7 @@ bb.a:
   %.sroa.07.0.i5.i = zext nneg i8 %i.e to i64
   %i.f = icmp ult i8 %1, 4
   %..i6.i = select i1 %i.f, i32 16384, i32 0      ; 2 uses
-  %i.g = getelementptr inbounds nuw [2 x i8], ptr @65, i64 %.sroa.07.0.i5.i
+  %i.g = getelementptr inbounds nuw [2 x i8], ptr @64, i64 %.sroa.07.0.i5.i
   %i.h = load i16, ptr %i.g, align 2, !noalias !4, !noundef !4
   %i.i = zext i16 %i.h to i32                     ; 3 uses
   br i1 %i.d, label %.split2, label %.split
@@ -437,7 +436,7 @@ bb.f:                                             ; preds = %bb.d
 bb.g:                                             ; preds = %bb.d
   %i.u = add nuw nsw i64 %i.n, 2
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 %i.n
-  call void @_RINvNtCshzWfHUSfYae_4core5slice20copy_from_slice_implhECsjkkKzr5dxZe_11miniz_oxide(ptr noalias nofree noundef nonnull %i.v, i64 noundef 2, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.a, i64 noundef 2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @66), !noalias !28
+  call void @_RINvNtCshzWfHUSfYae_4core5slice20copy_from_slice_implhECsjkkKzr5dxZe_11miniz_oxide(ptr noalias nofree noundef nonnull %i.v, i64 noundef 2, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.a, i64 noundef 2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @65), !noalias !28
   store i64 %i.u, ptr %2, align 8, !alias.scope !28, !noalias !31
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   br label %bb.j
@@ -449,7 +448,7 @@ bb.h:                                             ; preds = %bb.e
 bb.i:                                             ; preds = %bb.e
   %i.w = add nuw nsw i64 %i.t, 2
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 %i.t
-  call void @_RINvNtCshzWfHUSfYae_4core5slice20copy_from_slice_implhECsjkkKzr5dxZe_11miniz_oxide(ptr noalias nofree noundef nonnull %i.x, i64 noundef 2, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.b, i64 noundef 2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @66), !noalias !34
+  call void @_RINvNtCshzWfHUSfYae_4core5slice20copy_from_slice_implhECsjkkKzr5dxZe_11miniz_oxide(ptr noalias nofree noundef nonnull %i.x, i64 noundef 2, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.b, i64 noundef 2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @65), !noalias !34
   store i64 %i.w, ptr %2, align 8, !alias.scope !34, !noalias !37
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   br label %bb.j
@@ -474,7 +473,7 @@ bb.k:                                             ; preds = %bb.b
 
 _RNvNtNtCsjkkKzr5dxZe_11miniz_oxide7deflate4core5write.exit5: ; preds = %bb.k
   %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 %i.ac
-  tail call void @_RINvNtCshzWfHUSfYae_4core5slice20copy_from_slice_implhECsjkkKzr5dxZe_11miniz_oxide(ptr noalias nofree noundef nonnull %i.ag, i64 noundef range(i64 0, 4) %i.ab, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @13, i64 noundef range(i64 0, 4) %i.ab, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @66), !noalias !40
+  tail call void @_RINvNtCshzWfHUSfYae_4core5slice20copy_from_slice_implhECsjkkKzr5dxZe_11miniz_oxide(ptr noalias nofree noundef nonnull %i.ag, i64 noundef range(i64 0, 4) %i.ab, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @13, i64 noundef range(i64 0, 4) %i.ab, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @65), !noalias !40
   store i64 %i.ad, ptr %2, align 8, !alias.scope !40, !noalias !43
   br label %bb.j
 
@@ -823,7 +822,7 @@ bb.n:                                             ; preds = %.lr.ph88.i.us
 
 .lr.ph88.i:                                       ; preds = %.lr.ph88.preheader.i
   %i.eq = zext nneg i32 %.sroa.029.0101.i to i64
-  call void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %i.eq, i64 noundef range(i64 0, 289) %.sroa.04.2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @35) #22, !noalias !53
+  call void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %i.eq, i64 noundef range(i64 0, 289) %.sroa.04.2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @34) #22, !noalias !53
   unreachable
 
 ._crit_edge89.i:                                  ; preds = %.lr.ph88.i.us, %bb.n, %.preheader.i
@@ -855,7 +854,7 @@ bb.o:                                             ; preds = %.lr.ph97.i
   br i1 %i.fa, label %.lr.ph97.i, label %._crit_edge98.i
 
 bb.p:                                             ; preds = %.lr.ph97.i
-  call void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %i.ev, i64 noundef range(i64 0, 289) %.sroa.04.2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @36) #22, !noalias !53
+  call void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %i.ev, i64 noundef range(i64 0, 289) %.sroa.04.2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @35) #22, !noalias !53
   unreachable
 
 .lr.ph84.preheader.i:                             ; preds = %._crit_edge.i72, %bb.r
@@ -868,7 +867,7 @@ bb.p:                                             ; preds = %.lr.ph97.i
   br i1 %i.ff, label %bb.r, label %bb.q
 
 bb.q:                                             ; preds = %.lr.ph84.preheader.i
-  call void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %i.fe, i64 noundef range(i64 0, 289) %.sroa.04.2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @37) #22, !noalias !53
+  call void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %i.fe, i64 noundef range(i64 0, 289) %.sroa.04.2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @36) #22, !noalias !53
   unreachable
 
 bb.r:                                             ; preds = %.lr.ph84.preheader.i
@@ -884,7 +883,7 @@ bb.s:                                             ; preds = %.lr.ph.i70
   br i1 %i.fj, label %bb.u, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
-  call void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %.sroa.0.080.i, i64 noundef range(i64 0, 289) %.sroa.04.2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @38) #22, !noalias !53
+  call void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %.sroa.0.080.i, i64 noundef range(i64 0, 289) %.sroa.04.2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @37) #22, !noalias !53
   unreachable
 
 bb.u:                                             ; preds = %bb.s
@@ -922,7 +921,7 @@ bb.y:                                             ; preds = %bb.x
   br label %bb.w
 
 bb.z:                                             ; preds = %bb.x
-  call void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %.sroa.0.080.i, i64 noundef range(i64 0, 289) %.sroa.04.2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @39) #22, !noalias !53
+  call void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %.sroa.0.080.i, i64 noundef range(i64 0, 289) %.sroa.04.2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @38) #22, !noalias !53
   unreachable
 
 bb.aa:                                            ; preds = %bb.w
@@ -974,7 +973,7 @@ bb.af:                                            ; preds = %bb.ae
   br label %bb.ad
 
 bb.ag:                                            ; preds = %bb.ae
-  call void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %.sroa.0.1.i, i64 noundef range(i64 0, 289) %.sroa.04.2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @40) #22, !noalias !53
+  call void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %.sroa.0.1.i, i64 noundef range(i64 0, 289) %.sroa.04.2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @39) #22, !noalias !53
   unreachable
 
 _RNvMsb_NtNtCsjkkKzr5dxZe_11miniz_oxide7deflate4coreNtB5_12HuffmanOxide28calculate_minimum_redundancy.exit: ; preds = %._crit_edge98.i
@@ -992,7 +991,6 @@ _RNvMsb_NtNtCsjkkKzr5dxZe_11miniz_oxide7deflate4coreNtB5_12HuffmanOxide28calcula
   br i1 %i.gt, label %bb.ak, label %bb.al
 
 ._crit_edge:                                      ; preds = %bb.ak
-  call void @llvm.experimental.noalias.scope.decl(metadata !56)
   %i.gu = icmp samesign ult i64 %.sroa.04.2, 2
   br i1 %i.gu, label %_RNvMsb_NtNtCsjkkKzr5dxZe_11miniz_oxide7deflate4coreNtB5_12HuffmanOxide21enforce_max_code_size.exit, label %vector.ph
 
@@ -1146,30 +1144,22 @@ bb.ah:                                            ; preds = %bb.ai
   br i1 %exitcond.not.i77, label %_RNvMsb_NtNtCsjkkKzr5dxZe_11miniz_oxide7deflate4coreNtB5_12HuffmanOxide21enforce_max_code_size.exit, label %.lr.ph.i75
 
 bb.ai:                                            ; preds = %.lr.ph.i75, %bb.ah
-  %.sroa.03.0.i308 = phi i64 [ %3, %.lr.ph.i75 ], [ %i.it, %bb.ah ] ; 3 uses
+  %.sroa.03.0.i308 = phi i64 [ %3, %.lr.ph.i75 ], [ %i.it, %bb.ah ] ; 2 uses
   %i.it = add nsw i64 %.sroa.03.0.i308, -1        ; 4 uses
   %i.iu = getelementptr inbounds nuw [4 x i8], ptr %i.g, i64 %i.it
   %i.iv = load i32, ptr %i.iu, align 4, !alias.scope !56, !noundef !4 ; 2 uses
   %i.iw = icmp eq i32 %i.iv, 0
-  br i1 %i.iw, label %bb.ah, label %5
+  br i1 %i.iw, label %bb.ah, label %bb.aj
 
-5:                                                ; preds = %bb.ai
-  %6 = getelementptr inbounds nuw [4 x i8], ptr %i.g, i64 %i.it
-  %7 = add i32 %i.iv, -1
-  store i32 %7, ptr %6, align 4, !alias.scope !56
-  %.not.i78 = icmp eq i64 %.sroa.03.0.i308, 33
-  br i1 %.not.i78, label %8, label %bb.aj
-
-bb.aj:                                            ; preds = %5
+bb.aj:                                            ; preds = %bb.ai
+  %5 = getelementptr inbounds nuw [4 x i8], ptr %i.g, i64 %i.it
+  %6 = add i32 %i.iv, -1
+  store i32 %6, ptr %5, align 4, !alias.scope !56
   %i.ix = getelementptr inbounds nuw [4 x i8], ptr %i.g, i64 %.sroa.03.0.i308 ; 2 uses
   %i.iy = load i32, ptr %i.ix, align 4, !alias.scope !56, !noundef !4
   %i.iz = add i32 %i.iy, 2
   store i32 %i.iz, ptr %i.ix, align 4, !alias.scope !56
   br label %.loopexit.i76
-
-8:                                                ; preds = %5
-  call void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef 33, i64 noundef 33, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @34) #22, !noalias !56
-  unreachable
 
 _RNvMsb_NtNtCsjkkKzr5dxZe_11miniz_oxide7deflate4coreNtB5_12HuffmanOxide21enforce_max_code_size.exit: ; preds = %.loopexit.i76, %_RNvMsb_NtNtCsjkkKzr5dxZe_11miniz_oxide7deflate4coreNtB5_12HuffmanOxide18radix_sort_symbols.exit, %_RNvMsb_NtNtCsjkkKzr5dxZe_11miniz_oxide7deflate4coreNtB5_12HuffmanOxide28calculate_minimum_redundancy.exit, %._crit_edge, %_RINvYINtNtNtCshzWfHUSfYae_4core5slice4iter4IterlENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator5rfoldmNCINvNvXs_NtNtBR_8adapters9enumerateINtB1Y_9EnumeratepENtNtBP_8iterator8Iterator4fold9enumerateRlmNCNvMsb_NtNtCsjkkKzr5dxZe_11miniz_oxide7deflate4coreNtB3w_12HuffmanOxide21enforce_max_code_size0E0EB3A_.exit.i
   %i.ja = getelementptr inbounds nuw i8, ptr %0, i64 3456
@@ -1573,7 +1563,7 @@ _RNvMse_NtNtCsjkkKzr5dxZe_11miniz_oxide7deflate4coreNtB5_7LZOxide9init_flag.exit
   br i1 %or.cond5, label %bb.m, label %_RNvMs7_NtNtCsjkkKzr5dxZe_11miniz_oxide7deflate4coreNtB5_17OutputBufferOxide8put_bits.exit45
 
 bb.k:                                             ; preds = %bb.g
-  tail call void @_RNvNtCshzWfHUSfYae_4core9panicking5panic(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @41, i64 noundef 47, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @42) #22
+  tail call void @_RNvNtCshzWfHUSfYae_4core9panicking5panic(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @40, i64 noundef 47, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @41) #22
   unreachable
 
 _RNvMs7_NtNtCsjkkKzr5dxZe_11miniz_oxide7deflate4coreNtB5_17OutputBufferOxide8put_bits.exit45: ; preds = %bb.m, %_RNvMs7_NtNtCsjkkKzr5dxZe_11miniz_oxide7deflate4coreNtB5_17OutputBufferOxide8put_bits.exit45.loopexit, %_RNvMse_NtNtCsjkkKzr5dxZe_11miniz_oxide7deflate4coreNtB5_7LZOxide9init_flag.exit
@@ -1976,7 +1966,7 @@ bb.o:                                             ; preds = %bb.n
 bb.p:                                             ; preds = %bb.n
   %i.br = add nuw nsw i64 %i.bq, 2
   %i.bs = getelementptr inbounds nuw i8, ptr %i.n, i64 %i.bq
-  call void @_RINvNtCshzWfHUSfYae_4core5slice20copy_from_slice_implhECsjkkKzr5dxZe_11miniz_oxide(ptr noalias nofree noundef nonnull %i.bs, i64 noundef 2, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.g, i64 noundef 2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @66), !noalias !195
+  call void @_RINvNtCshzWfHUSfYae_4core5slice20copy_from_slice_implhECsjkkKzr5dxZe_11miniz_oxide(ptr noalias nofree noundef nonnull %i.bs, i64 noundef 2, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.g, i64 noundef 2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @65), !noalias !195
   store i64 %i.br, ptr %i.l, align 8, !alias.scope !191, !noalias !192
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g), !noalias !187
   br label %bb.q
@@ -2010,7 +2000,7 @@ bb.s:                                             ; preds = %bb.r
 
 bb.t:                                             ; preds = %bb.r
   %i.cc = getelementptr inbounds nuw i8, ptr %i.n, i64 %i.by
-  call void @_RINvNtCshzWfHUSfYae_4core5slice20copy_from_slice_implhECsjkkKzr5dxZe_11miniz_oxide(ptr noalias nofree noundef nonnull %i.cc, i64 noundef range(i64 0, 4) %i.bx, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.h, i64 noundef range(i64 0, 4) %i.bx, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @66), !noalias !203
+  call void @_RINvNtCshzWfHUSfYae_4core5slice20copy_from_slice_implhECsjkkKzr5dxZe_11miniz_oxide(ptr noalias nofree noundef nonnull %i.cc, i64 noundef range(i64 0, 4) %i.bx, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.h, i64 noundef range(i64 0, 4) %i.bx, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @65), !noalias !203
   store i64 %i.bz, ptr %i.l, align 8, !alias.scope !199, !noalias !200
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h), !noalias !187
   br label %bb.q
@@ -2084,7 +2074,7 @@ bb.ac:                                            ; preds = %bb.ab
 bb.ad:                                            ; preds = %bb.ab
   %i.cv = add nuw nsw i64 %i.cu, 2
   %i.cw = getelementptr inbounds nuw i8, ptr %i.n, i64 %i.cu
-  call void @_RINvNtCshzWfHUSfYae_4core5slice20copy_from_slice_implhECsjkkKzr5dxZe_11miniz_oxide(ptr noalias nofree noundef nonnull %i.cw, i64 noundef 2, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.e, i64 noundef 2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @66), !noalias !229
+  call void @_RINvNtCshzWfHUSfYae_4core5slice20copy_from_slice_implhECsjkkKzr5dxZe_11miniz_oxide(ptr noalias nofree noundef nonnull %i.cw, i64 noundef 2, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.e, i64 noundef 2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @65), !noalias !229
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !221
   br label %bb.ae
 
@@ -2118,7 +2108,7 @@ bb.ag:                                            ; preds = %bb.af
 
 bb.ah:                                            ; preds = %bb.af
   %i.dh = getelementptr inbounds nuw i8, ptr %i.n, i64 %i.dd
-  call void @_RINvNtCshzWfHUSfYae_4core5slice20copy_from_slice_implhECsjkkKzr5dxZe_11miniz_oxide(ptr noalias nofree noundef nonnull %i.dh, i64 noundef range(i64 0, 4) %i.dc, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.f, i64 noundef range(i64 0, 4) %i.dc, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @66), !noalias !237
+  call void @_RINvNtCshzWfHUSfYae_4core5slice20copy_from_slice_implhECsjkkKzr5dxZe_11miniz_oxide(ptr noalias nofree noundef nonnull %i.dh, i64 noundef range(i64 0, 4) %i.dc, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.f, i64 noundef range(i64 0, 4) %i.dc, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @65), !noalias !237
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !221
   br label %bb.ae
 
@@ -2144,7 +2134,7 @@ _RNvMs9_NtNtCsjkkKzr5dxZe_11miniz_oxide7deflate4coreNtB5_3Rle14prev_code_size.ex
 _RNvMs9_NtNtCsjkkKzr5dxZe_11miniz_oxide7deflate4coreNtB5_3Rle14prev_code_size.exit40.i: ; preds = %bb.ai
   %i.dl = add nuw nsw i64 %i.dk, 2
   %i.dm = getelementptr inbounds nuw i8, ptr %i.n, i64 %i.dk
-  call void @_RINvNtCshzWfHUSfYae_4core5slice20copy_from_slice_implhECsjkkKzr5dxZe_11miniz_oxide(ptr noalias nofree noundef nonnull %i.dm, i64 noundef 2, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.d, i64 noundef 2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @66), !noalias !256
+  call void @_RINvNtCshzWfHUSfYae_4core5slice20copy_from_slice_implhECsjkkKzr5dxZe_11miniz_oxide(ptr noalias nofree noundef nonnull %i.dm, i64 noundef 2, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.d, i64 noundef 2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @65), !noalias !256
   store i64 %i.dl, ptr %i.l, align 8, !alias.scope !252, !noalias !253
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !248
   store i16 0, ptr %i.av, align 4, !alias.scope !238, !noalias !257
@@ -2170,7 +2160,7 @@ bb.aj:                                            ; preds = %_RNvMs9_NtNtCsjkkKz
 bb.ak:                                            ; preds = %_RNvMs9_NtNtCsjkkKzr5dxZe_11miniz_oxide7deflate4coreNtB5_3Rle14prev_code_size.exit36.i
   %i.ds = add nuw nsw i64 %i.dn, 1
   %i.dt = getelementptr inbounds nuw i8, ptr %i.n, i64 %i.dn
-  call void @_RINvNtCshzWfHUSfYae_4core5slice20copy_from_slice_implhECsjkkKzr5dxZe_11miniz_oxide(ptr noalias nofree noundef nonnull %i.dt, i64 noundef 1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.k, i64 noundef 1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @66), !noalias !258
+  call void @_RINvNtCshzWfHUSfYae_4core5slice20copy_from_slice_implhECsjkkKzr5dxZe_11miniz_oxide(ptr noalias nofree noundef nonnull %i.dt, i64 noundef 1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.k, i64 noundef 1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @65), !noalias !258
   store i64 %i.ds, ptr %i.l, align 8, !alias.scope !213, !noalias !216
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k), !noalias !172
   br label %bb.w
@@ -2207,7 +2197,7 @@ bb.an:                                            ; preds = %bb.am
 bb.ao:                                            ; preds = %bb.am
   %i.ec = add nuw nsw i64 %i.eb, 2
   %i.ed = getelementptr inbounds nuw i8, ptr %i.n, i64 %i.eb
-  call void @_RINvNtCshzWfHUSfYae_4core5slice20copy_from_slice_implhECsjkkKzr5dxZe_11miniz_oxide(ptr noalias nofree noundef nonnull %i.ed, i64 noundef 2, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.b, i64 noundef 2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @66), !noalias !276
+  call void @_RINvNtCshzWfHUSfYae_4core5slice20copy_from_slice_implhECsjkkKzr5dxZe_11miniz_oxide(ptr noalias nofree noundef nonnull %i.ed, i64 noundef 2, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.b, i64 noundef 2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @65), !noalias !276
   store i64 %i.ec, ptr %i.l, align 8, !alias.scope !272, !noalias !273
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !268
   br label %_RINvXs0_NtNtNtCshzWfHUSfYae_4core4iter8adapters10take_whileINtB6_9TakeWhileINtNtB8_3rev3RevINtNtNtBc_5slice4iter4IterhEENCNvMsb_NtNtCsjkkKzr5dxZe_11miniz_oxide7deflate4coreNtB22_12HuffmanOxide19start_dynamic_blocks0_0ENtNtNtBa_6traits8iterator8Iterator4foldjNCNvYBV_B3u_5count0EB26_.exit.i
@@ -2239,7 +2229,7 @@ bb.aq:                                            ; preds = %bb.ap
 
 bb.ar:                                            ; preds = %bb.ap
   %i.ep = getelementptr inbounds nuw i8, ptr %i.n, i64 %i.el
-  call void @_RINvNtCshzWfHUSfYae_4core5slice20copy_from_slice_implhECsjkkKzr5dxZe_11miniz_oxide(ptr noalias nofree noundef nonnull %i.ep, i64 noundef range(i64 0, 4) %i.ek, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.c, i64 noundef range(i64 0, 4) %i.ek, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @66), !noalias !284
+  call void @_RINvNtCshzWfHUSfYae_4core5slice20copy_from_slice_implhECsjkkKzr5dxZe_11miniz_oxide(ptr noalias nofree noundef nonnull %i.ep, i64 noundef range(i64 0, 4) %i.ek, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.c, i64 noundef range(i64 0, 4) %i.ek, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @65), !noalias !284
   store i64 %i.em, ptr %i.l, align 8, !alias.scope !280, !noalias !281
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !268
   br label %_RINvXs0_NtNtNtCshzWfHUSfYae_4core4iter8adapters10take_whileINtB6_9TakeWhileINtNtB8_3rev3RevINtNtNtBc_5slice4iter4IterhEENCNvMsb_NtNtCsjkkKzr5dxZe_11miniz_oxide7deflate4coreNtB22_12HuffmanOxide19start_dynamic_blocks0_0ENtNtNtBa_6traits8iterator8Iterator4foldjNCNvYBV_B3u_5count0EB26_.exit.i
@@ -2642,7 +2632,7 @@ bb.cg:                                            ; preds = %_RNvMs7_NtNtCsjkkKz
   %..i37.i = call noundef i32 @llvm.umin.i32(i32 range(i32 1, 0) %.sroa.19.199.i, i32 16) ; 4 uses
   %i.ms = zext nneg i32 %..i37.i to i64           ; 2 uses
   %i.mt = trunc i64 %.sroa.0.1100.i to i32
-  %i.mu = getelementptr inbounds nuw [4 x i8], ptr @57, i64 %i.ms
+  %i.mu = getelementptr inbounds nuw [4 x i8], ptr @56, i64 %i.ms
   %i.mv = load i32, ptr %i.mu, align 4, !noalias !325, !noundef !4
   %i.mw = and i32 %i.mv, %i.mt                    ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !326)
@@ -2734,7 +2724,7 @@ bb.co:                                            ; preds = %bb.cn
   %i.oj = shl nuw i16 %i.oi, 8
   %i.ok = or disjoint i16 %i.oj, %i.of            ; 2 uses
   %i.ol = add nuw nsw i64 %.sroa.07.1.i, 3
-  %i.om = getelementptr inbounds nuw i8, ptr @45, i64 %i.ny
+  %i.om = getelementptr inbounds nuw i8, ptr @44, i64 %i.ny
   %i.on = load i8, ptr %i.om, align 1, !noalias !325, !noundef !4
   %i.oo = and i8 %i.on, 31
   %i.op = zext nneg i8 %i.oo to i64
@@ -2749,11 +2739,11 @@ bb.co:                                            ; preds = %bb.cn
   %i.oy = zext nneg i32 %i.ox to i64
   %i.oz = shl i64 %i.ot, %i.oy
   %i.pa = add i32 %.sroa.19.091.i, %i.ow          ; 2 uses
-  %i.pb = getelementptr inbounds nuw i8, ptr @58, i64 %i.ny
+  %i.pb = getelementptr inbounds nuw i8, ptr @57, i64 %i.ny
   %i.pc = load i8, ptr %i.pb, align 1, !noalias !325, !noundef !4 ; 2 uses
   %i.pd = and i8 %i.pc, 7
   %i.pe = zext nneg i8 %i.pd to i64
-  %i.pf = getelementptr inbounds nuw [4 x i8], ptr @57, i64 %i.pe
+  %i.pf = getelementptr inbounds nuw [4 x i8], ptr @56, i64 %i.pe
   %i.pg = load i32, ptr %i.pf, align 4, !noalias !325, !noundef !4
   %i.ph = zext i32 %i.pg to i64
   %i.pi = and i64 %i.ph, %i.ny
@@ -2771,12 +2761,12 @@ bb.cp:                                            ; preds = %bb.co
   br i1 %i.pq, label %bb.cq, label %bb.cr
 
 bb.cq:                                            ; preds = %bb.cp
-  %i.pr = getelementptr inbounds nuw i8, ptr @43, i64 %i.pp
-  %i.ps = getelementptr inbounds nuw i8, ptr @60, i64 %i.pp
+  %i.pr = getelementptr inbounds nuw i8, ptr @42, i64 %i.pp
+  %i.ps = getelementptr inbounds nuw i8, ptr @59, i64 %i.pp
   br label %bb.cs
 
 bb.cr:                                            ; preds = %bb.cp
-  call void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %i.pp, i64 noundef 128, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @59) #22, !noalias !325
+  call void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %i.pp, i64 noundef 128, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @58) #22, !noalias !325
   unreachable
 
 bb.cs:                                            ; preds = %bb.ct, %bb.cq
@@ -2797,7 +2787,7 @@ bb.cs:                                            ; preds = %bb.ct, %bb.cq
   %i.qc = add i32 %i.pn, %i.py                    ; 2 uses
   %i.qd = and i8 %.sroa.021.0.in.i, 15
   %i.qe = zext nneg i8 %i.qd to i64
-  %i.qf = getelementptr inbounds nuw [4 x i8], ptr @57, i64 %i.qe
+  %i.qf = getelementptr inbounds nuw [4 x i8], ptr @56, i64 %i.qe
   %i.qg = load i32, ptr %i.qf, align 4, !noalias !325, !noundef !4
   %i.qh = zext i16 %i.ok to i32
   %i.qi = and i32 %i.qg, %i.qh
@@ -2815,8 +2805,8 @@ bb.cs:                                            ; preds = %bb.ct, %bb.cq
 
 bb.ct:                                            ; preds = %bb.co
   %i.qt = zext nneg i16 %i.ok to i64              ; 2 uses
-  %i.qu = getelementptr inbounds nuw i8, ptr @44, i64 %i.qt
-  %i.qv = getelementptr inbounds nuw i8, ptr @61, i64 %i.qt
+  %i.qu = getelementptr inbounds nuw i8, ptr @43, i64 %i.qt
+  %i.qv = getelementptr inbounds nuw i8, ptr @60, i64 %i.qt
   br label %bb.cs
 
 .loopexit.i:                                      ; preds = %.preheader.i21.2, %.preheader.i21, %.preheader.i21.1, %bb.cs
@@ -3091,7 +3081,7 @@ bb.p:                                             ; preds = %bb.n
   br i1 %or.cond183.i, label %bb.w, label %.lr.ph254.preheader.i, !prof !74
 
 bb.q:                                             ; preds = %bb.o
-  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %.sroa.015.0.i, i64 noundef %i.bg, i64 noundef %i.aa, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @52) #22, !noalias !345
+  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %.sroa.015.0.i, i64 noundef %i.bg, i64 noundef %i.aa, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @51) #22, !noalias !345
   unreachable
 
 bb.r:                                             ; preds = %bb.o
@@ -3176,7 +3166,7 @@ bb.v:                                             ; preds = %bb.u, %bb.s
   br i1 %or.cond11.i, label %bb.m, label %bb.z
 
 bb.w:                                             ; preds = %bb.p
-  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %.sroa.015.0.i, i64 noundef %i.bj, i64 noundef %i.aa, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @56) #22, !noalias !345
+  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %.sroa.015.0.i, i64 noundef %i.bj, i64 noundef %i.aa, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @55) #22, !noalias !345
   unreachable
 
 .lr.ph254.preheader.i:                            ; preds = %bb.p
@@ -3556,7 +3546,7 @@ _RNvMsc_NtNtCsjkkKzr5dxZe_11miniz_oxide7deflate4coreNtB5_9DictOxide10find_match.
   br i1 %i.ka, label %bb.bc, label %_RINvXs0_NtNtNtCshzWfHUSfYae_4core4iter8adapters10take_whileINtB6_9TakeWhileINtNtNtBc_5slice4iter4IterhENCNvNtNtCsjkkKzr5dxZe_11miniz_oxide7deflate4core15compress_normal0ENtNtNtBa_6traits8iterator8Iterator4foldjNCNvYBV_B2I_5count0EB1L_.exit.thread.i
 
 bb.ba:                                            ; preds = %bb.ay
-  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %i.ew, i64 noundef %i.jx, i64 noundef 33026, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @55) #22, !noalias !345
+  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %i.ew, i64 noundef %i.jx, i64 noundef 33026, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @54) #22, !noalias !345
   unreachable
 
 bb.bb:                                            ; preds = %bb.ay
@@ -3691,10 +3681,10 @@ bb.bl:                                            ; preds = %bb.bk
 _RNvNtNtCsjkkKzr5dxZe_11miniz_oxide7deflate4core12record_match.exit.i: ; preds = %bb.bl, %bb.bk
   %i.mb = icmp ult i32 %.sroa.0110.3.i, 513
   %i.mc = zext nneg i32 %i.lb to i64
-  %i.md = getelementptr inbounds nuw i8, ptr @44, i64 %i.mc
+  %i.md = getelementptr inbounds nuw i8, ptr @43, i64 %i.mc
   %i.me = and i32 %i.lm, 127
   %i.mf = zext nneg i32 %i.me to i64
-  %i.mg = getelementptr inbounds nuw i8, ptr @43, i64 %i.mf
+  %i.mg = getelementptr inbounds nuw i8, ptr @42, i64 %i.mf
   %.sroa.06.0.in.i.i = select i1 %i.mb, ptr %i.md, ptr %i.mg
   %.sroa.06.0.i.i = load i8, ptr %.sroa.06.0.in.i.i, align 1, !noalias !376, !noundef !4
   %i.mh = zext i8 %.sroa.06.0.i.i to i64
@@ -3704,7 +3694,7 @@ _RNvNtNtCsjkkKzr5dxZe_11miniz_oxide7deflate4core12record_match.exit.i: ; preds =
   %i.ml = add i16 %i.mk, 1
   store i16 %i.ml, ptr %i.mj, align 2, !alias.scope !369, !noalias !377
   %i.mm = zext i8 %i.ld to i64
-  %i.mn = getelementptr inbounds nuw i8, ptr @45, i64 %i.mm
+  %i.mn = getelementptr inbounds nuw i8, ptr @44, i64 %i.mm
   %i.mo = load i8, ptr %i.mn, align 1, !noalias !376, !noundef !4
   %i.mp = and i8 %i.mo, 31
   %i.mq = zext nneg i8 %i.mp to i64
@@ -3824,10 +3814,10 @@ bb.bq:                                            ; preds = %.thread.i
 _RNvNtNtCsjkkKzr5dxZe_11miniz_oxide7deflate4core12record_match.exit192.i: ; preds = %bb.bq, %.thread.i
   %i.oz = icmp ult i32 %i.oa, 512
   %i.pa = zext nneg i32 %i.oa to i64
-  %i.pb = getelementptr inbounds nuw i8, ptr @44, i64 %i.pa
+  %i.pb = getelementptr inbounds nuw i8, ptr @43, i64 %i.pa
   %i.pc = and i32 %i.ok, 127
   %i.pd = zext nneg i32 %i.pc to i64
-  %i.pe = getelementptr inbounds nuw i8, ptr @43, i64 %i.pd
+  %i.pe = getelementptr inbounds nuw i8, ptr @42, i64 %i.pd
   %.sroa.06.0.in.i190.i = select i1 %i.oz, ptr %i.pb, ptr %i.pe
   %.sroa.06.0.i191.i = load i8, ptr %.sroa.06.0.in.i190.i, align 1, !noalias !388, !noundef !4
   %i.pf = zext i8 %.sroa.06.0.i191.i to i64
@@ -3837,7 +3827,7 @@ _RNvNtNtCsjkkKzr5dxZe_11miniz_oxide7deflate4core12record_match.exit192.i: ; pred
   %i.pj = add i16 %i.pi, 1
   store i16 %i.pj, ptr %i.ph, align 2, !alias.scope !381, !noalias !389
   %i.pk = zext i8 %i.oc to i64
-  %i.pl = getelementptr inbounds nuw i8, ptr @45, i64 %i.pk
+  %i.pl = getelementptr inbounds nuw i8, ptr @44, i64 %i.pk
   %i.pm = load i8, ptr %i.pl, align 1, !noalias !388, !noundef !4
   %i.pn = and i8 %i.pm, 31
   %i.po = zext nneg i8 %i.pn to i64
@@ -3938,10 +3928,10 @@ bb.bu:                                            ; preds = %bb.bt
 _RNvNtNtCsjkkKzr5dxZe_11miniz_oxide7deflate4core12record_match.exit196.i: ; preds = %bb.bu, %bb.bt
   %i.rq = icmp ult i32 %i.qq, 512
   %i.rr = zext nneg i32 %i.qq to i64
-  %i.rs = getelementptr inbounds nuw i8, ptr @44, i64 %i.rr
+  %i.rs = getelementptr inbounds nuw i8, ptr @43, i64 %i.rr
   %i.rt = and i32 %i.rb, 127
   %i.ru = zext nneg i32 %i.rt to i64
-  %i.rv = getelementptr inbounds nuw i8, ptr @43, i64 %i.ru
+  %i.rv = getelementptr inbounds nuw i8, ptr @42, i64 %i.ru
   %.sroa.06.0.in.i194.i = select i1 %i.rq, ptr %i.rs, ptr %i.rv
   %.sroa.06.0.i195.i = load i8, ptr %.sroa.06.0.in.i194.i, align 1, !noalias !405, !noundef !4
   %i.rw = zext i8 %.sroa.06.0.i195.i to i64
@@ -3951,7 +3941,7 @@ _RNvNtNtCsjkkKzr5dxZe_11miniz_oxide7deflate4core12record_match.exit196.i: ; pred
   %i.sa = add i16 %i.rz, 1
   store i16 %i.sa, ptr %i.ry, align 2, !alias.scope !398, !noalias !406
   %i.sb = zext i8 %i.qs to i64
-  %i.sc = getelementptr inbounds nuw i8, ptr @45, i64 %i.sb
+  %i.sc = getelementptr inbounds nuw i8, ptr @44, i64 %i.sb
   %i.sd = load i8, ptr %i.sc, align 1, !noalias !405, !noundef !4
   %i.se = and i8 %i.sd, 31
   %i.sf = zext nneg i8 %i.se to i64
@@ -3969,7 +3959,7 @@ bb.bv:                                            ; preds = %_RNvNtNtCsjkkKzr5dx
   br label %bb.bp
 
 bb.bw:                                            ; preds = %bb.bp
-  tail call void @_RNvNtCshzWfHUSfYae_4core9panicking5panic(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @53, i64 noundef 47, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @54) #22, !noalias !345
+  tail call void @_RNvNtCshzWfHUSfYae_4core9panicking5panic(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @52, i64 noundef 47, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @53) #22, !noalias !345
   unreachable
 
 bb.bx:                                            ; preds = %bb.bp
@@ -4372,16 +4362,16 @@ bb.dy:                                            ; preds = %.thread.i37
   br i1 %i.ahl, label %bb.ea, label %bb.dz
 
 bb.dz:                                            ; preds = %bb.dy
-  tail call void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %i.ahk, i64 noundef 128, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @46) #22, !noalias !410
+  tail call void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %i.ahk, i64 noundef 128, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @45) #22, !noalias !410
   unreachable
 
 bb.ea:                                            ; preds = %bb.dy
-  %i.ahm = getelementptr inbounds nuw i8, ptr @43, i64 %i.ahk
+  %i.ahm = getelementptr inbounds nuw i8, ptr @42, i64 %i.ahk
   br label %bb.ec
 
 bb.eb:                                            ; preds = %.thread.i37
   %i.ahn = zext nneg i16 %i.agn to i64
-  %i.aho = getelementptr inbounds nuw i8, ptr @44, i64 %i.ahn
+  %i.aho = getelementptr inbounds nuw i8, ptr @43, i64 %i.ahn
   br label %bb.ec
 
 bb.ec:                                            ; preds = %bb.eb, %bb.ea
@@ -4396,7 +4386,7 @@ bb.ec:                                            ; preds = %bb.eb, %bb.ea
   store i16 %i.ahu, ptr %i.ahs, align 2, !noalias !410
   %i.ahv = and i32 %i.ago, 255
   %i.ahw = zext nneg i32 %i.ahv to i64
-  %i.ahx = getelementptr inbounds nuw i8, ptr @45, i64 %i.ahw
+  %i.ahx = getelementptr inbounds nuw i8, ptr @44, i64 %i.ahw
   %i.ahy = load i8, ptr %i.ahx, align 1, !noalias !415, !noundef !4
   %i.ahz = and i8 %i.ahy, 31
   %i.aia = zext nneg i8 %i.ahz to i64
@@ -4484,14 +4474,14 @@ bb.ei:                                            ; preds = %bb.eh
   br i1 %i.ajo, label %_RNvNtNtCsjkkKzr5dxZe_11miniz_oxide7deflate4core15compress_normal.exit.thread, label %_RNvNtNtCsjkkKzr5dxZe_11miniz_oxide7deflate4core15compress_normal.exit.thread41
 
 bb.ej:                                            ; preds = %.lr.ph.i31
-  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %.sroa.06.2190.i, i64 noundef %i.ul, i64 noundef %i.tm, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @50) #22, !noalias !410
+  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %.sroa.06.2190.i, i64 noundef %i.ul, i64 noundef %i.tm, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @49) #22, !noalias !410
   unreachable
 
 bb.ek:                                            ; preds = %.lr.ph.i31
   %i.ajp = load ptr, ptr %i.td, align 8, !alias.scope !407, !noalias !410, !nonnull !4, !noundef !4
   %i.ajq = getelementptr inbounds nuw i8, ptr %i.ajp, i64 %.sroa.018.0191.i
   %i.ajr = getelementptr inbounds nuw i8, ptr %i.th, i64 %.sroa.06.2190.i ; 2 uses
-  tail call void @_RINvNtCshzWfHUSfYae_4core5slice20copy_from_slice_implhECsjkkKzr5dxZe_11miniz_oxide(ptr noalias nofree noundef nonnull %i.ajq, i64 noundef %..i100.i, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.ajr, i64 noundef %..i100.i, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @47), !noalias !410
+  tail call void @_RINvNtCshzWfHUSfYae_4core5slice20copy_from_slice_implhECsjkkKzr5dxZe_11miniz_oxide(ptr noalias nofree noundef nonnull %i.ajq, i64 noundef %..i100.i, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.ajr, i64 noundef %..i100.i, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @46), !noalias !410
   %i.ajs = icmp samesign ult i64 %.sroa.018.0191.i, 257
   br i1 %i.ajs, label %bb.el, label %bb.em
 
@@ -4510,14 +4500,14 @@ bb.em:                                            ; preds = %bb.eo, %bb.ek
   br i1 %i.ajx, label %._crit_edge.i32, label %.lr.ph.i31
 
 bb.en:                                            ; preds = %bb.el
-  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %.sroa.06.2190.i, i64 noundef %i.aju, i64 noundef %i.tm, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @49) #22, !noalias !410
+  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %.sroa.06.2190.i, i64 noundef %i.aju, i64 noundef %i.tm, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @48) #22, !noalias !410
   unreachable
 
 bb.eo:                                            ; preds = %bb.el
   %i.ajy = load ptr, ptr %i.td, align 8, !alias.scope !407, !noalias !410, !nonnull !4, !noundef !4
   %i.ajz = getelementptr inbounds nuw i8, ptr %i.ajy, i64 %.sroa.018.0191.i
   %i.aka = getelementptr inbounds nuw i8, ptr %i.ajz, i64 32768
-  tail call void @_RINvNtCshzWfHUSfYae_4core5slice20copy_from_slice_implhECsjkkKzr5dxZe_11miniz_oxide(ptr noalias nofree noundef nonnull %i.aka, i64 noundef %..i106.i, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.ajr, i64 noundef %..i106.i, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @48), !noalias !410
+  tail call void @_RINvNtCshzWfHUSfYae_4core5slice20copy_from_slice_implhECsjkkKzr5dxZe_11miniz_oxide(ptr noalias nofree noundef nonnull %i.aka, i64 noundef %..i106.i, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.ajr, i64 noundef %..i106.i, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @47), !noalias !410
   br label %bb.em
 
 _RNvNtNtCsjkkKzr5dxZe_11miniz_oxide7deflate4core15compress_normal.exit: ; preds = %bb.ck
@@ -4576,7 +4566,7 @@ bb.er:                                            ; preds = %bb.eq
   br label %_RNvNtNtCsjkkKzr5dxZe_11miniz_oxide7deflate4core15compress_normal.exit.thread.thread
 
 bb.es:                                            ; preds = %bb.eq
-  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef 0, i64 noundef %i.akr, i64 noundef %.pre223, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @51) #22
+  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef 0, i64 noundef %i.akr, i64 noundef %.pre223, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @50) #22
   unreachable
 
 bb.et:                                            ; preds = %_RNvNtNtCsjkkKzr5dxZe_11miniz_oxide7deflate4core15compress_normal.exit.thread.thread
@@ -4725,11 +4715,11 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.ae, label %bb.i, label %bb.h, !prof !46
 
 bb.g:                                             ; preds = %bb.e
-  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %i.i, i64 noundef %i.y, i64 noundef %i.g, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @64) #22
+  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %i.i, i64 noundef %i.y, i64 noundef %i.g, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @63) #22
   unreachable
 
 bb.h:                                             ; preds = %bb.f
-  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %i.ac, i64 noundef %i.ad, i64 noundef 85196, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @63) #22
+  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %i.ac, i64 noundef %i.ad, i64 noundef 85196, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @62) #22
   unreachable
 
 bb.i:                                             ; preds = %bb.f
@@ -4739,7 +4729,7 @@ bb.i:                                             ; preds = %bb.f
   %i.ai = load ptr, ptr %i.ah, align 8, !nonnull !4, !noundef !4
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ai, i64 %i.i
   %i.ak = getelementptr inbounds nuw i8, ptr %i.ag, i64 %i.ac
-  tail call void @_RINvNtCshzWfHUSfYae_4core5slice20copy_from_slice_implhECsjkkKzr5dxZe_11miniz_oxide(ptr noalias nofree noundef nonnull %i.aj, i64 noundef %..i, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.ak, i64 noundef %..i, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @62)
+  tail call void @_RINvNtCshzWfHUSfYae_4core5slice20copy_from_slice_implhECsjkkKzr5dxZe_11miniz_oxide(ptr noalias nofree noundef nonnull %i.aj, i64 noundef %..i, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.ak, i64 noundef %..i, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @61)
   br label %bb.d
 
 bb.j:                                             ; preds = %bb.k, %bb.c
@@ -4759,7 +4749,7 @@ bb.a:
   %.sroa.07.0 = zext nneg i32 %narrow to i64
   %i.b = icmp slt i32 %0, 4
   %. = select i1 %i.b, i32 16384, i32 0
-  %i.c = getelementptr inbounds nuw [2 x i8], ptr @65, i64 %.sroa.07.0
+  %i.c = getelementptr inbounds nuw [2 x i8], ptr @64, i64 %.sroa.07.0
   %i.d = load i16, ptr %i.c, align 2, !noundef !4
   %i.e = zext i16 %i.d to i32
   %i.f = or i32 %., %i.e                          ; 2 uses

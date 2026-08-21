@@ -3,6 +3,7 @@ inline.NumDeleted: 199
 loop-unroll.NumCompletelyUnrolled: 8
 loop-unroll.NumRuntimeUnrolled: 9
 loop-unroll.NumUnrolled: 17
+loop-unroll.NumUnrolledNotLatch: 1
 begin_hunk_0_@_ZN5boost8charconv6detail3ryuL16generic_to_charsENS2_20floating_decimal_128EPclNS0_12chars_formatEi:bb.a
   br label %.lr.ph.i.preheader
 
@@ -204,8 +205,8 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   br i1 %i.ax, label %_ZN5boost8charconv6detailrsENS1_7uint128Ei.exit, label %.thread
 
 _ZN5boost8charconv6detailrsENS1_7uint128Ei.exit:  ; preds = %bb.m
-  store i8 46, ptr %i.aw, align 1, !tbaa !25
   %4 = getelementptr inbounds nuw i8, ptr %.0, i64 2
+  store i8 46, ptr %i.aw, align 1, !tbaa !25
   %i.ay = lshr i64 %.sroa.14.1, 56
   %i.az = and i64 %i.ay, 15
   %i.ba = getelementptr inbounds nuw i8, ptr @_ZN5boost8charconv6detailL11digit_tableE, i64 %i.az
@@ -214,15 +215,6 @@ _ZN5boost8charconv6detailrsENS1_7uint128Ei.exit:  ; preds = %bb.m
   store i8 %i.bb, ptr %4, align 1, !tbaa !25
   %i.bd = icmp eq i32 %spec.select, 1
   br i1 %i.bd, label %.thread, label %_ZN5boost8charconv6detailrsENS1_7uint128Ei.exit.1
-
-.thread250:                                       ; preds = %_ZN5boost8charconv6detailrsENS1_7uint128Ei.exit.thread
-  br i1 %.not, label %.preheader.preheader, label %.thread.thread
-
-.thread.thread:                                   ; preds = %.thread250
-  %5 = zext nneg i32 %i.ei to i64                 ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.eh, i8 48, i64 %5, i1 false)
-  %6 = getelementptr inbounds nuw i8, ptr %i.eh, i64 %5
-  br label %.loopexit
 
 _ZN5boost8charconv6detailrsENS1_7uint128Ei.exit.1: ; preds = %_ZN5boost8charconv6detailrsENS1_7uint128Ei.exit
   %i.be = lshr i64 %.sroa.14.1, 52
@@ -233,6 +225,15 @@ _ZN5boost8charconv6detailrsENS1_7uint128Ei.exit.1: ; preds = %_ZN5boost8charconv
   store i8 %i.bh, ptr %i.bc, align 1, !tbaa !25
   %i.bj = icmp eq i32 %spec.select, 2
   br i1 %i.bj, label %.thread, label %_ZN5boost8charconv6detailrsENS1_7uint128Ei.exit.2
+
+5:                                                ; preds = %_ZN5boost8charconv6detailrsENS1_7uint128Ei.exit.thread
+  br i1 %.not, label %.preheader.preheader, label %.thread.thread
+
+.thread.thread:                                   ; preds = %5
+  %6 = zext nneg i32 %i.ei to i64                 ; 2 uses
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.eh, i8 48, i64 %6, i1 false)
+  %7 = getelementptr inbounds nuw i8, ptr %i.eh, i64 %6
+  br label %.loopexit
 
 _ZN5boost8charconv6detailrsENS1_7uint128Ei.exit.2: ; preds = %_ZN5boost8charconv6detailrsENS1_7uint128Ei.exit.1
   %i.bk = lshr i64 %.sroa.14.1, 48
@@ -362,14 +363,14 @@ _ZN5boost8charconv6detailrsENS1_7uint128Ei.exit.thread: ; preds = %_ZN5boost8cha
   store i8 %i.eg, ptr %i.ec, align 1, !tbaa !25
   %i.ei = add nsw i32 %spec.select, -15           ; 2 uses
   %i.ej = icmp eq i32 %i.ei, 0
-  br i1 %i.ej, label %.thread, label %.thread250
+  br i1 %i.ej, label %.thread, label %5
 
 .thread:                                          ; preds = %_ZN5boost8charconv6detailrsENS1_7uint128Ei.exit, %_ZN5boost8charconv6detailrsENS1_7uint128Ei.exit.1, %_ZN5boost8charconv6detailrsENS1_7uint128Ei.exit.2, %_ZN5boost8charconv6detailrsENS1_7uint128Ei.exit.3, %_ZN5boost8charconv6detailrsENS1_7uint128Ei.exit.4, %_ZN5boost8charconv6detailrsENS1_7uint128Ei.exit.5, %_ZN5boost8charconv6detailrsENS1_7uint128Ei.exit.6, %_ZN5boost8charconv6detailrsENS1_7uint128Ei.exit.7, %_ZN5boost8charconv6detailrsENS1_7uint128Ei.exit.8, %_ZN5boost8charconv6detailrsENS1_7uint128Ei.exit.9, %_ZN5boost8charconv6detailrsENS1_7uint128Ei.exit.10, %_ZN5boost8charconv6detailrsENS1_7uint128Ei.exit.11, %_ZN5boost8charconv6detailrsENS1_7uint128Ei.exit.12, %_ZN5boost8charconv6detailrsENS1_7uint128Ei.exit.13, %_ZN5boost8charconv6detailrsENS1_7uint128Ei.exit.thread, %bb.m
   %.4 = phi ptr [ %i.aw, %bb.m ], [ %i.eh, %_ZN5boost8charconv6detailrsENS1_7uint128Ei.exit.thread ], [ %i.bc, %_ZN5boost8charconv6detailrsENS1_7uint128Ei.exit ], [ %i.bi, %_ZN5boost8charconv6detailrsENS1_7uint128Ei.exit.1 ], [ %i.bo, %_ZN5boost8charconv6detailrsENS1_7uint128Ei.exit.2 ], [ %i.bu, %_ZN5boost8charconv6detailrsENS1_7uint128Ei.exit.3 ], [ %i.ca, %_ZN5boost8charconv6detailrsENS1_7uint128Ei.exit.4 ], [ %i.cg, %_ZN5boost8charconv6detailrsENS1_7uint128Ei.exit.5 ], [ %i.cm, %_ZN5boost8charconv6detailrsENS1_7uint128Ei.exit.6 ], [ %i.cs, %_ZN5boost8charconv6detailrsENS1_7uint128Ei.exit.7 ], [ %i.cy, %_ZN5boost8charconv6detailrsENS1_7uint128Ei.exit.8 ], [ %i.de, %_ZN5boost8charconv6detailrsENS1_7uint128Ei.exit.9 ], [ %i.dk, %_ZN5boost8charconv6detailrsENS1_7uint128Ei.exit.10 ], [ %i.dq, %_ZN5boost8charconv6detailrsENS1_7uint128Ei.exit.11 ], [ %i.dw, %_ZN5boost8charconv6detailrsENS1_7uint128Ei.exit.12 ], [ %i.ec, %_ZN5boost8charconv6detailrsENS1_7uint128Ei.exit.13 ] ; 2 uses
   br i1 %.not, label %.preheader.preheader, label %.loopexit
 
-.preheader.preheader:                             ; preds = %.thread250, %.thread
-  %.4.pn.ph = phi ptr [ %i.eh, %.thread250 ], [ %.4, %.thread ]
+.preheader.preheader:                             ; preds = %5, %.thread
+  %.4.pn.ph = phi ptr [ %i.eh, %5 ], [ %.4, %.thread ]
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.preheader, %.preheader
@@ -385,7 +386,7 @@ _ZN5boost8charconv6detailrsENS1_7uint128Ei.exit.thread: ; preds = %_ZN5boost8cha
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.preheader, %.loopexit.loopexit, %.thread.thread, %.thread
-  %.6 = phi ptr [ %.5, %.loopexit.loopexit ], [ %6, %.thread.thread ], [ %.4, %.thread ], [ %.4.pn, %.preheader ] ; 3 uses
+  %.6 = phi ptr [ %.5, %.loopexit.loopexit ], [ %7, %.thread.thread ], [ %.4, %.thread ], [ %.4.pn, %.preheader ] ; 3 uses
   %i.el = getelementptr inbounds nuw i8, ptr %.6, i64 1
   store i8 112, ptr %.6, align 1, !tbaa !25
   %. = select i1 %i.p, i8 45, i8 43

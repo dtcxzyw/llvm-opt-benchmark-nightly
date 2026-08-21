@@ -204,14 +204,14 @@ bb.fw:                                            ; preds = %_ZN5ImGui15IsKeyPre
 
 .lr.ph.i181.i.i:                                  ; preds = %bb.fw
   %i.ahc = getelementptr inbounds nuw i8, ptr %i.adp, i64 7112
-  %1 = zext nneg i32 %i.aha to i64
-  %2 = load ptr, ptr %i.ahc, align 8, !tbaa !353
+  %1 = load ptr, ptr %i.ahc, align 8, !tbaa !353
+  %2 = zext nneg i32 %i.aha to i64
   br label %bb.fx
 
 bb.fx:                                            ; preds = %_ZN5ImGui20IsWindowNavFocusableEP11ImGuiWindow.exit.thread.i.i.i, %.lr.ph.i181.i.i
-  %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i, %_ZN5ImGui20IsWindowNavFocusableEP11ImGuiWindow.exit.thread.i.i.i ], [ %1, %.lr.ph.i181.i.i ] ; 2 uses
+  %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i, %_ZN5ImGui20IsWindowNavFocusableEP11ImGuiWindow.exit.thread.i.i.i ], [ %2, %.lr.ph.i181.i.i ] ; 2 uses
   %indvars.iv.next.i.i = add nsw i64 %indvars.iv.i.i, -1 ; 2 uses
-  %i.ahd = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv.next.i.i
+  %i.ahd = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv.next.i.i
   %i.ahe = load ptr, ptr %i.ahd, align 8, !tbaa !530 ; 4 uses
   %i.ahf = getelementptr inbounds nuw i8, ptr %i.ahe, i64 143
   %i.ahg = load i8, ptr %i.ahf, align 1, !tbaa !427, !range !210, !noundef !211

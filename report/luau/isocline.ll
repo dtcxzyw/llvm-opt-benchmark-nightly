@@ -204,7 +204,7 @@ sbuf_string.exit261.i.i:                          ; preds = %bb.ez, %hsearch_pus
   br i1 %i.tq, label %history_get.exit38.lr.ph.i.i.i, label %.loopexit433.i.i
 
 history_get.exit38.lr.ph.i.i.i:                   ; preds = %sbuf_string.exit261.i.i
-  %i.aci = load i64, ptr %i.acb, align 8, !tbaa !172 ; 3 uses
+  %i.aci = load i64, ptr %i.acb, align 8, !tbaa !172 ; 2 uses
   %i.acj = getelementptr inbounds nuw i8, ptr %i.acb, i64 16
   %i.ack = load ptr, ptr %i.acj, align 8, !tbaa !174
   %i.acl = getelementptr [8 x i8], ptr %i.ack, i64 %i.aci
@@ -213,7 +213,7 @@ history_get.exit38.lr.ph.i.i.i:                   ; preds = %sbuf_string.exit261
   br label %history_get.exit38.i.i.i
 
 history_get.exit38.i.i.i:                         ; preds = %bb.fa, %history_get.exit38.lr.ph.i.i.i
-  %.157.i.in.i.i = phi i64 [ %.4355.ph.i.i.ph, %history_get.exit38.lr.ph.i.i.i ], [ %.157.i.i.i, %bb.fa ] ; 4 uses
+  %.157.i.in.i.i = phi i64 [ %.4355.ph.i.i.ph, %history_get.exit38.lr.ph.i.i.i ], [ %.157.i.i.i, %bb.fa ] ; 3 uses
   %.157.i.i.i = add nsw i64 %.157.i.in.i.i, -1    ; 2 uses
   %i.acm = sub nsw i64 0, %.157.i.in.i.i
   %i.acn = getelementptr [8 x i8], ptr %i.acl, i64 %i.acm
@@ -227,11 +227,9 @@ bb.fa:                                            ; preds = %history_get.exit38.
   br i1 %i.acq, label %history_get.exit38.i.i.i, label %.loopexit433.i.i, !llvm.loop !366
 
 .thread46.i263.i.i:                               ; preds = %history_get.exit38.i.i.i
-  %.not.i39.i264.not.i.i = icmp sgt i64 %.157.i.in.i.i, %i.aci
   %i.acr = ptrtoint ptr %i.aco to i64
-  %spec.select425.i.i = select i1 %.not.i39.i264.not.i.i, i64 0, i64 %i.acr
   %i.acs = ptrtoint ptr %i.acp to i64
-  %i.act = sub i64 %i.acs, %spec.select425.i.i
+  %i.act = sub i64 %i.acs, %i.acr
   br label %.outer.i.i.outer.backedge
 
 .loopexit433.i.i:                                 ; preds = %bb.fa, %sbuf_string.exit261.i.i

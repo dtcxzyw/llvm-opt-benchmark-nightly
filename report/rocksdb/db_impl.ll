@@ -204,14 +204,12 @@ begin_hunk_0
 @_ZTTNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEEE = external unnamed_addr constant [10 x ptr], align 8
 @_ZTVNSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEEE = external unnamed_addr constant { [16 x ptr] }, align 8
 @_ZTVSt15basic_streambufIcSt11char_traitsIcEE = external unnamed_addr constant { [16 x ptr] }, align 8
-@.str.225 = private unnamed_addr constant [55 x i8] c"%s: __pos (which is %zu) > this->size() (which is %zu)\00", align 1
 @.str.226 = private unnamed_addr constant [24 x i8] c" that enables timestamp\00", align 1
 @.str.227 = private unnamed_addr constant [88 x i8] c"ReadOptions::table_filter is not supported when min_tombstones_for_range_conversion > 0\00", align 1
 @.str.228 = private unnamed_addr constant [17 x i8] c"Read timestamp: \00", align 1
 @.str.229 = private unnamed_addr constant [39 x i8] c" is smaller than full_history_ts_low: \00", align 1
 @_ZTVN7rocksdb12SnapshotImplE = linkonce_odr unnamed_addr constant { [7 x ptr] } { [7 x ptr] [ptr null, ptr null, ptr @_ZNK7rocksdb12SnapshotImpl17GetSequenceNumberEv, ptr @_ZNK7rocksdb12SnapshotImpl11GetUnixTimeEv, ptr @_ZNK7rocksdb12SnapshotImpl12GetTimestampEv, ptr @_ZN7rocksdb8SnapshotD2Ev, ptr @_ZN7rocksdb12SnapshotImplD0Ev] }, comdat, align 8
 @_ZSt19piecewise_construct = linkonce_odr constant %"struct.std::piecewise_construct_t" zeroinitializer, comdat, align 1
-@.str.230 = private unnamed_addr constant [21 x i8] c"basic_string::substr\00", align 1
 @_ZZN7rocksdb12_GLOBAL__N_114DbSessionIdGenEvE3gen = internal global %"class.rocksdb::SemiStructuredUniqueIdGen" zeroinitializer, align 8
 @_ZGVZN7rocksdb12_GLOBAL__N_114DbSessionIdGenEvE3gen = internal global i64 0, align 8
 @_ZTVN10__cxxabiv120__si_class_type_infoE = external global [0 x ptr]
@@ -614,7 +612,7 @@ bb.i:                                             ; preds = %_ZN9__gnu_cxx27__ex
 
 _ZNSt12__shared_ptrIKN7rocksdb16PreparedFileInfoELN9__gnu_cxx12_Lock_policyE2EE5resetEv.exit: ; preds = %bb.c, %bb.e, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i, %bb.i
   %i.aa = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 3 uses
-  %i.ab = load i64, ptr %i.aa, align 8, !tbaa !103 ; 13 uses
+  %i.ab = load i64, ptr %i.aa, align 8, !tbaa !103 ; 11 uses
   %.not105 = icmp eq i64 %i.ab, 0
   %.pre = load ptr, ptr %2, align 8, !tbaa !9     ; 4 uses
   br i1 %.not105, label %._crit_edge.i.i.thread, label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i
@@ -626,13 +624,13 @@ _ZNSt12__shared_ptrIKN7rocksdb16PreparedFileInfoELN9__gnu_cxx12_Lock_policyE2EE5
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit
 
 _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i:     ; preds = %_ZNSt12__shared_ptrIKN7rocksdb16PreparedFileInfoELN9__gnu_cxx12_Lock_policyE2EE5resetEv.exit, %bb.j
-  %.1.i.i.in = phi i64 [ %.1.i.i, %bb.j ], [ %i.ab, %_ZNSt12__shared_ptrIKN7rocksdb16PreparedFileInfoELN9__gnu_cxx12_Lock_policyE2EE5resetEv.exit ] ; 5 uses
+  %.1.i.i.in = phi i64 [ %.1.i.i, %bb.j ], [ %i.ab, %_ZNSt12__shared_ptrIKN7rocksdb16PreparedFileInfoELN9__gnu_cxx12_Lock_policyE2EE5resetEv.exit ] ; 3 uses
   %.1.i.i = add i64 %.1.i.i.in, -1                ; 3 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %.pre, i64 %.1.i.i
   %i.ae = load i8, ptr %i.ad, align 1, !tbaa !15
   switch i8 %i.ae, label %bb.j [
-    i8 92, label %21
-    i8 47, label %21
+    i8 92, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i
+    i8 47, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i
   ]
 
 bb.j:                                             ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i
@@ -693,17 +691,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit: ; preds = %.
   store i8 0, ptr %i.ap, align 1, !tbaa !15
   br label %bb.s
 
-21:                                               ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i
+_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i: ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #44
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !2933)
-  %22 = icmp ugt i64 %.1.i.i.in, %i.ab
-  br i1 %22, label %23, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i
-
-23:                                               ; preds = %21
-  tail call void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.225, ptr noundef nonnull @.str.230, i64 noundef %.1.i.i.in, i64 noundef %i.ab) #42, !noalias !2933
-  unreachable
-
-_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i: ; preds = %21
   %i.aq = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 3 uses
   store ptr %i.aq, ptr %8, align 8, !tbaa !102, !alias.scope !2933
   %i.ar = getelementptr inbounds nuw i8, ptr %.pre, i64 %.1.i.i.in ; 2 uses
@@ -1105,9 +1094,6 @@ declare void @_ZNSt8ios_baseD2Ev(ptr noundef nonnull align 8 dead_on_return(216)
 
 ; Function Attrs: nounwind
 declare void @_ZNSt6localeD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8)) unnamed_addr #8
-
-; Function Attrs: noreturn
-declare void @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef, ...) local_unnamed_addr #24
 
 declare noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo3putEc(ptr noundef nonnull align 8 dereferenceable(8), i8 noundef signext) local_unnamed_addr #6
 

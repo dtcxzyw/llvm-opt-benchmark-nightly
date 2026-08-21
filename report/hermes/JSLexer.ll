@@ -204,7 +204,7 @@ _ZN6hermes6parser7JSLexer5errorEN4llvh5SMLocERKNS2_5TwineE.exit.i48: ; preds = %
   %i.gm = load i8, ptr %i.gk, align 1, !tbaa !66
   %i.gn = and i8 %i.gm, -8
   %or.cond.i43 = icmp eq i8 %i.gn, 48
-  br i1 %or.cond.i43, label %bb.ai, label %_ZN6hermes6parser7JSLexer12consumeOctalEj.exit49.loopexit
+  br i1 %or.cond.i43, label %bb.ai, label %_ZN6hermes6parser7JSLexer12consumeOctalEj.exit49
 
 bb.ai:                                            ; preds = %.lr.ph.i41
   %i.go = shl i8 %.09.i40, 3
@@ -213,19 +213,15 @@ bb.ai:                                            ; preds = %.lr.ph.i41
   %i.gq = load i8, ptr %i.gk, align 1, !tbaa !66
   %i.gr = add i8 %i.go, -48
   %.0.i45 = add i8 %i.gr, %i.gq
-  br label %_ZN6hermes6parser7JSLexer12consumeOctalEj.exit49.loopexit
+  br label %_ZN6hermes6parser7JSLexer12consumeOctalEj.exit49, !llvm.loop !272
 
-_ZN6hermes6parser7JSLexer12consumeOctalEj.exit49.loopexit: ; preds = %bb.ai, %.lr.ph.i41
-  %.04.i44.ph = phi i8 [ %.0.i45, %bb.ai ], [ %.09.i40, %.lr.ph.i41 ]
-  %10 = zext i8 %.04.i44.ph to i32
-  br label %_ZN6hermes6parser7JSLexer12consumeOctalEj.exit49
-
-_ZN6hermes6parser7JSLexer12consumeOctalEj.exit49: ; preds = %_ZN6hermes6parser7JSLexer12consumeOctalEj.exit49.loopexit, %_ZN6hermes6parser7JSLexer5errorEN4llvh5SMLocERKNS2_5TwineE.exit.i48
-  %.04.i44 = phi i32 [ 0, %_ZN6hermes6parser7JSLexer5errorEN4llvh5SMLocERKNS2_5TwineE.exit.i48 ], [ %10, %_ZN6hermes6parser7JSLexer12consumeOctalEj.exit49.loopexit ]
+_ZN6hermes6parser7JSLexer12consumeOctalEj.exit49: ; preds = %.lr.ph.i41, %bb.ai, %_ZN6hermes6parser7JSLexer5errorEN4llvh5SMLocERKNS2_5TwineE.exit.i48
+  %.04.i44 = phi i8 [ 0, %_ZN6hermes6parser7JSLexer5errorEN4llvh5SMLocERKNS2_5TwineE.exit.i48 ], [ %.09.i40, %.lr.ph.i41 ], [ %.0.i45, %bb.ai ]
+  %10 = zext i8 %.04.i44 to i32
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #18
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #18
   store ptr %i.g, ptr %i.h, align 8, !tbaa !18
-  call void @_ZN6hermes10encodeUTF8ERPcj(ptr noundef nonnull align 8 dereferenceable(8) %i.h, i32 noundef %.04.i44) #18
+  call void @_ZN6hermes10encodeUTF8ERPcj(ptr noundef nonnull align 8 dereferenceable(8) %i.h, i32 noundef %10) #18
   %i.gs = load ptr, ptr %i.h, align 8, !tbaa !18  ; 2 uses
   %i.gt = ptrtoint ptr %i.gs to i64
   %i.gu = sub i64 %i.gt, %i.af                    ; 4 uses

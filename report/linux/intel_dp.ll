@@ -204,14 +204,7 @@ bb.q:                                             ; preds = %bb.p
   %i.ck = load i32, ptr %i.cj, align 4
   %i.cl = getelementptr i8, ptr %2, i64 4396
   %i.cm = getelementptr i8, ptr %0, i64 3196
-  br i1 %3, label %.split.us.i.preheader.i, label %.split.i.preheader.i
-
-.split.i.preheader.i:                             ; preds = %bb.q
-  %6 = getelementptr i8, ptr %i.bz, i64 237
-  %7 = load i8, ptr %6, align 1, !range !18, !noundef !19
-  %8 = trunc nuw i8 %7 to i1
-  %9 = tail call zeroext i1 @intel_hdmi_bpc_possible(ptr noundef %2, i32 noundef 8, i1 noundef zeroext %8) #15
-  br i1 %9, label %intel_dp_hdmi_compute_bpc.exit.thread.i, label %intel_dp_max_bpp.exit
+  br i1 %3, label %.split.us.i.preheader.i, label %.split.i.i
 
 .split.us.i.preheader.i:                          ; preds = %bb.q
   %i.cn = tail call i32 @llvm.smax.i32(i32 range(i32 -715827882, 715827883) %.042.i, i32 8)
@@ -263,8 +256,15 @@ intel_dp_tmds_clock_valid.exit.us.i.i:            ; preds = %bb.u, %intel_dp_max
   %i.de = icmp sgt i32 %.02325.us.i.i, 9
   br i1 %i.de, label %.split.us.i.i, label %intel_dp_max_bpp.exit, !llvm.loop !48
 
-intel_dp_hdmi_compute_bpc.exit.thread.i:          ; preds = %bb.u, %.split.i.preheader.i
-  %.us-phi.i.ph.i = phi i32 [ 8, %.split.i.preheader.i ], [ %.02325.us.i.i, %bb.u ]
+.split.i.i:                                       ; preds = %bb.q
+  %6 = getelementptr i8, ptr %i.bz, i64 237
+  %7 = load i8, ptr %6, align 1, !range !18, !noundef !19
+  %8 = trunc nuw i8 %7 to i1
+  %9 = tail call zeroext i1 @intel_hdmi_bpc_possible(ptr noundef %2, i32 noundef 8, i1 noundef zeroext %8) #15
+  br i1 %9, label %intel_dp_hdmi_compute_bpc.exit.thread.i, label %intel_dp_max_bpp.exit
+
+intel_dp_hdmi_compute_bpc.exit.thread.i:          ; preds = %bb.u, %.split.i.i
+  %.us-phi.i.ph.i = phi i32 [ 8, %.split.i.i ], [ %.02325.us.i.i, %bb.u ]
   %i.df = tail call i32 @llvm.smin.i32(i32 %.042.i, i32 %.us-phi.i.ph.i)
   br label %bb.v
 
@@ -306,8 +306,8 @@ __drm_to_dev.exit.i:                              ; preds = %bb.z, %bb.y
   %i.du = load i32, ptr %i.dn, align 8
   br label %intel_dp_max_bpp.exit
 
-intel_dp_max_bpp.exit:                            ; preds = %intel_dp_tmds_clock_valid.exit.us.i.i, %__drm_to_dev.exit.i, %bb.x, %bb.w, %bb.v, %.split.i.preheader.i, %bb.m
-  %.1.i.sink = phi i32 [ %i.bu, %bb.m ], [ %i.dg, %bb.w ], [ %i.du, %__drm_to_dev.exit.i ], [ %i.dg, %bb.v ], [ %i.dg, %bb.x ], [ 0, %.split.i.preheader.i ], [ 0, %intel_dp_tmds_clock_valid.exit.us.i.i ]
+intel_dp_max_bpp.exit:                            ; preds = %intel_dp_tmds_clock_valid.exit.us.i.i, %__drm_to_dev.exit.i, %bb.x, %bb.w, %bb.v, %.split.i.i, %bb.m
+  %.1.i.sink = phi i32 [ %i.bu, %bb.m ], [ %i.dg, %bb.w ], [ %i.du, %__drm_to_dev.exit.i ], [ %i.dg, %bb.v ], [ %i.dg, %bb.x ], [ 0, %.split.i.i ], [ 0, %intel_dp_tmds_clock_valid.exit.us.i.i ]
   %i.dv = getelementptr i8, ptr %5, i64 20
   store i32 %.1.i.sink, ptr %i.dv, align 4
   br i1 %4, label %intel_dp_in_hdr_mode.exit.thread, label %bb.aa

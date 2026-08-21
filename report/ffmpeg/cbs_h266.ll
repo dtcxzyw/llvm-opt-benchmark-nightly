@@ -204,7 +204,7 @@ scalar.ph2099.preheader:                          ; preds = %.preheader1068.us.i
 
 bb.df:                                            ; preds = %.loopexit1073.thread.i, %.lr.ph1224.i
   %indvars.iv1443.i = phi i64 [ 2, %.lr.ph1224.i ], [ %indvars.iv.next1444.i, %.loopexit1073.thread.i ] ; 2 uses
-  %indvars.iv1430.i = phi i64 [ 1, %.lr.ph1224.i ], [ %indvars.iv.next1431.i, %.loopexit1073.thread.i ] ; 17 uses
+  %indvars.iv1430.i = phi i64 [ 1, %.lr.ph1224.i ], [ %indvars.iv.next1431.i, %.loopexit1073.thread.i ] ; 16 uses
   %indvar1396.i = phi i64 [ 0, %.lr.ph1224.i ], [ %indvar.next1397.i, %.loopexit1073.thread.i ] ; 4 uses
   %i.rg = mul nuw nsw i64 %indvar1396.i, 257
   %i.rh = getelementptr i8, ptr %i.ay, i64 %i.rg
@@ -238,26 +238,22 @@ bb.di:                                            ; preds = %bb.dg
   store i8 %i.rs, ptr %i.ru, align 1, !tbaa !27
   br label %bb.dj
 
-.loopexit1070.i:                                  ; preds = %bb.dm, %bb.dj
+.loopexit1070.i:                                  ; preds = %bb.dm
   %i.rv = icmp sgt i64 %indvars.iv1432.i, 1
   br i1 %i.rv, label %bb.dj, label %.loopexit1073.thread.i, !llvm.loop !302
 
 bb.dj:                                            ; preds = %.loopexit1070.i, %bb.di
-  %indvars.iv1432.i = phi i64 [ %indvars.iv1430.i, %bb.di ], [ %indvars.iv.next1433.i, %.loopexit1070.i ] ; 4 uses
+  %indvars.iv1432.i = phi i64 [ %indvars.iv1430.i, %bb.di ], [ %indvars.iv.next1433.i, %.loopexit1070.i ] ; 3 uses
   %indvars.iv.next1433.i = add nsw i64 %indvars.iv1432.i, -1 ; 4 uses
   %i.rw = getelementptr inbounds nuw i8, ptr %i.rt, i64 %indvars.iv.next1433.i ; 2 uses
   store i8 0, ptr %i.rw, align 1, !tbaa !27
-  %.not9621211.i = icmp sgt i64 %indvars.iv1432.i, %indvars.iv1430.i
-  br i1 %.not9621211.i, label %.loopexit1070.i, label %.lr.ph1214.i
-
-.lr.ph1214.i:                                     ; preds = %bb.dj
   %invariant.gep1215.i = getelementptr inbounds nuw i8, ptr %i.he, i64 %indvars.iv.next1433.i
   %invariant.gep1217.i = getelementptr inbounds nuw i8, ptr %i.hj, i64 %indvars.iv.next1433.i
   br label %bb.dk
 
-bb.dk:                                            ; preds = %bb.dm, %.lr.ph1214.i
-  %i.rx = phi i8 [ 0, %.lr.ph1214.i ], [ %i.sc, %bb.dm ] ; 2 uses
-  %indvars.iv1434.i = phi i64 [ %indvars.iv1432.i, %.lr.ph1214.i ], [ %indvars.iv.next1435.i, %bb.dm ] ; 4 uses
+bb.dk:                                            ; preds = %bb.dm, %bb.dj
+  %i.rx = phi i8 [ 0, %bb.dj ], [ %i.sc, %bb.dm ] ; 2 uses
+  %indvars.iv1434.i = phi i64 [ %indvars.iv1432.i, %bb.dj ], [ %indvars.iv.next1435.i, %bb.dm ] ; 4 uses
   %gep1216.i = getelementptr inbounds nuw [64 x i8], ptr %invariant.gep1215.i, i64 %indvars.iv1434.i
   %i.ry = load i8, ptr %gep1216.i, align 1, !tbaa !27
   %.not964.i = icmp eq i8 %i.ry, 0
@@ -431,11 +427,11 @@ bb.dt:                                            ; preds = %bb.dt, %.lr.ph1195.
   br i1 %.not1255.i, label %.loopexit1073.i, label %.lr.ph1209.i
 
 .lr.ph1209.i:                                     ; preds = %._crit_edge1199.i
-  %i.uf = zext i8 %.1.i to i64                    ; 3 uses
+  %i.uf = zext i8 %.1.i to i64                    ; 2 uses
   br label %bb.du
 
 bb.du:                                            ; preds = %.loopexit1072.i, %.lr.ph1209.i
-  %indvars.iv1418.i = phi i64 [ %i.uf, %.lr.ph1209.i ], [ %indvars.iv.next1419.i, %.loopexit1072.i ] ; 4 uses
+  %indvars.iv1418.i = phi i64 [ %i.uf, %.lr.ph1209.i ], [ %indvars.iv.next1419.i, %.loopexit1072.i ] ; 3 uses
   %indvars.iv.next1419.i = add nsw i64 %indvars.iv1418.i, -1 ; 6 uses
   %i.ug = getelementptr inbounds nuw i8, ptr %i.sf, i64 %indvars.iv.next1419.i
   %i.uh = load i8, ptr %i.ug, align 1, !tbaa !27
@@ -445,10 +441,8 @@ bb.du:                                            ; preds = %.loopexit1072.i, %.
 bb.dv:                                            ; preds = %bb.du
   %i.ui = getelementptr inbounds nuw i8, ptr %i.se, i64 %indvars.iv.next1419.i
   %i.uj = load i8, ptr %i.ui, align 1, !tbaa !27
-  %.not955.i = icmp ne i8 %i.uj, 0
-  %.not9561200.i = icmp samesign ugt i64 %indvars.iv1418.i, %i.uf
-  %or.cond1250.i = or i1 %.not9561200.i, %.not955.i
-  br i1 %or.cond1250.i, label %.loopexit1072.i, label %.lr.ph1202.i
+  %.not955.i.not = icmp eq i8 %i.uj, 0
+  br i1 %.not955.i.not, label %.lr.ph1202.i, label %.loopexit1072.i
 
 .lr.ph1202.i:                                     ; preds = %bb.dv
   %invariant.gep.i = getelementptr inbounds nuw i8, ptr %i.hj, i64 %indvars.iv.next1419.i

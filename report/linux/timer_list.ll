@@ -201,7 +201,7 @@ cpumask_next.exit.i:                              ; preds = %bb.c, %bb.b, %bb.a
   store i32 %.0.i.i.i, ptr %i.b, align 8
   %i.n = load i32, ptr @nr_cpu_ids, align 4
   %.not10.i = icmp ugt i32 %i.n, %.0.i.i.i
-  br i1 %.not10.i, label %move_iter.exit, label %bb.d
+  br i1 %.not10.i, label %move_iter.exit, label %bb.d, !llvm.loop !80
 
 bb.d:                                             ; preds = %cpumask_next.exit.i
   %i.o = load i8, ptr %i.e, align 4, !range !37, !noundef !38
@@ -211,7 +211,7 @@ bb.d:                                             ; preds = %cpumask_next.exit.i
 bb.e:                                             ; preds = %bb.d
   store i32 -1, ptr %i.b, align 8
   store i8 1, ptr %i.e, align 4
-  br label %move_iter.exit
+  br label %move_iter.exit, !llvm.loop !80
 
 move_iter.exit:                                   ; preds = %cpumask_next.exit.i, %bb.e, %bb.d
   %.09.i = phi ptr [ null, %bb.d ], [ %i.b, %bb.e ], [ %i.b, %cpumask_next.exit.i ]

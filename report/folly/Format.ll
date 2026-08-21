@@ -204,7 +204,7 @@ bb.au:                                            ; preds = %bb.at
   %i.ey = load i64, ptr %i.h, align 8, !tbaa !371
   %i.ez = trunc i64 %i.ey to i32
   %i.fa = load i32, ptr %i.j, align 8, !tbaa !363 ; 4 uses
-  %i.fb = add nsw i32 %i.fa, %i.ez                ; 5 uses
+  %i.fb = add nsw i32 %i.fa, %i.ez                ; 4 uses
   %i.fc = add nsw i32 %i.ex, 1
   %i.fd = icmp slt i32 %i.fc, %i.fb
   br i1 %i.fd, label %_ZN3fmt2v96detail11add_compareERKNS1_6bigintES4_S4_.exit, label %bb.av
@@ -228,7 +228,7 @@ bb.aw:                                            ; preds = %bb.av
   br label %bb.ax
 
 bb.ax:                                            ; preds = %bb.bc, %.lr.ph.i
-  %.0.in57.i = phi i32 [ %i.fb, %.lr.ph.i ], [ %.058.i, %bb.bc ] ; 7 uses
+  %.0.in57.i = phi i32 [ %i.fb, %.lr.ph.i ], [ %.058.i, %bb.bc ] ; 6 uses
   %.03256.i = phi i64 [ 0, %.lr.ph.i ], [ %i.gj, %bb.bc ] ; 2 uses
   %.058.i = add nsw i32 %.0.in57.i, -1            ; 5 uses
   %.not.i.i169 = icmp sgt i32 %.0.in57.i, %i.er
@@ -263,9 +263,7 @@ _ZZN3fmt2v96detail11add_compareERKNS1_6bigintES4_S4_ENKUlS4_iE_clES4_i.exit44.i:
   %i.fx = phi i64 [ %i.fw, %bb.az ], [ 0, %_ZZN3fmt2v96detail11add_compareERKNS1_6bigintES4_S4_ENKUlS4_iE_clES4_i.exit.i ]
   %i.fy = add nuw nsw i64 %i.fx, %i.fq            ; 3 uses
   %.not.i45.i = icmp sgt i32 %.0.in57.i, %i.fa
-  %9 = icmp sle i32 %.0.in57.i, %i.fb
-  %or.cond53.i = and i1 %.not.i45.i, %9
-  br i1 %or.cond53.i, label %bb.ba, label %_ZZN3fmt2v96detail11add_compareERKNS1_6bigintES4_S4_ENKUlS4_iE_clES4_i.exit46.i
+  br i1 %.not.i45.i, label %bb.ba, label %_ZZN3fmt2v96detail11add_compareERKNS1_6bigintES4_S4_ENKUlS4_iE_clES4_i.exit46.i
 
 bb.ba:                                            ; preds = %_ZZN3fmt2v96detail11add_compareERKNS1_6bigintES4_S4_ENKUlS4_iE_clES4_i.exit44.i
   %i.fz = sub nsw i32 %.058.i, %i.fa
@@ -668,7 +666,7 @@ _ZN3fmt2v96detail7compareERKNS1_6bigintES4_.exit: ; preds = %.loopexit.i, %bb.cb
   %i.mn = load i64, ptr %i.h, align 8, !tbaa !371
   %i.mo = trunc i64 %i.mn to i32
   %i.mp = load i32, ptr %i.j, align 8, !tbaa !363 ; 4 uses
-  %i.mq = add nsw i32 %i.mp, %i.mo                ; 5 uses
+  %i.mq = add nsw i32 %i.mp, %i.mo                ; 4 uses
   %i.mr = add nsw i32 %i.mm, 1
   %i.ms = icmp slt i32 %i.mr, %i.mq
   br i1 %i.ms, label %_ZN3fmt2v96detail11add_compareERKNS1_6bigintES4_S4_.exit227, label %bb.cc
@@ -690,7 +688,7 @@ bb.cd:                                            ; preds = %bb.cc
   br label %bb.ce
 
 bb.ce:                                            ; preds = %bb.cj, %.lr.ph.i212
-  %.0.in57.i213 = phi i32 [ %i.mq, %.lr.ph.i212 ], [ %.058.i215, %bb.cj ] ; 7 uses
+  %.0.in57.i213 = phi i32 [ %i.mq, %.lr.ph.i212 ], [ %.058.i215, %bb.cj ] ; 6 uses
   %.03256.i214 = phi i64 [ 0, %.lr.ph.i212 ], [ %i.ny, %bb.cj ] ; 2 uses
   %.058.i215 = add nsw i32 %.0.in57.i213, -1      ; 5 uses
   %.not.i.i216 = icmp sgt i32 %.0.in57.i213, %i.lj
@@ -725,9 +723,7 @@ _ZZN3fmt2v96detail11add_compareERKNS1_6bigintES4_S4_ENKUlS4_iE_clES4_i.exit44.i2
   %i.nm = phi i64 [ %i.nl, %bb.cg ], [ 0, %_ZZN3fmt2v96detail11add_compareERKNS1_6bigintES4_S4_ENKUlS4_iE_clES4_i.exit.i218 ]
   %i.nn = add nuw nsw i64 %i.nm, %i.nf            ; 3 uses
   %.not.i45.i222 = icmp sgt i32 %.0.in57.i213, %i.mp
-  %10 = icmp sle i32 %.0.in57.i213, %i.mq
-  %or.cond53.i223 = and i1 %.not.i45.i222, %10
-  br i1 %or.cond53.i223, label %bb.ch, label %_ZZN3fmt2v96detail11add_compareERKNS1_6bigintES4_S4_ENKUlS4_iE_clES4_i.exit46.i224
+  br i1 %.not.i45.i222, label %bb.ch, label %_ZZN3fmt2v96detail11add_compareERKNS1_6bigintES4_S4_ENKUlS4_iE_clES4_i.exit46.i224
 
 bb.ch:                                            ; preds = %_ZZN3fmt2v96detail11add_compareERKNS1_6bigintES4_S4_ENKUlS4_iE_clES4_i.exit44.i221
   %i.no = sub nsw i32 %.058.i215, %i.mp
@@ -808,7 +804,7 @@ bb.cm:                                            ; preds = %bb.ck
   %i.oo = load i64, ptr %i.h, align 8, !tbaa !371
   %i.op = trunc i64 %i.oo to i32
   %i.oq = load i32, ptr %i.j, align 8, !tbaa !363 ; 4 uses
-  %i.or = add nsw i32 %i.oq, %i.op                ; 5 uses
+  %i.or = add nsw i32 %i.oq, %i.op                ; 4 uses
   %i.os = add nsw i32 %i.on, 1
   %i.ot = icmp slt i32 %i.os, %i.or
   br i1 %i.ot, label %.thread, label %bb.cn
@@ -828,7 +824,7 @@ bb.co:                                            ; preds = %bb.cn
   br label %bb.cp
 
 bb.cp:                                            ; preds = %bb.ct, %.lr.ph.i230
-  %.0.in57.i231 = phi i32 [ %i.or, %.lr.ph.i230 ], [ %.058.i233, %bb.ct ] ; 5 uses
+  %.0.in57.i231 = phi i32 [ %i.or, %.lr.ph.i230 ], [ %.058.i233, %bb.ct ] ; 4 uses
   %.03256.i232 = phi i64 [ 0, %.lr.ph.i230 ], [ %i.pq, %bb.ct ] ; 2 uses
   %.058.i233 = add nsw i32 %.0.in57.i231, -1      ; 4 uses
   %.not.i.i234 = icmp sgt i32 %.0.in57.i231, %i.om
@@ -848,9 +844,7 @@ bb.cq:                                            ; preds = %bb.cp
 _ZZN3fmt2v96detail11add_compareERKNS1_6bigintES4_S4_ENKUlS4_iE_clES4_i.exit44.i239: ; preds = %bb.cp, %bb.cq
   %i.pf = phi i64 [ %i.pe, %bb.cq ], [ 0, %bb.cp ] ; 3 uses
   %.not.i45.i240 = icmp sgt i32 %.0.in57.i231, %i.oq
-  %11 = icmp sle i32 %.0.in57.i231, %i.or
-  %or.cond53.i241 = and i1 %.not.i45.i240, %11
-  br i1 %or.cond53.i241, label %bb.cr, label %_ZZN3fmt2v96detail11add_compareERKNS1_6bigintES4_S4_ENKUlS4_iE_clES4_i.exit46.i242
+  br i1 %.not.i45.i240, label %bb.cr, label %_ZZN3fmt2v96detail11add_compareERKNS1_6bigintES4_S4_ENKUlS4_iE_clES4_i.exit46.i242
 
 bb.cr:                                            ; preds = %_ZZN3fmt2v96detail11add_compareERKNS1_6bigintES4_S4_ENKUlS4_iE_clES4_i.exit44.i239
   %i.pg = sub nsw i32 %.058.i233, %i.oq
@@ -1253,7 +1247,7 @@ _ZN3fmt2v96detail6bigintmLIiEERS2_T_.exit303:     ; preds = %_ZN3fmt2v96detail6b
   %i.vu = add nsw i32 %i.vt, %i.vs                ; 3 uses
   %i.vv = trunc i64 %i.vq to i32
   %i.vw = load i32, ptr %i.j, align 8, !tbaa !363 ; 4 uses
-  %i.vx = add nsw i32 %i.vw, %i.vv                ; 5 uses
+  %i.vx = add nsw i32 %i.vw, %i.vv                ; 4 uses
   %i.vy = add nsw i32 %i.vu, 1
   %i.vz = icmp slt i32 %i.vy, %i.vx
   br i1 %i.vz, label %_ZN3fmt2v96detail11add_compareERKNS1_6bigintES4_S4_.exit321, label %bb.dm
@@ -1273,7 +1267,7 @@ bb.dn:                                            ; preds = %bb.dm
   br label %bb.do
 
 bb.do:                                            ; preds = %bb.dr, %.lr.ph.i306
-  %.0.in57.i307 = phi i32 [ %i.vx, %.lr.ph.i306 ], [ %.058.i309, %bb.dr ] ; 5 uses
+  %.0.in57.i307 = phi i32 [ %i.vx, %.lr.ph.i306 ], [ %.058.i309, %bb.dr ] ; 4 uses
   %.03256.i308 = phi i64 [ 0, %.lr.ph.i306 ], [ %i.ww, %bb.dr ] ; 2 uses
   %.058.i309 = add nsw i32 %.0.in57.i307, -1      ; 4 uses
   %.not.i.i310 = icmp sgt i32 %.0.in57.i307, %i.vt
@@ -1293,9 +1287,7 @@ bb.dp:                                            ; preds = %bb.do
 _ZZN3fmt2v96detail11add_compareERKNS1_6bigintES4_S4_ENKUlS4_iE_clES4_i.exit44.i315: ; preds = %bb.do, %bb.dp
   %i.wl = phi i64 [ %i.wk, %bb.dp ], [ 0, %bb.do ] ; 2 uses
   %.not.i45.i316 = icmp sgt i32 %.0.in57.i307, %i.vw
-  %12 = icmp sle i32 %.0.in57.i307, %i.vx
-  %or.cond53.i317 = and i1 %.not.i45.i316, %12
-  br i1 %or.cond53.i317, label %bb.dq, label %_ZZN3fmt2v96detail11add_compareERKNS1_6bigintES4_S4_ENKUlS4_iE_clES4_i.exit46.i318
+  br i1 %.not.i45.i316, label %bb.dq, label %_ZZN3fmt2v96detail11add_compareERKNS1_6bigintES4_S4_ENKUlS4_iE_clES4_i.exit46.i318
 
 bb.dq:                                            ; preds = %_ZZN3fmt2v96detail11add_compareERKNS1_6bigintES4_S4_ENKUlS4_iE_clES4_i.exit44.i315
   %i.wm = sub nsw i32 %.058.i309, %i.vw
@@ -1510,7 +1502,7 @@ bb.ed:                                            ; preds = %._crit_edge
   %i.zo = load i64, ptr %i.h, align 8, !tbaa !371
   %i.zp = trunc i64 %i.zo to i32
   %i.zq = load i32, ptr %i.j, align 8, !tbaa !363 ; 4 uses
-  %i.zr = add nsw i32 %i.zq, %i.zp                ; 5 uses
+  %i.zr = add nsw i32 %i.zq, %i.zp                ; 4 uses
   %i.zs = add nsw i32 %i.zn, 1
   %i.zt = icmp slt i32 %i.zs, %i.zr
   br i1 %i.zt, label %.thread433, label %bb.ee
@@ -1530,7 +1522,7 @@ bb.ef:                                            ; preds = %bb.ee
   br label %bb.eg
 
 bb.eg:                                            ; preds = %bb.ek, %.lr.ph.i344
-  %.0.in57.i345 = phi i32 [ %i.zr, %.lr.ph.i344 ], [ %.058.i347, %bb.ek ] ; 5 uses
+  %.0.in57.i345 = phi i32 [ %i.zr, %.lr.ph.i344 ], [ %.058.i347, %bb.ek ] ; 4 uses
   %.03256.i346 = phi i64 [ 0, %.lr.ph.i344 ], [ %i.aaq, %bb.ek ] ; 2 uses
   %.058.i347 = add nsw i32 %.0.in57.i345, -1      ; 4 uses
   %.not.i.i348 = icmp sgt i32 %.0.in57.i345, %i.zm
@@ -1550,9 +1542,7 @@ bb.eh:                                            ; preds = %bb.eg
 _ZZN3fmt2v96detail11add_compareERKNS1_6bigintES4_S4_ENKUlS4_iE_clES4_i.exit44.i353: ; preds = %bb.eg, %bb.eh
   %i.aaf = phi i64 [ %i.aae, %bb.eh ], [ 0, %bb.eg ] ; 3 uses
   %.not.i45.i354 = icmp sgt i32 %.0.in57.i345, %i.zq
-  %13 = icmp sle i32 %.0.in57.i345, %i.zr
-  %or.cond53.i355 = and i1 %.not.i45.i354, %13
-  br i1 %or.cond53.i355, label %bb.ei, label %_ZZN3fmt2v96detail11add_compareERKNS1_6bigintES4_S4_ENKUlS4_iE_clES4_i.exit46.i356
+  br i1 %.not.i45.i354, label %bb.ei, label %_ZZN3fmt2v96detail11add_compareERKNS1_6bigintES4_S4_ENKUlS4_iE_clES4_i.exit46.i356
 
 bb.ei:                                            ; preds = %_ZZN3fmt2v96detail11add_compareERKNS1_6bigintES4_S4_ENKUlS4_iE_clES4_i.exit44.i353
   %i.aag = sub nsw i32 %.058.i347, %i.zq

@@ -204,7 +204,7 @@ bb.l:                                             ; preds = %.lr.ph72
   tail call void @_RNvNtCscgRAwXFJnXP_4core9panicking18panic_bounds_check(i64 noundef %umax95, i64 noundef %1, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @13) #36, !dbg !5540
   unreachable
 
-bb.m:                                             ; preds = %bb.k, %bb.o
+bb.m:                                             ; preds = %bb.o, %bb.k
   %.sroa.08.0 = phi i64 [ %.sroa.029.071, %bb.k ], [ %.sroa.01.0, %bb.o ], !dbg !5598 ; 3 uses
   %.sroa.01.0 = add nsw i64 %.sroa.08.0, -1, !dbg !5599 ; 3 uses
   %i.u = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.sroa.01.0, !dbg !5601 ; 2 uses

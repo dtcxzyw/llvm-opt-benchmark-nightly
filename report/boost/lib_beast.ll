@@ -204,7 +204,7 @@ bb.cb:                                            ; preds = %bb.bv
   %i.qd = or i32 %i.pe, 8192
   store i32 %i.qd, ptr %i.pd, align 4, !tbaa !407
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %4, i8 0, i64 24, i1 false)
-  %i.qe = getelementptr i8, ptr %2, i64 %3        ; 45 uses
+  %i.qe = getelementptr i8, ptr %2, i64 %3        ; 44 uses
   %.not8.i.i.i.i173427 = icmp samesign eq i64 %3, 0
   br i1 %.not8.i.i.i.i173427, label %_ZNK5boost5beast4http10token_list3endEv.exit, label %.lr.ph.i.i.i.i174.preheader
 
@@ -283,7 +283,7 @@ _ZNK5boost5beast4http10token_list3endEv.exit:     ; preds = %_ZN5boost5beast4htt
   %.sroa.3249.0 = phi i64 [ %i.ra, %.preheader.i.i.i178._crit_edge ], [ 0, %bb.cb ], [ 0, %bb.cc ], [ 0, %bb.ce ], [ 0, %_ZN5boost5beast4http6detail8skip_owsIPKcEEvRT_S6_.exit.i.i.i176 ]
   %.sroa.9251.0 = phi ptr [ %2, %.preheader.i.i.i178._crit_edge ], [ %i.qe, %bb.cb ], [ %i.qe, %bb.cc ], [ %i.qe, %bb.ce ], [ %i.qe, %_ZN5boost5beast4http6detail8skip_owsIPKcEEvRT_S6_.exit.i.i.i176 ] ; 2 uses
   %.sroa.4250.0 = phi ptr [ %.lcssa495, %.preheader.i.i.i178._crit_edge ], [ %i.qe, %bb.cb ], [ %i.qe, %bb.cc ], [ %i.qe, %bb.ce ], [ %i.qe, %_ZN5boost5beast4http6detail8skip_owsIPKcEEvRT_S6_.exit.i.i.i176 ] ; 2 uses
-  %.sroa.5.0.copyload52.i.i = ptrtoaddr ptr %i.qe to i64 ; 4 uses
+  %.sroa.5.0.copyload52.i.i = ptrtoaddr ptr %i.qe to i64 ; 3 uses
   %i.rc = icmp ne ptr %i.qe, %.sroa.4250.0
   %i.rd = icmp ne ptr %i.qe, %.sroa.9251.0
   %or.cond.not13.i32.i.i = or i1 %i.rc, %i.rd
@@ -625,7 +625,7 @@ bb.cs:                                            ; preds = %.lr.ph.i.i.i.i214, 
   br i1 %.not.i.i.i.i215, label %_ZN5boost5beast4http6detail8skip_owsIPKcEEvRT_S6_.exit.i.i.i216, label %.lr.ph.i.i.i.i214, !llvm.loop !385
 
 _ZN5boost5beast4http6detail8skip_owsIPKcEEvRT_S6_.exit.i.i.i216: ; preds = %bb.cs, %.lr.ph.i.i.i.i214, %bb.cr
-  %.promoted22.i.i.i = phi ptr [ %i.wo, %bb.cr ], [ %i.wr, %.lr.ph.i.i.i.i214 ], [ %scevgep507, %bb.cs ] ; 6 uses
+  %.promoted22.i.i.i = phi ptr [ %i.wo, %bb.cr ], [ %i.wr, %.lr.ph.i.i.i.i214 ], [ %scevgep507, %bb.cs ] ; 4 uses
   %i.wu = icmp eq ptr %.promoted22.i.i.i, %i.qe
   br i1 %i.wu, label %_ZNK5boost5beast4http10token_list14const_iteratorneERKS3_.exit, label %bb.ct
 
@@ -641,10 +641,6 @@ bb.cu:                                            ; preds = %bb.ct
   br i1 %.06.i.i.i, label %_ZNK5boost5beast4http10token_list14const_iteratorneERKS3_.exit, label %.preheader.i.i.i218.preheader
 
 .preheader.i.i.i218.preheader:                    ; preds = %bb.cu
-  %.promoted22.i.i.i.lcssa508510 = ptrtoaddr ptr %.promoted22.i.i.i to i64
-  %scevgep509 = getelementptr i8, ptr %.promoted22.i.i.i, i64 %.sroa.5.0.copyload52.i.i
-  %9 = sub i64 0, %.promoted22.i.i.i.lcssa508510
-  %scevgep511 = getelementptr i8, ptr %scevgep509, i64 %9 ; 2 uses
   %i.wz = getelementptr inbounds nuw i8, ptr %.promoted22.i.i.i, i64 1 ; 2 uses
   %i.xa = icmp eq ptr %i.wz, %i.qe
   br i1 %i.xa, label %_ZN5boost5beast4http10token_list14const_iteratorppEv.exit.i, label %.lr.ph690
@@ -655,13 +651,13 @@ bb.cu:                                            ; preds = %bb.ct
   br i1 %i.xc, label %_ZN5boost5beast4http10token_list14const_iteratorppEv.exit.i, label %.lr.ph690, !llvm.loop !570
 
 .lr.ph690:                                        ; preds = %.preheader.i.i.i218.preheader, %.preheader.i.i.i218
-  %i.xd = phi ptr [ %i.xb, %.preheader.i.i.i218 ], [ %i.wz, %.preheader.i.i.i218.preheader ] ; 3 uses
+  %i.xd = phi ptr [ %i.xb, %.preheader.i.i.i218 ], [ %i.wz, %.preheader.i.i.i218.preheader ] ; 2 uses
   %i.xe = load i8, ptr %i.xd, align 1, !tbaa !20, !noalias !580
   %i.xf = zext i8 %i.xe to i64
   %i.xg = getelementptr inbounds nuw i8, ptr @_ZZN5boost5beast4http6detail13is_token_charEcE3tab, i64 %i.xf
   %i.xh = load i8, ptr %i.xg, align 1, !tbaa !20, !noalias !580
   %.not10.i.i.i219 = icmp eq i8 %i.xh, 0
-  br i1 %.not10.i.i.i219, label %._ZN5boost5beast4http10token_list14const_iteratorppEv.exit.i_crit_edge, label %.preheader.i.i.i218, !llvm.loop !570
+  br i1 %.not10.i.i.i219, label %_ZNK5boost5beast4http10token_list14const_iteratoreqERKS3_.exit, label %.preheader.i.i.i218, !llvm.loop !570
 
 bb.cv:                                            ; preds = %bb.ct
   %.not9.i.i.i222 = icmp eq i8 %i.wv, 44
@@ -671,15 +667,9 @@ bb.cw:                                            ; preds = %bb.cv
   %i.xi = getelementptr inbounds nuw i8, ptr %.promoted22.i.i.i, i64 1
   br label %bb.cr, !llvm.loop !571
 
-._ZN5boost5beast4http10token_list14const_iteratorppEv.exit.i_crit_edge: ; preds = %.lr.ph690
-  br label %_ZN5boost5beast4http10token_list14const_iteratorppEv.exit.i, !llvm.loop !570
-
-_ZN5boost5beast4http10token_list14const_iteratorppEv.exit.i: ; preds = %.preheader.i.i.i218, %._ZN5boost5beast4http10token_list14const_iteratorppEv.exit.i_crit_edge, %.preheader.i.i.i218.preheader
-  %.lcssa490 = phi ptr [ %i.xd, %._ZN5boost5beast4http10token_list14const_iteratorppEv.exit.i_crit_edge ], [ %scevgep511, %.preheader.i.i.i218.preheader ], [ %scevgep511, %.preheader.i.i.i218 ]
-  %10 = icmp eq ptr %i.qe, %.lcssa490
+_ZN5boost5beast4http10token_list14const_iteratorppEv.exit.i: ; preds = %.preheader.i.i.i218, %.preheader.i.i.i218.preheader
   %i.xj = icmp eq ptr %i.qe, %.sroa.9.025.i.i
-  %11 = and i1 %i.xj, %10
-  br i1 %11, label %_ZNK5boost5beast4http10token_list14const_iteratorneERKS3_.exit, label %_ZNK5boost5beast4http10token_list14const_iteratoreqERKS3_.exit
+  br i1 %i.xj, label %_ZNK5boost5beast4http10token_list14const_iteratorneERKS3_.exit, label %_ZNK5boost5beast4http10token_list14const_iteratoreqERKS3_.exit
 
 _ZNK5boost5beast4http10token_list14const_iteratorneERKS3_.exit: ; preds = %bb.cv, %_ZN5boost5beast4http6detail8skip_owsIPKcEEvRT_S6_.exit.i.i.i216, %bb.cu, %_ZN5boost5beast4http10token_list14const_iteratorppEv.exit.i
   %i.xk = getelementptr inbounds nuw i8, ptr %0, i64 24
@@ -701,7 +691,7 @@ bb.cy:                                            ; preds = %bb.a
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %4, i8 0, i64 24, i1 false)
   br label %_ZNK5boost5beast4http10token_list14const_iteratoreqERKS3_.exit
 
-_ZNK5boost5beast4http10token_list14const_iteratoreqERKS3_.exit: ; preds = %_ZNK5boost5beast4http10token_list3endEv.exit210, %_ZN5boost5beast4http10token_list14const_iteratorppEv.exit.i, %_ZNK5boost5beast4http10token_list14const_iteratorneERKS3_.exit, %bb.cy, %bb.cx, %bb.ca, %bb.bu, %bb.bo, %bb.ad
+_ZNK5boost5beast4http10token_list14const_iteratoreqERKS3_.exit: ; preds = %.lr.ph690, %_ZNK5boost5beast4http10token_list3endEv.exit210, %_ZN5boost5beast4http10token_list14const_iteratorppEv.exit.i, %_ZNK5boost5beast4http10token_list14const_iteratorneERKS3_.exit, %bb.cy, %bb.cx, %bb.ca, %bb.bu, %bb.bo, %bb.ad
   ret void
 }
 
@@ -1104,7 +1094,7 @@ bb.cb:                                            ; preds = %bb.bv
   %i.qd = or i32 %i.pe, 8192
   store i32 %i.qd, ptr %i.pd, align 4, !tbaa !593
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %4, i8 0, i64 24, i1 false)
-  %i.qe = getelementptr i8, ptr %2, i64 %3        ; 45 uses
+  %i.qe = getelementptr i8, ptr %2, i64 %3        ; 44 uses
   %.not8.i.i.i.i173427 = icmp samesign eq i64 %3, 0
   br i1 %.not8.i.i.i.i173427, label %_ZNK5boost5beast4http10token_list3endEv.exit, label %.lr.ph.i.i.i.i174.preheader
 
@@ -1183,7 +1173,7 @@ _ZNK5boost5beast4http10token_list3endEv.exit:     ; preds = %_ZN5boost5beast4htt
   %.sroa.3249.0 = phi i64 [ %i.ra, %.preheader.i.i.i178._crit_edge ], [ 0, %bb.cb ], [ 0, %bb.cc ], [ 0, %bb.ce ], [ 0, %_ZN5boost5beast4http6detail8skip_owsIPKcEEvRT_S6_.exit.i.i.i176 ]
   %.sroa.9251.0 = phi ptr [ %2, %.preheader.i.i.i178._crit_edge ], [ %i.qe, %bb.cb ], [ %i.qe, %bb.cc ], [ %i.qe, %bb.ce ], [ %i.qe, %_ZN5boost5beast4http6detail8skip_owsIPKcEEvRT_S6_.exit.i.i.i176 ] ; 2 uses
   %.sroa.4250.0 = phi ptr [ %.lcssa495, %.preheader.i.i.i178._crit_edge ], [ %i.qe, %bb.cb ], [ %i.qe, %bb.cc ], [ %i.qe, %bb.ce ], [ %i.qe, %_ZN5boost5beast4http6detail8skip_owsIPKcEEvRT_S6_.exit.i.i.i176 ] ; 2 uses
-  %.sroa.5.0.copyload52.i.i = ptrtoaddr ptr %i.qe to i64 ; 4 uses
+  %.sroa.5.0.copyload52.i.i = ptrtoaddr ptr %i.qe to i64 ; 3 uses
   %i.rc = icmp ne ptr %i.qe, %.sroa.4250.0
   %i.rd = icmp ne ptr %i.qe, %.sroa.9251.0
   %or.cond.not13.i32.i.i = or i1 %i.rc, %i.rd
@@ -1525,7 +1515,7 @@ bb.cs:                                            ; preds = %.lr.ph.i.i.i.i214, 
   br i1 %.not.i.i.i.i215, label %_ZN5boost5beast4http6detail8skip_owsIPKcEEvRT_S6_.exit.i.i.i216, label %.lr.ph.i.i.i.i214, !llvm.loop !385
 
 _ZN5boost5beast4http6detail8skip_owsIPKcEEvRT_S6_.exit.i.i.i216: ; preds = %bb.cs, %.lr.ph.i.i.i.i214, %bb.cr
-  %.promoted22.i.i.i = phi ptr [ %i.wo, %bb.cr ], [ %i.wr, %.lr.ph.i.i.i.i214 ], [ %scevgep507, %bb.cs ] ; 6 uses
+  %.promoted22.i.i.i = phi ptr [ %i.wo, %bb.cr ], [ %i.wr, %.lr.ph.i.i.i.i214 ], [ %scevgep507, %bb.cs ] ; 4 uses
   %i.wu = icmp eq ptr %.promoted22.i.i.i, %i.qe
   br i1 %i.wu, label %_ZNK5boost5beast4http10token_list14const_iteratorneERKS3_.exit, label %bb.ct
 
@@ -1541,10 +1531,6 @@ bb.cu:                                            ; preds = %bb.ct
   br i1 %.06.i.i.i, label %_ZNK5boost5beast4http10token_list14const_iteratorneERKS3_.exit, label %.preheader.i.i.i218.preheader
 
 .preheader.i.i.i218.preheader:                    ; preds = %bb.cu
-  %.promoted22.i.i.i.lcssa508510 = ptrtoaddr ptr %.promoted22.i.i.i to i64
-  %scevgep509 = getelementptr i8, ptr %.promoted22.i.i.i, i64 %.sroa.5.0.copyload52.i.i
-  %9 = sub i64 0, %.promoted22.i.i.i.lcssa508510
-  %scevgep511 = getelementptr i8, ptr %scevgep509, i64 %9 ; 2 uses
   %i.wz = getelementptr inbounds nuw i8, ptr %.promoted22.i.i.i, i64 1 ; 2 uses
   %i.xa = icmp eq ptr %i.wz, %i.qe
   br i1 %i.xa, label %_ZN5boost5beast4http10token_list14const_iteratorppEv.exit.i, label %.lr.ph690
@@ -1555,13 +1541,13 @@ bb.cu:                                            ; preds = %bb.ct
   br i1 %i.xc, label %_ZN5boost5beast4http10token_list14const_iteratorppEv.exit.i, label %.lr.ph690, !llvm.loop !570
 
 .lr.ph690:                                        ; preds = %.preheader.i.i.i218.preheader, %.preheader.i.i.i218
-  %i.xd = phi ptr [ %i.xb, %.preheader.i.i.i218 ], [ %i.wz, %.preheader.i.i.i218.preheader ] ; 3 uses
+  %i.xd = phi ptr [ %i.xb, %.preheader.i.i.i218 ], [ %i.wz, %.preheader.i.i.i218.preheader ] ; 2 uses
   %i.xe = load i8, ptr %i.xd, align 1, !tbaa !20, !noalias !742
   %i.xf = zext i8 %i.xe to i64
   %i.xg = getelementptr inbounds nuw i8, ptr @_ZZN5boost5beast4http6detail13is_token_charEcE3tab, i64 %i.xf
   %i.xh = load i8, ptr %i.xg, align 1, !tbaa !20, !noalias !742
   %.not10.i.i.i219 = icmp eq i8 %i.xh, 0
-  br i1 %.not10.i.i.i219, label %._ZN5boost5beast4http10token_list14const_iteratorppEv.exit.i_crit_edge, label %.preheader.i.i.i218, !llvm.loop !570
+  br i1 %.not10.i.i.i219, label %_ZNK5boost5beast4http10token_list14const_iteratoreqERKS3_.exit, label %.preheader.i.i.i218, !llvm.loop !570
 
 bb.cv:                                            ; preds = %bb.ct
   %.not9.i.i.i222 = icmp eq i8 %i.wv, 44
@@ -1571,15 +1557,9 @@ bb.cw:                                            ; preds = %bb.cv
   %i.xi = getelementptr inbounds nuw i8, ptr %.promoted22.i.i.i, i64 1
   br label %bb.cr, !llvm.loop !571
 
-._ZN5boost5beast4http10token_list14const_iteratorppEv.exit.i_crit_edge: ; preds = %.lr.ph690
-  br label %_ZN5boost5beast4http10token_list14const_iteratorppEv.exit.i, !llvm.loop !570
-
-_ZN5boost5beast4http10token_list14const_iteratorppEv.exit.i: ; preds = %.preheader.i.i.i218, %._ZN5boost5beast4http10token_list14const_iteratorppEv.exit.i_crit_edge, %.preheader.i.i.i218.preheader
-  %.lcssa490 = phi ptr [ %i.xd, %._ZN5boost5beast4http10token_list14const_iteratorppEv.exit.i_crit_edge ], [ %scevgep511, %.preheader.i.i.i218.preheader ], [ %scevgep511, %.preheader.i.i.i218 ]
-  %10 = icmp eq ptr %i.qe, %.lcssa490
+_ZN5boost5beast4http10token_list14const_iteratorppEv.exit.i: ; preds = %.preheader.i.i.i218, %.preheader.i.i.i218.preheader
   %i.xj = icmp eq ptr %i.qe, %.sroa.9.025.i.i
-  %11 = and i1 %i.xj, %10
-  br i1 %11, label %_ZNK5boost5beast4http10token_list14const_iteratorneERKS3_.exit, label %_ZNK5boost5beast4http10token_list14const_iteratoreqERKS3_.exit
+  br i1 %i.xj, label %_ZNK5boost5beast4http10token_list14const_iteratorneERKS3_.exit, label %_ZNK5boost5beast4http10token_list14const_iteratoreqERKS3_.exit
 
 _ZNK5boost5beast4http10token_list14const_iteratorneERKS3_.exit: ; preds = %bb.cv, %_ZN5boost5beast4http6detail8skip_owsIPKcEEvRT_S6_.exit.i.i.i216, %bb.cu, %_ZN5boost5beast4http10token_list14const_iteratorppEv.exit.i
   %i.xk = getelementptr inbounds nuw i8, ptr %0, i64 24
@@ -1601,7 +1581,7 @@ bb.cy:                                            ; preds = %bb.a
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %4, i8 0, i64 24, i1 false)
   br label %_ZNK5boost5beast4http10token_list14const_iteratoreqERKS3_.exit
 
-_ZNK5boost5beast4http10token_list14const_iteratoreqERKS3_.exit: ; preds = %_ZNK5boost5beast4http10token_list3endEv.exit210, %_ZN5boost5beast4http10token_list14const_iteratorppEv.exit.i, %_ZNK5boost5beast4http10token_list14const_iteratorneERKS3_.exit, %bb.cy, %bb.cx, %bb.ca, %bb.bu, %bb.bo, %bb.ad
+_ZNK5boost5beast4http10token_list14const_iteratoreqERKS3_.exit: ; preds = %.lr.ph690, %_ZNK5boost5beast4http10token_list3endEv.exit210, %_ZN5boost5beast4http10token_list14const_iteratorppEv.exit.i, %_ZNK5boost5beast4http10token_list14const_iteratorneERKS3_.exit, %bb.cy, %bb.cx, %bb.ca, %bb.bu, %bb.bo, %bb.ad
   ret void
 }
 
@@ -2004,11 +1984,11 @@ bb.g:                                             ; preds = %bb.f
   %or.cond315 = select i1 %.not9.i.i.i45, i1 true, i1 %.not8.i.i.i.i34
   br i1 %or.cond315, label %_ZNK5boost5beast4http10token_list5beginEv.exit46, label %.lr.ph.i.i.i.i35.preheader, !llvm.loop !571
 
-_ZNK5boost5beast4http10token_list5beginEv.exit46: ; preds = %_ZN5boost5beast4http6detail8skip_owsIPKcEEvRT_S6_.exit.i.i.i38, %bb.g, %bb.e, %.preheader.i.i.i41._crit_edge
-  %.sroa.0192.0 = phi ptr [ %i.l, %.preheader.i.i.i41._crit_edge ], [ null, %bb.e ], [ null, %bb.g ], [ null, %_ZN5boost5beast4http6detail8skip_owsIPKcEEvRT_S6_.exit.i.i.i38 ] ; 4 uses
-  %.sroa.13.0 = phi i64 [ %i.af, %.preheader.i.i.i41._crit_edge ], [ 0, %bb.e ], [ 0, %bb.g ], [ 0, %_ZN5boost5beast4http6detail8skip_owsIPKcEEvRT_S6_.exit.i.i.i38 ] ; 14 uses
-  %.sroa.26.0 = phi i1 [ %i.ag, %.preheader.i.i.i41._crit_edge ], [ false, %bb.e ], [ false, %bb.g ], [ false, %_ZN5boost5beast4http6detail8skip_owsIPKcEEvRT_S6_.exit.i.i.i38 ]
-  %.sroa.20.0 = phi ptr [ %.lcssa342, %.preheader.i.i.i41._crit_edge ], [ %i.b, %bb.e ], [ %i.b, %bb.g ], [ %i.b, %_ZN5boost5beast4http6detail8skip_owsIPKcEEvRT_S6_.exit.i.i.i38 ] ; 2 uses
+_ZNK5boost5beast4http10token_list5beginEv.exit46: ; preds = %bb.g, %_ZN5boost5beast4http6detail8skip_owsIPKcEEvRT_S6_.exit.i.i.i38, %bb.e, %.preheader.i.i.i41._crit_edge
+  %.sroa.0192.0 = phi ptr [ %i.l, %.preheader.i.i.i41._crit_edge ], [ null, %bb.e ], [ null, %_ZN5boost5beast4http6detail8skip_owsIPKcEEvRT_S6_.exit.i.i.i38 ], [ null, %bb.g ] ; 4 uses
+  %.sroa.13.0 = phi i64 [ %i.af, %.preheader.i.i.i41._crit_edge ], [ 0, %bb.e ], [ 0, %_ZN5boost5beast4http6detail8skip_owsIPKcEEvRT_S6_.exit.i.i.i38 ], [ 0, %bb.g ] ; 14 uses
+  %.sroa.26.0 = phi i1 [ %i.ag, %.preheader.i.i.i41._crit_edge ], [ false, %bb.e ], [ false, %_ZN5boost5beast4http6detail8skip_owsIPKcEEvRT_S6_.exit.i.i.i38 ], [ false, %bb.g ]
+  %.sroa.20.0 = phi ptr [ %.lcssa342, %.preheader.i.i.i41._crit_edge ], [ %i.b, %bb.e ], [ %i.b, %_ZN5boost5beast4http6detail8skip_owsIPKcEEvRT_S6_.exit.i.i.i38 ], [ %i.b, %bb.g ] ; 2 uses
   %i.ai = add i64 %2, %i.a                        ; 4 uses
   br label %bb.h
 
@@ -2096,11 +2076,11 @@ bb.m:                                             ; preds = %bb.l
   %i.bh = getelementptr inbounds nuw i8, ptr %.promoted22.i.i.i, i64 1
   br label %bb.h, !llvm.loop !571
 
-_ZN5boost5beast4http10token_list14const_iteratorppEv.exit.i: ; preds = %bb.l, %_ZN5boost5beast4http6detail8skip_owsIPKcEEvRT_S6_.exit.i.i.i52, %bb.k, %.preheader.i.i.i54._crit_edge
-  %.sroa.6246.0 = phi i64 [ %i.bg, %.preheader.i.i.i54._crit_edge ], [ 0, %bb.k ], [ 0, %_ZN5boost5beast4http6detail8skip_owsIPKcEEvRT_S6_.exit.i.i.i52 ], [ 0, %bb.l ]
-  %.sroa.9247.0 = phi ptr [ %.lcssa341, %.preheader.i.i.i54._crit_edge ], [ %i.b, %bb.k ], [ %i.b, %_ZN5boost5beast4http6detail8skip_owsIPKcEEvRT_S6_.exit.i.i.i52 ], [ %i.b, %bb.l ] ; 2 uses
-  %.sroa.18248.0 = phi ptr [ %.sroa.20.0, %.preheader.i.i.i54._crit_edge ], [ %i.b, %bb.k ], [ %i.b, %_ZN5boost5beast4http6detail8skip_owsIPKcEEvRT_S6_.exit.i.i.i52 ], [ %i.b, %bb.l ] ; 2 uses
-  %.sroa.0245.0 = phi ptr [ %.promoted22.i.i.i, %.preheader.i.i.i54._crit_edge ], [ null, %bb.k ], [ null, %_ZN5boost5beast4http6detail8skip_owsIPKcEEvRT_S6_.exit.i.i.i52 ], [ null, %bb.l ]
+_ZN5boost5beast4http10token_list14const_iteratorppEv.exit.i: ; preds = %_ZN5boost5beast4http6detail8skip_owsIPKcEEvRT_S6_.exit.i.i.i52, %bb.l, %.preheader.i.i.i54._crit_edge, %bb.k
+  %.sroa.6246.0 = phi i64 [ %i.bg, %.preheader.i.i.i54._crit_edge ], [ 0, %bb.k ], [ 0, %bb.l ], [ 0, %_ZN5boost5beast4http6detail8skip_owsIPKcEEvRT_S6_.exit.i.i.i52 ]
+  %.sroa.9247.0 = phi ptr [ %.lcssa341, %.preheader.i.i.i54._crit_edge ], [ %i.b, %bb.k ], [ %i.b, %bb.l ], [ %i.b, %_ZN5boost5beast4http6detail8skip_owsIPKcEEvRT_S6_.exit.i.i.i52 ] ; 2 uses
+  %.sroa.18248.0 = phi ptr [ %.sroa.20.0, %.preheader.i.i.i54._crit_edge ], [ %i.b, %bb.k ], [ %i.b, %bb.l ], [ %i.b, %_ZN5boost5beast4http6detail8skip_owsIPKcEEvRT_S6_.exit.i.i.i52 ] ; 2 uses
+  %.sroa.0245.0 = phi ptr [ %.promoted22.i.i.i, %.preheader.i.i.i54._crit_edge ], [ null, %bb.k ], [ null, %bb.l ], [ null, %_ZN5boost5beast4http6detail8skip_owsIPKcEEvRT_S6_.exit.i.i.i52 ]
   %i.bi = icmp eq ptr %i.b, %.sroa.9247.0
   %i.bj = icmp eq ptr %i.b, %.sroa.18248.0
   %or.cond250 = and i1 %i.bj, %i.bi
@@ -2398,11 +2378,11 @@ bb.ac:                                            ; preds = %bb.ab
   %i.fg = getelementptr inbounds nuw i8, ptr %.promoted22.i.i.i91, i64 1
   br label %bb.x, !llvm.loop !571
 
-_ZN5boost5beast4http10token_list14const_iteratorppEv.exit.i96: ; preds = %bb.ab, %_ZN5boost5beast4http6detail8skip_owsIPKcEEvRT_S6_.exit.i.i.i90, %bb.aa, %.preheader.i.i.i93._crit_edge
-  %.sroa.6243.0 = phi i64 [ %i.ff, %.preheader.i.i.i93._crit_edge ], [ 0, %bb.aa ], [ 0, %_ZN5boost5beast4http6detail8skip_owsIPKcEEvRT_S6_.exit.i.i.i90 ], [ 0, %bb.ab ]
-  %.sroa.9244.0 = phi ptr [ %.lcssa338, %.preheader.i.i.i93._crit_edge ], [ %i.b, %bb.aa ], [ %i.b, %_ZN5boost5beast4http6detail8skip_owsIPKcEEvRT_S6_.exit.i.i.i90 ], [ %i.b, %bb.ab ] ; 2 uses
-  %.sroa.18.0 = phi ptr [ %.sroa.5173.0, %.preheader.i.i.i93._crit_edge ], [ %i.b, %bb.aa ], [ %i.b, %_ZN5boost5beast4http6detail8skip_owsIPKcEEvRT_S6_.exit.i.i.i90 ], [ %i.b, %bb.ab ] ; 2 uses
-  %.sroa.0242.0 = phi ptr [ %.promoted22.i.i.i91, %.preheader.i.i.i93._crit_edge ], [ null, %bb.aa ], [ null, %_ZN5boost5beast4http6detail8skip_owsIPKcEEvRT_S6_.exit.i.i.i90 ], [ null, %bb.ab ]
+_ZN5boost5beast4http10token_list14const_iteratorppEv.exit.i96: ; preds = %_ZN5boost5beast4http6detail8skip_owsIPKcEEvRT_S6_.exit.i.i.i90, %bb.ab, %.preheader.i.i.i93._crit_edge, %bb.aa
+  %.sroa.6243.0 = phi i64 [ %i.ff, %.preheader.i.i.i93._crit_edge ], [ 0, %bb.aa ], [ 0, %bb.ab ], [ 0, %_ZN5boost5beast4http6detail8skip_owsIPKcEEvRT_S6_.exit.i.i.i90 ]
+  %.sroa.9244.0 = phi ptr [ %.lcssa338, %.preheader.i.i.i93._crit_edge ], [ %i.b, %bb.aa ], [ %i.b, %bb.ab ], [ %i.b, %_ZN5boost5beast4http6detail8skip_owsIPKcEEvRT_S6_.exit.i.i.i90 ] ; 2 uses
+  %.sroa.18.0 = phi ptr [ %.sroa.5173.0, %.preheader.i.i.i93._crit_edge ], [ %i.b, %bb.aa ], [ %i.b, %bb.ab ], [ %i.b, %_ZN5boost5beast4http6detail8skip_owsIPKcEEvRT_S6_.exit.i.i.i90 ] ; 2 uses
+  %.sroa.0242.0 = phi ptr [ %.promoted22.i.i.i91, %.preheader.i.i.i93._crit_edge ], [ null, %bb.aa ], [ null, %bb.ab ], [ null, %_ZN5boost5beast4http6detail8skip_owsIPKcEEvRT_S6_.exit.i.i.i90 ]
   %i.fh = icmp eq ptr %i.b, %.sroa.9244.0
   %i.fi = icmp eq ptr %i.b, %.sroa.18.0
   %or.cond251 = and i1 %i.fi, %i.fh

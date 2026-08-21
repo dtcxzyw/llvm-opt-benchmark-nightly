@@ -204,7 +204,7 @@ bb.t:                                             ; preds = %bb.s, %.split.i
   br label %array_bitmap_copy.exit.i
 
 array_bitmap_copy.exit.i:                         ; preds = %.lr.ph94.i.i, %.lr.ph.preheader.i.i
-  %.145.i.sink.i = phi i32 [ %i.fl, %.lr.ph94.i.i ], [ %.145.i.i, %.lr.ph.preheader.i.i ]
+  %.145.i.sink.i = phi i32 [ %.145.i.i, %.lr.ph.preheader.i.i ], [ %i.fl, %.lr.ph94.i.i ]
   %i.fm = trunc nuw i32 %.145.i.sink.i to i8
   store i8 %i.fm, ptr %i.ev, align 1
   %i.fn = getelementptr inbounds i8, ptr %.061.i, i64 %i.es
@@ -607,7 +607,7 @@ bb.ck:                                            ; preds = %bb.cj
   br label %array_bitmap_copy.exit221.sink.split.i
 
 array_bitmap_copy.exit221.sink.split.i:           ; preds = %.lr.ph94.i210.i, %.lr.ph.preheader.i185.i
-  %.145.i195.sink.i = phi i32 [ %i.qo, %.lr.ph94.i210.i ], [ %.145.i195.i, %.lr.ph.preheader.i185.i ]
+  %.145.i195.sink.i = phi i32 [ %.145.i195.i, %.lr.ph.preheader.i185.i ], [ %i.qo, %.lr.ph94.i210.i ]
   %i.qp = trunc nuw i32 %.145.i195.sink.i to i8
   store i8 %i.qp, ptr %i.py, align 1
   br label %array_bitmap_copy.exit221.i

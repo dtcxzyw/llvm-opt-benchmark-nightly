@@ -201,13 +201,13 @@ bb.b:                                             ; preds = %.lr.ph514.a, %._cri
   br i1 %.not224700, label %.preheader402, label %.lr.ph704
 
 .lr.ph704:                                        ; preds = %.preheader403.preheader, %.critedge3
-  %i.z = phi i64 [ %i.dh, %.critedge3 ], [ %i.w, %.preheader403.preheader ] ; 4 uses
+  %i.z = phi i64 [ %i.dh, %.critedge3 ], [ %i.w, %.preheader403.preheader ] ; 6 uses
   %i.aa = phi i64 [ %i.df, %.critedge3 ], [ %i.u, %.preheader403.preheader ] ; 2 uses
-  %spec.select703 = phi i64 [ %spec.select, %.critedge3 ], [ %spec.select699, %.preheader403.preheader ] ; 4 uses
+  %spec.select703 = phi i64 [ %spec.select, %.critedge3 ], [ %spec.select699, %.preheader403.preheader ] ; 6 uses
   %i.ab = phi i64 [ %i.dd, %.critedge3 ], [ %i.s, %.preheader403.preheader ]
   %i.ac = phi i64 [ %i.db, %.critedge3 ], [ %i.q, %.preheader403.preheader ] ; 2 uses
   %.0169702 = phi ptr [ %.1170459, %.critedge3 ], [ %storemerge511, %.preheader403.preheader ] ; 2 uses
-  %.1170.lcssa410470701 = phi ptr [ %.1170459, %.critedge3 ], [ %i.o, %.preheader403.preheader ] ; 7 uses
+  %.1170.lcssa410470701 = phi ptr [ %.1170459, %.critedge3 ], [ %i.o, %.preheader403.preheader ] ; 9 uses
   %i.ad = load i64, ptr %i.h, align 8, !tbaa !30  ; 2 uses
   %.not225 = icmp slt i64 %i.ac, %i.ad
   br i1 %.not225, label %bb.f, label %.preheader
@@ -234,6 +234,10 @@ bb.c:                                             ; preds = %.lr.ph
   %i.al = icmp sgt i64 %i.ak, 0
   br i1 %i.al, label %bb.d, label %is_func_rec.exit.thread
 
+is_func_rec.exit.thread:                          ; preds = %bb.c
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #7
+  br label %bb.e
+
 bb.d:                                             ; preds = %bb.c
   %i.am = load i8, ptr %i.ai, align 1, !tbaa !43  ; 2 uses
   %i.an = zext i8 %i.am to i64
@@ -242,30 +246,23 @@ bb.d:                                             ; preds = %bb.c
   %.fr21.i.i.i = freeze i8 %i.ap
   %i.aq = and i8 %.fr21.i.i.i, 4
   %.not.not.i.i.i = icmp eq i8 %i.aq, 0
-  br i1 %.not.not.i.i.i, label %switch.early.test.i.i.i, label %is_func_rec.exit.thread338
-
-switch.early.test.i.i.i:                          ; preds = %bb.d
-  switch i8 %i.am, label %is_func_rec.exit.thread [
-    i8 95, label %is_func_rec.exit.thread338
-    i8 36, label %is_func_rec.exit.thread338
-  ]
-
-is_func_rec.exit.thread338:                       ; preds = %bb.d, %switch.early.test.i.i.i, %switch.early.test.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #7
-  br label %.preheader402
-
-is_func_rec.exit.thread:                          ; preds = %switch.early.test.i.i.i, %bb.c
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #7
-  br label %bb.e
+  br i1 %.not.not.i.i.i, label %is_func_rec.exit, label %.preheader402
 
 is_func_rec.exit.a:                               ; preds = %.lr.ph
   %i.ar = load ptr, ptr %i.l, align 8, !tbaa !44
   %i.as = call i64 %i.ah(ptr noundef %i.ai, i64 noundef %i.ak, ptr noundef nonnull %i.e, i64 noundef 1, ptr noundef %i.ar) #7, !inline_history !45
-  %5 = icmp slt i64 %i.as, 0
+  %5 = icmp sgt i64 %i.as, -1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #7
-  br i1 %5, label %is_func_rec.exit._crit_edge, label %.preheader402
+  br i1 %5, label %.preheader402, label %is_func_rec.exit._crit_edge
 
-is_func_rec.exit._crit_edge:                      ; preds = %is_func_rec.exit.a
+is_func_rec.exit:                                 ; preds = %bb.d
+  switch i8 %i.am, label %is_func_rec.exit._crit_edge [
+    i8 95, label %.preheader402
+    i8 36, label %.preheader402
+  ]
+
+is_func_rec.exit._crit_edge:                      ; preds = %is_func_rec.exit, %is_func_rec.exit.a
   %.pre = load i64, ptr %i.i, align 8, !tbaa !36
   br label %bb.e
 
@@ -342,13 +339,13 @@ get_func_line.exit.thread:                        ; preds = %.lr.ph.i, %.thread.
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #7
   br label %.critedge
 
-get_func_line.exit:                               ; preds = %match_func_rec.exit.i, %bb.i, %switch.early.test.i.i.i257, %switch.early.test.i.i.i257
+get_func_line.exit:                               ; preds = %match_func_rec.exit.i, %switch.early.test.i.i.i257, %switch.early.test.i.i.i257, %bb.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #7
   %.not659 = icmp eq i64 %.02538.i, 0
   br i1 %.not659, label %.critedge, label %.lr.ph453
 
 .lr.ph453:                                        ; preds = %get_func_line.exit, %bb.n
-  %.0166452 = phi i64 [ %i.br, %bb.n ], [ %.02538.i, %get_func_line.exit ] ; 6 uses
+  %.0166452 = phi i64 [ %i.br, %bb.n ], [ %.02538.i, %get_func_line.exit ] ; 8 uses
   %i.br = add nsw i64 %.0166452, -1               ; 2 uses
   %.val246 = load ptr, ptr %0, align 8, !tbaa !37
   %i.bs = getelementptr inbounds nuw [24 x i8], ptr %.val246, i64 %i.br ; 2 uses
@@ -385,7 +382,11 @@ is_empty_rec.exit:                                ; preds = %bb.j
 
 bb.l:                                             ; preds = %is_empty_rec.exit
   %i.ce = icmp sgt i64 %i.bu, 0
-  br i1 %i.ce, label %bb.m, label %is_func_rec.exit266.thread
+  br i1 %i.ce, label %bb.m, label %is_func_rec.exit268.thread
+
+is_func_rec.exit268.thread:                       ; preds = %bb.l
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #7
+  br label %bb.n
 
 bb.m:                                             ; preds = %bb.l
   %i.cf = load i8, ptr %i.bv, align 1, !tbaa !43  ; 2 uses
@@ -395,36 +396,29 @@ bb.m:                                             ; preds = %bb.l
   %.fr21.i.i.i262 = freeze i8 %i.ci
   %i.cj = and i8 %.fr21.i.i.i262, 4
   %.not.not.i.i.i263 = icmp eq i8 %i.cj, 0
-  br i1 %.not.not.i.i.i263, label %switch.early.test.i.i.i265, label %is_func_rec.exit266.thread351
-
-switch.early.test.i.i.i265:                       ; preds = %bb.m
-  switch i8 %i.cf, label %is_func_rec.exit266.thread [
-    i8 95, label %is_func_rec.exit266.thread351
-    i8 36, label %is_func_rec.exit266.thread351
-  ]
-
-is_func_rec.exit266.thread351:                    ; preds = %bb.m, %switch.early.test.i.i.i265, %switch.early.test.i.i.i265
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #7
-  br label %.critedge
-
-is_func_rec.exit266.thread:                       ; preds = %switch.early.test.i.i.i265, %bb.l
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #7
-  br label %bb.n
+  br i1 %.not.not.i.i.i263, label %is_func_rec.exit268, label %.critedge
 
 is_func_rec.exit266:                              ; preds = %is_empty_rec.exit
   %i.ck = load ptr, ptr %i.l, align 8, !tbaa !44
   %i.cl = call i64 %i.cd(ptr noundef nonnull %i.bv, i64 noundef %i.bu, ptr noundef nonnull %i.c, i64 noundef 1, ptr noundef %i.ck) #7, !inline_history !45
-  %6 = icmp slt i64 %i.cl, 0
+  %6 = icmp sgt i64 %i.cl, -1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #7
-  br i1 %6, label %bb.n, label %.critedge
+  br i1 %6, label %.critedge, label %bb.n
 
-bb.n:                                             ; preds = %is_func_rec.exit266.thread, %is_func_rec.exit266
+is_func_rec.exit268:                              ; preds = %bb.m
+  switch i8 %i.cf, label %bb.n [
+    i8 95, label %.critedge
+    i8 36, label %.critedge
+  ]
+
+bb.n:                                             ; preds = %is_func_rec.exit268, %is_func_rec.exit266, %is_func_rec.exit268.thread
   %i.cm = icmp sgt i64 %.0166452, 1
   br i1 %i.cm, label %.lr.ph453, label %.critedge, !llvm.loop !50
 
-.critedge:                                        ; preds = %is_func_rec.exit266, %bb.n, %.lr.ph453, %bb.k, %get_func_line.exit.thread, %get_func_line.exit, %is_func_rec.exit266.thread351
-  %.0166409 = phi i64 [ -1, %get_func_line.exit.thread ], [ %.0166452, %is_func_rec.exit266.thread351 ], [ %.02538.i, %get_func_line.exit ], [ %.0166452, %bb.k ], [ 0, %bb.n ], [ %.0166452, %is_func_rec.exit266 ], [ %.0166452, %.lr.ph453 ]
-  %spec.store.select = call i64 @llvm.smax.i64(i64 %.0166409, i64 0) ; 5 uses
+.critedge:                                        ; preds = %bb.n, %.lr.ph453, %is_func_rec.exit266, %is_func_rec.exit268, %is_func_rec.exit268, %bb.m, %bb.k, %get_func_line.exit.thread, %get_func_line.exit
+  %.0166415 = phi i64 [ -1, %get_func_line.exit.thread ], [ %.0166452, %bb.k ], [ %.02538.i, %get_func_line.exit ], [ %.0166452, %.lr.ph453 ], [ 0, %bb.n ], [ %.0166452, %is_func_rec.exit268 ], [ %.0166452, %is_func_rec.exit266 ], [ %.0166452, %bb.m ], [ %.0166452, %is_func_rec.exit268 ]
+  %spec.store.select = call i64 @llvm.smax.i64(i64 %.0166415, i64 0) ; 5 uses
   %i.cn = icmp sgt i64 %i.ab, %spec.store.select
   br i1 %i.cn, label %bb.o, label %.preheader402
 
@@ -475,10 +469,10 @@ bb.q:                                             ; preds = %bb.p
   %.not224 = icmp eq i64 %i.dj, 0
   br i1 %.not224, label %.preheader402, label %.lr.ph704
 
-.preheader402:                                    ; preds = %.critedge, %.critedge3, %bb.o, %is_func_rec.exit.a, %bb.q, %.preheader403.preheader, %is_func_rec.exit.thread338
-  %.1170.lcssa410470683 = phi ptr [ %.1170.lcssa410470701, %is_func_rec.exit.a ], [ %.1170.lcssa410470701, %bb.q ], [ %.1170.lcssa410470701, %is_func_rec.exit.thread338 ], [ %i.o, %.preheader403.preheader ], [ %.1170459, %.critedge3 ], [ %.1170.lcssa410470701, %.critedge ], [ %.1170.lcssa410470701, %bb.o ] ; 3 uses
-  %.3194.ph = phi i64 [ %spec.select703, %is_func_rec.exit.a ], [ %spec.store.select, %bb.q ], [ %spec.select703, %is_func_rec.exit.thread338 ], [ %spec.select699, %.preheader403.preheader ], [ %spec.select, %.critedge3 ], [ %spec.select703, %.critedge ], [ %spec.store.select, %bb.o ] ; 4 uses
-  %.3188.ph = phi i64 [ %i.z, %is_func_rec.exit.a ], [ %spec.select240, %bb.q ], [ %i.z, %is_func_rec.exit.thread338 ], [ %i.w, %.preheader403.preheader ], [ %i.dh, %.critedge3 ], [ %i.z, %.critedge ], [ %spec.select240, %bb.o ] ; 4 uses
+.preheader402:                                    ; preds = %.critedge, %.critedge3, %bb.o, %is_func_rec.exit.a, %is_func_rec.exit, %is_func_rec.exit, %bb.d, %bb.q, %.preheader403.preheader
+  %.1170.lcssa416476691 = phi ptr [ %.1170.lcssa410470701, %bb.q ], [ %i.o, %.preheader403.preheader ], [ %.1170.lcssa410470701, %is_func_rec.exit.a ], [ %.1170.lcssa410470701, %bb.d ], [ %.1170.lcssa410470701, %is_func_rec.exit ], [ %.1170.lcssa410470701, %is_func_rec.exit ], [ %.1170459, %.critedge3 ], [ %.1170.lcssa410470701, %.critedge ], [ %.1170.lcssa410470701, %bb.o ] ; 3 uses
+  %.3194.ph = phi i64 [ %spec.store.select, %bb.q ], [ %spec.select699, %.preheader403.preheader ], [ %spec.select703, %is_func_rec.exit.a ], [ %spec.select703, %bb.d ], [ %spec.select703, %is_func_rec.exit ], [ %spec.select703, %is_func_rec.exit ], [ %spec.select, %.critedge3 ], [ %spec.select703, %.critedge ], [ %spec.store.select, %bb.o ] ; 4 uses
+  %.3188.ph = phi i64 [ %spec.select240, %bb.q ], [ %i.w, %.preheader403.preheader ], [ %i.z, %is_func_rec.exit.a ], [ %i.z, %bb.d ], [ %i.z, %is_func_rec.exit ], [ %i.z, %is_func_rec.exit ], [ %i.dh, %.critedge3 ], [ %i.z, %.critedge ], [ %spec.select240, %bb.o ] ; 4 uses
   br label %bb.r
 
 bb.r:                                             ; preds = %.preheader402, %bb.ah
@@ -569,7 +563,7 @@ match_func_rec.exit.i272:                         ; preds = %bb.t
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #7
   br label %bb.z
 
-get_func_line.exit283:                            ; preds = %match_func_rec.exit.i272, %bb.v, %switch.early.test.i.i.i282, %switch.early.test.i.i.i282
+get_func_line.exit283:                            ; preds = %match_func_rec.exit.i272, %switch.early.test.i.i.i282, %switch.early.test.i.i.i282, %bb.v
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #7
   %i.fb = icmp sgt i64 %.02538.i269, 0
   br i1 %i.fb, label %.lr.ph472, label %.critedge5
@@ -716,7 +710,7 @@ bb.ah:                                            ; preds = %get_func_line.exit3
   %i.gz = load ptr, ptr %.0176, align 8, !tbaa !21
   br label %bb.r
 
-.thread378.sink.split:                            ; preds = %match_func_rec.exit.i299, %bb.ag, %switch.early.test.i.i.i310, %switch.early.test.i.i.i310
+.thread378.sink.split:                            ; preds = %match_func_rec.exit.i299, %switch.early.test.i.i.i310, %switch.early.test.i.i.i310, %bb.ag
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
   br label %.thread378
 
@@ -837,7 +831,7 @@ bb.ap:                                            ; preds = %get_func_line.exit3
   br i1 %i.it, label %.thread384, label %bb.aq
 
 bb.aq:                                            ; preds = %bb.ap, %get_func_line.exit331
-  %i.iu = getelementptr inbounds nuw i8, ptr %.1170.lcssa410470683, i64 16 ; 2 uses
+  %i.iu = getelementptr inbounds nuw i8, ptr %.1170.lcssa416476691, i64 16 ; 2 uses
   %i.iv = load i64, ptr %i.iu, align 8, !tbaa !28 ; 2 uses
   %i.iw = icmp slt i64 %.3188.ph, %i.iv
   br i1 %i.iw, label %.lr.ph477, label %._crit_edge478
@@ -861,13 +855,13 @@ bb.ar:                                            ; preds = %.lr.ph477
 
 ._crit_edge478:                                   ; preds = %bb.ar, %bb.aq
   %.lcssa436 = phi i64 [ %i.iv, %bb.aq ], [ %i.iy, %bb.ar ]
-  %i.jg = getelementptr inbounds nuw i8, ptr %.1170.lcssa410470683, i64 8
+  %i.jg = getelementptr inbounds nuw i8, ptr %.1170.lcssa416476691, i64 8
   %i.jh = load i64, ptr %i.jg, align 8, !tbaa !22 ; 2 uses
   br label %bb.as
 
 bb.as:                                            ; preds = %bb.ax, %._crit_edge478
   %i.ji = phi i64 [ %i.jh, %._crit_edge478 ], [ %.pre554, %bb.ax ] ; 3 uses
-  %i.jj = phi ptr [ %.1170.lcssa410470683, %._crit_edge478 ], [ %.pre553, %bb.ax ] ; 7 uses
+  %i.jj = phi ptr [ %.1170.lcssa416476691, %._crit_edge478 ], [ %.pre553, %bb.ax ] ; 7 uses
   %.4195 = phi i64 [ %i.jh, %._crit_edge478 ], [ %i.lk, %bb.ax ] ; 2 uses
   %.5190 = phi i64 [ %.lcssa436, %._crit_edge478 ], [ %.lcssa448, %bb.ax ] ; 2 uses
   %i.jk = getelementptr inbounds nuw i8, ptr %i.jj, i64 8 ; 3 uses

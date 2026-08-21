@@ -204,15 +204,15 @@ bb.kc:                                            ; preds = %bb.ka
   %.not.i.i465 = phi i1 [ false, %bb.jz ], [ true, %.backedge.backedge ]
   %.sroa.0885.0 = phi ptr [ %i.ew, %bb.jz ], [ %i.alr, %.backedge.backedge ] ; 3 uses
   %.not.i.i.i467 = icmp eq ptr %.sroa.0885.0, null ; 2 uses
-  br i1 %.not.i.i465, label %bb.kd, label %.preheader.preheader, !prof !7426
+  br i1 %.not.i.i465, label %.preheader.preheader, label %bb.kd, !prof !7426
 
 .preheader.preheader:                             ; preds = %.backedge
-  br i1 %.not.i.i.i467, label %.loopexit, label %bb.ke
-
-bb.kd:                                            ; preds = %.backedge
   br i1 %.not.i.i.i467, label %.loopexit, label %bb.ki
 
-bb.ke:                                            ; preds = %.preheader.preheader
+bb.kd:                                            ; preds = %.backedge
+  br i1 %.not.i.i.i467, label %.loopexit, label %bb.ke
+
+bb.ke:                                            ; preds = %bb.kd
   %i.alj = getelementptr inbounds nuw i8, ptr %.sroa.0885.0, i64 128
   %i.alk = load ptr, ptr %i.alj, align 8, !noalias !11321, !align !349, !noundef !4 ; 2 uses
   %.not.i.i.i.i466 = icmp eq ptr %i.alk, null
@@ -260,8 +260,8 @@ bb.kh:                                            ; preds = %.body501
           cleanup
   br label %.body501
 
-bb.ki:                                            ; preds = %bb.ke, %bb.kd
-  %.lcssa.sink.i.i = phi ptr [ %.sroa.0885.0, %bb.kd ], [ %i.alk, %bb.ke ] ; 4 uses
+bb.ki:                                            ; preds = %bb.ke, %.preheader.preheader
+  %.lcssa.sink.i.i = phi ptr [ %.sroa.0885.0, %.preheader.preheader ], [ %i.alk, %bb.ke ] ; 4 uses
   %i.alq = getelementptr inbounds nuw i8, ptr %.lcssa.sink.i.i, i64 128
   %i.alr = load ptr, ptr %i.alq, align 8, !noalias !11348, !align !349, !noundef !4
   %i.als = add i64 %.sroa.12.0984, 1
@@ -284,7 +284,7 @@ bb.kj:                                            ; preds = %.noexc475
   %i.aly = invoke noundef zeroext i1 @_RNvMNtCshzWfHUSfYae_4core5sliceSh9ends_withCs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.alu, i64 noundef %i.alw, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.ak, i64 noundef 1)
           to label %_RNvNtNtCs6u1mgJOKDyY_13rust_analyzer11diagnostics17flycheck_to_proto19is_dummy_macro_file.exit unwind label %.loopexit1159
 
-.loopexit:                                        ; preds = %bb.kd, %bb.ke, %.preheader.preheader
+.loopexit:                                        ; preds = %.preheader.preheader, %bb.ke, %bb.kd
   call void @llvm.lifetime.start.p0(ptr nonnull %i.dx)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.dw)
   call void @llvm.experimental.noalias.scope.decl(metadata !11352)
