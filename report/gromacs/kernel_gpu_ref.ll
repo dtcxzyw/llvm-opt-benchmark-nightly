@@ -39,7 +39,7 @@ define void @_ZN3gmx20nbnxn_kernel_gpu_refEPKNS_16NbnxnPairlistGpuEPKNS_16nbnxn_
 bb.a:
   %i.a = alloca [2 x ptr], align 16               ; 6 uses
   %11 = alloca %"class.std::filesystem::__cxx11::path", align 8 ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #13
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 5 uses
   %i.c = load i32, ptr %i.b, align 8, !tbaa !9
   %.not = icmp eq i32 %i.c, 8
@@ -60,7 +60,7 @@ bb.d:                                             ; preds = %bb.b
           cleanup
   call void @_ZNSt10filesystem7__cxx114pathD2Ev(ptr noundef nonnull align 8 dead_on_return(40) dereferenceable(40) %11) #13
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #13
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #13
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   resume { ptr, i32 } %i.e
 
 bb.e:                                             ; preds = %bb.a
@@ -463,10 +463,10 @@ bb.s:                                             ; preds = %bb.q, %bb.af
   br i1 %or.cond374, label %bb.t, label %bb.af
 
 bb.t:                                             ; preds = %bb.s
-  %12 = lshr i64 %indvars.iv, 2
-  %i.ty = and i64 %12, 1073741823
-  %13 = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %i.ty
-  %i.tz = load ptr, ptr %13, align 8, !tbaa !148
+  %12 = shl nuw i64 %indvars.iv, 1
+  %i.ty = and i64 %12, 8589934584
+  %.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.ty
+  %i.tz = load ptr, ptr %.0..sroa_idx, align 8, !tbaa !148
   %i.ua = shl i64 %indvars.iv, 3
   %i.ub = and i64 %i.ua, 24
   %i.uc = or i64 %i.ub, %indvars.iv467.masked
@@ -724,7 +724,7 @@ bb.ak:                                            ; preds = %._crit_edge458
   br label %bb.al
 
 bb.al:                                            ; preds = %bb.ak, %._crit_edge458
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #13
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret void
 }
 

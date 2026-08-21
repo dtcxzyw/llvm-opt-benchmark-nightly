@@ -205,15 +205,15 @@ define hidden void @_RNvXs0_NtNtCsk4ZPsEfLtLH_6brotli3enc19context_map_entropyIN
 bb.a:
   %i.a = alloca [32 x i8], align 2                ; 4 uses
   %i.b = alloca [32 x i8], align 2                ; 4 uses
-  %6 = alloca [8 x i8], align 8                   ; 2 uses
-  store i64 %1, ptr %6, align 8
+  %.sroa.0 = alloca i64, align 8                  ; 2 uses
+  store i64 %1, ptr %.sroa.0, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 913, !dbg !37726
   %i.d = load i8, ptr %i.c, align 1, !dbg !37726, !noundef !14
   %i.e = zext i8 %i.d to i64, !dbg !37726
   %i.f = sub i64 %2, %i.e, !dbg !37727
   %i.g = and i64 %i.f, 7, !dbg !37731
-  %i.h = getelementptr inbounds nuw i8, ptr %6, i64 %i.g, !dbg !37732
-  %i.i = load i8, ptr %i.h, align 1, !dbg !37732, !noundef !14 ; 2 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %i.g, !dbg !37732
+  %i.i = load i8, ptr %i.h, align 1, !dbg !37732  ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !37733), !dbg !37736
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !dbg !37737
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !dbg !37737
@@ -616,38 +616,38 @@ define hidden void @_RNvXs3_NtNtCsk4ZPsEfLtLH_6brotli3enc11stride_evalINtB5_10St
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 41 uses
   %i.b = alloca [16 x i8], align 8                ; 41 uses
-  %6 = alloca [8 x i8], align 8                   ; 9 uses
-  store i64 %1, ptr %6, align 8
+  %.sroa.0 = alloca i64, align 8                  ; 9 uses
+  store i64 %1, ptr %.sroa.0, align 8
   %i.c = and i64 %2, 7, !dbg !38872               ; 2 uses
-  %i.d = getelementptr inbounds nuw i8, ptr %6, i64 %i.c, !dbg !38873
-  %i.e = load i8, ptr %i.d, align 1, !dbg !38873, !noundef !14 ; 2 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %i.c, !dbg !38873
+  %i.e = load i8, ptr %i.d, align 1, !dbg !38873  ; 2 uses
   %i.f = add i64 %2, 7, !dbg !38874
   %i.g = and i64 %i.f, 7, !dbg !38877
-  %i.h = getelementptr inbounds nuw i8, ptr %6, i64 %i.g, !dbg !38878
-  %i.i = load i8, ptr %i.h, align 1, !dbg !38878, !noundef !14 ; 2 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %i.g, !dbg !38878
+  %i.i = load i8, ptr %i.h, align 1, !dbg !38878  ; 2 uses
   %i.j = add i64 %2, 6, !dbg !38879
   %i.k = and i64 %i.j, 7, !dbg !38881
-  %i.l = getelementptr inbounds nuw i8, ptr %6, i64 %i.k, !dbg !38882
-  %i.m = load i8, ptr %i.l, align 1, !dbg !38882, !noundef !14 ; 2 uses
+  %i.l = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %i.k, !dbg !38882
+  %i.m = load i8, ptr %i.l, align 1, !dbg !38882  ; 2 uses
   %i.n = add i64 %2, 5, !dbg !38883
   %i.o = and i64 %i.n, 7, !dbg !38885
-  %i.p = getelementptr inbounds nuw i8, ptr %6, i64 %i.o, !dbg !38886
-  %i.q = load i8, ptr %i.p, align 1, !dbg !38886, !noundef !14 ; 2 uses
+  %i.p = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %i.o, !dbg !38886
+  %i.q = load i8, ptr %i.p, align 1, !dbg !38886  ; 2 uses
   %i.r = xor i64 %i.c, 4, !dbg !38887
-  %i.s = getelementptr inbounds nuw i8, ptr %6, i64 %i.r, !dbg !38888
-  %i.t = load i8, ptr %i.s, align 1, !dbg !38888, !noundef !14 ; 2 uses
+  %i.s = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %i.r, !dbg !38888
+  %i.t = load i8, ptr %i.s, align 1, !dbg !38888  ; 2 uses
   %i.u = add i64 %2, 3, !dbg !38889
   %i.v = and i64 %i.u, 7, !dbg !38891
-  %i.w = getelementptr inbounds nuw i8, ptr %6, i64 %i.v, !dbg !38892
-  %i.x = load i8, ptr %i.w, align 1, !dbg !38892, !noundef !14 ; 2 uses
+  %i.w = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %i.v, !dbg !38892
+  %i.x = load i8, ptr %i.w, align 1, !dbg !38892  ; 2 uses
   %i.y = add i64 %2, 1, !dbg !38893
   %i.z = and i64 %i.y, 7, !dbg !38895
   %i.aa = add i64 %2, 2, !dbg !38896
   %i.ab = and i64 %i.aa, 7, !dbg !38898
-  %i.ac = getelementptr inbounds nuw i8, ptr %6, i64 %i.ab, !dbg !38899
-  %i.ad = load i8, ptr %i.ac, align 1, !dbg !38899, !noundef !14 ; 2 uses
-  %i.ae = getelementptr inbounds nuw i8, ptr %6, i64 %i.z, !dbg !38900
-  %i.af = load i8, ptr %i.ae, align 1, !dbg !38900, !noundef !14 ; 2 uses
+  %i.ac = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %i.ab, !dbg !38899
+  %i.ad = load i8, ptr %i.ac, align 1, !dbg !38899 ; 2 uses
+  %i.ae = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %i.z, !dbg !38900
+  %i.af = load i8, ptr %i.ae, align 1, !dbg !38900 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !38901), !dbg !38904
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.ah = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 8 uses

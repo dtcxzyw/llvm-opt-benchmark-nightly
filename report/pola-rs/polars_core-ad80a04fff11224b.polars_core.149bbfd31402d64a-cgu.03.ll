@@ -204,8 +204,6 @@ bb.b:                                             ; preds = %bb.a
   %i.t = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %5 ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.d, i64 72 ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %i.d, i64 112
-  %.sroa.43.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %.sroa.54.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %i.w = getelementptr inbounds nuw i8, ptr %i.d, i64 56
   %i.x = getelementptr inbounds nuw i8, ptr %i.d, i64 64
   %i.y = getelementptr inbounds nuw i8, ptr %i.d, i64 104
@@ -218,6 +216,8 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.5.0..sroa_idx23.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.f, i64 16
   %.sroa.6.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.f, i64 24
   %.sroa.7.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.f, i64 32
+  %.8..8..8..8..8..8..8..8..8..8..8..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 8
+  %.16..16..16..16..16..16..16..16..16..16..16..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   br label %bb.c, !dbg !361250
 
 bb.c:                                             ; preds = %_RNCINvNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map8map_foldRINtNtCsgZ49sUHp3tW_5alloc5boxed3BoxDNtNtCs8774dFTUdNv_12polars_arrow5array5ArrayEL_ERNtNtB1x_7boolean12BooleanArrayuNCNvMs_NtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops8downcastINtB2Y_12ChunkedArrayNtNtB30_9datatypes11BooleanTypeE13downcast_iter0NCINvNvNtNtNtB8_6traits8iterator8Iterator8for_each4callB2h_NCNvXs2_NtNtB30_7hashing13vector_hasherB3T_NtB65_7VecHash16vec_hash_combine0E0E0B30_.exit.i, %bb.b
@@ -375,10 +375,10 @@ bb.p:                                             ; preds = %_RNvMs_NtNtCs8774dF
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(128) %i.d, ptr noundef nonnull readonly align 8 dereferenceable(72) %i.c, i64 72, i1 false), !dbg !361493, !alias.scope !361496, !noalias !361499
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.v, i8 0, i64 16, i1 false), !dbg !361493, !alias.scope !361501, !noalias !361502
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !dbg !361503, !noalias !361274
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !dbg !361504, !noalias !361274
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !dbg !361504
   store ptr %i.i, ptr %i.b, align 8, !dbg !361507, !noalias !361274
-  store ptr %i.h, ptr %.sroa.43.0..sroa_idx.i.i.i.i, align 8, !dbg !361507, !noalias !361274
-  store ptr %i.g, ptr %.sroa.54.0..sroa_idx.i.i.i.i, align 8, !dbg !361507, !noalias !361274
+  store ptr %i.h, ptr %.8..8..8..8..8..8..8..8..8..8..8..sroa_idx, align 8, !dbg !361507, !noalias !361274
+  store ptr %i.g, ptr %.16..16..16..16..16..16..16..16..16..16..16..sroa_idx, align 8, !dbg !361507, !noalias !361274
   call void @llvm.experimental.noalias.scope.decl(metadata !361511), !dbg !361514
   call void @llvm.experimental.noalias.scope.decl(metadata !361520), !dbg !361514
   %i.ch = load i64, ptr %i.x, align 8, !alias.scope !361522, !noalias !361529, !noundef !11 ; 2 uses
@@ -450,8 +450,8 @@ _RNvMNtCscgRAwXFJnXP_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceEr
   %i.dn = trunc i8 %i.da to i1, !dbg !361629
   %spec.select.idx.i.i.i.i.i.i.i = select i1 %i.dk, i64 0, i64 8, !dbg !361632
   %.sroa.0.0.in.in.v.i.i.i.i.i.i.i = select i1 %i.dn, i64 %spec.select.idx.i.i.i.i.i.i.i, i64 16, !dbg !361632
-  %.sroa.0.0.in.in.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 %.sroa.0.0.in.in.v.i.i.i.i.i.i.i, !dbg !361632
-  %.sroa.0.0.in.i.i.i.i.i.i.i = load ptr, ptr %.sroa.0.0.in.in.i.i.i.i.i.i.i, align 8, !dbg !361634, !alias.scope !361635, !noalias !361636, !nonnull !11, !align !358, !noundef !11
+  %.sroa.0.0.in.in.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 %.sroa.0.0.in.in.v.i.i.i.i.i.i.i, !dbg !361634
+  %.sroa.0.0.in.i.i.i.i.i.i.i = load ptr, ptr %.sroa.0.0.in.in.i.i.i.i.i.i.i, align 8, !dbg !361634, !alias.scope !361635, !noalias !361636
   %.sroa.0.0.i.i.i19.i.i.i.i = load i64, ptr %.sroa.0.0.in.i.i.i.i.i.i.i, align 8, !dbg !361634, !noalias !361639, !noundef !11 ; 2 uses
   %i.do = load i64, ptr %i.db, align 8, !dbg !361640, !noalias !361639, !noundef !11 ; 2 uses
   %i.dp = shl i64 %.sroa.0.0.i.i.i19.i.i.i.i, 6, !dbg !361642
@@ -465,7 +465,7 @@ _RNvMNtCscgRAwXFJnXP_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceEr
   br i1 %exitcond.not.i.i.i.i.i, label %_RINvXsi_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3zipINtB6_3ZipIBO_INtNtB8_3map3MapINtNtNtBc_3ops5range5RangejENCNCNvXs2_NtNtCs1LHh8CLbVkQ_11polars_core7hashing13vector_hasherINtNtB1X_13chunked_array12ChunkedArrayNtNtB1X_9datatypes11BooleanTypeENtB1T_7VecHash16vec_hash_combine0s_0EINtNtNtBc_5slice4iter7IterMutyEENtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iterator10BitmapIterENtB6_8SpecFold9spec_folduNCINvNvNtNtNtBa_6traits8iterator8Iterator8for_each4callTTbQyEbENCB1L_s0_0E0EB1X_.exit.i.i.i.i, label %_RNvXs_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3zipINtB4_3ZipINtNtB6_3map3MapINtNtNtBa_3ops5range5RangejENCNCNvXs2_NtNtCs1LHh8CLbVkQ_11polars_core7hashing13vector_hasherINtNtB1R_13chunked_array12ChunkedArrayNtNtB1R_9datatypes11BooleanTypeENtB1N_7VecHash16vec_hash_combine0s_0EINtNtNtBa_5slice4iter7IterMutyEENtNtNtB8_6traits8iterator8Iterator4nextB1R_.exit.i.i.i.i.i.i, !dbg !361531
 
 _RINvXsi_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3zipINtB6_3ZipIBO_INtNtB8_3map3MapINtNtNtBc_3ops5range5RangejENCNCNvXs2_NtNtCs1LHh8CLbVkQ_11polars_core7hashing13vector_hasherINtNtB1X_13chunked_array12ChunkedArrayNtNtB1X_9datatypes11BooleanTypeENtB1T_7VecHash16vec_hash_combine0s_0EINtNtNtBc_5slice4iter7IterMutyEENtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iterator10BitmapIterENtB6_8SpecFold9spec_folduNCINvNvNtNtNtBa_6traits8iterator8Iterator8for_each4callTTbQyEbENCB1L_s0_0E0EB1X_.exit.i.i.i.i: ; preds = %._crit_edge.i.i.i.i.i.i.i, %bb.q, %bb.p
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !361655, !noalias !361274
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !361655
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !dbg !361656, !noalias !361274
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !dbg !361657, !noalias !361274
   br label %_RNCINvNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map8map_foldRINtNtCsgZ49sUHp3tW_5alloc5boxed3BoxDNtNtCs8774dFTUdNv_12polars_arrow5array5ArrayEL_ERNtNtB1x_7boolean12BooleanArrayuNCNvMs_NtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops8downcastINtB2Y_12ChunkedArrayNtNtB30_9datatypes11BooleanTypeE13downcast_iter0NCINvNvNtNtNtB8_6traits8iterator8Iterator8for_each4callB2h_NCNvXs2_NtNtB30_7hashing13vector_hasherB3T_NtB65_7VecHash16vec_hash_combine0E0E0B30_.exit.i, !dbg !361658

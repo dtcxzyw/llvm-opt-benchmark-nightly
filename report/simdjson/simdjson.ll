@@ -204,7 +204,7 @@ _ZNK8simdjson7icelake12_GLOBAL__N_16stage116buf_block_readerILm128EE13get_remain
   %i.bn = getelementptr inbounds nuw i8, ptr %1, i64 %.sroa.11.0.lcssa.i
   %i.bo = sub i64 %2, %.sroa.11.0.lcssa.i         ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %i.a, ptr readonly align 1 %i.bn, i64 %i.bo, i1 false)
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #41
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   %.0..0..0..0..0.358.i = load <64 x i8>, ptr %i.a, align 16, !tbaa !9 ; 5 uses
   %.64..64..64..64..64..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 64
   %.64..64..64..64..64.359.i = load <64 x i8>, ptr %.64..64..64..64..64..sroa_idx, align 16, !tbaa !9 ; 5 uses
@@ -275,18 +275,18 @@ _ZN8simdjson7icelake12_GLOBAL__N_16stage113json_minifier4stepILm128EEEvPKhRNS2_1
   %i.dj = tail call <64 x i8> @llvm.x86.avx512.mask.compress.v64i8(<64 x i8> %.0..0..0..0..0.358.i, <64 x i8> zeroinitializer, <64 x i1> %i.di)
   store <64 x i8> %i.dj, ptr %i.b, align 16, !tbaa !9
   %i.dk = tail call range(i64 0, 65) i64 @llvm.ctpop.i64(i64 %i.dh) ; 2 uses
-  %5 = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.dk
   %.not377.i = bitcast <64 x i1> %i.dg to i64
   %i.dl = or i64 %i.dd, %.not377.i                ; 2 uses
   %i.dm = bitcast i64 %i.dl to <64 x i1>
   %i.dn = tail call <64 x i8> @llvm.x86.avx512.mask.compress.v64i8(<64 x i8> %.64..64..64..64..64.359.i, <64 x i8> zeroinitializer, <64 x i1> %i.dm)
-  store <64 x i8> %i.dn, ptr %5, align 1, !tbaa !9
+  %.0..0..0..0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.dk
+  store <64 x i8> %i.dn, ptr %.0..0..0..0..sroa_idx, align 1, !tbaa !9
   %i.do = tail call range(i64 0, 65) i64 @llvm.ctpop.i64(i64 %i.dl)
   %i.dp = add nuw nsw i64 %i.do, %i.dk
   %spec.select.i = tail call i64 @llvm.umin.i64(i64 %i.dp, i64 %i.bo) ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.sroa.41.0.lcssa.i, ptr nonnull align 16 %i.b, i64 %spec.select.i, i1 false)
   %i.dq = getelementptr inbounds nuw i8, ptr %.sroa.41.0.lcssa.i, i64 %spec.select.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #41
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   br label %_ZN8simdjson7icelake12_GLOBAL__N_16stage113json_minifier6minifyILm128EEENS_10error_codeEPKhmPhRm.exit
 
 _ZN8simdjson7icelake12_GLOBAL__N_16stage113json_minifier6minifyILm128EEENS_10error_codeEPKhmPhRm.exit: ; preds = %._crit_edge.i, %_ZN8simdjson7icelake12_GLOBAL__N_16stage113json_minifier4stepILm128EEEvPKhRNS2_16buf_block_readerIXT_EEE.exit.i
