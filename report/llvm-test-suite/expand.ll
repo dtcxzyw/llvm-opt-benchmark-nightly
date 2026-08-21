@@ -202,36 +202,41 @@ bb.h:                                             ; preds = %._crit_edge
 bb.i:                                             ; preds = %.lr.ph103, %bb.o
   %i.ca = phi i32 [ %i.bu, %.lr.ph103 ], [ %i.cq, %bb.o ] ; 2 uses
   %.169101 = phi ptr [ %i.br, %.lr.ph103 ], [ %i.cs, %bb.o ] ; 5 uses
-  %i.cb = load i32, ptr %.169101, align 4, !tbaa !4 ; 2 uses
+  %i.cb = load i32, ptr %.169101, align 4, !tbaa !4 ; 3 uses
   %i.cc = and i32 %i.cb, 8192
   %.not74 = icmp eq i32 %i.cc, 0
   br i1 %.not74, label %bb.o, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %i.cd = and i32 %i.cb, 1023                     ; 2 uses
-  %.not128 = icmp eq i32 %i.cd, 0
+  %4 = and i32 %i.cb, 1023
+  %i.cd = and i32 %i.cb, 1023
+  %5 = zext nneg i32 %i.cd to i64
+  %.not128 = icmp eq i32 %4, 0
   %i.ce = sext i1 %.not128 to i32
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.l, %bb.j
-  %.0 = phi i32 [ %i.cd, %bb.j ], [ %5, %bb.l ]   ; 4 uses
-  %4 = zext nneg i32 %.0 to i64                   ; 2 uses
-  %i.cf = getelementptr inbounds nuw [4 x i8], ptr %.169101, i64 %4
+  %indvars.iv117 = phi i64 [ %indvars.iv.next118, %bb.l ], [ %5, %bb.j ] ; 5 uses
+  %i.cf = getelementptr inbounds nuw [4 x i8], ptr %.169101, i64 %indvars.iv117
   %i.cg = load i32, ptr %i.cf, align 4, !tbaa !4
-  %i.ch = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %4
+  %i.ch = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %indvars.iv117
   %i.ci = load i32, ptr %i.ch, align 4, !tbaa !4
   %i.cj = xor i32 %i.ci, -1
   %i.ck = and i32 %i.cg, %i.cj
   %.not75 = icmp eq i32 %i.ck, 0
-  br i1 %.not75, label %bb.l, label %bb.m
+  br i1 %.not75, label %bb.l, label %.split.loop.exit
 
 bb.l:                                             ; preds = %bb.k
-  %5 = add nsw i32 %.0, -1
-  %i.cl = icmp sgt i32 %.0, 1
+  %indvars.iv.next118 = add nsw i64 %indvars.iv117, -1
+  %i.cl = icmp sgt i64 %indvars.iv117, 1
   br i1 %i.cl, label %bb.k, label %bb.m
 
-bb.m:                                             ; preds = %bb.k, %bb.l
-  %.1 = phi i32 [ %.0, %bb.k ], [ %i.ce, %bb.l ]
+.split.loop.exit:                                 ; preds = %bb.k
+  %6 = trunc nuw nsw i64 %indvars.iv117 to i32
+  br label %bb.m
+
+bb.m:                                             ; preds = %bb.l, %.split.loop.exit
+  %.1 = phi i32 [ %6, %.split.loop.exit ], [ %i.ce, %bb.l ]
   %.not76 = icmp eq i32 %.1, 0
   br i1 %.not76, label %bb.o, label %bb.n
 

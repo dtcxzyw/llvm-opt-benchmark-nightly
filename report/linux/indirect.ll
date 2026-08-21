@@ -203,24 +203,31 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
   store i32 0, ptr %4, align 4
   %i.b = icmp sgt i32 %1, 1
-  br i1 %i.b, label %.lr.ph, label %.critedge
+  br i1 %i.b, label %.lr.ph.preheader, label %.critedge
 
-.lr.ph:                                           ; preds = %bb.a, %bb.b
-  %.054 = phi i32 [ %6, %bb.b ], [ %1, %bb.a ]    ; 4 uses
-  %5 = zext nneg i32 %.054 to i64
-  %i.c = getelementptr [4 x i8], ptr %2, i64 %5
+.lr.ph.preheader:                                 ; preds = %bb.a
+  %5 = zext nneg i32 %1 to i64
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.b
+  %indvars.iv = phi i64 [ %5, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.b ] ; 4 uses
+  %i.c = getelementptr [4 x i8], ptr %2, i64 %indvars.iv
   %i.d = getelementptr i8, ptr %i.c, i64 -4
   %i.e = load i32, ptr %i.d, align 4
   %.not = icmp eq i32 %i.e, 0
-  br i1 %.not, label %bb.b, label %.critedge
+  br i1 %.not, label %bb.b, label %.critedge.loopexit.split.loop.exit75
 
 bb.b:                                             ; preds = %.lr.ph
-  %6 = add nsw i32 %.054, -1
-  %i.f = icmp sgt i32 %.054, 2
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
+  %i.f = icmp sgt i64 %indvars.iv, 2
   br i1 %i.f, label %.lr.ph, label %.critedge, !llvm.loop !55
 
-.critedge:                                        ; preds = %.lr.ph, %bb.b, %bb.a
-  %.0.lcssa = phi i32 [ %1, %bb.a ], [ 1, %bb.b ], [ %.054, %.lr.ph ] ; 2 uses
+.critedge.loopexit.split.loop.exit75:             ; preds = %.lr.ph
+  %6 = trunc nuw nsw i64 %indvars.iv to i32
+  br label %.critedge
+
+.critedge:                                        ; preds = %bb.b, %.critedge.loopexit.split.loop.exit75, %bb.a
+  %.0.lcssa = phi i32 [ %1, %bb.a ], [ %6, %.critedge.loopexit.split.loop.exit75 ], [ 1, %bb.b ] ; 2 uses
   %i.g = call fastcc ptr @ext4_get_branch(ptr noundef %0, i32 noundef %.0.lcssa, ptr noundef %2, ptr noundef %3, ptr noundef nonnull %i.a) #12, !srcloc !56 ; 2 uses
   %.not38 = icmp eq ptr %i.g, null
   %i.h = sext i32 %.0.lcssa to i64

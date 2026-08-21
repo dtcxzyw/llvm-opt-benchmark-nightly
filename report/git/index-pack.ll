@@ -204,12 +204,15 @@ bb.d:                                             ; preds = %st_mult.exit, %bb.c
 
 bb.e:                                             ; preds = %.critedge
   %i.af = icmp sgt i32 %.042.lcssa, 0
-  br i1 %i.af, label %.lr.ph71, label %._crit_edge
+  br i1 %i.af, label %.lr.ph71.preheader, label %._crit_edge
 
-.lr.ph71:                                         ; preds = %bb.e, %bb.g
-  %.14370 = phi i32 [ %2, %bb.g ], [ %.042.lcssa, %bb.e ] ; 3 uses
-  %1 = zext nneg i32 %.14370 to i64
-  %i.ag = getelementptr [8 x i8], ptr %.044.lcssa, i64 %1
+.lr.ph71.preheader:                               ; preds = %bb.e
+  %1 = zext nneg i32 %.042.lcssa to i64
+  br label %.lr.ph71
+
+.lr.ph71:                                         ; preds = %.lr.ph71.preheader, %bb.g
+  %indvars.iv77 = phi i64 [ %1, %.lr.ph71.preheader ], [ %indvars.iv.next78, %bb.g ] ; 3 uses
+  %i.ag = getelementptr [8 x i8], ptr %.044.lcssa, i64 %indvars.iv77
   %i.ah = getelementptr i8, ptr %i.ag, i64 -8
   %i.ai = load ptr, ptr %i.ah, align 8, !tbaa !240 ; 7 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ai, i64 8
@@ -244,8 +247,8 @@ bb.g:                                             ; preds = %.lr.ph71
   %i.bc = add i64 %i.bb, %i.ba
   store i64 %i.bc, ptr @base_cache_used, align 8, !tbaa !31
   tail call fastcc void @prune_base_data(ptr noundef nonnull %i.ai)
-  %2 = add nsw i32 %.14370, -1
-  %i.bd = icmp sgt i32 %.14370, 1
+  %indvars.iv.next78 = add nsw i64 %indvars.iv77, -1
+  %i.bd = icmp sgt i64 %indvars.iv77, 1
   br i1 %i.bd, label %.lr.ph71, label %._crit_edge, !llvm.loop !242
 
 ._crit_edge:                                      ; preds = %bb.g, %.thread, %bb.e
@@ -459,47 +462,52 @@ bb.l:                                             ; preds = %compare_ofs_delta_b
   br label %find_ofs_delta.exit.i
 
 find_ofs_delta.exit.i:                            ; preds = %compare_ofs_delta_bases.exit.i.i, %._crit_edge.loopexit.i.i25
-  %.2.i.i26 = phi i32 [ %i.ch, %._crit_edge.loopexit.i.i25 ], [ %i.br, %compare_ofs_delta_bases.exit.i.i ] ; 7 uses
+  %.2.i.i26 = phi i32 [ %i.ch, %._crit_edge.loopexit.i.i25 ], [ %i.br, %compare_ofs_delta_bases.exit.i.i ] ; 4 uses
   %i.ci = add nsw i32 %i.bl, -1                   ; 3 uses
   %i.cj = icmp slt i32 %.2.i.i26, 0
   br i1 %i.cj, label %find_ofs_delta_children.exit, label %.preheader.i27
 
 .preheader.i27:                                   ; preds = %find_ofs_delta.exit.i
   %.not.i28 = icmp eq i32 %.2.i.i26, 0
-  br i1 %.not.i28, label %.critedge.i30, label %.lr.ph.i29.a
+  br i1 %.not.i28, label %.critedge.i30, label %.lr.ph.i29
 
-.lr.ph.i29.a:                                     ; preds = %.preheader.i27, %bb.m
-  %.01924.i = phi i32 [ %3, %bb.m ], [ %.2.i.i26, %.preheader.i27 ] ; 4 uses
-  %2 = zext nneg i32 %.01924.i to i64
-  %i.ck = getelementptr [16 x i8], ptr %i.bn, i64 %2
+.lr.ph.i29:                                       ; preds = %.preheader.i27
+  %2 = zext nneg i32 %.2.i.i26 to i64             ; 3 uses
+  br label %.lr.ph.i29.a
+
+.lr.ph.i29.a:                                     ; preds = %bb.m, %.lr.ph.i29
+  %indvars.iv.i30 = phi i64 [ %2, %.lr.ph.i29 ], [ %indvars.iv.next.i35, %bb.m ] ; 4 uses
+  %i.ck = getelementptr [16 x i8], ptr %i.bn, i64 %indvars.iv.i30
   %i.cl = getelementptr i8, ptr %i.ck, i64 -16
   %i.cm = load i64, ptr %i.cl, align 8, !tbaa !221
   %i.cn = icmp eq i64 %i.cm, %i.bk
-  br i1 %i.cn, label %bb.m, label %.critedge.i30
+  br i1 %i.cn, label %bb.m, label %.critedge.loopexit.split.loop.exit35.i
 
 bb.m:                                             ; preds = %.lr.ph.i29.a
-  %3 = add nsw i32 %.01924.i, -1
-  %i.co = icmp sgt i32 %.01924.i, 1
+  %indvars.iv.next.i35 = add nsw i64 %indvars.iv.i30, -1
+  %i.co = icmp sgt i64 %indvars.iv.i30, 1
   br i1 %i.co, label %.lr.ph.i29.a, label %.critedge.i30, !llvm.loop !245
 
-.critedge.i30:                                    ; preds = %bb.m, %.lr.ph.i29.a, %.preheader.i27
-  %.019.lcssa.i31 = phi i32 [ 0, %.preheader.i27 ], [ %.01924.i, %.lr.ph.i29.a ], [ 0, %bb.m ] ; 3 uses
-  %smax.i32 = tail call i32 @llvm.smax.i32(i32 %.2.i.i26, i32 %i.ci) ; 2 uses
-  %i.cp = icmp sgt i32 %i.ci, %.2.i.i26
-  br i1 %i.cp, label %.lr.ph60, label %find_ofs_delta_children.exit
+.critedge.loopexit.split.loop.exit35.i:           ; preds = %.lr.ph.i29.a
+  %3 = trunc nuw nsw i64 %indvars.iv.i30 to i32
+  br label %.critedge.i30
 
-.lr.ph60:                                         ; preds = %.critedge.i30
-  %4 = zext nneg i32 %.2.i.i26 to i64
-  br label %bb.o
+.critedge.i30:                                    ; preds = %bb.m, %.critedge.loopexit.split.loop.exit35.i, %.preheader.i27
+  %.pre-phi.i32 = phi i64 [ 0, %.preheader.i27 ], [ %2, %.critedge.loopexit.split.loop.exit35.i ], [ %2, %bb.m ] ; 2 uses
+  %.019.lcssa.i31 = phi i32 [ 0, %.preheader.i27 ], [ %3, %.critedge.loopexit.split.loop.exit35.i ], [ 0, %bb.m ] ; 3 uses
+  %smax.i32 = tail call i32 @llvm.smax.i32(i32 %.2.i.i26, i32 %i.ci) ; 2 uses
+  %4 = trunc nuw nsw i64 %.pre-phi.i32 to i32     ; 2 uses
+  %i.cp = icmp sgt i32 %i.ci, %4
+  br i1 %i.cp, label %bb.o, label %find_ofs_delta_children.exit
 
 bb.n:                                             ; preds = %bb.o
   %i.cq = trunc nuw i64 %indvars.iv.next.i34 to i32 ; 2 uses
   %i.cr = icmp sgt i32 %i.ci, %i.cq
   br i1 %i.cr, label %bb.o, label %find_ofs_delta_children.exit, !llvm.loop !246
 
-bb.o:                                             ; preds = %.lr.ph60, %bb.n
-  %i.cs = phi i32 [ %.2.i.i26, %.lr.ph60 ], [ %i.cq, %bb.n ]
-  %indvars.iv.i3359 = phi i64 [ %4, %.lr.ph60 ], [ %indvars.iv.next.i34, %bb.n ]
+bb.o:                                             ; preds = %.critedge.i30, %bb.n
+  %i.cs = phi i32 [ %i.cq, %bb.n ], [ %4, %.critedge.i30 ]
+  %indvars.iv.i3359 = phi i64 [ %indvars.iv.next.i34, %bb.n ], [ %.pre-phi.i32, %.critedge.i30 ]
   %indvars.iv.next.i34 = add nuw nsw i64 %indvars.iv.i3359, 1 ; 3 uses
   %i.ct = getelementptr inbounds nuw [16 x i8], ptr %i.bn, i64 %indvars.iv.next.i34
   %i.cu = load i64, ptr %i.ct, align 8, !tbaa !221

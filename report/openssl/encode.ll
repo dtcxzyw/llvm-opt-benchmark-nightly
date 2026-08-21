@@ -201,7 +201,7 @@ bb.d:                                             ; preds = %bb.b, %bb.c
 
 .lr.ph:                                           ; preds = %bb.d, %bb.e
   %.083127 = phi i32 [ %i.k, %bb.e ], [ %3, %bb.d ] ; 5 uses
-  %.084126 = phi ptr [ %i.j, %bb.e ], [ %2, %bb.d ] ; 6 uses
+  %.084126 = phi ptr [ %i.j, %bb.e ], [ %2, %bb.d ] ; 5 uses
   %i.e = load i8, ptr %.084126, align 1, !tbaa !13 ; 2 uses
   %.not.i = icmp sgt i8 %i.e, -1
   br i1 %.not.i, label %conv_ascii2bin.exit, label %.critedge
@@ -221,16 +221,19 @@ bb.e:                                             ; preds = %conv_ascii2bin.exit
 
 .critedge:                                        ; preds = %conv_ascii2bin.exit, %.lr.ph
   %i.m = icmp samesign ugt i32 %.083127, 3
-  br i1 %i.m, label %.lr.ph135, label %.critedge3
+  br i1 %i.m, label %.lr.ph135.preheader, label %.critedge3
 
-.lr.ph135:                                        ; preds = %.critedge, %bb.f
-  %.1134 = phi i32 [ %6, %bb.f ], [ %.083127, %.critedge ] ; 5 uses
-  %5 = zext nneg i32 %.1134 to i64
-  %i.n = getelementptr i8, ptr %.084126, i64 %5
+.lr.ph135.preheader:                              ; preds = %.critedge
+  %5 = zext nneg i32 %.083127 to i64
+  br label %.lr.ph135
+
+.lr.ph135:                                        ; preds = %.lr.ph135.preheader, %bb.f
+  %indvars.iv = phi i64 [ %5, %.lr.ph135.preheader ], [ %indvars.iv.next, %bb.f ] ; 4 uses
+  %i.n = getelementptr i8, ptr %.084126, i64 %indvars.iv
   %i.o = getelementptr i8, ptr %i.n, i64 -1
   %i.p = load i8, ptr %i.o, align 1, !tbaa !13    ; 2 uses
   %.not.i94 = icmp sgt i8 %i.p, -1
-  br i1 %.not.i94, label %conv_ascii2bin.exit96, label %.critedge3
+  br i1 %.not.i94, label %conv_ascii2bin.exit96, label %.critedge3.loopexit
 
 conv_ascii2bin.exit96:                            ; preds = %.lr.ph135
   %i.q = zext nneg i8 %i.p to i64
@@ -238,16 +241,20 @@ conv_ascii2bin.exit96:                            ; preds = %.lr.ph135
   %i.s = load i8, ptr %i.r, align 1, !tbaa !13
   %i.t = and i8 %i.s, -20
   %i.u = icmp eq i8 %i.t, -32
-  br i1 %i.u, label %bb.f, label %.critedge3
+  br i1 %i.u, label %bb.f, label %.critedge3.loopexit
 
 bb.f:                                             ; preds = %conv_ascii2bin.exit96
-  %6 = add nsw i32 %.1134, -1
-  %i.v = icmp sgt i32 %.1134, 4
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
+  %i.v = icmp sgt i64 %indvars.iv, 4
   br i1 %i.v, label %.lr.ph135, label %.loopexit, !llvm.loop !17
 
-.critedge3:                                       ; preds = %conv_ascii2bin.exit96, %.lr.ph135, %bb.d, %.critedge
-  %.084.lcssa167 = phi ptr [ %.084126, %.critedge ], [ %2, %bb.d ], [ %.084126, %.lr.ph135 ], [ %.084126, %conv_ascii2bin.exit96 ] ; 2 uses
-  %.1.lcssa = phi i32 [ %.083127, %.critedge ], [ %3, %bb.d ], [ %.1134, %.lr.ph135 ], [ %.1134, %conv_ascii2bin.exit96 ] ; 4 uses
+.critedge3.loopexit:                              ; preds = %.lr.ph135, %conv_ascii2bin.exit96
+  %6 = trunc nuw nsw i64 %indvars.iv to i32
+  br label %.critedge3
+
+.critedge3:                                       ; preds = %.critedge3.loopexit, %bb.d, %.critedge
+  %.084.lcssa168 = phi ptr [ %.084126, %.critedge ], [ %2, %bb.d ], [ %.084126, %.critedge3.loopexit ] ; 2 uses
+  %.1.lcssa = phi i32 [ %.083127, %.critedge ], [ %3, %bb.d ], [ %6, %.critedge3.loopexit ] ; 4 uses
   %i.w = and i32 %.1.lcssa, 3
   %.not91 = icmp eq i32 %i.w, 0
   br i1 %.not91, label %bb.g, label %.loopexit
@@ -264,7 +271,7 @@ bb.g:                                             ; preds = %.critedge3
 .lr.ph144:                                        ; preds = %.preheader, %bb.l
   %.080143 = phi i32 [ %i.bo, %bb.l ], [ 0, %.preheader ] ; 2 uses
   %.081142 = phi i32 [ %i.bp, %bb.l ], [ 0, %.preheader ]
-  %.185141 = phi ptr [ %i.aw, %bb.l ], [ %.084.lcssa167, %.preheader ] ; 5 uses
+  %.185141 = phi ptr [ %i.aw, %bb.l ], [ %.084.lcssa168, %.preheader ] ; 5 uses
   %.086140 = phi ptr [ %i.bn, %bb.l ], [ %1, %.preheader ] ; 4 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %.185141, i64 1
   %i.ab = load i8, ptr %.185141, align 1, !tbaa !13 ; 2 uses
@@ -356,7 +363,7 @@ bb.l:                                             ; preds = %conv_ascii2bin.exit
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %.preheader
   %.086.lcssa = phi ptr [ %1, %.preheader ], [ %i.bn, %._crit_edge.loopexit ] ; 6 uses
-  %.185.lcssa = phi ptr [ %.084.lcssa167, %.preheader ], [ %i.aw, %._crit_edge.loopexit ] ; 4 uses
+  %.185.lcssa = phi ptr [ %.084.lcssa168, %.preheader ], [ %i.aw, %._crit_edge.loopexit ] ; 4 uses
   %.080.lcssa = phi i32 [ 3, %.preheader ], [ %i.br, %._crit_edge.loopexit ]
   %i.bs = getelementptr inbounds nuw i8, ptr %.185.lcssa, i64 1
   %i.bt = load i8, ptr %.185.lcssa, align 1, !tbaa !13 ; 2 uses

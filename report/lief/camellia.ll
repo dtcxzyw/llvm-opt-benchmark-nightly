@@ -204,16 +204,15 @@ bb.b:                                             ; preds = %.lr.ph
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.c, %bb.b
-  %.01926 = phi i32 [ 16, %bb.b ], [ %8, %bb.c ]  ; 3 uses
-  %7 = zext nneg i32 %.01926 to i64
-  %i.f = getelementptr i8, ptr %3, i64 %7
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.c ], [ 16, %bb.b ] ; 3 uses
+  %i.f = getelementptr i8, ptr %3, i64 %indvars.iv
   %i.g = getelementptr i8, ptr %i.f, i64 -1       ; 2 uses
   %i.h = load i8, ptr %i.g, align 1, !tbaa !10
   %i.i = add i8 %i.h, 1                           ; 2 uses
   store i8 %i.i, ptr %i.g, align 1, !tbaa !10
   %.not25 = icmp eq i8 %i.i, 0
-  %8 = add nsw i32 %.01926, -1
-  %i.j = icmp samesign ugt i32 %.01926, 1
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
+  %i.j = icmp samesign ugt i64 %indvars.iv, 1
   %or.cond = and i1 %.not25, %i.j
   br i1 %or.cond, label %bb.c, label %.loopexit, !llvm.loop !23
 
@@ -616,16 +615,15 @@ bb.q:                                             ; preds = %.lr.ph.i
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.r, %bb.q
-  %.01926.i = phi i32 [ 16, %bb.q ], [ %5, %bb.r ] ; 3 uses
-  %4 = zext nneg i32 %.01926.i to i64
-  %i.ht = getelementptr i8, ptr %i.d, i64 %4
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.r ], [ 16, %bb.q ] ; 3 uses
+  %i.ht = getelementptr i8, ptr %i.d, i64 %indvars.iv.i
   %i.hu = getelementptr i8, ptr %i.ht, i64 -1     ; 2 uses
   %i.hv = load i8, ptr %i.hu, align 1, !tbaa !10
   %i.hw = add i8 %i.hv, 1                         ; 2 uses
   store i8 %i.hw, ptr %i.hu, align 1, !tbaa !10
   %.not25.i = icmp eq i8 %i.hw, 0
-  %5 = add nsw i32 %.01926.i, -1
-  %i.hx = icmp samesign ugt i32 %.01926.i, 1
+  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1
+  %i.hx = icmp samesign ugt i64 %indvars.iv.i, 1
   %or.cond.i = and i1 %i.hx, %.not25.i
   br i1 %or.cond.i, label %bb.r, label %.loopexit.i, !llvm.loop !23
 
@@ -672,16 +670,15 @@ bb.u:                                             ; preds = %.lr.ph.i116
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.v, %bb.u
-  %.01926.i126 = phi i32 [ 16, %bb.u ], [ %7, %bb.v ] ; 3 uses
-  %6 = zext nneg i32 %.01926.i126 to i64
-  %i.ik = getelementptr i8, ptr %i.d, i64 %6
+  %indvars.iv.i126 = phi i64 [ %indvars.iv.next.i128, %bb.v ], [ 16, %bb.u ] ; 3 uses
+  %i.ik = getelementptr i8, ptr %i.d, i64 %indvars.iv.i126
   %i.il = getelementptr i8, ptr %i.ik, i64 -1     ; 2 uses
   %i.im = load i8, ptr %i.il, align 1, !tbaa !10
   %i.in = add i8 %i.im, 1                         ; 2 uses
   store i8 %i.in, ptr %i.il, align 1, !tbaa !10
   %.not25.i127 = icmp eq i8 %i.in, 0
-  %7 = add nsw i32 %.01926.i126, -1
-  %i.io = icmp samesign ugt i32 %.01926.i126, 1
+  %indvars.iv.next.i128 = add nsw i64 %indvars.iv.i126, -1
+  %i.io = icmp samesign ugt i64 %indvars.iv.i126, 1
   %or.cond.i128 = and i1 %i.io, %.not25.i127
   br i1 %or.cond.i128, label %bb.v, label %.loopexit.i121, !llvm.loop !23
 

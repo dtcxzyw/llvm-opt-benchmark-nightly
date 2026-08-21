@@ -1,8 +1,8 @@
 inline.NumInlined: 1316
 inline.NumDeleted: 37
-loop-unroll.NumCompletelyUnrolled: 43
+loop-unroll.NumCompletelyUnrolled: 44
 loop-unroll.NumRuntimeUnrolled: 126
-loop-unroll.NumUnrolled: 169
+loop-unroll.NumUnrolled: 170
 begin_hunk_0_@ZSTD_dedicatedDictSearch_lazy_loadDictionary:bb.a
   %i.bc = mul i64 %.val149, -3523014627327384477
   %i.bd = lshr i64 %i.bc, %i.al
@@ -204,7 +204,6 @@ bb.l:                                             ; preds = %bb.k
   %i.ej = sub i32 66, %i.z
   %i.ek = zext nneg i32 %i.ej to i64              ; 4 uses
   %i.el = sub i32 34, %i.z
-  %scevgep215 = getelementptr nuw i8, ptr %i.h, i64 4
   %i.em = zext i32 %i.eg to i64
   %i.en = and i64 %i.e, 4294967295
   br label %bb.m
@@ -252,16 +251,15 @@ bb.r:                                             ; preds = %bb.m
   br label %ZSTD_hashPtr.exit
 
 ZSTD_hashPtr.exit:                                ; preds = %bb.n, %bb.o, %bb.p, %bb.q, %bb.r
-  %.0.i = phi i64 [ %i.es, %bb.n ], [ %i.fa, %bb.r ], [ %i.eu, %bb.o ], [ %i.ew, %bb.p ], [ %i.ey, %bb.q ] ; 2 uses
-  %i.fb = shl i64 %.0.i, 4
-  %i.fc = and i64 %i.fb, 17179869168              ; 2 uses
-  %scevgep216 = getelementptr nuw i8, ptr %scevgep215, i64 %i.fc
-  %scevgep217 = getelementptr nuw i8, ptr %i.h, i64 %i.fc
-  %2 = load i64, ptr %scevgep217, align 4, !tbaa !25
-  store i64 %2, ptr %scevgep216, align 4, !tbaa !25
-  %3 = shl i64 %.0.i, 2
-  %4 = and i64 %3, 4294967292
-  %i.fd = getelementptr inbounds nuw [4 x i8], ptr %i.h, i64 %4
+  %.0.i = phi i64 [ %i.es, %bb.n ], [ %i.fa, %bb.r ], [ %i.eu, %bb.o ], [ %i.ew, %bb.p ], [ %i.ey, %bb.q ]
+  %i.fb = shl i64 %.0.i, 2
+  %i.fc = and i64 %i.fb, 4294967292               ; 3 uses
+  %2 = getelementptr inbounds nuw [4 x i8], ptr %i.h, i64 %i.fc
+  %3 = getelementptr inbounds nuw [4 x i8], ptr %i.h, i64 %i.fc
+  %4 = getelementptr inbounds nuw i8, ptr %3, i64 4
+  %5 = load <2 x i32>, ptr %2, align 4, !tbaa !25
+  store <2 x i32> %5, ptr %4, align 4, !tbaa !25
+  %i.fd = getelementptr inbounds nuw [4 x i8], ptr %i.h, i64 %i.fc
   %i.fe = trunc nuw i64 %indvars.iv221 to i32
   store i32 %i.fe, ptr %i.fd, align 4, !tbaa !25
   %indvars.iv.next222 = add nuw nsw i64 %indvars.iv221, 1 ; 2 uses

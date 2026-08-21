@@ -203,7 +203,11 @@ bb.j:                                             ; preds = %bb.j, %.lr.ph.new
 
 .preheader66:                                     ; preds = %._crit_edge, %.preheader67
   %i.bn = icmp sgt i32 %i.c, 1
-  br i1 %i.bn, label %.preheader65, label %.loopexit
+  br i1 %i.bn, label %.preheader65.preheader, label %.loopexit
+
+.preheader65.preheader:                           ; preds = %.preheader66
+  %wide.trip.count97 = zext nneg i32 %i.c to i64
+  br label %.preheader65
 
 bb.k:                                             ; preds = %.lr.ph74, %._crit_edge
   %.06072 = phi i32 [ 1, %.lr.ph74 ], [ %i.co, %._crit_edge ] ; 5 uses
@@ -267,20 +271,18 @@ bb.m:                                             ; preds = %.lr.ph71.split, %bb
   %exitcond90.not = icmp eq i32 %i.co, %.059
   br i1 %exitcond90.not, label %.preheader66, label %bb.k, !llvm.loop !47
 
-.preheader65:                                     ; preds = %.preheader66, %.critedge
-  %.276 = phi i32 [ %3, %.critedge ], [ 1, %.preheader66 ] ; 2 uses
+.preheader65:                                     ; preds = %.preheader65.preheader, %.critedge
+  %indvars.iv91 = phi i64 [ 1, %.preheader65.preheader ], [ %indvars.iv.next92, %.critedge ] ; 2 uses
   br label %bb.n
 
 bb.n:                                             ; preds = %.preheader65, %bb.o
-  %.16175 = phi i32 [ %.276, %.preheader65 ], [ %1, %bb.o ] ; 3 uses
+  %indvars.iv93 = phi i64 [ %indvars.iv91, %.preheader65 ], [ %indvars.iv.next94, %bb.o ] ; 4 uses
   %i.cp = load ptr, ptr @gop_structure, align 8, !tbaa !8 ; 2 uses
-  %0 = zext nneg i32 %.16175 to i64               ; 2 uses
-  %i.cq = getelementptr inbounds nuw [24 x i8], ptr %i.cp, i64 %0 ; 2 uses
+  %i.cq = getelementptr inbounds nuw [24 x i8], ptr %i.cp, i64 %indvars.iv93 ; 2 uses
   %i.cr = getelementptr inbounds nuw i8, ptr %i.cq, i64 16
   %i.cs = load i32, ptr %i.cr, align 4, !tbaa !19
-  %1 = add nsw i32 %.16175, -1                    ; 2 uses
-  %2 = zext nneg i32 %1 to i64
-  %i.ct = getelementptr inbounds nuw [24 x i8], ptr %i.cp, i64 %2 ; 3 uses
+  %indvars.iv.next94 = add nsw i64 %indvars.iv93, -1 ; 2 uses
+  %i.ct = getelementptr inbounds nuw [24 x i8], ptr %i.cp, i64 %indvars.iv.next94 ; 3 uses
   %i.cu = getelementptr inbounds nuw i8, ptr %i.ct, i64 16
   %i.cv = load i32, ptr %i.cu, align 4, !tbaa !19
   %i.cw = icmp sgt i32 %i.cs, %i.cv
@@ -290,14 +292,14 @@ bb.o:                                             ; preds = %bb.n
   %.sroa.0.0.copyload = load <6 x i32>, ptr %i.ct, align 4
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(24) %i.ct, ptr noundef nonnull align 4 dereferenceable(24) %i.cq, i64 24, i1 false), !tbaa.struct !48
   %i.cx = load ptr, ptr @gop_structure, align 8, !tbaa !8
-  %i.cy = getelementptr inbounds nuw [24 x i8], ptr %i.cx, i64 %0
+  %i.cy = getelementptr inbounds nuw [24 x i8], ptr %i.cx, i64 %indvars.iv93
   store <6 x i32> %.sroa.0.0.copyload, ptr %i.cy, align 4
-  %i.cz = icmp sgt i32 %.16175, 1
+  %i.cz = icmp sgt i64 %indvars.iv93, 1
   br i1 %i.cz, label %bb.n, label %.critedge, !llvm.loop !49
 
 .critedge:                                        ; preds = %bb.n, %bb.o
-  %3 = add nuw nsw i32 %.276, 1                   ; 2 uses
-  %exitcond91.not = icmp eq i32 %3, %i.c
+  %indvars.iv.next92 = add nuw nsw i64 %indvars.iv91, 1 ; 2 uses
+  %exitcond91.not = icmp eq i64 %indvars.iv.next92, %wide.trip.count97
   br i1 %exitcond91.not, label %.loopexit, label %.preheader65, !llvm.loop !50
 
 .loopexit:                                        ; preds = %.critedge, %.preheader66, %._crit_edge79

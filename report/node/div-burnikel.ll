@@ -203,21 +203,24 @@ bb.l:                                             ; preds = %.thread.i
   %.019.sink.i = phi i32 [ %.019.i, %_ZN2v86bigint6Digits9NormalizeEv.exit33.i ], [ %4, %bb.l ]
   %i.cv = add i32 %.019.sink.i, -1                ; 2 uses
   %i.cw = icmp sgt i32 %i.cv, -1
-  br i1 %i.cw, label %.lr.ph73.i, label %_ZN2v86bigint12_GLOBAL__N_114SpecialCompareEmNS0_6DigitsES2_.exit.thread
+  br i1 %i.cw, label %.lr.ph73.preheader.i, label %_ZN2v86bigint12_GLOBAL__N_114SpecialCompareEmNS0_6DigitsES2_.exit.thread
 
-.lr.ph73.i:                                       ; preds = %.thread57.i, %bb.m
-  %.172.i = phi i32 [ %11, %bb.m ], [ %i.cv, %.thread57.i ] ; 3 uses
-  %10 = zext nneg i32 %.172.i to i64              ; 2 uses
-  %i.cx = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %10
+.lr.ph73.preheader.i:                             ; preds = %.thread57.i
+  %10 = zext nneg i32 %i.cv to i64
+  br label %.lr.ph73.i
+
+.lr.ph73.i:                                       ; preds = %bb.m, %.lr.ph73.preheader.i
+  %indvars.iv.i130 = phi i64 [ %10, %.lr.ph73.preheader.i ], [ %indvars.iv.next.i131, %bb.m ] ; 4 uses
+  %i.cx = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %indvars.iv.i130
   %.0.copyload.i.i35.i = load i64, ptr %i.cx, align 1 ; 2 uses
-  %i.cy = getelementptr inbounds nuw [8 x i8], ptr %i.av, i64 %10
+  %i.cy = getelementptr inbounds nuw [8 x i8], ptr %i.av, i64 %indvars.iv.i130
   %.0.copyload.i.i36.i = load i64, ptr %i.cy, align 1 ; 2 uses
   %i.cz = icmp eq i64 %.0.copyload.i.i35.i, %.0.copyload.i.i36.i
   br i1 %i.cz, label %bb.m, label %.critedge.i
 
 bb.m:                                             ; preds = %.lr.ph73.i
-  %11 = add nsw i32 %.172.i, -1
-  %i.da = icmp sgt i32 %.172.i, 0
+  %indvars.iv.next.i131 = add nsw i64 %indvars.iv.i130, -1
+  %i.da = icmp sgt i64 %indvars.iv.i130, 0
   br i1 %i.da, label %.lr.ph73.i, label %_ZN2v86bigint12_GLOBAL__N_114SpecialCompareEmNS0_6DigitsES2_.exit.thread, !llvm.loop !18
 
 .critedge.i:                                      ; preds = %.lr.ph73.i
