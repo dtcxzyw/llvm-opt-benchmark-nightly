@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.j = icmp eq i64 %4, %2
   %i.k = tail call i64 @llvm.smax.i64(i64 %2, i64 10)
   %.sroa.speculated69 = add nsw i64 %i.k, -10
-  %.021 = select i1 %i.j, i64 %.sroa.speculated69, i64 %4 ; 4 uses
+  %.021 = select i1 %i.j, i64 %.sroa.speculated69, i64 %4 ; 3 uses
   %i.l = add nsw i64 %2, 10                       ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 120 ; 3 uses
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !974
@@ -258,9 +258,9 @@ bb.i:                                             ; preds = %_ZNSt7__cxx1112basi
 bb.j:                                             ; preds = %bb.i
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #27
   %i.aa = load ptr, ptr %i.m, align 8, !tbaa !974 ; 2 uses
-  %.idx74 = shl nsw i64 %.021, 2                  ; 4 uses
+  %.idx74 = shl nsw i64 %.021, 2                  ; 5 uses
   %i.ab = getelementptr i8, ptr %i.aa, i64 %.idx74 ; 5 uses
-  %.idx = shl nsw i64 %2, 2                       ; 9 uses
+  %.idx = shl nsw i64 %2, 2                       ; 10 uses
   %i.ac = getelementptr i8, ptr %i.aa, i64 %.idx  ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 7 uses
   store ptr %i.ad, ptr %5, align 8, !tbaa !8
@@ -291,8 +291,7 @@ bb.j:                                             ; preds = %bb.i
 
 .lr.ph.i.i.i.preheader:                           ; preds = %._crit_edge.i.i
   %i.al = add i64 %.idx, -4
-  %8 = shl i64 %.021, 2
-  %i.am = sub i64 %i.al, %8                       ; 2 uses
+  %i.am = sub i64 %i.al, %.idx74                  ; 2 uses
   %i.an = lshr exact i64 %i.am, 2
   %i.ao = add nuw nsw i64 %i.an, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.am, 92
@@ -442,8 +441,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit37: ; preds = %_
 
 .lr.ph.i.i.i40.preheader:                         ; preds = %._crit_edge.i.i38
   %i.cj = add i64 %.idx75, -4
-  %9 = shl i64 %2, 2
-  %i.ck = sub i64 %i.cj, %9                       ; 2 uses
+  %i.ck = sub i64 %i.cj, %.idx                    ; 2 uses
   %i.cl = lshr exact i64 %i.ck, 2
   %i.cm = add nuw nsw i64 %i.cl, 1                ; 2 uses
   %min.iters.check97 = icmp ult i64 %i.ck, 92

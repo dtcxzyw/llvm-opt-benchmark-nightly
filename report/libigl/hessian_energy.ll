@@ -204,8 +204,8 @@ _ZN5Eigen8internalL21first_default_alignedINS_3MapIKNS_6MatrixIiLin1ELi1ELi0ELin
   %i.ba = sub nsw i64 %i.as, %.0.i.i.i.i.i.i.i.i.i ; 5 uses
   %i.bb = sdiv i64 %i.ba, 8
   %i.bc = shl nsw i64 %i.bb, 3                    ; 2 uses
-  %i.bd = sdiv i64 %i.ba, 4                       ; 2 uses
-  %i.be = shl nsw i64 %i.bd, 2                    ; 2 uses
+  %i.bd = sdiv i64 %i.ba, 4
+  %i.be = shl nsw i64 %i.bd, 2                    ; 3 uses
   %i.bf = add nsw i64 %i.bc, %.0.i.i.i.i.i.i.i.i.i ; 2 uses
   %i.bg = add nsw i64 %i.be, %.0.i.i.i.i.i.i.i.i.i ; 4 uses
   %.off.i.i.i.i.i = add i64 %i.ba, 3
@@ -312,8 +312,7 @@ middle.block:                                     ; preds = %vector.body
   br i1 %i.cr, label %.lr.ph89.i.i.i.i.i.preheader, label %_ZNK5Eigen9DenseBaseINS_3MapIKNS_6MatrixIiLin1ELi1ELi0ELin1ELi1EEELi0ENS_6StrideILi0ELi0EEEEEE3sumEv.exit.i.i
 
 .lr.ph89.i.i.i.i.i.preheader:                     ; preds = %.preheader.i.i.i.i.i
-  %3 = shl nsw i64 %i.bd, 2
-  %i.cs = add i64 %.0.i.i.i.i.i.i.i.i.i, %3
+  %i.cs = add i64 %.0.i.i.i.i.i.i.i.i.i, %i.be
   %i.ct = sub i64 %i.as, %i.cs                    ; 3 uses
   %min.iters.check11 = icmp ult i64 %i.ct, 8
   br i1 %min.iters.check11, label %.lr.ph89.i.i.i.i.i.preheader78, label %vector.ph12

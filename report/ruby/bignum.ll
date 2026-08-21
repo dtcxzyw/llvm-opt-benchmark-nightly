@@ -205,10 +205,10 @@ bb.a:
   %i.d = icmp eq i64 %3, %5
   %i.e = and i1 %i.c, %i.d                        ; 2 uses
   %i.f = add i64 %5, 2                            ; 19 uses
-  %i.g = udiv i64 %i.f, 3                         ; 117 uses
+  %i.g = udiv i64 %i.f, 3                         ; 116 uses
   %i.h = add nuw nsw i64 %i.g, 1                  ; 46 uses
   %i.i = mul i64 %i.h, 6
-  %i.j = shl nuw i64 %i.g, 1                      ; 93 uses
+  %i.j = shl nuw i64 %i.g, 1                      ; 94 uses
   %i.k = add nuw i64 %i.j, 2                      ; 8 uses
   %i.l = or disjoint i64 %i.j, 1                  ; 30 uses
   %reass.add2022 = add i64 %i.k, %i.j
@@ -611,8 +611,7 @@ bb.t:                                             ; preds = %.lr.ph82.i.i706
   br i1 %i.pg, label %.lr.ph93.i.i703.preheader, label %.preheader.i.i699
 
 .lr.ph93.i.i703.preheader:                        ; preds = %.preheader67.i.i698
-  %8 = shl nuw i64 %i.g, 1
-  %i.ph = add i64 %.5.i.i696, %8
+  %i.ph = add i64 %.5.i.i696, %i.j
   %i.pi = sub i64 %3, %i.ph                       ; 3 uses
   %min.iters.check2886 = icmp ult i64 %i.pi, 12
   br i1 %min.iters.check2886, label %.lr.ph93.i.i703.preheader3315, label %vector.memcheck2883

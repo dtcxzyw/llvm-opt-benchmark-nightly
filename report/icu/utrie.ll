@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.c
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 139392 ; 4 uses
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !12   ; 4 uses
   %i.k = load i32, ptr %i.j, align 4, !tbaa !14   ; 39 uses
-  %i.l = and i32 %1, 31                           ; 4 uses
+  %i.l = and i32 %1, 31                           ; 5 uses
   %.not = icmp eq i32 %i.l, 0
   br i1 %.not, label %_ZL15utrie_fillBlockPjiijja.exit, label %bb.e
 
@@ -247,18 +247,17 @@ _ZL18utrie_getDataBlockP8UNewTriei.exit:          ; preds = %bb.g, %bb.e
   %i.ae = and i32 %i.ad, 4194272                  ; 5 uses
   %.not98 = icmp samesign ugt i32 %i.ae, %2
   %i.af = load ptr, ptr %i.i, align 8, !tbaa !12  ; 7 uses
-  %i.ag = zext nneg i32 %.0.i to i64              ; 5 uses
+  %i.ag = zext nneg i32 %.0.i to i64              ; 3 uses
   %i.ah = getelementptr inbounds nuw [4 x i8], ptr %i.af, i64 %i.ag ; 40 uses
   br i1 %.not98, label %bb.k, label %bb.h
 
 bb.h:                                             ; preds = %_ZL18utrie_getDataBlockP8UNewTriei.exit
   %i.ai = shl nuw nsw i32 %i.l, 2
-  %.idx = zext nneg i32 %i.ai to i64              ; 19 uses
+  %.idx = zext nneg i32 %i.ai to i64              ; 20 uses
   %.not.i = icmp eq i8 %4, 0
-  %5 = and i32 %1, 31                             ; 2 uses
-  %narrow324 = sub nuw nsw i32 32, %5
-  %6 = zext nneg i32 %narrow324 to i64            ; 4 uses
-  %min.iters.check197 = icmp samesign ugt i32 %5, 24 ; 2 uses
+  %5 = lshr exact i64 %.idx, 2
+  %6 = sub nuw nsw i64 32, %5                     ; 4 uses
+  %min.iters.check197 = icmp samesign ugt i32 %i.l, 24 ; 2 uses
   br i1 %.not.i, label %.lr.ph19.i.preheader, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %bb.h
@@ -304,7 +303,7 @@ vector.body.3:                                    ; preds = %vector.body.2
   br label %middle.block
 
 middle.block:                                     ; preds = %vector.body.3, %vector.body.2, %vector.body.1, %vector.ph
-  %cmp.n = icmp eq i64 %n.vec, %6
+  %cmp.n = icmp eq i64 %6, %n.vec
   br i1 %cmp.n, label %_ZL15utrie_fillBlockPjiijja.exit, label %.lr.ph.i.preheader335
 
 .lr.ph.i.preheader335:                            ; preds = %.lr.ph.i.preheader, %middle.block
@@ -671,7 +670,7 @@ pred.store.if217.3:                               ; preds = %pred.store.continue
   br label %middle.block220
 
 middle.block220:                                  ; preds = %pred.store.continue216.3, %pred.store.if217.3, %pred.store.continue218.2, %pred.store.continue218.1, %pred.store.continue218
-  %cmp.n221 = icmp eq i64 %n.vec199, %6
+  %cmp.n221 = icmp eq i64 %6, %n.vec199
   br i1 %cmp.n221, label %_ZL15utrie_fillBlockPjiijja.exit, label %.lr.ph19.i.preheader334
 
 .lr.ph19.i.preheader334:                          ; preds = %.lr.ph19.i.preheader, %middle.block220
@@ -706,7 +705,7 @@ bb.k:                                             ; preds = %_ZL18utrie_getDataB
   %i.fl = and i32 %2, 31                          ; 2 uses
   %i.fm = zext nneg i32 %i.fl to i64              ; 3 uses
   %i.fn = getelementptr inbounds nuw [4 x i8], ptr %i.ah, i64 %i.fm ; 2 uses
-  %i.fo = zext nneg i32 %i.l to i64               ; 5 uses
+  %i.fo = zext nneg i32 %i.l to i64               ; 3 uses
   %i.fp = getelementptr inbounds nuw [4 x i8], ptr %i.ah, i64 %i.fo ; 13 uses
   %.not.i102 = icmp eq i8 %4, 0
   %i.fq = icmp samesign ult i32 %i.l, %i.fl       ; 2 uses
@@ -717,8 +716,8 @@ bb.k:                                             ; preds = %_ZL18utrie_getDataB
 
 .lr.ph.i104.preheader:                            ; preds = %.preheader15.i103
   %i.fr = ptrtoaddr ptr %i.af to i64              ; 2 uses
-  %i.fs = shl nuw nsw i64 %i.ag, 2
-  %i.ft = shl nuw nsw i64 %i.fo, 2
+  %i.fs = shl nuw nsw i64 %i.ag, 2                ; 2 uses
+  %i.ft = shl nuw nsw i64 %i.fo, 2                ; 2 uses
   %i.fu = add i64 %i.fs, %i.fr                    ; 2 uses
   %i.fv = add i64 %i.fu, %i.ft
   %i.fw = add i64 %i.fv, 4
@@ -727,9 +726,8 @@ bb.k:                                             ; preds = %_ZL18utrie_getDataB
   %i.fz = tail call i64 @llvm.umax.i64(i64 %i.fw, i64 %i.fy)
   %i.ga = xor i64 %i.fr, -1
   %i.gb = add i64 %i.fz, %i.ga
-  %i.gc = add nuw nsw i64 %i.ag, %i.fo
-  %7 = shl nuw nsw i64 %i.gc, 2
-  %i.gd = sub i64 %i.gb, %7                       ; 2 uses
+  %i.gc = add nuw nsw i64 %i.fs, %i.ft
+  %i.gd = sub i64 %i.gb, %i.gc                    ; 2 uses
   %i.ge = lshr i64 %i.gd, 2
   %i.gf = add nuw nsw i64 %i.ge, 1                ; 2 uses
   %min.iters.check224 = icmp ult i64 %i.gd, 28
@@ -767,8 +765,8 @@ middle.block232:                                  ; preds = %vector.body229
 
 .lr.ph19.i107.preheader:                          ; preds = %.preheader.i106
   %i.gl = ptrtoaddr ptr %i.af to i64              ; 2 uses
-  %i.gm = shl nuw nsw i64 %i.ag, 2
-  %i.gn = shl nuw nsw i64 %i.fo, 2
+  %i.gm = shl nuw nsw i64 %i.ag, 2                ; 2 uses
+  %i.gn = shl nuw nsw i64 %i.fo, 2                ; 2 uses
   %i.go = add i64 %i.gm, %i.gl                    ; 2 uses
   %i.gp = add i64 %i.go, %i.gn
   %i.gq = add i64 %i.gp, 4
@@ -777,9 +775,8 @@ middle.block232:                                  ; preds = %vector.body229
   %i.gt = tail call i64 @llvm.umax.i64(i64 %i.gq, i64 %i.gs)
   %i.gu = xor i64 %i.gl, -1
   %i.gv = add i64 %i.gt, %i.gu
-  %i.gw = add nuw nsw i64 %i.ag, %i.fo
-  %8 = shl nuw nsw i64 %i.gw, 2
-  %i.gx = sub i64 %i.gv, %8                       ; 2 uses
+  %i.gw = add nuw nsw i64 %i.gm, %i.gn
+  %i.gx = sub i64 %i.gv, %i.gw                    ; 2 uses
   %i.gy = lshr i64 %i.gx, 2
   %i.gz = add nuw nsw i64 %i.gy, 1                ; 2 uses
   %min.iters.check236 = icmp ult i64 %i.gx, 28
@@ -1182,14 +1179,14 @@ bb.bb:                                            ; preds = %_ZL20utrie_allocDat
   br label %_ZL18utrie_getDataBlockP8UNewTriei.exit127
 
 _ZL18utrie_getDataBlockP8UNewTriei.exit127:       ; preds = %._ZL18utrie_getDataBlockP8UNewTriei.exit127_crit_edge, %bb.bb
-  %.pre-phi = phi i64 [ %.pre162, %._ZL18utrie_getDataBlockP8UNewTriei.exit127_crit_edge ], [ %i.ms, %bb.bb ] ; 3 uses
+  %.pre-phi = phi i64 [ %.pre162, %._ZL18utrie_getDataBlockP8UNewTriei.exit127_crit_edge ], [ %i.ms, %bb.bb ] ; 2 uses
   %i.mx = phi ptr [ %i.mf, %._ZL18utrie_getDataBlockP8UNewTriei.exit127_crit_edge ], [ %.pre, %bb.bb ] ; 2 uses
   %i.my = getelementptr inbounds nuw [4 x i8], ptr %i.mx, i64 %.pre-phi ; 14 uses
   %i.mz = zext nneg i32 %i.id to i64              ; 2 uses
   %i.na = getelementptr inbounds nuw [4 x i8], ptr %i.my, i64 %i.mz ; 2 uses
   %.not.i128 = icmp eq i8 %4, 0
   %i.nb = ptrtoaddr ptr %i.mx to i64              ; 2 uses
-  %i.nc = shl nuw nsw i64 %.pre-phi, 2
+  %i.nc = shl nuw nsw i64 %.pre-phi, 2            ; 2 uses
   %i.nd = shl nuw nsw i64 %i.mz, 2
   %i.ne = add i64 %i.nc, %i.nb                    ; 2 uses
   %i.nf = add i64 %i.ne, %i.nd
@@ -1197,8 +1194,7 @@ _ZL18utrie_getDataBlockP8UNewTriei.exit127:       ; preds = %._ZL18utrie_getData
   %i.nh = tail call i64 @llvm.umax.i64(i64 %i.nf, i64 %i.ng)
   %i.ni = xor i64 %i.nb, -1
   %i.nj = add i64 %i.nh, %i.ni
-  %9 = shl nuw nsw i64 %.pre-phi, 2
-  %i.nk = sub i64 %i.nj, %9                       ; 2 uses
+  %i.nk = sub i64 %i.nj, %i.nc                    ; 2 uses
   %i.nl = lshr i64 %i.nk, 2
   %i.nm = add nuw nsw i64 %i.nl, 1                ; 4 uses
   %min.iters.check287 = icmp ult i64 %i.nk, 28    ; 2 uses

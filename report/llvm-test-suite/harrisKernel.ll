@@ -63,24 +63,27 @@ vector.body:                                      ; preds = %.preheader317, %vec
   %index = phi i64 [ %index.next, %vector.body ], [ 0, %.preheader317 ] ; 6 uses
   %i.aa = getelementptr inbounds nuw [4 x i8], ptr %i.w, i64 %index
   %wide.load = load <4 x float>, ptr %i.aa, align 4, !tbaa !8, !alias.scope !10
+  %14 = fmul fast <4 x float> %wide.load, splat (float f0xBDAAAAAB)
   %i.ab = or disjoint i64 %index, 2               ; 3 uses
   %i.ac = getelementptr inbounds nuw [4 x i8], ptr %i.w, i64 %i.ab
   %wide.load501 = load <4 x float>, ptr %i.ac, align 4, !tbaa !8, !alias.scope !10
-  %14 = getelementptr inbounds nuw [4 x i8], ptr %i.x, i64 %index
-  %wide.load502 = load <4 x float>, ptr %14, align 4, !tbaa !8, !alias.scope !10
-  %i.ad = getelementptr inbounds nuw [4 x i8], ptr %i.x, i64 %i.ab
+  %15 = fmul fast <4 x float> %wide.load501, splat (float f0x3DAAAAAB)
+  %16 = fadd fast <4 x float> %14, %15
+  %i.ad = getelementptr inbounds nuw [4 x i8], ptr %i.x, i64 %index
   %wide.load503 = load <4 x float>, ptr %i.ad, align 4, !tbaa !8, !alias.scope !10
-  %15 = getelementptr inbounds nuw [4 x i8], ptr %i.y, i64 %index
-  %wide.load504 = load <4 x float>, ptr %15, align 4, !tbaa !8, !alias.scope !10
-  %i.ae = getelementptr inbounds nuw [4 x i8], ptr %i.y, i64 %i.ab
+  %17 = fmul fast <4 x float> %wide.load503, splat (float f0xBE2AAAAB)
+  %18 = fadd fast <4 x float> %16, %17
+  %i.ae = getelementptr inbounds nuw [4 x i8], ptr %i.x, i64 %i.ab
   %wide.load505 = load <4 x float>, ptr %i.ae, align 4, !tbaa !8, !alias.scope !10
-  %i.af = fadd fast <4 x float> %wide.load, %wide.load504
-  %16 = fsub fast <4 x float> %wide.load501, %i.af
-  %17 = fadd fast <4 x float> %16, %wide.load505
-  %18 = fmul fast <4 x float> %17, splat (float f0x3DAAAAAB)
-  %i.ag = fsub fast <4 x float> %wide.load503, %wide.load502
-  %i.ah = fmul fast <4 x float> %i.ag, splat (float f0x3E2AAAAB)
-  %i.ai = fadd fast <4 x float> %18, %i.ah
+  %19 = fmul fast <4 x float> %wide.load505, splat (float f0x3E2AAAAB)
+  %i.af = fadd fast <4 x float> %18, %19
+  %20 = getelementptr inbounds nuw [4 x i8], ptr %i.y, i64 %index
+  %wide.load492 = load <4 x float>, ptr %20, align 4, !tbaa !8, !alias.scope !10
+  %21 = getelementptr inbounds nuw [4 x i8], ptr %i.y, i64 %i.ab
+  %wide.load493 = load <4 x float>, ptr %21, align 4, !tbaa !8, !alias.scope !10
+  %i.ag = fsub fast <4 x float> %wide.load493, %wide.load492
+  %i.ah = fmul fast <4 x float> %i.ag, splat (float f0x3DAAAAAB)
+  %i.ai = fadd fast <4 x float> %i.ah, %i.af
   %i.aj = getelementptr inbounds nuw [4 x i8], ptr %i.z, i64 %index
   store <4 x float> %i.ai, ptr %i.aj, align 4, !tbaa !8, !alias.scope !13, !noalias !10
   %index.next = add nuw i64 %index, 4             ; 2 uses
@@ -137,27 +140,28 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.ba = load float, ptr %i.az, align 4, !tbaa !8
   %i.bb = getelementptr inbounds nuw [4 x i8], ptr %i.x, i64 %i.aw
   %i.bc = load float, ptr %i.bb, align 4, !tbaa !8
-  %19 = getelementptr inbounds nuw [4 x i8], ptr %i.y, i64 %indvars.iv
-  %20 = load float, ptr %19, align 4, !tbaa !8
-  %21 = getelementptr inbounds nuw [4 x i8], ptr %i.y, i64 %i.aw
-  %22 = load float, ptr %21, align 4, !tbaa !8
-  %23 = fadd fast float %i.av, %20
-  %reass.add292 = fsub fast float %i.ay, %23
-  %reass.add293 = fadd fast float %reass.add292, %22
-  %reass.mul294 = fmul fast float %reass.add293, f0x3DAAAAAB
-  %reass.add296 = fsub fast float %i.bc, %i.ba
-  %reass.mul297 = fmul fast float %reass.add296, f0x3E2AAAAB
-  %24 = fadd fast float %reass.mul294, %reass.mul297
+  %22 = insertelement <4 x float> poison, float %i.av, i64 0
+  %23 = insertelement <4 x float> %22, float %i.ay, i64 1
+  %24 = insertelement <4 x float> %23, float %i.ba, i64 2
+  %25 = insertelement <4 x float> %24, float %i.bc, i64 3
+  %26 = fmul fast <4 x float> %25, <float f0xBDAAAAAB, float f0x3DAAAAAB, float f0xBE2AAAAB, float f0x3E2AAAAB>
+  %27 = getelementptr inbounds nuw [4 x i8], ptr %i.y, i64 %indvars.iv
+  %28 = load float, ptr %27, align 4, !tbaa !8
+  %29 = getelementptr inbounds nuw [4 x i8], ptr %i.y, i64 %i.aw
+  %30 = load float, ptr %29, align 4, !tbaa !8
+  %reass.add296 = fsub fast float %30, %28
+  %reass.mul297 = fmul fast float %reass.add296, f0x3DAAAAAB
+  %op.rdx697 = tail call fast float @llvm.vector.reduce.fadd.v4f32(float %reass.mul297, <4 x float> %26)
   %i.bd = getelementptr inbounds nuw [4 x i8], ptr %i.z, i64 %indvars.iv
-  store float %24, ptr %i.bd, align 4, !tbaa !8
+  store float %op.rdx697, ptr %i.bd, align 4, !tbaa !8
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond, label %._crit_edge, label %scalar.ph, !llvm.loop !20
 
 .preheader315:                                    ; preds = %.preheader315.preheader, %._crit_edge321.a
   %indvars.iv371 = phi i64 [ 0, %.preheader315.preheader ], [ %indvars.iv.next372, %._crit_edge321.a ] ; 3 uses
-  %i.be = getelementptr inbounds nuw [8208 x i8], ptr %2, i64 %indvars.iv371 ; 7 uses
-  %i.bf = getelementptr inbounds nuw i8, ptr %i.be, i64 16416 ; 6 uses
+  %i.be = getelementptr inbounds nuw [8208 x i8], ptr %2, i64 %indvars.iv371 ; 6 uses
+  %i.bf = getelementptr inbounds nuw i8, ptr %i.be, i64 16416 ; 5 uses
   %i.bg = getelementptr inbounds nuw [8200 x i8], ptr %4, i64 %indvars.iv371 ; 2 uses
   %brmerge723 = select i1 %min.iters.check513, i1 true, i1 %found.conflict511
   br i1 %brmerge723, label %scalar.ph512.preheader, label %vector.body516
@@ -166,25 +170,28 @@ vector.body516:                                   ; preds = %.preheader315, %vec
   %index517 = phi i64 [ %index.next524, %vector.body516 ], [ 0, %.preheader315 ] ; 6 uses
   %i.bh = getelementptr inbounds nuw [4 x i8], ptr %i.be, i64 %index517
   %wide.load518 = load <4 x float>, ptr %i.bh, align 4, !tbaa !8, !alias.scope !21
+  %31 = fmul fast <4 x float> %wide.load518, splat (float f0xBDAAAAAB)
   %i.bi = getelementptr inbounds nuw [4 x i8], ptr %i.bf, i64 %index517
   %wide.load519 = load <4 x float>, ptr %i.bi, align 4, !tbaa !8, !alias.scope !21
-  %25 = or disjoint i64 %index517, 1              ; 2 uses
-  %26 = getelementptr inbounds nuw [4 x i8], ptr %i.be, i64 %25
-  %wide.load520 = load <4 x float>, ptr %26, align 4, !tbaa !8, !alias.scope !21
-  %i.bj = getelementptr inbounds nuw [4 x i8], ptr %i.bf, i64 %25
+  %32 = fmul fast <4 x float> %wide.load519, splat (float f0x3DAAAAAB)
+  %33 = fadd fast <4 x float> %31, %32
+  %34 = or disjoint i64 %index517, 1              ; 2 uses
+  %i.bj = getelementptr inbounds nuw [4 x i8], ptr %i.be, i64 %34
   %wide.load521 = load <4 x float>, ptr %i.bj, align 4, !tbaa !8, !alias.scope !21
-  %27 = or disjoint i64 %index517, 2              ; 2 uses
-  %i.bk = getelementptr inbounds nuw [4 x i8], ptr %i.be, i64 %27
+  %35 = fmul fast <4 x float> %wide.load521, splat (float f0xBE2AAAAB)
+  %36 = fadd fast <4 x float> %33, %35
+  %i.bk = getelementptr inbounds nuw [4 x i8], ptr %i.bf, i64 %34
   %wide.load522 = load <4 x float>, ptr %i.bk, align 4, !tbaa !8, !alias.scope !21
-  %28 = getelementptr inbounds nuw [4 x i8], ptr %i.bf, i64 %27
-  %wide.load523 = load <4 x float>, ptr %28, align 4, !tbaa !8, !alias.scope !21
-  %29 = fadd fast <4 x float> %wide.load518, %wide.load522
-  %30 = fsub fast <4 x float> %wide.load519, %29
-  %31 = fadd fast <4 x float> %30, %wide.load523
-  %32 = fmul fast <4 x float> %31, splat (float f0x3DAAAAAB)
-  %i.bl = fsub fast <4 x float> %wide.load521, %wide.load520
-  %i.bm = fmul fast <4 x float> %i.bl, splat (float f0x3E2AAAAB)
-  %i.bn = fadd fast <4 x float> %32, %i.bm
+  %37 = fmul fast <4 x float> %wide.load522, splat (float f0x3E2AAAAB)
+  %38 = fadd fast <4 x float> %36, %37
+  %39 = or disjoint i64 %index517, 2              ; 2 uses
+  %40 = getelementptr inbounds nuw [4 x i8], ptr %i.be, i64 %39
+  %wide.load510 = load <4 x float>, ptr %40, align 4, !tbaa !8, !alias.scope !21
+  %41 = getelementptr inbounds nuw [4 x i8], ptr %i.bf, i64 %39
+  %wide.load511 = load <4 x float>, ptr %41, align 4, !tbaa !8, !alias.scope !21
+  %i.bl = fsub fast <4 x float> %wide.load511, %wide.load510
+  %i.bm = fmul fast <4 x float> %i.bl, splat (float f0x3DAAAAAB)
+  %i.bn = fadd fast <4 x float> %i.bm, %38
   %i.bo = getelementptr inbounds nuw [4 x i8], ptr %i.bg, i64 %index517
   store <4 x float> %i.bn, ptr %i.bo, align 4, !tbaa !8, !alias.scope !24, !noalias !21
   %index.next524 = add nuw i64 %index517, 4       ; 2 uses
@@ -226,28 +233,22 @@ scalar.ph512.preheader:                           ; preds = %.preheader315, %mid
 scalar.ph512:                                     ; preds = %scalar.ph512.preheader, %scalar.ph512
   %indvars.iv366 = phi i64 [ %indvars.iv.next367, %scalar.ph512 ], [ %indvars.iv366.ph, %scalar.ph512.preheader ] ; 5 uses
   %i.bt = getelementptr inbounds nuw [4 x i8], ptr %i.be, i64 %indvars.iv366
-  %33 = load float, ptr %i.bt, align 4, !tbaa !8
   %i.bu = getelementptr inbounds nuw [4 x i8], ptr %i.bf, i64 %indvars.iv366
-  %34 = load float, ptr %i.bu, align 4, !tbaa !8
-  %indvars.iv.next367 = add nuw nsw i64 %indvars.iv366, 1 ; 4 uses
-  %35 = getelementptr inbounds nuw [4 x i8], ptr %i.be, i64 %indvars.iv.next367
-  %36 = load float, ptr %35, align 4, !tbaa !8
-  %37 = getelementptr inbounds nuw [4 x i8], ptr %i.bf, i64 %indvars.iv.next367
-  %38 = load float, ptr %37, align 4, !tbaa !8
+  %indvars.iv.next367 = add nuw nsw i64 %indvars.iv366, 1 ; 2 uses
+  %42 = load <2 x float>, ptr %i.bt, align 4, !tbaa !8
+  %43 = load <2 x float>, ptr %i.bu, align 4, !tbaa !8
+  %44 = shufflevector <2 x float> %42, <2 x float> %43, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
+  %45 = fmul fast <4 x float> %44, <float f0xBDAAAAAB, float f0x3DAAAAAB, float f0xBE2AAAAB, float f0x3E2AAAAB>
   %i.bv = add nuw nsw i64 %indvars.iv366, 2       ; 2 uses
   %i.bw = getelementptr inbounds nuw [4 x i8], ptr %i.be, i64 %i.bv
   %i.bx = load float, ptr %i.bw, align 4, !tbaa !8
   %i.by = getelementptr inbounds nuw [4 x i8], ptr %i.bf, i64 %i.bv
   %i.bz = load float, ptr %i.by, align 4, !tbaa !8
-  %39 = fadd fast float %33, %i.bx
-  %reass.add284 = fsub fast float %34, %39
-  %reass.add285 = fadd fast float %reass.add284, %i.bz
-  %reass.mul = fmul fast float %reass.add285, f0x3DAAAAAB
-  %reass.add287 = fsub fast float %38, %36
-  %reass.mul288 = fmul fast float %reass.add287, f0x3E2AAAAB
-  %40 = fadd fast float %reass.mul, %reass.mul288
+  %reass.add287 = fsub fast float %i.bz, %i.bx
+  %reass.mul288 = fmul fast float %reass.add287, f0x3DAAAAAB
+  %op.rdx696 = tail call fast float @llvm.vector.reduce.fadd.v4f32(float %reass.mul288, <4 x float> %45)
   %i.ca = getelementptr inbounds nuw [4 x i8], ptr %i.bg, i64 %indvars.iv366
-  store float %40, ptr %i.ca, align 4, !tbaa !8
+  store float %op.rdx696, ptr %i.ca, align 4, !tbaa !8
   %exitcond370 = icmp eq i64 %indvars.iv.next367, %wide.trip.count369
   br i1 %exitcond370, label %._crit_edge321.a, label %scalar.ph512, !llvm.loop !28
 
@@ -649,6 +650,9 @@ declare i32 @llvm.smax.i32(i32, i32) #1
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.vector.reduce.fadd.v8f32(float, <8 x float>) #1
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.vector.reduce.fadd.v4f32(float, <4 x float>) #1
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }

@@ -204,8 +204,8 @@ bb.ad:                                            ; preds = %thread-pre-split.i.
   %i.ht = phi i64 [ %.pr.i.i.i.i.i.i.i, %thread-pre-split.i.i.i.i.i.i.i ], [ %i.cb, %_ZNK5Eigen10MatrixBaseINS_6MatrixIdLin1ELi1ELi0ELin1ELi1EEEE3dotINS_3MapIKS2_Li0ENS_6StrideILi0ELi0EEEEEEENS_20ScalarBinaryOpTraitsIdNS_8internal6traitsIT_E6ScalarENSB_17scalar_product_opIdSF_EEE10ReturnTypeERKNS0_ISD_EE.exit ] ; 7 uses
   %i.hu = load ptr, ptr %i.hq, align 8, !tbaa !62 ; 8 uses
   %i.hv = ptrtoaddr ptr %i.hu to i64
-  %i.hw = sdiv i64 %i.ht, 2                       ; 2 uses
-  %i.hx = shl nsw i64 %i.hw, 1                    ; 5 uses
+  %i.hw = sdiv i64 %i.ht, 2
+  %i.hx = shl nsw i64 %i.hw, 1                    ; 6 uses
   %i.hy = icmp sgt i64 %i.ht, 1
   br i1 %i.hy, label %.lr.ph.i.preheader.i.i.i.i.i.i.i, label %._crit_edge.i.i.i.i.i.i.i.i
 
@@ -218,8 +218,7 @@ bb.ad:                                            ; preds = %thread-pre-split.i.
   br i1 %i.ia, label %.lr.ph.i.i.i.i.i.i.i.i.i.preheader, label %_ZN5Eigen6MatrixIdLin1ELi1ELi0ELin1ELi1EEaSINS_13CwiseBinaryOpINS_8internal17scalar_product_opIddEEKNS_14CwiseNullaryOpINS4_18scalar_constant_opIdEEKS1_EEKNS_3MapISA_Li0ENS_6StrideILi0ELi0EEEEEEEEERS1_RKNS_9DenseBaseIT_EE.exit
 
 .lr.ph.i.i.i.i.i.i.i.i.i.preheader:               ; preds = %._crit_edge.i.i.i.i.i.i.i.i
-  %3 = shl nsw i64 %i.hw, 1
-  %i.ib = sub i64 %i.ht, %3                       ; 3 uses
+  %i.ib = sub i64 %i.ht, %i.hx                    ; 3 uses
   %min.iters.check = icmp ult i64 %i.ib, 6
   %i.ic = sub i64 %i.bz, %i.hv
   %diff.check = icmp ugt i64 %i.ic, -32
@@ -622,8 +621,8 @@ bb.az:                                            ; preds = %thread-pre-split.i.
   %i.qu = phi i64 [ %.pr.i.i.i.i.i.i.i119, %thread-pre-split.i.i.i.i.i.i.i118 ], [ %i.qo, %bb.ay ] ; 7 uses
   %i.qv = load ptr, ptr %i.mj, align 8, !tbaa !62 ; 8 uses
   %i.qw = ptrtoaddr ptr %i.qv to i64
-  %i.qx = sdiv i64 %i.qu, 2                       ; 2 uses
-  %i.qy = shl nsw i64 %i.qx, 1                    ; 5 uses
+  %i.qx = sdiv i64 %i.qu, 2
+  %i.qy = shl nsw i64 %i.qx, 1                    ; 6 uses
   %i.qz = icmp sgt i64 %i.qu, 1
   br i1 %i.qz, label %.lr.ph.i.i.i.i.i.i.i.i124, label %._crit_edge.i.i.i.i.i.i.i.i120
 
@@ -632,8 +631,7 @@ bb.az:                                            ; preds = %thread-pre-split.i.
   br i1 %i.ra, label %.lr.ph.i.i.i.i.i.i.i.i.i121.preheader, label %_ZN5Eigen6MatrixIdLin1ELi1ELi0ELin1ELi1EEaSINS_3MapIKS1_Li0ENS_6StrideILi0ELi0EEEEEEERS1_RKNS_9DenseBaseIT_EE.exit
 
 .lr.ph.i.i.i.i.i.i.i.i.i121.preheader:            ; preds = %._crit_edge.i.i.i.i.i.i.i.i120
-  %4 = shl nsw i64 %i.qx, 1
-  %i.rb = sub i64 %i.qu, %4                       ; 3 uses
+  %i.rb = sub i64 %i.qu, %i.qy                    ; 3 uses
   %min.iters.check602 = icmp ult i64 %i.rb, 4
   %i.rc = sub i64 %i.qq, %i.qw
   %diff.check600 = icmp ugt i64 %i.rc, -32
@@ -747,8 +745,8 @@ bb.bc:                                            ; preds = %thread-pre-split.i.
   %i.ss = phi i64 [ %.pr.i.i.i.i.i.i.i129, %thread-pre-split.i.i.i.i.i.i.i128 ], [ %i.sq, %bb.bb ] ; 7 uses
   %i.st = load ptr, ptr %i.mj, align 8, !tbaa !62 ; 8 uses
   %i.su = ptrtoaddr ptr %i.st to i64
-  %i.sv = sdiv i64 %i.ss, 2                       ; 2 uses
-  %i.sw = shl nsw i64 %i.sv, 1                    ; 5 uses
+  %i.sv = sdiv i64 %i.ss, 2
+  %i.sw = shl nsw i64 %i.sv, 1                    ; 6 uses
   %i.sx = icmp sgt i64 %i.ss, 1
   br i1 %i.sx, label %.lr.ph.i.preheader.i.i.i.i.i.i.i134, label %._crit_edge.i.i.i.i.i.i.i.i130
 
@@ -761,8 +759,7 @@ bb.bc:                                            ; preds = %thread-pre-split.i.
   br i1 %i.sz, label %.lr.ph.i.i.i.i.i.i.i.i.i131.preheader, label %_ZN5Eigen6MatrixIdLin1ELi1ELi0ELin1ELi1EEaSINS_3MapIKS1_Li0ENS_6StrideILi0ELi0EEEEEEERS1_RKNS_9DenseBaseIT_EE.exit
 
 .lr.ph.i.i.i.i.i.i.i.i.i131.preheader:            ; preds = %._crit_edge.i.i.i.i.i.i.i.i130
-  %5 = shl nsw i64 %i.sv, 1
-  %i.ta = sub i64 %i.ss, %5                       ; 3 uses
+  %i.ta = sub i64 %i.ss, %i.sw                    ; 3 uses
   %min.iters.check616 = icmp ult i64 %i.ta, 4
   %i.tb = sub i64 %i.sp, %i.su
   %diff.check614 = icmp ugt i64 %i.tb, -32
@@ -880,8 +877,8 @@ bb.be:                                            ; preds = %thread-pre-split.i.
   %i.ux = phi i64 [ %.pr.i.i.i.i.i.i.i139, %thread-pre-split.i.i.i.i.i.i.i138 ], [ %i.uv, %bb.bd ] ; 7 uses
   %i.uy = load ptr, ptr %i.cc, align 8, !tbaa !62 ; 8 uses
   %i.uz = ptrtoaddr ptr %i.uy to i64              ; 2 uses
-  %i.va = sdiv i64 %i.ux, 2                       ; 2 uses
-  %i.vb = shl nsw i64 %i.va, 1                    ; 6 uses
+  %i.va = sdiv i64 %i.ux, 2
+  %i.vb = shl nsw i64 %i.va, 1                    ; 7 uses
   %i.vc = icmp sgt i64 %i.ux, 1
   br i1 %i.vc, label %.lr.ph.i.i.i.i.i.i.i.i144, label %._crit_edge.i.i.i.i.i.i.i.i140
 
@@ -890,8 +887,7 @@ bb.be:                                            ; preds = %thread-pre-split.i.
   br i1 %i.vd, label %.lr.ph.i.i.i.i.i.i.i.i.i141.preheader, label %_ZN5Eigen6MatrixIdLin1ELi1ELi0ELin1ELi1EEaSINS_13CwiseBinaryOpINS_8internal20scalar_difference_opIddEEKNS_3MapIKS1_Li0ENS_6StrideILi0ELi0EEEEES8_EEEERS1_RKNS_9DenseBaseIT_EE.exit
 
 .lr.ph.i.i.i.i.i.i.i.i.i141.preheader:            ; preds = %._crit_edge.i.i.i.i.i.i.i.i140
-  %6 = shl nsw i64 %i.va, 1
-  %i.ve = sub i64 %i.ux, %6                       ; 3 uses
+  %i.ve = sub i64 %i.ux, %i.vb                    ; 3 uses
   %min.iters.check653 = icmp ult i64 %i.ve, 6
   br i1 %min.iters.check653, label %.lr.ph.i.i.i.i.i.i.i.i.i141.preheader708, label %vector.memcheck648
 
@@ -1294,8 +1290,8 @@ bb.cc:                                            ; preds = %thread-pre-split.i.
   %i.aig = phi i64 [ %.pr.i.i.i.i.i.i.i218, %thread-pre-split.i.i.i.i.i.i.i217 ], [ %i.aic, %bb.cb ] ; 7 uses
   %i.aih = load ptr, ptr %i.mj, align 8, !tbaa !62 ; 6 uses
   %i.aii = ptrtoaddr ptr %i.aih to i64            ; 2 uses
-  %i.aij = sdiv i64 %i.aig, 2                     ; 2 uses
-  %i.aik = shl nsw i64 %i.aij, 1                  ; 6 uses
+  %i.aij = sdiv i64 %i.aig, 2
+  %i.aik = shl nsw i64 %i.aij, 1                  ; 7 uses
   %i.ail = icmp sgt i64 %i.aig, 1
   br i1 %i.ail, label %.lr.ph.i.preheader.i.i.i.i.i.i.i223, label %._crit_edge.i.i.i.i.i.i.i.i219
 
@@ -1308,8 +1304,7 @@ bb.cc:                                            ; preds = %thread-pre-split.i.
   br i1 %i.ain, label %.lr.ph.i.i.i.i.i.i.i.i.i220.preheader, label %_ZN5Eigen6MatrixIdLin1ELi1ELi0ELin1ELi1EEaSINS_3MapIKS1_Li0ENS_6StrideILi0ELi0EEEEEEERS1_RKNS_9DenseBaseIT_EE.exit
 
 .lr.ph.i.i.i.i.i.i.i.i.i220.preheader:            ; preds = %._crit_edge.i.i.i.i.i.i.i.i219
-  %7 = shl nsw i64 %i.aij, 1
-  %i.aio = sub i64 %i.aig, %7                     ; 3 uses
+  %i.aio = sub i64 %i.aig, %i.aik                 ; 3 uses
   %min.iters.check633 = icmp ult i64 %i.aio, 4
   br i1 %min.iters.check633, label %.lr.ph.i.i.i.i.i.i.i.i.i220.preheader706, label %vector.memcheck629
 

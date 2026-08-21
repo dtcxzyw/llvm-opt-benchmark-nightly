@@ -205,9 +205,9 @@ _ZN2v84base11SmallVectorINS_8internal4wasm32TurboshaftGraphBuildingInterface5Val
   %sext = shl i64 %i.bd, 32
   %i.df = ashr exact i64 %sext, 29
   %sext76 = shl i64 %i.bg, 32
-  %3 = add nsw i64 %i.df, -8
-  %4 = ashr exact i64 %sext76, 29
-  %i.dg = sub nsw i64 %3, %4                      ; 2 uses
+  %3 = ashr exact i64 %sext76, 29
+  %4 = add nsw i64 %i.df, -8
+  %i.dg = sub nsw i64 %4, %3                      ; 2 uses
   %i.dh = lshr exact i64 %i.dg, 3
   %i.di = add nuw nsw i64 %i.dh, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.dg, 232

@@ -203,7 +203,7 @@ bb.a:
   %i.m = load i32, ptr @tokensetsize, align 4, !tbaa !4
   %.fr46 = freeze i32 %i.m                        ; 4 uses
   %i.n = mul i32 %.fr46, %0
-  %i.o = sext i32 %i.n to i64                     ; 7 uses
+  %i.o = sext i32 %i.n to i64                     ; 5 uses
   %i.p = getelementptr [4 x i8], ptr %i.k, i64 %i.o ; 10 uses
   %i.q = sext i32 %.fr46 to i64
   %.idx = shl nsw i64 %i.q, 2                     ; 4 uses
@@ -241,7 +241,7 @@ bb.a:
   %scevgep = getelementptr i8, ptr %i.ak, i64 4
   %i.al = getelementptr i8, ptr %i.k, i64 %i.ai
   %scevgep74 = getelementptr i8, ptr %i.al, i64 4
-  %i.am = shl nsw i64 %i.o, 2                     ; 2 uses
+  %i.am = shl nsw i64 %i.o, 2                     ; 3 uses
   %i.an = add i64 %.idx, %i.l
   %i.ao = add i64 %i.an, %i.am
   %i.ap = add i64 %i.am, %i.l
@@ -249,8 +249,7 @@ bb.a:
   %i.ar = tail call i64 @llvm.umax.i64(i64 %i.ao, i64 %i.aq)
   %i.as = xor i64 %i.l, -1
   %i.at = add i64 %i.ar, %i.as
-  %1 = shl nsw i64 %i.o, 2
-  %i.au = sub i64 %i.at, %1                       ; 2 uses
+  %i.au = sub i64 %i.at, %i.am                    ; 2 uses
   %i.av = lshr i64 %i.au, 2
   %i.aw = add nuw nsw i64 %i.av, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.au, 28
@@ -413,7 +412,7 @@ bb.g:                                             ; preds = %bb.f
   br i1 %i.di, label %.lr.ph.us45.preheader, label %.loopexit
 
 .lr.ph.us45.preheader:                            ; preds = %.lr.ph44
-  %i.dk = shl nsw i64 %i.o, 2                     ; 2 uses
+  %i.dk = shl nsw i64 %i.o, 2                     ; 3 uses
   %i.dl = add i64 %.idx, %i.l
   %i.dm = add i64 %i.dl, %i.dk
   %i.dn = add i64 %i.dk, %i.l
@@ -421,8 +420,7 @@ bb.g:                                             ; preds = %bb.f
   %i.dp = tail call i64 @llvm.umax.i64(i64 %i.dm, i64 %i.do)
   %i.dq = xor i64 %i.l, -1
   %i.dr = add i64 %i.dp, %i.dq
-  %2 = shl nsw i64 %i.o, 2
-  %i.ds = sub i64 %i.dr, %2                       ; 2 uses
+  %i.ds = sub i64 %i.dr, %i.dk                    ; 2 uses
   %i.dt = lshr i64 %i.ds, 2
   %i.du = add nuw nsw i64 %i.dt, 1                ; 2 uses
   %min.iters.check83 = icmp ult i64 %i.ds, 28

@@ -205,8 +205,8 @@ bb.c:                                             ; preds = %.lr.ph52, %._crit_e
   %.03550 = phi i64 [ %i.bz, %.lr.ph52 ], [ %.sroa.speculated, %._crit_edge ] ; 12 uses
   %i.cb = shl i64 %.03451, 2                      ; 2 uses
   %i.cc = shl i64 %.03451, 2                      ; 2 uses
-  %i.cd = sub i64 %i.bm, %.03550                  ; 3 uses
-  %i.ce = and i64 %i.cd, -4
+  %i.cd = sub i64 %i.bm, %.03550                  ; 2 uses
+  %i.ce = and i64 %i.cd, -4                       ; 2 uses
   %i.cf = add nsw i64 %i.ce, %.03550              ; 6 uses
   %i.cg = icmp sgt i64 %.03550, 0
   br i1 %i.cg, label %.lr.ph, label %.preheader43
@@ -330,8 +330,7 @@ scalar.ph82:                                      ; preds = %scalar.ph82.prol.lo
   %i.em = load i64, ptr %i.el, align 8, !tbaa !88 ; 2 uses
   %i.en = mul nsw i64 %i.em, %.03451
   %i.eo = getelementptr [4 x i8], ptr %i.ek, i64 %i.en ; 2 uses
-  %1 = and i64 %i.cd, -4
-  %i.ep = add i64 %.03550, %1
+  %i.ep = add i64 %.03550, %i.ce
   %i.eq = sub i64 %i.bm, %i.ep                    ; 3 uses
   %min.iters.check69 = icmp ult i64 %i.eq, 12
   br i1 %min.iters.check69, label %scalar.ph68.preheader, label %vector.memcheck67

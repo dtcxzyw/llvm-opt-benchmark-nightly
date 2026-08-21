@@ -204,7 +204,7 @@ bb.iw:                                            ; preds = %bb.iv
   %i.xe = load i32, ptr %i.ay, align 8, !tbaa !66
   %i.xf = load ptr, ptr %i.az, align 8, !tbaa !67 ; 4 uses
   %i.xg = ptrtoaddr ptr %i.xf to i64              ; 6 uses
-  %i.xh = load i64, ptr %i.ax, align 8, !tbaa !65 ; 13 uses
+  %i.xh = load i64, ptr %i.ax, align 8, !tbaa !65 ; 12 uses
   switch i32 %i.xe, label %bb.ja [
     i32 1, label %bb.ix
     i32 2, label %bb.iy
@@ -316,18 +316,17 @@ bb.iz:                                            ; preds = %bb.iw
 
 .lr.ph.i.i.i.preheader:                           ; preds = %bb.iz
   %i.yq = shl i64 %i.xb, 2
-  %i.yr = shl i64 %i.xh, 2                        ; 2 uses
-  %4 = add i64 %i.yq, %i.xg
-  %i.ys = add i64 %4, %i.yr
-  %5 = shl i64 %.3170.i.i, 2
-  %i.yt = sub i64 %i.ys, %5
+  %i.yr = shl i64 %i.xh, 2                        ; 3 uses
+  %4 = shl i64 %.3170.i.i, 2
+  %i.ys = add i64 %i.yq, %i.xg
+  %5 = add i64 %i.ys, %i.yr
+  %i.yt = sub i64 %5, %4
   %i.yu = add i64 %i.yr, %i.xg
   %i.yv = add i64 %i.yu, 4
   %i.yw = call i64 @llvm.umax.i64(i64 %i.yt, i64 %i.yv)
   %i.yx = xor i64 %i.xg, -1
   %i.yy = add i64 %i.yw, %i.yx
-  %6 = shl i64 %i.xh, 2
-  %i.yz = sub i64 %i.yy, %6                       ; 2 uses
+  %i.yz = sub i64 %i.yy, %i.yr                    ; 2 uses
   %i.za = lshr i64 %i.yz, 2
   %i.zb = add nuw nsw i64 %i.za, 1                ; 2 uses
   %min.iters.check757 = icmp ult i64 %i.yz, 28
@@ -512,7 +511,7 @@ bb.jt:                                            ; preds = %bb.js
   %i.aau = load i32, ptr %i.ay, align 8, !tbaa !66
   %i.aav = load ptr, ptr %i.az, align 8, !tbaa !67 ; 4 uses
   %i.aaw = ptrtoaddr ptr %i.aav to i64            ; 6 uses
-  %i.aax = load i64, ptr %i.ax, align 8, !tbaa !65 ; 13 uses
+  %i.aax = load i64, ptr %i.ax, align 8, !tbaa !65 ; 12 uses
   switch i32 %i.aau, label %bb.jx [
     i32 1, label %bb.ju
     i32 2, label %bb.jv
@@ -618,18 +617,17 @@ bb.jw:                                            ; preds = %bb.jt
 
 .lr.ph.i217.i.i.preheader:                        ; preds = %bb.jw
   %i.ace = shl i64 %i.zl, 2
-  %i.acf = shl i64 %i.aax, 2                      ; 2 uses
-  %7 = add i64 %i.ace, %i.aaw
-  %i.acg = add i64 %7, %i.acf
-  %8 = shl i64 %.3170.i.i, 2
-  %i.ach = sub i64 %i.acg, %8
+  %i.acf = shl i64 %i.aax, 2                      ; 3 uses
+  %6 = shl i64 %.3170.i.i, 2
+  %i.acg = add i64 %i.ace, %i.aaw
+  %7 = add i64 %i.acg, %i.acf
+  %i.ach = sub i64 %7, %6
   %i.aci = add i64 %i.acf, %i.aaw
   %i.acj = add i64 %i.aci, 4
   %i.ack = call i64 @llvm.umax.i64(i64 %i.ach, i64 %i.acj)
   %i.acl = xor i64 %i.aaw, -1
   %i.acm = add i64 %i.ack, %i.acl
-  %9 = shl i64 %i.aax, 2
-  %i.acn = sub i64 %i.acm, %9                     ; 2 uses
+  %i.acn = sub i64 %i.acm, %i.acf                 ; 2 uses
   %i.aco = lshr i64 %i.acn, 2
   %i.acp = add nuw nsw i64 %i.aco, 1              ; 2 uses
   %min.iters.check717 = icmp ult i64 %i.acn, 28

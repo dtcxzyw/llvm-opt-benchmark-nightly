@@ -205,12 +205,12 @@ bb.em:                                            ; preds = %_ZNK4ncnn3Mat5empty
   %i.vs = getelementptr inbounds nuw i8, ptr %i.tb, i64 24
   %i.vt = load i32, ptr %i.vs, align 8, !tbaa !60 ; 2 uses
   %i.vu = sext i32 %i.vt to i64                   ; 3 uses
-  %i.vv = mul nsw i32 %i.vt, %i.vn                ; 13 uses
+  %i.vv = mul nsw i32 %i.vt, %i.vn                ; 12 uses
   %i.vw = icmp sgt i32 %i.vv, 3
   br i1 %i.vw, label %.lr.ph53.split.us.preheader.i.i.i, label %.lr.ph53.split.i.i.i
 
 .lr.ph53.split.us.preheader.i.i.i:                ; preds = %.lr.ph53.i.i.i
-  %i.vx = and i32 %i.vv, 2147483644               ; 3 uses
+  %i.vx = and i32 %i.vv, 2147483644               ; 4 uses
   %wide.trip.count101.i.i.i = zext nneg i32 %i.vk to i64 ; 2 uses
   %..i.i.i = select i1 %i.vj, i64 %i.vq, i64 %i.vo
   %factor.op.mul108.i.i.i = mul i64 %..i.i.i, %i.vu ; 2 uses
@@ -226,8 +226,7 @@ bb.em:                                            ; preds = %_ZNK4ncnn3Mat5empty
   %unroll_iter = and i32 %i.wa, 2147483644
   %lcmp.mod974.not = icmp eq i32 %xtraiter973, 0
   %lcmp.mod977 = icmp ne i32 %xtraiter973, 0
-  %25 = and i32 %i.vv, 2147483644
-  %i.wc = xor i32 %25, -1
+  %i.wc = xor i32 %i.vx, -1
   %i.wd = add nsw i32 %i.vv, %i.wc                ; 2 uses
   %i.we = zext i32 %i.wd to i64
   %i.wf = add nuw nsw i64 %i.we, 1                ; 2 uses
@@ -630,12 +629,12 @@ bb.la:                                            ; preds = %_ZNK4ncnn3Mat5empty
   %i.atr = getelementptr inbounds nuw i8, ptr %i.aep, i64 96
   %i.ats = load i32, ptr %i.atr, align 8, !tbaa !60 ; 2 uses
   %i.att = sext i32 %i.ats to i64                 ; 3 uses
-  %i.atu = mul nsw i32 %i.ats, %i.atm             ; 13 uses
+  %i.atu = mul nsw i32 %i.ats, %i.atm             ; 12 uses
   %i.atv = icmp sgt i32 %i.atu, 3
   br i1 %i.atv, label %.lr.ph53.split.us.preheader.i.i.i367, label %.lr.ph53.split.i.i.i336
 
 .lr.ph53.split.us.preheader.i.i.i367:             ; preds = %.lr.ph53.i.i.i335
-  %i.atw = and i32 %i.atu, 2147483644             ; 3 uses
+  %i.atw = and i32 %i.atu, 2147483644             ; 4 uses
   %wide.trip.count101.i.i.i368 = zext nneg i32 %i.atj to i64 ; 2 uses
   %..i.i.i369 = select i1 %i.ati, i64 %i.atp, i64 %i.atn
   %factor.op.mul108.i.i.i370 = mul i64 %..i.i.i369, %i.att ; 2 uses
@@ -651,8 +650,7 @@ bb.la:                                            ; preds = %_ZNK4ncnn3Mat5empty
   %unroll_iter996 = and i32 %i.atz, 2147483644
   %lcmp.mod992.not = icmp eq i32 %xtraiter990, 0
   %lcmp.mod995 = icmp ne i32 %xtraiter990, 0
-  %26 = and i32 %i.atu, 2147483644
-  %i.aub = xor i32 %26, -1
+  %i.aub = xor i32 %i.atw, -1
   %i.auc = add nsw i32 %i.atu, %i.aub             ; 2 uses
   %i.aud = zext i32 %i.auc to i64
   %i.aue = add nuw nsw i64 %i.aud, 1              ; 2 uses
@@ -1055,7 +1053,7 @@ bb.a:
   %i.m = getelementptr inbounds [4 x i8], ptr %.0.val, i64 %i.l ; 7 uses
   %i.n = getelementptr inbounds [4 x i8], ptr %.0.val1, i64 %i.l ; 7 uses
   %i.o = sdiv i32 %3, %i.b                        ; 11 uses
-  %i.p = mul i32 %i.i, %i.b                       ; 10 uses
+  %i.p = mul i32 %i.i, %i.b                       ; 9 uses
   %i.q = fdiv fast float f0x3C010204, %1          ; 3 uses
   %i.r = insertelement <4 x float> poison, float %i.q, i64 0
   %i.s = shufflevector <4 x float> %i.r, <4 x float> poison, <4 x i32> zeroinitializer
@@ -1067,7 +1065,7 @@ bb.a:
   br i1 %i.u, label %.lr.ph.us.preheader.i, label %.lr.ph31.split.i
 
 .lr.ph.us.preheader.i:                            ; preds = %.lr.ph31.i
-  %i.v = and i32 %i.p, 2147483644                 ; 3 uses
+  %i.v = and i32 %i.p, 2147483644                 ; 4 uses
   %i.w = sext i32 %i.b to i64
   %wide.trip.count78.i = zext nneg i32 %i.o to i64
   %.not = icmp eq i32 %i.v, %i.p
@@ -1079,8 +1077,7 @@ bb.a:
   %unroll_iter57 = and i32 %i.z, 2147483644
   %lcmp.mod53.not = icmp eq i32 %xtraiter51, 0
   %lcmp.mod56 = icmp ne i32 %xtraiter51, 0
-  %4 = and i32 %i.p, 2147483644
-  %i.ab = xor i32 %4, -1
+  %i.ab = xor i32 %i.v, -1
   %i.ac = add nsw i32 %i.p, %i.ab                 ; 2 uses
   %i.ad = zext i32 %i.ac to i64
   %i.ae = add nuw nsw i64 %i.ad, 1                ; 2 uses
@@ -1483,7 +1480,7 @@ begin_hunk_3_@_ZN4ncnnL20pack_A_tile_quantizeERKNS_3MatERS0_iiiiS2_:bb.a
   br i1 %i.gb, label %.lr.ph93.us.preheader.i, label %.lr.ph105.split.i
 
 .lr.ph93.us.preheader.i:                          ; preds = %.lr.ph105.i
-  %i.gc = and i32 %4, 2147483644                  ; 7 uses
+  %i.gc = and i32 %4, 2147483644                  ; 8 uses
   %i.gd = zext i32 %.1183.lcssa.i to i64          ; 2 uses
   %i.ge = sext i32 %1 to i64                      ; 2 uses
   %wide.trip.count144.i = zext i32 %2 to i64
@@ -1501,8 +1498,7 @@ begin_hunk_3_@_ZN4ncnnL20pack_A_tile_quantizeERKNS_3MatERS0_iiiiS2_:bb.a
   %i.go = shl i64 %i.i, 2
   %i.gp = or disjoint i32 %i.gc, 1
   %i.gq = tail call i32 @llvm.smax.i32(i32 %4, i32 %i.gp)
-  %6 = and i32 %4, 2147483644
-  %i.gr = xor i32 %6, -1
+  %i.gr = xor i32 %i.gc, -1
   %i.gs = add nsw i32 %i.gq, %i.gr                ; 2 uses
   %i.gt = zext i32 %i.gs to i64
   %i.gu = add nuw nsw i64 %i.gt, 1                ; 2 uses
@@ -1905,7 +1901,7 @@ bb.l:                                             ; preds = %bb.j
   %i.fk = getelementptr inbounds [4 x i8], ptr %.val123.us, i64 %i.dq ; 7 uses
   %i.fl = getelementptr inbounds [4 x i8], ptr %.val124.us, i64 %i.dq ; 7 uses
   %i.fm = sdiv i32 %.sroa.speculated165, %i.fd    ; 11 uses
-  %i.fn = mul i32 %i.fh, %i.fd                    ; 10 uses
+  %i.fn = mul i32 %i.fh, %i.fd                    ; 9 uses
   %i.fo = fdiv fast float f0x3C010204, %i.fc      ; 3 uses
   %i.fp = insertelement <4 x float> poison, float %i.fo, i64 0
   %i.fq = shufflevector <4 x float> %i.fp, <4 x float> poison, <4 x i32> zeroinitializer
@@ -2148,7 +2144,7 @@ bb.p:                                             ; preds = %.thread.us43.i.i.us
   br i1 %exitcond73.not.i.i.us, label %_ZN4ncnnL26compute_A_tile_int8_scalesERKNS_3MatERS0_fS3_ii.exit.us, label %.preheader.us33.i.i.us, !llvm.loop !674
 
 .lr.ph.us.preheader.i.i.us:                       ; preds = %.lr.ph31.i.i.us
-  %i.im = and i32 %i.fn, 2147483644               ; 3 uses
+  %i.im = and i32 %i.fn, 2147483644               ; 4 uses
   %i.in = sext i32 %i.fd to i64
   %wide.trip.count78.i.i.us = zext nneg i32 %i.fm to i64
   %.not.i129.us = icmp eq i32 %i.im, %i.fn
@@ -2160,8 +2156,7 @@ bb.p:                                             ; preds = %.thread.us43.i.i.us
   %unroll_iter260 = and i32 %i.iq, 2147483644
   %lcmp.mod256.not = icmp eq i32 %xtraiter254, 0
   %lcmp.mod259 = icmp ne i32 %xtraiter254, 0
-  %17 = and i32 %i.fn, 2147483644
-  %i.is = xor i32 %17, -1
+  %i.is = xor i32 %i.im, -1
   %i.it = add nsw i32 %i.fn, %i.is                ; 2 uses
   %i.iu = zext i32 %i.it to i64
   %i.iv = add nuw nsw i64 %i.iu, 1                ; 2 uses
@@ -2564,7 +2559,7 @@ bb.l:                                             ; preds = %bb.j
   %i.fk = getelementptr inbounds [4 x i8], ptr %.val124.us, i64 %i.dq ; 7 uses
   %i.fl = getelementptr inbounds [4 x i8], ptr %.val125.us, i64 %i.dq ; 7 uses
   %i.fm = sdiv i32 %.sroa.speculated166, %i.fd    ; 11 uses
-  %i.fn = mul i32 %i.fh, %i.fd                    ; 10 uses
+  %i.fn = mul i32 %i.fh, %i.fd                    ; 9 uses
   %i.fo = fdiv fast float f0x3C010204, %i.fc      ; 3 uses
   %i.fp = insertelement <4 x float> poison, float %i.fo, i64 0
   %i.fq = shufflevector <4 x float> %i.fp, <4 x float> poison, <4 x i32> zeroinitializer
@@ -2807,7 +2802,7 @@ bb.p:                                             ; preds = %.thread.us43.i.i.us
   br i1 %exitcond73.not.i.i.us, label %_ZN4ncnnL26compute_A_tile_int8_scalesERKNS_3MatERS0_fS3_ii.exit.us, label %.preheader.us33.i.i.us, !llvm.loop !674
 
 .lr.ph.us.preheader.i.i.us:                       ; preds = %.lr.ph31.i.i.us
-  %i.im = and i32 %i.fn, 2147483644               ; 3 uses
+  %i.im = and i32 %i.fn, 2147483644               ; 4 uses
   %i.in = sext i32 %i.fd to i64
   %wide.trip.count78.i.i.us = zext nneg i32 %i.fm to i64
   %.not.i130.us = icmp eq i32 %i.im, %i.fn
@@ -2819,8 +2814,7 @@ bb.p:                                             ; preds = %.thread.us43.i.i.us
   %unroll_iter261 = and i32 %i.iq, 2147483644
   %lcmp.mod257.not = icmp eq i32 %xtraiter255, 0
   %lcmp.mod260 = icmp ne i32 %xtraiter255, 0
-  %17 = and i32 %i.fn, 2147483644
-  %i.is = xor i32 %17, -1
+  %i.is = xor i32 %i.im, -1
   %i.it = add nsw i32 %i.fn, %i.is                ; 2 uses
   %i.iu = zext i32 %i.it to i64
   %i.iv = add nuw nsw i64 %i.iu, 1                ; 2 uses

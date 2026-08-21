@@ -205,7 +205,7 @@ bb.a:
   %i.h = load i64, ptr %i.g, align 8
   %i.i = add i64 %i.h, %i.e
   %i.j = inttoptr i64 %i.i to ptr                 ; 2 uses
-  %.idx19.i = shl nuw nsw i64 %4, 2               ; 4 uses
+  %.idx19.i = shl i64 %4, 2                       ; 5 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 %.idx19.i ; 5 uses
   %.idx.i = shl i64 %5, 2                         ; 5 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.j, i64 %.idx.i ; 2 uses
@@ -247,8 +247,7 @@ bb.d:                                             ; preds = %bb.b
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %bb.d
   %i.w = add i64 %.idx.i, -4
-  %6 = shl i64 %4, 2
-  %i.x = sub i64 %i.w, %6                         ; 2 uses
+  %i.x = sub i64 %i.w, %.idx19.i                  ; 2 uses
   %i.y = lshr exact i64 %i.x, 2
   %i.z = add nuw nsw i64 %i.y, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.x, 28
@@ -651,7 +650,7 @@ bb.a:
   %i.h = load i64, ptr %i.g, align 8
   %i.i = add i64 %i.h, %i.e
   %i.j = inttoptr i64 %i.i to ptr                 ; 2 uses
-  %.idx19.i = shl nuw nsw i64 %4, 2               ; 4 uses
+  %.idx19.i = shl i64 %4, 2                       ; 5 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 %.idx19.i ; 5 uses
   %.idx.i = shl i64 %5, 2                         ; 5 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.j, i64 %.idx.i ; 2 uses
@@ -693,8 +692,7 @@ bb.d:                                             ; preds = %bb.b
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %bb.d
   %i.w = add i64 %.idx.i, -4
-  %6 = shl i64 %4, 2
-  %i.x = sub i64 %i.w, %6                         ; 2 uses
+  %i.x = sub i64 %i.w, %.idx19.i                  ; 2 uses
   %i.y = lshr exact i64 %i.x, 2
   %i.z = add nuw nsw i64 %i.y, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.x, 28
@@ -1097,7 +1095,7 @@ bb.a:
   %i.j = load i64, ptr %i.i, align 8
   %i.k = add i64 %i.j, %i.g                       ; 2 uses
   %i.l = inttoptr i64 %i.k to ptr                 ; 2 uses
-  %.idx19.i = shl nuw nsw i64 %4, 3               ; 4 uses
+  %.idx19.i = shl i64 %4, 3                       ; 5 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 %.idx19.i ; 6 uses
   %.idx.i = shl i64 %5, 3                         ; 5 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.l, i64 %.idx.i ; 3 uses
@@ -1156,8 +1154,7 @@ bb.d:                                             ; preds = %bb.b
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %bb.d
   %i.ac = add i64 %.idx.i, -8
-  %6 = shl i64 %4, 3
-  %i.ad = sub i64 %i.ac, %6                       ; 2 uses
+  %i.ad = sub i64 %i.ac, %.idx19.i                ; 2 uses
   %i.ae = lshr exact i64 %i.ad, 3
   %i.af = add nuw nsw i64 %i.ae, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.ad, 24
@@ -1560,7 +1557,7 @@ bb.a:
   %i.j = load i64, ptr %i.i, align 8
   %i.k = add i64 %i.j, %i.g                       ; 2 uses
   %i.l = inttoptr i64 %i.k to ptr                 ; 2 uses
-  %.idx19.i = shl nuw nsw i64 %4, 3               ; 4 uses
+  %.idx19.i = shl i64 %4, 3                       ; 5 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 %.idx19.i ; 6 uses
   %.idx.i = shl i64 %5, 3                         ; 5 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.l, i64 %.idx.i ; 3 uses
@@ -1619,8 +1616,7 @@ bb.d:                                             ; preds = %bb.b
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %bb.d
   %i.ac = add i64 %.idx.i, -8
-  %6 = shl i64 %4, 3
-  %i.ad = sub i64 %i.ac, %6                       ; 2 uses
+  %i.ad = sub i64 %i.ac, %.idx19.i                ; 2 uses
   %i.ae = lshr exact i64 %i.ad, 3
   %i.af = add nuw nsw i64 %i.ae, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.ad, 24
@@ -2023,7 +2019,7 @@ _ZN2v88internal12_GLOBAL__N_121TypedElementsAccessorILNS0_12ElementsKindE27EE10F
   %i.ac = load i64, ptr %i.ab, align 8
   %i.ad = add i64 %i.ac, %i.z                     ; 2 uses
   %i.ae = inttoptr i64 %i.ad to ptr               ; 2 uses
-  %.idx19.i = shl nuw nsw i64 %4, 2               ; 4 uses
+  %.idx19.i = shl i64 %4, 2                       ; 5 uses
   %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 %.idx19.i ; 6 uses
   %.idx.i = shl i64 %5, 2                         ; 5 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.ae, i64 %.idx.i ; 3 uses
@@ -2081,8 +2077,7 @@ bb.q:                                             ; preds = %bb.o, %bb.n
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %bb.q
   %i.aw = add i64 %.idx.i, -4
-  %6 = shl i64 %4, 2
-  %i.ax = sub i64 %i.aw, %6                       ; 2 uses
+  %i.ax = sub i64 %i.aw, %.idx19.i                ; 2 uses
   %i.ay = lshr exact i64 %i.ax, 2
   %i.az = add nuw nsw i64 %i.ay, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.ax, 28
@@ -2485,7 +2480,7 @@ _ZN2v88internal12_GLOBAL__N_121TypedElementsAccessorILNS0_12ElementsKindE28EE10F
   %i.s = load i64, ptr %i.r, align 8
   %i.t = add i64 %i.s, %i.p                       ; 2 uses
   %i.u = inttoptr i64 %i.t to ptr                 ; 2 uses
-  %.idx19.i = shl nuw nsw i64 %4, 3               ; 4 uses
+  %.idx19.i = shl i64 %4, 3                       ; 5 uses
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 %.idx19.i ; 6 uses
   %.idx.i = shl i64 %5, 3                         ; 5 uses
   %i.w = getelementptr inbounds nuw i8, ptr %i.u, i64 %.idx.i ; 3 uses
@@ -2547,8 +2542,7 @@ bb.f:                                             ; preds = %bb.d, %bb.c
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %bb.f
   %i.am = add i64 %.idx.i, -8
-  %6 = shl i64 %4, 3
-  %i.an = sub i64 %i.am, %6                       ; 2 uses
+  %i.an = sub i64 %i.am, %.idx19.i                ; 2 uses
   %i.ao = lshr exact i64 %i.an, 3
   %i.ap = add nuw nsw i64 %i.ao, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.an, 24
@@ -2951,7 +2945,7 @@ bb.a:
   %i.h = load i64, ptr %i.g, align 8
   %i.i = add i64 %i.h, %i.e
   %i.j = inttoptr i64 %i.i to ptr                 ; 2 uses
-  %.idx19.i = shl nuw nsw i64 %4, 2               ; 4 uses
+  %.idx19.i = shl i64 %4, 2                       ; 5 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 %.idx19.i ; 5 uses
   %.idx.i = shl i64 %5, 2                         ; 5 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.j, i64 %.idx.i ; 2 uses
@@ -2993,8 +2987,7 @@ bb.d:                                             ; preds = %bb.b
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %bb.d
   %i.w = add i64 %.idx.i, -4
-  %6 = shl i64 %4, 2
-  %i.x = sub i64 %i.w, %6                         ; 2 uses
+  %i.x = sub i64 %i.w, %.idx19.i                  ; 2 uses
   %i.y = lshr exact i64 %i.x, 2
   %i.z = add nuw nsw i64 %i.y, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.x, 28
@@ -3397,7 +3390,7 @@ bb.a:
   %i.h = load i64, ptr %i.g, align 8
   %i.i = add i64 %i.h, %i.e
   %i.j = inttoptr i64 %i.i to ptr                 ; 2 uses
-  %.idx19.i = shl nuw nsw i64 %4, 2               ; 4 uses
+  %.idx19.i = shl i64 %4, 2                       ; 5 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 %.idx19.i ; 5 uses
   %.idx.i = shl i64 %5, 2                         ; 5 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.j, i64 %.idx.i ; 2 uses
@@ -3439,8 +3432,7 @@ bb.d:                                             ; preds = %bb.b
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %bb.d
   %i.w = add i64 %.idx.i, -4
-  %6 = shl i64 %4, 2
-  %i.x = sub i64 %i.w, %6                         ; 2 uses
+  %i.x = sub i64 %i.w, %.idx19.i                  ; 2 uses
   %i.y = lshr exact i64 %i.x, 2
   %i.z = add nuw nsw i64 %i.y, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.x, 28
@@ -3843,7 +3835,7 @@ bb.a:
   %i.j = load i64, ptr %i.i, align 8
   %i.k = add i64 %i.j, %i.g                       ; 2 uses
   %i.l = inttoptr i64 %i.k to ptr                 ; 2 uses
-  %.idx19.i = shl nuw nsw i64 %4, 3               ; 4 uses
+  %.idx19.i = shl i64 %4, 3                       ; 5 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 %.idx19.i ; 6 uses
   %.idx.i = shl i64 %5, 3                         ; 5 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.l, i64 %.idx.i ; 3 uses
@@ -3902,8 +3894,7 @@ bb.d:                                             ; preds = %bb.b
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %bb.d
   %i.ac = add i64 %.idx.i, -8
-  %6 = shl i64 %4, 3
-  %i.ad = sub i64 %i.ac, %6                       ; 2 uses
+  %i.ad = sub i64 %i.ac, %.idx19.i                ; 2 uses
   %i.ae = lshr exact i64 %i.ad, 3
   %i.af = add nuw nsw i64 %i.ae, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.ad, 24
@@ -4306,7 +4297,7 @@ bb.a:
   %i.j = load i64, ptr %i.i, align 8
   %i.k = add i64 %i.j, %i.g                       ; 2 uses
   %i.l = inttoptr i64 %i.k to ptr                 ; 2 uses
-  %.idx19.i = shl nuw nsw i64 %4, 3               ; 4 uses
+  %.idx19.i = shl i64 %4, 3                       ; 5 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 %.idx19.i ; 6 uses
   %.idx.i = shl i64 %5, 3                         ; 5 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.l, i64 %.idx.i ; 3 uses
@@ -4365,8 +4356,7 @@ bb.d:                                             ; preds = %bb.b
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %bb.d
   %i.ac = add i64 %.idx.i, -8
-  %6 = shl i64 %4, 3
-  %i.ad = sub i64 %i.ac, %6                       ; 2 uses
+  %i.ad = sub i64 %i.ac, %.idx19.i                ; 2 uses
   %i.ae = lshr exact i64 %i.ad, 3
   %i.af = add nuw nsw i64 %i.ae, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.ad, 24
@@ -4769,7 +4759,7 @@ _ZN2v88internal12_GLOBAL__N_121TypedElementsAccessorILNS0_12ElementsKindE39EE10F
   %i.ac = load i64, ptr %i.ab, align 8
   %i.ad = add i64 %i.ac, %i.z                     ; 2 uses
   %i.ae = inttoptr i64 %i.ad to ptr               ; 2 uses
-  %.idx19.i = shl nuw nsw i64 %4, 2               ; 4 uses
+  %.idx19.i = shl i64 %4, 2                       ; 5 uses
   %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 %.idx19.i ; 6 uses
   %.idx.i = shl i64 %5, 2                         ; 5 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.ae, i64 %.idx.i ; 3 uses
@@ -4827,8 +4817,7 @@ bb.q:                                             ; preds = %bb.o, %bb.n
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %bb.q
   %i.aw = add i64 %.idx.i, -4
-  %6 = shl i64 %4, 2
-  %i.ax = sub i64 %i.aw, %6                       ; 2 uses
+  %i.ax = sub i64 %i.aw, %.idx19.i                ; 2 uses
   %i.ay = lshr exact i64 %i.ax, 2
   %i.az = add nuw nsw i64 %i.ay, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.ax, 28
@@ -5231,7 +5220,7 @@ _ZN2v88internal12_GLOBAL__N_121TypedElementsAccessorILNS0_12ElementsKindE40EE10F
   %i.s = load i64, ptr %i.r, align 8
   %i.t = add i64 %i.s, %i.p                       ; 2 uses
   %i.u = inttoptr i64 %i.t to ptr                 ; 2 uses
-  %.idx19.i = shl nuw nsw i64 %4, 3               ; 4 uses
+  %.idx19.i = shl i64 %4, 3                       ; 5 uses
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 %.idx19.i ; 6 uses
   %.idx.i = shl i64 %5, 3                         ; 5 uses
   %i.w = getelementptr inbounds nuw i8, ptr %i.u, i64 %.idx.i ; 3 uses
@@ -5293,8 +5282,7 @@ bb.f:                                             ; preds = %bb.d, %bb.c
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %bb.f
   %i.am = add i64 %.idx.i, -8
-  %6 = shl i64 %4, 3
-  %i.an = sub i64 %i.am, %6                       ; 2 uses
+  %i.an = sub i64 %i.am, %.idx19.i                ; 2 uses
   %i.ao = lshr exact i64 %i.an, 3
   %i.ap = add nuw nsw i64 %i.ao, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.an, 24

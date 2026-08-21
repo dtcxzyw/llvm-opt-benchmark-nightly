@@ -201,28 +201,19 @@ bb.a:
   %.0167203 = phi i64 [ %i.ab, %.lr.ph ], [ %i.j, %bb.a ]
   %.0168202 = phi i64 [ %i.aa, %.lr.ph ], [ %i.k, %bb.a ] ; 3 uses
   %.0169201 = phi i64 [ %i.ac, %.lr.ph ], [ %i.l, %bb.a ]
-  %.0170200 = phi ptr [ %i.ad, %.lr.ph ], [ %0, %bb.a ] ; 3 uses
-  %3 = load <4 x i8>, ptr %.0170200, align 1, !tbaa !17 ; 2 uses
-  %4 = zext <4 x i8> %3 to <4 x i32>
-  %5 = add <4 x i8> %3, splat (i8 -65)
-  %6 = icmp ult <4 x i8> %5, splat (i8 26)
-  %7 = shl nuw <4 x i32> %4, <i32 0, i32 8, i32 16, i32 24> ; 2 uses
-  %8 = or <4 x i32> %7, <i32 32, i32 8192, i32 2097152, i32 536870912>
-  %9 = select <4 x i1> %6, <4 x i32> %8, <4 x i32> %7
-  %10 = tail call i32 @llvm.vector.reduce.or.v4i32(<4 x i32> %9)
-  %11 = zext i32 %10 to i64
-  %12 = getelementptr inbounds nuw i8, ptr %.0170200, i64 4
-  %13 = load <4 x i8>, ptr %12, align 1, !tbaa !17 ; 2 uses
-  %14 = zext <4 x i8> %13 to <4 x i32>            ; 2 uses
-  %15 = add <4 x i8> %13, splat (i8 -65)
-  %16 = icmp ult <4 x i8> %15, splat (i8 26)
-  %17 = or disjoint <4 x i32> %14, splat (i32 32)
-  %18 = select <4 x i1> %16, <4 x i32> %17, <4 x i32> %14
-  %19 = zext nneg <4 x i32> %18 to <4 x i64>
-  %20 = shl nuw <4 x i64> %19, <i64 32, i64 40, i64 48, i64 56>
-  %i.m = tail call i64 @llvm.vector.reduce.or.v4i64(<4 x i64> %20)
-  %op.rdx = or disjoint i64 %i.m, %11             ; 2 uses
-  %i.n = xor i64 %op.rdx, %.0166204               ; 3 uses
+  %.0170200 = phi ptr [ %i.ad, %.lr.ph ], [ %0, %bb.a ] ; 2 uses
+  %3 = load <8 x i8>, ptr %.0170200, align 1, !tbaa !17 ; 2 uses
+  %4 = zext <8 x i8> %3 to <8 x i32>              ; 2 uses
+  %5 = shl nuw <8 x i32> %4, <i32 0, i32 8, i32 16, i32 24, i32 0, i32 0, i32 0, i32 0>
+  %6 = add <8 x i8> %3, splat (i8 -65)
+  %7 = icmp ult <8 x i8> %6, splat (i8 26)
+  %8 = or <8 x i32> %5, <i32 32, i32 8192, i32 2097152, i32 536870912, i32 32, i32 32, i32 32, i32 32>
+  %9 = shl nuw <8 x i32> %4, <i32 0, i32 8, i32 16, i32 24, i32 0, i32 0, i32 0, i32 0>
+  %10 = select <8 x i1> %7, <8 x i32> %8, <8 x i32> %9
+  %11 = zext <8 x i32> %10 to <8 x i64>
+  %12 = shl <8 x i64> %11, <i64 0, i64 0, i64 0, i64 0, i64 32, i64 40, i64 48, i64 56>
+  %i.m = tail call i64 @llvm.vector.reduce.or.v8i64(<8 x i64> %12) ; 2 uses
+  %i.n = xor i64 %i.m, %.0166204                  ; 3 uses
   %i.o = add i64 %.0168202, %.0169201             ; 3 uses
   %i.p = tail call i64 @llvm.fshl.i64(i64 %.0168202, i64 %.0168202, i64 13)
   %i.q = xor i64 %i.p, %i.o                       ; 3 uses
@@ -237,7 +228,7 @@ bb.a:
   %i.z = tail call i64 @llvm.fshl.i64(i64 %i.q, i64 %i.q, i64 17)
   %i.aa = xor i64 %i.y, %i.z                      ; 2 uses
   %i.ab = tail call i64 @llvm.fshl.i64(i64 %i.y, i64 %i.y, i64 32) ; 2 uses
-  %i.ac = xor i64 %i.v, %op.rdx                   ; 2 uses
+  %i.ac = xor i64 %i.v, %i.m                      ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %.0170200, i64 8 ; 2 uses
   %.not = icmp eq ptr %i.ad, %i.e
   br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !18
@@ -410,10 +401,7 @@ bb.i:                                             ; preds = %._crit_edge, %bb.h
 declare i64 @llvm.fshl.i64(i64, i64, i64) #2
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.vector.reduce.or.v4i64(<4 x i64>) #2
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.vector.reduce.or.v4i32(<4 x i32>) #2
+declare i64 @llvm.vector.reduce.or.v8i64(<8 x i64>) #2
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nofree norecurse nosync nounwind memory(argmem: read) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

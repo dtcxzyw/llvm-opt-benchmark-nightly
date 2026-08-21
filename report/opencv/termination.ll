@@ -205,14 +205,14 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not55, label %.lr.ph162, label %.lr.ph105._crit_edge, !llvm.loop !140
 
 .lr.ph105._crit_edge:                             ; preds = %.lr.ph105, %.lr.ph105.preheader
-  %indvars.iv125.lcssa = phi i64 [ %i.cs, %.lr.ph105.preheader ], [ %indvars.iv.next126, %.lr.ph105 ] ; 2 uses
+  %indvars.iv125.lcssa = phi i64 [ %i.cs, %.lr.ph105.preheader ], [ %indvars.iv.next126, %.lr.ph105 ]
   %.lcssa150 = phi i32 [ %i.cq, %.lr.ph105.preheader ], [ %i.fj, %.lr.ph105 ]
   %.lcssa = phi i64 [ %i.cu, %.lr.ph105.preheader ], [ %i.cx, %.lr.ph105 ]
   %i.cz = load ptr, ptr %i.i, align 8, !tbaa !130 ; 3 uses
-  %.idx = shl nsw i64 %indvars.iv125.lcssa, 2
+  %.idx = shl nsw i64 %indvars.iv125.lcssa, 2     ; 2 uses
   %i.da = add nsw i64 %.idx, -4                   ; 2 uses
-  %i.db = sext i32 %.lcssa150 to i64              ; 2 uses
-  %.idx82 = shl nsw i64 %i.db, 2                  ; 2 uses
+  %i.db = sext i32 %.lcssa150 to i64
+  %.idx82 = shl nsw i64 %i.db, 2                  ; 3 uses
   %i.dc = getelementptr inbounds i8, ptr %i.cz, i64 %.idx82
   %i.dd = getelementptr inbounds nuw [4 x i8], ptr %i.cz, i64 %.lcssa
   %i.de = load i32, ptr %i.dd, align 4, !tbaa !41 ; 2 uses
@@ -221,10 +221,10 @@ bb.d:                                             ; preds = %bb.c
 
 .lr.ph.i.i.i.preheader:                           ; preds = %.lr.ph105._crit_edge
   %i.df = getelementptr inbounds i8, ptr %i.cz, i64 %i.da ; 3 uses
-  %i.dg = sub i64 %i.db, %indvars.iv125.lcssa
-  %1 = and i64 %i.dg, 4611686018427387903         ; 2 uses
+  %i.dg = sub i64 %.idx82, %.idx                  ; 2 uses
+  %1 = lshr exact i64 %i.dg, 2
   %i.dh = add nuw nsw i64 %1, 1                   ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %1, 7
+  %min.iters.check = icmp ult i64 %i.dg, 28
   br i1 %min.iters.check, label %.lr.ph.i.i.i.preheader176, label %vector.ph169
 
 vector.ph169:                                     ; preds = %.lr.ph.i.i.i.preheader

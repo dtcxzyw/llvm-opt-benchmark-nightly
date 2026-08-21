@@ -205,8 +205,8 @@ bb.f:                                             ; preds = %_ZNK7xgboost6common
   unreachable
 
 _ZNK7xgboost6common9TransformILb0EE9EvaluatorIZNS_3obj10RegLossObjINS4_16LinearSquareLossEE11GetGradientERKNS_16HostDeviceVectorIfEERKNS_8MetaInfoEiPNS_6linalg6TensorINS_6detail20GradientPairInternalIfEELi2EEEEUlmNS0_4SpanIfLm18446744073709551615EEENSM_ISJ_Lm18446744073709551615EEENSM_IKfLm18446744073709551615EEESQ_SQ_E_E9UnpackHDVIfEENSM_IKT_Lm18446744073709551615EEEPKNS8_ISU_EE.exit12: ; preds = %_ZNK7xgboost6common9TransformILb0EE9EvaluatorIZNS_3obj10RegLossObjINS4_16LinearSquareLossEE11GetGradientERKNS_16HostDeviceVectorIfEERKNS_8MetaInfoEiPNS_6linalg6TensorINS_6detail20GradientPairInternalIfEELi2EEEEUlmNS0_4SpanIfLm18446744073709551615EEENSM_ISJ_Lm18446744073709551615EEENSM_IKfLm18446744073709551615EEESQ_SQ_E_E9UnpackHDVIfEENSM_IKT_Lm18446744073709551615EEEPKNS8_ISU_EE.exit9
-  %i.au = load i64, ptr %i.a, align 8, !tbaa !403 ; 4 uses
-  %i.av = mul i64 %i.au, %1                       ; 7 uses
+  %i.au = load i64, ptr %i.a, align 8, !tbaa !403 ; 3 uses
+  %i.av = mul i64 %i.au, %1                       ; 8 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.ax = add i64 %i.av, %i.au
   %i.ay = load i64, ptr %i.aw, align 8, !tbaa !17
@@ -238,8 +238,7 @@ _ZNK7xgboost6common4SpanIfLm18446744073709551615EEixEm.exit25.i: ; preds = %_ZNK
   br i1 %i.bd, label %.lr.ph.split.us.i.preheader, label %.lr.ph.split.i
 
 .lr.ph.split.us.i.preheader:                      ; preds = %.lr.ph.i
-  %2 = mul i64 %i.au, %1
-  %i.bf = sub i64 %.sroa.speculated.i, %2         ; 3 uses
+  %i.bf = sub i64 %.sroa.speculated.i, %i.av      ; 3 uses
   %min.iters.check = icmp ult i64 %i.bf, 12
   br i1 %min.iters.check, label %.lr.ph.split.us.i.preheader36, label %vector.memcheck
 

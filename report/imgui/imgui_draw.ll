@@ -205,7 +205,7 @@ bb.a:
   br i1 %i.j, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.a
-  %i.k = sext i32 %1 to i64                       ; 3 uses
+  %i.k = sext i32 %1 to i64                       ; 2 uses
   %i.l = getelementptr inbounds [20 x i8], ptr %i.g, i64 %i.k ; 6 uses
   %i.m = lshr i32 %6, 16
   %i.n = and i32 %i.m, 255
@@ -227,21 +227,19 @@ bb.a:
   %i.ad = uitofp nneg i32 %i.p to float           ; 2 uses
   %i.ae = sitofp i32 %i.q to float                ; 2 uses
   %i.af = ptrtoaddr ptr %i.g to i64               ; 3 uses
-  %i.ag = mul nsw i64 %i.k, 20
+  %i.ag = mul nsw i64 %i.k, 20                    ; 3 uses
   %i.ah = add i64 %i.ag, %i.af
   %i.ai = add i64 %i.ah, 20
   %i.aj = mul nsw i64 %i.h, 20
   %i.ak = add i64 %i.aj, %i.af
   %i.al = tail call i64 @llvm.umax.i64(i64 %i.ai, i64 %i.ak)
-  %7 = mul nsw i64 %i.k, -20                      ; 2 uses
   %i.am = add i64 %i.al, -20
-  %8 = sub i64 %i.am, %i.af                       ; 2 uses
-  %i.an = sub nsw i64 0, %7
-  %i.ao = icmp ne i64 %8, %i.an
+  %i.an = sub i64 %i.am, %i.af                    ; 2 uses
+  %i.ao = icmp ne i64 %i.an, %i.ag
   %i.ap = zext i1 %i.ao to i64                    ; 2 uses
-  %9 = sub i64 %8, %i.ap
-  %10 = add i64 %9, %7
-  %i.aq = udiv i64 %10, 20
+  %7 = or disjoint i64 %i.ag, %i.ap
+  %8 = sub i64 %i.an, %7
+  %i.aq = udiv i64 %8, 20
   %i.ar = add nuw nsw i64 %i.aq, %i.ap            ; 2 uses
   %i.as = add nuw nsw i64 %i.ar, 1                ; 2 uses
   %min.iters.check = icmp samesign ult i64 %i.ar, 3

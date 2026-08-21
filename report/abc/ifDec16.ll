@@ -205,31 +205,32 @@ bb.ap:                                            ; preds = %bb.an, %bb.ao, %bb.
   br i1 %.not141, label %If_CluSupport.exit.thread, label %bb.aq
 
 bb.aq:                                            ; preds = %bb.ap
-  %14 = and i8 %i.lp, 15
-  %15 = getelementptr inbounds nuw i8, ptr %0, i64 1
-  %16 = load i8, ptr %15, align 1, !tbaa !80
-  %17 = shl i8 %16, 4
-  %18 = or disjoint i8 %17, %14
-  %19 = zext i8 %18 to i32
-  %i.lq = getelementptr inbounds nuw i8, ptr %0, i64 2
-  %20 = load <4 x i8>, ptr %i.lq, align 1, !tbaa !80
-  %i.lr = and <4 x i8> %20, splat (i8 15)
+  %14 = getelementptr inbounds nuw i8, ptr %0, i64 1
+  %15 = load <4 x i8>, ptr %14, align 1, !tbaa !80
+  %16 = getelementptr inbounds nuw i8, ptr %0, i64 5
+  %17 = load i8, ptr %16, align 1, !tbaa !80
+  %18 = getelementptr inbounds nuw i8, ptr %0, i64 6
+  %19 = load i8, ptr %18, align 1, !tbaa !80
+  %i.lq = getelementptr inbounds nuw i8, ptr %0, i64 7
+  %20 = load i8, ptr %i.lq, align 1, !tbaa !80
+  %i.lr = and <4 x i8> %15, splat (i8 15)
   %i.ls = zext nneg <4 x i8> %i.lr to <4 x i32>
-  %i.lt = shl nuw nsw <4 x i32> %i.ls, <i32 8, i32 12, i32 16, i32 20>
-  %21 = getelementptr inbounds nuw i8, ptr %0, i64 6
-  %22 = load i8, ptr %21, align 1, !tbaa !80
-  %i.lu = and i8 %22, 15
+  %i.lt = shl nuw <4 x i32> %i.ls, <i32 4, i32 8, i32 12, i32 16>
+  %21 = call i32 @llvm.vector.reduce.or.v4i32(<4 x i32> %i.lt)
+  %i.lu = and i8 %17, 15
   %i.lv = zext nneg i8 %i.lu to i32
-  %i.lw = shl nuw nsw i32 %i.lv, 24
-  %23 = getelementptr inbounds nuw i8, ptr %0, i64 7
-  %24 = load i8, ptr %23, align 1, !tbaa !80
-  %25 = and i8 %24, 15
-  %i.lx = zext nneg i8 %25 to i32
-  %i.ly = shl nuw i32 %i.lx, 28
-  %26 = call i32 @llvm.vector.reduce.or.v4i32(<4 x i32> %i.lt)
-  %op.rdx.a = or i32 %26, %19
-  %op.rdx292 = or disjoint i32 %i.lw, %i.ly
-  %op.rdx293 = or i32 %op.rdx.a, %op.rdx292
+  %i.lw = shl nuw nsw i32 %i.lv, 20
+  %op.rdx = or i32 %21, %i.lw
+  %22 = and i8 %19, 15
+  %23 = zext nneg i8 %22 to i32
+  %24 = shl nuw nsw i32 %23, 24
+  %i.lx = zext i8 %20 to i32
+  %i.ly = shl i32 %i.lx, 28
+  %op.rdx292 = or disjoint i32 %24, %i.ly
+  %op.rdx.a = or i32 %op.rdx, %op.rdx292
+  %25 = and i8 %i.lp, 15
+  %26 = zext nneg i8 %25 to i32
+  %op.rdx293 = or disjoint i32 %op.rdx.a, %26
   br label %If_CluSupport.exit.thread.sink.split
 
 If_CluSupport.exit.thread.sink.split:             ; preds = %bb.aa, %bb.aq
@@ -249,33 +250,18 @@ If_CluSupport.exit.thread:                        ; preds = %If_CluSupport.exit.
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define internal fastcc i32 @If_CluGrp2Uns(ptr nofree noundef readonly captures(none) %0) unnamed_addr #14 {
 bb.a:
-  %1 = load i8, ptr %0, align 1, !tbaa !80
-  %2 = and i8 %1, 15
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 1
-  %4 = load i8, ptr %3, align 1, !tbaa !80
-  %5 = shl i8 %4, 4
-  %6 = or disjoint i8 %5, %2
-  %7 = zext i8 %6 to i32
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 2
+  %1 = load <4 x i8>, ptr %0, align 1, !tbaa !80
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.b = load <4 x i8>, ptr %i.a, align 1, !tbaa !80
-  %i.c = and <4 x i8> %i.b, splat (i8 15)
+  %i.c = and <4 x i8> %1, splat (i8 15)
   %i.d = zext nneg <4 x i8> %i.c to <4 x i32>
-  %i.e = shl nuw nsw <4 x i32> %i.d, <i32 8, i32 12, i32 16, i32 20>
-  %8 = getelementptr inbounds nuw i8, ptr %0, i64 6
-  %9 = load i8, ptr %8, align 1, !tbaa !80
-  %10 = and i8 %9, 15
-  %11 = zext nneg i8 %10 to i32
-  %12 = shl nuw nsw i32 %11, 24
-  %13 = getelementptr inbounds nuw i8, ptr %0, i64 7
-  %14 = load i8, ptr %13, align 1, !tbaa !80
-  %15 = and i8 %14, 15
-  %16 = zext nneg i8 %15 to i32
-  %17 = shl nuw i32 %16, 28
-  %i.f = tail call i32 @llvm.vector.reduce.or.v4i32(<4 x i32> %i.e)
-  %op.rdx = or i32 %i.f, %7
-  %op.rdx11 = or disjoint i32 %12, %17
-  %op.rdx12 = or i32 %op.rdx, %op.rdx11
-  ret i32 %op.rdx12
+  %i.e = shl nuw nsw <4 x i32> %i.d, <i32 0, i32 4, i32 8, i32 12>
+  %2 = and <4 x i8> %i.b, splat (i8 15)
+  %3 = zext nneg <4 x i8> %2 to <4 x i32>
+  %4 = shl nuw <4 x i32> %3, <i32 16, i32 20, i32 24, i32 28>
+  %rdx.op = or disjoint <4 x i32> %i.e, %4
+  %i.f = tail call i32 @llvm.vector.reduce.or.v4i32(<4 x i32> %rdx.op)
+  ret i32 %i.f
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(none) uwtable

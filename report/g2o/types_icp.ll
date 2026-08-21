@@ -205,8 +205,8 @@ bb.f:                                             ; preds = %bb.e
 _ZN5Eigen8internal13first_alignedILi16EdlEET1_PKT0_S2_.exit.i.i.i.i.i.i: ; preds = %bb.f, %bb.e
   %.0.i.i.i.i.i.i.i = phi i64 [ %i.ct, %bb.f ], [ %i.cl, %bb.e ] ; 9 uses
   %i.cu = sub nsw i64 %i.cl, %.0.i.i.i.i.i.i.i    ; 2 uses
-  %i.cv = sdiv i64 %i.cu, 2                       ; 2 uses
-  %i.cw = shl nsw i64 %i.cv, 1
+  %i.cv = sdiv i64 %i.cu, 2
+  %i.cw = shl nsw i64 %i.cv, 1                    ; 2 uses
   %i.cx = add nsw i64 %i.cw, %.0.i.i.i.i.i.i.i    ; 5 uses
   %i.cy = icmp sgt i64 %.0.i.i.i.i.i.i.i, 0
   br i1 %i.cy, label %.lr.ph.i.i.i.i.i.i.i, label %_ZN5Eigen8internal31unaligned_dense_assignment_loopILb0EE3runINS0_31generic_dense_assignment_kernelINS0_9evaluatorINS_5BlockINS6_INS_3RefINS_6MatrixIdLi6ELi6ELi0ELi6ELi6EEELi0ENS_11OuterStrideILin1EEEEELi6ELi1ELb1EEELin1ELi1ELb0EEEEENS5_INS_14CwiseNullaryOpINS0_18scalar_constant_opIdEENS8_IdLin1ELi1ELi0ELi6ELi1EEEEEEENS0_13div_assign_opIddEELi0EEEEEvRT_ll.exit.i.i.i.i.i.i
@@ -263,8 +263,7 @@ _ZN5Eigen8internal31unaligned_dense_assignment_loopILb0EE3runINS0_31generic_dens
   br i1 %i.dq, label %.lr.ph.i17.i.i.i.i.i.i.preheader, label %.loopexit
 
 .lr.ph.i17.i.i.i.i.i.i.preheader:                 ; preds = %._crit_edge.i.i.i.i.i.i
-  %8 = shl nsw i64 %i.cv, 1
-  %i.dr = add i64 %.0.i.i.i.i.i.i.i, %8
+  %i.dr = add i64 %.0.i.i.i.i.i.i.i, %i.cw
   %i.ds = sub i64 %i.cl, %i.dr                    ; 3 uses
   %min.iters.check = icmp ult i64 %i.ds, 2
   br i1 %min.iters.check, label %.lr.ph.i17.i.i.i.i.i.i.preheader177, label %vector.ph
@@ -567,8 +566,8 @@ bb.c:                                             ; preds = %.lr.ph52, %._crit_e
   %.03451 = phi i64 [ 0, %.lr.ph52 ], [ %i.gd, %._crit_edge ] ; 8 uses
   %.03550 = phi i64 [ %i.ck, %.lr.ph52 ], [ %.sroa.speculated, %._crit_edge ] ; 7 uses
   %i.cn = shl i64 %.03451, 3                      ; 2 uses
-  %i.co = sub i64 %i.bz, %.03550                  ; 4 uses
-  %i.cp = and i64 %i.co, -2
+  %i.co = sub i64 %i.bz, %.03550                  ; 3 uses
+  %i.cp = and i64 %i.co, -2                       ; 2 uses
   %i.cq = add nsw i64 %i.cp, %.03550              ; 6 uses
   %i.cr = icmp sgt i64 %.03550, 0
   br i1 %i.cr, label %.preheader43.loopexit, label %.preheader43
@@ -623,8 +622,7 @@ bb.c:                                             ; preds = %.lr.ph52, %._crit_e
   %i.ec = load i64, ptr %i.eb, align 8, !tbaa !448, !noalias !547 ; 2 uses
   %i.ed = mul nsw i64 %i.ec, %.03451
   %i.ee = getelementptr inbounds [8 x i8], ptr %i.dy, i64 %i.ed ; 3 uses
-  %1 = and i64 %i.co, -2
-  %i.ef = add i64 %.03550, %1
+  %i.ef = add i64 %.03550, %i.cp
   %i.eg = sub i64 %i.bz, %i.ef                    ; 3 uses
   %min.iters.check89 = icmp ult i64 %i.eg, 10
   br i1 %min.iters.check89, label %scalar.ph88.preheader, label %vector.memcheck73
@@ -1027,8 +1025,8 @@ bb.g:                                             ; preds = %bb.f
 _ZN5Eigen8internal13first_alignedILi16EdlEET1_PKT0_S2_.exit.i.i.i.i.i.i: ; preds = %bb.g, %bb.f
   %.0.i.i.i.i.i.i.i = phi i64 [ %i.bj, %bb.g ], [ %i.bd, %bb.f ] ; 9 uses
   %i.bk = sub nsw i64 %i.bd, %.0.i.i.i.i.i.i.i    ; 2 uses
-  %i.bl = sdiv i64 %i.bk, 2                       ; 2 uses
-  %i.bm = shl nsw i64 %i.bl, 1
+  %i.bl = sdiv i64 %i.bk, 2
+  %i.bm = shl nsw i64 %i.bl, 1                    ; 2 uses
   %i.bn = add nsw i64 %i.bm, %.0.i.i.i.i.i.i.i    ; 5 uses
   %i.bo = icmp sgt i64 %.0.i.i.i.i.i.i.i, 0
   br i1 %i.bo, label %.lr.ph.i.i.i.i.i.i.i.preheader, label %_ZN5Eigen8internal31unaligned_dense_assignment_loopILb0EE3runINS0_31generic_dense_assignment_kernelINS0_9evaluatorINS_5BlockINS_6MatrixIdLi6ELi6ELi0ELi6ELi6EEELin1ELi1ELb0EEEEENS5_INS_14CwiseNullaryOpINS0_18scalar_constant_opIdEENS7_IdLin1ELi1ELi0ELi6ELi1EEEEEEENS0_13div_assign_opIddEELi0EEEEEvRT_ll.exit.i.i.i.i.i.i
@@ -1085,8 +1083,7 @@ _ZN5Eigen8internal31unaligned_dense_assignment_loopILb0EE3runINS0_31generic_dens
   br i1 %i.bz, label %.lr.ph.i17.i.i.i.i.i.i.preheader, label %_ZN5Eigen9DenseBaseINS_5BlockINS_6MatrixIdLi6ELi6ELi0ELi6ELi6EEELin1ELi1ELb0EEEEdVERKd.exit
 
 .lr.ph.i17.i.i.i.i.i.i.preheader:                 ; preds = %._crit_edge.i.i.i.i.i.i
-  %6 = shl nsw i64 %i.bl, 1
-  %i.ca = add i64 %.0.i.i.i.i.i.i.i, %6
+  %i.ca = add i64 %.0.i.i.i.i.i.i.i, %i.bm
   %i.cb = sub i64 %i.bd, %i.ca                    ; 3 uses
   %min.iters.check = icmp ult i64 %i.cb, 2
   br i1 %min.iters.check, label %.lr.ph.i17.i.i.i.i.i.i.preheader78, label %vector.ph
@@ -1174,8 +1171,8 @@ bb.b:                                             ; preds = %bb.a
 _ZN5Eigen8internal13first_alignedILi16EdlEET1_PKT0_S2_.exit: ; preds = %bb.a, %bb.b
   %.0.i = phi i64 [ %i.j, %bb.b ], [ %i.d, %bb.a ] ; 14 uses
   %i.k = sub nsw i64 %i.d, %.0.i                  ; 2 uses
-  %i.l = sdiv i64 %i.k, 2                         ; 3 uses
-  %i.m = shl nsw i64 %i.l, 1
+  %i.l = sdiv i64 %i.k, 2                         ; 2 uses
+  %i.m = shl nsw i64 %i.l, 1                      ; 2 uses
   %i.n = add nsw i64 %i.m, %.0.i                  ; 7 uses
   %i.o = icmp sgt i64 %.0.i, 0
   br i1 %i.o, label %.lr.ph.i, label %_ZN5Eigen8internal31unaligned_dense_assignment_loopILb0EE3runINS0_31generic_dense_assignment_kernelINS0_9evaluatorINS_5BlockINS_6MatrixIdLi6ELi6ELi0ELi6ELi6EEELin1ELi1ELb0EEEEENS5_INS_7ProductINS6_IS8_Lin1ELin1ELb0EEENS_9TransposeIKNS6_IS8_Li1ELin1ELb0EEEEELi1EEEEENS0_13sub_assign_opIddEELi0EEEEEvRT_ll.exit
@@ -1426,8 +1423,7 @@ _ZN5Eigen8internal31unaligned_dense_assignment_loopILb0EE3runINS0_31generic_dens
   br label %.lr.ph.i.i.i.i.i.preheader.us.i22
 
 _ZN5Eigen8internal31generic_dense_assignment_kernelINS0_9evaluatorINS_5BlockINS_6MatrixIdLi6ELi6ELi0ELi6ELi6EEELin1ELi1ELb0EEEEENS2_INS_7ProductINS3_IS5_Lin1ELin1ELb0EEENS_9TransposeIKNS3_IS5_Li1ELin1ELb0EEEEELi1EEEEENS0_13sub_assign_opIddEELi0EE11assignCoeffEl.exit.i19.preheader: ; preds = %.lr.ph.split.i18
-  %1 = shl nsw i64 %i.l, 1
-  %i.dv = add i64 %.0.i, %1
+  %i.dv = add i64 %.0.i, %i.m
   %i.dw = sub i64 %i.d, %i.dv                     ; 3 uses
   %min.iters.check78 = icmp ult i64 %i.dw, 14
   br i1 %min.iters.check78, label %_ZN5Eigen8internal31generic_dense_assignment_kernelINS0_9evaluatorINS_5BlockINS_6MatrixIdLi6ELi6ELi0ELi6ELi6EEELin1ELi1ELb0EEEEENS2_INS_7ProductINS3_IS5_Lin1ELin1ELb0EEENS_9TransposeIKNS3_IS5_Li1ELin1ELb0EEEEELi1EEEEENS0_13sub_assign_opIddEELi0EE11assignCoeffEl.exit.i19.preheader93, label %vector.memcheck64

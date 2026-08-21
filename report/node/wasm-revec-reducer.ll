@@ -205,21 +205,20 @@ _ZN2v88internal10ZoneVectorISt4pairINS0_8compiler10turboshaft7OpIndexES5_EE16Cop
   br label %_ZN2v88internal10ZoneVectorISt4pairINS0_8compiler10turboshaft7OpIndexES5_EE16CopyingOverwriteEPS6_PKS6_SA_.exit.i
 
 _ZN2v88internal10ZoneVectorISt4pairINS0_8compiler10turboshaft7OpIndexES5_EE16CopyingOverwriteEPS6_PKS6_SA_.exit.i: ; preds = %_ZN2v88internal10ZoneVectorISt4pairINS0_8compiler10turboshaft7OpIndexES5_EE16CopyingOverwriteEPS6_PKS6_SA_.exit.loopexit.i, %_ZN2v88internal10ZoneVectorISt4pairINS0_8compiler10turboshaft7OpIndexES5_EEC2IPS6_St26random_access_iterator_tagEET_SB_PNS0_4ZoneE.exit
-  %i.ed = phi i64 [ %.pre.i, %_ZN2v88internal10ZoneVectorISt4pairINS0_8compiler10turboshaft7OpIndexES5_EE16CopyingOverwriteEPS6_PKS6_SA_.exit.loopexit.i ], [ 0, %_ZN2v88internal10ZoneVectorISt4pairINS0_8compiler10turboshaft7OpIndexES5_EEC2IPS6_St26random_access_iterator_tagEET_SB_PNS0_4ZoneE.exit ] ; 4 uses
+  %i.ed = phi i64 [ %.pre.i, %_ZN2v88internal10ZoneVectorISt4pairINS0_8compiler10turboshaft7OpIndexES5_EE16CopyingOverwriteEPS6_PKS6_SA_.exit.loopexit.i ], [ 0, %_ZN2v88internal10ZoneVectorISt4pairINS0_8compiler10turboshaft7OpIndexES5_EEC2IPS6_St26random_access_iterator_tagEET_SB_PNS0_4ZoneE.exit ] ; 3 uses
   %i.ee = getelementptr inbounds nuw [8 x i8], ptr %i.cs, i64 %i.ed ; 4 uses
   %i.ef = icmp ult ptr %i.ee, %i.cu
   br i1 %i.ef, label %.lr.ph17.preheader.i, label %_ZN2v88internal10ZoneVectorISt4pairINS0_8compiler10turboshaft7OpIndexES5_EE6insertIPS6_St26random_access_iterator_tagEES9_PKS6_T_SD_.exit
 
 .lr.ph17.preheader.i:                             ; preds = %_ZN2v88internal10ZoneVectorISt4pairINS0_8compiler10turboshaft7OpIndexES5_EE16CopyingOverwriteEPS6_PKS6_SA_.exit.i
   %i.eg = getelementptr inbounds nuw [8 x i8], ptr %i.cz, i64 %i.ed ; 3 uses
-  %i.eh = shl nuw nsw i64 %i.ed, 3
+  %i.eh = shl nuw nsw i64 %i.ed, 3                ; 2 uses
   %i.ei = add i64 %i.eh, %i.cw
   %i.ej = add i64 %i.ei, 8
   %i.ek = call i64 @llvm.umax.i64(i64 %i.cv, i64 %i.ej)
   %i.el = xor i64 %i.cw, -1
   %i.em = add i64 %i.ek, %i.el
-  %4 = shl i64 %i.ed, 3
-  %i.en = sub i64 %i.em, %4                       ; 2 uses
+  %i.en = sub i64 %i.em, %i.eh                    ; 2 uses
   %i.eo = lshr i64 %i.en, 3
   %i.ep = add nuw nsw i64 %i.eo, 1                ; 2 uses
   %min.iters.check100 = icmp ult i64 %i.en, 72

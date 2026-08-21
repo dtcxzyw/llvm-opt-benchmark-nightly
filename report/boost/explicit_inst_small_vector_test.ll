@@ -204,11 +204,11 @@ _ZN5boost9container26uninitialized_move_alloc_nINS0_22small_vector_allocatorINS0
 
 .lr.ph.i40.i.i.i.preheader:                       ; preds = %_ZN5boost9container26uninitialized_move_alloc_nINS0_22small_vector_allocatorINS0_4test24movable_and_copyable_intENS3_16simple_allocatorIvEEvEEPS4_S8_EENS0_3dtl41disable_if_memtransfer_copy_constructibleIT0_T1_SC_E4typeERT_SB_mSC_.exit.i.i.i
   %i.az = shl nuw nsw i64 %i.e, 2
-  %5 = add i64 %i.az, %i.h
-  %i.ba = add i64 %5, -4
-  %6 = shl i64 %3, 2
-  %i.bb = add i64 %6, %i.ac
-  %i.bc = sub i64 %i.ba, %i.bb                    ; 2 uses
+  %5 = shl i64 %3, 2
+  %i.ba = add i64 %i.az, %i.h
+  %6 = add i64 %i.ba, -4
+  %i.bb = add i64 %5, %i.ac
+  %i.bc = sub i64 %6, %i.bb                       ; 2 uses
   %i.bd = lshr i64 %i.bc, 2
   %i.be = add nuw nsw i64 %i.bd, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.bc, 156
@@ -611,11 +611,11 @@ _ZN5boost9container26uninitialized_move_alloc_nINS0_22small_vector_allocatorINS0
 
 .lr.ph.i40.i.i.i.preheader:                       ; preds = %_ZN5boost9container26uninitialized_move_alloc_nINS0_22small_vector_allocatorINS0_4test24movable_and_copyable_intENS0_9allocatorIvLj2ELj0EEEvEEPS4_S8_EENS0_3dtl41disable_if_memtransfer_copy_constructibleIT0_T1_SC_E4typeERT_SB_mSC_.exit.i.i.i
   %i.az = shl nuw nsw i64 %i.e, 2
-  %5 = add i64 %i.az, %i.h
-  %i.ba = add i64 %5, -4
-  %6 = shl i64 %3, 2
-  %i.bb = add i64 %6, %i.ac
-  %i.bc = sub i64 %i.ba, %i.bb                    ; 2 uses
+  %5 = shl i64 %3, 2
+  %i.ba = add i64 %i.az, %i.h
+  %6 = add i64 %i.ba, -4
+  %i.bb = add i64 %5, %i.ac
+  %i.bc = sub i64 %6, %i.bb                       ; 2 uses
   %i.bd = lshr i64 %i.bc, 2
   %i.be = add nuw nsw i64 %i.bd, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.bc, 156

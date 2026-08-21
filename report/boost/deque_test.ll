@@ -205,10 +205,10 @@ bb.h:                                             ; preds = %_ZNSt5dequeIiSaIiEE
 
 .lr.ph.i.i.i.i.i.i.i.preheader:                   ; preds = %bb.h
   %i.ah = shl i64 %2, 2
-  %5 = add i64 %i.ae, %i.ah
-  %i.ai = add i64 %5, 508
-  %6 = shl nsw i64 %.pre-phi13.i, 2
-  %i.aj = sub i64 %i.ai, %6                       ; 2 uses
+  %5 = shl nsw i64 %.pre-phi13.i, 2
+  %i.ai = add i64 %i.ae, %i.ah
+  %6 = add i64 %i.ai, 508
+  %i.aj = sub i64 %6, %5                          ; 2 uses
   %i.ak = lshr exact i64 %i.aj, 2
   %i.al = add nuw nsw i64 %i.ak, 1                ; 2 uses
   %min.iters.check156 = icmp ult i64 %i.aj, 28
@@ -502,12 +502,12 @@ bb.p:                                             ; preds = %bb.m
   br label %_ZNSt5dequeIiSaIiEE27_M_reserve_elements_at_backEm.exit
 
 _ZNSt5dequeIiSaIiEE27_M_reserve_elements_at_backEm.exit: ; preds = %bb.o, %bb.p
-  %i.ee = phi i64 [ %i.ec, %bb.o ], [ %i.ed, %bb.p ] ; 5 uses
+  %i.ee = phi i64 [ %i.ec, %bb.o ], [ %i.ed, %bb.p ] ; 4 uses
   %.idx = shl nsw i64 %i.ee, 3                    ; 2 uses
   %.ptr = getelementptr inbounds i8, ptr %i.dt, i64 %.idx
   %i.ef = load ptr, ptr %.ptr, align 8, !tbaa !49, !noalias !2713 ; 9 uses
   %i.eg = getelementptr inbounds nuw i8, ptr %i.ef, i64 512 ; 4 uses
-  %i.eh = shl i64 %i.ee, 9                        ; 2 uses
+  %i.eh = shl i64 %i.ee, 9                        ; 3 uses
   %i.ei = shl i64 %i.dx, 2                        ; 3 uses
   %.idx114 = sub i64 %i.ei, %i.eh
   %i.ej = getelementptr inbounds i8, ptr %i.ef, i64 %.idx114 ; 5 uses
@@ -579,8 +579,7 @@ _ZSt9__fill_a1IPiiEN9__gnu_cxx11__enable_ifIXsr11__is_scalarIT0_EE7__valueEvE6__
 
 .lr.ph.i19.i.i.i.i.i.i25.preheader:               ; preds = %._crit_edge.i.i.i.i.i.i23
   %i.ez = add i64 %i.ei, -4
-  %7 = shl i64 %i.ee, 9
-  %i.fa = sub i64 %i.ez, %7                       ; 2 uses
+  %i.fa = sub i64 %i.ez, %i.eh                    ; 2 uses
   %i.fb = lshr exact i64 %i.fa, 2
   %i.fc = add nuw nsw i64 %i.fb, 1                ; 2 uses
   %min.iters.check130 = icmp ult i64 %i.fa, 28
@@ -983,11 +982,11 @@ bb.bi:                                            ; preds = %bb.bf
   br label %bb.bj
 
 bb.bj:                                            ; preds = %bb.bi, %bb.bh
-  %i.rj = phi i64 [ %i.rh, %bb.bh ], [ %i.ri, %bb.bi ] ; 4 uses
+  %i.rj = phi i64 [ %i.rh, %bb.bh ], [ %i.ri, %bb.bi ] ; 3 uses
   %.idx = shl nsw i64 %i.rj, 3
   %i.rk = getelementptr inbounds i8, ptr %i.qy, i64 %.idx ; 2 uses
   %i.rl = load ptr, ptr %i.rk, align 8, !tbaa !49, !noalias !2839 ; 4 uses
-  %i.rm = shl i64 %i.rj, 9                        ; 2 uses
+  %i.rm = shl i64 %i.rj, 9                        ; 3 uses
   %i.rn = shl i64 %i.re, 2                        ; 3 uses
   %.idx305 = sub i64 %i.rn, %i.rm
   %i.ro = getelementptr inbounds i8, ptr %i.rl, i64 %.idx305
@@ -1053,8 +1052,7 @@ _ZSt9__fill_a1IPiiEN9__gnu_cxx11__enable_ifIXsr11__is_scalarIT0_EE7__valueEvE6__
 
 .lr.ph.i19.i.i.i81.preheader:                     ; preds = %._crit_edge.i.i.i79
   %i.sb = add i64 %i.rn, -4
-  %29 = shl i64 %i.rj, 9
-  %i.sc = sub i64 %i.sb, %29                      ; 2 uses
+  %i.sc = sub i64 %i.sb, %i.rm                    ; 2 uses
   %i.sd = lshr exact i64 %i.sc, 2
   %i.se = add nuw nsw i64 %i.sd, 1                ; 2 uses
   %min.iters.check466 = icmp ult i64 %i.sc, 28

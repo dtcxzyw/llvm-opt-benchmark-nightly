@@ -205,11 +205,11 @@ _ZN5boost9container26uninitialized_move_alloc_nINS0_3dtl24static_storage_allocat
 
 .lr.ph.i40.i.i.i.preheader:                       ; preds = %_ZN5boost9container26uninitialized_move_alloc_nINS0_3dtl24static_storage_allocatorINS0_4test24movable_and_copyable_intELm10ELm0ELb1EEEPS5_S7_EENS2_41disable_if_memtransfer_copy_constructibleIT0_T1_SA_E4typeERT_S9_mSA_.exit.i.i.i
   %i.az = shl i64 %i.d, 2
-  %5 = add i64 %i.az, %i.a
-  %i.ba = add i64 %5, -4
-  %6 = shl i64 %3, 2
-  %i.bb = add i64 %6, %i.ac
-  %i.bc = sub i64 %i.ba, %i.bb                    ; 2 uses
+  %5 = shl i64 %3, 2
+  %i.ba = add i64 %i.az, %i.a
+  %6 = add i64 %i.ba, -4
+  %i.bb = add i64 %5, %i.ac
+  %i.bc = sub i64 %6, %i.bb                       ; 2 uses
   %i.bd = lshr i64 %i.bc, 2
   %i.be = add nuw nsw i64 %i.bd, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.bc, 156
