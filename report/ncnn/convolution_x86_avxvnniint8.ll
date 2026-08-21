@@ -203,7 +203,7 @@ begin_hunk_0_@_ZN4ncnn46convolution_im2col_input_tile_int8_avxvnniint8ERKNS_3Mat
 
 .loopexit.us.i.i:                                 ; preds = %.lr.ph234.us.i.i.prol.loopexit, %.lr.ph234.us.i.i, %.preheader.us.i.i
   %.25.lcssa.us.i.i = phi ptr [ %.24.lcssa.us.i.i, %.preheader.us.i.i ], [ %.lcssa399.unr, %.lr.ph234.us.i.i.prol.loopexit ], [ %i.vq, %.lr.ph234.us.i.i ]
-  %indvars.iv.next294.i.i = add nsw i64 %indvars.iv293.i.i, 1 ; 2 uses
+  %indvars.iv.next294.i.i = add nuw nsw i64 %indvars.iv293.i.i, 1 ; 2 uses
   %exitcond297.not.i.i = icmp eq i64 %indvars.iv.next294.i.i, %wide.trip.count296.i.i
   br i1 %exitcond297.not.i.i, label %_ZN4ncnnL34convolution_im2col_input_tile_int8ERKNS_3MatERS0_iiiiiiiiii.exit, label %.lr.ph238.split.us.i.i, !llvm.loop !61
 
@@ -302,7 +302,7 @@ bb.c:                                             ; preds = %bb.c, %.epil.prehea
 
 ..loopexit118_crit_edge.i.i:                      ; preds = %bb.c, %..loopexit118_crit_edge.i.i.unr-lcssa
   %.lcssa401 = phi ptr [ %i.xy, %..loopexit118_crit_edge.i.i.unr-lcssa ], [ %i.yb, %bb.c ]
-  %indvars.iv.next288.i.i = add nsw i64 %indvars.iv287.i.i, 1 ; 2 uses
+  %indvars.iv.next288.i.i = add nuw nsw i64 %indvars.iv287.i.i, 1 ; 2 uses
   %exitcond290.not.i.i = icmp eq i64 %indvars.iv.next288.i.i, %wide.trip.count.i.i
   br i1 %exitcond290.not.i.i, label %_ZN4ncnnL34convolution_im2col_input_tile_int8ERKNS_3MatERS0_iiiiiiiiii.exit, label %_ZN4ncnn3MatD2Ev.exit385.i.i, !llvm.loop !61
 

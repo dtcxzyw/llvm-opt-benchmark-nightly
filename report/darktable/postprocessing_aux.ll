@@ -204,7 +204,7 @@ vector.ph171:                                     ; preds = %vector.main.loop.it
 
 vector.body173:                                   ; preds = %vector.body173, %vector.ph171
   %index174 = phi i64 [ 0, %vector.ph171 ], [ %index.next191, %vector.body173 ] ; 2 uses
-  %i.fx = add i64 %index174, %i.er                ; 4 uses
+  %i.fx = add nuw i64 %index174, %i.er            ; 4 uses
   %i.fy = getelementptr inbounds [4 x i8], ptr %2, i64 %i.fx ; 4 uses
   %i.fz = getelementptr inbounds nuw i8, ptr %i.fy, i64 32
   %i.ga = getelementptr inbounds nuw i8, ptr %i.fy, i64 64
@@ -279,7 +279,7 @@ vec.epilog.ph200:                                 ; preds = %vector.main.loop.it
 
 vec.epilog.vector.body202:                        ; preds = %vec.epilog.vector.body202, %vec.epilog.ph200
   %index203 = phi i64 [ %vec.epilog.resume.val194, %vec.epilog.ph200 ], [ %index.next208, %vec.epilog.vector.body202 ] ; 2 uses
-  %i.hi = add i64 %index203, %i.er                ; 4 uses
+  %i.hi = add nuw i64 %index203, %i.er            ; 4 uses
   %i.hj = getelementptr inbounds [4 x i8], ptr %2, i64 %i.hi
   %wide.load204 = load <8 x float>, ptr %i.hj, align 4, !tbaa !11, !alias.scope !31
   %i.hk = fmul reassoc nsz arcp contract afn <8 x float> %wide.load204, splat (float 2.000000e+00)
@@ -333,7 +333,7 @@ vec.epilog.scalar.ph197.prol:                     ; preds = %vec.epilog.scalar.p
   %i.io = fadd reassoc nsz arcp contract afn float %i.ig, %i.in
   %i.ip = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv69.ph
   store float %i.io, ptr %i.ip, align 4, !tbaa !11
-  %indvars.iv.next70.prol = add nsw i64 %indvars.iv69.ph, 1
+  %indvars.iv.next70.prol = add nuw nsw i64 %indvars.iv69.ph, 1
   br label %vec.epilog.scalar.ph197.prol.loopexit
 
 vec.epilog.scalar.ph197.prol.loopexit:            ; preds = %vec.epilog.scalar.ph197.prol, %vec.epilog.scalar.ph197.preheader
@@ -386,7 +386,7 @@ vec.epilog.scalar.ph197:                          ; preds = %vec.epilog.scalar.p
   %i.jx = fadd reassoc nsz arcp contract afn float %i.jp, %i.jw
   %i.jy = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv69
   store float %i.jx, ptr %i.jy, align 4, !tbaa !11
-  %indvars.iv.next70 = add nsw i64 %indvars.iv69, 1 ; 4 uses
+  %indvars.iv.next70 = add nuw nsw i64 %indvars.iv69, 1 ; 4 uses
   %i.jz = mul nsw i64 %indvars.iv.next70, %i.es
   %i.ka = getelementptr inbounds [4 x i8], ptr %2, i64 %i.jz
   %i.kb = load float, ptr %i.ka, align 4, !tbaa !11
@@ -406,7 +406,7 @@ vec.epilog.scalar.ph197:                          ; preds = %vec.epilog.scalar.p
   %i.kp = fadd reassoc nsz arcp contract afn float %i.kh, %i.ko
   %i.kq = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv.next70
   store float %i.kp, ptr %i.kq, align 4, !tbaa !11
-  %indvars.iv.next70.1 = add nsw i64 %indvars.iv69, 2 ; 2 uses
+  %indvars.iv.next70.1 = add nuw nsw i64 %indvars.iv69, 2 ; 2 uses
   %exitcond73.not.1 = icmp eq i64 %indvars.iv.next70.1, %wide.trip.count72
   br i1 %exitcond73.not.1, label %._crit_edge, label %vec.epilog.scalar.ph197, !llvm.loop !44
 
@@ -809,7 +809,7 @@ vector.ph776:                                     ; preds = %vector.main.loop.it
 
 vector.body778:                                   ; preds = %vector.body778, %vector.ph776
   %index779 = phi i64 [ 0, %vector.ph776 ], [ %index.next796, %vector.body778 ] ; 2 uses
-  %i.nm = add i64 %index779, %i.ms                ; 4 uses
+  %i.nm = add nuw i64 %index779, %i.ms            ; 4 uses
   %i.nn = getelementptr inbounds [4 x i8], ptr %i.ib, i64 %i.nm ; 4 uses
   %i.no = getelementptr inbounds nuw i8, ptr %i.nn, i64 32
   %i.np = getelementptr inbounds nuw i8, ptr %i.nn, i64 64
@@ -884,7 +884,7 @@ vec.epilog.ph805:                                 ; preds = %vector.main.loop.it
 
 vec.epilog.vector.body807:                        ; preds = %vec.epilog.vector.body807, %vec.epilog.ph805
   %index808 = phi i64 [ %vec.epilog.resume.val799, %vec.epilog.ph805 ], [ %index.next813, %vec.epilog.vector.body807 ] ; 2 uses
-  %i.ox = add i64 %index808, %i.ms                ; 4 uses
+  %i.ox = add nuw i64 %index808, %i.ms            ; 4 uses
   %i.oy = getelementptr inbounds [4 x i8], ptr %i.ib, i64 %i.ox
   %wide.load809 = load <8 x float>, ptr %i.oy, align 4, !tbaa !11, !alias.scope !138
   %i.oz = fmul reassoc nsz arcp contract afn <8 x float> %wide.load809, splat (float 2.000000e+00)
@@ -935,7 +935,7 @@ vec.epilog.scalar.ph802.prol:                     ; preds = %vec.epilog.scalar.p
   %i.qa = fadd reassoc nsz arcp contract afn float %i.pt, %i.pz
   %i.qb = getelementptr inbounds nuw [4 x i8], ptr %i.ak, i64 %indvars.iv69.i.ph
   store float %i.qa, ptr %i.qb, align 4, !tbaa !11
-  %indvars.iv.next70.i.prol = add nsw i64 %indvars.iv69.i.ph, 1
+  %indvars.iv.next70.i.prol = add nuw nsw i64 %indvars.iv69.i.ph, 1
   br label %vec.epilog.scalar.ph802.prol.loopexit
 
 vec.epilog.scalar.ph802.prol.loopexit:            ; preds = %vec.epilog.scalar.ph802.prol, %vec.epilog.scalar.ph802.preheader
@@ -981,7 +981,7 @@ vec.epilog.scalar.ph802:                          ; preds = %vec.epilog.scalar.p
   %i.rc = fadd reassoc nsz arcp contract afn float %i.qv, %i.rb
   %i.rd = getelementptr inbounds nuw [4 x i8], ptr %i.ak, i64 %indvars.iv69.i
   store float %i.rc, ptr %i.rd, align 4, !tbaa !11
-  %indvars.iv.next70.i = add nsw i64 %indvars.iv69.i, 1 ; 4 uses
+  %indvars.iv.next70.i = add nuw nsw i64 %indvars.iv69.i, 1 ; 4 uses
   %i.re = getelementptr inbounds [4 x i8], ptr %i.ib, i64 %indvars.iv.next70.i
   %i.rf = load float, ptr %i.re, align 4, !tbaa !11
   %i.rg = fmul reassoc nsz arcp contract afn float %i.rf, 2.000000e+00
@@ -998,7 +998,7 @@ vec.epilog.scalar.ph802:                          ; preds = %vec.epilog.scalar.p
   %i.rr = fadd reassoc nsz arcp contract afn float %i.rk, %i.rq
   %i.rs = getelementptr inbounds nuw [4 x i8], ptr %i.ak, i64 %indvars.iv.next70.i
   store float %i.rr, ptr %i.rs, align 4, !tbaa !11
-  %indvars.iv.next70.i.1 = add nsw i64 %indvars.iv69.i, 2 ; 2 uses
+  %indvars.iv.next70.i.1 = add nuw nsw i64 %indvars.iv69.i, 2 ; 2 uses
   %exitcond73.not.i.1 = icmp eq i64 %indvars.iv.next70.i.1, %i.cw
   br i1 %exitcond73.not.i.1, label %_ZN6LibRaw13hat_transformEPfS0_iii.exit, label %vec.epilog.scalar.ph802, !llvm.loop !151
 
@@ -1401,7 +1401,7 @@ vector.ph561:                                     ; preds = %vector.main.loop.it
 
 vector.body563:                                   ; preds = %vector.body563, %vector.ph561
   %index564 = phi i64 [ 0, %vector.ph561 ], [ %index.next580, %vector.body563 ] ; 2 uses
-  %i.zi = add i64 %index564, %i.yn                ; 4 uses
+  %i.zi = add nuw i64 %index564, %i.yn            ; 4 uses
   %i.zj = getelementptr inbounds [4 x i8], ptr %i.ud, i64 %i.zi ; 4 uses
   %i.zk = getelementptr inbounds nuw i8, ptr %i.zj, i64 32
   %i.zl = getelementptr inbounds nuw i8, ptr %i.zj, i64 64
@@ -1476,7 +1476,7 @@ vec.epilog.ph589:                                 ; preds = %vector.main.loop.it
 
 vec.epilog.vector.body591:                        ; preds = %vec.epilog.vector.body591, %vec.epilog.ph589
   %index592 = phi i64 [ %vec.epilog.resume.val583, %vec.epilog.ph589 ], [ %index.next597, %vec.epilog.vector.body591 ] ; 2 uses
-  %i.aat = add i64 %index592, %i.yn               ; 4 uses
+  %i.aat = add nuw i64 %index592, %i.yn           ; 4 uses
   %i.aau = getelementptr inbounds [4 x i8], ptr %i.ud, i64 %i.aat
   %wide.load593 = load <8 x float>, ptr %i.aau, align 4, !tbaa !11, !alias.scope !172
   %i.aav = fmul reassoc nsz arcp contract afn <8 x float> %wide.load593, splat (float 2.000000e+00)
@@ -1530,7 +1530,7 @@ vec.epilog.scalar.ph586.prol:                     ; preds = %vec.epilog.scalar.p
   %i.abz = fadd reassoc nsz arcp contract afn float %i.abr, %i.aby
   %i.aca = getelementptr inbounds nuw [4 x i8], ptr %i.ak, i64 %indvars.iv69.i265.ph
   store float %i.abz, ptr %i.aca, align 4, !tbaa !11
-  %indvars.iv.next70.i266.prol = add nsw i64 %indvars.iv69.i265.ph, 1
+  %indvars.iv.next70.i266.prol = add nuw nsw i64 %indvars.iv69.i265.ph, 1
   br label %vec.epilog.scalar.ph586.prol.loopexit
 
 vec.epilog.scalar.ph586.prol.loopexit:            ; preds = %vec.epilog.scalar.ph586.prol, %vec.epilog.scalar.ph586.preheader
@@ -1582,7 +1582,7 @@ vec.epilog.scalar.ph586:                          ; preds = %vec.epilog.scalar.p
   %i.adh = fadd reassoc nsz arcp contract afn float %i.acz, %i.adg
   %i.adi = getelementptr inbounds nuw [4 x i8], ptr %i.ak, i64 %indvars.iv69.i265
   store float %i.adh, ptr %i.adi, align 4, !tbaa !11
-  %indvars.iv.next70.i266 = add nsw i64 %indvars.iv69.i265, 1 ; 4 uses
+  %indvars.iv.next70.i266 = add nuw nsw i64 %indvars.iv69.i265, 1 ; 4 uses
   %i.adj = mul nsw i64 %indvars.iv.next70.i266, %i.cw
   %i.adk = getelementptr inbounds [4 x i8], ptr %i.ud, i64 %i.adj
   %i.adl = load float, ptr %i.adk, align 4, !tbaa !11
@@ -1602,7 +1602,7 @@ vec.epilog.scalar.ph586:                          ; preds = %vec.epilog.scalar.p
   %i.adz = fadd reassoc nsz arcp contract afn float %i.adr, %i.ady
   %i.aea = getelementptr inbounds nuw [4 x i8], ptr %i.ak, i64 %indvars.iv.next70.i266
   store float %i.adz, ptr %i.aea, align 4, !tbaa !11
-  %indvars.iv.next70.i266.1 = add nsw i64 %indvars.iv69.i265, 2 ; 2 uses
+  %indvars.iv.next70.i266.1 = add nuw nsw i64 %indvars.iv69.i265, 2 ; 2 uses
   %exitcond73.not.i267.1 = icmp eq i64 %indvars.iv.next70.i266.1, %i.cx
   br i1 %exitcond73.not.i267.1, label %_ZN6LibRaw13hat_transformEPfS0_iii.exit281, label %vec.epilog.scalar.ph586, !llvm.loop !185
 
