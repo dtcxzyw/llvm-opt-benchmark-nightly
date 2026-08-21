@@ -205,16 +205,19 @@ bb.am:                                            ; preds = %bb.al
   %i.cn = load ptr, ptr %i.cm, align 8, !tbaa !29
   %i.co = call i32 @strcasecmp(ptr noundef %i.cn, ptr noundef nonnull @.str.105) #34
   %.not93.i = icmp eq i32 %i.co, 0
-  br i1 %.not93.i, label %.lr.ph148.i, label %bb.as
+  br i1 %.not93.i, label %.lr.ph148.preheader.i, label %bb.as
+
+.lr.ph148.preheader.i:                            ; preds = %bb.am
+  %sext170.i = zext nneg i32 %i.bz to i64
+  br label %.lr.ph148.i
 
 bb.an:                                            ; preds = %bb.ar
   %indvars.iv.next169.i = add nuw nsw i64 %indvars.iv168.i, 2 ; 2 uses
-  %5 = trunc nuw i64 %indvars.iv.next169.i to i32
-  %6 = icmp sgt i32 %i.bz, %5
-  br i1 %6, label %.lr.ph148.i, label %isSensitiveCommand.exit, !llvm.loop !394
+  %5 = icmp samesign ult i64 %indvars.iv.next169.i, %sext170.i
+  br i1 %5, label %.lr.ph148.i, label %isSensitiveCommand.exit, !llvm.loop !394
 
-.lr.ph148.i:                                      ; preds = %bb.am, %bb.an
-  %indvars.iv168.i = phi i64 [ %indvars.iv.next169.i, %bb.an ], [ 2, %bb.am ] ; 2 uses
+.lr.ph148.i:                                      ; preds = %bb.an, %.lr.ph148.preheader.i
+  %indvars.iv168.i = phi i64 [ 2, %.lr.ph148.preheader.i ], [ %indvars.iv.next169.i, %bb.an ] ; 2 uses
   %i.cp = getelementptr inbounds nuw [8 x i8], ptr %i.cb, i64 %indvars.iv168.i
   %i.cq = load ptr, ptr %i.cp, align 8, !tbaa !29 ; 5 uses
   %i.cr = call i32 @strcasecmp(ptr noundef %i.cq, ptr noundef nonnull @.str.904) #34
@@ -248,16 +251,19 @@ bb.as:                                            ; preds = %bb.am, %bb.al
 bb.at:                                            ; preds = %bb.as
   %i.cx = call i32 @strcasecmp(ptr noundef %i.cc, ptr noundef nonnull @.str.909) #34
   %.not99.i = icmp eq i32 %i.cx, 0
-  br i1 %.not99.i, label %.lr.ph146.i, label %bb.aw
+  br i1 %.not99.i, label %.lr.ph146.preheader.i, label %bb.aw
+
+.lr.ph146.preheader.i:                            ; preds = %bb.at
+  %sext.i = zext nneg i32 %i.bz to i64
+  br label %.lr.ph146.i
 
 bb.au:                                            ; preds = %bb.av
   %indvars.iv.next166.i = add nuw nsw i64 %indvars.iv165.i, 2 ; 2 uses
-  %7 = trunc nuw i64 %indvars.iv.next166.i to i32
-  %8 = icmp sgt i32 %i.bz, %7
-  br i1 %8, label %.lr.ph146.i, label %.thread.i, !llvm.loop !395
+  %6 = icmp samesign ult i64 %indvars.iv.next166.i, %sext.i
+  br i1 %6, label %.lr.ph146.i, label %.thread.i, !llvm.loop !395
 
-.lr.ph146.i:                                      ; preds = %bb.at, %bb.au
-  %indvars.iv165.i = phi i64 [ %indvars.iv.next166.i, %bb.au ], [ 2, %bb.at ] ; 3 uses
+.lr.ph146.i:                                      ; preds = %bb.au, %.lr.ph146.preheader.i
+  %indvars.iv165.i = phi i64 [ 2, %.lr.ph146.preheader.i ], [ %indvars.iv.next166.i, %bb.au ] ; 3 uses
   %i.cy = trunc nuw nsw i64 %indvars.iv165.i to i32
   %i.cz = xor i32 %i.cy, -1
   %i.da = add i32 %i.bz, %i.cz                    ; 2 uses
@@ -660,8 +666,8 @@ bb.ac:                                            ; preds = %bb.ac, %.lr.ph.i.i.
   %i.dc = load i64, ptr %i.db, align 8, !tbaa !70
   %i.dd = getelementptr inbounds [8 x i8], ptr %i.cd, i64 %i.cz
   store i64 %i.dc, ptr %i.dd, align 8, !tbaa !26
-  %i.de = add nuw i64 %.069106.i.i, 2             ; 2 uses
-  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
+  %i.de = add nuw nsw i64 %.069106.i.i, 2         ; 2 uses
+  %niter.next.1 = add nuw nsw i64 %niter, 2       ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.i.i.loopexit.unr-lcssa, label %bb.ac, !llvm.loop !523
 
@@ -1064,7 +1070,7 @@ hi_sdslen.exit:                                   ; preds = %.peel.next, %bb.r, 
   %.0.i = phi i64 [ %i.ca, %bb.v ], [ %i.bp, %bb.r ], [ %i.bs, %bb.s ], [ %i.bv, %bb.t ], [ %i.by, %bb.u ], [ 0, %.peel.next ]
   %i.cb = tail call ptr @hi_sdscatlen(ptr noundef %i.bf, ptr noundef nonnull %i.bj, i64 noundef %.0.i) #32 ; 2 uses
   tail call void @hi_sdsfree(ptr noundef nonnull %i.bj) #32
-  %i.cc = add nuw i64 %.064, 1                    ; 2 uses
+  %i.cc = add nuw nsw i64 %.064, 1                ; 2 uses
   %i.cd = load i64, ptr %i.ag, align 8, !tbaa !33
   %i.ce = icmp ult i64 %i.cc, %i.cd
   br i1 %i.ce, label %.peel.next, label %.loopexit, !llvm.loop !539

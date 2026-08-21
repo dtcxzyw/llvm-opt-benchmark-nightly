@@ -29,10 +29,14 @@ target triple = "x86_64-pc-linux-gnu"
 define i32 @ff_ac3_find_syncword(ptr nofree noundef readonly captures(none) %0, i32 noundef %1) local_unnamed_addr #0 {
 bb.a:
   %i.a = icmp sgt i32 %1, 1
-  br i1 %i.a, label %.lr.ph, label %.loopexit
+  br i1 %i.a, label %.lr.ph.preheader, label %.loopexit
 
-.lr.ph:                                           ; preds = %bb.a, %bb.e
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.e ], [ 1, %bb.a ] ; 4 uses
+.lr.ph.preheader:                                 ; preds = %bb.a
+  %sext = zext nneg i32 %1 to i64
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.e
+  %indvars.iv = phi i64 [ 1, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.e ] ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 %indvars.iv ; 3 uses
   %i.c = load i8, ptr %i.b, align 1, !tbaa !9     ; 3 uses
   switch i8 %i.c, label %bb.e [
@@ -60,17 +64,17 @@ bb.d:                                             ; preds = %bb.b
   br i1 %i.m, label %.loopexit.loopexit.split.loop.exit, label %bb.e
 
 bb.e:                                             ; preds = %.lr.ph, %bb.d
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %indvars = trunc i64 %indvars.iv.next to i32    ; 2 uses
-  %2 = icmp sgt i32 %1, %indvars
-  br i1 %2, label %.lr.ph, label %.loopexit, !llvm.loop !10
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 2 ; 3 uses
+  %2 = icmp samesign ult i64 %indvars.iv.next, %sext
+  br i1 %2, label %.lr.ph, label %.loopexit.loopexit.split.loop.exit, !llvm.loop !10
 
-.loopexit.loopexit.split.loop.exit:               ; preds = %bb.d
-  %i.n = trunc nuw nsw i64 %indvars.iv to i32
+.loopexit.loopexit.split.loop.exit:               ; preds = %bb.d, %bb.e
+  %.1.ph.in = phi i64 [ %indvars.iv, %bb.d ], [ %indvars.iv.next, %bb.e ]
+  %i.n = trunc i64 %.1.ph.in to i32
   br label %.loopexit
 
-.loopexit:                                        ; preds = %bb.e, %.loopexit.loopexit.split.loop.exit, %bb.a, %bb.c
-  %.1 = phi i32 [ %i.i, %bb.c ], [ 1, %bb.a ], [ %i.n, %.loopexit.loopexit.split.loop.exit ], [ %indvars, %bb.e ] ; 2 uses
+.loopexit:                                        ; preds = %.loopexit.loopexit.split.loop.exit, %bb.a, %bb.c
+  %.1 = phi i32 [ %i.i, %bb.c ], [ 1, %bb.a ], [ %i.n, %.loopexit.loopexit.split.loop.exit ] ; 2 uses
   %.not = icmp slt i32 %.1, %1
   %.1. = select i1 %.not, i32 %.1, i32 -1094995529
   ret i32 %.1.

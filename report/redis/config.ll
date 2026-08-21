@@ -204,10 +204,14 @@ bb.g:                                             ; preds = %bb.f
   br label %bb.h
 
 bb.h:                                             ; preds = %.sink.split, %bb.f
-  br i1 %i.r, label %.lr.ph43, label %.loopexit
+  br i1 %i.r, label %.lr.ph43.preheader, label %.loopexit
 
-.lr.ph43:                                         ; preds = %bb.h, %.lr.ph43
-  %indvars.iv45 = phi i64 [ %indvars.iv.next46, %.lr.ph43 ], [ 0, %bb.h ] ; 2 uses
+.lr.ph43.preheader:                               ; preds = %bb.h
+  %sext = zext nneg i32 %.0275153 to i64
+  br label %.lr.ph43
+
+.lr.ph43:                                         ; preds = %.lr.ph43.preheader, %.lr.ph43
+  %indvars.iv45 = phi i64 [ 0, %.lr.ph43.preheader ], [ %indvars.iv.next46, %.lr.ph43 ] ; 2 uses
   %i.t = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv45 ; 2 uses
   %i.u = load ptr, ptr %i.t, align 8, !tbaa !19
   %i.v = call i64 @__isoc23_strtoll(ptr noundef %i.u, ptr noundef null, i32 noundef 10) #25
@@ -231,9 +235,8 @@ bb.h:                                             ; preds = %.sink.split, %bb.f
   %i.ak = add nsw i32 %i.ag, 1
   store i32 %i.ak, ptr getelementptr inbounds nuw (i8, ptr @server, i64 6936), align 8, !tbaa !56
   %indvars.iv.next46 = add nuw nsw i64 %indvars.iv45, 2 ; 2 uses
-  %4 = trunc nuw i64 %indvars.iv.next46 to i32
-  %5 = icmp sgt i32 %.0275153, %4
-  br i1 %5, label %.lr.ph43, label %.loopexit, !llvm.loop !237
+  %4 = icmp samesign ult i64 %indvars.iv.next46, %sext
+  br i1 %4, label %.lr.ph43, label %.loopexit, !llvm.loop !237
 
 .loopexit:                                        ; preds = %.lr.ph43, %bb.h, %.critedge, %.thread
   %.2 = phi i32 [ 0, %.thread ], [ 0, %.critedge ], [ 1, %bb.h ], [ 1, %.lr.ph43 ]

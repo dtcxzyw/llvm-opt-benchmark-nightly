@@ -202,25 +202,27 @@ bb.h:                                             ; preds = %bb.e
 .lr.ph157.i:                                      ; preds = %bb.h
   %.not.i142.i = icmp eq ptr %i.e, null           ; 2 uses
   %i.u = getelementptr i8, ptr %i.e, i64 8        ; 2 uses
+  %zext.i = zext i32 %i.t to i64
   %umax.i = tail call i32 @llvm.umax.i32(i32 %i.t, i32 2)
+  %wide.trip.count.i = zext i32 %umax.i to i64
   %i.v = icmp eq i32 %1, 0
   %spec.select.i = select i1 %i.v, ptr @.str.54, ptr @.str.55 ; 3 uses
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.ab, %.lr.ph157.i
-  %.0127155.i = phi i32 [ 1, %.lr.ph157.i ], [ %3, %bb.ab ] ; 3 uses
-  %3 = add nuw i32 %.0127155.i, 1                 ; 5 uses
-  %i.w = icmp ult i32 %3, %i.t
-  %4 = sext i32 %.0127155.i to i64                ; 2 uses
+  %indvars.iv.i = phi i64 [ 1, %.lr.ph157.i ], [ %indvars.iv.next.i, %bb.ab ] ; 4 uses
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 4 uses
+  %i.w = icmp samesign ult i64 %indvars.iv.next.i, %zext.i
   br i1 %i.w, label %.lr.ph.i, label %._crit_edge.i
 
 .lr.ph.i:                                         ; preds = %bb.i
-  %i.x = getelementptr [18 x i8], ptr %i.r, i64 %4 ; 7 uses
+  %i.x = getelementptr [18 x i8], ptr %i.r, i64 %indvars.iv.i ; 7 uses
   %i.y = getelementptr i8, ptr %i.x, i64 5        ; 4 uses
   %i.z = getelementptr i8, ptr %i.x, i64 13       ; 2 uses
   %i.aa = getelementptr i8, ptr %i.x, i64 14      ; 2 uses
   %i.ab = getelementptr i8, ptr %i.x, i64 15      ; 2 uses
   %i.ac = getelementptr i8, ptr %i.x, i64 16      ; 2 uses
+  %3 = trunc nuw nsw i64 %indvars.iv.next.i to i32 ; 2 uses
   br i1 %.not.i142.i, label %.lr.ph.split.us.i, label %.lr.ph.split.i
 
 .lr.ph.split.us.i:                                ; preds = %.lr.ph.i, %bb.k
@@ -331,11 +333,12 @@ bb.m:                                             ; preds = %__drm_to_dev.exit14
   br i1 %exitcond.not.i, label %._crit_edge.i, label %.lr.ph.split.i, !llvm.loop !13
 
 ._crit_edge.i:                                    ; preds = %bb.m, %bb.k, %bb.i
-  %i.cy = getelementptr [18 x i8], ptr %i.r, i64 %4 ; 12 uses
+  %i.cy = getelementptr [18 x i8], ptr %i.r, i64 %indvars.iv.i ; 12 uses
   %i.cz = load i32, ptr %i.cy, align 1            ; 7 uses
-  %5 = add i32 %.0127155.i, -1
-  %6 = sext i32 %5 to i64
-  %i.da = getelementptr [18 x i8], ptr %i.r, i64 %6 ; 11 uses
+  %4 = shl nuw i64 %indvars.iv.i, 32
+  %sext.i = add i64 %4, -4294967296
+  %5 = ashr exact i64 %sext.i, 32
+  %i.da = getelementptr [18 x i8], ptr %i.r, i64 %5 ; 11 uses
   %i.db = load i32, ptr %i.da, align 1            ; 3 uses
   %i.dc = icmp ult i32 %i.cz, %i.db
   br i1 %i.dc, label %bb.ab, label %bb.n
@@ -460,7 +463,7 @@ __drm_to_dev.exit147.i:                           ; preds = %bb.aa, %bb.z
   br label %validate_fw_table_type.exit
 
 bb.ab:                                            ; preds = %bb.y, %bb.w, %bb.u, %bb.q, %bb.o, %._crit_edge.i
-  %exitcond165.not.i = icmp eq i32 %3, %umax.i
+  %exitcond165.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
   br i1 %exitcond165.not.i, label %.loopexit.loopexit, label %bb.i, !llvm.loop !15
 
 validate_fw_table_type.exit:                      ; preds = %__drm_to_dev.exit147.i, %intel_uc_fw_type_repr.exit.i

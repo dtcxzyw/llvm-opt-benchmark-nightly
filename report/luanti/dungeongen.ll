@@ -202,8 +202,9 @@ bb.v:                                             ; preds = %bb.u
   br label %.preheader.us.us.us
 
 .preheader.us.us.us:                              ; preds = %._crit_edge404.us.us.us, %.preheader385.us.us
-  %.0104405.us.us.us = phi i16 [ 1, %.preheader385.us.us ], [ %3, %._crit_edge404.us.us.us ] ; 2 uses
-  %i.jz = add i16 %.0104405.us.us.us, %.sroa.8.0.extract.trunc ; 3 uses
+  %indvars.iv433 = phi i32 [ %indvars.iv.next434, %._crit_edge404.us.us.us ], [ 1, %.preheader385.us.us ] ; 2 uses
+  %3 = trunc nsw i32 %indvars.iv433 to i16
+  %i.jz = add i16 %3, %.sroa.8.0.extract.trunc    ; 3 uses
   %i.ka = sext i16 %i.jz to i32
   br label %bb.w
 
@@ -277,8 +278,9 @@ _ZNK9VoxelArea8containsEN4core8vector3dIsEE.exit246.thread.us.us.us: ; preds = %
   br i1 %i.lq, label %bb.w, label %._crit_edge404.us.us.us, !llvm.loop !149
 
 ._crit_edge404.us.us.us:                          ; preds = %_ZNK9VoxelArea8containsEN4core8vector3dIsEE.exit246.thread.us.us.us
-  %3 = add i16 %.0104405.us.us.us, 1              ; 2 uses
-  %4 = sext i16 %3 to i32
+  %indvars.iv.next434 = add i32 %indvars.iv433, 1 ; 2 uses
+  %sext = shl i32 %indvars.iv.next434, 16
+  %4 = ashr exact i32 %sext, 16
   %i.lr = icmp sgt i32 %i.jt, %4
   br i1 %i.lr, label %.preheader.us.us.us, label %._crit_edge406.split.us.us.us, !llvm.loop !150
 
@@ -681,9 +683,10 @@ _ZNK4core8vector3dIsEeqERKS1_.exit66.thread:      ; preds = %_ZNK4core8vector3dI
   br label %.preheader.us.us.us
 
 .preheader.us.us.us:                              ; preds = %.thread177.us.us.us, %.preheader199.us.us
-  %.043210.us.us.us = phi i16 [ 1, %.preheader199.us.us ], [ %9, %.thread177.us.us.us ] ; 2 uses
-  %.146209.us.us.us = phi i1 [ %.045211.us.us, %.preheader199.us.us ], [ %.449.us.us.us, %.thread177.us.us.us ]
-  %i.bx = add i16 %.043210.us.us.us, %.sroa.9.3   ; 3 uses
+  %indvars.iv234 = phi i32 [ %indvars.iv.next235, %.thread177.us.us.us ], [ 1, %.preheader199.us.us ] ; 3 uses
+  %.146209.us.us.us = phi i1 [ %.449.us.us.us, %.thread177.us.us.us ], [ %.045211.us.us, %.preheader199.us.us ]
+  %7 = trunc nsw i32 %indvars.iv234 to i16
+  %i.bx = add i16 %.sroa.9.3, %7                  ; 3 uses
   %.not7.i.us.us.us = icmp sgt i16 %i.bl, %i.bx
   %.not8.i.us.us.us = icmp slt i16 %i.bn, %i.bx
   %i.by = sext i16 %i.bx to i32
@@ -694,14 +697,16 @@ _ZNK4core8vector3dIsEeqERKS1_.exit66.thread:      ; preds = %_ZNK4core8vector3dI
   br i1 %i.ca, label %.thread177.us.us.us, label %.lr.ph.split.us.us.us
 
 bb.j:                                             ; preds = %bb.l
-  %7 = add i16 %.042201.us.us.us, 1               ; 2 uses
-  %8 = sext i16 %7 to i32
+  %indvars.iv.next = add i32 %indvars.iv, 1       ; 2 uses
+  %sext = shl i32 %indvars.iv.next, 16
+  %8 = ashr exact i32 %sext, 16
   %i.cb = icmp sgt i32 %i.o, %8
   br i1 %i.cb, label %.lr.ph.split.us.us.us, label %.thread177.us.us.us, !llvm.loop !156
 
 .lr.ph.split.us.us.us:                            ; preds = %.preheader.us.us.us, %bb.j
-  %.042201.us.us.us = phi i16 [ %7, %bb.j ], [ 1, %.preheader.us.us.us ] ; 2 uses
-  %i.cc = add i16 %.042201.us.us.us, %.sroa.0106.3 ; 3 uses
+  %indvars.iv = phi i32 [ %indvars.iv.next, %bb.j ], [ 1, %.preheader.us.us.us ] ; 2 uses
+  %9 = trunc nsw i32 %indvars.iv to i16
+  %i.cc = add i16 %.sroa.0106.3, %9               ; 3 uses
   %.not.i.us.us.us = icmp sgt i16 %i.bh, %i.cc
   %.not6.i.us.us.us = icmp slt i16 %i.bj, %i.cc
   %or.cond.i.us.us.us = select i1 %.not.i.us.us.us, i1 true, i1 %.not6.i.us.us.us
@@ -738,9 +743,11 @@ bb.l:                                             ; preds = %_ZNK9VoxelArea8cont
 
 .thread177.us.us.us:                              ; preds = %.lr.ph.split.us.us.us, %bb.l, %bb.j, %_ZNK9VoxelArea8containsEN4core8vector3dIsEE.exit.us.us.us, %bb.k, %.preheader.us.us.us
   %.449.us.us.us = phi i1 [ false, %.preheader.us.us.us ], [ %.146209.us.us.us, %bb.j ], [ false, %_ZNK9VoxelArea8containsEN4core8vector3dIsEE.exit.us.us.us ], [ false, %bb.k ], [ false, %bb.l ], [ false, %.lr.ph.split.us.us.us ] ; 3 uses
-  %9 = add i16 %.043210.us.us.us, 1               ; 2 uses
-  %10 = sext i16 %9 to i32
-  %i.cu = icmp sgt i32 %i.m, %10
+  %10 = shl i32 %indvars.iv234, 16
+  %sext239 = add i32 %10, 65536
+  %11 = ashr exact i32 %sext239, 16
+  %i.cu = icmp sgt i32 %i.m, %11
+  %indvars.iv.next235 = add i32 %indvars.iv234, 1
   br i1 %i.cu, label %.preheader.us.us.us, label %._crit_edge.split.us.us.us, !llvm.loop !157
 
 ._crit_edge.split.us.us.us:                       ; preds = %.thread177.us.us.us

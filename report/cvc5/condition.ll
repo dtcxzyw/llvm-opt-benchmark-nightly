@@ -166,6 +166,7 @@ bb.a:
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 504 ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 512 ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 1080 ; 2 uses
+  %zext = zext i32 %i.o to i64
   %i.v = add nsw i32 %i.l, 1
   br label %bb.b
 
@@ -179,15 +180,16 @@ bb.a:
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 472
   %i.x = load ptr, ptr %i.w, align 8, !tbaa !164
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 712
+  %zext1379 = zext i32 %.pre1376 to i64
   br label %bb.q
 
 bb.b:                                             ; preds = %.lr.ph, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit
-  %.sroa.0570.01027 = phi i32 [ 1, %.lr.ph ], [ %4, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit ] ; 7 uses
+  %indvars.iv = phi i64 [ 1, %.lr.ph ], [ %indvars.iv.next, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit ] ; 4 uses
+  %indvars1376 = trunc i64 %indvars.iv to i32     ; 4 uses
   %2 = load ptr, ptr %i.p, align 8, !tbaa !164    ; 2 uses
-  %3 = sext i32 %.sroa.0570.01027 to i64
-  %i.z = getelementptr inbounds i8, ptr %2, i64 %3
+  %i.z = getelementptr inbounds nuw i8, ptr %2, i64 %indvars.iv
   %i.aa = load i8, ptr %i.z, align 1, !tbaa !165  ; 2 uses
-  %i.ab = tail call noundef i32 @llvm.abs.i32(i32 %.sroa.0570.01027, i1 true)
+  %i.ab = tail call noundef i32 @llvm.abs.i32(i32 %indvars1376, i1 true)
   %i.ac = zext nneg i32 %i.ab to i64              ; 7 uses
   %i.ad = load ptr, ptr %i.q, align 8, !tbaa !172
   %i.ae = getelementptr inbounds nuw [16 x i8], ptr %i.ad, i64 %i.ac ; 2 uses
@@ -201,8 +203,8 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.ag = icmp slt i8 %i.aa, 0
-  %i.ah = sub nsw i32 0, %.sroa.0570.01027
-  %i.ai = select i1 %i.ag, i32 %i.ah, i32 %.sroa.0570.01027 ; 4 uses
+  %i.ah = sub nsw i32 0, %indvars1376
+  %i.ai = select i1 %i.ag, i32 %i.ah, i32 %indvars1376 ; 4 uses
   %i.aj = load ptr, ptr %i.r, align 8, !tbaa !175
   %i.ak = getelementptr inbounds nuw [4 x i8], ptr %i.aj, i64 %i.ac
   %i.al = load i32, ptr %i.ak, align 1
@@ -283,7 +285,7 @@ bb.j:                                             ; preds = %bb.i
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.i
-  %i.ca = tail call noundef i32 @_ZN7CaDiCaL8Internal12decide_phaseEib(ptr noundef nonnull align 8 dereferenceable(5704) %0, i32 noundef %.sroa.0570.01027, i1 noundef zeroext true) ; 4 uses
+  %i.ca = tail call noundef i32 @_ZN7CaDiCaL8Internal12decide_phaseEib(ptr noundef nonnull align 8 dereferenceable(5704) %0, i32 noundef %indvars1376, i1 noundef zeroext true) ; 4 uses
   %i.cb = load ptr, ptr %i.p, align 8, !tbaa !164
   %i.cc = sext i32 %i.ca to i64
   %i.cd = getelementptr inbounds i8, ptr %i.cb, i64 %i.cc
@@ -355,8 +357,8 @@ _ZNSt6vectorIiSaIiEE17_M_realloc_insertIJRKiEEEvN9__gnu_cxx17__normal_iteratorIP
   br label %_ZNSt6vectorIiSaIiEE9push_backERKi.exit
 
 _ZNSt6vectorIiSaIiEE9push_backERKi.exit:          ; preds = %bb.f, %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJRKiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i, %bb.l, %_ZN7CaDiCaL8Internal6frozenEi.exit, %bb.g, %_ZN7CaDiCaL8Internal6frozenEi.exit388, %_ZN7CaDiCaL8Internal6frozenEi.exit388.thread, %bb.c
-  %4 = add i32 %.sroa.0570.01027, 1
-  %.not648 = icmp eq i32 %.sroa.0570.01027, %i.o
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
+  %.not648 = icmp eq i64 %indvars.iv, %zext
   br i1 %.not648, label %._crit_edge, label %bb.b
 
 ._crit_edge1033:                                  ; preds = %bb.s, %bb.a, %._crit_edge
@@ -384,29 +386,29 @@ _ZNSt6vectorIiSaIiEE9push_backERKi.exit:          ; preds = %bb.f, %_ZNSt6vector
   br label %bb.t
 
 bb.q:                                             ; preds = %.lr.ph1032, %bb.s
-  %.sroa.0197.01030.a = phi i64 [ 0, %.lr.ph1032 ], [ %.sroa.0197.1, %bb.s ] ; 2 uses
-  %.sroa.0564.01029 = phi i32 [ 1, %.lr.ph1032 ], [ %6, %bb.s ] ; 4 uses
-  %5 = sext i32 %.sroa.0564.01029 to i64
-  %i.dr = getelementptr inbounds i8, ptr %i.x, i64 %5
+  %.sroa.0197.01030.a = phi i64 [ 1, %.lr.ph1032 ], [ %indvars.iv.next1378, %bb.s ] ; 4 uses
+  %.sroa.0197.01030 = phi i64 [ 0, %.lr.ph1032 ], [ %.sroa.0197.1, %bb.s ] ; 2 uses
+  %i.dr = getelementptr inbounds nuw i8, ptr %i.x, i64 %.sroa.0197.01030.a
   %i.ds = load i8, ptr %i.dr, align 1, !tbaa !165
   %.not373 = icmp eq i8 %i.ds, 0
   br i1 %.not373, label %bb.s, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
-  %i.dt = tail call noundef i32 @llvm.abs.i32(i32 %.sroa.0564.01029, i1 true)
+  %3 = trunc nsw i64 %.sroa.0197.01030.a to i32
+  %i.dt = tail call noundef i32 @llvm.abs.i32(i32 %3, i1 true)
   %i.du = zext nneg i32 %i.dt to i64
   %i.dv = load ptr, ptr %i.y, align 8, !tbaa !172
   %i.dw = getelementptr inbounds nuw [16 x i8], ptr %i.dv, i64 %i.du
   %i.dx = load i32, ptr %i.dw, align 8, !tbaa !173
   %.not374 = icmp ne i32 %i.dx, 0
   %i.dy = zext i1 %.not374 to i64
-  %spec.select386 = add i64 %.sroa.0197.01030.a, %i.dy
+  %spec.select386 = add i64 %.sroa.0197.01030, %i.dy
   br label %bb.s
 
 bb.s:                                             ; preds = %bb.r, %bb.q
-  %.sroa.0197.1 = phi i64 [ %spec.select386, %bb.r ], [ %.sroa.0197.01030.a, %bb.q ] ; 2 uses
-  %6 = add i32 %.sroa.0564.01029, 1
-  %.not649 = icmp eq i32 %.sroa.0564.01029, %.pre1376
+  %.sroa.0197.1 = phi i64 [ %spec.select386, %bb.r ], [ %.sroa.0197.01030, %bb.q ] ; 2 uses
+  %indvars.iv.next1378 = add nuw nsw i64 %.sroa.0197.01030.a, 1
+  %.not649 = icmp eq i64 %.sroa.0197.01030.a, %zext1379
   br i1 %.not649, label %._crit_edge1033, label %bb.q
 
 ._crit_edge1066.loopexit:                         ; preds = %_ZNSt6vectorIPN7CaDiCaL6ClauseESaIS2_EE9push_backERKS2_.exit403.thread

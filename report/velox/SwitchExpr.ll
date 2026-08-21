@@ -205,10 +205,14 @@ _ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE10_M_releaseEv.exit.i.i.i1
 
 _ZNSt10shared_ptrIKN8facebook5velox4TypeEEaSERKS4_.exit109.us: ; preds = %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE10_M_releaseEv.exit.i.i.i107.us, %bb.aq
   %.not1.i.us = icmp eq i64 %indvars.iv264, 0
-  br i1 %.not1.i.us, label %_ZNSt10shared_ptrIKN8facebook5velox4TypeEEaSERKS4_.exit.us, label %.lr.ph.i.us.a
+  br i1 %.not1.i.us, label %_ZNSt10shared_ptrIKN8facebook5velox4TypeEEaSERKS4_.exit.us, label %.lr.ph.i.us
 
-.lr.ph.i.us.a:                                    ; preds = %_ZNSt10shared_ptrIKN8facebook5velox4TypeEEaSERKS4_.exit109.us, %_ZNSt10shared_ptrIKN8facebook5velox4TypeEEaSERKS4_.exit.i.us
-  %indvars.iv.i.us = phi i64 [ %indvars.iv.next.i.us, %_ZNSt10shared_ptrIKN8facebook5velox4TypeEEaSERKS4_.exit.i.us ], [ 1, %_ZNSt10shared_ptrIKN8facebook5velox4TypeEEaSERKS4_.exit109.us ] ; 2 uses
+.lr.ph.i.us:                                      ; preds = %_ZNSt10shared_ptrIKN8facebook5velox4TypeEEaSERKS4_.exit109.us
+  %16 = add nsw i64 %i.ca, -1
+  br label %.lr.ph.i.us.a
+
+.lr.ph.i.us.a:                                    ; preds = %_ZNSt10shared_ptrIKN8facebook5velox4TypeEEaSERKS4_.exit.i.us, %.lr.ph.i.us
+  %indvars.iv.i.us = phi i64 [ 1, %.lr.ph.i.us ], [ %indvars.iv.next.i.us, %_ZNSt10shared_ptrIKN8facebook5velox4TypeEEaSERKS4_.exit.i.us ] ; 2 uses
   %i.es = load ptr, ptr %3, align 8, !tbaa !112
   %i.et = getelementptr inbounds nuw [16 x i8], ptr %i.es, i64 %indvars.iv.i.us ; 2 uses
   %i.eu = load ptr, ptr %0, align 8, !tbaa !13
@@ -295,8 +299,8 @@ _ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE10_M_releaseEv.exit.i.i.i.
 
 _ZNSt10shared_ptrIKN8facebook5velox4TypeEEaSERKS4_.exit.i.us: ; preds = %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE10_M_releaseEv.exit.i.i.i.i.us, %.lr.ph.i.us.a
   %indvars.iv.next.i.us = add nuw nsw i64 %indvars.iv.i.us, 2 ; 2 uses
-  %16 = icmp samesign ult i64 %indvars.iv.next.i.us, %i.ca
-  br i1 %16, label %.lr.ph.i.us.a, label %_ZNSt10shared_ptrIKN8facebook5velox4TypeEEaSERKS4_.exit.us, !llvm.loop !371
+  %17 = icmp samesign ugt i64 %indvars.iv.next.i.us, %16
+  br i1 %17, label %_ZNSt10shared_ptrIKN8facebook5velox4TypeEEaSERKS4_.exit.us, label %.lr.ph.i.us.a, !llvm.loop !371
 
 _ZNSt10shared_ptrIKN8facebook5velox4TypeEEaSERKS4_.exit.us: ; preds = %_ZNSt10shared_ptrIKN8facebook5velox4TypeEEaSERKS4_.exit.i.us, %_ZNSt10shared_ptrIKN8facebook5velox4TypeEEaSERKS4_.exit109.us, %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE10_M_releaseEv.exit.i.i.i.us, %bb.ad, %bb.aa
   %indvars.iv.next265 = add nuw nsw i64 %indvars.iv264, 1 ; 2 uses
@@ -699,10 +703,14 @@ _ZNSt10shared_ptrIKN8facebook5velox4TypeEEaSERKS4_.exit148: ; preds = %bb.ct, %_
   %i.li = trunc i64 %i.i to i32
   %i.lj = add i32 %i.li, -2                       ; 2 uses
   %.not1.i149 = icmp slt i32 %i.lj, 1
-  br i1 %.not1.i149, label %_ZNSt10shared_ptrIKN8facebook5velox4TypeEEaSERKS4_.exit137, label %.lr.ph.i150.a
+  br i1 %.not1.i149, label %_ZNSt10shared_ptrIKN8facebook5velox4TypeEEaSERKS4_.exit137, label %.lr.ph.i150
 
-.lr.ph.i150.a:                                    ; preds = %_ZNSt10shared_ptrIKN8facebook5velox4TypeEEaSERKS4_.exit148, %_ZNSt10shared_ptrIKN8facebook5velox4TypeEEaSERKS4_.exit.i161
-  %indvars.iv.i151 = phi i64 [ %indvars.iv.next.i162, %_ZNSt10shared_ptrIKN8facebook5velox4TypeEEaSERKS4_.exit.i161 ], [ 1, %_ZNSt10shared_ptrIKN8facebook5velox4TypeEEaSERKS4_.exit148 ] ; 2 uses
+.lr.ph.i150:                                      ; preds = %_ZNSt10shared_ptrIKN8facebook5velox4TypeEEaSERKS4_.exit148
+  %sext.i151 = zext nneg i32 %i.lj to i64
+  br label %.lr.ph.i150.a
+
+.lr.ph.i150.a:                                    ; preds = %_ZNSt10shared_ptrIKN8facebook5velox4TypeEEaSERKS4_.exit.i161, %.lr.ph.i150
+  %indvars.iv.i151 = phi i64 [ 1, %.lr.ph.i150 ], [ %indvars.iv.next.i162, %_ZNSt10shared_ptrIKN8facebook5velox4TypeEEaSERKS4_.exit.i161 ] ; 2 uses
   %i.lk = load ptr, ptr %3, align 8, !tbaa !112
   %i.ll = getelementptr inbounds nuw [16 x i8], ptr %i.lk, i64 %indvars.iv.i151 ; 2 uses
   %i.lm = load ptr, ptr %0, align 8, !tbaa !13
@@ -789,9 +797,8 @@ _ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE10_M_releaseEv.exit.i.i.i.
 
 _ZNSt10shared_ptrIKN8facebook5velox4TypeEEaSERKS4_.exit.i161: ; preds = %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE10_M_releaseEv.exit.i.i.i.i160, %.lr.ph.i150.a
   %indvars.iv.next.i162 = add nuw nsw i64 %indvars.iv.i151, 2 ; 2 uses
-  %17 = trunc nuw i64 %indvars.iv.next.i162 to i32
-  %.not.i163 = icmp slt i32 %i.lj, %17
-  br i1 %.not.i163, label %_ZNSt10shared_ptrIKN8facebook5velox4TypeEEaSERKS4_.exit137, label %.lr.ph.i150.a, !llvm.loop !371
+  %18 = icmp samesign ugt i64 %indvars.iv.next.i162, %sext.i151
+  br i1 %18, label %_ZNSt10shared_ptrIKN8facebook5velox4TypeEEaSERKS4_.exit137, label %.lr.ph.i150.a, !llvm.loop !371
 
 bb.do:                                            ; preds = %bb.cr
   %i.ml = landingpad { ptr, i32 }

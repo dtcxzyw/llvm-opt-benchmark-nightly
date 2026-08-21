@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.f
   br i1 %i.dq, label %.preheader.i, label %bilateral_me.exit, !llvm.loop !141
 
 bilateral_me.exit:                                ; preds = %._crit_edge31.i, %.preheader27.lr.ph.i, %bb.g
-  %i.dr = phi i32 [ %i.ci, %bb.g ], [ %i.ci, %.preheader27.lr.ph.i ], [ %i.dn, %._crit_edge31.i ] ; 13 uses
+  %i.dr = phi i32 [ %i.ci, %bb.g ], [ %i.ci, %.preheader27.lr.ph.i ], [ %i.dn, %._crit_edge31.i ] ; 10 uses
   %i.ds = getelementptr inbounds nuw i8, ptr %.16.val.72.val, i64 260
   %i.dt = load i32, ptr %i.ds, align 4, !tbaa !96
   %i.du = icmp eq i32 %i.dt, 1
@@ -431,18 +431,18 @@ bb.j:                                             ; preds = %bb.j, %.epil.prehea
   store i32 %i.hw, ptr %i.hx, align 8, !tbaa !145
   %i.hy = getelementptr inbounds nuw i8, ptr %.16.val.72.val, i64 3424 ; 4 uses
   %i.hz = getelementptr inbounds nuw i8, ptr %.16.val.72.val, i64 3488 ; 3 uses
-  %i.ia = load i32, ptr %i.hz, align 8, !tbaa !84 ; 11 uses
+  %i.ia = load i32, ptr %i.hz, align 8, !tbaa !84 ; 8 uses
   %i.ib = icmp sgt i32 %i.ia, 0
   br i1 %i.ib, label %.split.us.split.us.i, label %cluster_mvs.exit
 
 .split.us.split.us.i:                             ; preds = %.split.us.i
   %i.ic = load ptr, ptr %i.hy, align 8, !tbaa !20 ; 5 uses
-  %i.id = zext nneg i32 %i.ia to i64              ; 7 uses
-  %i.ie = zext nneg i32 %i.dr to i64              ; 2 uses
+  %i.id = zext nneg i32 %i.ia to i64              ; 10 uses
+  %i.ie = zext nneg i32 %i.dr to i64              ; 5 uses
   br label %.preheader214.us.us.us.i
 
 .preheader214.us.us.us.i:                         ; preds = %.preheader214.us.us.us.i.backedge, %.split.us.split.us.i
-  %indvars.iv304.i = phi i64 [ 0, %.split.us.split.us.i ], [ %indvars.iv304.i.be, %.preheader214.us.us.us.i.backedge ] ; 7 uses
+  %indvars.iv304.i = phi i64 [ 0, %.split.us.split.us.i ], [ %indvars.iv304.i.be, %.preheader214.us.us.us.i.backedge ] ; 10 uses
   %indvars.iv293.i = phi i32 [ -1, %.split.us.split.us.i ], [ %indvars.iv293.i.be, %.preheader214.us.us.us.i.backedge ] ; 5 uses
   %.1170231.us.us.us.i = phi i32 [ 0, %.split.us.split.us.i ], [ %.3.us.us.us.i, %.preheader214.us.us.us.i.backedge ]
   %.0175230.us.us.us.i = phi i32 [ 0, %.split.us.split.us.i ], [ %.0175230.us.us.us.i.be, %.preheader214.us.us.us.i.backedge ]
@@ -453,41 +453,44 @@ bb.j:                                             ; preds = %bb.j, %.epil.prehea
   %i.ii = add nuw nsw i64 %indvars.iv304.i, 1     ; 3 uses
   %.not198.us.us.us.i = icmp samesign ult i64 %i.ii, %i.ie
   %i.ij = trunc i64 %indvars.iv304.i to i32       ; 4 uses
-  %i.ik = add i32 %i.ij, 2                        ; 2 uses
+  %i.ik = add i32 %i.ij, 2
   %i.il = select i1 %.not198.us.us.us.i, i32 %i.ik, i32 %i.dr
   %i.im = sext i32 %i.il to i64                   ; 2 uses
   %.not333.i = icmp sgt i64 %indvars.iv304.i, %i.im
   %i.in = tail call i32 @llvm.smax.i32(i32 %indvars.iv293.i, i32 1)
   %smax297.1.i = add nsw i32 %i.in, -1
   %i.io = zext nneg i32 %smax297.1.i to i64
-  %i.ip = add nsw i64 %indvars.iv304.i, -2
-  %.not198.us.us.us.1.i = icmp sgt i32 %i.dr, %i.ik
-  %i.iq = add i32 %i.ij, 3                        ; 2 uses
-  %i.ir = select i1 %.not198.us.us.us.1.i, i32 %i.iq, i32 %i.dr
+  %1 = add nsw i64 %indvars.iv304.i, -2
+  %i.ip = add nuw nsw i64 %indvars.iv304.i, 2
+  %2 = icmp samesign ult i64 %i.ip, %i.ie
+  %i.iq = add i32 %i.ij, 3
+  %i.ir = select i1 %2, i32 %i.iq, i32 %i.dr
   %i.is = sext i32 %i.ir to i64                   ; 2 uses
-  %i.it = icmp slt i64 %i.ip, %i.is
+  %i.it = icmp slt i64 %1, %i.is
   %i.iu = tail call i32 @llvm.smax.i32(i32 %indvars.iv293.i, i32 2)
   %smax297.2.i = add nsw i32 %i.iu, -2
   %i.iv = zext nneg i32 %smax297.2.i to i64
-  %i.iw = add nsw i64 %indvars.iv304.i, -3
-  %.not198.us.us.us.2.i = icmp sgt i32 %i.dr, %i.iq
-  %i.ix = add i32 %i.ij, 4                        ; 2 uses
-  %i.iy = select i1 %.not198.us.us.us.2.i, i32 %i.ix, i32 %i.dr
+  %3 = add nsw i64 %indvars.iv304.i, -3
+  %i.iw = add nuw nsw i64 %indvars.iv304.i, 3
+  %4 = icmp samesign ult i64 %i.iw, %i.ie
+  %i.ix = add i32 %i.ij, 4
+  %i.iy = select i1 %4, i32 %i.ix, i32 %i.dr
   %i.iz = sext i32 %i.iy to i64                   ; 2 uses
-  %i.ja = icmp slt i64 %i.iw, %i.iz
+  %i.ja = icmp slt i64 %3, %i.iz
   %i.jb = tail call i32 @llvm.smax.i32(i32 %indvars.iv293.i, i32 3)
   %smax297.3.i = add nsw i32 %i.jb, -3
   %i.jc = zext nneg i32 %smax297.3.i to i64
-  %i.jd = add nsw i64 %indvars.iv304.i, -4
-  %.not198.us.us.us.3.i = icmp sgt i32 %i.dr, %i.ix
+  %5 = add nsw i64 %indvars.iv304.i, -4
+  %i.jd = add nuw nsw i64 %indvars.iv304.i, 4
+  %6 = icmp samesign ult i64 %i.jd, %i.ie
   %i.je = add i32 %i.ij, 5
-  %i.jf = select i1 %.not198.us.us.us.3.i, i32 %i.je, i32 %i.dr
+  %i.jf = select i1 %6, i32 %i.je, i32 %i.dr
   %i.jg = sext i32 %i.jf to i64                   ; 2 uses
-  %i.jh = icmp slt i64 %i.jd, %i.jg
+  %i.jh = icmp slt i64 %5, %i.jg
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.s, %.preheader214.us.us.us.i
-  %indvars.iv301.i = phi i64 [ %indvars.iv.next302.i, %bb.s ], [ 0, %.preheader214.us.us.us.i ] ; 11 uses
+  %indvars.iv301.i = phi i64 [ %indvars.iv.next302.i, %bb.s ], [ 0, %.preheader214.us.us.us.i ] ; 14 uses
   %indvars.iv.i123 = phi i32 [ %indvars.iv.next.i124, %bb.s ], [ -1, %.preheader214.us.us.us.i ] ; 5 uses
   %.2227.us.us.us.i = phi i32 [ %.3.us.us.us.i, %bb.s ], [ %.1170231.us.us.us.i, %.preheader214.us.us.us.i ] ; 5 uses
   %.1176226.us.us.us.i = phi i32 [ %.2177.us.us.us.i, %bb.s ], [ %.0175230.us.us.us.i, %.preheader214.us.us.us.i ] ; 3 uses
@@ -540,11 +543,11 @@ bb.n:                                             ; preds = %bb.m, %bb.l
 
 .lr.ph221.us.us.us.1.i:                           ; preds = %._crit_edge222.us.us.us.i
   %i.kk = add nsw i64 %indvars.iv301.i, -2
-  %1 = trunc i64 %indvars.iv301.i to i32          ; 2 uses
-  %2 = add i32 %1, 2
-  %.not199.us.us.us.1.i = icmp sgt i32 %i.ia, %2
-  %i.kl = add i32 %1, 3
-  %i.km = select i1 %.not199.us.us.us.1.i, i32 %i.kl, i32 %i.ia
+  %7 = add nuw nsw i64 %indvars.iv301.i, 2
+  %8 = icmp samesign ult i64 %7, %i.id
+  %9 = trunc i64 %indvars.iv301.i to i32
+  %i.kl = add i32 %9, 3
+  %i.km = select i1 %8, i32 %i.kl, i32 %i.ia
   %i.kn = sext i32 %i.km to i64                   ; 2 uses
   %i.ko = icmp slt i64 %i.kk, %i.kn
   br i1 %i.ko, label %.lr.ph.us.us.us.us.1.i, label %._crit_edge222.us.us.us.1.i
@@ -585,11 +588,11 @@ bb.o:                                             ; preds = %bb.o, %.lr.ph.us.us
 
 .lr.ph221.us.us.us.2.i:                           ; preds = %._crit_edge222.us.us.us.1.i
   %i.kz = add nsw i64 %indvars.iv301.i, -3
-  %3 = trunc i64 %indvars.iv301.i to i32          ; 2 uses
-  %4 = add i32 %3, 3
-  %.not199.us.us.us.2.i = icmp sgt i32 %i.ia, %4
-  %i.la = add i32 %3, 4
-  %i.lb = select i1 %.not199.us.us.us.2.i, i32 %i.la, i32 %i.ia
+  %10 = add nuw nsw i64 %indvars.iv301.i, 3
+  %11 = icmp samesign ult i64 %10, %i.id
+  %12 = trunc i64 %indvars.iv301.i to i32
+  %i.la = add i32 %12, 4
+  %i.lb = select i1 %11, i32 %i.la, i32 %i.ia
   %i.lc = sext i32 %i.lb to i64                   ; 2 uses
   %i.ld = icmp slt i64 %i.kz, %i.lc
   br i1 %i.ld, label %.lr.ph.us.us.us.us.2.i, label %._crit_edge222.us.us.us.2.i
@@ -630,11 +633,11 @@ bb.p:                                             ; preds = %bb.p, %.lr.ph.us.us
 
 .lr.ph221.us.us.us.3.i:                           ; preds = %._crit_edge222.us.us.us.2.i
   %i.lo = add nsw i64 %indvars.iv301.i, -4
-  %5 = trunc i64 %indvars.iv301.i to i32          ; 2 uses
-  %6 = add i32 %5, 4
-  %.not199.us.us.us.3.i = icmp sgt i32 %i.ia, %6
-  %i.lp = add i32 %5, 5
-  %i.lq = select i1 %.not199.us.us.us.3.i, i32 %i.lp, i32 %i.ia
+  %13 = add nuw nsw i64 %indvars.iv301.i, 4
+  %14 = icmp samesign ult i64 %13, %i.id
+  %15 = trunc i64 %indvars.iv301.i to i32
+  %i.lp = add i32 %15, 5
+  %i.lq = select i1 %14, i32 %i.lp, i32 %i.ia
   %i.lr = sext i32 %i.lq to i64                   ; 2 uses
   %i.ls = icmp slt i64 %i.lo, %i.lr
   br i1 %i.ls, label %.lr.ph.us.us.us.us.3.i, label %._crit_edge222.us.us.us.3.i

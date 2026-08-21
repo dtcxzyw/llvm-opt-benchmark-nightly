@@ -205,8 +205,8 @@ bb.be:                                            ; preds = %bb.be, %.lr.ph.i.i1
   %i.ho = trunc i64 %i.hn to i32
   store i32 %i.ho, ptr %i.hj, align 4, !tbaa !65
   %i.hp = lshr i64 %i.hn, 32                      ; 3 uses
-  %i.hq = add nuw i64 %.013.i.i, 2                ; 2 uses
-  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
+  %i.hq = add nuw nsw i64 %.013.i.i, 2            ; 2 uses
+  %niter.next.1 = add nuw nsw i64 %niter, 2       ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.i.i.unr-lcssa, label %bb.be, !llvm.loop !379
 
@@ -302,8 +302,8 @@ bb.bi:                                            ; preds = %bb.bi, %.lr.ph.i.i1
   %i.iy = trunc i64 %i.ix to i32
   store i32 %i.iy, ptr %i.it, align 4, !tbaa !65
   %i.iz = lshr i64 %i.ix, 32                      ; 3 uses
-  %i.ja = add nuw i64 %.013.i.i181, 2             ; 2 uses
-  %niter1097.next.1 = add nuw i64 %niter1097, 2   ; 2 uses
+  %i.ja = add nuw nsw i64 %.013.i.i181, 2         ; 2 uses
+  %niter1097.next.1 = add nuw nsw i64 %niter1097, 2 ; 2 uses
   %niter1097.ncmp.1 = icmp eq i64 %niter1097.next.1, %unroll_iter1096
   br i1 %niter1097.ncmp.1, label %._crit_edge.i.i184.unr-lcssa, label %bb.bi, !llvm.loop !379
 
@@ -399,8 +399,8 @@ bb.bm:                                            ; preds = %bb.bm, %.lr.ph.i.i1
   %i.kh = trunc i64 %i.kg to i32
   store i32 %i.kh, ptr %i.kc, align 4, !tbaa !65
   %i.ki = lshr i64 %i.kg, 32                      ; 3 uses
-  %i.kj = add nuw i64 %.013.i.i195, 2             ; 2 uses
-  %niter1104.next.1 = add nuw i64 %niter1104, 2   ; 2 uses
+  %i.kj = add nuw nsw i64 %.013.i.i195, 2         ; 2 uses
+  %niter1104.next.1 = add nuw nsw i64 %niter1104, 2 ; 2 uses
   %niter1104.ncmp.1 = icmp eq i64 %niter1104.next.1, %unroll_iter1103
   br i1 %niter1104.ncmp.1, label %._crit_edge.i.i198.unr-lcssa, label %bb.bm, !llvm.loop !379
 
@@ -803,8 +803,8 @@ bb.cx:                                            ; preds = %bb.cx, %.lr.ph.i.i2
   %i.rd = trunc i64 %i.rc to i32
   store i32 %i.rd, ptr %i.qy, align 4, !tbaa !65
   %i.re = lshr i64 %i.rc, 32                      ; 3 uses
-  %i.rf = add nuw i64 %.013.i.i250, 2             ; 2 uses
-  %niter1125.next.1 = add nuw i64 %niter1125, 2   ; 2 uses
+  %i.rf = add nuw nsw i64 %.013.i.i250, 2         ; 2 uses
+  %niter1125.next.1 = add nuw nsw i64 %niter1125, 2 ; 2 uses
   %niter1125.ncmp.1 = icmp eq i64 %niter1125.next.1, %unroll_iter1124
   br i1 %niter1125.ncmp.1, label %._crit_edge.i.i253.unr-lcssa, label %bb.cx, !llvm.loop !379
 
@@ -896,8 +896,8 @@ bb.da:                                            ; preds = %bb.da, %.lr.ph.i.i2
   %i.sm = trunc i64 %i.sl to i32
   store i32 %i.sm, ptr %i.sh, align 4, !tbaa !65
   %i.sn = lshr i64 %i.sl, 32                      ; 3 uses
-  %i.so = add nuw i64 %.013.i.i264, 2             ; 2 uses
-  %niter1132.next.1 = add nuw i64 %niter1132, 2   ; 2 uses
+  %i.so = add nuw nsw i64 %.013.i.i264, 2         ; 2 uses
+  %niter1132.next.1 = add nuw nsw i64 %niter1132, 2 ; 2 uses
   %niter1132.ncmp.1 = icmp eq i64 %niter1132.next.1, %unroll_iter1131
   br i1 %niter1132.ncmp.1, label %._crit_edge.i.i267.unr-lcssa, label %bb.da, !llvm.loop !379
 
@@ -995,8 +995,8 @@ bb.de:                                            ; preds = %bb.de, %.lr.ph.i.i2
   %i.tv = trunc i64 %i.tu to i32
   store i32 %i.tv, ptr %i.tq, align 4, !tbaa !65
   %i.tw = lshr i64 %i.tu, 32                      ; 3 uses
-  %i.tx = add nuw i64 %.013.i.i278, 2             ; 2 uses
-  %niter1139.next.1 = add nuw i64 %niter1139, 2   ; 2 uses
+  %i.tx = add nuw nsw i64 %.013.i.i278, 2         ; 2 uses
+  %niter1139.next.1 = add nuw nsw i64 %niter1139, 2 ; 2 uses
   %niter1139.ncmp.1 = icmp eq i64 %niter1139.next.1, %unroll_iter1138
   br i1 %niter1139.ncmp.1, label %._crit_edge.i.i281.unr-lcssa, label %bb.de, !llvm.loop !379
 
@@ -1096,8 +1096,8 @@ bb.dj:                                            ; preds = %bb.dj, %.lr.ph.i.i2
   %i.vi = trunc i64 %i.vh to i32
   store i32 %i.vi, ptr %i.vd, align 4, !tbaa !65
   %i.vj = lshr i64 %i.vh, 32                      ; 3 uses
-  %i.vk = add nuw i64 %.013.i.i292, 2             ; 2 uses
-  %niter1118.next.1 = add nuw i64 %niter1118, 2   ; 2 uses
+  %i.vk = add nuw nsw i64 %.013.i.i292, 2         ; 2 uses
+  %niter1118.next.1 = add nuw nsw i64 %niter1118, 2 ; 2 uses
   %niter1118.ncmp.1 = icmp eq i64 %niter1118.next.1, %unroll_iter1117
   br i1 %niter1118.ncmp.1, label %._crit_edge.i.i295.unr-lcssa, label %bb.dj, !llvm.loop !379
 
@@ -1343,8 +1343,8 @@ bb.dz:                                            ; preds = %bb.dz, %.lr.ph.i.i3
   %i.zc = trunc i64 %i.zb to i32
   store i32 %i.zc, ptr %i.yx, align 4, !tbaa !65
   %i.zd = lshr i64 %i.zb, 32                      ; 3 uses
-  %i.ze = add nuw i64 %.013.i.i330, 2             ; 2 uses
-  %niter1111.next.1 = add nuw i64 %niter1111, 2   ; 2 uses
+  %i.ze = add nuw nsw i64 %.013.i.i330, 2         ; 2 uses
+  %niter1111.next.1 = add nuw nsw i64 %niter1111, 2 ; 2 uses
   %niter1111.ncmp.1 = icmp eq i64 %niter1111.next.1, %unroll_iter1110
   br i1 %niter1111.ncmp.1, label %._crit_edge.i.i333.unr-lcssa, label %bb.dz, !llvm.loop !379
 
@@ -1747,8 +1747,8 @@ bb.g:                                             ; preds = %bb.g, %.lr.ph.i.i.n
   %i.aw = trunc i64 %i.av to i32
   store i32 %i.aw, ptr %i.ar, align 4, !tbaa !65
   %i.ax = lshr i64 %i.av, 32                      ; 3 uses
-  %i.ay = add nuw i64 %.013.i.i, 2                ; 2 uses
-  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
+  %i.ay = add nuw nsw i64 %.013.i.i, 2            ; 2 uses
+  %niter.next.1 = add nuw nsw i64 %niter, 2       ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.i.i.unr-lcssa, label %bb.g, !llvm.loop !379
 
@@ -2100,8 +2100,8 @@ bb.h:                                             ; preds = %bb.h, %.lr.ph.i13.n
   store i32 %i.eg, ptr %i.ea, align 4, !tbaa !65
   %i.eh = lshr i64 %i.ef, 63                      ; 2 uses
   %i.ei = add nsw i32 %.01222.i, 2                ; 3 uses
-  %i.ej = add nuw i64 %.023.i, 2                  ; 2 uses
-  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
+  %i.ej = add nuw nsw i64 %.023.i, 2              ; 2 uses
+  %niter.next.1 = add nuw nsw i64 %niter, 2       ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.preheader.i.unr-lcssa, label %bb.h, !llvm.loop !458
 
@@ -2470,6 +2470,7 @@ _ZN3fmt2v919basic_memory_bufferIjLm32ESaIjEE6resizeEm.exit: ; preds = %_ZN3fmt2v
   %i.ap = load ptr, ptr %i.e, align 8             ; 6 uses
   %sext = shl i64 %i.b, 32
   %i.aq = ashr exact i64 %sext, 32                ; 2 uses
+  %2 = add nsw i32 %i.c, 1
   %i.ar = add i32 %i.c, -2
   %invariant.op = sub i32 1, %i.c
   %indvars.iv85.prol = add nsw i64 %i.aq, -1      ; 2 uses
@@ -2591,7 +2592,7 @@ bb.q:                                             ; preds = %.critedge.i
 
 bb.r:                                             ; preds = %.lr.ph61, %._crit_edge
   %indvar = phi i32 [ 0, %.lr.ph61 ], [ %indvar.next, %._crit_edge ] ; 3 uses
-  %indvars.iv81 = phi i32 [ 1, %.lr.ph61 ], [ %indvars.iv.next82, %._crit_edge ] ; 3 uses
+  %indvars.iv81 = phi i64 [ 1, %.lr.ph61 ], [ %indvars.iv.next82, %._crit_edge ] ; 4 uses
   %.03360 = phi i32 [ %i.c, %.lr.ph61 ], [ %i.dz, %._crit_edge ] ; 3 uses
   %.259 = phi i128 [ %.037.lcssa, %.lr.ph61 ], [ %i.dy, %._crit_edge ] ; 3 uses
   %.reass.reass = add i32 %.03360, %invariant.op
@@ -2599,15 +2600,14 @@ bb.r:                                             ; preds = %.lr.ph61, %._crit_e
   br i1 %i.cp, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.r
-  %2 = sext i32 %indvars.iv81 to i64              ; 3 uses
   %i.cq = sub i32 %indvar, %i.c
   %i.cr = and i32 %i.cq, 1
   %lcmp.mod151.not.not = icmp eq i32 %i.cr, 0
   br i1 %lcmp.mod151.not.not, label %.lr.ph.prol, label %.lr.ph.prol.loopexit
 
 .lr.ph.prol:                                      ; preds = %.lr.ph.preheader
-  %indvars.iv.next84.prol = add nsw i64 %2, 1
-  %i.cs = getelementptr inbounds [4 x i8], ptr %i.ap, i64 %2
+  %indvars.iv.next84.prol = add nuw nsw i64 %indvars.iv81, 1
+  %i.cs = getelementptr inbounds nuw [4 x i8], ptr %i.ap, i64 %indvars.iv81
   %i.ct = load i32, ptr %i.cs, align 4, !tbaa !65
   %i.cu = zext i32 %i.ct to i64
   %i.cv = load i32, ptr %i.as, align 4, !tbaa !65
@@ -2620,7 +2620,7 @@ bb.r:                                             ; preds = %.lr.ph61, %._crit_e
 .lr.ph.prol.loopexit:                             ; preds = %.lr.ph.prol, %.lr.ph.preheader
   %.lcssa145.unr = phi i128 [ poison, %.lr.ph.preheader ], [ %i.cz, %.lr.ph.prol ]
   %indvars.iv85.in.unr = phi i64 [ %i.aq, %.lr.ph.preheader ], [ %indvars.iv85.prol, %.lr.ph.prol ]
-  %indvars.iv83.unr = phi i64 [ %2, %.lr.ph.preheader ], [ %indvars.iv.next84.prol, %.lr.ph.prol ]
+  %indvars.iv83.unr = phi i64 [ %indvars.iv81, %.lr.ph.preheader ], [ %indvars.iv.next84.prol, %.lr.ph.prol ]
   %.355.unr = phi i128 [ %.259, %.lr.ph.preheader ], [ %i.cz, %.lr.ph.prol ]
   %i.da = icmp eq i32 %i.ar, %indvar
   br i1 %i.da, label %._crit_edge, label %.lr.ph
@@ -2629,7 +2629,7 @@ bb.r:                                             ; preds = %.lr.ph61, %._crit_e
   %indvars.iv85.in = phi i64 [ %indvars.iv85.1, %.lr.ph ], [ %indvars.iv85.in.unr, %.lr.ph.prol.loopexit ] ; 2 uses
   %indvars.iv83 = phi i64 [ %indvars.iv.next84.1, %.lr.ph ], [ %indvars.iv83.unr, %.lr.ph.prol.loopexit ] ; 3 uses
   %.355 = phi i128 [ %i.du, %.lr.ph ], [ %.355.unr, %.lr.ph.prol.loopexit ]
-  %i.db = getelementptr inbounds [4 x i8], ptr %i.ap, i64 %indvars.iv83
+  %i.db = getelementptr inbounds nuw [4 x i8], ptr %i.ap, i64 %indvars.iv83
   %i.dc = load i32, ptr %i.db, align 4, !tbaa !65
   %i.dd = zext i32 %i.dc to i64
   %i.de = getelementptr [4 x i8], ptr %i.ap, i64 %indvars.iv85.in
@@ -2640,9 +2640,9 @@ bb.r:                                             ; preds = %.lr.ph61, %._crit_e
   %i.dj = zext i64 %i.di to i128
   %i.dk = add i128 %.355, %i.dj
   %indvars.iv85.1 = add nsw i64 %indvars.iv85.in, -2 ; 2 uses
-  %indvars.iv.next84.1 = add nsw i64 %indvars.iv83, 2 ; 2 uses
-  %i.dl = getelementptr [4 x i8], ptr %i.ap, i64 %indvars.iv83
-  %i.dm = getelementptr i8, ptr %i.dl, i64 4
+  %indvars.iv.next84.1 = add nuw nsw i64 %indvars.iv83, 2 ; 2 uses
+  %i.dl = getelementptr inbounds nuw [4 x i8], ptr %i.ap, i64 %indvars.iv83
+  %i.dm = getelementptr inbounds nuw i8, ptr %i.dl, i64 4
   %i.dn = load i32, ptr %i.dm, align 4, !tbaa !65
   %i.do = zext i32 %i.dn to i64
   %i.dp = getelementptr inbounds [4 x i8], ptr %i.ap, i64 %indvars.iv85.1
@@ -2663,8 +2663,9 @@ bb.r:                                             ; preds = %.lr.ph61, %._crit_e
   store i32 %i.dx, ptr %i.dw, align 4, !tbaa !65
   %i.dy = lshr i128 %.3.lcssa, 32
   %i.dz = add nsw i32 %.03360, 1
-  %indvars.iv.next82 = add i32 %indvars.iv81, 1
-  %exitcond91.not = icmp eq i32 %indvars.iv81, %i.c
+  %indvars.iv.next82 = add nuw nsw i64 %indvars.iv81, 1 ; 2 uses
+  %lftr.wideiv = trunc i64 %indvars.iv.next82 to i32
+  %exitcond91.not = icmp eq i32 %2, %lftr.wideiv
   %indvar.next = add i32 %indvar, 1
   br i1 %exitcond91.not, label %._crit_edge62.loopexit, label %bb.r, !llvm.loop !468
 
@@ -3067,13 +3068,17 @@ bb.at:                                            ; preds = %bb.ar
 bb.au:                                            ; preds = %bb.am
   %i.hr = icmp sgt i32 %i.fs, 1
   %indvars.iv.next310 = add nuw nsw i64 %indvars.iv309, 1
-  br i1 %i.hr, label %bb.ab, label %_ZN3fmt2v96detail18gen_digits_handler8on_digitEcmmmb.exit115, !llvm.loop !746
+  br i1 %i.hr, label %bb.ab, label %_ZN3fmt2v96detail18gen_digits_handler8on_digitEcmmmb.exit115.preheader, !llvm.loop !746
 
-_ZN3fmt2v96detail18gen_digits_handler8on_digitEcmmmb.exit115: ; preds = %bb.au, %bb.av
-  %i.hs = phi i32 [ %i.hz, %bb.av ], [ %i.gl, %bb.au ]
-  %indvars.iv312 = phi i64 [ %indvars.iv.next313, %bb.av ], [ %indvars.iv309, %bb.au ] ; 4 uses
-  %.045.i = phi i64 [ %i.hu, %bb.av ], [ 1, %bb.au ] ; 2 uses
-  %.042.i = phi i64 [ %i.hy, %bb.av ], [ %i.el, %bb.au ]
+_ZN3fmt2v96detail18gen_digits_handler8on_digitEcmmmb.exit115.preheader: ; preds = %bb.au
+  %sext = zext nneg i32 %.sroa.33.0 to i64
+  br label %_ZN3fmt2v96detail18gen_digits_handler8on_digitEcmmmb.exit115
+
+_ZN3fmt2v96detail18gen_digits_handler8on_digitEcmmmb.exit115: ; preds = %_ZN3fmt2v96detail18gen_digits_handler8on_digitEcmmmb.exit115.preheader, %bb.av
+  %i.hs = phi i32 [ %i.gl, %_ZN3fmt2v96detail18gen_digits_handler8on_digitEcmmmb.exit115.preheader ], [ %i.hz, %bb.av ]
+  %indvars.iv312 = phi i64 [ %indvars.iv309, %_ZN3fmt2v96detail18gen_digits_handler8on_digitEcmmmb.exit115.preheader ], [ %indvars.iv.next313, %bb.av ] ; 4 uses
+  %.045.i = phi i64 [ 1, %_ZN3fmt2v96detail18gen_digits_handler8on_digitEcmmmb.exit115.preheader ], [ %i.hu, %bb.av ] ; 2 uses
+  %.042.i = phi i64 [ %i.el, %_ZN3fmt2v96detail18gen_digits_handler8on_digitEcmmmb.exit115.preheader ], [ %i.hy, %bb.av ]
   %i.ht = mul i64 %.042.i, 10                     ; 2 uses
   %i.hu = mul i64 %.045.i, 10                     ; 6 uses
   %i.hv = lshr i64 %i.ht, %i.ef
@@ -3081,19 +3086,19 @@ _ZN3fmt2v96detail18gen_digits_handler8on_digitEcmmmb.exit115: ; preds = %bb.au, 
   %i.hx = add i8 %i.hw, 48
   %i.hy = and i64 %i.ht, %i.ek                    ; 6 uses
   %i.hz = add nsw i32 %i.hs, -1                   ; 8 uses
-  %indvars.iv.next313 = add nuw nsw i64 %indvars.iv312, 1 ; 4 uses
+  %indvars.iv.next313 = add nuw nsw i64 %indvars.iv312, 1 ; 6 uses
   %i.ia = getelementptr inbounds nuw i8, ptr %i.ed, i64 %indvars.iv312
   store i8 %i.hx, ptr %i.ia, align 1, !tbaa !45
   %.not.i102 = icmp ult i64 %i.hu, %i.hy
-  %5 = trunc nuw i64 %indvars.iv.next313 to i32   ; 7 uses
-  br i1 %.not.i102, label %bb.av, label %_ZN3fmt2v96detail16grisu_gen_digitsENS1_8basic_fpIyEEmRiRNS1_18gen_digits_handlerE.exit.thread
+  br i1 %.not.i102, label %bb.av, label %_ZN3fmt2v96detail16grisu_gen_digitsENS1_8basic_fpIyEEmRiRNS1_18gen_digits_handlerE.exit.thread.loopexit
 
 bb.av:                                            ; preds = %_ZN3fmt2v96detail18gen_digits_handler8on_digitEcmmmb.exit115
-  %6 = icmp sgt i32 %.sroa.33.0, %5
-  br i1 %6, label %_ZN3fmt2v96detail18gen_digits_handler8on_digitEcmmmb.exit115, label %bb.aw, !llvm.loop !747
+  %5 = icmp samesign ult i64 %indvars.iv.next313, %sext
+  br i1 %5, label %_ZN3fmt2v96detail18gen_digits_handler8on_digitEcmmmb.exit115, label %bb.aw, !llvm.loop !747
 
 bb.aw:                                            ; preds = %bb.av
   %i.ib = trunc nuw nsw i64 %indvars.iv312 to i32
+  %6 = trunc nuw i64 %indvars.iv.next313 to i32   ; 5 uses
   %.not29.i = icmp ult i64 %i.hu, %i.eg
   %i.ic = sub nuw i64 %i.eg, %i.hu
   %.not30.i = icmp ult i64 %i.hu, %i.ic
@@ -3163,7 +3168,7 @@ bb.bd:                                            ; preds = %bb.bb
 
 _ZN3fmt2v96detail16grisu_gen_digitsENS1_8basic_fpIyEEmRiRNS1_18gen_digits_handlerE.exit.thread235: ; preds = %.critedge.i110, %bb.bc, %bb.bd, %bb.ay, %bb.ao, %.critedge.i, %bb.as, %bb.at, %bb.z, %bb.u
   %i.iy = phi i32 [ %i.eu, %bb.u ], [ %i.eu, %bb.z ], [ %i.hz, %bb.bc ], [ %i.hz, %bb.bd ], [ %i.hz, %.critedge.i110 ], [ %i.hz, %bb.ay ], [ %i.gl, %bb.as ], [ %i.gl, %bb.at ], [ %i.gl, %.critedge.i ], [ %i.gl, %bb.ao ]
-  %.sroa.16.2242 = phi i32 [ 0, %bb.u ], [ 1, %bb.z ], [ %i.iw, %bb.bc ], [ %5, %bb.bd ], [ %5, %.critedge.i110 ], [ %5, %bb.ay ], [ %i.hp, %bb.as ], [ %i.gp, %bb.at ], [ %i.gp, %.critedge.i ], [ %i.gp, %bb.ao ]
+  %.sroa.16.2242 = phi i32 [ 0, %bb.u ], [ 1, %bb.z ], [ %i.iw, %bb.bc ], [ %6, %bb.bd ], [ %6, %.critedge.i110 ], [ %6, %bb.ay ], [ %i.hp, %bb.as ], [ %i.gp, %bb.at ], [ %i.gp, %.critedge.i ], [ %i.gp, %bb.ao ]
   %.sroa.40.2241 = phi i32 [ %i.ee, %bb.u ], [ %i.ee, %bb.z ], [ %i.ee, %bb.bc ], [ %i.ix, %bb.bd ], [ %i.ee, %.critedge.i110 ], [ %i.ee, %bb.ay ], [ %i.ee, %bb.as ], [ %i.hq, %bb.at ], [ %i.ee, %.critedge.i ], [ %i.ee, %bb.ao ]
   %i.iz = add nsw i32 %i.iy, %.sroa.40.2241
   store i32 %i.iz, ptr %i.b, align 4, !tbaa !65
@@ -3187,10 +3192,14 @@ bb.bf:                                            ; preds = %bb.be, %_ZN3fmt2v96
   store i64 %..i116, ptr %i.jh, align 8, !tbaa !39
   br label %bb.bj
 
-_ZN3fmt2v96detail16grisu_gen_digitsENS1_8basic_fpIyEEmRiRNS1_18gen_digits_handlerE.exit.thread: ; preds = %_ZN3fmt2v96detail18gen_digits_handler8on_digitEcmmmb.exit115, %bb.ap, %.thread213, %bb.aw, %bb.az, %bb.y, %bb.x
-  %i.ji = phi i32 [ %i.eu, %bb.y ], [ %i.eu, %bb.x ], [ %i.gl, %bb.ap ], [ %i.gl, %.thread213 ], [ %i.hz, %bb.aw ], [ %i.hz, %bb.az ], [ %i.hz, %_ZN3fmt2v96detail18gen_digits_handler8on_digitEcmmmb.exit115 ]
-  %.sroa.16.2231 = phi i32 [ 0, %bb.y ], [ 0, %bb.x ], [ %i.gp, %bb.ap ], [ %i.gp, %.thread213 ], [ %5, %bb.aw ], [ %5, %bb.az ], [ %5, %_ZN3fmt2v96detail18gen_digits_handler8on_digitEcmmmb.exit115 ]
-  %.sroa.33.1230 = phi i32 [ 0, %bb.y ], [ 0, %bb.x ], [ %.sroa.33.0, %bb.ap ], [ %.sroa.33.0, %.thread213 ], [ %.sroa.33.0, %bb.aw ], [ %.sroa.33.0, %bb.az ], [ %.sroa.33.0, %_ZN3fmt2v96detail18gen_digits_handler8on_digitEcmmmb.exit115 ]
+_ZN3fmt2v96detail16grisu_gen_digitsENS1_8basic_fpIyEEmRiRNS1_18gen_digits_handlerE.exit.thread.loopexit: ; preds = %_ZN3fmt2v96detail18gen_digits_handler8on_digitEcmmmb.exit115
+  %7 = trunc nuw i64 %indvars.iv.next313 to i32
+  br label %_ZN3fmt2v96detail16grisu_gen_digitsENS1_8basic_fpIyEEmRiRNS1_18gen_digits_handlerE.exit.thread
+
+_ZN3fmt2v96detail16grisu_gen_digitsENS1_8basic_fpIyEEmRiRNS1_18gen_digits_handlerE.exit.thread: ; preds = %_ZN3fmt2v96detail16grisu_gen_digitsENS1_8basic_fpIyEEmRiRNS1_18gen_digits_handlerE.exit.thread.loopexit, %bb.ap, %.thread213, %bb.aw, %bb.az, %bb.y, %bb.x
+  %i.ji = phi i32 [ %i.eu, %bb.y ], [ %i.eu, %bb.x ], [ %i.gl, %bb.ap ], [ %i.gl, %.thread213 ], [ %i.hz, %bb.aw ], [ %i.hz, %bb.az ], [ %i.hz, %_ZN3fmt2v96detail16grisu_gen_digitsENS1_8basic_fpIyEEmRiRNS1_18gen_digits_handlerE.exit.thread.loopexit ]
+  %.sroa.16.2231 = phi i32 [ 0, %bb.y ], [ 0, %bb.x ], [ %i.gp, %bb.ap ], [ %i.gp, %.thread213 ], [ %6, %bb.aw ], [ %6, %bb.az ], [ %7, %_ZN3fmt2v96detail16grisu_gen_digitsENS1_8basic_fpIyEEmRiRNS1_18gen_digits_handlerE.exit.thread.loopexit ]
+  %.sroa.33.1230 = phi i32 [ 0, %bb.y ], [ 0, %bb.x ], [ %.sroa.33.0, %bb.ap ], [ %.sroa.33.0, %.thread213 ], [ %.sroa.33.0, %bb.aw ], [ %.sroa.33.0, %bb.az ], [ %.sroa.33.0, %_ZN3fmt2v96detail16grisu_gen_digitsENS1_8basic_fpIyEEmRiRNS1_18gen_digits_handlerE.exit.thread.loopexit ]
   %reass.sub288 = sub i32 %.sroa.16.2231, %i.dm
   %i.jj = add i32 %reass.sub288, 347
   %i.jk = add nsw i32 %i.jj, %i.ji

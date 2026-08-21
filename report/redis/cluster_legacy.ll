@@ -205,15 +205,19 @@ declare void @sdsIncrLen(ptr noundef, i64 noundef) local_unnamed_addr #2
 define dso_local ptr @representSlotInfo(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, i32 noundef %2) local_unnamed_addr #3 {
 bb.a:
   %i.a = icmp sgt i32 %2, 0
-  br i1 %i.a, label %.lr.ph, label %._crit_edge
+  br i1 %i.a, label %.lr.ph.preheader, label %._crit_edge
+
+.lr.ph.preheader:                                 ; preds = %bb.a
+  %sext = zext nneg i32 %2 to i64
+  br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %bb.d, %bb.a
   %.014.lcssa = phi ptr [ %0, %bb.a ], [ %.1, %bb.d ]
   ret ptr %.014.lcssa
 
-.lr.ph:                                           ; preds = %bb.a, %bb.d
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.d ], [ 0, %bb.a ] ; 2 uses
-  %.01418 = phi ptr [ %.1, %bb.d ], [ %0, %bb.a ] ; 2 uses
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.d
+  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.d ] ; 2 uses
+  %.01418 = phi ptr [ %0, %.lr.ph.preheader ], [ %.1, %bb.d ] ; 2 uses
   %i.b = getelementptr inbounds nuw [2 x i8], ptr %1, i64 %indvars.iv ; 2 uses
   %i.c = load i16, ptr %i.b, align 2, !tbaa !59   ; 2 uses
   %i.d = zext i16 %i.c to i64                     ; 2 uses
@@ -234,9 +238,8 @@ bb.c:                                             ; preds = %.lr.ph
 bb.d:                                             ; preds = %bb.c, %bb.b
   %.1 = phi ptr [ %i.h, %bb.b ], [ %i.j, %bb.c ]  ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %3 = trunc nuw i64 %indvars.iv.next to i32
-  %4 = icmp sgt i32 %2, %3
-  br i1 %4, label %.lr.ph, label %._crit_edge, !llvm.loop !301
+  %3 = icmp samesign ult i64 %indvars.iv.next, %sext
+  br i1 %3, label %.lr.ph, label %._crit_edge, !llvm.loop !301
 }
 
 ; Function Attrs: nounwind uwtable
@@ -481,11 +484,15 @@ bb.ab:                                            ; preds = %bb.aa
   %i.cv = getelementptr inbounds nuw i8, ptr %1, i64 2160
   %i.cw = load i32, ptr %i.cv, align 8, !tbaa !110 ; 2 uses
   %i.cx = icmp sgt i32 %i.cw, 0
-  br i1 %i.cx, label %.lr.ph.i, label %representSlotInfo.exit
+  br i1 %i.cx, label %.lr.ph.preheader.i, label %representSlotInfo.exit
 
-.lr.ph.i:                                         ; preds = %bb.ab, %bb.ae
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.ae ], [ 0, %bb.ab ] ; 2 uses
-  %.01418.i = phi ptr [ %.1.i, %bb.ae ], [ %i.cs, %bb.ab ] ; 2 uses
+.lr.ph.preheader.i:                               ; preds = %bb.ab
+  %sext.i = zext nneg i32 %i.cw to i64
+  br label %.lr.ph.i
+
+.lr.ph.i:                                         ; preds = %bb.ae, %.lr.ph.preheader.i
+  %indvars.iv.i = phi i64 [ 0, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %bb.ae ] ; 2 uses
+  %.01418.i = phi ptr [ %i.cs, %.lr.ph.preheader.i ], [ %.1.i, %bb.ae ] ; 2 uses
   %i.cy = getelementptr inbounds nuw [2 x i8], ptr %i.cu, i64 %indvars.iv.i ; 2 uses
   %i.cz = load i16, ptr %i.cy, align 2, !tbaa !59 ; 2 uses
   %i.da = zext i16 %i.cz to i64                   ; 2 uses
@@ -506,9 +513,8 @@ bb.ad:                                            ; preds = %.lr.ph.i
 bb.ae:                                            ; preds = %bb.ad, %bb.ac
   %.1.i = phi ptr [ %i.de, %bb.ac ], [ %i.dg, %bb.ad ] ; 2 uses
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 2 ; 2 uses
-  %3 = trunc nuw i64 %indvars.iv.next.i to i32
-  %4 = icmp sgt i32 %i.cw, %3
-  br i1 %4, label %.lr.ph.i, label %representSlotInfo.exit, !llvm.loop !301
+  %3 = icmp samesign ult i64 %indvars.iv.next.i, %sext.i
+  br i1 %3, label %.lr.ph.i, label %representSlotInfo.exit, !llvm.loop !301
 
 bb.af:                                            ; preds = %bb.aa
   %i.dh = getelementptr inbounds nuw i8, ptr %1, i64 2164

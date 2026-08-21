@@ -192,18 +192,19 @@ bb.e:                                             ; preds = %bb.c
   br i1 %.not23.i, label %._crit_edge.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.e, %.lr.ph.i
-  %.020.i = phi i32 [ %9, %.lr.ph.i ], [ 1, %bb.e ] ; 3 uses
-  %3 = sext i32 %.020.i to i64
-  %4 = getelementptr inbounds [4 x i8], ptr %i.e, i64 %3
-  %5 = load i32, ptr %4, align 4
-  %6 = add i32 %.020.i, -1
-  %7 = sext i32 %6 to i64
-  %8 = getelementptr inbounds [4 x i8], ptr %i.e, i64 %7
-  store i32 %5, ptr %8, align 4
-  %9 = add nuw i32 %.020.i, 1                     ; 2 uses
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %.lr.ph.i ], [ 1, %bb.e ] ; 3 uses
+  %3 = getelementptr inbounds nuw [4 x i8], ptr %i.e, i64 %indvars.iv.i
+  %4 = load i32, ptr %3, align 4
+  %5 = shl i64 %indvars.iv.i, 32
+  %sext.i = add i64 %5, -4294967296
+  %6 = ashr exact i64 %sext.i, 30
+  %7 = getelementptr inbounds i8, ptr %i.e, i64 %6
+  store i32 %4, ptr %7, align 4
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %i.i = load i32, ptr %i.f, align 4              ; 2 uses
-  %10 = icmp ult i32 %9, %i.i
-  br i1 %10, label %.lr.ph.i, label %._crit_edge.loopexit.i, !llvm.loop !9
+  %8 = trunc nsw i64 %indvars.iv.next.i to i32
+  %9 = icmp ugt i32 %i.i, %8
+  br i1 %9, label %.lr.ph.i, label %._crit_edge.loopexit.i, !llvm.loop !9
 
 ._crit_edge.loopexit.i:                           ; preds = %.lr.ph.i
   %i.j = add i32 %i.i, -1

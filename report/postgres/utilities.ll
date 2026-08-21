@@ -53,39 +53,50 @@ bb.a:
 
 .preheader21:                                     ; preds = %bb.a
   %.not33 = icmp eq i32 %3, 0
-  br i1 %.not33, label %.loopexit22, label %.lr.ph28
+  br i1 %.not33, label %.loopexit22, label %.lr.ph28.preheader
 
-.lr.ph28:                                         ; preds = %.preheader21, %.loopexit
-  %.027 = phi i32 [ %i.j, %.loopexit ], [ %3, %.preheader21 ] ; 2 uses
-  %.01826 = phi i32 [ %.2, %.loopexit ], [ %1, %.preheader21 ] ; 3 uses
+.lr.ph28.preheader:                               ; preds = %.preheader21
+  %4 = sext i32 %2 to i64
+  br label %.lr.ph28
+
+.lr.ph28:                                         ; preds = %.lr.ph28.preheader, %.loopexit
+  %.027 = phi i32 [ %i.j, %.loopexit ], [ %3, %.lr.ph28.preheader ] ; 2 uses
+  %.01826 = phi i32 [ %.2, %.loopexit ], [ %1, %.lr.ph28.preheader ] ; 3 uses
   %.not = icmp slt i32 %.01826, %2
   br i1 %.not, label %bb.b, label %.loopexit22
 
 bb.b:                                             ; preds = %.lr.ph28
-  %i.b = add nsw i32 %.01826, 1                   ; 3 uses
-  %i.c = sext i32 %.01826 to i64
+  %i.b = add nsw i32 %.01826, 1                   ; 2 uses
+  %i.c = sext i32 %.01826 to i64                  ; 2 uses
   %i.d = getelementptr inbounds i8, ptr %0, i64 %i.c
   %i.e = load i8, ptr %i.d, align 1
   %i.f = icmp ugt i8 %i.e, -65
   %i.g = icmp slt i32 %i.b, %2
   %or.cond32 = select i1 %i.f, i1 %i.g, i1 false
-  br i1 %or.cond32, label %.lr.ph, label %.loopexit
+  br i1 %or.cond32, label %.lr.ph.preheader, label %.loopexit
 
-.lr.ph:                                           ; preds = %bb.b, %bb.c
-  %.123 = phi i32 [ %5, %bb.c ], [ %i.b, %bb.b ]  ; 3 uses
-  %4 = sext i32 %.123 to i64
-  %i.h = getelementptr inbounds i8, ptr %0, i64 %4
+.lr.ph.preheader:                                 ; preds = %bb.b
+  %5 = add nsw i64 %i.c, 1
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.c
+  %indvars.iv = phi i64 [ %5, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.c ] ; 3 uses
+  %i.h = getelementptr inbounds i8, ptr %0, i64 %indvars.iv
   %i.i = load i8, ptr %i.h, align 1
   %or.cond = icmp sgt i8 %i.i, -65
-  br i1 %or.cond, label %.loopexit, label %bb.c
+  br i1 %or.cond, label %.loopexit.loopexit.split.loop.exit, label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph
-  %5 = add nsw i32 %.123, 1                       ; 2 uses
-  %exitcond.not = icmp eq i32 %5, %2
-  br i1 %exitcond.not, label %.loopexit, label %.lr.ph, !llvm.loop !3
+  %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
+  %6 = icmp slt i64 %indvars.iv.next, %4
+  br i1 %6, label %.lr.ph, label %.loopexit, !llvm.loop !3
 
-.loopexit:                                        ; preds = %bb.c, %.lr.ph, %bb.b
-  %.2 = phi i32 [ %i.b, %bb.b ], [ %.123, %.lr.ph ], [ %2, %bb.c ] ; 2 uses
+.loopexit.loopexit.split.loop.exit:               ; preds = %.lr.ph
+  %7 = trunc nsw i64 %indvars.iv to i32
+  br label %.loopexit
+
+.loopexit:                                        ; preds = %bb.c, %.loopexit.loopexit.split.loop.exit, %bb.b
+  %.2 = phi i32 [ %i.b, %bb.b ], [ %7, %.loopexit.loopexit.split.loop.exit ], [ %2, %bb.c ] ; 2 uses
   %i.j = add nsw i32 %.027, -1
   %i.k = icmp sgt i32 %.027, 1
   br i1 %i.k, label %.lr.ph28, label %.loopexit22, !llvm.loop !5

@@ -205,13 +205,17 @@ bb.ai:                                            ; preds = %.critedge.i
 bb.aj:                                            ; preds = %bb.ad
   %i.ey = icmp samesign ugt i32 %i.da, 1
   %indvars.iv.next519 = add nuw nsw i64 %indvars.iv518, 1
-  br i1 %i.ey, label %bb.s, label %_ZN10duckdb_fmt2v68internal13fixed_handler8on_digitEcmmmib.exit178, !llvm.loop !87
+  br i1 %i.ey, label %bb.s, label %_ZN10duckdb_fmt2v68internal13fixed_handler8on_digitEcmmmib.exit178.preheader, !llvm.loop !87
 
-_ZN10duckdb_fmt2v68internal13fixed_handler8on_digitEcmmmib.exit178: ; preds = %bb.aj, %_ZN10duckdb_fmt2v68internal13fixed_handler8on_digitEcmmmib.exit178
-  %i.ez = phi i32 [ %i.fg, %_ZN10duckdb_fmt2v68internal13fixed_handler8on_digitEcmmmib.exit178 ], [ %i.dt, %bb.aj ]
-  %indvars.iv521 = phi i64 [ %indvars.iv.next522, %_ZN10duckdb_fmt2v68internal13fixed_handler8on_digitEcmmmib.exit178 ], [ %indvars.iv518, %bb.aj ] ; 4 uses
-  %.039.i = phi i64 [ %i.fb, %_ZN10duckdb_fmt2v68internal13fixed_handler8on_digitEcmmmib.exit178 ], [ 1, %bb.aj ] ; 2 uses
-  %.036.i = phi i64 [ %i.ff, %_ZN10duckdb_fmt2v68internal13fixed_handler8on_digitEcmmmib.exit178 ], [ %i.bx, %bb.aj ]
+_ZN10duckdb_fmt2v68internal13fixed_handler8on_digitEcmmmib.exit178.preheader: ; preds = %bb.aj
+  %sext = sext i32 %.sroa.32.0 to i64
+  br label %_ZN10duckdb_fmt2v68internal13fixed_handler8on_digitEcmmmib.exit178
+
+_ZN10duckdb_fmt2v68internal13fixed_handler8on_digitEcmmmib.exit178: ; preds = %_ZN10duckdb_fmt2v68internal13fixed_handler8on_digitEcmmmib.exit178.preheader, %_ZN10duckdb_fmt2v68internal13fixed_handler8on_digitEcmmmib.exit178
+  %i.ez = phi i32 [ %i.dt, %_ZN10duckdb_fmt2v68internal13fixed_handler8on_digitEcmmmib.exit178.preheader ], [ %i.fg, %_ZN10duckdb_fmt2v68internal13fixed_handler8on_digitEcmmmib.exit178 ]
+  %indvars.iv521 = phi i64 [ %indvars.iv518, %_ZN10duckdb_fmt2v68internal13fixed_handler8on_digitEcmmmib.exit178.preheader ], [ %indvars.iv.next522, %_ZN10duckdb_fmt2v68internal13fixed_handler8on_digitEcmmmib.exit178 ] ; 4 uses
+  %.039.i = phi i64 [ 1, %_ZN10duckdb_fmt2v68internal13fixed_handler8on_digitEcmmmib.exit178.preheader ], [ %i.fb, %_ZN10duckdb_fmt2v68internal13fixed_handler8on_digitEcmmmib.exit178 ] ; 2 uses
+  %.036.i = phi i64 [ %i.bx, %_ZN10duckdb_fmt2v68internal13fixed_handler8on_digitEcmmmib.exit178.preheader ], [ %i.ff, %_ZN10duckdb_fmt2v68internal13fixed_handler8on_digitEcmmmib.exit178 ]
   %i.fa = mul i64 %.036.i, 10                     ; 2 uses
   %i.fb = mul i64 %.039.i, 10                     ; 6 uses
   %i.fc = lshr i64 %i.fa, %i.bs
@@ -219,15 +223,15 @@ _ZN10duckdb_fmt2v68internal13fixed_handler8on_digitEcmmmib.exit178: ; preds = %b
   %i.fe = add i8 %i.fd, 48
   %i.ff = and i64 %i.fa, %i.bw                    ; 6 uses
   %i.fg = add nsw i32 %i.ez, -1                   ; 4 uses
-  %indvars.iv.next522 = add nuw nsw i64 %indvars.iv521, 1 ; 4 uses
+  %indvars.iv.next522 = add nuw nsw i64 %indvars.iv521, 1 ; 5 uses
   %i.fh = getelementptr inbounds nuw i8, ptr %i.br, i64 %indvars.iv521
   store i8 %i.fe, ptr %i.fh, align 1, !tbaa !18
-  %4 = trunc nuw i64 %indvars.iv.next522 to i32   ; 3 uses
-  %5 = icmp sgt i32 %.sroa.32.0, %4
-  br i1 %5, label %_ZN10duckdb_fmt2v68internal13fixed_handler8on_digitEcmmmib.exit178, label %bb.ak, !llvm.loop !88
+  %4 = icmp slt i64 %indvars.iv.next522, %sext
+  br i1 %4, label %_ZN10duckdb_fmt2v68internal13fixed_handler8on_digitEcmmmib.exit178, label %bb.ak, !llvm.loop !88
 
 bb.ak:                                            ; preds = %_ZN10duckdb_fmt2v68internal13fixed_handler8on_digitEcmmmib.exit178
   %i.fi = trunc nuw nsw i64 %indvars.iv521 to i32
+  %5 = trunc nuw i64 %indvars.iv.next522 to i32   ; 2 uses
   %.not.i166 = icmp ult i64 %i.fb, %i.bt
   %i.fj = sub nuw i64 %i.bt, %i.fb
   %.not22.i = icmp ult i64 %i.fb, %i.fj
@@ -298,7 +302,7 @@ bb.aq:                                            ; preds = %.critedge.i173
 
 bb.ar:                                            ; preds = %bb.af, %bb.ai, %.critedge.i, %bb.am, %bb.aq, %.critedge.i173
   %.promoted = phi i32 [ %i.fg, %bb.aq ], [ %i.fg, %.critedge.i173 ], [ %i.fg, %bb.am ], [ %i.dt, %bb.ai ], [ %i.dt, %.critedge.i ], [ %i.dt, %bb.af ] ; 2 uses
-  %.sroa.16271.2.ph = phi i32 [ %i.gd, %bb.aq ], [ %4, %.critedge.i173 ], [ %4, %bb.am ], [ %i.ex, %bb.ai ], [ %i.dx, %.critedge.i ], [ %i.dx, %bb.af ] ; 2 uses
+  %.sroa.16271.2.ph = phi i32 [ %i.gd, %bb.aq ], [ %5, %.critedge.i173 ], [ %5, %bb.am ], [ %i.ex, %bb.ai ], [ %i.dx, %.critedge.i ], [ %i.dx, %bb.af ] ; 2 uses
   br i1 %i.c, label %.critedge, label %.preheader
 
 .preheader:                                       ; preds = %bb.ar
@@ -681,7 +685,7 @@ bb.bo:                                            ; preds = %bb.bn, %_ZN10duckdb
 
 bb.bp:                                            ; preds = %bb.bj
   %i.na = icmp samesign ugt i32 %i.lb, 1
-  %indvars.iv.next532 = add nuw i64 %indvars.iv531, 1
+  %indvars.iv.next532 = add nuw nsw i64 %indvars.iv531, 1
   br i1 %i.na, label %bb.ay, label %_ZN10duckdb_fmt2v68internal22grisu_shortest_handler8on_digitEcmmmib.exit238, !llvm.loop !91
 
 _ZN10duckdb_fmt2v68internal22grisu_shortest_handler8on_digitEcmmmib.exit238: ; preds = %bb.bp, %_ZN10duckdb_fmt2v68internal22grisu_shortest_handler8on_digitEcmmmib.exit238
@@ -1084,8 +1088,8 @@ bb.af:                                            ; preds = %bb.af, %.lr.ph.i.i.
   %i.he = add nuw nsw i64 %i.hd, %i.hb            ; 3 uses
   %i.hf = trunc i64 %i.gz to i32
   store i32 %i.hf, ptr %i.gu, align 4, !tbaa !3
-  %i.hg = add nuw i64 %.019.i.i, 2                ; 2 uses
-  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
+  %i.hg = add nuw nsw i64 %.019.i.i, 2            ; 2 uses
+  %niter.next.1 = add nuw nsw i64 %niter, 2       ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.preheader.i.i.unr-lcssa, label %bb.af, !llvm.loop !108
 
@@ -1488,8 +1492,8 @@ bb.bu:                                            ; preds = %bb.bu, %.lr.ph.i.i2
   %i.qo = trunc i64 %i.qn to i32
   store i32 %i.qo, ptr %i.qj, align 4, !tbaa !3
   %i.qp = lshr i64 %i.qn, 32                      ; 3 uses
-  %i.qq = add nuw i64 %.013.i.i, 2                ; 2 uses
-  %niter1107.next.1 = add nuw i64 %niter1107, 2   ; 2 uses
+  %i.qq = add nuw nsw i64 %.013.i.i, 2            ; 2 uses
+  %niter1107.next.1 = add nuw nsw i64 %niter1107, 2 ; 2 uses
   %niter1107.ncmp.1 = icmp eq i64 %niter1107.next.1, %unroll_iter1106
   br i1 %niter1107.ncmp.1, label %._crit_edge.i.i.unr-lcssa, label %bb.bu, !llvm.loop !116
 
@@ -1581,8 +1585,8 @@ bb.bx:                                            ; preds = %bb.bx, %.lr.ph.i.i2
   %i.rx = trunc i64 %i.rw to i32
   store i32 %i.rx, ptr %i.rs, align 4, !tbaa !3
   %i.ry = lshr i64 %i.rw, 32                      ; 3 uses
-  %i.rz = add nuw i64 %.013.i.i241, 2             ; 2 uses
-  %niter1114.next.1 = add nuw i64 %niter1114, 2   ; 2 uses
+  %i.rz = add nuw nsw i64 %.013.i.i241, 2         ; 2 uses
+  %niter1114.next.1 = add nuw nsw i64 %niter1114, 2 ; 2 uses
   %niter1114.ncmp.1 = icmp eq i64 %niter1114.next.1, %unroll_iter1113
   br i1 %niter1114.ncmp.1, label %._crit_edge.i.i244.unr-lcssa, label %bb.bx, !llvm.loop !116
 
@@ -1680,8 +1684,8 @@ bb.cb:                                            ; preds = %bb.cb, %.lr.ph.i.i2
   %i.tg = trunc i64 %i.tf to i32
   store i32 %i.tg, ptr %i.tb, align 4, !tbaa !3
   %i.th = lshr i64 %i.tf, 32                      ; 3 uses
-  %i.ti = add nuw i64 %.013.i.i255, 2             ; 2 uses
-  %niter1121.next.1 = add nuw i64 %niter1121, 2   ; 2 uses
+  %i.ti = add nuw nsw i64 %.013.i.i255, 2         ; 2 uses
+  %niter1121.next.1 = add nuw nsw i64 %niter1121, 2 ; 2 uses
   %niter1121.ncmp.1 = icmp eq i64 %niter1121.next.1, %unroll_iter1120
   br i1 %niter1121.ncmp.1, label %._crit_edge.i.i258.unr-lcssa, label %bb.cb, !llvm.loop !116
 
@@ -2084,8 +2088,8 @@ bb.g:                                             ; preds = %bb.g, %.lr.ph.i.i.n
   %i.as = trunc i64 %i.ar to i32
   store i32 %i.as, ptr %i.an, align 4, !tbaa !3
   %i.at = lshr i64 %i.ar, 32                      ; 3 uses
-  %i.au = add nuw i64 %.013.i.i, 2                ; 2 uses
-  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
+  %i.au = add nuw nsw i64 %.013.i.i, 2            ; 2 uses
+  %niter.next.1 = add nuw nsw i64 %niter, 2       ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.i.i.unr-lcssa, label %bb.g, !llvm.loop !116
 
@@ -2488,21 +2492,20 @@ bb.g:                                             ; preds = %.critedge.i
 bb.h:                                             ; preds = %.lr.ph58, %._crit_edge
   %indvar = phi i32 [ 0, %.lr.ph58 ], [ %indvar.next, %._crit_edge ] ; 3 uses
   %indvars.iv88 = phi i64 [ %i.v, %.lr.ph58 ], [ %indvars.iv.next89, %._crit_edge ] ; 3 uses
-  %indvars.iv78 = phi i32 [ 1, %.lr.ph58 ], [ %indvars.iv.next79, %._crit_edge ] ; 2 uses
+  %indvars.iv78 = phi i64 [ 1, %.lr.ph58 ], [ %indvars.iv.next79, %._crit_edge ] ; 4 uses
   %.256 = phi i128 [ %.038.lcssa, %.lr.ph58 ], [ %i.ck, %._crit_edge ] ; 3 uses
   %i.bw = icmp slt i64 %indvars.iv88, %invariant.op
   br i1 %i.bw, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.h
-  %2 = sext i32 %indvars.iv78 to i64              ; 3 uses
   %i.bx = sub i32 %indvar, %i.c
   %i.by = and i32 %i.bx, 1
   %lcmp.mod113.not.not = icmp eq i32 %i.by, 0
   br i1 %lcmp.mod113.not.not, label %.lr.ph.prol, label %.lr.ph.prol.loopexit
 
 .lr.ph.prol:                                      ; preds = %.lr.ph.preheader
-  %indvars.iv.next81.prol = add nsw i64 %2, 1
-  %i.bz = getelementptr inbounds nuw [4 x i8], ptr %i.s, i64 %2
+  %indvars.iv.next81.prol = add nuw nsw i64 %indvars.iv78, 1
+  %i.bz = getelementptr inbounds nuw [4 x i8], ptr %i.s, i64 %indvars.iv78
   %i.ca = load i32, ptr %i.bz, align 4, !tbaa !3
   %i.cb = zext i32 %i.ca to i64
   %i.cc = load i32, ptr %i.z, align 4, !tbaa !3
@@ -2515,7 +2518,7 @@ bb.h:                                             ; preds = %.lr.ph58, %._crit_e
 .lr.ph.prol.loopexit:                             ; preds = %.lr.ph.prol, %.lr.ph.preheader
   %.lcssa107.unr = phi i128 [ poison, %.lr.ph.preheader ], [ %i.cg, %.lr.ph.prol ]
   %indvars.iv82.in.unr = phi i64 [ %i.v, %.lr.ph.preheader ], [ %indvars.iv82.prol, %.lr.ph.prol ]
-  %indvars.iv80.unr = phi i64 [ %2, %.lr.ph.preheader ], [ %indvars.iv.next81.prol, %.lr.ph.prol ]
+  %indvars.iv80.unr = phi i64 [ %indvars.iv78, %.lr.ph.preheader ], [ %indvars.iv.next81.prol, %.lr.ph.prol ]
   %.352.unr = phi i128 [ %.256, %.lr.ph.preheader ], [ %i.cg, %.lr.ph.prol ]
   %i.ch = icmp eq i32 %i.y, %indvar
   br i1 %i.ch, label %._crit_edge, label %.lr.ph
@@ -2527,7 +2530,7 @@ bb.h:                                             ; preds = %.lr.ph58, %._crit_e
   store i32 %i.ci, ptr %i.cj, align 4, !tbaa !3
   %i.ck = lshr i128 %.3.lcssa, 32
   %indvars.iv.next89 = add nsw i64 %indvars.iv88, 1 ; 2 uses
-  %indvars.iv.next79 = add i32 %indvars.iv78, 1
+  %indvars.iv.next79 = add nuw nsw i64 %indvars.iv78, 1
   %exitcond91.not = icmp eq i64 %indvars.iv.next89, %i.e
   %indvar.next = add i32 %indvar, 1
   br i1 %exitcond91.not, label %._crit_edge59, label %bb.h, !llvm.loop !1329
@@ -2547,9 +2550,9 @@ bb.h:                                             ; preds = %.lr.ph58, %._crit_e
   %i.ct = zext i64 %i.cs to i128
   %i.cu = add i128 %.352, %i.ct
   %indvars.iv82.1 = add nsw i64 %indvars.iv82.in, -2 ; 2 uses
-  %indvars.iv.next81.1 = add nsw i64 %indvars.iv80, 2 ; 2 uses
-  %i.cv = getelementptr [4 x i8], ptr %i.s, i64 %indvars.iv80
-  %i.cw = getelementptr i8, ptr %i.cv, i64 4
+  %indvars.iv.next81.1 = add nuw nsw i64 %indvars.iv80, 2 ; 2 uses
+  %i.cv = getelementptr inbounds nuw [4 x i8], ptr %i.s, i64 %indvars.iv80
+  %i.cw = getelementptr inbounds nuw i8, ptr %i.cv, i64 4
   %i.cx = load i32, ptr %i.cw, align 4, !tbaa !3
   %i.cy = zext i32 %i.cx to i64
   %i.cz = getelementptr inbounds nuw [4 x i8], ptr %i.s, i64 %indvars.iv82.1

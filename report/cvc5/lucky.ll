@@ -198,10 +198,11 @@ _ZN7CaDiCaL8Internal7unluckyEi.exit:              ; preds = %bb.n, %.thread, %bb
   %i.bj = getelementptr inbounds nuw i8, ptr %0, i64 5672
   %i.bk = getelementptr inbounds nuw i8, ptr %0, i64 3800
   %i.bl = getelementptr inbounds nuw i8, ptr %0, i64 472
+  %zext = zext i32 %i.bf to i64
   br label %bb.r
 
 bb.r:                                             ; preds = %.lr.ph116, %_ZN7CaDiCaL8Internal7unluckyEi.exit58
-  %.sroa.061.0114 = phi i32 [ 1, %.lr.ph116 ], [ %2, %_ZN7CaDiCaL8Internal7unluckyEi.exit58 ] ; 4 uses
+  %indvars.iv = phi i64 [ 1, %.lr.ph116 ], [ %indvars.iv.next, %_ZN7CaDiCaL8Internal7unluckyEi.exit58 ] ; 4 uses
   %i.bm = load volatile i8, ptr %i.bg, align 8, !tbaa !156, !range !157, !noundef !158
   %i.bn = trunc nuw i8 %i.bm to i1
   br i1 %i.bn, label %_ZN7CaDiCaL8Internal25terminated_asynchronouslyEi.exit56, label %bb.s
@@ -267,14 +268,14 @@ bb.z:                                             ; preds = %bb.y
 
 bb.aa:                                            ; preds = %bb.v, %bb.u, %bb.w
   %i.ch = load ptr, ptr %i.bl, align 8, !tbaa !187
-  %1 = sext i32 %.sroa.061.0114 to i64
-  %i.ci = getelementptr inbounds i8, ptr %i.ch, i64 %1
+  %i.ci = getelementptr inbounds nuw i8, ptr %i.ch, i64 %indvars.iv
   %i.cj = load i8, ptr %i.ci, align 1, !tbaa !188
   %.not46 = icmp eq i8 %i.cj, 0
   br i1 %.not46, label %bb.ab, label %_ZN7CaDiCaL8Internal7unluckyEi.exit58
 
 bb.ab:                                            ; preds = %bb.aa
-  %i.ck = sub nsw i32 0, %.sroa.061.0114
+  %1 = trunc i64 %indvars.iv to i32
+  %i.ck = sub i32 0, %1
   tail call void @_ZN7CaDiCaL8Internal22search_assume_decisionEi(ptr noundef nonnull align 8 dereferenceable(5704) %0, i32 noundef %i.ck)
   %i.cl = tail call noundef zeroext i1 @_ZN7CaDiCaL8Internal9propagateEv(ptr noundef nonnull align 8 dereferenceable(5704) %0)
   br i1 %i.cl, label %_ZN7CaDiCaL8Internal7unluckyEi.exit58, label %bb.ac
@@ -300,8 +301,8 @@ bb.af:                                            ; preds = %bb.ae
   br label %bb.ag
 
 _ZN7CaDiCaL8Internal7unluckyEi.exit58:            ; preds = %bb.aa, %bb.ab
-  %2 = add i32 %.sroa.061.0114, 1
-  %.not97 = icmp eq i32 %.sroa.061.0114, %i.bf
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
+  %.not97 = icmp eq i64 %indvars.iv, %zext
   br i1 %.not97, label %._crit_edge117, label %bb.r
 
 ._crit_edge117:                                   ; preds = %_ZN7CaDiCaL8Internal7unluckyEi.exit58, %._crit_edge
@@ -485,10 +486,11 @@ _ZN7CaDiCaL8Internal7unluckyEi.exit:              ; preds = %bb.n, %.thread, %bb
   %i.bj = getelementptr inbounds nuw i8, ptr %0, i64 5672
   %i.bk = getelementptr inbounds nuw i8, ptr %0, i64 3800
   %i.bl = getelementptr inbounds nuw i8, ptr %0, i64 472
+  %zext = zext i32 %i.bf to i64
   br label %bb.r
 
 bb.r:                                             ; preds = %.lr.ph116, %_ZN7CaDiCaL8Internal7unluckyEi.exit58
-  %.sroa.061.0114 = phi i32 [ 1, %.lr.ph116 ], [ %2, %_ZN7CaDiCaL8Internal7unluckyEi.exit58 ] ; 4 uses
+  %indvars.iv = phi i64 [ 1, %.lr.ph116 ], [ %indvars.iv.next, %_ZN7CaDiCaL8Internal7unluckyEi.exit58 ] ; 4 uses
   %i.bm = load volatile i8, ptr %i.bg, align 8, !tbaa !156, !range !157, !noundef !158
   %i.bn = trunc nuw i8 %i.bm to i1
   br i1 %i.bn, label %_ZN7CaDiCaL8Internal25terminated_asynchronouslyEi.exit56, label %bb.s
@@ -554,14 +556,14 @@ bb.z:                                             ; preds = %bb.y
 
 bb.aa:                                            ; preds = %bb.v, %bb.u, %bb.w
   %i.ch = load ptr, ptr %i.bl, align 8, !tbaa !187
-  %1 = sext i32 %.sroa.061.0114 to i64
-  %i.ci = getelementptr inbounds i8, ptr %i.ch, i64 %1
+  %i.ci = getelementptr inbounds nuw i8, ptr %i.ch, i64 %indvars.iv
   %i.cj = load i8, ptr %i.ci, align 1, !tbaa !188
   %.not46 = icmp eq i8 %i.cj, 0
   br i1 %.not46, label %bb.ab, label %_ZN7CaDiCaL8Internal7unluckyEi.exit58
 
 bb.ab:                                            ; preds = %bb.aa
-  tail call void @_ZN7CaDiCaL8Internal22search_assume_decisionEi(ptr noundef nonnull align 8 dereferenceable(5704) %0, i32 noundef %.sroa.061.0114)
+  %1 = trunc nsw i64 %indvars.iv to i32
+  tail call void @_ZN7CaDiCaL8Internal22search_assume_decisionEi(ptr noundef nonnull align 8 dereferenceable(5704) %0, i32 noundef %1)
   %i.ck = tail call noundef zeroext i1 @_ZN7CaDiCaL8Internal9propagateEv(ptr noundef nonnull align 8 dereferenceable(5704) %0)
   br i1 %i.ck, label %_ZN7CaDiCaL8Internal7unluckyEi.exit58, label %bb.ac
 
@@ -586,8 +588,8 @@ bb.af:                                            ; preds = %bb.ae
   br label %bb.ag
 
 _ZN7CaDiCaL8Internal7unluckyEi.exit58:            ; preds = %bb.aa, %bb.ab
-  %2 = add i32 %.sroa.061.0114, 1
-  %.not97 = icmp eq i32 %.sroa.061.0114, %i.bf
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
+  %.not97 = icmp eq i64 %indvars.iv, %zext
   br i1 %.not97, label %._crit_edge117, label %bb.r
 
 ._crit_edge117:                                   ; preds = %_ZN7CaDiCaL8Internal7unluckyEi.exit58, %._crit_edge
@@ -618,10 +620,11 @@ bb.a:
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 5672
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 3800
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 472
+  %zext = zext i32 %i.c to i64
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %_ZN7CaDiCaL8Internal7unluckyEi.exit
-  %.sroa.012.024 = phi i32 [ 1, %.lr.ph ], [ %2, %_ZN7CaDiCaL8Internal7unluckyEi.exit ] ; 4 uses
+  %indvars.iv = phi i64 [ 1, %.lr.ph ], [ %indvars.iv.next, %_ZN7CaDiCaL8Internal7unluckyEi.exit ] ; 4 uses
   %i.j = load volatile i8, ptr %i.d, align 8, !tbaa !156, !range !157, !noundef !158
   %i.k = trunc nuw i8 %i.j to i1
   br i1 %i.k, label %_ZN7CaDiCaL8Internal25terminated_asynchronouslyEi.exit, label %bb.c
@@ -687,14 +690,14 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.f, %bb.e, %bb.g
   %i.ae = load ptr, ptr %i.i, align 8, !tbaa !187
-  %1 = sext i32 %.sroa.012.024 to i64
-  %i.af = getelementptr inbounds i8, ptr %i.ae, i64 %1
+  %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 %indvars.iv
   %i.ag = load i8, ptr %i.af, align 1, !tbaa !188
   %.not = icmp eq i8 %i.ag, 0
   br i1 %.not, label %bb.l, label %_ZN7CaDiCaL8Internal7unluckyEi.exit
 
 bb.l:                                             ; preds = %bb.k
-  %i.ah = sub nsw i32 0, %.sroa.012.024
+  %1 = trunc i64 %indvars.iv to i32
+  %i.ah = sub i32 0, %1
   tail call void @_ZN7CaDiCaL8Internal22search_assume_decisionEi(ptr noundef nonnull align 8 dereferenceable(5704) %0, i32 noundef %i.ah)
   %i.ai = tail call noundef zeroext i1 @_ZN7CaDiCaL8Internal9propagateEv(ptr noundef nonnull align 8 dereferenceable(5704) %0)
   br i1 %i.ai, label %_ZN7CaDiCaL8Internal7unluckyEi.exit, label %bb.m
@@ -720,8 +723,8 @@ bb.p:                                             ; preds = %bb.o
   br label %bb.q
 
 _ZN7CaDiCaL8Internal7unluckyEi.exit:              ; preds = %bb.k, %bb.l
-  %2 = add i32 %.sroa.012.024, 1
-  %.not20 = icmp eq i32 %.sroa.012.024, %i.c
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
+  %.not20 = icmp eq i64 %indvars.iv, %zext
   br i1 %.not20, label %._crit_edge, label %bb.b
 
 ._crit_edge:                                      ; preds = %_ZN7CaDiCaL8Internal7unluckyEi.exit, %bb.a
@@ -752,10 +755,11 @@ bb.a:
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 5672
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 3800
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 472
+  %zext = zext i32 %i.c to i64
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %_ZN7CaDiCaL8Internal7unluckyEi.exit
-  %.sroa.012.024 = phi i32 [ 1, %.lr.ph ], [ %2, %_ZN7CaDiCaL8Internal7unluckyEi.exit ] ; 4 uses
+  %indvars.iv = phi i64 [ 1, %.lr.ph ], [ %indvars.iv.next, %_ZN7CaDiCaL8Internal7unluckyEi.exit ] ; 4 uses
   %i.j = load volatile i8, ptr %i.d, align 8, !tbaa !156, !range !157, !noundef !158
   %i.k = trunc nuw i8 %i.j to i1
   br i1 %i.k, label %_ZN7CaDiCaL8Internal25terminated_asynchronouslyEi.exit, label %bb.c
@@ -821,14 +825,14 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.f, %bb.e, %bb.g
   %i.ae = load ptr, ptr %i.i, align 8, !tbaa !187
-  %1 = sext i32 %.sroa.012.024 to i64
-  %i.af = getelementptr inbounds i8, ptr %i.ae, i64 %1
+  %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 %indvars.iv
   %i.ag = load i8, ptr %i.af, align 1, !tbaa !188
   %.not = icmp eq i8 %i.ag, 0
   br i1 %.not, label %bb.l, label %_ZN7CaDiCaL8Internal7unluckyEi.exit
 
 bb.l:                                             ; preds = %bb.k
-  tail call void @_ZN7CaDiCaL8Internal22search_assume_decisionEi(ptr noundef nonnull align 8 dereferenceable(5704) %0, i32 noundef %.sroa.012.024)
+  %1 = trunc nsw i64 %indvars.iv to i32
+  tail call void @_ZN7CaDiCaL8Internal22search_assume_decisionEi(ptr noundef nonnull align 8 dereferenceable(5704) %0, i32 noundef %1)
   %i.ah = tail call noundef zeroext i1 @_ZN7CaDiCaL8Internal9propagateEv(ptr noundef nonnull align 8 dereferenceable(5704) %0)
   br i1 %i.ah, label %_ZN7CaDiCaL8Internal7unluckyEi.exit, label %bb.m
 
@@ -853,8 +857,8 @@ bb.p:                                             ; preds = %bb.o
   br label %bb.q
 
 _ZN7CaDiCaL8Internal7unluckyEi.exit:              ; preds = %bb.k, %bb.l
-  %2 = add i32 %.sroa.012.024, 1
-  %.not20 = icmp eq i32 %.sroa.012.024, %i.c
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
+  %.not20 = icmp eq i64 %indvars.iv, %zext
   br i1 %.not20, label %._crit_edge, label %bb.b
 
 ._crit_edge:                                      ; preds = %_ZN7CaDiCaL8Internal7unluckyEi.exit, %bb.a
@@ -1257,10 +1261,11 @@ _ZN7CaDiCaL8Internal7unluckyEi.exit:              ; preds = %bb.n, %bb.k, %bb.r
   %i.bp = getelementptr inbounds nuw i8, ptr %0, i64 5672
   %i.bq = getelementptr inbounds nuw i8, ptr %0, i64 3800
   %i.br = getelementptr inbounds nuw i8, ptr %0, i64 472
+  %zext = zext i32 %i.bl to i64
   br label %bb.w
 
 bb.w:                                             ; preds = %.lr.ph118, %_ZN7CaDiCaL8Internal7unluckyEi.exit62
-  %.sroa.065.0116 = phi i32 [ 1, %.lr.ph118 ], [ %2, %_ZN7CaDiCaL8Internal7unluckyEi.exit62 ] ; 4 uses
+  %indvars.iv = phi i64 [ 1, %.lr.ph118 ], [ %indvars.iv.next, %_ZN7CaDiCaL8Internal7unluckyEi.exit62 ] ; 4 uses
   %i.bs = load volatile i8, ptr %i.bm, align 8, !tbaa !156, !range !157, !noundef !158
   %i.bt = trunc nuw i8 %i.bs to i1
   br i1 %i.bt, label %_ZN7CaDiCaL8Internal25terminated_asynchronouslyEi.exit60, label %bb.x
@@ -1326,14 +1331,14 @@ bb.ae:                                            ; preds = %bb.ad
 
 bb.af:                                            ; preds = %bb.aa, %bb.z, %bb.ab
   %i.cn = load ptr, ptr %i.br, align 8, !tbaa !187
-  %1 = sext i32 %.sroa.065.0116 to i64
-  %i.co = getelementptr inbounds i8, ptr %i.cn, i64 %1
+  %i.co = getelementptr inbounds nuw i8, ptr %i.cn, i64 %indvars.iv
   %i.cp = load i8, ptr %i.co, align 1, !tbaa !188
   %.not49 = icmp eq i8 %i.cp, 0
   br i1 %.not49, label %bb.ag, label %_ZN7CaDiCaL8Internal7unluckyEi.exit62
 
 bb.ag:                                            ; preds = %bb.af
-  %i.cq = sub nsw i32 0, %.sroa.065.0116
+  %1 = trunc i64 %indvars.iv to i32
+  %i.cq = sub i32 0, %1
   tail call void @_ZN7CaDiCaL8Internal22search_assume_decisionEi(ptr noundef nonnull align 8 dereferenceable(5704) %0, i32 noundef %i.cq)
   %i.cr = tail call noundef zeroext i1 @_ZN7CaDiCaL8Internal9propagateEv(ptr noundef nonnull align 8 dereferenceable(5704) %0)
   br i1 %i.cr, label %_ZN7CaDiCaL8Internal7unluckyEi.exit62, label %bb.ah
@@ -1359,8 +1364,8 @@ bb.ak:                                            ; preds = %bb.aj
   br label %bb.al
 
 _ZN7CaDiCaL8Internal7unluckyEi.exit62:            ; preds = %bb.af, %bb.ag
-  %2 = add i32 %.sroa.065.0116, 1
-  %.not100 = icmp eq i32 %.sroa.065.0116, %i.bl
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
+  %.not100 = icmp eq i64 %indvars.iv, %zext
   br i1 %.not100, label %._crit_edge119, label %bb.w
 
 ._crit_edge119:                                   ; preds = %_ZN7CaDiCaL8Internal7unluckyEi.exit62, %._crit_edge114
@@ -1575,10 +1580,11 @@ _ZN7CaDiCaL8Internal7unluckyEi.exit:              ; preds = %bb.n, %bb.k, %bb.r
   %i.bq = getelementptr inbounds nuw i8, ptr %0, i64 5672
   %i.br = getelementptr inbounds nuw i8, ptr %0, i64 3800
   %i.bs = getelementptr inbounds nuw i8, ptr %0, i64 472
+  %zext = zext i32 %i.bm to i64
   br label %bb.w
 
 bb.w:                                             ; preds = %.lr.ph119, %_ZN7CaDiCaL8Internal7unluckyEi.exit62
-  %.sroa.065.0117 = phi i32 [ 1, %.lr.ph119 ], [ %2, %_ZN7CaDiCaL8Internal7unluckyEi.exit62 ] ; 4 uses
+  %indvars.iv = phi i64 [ 1, %.lr.ph119 ], [ %indvars.iv.next, %_ZN7CaDiCaL8Internal7unluckyEi.exit62 ] ; 4 uses
   %i.bt = load volatile i8, ptr %i.bn, align 8, !tbaa !156, !range !157, !noundef !158
   %i.bu = trunc nuw i8 %i.bt to i1
   br i1 %i.bu, label %_ZN7CaDiCaL8Internal25terminated_asynchronouslyEi.exit60, label %bb.x
@@ -1644,14 +1650,14 @@ bb.ae:                                            ; preds = %bb.ad
 
 bb.af:                                            ; preds = %bb.aa, %bb.z, %bb.ab
   %i.co = load ptr, ptr %i.bs, align 8, !tbaa !187
-  %1 = sext i32 %.sroa.065.0117 to i64
-  %i.cp = getelementptr inbounds i8, ptr %i.co, i64 %1
+  %i.cp = getelementptr inbounds nuw i8, ptr %i.co, i64 %indvars.iv
   %i.cq = load i8, ptr %i.cp, align 1, !tbaa !188
   %.not49 = icmp eq i8 %i.cq, 0
   br i1 %.not49, label %bb.ag, label %_ZN7CaDiCaL8Internal7unluckyEi.exit62
 
 bb.ag:                                            ; preds = %bb.af
-  tail call void @_ZN7CaDiCaL8Internal22search_assume_decisionEi(ptr noundef nonnull align 8 dereferenceable(5704) %0, i32 noundef %.sroa.065.0117)
+  %1 = trunc nsw i64 %indvars.iv to i32
+  tail call void @_ZN7CaDiCaL8Internal22search_assume_decisionEi(ptr noundef nonnull align 8 dereferenceable(5704) %0, i32 noundef %1)
   %i.cr = tail call noundef zeroext i1 @_ZN7CaDiCaL8Internal9propagateEv(ptr noundef nonnull align 8 dereferenceable(5704) %0)
   br i1 %i.cr, label %_ZN7CaDiCaL8Internal7unluckyEi.exit62, label %bb.ah
 
@@ -1676,8 +1682,8 @@ bb.ak:                                            ; preds = %bb.aj
   br label %bb.al
 
 _ZN7CaDiCaL8Internal7unluckyEi.exit62:            ; preds = %bb.af, %bb.ag
-  %2 = add i32 %.sroa.065.0117, 1
-  %.not101 = icmp eq i32 %.sroa.065.0117, %i.bm
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
+  %.not101 = icmp eq i64 %indvars.iv, %zext
   br i1 %.not101, label %._crit_edge120, label %bb.w
 
 ._crit_edge120:                                   ; preds = %_ZN7CaDiCaL8Internal7unluckyEi.exit62, %._crit_edge115
