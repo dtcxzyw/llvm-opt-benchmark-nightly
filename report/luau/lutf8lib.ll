@@ -91,19 +91,22 @@ bb.e:                                             ; preds = %bb.d
 
 .preheader:                                       ; preds = %bb.e
   %.not64 = icmp eq i32 %.0.i, 1
-  br i1 %.not64, label %.critedge.thread, label %.lr.ph
+  br i1 %.not64, label %.critedge.thread, label %.lr.ph.preheader
 
-.lr.ph:                                           ; preds = %.preheader, %bb.f
-  %.059 = phi i32 [ %2, %bb.f ], [ %i.s, %.preheader ] ; 4 uses
-  %1 = zext nneg i32 %.059 to i64
-  %i.v = getelementptr inbounds nuw i8, ptr %i.b, i64 %1
+.lr.ph.preheader:                                 ; preds = %.preheader
+  %1 = zext nneg i32 %i.s to i64
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.f
+  %indvars.iv73 = phi i64 [ %1, %.lr.ph.preheader ], [ %indvars.iv.next74, %bb.f ] ; 4 uses
+  %i.v = getelementptr inbounds nuw i8, ptr %i.b, i64 %indvars.iv73
   %i.w = load i8, ptr %i.v, align 1, !tbaa !11
   %i.x = icmp slt i8 %i.w, -64
-  br i1 %i.x, label %bb.f, label %.critedge.thread
+  br i1 %i.x, label %bb.f, label %.critedge.thread.loopexit.split.loop.exit93
 
 bb.f:                                             ; preds = %.lr.ph
-  %2 = add nsw i32 %.059, -1
-  %i.y = icmp sgt i32 %.059, 1
+  %indvars.iv.next74 = add nsw i64 %indvars.iv73, -1
+  %i.y = icmp sgt i64 %indvars.iv73, 1
   br i1 %i.y, label %.lr.ph, label %.critedge.thread, !llvm.loop !12
 
 bb.g:                                             ; preds = %bb.e
@@ -198,8 +201,12 @@ bb.m:                                             ; preds = %bb.l
   %i.bb = icmp eq i32 %.238, 0
   br i1 %i.bb, label %.critedge.thread, label %.critedge.thread83
 
-.critedge.thread:                                 ; preds = %.lr.ph, %bb.f, %.preheader, %.critedge
-  %.582 = phi i32 [ %.5, %.critedge ], [ 0, %.preheader ], [ %.059, %.lr.ph ], [ 0, %bb.f ]
+.critedge.thread.loopexit.split.loop.exit93:      ; preds = %.lr.ph
+  %2 = trunc nuw nsw i64 %indvars.iv73 to i32
+  br label %.critedge.thread
+
+.critedge.thread:                                 ; preds = %bb.f, %.critedge.thread.loopexit.split.loop.exit93, %.preheader, %.critedge
+  %.582 = phi i32 [ %.5, %.critedge ], [ 0, %.preheader ], [ %2, %.critedge.thread.loopexit.split.loop.exit93 ], [ 0, %bb.f ]
   %i.bc = add nuw nsw i32 %.582, 1
   call void @_Z15lua_pushintegerP9lua_Statei(ptr noundef %0, i32 noundef %i.bc)
   br label %bb.n

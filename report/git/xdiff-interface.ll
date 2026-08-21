@@ -202,15 +202,18 @@ bb.j:                                             ; preds = %.loopexit
   %i.ae = load i32, ptr %.sroa.sel.sroa.sel.v.sroa.sel.v.sroa.sel, align 4, !tbaa !64
   %i.af = sub nsw i32 %i.ae, %i.ab
   %i.ag = sext i32 %i.af to i64
-  %spec.select53 = call i64 @llvm.smin.i64(i64 %3, i64 %i.ag)
-  %spec.select = trunc i64 %spec.select53 to i32  ; 3 uses
+  %spec.select53 = call i64 @llvm.smin.i64(i64 %3, i64 %i.ag) ; 3 uses
+  %spec.select = trunc i64 %spec.select53 to i32
   %i.ah = icmp sgt i32 %spec.select, 0
-  br i1 %i.ah, label %.lr.ph58, label %.critedge
+  br i1 %i.ah, label %.lr.ph58.preheader, label %.critedge
 
-.lr.ph58:                                         ; preds = %bb.j, %bb.k
-  %.157 = phi i32 [ %7, %bb.k ], [ %spec.select, %bb.j ] ; 4 uses
-  %6 = zext nneg i32 %.157 to i64
-  %i.ai = getelementptr i8, ptr %i.ad, i64 %6
+.lr.ph58.preheader:                               ; preds = %bb.j
+  %6 = and i64 %spec.select53, 2147483647
+  br label %.lr.ph58
+
+.lr.ph58:                                         ; preds = %.lr.ph58.preheader, %bb.k
+  %indvars.iv66 = phi i64 [ %6, %.lr.ph58.preheader ], [ %indvars.iv.next67, %bb.k ] ; 4 uses
+  %i.ai = getelementptr i8, ptr %i.ad, i64 %indvars.iv66
   %i.aj = getelementptr i8, ptr %i.ai, i64 -1
   %i.ak = load i8, ptr %i.aj, align 1, !tbaa !26
   %i.al = zext i8 %i.ak to i64
@@ -221,18 +224,19 @@ bb.j:                                             ; preds = %.loopexit
   br i1 %.not47, label %.critedge, label %bb.k
 
 bb.k:                                             ; preds = %.lr.ph58
-  %7 = add nsw i32 %.157, -1
-  %i.ap = icmp sgt i32 %.157, 1
+  %indvars.iv.next67 = add nsw i64 %indvars.iv66, -1
+  %i.ap = icmp sgt i64 %indvars.iv66, 1
   br i1 %i.ap, label %.lr.ph58, label %.critedge, !llvm.loop !66
 
 .critedge:                                        ; preds = %.lr.ph58, %bb.k, %bb.j
-  %.1.lcssa = phi i32 [ %spec.select, %bb.j ], [ 0, %bb.k ], [ %.157, %.lr.ph58 ]
-  %8 = sext i32 %.1.lcssa to i64                  ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %2, ptr align 1 %i.ad, i64 %8, i1 false)
+  %.1.lcssa = phi i64 [ %spec.select53, %bb.j ], [ 0, %bb.k ], [ %indvars.iv66, %.lr.ph58 ]
+  %sext = shl i64 %.1.lcssa, 32
+  %7 = ashr exact i64 %sext, 32                   ; 2 uses
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %2, ptr align 1 %i.ad, i64 %7, i1 false)
   br label %.thread
 
 .thread:                                          ; preds = %bb.f, %bb.h, %.loopexit, %.critedge
-  %.2 = phi i64 [ -1, %.loopexit ], [ %8, %.critedge ], [ -1, %bb.h ], [ -1, %bb.f ]
+  %.2 = phi i64 [ -1, %.loopexit ], [ %7, %.critedge ], [ -1, %bb.h ], [ -1, %bb.f ]
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #14
   ret i64 %.2
 }

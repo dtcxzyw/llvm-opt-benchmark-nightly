@@ -204,11 +204,11 @@ bb.a:
   %i.s = load ptr, ptr %i.p, align 8              ; 4 uses
   %i.t = ptrtoint ptr %i.r to i64
   %i.u = ptrtoint ptr %i.s to i64
-  %i.v = sub i64 %i.t, %i.u
+  %i.v = sub i64 %i.t, %i.u                       ; 2 uses
   %i.w = ashr exact i64 %i.v, 4                   ; 2 uses
-  %1 = trunc i64 %i.w to i32                      ; 2 uses
-  %2 = icmp ugt i32 %1, 1
-  br i1 %2, label %bb.b, label %_ZSt7reverseIN9__gnu_cxx17__normal_iteratorIPN5glTF24Mesh9PrimitiveESt6vectorIS4_SaIS4_EEEEEvT_SA_.exit
+  %1 = and i64 %i.v, 68719476704
+  %.not126 = icmp eq i64 %1, 0
+  br i1 %.not126, label %_ZSt7reverseIN9__gnu_cxx17__normal_iteratorIPN5glTF24Mesh9PrimitiveESt6vectorIS4_SaIS4_EEEEEvT_SA_.exit, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph95
   %.not.i.i.not = icmp eq ptr %i.r, %i.s
@@ -220,16 +220,18 @@ bb.c:                                             ; preds = %bb.b
 
 .lr.ph:                                           ; preds = %bb.b
   %.sroa.070.0.copyload = load ptr, ptr %i.s, align 8 ; 2 uses
-  %.03789 = add i32 %1, -1
+  %.03789 = add nsw i64 %i.w, 4294967295
   %.sroa.774.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.s, i64 8
   %.sroa.774.0.copyload = load i32, ptr %.sroa.774.0..sroa_idx, align 8
   %i.x = zext i32 %.sroa.774.0.copyload to i64    ; 2 uses
+  %2 = and i64 %.03789, 4294967295
   br label %bb.d
 
 .loopexit:                                        ; preds = %._crit_edge, %_ZNSt6vectorIN10glTFCommon3RefIN5glTF24MeshEEESaIS4_EE2atEm.exit45
   %i.y = phi ptr [ %i.by, %_ZNSt6vectorIN10glTFCommon3RefIN5glTF24MeshEEESaIS4_EE2atEm.exit45 ], [ %i.cr, %._crit_edge ]
-  %.037 = add i32 %.03791, -1                     ; 2 uses
-  %.not = icmp eq i32 %.037, 0
+  %indvars.iv.next108 = add nsw i64 %indvars.iv107, -1 ; 2 uses
+  %3 = and i64 %indvars.iv.next108, 4294967295
+  %.not = icmp eq i64 %3, 0
   br i1 %.not, label %._crit_edge92, label %bb.d, !llvm.loop !89
 
 ._crit_edge92:                                    ; preds = %.loopexit
@@ -257,12 +259,11 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.ak, label %.lr.ph.i.i, label %_ZSt7reverseIN9__gnu_cxx17__normal_iteratorIPN5glTF24Mesh9PrimitiveESt6vectorIS4_SaIS4_EEEEEvT_SA_.exit.loopexit, !llvm.loop !90
 
 bb.d:                                             ; preds = %.lr.ph, %.loopexit
-  %.03791 = phi i32 [ %.03789, %.lr.ph ], [ %.037, %.loopexit ] ; 2 uses
+  %indvars.iv107 = phi i64 [ %2, %.lr.ph ], [ %indvars.iv.next108, %.loopexit ] ; 4 uses
   %i.al = load ptr, ptr %i.m, align 8
   %i.am = getelementptr inbounds nuw [8 x i8], ptr %i.al, i64 %indvars.iv107.a
   %i.an = load ptr, ptr %i.am, align 8            ; 2 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %i.an, i64 288
-  %3 = zext i32 %.03791 to i64                    ; 3 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %i.an, i64 296
   %i.aq = load ptr, ptr %i.ap, align 8
   %i.ar = load ptr, ptr %i.ao, align 8            ; 2 uses
@@ -270,15 +271,15 @@ bb.d:                                             ; preds = %.lr.ph, %.loopexit
   %i.at = ptrtoint ptr %i.ar to i64
   %i.au = sub i64 %i.as, %i.at
   %i.av = ashr exact i64 %i.au, 4                 ; 2 uses
-  %.not.i.i44 = icmp ugt i64 %i.av, %3
+  %.not.i.i44 = icmp ugt i64 %i.av, %indvars.iv107
   br i1 %.not.i.i44, label %_ZNSt6vectorIN10glTFCommon3RefIN5glTF24MeshEEESaIS4_EE2atEm.exit45, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  tail call void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.249, i64 noundef %3, i64 noundef %i.av) #34
+  tail call void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.249, i64 noundef %indvars.iv107, i64 noundef %i.av) #34
   unreachable
 
 _ZNSt6vectorIN10glTFCommon3RefIN5glTF24MeshEEESaIS4_EE2atEm.exit45: ; preds = %bb.d
-  %i.aw = getelementptr inbounds nuw [16 x i8], ptr %i.ar, i64 %3 ; 2 uses
+  %i.aw = getelementptr inbounds nuw [16 x i8], ptr %i.ar, i64 %indvars.iv107 ; 2 uses
   %.sroa.065.0.copyload = load ptr, ptr %i.aw, align 8 ; 2 uses
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.aw, i64 8
   %.sroa.6.0.copyload = load i32, ptr %.sroa.6.0..sroa_idx, align 8
@@ -681,23 +682,24 @@ bb.i:                                             ; preds = %._crit_edge
 
 .lr.ph121.preheader:                              ; preds = %bb.i
   %i.aw = add nuw nsw i32 %3, 1
+  %4 = zext nneg i32 %i.aw to i64
   br label %.lr.ph121
 
 bb.j:                                             ; preds = %.lr.ph121
-  %4 = add nsw i32 %.0119, -1
-  %i.ax = icmp slt i32 %.0119, 4
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
+  %5 = trunc nuw i64 %indvars.iv to i32
+  %i.ax = icmp slt i32 %5, 4
   br i1 %i.ax, label %.loopexit142, label %.lr.ph121, !llvm.loop !532
 
 .lr.ph121:                                        ; preds = %.lr.ph121.preheader, %bb.j
-  %.0119 = phi i32 [ %4, %bb.j ], [ %i.aw, %.lr.ph121.preheader ] ; 3 uses
-  %5 = zext nneg i32 %.0119 to i64                ; 2 uses
-  %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 %5
+  %indvars.iv = phi i64 [ %4, %.lr.ph121.preheader ], [ %indvars.iv.next, %bb.j ] ; 4 uses
+  %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 %indvars.iv
   %i.az = load i8, ptr %i.ay, align 1
   %.not = icmp eq i8 %i.az, 48
   br i1 %.not, label %bb.j, label %.loopexit
 
 .loopexit:                                        ; preds = %.lr.ph121
-  %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 %5
+  %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 %indvars.iv
   %i.bb = getelementptr inbounds nuw i8, ptr %i.ba, i64 1
   br label %_ZN9rapidjson8internal13WriteExponentEiPc.exit
 

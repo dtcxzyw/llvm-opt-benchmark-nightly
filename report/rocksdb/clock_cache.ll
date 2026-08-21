@@ -204,44 +204,46 @@ bb.a:
   %i.w = add i64 %i.v, -1
   %i.x = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.w, i1 true)
   %i.y = trunc nuw nsw i64 %i.x to i32
-  %i.z = xor i32 %i.y, 63                         ; 3 uses
-  br i1 %i.p, label %.preheader.i, label %._ZN7rocksdb11clock_cache20FixedHyperClockTable12CalcHashBitsEmmNS_25CacheMetadataChargePolicyE.exit_crit_edge
+  %i.z = xor i32 %i.y, 63                         ; 2 uses
+  br i1 %i.p, label %._ZN7rocksdb11clock_cache20FixedHyperClockTable12CalcHashBitsEmmNS_25CacheMetadataChargePolicyE.exit_crit_edge, label %_ZN7rocksdb11clock_cache20FixedHyperClockTable12CalcHashBitsEmmNS_25CacheMetadataChargePolicyE.exit
 
 ._ZN7rocksdb11clock_cache20FixedHyperClockTable12CalcHashBitsEmmNS_25CacheMetadataChargePolicyE.exit_crit_edge: ; preds = %bb.a
-  %.pre = zext nneg i32 %i.z to i64               ; 2 uses
-  %.pre13 = shl i64 64, %.pre
-  br label %_ZN7rocksdb11clock_cache20FixedHyperClockTable12CalcHashBitsEmmNS_25CacheMetadataChargePolicyE.exit
+  %.pre = zext nneg i32 %i.z to i64
+  br label %.preheader.i
 
-.preheader.i:                                     ; preds = %bb.a, %.preheader.i
-  %.0.i = phi i32 [ %9, %.preheader.i ], [ %i.z, %bb.a ] ; 4 uses
-  %i.aa = icmp ne i32 %.0.i, 0
-  %8 = zext nneg i32 %.0.i to i64                 ; 2 uses
-  %i.ab = shl i64 64, %8                          ; 2 uses
+.preheader.i:                                     ; preds = %.preheader.i, %._ZN7rocksdb11clock_cache20FixedHyperClockTable12CalcHashBitsEmmNS_25CacheMetadataChargePolicyE.exit_crit_edge
+  %indvars.iv.i = phi i64 [ %.pre, %._ZN7rocksdb11clock_cache20FixedHyperClockTable12CalcHashBitsEmmNS_25CacheMetadataChargePolicyE.exit_crit_edge ], [ %indvars.iv.next.i, %.preheader.i ] ; 4 uses
+  %i.aa = icmp ne i64 %indvars.iv.i, 0
+  %i.ab = shl i64 64, %indvars.iv.i
   %i.ac = icmp ugt i64 %i.ab, %1
   %i.ad = select i1 %i.aa, i1 %i.ac, i1 false
-  %9 = add nsw i32 %.0.i, -1
-  br i1 %i.ad, label %.preheader.i, label %_ZN7rocksdb11clock_cache20FixedHyperClockTable12CalcHashBitsEmmNS_25CacheMetadataChargePolicyE.exit, !llvm.loop !175
+  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1
+  br i1 %i.ad, label %.preheader.i, label %.loopexit.loopexit.i, !llvm.loop !175
 
-_ZN7rocksdb11clock_cache20FixedHyperClockTable12CalcHashBitsEmmNS_25CacheMetadataChargePolicyE.exit: ; preds = %.preheader.i, %._ZN7rocksdb11clock_cache20FixedHyperClockTable12CalcHashBitsEmmNS_25CacheMetadataChargePolicyE.exit_crit_edge
-  %.pre-phi14 = phi i64 [ %.pre13, %._ZN7rocksdb11clock_cache20FixedHyperClockTable12CalcHashBitsEmmNS_25CacheMetadataChargePolicyE.exit_crit_edge ], [ %i.ab, %.preheader.i ] ; 2 uses
-  %.pre-phi = phi i64 [ %.pre, %._ZN7rocksdb11clock_cache20FixedHyperClockTable12CalcHashBitsEmmNS_25CacheMetadataChargePolicyE.exit_crit_edge ], [ %8, %.preheader.i ] ; 3 uses
-  %.1.i = phi i32 [ %i.z, %._ZN7rocksdb11clock_cache20FixedHyperClockTable12CalcHashBitsEmmNS_25CacheMetadataChargePolicyE.exit_crit_edge ], [ %.0.i, %.preheader.i ] ; 2 uses
+.loopexit.loopexit.i:                             ; preds = %.preheader.i
+  %8 = trunc nuw nsw i64 %indvars.iv.i to i32
+  br label %_ZN7rocksdb11clock_cache20FixedHyperClockTable12CalcHashBitsEmmNS_25CacheMetadataChargePolicyE.exit
+
+_ZN7rocksdb11clock_cache20FixedHyperClockTable12CalcHashBitsEmmNS_25CacheMetadataChargePolicyE.exit: ; preds = %bb.a, %.loopexit.loopexit.i
+  %.1.i = phi i32 [ %i.z, %bb.a ], [ %8, %.loopexit.loopexit.i ] ; 3 uses
   store i32 %.1.i, ptr %i.k, align 32, !tbaa !112
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 168
-  %notmask = shl nsw i64 -1, %.pre-phi
+  %9 = zext nneg i32 %.1.i to i64                 ; 4 uses
+  %notmask = shl nsw i64 -1, %9
   %i.af = xor i64 %notmask, -1
   store i64 %i.af, ptr %i.ae, align 8, !tbaa !99
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 176
-  %i.ah = shl nuw i64 1, %.pre-phi                ; 2 uses
+  %i.ah = shl nuw i64 1, %9                       ; 2 uses
   %i.ai = uitofp i64 %i.ah to double
   %i.aj = fmul nnan double %i.ai, 8.400000e-01
   %i.ak = fptoui double %i.aj to i64
   store i64 %i.ak, ptr %i.ag, align 16, !tbaa !36
   %i.al = icmp ugt i32 %.1.i, 57
-  %i.am = select i1 %i.al, i64 -1, i64 %.pre-phi14
+  %10 = shl i64 64, %9                            ; 2 uses
+  %i.am = select i1 %i.al, i64 -1, i64 %10
   %i.an = tail call noalias noundef nonnull align 64 ptr @_ZnamSt11align_val_t(i64 noundef %i.am, i64 noundef 64) #34 ; 4 uses
   %i.ao = getelementptr inbounds [64 x i8], ptr %i.an, i64 %i.ah
-  %i.ap = shl i64 64, %.pre-phi
+  %i.ap = shl i64 64, %9
   %i.aq = add i64 %i.ap, -64                      ; 2 uses
   %i.ar = lshr exact i64 %i.aq, 6
   %i.as = add nuw nsw i64 %i.ar, 1
@@ -291,7 +293,7 @@ _ZN7rocksdb11clock_cache20FixedHyperClockTable12CalcHashBitsEmmNS_25CacheMetadat
 
 bb.b:                                             ; preds = %.unr-lcssa
   %i.bh = getelementptr inbounds nuw i8, ptr %0, i64 72
-  %i.bi = atomicrmw add ptr %i.bh, i64 %.pre-phi14 monotonic, align 8 ; 0 uses
+  %i.bi = atomicrmw add ptr %i.bh, i64 %10 monotonic, align 8 ; 0 uses
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %.unr-lcssa
@@ -299,7 +301,7 @@ bb.c:                                             ; preds = %bb.b, %.unr-lcssa
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define noundef range(i32 0, 2147483647) i32 @_ZN7rocksdb11clock_cache20FixedHyperClockTable12CalcHashBitsEmmNS_25CacheMetadataChargePolicyE(i64 noundef %0, i64 noundef %1, i32 noundef %2) local_unnamed_addr #10 align 2 {
+define noundef i32 @_ZN7rocksdb11clock_cache20FixedHyperClockTable12CalcHashBitsEmmNS_25CacheMetadataChargePolicyE(i64 noundef %0, i64 noundef %1, i32 noundef %2) local_unnamed_addr #10 align 2 {
 bb.a:
   %i.a = uitofp i64 %1 to double
   %i.b = fmul nnan double %i.a, f0x3FE6666666666666 ; 2 uses
@@ -315,20 +317,27 @@ bb.a:
   %i.k = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.j, i1 true)
   %i.l = trunc nuw nsw i64 %i.k to i32
   %i.m = xor i32 %i.l, 63                         ; 2 uses
-  br i1 %i.c, label %.preheader, label %.loopexit
+  br i1 %i.c, label %.preheader.preheader, label %.loopexit
 
-.preheader:                                       ; preds = %bb.a, %.preheader
-  %.0 = phi i32 [ %4, %.preheader ], [ %i.m, %bb.a ] ; 4 uses
-  %i.n = icmp ne i32 %.0, 0
-  %3 = zext nneg i32 %.0 to i64
-  %i.o = shl i64 64, %3
+.preheader.preheader:                             ; preds = %bb.a
+  %3 = zext nneg i32 %i.m to i64
+  br label %.preheader
+
+.preheader:                                       ; preds = %.preheader.preheader, %.preheader
+  %indvars.iv = phi i64 [ %3, %.preheader.preheader ], [ %indvars.iv.next, %.preheader ] ; 4 uses
+  %i.n = icmp ne i64 %indvars.iv, 0
+  %i.o = shl i64 64, %indvars.iv
   %i.p = icmp ugt i64 %i.o, %0
   %i.q = select i1 %i.n, i1 %i.p, i1 false
-  %4 = add nsw i32 %.0, -1
-  br i1 %i.q, label %.preheader, label %.loopexit, !llvm.loop !175
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
+  br i1 %i.q, label %.preheader, label %.loopexit.loopexit, !llvm.loop !175
 
-.loopexit:                                        ; preds = %.preheader, %bb.a
-  %.1 = phi i32 [ %i.m, %bb.a ], [ %.0, %.preheader ]
+.loopexit.loopexit:                               ; preds = %.preheader
+  %4 = trunc nuw nsw i64 %indvars.iv to i32
+  br label %.loopexit
+
+.loopexit:                                        ; preds = %.loopexit.loopexit, %bb.a
+  %.1 = phi i32 [ %i.m, %bb.a ], [ %4, %.loopexit.loopexit ]
   ret i32 %.1
 }
 

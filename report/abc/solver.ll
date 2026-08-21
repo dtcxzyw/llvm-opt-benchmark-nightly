@@ -203,15 +203,15 @@ bb.b:                                             ; preds = %bb.a
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 104
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 96
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 80
+  %2 = zext i32 %.val to i64
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph, %bb.l
-  %.in = phi i32 [ %.val, %.lr.ph ], [ %2, %bb.l ]
-  %2 = add i32 %.in, -1                           ; 3 uses
+  %indvars.iv = phi i64 [ %2, %.lr.ph ], [ %3, %bb.l ]
+  %3 = add i64 %indvars.iv, -1                    ; 3 uses
   %i.n = load ptr, ptr %i.c, align 8, !tbaa !49
   %i.o = getelementptr i8, ptr %i.n, i64 8
   %.val27 = load ptr, ptr %i.o, align 8, !tbaa !34
-  %3 = zext i32 %2 to i64
   %i.p = getelementptr inbounds nuw [4 x i8], ptr %.val27, i64 %3
   %i.q = load i32, ptr %i.p, align 4, !tbaa !37
   %i.r = lshr i32 %i.q, 1                         ; 5 uses
@@ -413,7 +413,8 @@ bb.l:                                             ; preds = %heap_insert.exit, %
   %.val28 = load ptr, ptr %i.cr, align 8, !tbaa !34 ; 2 uses
   %i.cs = getelementptr inbounds nuw [4 x i8], ptr %.val28, i64 %i.f
   %i.ct = load i32, ptr %i.cs, align 4, !tbaa !37 ; 2 uses
-  %i.cu = icmp ugt i32 %2, %i.ct
+  %4 = zext i32 %i.ct to i64
+  %i.cu = icmp ugt i64 %3, %4
   br i1 %i.cu, label %bb.c, label %._crit_edge.loopexit, !llvm.loop !71
 
 ._crit_edge.loopexit:                             ; preds = %bb.l
@@ -816,10 +817,10 @@ bb.fu:                                            ; preds = %vec_uint_push_back.
   %i.bpk = zext i32 %.val.i113 to i64
   br label %.lr.ph56.i
 
-.lr.ph56.i:                                       ; preds = %.lr.ph56.i.preheader, %bb.gd
-  %indvars.iv = phi i64 [ %i.bpk, %.lr.ph56.i.preheader ], [ %i.bpl, %bb.gd ]
+.lr.ph56.i:                                       ; preds = %bb.gd, %.lr.ph56.i.preheader
   %2 = phi ptr [ %i.bpg, %.lr.ph56.i.preheader ], [ %i.brz, %bb.gd ]
-  %i.bpl = add i64 %indvars.iv, -1                ; 3 uses
+  %indvars.iv58.i = phi i64 [ %i.bpk, %.lr.ph56.i.preheader ], [ %i.bpl, %bb.gd ]
+  %i.bpl = add i64 %indvars.iv58.i, -1            ; 3 uses
   %i.bpm = load ptr, ptr %i.g, align 8, !tbaa !49
   %i.bpn = getelementptr i8, ptr %i.bpm, i64 8
   %.val39.i = load ptr, ptr %i.bpn, align 8, !tbaa !34

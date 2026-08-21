@@ -203,19 +203,19 @@ bb.e:                                             ; preds = %bb.d
   %i.ae = sdiv i32 %i.ad, 2
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 384
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 376
+  %1 = zext nneg i32 %i.ab to i64
   br label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph, %bb.h
-  %.03157 = phi i32 [ %i.ab, %.lr.ph ], [ %2, %bb.h ] ; 5 uses
+  %indvars.iv = phi i64 [ %1, %.lr.ph ], [ %indvars.iv.next, %bb.h ] ; 6 uses
   %.03256 = phi i32 [ %i.ae, %.lr.ph ], [ %.2, %bb.h ] ; 2 uses
-  %1 = zext nneg i32 %.03157 to i64               ; 2 uses
   %i.ah = load ptr, ptr %i.g, align 8, !tbaa !78
   %i.ai = load ptr, ptr %i.e, align 8, !tbaa !76  ; 2 uses
   %i.aj = ptrtoint ptr %i.ah to i64
   %i.ak = ptrtoint ptr %i.ai to i64
   %i.al = sub i64 %i.aj, %i.ak
   %i.am = ashr exact i64 %i.al, 3
-  %i.an = icmp ugt i64 %i.am, %1
+  %i.an = icmp ugt i64 %i.am, %indvars.iv
   br i1 %i.an, label %_ZN4core5arrayIPN3gui7IGUITabEEixEj.exit, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
@@ -223,7 +223,7 @@ bb.g:                                             ; preds = %bb.f
   unreachable
 
 _ZN4core5arrayIPN3gui7IGUITabEEixEj.exit:         ; preds = %bb.f
-  %i.ao = getelementptr inbounds nuw [8 x i8], ptr %i.ai, i64 %1
+  %i.ao = getelementptr inbounds nuw [8 x i8], ptr %i.ai, i64 %indvars.iv
   %i.ap = load ptr, ptr %i.ao, align 8, !tbaa !79 ; 3 uses
   %.not42 = icmp eq ptr %i.ap, null
   br i1 %.not42, label %bb.h, label %_ZNK3gui14CGUITabControl12calcTabWidthEPNS_8IGUIFontEPKw.exit
@@ -245,25 +245,30 @@ _ZNK3gui14CGUITabControl12calcTabWidthEPNS_8IGUIFontEPKw.exit: ; preds = %_ZN4co
   %i.bc = tail call i32 @llvm.smin.i32(i32 %i.az, i32 %i.ba)
   %.06.i = select i1 %i.bb, i32 %i.bc, i32 %i.az  ; 2 uses
   %i.bd = load i32, ptr %i.aa, align 8, !tbaa !64
-  %i.be = icmp eq i32 %.03157, %i.bd
+  %2 = zext i32 %i.bd to i64
+  %i.be = icmp eq i64 %indvars.iv, %2
   %i.bf = sdiv i32 %.06.i, 2
   %.0 = select i1 %i.be, i32 %i.bf, i32 %.06.i
   %i.bg = sub nsw i32 %.03256, %.0                ; 2 uses
   %i.bh = icmp slt i32 %i.bg, %i.v
-  br i1 %i.bh, label %.thread, label %bb.h
+  br i1 %i.bh, label %.thread.loopexit, label %bb.h
 
 bb.h:                                             ; preds = %_ZNK3gui14CGUITabControl12calcTabWidthEPNS_8IGUIFontEPKw.exit, %_ZN4core5arrayIPN3gui7IGUITabEEixEj.exit
   %.2 = phi i32 [ %i.bg, %_ZNK3gui14CGUITabControl12calcTabWidthEPNS_8IGUIFontEPKw.exit ], [ %.03256, %_ZN4core5arrayIPN3gui7IGUITabEEixEj.exit ]
-  %2 = add nsw i32 %.03157, -1
-  %i.bi = icmp sgt i32 %.03157, 1
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
+  %i.bi = icmp sgt i64 %indvars.iv, 1
   br i1 %i.bi, label %bb.f, label %._crit_edge.thread, !llvm.loop !117
 
 ._crit_edge:                                      ; preds = %bb.e
   %i.bj = icmp eq i32 %i.ab, 0
   br i1 %i.bj, label %._crit_edge.thread, label %.thread
 
-.thread:                                          ; preds = %_ZNK3gui14CGUITabControl12calcTabWidthEPNS_8IGUIFontEPKw.exit, %._crit_edge
-  %.03155 = phi i32 [ %i.ab, %._crit_edge ], [ %.03157, %_ZNK3gui14CGUITabControl12calcTabWidthEPNS_8IGUIFontEPKw.exit ] ; 4 uses
+.thread.loopexit:                                 ; preds = %_ZNK3gui14CGUITabControl12calcTabWidthEPNS_8IGUIFontEPKw.exit
+  %3 = trunc nuw nsw i64 %indvars.iv to i32
+  br label %.thread
+
+.thread:                                          ; preds = %.thread.loopexit, %._crit_edge
+  %.03155 = phi i32 [ %i.ab, %._crit_edge ], [ %3, %.thread.loopexit ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #19
   store i32 0, ptr %i.a, align 4, !tbaa !46
   %i.bk = call noundef zeroext i1 @_ZN3gui14CGUITabControl17needScrollControlEibPi(ptr noundef nonnull align 8 dereferenceable(388) %0, i32 noundef %.03155, i1 noundef zeroext true, ptr noundef nonnull %i.a)

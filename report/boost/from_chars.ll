@@ -204,20 +204,21 @@ _ZN5boost8charconv6detail10fast_float8stackvecILt62EE10try_extendENS2_4spanImEE.
 
 .lr.ph.i50:                                       ; preds = %.critedge34
   %i.dr = getelementptr i8, ptr %0, i64 -8
+  %5 = zext i16 %.promoted.i to i64
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.w, %.lr.ph.i50
-  %5 = phi i16 [ %.promoted.i, %.lr.ph.i50 ], [ %7, %bb.w ] ; 2 uses
-  %6 = zext i16 %5 to i64
-  %i.ds = getelementptr [8 x i8], ptr %i.dr, i64 %6
+  %indvars.iv.i = phi i64 [ %5, %.lr.ph.i50 ], [ %indvars.iv.next.i, %bb.w ] ; 2 uses
+  %i.ds = getelementptr [8 x i8], ptr %i.dr, i64 %indvars.iv.i
   %i.dt = load i64, ptr %i.ds, align 8, !tbaa !10
   %i.du = icmp eq i64 %i.dt, 0
   br i1 %i.du, label %bb.w, label %.critedge32
 
 bb.w:                                             ; preds = %bb.v
-  %7 = add i16 %5, -1                             ; 3 uses
-  store i16 %7, ptr %i.a, align 8, !tbaa !62
-  %.not.i51 = icmp eq i16 %7, 0
+  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1 ; 2 uses
+  %indvars.i = trunc i64 %indvars.iv.next.i to i16 ; 2 uses
+  store i16 %indvars.i, ptr %i.a, align 8, !tbaa !62
+  %.not.i51 = icmp eq i16 %indvars.i, 0
   br i1 %.not.i51, label %.critedge32, label %bb.v, !llvm.loop !91
 
 .critedge32:                                      ; preds = %bb.w, %bb.v, %bb.g, %.critedge34, %_ZN5boost8charconv6detail10fast_float8stackvecILt62EE10try_extendENS2_4spanImEE.exit
