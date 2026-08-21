@@ -1023,6 +1023,8 @@ def compute_diff(
 
     ref_stat_lines = _format_interesting_stats_lines(ref_stats)
     new_stat_lines = _format_interesting_stats_lines(new_stats)
+    proj, file = os.path.basename(new_bc).removesuffix(".bc").split("-s-", 1)
+    download_link_line = f"Download link: {make_dataset_download_link(proj, file)}"
 
     ref_index = _build_ir_context_index(ref_lines)
     new_index = _build_ir_context_index(new_lines)
@@ -1033,8 +1035,8 @@ def compute_diff(
         return None
 
     minimized_ref_lines, minimized_new_lines = minimized
-    minimized_ref_lines = ref_stat_lines + minimized_ref_lines
-    minimized_new_lines = new_stat_lines + minimized_new_lines
+    minimized_ref_lines = [download_link_line] + ref_stat_lines + minimized_ref_lines
+    minimized_new_lines = [download_link_line] + new_stat_lines + minimized_new_lines
     with open(minimized_ref_ir, "w") as f:
         f.write("\n".join(minimized_ref_lines) + "\n")
     with open(minimized_new_ir, "w") as f:
@@ -1227,6 +1229,13 @@ def _run_opt_task(args):
     )
 
 
+def make_dataset_download_link(proj: str, file: str) -> str:
+    return (
+        "https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark"
+        f"/resolve/{proj}/original/{file}?download=true"
+    )
+
+
 def run_opt(
     config: TestConfig,
     enable_ir_diff: bool = True,
@@ -1331,7 +1340,10 @@ def run_opt(
                 continue
             proj, file, ret = item
             if isinstance(ret, str):
-                log_f.write(f"{proj}/{file}: {ret}\n")
+                log_f.write(
+                    f"{proj}/{file}: {ret}\n"
+                    f"Download link: {make_dataset_download_link(proj, file)}\n"
+                )
                 continue
 
             if config.comptime:
