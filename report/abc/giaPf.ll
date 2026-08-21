@@ -204,7 +204,7 @@ Pf_SetLastCutContainsArea.exit.i.us.us.us:        ; preds = %._crit_edge56.loope
   %i.asd = zext nneg i32 %.0.i.i335.us.us.us to i64
   br label %.lr.ph.i8.i.us.us.us
 
-.lr.ph.i8.i.us.us.us:                             ; preds = %.lr.ph.i8.i.us.us.us.preheader, %Pf_CutCompareArea.exit.i.i.us.us.us
+.lr.ph.i8.i.us.us.us:                             ; preds = %Pf_CutCompareArea.exit.i.i.us.us.us, %.lr.ph.i8.i.us.us.us.preheader
   %indvars.iv694 = phi i64 [ %i.asd, %.lr.ph.i8.i.us.us.us.preheader ], [ %indvars.iv.next695, %Pf_CutCompareArea.exit.i.i.us.us.us ] ; 3 uses
   %i.ase = getelementptr [8 x i8], ptr %i.c, i64 %indvars.iv694 ; 3 uses
   %i.asf = getelementptr i8, ptr %i.ase, i64 -8   ; 2 uses
@@ -607,7 +607,7 @@ Pf_SetLastCutContainsArea.exit.i451.us:           ; preds = %._crit_edge56.loope
   %i.bmg = zext nneg i32 %.0.i.i452.us to i64
   br label %.lr.ph.i8.i453.us
 
-.lr.ph.i8.i453.us:                                ; preds = %.lr.ph.i8.i453.us.preheader, %Pf_CutCompareArea.exit.i.i455.us
+.lr.ph.i8.i453.us:                                ; preds = %Pf_CutCompareArea.exit.i.i455.us, %.lr.ph.i8.i453.us.preheader
   %indvars.iv709 = phi i64 [ %i.bmg, %.lr.ph.i8.i453.us.preheader ], [ %indvars.iv.next710, %Pf_CutCompareArea.exit.i.i455.us ] ; 3 uses
   %i.bmh = getelementptr [8 x i8], ptr %i.c, i64 %indvars.iv709 ; 3 uses
   %i.bmi = getelementptr i8, ptr %i.bmh, i64 -8   ; 2 uses
@@ -1010,12 +1010,15 @@ bb.l:                                             ; preds = %bb.k, %.lr.ph55.i
 Pf_SetLastCutContainsArea.exit:                   ; preds = %._crit_edge.i, %._crit_edge56.loopexit.i
   %.0.i = phi i32 [ %i.bb, %._crit_edge56.loopexit.i ], [ %1, %._crit_edge.i ] ; 8 uses
   %i.bc = icmp sgt i32 %.0.i, 0
-  br i1 %i.bc, label %.lr.ph.i8, label %Pf_SetSortByArea.exit
+  br i1 %i.bc, label %.lr.ph.preheader.i, label %Pf_SetSortByArea.exit
 
-.lr.ph.i8:                                        ; preds = %Pf_SetLastCutContainsArea.exit, %Pf_CutCompareArea.exit.i
-  %.016.i = phi i32 [ %4, %Pf_CutCompareArea.exit.i ], [ %.0.i, %Pf_SetLastCutContainsArea.exit ] ; 3 uses
-  %3 = zext nneg i32 %.016.i to i64
-  %i.bd = getelementptr [8 x i8], ptr %0, i64 %3  ; 3 uses
+.lr.ph.preheader.i:                               ; preds = %Pf_SetLastCutContainsArea.exit
+  %3 = zext nneg i32 %.0.i to i64
+  br label %.lr.ph.i8
+
+.lr.ph.i8:                                        ; preds = %Pf_CutCompareArea.exit.i, %.lr.ph.preheader.i
+  %indvars.iv.i9 = phi i64 [ %3, %.lr.ph.preheader.i ], [ %indvars.iv.next.i10, %Pf_CutCompareArea.exit.i ] ; 3 uses
+  %i.bd = getelementptr [8 x i8], ptr %0, i64 %indvars.iv.i9 ; 3 uses
   %i.be = getelementptr i8, ptr %i.bd, i64 -8     ; 2 uses
   %i.bf = load ptr, ptr %i.be, align 8, !tbaa !136 ; 4 uses
   %i.bg = load ptr, ptr %i.bd, align 8, !tbaa !136 ; 4 uses
@@ -1067,8 +1070,8 @@ bb.r:                                             ; preds = %bb.q
 Pf_CutCompareArea.exit.i:                         ; preds = %bb.r, %bb.q, %bb.o, %bb.m
   store ptr %i.bg, ptr %i.be, align 8, !tbaa !136
   store ptr %i.bf, ptr %i.bd, align 8, !tbaa !136
-  %4 = add nsw i32 %.016.i, -1
-  %i.cg = icmp sgt i32 %.016.i, 1
+  %indvars.iv.next.i10 = add nsw i64 %indvars.iv.i9, -1
+  %i.cg = icmp sgt i64 %indvars.iv.i9, 1
   br i1 %i.cg, label %.lr.ph.i8, label %Pf_SetSortByArea.exit, !llvm.loop !158
 
 Pf_SetSortByArea.exit:                            ; preds = %.lr.ph.i8, %bb.n, %bb.p, %bb.r, %Pf_CutCompareArea.exit.i, %bb.b, %Pf_SetLastCutContainsArea.exit

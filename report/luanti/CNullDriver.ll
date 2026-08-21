@@ -204,18 +204,21 @@ bb.b:                                             ; preds = %bb.a
   %i.i = trunc i64 %i.h to i32
   %.03254 = add i32 %i.i, -1                      ; 2 uses
   %i.j = icmp sgt i32 %.03254, -1
-  br i1 %i.j, label %.lr.ph, label %.loopexit
+  br i1 %i.j, label %.lr.ph.preheader, label %.loopexit
 
-.lr.ph:                                           ; preds = %bb.b, %bb.h
-  %.03255 = phi i32 [ %.032, %bb.h ], [ %.03254, %bb.b ] ; 3 uses
-  %2 = zext nneg i32 %.03255 to i64               ; 6 uses
+.lr.ph.preheader:                                 ; preds = %bb.b
+  %2 = zext nneg i32 %.03254 to i64
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.h
+  %indvars.iv = phi i64 [ %2, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.h ] ; 8 uses
   %i.k = load ptr, ptr %i.b, align 8, !tbaa !118
   %i.l = load ptr, ptr %i.a, align 8, !tbaa !122  ; 2 uses
   %i.m = ptrtoint ptr %i.k to i64
   %i.n = ptrtoint ptr %i.l to i64
   %i.o = sub i64 %i.m, %i.n
   %i.p = ashr exact i64 %i.o, 3
-  %i.q = icmp ugt i64 %i.p, %2
+  %i.q = icmp ugt i64 %i.p, %indvars.iv
   br i1 %i.q, label %_ZN4core5arrayIPN5video12IImageLoaderEEixEj.exit, label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph
@@ -223,7 +226,7 @@ bb.c:                                             ; preds = %.lr.ph
   unreachable
 
 _ZN4core5arrayIPN5video12IImageLoaderEEixEj.exit: ; preds = %.lr.ph
-  %i.r = getelementptr inbounds nuw [8 x i8], ptr %i.l, i64 %2
+  %i.r = getelementptr inbounds nuw [8 x i8], ptr %i.l, i64 %indvars.iv
   %i.s = load ptr, ptr %i.r, align 8, !tbaa !120  ; 2 uses
   %i.t = load ptr, ptr %1, align 8, !tbaa !8
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 32
@@ -245,7 +248,7 @@ bb.d:                                             ; preds = %_ZN4core5arrayIPN5v
   %i.ah = ptrtoint ptr %i.af to i64
   %i.ai = sub i64 %i.ag, %i.ah
   %i.aj = ashr exact i64 %i.ai, 3
-  %i.ak = icmp ugt i64 %i.aj, %2
+  %i.ak = icmp ugt i64 %i.aj, %indvars.iv
   br i1 %i.ak, label %_ZN4core5arrayIPN5video12IImageLoaderEEixEj.exit42, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
@@ -253,7 +256,7 @@ bb.e:                                             ; preds = %bb.d
   unreachable
 
 _ZN4core5arrayIPN5video12IImageLoaderEEixEj.exit42: ; preds = %bb.d
-  %i.al = getelementptr inbounds nuw [8 x i8], ptr %i.af, i64 %2
+  %i.al = getelementptr inbounds nuw [8 x i8], ptr %i.af, i64 %indvars.iv
   %i.am = load ptr, ptr %i.al, align 8, !tbaa !120 ; 2 uses
   %i.an = load ptr, ptr %i.am, align 8, !tbaa !8
   %i.ao = getelementptr inbounds nuw i8, ptr %i.an, i64 8
@@ -272,7 +275,7 @@ bb.f:                                             ; preds = %_ZN4core5arrayIPN5v
   %i.ay = ptrtoint ptr %i.aw to i64
   %i.az = sub i64 %i.ax, %i.ay
   %i.ba = ashr exact i64 %i.az, 3
-  %i.bb = icmp ugt i64 %i.ba, %2
+  %i.bb = icmp ugt i64 %i.ba, %indvars.iv
   br i1 %i.bb, label %_ZN4core5arrayIPN5video12IImageLoaderEEixEj.exit43, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
@@ -280,7 +283,7 @@ bb.g:                                             ; preds = %bb.f
   unreachable
 
 _ZN4core5arrayIPN5video12IImageLoaderEEixEj.exit43: ; preds = %bb.f
-  %i.bc = getelementptr inbounds nuw [8 x i8], ptr %i.aw, i64 %2
+  %i.bc = getelementptr inbounds nuw [8 x i8], ptr %i.aw, i64 %indvars.iv
   %i.bd = load ptr, ptr %i.bc, align 8, !tbaa !120 ; 2 uses
   %i.be = load ptr, ptr %i.bd, align 8, !tbaa !8
   %i.bf = getelementptr inbounds nuw i8, ptr %i.be, i64 16
@@ -290,8 +293,8 @@ _ZN4core5arrayIPN5video12IImageLoaderEEixEj.exit43: ; preds = %bb.f
   br i1 %.not40, label %bb.h, label %.loopexit
 
 bb.h:                                             ; preds = %_ZN4core5arrayIPN5video12IImageLoaderEEixEj.exit43, %_ZN4core5arrayIPN5video12IImageLoaderEEixEj.exit42, %_ZN4core5arrayIPN5video12IImageLoaderEEixEj.exit
-  %.032 = add nsw i32 %.03255, -1
-  %i.bi = icmp sgt i32 %.03255, 0
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
+  %i.bi = icmp sgt i64 %indvars.iv, 0
   br i1 %i.bi, label %.lr.ph, label %._crit_edge, !llvm.loop !246
 
 ._crit_edge:                                      ; preds = %bb.h
@@ -304,18 +307,21 @@ bb.h:                                             ; preds = %_ZN4core5arrayIPN5v
   %.pre70 = trunc i64 %.pre68 to i32
   %.pre72 = add i32 %.pre70, -1                   ; 2 uses
   %i.bj = icmp sgt i32 %.pre72, -1
-  br i1 %i.bj, label %.lr.ph59, label %.loopexit
+  br i1 %i.bj, label %.lr.ph59.preheader, label %.loopexit
 
-.lr.ph59:                                         ; preds = %._crit_edge, %bb.n
-  %.057 = phi i32 [ %.0, %bb.n ], [ %.pre72, %._crit_edge ] ; 3 uses
-  %3 = zext nneg i32 %.057 to i64                 ; 6 uses
+.lr.ph59.preheader:                               ; preds = %._crit_edge
+  %3 = zext nneg i32 %.pre72 to i64
+  br label %.lr.ph59
+
+.lr.ph59:                                         ; preds = %.lr.ph59.preheader, %bb.n
+  %indvars.iv63 = phi i64 [ %3, %.lr.ph59.preheader ], [ %indvars.iv.next64, %bb.n ] ; 8 uses
   %i.bk = load ptr, ptr %i.b, align 8, !tbaa !118
   %i.bl = load ptr, ptr %i.a, align 8, !tbaa !122 ; 2 uses
   %i.bm = ptrtoint ptr %i.bk to i64
   %i.bn = ptrtoint ptr %i.bl to i64
   %i.bo = sub i64 %i.bm, %i.bn
   %i.bp = ashr exact i64 %i.bo, 3
-  %i.bq = icmp ugt i64 %i.bp, %3
+  %i.bq = icmp ugt i64 %i.bp, %indvars.iv63
   br i1 %i.bq, label %_ZN4core5arrayIPN5video12IImageLoaderEEixEj.exit44, label %bb.i
 
 bb.i:                                             ; preds = %.lr.ph59
@@ -323,7 +329,7 @@ bb.i:                                             ; preds = %.lr.ph59
   unreachable
 
 _ZN4core5arrayIPN5video12IImageLoaderEEixEj.exit44: ; preds = %.lr.ph59
-  %i.br = getelementptr inbounds nuw [8 x i8], ptr %i.bl, i64 %3
+  %i.br = getelementptr inbounds nuw [8 x i8], ptr %i.bl, i64 %indvars.iv63
   %i.bs = load ptr, ptr %i.br, align 8, !tbaa !120 ; 2 uses
   %i.bt = load ptr, ptr %1, align 8, !tbaa !8
   %i.bu = getelementptr inbounds nuw i8, ptr %i.bt, i64 32
@@ -345,7 +351,7 @@ bb.j:                                             ; preds = %_ZN4core5arrayIPN5v
   %i.ch = ptrtoint ptr %i.cf to i64
   %i.ci = sub i64 %i.cg, %i.ch
   %i.cj = ashr exact i64 %i.ci, 3
-  %i.ck = icmp ugt i64 %i.cj, %3
+  %i.ck = icmp ugt i64 %i.cj, %indvars.iv63
   br i1 %i.ck, label %_ZN4core5arrayIPN5video12IImageLoaderEEixEj.exit45, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
@@ -353,7 +359,7 @@ bb.k:                                             ; preds = %bb.j
   unreachable
 
 _ZN4core5arrayIPN5video12IImageLoaderEEixEj.exit45: ; preds = %bb.j
-  %i.cl = getelementptr inbounds nuw [8 x i8], ptr %i.cf, i64 %3
+  %i.cl = getelementptr inbounds nuw [8 x i8], ptr %i.cf, i64 %indvars.iv63
   %i.cm = load ptr, ptr %i.cl, align 8, !tbaa !120 ; 2 uses
   %i.cn = load ptr, ptr %i.cm, align 8, !tbaa !8
   %i.co = getelementptr inbounds nuw i8, ptr %i.cn, i64 8
@@ -372,7 +378,7 @@ bb.l:                                             ; preds = %_ZN4core5arrayIPN5v
   %i.cy = ptrtoint ptr %i.cw to i64
   %i.cz = sub i64 %i.cx, %i.cy
   %i.da = ashr exact i64 %i.cz, 3
-  %i.db = icmp ugt i64 %i.da, %3
+  %i.db = icmp ugt i64 %i.da, %indvars.iv63
   br i1 %i.db, label %_ZN4core5arrayIPN5video12IImageLoaderEEixEj.exit46, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
@@ -380,7 +386,7 @@ bb.m:                                             ; preds = %bb.l
   unreachable
 
 _ZN4core5arrayIPN5video12IImageLoaderEEixEj.exit46: ; preds = %bb.l
-  %i.dc = getelementptr inbounds nuw [8 x i8], ptr %i.cw, i64 %3
+  %i.dc = getelementptr inbounds nuw [8 x i8], ptr %i.cw, i64 %indvars.iv63
   %i.dd = load ptr, ptr %i.dc, align 8, !tbaa !120 ; 2 uses
   %i.de = load ptr, ptr %i.dd, align 8, !tbaa !8
   %i.df = getelementptr inbounds nuw i8, ptr %i.de, i64 16
@@ -390,8 +396,8 @@ _ZN4core5arrayIPN5video12IImageLoaderEEixEj.exit46: ; preds = %bb.l
   br i1 %.not41, label %bb.n, label %.loopexit
 
 bb.n:                                             ; preds = %_ZN4core5arrayIPN5video12IImageLoaderEEixEj.exit46, %_ZN4core5arrayIPN5video12IImageLoaderEEixEj.exit45, %_ZN4core5arrayIPN5video12IImageLoaderEEixEj.exit44
-  %.0 = add nsw i32 %.057, -1
-  %i.di = icmp sgt i32 %.057, 0
+  %indvars.iv.next64 = add nsw i64 %indvars.iv63, -1
+  %i.di = icmp sgt i64 %indvars.iv63, 0
   br i1 %i.di, label %.lr.ph59, label %.loopexit, !llvm.loop !247
 
 .loopexit:                                        ; preds = %_ZN4core5arrayIPN5video12IImageLoaderEEixEj.exit43, %bb.n, %_ZN4core5arrayIPN5video12IImageLoaderEEixEj.exit46, %bb.b, %._crit_edge, %bb.a
@@ -465,18 +471,21 @@ bb.b:                                             ; preds = %bb.a
   %i.i = trunc i64 %i.h to i32
   %.01319 = add i32 %i.i, -1                      ; 2 uses
   %i.j = icmp sgt i32 %.01319, -1
-  br i1 %i.j, label %.lr.ph, label %.loopexit
+  br i1 %i.j, label %.lr.ph.preheader, label %.loopexit
 
-.lr.ph:                                           ; preds = %bb.b, %bb.f
-  %.01320 = phi i32 [ %.013, %bb.f ], [ %.01319, %bb.b ] ; 3 uses
-  %4 = zext nneg i32 %.01320 to i64               ; 4 uses
+.lr.ph.preheader:                                 ; preds = %bb.b
+  %4 = zext nneg i32 %.01319 to i64
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.f
+  %indvars.iv = phi i64 [ %4, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.f ] ; 6 uses
   %i.k = load ptr, ptr %i.b, align 8, !tbaa !123
   %i.l = load ptr, ptr %i.a, align 8, !tbaa !127  ; 2 uses
   %i.m = ptrtoint ptr %i.k to i64
   %i.n = ptrtoint ptr %i.l to i64
   %i.o = sub i64 %i.m, %i.n
   %i.p = ashr exact i64 %i.o, 3
-  %i.q = icmp ugt i64 %i.p, %4
+  %i.q = icmp ugt i64 %i.p, %indvars.iv
   br i1 %i.q, label %_ZN4core5arrayIPN5video12IImageWriterEEixEj.exit, label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph
@@ -484,7 +493,7 @@ bb.c:                                             ; preds = %.lr.ph
   unreachable
 
 _ZN4core5arrayIPN5video12IImageWriterEEixEj.exit: ; preds = %.lr.ph
-  %i.r = getelementptr inbounds nuw [8 x i8], ptr %i.l, i64 %4
+  %i.r = getelementptr inbounds nuw [8 x i8], ptr %i.l, i64 %indvars.iv
   %i.s = load ptr, ptr %i.r, align 8, !tbaa !125  ; 2 uses
   %i.t = load ptr, ptr %2, align 8, !tbaa !8
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 24
@@ -503,7 +512,7 @@ bb.d:                                             ; preds = %_ZN4core5arrayIPN5v
   %i.ae = ptrtoint ptr %i.ac to i64
   %i.af = sub i64 %i.ad, %i.ae
   %i.ag = ashr exact i64 %i.af, 3
-  %i.ah = icmp ugt i64 %i.ag, %4
+  %i.ah = icmp ugt i64 %i.ag, %indvars.iv
   br i1 %i.ah, label %_ZN4core5arrayIPN5video12IImageWriterEEixEj.exit17, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
@@ -511,7 +520,7 @@ bb.e:                                             ; preds = %bb.d
   unreachable
 
 _ZN4core5arrayIPN5video12IImageWriterEEixEj.exit17: ; preds = %bb.d
-  %i.ai = getelementptr inbounds nuw [8 x i8], ptr %i.ac, i64 %4
+  %i.ai = getelementptr inbounds nuw [8 x i8], ptr %i.ac, i64 %indvars.iv
   %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !125 ; 2 uses
   %i.ak = load ptr, ptr %i.aj, align 8, !tbaa !8
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 24
@@ -520,8 +529,8 @@ _ZN4core5arrayIPN5video12IImageWriterEEixEj.exit17: ; preds = %bb.d
   br i1 %i.an, label %.loopexit, label %bb.f
 
 bb.f:                                             ; preds = %_ZN4core5arrayIPN5video12IImageWriterEEixEj.exit, %_ZN4core5arrayIPN5video12IImageWriterEEixEj.exit17
-  %.013 = add nsw i32 %.01320, -1
-  %i.ao = icmp sgt i32 %.01320, 0
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
+  %i.ao = icmp sgt i64 %indvars.iv, 0
   br i1 %i.ao, label %.lr.ph, label %.loopexit, !llvm.loop !248
 
 .loopexit:                                        ; preds = %bb.f, %_ZN4core5arrayIPN5video12IImageWriterEEixEj.exit17, %bb.b, %bb.a
@@ -924,21 +933,24 @@ bb.a:
   %i.i = trunc i64 %i.h to i32
   %.03 = add i32 %i.i, -1                         ; 2 uses
   %i.j = icmp sgt i32 %.03, -1
-  br i1 %i.j, label %.lr.ph, label %._crit_edge
+  br i1 %i.j, label %.lr.ph.preheader, label %._crit_edge
+
+.lr.ph.preheader:                                 ; preds = %bb.a
+  %1 = zext nneg i32 %.03 to i64
+  br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %_ZN4core5arrayIN5video11CNullDriver9SOccQueryEEixEj.exit, %bb.a
   ret void
 
-.lr.ph:                                           ; preds = %bb.a, %_ZN4core5arrayIN5video11CNullDriver9SOccQueryEEixEj.exit
-  %.04 = phi i32 [ %.0, %_ZN4core5arrayIN5video11CNullDriver9SOccQueryEEixEj.exit ], [ %.03, %bb.a ] ; 3 uses
-  %1 = zext nneg i32 %.04 to i64                  ; 2 uses
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZN4core5arrayIN5video11CNullDriver9SOccQueryEEixEj.exit
+  %indvars.iv = phi i64 [ %1, %.lr.ph.preheader ], [ %indvars.iv.next, %_ZN4core5arrayIN5video11CNullDriver9SOccQueryEEixEj.exit ] ; 4 uses
   %i.k = load ptr, ptr %i.b, align 8, !tbaa !324
   %i.l = load ptr, ptr %i.a, align 8, !tbaa !325  ; 2 uses
   %i.m = ptrtoint ptr %i.k to i64
   %i.n = ptrtoint ptr %i.l to i64
   %i.o = sub i64 %i.m, %i.n
   %i.p = ashr exact i64 %i.o, 5
-  %i.q = icmp ugt i64 %i.p, %1
+  %i.q = icmp ugt i64 %i.p, %indvars.iv
   br i1 %i.q, label %_ZN4core5arrayIN5video11CNullDriver9SOccQueryEEixEj.exit, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph
@@ -946,14 +958,14 @@ bb.b:                                             ; preds = %.lr.ph
   unreachable
 
 _ZN4core5arrayIN5video11CNullDriver9SOccQueryEEixEj.exit: ; preds = %.lr.ph
-  %i.r = getelementptr inbounds nuw [32 x i8], ptr %i.l, i64 %1
+  %i.r = getelementptr inbounds nuw [32 x i8], ptr %i.l, i64 %indvars.iv
   %i.s = load ptr, ptr %i.r, align 8, !tbaa !319
   %i.t = load ptr, ptr %0, align 8, !tbaa !8
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 240
   %i.v = load ptr, ptr %i.u, align 8
   tail call void %i.v(ptr noundef nonnull align 8 dereferenceable(933) %0, ptr noundef %i.s)
-  %.0 = add nsw i32 %.04, -1
-  %i.w = icmp sgt i32 %.04, 0
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
+  %i.w = icmp sgt i64 %indvars.iv, 0
   br i1 %i.w, label %.lr.ph, label %._crit_edge, !llvm.loop !331
 }
 

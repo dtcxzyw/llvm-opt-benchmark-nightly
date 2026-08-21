@@ -201,24 +201,28 @@ _Z15search_res_atomPKciPK7t_atomsS0_b.exit134:    ; preds = %bb.ah, %bb.ag, %bb.
 
 .critedge98:                                      ; preds = %._crit_edge.i.i.i108, %bb.v, %bb.af, %_ZSt4findIN3gmx12ArrayRefIterIKiEEiET_S4_S4_RKT0_.exit129
   %i.en = icmp sgt i32 %1, -1
-  br i1 %i.en, label %.lr.ph209, label %.critedge99
+  br i1 %i.en, label %.lr.ph209.preheader, label %.critedge99
 
-.lr.ph209:                                        ; preds = %.critedge98, %bb.aj
-  %.2208 = phi i32 [ %9, %bb.aj ], [ %1, %.critedge98 ] ; 4 uses
-  %8 = zext nneg i32 %.2208 to i64
-  %i.eo = getelementptr inbounds nuw [36 x i8], ptr %i.c, i64 %8
+.lr.ph209.preheader:                              ; preds = %.critedge98
+  %8 = zext nneg i32 %1 to i64
+  br label %.lr.ph209
+
+.lr.ph209:                                        ; preds = %.lr.ph209.preheader, %bb.aj
+  %indvars.iv247 = phi i64 [ %8, %.lr.ph209.preheader ], [ %indvars.iv.next248, %bb.aj ] ; 4 uses
+  %i.eo = getelementptr inbounds nuw [36 x i8], ptr %i.c, i64 %indvars.iv247
   %i.ep = getelementptr inbounds nuw i8, ptr %i.eo, i64 24
   %i.eq = load i32, ptr %i.ep, align 4, !tbaa !21 ; 2 uses
   %i.er = icmp eq i32 %i.eq, %i.cs
   br i1 %i.er, label %bb.aj, label %.critedge6
 
 bb.aj:                                            ; preds = %.lr.ph209
-  %9 = add nsw i32 %.2208, -1
-  %i.es = icmp sgt i32 %.2208, 0
+  %indvars.iv.next248 = add nsw i64 %indvars.iv247, -1
+  %i.es = icmp sgt i64 %indvars.iv247, 0
   br i1 %i.es, label %.lr.ph209, label %.critedge99, !llvm.loop !40
 
 .critedge6:                                       ; preds = %.lr.ph209
-  %i.et = add nuw nsw i32 %.2208, 1
+  %9 = trunc nuw nsw i64 %indvars.iv247 to i32
+  %i.et = add nuw nsw i32 %9, 1
   br label %.critedge99
 
 .critedge99:                                      ; preds = %bb.aj, %.critedge98, %.critedge6

@@ -203,19 +203,23 @@ bb.a:
   %i.a = load i64, ptr %1, align 8, !tbaa !22     ; 11 uses
   %i.b = load i32, ptr @timeline_cursor, align 4, !tbaa !6 ; 2 uses
   %.not.i = icmp eq i32 %i.b, 0
-  br i1 %.not.i, label %find_last_event.exit.thread, label %.preheader.i
+  br i1 %.not.i, label %find_last_event.exit.thread, label %.preheader.preheader.i
 
-.preheader.i:                                     ; preds = %bb.a, %bb.b
-  %.0.i = phi i32 [ %4, %bb.b ], [ %i.b, %bb.a ]  ; 2 uses
-  %3 = zext i32 %.0.i to i64
-  %i.c = getelementptr inbounds nuw [16 x i8], ptr @event_timeline, i64 %3 ; 2 uses
+.preheader.preheader.i:                           ; preds = %bb.a
+  %3 = zext i32 %i.b to i64
+  br label %.preheader.i
+
+.preheader.i:                                     ; preds = %bb.b, %.preheader.preheader.i
+  %indvars.iv.i = phi i64 [ %3, %.preheader.preheader.i ], [ %indvars.iv.next.i, %bb.b ] ; 2 uses
+  %i.c = getelementptr inbounds nuw [16 x i8], ptr @event_timeline, i64 %indvars.iv.i ; 2 uses
   %i.d = load i64, ptr %i.c, align 16, !tbaa !15
   %i.e = icmp eq i64 %i.d, %i.a
   br i1 %i.e, label %find_last_event.exit, label %bb.b
 
 bb.b:                                             ; preds = %.preheader.i
-  %4 = add i32 %.0.i, -1                          ; 2 uses
-  %.not10.i = icmp eq i32 %4, 0
+  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1 ; 2 uses
+  %4 = and i64 %indvars.iv.next.i, 4294967295
+  %.not10.i = icmp eq i64 %4, 0
   br i1 %.not10.i, label %find_last_event.exit.thread, label %.preheader.i, !llvm.loop !24
 
 find_last_event.exit:                             ; preds = %.preheader.i

@@ -203,29 +203,33 @@ bb.k:                                             ; preds = %bb.o, %bb.j
 bb.l:                                             ; preds = %bb.k
   %i.fh = load i32, ptr %i.es, align 4, !tbaa !4
   %i.fi = and i32 %i.fh, 1023                     ; 2 uses
+  %7 = zext nneg i32 %i.fi to i64
   %.not49.i = icmp eq i32 %i.fi, 0
   %i.fj = sext i1 %.not49.i to i32
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.n, %bb.l
-  %.031.i = phi i32 [ %i.fi, %bb.l ], [ %8, %bb.n ] ; 4 uses
-  %7 = zext nneg i32 %.031.i to i64               ; 2 uses
-  %i.fk = getelementptr inbounds nuw [4 x i8], ptr %i.es, i64 %7
+  %indvars.iv.i141 = phi i64 [ %indvars.iv.next.i143, %bb.n ], [ %7, %bb.l ] ; 5 uses
+  %i.fk = getelementptr inbounds nuw [4 x i8], ptr %i.es, i64 %indvars.iv.i141
   %i.fl = load i32, ptr %i.fk, align 4, !tbaa !4
-  %i.fm = getelementptr inbounds nuw [4 x i8], ptr %i.fg, i64 %7
+  %i.fm = getelementptr inbounds nuw [4 x i8], ptr %i.fg, i64 %indvars.iv.i141
   %i.fn = load i32, ptr %i.fm, align 4, !tbaa !4
   %i.fo = xor i32 %i.fn, -1
   %i.fp = and i32 %i.fl, %i.fo
   %.not40.i = icmp eq i32 %i.fp, 0
-  br i1 %.not40.i, label %bb.n, label %bb.o
+  br i1 %.not40.i, label %bb.n, label %.split.loop.exit.i
 
 bb.n:                                             ; preds = %bb.m
-  %8 = add nsw i32 %.031.i, -1
-  %i.fq = icmp sgt i32 %.031.i, 1
+  %indvars.iv.next.i143 = add nsw i64 %indvars.iv.i141, -1
+  %i.fq = icmp sgt i64 %indvars.iv.i141, 1
   br i1 %i.fq, label %bb.m, label %bb.o
 
-bb.o:                                             ; preds = %bb.n, %bb.m
-  %.1.i141 = phi i32 [ %.031.i, %bb.m ], [ %i.fj, %bb.n ]
+.split.loop.exit.i:                               ; preds = %bb.m
+  %8 = trunc nuw nsw i64 %indvars.iv.i141 to i32
+  br label %bb.o
+
+bb.o:                                             ; preds = %bb.n, %.split.loop.exit.i
+  %.1.i141 = phi i32 [ %8, %.split.loop.exit.i ], [ %i.fj, %bb.n ]
   %.not41.i = icmp eq i32 %.1.i141, 0
   br i1 %.not41.i, label %bb.p, label %bb.k
 
@@ -346,29 +350,33 @@ bb.r:                                             ; preds = %bb.v, %bb.q
 bb.s:                                             ; preds = %bb.r
   %i.hi = load i32, ptr %i.gt, align 4, !tbaa !4
   %i.hj = and i32 %i.hi, 1023                     ; 2 uses
+  %9 = zext nneg i32 %i.hj to i64
   %.not49.i150 = icmp eq i32 %i.hj, 0
   %i.hk = sext i1 %.not49.i150 to i32
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.u, %bb.s
-  %.031.i151 = phi i32 [ %i.hj, %bb.s ], [ %10, %bb.u ] ; 4 uses
-  %9 = zext nneg i32 %.031.i151 to i64            ; 2 uses
-  %i.hl = getelementptr inbounds nuw [4 x i8], ptr %i.gt, i64 %9
+  %indvars.iv.i151 = phi i64 [ %indvars.iv.next.i161, %bb.u ], [ %9, %bb.s ] ; 5 uses
+  %i.hl = getelementptr inbounds nuw [4 x i8], ptr %i.gt, i64 %indvars.iv.i151
   %i.hm = load i32, ptr %i.hl, align 4, !tbaa !4
-  %i.hn = getelementptr inbounds nuw [4 x i8], ptr %i.hh, i64 %9
+  %i.hn = getelementptr inbounds nuw [4 x i8], ptr %i.hh, i64 %indvars.iv.i151
   %i.ho = load i32, ptr %i.hn, align 4, !tbaa !4
   %i.hp = xor i32 %i.ho, -1
   %i.hq = and i32 %i.hm, %i.hp
   %.not40.i152 = icmp eq i32 %i.hq, 0
-  br i1 %.not40.i152, label %bb.u, label %bb.v
+  br i1 %.not40.i152, label %bb.u, label %.split.loop.exit.i153
 
 bb.u:                                             ; preds = %bb.t
-  %10 = add nsw i32 %.031.i151, -1
-  %i.hr = icmp sgt i32 %.031.i151, 1
+  %indvars.iv.next.i161 = add nsw i64 %indvars.iv.i151, -1
+  %i.hr = icmp sgt i64 %indvars.iv.i151, 1
   br i1 %i.hr, label %bb.t, label %bb.v
 
-bb.v:                                             ; preds = %bb.u, %bb.t
-  %.1.i153 = phi i32 [ %.031.i151, %bb.t ], [ %i.hk, %bb.u ]
+.split.loop.exit.i153:                            ; preds = %bb.t
+  %10 = trunc nuw nsw i64 %indvars.iv.i151 to i32
+  br label %bb.v
+
+bb.v:                                             ; preds = %bb.u, %.split.loop.exit.i153
+  %.1.i153 = phi i32 [ %10, %.split.loop.exit.i153 ], [ %i.hk, %bb.u ]
   %.not41.i154 = icmp eq i32 %.1.i153, 0
   br i1 %.not41.i154, label %bb.w, label %bb.r
 

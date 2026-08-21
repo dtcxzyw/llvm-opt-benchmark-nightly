@@ -204,12 +204,15 @@ bb.cn:                                            ; preds = %bb.cm, %.lr.ph55.i.
 Sdb_CutSetLastCutContains.exit.i.us:              ; preds = %._crit_edge56.loopexit.i.i.us, %._crit_edge.i.i.us
   %.0.i.i180.us = phi i32 [ %i.azy, %._crit_edge56.loopexit.i.i.us ], [ %.1330.us, %._crit_edge.i.i.us ] ; 6 uses
   %i.azz = icmp sgt i32 %.0.i.i180.us, 0
-  br i1 %i.azz, label %.lr.ph.i8.i.us, label %Sdb_CutSetSortByCost.exit.i.us
+  br i1 %i.azz, label %.lr.ph.preheader.i.i181.us, label %Sdb_CutSetSortByCost.exit.i.us
 
-.lr.ph.i8.i.us:                                   ; preds = %Sdb_CutSetLastCutContains.exit.i.us, %Sdb_CutCompare.exit.i.i.us
-  %.017.i.i181.us = phi i32 [ %3, %Sdb_CutCompare.exit.i.i.us ], [ %.0.i.i180.us, %Sdb_CutSetLastCutContains.exit.i.us ] ; 3 uses
-  %2 = zext nneg i32 %.017.i.i181.us to i64
-  %i.baa = getelementptr [8 x i8], ptr %i.jf, i64 %2 ; 3 uses
+.lr.ph.preheader.i.i181.us:                       ; preds = %Sdb_CutSetLastCutContains.exit.i.us
+  %2 = zext nneg i32 %.0.i.i180.us to i64
+  br label %.lr.ph.i8.i.us
+
+.lr.ph.i8.i.us:                                   ; preds = %Sdb_CutCompare.exit.i.i.us, %.lr.ph.preheader.i.i181.us
+  %indvars.iv.i9.i.us = phi i64 [ %2, %.lr.ph.preheader.i.i181.us ], [ %indvars.iv.next.i10.i.us, %Sdb_CutCompare.exit.i.i.us ] ; 3 uses
+  %i.baa = getelementptr [8 x i8], ptr %i.jf, i64 %indvars.iv.i9.i.us ; 3 uses
   %i.bab = getelementptr i8, ptr %i.baa, i64 -8   ; 2 uses
   %i.bac = load ptr, ptr %i.bab, align 8, !tbaa !54 ; 2 uses
   %i.bad = load ptr, ptr %i.baa, align 8, !tbaa !54 ; 2 uses
@@ -235,8 +238,8 @@ bb.cp:                                            ; preds = %bb.co
 Sdb_CutCompare.exit.i.i.us:                       ; preds = %bb.cp, %bb.co
   store ptr %i.bad, ptr %i.bab, align 8, !tbaa !54
   store ptr %i.bac, ptr %i.baa, align 8, !tbaa !54
-  %3 = add nsw i32 %.017.i.i181.us, -1
-  %i.ban = icmp sgt i32 %.017.i.i181.us, 1
+  %indvars.iv.next.i10.i.us = add nsw i64 %indvars.iv.i9.i.us, -1
+  %i.ban = icmp sgt i64 %indvars.iv.i9.i.us, 1
   br i1 %i.ban, label %.lr.ph.i8.i.us, label %Sdb_CutSetSortByCost.exit.i.us, !llvm.loop !124
 
 Sdb_CutSetSortByCost.exit.i.us:                   ; preds = %.lr.ph.i8.i.us, %bb.cp, %Sdb_CutCompare.exit.i.i.us, %Sdb_CutSetLastCutContains.exit.i.us, %bb.cd

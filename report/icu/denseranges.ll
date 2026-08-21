@@ -76,24 +76,31 @@ bb.g:                                             ; preds = %bb.f
   %i.z = sub nsw i64 %i.x, %i.y                   ; 2 uses
   %i.aa = load i32, ptr %i.r, align 4, !tbaa !11  ; 6 uses
   %i.ab = icmp sgt i32 %i.aa, 0
-  br i1 %i.ab, label %.lr.ph.i, label %.critedge.i
+  br i1 %i.ab, label %.lr.ph.preheader.i, label %.critedge.i
 
-.lr.ph.i:                                         ; preds = %bb.g, %bb.h
-  %.01619.i = phi i32 [ %7, %bb.h ], [ %i.aa, %bb.g ] ; 4 uses
-  %6 = zext nneg i32 %.01619.i to i64
-  %i.ac = getelementptr [8 x i8], ptr %5, i64 %6
+.lr.ph.preheader.i:                               ; preds = %bb.g
+  %6 = zext nneg i32 %i.aa to i64
+  br label %.lr.ph.i
+
+.lr.ph.i:                                         ; preds = %bb.h, %.lr.ph.preheader.i
+  %indvars.iv.i = phi i64 [ %6, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %bb.h ] ; 4 uses
+  %i.ac = getelementptr [8 x i8], ptr %5, i64 %indvars.iv.i
   %i.ad = getelementptr i8, ptr %i.ac, i64 64
   %i.ae = load i64, ptr %i.ad, align 8, !tbaa !12
   %i.af = icmp sgt i64 %i.z, %i.ae
-  br i1 %i.af, label %bb.h, label %.critedge.i
+  br i1 %i.af, label %bb.h, label %.critedge.loopexit.split.loop.exit31.i
 
 bb.h:                                             ; preds = %.lr.ph.i
-  %7 = add nsw i32 %.01619.i, -1
-  %i.ag = icmp sgt i32 %.01619.i, 1
+  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1
+  %i.ag = icmp sgt i64 %indvars.iv.i, 1
   br i1 %i.ag, label %.lr.ph.i, label %.critedge.i, !llvm.loop !14
 
-.critedge.i:                                      ; preds = %bb.h, %.lr.ph.i, %bb.g
-  %.016.lcssa.i = phi i32 [ %i.aa, %bb.g ], [ %.01619.i, %.lr.ph.i ], [ 0, %bb.h ] ; 4 uses
+.critedge.loopexit.split.loop.exit31.i:           ; preds = %.lr.ph.i
+  %7 = trunc nuw nsw i64 %indvars.iv.i to i32
+  br label %.critedge.i
+
+.critedge.i:                                      ; preds = %bb.h, %.critedge.loopexit.split.loop.exit31.i, %bb.g
+  %.016.lcssa.i = phi i32 [ %i.aa, %bb.g ], [ %7, %.critedge.loopexit.split.loop.exit31.i ], [ 0, %bb.h ] ; 4 uses
   %i.ah = load i32, ptr %5, align 8, !tbaa !9     ; 3 uses
   %i.ai = icmp slt i32 %.016.lcssa.i, %i.ah
   br i1 %i.ai, label %bb.i, label %_ZN12_GLOBAL__N_111LargestGaps3addEil.exit

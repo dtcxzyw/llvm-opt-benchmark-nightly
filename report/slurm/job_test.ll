@@ -201,7 +201,7 @@ bb.bg:                                            ; preds = %bb.bf, %bb.be
   br label %bb.da
 
 bb.bh:                                            ; preds = %.thread, %bb.az
-  %i.gp = phi i16 [ %.pre248, %.thread ], [ %i.dh, %bb.az ] ; 7 uses
+  %i.gp = phi i16 [ %.pre248, %.thread ], [ %i.dh, %bb.az ] ; 6 uses
   br i1 %.not200, label %bb.bx, label %bb.bi
 
 bb.bi:                                            ; preds = %bb.bh
@@ -216,7 +216,7 @@ bb.bj:                                            ; preds = %bb.bi
   %i.gu = load i64, ptr %i.az, align 8
   %i.gv = and i64 %i.gu, 65536
   %.not205 = icmp eq i64 %i.gv, 0
-  %i.gw = zext i16 %i.gp to i64
+  %i.gw = zext i16 %i.gp to i64                   ; 2 uses
   %i.gx = mul i64 %i.gt, %i.gw
   %i.gy = icmp ugt i64 %i.gx, %.0167              ; 2 uses
   %or.cond = select i1 %.not205, i1 %i.gy, i1 false
@@ -264,15 +264,15 @@ bb.bo:                                            ; preds = %bb.bn
   br label %bb.bp
 
 bb.bp:                                            ; preds = %.lr.ph, %bb.bq
-  %.0168238 = phi i16 [ %i.gp, %.lr.ph ], [ %13, %bb.bq ] ; 3 uses
-  %12 = zext i16 %.0168238 to i64
-  %.reass = mul i64 %factor.op.mul, %12
+  %indvars.iv = phi i64 [ %i.gw, %.lr.ph ], [ %indvars.iv.next, %bb.bq ] ; 3 uses
+  %.reass = mul i64 %factor.op.mul, %indvars.iv
   %i.ho = icmp ugt i64 %.reass, %.0167
-  br i1 %i.ho, label %bb.bq, label %.critedge
+  br i1 %i.ho, label %bb.bq, label %.critedge.loopexit264.split.loop.exit266
 
 bb.bq:                                            ; preds = %bb.bp
-  %13 = add i16 %.0168238, -1                     ; 2 uses
-  %.not209 = icmp eq i16 %13, 0
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 2 uses
+  %12 = and i64 %indvars.iv.next, 65535
+  %.not209 = icmp eq i64 %12, 0
   br i1 %.not209, label %.critedge, label %bb.bp, !llvm.loop !59
 
 bb.br:                                            ; preds = %bb.bo, %bb.bn, %bb.bm, %bb.bl
@@ -296,8 +296,12 @@ bb.bt:                                            ; preds = %bb.bs
   %i.hv = icmp ugt i64 %i.hu, %.0167
   br i1 %i.hv, label %bb.bs, label %.critedge, !llvm.loop !60
 
-.critedge:                                        ; preds = %bb.bp, %bb.bq, %bb.bt, %bb.bs, %.preheader, %bb.br, %bb.bk
-  %.2 = phi i16 [ 0, %bb.bk ], [ 0, %.preheader ], [ 0, %bb.bs ], [ %i.gp, %bb.br ], [ %i.hs, %bb.bt ], [ %.0168238, %bb.bp ], [ 0, %bb.bq ] ; 3 uses
+.critedge.loopexit264.split.loop.exit266:         ; preds = %bb.bp
+  %13 = trunc nuw i64 %indvars.iv to i16
+  br label %.critedge
+
+.critedge:                                        ; preds = %bb.bq, %bb.bt, %bb.bs, %.critedge.loopexit264.split.loop.exit266, %.preheader, %bb.br, %bb.bk
+  %.2 = phi i16 [ 0, %bb.bk ], [ 0, %.preheader ], [ %13, %.critedge.loopexit264.split.loop.exit266 ], [ %i.gp, %bb.br ], [ 0, %bb.bs ], [ %i.hs, %bb.bt ], [ 0, %bb.bq ] ; 3 uses
   %i.hw = getelementptr inbounds nuw i8, ptr %i.gq, i64 96
   %i.hx = load i16, ptr %i.hw, align 8            ; 2 uses
   %i.hy = icmp ugt i16 %i.hx, 1

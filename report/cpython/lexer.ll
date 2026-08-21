@@ -203,13 +203,16 @@ bb.af:                                            ; preds = %bb.ad
 
 thread-pre-split:                                 ; preds = %bb.aa
   %i.cn = icmp sgt i32 %i.bo, 0
-  br i1 %i.cn, label %.lr.ph, label %.critedge.thread
+  br i1 %i.cn, label %.lr.ph.preheader, label %.critedge.thread
 
-.lr.ph:                                           ; preds = %thread-pre-split, %bb.ag
-  %3 = phi i32 [ %5, %bb.ag ], [ %i.bo, %thread-pre-split ] ; 4 uses
-  %4 = zext nneg i32 %3 to i64
-  %i.co = getelementptr [4 x i8], ptr %i.n, i64 %4
-  %i.cp = load i32, ptr %i.co, align 4, !tbaa !7
+.lr.ph.preheader:                                 ; preds = %thread-pre-split
+  %3 = zext nneg i32 %i.bo to i64
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.ag
+  %indvars.iv = phi i64 [ %3, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.ag ] ; 4 uses
+  %i.co = getelementptr [4 x i8], ptr %i.n, i64 %indvars.iv
+  %i.cp = load i32, ptr %i.co, align 4, !tbaa !7  ; 2 uses
   %i.cq = icmp slt i32 %i.bm, %i.cp
   br i1 %i.cq, label %bb.ag, label %.critedge
 
@@ -217,17 +220,20 @@ bb.ag:                                            ; preds = %.lr.ph
   %i.cr = load i32, ptr %i.p, align 4, !tbaa !58
   %i.cs = add i32 %i.cr, -1
   store i32 %i.cs, ptr %i.p, align 4, !tbaa !58
-  %5 = add nsw i32 %3, -1                         ; 2 uses
-  store i32 %5, ptr %i.o, align 4, !tbaa !57
-  %i.ct = icmp sgt i32 %3, 1
-  br i1 %i.ct, label %.lr.ph, label %.critedge, !llvm.loop !59
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 2 uses
+  %4 = trunc nuw nsw i64 %indvars.iv.next to i32
+  store i32 %4, ptr %i.o, align 4, !tbaa !57
+  %i.ct = icmp sgt i64 %indvars.iv, 1
+  br i1 %i.ct, label %.lr.ph, label %..critedge.loopexit_crit_edge, !llvm.loop !59
 
-.critedge:                                        ; preds = %.lr.ph, %bb.ag
-  %.lcssa1773.ph.a = phi i32 [ %3, %.lr.ph ], [ 0, %bb.ag ]
-  %.pre2330 = zext nneg i32 %.lcssa1773.ph.a to i64 ; 2 uses
-  %.phi.trans.insert = getelementptr [4 x i8], ptr %i.n, i64 %.pre2330
-  %.pre2331 = load i32, ptr %.phi.trans.insert, align 4, !tbaa !7
-  %i.cu = icmp eq i32 %i.bm, %.pre2331
+..critedge.loopexit_crit_edge:                    ; preds = %bb.ag
+  %.pre2332.pre = load i32, ptr %i.n, align 8, !tbaa !7
+  br label %.critedge, !llvm.loop !59
+
+.critedge:                                        ; preds = %.lr.ph, %..critedge.loopexit_crit_edge
+  %.lcssa1773.ph.a = phi i32 [ %.pre2332.pre, %..critedge.loopexit_crit_edge ], [ %i.cp, %.lr.ph ]
+  %.lcssa1773.ph = phi i64 [ 0, %..critedge.loopexit_crit_edge ], [ %indvars.iv, %.lr.ph ]
+  %i.cu = icmp eq i32 %i.bm, %.lcssa1773.ph.a
   br i1 %i.cu, label %bb.ah, label %.critedge.thread
 
 .critedge.thread:                                 ; preds = %thread-pre-split, %.critedge
@@ -238,7 +244,7 @@ bb.ag:                                            ; preds = %.lr.ph
   br label %.thread1499
 
 bb.ah:                                            ; preds = %.critedge
-  %i.cx = getelementptr [4 x i8], ptr %i.q, i64 %.pre2330
+  %i.cx = getelementptr [4 x i8], ptr %i.q, i64 %.lcssa1773.ph
   %i.cy = load i32, ptr %i.cx, align 4, !tbaa !7
   %.not1180 = icmp eq i32 %i.bn, %i.cy
   br i1 %.not1180, label %.thread, label %bb.ai

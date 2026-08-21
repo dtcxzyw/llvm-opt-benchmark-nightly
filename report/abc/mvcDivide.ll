@@ -107,8 +107,8 @@ bb.f:                                             ; preds = %.lr.ph, %.thread269
   %i.z = load ptr, ptr %i.y, align 8, !tbaa !23   ; 3 uses
   %i.aa = load ptr, ptr %i.x, align 8, !tbaa !23  ; 4 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %i.z, i64 8
-  %i.ac = load i32, ptr %i.ab, align 8
-  %i.ad = and i32 %i.ac, 16777215                 ; 2 uses
+  %i.ac = load i32, ptr %i.ab, align 8            ; 2 uses
+  %i.ad = and i32 %i.ac, 16777215
   %i.ae = getelementptr inbounds nuw i8, ptr %i.z, i64 16 ; 3 uses
   switch i32 %i.ad, label %.preheader282 [
     i32 0, label %.split
@@ -119,6 +119,8 @@ bb.f:                                             ; preds = %.lr.ph, %.thread269
   %i.af = load ptr, ptr %i.m, align 8, !tbaa !20
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 16
   %i.ah = getelementptr inbounds nuw i8, ptr %i.aa, i64 16
+  %4 = and i32 %i.ac, 16777215
+  %5 = zext nneg i32 %4 to i64
   br label %bb.i
 
 .split:                                           ; preds = %bb.f
@@ -146,19 +148,18 @@ bb.g:                                             ; preds = %bb.f
   br i1 %i.az, label %bb.j, label %.thread
 
 bb.h:                                             ; preds = %bb.i
-  %4 = add nsw i32 %.0235285, -1
-  %i.ba = icmp sgt i32 %.0235285, 0
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
+  %i.ba = icmp sgt i64 %indvars.iv, 0
   br i1 %i.ba, label %bb.i, label %.thread269, !llvm.loop !24
 
 bb.i:                                             ; preds = %.preheader282, %bb.h
-  %.0235285 = phi i32 [ %i.ad, %.preheader282 ], [ %4, %bb.h ] ; 3 uses
-  %5 = zext nneg i32 %.0235285 to i64             ; 3 uses
-  %i.bb = getelementptr inbounds nuw [4 x i8], ptr %i.ae, i64 %5
+  %indvars.iv = phi i64 [ %5, %.preheader282 ], [ %indvars.iv.next, %bb.h ] ; 5 uses
+  %i.bb = getelementptr inbounds nuw [4 x i8], ptr %i.ae, i64 %indvars.iv
   %i.bc = load i32, ptr %i.bb, align 4, !tbaa !21
-  %i.bd = getelementptr inbounds nuw [4 x i8], ptr %i.ag, i64 %5
+  %i.bd = getelementptr inbounds nuw [4 x i8], ptr %i.ag, i64 %indvars.iv
   %i.be = load i32, ptr %i.bd, align 4, !tbaa !21 ; 2 uses
   %i.bf = or i32 %i.be, %i.bc
-  %i.bg = getelementptr inbounds nuw [4 x i8], ptr %i.ah, i64 %5
+  %i.bg = getelementptr inbounds nuw [4 x i8], ptr %i.ah, i64 %indvars.iv
   %i.bh = load i32, ptr %i.bg, align 4, !tbaa !21
   %i.bi = or i32 %i.bh, %i.be
   %.not264 = icmp eq i32 %i.bf, %i.bi

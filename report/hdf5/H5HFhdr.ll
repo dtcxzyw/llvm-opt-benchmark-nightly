@@ -201,12 +201,12 @@ bb.h:                                             ; preds = %.backedge, %bb.g
 .lr.ph:                                           ; preds = %bb.h
   %i.ag = getelementptr inbounds nuw i8, ptr %.pre, i64 344
   %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !93
+  %2 = zext nneg i32 %i.ae to i64
   br label %bb.i
 
 bb.i:                                             ; preds = %.lr.ph, %.critedge3
-  %.06299 = phi i32 [ %i.ae, %.lr.ph ], [ %3, %.critedge3 ] ; 6 uses
-  %2 = zext nneg i32 %.06299 to i64
-  %i.ai = getelementptr inbounds nuw [8 x i8], ptr %i.ah, i64 %2
+  %indvars.iv = phi i64 [ %2, %.lr.ph ], [ %indvars.iv.next, %.critedge3 ] ; 4 uses
+  %i.ai = getelementptr inbounds nuw [8 x i8], ptr %i.ah, i64 %indvars.iv
   %i.aj = load i64, ptr %i.ai, align 8, !tbaa !94 ; 2 uses
   %i.ak = icmp eq i64 %i.aj, %1
   %.not77 = icmp eq i64 %i.aj, -1
@@ -214,8 +214,8 @@ bb.i:                                             ; preds = %.lr.ph, %.critedge3
   br i1 %or.cond94, label %.critedge3, label %.critedge
 
 .critedge3:                                       ; preds = %bb.i
-  %3 = add nsw i32 %.06299, -1
-  %i.al = icmp sgt i32 %.06299, 0
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
+  %i.al = icmp sgt i64 %indvars.iv, 0
   br i1 %i.al, label %bb.i, label %._crit_edge, !llvm.loop !96
 
 ._crit_edge:                                      ; preds = %.critedge3, %bb.h
@@ -265,15 +265,16 @@ bb.p:                                             ; preds = %bb.o
   br label %.thread87
 
 .critedge:                                        ; preds = %bb.i
-  store i32 %.06299, ptr %i.b, align 4, !tbaa !81
+  %3 = trunc nuw nsw i64 %indvars.iv to i32       ; 3 uses
+  store i32 %3, ptr %i.b, align 4, !tbaa !81
   %i.bf = load i32, ptr %i.z, align 8, !tbaa !51
-  %i.bg = udiv i32 %.06299, %i.bf                 ; 2 uses
+  %i.bg = udiv i32 %3, %i.bf                      ; 2 uses
   %i.bh = load i32, ptr %i.aa, align 8, !tbaa !46
   %i.bi = icmp ult i32 %i.bg, %i.bh
   br i1 %i.bi, label %bb.q, label %bb.t
 
 bb.q:                                             ; preds = %.critedge
-  %i.bj = add nuw i32 %.06299, 1                  ; 2 uses
+  %i.bj = add nuw i32 %3, 1                       ; 2 uses
   store i32 %i.bj, ptr %i.b, align 4, !tbaa !81
   %i.bk = call i32 @H5HF__man_iter_set_entry(ptr noundef nonnull %0, ptr noundef nonnull %i.j, i32 noundef %i.bj) #6
   %i.bl = icmp slt i32 %i.bk, 0

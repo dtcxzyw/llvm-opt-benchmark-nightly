@@ -201,20 +201,23 @@ bb.ax:                                            ; preds = %.lr.ph261
   %i.eg = trunc i64 %i.ef to i32
   %.0164257 = add i32 %i.eg, -1                   ; 2 uses
   %i.eh = icmp sgt i32 %.0164257, 0
-  br i1 %i.eh, label %.lr.ph, label %._crit_edge
+  br i1 %i.eh, label %.lr.ph.preheader, label %._crit_edge
 
-.lr.ph:                                           ; preds = %bb.ax, %bb.ay
-  %.0164258 = phi i32 [ %.0164, %bb.ay ], [ %.0164257, %bb.ax ] ; 3 uses
-  %3 = zext nneg i32 %.0164258 to i64
-  %i.ei = getelementptr inbounds nuw i8, ptr %i.eb, i64 %3 ; 2 uses
+.lr.ph.preheader:                                 ; preds = %bb.ax
+  %3 = zext nneg i32 %.0164257 to i64
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.ay
+  %indvars.iv = phi i64 [ %3, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.ay ] ; 3 uses
+  %i.ei = getelementptr inbounds nuw i8, ptr %i.eb, i64 %indvars.iv ; 2 uses
   %i.ej = load i8, ptr %i.ei, align 1, !tbaa !14
   %i.ek = icmp eq i8 %i.ej, 47
   br i1 %i.ek, label %bb.ay, label %._crit_edge
 
 bb.ay:                                            ; preds = %.lr.ph
   store i8 0, ptr %i.ei, align 1, !tbaa !14
-  %.0164 = add nsw i32 %.0164258, -1
-  %i.el = icmp samesign ugt i32 %.0164258, 1
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
+  %i.el = icmp samesign ugt i64 %indvars.iv, 1
   br i1 %i.el, label %.lr.ph, label %._crit_edge, !llvm.loop !31
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.ay, %bb.ax

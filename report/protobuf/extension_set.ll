@@ -204,12 +204,15 @@ bb.c:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !13   ; 2 uses
   %.not48 = icmp eq i16 %i.b, 0
-  br i1 %.not48, label %._crit_edge, label %.lr.ph
+  br i1 %.not48, label %._crit_edge, label %.lr.ph.preheader
 
-.lr.ph:                                           ; preds = %bb.c, %bb.e
-  %.049 = phi i16 [ %4, %bb.e ], [ %i.b, %bb.c ]  ; 3 uses
-  %3 = zext nneg i16 %.049 to i64
-  %i.g = getelementptr [32 x i8], ptr %i.f, i64 %3 ; 2 uses
+.lr.ph.preheader:                                 ; preds = %bb.c
+  %3 = zext nneg i16 %i.b to i64
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.e
+  %indvars.iv = phi i64 [ %3, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.e ] ; 3 uses
+  %i.g = getelementptr [32 x i8], ptr %i.f, i64 %indvars.iv ; 2 uses
   %i.h = getelementptr i8, ptr %i.g, i64 -32
   %i.i = load i32, ptr %i.h, align 8, !tbaa !109  ; 2 uses
   %i.j = icmp eq i32 %i.i, %2
@@ -226,14 +229,14 @@ bb.d:                                             ; preds = %.lr.ph
   br i1 %i.n, label %._crit_edge.loopexit, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %4 = add nsw i16 %.049, -1                      ; 2 uses
-  %.not = icmp eq i16 %4, 0
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 2 uses
+  %4 = and i64 %indvars.iv.next, 65535
+  %.not = icmp eq i64 %4, 0
   br i1 %.not, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !316
 
 ._crit_edge.loopexit:                             ; preds = %bb.d, %bb.e
-  %.0.lcssa.ph = phi i16 [ 0, %bb.e ], [ %.049, %bb.d ]
-  %5 = zext nneg i16 %.0.lcssa.ph to i64
-  %i.o = shl nuw nsw i64 %5, 5
+  %.0.lcssa.ph = phi i64 [ 0, %bb.e ], [ %indvars.iv, %bb.d ]
+  %i.o = shl nuw nsw i64 %.0.lcssa.ph, 5
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.c

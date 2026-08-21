@@ -204,7 +204,7 @@ bb.a:
 
 bb.b:                                             ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit.7, %bb.a
   %indvars.iv = phi i64 [ %indvars.iv.next, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit.7 ], [ 7, %bb.a ] ; 4 uses
-  %i.e = shl nuw nsw i64 %indvars.iv, 3           ; 8 uses
+  %i.e = shl nsw i64 %indvars.iv, 3               ; 8 uses
   %i.f = call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull @.str.2, i64 noundef 3) #26 ; 0 uses
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 %i.e
   %i.h = load i8, ptr %i.g, align 8, !tbaa !27
@@ -607,9 +607,8 @@ bb.a:
 
 bb.b:                                             ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit27, %bb.a
   %indvars.iv73 = phi i64 [ %indvars.iv.next74, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit27 ], [ 7, %bb.a ] ; 3 uses
-  %i.ag = shl nuw nsw i64 %indvars.iv73, 3        ; 2 uses
-  %invariant.gep = getelementptr inbounds nuw i8, ptr %1, i64 %i.ag
-  %i.ah = getelementptr inbounds nuw i8, ptr %1, i64 %i.ag
+  %i.ag = shl nsw i64 %indvars.iv73, 3            ; 2 uses
+  %i.ah = getelementptr i8, ptr %1, i64 %i.ag
   br label %.preheader
 
 .preheader:                                       ; preds = %bb.b, %bb.i
@@ -624,7 +623,7 @@ bb.c:                                             ; preds = %bb.i
 bb.d:                                             ; preds = %.preheader, %bb.e
   %indvars.iv = phi i64 [ %i.ai, %.preheader ], [ %indvars.iv.next, %bb.e ] ; 5 uses
   %.01468 = phi i32 [ 0, %.preheader ], [ %i.al, %bb.e ] ; 3 uses
-  %gep = getelementptr inbounds nuw i8, ptr %invariant.gep, i64 %indvars.iv
+  %gep = getelementptr i8, ptr %i.ah, i64 %indvars.iv
   %i.ak = load i8, ptr %gep, align 1, !tbaa !27
   %.not70 = icmp eq i8 %i.ak, 0
   br i1 %.not70, label %bb.e, label %.critedge
@@ -649,7 +648,9 @@ bb.f:                                             ; preds = %.critedge
   br label %.thread
 
 .thread:                                          ; preds = %.critedge, %bb.f
-  %i.ap = getelementptr inbounds nuw i8, ptr %i.ah, i64 %indvars.iv
+  %6 = add i64 %indvars.iv, %i.ag
+  %7 = and i64 %6, 255
+  %i.ap = getelementptr inbounds nuw i8, ptr %1, i64 %7
   %i.aq = load i8, ptr %i.ap, align 1, !tbaa !27
   %i.ar = zext i8 %i.aq to i64
   %i.as = getelementptr inbounds nuw i8, ptr @.str.26, i64 %i.ar
