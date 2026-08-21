@@ -203,7 +203,7 @@ _ZSt6fill_nIPmmmET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i.i: ; preds = %.noexc95
   %i.bj = ptrtoint ptr %i.bc to i64
   %i.bk = sub i64 %i.bi, %i.bj
   %i.bl = ashr exact i64 %i.bk, 3                 ; 4 uses
-  %10 = add nsw i64 %.fr, -1
+  %10 = call i64 @llvm.usub.sat.i64(i64 %.fr, i64 1)
   %umin = call i64 @llvm.umin.i64(i64 %10, i64 %i.bl) ; 2 uses
   %min.iters.check = icmp ult i64 %umin, 4
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
@@ -214,11 +214,11 @@ scalar.ph.preheader:                              ; preds = %vector.body, %.lr.p
   br label %scalar.ph
 
 vector.ph:                                        ; preds = %.lr.ph251
-  %i.bm = add nuw i64 %umin, 1                    ; 2 uses
+  %i.bm = add nuw nsw i64 %umin, 1                ; 2 uses
   %i.bn = and i64 %i.bm, 3                        ; 2 uses
   %i.bo = icmp eq i64 %i.bn, 0
   %i.bp = select i1 %i.bo, i64 4, i64 %i.bn
-  %n.vec = sub i64 %i.bm, %i.bp                   ; 3 uses
+  %n.vec = sub nsw i64 %i.bm, %i.bp               ; 3 uses
   %i.bq = add i64 %.034255, %n.vec
   %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %.034255, i64 0
   %broadcast.splat = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer
@@ -620,6 +620,9 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #33
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #26
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.usub.sat.i64(i64, i64) #26
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

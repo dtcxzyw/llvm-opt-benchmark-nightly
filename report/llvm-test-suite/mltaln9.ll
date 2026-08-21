@@ -204,8 +204,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 
 bb.d:                                             ; preds = %.lr.ph135.us, %.loopexit118.us
   %indvars.iv195 = phi i64 [ 0, %.lr.ph135.us ], [ %indvars.iv.next196, %.loopexit118.us ] ; 5 uses
-  %i.m = shl nuw nsw i64 %indvars.iv195, 3        ; 2 uses
-  %scevgep251 = getelementptr i8, ptr %1, i64 %i.m
+  %i.m = shl nuw nsw i64 %indvars.iv195, 3
   %i.n = getelementptr i8, ptr %1, i64 %i.m
   %scevgep252 = getelementptr i8, ptr %i.n, i64 8
   %i.o = icmp eq i64 %indvars.iv210, %indvars.iv195
@@ -249,7 +248,7 @@ vector.memcheck:                                  ; preds = %.lr.ph130.us.prehea
   %i.ag = shl nsw i64 %i.af, 3
   %scevgep250 = getelementptr i8, ptr %scevgep249, i64 %i.ag
   %bound0 = icmp ult ptr %scevgep, %scevgep252
-  %bound1 = icmp ult ptr %scevgep251, %scevgep250
+  %bound1 = icmp ult ptr %i.ed, %scevgep250
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %.lr.ph130.us.preheader257, label %vector.ph
 
@@ -480,7 +479,7 @@ bb.k:                                             ; preds = %._crit_edge.us, %.l
 
 .lr.ph133.us:                                     ; preds = %bb.e
   %i.ec = getelementptr inbounds nuw [80 x i8], ptr %i.p, i64 %indvars.iv195
-  %i.ed = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv195 ; 6 uses
+  %i.ed = getelementptr [8 x i8], ptr %1, i64 %indvars.iv195 ; 7 uses
   br label %bb.f
 
 .lr.ph135.us:                                     ; preds = %.preheader121.us, %.lr.ph127.us.preheader

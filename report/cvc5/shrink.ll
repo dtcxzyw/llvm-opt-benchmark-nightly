@@ -203,20 +203,19 @@ bb.l:                                             ; preds = %.lr.ph143
   br i1 %exitcond.peel.not, label %._crit_edge153, label %_ZNSt6vectorImSaImEE5clearEv.exit.us.preheader
 
 _ZNSt6vectorImSaImEE5clearEv.exit.us.preheader:   ; preds = %.lr.ph152.split.us
-  %umax = tail call i64 @llvm.umax.i64(i64 %i.az, i64 2) ; 3 uses
+  %umax = tail call i64 @llvm.usub.sat.i64(i64 %i.az, i64 2) ; 3 uses
   %xtraiter = and i64 %umax, 1
   %i.bk = icmp eq i64 %i.ay, 12
   br i1 %i.bk, label %_ZNSt6vectorImSaImEE5clearEv.exit.us.epil.preheader, label %_ZNSt6vectorImSaImEE5clearEv.exit.us.preheader.new
 
 _ZNSt6vectorImSaImEE5clearEv.exit.us.preheader.new: ; preds = %_ZNSt6vectorImSaImEE5clearEv.exit.us.preheader
   %i.bl = and i64 %umax, -2
-  %4 = add i64 %i.bl, -4
   br label %_ZNSt6vectorImSaImEE5clearEv.exit.us
 
 _ZNSt6vectorImSaImEE5clearEv.exit.us:             ; preds = %_ZNSt6vectorImSaImEE5clearEv.exit.us, %_ZNSt6vectorImSaImEE5clearEv.exit.us.preheader.new
   %.0150.us = phi i64 [ 2, %_ZNSt6vectorImSaImEE5clearEv.exit.us.preheader.new ], [ %i.bx, %_ZNSt6vectorImSaImEE5clearEv.exit.us ] ; 3 uses
   %.023149.us = phi i64 [ %spec.select.us.peel, %_ZNSt6vectorImSaImEE5clearEv.exit.us.preheader.new ], [ %spec.select.us.1, %_ZNSt6vectorImSaImEE5clearEv.exit.us ] ; 2 uses
-  %niter = phi i64 [ 0, %_ZNSt6vectorImSaImEE5clearEv.exit.us.preheader.new ], [ %niter.next.1, %_ZNSt6vectorImSaImEE5clearEv.exit.us ] ; 2 uses
+  %niter = phi i64 [ 0, %_ZNSt6vectorImSaImEE5clearEv.exit.us.preheader.new ], [ %niter.next.1, %_ZNSt6vectorImSaImEE5clearEv.exit.us ]
   %i.bm = getelementptr inbounds nuw [4 x i8], ptr %i.av, i64 %.0150.us
   %i.bn = load i32, ptr %i.bm, align 4, !tbaa !11 ; 2 uses
   %i.bo = getelementptr inbounds nuw [4 x i8], ptr %i.av, i64 %.023149.us
@@ -233,8 +232,8 @@ _ZNSt6vectorImSaImEE5clearEv.exit.us:             ; preds = %_ZNSt6vectorImSaImE
   %i.bw = zext i1 %i.bv to i64
   %spec.select.us.1 = add i64 %spec.select.us, %i.bw ; 3 uses
   %i.bx = add nuw i64 %.0150.us, 2                ; 2 uses
-  %niter.next.1 = add i64 %niter, 2
-  %niter.ncmp.1 = icmp eq i64 %niter, %4
+  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.ncmp.1 = icmp eq i64 %niter.next.1, %i.bl
   br i1 %niter.ncmp.1, label %._crit_edge153.loopexit241.unr-lcssa, label %_ZNSt6vectorImSaImEE5clearEv.exit.us, !llvm.loop !217
 
 ._crit_edge153.loopexit241.unr-lcssa:             ; preds = %_ZNSt6vectorImSaImEE5clearEv.exit.us
@@ -636,6 +635,9 @@ declare i32 @llvm.umax.i32(i32, i32) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #11
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.usub.sat.i64(i64, i64) #11
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

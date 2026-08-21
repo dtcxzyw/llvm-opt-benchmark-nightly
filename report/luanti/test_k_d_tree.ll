@@ -204,11 +204,9 @@ bb.b:                                             ; preds = %._crit_edge
 bb.c:                                             ; preds = %_ZN8k_d_tree13SortedIndicesILh3EED2Ev.exit, %._crit_edge
   %i.r = phi i64 [ %i.c, %_ZN8k_d_tree13SortedIndicesILh3EED2Ev.exit ], [ %i.cf, %._crit_edge ] ; 2 uses
   %i.s = phi ptr [ %i.h, %_ZN8k_d_tree13SortedIndicesILh3EED2Ev.exit ], [ %i.cg, %._crit_edge ] ; 4 uses
-  %indvars.iv = phi i64 [ 0, %_ZN8k_d_tree13SortedIndicesILh3EED2Ev.exit ], [ %indvars.iv.next, %._crit_edge ] ; 7 uses
-  %3 = shl nuw nsw i64 %indvars.iv, 1
-  %4 = add nuw i64 %3, 2
+  %indvars.iv = phi i64 [ 0, %_ZN8k_d_tree13SortedIndicesILh3EED2Ev.exit ], [ %indvars.iv.next, %._crit_edge ] ; 6 uses
   %i.t = shl nuw nsw i64 %indvars.iv, 1
-  %i.u = add nuw i64 %i.t, 2
+  %i.u = add nuw i64 %i.t, 2                      ; 2 uses
   %i.v = load i64, ptr %1, align 8, !tbaa !74     ; 3 uses
   %i.w = icmp ugt i64 %i.v, 1
   br i1 %i.w, label %_ZSt4copyIPKtPtET0_T_S4_S3_.exit.i, label %.split.us.i, !prof !59
@@ -438,7 +436,7 @@ iter.check166:                                    ; preds = %.critedge.preheader
   %.049.lcssa148 = ptrtoaddr ptr %.049.lcssa to i64 ; 2 uses
   %.0.lcssa147 = ptrtoaddr ptr %.0.lcssa to i64
   %i.da = add i64 %i.ck, -2
-  %i.db = mul i64 %i.cl, %4
+  %i.db = mul i64 %i.cl, %i.u
   %i.dc = add i64 %i.da, %i.db
   %i.dd = sub i64 %i.dc, %.049.lcssa148           ; 3 uses
   %i.de = lshr i64 %i.dd, 1
@@ -841,7 +839,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 iter.check62:                                     ; preds = %.preheader.preheader.i, %vec.epilog.middle.block, %middle.block
   %i.ao = getelementptr inbounds nuw [2 x i8], ptr %i.ab, i64 %1 ; 3 uses
-  %umax47 = tail call i64 @llvm.umax.i64(i64 %1, i64 1) ; 7 uses
+  %umax47 = tail call i64 @llvm.umax.i64(i64 %1, i64 1) ; 6 uses
   %min.iters.check48 = icmp ult i64 %1, 4
   br i1 %min.iters.check48, label %vec.epilog.scalar.ph63.preheader, label %vector.scevcheck46
 
@@ -927,7 +925,7 @@ iter.check94:                                     ; preds = %vec.epilog.scalar.p
   br i1 %min.iters.check80, label %vec.epilog.scalar.ph95.preheader, label %vector.scevcheck79
 
 vector.scevcheck79:                               ; preds = %iter.check94
-  %i.bg = add i64 %umax47, -1                     ; 2 uses
+  %i.bg = add i64 %1, -1                          ; 2 uses
   %i.bh = and i64 %i.bg, 65535
   %i.bi = icmp eq i64 %i.bh, 65535
   %i.bj = icmp ugt i64 %i.bg, 65535
@@ -1330,11 +1328,9 @@ bb.b:                                             ; preds = %._crit_edge
 bb.c:                                             ; preds = %_ZN8k_d_tree13SortedIndicesILh3EED2Ev.exit, %._crit_edge
   %i.u = phi i64 [ %i.c, %_ZN8k_d_tree13SortedIndicesILh3EED2Ev.exit ], [ %i.ci, %._crit_edge ] ; 2 uses
   %i.v = phi ptr [ %i.i, %_ZN8k_d_tree13SortedIndicesILh3EED2Ev.exit ], [ %i.cj, %._crit_edge ] ; 4 uses
-  %indvars.iv = phi i64 [ 0, %_ZN8k_d_tree13SortedIndicesILh3EED2Ev.exit ], [ %indvars.iv.next, %._crit_edge ] ; 7 uses
-  %3 = shl nuw nsw i64 %indvars.iv, 1
-  %4 = add nuw i64 %3, 2
+  %indvars.iv = phi i64 [ 0, %_ZN8k_d_tree13SortedIndicesILh3EED2Ev.exit ], [ %indvars.iv.next, %._crit_edge ] ; 6 uses
   %i.w = shl nuw nsw i64 %indvars.iv, 1
-  %i.x = add nuw i64 %i.w, 2
+  %i.x = add nuw i64 %i.w, 2                      ; 2 uses
   %i.y = load i64, ptr %1, align 8, !tbaa !97     ; 3 uses
   %i.z = icmp ugt i64 %i.y, 1
   br i1 %i.z, label %_ZSt4copyIPKfPfET0_T_S4_S3_.exit.i, label %.split.us.i, !prof !59
@@ -1564,7 +1560,7 @@ iter.check165:                                    ; preds = %.critedge.preheader
   %.049.lcssa147 = ptrtoaddr ptr %.049.lcssa to i64 ; 2 uses
   %.0.lcssa146 = ptrtoaddr ptr %.0.lcssa to i64
   %i.dd = add i64 %i.cn, -2
-  %i.de = mul i64 %i.co, %4
+  %i.de = mul i64 %i.co, %i.x
   %i.df = add i64 %i.dd, %i.de
   %i.dg = sub i64 %i.df, %.049.lcssa147           ; 3 uses
   %i.dh = lshr i64 %i.dg, 1
@@ -1967,7 +1963,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 iter.check61:                                     ; preds = %.preheader.preheader.i, %vec.epilog.middle.block, %middle.block
   %i.ar = getelementptr inbounds nuw [2 x i8], ptr %i.ae, i64 %1 ; 3 uses
-  %umax46 = tail call i64 @llvm.umax.i64(i64 %1, i64 1) ; 7 uses
+  %umax46 = tail call i64 @llvm.umax.i64(i64 %1, i64 1) ; 6 uses
   %min.iters.check47 = icmp ult i64 %1, 4
   br i1 %min.iters.check47, label %vec.epilog.scalar.ph62.preheader, label %vector.scevcheck45
 
@@ -2053,7 +2049,7 @@ iter.check93:                                     ; preds = %vec.epilog.scalar.p
   br i1 %min.iters.check79, label %vec.epilog.scalar.ph94.preheader, label %vector.scevcheck78
 
 vector.scevcheck78:                               ; preds = %iter.check93
-  %i.bj = add i64 %umax46, -1                     ; 2 uses
+  %i.bj = add i64 %1, -1                          ; 2 uses
   %i.bk = and i64 %i.bj, 65535
   %i.bl = icmp eq i64 %i.bk, 65535
   %i.bm = icmp ugt i64 %i.bj, 65535

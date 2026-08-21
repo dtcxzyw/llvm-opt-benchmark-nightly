@@ -202,12 +202,11 @@ bb.an:                                            ; preds = %bb.am, %bb.al
   br label %.preheader
 
 .preheader.lr.ph.split.us:                        ; preds = %.preheader.lr.ph
-  %1 = add i32 %i.ma, %.0121222
-  %2 = tail call i16 @llvm.umax.i16(i16 %i.mo, i16 1)
-  %umax = zext i16 %2 to i32
-  %3 = add nsw i32 %umax, -1
+  %1 = zext i16 %i.mo to i32
+  %2 = add i32 %i.ma, %.0121222
+  %3 = tail call i32 @llvm.usub.sat.i32(i32 %1, i32 1)
   %i.na = mul i32 %i.ma, %3
-  %i.nb = add i32 %1, %i.na
+  %i.nb = add i32 %2, %i.na
   br label %._crit_edge219
 
 .preheader:                                       ; preds = %.preheader.preheader, %._crit_edge216
@@ -610,7 +609,7 @@ declare i32 @llvm.smax.i32(i32, i32) #11
 declare i32 @llvm.umin.i32(i32, i32) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i16 @llvm.umax.i16(i16, i16) #11
+declare i32 @llvm.usub.sat.i32(i32, i32) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x i32> @llvm.smax.v2i32(<2 x i32>, <2 x i32>) #11

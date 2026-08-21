@@ -204,13 +204,12 @@ _ZNK4ojph5local9param_cod15packets_use_ephEv.exit: ; preds = %_ZNK4ojph5local9pa
 
 .lr.ph331.preheader:                              ; preds = %bb.ag
   %i.ls = shl nuw i32 1, %i.ne                    ; 2 uses
-  %i.lt = add i32 %i.nc, 2
-  %umax = call i32 @llvm.umax.i32(i32 %i.lt, i32 2) ; 2 uses
+  %i.lt = add i32 %i.nc, 2                        ; 2 uses
+  %umax = call i32 @llvm.umax.i32(i32 %i.lt, i32 2)
   %wide.trip.count = zext i32 %umax to i64
   %i.lu = add nsw i64 %wide.trip.count, -1        ; 2 uses
   %xtraiter429 = and i64 %i.lu, 3                 ; 3 uses
-  %13 = add i32 %umax, -2
-  %i.lv = icmp ult i32 %13, 3
+  %i.lv = icmp ult i32 %i.lt, 5
   br i1 %i.lv, label %.lr.ph331.epil.preheader, label %.lr.ph331.preheader.new
 
 .lr.ph331.preheader.new:                          ; preds = %.lr.ph331.preheader

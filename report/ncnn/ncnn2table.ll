@@ -204,15 +204,14 @@ bb.c:                                             ; preds = %_ZNSt6vectorIfSaIfE
           to label %bb.y unwind label %.loopexit.split-lp
 
 .preheader246:                                    ; preds = %vector.body439, %_ZNSt6vectorIfSaIfEED2Ev.exit211
-  %indvar = phi i64 [ %indvar.next, %_ZNSt6vectorIfSaIfEED2Ev.exit211 ], [ 0, %vector.body439 ] ; 6 uses
+  %indvar = phi i64 [ %indvar.next, %_ZNSt6vectorIfSaIfEED2Ev.exit211 ], [ 0, %vector.body439 ] ; 5 uses
   %indvars.iv299 = phi i64 [ %indvars.iv.next300, %_ZNSt6vectorIfSaIfEED2Ev.exit211 ], [ 128, %vector.body439 ] ; 20 uses
   %.0179282 = phi float [ %.1, %_ZNSt6vectorIfSaIfEED2Ev.exit211 ], [ f0x7F7FFFFF, %vector.body439 ] ; 2 uses
   %.0180281 = phi i32 [ %.1181, %_ZNSt6vectorIfSaIfEED2Ev.exit211 ], [ 128, %vector.body439 ]
   %i.bj = add i64 %indvar, 127
   %i.bk = sub i64 0, %indvar
   %i.bl = add i64 %indvar, 127
-  %4 = shl nuw nsw i64 %indvar, 2
-  %i.bm = shl nuw nsw i64 %indvars.iv299, 2       ; 4 uses
+  %i.bm = shl nuw nsw i64 %indvars.iv299, 2       ; 5 uses
   %i.bn = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.bm) #39
           to label %.noexc unwind label %.loopexit247 ; 13 uses
 
@@ -247,8 +246,7 @@ middle.block433:                                  ; preds = %vector.body429
 
 _ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit.preheader:  ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i, %middle.block433
   %i.bv = load ptr, ptr %i.am, align 8, !tbaa !104 ; 13 uses
-  %5 = getelementptr i8, ptr %i.bv, i64 %4
-  %scevgep = getelementptr i8, ptr %5, i64 512
+  %scevgep = getelementptr i8, ptr %i.bv, i64 %i.bm
   %bound0 = icmp ult ptr %i.bn, %scevgep
   %bound1 = icmp ult ptr %i.bv, %i.bo
   %found.conflict = and i1 %bound0, %bound1

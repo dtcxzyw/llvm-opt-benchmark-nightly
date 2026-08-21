@@ -204,7 +204,7 @@ bb.oc:                                            ; preds = %bb.ob
   %i.avd = getelementptr inbounds nuw i8, ptr %152, i64 8
   store i64 14, ptr %i.avd, align 8, !tbaa !12
   %i.ave = invoke noundef i32 @_ZNK11OpenImageIO4v3_19ImageSpec17get_int_attributeENS0_17basic_string_viewIcSt11char_traitsIcEEEi(ptr noundef nonnull align 8 dereferenceable(160) %58, ptr noundef nonnull dead_on_return %152, i32 noundef 8)
-          to label %bb.od unwind label %bb.oj     ; 5 uses
+          to label %bb.od unwind label %bb.oj     ; 6 uses
 
 bb.od:                                            ; preds = %bb.oc
   store i32 %i.ave, ptr %i.af, align 4, !tbaa !3
@@ -320,12 +320,11 @@ _ZNSt6vectorIfSaIfEEC2EmRKS0_.exit1282:           ; preds = %_ZSt6fill_nIPfmfET_
   %i.axk = getelementptr inbounds nuw i8, ptr %159, i64 16 ; 7 uses
   %i.axl = getelementptr inbounds nuw i8, ptr %159, i64 8 ; 2 uses
   %i.axm = getelementptr inbounds nuw i8, ptr %158, i64 8
-  %umax = call i64 @llvm.umax.i64(i64 %i.avg, i64 2) ; 2 uses
-  %408 = add i64 %umax, -1                        ; 2 uses
-  %i.axn = add i64 %umax, -2
-  %xtraiter = and i64 %408, 3                     ; 3 uses
-  %i.axo = icmp ult i64 %i.axn, 3
-  %unroll_iter = and i64 %408, -4
+  %umax = call i64 @llvm.umax.i64(i64 %i.avg, i64 2)
+  %i.axn = add i64 %umax, -1                      ; 2 uses
+  %xtraiter = and i64 %i.axn, 3                   ; 3 uses
+  %i.axo = icmp ult i32 %i.ave, 3
+  %unroll_iter = and i64 %i.axn, -4
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   %lcmp.mod3371 = icmp ne i64 %xtraiter, 0
   %min.iters.check = icmp eq i32 %i.ave, 0

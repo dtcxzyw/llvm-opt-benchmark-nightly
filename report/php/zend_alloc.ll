@@ -203,7 +203,7 @@ declare ptr @mremap(ptr noundef, i64 noundef, i64 noundef, i32 noundef, ...) loc
 ; Function Attrs: noinline nounwind uwtable
 define internal fastcc ptr @zend_mm_alloc_small_slow(ptr noundef %0, i32 noundef %1) unnamed_addr #30 {
 bb.a:
-  %i.a = zext i32 %1 to i64                       ; 5 uses
+  %i.a = zext i32 %1 to i64                       ; 6 uses
   %i.b = getelementptr inbounds nuw [4 x i8], ptr @bin_pages, i64 %i.a
   %i.c = load i32, ptr %i.b, align 4, !tbaa !27   ; 2 uses
   %i.d = tail call fastcc ptr @zend_mm_alloc_pages(ptr noundef %0, i32 noundef %i.c) ; 5 uses
@@ -228,14 +228,15 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not, label %.loopexit, label %.preheader
 
 .preheader:                                       ; preds = %bb.b
-  %umax = tail call i32 @llvm.umax.i32(i32 %i.c, i32 2) ; 2 uses
+  %umax = tail call i32 @llvm.umax.i32(i32 %i.c, i32 2)
   %wide.trip.count = zext i32 %umax to i64
   %invariant.op = or i32 %1, -1073741824          ; 5 uses
   %i.r = add nsw i64 %wide.trip.count, -1         ; 2 uses
   %xtraiter = and i64 %i.r, 3                     ; 3 uses
-  %2 = add i32 %umax, -2
-  %3 = icmp ult i32 %2, 3
-  br i1 %3, label %.epil.preheader, label %.preheader.new
+  %2 = shl nuw i64 1, %i.a
+  %3 = and i64 %2, 720306175
+  %.not43 = icmp eq i64 %3, 0
+  br i1 %.not43, label %.preheader.new, label %.epil.preheader
 
 .preheader.new:                                   ; preds = %.preheader
   %unroll_iter = and i64 %i.r, -4

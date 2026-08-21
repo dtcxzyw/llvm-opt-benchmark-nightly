@@ -204,10 +204,7 @@ _RNvMNtNtNtCs2vKOLqTMYjT_3std4sync4mpmc7contextNtB2_7Context10wait_until.exit.th
   br i1 %.not2.i, label %.lr.ph.i38, label %_RNvMs0_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc4zeroINtB5_6PacketINtNtCs6JMX4GRUq9U_4core6result6ResultNtCsfIwuYbgPzJV_5uu_du13StatPrintInfoINtNtCs7tKScEop1B6_5alloc5boxed3BoxDNtNtNtCsh036I4OHgIr_6uucore4mods5error6UErrorEL_EEE10wait_readyB1z_.exit
 
 .lr.ph.i38:                                       ; preds = %_RNvMNtNtNtCs2vKOLqTMYjT_3std4sync4mpmc7contextNtB2_7Context10wait_until.exit.thread, %_RNvMs1_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i
-  %loop-unroll.iv = phi i32 [ %loop-unroll.iv.next, %_RNvMs1_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i ], [ 0, %_RNvMNtNtNtCs2vKOLqTMYjT_3std4sync4mpmc7contextNtB2_7Context10wait_until.exit.thread ] ; 4 uses
-  %.sroa.0.03.i = phi i32 [ %i.ev, %_RNvMs1_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i ], [ 0, %_RNvMNtNtNtCs2vKOLqTMYjT_3std4sync4mpmc7contextNtB2_7Context10wait_until.exit.thread ] ; 4 uses
-  %2 = shl i32 %.sroa.0.03.i, 1
-  %3 = or i32 %2, 1
+  %.sroa.0.03.i = phi i32 [ %i.ev, %_RNvMs1_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i ], [ 0, %_RNvMNtNtNtCs2vKOLqTMYjT_3std4sync4mpmc7contextNtB2_7Context10wait_until.exit.thread ] ; 6 uses
   %i.et = icmp ult i32 %.sroa.0.03.i, 7
   br i1 %i.et, label %_RNvMs6_NtCs6JMX4GRUq9U_4core3numm15overflowing_pow.exit.i.i, label %bb.ag
 
@@ -220,13 +217,13 @@ _RNvMs6_NtCs6JMX4GRUq9U_4core3numm15overflowing_pow.exit.i.i: ; preds = %.lr.ph.
   br i1 %.not.i.i40, label %_RNvMs1_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i, label %.lr.ph.i.i.preheader
 
 .lr.ph.i.i.preheader:                             ; preds = %_RNvMs6_NtCs6JMX4GRUq9U_4core3numm15overflowing_pow.exit.i.i
-  %4 = add i32 %loop-unroll.iv, -1
-  %xtraiter = and i32 %loop-unroll.iv, 7          ; 3 uses
-  %i.eu = icmp ult i32 %4, 7
+  %2 = mul nuw i32 %.sroa.0.03.i, %.sroa.0.03.i   ; 2 uses
+  %xtraiter = and i32 %2, 7                       ; 3 uses
+  %i.eu = icmp ult i32 %.sroa.0.03.i, 3
   br i1 %i.eu, label %.lr.ph.i.i.epil.preheader, label %.lr.ph.i.i.preheader.new
 
 .lr.ph.i.i.preheader.new:                         ; preds = %.lr.ph.i.i.preheader
-  %unroll_iter = and i32 %loop-unroll.iv, -8
+  %unroll_iter = and i32 %2, 56
   br label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %.lr.ph.i.i, %.lr.ph.i.i.preheader.new
@@ -263,7 +260,6 @@ _RNvMs1_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i
   %i.ev = add i32 %.sroa.0.03.i, 1
   %i.ew = load atomic i8, ptr %i.j acquire, align 16
   %.not.i39 = icmp eq i8 %i.ew, 0
-  %loop-unroll.iv.next = add i32 %loop-unroll.iv, %3
   br i1 %.not.i39, label %.lr.ph.i38, label %_RNvMs0_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc4zeroINtB5_6PacketINtNtCs6JMX4GRUq9U_4core6result6ResultNtCsfIwuYbgPzJV_5uu_du13StatPrintInfoINtNtCs7tKScEop1B6_5alloc5boxed3BoxDNtNtNtCsh036I4OHgIr_6uucore4mods5error6UErrorEL_EEE10wait_readyB1z_.exit
 
 _RNvMs0_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc4zeroINtB5_6PacketINtNtCs6JMX4GRUq9U_4core6result6ResultNtCsfIwuYbgPzJV_5uu_du13StatPrintInfoINtNtCs7tKScEop1B6_5alloc5boxed3BoxDNtNtNtCsh036I4OHgIr_6uucore4mods5error6UErrorEL_EEE10wait_readyB1z_.exit: ; preds = %_RNvMs1_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i, %_RNvMNtNtNtCs2vKOLqTMYjT_3std4sync4mpmc7contextNtB2_7Context10wait_until.exit.thread
@@ -666,10 +662,7 @@ _RNvMNtNtNtCs2vKOLqTMYjT_3std4sync4mpmc7contextNtB2_7Context10wait_until.exit.th
   br i1 %.not2.i, label %.lr.ph.i51, label %.loopexit
 
 .lr.ph.i51:                                       ; preds = %_RNvMNtNtNtCs2vKOLqTMYjT_3std4sync4mpmc7contextNtB2_7Context10wait_until.exit.thread, %_RNvMs1_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i
-  %loop-unroll.iv = phi i32 [ %loop-unroll.iv.next, %_RNvMs1_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i ], [ 0, %_RNvMNtNtNtCs2vKOLqTMYjT_3std4sync4mpmc7contextNtB2_7Context10wait_until.exit.thread ] ; 4 uses
-  %.sroa.0.03.i = phi i32 [ %i.ew, %_RNvMs1_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i ], [ 0, %_RNvMNtNtNtCs2vKOLqTMYjT_3std4sync4mpmc7contextNtB2_7Context10wait_until.exit.thread ] ; 4 uses
-  %2 = shl i32 %.sroa.0.03.i, 1
-  %3 = or i32 %2, 1
+  %.sroa.0.03.i = phi i32 [ %i.ew, %_RNvMs1_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i ], [ 0, %_RNvMNtNtNtCs2vKOLqTMYjT_3std4sync4mpmc7contextNtB2_7Context10wait_until.exit.thread ] ; 6 uses
   %i.eu = icmp ult i32 %.sroa.0.03.i, 7
   br i1 %i.eu, label %_RNvMs6_NtCs6JMX4GRUq9U_4core3numm15overflowing_pow.exit.i.i, label %bb.ag
 
@@ -682,13 +675,13 @@ _RNvMs6_NtCs6JMX4GRUq9U_4core3numm15overflowing_pow.exit.i.i: ; preds = %.lr.ph.
   br i1 %.not.i.i53, label %_RNvMs1_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i, label %.lr.ph.i.i.preheader
 
 .lr.ph.i.i.preheader:                             ; preds = %_RNvMs6_NtCs6JMX4GRUq9U_4core3numm15overflowing_pow.exit.i.i
-  %4 = add i32 %loop-unroll.iv, -1
-  %xtraiter = and i32 %loop-unroll.iv, 7          ; 3 uses
-  %i.ev = icmp ult i32 %4, 7
+  %2 = mul nuw i32 %.sroa.0.03.i, %.sroa.0.03.i   ; 2 uses
+  %xtraiter = and i32 %2, 7                       ; 3 uses
+  %i.ev = icmp ult i32 %.sroa.0.03.i, 3
   br i1 %i.ev, label %.lr.ph.i.i.epil.preheader, label %.lr.ph.i.i.preheader.new
 
 .lr.ph.i.i.preheader.new:                         ; preds = %.lr.ph.i.i.preheader
-  %unroll_iter = and i32 %loop-unroll.iv, -8
+  %unroll_iter = and i32 %2, 56
   br label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %.lr.ph.i.i, %.lr.ph.i.i.preheader.new
@@ -725,7 +718,6 @@ _RNvMs1_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i
   %i.ew = add i32 %.sroa.0.03.i, 1
   %i.ex = load atomic i8, ptr %i.k acquire, align 16
   %.not.i52 = icmp eq i8 %i.ex, 0
-  %loop-unroll.iv.next = add i32 %loop-unroll.iv, %3
   br i1 %.not.i52, label %.lr.ph.i51, label %.loopexit
 
 bb.ah:                                            ; preds = %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VecNtNtNtNtCs2vKOLqTMYjT_3std4sync4mpmc5waker5EntryE10try_removeCsfIwuYbgPzJV_5uu_du.exit.i.i
@@ -1128,15 +1120,10 @@ bb.c:                                             ; preds = %_RINvMNtNtNtCs2vKOL
   br label %bb.d
 
 bb.d:                                             ; preds = %_RNvMs1_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc5utilsNtB5_7Backoff10spin_light.exit32.i.i.i, %bb.c
-  %loop-unroll.iv675 = phi i32 [ %loop-unroll.iv.next676, %_RNvMs1_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc5utilsNtB5_7Backoff10spin_light.exit32.i.i.i ], [ 0, %bb.c ] ; 4 uses
-  %.sroa.0.038.i.i.i = phi i32 [ %.sroa.0.1.i.i.i, %_RNvMs1_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc5utilsNtB5_7Backoff10spin_light.exit32.i.i.i ], [ 0, %bb.c ] ; 10 uses
-  %.sroa.02.0.i.i.i = phi i64 [ %i.gt, %_RNvMs1_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc5utilsNtB5_7Backoff10spin_light.exit32.i.i.i ], [ %i.fp, %bb.c ] ; 7 uses
-  %umin690 = call i32 @llvm.umin.i32(i32 %.sroa.0.038.i.i.i, i32 6) ; 2 uses
-  %2 = mul nuw nsw i32 %umin690, %umin690         ; 2 uses
+  %.sroa.0.038.i.i.i = phi i32 [ 0, %bb.c ], [ %.sroa.0.1.i.i.i, %_RNvMs1_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc5utilsNtB5_7Backoff10spin_light.exit32.i.i.i ] ; 12 uses
+  %.sroa.02.0.i.i.i = phi i64 [ %i.fp, %bb.c ], [ %i.gt, %_RNvMs1_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc5utilsNtB5_7Backoff10spin_light.exit32.i.i.i ] ; 7 uses
   %umin683 = call i32 @llvm.umin.i32(i32 %.sroa.0.038.i.i.i, i32 6) ; 2 uses
   %i.fq = mul nuw nsw i32 %umin683, %umin683      ; 2 uses
-  %3 = shl i32 %.sroa.0.038.i.i.i, 1
-  %4 = or i32 %3, 1
   %i.fr = load i64, ptr %i.cy, align 16, !noalias !3161, !noundef !4
   %i.fs = add i64 %i.fr, -1
   %i.ft = and i64 %i.fs, %.sroa.02.0.i.i.i        ; 3 uses
@@ -1177,13 +1164,13 @@ _RNvMs6_NtCs6JMX4GRUq9U_4core3numm15overflowing_pow.exit.i.i.i.i: ; preds = %bb.
   br i1 %.not.i.i.i.i, label %_RNvMs1_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc5utilsNtB5_7Backoff10spin_light.exit32.i.i.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %_RNvMs6_NtCs6JMX4GRUq9U_4core3numm15overflowing_pow.exit.i.i.i.i
-  %5 = add i32 %loop-unroll.iv675, -1
-  %xtraiter677 = and i32 %loop-unroll.iv675, 7    ; 3 uses
-  %i.gk = icmp ult i32 %5, 7
+  %2 = mul nuw i32 %.sroa.0.038.i.i.i, %.sroa.0.038.i.i.i ; 2 uses
+  %xtraiter677 = and i32 %2, 7                    ; 3 uses
+  %i.gk = icmp ult i32 %.sroa.0.038.i.i.i, 3
   br i1 %i.gk, label %.lr.ph.i.i.i.i.epil.preheader, label %.lr.ph.i.i.i.i.preheader.new
 
 .lr.ph.i.i.i.i.preheader.new:                     ; preds = %.lr.ph.i.i.i.i.preheader
-  %unroll_iter681 = and i32 %loop-unroll.iv675, -8
+  %unroll_iter681 = and i32 %2, 56
   br label %.lr.ph.i.i.i.i
 
 .lr.ph.i.i.i.i:                                   ; preds = %.lr.ph.i.i.i.i, %.lr.ph.i.i.i.i.preheader.new
@@ -1210,16 +1197,18 @@ bb.i:                                             ; preds = %bb.e
   br i1 %i.gp, label %bb.j, label %_RNvMs6_NtCs6JMX4GRUq9U_4core3numm15overflowing_pow.exit.i12.i.i.i
 
 _RNvMs6_NtCs6JMX4GRUq9U_4core3numm15overflowing_pow.exit.i12.i.i.i: ; preds = %bb.i
+  %..i.i.i.i.i = call noundef range(i32 0, 7) i32 @llvm.umin.i32(i32 %.sroa.0.038.i.i.i, i32 6) ; 2 uses
+  %3 = mul nuw nsw i32 %..i.i.i.i.i, %..i.i.i.i.i ; 2 uses
   %.not.i13.i.i.i = icmp eq i32 %.sroa.0.038.i.i.i, 0
   br i1 %.not.i13.i.i.i, label %_RNvMs1_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc5utilsNtB5_7Backoff10spin_light.exit32.i.i.i, label %.lr.ph.i16.i.i.i.preheader
 
 .lr.ph.i16.i.i.i.preheader:                       ; preds = %_RNvMs6_NtCs6JMX4GRUq9U_4core3numm15overflowing_pow.exit.i12.i.i.i
-  %xtraiter684 = and i32 %i.fq, 7                 ; 3 uses
+  %xtraiter684 = and i32 %3, 5                    ; 3 uses
   %i.gq = icmp ult i32 %.sroa.0.038.i.i.i, 3
   br i1 %i.gq, label %.lr.ph.i16.i.i.i.epil.preheader, label %.lr.ph.i16.i.i.i.preheader.new
 
 .lr.ph.i16.i.i.i.preheader.new:                   ; preds = %.lr.ph.i16.i.i.i.preheader
-  %unroll_iter688 = and i32 %i.fq, 56
+  %unroll_iter688 = and i32 %3, 56
   br label %.lr.ph.i16.i.i.i
 
 .lr.ph.i16.i.i.i:                                 ; preds = %.lr.ph.i16.i.i.i, %.lr.ph.i16.i.i.i.preheader.new
@@ -1292,7 +1281,6 @@ _RNvMs1_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc5utilsNtB5_7Backoff10spin_light.exit32
 _RNvMs1_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc5utilsNtB5_7Backoff10spin_light.exit32.i.i.i: ; preds = %_RNvMs1_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc5utilsNtB5_7Backoff10spin_light.exit32.i.i.i.loopexit549.unr-lcssa, %.lr.ph.i.i.i.i.epil, %_RNvMs1_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc5utilsNtB5_7Backoff10spin_light.exit32.i.i.i.loopexit548.unr-lcssa, %.lr.ph.i16.i.i.i.epil, %_RNvMs1_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc5utilsNtB5_7Backoff10spin_light.exit32.i.i.i.loopexit.unr-lcssa, %.lr.ph.i26.i.i.i.epil, %_RNvMs6_NtCs6JMX4GRUq9U_4core3numm15overflowing_pow.exit.i22.i.i.i, %_RNvMs6_NtCs6JMX4GRUq9U_4core3numm15overflowing_pow.exit.i12.i.i.i, %_RNvMs6_NtCs6JMX4GRUq9U_4core3numm15overflowing_pow.exit.i.i.i.i, %bb.h
   %i.gt = load atomic i64, ptr %.val56 monotonic, align 16, !noalias !3161
   %.sroa.0.1.i.i.i = add i32 %.sroa.0.038.i.i.i, 1
-  %loop-unroll.iv.next676 = add i32 %loop-unroll.iv675, %4
   br label %bb.d
 
 bb.k:                                             ; preds = %bb.f
@@ -1311,12 +1299,12 @@ _RNvMs6_NtCs6JMX4GRUq9U_4core3numm15overflowing_pow.exit.i22.i.i.i: ; preds = %b
   br i1 %.not.i23.i.i.i, label %_RNvMs1_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc5utilsNtB5_7Backoff10spin_light.exit32.i.i.i, label %.lr.ph.i26.i.i.i.preheader
 
 .lr.ph.i26.i.i.i.preheader:                       ; preds = %_RNvMs6_NtCs6JMX4GRUq9U_4core3numm15overflowing_pow.exit.i22.i.i.i
-  %xtraiter691 = and i32 %2, 7                    ; 3 uses
+  %xtraiter691 = and i32 %i.fq, 7                 ; 3 uses
   %i.gx = icmp ult i32 %.sroa.0.038.i.i.i, 3
   br i1 %i.gx, label %.lr.ph.i26.i.i.i.epil.preheader, label %.lr.ph.i26.i.i.i.preheader.new
 
 .lr.ph.i26.i.i.i.preheader.new:                   ; preds = %.lr.ph.i26.i.i.i.preheader
-  %unroll_iter695 = and i32 %2, 56
+  %unroll_iter695 = and i32 %i.fq, 56
   br label %.lr.ph.i26.i.i.i
 
 .lr.ph.i26.i.i.i:                                 ; preds = %.lr.ph.i26.i.i.i, %.lr.ph.i26.i.i.i.preheader.new
@@ -1498,14 +1486,9 @@ bb.z:                                             ; preds = %_RINvMNtNtNtCs2vKOL
   br label %bb.aa
 
 bb.aa:                                            ; preds = %.backedge.i.i.i, %bb.z
-  %loop-unroll.iv645 = phi i32 [ %loop-unroll.iv.next646, %.backedge.i.i.i ], [ 0, %bb.z ] ; 7 uses
-  %.sroa.0.043.i.i.i = phi i32 [ %.sroa.0.043.be.i.i.i, %.backedge.i.i.i ], [ 0, %bb.z ] ; 9 uses
-  %.sroa.012.0.i.i.i = phi ptr [ %i.ij, %.backedge.i.i.i ], [ %i.hz, %bb.z ] ; 8 uses
-  %.sroa.07.0.i.i.i = phi i64 [ %i.ii, %.backedge.i.i.i ], [ %i.hy, %bb.z ] ; 5 uses
-  %6 = shl i32 %.sroa.0.043.i.i.i, 1
-  %7 = or i32 %6, 1
-  %umin = call i32 @llvm.umin.i32(i32 %.sroa.0.043.i.i.i, i32 6) ; 2 uses
-  %8 = mul nuw nsw i32 %umin, %umin               ; 2 uses
+  %.sroa.0.043.i.i.i = phi i32 [ 0, %bb.z ], [ %.sroa.0.043.be.i.i.i, %.backedge.i.i.i ] ; 14 uses
+  %.sroa.012.0.i.i.i = phi ptr [ %i.hz, %bb.z ], [ %i.ij, %.backedge.i.i.i ] ; 8 uses
+  %.sroa.07.0.i.i.i = phi i64 [ %i.hy, %bb.z ], [ %i.ii, %.backedge.i.i.i ] ; 5 uses
   %i.ia = lshr i64 %.sroa.07.0.i.i.i, 1           ; 2 uses
   %i.ib = and i64 %i.ia, 31                       ; 6 uses
   %i.ic = icmp eq i64 %i.ib, 31
@@ -1520,13 +1503,13 @@ _RNvMs6_NtCs6JMX4GRUq9U_4core3numm15overflowing_pow.exit.i.i.i19.i: ; preds = %b
   br i1 %.not.i.i.i20.i, label %.backedge.i.i.i, label %.lr.ph.i.i.i23.i.preheader
 
 .lr.ph.i.i.i23.i.preheader:                       ; preds = %_RNvMs6_NtCs6JMX4GRUq9U_4core3numm15overflowing_pow.exit.i.i.i19.i
-  %9 = add i32 %loop-unroll.iv645, -1
-  %xtraiter653 = and i32 %loop-unroll.iv645, 7    ; 3 uses
-  %i.ie = icmp ult i32 %9, 7
+  %4 = mul nuw i32 %.sroa.0.043.i.i.i, %.sroa.0.043.i.i.i ; 2 uses
+  %xtraiter653 = and i32 %4, 7                    ; 3 uses
+  %i.ie = icmp ult i32 %.sroa.0.043.i.i.i, 3
   br i1 %i.ie, label %.lr.ph.i.i.i23.i.epil.preheader, label %.lr.ph.i.i.i23.i.preheader.new
 
 .lr.ph.i.i.i23.i.preheader.new:                   ; preds = %.lr.ph.i.i.i23.i.preheader
-  %unroll_iter657 = and i32 %loop-unroll.iv645, -8
+  %unroll_iter657 = and i32 %4, 56
   br label %.lr.ph.i.i.i23.i
 
 .lr.ph.i.i.i23.i:                                 ; preds = %.lr.ph.i.i.i23.i, %.lr.ph.i.i.i23.i.preheader.new
@@ -1605,7 +1588,6 @@ bb.ac:                                            ; preds = %bb.aa
   %i.ii = load atomic i64, ptr %.val56 acquire, align 8, !noalias !3201
   %i.ij = load atomic ptr, ptr %i.cu acquire, align 8, !noalias !3201
   %.sroa.0.043.be.i.i.i = add i32 %.sroa.0.043.i.i.i, 1
-  %loop-unroll.iv.next646 = add i32 %loop-unroll.iv645, %7
   br label %bb.aa
 
 bb.ad:                                            ; preds = %bb.ac
@@ -1646,13 +1628,13 @@ _RNvMs6_NtCs6JMX4GRUq9U_4core3numm15overflowing_pow.exit.i19.i.i.i: ; preds = %b
   br i1 %.not.i20.i.i.i, label %.backedge.i.i.i, label %.lr.ph.i23.i.i.i.preheader
 
 .lr.ph.i23.i.i.i.preheader:                       ; preds = %_RNvMs6_NtCs6JMX4GRUq9U_4core3numm15overflowing_pow.exit.i19.i.i.i
-  %10 = add i32 %loop-unroll.iv645, -1
-  %xtraiter647 = and i32 %loop-unroll.iv645, 7    ; 3 uses
-  %i.it = icmp ult i32 %10, 7
+  %5 = mul nuw i32 %.sroa.0.043.i.i.i, %.sroa.0.043.i.i.i ; 2 uses
+  %xtraiter647 = and i32 %5, 7                    ; 3 uses
+  %i.it = icmp ult i32 %.sroa.0.043.i.i.i, 3
   br i1 %i.it, label %.lr.ph.i23.i.i.i.epil.preheader, label %.lr.ph.i23.i.i.i.preheader.new
 
 .lr.ph.i23.i.i.i.preheader.new:                   ; preds = %.lr.ph.i23.i.i.i.preheader
-  %unroll_iter651 = and i32 %loop-unroll.iv645, -8
+  %unroll_iter651 = and i32 %5, 56
   br label %.lr.ph.i23.i.i.i
 
 .lr.ph.i23.i.i.i:                                 ; preds = %.lr.ph.i23.i.i.i, %.lr.ph.i23.i.i.i.preheader.new
@@ -1670,16 +1652,18 @@ _RNvMs6_NtCs6JMX4GRUq9U_4core3numm15overflowing_pow.exit.i19.i.i.i: ; preds = %b
   br i1 %niter652.ncmp.7, label %.backedge.i.i.i.loopexit550.unr-lcssa, label %.lr.ph.i23.i.i.i
 
 _RNvMs6_NtCs6JMX4GRUq9U_4core3numm15overflowing_pow.exit.i29.i.i.i: ; preds = %bb.ah
+  %..i.i.i.i9.i = call noundef range(i32 0, 7) i32 @llvm.umin.i32(i32 %.sroa.0.043.i.i.i, i32 6) ; 2 uses
+  %6 = mul nuw nsw i32 %..i.i.i.i9.i, %..i.i.i.i9.i ; 2 uses
   %.not.i30.i.i.i = icmp eq i32 %.sroa.0.043.i.i.i, 0
   br i1 %.not.i30.i.i.i, label %.backedge.i.i.i, label %.lr.ph.i33.i.i.i.preheader
 
 .lr.ph.i33.i.i.i.preheader:                       ; preds = %_RNvMs6_NtCs6JMX4GRUq9U_4core3numm15overflowing_pow.exit.i29.i.i.i
-  %xtraiter639 = and i32 %8, 7                    ; 3 uses
+  %xtraiter639 = and i32 %6, 5                    ; 3 uses
   %i.iu = icmp ult i32 %.sroa.0.043.i.i.i, 3
   br i1 %i.iu, label %.lr.ph.i33.i.i.i.epil.preheader, label %.lr.ph.i33.i.i.i.preheader.new
 
 .lr.ph.i33.i.i.i.preheader.new:                   ; preds = %.lr.ph.i33.i.i.i.preheader
-  %unroll_iter643 = and i32 %8, 56
+  %unroll_iter643 = and i32 %6, 56
   br label %.lr.ph.i33.i.i.i
 
 .lr.ph.i33.i.i.i:                                 ; preds = %.lr.ph.i33.i.i.i, %.lr.ph.i33.i.i.i.preheader.new
@@ -1707,10 +1691,7 @@ bb.ak:                                            ; preds = %bb.aj
   br i1 %i.iy, label %.lr.ph.i37.i.i.i, label %_RNvMs_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc4listINtB4_5BlockINtNtCs6JMX4GRUq9U_4core6result6ResultNtCsfIwuYbgPzJV_5uu_du13StatPrintInfoINtNtCs7tKScEop1B6_5alloc5boxed3BoxDNtNtNtCsh036I4OHgIr_6uucore4mods5error6UErrorEL_EEE9wait_nextB1x_.exit.i.i.i
 
 .lr.ph.i37.i.i.i:                                 ; preds = %bb.ak, %_RNvMs1_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i.i.i.i
-  %loop-unroll.iv659 = phi i32 [ %loop-unroll.iv.next660, %_RNvMs1_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i.i.i.i ], [ 0, %bb.ak ] ; 4 uses
-  %.sroa.0.02.i.i.i.i = phi i32 [ %i.jb, %_RNvMs1_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i.i.i.i ], [ 0, %bb.ak ] ; 4 uses
-  %11 = shl i32 %.sroa.0.02.i.i.i.i, 1
-  %12 = or i32 %11, 1
+  %.sroa.0.02.i.i.i.i = phi i32 [ %i.jb, %_RNvMs1_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i.i.i.i ], [ 0, %bb.ak ] ; 6 uses
   %i.iz = icmp ult i32 %.sroa.0.02.i.i.i.i, 7
   br i1 %i.iz, label %_RNvMs6_NtCs6JMX4GRUq9U_4core3numm15overflowing_pow.exit.i.i.i.i.i, label %bb.al
 
@@ -1723,13 +1704,13 @@ _RNvMs6_NtCs6JMX4GRUq9U_4core3numm15overflowing_pow.exit.i.i.i.i.i: ; preds = %.
   br i1 %.not.i.i.i.i10.i, label %_RNvMs1_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i.i.i.i, label %.lr.ph.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %_RNvMs6_NtCs6JMX4GRUq9U_4core3numm15overflowing_pow.exit.i.i.i.i.i
-  %13 = add i32 %loop-unroll.iv659, -1
-  %xtraiter661 = and i32 %loop-unroll.iv659, 7    ; 3 uses
-  %i.ja = icmp ult i32 %13, 7
+  %7 = mul nuw i32 %.sroa.0.02.i.i.i.i, %.sroa.0.02.i.i.i.i ; 2 uses
+  %xtraiter661 = and i32 %7, 7                    ; 3 uses
+  %i.ja = icmp ult i32 %.sroa.0.02.i.i.i.i, 3
   br i1 %i.ja, label %.lr.ph.i.i.i.i.i.epil.preheader, label %.lr.ph.i.i.i.i.i.preheader.new
 
 .lr.ph.i.i.i.i.i.preheader.new:                   ; preds = %.lr.ph.i.i.i.i.i.preheader
-  %unroll_iter665 = and i32 %loop-unroll.iv659, -8
+  %unroll_iter665 = and i32 %7, 56
   br label %.lr.ph.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i:                                 ; preds = %.lr.ph.i.i.i.i.i, %.lr.ph.i.i.i.i.i.preheader.new
@@ -1766,7 +1747,6 @@ _RNvMs1_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i
   %i.jb = add i32 %.sroa.0.02.i.i.i.i, 1
   %i.jc = load atomic ptr, ptr %i.iw acquire, align 8, !noalias !3201 ; 2 uses
   %i.jd = icmp eq ptr %i.jc, null
-  %loop-unroll.iv.next660 = add i32 %loop-unroll.iv659, %12
   br i1 %i.jd, label %.lr.ph.i37.i.i.i, label %_RNvMs_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc4listINtB4_5BlockINtNtCs6JMX4GRUq9U_4core6result6ResultNtCsfIwuYbgPzJV_5uu_du13StatPrintInfoINtNtCs7tKScEop1B6_5alloc5boxed3BoxDNtNtNtCsh036I4OHgIr_6uucore4mods5error6UErrorEL_EEE9wait_nextB1x_.exit.i.i.i
 
 _RNvMs_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc4listINtB4_5BlockINtNtCs6JMX4GRUq9U_4core6result6ResultNtCsfIwuYbgPzJV_5uu_du13StatPrintInfoINtNtCs7tKScEop1B6_5alloc5boxed3BoxDNtNtNtCsh036I4OHgIr_6uucore4mods5error6UErrorEL_EEE9wait_nextB1x_.exit.i.i.i: ; preds = %_RNvMs1_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i.i.i.i, %bb.ak
@@ -1798,10 +1778,7 @@ bb.am:                                            ; preds = %_RNvMs_NtNtNtCs2vKO
   br i1 %i.jp, label %.lr.ph.i.i6.i.i, label %_RNvMNtNtNtCs2vKOLqTMYjT_3std4sync4mpmc4listINtB2_4SlotINtNtCs6JMX4GRUq9U_4core6result6ResultNtCsfIwuYbgPzJV_5uu_du13StatPrintInfoINtNtCs7tKScEop1B6_5alloc5boxed3BoxDNtNtNtCsh036I4OHgIr_6uucore4mods5error6UErrorEL_EEE10wait_writeB1u_.exit.i.i.i
 
 .lr.ph.i.i6.i.i:                                  ; preds = %bb.am, %_RNvMs1_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i.i8.i.i
-  %loop-unroll.iv667 = phi i32 [ %loop-unroll.iv.next668, %_RNvMs1_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i.i8.i.i ], [ 0, %bb.am ] ; 4 uses
-  %.sroa.0.02.i.i7.i.i = phi i32 [ %i.js, %_RNvMs1_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i.i8.i.i ], [ 0, %bb.am ] ; 4 uses
-  %14 = shl i32 %.sroa.0.02.i.i7.i.i, 1
-  %15 = or i32 %14, 1
+  %.sroa.0.02.i.i7.i.i = phi i32 [ %i.js, %_RNvMs1_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i.i8.i.i ], [ 0, %bb.am ] ; 6 uses
   %i.jq = icmp ult i32 %.sroa.0.02.i.i7.i.i, 7
   br i1 %i.jq, label %_RNvMs6_NtCs6JMX4GRUq9U_4core3numm15overflowing_pow.exit.i.i.i10.i.i, label %bb.an
 
@@ -1814,13 +1791,13 @@ _RNvMs6_NtCs6JMX4GRUq9U_4core3numm15overflowing_pow.exit.i.i.i10.i.i: ; preds = 
   br i1 %.not.i.i.i11.i.i, label %_RNvMs1_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i.i8.i.i, label %.lr.ph.i.i.i14.i.i.preheader
 
 .lr.ph.i.i.i14.i.i.preheader:                     ; preds = %_RNvMs6_NtCs6JMX4GRUq9U_4core3numm15overflowing_pow.exit.i.i.i10.i.i
-  %16 = add i32 %loop-unroll.iv667, -1
-  %xtraiter669 = and i32 %loop-unroll.iv667, 7    ; 3 uses
-  %i.jr = icmp ult i32 %16, 7
+  %8 = mul nuw i32 %.sroa.0.02.i.i7.i.i, %.sroa.0.02.i.i7.i.i ; 2 uses
+  %xtraiter669 = and i32 %8, 7                    ; 3 uses
+  %i.jr = icmp ult i32 %.sroa.0.02.i.i7.i.i, 3
   br i1 %i.jr, label %.lr.ph.i.i.i14.i.i.epil.preheader, label %.lr.ph.i.i.i14.i.i.preheader.new
 
 .lr.ph.i.i.i14.i.i.preheader.new:                 ; preds = %.lr.ph.i.i.i14.i.i.preheader
-  %unroll_iter673 = and i32 %loop-unroll.iv667, -8
+  %unroll_iter673 = and i32 %8, 56
   br label %.lr.ph.i.i.i14.i.i
 
 .lr.ph.i.i.i14.i.i:                               ; preds = %.lr.ph.i.i.i14.i.i, %.lr.ph.i.i.i14.i.i.preheader.new
@@ -1858,7 +1835,6 @@ _RNvMs1_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i
   %i.jt = load atomic i64, ptr %i.jm acquire, align 8, !noalias !3206
   %i.ju = and i64 %i.jt, 1
   %i.jv = icmp eq i64 %i.ju, 0
-  %loop-unroll.iv.next668 = add i32 %loop-unroll.iv667, %15
   br i1 %i.jv, label %.lr.ph.i.i6.i.i, label %_RNvMNtNtNtCs2vKOLqTMYjT_3std4sync4mpmc4listINtB2_4SlotINtNtCs6JMX4GRUq9U_4core6result6ResultNtCsfIwuYbgPzJV_5uu_du13StatPrintInfoINtNtCs7tKScEop1B6_5alloc5boxed3BoxDNtNtNtCsh036I4OHgIr_6uucore4mods5error6UErrorEL_EEE10wait_writeB1u_.exit.i.i.i
 
 _RNvMNtNtNtCs2vKOLqTMYjT_3std4sync4mpmc4listINtB2_4SlotINtNtCs6JMX4GRUq9U_4core6result6ResultNtCsfIwuYbgPzJV_5uu_du13StatPrintInfoINtNtCs7tKScEop1B6_5alloc5boxed3BoxDNtNtNtCsh036I4OHgIr_6uucore4mods5error6UErrorEL_EEE10wait_writeB1u_.exit.i.i.i: ; preds = %_RNvMs1_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i.i8.i.i, %bb.am
@@ -2239,10 +2215,7 @@ bb.bw:                                            ; preds = %bb.bv
   br i1 %.not2.i.i.i.i, label %.lr.ph.i.i6.i35.i, label %_RNvMs0_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc4zeroINtB5_6PacketINtNtCs6JMX4GRUq9U_4core6result6ResultNtCsfIwuYbgPzJV_5uu_du13StatPrintInfoINtNtCs7tKScEop1B6_5alloc5boxed3BoxDNtNtNtCsh036I4OHgIr_6uucore4mods5error6UErrorEL_EEE10wait_readyB1z_.exit.i.i.i
 
 .lr.ph.i.i6.i35.i:                                ; preds = %bb.bw, %_RNvMs1_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i.i.i37.i
-  %loop-unroll.iv = phi i32 [ %loop-unroll.iv.next, %_RNvMs1_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i.i.i37.i ], [ 0, %bb.bw ] ; 4 uses
-  %.sroa.0.03.i.i.i36.i = phi i32 [ %i.of, %_RNvMs1_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i.i.i37.i ], [ 0, %bb.bw ] ; 4 uses
-  %17 = shl i32 %.sroa.0.03.i.i.i36.i, 1
-  %18 = or i32 %17, 1
+  %.sroa.0.03.i.i.i36.i = phi i32 [ %i.of, %_RNvMs1_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i.i.i37.i ], [ 0, %bb.bw ] ; 6 uses
   %i.od = icmp ult i32 %.sroa.0.03.i.i.i36.i, 7
   br i1 %i.od, label %_RNvMs6_NtCs6JMX4GRUq9U_4core3numm15overflowing_pow.exit.i.i.i.i39.i, label %bb.bx
 
@@ -2255,13 +2228,13 @@ _RNvMs6_NtCs6JMX4GRUq9U_4core3numm15overflowing_pow.exit.i.i.i.i39.i: ; preds = 
   br i1 %.not.i.i.i8.i.i, label %_RNvMs1_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i.i.i37.i, label %.lr.ph.i.i.i.i42.i.preheader
 
 .lr.ph.i.i.i.i42.i.preheader:                     ; preds = %_RNvMs6_NtCs6JMX4GRUq9U_4core3numm15overflowing_pow.exit.i.i.i.i39.i
-  %19 = add i32 %loop-unroll.iv, -1
-  %xtraiter = and i32 %loop-unroll.iv, 7          ; 3 uses
-  %i.oe = icmp ult i32 %19, 7
+  %9 = mul nuw i32 %.sroa.0.03.i.i.i36.i, %.sroa.0.03.i.i.i36.i ; 2 uses
+  %xtraiter = and i32 %9, 7                       ; 3 uses
+  %i.oe = icmp ult i32 %.sroa.0.03.i.i.i36.i, 3
   br i1 %i.oe, label %.lr.ph.i.i.i.i42.i.epil.preheader, label %.lr.ph.i.i.i.i42.i.preheader.new
 
 .lr.ph.i.i.i.i42.i.preheader.new:                 ; preds = %.lr.ph.i.i.i.i42.i.preheader
-  %unroll_iter = and i32 %loop-unroll.iv, -8
+  %unroll_iter = and i32 %9, 56
   br label %.lr.ph.i.i.i.i42.i
 
 .lr.ph.i.i.i.i42.i:                               ; preds = %.lr.ph.i.i.i.i42.i, %.lr.ph.i.i.i.i42.i.preheader.new
@@ -2298,7 +2271,6 @@ _RNvMs1_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i
   %i.of = add i32 %.sroa.0.03.i.i.i36.i, 1
   %i.og = load atomic i8, ptr %i.ob acquire, align 1, !noalias !3275
   %.not.i.i7.i.i = icmp eq i8 %i.og, 0
-  %loop-unroll.iv.next = add i32 %loop-unroll.iv, %18
   br i1 %.not.i.i7.i.i, label %.lr.ph.i.i6.i35.i, label %_RNvMs0_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc4zeroINtB5_6PacketINtNtCs6JMX4GRUq9U_4core6result6ResultNtCsfIwuYbgPzJV_5uu_du13StatPrintInfoINtNtCs7tKScEop1B6_5alloc5boxed3BoxDNtNtNtCsh036I4OHgIr_6uucore4mods5error6UErrorEL_EEE10wait_readyB1z_.exit.i.i.i
 
 _RNvMs0_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc4zeroINtB5_6PacketINtNtCs6JMX4GRUq9U_4core6result6ResultNtCsfIwuYbgPzJV_5uu_du13StatPrintInfoINtNtCs7tKScEop1B6_5alloc5boxed3BoxDNtNtNtCsh036I4OHgIr_6uucore4mods5error6UErrorEL_EEE10wait_readyB1z_.exit.i.i.i: ; preds = %_RNvMs1_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i.i.i37.i, %bb.bw
@@ -2701,16 +2673,11 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %_RNvMs1_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc5utilsNtB5_7Backoff10spin_light.exit32.i.i, %.lr.ph.i.i
-  %loop-unroll.iv = phi i32 [ %loop-unroll.iv.next, %_RNvMs1_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc5utilsNtB5_7Backoff10spin_light.exit32.i.i ], [ 0, %.lr.ph.i.i ] ; 4 uses
-  %i.ai = phi i64 [ %i.bl, %_RNvMs1_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc5utilsNtB5_7Backoff10spin_light.exit32.i.i ], [ %i.ag, %.lr.ph.i.i ]
-  %.sroa.02.043.i.i = phi i64 [ %i.bk, %_RNvMs1_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc5utilsNtB5_7Backoff10spin_light.exit32.i.i ], [ %i.ah, %.lr.ph.i.i ] ; 8 uses
-  %.sroa.0.03842.i.i = phi i32 [ %.sroa.0.1.i.i, %_RNvMs1_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc5utilsNtB5_7Backoff10spin_light.exit32.i.i ], [ 0, %.lr.ph.i.i ] ; 10 uses
-  %umin167 = call i32 @llvm.umin.i32(i32 %.sroa.0.03842.i.i, i32 6) ; 2 uses
-  %2 = mul nuw nsw i32 %umin167, %umin167         ; 2 uses
+  %i.ai = phi i64 [ %i.ag, %.lr.ph.i.i ], [ %i.bl, %_RNvMs1_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc5utilsNtB5_7Backoff10spin_light.exit32.i.i ]
+  %.sroa.02.043.i.i = phi i64 [ %i.ah, %.lr.ph.i.i ], [ %i.bk, %_RNvMs1_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc5utilsNtB5_7Backoff10spin_light.exit32.i.i ] ; 8 uses
+  %.sroa.0.03842.i.i = phi i32 [ 0, %.lr.ph.i.i ], [ %.sroa.0.1.i.i, %_RNvMs1_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc5utilsNtB5_7Backoff10spin_light.exit32.i.i ] ; 12 uses
   %umin = call i32 @llvm.umin.i32(i32 %.sroa.0.03842.i.i, i32 6) ; 2 uses
   %i.aj = mul nuw nsw i32 %umin, %umin            ; 2 uses
-  %3 = shl i32 %.sroa.0.03842.i.i, 1
-  %4 = or i32 %3, 1
   %i.ak = add i64 %i.ai, -1
   %i.al = and i64 %i.ak, %.sroa.02.043.i.i        ; 3 uses
   %i.am = load i64, ptr %i.aa, align 8, !noalias !3721, !noundef !4
@@ -2752,13 +2719,13 @@ _RNvMs6_NtCs6JMX4GRUq9U_4core3numm15overflowing_pow.exit.i.i.i: ; preds = %bb.f
   br i1 %.not.i.i.i, label %_RNvMs1_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc5utilsNtB5_7Backoff10spin_light.exit32.i.i, label %.lr.ph.i.i.i.preheader
 
 .lr.ph.i.i.i.preheader:                           ; preds = %_RNvMs6_NtCs6JMX4GRUq9U_4core3numm15overflowing_pow.exit.i.i.i
-  %5 = add i32 %loop-unroll.iv, -1
-  %xtraiter155 = and i32 %loop-unroll.iv, 7       ; 3 uses
-  %i.be = icmp ult i32 %5, 7
+  %2 = mul nuw i32 %.sroa.0.03842.i.i, %.sroa.0.03842.i.i ; 2 uses
+  %xtraiter155 = and i32 %2, 7                    ; 3 uses
+  %i.be = icmp ult i32 %.sroa.0.03842.i.i, 3
   br i1 %i.be, label %.lr.ph.i.i.i.epil.preheader, label %.lr.ph.i.i.i.preheader.new
 
 .lr.ph.i.i.i.preheader.new:                       ; preds = %.lr.ph.i.i.i.preheader
-  %unroll_iter159 = and i32 %loop-unroll.iv, -8
+  %unroll_iter159 = and i32 %2, 56
   br label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %.lr.ph.i.i.i, %.lr.ph.i.i.i.preheader.new
@@ -2784,16 +2751,18 @@ bb.h:                                             ; preds = %bb.d
   br i1 %i.bi, label %_RNvMs_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc5arrayINtB4_7ChannelINtNtCs6JMX4GRUq9U_4core6result6ResultNtCsfIwuYbgPzJV_5uu_du13StatPrintInfoINtNtCs7tKScEop1B6_5alloc5boxed3BoxDNtNtNtCsh036I4OHgIr_6uucore4mods5error6UErrorEL_EEE10start_sendB1A_.exit.i, label %_RNvMs6_NtCs6JMX4GRUq9U_4core3numm15overflowing_pow.exit.i12.i.i
 
 _RNvMs6_NtCs6JMX4GRUq9U_4core3numm15overflowing_pow.exit.i12.i.i: ; preds = %bb.h
+  %..i.i.i.i = call noundef range(i32 0, 7) i32 @llvm.umin.i32(i32 %.sroa.0.03842.i.i, i32 6) ; 2 uses
+  %3 = mul nuw nsw i32 %..i.i.i.i, %..i.i.i.i     ; 2 uses
   %.not.i13.i.i = icmp eq i32 %.sroa.0.03842.i.i, 0
   br i1 %.not.i13.i.i, label %_RNvMs1_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc5utilsNtB5_7Backoff10spin_light.exit32.i.i, label %.lr.ph.i16.i.i.preheader
 
 .lr.ph.i16.i.i.preheader:                         ; preds = %_RNvMs6_NtCs6JMX4GRUq9U_4core3numm15overflowing_pow.exit.i12.i.i
-  %xtraiter161 = and i32 %i.aj, 7                 ; 3 uses
+  %xtraiter161 = and i32 %3, 5                    ; 3 uses
   %i.bj = icmp ult i32 %.sroa.0.03842.i.i, 3
   br i1 %i.bj, label %.lr.ph.i16.i.i.epil.preheader, label %.lr.ph.i16.i.i.preheader.new
 
 .lr.ph.i16.i.i.preheader.new:                     ; preds = %.lr.ph.i16.i.i.preheader
-  %unroll_iter165 = and i32 %i.aj, 56
+  %unroll_iter165 = and i32 %3, 56
   br label %.lr.ph.i16.i.i
 
 .lr.ph.i16.i.i:                                   ; preds = %.lr.ph.i16.i.i, %.lr.ph.i16.i.i.preheader.new
@@ -2864,7 +2833,6 @@ _RNvMs1_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc5utilsNtB5_7Backoff10spin_light.exit32
   %i.bl = load i64, ptr %i.v, align 16, !noalias !3721, !noundef !4 ; 2 uses
   %i.bm = and i64 %i.bl, %i.bk
   %i.bn = icmp eq i64 %i.bm, 0
-  %loop-unroll.iv.next = add i32 %loop-unroll.iv, %4
   br i1 %i.bn, label %bb.c, label %_RNvMs_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc5arrayINtB4_7ChannelINtNtCs6JMX4GRUq9U_4core6result6ResultNtCsfIwuYbgPzJV_5uu_du13StatPrintInfoINtNtCs7tKScEop1B6_5alloc5boxed3BoxDNtNtNtCsh036I4OHgIr_6uucore4mods5error6UErrorEL_EEE5writeB1A_.exit.i
 
 bb.i:                                             ; preds = %bb.e
@@ -2887,12 +2855,12 @@ _RNvMs6_NtCs6JMX4GRUq9U_4core3numm15overflowing_pow.exit.i22.i.i: ; preds = %bb.
   br i1 %.not.i23.i.i, label %_RNvMs1_NtNtNtCs2vKOLqTMYjT_3std4sync4mpmc5utilsNtB5_7Backoff10spin_light.exit32.i.i, label %.lr.ph.i26.i.i.preheader
 
 .lr.ph.i26.i.i.preheader:                         ; preds = %_RNvMs6_NtCs6JMX4GRUq9U_4core3numm15overflowing_pow.exit.i22.i.i
-  %xtraiter168 = and i32 %2, 7                    ; 3 uses
+  %xtraiter168 = and i32 %i.aj, 7                 ; 3 uses
   %i.bs = icmp ult i32 %.sroa.0.03842.i.i, 3
   br i1 %i.bs, label %.lr.ph.i26.i.i.epil.preheader, label %.lr.ph.i26.i.i.preheader.new
 
 .lr.ph.i26.i.i.preheader.new:                     ; preds = %.lr.ph.i26.i.i.preheader
-  %unroll_iter172 = and i32 %2, 56
+  %unroll_iter172 = and i32 %i.aj, 56
   br label %.lr.ph.i26.i.i
 
 .lr.ph.i26.i.i:                                   ; preds = %.lr.ph.i26.i.i, %.lr.ph.i26.i.i.preheader.new

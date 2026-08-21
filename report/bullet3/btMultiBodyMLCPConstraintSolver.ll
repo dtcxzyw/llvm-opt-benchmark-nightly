@@ -204,7 +204,7 @@ bb.cx:                                            ; preds = %._crit_edge799
 
 bb.cy:                                            ; preds = %.lr.ph804, %_ZN9btMatrixXIfE16multiplyAdd2_p8rEPKfS2_iiii.exit585
   %indvars.iv878 = phi i64 [ 0, %.lr.ph804 ], [ %indvars.iv.next879, %_ZN9btMatrixXIfE16multiplyAdd2_p8rEPKfS2_iiii.exit585 ] ; 2 uses
-  %.0276800 = phi i32 [ 0, %.lr.ph804 ], [ %i.aon, %_ZN9btMatrixXIfE16multiplyAdd2_p8rEPKfS2_iiii.exit585 ] ; 9 uses
+  %.0276800 = phi i32 [ 0, %.lr.ph804 ], [ %i.aon, %_ZN9btMatrixXIfE16multiplyAdd2_p8rEPKfS2_iiii.exit585 ] ; 8 uses
   %i.afv = sext i32 %.0276800 to i64              ; 3 uses
   %i.afw = getelementptr inbounds [8 x i8], ptr %i.afm, i64 %i.afv
   %i.afx = load ptr, ptr %i.afw, align 8, !tbaa !44
@@ -229,13 +229,11 @@ bb.cz:                                            ; preds = %bb.cy
   %.pn977 = shl nsw i64 %i.afv, 4                 ; 2 uses
   %i.agk = getelementptr [4 x i8], ptr %i.mb, i64 %.pn977 ; 3 uses
   %i.agl = getelementptr [4 x i8], ptr %i.mf, i64 %.pn977 ; 10 uses
-  %i.agm = load i32, ptr %i.aft, align 4          ; 5 uses
+  %i.agm = load i32, ptr %i.aft, align 4          ; 3 uses
   %i.agn = load ptr, ptr %i.afu, align 8          ; 4 uses
   %.promoted40.i = load i32, ptr %i.afs, align 8
   %wide.trip.count.i562 = zext nneg i32 %i.agj to i64 ; 6 uses
   %i.ago = add nsw i64 %wide.trip.count.i562, -1  ; 2 uses
-  %19 = add i32 %i.agm, 1
-  %20 = mul i32 %.0276800, %19
   %i.agp = shl nsw i64 %i.afv, 6                  ; 2 uses
   %i.agq = add nsw i32 %i.agj, -1
   %i.agr = zext i32 %i.agq to i64
@@ -262,7 +260,7 @@ bb.cz:                                            ; preds = %bb.cy
 
 .preheader.i563:                                  ; preds = %._crit_edge.i570, %.preheader.lr.ph.i560
   %.038.i564 = phi ptr [ %i.alf, %._crit_edge.i570 ], [ %i.agk, %.preheader.lr.ph.i560 ] ; 8 uses
-  %.03437.i565 = phi i32 [ %i.alg, %._crit_edge.i570 ], [ 0, %.preheader.lr.ph.i560 ] ; 4 uses
+  %.03437.i565 = phi i32 [ %i.alg, %._crit_edge.i570 ], [ 0, %.preheader.lr.ph.i560 ] ; 3 uses
   %i.ahg = mul i32 %i.agm, %.03437.i565
   %i.ahh = add i32 %i.agv, %i.ahg
   %i.ahi = sext i32 %i.ahh to i64
@@ -276,7 +274,7 @@ bb.cz:                                            ; preds = %bb.cy
   %i.aho = getelementptr inbounds nuw i8, ptr %.038.i564, i64 24 ; 2 uses
   %i.ahp = add nsw i32 %.03437.i565, %.0276800
   %i.ahq = mul nsw i32 %i.ahp, %i.agm
-  %invariant.op.i = add i32 %i.ahq, %.0276800     ; 2 uses
+  %invariant.op.i = add i32 %i.ahq, %.0276800     ; 4 uses
   br i1 %min.iters.check1053, label %scalar.ph1052.preheader, label %vector.scevcheck
 
 scalar.ph1052.preheader:                          ; preds = %vector.body1056, %vector.memcheck1041, %vector.scevcheck, %.preheader.i563
@@ -285,10 +283,8 @@ scalar.ph1052.preheader:                          ; preds = %vector.body1056, %v
   br label %scalar.ph1052
 
 vector.scevcheck:                                 ; preds = %.preheader.i563
-  %21 = mul i32 %i.agm, %.03437.i565
-  %22 = add i32 %20, %21                          ; 2 uses
-  %i.ahr = add i32 %22, %i.agz
-  %i.ahs = icmp slt i32 %i.ahr, %22
+  %i.ahr = add i32 %invariant.op.i, %i.agz
+  %i.ahs = icmp slt i32 %i.ahr, %invariant.op.i
   %i.aht = or i1 %i.ahs, %i.aha
   br i1 %i.aht, label %scalar.ph1052.preheader, label %vector.memcheck1041
 

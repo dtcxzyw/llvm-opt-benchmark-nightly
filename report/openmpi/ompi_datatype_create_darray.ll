@@ -71,7 +71,7 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.e
   %i.aa = icmp eq i32 %7, 0                       ; 6 uses
   %i.ab = add nsw i32 %2, -1                      ; 2 uses
-  %.0113 = select i1 %i.aa, i32 %i.ab, i32 0      ; 5 uses
+  %.0113 = select i1 %i.aa, i32 %i.ab, i32 0      ; 4 uses
   %.0112 = select i1 %i.aa, i32 -1, i32 %2        ; 3 uses
   %.0111 = select i1 %i.aa, i64 -1, i64 1         ; 4 uses
   %i.ac = icmp eq i32 %7, 1                       ; 2 uses
@@ -84,16 +84,13 @@ bb.f:                                             ; preds = %bb.e
   %i.aj = zext nneg i32 %i.ab to i64
   %i.ak = add nsw i64 %i.ah, -1
   %i.al = sub nsw i64 %i.k, %i.ah
-  %10 = add nsw i32 %.0113, 1
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.u
   %indvar = phi i64 [ 0, %bb.f ], [ %indvar.next, %bb.u ] ; 5 uses
-  %indvars.iv166 = phi i64 [ %i.ah, %bb.f ], [ %indvars.iv.next167, %bb.u ] ; 24 uses
+  %indvars.iv166 = phi i64 [ %i.ah, %bb.f ], [ %indvars.iv.next167, %bb.u ] ; 25 uses
   %i.am = mul i64 %.0111, %indvar
-  %i.an = trunc i64 %i.am to i32                  ; 2 uses
-  %11 = add i32 %10, %i.an
-  %12 = zext i32 %11 to i64                       ; 2 uses
+  %i.an = trunc i64 %i.am to i32
   %i.ao = sub i64 0, %indvar
   %i.ap = select i1 %i.aa, i64 %indvar, i64 %i.ao ; 2 uses
   %i.aq = add i64 %i.al, %i.ap
@@ -339,13 +336,14 @@ bb.o:                                             ; preds = %bb.n, %bb.l
   br i1 %.not98117.i, label %.loopexit.i, label %.lr.ph119.preheader.i
 
 .lr.ph119.preheader.i:                            ; preds = %.preheader.i
-  %xtraiter213 = and i64 %12, 7                   ; 3 uses
+  %10 = add nuw i64 %indvars.iv166, 1             ; 2 uses
+  %xtraiter213 = and i64 %10, 7                   ; 3 uses
   %i.er = add i32 %.0113, %i.an
   %i.es = icmp ult i32 %i.er, 7
   br i1 %i.es, label %.lr.ph119.i.epil.preheader, label %.lr.ph119.preheader.i.new
 
 .lr.ph119.preheader.i.new:                        ; preds = %.lr.ph119.preheader.i
-  %unroll_iter219 = and i64 %12, 4294967288
+  %unroll_iter219 = and i64 %10, 4294967288
   br label %.lr.ph119.i
 
 .lr.ph119.i:                                      ; preds = %.lr.ph119.i, %.lr.ph119.preheader.i.new

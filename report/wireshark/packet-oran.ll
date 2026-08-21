@@ -204,8 +204,8 @@ bb.l:                                             ; preds = %bb.a
 
 bb.m:                                             ; preds = %bb.l
   %i.au = add i32 %2, -1                          ; 6 uses
-  %i.av = add i32 %i.au, %1                       ; 2 uses
-  %i.aw = udiv i32 %i.av, %2                      ; 3 uses
+  %i.av = add i32 %i.au, %1                       ; 3 uses
+  %i.aw = udiv i32 %i.av, %2                      ; 2 uses
   %i.ax = getelementptr i8, ptr %3, i64 816       ; 3 uses
   %spec.select = tail call i32 @llvm.umin.i32(i32 %i.aw, i32 512) ; 2 uses
   store i32 %spec.select, ptr %i.ax, align 4
@@ -217,8 +217,9 @@ bb.m:                                             ; preds = %bb.l
   %i.az = add i32 %1, %0                          ; 6 uses
   %umax333 = tail call i32 @llvm.umax.i32(i32 %spec.select, i32 1) ; 2 uses
   %wide.trip.count334 = zext nneg i32 %umax333 to i64 ; 2 uses
+  %4 = udiv i32 %i.av, %2
   %xtraiter400 = and i64 %wide.trip.count334, 1
-  %i.ba = icmp ult i32 %i.aw, 2
+  %i.ba = icmp ult i32 %4, 2
   br i1 %i.ba, label %.epil.preheader399, label %.lr.ph293.new
 
 .lr.ph293.new:                                    ; preds = %.lr.ph293
@@ -383,8 +384,8 @@ bb.y:                                             ; preds = %bb.l
   %i.de = load i8, ptr %i.dd, align 4, !range !6, !noundef !7
   %i.df = trunc nuw i8 %i.de to i1
   %i.dg = add i32 %2, -1                          ; 5 uses
-  %i.dh = add i32 %i.dg, %1                       ; 3 uses
-  %i.di = udiv i32 %i.dh, %2                      ; 5 uses
+  %i.dh = add i32 %i.dg, %1                       ; 4 uses
+  %i.di = udiv i32 %i.dh, %2                      ; 4 uses
   br i1 %i.df, label %bb.z, label %bb.ae
 
 bb.z:                                             ; preds = %bb.y
@@ -467,8 +468,9 @@ bb.ae:                                            ; preds = %bb.y
   %i.ej = add i32 %1, %0                          ; 6 uses
   %umax = tail call i32 @llvm.umax.i32(i32 %spec.select272, i32 1) ; 2 uses
   %wide.trip.count = zext nneg i32 %umax to i64   ; 2 uses
+  %5 = udiv i32 %i.dh, %2
   %xtraiter = and i64 %wide.trip.count, 1
-  %i.ek = icmp ult i32 %i.di, 2
+  %i.ek = icmp ult i32 %5, 2
   br i1 %i.ek, label %.epil.preheader, label %.lr.ph.new
 
 .lr.ph.new:                                       ; preds = %.lr.ph

@@ -204,10 +204,10 @@ bb.c:                                             ; preds = %bb.a
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.m = load i32, ptr %i.l, align 8, !tbaa !30
   %i.n = zext i16 %i.f to i32
-  %i.o = sub nsw i32 %i.m, %i.n                   ; 2 uses
-  %i.p = shl nuw nsw i32 1, %i.j                  ; 5 uses
+  %i.o = sub nsw i32 %i.m, %i.n                   ; 3 uses
+  %i.p = shl nuw nsw i32 1, %i.j                  ; 6 uses
   %i.q = udiv i32 %i.o, 3
-  %. = tail call i32 @llvm.umin.i32(i32 %i.q, i32 %i.p) ; 5 uses
+  %. = tail call i32 @llvm.umin.i32(i32 %i.q, i32 %i.p) ; 4 uses
   %.not = icmp ult i32 %i.o, 3
   br i1 %.not, label %.preheader.preheader, label %.lr.ph.preheader
 
@@ -271,8 +271,10 @@ vector.body112:                                   ; preds = %vector.body112, %ve
 .lr.ph.preheader:                                 ; preds = %bb.c
   %umax = tail call i32 @llvm.umax.i32(i32 %., i32 1) ; 2 uses
   %wide.trip.count = zext nneg i32 %umax to i64   ; 2 uses
+  %2 = udiv i32 %i.o, 3
+  %3 = tail call i32 @llvm.umin.i32(i32 %2, i32 %i.p)
   %xtraiter = and i64 %wide.trip.count, 1
-  %i.am = icmp samesign ult i32 %., 2
+  %i.am = icmp samesign ult i32 %3, 2
   br i1 %i.am, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
 
 .lr.ph.preheader.new:                             ; preds = %.lr.ph.preheader

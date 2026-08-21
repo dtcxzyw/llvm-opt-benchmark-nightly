@@ -204,6 +204,7 @@ bb.o:                                             ; preds = %bb.g
 
 _kmalloc_noprof.exit.i:                           ; preds = %bb.o, %bb.n, %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.f
   %i.aj = phi i1 [ false, %bb.i ], [ true, %bb.f ], [ true, %bb.j ], [ true, %bb.k ], [ true, %bb.l ], [ true, %bb.m ], [ true, %bb.n ], [ true, %bb.o ]
+  %3 = phi i1 [ true, %bb.i ], [ false, %bb.f ], [ true, %bb.j ], [ false, %bb.k ], [ false, %bb.l ], [ false, %bb.m ], [ false, %bb.n ], [ false, %bb.o ]
   %.0119.i = phi i32 [ 20, %bb.i ], [ 256, %bb.f ], [ 24, %bb.j ], [ 28, %bb.k ], [ 32, %bb.l ], [ 36, %bb.m ], [ 80, %bb.n ], [ 32, %bb.o ] ; 3 uses
   %i.ak = zext nneg i32 %.0119.i to i64           ; 3 uses
   %i.al = tail call noalias align 8 ptr @__kmalloc_noprof(i64 noundef range(i64 -2147483648, 4294967296) %i.ak, i32 noundef 3264) #33 ; 45 uses
@@ -309,13 +310,11 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.aj, label %.lr.ph.preheader.i, label %.loopexit.i
 
 .lr.ph.preheader.i:                               ; preds = %.preheader161.preheader.i
-  %umax.i = tail call i32 @llvm.umax.i32(i32 %.0119.i, i32 21) ; 2 uses
+  %umax.i = tail call i32 @llvm.umax.i32(i32 %.0119.i, i32 21)
   %wide.trip.count216.i = zext nneg i32 %umax.i to i64
   %i.cv = add nsw i64 %wide.trip.count216.i, -20  ; 2 uses
   %xtraiter225 = and i64 %i.cv, 5                 ; 3 uses
-  %3 = add nsw i32 %umax.i, -21
-  %4 = icmp ult i32 %3, 7
-  br i1 %4, label %.lr.ph.i.epil.preheader, label %.lr.ph.preheader.i.new
+  br i1 %3, label %.lr.ph.i.epil.preheader, label %.lr.ph.preheader.i.new
 
 .lr.ph.preheader.i.new:                           ; preds = %.lr.ph.preheader.i
   %unroll_iter230 = and i64 %i.cv, -8

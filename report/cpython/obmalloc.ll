@@ -205,16 +205,15 @@ mi_segment_ensure_committed.exit.thread:          ; preds = %mi_commit_mask_is_e
   br i1 %.not554, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %mi_segment_ensure_committed.exit.thread
-  %i.hd = add i64 %.049, 1
-  %umax = call i64 @llvm.umax.i64(i64 %i.hd, i64 2) ; 2 uses
-  %6 = add i64 %umax, -1                          ; 2 uses
-  %i.he = add i64 %umax, -2
-  %xtraiter = and i64 %6, 3                       ; 3 uses
-  %i.hf = icmp ult i64 %i.he, 3
+  %i.hd = add i64 %.049, 1                        ; 2 uses
+  %umax = call i64 @llvm.umax.i64(i64 %i.hd, i64 2)
+  %i.he = add i64 %umax, -1                       ; 2 uses
+  %xtraiter = and i64 %i.he, 3                    ; 3 uses
+  %i.hf = icmp ult i64 %i.hd, 5
   br i1 %i.hf, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
 
 .lr.ph.preheader.new:                             ; preds = %.lr.ph.preheader
-  %unroll_iter = and i64 %6, -4
+  %unroll_iter = and i64 %i.he, -4
   br label %.lr.ph
 
 ._crit_edge.loopexit.unr-lcssa:                   ; preds = %.lr.ph

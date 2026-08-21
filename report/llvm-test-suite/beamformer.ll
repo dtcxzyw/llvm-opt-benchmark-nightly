@@ -204,8 +204,6 @@ bb.bb:                                            ; preds = %bb.bb, %.preheader9
 
 .preheader95:                                     ; preds = %bb.bb, %Magnitude_StrictFP.exit
   %indvar = phi i64 [ %indvar.next, %Magnitude_StrictFP.exit ], [ 0, %bb.bb ] ; 4 uses
-  %3 = shl nuw nsw i64 %indvar, 11
-  %scevgep = getelementptr i8, ptr @detector_out_StrictFP, i64 %3
   %i.acg = getelementptr inbounds nuw [96 x i8], ptr %i.d, i64 %indvar ; 24 uses
   %i.ach = getelementptr inbounds nuw i8, ptr %i.acg, i64 92
   %i.aci = load float, ptr %i.ach, align 4, !tbaa !21
@@ -608,7 +606,8 @@ BeamFirFilter_StrictFP.exit85:                    ; preds = %._crit_edge.i74, %.
   br i1 %exitcond196.not, label %.lr.ph.i86.preheader, label %bb.bc, !llvm.loop !34
 
 Magnitude_StrictFP.exit:                          ; preds = %vector.body
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(2048) %scevgep, ptr noundef nonnull align 16 dereferenceable(2048) %i.h, i64 2048, i1 false), !tbaa !21
+  %3 = getelementptr inbounds nuw [2048 x i8], ptr @detector_out_StrictFP, i64 %indvar
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(2048) %3, ptr noundef nonnull align 16 dereferenceable(2048) %i.h, i64 2048, i1 false), !tbaa !21
   %indvar.next = add nuw nsw i64 %indvar, 1       ; 2 uses
   %exitcond198.not = icmp eq i64 %indvar.next, 4
   br i1 %exitcond198.not, label %bb.be, label %.preheader95, !llvm.loop !35
@@ -1011,8 +1010,6 @@ begin_hunk_2_@begin:bb.a
 
 .preheader111:                                    ; preds = %.preheader112.11, %Magnitude.exit
   %indvar = phi i64 [ %indvar.next, %Magnitude.exit ], [ 0, %.preheader112.11 ] ; 4 uses
-  %3 = shl nuw nsw i64 %indvar, 11
-  %scevgep = getelementptr i8, ptr %i.i, i64 %3
   %i.acj = getelementptr inbounds nuw [96 x i8], ptr %i.d, i64 %indvar ; 24 uses
   %i.ack = getelementptr inbounds nuw i8, ptr %i.acj, i64 92
   %i.acl = load float, ptr %i.ack, align 4, !tbaa !21
@@ -1415,7 +1412,8 @@ BeamFirFilter.exit97:                             ; preds = %._crit_edge.i86, %.
   br i1 %exitcond222.not, label %.lr.ph.i98.preheader, label %bb.as, !llvm.loop !46
 
 Magnitude.exit:                                   ; preds = %vector.body
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(2048) %scevgep, ptr noundef nonnull align 16 dereferenceable(2048) %i.h, i64 2048, i1 false), !tbaa !21
+  %3 = getelementptr inbounds nuw [2048 x i8], ptr %i.i, i64 %indvar
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(2048) %3, ptr noundef nonnull align 16 dereferenceable(2048) %i.h, i64 2048, i1 false), !tbaa !21
   %indvar.next = add nuw nsw i64 %indvar, 1       ; 2 uses
   %exitcond224.not = icmp eq i64 %indvar.next, 4
   br i1 %exitcond224.not, label %.preheader, label %.preheader111, !llvm.loop !47

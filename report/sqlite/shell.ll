@@ -205,7 +205,7 @@ bb.j:                                             ; preds = %bb.i
   %i.ab = load i32, ptr %i.aa, align 8, !tbaa !190
   %i.ac = sub i32 %.057.lcssa, %i.h
   %i.ad = add nsw i32 %i.ac, %i.ab
-  %i.ae = sub nsw i32 %.057.lcssa, %.058.lcssa    ; 3 uses
+  %i.ae = sub nsw i32 %.057.lcssa, %.058.lcssa    ; 4 uses
   %i.af = sext i32 %i.ae to i64
   %i.ag = add nsw i64 %i.af, 20
   %i.ah = tail call ptr @sqlite3_malloc64(i64 noundef %i.ag) #45 ; 15 uses
@@ -234,7 +234,7 @@ bb.n:                                             ; preds = %bb.l
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %bb.m
-  %.1 = phi i32 [ 1, %bb.m ], [ %i.ae, %bb.n ]    ; 9 uses
+  %.1 = phi i32 [ 1, %bb.m ], [ %i.ae, %bb.n ]    ; 7 uses
   %.056 = phi i32 [ -1, %bb.m ], [ %i.ap, %bb.n ]
   %.0 = phi ptr [ %i.a, %bb.m ], [ %i.ao, %bb.n ] ; 9 uses
   %.095 = ptrtoaddr ptr %.0 to i64
@@ -258,9 +258,10 @@ bb.o:                                             ; preds = %bb.n, %bb.m
   br i1 %i.ay, label %iter.check, label %._crit_edge
 
 iter.check:                                       ; preds = %.preheader
-  %wide.trip.count82 = zext nneg i32 %.1 to i64   ; 4 uses
-  %3 = add nsw i64 %wide.trip.count82, -1         ; 5 uses
-  %min.iters.check = icmp ult i32 %.1, 9
+  %wide.trip.count82 = zext nneg i32 %.1 to i64   ; 3 uses
+  %3 = zext i32 %i.ae to i64
+  %4 = call i64 @llvm.usub.sat.i64(i64 %3, i64 1) ; 7 uses
+  %min.iters.check = icmp samesign ult i64 %4, 8
   br i1 %min.iters.check, label %.lr.ph74.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
@@ -270,12 +271,12 @@ vector.memcheck:                                  ; preds = %iter.check
   br i1 %diff.check, label %.lr.ph74.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck
-  %min.iters.check96 = icmp ult i32 %.1, 33
+  %min.iters.check96 = icmp samesign ult i64 %4, 32
   br i1 %min.iters.check96, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %i.bb = and i64 %3, 24
-  %n.vec = and i64 %3, -32                        ; 4 uses
+  %i.bb = and i64 %4, 24
+  %n.vec = and i64 %4, 4294967264                 ; 4 uses
   %i.bc = or disjoint i64 %n.vec, 1
   br label %vector.body
 
@@ -298,7 +299,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.bl, label %middle.block, label %vector.body, !llvm.loop !859
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %3, %n.vec
+  %cmp.n = icmp eq i64 %4, %n.vec
   br i1 %cmp.n, label %._crit_edge, label %vec.epilog.iter.check
 
 vec.epilog.iter.check:                            ; preds = %middle.block
@@ -307,7 +308,7 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %n.vec98 = and i64 %3, -8                       ; 3 uses
+  %n.vec98 = and i64 %4, 4294967288               ; 3 uses
   %i.bm = or disjoint i64 %n.vec98, 1
   br label %vec.epilog.vector.body
 
@@ -325,7 +326,7 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   br i1 %i.bs, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !861
 
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
-  %cmp.n102 = icmp eq i64 %3, %n.vec98
+  %cmp.n102 = icmp eq i64 %4, %n.vec98
   br i1 %cmp.n102, label %._crit_edge, label %.lr.ph74.preheader
 
 .lr.ph74.preheader:                               ; preds = %vector.memcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block

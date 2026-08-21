@@ -203,7 +203,7 @@ bb.pv:                                            ; preds = %bb.pu
 
 .loopexit3345.thread:                             ; preds = %.lr.ph3444, %.loopexit3345
   %.12283.ph3838 = phi i32 [ %i.alk, %.loopexit3345 ], [ %.022823442, %.lr.ph3444 ] ; 3 uses
-  %i.alu = add i32 %.12283.ph3838, 1              ; 3 uses
+  %i.alu = add i32 %.12283.ph3838, 1              ; 4 uses
   %i.alv = sext i32 %i.alu to i64
   %i.alw = mul nsw i64 %i.alv, 36
   %i.alx = call ptr @cli_malloc(i64 noundef %i.alw) #13 ; 20 uses
@@ -222,16 +222,17 @@ bb.px:                                            ; preds = %.loopexit3345.threa
 
 .lr.ph3448.preheader:                             ; preds = %bb.px
   %umax = call i32 @llvm.umax.i32(i32 %i.alu, i32 2)
-  %wide.trip.count3561 = zext i32 %umax to i64    ; 7 uses
+  %wide.trip.count3561 = zext i32 %umax to i64    ; 6 uses
   %i.alz = add nsw i64 %wide.trip.count3561, -1   ; 2 uses
   %min.iters.check = icmp ult i32 %i.alu, 21
   br i1 %min.iters.check, label %.lr.ph3448.preheader3957, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.lr.ph3448.preheader
-  %5 = add nsw i64 %wide.trip.count3561, -2       ; 2 uses
-  %i.ama = and i64 %5, 1073741823
+  %5 = zext i32 %i.alu to i64
+  %6 = call i64 @llvm.usub.sat.i64(i64 %5, i64 2) ; 2 uses
+  %i.ama = and i64 %6, 1073741823
   %i.amb = icmp eq i64 %i.ama, 1073741823
-  %i.amc = icmp ugt i64 %5, 1073741823
+  %i.amc = icmp samesign ugt i64 %6, 1073741823
   %i.amd = or i1 %i.amb, %i.amc
   br i1 %i.amd, label %.lr.ph3448.preheader3957, label %vector.memcheck
 

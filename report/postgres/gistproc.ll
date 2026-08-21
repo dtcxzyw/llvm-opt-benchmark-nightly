@@ -203,20 +203,19 @@ adjustBox.exit:                                   ; preds = %.peel.next, %adjust
   %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 8
   %i.ba = zext nneg i32 %i.i to i64               ; 2 uses
   %i.bb = zext i32 %i.j to i64
-  %i.bc = trunc i32 %i.g to i16
-  %umax = tail call i16 @llvm.umax.i16(i16 %i.bc, i16 2) ; 2 uses
-  %2 = add i16 %umax, -1                          ; 6 uses
-  %i.bd = add i16 %umax, -2                       ; 2 uses
-  %xtraiter = and i16 %2, 1
-  %3 = icmp eq i16 %i.bd, 0
-  %unroll_iter = and i16 %2, -2
+  %i.bc = trunc i32 %i.g to i16                   ; 3 uses
+  %umax = tail call i16 @llvm.umax.i16(i16 %i.bc, i16 2)
+  %i.bd = add i16 %umax, -1                       ; 6 uses
+  %xtraiter = and i16 %i.bd, 1
+  %2 = icmp ult i16 %i.bc, 3
+  %unroll_iter = and i16 %i.bd, -2
   %lcmp.mod.not = icmp eq i16 %xtraiter, 0
-  %lcmp.mod415 = trunc i16 %2 to i1
-  %xtraiter416 = and i16 %2, 1
-  %4 = icmp eq i16 %i.bd, 0
-  %unroll_iter419 = and i16 %2, -2
+  %lcmp.mod415 = trunc i16 %i.bd to i1
+  %xtraiter416 = and i16 %i.bd, 1
+  %3 = icmp ult i16 %i.bc, 3
+  %unroll_iter419 = and i16 %i.bd, -2
   %lcmp.mod417.not = icmp eq i16 %xtraiter416, 0
-  %lcmp.mod418 = trunc i16 %2 to i1
+  %lcmp.mod418 = trunc i16 %i.bd to i1
   br label %.preheader
 
 .preheader:                                       ; preds = %._crit_edge, %._crit_edge292
@@ -228,10 +227,10 @@ adjustBox.exit:                                   ; preds = %.peel.next, %adjust
   br i1 %i.be, label %.lr.ph272.split.us.preheader, label %.lr.ph272.split.preheader
 
 .lr.ph272.split.preheader:                        ; preds = %.lr.ph272
-  br i1 %3, label %.lr.ph272.split.epil.preheader, label %.lr.ph272.split
+  br i1 %2, label %.lr.ph272.split.epil.preheader, label %.lr.ph272.split
 
 .lr.ph272.split.us.preheader:                     ; preds = %.lr.ph272
-  br i1 %4, label %.lr.ph272.split.us.epil.preheader, label %.lr.ph272.split.us
+  br i1 %3, label %.lr.ph272.split.us.epil.preheader, label %.lr.ph272.split.us
 
 .lr.ph272.split.us:                               ; preds = %.lr.ph272.split.us.preheader, %.lr.ph272.split.us
   %.1239271.us = phi i16 [ %i.ca, %.lr.ph272.split.us ], [ 1, %.lr.ph272.split.us.preheader ] ; 3 uses

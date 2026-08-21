@@ -204,7 +204,7 @@ middle.block:                                     ; preds = %vector.body
 
 bb.o:                                             ; preds = %.lr.ph370, %.thread325
   %.4250369 = phi i32 [ %.3249, %.lr.ph370 ], [ %.10334, %.thread325 ] ; 4 uses
-  %.0251368 = phi i32 [ 0, %.lr.ph370 ], [ %.5256333, %.thread325 ] ; 6 uses
+  %.0251368 = phi i32 [ 0, %.lr.ph370 ], [ %.5256333, %.thread325 ] ; 8 uses
   %.0257366 = phi ptr [ %2, %.lr.ph370 ], [ %i.fg, %.thread325 ] ; 8 uses
   %.0258365 = phi i32 [ 1, %.lr.ph370 ], [ %i.gt, %.thread325 ] ; 4 uses
   %.0260364 = phi ptr [ %i.av, %.lr.ph370 ], [ %.0261363, %.thread325 ] ; 15 uses
@@ -239,7 +239,7 @@ bb.t:                                             ; preds = %bb.s
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.s, %bb.t
-  %.0237 = phi i32 [ 1, %bb.t ], [ %.0251368, %bb.s ] ; 5 uses
+  %.0237 = phi i32 [ 1, %bb.t ], [ %.0251368, %bb.s ] ; 3 uses
   %i.bq = icmp slt i32 %.0237, %.5                ; 2 uses
   br i1 %.not308, label %.preheader, label %.preheader335
 
@@ -263,13 +263,13 @@ bb.u:                                             ; preds = %bb.s, %bb.t
   %i.bw = sext i32 %.0237 to i64                  ; 10 uses
   %wide.trip.count389 = sext i32 %.5 to i64       ; 6 uses
   %i.bx = sub nsw i64 %wide.trip.count389, %i.bw  ; 3 uses
-  %min.iters.check460 = icmp ult i64 %i.bx, 12
+  %min.iters.check460 = icmp ult i64 %i.bx, 16
   br i1 %min.iters.check460, label %.lr.ph351.preheader482, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.lr.ph351.preheader
   %i.by = xor i64 %i.bw, -1
   %i.bz = add nsw i64 %i.by, %wide.trip.count389  ; 2 uses
-  %9 = add i32 %.0237, -1                         ; 2 uses
+  %9 = tail call i32 @llvm.usub.sat.i32(i32 %.0251368, i32 1) ; 2 uses
   %i.ca = trunc i64 %i.bz to i32
   %i.cb = add i32 %9, %i.ca
   %i.cc = icmp slt i32 %i.cb, %9
@@ -284,7 +284,7 @@ vector.memcheck:                                  ; preds = %vector.scevcheck
   %scevgep435 = getelementptr i8, ptr %.0260364, i64 %i.cg ; 5 uses
   %scevgep436 = getelementptr i8, ptr %.0261363, i64 %i.cf
   %scevgep437 = getelementptr i8, ptr %.0261363, i64 %i.cg
-  %10 = add i32 %.0237, -1
+  %10 = tail call i32 @llvm.usub.sat.i32(i32 %.0251368, i32 1)
   %i.ch = sext i32 %10 to i64                     ; 2 uses
   %i.ci = shl nsw i64 %i.ch, 2                    ; 2 uses
   %scevgep438 = getelementptr i8, ptr %.0260364, i64 %i.ci
@@ -685,6 +685,9 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #16
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare i64 @wcslen(ptr captures(none)) local_unnamed_addr #15
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.usub.sat.i32(i32, i32) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x i32> @llvm.smin.v4i32(<4 x i32>, <4 x i32>) #11

@@ -203,9 +203,9 @@ bb.i:                                             ; preds = %bb.h
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h
-  %i.bn = load ptr, ptr %i.bd, align 8, !tbaa !71 ; 5 uses
-  %i.bo = load ptr, ptr %i.bj, align 8, !tbaa !73 ; 6 uses
-  %i.bp = load ptr, ptr %i.bh, align 8, !tbaa !72 ; 9 uses
+  %i.bn = load ptr, ptr %i.bd, align 8, !tbaa !71 ; 4 uses
+  %i.bo = load ptr, ptr %i.bj, align 8, !tbaa !73 ; 4 uses
+  %i.bp = load ptr, ptr %i.bh, align 8, !tbaa !72 ; 6 uses
   %i.bq = shl nuw nsw i64 %i.bf, 3
   call void @llvm.memset.p0.i64(ptr align 8 %i.bp, i8 0, i64 %i.bq, i1 false)
   %i.br = load ptr, ptr %i.c, align 8, !tbaa !44
@@ -608,29 +608,23 @@ place_essa_pis.exit:                              ; preds = %.critedge.i, %bb.j
   %.0315412.us = phi i32 [ 0, %.lr.ph413.us.preheader ], [ %.0315412.us.be, %.lr.ph413.us.backedge ] ; 5 uses
   %i.wg = mul i64 %i.ap, %indvars.iv439
   %i.wh = shl i64 %i.wg, 3
-  %i.wi = and i64 %i.wh, 34359738360              ; 4 uses
-  %scevgep561 = getelementptr i8, ptr %i.bp, i64 %i.wi
-  %scevgep563 = getelementptr i8, ptr %scevgep562, i64 %i.wi
-  %scevgep564 = getelementptr i8, ptr %i.bo, i64 %i.wi
+  %i.wi = and i64 %i.wh, 34359738360              ; 2 uses
+  %scevgep564 = getelementptr i8, ptr %scevgep562, i64 %i.wi
   %scevgep566 = getelementptr i8, ptr %scevgep565, i64 %i.wi
   %i.wj = mul i64 %i.ap, %indvars.iv439
   %i.wk = shl i64 %i.wj, 3
-  %i.wl = and i64 %i.wk, 34359738360              ; 4 uses
-  %scevgep530 = getelementptr i8, ptr %i.bp, i64 %i.wl ; 2 uses
-  %scevgep532 = getelementptr i8, ptr %scevgep531.a, i64 %i.wl ; 2 uses
-  %scevgep535 = getelementptr i8, ptr %i.bo, i64 %i.wl
+  %i.wl = and i64 %i.wk, 34359738360              ; 2 uses
+  %scevgep535 = getelementptr i8, ptr %scevgep531.a, i64 %i.wl ; 2 uses
   %scevgep537 = getelementptr i8, ptr %scevgep536, i64 %i.wl
   %i.wm = mul i64 %i.ap, %indvars.iv439
   %i.wn = shl i64 %i.wm, 3
-  %i.wo = and i64 %i.wn, 34359738360              ; 4 uses
-  %scevgep = getelementptr i8, ptr %i.bn, i64 %i.wo
-  %scevgep522 = getelementptr i8, ptr %scevgep521.a, i64 %i.wo
-  %scevgep523.a = getelementptr i8, ptr %i.bp, i64 %i.wo
+  %i.wo = and i64 %i.wn, 34359738360              ; 2 uses
+  %scevgep523.a = getelementptr i8, ptr %scevgep521.a, i64 %i.wo
   %scevgep525 = getelementptr i8, ptr %scevgep524, i64 %i.wo
   %i.wp = mul i64 %indvars.iv439, %i.ap
   %i.wq = and i64 %i.wp, 4294967295               ; 4 uses
-  %i.wr = getelementptr inbounds nuw [8 x i8], ptr %i.bn, i64 %i.wq ; 7 uses
-  %i.ws = getelementptr inbounds nuw [8 x i8], ptr %i.bp, i64 %i.wq ; 17 uses
+  %i.wr = getelementptr [8 x i8], ptr %i.bn, i64 %i.wq ; 8 uses
+  %i.ws = getelementptr [8 x i8], ptr %i.bp, i64 %i.wq ; 21 uses
   %i.wt = getelementptr inbounds nuw [64 x i8], ptr %i.d, i64 %indvars.iv439 ; 4 uses
   %i.wu = getelementptr inbounds nuw i8, ptr %i.wt, i64 8
   %i.wv = load i32, ptr %i.wu, align 8, !tbaa !79 ; 2 uses
@@ -649,15 +643,15 @@ bb.el:                                            ; preds = %bb.ek
   br i1 %.not338.us, label %.lr.ph410.us, label %bb.em
 
 bb.em:                                            ; preds = %bb.el
-  %i.xb = getelementptr inbounds nuw [8 x i8], ptr %i.bo, i64 %i.wq ; 6 uses
+  %i.xb = getelementptr [8 x i8], ptr %i.bo, i64 %i.wq ; 7 uses
   br i1 %.not.i360, label %zend_bitset_union.exit387.us, label %.lr.ph.i362.us.preheader
 
 .lr.ph.i362.us.preheader:                         ; preds = %bb.em
   br i1 %min.iters.check571, label %.lr.ph.i362.us.preheader599, label %vector.memcheck560
 
 vector.memcheck560:                               ; preds = %.lr.ph.i362.us.preheader
-  %bound0567 = icmp ult ptr %scevgep561, %scevgep566
-  %bound1568 = icmp ult ptr %scevgep564, %scevgep563
+  %bound0567 = icmp ult ptr %i.ws, %scevgep566
+  %bound1568 = icmp ult ptr %i.xb, %scevgep564
   %found.conflict569 = and i1 %bound0567, %bound1568
   br i1 %found.conflict569, label %.lr.ph.i362.us.preheader599, label %vector.body574
 
@@ -760,8 +754,8 @@ bb.en:                                            ; preds = %.lr.ph.us418, %zend
 vector.memcheck529:                               ; preds = %.lr.ph.i369.preheader.us
   %i.yn = shl nuw nsw i64 %i.yl, 3
   %scevgep534 = getelementptr i8, ptr %scevgep533.a, i64 %i.yn
-  %bound0538 = icmp ult ptr %scevgep530, %scevgep534
-  %bound1539 = icmp ult ptr %i.ym, %scevgep532
+  %bound0538 = icmp ult ptr %i.ws, %scevgep534
+  %bound1539 = icmp ult ptr %i.ym, %scevgep535
   %found.conflict540 = and i1 %bound0538, %bound1539
   %conflict.rdx = or i1 %found.conflict540, %found.conflict543
   br i1 %conflict.rdx, label %.lr.ph.i369.us.preheader, label %vector.body548
@@ -864,8 +858,8 @@ middle.block557:                                  ; preds = %vector.body548
   br i1 %min.iters.check, label %.lr.ph.i383.us.preheader597, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i383.us.preheader
-  %bound0 = icmp ult ptr %scevgep, %scevgep525
-  %bound1 = icmp ult ptr %scevgep523.a, %scevgep522
+  %bound0 = icmp ult ptr %i.wr, %scevgep525
+  %bound1 = icmp ult ptr %i.ws, %scevgep523.a
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %.lr.ph.i383.us.preheader597, label %vector.body
 
@@ -977,7 +971,7 @@ zend_bitset_union_with_intersection.exit.loopexit.us: ; preds = %.lr.ph.i369.us.
 
 .lr.ph410.us:                                     ; preds = %bb.el
   %i.abq = getelementptr inbounds nuw i8, ptr %i.wt, i64 32
-  %i.abr = getelementptr inbounds nuw [8 x i8], ptr %i.bo, i64 %i.wq ; 4 uses
+  %i.abr = getelementptr [8 x i8], ptr %i.bo, i64 %i.wq ; 5 uses
   br i1 %.not.i360, label %zend_bitset_union.exit387.us, label %.lr.ph410.split.us420.preheader
 
 .lr.ph410.split.us420.preheader:                  ; preds = %.lr.ph410.us
@@ -987,8 +981,8 @@ zend_bitset_union_with_intersection.exit.loopexit.us: ; preds = %.lr.ph.i369.us.
   %i.abv = sext i32 %i.abu to i64
   %wide.trip.count = zext nneg i32 %i.wy to i64
   %invariant.gep = getelementptr [4 x i8], ptr %i.abs, i64 %i.abv
-  %bound0541 = icmp ult ptr %scevgep530, %scevgep537
-  %bound1542 = icmp ult ptr %scevgep535, %scevgep532
+  %bound0541 = icmp ult ptr %i.ws, %scevgep537
+  %bound1542 = icmp ult ptr %i.abr, %scevgep535
   %found.conflict543 = and i1 %bound0541, %bound1542
   br label %.lr.ph410.split.us420
 

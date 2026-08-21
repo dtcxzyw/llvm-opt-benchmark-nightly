@@ -204,8 +204,8 @@ RARRAY_AREF.exit485:                              ; preds = %rb_array_len.exit48
   store i64 %i.un, ptr %i.d, align 8, !tbaa !11
   %i.uo = call i64 @rb_to_int(i64 noundef %i.un) #12 ; 2 uses
   store i64 %i.uo, ptr %i.d, align 8, !tbaa !11
-  %i.up = call i64 @rb_absint_numwords(i64 noundef %i.uo, i64 noundef 7, ptr noundef null) #12 ; 4 uses
-  %spec.store.select13 = call i64 @llvm.umax.i64(i64 %i.up, i64 1) ; 5 uses
+  %i.up = call i64 @rb_absint_numwords(i64 noundef %i.uo, i64 noundef 7, ptr noundef null) #12 ; 5 uses
+  %spec.store.select13 = call i64 @llvm.umax.i64(i64 %i.up, i64 1) ; 4 uses
   %i.uq = call i64 @rb_str_new(ptr noundef null, i64 noundef %spec.store.select13) #12, !callees !42
   %i.ur = load i64, ptr %i.d, align 8, !tbaa !11
   %i.us = inttoptr i64 %i.uq to ptr               ; 5 uses
@@ -261,7 +261,7 @@ RSTRING_PTR.exit489:                              ; preds = %bb.fc, %bb.fd
   br i1 %i.vj, label %iter.check, label %._crit_edge
 
 iter.check:                                       ; preds = %RSTRING_PTR.exit489
-  %i.vk = add i64 %spec.store.select13, -1        ; 5 uses
+  %i.vk = add i64 %i.up, -1                       ; 5 uses
   %min.iters.check = icmp ult i64 %i.up, 5
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.main.loop.iter.check
 

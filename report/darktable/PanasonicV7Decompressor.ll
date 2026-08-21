@@ -203,7 +203,7 @@ _ZNK8rawspeed10ByteStream12getSubStreamEjj.exit:  ; preds = %bb.a
   %i.aj = zext nneg i32 %i.h to i64
   %wide.trip.count = zext nneg i32 %i.u to i64    ; 3 uses
   %umax = tail call i32 @llvm.umax.i32(i32 %i.u, i32 1)
-  %wide.trip.count69 = zext nneg i32 %umax to i64 ; 3 uses
+  %wide.trip.count69 = zext nneg i32 %umax to i64 ; 2 uses
   %i.ak = add nsw i64 %wide.trip.count69, -1
   %i.al = tail call i64 @llvm.umin.i64(i64 %wide.trip.count, i64 %i.ak) ; 2 uses
   %i.am = add nuw nsw i64 %i.al, 1                ; 2 uses
@@ -216,8 +216,7 @@ _ZNK8rawspeed10ByteStream12getSubStreamEjj.exit:  ; preds = %bb.a
   br label %.lr.ph
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader
-  %2 = add nsw i64 %wide.trip.count69, -1
-  %umin = tail call i64 @llvm.umin.i64(i64 %wide.trip.count, i64 %2) ; 2 uses
+  %umin = tail call i64 @llvm.usub.sat.i64(i64 %wide.trip.count, i64 1) ; 2 uses
   %i.an = mul nuw nsw i64 %umin, 18
   %i.ao = shl nuw nsw i64 %i.s, 1
   %i.ap = getelementptr i8, ptr %i.c, i64 %i.an
@@ -618,6 +617,9 @@ declare i32 @llvm.umax.i32(i32, i32) #17
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.fshl.i32(i32, i32, i32) #17
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.usub.sat.i64(i64, i64) #17
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #17
