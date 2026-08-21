@@ -204,13 +204,14 @@ bits_read_signed_nz_le.exit298.i:                 ; preds = %bits_priv_refill_32
 
 .lr.ph323.i:                                      ; preds = %._crit_edge.i, %.lr.ph326.preheader.i
   %indvars.iv376.i = phi i64 [ 1, %.lr.ph326.preheader.i ], [ %indvars.iv.next377.i, %._crit_edge.i ] ; 3 uses
-  %indvars.iv373.i = phi i32 [ 2, %.lr.ph326.preheader.i ], [ %indvars.iv.next374.i, %._crit_edge.i ] ; 3 uses
-  %i.vx = lshr i32 %indvars.iv373.i, 1            ; 3 uses
+  %indvars.iv373.i = phi i32 [ 2, %.lr.ph326.preheader.i ], [ %indvars.iv.next374.i, %._crit_edge.i ] ; 4 uses
+  %i.vx = lshr i32 %indvars.iv373.i, 1            ; 2 uses
   %i.vy = getelementptr [4 x i8], ptr %i.a, i64 %indvars.iv376.i ; 3 uses
   %i.vz = getelementptr inbounds nuw [2 x i8], ptr %i.kn, i64 %indvars.iv376.i
   %i.wa = load i16, ptr %i.vz, align 2, !tbaa !83
   %i.wb = sext i16 %i.wa to i32                   ; 7 uses
-  %i.wc = icmp eq i32 %i.vx, 1
+  %.mask = and i32 %indvars.iv373.i, 2147483646
+  %i.wc = icmp eq i32 %.mask, 2
   br i1 %i.wc, label %.epil.preheader, label %.lr.ph323.i.new
 
 .lr.ph323.i.new:                                  ; preds = %.lr.ph323.i
