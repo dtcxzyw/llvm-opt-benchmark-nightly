@@ -204,7 +204,7 @@ bb.fw:                                            ; preds = %size_align_up.exit6
   %.not.i73324443291 = icmp eq i64 %.0482.i.ph, 0
   %.not.i72924503292 = icmp eq i64 %.0482.i.ph, 0
   %.not.i72224563294 = icmp eq i64 %.0482.i.ph, 0
-  %i.ase = add i64 %.0482.i.ph, -1                ; 8 uses
+  %i.ase = add i64 %.0482.i.ph, -1                ; 7 uses
   %xtraiter = and i64 %.0482.i.ph, 7              ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   %i.asf = icmp ult i64 %i.ase, 7
@@ -607,7 +607,7 @@ bb.mf:                                            ; preds = %write_indent.exit73
   br label %.preheader1397
 
 .preheader1397:                                   ; preds = %.preheader1397.preheader, %bb.mh
-  %indvar = phi i64 [ 0, %.preheader1397.preheader ], [ %indvar.next, %bb.mh ] ; 3 uses
+  %indvar = phi i64 [ 0, %.preheader1397.preheader ], [ %indvar.next, %bb.mh ] ; 2 uses
   %.1 = phi i8 [ %.01040.ph, %.preheader1397.preheader ], [ %i.cvl, %bb.mh ]
   %.16558.i = phi ptr [ %.15557.i, %.preheader1397.preheader ], [ %.18560.i, %bb.mh ] ; 4 uses
   %.17540.i = phi ptr [ %.16539.i, %.preheader1397.preheader ], [ %i.cvo, %bb.mh ] ; 2 uses
@@ -615,7 +615,6 @@ bb.mf:                                            ; preds = %write_indent.exit73
   %.16.i = phi ptr [ %.15.i, %.preheader1397.preheader ], [ %i.cvh, %bb.mh ] ; 3 uses
   %.9.i = phi i64 [ %.8492.i, %.preheader1397.preheader ], [ %.10.i, %bb.mh ] ; 4 uses
   %.1483.i = phi i64 [ %.0482.i.ph, %.preheader1397.preheader ], [ %i.cur, %bb.mh ] ; 2 uses
-  %6 = sub i64 %i.ase, %indvar
   %i.ctu = sub i64 %i.ctt, %indvar
   %i.ctv = getelementptr inbounds i8, ptr %.17540.i, i64 -2
   %i.ctw = getelementptr inbounds i8, ptr %.17540.i, i64 -1 ; 3 uses
@@ -657,12 +656,12 @@ bb.mg:                                            ; preds = %.thread1181, %.preh
   %.18522.i = phi ptr [ %i.cuq, %.thread1181 ], [ %.16520.i, %.preheader1397 ] ; 4 uses
   %.18.i = phi ptr [ %i.cun, %.thread1181 ], [ %.16.i, %.preheader1397 ] ; 5 uses
   %.10.i = phi i64 [ %i.cud, %.thread1181 ], [ %.9.i, %.preheader1397 ] ; 5 uses
-  %i.cur = add i64 %.1483.i, -1                   ; 5 uses
+  %i.cur = add i64 %.1483.i, -1                   ; 6 uses
   %.not.i7452469 = icmp eq i64 %i.cur, 0
   br i1 %.not.i7452469, label %write_indent.exit746, label %.lr.ph2473.preheader
 
 .lr.ph2473.preheader:                             ; preds = %bb.mg
-  %xtraiter5977 = and i64 %6, 7                   ; 2 uses
+  %xtraiter5977 = and i64 %i.cur, 7               ; 2 uses
   %lcmp.mod5978.not = icmp eq i64 %xtraiter5977, 0
   br i1 %lcmp.mod5978.not, label %.lr.ph2473.prol.loopexit, label %.lr.ph2473.prol
 
@@ -1065,7 +1064,7 @@ bb.fy:                                            ; preds = %bb.fx, %bb.fw
   %.not.i755.i20972950 = icmp eq i64 %.0487.i.ph, 0
   %.not.i759.i21032951 = icmp eq i64 %.0487.i.ph, 0
   %.not.i767.i21092953 = icmp eq i64 %.0487.i.ph, 0
-  %i.asf = add i64 %.0487.i.ph, -1                ; 8 uses
+  %i.asf = add i64 %.0487.i.ph, -1                ; 7 uses
   %xtraiter = and i64 %.0487.i.ph, 7              ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   %i.asg = icmp ult i64 %i.asf, 7
@@ -1468,7 +1467,7 @@ bb.mr:                                            ; preds = %bb.mq
   br label %bb.fz
 
 .preheader1048:                                   ; preds = %.preheader1048.preheader, %bb.mu
-  %indvar = phi i64 [ 0, %.preheader1048.preheader ], [ %indvar.next, %bb.mu ] ; 3 uses
+  %indvar = phi i64 [ 0, %.preheader1048.preheader ], [ %indvar.next, %bb.mu ] ; 2 uses
   %.1690 = phi ptr [ %.0689.ph, %.preheader1048.preheader ], [ %i.cvw, %bb.mu ]
   %.1 = phi i8 [ %.0687.ph, %.preheader1048.preheader ], [ %i.cvu, %bb.mu ]
   %.16563.i = phi ptr [ %.15562.i, %.preheader1048.preheader ], [ %.18565.i, %bb.mu ] ; 4 uses
@@ -1477,7 +1476,6 @@ bb.mr:                                            ; preds = %bb.mq
   %.16.i = phi ptr [ %.15.i, %.preheader1048.preheader ], [ %i.cvq, %bb.mu ] ; 3 uses
   %.9.i = phi i64 [ %.8497.i, %.preheader1048.preheader ], [ %.10.i, %bb.mu ] ; 4 uses
   %.1488.i = phi i64 [ %.0487.i.ph, %.preheader1048.preheader ], [ %i.cuy, %bb.mu ] ; 2 uses
-  %7 = sub i64 %i.asf, %indvar
   %i.cub = sub i64 %i.cty, %indvar
   %i.cuc = getelementptr inbounds i8, ptr %.17545.i, i64 -2
   %i.cud = getelementptr inbounds i8, ptr %.17545.i, i64 -1 ; 3 uses
@@ -1519,12 +1517,12 @@ bb.mt:                                            ; preds = %.thread832, %.prehe
   %.18527.i = phi ptr [ %i.cux, %.thread832 ], [ %.16525.i, %.preheader1048 ] ; 4 uses
   %.18.i = phi ptr [ %i.cuu, %.thread832 ], [ %.16.i, %.preheader1048 ] ; 6 uses
   %.10.i = phi i64 [ %i.cuk, %.thread832 ], [ %.9.i, %.preheader1048 ] ; 5 uses
-  %i.cuy = add i64 %.1488.i, -1                   ; 5 uses
+  %i.cuy = add i64 %.1488.i, -1                   ; 6 uses
   %.not.i748.i2122 = icmp eq i64 %i.cuy, 0
   br i1 %.not.i748.i2122, label %write_indent.exit.i, label %.lr.ph2126.preheader
 
 .lr.ph2126.preheader:                             ; preds = %bb.mt
-  %xtraiter5642 = and i64 %7, 7                   ; 2 uses
+  %xtraiter5642 = and i64 %i.cuy, 7               ; 2 uses
   %lcmp.mod5643.not = icmp eq i64 %xtraiter5642, 0
   br i1 %lcmp.mod5643.not, label %.lr.ph2126.prol.loopexit, label %.lr.ph2126.prol
 

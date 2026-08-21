@@ -204,23 +204,23 @@ bb.ae:                                            ; preds = %.lr.ph229, %._crit_
   %indvars.iv333 = phi i64 [ %i.ho, %.lr.ph229 ], [ %indvars.iv.next334, %._crit_edge ] ; 11 uses
   %indvars.iv = phi i32 [ %i.hn, %.lr.ph229 ], [ %indvars.iv.next, %._crit_edge ] ; 6 uses
   %.5227 = phi i32 [ 0, %.lr.ph229 ], [ %i.ne, %._crit_edge ]
-  %6 = tail call i32 @llvm.smin.i32(i32 %indvars.iv, i32 %i.e) ; 3 uses
-  %7 = sub i33 %i.hq, %indvar424
-  %i.hr = zext i32 %6 to i33
-  %i.hs = add i33 %7, %i.hr                       ; 2 uses
+  %6 = sub i33 %i.hq, %indvar424
+  %7 = tail call i32 @llvm.smin.i32(i32 %indvars.iv, i32 %i.e)
+  %i.hr = zext i32 %7 to i33
+  %i.hs = add i33 %6, %i.hr                       ; 2 uses
   %i.ht = shl i33 %i.hs, 1
-  %8 = tail call i32 @llvm.smin.i32(i32 %indvars.iv, i32 %i.e) ; 2 uses
-  %9 = trunc i33 %indvar424 to i32
-  %10 = sub i32 %i.hk, %9                         ; 2 uses
-  %i.hu = add i32 %10, %8
-  %11 = tail call i32 @llvm.smin.i32(i32 %indvars.iv, i32 %i.e) ; 3 uses
-  %12 = sub i33 %i.hp, %indvar424
-  %i.hv = zext i32 %11 to i33
-  %i.hw = add i33 %12, %i.hv                      ; 2 uses
+  %8 = trunc i33 %indvar424 to i32
+  %9 = sub i32 %i.hk, %8
+  %10 = tail call i32 @llvm.smin.i32(i32 %indvars.iv, i32 %i.e)
+  %i.hu = add i32 %9, %10                         ; 2 uses
+  %11 = sub i33 %i.hp, %indvar424
+  %12 = tail call i32 @llvm.smin.i32(i32 %indvars.iv, i32 %i.e)
+  %i.hv = zext i32 %12 to i33
+  %i.hw = add i33 %11, %i.hv                      ; 2 uses
   %i.hx = shl i33 %i.hw, 1
-  %13 = tail call i32 @llvm.smin.i32(i32 %indvars.iv, i32 %i.e) ; 2 uses
-  %14 = sub i32 %i.hk, %indvar                    ; 2 uses
-  %i.hy = add i32 %14, %13
+  %13 = sub i32 %i.hk, %indvar
+  %14 = tail call i32 @llvm.smin.i32(i32 %indvars.iv, i32 %i.e)
+  %i.hy = add i32 %13, %14                        ; 2 uses
   %i.hz = shl i32 %.5227, 1
   %i.ia = trunc nuw nsw i64 %indvars.iv333 to i32
   %i.ib = sub i32 %i.d, %i.ia
@@ -229,7 +229,7 @@ bb.ae:                                            ; preds = %.lr.ph229, %._crit_
   br i1 %i.id, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.ae
-  %i.ie = tail call i32 @llvm.smin.i32(i32 %indvars.iv, i32 %i.e)
+  %i.ie = tail call i32 @llvm.smin.i32(i32 %indvars.iv, i32 %i.e) ; 9 uses
   %smin330 = sext i32 %i.ie to i64                ; 17 uses
   %i.if = add nsw i64 %smin330, 1                 ; 12 uses
   switch i8 %i.hm, label %.lr.ph.unreachabledefault [
@@ -244,8 +244,8 @@ pcmp_val.exit161.us217.preheader:                 ; preds = %.lr.ph
   br i1 %min.iters.check481, label %pcmp_val.exit161.us217.preheader612, label %vector.scevcheck475
 
 vector.scevcheck475:                              ; preds = %pcmp_val.exit161.us217.preheader
-  %i.ig = zext i32 %6 to i33
-  %mul.overflow479 = icmp slt i32 %6, 0
+  %i.ig = zext i32 %i.ie to i33
+  %mul.overflow479 = icmp slt i32 %i.ie, 0
   %i.ih = sub i33 %i.hs, %i.ig
   %i.ii = shl i33 %i.ih, 1
   %i.ij = icmp sgt i33 %i.ii, %i.ht
@@ -253,7 +253,7 @@ vector.scevcheck475:                              ; preds = %pcmp_val.exit161.us
   br i1 %i.ik, label %pcmp_val.exit161.us217.preheader612, label %vector.ph482
 
 vector.ph482:                                     ; preds = %vector.scevcheck475
-  %n.vec483 = and i64 %i.if, -8                   ; 3 uses
+  %n.vec483 = and i64 %i.if, 4294967288           ; 3 uses
   %i.il = sub nsw i64 %smin330, %n.vec483
   br label %vector.body484
 
@@ -304,13 +304,14 @@ pcmp_val.exit161.us209.preheader:                 ; preds = %.lr.ph
   br i1 %min.iters.check453, label %pcmp_val.exit161.us209.preheader610, label %vector.scevcheck449
 
 vector.scevcheck449:                              ; preds = %pcmp_val.exit161.us209.preheader
-  %i.je = icmp sgt i32 %10, %i.hu
-  %i.jf = icmp slt i32 %8, 0
+  %15 = sub i32 %i.hu, %i.ie
+  %i.je = icmp sgt i32 %15, %i.hu
+  %i.jf = icmp slt i32 %i.ie, 0
   %i.jg = or i1 %i.je, %i.jf
   br i1 %i.jg, label %pcmp_val.exit161.us209.preheader610, label %vector.ph454
 
 vector.ph454:                                     ; preds = %vector.scevcheck449
-  %n.vec455 = and i64 %i.if, -8                   ; 3 uses
+  %n.vec455 = and i64 %i.if, 4294967288           ; 3 uses
   %i.jh = sub nsw i64 %smin330, %n.vec455
   br label %vector.body456
 
@@ -361,8 +362,8 @@ pcmp_val.exit161.us201.preheader:                 ; preds = %.lr.ph
   br i1 %min.iters.check427, label %pcmp_val.exit161.us201.preheader608, label %vector.scevcheck422
 
 vector.scevcheck422:                              ; preds = %pcmp_val.exit161.us201.preheader
-  %i.ka = zext i32 %11 to i33
-  %mul.overflow = icmp slt i32 %11, 0
+  %i.ka = zext i32 %i.ie to i33
+  %mul.overflow = icmp slt i32 %i.ie, 0
   %i.kb = sub i33 %i.hw, %i.ka
   %i.kc = shl i33 %i.kb, 1
   %i.kd = icmp sgt i33 %i.kc, %i.hx
@@ -370,7 +371,7 @@ vector.scevcheck422:                              ; preds = %pcmp_val.exit161.us
   br i1 %i.ke, label %pcmp_val.exit161.us201.preheader608, label %vector.ph428
 
 vector.ph428:                                     ; preds = %vector.scevcheck422
-  %n.vec429 = and i64 %i.if, -8                   ; 3 uses
+  %n.vec429 = and i64 %i.if, 4294967288           ; 3 uses
   %i.kf = sub nsw i64 %smin330, %n.vec429
   br label %vector.body430
 
@@ -421,13 +422,14 @@ pcmp_val.exit161.us.preheader:                    ; preds = %.lr.ph
   br i1 %min.iters.check, label %pcmp_val.exit161.us.preheader607, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %pcmp_val.exit161.us.preheader
-  %i.ky = icmp sgt i32 %14, %i.hy
-  %i.kz = icmp slt i32 %13, 0
+  %16 = sub i32 %i.hy, %i.ie
+  %i.ky = icmp sgt i32 %16, %i.hy
+  %i.kz = icmp slt i32 %i.ie, 0
   %i.la = or i1 %i.ky, %i.kz
   br i1 %i.la, label %pcmp_val.exit161.us.preheader607, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.scevcheck
-  %n.vec = and i64 %i.if, -8                      ; 3 uses
+  %n.vec = and i64 %i.if, 4294967288              ; 3 uses
   %i.lb = sub nsw i64 %smin330, %n.vec
   br label %vector.body
 

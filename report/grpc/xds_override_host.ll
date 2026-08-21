@@ -203,7 +203,7 @@ _ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE
   %i.ar = ptrtoint ptr %.pre303.i.i.i.i to i64
   %i.as = ptrtoint ptr %.pre.i.i.i.i to i64
   %i.at = sub i64 %i.ar, %i.as
-  %i.au = ashr exact i64 %i.at, 5                 ; 6 uses
+  %i.au = ashr exact i64 %i.at, 5                 ; 5 uses
   %.not278.i.i.i.i = icmp eq ptr %.pre303.i.i.i.i, %.pre.i.i.i.i
   br i1 %.not278.i.i.i.i, label %_ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EvT_S7_RSaIT0_E.exit.i.i.i.i.i, label %.lr.ph275.i.i.i.i
 
@@ -447,11 +447,10 @@ _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev.ex
   br label %"_ZSt6invokeIRKZN9grpc_core12_GLOBAL__N_117XdsOverrideHostLb16UpdateAddressMapERKNS0_25EndpointAddressesIteratorEE3$_0JRKNS0_17EndpointAddressesEEENSt13invoke_resultIT_JDpT0_EE4typeEOSD_DpOSE_.exit"
 
 bb.an:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit146.i.i.i.i, %.lr.ph275.i.i.i.i
-  %.047273.i.i.i.i = phi i64 [ 0, %.lr.ph275.i.i.i.i ], [ %i.gh, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit146.i.i.i.i ] ; 8 uses
-  %umin164 = call i64 @llvm.umin.i64(i64 %i.au, i64 %.047273.i.i.i.i) ; 2 uses
-  %umin = call i64 @llvm.umin.i64(i64 %i.au, i64 %.047273.i.i.i.i) ; 2 uses
+  %.047273.i.i.i.i = phi i64 [ 0, %.lr.ph275.i.i.i.i ], [ %i.gh, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit146.i.i.i.i ] ; 7 uses
+  %umin = call i64 @llvm.umin.i64(i64 %i.au, i64 %.047273.i.i.i.i) ; 3 uses
   %i.di = add i64 %umin, 576460752303423486
-  %i.dj = and i64 %i.di, 576460752303423487
+  %i.dj = and i64 %i.di, 576460752303423487       ; 2 uses
   %i.dk = add i64 %umin, 7
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #38
   %.sroa.speculated.i.i.i.i.i = call i64 @llvm.umin.i64(i64 %.047273.i.i.i.i, i64 %i.au) ; 2 uses
@@ -557,7 +556,7 @@ _ZN4absl12lts_2025051216strings_internal28STLStringResizeUninitializedINSt7__cxx
 .lr.ph55.preheader.i.i.i.i.i.i.i.i:               ; preds = %_ZN4absl12lts_2025051216strings_internal28STLStringResizeUninitializedINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEvEEvPT_m.exit.i.i.i.i.i.i.i.i
   %i.fg = load i64, ptr %i.ax, align 8, !tbaa !35, !noalias !380
   %i.fh = getelementptr inbounds nuw i8, ptr %i.fd, i64 %i.fg ; 3 uses
-  %i.fi = and i64 %umin164, 1
+  %i.fi = and i64 %umin, 1
   %lcmp.mod166.not.not = icmp eq i64 %i.fi, 0
   br i1 %lcmp.mod166.not.not, label %.lr.ph55.i.i.i.i.i.i.i.i.prol, label %.lr.ph55.i.i.i.i.i.i.i.i.prol.loopexit
 
@@ -575,8 +574,7 @@ _ZN4absl12lts_2025051216strings_internal28STLStringResizeUninitializedINSt7__cxx
   %.unr168 = phi ptr [ %i.ay, %.lr.ph55.preheader.i.i.i.i.i.i.i.i ], [ %i.bo, %.lr.ph55.i.i.i.i.i.i.i.i.prol ]
   %.054.i.i.i.i.i.i.i.i.unr = phi ptr [ %.pre.i.i.i.i, %.lr.ph55.preheader.i.i.i.i.i.i.i.i ], [ %i.ay, %.lr.ph55.i.i.i.i.i.i.i.i.prol ]
   %.03153.i.i.i.i.i.i.i.i.unr = phi ptr [ %i.fh, %.lr.ph55.preheader.i.i.i.i.i.i.i.i ], [ %i.fn, %.lr.ph55.i.i.i.i.i.i.i.i.prol ]
-  %14 = and i64 %umin164, 576460752303423487
-  %i.fo = icmp eq i64 %14, 2
+  %i.fo = icmp eq i64 %i.dj, 0
   br i1 %i.fo, label %_ZN4absl12lts_202505127StrJoinINS0_4SpanIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEES8_RKT_St17basic_string_viewIcS6_E.exit.i.i.i.i, label %.lr.ph55.i.i.i.i.i.i.i.i
 
 bb.aq:                                            ; preds = %bb.ap

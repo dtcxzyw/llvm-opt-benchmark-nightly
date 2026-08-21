@@ -204,7 +204,7 @@ bb.kt:                                            ; preds = %bb.kr, %bb.ks
   %i.bfb = phi ptr [ %i.bfa, %bb.ks ], [ %i.bey, %bb.kr ] ; 21 uses
   %i.bfc = ptrtoaddr ptr %i.bfb to i64
   %i.bfd = getelementptr inbounds nuw i8, ptr %.0254, i64 232
-  %i.bfe = load i32, ptr %i.bfd, align 8, !tbaa !107 ; 19 uses
+  %i.bfe = load i32, ptr %i.bfd, align 8, !tbaa !107 ; 16 uses
   %i.bff = getelementptr inbounds nuw i8, ptr %.0254, i64 236
   %i.bfg = load i32, ptr %i.bff, align 4, !tbaa !108 ; 8 uses
   %i.bfh = getelementptr inbounds nuw i8, ptr %i.ak, i64 808 ; 2 uses
@@ -242,13 +242,12 @@ bb.ku:                                            ; preds = %bb.kt
   br label %.preheader290
 
 .preheader290:                                    ; preds = %.preheader290.preheader, %._crit_edge367
-  %.0250368 = phi i32 [ %i.bgs, %._crit_edge367 ], [ 0, %.preheader290.preheader ] ; 3 uses
-  %i.bfp = mul i32 %.0250368, %i.bfe              ; 6 uses
+  %.0250368 = phi i32 [ %i.bgs, %._crit_edge367 ], [ 0, %.preheader290.preheader ] ; 2 uses
+  %i.bfp = mul i32 %.0250368, %i.bfe              ; 7 uses
   br i1 %min.iters.check785, label %scalar.ph784.preheader, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.preheader290
-  %2 = mul i32 %i.bfe, %.0250368
-  %i.bfq = xor i32 %2, -1
+  %i.bfq = xor i32 %i.bfp, -1
   %i.bfr = icmp ult i32 %i.bfq, %i.bfn
   %i.bfs = or i1 %i.bfr, %i.bfo
   br i1 %i.bfs, label %scalar.ph784.preheader, label %vector.body788
@@ -560,13 +559,9 @@ bb.lb:                                            ; preds = %bb.la
   br label %.preheader283
 
 .preheader283:                                    ; preds = %.preheader283.lr.ph, %._crit_edge392
-  %indvars.iv500 = phi i64 [ 0, %.preheader283.lr.ph ], [ %indvars.iv.next501, %._crit_edge392 ] ; 8 uses
+  %indvars.iv500 = phi i64 [ 0, %.preheader283.lr.ph ], [ %indvars.iv.next501, %._crit_edge392 ] ; 6 uses
   %i.bkj = mul i64 %i.bkh, %indvars.iv500
   %i.bkk = add i64 %i.bkg, %i.bkj
-  %3 = trunc i64 %indvars.iv500 to i32
-  %4 = mul i32 %i.bfe, %3
-  %5 = trunc i64 %indvars.iv500 to i32
-  %6 = mul i32 %i.bfe, %5
   br i1 %.not399, label %.preheader, label %.lr.ph388
 
 .lr.ph388:                                        ; preds = %.preheader283
@@ -587,7 +582,7 @@ bb.lb:                                            ; preds = %bb.la
 
 .lr.ph391:                                        ; preds = %.preheader
   %i.bkr = trunc nuw i64 %indvars.iv500 to i32
-  %i.bks = mul i32 %i.bfe, %i.bkr                 ; 4 uses
+  %i.bks = mul i32 %i.bfe, %i.bkr                 ; 6 uses
   %i.bkt = mul nuw i64 %indvars.iv500, %i.bjr
   %i.bku = getelementptr inbounds nuw [4 x i8], ptr %i.bjy, i64 %i.bkt ; 4 uses
   %i.bkv = zext i32 %.5.lcssa to i64              ; 8 uses
@@ -598,7 +593,7 @@ bb.lb:                                            ; preds = %bb.la
 vector.scevcheck835:                              ; preds = %.lr.ph391
   %i.bkx = xor i64 %i.bkv, -1
   %i.bky = add nsw i64 %i.bkx, %wide.trip.count498 ; 2 uses
-  %i.bkz = add i32 %.5.lcssa, %6
+  %i.bkz = add i32 %.5.lcssa, %i.bks
   %i.bla = trunc i64 %i.bky to i32
   %i.blb = xor i32 %i.bkz, -1
   %i.blc = icmp ult i32 %i.blb, %i.bla
@@ -609,7 +604,7 @@ vector.scevcheck835:                              ; preds = %.lr.ph391
 vector.memcheck:                                  ; preds = %vector.scevcheck835
   %i.blf = shl nuw nsw i64 %i.bkv, 2
   %i.blg = add i64 %i.bkk, %i.blf
-  %i.blh = add i32 %.5.lcssa, %4
+  %i.blh = add i32 %.5.lcssa, %i.bks
   %i.bli = zext i32 %i.blh to i64
   %i.blj = shl nuw nsw i64 %i.bli, 2
   %i.blk = sub i64 %i.blj, %i.blg

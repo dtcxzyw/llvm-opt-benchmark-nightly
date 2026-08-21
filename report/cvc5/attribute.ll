@@ -204,7 +204,7 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.f, %.lr.ph.i
-  %indvar = phi i64 [ %indvar.next, %bb.f ], [ 0, %.lr.ph.i ] ; 3 uses
+  %indvar = phi i64 [ %indvar.next, %bb.f ], [ 0, %.lr.ph.i ] ; 2 uses
   %.sroa.08.021.i.idx = phi i64 [ %.sroa.08.021.i.add, %bb.f ], [ 24, %.lr.ph.i ] ; 3 uses
   %.pn20.i = phi ptr [ %.sroa.08.021.i.ptr, %bb.f ], [ %0, %.lr.ph.i ] ; 7 uses
   %.sroa.08.021.i.ptr = getelementptr inbounds nuw i8, ptr %0, i64 %.sroa.08.021.i.idx ; 7 uses
@@ -228,10 +228,10 @@ _ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN4cvc58internal4expr4attr8AttrHashImE6inse
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.pn20.i, i64 40
   %.sroa.5.0.copyload.i = load i64, ptr %.sroa.5.0..sroa_idx.i, align 8
   %i.n = getelementptr inbounds nuw i8, ptr %.pn20.i, i64 48
-  %i.o = udiv exact i64 %.sroa.08.021.i.idx, 24   ; 2 uses
-  %i.p = and i64 %indvar, 1
+  %i.o = udiv i64 %.sroa.08.021.i.idx, 24         ; 3 uses
+  %i.p = and i64 %i.o, 1
   %lcmp.mod.not.not = icmp eq i64 %i.p, 0
-  br i1 %lcmp.mod.not.not, label %.lr.ph.i.i.i.i.i.i.prol, label %.lr.ph.i.i.i.i.i.i.prol.loopexit
+  br i1 %lcmp.mod.not.not, label %.lr.ph.i.i.i.i.i.i.prol.loopexit, label %.lr.ph.i.i.i.i.i.i.prol
 
 .lr.ph.i.i.i.i.i.i.prol:                          ; preds = %.lr.ph.preheader.i.i.i.i.i.i
   %i.q = getelementptr inbounds i8, ptr %.sroa.08.021.i.ptr, i64 -24 ; 2 uses

@@ -204,7 +204,7 @@ bb.a:
   store ptr %2, ptr %i.a, align 8, !tbaa !261
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #20
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 40 ; 2 uses
-  %i.h = load i32, ptr %i.g, align 8, !tbaa !142  ; 35 uses
+  %i.h = load i32, ptr %i.g, align 8, !tbaa !142  ; 34 uses
   store i32 %i.h, ptr %i.b, align 4, !tbaa !16
   %i.i = add nsw i32 %i.h, %3                     ; 2 uses
   %i.j = icmp eq i32 %i.h, 0                      ; 2 uses
@@ -607,7 +607,7 @@ _ZN5arrow6ResultINS_7compute17KeyColumnMetadataEED2Ev.exit.i212: ; preds = %bb.a
   br i1 %i.og, label %.lr.ph56.i, label %"_ZN5arrow7compute16ExecBatchBuilder5VisitIZNS1_14AppendSelectedERKSt10shared_ptrINS_9ArrayDataEEPNS0_18ResizableArrayDataEiPKtPNS_10MemoryPoolEE3$_4EEvS7_iSB_T_.exit"
 
 .lr.ph56.i:                                       ; preds = %.preheader.i223
-  %i.oh = ashr i64 %.sroa.0.0.copyload.i.i50.i, 32 ; 4 uses
+  %i.oh = ashr i64 %.sroa.0.0.copyload.i.i50.i, 32 ; 3 uses
   %i.oi = add nsw i64 %i.oh, -1
   %i.oj = sdiv i64 %i.oi, 8                       ; 3 uses
   %i.ok = icmp eq i64 %.sroa.520.0.extract.shift51.i, 0
@@ -771,7 +771,7 @@ middle.block436:                                  ; preds = %vector.body431
   br i1 %exitcond.not.i222, label %"_ZN5arrow7compute16ExecBatchBuilder5VisitIZNS1_14AppendSelectedERKSt10shared_ptrINS_9ArrayDataEEPNS0_18ResizableArrayDataEiPKtPNS_10MemoryPoolEE3$_4EEvS7_iSB_T_.exit", label %.lr.ph.i217, !llvm.loop !281
 
 .lr.ph.split.i40.preheader.i:                     ; preds = %"_ZZN5arrow7compute16ExecBatchBuilder14AppendSelectedERKSt10shared_ptrINS_9ArrayDataEEPNS0_18ResizableArrayDataEiPKtPNS_10MemoryPoolEENK3$_4clEiPKhi.exit45.loopexit.i", %.lr.ph.split.i40.preheader.preheader.i
-  %indvars.iv59.i = phi i64 [ 0, %.lr.ph.split.i40.preheader.preheader.i ], [ %indvars.iv.next60.i, %"_ZZN5arrow7compute16ExecBatchBuilder14AppendSelectedERKSt10shared_ptrINS_9ArrayDataEEPNS0_18ResizableArrayDataEiPKtPNS_10MemoryPoolEENK3$_4clEiPKhi.exit45.loopexit.i" ] ; 4 uses
+  %indvars.iv59.i = phi i64 [ 0, %.lr.ph.split.i40.preheader.preheader.i ], [ %indvars.iv.next60.i, %"_ZZN5arrow7compute16ExecBatchBuilder14AppendSelectedERKSt10shared_ptrINS_9ArrayDataEEPNS0_18ResizableArrayDataEiPKtPNS_10MemoryPoolEENK3$_4clEiPKhi.exit45.loopexit.i" ] ; 3 uses
   %i.ra = getelementptr inbounds nuw [2 x i8], ptr %4, i64 %indvars.iv59.i
   %i.rb = load i16, ptr %i.ra, align 2, !tbaa !253
   %i.rc = load ptr, ptr %1, align 8, !tbaa !65    ; 2 uses
@@ -793,18 +793,14 @@ middle.block436:                                  ; preds = %vector.body431
   %i.rr = trunc nuw nsw i64 %indvars.iv59.i to i32
   %i.rs = add nsw i32 %i.h, %i.rr
   %i.rt = sext i32 %i.rs to i64
-  %i.ru = mul nsw i64 %i.oh, %i.rt
+  %i.ru = mul nsw i64 %i.oh, %i.rt                ; 2 uses
   %i.rv = getelementptr inbounds i8, ptr %i.rq, i64 %i.ru ; 2 uses
   br i1 %or.cond, label %.lr.ph.split.i40.i.preheader, label %vector.memcheck441
 
 vector.memcheck441:                               ; preds = %.lr.ph.split.i40.preheader.i
   %i.rw = ptrtoaddr ptr %i.rq to i64
   %i.rx = ptrtoaddr ptr %i.ri to i64
-  %19 = trunc i64 %indvars.iv59.i to i32
-  %20 = add i32 %i.h, %19
-  %21 = sext i32 %20 to i64
-  %22 = mul nsw i64 %i.oh, %21
-  %i.ry = add i64 %22, %i.rw
+  %i.ry = add i64 %i.ru, %i.rw
   %i.rz = add i64 %i.rn, %i.rx
   %i.sa = sub i64 %i.rz, %i.ry
   %diff.check442 = icmp ugt i64 %i.sa, -32

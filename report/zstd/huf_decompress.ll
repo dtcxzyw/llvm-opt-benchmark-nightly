@@ -204,10 +204,8 @@ begin_hunk_0_@HUF_readDTableX2_wksp:bb.a
 
 .lr.ph.split.i:                                   ; preds = %.lr.ph.i, %HUF_fillDTableX2Level2.exit.loopexit.i
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %HUF_fillDTableX2Level2.exit.loopexit.i ], [ %i.fo, %.lr.ph.i ] ; 2 uses
-  %.05267.i = phi i32 [ %i.tj, %HUF_fillDTableX2Level2.exit.loopexit.i ], [ %i.fc, %.lr.ph.i ] ; 4 uses
-  %6 = sext i32 %.05267.i to i64
-  %7 = sext i32 %.05267.i to i64
-  %i.jl = sext i32 %.05267.i to i64
+  %.05267.i = phi i32 [ %i.tj, %HUF_fillDTableX2Level2.exit.loopexit.i ], [ %i.fc, %.lr.ph.i ] ; 2 uses
+  %i.jl = sext i32 %.05267.i to i64               ; 3 uses
   %i.jm = getelementptr [4 x i8], ptr %i.e, i64 %i.jl ; 13 uses
   %i.jn = getelementptr inbounds i8, ptr %i.eo, i64 %indvars.iv.i
   %i.jo = load i8, ptr %i.jn, align 1, !tbaa !45
@@ -421,7 +419,7 @@ bb.l:                                             ; preds = %HUF_fillDTableX2For
 
 vector.memcheck291:                               ; preds = %.lr.ph104.i.i
   %i.mm = shl nsw i64 %i.lf, 3
-  %i.mn = add nsw i64 %6, %i.lb
+  %i.mn = add nsw i64 %i.jl, %i.lb
   %i.mo = shl nsw i64 %i.mn, 2
   %i.mp = add nsw i64 %i.mm, %i.mo
   %i.mq = shl nsw i64 %i.ld, 3
@@ -515,7 +513,7 @@ scalar.ph297.prol.loopexit:                       ; preds = %scalar.ph297.prol, 
   br i1 %min.iters.check275, label %scalar.ph274.preheader, label %vector.memcheck268
 
 vector.memcheck268:                               ; preds = %.lr.ph110.i.i
-  %i.ns = add nsw i64 %7, %i.lf
+  %i.ns = add nsw i64 %i.jl, %i.lf
   %i.nt = add nsw i64 %i.ns, %i.lb
   %i.nu = sub nsw i64 %i.nt, %i.ld
   %i.nv = shl nsw i64 %i.nu, 2

@@ -203,13 +203,12 @@ bb.e:                                             ; preds = %bb.c
 .preheader.us.preheader:                          ; preds = %.preheader.lr.ph
   %i.au = sext i32 %i.aq to i64                   ; 2 uses
   %smax = tail call i32 @llvm.smax.i32(i32 %i.aq, i32 1) ; 2 uses
-  %wide.trip.count = zext nneg i32 %smax to i64   ; 4 uses
-  %i.av = shl nuw nsw i64 %wide.trip.count, 3     ; 2 uses
+  %wide.trip.count = zext nneg i32 %smax to i64   ; 5 uses
+  %i.av = shl nuw nsw i64 %wide.trip.count, 3
   %i.aw = shl nsw i64 %i.at, 3
-  %i.ax = shl nsw i64 %i.au, 3                    ; 2 uses
+  %3 = add nsw i64 %i.au, %wide.trip.count
+  %i.ax = shl nsw i64 %3, 3
   %min.iters.check = icmp slt i32 %i.aq, 4
-  %3 = getelementptr i8, ptr %0, i64 %i.ax
-  %4 = getelementptr i8, ptr %3, i64 %i.av
   %i.ay = getelementptr i8, ptr %0, i64 %i.ax
   %i.az = getelementptr i8, ptr %0, i64 %i.av
   %n.vec = and i64 %wide.trip.count, 2147483644
@@ -223,19 +222,18 @@ bb.e:                                             ; preds = %bb.c
 .preheader.us:                                    ; preds = %.preheader.us.preheader, %._crit_edge.us
   %indvar = phi i64 [ 0, %.preheader.us.preheader ], [ %indvar.next, %._crit_edge.us ] ; 2 uses
   %.051.us = phi ptr [ %0, %.preheader.us.preheader ], [ %i.bq, %._crit_edge.us ] ; 7 uses
-  %invariant.gep = getelementptr [8 x i8], ptr %.051.us, i64 %i.au ; 4 uses
+  %invariant.gep = getelementptr [8 x i8], ptr %.051.us, i64 %i.au ; 5 uses
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %.preheader.us
   br i1 %i.ba, label %scalar.ph.epil.preheader, label %scalar.ph
 
 vector.memcheck:                                  ; preds = %.preheader.us
-  %i.bb = mul i64 %i.aw, %indvar                  ; 3 uses
-  %scevgep66 = getelementptr i8, ptr %4, i64 %i.bb
+  %i.bb = mul i64 %i.aw, %indvar                  ; 2 uses
   %scevgep65 = getelementptr i8, ptr %i.ay, i64 %i.bb
   %scevgep = getelementptr i8, ptr %i.az, i64 %i.bb
-  %bound0 = icmp ult ptr %.051.us, %scevgep66
-  %bound1 = icmp ult ptr %scevgep65, %scevgep
+  %bound0 = icmp ult ptr %.051.us, %scevgep65
+  %bound1 = icmp ult ptr %invariant.gep, %scevgep
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.body
 

@@ -204,12 +204,7 @@ _ZN5o3dgc19ComputeVectorMinMaxEPKfmmmPfS2_NS_27O3DGCSC3DMCQuantizationModeE.exit
   ret void
 
 bb.x:                                             ; preds = %.lr.ph, %_ZN5o3dgc19ComputeVectorMinMaxEPKfmmmPfS2_NS_27O3DGCSC3DMCQuantizationModeE.exit73
-  %.080 = phi i64 [ 0, %.lr.ph ], [ %i.ke, %_ZN5o3dgc19ComputeVectorMinMaxEPKfmmmPfS2_NS_27O3DGCSC3DMCQuantizationModeE.exit73 ] ; 6 uses
-  %2 = shl i64 %.080, 7                           ; 2 uses
-  %3 = getelementptr i8, ptr %0, i64 %2
-  %scevgep = getelementptr i8, ptr %3, i64 10360
-  %4 = getelementptr i8, ptr %0, i64 %2
-  %scevgep168 = getelementptr i8, ptr %4, i64 43128
+  %.080 = phi i64 [ 0, %.lr.ph ], [ %i.ke, %_ZN5o3dgc19ComputeVectorMinMaxEPKfmmmPfS2_NS_27O3DGCSC3DMCQuantizationModeE.exit73 ] ; 5 uses
   %i.ev = getelementptr inbounds nuw [8 x i8], ptr %i.eq, i64 %.080
   %i.ew = load ptr, ptr %i.ev, align 8            ; 9 uses
   %i.ex = getelementptr inbounds nuw [8 x i8], ptr %i.er, i64 %.080
@@ -217,8 +212,8 @@ bb.x:                                             ; preds = %.lr.ph, %_ZN5o3dgc1
   %i.ez = getelementptr inbounds nuw [8 x i8], ptr %i.es, i64 %.080
   %i.fa = load i64, ptr %i.ez, align 8            ; 25 uses
   %i.fb = shl i64 %.080, 5                        ; 2 uses
-  %i.fc = getelementptr inbounds nuw [4 x i8], ptr %i.et, i64 %i.fb ; 20 uses
-  %i.fd = getelementptr inbounds nuw [4 x i8], ptr %i.eu, i64 %i.fb ; 20 uses
+  %i.fc = getelementptr [4 x i8], ptr %i.et, i64 %i.fb ; 21 uses
+  %i.fd = getelementptr [4 x i8], ptr %i.eu, i64 %i.fb ; 21 uses
   %i.fe = icmp eq i64 %i.ey, 0
   %i.ff = icmp eq i64 %i.fa, 0
   %or.cond.i = or i1 %i.fe, %i.ff
@@ -230,9 +225,9 @@ bb.x:                                             ; preds = %.lr.ph, %_ZN5o3dgc1
 
 vector.memcheck:                                  ; preds = %.preheader101.i43.preheader
   %i.fg = shl i64 %i.fa, 2                        ; 2 uses
-  %scevgep169 = getelementptr i8, ptr %scevgep168, i64 %i.fg
+  %scevgep169 = getelementptr i8, ptr %i.fd, i64 %i.fg
   %scevgep170 = getelementptr i8, ptr %i.ew, i64 %i.fg
-  %bound0 = icmp ult ptr %scevgep, %scevgep170
+  %bound0 = icmp ult ptr %i.fc, %scevgep170
   %bound1 = icmp ult ptr %i.ew, %scevgep169
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %.preheader101.i43.preheader183, label %vector.ph173

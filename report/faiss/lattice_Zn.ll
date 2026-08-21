@@ -203,13 +203,14 @@ _ZNSt6vectorImSaImEE6resizeEmRKm.exit.i.i:        ; preds = %bb.a
   %i.b = load ptr, ptr @_ZN5faiss12_GLOBAL__N_14combE, align 8, !tbaa !63 ; 8 uses
   %i.c = ptrtoaddr ptr %i.b to i64                ; 2 uses
   store i64 1, ptr %i.b, align 8, !tbaa !47
-  %i.d = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN5faiss12_GLOBAL__N_14combE, i64 24), align 8, !tbaa !194 ; 3 uses
+  %i.d = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN5faiss12_GLOBAL__N_14combE, i64 24), align 8, !tbaa !194 ; 4 uses
   %i.e = icmp sgt i32 %i.d, 1
   br i1 %i.e, label %.lr.ph.preheader.i.i, label %__cxx_global_var_init.exit
 
 .lr.ph.preheader.i.i:                             ; preds = %_ZNSt6vectorImSaImEE6resizeEmRKm.exit.i.i
-  %i.f = zext nneg i32 %i.d to i64                ; 6 uses
-  %0 = shl nuw nsw i64 %i.f, 3
+  %i.f = zext nneg i32 %i.d to i64                ; 5 uses
+  %0 = zext nneg i32 %i.d to i35
+  %1 = shl nuw nsw i35 %0, 3
   %i.g = shl nuw nsw i64 %i.f, 3
   %i.h = add i64 %i.g, %i.c
   %i.i = add i64 %i.h, 8
@@ -237,7 +238,8 @@ _ZNSt6vectorImSaImEED2Ev.exit.i.i:                ; preds = %bb.c, %bb.b
   resume { ptr, i32 } %i.k
 
 .lr.ph.i.i:                                       ; preds = %.loopexit, %.lr.ph.preheader.i.i
-  %indvar.a = phi i64 [ %indvar.next.a, %.loopexit ], [ 0, %.lr.ph.preheader.i.i ] ; 5 uses
+  %indvar.a = phi i64 [ %indvar.next.a, %.loopexit ], [ 0, %.lr.ph.preheader.i.i ] ; 2 uses
+  %indvar = phi i35 [ %indvar.next, %.loopexit ], [ 0, %.lr.ph.preheader.i.i ] ; 2 uses
   %indvars.iv8.i.i = phi i64 [ %indvars.iv.next9.i.i, %.loopexit ], [ 1, %.lr.ph.preheader.i.i ] ; 7 uses
   %indvars.iv6.i.i = phi i64 [ %indvars.iv.next7.i.i, %.loopexit ], [ 2, %.lr.ph.preheader.i.i ] ; 3 uses
   %i.q = mul i64 %i.j, %indvar.a                  ; 2 uses
@@ -248,7 +250,7 @@ _ZNSt6vectorImSaImEED2Ev.exit.i.i:                ; preds = %bb.c, %bb.b
   %i.u = mul nuw nsw i64 %indvars.iv8.i.i, %i.f
   %i.v = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %i.u ; 5 uses
   store i64 1, ptr %i.v, align 8, !tbaa !47
-  %i.w = add nsw i64 %indvars.iv8.i.i, -1
+  %i.w = add nsw i64 %indvars.iv8.i.i, -1         ; 3 uses
   %i.x = mul nuw nsw i64 %i.w, %i.f               ; 2 uses
   %i.y = add nuw nsw i64 %i.x, 4294967295         ; 4 uses
   %invariant.gep.i.i = getelementptr [8 x i8], ptr %i.b, i64 %i.x ; 4 uses
@@ -256,13 +258,12 @@ _ZNSt6vectorImSaImEED2Ev.exit.i.i:                ; preds = %bb.c, %bb.b
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.lr.ph.i.i
-  %1 = mul i64 %0, %indvar.a
-  %2 = trunc i64 %1 to i35                        ; 2 uses
-  %i.z = trunc i64 %indvar.a to i35
+  %2 = mul i35 %1, %indvar                        ; 2 uses
+  %i.z = trunc i64 %i.w to i35
   %mul.result = shl i35 %i.z, 3
-  %i.aa = add i35 %mul.result, %2
+  %i.aa = add i35 %2, %mul.result
   %i.ab = icmp slt i35 %i.aa, %2
-  %i.ac = icmp ugt i64 %indvar.a, 4294967295
+  %i.ac = icmp ugt i64 %i.w, 4294967295
   %i.ad = or i1 %i.ab, %i.ac
   br i1 %i.ad, label %scalar.ph.preheader, label %vector.memcheck
 
@@ -273,7 +274,7 @@ vector.memcheck:                                  ; preds = %vector.scevcheck
   br i1 %conflict.rdx, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %indvars.iv8.i.i, 9223372036854775804 ; 3 uses
+  %n.vec = and i64 %indvars.iv8.i.i, 8589934588   ; 3 uses
   %i.af = or disjoint i64 %n.vec, 1
   br label %vector.body
 
@@ -334,6 +335,7 @@ scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %sc
   %indvars.iv.next9.i.i = add nuw nsw i64 %indvars.iv8.i.i, 1 ; 2 uses
   %indvars.iv.next7.i.i = add nuw nsw i64 %indvars.iv6.i.i, 1
   %exitcond14.not.i.i = icmp eq i64 %indvars.iv.next9.i.i, %i.f
+  %indvar.next = add i35 %indvar, 1
   %indvar.next.a = add i64 %indvar.a, 1
   br i1 %exitcond14.not.i.i, label %__cxx_global_var_init.exit, label %.lr.ph.i.i, !llvm.loop !197
 

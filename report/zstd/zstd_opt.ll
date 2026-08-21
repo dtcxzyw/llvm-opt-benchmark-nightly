@@ -204,7 +204,7 @@ ZSTD_litLengthPrice.exit17:                       ; preds = %bb.n, %bb.o
 
 .lr.ph210:                                        ; preds = %.lr.ph210.preheader, %.thread110
   %.2439.i208 = phi i32 [ %.15.i119, %.thread110 ], [ %i.hh, %.lr.ph210.preheader ] ; 6 uses
-  %.2446.i207 = phi i32 [ %.pre-phi273, %.thread110 ], [ 1, %.lr.ph210.preheader ] ; 12 uses
+  %.2446.i207 = phi i32 [ %.pre-phi273, %.thread110 ], [ 1, %.lr.ph210.preheader ] ; 10 uses
   %i.hi = zext i32 %.2446.i207 to i64             ; 2 uses
   %i.hj = getelementptr inbounds nuw i8, ptr %.0420.i225, i64 %i.hi ; 5 uses
   %i.hk = add i32 %.2446.i207, -1
@@ -551,7 +551,7 @@ bb.an:                                            ; preds = %.preheader, %._crit
   %i.np = getelementptr inbounds nuw [8 x i8], ptr %i.af, i64 %indvars.iv256 ; 2 uses
   %i.nq = load i32, ptr %i.np, align 4, !tbaa !47 ; 3 uses
   %i.nr = getelementptr inbounds nuw i8, ptr %i.np, i64 4
-  %i.ns = load i32, ptr %i.nr, align 4, !tbaa !45 ; 5 uses
+  %i.ns = load i32, ptr %i.nr, align 4, !tbaa !45 ; 3 uses
   %.not474.i = icmp eq i64 %indvars.iv256, 0
   br i1 %.not474.i, label %bb.ap, label %bb.ao
 
@@ -576,20 +576,18 @@ bb.ap:                                            ; preds = %bb.ao, %bb.an
 
 .lr.ph194.split.us:                               ; preds = %.lr.ph194
   %i.oc = shl nuw nsw i32 %i.nz, 8
-  %invariant.op202.reass = add i32 %i.oc, %invariant.op203
-  %i.od = add i32 %.2446.i207, %i.ns
+  %i.od = add i32 %i.oc, %invariant.op203
   br label %ZSTD_getMatchPrice.exit8.us
 
 ZSTD_getMatchPrice.exit8.us:                      ; preds = %._crit_edge188.us, %.lr.ph194.split.us
-  %indvar413 = phi i32 [ %indvar.next414, %._crit_edge188.us ], [ 0, %.lr.ph194.split.us ] ; 2 uses
-  %.0426.i192.us = phi i32 [ %i.pm, %._crit_edge188.us ], [ %i.ns, %.lr.ph194.split.us ] ; 4 uses
-  %.9.i191.us = phi i32 [ %.10.i.lcssa.us, %._crit_edge188.us ], [ %.8.i204, %.lr.ph194.split.us ] ; 4 uses
+  %.0426.i192.us = phi i32 [ %i.ns, %.lr.ph194.split.us ], [ %i.pm, %._crit_edge188.us ] ; 4 uses
+  %.9.i191.us = phi i32 [ %.8.i204, %.lr.ph194.split.us ], [ %.10.i.lcssa.us, %._crit_edge188.us ] ; 4 uses
   %i.oe = add i32 %.0426.i192.us, %.2446.i207     ; 4 uses
   %i.of = add i32 %.0426.i192.us, -2
   %i.og = call range(i32 0, 32) i32 @llvm.ctlz.i32(i32 %i.of, i1 true)
   %i.oh = shl nuw nsw i32 %i.og, 8
   %i.oi = xor i32 %i.oh, 7936
-  %.reass = add i32 %i.oi, %invariant.op202.reass ; 2 uses
+  %.reass = add i32 %i.oi, %i.od                  ; 2 uses
   %i.oj = icmp ugt i32 %i.oe, %.9.i191.us
   br i1 %i.oj, label %.lr.ph187.us.preheader, label %bb.aq
 
@@ -605,11 +603,9 @@ bb.aq:                                            ; preds = %ZSTD_getMatchPrice.
   br label %._crit_edge188.us
 
 .lr.ph187.us.preheader:                           ; preds = %ZSTD_getMatchPrice.exit8.us
-  %9 = sub i32 %i.od, %indvar413
-  %10 = zext i32 %9 to i64                        ; 2 uses
   %i.oo = zext i32 %.9.i191.us to i64             ; 4 uses
-  %i.op = zext i32 %i.oe to i64                   ; 2 uses
-  %i.oq = sub nsw i64 %10, %i.oo
+  %i.op = zext i32 %i.oe to i64                   ; 4 uses
+  %i.oq = sub nsw i64 %i.op, %i.oo
   %xtraiter415 = and i64 %i.oq, 3                 ; 2 uses
   %lcmp.mod416.not = icmp eq i64 %xtraiter415, 0
   br i1 %lcmp.mod416.not, label %.lr.ph187.us.prol.loopexit, label %.lr.ph187.us.prol
@@ -629,7 +625,7 @@ bb.aq:                                            ; preds = %ZSTD_getMatchPrice.
 .lr.ph187.us.prol.loopexit:                       ; preds = %.lr.ph187.us.prol, %.lr.ph187.us.preheader
   %indvars.iv253.unr = phi i64 [ %i.oo, %.lr.ph187.us.preheader ], [ %indvars.iv.next254.prol, %.lr.ph187.us.prol ]
   %indvars.iv.next254.lcssa.unr = phi i64 [ poison, %.lr.ph187.us.preheader ], [ %indvars.iv.next254.prol, %.lr.ph187.us.prol ]
-  %i.ot = sub nsw i64 %i.oo, %10
+  %i.ot = sub nsw i64 %i.oo, %i.op
   %i.ou = icmp ugt i64 %i.ot, -4
   br i1 %i.ou, label %._crit_edge188.us.loopexit, label %.lr.ph187.us
 
@@ -676,7 +672,6 @@ bb.aq:                                            ; preds = %ZSTD_getMatchPrice.
   store i32 %.reass, ptr %i.pi, align 4, !tbaa !44
   %i.pm = add i32 %.0426.i192.us, -1              ; 2 uses
   %.not475.i.us = icmp ult i32 %i.pm, %i.nx
-  %indvar.next414 = add i32 %indvar413, 1
   br i1 %.not475.i.us, label %._crit_edge195, label %ZSTD_getMatchPrice.exit8.us, !llvm.loop !64
 
 .lr.ph194.split:                                  ; preds = %.lr.ph194
@@ -690,18 +685,14 @@ bb.aq:                                            ; preds = %ZSTD_getMatchPrice.
   %i.pu = getelementptr inbounds nuw [4 x i8], ptr %i.pt, i64 %i.pr
   %i.pv = load i32, ptr %i.bb, align 8, !tbaa !53
   %i.pw = load ptr, ptr %i.bc, align 8, !tbaa !54
-  %11 = add i32 %i.pq, %i.ps
-  %invariant.op201.a = add i32 %11, %i.pv
-  %invariant.op363.a = add i32 %invariant.op201.a, -7936
-  %i.px = add i32 %.2446.i207, %i.ns
+  %invariant.op201.a = add i32 %i.pq, %i.ps
+  %invariant.op363.a = add i32 %invariant.op201.a, %i.pv
+  %i.px = add i32 %invariant.op363.a, -7936
   br label %bb.ar
 
 bb.ar:                                            ; preds = %.lr.ph194.split, %._crit_edge188
-  %indvar = phi i32 [ 0, %.lr.ph194.split ], [ %indvar.next, %._crit_edge188 ] ; 2 uses
   %.0426.i192 = phi i32 [ %i.ns, %.lr.ph194.split ], [ %i.sc, %._crit_edge188 ] ; 4 uses
   %.9.i191 = phi i32 [ %.8.i204, %.lr.ph194.split ], [ %.10.i.lcssa, %._crit_edge188 ] ; 4 uses
-  %12 = sub i32 %i.px, %indvar
-  %13 = zext i32 %12 to i64                       ; 2 uses
   %i.py = add i32 %.0426.i192, %.2446.i207        ; 4 uses
   %i.pz = add i32 %.0426.i192, -3                 ; 3 uses
   %i.qa = load i32, ptr %i.pu, align 4, !tbaa !25
@@ -737,7 +728,7 @@ ZSTD_MLcode.exit34:                               ; preds = %bb.as, %bb.at
   %reass.add165 = add nuw nsw i32 %i.nz, %i.qo
   %i.qu = add nuw nsw i32 %i.qc, %reass.add165
   %i.qv = shl nuw nsw i32 %i.qu, 8
-  %i.qw = add i32 %i.qv, %invariant.op363.a
+  %i.qw = add i32 %i.qv, %i.px
   %i.qx = add i32 %i.qw, %.neg
   %i.qy = add nsw i32 %i.mw, %i.qx                ; 2 uses
   %i.qz = icmp ugt i32 %i.py, %.9.i191
@@ -756,8 +747,8 @@ bb.au:                                            ; preds = %ZSTD_MLcode.exit34
 
 .lr.ph187.preheader:                              ; preds = %ZSTD_MLcode.exit34
   %i.re = zext i32 %.9.i191 to i64                ; 4 uses
-  %i.rf = zext i32 %i.py to i64                   ; 2 uses
-  %i.rg = sub nsw i64 %13, %i.re
+  %i.rf = zext i32 %i.py to i64                   ; 4 uses
+  %i.rg = sub nsw i64 %i.rf, %i.re
   %xtraiter411 = and i64 %i.rg, 3                 ; 2 uses
   %lcmp.mod412.not = icmp eq i64 %xtraiter411, 0
   br i1 %lcmp.mod412.not, label %.lr.ph187.prol.loopexit, label %.lr.ph187.prol
@@ -777,7 +768,7 @@ bb.au:                                            ; preds = %ZSTD_MLcode.exit34
 .lr.ph187.prol.loopexit:                          ; preds = %.lr.ph187.prol, %.lr.ph187.preheader
   %indvars.iv250.unr = phi i64 [ %i.re, %.lr.ph187.preheader ], [ %indvars.iv.next251.prol, %.lr.ph187.prol ]
   %indvars.iv.next251.lcssa.unr = phi i64 [ poison, %.lr.ph187.preheader ], [ %indvars.iv.next251.prol, %.lr.ph187.prol ]
-  %i.rj = sub nsw i64 %i.re, %13
+  %i.rj = sub nsw i64 %i.re, %i.rf
   %i.rk = icmp ugt i64 %i.rj, -4
   br i1 %i.rk, label %._crit_edge188.loopexit, label %.lr.ph187
 
@@ -824,7 +815,6 @@ bb.au:                                            ; preds = %ZSTD_MLcode.exit34
   store i32 %i.qy, ptr %i.ry, align 4, !tbaa !44
   %i.sc = add i32 %.0426.i192, -1                 ; 2 uses
   %.not475.i = icmp ult i32 %i.sc, %i.nx
-  %indvar.next = add i32 %indvar, 1
   br i1 %.not475.i, label %._crit_edge195, label %bb.ar, !llvm.loop !64
 
 ._crit_edge195:                                   ; preds = %._crit_edge188, %bb.au, %._crit_edge188.us, %bb.aq, %bb.ap
@@ -1227,7 +1217,7 @@ ZSTD_litLengthPrice.exit18:                       ; preds = %bb.n, %bb.o
 
 .lr.ph324:                                        ; preds = %.lr.ph324.preheader, %.thread183
   %.2439.i322 = phi i32 [ %.15.i192, %.thread183 ], [ %i.hy, %.lr.ph324.preheader ] ; 7 uses
-  %.2446.i321 = phi i32 [ %i.aae, %.thread183 ], [ 1, %.lr.ph324.preheader ] ; 14 uses
+  %.2446.i321 = phi i32 [ %i.aae, %.thread183 ], [ 1, %.lr.ph324.preheader ] ; 12 uses
   %i.hz = zext i32 %.2446.i321 to i64             ; 2 uses
   %i.ia = getelementptr inbounds nuw i8, ptr %.0420.i339, i64 %i.hz ; 8 uses
   %i.ib = add i32 %.2446.i321, -1
@@ -1630,7 +1620,7 @@ bb.bd:                                            ; preds = %ZSTD_litLengthPrice
   %i.vj = getelementptr inbounds nuw [8 x i8], ptr %i.af, i64 %indvars.iv371 ; 2 uses
   %i.vk = load i32, ptr %i.vj, align 4, !tbaa !47 ; 3 uses
   %i.vl = getelementptr inbounds nuw i8, ptr %i.vj, i64 4
-  %i.vm = load i32, ptr %i.vl, align 4, !tbaa !45 ; 5 uses
+  %i.vm = load i32, ptr %i.vl, align 4, !tbaa !45 ; 3 uses
   %.not474.i = icmp eq i64 %indvars.iv371, 0
   br i1 %.not474.i, label %bb.bf, label %bb.be
 
@@ -1651,16 +1641,11 @@ bb.bf:                                            ; preds = %bb.be, %.preheader
   %i.vt = xor i32 %i.vs, 31                       ; 3 uses
   %i.vu = load i32, ptr %i.av, align 8, !tbaa !40
   %i.vv = icmp eq i32 %i.vu, 1
-  br i1 %i.vv, label %ZSTD_getMatchPrice.exit8.us.preheader, label %.lr.ph312.split
+  br i1 %i.vv, label %ZSTD_getMatchPrice.exit8.us, label %.lr.ph312.split
 
-ZSTD_getMatchPrice.exit8.us.preheader:            ; preds = %.lr.ph312
-  %10 = add i32 %.2446.i321, %i.vm
-  br label %ZSTD_getMatchPrice.exit8.us
-
-ZSTD_getMatchPrice.exit8.us:                      ; preds = %ZSTD_getMatchPrice.exit8.us.preheader, %bb.bh
-  %indvar540 = phi i32 [ 0, %ZSTD_getMatchPrice.exit8.us.preheader ], [ %indvar.next541, %bb.bh ] ; 2 uses
-  %.0426.i310.us = phi i32 [ %i.vm, %ZSTD_getMatchPrice.exit8.us.preheader ], [ %i.xi, %bb.bh ] ; 4 uses
-  %.9.i309.us = phi i32 [ %.8.i318, %ZSTD_getMatchPrice.exit8.us.preheader ], [ %.12.i.us, %bb.bh ] ; 4 uses
+ZSTD_getMatchPrice.exit8.us:                      ; preds = %.lr.ph312, %bb.bh
+  %.0426.i310.us = phi i32 [ %i.xi, %bb.bh ], [ %i.vm, %.lr.ph312 ] ; 4 uses
+  %.9.i309.us = phi i32 [ %.12.i.us, %bb.bh ], [ %.8.i318, %.lr.ph312 ] ; 4 uses
   %i.vw = add i32 %.0426.i310.us, %.2446.i321     ; 4 uses
   %i.vx = add i32 %.0426.i310.us, -2              ; 2 uses
   %i.vy = call range(i32 0, 32) i32 @llvm.ctlz.i32(i32 %i.vx, i1 true)
@@ -1687,11 +1672,9 @@ bb.bg:                                            ; preds = %ZSTD_getMatchPrice.
   br label %._crit_edge306.us
 
 .lr.ph305.us.preheader:                           ; preds = %ZSTD_getMatchPrice.exit8.us
-  %11 = sub i32 %10, %indvar540
-  %12 = zext i32 %11 to i64                       ; 2 uses
   %i.wk = zext i32 %.9.i309.us to i64             ; 4 uses
-  %i.wl = zext i32 %i.vw to i64                   ; 2 uses
-  %i.wm = sub nsw i64 %12, %i.wk
+  %i.wl = zext i32 %i.vw to i64                   ; 4 uses
+  %i.wm = sub nsw i64 %i.wl, %i.wk
   %xtraiter542 = and i64 %i.wm, 3                 ; 2 uses
   %lcmp.mod543.not = icmp eq i64 %xtraiter542, 0
   br i1 %lcmp.mod543.not, label %.lr.ph305.us.prol.loopexit, label %.lr.ph305.us.prol
@@ -1711,7 +1694,7 @@ bb.bg:                                            ; preds = %ZSTD_getMatchPrice.
 .lr.ph305.us.prol.loopexit:                       ; preds = %.lr.ph305.us.prol, %.lr.ph305.us.preheader
   %indvars.iv368.unr = phi i64 [ %i.wk, %.lr.ph305.us.preheader ], [ %indvars.iv.next369.prol, %.lr.ph305.us.prol ]
   %indvars.iv.next369.lcssa.unr = phi i64 [ poison, %.lr.ph305.us.preheader ], [ %indvars.iv.next369.prol, %.lr.ph305.us.prol ]
-  %i.wp = sub nsw i64 %i.wk, %12
+  %i.wp = sub nsw i64 %i.wk, %i.wl
   %i.wq = icmp ugt i64 %i.wp, -4
   br i1 %i.wq, label %._crit_edge306.us.loopexit, label %.lr.ph305.us
 
@@ -1762,7 +1745,6 @@ bb.bh:                                            ; preds = %._crit_edge306.us, 
   %.12.i.us = phi i32 [ %.10.i.lcssa.us, %._crit_edge306.us ], [ %.9.i309.us, %bb.bg ] ; 2 uses
   %i.xi = add i32 %.0426.i310.us, -1              ; 2 uses
   %.not475.i.us = icmp ult i32 %i.xi, %i.vr
-  %indvar.next541 = add i32 %indvar540, 1
   br i1 %.not475.i.us, label %._crit_edge313, label %ZSTD_getMatchPrice.exit8.us, !llvm.loop !64
 
 .lr.ph312.split:                                  ; preds = %.lr.ph312
@@ -1772,17 +1754,13 @@ bb.bh:                                            ; preds = %._crit_edge306.us, 
   %i.xm = getelementptr inbounds nuw [4 x i8], ptr %i.xl, i64 %i.xj
   %i.xn = load i32, ptr %i.bb, align 8, !tbaa !53
   %i.xo = load ptr, ptr %i.bc, align 8, !tbaa !54
-  %.neg261 = add i32 %i.xk, 51
-  %invariant.op316.a = add i32 %.neg261, %i.xn
-  %i.xp = add i32 %.2446.i321, %i.vm
+  %invariant.op316.a = add i32 %i.xk, 51
+  %i.xp = add i32 %invariant.op316.a, %i.xn
   br label %bb.bi
 
 bb.bi:                                            ; preds = %.lr.ph312.split, %bb.bm
-  %indvar = phi i32 [ 0, %.lr.ph312.split ], [ %indvar.next, %bb.bm ] ; 2 uses
   %.0426.i310 = phi i32 [ %i.vm, %.lr.ph312.split ], [ %i.aaa, %bb.bm ] ; 4 uses
   %.9.i309 = phi i32 [ %.8.i318, %.lr.ph312.split ], [ %.12.i, %bb.bm ] ; 4 uses
-  %13 = sub i32 %i.xp, %indvar
-  %14 = zext i32 %13 to i64                       ; 2 uses
   %i.xq = add i32 %.0426.i310, %.2446.i321        ; 4 uses
   %i.xr = add i32 %.0426.i310, -3                 ; 3 uses
   %i.xs = load i32, ptr %i.xm, align 4, !tbaa !25
@@ -1824,7 +1802,7 @@ ZSTD_MLcode.exit98:                               ; preds = %bb.bj, %bb.bk
   %reass.add270 = sub nsw i32 %i.yr, %i.ys
   %reass.mul271 = shl nsw i32 %reass.add270, 8
   %i.yt = add i32 %i.xx, %i.yq
-  %i.yu = sub i32 %invariant.op316.a, %i.yt
+  %i.yu = sub i32 %i.xp, %i.yt
   %i.yv = add i32 %i.yu, %reass.mul271
   %i.yw = add nsw i32 %i.uq, %i.yv                ; 2 uses
   %i.yx = icmp ugt i32 %i.xq, %.9.i309
@@ -1843,8 +1821,8 @@ bb.bl:                                            ; preds = %ZSTD_MLcode.exit98
 
 .lr.ph305.preheader:                              ; preds = %ZSTD_MLcode.exit98
   %i.zc = zext i32 %.9.i309 to i64                ; 4 uses
-  %i.zd = zext i32 %i.xq to i64                   ; 2 uses
-  %i.ze = sub nsw i64 %14, %i.zc
+  %i.zd = zext i32 %i.xq to i64                   ; 4 uses
+  %i.ze = sub nsw i64 %i.zd, %i.zc
   %xtraiter538 = and i64 %i.ze, 3                 ; 2 uses
   %lcmp.mod539.not = icmp eq i64 %xtraiter538, 0
   br i1 %lcmp.mod539.not, label %.lr.ph305.prol.loopexit, label %.lr.ph305.prol
@@ -1864,7 +1842,7 @@ bb.bl:                                            ; preds = %ZSTD_MLcode.exit98
 .lr.ph305.prol.loopexit:                          ; preds = %.lr.ph305.prol, %.lr.ph305.preheader
   %indvars.iv365.unr = phi i64 [ %i.zc, %.lr.ph305.preheader ], [ %indvars.iv.next366.prol, %.lr.ph305.prol ]
   %indvars.iv.next366.lcssa.unr = phi i64 [ poison, %.lr.ph305.preheader ], [ %indvars.iv.next366.prol, %.lr.ph305.prol ]
-  %i.zh = sub nsw i64 %i.zc, %14
+  %i.zh = sub nsw i64 %i.zc, %i.zd
   %i.zi = icmp ugt i64 %i.zh, -4
   br i1 %i.zi, label %._crit_edge306.loopexit, label %.lr.ph305
 
@@ -1915,7 +1893,6 @@ bb.bm:                                            ; preds = %bb.bl, %._crit_edge
   %.12.i = phi i32 [ %.10.i.lcssa, %._crit_edge306 ], [ %.9.i309, %bb.bl ] ; 2 uses
   %i.aaa = add i32 %.0426.i310, -1                ; 2 uses
   %.not475.i = icmp ult i32 %i.aaa, %i.vr
-  %indvar.next = add i32 %indvar, 1
   br i1 %.not475.i, label %._crit_edge313, label %bb.bi, !llvm.loop !64
 
 ._crit_edge313:                                   ; preds = %bb.bm, %bb.bh, %bb.bf

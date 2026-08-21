@@ -203,14 +203,13 @@ bb.ab:                                            ; preds = %bb.n
 
 .preheader.i112.i:                                ; preds = %.loopexit, %.loopexit120.i
   %i.jg = phi i8 [ 0, %.loopexit120.i ], [ %spec.select150.i, %.loopexit ]
-  %.03342.i.i = phi i32 [ 0, %.loopexit120.i ], [ %i.kz, %.loopexit ] ; 4 uses
+  %.03342.i.i = phi i32 [ 0, %.loopexit120.i ], [ %i.kz, %.loopexit ] ; 3 uses
   %.03541.i.i = phi i32 [ 0, %.loopexit120.i ], [ %spec.select151.i, %.loopexit ] ; 2 uses
-  %i.jh = mul i32 %.03342.i.i, %3                 ; 6 uses
+  %i.jh = mul i32 %.03342.i.i, %3                 ; 7 uses
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.preheader.i112.i
-  %6 = mul i32 %3, %.03342.i.i
-  %i.ji = xor i32 %6, -1
+  %i.ji = xor i32 %i.jh, -1
   %i.jj = icmp ult i32 %i.ji, %i.je
   %i.jk = or i1 %i.jj, %i.jf
   br i1 %i.jk, label %scalar.ph.preheader, label %vector.body

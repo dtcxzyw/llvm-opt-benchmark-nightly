@@ -203,7 +203,7 @@ bb.a:
   store i32 %2, ptr %i.e, align 8, !tbaa !129
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !80   ; 2 uses
-  %i.h = load ptr, ptr %0, align 8, !tbaa !57     ; 18 uses
+  %i.h = load ptr, ptr %0, align 8, !tbaa !57     ; 16 uses
   %i.i = ptrtoint ptr %i.g to i64
   %i.j = ptrtoint ptr %i.h to i64
   %i.k = sub i64 %i.i, %i.j
@@ -606,14 +606,10 @@ _ZNSt6vectorIPKaSaIS1_EE6resizeEm.exit.split:     ; preds = %bb.ay, %_ZSt27__uni
 .preheader.lr.ph.us:                              ; preds = %.preheader.lr.ph.us.preheader, %._crit_edge191.split.us.loopexit
   %.1197.us = phi i64 [ %i.fe, %._crit_edge191.split.us.loopexit ], [ 0, %.preheader.lr.ph.us.preheader ] ; 4 uses
   %.057194.us = phi i32 [ %i.fd, %._crit_edge191.split.us.loopexit ], [ 0, %.preheader.lr.ph.us.preheader ] ; 3 uses
-  %i.er = mul i64 %.1197.us, 208                  ; 2 uses
-  %24 = getelementptr i8, ptr %i.h, i64 %i.er
-  %scevgep276 = getelementptr i8, ptr %24, i64 24
+  %i.er = mul i64 %.1197.us, 208
   %i.es = getelementptr i8, ptr %i.h, i64 %i.er
   %scevgep277 = getelementptr i8, ptr %i.es, i64 32
-  %i.et = mul i64 %.1197.us, 208                  ; 2 uses
-  %25 = getelementptr i8, ptr %i.h, i64 %i.et
-  %scevgep271 = getelementptr i8, ptr %25, i64 24
+  %i.et = mul i64 %.1197.us, 208
   %i.eu = getelementptr i8, ptr %i.h, i64 %i.et
   %scevgep272 = getelementptr i8, ptr %i.eu, i64 32
   %i.ev = getelementptr inbounds nuw [208 x i8], ptr %i.h, i64 %.1197.us ; 6 uses
@@ -621,7 +617,7 @@ _ZNSt6vectorIPKaSaIS1_EE6resizeEm.exit.split:     ; preds = %bb.ay, %_ZSt27__uni
   %i.ex = load i32, ptr %i.ew, align 4, !tbaa !81
   %i.ey = icmp sgt i32 %i.ex, 1
   %i.ez = getelementptr inbounds nuw i8, ptr %i.ev, i64 4
-  %i.fa = getelementptr inbounds nuw i8, ptr %i.ev, i64 24 ; 12 uses
+  %i.fa = getelementptr i8, ptr %i.ev, i64 24     ; 14 uses
   %i.fb = getelementptr inbounds nuw i8, ptr %i.ev, i64 128
   %i.fc = getelementptr inbounds nuw i8, ptr %i.ev, i64 136
   br i1 %i.ey, label %.preheader.lr.ph.split.us, label %.noexc.i
@@ -646,7 +642,7 @@ vector.memcheck274:                               ; preds = %.preheader.us200
   %i.fl = getelementptr i8, ptr %i.fg, i64 %i.hd
   %scevgep275 = getelementptr i8, ptr %i.fl, i64 %i.fk
   %bound0278 = icmp ult ptr %i.fj, %scevgep277
-  %bound1279 = icmp ult ptr %scevgep276, %scevgep275
+  %bound1279 = icmp ult ptr %i.fa, %scevgep275
   %found.conflict280 = and i1 %bound0278, %bound1279
   br i1 %found.conflict280, label %_ZN2cv3Mat3ptrIaEEPT_ii.exit.us.us.preheader, label %vector.ph283
 
@@ -791,7 +787,7 @@ vector.memcheck:                                  ; preds = %.preheader.us.us
   %i.hm = getelementptr i8, ptr %i.hi, i64 %i.hg
   %scevgep = getelementptr i8, ptr %i.hm, i64 %i.hl
   %bound0 = icmp ult ptr %i.hk, %scevgep272
-  %bound1 = icmp ult ptr %scevgep271, %scevgep
+  %bound1 = icmp ult ptr %i.fa, %scevgep
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %_ZN2cv3Mat3ptrIaEEPT_ii.exit.us.us.us.us.preheader, label %vector.ph
 

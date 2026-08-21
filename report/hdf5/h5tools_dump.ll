@@ -203,6 +203,7 @@ bb.bw:                                            ; preds = %bb.bu
   store i32 %i.mi, ptr %i.mj, align 8, !tbaa !110
   %i.mk = getelementptr inbounds nuw i8, ptr %10, i64 20 ; 3 uses
   store i32 %.fr262, ptr %i.mk, align 4, !tbaa !88
+  %factor.op.mul217.i = shl nuw nsw i64 %i.ar, 4
   %i.ml = getelementptr inbounds nuw i8, ptr %10, i64 16
   %i.mm = getelementptr inbounds nuw i8, ptr %10, i64 8 ; 7 uses
   %i.mn = getelementptr inbounds nuw i8, ptr %10, i64 576
@@ -217,7 +218,6 @@ bb.bw:                                            ; preds = %bb.bu
   %i.mw = getelementptr inbounds nuw i8, ptr %10, i64 560
   %.not227.i = icmp eq i64 %.0136.lcssa.i, 0
   %i.mx = getelementptr inbounds nuw i8, ptr %3, i64 280 ; 3 uses
-  %12 = shl nuw nsw i64 %i.ar, 4
   %i.my = icmp ne i64 %.0136.lcssa.i, 1
   %exitcond240.peel.not.i = icmp eq i64 %.0136.lcssa.i, 1
   br label %bb.bx
@@ -229,7 +229,7 @@ bb.bx:                                            ; preds = %bb.cr, %.lr.ph222.i
   br i1 %.not263, label %._crit_edge203.i, label %.lr.ph202.i
 
 .lr.ph202.i:                                      ; preds = %bb.bx
-  %i.mz = mul i64 %12, %.0140218.i
+  %i.mz = mul i64 %factor.op.mul217.i, %.0140218.i
   %scevgep.i = getelementptr i8, ptr %i.au, i64 %i.mz
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.lc, ptr align 8 %scevgep.i, i64 %i.he, i1 false), !tbaa !22
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.lq, ptr nonnull align 8 %i.hf, i64 %i.he, i1 false), !tbaa !22
