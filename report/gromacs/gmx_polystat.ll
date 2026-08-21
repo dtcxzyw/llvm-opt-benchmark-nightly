@@ -204,24 +204,25 @@ bb.cf:                                            ; preds = %.preheader647, %bb.
   br i1 %.not348, label %_ZL13calc_int_distPdPA3_fN3gmx8ArrayRefIKiEE.exit, label %bb.cg
 
 bb.cg:                                            ; preds = %.lr.ph696
-  %i.rw = sub nsw i32 %i.qu, %i.qs                ; 3 uses
+  %i.rw = sub nsw i32 %i.qu, %i.qs                ; 4 uses
   %i.rx = icmp sgt i32 %i.rw, 1
   br i1 %i.rx, label %.preheader.preheader.i, label %_ZL13calc_int_distPdPA3_fN3gmx8ArrayRefIKiEE.exit
 
 .preheader.preheader.i:                           ; preds = %bb.cg
   %i.ry = zext nneg i32 %i.rw to i64
-  %21 = xor i32 %i.qs, -1
-  %22 = add i32 %i.qu, %21
+  %21 = sub i32 %i.qs, %i.qu
   br label %.preheader.i
 
 .preheader.i:                                     ; preds = %._crit_edge.i.loopexit, %.preheader.preheader.i
   %indvar1172 = phi i32 [ %indvar.next1173, %._crit_edge.i.loopexit ], [ 0, %.preheader.preheader.i ] ; 2 uses
   %indvars.iv31.i = phi i64 [ %indvars.iv.next32.i, %._crit_edge.i.loopexit ], [ 1, %.preheader.preheader.i ] ; 4 uses
-  %23 = sub i32 %22, %indvar1172                  ; 3 uses
-  %i.rz = zext i32 %23 to i64                     ; 2 uses
+  %indvars.iv29.in.i = phi i32 [ %indvars.iv29.i, %._crit_edge.i.loopexit ], [ %i.rw, %.preheader.preheader.i ]
+  %indvars.iv29.i = add i32 %indvars.iv29.in.i, -1 ; 3 uses
+  %i.rz = zext i32 %indvars.iv29.i to i64         ; 2 uses
   %invariant.gep.i = getelementptr inbounds nuw [4 x i8], ptr %i.qy, i64 %indvars.iv31.i ; 3 uses
   %xtraiter = and i64 %i.rz, 1
-  %i.sa = icmp eq i32 %23, 1
+  %22 = add i32 %21, %indvar1172
+  %i.sa = icmp eq i32 %22, -2
   br i1 %i.sa, label %.lr.ph.i.epil.preheader, label %.preheader.i.new
 
 .preheader.i.new:                                 ; preds = %.preheader.i
@@ -293,7 +294,7 @@ bb.cg:                                            ; preds = %.lr.ph696
 .lr.ph.i.epil.preheader:                          ; preds = %._crit_edge.i.loopexit.unr-lcssa, %.preheader.i
   %indvars.iv.i.epil.init = phi i64 [ 0, %.preheader.i ], [ %indvars.iv.next.i.1, %._crit_edge.i.loopexit.unr-lcssa ] ; 2 uses
   %.024.i.epil.init = phi double [ 0.000000e+00, %.preheader.i ], [ %i.tq, %._crit_edge.i.loopexit.unr-lcssa ]
-  %lcmp.mod1175 = trunc i32 %23 to i1
+  %lcmp.mod1175 = trunc i32 %indvars.iv29.i to i1
   call void @llvm.assume(i1 %lcmp.mod1175)
   %i.tr = getelementptr inbounds nuw [4 x i8], ptr %i.qy, i64 %indvars.iv.i.epil.init
   %i.ts = load i32, ptr %i.tr, align 4, !tbaa !9

@@ -204,14 +204,13 @@ bb.a:
 
 .lr.ph39:                                         ; preds = %bb.a, %._crit_edge
   %indvars.iv47 = phi i64 [ %indvars.iv.next48, %._crit_edge ], [ 0, %bb.a ] ; 4 uses
-  %indvars.iv = phi i32 [ %5, %._crit_edge ], [ 0, %bb.a ] ; 3 uses
+  %indvars.iv = phi i32 [ %indvars.iv.next, %._crit_edge ], [ 0, %bb.a ] ; 3 uses
   %i.j = phi ptr [ %i.ao, %._crit_edge ], [ %i.c, %bb.a ]
-  %5 = add i32 %4, %indvars.iv                    ; 2 uses
   %i.k = add i32 %indvars.iv, 1
   %i.l = trunc nuw nsw i64 %indvars.iv47 to i32   ; 2 uses
   %i.m = mul i32 %4, %i.l
   %i.n = xor i32 %i.m, -1
-  %i.o = mul i32 %4, %i.l                         ; 2 uses
+  %i.o = mul i32 %4, %i.l                         ; 3 uses
   %i.p = getelementptr inbounds nuw [32 x i8], ptr %i.j, i64 %indvars.iv47
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 8
   %i.r = load i64, ptr %i.q, align 8, !tbaa !32
@@ -232,6 +231,7 @@ bb.a:
   br i1 %i.y, label %.lr.ph36.preheader, label %._crit_edge
 
 .lr.ph36.preheader:                               ; preds = %.preheader
+  %5 = add i32 %i.o, %4
   %i.z = sext i32 %i.t to i64
   %scevgep = getelementptr i8, ptr %1, i64 %i.z
   %i.aa = add i32 %spec.select, %i.k
@@ -267,6 +267,7 @@ bb.a:
   %sext = shl i64 %i.ar, 27
   %i.as = ashr i64 %sext, 32
   %i.at = icmp slt i64 %indvars.iv.next48, %i.as
+  %indvars.iv.next = add i32 %indvars.iv, %4
   br i1 %i.at, label %.lr.ph39, label %._crit_edge40, !llvm.loop !1582
 }
 
