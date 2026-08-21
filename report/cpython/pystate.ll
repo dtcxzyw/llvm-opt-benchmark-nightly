@@ -203,10 +203,10 @@ bb.b:                                             ; preds = %bb.a
   store i8 0, ptr %i.u, align 8, !tbaa !213
   %i.v = getelementptr i8, ptr %1, i64 223456
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %i.v, i8 0, i64 16, i1 false), !tbaa !213
-  %i.w = getelementptr i8, ptr %1, i64 224776
-  %scevgep9 = getelementptr i8, ptr %1, i64 223496
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1216) %scevgep9, i8 0, i64 1216, i1 false), !tbaa !214
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.w, i8 0, i64 64, i1 false), !tbaa !215
+  %i.w = getelementptr i8, ptr %1, i64 223496
+  %scevgep9 = getelementptr i8, ptr %1, i64 224776
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1216) %i.w, i8 0, i64 1216, i1 false), !tbaa !214
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %scevgep9, i8 0, i64 64, i1 false), !tbaa !215
   %i.x = getelementptr i8, ptr %1, i64 8040
   store i64 0, ptr %i.x, align 8, !tbaa !216
   %i.y = getelementptr i8, ptr %1, i64 223384
