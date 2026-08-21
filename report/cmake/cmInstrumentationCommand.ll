@@ -203,7 +203,7 @@ bb.a:
   %i.c = ptrtoint ptr %.val4 to i64
   %i.d = ptrtoint ptr %.val3 to i64
   %i.e = sub i64 %i.c, %i.d
-  %i.f = ashr exact i64 %i.e, 5                   ; 2 uses
+  %i.f = ashr exact i64 %i.e, 5                   ; 3 uses
   %.not.i.i.i = icmp eq ptr %.val4, %.val3
   br i1 %.not.i.i.i, label %_ZSt10__invoke_rIbRZN12_GLOBAL__N_110EnumParserIN22cmInstrumentationQuery6OptionEEESt8functionIFbRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERT_EESt6vectorISA_SaISA_EEEUlSC_RS3_E_JSC_SK_EENSt9enable_ifIX16is_invocable_r_vISD_T0_DpT1_EESD_E4typeEOSO_DpOSP_.exit, label %.lr.ph.i.i.i
 
@@ -218,9 +218,9 @@ bb.a:
   br i1 %i.j, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread.i.i.i, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread5.us.preheader.i.i.i
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread5.us.preheader.i.i.i: ; preds = %.lr.ph.split.us.i.i.i
-  %3 = add nsw i64 %i.f, -1                       ; 2 uses
-  %exitcond23.not.i.i.i19 = icmp eq i64 %3, 0
-  br i1 %exitcond23.not.i.i.i19, label %_ZSt10__invoke_rIbRZN12_GLOBAL__N_110EnumParserIN22cmInstrumentationQuery6OptionEEESt8functionIFbRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERT_EESt6vectorISA_SaISA_EEEUlSC_RS3_E_JSC_SK_EENSt9enable_ifIX16is_invocable_r_vISD_T0_DpT1_EESD_E4typeEOSO_DpOSP_.exit, label %.lr.ph, !llvm.loop !411
+  %3 = tail call i64 @llvm.usub.sat.i64(i64 %i.f, i64 1)
+  %exitcond22.not.i.i.i19 = icmp ult i64 %i.f, 2
+  br i1 %exitcond22.not.i.i.i19, label %_ZSt10__invoke_rIbRZN12_GLOBAL__N_110EnumParserIN22cmInstrumentationQuery6OptionEEESt8functionIFbRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERT_EESt6vectorISA_SaISA_EEEUlSC_RS3_E_JSC_SK_EENSt9enable_ifIX16is_invocable_r_vISD_T0_DpT1_EESD_E4typeEOSO_DpOSP_.exit, label %.lr.ph, !llvm.loop !411
 
 .lr.ph:                                           ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread5.us.preheader.i.i.i
   br label %bb.b, !llvm.loop !411
@@ -582,7 +582,7 @@ bb.a:
   %i.c = ptrtoint ptr %.val4 to i64
   %i.d = ptrtoint ptr %.val3 to i64
   %i.e = sub i64 %i.c, %i.d
-  %i.f = ashr exact i64 %i.e, 5                   ; 2 uses
+  %i.f = ashr exact i64 %i.e, 5                   ; 3 uses
   %.not.i.i.i = icmp eq ptr %.val4, %.val3
   br i1 %.not.i.i.i, label %_ZSt10__invoke_rIbRZN12_GLOBAL__N_110EnumParserIN22cmInstrumentationQuery4HookEEESt8functionIFbRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERT_EESt6vectorISA_SaISA_EEEUlSC_RS3_E_JSC_SK_EENSt9enable_ifIX16is_invocable_r_vISD_T0_DpT1_EESD_E4typeEOSO_DpOSP_.exit, label %.lr.ph.i.i.i
 
@@ -597,9 +597,9 @@ bb.a:
   br i1 %i.j, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread.i.i.i, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread5.us.preheader.i.i.i
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread5.us.preheader.i.i.i: ; preds = %.lr.ph.split.us.i.i.i
-  %3 = add nsw i64 %i.f, -1                       ; 2 uses
-  %exitcond23.not.i.i.i19 = icmp eq i64 %3, 0
-  br i1 %exitcond23.not.i.i.i19, label %_ZSt10__invoke_rIbRZN12_GLOBAL__N_110EnumParserIN22cmInstrumentationQuery4HookEEESt8functionIFbRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERT_EESt6vectorISA_SaISA_EEEUlSC_RS3_E_JSC_SK_EENSt9enable_ifIX16is_invocable_r_vISD_T0_DpT1_EESD_E4typeEOSO_DpOSP_.exit, label %.lr.ph, !llvm.loop !413
+  %3 = tail call i64 @llvm.usub.sat.i64(i64 %i.f, i64 1)
+  %exitcond22.not.i.i.i19 = icmp ult i64 %i.f, 2
+  br i1 %exitcond22.not.i.i.i19, label %_ZSt10__invoke_rIbRZN12_GLOBAL__N_110EnumParserIN22cmInstrumentationQuery4HookEEESt8functionIFbRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERT_EESt6vectorISA_SaISA_EEEUlSC_RS3_E_JSC_SK_EENSt9enable_ifIX16is_invocable_r_vISD_T0_DpT1_EESD_E4typeEOSO_DpOSP_.exit, label %.lr.ph, !llvm.loop !413
 
 .lr.ph:                                           ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread5.us.preheader.i.i.i
   br label %bb.b, !llvm.loop !413
@@ -818,6 +818,9 @@ declare i64 @llvm.umin.i64(i64, i64) #21
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #22
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.usub.sat.i64(i64, i64) #21
 
 attributes #0 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

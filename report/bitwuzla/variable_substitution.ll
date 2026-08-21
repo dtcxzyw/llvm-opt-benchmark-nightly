@@ -203,9 +203,9 @@ bb.cb:                                            ; preds = %bb.ca
   %i.ko = ptrtoint ptr %i.kg to i64
   %i.kp = ptrtoint ptr %i.kf to i64
   %i.kq = sub i64 %i.ko, %i.kp
-  %i.kr = sdiv exact i64 %i.kq, 40
-  %18 = add nsw i64 %i.kr, -1                     ; 2 uses
-  %exitcond342.not501 = icmp eq i64 %18, 0
+  %i.kr = sdiv exact i64 %i.kq, 40                ; 2 uses
+  %18 = call i64 @llvm.usub.sat.i64(i64 %i.kr, i64 1)
+  %exitcond342.not501 = icmp ult i64 %i.kr, 2
   br i1 %exitcond342.not501, label %.critedge, label %.lr.ph503
 
 bb.cc:                                            ; preds = %.lr.ph503
@@ -607,6 +607,9 @@ declare i64 @llvm.smax.i64(i64, i64) #22
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smin.i64(i64, i64) #22
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.usub.sat.i64(i64, i64) #22
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

@@ -204,10 +204,10 @@ bb.n:                                             ; preds = %.thread, %bb.k
 arch_test_bit.exit:                               ; preds = %bb.m, %bb.n
   %.0155180 = phi i16 [ %.0155, %bb.m ], [ %.0155178, %bb.n ]
   %i.ar = icmp eq i16 %6, 0
-  %spec.select = select i1 %i.ar, i16 %.0155180, i16 %6
+  %spec.select = select i1 %i.ar, i16 %.0155180, i16 %6 ; 2 uses
   %i.as = getelementptr i8, ptr %0, i64 2792
-  %i.at = load i16, ptr %i.as, align 8            ; 2 uses
-  %.1 = tail call i16 @llvm.umin.i16(i16 %spec.select, i16 %i.at) ; 10 uses
+  %i.at = load i16, ptr %i.as, align 8            ; 3 uses
+  %.1 = tail call i16 @llvm.umin.i16(i16 %spec.select, i16 %i.at) ; 9 uses
   store i16 %.1, ptr %i.j, align 4
   %i.au = zext nneg i16 %5 to i64                 ; 3 uses
   %i.av = getelementptr i8, ptr %0, i64 864
@@ -281,8 +281,9 @@ bb.t:                                             ; preds = %_kzalloc_noprof.exi
   %i.bv = getelementptr i8, ptr %i.br, i64 144    ; 5 uses
   %i.bw = tail call i16 @llvm.umax.i16(i16 %.1, i16 1)
   %wide.trip.count = zext nneg i16 %i.bw to i64   ; 2 uses
+  %12 = tail call i16 @llvm.umin.i16(i16 %spec.select, i16 %i.at)
   %xtraiter = and i64 %wide.trip.count, 3         ; 3 uses
-  %i.bx = icmp ult i16 %.1, 4
+  %i.bx = icmp ult i16 %12, 4
   br i1 %i.bx, label %.epil.preheader, label %.lr.ph.new
 
 .lr.ph.new:                                       ; preds = %.lr.ph

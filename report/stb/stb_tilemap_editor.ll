@@ -203,14 +203,14 @@ bb.g:                                             ; preds = %stbte__should_copy_
 
 .preheader85.preheader:                           ; preds = %.preheader85.lr.ph
   %i.ah = shl nuw i32 %i.af, 1
-  %i.ai = zext i32 %i.ah to i64                   ; 5 uses
+  %i.ai = zext i32 %i.ah to i64                   ; 9 uses
   %wide.trip.count = zext nneg i32 %i.ac to i64   ; 2 uses
-  %xtraiter = and i64 %wide.trip.count, 3         ; 3 uses
-  %i.aj = icmp ult i32 %i.ac, 4
+  %xtraiter = and i64 %wide.trip.count, 7         ; 3 uses
+  %i.aj = icmp ult i32 %i.ac, 8
   br i1 %i.aj, label %.preheader85.epil.preheader, label %.preheader85.preheader.new
 
 .preheader85.preheader.new:                       ; preds = %.preheader85.preheader
-  %unroll_iter = and i64 %wide.trip.count, 2147483644
+  %unroll_iter = and i64 %wide.trip.count, 2147483640
   br label %.preheader85
 
 bb.h:                                             ; preds = %bb.g
@@ -219,26 +219,33 @@ bb.h:                                             ; preds = %bb.g
   br label %bb.bh
 
 .preheader85:                                     ; preds = %.preheader85, %.preheader85.preheader.new
-  %indvar.a = phi i64 [ 0, %.preheader85.preheader.new ], [ %indvar.next.3, %.preheader85 ] ; 5 uses
+  %indvar.a = phi i64 [ 0, %.preheader85.preheader.new ], [ %indvar.next.3, %.preheader85 ] ; 9 uses
   %niter = phi i64 [ 0, %.preheader85.preheader.new ], [ %niter.next.3, %.preheader85 ]
-  %2 = shl nuw nsw i64 %indvar.a, 4
-  %3 = getelementptr nuw i8, ptr @stbte__ui, i64 %2
-  %scevgep = getelementptr nuw i8, ptr %3, i64 5588
+  %2 = getelementptr inbounds nuw [16 x i8], ptr getelementptr inbounds nuw (i8, ptr @stbte__ui, i64 5588), i64 %indvar.a
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %2, i8 -1, i64 %i.ai, i1 false), !tbaa !21
+  %3 = getelementptr inbounds nuw [16 x i8], ptr getelementptr inbounds nuw (i8, ptr @stbte__ui, i64 5588), i64 %indvar.a
+  %scevgep = getelementptr inbounds nuw i8, ptr %3, i64 16
   tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %scevgep, i8 -1, i64 %i.ai, i1 false), !tbaa !21
-  %indvar.next = shl i64 %indvar.a, 4
-  %i.ak = getelementptr nuw i8, ptr @stbte__ui, i64 %indvar.next
-  %scevgep.1 = getelementptr nuw i8, ptr %i.ak, i64 5604
+  %4 = getelementptr inbounds nuw [16 x i8], ptr getelementptr inbounds nuw (i8, ptr @stbte__ui, i64 5588), i64 %indvar.a
+  %i.ak = getelementptr inbounds nuw i8, ptr %4, i64 32
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ak, i8 -1, i64 %i.ai, i1 false), !tbaa !21
+  %5 = getelementptr inbounds nuw [16 x i8], ptr getelementptr inbounds nuw (i8, ptr @stbte__ui, i64 5588), i64 %indvar.a
+  %scevgep.1 = getelementptr inbounds nuw i8, ptr %5, i64 48
   tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %scevgep.1, i8 -1, i64 %i.ai, i1 false), !tbaa !21
-  %indvar.next.1 = shl i64 %indvar.a, 4
-  %i.al = getelementptr nuw i8, ptr @stbte__ui, i64 %indvar.next.1
-  %scevgep.2 = getelementptr nuw i8, ptr %i.al, i64 5620
+  %6 = getelementptr inbounds nuw [16 x i8], ptr getelementptr inbounds nuw (i8, ptr @stbte__ui, i64 5588), i64 %indvar.a
+  %i.al = getelementptr inbounds nuw i8, ptr %6, i64 64
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.al, i8 -1, i64 %i.ai, i1 false), !tbaa !21
+  %7 = getelementptr inbounds nuw [16 x i8], ptr getelementptr inbounds nuw (i8, ptr @stbte__ui, i64 5588), i64 %indvar.a
+  %scevgep.2 = getelementptr inbounds nuw i8, ptr %7, i64 80
   tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %scevgep.2, i8 -1, i64 %i.ai, i1 false), !tbaa !21
-  %indvar.next.2 = shl i64 %indvar.a, 4
-  %i.am = getelementptr nuw i8, ptr @stbte__ui, i64 %indvar.next.2
-  %scevgep.3 = getelementptr nuw i8, ptr %i.am, i64 5636
+  %8 = getelementptr inbounds nuw [16 x i8], ptr getelementptr inbounds nuw (i8, ptr @stbte__ui, i64 5588), i64 %indvar.a
+  %i.am = getelementptr inbounds nuw i8, ptr %8, i64 96
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.am, i8 -1, i64 %i.ai, i1 false), !tbaa !21
+  %9 = getelementptr inbounds nuw [16 x i8], ptr getelementptr inbounds nuw (i8, ptr @stbte__ui, i64 5588), i64 %indvar.a
+  %scevgep.3 = getelementptr inbounds nuw i8, ptr %9, i64 112
   tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %scevgep.3, i8 -1, i64 %i.ai, i1 false), !tbaa !21
-  %indvar.next.3 = add nuw nsw i64 %indvar.a, 4   ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %indvar.next.3 = add nuw nsw i64 %indvar.a, 8   ; 2 uses
+  %niter.next.3 = add i64 %niter, 8               ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %._crit_edge89.split.loopexit.unr-lcssa, label %.preheader85, !llvm.loop !155
 
@@ -255,10 +262,8 @@ bb.h:                                             ; preds = %bb.g
 .preheader85.epil:                                ; preds = %.preheader85.epil, %.preheader85.epil.preheader
   %indvar.epil = phi i64 [ %indvar.epil.init, %.preheader85.epil.preheader ], [ %indvar.next.epil, %.preheader85.epil ] ; 2 uses
   %epil.iter = phi i64 [ 0, %.preheader85.epil.preheader ], [ %epil.iter.next, %.preheader85.epil ]
-  %4 = shl nuw nsw i64 %indvar.epil, 4
-  %5 = getelementptr nuw i8, ptr @stbte__ui, i64 %4
-  %scevgep.epil = getelementptr nuw i8, ptr %5, i64 5588
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %scevgep.epil, i8 -1, i64 %i.ai, i1 false), !tbaa !21
+  %10 = getelementptr inbounds nuw [16 x i8], ptr getelementptr inbounds nuw (i8, ptr @stbte__ui, i64 5588), i64 %indvar.epil
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %10, i8 -1, i64 %i.ai, i1 false), !tbaa !21
   %indvar.next.epil = add nuw nsw i64 %indvar.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
@@ -661,9 +666,9 @@ bb.a:
   %i.b = load i32, ptr getelementptr inbounds nuw (i8, ptr @stbte__ui, i64 1316328), align 8, !tbaa !165 ; 3 uses
   %i.c = load i32, ptr getelementptr inbounds nuw (i8, ptr @stbte__ui, i64 1316332), align 4, !tbaa !166 ; 3 uses
   %i.d = ashr i32 %i.b, 1
-  %i.e = sub i32 %1, %i.d                         ; 2 uses
+  %i.e = sub nsw i32 %1, %i.d                     ; 3 uses
   %i.f = ashr i32 %i.c, 1
-  %i.g = sub i32 %2, %i.f                         ; 2 uses
+  %i.g = sub nsw i32 %2, %i.f
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 801036
   %i.i = load i32, ptr %i.h, align 4, !tbaa !148
   switch i32 %i.i, label %bb.c [
@@ -760,8 +765,7 @@ bb.g:                                             ; preds = %stbte__should_copy_
   br i1 %i.au, label %.preheader103.preheader, label %._crit_edge120.split
 
 .preheader103.preheader:                          ; preds = %.preheader103.lr.ph
-  %i.az = sext i32 %i.e to i64                    ; 2 uses
-  %3 = sext i32 %i.g to i64
+  %i.az = sext i32 %i.e to i64
   %wide.trip.count136 = zext nneg i32 %i.c to i64
   %wide.trip.count131 = zext nneg i32 %i.b to i64
   br label %.preheader103
@@ -769,18 +773,17 @@ bb.g:                                             ; preds = %stbte__should_copy_
 .preheader103:                                    ; preds = %.preheader103.preheader, %._crit_edge117
   %i.ba = phi i32 [ %i.ar, %.preheader103.preheader ], [ %i.ez, %._crit_edge117 ]
   %i.bb = phi i32 [ %i.am, %.preheader103.preheader ], [ %i.fa, %._crit_edge117 ]
-  %indvars.iv133 = phi i64 [ 0, %.preheader103.preheader ], [ %indvars.iv.next134, %._crit_edge117 ] ; 3 uses
+  %indvars.iv133 = phi i64 [ 0, %.preheader103.preheader ], [ %indvars.iv.next134, %._crit_edge117 ] ; 2 uses
   %.0119 = phi i64 [ 0, %.preheader103.preheader ], [ %indvars.iv.next125, %._crit_edge117 ]
   %i.bc = trunc nuw nsw i64 %indvars.iv133 to i32
-  %i.bd = add i32 %i.g, %i.bc
-  %4 = zext i32 %i.bd to i64
-  %5 = mul nuw nsw i64 %4, 3200
-  %6 = add nsw i64 %indvars.iv133, %3             ; 5 uses
-  %7 = icmp sgt i64 %6, -1
-  %8 = getelementptr inbounds nuw [3200 x i8], ptr %0, i64 %6
-  %9 = trunc i64 %6 to i16                        ; 2 uses
-  %i.be = getelementptr inbounds [800 x i8], ptr %i.ay, i64 %6
-  %scevgep = getelementptr i8, ptr %0, i64 %5
+  %i.bd = add nsw i32 %i.g, %i.bc                 ; 5 uses
+  %3 = icmp sgt i32 %i.bd, -1
+  %4 = zext nneg i32 %i.bd to i64
+  %5 = getelementptr inbounds nuw [3200 x i8], ptr %0, i64 %4 ; 2 uses
+  %6 = trunc i32 %i.bd to i16                     ; 2 uses
+  %7 = sext i32 %i.bd to i64
+  %i.be = getelementptr inbounds [800 x i8], ptr %i.ay, i64 %7 ; 2 uses
+  %invariant.gep = getelementptr [4 x i8], ptr %i.be, i64 %i.az
   br label %bb.h
 
 bb.h:                                             ; preds = %.preheader103, %bb.p
@@ -788,28 +791,22 @@ bb.h:                                             ; preds = %.preheader103, %bb.
   %i.bg = phi i32 [ %i.bb, %.preheader103 ], [ %i.fa, %bb.p ] ; 6 uses
   %indvars.iv126 = phi i64 [ 0, %.preheader103 ], [ %indvars.iv.next127, %bb.p ] ; 4 uses
   %indvars.iv124 = phi i64 [ %.0119, %.preheader103 ], [ %indvars.iv.next125, %bb.p ] ; 4 uses
-  %10 = trunc nuw nsw i64 %indvars.iv126 to i32
-  %11 = add i32 %i.e, %10
-  %12 = zext i32 %11 to i64
-  %13 = shl nuw nsw i64 %12, 4
-  %scevgep121 = getelementptr i8, ptr %scevgep, i64 %13
-  br i1 %7, label %bb.i, label %bb.o
+  br i1 %3, label %bb.i, label %bb.o
 
 bb.i:                                             ; preds = %bb.h
   %i.bh = load i32, ptr %i.av, align 4, !tbaa !31
-  %14 = sext i32 %i.bh to i64
-  %i.bi = icmp slt i64 %6, %14
+  %i.bi = icmp slt i32 %i.bd, %i.bh
   br i1 %i.bi, label %bb.j, label %bb.o
 
 bb.j:                                             ; preds = %bb.i
-  %15 = add nsw i64 %indvars.iv126, %i.az         ; 4 uses
-  %i.bj = icmp sgt i64 %15, -1
+  %8 = trunc nuw nsw i64 %indvars.iv126 to i32
+  %9 = add nsw i32 %i.e, %8                       ; 5 uses
+  %i.bj = icmp sgt i32 %9, -1
   br i1 %i.bj, label %bb.k, label %bb.o
 
 bb.k:                                             ; preds = %bb.j
   %i.bk = load i32, ptr %i.aw, align 8, !tbaa !30
-  %16 = sext i32 %i.bk to i64
-  %i.bl = icmp slt i64 %15, %16
+  %i.bl = icmp slt i32 %9, %i.bk
   br i1 %i.bl, label %bb.l, label %bb.o
 
 bb.l:                                             ; preds = %bb.k
@@ -824,13 +821,16 @@ bb.l:                                             ; preds = %bb.k
   br label %._crit_edge108
 
 .lr.ph107:                                        ; preds = %bb.l
+  %10 = zext nneg i32 %9 to i64
+  %11 = getelementptr inbounds nuw [16 x i8], ptr %5, i64 %10
   %i.bp = shl nuw i32 %i.bm, 1
   %i.bq = zext i32 %i.bp to i64
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %i.a, ptr align 2 %scevgep121, i64 %i.bq, i1 false), !tbaa !21
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %i.a, ptr align 2 %11, i64 %i.bq, i1 false), !tbaa !21
   %i.br = getelementptr inbounds [16 x i8], ptr getelementptr inbounds nuw (i8, ptr @stbte__ui, i64 5588), i64 %indvars.iv124
   call void @stbte__paste_stack(ptr noundef nonnull %0, ptr noundef nonnull %i.a, ptr noundef nonnull %i.a, ptr noundef nonnull %i.br, i32 noundef 0)
-  %i.bs = getelementptr inbounds nuw [16 x i8], ptr %8, i64 %15
-  %i.bt = trunc i64 %15 to i16
+  %12 = zext nneg i32 %9 to i64
+  %i.bs = getelementptr inbounds nuw [16 x i8], ptr %5, i64 %12
+  %i.bt = trunc i32 %9 to i16
   %wide.trip.count = zext nneg i32 %i.bm to i64
   br label %bb.m
 
@@ -864,7 +864,7 @@ stbte__undo_record.exit:                          ; preds = %bb.m
   %i.cn = add nsw i32 %i.cg, %i.cm                ; 2 uses
   %i.co = zext nneg i32 %i.ck to i64
   %i.cp = getelementptr inbounds nuw [2 x i8], ptr %i.ai, i64 %i.co
-  store i16 %9, ptr %i.cp, align 2, !tbaa !21
+  store i16 %6, ptr %i.cp, align 2, !tbaa !21
   %i.cq = add nuw nsw i32 %i.bv, 3
   %i.cr = and i32 %i.cq, 8388607
   %i.cs = icmp slt i32 %i.cn, 8388606
@@ -905,8 +905,10 @@ bb.o:                                             ; preds = %._crit_edge108, %bb
   br i1 %i.ab, label %.preheader, label %bb.p
 
 .preheader:                                       ; preds = %bb.o
-  %17 = add nsw i64 %indvars.iv126, %i.az         ; 2 uses
-  %i.dh = getelementptr inbounds [4 x i8], ptr %i.be, i64 %17 ; 2 uses
+  %13 = trunc nuw nsw i64 %indvars.iv126 to i32
+  %14 = add nsw i32 %i.e, %13                     ; 2 uses
+  %15 = sext i32 %14 to i64
+  %i.dh = getelementptr inbounds [4 x i8], ptr %i.be, i64 %15
   %i.di = load float, ptr %i.dh, align 4, !tbaa !42 ; 2 uses
   %i.dj = getelementptr inbounds [4 x i8], ptr getelementptr inbounds nuw (i8, ptr @stbte__ui, i64 1054164), i64 %indvars.iv124
   %i.dk = load float, ptr %i.dj, align 4, !tbaa !42 ; 2 uses
@@ -914,7 +916,7 @@ bb.o:                                             ; preds = %._crit_edge108, %bb
   br i1 %i.dl, label %.preheader.split, label %.split
 
 .preheader.split:                                 ; preds = %.preheader
-  %i.dm = trunc i64 %17 to i16
+  %i.dm = trunc i32 %14 to i16
   %i.dn = bitcast float %i.di to i32              ; 2 uses
   %.sroa.0.0.extract.trunc.i = trunc i32 %i.dn to i16
   %.sroa.05.2.extract.shift.i = lshr i32 %i.dn, 16
@@ -946,7 +948,7 @@ bb.o:                                             ; preds = %._crit_edge108, %bb
   %i.ei = add nsw i32 %i.eb, %i.eh                ; 2 uses
   %i.ej = zext nneg i32 %i.ef to i64
   %i.ek = getelementptr inbounds nuw [2 x i8], ptr %i.ai, i64 %i.ej
-  store i16 %9, ptr %i.ek, align 2, !tbaa !21
+  store i16 %6, ptr %i.ek, align 2, !tbaa !21
   %i.el = add nuw nsw i32 %.promoted, 4
   %i.em = and i32 %i.el, 8388607
   %i.en = icmp slt i32 %i.ei, 8388606
@@ -968,7 +970,8 @@ bb.o:                                             ; preds = %._crit_edge108, %bb
 .split:                                           ; preds = %.preheader, %.preheader.split
   %i.ex = phi i32 [ %.promoted110, %.preheader ], [ %i.ew, %.preheader.split ]
   %i.ey = phi i32 [ %.promoted, %.preheader ], [ %i.et, %.preheader.split ]
-  store float %i.dk, ptr %i.dh, align 4, !tbaa !42
+  %gep = getelementptr [4 x i8], ptr %invariant.gep, i64 %indvars.iv126
+  store float %i.dk, ptr %gep, align 4, !tbaa !42
   br label %bb.p
 
 bb.p:                                             ; preds = %.split, %bb.o

@@ -169,7 +169,7 @@ select.unfold._crit_edge.i.loopexit:              ; preds = %select.unfold.i
 
 select.unfold._crit_edge.i:                       ; preds = %select.unfold._crit_edge.i.loopexit, %bb.c
   %i.ar = phi i64 [ undef, %bb.c ], [ %i.aq, %select.unfold._crit_edge.i.loopexit ]
-  %.1.lcssa.i = phi i64 [ %spec.select.i, %bb.c ], [ %i.ad, %select.unfold._crit_edge.i.loopexit ] ; 15 uses
+  %.1.lcssa.i = phi i64 [ %spec.select.i, %bb.c ], [ %i.ad, %select.unfold._crit_edge.i.loopexit ] ; 14 uses
   %.053.lcssa.i = phi ptr [ %1, %bb.c ], [ %i.af, %select.unfold._crit_edge.i.loopexit ] ; 11 uses
   %.052.lcssa.i = phi ptr [ %2, %bb.c ], [ %i.ag, %select.unfold._crit_edge.i.loopexit ] ; 10 uses
   br i1 %.not.i, label %.preheader.i, label %bb.e
@@ -299,19 +299,19 @@ bb.e:                                             ; preds = %select.unfold._crit
   br i1 %.not76.i, label %._crit_edge.i, label %iter.check
 
 iter.check:                                       ; preds = %bb.e
-  %i.cq = trunc nuw nsw i64 %.1.lcssa.i to i32
+  %i.cq = trunc nuw nsw i64 %.1.lcssa.i to i32    ; 2 uses
   %min.iters.check = icmp samesign ult i64 %.1.lcssa.i, 4
   br i1 %min.iters.check, label %.lr.ph72.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
   %scevgep = getelementptr i8, ptr %5, i64 %.1.lcssa.i ; 2 uses
   %scevgep49.a = getelementptr i8, ptr %.053.lcssa.i, i64 16 ; 2 uses
-  %6 = add nuw nsw i64 %.1.lcssa.i, 4294967295
-  %7 = and i64 %6, 4294967295
-  %8 = add nuw nsw i64 %7, 17                     ; 2 uses
-  %scevgep51.a = getelementptr i8, ptr %.053.lcssa.i, i64 %8 ; 2 uses
+  %6 = call i32 @llvm.usub.sat.i32(i32 %i.cq, i32 1)
+  %narrow = add nuw nsw i32 %6, 17
+  %7 = zext nneg i32 %narrow to i64               ; 2 uses
+  %scevgep51.a = getelementptr i8, ptr %.053.lcssa.i, i64 %7 ; 2 uses
   %scevgep52 = getelementptr i8, ptr %.052.lcssa.i, i64 16 ; 2 uses
-  %scevgep53 = getelementptr i8, ptr %.052.lcssa.i, i64 %8 ; 2 uses
+  %scevgep53 = getelementptr i8, ptr %.052.lcssa.i, i64 %7 ; 2 uses
   %bound0 = icmp ult ptr %5, %scevgep51.a
   %bound1 = icmp ult ptr %scevgep49.a, %scevgep
   %found.conflict = and i1 %bound0, %bound1
@@ -483,6 +483,9 @@ declare i64 @llvm.fshl.i64(i64, i64, i64) #5
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #6
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.usub.sat.i32(i32, i32) #5
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "warn-stack-size"="25344" }
 attributes #1 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "warn-stack-size"="25344" }
