@@ -203,11 +203,11 @@ _ZN2cvL19initLUTforLABLUVs16ERKNS_9softfloatES2_.exit: ; preds = %.preheader3, %
   %i.tt = getelementptr inbounds nuw i8, ptr %gep9, i64 6
   %i.tu = trunc i64 %i.ts to i16
   store i16 %i.tu, ptr %i.tt, align 2, !tbaa !291
-  %i.tv = mul i64 %i.te, %i.th
+  %i.tv = mul nuw nsw i64 %i.te, %i.th
   %i.tw = getelementptr inbounds nuw i8, ptr %gep9, i64 8
   %i.tx = trunc i64 %i.tv to i16
   store i16 %i.tx, ptr %i.tw, align 8, !tbaa !291
-  %i.ty = mul i64 %indvars.iv167, %i.th
+  %i.ty = mul nuw nsw i64 %indvars.iv167, %i.th
   %i.tz = getelementptr inbounds nuw i8, ptr %gep9, i64 10
   %i.ua = trunc i64 %i.ty to i16
   store i16 %i.ua, ptr %i.tz, align 2, !tbaa !291
