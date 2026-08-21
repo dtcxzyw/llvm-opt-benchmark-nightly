@@ -173,7 +173,7 @@ bb.b:                                             ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %4, i64 16
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %4, i8 0, i64 16, i1 false)
   store double +qnan, ptr %i.j, align 16, !tbaa !24
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #5
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store ptr %3, ptr %i.a, align 16, !tbaa !26
   %i.k = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr %i.h, ptr %i.k, align 8, !tbaa !26
@@ -192,7 +192,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 ._crit_edge:                                      ; preds = %_ZN4geos9algorithm8distance17PointPairDistance10setMinimumERKNS_4geom10CoordinateES6_.exit, %bb.b
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #5
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #5
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #5
   br label %bb.g
@@ -203,9 +203,10 @@ bb.c:                                             ; preds = %.lr.ph, %_ZN4geos9a
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 24
   %i.u = load ptr, ptr %i.t, align 8
   %i.v = call noundef nonnull align 8 dereferenceable(24) ptr %i.u(ptr noundef nonnull align 8 dereferenceable(8) %i.b, i64 noundef %.014)
-  %i.w = and i64 %.014, 1
-  %5 = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %i.w
-  %i.x = load ptr, ptr %5, align 8, !tbaa !26
+  %5 = shl i64 %.014, 3
+  %i.w = and i64 %5, 8
+  %.0..0..0..0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.w
+  %i.x = load ptr, ptr %.0..0..0..0..sroa_idx, align 8, !tbaa !26
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.x, ptr noundef nonnull align 8 dereferenceable(24) %i.v, i64 24, i1 false), !tbaa.struct !20
   call void @_ZNK4geos4geom11LineSegment12closestPointERKNS0_10CoordinateERS2_(ptr noundef nonnull align 8 dereferenceable(48) %3, ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef nonnull align 8 dereferenceable(24) %4)
   %i.y = load i8, ptr %i.p, align 8, !tbaa !10, !range !18, !noundef !19

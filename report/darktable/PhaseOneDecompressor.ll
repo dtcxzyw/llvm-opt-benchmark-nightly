@@ -14,7 +14,6 @@ target triple = "x86_64-pc-linux-gnu"
 %"class.rawspeed::DataBuffer.base" = type { %"class.rawspeed::Buffer.base", i16 }
 %"class.rawspeed::Buffer.base" = type <{ ptr, i32 }>
 %"struct.rawspeed::PhaseOneStrip" = type { i32, [4 x i8], %"class.rawspeed::ByteStream" }
-%"struct.std::array.62" = type { [2 x i32] }
 %"class.std::__cxx11::basic_string" = type { %"struct.std::__cxx11::basic_string<char>::_Alloc_hider", i64, %union.anon }
 %"struct.std::__cxx11::basic_string<char>::_Alloc_hider" = type { ptr }
 %union.anon = type { i64, [8 x i8] }
@@ -417,8 +416,8 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #3
 define hidden void @_ZNK8rawspeed20PhaseOneDecompressor15decompressStripERKNS_13PhaseOneStripE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(40) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %1) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %.sroa.0.i.i = alloca i32, align 4              ; 7 uses
-  %2 = alloca %"struct.std::array.62", align 4    ; 9 uses
-  %3 = alloca %"struct.std::array.62", align 4    ; 9 uses
+  %.sroa.0231 = alloca i64, align 8               ; 10 uses
+  %.sroa.0 = alloca i64, align 8                  ; 12 uses
   %i.a = load ptr, ptr %0, align 8, !tbaa !18     ; 5 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 592
   %i.c = load i32, ptr %i.b, align 8, !tbaa !95, !noalias !129
@@ -462,15 +461,14 @@ _ZN8rawspeed16BitStreamerMSB32CI2NS_11BitStreamerIS0_NS_39BitStreamerForwardSequ
   %i.ab = load i32, ptr %i.aa, align 4, !tbaa !137, !noalias !129
   %i.ac = getelementptr inbounds nuw i8, ptr %i.a, i64 568
   %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !138, !noalias !129
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #26
-  store i32 0, ptr %2, align 4, !tbaa !127
-  %.06.i.i.i.i.ptr.1.i = getelementptr inbounds nuw i8, ptr %2, i64 4
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0231)
+  store i32 0, ptr %.sroa.0231, align 8, !tbaa !127
+  %.06.i.i.i.i.ptr.1.i = getelementptr inbounds nuw i8, ptr %.sroa.0231, i64 4
   store i32 0, ptr %.06.i.i.i.i.ptr.1.i, align 4, !tbaa !127
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #26
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
   %i.ae = load i32, ptr %1, align 8, !tbaa !100   ; 2 uses
   %i.af = add nuw nsw i32 %i.u, 8
   %i.ag = and i32 %i.f, 2147483640                ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %3, i64 4 ; 4 uses
   %i.ah = icmp samesign ult i32 %i.ae, %i.ab      ; 2 uses
   %i.ai = mul nuw nsw i32 %i.ae, %i.i
   %i.aj = zext nneg i32 %i.ai to i64
@@ -486,8 +484,9 @@ _ZN8rawspeed16BitStreamerMSB32CI2NS_11BitStreamerIS0_NS_39BitStreamerForwardSequ
   br i1 %.not.peel.not, label %bb.c, label %.preheader.us.preheader.peel
 
 bb.c:                                             ; preds = %_ZN8rawspeed16BitStreamerMSB32CI2NS_11BitStreamerIS0_NS_39BitStreamerForwardSequentialReplenisherIS0_EEEEENS_10Array1DRefIKSt4byteEE.exit
-  store i32 14, ptr %4, align 4, !tbaa !127
-  store i32 14, ptr %3, align 4, !tbaa !127
+  %.sroa.0.4..sroa_idx228 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 4
+  store i32 14, ptr %.sroa.0.4..sroa_idx228, align 4, !tbaa !127
+  store i32 14, ptr %.sroa.0, align 8, !tbaa !127
   br label %.loopexit.peel
 
 .preheader.us.preheader.peel:                     ; preds = %_ZN8rawspeed16BitStreamerMSB32CI2NS_11BitStreamerIS0_NS_39BitStreamerForwardSequentialReplenisherIS0_EEEEENS_10Array1DRefIKSt4byteEE.exit
@@ -499,7 +498,7 @@ bb.c:                                             ; preds = %_ZN8rawspeed16BitSt
   %i.ap = getelementptr inbounds nuw [4 x i8], ptr @_ZZNK8rawspeed20PhaseOneDecompressor15decompressStripERKNS_13PhaseOneStripEE6length, i64 %i.ao
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ap, i64 32
   %i.ar = load i32, ptr %i.aq, align 4, !tbaa !127
-  store i32 %i.ar, ptr %3, align 4, !tbaa !127
+  store i32 %i.ar, ptr %.sroa.0, align 8, !tbaa !127
   %i.as = and i64 %i.an, 270215977642229760
   %or.cond216.peel = icmp eq i64 %i.as, 0
   br i1 %or.cond216.peel, label %bb.d, label %.split.us
@@ -515,13 +514,14 @@ bb.d:                                             ; preds = %.thread.loopexit.us
   %i.aw = getelementptr inbounds nuw [4 x i8], ptr @_ZZNK8rawspeed20PhaseOneDecompressor15decompressStripERKNS_13PhaseOneStripEE6length, i64 %i.au
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 32
   %i.ay = load i32, ptr %i.ax, align 4, !tbaa !127
-  store i32 %i.ay, ptr %4, align 4, !tbaa !127
+  %.sroa.0.4..sroa_idx230 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 4
+  store i32 %i.ay, ptr %.sroa.0.4..sroa_idx230, align 4, !tbaa !127
   br label %.loopexit.peel
 
 .loopexit.peel:                                   ; preds = %.thread.loopexit.us.1.peel, %bb.c
   %.sroa.13.5.peel = phi i32 [ 32, %bb.c ], [ 20, %.thread.loopexit.us.1.peel ] ; 3 uses
   %.sroa.054.5.peel = phi i64 [ %i.an, %bb.c ], [ %i.av, %.thread.loopexit.us.1.peel ] ; 3 uses
-  %i.az = load i32, ptr %3, align 4, !tbaa !127   ; 8 uses
+  %i.az = load i32, ptr %.sroa.0, align 8, !tbaa !127 ; 8 uses
   %i.ba = icmp eq i32 %i.az, 14
   br i1 %i.ba, label %bb.f, label %bb.e
 
@@ -540,11 +540,11 @@ bb.e:                                             ; preds = %.loopexit.peel
   %i.bj = zext nneg i32 %i.az to i64
   %i.bk = add nsw i32 %i.az, -1
   %.neg.peel = shl nsw i32 -1, %i.bk
-  %i.bl = load i32, ptr %2, align 4, !tbaa !127
+  %i.bl = load i32, ptr %.sroa.0231, align 8, !tbaa !127
   %i.bm = add nsw i32 %.neg.peel, 1
   %i.bn = add i32 %i.bm, %i.bh
   %i.bo = add nsw i32 %i.bn, %i.bl                ; 2 uses
-  store i32 %i.bo, ptr %2, align 4, !tbaa !127
+  store i32 %i.bo, ptr %.sroa.0231, align 8, !tbaa !127
   %i.bp = trunc i32 %i.bo to i16
   br label %.peel.next
 
@@ -552,7 +552,7 @@ bb.f:                                             ; preds = %.loopexit.peel
   %i.bq = lshr i64 %.sroa.054.5.peel, 48          ; 2 uses
   %i.br = trunc nuw nsw i64 %i.bq to i32
   %i.bs = add nsw i32 %.sroa.13.5.peel, -16
-  store i32 %i.br, ptr %2, align 4, !tbaa !127
+  store i32 %i.br, ptr %.sroa.0231, align 8, !tbaa !127
   %i.bt = trunc nuw i64 %i.bq to i16
   br label %.peel.next
 
@@ -563,11 +563,13 @@ bb.f:                                             ; preds = %.loopexit.peel
   %.sroa.054.6.peel = shl i64 %.sroa.054.5.peel, %.pn.peel
   tail call void @llvm.assume(i1 %i.ah)
   store i16 %.sink.peel, ptr %i.ak, align 2, !tbaa !139
+  %.sroa.0.4..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 4
+  %.sroa.0.4..sroa_idx226 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 4
   br label %bb.g
 
 .loopexit221:                                     ; preds = %bb.x
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #26
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #26
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0231)
   ret void
 
 bb.g:                                             ; preds = %.peel.next, %bb.x
@@ -633,8 +635,8 @@ _ZN8rawspeed11BitStreamerINS_16BitStreamerMSB32ENS_39BitStreamerForwardSequentia
   br i1 %.not, label %bb.m, label %bb.l
 
 bb.l:                                             ; preds = %_ZN8rawspeed11BitStreamerINS_16BitStreamerMSB32ENS_39BitStreamerForwardSequentialReplenisherIS1_EEE4fillEi.exit
-  store i32 14, ptr %4, align 4, !tbaa !127
-  store i32 14, ptr %3, align 4, !tbaa !127
+  store i32 14, ptr %.sroa.0.4..sroa_idx, align 4, !tbaa !127
+  store i32 14, ptr %.sroa.0, align 8, !tbaa !127
   br label %.loopexit
 
 bb.m:                                             ; preds = %_ZN8rawspeed11BitStreamerINS_16BitStreamerMSB32ENS_39BitStreamerForwardSequentialReplenisherIS1_EEE4fillEi.exit
@@ -692,7 +694,7 @@ bb.q:                                             ; preds = %bb.p
   %i.de = getelementptr inbounds nuw [4 x i8], ptr @_ZZNK8rawspeed20PhaseOneDecompressor15decompressStripERKNS_13PhaseOneStripEE6length, i64 %i.db
   %i.df = getelementptr inbounds nuw [4 x i8], ptr %i.de, i64 %.0137
   %i.dg = load i32, ptr %i.df, align 4, !tbaa !127
-  store i32 %i.dg, ptr %3, align 4, !tbaa !127
+  store i32 %i.dg, ptr %.sroa.0, align 8, !tbaa !127
   br label %.preheader.1
 
 .preheader.1:                                     ; preds = %.preheader135, %.thread
@@ -738,15 +740,16 @@ bb.u:                                             ; preds = %bb.t
   %i.dv = getelementptr inbounds nuw [4 x i8], ptr @_ZZNK8rawspeed20PhaseOneDecompressor15decompressStripERKNS_13PhaseOneStripEE6length, i64 %i.ds
   %i.dw = getelementptr inbounds nuw [4 x i8], ptr %i.dv, i64 %.0137.1
   %i.dx = load i32, ptr %i.dw, align 4, !tbaa !127
-  store i32 %i.dx, ptr %4, align 4, !tbaa !127
+  store i32 %i.dx, ptr %.sroa.0.4..sroa_idx226, align 4, !tbaa !127
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.thread.1, %.preheader.1, %bb.m, %bb.l
   %.sroa.13.5 = phi i32 [ %.sroa.13.7, %bb.l ], [ %i.dh, %.preheader.1 ], [ %.sroa.13.7, %bb.m ], [ %i.dt, %.thread.1 ] ; 3 uses
   %.sroa.054.5 = phi i64 [ %.sroa.054.7, %bb.l ], [ %i.di, %.preheader.1 ], [ %.sroa.054.7, %bb.m ], [ %i.du, %.thread.1 ] ; 3 uses
-  %i.dy = and i64 %indvars.iv, 1                  ; 3 uses
-  %5 = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %i.dy
-  %i.dz = load i32, ptr %5, align 4, !tbaa !127   ; 8 uses
+  %i.dy = and i64 %indvars.iv, 1                  ; 4 uses
+  %.sroa.0.0..sroa_stride = shl nuw nsw i64 %i.dy, 2
+  %.sroa.0.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %.sroa.0.0..sroa_stride
+  %i.dz = load i32, ptr %.sroa.0.0..sroa_idx, align 4, !tbaa !127 ; 8 uses
   %i.ea = icmp eq i32 %i.dz, 14
   %i.eb = icmp sgt i32 %.sroa.3368.1, -1
   tail call void @llvm.assume(i1 %i.eb)
@@ -759,8 +762,9 @@ bb.v:                                             ; preds = %.loopexit
   %i.ee = lshr i64 %.sroa.054.5, 48               ; 2 uses
   %i.ef = trunc nuw nsw i64 %i.ee to i32
   %i.eg = add nsw i32 %.sroa.13.5, -16
-  %6 = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.dy
-  store i32 %i.ef, ptr %6, align 4, !tbaa !127
+  %.sroa.0231.0..sroa_stride = shl nuw nsw i64 %i.dy, 2
+  %.sroa.0231.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0231, i64 %.sroa.0231.0..sroa_stride
+  store i32 %i.ef, ptr %.sroa.0231.0..sroa_idx, align 4, !tbaa !127
   %i.eh = trunc nuw i64 %i.ee to i16
   br label %bb.x
 
@@ -779,12 +783,15 @@ bb.w:                                             ; preds = %.loopexit
   %i.eq = zext nneg i32 %i.dz to i64
   %i.er = add nsw i32 %i.dz, -1
   %.neg = shl nsw i32 -1, %i.er
-  %7 = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.dy ; 2 uses
-  %i.es = load i32, ptr %7, align 4, !tbaa !127
+  %.sroa.0231.0..sroa_stride235 = shl nuw nsw i64 %i.dy, 2
+  %.sroa.0231.0..sroa_idx237 = getelementptr inbounds nuw i8, ptr %.sroa.0231, i64 %.sroa.0231.0..sroa_stride235
+  %i.es = load i32, ptr %.sroa.0231.0..sroa_idx237, align 4, !tbaa !127
   %i.et = add nsw i32 %.neg, 1
   %i.eu = add i32 %i.et, %i.eo
   %i.ev = add nsw i32 %i.eu, %i.es                ; 2 uses
-  store i32 %i.ev, ptr %7, align 4, !tbaa !127
+  %.sroa.0231.0..sroa_stride232 = shl nuw nsw i64 %i.dy, 2
+  %.sroa.0231.0..sroa_idx234 = getelementptr inbounds nuw i8, ptr %.sroa.0231, i64 %.sroa.0231.0..sroa_stride232
+  store i32 %i.ev, ptr %.sroa.0231.0..sroa_idx234, align 4, !tbaa !127
   %i.ew = trunc i32 %i.ev to i16
   br label %bb.x
 

@@ -205,7 +205,7 @@ bb.p:                                             ; preds = %._crit_edge13.i, %.
   %.05417.i = phi i16 [ 3, %.lr.ph21.i ], [ %i.cb, %._crit_edge13.i ] ; 2 uses
   %.05716.i = phi i8 [ 0, %.lr.ph21.i ], [ %.158.i, %._crit_edge13.i ] ; 3 uses
   %.06315.i = phi ptr [ %i.an, %.lr.ph21.i ], [ %i.by, %._crit_edge13.i ] ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #21
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.av = load ptr, ptr %i.aq, align 8, !tbaa !499
   %i.aw = getelementptr inbounds nuw [4 x i8], ptr %i.av, i64 %indvars.iv33.i
   %i.ax = load i32, ptr %i.aw, align 4, !tbaa !3  ; 5 uses
@@ -295,7 +295,7 @@ bb.r:                                             ; preds = %bb.q
 ._crit_edge13.i:                                  ; preds = %.lr.ph12.i
   %i.ca = zext i8 %.050.lcssa.i to i16
   %i.cb = add i16 %.155.i, %i.ca                  ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #21
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %indvars.iv.next34.i = add nuw nsw i64 %indvars.iv33.i, 1 ; 2 uses
   %i.cc = load i32, ptr %i.ao, align 4, !tbaa !497
   %i.cd = zext i32 %i.cc to i64
@@ -308,7 +308,7 @@ bb.r:                                             ; preds = %bb.q
 
 bb.s:                                             ; preds = %bb.q
   %i.cg = tail call i32 (ptr, i32, ptr, ...) @opj_event_msg(ptr noundef %5, i32 noundef 1, ptr noundef nonnull @.str.306) #21 ; 0 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #21
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   tail call void @opj_tcd_marker_info_destroy(ptr noundef nonnull %.052) #21
   tail call void @opj_free(ptr noundef nonnull %i.aj) #21
   br label %bb.u

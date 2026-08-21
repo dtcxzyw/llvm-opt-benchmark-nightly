@@ -202,7 +202,7 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.ac
 
 bb.e:                                             ; preds = %bb.c
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #14
+  call void @llvm.lifetime.start.p0(ptr nonnull %4)
   %i.j = getelementptr i8, ptr %0, i64 16
   %.val = load ptr, ptr %i.j, align 8, !tbaa !11  ; 2 uses
   %i.k = getelementptr i8, ptr %.val, i64 7376
@@ -224,7 +224,7 @@ bb.g:                                             ; preds = %bb.f
   %.val19 = load i64, ptr %i.q, align 8, !tbaa !112
   %i.r = lshr i64 %.val19, 6
   %.0.in.idx.i = and i64 %i.r, 8
-  %.0.in.i = getelementptr i8, ptr %4, i64 %.0.in.idx.i
+  %.0.in.i = getelementptr inbounds nuw i8, ptr %4, i64 %.0.in.idx.i
   %.0.i = load ptr, ptr %.0.in.i, align 8, !tbaa !109 ; 5 uses
   %i.s = load i32, ptr %.0.i, align 8, !tbaa !118
   %.not.i = icmp eq i32 %i.s, 0
@@ -406,7 +406,7 @@ bb.ab:                                            ; preds = %bb.aa
 
 _xidregistry_unlock.exit:                         ; preds = %bb.f, %bb.e, %bb.ab, %bb.aa, %_xidregistry_add_type.exit
   %.016 = phi i32 [ %.0, %bb.ab ], [ %.0, %_xidregistry_add_type.exit ], [ %.0, %bb.aa ], [ -1, %bb.e ], [ -1, %bb.f ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #14
+  call void @llvm.lifetime.end.p0(ptr nonnull %4)
   br label %bb.ac
 
 bb.ac:                                            ; preds = %_xidregistry_unlock.exit, %bb.d, %bb.b
@@ -420,7 +420,7 @@ declare ptr @PyErr_Format(ptr noundef, ptr noundef, ...) local_unnamed_addr #1
 define dso_local range(i32 -1, 2) i32 @_PyXIData_UnregisterClass(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(address) %1) local_unnamed_addr #0 {
 bb.a:
   %2 = alloca %struct._dlcontext, align 8         ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #14
+  call void @llvm.lifetime.start.p0(ptr nonnull %2)
   %i.a = getelementptr i8, ptr %0, i64 16
   %.val = load ptr, ptr %i.a, align 8, !tbaa !11  ; 2 uses
   %i.b = getelementptr i8, ptr %.val, i64 7376
@@ -442,7 +442,7 @@ bb.c:                                             ; preds = %bb.b
   %.val14 = load i64, ptr %i.h, align 8, !tbaa !112
   %i.i = lshr i64 %.val14, 6
   %.0.in.idx.i = and i64 %i.i, 8
-  %.0.in.i = getelementptr i8, ptr %2, i64 %.0.in.idx.i
+  %.0.in.i = getelementptr inbounds nuw i8, ptr %2, i64 %.0.in.idx.i
   %.0.i = load ptr, ptr %.0.in.i, align 8, !tbaa !109 ; 5 uses
   %i.j = load i32, ptr %.0.i, align 8, !tbaa !118
   %.not.i = icmp eq i32 %i.j, 0
@@ -627,7 +627,7 @@ bb.aa:                                            ; preds = %bb.z
 
 _xidregistry_unlock.exit:                         ; preds = %bb.b, %bb.a, %bb.aa, %bb.z, %_xidregistry_find_type.exit.thread
   %.012 = phi i32 [ %.0, %bb.aa ], [ %.0, %_xidregistry_find_type.exit.thread ], [ %.0, %bb.z ], [ -1, %bb.a ], [ -1, %bb.b ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #14
+  call void @llvm.lifetime.end.p0(ptr nonnull %2)
   ret i32 %.012
 }
 

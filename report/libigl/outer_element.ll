@@ -21,10 +21,6 @@ module asm(target_features: "+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87", target_cpu:
 %"struct.std::_Vector_base<long, std::allocator<long>>::_Vector_impl" = type { %"struct.std::_Vector_base<long, std::allocator<long>>::_Vector_impl_data" }
 %"struct.std::_Vector_base<long, std::allocator<long>>::_Vector_impl_data" = type { ptr, ptr, ptr }
 %class.anon.69 = type { ptr, ptr, ptr, ptr, ptr, ptr, ptr, ptr }
-%"class.Eigen::Matrix.70" = type { %"class.Eigen::PlainObjectBase.71" }
-%"class.Eigen::PlainObjectBase.71" = type { %"class.Eigen::DenseStorage.78" }
-%"class.Eigen::DenseStorage.78" = type { %"struct.Eigen::internal::plain_array.79" }
-%"struct.Eigen::internal::plain_array.79" = type { [3 x i32] }
 %class.anon.182 = type { i8 }
 %class.anon.184 = type { ptr, ptr, ptr, ptr, ptr, ptr, ptr, ptr }
 %class.anon.231 = type { i8 }
@@ -181,7 +177,7 @@ bb.a:
   %i.e = alloca i8, align 1                       ; 5 uses
   %9 = alloca %"class.std::vector", align 8       ; 13 uses
   %10 = alloca %class.anon.69, align 8            ; 13 uses
-  %11 = alloca %"class.Eigen::Matrix.70", align 4 ; 8 uses
+  %.sroa.046 = alloca [3 x i32], align 4          ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #15
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #15
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %6, i8 0, i64 16, i1 false)
@@ -240,8 +236,8 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph:                                           ; preds = %bb.b
   %i.aa = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.ab = getelementptr inbounds nuw i8, ptr %11, i64 4
-  %i.ac = getelementptr inbounds nuw i8, ptr %11, i64 8
+  %i.ab = getelementptr inbounds nuw i8, ptr %.sroa.046, i64 4
+  %i.ac = getelementptr inbounds nuw i8, ptr %.sroa.046, i64 8
   br label %bb.d
 
 ._crit_edge.loopexit:                             ; preds = %bb.i
@@ -275,12 +271,12 @@ bb.d:                                             ; preds = %.lr.ph, %bb.i
   %i.al = load ptr, ptr %6, align 8, !tbaa !14
   %i.am = getelementptr inbounds [8 x i8], ptr %i.al, i64 %.02756
   %i.an = load i64, ptr %i.am, align 8, !tbaa !21 ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %11) #15
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.046)
   %i.ao = load ptr, ptr %1, align 8, !tbaa !44, !noalias !47
   %i.ap = getelementptr inbounds [4 x i8], ptr %i.ao, i64 %i.an ; 3 uses
   %i.aq = load i64, ptr %i.aa, align 8, !tbaa !50 ; 2 uses
   %i.ar = load i32, ptr %i.ap, align 4, !tbaa !18 ; 2 uses
-  store i32 %i.ar, ptr %11, align 4, !tbaa !18
+  store i32 %i.ar, ptr %.sroa.046, align 4, !tbaa !18
   %i.as = getelementptr inbounds [4 x i8], ptr %i.ap, i64 %i.aq
   %i.at = load i32, ptr %i.as, align 4, !tbaa !18 ; 2 uses
   store i32 %i.at, ptr %i.ab, align 4, !tbaa !18
@@ -308,17 +304,19 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.f, %bb.e, %bb.d
   %.0.i = phi i64 [ 1, %bb.e ], [ 0, %bb.d ], [ %..i, %bb.f ] ; 4 uses
   %.cmp.inv = icmp sgt i64 %.0.i, 1
-  %12 = getelementptr [4 x i8], ptr %11, i64 %.0.i
-  %.v.sroa.sel.v = select i1 %.cmp.inv, i64 -8, i64 4
-  %.v.sroa.sel = getelementptr i8, ptr %12, i64 %.v.sroa.sel.v
+  %.v = select i1 %.cmp.inv, i64 4611686018427387902, i64 1
+  %11 = add nsw i64 %.0.i, %.v
+  %.sroa.046.0..sroa_stride = shl i64 %11, 2
+  %.v.sroa.sel = getelementptr inbounds i8, ptr %.sroa.046, i64 %.sroa.046.0..sroa_stride
   %i.bd = load i32, ptr %.v.sroa.sel, align 4, !tbaa !18
   %.cmp55 = icmp slt i64 %.0.i, 1
-  %13 = getelementptr [4 x i8], ptr %11, i64 %.0.i
-  %.v65.sroa.sel.v = select i1 %.cmp55, i64 8, i64 -4
-  %.v65.sroa.sel = getelementptr i8, ptr %13, i64 %.v65.sroa.sel.v
-  %14 = sext i32 %i.bd to i64
-  %i.be = load i32, ptr %.v65.sroa.sel, align 4, !tbaa !18
-  invoke void @_ZZN3igl10outer_edgeIN5Eigen6MatrixIdLin1ELi3ELi0ELin1ELi3EEENS2_IiLin1ELi3ELi0ELin1ELi3EEENS2_IlLin1ELi1ELi0ELin1ELi1EEElS5_EEvRKNS1_10MatrixBaseIT_EERKNS6_IT0_EERKNS6_IT1_EERT2_SK_RNS1_15PlainObjectBaseIT3_EEENKUlllE_clEll(ptr noundef nonnull align 8 dereferenceable(64) %10, i64 noundef %14, i64 noundef %i.an)
+  %.v73 = select i1 %.cmp55, i64 2, i64 4611686018427387903
+  %12 = add nsw i64 %.0.i, %.v73
+  %13 = sext i32 %i.bd to i64
+  %.sroa.046.0..sroa_stride47 = shl i64 %12, 2
+  %.sroa.046.0..sroa_idx49 = getelementptr inbounds i8, ptr %.sroa.046, i64 %.sroa.046.0..sroa_stride47
+  %i.be = load i32, ptr %.sroa.046.0..sroa_idx49, align 4, !tbaa !18
+  invoke void @_ZZN3igl10outer_edgeIN5Eigen6MatrixIdLin1ELi3ELi0ELin1ELi3EEENS2_IiLin1ELi3ELi0ELin1ELi3EEENS2_IlLin1ELi1ELi0ELin1ELi1EEElS5_EEvRKNS1_10MatrixBaseIT_EERKNS6_IT0_EERKNS6_IT1_EERT2_SK_RNS1_15PlainObjectBaseIT3_EEENKUlllE_clEll(ptr noundef nonnull align 8 dereferenceable(64) %10, i64 noundef %13, i64 noundef %i.an)
           to label %bb.h unwind label %bb.j
 
 bb.h:                                             ; preds = %bb.g
@@ -327,7 +325,7 @@ bb.h:                                             ; preds = %bb.g
           to label %bb.i unwind label %bb.j
 
 bb.i:                                             ; preds = %bb.h
-  call void @llvm.lifetime.end.p0(ptr nonnull %11) #15
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.046)
   %i.bg = add nuw i64 %.02756, 1                  ; 2 uses
   %exitcond.not = icmp eq i64 %i.bg, %i.z
   br i1 %exitcond.not, label %._crit_edge.loopexit, label %bb.d, !llvm.loop !51
@@ -335,7 +333,7 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %bb.h, %bb.g
   %i.bh = landingpad { ptr, i32 }
           cleanup
-  call void @llvm.lifetime.end.p0(ptr nonnull %11) #15
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.046)
   br label %bb.q
 
 bb.k:                                             ; preds = %._crit_edge
@@ -553,7 +551,7 @@ bb.a:
   %i.e = alloca i8, align 1                       ; 5 uses
   %9 = alloca %"class.std::vector", align 8       ; 13 uses
   %10 = alloca %class.anon.184, align 8           ; 13 uses
-  %11 = alloca %"class.Eigen::Matrix.70", align 4 ; 8 uses
+  %.sroa.045 = alloca [3 x i32], align 4          ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #15
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #15
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %6, i8 0, i64 16, i1 false)
@@ -608,8 +606,8 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph:                                           ; preds = %bb.b
   %i.y = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.z = getelementptr inbounds nuw i8, ptr %11, i64 4
-  %i.aa = getelementptr inbounds nuw i8, ptr %11, i64 8
+  %i.z = getelementptr inbounds nuw i8, ptr %.sroa.045, i64 4
+  %i.aa = getelementptr inbounds nuw i8, ptr %.sroa.045, i64 8
   br label %bb.d
 
 ._crit_edge.loopexit:                             ; preds = %bb.i
@@ -643,13 +641,13 @@ bb.d:                                             ; preds = %.lr.ph, %bb.i
   %i.aj = load ptr, ptr %6, align 8, !tbaa !14
   %i.ak = getelementptr inbounds [8 x i8], ptr %i.aj, i64 %.02756
   %i.al = load i64, ptr %i.ak, align 8, !tbaa !21 ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %11) #15
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.045)
   %i.am = load ptr, ptr %1, align 8, !tbaa !64, !noalias !66
   %i.an = load i64, ptr %i.y, align 8, !tbaa !69, !noalias !66
   %i.ao = mul nsw i64 %i.an, %i.al
   %i.ap = getelementptr inbounds [4 x i8], ptr %i.am, i64 %i.ao ; 3 uses
   %i.aq = load i32, ptr %i.ap, align 4, !tbaa !18 ; 2 uses
-  store i32 %i.aq, ptr %11, align 4, !tbaa !18
+  store i32 %i.aq, ptr %.sroa.045, align 4, !tbaa !18
   %i.ar = getelementptr i8, ptr %i.ap, i64 4
   %i.as = load i32, ptr %i.ar, align 4, !tbaa !18 ; 2 uses
   store i32 %i.as, ptr %i.z, align 4, !tbaa !18
@@ -676,17 +674,19 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.f, %bb.e, %bb.d
   %.0.i = phi i64 [ 1, %bb.e ], [ 0, %bb.d ], [ %..i, %bb.f ] ; 4 uses
   %.cmp.inv = icmp sgt i64 %.0.i, 1
-  %12 = getelementptr [4 x i8], ptr %11, i64 %.0.i
-  %.v.sroa.sel.v = select i1 %.cmp.inv, i64 -8, i64 4
-  %.v.sroa.sel = getelementptr i8, ptr %12, i64 %.v.sroa.sel.v
+  %.v = select i1 %.cmp.inv, i64 4611686018427387902, i64 1
+  %11 = add nsw i64 %.0.i, %.v
+  %.sroa.045.0..sroa_stride = shl i64 %11, 2
+  %.v.sroa.sel = getelementptr inbounds i8, ptr %.sroa.045, i64 %.sroa.045.0..sroa_stride
   %i.bc = load i32, ptr %.v.sroa.sel, align 4, !tbaa !18
   %.cmp55 = icmp slt i64 %.0.i, 1
-  %13 = getelementptr [4 x i8], ptr %11, i64 %.0.i
-  %.v65.sroa.sel.v = select i1 %.cmp55, i64 8, i64 -4
-  %.v65.sroa.sel = getelementptr i8, ptr %13, i64 %.v65.sroa.sel.v
-  %14 = sext i32 %i.bc to i64
-  %i.bd = load i32, ptr %.v65.sroa.sel, align 4, !tbaa !18
-  invoke void @_ZZN3igl10outer_edgeIN5Eigen6MatrixIdLin1ELin1ELi1ELin1ELin1EEENS2_IiLin1ELin1ELi1ELin1ELin1EEES4_lNS2_IlLin1ELi1ELi0ELin1ELi1EEEEEvRKNS1_10MatrixBaseIT_EERKNS6_IT0_EERKNS6_IT1_EERT2_SK_RNS1_15PlainObjectBaseIT3_EEENKUlllE_clEll(ptr noundef nonnull align 8 dereferenceable(64) %10, i64 noundef %14, i64 noundef %i.al)
+  %.v73 = select i1 %.cmp55, i64 2, i64 4611686018427387903
+  %12 = add nsw i64 %.0.i, %.v73
+  %13 = sext i32 %i.bc to i64
+  %.sroa.045.0..sroa_stride46 = shl i64 %12, 2
+  %.sroa.045.0..sroa_idx48 = getelementptr inbounds i8, ptr %.sroa.045, i64 %.sroa.045.0..sroa_stride46
+  %i.bd = load i32, ptr %.sroa.045.0..sroa_idx48, align 4, !tbaa !18
+  invoke void @_ZZN3igl10outer_edgeIN5Eigen6MatrixIdLin1ELin1ELi1ELin1ELin1EEENS2_IiLin1ELin1ELi1ELin1ELin1EEES4_lNS2_IlLin1ELi1ELi0ELin1ELi1EEEEEvRKNS1_10MatrixBaseIT_EERKNS6_IT0_EERKNS6_IT1_EERT2_SK_RNS1_15PlainObjectBaseIT3_EEENKUlllE_clEll(ptr noundef nonnull align 8 dereferenceable(64) %10, i64 noundef %13, i64 noundef %i.al)
           to label %bb.h unwind label %bb.j
 
 bb.h:                                             ; preds = %bb.g
@@ -695,7 +695,7 @@ bb.h:                                             ; preds = %bb.g
           to label %bb.i unwind label %bb.j
 
 bb.i:                                             ; preds = %bb.h
-  call void @llvm.lifetime.end.p0(ptr nonnull %11) #15
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.045)
   %i.bf = add nuw i64 %.02756, 1                  ; 2 uses
   %exitcond.not = icmp eq i64 %i.bf, %i.x
   br i1 %exitcond.not, label %._crit_edge.loopexit, label %bb.d, !llvm.loop !70
@@ -703,7 +703,7 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %bb.h, %bb.g
   %i.bg = landingpad { ptr, i32 }
           cleanup
-  call void @llvm.lifetime.end.p0(ptr nonnull %11) #15
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.045)
   br label %bb.q
 
 bb.k:                                             ; preds = %._crit_edge
@@ -914,7 +914,7 @@ bb.a:
   %i.e = alloca i8, align 1                       ; 5 uses
   %9 = alloca %"class.std::vector", align 8       ; 13 uses
   %10 = alloca %class.anon.233, align 8           ; 13 uses
-  %11 = alloca %"class.Eigen::Matrix.70", align 4 ; 8 uses
+  %.sroa.046 = alloca [3 x i32], align 4          ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #15
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #15
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %6, i8 0, i64 16, i1 false)
@@ -973,8 +973,8 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph:                                           ; preds = %bb.b
   %i.aa = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.ab = getelementptr inbounds nuw i8, ptr %11, i64 4
-  %i.ac = getelementptr inbounds nuw i8, ptr %11, i64 8
+  %i.ab = getelementptr inbounds nuw i8, ptr %.sroa.046, i64 4
+  %i.ac = getelementptr inbounds nuw i8, ptr %.sroa.046, i64 8
   br label %bb.d
 
 ._crit_edge.loopexit:                             ; preds = %bb.i
@@ -1008,12 +1008,12 @@ bb.d:                                             ; preds = %.lr.ph, %bb.i
   %i.al = load ptr, ptr %6, align 8, !tbaa !14
   %i.am = getelementptr inbounds [8 x i8], ptr %i.al, i64 %.02757
   %i.an = load i64, ptr %i.am, align 8, !tbaa !21 ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %11) #15
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.046)
   %i.ao = load ptr, ptr %1, align 8, !tbaa !80, !noalias !82
   %i.ap = getelementptr inbounds [4 x i8], ptr %i.ao, i64 %i.an ; 3 uses
   %i.aq = load i64, ptr %i.aa, align 8, !tbaa !85 ; 2 uses
   %i.ar = load i32, ptr %i.ap, align 4, !tbaa !18 ; 2 uses
-  store i32 %i.ar, ptr %11, align 4, !tbaa !18
+  store i32 %i.ar, ptr %.sroa.046, align 4, !tbaa !18
   %i.as = getelementptr inbounds [4 x i8], ptr %i.ap, i64 %i.aq
   %i.at = load i32, ptr %i.as, align 4, !tbaa !18 ; 2 uses
   store i32 %i.at, ptr %i.ab, align 4, !tbaa !18
@@ -1041,17 +1041,19 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.f, %bb.e, %bb.d
   %.0.i = phi i64 [ 1, %bb.e ], [ 0, %bb.d ], [ %..i, %bb.f ] ; 4 uses
   %.cmp.inv = icmp sgt i64 %.0.i, 1
-  %12 = getelementptr [4 x i8], ptr %11, i64 %.0.i
-  %.v.sroa.sel.v = select i1 %.cmp.inv, i64 -8, i64 4
-  %.v.sroa.sel = getelementptr i8, ptr %12, i64 %.v.sroa.sel.v
+  %.v = select i1 %.cmp.inv, i64 4611686018427387902, i64 1
+  %11 = add nsw i64 %.0.i, %.v
+  %.sroa.046.0..sroa_stride = shl i64 %11, 2
+  %.v.sroa.sel = getelementptr inbounds i8, ptr %.sroa.046, i64 %.sroa.046.0..sroa_stride
   %i.bd = load i32, ptr %.v.sroa.sel, align 4, !tbaa !18
   %.cmp56 = icmp slt i64 %.0.i, 1
-  %13 = getelementptr [4 x i8], ptr %11, i64 %.0.i
-  %.v66.sroa.sel.v = select i1 %.cmp56, i64 8, i64 -4
-  %.v66.sroa.sel = getelementptr i8, ptr %13, i64 %.v66.sroa.sel.v
-  %14 = sext i32 %i.bd to i64
-  %i.be = load i32, ptr %.v66.sroa.sel, align 4, !tbaa !18
-  invoke void @_ZZN3igl10outer_edgeIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENS2_IiLin1ELin1ELi0ELin1ELin1EEENS2_IiLin1ELi1ELi0ELin1ELi1EEElNS2_IlLin1ELi1ELi0ELin1ELi1EEEEEvRKNS1_10MatrixBaseIT_EERKNS7_IT0_EERKNS7_IT1_EERT2_SL_RNS1_15PlainObjectBaseIT3_EEENKUlllE_clEll(ptr noundef nonnull align 8 dereferenceable(64) %10, i64 noundef %14, i64 noundef %i.an)
+  %.v74 = select i1 %.cmp56, i64 2, i64 4611686018427387903
+  %12 = add nsw i64 %.0.i, %.v74
+  %13 = sext i32 %i.bd to i64
+  %.sroa.046.0..sroa_stride47 = shl i64 %12, 2
+  %.sroa.046.0..sroa_idx49 = getelementptr inbounds i8, ptr %.sroa.046, i64 %.sroa.046.0..sroa_stride47
+  %i.be = load i32, ptr %.sroa.046.0..sroa_idx49, align 4, !tbaa !18
+  invoke void @_ZZN3igl10outer_edgeIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENS2_IiLin1ELin1ELi0ELin1ELin1EEENS2_IiLin1ELi1ELi0ELin1ELi1EEElNS2_IlLin1ELi1ELi0ELin1ELi1EEEEEvRKNS1_10MatrixBaseIT_EERKNS7_IT0_EERKNS7_IT1_EERT2_SL_RNS1_15PlainObjectBaseIT3_EEENKUlllE_clEll(ptr noundef nonnull align 8 dereferenceable(64) %10, i64 noundef %13, i64 noundef %i.an)
           to label %bb.h unwind label %bb.j
 
 bb.h:                                             ; preds = %bb.g
@@ -1060,7 +1062,7 @@ bb.h:                                             ; preds = %bb.g
           to label %bb.i unwind label %bb.j
 
 bb.i:                                             ; preds = %bb.h
-  call void @llvm.lifetime.end.p0(ptr nonnull %11) #15
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.046)
   %i.bg = add nuw i64 %.02757, 1                  ; 2 uses
   %exitcond.not = icmp eq i64 %i.bg, %i.z
   br i1 %exitcond.not, label %._crit_edge.loopexit, label %bb.d, !llvm.loop !86
@@ -1068,7 +1070,7 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %bb.h, %bb.g
   %i.bh = landingpad { ptr, i32 }
           cleanup
-  call void @llvm.lifetime.end.p0(ptr nonnull %11) #15
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.046)
   br label %bb.q
 
 bb.k:                                             ; preds = %._crit_edge

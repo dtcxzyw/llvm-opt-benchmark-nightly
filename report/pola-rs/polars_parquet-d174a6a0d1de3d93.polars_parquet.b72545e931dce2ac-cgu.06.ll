@@ -205,15 +205,15 @@ bb.x:                                             ; preds = %bb.s
 ; Function Attrs: nonlazybind uwtable
 define hidden void @_RNvMsc_NtNtCsk4ZPsEfLtLH_6brotli3enc10prior_evalINtB5_9PriorEvalNtNtCsbA1n9drshSs_12alloc_stdlib9std_alloc13StandardAllocE16update_cost_baseCsfISxE4fmY1Y_14polars_parquet(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(296) %0, i64 noundef %1, i64 noundef %2, i8 noundef %3, i64 noundef %4, i8 noundef %5) unnamed_addr #1 personality ptr @rust_eh_personality !dbg !22893 {
 bb.a:
-  %6 = alloca [8 x i8], align 8                   ; 6 uses
-  store i64 %1, ptr %6, align 8
+  %.sroa.0 = alloca i64, align 8                  ; 6 uses
+  store i64 %1, ptr %.sroa.0, align 8
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 289, !dbg !22894
   %i.b = load i8, ptr %i.a, align 1, !dbg !22894, !noundef !14
   %i.c = zext i8 %i.b to i64, !dbg !22894
   %i.d = sub i64 %2, %i.c, !dbg !22897
   %i.e = and i64 %i.d, 7, !dbg !22900
-  %i.f = getelementptr inbounds nuw i8, ptr %6, i64 %i.e, !dbg !22901
-  %i.g = load i8, ptr %i.f, align 1, !dbg !22901, !noundef !14 ; 2 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %i.e, !dbg !22901
+  %i.g = load i8, ptr %i.f, align 1, !dbg !22901  ; 2 uses
   %i.h = lshr i8 %i.g, 4, !dbg !22902
   %i.i = zext nneg i8 %i.h to i64, !dbg !22902
   %i.j = shl nuw nsw i64 %i.i, 8, !dbg !22906
@@ -616,8 +616,8 @@ _RNvMsa_NtNtCsk4ZPsEfLtLH_6brotli3enc10prior_evalNtB5_3CDF6update.exit739: ; pre
   %i.ka = getelementptr inbounds nuw i8, ptr %0, i64 168, !dbg !23475
   %.val2503.a = load i64, ptr %i.ka, align 8, !dbg !23475, !noundef !14 ; 4 uses
   %i.kb = and i64 %2, 7, !dbg !23476
-  %i.kc = getelementptr inbounds nuw i8, ptr %6, i64 %i.kb, !dbg !23477
-  %i.kd = load i8, ptr %i.kc, align 1, !dbg !23477, !noundef !14
+  %i.kc = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %i.kb, !dbg !23477
+  %i.kd = load i8, ptr %i.kc, align 1, !dbg !23477
   %i.ke = zext i8 %i.kd to i64, !dbg !23478       ; 2 uses
   %i.kf = shl nuw nsw i64 %i.ke, 9, !dbg !23487
   %i.kg = or i64 %i.kf, %i.gz, !dbg !23487        ; 3 uses
@@ -773,8 +773,8 @@ _RNvMsa_NtNtCsk4ZPsEfLtLH_6brotli3enc10prior_evalNtB5_3CDF6update.exit617: ; pre
   %.val2499 = load i64, ptr %i.og, align 8, !dbg !23673, !noundef !14 ; 4 uses
   %i.oh = add i64 %2, 7, !dbg !23674
   %i.oi = and i64 %i.oh, 7, !dbg !23676
-  %i.oj = getelementptr inbounds nuw i8, ptr %6, i64 %i.oi, !dbg !23677
-  %i.ok = load i8, ptr %i.oj, align 1, !dbg !23677, !noundef !14
+  %i.oj = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %i.oi, !dbg !23677
+  %i.ok = load i8, ptr %i.oj, align 1, !dbg !23677
   %i.ol = zext i8 %i.ok to i64, !dbg !23678       ; 2 uses
   %i.om = shl nuw nsw i64 %i.ol, 9, !dbg !23686
   %i.on = or i64 %i.om, %i.gz, !dbg !23686        ; 3 uses
@@ -895,8 +895,8 @@ _RNvMsa_NtNtCsk4ZPsEfLtLH_6brotli3enc10prior_evalNtB5_3CDF6update.exit495: ; pre
   %.val2495 = load i64, ptr %i.ra, align 8, !dbg !23847, !noundef !14 ; 4 uses
   %i.rb = add i64 %2, 6, !dbg !23848
   %i.rc = and i64 %i.rb, 7, !dbg !23850
-  %i.rd = getelementptr inbounds nuw i8, ptr %6, i64 %i.rc, !dbg !23851
-  %i.re = load i8, ptr %i.rd, align 1, !dbg !23851, !noundef !14
+  %i.rd = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %i.rc, !dbg !23851
+  %i.re = load i8, ptr %i.rd, align 1, !dbg !23851
   %i.rf = zext i8 %i.re to i64, !dbg !23852       ; 2 uses
   %i.rg = shl nuw nsw i64 %i.rf, 9, !dbg !23860
   %i.rh = or i64 %i.rg, %i.gz, !dbg !23860        ; 3 uses
@@ -1017,8 +1017,8 @@ _RNvMsa_NtNtCsk4ZPsEfLtLH_6brotli3enc10prior_evalNtB5_3CDF6update.exit373: ; pre
   %.val2491 = load i64, ptr %i.tu, align 8, !dbg !24021, !noundef !14 ; 4 uses
   %i.tv = add i64 %2, 5, !dbg !24022
   %i.tw = and i64 %i.tv, 7, !dbg !24024
-  %i.tx = getelementptr inbounds nuw i8, ptr %6, i64 %i.tw, !dbg !24025
-  %i.ty = load i8, ptr %i.tx, align 1, !dbg !24025, !noundef !14
+  %i.tx = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %i.tw, !dbg !24025
+  %i.ty = load i8, ptr %i.tx, align 1, !dbg !24025
   %i.tz = zext i8 %i.ty to i64, !dbg !24026       ; 2 uses
   %i.ua = shl nuw nsw i64 %i.tz, 9, !dbg !24034
   %i.ub = or i64 %i.ua, %i.gz, !dbg !24034        ; 3 uses

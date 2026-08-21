@@ -7,16 +7,14 @@ begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
 
-%"class.std::bitset" = type { %"struct.std::_Base_bitset" }
-%"struct.std::_Base_bitset" = type { [4 x i64] }
 %"class.folly::SparseByteSet" = type { i16, [256 x i8], [256 x i8] }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define noundef i64 @_ZN5folly6detail26qfind_first_byte_of_bitsetENS0_15StringPieceLiteES1_(ptr %0, ptr %1, ptr nofree readonly captures(address) %2, ptr nofree readnone captures(address) %3) local_unnamed_addr #0 {
 bb.a:
-  %4 = alloca %"class.std::bitset", align 8       ; 7 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #3
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %4, i8 0, i64 32, i1 false)
+  %.sroa.0 = alloca [4 x i64], align 8            ; 10 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.0, i8 0, i64 32, i1 false)
   %.not22 = icmp eq ptr %2, %3
   br i1 %.not22, label %.preheader, label %.lr.ph.preheader
 
@@ -31,13 +29,15 @@ bb.a:
 .lr.ph.prol:                                      ; preds = %.lr.ph.preheader
   %i.d = load i8, ptr %2, align 1, !tbaa !12
   %i.e = zext i8 %i.d to i64                      ; 2 uses
-  %5 = lshr i64 %i.e, 6
-  %6 = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %5 ; 2 uses
-  %i.f = and i64 %i.e, 63
-  %7 = shl nuw i64 1, %i.f
-  %i.g = load i64, ptr %6, align 8, !tbaa !13
-  %i.h = or i64 %7, %i.g
-  store i64 %i.h, ptr %6, align 8, !tbaa !13
+  %4 = and i64 %i.e, 63
+  %5 = shl nuw i64 1, %4
+  %6 = lshr i64 %i.e, 3
+  %i.f = and i64 %6, 24                           ; 2 uses
+  %.sroa.0.0..sroa_idx56 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %i.f
+  %i.g = load i64, ptr %.sroa.0.0..sroa_idx56, align 8, !tbaa !13
+  %i.h = or i64 %5, %i.g
+  %.sroa.0.0..sroa_idx59 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %i.f
+  store i64 %i.h, ptr %.sroa.0.0..sroa_idx59, align 8, !tbaa !13
   %i.i = getelementptr inbounds nuw i8, ptr %2, i64 1
   br label %.lr.ph.prol.loopexit
 
@@ -58,23 +58,27 @@ bb.a:
   %.01423 = phi ptr [ %i.z, %.lr.ph ], [ %.01423.unr, %.lr.ph.prol.loopexit ] ; 3 uses
   %i.o = load i8, ptr %.01423, align 1, !tbaa !12
   %i.p = zext i8 %i.o to i64                      ; 2 uses
-  %8 = lshr i64 %i.p, 6
-  %9 = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %8 ; 2 uses
-  %i.q = and i64 %i.p, 63
-  %10 = shl nuw i64 1, %i.q
-  %i.r = load i64, ptr %9, align 8, !tbaa !13
-  %i.s = or i64 %10, %i.r
-  store i64 %i.s, ptr %9, align 8, !tbaa !13
+  %7 = and i64 %i.p, 63
+  %8 = shl nuw i64 1, %7
+  %9 = lshr i64 %i.p, 3
+  %i.q = and i64 %9, 24                           ; 2 uses
+  %.sroa.0.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %i.q
+  %i.r = load i64, ptr %.sroa.0.0..sroa_idx, align 8, !tbaa !13
+  %i.s = or i64 %8, %i.r
+  %.sroa.0.0..sroa_idx50 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %i.q
+  store i64 %i.s, ptr %.sroa.0.0..sroa_idx50, align 8, !tbaa !13
   %i.t = getelementptr inbounds nuw i8, ptr %.01423, i64 1
   %i.u = load i8, ptr %i.t, align 1, !tbaa !12
   %i.v = zext i8 %i.u to i64                      ; 2 uses
-  %11 = lshr i64 %i.v, 6
-  %12 = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %11 ; 2 uses
-  %i.w = and i64 %i.v, 63
-  %13 = shl nuw i64 1, %i.w
-  %i.x = load i64, ptr %12, align 8, !tbaa !13
-  %i.y = or i64 %13, %i.x
-  store i64 %i.y, ptr %12, align 8, !tbaa !13
+  %10 = and i64 %i.v, 63
+  %11 = shl nuw i64 1, %10
+  %12 = lshr i64 %i.v, 3
+  %i.w = and i64 %12, 24                          ; 2 uses
+  %.sroa.0.0..sroa_idx62 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %i.w
+  %i.x = load i64, ptr %.sroa.0.0..sroa_idx62, align 8, !tbaa !13
+  %i.y = or i64 %11, %i.x
+  %.sroa.0.0..sroa_idx65 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %i.w
+  store i64 %i.y, ptr %.sroa.0.0..sroa_idx65, align 8, !tbaa !13
   %i.z = getelementptr inbounds nuw i8, ptr %.01423, i64 2 ; 2 uses
   %.not.1 = icmp eq ptr %i.z, %3
   br i1 %.not.1, label %.preheader, label %.lr.ph
@@ -84,11 +88,12 @@ bb.a:
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 %.01225
   %i.ab = load i8, ptr %i.aa, align 1, !tbaa !12
   %i.ac = zext i8 %i.ab to i64                    ; 2 uses
-  %i.ad = lshr i64 %i.ac, 6
-  %14 = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %i.ad
-  %15 = and i64 %i.ac, 63
-  %i.ae = load i64, ptr %14, align 8, !tbaa !13
-  %i.af = shl nuw i64 1, %15
+  %13 = and i64 %i.ac, 63
+  %i.ad = lshr i64 %i.ac, 3
+  %.sroa.0.0..sroa_stride24 = and i64 %i.ad, 24
+  %.sroa.0.0..sroa_idx53 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %.sroa.0.0..sroa_stride24
+  %i.ae = load i64, ptr %.sroa.0.0..sroa_idx53, align 8, !tbaa !13
+  %i.af = shl nuw i64 1, %13
   %i.ag = and i64 %i.af, %i.ae
   %.not21 = icmp eq i64 %i.ag, 0
   br i1 %.not21, label %bb.b, label %._crit_edge
@@ -100,7 +105,7 @@ bb.b:                                             ; preds = %.lr.ph26
 
 ._crit_edge:                                      ; preds = %bb.b, %.lr.ph26, %.preheader
   %spec.select = phi i64 [ -1, %.preheader ], [ %.01225, %.lr.ph26 ], [ -1, %bb.b ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #3
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   ret i64 %spec.select
 }
 

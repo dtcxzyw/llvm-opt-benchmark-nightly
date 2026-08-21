@@ -49,8 +49,8 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind sspstrong uwtable
 define dso_local void @machine_parse_smp_config(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr noundef %2) local_unnamed_addr #0 {
 bb.a:
-  %i.a = tail call ptr @object_get_class(ptr noundef %0) #7
-  %i.b = tail call ptr @object_class_dynamic_cast_assert(ptr noundef %i.a, ptr noundef nonnull @.str.16, ptr noundef nonnull @.str.17, i32 noundef 25, ptr noundef nonnull @__func__.MACHINE_GET_CLASS) #7 ; 11 uses
+  %i.a = tail call ptr @object_get_class(ptr noundef %0) #8
+  %i.b = tail call ptr @object_class_dynamic_cast_assert(ptr noundef %i.a, ptr noundef nonnull @.str.16, ptr noundef nonnull @.str.17, i32 noundef 25, ptr noundef nonnull @__func__.MACHINE_GET_CLASS) #8 ; 11 uses
   %i.c = load i8, ptr %1, align 8, !range !7, !noundef !8
   %i.d = trunc nuw i8 %i.c to i1                  ; 2 uses
   br i1 %i.d, label %bb.b, label %bb.c
@@ -275,7 +275,7 @@ bb.an:                                            ; preds = %bb.am
   br i1 %i.db, label %bb.ao, label %bb.ap
 
 bb.ao:                                            ; preds = %bb.an, %bb.al, %bb.aj, %bb.ah, %bb.af, %bb.ad, %bb.ab, %bb.z, %bb.x, %bb.v
-  tail call void (ptr, ptr, i32, ptr, ptr, ...) @error_setg_internal(ptr noundef %2, ptr noundef nonnull @.str, i32 noundef 116, ptr noundef nonnull @__func__.machine_parse_smp_config, ptr noundef nonnull @.str.1) #7
+  tail call void (ptr, ptr, i32, ptr, ptr, ...) @error_setg_internal(ptr noundef %2, ptr noundef nonnull @.str, i32 noundef 116, ptr noundef nonnull @__func__.machine_parse_smp_config, ptr noundef nonnull @.str.1) #8
   br label %bb.by
 
 bb.ap:                                            ; preds = %bb.an, %bb.am
@@ -294,7 +294,7 @@ bb.aq:                                            ; preds = %bb.ap
   br i1 %i.di, label %bb.ar, label %bb.as
 
 bb.ar:                                            ; preds = %bb.aq
-  tail call void (ptr, ptr, i32, ptr, ptr, ...) @error_setg_internal(ptr noundef %2, ptr noundef nonnull @.str, i32 noundef 127, ptr noundef nonnull @__func__.machine_parse_smp_config, ptr noundef nonnull @.str.2) #7
+  tail call void (ptr, ptr, i32, ptr, ptr, ...) @error_setg_internal(ptr noundef %2, ptr noundef nonnull @.str, i32 noundef 127, ptr noundef nonnull @__func__.machine_parse_smp_config, ptr noundef nonnull @.str.2) #8
   br label %bb.by
 
 bb.as:                                            ; preds = %bb.ap, %bb.aq
@@ -312,7 +312,7 @@ bb.at:                                            ; preds = %bb.as
   br i1 %i.do, label %bb.au, label %bb.av
 
 bb.au:                                            ; preds = %bb.at
-  tail call void (ptr, ptr, i32, ptr, ptr, ...) @error_setg_internal(ptr noundef %2, ptr noundef nonnull @.str, i32 noundef 135, ptr noundef nonnull @__func__.machine_parse_smp_config, ptr noundef nonnull @.str.3) #7
+  tail call void (ptr, ptr, i32, ptr, ptr, ...) @error_setg_internal(ptr noundef %2, ptr noundef nonnull @.str, i32 noundef 135, ptr noundef nonnull @__func__.machine_parse_smp_config, ptr noundef nonnull @.str.3) #8
   br label %bb.by
 
 bb.av:                                            ; preds = %bb.as, %bb.at
@@ -330,7 +330,7 @@ bb.aw:                                            ; preds = %bb.av
   br i1 %i.du, label %bb.ax, label %bb.ay
 
 bb.ax:                                            ; preds = %bb.aw
-  tail call void (ptr, ptr, i32, ptr, ptr, ...) @error_setg_internal(ptr noundef %2, ptr noundef nonnull @.str, i32 noundef 143, ptr noundef nonnull @__func__.machine_parse_smp_config, ptr noundef nonnull @.str.4) #7
+  tail call void (ptr, ptr, i32, ptr, ptr, ...) @error_setg_internal(ptr noundef %2, ptr noundef nonnull @.str, i32 noundef 143, ptr noundef nonnull @__func__.machine_parse_smp_config, ptr noundef nonnull @.str.4) #8
   br label %bb.by
 
 bb.ay:                                            ; preds = %bb.av, %bb.aw
@@ -348,7 +348,7 @@ bb.az:                                            ; preds = %bb.ay
   br i1 %i.ea, label %bb.ba, label %bb.bb
 
 bb.ba:                                            ; preds = %bb.az
-  tail call void (ptr, ptr, i32, ptr, ptr, ...) @error_setg_internal(ptr noundef %2, ptr noundef nonnull @.str, i32 noundef 151, ptr noundef nonnull @__func__.machine_parse_smp_config, ptr noundef nonnull @.str.5) #7
+  tail call void (ptr, ptr, i32, ptr, ptr, ...) @error_setg_internal(ptr noundef %2, ptr noundef nonnull @.str, i32 noundef 151, ptr noundef nonnull @__func__.machine_parse_smp_config, ptr noundef nonnull @.str.5) #8
   br label %bb.by
 
 bb.bb:                                            ; preds = %bb.ay, %bb.az
@@ -366,7 +366,7 @@ bb.bc:                                            ; preds = %bb.bb
   br i1 %i.eg, label %bb.bd, label %bb.be
 
 bb.bd:                                            ; preds = %bb.bc
-  tail call void (ptr, ptr, i32, ptr, ptr, ...) @error_setg_internal(ptr noundef %2, ptr noundef nonnull @.str, i32 noundef 159, ptr noundef nonnull @__func__.machine_parse_smp_config, ptr noundef nonnull @.str.6) #7
+  tail call void (ptr, ptr, i32, ptr, ptr, ...) @error_setg_internal(ptr noundef %2, ptr noundef nonnull @.str, i32 noundef 159, ptr noundef nonnull @__func__.machine_parse_smp_config, ptr noundef nonnull @.str.6) #8
   br label %bb.by
 
 bb.be:                                            ; preds = %bb.bb, %bb.bc
@@ -507,8 +507,8 @@ bb.bq:                                            ; preds = %bb.bp
 
 bb.br:                                            ; preds = %.thread
   %i.hd = tail call fastcc ptr @cpu_hierarchy_to_string(ptr noundef nonnull %0) ; 2 uses
-  tail call void (ptr, ptr, i32, ptr, ptr, ...) @error_setg_internal(ptr noundef %2, ptr noundef nonnull @.str, i32 noundef 234, ptr noundef nonnull @__func__.machine_parse_smp_config, ptr noundef nonnull @.str.7, ptr noundef %i.hd, i32 noundef %spec.select) #7
-  tail call void @g_free(ptr noundef %i.hd) #7
+  tail call void (ptr, ptr, i32, ptr, ptr, ...) @error_setg_internal(ptr noundef %2, ptr noundef nonnull @.str, i32 noundef 234, ptr noundef nonnull @__func__.machine_parse_smp_config, ptr noundef nonnull @.str.7, ptr noundef %i.hd, i32 noundef %spec.select) #8
+  tail call void @g_free(ptr noundef %i.hd) #8
   br label %bb.by
 
 bb.bs:                                            ; preds = %.thread
@@ -517,8 +517,8 @@ bb.bs:                                            ; preds = %.thread
 
 bb.bt:                                            ; preds = %bb.bs
   %i.hf = tail call fastcc ptr @cpu_hierarchy_to_string(ptr noundef nonnull %0) ; 2 uses
-  tail call void (ptr, ptr, i32, ptr, ptr, ...) @error_setg_internal(ptr noundef %2, ptr noundef nonnull @.str, i32 noundef 243, ptr noundef nonnull @__func__.machine_parse_smp_config, ptr noundef nonnull @.str.8, ptr noundef %i.hf, i32 noundef %i.gp, i32 noundef %i.gq) #7
-  tail call void @g_free(ptr noundef %i.hf) #7
+  tail call void (ptr, ptr, i32, ptr, ptr, ...) @error_setg_internal(ptr noundef %2, ptr noundef nonnull @.str, i32 noundef 243, ptr noundef nonnull @__func__.machine_parse_smp_config, ptr noundef nonnull @.str.8, ptr noundef %i.hf, i32 noundef %i.gp, i32 noundef %i.gq) #8
+  tail call void @g_free(ptr noundef %i.hf) #8
   br label %bb.by
 
 bb.bu:                                            ; preds = %bb.bs
@@ -531,7 +531,7 @@ bb.bu:                                            ; preds = %bb.bs
 bb.bv:                                            ; preds = %bb.bu
   %i.hk = getelementptr inbounds nuw i8, ptr %i.b, i64 104
   %i.hl = load ptr, ptr %i.hk, align 8
-  tail call void (ptr, ptr, i32, ptr, ptr, ...) @error_setg_internal(ptr noundef %2, ptr noundef nonnull @.str, i32 noundef 251, ptr noundef nonnull @__func__.machine_parse_smp_config, ptr noundef nonnull @.str.9, i32 noundef %i.hg, ptr noundef %i.hl, i32 noundef %i.hi) #7
+  tail call void (ptr, ptr, i32, ptr, ptr, ...) @error_setg_internal(ptr noundef %2, ptr noundef nonnull @.str, i32 noundef 251, ptr noundef nonnull @__func__.machine_parse_smp_config, ptr noundef nonnull @.str.9, i32 noundef %i.hg, ptr noundef %i.hl, i32 noundef %i.hi) #8
   br label %bb.by
 
 bb.bw:                                            ; preds = %bb.bu
@@ -544,21 +544,24 @@ bb.bw:                                            ; preds = %bb.bu
 bb.bx:                                            ; preds = %bb.bw
   %i.hq = getelementptr inbounds nuw i8, ptr %i.b, i64 104
   %i.hr = load ptr, ptr %i.hq, align 8
-  tail call void (ptr, ptr, i32, ptr, ptr, ...) @error_setg_internal(ptr noundef %2, ptr noundef nonnull @.str, i32 noundef 259, ptr noundef nonnull @__func__.machine_parse_smp_config, ptr noundef nonnull @.str.10, i32 noundef %i.hm, ptr noundef %i.hr, i32 noundef %i.ho) #7
+  tail call void (ptr, ptr, i32, ptr, ptr, ...) @error_setg_internal(ptr noundef %2, ptr noundef nonnull @.str, i32 noundef 259, ptr noundef nonnull @__func__.machine_parse_smp_config, ptr noundef nonnull @.str.10, i32 noundef %i.hm, ptr noundef %i.hr, i32 noundef %i.ho) #8
   br label %bb.by
 
 bb.by:                                            ; preds = %bb.bw, %bb.bx, %bb.bv, %bb.bt, %bb.br, %bb.bd, %bb.ba, %bb.ax, %bb.au, %bb.ar, %bb.ao
   ret void
 }
 
-declare void @error_setg_internal(ptr noundef, ptr noundef, i32 noundef, ptr noundef, ptr noundef, ...) local_unnamed_addr #1
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
+declare void @llvm.lifetime.start.p0(ptr captures(none)) #1
+
+declare void @error_setg_internal(ptr noundef, ptr noundef, i32 noundef, ptr noundef, ptr noundef, ...) local_unnamed_addr #2
 
 ; Function Attrs: nounwind sspstrong uwtable
 define internal fastcc ptr @cpu_hierarchy_to_string(ptr noundef %0) unnamed_addr #0 {
 bb.a:
-  %i.a = tail call ptr @object_get_class(ptr noundef %0) #7
-  %i.b = tail call ptr @object_class_dynamic_cast_assert(ptr noundef %i.a, ptr noundef nonnull @.str.16, ptr noundef nonnull @.str.17, i32 noundef 25, ptr noundef nonnull @__func__.MACHINE_GET_CLASS) #7 ; 5 uses
-  %i.c = tail call ptr @g_string_new(ptr noundef null) #7 ; 9 uses
+  %i.a = tail call ptr @object_get_class(ptr noundef %0) #8
+  %i.b = tail call ptr @object_class_dynamic_cast_assert(ptr noundef %i.a, ptr noundef nonnull @.str.16, ptr noundef nonnull @.str.17, i32 noundef 25, ptr noundef nonnull @__func__.MACHINE_GET_CLASS) #8 ; 5 uses
+  %i.c = tail call ptr @g_string_new(ptr noundef null) #8 ; 9 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 324
   %i.e = load i8, ptr %i.d, align 1, !range !7, !noundef !8
   %i.f = trunc nuw i8 %i.e to i1
@@ -567,7 +570,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 308
   %i.h = load i32, ptr %i.g, align 4
-  tail call void (ptr, ptr, ...) @g_string_append_printf(ptr noundef %i.c, ptr noundef nonnull @.str.18, i32 noundef %i.h) #7
+  tail call void (ptr, ptr, ...) @g_string_append_printf(ptr noundef %i.c, ptr noundef nonnull @.str.18, i32 noundef %i.h) #8
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
@@ -579,13 +582,13 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 bb.d:                                             ; preds = %bb.c
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 312
   %i.m = load i32, ptr %i.l, align 8
-  tail call void (ptr, ptr, ...) @g_string_append_printf(ptr noundef %i.c, ptr noundef nonnull @.str.19, i32 noundef %i.m) #7
+  tail call void (ptr, ptr, ...) @g_string_append_printf(ptr noundef %i.c, ptr noundef nonnull @.str.19, i32 noundef %i.m) #8
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 316
   %i.o = load i32, ptr %i.n, align 4
-  tail call void (ptr, ptr, ...) @g_string_append_printf(ptr noundef %i.c, ptr noundef nonnull @.str.20, i32 noundef %i.o) #7
+  tail call void (ptr, ptr, ...) @g_string_append_printf(ptr noundef %i.c, ptr noundef nonnull @.str.20, i32 noundef %i.o) #8
   %i.p = getelementptr inbounds nuw i8, ptr %i.b, i64 320
   %i.q = load i8, ptr %i.p, align 1, !range !7, !noundef !8
   %i.r = trunc nuw i8 %i.q to i1
@@ -594,7 +597,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
 bb.f:                                             ; preds = %bb.e
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 320
   %i.t = load i32, ptr %i.s, align 8
-  tail call void (ptr, ptr, ...) @g_string_append_printf(ptr noundef %i.c, ptr noundef nonnull @.str.21, i32 noundef %i.t) #7
+  tail call void (ptr, ptr, ...) @g_string_append_printf(ptr noundef %i.c, ptr noundef nonnull @.str.21, i32 noundef %i.t) #8
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
@@ -606,7 +609,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
 bb.h:                                             ; preds = %bb.g
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 324
   %i.y = load i32, ptr %i.x, align 4
-  tail call void (ptr, ptr, ...) @g_string_append_printf(ptr noundef %i.c, ptr noundef nonnull @.str.22, i32 noundef %i.y) #7
+  tail call void (ptr, ptr, ...) @g_string_append_printf(ptr noundef %i.c, ptr noundef nonnull @.str.22, i32 noundef %i.y) #8
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g
@@ -618,25 +621,31 @@ bb.i:                                             ; preds = %bb.h, %bb.g
 bb.j:                                             ; preds = %bb.i
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 328
   %i.ad = load i32, ptr %i.ac, align 8
-  tail call void (ptr, ptr, ...) @g_string_append_printf(ptr noundef %i.c, ptr noundef nonnull @.str.23, i32 noundef %i.ad) #7
+  tail call void (ptr, ptr, ...) @g_string_append_printf(ptr noundef %i.c, ptr noundef nonnull @.str.23, i32 noundef %i.ad) #8
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.i
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 332
   %i.af = load i32, ptr %i.ae, align 4
-  tail call void (ptr, ptr, ...) @g_string_append_printf(ptr noundef %i.c, ptr noundef nonnull @.str.24, i32 noundef %i.af) #7
+  tail call void (ptr, ptr, ...) @g_string_append_printf(ptr noundef %i.c, ptr noundef nonnull @.str.24, i32 noundef %i.af) #8
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 336
   %i.ah = load i32, ptr %i.ag, align 8
-  tail call void (ptr, ptr, ...) @g_string_append_printf(ptr noundef %i.c, ptr noundef nonnull @.str.25, i32 noundef %i.ah) #7
-  %i.ai = tail call ptr @g_string_free(ptr noundef %i.c, i32 noundef 0) #7
+  tail call void (ptr, ptr, ...) @g_string_append_printf(ptr noundef %i.c, ptr noundef nonnull @.str.25, i32 noundef %i.ah) #8
+  %i.ai = tail call ptr @g_string_free(ptr noundef %i.c, i32 noundef 0) #8
   ret ptr %i.ai
 }
+
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
+declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 
 ; Function Attrs: nounwind sspstrong uwtable
 define dso_local noundef zeroext i1 @machine_parse_smp_cache(ptr noundef %0, ptr nofree noundef readonly captures(address_is_null) %1, ptr noundef %2) local_unnamed_addr #0 {
 bb.a:
-  %i.a = tail call ptr @object_get_class(ptr noundef %0) #7
-  %i.b = tail call ptr @object_class_dynamic_cast_assert(ptr noundef %i.a, ptr noundef nonnull @.str.16, ptr noundef nonnull @.str.17, i32 noundef 25, ptr noundef nonnull @__func__.MACHINE_GET_CLASS) #7 ; 2 uses
+  %.sroa.0 = alloca i64, align 8                  ; 6 uses
+  %i.a = tail call ptr @object_get_class(ptr noundef %0) #8
+  %i.b = tail call ptr @object_class_dynamic_cast_assert(ptr noundef %i.a, ptr noundef nonnull @.str.16, ptr noundef nonnull @.str.17, i32 noundef 25, ptr noundef nonnull @__func__.MACHINE_GET_CLASS) #8 ; 2 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
+  store i64 0, ptr %.sroa.0, align 8
   %.not48 = icmp eq ptr %1, null
   br i1 %.not48, label %.preheader, label %.lr.ph
 
@@ -649,20 +658,23 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a, %bb.c
   %.03149 = phi ptr [ %i.v, %bb.c ], [ %1, %bb.a ] ; 2 uses
-  %3 = phi i64 [ %i.u, %bb.c ], [ 0, %bb.a ]      ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %.03149, i64 8 ; 2 uses
   %i.g = load ptr, ptr %i.f, align 8              ; 2 uses
   %i.h = load i32, ptr %i.g, align 4              ; 2 uses
-  %i.i = zext i32 %i.h to i64                     ; 2 uses
+  %i.i = zext i32 %i.h to i64                     ; 3 uses
+  %3 = lshr i64 %i.i, 3
+  %.sroa.0.0..sroa_stride = and i64 %3, 536870904
+  %.sroa.0.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %.sroa.0.0..sroa_stride
+  %.sroa.0.0..sroa.0.0..sroa.0.0. = load i64, ptr %.sroa.0.0..sroa_idx, align 8
   %i.j = and i64 %i.i, 63
   %i.k = shl nuw i64 1, %i.j
-  %i.l = and i64 %i.k, %3
+  %i.l = and i64 %i.k, %.sroa.0.0..sroa.0.0..sroa.0.0.
   %.not37 = icmp eq i64 %i.l, 0
   br i1 %.not37, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph
-  %i.m = tail call ptr @qapi_enum_lookup(ptr noundef nonnull @CacheLevelAndType_lookup, i32 noundef %i.h) #7
-  tail call void (ptr, ptr, i32, ptr, ptr, ...) @error_setg_internal(ptr noundef %2, ptr noundef nonnull @.str, i32 noundef 300, ptr noundef nonnull @__func__.machine_parse_smp_cache, ptr noundef nonnull @.str.11, ptr noundef %i.m) #7
+  %i.m = tail call ptr @qapi_enum_lookup(ptr noundef nonnull @CacheLevelAndType_lookup, i32 noundef %i.h) #8
+  tail call void (ptr, ptr, i32, ptr, ptr, ...) @error_setg_internal(ptr noundef %2, ptr noundef nonnull @.str, i32 noundef 300, ptr noundef nonnull @__func__.machine_parse_smp_cache, ptr noundef nonnull @.str.11, ptr noundef %i.m) #8
   br label %.critedge
 
 bb.c:                                             ; preds = %.lr.ph
@@ -673,17 +685,23 @@ bb.c:                                             ; preds = %.lr.ph
   store i32 %i.o, ptr %i.q, align 4
   %i.r = load ptr, ptr %i.f, align 8
   %i.s = load i32, ptr %i.r, align 4
-  %4 = and i32 %i.s, 63
-  %5 = zext nneg i32 %4 to i64
+  %4 = zext i32 %i.s to i64                       ; 2 uses
+  %5 = and i64 %4, 63
   %i.t = shl nuw i64 1, %5
-  %i.u = or i64 %i.t, %3
+  %6 = lshr i64 %4, 3
+  %.sroa.0.0..sroa_stride39 = and i64 %6, 536870904 ; 2 uses
+  %.sroa.0.0..sroa_idx87 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %.sroa.0.0..sroa_stride39
+  %.sroa.0.0..sroa.0.0..sroa.0.0.42 = load i64, ptr %.sroa.0.0..sroa_idx87, align 8
+  %i.u = or i64 %i.t, %.sroa.0.0..sroa.0.0..sroa.0.0.42
+  %.sroa.0.0..sroa_idx90 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %.sroa.0.0..sroa_stride39
+  store i64 %i.u, ptr %.sroa.0.0..sroa_idx90, align 8
   %i.v = load ptr, ptr %.03149, align 8           ; 2 uses
   %.not = icmp eq ptr %i.v, null
   br i1 %.not, label %.preheader, label %.lr.ph, !llvm.loop !9
 
 .thread39:                                        ; preds = %.preheader
-  %i.w = tail call ptr @object_get_class(ptr noundef nonnull %0) #7
-  %i.x = tail call ptr @object_class_dynamic_cast_assert(ptr noundef %i.w, ptr noundef nonnull @.str.16, ptr noundef nonnull @.str.17, i32 noundef 25, ptr noundef nonnull @__func__.MACHINE_GET_CLASS) #7 ; 0 uses
+  %i.w = tail call ptr @object_get_class(ptr noundef nonnull %0) #8
+  %i.x = tail call ptr @object_class_dynamic_cast_assert(ptr noundef %i.w, ptr noundef nonnull @.str.16, ptr noundef nonnull @.str.17, i32 noundef 25, ptr noundef nonnull @__func__.MACHINE_GET_CLASS) #8 ; 0 uses
   br label %bb.n
 
 bb.d:                                             ; preds = %.preheader
@@ -697,8 +715,8 @@ bb.d:                                             ; preds = %.preheader
 
 bb.e:                                             ; preds = %bb.ag, %bb.x, %bb.o, %bb.d
   %.lcssa = phi i32 [ %i.z, %bb.d ], [ %i.bc, %bb.o ], [ %i.ce, %bb.x ], [ %i.dg, %bb.ag ]
-  %i.ae = tail call ptr @qapi_enum_lookup(ptr noundef nonnull @CacheLevelAndType_lookup, i32 noundef %.lcssa) #7
-  tail call void (ptr, ptr, i32, ptr, ptr, ...) @error_setg_internal(ptr noundef %2, ptr noundef nonnull @.str, i32 noundef 320, ptr noundef nonnull @__func__.machine_parse_smp_cache, ptr noundef nonnull @.str.12, ptr noundef %i.ae) #7
+  %i.ae = tail call ptr @qapi_enum_lookup(ptr noundef nonnull @CacheLevelAndType_lookup, i32 noundef %.lcssa) #8
+  tail call void (ptr, ptr, i32, ptr, ptr, ...) @error_setg_internal(ptr noundef %2, ptr noundef nonnull @.str, i32 noundef 320, ptr noundef nonnull @__func__.machine_parse_smp_cache, ptr noundef nonnull @.str.12, ptr noundef %i.ae) #8
   br label %.critedge
 
 bb.f:                                             ; preds = %bb.d
@@ -706,13 +724,13 @@ bb.f:                                             ; preds = %bb.d
   br i1 %i.af, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.ah, %bb.y, %bb.p, %bb.f
-  %i.ag = tail call ptr @qapi_enum_lookup(ptr noundef nonnull @CpuTopologyLevel_lookup, i32 noundef 0) #7
-  tail call void (ptr, ptr, i32, ptr, ptr, ...) @error_setg_internal(ptr noundef %2, ptr noundef nonnull @.str, i32 noundef 327, ptr noundef nonnull @__func__.machine_parse_smp_cache, ptr noundef nonnull @.str.13, ptr noundef %i.ag) #7
+  %i.ag = tail call ptr @qapi_enum_lookup(ptr noundef nonnull @CpuTopologyLevel_lookup, i32 noundef 0) #8
+  tail call void (ptr, ptr, i32, ptr, ptr, ...) @error_setg_internal(ptr noundef %2, ptr noundef nonnull @.str, i32 noundef 327, ptr noundef nonnull @__func__.machine_parse_smp_cache, ptr noundef nonnull @.str.13, ptr noundef %i.ag) #8
   br label %.critedge
 
 bb.h:                                             ; preds = %bb.f
-  %i.ah = tail call ptr @object_get_class(ptr noundef nonnull %0) #7
-  %i.ai = tail call ptr @object_class_dynamic_cast_assert(ptr noundef %i.ah, ptr noundef nonnull @.str.16, ptr noundef nonnull @.str.17, i32 noundef 25, ptr noundef nonnull @__func__.MACHINE_GET_CLASS) #7 ; 5 uses
+  %i.ah = tail call ptr @object_get_class(ptr noundef nonnull %0) #8
+  %i.ai = tail call ptr @object_class_dynamic_cast_assert(ptr noundef %i.ah, ptr noundef nonnull @.str.16, ptr noundef nonnull @.str.17, i32 noundef 25, ptr noundef nonnull @__func__.MACHINE_GET_CLASS) #8 ; 5 uses
   switch i32 %i.e, label %bb.n [
     i32 2, label %bb.i
     i32 3, label %bb.j
@@ -753,8 +771,8 @@ bb.m:                                             ; preds = %bb.h
 
 machine_check_topo_support.exit:                  ; preds = %bb.an, %bb.am, %bb.al, %bb.ak, %bb.aj, %bb.ae, %bb.ad, %bb.ac, %bb.ab, %bb.aa, %bb.v, %bb.u, %bb.t, %bb.s, %bb.r, %bb.i, %bb.j, %bb.k, %bb.l, %bb.m
   %.lcssa55 = phi i32 [ 2, %bb.i ], [ 3, %bb.j ], [ 4, %bb.k ], [ 6, %bb.l ], [ 7, %bb.m ], [ 7, %bb.r ], [ 6, %bb.s ], [ 4, %bb.t ], [ 3, %bb.u ], [ 2, %bb.v ], [ 7, %bb.aa ], [ 6, %bb.ab ], [ 4, %bb.ac ], [ 3, %bb.ad ], [ 2, %bb.ae ], [ 7, %bb.aj ], [ 6, %bb.ak ], [ 4, %bb.al ], [ 3, %bb.am ], [ 2, %bb.an ]
-  %i.ay = tail call ptr @qapi_enum_lookup(ptr noundef nonnull @CpuTopologyLevel_lookup, i32 noundef range(i32 1, 0) %.lcssa55) #7
-  tail call void (ptr, ptr, i32, ptr, ptr, ...) @error_setg_internal(ptr noundef %2, ptr noundef nonnull @.str, i32 noundef 278, ptr noundef nonnull @__func__.machine_check_topo_support, ptr noundef nonnull @.str.26, ptr noundef %i.ay) #7
+  %i.ay = tail call ptr @qapi_enum_lookup(ptr noundef nonnull @CpuTopologyLevel_lookup, i32 noundef range(i32 1, 0) %.lcssa55) #8
+  tail call void (ptr, ptr, i32, ptr, ptr, ...) @error_setg_internal(ptr noundef %2, ptr noundef nonnull @.str, i32 noundef 278, ptr noundef nonnull @__func__.machine_check_topo_support, ptr noundef nonnull @.str.26, ptr noundef %i.ay) #8
   br label %.critedge
 
 bb.n:                                             ; preds = %bb.h, %bb.k, %bb.i, %bb.j, %bb.m, %bb.l, %.thread39
@@ -777,8 +795,8 @@ bb.p:                                             ; preds = %bb.o
   br i1 %i.bh, label %bb.g, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
-  %i.bi = tail call ptr @object_get_class(ptr noundef nonnull %0) #7
-  %i.bj = tail call ptr @object_class_dynamic_cast_assert(ptr noundef %i.bi, ptr noundef nonnull @.str.16, ptr noundef nonnull @.str.17, i32 noundef 25, ptr noundef nonnull @__func__.MACHINE_GET_CLASS) #7 ; 5 uses
+  %i.bi = tail call ptr @object_get_class(ptr noundef nonnull %0) #8
+  %i.bj = tail call ptr @object_class_dynamic_cast_assert(ptr noundef %i.bi, ptr noundef nonnull @.str.16, ptr noundef nonnull @.str.17, i32 noundef 25, ptr noundef nonnull @__func__.MACHINE_GET_CLASS) #8 ; 5 uses
   switch i32 %i.ba, label %bb.w [
     i32 2, label %bb.v
     i32 3, label %bb.u
@@ -818,8 +836,8 @@ bb.v:                                             ; preds = %bb.q
   br i1 %i.by, label %bb.w, label %machine_check_topo_support.exit
 
 .thread39.1:                                      ; preds = %bb.n
-  %i.bz = tail call ptr @object_get_class(ptr noundef nonnull %0) #7
-  %i.ca = tail call ptr @object_class_dynamic_cast_assert(ptr noundef %i.bz, ptr noundef nonnull @.str.16, ptr noundef nonnull @.str.17, i32 noundef 25, ptr noundef nonnull @__func__.MACHINE_GET_CLASS) #7 ; 0 uses
+  %i.bz = tail call ptr @object_get_class(ptr noundef nonnull %0) #8
+  %i.ca = tail call ptr @object_class_dynamic_cast_assert(ptr noundef %i.bz, ptr noundef nonnull @.str.16, ptr noundef nonnull @.str.17, i32 noundef 25, ptr noundef nonnull @__func__.MACHINE_GET_CLASS) #8 ; 0 uses
   br label %bb.w
 
 bb.w:                                             ; preds = %.thread39.1, %bb.v, %bb.u, %bb.t, %bb.s, %bb.r, %bb.q
@@ -842,8 +860,8 @@ bb.y:                                             ; preds = %bb.x
   br i1 %i.cj, label %bb.g, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
-  %i.ck = tail call ptr @object_get_class(ptr noundef nonnull %0) #7
-  %i.cl = tail call ptr @object_class_dynamic_cast_assert(ptr noundef %i.ck, ptr noundef nonnull @.str.16, ptr noundef nonnull @.str.17, i32 noundef 25, ptr noundef nonnull @__func__.MACHINE_GET_CLASS) #7 ; 5 uses
+  %i.ck = tail call ptr @object_get_class(ptr noundef nonnull %0) #8
+  %i.cl = tail call ptr @object_class_dynamic_cast_assert(ptr noundef %i.ck, ptr noundef nonnull @.str.16, ptr noundef nonnull @.str.17, i32 noundef 25, ptr noundef nonnull @__func__.MACHINE_GET_CLASS) #8 ; 5 uses
   switch i32 %i.cc, label %bb.af [
     i32 2, label %bb.ae
     i32 3, label %bb.ad
@@ -883,8 +901,8 @@ bb.ae:                                            ; preds = %bb.z
   br i1 %i.da, label %bb.af, label %machine_check_topo_support.exit
 
 .thread39.2:                                      ; preds = %bb.w
-  %i.db = tail call ptr @object_get_class(ptr noundef nonnull %0) #7
-  %i.dc = tail call ptr @object_class_dynamic_cast_assert(ptr noundef %i.db, ptr noundef nonnull @.str.16, ptr noundef nonnull @.str.17, i32 noundef 25, ptr noundef nonnull @__func__.MACHINE_GET_CLASS) #7 ; 0 uses
+  %i.db = tail call ptr @object_get_class(ptr noundef nonnull %0) #8
+  %i.dc = tail call ptr @object_class_dynamic_cast_assert(ptr noundef %i.db, ptr noundef nonnull @.str.16, ptr noundef nonnull @.str.17, i32 noundef 25, ptr noundef nonnull @__func__.MACHINE_GET_CLASS) #8 ; 0 uses
   br label %bb.af
 
 bb.af:                                            ; preds = %.thread39.2, %bb.ae, %bb.ad, %bb.ac, %bb.ab, %bb.aa, %bb.z
@@ -907,8 +925,8 @@ bb.ah:                                            ; preds = %bb.ag
   br i1 %i.dl, label %bb.g, label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ah
-  %i.dm = tail call ptr @object_get_class(ptr noundef nonnull %0) #7
-  %i.dn = tail call ptr @object_class_dynamic_cast_assert(ptr noundef %i.dm, ptr noundef nonnull @.str.16, ptr noundef nonnull @.str.17, i32 noundef 25, ptr noundef nonnull @__func__.MACHINE_GET_CLASS) #7 ; 5 uses
+  %i.dm = tail call ptr @object_get_class(ptr noundef nonnull %0) #8
+  %i.dn = tail call ptr @object_class_dynamic_cast_assert(ptr noundef %i.dm, ptr noundef nonnull @.str.16, ptr noundef nonnull @.str.17, i32 noundef 25, ptr noundef nonnull @__func__.MACHINE_GET_CLASS) #8 ; 5 uses
   switch i32 %i.de, label %.critedge38 [
     i32 2, label %bb.an
     i32 3, label %bb.am
@@ -948,8 +966,8 @@ bb.an:                                            ; preds = %bb.ai
   br i1 %i.ec, label %.critedge38, label %machine_check_topo_support.exit
 
 .thread39.3:                                      ; preds = %bb.af
-  %i.ed = tail call ptr @object_get_class(ptr noundef nonnull %0) #7
-  %i.ee = tail call ptr @object_class_dynamic_cast_assert(ptr noundef %i.ed, ptr noundef nonnull @.str.16, ptr noundef nonnull @.str.17, i32 noundef 25, ptr noundef nonnull @__func__.MACHINE_GET_CLASS) #7 ; 0 uses
+  %i.ed = tail call ptr @object_get_class(ptr noundef nonnull %0) #8
+  %i.ee = tail call ptr @object_class_dynamic_cast_assert(ptr noundef %i.ed, ptr noundef nonnull @.str.16, ptr noundef nonnull @.str.17, i32 noundef 25, ptr noundef nonnull @__func__.MACHINE_GET_CLASS) #8 ; 0 uses
   br label %.critedge38
 
 .critedge38:                                      ; preds = %.thread39.3, %bb.an, %bb.am, %bb.al, %bb.ak, %bb.aj, %bb.ai
@@ -959,13 +977,14 @@ bb.an:                                            ; preds = %bb.ai
 
 .critedge:                                        ; preds = %bb.e, %bb.g, %machine_check_topo_support.exit, %.critedge38, %bb.b
   %.3 = phi i1 [ false, %bb.b ], [ true, %.critedge38 ], [ false, %machine_check_topo_support.exit ], [ false, %bb.g ], [ false, %bb.e ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   ret i1 %.3
 }
 
-declare ptr @qapi_enum_lookup(ptr noundef, i32 noundef) local_unnamed_addr #1
+declare ptr @qapi_enum_lookup(ptr noundef, i32 noundef) local_unnamed_addr #2
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(argmem: write) uwtable
-define dso_local void @machine_set_cache_topo_level(ptr nofree noundef writeonly captures(none) %0, i32 noundef %1, i32 noundef %2) local_unnamed_addr #2 {
+define dso_local void @machine_set_cache_topo_level(ptr nofree noundef writeonly captures(none) %0, i32 noundef %1, i32 noundef %2) local_unnamed_addr #3 {
 bb.a:
   %i.a = zext i32 %1 to i64
   %i.b = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.a
@@ -975,7 +994,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(argmem: read) uwtable
-define dso_local i32 @machine_topo_get_cores_per_socket(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #3 {
+define dso_local i32 @machine_topo_get_cores_per_socket(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #4 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 332
   %i.b = load i32, ptr %i.a, align 4
@@ -992,7 +1011,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(argmem: read) uwtable
-define dso_local i32 @machine_topo_get_threads_per_socket(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #3 {
+define dso_local i32 @machine_topo_get_threads_per_socket(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #4 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 336
   %i.b = load i32, ptr %i.a, align 8
@@ -1012,7 +1031,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(argmem: read) uwtable
-define dso_local i32 @machine_get_cache_topo_level(ptr nofree noundef readonly captures(none) %0, i32 noundef %1) local_unnamed_addr #3 {
+define dso_local i32 @machine_get_cache_topo_level(ptr nofree noundef readonly captures(none) %0, i32 noundef %1) local_unnamed_addr #4 {
 bb.a:
   %i.a = zext i32 %1 to i64
   %i.b = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.a
@@ -1030,7 +1049,7 @@ bb.a:
   br i1 %.not.i, label %bb.b, label %smp_cache_topo_cmp.exit
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @__assert_fail(ptr noundef nonnull @.str.27, ptr noundef nonnull @.str, i32 noundef 374, ptr noundef nonnull @__PRETTY_FUNCTION__.smp_cache_topo_cmp) #8
+  tail call void @__assert_fail(ptr noundef nonnull @.str.27, ptr noundef nonnull @.str, i32 noundef 374, ptr noundef nonnull @__PRETTY_FUNCTION__.smp_cache_topo_cmp) #9
   unreachable
 
 smp_cache_topo_cmp.exit:                          ; preds = %bb.a
@@ -1046,7 +1065,7 @@ bb.c:                                             ; preds = %smp_cache_topo_cmp.
   br i1 %.not.i6, label %bb.d, label %smp_cache_topo_cmp.exit7
 
 bb.d:                                             ; preds = %bb.c
-  tail call void @__assert_fail(ptr noundef nonnull @.str.27, ptr noundef nonnull @.str, i32 noundef 374, ptr noundef nonnull @__PRETTY_FUNCTION__.smp_cache_topo_cmp) #8
+  tail call void @__assert_fail(ptr noundef nonnull @.str.27, ptr noundef nonnull @.str, i32 noundef 374, ptr noundef nonnull @__PRETTY_FUNCTION__.smp_cache_topo_cmp) #9
   unreachable
 
 smp_cache_topo_cmp.exit7:                         ; preds = %bb.c
@@ -1054,7 +1073,7 @@ smp_cache_topo_cmp.exit7:                         ; preds = %bb.c
   br i1 %i.h, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %smp_cache_topo_cmp.exit7, %smp_cache_topo_cmp.exit
-  tail call void (ptr, ptr, i32, ptr, ptr, ...) @error_setg_internal(ptr noundef %1, ptr noundef nonnull @.str, i32 noundef 395, ptr noundef nonnull @__func__.machine_check_smp_cache, ptr noundef nonnull @.str.14) #7
+  tail call void (ptr, ptr, i32, ptr, ptr, ...) @error_setg_internal(ptr noundef %1, ptr noundef nonnull @.str, i32 noundef 395, ptr noundef nonnull @__func__.machine_check_smp_cache, ptr noundef nonnull @.str.14) #8
   br label %bb.i
 
 bb.f:                                             ; preds = %smp_cache_topo_cmp.exit7
@@ -1062,7 +1081,7 @@ bb.f:                                             ; preds = %smp_cache_topo_cmp.
   br i1 %.not.i8, label %bb.g, label %smp_cache_topo_cmp.exit9
 
 bb.g:                                             ; preds = %bb.f
-  tail call void @__assert_fail(ptr noundef nonnull @.str.27, ptr noundef nonnull @.str, i32 noundef 374, ptr noundef nonnull @__PRETTY_FUNCTION__.smp_cache_topo_cmp) #8
+  tail call void @__assert_fail(ptr noundef nonnull @.str.27, ptr noundef nonnull @.str, i32 noundef 374, ptr noundef nonnull @__PRETTY_FUNCTION__.smp_cache_topo_cmp) #9
   unreachable
 
 smp_cache_topo_cmp.exit9:                         ; preds = %bb.f
@@ -1072,7 +1091,7 @@ smp_cache_topo_cmp.exit9:                         ; preds = %bb.f
   br i1 %i.k, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %smp_cache_topo_cmp.exit9
-  tail call void (ptr, ptr, i32, ptr, ptr, ...) @error_setg_internal(ptr noundef %1, ptr noundef nonnull @.str, i32 noundef 403, ptr noundef nonnull @__func__.machine_check_smp_cache, ptr noundef nonnull @.str.15) #7
+  tail call void (ptr, ptr, i32, ptr, ptr, ...) @error_setg_internal(ptr noundef %1, ptr noundef nonnull @.str, i32 noundef 403, ptr noundef nonnull @__func__.machine_check_smp_cache, ptr noundef nonnull @.str.15) #8
   br label %bb.i
 
 bb.i:                                             ; preds = %smp_cache_topo_cmp.exit9, %bb.h, %bb.e
@@ -1081,7 +1100,7 @@ bb.i:                                             ; preds = %smp_cache_topo_cmp.
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(argmem: readwrite) uwtable
-define dso_local noundef zeroext i1 @machine_find_lowest_level_cache_at_topo_level(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef writeonly captures(none) %1, i32 noundef %2) local_unnamed_addr #4 {
+define dso_local noundef zeroext i1 @machine_find_lowest_level_cache_at_topo_level(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef writeonly captures(none) %1, i32 noundef %2) local_unnamed_addr #5 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 348
   %i.b = load i32, ptr %i.a, align 4
@@ -1117,7 +1136,7 @@ bb.e:                                             ; preds = %bb.d
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(argmem: read) uwtable
-define dso_local zeroext i1 @machine_defines_cache_at_topo_level(ptr nofree noundef readonly captures(none) %0, i32 noundef %1) local_unnamed_addr #3 {
+define dso_local zeroext i1 @machine_defines_cache_at_topo_level(ptr nofree noundef readonly captures(none) %0, i32 noundef %1) local_unnamed_addr #4 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 348
   %i.b = load i32, ptr %i.a, align 4
@@ -1147,33 +1166,34 @@ bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b,
   ret i1 %.lcssa
 }
 
-declare ptr @object_class_dynamic_cast_assert(ptr noundef, ptr noundef, ptr noundef, i32 noundef, ptr noundef) local_unnamed_addr #1
+declare ptr @object_class_dynamic_cast_assert(ptr noundef, ptr noundef, ptr noundef, i32 noundef, ptr noundef) local_unnamed_addr #2
 
-declare ptr @object_get_class(ptr noundef) local_unnamed_addr #1
+declare ptr @object_get_class(ptr noundef) local_unnamed_addr #2
 
-declare ptr @g_string_new(ptr noundef) local_unnamed_addr #1
+declare ptr @g_string_new(ptr noundef) local_unnamed_addr #2
 
-declare void @g_string_append_printf(ptr noundef, ptr noundef, ...) local_unnamed_addr #1
+declare void @g_string_append_printf(ptr noundef, ptr noundef, ...) local_unnamed_addr #2
 
-declare ptr @g_string_free(ptr noundef, i32 noundef) local_unnamed_addr #1
+declare ptr @g_string_free(ptr noundef, i32 noundef) local_unnamed_addr #2
 
-declare void @g_free(ptr noundef) local_unnamed_addr #1
+declare void @g_free(ptr noundef) local_unnamed_addr #2
 
 ; Function Attrs: noreturn nounwind
-declare void @__assert_fail(ptr noundef, ptr noundef, i32 noundef, ptr noundef) local_unnamed_addr #5
+declare void @__assert_fail(ptr noundef, ptr noundef, i32 noundef, ptr noundef) local_unnamed_addr #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umax.i32(i32, i32) #6
+declare i32 @llvm.umax.i32(i32, i32) #7
 
 attributes #0 = { nounwind sspstrong uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "zero-call-used-regs"="used-gpr" }
-attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "zero-call-used-regs"="used-gpr" }
-attributes #2 = { mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "zero-call-used-regs"="used-gpr" }
-attributes #3 = { mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(argmem: read) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "zero-call-used-regs"="used-gpr" }
-attributes #4 = { mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "zero-call-used-regs"="used-gpr" }
-attributes #5 = { noreturn nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "zero-call-used-regs"="used-gpr" }
-attributes #6 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #7 = { nounwind }
-attributes #8 = { noreturn nounwind }
+attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
+attributes #2 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "zero-call-used-regs"="used-gpr" }
+attributes #3 = { mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "zero-call-used-regs"="used-gpr" }
+attributes #4 = { mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(argmem: read) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "zero-call-used-regs"="used-gpr" }
+attributes #5 = { mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "zero-call-used-regs"="used-gpr" }
+attributes #6 = { noreturn nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "zero-call-used-regs"="used-gpr" }
+attributes #7 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #8 = { nounwind }
+attributes #9 = { noreturn nounwind }
 
 !llvm.module.flags = !{!0, !1, !2, !3, !4, !5}
 !llvm.ident = !{!6}

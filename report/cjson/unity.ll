@@ -204,7 +204,7 @@ UnityFloatsWithin.exit.thread:                    ; preds = %bb.e, %bb.d, %bb.c,
 define dso_local void @UnityAssertFloatSpecial(float noundef %0, ptr nofree noundef readonly captures(address_is_null) %1, i64 noundef %2, i32 noundef %3) local_unnamed_addr #0 {
 bb.a:
   %i.a = alloca [4 x ptr], align 16               ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.a, ptr noundef nonnull align 16 dereferenceable(32) @__const.UnityAssertDoubleSpecial.trait_names, i64 32, i1 false)
   %i.b = and i32 %3, 1
   %.not = icmp eq i32 %i.b, 0
@@ -256,7 +256,7 @@ bb.f:                                             ; preds = %bb.b, %bb.b
 
 bb.g:                                             ; preds = %bb.f, %bb.e, %bb.d, %bb.c
   %.035.in = phi i1 [ %narrow, %bb.f ], [ %narrow47, %bb.c ], [ %narrow44, %bb.d ], [ %i.m, %bb.e ]
-  %.0.shrunk = phi i64 [ 3, %bb.f ], [ 0, %bb.c ], [ 1, %bb.d ], [ 2, %bb.e ]
+  %.0.shrunk = phi i64 [ 24, %bb.f ], [ 0, %bb.c ], [ 8, %bb.d ], [ 16, %bb.e ]
   %i.o = trunc i32 %3 to i1
   %i.p = xor i1 %.035.in, %i.o
   br i1 %i.p, label %bb.h, label %bb.k
@@ -272,8 +272,8 @@ bb.i:                                             ; preds = %bb.h
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h
-  %4 = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %.0.shrunk43
-  %i.q = load ptr, ptr %4, align 8, !tbaa !32
+  %.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 %.0.shrunk43
+  %i.q = load ptr, ptr %.0..sroa_idx, align 8, !tbaa !32
   tail call void @UnityPrint(ptr noundef %i.q)
   tail call void @UnityPrint(ptr noundef nonnull @UnityStrWas)
   %i.r = fpext float %0 to double
@@ -284,7 +284,7 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   unreachable
 
 bb.k:                                             ; preds = %bb.g, %bb.a
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret void
 }
 
@@ -478,7 +478,7 @@ UnityDoublesWithin.exit.thread:                   ; preds = %bb.e, %bb.d, %bb.c,
 define dso_local void @UnityAssertDoubleSpecial(double noundef %0, ptr nofree noundef readonly captures(address_is_null) %1, i64 noundef %2, i32 noundef %3) local_unnamed_addr #0 {
 bb.a:
   %i.a = alloca [4 x ptr], align 16               ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.a, ptr noundef nonnull align 16 dereferenceable(32) @__const.UnityAssertDoubleSpecial.trait_names, i64 32, i1 false)
   %i.b = and i32 %3, 1
   %.not = icmp eq i32 %i.b, 0
@@ -530,7 +530,7 @@ bb.f:                                             ; preds = %bb.b, %bb.b
 
 bb.g:                                             ; preds = %bb.f, %bb.e, %bb.d, %bb.c
   %.035.in = phi i1 [ %narrow, %bb.f ], [ %narrow47, %bb.c ], [ %narrow44, %bb.d ], [ %i.m, %bb.e ]
-  %.0.shrunk = phi i64 [ 3, %bb.f ], [ 0, %bb.c ], [ 1, %bb.d ], [ 2, %bb.e ]
+  %.0.shrunk = phi i64 [ 24, %bb.f ], [ 0, %bb.c ], [ 8, %bb.d ], [ 16, %bb.e ]
   %i.o = trunc i32 %3 to i1
   %i.p = xor i1 %.035.in, %i.o
   br i1 %i.p, label %bb.h, label %bb.k
@@ -546,8 +546,8 @@ bb.i:                                             ; preds = %bb.h
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h
-  %4 = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %.0.shrunk43
-  %i.q = load ptr, ptr %4, align 8, !tbaa !32
+  %.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 %.0.shrunk43
+  %i.q = load ptr, ptr %.0..sroa_idx, align 8, !tbaa !32
   tail call void @UnityPrint(ptr noundef %i.q)
   tail call void @UnityPrint(ptr noundef nonnull @UnityStrWas)
   tail call void @UnityPrintFloat(double noundef %0)
@@ -557,7 +557,7 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   unreachable
 
 bb.k:                                             ; preds = %bb.g, %bb.a
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret void
 }
 

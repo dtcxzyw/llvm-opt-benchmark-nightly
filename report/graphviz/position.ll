@@ -19,7 +19,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define i32 @dot_position(ptr noundef %0) local_unnamed_addr #0 {
 bb.a:
-  %1 = alloca [2 x i32], align 4                  ; 5 uses
+  %.sroa.0.i = alloca i64, align 8                ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 19 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !8
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 256
@@ -388,7 +388,7 @@ allocate_aux_edges.exit.loopexit.i:               ; preds = %gv_calloc.exit23.i.
 
 allocate_aux_edges.exit.i:                        ; preds = %allocate_aux_edges.exit.loopexit.i, %bb.r
   %i.fb = phi ptr [ %.pre.i, %allocate_aux_edges.exit.loopexit.i ], [ %.val.i, %bb.r ] ; 6 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %1) #14
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i)
   %i.fc = getelementptr inbounds nuw i8, ptr %i.fb, i64 264
   %i.fd = load ptr, ptr %i.fc, align 8, !tbaa !41
   %i.fe = getelementptr inbounds nuw i8, ptr %0, i64 120
@@ -402,8 +402,8 @@ allocate_aux_edges.exit.i:                        ; preds = %allocate_aux_edges.
   %i.fl = getelementptr inbounds nuw i8, ptr %i.fb, i64 352
   %i.fm = load i32, ptr %i.fl, align 8, !tbaa !84 ; 2 uses
   %.262.i.i = select i1 %.not.i5.i, i32 %i.fm, i32 5
-  store i32 %i.fm, ptr %1, align 4, !tbaa !85
-  %i.fn = getelementptr inbounds nuw i8, ptr %1, i64 4
+  store i32 %i.fm, ptr %.sroa.0.i, align 8, !tbaa !85
+  %i.fn = getelementptr inbounds nuw i8, ptr %.sroa.0.i, i64 4
   store i32 %.262.i.i, ptr %i.fn, align 4, !tbaa !85
   %i.fo = getelementptr inbounds nuw i8, ptr %i.fb, i64 336
   %i.fp = load i32, ptr %i.fo, align 8, !tbaa !39 ; 2 uses
@@ -432,9 +432,10 @@ allocate_aux_edges.exit.i:                        ; preds = %allocate_aux_edges.
   br i1 %i.gc, label %.lr.ph221.i.i, label %._crit_edge222.i.i
 
 .lr.ph221.i.i:                                    ; preds = %.lr.ph226.i.i
-  %i.gd = and i64 %indvars.iv231.i.i, 1
-  %2 = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.gd
-  %i.ge = load i32, ptr %2, align 4, !tbaa !85
+  %1 = shl i64 %indvars.iv231.i.i, 2
+  %i.gd = and i64 %1, 4
+  %.sroa.0.i.0.i.0.i.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0.i, i64 %i.gd
+  %i.ge = load i32, ptr %.sroa.0.i.0.i.0.i.0..sroa_idx, align 4, !tbaa !85
   %i.gf = sitofp i32 %i.ge to double
   br label %bb.x
 
@@ -837,7 +838,7 @@ bb.aw:                                            ; preds = %gv_alloc.exit22.i20
 
 make_LR_constraints.exit.i:                       ; preds = %._crit_edge222.i.i, %allocate_aux_edges.exit.i
   %i.rw = phi ptr [ %i.fb, %allocate_aux_edges.exit.i ], [ %i.rs, %._crit_edge222.i.i ] ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %1) #14
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i)
   %i.rx = getelementptr inbounds nuw i8, ptr %i.rw, i64 256
   %.057.i.i = load ptr, ptr %i.rx, align 8, !tbaa !46 ; 2 uses
   %.not58.i.i = icmp eq ptr %.057.i.i, null

@@ -204,21 +204,20 @@ bb.f:                                             ; preds = %bb.d
   br i1 %i.u, label %bb.j, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.v = call noundef zeroext i1 @_RNvMNtCsdVrXiLXuAnx_6parser6parserNtB2_6Parser2at(ptr noundef nonnull align 8 %0, i16 noundef 28)
+  %i.v = call noundef zeroext i1 @_RNvMNtCsdVrXiLXuAnx_6parser6parserNtB2_6Parser2at(ptr noundef nonnull align 8 %0, i16 noundef 27)
   br i1 %i.v, label %bb.j, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %i.w = call noundef zeroext i1 @_RNvMNtCsdVrXiLXuAnx_6parser6parserNtB2_6Parser2at(ptr noundef nonnull align 8 %0, i16 noundef 26)
+  %i.w = call noundef zeroext i1 @_RNvMNtCsdVrXiLXuAnx_6parser6parserNtB2_6Parser2at(ptr noundef nonnull align 8 %0, i16 noundef 27)
   br i1 %i.w, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.d, %bb.aa, %bb.w, %bb.n
   ret void
 
 bb.j:                                             ; preds = %bb.h, %bb.g, %bb.f
-  %.lcssa = phi i16 [ 27, %bb.f ], [ 28, %bb.g ], [ 26, %bb.h ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
   call void @_RNvMs0_NtCsdVrXiLXuAnx_6parser6parserNtB5_15CompletedMarker7precede(ptr noalias nofree noundef nonnull sret([40 x i8]) align 8 captures(none) dereferenceable(40) %i.e, ptr noalias nofree noundef nonnull readonly align 4 captures(none) dereferenceable(12) %i.f, ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %0)
-  invoke void @_RNvMNtCsdVrXiLXuAnx_6parser6parserNtB2_6Parser4bump(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %0, i16 noundef %.lcssa)
+  invoke void @_RNvMNtCsdVrXiLXuAnx_6parser6parserNtB2_6Parser4bump(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %0, i16 noundef 27)
           to label %bb.k unwind label %bb.p
 
 bb.k:                                             ; preds = %bb.j

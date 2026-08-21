@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %_RNvMNtCshzWfHUSfYa
 
 .outer._crit_edge:                                ; preds = %.outer, %_RNvMNtCshzWfHUSfYae_4core5sliceSNtCs9CN1NTpuHUY_14icu_normalizer17CharacterAndClass12split_at_mutBw_.exit, %bb.a
   %.sroa.0.0.ph.lcssa118 = phi ptr [ %.sroa.0.0.ph128, %_RNvMNtCshzWfHUSfYae_4core5sliceSNtCs9CN1NTpuHUY_14icu_normalizer17CharacterAndClass12split_at_mutBw_.exit ], [ %0, %bb.a ], [ %i.lh, %.outer ] ; 18 uses
-  %.sroa.16.0.lcssa = phi i64 [ %.sroa.27.2.lcssa.i, %_RNvMNtCshzWfHUSfYae_4core5sliceSNtCs9CN1NTpuHUY_14icu_normalizer17CharacterAndClass12split_at_mutBw_.exit ], [ %1, %bb.a ], [ %i.ks, %.outer ] ; 10 uses
+  %.sroa.16.0.lcssa = phi i64 [ %.sroa.27.2.lcssa.i, %_RNvMNtCshzWfHUSfYae_4core5sliceSNtCs9CN1NTpuHUY_14icu_normalizer17CharacterAndClass12split_at_mutBw_.exit ], [ %1, %bb.a ], [ %i.ks, %.outer ] ; 9 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !47)
   call void @llvm.experimental.noalias.scope.decl(metadata !50)
   %i.f = icmp samesign ult i64 %.sroa.16.0.lcssa, 2
@@ -216,7 +216,7 @@ bb.c:                                             ; preds = %.outer._crit_edge
   br i1 %i.h, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.i = lshr i64 %.sroa.16.0.lcssa, 1            ; 12 uses
+  %i.i = lshr i64 %.sroa.16.0.lcssa, 1            ; 11 uses
   %i.j = icmp samesign ugt i64 %.sroa.16.0.lcssa, 15
   br i1 %i.j, label %bb.g, label %bb.f
 
@@ -356,22 +356,15 @@ bb.i:                                             ; preds = %bb.f
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h, %bb.g
-  %.sroa.0.0.i = phi i64 [ 8, %bb.g ], [ 4, %bb.h ], [ 1, %bb.i ] ; 4 uses
-  %7 = sub nsw i64 %.sroa.16.0.lcssa, %i.i        ; 2 uses
+  %.sroa.0.0.i = phi i64 [ 8, %bb.g ], [ 4, %bb.h ], [ 1, %bb.i ] ; 3 uses
   %i.ct = icmp samesign ult i64 %.sroa.0.0.i, %i.i
-  br i1 %i.ct, label %.lr.ph.i, label %.loopexit.i
+  br i1 %i.ct, label %.lr.ph.i, label %.loopexit.1.i
 
-.loopexit.i:                                      ; preds = %_RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6shared9smallsort11insert_tailNtCs9CN1NTpuHUY_14icu_normalizer17CharacterAndClassNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB18_11sort_by_keyNtB1a_23CanonicalCombiningClassNCNvB1a_17sort_slice_by_cccs_0E0EB1a_.exit.i, %bb.j
-  %8 = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0.0.ph.lcssa118, i64 %i.i
-  %9 = getelementptr [4 x i8], ptr %2, i64 %i.i   ; 6 uses
-  %10 = icmp ult i64 %.sroa.0.0.i, %7
-  br i1 %10, label %.lr.ph.1.i, label %.loopexit.1.i
-
-.lr.ph.1.i:                                       ; preds = %.loopexit.i, %_RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6shared9smallsort11insert_tailNtCs9CN1NTpuHUY_14icu_normalizer17CharacterAndClassNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB18_11sort_by_keyNtB1a_23CanonicalCombiningClassNCNvB1a_17sort_slice_by_cccs_0E0EB1a_.exit.1.i
-  %.sroa.05.08.1.i = phi i64 [ %i.dg, %_RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6shared9smallsort11insert_tailNtCs9CN1NTpuHUY_14icu_normalizer17CharacterAndClassNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB18_11sort_by_keyNtB1a_23CanonicalCombiningClassNCNvB1a_17sort_slice_by_cccs_0E0EB1a_.exit.1.i ], [ %.sroa.0.0.i, %.loopexit.i ] ; 4 uses
-  %i.cu = getelementptr inbounds nuw [4 x i8], ptr %8, i64 %.sroa.05.08.1.i
+.lr.ph.1.i:                                       ; preds = %_RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6shared9smallsort11insert_tailNtCs9CN1NTpuHUY_14icu_normalizer17CharacterAndClassNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB18_11sort_by_keyNtB1a_23CanonicalCombiningClassNCNvB1a_17sort_slice_by_cccs_0E0EB1a_.exit.i, %_RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6shared9smallsort11insert_tailNtCs9CN1NTpuHUY_14icu_normalizer17CharacterAndClassNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB18_11sort_by_keyNtB1a_23CanonicalCombiningClassNCNvB1a_17sort_slice_by_cccs_0E0EB1a_.exit.1.i
+  %.sroa.05.08.1.i = phi i64 [ %i.dg, %_RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6shared9smallsort11insert_tailNtCs9CN1NTpuHUY_14icu_normalizer17CharacterAndClassNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB18_11sort_by_keyNtB1a_23CanonicalCombiningClassNCNvB1a_17sort_slice_by_cccs_0E0EB1a_.exit.1.i ], [ %.sroa.0.0.i, %_RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6shared9smallsort11insert_tailNtCs9CN1NTpuHUY_14icu_normalizer17CharacterAndClassNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB18_11sort_by_keyNtB1a_23CanonicalCombiningClassNCNvB1a_17sort_slice_by_cccs_0E0EB1a_.exit.i ] ; 4 uses
+  %i.cu = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0.0.ph.lcssa118, i64 %.sroa.05.08.1.i
   %.idx329 = shl nuw nsw i64 %.sroa.05.08.1.i, 2
-  %i.cv = getelementptr inbounds nuw i8, ptr %9, i64 %.idx329 ; 3 uses
+  %i.cv = getelementptr inbounds nuw i8, ptr %2, i64 %.idx329 ; 3 uses
   %i.cw = load i32, ptr %i.cu, align 4, !alias.scope !47, !noalias !50 ; 3 uses
   store i32 %i.cw, ptr %i.cv, align 4, !alias.scope !50, !noalias !47
   %i.cx = getelementptr inbounds i8, ptr %i.cv, i64 -4 ; 2 uses
@@ -388,7 +381,7 @@ bb.j:                                             ; preds = %bb.i, %bb.h, %bb.g
 
 .preheader.1.i:                                   ; preds = %.lr.ph309
   store i32 %.val8.i48.1.i, ptr %.sroa.0.0.i47.1.i308, align 4, !alias.scope !50, !noalias !47
-  %i.dc = icmp eq ptr %i.dd, %9
+  %i.dc = icmp eq ptr %i.dd, %2
   br i1 %i.dc, label %._crit_edge310, label %.lr.ph309
 
 .lr.ph309:                                        ; preds = %.preheader.1.i.preheader, %.preheader.1.i
@@ -400,21 +393,22 @@ bb.j:                                             ; preds = %bb.i, %bb.h, %bb.g
   br i1 %i.df, label %.preheader.1.i, label %._crit_edge310
 
 ._crit_edge310:                                   ; preds = %.preheader.1.i, %.lr.ph309, %.preheader.1.i.preheader
-  %.sroa.0.0.i47.lcssa.1.i = phi ptr [ %9, %.preheader.1.i.preheader ], [ %9, %.preheader.1.i ], [ %.sroa.0.0.i47.1.i308, %.lr.ph309 ]
+  %.sroa.0.0.i47.lcssa.1.i = phi ptr [ %2, %.preheader.1.i.preheader ], [ %2, %.preheader.1.i ], [ %.sroa.0.0.i47.1.i308, %.lr.ph309 ]
   store i32 %i.cw, ptr %.sroa.0.0.i47.lcssa.1.i, align 4, !alias.scope !50, !noalias !52
   br label %_RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6shared9smallsort11insert_tailNtCs9CN1NTpuHUY_14icu_normalizer17CharacterAndClassNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB18_11sort_by_keyNtB1a_23CanonicalCombiningClassNCNvB1a_17sort_slice_by_cccs_0E0EB1a_.exit.1.i
 
 _RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6shared9smallsort11insert_tailNtCs9CN1NTpuHUY_14icu_normalizer17CharacterAndClassNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB18_11sort_by_keyNtB1a_23CanonicalCombiningClassNCNvB1a_17sort_slice_by_cccs_0E0EB1a_.exit.1.i: ; preds = %._crit_edge310, %.lr.ph.1.i
   %i.dg = add nuw i64 %.sroa.05.08.1.i, 1         ; 2 uses
-  %exitcond.1.not.i = icmp eq i64 %i.dg, %7
+  %exitcond.1.not.i = icmp eq i64 %i.dg, %i.i
   br i1 %exitcond.1.not.i, label %.loopexit.1.i, label %.lr.ph.1.i
 
-.loopexit.1.i:                                    ; preds = %_RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6shared9smallsort11insert_tailNtCs9CN1NTpuHUY_14icu_normalizer17CharacterAndClassNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB18_11sort_by_keyNtB1a_23CanonicalCombiningClassNCNvB1a_17sort_slice_by_cccs_0E0EB1a_.exit.1.i, %.loopexit.i
+.loopexit.1.i:                                    ; preds = %_RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6shared9smallsort11insert_tailNtCs9CN1NTpuHUY_14icu_normalizer17CharacterAndClassNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB18_11sort_by_keyNtB1a_23CanonicalCombiningClassNCNvB1a_17sort_slice_by_cccs_0E0EB1a_.exit.1.i, %bb.j
   call void @llvm.experimental.noalias.scope.decl(metadata !57)
   %i.dh = add nsw i64 %.sroa.16.0.lcssa, -1       ; 2 uses
-  %i.di = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0.0.ph.lcssa118, i64 %i.dh
-  %i.dj = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.dh
-  %i.dk = getelementptr i8, ptr %9, i64 -4
+  %7 = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0.0.ph.lcssa118, i64 %i.dh
+  %i.di = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.dh
+  %i.dj = getelementptr [4 x i8], ptr %2, i64 %i.i ; 2 uses
+  %i.dk = getelementptr i8, ptr %i.dj, i64 -4
   br label %.lr.ph.i.i
 
 ._crit_edge.i.i:                                  ; preds = %.lr.ph.i.i
@@ -428,10 +422,10 @@ _RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6shared9smallsort11insert_tailNtCs9CN
   %.sroa.0.014.i.i = phi ptr [ %i.dz, %.lr.ph.i.i ], [ %.sroa.0.0.ph.lcssa118, %.loopexit.1.i ] ; 2 uses
   %.sroa.04.013.i.i = phi i64 [ %i.dp, %.lr.ph.i.i ], [ 0, %.loopexit.1.i ]
   %.sroa.06.012.i.i = phi ptr [ %i.dy, %.lr.ph.i.i ], [ %2, %.loopexit.1.i ] ; 2 uses
-  %.sroa.011.011.i.i = phi ptr [ %i.dw, %.lr.ph.i.i ], [ %9, %.loopexit.1.i ] ; 2 uses
+  %.sroa.011.011.i.i = phi ptr [ %i.dw, %.lr.ph.i.i ], [ %i.dj, %.loopexit.1.i ] ; 2 uses
   %.sroa.015.010.i.i = phi ptr [ %i.eg, %.lr.ph.i.i ], [ %i.dk, %.loopexit.1.i ] ; 2 uses
-  %.sroa.017.09.i.i = phi ptr [ %i.ef, %.lr.ph.i.i ], [ %i.dj, %.loopexit.1.i ] ; 2 uses
-  %.sroa.019.08.i.i = phi ptr [ %i.eh, %.lr.ph.i.i ], [ %i.di, %.loopexit.1.i ] ; 2 uses
+  %.sroa.017.09.i.i = phi ptr [ %i.ef, %.lr.ph.i.i ], [ %i.di, %.loopexit.1.i ] ; 2 uses
+  %.sroa.019.08.i.i = phi ptr [ %i.eh, %.lr.ph.i.i ], [ %7, %.loopexit.1.i ] ; 2 uses
   %i.dp = add nuw nsw i64 %.sroa.04.013.i.i, 1    ; 2 uses
   %.sroa.011.0.val.i.i = load i32, ptr %.sroa.011.011.i.i, align 4, !alias.scope !60, !noalias !47, !noundef !18 ; 2 uses
   %.sroa.06.0.val.i.i = load i32, ptr %.sroa.06.012.i.i, align 4, !alias.scope !60, !noalias !47, !noundef !18 ; 2 uses
@@ -536,7 +530,7 @@ bb.n:                                             ; preds = %bb.m
 _RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6shared9smallsort11insert_tailNtCs9CN1NTpuHUY_14icu_normalizer17CharacterAndClassNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB18_11sort_by_keyNtB1a_23CanonicalCombiningClassNCNvB1a_17sort_slice_by_cccs_0E0EB1a_.exit.i: ; preds = %._crit_edge305, %.lr.ph.i
   %i.ff = add nuw i64 %.sroa.05.08.i, 1           ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.ff, %i.i
-  br i1 %exitcond.not.i, label %.loopexit.i, label %.lr.ph.i
+  br i1 %exitcond.not.i, label %.lr.ph.1.i, label %.lr.ph.i
 
 .lr.ph._crit_edge:                                ; preds = %.lr.ph, %bb.b
   %.sroa.16.0121.lcssa = phi i64 [ %.sroa.27.2.lcssa.i, %bb.b ], [ %.sroa.16.0.ph127, %.lr.ph ]

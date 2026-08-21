@@ -204,7 +204,7 @@ bb.a:
   %i.b = alloca i32, align 4                      ; 5 uses
   %i.c = alloca [32 x i8], align 16               ; 7 uses
   %i.d = alloca i32, align 4                      ; 7 uses
-  %2 = alloca %"class.ncnn::CpuSet", align 8      ; 11 uses
+  %.sroa.0133 = alloca [16 x i64], align 8        ; 15 uses
   %i.e = alloca [256 x i8], align 16              ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #17
   %i.f = call i32 (ptr, ptr, ...) @sprintf(ptr noundef nonnull dereferenceable(1) %i.a, ptr noundef nonnull dereferenceable(1) @.str.25, i32 noundef %0, i32 noundef 0) #17 ; 0 uses
@@ -288,8 +288,8 @@ bb.h:                                             ; preds = %bb.g
   br label %.critedge
 
 .critedge111:                                     ; preds = %bb.g
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #17
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(128) %2, i8 0, i64 128, i1 false)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0133)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(128) %.sroa.0133, i8 0, i64 128, i1 false)
   %i.ah = call i32 (ptr, ptr, ...) @sprintf(ptr noundef nonnull dereferenceable(1) %i.a, ptr noundef nonnull dereferenceable(1) @.str.33, i32 noundef %0, i32 noundef %.076169) #17 ; 0 uses
   %i.ai = call noalias ptr @fopen(ptr noundef nonnull %i.a, ptr noundef nonnull @.str.7) ; 3 uses
   %.not100 = icmp eq ptr %i.ai, null
@@ -342,11 +342,13 @@ bb.j:                                             ; preds = %bb.i
 bb.k:                                             ; preds = %.lr.ph175
   %i.bb = and i64 %indvars.iv198, 60
   %i.bc = shl nuw nsw i64 1, %i.bb
-  %i.bd = lshr i64 %indvars.iv198, 6
-  %3 = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %i.bd ; 2 uses
-  %i.be = load i64, ptr %3, align 8, !tbaa !9
+  %i.bd = lshr i64 %indvars.iv198, 3
+  %.sroa.0133.0..sroa_stride = and i64 %i.bd, 120 ; 2 uses
+  %.sroa.0133.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0133, i64 %.sroa.0133.0..sroa_stride
+  %i.be = load i64, ptr %.sroa.0133.0..sroa_idx, align 8, !tbaa !9
   %i.bf = or i64 %i.be, %i.bc
-  store i64 %i.bf, ptr %3, align 8, !tbaa !9
+  %.sroa.0133.0..sroa_idx329 = getelementptr inbounds nuw i8, ptr %.sroa.0133, i64 %.sroa.0133.0..sroa_stride
+  store i64 %i.bf, ptr %.sroa.0133.0..sroa_idx329, align 8, !tbaa !9
   br label %_ZN4ncnn6CpuSet6enableEi.exit
 
 _ZN4ncnn6CpuSet6enableEi.exit:                    ; preds = %bb.k, %.lr.ph175
@@ -358,11 +360,13 @@ _ZN4ncnn6CpuSet6enableEi.exit:                    ; preds = %bb.k, %.lr.ph175
 bb.l:                                             ; preds = %_ZN4ncnn6CpuSet6enableEi.exit
   %i.bh = and i64 %indvars.iv198, 60
   %i.bi = shl nuw nsw i64 2, %i.bh
-  %i.bj = lshr i64 %indvars.iv198, 6
-  %4 = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %i.bj ; 2 uses
-  %i.bk = load i64, ptr %4, align 8, !tbaa !9
+  %i.bj = lshr i64 %indvars.iv198, 3
+  %.sroa.0133.0..sroa_stride137 = and i64 %i.bj, 120 ; 2 uses
+  %.sroa.0133.0..sroa_idx332 = getelementptr inbounds nuw i8, ptr %.sroa.0133, i64 %.sroa.0133.0..sroa_stride137
+  %i.bk = load i64, ptr %.sroa.0133.0..sroa_idx332, align 8, !tbaa !9
   %i.bl = or i64 %i.bk, %i.bi
-  store i64 %i.bl, ptr %4, align 8, !tbaa !9
+  %.sroa.0133.0..sroa_idx335 = getelementptr inbounds nuw i8, ptr %.sroa.0133, i64 %.sroa.0133.0..sroa_stride137
+  store i64 %i.bl, ptr %.sroa.0133.0..sroa_idx335, align 8, !tbaa !9
   br label %_ZN4ncnn6CpuSet6enableEi.exit117
 
 _ZN4ncnn6CpuSet6enableEi.exit117:                 ; preds = %bb.l, %_ZN4ncnn6CpuSet6enableEi.exit
@@ -374,11 +378,13 @@ _ZN4ncnn6CpuSet6enableEi.exit117:                 ; preds = %bb.l, %_ZN4ncnn6Cpu
 bb.m:                                             ; preds = %_ZN4ncnn6CpuSet6enableEi.exit117
   %i.bn = and i64 %indvars.iv198, 60
   %i.bo = shl nuw nsw i64 4, %i.bn
-  %i.bp = lshr i64 %indvars.iv198, 6
-  %5 = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %i.bp ; 2 uses
-  %i.bq = load i64, ptr %5, align 8, !tbaa !9
+  %i.bp = lshr i64 %indvars.iv198, 3
+  %.sroa.0133.0..sroa_stride144 = and i64 %i.bp, 120 ; 2 uses
+  %.sroa.0133.0..sroa_idx338 = getelementptr inbounds nuw i8, ptr %.sroa.0133, i64 %.sroa.0133.0..sroa_stride144
+  %i.bq = load i64, ptr %.sroa.0133.0..sroa_idx338, align 8, !tbaa !9
   %i.br = or i64 %i.bq, %i.bo
-  store i64 %i.br, ptr %5, align 8, !tbaa !9
+  %.sroa.0133.0..sroa_idx341 = getelementptr inbounds nuw i8, ptr %.sroa.0133, i64 %.sroa.0133.0..sroa_stride144
+  store i64 %i.br, ptr %.sroa.0133.0..sroa_idx341, align 8, !tbaa !9
   br label %_ZN4ncnn6CpuSet6enableEi.exit118
 
 _ZN4ncnn6CpuSet6enableEi.exit118:                 ; preds = %bb.m, %_ZN4ncnn6CpuSet6enableEi.exit117
@@ -390,11 +396,13 @@ _ZN4ncnn6CpuSet6enableEi.exit118:                 ; preds = %bb.m, %_ZN4ncnn6Cpu
 bb.n:                                             ; preds = %_ZN4ncnn6CpuSet6enableEi.exit118
   %i.bt = and i64 %indvars.iv198, 60
   %i.bu = shl nuw i64 8, %i.bt
-  %i.bv = lshr i64 %indvars.iv198, 6
-  %6 = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %i.bv ; 2 uses
-  %i.bw = load i64, ptr %6, align 8, !tbaa !9
+  %i.bv = lshr i64 %indvars.iv198, 3
+  %.sroa.0133.0..sroa_stride151 = and i64 %i.bv, 120 ; 2 uses
+  %.sroa.0133.0..sroa_idx344 = getelementptr inbounds nuw i8, ptr %.sroa.0133, i64 %.sroa.0133.0..sroa_stride151
+  %i.bw = load i64, ptr %.sroa.0133.0..sroa_idx344, align 8, !tbaa !9
   %i.bx = or i64 %i.bw, %i.bu
-  store i64 %i.bx, ptr %6, align 8, !tbaa !9
+  %.sroa.0133.0..sroa_idx347 = getelementptr inbounds nuw i8, ptr %.sroa.0133, i64 %.sroa.0133.0..sroa_stride151
+  store i64 %i.bx, ptr %.sroa.0133.0..sroa_idx347, align 8, !tbaa !9
   br label %_ZN4ncnn6CpuSet6enableEi.exit119
 
 _ZN4ncnn6CpuSet6enableEi.exit119:                 ; preds = %bb.n, %_ZN4ncnn6CpuSet6enableEi.exit118
@@ -412,14 +420,16 @@ vector.body:                                      ; preds = %vector.body, %._cri
   %vec.phi = phi <2 x i32> [ zeroinitializer, %._crit_edge ], [ %i.cl, %vector.body ]
   %vec.phi248 = phi <2 x i32> [ zeroinitializer, %._crit_edge ], [ %i.cm, %vector.body ]
   %step.add = add nuw <2 x i64> %vec.ind, splat (i64 2)
-  %i.bz = lshr i64 %index, 6
-  %i.ca = lshr i64 %index, 6
-  %7 = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %i.bz
-  %8 = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %i.ca
-  %i.cb = load i64, ptr %7, align 8, !tbaa !9
+  %i.bz = lshr i64 %index, 3
+  %i.ca = lshr i64 %index, 3
+  %2 = and i64 %i.bz, 1152921504606846968
+  %3 = and i64 %i.ca, 1152921504606846968
+  %.sroa.0133.0..sroa_idx353 = getelementptr inbounds nuw i8, ptr %.sroa.0133, i64 %2
+  %i.cb = load i64, ptr %.sroa.0133.0..sroa_idx353, align 8, !tbaa !9
   %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %i.cb, i64 0
   %broadcast.splat = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer
-  %i.cc = load i64, ptr %8, align 8, !tbaa !9
+  %.sroa.0133.0..sroa_idx356 = getelementptr inbounds nuw i8, ptr %.sroa.0133, i64 %3
+  %i.cc = load i64, ptr %.sroa.0133.0..sroa_idx356, align 8, !tbaa !9
   %broadcast.splatinsert249 = insertelement <2 x i64> poison, i64 %i.cc, i64 0
   %broadcast.splat250 = shufflevector <2 x i64> %broadcast.splatinsert249, <2 x i64> poison, <2 x i32> zeroinitializer
   %i.cd = and <2 x i64> %vec.ind, splat (i64 63)
@@ -477,9 +487,10 @@ _ZNSt6vectorIiSaIiEED2Ev.exit:                    ; preds = %._crit_edge185, %bb
   br i1 %i.da, label %_ZNK4ncnn6CpuSet10is_enabledEi.exit, label %_ZNK4ncnn6CpuSet10is_enabledEi.exit.thread
 
 _ZNK4ncnn6CpuSet10is_enabledEi.exit:              ; preds = %.lr.ph184
-  %i.db = lshr i64 %indvars.iv203, 6
-  %9 = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %i.db
-  %i.dc = load i64, ptr %9, align 8, !tbaa !9
+  %i.db = lshr i64 %indvars.iv203, 3
+  %.sroa.0133.0..sroa_stride162 = and i64 %i.db, 120
+  %.sroa.0133.0..sroa_idx350 = getelementptr inbounds nuw i8, ptr %.sroa.0133, i64 %.sroa.0133.0..sroa_stride162
+  %i.dc = load i64, ptr %.sroa.0133.0..sroa_idx350, align 8, !tbaa !9
   %i.dd = and i64 %indvars.iv203, 63
   %i.de = lshr i64 %i.dc, %i.dd
   %i.df = trunc i64 %i.de to i1
@@ -620,14 +631,14 @@ bb.aa:                                            ; preds = %.thread221, %bb.z
 
 _ZNSt6vectorIiSaIiEED2Ev.exit123:                 ; preds = %bb.z, %bb.aa
   %.pn225 = phi { ptr, i32 } [ %.pn, %bb.z ], [ %.pn224, %bb.aa ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #17
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0133)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #17
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #17
   resume { ptr, i32 } %.pn225
 
 .critedge113:                                     ; preds = %.thread144, %.critedge111, %_ZNSt6vectorIiSaIiEED2Ev.exit, %bb.o
   %.482 = phi i32 [ %i.cr, %bb.o ], [ %i.cz, %_ZNSt6vectorIiSaIiEED2Ev.exit ], [ 0, %.thread144 ], [ 0, %.critedge111 ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #17
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0133)
   br label %.critedge
 
 .critedge:                                        ; preds = %bb.h, %bb.f, %.critedge113

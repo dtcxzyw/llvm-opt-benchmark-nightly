@@ -205,7 +205,7 @@ bb.a:
   %i.d = alloca [3 x i64], align 16               ; 6 uses
   %i.e = alloca i32, align 4                      ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #7
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #7
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %i.d, i8 0, i64 24, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #7
   %i.f = tail call i32 @tvb_reported_length(ptr noundef %0)
@@ -608,10 +608,10 @@ bb.ca:                                            ; preds = %bb.ed, %.lr.ph.i151
   br i1 %.not36.i, label %bb.ed, label %bb.cb
 
 bb.cb:                                            ; preds = %bb.ca
-  %.udiv125.i = lshr i64 %indvars.iv.i152, 6
-  %i.xd = and i64 %.udiv125.i, 67108863
-  %4 = getelementptr [8 x i8], ptr %i.d, i64 %i.xd
-  %i.xe = load i64, ptr %4, align 8
+  %.udiv125.i = lshr i64 %indvars.iv.i152, 3
+  %i.xd = and i64 %.udiv125.i, 536870904
+  %.0..0..0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.xd
+  %i.xe = load i64, ptr %.0..0..0..sroa_idx, align 8
   %narrow.i = xor i32 %.urem.i, 63
   %i.xf = zext nneg i32 %narrow.i to i64
   %i.xg = shl nuw nsw i64 1, %i.xf
@@ -1014,7 +1014,7 @@ bb.ed:                                            ; preds = %bb.ec, %bb.eb, %bb.
 dissect_databits.exit:                            ; preds = %.lr.ph.i132, %bb.l, %bb.m, %bb.n, %bb.o, %bb.p, %bb.q, %bb.r, %bb.s, %bb.t, %bb.u, %bb.v, %bb.w, %bb.x, %bb.y, %bb.z, %.lr.ph.i125, %bb.f, %bb.g, %bb.h, %bb.k, %bb.e, %._crit_edge.i, %bb.ea, %.thread, %ishex_str.exit.thread175, %.lr.ph.i126, %.lr.ph.i, %bb.a, %bb.bz, %bb.bx, %ishex_str.exit142.thread, %bb.br
   %.0 = phi i32 [ 0, %bb.a ], [ %.0114, %bb.br ], [ %i.wx, %bb.bz ], [ 0, %bb.e ], [ %i.ws, %bb.bx ], [ %i.va, %ishex_str.exit142.thread ], [ 0, %.lr.ph.i125 ], [ 0, %.lr.ph.i126 ], [ 0, %bb.k ], [ 0, %.lr.ph.i ], [ 0, %ishex_str.exit.thread175 ], [ 0, %.thread ], [ %.3515677.i, %bb.ea ], [ %i.ahr, %._crit_edge.i ], [ 0, %bb.h ], [ 0, %bb.g ], [ 0, %bb.f ], [ 0, %bb.z ], [ 0, %bb.y ], [ 0, %bb.x ], [ 0, %bb.w ], [ 0, %bb.v ], [ 0, %bb.u ], [ 0, %bb.t ], [ 0, %bb.s ], [ 0, %bb.r ], [ 0, %bb.q ], [ 0, %bb.p ], [ 0, %bb.o ], [ 0, %bb.n ], [ 0, %bb.m ], [ 0, %bb.l ], [ 0, %.lr.ph.i132 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #7
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #7
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #7
   ret i32 %.0
 }

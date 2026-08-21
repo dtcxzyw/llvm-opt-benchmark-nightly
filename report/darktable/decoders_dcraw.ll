@@ -205,9 +205,9 @@ bb.a:
   %i.b = alloca ptr, align 8                      ; 4 uses
   %i.c = alloca ptr, align 8                      ; 4 uses
   %i.d = alloca [64 x i32], align 16              ; 8 uses
-  %1 = alloca [2 x i32], align 4                  ; 6 uses
+  %.sroa.0 = alloca i64, align 8                  ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #15
-  call void @llvm.lifetime.start.p0(ptr nonnull %1) #15
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 381592 ; 11 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 381840
   %i.g = load i32, ptr %i.f, align 8, !tbaa !119
@@ -316,13 +316,13 @@ bb.f:                                             ; preds = %_ZN6LibRaw17canon_h
 
 .lr.ph171:                                        ; preds = %bb.f
   %i.az = getelementptr inbounds nuw i8, ptr %0, i64 193784
-  %i.ba = getelementptr inbounds nuw i8, ptr %1, i64 4
+  %i.ba = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 4
   br label %bb.g
 
 .preheader:                                       ; preds = %bb.aj, %bb.f
   call void @_ZN6LibRaw4freeEPv(ptr noundef nonnull align 8 dereferenceable(768512) %0, ptr noundef %i.j)
   call void @_ZN6LibRaw4freeEPv(ptr noundef nonnull align 8 dereferenceable(768512) %0, ptr noundef %i.l)
-  call void @llvm.lifetime.end.p0(ptr nonnull %1) #15
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #15
   ret void
 
@@ -705,17 +705,20 @@ bb.ab:                                            ; preds = %.thread209, %bb.af
 
 bb.ac:                                            ; preds = %bb.ab
   store i32 512, ptr %i.ba, align 4, !tbaa !126
-  store i32 512, ptr %1, align 4, !tbaa !126
+  store i32 512, ptr %.sroa.0, align 8, !tbaa !126
   br label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ac, %bb.ab
   %i.gq = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %indvars.iv
   %i.gr = load i32, ptr %i.gq, align 4, !tbaa !126
-  %i.gs = and i64 %indvars.iv, 1
-  %2 = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.gs ; 2 uses
-  %i.gt = load i32, ptr %2, align 4, !tbaa !126
+  %i.gs = and i64 %indvars.iv, 1                  ; 2 uses
+  %.sroa.0.0..sroa_stride225 = shl nuw nsw i64 %i.gs, 2
+  %.sroa.0.0..sroa_idx227 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %.sroa.0.0..sroa_stride225
+  %i.gt = load i32, ptr %.sroa.0.0..sroa_idx227, align 4, !tbaa !126
   %i.gu = add nsw i32 %i.gt, %i.gr                ; 3 uses
-  store i32 %i.gu, ptr %2, align 4, !tbaa !126
+  %.sroa.0.0..sroa_stride = shl nuw nsw i64 %i.gs, 2
+  %.sroa.0.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %.sroa.0.0..sroa_stride
+  store i32 %i.gu, ptr %.sroa.0.0..sroa_idx, align 4, !tbaa !126
   %i.gv = trunc i32 %i.gu to i16
   %gep = getelementptr inbounds nuw [2 x i8], ptr %invariant.gep, i64 %indvars.iv
   store i16 %i.gv, ptr %gep, align 2, !tbaa !96
@@ -871,7 +874,7 @@ bb.ak:                                            ; preds = %.loopexit.split-lp,
           to label %bb.al unwind label %bb.am
 
 bb.al:                                            ; preds = %bb.ak
-  call void @llvm.lifetime.end.p0(ptr nonnull %1) #15
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #15
   resume { ptr, i32 } %lpad.phi
 

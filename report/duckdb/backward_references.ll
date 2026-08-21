@@ -205,7 +205,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f, %_ZN13
   %.sroa.18403.7 = phi i64 [ %i.be, %bb.g ], [ 0, %bb.f ], [ 0, %_ZN13duckdb_brotliL24FindMatchLengthWithLimitEPKhS1_m.exit126.i ], [ 0, %bb.b ], [ 0, %.thread ] ; 4 uses
   %.sroa.0394.7 = phi i64 [ %.2.i122.i, %bb.g ], [ 0, %bb.f ], [ 0, %_ZN13duckdb_brotliL24FindMatchLengthWithLimitEPKhS1_m.exit126.i ], [ 0, %bb.b ], [ 0, %.thread ] ; 5 uses
   %.299.i.in = phi i8 [ %i.cl, %bb.g ], [ %i.ba, %bb.f ], [ %i.ba, %_ZN13duckdb_brotliL24FindMatchLengthWithLimitEPKhS1_m.exit126.i ], [ %i.ba, %bb.b ], [ %i.ba, %.thread ] ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #6, !noalias !641
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store i64 %i.bc, ptr %i.b, align 16, !tbaa !30, !noalias !641
   %i.cm = add nuw nsw i64 %i.bc, 8
   %i.cn = and i64 %i.cm, 1048575                  ; 2 uses
@@ -216,10 +216,9 @@ bb.h:                                             ; preds = %bb.g, %bb.f, %_ZN13
   %i.cq = add nuw nsw i64 %i.bc, 24
   %i.cr = and i64 %i.cq, 1048575                  ; 2 uses
   store i64 %i.cr, ptr %i.aq, align 8, !tbaa !30, !noalias !641
-  %11 = lshr i64 %.0194822, 3
-  %i.cs = and i64 %11, 3
-  %12 = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %i.cs
-  %i.ct = load i64, ptr %12, align 8, !tbaa !30, !noalias !641
+  %i.cs = and i64 %.0194822, 24
+  %.0..0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.cs
+  %i.ct = load i64, ptr %.0..0..sroa_idx, align 8, !tbaa !30, !noalias !641
   %i.cu = icmp ugt i64 %i.au, 7                   ; 5 uses
   %i.cv = getelementptr inbounds nuw [4 x i8], ptr %i.aa, i64 %i.bc
   %i.cw = load i32, ptr %i.cv, align 4, !tbaa !3, !noalias !639
@@ -622,7 +621,7 @@ _ZN13duckdb_brotliL19FindLongestMatchH54EPNS_3H54EPKNS_23BrotliEncoderDictionary
   %.sroa.29.9.3 = phi i64 [ %.sroa.29.9.2, %bb.ad ], [ %i.iz, %bb.ai ], [ %.sroa.29.9.2, %bb.ah ], [ %.sroa.29.9.2, %_ZN13duckdb_brotliL24FindMatchLengthWithLimitEPKhS1_m.exit.i290.3 ], [ %.sroa.29.9.2, %bb.ac ] ; 3 uses
   %.sroa.18403.9.3 = phi i64 [ %.sroa.18403.9.2, %bb.ad ], [ %i.hr, %bb.ai ], [ %.sroa.18403.9.2, %bb.ah ], [ %.sroa.18403.9.2, %_ZN13duckdb_brotliL24FindMatchLengthWithLimitEPKhS1_m.exit.i290.3 ], [ %.sroa.18403.9.2, %bb.ac ] ; 3 uses
   %.sroa.0394.9.3 = phi i64 [ %.sroa.0394.9.2, %bb.ad ], [ %.2.i.i291.3, %bb.ai ], [ %.sroa.0394.9.2, %bb.ah ], [ %.sroa.0394.9.2, %_ZN13duckdb_brotliL24FindMatchLengthWithLimitEPKhS1_m.exit.i290.3 ], [ %.sroa.0394.9.2, %bb.ac ] ; 3 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #6, !noalias !641
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   %i.jb = trunc i64 %.0194822 to i32              ; 2 uses
   %i.jc = getelementptr inbounds nuw [4 x i8], ptr %i.aa, i64 %i.ct
   store i32 %i.jb, ptr %i.jc, align 4, !tbaa !3, !noalias !639
@@ -1025,7 +1024,7 @@ bb.cr:                                            ; preds = %bb.cq, %bb.cp, %_ZN
   %.sroa.12.5 = phi i64 [ %i.vg, %bb.cq ], [ 0, %bb.cp ], [ 0, %_ZN13duckdb_brotliL24FindMatchLengthWithLimitEPKhS1_m.exit126.i333 ], [ 0, %bb.cl ], [ 0, %.preheader528 ] ; 4 uses
   %.sroa.0.5 = phi i64 [ %.2.i122.i334, %bb.cq ], [ %i.uu, %bb.cp ], [ %i.uu, %_ZN13duckdb_brotliL24FindMatchLengthWithLimitEPKhS1_m.exit126.i333 ], [ %i.uu, %bb.cl ], [ %i.uu, %.preheader528 ] ; 5 uses
   %.299.i296.in = phi i8 [ %i.wo, %bb.cq ], [ %i.vc, %bb.cp ], [ %i.vc, %_ZN13duckdb_brotliL24FindMatchLengthWithLimitEPKhS1_m.exit126.i333 ], [ %i.vc, %bb.cl ], [ %i.vc, %.preheader528 ] ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6, !noalias !679
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store i64 %i.ve, ptr %i.a, align 16, !tbaa !30, !noalias !679
   %i.wp = add nuw nsw i64 %i.ve, 8
   %i.wq = and i64 %i.wp, 1048575                  ; 2 uses
@@ -1036,10 +1035,9 @@ bb.cr:                                            ; preds = %bb.cq, %bb.cp, %_ZN
   %i.wt = add nuw nsw i64 %i.ve, 24
   %i.wu = and i64 %i.wt, 1048575                  ; 2 uses
   store i64 %i.wu, ptr %i.at, align 8, !tbaa !30, !noalias !679
-  %13 = lshr i64 %i.uv, 3
-  %i.wv = and i64 %13, 3
-  %14 = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %i.wv
-  %i.ww = load i64, ptr %14, align 8, !tbaa !30, !noalias !679
+  %i.wv = and i64 %i.uv, 24
+  %.0..0..sroa_idx305 = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.wv
+  %i.ww = load i64, ptr %.0..0..sroa_idx305, align 8, !tbaa !30, !noalias !679
   %i.wx = icmp ugt i64 %.0188, 7                  ; 4 uses
   %i.wy = getelementptr inbounds nuw [4 x i8], ptr %i.aa, i64 %i.ve
   %i.wz = load i32, ptr %i.wy, align 4, !tbaa !3, !noalias !675
@@ -1442,7 +1440,7 @@ _ZN13duckdb_brotliL19FindLongestMatchH54EPNS_3H54EPKNS_23BrotliEncoderDictionary
   %.sroa.18.7.3 = phi i64 [ %.sroa.18.7.2, %bb.dn ], [ %i.adc, %bb.ds ], [ %.sroa.18.7.2, %bb.dr ], [ %.sroa.18.7.2, %_ZN13duckdb_brotliL24FindMatchLengthWithLimitEPKhS1_m.exit.i317.3 ], [ %.sroa.18.7.2, %bb.dm ] ; 3 uses
   %.sroa.12.7.3 = phi i64 [ %.sroa.12.7.2, %bb.dn ], [ %i.abu, %bb.ds ], [ %.sroa.12.7.2, %bb.dr ], [ %.sroa.12.7.2, %_ZN13duckdb_brotliL24FindMatchLengthWithLimitEPKhS1_m.exit.i317.3 ], [ %.sroa.12.7.2, %bb.dm ] ; 3 uses
   %.sroa.0.7.3 = phi i64 [ %.sroa.0.7.2, %bb.dn ], [ %.2.i.i318.3, %bb.ds ], [ %.sroa.0.7.2, %bb.dr ], [ %.sroa.0.7.2, %_ZN13duckdb_brotliL24FindMatchLengthWithLimitEPKhS1_m.exit.i317.3 ], [ %.sroa.0.7.2, %bb.dm ] ; 3 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6, !noalias !679
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.ade = trunc i64 %i.uv to i32                 ; 2 uses
   %i.adf = getelementptr inbounds nuw [4 x i8], ptr %i.aa, i64 %i.ww
   store i32 %i.ade, ptr %i.adf, align 4, !tbaa !3, !noalias !675
@@ -1845,15 +1843,14 @@ bb.h:                                             ; preds = %bb.g, %bb.f, %_ZN13
   %.sroa.13.2 = phi i64 [ %i.ap, %bb.g ], [ 0, %bb.f ], [ 0, %_ZN13duckdb_brotliL24FindMatchLengthWithLimitEPKhS1_m.exit126.i240 ], [ 0, %bb.b ], [ 0, %.thread ] ; 4 uses
   %.sroa.0254.2 = phi i64 [ %.2.i122.i241, %bb.g ], [ 0, %bb.f ], [ 0, %_ZN13duckdb_brotliL24FindMatchLengthWithLimitEPKhS1_m.exit126.i240 ], [ 0, %bb.b ], [ 0, %.thread ] ; 5 uses
   %.299.i203.in = phi i8 [ %i.bw, %bb.g ], [ %i.al, %bb.f ], [ %i.al, %_ZN13duckdb_brotliL24FindMatchLengthWithLimitEPKhS1_m.exit126.i240 ], [ %i.al, %bb.b ], [ %i.al, %.thread ] ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6, !noalias !952
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store i64 %i.an, ptr %i.a, align 16, !tbaa !30, !noalias !952
   %i.bx = add nuw nsw i64 %i.an, 8
   %i.by = and i64 %i.bx, 65535                    ; 2 uses
   store i64 %i.by, ptr %i.af, align 8, !tbaa !30, !noalias !952
-  %11 = lshr i64 %.0178435, 3
-  %i.bz = and i64 %11, 1
-  %12 = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %i.bz
-  %i.ca = load i64, ptr %12, align 8, !tbaa !30, !noalias !952
+  %i.bz = and i64 %.0178435, 8
+  %.0..0..sroa_idx85 = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.bz
+  %i.ca = load i64, ptr %.0..0..sroa_idx85, align 8, !tbaa !30, !noalias !952
   %i.cb = icmp ugt i64 %i.ah, 7                   ; 2 uses
   %i.cc = getelementptr inbounds nuw [4 x i8], ptr %i.y, i64 %i.an
   %i.cd = load i32, ptr %i.cc, align 4, !tbaa !3, !noalias !950
@@ -2066,7 +2063,7 @@ _ZN13duckdb_brotliL18FindLongestMatchH3EPNS_2H3EPKNS_23BrotliEncoderDictionaryEP
   %.sroa.21.4.1 = phi i64 [ %.sroa.21.4, %bb.p ], [ %i.fc, %bb.u ], [ %.sroa.21.4, %bb.t ], [ %.sroa.21.4, %_ZN13duckdb_brotliL24FindMatchLengthWithLimitEPKhS1_m.exit.i224.1 ], [ %.sroa.21.4, %bb.o ] ; 2 uses
   %.sroa.13.4.1 = phi i64 [ %.sroa.13.4, %bb.p ], [ %i.du, %bb.u ], [ %.sroa.13.4, %bb.t ], [ %.sroa.13.4, %_ZN13duckdb_brotliL24FindMatchLengthWithLimitEPKhS1_m.exit.i224.1 ], [ %.sroa.13.4, %bb.o ]
   %.sroa.0254.4.1 = phi i64 [ %.sroa.0254.4, %bb.p ], [ %.2.i.i225.1, %bb.u ], [ %.sroa.0254.4, %bb.t ], [ %.sroa.0254.4, %_ZN13duckdb_brotliL24FindMatchLengthWithLimitEPKhS1_m.exit.i224.1 ], [ %.sroa.0254.4, %bb.o ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6, !noalias !952
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.fe = trunc i64 %.0178435 to i32
   %i.ff = getelementptr inbounds nuw [4 x i8], ptr %i.y, i64 %i.ca
   store i32 %i.fe, ptr %i.ff, align 4, !tbaa !3, !noalias !950
@@ -2200,15 +2197,14 @@ bb.ac:                                            ; preds = %bb.ab, %bb.aa, %_ZN
   %.sroa.7.0 = phi i64 [ %i.fi, %bb.ab ], [ 0, %bb.aa ], [ 0, %_ZN13duckdb_brotliL24FindMatchLengthWithLimitEPKhS1_m.exit126.i ], [ 0, %bb.w ], [ 0, %bb.v ] ; 4 uses
   %.sroa.0.0 = phi i64 [ %.2.i122.i, %bb.ab ], [ %i.fn, %bb.aa ], [ %i.fn, %_ZN13duckdb_brotliL24FindMatchLengthWithLimitEPKhS1_m.exit126.i ], [ %i.fn, %bb.w ], [ %i.fn, %bb.v ] ; 5 uses
   %.299.i.in = phi i8 [ %i.hd, %bb.ab ], [ %i.ft, %bb.aa ], [ %i.ft, %_ZN13duckdb_brotliL24FindMatchLengthWithLimitEPKhS1_m.exit126.i ], [ %i.ft, %bb.w ], [ %i.ft, %bb.v ] ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #6, !noalias !962
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store i64 %i.fv, ptr %i.b, align 16, !tbaa !30, !noalias !962
   %i.he = add nuw nsw i64 %i.fv, 8
   %i.hf = and i64 %i.he, 65535                    ; 2 uses
   store i64 %i.hf, ptr %i.ag, align 8, !tbaa !30, !noalias !962
-  %13 = lshr i64 %i.fo, 3
-  %i.hg = and i64 %13, 1
-  %14 = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %i.hg
-  %i.hh = load i64, ptr %14, align 8, !tbaa !30, !noalias !962
+  %i.hg = and i64 %i.fo, 8
+  %.0..0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.hg
+  %i.hh = load i64, ptr %.0..0..sroa_idx, align 8, !tbaa !30, !noalias !962
   %i.hi = icmp ugt i64 %.0172, 7                  ; 2 uses
   %i.hj = getelementptr inbounds nuw [4 x i8], ptr %i.y, i64 %i.fv
   %i.hk = load i32, ptr %i.hj, align 4, !tbaa !3, !noalias !961
@@ -2421,7 +2417,7 @@ _ZN13duckdb_brotliL18FindLongestMatchH3EPNS_2H3EPKNS_23BrotliEncoderDictionaryEP
   %.sroa.10.2.1 = phi i64 [ %.sroa.10.2, %bb.ak ], [ %i.kj, %bb.ap ], [ %.sroa.10.2, %bb.ao ], [ %.sroa.10.2, %_ZN13duckdb_brotliL24FindMatchLengthWithLimitEPKhS1_m.exit.i.1 ], [ %.sroa.10.2, %bb.aj ] ; 2 uses
   %.sroa.7.2.1 = phi i64 [ %.sroa.7.2, %bb.ak ], [ %i.jb, %bb.ap ], [ %.sroa.7.2, %bb.ao ], [ %.sroa.7.2, %_ZN13duckdb_brotliL24FindMatchLengthWithLimitEPKhS1_m.exit.i.1 ], [ %.sroa.7.2, %bb.aj ] ; 2 uses
   %.sroa.0.2.1 = phi i64 [ %.sroa.0.2, %bb.ak ], [ %.2.i.i.1, %bb.ap ], [ %.sroa.0.2, %bb.ao ], [ %.sroa.0.2, %_ZN13duckdb_brotliL24FindMatchLengthWithLimitEPKhS1_m.exit.i.1 ], [ %.sroa.0.2, %bb.aj ] ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #6, !noalias !962
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   %i.kl = trunc i64 %i.fo to i32
   %i.km = getelementptr inbounds nuw [4 x i8], ptr %i.y, i64 %i.hh
   store i32 %i.kl, ptr %i.km, align 4, !tbaa !3, !noalias !961
@@ -2824,7 +2820,7 @@ bb.m:                                             ; preds = %bb.l, %bb.k, %_ZN13
   %.sroa.14.2 = phi i64 [ %i.cc, %bb.l ], [ 0, %bb.k ], [ 0, %_ZN13duckdb_brotliL24FindMatchLengthWithLimitEPKhS1_m.exit136.i265 ], [ 0, %bb.g ], [ 0, %bb.f ] ; 4 uses
   %.sroa.0281.2 = phi i64 [ %.2.i132.i266, %bb.l ], [ 0, %bb.k ], [ 0, %_ZN13duckdb_brotliL24FindMatchLengthWithLimitEPKhS1_m.exit136.i265 ], [ 0, %bb.g ], [ 0, %bb.f ] ; 5 uses
   %.2109.i203.in = phi i8 [ %i.dj, %bb.l ], [ %i.by, %bb.k ], [ %i.by, %_ZN13duckdb_brotliL24FindMatchLengthWithLimitEPKhS1_m.exit136.i265 ], [ %i.by, %bb.g ], [ %i.by, %bb.f ] ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6, !noalias !990
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store i64 %i.ca, ptr %i.a, align 16, !tbaa !30, !noalias !990
   %i.dk = add nuw nsw i64 %i.ca, 8
   %i.dl = and i64 %i.dk, 131071                   ; 2 uses
@@ -2835,10 +2831,9 @@ bb.m:                                             ; preds = %bb.l, %bb.k, %_ZN13
   %i.do = add nuw nsw i64 %i.ca, 24
   %i.dp = and i64 %i.do, 131071                   ; 2 uses
   store i64 %i.dp, ptr %i.ao, align 8, !tbaa !30, !noalias !990
-  %12 = lshr i64 %.0178544, 3
-  %i.dq = and i64 %12, 3
-  %13 = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %i.dq
-  %i.dr = load i64, ptr %13, align 8, !tbaa !30, !noalias !990 ; 2 uses
+  %i.dq = and i64 %.0178544, 24
+  %.0..0..sroa_idx1007 = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.dq
+  %i.dr = load i64, ptr %.0..0..sroa_idx1007, align 8, !tbaa !30, !noalias !990 ; 2 uses
   %i.ds = icmp ugt i64 %i.as, 7                   ; 4 uses
   %i.dt = getelementptr inbounds nuw [4 x i8], ptr %i.ae, i64 %i.ca
   %i.du = load i32, ptr %i.dt, align 4, !tbaa !3, !noalias !988
@@ -3241,7 +3236,7 @@ bb.ao:                                            ; preds = %bb.an, %bb.am, %_ZN
   %.sroa.23291.8.3 = phi i64 [ %.sroa.23291.8.2, %bb.ai ], [ %i.jx, %bb.an ], [ %.sroa.23291.8.2, %bb.am ], [ %.sroa.23291.8.2, %_ZN13duckdb_brotliL24FindMatchLengthWithLimitEPKhS1_m.exit.i249.3 ], [ %.sroa.23291.8.2, %bb.ah ] ; 2 uses
   %.sroa.14.8.3 = phi i64 [ %.sroa.14.8.2, %bb.ai ], [ %i.ip, %bb.an ], [ %.sroa.14.8.2, %bb.am ], [ %.sroa.14.8.2, %_ZN13duckdb_brotliL24FindMatchLengthWithLimitEPKhS1_m.exit.i249.3 ], [ %.sroa.14.8.2, %bb.ah ]
   %.sroa.0281.8.3 = phi i64 [ %.sroa.0281.8.2, %bb.ai ], [ %.2.i.i250.3, %bb.an ], [ %.sroa.0281.8.2, %bb.am ], [ %.sroa.0281.8.2, %_ZN13duckdb_brotliL24FindMatchLengthWithLimitEPKhS1_m.exit.i249.3 ], [ %.sroa.0281.8.2, %bb.ah ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6, !noalias !990
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.jz = icmp eq i64 %.sroa.23291.8.3, 2020
   br i1 %i.jz, label %bb.ap, label %_ZN13duckdb_brotliL18FindLongestMatchH4EPNS_2H4EPKNS_23BrotliEncoderDictionaryEPKhmPKimmmmmPNS_18HasherSearchResultE.exit272
 
@@ -3572,7 +3567,7 @@ bb.bi:                                            ; preds = %bb.bh, %bb.bg, %_ZN
   %.sroa.8.0 = phi i64 [ %i.nn, %bb.bh ], [ 0, %bb.bg ], [ 0, %_ZN13duckdb_brotliL24FindMatchLengthWithLimitEPKhS1_m.exit136.i ], [ 0, %bb.bc ], [ 0, %bb.bb ] ; 4 uses
   %.sroa.0.0 = phi i64 [ %.2.i132.i, %bb.bh ], [ %i.ns, %bb.bg ], [ %i.ns, %_ZN13duckdb_brotliL24FindMatchLengthWithLimitEPKhS1_m.exit136.i ], [ %i.ns, %bb.bc ], [ %i.ns, %bb.bb ] ; 5 uses
   %.2109.i.in = phi i8 [ %i.qc, %bb.bh ], [ %i.os, %bb.bg ], [ %i.os, %_ZN13duckdb_brotliL24FindMatchLengthWithLimitEPKhS1_m.exit136.i ], [ %i.os, %bb.bc ], [ %i.os, %bb.bb ] ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #6, !noalias !1002
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store i64 %i.ou, ptr %i.b, align 16, !tbaa !30, !noalias !1002
   %i.qd = add nuw nsw i64 %i.ou, 8
   %i.qe = and i64 %i.qd, 131071                   ; 2 uses
@@ -3583,10 +3578,9 @@ bb.bi:                                            ; preds = %bb.bh, %bb.bg, %_ZN
   %i.qh = add nuw nsw i64 %i.ou, 24
   %i.qi = and i64 %i.qh, 131071                   ; 2 uses
   store i64 %i.qi, ptr %i.ar, align 8, !tbaa !30, !noalias !1002
-  %14 = lshr i64 %i.nt, 3
-  %i.qj = and i64 %14, 3
-  %15 = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %i.qj
-  %i.qk = load i64, ptr %15, align 8, !tbaa !30, !noalias !1002
+  %i.qj = and i64 %i.nt, 24
+  %.0..0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.qj
+  %i.qk = load i64, ptr %.0..0..sroa_idx, align 8, !tbaa !30, !noalias !1002
   %i.ql = icmp ugt i64 %.0172, 7                  ; 4 uses
   %i.qm = getelementptr inbounds nuw [4 x i8], ptr %i.ae, i64 %i.ou
   %i.qn = load i32, ptr %i.qm, align 4, !tbaa !3, !noalias !1001
@@ -3989,7 +3983,7 @@ bb.ck:                                            ; preds = %bb.cj, %bb.ci, %_ZN
   %.sroa.12.6.3 = phi i64 [ %.sroa.12.6.2, %bb.ce ], [ %i.wq, %bb.cj ], [ %.sroa.12.6.2, %bb.ci ], [ %.sroa.12.6.2, %_ZN13duckdb_brotliL24FindMatchLengthWithLimitEPKhS1_m.exit.i.3 ], [ %.sroa.12.6.2, %bb.cd ] ; 2 uses
   %.sroa.8.6.3 = phi i64 [ %.sroa.8.6.2, %bb.ce ], [ %i.vi, %bb.cj ], [ %.sroa.8.6.2, %bb.ci ], [ %.sroa.8.6.2, %_ZN13duckdb_brotliL24FindMatchLengthWithLimitEPKhS1_m.exit.i.3 ], [ %.sroa.8.6.2, %bb.cd ] ; 7 uses
   %.sroa.0.6.3 = phi i64 [ %.sroa.0.6.2, %bb.ce ], [ %.2.i.i.3, %bb.cj ], [ %.sroa.0.6.2, %bb.ci ], [ %.sroa.0.6.2, %_ZN13duckdb_brotliL24FindMatchLengthWithLimitEPKhS1_m.exit.i.3 ], [ %.sroa.0.6.2, %bb.cd ] ; 7 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #6, !noalias !1002
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   %i.ws = icmp eq i64 %.sroa.12.6.3, 2020
   br i1 %i.ws, label %bb.cl, label %_ZN13duckdb_brotliL18FindLongestMatchH4EPNS_2H4EPKNS_23BrotliEncoderDictionaryEPKhmPKimmmmmPNS_18HasherSearchResultE.exit
 
@@ -4392,7 +4386,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f, %_ZN13
   %.sroa.13.2 = phi i64 [ %i.at, %bb.g ], [ 0, %bb.f ], [ 0, %_ZN13duckdb_brotliL24FindMatchLengthWithLimitEPKhS1_m.exit126.i240 ], [ 0, %bb.b ], [ 0, %.thread ] ; 4 uses
   %.sroa.0254.2 = phi i64 [ %.2.i122.i241, %bb.g ], [ 0, %bb.f ], [ 0, %_ZN13duckdb_brotliL24FindMatchLengthWithLimitEPKhS1_m.exit126.i240 ], [ 0, %bb.b ], [ 0, %.thread ] ; 5 uses
   %.299.i203.in = phi i8 [ %i.ca, %bb.g ], [ %i.ap, %bb.f ], [ %i.ap, %_ZN13duckdb_brotliL24FindMatchLengthWithLimitEPKhS1_m.exit126.i240 ], [ %i.ap, %bb.b ], [ %i.ap, %.thread ] ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6, !noalias !1402
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store i64 %i.ar, ptr %i.a, align 16, !tbaa !30, !noalias !1402
   %i.cb = add nuw nsw i64 %i.ar, 8
   %i.cc = and i64 %i.cb, 1048575                  ; 2 uses
@@ -4403,10 +4397,9 @@ bb.h:                                             ; preds = %bb.g, %bb.f, %_ZN13
   %i.cf = add nuw nsw i64 %i.ar, 24
   %i.cg = and i64 %i.cf, 1048575                  ; 2 uses
   store i64 %i.cg, ptr %i.ah, align 8, !tbaa !30, !noalias !1402
-  %11 = lshr i64 %.0178435, 3
-  %i.ch = and i64 %11, 3
-  %12 = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %i.ch
-  %i.ci = load i64, ptr %12, align 8, !tbaa !30, !noalias !1402
+  %i.ch = and i64 %.0178435, 24
+  %.0..0..sroa_idx133 = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.ch
+  %i.ci = load i64, ptr %.0..0..sroa_idx133, align 8, !tbaa !30, !noalias !1402
   %i.cj = icmp ugt i64 %i.al, 7                   ; 4 uses
   %i.ck = getelementptr inbounds nuw [4 x i8], ptr %i.y, i64 %i.ar
   %i.cl = load i32, ptr %i.ck, align 4, !tbaa !3, !noalias !1400
@@ -4809,7 +4802,7 @@ _ZN13duckdb_brotliL19FindLongestMatchH54EPNS_3H54EPKNS_23BrotliEncoderDictionary
   %.sroa.21.4.3 = phi i64 [ %.sroa.21.4.2, %bb.ad ], [ %i.io, %bb.ai ], [ %.sroa.21.4.2, %bb.ah ], [ %.sroa.21.4.2, %_ZN13duckdb_brotliL24FindMatchLengthWithLimitEPKhS1_m.exit.i224.3 ], [ %.sroa.21.4.2, %bb.ac ] ; 2 uses
   %.sroa.13.4.3 = phi i64 [ %.sroa.13.4.2, %bb.ad ], [ %i.hg, %bb.ai ], [ %.sroa.13.4.2, %bb.ah ], [ %.sroa.13.4.2, %_ZN13duckdb_brotliL24FindMatchLengthWithLimitEPKhS1_m.exit.i224.3 ], [ %.sroa.13.4.2, %bb.ac ]
   %.sroa.0254.4.3 = phi i64 [ %.sroa.0254.4.2, %bb.ad ], [ %.2.i.i225.3, %bb.ai ], [ %.sroa.0254.4.2, %bb.ah ], [ %.sroa.0254.4.2, %_ZN13duckdb_brotliL24FindMatchLengthWithLimitEPKhS1_m.exit.i224.3 ], [ %.sroa.0254.4.2, %bb.ac ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6, !noalias !1402
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.iq = trunc i64 %.0178435 to i32
   %i.ir = getelementptr inbounds nuw [4 x i8], ptr %i.y, i64 %i.ci
   store i32 %i.iq, ptr %i.ir, align 4, !tbaa !3, !noalias !1400
@@ -4943,7 +4936,7 @@ bb.aq:                                            ; preds = %bb.ap, %bb.ao, %_ZN
   %.sroa.7.0 = phi i64 [ %i.iu, %bb.ap ], [ 0, %bb.ao ], [ 0, %_ZN13duckdb_brotliL24FindMatchLengthWithLimitEPKhS1_m.exit126.i ], [ 0, %bb.ak ], [ 0, %bb.aj ] ; 4 uses
   %.sroa.0.0 = phi i64 [ %.2.i122.i, %bb.ap ], [ %i.iz, %bb.ao ], [ %i.iz, %_ZN13duckdb_brotliL24FindMatchLengthWithLimitEPKhS1_m.exit126.i ], [ %i.iz, %bb.ak ], [ %i.iz, %bb.aj ] ; 5 uses
   %.299.i.in = phi i8 [ %i.kp, %bb.ap ], [ %i.jf, %bb.ao ], [ %i.jf, %_ZN13duckdb_brotliL24FindMatchLengthWithLimitEPKhS1_m.exit126.i ], [ %i.jf, %bb.ak ], [ %i.jf, %bb.aj ] ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #6, !noalias !1412
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store i64 %i.jh, ptr %i.b, align 16, !tbaa !30, !noalias !1412
   %i.kq = add nuw nsw i64 %i.jh, 8
   %i.kr = and i64 %i.kq, 1048575                  ; 2 uses
@@ -4954,10 +4947,9 @@ bb.aq:                                            ; preds = %bb.ap, %bb.ao, %_ZN
   %i.ku = add nuw nsw i64 %i.jh, 24
   %i.kv = and i64 %i.ku, 1048575                  ; 2 uses
   store i64 %i.kv, ptr %i.ak, align 8, !tbaa !30, !noalias !1412
-  %13 = lshr i64 %i.ja, 3
-  %i.kw = and i64 %13, 3
-  %14 = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %i.kw
-  %i.kx = load i64, ptr %14, align 8, !tbaa !30, !noalias !1412
+  %i.kw = and i64 %i.ja, 24
+  %.0..0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.kw
+  %i.kx = load i64, ptr %.0..0..sroa_idx, align 8, !tbaa !30, !noalias !1412
   %i.ky = icmp ugt i64 %.0172, 7                  ; 4 uses
   %i.kz = getelementptr inbounds nuw [4 x i8], ptr %i.y, i64 %i.jh
   %i.la = load i32, ptr %i.kz, align 4, !tbaa !3, !noalias !1411
@@ -5360,7 +5352,7 @@ _ZN13duckdb_brotliL19FindLongestMatchH54EPNS_3H54EPKNS_23BrotliEncoderDictionary
   %.sroa.10.2.3 = phi i64 [ %.sroa.10.2.2, %bb.bm ], [ %i.rd, %bb.br ], [ %.sroa.10.2.2, %bb.bq ], [ %.sroa.10.2.2, %_ZN13duckdb_brotliL24FindMatchLengthWithLimitEPKhS1_m.exit.i.3 ], [ %.sroa.10.2.2, %bb.bl ] ; 2 uses
   %.sroa.7.2.3 = phi i64 [ %.sroa.7.2.2, %bb.bm ], [ %i.pv, %bb.br ], [ %.sroa.7.2.2, %bb.bq ], [ %.sroa.7.2.2, %_ZN13duckdb_brotliL24FindMatchLengthWithLimitEPKhS1_m.exit.i.3 ], [ %.sroa.7.2.2, %bb.bl ] ; 2 uses
   %.sroa.0.2.3 = phi i64 [ %.sroa.0.2.2, %bb.bm ], [ %.2.i.i.3, %bb.br ], [ %.sroa.0.2.2, %bb.bq ], [ %.sroa.0.2.2, %_ZN13duckdb_brotliL24FindMatchLengthWithLimitEPKhS1_m.exit.i.3 ], [ %.sroa.0.2.2, %bb.bl ] ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #6, !noalias !1412
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   %i.rf = trunc i64 %i.ja to i32
   %i.rg = getelementptr inbounds nuw [4 x i8], ptr %i.y, i64 %i.kx
   store i32 %i.rf, ptr %i.rg, align 4, !tbaa !3, !noalias !1411
@@ -5763,15 +5755,14 @@ bb.h:                                             ; preds = %bb.g, %bb.f, %_ZN13
   %.sroa.15.2 = phi i64 [ %i.au, %bb.g ], [ 0, %bb.f ], [ 0, %_ZN13duckdb_brotliL24FindMatchLengthWithLimitEPKhS1_m.exit126.i.i260 ], [ 0, %bb.b ], [ 0, %.thread ] ; 4 uses
   %.sroa.0278.2 = phi i64 [ %.2.i122.i.i261, %bb.g ], [ 0, %bb.f ], [ 0, %_ZN13duckdb_brotliL24FindMatchLengthWithLimitEPKhS1_m.exit126.i.i260 ], [ 0, %bb.b ], [ 0, %.thread ] ; 5 uses
   %.299.i.i200.in = phi i8 [ %i.cb, %bb.g ], [ %i.aq, %bb.f ], [ %i.aq, %_ZN13duckdb_brotliL24FindMatchLengthWithLimitEPKhS1_m.exit126.i.i260 ], [ %i.aq, %bb.b ], [ %i.aq, %.thread ] ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6, !noalias !1448
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store i64 %i.as, ptr %i.a, align 16, !tbaa !30, !noalias !1448
   %i.cc = add nuw nsw i64 %i.as, 8
   %i.cd = and i64 %i.cc, 65535                    ; 2 uses
   store i64 %i.cd, ptr %i.ak, align 8, !tbaa !30, !noalias !1448
-  %11 = lshr i64 %.0178541, 3
-  %i.ce = and i64 %11, 1
-  %12 = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %i.ce
-  %i.cf = load i64, ptr %12, align 8, !tbaa !30, !noalias !1448
+  %i.ce = and i64 %.0178541, 8
+  %.0..0..sroa_idx115 = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.ce
+  %i.cf = load i64, ptr %.0..0..sroa_idx115, align 8, !tbaa !30, !noalias !1448
   %i.cg = icmp ugt i64 %i.am, 7                   ; 3 uses
   %i.ch = getelementptr inbounds nuw [4 x i8], ptr %i.y, i64 %i.as
   %i.ci = load i32, ptr %i.ch, align 4, !tbaa !3, !noalias !1445
@@ -5984,7 +5975,7 @@ _ZN13duckdb_brotliL18FindLongestMatchH3EPNS_2H3EPKNS_23BrotliEncoderDictionaryEP
   %.sroa.24.6.1 = phi i64 [ %.sroa.24.6, %bb.p ], [ %i.fh, %bb.u ], [ %.sroa.24.6, %bb.t ], [ %.sroa.24.6, %_ZN13duckdb_brotliL24FindMatchLengthWithLimitEPKhS1_m.exit.i32.i244.1 ], [ %.sroa.24.6, %bb.o ] ; 3 uses
   %.sroa.15.6.1 = phi i64 [ %.sroa.15.6, %bb.p ], [ %i.dz, %bb.u ], [ %.sroa.15.6, %bb.t ], [ %.sroa.15.6, %_ZN13duckdb_brotliL24FindMatchLengthWithLimitEPKhS1_m.exit.i32.i244.1 ], [ %.sroa.15.6, %bb.o ] ; 3 uses
   %.sroa.0278.6.1 = phi i64 [ %.sroa.0278.6, %bb.p ], [ %.2.i.i33.i245.1, %bb.u ], [ %.sroa.0278.6, %bb.t ], [ %.sroa.0278.6, %_ZN13duckdb_brotliL24FindMatchLengthWithLimitEPKhS1_m.exit.i32.i244.1 ], [ %.sroa.0278.6, %bb.o ] ; 3 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6, !noalias !1448
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.fj = trunc i64 %.0178541 to i32              ; 2 uses
   %i.fk = getelementptr inbounds nuw [4 x i8], ptr %i.y, i64 %i.cf
   store i32 %i.fj, ptr %i.fk, align 4, !tbaa !3, !noalias !1445
@@ -6294,15 +6285,14 @@ bb.ao:                                            ; preds = %bb.an, %bb.am, %_ZN
   %.sroa.9.0 = phi i64 [ %i.hy, %bb.an ], [ 0, %bb.am ], [ 0, %_ZN13duckdb_brotliL24FindMatchLengthWithLimitEPKhS1_m.exit126.i.i ], [ 0, %bb.ai ], [ 0, %bb.ah ] ; 4 uses
   %.sroa.0.0 = phi i64 [ %.2.i122.i.i, %bb.an ], [ %i.id, %bb.am ], [ %i.id, %_ZN13duckdb_brotliL24FindMatchLengthWithLimitEPKhS1_m.exit126.i.i ], [ %i.id, %bb.ai ], [ %i.id, %bb.ah ] ; 5 uses
   %.299.i.i.in = phi i8 [ %i.jt, %bb.an ], [ %i.ij, %bb.am ], [ %i.ij, %_ZN13duckdb_brotliL24FindMatchLengthWithLimitEPKhS1_m.exit126.i.i ], [ %i.ij, %bb.ai ], [ %i.ij, %bb.ah ] ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #6, !noalias !1478
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store i64 %i.il, ptr %i.b, align 16, !tbaa !30, !noalias !1478
   %i.ju = add nuw nsw i64 %i.il, 8
   %i.jv = and i64 %i.ju, 65535                    ; 2 uses
   store i64 %i.jv, ptr %i.al, align 8, !tbaa !30, !noalias !1478
-  %13 = lshr i64 %i.ie, 3
-  %i.jw = and i64 %13, 1
-  %14 = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %i.jw
-  %i.jx = load i64, ptr %14, align 8, !tbaa !30, !noalias !1478
+  %i.jw = and i64 %i.ie, 8
+  %.0..0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.jw
+  %i.jx = load i64, ptr %.0..0..sroa_idx, align 8, !tbaa !30, !noalias !1478
   %i.jy = icmp ugt i64 %.0172, 7                  ; 2 uses
   %i.jz = getelementptr inbounds nuw [4 x i8], ptr %i.y, i64 %i.il
   %i.ka = load i32, ptr %i.jz, align 4, !tbaa !3, !noalias !1477
@@ -6515,7 +6505,7 @@ _ZN13duckdb_brotliL18FindLongestMatchH3EPNS_2H3EPKNS_23BrotliEncoderDictionaryEP
   %.sroa.13.4.1 = phi i64 [ %.sroa.13.4, %bb.aw ], [ %i.mz, %bb.bb ], [ %.sroa.13.4, %bb.ba ], [ %.sroa.13.4, %_ZN13duckdb_brotliL24FindMatchLengthWithLimitEPKhS1_m.exit.i32.i.1 ], [ %.sroa.13.4, %bb.av ] ; 3 uses
   %.sroa.9.4.1 = phi i64 [ %.sroa.9.4, %bb.aw ], [ %i.lr, %bb.bb ], [ %.sroa.9.4, %bb.ba ], [ %.sroa.9.4, %_ZN13duckdb_brotliL24FindMatchLengthWithLimitEPKhS1_m.exit.i32.i.1 ], [ %.sroa.9.4, %bb.av ] ; 3 uses
   %.sroa.0.4.1 = phi i64 [ %.sroa.0.4, %bb.aw ], [ %.2.i.i33.i.1, %bb.bb ], [ %.sroa.0.4, %bb.ba ], [ %.sroa.0.4, %_ZN13duckdb_brotliL24FindMatchLengthWithLimitEPKhS1_m.exit.i32.i.1 ], [ %.sroa.0.4, %bb.av ] ; 3 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #6, !noalias !1478
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   %i.nb = trunc i64 %i.ie to i32                  ; 2 uses
   %i.nc = getelementptr inbounds nuw [4 x i8], ptr %i.y, i64 %i.jx
   store i32 %i.nb, ptr %i.nc, align 4, !tbaa !3, !noalias !1477
@@ -6918,7 +6908,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f, %_ZN13
   %.sroa.15.2 = phi i64 [ %i.ay, %bb.g ], [ 0, %bb.f ], [ 0, %_ZN13duckdb_brotliL24FindMatchLengthWithLimitEPKhS1_m.exit126.i ], [ 0, %bb.b ], [ 0, %.thread ] ; 4 uses
   %.sroa.0299.2 = phi i64 [ %.2.i122.i, %bb.g ], [ 0, %bb.f ], [ 0, %_ZN13duckdb_brotliL24FindMatchLengthWithLimitEPKhS1_m.exit126.i ], [ 0, %bb.b ], [ 0, %.thread ] ; 5 uses
   %.299.i.in = phi i8 [ %i.cf, %bb.g ], [ %i.au, %bb.f ], [ %i.au, %_ZN13duckdb_brotliL24FindMatchLengthWithLimitEPKhS1_m.exit126.i ], [ %i.au, %bb.b ], [ %i.au, %.thread ] ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #6, !noalias !1519
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store i64 %i.aw, ptr %i.b, align 16, !tbaa !30, !noalias !1519
   %i.cg = add nuw nsw i64 %i.aw, 8
   %i.ch = and i64 %i.cg, 1048575                  ; 2 uses
@@ -6929,10 +6919,9 @@ bb.h:                                             ; preds = %bb.g, %bb.f, %_ZN13
   %i.ck = add nuw nsw i64 %i.aw, 24
   %i.cl = and i64 %i.ck, 1048575                  ; 2 uses
   store i64 %i.cl, ptr %i.am, align 8, !tbaa !30, !noalias !1519
-  %11 = lshr i64 %.0178562, 3
-  %i.cm = and i64 %11, 3
-  %12 = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %i.cm
-  %i.cn = load i64, ptr %12, align 8, !tbaa !30, !noalias !1519
+  %i.cm = and i64 %.0178562, 24
+  %.0..0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.cm
+  %i.cn = load i64, ptr %.0..0..sroa_idx, align 8, !tbaa !30, !noalias !1519
   %i.co = icmp ugt i64 %i.aq, 7                   ; 5 uses
   %i.cp = getelementptr inbounds nuw [4 x i8], ptr %i.y, i64 %i.aw
   %i.cq = load i32, ptr %i.cp, align 4, !tbaa !3, !noalias !1517
@@ -7335,7 +7324,7 @@ _ZN13duckdb_brotliL19FindLongestMatchH54EPNS_3H54EPKNS_23BrotliEncoderDictionary
   %.sroa.24.4.3 = phi i64 [ %.sroa.24.4.2, %bb.ad ], [ %i.it, %bb.ai ], [ %.sroa.24.4.2, %bb.ah ], [ %.sroa.24.4.2, %_ZN13duckdb_brotliL24FindMatchLengthWithLimitEPKhS1_m.exit.i.3 ], [ %.sroa.24.4.2, %bb.ac ] ; 3 uses
   %.sroa.15.4.3 = phi i64 [ %.sroa.15.4.2, %bb.ad ], [ %i.hl, %bb.ai ], [ %.sroa.15.4.2, %bb.ah ], [ %.sroa.15.4.2, %_ZN13duckdb_brotliL24FindMatchLengthWithLimitEPKhS1_m.exit.i.3 ], [ %.sroa.15.4.2, %bb.ac ] ; 3 uses
   %.sroa.0299.4.3 = phi i64 [ %.sroa.0299.4.2, %bb.ad ], [ %.2.i.i.3, %bb.ai ], [ %.sroa.0299.4.2, %bb.ah ], [ %.sroa.0299.4.2, %_ZN13duckdb_brotliL24FindMatchLengthWithLimitEPKhS1_m.exit.i.3 ], [ %.sroa.0299.4.2, %bb.ac ] ; 3 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #6, !noalias !1519
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   %i.iv = trunc i64 %.0178562 to i32              ; 2 uses
   %i.iw = getelementptr inbounds nuw [4 x i8], ptr %i.y, i64 %i.cn
   store i32 %i.iv, ptr %i.iw, align 4, !tbaa !3, !noalias !1517
@@ -7639,7 +7628,7 @@ bb.bb:                                            ; preds = %bb.ba, %bb.az, %_ZN
   %.sroa.9.0 = phi i64 [ %i.lx, %bb.ba ], [ 0, %bb.az ], [ 0, %_ZN13duckdb_brotliL24FindMatchLengthWithLimitEPKhS1_m.exit126.i240 ], [ 0, %bb.av ], [ 0, %.preheader396 ] ; 4 uses
   %.sroa.0.0 = phi i64 [ %.2.i122.i241, %bb.ba ], [ %i.ln, %bb.az ], [ %i.ln, %_ZN13duckdb_brotliL24FindMatchLengthWithLimitEPKhS1_m.exit126.i240 ], [ %i.ln, %bb.av ], [ %i.ln, %.preheader396 ] ; 5 uses
   %.299.i203.in = phi i8 [ %i.nf, %bb.ba ], [ %i.lt, %bb.az ], [ %i.lt, %_ZN13duckdb_brotliL24FindMatchLengthWithLimitEPKhS1_m.exit126.i240 ], [ %i.lt, %bb.av ], [ %i.lt, %.preheader396 ] ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6, !noalias !1537
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store i64 %i.lv, ptr %i.a, align 16, !tbaa !30, !noalias !1537
   %i.ng = add nuw nsw i64 %i.lv, 8
   %i.nh = and i64 %i.ng, 1048575                  ; 2 uses
@@ -7650,10 +7639,9 @@ bb.bb:                                            ; preds = %bb.ba, %bb.az, %_ZN
   %i.nk = add nuw nsw i64 %i.lv, 24
   %i.nl = and i64 %i.nk, 1048575                  ; 2 uses
   store i64 %i.nl, ptr %i.ap, align 8, !tbaa !30, !noalias !1537
-  %13 = lshr i64 %i.lo, 3
-  %i.nm = and i64 %13, 3
-  %14 = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %i.nm
-  %i.nn = load i64, ptr %14, align 8, !tbaa !30, !noalias !1537
+  %i.nm = and i64 %i.lo, 24
+  %.0..0..sroa_idx163 = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.nm
+  %i.nn = load i64, ptr %.0..0..sroa_idx163, align 8, !tbaa !30, !noalias !1537
   %i.no = icmp ugt i64 %.0172, 7                  ; 4 uses
   %i.np = getelementptr inbounds nuw [4 x i8], ptr %i.y, i64 %i.lv
   %i.nq = load i32, ptr %i.np, align 4, !tbaa !3, !noalias !1533
@@ -8056,7 +8044,7 @@ _ZN13duckdb_brotliL19FindLongestMatchH54EPNS_3H54EPKNS_23BrotliEncoderDictionary
   %.sroa.13.2.3 = phi i64 [ %.sroa.13.2.2, %bb.bx ], [ %i.tt, %bb.cc ], [ %.sroa.13.2.2, %bb.cb ], [ %.sroa.13.2.2, %_ZN13duckdb_brotliL24FindMatchLengthWithLimitEPKhS1_m.exit.i224.3 ], [ %.sroa.13.2.2, %bb.bw ] ; 3 uses
   %.sroa.9.2.3 = phi i64 [ %.sroa.9.2.2, %bb.bx ], [ %i.sl, %bb.cc ], [ %.sroa.9.2.2, %bb.cb ], [ %.sroa.9.2.2, %_ZN13duckdb_brotliL24FindMatchLengthWithLimitEPKhS1_m.exit.i224.3 ], [ %.sroa.9.2.2, %bb.bw ] ; 3 uses
   %.sroa.0.2.3 = phi i64 [ %.sroa.0.2.2, %bb.bx ], [ %.2.i.i225.3, %bb.cc ], [ %.sroa.0.2.2, %bb.cb ], [ %.sroa.0.2.2, %_ZN13duckdb_brotliL24FindMatchLengthWithLimitEPKhS1_m.exit.i224.3 ], [ %.sroa.0.2.2, %bb.bw ] ; 3 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6, !noalias !1537
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.tv = trunc i64 %i.lo to i32                  ; 2 uses
   %i.tw = getelementptr inbounds nuw [4 x i8], ptr %i.y, i64 %i.nn
   store i32 %i.tv, ptr %i.tw, align 4, !tbaa !3, !noalias !1533
@@ -8459,7 +8447,6 @@ attributes #2 = { nocallback nofree nosync nounwind willreturn memory(argmem: re
 attributes #3 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #4 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #5 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
-attributes #6 = { nounwind }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

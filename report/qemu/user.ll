@@ -202,12 +202,12 @@ should_catch_syscall.exit.thread3:                ; preds = %bb.b, %should_catch
 ; Function Attrs: nounwind sspstrong uwtable
 define dso_local void @gdb_handle_set_catch_syscalls(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readnone captures(none) %1) local_unnamed_addr #0 {
 sub_0:
-  %i.a = alloca [16 x i64], align 16              ; 5 uses
+  %i.a = alloca [16 x i64], align 16              ; 6 uses
   %i.b = alloca i32, align 4                      ; 6 uses
   %i.c = alloca ptr, align 8                      ; 8 uses
   %i.d = load ptr, ptr %0, align 8
   %i.e = load ptr, ptr %i.d, align 8              ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #15
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #15
   store i32 0, ptr %i.b, align 4, !annotation !7
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #15
@@ -248,7 +248,7 @@ bb.c:                                             ; preds = %.tail12
   br i1 %i.q, label %bb.d, label %.loopexit
 
 bb.d:                                             ; preds = %bb.c
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(128) %i.a, i8 noundef 0, i64 noundef 128, i1 noundef false) #15
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(128) %i.a, i8 0, i64 128, i1 false)
   %i.r = getelementptr inbounds nuw i8, ptr %i.e, i64 2 ; 2 uses
   store ptr %i.r, ptr %i.c, align 8
   %i.s = call i32 @qemu_strtoui(ptr noundef nonnull %i.r, ptr noundef nonnull %i.c, i32 noundef 16, ptr noundef nonnull %i.b) #15
@@ -280,11 +280,13 @@ bb.g:                                             ; preds = %bb.f
   %i.z = zext nneg i32 %i.x to i64                ; 2 uses
   %i.aa = and i64 %i.z, 63
   %i.ab = shl nuw i64 1, %i.aa
-  %i.ac = lshr i64 %i.z, 6
-  %2 = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %i.ac ; 2 uses
-  %i.ad = load i64, ptr %2, align 8
+  %i.ac = lshr i64 %i.z, 3
+  %.0..sroa_stride = and i64 %i.ac, 120           ; 2 uses
+  %.0..0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 %.0..sroa_stride
+  %i.ad = load i64, ptr %.0..0..sroa_idx, align 8
   %i.ae = or i64 %i.ad, %i.ab
-  store i64 %i.ae, ptr %2, align 8
+  %.0..0..sroa_idx33 = getelementptr inbounds nuw i8, ptr %i.a, i64 %.0..sroa_stride
+  store i64 %i.ae, ptr %.0..0..sroa_idx33, align 8
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.f, %bb.g
@@ -312,7 +314,7 @@ bb.k:                                             ; preds = %bb.j, %bb.i
 bb.l:                                             ; preds = %.loopexit, %bb.k, %bb.b, %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #15
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #15
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #15
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret void
 }
 

@@ -204,7 +204,7 @@ bb.j:                                             ; preds = %bb.h
           cleanup
   br label %bb.dk
 
-.loopexit174:                                     ; preds = %6, %bb.l
+.loopexit174:                                     ; preds = %.preheader.1, %bb.l
   %lpad.loopexit175 = landingpad { ptr, i32 }
           cleanup
   br label %.thread125
@@ -239,7 +239,7 @@ bb.k:                                             ; preds = %bb.j
 
 bb.l:                                             ; preds = %bb.k
   %i.bf = invoke noundef zeroext i1 @_RNvMNtCsdVrXiLXuAnx_6parser6parserNtB2_6Parser2at(ptr noundef nonnull align 8 dereferenceable(72) %1, i16 noundef 28)
-          to label %bb.cv unwind label %.loopexit174, !noalias !58, !inline_history !59
+          to label %6 unwind label %.loopexit174, !noalias !58, !inline_history !59
 
 bb.m:                                             ; preds = %bb.k
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ak), !noalias !56
@@ -343,14 +343,7 @@ bb.ad:                                            ; preds = %bb.ac
   call void @llvm.lifetime.end.p0(ptr nonnull %i.z), !noalias !56
   br label %bb.dm
 
-6:                                                ; preds = %bb.cv
-  %7 = invoke noundef zeroext i1 @_RNvMNtCsdVrXiLXuAnx_6parser6parserNtB2_6Parser2at(ptr noundef nonnull align 8 dereferenceable(72) %1, i16 noundef 26)
-          to label %8 unwind label %.loopexit174, !noalias !58, !inline_history !59
-
-8:                                                ; preds = %6
-  br i1 %7, label %bb.cw, label %bb.ae
-
-bb.ae:                                            ; preds = %8
+bb.ae:                                            ; preds = %bb.cv
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ac), !noalias !56
   invoke void @_RNvNtNtNtCsdVrXiLXuAnx_6parser7grammar11expressions4atom9atom_expr(ptr noalias nofree noundef nonnull sret([16 x i8]) align 4 captures(none) dereferenceable(16) %i.ac, ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %1, i1 noundef zeroext %3, i1 noundef zeroext %4)
           to label %bb.af unwind label %.body58.thread150.loopexit.split-lp, !noalias !58, !inline_history !59
@@ -753,11 +746,17 @@ bb.cu:                                            ; preds = %bb.af
   call void @llvm.lifetime.end.p0(ptr nonnull %i.t)
   br label %bb.dm
 
-bb.cv:                                            ; preds = %bb.l
-  br i1 %i.bf, label %bb.cw, label %6
+6:                                                ; preds = %bb.l
+  br i1 %i.bf, label %bb.cw, label %.preheader.1
 
-bb.cw:                                            ; preds = %8, %bb.cv
-  %.lcssa244 = phi i16 [ 28, %bb.cv ], [ 26, %8 ]
+.preheader.1:                                     ; preds = %6
+  %7 = invoke noundef zeroext i1 @_RNvMNtCsdVrXiLXuAnx_6parser6parserNtB2_6Parser2at(ptr noundef nonnull align 8 dereferenceable(72) %1, i16 noundef 28)
+          to label %bb.cv unwind label %.loopexit174, !noalias !58, !inline_history !59
+
+bb.cv:                                            ; preds = %.preheader.1
+  br i1 %7, label %bb.cw, label %bb.ae
+
+bb.cw:                                            ; preds = %bb.cv, %6
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ah), !noalias !56
   invoke void @_RNvMNtCsdVrXiLXuAnx_6parser6parserNtB2_6Parser5start(ptr noalias nofree noundef nonnull sret([40 x i8]) align 8 captures(none) dereferenceable(40) %i.ah, ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %1)
           to label %bb.cx unwind label %.loopexit.split-lp, !noalias !58, !inline_history !59
@@ -765,7 +764,7 @@ bb.cw:                                            ; preds = %8, %bb.cv
 bb.cx:                                            ; preds = %bb.cw
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.al, ptr noundef nonnull align 8 dereferenceable(40) %i.ah, i64 40, i1 false), !noalias !56
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ah), !noalias !56
-  invoke void @_RNvMNtCsdVrXiLXuAnx_6parser6parserNtB2_6Parser4bump(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %1, i16 noundef %.lcssa244)
+  invoke void @_RNvMNtCsdVrXiLXuAnx_6parser6parserNtB2_6Parser4bump(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %1, i16 noundef 28)
           to label %bb.cy unwind label %.thread142, !noalias !58, !inline_history !59
 
 bb.cy:                                            ; preds = %bb.cx

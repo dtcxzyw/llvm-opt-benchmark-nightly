@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.d, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.e = lshr i64 %1, 1                           ; 12 uses
+  %i.e = lshr i64 %1, 1                           ; 11 uses
   %i.f = icmp samesign ugt i64 %1, 15
   br i1 %i.f, label %bb.f, label %bb.e
 
@@ -342,22 +342,15 @@ bb.h:                                             ; preds = %bb.e
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.g, %bb.h, %bb.f
-  %.sroa.0.0 = phi i64 [ 8, %bb.f ], [ 4, %bb.g ], [ 1, %bb.h ] ; 4 uses
-  %5 = sub nsw i64 %1, %i.e                       ; 2 uses
+  %.sroa.0.0 = phi i64 [ 8, %bb.f ], [ 4, %bb.g ], [ 1, %bb.h ] ; 3 uses
   %i.cn = icmp samesign ult i64 %.sroa.0.0, %i.e
-  br i1 %i.cn, label %.noexc47, label %.loopexit51
+  br i1 %i.cn, label %.noexc47, label %.loopexit51.1
 
-.loopexit51:                                      ; preds = %_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared9smallsort11insert_tailNtNtNtNtNtCs5oRRSLMQMUC_4jiff2tz2db8zoneinfo5inner12ZoneInfoNameNvYB18_NtNtBa_3cmp10PartialOrd2ltEB1i_.exit, %bb.i
-  %6 = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.e
-  %7 = getelementptr [8 x i8], ptr %2, i64 %i.e   ; 6 uses
-  %8 = icmp ult i64 %.sroa.0.0, %5
-  br i1 %8, label %.noexc47.1, label %.loopexit51.1
-
-.noexc47.1:                                       ; preds = %.loopexit51, %_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared9smallsort11insert_tailNtNtNtNtNtCs5oRRSLMQMUC_4jiff2tz2db8zoneinfo5inner12ZoneInfoNameNvYB18_NtNtBa_3cmp10PartialOrd2ltEB1i_.exit.1
-  %.sroa.05.057.1 = phi i64 [ %i.dd, %_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared9smallsort11insert_tailNtNtNtNtNtCs5oRRSLMQMUC_4jiff2tz2db8zoneinfo5inner12ZoneInfoNameNvYB18_NtNtBa_3cmp10PartialOrd2ltEB1i_.exit.1 ], [ %.sroa.0.0, %.loopexit51 ] ; 4 uses
-  %i.co = getelementptr inbounds nuw [8 x i8], ptr %6, i64 %.sroa.05.057.1
+.noexc47.1:                                       ; preds = %_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared9smallsort11insert_tailNtNtNtNtNtCs5oRRSLMQMUC_4jiff2tz2db8zoneinfo5inner12ZoneInfoNameNvYB18_NtNtBa_3cmp10PartialOrd2ltEB1i_.exit, %_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared9smallsort11insert_tailNtNtNtNtNtCs5oRRSLMQMUC_4jiff2tz2db8zoneinfo5inner12ZoneInfoNameNvYB18_NtNtBa_3cmp10PartialOrd2ltEB1i_.exit.1
+  %.sroa.05.057.1 = phi i64 [ %i.dd, %_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared9smallsort11insert_tailNtNtNtNtNtCs5oRRSLMQMUC_4jiff2tz2db8zoneinfo5inner12ZoneInfoNameNvYB18_NtNtBa_3cmp10PartialOrd2ltEB1i_.exit.1 ], [ %.sroa.0.0, %_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared9smallsort11insert_tailNtNtNtNtNtCs5oRRSLMQMUC_4jiff2tz2db8zoneinfo5inner12ZoneInfoNameNvYB18_NtNtBa_3cmp10PartialOrd2ltEB1i_.exit ] ; 4 uses
+  %i.co = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.sroa.05.057.1
   %.idx99 = shl nuw nsw i64 %.sroa.05.057.1, 3
-  %i.cp = getelementptr inbounds nuw i8, ptr %7, i64 %.idx99 ; 5 uses
+  %i.cp = getelementptr inbounds nuw i8, ptr %2, i64 %.idx99 ; 5 uses
   %i.cq = load i64, ptr %i.co, align 8
   store i64 %i.cq, ptr %i.cp, align 8
   %i.cr = getelementptr inbounds i8, ptr %i.cp, i64 -8 ; 3 uses
@@ -379,7 +372,7 @@ bb.j:                                             ; preds = %.noexc47.1
 bb.k:                                             ; preds = %bb.l
   %i.cx = load i64, ptr %i.cz, align 8
   store i64 %i.cx, ptr %.sroa.0.0.i46.192, align 8
-  %i.cy = icmp eq ptr %i.cz, %7
+  %i.cy = icmp eq ptr %i.cz, %2
   br i1 %i.cy, label %._crit_edge95, label %.lr.ph94
 
 .lr.ph94:                                         ; preds = %bb.j, %bb.k
@@ -395,7 +388,7 @@ bb.l:                                             ; preds = %.lr.ph94
   br i1 %.sroa.0.0.i.i9.i.1, label %bb.k, label %._crit_edge95
 
 ._crit_edge95:                                    ; preds = %bb.k, %bb.l, %bb.j
-  %.sroa.0.0.i46.lcssa.1 = phi ptr [ %7, %bb.j ], [ %7, %bb.k ], [ %.sroa.0.0.i46.192, %bb.l ]
+  %.sroa.0.0.i46.lcssa.1 = phi ptr [ %2, %bb.j ], [ %2, %bb.k ], [ %.sroa.0.0.i46.192, %bb.l ]
   %i.dc = load i64, ptr %i.a, align 8, !noalias !142
   store i64 %i.dc, ptr %.sroa.0.0.i46.lcssa.1, align 8, !noalias !142
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
@@ -403,15 +396,16 @@ bb.l:                                             ; preds = %.lr.ph94
 
 _RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared9smallsort11insert_tailNtNtNtNtNtCs5oRRSLMQMUC_4jiff2tz2db8zoneinfo5inner12ZoneInfoNameNvYB18_NtNtBa_3cmp10PartialOrd2ltEB1i_.exit.1: ; preds = %._crit_edge95, %.noexc47.1
   %i.dd = add i64 %.sroa.05.057.1, 1              ; 2 uses
-  %exitcond.1.not = icmp eq i64 %i.dd, %5
+  %exitcond.1.not = icmp eq i64 %i.dd, %i.e
   br i1 %exitcond.1.not, label %.loopexit51.1, label %.noexc47.1
 
-.loopexit51.1:                                    ; preds = %_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared9smallsort11insert_tailNtNtNtNtNtCs5oRRSLMQMUC_4jiff2tz2db8zoneinfo5inner12ZoneInfoNameNvYB18_NtNtBa_3cmp10PartialOrd2ltEB1i_.exit.1, %.loopexit51
+.loopexit51.1:                                    ; preds = %_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared9smallsort11insert_tailNtNtNtNtNtCs5oRRSLMQMUC_4jiff2tz2db8zoneinfo5inner12ZoneInfoNameNvYB18_NtNtBa_3cmp10PartialOrd2ltEB1i_.exit.1, %bb.i
   call void @llvm.experimental.noalias.scope.decl(metadata !147)
   %i.de = add nsw i64 %1, -1                      ; 2 uses
-  %i.df = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.de
-  %i.dg = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %i.de
-  %i.dh = getelementptr i8, ptr %7, i64 -8
+  %5 = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.de
+  %i.df = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %i.de
+  %i.dg = getelementptr [8 x i8], ptr %2, i64 %i.e ; 2 uses
+  %i.dh = getelementptr i8, ptr %i.dg, i64 -8
   br label %.lr.ph.i
 
 ._crit_edge.i:                                    ; preds = %.noexc42
@@ -425,10 +419,10 @@ _RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared9smallsort11insert_tailNtNtNtN
   %.sroa.0.010.i = phi ptr [ %i.dr, %.noexc42 ], [ %0, %.loopexit51.1 ] ; 2 uses
   %.sroa.04.09.i = phi i64 [ %i.dm, %.noexc42 ], [ 0, %.loopexit51.1 ]
   %.sroa.06.08.i = phi ptr [ %i.du, %.noexc42 ], [ %2, %.loopexit51.1 ] ; 3 uses
-  %.sroa.011.07.i = phi ptr [ %i.dw, %.noexc42 ], [ %7, %.loopexit51.1 ] ; 3 uses
+  %.sroa.011.07.i = phi ptr [ %i.dw, %.noexc42 ], [ %i.dg, %.loopexit51.1 ] ; 3 uses
   %.sroa.015.06.i = phi ptr [ %i.eb, %.noexc42 ], [ %i.dh, %.loopexit51.1 ] ; 3 uses
-  %.sroa.017.05.i = phi ptr [ %i.ea, %.noexc42 ], [ %i.dg, %.loopexit51.1 ] ; 3 uses
-  %.sroa.019.04.i = phi ptr [ %i.ec, %.noexc42 ], [ %i.df, %.loopexit51.1 ] ; 2 uses
+  %.sroa.017.05.i = phi ptr [ %i.ea, %.noexc42 ], [ %i.df, %.loopexit51.1 ] ; 3 uses
+  %.sroa.019.04.i = phi ptr [ %i.ec, %.noexc42 ], [ %5, %.loopexit51.1 ] ; 2 uses
   %i.dm = add nuw nsw i64 %.sroa.04.09.i, 1       ; 2 uses
   %i.dn = invoke noundef i8 @_RNvXs8_NtNtNtNtCs5oRRSLMQMUC_4jiff2tz2db8zoneinfo5innerNtB5_12ZoneInfoNameNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd11partial_cmp(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %.sroa.011.07.i, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %.sroa.06.08.i)
           to label %.noexc unwind label %.loopexit ; 2 uses
@@ -583,7 +577,7 @@ bb.t:                                             ; preds = %.loopexit.split-lp6
 _RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared9smallsort11insert_tailNtNtNtNtNtCs5oRRSLMQMUC_4jiff2tz2db8zoneinfo5inner12ZoneInfoNameNvYB18_NtNtBa_3cmp10PartialOrd2ltEB1i_.exit: ; preds = %._crit_edge, %.noexc47
   %i.fd = add i64 %.sroa.05.057, 1                ; 2 uses
   %exitcond.not = icmp eq i64 %i.fd, %i.e
-  br i1 %exitcond.not, label %.loopexit51, label %.noexc47
+  br i1 %exitcond.not, label %.noexc47.1, label %.noexc47
 }
 
 ; Function Attrs: nonlazybind uwtable

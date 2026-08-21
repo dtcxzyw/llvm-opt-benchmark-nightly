@@ -11,10 +11,6 @@ target triple = "x86_64-pc-linux-gnu"
 %"class.Eigen::Matrix.3" = type { %"class.Eigen::PlainObjectBase.4" }
 %"class.Eigen::PlainObjectBase.4" = type { %"class.Eigen::DenseStorage.11" }
 %"class.Eigen::DenseStorage.11" = type { ptr, i64 }
-%"class.Eigen::Matrix.45" = type { %"class.Eigen::PlainObjectBase.46" }
-%"class.Eigen::PlainObjectBase.46" = type { %"class.Eigen::DenseStorage.53" }
-%"class.Eigen::DenseStorage.53" = type { %"struct.Eigen::internal::plain_array.54" }
-%"struct.Eigen::internal::plain_array.54" = type { [9 x double] }
 
 $_ZN3igl25parallel_transport_anglesIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENS2_IiLin1ELin1ELi0ELin1ELin1EEENS2_IdLin1ELi1ELi0ELin1ELi1EEEEEvRKNS1_10MatrixBaseIT_EERKNS6_IT0_EESA_RKS4_SG_RNS1_15PlainObjectBaseIT1_EE = comdat any
 
@@ -28,7 +24,8 @@ $_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELi1ELi0ELin1ELi1EEEE6resizeEll = co
 define weak_odr dso_local void @_ZN3igl25parallel_transport_anglesIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENS2_IiLin1ELin1ELi0ELin1ELin1EEENS2_IdLin1ELi1ELi0ELin1ELi1EEEEEvRKNS1_10MatrixBaseIT_EERKNS6_IT0_EESA_RKS4_SG_RNS1_15PlainObjectBaseIT1_EE(ptr noundef nonnull align 1 dereferenceable(1) %0, ptr noundef nonnull align 1 dereferenceable(1) %1, ptr noundef nonnull align 1 dereferenceable(1) %2, ptr noundef nonnull align 8 dereferenceable(24) %3, ptr noundef nonnull align 8 dereferenceable(24) %4, ptr noundef nonnull align 8 dereferenceable(16) %5) local_unnamed_addr #0 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
   %6 = alloca %"class.Eigen::Matrix.3", align 8   ; 11 uses
-  %7 = alloca %"class.Eigen::Matrix.45", align 8  ; 10 uses
+  %.sroa.4 = alloca [3 x double], align 8         ; 5 uses
+  %.sroa.7 = alloca [3 x double], align 8         ; 6 uses
   %i.a = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 5 uses
   %i.b = load i64, ptr %i.a, align 8, !tbaa !9    ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #11
@@ -144,14 +141,11 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELi1ELi0ELin1ELi1EEEE7setZeroEl.exit:
   %i.ae = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.af = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %8 = getelementptr inbounds nuw i8, ptr %7, i64 24
-  %9 = getelementptr inbounds nuw i8, ptr %7, i64 48
-  %10 = getelementptr inbounds nuw i8, ptr %7, i64 8
-  %i.ah = getelementptr inbounds nuw i8, ptr %7, i64 32
-  %i.ai = getelementptr inbounds nuw i8, ptr %7, i64 56
-  %i.aj = getelementptr inbounds nuw i8, ptr %7, i64 64
   %wide.trip.count617 = and i64 %i.b, 4294967295
   %.pre = load ptr, ptr %6, align 8
+  %i.ah = getelementptr inbounds nuw i8, ptr %.sroa.4, i64 8
+  %i.ai = getelementptr inbounds nuw i8, ptr %.sroa.7, i64 8
+  %i.aj = getelementptr inbounds nuw i8, ptr %.sroa.7, i64 16
   br label %bb.n
 
 bb.f:                                             ; preds = %bb.e, %bb.a
@@ -397,7 +391,8 @@ _ZN5Eigen10MatrixBaseINS_6MatrixIdLi1ELi3ELi1ELi1ELi3EEEE9normalizeEv.exit236: ;
   %i.gz = fmul double %i.bu, %i.fv
   %i.ha = fadd double %i.gy, %i.gz
   %i.hb = fadd double %i.gx, %i.ha
-  call void @llvm.lifetime.start.p0(ptr nonnull %7) #11
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.7)
   %i.hc = getelementptr [4 x i8], ptr %i.cz, i64 %i.by ; 3 uses
   %i.hd = load i32, ptr %i.hc, align 4, !tbaa !17
   %i.he = sext i32 %i.hd to i64
@@ -461,46 +456,42 @@ _ZN5Eigen10MatrixBaseINS_6MatrixIdLi1ELi3ELi1ELi1ELi3EEEE9normalizeEv.exit236: ;
   %i.jj = insertelement <2 x double> poison, double %i.hz, i64 0
   %i.jk = shufflevector <2 x double> %i.jj, <2 x double> poison, <2 x i32> zeroinitializer
   %i.jl = fmul <2 x double> %.sroa.12635.56.vec.insert, %i.jk
-  %i.jm = fadd <2 x double> %i.ji, %i.jl          ; 6 uses
+  %i.jm = fadd <2 x double> %i.ji, %i.jl          ; 5 uses
   %i.jn = fmul double %i.bq, %i.ht
   %i.jo = fmul double %i.bs, %i.hw
   %i.jp = fmul double %i.bu, %i.hz
   %i.jq = fadd double %i.jo, %i.jp
   %i.jr = fadd double %i.jn, %i.jq                ; 3 uses
-  %i.js = insertelement <2 x double> poison, double %i.if, i64 0
-  %11 = shufflevector <2 x double> %i.js, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.jt = fmul <2 x double> %.sroa.0629.8.vec.insert, %11
-  %i.ju = insertelement <2 x double> poison, double %i.ii, i64 0
-  %12 = shufflevector <2 x double> %i.ju, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.jv = fmul <2 x double> %.sroa.7632.32.vec.insert, %12
+  %i.js = insertelement <2 x double> poison, double %i.if, i64 1
+  %i.jt = fmul <2 x double> %.sroa.0629.8.vec.insert, %i.js
+  %i.ju = insertelement <2 x double> poison, double %i.ii, i64 1
+  %i.jv = fmul <2 x double> %.sroa.7632.32.vec.insert, %i.ju
   %i.jw = fadd <2 x double> %i.jt, %i.jv
-  %i.jx = insertelement <2 x double> poison, double %i.il, i64 0
-  %13 = shufflevector <2 x double> %i.jx, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.jy = fmul <2 x double> %.sroa.12635.56.vec.insert, %13
-  %i.jz = fadd <2 x double> %i.jw, %i.jy          ; 2 uses
+  %i.jx = insertelement <2 x double> poison, double %i.il, i64 1
+  %i.jy = fmul <2 x double> %.sroa.12635.56.vec.insert, %i.jx
+  %i.jz = fadd <2 x double> %i.jw, %i.jy
   %i.ka = fmul double %i.bq, %i.if
   %i.kb = fmul double %i.bs, %i.ii
   %i.kc = fmul double %i.bu, %i.il
   %i.kd = fadd double %i.kb, %i.kc
   %i.ke = fadd double %i.ka, %i.kd
   %i.kf = extractelement <2 x double> %i.iw, i64 0
-  %14 = shufflevector <2 x double> %i.jm, <2 x double> %i.jz, <2 x i32> <i32 0, i32 2>
-  store <2 x double> %14, ptr %10, align 8, !tbaa !25
   %i.kg = extractelement <2 x double> %i.iw, i64 1 ; 2 uses
-  store double %i.kg, ptr %8, align 8, !tbaa !25
+  store double %i.kg, ptr %.sroa.4, align 8, !tbaa !25
   %i.kh = extractelement <2 x double> %i.jm, i64 1
   %i.ki = shufflevector <2 x double> %i.jm, <2 x double> %i.jz, <2 x i32> <i32 1, i32 3>
   store <2 x double> %i.ki, ptr %i.ah, align 8, !tbaa !25
-  store double %i.jb, ptr %9, align 8, !tbaa !25
+  store double %i.jb, ptr %.sroa.7, align 8, !tbaa !25
   store double %i.jr, ptr %i.ai, align 8, !tbaa !25
   store double %i.ke, ptr %i.aj, align 8, !tbaa !25
   %i.kj = select i1 %.not644, i64 2, i64 1
   %i.kk = select i1 %i.cm, i64 0, i64 %i.kj
-  %i.kl = select i1 %i.cv, i64 1, i64 %i.kk
-  %15 = getelementptr [8 x i8], ptr %7, i64 %i.kl ; 2 uses
-  %i.km = getelementptr i8, ptr %15, i64 48
+  %i.kl = select i1 %i.cv, i64 1, i64 %i.kk       ; 2 uses
+  %.sroa.7.48..sroa_stride = shl nuw nsw i64 %i.kl, 3
+  %i.km = getelementptr inbounds nuw i8, ptr %.sroa.7, i64 %.sroa.7.48..sroa_stride
   %i.kn = load double, ptr %i.km, align 8, !tbaa !25
-  %i.ko = getelementptr i8, ptr %15, i64 24
+  %.sroa.4.24..sroa_stride = shl nuw nsw i64 %i.kl, 3
+  %i.ko = getelementptr inbounds nuw i8, ptr %.sroa.4, i64 %.sroa.4.24..sroa_stride
   %i.kp = load double, ptr %i.ko, align 8, !tbaa !25
   %i.kq = call double @atan2(double noundef %i.kn, double noundef %i.kp) #11
   %i.kr = fneg double %i.kq                       ; 3 uses
@@ -518,7 +509,7 @@ _ZN5Eigen10MatrixBaseINS_6MatrixIdLi1ELi3ELi1ELi1ELi3EEEE9normalizeEv.exit236: ;
   %i.lb = insertelement <2 x double> poison, double %i.jb, i64 0
   %i.lc = shufflevector <2 x double> %i.lb, <2 x double> poison, <2 x i32> zeroinitializer
   %i.ld = fmul <2 x double> %i.lc, %.sroa.12.56.vec.insert
-  %i.le = fadd <2 x double> %i.la, %i.ld          ; 2 uses
+  %i.le = fadd <2 x double> %i.la, %i.ld
   %i.lf = fmul double %i.kf, 0.000000e+00
   %i.lg = fmul double %i.kg, %i.kt
   %i.lh = fmul double %i.jb, %i.kv
@@ -539,8 +530,6 @@ _ZN5Eigen10MatrixBaseINS_6MatrixIdLi1ELi3ELi1ELi1ELi3EEEE9normalizeEv.exit236: ;
   %i.lw = fmul double %i.jr, %i.kv
   %i.lx = fadd double %i.lv, %i.lw
   %i.ly = fadd double %i.lx, %i.lu
-  %16 = extractelement <2 x double> %i.le, i64 0
-  store double %16, ptr %7, align 8, !tbaa !25
   %i.lz = fsub <2 x double> %i.gw, %i.gg          ; 4 uses
   %i.ma = fsub double %i.hb, %i.gl                ; 2 uses
   %i.mb = fsub <2 x double> %i.lt, %i.le          ; 4 uses
@@ -590,7 +579,8 @@ cdce.end599:                                      ; preds = %_ZN5Eigen10MatrixBa
   %i.nb = load ptr, ptr %5, align 8, !tbaa !22
   %i.nc = getelementptr inbounds nuw [8 x i8], ptr %i.nb, i64 %indvars.iv614
   store double %i.mv, ptr %i.nc, align 8, !tbaa !25
-  call void @llvm.lifetime.end.p0(ptr nonnull %7) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.7)
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %cdce.end599

@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %_RNvMNtCsj6eKBz9Db1
 
 .outer._crit_edge:                                ; preds = %.outer, %_RNvMNtCsj6eKBz9Db1c_4core5sliceSINtNtNtCsdftwklc2oBO_7similar10algorithms5utils10UniqueItemINtBx_12OffsetLookupmEE12split_at_mutBB_.exit, %bb.a
   %.sroa.0.0.ph.lcssa118 = phi ptr [ %.sroa.0.0.ph127, %_RNvMNtCsj6eKBz9Db1c_4core5sliceSINtNtNtCsdftwklc2oBO_7similar10algorithms5utils10UniqueItemINtBx_12OffsetLookupmEE12split_at_mutBB_.exit ], [ %0, %bb.a ], [ %i.kf, %.outer ] ; 18 uses
-  %.sroa.16.0.lcssa = phi i64 [ %.sroa.27.2.lcssa.i, %_RNvMNtCsj6eKBz9Db1c_4core5sliceSINtNtNtCsdftwklc2oBO_7similar10algorithms5utils10UniqueItemINtBx_12OffsetLookupmEE12split_at_mutBB_.exit ], [ %1, %bb.a ], [ %i.jq, %.outer ] ; 10 uses
+  %.sroa.16.0.lcssa = phi i64 [ %.sroa.27.2.lcssa.i, %_RNvMNtCsj6eKBz9Db1c_4core5sliceSINtNtNtCsdftwklc2oBO_7similar10algorithms5utils10UniqueItemINtBx_12OffsetLookupmEE12split_at_mutBB_.exit ], [ %1, %bb.a ], [ %i.jq, %.outer ] ; 9 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !9502)
   call void @llvm.experimental.noalias.scope.decl(metadata !9505)
   %i.i = icmp samesign ult i64 %.sroa.16.0.lcssa, 2
@@ -217,7 +217,7 @@ bb.c:                                             ; preds = %.outer._crit_edge
   br i1 %i.k, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.l = lshr i64 %.sroa.16.0.lcssa, 1            ; 12 uses
+  %i.l = lshr i64 %.sroa.16.0.lcssa, 1            ; 11 uses
   %i.m = icmp samesign ugt i64 %.sroa.16.0.lcssa, 15
   br i1 %i.m, label %bb.g, label %bb.f
 
@@ -349,22 +349,62 @@ bb.i:                                             ; preds = %bb.f
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h, %bb.g
-  %.sroa.0.0.i = phi i64 [ 8, %bb.g ], [ 4, %bb.h ], [ 1, %bb.i ] ; 4 uses
-  %7 = sub nsw i64 %.sroa.16.0.lcssa, %i.l        ; 2 uses
+  %.sroa.0.0.i = phi i64 [ 8, %bb.g ], [ 4, %bb.h ], [ 1, %bb.i ] ; 3 uses
   %i.co = icmp samesign ult i64 %.sroa.0.0.i, %i.l
-  br i1 %i.co, label %.lr.ph.i, label %.loopexit.i
+  br i1 %i.co, label %.loopexit.i, label %.loopexit.1.i
 
-.loopexit.i:                                      ; preds = %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailINtNtNtCsdftwklc2oBO_7similar10algorithms5utils10UniqueItemINtB1b_12OffsetLookupmEENCINvMNtCs4wP2HXfJTCR_5alloc5sliceSB18_11sort_by_keyjNCINvB1b_6uniqueB25_Es1_0E0EB1f_.exit.i, %bb.j
-  %i.cp = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0.0.ph.lcssa118, i64 %i.l
-  %8 = getelementptr [16 x i8], ptr %2, i64 %i.l  ; 6 uses
-  %i.cq = icmp ult i64 %.sroa.0.0.i, %7
-  br i1 %i.cq, label %.lr.ph.1.i, label %.loopexit.1.i
+.loopexit.i:                                      ; preds = %bb.j, %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailINtNtNtCsdftwklc2oBO_7similar10algorithms5utils10UniqueItemINtB1b_12OffsetLookupmEENCINvMNtCs4wP2HXfJTCR_5alloc5sliceSB18_11sort_by_keyjNCINvB1b_6uniqueB25_Es1_0E0EB1f_.exit.us.i
+  %.sroa.05.012.us.i = phi i64 [ %17, %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailINtNtNtCsdftwklc2oBO_7similar10algorithms5utils10UniqueItemINtB1b_12OffsetLookupmEENCINvMNtCs4wP2HXfJTCR_5alloc5sliceSB18_11sort_by_keyjNCINvB1b_6uniqueB25_Es1_0E0EB1f_.exit.us.i ], [ %.sroa.0.0.i, %bb.j ] ; 4 uses
+  %i.cp = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0.0.ph.lcssa118, i64 %.sroa.05.012.us.i
+  %.idx = shl nuw nsw i64 %.sroa.05.012.us.i, 4
+  %7 = getelementptr inbounds nuw i8, ptr %2, i64 %.idx ; 8 uses
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %7, ptr noundef nonnull align 8 dereferenceable(16) %i.cp, i64 16, i1 false), !alias.scope !9507
+  %8 = getelementptr i8, ptr %7, i64 8
+  %.val9.i40.us.i = load i64, ptr %8, align 8, !alias.scope !9505, !noalias !9502, !noundef !5 ; 3 uses
+  %9 = getelementptr i8, ptr %7, i64 -8
+  %.val10.i.us.i = load i64, ptr %9, align 8, !alias.scope !9505, !noalias !9502, !noundef !5
+  %i.cq = icmp ult i64 %.val9.i40.us.i, %.val10.i.us.i
+  br i1 %i.cq, label %10, label %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailINtNtNtCsdftwklc2oBO_7similar10algorithms5utils10UniqueItemINtB1b_12OffsetLookupmEENCINvMNtCs4wP2HXfJTCR_5alloc5sliceSB18_11sort_by_keyjNCINvB1b_6uniqueB25_Es1_0E0EB1f_.exit.us.i
 
-.lr.ph.1.i:                                       ; preds = %.loopexit.i, %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailINtNtNtCsdftwklc2oBO_7similar10algorithms5utils10UniqueItemINtB1b_12OffsetLookupmEENCINvMNtCs4wP2HXfJTCR_5alloc5sliceSB18_11sort_by_keyjNCINvB1b_6uniqueB25_Es1_0E0EB1f_.exit.1.i
-  %.sroa.05.08.1.i = phi i64 [ %i.db, %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailINtNtNtCsdftwklc2oBO_7similar10algorithms5utils10UniqueItemINtB1b_12OffsetLookupmEENCINvMNtCs4wP2HXfJTCR_5alloc5sliceSB18_11sort_by_keyjNCINvB1b_6uniqueB25_Es1_0E0EB1f_.exit.1.i ], [ %.sroa.0.0.i, %.loopexit.i ] ; 4 uses
-  %i.cr = getelementptr inbounds nuw [16 x i8], ptr %i.cp, i64 %.sroa.05.08.1.i
+10:                                               ; preds = %.loopexit.i
+  %11 = load ptr, ptr %7, align 8, !alias.scope !9505, !noalias !9502, !nonnull !5, !align !97, !noundef !5
+  %.sroa.0.0.i41.us.i297 = getelementptr inbounds i8, ptr %7, i64 -16 ; 2 uses
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %7, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.0.i41.us.i297, i64 16, i1 false), !alias.scope !9505, !noalias !9502
+  %12 = icmp eq i64 %.sroa.05.012.us.i, 1
+  br i1 %12, label %._crit_edge302, label %.lr.ph301
+
+13:                                               ; preds = %.lr.ph301
+  %.sroa.0.0.i41.us.i = getelementptr inbounds i8, ptr %.sroa.0.0.i41.us.i299, i64 -16 ; 3 uses
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.0.i41.us.i299, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.0.i41.us.i, i64 16, i1 false), !alias.scope !9505, !noalias !9502
+  %14 = icmp eq ptr %.sroa.0.0.i41.us.i, %2
+  br i1 %14, label %._crit_edge302, label %.lr.ph301
+
+.lr.ph301:                                        ; preds = %10, %13
+  %.sroa.0.0.i41.us.i299 = phi ptr [ %.sroa.0.0.i41.us.i, %13 ], [ %.sroa.0.0.i41.us.i297, %10 ] ; 5 uses
+  %.sroa.5.0.i.us.i298 = phi ptr [ %.sroa.0.0.i41.us.i299, %13 ], [ %7, %10 ] ; 2 uses
+  %15 = getelementptr i8, ptr %.sroa.5.0.i.us.i298, i64 -24
+  %.val8.i42.us.i = load i64, ptr %15, align 8, !alias.scope !9505, !noalias !9502, !noundef !5
+  %16 = icmp ult i64 %.val9.i40.us.i, %.val8.i42.us.i
+  br i1 %16, label %13, label %._crit_edge302
+
+._crit_edge302:                                   ; preds = %13, %.lr.ph301, %10
+  %.sroa.5.0.i.us.i.lcssa = phi ptr [ %7, %10 ], [ %.sroa.0.0.i41.us.i299, %13 ], [ %.sroa.5.0.i.us.i298, %.lr.ph301 ]
+  %.sroa.0.0.i41.us.lcssa.i = phi ptr [ %2, %10 ], [ %2, %13 ], [ %.sroa.0.0.i41.us.i299, %.lr.ph301 ]
+  store ptr %11, ptr %.sroa.0.0.i41.us.lcssa.i, align 8, !alias.scope !9505, !noalias !9508
+  %.sroa.4.0..sroa.0.0.lcssa.sroa_idx.i.us.i = getelementptr inbounds i8, ptr %.sroa.5.0.i.us.i.lcssa, i64 -8
+  store i64 %.val9.i40.us.i, ptr %.sroa.4.0..sroa.0.0.lcssa.sroa_idx.i.us.i, align 8, !alias.scope !9505, !noalias !9508
+  br label %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailINtNtNtCsdftwklc2oBO_7similar10algorithms5utils10UniqueItemINtB1b_12OffsetLookupmEENCINvMNtCs4wP2HXfJTCR_5alloc5sliceSB18_11sort_by_keyjNCINvB1b_6uniqueB25_Es1_0E0EB1f_.exit.us.i
+
+_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailINtNtNtCsdftwklc2oBO_7similar10algorithms5utils10UniqueItemINtB1b_12OffsetLookupmEENCINvMNtCs4wP2HXfJTCR_5alloc5sliceSB18_11sort_by_keyjNCINvB1b_6uniqueB25_Es1_0E0EB1f_.exit.us.i: ; preds = %._crit_edge302, %.loopexit.i
+  %17 = add nuw nsw i64 %.sroa.05.012.us.i, 1     ; 2 uses
+  %exitcond.not.i = icmp eq i64 %17, %i.l
+  br i1 %exitcond.not.i, label %.lr.ph.1.i, label %.loopexit.i
+
+.lr.ph.1.i:                                       ; preds = %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailINtNtNtCsdftwklc2oBO_7similar10algorithms5utils10UniqueItemINtB1b_12OffsetLookupmEENCINvMNtCs4wP2HXfJTCR_5alloc5sliceSB18_11sort_by_keyjNCINvB1b_6uniqueB25_Es1_0E0EB1f_.exit.us.i, %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailINtNtNtCsdftwklc2oBO_7similar10algorithms5utils10UniqueItemINtB1b_12OffsetLookupmEENCINvMNtCs4wP2HXfJTCR_5alloc5sliceSB18_11sort_by_keyjNCINvB1b_6uniqueB25_Es1_0E0EB1f_.exit.1.i
+  %.sroa.05.08.1.i = phi i64 [ %i.db, %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailINtNtNtCsdftwklc2oBO_7similar10algorithms5utils10UniqueItemINtB1b_12OffsetLookupmEENCINvMNtCs4wP2HXfJTCR_5alloc5sliceSB18_11sort_by_keyjNCINvB1b_6uniqueB25_Es1_0E0EB1f_.exit.1.i ], [ %.sroa.0.0.i, %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailINtNtNtCsdftwklc2oBO_7similar10algorithms5utils10UniqueItemINtB1b_12OffsetLookupmEENCINvMNtCs4wP2HXfJTCR_5alloc5sliceSB18_11sort_by_keyjNCINvB1b_6uniqueB25_Es1_0E0EB1f_.exit.us.i ] ; 4 uses
+  %i.cr = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0.0.ph.lcssa118, i64 %.sroa.05.08.1.i
   %.idx321 = shl nuw nsw i64 %.sroa.05.08.1.i, 4
-  %i.cs = getelementptr inbounds nuw i8, ptr %8, i64 %.idx321 ; 8 uses
+  %i.cs = getelementptr inbounds nuw i8, ptr %2, i64 %.idx321 ; 8 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.cs, ptr noundef nonnull align 8 dereferenceable(16) %i.cr, i64 16, i1 false), !alias.scope !9507
   %i.ct = getelementptr i8, ptr %i.cs, i64 8
   %.val9.i40.1.i = load i64, ptr %i.ct, align 8, !alias.scope !9505, !noalias !9502, !noundef !5 ; 3 uses
@@ -383,7 +423,7 @@ bb.k:                                             ; preds = %.lr.ph.1.i
 bb.l:                                             ; preds = %.lr.ph314
   %.sroa.0.0.i41.1.i = getelementptr inbounds i8, ptr %.sroa.0.0.i41.1.i312, i64 -16 ; 3 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.0.i41.1.i312, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.0.i41.1.i, i64 16, i1 false), !alias.scope !9505, !noalias !9502
-  %i.cy = icmp eq ptr %.sroa.0.0.i41.1.i, %8
+  %i.cy = icmp eq ptr %.sroa.0.0.i41.1.i, %2
   br i1 %i.cy, label %._crit_edge315, label %.lr.ph314
 
 .lr.ph314:                                        ; preds = %bb.k, %bb.l
@@ -396,22 +436,23 @@ bb.l:                                             ; preds = %.lr.ph314
 
 ._crit_edge315:                                   ; preds = %bb.l, %.lr.ph314, %bb.k
   %.sroa.5.0.i.1.i.lcssa = phi ptr [ %i.cs, %bb.k ], [ %.sroa.0.0.i41.1.i312, %bb.l ], [ %.sroa.5.0.i.1.i311, %.lr.ph314 ]
-  %.sroa.0.0.i41.lcssa.1.i = phi ptr [ %8, %bb.k ], [ %8, %bb.l ], [ %.sroa.0.0.i41.1.i312, %.lr.ph314 ]
+  %.sroa.0.0.i41.lcssa.1.i = phi ptr [ %2, %bb.k ], [ %2, %bb.l ], [ %.sroa.0.0.i41.1.i312, %.lr.ph314 ]
   store ptr %i.cw, ptr %.sroa.0.0.i41.lcssa.1.i, align 8, !alias.scope !9505, !noalias !9508
   %.sroa.4.0..sroa.0.0.lcssa.sroa_idx.i.1.i = getelementptr inbounds i8, ptr %.sroa.5.0.i.1.i.lcssa, i64 -8
   store i64 %.val9.i40.1.i, ptr %.sroa.4.0..sroa.0.0.lcssa.sroa_idx.i.1.i, align 8, !alias.scope !9505, !noalias !9508
   br label %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailINtNtNtCsdftwklc2oBO_7similar10algorithms5utils10UniqueItemINtB1b_12OffsetLookupmEENCINvMNtCs4wP2HXfJTCR_5alloc5sliceSB18_11sort_by_keyjNCINvB1b_6uniqueB25_Es1_0E0EB1f_.exit.1.i
 
 _RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailINtNtNtCsdftwklc2oBO_7similar10algorithms5utils10UniqueItemINtB1b_12OffsetLookupmEENCINvMNtCs4wP2HXfJTCR_5alloc5sliceSB18_11sort_by_keyjNCINvB1b_6uniqueB25_Es1_0E0EB1f_.exit.1.i: ; preds = %._crit_edge315, %.lr.ph.1.i
-  %i.db = add nuw i64 %.sroa.05.08.1.i, 1         ; 2 uses
-  %exitcond.1.not.i = icmp eq i64 %i.db, %7
+  %i.db = add nuw nsw i64 %.sroa.05.08.1.i, 1     ; 2 uses
+  %exitcond.1.not.i = icmp eq i64 %i.db, %i.l
   br i1 %exitcond.1.not.i, label %.loopexit.1.i, label %.lr.ph.1.i
 
-.loopexit.1.i:                                    ; preds = %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailINtNtNtCsdftwklc2oBO_7similar10algorithms5utils10UniqueItemINtB1b_12OffsetLookupmEENCINvMNtCs4wP2HXfJTCR_5alloc5sliceSB18_11sort_by_keyjNCINvB1b_6uniqueB25_Es1_0E0EB1f_.exit.1.i, %.loopexit.i
+.loopexit.1.i:                                    ; preds = %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailINtNtNtCsdftwklc2oBO_7similar10algorithms5utils10UniqueItemINtB1b_12OffsetLookupmEENCINvMNtCs4wP2HXfJTCR_5alloc5sliceSB18_11sort_by_keyjNCINvB1b_6uniqueB25_Es1_0E0EB1f_.exit.1.i, %bb.j
   %i.dc = add nsw i64 %.sroa.16.0.lcssa, -1       ; 2 uses
-  %i.dd = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0.0.ph.lcssa118, i64 %i.dc
-  %i.de = getelementptr inbounds nuw [16 x i8], ptr %2, i64 %i.dc
-  %i.df = getelementptr i8, ptr %8, i64 -16
+  %18 = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0.0.ph.lcssa118, i64 %i.dc
+  %i.dd = getelementptr inbounds nuw [16 x i8], ptr %2, i64 %i.dc
+  %i.de = getelementptr [16 x i8], ptr %2, i64 %i.l ; 2 uses
+  %i.df = getelementptr i8, ptr %i.de, i64 -16
   br label %.lr.ph.i.i
 
 ._crit_edge.i.i:                                  ; preds = %.lr.ph.i.i
@@ -425,10 +466,10 @@ _RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailINtNtNt
   %.sroa.0.010.i.i = phi ptr [ %i.dt, %.lr.ph.i.i ], [ %.sroa.0.0.ph.lcssa118, %.loopexit.1.i ] ; 2 uses
   %.sroa.04.09.i.i = phi i64 [ %i.dk, %.lr.ph.i.i ], [ 0, %.loopexit.1.i ]
   %.sroa.06.08.i.i = phi ptr [ %i.ds, %.lr.ph.i.i ], [ %2, %.loopexit.1.i ] ; 3 uses
-  %.sroa.011.07.i.i = phi ptr [ %i.dq, %.lr.ph.i.i ], [ %8, %.loopexit.1.i ] ; 3 uses
+  %.sroa.011.07.i.i = phi ptr [ %i.dq, %.lr.ph.i.i ], [ %i.de, %.loopexit.1.i ] ; 3 uses
   %.sroa.015.06.i.i = phi ptr [ %i.dz, %.lr.ph.i.i ], [ %i.df, %.loopexit.1.i ] ; 3 uses
-  %.sroa.017.05.i.i = phi ptr [ %i.dy, %.lr.ph.i.i ], [ %i.de, %.loopexit.1.i ] ; 3 uses
-  %.sroa.019.04.i.i = phi ptr [ %i.ea, %.lr.ph.i.i ], [ %i.dd, %.loopexit.1.i ] ; 2 uses
+  %.sroa.017.05.i.i = phi ptr [ %i.dy, %.lr.ph.i.i ], [ %i.dd, %.loopexit.1.i ] ; 3 uses
+  %.sroa.019.04.i.i = phi ptr [ %i.ea, %.lr.ph.i.i ], [ %18, %.loopexit.1.i ] ; 2 uses
   %i.dk = add nuw nsw i64 %.sroa.04.09.i.i, 1     ; 2 uses
   %i.dl = getelementptr i8, ptr %.sroa.011.07.i.i, i64 8
   %.sroa.011.0.val.i.i = load i64, ptr %i.dl, align 8, !alias.scope !9513, !noalias !9502, !noundef !5
@@ -491,53 +532,6 @@ bb.p:                                             ; preds = %bb.o
   %i.ek = shl nuw nsw i64 %.sroa.16.0.lcssa, 4
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %.sroa.0.0.ph.lcssa118, ptr nonnull align 8 %2, i64 %i.ek, i1 false), !alias.scope !9507, !noalias !9524
   resume { ptr, i32 } %i.ej
-
-.lr.ph.i:                                         ; preds = %bb.j, %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailINtNtNtCsdftwklc2oBO_7similar10algorithms5utils10UniqueItemINtB1b_12OffsetLookupmEENCINvMNtCs4wP2HXfJTCR_5alloc5sliceSB18_11sort_by_keyjNCINvB1b_6uniqueB25_Es1_0E0EB1f_.exit.i
-  %.sroa.05.08.i = phi i64 [ %21, %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailINtNtNtCsdftwklc2oBO_7similar10algorithms5utils10UniqueItemINtB1b_12OffsetLookupmEENCINvMNtCs4wP2HXfJTCR_5alloc5sliceSB18_11sort_by_keyjNCINvB1b_6uniqueB25_Es1_0E0EB1f_.exit.i ], [ %.sroa.0.0.i, %bb.j ] ; 4 uses
-  %9 = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0.0.ph.lcssa118, i64 %.sroa.05.08.i
-  %.idx = shl nuw nsw i64 %.sroa.05.08.i, 4
-  %10 = getelementptr inbounds nuw i8, ptr %2, i64 %.idx ; 8 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %10, ptr noundef nonnull align 8 dereferenceable(16) %9, i64 16, i1 false), !alias.scope !9507
-  %11 = getelementptr i8, ptr %10, i64 8
-  %.val9.i40.i = load i64, ptr %11, align 8, !alias.scope !9505, !noalias !9502, !noundef !5 ; 3 uses
-  %12 = getelementptr i8, ptr %10, i64 -8
-  %.val10.i.i = load i64, ptr %12, align 8, !alias.scope !9505, !noalias !9502, !noundef !5
-  %13 = icmp ult i64 %.val9.i40.i, %.val10.i.i
-  br i1 %13, label %14, label %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailINtNtNtCsdftwklc2oBO_7similar10algorithms5utils10UniqueItemINtB1b_12OffsetLookupmEENCINvMNtCs4wP2HXfJTCR_5alloc5sliceSB18_11sort_by_keyjNCINvB1b_6uniqueB25_Es1_0E0EB1f_.exit.i
-
-14:                                               ; preds = %.lr.ph.i
-  %15 = load ptr, ptr %10, align 8, !alias.scope !9505, !noalias !9502, !nonnull !5, !align !97, !noundef !5
-  %.sroa.0.0.i41.i299 = getelementptr inbounds i8, ptr %10, i64 -16 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %10, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.0.i41.i299, i64 16, i1 false), !alias.scope !9505, !noalias !9502
-  %16 = icmp eq i64 %.sroa.05.08.i, 1
-  br i1 %16, label %._crit_edge304, label %.lr.ph303
-
-17:                                               ; preds = %.lr.ph303
-  %.sroa.0.0.i41.i = getelementptr inbounds i8, ptr %.sroa.0.0.i41.i301, i64 -16 ; 3 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.0.i41.i301, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.0.i41.i, i64 16, i1 false), !alias.scope !9505, !noalias !9502
-  %18 = icmp eq ptr %.sroa.0.0.i41.i, %2
-  br i1 %18, label %._crit_edge304, label %.lr.ph303
-
-.lr.ph303:                                        ; preds = %14, %17
-  %.sroa.0.0.i41.i301 = phi ptr [ %.sroa.0.0.i41.i, %17 ], [ %.sroa.0.0.i41.i299, %14 ] ; 5 uses
-  %.sroa.5.0.i.i300 = phi ptr [ %.sroa.0.0.i41.i301, %17 ], [ %10, %14 ] ; 2 uses
-  %19 = getelementptr i8, ptr %.sroa.5.0.i.i300, i64 -24
-  %.val8.i42.i = load i64, ptr %19, align 8, !alias.scope !9505, !noalias !9502, !noundef !5
-  %20 = icmp ult i64 %.val9.i40.i, %.val8.i42.i
-  br i1 %20, label %17, label %._crit_edge304
-
-._crit_edge304:                                   ; preds = %17, %.lr.ph303, %14
-  %.sroa.5.0.i.i.lcssa = phi ptr [ %10, %14 ], [ %.sroa.0.0.i41.i301, %17 ], [ %.sroa.5.0.i.i300, %.lr.ph303 ]
-  %.sroa.0.0.i41.lcssa.i = phi ptr [ %2, %14 ], [ %2, %17 ], [ %.sroa.0.0.i41.i301, %.lr.ph303 ]
-  store ptr %15, ptr %.sroa.0.0.i41.lcssa.i, align 8, !alias.scope !9505, !noalias !9508
-  %.sroa.4.0..sroa.0.0.lcssa.sroa_idx.i.i = getelementptr inbounds i8, ptr %.sroa.5.0.i.i.lcssa, i64 -8
-  store i64 %.val9.i40.i, ptr %.sroa.4.0..sroa.0.0.lcssa.sroa_idx.i.i, align 8, !alias.scope !9505, !noalias !9508
-  br label %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailINtNtNtCsdftwklc2oBO_7similar10algorithms5utils10UniqueItemINtB1b_12OffsetLookupmEENCINvMNtCs4wP2HXfJTCR_5alloc5sliceSB18_11sort_by_keyjNCINvB1b_6uniqueB25_Es1_0E0EB1f_.exit.i
-
-_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailINtNtNtCsdftwklc2oBO_7similar10algorithms5utils10UniqueItemINtB1b_12OffsetLookupmEENCINvMNtCs4wP2HXfJTCR_5alloc5sliceSB18_11sort_by_keyjNCINvB1b_6uniqueB25_Es1_0E0EB1f_.exit.i: ; preds = %._crit_edge304, %.lr.ph.i
-  %21 = add nuw i64 %.sroa.05.08.i, 1             ; 2 uses
-  %exitcond.not.i = icmp eq i64 %21, %i.l
-  br i1 %exitcond.not.i, label %.loopexit.i, label %.lr.ph.i
 
 .lr.ph._crit_edge:                                ; preds = %.lr.ph, %bb.b
   %.sroa.16.0120.lcssa = phi i64 [ %.sroa.27.2.lcssa.i, %bb.b ], [ %.sroa.16.0.ph126, %.lr.ph ]
@@ -941,7 +935,7 @@ bb.b:                                             ; preds = %_RNvMNtCsj6eKBz9Db1
 
 .outer._crit_edge:                                ; preds = %.outer, %_RNvMNtCsj6eKBz9Db1c_4core5sliceSINtNtNtCsdftwklc2oBO_7similar10algorithms5utils10UniqueItemINtNtBB_4text12TextDiffSideeEE12split_at_mutBB_.exit, %bb.a
   %.sroa.0.0.ph.lcssa118 = phi ptr [ %.sroa.0.0.ph127, %_RNvMNtCsj6eKBz9Db1c_4core5sliceSINtNtNtCsdftwklc2oBO_7similar10algorithms5utils10UniqueItemINtNtBB_4text12TextDiffSideeEE12split_at_mutBB_.exit ], [ %0, %bb.a ], [ %i.kf, %.outer ] ; 18 uses
-  %.sroa.16.0.lcssa = phi i64 [ %.sroa.27.2.lcssa.i, %_RNvMNtCsj6eKBz9Db1c_4core5sliceSINtNtNtCsdftwklc2oBO_7similar10algorithms5utils10UniqueItemINtNtBB_4text12TextDiffSideeEE12split_at_mutBB_.exit ], [ %1, %bb.a ], [ %i.jq, %.outer ] ; 10 uses
+  %.sroa.16.0.lcssa = phi i64 [ %.sroa.27.2.lcssa.i, %_RNvMNtCsj6eKBz9Db1c_4core5sliceSINtNtNtCsdftwklc2oBO_7similar10algorithms5utils10UniqueItemINtNtBB_4text12TextDiffSideeEE12split_at_mutBB_.exit ], [ %1, %bb.a ], [ %i.jq, %.outer ] ; 9 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !9584)
   call void @llvm.experimental.noalias.scope.decl(metadata !9587)
   %i.i = icmp samesign ult i64 %.sroa.16.0.lcssa, 2
@@ -953,7 +947,7 @@ bb.c:                                             ; preds = %.outer._crit_edge
   br i1 %i.k, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.l = lshr i64 %.sroa.16.0.lcssa, 1            ; 12 uses
+  %i.l = lshr i64 %.sroa.16.0.lcssa, 1            ; 11 uses
   %i.m = icmp samesign ugt i64 %.sroa.16.0.lcssa, 15
   br i1 %i.m, label %bb.g, label %bb.f
 
@@ -1085,22 +1079,62 @@ bb.i:                                             ; preds = %bb.f
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h, %bb.g
-  %.sroa.0.0.i = phi i64 [ 8, %bb.g ], [ 4, %bb.h ], [ 1, %bb.i ] ; 4 uses
-  %7 = sub nsw i64 %.sroa.16.0.lcssa, %i.l        ; 2 uses
+  %.sroa.0.0.i = phi i64 [ 8, %bb.g ], [ 4, %bb.h ], [ 1, %bb.i ] ; 3 uses
   %i.co = icmp samesign ult i64 %.sroa.0.0.i, %i.l
-  br i1 %i.co, label %.lr.ph.i, label %.loopexit.i
+  br i1 %i.co, label %.loopexit.i, label %.loopexit.1.i
 
-.loopexit.i:                                      ; preds = %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailINtNtNtCsdftwklc2oBO_7similar10algorithms5utils10UniqueItemINtNtB1f_4text12TextDiffSideeEENCINvMNtCs4wP2HXfJTCR_5alloc5sliceSB18_11sort_by_keyjNCINvB1b_6uniqueB25_Es1_0E0EB1f_.exit.i, %bb.j
-  %i.cp = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0.0.ph.lcssa118, i64 %i.l
-  %8 = getelementptr [16 x i8], ptr %2, i64 %i.l  ; 6 uses
-  %i.cq = icmp ult i64 %.sroa.0.0.i, %7
-  br i1 %i.cq, label %.lr.ph.1.i, label %.loopexit.1.i
+.loopexit.i:                                      ; preds = %bb.j, %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailINtNtNtCsdftwklc2oBO_7similar10algorithms5utils10UniqueItemINtNtB1f_4text12TextDiffSideeEENCINvMNtCs4wP2HXfJTCR_5alloc5sliceSB18_11sort_by_keyjNCINvB1b_6uniqueB25_Es1_0E0EB1f_.exit.us.i
+  %.sroa.05.012.us.i = phi i64 [ %17, %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailINtNtNtCsdftwklc2oBO_7similar10algorithms5utils10UniqueItemINtNtB1f_4text12TextDiffSideeEENCINvMNtCs4wP2HXfJTCR_5alloc5sliceSB18_11sort_by_keyjNCINvB1b_6uniqueB25_Es1_0E0EB1f_.exit.us.i ], [ %.sroa.0.0.i, %bb.j ] ; 4 uses
+  %i.cp = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0.0.ph.lcssa118, i64 %.sroa.05.012.us.i
+  %.idx = shl nuw nsw i64 %.sroa.05.012.us.i, 4
+  %7 = getelementptr inbounds nuw i8, ptr %2, i64 %.idx ; 8 uses
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %7, ptr noundef nonnull align 8 dereferenceable(16) %i.cp, i64 16, i1 false), !alias.scope !9589
+  %8 = getelementptr i8, ptr %7, i64 8
+  %.val9.i40.us.i = load i64, ptr %8, align 8, !alias.scope !9587, !noalias !9584, !noundef !5 ; 3 uses
+  %9 = getelementptr i8, ptr %7, i64 -8
+  %.val10.i.us.i = load i64, ptr %9, align 8, !alias.scope !9587, !noalias !9584, !noundef !5
+  %i.cq = icmp ult i64 %.val9.i40.us.i, %.val10.i.us.i
+  br i1 %i.cq, label %10, label %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailINtNtNtCsdftwklc2oBO_7similar10algorithms5utils10UniqueItemINtNtB1f_4text12TextDiffSideeEENCINvMNtCs4wP2HXfJTCR_5alloc5sliceSB18_11sort_by_keyjNCINvB1b_6uniqueB25_Es1_0E0EB1f_.exit.us.i
 
-.lr.ph.1.i:                                       ; preds = %.loopexit.i, %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailINtNtNtCsdftwklc2oBO_7similar10algorithms5utils10UniqueItemINtNtB1f_4text12TextDiffSideeEENCINvMNtCs4wP2HXfJTCR_5alloc5sliceSB18_11sort_by_keyjNCINvB1b_6uniqueB25_Es1_0E0EB1f_.exit.1.i
-  %.sroa.05.08.1.i = phi i64 [ %i.db, %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailINtNtNtCsdftwklc2oBO_7similar10algorithms5utils10UniqueItemINtNtB1f_4text12TextDiffSideeEENCINvMNtCs4wP2HXfJTCR_5alloc5sliceSB18_11sort_by_keyjNCINvB1b_6uniqueB25_Es1_0E0EB1f_.exit.1.i ], [ %.sroa.0.0.i, %.loopexit.i ] ; 4 uses
-  %i.cr = getelementptr inbounds nuw [16 x i8], ptr %i.cp, i64 %.sroa.05.08.1.i
+10:                                               ; preds = %.loopexit.i
+  %11 = load ptr, ptr %7, align 8, !alias.scope !9587, !noalias !9584, !nonnull !5, !align !97, !noundef !5
+  %.sroa.0.0.i41.us.i297 = getelementptr inbounds i8, ptr %7, i64 -16 ; 2 uses
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %7, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.0.i41.us.i297, i64 16, i1 false), !alias.scope !9587, !noalias !9584
+  %12 = icmp eq i64 %.sroa.05.012.us.i, 1
+  br i1 %12, label %._crit_edge302, label %.lr.ph301
+
+13:                                               ; preds = %.lr.ph301
+  %.sroa.0.0.i41.us.i = getelementptr inbounds i8, ptr %.sroa.0.0.i41.us.i299, i64 -16 ; 3 uses
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.0.i41.us.i299, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.0.i41.us.i, i64 16, i1 false), !alias.scope !9587, !noalias !9584
+  %14 = icmp eq ptr %.sroa.0.0.i41.us.i, %2
+  br i1 %14, label %._crit_edge302, label %.lr.ph301
+
+.lr.ph301:                                        ; preds = %10, %13
+  %.sroa.0.0.i41.us.i299 = phi ptr [ %.sroa.0.0.i41.us.i, %13 ], [ %.sroa.0.0.i41.us.i297, %10 ] ; 5 uses
+  %.sroa.5.0.i.us.i298 = phi ptr [ %.sroa.0.0.i41.us.i299, %13 ], [ %7, %10 ] ; 2 uses
+  %15 = getelementptr i8, ptr %.sroa.5.0.i.us.i298, i64 -24
+  %.val8.i42.us.i = load i64, ptr %15, align 8, !alias.scope !9587, !noalias !9584, !noundef !5
+  %16 = icmp ult i64 %.val9.i40.us.i, %.val8.i42.us.i
+  br i1 %16, label %13, label %._crit_edge302
+
+._crit_edge302:                                   ; preds = %13, %.lr.ph301, %10
+  %.sroa.5.0.i.us.i.lcssa = phi ptr [ %7, %10 ], [ %.sroa.0.0.i41.us.i299, %13 ], [ %.sroa.5.0.i.us.i298, %.lr.ph301 ]
+  %.sroa.0.0.i41.us.lcssa.i = phi ptr [ %2, %10 ], [ %2, %13 ], [ %.sroa.0.0.i41.us.i299, %.lr.ph301 ]
+  store ptr %11, ptr %.sroa.0.0.i41.us.lcssa.i, align 8, !alias.scope !9587, !noalias !9590
+  %.sroa.4.0..sroa.0.0.lcssa.sroa_idx.i.us.i = getelementptr inbounds i8, ptr %.sroa.5.0.i.us.i.lcssa, i64 -8
+  store i64 %.val9.i40.us.i, ptr %.sroa.4.0..sroa.0.0.lcssa.sroa_idx.i.us.i, align 8, !alias.scope !9587, !noalias !9590
+  br label %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailINtNtNtCsdftwklc2oBO_7similar10algorithms5utils10UniqueItemINtNtB1f_4text12TextDiffSideeEENCINvMNtCs4wP2HXfJTCR_5alloc5sliceSB18_11sort_by_keyjNCINvB1b_6uniqueB25_Es1_0E0EB1f_.exit.us.i
+
+_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailINtNtNtCsdftwklc2oBO_7similar10algorithms5utils10UniqueItemINtNtB1f_4text12TextDiffSideeEENCINvMNtCs4wP2HXfJTCR_5alloc5sliceSB18_11sort_by_keyjNCINvB1b_6uniqueB25_Es1_0E0EB1f_.exit.us.i: ; preds = %._crit_edge302, %.loopexit.i
+  %17 = add nuw nsw i64 %.sroa.05.012.us.i, 1     ; 2 uses
+  %exitcond.not.i = icmp eq i64 %17, %i.l
+  br i1 %exitcond.not.i, label %.lr.ph.1.i, label %.loopexit.i
+
+.lr.ph.1.i:                                       ; preds = %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailINtNtNtCsdftwklc2oBO_7similar10algorithms5utils10UniqueItemINtNtB1f_4text12TextDiffSideeEENCINvMNtCs4wP2HXfJTCR_5alloc5sliceSB18_11sort_by_keyjNCINvB1b_6uniqueB25_Es1_0E0EB1f_.exit.us.i, %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailINtNtNtCsdftwklc2oBO_7similar10algorithms5utils10UniqueItemINtNtB1f_4text12TextDiffSideeEENCINvMNtCs4wP2HXfJTCR_5alloc5sliceSB18_11sort_by_keyjNCINvB1b_6uniqueB25_Es1_0E0EB1f_.exit.1.i
+  %.sroa.05.08.1.i = phi i64 [ %i.db, %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailINtNtNtCsdftwklc2oBO_7similar10algorithms5utils10UniqueItemINtNtB1f_4text12TextDiffSideeEENCINvMNtCs4wP2HXfJTCR_5alloc5sliceSB18_11sort_by_keyjNCINvB1b_6uniqueB25_Es1_0E0EB1f_.exit.1.i ], [ %.sroa.0.0.i, %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailINtNtNtCsdftwklc2oBO_7similar10algorithms5utils10UniqueItemINtNtB1f_4text12TextDiffSideeEENCINvMNtCs4wP2HXfJTCR_5alloc5sliceSB18_11sort_by_keyjNCINvB1b_6uniqueB25_Es1_0E0EB1f_.exit.us.i ] ; 4 uses
+  %i.cr = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0.0.ph.lcssa118, i64 %.sroa.05.08.1.i
   %.idx321 = shl nuw nsw i64 %.sroa.05.08.1.i, 4
-  %i.cs = getelementptr inbounds nuw i8, ptr %8, i64 %.idx321 ; 8 uses
+  %i.cs = getelementptr inbounds nuw i8, ptr %2, i64 %.idx321 ; 8 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.cs, ptr noundef nonnull align 8 dereferenceable(16) %i.cr, i64 16, i1 false), !alias.scope !9589
   %i.ct = getelementptr i8, ptr %i.cs, i64 8
   %.val9.i40.1.i = load i64, ptr %i.ct, align 8, !alias.scope !9587, !noalias !9584, !noundef !5 ; 3 uses
@@ -1119,7 +1153,7 @@ bb.k:                                             ; preds = %.lr.ph.1.i
 bb.l:                                             ; preds = %.lr.ph314
   %.sroa.0.0.i41.1.i = getelementptr inbounds i8, ptr %.sroa.0.0.i41.1.i312, i64 -16 ; 3 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.0.i41.1.i312, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.0.i41.1.i, i64 16, i1 false), !alias.scope !9587, !noalias !9584
-  %i.cy = icmp eq ptr %.sroa.0.0.i41.1.i, %8
+  %i.cy = icmp eq ptr %.sroa.0.0.i41.1.i, %2
   br i1 %i.cy, label %._crit_edge315, label %.lr.ph314
 
 .lr.ph314:                                        ; preds = %bb.k, %bb.l
@@ -1132,22 +1166,23 @@ bb.l:                                             ; preds = %.lr.ph314
 
 ._crit_edge315:                                   ; preds = %bb.l, %.lr.ph314, %bb.k
   %.sroa.5.0.i.1.i.lcssa = phi ptr [ %i.cs, %bb.k ], [ %.sroa.0.0.i41.1.i312, %bb.l ], [ %.sroa.5.0.i.1.i311, %.lr.ph314 ]
-  %.sroa.0.0.i41.lcssa.1.i = phi ptr [ %8, %bb.k ], [ %8, %bb.l ], [ %.sroa.0.0.i41.1.i312, %.lr.ph314 ]
+  %.sroa.0.0.i41.lcssa.1.i = phi ptr [ %2, %bb.k ], [ %2, %bb.l ], [ %.sroa.0.0.i41.1.i312, %.lr.ph314 ]
   store ptr %i.cw, ptr %.sroa.0.0.i41.lcssa.1.i, align 8, !alias.scope !9587, !noalias !9590
   %.sroa.4.0..sroa.0.0.lcssa.sroa_idx.i.1.i = getelementptr inbounds i8, ptr %.sroa.5.0.i.1.i.lcssa, i64 -8
   store i64 %.val9.i40.1.i, ptr %.sroa.4.0..sroa.0.0.lcssa.sroa_idx.i.1.i, align 8, !alias.scope !9587, !noalias !9590
   br label %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailINtNtNtCsdftwklc2oBO_7similar10algorithms5utils10UniqueItemINtNtB1f_4text12TextDiffSideeEENCINvMNtCs4wP2HXfJTCR_5alloc5sliceSB18_11sort_by_keyjNCINvB1b_6uniqueB25_Es1_0E0EB1f_.exit.1.i
 
 _RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailINtNtNtCsdftwklc2oBO_7similar10algorithms5utils10UniqueItemINtNtB1f_4text12TextDiffSideeEENCINvMNtCs4wP2HXfJTCR_5alloc5sliceSB18_11sort_by_keyjNCINvB1b_6uniqueB25_Es1_0E0EB1f_.exit.1.i: ; preds = %._crit_edge315, %.lr.ph.1.i
-  %i.db = add nuw i64 %.sroa.05.08.1.i, 1         ; 2 uses
-  %exitcond.1.not.i = icmp eq i64 %i.db, %7
+  %i.db = add nuw nsw i64 %.sroa.05.08.1.i, 1     ; 2 uses
+  %exitcond.1.not.i = icmp eq i64 %i.db, %i.l
   br i1 %exitcond.1.not.i, label %.loopexit.1.i, label %.lr.ph.1.i
 
-.loopexit.1.i:                                    ; preds = %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailINtNtNtCsdftwklc2oBO_7similar10algorithms5utils10UniqueItemINtNtB1f_4text12TextDiffSideeEENCINvMNtCs4wP2HXfJTCR_5alloc5sliceSB18_11sort_by_keyjNCINvB1b_6uniqueB25_Es1_0E0EB1f_.exit.1.i, %.loopexit.i
+.loopexit.1.i:                                    ; preds = %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailINtNtNtCsdftwklc2oBO_7similar10algorithms5utils10UniqueItemINtNtB1f_4text12TextDiffSideeEENCINvMNtCs4wP2HXfJTCR_5alloc5sliceSB18_11sort_by_keyjNCINvB1b_6uniqueB25_Es1_0E0EB1f_.exit.1.i, %bb.j
   %i.dc = add nsw i64 %.sroa.16.0.lcssa, -1       ; 2 uses
-  %i.dd = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0.0.ph.lcssa118, i64 %i.dc
-  %i.de = getelementptr inbounds nuw [16 x i8], ptr %2, i64 %i.dc
-  %i.df = getelementptr i8, ptr %8, i64 -16
+  %18 = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0.0.ph.lcssa118, i64 %i.dc
+  %i.dd = getelementptr inbounds nuw [16 x i8], ptr %2, i64 %i.dc
+  %i.de = getelementptr [16 x i8], ptr %2, i64 %i.l ; 2 uses
+  %i.df = getelementptr i8, ptr %i.de, i64 -16
   br label %.lr.ph.i.i
 
 ._crit_edge.i.i:                                  ; preds = %.lr.ph.i.i
@@ -1161,10 +1196,10 @@ _RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailINtNtNt
   %.sroa.0.010.i.i = phi ptr [ %i.dt, %.lr.ph.i.i ], [ %.sroa.0.0.ph.lcssa118, %.loopexit.1.i ] ; 2 uses
   %.sroa.04.09.i.i = phi i64 [ %i.dk, %.lr.ph.i.i ], [ 0, %.loopexit.1.i ]
   %.sroa.06.08.i.i = phi ptr [ %i.ds, %.lr.ph.i.i ], [ %2, %.loopexit.1.i ] ; 3 uses
-  %.sroa.011.07.i.i = phi ptr [ %i.dq, %.lr.ph.i.i ], [ %8, %.loopexit.1.i ] ; 3 uses
+  %.sroa.011.07.i.i = phi ptr [ %i.dq, %.lr.ph.i.i ], [ %i.de, %.loopexit.1.i ] ; 3 uses
   %.sroa.015.06.i.i = phi ptr [ %i.dz, %.lr.ph.i.i ], [ %i.df, %.loopexit.1.i ] ; 3 uses
-  %.sroa.017.05.i.i = phi ptr [ %i.dy, %.lr.ph.i.i ], [ %i.de, %.loopexit.1.i ] ; 3 uses
-  %.sroa.019.04.i.i = phi ptr [ %i.ea, %.lr.ph.i.i ], [ %i.dd, %.loopexit.1.i ] ; 2 uses
+  %.sroa.017.05.i.i = phi ptr [ %i.dy, %.lr.ph.i.i ], [ %i.dd, %.loopexit.1.i ] ; 3 uses
+  %.sroa.019.04.i.i = phi ptr [ %i.ea, %.lr.ph.i.i ], [ %18, %.loopexit.1.i ] ; 2 uses
   %i.dk = add nuw nsw i64 %.sroa.04.09.i.i, 1     ; 2 uses
   %i.dl = getelementptr i8, ptr %.sroa.011.07.i.i, i64 8
   %.sroa.011.0.val.i.i = load i64, ptr %i.dl, align 8, !alias.scope !9595, !noalias !9584, !noundef !5
@@ -1227,53 +1262,6 @@ bb.p:                                             ; preds = %bb.o
   %i.ek = shl nuw nsw i64 %.sroa.16.0.lcssa, 4
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %.sroa.0.0.ph.lcssa118, ptr nonnull align 8 %2, i64 %i.ek, i1 false), !alias.scope !9589, !noalias !9606
   resume { ptr, i32 } %i.ej
-
-.lr.ph.i:                                         ; preds = %bb.j, %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailINtNtNtCsdftwklc2oBO_7similar10algorithms5utils10UniqueItemINtNtB1f_4text12TextDiffSideeEENCINvMNtCs4wP2HXfJTCR_5alloc5sliceSB18_11sort_by_keyjNCINvB1b_6uniqueB25_Es1_0E0EB1f_.exit.i
-  %.sroa.05.08.i = phi i64 [ %21, %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailINtNtNtCsdftwklc2oBO_7similar10algorithms5utils10UniqueItemINtNtB1f_4text12TextDiffSideeEENCINvMNtCs4wP2HXfJTCR_5alloc5sliceSB18_11sort_by_keyjNCINvB1b_6uniqueB25_Es1_0E0EB1f_.exit.i ], [ %.sroa.0.0.i, %bb.j ] ; 4 uses
-  %9 = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0.0.ph.lcssa118, i64 %.sroa.05.08.i
-  %.idx = shl nuw nsw i64 %.sroa.05.08.i, 4
-  %10 = getelementptr inbounds nuw i8, ptr %2, i64 %.idx ; 8 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %10, ptr noundef nonnull align 8 dereferenceable(16) %9, i64 16, i1 false), !alias.scope !9589
-  %11 = getelementptr i8, ptr %10, i64 8
-  %.val9.i40.i = load i64, ptr %11, align 8, !alias.scope !9587, !noalias !9584, !noundef !5 ; 3 uses
-  %12 = getelementptr i8, ptr %10, i64 -8
-  %.val10.i.i = load i64, ptr %12, align 8, !alias.scope !9587, !noalias !9584, !noundef !5
-  %13 = icmp ult i64 %.val9.i40.i, %.val10.i.i
-  br i1 %13, label %14, label %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailINtNtNtCsdftwklc2oBO_7similar10algorithms5utils10UniqueItemINtNtB1f_4text12TextDiffSideeEENCINvMNtCs4wP2HXfJTCR_5alloc5sliceSB18_11sort_by_keyjNCINvB1b_6uniqueB25_Es1_0E0EB1f_.exit.i
-
-14:                                               ; preds = %.lr.ph.i
-  %15 = load ptr, ptr %10, align 8, !alias.scope !9587, !noalias !9584, !nonnull !5, !align !97, !noundef !5
-  %.sroa.0.0.i41.i299 = getelementptr inbounds i8, ptr %10, i64 -16 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %10, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.0.i41.i299, i64 16, i1 false), !alias.scope !9587, !noalias !9584
-  %16 = icmp eq i64 %.sroa.05.08.i, 1
-  br i1 %16, label %._crit_edge304, label %.lr.ph303
-
-17:                                               ; preds = %.lr.ph303
-  %.sroa.0.0.i41.i = getelementptr inbounds i8, ptr %.sroa.0.0.i41.i301, i64 -16 ; 3 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.0.i41.i301, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.0.i41.i, i64 16, i1 false), !alias.scope !9587, !noalias !9584
-  %18 = icmp eq ptr %.sroa.0.0.i41.i, %2
-  br i1 %18, label %._crit_edge304, label %.lr.ph303
-
-.lr.ph303:                                        ; preds = %14, %17
-  %.sroa.0.0.i41.i301 = phi ptr [ %.sroa.0.0.i41.i, %17 ], [ %.sroa.0.0.i41.i299, %14 ] ; 5 uses
-  %.sroa.5.0.i.i300 = phi ptr [ %.sroa.0.0.i41.i301, %17 ], [ %10, %14 ] ; 2 uses
-  %19 = getelementptr i8, ptr %.sroa.5.0.i.i300, i64 -24
-  %.val8.i42.i = load i64, ptr %19, align 8, !alias.scope !9587, !noalias !9584, !noundef !5
-  %20 = icmp ult i64 %.val9.i40.i, %.val8.i42.i
-  br i1 %20, label %17, label %._crit_edge304
-
-._crit_edge304:                                   ; preds = %17, %.lr.ph303, %14
-  %.sroa.5.0.i.i.lcssa = phi ptr [ %10, %14 ], [ %.sroa.0.0.i41.i301, %17 ], [ %.sroa.5.0.i.i300, %.lr.ph303 ]
-  %.sroa.0.0.i41.lcssa.i = phi ptr [ %2, %14 ], [ %2, %17 ], [ %.sroa.0.0.i41.i301, %.lr.ph303 ]
-  store ptr %15, ptr %.sroa.0.0.i41.lcssa.i, align 8, !alias.scope !9587, !noalias !9590
-  %.sroa.4.0..sroa.0.0.lcssa.sroa_idx.i.i = getelementptr inbounds i8, ptr %.sroa.5.0.i.i.lcssa, i64 -8
-  store i64 %.val9.i40.i, ptr %.sroa.4.0..sroa.0.0.lcssa.sroa_idx.i.i, align 8, !alias.scope !9587, !noalias !9590
-  br label %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailINtNtNtCsdftwklc2oBO_7similar10algorithms5utils10UniqueItemINtNtB1f_4text12TextDiffSideeEENCINvMNtCs4wP2HXfJTCR_5alloc5sliceSB18_11sort_by_keyjNCINvB1b_6uniqueB25_Es1_0E0EB1f_.exit.i
-
-_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailINtNtNtCsdftwklc2oBO_7similar10algorithms5utils10UniqueItemINtNtB1f_4text12TextDiffSideeEENCINvMNtCs4wP2HXfJTCR_5alloc5sliceSB18_11sort_by_keyjNCINvB1b_6uniqueB25_Es1_0E0EB1f_.exit.i: ; preds = %._crit_edge304, %.lr.ph.i
-  %21 = add nuw i64 %.sroa.05.08.i, 1             ; 2 uses
-  %exitcond.not.i = icmp eq i64 %21, %i.l
-  br i1 %exitcond.not.i, label %.loopexit.i, label %.lr.ph.i
 
 .lr.ph._crit_edge:                                ; preds = %.lr.ph, %bb.b
   %.sroa.16.0120.lcssa = phi i64 [ %.sroa.27.2.lcssa.i, %bb.b ], [ %.sroa.16.0.ph126, %.lr.ph ]

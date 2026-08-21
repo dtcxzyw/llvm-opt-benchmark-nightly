@@ -204,7 +204,7 @@ bb.q:                                             ; preds = %.loopexit239.i
 .noexc.1.i:                                       ; preds = %bb.q, %.noexc.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !209
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !209
-  call void @_RNvMsu_NtNtCs4NRVxsYgnAr_4core3str7patternNtB5_11StrSearcher3new(ptr noalias noundef nonnull sret([104 x i8]) align 8 captures(none) dereferenceable(104) %i.a, ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.ds, i64 noundef %i.du, ptr noalias noundef nonnull readonly captures(address, read_provenance) @43, i64 noundef 3)
+  call void @_RNvMsu_NtNtCs4NRVxsYgnAr_4core3str7patternNtB5_11StrSearcher3new(ptr noalias noundef nonnull sret([104 x i8]) align 8 captures(none) dereferenceable(104) %i.a, ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.ds, i64 noundef %i.du, ptr noalias noundef nonnull readonly captures(address, read_provenance) @42, i64 noundef 3)
   call fastcc void @_RNvXsv_NtNtCs4NRVxsYgnAr_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match(ptr noalias noundef align 8 captures(address) dereferenceable(24) %i.b, ptr noalias noundef align 8 dereferenceable(104) %i.a)
   %i.es = load i64, ptr %i.b, align 8, !range !70, !noalias !209, !noundef !12
   %i.et = trunc nuw i64 %i.es to i1               ; 2 uses
@@ -279,7 +279,7 @@ bb.y:                                             ; preds = %.loopexit238.i
 .noexc.2.i:                                       ; preds = %bb.y, %.noexc.1.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !209
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !209
-  call void @_RNvMsu_NtNtCs4NRVxsYgnAr_4core3str7patternNtB5_11StrSearcher3new(ptr noalias noundef nonnull sret([104 x i8]) align 8 captures(none) dereferenceable(104) %i.a, ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.ds, i64 noundef %i.du, ptr noalias noundef nonnull readonly captures(address, read_provenance) @44, i64 noundef 3)
+  call void @_RNvMsu_NtNtCs4NRVxsYgnAr_4core3str7patternNtB5_11StrSearcher3new(ptr noalias noundef nonnull sret([104 x i8]) align 8 captures(none) dereferenceable(104) %i.a, ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.ds, i64 noundef %i.du, ptr noalias noundef nonnull readonly captures(address, read_provenance) @42, i64 noundef 3)
   call fastcc void @_RNvXsv_NtNtCs4NRVxsYgnAr_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match(ptr noalias noundef align 8 captures(address) dereferenceable(24) %i.b, ptr noalias noundef align 8 dereferenceable(104) %i.a)
   %i.fo = load i64, ptr %i.b, align 8, !range !70, !noalias !209, !noundef !12
   %i.fp = trunc nuw i64 %i.fo to i1               ; 2 uses
@@ -351,16 +351,15 @@ bb.ag:                                            ; preds = %.loopexit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   br label %_RNvNtNtNtNtCs4wrugdhLTku_30codspeed_divan_compat_walltime4time9timestamp3tsc4arch17nominal_frequency.exit.thread
 
-_RNvNtNtNtNtCs4wrugdhLTku_30codspeed_divan_compat_walltime4time9timestamp3tsc4arch17nominal_frequency.exit.thread: ; preds = %bb.g, %bb.h, %.noexc.2.i, %bb.ag
+_RNvNtNtNtNtCs4wrugdhLTku_30codspeed_divan_compat_walltime4time9timestamp3tsc4arch17nominal_frequency.exit.thread: ; preds = %.noexc.2.i, %bb.ag, %bb.h, %bb.g
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
   %i.gk = call noundef double @_RNvNtNtNtNtNtCs4wrugdhLTku_30codspeed_divan_compat_walltime4time9timestamp3tsc4arch7measure17measure_frequency()
   br label %bb.ai
 
 bb.ah:                                            ; preds = %.loopexit.i, %.loopexit238.i, %.loopexit239.i
-  %.sroa.9.0.copyload.lcssa193.i = phi double [ 1.000000e+06, %.loopexit239.i ], [ 1.000000e+09, %.loopexit238.i ], [ 1.000000e+12, %.loopexit.i ]
   %i.gl = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   %i.gm = load double, ptr %i.gl, align 8, !noundef !12
-  %i.gn = fmul double %.sroa.9.0.copyload.lcssa193.i, %i.gm ; 3 uses
+  %i.gn = fmul double %i.gm, 1.000000e+06         ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
   %i.go = call noundef double @_RNvNtNtNtNtNtCs4wrugdhLTku_30codspeed_divan_compat_walltime4time9timestamp3tsc4arch7measure17measure_frequency() ; 3 uses

@@ -205,7 +205,7 @@ bb.a:
   %i.b = alloca [2 x [64 x i64]], align 16        ; 9 uses
   %i.c = alloca [2 x [2 x [64 x i64]]], align 16  ; 12 uses
   %i.d = alloca [64 x i64], align 16              ; 95 uses
-  %8 = alloca [2 x i32], align 8                  ; 10 uses
+  %.sroa.0 = alloca i64, align 8                  ; 11 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #33
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(512) %i.a, i8 0, i64 512, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #33
@@ -214,8 +214,8 @@ bb.a:
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(2048) %i.c, i8 0, i64 2048, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #33
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(512) %i.d, i8 0, i64 512, i1 false)
-  call void @llvm.lifetime.start.p0(ptr nonnull %8) #33
-  store i64 0, ptr %8, align 8
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
+  store i64 0, ptr %.sroa.0, align 8
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 288 ; 5 uses
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !95
   %i.g = getelementptr i8, ptr %i.f, i64 4
@@ -378,17 +378,18 @@ bb.f:                                             ; preds = %bb.e
   %i.cg = getelementptr inbounds [8 x i8], ptr %i.cf, i64 %i.bx
   %i.ch = load i64, ptr %i.cg, align 8, !tbaa !100
   %i.ci = lshr i64 %i.ch, %i.bz
-  %i.cj = and i64 %i.ci, 1                        ; 2 uses
+  %i.cj = and i64 %i.ci, 1                        ; 3 uses
   %i.ck = getelementptr inbounds nuw [8 x i8], ptr %i.bu, i64 %indvars.iv309
   %i.cl = getelementptr inbounds nuw [1024 x i8], ptr %i.c, i64 %i.cj ; 11 uses
-  %9 = getelementptr inbounds nuw [4 x i8], ptr %8, i64 %i.cj ; 4 uses
   %i.cm = getelementptr inbounds nuw i8, ptr %i.cl, i64 512 ; 10 uses
   %.pre = load i64, ptr %i.cb, align 8, !tbaa !100 ; 3 uses
   %i.cn = load i64, ptr %i.cf, align 8, !tbaa !100 ; 2 uses
   %i.co = xor i64 %i.cn, -1
   %i.cp = and i64 %.pre, %i.co                    ; 4 uses
   %i.cq = and i64 %.pre, %i.cn                    ; 4 uses
-  %i.cr = load i32, ptr %9, align 4, !tbaa !8     ; 5 uses
+  %.sroa.0.0..sroa_stride347 = shl nuw nsw i64 %i.cj, 2
+  %.sroa.0.0..sroa_idx349 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %.sroa.0.0..sroa_stride347 ; 2 uses
+  %i.cr = load i32, ptr %.sroa.0.0..sroa_idx349, align 4, !tbaa !8 ; 5 uses
   %i.cs = icmp sgt i32 %i.cr, 0
   br i1 %i.cs, label %.lr.ph.i, label %._crit_edge.thread.i
 
@@ -484,7 +485,7 @@ bb.m:                                             ; preds = %._crit_edge.thread.
 
 .loopexit451:                                     ; preds = %bb.h, %bb.m, %.lr.ph8.i
   %.055.i = phi i32 [ %.2.i, %bb.m ], [ %.2.i, %.lr.ph8.i ], [ %i.cr, %bb.h ]
-  store i32 %.055.i, ptr %9, align 4, !tbaa !8
+  store i32 %.055.i, ptr %.sroa.0.0..sroa_idx349, align 4, !tbaa !8
   %i.eb = load i64, ptr %i.ck, align 8, !tbaa !100 ; 3 uses
   %i.ec = icmp eq i64 %.pre, %i.eb
   br i1 %i.ec, label %.loopexit259, label %bb.n
@@ -494,7 +495,9 @@ bb.n:                                             ; preds = %.loopexit451
   %i.ee = xor i64 %i.ed, -1
   %i.ef = and i64 %i.eb, %i.ee                    ; 4 uses
   %i.eg = and i64 %i.eb, %i.ed                    ; 4 uses
-  %i.eh = load i32, ptr %9, align 4, !tbaa !8     ; 5 uses
+  %.sroa.0.0..sroa_stride350 = shl nuw nsw i64 %i.cj, 2
+  %.sroa.0.0..sroa_idx352 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %.sroa.0.0..sroa_stride350 ; 2 uses
+  %i.eh = load i32, ptr %.sroa.0.0..sroa_idx352, align 4, !tbaa !8 ; 5 uses
   %i.ei = icmp sgt i32 %i.eh, 0
   br i1 %i.ei, label %.lr.ph.i.1, label %._crit_edge.thread.i.1
 
@@ -590,7 +593,7 @@ bb.u:                                             ; preds = %._crit_edge.thread.
 
 Sbd_ManAddCube2.exit.1:                           ; preds = %bb.p, %.lr.ph8.i.1, %bb.u
   %.055.i.1 = phi i32 [ %.2.i.1, %bb.u ], [ %.2.i.1, %.lr.ph8.i.1 ], [ %i.eh, %bb.p ]
-  store i32 %.055.i.1, ptr %9, align 4, !tbaa !8
+  store i32 %.055.i.1, ptr %.sroa.0.0..sroa_idx352, align 4, !tbaa !8
   br label %.loopexit259
 
 .loopexit259:                                     ; preds = %.loopexit451, %Sbd_ManAddCube2.exit.1, %bb.e
@@ -605,8 +608,8 @@ bb.v:                                             ; preds = %.loopexit259
   br i1 %.not175, label %..loopexit258_crit_edge, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
-  %i.ft = load i32, ptr %8, align 8, !tbaa !8
-  %i.fu = getelementptr inbounds nuw i8, ptr %8, i64 4
+  %i.ft = load i32, ptr %.sroa.0, align 8, !tbaa !8
+  %i.fu = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 4
   %i.fv = load i32, ptr %i.fu, align 4, !tbaa !8
   %i.fw = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.15, i32 noundef %i.ft, i32 noundef %i.fv) ; 0 uses
   %.pre364 = load ptr, ptr %0, align 8, !tbaa !72
@@ -616,12 +619,12 @@ bb.w:                                             ; preds = %bb.v
   br i1 %i.fx, label %..loopexit258_crit_edge, label %.preheader257.preheader
 
 ..loopexit258_crit_edge:                          ; preds = %bb.v, %bb.w
-  %.pre367 = load i32, ptr %8, align 8, !tbaa !8
+  %.pre367 = load i32, ptr %.sroa.0, align 8, !tbaa !8
   br label %.loopexit258
 
 .preheader257.preheader:                          ; preds = %bb.w
   %i.fy = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.16, ptr noundef nonnull @.str.18) ; 0 uses
-  %i.fz = load i32, ptr %8, align 8, !tbaa !8     ; 3 uses
+  %i.fz = load i32, ptr %.sroa.0, align 8, !tbaa !8 ; 3 uses
   %i.ga = icmp sgt i32 %i.fz, 0
   br i1 %i.ga, label %.preheader256.lr.ph, label %._crit_edge
 
@@ -667,7 +670,7 @@ bb.aa:                                            ; preds = %bb.z
 ._crit_edge:                                      ; preds = %bb.aa, %.preheader257.preheader
   %putchar192 = tail call i32 @putchar(i32 10)    ; 0 uses
   %i.gj = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.16, ptr noundef nonnull @.str.17) ; 0 uses
-  %i.gk = getelementptr inbounds nuw i8, ptr %8, i64 4
+  %i.gk = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 4
   %i.gl = load i32, ptr %i.gk, align 4, !tbaa !8  ; 2 uses
   %i.gm = icmp sgt i32 %i.gl, 0
   br i1 %i.gm, label %.preheader256.lr.ph.1, label %._crit_edge.1
@@ -722,7 +725,7 @@ bb.ae:                                            ; preds = %bb.ad
   br i1 %i.gx, label %.preheader.lr.ph, label %._crit_edge276
 
 .preheader.lr.ph:                                 ; preds = %.loopexit258
-  %i.gy = getelementptr inbounds nuw i8, ptr %8, i64 4
+  %i.gy = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 4
   %i.gz = load i32, ptr %i.gy, align 4, !tbaa !8  ; 2 uses
   %i.ha = icmp sgt i32 %i.gz, 0
   %i.hb = getelementptr inbounds nuw i8, ptr %i.c, i64 512
@@ -1125,7 +1128,7 @@ bb.bo:                                            ; preds = %bb.bd, %._crit_edge
 
 .loopexit:                                        ; preds = %bb.bo, %bb.an, %bb.bn, %bb.bm, %Abc_Clock.exit244
   %.0171 = phi i32 [ 0, %Abc_Clock.exit244 ], [ 1, %bb.bm ], [ 1, %bb.bn ], [ 0, %bb.an ], [ 0, %bb.bo ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %8) #33
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #33
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #33
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #33

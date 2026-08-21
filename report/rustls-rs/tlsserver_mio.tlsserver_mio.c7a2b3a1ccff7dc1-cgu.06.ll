@@ -204,27 +204,23 @@ define hidden void @_RINvMNtNtCsdsZTLzXv0lo_12clap_builder7builder9arg_groupNtB3
 bb.a:
   %i.a = alloca [96 x i8], align 8                ; 9 uses
   %i.b = alloca [96 x i8], align 8                ; 4 uses
-  %3 = alloca [240 x i8], align 8                 ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %3)
-  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(224) %.sroa.5.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(224) %2, i64 224, i1 false)
+  %.sroa.7.16. = load ptr, ptr %2, align 8, !alias.scope !117 ; 2 uses
+  %.not = icmp eq ptr %.sroa.7.16., null
+  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %.sroa.7.24. = load i64, ptr %.sroa.5.0..sroa_idx, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  br label %bb.b
+  br i1 %.not, label %bb.h, label %bb.b
 
 bb.b:                                             ; preds = %bb.a, %bb.i
-  %i.e = phi i64 [ 0, %bb.a ], [ %i.f, %bb.i ]    ; 2 uses
+  %i.e = phi i64 [ %i.f, %bb.i ], [ 0, %bb.a ]
   %i.f = add nuw nsw i64 %i.e, 1                  ; 2 uses
-  %4 = getelementptr inbounds nuw [16 x i8], ptr %.sroa.5.0..sroa_idx, i64 %i.e ; 2 uses
-  %5 = load ptr, ptr %4, align 8, !alias.scope !117, !nonnull !9, !noundef !9
-  %6 = getelementptr inbounds nuw i8, ptr %4, i64 8
-  %7 = load i64, ptr %6, align 8, !alias.scope !117, !noundef !9
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %i.a, ptr noundef nonnull align 8 dereferenceable(96) %1, i64 96, i1 false)
   call void @llvm.experimental.noalias.scope.decl(metadata !122)
   call void @llvm.experimental.noalias.scope.decl(metadata !125)
-  %i.g = invoke { ptr, i64 } @_RNvXsk_NtNtCsdsZTLzXv0lo_12clap_builder7builder10resettableNtNtNtB9_4util2id2IdINtB5_14IntoResettableBV_E15into_resettableCsh8EDedVkTYb_13tlsserver_mio(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %5, i64 noundef %7)
+  %i.g = invoke { ptr, i64 } @_RNvXsk_NtNtCsdsZTLzXv0lo_12clap_builder7builder10resettableNtNtNtB9_4util2id2IdINtB5_14IntoResettableBV_E15into_resettableCsh8EDedVkTYb_13tlsserver_mio(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.sroa.7.16., i64 noundef %.sroa.7.24.)
           to label %bb.d unwind label %bb.c, !noalias !127 ; 2 uses
 
 bb.c:                                             ; preds = %bb.f, %bb.b
@@ -264,8 +260,7 @@ bb.g:                                             ; preds = %bb.c
   call void @_RNvNtCsj6eKBz9Db1c_4core9panicking16panic_in_cleanup() #25, !noalias !122
   unreachable
 
-bb.h:                                             ; preds = %bb.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %3)
+bb.h:                                             ; preds = %bb.i, %bb.a
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %0, ptr noundef nonnull align 8 dereferenceable(96) %1, i64 96, i1 false)
   ret void
 

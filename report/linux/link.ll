@@ -134,7 +134,7 @@ bb.a:
   %i.n = xor i32 %i.j, -1
   %i.o = and i32 %i.k, %i.n
   %i.p = zext nneg i32 %i.o to i64                ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #11
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(120) %i.a, i8 0, i64 120, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #11
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(120) %i.b, i8 0, i64 120, i1 false), !annotation !15
@@ -202,9 +202,10 @@ bb.h:                                             ; preds = %find_next_bit.exit1
   br i1 %.not169.i, label %.loopexit55, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %i.am = and i64 %i.ah, 15
-  %4 = getelementptr [8 x i8], ptr %i.a, i64 %i.am
-  store ptr %i.al, ptr %4, align 8
+  %4 = shl i64 %i.ah, 3
+  %i.am = and i64 %4, 120
+  %.0..sroa_idx76 = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.am
+  store ptr %i.al, ptr %.0..sroa_idx76, align 8
   %i.an = add nuw nsw i64 %i.ah, 1
   %i.ao = and i64 %i.an, 31                       ; 2 uses
   %i.ap = icmp samesign ugt i64 %i.ao, 14
@@ -287,8 +288,9 @@ bb.p:                                             ; preds = %bb.o
   br label %.critedge.i
 
 .critedge.i:                                      ; preds = %bb.n, %bb.p, %bb.o
-  %5 = getelementptr [8 x i8], ptr %i.a, i64 %.pre71
-  %i.bs = load ptr, ptr %5, align 8               ; 5 uses
+  %.0..sroa_stride70 = shl nuw nsw i64 %.pre71, 3
+  %.0..sroa_idx72 = getelementptr inbounds nuw i8, ptr %i.a, i64 %.0..sroa_stride70
+  %i.bs = load ptr, ptr %.0..sroa_idx72, align 8  ; 5 uses
   %i.bt = getelementptr i8, ptr %i.bs, i64 1072
   tail call void @ieee80211_link_init(ptr noundef %0, i32 noundef %i.bn, ptr noundef %i.bs, ptr noundef %i.bt) #10, !inline_history !17
   %i.bu = load ptr, ptr %i.bs, align 8
@@ -691,9 +693,10 @@ find_next_bit.exit175.i:                          ; preds = %bb.ap
   br i1 %i.hp, label %bb.aq, label %find_next_bit.exit175.i.thread
 
 bb.aq:                                            ; preds = %find_next_bit.exit175.i
-  %i.hq = and i64 %i.hn, 15
-  %6 = getelementptr [8 x i8], ptr %i.a, i64 %i.hq
-  %i.hr = load ptr, ptr %6, align 8
+  %5 = shl i64 %i.hn, 3
+  %i.hq = and i64 %5, 120
+  %.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.hq
+  %i.hr = load ptr, ptr %.0..sroa_idx, align 8
   call void @ieee80211_link_stop(ptr noundef %i.hr) #10, !inline_history !17
   %i.hs = add nuw nsw i64 %i.hn, 1
   %i.ht = and i64 %i.hs, 31                       ; 2 uses
@@ -928,7 +931,7 @@ ieee80211_vif_update_links.exit:                  ; preds = %.loopexit55, %find_
   %.0.i = phi i32 [ 0, %bb.b ], [ %.4152.i48, %ieee80211_link_init.exit ], [ 0, %.loopexit ], [ 0, %find_next_bit.exit.i.thread ], [ %.3151.i, %.loopexit55 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #11
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.ln = load ptr, ptr %i.d, align 16
   call void @kfree(ptr noundef %i.ln) #12
   %i.lo = getelementptr inbounds nuw i8, ptr %i.d, i64 8

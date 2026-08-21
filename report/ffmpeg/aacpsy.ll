@@ -205,7 +205,7 @@ bb.a:
   %i.a = alloca [1024 x float], align 16          ; 4 uses
   %i.b = alloca [18 x float], align 16            ; 19 uses
   %i.c = alloca [18 x float], align 16            ; 5 uses
-  %6 = alloca [9 x float], align 16               ; 10 uses
+  %.sroa.3 = alloca [8 x float], align 16         ; 11 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 72
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !41
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 3616
@@ -220,8 +220,8 @@ vector.ph:                                        ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #11
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #11
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #11
-  call void @llvm.lifetime.start.p0(ptr nonnull %6) #11
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(36) %6, i8 0, i64 36, i1 false)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.3)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %.sroa.3, i8 0, i64 32, i1 false)
   %i.j = getelementptr inbounds nuw i8, ptr %3, i64 44
   br label %vector.body
 
@@ -345,12 +345,14 @@ bb.c:                                             ; preds = %bb.b
   %i.bw = getelementptr inbounds nuw [4 x i8], ptr %i.bd, i64 %indvars.iv
   store float %.095..1, ptr %i.bw, align 4, !tbaa !49
   %i.bx = lshr i64 %indvars.iv, 1
-  %i.by = and i64 %i.bx, 2147483647
-  %7 = getelementptr inbounds nuw [4 x i8], ptr %6, i64 %i.by
-  %i.bz = getelementptr inbounds nuw i8, ptr %7, i64 4 ; 2 uses
+  %i.by = and i64 %i.bx, 2147483647               ; 2 uses
+  %.sroa.3.4..sroa_stride402 = shl nuw nsw i64 %i.by, 2
+  %i.bz = getelementptr inbounds nuw i8, ptr %.sroa.3, i64 %.sroa.3.4..sroa_stride402
   %i.ca = load float, ptr %i.bz, align 4, !tbaa !49
   %i.cb = fadd nsz float %.095..1, %i.ca
-  store float %i.cb, ptr %i.bz, align 4, !tbaa !49
+  %.sroa.3.4..sroa_stride = shl nuw nsw i64 %i.by, 2
+  %.sroa.3.4..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.3, i64 %.sroa.3.4..sroa_stride
+  store float %i.cb, ptr %.sroa.3.4..sroa_idx, align 4, !tbaa !49
   %i.cc = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %indvars.iv
   %i.cd = load float, ptr %i.cc, align 4, !tbaa !49 ; 4 uses
   %i.ce = fcmp nsz ogt float %.095..1, %i.cd
@@ -539,18 +541,17 @@ bb.ah:                                            ; preds = %bb.ag
 
 .preheader132:                                    ; preds = %bb.ah, %bb.ag, %bb.af
   %.sroa.92.3 = phi i32 [ 2, %bb.ah ], [ 0, %bb.ag ], [ 1, %bb.af ]
-  %8 = getelementptr inbounds nuw i8, ptr %6, i64 4
   %i.fd = fmul nsz float %i.bm, 2.300000e+00
   %i.fe = icmp samesign uge i32 %.sroa.0.3, %.sroa.14.5
-  %9 = getelementptr inbounds nuw i8, ptr %6, i64 8
-  %10 = getelementptr inbounds nuw i8, ptr %6, i64 20
-  %i.ff = load <4 x float>, ptr %8, align 4, !tbaa !49 ; 5 uses
+  %i.ff = load <4 x float>, ptr %.sroa.3, align 16, !tbaa !49 ; 5 uses
   %i.fg = extractelement <4 x float> %i.ff, i64 0 ; 3 uses
   %i.fh = fcmp nsz ogt float %i.bm, %i.fg
   %i.fi = select nsz i1 %i.fh, float %i.bm, float %i.fg
   %i.fj = fcmp nsz uge float %i.fi, 4.000000e+04
-  %i.fk = load float, ptr %10, align 4, !tbaa !49 ; 3 uses
-  %i.fl = load <4 x float>, ptr %9, align 8, !tbaa !49 ; 4 uses
+  %.sroa.3.20..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.3, i64 16
+  %i.fk = load float, ptr %.sroa.3.20..sroa_idx, align 16, !tbaa !49 ; 3 uses
+  %.sroa.3.8..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.3, i64 4
+  %i.fl = load <4 x float>, ptr %.sroa.3.8..sroa_idx, align 4, !tbaa !49 ; 4 uses
   %i.fm = fmul nsz <4 x float> %i.ff, splat (float 2.300000e+00) ; 2 uses
   %i.fn = extractelement <4 x float> %i.fm, i64 0
   %i.fo = fcmp nsz uge float %i.bm, %i.fn
@@ -572,8 +573,8 @@ bb.ah:                                            ; preds = %bb.ag
   %i.ga = insertelement <4 x i32> %i.fz, i32 %.sroa.47.3, i64 2
   %i.gb = insertelement <4 x i32> %i.ga, i32 %.sroa.58.3, i64 3
   %i.gc = select <4 x i1> %i.fx, <4 x i32> zeroinitializer, <4 x i32> %i.gb ; 7 uses
-  %i.gd = getelementptr inbounds nuw i8, ptr %6, i64 24
-  %i.ge = load float, ptr %i.gd, align 8, !tbaa !49 ; 7 uses
+  %i.gd = getelementptr inbounds nuw i8, ptr %.sroa.3, i64 20
+  %i.ge = load float, ptr %i.gd, align 4, !tbaa !49 ; 7 uses
   %i.gf = fcmp nsz ogt float %i.fk, %i.ge
   %i.gg = select nsz i1 %i.gf, float %i.fk, float %i.ge
   %i.gh = fcmp nsz olt float %i.gg, 4.000000e+04
@@ -584,8 +585,8 @@ bb.ah:                                            ; preds = %bb.ag
   %i.gl = fcmp nsz olt float %i.ge, %i.gk
   %or.cond123.5 = and i1 %i.gl, %or.cond121.5
   %.sroa.69.4 = select i1 %or.cond123.5, i32 0, i32 %.sroa.69.3 ; 4 uses
-  %i.gm = getelementptr inbounds nuw i8, ptr %6, i64 28
-  %i.gn = load float, ptr %i.gm, align 4, !tbaa !49 ; 7 uses
+  %i.gm = getelementptr inbounds nuw i8, ptr %.sroa.3, i64 24
+  %i.gn = load float, ptr %i.gm, align 8, !tbaa !49 ; 7 uses
   %i.go = fcmp nsz ogt float %i.ge, %i.gn
   %i.gp = select nsz i1 %i.go, float %i.ge, float %i.gn
   %i.gq = fcmp nsz olt float %i.gp, 4.000000e+04
@@ -595,8 +596,8 @@ bb.ah:                                            ; preds = %bb.ag
   %i.gt = fcmp nsz olt float %i.gn, %i.gi
   %or.cond123.6 = and i1 %i.gt, %or.cond121.6
   %.sroa.80.4 = select i1 %or.cond123.6, i32 0, i32 %.sroa.80.3 ; 5 uses
-  %i.gu = getelementptr inbounds nuw i8, ptr %6, i64 32
-  %i.gv = load float, ptr %i.gu, align 16, !tbaa !49 ; 4 uses
+  %i.gu = getelementptr inbounds nuw i8, ptr %.sroa.3, i64 28
+  %i.gv = load float, ptr %i.gu, align 4, !tbaa !49 ; 4 uses
   %i.gw = fcmp nsz ogt float %i.gn, %i.gv
   %i.gx = select nsz i1 %i.gw, float %i.gn, float %i.gv
   %i.gy = fcmp nsz olt float %i.gx, 4.000000e+04
@@ -678,7 +679,7 @@ bb.aj:                                            ; preds = %bb.ai, %.preheader1
   %.sroa.80.0 = phi i32 [ %.sroa.80.4, %.preheader132 ], [ %.sroa.80.5, %.preheader.preheader ], [ %spec.select357, %bb.ai ] ; 2 uses
   %.sroa.92.0 = phi i32 [ %.sroa.92.4, %.preheader132 ], [ 0, %.preheader.preheader ], [ %spec.select358, %bb.ai ]
   %i.ie = phi <4 x i32> [ %i.gc, %.preheader132 ], [ %i.ia, %.preheader.preheader ], [ %i.ia, %bb.ai ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.3)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #11
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #11
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11

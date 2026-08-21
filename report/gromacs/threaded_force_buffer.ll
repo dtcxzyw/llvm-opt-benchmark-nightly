@@ -205,7 +205,7 @@ bb.k:                                             ; preds = %.preheader.preheade
 ; Function Attrs: alwaysinline norecurse nounwind uwtable
 define internal void @_ZN3gmx12_GLOBAL__N_124reduceThreadForceBuffersINS_11BasicVectorIfEEEEvNS_8ArrayRefIS3_EENS4_ISt10unique_ptrINS_17ThreadForceBufferIT_EESt14default_deleteIS9_EEEENS4_IKSt5arrayImLm2EEEENS4_IKiEE.omp_outlined(ptr noalias nofree noundef readonly captures(none) %0, ptr noalias nofree readnone captures(none) %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %2, ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(4) %3, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %4, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %5, ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(4) %6, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %7) #13 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %8 = alloca %"struct.std::array", align 16      ; 12 uses
+  %.sroa.0 = alloca [2 x i64], align 16           ; 12 uses
   %i.a = alloca i32, align 4                      ; 5 uses
   %i.b = alloca i32, align 4                      ; 6 uses
   %i.c = alloca i32, align 4                      ; 4 uses
@@ -278,17 +278,17 @@ bb.c:                                             ; preds = %.lr.ph73, %.loopexi
   %indvars.iv.epil.init = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next.1, %._crit_edge.unr-lcssa ] ; 3 uses
   %.04860.epil.init = phi i32 [ 0, %.lr.ph ], [ %.1.1, %._crit_edge.unr-lcssa ] ; 3 uses
   call void @llvm.assume(i1 %lcmp.mod115)
-  call void @llvm.lifetime.start.p0(ptr nonnull %8)
-  store <2 x i64> %i.af, ptr %8, align 16
-  %i.ag = lshr i64 %indvars.iv.epil.init, 6
-  %i.ah = and i64 %i.ag, 67108863
-  %9 = getelementptr inbounds nuw [8 x i8], ptr %8, i64 %i.ah
-  %i.ai = load i64, ptr %9, align 8, !tbaa !77
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
+  store <2 x i64> %i.af, ptr %.sroa.0, align 16
+  %i.ag = lshr i64 %indvars.iv.epil.init, 3
+  %i.ah = and i64 %i.ag, 536870904
+  %.sroa.0.0..sroa_idx128 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %i.ah
+  %i.ai = load i64, ptr %.sroa.0.0..sroa_idx128, align 8, !tbaa !77
   %i.aj = and i64 %indvars.iv.epil.init, 63
   %i.ak = shl nuw i64 1, %i.aj
   %i.al = and i64 %i.ai, %i.ak
   %.not56.epil = icmp eq i64 %i.al, 0
-  call void @llvm.lifetime.end.p0(ptr nonnull %8)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   br i1 %.not56.epil, label %._crit_edge, label %bb.d
 
 bb.d:                                             ; preds = %.epil.preheader
@@ -312,17 +312,17 @@ bb.d:                                             ; preds = %.epil.preheader
   %indvars.iv = phi i64 [ %indvars.iv.next.1, %bb.h ], [ 0, %.lr.ph ] ; 6 uses
   %.04860 = phi i32 [ %.1.1, %bb.h ], [ 0, %.lr.ph ] ; 3 uses
   %niter = phi i64 [ %niter.next.1, %bb.h ], [ 0, %.lr.ph ]
-  call void @llvm.lifetime.start.p0(ptr nonnull %8)
-  store <2 x i64> %i.af, ptr %8, align 16
-  %i.av = lshr i64 %indvars.iv, 6
-  %i.aw = and i64 %i.av, 67108863
-  %10 = getelementptr inbounds nuw [8 x i8], ptr %8, i64 %i.aw
-  %i.ax = load i64, ptr %10, align 8, !tbaa !77
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
+  store <2 x i64> %i.af, ptr %.sroa.0, align 16
+  %i.av = lshr i64 %indvars.iv, 3
+  %i.aw = and i64 %i.av, 536870904
+  %.sroa.0.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %i.aw
+  %i.ax = load i64, ptr %.sroa.0.0..sroa_idx, align 8, !tbaa !77
   %i.ay = and i64 %indvars.iv, 62
   %i.az = shl nuw nsw i64 1, %i.ay
   %i.ba = and i64 %i.ax, %i.az
   %.not56 = icmp eq i64 %i.ba, 0
-  call void @llvm.lifetime.end.p0(ptr nonnull %8)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   br i1 %.not56, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %.lr.ph.new
@@ -340,17 +340,17 @@ bb.e:                                             ; preds = %.lr.ph.new
 bb.f:                                             ; preds = %.lr.ph.new, %bb.e
   %.1 = phi i32 [ %i.bg, %bb.e ], [ %.04860, %.lr.ph.new ] ; 3 uses
   %indvars.iv.next = or disjoint i64 %indvars.iv, 1 ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %8)
-  store <2 x i64> %i.af, ptr %8, align 16
-  %i.bj = lshr i64 %indvars.iv, 6
-  %i.bk = and i64 %i.bj, 67108863
-  %11 = getelementptr inbounds nuw [8 x i8], ptr %8, i64 %i.bk
-  %i.bl = load i64, ptr %11, align 8, !tbaa !77
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
+  store <2 x i64> %i.af, ptr %.sroa.0, align 16
+  %i.bj = lshr i64 %indvars.iv, 3
+  %i.bk = and i64 %i.bj, 536870904
+  %.sroa.0.0..sroa_idx132 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %i.bk
+  %i.bl = load i64, ptr %.sroa.0.0..sroa_idx132, align 8, !tbaa !77
   %i.bm = and i64 %indvars.iv.next, 63
   %i.bn = shl nuw i64 1, %i.bm
   %i.bo = and i64 %i.bl, %i.bn
   %.not56.1 = icmp eq i64 %i.bo, 0
-  call void @llvm.lifetime.end.p0(ptr nonnull %8)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   br i1 %.not56.1, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
@@ -753,7 +753,7 @@ bb.k:                                             ; preds = %.preheader.preheade
 ; Function Attrs: alwaysinline norecurse nounwind uwtable
 define internal void @_ZN3gmx12_GLOBAL__N_124reduceThreadForceBuffersIA4_fEEvNS_8ArrayRefINS_11BasicVectorIfEEEENS3_ISt10unique_ptrINS_17ThreadForceBufferIT_EESt14default_deleteISA_EEEENS3_IKSt5arrayImLm2EEEENS3_IKiEE.omp_outlined(ptr noalias nofree noundef readonly captures(none) %0, ptr noalias nofree readnone captures(none) %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %2, ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(4) %3, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %4, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %5, ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(4) %6, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %7) #13 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %8 = alloca %"struct.std::array", align 16      ; 12 uses
+  %.sroa.0 = alloca [2 x i64], align 16           ; 12 uses
   %i.a = alloca i32, align 4                      ; 5 uses
   %i.b = alloca i32, align 4                      ; 6 uses
   %i.c = alloca i32, align 4                      ; 4 uses
@@ -826,17 +826,17 @@ bb.c:                                             ; preds = %.lr.ph73, %.loopexi
   %indvars.iv.epil.init = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next.1, %._crit_edge.unr-lcssa ] ; 3 uses
   %.04860.epil.init = phi i32 [ 0, %.lr.ph ], [ %.1.1, %._crit_edge.unr-lcssa ] ; 3 uses
   call void @llvm.assume(i1 %lcmp.mod116)
-  call void @llvm.lifetime.start.p0(ptr nonnull %8)
-  store <2 x i64> %i.af, ptr %8, align 16
-  %i.ag = lshr i64 %indvars.iv.epil.init, 6
-  %i.ah = and i64 %i.ag, 67108863
-  %9 = getelementptr inbounds nuw [8 x i8], ptr %8, i64 %i.ah
-  %i.ai = load i64, ptr %9, align 8, !tbaa !77
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
+  store <2 x i64> %i.af, ptr %.sroa.0, align 16
+  %i.ag = lshr i64 %indvars.iv.epil.init, 3
+  %i.ah = and i64 %i.ag, 536870904
+  %.sroa.0.0..sroa_idx129 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %i.ah
+  %i.ai = load i64, ptr %.sroa.0.0..sroa_idx129, align 8, !tbaa !77
   %i.aj = and i64 %indvars.iv.epil.init, 63
   %i.ak = shl nuw i64 1, %i.aj
   %i.al = and i64 %i.ai, %i.ak
   %.not56.epil = icmp eq i64 %i.al, 0
-  call void @llvm.lifetime.end.p0(ptr nonnull %8)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   br i1 %.not56.epil, label %._crit_edge, label %bb.d
 
 bb.d:                                             ; preds = %.epil.preheader
@@ -860,17 +860,17 @@ bb.d:                                             ; preds = %.epil.preheader
   %indvars.iv = phi i64 [ %indvars.iv.next.1, %bb.h ], [ 0, %.lr.ph ] ; 6 uses
   %.04860 = phi i32 [ %.1.1, %bb.h ], [ 0, %.lr.ph ] ; 3 uses
   %niter = phi i64 [ %niter.next.1, %bb.h ], [ 0, %.lr.ph ]
-  call void @llvm.lifetime.start.p0(ptr nonnull %8)
-  store <2 x i64> %i.af, ptr %8, align 16
-  %i.av = lshr i64 %indvars.iv, 6
-  %i.aw = and i64 %i.av, 67108863
-  %10 = getelementptr inbounds nuw [8 x i8], ptr %8, i64 %i.aw
-  %i.ax = load i64, ptr %10, align 8, !tbaa !77
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
+  store <2 x i64> %i.af, ptr %.sroa.0, align 16
+  %i.av = lshr i64 %indvars.iv, 3
+  %i.aw = and i64 %i.av, 536870904
+  %.sroa.0.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %i.aw
+  %i.ax = load i64, ptr %.sroa.0.0..sroa_idx, align 8, !tbaa !77
   %i.ay = and i64 %indvars.iv, 62
   %i.az = shl nuw nsw i64 1, %i.ay
   %i.ba = and i64 %i.ax, %i.az
   %.not56 = icmp eq i64 %i.ba, 0
-  call void @llvm.lifetime.end.p0(ptr nonnull %8)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   br i1 %.not56, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %.lr.ph.new
@@ -888,17 +888,17 @@ bb.e:                                             ; preds = %.lr.ph.new
 bb.f:                                             ; preds = %.lr.ph.new, %bb.e
   %.1 = phi i32 [ %i.bg, %bb.e ], [ %.04860, %.lr.ph.new ] ; 3 uses
   %indvars.iv.next = or disjoint i64 %indvars.iv, 1 ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %8)
-  store <2 x i64> %i.af, ptr %8, align 16
-  %i.bj = lshr i64 %indvars.iv, 6
-  %i.bk = and i64 %i.bj, 67108863
-  %11 = getelementptr inbounds nuw [8 x i8], ptr %8, i64 %i.bk
-  %i.bl = load i64, ptr %11, align 8, !tbaa !77
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
+  store <2 x i64> %i.af, ptr %.sroa.0, align 16
+  %i.bj = lshr i64 %indvars.iv, 3
+  %i.bk = and i64 %i.bj, 536870904
+  %.sroa.0.0..sroa_idx133 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %i.bk
+  %i.bl = load i64, ptr %.sroa.0.0..sroa_idx133, align 8, !tbaa !77
   %i.bm = and i64 %indvars.iv.next, 63
   %i.bn = shl nuw i64 1, %i.bm
   %i.bo = and i64 %i.bl, %i.bn
   %.not56.1 = icmp eq i64 %i.bo, 0
-  call void @llvm.lifetime.end.p0(ptr nonnull %8)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   br i1 %.not56.1, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f

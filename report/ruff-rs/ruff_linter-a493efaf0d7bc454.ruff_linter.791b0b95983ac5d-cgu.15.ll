@@ -205,7 +205,7 @@ bb.m:                                             ; preds = %bb.v, %.lr.ph.i
   call void @llvm.assume(i1 %i.bg)
   %i.bh = load ptr, ptr %i.as, align 8, !alias.scope !8648, !noalias !8638, !nonnull !6, !noundef !6 ; 4 uses
   %i.bi = getelementptr inbounds nuw [8 x i8], ptr %i.bh, i64 %i.bb
-  %i.bj = load ptr, ptr %i.bi, align 8, !noalias !8650, !nonnull !6, !align !331, !noundef !6 ; 6 uses
+  %i.bj = load ptr, ptr %i.bi, align 8, !noalias !8650, !nonnull !6, !align !331, !noundef !6 ; 5 uses
   %i.bk = load i32, ptr %i.bj, align 8, !range !62, !noalias !8638, !noundef !6
   switch i32 %i.bk, label %bb.p [
     i32 2, label %bb.r
@@ -277,8 +277,7 @@ bb.s:                                             ; preds = %bb.m
   ]
 
 bb.t:                                             ; preds = %bb.r
-  %i.ca = getelementptr inbounds nuw i8, ptr %i.bj, i64 8
-  %2 = getelementptr inbounds nuw i8, ptr %i.bj, i64 16
+  %i.ca = getelementptr inbounds nuw i8, ptr %i.bj, i64 8 ; 2 uses
   %i.cb = load ptr, ptr %i.ca, align 8, !noalias !8638, !nonnull !6, !noundef !6 ; 7 uses
   %i.cc = load i32, ptr %i.cb, align 8, !range !62, !noalias !8638, !noundef !6
   switch i32 %i.cc, label %bb.w [
@@ -356,7 +355,7 @@ _RNvMs3_NtNtCscdodAO9FK5_5alloc11collections9vec_dequeINtB5_8VecDequeRNtNtCskLng
   br label %bb.aa
 
 bb.aa:                                            ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtNtCscdodAO9FK5_5alloc11collections9vec_deque8VecDequeRNtNtCskLngH8kgpZI_15ruff_python_ast9generated4ExprEECsEhZmuQNqkz_11ruff_linter.exit50.i, %_RNvMs3_NtNtCscdodAO9FK5_5alloc11collections9vec_dequeINtB5_8VecDequeRNtNtCskLngH8kgpZI_15ruff_python_ast9generated4ExprE13push_back_mutCsEhZmuQNqkz_11ruff_linter.exit47.i, %_RNvMs3_NtNtCscdodAO9FK5_5alloc11collections9vec_dequeINtB5_8VecDequeRNtNtCskLngH8kgpZI_15ruff_python_ast9generated4ExprE13push_back_mutCsEhZmuQNqkz_11ruff_linter.exit.i, %_RNvMsF_NtCscdodAO9FK5_5alloc3vecINtB5_3VecRNtNtCskLngH8kgpZI_15ruff_python_ast9generated4ExprE8push_mutCsEhZmuQNqkz_11ruff_linter.exit33.i
-  %i.dc = load ptr, ptr %2, align 8, !noalias !8638, !nonnull !6, !noundef !6 ; 7 uses
+  %i.dc = load ptr, ptr %i.ca, align 8, !noalias !8638, !nonnull !6, !noundef !6 ; 7 uses
   %i.dd = load i32, ptr %i.dc, align 8, !range !62, !noalias !8638, !noundef !6
   switch i32 %i.dd, label %bb.aj [
     i32 2, label %bb.ag

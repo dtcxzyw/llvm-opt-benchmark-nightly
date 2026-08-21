@@ -10,8 +10,6 @@ target triple = "x86_64-pc-linux-gnu"
 %"class.std::__cxx11::basic_string" = type { %"struct.std::__cxx11::basic_string<char>::_Alloc_hider", i64, %union.anon }
 %"struct.std::__cxx11::basic_string<char>::_Alloc_hider" = type { ptr }
 %union.anon = type { i64, [8 x i8] }
-%"class.std::bitset" = type { %"struct.std::_Base_bitset" }
-%"struct.std::_Base_bitset" = type { [4 x i64] }
 %"class.llvh::StringRef" = type { ptr, i64 }
 %"class.llvh::APInt" = type <{ %union.anon.0, i32, [4 x i8] }>
 %union.anon.0 = type { i64 }
@@ -414,9 +412,9 @@ _ZNK4llvh9StringRef12equals_lowerES0_.exit.thread: ; preds = %_ZNK4llvh9StringRe
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
 define hidden noundef i64 @_ZNK4llvh9StringRef13find_first_ofES0_m(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %0, ptr nofree readonly captures(none) %1, i64 %2, i64 noundef %3) local_unnamed_addr #0 align 2 {
 bb.a:
-  %4 = alloca %"class.std::bitset", align 8       ; 7 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #18
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %4, i8 0, i64 32, i1 false)
+  %.sroa.0 = alloca [4 x i64], align 8            ; 10 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.0, i8 0, i64 32, i1 false)
   %.not16 = icmp eq i64 %2, 0
   br i1 %.not16, label %._crit_edge, label %.lr.ph.preheader
 
@@ -442,11 +440,13 @@ bb.a:
   %i.d = zext i8 %i.c to i64                      ; 2 uses
   %i.e = and i64 %i.d, 63
   %i.f = shl nuw i64 1, %i.e
-  %i.g = lshr i64 %i.d, 6
-  %5 = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %i.g ; 2 uses
-  %i.h = load i64, ptr %5, align 8, !tbaa !12
+  %i.g = lshr i64 %i.d, 3
+  %.sroa.0.0..sroa_stride.epil = and i64 %i.g, 24 ; 2 uses
+  %.sroa.0.0..sroa_idx54 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %.sroa.0.0..sroa_stride.epil
+  %i.h = load i64, ptr %.sroa.0.0..sroa_idx54, align 8, !tbaa !12
   %i.i = or i64 %i.f, %i.h
-  store i64 %i.i, ptr %5, align 8, !tbaa !12
+  %.sroa.0.0..sroa_idx57 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %.sroa.0.0..sroa_stride.epil
+  store i64 %i.i, ptr %.sroa.0.0..sroa_idx57, align 8, !tbaa !12
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.lr.ph.epil.preheader, %._crit_edge.loopexit.unr-lcssa, %bb.a
@@ -467,22 +467,26 @@ bb.a:
   %i.o = zext i8 %i.n to i64                      ; 2 uses
   %i.p = and i64 %i.o, 63
   %i.q = shl nuw i64 1, %i.p
-  %i.r = lshr i64 %i.o, 6
-  %6 = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %i.r ; 2 uses
-  %i.s = load i64, ptr %6, align 8, !tbaa !12
+  %i.r = lshr i64 %i.o, 3
+  %.sroa.0.0..sroa_stride = and i64 %i.r, 24      ; 2 uses
+  %.sroa.0.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %.sroa.0.0..sroa_stride
+  %i.s = load i64, ptr %.sroa.0.0..sroa_idx, align 8, !tbaa !12
   %i.t = or i64 %i.q, %i.s
-  store i64 %i.t, ptr %6, align 8, !tbaa !12
+  %.sroa.0.0..sroa_idx48 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %.sroa.0.0..sroa_stride
+  store i64 %i.t, ptr %.sroa.0.0..sroa_idx48, align 8, !tbaa !12
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 %.01117
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 1
   %i.w = load i8, ptr %i.v, align 1, !tbaa !15
   %i.x = zext i8 %i.w to i64                      ; 2 uses
   %i.y = and i64 %i.x, 63
   %i.z = shl nuw i64 1, %i.y
-  %i.aa = lshr i64 %i.x, 6
-  %7 = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %i.aa ; 2 uses
-  %i.ab = load i64, ptr %7, align 8, !tbaa !12
+  %i.aa = lshr i64 %i.x, 3
+  %.sroa.0.0..sroa_stride.1 = and i64 %i.aa, 24   ; 2 uses
+  %.sroa.0.0..sroa_idx60 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %.sroa.0.0..sroa_stride.1
+  %i.ab = load i64, ptr %.sroa.0.0..sroa_idx60, align 8, !tbaa !12
   %i.ac = or i64 %i.z, %i.ab
-  store i64 %i.ac, ptr %7, align 8, !tbaa !12
+  %.sroa.0.0..sroa_idx63 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %.sroa.0.0..sroa_stride.1
+  store i64 %i.ac, ptr %.sroa.0.0..sroa_idx63, align 8, !tbaa !12
   %i.ad = add nuw i64 %.01117, 2                  ; 2 uses
   %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
@@ -493,9 +497,10 @@ bb.b:                                             ; preds = %.lr.ph21, %bb.c
   %i.ae = getelementptr inbounds nuw i8, ptr %i.l, i64 %.01019
   %i.af = load i8, ptr %i.ae, align 1, !tbaa !15
   %i.ag = zext i8 %i.af to i64                    ; 2 uses
-  %i.ah = lshr i64 %i.ag, 6
-  %8 = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %i.ah
-  %i.ai = load i64, ptr %8, align 8, !tbaa !12
+  %i.ah = lshr i64 %i.ag, 3
+  %.sroa.0.0..sroa_stride17 = and i64 %i.ah, 24
+  %.sroa.0.0..sroa_idx51 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %.sroa.0.0..sroa_stride17
+  %i.ai = load i64, ptr %.sroa.0.0..sroa_idx51, align 8, !tbaa !12
   %i.aj = and i64 %i.ag, 63
   %i.ak = shl nuw i64 1, %i.aj
   %i.al = and i64 %i.ak, %i.ai
@@ -509,7 +514,7 @@ bb.c:                                             ; preds = %bb.b
 
 ._crit_edge22:                                    ; preds = %bb.c, %bb.b, %._crit_edge
   %spec.select = phi i64 [ -1, %._crit_edge ], [ %.01019, %bb.b ], [ -1, %bb.c ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #18
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   ret i64 %spec.select
 }
 
@@ -545,9 +550,9 @@ bb.c:                                             ; preds = %bb.b
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
 define hidden noundef i64 @_ZNK4llvh9StringRef17find_first_not_ofES0_m(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %0, ptr nofree readonly captures(none) %1, i64 %2, i64 noundef %3) local_unnamed_addr #0 align 2 {
 bb.a:
-  %4 = alloca %"class.std::bitset", align 8       ; 7 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #18
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %4, i8 0, i64 32, i1 false)
+  %.sroa.0 = alloca [4 x i64], align 8            ; 10 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.0, i8 0, i64 32, i1 false)
   %.not16 = icmp eq i64 %2, 0
   br i1 %.not16, label %._crit_edge, label %.lr.ph.preheader
 
@@ -573,11 +578,13 @@ bb.a:
   %i.d = zext i8 %i.c to i64                      ; 2 uses
   %i.e = and i64 %i.d, 63
   %i.f = shl nuw i64 1, %i.e
-  %i.g = lshr i64 %i.d, 6
-  %5 = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %i.g ; 2 uses
-  %i.h = load i64, ptr %5, align 8, !tbaa !12
+  %i.g = lshr i64 %i.d, 3
+  %.sroa.0.0..sroa_stride.epil = and i64 %i.g, 24 ; 2 uses
+  %.sroa.0.0..sroa_idx54 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %.sroa.0.0..sroa_stride.epil
+  %i.h = load i64, ptr %.sroa.0.0..sroa_idx54, align 8, !tbaa !12
   %i.i = or i64 %i.f, %i.h
-  store i64 %i.i, ptr %5, align 8, !tbaa !12
+  %.sroa.0.0..sroa_idx57 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %.sroa.0.0..sroa_stride.epil
+  store i64 %i.i, ptr %.sroa.0.0..sroa_idx57, align 8, !tbaa !12
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.lr.ph.epil.preheader, %._crit_edge.loopexit.unr-lcssa, %bb.a
@@ -598,22 +605,26 @@ bb.a:
   %i.o = zext i8 %i.n to i64                      ; 2 uses
   %i.p = and i64 %i.o, 63
   %i.q = shl nuw i64 1, %i.p
-  %i.r = lshr i64 %i.o, 6
-  %6 = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %i.r ; 2 uses
-  %i.s = load i64, ptr %6, align 8, !tbaa !12
+  %i.r = lshr i64 %i.o, 3
+  %.sroa.0.0..sroa_stride = and i64 %i.r, 24      ; 2 uses
+  %.sroa.0.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %.sroa.0.0..sroa_stride
+  %i.s = load i64, ptr %.sroa.0.0..sroa_idx, align 8, !tbaa !12
   %i.t = or i64 %i.q, %i.s
-  store i64 %i.t, ptr %6, align 8, !tbaa !12
+  %.sroa.0.0..sroa_idx48 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %.sroa.0.0..sroa_stride
+  store i64 %i.t, ptr %.sroa.0.0..sroa_idx48, align 8, !tbaa !12
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 %.01117
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 1
   %i.w = load i8, ptr %i.v, align 1, !tbaa !15
   %i.x = zext i8 %i.w to i64                      ; 2 uses
   %i.y = and i64 %i.x, 63
   %i.z = shl nuw i64 1, %i.y
-  %i.aa = lshr i64 %i.x, 6
-  %7 = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %i.aa ; 2 uses
-  %i.ab = load i64, ptr %7, align 8, !tbaa !12
+  %i.aa = lshr i64 %i.x, 3
+  %.sroa.0.0..sroa_stride.1 = and i64 %i.aa, 24   ; 2 uses
+  %.sroa.0.0..sroa_idx60 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %.sroa.0.0..sroa_stride.1
+  %i.ab = load i64, ptr %.sroa.0.0..sroa_idx60, align 8, !tbaa !12
   %i.ac = or i64 %i.z, %i.ab
-  store i64 %i.ac, ptr %7, align 8, !tbaa !12
+  %.sroa.0.0..sroa_idx63 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %.sroa.0.0..sroa_stride.1
+  store i64 %i.ac, ptr %.sroa.0.0..sroa_idx63, align 8, !tbaa !12
   %i.ad = add nuw i64 %.01117, 2                  ; 2 uses
   %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
@@ -624,9 +635,10 @@ bb.b:                                             ; preds = %.lr.ph21, %bb.c
   %i.ae = getelementptr inbounds nuw i8, ptr %i.l, i64 %.01019
   %i.af = load i8, ptr %i.ae, align 1, !tbaa !15
   %i.ag = zext i8 %i.af to i64                    ; 2 uses
-  %i.ah = lshr i64 %i.ag, 6
-  %8 = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %i.ah
-  %i.ai = load i64, ptr %8, align 8, !tbaa !12
+  %i.ah = lshr i64 %i.ag, 3
+  %.sroa.0.0..sroa_stride17 = and i64 %i.ah, 24
+  %.sroa.0.0..sroa_idx51 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %.sroa.0.0..sroa_stride17
+  %i.ai = load i64, ptr %.sroa.0.0..sroa_idx51, align 8, !tbaa !12
   %i.aj = and i64 %i.ag, 63
   %i.ak = shl nuw i64 1, %i.aj
   %i.al = and i64 %i.ak, %i.ai
@@ -640,16 +652,16 @@ bb.c:                                             ; preds = %bb.b
 
 ._crit_edge22:                                    ; preds = %bb.c, %bb.b, %._crit_edge
   %spec.select = phi i64 [ -1, %._crit_edge ], [ %.01019, %bb.b ], [ -1, %bb.c ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #18
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   ret i64 %spec.select
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
 define hidden noundef i64 @_ZNK4llvh9StringRef12find_last_ofES0_m(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %0, ptr nofree readonly captures(none) %1, i64 %2, i64 noundef %3) local_unnamed_addr #0 align 2 {
 bb.a:
-  %4 = alloca %"class.std::bitset", align 8       ; 7 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #18
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %4, i8 0, i64 32, i1 false)
+  %.sroa.0 = alloca [4 x i64], align 8            ; 10 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.0, i8 0, i64 32, i1 false)
   %.not16 = icmp eq i64 %2, 0
   br i1 %.not16, label %._crit_edge, label %.lr.ph.preheader
 
@@ -675,11 +687,13 @@ bb.a:
   %i.d = zext i8 %i.c to i64                      ; 2 uses
   %i.e = and i64 %i.d, 63
   %i.f = shl nuw i64 1, %i.e
-  %i.g = lshr i64 %i.d, 6
-  %5 = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %i.g ; 2 uses
-  %i.h = load i64, ptr %5, align 8, !tbaa !12
+  %i.g = lshr i64 %i.d, 3
+  %.sroa.0.0..sroa_stride.epil = and i64 %i.g, 24 ; 2 uses
+  %.sroa.0.0..sroa_idx52 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %.sroa.0.0..sroa_stride.epil
+  %i.h = load i64, ptr %.sroa.0.0..sroa_idx52, align 8, !tbaa !12
   %i.i = or i64 %i.f, %i.h
-  store i64 %i.i, ptr %5, align 8, !tbaa !12
+  %.sroa.0.0..sroa_idx55 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %.sroa.0.0..sroa_stride.epil
+  store i64 %i.i, ptr %.sroa.0.0..sroa_idx55, align 8, !tbaa !12
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.lr.ph.epil.preheader, %._crit_edge.loopexit.unr-lcssa, %bb.a
@@ -701,22 +715,26 @@ bb.a:
   %i.o = zext i8 %i.n to i64                      ; 2 uses
   %i.p = and i64 %i.o, 63
   %i.q = shl nuw i64 1, %i.p
-  %i.r = lshr i64 %i.o, 6
-  %6 = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %i.r ; 2 uses
-  %i.s = load i64, ptr %6, align 8, !tbaa !12
+  %i.r = lshr i64 %i.o, 3
+  %.sroa.0.0..sroa_stride = and i64 %i.r, 24      ; 2 uses
+  %.sroa.0.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %.sroa.0.0..sroa_stride
+  %i.s = load i64, ptr %.sroa.0.0..sroa_idx, align 8, !tbaa !12
   %i.t = or i64 %i.q, %i.s
-  store i64 %i.t, ptr %6, align 8, !tbaa !12
+  %.sroa.0.0..sroa_idx46 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %.sroa.0.0..sroa_stride
+  store i64 %i.t, ptr %.sroa.0.0..sroa_idx46, align 8, !tbaa !12
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 %.01117
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 1
   %i.w = load i8, ptr %i.v, align 1, !tbaa !15
   %i.x = zext i8 %i.w to i64                      ; 2 uses
   %i.y = and i64 %i.x, 63
   %i.z = shl nuw i64 1, %i.y
-  %i.aa = lshr i64 %i.x, 6
-  %7 = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %i.aa ; 2 uses
-  %i.ab = load i64, ptr %7, align 8, !tbaa !12
+  %i.aa = lshr i64 %i.x, 3
+  %.sroa.0.0..sroa_stride.1 = and i64 %i.aa, 24   ; 2 uses
+  %.sroa.0.0..sroa_idx58 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %.sroa.0.0..sroa_stride.1
+  %i.ab = load i64, ptr %.sroa.0.0..sroa_idx58, align 8, !tbaa !12
   %i.ac = or i64 %i.z, %i.ab
-  store i64 %i.ac, ptr %7, align 8, !tbaa !12
+  %.sroa.0.0..sroa_idx61 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %.sroa.0.0..sroa_stride.1
+  store i64 %i.ac, ptr %.sroa.0.0..sroa_idx61, align 8, !tbaa !12
   %i.ad = add nuw i64 %.01117, 2                  ; 2 uses
   %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
@@ -732,9 +750,10 @@ bb.b:                                             ; preds = %.lr.ph20
   %i.ae = getelementptr inbounds nuw i8, ptr %i.l, i64 %.010
   %i.af = load i8, ptr %i.ae, align 1, !tbaa !15
   %i.ag = zext i8 %i.af to i64                    ; 2 uses
-  %i.ah = lshr i64 %i.ag, 6
-  %8 = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %i.ah
-  %i.ai = load i64, ptr %8, align 8, !tbaa !12
+  %i.ah = lshr i64 %i.ag, 3
+  %.sroa.0.0..sroa_stride17 = and i64 %i.ah, 24
+  %.sroa.0.0..sroa_idx49 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %.sroa.0.0..sroa_stride17
+  %i.ai = load i64, ptr %.sroa.0.0..sroa_idx49, align 8, !tbaa !12
   %i.aj = and i64 %i.ag, 63
   %i.ak = shl nuw i64 1, %i.aj
   %i.al = and i64 %i.ak, %i.ai
@@ -746,7 +765,7 @@ bb.b:                                             ; preds = %.lr.ph20
 
 ._crit_edge22:                                    ; preds = %bb.b, %._crit_edge21, %._crit_edge
   %.010.lcssa = phi i64 [ %.010, %._crit_edge21 ], [ -1, %._crit_edge ], [ -1, %bb.b ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #18
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   ret i64 %.010.lcssa
 }
 
@@ -783,9 +802,9 @@ bb.b:                                             ; preds = %.lr.ph
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
 define hidden noundef i64 @_ZNK4llvh9StringRef16find_last_not_ofES0_m(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %0, ptr nofree readonly captures(none) %1, i64 %2, i64 noundef %3) local_unnamed_addr #0 align 2 {
 bb.a:
-  %4 = alloca %"class.std::bitset", align 8       ; 7 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #18
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %4, i8 0, i64 32, i1 false)
+  %.sroa.0 = alloca [4 x i64], align 8            ; 10 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.0, i8 0, i64 32, i1 false)
   %.not17 = icmp eq i64 %2, 0
   br i1 %.not17, label %._crit_edge, label %.lr.ph.preheader
 
@@ -811,11 +830,13 @@ bb.a:
   %i.d = zext i8 %i.c to i64                      ; 2 uses
   %i.e = and i64 %i.d, 63
   %i.f = shl nuw i64 1, %i.e
-  %i.g = lshr i64 %i.d, 6
-  %5 = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %i.g ; 2 uses
-  %i.h = load i64, ptr %5, align 8, !tbaa !12
+  %i.g = lshr i64 %i.d, 3
+  %.sroa.0.0..sroa_stride.epil = and i64 %i.g, 24 ; 2 uses
+  %.sroa.0.0..sroa_idx53 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %.sroa.0.0..sroa_stride.epil
+  %i.h = load i64, ptr %.sroa.0.0..sroa_idx53, align 8, !tbaa !12
   %i.i = or i64 %i.f, %i.h
-  store i64 %i.i, ptr %5, align 8, !tbaa !12
+  %.sroa.0.0..sroa_idx56 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %.sroa.0.0..sroa_stride.epil
+  store i64 %i.i, ptr %.sroa.0.0..sroa_idx56, align 8, !tbaa !12
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.lr.ph.epil.preheader, %._crit_edge.loopexit.unr-lcssa, %bb.a
@@ -837,22 +858,26 @@ bb.a:
   %i.o = zext i8 %i.n to i64                      ; 2 uses
   %i.p = and i64 %i.o, 63
   %i.q = shl nuw i64 1, %i.p
-  %i.r = lshr i64 %i.o, 6
-  %6 = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %i.r ; 2 uses
-  %i.s = load i64, ptr %6, align 8, !tbaa !12
+  %i.r = lshr i64 %i.o, 3
+  %.sroa.0.0..sroa_stride = and i64 %i.r, 24      ; 2 uses
+  %.sroa.0.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %.sroa.0.0..sroa_stride
+  %i.s = load i64, ptr %.sroa.0.0..sroa_idx, align 8, !tbaa !12
   %i.t = or i64 %i.q, %i.s
-  store i64 %i.t, ptr %6, align 8, !tbaa !12
+  %.sroa.0.0..sroa_idx47 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %.sroa.0.0..sroa_stride
+  store i64 %i.t, ptr %.sroa.0.0..sroa_idx47, align 8, !tbaa !12
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 %.01218
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 1
   %i.w = load i8, ptr %i.v, align 1, !tbaa !15
   %i.x = zext i8 %i.w to i64                      ; 2 uses
   %i.y = and i64 %i.x, 63
   %i.z = shl nuw i64 1, %i.y
-  %i.aa = lshr i64 %i.x, 6
-  %7 = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %i.aa ; 2 uses
-  %i.ab = load i64, ptr %7, align 8, !tbaa !12
+  %i.aa = lshr i64 %i.x, 3
+  %.sroa.0.0..sroa_stride.1 = and i64 %i.aa, 24   ; 2 uses
+  %.sroa.0.0..sroa_idx59 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %.sroa.0.0..sroa_stride.1
+  %i.ab = load i64, ptr %.sroa.0.0..sroa_idx59, align 8, !tbaa !12
   %i.ac = or i64 %i.z, %i.ab
-  store i64 %i.ac, ptr %7, align 8, !tbaa !12
+  %.sroa.0.0..sroa_idx62 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %.sroa.0.0..sroa_stride.1
+  store i64 %i.ac, ptr %.sroa.0.0..sroa_idx62, align 8, !tbaa !12
   %i.ad = add nuw i64 %.01218, 2                  ; 2 uses
   %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
@@ -868,9 +893,10 @@ bb.b:                                             ; preds = %.lr.ph21
   %i.ae = getelementptr inbounds nuw i8, ptr %i.l, i64 %.011
   %i.af = load i8, ptr %i.ae, align 1, !tbaa !15
   %i.ag = zext i8 %i.af to i64                    ; 2 uses
-  %i.ah = lshr i64 %i.ag, 6
-  %8 = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %i.ah
-  %i.ai = load i64, ptr %8, align 8, !tbaa !12
+  %i.ah = lshr i64 %i.ag, 3
+  %.sroa.0.0..sroa_stride18 = and i64 %i.ah, 24
+  %.sroa.0.0..sroa_idx50 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %.sroa.0.0..sroa_stride18
+  %i.ai = load i64, ptr %.sroa.0.0..sroa_idx50, align 8, !tbaa !12
   %i.aj = and i64 %i.ag, 63
   %i.ak = shl nuw i64 1, %i.aj
   %i.al = and i64 %i.ak, %i.ai
@@ -882,7 +908,7 @@ bb.b:                                             ; preds = %.lr.ph21
 
 ._crit_edge23:                                    ; preds = %bb.b, %._crit_edge22, %._crit_edge
   %.011.lcssa = phi i64 [ %.011, %._crit_edge22 ], [ -1, %._crit_edge ], [ -1, %bb.b ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #18
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   ret i64 %.011.lcssa
 }
 

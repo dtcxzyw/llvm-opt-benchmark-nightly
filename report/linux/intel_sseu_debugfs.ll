@@ -39,10 +39,10 @@ define dso_local range(i32 -19, 1) i32 @intel_sseu_status(ptr noundef %0, ptr no
 bb.a:
   %i.a = alloca [8 x i32], align 16               ; 6 uses
   %i.b = alloca [16 x i32], align 16              ; 7 uses
-  %2 = alloca [2 x i32], align 8                  ; 4 uses
+  %.sroa.057 = alloca i64, align 8                ; 4 uses
   %i.c = alloca [3 x i32], align 4                ; 5 uses
   %i.d = alloca [6 x i32], align 16               ; 5 uses
-  %3 = alloca [2 x i32], align 8                  ; 4 uses
+  %.sroa.0 = alloca i64, align 8                  ; 4 uses
   %i.e = load ptr, ptr %1, align 8                ; 4 uses
   %i.f = getelementptr i8, ptr %i.e, i64 1656     ; 2 uses
   %i.g = load i8, ptr %i.f, align 8
@@ -254,8 +254,8 @@ bb.o:                                             ; preds = %bb.n
   %i.ed = load ptr, ptr %i.ad, align 8            ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #12
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #12
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #12
-  store i64 93458488361045, ptr %3, align 8, !annotation !21
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
+  store i64 93458488361045, ptr %.sroa.0, align 8
   %i.ee = load i8, ptr %i.q, align 8
   %.not125.i = icmp eq i8 %i.ee, 0
   br i1 %.not125.i, label %gen9_sseu_device_status.exit, label %.lr.ph.i
@@ -370,9 +370,10 @@ bb.w:                                             ; preds = %bb.v
   br label %bb.x
 
 bb.x:                                             ; preds = %bb.u, %bb.w
-  %i.gi = and i64 %indvars.iv129.i, 1
-  %4 = getelementptr [4 x i8], ptr %3, i64 %i.gi
-  %i.gj = load i32, ptr %4, align 4
+  %2 = shl nuw nsw i64 %indvars.iv129.i, 2
+  %i.gi = and i64 %2, 4
+  %.sroa.0.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %i.gi
+  %i.gj = load i32, ptr %.sroa.0.0..sroa_idx, align 4
   %i.gk = trunc nuw nsw i64 %indvars.iv129.i to i32
   %i.gl = lshr i32 %i.gk, 1
   %i.gm = add nuw i32 %i.gl, %i.fu
@@ -417,7 +418,7 @@ bb.y:                                             ; preds = %bb.x, %bb.v
   br i1 %i.hi, label %.lr.ph123.i, label %gen9_sseu_device_status.exit, !llvm.loop !25
 
 gen9_sseu_device_status.exit:                     ; preds = %.loopexit.i, %bb.o, %._crit_edge.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #12
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #12
   br label %cherryview_sseu_device_status.exit
@@ -430,8 +431,8 @@ bb.aa:                                            ; preds = %bb.z
   %i.hk = load ptr, ptr %i.ad, align 8            ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #12
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #12
-  store i64 93458488361045, ptr %2, align 8, !annotation !21
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.057)
+  store i64 93458488361045, ptr %.sroa.057, align 8
   %i.hl = load i8, ptr %i.q, align 8
   %.not187.i = icmp eq i8 %i.hl, 0
   br i1 %.not187.i, label %gen11_sseu_device_status.exit, label %.lr.ph.i46
@@ -540,9 +541,10 @@ bb.ad:                                            ; preds = %bb.ac
   br i1 %.not148.i, label %bb.af, label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ac, %bb.ad
-  %i.jr = and i64 %indvars.iv192.i, 1
-  %5 = getelementptr [4 x i8], ptr %2, i64 %i.jr
-  %i.js = load i32, ptr %5, align 4
+  %3 = shl nuw nsw i64 %indvars.iv192.i, 2
+  %i.jr = and i64 %3, 4
+  %.sroa.057.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.057, i64 %i.jr
+  %i.js = load i32, ptr %.sroa.057.0..sroa_idx, align 4
   %i.jt = trunc nuw nsw i64 %indvars.iv192.i to i32
   %i.ju = lshr i32 %i.jt, 1
   %i.jv = add nuw i32 %i.ju, %i.jj
@@ -587,7 +589,7 @@ bb.af:                                            ; preds = %bb.ae, %bb.ad
   br i1 %i.kr, label %.lr.ph185.i, label %gen11_sseu_device_status.exit, !llvm.loop !30
 
 gen11_sseu_device_status.exit:                    ; preds = %.loopexit.i50, %bb.aa, %._crit_edge.i47
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #12
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.057)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #12
   br label %cherryview_sseu_device_status.exit

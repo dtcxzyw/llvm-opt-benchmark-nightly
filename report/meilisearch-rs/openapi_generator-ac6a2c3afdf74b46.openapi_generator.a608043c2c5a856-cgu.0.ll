@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %._crit_edge.i.a, %b
   %.sroa.0.0.copyload1482.i = phi i64 [ %.sroa.0.0.copyload1482.pre.i, %._crit_edge.i.a ], [ %.sroa.0.0.copyload.i, %bb.b ] ; 3 uses
   %i.bz = phi ptr [ %.pre.i, %._crit_edge.i.a ], [ %.sroa.281488.0.copyload.i, %bb.b ] ; 4 uses
   %i.ca = getelementptr inbounds nuw i8, ptr %i.bz, i64 16
-  store ptr @268, ptr %i.ca, align 8, !noalias !12966
+  store ptr @267, ptr %i.ca, align 8, !noalias !12966
   %i.cb = getelementptr inbounds nuw i8, ptr %i.bz, i64 24
   store i64 6, ptr %i.cb, align 8, !noalias !12967
   %.sroa.421514.0.copyload1516.i = load i64, ptr %.sroa.0595.sroa.20.0..sroa_idx.i, align 8, !alias.scope !12965, !noalias !12960 ; 2 uses
@@ -255,9 +255,9 @@ bb.f:                                             ; preds = %._crit_edge1666.i, 
   %.sroa.0.0.copyload1483.i = phi i64 [ %.sroa.0.0.copyload1483.pre.i, %._crit_edge1666.i ], [ %.sroa.0.0.copyload1482.i, %bb.d ] ; 3 uses
   %i.ce = phi ptr [ %.pre1667.i, %._crit_edge1666.i ], [ %i.bz, %bb.d ] ; 4 uses
   %i.cf = getelementptr inbounds nuw i8, ptr %i.ce, i64 32
-  store ptr @269, ptr %i.cf, align 8, !noalias !12973
+  store ptr @267, ptr %i.cf, align 8, !noalias !12973
   %i.cg = getelementptr inbounds nuw i8, ptr %i.ce, i64 40
-  store i64 15, ptr %i.cg, align 8, !noalias !12974
+  store i64 6, ptr %i.cg, align 8, !noalias !12974
   %.sroa.491527.0.copyload1531.i = load ptr, ptr %.sroa.0595.sroa.21.0..sroa_idx.i, align 8, !alias.scope !12972, !noalias !12960 ; 2 uses
   %.sroa.70.0.copyload1567.i = load ptr, ptr %.sroa.0595.sroa.24.0..sroa_idx.i, align 8, !alias.scope !12972, !noalias !12960
   %.sroa.77.0.copyload1579.i = load i64, ptr %.sroa.0595.sroa.25.0..sroa_idx.i, align 8, !alias.scope !12972, !noalias !12960
@@ -309,9 +309,9 @@ bb.h:                                             ; preds = %._crit_edge1670.i, 
   %.sroa.0.0.copyload1484.i = phi i64 [ %.sroa.0.0.copyload1484.pre.i, %._crit_edge1670.i ], [ %.sroa.0.0.copyload1483.i, %bb.f ] ; 3 uses
   %i.cj = phi ptr [ %.pre1671.i, %._crit_edge1670.i ], [ %i.ce, %bb.f ] ; 4 uses
   %i.ck = getelementptr inbounds nuw i8, ptr %i.cj, i64 48
-  store ptr @270, ptr %i.ck, align 8, !noalias !12980
+  store ptr @267, ptr %i.ck, align 8, !noalias !12980
   %i.cl = getelementptr inbounds nuw i8, ptr %i.cj, i64 56
-  store i64 18, ptr %i.cl, align 8, !noalias !12981
+  store i64 6, ptr %i.cl, align 8, !noalias !12981
   %.sroa.63.0.copyload1557.i = load i64, ptr %.sroa.0595.sroa.23.0..sroa_idx.i, align 8, !alias.scope !12979, !noalias !12960 ; 2 uses
   %.sroa.70.0.copyload1569.i = load ptr, ptr %.sroa.0595.sroa.24.0..sroa_idx.i, align 8, !alias.scope !12979, !noalias !12960 ; 2 uses
   %.sroa.77.0.copyload1581.i = load i64, ptr %.sroa.0595.sroa.25.0..sroa_idx.i, align 8, !alias.scope !12979, !noalias !12960
@@ -366,9 +366,9 @@ bb.j:                                             ; preds = %._crit_edge1676.i, 
   %.sroa.0.0.copyload1485.i = phi i64 [ %.sroa.0.0.copyload1485.pre.i, %._crit_edge1676.i ], [ %.sroa.0.0.copyload1484.i, %bb.h ] ; 3 uses
   %i.cn = phi ptr [ %.pre1677.i, %._crit_edge1676.i ], [ %i.cj, %bb.h ] ; 4 uses
   %i.co = getelementptr inbounds nuw i8, ptr %i.cn, i64 64
-  store ptr @271, ptr %i.co, align 8, !noalias !12987
+  store ptr @267, ptr %i.co, align 8, !noalias !12987
   %i.cp = getelementptr inbounds nuw i8, ptr %i.cn, i64 72
-  store i64 11, ptr %i.cp, align 8, !noalias !12988
+  store i64 6, ptr %i.cp, align 8, !noalias !12988
   %.sroa.77.0.copyload1583.i = load i64, ptr %.sroa.0595.sroa.25.0..sroa_idx.i, align 8, !alias.scope !12986, !noalias !12960 ; 2 uses
   %.sroa.84.0.copyload1595.i = load ptr, ptr %.sroa.0595.sroa.26.0..sroa_idx.i, align 8, !alias.scope !12986, !noalias !12960 ; 2 uses
   %.sroa.91.0.copyload1607.i = load i64, ptr %.sroa.0595.sroa.27.0..sroa_idx.i, align 8, !alias.scope !12986, !noalias !12960
@@ -425,9 +425,9 @@ bb.l:                                             ; preds = %._crit_edge1684.i, 
   %.sroa.0.0.copyload1486.i = phi i64 [ %.sroa.0.0.copyload1486.pre.i, %._crit_edge1684.i ], [ %.sroa.0.0.copyload1485.i, %bb.j ] ; 3 uses
   %i.cr = phi ptr [ %.pre1685.i, %._crit_edge1684.i ], [ %i.cn, %bb.j ] ; 4 uses
   %i.cs = getelementptr inbounds nuw i8, ptr %i.cr, i64 80
-  store ptr @272, ptr %i.cs, align 8, !noalias !12994
+  store ptr @267, ptr %i.cs, align 8, !noalias !12994
   %i.ct = getelementptr inbounds nuw i8, ptr %i.cr, i64 88
-  store i64 10, ptr %i.ct, align 8, !noalias !12995
+  store i64 6, ptr %i.ct, align 8, !noalias !12995
   %.sroa.91.0.copyload1609.i = load i64, ptr %.sroa.0595.sroa.27.0..sroa_idx.i, align 8, !alias.scope !12993, !noalias !12960 ; 2 uses
   %.sroa.98.0.copyload1621.i = load i8, ptr %.sroa.0595.sroa.28.0..sroa_idx.i, align 8, !alias.scope !12993, !noalias !12960 ; 2 uses
   %.sroa.105.0.copyload1633.i = load i8, ptr %.sroa.18.0..sroa_idx.i, align 1, !alias.scope !12993, !noalias !12960 ; 2 uses
@@ -488,9 +488,9 @@ bb.n:                                             ; preds = %._crit_edge1694.i, 
   %.sroa.0.0.copyload1487.i = phi i64 [ %.sroa.0.0.copyload1487.pre.i, %._crit_edge1694.i ], [ %.sroa.0.0.copyload1486.i, %bb.l ]
   %i.cv = phi ptr [ %.pre1695.i, %._crit_edge1694.i ], [ %i.cr, %bb.l ] ; 3 uses
   %i.cw = getelementptr inbounds nuw i8, ptr %i.cv, i64 96
-  store ptr @273, ptr %i.cw, align 8, !noalias !13001
+  store ptr @267, ptr %i.cw, align 8, !noalias !13001
   %i.cx = getelementptr inbounds nuw i8, ptr %i.cv, i64 104
-  store i64 12, ptr %i.cx, align 8, !noalias !13002
+  store i64 6, ptr %i.cx, align 8, !noalias !13002
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(6) %.sroa.112.i, ptr noundef nonnull align 2 dereferenceable(6) %.sroa.19.0..sroa_idx.i, i64 6, i1 false), !alias.scope !13000, !noalias !12960
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ae), !noalias !12942
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(6) %.sroa.19.i, ptr noundef nonnull align 2 dereferenceable(6) %.sroa.112.i, i64 6, i1 false), !noalias !12944

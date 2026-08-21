@@ -205,7 +205,7 @@ test_smbios_entry_point.exit:                     ; preds = %.loopexit.i, %bb.m,
   %i.cq = getelementptr inbounds nuw i8, ptr %0, i64 152
   %i.cr = load i64, ptr %i.cq, align 8
   %.not37.i.not = icmp eq i64 %i.cr, 0            ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #15
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.a, i8 0, i64 16, i1 false)
   br i1 %.not37.i.not, label %bb.n, label %bb.o
 
@@ -269,15 +269,17 @@ bb.s:                                             ; preds = %bb.r, %bb.q
 .smbios_single_instance.exit_crit_edge.i:         ; preds = %bb.s
   %.pre.i = and i64 %i.df, 63
   %.pre126.i = shl nuw i64 1, %.pre.i
-  %.pre128.i = lshr i64 %i.df, 6                  ; 2 uses
-  %.phi.trans.insert = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %.pre128.i
-  %.pre = load i64, ptr %.phi.trans.insert, align 8
+  %.pre128.i = lshr i64 %i.df, 3
+  %.pre150.i = and i64 %.pre128.i, 24             ; 2 uses
+  %.0..0..sroa_idx139.i.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.a, i64 %.pre150.i
+  %.pre = load i64, ptr %.0..0..sroa_idx139.i.phi.trans.insert, align 8
   br label %smbios_single_instance.exit.i
 
 bb.t:                                             ; preds = %bb.s, %bb.s, %bb.s, %bb.s, %bb.s, %bb.s, %bb.s
-  %i.dm = lshr i64 %i.df, 6                       ; 2 uses
-  %1 = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %i.dm
-  %i.dn = load i64, ptr %1, align 8               ; 2 uses
+  %i.dm = lshr i64 %i.df, 3
+  %.0..sroa_stride.i = and i64 %i.dm, 24          ; 2 uses
+  %.0..0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 %.0..sroa_stride.i
+  %i.dn = load i64, ptr %.0..0..sroa_idx.i, align 8 ; 2 uses
   %i.do = and i64 %i.df, 63
   %i.dp = shl nuw i64 1, %i.do                    ; 2 uses
   %i.dq = and i64 %i.dn, %i.dp
@@ -290,11 +292,11 @@ bb.u:                                             ; preds = %bb.t
 
 smbios_single_instance.exit.i:                    ; preds = %bb.t, %.smbios_single_instance.exit_crit_edge.i
   %i.dr = phi i64 [ %.pre, %.smbios_single_instance.exit_crit_edge.i ], [ %i.dn, %bb.t ]
-  %.pre-phi129.i = phi i64 [ %.pre128.i, %.smbios_single_instance.exit_crit_edge.i ], [ %i.dm, %bb.t ]
+  %.pre-phi129.i = phi i64 [ %.pre150.i, %.smbios_single_instance.exit_crit_edge.i ], [ %.0..sroa_stride.i, %bb.t ]
   %.pre-phi127.i = phi i64 [ %.pre126.i, %.smbios_single_instance.exit_crit_edge.i ], [ %i.dp, %bb.t ]
-  %2 = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %.pre-phi129.i
+  %.0..0..sroa_idx139.i = getelementptr inbounds nuw i8, ptr %i.a, i64 %.pre-phi129.i
   %i.ds = or i64 %i.dr, %.pre-phi127.i
-  store i64 %i.ds, ptr %2, align 8
+  store i64 %i.ds, ptr %.0..0..sroa_idx139.i, align 8
   %i.dt = icmp eq i8 %i.de, 4
   br i1 %i.dt, label %bb.v, label %bb.ai
 
@@ -517,9 +519,10 @@ bb.at:                                            ; preds = %bb.av
   %i.hj = getelementptr inbounds nuw i8, ptr %i.hi, i64 1
   %i.hk = load i8, ptr %i.hj, align 1
   %i.hl = zext i8 %i.hk to i64                    ; 2 uses
-  %i.hm = lshr i64 %i.hl, 6
-  %3 = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %i.hm
-  %i.hn = load i64, ptr %3, align 8
+  %i.hm = lshr i64 %i.hl, 3
+  %.0..sroa_stride97.i.1 = and i64 %i.hm, 24
+  %.0..0..sroa_idx145.i.1 = getelementptr inbounds nuw i8, ptr %i.a, i64 %.0..sroa_stride97.i.1
+  %i.hn = load i64, ptr %.0..0..sroa_idx145.i.1, align 8
   %i.ho = and i64 %i.hl, 63
   %i.hp = shl nuw i64 1, %i.ho
   %i.hq = and i64 %i.hp, %i.hn
@@ -538,9 +541,10 @@ bb.av:                                            ; preds = %bb.au, %.lr.ph.i.ne
   %i.hr = getelementptr inbounds nuw i8, ptr %i.hg, i64 %indvars.iv.i6
   %i.hs = load i8, ptr %i.hr, align 1
   %i.ht = zext i8 %i.hs to i64                    ; 2 uses
-  %i.hu = lshr i64 %i.ht, 6
-  %4 = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %i.hu
-  %i.hv = load i64, ptr %4, align 8
+  %i.hu = lshr i64 %i.ht, 3
+  %.0..sroa_stride97.i = and i64 %i.hu, 24
+  %.0..0..sroa_idx145.i = getelementptr inbounds nuw i8, ptr %i.a, i64 %.0..sroa_stride97.i
+  %i.hv = load i64, ptr %.0..0..sroa_idx145.i, align 8
   %i.hw = and i64 %i.ht, 63
   %i.hx = shl nuw i64 1, %i.hw
   %i.hy = and i64 %i.hx, %i.hv
@@ -562,9 +566,10 @@ bb.av:                                            ; preds = %bb.au, %.lr.ph.i.ne
   %i.hz = getelementptr inbounds nuw i8, ptr %i.hg, i64 %indvars.iv.i6.epil.init
   %i.ia = load i8, ptr %i.hz, align 1
   %i.ib = zext i8 %i.ia to i64                    ; 2 uses
-  %i.ic = lshr i64 %i.ib, 6
-  %5 = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %i.ic
-  %i.id = load i64, ptr %5, align 8
+  %i.ic = lshr i64 %i.ib, 3
+  %.0..sroa_stride97.i.epil = and i64 %i.ic, 24
+  %.0..0..sroa_idx145.i.epil = getelementptr inbounds nuw i8, ptr %i.a, i64 %.0..sroa_stride97.i.epil
+  %i.id = load i64, ptr %.0..0..sroa_idx145.i.epil, align 8
   %i.ie = and i64 %i.ib, 63
   %i.if = shl nuw i64 1, %i.ie
   %i.ig = and i64 %i.if, %i.id
@@ -588,7 +593,7 @@ bb.aw:                                            ; preds = %._crit_edge.i
   br label %test_smbios_structs.exit
 
 test_smbios_structs.exit:                         ; preds = %._crit_edge.i, %bb.aw
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #15
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   br label %bb.ax
 
 bb.ax:                                            ; preds = %test_smbios_structs.exit, %bb.b

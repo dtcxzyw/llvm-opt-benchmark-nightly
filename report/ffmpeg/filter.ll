@@ -205,10 +205,10 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 3 uses
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !9    ; 18 uses
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 2064 ; 2 uses
-  %i.i = load ptr, ptr %i.h, align 8, !tbaa !20   ; 4 uses
-  %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 30
+  %i.i = load ptr, ptr %i.h, align 8, !tbaa !20   ; 5 uses
+  %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 30 ; 2 uses
   %i.k = load i8, ptr %i.j, align 2, !tbaa !76
-  %i.l = zext i8 %i.k to i32                      ; 7 uses
+  %i.l = zext i8 %i.k to i32                      ; 2 uses
   %i.m = ashr i32 %1, %i.l                        ; 12 uses
   %i.n = ashr i32 %2, %i.l                        ; 10 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.i, i64 20
@@ -216,14 +216,14 @@ bb.a:
   %i.q = zext i8 %i.p to i32                      ; 2 uses
   %i.r = shl i32 1280, %i.q
   %i.s = shl i32 10248, %i.q
-  %i.t = load ptr, ptr %i.i, align 8, !tbaa !85   ; 7 uses
+  %i.t = load ptr, ptr %i.i, align 8, !tbaa !85
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 7
   %i.v = load i8, ptr %i.u, align 1, !tbaa !86
   %.not = icmp ne i8 %i.v, 0                      ; 2 uses
-  %i.w = getelementptr inbounds nuw i8, ptr %i.i, i64 32
+  %i.w = getelementptr inbounds nuw i8, ptr %i.i, i64 32 ; 2 uses
   %i.x = load i16, ptr %i.w, align 8, !tbaa !73
-  %i.y = zext i16 %i.x to i32                     ; 8 uses
-  %i.z = add nsw i32 %2, %i.y                     ; 3 uses
+  %i.y = zext i16 %i.x to i32
+  %i.z = add nsw i32 %2, %i.y                     ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %i.g, i64 21824
   %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !207
   %i.ac = getelementptr inbounds nuw i8, ptr %i.g, i64 2072 ; 2 uses
@@ -237,15 +237,20 @@ bb.a:
   %i.ak = getelementptr inbounds [8 x i8], ptr %i.ab, i64 %i.aj ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #8
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #8
+  %4 = load i16, ptr %i.w, align 8, !tbaa !73
+  %5 = zext i16 %4 to i32                         ; 8 uses
   %i.al = getelementptr inbounds nuw i8, ptr %i.g, i64 2114 ; 3 uses
-  %i.am = shl i32 %i.n, %i.l                      ; 3 uses
-  %i.an = getelementptr inbounds nuw i8, ptr %i.t, i64 38772
+  %6 = load i8, ptr %i.j, align 2, !tbaa !76
+  %7 = zext nneg i8 %6 to i32                     ; 5 uses
+  %i.am = shl i32 %i.n, %7                        ; 3 uses
+  %8 = load ptr, ptr %i.i, align 8, !tbaa !85     ; 6 uses
+  %i.an = getelementptr inbounds nuw i8, ptr %8, i64 38772
   %i.ao = load i8, ptr %i.an, align 4, !tbaa !112
   %.not29.i.i = icmp eq i8 %i.ao, 0               ; 2 uses
   br i1 %.not29.i.i, label %get_virtual_boundary.exit.thread.i, label %.preheader.i.i
 
 get_virtual_boundary.exit.thread.i:               ; preds = %bb.a
-  %i.ap = shl i32 %i.m, %i.l
+  %i.ap = shl i32 %i.m, %7
   br label %get_virtual_boundary.exit70.i
 
 .preheader.i.i:                                   ; preds = %bb.a
@@ -265,7 +270,7 @@ get_virtual_boundary.exit.thread.i:               ; preds = %bb.a
   %i.as = zext i16 %i.ar to i32                   ; 2 uses
   %i.at = sub nsw i32 %i.as, %i.am                ; 2 uses
   %i.au = icmp sgt i32 %i.at, -1
-  %i.av = icmp samesign ult i32 %i.at, %i.y
+  %i.av = icmp samesign ult i32 %i.at, %5
   %or.cond.i = select i1 %i.au, i1 %i.av, i1 false
   br i1 %or.cond.i, label %.preheader.i59.i, label %bb.b
 
@@ -277,7 +282,7 @@ bb.b:                                             ; preds = %.lr.ph.i.i
 .preheader.i59.i:                                 ; preds = %bb.b, %.lr.ph.i.i, %.preheader.i.i
   %.3.i97.i = phi i32 [ 0, %.preheader.i.i ], [ %i.as, %.lr.ph.i.i ], [ 0, %bb.b ] ; 3 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %i.g, i64 2106
-  %i.ax = shl i32 %i.m, %i.l                      ; 4 uses
+  %i.ax = shl i32 %i.m, %7                        ; 4 uses
   %.in.in.i60.i = getelementptr inbounds nuw i8, ptr %i.g, i64 2104
   %.in.i61.i = load i8, ptr %.in.in.i60.i, align 8, !tbaa !77 ; 2 uses
   %.not3036.not.i62.i = icmp eq i8 %.in.i61.i, 0
@@ -294,7 +299,7 @@ bb.b:                                             ; preds = %.lr.ph.i.i
   %i.ba = zext i16 %i.az to i32                   ; 2 uses
   %i.bb = sub nsw i32 %i.ba, %i.ax                ; 2 uses
   %i.bc = icmp sgt i32 %i.bb, -1
-  %i.bd = icmp samesign ult i32 %i.bb, %i.y
+  %i.bd = icmp samesign ult i32 %i.bb, %5
   %or.cond98.i = select i1 %i.bc, i1 %i.bd, i1 false
   br i1 %or.cond98.i, label %get_virtual_boundary.exit70.i, label %bb.c
 
@@ -309,15 +314,16 @@ get_virtual_boundary.exit70.i:                    ; preds = %bb.c, %.lr.ph.i65.i
   %.3.i69.i = phi i32 [ 0, %get_virtual_boundary.exit.thread.i ], [ 0, %.preheader.i59.i ], [ 0, %bb.c ], [ %i.ba, %.lr.ph.i65.i ] ; 7 uses
   %i.bf = icmp sgt i32 %.3.i94.i, %2              ; 2 uses
   %.not235.not.not = icmp sgt i32 %.3.i69.i, %1
-  %i.bg = add nsw i32 %1, %i.y
+  %i.bg = add nsw i32 %1, %5
   %i.bh = getelementptr inbounds nuw i8, ptr %i.ad, i64 30
   %i.bi = load i16, ptr %i.bh, align 2, !tbaa !80
   %i.bj = zext i16 %i.bi to i32
   %..i = tail call i32 @llvm.smin.i32(i32 %i.bg, i32 %i.bj) ; 5 uses
+  %9 = add nsw i32 %2, %5
   %i.bk = getelementptr inbounds nuw i8, ptr %i.ad, i64 32
   %i.bl = load i16, ptr %i.bk, align 8, !tbaa !98
   %i.bm = zext i16 %i.bl to i32
-  %i.bn = tail call i32 @llvm.smin.i32(i32 %i.z, i32 %i.bm) ; 6 uses
+  %i.bn = tail call i32 @llvm.smin.i32(i32 %9, i32 %i.bm) ; 6 uses
   %.not.i = icmp eq i32 %i.m, 0                   ; 2 uses
   %i.bo = zext i1 %.not.i to i32
   %.not55.i = icmp eq i32 %i.n, 0                 ; 2 uses
@@ -468,7 +474,7 @@ bb.u:                                             ; preds = %bb.t, %bb.s, %bb.l
   %.sroa.21.1.i = phi i32 [ %.sroa.21.0.i, %bb.l ], [ %i.ec, %bb.s ], [ %i.ec, %bb.t ] ; 2 uses
   %.sroa.12.1.i = phi i32 [ %.sroa.12.0.i, %bb.l ], [ %i.dq, %bb.s ], [ %i.dq, %bb.t ] ; 2 uses
   %.sroa.0.1.i = phi i32 [ %.sroa.0.0.i, %bb.l ], [ %i.dm, %bb.s ], [ %i.dm, %bb.t ] ; 2 uses
-  %i.eo = getelementptr inbounds nuw i8, ptr %i.t, i64 10412
+  %i.eo = getelementptr inbounds nuw i8, ptr %8, i64 10412
   %i.ep = zext i16 %i.cd to i64                   ; 5 uses
   %i.eq = getelementptr inbounds nuw i8, ptr %i.eo, i64 %i.ep
   %i.er = load i8, ptr %i.eq, align 1, !tbaa !77
@@ -504,11 +510,11 @@ bb.z:                                             ; preds = %bb.y, %bb.x
   br i1 %.not108.i.i, label %bb.aa, label %bb.ab
 
 bb.aa:                                            ; preds = %bb.z
-  %i.fa = getelementptr inbounds nuw i8, ptr %i.t, i64 1412
+  %i.fa = getelementptr inbounds nuw i8, ptr %8, i64 1412
   %i.fb = getelementptr inbounds nuw [2 x i8], ptr %i.fa, i64 %i.ep
   %i.fc = load i16, ptr %i.fb, align 2, !tbaa !99
   %i.fd = zext i16 %i.fc to i32
-  %i.fe = getelementptr inbounds nuw i8, ptr %i.t, i64 5412
+  %i.fe = getelementptr inbounds nuw i8, ptr %8, i64 5412
   %i.ff = getelementptr inbounds nuw [2 x i8], ptr %i.fe, i64 %i.ep
   %i.fg = load i16, ptr %i.ff, align 2, !tbaa !99
   %i.fh = zext i16 %i.fg to i32
@@ -522,11 +528,11 @@ bb.ab:                                            ; preds = %bb.aa, %bb.z
   br i1 %.sroa.30.1.shrunk.i, label %bb.ad, label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab
-  %i.fm = getelementptr inbounds nuw i8, ptr %i.t, i64 3412
+  %i.fm = getelementptr inbounds nuw i8, ptr %8, i64 3412
   %i.fn = getelementptr inbounds nuw [2 x i8], ptr %i.fm, i64 %i.ep
   %i.fo = load i16, ptr %i.fn, align 2, !tbaa !99
   %i.fp = zext i16 %i.fo to i32
-  %i.fq = getelementptr inbounds nuw i8, ptr %i.t, i64 7412
+  %i.fq = getelementptr inbounds nuw i8, ptr %8, i64 7412
   %i.fr = getelementptr inbounds nuw [2 x i8], ptr %i.fq, i64 %i.ep
   %i.fs = load i16, ptr %i.fr, align 2, !tbaa !99
   %i.ft = zext i16 %i.fs to i32
@@ -563,7 +569,7 @@ bb.ae:                                            ; preds = %bb.ad
   %i.fz = zext i16 %i.fy to i32                   ; 2 uses
   %i.ga = sub nsw i32 %i.fz, %i.be                ; 2 uses
   %i.gb = icmp sgt i32 %i.ga, -1
-  %i.gc = icmp samesign ult i32 %i.ga, %i.y
+  %i.gc = icmp samesign ult i32 %i.ga, %5
   %or.cond99.i = select i1 %i.gb, i1 %i.gc, i1 false
   br i1 %or.cond99.i, label %is_virtual_boundary.exit.i.i, label %bb.af
 
@@ -600,7 +606,7 @@ bb.ag:                                            ; preds = %is_virtual_boundary
   %i.gi = zext i16 %i.gh to i32                   ; 2 uses
   %i.gj = sub nsw i32 %i.gi, %i.am                ; 2 uses
   %i.gk = icmp sgt i32 %i.gj, -1
-  %i.gl = icmp samesign ult i32 %i.gj, %i.y
+  %i.gl = icmp samesign ult i32 %i.gj, %5
   %or.cond100.i = select i1 %i.gk, i1 %i.gl, i1 false
   br i1 %or.cond100.i, label %is_virtual_boundary.exit127.i.i, label %bb.ah
 
@@ -622,7 +628,7 @@ bb.ai:                                            ; preds = %is_virtual_boundary
 
 .preheader.i.i129.i.i:                            ; preds = %bb.ai
   %i.gp = add nsw i32 %i.m, 1
-  %i.gq = shl i32 %i.gp, %i.l                     ; 2 uses
+  %i.gq = shl i32 %i.gp, %7                       ; 2 uses
   %.in.in.i.i130.i.i = getelementptr inbounds nuw i8, ptr %i.g, i64 2104
   %.in.i.i131.i.i = load i8, ptr %.in.in.i.i130.i.i, align 8, !tbaa !77 ; 2 uses
   %.not3036.not.i.i132.i.i = icmp eq i8 %.in.i.i131.i.i, 0
@@ -640,7 +646,7 @@ bb.ai:                                            ; preds = %is_virtual_boundary
   %i.gu = zext i16 %i.gt to i32                   ; 2 uses
   %i.gv = sub nsw i32 %i.gu, %i.gq                ; 2 uses
   %i.gw = icmp sgt i32 %i.gv, -1
-  %i.gx = icmp samesign ult i32 %i.gv, %i.y
+  %i.gx = icmp samesign ult i32 %i.gv, %5
   %or.cond101.i = select i1 %i.gw, i1 %i.gx, i1 false
   br i1 %or.cond101.i, label %is_virtual_boundary.exit140.i.i, label %bb.aj
 
@@ -661,7 +667,7 @@ bb.ak:                                            ; preds = %is_virtual_boundary
 
 .preheader.i.i142.i.i:                            ; preds = %bb.ak
   %i.hb = add nsw i32 %i.n, 1
-  %i.hc = shl i32 %i.hb, %i.l                     ; 2 uses
+  %i.hc = shl i32 %i.hb, %7                       ; 2 uses
   %.in.in.i.i143.i.i = getelementptr inbounds nuw i8, ptr %i.g, i64 2112
   %.in.i.i144.i.i = load i8, ptr %.in.in.i.i143.i.i, align 8, !tbaa !77 ; 2 uses
   %.not3036.not.i.i145.i.i = icmp eq i8 %.in.i.i144.i.i, 0
@@ -678,7 +684,7 @@ bb.ak:                                            ; preds = %is_virtual_boundary
   %i.hf = zext i16 %i.he to i32                   ; 2 uses
   %i.hg = sub nsw i32 %i.hf, %i.hc                ; 2 uses
   %i.hh = icmp sgt i32 %i.hg, -1
-  %i.hi = icmp samesign ult i32 %i.hg, %i.y
+  %i.hi = icmp samesign ult i32 %i.hg, %5
   %or.cond102.i = select i1 %i.hh, i1 %i.hi, i1 false
   br i1 %or.cond102.i, label %is_virtual_boundary.exit153.i.i, label %bb.al
 
@@ -871,21 +877,20 @@ alf_get_subblock.exit.i:                          ; preds = %alf_get_edges.exit.
 bb.am:                                            ; preds = %.lr.ph, %bb.an
   %indvars.iv205 = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next206, %bb.an ] ; 3 uses
   %i.iq = getelementptr inbounds nuw [16 x i8], ptr %3, i64 %indvars.iv205 ; 4 uses
-  %4 = load i32, ptr %i.iq, align 16, !tbaa !208  ; 2 uses
-  %i.ir = getelementptr inbounds nuw i8, ptr %i.iq, i64 4
-  %5 = load i32, ptr %i.ir, align 4, !tbaa !210   ; 4 uses
-  %i.is = getelementptr inbounds nuw i8, ptr %i.iq, i64 8
-  %6 = load i32, ptr %i.is, align 8, !tbaa !211
-  %7 = sub nsw i32 %6, %4
-  %i.it = getelementptr inbounds nuw i8, ptr %i.iq, i64 12
-  %8 = load i32, ptr %i.it, align 4, !tbaa !212
-  %9 = sub nsw i32 %8, %5
-  %10 = getelementptr inbounds nuw [16 x i8], ptr %i.e, i64 %indvars.iv205 ; 4 uses
-  %11 = getelementptr inbounds nuw i8, ptr %10, i64 4
-  %12 = getelementptr inbounds nuw i8, ptr %10, i64 12
-  %13 = getelementptr inbounds nuw i8, ptr %10, i64 8
-  %i.iu = sub nsw i32 %i.z, %5
-  %i.iv = sub i32 %i.ij, %5
+  %i.ir = getelementptr inbounds nuw i8, ptr %i.iq, i64 4 ; 2 uses
+  %10 = getelementptr inbounds nuw i8, ptr %i.iq, i64 8
+  %i.is = getelementptr inbounds nuw i8, ptr %i.iq, i64 12
+  %11 = getelementptr inbounds nuw [16 x i8], ptr %i.e, i64 %indvars.iv205 ; 4 uses
+  %12 = getelementptr inbounds nuw i8, ptr %11, i64 4
+  %i.it = getelementptr inbounds nuw i8, ptr %11, i64 12
+  %13 = getelementptr inbounds nuw i8, ptr %11, i64 8
+  %14 = load i32, ptr %i.iq, align 16, !tbaa !208 ; 2 uses
+  %15 = load i32, ptr %i.ir, align 4, !tbaa !210  ; 3 uses
+  %16 = load i32, ptr %10, align 8, !tbaa !211
+  %17 = sub nsw i32 %16, %14
+  %18 = load i32, ptr %i.is, align 4, !tbaa !212
+  %i.iu = sub nsw i32 %18, %15
+  %i.iv = sub nsw i32 %i.z, %15
   br label %bb.ao
 
 bb.an:                                            ; preds = %alf_filter_cc.exit
@@ -904,10 +909,10 @@ bb.ao:                                            ; preds = %bb.am, %alf_filter_
   %i.jc = getelementptr inbounds nuw i8, ptr %i.jb, i64 %indvars.iv
   %i.jd = load i8, ptr %i.jc, align 1, !tbaa !77
   %i.je = zext i8 %i.jd to i32                    ; 5 uses
-  %i.jf = ashr i32 %4, %i.ja
-  %i.jg = ashr i32 %5, %i.je                      ; 3 uses
-  %i.jh = ashr i32 %7, %i.ja                      ; 6 uses
-  %i.ji = ashr i32 %9, %i.je                      ; 27 uses
+  %i.jf = ashr i32 %14, %i.ja
+  %i.jg = ashr i32 %15, %i.je                     ; 3 uses
+  %i.jh = ashr i32 %17, %i.ja                     ; 6 uses
+  %i.ji = ashr i32 %i.iu, %i.je                   ; 27 uses
   %i.jj = load ptr, ptr %i.hs, align 8, !tbaa !78 ; 2 uses
   %i.jk = getelementptr inbounds nuw i8, ptr %i.jj, i64 64
   %i.jl = getelementptr inbounds nuw [4 x i8], ptr %i.jk, i64 %indvars.iv
@@ -1025,7 +1030,7 @@ copy_ctb.exit.i:                                  ; preds = %copy_ctb.exit.i.loo
   %i.li = getelementptr inbounds i8, ptr %gep, i64 %i.lh ; 4 uses
   %i.lj = shl i32 %i.kh, %i.js
   %i.lk = sext i32 %i.lj to i64                   ; 4 uses
-  %i.ll = load i32, ptr %11, align 4, !tbaa !97   ; 3 uses
+  %i.ll = load i32, ptr %12, align 4, !tbaa !97   ; 3 uses
   %.not.i.i137 = icmp eq i32 %i.ll, 0             ; 5 uses
   br i1 %.not.i.i137, label %.preheader168.i, label %.preheader169.i
 
@@ -1067,7 +1072,7 @@ alf_fill_border_h.exit.i:                         ; preds = %.preheader169.i, %.
   %i.mc = sext i32 %i.mb to i64
   %i.md = mul nsw i64 %i.mc, %i.hw
   %i.me = getelementptr inbounds i8, ptr %gep, i64 %i.md ; 3 uses
-  %i.mf = load i32, ptr %12, align 4, !tbaa !97
+  %i.mf = load i32, ptr %i.it, align 4, !tbaa !97
   %.not.i105.i = icmp eq i32 %i.mf, 0             ; 5 uses
   br i1 %.not.i105.i, label %.preheader165.i, label %.preheader166.i
 
@@ -1116,7 +1121,7 @@ alf_fill_border_h.exit113.i:                      ; preds = %.preheader166.i, %.
   %i.nd = getelementptr inbounds i8, ptr %gep, i64 %i.nc ; 4 uses
   %i.ne = getelementptr inbounds i8, ptr %i.nd, i64 %i.lh ; 9 uses
   %i.nf = getelementptr inbounds i8, ptr %i.ne, i64 %i.nb ; 4 uses
-  %i.ng = load i32, ptr %10, align 16, !tbaa !97
+  %i.ng = load i32, ptr %11, align 16, !tbaa !97
   %.not.i114.i = icmp eq i32 %i.ng, 0
   br i1 %.not.i114.i, label %bb.ay, label %bb.at
 
@@ -1519,7 +1524,7 @@ alf_filter_luma.exit:                             ; preds = %bb.bm, %bb.bn
   br label %alf_filter_cc.exit
 
 .thread172:                                       ; preds = %bb.bl
-  %i.vd = ashr i32 %i.iu, %i.je
+  %i.vd = ashr i32 %i.iv, %i.je
   %i.ve = add nsw i32 %i.vd, -2
   %i.vf = getelementptr i8, ptr %.pre212, i64 8
   %.val133.val = load ptr, ptr %i.vf, align 8, !tbaa !115
@@ -1628,6 +1633,8 @@ bb.bp:                                            ; preds = %bb.bo
   br i1 %.not.i141, label %alf_filter_cc.exit, label %bb.bq
 
 bb.bq:                                            ; preds = %bb.bp
+  %19 = load i32, ptr %i.ir, align 4, !tbaa !210
+  %20 = sub i32 %i.ij, %19
   %i.ya = sext i32 %i.jm to i64
   %i.yb = getelementptr [56 x i8], ptr %i.xz, i64 %indvars.iv
   %i.yc = zext i8 %i.xt to i64
@@ -1635,7 +1642,7 @@ bb.bq:                                            ; preds = %bb.bp
   %i.ye = getelementptr i8, ptr %i.yd, i64 986
   %i.yf = getelementptr inbounds nuw i8, ptr %.val136, i64 21712
   %i.yg = load ptr, ptr %i.yf, align 8, !tbaa !232
-  call void %i.yg(ptr noundef %i.jw, i64 noundef range(i64 -2147483648, 2147483648) %i.ya, ptr noundef nonnull %i.il, i64 noundef range(i64 -2147483648, 2147483648) %i.hw, i32 noundef %i.jh, i32 noundef %i.ji, i32 noundef range(i32 0, 256) %i.ja, i32 noundef range(i32 0, 256) %i.je, ptr noundef %i.ye, i32 noundef range(i32 -2147483648, 2147483644) %i.iv) #8, !inline_history !233
+  call void %i.yg(ptr noundef %i.jw, i64 noundef range(i64 -2147483648, 2147483648) %i.ya, ptr noundef nonnull %i.il, i64 noundef range(i64 -2147483648, 2147483648) %i.hw, i32 noundef %i.jh, i32 noundef %i.ji, i32 noundef range(i32 0, 256) %i.ja, i32 noundef range(i32 0, 256) %i.je, ptr noundef %i.ye, i32 noundef range(i32 -2147483648, 2147483644) %20) #8, !inline_history !233
   br label %alf_filter_cc.exit
 
 alf_filter_cc.exit:                               ; preds = %bb.ar, %alf_filter_luma.exit, %bb.bq, %bb.bp, %bb.bo, %alf_prepare_buffer.exit.thread

@@ -205,14 +205,14 @@ declare dso_local void @lru_add_drain() local_unnamed_addr #0
 ; Function Attrs: fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong
 define internal fastcc i64 @isolate_lru_folios(i64 noundef range(i64 1, 0) %0, ptr noundef %1, ptr noundef %2, ptr nofree noundef writeonly captures(none) %3, ptr nofree noundef readonly captures(none) %4, i32 noundef range(i32 0, 4) %5) unnamed_addr #1 align 16 prefalign(16) {
 bb.a:
-  %i.a = alloca [4 x i64], align 16               ; 8 uses
-  %i.b = alloca [4 x i64], align 16               ; 8 uses
+  %i.a = alloca [4 x i64], align 16               ; 9 uses
+  %i.b = alloca [4 x i64], align 16               ; 9 uses
   %6 = alloca %struct.list_head, align 8          ; 11 uses
   %i.c = zext nneg i32 %5 to i64
   %i.d = getelementptr [16 x i8], ptr %1, i64 %i.c ; 13 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #15
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.a, i8 0, i64 32, i1 false)
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #15
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.b, i8 0, i64 32, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #15
   store ptr %6, ptr %6, align 8
@@ -274,11 +274,13 @@ bb.g:                                             ; preds = %folio_nr_pages.exit
   br i1 %i.z, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g
-  %i.aa = and i64 %i.u, 3
-  %7 = getelementptr [8 x i8], ptr %i.b, i64 %i.aa ; 2 uses
-  %i.ab = load i64, ptr %7, align 8
+  %7 = shl nuw nsw i64 %i.u, 3
+  %i.aa = and i64 %7, 24                          ; 2 uses
+  %.0..0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.aa
+  %i.ab = load i64, ptr %.0..0..sroa_idx, align 8
   %i.ac = add i64 %i.ab, %.0.i73
-  store i64 %i.ac, ptr %7, align 8
+  %.0..0..sroa_idx118 = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.aa
+  store i64 %i.ac, ptr %.0..0..sroa_idx118, align 8
   %i.ad = add nuw nsw i64 %.05585, 1
   br label %folio_put.exit
 
@@ -359,12 +361,13 @@ bb.o:                                             ; preds = %bb.n
 bb.p:                                             ; preds = %folio_try_get.exit
   %i.be = add i64 %.0.i73, %.06182
   %.val69 = load i64, ptr %i.j, align 16
-  %i.bf = lshr i64 %.val69, 56
-  %i.bg = and i64 %i.bf, 3
-  %8 = getelementptr [8 x i8], ptr %i.a, i64 %i.bg ; 2 uses
-  %i.bh = load i64, ptr %8, align 8
+  %i.bf = lshr i64 %.val69, 53
+  %i.bg = and i64 %i.bf, 24                       ; 2 uses
+  %.0..0..sroa_idx121 = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.bg
+  %i.bh = load i64, ptr %.0..0..sroa_idx121, align 8
   %i.bi = add i64 %i.bh, %.0.i73
-  store i64 %i.bi, ptr %8, align 8
+  %.0..0..sroa_idx124 = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.bg
+  store i64 %i.bi, ptr %.0..0..sroa_idx124, align 8
   br label %folio_put.exit
 
 folio_put.exit:                                   ; preds = %arch_atomic_try_cmpxchg.exit.i.i.i, %folio_mapped.exit.thread, %bb.o, %bb.n, %folio_mapped.exit, %bb.i, %bb.p, %bb.h
@@ -599,8 +602,8 @@ __update_lru_size.exit.i.3:                       ; preds = %bb.ai, %bb.ah
 
 update_lru_sizes.exit:                            ; preds = %__update_lru_size.exit.i.3, %bb.ag
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #15
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #15
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #15
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret i64 %.061.lcssa
 }
 

@@ -205,7 +205,7 @@ bb.bg:                                            ; preds = %checkUnsignedBitfie
   br label %bb.bu
 
 bb.bh:                                            ; preds = %bb.aa
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #23
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #23
   br i1 %.not230, label %getObjectReadOnlyString.exit, label %bb.bi
 
@@ -522,7 +522,7 @@ getSignedBitfield.exit310:                        ; preds = %.lr.ph.i312.epil.pr
   %.0.lcssa.i317.sink = phi i64 [ %.lcssa, %getUnsignedBitfield.exit.i305 ], [ %i.oz, %bb.bs ], [ %.0.lcssa.i10.i308, %getUnsignedBitfield.exit.thread.i307 ], [ 0, %bb.bt ], [ %i.py, %getSignedBitfield.exit310.loopexit.unr-lcssa ], [ %i.qk, %.lr.ph.i312.epil.preheader ]
   call void @addReplyLongLong(ptr noundef nonnull %0, i64 noundef %.0.lcssa.i317.sink) #23
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #23
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #23
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
   br label %bb.bu
 
 bb.bu:                                            ; preds = %bb.bg, %setUnsignedBitfield.exit, %bb.av, %setSignedBitfield.exit, %getSignedBitfield.exit310

@@ -204,9 +204,10 @@ bb.t:                                             ; preds = %bb.s
   %i.bu = lshr i64 %i.bt, 32
   %i.bv = or i64 %i.bu, %i.bt
   %i.bw = mul i64 %i.bv, 285870213051386505
-  %i.bx = lshr i64 %i.bw, 58
-  %6 = getelementptr inbounds nuw [8 x i8], ptr @__const._ZN6duckdb10CountZerosImE7LeadingEm.index64msb, i64 %i.bx
-  %i.by = load i64, ptr %6, align 8, !tbaa !103
+  %i.bx = lshr i64 %i.bw, 55
+  %.0..sroa_stride.i.i = and i64 %i.bx, 504
+  %.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr @__const._ZN6duckdb10CountZerosImE7LeadingEm.index64msb, i64 %.0..sroa_stride.i.i
+  %i.by = load i64, ptr %.0..sroa_idx.i.i, align 8, !tbaa !103
   %i.bz = add i64 %i.by, 1
   br label %_ZN6duckdb17RadixPartitioning9RadixBitsImEEmT_.exit
 

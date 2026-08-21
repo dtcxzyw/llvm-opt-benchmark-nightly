@@ -204,8 +204,8 @@ declare ptr @Gia_ManDup(ptr noundef) local_unnamed_addr #7
 ; Function Attrs: nounwind uwtable
 define range(i32 -1073741824, 1073741824) i32 @Gia_ManEquivSetColors(ptr noundef %0, i32 noundef %1) local_unnamed_addr #6 {
 bb.a:
-  %2 = alloca [2 x i32], align 4                  ; 6 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #32
+  %.sroa.0 = alloca i64, align 8                  ; 8 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 192 ; 4 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !54   ; 2 uses
   %i.c = load i32, ptr %i.b, align 4
@@ -271,9 +271,9 @@ bb.a:
   %.val.i81 = phi ptr [ %.val4257, %bb.a ], [ %.val4257, %.lr.ph.preheader ], [ %.val42, %..critedge.loopexit_crit_edge ], [ %.val42, %.lr.ph ]
   %.val3763 = phi i32 [ %.val4156, %bb.a ], [ %.val4156, %.lr.ph.preheader ], [ %.val41, %..critedge.loopexit_crit_edge ], [ %.val41, %.lr.ph ]
   %.lcssa = phi i32 [ %i.l, %bb.a ], [ %i.l, %.lr.ph.preheader ], [ %i.aa, %..critedge.loopexit_crit_edge ], [ %i.aa, %.lr.ph ] ; 4 uses
-  %i.ad = getelementptr inbounds nuw i8, ptr %2, i64 4 ; 2 uses
+  %i.ad = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 4
   store i32 %.lcssa, ptr %i.ad, align 4, !tbaa !34
-  store i32 %.lcssa, ptr %2, align 4, !tbaa !34
+  store i32 %.lcssa, ptr %.sroa.0, align 8, !tbaa !34
   %i.ae = getelementptr i8, ptr %0, i64 72        ; 2 uses
   %.val3864 = load ptr, ptr %i.ae, align 8, !tbaa !52 ; 2 uses
   %i.af = getelementptr i8, ptr %.val3864, i64 4
@@ -308,11 +308,14 @@ bb.a:
   %i.aq = trunc nuw nsw i64 %indvars.iv7496 to i32
   %i.ar = and i32 %i.aq, 1
   %i.as = tail call i32 @Gia_ManEquivSetColor_rec(ptr noundef nonnull %0, ptr noundef nonnull %i.ap, i32 noundef %i.ar)
-  %i.at = and i64 %indvars.iv7496, 1
-  %3 = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.at ; 2 uses
-  %i.au = load i32, ptr %3, align 4, !tbaa !34
+  %i.at = and i64 %indvars.iv7496, 1              ; 2 uses
+  %.sroa.0.0..sroa_stride108 = shl nuw nsw i64 %i.at, 2
+  %.sroa.0.0..sroa_idx110 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %.sroa.0.0..sroa_stride108
+  %i.au = load i32, ptr %.sroa.0.0..sroa_idx110, align 4, !tbaa !34
   %i.av = add nsw i32 %i.au, %i.as
-  store i32 %i.av, ptr %3, align 4, !tbaa !34
+  %.sroa.0.0..sroa_stride = shl nuw nsw i64 %i.at, 2
+  %.sroa.0.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %.sroa.0.0..sroa_stride
+  store i32 %i.av, ptr %.sroa.0.0..sroa_idx, align 4, !tbaa !34
   %indvars.iv.next75 = add nuw nsw i64 %indvars.iv7496, 1 ; 2 uses
   %.val37 = load i32, ptr %i.i, align 8, !tbaa !111
   %.val38 = load ptr, ptr %i.ae, align 8, !tbaa !52 ; 2 uses
@@ -329,8 +332,9 @@ bb.a:
 .critedge2.loopexit:                              ; preds = %.lr.ph69, %..critedge2.loopexit_crit_edge, %.lr.ph69.preheader
   %.val38.val.lcssa.ph = phi i32 [ %.val38.val65, %.lr.ph69.preheader ], [ %.val38.val, %..critedge2.loopexit_crit_edge ], [ %.val38.val, %.lr.ph69 ]
   %.val.i.pre = load ptr, ptr %i.j, align 8, !tbaa !49
-  %.pre = load i32, ptr %2, align 4, !tbaa !34
-  %.pre83 = load i32, ptr %i.ad, align 4, !tbaa !34
+  %.pre = load i32, ptr %.sroa.0, align 8, !tbaa !34
+  %.sroa.0.4..sroa_idx111 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 4
+  %.pre83 = load i32, ptr %.sroa.0.4..sroa_idx111, align 4, !tbaa !34
   br label %.critedge2
 
 .critedge2:                                       ; preds = %.critedge2.loopexit, %.critedge
@@ -359,7 +363,7 @@ bb.b:                                             ; preds = %.critedge2
 bb.c:                                             ; preds = %bb.b, %.critedge2
   %i.bm = add nsw i32 %i.bj, %i.bk
   %i.bn = sdiv i32 %i.bm, 2
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #32
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   ret i32 %i.bn
 }
 

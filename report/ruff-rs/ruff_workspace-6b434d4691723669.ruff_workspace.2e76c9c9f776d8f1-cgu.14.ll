@@ -204,7 +204,6 @@ bb.f:                                             ; preds = %bb.e, %.thread5.i
   br i1 %i.o, label %bb.g, label %_RNvNvNtCs3ZkgueCtkyH_14ruff_workspace9pyproject29get_minimum_supported_version11major_minor.exit
 
 bb.g:                                             ; preds = %bb.f
-  %0 = getelementptr inbounds nuw i8, ptr %.sroa.04.047.i, i64 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store i64 1, ptr %i.b, align 8
   %i.p = getelementptr inbounds nuw i8, ptr %i.b, i64 8
@@ -284,13 +283,20 @@ bb.o:                                             ; preds = %bb.n, %bb.m
   %i.af = invoke fastcc noundef nonnull align 8 ptr @_RNvMsA_NtCscdodAO9FK5_5alloc4syncINtB5_3ArcNtNtCsgHAIXRTqFF5_9pep440_rs7version12VersionInnerE8make_mutCs3ZkgueCtkyH_14ruff_workspace(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.a)
           to label %.noexc.i.i.i unwind label %bb.v, !noalias !3509 ; 5 uses
 
-bb.p:                                             ; preds = %_RNvMs3_NtCsgHAIXRTqFF5_9pep440_rs7versionNtB5_7Version12push_release.exit.1.i.i.i
-  %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 96
+_RNvXs2_NtNtCs4NRVxsYgnAr_4core5array4iterINtB5_8IntoIterRyKj2_ENtNtNtNtB9_4iter6traits8iterator8Iterator4nextCs3ZkgueCtkyH_14ruff_workspace.exit.thread.i.i.i: ; preds = %_RNvMsF_NtCscdodAO9FK5_5alloc3vecINtB5_3VecyE8push_mutCs3ZkgueCtkyH_14ruff_workspace.exit.i.1.i.i.i, %_RNvMse_NtCsgHAIXRTqFF5_9pep440_rs7versionNtB5_12VersionSmall12push_release.exit.i.1.i.i.i
+  %0 = load ptr, ptr %i.a, align 8, !noalias !3509, !nonnull !9, !noundef !9 ; 4 uses
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %2 = load i64, ptr %1, align 8, !range !88, !noalias !3509, !noundef !9
+  %.not6.i.i.i = icmp eq i64 %2, 2
+  br i1 %.not6.i.i.i, label %bb.q, label %bb.p
+
+bb.p:                                             ; preds = %_RNvXs2_NtNtCs4NRVxsYgnAr_4core5array4iterINtB5_8IntoIterRyKj2_ENtNtNtNtB9_4iter6traits8iterator8Iterator4nextCs3ZkgueCtkyH_14ruff_workspace.exit.thread.i.i.i
+  %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 96
   %i.ah = load i64, ptr %i.ag, align 8, !noalias !3509, !noundef !9
   br label %bb.s
 
-bb.q:                                             ; preds = %_RNvMs3_NtCsgHAIXRTqFF5_9pep440_rs7versionNtB5_7Version12push_release.exit.1.i.i.i
-  %i.ai = getelementptr inbounds nuw i8, ptr %1, i64 64
+bb.q:                                             ; preds = %_RNvXs2_NtNtCs4NRVxsYgnAr_4core5array4iterINtB5_8IntoIterRyKj2_ENtNtNtNtB9_4iter6traits8iterator8Iterator4nextCs3ZkgueCtkyH_14ruff_workspace.exit.thread.i.i.i
+  %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.aj = load i8, ptr %i.ai, align 8, !noalias !3509, !noundef !9 ; 2 uses
   %i.ak = zext i8 %i.aj to i64                    ; 2 uses
   %i.al = icmp ult i8 %i.aj, 5
@@ -395,7 +401,7 @@ _RNvMse_NtCsgHAIXRTqFF5_9pep440_rs7versionNtB5_12VersionSmall12push_release.exit
   br label %_RNvMs3_NtCsgHAIXRTqFF5_9pep440_rs7versionNtB5_7Version12push_release.exit.i.i.i
 
 _RNvMs3_NtCsgHAIXRTqFF5_9pep440_rs7versionNtB5_7Version12push_release.exit.i.i.i: ; preds = %_RNvMse_NtCsgHAIXRTqFF5_9pep440_rs7versionNtB5_12VersionSmall12push_release.exit.i.i.i.i, %_RNvMsF_NtCscdodAO9FK5_5alloc3vecINtB5_3VecyE8push_mutCs3ZkgueCtkyH_14ruff_workspace.exit.i.i.i.i
-  %i.bu = load i64, ptr %0, align 8, !noalias !3509, !noundef !9 ; 7 uses
+  %i.bu = load i64, ptr %.sroa.04.047.i, align 8, !noalias !3509, !noundef !9 ; 7 uses
   %i.bv = invoke fastcc noundef nonnull align 8 ptr @_RNvMsA_NtCscdodAO9FK5_5alloc4syncINtB5_3ArcNtNtCsgHAIXRTqFF5_9pep440_rs7version12VersionInnerE8make_mutCs3ZkgueCtkyH_14ruff_workspace(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.a)
           to label %.noexc.1.i.i.i unwind label %bb.v, !noalias !3509 ; 5 uses
 
@@ -449,7 +455,7 @@ bb.ag:                                            ; preds = %bb.af
 _RNvMse_NtCsgHAIXRTqFF5_9pep440_rs7versionNtB5_12VersionSmall12push_release.exit.i.1.i.i.i: ; preds = %bb.ag, %bb.ae
   %.sink.i.i.1.i.i.i = phi i8 [ 1, %bb.ag ], [ %i.cm, %bb.ae ]
   store i8 %.sink.i.i.1.i.i.i, ptr %i.by, align 8, !alias.scope !3515, !noalias !3509
-  br label %_RNvMs3_NtCsgHAIXRTqFF5_9pep440_rs7versionNtB5_7Version12push_release.exit.1.i.i.i
+  br label %_RNvXs2_NtNtCs4NRVxsYgnAr_4core5array4iterINtB5_8IntoIterRyKj2_ENtNtNtNtB9_4iter6traits8iterator8Iterator4nextCs3ZkgueCtkyH_14ruff_workspace.exit.thread.i.i.i
 
 _RNvMse_NtCsgHAIXRTqFF5_9pep440_rs7versionNtB5_12VersionSmall12push_release.exit.thread.i.1.i.i.i: ; preds = %bb.af, %bb.ad, %.noexc.1.i.i.i
   %i.cs = invoke noundef nonnull align 8 ptr @_RNvMs3_NtCsgHAIXRTqFF5_9pep440_rs7versionNtB5_7Version9make_full(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.a)
@@ -474,14 +480,7 @@ _RNvMsF_NtCscdodAO9FK5_5alloc3vecINtB5_3VecyE8push_mutCs3ZkgueCtkyH_14ruff_works
   store i64 %i.bu, ptr %i.da, align 8, !noalias !3509
   %i.db = add i64 %i.cv, 1
   store i64 %i.db, ptr %i.cu, align 8, !alias.scope !3512, !noalias !3509
-  br label %_RNvMs3_NtCsgHAIXRTqFF5_9pep440_rs7versionNtB5_7Version12push_release.exit.1.i.i.i
-
-_RNvMs3_NtCsgHAIXRTqFF5_9pep440_rs7versionNtB5_7Version12push_release.exit.1.i.i.i: ; preds = %_RNvMsF_NtCscdodAO9FK5_5alloc3vecINtB5_3VecyE8push_mutCs3ZkgueCtkyH_14ruff_workspace.exit.i.1.i.i.i, %_RNvMse_NtCsgHAIXRTqFF5_9pep440_rs7versionNtB5_12VersionSmall12push_release.exit.i.1.i.i.i
-  %1 = load ptr, ptr %i.a, align 8, !noalias !3509, !nonnull !9, !noundef !9 ; 4 uses
-  %2 = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %3 = load i64, ptr %2, align 8, !range !88, !noalias !3509, !noundef !9
-  %.not6.i.i.i = icmp eq i64 %3, 2
-  br i1 %.not6.i.i.i, label %bb.q, label %bb.p
+  br label %_RNvXs2_NtNtCs4NRVxsYgnAr_4core5array4iterINtB5_8IntoIterRyKj2_ENtNtNtNtB9_4iter6traits8iterator8Iterator4nextCs3ZkgueCtkyH_14ruff_workspace.exit.thread.i.i.i
 
 bb.ai:                                            ; preds = %bb.ak
   %i.dc = landingpad { ptr, i32 }
@@ -509,7 +508,7 @@ _RINvMs3_NtCsgHAIXRTqFF5_9pep440_rs7versionNtB6_7Version3newARyj2_BW_ECs3ZkgueCt
   br label %_RNvNvNtCs3ZkgueCtkyH_14ruff_workspace9pyproject29get_minimum_supported_version11major_minor.exit
 
 _RNvNvNtCs3ZkgueCtkyH_14ruff_workspace9pyproject29get_minimum_supported_version11major_minor.exit: ; preds = %bb.d, %.thread.i, %bb.f, %_RINvMs3_NtCsgHAIXRTqFF5_9pep440_rs7versionNtB6_7Version3newARyj2_BW_ECs3ZkgueCtkyH_14ruff_workspace.exit.i
-  %.sroa.0.0.i = phi ptr [ %1, %_RINvMs3_NtCsgHAIXRTqFF5_9pep440_rs7versionNtB6_7Version3newARyj2_BW_ECs3ZkgueCtkyH_14ruff_workspace.exit.i ], [ null, %bb.d ], [ null, %bb.f ], [ null, %.thread.i ]
+  %.sroa.0.0.i = phi ptr [ %0, %_RINvMs3_NtCsgHAIXRTqFF5_9pep440_rs7versionNtB6_7Version3newARyj2_BW_ECs3ZkgueCtkyH_14ruff_workspace.exit.i ], [ null, %bb.d ], [ null, %bb.f ], [ null, %.thread.i ]
   ret ptr %.sroa.0.0.i
 }
 
@@ -912,7 +911,7 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCs2AWtUsOyxgP_3std4path7PathBufECs3Z
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.ak = load ptr, ptr %i.q, align 8, !nonnull !9, !noundef !9
   %i.al = load i64, ptr %i.r, align 8, !noundef !9
-  invoke void @_RINvMs16_NtCs2AWtUsOyxgP_3std4pathNtB7_4Path4joinReECs3ZkgueCtkyH_14ruff_workspace(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.a, ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.ak, i64 noundef %i.al, ptr noalias noundef nonnull readonly captures(address, read_provenance) @13, i64 noundef 9)
+  invoke void @_RINvMs16_NtCs2AWtUsOyxgP_3std4pathNtB7_4Path4joinReECs3ZkgueCtkyH_14ruff_workspace(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.a, ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.ak, i64 noundef %i.al, ptr noalias noundef nonnull readonly captures(address, read_provenance) @12, i64 noundef 10)
           to label %bb.ab unwind label %bb.l
 
 bb.ab:                                            ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCs2AWtUsOyxgP_3std4path7PathBufECs3ZkgueCtkyH_14ruff_workspace.exit75
@@ -943,7 +942,7 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCs2AWtUsOyxgP_3std4path7PathBufECs3Z
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.aq = load ptr, ptr %i.q, align 8, !nonnull !9, !noundef !9
   %i.ar = load i64, ptr %i.r, align 8, !noundef !9
-  invoke void @_RINvMs16_NtCs2AWtUsOyxgP_3std4pathNtB7_4Path4joinReECs3ZkgueCtkyH_14ruff_workspace(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.a, ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.aq, i64 noundef %i.ar, ptr noalias noundef nonnull readonly captures(address, read_provenance) @7, i64 noundef 14)
+  invoke void @_RINvMs16_NtCs2AWtUsOyxgP_3std4pathNtB7_4Path4joinReECs3ZkgueCtkyH_14ruff_workspace(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.a, ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.aq, i64 noundef %i.ar, ptr noalias noundef nonnull readonly captures(address, read_provenance) @12, i64 noundef 10)
           to label %bb.ag unwind label %bb.l
 
 bb.ag:                                            ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCs2AWtUsOyxgP_3std4path7PathBufECs3ZkgueCtkyH_14ruff_workspace.exit75.1

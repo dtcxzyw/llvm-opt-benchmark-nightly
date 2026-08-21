@@ -205,7 +205,7 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc2rc4WeakNtNtNtNt
 define hidden void @_RNvMs6_NtNtCsoTR8nlGN3X_18ty_python_semantic5types7typevarNtB5_20BoundTypeVarInstance11to_instance(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([12 x i8]) align 4 captures(none) dereferenceable(12) %0, i32 noundef range(i32 1, 0) %1, i32 noundef %2, ptr noundef nonnull %3, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(272) %4, ptr noundef nonnull align 4 %5) unnamed_addr #2 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [32 x i8], align 8                ; 6 uses
-  %i.b = alloca [16 x i8], align 8                ; 8 uses
+  %i.b = alloca [16 x i8], align 8                ; 9 uses
   %i.c = alloca [16 x i8], align 8                ; 5 uses
   %i.d = alloca [24 x i8], align 8                ; 4 uses
   %i.e = alloca [16 x i8], align 4                ; 4 uses
@@ -496,9 +496,9 @@ _RINvMNtCsj8vhLppEnlJ_8char_str4reprNtB3_4Repr24from_exact_joined_slicesReECsoTR
   br label %bb.ab
 
 bb.x:                                             ; preds = %bb.u
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !13168
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(15) %i.b, i8 0, i64 15, i1 false), !noalias !13168
-  %.sroa.4.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 15 ; 2 uses
+  %.sroa.4.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 15
   store i8 -64, ptr %.sroa.4.0..sroa_idx.i.i.i, align 1, !noalias !13168
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.01.0.i.i) ]
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.b, ptr nonnull readonly align 1 %.sroa.01.0.i.i, i64 %.sroa.0.0.i.i, i1 false), !alias.scope !13172, !noalias !13176
@@ -510,14 +510,15 @@ bb.x:                                             ; preds = %bb.u
 bb.y:                                             ; preds = %bb.x
   %i.cx = trunc nuw nsw i64 %i.co to i8
   %i.cy = or disjoint i8 %i.cx, -64
-  store i8 %i.cy, ptr %.sroa.4.0..sroa_idx.i.i.i, align 1, !noalias !13168
+  %.15..15..15..sroa_idx9 = getelementptr inbounds nuw i8, ptr %i.b, i64 15
+  store i8 %i.cy, ptr %.15..15..15..sroa_idx9, align 1, !noalias !13168
   br label %_RINvMNtCsj8vhLppEnlJ_8char_str4reprNtB3_4Repr24from_exact_joined_slicesReECsoTR8nlGN3X_18ty_python_semantic.exit.i
 
 _RINvMNtCsj8vhLppEnlJ_8char_str4reprNtB3_4Repr24from_exact_joined_slicesReECsoTR8nlGN3X_18ty_python_semantic.exit.i: ; preds = %bb.y, %bb.x
   %.sroa.032.0.copyload33.i = load ptr, ptr %i.b, align 8, !noalias !13179
   %.sroa.634.0..sroa_idx35.i = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %.sroa.634.0.copyload36.i = load i64, ptr %.sroa.634.0..sroa_idx35.i, align 8, !noalias !13179 ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !13168
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   %i.cz = icmp ugt i64 %.sroa.634.0.copyload36.i, -72057594037927937
   br i1 %i.cz, label %_RINvMNtCsj8vhLppEnlJ_8char_str4reprNtB3_4Repr24from_exact_joined_slicesReECsoTR8nlGN3X_18ty_python_semantic.exit.thread.i, label %bb.ab, !prof !7988
 

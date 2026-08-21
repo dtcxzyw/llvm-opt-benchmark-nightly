@@ -204,8 +204,8 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 define dso_local range(i32 0, 2) i32 @dct_luma8x8(i32 noundef %0, ptr nofree noundef captures(none) %1, i32 noundef %2) local_unnamed_addr #5 {
 bb.a:
   %i.a = alloca [8 x [8 x i32]], align 16         ; 23 uses
-  %i.b = alloca [4 x i32], align 16               ; 10 uses
-  %i.c = alloca [4 x i32], align 16               ; 6 uses
+  %i.b = alloca [4 x i32], align 16               ; 12 uses
+  %i.c = alloca [4 x i32], align 16               ; 10 uses
   %i.d = shl i32 %0, 3
   %i.e = and i32 %i.d, 8                          ; 6 uses
   %i.f = shl nsw i32 %0, 2
@@ -221,8 +221,8 @@ bb.a:
   %i.p = getelementptr inbounds nuw i8, ptr %i.n, i64 8
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !56   ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #8
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #8
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   %i.r = getelementptr inbounds nuw i8, ptr %i.h, i64 14224
   %i.s = load ptr, ptr %i.r, align 8, !tbaa !34
   %i.t = getelementptr inbounds nuw i8, ptr %i.h, i64 12
@@ -625,12 +625,15 @@ bb.d:                                             ; preds = %middle.block580, %b
   %i.nv = getelementptr inbounds nuw i8, ptr %i.ns, i64 1
   %i.nw = load i8, ptr %i.nv, align 1, !tbaa !47  ; 2 uses
   %i.nx = zext i8 %i.nw to i32
-  %i.ny = and i64 %indvars.iv530, 3               ; 3 uses
+  %i.ny = and i64 %indvars.iv530, 3               ; 6 uses
   %i.nz = add nsw i32 %.0431510, 1                ; 4 uses
-  %3 = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %i.ny ; 3 uses
-  %i.oa = load i32, ptr %3, align 4, !tbaa !4
+  %.0..sroa_stride586 = shl nuw nsw i64 %i.ny, 2
+  %.0..sroa_idx588 = getelementptr inbounds nuw i8, ptr %i.c, i64 %.0..sroa_stride586
+  %i.oa = load i32, ptr %.0..sroa_idx588, align 4, !tbaa !4
   %i.ob = add nsw i32 %i.oa, 1                    ; 3 uses
-  store i32 %i.ob, ptr %3, align 4, !tbaa !4
+  %.0..sroa_stride583 = shl nuw nsw i64 %i.ny, 2
+  %.0..sroa_idx585 = getelementptr inbounds nuw i8, ptr %i.c, i64 %.0..sroa_stride583
+  store i32 %i.ob, ptr %.0..sroa_idx585, align 4, !tbaa !4
   %i.oc = zext i8 %i.nw to i64                    ; 4 uses
   %i.od = getelementptr inbounds nuw [64 x i8], ptr %i.bh, i64 %i.oc
   %i.oe = zext i8 %i.nt to i64                    ; 4 uses
@@ -721,8 +724,9 @@ bb.m:                                             ; preds = %bb.k, %bb.l
   %i.qf = getelementptr inbounds nuw [8 x i8], ptr %i.m, i64 %i.ny
   %i.qg = load ptr, ptr %i.qf, align 8, !tbaa !54 ; 2 uses
   %i.qh = load ptr, ptr %i.qg, align 8, !tbaa !56
-  %4 = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %i.ny ; 2 uses
-  %i.qi = load i32, ptr %4, align 4, !tbaa !4     ; 2 uses
+  %.0..sroa_stride602 = shl nuw nsw i64 %i.ny, 2
+  %.0..sroa_idx604 = getelementptr inbounds nuw i8, ptr %i.b, i64 %.0..sroa_stride602
+  %i.qi = load i32, ptr %.0..sroa_idx604, align 4, !tbaa !4 ; 2 uses
   %i.qj = sext i32 %i.qi to i64                   ; 2 uses
   %i.qk = getelementptr inbounds [4 x i8], ptr %i.qh, i64 %i.qj
   store i32 %i.qe, ptr %i.qk, align 4, !tbaa !4
@@ -731,8 +735,12 @@ bb.m:                                             ; preds = %bb.k, %bb.l
   %i.qn = getelementptr inbounds [4 x i8], ptr %i.qm, i64 %i.qj
   store i32 %i.ob, ptr %i.qn, align 4, !tbaa !4
   %i.qo = add nsw i32 %i.qi, 1
-  store i32 %i.qo, ptr %4, align 4, !tbaa !4
-  store i32 -1, ptr %3, align 4, !tbaa !4
+  %.0..sroa_stride599 = shl nuw nsw i64 %i.ny, 2
+  %.0..sroa_idx601 = getelementptr inbounds nuw i8, ptr %i.b, i64 %.0..sroa_stride599
+  store i32 %i.qo, ptr %.0..sroa_idx601, align 4, !tbaa !4
+  %.0..sroa_stride = shl nuw nsw i64 %i.ny, 2
+  %.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 %.0..sroa_stride
+  store i32 -1, ptr %.0..sroa_idx, align 4, !tbaa !4
   br label %bb.q
 
 bb.n:                                             ; preds = %bb.j, %bb.i
@@ -815,12 +823,15 @@ bb.t:                                             ; preds = %bb.s, %bb.aa
   %i.sb = load i8, ptr %i.sa, align 2, !tbaa !47  ; 2 uses
   %i.sc = getelementptr inbounds nuw i8, ptr %i.sa, i64 1
   %i.sd = load i8, ptr %i.sc, align 1, !tbaa !47  ; 2 uses
-  %i.se = and i64 %indvars.iv534, 3               ; 3 uses
+  %i.se = and i64 %indvars.iv534, 3               ; 6 uses
   %i.sf = add nsw i32 %.3434514, 1                ; 3 uses
-  %5 = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %i.se ; 3 uses
-  %i.sg = load i32, ptr %5, align 4, !tbaa !4
+  %.0..sroa_stride595 = shl nuw nsw i64 %i.se, 2
+  %.0..sroa_idx597 = getelementptr inbounds nuw i8, ptr %i.c, i64 %.0..sroa_stride595
+  %i.sg = load i32, ptr %.0..sroa_idx597, align 4, !tbaa !4
   %i.sh = add nsw i32 %i.sg, 1                    ; 2 uses
-  store i32 %i.sh, ptr %5, align 4, !tbaa !4
+  %.0..sroa_stride592 = shl nuw nsw i64 %i.se, 2
+  %.0..sroa_idx594 = getelementptr inbounds nuw i8, ptr %i.c, i64 %.0..sroa_stride592
+  store i32 %i.sh, ptr %.0..sroa_idx594, align 4, !tbaa !4
   %i.si = zext i8 %i.sd to i64
   %i.sj = getelementptr inbounds nuw [64 x i8], ptr %i.ru, i64 %i.si
   %i.sk = zext i8 %i.sb to i64
@@ -872,8 +883,9 @@ bb.y:                                             ; preds = %bb.x
   %i.tk = getelementptr inbounds nuw [8 x i8], ptr %i.m, i64 %i.se
   %i.tl = load ptr, ptr %i.tk, align 8, !tbaa !54 ; 2 uses
   %i.tm = load ptr, ptr %i.tl, align 8, !tbaa !56
-  %6 = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %i.se ; 2 uses
-  %i.tn = load i32, ptr %6, align 4, !tbaa !4     ; 2 uses
+  %.0..sroa_stride609 = shl nuw nsw i64 %i.se, 2
+  %.0..sroa_idx611 = getelementptr inbounds nuw i8, ptr %i.b, i64 %.0..sroa_stride609
+  %i.tn = load i32, ptr %.0..sroa_idx611, align 4, !tbaa !4 ; 2 uses
   %i.to = sext i32 %i.tn to i64                   ; 2 uses
   %i.tp = getelementptr inbounds [4 x i8], ptr %i.tm, i64 %i.to
   store i32 %i.tj, ptr %i.tp, align 4, !tbaa !4
@@ -882,8 +894,12 @@ bb.y:                                             ; preds = %bb.x
   %i.ts = getelementptr inbounds [4 x i8], ptr %i.tr, i64 %i.to
   store i32 %i.sh, ptr %i.ts, align 4, !tbaa !4
   %i.tt = add nsw i32 %i.tn, 1
-  store i32 %i.tt, ptr %6, align 4, !tbaa !4
-  store i32 -1, ptr %5, align 4, !tbaa !4
+  %.0..sroa_stride606 = shl nuw nsw i64 %i.se, 2
+  %.0..sroa_idx608 = getelementptr inbounds nuw i8, ptr %i.b, i64 %.0..sroa_stride606
+  store i32 %i.tt, ptr %.0..sroa_idx608, align 4, !tbaa !4
+  %.0..sroa_stride589 = shl nuw nsw i64 %i.se, 2
+  %.0..sroa_idx591 = getelementptr inbounds nuw i8, ptr %i.c, i64 %.0..sroa_stride589
+  store i32 -1, ptr %.0..sroa_idx591, align 4, !tbaa !4
   br label %bb.aa
 
 bb.z:                                             ; preds = %bb.x, %bb.w
@@ -1286,8 +1302,8 @@ bb.af:                                            ; preds = %.preheader, %bb.af
   br i1 %exitcond565.not, label %.loopexit, label %bb.af, !llvm.loop !107
 
 .loopexit:                                        ; preds = %bb.ae, %bb.af
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #8
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #8
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #8
   ret i32 %.4
 }

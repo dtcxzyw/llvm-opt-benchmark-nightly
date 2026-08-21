@@ -70,10 +70,6 @@ target triple = "x86_64-pc-linux-gnu"
 %"class.std::basic_ios" = type { %"class.std::ios_base", ptr, i8, i8, ptr, ptr, ptr, ptr }
 %"class.std::ios_base" = type { ptr, i64, i64, i32, i32, i32, ptr, %"struct.std::ios_base::_Words", [8 x %"struct.std::ios_base::_Words"], i32, ptr, %"class.std::locale" }
 %"struct.std::ios_base::_Words" = type { ptr, i64 }
-%"class.xsimd::batch" = type { %"struct.xsimd::types::simd_register" }
-%"struct.xsimd::types::simd_register" = type { %"struct.xsimd::types::simd_register.51" }
-%"struct.xsimd::types::simd_register.51" = type { %"struct.xsimd::types::simd_register.52" }
-%"struct.xsimd::types::simd_register.52" = type { <4 x i64> }
 %"class.google::LogMessageFatal" = type { %"class.google::LogMessage" }
 %"struct.facebook::velox::memory::Stats" = type { %"struct.std::array", i64 }
 %"struct.std::array" = type { [20 x %"struct.facebook::velox::memory::SizeClassStats"] }
@@ -476,8 +472,8 @@ _ZN8facebook5velox6memory13MmapAllocator9SizeClass11allocateAnyEiRiRmRNS1_10Allo
 ; Function Attrs: mustprogress uwtable
 define void @_ZN8facebook5velox6memory13MmapAllocator9SizeClass22allocateFromMappedFreeEiRNS1_10AllocationE(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(192) %0, i32 noundef %1, ptr noundef nonnull align 8 dereferenceable(36) %2) local_unnamed_addr #17 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %3 = alloca %"class.xsimd::batch", align 32     ; 5 uses
-  %4 = alloca %"class.google::LogMessage", align 8 ; 7 uses
+  %.sroa.0 = alloca <4 x i64>, align 32           ; 5 uses
+  %3 = alloca %"class.google::LogMessage", align 8 ; 7 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 120 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 144 ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 72
@@ -501,7 +497,7 @@ bb.a:
   %indvars.iv113 = phi i64 [ %i.i, %.lr.ph.preheader ], [ %indvars.iv.next114, %.thread55 ] ; 5 uses
   %.01998 = phi i1 [ false, %.lr.ph.preheader ], [ %.12062, %.thread55 ]
   %.14096 = phi i32 [ %.039, %.lr.ph.preheader ], [ %.24160, %.thread55 ] ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #31
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
   %i.j = load ptr, ptr %i.a, align 8, !tbaa !115
   %i.k = getelementptr inbounds [8 x i8], ptr %i.j, i64 %indvars.iv113
   %i.l = load <4 x i64>, ptr %i.k, align 1, !tbaa !110
@@ -510,7 +506,7 @@ bb.a:
   %i.o = getelementptr inbounds [8 x i8], ptr %i.n, i64 %indvars.iv113
   %i.p = load <4 x i64>, ptr %i.o, align 1, !tbaa !110
   %i.q = and <4 x i64> %i.p, %i.m                 ; 2 uses
-  store <4 x i64> %i.q, ptr %3, align 32
+  store <4 x i64> %i.q, ptr %.sroa.0, align 32
   %i.r = icmp ne <4 x i64> %i.q, zeroinitializer
   %i.s = bitcast <4 x i1> %i.r to i4              ; 2 uses
   %i.t = icmp eq i4 %i.s, 0
@@ -529,7 +525,7 @@ bb.b:                                             ; preds = %"_ZZN8facebook5velo
   %.4 = phi i32 [ %.6, %"_ZZN8facebook5velox4bits8testBitsIZNS0_6memory13MmapAllocator9SizeClass22allocateFromMappedFreeEiRNS3_10AllocationEE3$_0EEbPKmiibT_ENKUliE_clEi.exit.i.i" ], [ %.14096, %.lr.ph.i.i ] ; 3 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 64
   %i.y = lshr exact i64 %indvars.iv, 3
-  %i.z = getelementptr inbounds nuw i8, ptr %3, i64 %i.y
+  %i.z = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %i.y
   %i.aa = load i64, ptr %i.z, align 8, !tbaa !70  ; 2 uses
   %.not.i46.i.i = icmp eq i64 %i.aa, 0
   br i1 %.not.i46.i.i, label %"_ZZN8facebook5velox4bits8testBitsIZNS0_6memory13MmapAllocator9SizeClass22allocateFromMappedFreeEiRNS3_10AllocationEE3$_0EEbPKmiibT_ENKUliE_clEi.exit.i.i", label %.preheader.i47.i.i.preheader
@@ -622,13 +618,13 @@ bb.c:                                             ; preds = %.lr.ph147
   br label %.thread64.thread
 
 .thread64.thread:                                 ; preds = %.preheader.i47.i.i.preheader, %.preheader.i47.i.i, %.lr.ph147, %._crit_edge148
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #31
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   br label %bb.f
 
 .thread55:                                        ; preds = %"_ZN8facebook5velox4bits8testBitsIZNS0_6memory13MmapAllocator9SizeClass22allocateFromMappedFreeEiRNS3_10AllocationEE3$_0EEbPKmiibT_.exit", %.lr.ph
   %.12062 = phi i1 [ %.01998, %.lr.ph ], [ true, %"_ZN8facebook5velox4bits8testBitsIZNS0_6memory13MmapAllocator9SizeClass22allocateFromMappedFreeEiRNS3_10AllocationEE3$_0EEbPKmiibT_.exit" ] ; 2 uses
   %.24160 = phi i32 [ %.14096, %.lr.ph ], [ %.6, %"_ZN8facebook5velox4bits8testBitsIZNS0_6memory13MmapAllocator9SizeClass22allocateFromMappedFreeEiRNS3_10AllocationEE3$_0EEbPKmiibT_.exit" ] ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #31
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   %i.bt = add nuw i32 %.pre, 4
   %i.bu = icmp ult i32 %i.bt, %i.h
   %indvars.iv.next114 = add nuw nsw i64 %indvars.iv113, 4
@@ -658,9 +654,9 @@ bb.c:                                             ; preds = %.lr.ph147
   br label %.loopexit
 
 .loopexit:                                        ; preds = %._crit_edge, %.critedge
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #31
-  call void @_ZN6google10LogMessageC1EPKcii(ptr noundef nonnull align 8 dereferenceable(96) %4, ptr noundef nonnull @.str, i32 noundef 774, i32 noundef 2)
-  %i.ck = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZN6google10LogMessage6streamEv(ptr noundef nonnull align 8 dereferenceable(96) %4)
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #31
+  call void @_ZN6google10LogMessageC1EPKcii(ptr noundef nonnull align 8 dereferenceable(96) %3, ptr noundef nonnull @.str, i32 noundef 774, i32 noundef 2)
+  %i.ck = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZN6google10LogMessage6streamEv(ptr noundef nonnull align 8 dereferenceable(96) %3)
           to label %bb.d unwind label %bb.e       ; 3 uses
 
 bb.d:                                             ; preds = %.loopexit
@@ -677,15 +673,15 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit26: ; preds = %_ZStl
           to label %.thread70 unwind label %bb.e  ; 0 uses
 
 .thread70:                                        ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit26
-  call void @_ZN6google10LogMessageD1Ev(ptr noundef nonnull align 8 dead_on_return(96) dereferenceable(96) %4) #31
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #31
+  call void @_ZN6google10LogMessageD1Ev(ptr noundef nonnull align 8 dead_on_return(96) dereferenceable(96) %3) #31
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #31
   br label %bb.f
 
 bb.e:                                             ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit26, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit, %bb.d, %.loopexit
   %i.cp = landingpad { ptr, i32 }
           cleanup
-  call void @_ZN6google10LogMessageD1Ev(ptr noundef nonnull align 8 dead_on_return(96) dereferenceable(96) %4) #31
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #31
+  call void @_ZN6google10LogMessageD1Ev(ptr noundef nonnull align 8 dead_on_return(96) dereferenceable(96) %3) #31
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #31
   resume { ptr, i32 } %i.cp
 
 bb.f:                                             ; preds = %.thread64.thread, %.thread70

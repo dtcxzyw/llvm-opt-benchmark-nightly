@@ -204,7 +204,7 @@ bb.j:                                             ; preds = %bb.h, %bb.f
 
 bb.k:                                             ; preds = %bb.g, %bb.h
   %.0194 = phi i32 [ %i.q, %bb.h ], [ 0, %bb.g ]  ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #16
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(208) %i.f, i8 0, i64 208, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #16
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(208) %i.g, i8 0, i64 208, i1 false)
@@ -607,7 +607,6 @@ bb.bf:                                            ; preds = %bb.be
   %i.ft = load ptr, ptr %i.fs, align 8
   %i.fu = select i1 %.not.i.i.i, ptr %i.ft, ptr %i.fr
   %i.fv = load i16, ptr %i.fu, align 2, !tbaa !46 ; 2 uses
-  %7 = zext nneg i16 %i.fv to i64
   %i.fw = add i16 %i.fv, -65
   %or.cond = icmp ult i16 %i.fw, 26
   br i1 %or.cond, label %bb.bg, label %.thread408
@@ -619,10 +618,12 @@ bb.bg:                                            ; preds = %bb.bf
           to label %_ZNK6icu_787UVector11lastElementEv.exit unwind label %bb.bh
 
 _ZNK6icu_787UVector11lastElementEv.exit:          ; preds = %bb.bg
-  %i.ga = add nuw nsw i64 %7, 4294967231
-  %i.gb = and i64 %i.ga, 4294967295
-  %8 = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %i.gb
-  store ptr %i.fz, ptr %8, align 8, !tbaa !65
+  %7 = shl nuw nsw i16 %i.fv, 3
+  %8 = zext nneg i16 %7 to i64
+  %i.ga = add nuw nsw i64 %8, 34359737848
+  %i.gb = and i64 %i.ga, 34359738360
+  %.0..0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.f, i64 %i.gb
+  store ptr %i.fz, ptr %.0..0..sroa_idx, align 8, !tbaa !65
   br label %.thread408
 
 bb.bh:                                            ; preds = %bb.bl, %bb.bg
@@ -1025,7 +1026,7 @@ bb.er:                                            ; preds = %.thread678, %_ZN6ic
 _ZN6icu_7812LocalPointerINS_7UVectorEED2Ev.exit352: ; preds = %bb.n, %bb.m, %bb.er, %.thread689
   %.15688 = phi ptr [ %.15693, %.thread689 ], [ %.14684, %bb.er ], [ null, %bb.m ], [ null, %bb.n ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #16
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #16
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
   call void @_ZN6icu_789UVector64D1Ev(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable(32) %3) #16
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #16
   br label %bb.ew
@@ -1045,7 +1046,7 @@ bb.et:                                            ; preds = %bb.es, %.thread474,
 _ZN6icu_7812LocalPointerINS_7UVectorEED2Ev.exit353: ; preds = %bb.et, %bb.o
   %.pn281.pn.pn.pn.pn.pn = phi { ptr, i32 } [ %i.y, %bb.o ], [ %.pn281.pn.pn.pn.pn472, %bb.et ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #16
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #16
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
   br label %bb.eu
 
 bb.eu:                                            ; preds = %_ZN6icu_7812LocalPointerINS_7UVectorEED2Ev.exit353, %bb.j

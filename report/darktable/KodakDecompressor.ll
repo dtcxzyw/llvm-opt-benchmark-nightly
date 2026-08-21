@@ -14,7 +14,6 @@ target triple = "x86_64-pc-linux-gnu"
 %struct.__va_list_tag = type { i32, i32, ptr, ptr }
 %"struct.std::array.48" = type { [256 x i16] }
 %"struct.std::array.49" = type { [512 x i8] }
-%"struct.std::array.54" = type { [2 x i32] }
 
 $_ZN8rawspeed14ThrowExceptionINS_19RawDecoderExceptionEEEvPKcz = comdat any
 
@@ -417,7 +416,7 @@ define hidden void @_ZN8rawspeed17KodakDecompressor10decompressEv(ptr nofree nou
 bb.a:
   %i.a = alloca i32, align 4                      ; 4 uses
   %1 = alloca %"struct.std::array.48", align 2    ; 4 uses
-  %2 = alloca %"struct.std::array.54", align 4    ; 5 uses
+  %.sroa.0 = alloca i64, align 8                  ; 6 uses
   %i.b = load ptr, ptr %0, align 8, !tbaa !16     ; 5 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 568
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !136, !noalias !137
@@ -446,7 +445,6 @@ bb.a:
 
 .preheader.lr.ph:                                 ; preds = %bb.a
   %i.s = icmp eq i32 %i.i, 0
-  %.06.i.i.i.i.ptr.1.i = getelementptr inbounds nuw i8, ptr %2, i64 4
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 44
   br i1 %i.s, label %._crit_edge87.split, label %.preheader.preheader
@@ -455,6 +453,7 @@ bb.a:
   %i.v = zext nneg i32 %i.i to i64                ; 2 uses
   %i.w = zext nneg i32 %i.n to i64
   %wide.trip.count101 = zext nneg i32 %i.k to i64
+  %.sroa.0.4..06.i.i.i.i.ptr.1.i.sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 4
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.preheader, %._crit_edge85
@@ -481,9 +480,9 @@ bb.b:                                             ; preds = %.preheader, %._crit
   %.sroa.speculated = call i32 @llvm.smin.i32(i32 %i.ac, i32 256) ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #15
   call void @_ZN8rawspeed17KodakDecompressor13decodeSegmentEj(ptr dead_on_unwind nonnull writable sret(%"struct.std::array.48") align 2 %1, ptr noundef nonnull align 8 dereferenceable(48) %0, i32 noundef %.sroa.speculated)
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #15
-  store i32 0, ptr %2, align 4, !tbaa !119
-  store i32 0, ptr %.06.i.i.i.i.ptr.1.i, align 4, !tbaa !119
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
+  store i32 0, ptr %.sroa.0, align 8, !tbaa !119
+  store i32 0, ptr %.sroa.0.4..06.i.i.i.i.ptr.1.i.sroa_idx, align 4, !tbaa !119
   %i.ad = icmp sgt i32 %i.ac, 0
   br i1 %i.ad, label %.lr.ph.preheader, label %._crit_edge
 
@@ -498,7 +497,7 @@ bb.b:                                             ; preds = %.preheader, %._crit
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.b
   %.1.lcssa = phi i32 [ %.02083, %bb.b ], [ %i.af, %._crit_edge.loopexit ] ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #15
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #15
   %i.ag = icmp slt i32 %.1.lcssa, %i.i
   br i1 %i.ag, label %bb.b, label %._crit_edge85, !llvm.loop !145
@@ -509,11 +508,14 @@ bb.b:                                             ; preds = %.preheader, %._crit
   %i.ah = getelementptr inbounds nuw [2 x i8], ptr %1, i64 %indvars.iv
   %i.ai = load i16, ptr %i.ah, align 2, !tbaa !133
   %i.aj = sext i16 %i.ai to i32
-  %i.ak = and i64 %indvars.iv, 1
-  %3 = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.ak ; 2 uses
-  %i.al = load i32, ptr %3, align 4, !tbaa !119
+  %i.ak = and i64 %indvars.iv, 1                  ; 2 uses
+  %.sroa.0.0..sroa_stride113 = shl nuw nsw i64 %i.ak, 2
+  %.sroa.0.0..sroa_idx115 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %.sroa.0.0..sroa_stride113
+  %i.al = load i32, ptr %.sroa.0.0..sroa_idx115, align 4, !tbaa !119
   %i.am = add nsw i32 %i.al, %i.aj                ; 5 uses
-  store i32 %i.am, ptr %3, align 4, !tbaa !119
+  %.sroa.0.0..sroa_stride = shl nuw nsw i64 %i.ak, 2
+  %.sroa.0.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %.sroa.0.0..sroa_stride
+  store i32 %i.am, ptr %.sroa.0.0..sroa_idx, align 4, !tbaa !119
   %i.an = load i32, ptr %i.t, align 8, !tbaa !19  ; 3 uses
   %i.ao = icmp ult i32 %i.an, 32
   call void @llvm.assume(i1 %i.ao)

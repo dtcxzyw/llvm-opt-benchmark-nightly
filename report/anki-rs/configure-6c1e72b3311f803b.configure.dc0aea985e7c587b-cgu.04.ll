@@ -204,10 +204,9 @@ begin_hunk_0
 @213 = private unnamed_addr constant [12 x i8] c"check:svelte", align 1
 @214 = private unnamed_addr constant [13 x i8] c".eslintrc.cjs", align 1
 @215 = private unnamed_addr constant [2 x i8] c"ts", align 1
-@216 = private unnamed_addr constant [18 x i8] c"qt/aqt/data/web/js", align 1
-@217 = private unnamed_addr constant <{ ptr, [8 x i8], ptr, [8 x i8] }> <{ ptr inttoptr (i64 1 to ptr), [8 x i8] zeroinitializer, ptr @125, [8 x i8] c"\03\00\00\00\00\00\00\00" }>, align 8
-@218 = private unnamed_addr constant [12 x i8] c"check:eslint", align 1
-@219 = private unnamed_addr constant [10 x i8] c"fix:eslint", align 1
+@216 = private unnamed_addr constant <{ ptr, [8 x i8], ptr, [8 x i8] }> <{ ptr inttoptr (i64 1 to ptr), [8 x i8] zeroinitializer, ptr @125, [8 x i8] c"\03\00\00\00\00\00\00\00" }>, align 8
+@217 = private unnamed_addr constant [12 x i8] c"check:eslint", align 1
+@218 = private unnamed_addr constant [10 x i8] c"fix:eslint", align 1
 @switch.table._ZN9configure3web19build_and_check_web17h225f7c0e5fd9bafdE = private unnamed_addr constant [6 x ptr] [ptr @11, ptr @13, ptr @15, ptr @17, ptr @19, ptr @21], align 8
 @switch.table._ZN9configure3web19build_and_check_web17h225f7c0e5fd9bafdE.18 = private unnamed_addr constant [6 x i8] c"?A@B:<", align 8
 @switch.table._ZN9configure3web19build_and_check_web17h225f7c0e5fd9bafdE.19 = private unnamed_addr constant [6 x ptr] [ptr @12, ptr @14, ptr @16, ptr @18, ptr @20, ptr @22], align 8
@@ -610,7 +609,7 @@ bb.bw:                                            ; preds = %bb.bs
   store ptr %i.v, ptr %i.r, align 8
   store ptr @"_ZN44_$LT$$RF$T$u20$as$u20$core..fmt..Display$GT$3fmt17h245d25d94735a8eaE", ptr %.sroa.4129.0..sroa_idx, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !288
-  store ptr @217, ptr %i.b, align 8, !noalias !295
+  store ptr @216, ptr %i.b, align 8, !noalias !295
   store i64 2, ptr %.sroa.4229.0..sroa_idx, align 8, !noalias !295
   store ptr %i.r, ptr %.sroa.5230.0..sroa_idx, align 8, !noalias !295
   store i64 1, ptr %.sroa.6.0..sroa_idx, align 8, !noalias !295
@@ -725,7 +724,7 @@ bb.cg:                                            ; preds = %bb.ce
   store i8 0, ptr %i.ev, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.o)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.p)
-  %i.fp = invoke noundef ptr @_ZN9ninja_gen5build5Build10add_action17hc0b82bfb6d147788E(ptr noalias noundef nonnull align 8 dereferenceable(248) %0, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @218, i64 noundef 12, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(120) %i.q)
+  %i.fp = invoke noundef ptr @_ZN9ninja_gen5build5Build10add_action17hc0b82bfb6d147788E(ptr noalias noundef nonnull align 8 dereferenceable(248) %0, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @217, i64 noundef 12, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(120) %i.q)
           to label %bb.ch unwind label %.thread321 ; 2 uses
 
 bb.ch:                                            ; preds = %bb.cg
@@ -757,7 +756,7 @@ bb.ck:                                            ; preds = %bb.ci
   store i8 1, ptr %i.ez, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m)
-  %i.ft = invoke noundef ptr @_ZN9ninja_gen5build5Build10add_action17hc0b82bfb6d147788E(ptr noalias noundef nonnull align 8 dereferenceable(248) %0, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @219, i64 noundef 10, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(120) %i.n)
+  %i.ft = invoke noundef ptr @_ZN9ninja_gen5build5Build10add_action17hc0b82bfb6d147788E(ptr noalias noundef nonnull align 8 dereferenceable(248) %0, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @218, i64 noundef 10, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(120) %i.n)
           to label %bb.cl unwind label %bb.cd     ; 2 uses
 
 bb.cl:                                            ; preds = %bb.ck
@@ -767,8 +766,8 @@ bb.cl:                                            ; preds = %bb.ck
 
 bb.cm:                                            ; preds = %bb.cl
   call void @llvm.lifetime.end.p0(ptr nonnull %i.u)
-  store ptr @216, ptr %i.v, align 8
-  store i64 18, ptr %i.eo, align 8
+  store ptr @215, ptr %i.v, align 8
+  store i64 2, ptr %i.eo, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.u)
   call void @_RNvCsiGVaDesi5rv_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #18
   %i.fu = call noundef align 8 dereferenceable_or_null(48) ptr @_RNvCsiGVaDesi5rv_7___rustc12___rust_alloc(i64 noundef 48, i64 noundef 8) #18 ; 9 uses
@@ -781,7 +780,7 @@ bb.cn:                                            ; preds = %bb.cm
   store ptr %i.v, ptr %i.r, align 8
   store ptr @"_ZN44_$LT$$RF$T$u20$as$u20$core..fmt..Display$GT$3fmt17h245d25d94735a8eaE", ptr %.sroa.4129.0..sroa_idx, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !288
-  store ptr @217, ptr %i.b, align 8, !noalias !295
+  store ptr @216, ptr %i.b, align 8, !noalias !295
   store i64 2, ptr %.sroa.4229.0..sroa_idx, align 8, !noalias !295
   store ptr %i.r, ptr %.sroa.5230.0..sroa_idx, align 8, !noalias !295
   store i64 1, ptr %.sroa.6.0..sroa_idx, align 8, !noalias !295
@@ -841,7 +840,7 @@ bb.cr:                                            ; preds = %bb.cq
   store i8 0, ptr %i.ev, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.o)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.p)
-  %i.gd = invoke noundef ptr @_ZN9ninja_gen5build5Build10add_action17hc0b82bfb6d147788E(ptr noalias noundef nonnull align 8 dereferenceable(248) %0, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @218, i64 noundef 12, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(120) %i.q)
+  %i.gd = invoke noundef ptr @_ZN9ninja_gen5build5Build10add_action17hc0b82bfb6d147788E(ptr noalias noundef nonnull align 8 dereferenceable(248) %0, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @217, i64 noundef 12, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(120) %i.q)
           to label %bb.cs unwind label %.thread321 ; 2 uses
 
 bb.cs:                                            ; preds = %bb.cr
@@ -867,7 +866,7 @@ bb.cu:                                            ; preds = %bb.ct
   store i8 1, ptr %i.ez, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m)
-  %i.gg = invoke noundef ptr @_ZN9ninja_gen5build5Build10add_action17hc0b82bfb6d147788E(ptr noalias noundef nonnull align 8 dereferenceable(248) %0, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @219, i64 noundef 10, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(120) %i.n)
+  %i.gg = invoke noundef ptr @_ZN9ninja_gen5build5Build10add_action17hc0b82bfb6d147788E(ptr noalias noundef nonnull align 8 dereferenceable(248) %0, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @218, i64 noundef 10, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(120) %i.n)
           to label %bb.cv unwind label %bb.cd     ; 2 uses
 
 bb.cv:                                            ; preds = %bb.cu

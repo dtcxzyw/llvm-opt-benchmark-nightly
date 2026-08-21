@@ -205,14 +205,14 @@ bb.d:                                             ; preds = %.noexc
   br label %bb.e
 
 bb.e:                                             ; preds = %.lr.ph90, %"_ZN4core3ptr67drop_in_place$LT$alloc..vec..into_iter..IntoIter$LT$$RF$str$GT$$GT$17h97f6c46a3e744920E.exit51.1"
-  %.sroa.05.088 = phi ptr [ %i.ag, %.lr.ph90 ], [ %i.ap, %"_ZN4core3ptr67drop_in_place$LT$alloc..vec..into_iter..IntoIter$LT$$RF$str$GT$$GT$17h97f6c46a3e744920E.exit51.1" ] ; 5 uses
+  %.sroa.05.088 = phi ptr [ %i.ag, %.lr.ph90 ], [ %i.ap, %"_ZN4core3ptr67drop_in_place$LT$alloc..vec..into_iter..IntoIter$LT$$RF$str$GT$$GT$17h97f6c46a3e744920E.exit51.1" ] ; 3 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %.sroa.05.088, i64 224 ; 2 uses
+  %2 = getelementptr inbounds nuw i8, ptr %.sroa.05.088, i64 24 ; 2 uses
+  %i.aq = getelementptr inbounds nuw i8, ptr %.sroa.05.088, i64 32 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
-  %i.aq = getelementptr inbounds nuw i8, ptr %.sroa.05.088, i64 24
-  %2 = load ptr, ptr %i.aq, align 8, !nonnull !8, !noundef !8
-  %3 = getelementptr inbounds nuw i8, ptr %.sroa.05.088, i64 32
-  %i.ar = load i64, ptr %3, align 8, !noundef !8
-  call void @_ZN4anki4text30extract_underscored_references17h9a34ceca45e2fe98E(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.e, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %2, i64 noundef %i.ar)
+  %3 = load ptr, ptr %2, align 8, !nonnull !8, !noundef !8
+  %i.ar = load i64, ptr %i.aq, align 8, !noundef !8
+  call void @_ZN4anki4text30extract_underscored_references17h9a34ceca45e2fe98E(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.e, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %3, i64 noundef %i.ar)
   %i.as = load ptr, ptr %i.al, align 8, !nonnull !8, !noundef !8 ; 4 uses
   %i.at = load i64, ptr %i.e, align 8, !range !695, !noundef !8
   %i.au = load i64, ptr %i.am, align 8, !noundef !8 ; 3 uses
@@ -284,10 +284,8 @@ bb.e:                                             ; preds = %.lr.ph90, %"_ZN4cor
   call void @"_ZN86_$LT$alloc..vec..into_iter..IntoIter$LT$T$C$A$GT$$u20$as$u20$core..ops..drop..Drop$GT$4drop17he7705a07ae340aa1E"(ptr noalias noundef nonnull align 8 dereferenceable(32) %i.d)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
-  %4 = getelementptr inbounds nuw i8, ptr %.sroa.05.088, i64 48
-  %i.bh = load ptr, ptr %4, align 8, !nonnull !8, !noundef !8
-  %5 = getelementptr inbounds nuw i8, ptr %.sroa.05.088, i64 56
-  %i.bi = load i64, ptr %5, align 8, !noundef !8
+  %i.bh = load ptr, ptr %2, align 8, !nonnull !8, !noundef !8
+  %i.bi = load i64, ptr %i.aq, align 8, !noundef !8
   call void @_ZN4anki4text30extract_underscored_references17h9a34ceca45e2fe98E(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.e, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %i.bh, i64 noundef %i.bi)
   %i.bj = load ptr, ptr %i.al, align 8, !nonnull !8, !noundef !8 ; 4 uses
   %i.bk = load i64, ptr %i.e, align 8, !range !695, !noundef !8
@@ -514,14 +512,14 @@ bb.c:                                             ; preds = %.noexc
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph110, %"_ZN4core3ptr67drop_in_place$LT$alloc..vec..into_iter..IntoIter$LT$$RF$str$GT$$GT$17h97f6c46a3e744920E.exit51.1"
-  %.sroa.05.0108 = phi ptr [ %i.ai, %.lr.ph110 ], [ %i.ar, %"_ZN4core3ptr67drop_in_place$LT$alloc..vec..into_iter..IntoIter$LT$$RF$str$GT$$GT$17h97f6c46a3e744920E.exit51.1" ] ; 5 uses
+  %.sroa.05.0108 = phi ptr [ %i.ai, %.lr.ph110 ], [ %i.ar, %"_ZN4core3ptr67drop_in_place$LT$alloc..vec..into_iter..IntoIter$LT$$RF$str$GT$$GT$17h97f6c46a3e744920E.exit51.1" ] ; 3 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %.sroa.05.0108, i64 224 ; 2 uses
+  %2 = getelementptr inbounds nuw i8, ptr %.sroa.05.0108, i64 24 ; 2 uses
+  %i.as = getelementptr inbounds nuw i8, ptr %.sroa.05.0108, i64 32 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
-  %i.as = getelementptr inbounds nuw i8, ptr %.sroa.05.0108, i64 24
-  %2 = load ptr, ptr %i.as, align 8, !nonnull !8, !noundef !8
-  %3 = getelementptr inbounds nuw i8, ptr %.sroa.05.0108, i64 32
-  %i.at = load i64, ptr %3, align 8, !noundef !8
-  call void @_ZN4anki4text30extract_underscored_references17h9a34ceca45e2fe98E(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.g, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %2, i64 noundef %i.at)
+  %3 = load ptr, ptr %2, align 8, !nonnull !8, !noundef !8
+  %i.at = load i64, ptr %i.as, align 8, !noundef !8
+  call void @_ZN4anki4text30extract_underscored_references17h9a34ceca45e2fe98E(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.g, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %3, i64 noundef %i.at)
   %i.au = load ptr, ptr %i.an, align 8, !nonnull !8, !noundef !8 ; 4 uses
   %i.av = load i64, ptr %i.g, align 8, !range !695, !noundef !8
   %i.aw = load i64, ptr %i.ao, align 8, !noundef !8 ; 3 uses
@@ -593,10 +591,8 @@ bb.d:                                             ; preds = %.lr.ph110, %"_ZN4co
   call void @"_ZN86_$LT$alloc..vec..into_iter..IntoIter$LT$T$C$A$GT$$u20$as$u20$core..ops..drop..Drop$GT$4drop17he7705a07ae340aa1E"(ptr noalias noundef nonnull align 8 dereferenceable(32) %i.f)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
-  %4 = getelementptr inbounds nuw i8, ptr %.sroa.05.0108, i64 48
-  %i.bj = load ptr, ptr %4, align 8, !nonnull !8, !noundef !8
-  %5 = getelementptr inbounds nuw i8, ptr %.sroa.05.0108, i64 56
-  %i.bk = load i64, ptr %5, align 8, !noundef !8
+  %i.bj = load ptr, ptr %2, align 8, !nonnull !8, !noundef !8
+  %i.bk = load i64, ptr %i.as, align 8, !noundef !8
   call void @_ZN4anki4text30extract_underscored_references17h9a34ceca45e2fe98E(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.g, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %i.bj, i64 noundef %i.bk)
   %i.bl = load ptr, ptr %i.an, align 8, !nonnull !8, !noundef !8 ; 4 uses
   %i.bm = load i64, ptr %i.g, align 8, !range !695, !noundef !8

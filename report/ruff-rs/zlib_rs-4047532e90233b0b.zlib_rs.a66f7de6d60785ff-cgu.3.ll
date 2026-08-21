@@ -204,10 +204,11 @@ _RNvNtNtCsehVNULHUZqJ_7zlib_rs5crc327combine8multmodp.exit.i: ; preds = %bb.e, %
   br i1 %.not.i, label %_RNvNtNtCsehVNULHUZqJ_7zlib_rs5crc327combine7x2nmodp.exit, label %.lr.ph.i
 
 bb.b:                                             ; preds = %.lr.ph.i
-  %i.d = and i32 %.sroa.03.010.i, 31
+  %3 = shl nuw nsw i32 %.sroa.03.010.i, 2
+  %i.d = and i32 %3, 124
   %i.e = zext nneg i32 %i.d to i64
-  %3 = getelementptr inbounds nuw [4 x i8], ptr @16, i64 %i.e
-  %i.f = load i32, ptr %3, align 4                ; 2 uses
+  %.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr @16, i64 %i.e
+  %i.f = load i32, ptr %.0..sroa_idx.i, align 4   ; 2 uses
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.d, %bb.b
@@ -295,10 +296,11 @@ _RNvNtNtCsehVNULHUZqJ_7zlib_rs5crc327combine8multmodp.exit: ; preds = %bb.e, %.l
   br i1 %.not, label %._crit_edge, label %.lr.ph
 
 bb.b:                                             ; preds = %.lr.ph
-  %i.d = and i32 %.sroa.03.010, 31
+  %2 = shl i32 %.sroa.03.010, 2
+  %i.d = and i32 %2, 124
   %i.e = zext nneg i32 %i.d to i64
-  %2 = getelementptr inbounds nuw [4 x i8], ptr @16, i64 %i.e
-  %i.f = load i32, ptr %2, align 4                ; 2 uses
+  %.0..sroa_idx = getelementptr inbounds nuw i8, ptr @16, i64 %i.e
+  %i.f = load i32, ptr %.0..sroa_idx, align 4     ; 2 uses
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.d, %bb.b

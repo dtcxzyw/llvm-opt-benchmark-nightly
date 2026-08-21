@@ -205,9 +205,10 @@ bb.e:                                             ; preds = %bb.d
   %i.ay = lshr i64 %i.ax, 32
   %i.az = or i64 %i.ay, %i.ax
   %i.ba = mul i64 %i.az, 285870213051386505
-  %i.bb = lshr i64 %i.ba, 58
-  %8 = getelementptr inbounds nuw [8 x i8], ptr @__const._ZN6duckdb10CountZerosImE7LeadingEm.index64msb, i64 %i.bb
-  %i.bc = load i64, ptr %8, align 8, !tbaa !92
+  %i.bb = lshr i64 %i.ba, 55
+  %.0..sroa_stride.i.i = and i64 %i.bb, 504
+  %.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr @__const._ZN6duckdb10CountZerosImE7LeadingEm.index64msb, i64 %.0..sroa_stride.i.i
+  %i.bc = load i64, ptr %.0..sroa_idx.i.i, align 8, !tbaa !92
   %i.bd = add i64 %i.bc, 1
   br label %_ZN6duckdb17RadixPartitioning9RadixBitsImEEmT_.exit
 
@@ -473,9 +474,10 @@ bb.q:                                             ; preds = %bb.p
   %i.fx = lshr i64 %i.fw, 32
   %i.fy = or i64 %i.fx, %i.fw
   %i.fz = mul i64 %i.fy, 285870213051386505
-  %i.ga = lshr i64 %i.fz, 58
-  %9 = getelementptr inbounds nuw [8 x i8], ptr @__const._ZN6duckdb10CountZerosImE7LeadingEm.index64msb, i64 %i.ga
-  %i.gb = load i64, ptr %9, align 8, !tbaa !92
+  %i.ga = lshr i64 %i.fz, 55
+  %.0..sroa_stride.i.i87 = and i64 %i.ga, 504
+  %.0..sroa_idx.i.i88 = getelementptr inbounds nuw i8, ptr @__const._ZN6duckdb10CountZerosImE7LeadingEm.index64msb, i64 %.0..sroa_stride.i.i87
+  %i.gb = load i64, ptr %.0..sroa_idx.i.i88, align 8, !tbaa !92
   %i.gc = add i64 %i.gb, 1
   br label %_ZN6duckdb17RadixPartitioning9RadixBitsImEEmT_.exit88
 

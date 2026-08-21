@@ -204,7 +204,7 @@ declare void @__assert_fail(ptr noundef, ptr noundef, i32 noundef, ptr noundef) 
 define internal fastcc void @uv__epoll_ctl_flush(i32 noundef %0, ptr nofree noundef readonly captures(none) %1, ptr noundef nonnull %2) unnamed_addr #0 {
 bb.a:
   %3 = alloca [256 x %struct.epoll_event], align 16 ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #16
+  call void @llvm.lifetime.start.p0(ptr nonnull %3)
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 112 ; 3 uses
   %i.b = load i32, ptr %i.a, align 8
   %.not = icmp eq i32 %i.b, -1
@@ -338,7 +338,6 @@ bb.s:                                             ; preds = %bb.r
   unreachable
 
 bb.t:                                             ; preds = %bb.r
-  %4 = getelementptr inbounds nuw [12 x i8], ptr %3, i64 %i.au
   %i.aw = load i32, ptr %i.ad, align 8            ; 2 uses
   %i.ax = load ptr, ptr %i.e, align 8             ; 2 uses
   %i.ay = load i32, ptr %i.ax, align 4            ; 2 uses
@@ -347,7 +346,9 @@ bb.t:                                             ; preds = %bb.r
   %i.ba = and i32 %i.ay, %i.aw                    ; 2 uses
   %i.bb = zext i32 %i.ba to i64                   ; 2 uses
   %i.bc = getelementptr inbounds nuw [12 x i8], ptr %2, i64 %i.bb ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(12) %i.bc, ptr noundef nonnull align 4 dereferenceable(12) %4, i64 12, i1 false)
+  %.0..sroa_stride = mul nuw nsw i64 %i.au, 12
+  %.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 %.0..sroa_stride
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(12) %i.bc, ptr noundef nonnull align 4 dereferenceable(12) %.0..sroa_idx, i64 12, i1 false)
   %i.bd = load ptr, ptr %i.ae, align 8
   %i.be = getelementptr inbounds nuw [64 x i8], ptr %i.bd, i64 %i.bb ; 7 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.be, i8 0, i64 64, i1 false)
@@ -391,7 +392,7 @@ bb.u:                                             ; preds = %bb.t
   br i1 %.not39, label %._crit_edge, label %bb.m, !llvm.loop !28
 
 ._crit_edge:                                      ; preds = %.backedge, %bb.l
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #16
+  call void @llvm.lifetime.end.p0(ptr nonnull %3)
   ret void
 }
 

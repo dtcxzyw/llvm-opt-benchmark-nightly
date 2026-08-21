@@ -57,7 +57,6 @@ target triple = "x86_64-pc-linux-gnu"
 %"class.rawspeed::HuffmanCode" = type { %"class.rawspeed::AbstractPrefixCode", %"class.std::vector.2" }
 %struct.__va_list_tag = type { i32, i32, ptr, ptr }
 %"struct.std::array.82" = type { [16 x i32] }
-%"struct.std::array.100" = type { [2 x i32] }
 
 $_ZN8rawspeed14ThrowExceptionINS_19RawDecoderExceptionEEEvPKcz = comdat any
 
@@ -460,7 +459,7 @@ _ZNSt14_Optional_baseIN8rawspeed11HuffmanCodeINS0_15BaselineCodeTagEEELb0ELb0EED
 define hidden void @_ZNK8rawspeed18PentaxDecompressor10decompressENS_10ByteStreamE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(168) %0, ptr nofree noundef readonly byval(%"class.rawspeed::ByteStream") align 8 captures(none) %1) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %.sroa.0.i.i = alloca i32, align 4              ; 5 uses
-  %2 = alloca %"struct.std::array.100", align 8   ; 5 uses
+  %.sroa.0 = alloca i64, align 8                  ; 6 uses
   %i.a = load ptr, ptr %0, align 8, !tbaa !16     ; 5 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 568
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !201, !noalias !202 ; 2 uses
@@ -540,8 +539,8 @@ bb.b:                                             ; preds = %._crit_edge.us, %_Z
   %.sroa.039.0196.us = phi i64 [ %.sroa.039.3.us, %._crit_edge.us ], [ 0, %_ZN8rawspeed14BitStreamerMSBCI2NS_11BitStreamerIS0_NS_39BitStreamerForwardSequentialReplenisherIS0_EEEEENS_10Array1DRefIKSt4byteEE.exit.preheader.split.us ]
   %.sroa.16.0195.us = phi i32 [ %.sroa.16.3.us, %._crit_edge.us ], [ 0, %_ZN8rawspeed14BitStreamerMSBCI2NS_11BitStreamerIS0_NS_39BitStreamerForwardSequentialReplenisherIS0_EEEEENS_10Array1DRefIKSt4byteEE.exit.preheader.split.us ]
   %.sroa.4159.0194.us = phi i32 [ %.sroa.4159.2.us, %._crit_edge.us ], [ 0, %_ZN8rawspeed14BitStreamerMSBCI2NS_11BitStreamerIS0_NS_39BitStreamerForwardSequentialReplenisherIS0_EEEEENS_10Array1DRefIKSt4byteEE.exit.preheader.split.us ]
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #19
-  store i64 0, ptr %2, align 8
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
+  store i64 0, ptr %.sroa.0, align 8
   %i.au = icmp samesign ugt i64 %indvars.iv230, 1
   br i1 %i.au, label %bb.c, label %.lr.ph.us
 
@@ -553,7 +552,7 @@ bb.c:                                             ; preds = %bb.b
   %i.ay = getelementptr inbounds nuw [2 x i8], ptr %i.c, i64 %i.ax
   %i.az = load <2 x i16>, ptr %i.ay, align 2, !tbaa !208
   %i.ba = zext <2 x i16> %i.az to <2 x i32>
-  store <2 x i32> %i.ba, ptr %2, align 8
+  store <2 x i32> %i.ba, ptr %.sroa.0, align 8
   br label %.lr.ph.us
 
 .lr.ph.us:                                        ; preds = %bb.c, %bb.b
@@ -788,11 +787,14 @@ _ZNK8rawspeed20PrefixCodeLUTDecoderINS_15BaselineCodeTagENS_23PrefixCodeLookupDe
   %.sroa.16.3.us = phi i32 [ %i.ce, %_ZN8rawspeed11BitStreamerINS_14BitStreamerMSBENS_39BitStreamerForwardSequentialReplenisherIS1_EEE4fillEi.exit.us ], [ %i.ep, %bb.q ], [ %i.ef, %bb.p ], [ %.sroa.16.2.us, %bb.o ], [ %.sroa.16.2.us, %bb.n ] ; 2 uses
   %.sroa.039.3.us = phi i64 [ %i.cg, %_ZN8rawspeed11BitStreamerINS_14BitStreamerMSBENS_39BitStreamerForwardSequentialReplenisherIS1_EEE4fillEi.exit.us ], [ %i.er, %bb.q ], [ %i.eg, %bb.p ], [ %.sroa.039.2.us, %bb.o ], [ %.sroa.039.2.us, %bb.n ] ; 2 uses
   %.0.i.us = phi i32 [ %i.cb, %_ZN8rawspeed11BitStreamerINS_14BitStreamerMSBENS_39BitStreamerForwardSequentialReplenisherIS1_EEE4fillEi.exit.us ], [ %.0.i.i.us, %bb.q ], [ -32768, %bb.p ], [ -32768, %bb.o ], [ 0, %bb.n ]
-  %i.eu = and i64 %indvars.iv225, 1
-  %3 = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.eu ; 2 uses
-  %i.ev = load i32, ptr %3, align 4, !tbaa !148
+  %i.eu = and i64 %indvars.iv225, 1               ; 2 uses
+  %.sroa.0.0..sroa_stride = shl nuw nsw i64 %i.eu, 2
+  %.sroa.0.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %.sroa.0.0..sroa_stride
+  %i.ev = load i32, ptr %.sroa.0.0..sroa_idx, align 4, !tbaa !148
   %i.ew = add nsw i32 %i.ev, %.0.i.us             ; 3 uses
-  store i32 %i.ew, ptr %3, align 4, !tbaa !148
+  %.sroa.0.0..sroa_stride279 = shl nuw nsw i64 %i.eu, 2
+  %.sroa.0.0..sroa_idx281 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 %.sroa.0.0..sroa_stride279
+  store i32 %i.ew, ptr %.sroa.0.0..sroa_idx281, align 4, !tbaa !148
   %i.ex = icmp ult i32 %i.ew, 65536
   br i1 %i.ex, label %bb.r, label %.split202.us
 
@@ -805,7 +807,7 @@ bb.r:                                             ; preds = %_ZNK8rawspeed20Pref
   br i1 %exitcond229.not, label %._crit_edge.us, label %bb.d, !llvm.loop !210
 
 ._crit_edge.us:                                   ; preds = %bb.r
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #19
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   %indvars.iv.next231 = add nuw nsw i64 %indvars.iv230, 1 ; 2 uses
   %exitcond234.not = icmp eq i64 %indvars.iv.next231, %wide.trip.count233
   br i1 %exitcond234.not, label %.split206.us, label %bb.b, !llvm.loop !211
