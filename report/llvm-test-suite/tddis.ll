@@ -203,8 +203,8 @@ scalar.ph190:                                     ; preds = %scalar.ph190.prehea
 
 .preheader88:                                     ; preds = %.preheader88.preheader, %._crit_edge107
   %indvars.iv143 = phi i64 [ %i.ck, %.preheader88.preheader ], [ %indvars.iv.next144, %._crit_edge107 ] ; 3 uses
-  %i.cx = sub nsw i64 %indvars.iv143, %i.ck
-  %i.cy = getelementptr inbounds [8 x i8], ptr %4, i64 %i.cx ; 6 uses
+  %i.cx = sub nuw nsw i64 %indvars.iv143, %i.ck
+  %i.cy = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %i.cx ; 6 uses
   %i.cz = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv143
   %i.da = load ptr, ptr %i.cz, align 8, !tbaa !12 ; 9 uses
   br i1 %min.iters.check217, label %scalar.ph216.preheader, label %vector.memcheck204
