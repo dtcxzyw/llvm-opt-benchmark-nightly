@@ -204,7 +204,7 @@ bb.ap:                                            ; preds = %bb.ao, %bb.an, %.th
 ; Function Attrs: nounwind uwtable
 define internal void @psy_3gpp_analyze(ptr noundef %0, i32 noundef %1, ptr nofree noundef readonly captures(none) %2, ptr nofree noundef readonly captures(none) %3) #2 {
 bb.a:
-  %i.a = alloca [128 x float], align 16           ; 8 uses
+  %i.a = alloca [128 x float], align 16           ; 7 uses
   %i.b = tail call ptr @ff_psy_find_group(ptr noundef %0, i32 noundef %1) #11
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 160 ; 2 uses
   %i.d = load i8, ptr %i.c, align 8, !tbaa !82
@@ -466,7 +466,7 @@ calc_thr_3gpp.exit.i:                             ; preds = %._crit_edge57.i.i, 
   br label %bb.q
 
 bb.q:                                             ; preds = %._crit_edge736.i, %.lr.ph743.i
-  %indvar = phi i64 [ %indvar.next, %._crit_edge736.i ], [ 0, %.lr.ph743.i ] ; 3 uses
+  %indvar = phi i64 [ %indvar.next, %._crit_edge736.i ], [ 0, %.lr.ph743.i ] ; 2 uses
   %indvars.iv852.i = phi i64 [ %indvars.iv.next853.i, %._crit_edge736.i ], [ 0, %.lr.ph743.i ] ; 5 uses
   %.0542740.i = phi float [ %.1543.lcssa.i, %._crit_edge736.i ], [ 0.000000e+00, %.lr.ph743.i ] ; 2 uses
   %i.ed = phi <2 x float> [ %i.ho, %._crit_edge736.i ], [ %i.du, %.lr.ph743.i ] ; 2 uses
@@ -478,10 +478,8 @@ bb.q:                                             ; preds = %._crit_edge736.i, %
   br i1 %i.dv, label %.lr.ph.preheader.i, label %.preheader722.i
 
 .lr.ph.preheader.i:                               ; preds = %bb.q
-  %4 = shl nuw nsw i64 %indvar, 6
-  %scevgep132 = getelementptr i8, ptr %i.a, i64 %4
-  %invariant.gep.i = getelementptr [4 x i8], ptr %i.a, i64 %indvars.iv852.i ; 2 uses
-  %load_initial = load float, ptr %scevgep132, align 16
+  %invariant.gep.i = getelementptr [4 x i8], ptr %i.a, i64 %indvars.iv852.i ; 3 uses
+  %load_initial = load float, ptr %invariant.gep.i, align 16
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i, %.lr.ph.preheader.i

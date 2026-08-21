@@ -204,7 +204,7 @@ _ZNKSt6vectorISt4pairImN7rocksdb14TrackedTrxInfoEESaIS3_EE12_M_check_lenEmPKc.ex
   %.not.i = icmp ne i64 %i.l, 0
   tail call void @llvm.assume(i1 %.not.i)
   %i.o = mul nuw nsw i64 %i.l, 152                ; 2 uses
-  %i.p = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.o) #29 ; 7 uses
+  %i.p = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.o) #29 ; 6 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 %i.n ; 2 uses
   %i.r = load i64, ptr %2, align 8, !tbaa !406
   store i64 %i.r, ptr %i.q, align 8, !tbaa !406
@@ -218,17 +218,13 @@ _ZNSt16allocator_traitsISaISt4pairImN7rocksdb14TrackedTrxInfoEEEE9constructIS3_J
   br i1 %.not10.i.i.i, label %_ZNSt6vectorISt4pairImN7rocksdb14TrackedTrxInfoEESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %_ZNSt16allocator_traitsISaISt4pairImN7rocksdb14TrackedTrxInfoEEEE9constructIS3_JRKS3_EEEvRS4_PT_DpOT0_.exit, %_ZSt19__relocate_object_aISt4pairImN7rocksdb14TrackedTrxInfoEES3_SaIS3_EEvPT_PT0_RT1_.exit.i.i.i
-  %indvar = phi i64 [ %indvar.next, %_ZSt19__relocate_object_aISt4pairImN7rocksdb14TrackedTrxInfoEES3_SaIS3_EEvPT_PT0_RT1_.exit.i.i.i ], [ 0, %_ZNSt16allocator_traitsISaISt4pairImN7rocksdb14TrackedTrxInfoEEEE9constructIS3_JRKS3_EEEvRS4_PT_DpOT0_.exit ] ; 2 uses
   %.012.i.i.i = phi ptr [ %i.cz, %_ZSt19__relocate_object_aISt4pairImN7rocksdb14TrackedTrxInfoEES3_SaIS3_EEvPT_PT0_RT1_.exit.i.i.i ], [ %i.p, %_ZNSt16allocator_traitsISaISt4pairImN7rocksdb14TrackedTrxInfoEEEE9constructIS3_JRKS3_EEEvRS4_PT_DpOT0_.exit ] ; 10 uses
   %.0911.i.i.i = phi ptr [ %i.cy, %_ZSt19__relocate_object_aISt4pairImN7rocksdb14TrackedTrxInfoEES3_SaIS3_EEvPT_PT0_RT1_.exit.i.i.i ], [ %i.c, %_ZNSt16allocator_traitsISaISt4pairImN7rocksdb14TrackedTrxInfoEEEE9constructIS3_JRKS3_EEEvRS4_PT_DpOT0_.exit ] ; 12 uses
-  %3 = mul nuw i64 %indvar, 152
-  %4 = getelementptr i8, ptr %i.p, i64 %3
-  %scevgep = getelementptr i8, ptr %4, i64 16     ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !771)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !774)
   %i.u = getelementptr inbounds nuw i8, ptr %.0911.i.i.i, i64 8 ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %.012.i.i.i, i64 88
-  %i.w = getelementptr inbounds nuw i8, ptr %.012.i.i.i, i64 16 ; 12 uses
+  %i.w = getelementptr i8, ptr %.012.i.i.i, i64 16 ; 14 uses
   %i.x = getelementptr inbounds nuw i8, ptr %.012.i.i.i, i64 80
   store ptr %i.w, ptr %i.x, align 8, !tbaa !304, !alias.scope !771, !noalias !774
   %i.y = getelementptr inbounds nuw i8, ptr %.0911.i.i.i, i64 88 ; 2 uses
@@ -254,9 +250,9 @@ iter.check:                                       ; preds = %.lr.ph.i.i.i
 
 vector.memcheck:                                  ; preds = %iter.check
   %i.ah = shl i64 %i.ad, 3                        ; 2 uses
-  %scevgep67.a = getelementptr i8, ptr %scevgep, i64 %i.ah
+  %scevgep67.a = getelementptr i8, ptr %i.w, i64 %i.ah
   %scevgep68 = getelementptr i8, ptr %i.ag, i64 %i.ah
-  %bound0 = icmp ult ptr %scevgep, %scevgep68
+  %bound0 = icmp ult ptr %i.w, %scevgep68
   %bound1 = icmp ult ptr %i.ag, %scevgep67.a
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
@@ -444,27 +440,22 @@ _ZSt19__relocate_object_aISt4pairImN7rocksdb14TrackedTrxInfoEES3_SaIS3_EEvPT_PT0
   %i.cy = getelementptr inbounds nuw i8, ptr %.0911.i.i.i, i64 152 ; 2 uses
   %i.cz = getelementptr inbounds nuw i8, ptr %.012.i.i.i, i64 152 ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.cy, %1
-  %indvar.next = add i64 %indvar, 1
   br i1 %.not.i.i.i, label %_ZNSt6vectorISt4pairImN7rocksdb14TrackedTrxInfoEESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit, label %.lr.ph.i.i.i, !llvm.loop !787
 
 _ZNSt6vectorISt4pairImN7rocksdb14TrackedTrxInfoEESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit: ; preds = %_ZSt19__relocate_object_aISt4pairImN7rocksdb14TrackedTrxInfoEES3_SaIS3_EEvPT_PT0_RT1_.exit.i.i.i, %_ZNSt16allocator_traitsISaISt4pairImN7rocksdb14TrackedTrxInfoEEEE9constructIS3_JRKS3_EEEvRS4_PT_DpOT0_.exit
-  %.0.lcssa.i.i.i = phi ptr [ %i.p, %_ZNSt16allocator_traitsISaISt4pairImN7rocksdb14TrackedTrxInfoEEEE9constructIS3_JRKS3_EEEvRS4_PT_DpOT0_.exit ], [ %i.cz, %_ZSt19__relocate_object_aISt4pairImN7rocksdb14TrackedTrxInfoEES3_SaIS3_EEvPT_PT0_RT1_.exit.i.i.i ] ; 2 uses
+  %.0.lcssa.i.i.i = phi ptr [ %i.p, %_ZNSt16allocator_traitsISaISt4pairImN7rocksdb14TrackedTrxInfoEEEE9constructIS3_JRKS3_EEEvRS4_PT_DpOT0_.exit ], [ %i.cz, %_ZSt19__relocate_object_aISt4pairImN7rocksdb14TrackedTrxInfoEES3_SaIS3_EEvPT_PT0_RT1_.exit.i.i.i ]
   %i.da = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i, i64 152 ; 2 uses
   %.not10.i.i.i26 = icmp eq ptr %1, %i.b
   br i1 %.not10.i.i.i26, label %_ZNSt6vectorISt4pairImN7rocksdb14TrackedTrxInfoEESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit41, label %.lr.ph.i.i.i27
 
 .lr.ph.i.i.i27:                                   ; preds = %_ZNSt6vectorISt4pairImN7rocksdb14TrackedTrxInfoEESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit, %_ZSt19__relocate_object_aISt4pairImN7rocksdb14TrackedTrxInfoEES3_SaIS3_EEvPT_PT0_RT1_.exit.i.i.i38
-  %indvar79 = phi i64 [ %indvar.next80, %_ZSt19__relocate_object_aISt4pairImN7rocksdb14TrackedTrxInfoEES3_SaIS3_EEvPT_PT0_RT1_.exit.i.i.i38 ], [ 0, %_ZNSt6vectorISt4pairImN7rocksdb14TrackedTrxInfoEESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit ] ; 2 uses
   %.012.i.i.i28 = phi ptr [ %i.gg, %_ZSt19__relocate_object_aISt4pairImN7rocksdb14TrackedTrxInfoEES3_SaIS3_EEvPT_PT0_RT1_.exit.i.i.i38 ], [ %i.da, %_ZNSt6vectorISt4pairImN7rocksdb14TrackedTrxInfoEESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit ] ; 10 uses
   %.0911.i.i.i29 = phi ptr [ %i.gf, %_ZSt19__relocate_object_aISt4pairImN7rocksdb14TrackedTrxInfoEES3_SaIS3_EEvPT_PT0_RT1_.exit.i.i.i38 ], [ %1, %_ZNSt6vectorISt4pairImN7rocksdb14TrackedTrxInfoEESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit ] ; 12 uses
-  %5 = mul nuw i64 %indvar79, 152
-  %6 = getelementptr i8, ptr %.0.lcssa.i.i.i, i64 %5
-  %scevgep81 = getelementptr i8, ptr %6, i64 168  ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !788)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !791)
   %i.db = getelementptr inbounds nuw i8, ptr %.0911.i.i.i29, i64 8 ; 2 uses
   %i.dc = getelementptr inbounds nuw i8, ptr %.012.i.i.i28, i64 88
-  %i.dd = getelementptr inbounds nuw i8, ptr %.012.i.i.i28, i64 16 ; 12 uses
+  %i.dd = getelementptr i8, ptr %.012.i.i.i28, i64 16 ; 14 uses
   %i.de = getelementptr inbounds nuw i8, ptr %.012.i.i.i28, i64 80
   store ptr %i.dd, ptr %i.de, align 8, !tbaa !304, !alias.scope !788, !noalias !791
   %i.df = getelementptr inbounds nuw i8, ptr %.0911.i.i.i29, i64 88 ; 2 uses
@@ -490,9 +481,9 @@ iter.check102:                                    ; preds = %.lr.ph.i.i.i27
 
 vector.memcheck78:                                ; preds = %iter.check102
   %i.do = shl i64 %i.dk, 3                        ; 2 uses
-  %scevgep82 = getelementptr i8, ptr %scevgep81, i64 %i.do
+  %scevgep82 = getelementptr i8, ptr %i.dd, i64 %i.do
   %scevgep83 = getelementptr i8, ptr %i.dn, i64 %i.do
-  %bound084 = icmp ult ptr %scevgep81, %scevgep83
+  %bound084 = icmp ult ptr %i.dd, %scevgep83
   %bound185 = icmp ult ptr %i.dn, %scevgep82
   %found.conflict86 = and i1 %bound084, %bound185
   br i1 %found.conflict86, label %vec.epilog.scalar.ph103.preheader, label %vector.main.loop.iter.check88
@@ -680,7 +671,6 @@ _ZSt19__relocate_object_aISt4pairImN7rocksdb14TrackedTrxInfoEES3_SaIS3_EEvPT_PT0
   %i.gf = getelementptr inbounds nuw i8, ptr %.0911.i.i.i29, i64 152 ; 2 uses
   %i.gg = getelementptr inbounds nuw i8, ptr %.012.i.i.i28, i64 152 ; 2 uses
   %.not.i.i.i39 = icmp eq ptr %i.gf, %i.b
-  %indvar.next80 = add i64 %indvar79, 1
   br i1 %.not.i.i.i39, label %_ZNSt6vectorISt4pairImN7rocksdb14TrackedTrxInfoEESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit41, label %.lr.ph.i.i.i27, !llvm.loop !787
 
 _ZNSt6vectorISt4pairImN7rocksdb14TrackedTrxInfoEESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit41: ; preds = %_ZSt19__relocate_object_aISt4pairImN7rocksdb14TrackedTrxInfoEES3_SaIS3_EEvPT_PT0_RT1_.exit.i.i.i38, %_ZNSt6vectorISt4pairImN7rocksdb14TrackedTrxInfoEESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit

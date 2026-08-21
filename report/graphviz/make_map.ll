@@ -204,16 +204,14 @@ bb.cv:                                            ; preds = %bb.cu
   %niter1395 = phi i64 [ 0, %.preheader.preheader.i.new ], [ %niter1395.next.1, %.preheader.i528 ]
   %i.afy = shl nuw nsw i64 %indvar.i, 4
   %scevgep.i = getelementptr nuw i8, ptr %i.afs, i64 %i.afy
-  %18 = shl nuw nsw i64 %indvar.i, 5
-  %19 = getelementptr nuw i8, ptr %i.yr, i64 %18
-  %scevgep204.i = getelementptr nuw i8, ptr %19, i64 16
+  %18 = getelementptr inbounds nuw [32 x i8], ptr %i.yr, i64 %indvar.i
+  %scevgep204.i = getelementptr inbounds nuw i8, ptr %18, i64 16
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %scevgep.i, ptr noundef nonnull readonly align 8 dereferenceable(16) %scevgep204.i, i64 16, i1 false), !tbaa !22
   %indvar.next.i = or disjoint i64 %indvar.i, 1   ; 2 uses
   %i.afz = shl nuw nsw i64 %indvar.next.i, 4
   %scevgep.i.1 = getelementptr nuw i8, ptr %i.afs, i64 %i.afz
-  %20 = shl nuw nsw i64 %indvar.next.i, 5
-  %21 = getelementptr nuw i8, ptr %i.yr, i64 %20
-  %scevgep204.i.1 = getelementptr nuw i8, ptr %21, i64 16
+  %19 = getelementptr inbounds nuw [32 x i8], ptr %i.yr, i64 %indvar.next.i
+  %scevgep204.i.1 = getelementptr inbounds nuw i8, ptr %19, i64 16
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %scevgep.i.1, ptr noundef nonnull readonly align 8 dereferenceable(16) %scevgep204.i.1, i64 16, i1 false), !tbaa !22
   %indvar.next.i.1 = add nuw nsw i64 %indvar.i, 2 ; 2 uses
   %niter1395.next.1 = add i64 %niter1395, 2       ; 2 uses
@@ -230,9 +228,8 @@ bb.cv:                                            ; preds = %bb.cu
   call void @llvm.assume(i1 %lcmp.mod1393)
   %i.aga = shl nuw nsw i64 %indvar.i.epil.init, 4
   %scevgep.i.epil = getelementptr nuw i8, ptr %i.afs, i64 %i.aga
-  %22 = shl nuw nsw i64 %indvar.i.epil.init, 5
-  %23 = getelementptr nuw i8, ptr %i.yr, i64 %22
-  %scevgep204.i.epil = getelementptr nuw i8, ptr %23, i64 16
+  %20 = getelementptr inbounds nuw [32 x i8], ptr %i.yr, i64 %indvar.i.epil.init
+  %scevgep204.i.epil = getelementptr inbounds nuw i8, ptr %20, i64 16
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %scevgep.i.epil, ptr noundef nonnull readonly align 8 dereferenceable(16) %scevgep204.i.epil, i64 16, i1 false), !tbaa !22
   br label %bb.cw
 

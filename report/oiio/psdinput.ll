@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   br i1 %.not100, label %_ZN11OpenImageIO4v3_113byteswap_spanIjEEvNS0_4spanIT_Lm18446744073709551615EEE.exit, label %.preheader.lr.ph
 
 .preheader.lr.ph:                                 ; preds = %.preheader78
-  %i.q = zext i32 %5 to i64                       ; 3 uses
+  %i.q = zext i32 %5 to i64                       ; 2 uses
   %i.r = icmp ugt i32 %5, 1
   br i1 %i.r, label %.preheader.preheader, label %_ZN11OpenImageIO4v3_113byteswap_spanIjEEvNS0_4spanIT_Lm18446744073709551615EEE.exit
 
@@ -219,12 +219,10 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.preheader, %._crit_edge96
-  %.05197 = phi i64 [ %i.z, %._crit_edge96 ], [ 0, %.preheader.preheader ] ; 3 uses
-  %7 = mul i64 %.05197, %i.q
-  %scevgep = getelementptr i8, ptr %3, i64 %7
+  %.05197 = phi i64 [ %i.z, %._crit_edge96 ], [ 0, %.preheader.preheader ] ; 2 uses
   %i.v = mul nuw i64 %.05197, %i.q
-  %invariant.gep117 = getelementptr i8, ptr %3, i64 %i.v ; 5 uses
-  %load_initial = load i8, ptr %scevgep, align 1  ; 2 uses
+  %invariant.gep117 = getelementptr i8, ptr %3, i64 %i.v ; 6 uses
+  %load_initial = load i8, ptr %invariant.gep117, align 1 ; 2 uses
   br i1 %i.u, label %.epil.preheader149, label %.preheader.new
 
 ._crit_edge96.unr-lcssa:                          ; preds = %.preheader.new
@@ -361,12 +359,11 @@ _ZN11OpenImageIO4v3_113byteswap_spanItEEvNS0_4spanIT_Lm18446744073709551615EEE.e
   br i1 %.not99, label %_ZN11OpenImageIO4v3_113byteswap_spanIjEEvNS0_4spanIT_Lm18446744073709551615EEE.exit, label %.preheader79.lr.ph
 
 .preheader79.lr.ph:                               ; preds = %_ZN11OpenImageIO4v3_113byteswap_spanItEEvNS0_4spanIT_Lm18446744073709551615EEE.exit
-  %i.bb = zext i32 %5 to i64                      ; 3 uses
+  %i.bb = zext i32 %5 to i64                      ; 2 uses
   %i.bc = icmp ugt i32 %5, 1
   br i1 %i.bc, label %.preheader79.preheader, label %_ZN11OpenImageIO4v3_113byteswap_spanIjEEvNS0_4spanIT_Lm18446744073709551615EEE.exit
 
 .preheader79.preheader:                           ; preds = %.preheader79.lr.ph
-  %8 = shl nuw nsw i64 %i.bb, 1
   %i.bd = add nsw i64 %i.bb, -1                   ; 2 uses
   %xtraiter146 = and i64 %i.bd, 3                 ; 3 uses
   %i.be = add i32 %5, -2
@@ -377,12 +374,10 @@ _ZN11OpenImageIO4v3_113byteswap_spanItEEvNS0_4spanIT_Lm18446744073709551615EEE.e
   br label %.preheader79
 
 .preheader79:                                     ; preds = %.preheader79.preheader, %._crit_edge93
-  %.05694 = phi i64 [ %i.bk, %._crit_edge93 ], [ 0, %.preheader79.preheader ] ; 3 uses
-  %9 = mul i64 %8, %.05694
-  %scevgep140 = getelementptr i8, ptr %3, i64 %9
+  %.05694 = phi i64 [ %i.bk, %._crit_edge93 ], [ 0, %.preheader79.preheader ] ; 2 uses
   %i.bg = mul nuw i64 %.05694, %i.bb
-  %invariant.gep = getelementptr [2 x i8], ptr %3, i64 %i.bg ; 5 uses
-  %load_initial141 = load i16, ptr %scevgep140, align 2 ; 2 uses
+  %invariant.gep = getelementptr [2 x i8], ptr %3, i64 %i.bg ; 6 uses
+  %load_initial141 = load i16, ptr %invariant.gep, align 2 ; 2 uses
   br i1 %i.bf, label %.epil.preheader, label %.preheader79.new
 
 ._crit_edge93.unr-lcssa:                          ; preds = %.preheader79.new

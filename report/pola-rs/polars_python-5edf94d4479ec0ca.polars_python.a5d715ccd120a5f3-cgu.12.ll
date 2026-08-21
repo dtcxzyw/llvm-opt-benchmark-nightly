@@ -204,13 +204,11 @@ _RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShor
   br i1 %.not, label %._crit_edge227, label %.lr.ph226.split, !dbg !153191
 
 .split213:                                        ; preds = %_RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShortCircuitNtNvMs0_NtNtCs1LHh8CLbVkQ_11polars_core13chunked_array7ndarrayNtNtNtB1z_5frame9dataframe9DataFrame10to_ndarray6CursorEKj40_INtBJ_7WrappedB1n_jNCNCIB1p_NtNtB1z_9datatypes10UInt16TypeEs2_00EECseeLknQCOKOd_13polars_python.exit, %.loopexit105
-  %indvars.iv342 = phi i64 [ %i.s, %_RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShortCircuitNtNvMs0_NtNtCs1LHh8CLbVkQ_11polars_core13chunked_array7ndarrayNtNtNtB1z_5frame9dataframe9DataFrame10to_ndarray6CursorEKj40_INtBJ_7WrappedB1n_jNCNCIB1p_NtNtB1z_9datatypes10UInt16TypeEs2_00EECseeLknQCOKOd_13polars_python.exit ], [ %indvars.iv.next343, %.loopexit105 ] ; 4 uses
+  %indvars.iv342 = phi i64 [ %i.s, %_RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShortCircuitNtNvMs0_NtNtCs1LHh8CLbVkQ_11polars_core13chunked_array7ndarrayNtNtNtB1z_5frame9dataframe9DataFrame10to_ndarray6CursorEKj40_INtBJ_7WrappedB1n_jNCNCIB1p_NtNtB1z_9datatypes10UInt16TypeEs2_00EECseeLknQCOKOd_13polars_python.exit ], [ %indvars.iv.next343, %.loopexit105 ] ; 3 uses
   %.sroa.045.0220 = phi i64 [ %.sroa.05.0.i.i86, %_RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShortCircuitNtNvMs0_NtNtCs1LHh8CLbVkQ_11polars_core13chunked_array7ndarrayNtNtNtB1z_5frame9dataframe9DataFrame10to_ndarray6CursorEKj40_INtBJ_7WrappedB1n_jNCNCIB1p_NtNtB1z_9datatypes10UInt16TypeEs2_00EECseeLknQCOKOd_13polars_python.exit ], [ %i.df, %.loopexit105 ]
   %.sroa.026.0219 = phi i64 [ 0, %_RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShortCircuitNtNvMs0_NtNtCs1LHh8CLbVkQ_11polars_core13chunked_array7ndarrayNtNtNtB1z_5frame9dataframe9DataFrame10to_ndarray6CursorEKj40_INtBJ_7WrappedB1n_jNCNCIB1p_NtNtB1z_9datatypes10UInt16TypeEs2_00EECseeLknQCOKOd_13polars_python.exit ], [ %i.de, %.loopexit105 ] ; 5 uses
-  %umax623 = call i64 @llvm.umax.i64(i64 %indvars.iv342, i64 1), !dbg !153292
-  %umin = call i64 @llvm.umin.i64(i64 %umax623, i64 32), !dbg !153292 ; 3 uses
   %i.dd = call i64 @llvm.umax.i64(i64 %indvars.iv342, i64 1), !dbg !153292
-  %umax354 = call i64 @llvm.umin.i64(i64 %i.dd, i64 32), !dbg !153292 ; 2 uses
+  %umax354 = call i64 @llvm.umin.i64(i64 %i.dd, i64 32), !dbg !153292 ; 5 uses
   %i.de = add i64 %.sroa.026.0219, 32, !dbg !153292
   %i.df = add i64 %.sroa.045.0220, -1, !dbg !153296 ; 2 uses
   %i.dg = load i64, ptr %i.k, align 8, !dbg !153297, !noundef !11
@@ -230,11 +228,11 @@ _RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShor
   %i.dn = add i64 %i.dh, %.sroa.0.0.i87
   %i.do = icmp ne i64 %i.s, %.sroa.026.0219
   %.not229 = icmp eq i64 %i.s, %.sroa.026.0219    ; 2 uses
-  %xtraiter624 = and i64 %umin, 1
+  %xtraiter624 = and i64 %umax354, 1
   %i.dp = icmp ult i64 %indvars.iv342, 2
-  %unroll_iter627 = and i64 %umin, 62
+  %unroll_iter627 = and i64 %umax354, 62
   %lcmp.mod625.not = icmp eq i64 %xtraiter624, 0
-  %lcmp.mod626 = trunc i64 %umin to i1
+  %lcmp.mod626 = trunc i64 %umax354 to i1
   br label %.split, !dbg !153302
 
 .split:                                           ; preds = %.lr.ph217, %._crit_edge212
@@ -637,13 +635,11 @@ _RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShor
   br i1 %.not, label %._crit_edge227, label %.lr.ph226.split, !dbg !153853
 
 .split213:                                        ; preds = %_RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShortCircuitNtNvMs0_NtNtCs1LHh8CLbVkQ_11polars_core13chunked_array7ndarrayNtNtNtB1z_5frame9dataframe9DataFrame10to_ndarray6CursorEKj40_INtBJ_7WrappedB1n_jNCNCIB1p_NtNtB1z_9datatypes10UInt32TypeEs2_00EECseeLknQCOKOd_13polars_python.exit, %.loopexit105
-  %indvars.iv342 = phi i64 [ %i.s, %_RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShortCircuitNtNvMs0_NtNtCs1LHh8CLbVkQ_11polars_core13chunked_array7ndarrayNtNtNtB1z_5frame9dataframe9DataFrame10to_ndarray6CursorEKj40_INtBJ_7WrappedB1n_jNCNCIB1p_NtNtB1z_9datatypes10UInt32TypeEs2_00EECseeLknQCOKOd_13polars_python.exit ], [ %indvars.iv.next343, %.loopexit105 ] ; 4 uses
+  %indvars.iv342 = phi i64 [ %i.s, %_RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShortCircuitNtNvMs0_NtNtCs1LHh8CLbVkQ_11polars_core13chunked_array7ndarrayNtNtNtB1z_5frame9dataframe9DataFrame10to_ndarray6CursorEKj40_INtBJ_7WrappedB1n_jNCNCIB1p_NtNtB1z_9datatypes10UInt32TypeEs2_00EECseeLknQCOKOd_13polars_python.exit ], [ %indvars.iv.next343, %.loopexit105 ] ; 3 uses
   %.sroa.045.0220 = phi i64 [ %.sroa.05.0.i.i86, %_RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShortCircuitNtNvMs0_NtNtCs1LHh8CLbVkQ_11polars_core13chunked_array7ndarrayNtNtNtB1z_5frame9dataframe9DataFrame10to_ndarray6CursorEKj40_INtBJ_7WrappedB1n_jNCNCIB1p_NtNtB1z_9datatypes10UInt32TypeEs2_00EECseeLknQCOKOd_13polars_python.exit ], [ %i.df, %.loopexit105 ]
   %.sroa.026.0219 = phi i64 [ 0, %_RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShortCircuitNtNvMs0_NtNtCs1LHh8CLbVkQ_11polars_core13chunked_array7ndarrayNtNtNtB1z_5frame9dataframe9DataFrame10to_ndarray6CursorEKj40_INtBJ_7WrappedB1n_jNCNCIB1p_NtNtB1z_9datatypes10UInt32TypeEs2_00EECseeLknQCOKOd_13polars_python.exit ], [ %i.de, %.loopexit105 ] ; 5 uses
-  %umax623 = call i64 @llvm.umax.i64(i64 %indvars.iv342, i64 1), !dbg !153936
-  %umin = call i64 @llvm.umin.i64(i64 %umax623, i64 32), !dbg !153936 ; 3 uses
   %i.dd = call i64 @llvm.umax.i64(i64 %indvars.iv342, i64 1), !dbg !153936
-  %umax354 = call i64 @llvm.umin.i64(i64 %i.dd, i64 32), !dbg !153936 ; 2 uses
+  %umax354 = call i64 @llvm.umin.i64(i64 %i.dd, i64 32), !dbg !153936 ; 5 uses
   %i.de = add i64 %.sroa.026.0219, 32, !dbg !153936
   %i.df = add i64 %.sroa.045.0220, -1, !dbg !153940 ; 2 uses
   %i.dg = load i64, ptr %i.k, align 8, !dbg !153941, !noundef !11
@@ -663,11 +659,11 @@ _RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShor
   %i.dn = add i64 %i.dh, %.sroa.0.0.i87
   %i.do = icmp ne i64 %i.s, %.sroa.026.0219
   %.not229 = icmp eq i64 %i.s, %.sroa.026.0219    ; 2 uses
-  %xtraiter624 = and i64 %umin, 1
+  %xtraiter624 = and i64 %umax354, 1
   %i.dp = icmp ult i64 %indvars.iv342, 2
-  %unroll_iter627 = and i64 %umin, 62
+  %unroll_iter627 = and i64 %umax354, 62
   %lcmp.mod625.not = icmp eq i64 %xtraiter624, 0
-  %lcmp.mod626 = trunc i64 %umin to i1
+  %lcmp.mod626 = trunc i64 %umax354 to i1
   br label %.split, !dbg !153946
 
 .split:                                           ; preds = %.lr.ph217, %._crit_edge212
@@ -1070,13 +1066,11 @@ _RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShor
   br i1 %.not, label %._crit_edge227, label %.lr.ph226.split, !dbg !154496
 
 .split213:                                        ; preds = %_RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShortCircuitNtNvMs0_NtNtCs1LHh8CLbVkQ_11polars_core13chunked_array7ndarrayNtNtNtB1z_5frame9dataframe9DataFrame10to_ndarray6CursorEKj40_INtBJ_7WrappedB1n_jNCNCIB1p_NtNtB1z_9datatypes10UInt64TypeEs2_00EECseeLknQCOKOd_13polars_python.exit, %.loopexit105
-  %indvars.iv342 = phi i64 [ %i.s, %_RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShortCircuitNtNvMs0_NtNtCs1LHh8CLbVkQ_11polars_core13chunked_array7ndarrayNtNtNtB1z_5frame9dataframe9DataFrame10to_ndarray6CursorEKj40_INtBJ_7WrappedB1n_jNCNCIB1p_NtNtB1z_9datatypes10UInt64TypeEs2_00EECseeLknQCOKOd_13polars_python.exit ], [ %indvars.iv.next343, %.loopexit105 ] ; 4 uses
+  %indvars.iv342 = phi i64 [ %i.s, %_RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShortCircuitNtNvMs0_NtNtCs1LHh8CLbVkQ_11polars_core13chunked_array7ndarrayNtNtNtB1z_5frame9dataframe9DataFrame10to_ndarray6CursorEKj40_INtBJ_7WrappedB1n_jNCNCIB1p_NtNtB1z_9datatypes10UInt64TypeEs2_00EECseeLknQCOKOd_13polars_python.exit ], [ %indvars.iv.next343, %.loopexit105 ] ; 3 uses
   %.sroa.045.0220 = phi i64 [ %.sroa.05.0.i.i86, %_RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShortCircuitNtNvMs0_NtNtCs1LHh8CLbVkQ_11polars_core13chunked_array7ndarrayNtNtNtB1z_5frame9dataframe9DataFrame10to_ndarray6CursorEKj40_INtBJ_7WrappedB1n_jNCNCIB1p_NtNtB1z_9datatypes10UInt64TypeEs2_00EECseeLknQCOKOd_13polars_python.exit ], [ %i.df, %.loopexit105 ]
   %.sroa.026.0219 = phi i64 [ 0, %_RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShortCircuitNtNvMs0_NtNtCs1LHh8CLbVkQ_11polars_core13chunked_array7ndarrayNtNtNtB1z_5frame9dataframe9DataFrame10to_ndarray6CursorEKj40_INtBJ_7WrappedB1n_jNCNCIB1p_NtNtB1z_9datatypes10UInt64TypeEs2_00EECseeLknQCOKOd_13polars_python.exit ], [ %i.de, %.loopexit105 ] ; 5 uses
-  %umax623 = call i64 @llvm.umax.i64(i64 %indvars.iv342, i64 1), !dbg !154579
-  %umin = call i64 @llvm.umin.i64(i64 %umax623, i64 32), !dbg !154579 ; 3 uses
   %i.dd = call i64 @llvm.umax.i64(i64 %indvars.iv342, i64 1), !dbg !154579
-  %umax354 = call i64 @llvm.umin.i64(i64 %i.dd, i64 32), !dbg !154579 ; 2 uses
+  %umax354 = call i64 @llvm.umin.i64(i64 %i.dd, i64 32), !dbg !154579 ; 5 uses
   %i.de = add i64 %.sroa.026.0219, 32, !dbg !154579
   %i.df = add i64 %.sroa.045.0220, -1, !dbg !154583 ; 2 uses
   %i.dg = load i64, ptr %i.k, align 8, !dbg !154584, !noundef !11
@@ -1096,11 +1090,11 @@ _RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShor
   %i.dn = add i64 %i.dh, %.sroa.0.0.i87
   %i.do = icmp ne i64 %i.s, %.sroa.026.0219
   %.not229 = icmp eq i64 %i.s, %.sroa.026.0219    ; 2 uses
-  %xtraiter624 = and i64 %umin, 1
+  %xtraiter624 = and i64 %umax354, 1
   %i.dp = icmp ult i64 %indvars.iv342, 2
-  %unroll_iter627 = and i64 %umin, 62
+  %unroll_iter627 = and i64 %umax354, 62
   %lcmp.mod625.not = icmp eq i64 %xtraiter624, 0
-  %lcmp.mod626 = trunc i64 %umin to i1
+  %lcmp.mod626 = trunc i64 %umax354 to i1
   br label %.split, !dbg !154589
 
 .split:                                           ; preds = %.lr.ph217, %._crit_edge212
@@ -1503,13 +1497,11 @@ _RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShor
   br i1 %.not, label %._crit_edge227, label %.lr.ph226.split, !dbg !155138
 
 .split213:                                        ; preds = %_RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShortCircuitNtNvMs0_NtNtCs1LHh8CLbVkQ_11polars_core13chunked_array7ndarrayNtNtNtB1z_5frame9dataframe9DataFrame10to_ndarray6CursorEKj40_INtBJ_7WrappedB1n_jNCNCIB1p_NtNtB1z_9datatypes11Float16TypeEs2_00EECseeLknQCOKOd_13polars_python.exit, %.loopexit105
-  %indvars.iv342 = phi i64 [ %i.s, %_RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShortCircuitNtNvMs0_NtNtCs1LHh8CLbVkQ_11polars_core13chunked_array7ndarrayNtNtNtB1z_5frame9dataframe9DataFrame10to_ndarray6CursorEKj40_INtBJ_7WrappedB1n_jNCNCIB1p_NtNtB1z_9datatypes11Float16TypeEs2_00EECseeLknQCOKOd_13polars_python.exit ], [ %indvars.iv.next343, %.loopexit105 ] ; 4 uses
+  %indvars.iv342 = phi i64 [ %i.s, %_RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShortCircuitNtNvMs0_NtNtCs1LHh8CLbVkQ_11polars_core13chunked_array7ndarrayNtNtNtB1z_5frame9dataframe9DataFrame10to_ndarray6CursorEKj40_INtBJ_7WrappedB1n_jNCNCIB1p_NtNtB1z_9datatypes11Float16TypeEs2_00EECseeLknQCOKOd_13polars_python.exit ], [ %indvars.iv.next343, %.loopexit105 ] ; 3 uses
   %.sroa.045.0220 = phi i64 [ %.sroa.05.0.i.i86, %_RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShortCircuitNtNvMs0_NtNtCs1LHh8CLbVkQ_11polars_core13chunked_array7ndarrayNtNtNtB1z_5frame9dataframe9DataFrame10to_ndarray6CursorEKj40_INtBJ_7WrappedB1n_jNCNCIB1p_NtNtB1z_9datatypes11Float16TypeEs2_00EECseeLknQCOKOd_13polars_python.exit ], [ %i.df, %.loopexit105 ]
   %.sroa.026.0219 = phi i64 [ 0, %_RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShortCircuitNtNvMs0_NtNtCs1LHh8CLbVkQ_11polars_core13chunked_array7ndarrayNtNtNtB1z_5frame9dataframe9DataFrame10to_ndarray6CursorEKj40_INtBJ_7WrappedB1n_jNCNCIB1p_NtNtB1z_9datatypes11Float16TypeEs2_00EECseeLknQCOKOd_13polars_python.exit ], [ %i.de, %.loopexit105 ] ; 5 uses
-  %umax623 = call i64 @llvm.umax.i64(i64 %indvars.iv342, i64 1), !dbg !155221
-  %umin = call i64 @llvm.umin.i64(i64 %umax623, i64 32), !dbg !155221 ; 3 uses
   %i.dd = call i64 @llvm.umax.i64(i64 %indvars.iv342, i64 1), !dbg !155221
-  %umax354 = call i64 @llvm.umin.i64(i64 %i.dd, i64 32), !dbg !155221 ; 2 uses
+  %umax354 = call i64 @llvm.umin.i64(i64 %i.dd, i64 32), !dbg !155221 ; 5 uses
   %i.de = add i64 %.sroa.026.0219, 32, !dbg !155221
   %i.df = add i64 %.sroa.045.0220, -1, !dbg !155225 ; 2 uses
   %i.dg = load i64, ptr %i.k, align 8, !dbg !155226, !noundef !11
@@ -1529,11 +1521,11 @@ _RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShor
   %i.dn = add i64 %i.dh, %.sroa.0.0.i87
   %i.do = icmp ne i64 %i.s, %.sroa.026.0219
   %.not229 = icmp eq i64 %i.s, %.sroa.026.0219    ; 2 uses
-  %xtraiter624 = and i64 %umin, 1
+  %xtraiter624 = and i64 %umax354, 1
   %i.dp = icmp ult i64 %indvars.iv342, 2
-  %unroll_iter627 = and i64 %umin, 62
+  %unroll_iter627 = and i64 %umax354, 62
   %lcmp.mod625.not = icmp eq i64 %xtraiter624, 0
-  %lcmp.mod626 = trunc i64 %umin to i1
+  %lcmp.mod626 = trunc i64 %umax354 to i1
   br label %.split, !dbg !155231
 
 .split:                                           ; preds = %.lr.ph217, %._crit_edge212
@@ -1936,13 +1928,11 @@ _RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShor
   br i1 %.not, label %._crit_edge227, label %.lr.ph226.split, !dbg !155780
 
 .split213:                                        ; preds = %_RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShortCircuitNtNvMs0_NtNtCs1LHh8CLbVkQ_11polars_core13chunked_array7ndarrayNtNtNtB1z_5frame9dataframe9DataFrame10to_ndarray6CursorEKj40_INtBJ_7WrappedB1n_jNCNCIB1p_NtNtB1z_9datatypes11Float32TypeEs2_00EECseeLknQCOKOd_13polars_python.exit, %.loopexit105
-  %indvars.iv342 = phi i64 [ %i.s, %_RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShortCircuitNtNvMs0_NtNtCs1LHh8CLbVkQ_11polars_core13chunked_array7ndarrayNtNtNtB1z_5frame9dataframe9DataFrame10to_ndarray6CursorEKj40_INtBJ_7WrappedB1n_jNCNCIB1p_NtNtB1z_9datatypes11Float32TypeEs2_00EECseeLknQCOKOd_13polars_python.exit ], [ %indvars.iv.next343, %.loopexit105 ] ; 4 uses
+  %indvars.iv342 = phi i64 [ %i.s, %_RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShortCircuitNtNvMs0_NtNtCs1LHh8CLbVkQ_11polars_core13chunked_array7ndarrayNtNtNtB1z_5frame9dataframe9DataFrame10to_ndarray6CursorEKj40_INtBJ_7WrappedB1n_jNCNCIB1p_NtNtB1z_9datatypes11Float32TypeEs2_00EECseeLknQCOKOd_13polars_python.exit ], [ %indvars.iv.next343, %.loopexit105 ] ; 3 uses
   %.sroa.045.0220 = phi i64 [ %.sroa.05.0.i.i86, %_RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShortCircuitNtNvMs0_NtNtCs1LHh8CLbVkQ_11polars_core13chunked_array7ndarrayNtNtNtB1z_5frame9dataframe9DataFrame10to_ndarray6CursorEKj40_INtBJ_7WrappedB1n_jNCNCIB1p_NtNtB1z_9datatypes11Float32TypeEs2_00EECseeLknQCOKOd_13polars_python.exit ], [ %i.df, %.loopexit105 ]
   %.sroa.026.0219 = phi i64 [ 0, %_RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShortCircuitNtNvMs0_NtNtCs1LHh8CLbVkQ_11polars_core13chunked_array7ndarrayNtNtNtB1z_5frame9dataframe9DataFrame10to_ndarray6CursorEKj40_INtBJ_7WrappedB1n_jNCNCIB1p_NtNtB1z_9datatypes11Float32TypeEs2_00EECseeLknQCOKOd_13polars_python.exit ], [ %i.de, %.loopexit105 ] ; 5 uses
-  %umax623 = call i64 @llvm.umax.i64(i64 %indvars.iv342, i64 1), !dbg !155863
-  %umin = call i64 @llvm.umin.i64(i64 %umax623, i64 32), !dbg !155863 ; 3 uses
   %i.dd = call i64 @llvm.umax.i64(i64 %indvars.iv342, i64 1), !dbg !155863
-  %umax354 = call i64 @llvm.umin.i64(i64 %i.dd, i64 32), !dbg !155863 ; 2 uses
+  %umax354 = call i64 @llvm.umin.i64(i64 %i.dd, i64 32), !dbg !155863 ; 5 uses
   %i.de = add i64 %.sroa.026.0219, 32, !dbg !155863
   %i.df = add i64 %.sroa.045.0220, -1, !dbg !155867 ; 2 uses
   %i.dg = load i64, ptr %i.k, align 8, !dbg !155868, !noundef !11
@@ -1962,11 +1952,11 @@ _RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShor
   %i.dn = add i64 %i.dh, %.sroa.0.0.i87
   %i.do = icmp ne i64 %i.s, %.sroa.026.0219
   %.not229 = icmp eq i64 %i.s, %.sroa.026.0219    ; 2 uses
-  %xtraiter624 = and i64 %umin, 1
+  %xtraiter624 = and i64 %umax354, 1
   %i.dp = icmp ult i64 %indvars.iv342, 2
-  %unroll_iter627 = and i64 %umin, 62
+  %unroll_iter627 = and i64 %umax354, 62
   %lcmp.mod625.not = icmp eq i64 %xtraiter624, 0
-  %lcmp.mod626 = trunc i64 %umin to i1
+  %lcmp.mod626 = trunc i64 %umax354 to i1
   br label %.split, !dbg !155873
 
 .split:                                           ; preds = %.lr.ph217, %._crit_edge212
@@ -2369,13 +2359,11 @@ _RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShor
   br i1 %.not, label %._crit_edge227, label %.lr.ph226.split, !dbg !156422
 
 .split213:                                        ; preds = %_RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShortCircuitNtNvMs0_NtNtCs1LHh8CLbVkQ_11polars_core13chunked_array7ndarrayNtNtNtB1z_5frame9dataframe9DataFrame10to_ndarray6CursorEKj40_INtBJ_7WrappedB1n_jNCNCIB1p_NtNtB1z_9datatypes11Float64TypeEs2_00EECseeLknQCOKOd_13polars_python.exit, %.loopexit105
-  %indvars.iv342 = phi i64 [ %i.s, %_RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShortCircuitNtNvMs0_NtNtCs1LHh8CLbVkQ_11polars_core13chunked_array7ndarrayNtNtNtB1z_5frame9dataframe9DataFrame10to_ndarray6CursorEKj40_INtBJ_7WrappedB1n_jNCNCIB1p_NtNtB1z_9datatypes11Float64TypeEs2_00EECseeLknQCOKOd_13polars_python.exit ], [ %indvars.iv.next343, %.loopexit105 ] ; 4 uses
+  %indvars.iv342 = phi i64 [ %i.s, %_RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShortCircuitNtNvMs0_NtNtCs1LHh8CLbVkQ_11polars_core13chunked_array7ndarrayNtNtNtB1z_5frame9dataframe9DataFrame10to_ndarray6CursorEKj40_INtBJ_7WrappedB1n_jNCNCIB1p_NtNtB1z_9datatypes11Float64TypeEs2_00EECseeLknQCOKOd_13polars_python.exit ], [ %indvars.iv.next343, %.loopexit105 ] ; 3 uses
   %.sroa.045.0220 = phi i64 [ %.sroa.05.0.i.i86, %_RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShortCircuitNtNvMs0_NtNtCs1LHh8CLbVkQ_11polars_core13chunked_array7ndarrayNtNtNtB1z_5frame9dataframe9DataFrame10to_ndarray6CursorEKj40_INtBJ_7WrappedB1n_jNCNCIB1p_NtNtB1z_9datatypes11Float64TypeEs2_00EECseeLknQCOKOd_13polars_python.exit ], [ %i.df, %.loopexit105 ]
   %.sroa.026.0219 = phi i64 [ 0, %_RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShortCircuitNtNvMs0_NtNtCs1LHh8CLbVkQ_11polars_core13chunked_array7ndarrayNtNtNtB1z_5frame9dataframe9DataFrame10to_ndarray6CursorEKj40_INtBJ_7WrappedB1n_jNCNCIB1p_NtNtB1z_9datatypes11Float64TypeEs2_00EECseeLknQCOKOd_13polars_python.exit ], [ %i.de, %.loopexit105 ] ; 5 uses
-  %umax623 = call i64 @llvm.umax.i64(i64 %indvars.iv342, i64 1), !dbg !156505
-  %umin = call i64 @llvm.umin.i64(i64 %umax623, i64 32), !dbg !156505 ; 3 uses
   %i.dd = call i64 @llvm.umax.i64(i64 %indvars.iv342, i64 1), !dbg !156505
-  %umax354 = call i64 @llvm.umin.i64(i64 %i.dd, i64 32), !dbg !156505 ; 2 uses
+  %umax354 = call i64 @llvm.umin.i64(i64 %i.dd, i64 32), !dbg !156505 ; 5 uses
   %i.de = add i64 %.sroa.026.0219, 32, !dbg !156505
   %i.df = add i64 %.sroa.045.0220, -1, !dbg !156509 ; 2 uses
   %i.dg = load i64, ptr %i.k, align 8, !dbg !156510, !noundef !11
@@ -2395,11 +2383,11 @@ _RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShor
   %i.dn = add i64 %i.dh, %.sroa.0.0.i87
   %i.do = icmp ne i64 %i.s, %.sroa.026.0219
   %.not229 = icmp eq i64 %i.s, %.sroa.026.0219    ; 2 uses
-  %xtraiter624 = and i64 %umin, 1
+  %xtraiter624 = and i64 %umax354, 1
   %i.dp = icmp ult i64 %indvars.iv342, 2
-  %unroll_iter627 = and i64 %umin, 62
+  %unroll_iter627 = and i64 %umax354, 62
   %lcmp.mod625.not = icmp eq i64 %xtraiter624, 0
-  %lcmp.mod626 = trunc i64 %umin to i1
+  %lcmp.mod626 = trunc i64 %umax354 to i1
   br label %.split, !dbg !156515
 
 .split:                                           ; preds = %.lr.ph217, %._crit_edge212
@@ -2802,13 +2790,11 @@ _RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShor
   br i1 %.not, label %._crit_edge226, label %.lr.ph225.split, !dbg !157064
 
 .split212:                                        ; preds = %_RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShortCircuitNtNvMs0_NtNtCs1LHh8CLbVkQ_11polars_core13chunked_array7ndarrayNtNtNtB1z_5frame9dataframe9DataFrame10to_ndarray6CursorEKj40_INtBJ_7WrappedB1n_jNCNCIB1p_NtNtB1z_9datatypes8Int8TypeEs2_00EECseeLknQCOKOd_13polars_python.exit, %.loopexit102
-  %indvars.iv341 = phi i64 [ %i.s, %_RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShortCircuitNtNvMs0_NtNtCs1LHh8CLbVkQ_11polars_core13chunked_array7ndarrayNtNtNtB1z_5frame9dataframe9DataFrame10to_ndarray6CursorEKj40_INtBJ_7WrappedB1n_jNCNCIB1p_NtNtB1z_9datatypes8Int8TypeEs2_00EECseeLknQCOKOd_13polars_python.exit ], [ %indvars.iv.next342, %.loopexit102 ] ; 4 uses
+  %indvars.iv341 = phi i64 [ %i.s, %_RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShortCircuitNtNvMs0_NtNtCs1LHh8CLbVkQ_11polars_core13chunked_array7ndarrayNtNtNtB1z_5frame9dataframe9DataFrame10to_ndarray6CursorEKj40_INtBJ_7WrappedB1n_jNCNCIB1p_NtNtB1z_9datatypes8Int8TypeEs2_00EECseeLknQCOKOd_13polars_python.exit ], [ %indvars.iv.next342, %.loopexit102 ] ; 3 uses
   %.sroa.045.0219 = phi i64 [ %.sroa.05.0.i.i84, %_RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShortCircuitNtNvMs0_NtNtCs1LHh8CLbVkQ_11polars_core13chunked_array7ndarrayNtNtNtB1z_5frame9dataframe9DataFrame10to_ndarray6CursorEKj40_INtBJ_7WrappedB1n_jNCNCIB1p_NtNtB1z_9datatypes8Int8TypeEs2_00EECseeLknQCOKOd_13polars_python.exit ], [ %i.df, %.loopexit102 ]
   %.sroa.026.0218 = phi i64 [ 0, %_RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShortCircuitNtNvMs0_NtNtCs1LHh8CLbVkQ_11polars_core13chunked_array7ndarrayNtNtNtB1z_5frame9dataframe9DataFrame10to_ndarray6CursorEKj40_INtBJ_7WrappedB1n_jNCNCIB1p_NtNtB1z_9datatypes8Int8TypeEs2_00EECseeLknQCOKOd_13polars_python.exit ], [ %i.de, %.loopexit102 ] ; 5 uses
-  %umax619 = call i64 @llvm.umax.i64(i64 %indvars.iv341, i64 1), !dbg !157147
-  %umin = call i64 @llvm.umin.i64(i64 %umax619, i64 32), !dbg !157147 ; 3 uses
   %i.dd = call i64 @llvm.umax.i64(i64 %indvars.iv341, i64 1), !dbg !157147
-  %umax353 = call i64 @llvm.umin.i64(i64 %i.dd, i64 32), !dbg !157147 ; 2 uses
+  %umax353 = call i64 @llvm.umin.i64(i64 %i.dd, i64 32), !dbg !157147 ; 5 uses
   %i.de = add i64 %.sroa.026.0218, 32, !dbg !157147
   %i.df = add i64 %.sroa.045.0219, -1, !dbg !157151 ; 2 uses
   %i.dg = load i64, ptr %i.k, align 8, !dbg !157152, !noundef !11
@@ -2828,11 +2814,11 @@ _RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShor
   %i.dn = add i64 %i.dh, %.sroa.0.0.i85
   %i.do = icmp ne i64 %i.s, %.sroa.026.0218
   %.not228 = icmp eq i64 %i.s, %.sroa.026.0218    ; 2 uses
-  %xtraiter620 = and i64 %umin, 1
+  %xtraiter620 = and i64 %umax353, 1
   %i.dp = icmp ult i64 %indvars.iv341, 2
-  %unroll_iter623 = and i64 %umin, 62
+  %unroll_iter623 = and i64 %umax353, 62
   %lcmp.mod621.not = icmp eq i64 %xtraiter620, 0
-  %lcmp.mod622 = trunc i64 %umin to i1
+  %lcmp.mod622 = trunc i64 %umax353 to i1
   br label %.split, !dbg !157157
 
 .split:                                           ; preds = %.lr.ph216, %._crit_edge211
@@ -3235,13 +3221,11 @@ _RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShor
   br i1 %.not, label %._crit_edge227, label %.lr.ph226.split, !dbg !157710
 
 .split213:                                        ; preds = %_RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShortCircuitNtNvMs0_NtNtCs1LHh8CLbVkQ_11polars_core13chunked_array7ndarrayNtNtNtB1z_5frame9dataframe9DataFrame10to_ndarray6CursorEKj40_INtBJ_7WrappedB1n_jNCNCIB1p_NtNtB1z_9datatypes9Int16TypeEs2_00EECseeLknQCOKOd_13polars_python.exit, %.loopexit105
-  %indvars.iv342 = phi i64 [ %i.s, %_RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShortCircuitNtNvMs0_NtNtCs1LHh8CLbVkQ_11polars_core13chunked_array7ndarrayNtNtNtB1z_5frame9dataframe9DataFrame10to_ndarray6CursorEKj40_INtBJ_7WrappedB1n_jNCNCIB1p_NtNtB1z_9datatypes9Int16TypeEs2_00EECseeLknQCOKOd_13polars_python.exit ], [ %indvars.iv.next343, %.loopexit105 ] ; 4 uses
+  %indvars.iv342 = phi i64 [ %i.s, %_RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShortCircuitNtNvMs0_NtNtCs1LHh8CLbVkQ_11polars_core13chunked_array7ndarrayNtNtNtB1z_5frame9dataframe9DataFrame10to_ndarray6CursorEKj40_INtBJ_7WrappedB1n_jNCNCIB1p_NtNtB1z_9datatypes9Int16TypeEs2_00EECseeLknQCOKOd_13polars_python.exit ], [ %indvars.iv.next343, %.loopexit105 ] ; 3 uses
   %.sroa.045.0220 = phi i64 [ %.sroa.05.0.i.i86, %_RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShortCircuitNtNvMs0_NtNtCs1LHh8CLbVkQ_11polars_core13chunked_array7ndarrayNtNtNtB1z_5frame9dataframe9DataFrame10to_ndarray6CursorEKj40_INtBJ_7WrappedB1n_jNCNCIB1p_NtNtB1z_9datatypes9Int16TypeEs2_00EECseeLknQCOKOd_13polars_python.exit ], [ %i.df, %.loopexit105 ]
   %.sroa.026.0219 = phi i64 [ 0, %_RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShortCircuitNtNvMs0_NtNtCs1LHh8CLbVkQ_11polars_core13chunked_array7ndarrayNtNtNtB1z_5frame9dataframe9DataFrame10to_ndarray6CursorEKj40_INtBJ_7WrappedB1n_jNCNCIB1p_NtNtB1z_9datatypes9Int16TypeEs2_00EECseeLknQCOKOd_13polars_python.exit ], [ %i.de, %.loopexit105 ] ; 5 uses
-  %umax623 = call i64 @llvm.umax.i64(i64 %indvars.iv342, i64 1), !dbg !157793
-  %umin = call i64 @llvm.umin.i64(i64 %umax623, i64 32), !dbg !157793 ; 3 uses
   %i.dd = call i64 @llvm.umax.i64(i64 %indvars.iv342, i64 1), !dbg !157793
-  %umax354 = call i64 @llvm.umin.i64(i64 %i.dd, i64 32), !dbg !157793 ; 2 uses
+  %umax354 = call i64 @llvm.umin.i64(i64 %i.dd, i64 32), !dbg !157793 ; 5 uses
   %i.de = add i64 %.sroa.026.0219, 32, !dbg !157793
   %i.df = add i64 %.sroa.045.0220, -1, !dbg !157797 ; 2 uses
   %i.dg = load i64, ptr %i.k, align 8, !dbg !157798, !noundef !11
@@ -3261,11 +3245,11 @@ _RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShor
   %i.dn = add i64 %i.dh, %.sroa.0.0.i87
   %i.do = icmp ne i64 %i.s, %.sroa.026.0219
   %.not229 = icmp eq i64 %i.s, %.sroa.026.0219    ; 2 uses
-  %xtraiter624 = and i64 %umin, 1
+  %xtraiter624 = and i64 %umax354, 1
   %i.dp = icmp ult i64 %indvars.iv342, 2
-  %unroll_iter627 = and i64 %umin, 62
+  %unroll_iter627 = and i64 %umax354, 62
   %lcmp.mod625.not = icmp eq i64 %xtraiter624, 0
-  %lcmp.mod626 = trunc i64 %umin to i1
+  %lcmp.mod626 = trunc i64 %umax354 to i1
   br label %.split, !dbg !157803
 
 .split:                                           ; preds = %.lr.ph217, %._crit_edge212
@@ -3668,13 +3652,11 @@ _RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShor
   br i1 %.not, label %._crit_edge227, label %.lr.ph226.split, !dbg !158352
 
 .split213:                                        ; preds = %_RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShortCircuitNtNvMs0_NtNtCs1LHh8CLbVkQ_11polars_core13chunked_array7ndarrayNtNtNtB1z_5frame9dataframe9DataFrame10to_ndarray6CursorEKj40_INtBJ_7WrappedB1n_jNCNCIB1p_NtNtB1z_9datatypes9Int32TypeEs2_00EECseeLknQCOKOd_13polars_python.exit, %.loopexit105
-  %indvars.iv342 = phi i64 [ %i.s, %_RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShortCircuitNtNvMs0_NtNtCs1LHh8CLbVkQ_11polars_core13chunked_array7ndarrayNtNtNtB1z_5frame9dataframe9DataFrame10to_ndarray6CursorEKj40_INtBJ_7WrappedB1n_jNCNCIB1p_NtNtB1z_9datatypes9Int32TypeEs2_00EECseeLknQCOKOd_13polars_python.exit ], [ %indvars.iv.next343, %.loopexit105 ] ; 4 uses
+  %indvars.iv342 = phi i64 [ %i.s, %_RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShortCircuitNtNvMs0_NtNtCs1LHh8CLbVkQ_11polars_core13chunked_array7ndarrayNtNtNtB1z_5frame9dataframe9DataFrame10to_ndarray6CursorEKj40_INtBJ_7WrappedB1n_jNCNCIB1p_NtNtB1z_9datatypes9Int32TypeEs2_00EECseeLknQCOKOd_13polars_python.exit ], [ %indvars.iv.next343, %.loopexit105 ] ; 3 uses
   %.sroa.045.0220 = phi i64 [ %.sroa.05.0.i.i86, %_RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShortCircuitNtNvMs0_NtNtCs1LHh8CLbVkQ_11polars_core13chunked_array7ndarrayNtNtNtB1z_5frame9dataframe9DataFrame10to_ndarray6CursorEKj40_INtBJ_7WrappedB1n_jNCNCIB1p_NtNtB1z_9datatypes9Int32TypeEs2_00EECseeLknQCOKOd_13polars_python.exit ], [ %i.df, %.loopexit105 ]
   %.sroa.026.0219 = phi i64 [ 0, %_RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShortCircuitNtNvMs0_NtNtCs1LHh8CLbVkQ_11polars_core13chunked_array7ndarrayNtNtNtB1z_5frame9dataframe9DataFrame10to_ndarray6CursorEKj40_INtBJ_7WrappedB1n_jNCNCIB1p_NtNtB1z_9datatypes9Int32TypeEs2_00EECseeLknQCOKOd_13polars_python.exit ], [ %i.de, %.loopexit105 ] ; 5 uses
-  %umax623 = call i64 @llvm.umax.i64(i64 %indvars.iv342, i64 1), !dbg !158435
-  %umin = call i64 @llvm.umin.i64(i64 %umax623, i64 32), !dbg !158435 ; 3 uses
   %i.dd = call i64 @llvm.umax.i64(i64 %indvars.iv342, i64 1), !dbg !158435
-  %umax354 = call i64 @llvm.umin.i64(i64 %i.dd, i64 32), !dbg !158435 ; 2 uses
+  %umax354 = call i64 @llvm.umin.i64(i64 %i.dd, i64 32), !dbg !158435 ; 5 uses
   %i.de = add i64 %.sroa.026.0219, 32, !dbg !158435
   %i.df = add i64 %.sroa.045.0220, -1, !dbg !158439 ; 2 uses
   %i.dg = load i64, ptr %i.k, align 8, !dbg !158440, !noundef !11
@@ -3694,11 +3676,11 @@ _RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShor
   %i.dn = add i64 %i.dh, %.sroa.0.0.i87
   %i.do = icmp ne i64 %i.s, %.sroa.026.0219
   %.not229 = icmp eq i64 %i.s, %.sroa.026.0219    ; 2 uses
-  %xtraiter624 = and i64 %umin, 1
+  %xtraiter624 = and i64 %umax354, 1
   %i.dp = icmp ult i64 %indvars.iv342, 2
-  %unroll_iter627 = and i64 %umin, 62
+  %unroll_iter627 = and i64 %umax354, 62
   %lcmp.mod625.not = icmp eq i64 %xtraiter624, 0
-  %lcmp.mod626 = trunc i64 %umin to i1
+  %lcmp.mod626 = trunc i64 %umax354 to i1
   br label %.split, !dbg !158445
 
 .split:                                           ; preds = %.lr.ph217, %._crit_edge212
@@ -4101,13 +4083,11 @@ _RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShor
   br i1 %.not, label %._crit_edge227, label %.lr.ph226.split, !dbg !158994
 
 .split213:                                        ; preds = %_RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShortCircuitNtNvMs0_NtNtCs1LHh8CLbVkQ_11polars_core13chunked_array7ndarrayNtNtNtB1z_5frame9dataframe9DataFrame10to_ndarray6CursorEKj40_INtBJ_7WrappedB1n_jNCNCIB1p_NtNtB1z_9datatypes9Int64TypeEs2_00EECseeLknQCOKOd_13polars_python.exit, %.loopexit105
-  %indvars.iv342 = phi i64 [ %i.s, %_RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShortCircuitNtNvMs0_NtNtCs1LHh8CLbVkQ_11polars_core13chunked_array7ndarrayNtNtNtB1z_5frame9dataframe9DataFrame10to_ndarray6CursorEKj40_INtBJ_7WrappedB1n_jNCNCIB1p_NtNtB1z_9datatypes9Int64TypeEs2_00EECseeLknQCOKOd_13polars_python.exit ], [ %indvars.iv.next343, %.loopexit105 ] ; 4 uses
+  %indvars.iv342 = phi i64 [ %i.s, %_RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShortCircuitNtNvMs0_NtNtCs1LHh8CLbVkQ_11polars_core13chunked_array7ndarrayNtNtNtB1z_5frame9dataframe9DataFrame10to_ndarray6CursorEKj40_INtBJ_7WrappedB1n_jNCNCIB1p_NtNtB1z_9datatypes9Int64TypeEs2_00EECseeLknQCOKOd_13polars_python.exit ], [ %indvars.iv.next343, %.loopexit105 ] ; 3 uses
   %.sroa.045.0220 = phi i64 [ %.sroa.05.0.i.i86, %_RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShortCircuitNtNvMs0_NtNtCs1LHh8CLbVkQ_11polars_core13chunked_array7ndarrayNtNtNtB1z_5frame9dataframe9DataFrame10to_ndarray6CursorEKj40_INtBJ_7WrappedB1n_jNCNCIB1p_NtNtB1z_9datatypes9Int64TypeEs2_00EECseeLknQCOKOd_13polars_python.exit ], [ %i.df, %.loopexit105 ]
   %.sroa.026.0219 = phi i64 [ 0, %_RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShortCircuitNtNvMs0_NtNtCs1LHh8CLbVkQ_11polars_core13chunked_array7ndarrayNtNtNtB1z_5frame9dataframe9DataFrame10to_ndarray6CursorEKj40_INtBJ_7WrappedB1n_jNCNCIB1p_NtNtB1z_9datatypes9Int64TypeEs2_00EECseeLknQCOKOd_13polars_python.exit ], [ %i.de, %.loopexit105 ] ; 5 uses
-  %umax623 = call i64 @llvm.umax.i64(i64 %indvars.iv342, i64 1), !dbg !159077
-  %umin = call i64 @llvm.umin.i64(i64 %umax623, i64 32), !dbg !159077 ; 3 uses
   %i.dd = call i64 @llvm.umax.i64(i64 %indvars.iv342, i64 1), !dbg !159077
-  %umax354 = call i64 @llvm.umin.i64(i64 %i.dd, i64 32), !dbg !159077 ; 2 uses
+  %umax354 = call i64 @llvm.umin.i64(i64 %i.dd, i64 32), !dbg !159077 ; 5 uses
   %i.de = add i64 %.sroa.026.0219, 32, !dbg !159077
   %i.df = add i64 %.sroa.045.0220, -1, !dbg !159081 ; 2 uses
   %i.dg = load i64, ptr %i.k, align 8, !dbg !159082, !noundef !11
@@ -4127,11 +4107,11 @@ _RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShor
   %i.dn = add i64 %i.dh, %.sroa.0.0.i87
   %i.do = icmp ne i64 %i.s, %.sroa.026.0219
   %.not229 = icmp eq i64 %i.s, %.sroa.026.0219    ; 2 uses
-  %xtraiter624 = and i64 %umin, 1
+  %xtraiter624 = and i64 %umax354, 1
   %i.dp = icmp ult i64 %indvars.iv342, 2
-  %unroll_iter627 = and i64 %umin, 62
+  %unroll_iter627 = and i64 %umax354, 62
   %lcmp.mod625.not = icmp eq i64 %xtraiter624, 0
-  %lcmp.mod626 = trunc i64 %umin to i1
+  %lcmp.mod626 = trunc i64 %umax354 to i1
   br label %.split, !dbg !159087
 
 .split:                                           ; preds = %.lr.ph217, %._crit_edge212
@@ -4534,13 +4514,11 @@ _RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShor
   br i1 %.not, label %._crit_edge226, label %.lr.ph225.split, !dbg !159636
 
 .split212:                                        ; preds = %_RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShortCircuitNtNvMs0_NtNtCs1LHh8CLbVkQ_11polars_core13chunked_array7ndarrayNtNtNtB1z_5frame9dataframe9DataFrame10to_ndarray6CursorEKj40_INtBJ_7WrappedB1n_jNCNCIB1p_NtNtB1z_9datatypes9UInt8TypeEs2_00EECseeLknQCOKOd_13polars_python.exit, %.loopexit102
-  %indvars.iv341 = phi i64 [ %i.s, %_RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShortCircuitNtNvMs0_NtNtCs1LHh8CLbVkQ_11polars_core13chunked_array7ndarrayNtNtNtB1z_5frame9dataframe9DataFrame10to_ndarray6CursorEKj40_INtBJ_7WrappedB1n_jNCNCIB1p_NtNtB1z_9datatypes9UInt8TypeEs2_00EECseeLknQCOKOd_13polars_python.exit ], [ %indvars.iv.next342, %.loopexit102 ] ; 4 uses
+  %indvars.iv341 = phi i64 [ %i.s, %_RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShortCircuitNtNvMs0_NtNtCs1LHh8CLbVkQ_11polars_core13chunked_array7ndarrayNtNtNtB1z_5frame9dataframe9DataFrame10to_ndarray6CursorEKj40_INtBJ_7WrappedB1n_jNCNCIB1p_NtNtB1z_9datatypes9UInt8TypeEs2_00EECseeLknQCOKOd_13polars_python.exit ], [ %indvars.iv.next342, %.loopexit102 ] ; 3 uses
   %.sroa.045.0219 = phi i64 [ %.sroa.05.0.i.i84, %_RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShortCircuitNtNvMs0_NtNtCs1LHh8CLbVkQ_11polars_core13chunked_array7ndarrayNtNtNtB1z_5frame9dataframe9DataFrame10to_ndarray6CursorEKj40_INtBJ_7WrappedB1n_jNCNCIB1p_NtNtB1z_9datatypes9UInt8TypeEs2_00EECseeLknQCOKOd_13polars_python.exit ], [ %i.df, %.loopexit102 ]
   %.sroa.026.0218 = phi i64 [ 0, %_RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShortCircuitNtNvMs0_NtNtCs1LHh8CLbVkQ_11polars_core13chunked_array7ndarrayNtNtNtB1z_5frame9dataframe9DataFrame10to_ndarray6CursorEKj40_INtBJ_7WrappedB1n_jNCNCIB1p_NtNtB1z_9datatypes9UInt8TypeEs2_00EECseeLknQCOKOd_13polars_python.exit ], [ %i.de, %.loopexit102 ] ; 5 uses
-  %umax619 = call i64 @llvm.umax.i64(i64 %indvars.iv341, i64 1), !dbg !159719
-  %umin = call i64 @llvm.umin.i64(i64 %umax619, i64 32), !dbg !159719 ; 3 uses
   %i.dd = call i64 @llvm.umax.i64(i64 %indvars.iv341, i64 1), !dbg !159719
-  %umax353 = call i64 @llvm.umin.i64(i64 %i.dd, i64 32), !dbg !159719 ; 2 uses
+  %umax353 = call i64 @llvm.umin.i64(i64 %i.dd, i64 32), !dbg !159719 ; 5 uses
   %i.de = add i64 %.sroa.026.0218, 32, !dbg !159719
   %i.df = add i64 %.sroa.045.0219, -1, !dbg !159723 ; 2 uses
   %i.dg = load i64, ptr %i.k, align 8, !dbg !159724, !noundef !11
@@ -4560,11 +4538,11 @@ _RINvNtCscgRAwXFJnXP_4core5array11try_from_fnINtNtNtB4_3ops9try_trait17NeverShor
   %i.dn = add i64 %i.dh, %.sroa.0.0.i85
   %i.do = icmp ne i64 %i.s, %.sroa.026.0218
   %.not228 = icmp eq i64 %i.s, %.sroa.026.0218    ; 2 uses
-  %xtraiter620 = and i64 %umin, 1
+  %xtraiter620 = and i64 %umax353, 1
   %i.dp = icmp ult i64 %indvars.iv341, 2
-  %unroll_iter623 = and i64 %umin, 62
+  %unroll_iter623 = and i64 %umax353, 62
   %lcmp.mod621.not = icmp eq i64 %xtraiter620, 0
-  %lcmp.mod622 = trunc i64 %umin to i1
+  %lcmp.mod622 = trunc i64 %umax353 to i1
   br label %.split, !dbg !159729
 
 .split:                                           ; preds = %.lr.ph216, %._crit_edge211

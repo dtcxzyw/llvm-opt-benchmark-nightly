@@ -201,7 +201,7 @@ bb.ad:                                            ; preds = %bb.ac
   %i.ci = trunc nsw i64 %indvars.iv to i32        ; 3 uses
   store i32 %i.ci, ptr @optind, align 4, !tbaa !12
   %i.cj = tail call i32 @my_getopt(i32 noundef %0, ptr noundef nonnull %1, ptr noundef %2) ; 2 uses
-  %optind.promoted = load i32, ptr @optind, align 4 ; 6 uses
+  %optind.promoted = load i32, ptr @optind, align 4 ; 5 uses
   %i.ck = icmp slt i32 %i.k, %i.ci
   br i1 %i.ck, label %.lr.ph126.preheader, label %.loopexit
 
@@ -233,11 +233,10 @@ bb.ad:                                            ; preds = %bb.ac
   br label %.lr.ph126
 
 .lr.ph126:                                        ; preds = %.lr.ph126.preheader, %._crit_edge122
-  %indvar182 = phi i64 [ 0, %.lr.ph126.preheader ], [ %indvar.next183, %._crit_edge122 ] ; 5 uses
+  %indvar182 = phi i64 [ 0, %.lr.ph126.preheader ], [ %indvar.next183, %._crit_edge122 ] ; 4 uses
   %indvar178 = phi i35 [ 0, %.lr.ph126.preheader ], [ %indvar.next179, %._crit_edge122 ] ; 2 uses
   %indvars.iv143 = phi i64 [ %i.cl, %.lr.ph126.preheader ], [ %indvars.iv.next144, %._crit_edge122 ] ; 3 uses
   %indvars.iv134 = phi i64 [ %indvars.iv, %.lr.ph126.preheader ], [ %indvars.iv.next135, %._crit_edge122 ] ; 6 uses
-  %3 = trunc i64 %indvar182 to i32
   %i.df = trunc i64 %indvar182 to i32
   %i.dg = sub i64 %indvar182, %i.ct
   %i.dh = shl i64 %i.dg, 3
@@ -254,7 +253,7 @@ bb.ad:                                            ; preds = %bb.ac
   br i1 %i.dp, label %.lr.ph121.preheader, label %._crit_edge122
 
 .lr.ph121.preheader:                              ; preds = %.lr.ph126
-  %i.dq = trunc nsw i64 %indvars.iv143 to i32
+  %i.dq = trunc i64 %indvars.iv143 to i32         ; 2 uses
   br i1 %min.iters.check, label %.lr.ph121.preheader187, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.lr.ph121.preheader
@@ -295,8 +294,7 @@ middle.block:                                     ; preds = %vector.body
   %indvars.iv136.ph = phi i64 [ %indvars.iv134, %vector.scevcheck ], [ %indvars.iv134, %.lr.ph121.preheader ], [ %i.du, %middle.block ] ; 3 uses
   %.0119.in.ph = phi i64 [ %indvars.iv.next135, %vector.scevcheck ], [ %indvars.iv.next135, %.lr.ph121.preheader ], [ %i.dv, %middle.block ] ; 2 uses
   %i.ef = trunc i64 %indvars.iv136.ph to i32      ; 2 uses
-  %4 = add i32 %3, %i.ef
-  %i.eg = sub i32 %optind.promoted, %4
+  %i.eg = sub i32 %i.dq, %i.ef
   %xtraiter = and i32 %i.eg, 3                    ; 2 uses
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph121.prol.loopexit, label %.lr.ph121.prol
@@ -531,7 +529,7 @@ bb.m:                                             ; preds = %bb.l
   br i1 %i.af, label %.lr.ph282.preheader, label %.thread235
 
 .lr.ph282.preheader:                              ; preds = %bb.m
-  %optind.promoted = load i32, ptr @optind, align 4 ; 5 uses
+  %optind.promoted = load i32, ptr @optind, align 4 ; 4 uses
   %i.ag = sext i32 %optind.promoted to i64
   %i.ah = xor i32 %i.j, -1
   %i.ai = sub i32 %i.ah, %indvar
@@ -559,11 +557,10 @@ bb.m:                                             ; preds = %bb.l
   br label %.lr.ph282
 
 .lr.ph282:                                        ; preds = %.lr.ph282.preheader, %._crit_edge278
-  %indvar345 = phi i64 [ 0, %.lr.ph282.preheader ], [ %indvar.next346, %._crit_edge278 ] ; 5 uses
+  %indvar345 = phi i64 [ 0, %.lr.ph282.preheader ], [ %indvar.next346, %._crit_edge278 ] ; 4 uses
   %indvar341 = phi i35 [ 0, %.lr.ph282.preheader ], [ %indvar.next342, %._crit_edge278 ] ; 2 uses
   %indvars.iv307 = phi i64 [ %i.ag, %.lr.ph282.preheader ], [ %indvars.iv.next308, %._crit_edge278 ] ; 3 uses
   %indvars.iv298 = phi i64 [ %indvars.iv294, %.lr.ph282.preheader ], [ %indvars.iv.next299, %._crit_edge278 ] ; 6 uses
-  %6 = trunc i64 %indvar345 to i32
   %i.ba = trunc i64 %indvar345 to i32
   %i.bb = sub i64 %indvar345, %i.ao
   %i.bc = shl i64 %i.bb, 3
@@ -580,7 +577,7 @@ bb.m:                                             ; preds = %bb.l
   br i1 %i.bk, label %.lr.ph277.preheader, label %._crit_edge278
 
 .lr.ph277.preheader:                              ; preds = %.lr.ph282
-  %i.bl = trunc nsw i64 %indvars.iv307 to i32
+  %i.bl = trunc i64 %indvars.iv307 to i32         ; 2 uses
   br i1 %min.iters.check, label %.lr.ph277.preheader350, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.lr.ph277.preheader
@@ -621,8 +618,7 @@ middle.block:                                     ; preds = %vector.body
   %indvars.iv300.ph = phi i64 [ %indvars.iv298, %vector.scevcheck ], [ %indvars.iv298, %.lr.ph277.preheader ], [ %i.bp, %middle.block ] ; 3 uses
   %.0167275.in.ph = phi i64 [ %indvars.iv.next299, %vector.scevcheck ], [ %indvars.iv.next299, %.lr.ph277.preheader ], [ %i.bq, %middle.block ] ; 2 uses
   %i.ca = trunc i64 %indvars.iv300.ph to i32      ; 2 uses
-  %7 = add i32 %6, %i.ca
-  %i.cb = sub i32 %optind.promoted, %7
+  %i.cb = sub i32 %i.bl, %i.ca
   %xtraiter = and i32 %i.cb, 3                    ; 2 uses
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph277.prol.loopexit, label %.lr.ph277.prol

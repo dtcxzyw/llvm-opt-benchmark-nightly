@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.c, %.thread, %bb
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 24
   %i.w = load ptr, ptr %i.v, align 8, !tbaa !112  ; 3 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 56
-  %i.y = load ptr, ptr %i.x, align 8, !tbaa !89   ; 16 uses
+  %i.y = load ptr, ptr %i.x, align 8, !tbaa !89   ; 14 uses
   %i.z = getelementptr inbounds nuw i8, ptr %i.w, i64 16
   %i.aa = load i64, ptr %i.z, align 8, !tbaa !57  ; 36 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %i.w, i64 8
@@ -607,7 +607,7 @@ bb.aq:                                            ; preds = %bb.ap, %._crit_edge
   %i.fr = and i32 %i.bl, 64
   %.not208 = icmp eq i32 %i.fr, 0
   %i.fs = add i64 %i.aa, -1                       ; 4 uses
-  %i.ft = shl i64 %i.aa, 4                        ; 5 uses
+  %i.ft = shl i64 %i.aa, 4                        ; 3 uses
   %scevgep305.a = getelementptr i8, ptr %i.am, i64 %i.ft ; 4 uses
   %i.fu = mul i64 %.0179281, %i.aa
   %i.fv = shl i64 %i.fu, 4
@@ -649,10 +649,8 @@ bb.aq:                                            ; preds = %bb.ap, %._crit_edge
   br label %.preheader219.us224
 
 .preheader219.us224:                              ; preds = %.preheader219.us224.preheader, %bb.av
-  %.0178222.us225 = phi i64 [ %i.gi, %bb.av ], [ 0, %.preheader219.us224.preheader ] ; 3 uses
+  %.0178222.us225 = phi i64 [ %i.gi, %bb.av ], [ 0, %.preheader219.us224.preheader ] ; 2 uses
   %.3221.us226 = phi i32 [ 0, %bb.av ], [ %.2, %.preheader219.us224.preheader ] ; 3 uses
-  %4 = mul i64 %i.ft, %.0178222.us225
-  %scevgep300 = getelementptr i8, ptr %i.y, i64 %4 ; 2 uses
   br i1 %.not251, label %._crit_edge.us234, label %.lr.ph.us232
 
 scalar.ph316:                                     ; preds = %scalar.ph316.prol.loopexit, %scalar.ph316
@@ -702,12 +700,12 @@ bb.av:                                            ; preds = %bb.au, %bb.at, %bb.
 
 .lr.ph.us232:                                     ; preds = %.preheader219.us224
   %i.gj = mul i64 %.0178222.us225, %i.aa
-  %invariant.gep.us233 = getelementptr [16 x i8], ptr %i.y, i64 %i.gj ; 4 uses
+  %invariant.gep.us233 = getelementptr [16 x i8], ptr %i.y, i64 %i.gj ; 6 uses
   %i.gk = load ptr, ptr %i.t, align 8, !tbaa !25  ; 3 uses
   %i.gl = getelementptr inbounds nuw i8, ptr %i.gk, i64 32 ; 5 uses
   %i.gm = getelementptr inbounds nuw i8, ptr %i.gk, i64 40
-  %i.gn = getelementptr i8, ptr %scevgep300, i64 %mul.result302
-  %i.go = icmp ult ptr %i.gn, %scevgep300
+  %i.gn = getelementptr i8, ptr %invariant.gep.us233, i64 %mul.result302
+  %i.go = icmp ult ptr %i.gn, %invariant.gep.us233
   %i.gp = or i1 %i.go, %mul.overflow303
   %or.cond383 = select i1 %min.iters.check317, i1 true, i1 %i.gp
   br i1 %or.cond383, label %scalar.ph316.preheader, label %vector.memcheck304
@@ -768,35 +766,31 @@ scalar.ph316.prol.loopexit:                       ; preds = %scalar.ph316.prol, 
   br i1 %i.hc, label %._crit_edge.us234, label %scalar.ph316
 
 .preheader219.us237:                              ; preds = %.preheader219.us237.preheader, %bb.ay
-  %.0178222.us238 = phi i64 [ %i.ii, %bb.ay ], [ 0, %.preheader219.us237.preheader ] ; 4 uses
+  %.0178222.us238 = phi i64 [ %i.ii, %bb.ay ], [ 0, %.preheader219.us237.preheader ] ; 3 uses
   %i.hd = mul i64 %.0178222.us238, %i.aa
-  %invariant.gep.us245 = getelementptr [16 x i8], ptr %i.y, i64 %i.hd ; 4 uses
+  %invariant.gep.us245 = getelementptr [16 x i8], ptr %i.y, i64 %i.hd ; 6 uses
   %i.he = load ptr, ptr %i.t, align 8, !tbaa !25  ; 3 uses
-  %i.hf = getelementptr inbounds nuw i8, ptr %i.he, i64 32 ; 5 uses
-  %i.hg = getelementptr inbounds nuw i8, ptr %i.he, i64 40
-  br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.scevcheck
+  %4 = getelementptr inbounds nuw i8, ptr %i.he, i64 32 ; 5 uses
+  %i.hf = getelementptr inbounds nuw i8, ptr %i.he, i64 40
+  %i.hg = getelementptr i8, ptr %invariant.gep.us245, i64 %mul.result
+  %5 = icmp ult ptr %i.hg, %invariant.gep.us245
+  %6 = or i1 %5, %mul.overflow
+  %or.cond384 = select i1 %min.iters.check, i1 true, i1 %6
+  br i1 %or.cond384, label %scalar.ph.preheader, label %vector.memcheck
 
-vector.scevcheck:                                 ; preds = %.preheader219.us237
-  %5 = mul i64 %i.ft, %.0178222.us238
-  %scevgep = getelementptr i8, ptr %i.y, i64 %5   ; 2 uses
-  %6 = getelementptr i8, ptr %scevgep, i64 %mul.result
-  %7 = icmp ult ptr %6, %scevgep
-  %8 = or i1 %7, %mul.overflow
-  br i1 %8, label %scalar.ph.preheader, label %vector.memcheck
-
-vector.memcheck:                                  ; preds = %vector.scevcheck
+vector.memcheck:                                  ; preds = %.preheader219.us237
   %scevgep288 = getelementptr i8, ptr %i.he, i64 48
   %bound0289 = icmp ult ptr %i.am, %scevgep288
-  %bound1290 = icmp ult ptr %i.hf, %scevgep305.a
+  %bound1290 = icmp ult ptr %4, %scevgep305.a
   %found.conflict291 = and i1 %bound0289, %bound1290
   %conflict.rdx = or i1 %i.fw, %found.conflict291
   br i1 %conflict.rdx, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %i.hh = load double, ptr %i.hf, align 8, !tbaa !212, !alias.scope !223
+  %i.hh = load double, ptr %4, align 8, !tbaa !212, !alias.scope !223
   %broadcast.splatinsert295 = insertelement <2 x double> poison, double %i.hh, i64 0
   %broadcast.splat296 = shufflevector <2 x double> %broadcast.splatinsert295, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.hi = load double, ptr %i.hg, align 8, !tbaa !216, !alias.scope !223
+  %i.hi = load double, ptr %i.hf, align 8, !tbaa !216, !alias.scope !223
   %broadcast.splatinsert297 = insertelement <2 x double> poison, double %i.hi, i64 0
   %broadcast.splat298 = shufflevector <2 x double> %broadcast.splatinsert297, <2 x double> poison, <2 x i32> zeroinitializer
   br label %vector.body
@@ -819,8 +813,8 @@ vector.body:                                      ; preds = %vector.body, %vecto
 middle.block:                                     ; preds = %vector.body
   br i1 %cmp.n, label %._crit_edge.us246, label %scalar.ph.preheader
 
-scalar.ph.preheader:                              ; preds = %vector.memcheck, %vector.scevcheck, %.preheader219.us237, %middle.block
-  %.0177220.us239.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %vector.scevcheck ], [ 0, %.preheader219.us237 ], [ %n.vec, %middle.block ] ; 5 uses
+scalar.ph.preheader:                              ; preds = %vector.memcheck, %.preheader219.us237, %middle.block
+  %.0177220.us239.ph = phi i64 [ 0, %vector.memcheck ], [ %n.vec, %middle.block ], [ 0, %.preheader219.us237 ] ; 5 uses
   %.neg = or disjoint i64 %.0177220.us239.ph, 1
   br i1 %lcmp.mod.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
 
@@ -828,7 +822,7 @@ scalar.ph.prol:                                   ; preds = %scalar.ph.preheader
   %gep.us240.prol = getelementptr [16 x i8], ptr %invariant.gep.us245, i64 %.0177220.us239.ph
   %i.ho = getelementptr inbounds nuw [16 x i8], ptr %i.am, i64 %.0177220.us239.ph
   %i.hp = load <2 x double>, ptr %gep.us240.prol, align 8, !tbaa !9
-  %i.hq = load <2 x double>, ptr %i.hf, align 8, !tbaa !9
+  %i.hq = load <2 x double>, ptr %4, align 8, !tbaa !9
   %i.hr = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.hp, <2 x double> %i.be, <2 x double> %i.hq)
   store <2 x double> %i.hr, ptr %i.ho, align 8, !tbaa !9
   %i.hs = or disjoint i64 %.0177220.us239.ph, 1
@@ -844,14 +838,14 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   %gep.us240 = getelementptr [16 x i8], ptr %invariant.gep.us245, i64 %.0177220.us239
   %i.hu = getelementptr inbounds nuw [16 x i8], ptr %i.am, i64 %.0177220.us239
   %i.hv = load <2 x double>, ptr %gep.us240, align 8, !tbaa !9
-  %i.hw = load <2 x double>, ptr %i.hf, align 8, !tbaa !9
+  %i.hw = load <2 x double>, ptr %4, align 8, !tbaa !9
   %i.hx = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.hv, <2 x double> %i.be, <2 x double> %i.hw)
   store <2 x double> %i.hx, ptr %i.hu, align 8, !tbaa !9
   %i.hy = add nuw i64 %.0177220.us239, 1          ; 2 uses
   %gep.us240.1 = getelementptr [16 x i8], ptr %invariant.gep.us245, i64 %i.hy
   %i.hz = getelementptr inbounds nuw [16 x i8], ptr %i.am, i64 %i.hy
   %i.ia = load <2 x double>, ptr %gep.us240.1, align 8, !tbaa !9
-  %i.ib = load <2 x double>, ptr %i.hf, align 8, !tbaa !9
+  %i.ib = load <2 x double>, ptr %4, align 8, !tbaa !9
   %i.ic = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ia, <2 x double> %i.be, <2 x double> %i.ib)
   store <2 x double> %i.ic, ptr %i.hz, align 8, !tbaa !9
   %i.id = add nuw i64 %.0177220.us239, 2          ; 2 uses

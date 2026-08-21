@@ -204,9 +204,10 @@ bb.f:                                             ; preds = %.preheader255
   br label %bb.g
 
 .preheader253:                                    ; preds = %bb.g
-  %i.dn = getelementptr inbounds nuw i8, ptr %i.b, i64 26080
+  %i.dn = getelementptr i8, ptr %i.b, i64 26080
   %i.do = getelementptr inbounds nuw i8, ptr %i.b, i64 26086
   %i.dp = getelementptr inbounds nuw i8, ptr %i.b, i64 26470
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(6) %i.dn, i8 1, i64 6, i1 false), !tbaa !51
   br label %.preheader252
 
 bb.g:                                             ; preds = %.preheader254, %bb.g
@@ -255,8 +256,7 @@ bb.g:                                             ; preds = %.preheader254, %bb.
 
 .preheader252:                                    ; preds = %.preheader253, %bb.h
   %i.eh = phi i1 [ true, %.preheader253 ], [ false, %bb.h ]
-  %indvars.iv281 = phi i64 [ 0, %.preheader253 ], [ 1, %bb.h ] ; 5 uses
-  %1 = getelementptr inbounds nuw [3 x i8], ptr %i.dn, i64 %indvars.iv281
+  %indvars.iv281 = phi i64 [ 0, %.preheader253 ], [ 1, %bb.h ] ; 4 uses
   %i.ei = getelementptr inbounds nuw [192 x i8], ptr %i.do, i64 %indvars.iv281
   %i.ej = trunc nuw nsw i64 %indvars.iv281 to i16
   %i.ek = xor i16 %i.ej, 1
@@ -269,9 +269,7 @@ bb.h:                                             ; preds = %bb.i
   br i1 %i.eh, label %.preheader252, label %.loopexit, !llvm.loop !182
 
 bb.i:                                             ; preds = %.preheader252, %bb.i
-  %indvars.iv277 = phi i64 [ 0, %.preheader252 ], [ %indvars.iv.next278, %bb.i ] ; 5 uses
-  %2 = getelementptr inbounds nuw i8, ptr %1, i64 %indvars.iv277
-  store i8 1, ptr %2, align 1, !tbaa !51
+  %indvars.iv277 = phi i64 [ 0, %.preheader252 ], [ %indvars.iv.next278, %bb.i ] ; 4 uses
   %i.en = getelementptr inbounds nuw [64 x i8], ptr %i.ei, i64 %indvars.iv277
   store i8 63, ptr %i.en, align 2, !tbaa !51
   %.not229 = icmp eq i64 %indvars.iv277, 0

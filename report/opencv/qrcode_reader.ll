@@ -204,7 +204,7 @@ bb.a:
   %i.a = load ptr, ptr %1, align 8, !tbaa !45     ; 4 uses
   %i.b = load ptr, ptr %2, align 8, !tbaa !45     ; 2 uses
   %i.c = ashr i32 %3, 1                           ; 5 uses
-  %i.d = tail call noundef i32 @_ZNK5zxing9BitMatrix8getWidthEv(ptr noundef nonnull align 8 dereferenceable(346) %i.a) ; 4 uses
+  %i.d = tail call noundef i32 @_ZNK5zxing9BitMatrix8getWidthEv(ptr noundef nonnull align 8 dereferenceable(346) %i.a) ; 3 uses
   %i.e = load ptr, ptr %1, align 8, !tbaa !45
   %i.f = tail call noundef i32 @_ZNK5zxing9BitMatrix9getHeightEv(ptr noundef nonnull align 8 dereferenceable(346) %i.e)
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 20
@@ -247,13 +247,12 @@ bb.a:
   br label %.lr.ph.us
 
 .lr.ph.us:                                        ; preds = %.lr.ph.us.preheader, %._crit_edge.us
-  %indvar = phi i32 [ 0, %.lr.ph.us.preheader ], [ %indvar.next, %._crit_edge.us ] ; 2 uses
   %indvars.iv83 = phi i64 [ %i.u, %.lr.ph.us.preheader ], [ %indvars.iv.next84, %._crit_edge.us ] ; 3 uses
   %.06473.us = phi i32 [ 0, %.lr.ph.us.preheader ], [ %.lcssa, %._crit_edge.us ] ; 3 uses
   %i.ad = trunc nsw i64 %indvars.iv83 to i32      ; 3 uses
   %i.ae = add i32 %i.ad, %i.n
   %i.af = add nsw i64 %indvars.iv83, %i.t
-  %i.ag = mul nsw i32 %i.ae, %i.d                 ; 3 uses
+  %i.ag = mul i32 %i.ae, %i.d                     ; 5 uses
   %i.ah = mul nsw i64 %i.af, %i.v                 ; 2 uses
   %i.ai = tail call noundef ptr @_ZN5zxing9BitMatrix13getRowBoolPtrEi(ptr noundef nonnull align 8 dereferenceable(346) %i.a, i32 noundef %i.ad) ; 4 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.j, ptr align 1 %i.ai, i64 %i.i, i1 false)
@@ -265,9 +264,8 @@ bb.a:
 
 vector.scevcheck:                                 ; preds = %.lr.ph.us
   %i.al = ptrtoaddr ptr %i.ai to i64
-  %4 = mul i32 %i.d, %indvar                      ; 2 uses
-  %i.am = add i32 %4, %i.aa
-  %i.an = icmp slt i32 %i.am, %4
+  %i.am = add i32 %i.ag, %i.aa
+  %i.an = icmp slt i32 %i.am, %i.ag
   %i.ao = or i1 %i.an, %i.ab
   %i.ap = sub i64 %i.al, %i.k
   %diff.check = icmp ugt i64 %i.ap, -4
@@ -413,7 +411,6 @@ bb.c:                                             ; preds = %bb.b, %scalar.ph
   %indvars.iv.next84 = add nsw i64 %indvars.iv83, 1 ; 2 uses
   %lftr.wideiv = trunc i64 %indvars.iv.next84 to i32
   %exitcond86.not = icmp eq i32 %i.o, %lftr.wideiv
-  %indvar.next = add i32 %indvar, 1
   br i1 %exitcond86.not, label %._crit_edge77, label %.lr.ph.us, !llvm.loop !213
 
 .lr.ph76.split:                                   ; preds = %.lr.ph76, %.lr.ph76.split

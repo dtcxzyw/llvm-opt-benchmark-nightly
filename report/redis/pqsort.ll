@@ -91,7 +91,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.at, %bb.a
   %.0214 = phi i64 [ %1, %bb.a ], [ %i.xl, %bb.at ] ; 9 uses
-  %.0 = phi ptr [ %0, %bb.a ], [ %i.xh, %bb.at ]  ; 63 uses
+  %.0 = phi ptr [ %0, %bb.a ], [ %i.xh, %bb.at ]  ; 62 uses
   %i.z = ptrtoint ptr %.0 to i64                  ; 2 uses
   %i.aa = or i64 %2, %i.z
   %i.ab = and i64 %i.aa, 7
@@ -165,7 +165,7 @@ swapfunc.exit.us.us:                              ; preds = %.lr.ph364.us
 .preheader.us373:                                 ; preds = %.preheader.us373.preheader, %.critedge.us375
   %indvar916 = phi i64 [ 0, %.preheader.us373.preheader ], [ %indvar.next917, %.critedge.us375 ] ; 2 uses
   %.0222369.us374 = phi ptr [ %.0222368, %.preheader.us373.preheader ], [ %.0222.us376, %.critedge.us375 ] ; 3 uses
-  %i.ax = mul i64 %2, %indvar916                  ; 3 uses
+  %i.ax = mul i64 %2, %indvar916                  ; 2 uses
   %i.ay = add i64 %i.au, %i.ax
   %i.az = add i64 %i.at, %i.ax
   %i.ba = icmp ugt ptr %.0222369.us374, %.0
@@ -180,14 +180,12 @@ swapfunc.exit.us.us:                              ; preds = %.lr.ph364.us
 .lr.ph364.us377:                                  ; preds = %.preheader.us373, %swapfunc.exit.loopexit.us.us
   %indvar918 = phi i64 [ %indvar.next919, %swapfunc.exit.loopexit.us.us ], [ 0, %.preheader.us373 ] ; 2 uses
   %.0225363.us366.us = phi ptr [ %i.bf, %swapfunc.exit.loopexit.us.us ], [ %.0222369.us374, %.preheader.us373 ] ; 7 uses
-  %i.bc = mul i64 %2, %indvar918                  ; 3 uses
-  %6 = sub i64 %i.ay, %i.bc
-  %scevgep920 = getelementptr i8, ptr %.0, i64 %6
-  %i.bd = sub i64 %i.ax, %i.bc
+  %i.bc = mul i64 %2, %indvar918                  ; 2 uses
+  %i.bd = sub i64 %i.ay, %i.bc
   %scevgep921 = getelementptr i8, ptr %.0, i64 %i.bd
   %i.be = sub i64 %i.az, %i.bc
   %scevgep922 = getelementptr i8, ptr %.0, i64 %i.be
-  %i.bf = getelementptr inbounds i8, ptr %.0225363.us366.us, i64 %i.a ; 7 uses
+  %i.bf = getelementptr inbounds i8, ptr %.0225363.us366.us, i64 %i.a ; 8 uses
   %i.bg = tail call i32 %3(ptr noundef nonnull %i.bf, ptr noundef nonnull %.0225363.us366.us) #2
   %i.bh = icmp sgt i32 %i.bg, 0
   br i1 %i.bh, label %.preheader381.preheader, label %.critedge.us375
@@ -197,7 +195,7 @@ swapfunc.exit.us.us:                              ; preds = %.lr.ph364.us
 
 vector.memcheck915:                               ; preds = %.preheader381.preheader
   %bound0923 = icmp ult ptr %.0225363.us366.us, %scevgep922
-  %bound1924 = icmp ult ptr %scevgep921, %scevgep920
+  %bound1924 = icmp ult ptr %i.bf, %scevgep921
   %found.conflict925 = and i1 %bound0923, %bound1924
   br i1 %found.conflict925, label %.preheader381.preheader944, label %vector.ph928
 

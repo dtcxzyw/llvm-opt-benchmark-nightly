@@ -204,8 +204,8 @@ define void @Of_ObjMergeOrder(ptr nofree noundef captures(none) %0, i32 noundef 
 bb.a:
   %i.a = alloca i64, align 8                      ; 5 uses
   %i.b = alloca i64, align 8                      ; 5 uses
-  %2 = alloca [32 x %struct.Of_Cut_t_], align 16  ; 14 uses
-  %3 = alloca [32 x %struct.Of_Cut_t_], align 16  ; 14 uses
+  %2 = alloca [32 x %struct.Of_Cut_t_], align 16  ; 13 uses
+  %3 = alloca [32 x %struct.Of_Cut_t_], align 16  ; 13 uses
   %4 = alloca [32 x %struct.Of_Cut_t_], align 16  ; 5 uses
   %i.c = alloca [32 x ptr], align 16              ; 31 uses
   %5 = alloca [32 x %struct.Of_Cut_t_], align 16  ; 10 uses
@@ -608,23 +608,15 @@ Gia_ObjIsXor.exit:                                ; preds = %Gia_ObjIsMuxId.exit
   br i1 %i.arx, label %.preheader.us, label %.loopexit488
 
 .preheader.us:                                    ; preds = %.preheader.lr.ph, %._crit_edge574.us
-  %indvar = phi i64 [ %indvar.next, %._crit_edge574.us ], [ 0, %.preheader.lr.ph ] ; 2 uses
   %.6577.us = phi i32 [ %.8.us, %._crit_edge574.us ], [ %.1, %.preheader.lr.ph ]
   %.1149576.us = phi ptr [ %i.bkr, %._crit_edge574.us ], [ %2, %.preheader.lr.ph ] ; 5 uses
-  %7 = mul i64 %indvar, 48
-  %8 = getelementptr i8, ptr %2, i64 %7
-  %scevgep661 = getelementptr i8, ptr %8, i64 20
   %i.asg = getelementptr inbounds nuw i8, ptr %.1149576.us, i64 16
-  %i.ash = getelementptr inbounds nuw i8, ptr %.1149576.us, i64 20 ; 3 uses
+  %i.ash = getelementptr i8, ptr %.1149576.us, i64 20 ; 4 uses
   br label %bb.by
 
 bb.by:                                            ; preds = %.preheader.us, %Of_SetAddCut.exit455.us
-  %indvar665 = phi i64 [ 0, %.preheader.us ], [ %indvar.next666, %Of_SetAddCut.exit455.us ] ; 2 uses
   %.7569.us = phi i32 [ %.6577.us, %.preheader.us ], [ %.8.us, %Of_SetAddCut.exit455.us ] ; 18 uses
   %.1147568.us = phi ptr [ %3, %.preheader.us ], [ %i.bkp, %Of_SetAddCut.exit455.us ] ; 5 uses
-  %9 = mul i64 %indvar665, 48
-  %10 = getelementptr i8, ptr %3, i64 %9
-  %scevgep667 = getelementptr i8, ptr %10, i64 20
   %i.asi = load i32, ptr %i.asg, align 8          ; 3 uses
   %i.asj = lshr i32 %i.asi, 27                    ; 11 uses
   %i.ask = getelementptr inbounds nuw i8, ptr %.1147568.us, i64 16
@@ -650,7 +642,7 @@ bb.ca:                                            ; preds = %bb.bz, %bb.by
   %i.asx = sext i32 %.7569.us to i64
   %i.asy = getelementptr inbounds [8 x i8], ptr %i.c, i64 %i.asx
   %i.asz = load ptr, ptr %i.asy, align 8, !tbaa !93 ; 19 uses
-  %i.ata = getelementptr inbounds nuw i8, ptr %.1147568.us, i64 20 ; 3 uses
+  %i.ata = getelementptr i8, ptr %.1147568.us, i64 20 ; 4 uses
   %i.atb = getelementptr i8, ptr %i.asz, i64 20   ; 15 uses
   %i.atc = icmp eq i32 %i.asj, %i.n
   %i.atd = icmp eq i32 %i.asm, %i.n
@@ -740,7 +732,7 @@ bb.ci:                                            ; preds = %bb.ch, %bb.cg, %bb.
   %i.aub = shl nsw i64 %i.atz, 2
   %scevgep660 = getelementptr i8, ptr %i.atb, i64 %i.aub
   %i.auc = shl nsw i64 %i.aua, 2
-  %scevgep662 = getelementptr i8, ptr %scevgep661, i64 %i.auc
+  %scevgep662 = getelementptr i8, ptr %i.ash, i64 %i.auc
   %i.aud = sub nsw i64 %wide.trip.count.i323.us, %i.aua
   %i.aue = shl nsw i64 %i.aud, 2
   call void @llvm.memcpy.p0.p0.i64(ptr align 4 %scevgep660, ptr align 4 %scevgep662, i64 %i.aue, i1 false), !tbaa !42
@@ -772,7 +764,7 @@ bb.ci:                                            ; preds = %bb.ch, %bb.cg, %bb.
   %i.auo = shl nsw i64 %i.aum, 2
   %scevgep664.a = getelementptr i8, ptr %i.atb, i64 %i.auo
   %i.aup = shl nsw i64 %i.aun, 2
-  %scevgep668 = getelementptr i8, ptr %scevgep667, i64 %i.aup
+  %scevgep668 = getelementptr i8, ptr %i.ata, i64 %i.aup
   %i.auq = sub nsw i64 %wide.trip.count153.i.us, %i.aun
   %i.aur = shl nsw i64 %i.auq, 2
   call void @llvm.memcpy.p0.p0.i64(ptr align 4 %scevgep664.a, ptr align 4 %scevgep668, i64 %i.aur, i1 false), !tbaa !42
@@ -1175,13 +1167,11 @@ Of_SetAddCut.exit455.us:                          ; preds = %bb.ci, %.lr.ph134.i
   %.8.us = phi i32 [ %.7569.us, %bb.bz ], [ %.7569.us, %.preheader118.i.us ], [ 1, %Of_CutParams.exit409.us ], [ %i.bko, %Of_SetSortByArea.exit.i410.us ], [ %.7569.us, %.loopexit120.i.us ], [ %.7569.us, %bb.cs ], [ %.7569.us, %.loopexit121.i.us ], [ %.7569.us, %.lr.ph134.i.us ], [ %.7569.us, %bb.cp ], [ %.7569.us, %bb.cm ], [ %.7569.us, %bb.ct ], [ %.7569.us, %bb.ci ] ; 3 uses
   %i.bkp = getelementptr inbounds nuw i8, ptr %.1147568.us, i64 48 ; 2 uses
   %i.bkq = icmp ult ptr %i.bkp, %i.kc
-  %indvar.next666 = add i64 %indvar665, 1
   br i1 %i.bkq, label %bb.by, label %._crit_edge574.us, !llvm.loop !122
 
 ._crit_edge574.us:                                ; preds = %Of_SetAddCut.exit455.us
   %i.bkr = getelementptr inbounds nuw i8, ptr %.1149576.us, i64 48 ; 2 uses
   %i.bks = icmp ult ptr %i.bkr, %i.ka
-  %indvar.next = add i64 %indvar, 1
   br i1 %i.bks, label %.preheader.us, label %.loopexit488, !llvm.loop !123
 
 .loopexit488:                                     ; preds = %._crit_edge574.us, %.preheader.lr.ph, %Gia_ObjIsXor.exit, %._crit_edge561
