@@ -204,13 +204,13 @@ bb.f:                                             ; preds = %._crit_edge63.i, %b
   %.sroa.038.0.extract.trunc.i = trunc i64 %i.z to i32
   br label %.lr.ph.i
 
-.lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %bb.i
+.lr.ph.i:                                         ; preds = %bb.i, %.lr.ph.i.preheader
   %.sroa.015.057.i = phi i64 [ %i.aa, %bb.i ], [ %.sroa.025.060.i, %.lr.ph.i.preheader ] ; 3 uses
   %i.aa = sub nuw i64 %.sroa.015.057.i, %i.v      ; 6 uses
   %.not26 = icmp ugt i64 %i.aa, %i.g
   br i1 %.not26, label %.invoke, label %bb.g
 
-._crit_edge.i.loopexit:                           ; preds = %bb.g, %bb.i
+._crit_edge.i.loopexit:                           ; preds = %bb.i, %bb.g
   %.sroa.015.0.lcssa.i.ph = phi i64 [ %i.aa, %bb.i ], [ %.sroa.015.057.i, %bb.g ] ; 3 uses
   %.not27 = icmp ugt i64 %.sroa.015.0.lcssa.i.ph, %i.g
   br i1 %.not27, label %.invoke, label %bb.h
