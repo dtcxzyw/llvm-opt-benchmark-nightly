@@ -201,7 +201,7 @@ bb.p:                                             ; preds = %bb.o, %bb.n
   %i.eb = getelementptr inbounds i8, ptr %i.dw, i64 %i.dm
   %i.ec = add nsw i32 %i.de, -1                   ; 2 uses
   %i.ed = load i32, ptr %i.cz, align 8, !tbaa !37 ; 2 uses
-  %i.ee = zext nneg i32 %i.ec to i64              ; 7 uses
+  %i.ee = zext nneg i32 %i.ec to i64              ; 6 uses
   %i.ef = sext i32 %i.ed to i64                   ; 2 uses
   %i.eg = sub nsw i64 0, %i.ef                    ; 2 uses
   %i.eh = getelementptr inbounds i8, ptr %i.dn, i64 %i.eg ; 2 uses
@@ -259,7 +259,7 @@ bb.s:                                             ; preds = %.thread.i.peel.i, %
 
 bb.t:                                             ; preds = %bb.af, %.peel.next.i
   %i.ey = phi i32 [ %i.ev, %.peel.next.i ], [ %i.gg, %bb.af ]
-  %indvars.iv.i.in.i = phi i64 [ %i.ee, %.peel.next.i ], [ %indvars.iv.i.i, %bb.af ] ; 5 uses
+  %indvars.iv.i.in.i = phi i64 [ %i.ee, %.peel.next.i ], [ %indvars.iv.i.i, %bb.af ] ; 4 uses
   %.0161209.i.i = phi ptr [ %i.ei, %.peel.next.i ], [ %i.fc, %bb.af ]
   %.0162208.i.i = phi ptr [ %i.eh, %.peel.next.i ], [ %i.fb, %bb.af ]
   %.0163207.i.i = phi i32 [ %i.de, %.peel.next.i ], [ %.2.i.i, %bb.af ] ; 2 uses
@@ -267,8 +267,8 @@ bb.t:                                             ; preds = %bb.af, %.peel.next.
   %.0167205.i.i = phi i32 [ %i.de, %.peel.next.i ], [ %.2169.i.i, %bb.af ] ; 2 uses
   %.0170204.i.i = phi i32 [ %i.ex, %.peel.next.i ], [ %i.gh, %bb.af ]
   %.0174203.i.i = phi i32 [ %.1175.i.peel.i, %.peel.next.i ], [ %.1175.i.i, %bb.af ]
-  %.0178202.i.i = phi i32 [ 1, %.peel.next.i ], [ %.1179.i.i.a, %bb.af ]
-  %.0180201.i.i = phi i32 [ %.1181.i.peel126.i, %.peel.next.i ], [ %.1181.i.i, %bb.af ]
+  %.0178202.i.i = phi i32 [ 1, %.peel.next.i ], [ %.1179.i.i, %bb.af ]
+  %.0180201.i.i = phi i32 [ %.1181.i.peel126.i, %.peel.next.i ], [ %.1179.i.i.a, %bb.af ]
   %indvars.iv.i.i = add nsw i64 %indvars.iv.i.in.i, -1 ; 7 uses
   %i.ez = sext i32 %i.ey to i64                   ; 2 uses
   %i.fa = sub nsw i64 0, %i.ez                    ; 2 uses
@@ -316,58 +316,48 @@ bb.x:                                             ; preds = %bb.w, %bb.v
   %.2.i.i = phi i32 [ %..1.i.i, %bb.w ], [ %.1.i.i, %bb.v ]
   %i.fn = load i32, ptr %i.cu, align 8, !tbaa !47
   %.not192.i.i = icmp eq i32 %i.fn, 0
-  br i1 %.not192.i.i, label %4, label %8
+  br i1 %.not192.i.i, label %bb.y, label %bb.aa
 
-4:                                                ; preds = %bb.x
-  %bcmp.i.i = tail call i32 @bcmp(ptr %i.fb, ptr %i.fc, i64 %i.ez)
-  %.not193.i.i = icmp eq i32 %bcmp.i.i, 0
-  br i1 %.not193.i.i, label %5, label %8
-
-5:                                                ; preds = %4
-  %6 = add nsw i32 %.0180201.i.i, 1
-  %7 = tail call i32 @llvm.umin.i32(i32 %6, i32 254)
-  br label %8
-
-8:                                                ; preds = %5, %4, %bb.x
-  %.1181.i.i = phi i32 [ %7, %5 ], [ 0, %4 ], [ 0, %bb.x ] ; 4 uses
-  %9 = zext nneg i32 %.1181.i.i to i64
-  %10 = getelementptr inbounds nuw [4 x i8], ptr %i.fi, i64 %indvars.iv.i.i
-  %11 = getelementptr inbounds nuw [4 x i8], ptr %10, i64 %9
-  %12 = load i32, ptr %11, align 4, !tbaa !51
-  %13 = trunc nuw i32 %.1181.i.i to i8
-  %14 = load ptr, ptr %i.dc, align 8, !tbaa !40
-  %15 = getelementptr inbounds nuw i8, ptr %14, i64 %indvars.iv.i.i
-  store i8 %13, ptr %15, align 1, !tbaa !50
-  %.not121.i = icmp samesign ugt i64 %indvars.iv.i.in.i, %i.ee
-  %.pre.i.i = load i32, ptr %i.cz, align 8, !tbaa !37 ; 2 uses
-  br i1 %.not121.i, label %bb.aa, label %bb.y
-
-bb.y:                                             ; preds = %8
-  %16 = sext i32 %.pre.i.i to i64                 ; 2 uses
-  %17 = getelementptr inbounds i8, ptr %i.fb, i64 %16
-  %bcmp194.i.i.a = tail call i32 @bcmp(ptr %i.fb, ptr %17, i64 %16)
+bb.y:                                             ; preds = %bb.x
+  %bcmp194.i.i.a = tail call i32 @bcmp(ptr %i.fb, ptr %i.fc, i64 %i.ez)
   %.not195.i.i.a = icmp eq i32 %bcmp194.i.i.a, 0
   br i1 %.not195.i.i.a, label %bb.z, label %bb.aa
 
 bb.z:                                             ; preds = %bb.y
-  %i.fo = add nsw i32 %.0178202.i.i, 1
-  %i.fp = tail call i32 @llvm.umin.i32(i32 %i.fo, i32 128)
+  %i.fo = add nsw i32 %.0180201.i.i, 1
+  %i.fp = tail call i32 @llvm.umin.i32(i32 %i.fo, i32 254)
   br label %bb.aa
 
-bb.aa:                                            ; preds = %bb.z, %bb.y, %8
-  %.1179.i.i.a = phi i32 [ %i.fp, %bb.z ], [ 1, %bb.y ], [ 1, %8 ] ; 4 uses
+bb.aa:                                            ; preds = %bb.z, %bb.y, %bb.x
+  %.1179.i.i.a = phi i32 [ %i.fp, %bb.z ], [ 0, %bb.y ], [ 0, %bb.x ] ; 4 uses
+  %4 = zext nneg i32 %.1179.i.i.a to i64
+  %5 = getelementptr inbounds nuw [4 x i8], ptr %i.fi, i64 %indvars.iv.i.i
+  %6 = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %4
+  %7 = load i32, ptr %6, align 4, !tbaa !51
+  %8 = trunc nuw i32 %.1179.i.i.a to i8
+  %9 = load ptr, ptr %i.dc, align 8, !tbaa !40
+  %10 = getelementptr inbounds nuw i8, ptr %9, i64 %indvars.iv.i.i
+  store i8 %8, ptr %10, align 1, !tbaa !50
+  %.pre.i.i = load i32, ptr %i.cz, align 8, !tbaa !37 ; 2 uses
+  %11 = sext i32 %.pre.i.i to i64                 ; 2 uses
+  %12 = getelementptr inbounds i8, ptr %i.fb, i64 %11
+  %bcmp194.i.i = tail call i32 @bcmp(ptr %i.fb, ptr %12, i64 %11)
+  %.not195.i.i = icmp eq i32 %bcmp194.i.i, 0
+  %13 = add nsw i32 %.0178202.i.i, 1
+  %14 = tail call i32 @llvm.umin.i32(i32 %13, i32 128)
+  %.1179.i.i = select i1 %.not195.i.i, i32 %14, i32 1 ; 4 uses
   %i.fq = load ptr, ptr %i.db, align 8, !tbaa !41
-  %i.fr = zext nneg i32 %.1179.i.i.a to i64
+  %i.fr = zext nneg i32 %.1179.i.i to i64
   %i.fs = getelementptr inbounds nuw [4 x i8], ptr %i.fq, i64 %indvars.iv.i.i ; 4 uses
   %i.ft = getelementptr inbounds nuw [4 x i8], ptr %i.fs, i64 %i.fr
   %i.fu = load i32, ptr %i.ft, align 4, !tbaa !51
   %.0177.v.i.i = select i1 %.not189.i.i, i32 1, i32 2
-  %.0177.i.i = add nsw i32 %12, %.0177.v.i.i      ; 2 uses
+  %.0177.i.i = add nsw i32 %7, %.0177.v.i.i       ; 2 uses
   %i.fv = select i1 %.not189.i.i, i32 2, i32 1
   %i.fw = add i32 %.pre.i.i, %i.fv
   %.0176.i.i = add i32 %i.fw, %i.fu               ; 2 uses
-  %i.fx = icmp samesign ugt i32 %.1179.i.i.a, 1
-  %i.fy = icmp eq i32 %.1181.i.i, 0               ; 2 uses
+  %i.fx = icmp samesign ugt i32 %.1179.i.i, 1
+  %i.fy = icmp eq i32 %.1179.i.i.a, 0             ; 2 uses
   br i1 %i.fx, label %bb.ab, label %bb.ad
 
 bb.ab:                                            ; preds = %bb.aa
@@ -377,7 +367,7 @@ bb.ab:                                            ; preds = %bb.aa
 
 bb.ac:                                            ; preds = %bb.ab
   store i32 %.0176.i.i, ptr %i.fs, align 4, !tbaa !51
-  %i.ga = trunc nuw i32 %.1179.i.i.a to i8
+  %i.ga = trunc nuw i32 %.1179.i.i to i8
   %i.gb = sub i8 0, %i.ga
   br label %bb.af
 

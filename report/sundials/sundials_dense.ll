@@ -202,7 +202,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !8    ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.d = load i64, ptr %i.c, align 8, !tbaa !15   ; 9 uses
+  %i.d = load i64, ptr %i.c, align 8, !tbaa !15   ; 8 uses
   %i.e = add i64 %i.d, -1                         ; 5 uses
   %i.f = icmp sgt i64 %i.d, 1                     ; 2 uses
   br i1 %i.f, label %.lr.ph.preheader.i.preheader, label %._crit_edge.i
@@ -345,32 +345,28 @@ middle.block:                                     ; preds = %vector.body
   %.15060.i = phi i64 [ %i.cn, %._crit_edge59.i ], [ %i.bn, %.lr.ph62.preheader.i ] ; 7 uses
   %i.bo = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %.15060.i
   %i.bp = load ptr, ptr %i.bo, align 8, !tbaa !17 ; 4 uses
-  %.155.i = add nuw nsw i64 %.15060.i, 1          ; 4 uses
-  %2 = icmp slt i64 %.155.i, %i.d
-  %3 = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %.15060.i ; 5 uses
-  %.promoted.i = load double, ptr %3, align 8, !tbaa !18 ; 3 uses
-  br i1 %2, label %.lr.ph58.i.preheader, label %._crit_edge59.i
-
-.lr.ph58.i.preheader:                             ; preds = %.lr.ph62.i
-  %4 = and i64 %indvar, 1
-  %lcmp.mod11.not.not = icmp eq i64 %4, 0
+  %.155.i = add nuw nsw i64 %.15060.i, 1          ; 3 uses
+  %2 = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %.15060.i ; 5 uses
+  %.promoted.i = load double, ptr %2, align 8, !tbaa !18 ; 2 uses
+  %3 = and i64 %indvar, 1
+  %lcmp.mod11.not.not = icmp eq i64 %3, 0
   br i1 %lcmp.mod11.not.not, label %.lr.ph58.i.prol, label %.lr.ph58.i.prol.loopexit
 
-.lr.ph58.i.prol:                                  ; preds = %.lr.ph58.i.preheader
+.lr.ph58.i.prol:                                  ; preds = %.lr.ph62.i
   %i.bq = getelementptr inbounds nuw [8 x i8], ptr %i.bp, i64 %.155.i
   %i.br = load double, ptr %i.bq, align 8, !tbaa !18
   %i.bs = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %.155.i
   %i.bt = load double, ptr %i.bs, align 8, !tbaa !18
   %i.bu = fneg double %i.br
   %i.bv = tail call double @llvm.fmuladd.f64(double %i.bu, double %i.bt, double %.promoted.i) ; 3 uses
-  store double %i.bv, ptr %3, align 8, !tbaa !18
+  store double %i.bv, ptr %2, align 8, !tbaa !18
   %.1.i.prol = add nuw nsw i64 %.15060.i, 2
   br label %.lr.ph58.i.prol.loopexit
 
-.lr.ph58.i.prol.loopexit:                         ; preds = %.lr.ph58.i.prol, %.lr.ph58.i.preheader
-  %.lcssa.unr = phi double [ poison, %.lr.ph58.i.preheader ], [ %i.bv, %.lr.ph58.i.prol ]
-  %.unr = phi double [ %.promoted.i, %.lr.ph58.i.preheader ], [ %i.bv, %.lr.ph58.i.prol ]
-  %.156.i.unr = phi i64 [ %.155.i, %.lr.ph58.i.preheader ], [ %.1.i.prol, %.lr.ph58.i.prol ]
+.lr.ph58.i.prol.loopexit:                         ; preds = %.lr.ph58.i.prol, %.lr.ph62.i
+  %.lcssa.unr = phi double [ poison, %.lr.ph62.i ], [ %i.bv, %.lr.ph58.i.prol ]
+  %.unr = phi double [ %.promoted.i, %.lr.ph62.i ], [ %i.bv, %.lr.ph58.i.prol ]
+  %.156.i.unr = phi i64 [ %.155.i, %.lr.ph62.i ], [ %.1.i.prol, %.lr.ph58.i.prol ]
   %i.bw = icmp eq i64 %indvar, 0
   br i1 %i.bw, label %._crit_edge59.i, label %.lr.ph58.i
 
@@ -383,7 +379,7 @@ middle.block:                                     ; preds = %vector.body
   %i.cb = load double, ptr %i.ca, align 8, !tbaa !18
   %i.cc = fneg double %i.bz
   %i.cd = tail call double @llvm.fmuladd.f64(double %i.cc, double %i.cb, double %i.bx) ; 2 uses
-  store double %i.cd, ptr %3, align 8, !tbaa !18
+  store double %i.cd, ptr %2, align 8, !tbaa !18
   %.1.i = add nuw nsw i64 %.156.i, 1              ; 2 uses
   %i.ce = getelementptr inbounds nuw [8 x i8], ptr %i.bp, i64 %.1.i
   %i.cf = load double, ptr %i.ce, align 8, !tbaa !18
@@ -391,17 +387,17 @@ middle.block:                                     ; preds = %vector.body
   %i.ch = load double, ptr %i.cg, align 8, !tbaa !18
   %i.ci = fneg double %i.cf
   %i.cj = tail call double @llvm.fmuladd.f64(double %i.ci, double %i.ch, double %i.cd) ; 3 uses
-  store double %i.cj, ptr %3, align 8, !tbaa !18
+  store double %i.cj, ptr %2, align 8, !tbaa !18
   %.1.i.1 = add nuw nsw i64 %.156.i, 2            ; 2 uses
   %exitcond65.not.i.1 = icmp eq i64 %.1.i.1, %i.d
   br i1 %exitcond65.not.i.1, label %._crit_edge59.i, label %.lr.ph58.i
 
-._crit_edge59.i:                                  ; preds = %.lr.ph58.i.prol.loopexit, %.lr.ph58.i, %.lr.ph62.i
-  %5 = phi double [ %.promoted.i, %.lr.ph62.i ], [ %.lcssa.unr, %.lr.ph58.i.prol.loopexit ], [ %i.cj, %.lr.ph58.i ]
+._crit_edge59.i:                                  ; preds = %.lr.ph58.i, %.lr.ph58.i.prol.loopexit
+  %.lcssa = phi double [ %.lcssa.unr, %.lr.ph58.i.prol.loopexit ], [ %i.cj, %.lr.ph58.i ]
   %i.ck = getelementptr inbounds nuw [8 x i8], ptr %i.bp, i64 %.15060.i
   %i.cl = load double, ptr %i.ck, align 8, !tbaa !18
-  %i.cm = fdiv double %5, %i.cl
-  store double %i.cm, ptr %3, align 8, !tbaa !18
+  %i.cm = fdiv double %.lcssa, %i.cl
+  store double %i.cm, ptr %2, align 8, !tbaa !18
   %i.cn = add nsw i64 %.15060.i, -1
   %i.co = icmp sgt i64 %.15060.i, 0
   %indvar.next = add i64 %indvar, 1

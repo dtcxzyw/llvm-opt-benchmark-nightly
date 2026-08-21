@@ -34,7 +34,7 @@ bb.a:
   %i.k = sext i32 %narrow to i64                  ; 4 uses
   %i.l = getelementptr inbounds [8 x i8], ptr %5, i64 %i.k ; 52 uses
   %i.m = getelementptr inbounds i8, ptr %7, i64 -8 ; 4 uses
-  %i.n = getelementptr inbounds i8, ptr %8, i64 -8 ; 4 uses
+  %i.n = getelementptr inbounds i8, ptr %8, i64 -8 ; 3 uses
   %i.o = load i32, ptr %12, align 4, !tbaa !8     ; 4 uses
   %narrow780 = xor i32 %i.o, -1
   %i.p = sext i32 %narrow780 to i64               ; 3 uses
@@ -265,7 +265,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   %.1754864 = phi i32 [ 1, %.lr.ph867 ], [ %.2755856, %bb.au ]
   %.0765863 = phi i32 [ %i.cr, %.lr.ph867 ], [ %i.alk, %bb.au ] ; 29 uses
   store i32 %i.cq, ptr %i.a, align 4, !tbaa !8
-  %i.eo = add nsw i32 %.0765863, -1               ; 9 uses
+  %i.eo = add nsw i32 %.0765863, -1               ; 8 uses
   %i.ep = mul nsw i32 %i.eo, %i.j                 ; 3 uses
   %i.eq = add nsw i32 %i.ep, %.0765863
   %i.er = sext i32 %i.eq to i64
@@ -288,7 +288,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   %i.fi = add nsw i32 %i.fe, %.0765863
   %i.fj = sext i32 %i.fi to i64
   %i.fk = getelementptr inbounds [8 x i8], ptr %i.l, i64 %i.fj ; 2 uses
-  %i.fl = sext i32 %.0765863 to i64               ; 5 uses
+  %i.fl = sext i32 %.0765863 to i64               ; 4 uses
   %i.fm = sext i32 %i.et to i64
   %i.fn = add i32 %.0765863, 1                    ; 2 uses
   %i.fo = sext i32 %i.eo to i64                   ; 3 uses
@@ -421,7 +421,7 @@ bb.p:                                             ; preds = %bb.n, %bb.o
   br i1 %.not784.not, label %.lr.ph817, label %._crit_edge818, !llvm.loop !15
 
 ._crit_edge818:                                   ; preds = %.lr.ph817, %bb.o, %bb.p, %.preheader805
-  %.0759.lcssa = phi i32 [ %.0765863, %.preheader805 ], [ %.0758855, %bb.p ], [ %indvars882, %bb.o ], [ %indvars882, %.lr.ph817 ] ; 18 uses
+  %.0759.lcssa = phi i32 [ %.0765863, %.preheader805 ], [ %.0758855, %bb.p ], [ %indvars882, %bb.o ], [ %indvars882, %.lr.ph817 ] ; 17 uses
   %i.iq = load i32, ptr %3, align 4, !tbaa !8
   %i.ir = icmp sgt i32 %.0759.lcssa, %i.iq
   br i1 %i.ir, label %bb.q, label %bb.r
@@ -824,26 +824,21 @@ scalar.ph1082:                                    ; preds = %scalar.ph1082.prol.
 
 bb.am:                                            ; preds = %bb.r
   %i.akc = icmp eq i32 %.0759.lcssa, %.0765863
-  br i1 %i.akc, label %bb.an, label %15
+  %14 = getelementptr inbounds [8 x i8], ptr %i.n, i64 %i.fl ; 2 uses
+  br i1 %i.akc, label %bb.an, label %bb.ao
 
 bb.an:                                            ; preds = %bb.am
   %i.akd = load double, ptr %i.fa, align 8, !tbaa !9
   %i.ake = getelementptr inbounds [8 x i8], ptr %i.m, i64 %i.fl
   store double %i.akd, ptr %i.ake, align 8, !tbaa !9
-  %14 = getelementptr inbounds [8 x i8], ptr %i.n, i64 %i.fl
   store double 0.000000e+00, ptr %14, align 8, !tbaa !9
   br label %bb.au
 
-15:                                               ; preds = %bb.am
-  %16 = icmp eq i32 %.0759.lcssa, %i.eo
-  br i1 %16, label %bb.ao, label %bb.au
-
-bb.ao:                                            ; preds = %15
+bb.ao:                                            ; preds = %bb.am
   %i.akf = getelementptr inbounds [8 x i8], ptr %i.m, i64 %i.fo
   %i.akg = getelementptr inbounds [8 x i8], ptr %i.n, i64 %i.fo
   %i.akh = getelementptr inbounds [8 x i8], ptr %i.m, i64 %i.fl
-  %17 = getelementptr inbounds [8 x i8], ptr %i.n, i64 %i.fl
-  call void @dlanv2_(ptr noundef %i.fd, ptr noundef %i.fh, ptr noundef %i.es, ptr noundef %i.fk, ptr noundef nonnull %i.akf, ptr noundef nonnull %i.akg, ptr noundef nonnull %i.akh, ptr noundef nonnull %17, ptr noundef nonnull %i.d, ptr noundef nonnull %i.e) #5
+  call void @dlanv2_(ptr noundef %i.fd, ptr noundef %i.fh, ptr noundef %i.es, ptr noundef %i.fk, ptr noundef nonnull %i.akf, ptr noundef nonnull %i.akg, ptr noundef nonnull %i.akh, ptr noundef nonnull %14, ptr noundef nonnull %i.d, ptr noundef nonnull %i.e) #5
   %i.aki = load i32, ptr %0, align 4, !tbaa !8
   %.not800 = icmp eq i32 %i.aki, 0
   br i1 %.not800, label %bb.as, label %bb.ap
@@ -896,7 +891,7 @@ bb.at:                                            ; preds = %bb.as
   call void @drot_(ptr noundef nonnull %i.g, ptr noundef %i.alf, ptr noundef nonnull @c__1, ptr noundef %i.alj, ptr noundef nonnull @c__1, ptr noundef nonnull %i.d, ptr noundef nonnull %i.e) #5
   br label %bb.au
 
-bb.au:                                            ; preds = %15, %bb.at, %bb.as, %bb.an
+bb.au:                                            ; preds = %bb.at, %bb.as, %bb.an
   %i.alk = add nsw i32 %.0759.lcssa, -1
   %i.all = load i32, ptr %3, align 4, !tbaa !8    ; 2 uses
   %.not = icmp sgt i32 %.0759.lcssa, %i.all
