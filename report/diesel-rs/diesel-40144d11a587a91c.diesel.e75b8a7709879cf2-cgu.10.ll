@@ -204,8 +204,8 @@ bb.a:
   %switch.i.i.i.i.i.3 = icmp samesign ult i32 %.val.i.i.3, 4
   %i.x = zext i1 %switch.i.i.i.i.i.3 to i64
   %i.y = add i64 %i.u, %i.x                       ; 3 uses
-  %i.z = add nuw i64 %.sroa.04.0.i.i, 4           ; 2 uses
-  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
+  %i.z = add nuw nsw i64 %.sroa.04.0.i.i, 4       ; 2 uses
+  %niter.next.3 = add nuw nsw i64 %niter, 4       ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.loopexit.loopexit.unr-lcssa, label %.preheader.i
 

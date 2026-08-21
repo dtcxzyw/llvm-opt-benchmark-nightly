@@ -205,7 +205,7 @@ bb.ap:                                            ; preds = %bb.am
   %i.kk = zext i8 %i.kj to i64
   %i.kl = xor i64 %i.kh, %i.kk
   %i.km = mul i64 %i.kl, 1099511628211            ; 3 uses
-  %niter376.next.7 = add nuw i64 %niter376, 8     ; 2 uses
+  %niter376.next.7 = add nuw nsw i64 %niter376, 8 ; 2 uses
   %niter376.ncmp.7 = icmp eq i64 %niter376.next.7, %unroll_iter375
   br i1 %niter376.ncmp.7, label %.loopexit71.loopexit.i.i.i.i.i.i.unr-lcssa, label %.lr.ph.i.i.i.i.i.i.i.i
 
@@ -608,7 +608,7 @@ bb.bh:                                            ; preds = %bb.be
   %i.qy = zext i8 %i.qx to i64
   %i.qz = xor i64 %i.qv, %i.qy
   %i.ra = mul i64 %i.qz, 1099511628211            ; 3 uses
-  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
+  %niter.next.7 = add nuw nsw i64 %niter, 8       ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %.loopexit74.loopexit.i.i.i.i.i.i.unr-lcssa, label %.lr.ph.i.i65.i.i.i.i.i.i
 
@@ -1011,7 +1011,7 @@ bb.hs:                                            ; preds = %bb.jz, %.lr.ph.i
   %i.aoh = phi ptr [ inttoptr (i64 4 to ptr), %.lr.ph.i ], [ %i.bdf, %bb.jz ]
   %i.aoi = phi i64 [ 0, %.lr.ph.i ], [ %i.aoj, %bb.jz ] ; 9 uses
   %.sroa.0.0233.i = phi i32 [ 0, %.lr.ph.i ], [ %.sroa.0.3.i, %bb.jz ] ; 4 uses
-  %i.aoj = add nuw i64 %i.aoi, 1                  ; 3 uses
+  %i.aoj = add nuw nsw i64 %i.aoi, 1              ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !802)
   call void @llvm.experimental.noalias.scope.decl(metadata !803)
   %i.aok = icmp ult i64 %i.aoi, %i.anq            ; 4 uses
@@ -1221,7 +1221,7 @@ bb.ih:                                            ; preds = %bb.ig, %bb.if
   %i.arx = zext i8 %i.arw to i64
   %i.ary = xor i64 %i.aru, %i.arx
   %i.arz = mul i64 %i.ary, 1099511628211          ; 3 uses
-  %niter394.next.7 = add nuw i64 %niter394, 8     ; 2 uses
+  %niter394.next.7 = add nuw nsw i64 %niter394, 8 ; 2 uses
   %niter394.ncmp.7 = icmp eq i64 %niter394.next.7, %unroll_iter393
   br i1 %niter394.ncmp.7, label %.loopexit192.loopexit.i.unr-lcssa, label %.lr.ph.i.i.i
 
@@ -1624,7 +1624,7 @@ bb.jj:                                            ; preds = %bb.hw, %bb.hv
   %i.ayf = zext i8 %i.aye to i64
   %i.ayg = xor i64 %i.ayc, %i.ayf
   %i.ayh = mul i64 %i.ayg, 1099511628211          ; 3 uses
-  %niter385.next.7 = add nuw i64 %niter385, 8     ; 2 uses
+  %niter385.next.7 = add nuw nsw i64 %niter385, 8 ; 2 uses
   %niter385.ncmp.7 = icmp eq i64 %niter385.next.7, %unroll_iter384
   br i1 %niter385.ncmp.7, label %.loopexit201.loopexit.i.unr-lcssa, label %.lr.ph.i.i53.i
 
@@ -2027,7 +2027,7 @@ bb.s:                                             ; preds = %bb.r, %bb.q
   %i.eg = zext i8 %i.ef to i64
   %i.eh = xor i64 %i.ed, %i.eg
   %i.ei = mul i64 %i.eh, 1099511628211            ; 3 uses
-  %niter67.next.7 = add nuw i64 %niter67, 8       ; 2 uses
+  %niter67.next.7 = add nuw nsw i64 %niter67, 8   ; 2 uses
   %niter67.ncmp.7 = icmp eq i64 %niter67.next.7, %unroll_iter66
   br i1 %niter67.ncmp.7, label %.loopexit190.loopexit.unr-lcssa, label %.lr.ph.i.i
 
@@ -2430,7 +2430,7 @@ bb.au:                                            ; preds = %bb.h, %bb.g
   %i.ko = zext i8 %i.kn to i64
   %i.kp = xor i64 %i.kl, %i.ko
   %i.kq = mul i64 %i.kp, 1099511628211            ; 3 uses
-  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
+  %niter.next.7 = add nuw nsw i64 %niter, 8       ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %.loopexit199.loopexit.unr-lcssa, label %.lr.ph.i.i53
 
@@ -2833,7 +2833,7 @@ bb.q:                                             ; preds = %bb.f, %bb.e
   %i.dx = zext i8 %i.dw to i64
   %i.dy = xor i64 %i.du, %i.dx
   %i.dz = mul i64 %i.dy, 1099511628211            ; 3 uses
-  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
+  %niter.next.7 = add nuw nsw i64 %niter, 8       ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %.loopexit162.loopexit.unr-lcssa, label %.lr.ph.i.i
 
@@ -3236,7 +3236,7 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   %i.eh = zext i8 %i.eg to i64
   %i.ei = xor i64 %i.ee, %i.eh
   %i.ej = mul i64 %i.ei, 1099511628211            ; 3 uses
-  %niter275.next.7 = add nuw i64 %niter275, 8     ; 2 uses
+  %niter275.next.7 = add nuw nsw i64 %niter275, 8 ; 2 uses
   %niter275.ncmp.7 = icmp eq i64 %niter275.next.7, %unroll_iter274
   br i1 %niter275.ncmp.7, label %.loopexit145.loopexit.unr-lcssa, label %.lr.ph.i.i
 
@@ -3623,7 +3623,7 @@ bb.af:                                            ; preds = %bb.ae, %bb.ad
   %i.kc = zext i8 %i.kb to i64
   %i.kd = xor i64 %i.jz, %i.kc
   %i.ke = mul i64 %i.kd, 1099511628211            ; 3 uses
-  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
+  %niter.next.7 = add nuw nsw i64 %niter, 8       ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %.loopexit148.loopexit.unr-lcssa, label %.lr.ph.i.i54
 

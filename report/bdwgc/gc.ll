@@ -205,15 +205,15 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.new
   %i.h = select i1 %i.f, i64 %i.g, i64 1152921504606846975, !prof !6
   %i.i = getelementptr inbounds nuw [8 x i8], ptr getelementptr inbounds nuw (i8, ptr @GC_arrays, i64 5608), i64 %.06
   store i64 %i.h, ptr %i.i, align 8
-  %i.j = add nuw i64 %.06, 1                      ; 3 uses
+  %i.j = add nuw nsw i64 %.06, 1                  ; 3 uses
   %i.k = icmp ult i64 %i.j, %i.d
   %.reass.1 = add i64 %i.j, %invariant.op
   %i.l = lshr i64 %.reass.1, 4
   %i.m = select i1 %i.k, i64 %i.l, i64 1152921504606846975, !prof !6
   %i.n = getelementptr inbounds nuw [8 x i8], ptr getelementptr inbounds nuw (i8, ptr @GC_arrays, i64 5608), i64 %i.j
   store i64 %i.m, ptr %i.n, align 8
-  %i.o = add nuw i64 %.06, 2                      ; 2 uses
-  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
+  %i.o = add nuw nsw i64 %.06, 2                  ; 2 uses
+  %niter.next.1 = add nuw nsw i64 %niter, 2       ; 2 uses
   %niter.ncmp.1.not = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1.not, label %._crit_edge.loopexit.unr-lcssa, label %bb.b, !llvm.loop !156
 
@@ -616,7 +616,7 @@ bb.c:                                             ; preds = %bb.b
   %i.ai = getelementptr inbounds nuw i8, ptr %.05074, i64 136
   store i64 %i.c, ptr %i.ai, align 8
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ag, i64 %i.k ; 2 uses
-  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
+  %niter.next.7 = add nuw nsw i64 %niter, 8       ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %.loopexit.loopexit.unr-lcssa, label %.lr.ph77, !llvm.loop !346
 
