@@ -204,22 +204,22 @@ scalar.ph779:                                     ; preds = %scalar.ph779.prehea
   br i1 %exitcond.not.i, label %.lr.ph59.i.preheader, label %scalar.ph779, !llvm.loop !47
 
 .lr.ph59.i:                                       ; preds = %.lr.ph59.i.preheader, %._crit_edge.thread.i
-  %.04758.i = phi i64 [ %i.gx, %._crit_edge.thread.i ], [ 0, %.lr.ph59.i.preheader ] ; 8 uses
-  %3 = xor i64 %.04758.i, -1                      ; 2 uses
-  %4 = add i64 %i.l, %3                           ; 2 uses
-  %5 = getelementptr inbounds nuw [4 x i8], ptr %i.da, i64 %.04758.i ; 2 uses
-  %6 = load i32, ptr %5, align 4, !tbaa !34       ; 4 uses
-  %i.gx = add nuw i64 %.04758.i, 1                ; 5 uses
-  %min.iters.check790 = icmp ult i64 %4, 8
+  %.04758.i = phi i64 [ %5, %._crit_edge.thread.i ], [ 0, %.lr.ph59.i.preheader ] ; 8 uses
+  %3 = getelementptr inbounds nuw [4 x i8], ptr %i.da, i64 %.04758.i ; 2 uses
+  %4 = load i32, ptr %3, align 4, !tbaa !34       ; 4 uses
+  %5 = add nuw i64 %.04758.i, 1                   ; 5 uses
+  %6 = xor i64 %.04758.i, -1                      ; 2 uses
+  %i.gx = add i64 %i.l, %6                        ; 2 uses
+  %min.iters.check790 = icmp ult i64 %i.gx, 8
   br i1 %min.iters.check790, label %.lr.ph57.i.preheader, label %vector.ph791
 
 vector.ph791:                                     ; preds = %.lr.ph59.i
-  %i.gy = and i64 %3, 3                           ; 2 uses
-  %n.vec792 = sub nuw i64 %4, %i.gy               ; 2 uses
-  %i.gz = add i64 %i.gx, %n.vec792
-  %broadcast.splatinsert793 = insertelement <2 x i32> poison, i32 %6, i64 0
+  %i.gy = and i64 %6, 3                           ; 2 uses
+  %n.vec792 = sub nuw i64 %i.gx, %i.gy            ; 2 uses
+  %i.gz = add i64 %5, %n.vec792
+  %broadcast.splatinsert793 = insertelement <2 x i32> poison, i32 %4, i64 0
   %broadcast.splat794 = shufflevector <2 x i32> %broadcast.splatinsert793, <2 x i32> poison, <2 x i32> zeroinitializer ; 2 uses
-  %i.ha = getelementptr inbounds nuw [4 x i8], ptr %i.da, i64 %i.gx
+  %i.ha = getelementptr inbounds nuw [4 x i8], ptr %i.da, i64 %5
   br label %vector.body795
 
 vector.body795:                                   ; preds = %vector.body795, %vector.ph791
@@ -256,15 +256,15 @@ middle.block807:                                  ; preds = %vector.body795
   %i.ho = call <2 x i64> @llvm.umin.v2i64(<2 x i64> %i.hf, <2 x i64> %i.hn)
   %rdx.minmax810 = select <2 x i1> %i.hl, <2 x i64> %i.ho, <2 x i64> %i.hn
   %i.hp = call i64 @llvm.vector.reduce.umin.v2i64(<2 x i64> %rdx.minmax810)
-  %i.hq = add i64 %i.gx, %i.hp
-  %i.hr = icmp eq i32 %i.hk, %6
+  %i.hq = add i64 %5, %i.hp
+  %i.hr = icmp eq i32 %i.hk, %4
   %i.hs = select i1 %i.hr, i64 %.04758.i, i64 %i.hq ; 2 uses
   %cmp.n811 = icmp eq i64 %i.gy, 0
   br i1 %cmp.n811, label %._crit_edge.i, label %.lr.ph57.i.preheader
 
 .lr.ph57.i.preheader:                             ; preds = %.lr.ph59.i, %middle.block807
-  %.056.i.ph = phi i64 [ %i.gx, %.lr.ph59.i ], [ %i.gz, %middle.block807 ]
-  %.04455.i.ph = phi i32 [ %6, %.lr.ph59.i ], [ %i.hk, %middle.block807 ]
+  %.056.i.ph = phi i64 [ %5, %.lr.ph59.i ], [ %i.gz, %middle.block807 ]
+  %.04455.i.ph = phi i32 [ %4, %.lr.ph59.i ], [ %i.hk, %middle.block807 ]
   %.04554.i.ph = phi i64 [ %.04758.i, %.lr.ph59.i ], [ %i.hs, %middle.block807 ]
   br label %.lr.ph57.i
 
@@ -289,8 +289,8 @@ middle.block807:                                  ; preds = %vector.body795
 bb.f:                                             ; preds = %._crit_edge.i
   %i.hx = getelementptr inbounds nuw [4 x i8], ptr %i.da, i64 %.146.i.lcssa ; 2 uses
   %i.hy = load i32, ptr %i.hx, align 4, !tbaa !34
-  store i32 %i.hy, ptr %5, align 4, !tbaa !34
-  store i32 %6, ptr %i.hx, align 4, !tbaa !34
+  store i32 %i.hy, ptr %3, align 4, !tbaa !34
+  store i32 %4, ptr %i.hx, align 4, !tbaa !34
   %i.hz = getelementptr inbounds nuw [4 x i8], ptr %i.go, i64 %.04758.i ; 2 uses
   %i.ia = getelementptr inbounds nuw [4 x i8], ptr %i.go, i64 %.146.i.lcssa ; 2 uses
   %i.ib = load i32, ptr %i.hz, align 4, !tbaa !34
