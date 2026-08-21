@@ -204,8 +204,8 @@ declare void @free(ptr allocptr noundef captures(none)) local_unnamed_addr #3
 ; Function Attrs: nounwind uwtable
 define dso_local ptr @cli_hex2str(ptr noundef %0) local_unnamed_addr #0 {
 bb.a:
-  %i.a = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %0) #14
-  %i.b = trunc i64 %i.a to i32                    ; 5 uses
+  %i.a = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %0) #14 ; 2 uses
+  %i.b = trunc i64 %i.a to i32                    ; 4 uses
   %i.c = and i32 %i.b, 1
   %.not = icmp eq i32 %i.c, 0
   br i1 %.not, label %bb.c, label %bb.b
@@ -224,11 +224,15 @@ bb.c:                                             ; preds = %bb.a
 
 .preheader:                                       ; preds = %bb.c
   %i.h = icmp sgt i32 %i.b, 0
-  br i1 %i.h, label %.lr.ph, label %.loopexit
+  br i1 %i.h, label %.lr.ph.preheader, label %.loopexit
 
-.lr.ph:                                           ; preds = %.preheader, %bb.m
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.m ], [ 0, %.preheader ] ; 2 uses
-  %.02240 = phi ptr [ %i.an, %bb.m ], [ %i.g, %.preheader ] ; 2 uses
+.lr.ph.preheader:                                 ; preds = %.preheader
+  %sext = and i64 %i.a, 2147483647
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.m
+  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.m ] ; 2 uses
+  %.02240 = phi ptr [ %i.g, %.lr.ph.preheader ], [ %i.an, %bb.m ] ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 %indvars.iv ; 2 uses
   %i.j = load i8, ptr %i.i, align 1, !tbaa !8     ; 3 uses
   %i.k = sext i8 %i.j to i32                      ; 2 uses
@@ -317,9 +321,8 @@ bb.m:                                             ; preds = %cli_hex2int.exit35
   %i.an = getelementptr inbounds nuw i8, ptr %.02240, i64 1
   store i8 %i.am, ptr %.02240, align 1, !tbaa !8
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %1 = trunc nuw i64 %indvars.iv.next to i32
-  %2 = icmp slt i32 %1, %i.b
-  br i1 %2, label %.lr.ph, label %.loopexit, !llvm.loop !18
+  %1 = icmp samesign ult i64 %indvars.iv.next, %sext
+  br i1 %1, label %.lr.ph, label %.loopexit, !llvm.loop !18
 
 cli_hex2int.exit35.thread:                        ; preds = %bb.g, %cli_hex2int.exit35, %bb.l
   tail call void @free(ptr noundef %i.g) #15

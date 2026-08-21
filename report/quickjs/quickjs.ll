@@ -205,8 +205,8 @@ bb.a:
   %i.v = load i8, ptr %i.u, align 1, !tbaa !35
   %i.w = zext i8 %i.v to i32
   %i.x = add i32 %i.s, %i.w                       ; 3 uses
-  %i.y = add nuw i64 %.010.i, 4                   ; 2 uses
-  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
+  %i.y = add nuw nsw i64 %.010.i, 4               ; 2 uses
+  %niter.next.3 = add nuw nsw i64 %niter, 4       ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %hash_string8.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !290
 
@@ -609,7 +609,7 @@ bb.aa:                                            ; preds = %bb.z, %bb.y
   %i.fg = add i32 %.val.i.3, %i.fc
   %i.fh = mul i32 %i.fg, -1640562687              ; 3 uses
   %i.fi = add nuw i64 %i.es, 16                   ; 2 uses
-  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
+  %niter.next.3 = add nuw nsw i64 %niter, 4       ; 2 uses
   %niter.ncmp.3.not = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3.not, label %._crit_edge.loopexit.i.unr-lcssa, label %.lr.ph.i58, !llvm.loop !948
 
@@ -1012,7 +1012,7 @@ bb.f:                                             ; preds = %bb.e
   %i.bc = add i32 %.val.i62.i.3, %i.ay
   %i.bd = mul i32 %i.bc, -1640562687              ; 3 uses
   %i.be = add nuw nsw i64 %i.ao, 16               ; 2 uses
-  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
+  %niter.next.3 = add nuw nsw i64 %niter, 4       ; 2 uses
   %niter.ncmp.3.not = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3.not, label %._crit_edge.loopexit.i.i.unr-lcssa, label %.lr.ph.i.i, !llvm.loop !948
 
@@ -1415,14 +1415,12 @@ bb.ah:                                            ; preds = %JS_ThrowOutOfMemory
   %exitcond.not = icmp eq i64 %indvars.iv.next, %i.bw
   br i1 %exitcond.not, label %.preheader195, label %bb.t, !llvm.loop !1778
 
-.lr.ph227:                                        ; preds = %.lr.ph227.preheader, %find_prop_key.exit.thread
-  %indvars.iv273 = phi i64 [ 1, %.lr.ph227.preheader ], [ %indvars.iv.next274, %find_prop_key.exit.thread ] ; 4 uses
+.lr.ph227:                                        ; preds = %find_prop_key.exit.thread, %.lr.ph227.preheader
+  %indvars.iv273 = phi i64 [ 1, %.lr.ph227.preheader ], [ %indvars.iv.next274, %find_prop_key.exit.thread ] ; 3 uses
   %i.ds = getelementptr inbounds nuw [8 x i8], ptr %.2140, i64 %indvars.iv273
   %i.dt = getelementptr inbounds nuw i8, ptr %i.ds, i64 4
   %i.du = load i32, ptr %i.dt, align 4, !tbaa !522
-  %5 = trunc nuw i64 %indvars.iv273 to i32
-  %6 = icmp sgt i32 %5, 0
-  br i1 %6, label %.lr.ph.i, label %find_prop_key.exit.thread
+  br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph227, %bb.ai
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.ai ], [ 0, %.lr.ph227 ] ; 2 uses
@@ -1441,7 +1439,7 @@ find_prop_key.exit:                               ; preds = %.lr.ph.i
   %i.dz = tail call { i64, i64 } (ptr, ptr, ...) @JS_ThrowTypeError(ptr noundef nonnull %0, ptr noundef nonnull @.str.327) ; 0 uses
   br label %js_get_length32.exit.thread
 
-find_prop_key.exit.thread:                        ; preds = %bb.ai, %.lr.ph227
+find_prop_key.exit.thread:                        ; preds = %bb.ai
   %indvars.iv.next274 = add nuw nsw i64 %indvars.iv273, 1 ; 2 uses
   %exitcond277.not = icmp eq i64 %indvars.iv.next274, %wide.trip.count276
   br i1 %exitcond277.not, label %._crit_edge, label %.lr.ph227, !llvm.loop !1780
@@ -1844,7 +1842,7 @@ js_dup.exit.1:                                    ; preds = %bb.q, %js_dup.exit
   store i64 %i.bs, ptr %.sroa.47.0..sroa_idx.1, align 8, !tbaa !72
   %i.bz = add nuw nsw i64 %.077146, 2             ; 2 uses
   %i.ca = getelementptr inbounds nuw i8, ptr %.0147, i64 32 ; 3 uses
-  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
+  %niter.next.1 = add nuw nsw i64 %niter, 2       ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !2114
 
@@ -2247,7 +2245,7 @@ bb.w:                                             ; preds = %u8a_hex_nibble.exit
   %i.bx = shl nuw nsw i32 %.0.i.i, 4
   %i.by = or i32 %.0.i37.i, %i.bx
   %i.bz = trunc i32 %i.by to i8
-  %i.ca = add nuw i64 %.02543.i, 1                ; 2 uses
+  %i.ca = add nuw nsw i64 %.02543.i, 1            ; 2 uses
   %i.cb = getelementptr inbounds nuw i8, ptr %i.w, i64 %.02543.i
   store i8 %i.bz, ptr %i.cb, align 1, !tbaa !35
   %i.cc = add i64 %.02444.i, 2                    ; 2 uses

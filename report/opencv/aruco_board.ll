@@ -204,10 +204,10 @@ bb.i:                                             ; preds = %bb.g
 
 _ZNK2cv11_InputArray6getMatEi.exit:               ; preds = %bb.h, %bb.i
   %i.m = invoke noundef i64 @_ZNK2cv3Mat5totalEv(ptr noundef nonnull align 8 dereferenceable(208) %4)
-          to label %bb.j unwind label %bb.k
+          to label %bb.j unwind label %bb.k       ; 3 uses
 
 bb.j:                                             ; preds = %_ZNK2cv11_InputArray6getMatEi.exit
-  %i.n = trunc i64 %i.m to i32                    ; 4 uses
+  %i.n = trunc i64 %i.m to i32
   %i.o = icmp ult i32 %i.n, 3
   br i1 %i.o, label %bb.av, label %bb.l
 
@@ -492,15 +492,18 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit61: ; preds = %bb.
   %i.fa = load i32, ptr %i.ez, align 8
   %i.fb = icmp eq i32 %i.fa, 1
   %i.fc = getelementptr inbounds nuw i8, ptr %4, i64 12
-  %i.fd = load i32, ptr %i.fc, align 4            ; 5 uses
+  %i.fd = load i32, ptr %i.fc, align 4            ; 4 uses
   %i.fe = getelementptr inbounds nuw i8, ptr %4, i64 128
   %i.ff = load i64, ptr %i.fe, align 8            ; 4 uses
-  br i1 %i.at, label %_ZN2cv3Mat2atIiEERT_i.exit67.us, label %.lr.ph.split
+  br i1 %i.at, label %_ZN2cv3Mat2atIiEERT_i.exit67.us.preheader, label %.lr.ph.split
 
-_ZN2cv3Mat2atIiEERT_i.exit67.us:                  ; preds = %.lr.ph, %_ZN2cv3Mat2atIiEERT_i.exit67.us
-  %.090.us = phi i32 [ %11, %_ZN2cv3Mat2atIiEERT_i.exit67.us ], [ 2, %.lr.ph ] ; 2 uses
-  %10 = sext i32 %.090.us to i64
-  %i.fg = getelementptr inbounds [4 x i8], ptr %i.dr, i64 %10
+_ZN2cv3Mat2atIiEERT_i.exit67.us.preheader:        ; preds = %.lr.ph
+  %wide.trip.count156 = and i64 %i.m, 4294967295
+  br label %_ZN2cv3Mat2atIiEERT_i.exit67.us
+
+_ZN2cv3Mat2atIiEERT_i.exit67.us:                  ; preds = %_ZN2cv3Mat2atIiEERT_i.exit67.us, %_ZN2cv3Mat2atIiEERT_i.exit67.us.preheader
+  %indvars.iv152 = phi i64 [ 2, %_ZN2cv3Mat2atIiEERT_i.exit67.us.preheader ], [ %indvars.iv.next153, %_ZN2cv3Mat2atIiEERT_i.exit67.us ] ; 2 uses
+  %i.fg = getelementptr inbounds nuw [4 x i8], ptr %i.dr, i64 %indvars.iv152
   %i.fh = load i32, ptr %i.fg, align 4, !tbaa !35
   %i.fi = sext i32 %i.fh to i64
   %i.fj = getelementptr inbounds nuw [12 x i8], ptr %i.dt, i64 %i.fi
@@ -513,8 +516,8 @@ _ZN2cv3Mat2atIiEERT_i.exit67.us:                  ; preds = %.lr.ph, %_ZN2cv3Mat
   %i.fq = fadd double %i.ey, %i.fp
   %i.fr = call noundef double @llvm.fabs.f64(double %i.fq)
   %i.fs = fcmp ule double %i.fr, f0x3EB0C6F7A0B5ED8D ; 2 uses
-  %11 = add nuw i32 %.090.us, 1                   ; 2 uses
-  %exitcond136.not = icmp ne i32 %11, %i.n
+  %indvars.iv.next153 = add nuw nsw i64 %indvars.iv152, 1 ; 2 uses
+  %exitcond136.not = icmp ne i64 %indvars.iv.next153, %wide.trip.count156
   %or.cond.not = select i1 %i.fs, i1 %exitcond136.not, i1 false
   br i1 %or.cond.not, label %_ZN2cv3Mat2atIiEERT_i.exit67.us, label %.critedge, !llvm.loop !301
 
@@ -526,12 +529,12 @@ _ZN2cv3Mat2atIiEERT_i.exit67.us:                  ; preds = %.lr.ph, %_ZN2cv3Mat
   %i.fx = load i32, ptr %i.fw, align 4
   %i.fy = icmp eq i32 %i.fx, 1
   %or.cond.i65 = select i1 %i.fv, i1 true, i1 %i.fy
+  %wide.trip.count150 = and i64 %i.m, 4294967295  ; 2 uses
   br i1 %or.cond.i65, label %_ZN2cv3Mat2atIiEERT_i.exit67.us97.us, label %.lr.ph.split.split.split
 
 _ZN2cv3Mat2atIiEERT_i.exit67.us97.us:             ; preds = %.lr.ph.split, %_ZN2cv3Mat2atIiEERT_i.exit67.us97.us
-  %.090.us95.us = phi i32 [ %13, %_ZN2cv3Mat2atIiEERT_i.exit67.us97.us ], [ 2, %.lr.ph.split ] ; 2 uses
-  %12 = sext i32 %.090.us95.us to i64
-  %i.fz = getelementptr inbounds [4 x i8], ptr %i.dr, i64 %12
+  %indvars.iv146 = phi i64 [ %indvars.iv.next147, %_ZN2cv3Mat2atIiEERT_i.exit67.us97.us ], [ 2, %.lr.ph.split ] ; 2 uses
+  %i.fz = getelementptr inbounds nuw [4 x i8], ptr %i.dr, i64 %indvars.iv146
   %i.ga = load i32, ptr %i.fz, align 4, !tbaa !35
   %i.gb = sext i32 %i.ga to i64
   %i.gc = getelementptr inbounds nuw [12 x i8], ptr %i.dt, i64 %i.gb
@@ -544,45 +547,45 @@ _ZN2cv3Mat2atIiEERT_i.exit67.us97.us:             ; preds = %.lr.ph.split, %_ZN2
   %i.gj = fadd double %i.ey, %i.gi
   %i.gk = call noundef double @llvm.fabs.f64(double %i.gj)
   %i.gl = fcmp ule double %i.gk, f0x3EB0C6F7A0B5ED8D ; 2 uses
-  %13 = add nuw i32 %.090.us95.us, 1              ; 2 uses
-  %exitcond134.not = icmp ne i32 %13, %i.n
+  %indvars.iv.next147 = add nuw nsw i64 %indvars.iv146, 1 ; 2 uses
+  %exitcond134.not = icmp ne i64 %indvars.iv.next147, %wide.trip.count150
   %or.cond172.not = select i1 %i.gl, i1 %exitcond134.not, i1 false
   br i1 %or.cond172.not, label %_ZN2cv3Mat2atIiEERT_i.exit67.us97.us, label %.critedge, !llvm.loop !301
 
 .lr.ph.split.split.split:                         ; preds = %.lr.ph.split, %_ZN2cv3Mat2atIiEERT_i.exit67
-  %.090 = phi i32 [ %20, %_ZN2cv3Mat2atIiEERT_i.exit67 ], [ 2, %.lr.ph.split ] ; 7 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %_ZN2cv3Mat2atIiEERT_i.exit67 ], [ 2, %.lr.ph.split ] ; 7 uses
   br i1 %i.fb, label %bb.am, label %bb.an
 
 bb.am:                                            ; preds = %.lr.ph.split.split.split
-  %14 = sext i32 %.090 to i64
-  %i.gm = mul i64 %i.ff, %14
+  %i.gm = mul i64 %i.ff, %indvars.iv
   %i.gn = getelementptr inbounds nuw i8, ptr %i.dr, i64 %i.gm
-  %15 = sext i32 %.090 to i64
-  %i.go = mul i64 %i.ff, %15
+  %i.go = mul i64 %i.ff, %indvars.iv
   %i.gp = getelementptr inbounds nuw i8, ptr %i.dr, i64 %i.go
   br label %_ZN2cv3Mat2atIiEERT_i.exit67
 
 bb.an:                                            ; preds = %.lr.ph.split.split.split
-  %i.gq = sdiv i32 %.090, %i.fd                   ; 2 uses
+  %10 = trunc nsw i64 %indvars.iv to i32
+  %i.gq = sdiv i32 %10, %i.fd                     ; 2 uses
   %i.gr = mul nsw i32 %i.gq, %i.fd
-  %16 = sub nsw i32 %.090, %i.gr
+  %11 = sext i32 %i.gr to i64
+  %12 = sub nsw i64 %indvars.iv, %11
   %i.gs = sext i32 %i.gq to i64
   %i.gt = mul i64 %i.ff, %i.gs
   %i.gu = getelementptr inbounds nuw i8, ptr %i.dr, i64 %i.gt
-  %17 = sext i32 %16 to i64
-  %18 = getelementptr inbounds [4 x i8], ptr %i.gu, i64 %17
-  %i.gv = sdiv i32 %.090, %i.fd                   ; 2 uses
-  %i.gw = mul nsw i32 %i.gv, %i.fd                ; 0 uses
-  %.recomposed = srem i32 %.090, %i.fd
+  %13 = getelementptr inbounds [4 x i8], ptr %i.gu, i64 %12
+  %14 = trunc nsw i64 %indvars.iv to i32
+  %i.gv = sdiv i32 %14, %i.fd                     ; 2 uses
+  %i.gw = mul nsw i32 %i.gv, %i.fd
+  %15 = sext i32 %i.gw to i64
+  %16 = sub nsw i64 %indvars.iv, %15
   %i.gx = sext i32 %i.gv to i64
   %i.gy = mul i64 %i.ff, %i.gx
   %i.gz = getelementptr inbounds nuw i8, ptr %i.dr, i64 %i.gy
-  %19 = sext i32 %.recomposed to i64
-  %i.ha = getelementptr inbounds [4 x i8], ptr %i.gz, i64 %19
+  %i.ha = getelementptr inbounds [4 x i8], ptr %i.gz, i64 %16
   br label %_ZN2cv3Mat2atIiEERT_i.exit67
 
 _ZN2cv3Mat2atIiEERT_i.exit67:                     ; preds = %bb.an, %bb.am
-  %.pn165.in.in = phi ptr [ %18, %bb.an ], [ %i.gn, %bb.am ]
+  %.pn165.in.in = phi ptr [ %13, %bb.an ], [ %i.gn, %bb.am ]
   %.0.i66 = phi ptr [ %i.ha, %bb.an ], [ %i.gp, %bb.am ]
   %.pn165.in = load i32, ptr %.pn165.in.in, align 4, !tbaa !35
   %.pn165 = sext i32 %.pn165.in to i64
@@ -600,8 +603,8 @@ _ZN2cv3Mat2atIiEERT_i.exit67:                     ; preds = %bb.an, %bb.am
   %i.hl = fadd double %i.ey, %i.hk
   %i.hm = call noundef double @llvm.fabs.f64(double %i.hl)
   %i.hn = fcmp ule double %i.hm, f0x3EB0C6F7A0B5ED8D ; 2 uses
-  %20 = add nuw i32 %.090, 1                      ; 2 uses
-  %exitcond.not = icmp ne i32 %20, %i.n
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %exitcond.not = icmp ne i64 %indvars.iv.next, %wide.trip.count150
   %or.cond174.not = select i1 %i.hn, i1 %exitcond.not, i1 false
   br i1 %or.cond174.not, label %.lr.ph.split.split.split, label %.critedge, !llvm.loop !301
 

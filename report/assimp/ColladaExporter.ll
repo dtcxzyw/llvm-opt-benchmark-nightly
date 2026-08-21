@@ -204,7 +204,7 @@ define hidden void @_ZN6Assimp15ColladaExporter13WriteTexturesEv(ptr noundef non
 bb.a:
   %i.a = alloca i64, align 8                      ; 6 uses
   %i.b = alloca i8, align 1                       ; 4 uses
-  %i.c = alloca [1024 x i8], align 16             ; 9 uses
+  %i.c = alloca [1024 x i8], align 16             ; 7 uses
   %1 = alloca %"class.std::__cxx11::basic_string", align 8 ; 12 uses
   %2 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
@@ -232,7 +232,6 @@ bb.a:
   br i1 %i.k, label %.lr.ph, label %.loopexit
 
 .lr.ph:                                           ; preds = %bb.a
-  %14 = getelementptr inbounds nuw i8, ptr %i.c, i64 1
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 1056
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 1064
   %i.n = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 8 uses
@@ -269,38 +268,25 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %._crit_edge
   %i.ar = phi ptr [ %i.e, %.lr.ph ], [ %i.mo, %._crit_edge ] ; 2 uses
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %.pre526, %._crit_edge ] ; 7 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %.pre526, %._crit_edge ] ; 6 uses
   %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 72
   %i.at = load ptr, ptr %i.as, align 8
   %i.au = getelementptr inbounds nuw [8 x i8], ptr %i.at, i64 %indvars.iv
   %i.av = load ptr, ptr %i.au, align 8            ; 6 uses
   %i.aw = icmp eq ptr %i.av, null
   %.pre526 = add nuw nsw i64 %indvars.iv, 1       ; 3 uses
-  br i1 %i.aw, label %._crit_edge, label %15
+  br i1 %i.aw, label %._crit_edge, label %bb.c
 
-15:                                               ; preds = %bb.b
-  %16 = trunc nuw i64 %.pre526 to i32             ; 2 uses
-  %17 = icmp slt i32 %16, 0
-  br i1 %17, label %bb.c, label %.lr.ph.i.preheader
-
-bb.c:                                             ; preds = %15
-  store i8 45, ptr %i.c, align 16
-  %i.ax = trunc nuw i64 %indvars.iv to i32
-  %18 = xor i32 %i.ax, -1
-  br label %.lr.ph.i.preheader
-
-.lr.ph.i.preheader:                               ; preds = %bb.c, %15
-  %.13051.i.ph = phi i32 [ 1, %15 ], [ 2, %bb.c ]
-  %.13350.i.ph = phi i32 [ %16, %15 ], [ %18, %bb.c ]
-  %.13749.i.ph = phi ptr [ %i.c, %15 ], [ %14, %bb.c ]
+bb.c:                                             ; preds = %bb.b
+  %i.ax = trunc nuw i64 %.pre526 to i32
   br label %.lr.ph.i
 
-.lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %bb.e
-  %.02653.i = phi i1 [ %or.cond3.i, %bb.e ], [ false, %.lr.ph.i.preheader ]
-  %.02752.i = phi i32 [ %i.bh, %bb.e ], [ 1000000000, %.lr.ph.i.preheader ] ; 5 uses
-  %.13051.i = phi i32 [ %.231.i, %bb.e ], [ %.13051.i.ph, %.lr.ph.i.preheader ] ; 2 uses
-  %.13350.i = phi i32 [ %.234.i, %bb.e ], [ %.13350.i.ph, %.lr.ph.i.preheader ] ; 3 uses
-  %.13749.i = phi ptr [ %.238.i, %bb.e ], [ %.13749.i.ph, %.lr.ph.i.preheader ] ; 3 uses
+.lr.ph.i:                                         ; preds = %bb.c, %bb.e
+  %.02653.i = phi i1 [ %or.cond3.i, %bb.e ], [ false, %bb.c ]
+  %.02752.i = phi i32 [ %i.bh, %bb.e ], [ 1000000000, %bb.c ] ; 5 uses
+  %.13051.i = phi i32 [ %.231.i, %bb.e ], [ 1, %bb.c ] ; 2 uses
+  %.13350.i = phi i32 [ %.234.i, %bb.e ], [ %i.ax, %bb.c ] ; 3 uses
+  %.13749.i = phi ptr [ %.238.i, %bb.e ], [ %i.c, %bb.c ] ; 3 uses
   %i.ay = sdiv i32 %.13350.i, %.02752.i           ; 3 uses
   %.recomposed = srem i32 %.13350.i, %.02752.i
   %i.az = icmp ne i32 %i.ay, 0

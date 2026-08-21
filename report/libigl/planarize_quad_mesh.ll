@@ -205,10 +205,7 @@ bb.s:                                             ; preds = %.lr.ph200
 
 .lr.ph196.preheader:                              ; preds = %bb.t
   %i.cm = sext i32 %.0100199 to i64               ; 5 uses
-  %2 = add i64 %.098193, 2
-  %smin = tail call i64 @llvm.smin.i64(i64 %i.db, i64 1)
-  %3 = sub i64 %2, %smin                          ; 3 uses
-  %min.iters.check = icmp ult i64 %3, 8
+  %min.iters.check = icmp samesign ult i64 %.098193, 7
   br i1 %min.iters.check, label %.lr.ph196.preheader256, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph196.preheader
@@ -218,9 +215,9 @@ vector.memcheck:                                  ; preds = %.lr.ph196.preheader
   br i1 %diff.check, label %.lr.ph196.preheader256, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %3, -8                         ; 4 uses
+  %n.vec = and i64 %i.db, 9223372036854775800     ; 3 uses
   %i.co = sub i64 %i.cm, %n.vec                   ; 2 uses
-  %4 = sub i64 %i.db, %n.vec
+  %2 = and i64 %i.db, 7
   %invariant.gep = getelementptr [4 x i8], ptr %i.ah, i64 %i.cm
   br label %vector.body
 
@@ -243,12 +240,12 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.cw, label %middle.block, label %vector.body, !llvm.loop !365
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %3, %n.vec
+  %cmp.n = icmp eq i64 %i.db, %n.vec
   br i1 %cmp.n, label %.loopexit.loopexit, label %.lr.ph196.preheader256
 
 .lr.ph196.preheader256:                           ; preds = %vector.memcheck, %.lr.ph196.preheader, %middle.block
   %indvars.iv.ph = phi i64 [ %i.cm, %vector.memcheck ], [ %i.cm, %.lr.ph196.preheader ], [ %i.co, %middle.block ]
-  %.1195.ph = phi i64 [ %i.db, %vector.memcheck ], [ %i.db, %.lr.ph196.preheader ], [ %4, %middle.block ]
+  %.1195.ph = phi i64 [ %i.db, %vector.memcheck ], [ %i.db, %.lr.ph196.preheader ], [ %2, %middle.block ]
   br label %.lr.ph196
 
 bb.t:                                             ; preds = %.lr.ph, %bb.t
@@ -260,7 +257,7 @@ bb.t:                                             ; preds = %.lr.ph, %bb.t
   store i32 %.099192, ptr %i.cz, align 4, !tbaa !154
   store i32 %i.bk, ptr %i.cx, align 4, !tbaa !154
   %i.da = getelementptr inbounds [4 x i8], ptr %i.cl, i64 %i.cy
-  %i.db = add nuw i64 %.098193, 1                 ; 5 uses
+  %i.db = add nuw nsw i64 %.098193, 1             ; 6 uses
   %i.dc = load i32, ptr %i.da, align 4, !tbaa !154 ; 2 uses
   %i.dd = sext i32 %i.dc to i64                   ; 2 uses
   %i.de = getelementptr inbounds [4 x i8], ptr %i.ai, i64 %i.dd ; 2 uses
@@ -663,7 +660,7 @@ bb.b:                                             ; preds = %.lr.ph
   %i.ar = fmul double %i.an, %i.aq
   %i.as = fadd double %i.aj, %i.ar                ; 3 uses
   %i.at = add nuw nsw i64 %.01724.i.i.i.i.i.i, 2  ; 2 uses
-  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
+  %niter.next.1 = add nuw nsw i64 %niter, 2       ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN5Eigen8internal31generic_dense_assignment_kernelINS0_9evaluatorINS_6MatrixIdLi3ELi3ELi0ELi3ELi3EEEEENS2_INS_7ProductINS3_IdLin1ELin1ELi0ELin1ELin1EEENS_9TransposeIKS7_EELi1EEEEENS0_9assign_opIddEELi1EE23assignCoeffByOuterInnerEll.exit.loopexit.unr-lcssa, label %.lr.ph.i.i.i.i.i.i, !llvm.loop !645
 
@@ -872,7 +869,7 @@ bb.f:                                             ; preds = %bb.e
   %i.ez = fmul double %i.ev, %i.ey
   %i.fa = fadd double %i.er, %i.ez                ; 3 uses
   %i.fb = add nuw nsw i64 %.01724.i.i.i.i.i.i41, 2 ; 2 uses
-  %niter89.next.1 = add nuw i64 %niter89, 2       ; 2 uses
+  %niter89.next.1 = add nuw nsw i64 %niter89, 2   ; 2 uses
   %niter89.ncmp.1 = icmp eq i64 %niter89.next.1, %unroll_iter88
   br i1 %niter89.ncmp.1, label %._crit_edge.loopexit.loopexit.unr-lcssa, label %.lr.ph.i.i.i.i.i.i40, !llvm.loop !645
 
@@ -1275,7 +1272,7 @@ bb.m:                                             ; preds = %bb.l
   %i.cr = load double, ptr %i.cq, align 8, !tbaa !43
   %i.cs = fsub double %i.cr, %i.cc
   store double %i.cs, ptr %i.cq, align 8, !tbaa !43
-  %i.ct = add nuw i64 %.05870.i.epil, 1
+  %i.ct = add nuw nsw i64 %.05870.i.epil, 1
   %epil.iter96.next = add i64 %epil.iter96, 1     ; 2 uses
   %epil.iter96.cmp.not = icmp eq i64 %epil.iter96.next, %xtraiter95
   br i1 %epil.iter96.cmp.not, label %._crit_edge.i, label %.lr.ph.i.epil, !llvm.loop !902
@@ -1321,7 +1318,7 @@ bb.m:                                             ; preds = %bb.l
   %i.dt = load double, ptr %i.ds, align 16, !tbaa !43
   %i.du = fsub double %i.dt, %i.cc
   store double %i.du, ptr %i.ds, align 16, !tbaa !43
-  %i.dv = add nuw i64 %.05870.i, 4                ; 2 uses
+  %i.dv = add nuw nsw i64 %.05870.i, 4            ; 2 uses
   %niter100.next.3 = add i64 %niter100, 4         ; 2 uses
   %niter100.ncmp.3 = icmp eq i64 %niter100.next.3, %unroll_iter99
   br i1 %niter100.ncmp.3, label %._crit_edge.i.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !903
@@ -1387,7 +1384,7 @@ bb.o:                                             ; preds = %bb.n
   %i.fb = load double, ptr %i.fa, align 16, !tbaa !43
   %i.fc = fsub double %i.fb, %i.ef
   store double %i.fc, ptr %i.fa, align 16, !tbaa !43
-  %i.fd = add nuw i64 %.072.i, 4                  ; 2 uses
+  %i.fd = add nuw nsw i64 %.072.i, 4              ; 2 uses
   %niter.next.3 = add i64 %niter, 4               ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_ZN5Eigen9RealSchurINS_6MatrixIdLi3ELi3ELi0ELi3ELi3EEEE12computeShiftEllRdRNS1_IdLi3ELi1ELi0ELi3ELi1EEE.exit.loopexit.unr-lcssa, label %.lr.ph74.i, !llvm.loop !904
@@ -1411,7 +1408,7 @@ _ZN5Eigen9RealSchurINS_6MatrixIdLi3ELi3ELi0ELi3ELi3EEEE12computeShiftEllRdRNS1_I
   %i.fg = load double, ptr %i.ff, align 8, !tbaa !43
   %i.fh = fsub double %i.fg, %i.ef
   store double %i.fh, ptr %i.ff, align 8, !tbaa !43
-  %i.fi = add nuw i64 %.072.i.epil, 1
+  %i.fi = add nuw nsw i64 %.072.i.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
   br i1 %epil.iter.cmp.not, label %_ZN5Eigen9RealSchurINS_6MatrixIdLi3ELi3ELi0ELi3ELi3EEEE12computeShiftEllRdRNS1_IdLi3ELi1ELi0ELi3ELi1EEE.exit, label %.lr.ph74.i.epil, !llvm.loop !905
@@ -1814,7 +1811,7 @@ bb.e:                                             ; preds = %.lr.ph469, %bb.e
   %i.la = fmul <2 x double> %i.ks, %i.kz
   %i.lb = fadd <2 x double> %i.ko, %i.la          ; 3 uses
   %i.lc = add nuw nsw i64 %i.kc, 4
-  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
+  %niter.next.1 = add nuw nsw i64 %niter, 2       ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge482.loopexit.unr-lcssa, label %.lr.ph481.new, !llvm.loop !1464
 

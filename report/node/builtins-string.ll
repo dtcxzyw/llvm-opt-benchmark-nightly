@@ -204,7 +204,7 @@ bb.a:
   %5 = alloca %"class.v8::internal::LookupIterator", align 8 ; 17 uses
   %6 = alloca %"class.v8::internal::LookupIterator", align 8 ; 17 uses
   %7 = alloca %"class.v8::internal::IncrementalStringBuilder", align 8 ; 7 uses
-  %i.a = sext i32 %0 to i64                       ; 2 uses
+  %i.a = sext i32 %0 to i64                       ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 560 ; 4 uses
   %i.c = load ptr, ptr %i.b, align 8
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 568 ; 4 uses
@@ -213,7 +213,7 @@ bb.a:
   %i.g = load i32, ptr %i.f, align 8
   %i.h = add nsw i32 %i.g, 1
   store i32 %i.h, ptr %i.f, align 8
-  %8 = add nsw i32 %0, -4
+  %8 = add nsw i64 %i.a, 4294967292
   %.not.i156.i = icmp sgt i32 %0, 5
   %i.i = ptrtoint ptr %1 to i64                   ; 2 uses
   %i.j = shl nsw i64 %i.a, 3
@@ -616,17 +616,19 @@ _ZN2v88internal6Object8ToStringIS1_NS0_12DirectHandleEQsr3stdE16is_convertible_v
 .lr.ph.i:                                         ; preds = %.critedge133.i
   %i.gj = getelementptr inbounds nuw i8, ptr %3, i64 4
   %i.gk = getelementptr inbounds nuw i8, ptr %3, i64 24
-  %wide.trip.count.i = zext i32 %i.fh to i64
+  %zext.i = and i64 %8, 4294967295
+  %9 = add i32 %i.fh, 1
   br label %bb.p
 
 bb.p:                                             ; preds = %_ZN2v88internal6Object8ToStringIS1_NS0_12DirectHandleEQsr3stdE16is_convertible_vIT0_IT_ENS3_IS5_EEEEENS4_INS0_6StringEE9MaybeTypeEPNS0_7IsolateES6_.exit189.thread.i, %.lr.ph.i
-  %indvars.iv.i.a = phi i64 [ 1, %.lr.ph.i ], [ %indvars.iv.next.i.a, %_ZN2v88internal6Object8ToStringIS1_NS0_12DirectHandleEQsr3stdE16is_convertible_vIT0_IT_ENS3_IS5_EEEEENS4_INS0_6StringEE9MaybeTypeEPNS0_7IsolateES6_.exit189.thread.i ] ; 2 uses
-  %.0118380.i = phi i32 [ 2, %.lr.ph.i ], [ %11, %_ZN2v88internal6Object8ToStringIS1_NS0_12DirectHandleEQsr3stdE16is_convertible_vIT0_IT_ENS3_IS5_EEEEENS4_INS0_6StringEE9MaybeTypeEPNS0_7IsolateES6_.exit189.thread.i ] ; 4 uses
-  %i.gl = icmp ult i32 %.0118380.i, %8
+  %indvars.iv.i.a = phi i64 [ 2, %.lr.ph.i ], [ %indvars.iv.next.i.a, %_ZN2v88internal6Object8ToStringIS1_NS0_12DirectHandleEQsr3stdE16is_convertible_vIT0_IT_ENS3_IS5_EEEEENS4_INS0_6StringEE9MaybeTypeEPNS0_7IsolateES6_.exit189.thread.i ] ; 4 uses
+  %indvars.iv.i = phi i64 [ 1, %.lr.ph.i ], [ %indvars.iv.next.i, %_ZN2v88internal6Object8ToStringIS1_NS0_12DirectHandleEQsr3stdE16is_convertible_vIT0_IT_ENS3_IS5_EEEEENS4_INS0_6StringEE9MaybeTypeEPNS0_7IsolateES6_.exit189.thread.i ] ; 2 uses
+  %i.gl = icmp samesign ult i64 %indvars.iv.i.a, %zext.i
   br i1 %i.gl, label %bb.q, label %bb.s
 
 bb.q:                                             ; preds = %bb.p
-  %i.gm = add nsw i32 %.0118380.i, 4
+  %10 = trunc nuw i64 %indvars.iv.i.a to i32
+  %i.gm = add i32 %10, 4
   %.not.i179.i = icmp ugt i32 %i.gm, %0
   br i1 %.not.i179.i, label %bb.r, label %_ZNK2v88internal16BuiltinArguments2atINS0_6ObjectEEENS0_6HandleIT_EEi.exit.i, !prof !9
 
@@ -635,9 +637,10 @@ bb.r:                                             ; preds = %bb.q
   unreachable
 
 _ZNK2v88internal16BuiltinArguments2atINS0_6ObjectEEENS0_6HandleIT_EEi.exit.i: ; preds = %bb.q
-  %9 = sub i32 -5, %.0118380.i
-  %10 = sext i32 %9 to i64
-  %i.gn = add nsw i64 %10, %i.a
+  %11 = shl nuw i64 %indvars.iv.i.a, 32
+  %sext.i = sub i64 -21474836480, %11
+  %12 = ashr exact i64 %sext.i, 32
+  %i.gn = add nsw i64 %12, %i.a
   %i.go = shl nsw i64 %i.gn, 3
   %i.gp = sub i64 %i.i, %i.go
   %i.gq = inttoptr i64 %i.gp to ptr               ; 3 uses
@@ -671,7 +674,7 @@ _ZN2v88internal6Object8ToStringIS1_NS0_6HandleEQsr3stdE16is_convertible_vIT0_IT_
 
 bb.s:                                             ; preds = %.critedge135.i, %bb.p
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #15
-  call void @_ZN2v88internal14LookupIteratorC2EPNS0_7IsolateENS0_12DirectHandleINS0_5UnionIJNS0_3SmiENS0_10HeapNumberENS0_6BigIntENS0_6StringENS0_6SymbolENS0_7BooleanENS0_4NullENS0_9UndefinedENS0_10JSReceiverEEEEEENS4_INS0_4NameEEEmSG_NS1_13ConfigurationE(ptr noundef nonnull align 8 dereferenceable(88) %3, ptr noundef nonnull %2, ptr nonnull %.sroa.09.0.i326.i, ptr null, i64 noundef %indvars.iv.i.a, ptr nonnull %.sroa.09.0.i326.i, i32 noundef 3)
+  call void @_ZN2v88internal14LookupIteratorC2EPNS0_7IsolateENS0_12DirectHandleINS0_5UnionIJNS0_3SmiENS0_10HeapNumberENS0_6BigIntENS0_6StringENS0_6SymbolENS0_7BooleanENS0_4NullENS0_9UndefinedENS0_10JSReceiverEEEEEENS4_INS0_4NameEEEmSG_NS1_13ConfigurationE(ptr noundef nonnull align 8 dereferenceable(88) %3, ptr noundef nonnull %2, ptr nonnull %.sroa.09.0.i326.i, ptr null, i64 noundef %indvars.iv.i, ptr nonnull %.sroa.09.0.i326.i, i32 noundef 3)
   %i.hc = load i32, ptr %i.gj, align 4
   %.not.i183.i = icmp eq i32 %i.hc, 0
   br i1 %.not.i183.i, label %_ZN2v88internal6Object10GetElementEPNS0_7IsolateENS0_12DirectHandleINS0_5UnionIJNS0_3SmiENS0_10HeapNumberENS0_6BigIntENS0_6StringENS0_6SymbolENS0_7BooleanENS0_4NullENS0_9UndefinedENS0_10JSReceiverEEEEEEj.exit185.thread.i, label %_ZN2v88internal6Object10GetElementEPNS0_7IsolateENS0_12DirectHandleINS0_5UnionIJNS0_3SmiENS0_10HeapNumberENS0_6BigIntENS0_6StringENS0_6SymbolENS0_7BooleanENS0_4NullENS0_9UndefinedENS0_10JSReceiverEEEEEEj.exit185.i
@@ -720,9 +723,10 @@ bb.t:                                             ; preds = %_ZN2v88internal6Obj
 _ZN2v88internal6Object8ToStringIS1_NS0_12DirectHandleEQsr3stdE16is_convertible_vIT0_IT_ENS3_IS5_EEEEENS4_INS0_6StringEE9MaybeTypeEPNS0_7IsolateES6_.exit189.thread.i: ; preds = %_ZN2v88internal6Object8ToStringIS1_NS0_12DirectHandleEQsr3stdE16is_convertible_vIT0_IT_ENS3_IS5_EEEEENS4_INS0_6StringEE9MaybeTypeEPNS0_7IsolateES6_.exit189.i, %_ZN2v88internal8IsStringENS0_6TaggedINS0_6ObjectEEE.exit.i188.i
   %.sroa.07.0.i187359.i = phi ptr [ %i.hq, %_ZN2v88internal6Object8ToStringIS1_NS0_12DirectHandleEQsr3stdE16is_convertible_vIT0_IT_ENS3_IS5_EEEEENS4_INS0_6StringEE9MaybeTypeEPNS0_7IsolateES6_.exit189.i ], [ %.sroa.0.0.i184355.i, %_ZN2v88internal8IsStringENS0_6TaggedINS0_6ObjectEEE.exit.i188.i ]
   call void @_ZN2v88internal24IncrementalStringBuilder12AppendStringENS0_12DirectHandleINS0_6StringEEE(ptr noundef nonnull align 8 dereferenceable(40) %7, ptr nonnull %.sroa.07.0.i187359.i) #15
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1
   %indvars.iv.next.i.a = add nuw nsw i64 %indvars.iv.i.a, 1 ; 2 uses
-  %11 = add i32 %.0118380.i, 1
-  %exitcond.not.i = icmp eq i64 %indvars.iv.next.i.a, %wide.trip.count.i
+  %lftr.wideiv = trunc i64 %indvars.iv.next.i.a to i32
+  %exitcond.not.i = icmp eq i32 %9, %lftr.wideiv
   br i1 %exitcond.not.i, label %.critedge149.i, label %bb.p, !llvm.loop !15
 
 .critedge149.i:                                   ; preds = %_ZN2v88internal6Object8ToStringIS1_NS0_12DirectHandleEQsr3stdE16is_convertible_vIT0_IT_ENS3_IS5_EEEEENS4_INS0_6StringEE9MaybeTypeEPNS0_7IsolateES6_.exit189.thread.i, %.critedge133.i, %bb.o

@@ -205,7 +205,7 @@ bb.a:
   %i.w = zext i8 %i.t to i32
   %i.x = xor i32 %i.v, %i.w                       ; 3 uses
   %i.y = getelementptr inbounds nuw i8, ptr %.sroa.05.09.i.i, i64 4 ; 2 uses
-  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
+  %niter.next.3 = add nuw nsw i64 %niter, 4       ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_ZN7httplib6detail7str2tagERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.i.unr-lcssa, label %.lr.ph.i.i
 
@@ -608,7 +608,7 @@ bb.a:
   %i.ac = zext i8 %i.z to i32
   %i.ad = xor i32 %i.ab, %i.ac                    ; 3 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %.sroa.05.09, i64 4 ; 2 uses
-  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
+  %niter.next.3 = add nuw nsw i64 %niter, 4       ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph
 }
@@ -820,7 +820,7 @@ _ZNKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_St4lessIS5_ESa
   %i.be = zext i8 %i.bb to i32
   %i.bf = xor i32 %i.bd, %i.be                    ; 3 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %.sroa.05.09.i, i64 4 ; 2 uses
-  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
+  %niter.next.3 = add nuw nsw i64 %niter, 4       ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_ZN7httplib6detail7str2tagERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.unr-lcssa, label %.lr.ph.i
 
@@ -1223,7 +1223,7 @@ bb.a:
   %i.w = zext i8 %i.t to i32
   %i.x = xor i32 %i.v, %i.w                       ; 3 uses
   %i.y = getelementptr inbounds nuw i8, ptr %.sroa.05.09.i, i64 4 ; 2 uses
-  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
+  %niter.next.3 = add nuw nsw i64 %niter, 4       ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_ZN7httplib6detail7str2tagERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.unr-lcssa, label %.lr.ph.i
 
@@ -1626,7 +1626,7 @@ bb.a:
   %i.w = zext i8 %i.t to i32
   %i.x = xor i32 %i.v, %i.w                       ; 3 uses
   %i.y = getelementptr inbounds nuw i8, ptr %.sroa.05.09.i, i64 4 ; 2 uses
-  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
+  %niter.next.3 = add nuw nsw i64 %niter, 4       ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_ZN7httplib6detail7str2tagERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.unr-lcssa, label %.lr.ph.i
 
@@ -1716,7 +1716,7 @@ bb.a:
   %i.w = zext i8 %i.t to i32
   %i.x = xor i32 %i.v, %i.w                       ; 3 uses
   %i.y = getelementptr inbounds nuw i8, ptr %.sroa.05.09.i.i, i64 4 ; 2 uses
-  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
+  %niter.next.3 = add nuw nsw i64 %niter, 4       ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_ZN7httplib6detail7str2tagERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.i.unr-lcssa, label %.lr.ph.i.i
 
@@ -2119,7 +2119,7 @@ bb.y:                                             ; preds = %bb.t
   %i.fg = zext i8 %i.fd to i32
   %i.fh = xor i32 %i.ff, %i.fg                    ; 3 uses
   %i.fi = getelementptr inbounds nuw i8, ptr %.sroa.05.09.i.i.i, i64 4 ; 2 uses
-  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
+  %niter.next.3 = add nuw nsw i64 %niter, 4       ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_ZN7httplib6detail7str2tagERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.i.i.unr-lcssa, label %.lr.ph.i.i.i
 
@@ -2522,7 +2522,7 @@ tailrecurse.i.i.i:                                ; preds = %tailrecurse.i.i.i, 
   %i.at = load i8, ptr %i.as, align 1, !tbaa !65
   %i.au = zext i8 %i.at to i64
   %i.av = xor i64 %i.ap, %i.au                    ; 3 uses
-  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
+  %niter.next.1 = add nuw nsw i64 %niter, 2       ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZNKSt8__detail15_Hash_code_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_NS_9_IdentityEN7httplib6detail11case_ignore4hashENS_18_Mod_range_hashingENS_20_Default_ranged_hashELb1EE15_M_hash_code_trIS6_EEmRKT_.exit.loopexit.unr-lcssa, label %tailrecurse.i.i.i
 
@@ -2925,7 +2925,7 @@ tailrecurse.i.i.i:                                ; preds = %tailrecurse.i.i.i, 
   %i.at = load i8, ptr %i.as, align 1, !tbaa !65
   %i.au = zext i8 %i.at to i64
   %i.av = xor i64 %i.ap, %i.au                    ; 3 uses
-  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
+  %niter.next.1 = add nuw nsw i64 %niter, 2       ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZNKSt8__detail15_Hash_code_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_NS_9_IdentityEN7httplib6detail11case_ignore4hashENS_18_Mod_range_hashingENS_20_Default_ranged_hashELb1EE12_M_hash_codeERKS6_.exit.loopexit.unr-lcssa, label %tailrecurse.i.i.i
 
@@ -3328,8 +3328,8 @@ bb.e:                                             ; preds = %bb.d, %.loopexit.i
   %i.ce = getelementptr i8, ptr %i.cd, i64 %i.cc
   %i.cf = getelementptr i8, ptr %i.ce, i64 %i.bz
   store i8 %i.cb, ptr %i.cf, align 1, !tbaa !65
-  %i.cg = add nuw i64 %.024.i, 4                  ; 2 uses
-  %niter969.next.3 = add nuw i64 %niter969, 4     ; 2 uses
+  %i.cg = add nuw nsw i64 %.024.i, 4              ; 2 uses
+  %niter969.next.3 = add nuw nsw i64 %niter969, 4 ; 2 uses
   %niter969.ncmp.3 = icmp eq i64 %niter969.next.3, %unroll_iter968
   br i1 %niter969.ncmp.3, label %_ZN7httplib6detail14FormDataParser10buf_appendEPKcm.exit.loopexit.unr-lcssa, label %.lr.ph25.i, !llvm.loop !3687
 

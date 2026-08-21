@@ -205,7 +205,7 @@ middle.block:                                     ; preds = %vector.body
   %spec.select.i = select i1 %i.af, i64 -1, i64 %i.ae ; 2 uses
   %i.ag = icmp slt i32 %i.w, 1                    ; 8 uses
   %i.ah = zext nneg i32 %i.s to i64               ; 4 uses
-  %i.ai = zext nneg i32 %1 to i64
+  %i.ai = zext nneg i32 %1 to i64                 ; 2 uses
   %wide.trip.count356 = zext nneg i32 %1 to i64   ; 2 uses
   %i.aj = icmp ult i32 %i.s, 6
   %i.ak = add nsw i32 %1, -7                      ; 4 uses
@@ -431,7 +431,7 @@ middle.block:                                     ; preds = %vector.body
 
 .loopexit261:                                     ; preds = %.loopexit260, %bb.j
   %.1.lcssa = phi i32 [ %.087278, %bb.j ], [ %.2.lcssa, %.loopexit260 ] ; 4 uses
-  %indvars.iv.next326 = add nuw i32 %indvars.iv325, 1
+  %indvars.iv.next326 = add nuw nsw i32 %indvars.iv325, 1
   %indvars.iv.next338 = add nuw nsw i64 %indvars.iv337, 1
   %indvars.iv.next347 = add nuw nsw i64 %indvars.iv346, 1
   %exitcond357.not = icmp eq i64 %indvars.iv.next354, %wide.trip.count356
@@ -579,9 +579,8 @@ bb.k:                                             ; preds = %.lr.ph275, %.loopex
   %indvars.iv327 = phi i32 [ %indvars.iv325, %.lr.ph275 ], [ %indvars.iv.next328, %.loopexit260 ] ; 2 uses
   %.1274 = phi i32 [ %.087278, %.lr.ph275 ], [ %.2.lcssa, %.loopexit260 ] ; 2 uses
   %indvars.iv.next349 = add nuw nsw i64 %indvars.iv348, 1 ; 3 uses
-  %3 = trunc nuw i64 %indvars.iv.next349 to i32
-  %4 = icmp sgt i32 %1, %3
-  br i1 %4, label %.lr.ph271, label %.loopexit260
+  %3 = icmp samesign ult i64 %indvars.iv.next349, %i.ai
+  br i1 %3, label %.lr.ph271, label %.loopexit260
 
 .lr.ph271:                                        ; preds = %bb.k
   %i.fv = sext i32 %indvars.iv327 to i64

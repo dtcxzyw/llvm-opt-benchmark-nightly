@@ -202,33 +202,42 @@ declare ptr @proto_item_add_subtree(ptr noundef, i32 noundef) local_unnamed_addr
 define internal fastcc range(i32 2, 0) i32 @dissect_bencoding_str(ptr noundef %0, ptr noundef %1, i32 noundef %2, i32 noundef range(i32 1, -2147483648) %3, ptr noundef %4, ptr noundef %5, i32 noundef range(i32 0, 3) %6) unnamed_addr #0 {
 bb.a:
   %i.a = icmp samesign ult i32 %3, 2
-  br i1 %i.a, label %bb.b, label %.preheader.preheader
+  br i1 %i.a, label %13, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %7 = tail call ptr @proto_tree_add_expert(ptr noundef %4, ptr noundef %1, ptr noundef nonnull @ei_bencode_str, ptr noundef %0, i32 noundef %2, i32 noundef 1) ; 0 uses
+  %7 = tail call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef %2) ; 3 uses
+  %8 = add nsw i32 %3, -1                         ; 2 uses
+  %9 = zext nneg i8 %7 to i32
+  %10 = add i8 %7, -48
+  %11 = icmp ult i8 %10, 10
+  br i1 %11, label %.preheader.a, label %bb.k
+
+.preheader.a:                                     ; preds = %bb.b
+  %12 = add nsw i32 %9, -48
+  %i.b = icmp ne i8 %7, 48
+  %.not.a = icmp eq i32 %8, 0
+  br i1 %.not.a, label %bb.l, label %.preheader.preheader
+
+13:                                               ; preds = %bb.a
+  %14 = tail call ptr @proto_tree_add_expert(ptr noundef %4, ptr noundef %1, ptr noundef nonnull @ei_bencode_str, ptr noundef %0, i32 noundef %2, i32 noundef 1) ; 0 uses
   br label %bb.m
 
-.preheader.a:                                     ; preds = %bb.j
-  %8 = icmp ne i8 %i.d, 48
-  %i.b = icmp ne i32 %.080121, 0
-  %or.cond11.not = or i1 %8, %i.b
-  %.not.a = icmp eq i32 %i.e, 0
-  br i1 %.not.a, label %bb.l, label %.preheader.preheader, !llvm.loop !11
+.preheader:                                       ; preds = %bb.j
+  %.not = icmp eq i32 %i.e, 0
+  br i1 %.not, label %bb.l, label %.preheader.preheader, !llvm.loop !11
 
-.preheader.preheader:                             ; preds = %bb.a, %.preheader.a
-  %.0122 = phi i1 [ %or.cond11.not, %.preheader.a ], [ true, %bb.a ]
-  %.080121 = phi i32 [ %i.f, %.preheader.a ], [ 0, %bb.a ] ; 3 uses
-  %.081120 = phi i32 [ %i.e, %.preheader.a ], [ %3, %bb.a ]
-  %.082119 = phi i32 [ %i.y, %.preheader.a ], [ 0, %bb.a ] ; 8 uses
+.preheader.preheader:                             ; preds = %.preheader.a, %.preheader
+  %.0122 = phi i1 [ true, %.preheader ], [ %i.b, %.preheader.a ]
+  %.080121 = phi i32 [ %i.f, %.preheader ], [ 1, %.preheader.a ] ; 2 uses
+  %.081120 = phi i32 [ %i.e, %.preheader ], [ %8, %.preheader.a ]
+  %.082119 = phi i32 [ %i.y, %.preheader ], [ %12, %.preheader.a ] ; 8 uses
   %i.c = add i32 %.080121, %2
-  %i.d = tail call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef %i.c) ; 4 uses
+  %i.d = tail call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef %i.c) ; 3 uses
   %i.e = add nsw i32 %.081120, -1                 ; 3 uses
-  %i.f = add nuw i32 %.080121, 1                  ; 5 uses
+  %i.f = add nuw nsw i32 %.080121, 1              ; 4 uses
   %i.g = zext nneg i8 %i.d to i32
   %i.h = icmp eq i8 %i.d, 58
-  %9 = icmp sgt i32 %i.f, 1
-  %or.cond = select i1 %i.h, i1 %9, i1 false
-  br i1 %or.cond, label %bb.c, label %bb.i
+  br i1 %i.h, label %bb.c, label %bb.i
 
 bb.c:                                             ; preds = %.preheader.preheader
   %i.i = icmp ugt i32 %.082119, %i.e
@@ -281,19 +290,19 @@ bb.j:                                             ; preds = %bb.i
   %i.x = add i32 %i.w, -48
   %i.y = add i32 %i.x, %i.g                       ; 2 uses
   %.not90 = icmp ult i32 %i.y, %.082119
-  br i1 %.not90, label %bb.k, label %.preheader.a, !llvm.loop !11
+  br i1 %.not90, label %bb.k, label %.preheader, !llvm.loop !13
 
-bb.k:                                             ; preds = %bb.j, %bb.i
+bb.k:                                             ; preds = %bb.j, %bb.i, %bb.b
   %i.z = tail call ptr @proto_tree_add_expert(ptr noundef %4, ptr noundef %1, ptr noundef nonnull @ei_bencode_str, ptr noundef %0, i32 noundef %2, i32 noundef %3) ; 0 uses
   br label %bb.m
 
-bb.l:                                             ; preds = %.preheader.a
+bb.l:                                             ; preds = %.preheader, %.preheader.a
   %i.aa = load i32, ptr @hf_bencode_truncated_data, align 4
   %i.ab = tail call ptr @proto_tree_add_item(ptr noundef %4, i32 noundef %i.aa, ptr noundef %0, i32 noundef %2, i32 noundef %3, i32 noundef 0) ; 0 uses
   br label %bb.m
 
-bb.m:                                             ; preds = %bb.l, %bb.k, %bb.h, %bb.d, %bb.b
-  %.083 = phi i32 [ -1, %bb.b ], [ -1, %bb.d ], [ %i.t, %bb.h ], [ -1, %bb.k ], [ -1, %bb.l ]
+bb.m:                                             ; preds = %bb.l, %bb.k, %bb.h, %bb.d, %13
+  %.083 = phi i32 [ -1, %13 ], [ -1, %bb.d ], [ %i.t, %bb.h ], [ -1, %bb.k ], [ -1, %bb.l ]
   ret i32 %.083
 }
 
@@ -335,5 +344,7 @@ attributes #1 = { null_pointer_is_valid "no-trapping-math"="true" "stack-protect
 !8 = distinct !{!8, !7}
 !9 = distinct !{!9, !7, !10}
 !10 = !{!"llvm.loop.peeled.count", i32 2}
-!11 = distinct !{!11, !7}
+!11 = distinct !{!11, !7, !12}
+!12 = !{!"llvm.loop.peeled.count", i32 1}
+!13 = distinct !{!13, !7}
 end_hunk_0

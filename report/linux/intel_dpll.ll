@@ -204,14 +204,13 @@ i9xx_select_p2_div.exit:                          ; preds = %bb.f, %bb.g
   %.sroa.26.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 24
   %.sroa.28.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 28
   %.sroa.30.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 32
-  %.pre = load i32, ptr %i.u, align 4             ; 3 uses
+  %.pre = load i32, ptr %i.u, align 4             ; 2 uses
   br label %bb.h
 
 bb.h:                                             ; preds = %.lr.ph55, %._crit_edge47
-  %5 = phi i32 [ %i.s, %.lr.ph55 ], [ %8, %._crit_edge47 ] ; 2 uses
-  %i.ah = phi i32 [ %.pre, %.lr.ph55 ], [ %i.dk, %._crit_edge47 ] ; 5 uses
-  %i.ai = phi i32 [ %.pre, %.lr.ph55 ], [ %i.dl, %._crit_edge47 ] ; 2 uses
-  %i.aj = phi i32 [ %.pre, %.lr.ph55 ], [ %i.dm, %._crit_edge47 ] ; 2 uses
+  %i.ah = phi i32 [ %i.s, %.lr.ph55 ], [ %i.dk, %._crit_edge47 ] ; 2 uses
+  %i.ai = phi i32 [ %.pre, %.lr.ph55 ], [ %i.dl, %._crit_edge47 ] ; 3 uses
+  %i.aj = phi i32 [ %.pre, %.lr.ph55 ], [ %i.dm, %._crit_edge47 ] ; 3 uses
   %.054 = phi i32 [ %2, %.lr.ph55 ], [ %.1.lcssa, %._crit_edge47 ] ; 3 uses
   %storemerge52 = phi i32 [ %i.q, %.lr.ph55 ], [ %i.dn, %._crit_edge47 ] ; 7 uses
   %i.ak = load i32, ptr %i.t, align 4             ; 3 uses
@@ -229,7 +228,6 @@ bb.h:                                             ; preds = %.lr.ph55, %._crit_e
   br i1 %i.ao, label %._crit_edge47, label %.lr.ph46.split
 
 .lr.ph46.split:                                   ; preds = %.lr.ph46, %._crit_edge37
-  %6 = phi i32 [ %7, %._crit_edge37 ], [ %i.ah, %.lr.ph46 ] ; 2 uses
   %i.ap = phi i32 [ %i.dg, %._crit_edge37 ], [ %i.ai, %.lr.ph46 ] ; 2 uses
   %i.aq = phi i32 [ %i.dh, %._crit_edge37 ], [ %i.an, %.lr.ph46 ] ; 3 uses
   %i.ar = phi i32 [ %i.di, %._crit_edge37 ], [ %i.an, %.lr.ph46 ] ; 3 uses
@@ -427,11 +425,10 @@ intel_pll_is_valid.exit.thread:                   ; preds = %bb.z, %bb.x, %bb.u,
   br i1 %.not39, label %._crit_edge37.loopexit58, label %.lr.ph36.split, !llvm.loop !68
 
 ._crit_edge37.loopexit58:                         ; preds = %._crit_edge
-  %.pre62 = load i32, ptr %i.u, align 4           ; 2 uses
+  %.pre62 = load i32, ptr %i.u, align 4
   br label %._crit_edge37
 
 ._crit_edge37:                                    ; preds = %.lr.ph36, %._crit_edge37.loopexit58, %.lr.ph46.split
-  %7 = phi i32 [ %6, %.lr.ph46.split ], [ %.pre62, %._crit_edge37.loopexit58 ], [ %6, %.lr.ph36 ] ; 2 uses
   %i.dg = phi i32 [ %i.ap, %.lr.ph46.split ], [ %.pre62, %._crit_edge37.loopexit58 ], [ %i.ap, %.lr.ph36 ] ; 4 uses
   %i.dh = phi i32 [ %i.aq, %.lr.ph46.split ], [ %i.dc, %._crit_edge37.loopexit58 ], [ %i.aq, %.lr.ph36 ]
   %i.di = phi i32 [ %i.ar, %.lr.ph46.split ], [ %i.dc, %._crit_edge37.loopexit58 ], [ %i.ar, %.lr.ph36 ]
@@ -447,13 +444,12 @@ intel_pll_is_valid.exit.thread:                   ; preds = %bb.z, %bb.x, %bb.u,
   br label %._crit_edge47
 
 ._crit_edge47:                                    ; preds = %.lr.ph46, %._crit_edge47.loopexit59, %bb.h
-  %8 = phi i32 [ %5, %bb.h ], [ %.pre63, %._crit_edge47.loopexit59 ], [ %5, %.lr.ph46 ] ; 2 uses
-  %i.dk = phi i32 [ %i.ah, %bb.h ], [ %7, %._crit_edge47.loopexit59 ], [ %i.ah, %.lr.ph46 ]
-  %i.dl = phi i32 [ %i.ai, %bb.h ], [ %i.dg, %._crit_edge47.loopexit59 ], [ %i.ah, %.lr.ph46 ]
-  %i.dm = phi i32 [ %i.aj, %bb.h ], [ %i.dg, %._crit_edge47.loopexit59 ], [ %i.ah, %.lr.ph46 ]
+  %i.dk = phi i32 [ %i.ah, %bb.h ], [ %.pre63, %._crit_edge47.loopexit59 ], [ %i.ah, %.lr.ph46 ] ; 2 uses
+  %i.dl = phi i32 [ %i.ai, %bb.h ], [ %i.dg, %._crit_edge47.loopexit59 ], [ %i.ai, %.lr.ph46 ]
+  %i.dm = phi i32 [ %i.aj, %bb.h ], [ %i.dg, %._crit_edge47.loopexit59 ], [ %i.aj, %.lr.ph46 ]
   %.1.lcssa = phi i32 [ %.054, %bb.h ], [ %.2.lcssa, %._crit_edge47.loopexit59 ], [ %.054, %.lr.ph46 ] ; 2 uses
   %i.dn = add i32 %storemerge52, 1                ; 2 uses
-  %.not34 = icmp sgt i32 %i.dn, %8
+  %.not34 = icmp sgt i32 %i.dn, %i.dk
   br i1 %.not34, label %._crit_edge56.loopexit, label %bb.h, !llvm.loop !70
 
 ._crit_edge56.loopexit:                           ; preds = %._crit_edge47

@@ -205,7 +205,7 @@ _ZNK5Eigen10MatrixBaseINS_13CwiseBinaryOpINS_8internal20scalar_difference_opIddE
   %i.fy = fmul double %i.fx, %i.fx
   %i.fz = fadd double %i.fq, %i.fy                ; 3 uses
   %i.ga = add nuw nsw i64 %.01724.i.i.i.i.us, 2   ; 2 uses
-  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
+  %niter.next.1 = add nuw nsw i64 %niter, 2       ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZNK5Eigen10MatrixBaseINS_13CwiseBinaryOpINS_8internal20scalar_difference_opIddEEKNS_5BlockINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEES9_EEE11squaredNormEv.exit.loopexit.us.unr-lcssa, label %.lr.ph.i.i.i.i.us, !llvm.loop !130
 
@@ -307,7 +307,7 @@ _ZNK5Eigen10MatrixBaseINS_13CwiseBinaryOpINS_8internal20scalar_difference_opIddE
   %i.hy = fmul double %i.hx, %i.hx
   %i.hz = fadd double %i.hq, %i.hy                ; 3 uses
   %i.ia = add nuw nsw i64 %.01724.i.i.i.i91, 2    ; 2 uses
-  %niter480.next.1 = add nuw i64 %niter480, 2     ; 2 uses
+  %niter480.next.1 = add nuw nsw i64 %niter480, 2 ; 2 uses
   %niter480.ncmp.1 = icmp eq i64 %niter480.next.1, %unroll_iter479
   br i1 %niter480.ncmp.1, label %_ZNK5Eigen10MatrixBaseINS_13CwiseBinaryOpINS_8internal20scalar_difference_opIddEEKNS_5BlockINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEES9_EEE11squaredNormEv.exit94.loopexit460.unr-lcssa, label %.lr.ph.i.i.i.i90, !llvm.loop !130
 
@@ -710,7 +710,7 @@ _ZNK5Eigen10MatrixBaseINS_13CwiseBinaryOpINS_8internal20scalar_difference_opIddE
   %i.aq = fmul double %i.ap, %i.ap
   %i.ar = fadd double %i.ai, %i.aq                ; 3 uses
   %i.as = add nuw nsw i64 %.01724.i.i.i.i.us, 2   ; 2 uses
-  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
+  %niter.next.1 = add nuw nsw i64 %niter, 2       ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZNK5Eigen10MatrixBaseINS_13CwiseBinaryOpINS_8internal20scalar_difference_opIddEEKNS_6MatrixIdLi1ELin1ELi1ELi1ELin1EEEKNS_5BlockIKNS5_IdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEEEEE11squaredNormEv.exit.loopexit.us.unr-lcssa, label %.lr.ph.i.i.i.i.us, !llvm.loop !420
 
@@ -1113,7 +1113,7 @@ bb.l:                                             ; preds = %_ZN5Eigen8internalL
   %i.dg = fcmp olt double %i.dc, %i.df
   %i.dh = select i1 %i.dg, double %i.df, double %i.dc ; 3 uses
   %i.di = add nuw nsw i64 %.094.i.i.i.i.i.i.i.i.i.i.i.i, 4 ; 2 uses
-  %niter46.next.3 = add nuw i64 %niter46, 4       ; 2 uses
+  %niter46.next.3 = add nuw nsw i64 %niter46, 4   ; 2 uses
   %niter46.ncmp.3 = icmp eq i64 %niter46.next.3, %unroll_iter45
   br i1 %niter46.ncmp.3, label %_ZN5Eigen8internal31generic_dense_assignment_kernelINS0_9evaluatorINS_9TransposeINS_6MatrixIdLin1ELi1ELi0ELin1ELi1EEEEEEENS2_INS_16PartialReduxExprINS4_IdLin1ELin1ELi0ELin1ELin1EEENS0_15member_maxCoeffIddEELi0EEEEENS0_9assign_opIddEELi0EE11assignCoeffEl.exit.i.i.i.i.i.loopexit.unr-lcssa, label %.lr.ph96.i.i.i.i.i.i.i.i.i.i.i.i, !llvm.loop !841
 
@@ -1414,7 +1414,7 @@ bb.l:                                             ; preds = %_ZN5Eigen8internalL
   %i.dg = fcmp olt double %i.df, %i.dc
   %i.dh = select i1 %i.dg, double %i.df, double %i.dc ; 3 uses
   %i.di = add nuw nsw i64 %.094.i.i.i.i.i.i.i.i.i.i.i.i, 4 ; 2 uses
-  %niter46.next.3 = add nuw i64 %niter46, 4       ; 2 uses
+  %niter46.next.3 = add nuw nsw i64 %niter46, 4   ; 2 uses
   %niter46.ncmp.3 = icmp eq i64 %niter46.next.3, %unroll_iter45
   br i1 %niter46.ncmp.3, label %_ZN5Eigen8internal31generic_dense_assignment_kernelINS0_9evaluatorINS_9TransposeINS_6MatrixIdLin1ELi1ELi0ELin1ELi1EEEEEEENS2_INS_16PartialReduxExprINS4_IdLin1ELin1ELi0ELin1ELin1EEENS0_15member_minCoeffIddEELi0EEEEENS0_9assign_opIddEELi0EE11assignCoeffEl.exit.i.i.i.i.i.loopexit.unr-lcssa, label %.lr.ph96.i.i.i.i.i.i.i.i.i.i.i.i, !llvm.loop !855
 
@@ -1817,10 +1817,7 @@ bb.s:                                             ; preds = %.lr.ph200
 
 .lr.ph196.preheader:                              ; preds = %bb.t
   %i.cm = sext i32 %.0100199 to i64               ; 5 uses
-  %2 = add i64 %.098193, 2
-  %smin = tail call i64 @llvm.smin.i64(i64 %i.db, i64 1)
-  %3 = sub i64 %2, %smin                          ; 3 uses
-  %min.iters.check = icmp ult i64 %3, 8
+  %min.iters.check = icmp samesign ult i64 %.098193, 7
   br i1 %min.iters.check, label %.lr.ph196.preheader256, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph196.preheader
@@ -1830,9 +1827,9 @@ vector.memcheck:                                  ; preds = %.lr.ph196.preheader
   br i1 %diff.check, label %.lr.ph196.preheader256, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %3, -8                         ; 4 uses
+  %n.vec = and i64 %i.db, 9223372036854775800     ; 3 uses
   %i.co = sub i64 %i.cm, %n.vec                   ; 2 uses
-  %4 = sub i64 %i.db, %n.vec
+  %2 = and i64 %i.db, 7
   %invariant.gep = getelementptr [4 x i8], ptr %i.ah, i64 %i.cm
   br label %vector.body
 
@@ -1855,12 +1852,12 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.cw, label %middle.block, label %vector.body, !llvm.loop !1140
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %3, %n.vec
+  %cmp.n = icmp eq i64 %i.db, %n.vec
   br i1 %cmp.n, label %.loopexit.loopexit, label %.lr.ph196.preheader256
 
 .lr.ph196.preheader256:                           ; preds = %vector.memcheck, %.lr.ph196.preheader, %middle.block
   %indvars.iv.ph = phi i64 [ %i.cm, %vector.memcheck ], [ %i.cm, %.lr.ph196.preheader ], [ %i.co, %middle.block ]
-  %.1195.ph = phi i64 [ %i.db, %vector.memcheck ], [ %i.db, %.lr.ph196.preheader ], [ %4, %middle.block ]
+  %.1195.ph = phi i64 [ %i.db, %vector.memcheck ], [ %i.db, %.lr.ph196.preheader ], [ %2, %middle.block ]
   br label %.lr.ph196
 
 bb.t:                                             ; preds = %.lr.ph, %bb.t
@@ -1872,7 +1869,7 @@ bb.t:                                             ; preds = %.lr.ph, %bb.t
   store i32 %.099192, ptr %i.cz, align 4, !tbaa !70
   store i32 %i.bk, ptr %i.cx, align 4, !tbaa !70
   %i.da = getelementptr inbounds [4 x i8], ptr %i.cl, i64 %i.cy
-  %i.db = add nuw i64 %.098193, 1                 ; 5 uses
+  %i.db = add nuw nsw i64 %.098193, 1             ; 6 uses
   %i.dc = load i32, ptr %i.da, align 4, !tbaa !70 ; 2 uses
   %i.dd = sext i32 %i.dc to i64                   ; 2 uses
   %i.de = getelementptr inbounds [4 x i8], ptr %i.ai, i64 %i.dd ; 2 uses

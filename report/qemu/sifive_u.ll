@@ -204,15 +204,19 @@ bb.i:                                             ; preds = %._crit_edge.i
   store i32 %i.du, ptr %i.dq, align 4
   store i32 184549376, ptr %i.ds, align 4
   %.not133.i = icmp eq i32 %i.dr, 1
-  br i1 %.not133.i, label %create_fdt.exit, label %.peel.next.i
+  br i1 %.not133.i, label %create_fdt.exit, label %.peel.next.i.preheader
 
-.peel.next.i:                                     ; preds = %bb.i, %.peel.next.i
-  %.112.i = phi i32 [ %3, %.peel.next.i ], [ 1, %bb.i ] ; 3 uses
-  %2 = sext i32 %.112.i to i64
-  %i.dv = getelementptr inbounds [4 x i8], ptr %i.bj, i64 %2
+.peel.next.i.preheader:                           ; preds = %bb.i
+  %wide.trip.count = zext i32 %i.dr to i64
+  br label %.peel.next.i
+
+.peel.next.i:                                     ; preds = %.peel.next.i.preheader, %.peel.next.i
+  %indvars.iv = phi i64 [ 1, %.peel.next.i.preheader ], [ %indvars.iv.next, %.peel.next.i ] ; 3 uses
+  %i.dv = getelementptr inbounds nuw [4 x i8], ptr %i.bj, i64 %indvars.iv
   %i.dw = load i32, ptr %i.dv, align 4
   %i.dx = call noundef i32 @llvm.bswap.i32(i32 %i.dw) ; 2 uses
-  %i.dy = shl i32 %.112.i, 2                      ; 3 uses
+  %2 = trunc nuw nsw i64 %indvars.iv to i32
+  %i.dy = shl i32 %2, 2                           ; 3 uses
   %i.dz = add i32 %i.dy, -2
   %i.ea = sext i32 %i.dz to i64
   %i.eb = getelementptr inbounds [4 x i8], ptr %i.dq, i64 %i.ea
@@ -226,8 +230,8 @@ bb.i:                                             ; preds = %._crit_edge.i
   store i32 %i.dx, ptr %i.eg, align 4
   %i.eh = getelementptr i8, ptr %i.eg, i64 4
   store i32 150994944, ptr %i.eh, align 4
-  %3 = add nuw i32 %.112.i, 1                     ; 2 uses
-  %exitcond.not = icmp eq i32 %3, %i.dr
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %create_fdt.exit, label %.peel.next.i, !llvm.loop !10
 
 create_fdt.exit:                                  ; preds = %.peel.next.i, %._crit_edge.i, %bb.i

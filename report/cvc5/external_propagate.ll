@@ -205,19 +205,20 @@ bb.b:                                             ; preds = %bb.a
   %i.k = load ptr, ptr %i.j, align 8
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 996 ; 2 uses
   %.promoted = load i32, ptr %i.l, align 4
+  %zext = zext i32 %i.e to i64
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph, %bb.g
-  %1 = phi i32 [ %.promoted, %.lr.ph ], [ %i.z, %bb.g ] ; 5 uses
-  %.sroa.010.015 = phi i32 [ 1, %.lr.ph ], [ %3, %bb.g ] ; 6 uses
-  %2 = sext i32 %.sroa.010.015 to i64
-  %i.m = getelementptr inbounds i8, ptr %i.g, i64 %2
+  %indvars.iv = phi i64 [ 1, %.lr.ph ], [ %indvars.iv.next, %bb.g ] ; 4 uses
+  %.sroa.010.015 = phi i32 [ %.promoted, %.lr.ph ], [ %i.z, %bb.g ] ; 5 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %i.g, i64 %indvars.iv
   %i.n = load i8, ptr %i.m, align 1, !tbaa !157
   %.not7 = icmp eq i8 %i.n, 0
   br i1 %.not7, label %bb.g, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.o = tail call noundef i32 @llvm.abs.i32(i32 %.sroa.010.015, i1 true)
+  %1 = trunc nsw i64 %indvars.iv to i32           ; 3 uses
+  %i.o = tail call noundef i32 @llvm.abs.i32(i32 %1, i1 true)
   %i.p = zext nneg i32 %i.o to i64
   %i.q = getelementptr inbounds nuw [16 x i8], ptr %i.i, i64 %i.p ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 8
@@ -226,12 +227,12 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not8, label %bb.e, label %bb.g
 
 bb.e:                                             ; preds = %bb.d
-  %.not9 = icmp eq i32 %1, 0
+  %.not9 = icmp eq i32 %.sroa.010.015, 0
   br i1 %.not9, label %.sink.split, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.t = load i32, ptr %i.q, align 8, !tbaa !160
-  %i.u = tail call noundef i32 @llvm.abs.i32(i32 %1, i1 true)
+  %i.u = tail call noundef i32 @llvm.abs.i32(i32 %.sroa.010.015, i1 true)
   %i.v = zext nneg i32 %i.u to i64
   %i.w = getelementptr inbounds nuw [16 x i8], ptr %i.i, i64 %i.v
   %i.x = load i32, ptr %i.w, align 8, !tbaa !160
@@ -239,13 +240,13 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.y, label %.sink.split, label %bb.g
 
 .sink.split:                                      ; preds = %bb.f, %bb.e
-  store i32 %.sroa.010.015, ptr %i.l, align 4, !tbaa !167
+  store i32 %1, ptr %i.l, align 4, !tbaa !167
   br label %bb.g
 
 bb.g:                                             ; preds = %.sink.split, %bb.f, %bb.d, %bb.c
-  %i.z = phi i32 [ %1, %bb.f ], [ %1, %bb.c ], [ %1, %bb.d ], [ %.sroa.010.015, %.sink.split ]
-  %3 = add i32 %.sroa.010.015, 1
-  %.not13 = icmp eq i32 %.sroa.010.015, %i.e
+  %i.z = phi i32 [ %.sroa.010.015, %bb.f ], [ %.sroa.010.015, %bb.c ], [ %.sroa.010.015, %bb.d ], [ %1, %.sink.split ]
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
+  %.not13 = icmp eq i64 %indvars.iv, %zext
   br i1 %.not13, label %.loopexit, label %bb.c
 
 .loopexit:                                        ; preds = %bb.g, %bb.b, %bb.a
@@ -648,7 +649,7 @@ bb.g:                                             ; preds = %bb.e, %bb.d, %bb.b,
   %.135 = phi i32 [ %.03445, %bb.d ], [ %.03445, %bb.b ], [ %i.an, %bb.f ], [ %.03445, %bb.e ] ; 3 uses
   %.133 = phi i32 [ %.03246, %bb.d ], [ %.03246, %bb.b ], [ %i.ae, %bb.f ], [ %.03246, %bb.e ]
   %.1 = phi i32 [ %.03147, %bb.d ], [ %.03147, %bb.b ], [ %i.ai, %bb.f ], [ %.03147, %bb.e ]
-  %i.ao = add nuw i64 %.048, 1                    ; 2 uses
+  %i.ao = add nuw nsw i64 %.048, 1                ; 2 uses
   %exitcond.not = icmp eq i64 %i.ao, %i.h
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !229
 
@@ -723,7 +724,7 @@ bb.o:                                             ; preds = %bb.n, %bb.m, %bb.l,
   %.135.1 = phi i32 [ %.03445.1, %bb.k ], [ %.03445.1, %bb.m ], [ %i.br, %bb.n ], [ %.03445.1, %bb.l ] ; 3 uses
   %.133.1 = phi i32 [ %.03246.1, %bb.k ], [ %.03246.1, %bb.m ], [ %i.bi, %bb.n ], [ %.03246.1, %bb.l ]
   %.1.1 = phi i32 [ %.03147.1, %bb.k ], [ %.03147.1, %bb.m ], [ %i.bm, %bb.n ], [ %.03147.1, %bb.l ]
-  %i.bs = add nuw i64 %.048.1, 1                  ; 2 uses
+  %i.bs = add nuw nsw i64 %.048.1, 1              ; 2 uses
   %exitcond.1.not = icmp eq i64 %i.bs, %i.h
   br i1 %exitcond.1.not, label %._crit_edge.1, label %.lr.ph.1, !llvm.loop !229
 
@@ -1126,7 +1127,7 @@ bb.n:                                             ; preds = %bb.m
   %spec.select.1 = select i1 %i.by, i32 %i.bs, i32 %spec.select ; 3 uses
   %spec.select55.1 = tail call i32 @llvm.smax.i32(i32 %i.bx, i32 %spec.select55) ; 2 uses
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
+  %niter.next.1 = add nuw nsw i64 %niter, 2       ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !240
 

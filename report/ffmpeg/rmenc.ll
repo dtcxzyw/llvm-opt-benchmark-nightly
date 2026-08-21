@@ -166,10 +166,14 @@ bb.b:                                             ; preds = %bb.a
 
 .preheader.i:                                     ; preds = %bb.b
   %i.aa = icmp sgt i32 %i.o, 0
-  br i1 %i.aa, label %.lr.ph.i, label %rm_write_audio.exit
+  br i1 %i.aa, label %.lr.ph.preheader.i, label %rm_write_audio.exit
 
-.lr.ph.i:                                         ; preds = %.preheader.i, %.lr.ph.i
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %.lr.ph.i ], [ 0, %.preheader.i ] ; 2 uses
+.lr.ph.preheader.i:                               ; preds = %.preheader.i
+  %sext.i = zext nneg i32 %i.o to i64
+  br label %.lr.ph.i
+
+.lr.ph.i:                                         ; preds = %.lr.ph.i, %.lr.ph.preheader.i
+  %indvars.iv.i = phi i64 [ 0, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %.lr.ph.i ] ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %i.m, i64 %indvars.iv.i ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 1
   %i.ad = load i8, ptr %i.ac, align 1, !tbaa !63
@@ -179,9 +183,8 @@ bb.b:                                             ; preds = %bb.a
   %i.ag = zext i8 %i.af to i32
   tail call void @avio_w8(ptr noundef %.val10, i32 noundef %i.ag) #7
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 2 ; 2 uses
-  %2 = trunc nuw i64 %indvars.iv.next.i to i32
-  %3 = icmp sgt i32 %i.o, %2
-  br i1 %3, label %.lr.ph.i, label %rm_write_audio.exit, !llvm.loop !64
+  %2 = icmp samesign ult i64 %indvars.iv.next.i, %sext.i
+  br i1 %2, label %.lr.ph.i, label %rm_write_audio.exit, !llvm.loop !64
 
 bb.c:                                             ; preds = %bb.b
   tail call void @avio_write(ptr noundef %.val10, ptr noundef %i.m, i32 noundef %i.o) #7

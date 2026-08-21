@@ -205,7 +205,7 @@ vec.epilog.middle.block1600:                      ; preds = %vec.epilog.vector.b
   %i.agz = getelementptr i8, ptr %i.agy, i64 1
   store i8 -1, ptr %i.agz, align 1, !tbaa !26
   %i.aha = getelementptr inbounds i8, ptr %i.agx, i64 %i.aq ; 2 uses
-  %niter.next.7 = add nuw i32 %niter, 8           ; 2 uses
+  %niter.next.7 = add nuw nsw i32 %niter, 8       ; 2 uses
   %niter.ncmp.7 = icmp eq i32 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %.loopexit723.loopexit.unr-lcssa, label %.lr.ph808.new, !llvm.loop !396
 

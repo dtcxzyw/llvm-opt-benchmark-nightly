@@ -204,8 +204,8 @@ bb.g:                                             ; preds = %.lr.ph, %bb.f
   br i1 %i.ab, label %.lr.ph30, label %._crit_edge34
 
 .lr.ph30:                                         ; preds = %.preheader
-  %1 = trunc i64 %indvars.iv36 to i32
-  %2 = add i32 %1, 2                              ; 2 uses
+  %1 = add nuw nsw i64 %indvars.iv36, 2           ; 2 uses
+  %2 = trunc nsw i64 %1 to i32
   %i.ac = load ptr, ptr %i.a, align 8             ; 2 uses
   %i.ad = getelementptr [8 x i8], ptr %i.ac, i64 %indvars.iv36 ; 2 uses
   %i.ae = load i64, ptr %i.ad, align 8            ; 3 uses
@@ -261,7 +261,8 @@ bb.i:                                             ; preds = %.lr.ph47
   %i.br = or i64 %i.bq, %i.bn
   store i64 %i.br, ptr %i.bg, align 8
   %i.bs = load i32, ptr %i.o, align 8             ; 3 uses
-  %i.bt = icmp slt i32 %2, %i.bs
+  %3 = sext i32 %i.bs to i64
+  %i.bt = icmp slt i64 %1, %3
   br i1 %i.bt, label %bb.j, label %try_adjacent_combine.exit
 
 bb.j:                                             ; preds = %bb.i

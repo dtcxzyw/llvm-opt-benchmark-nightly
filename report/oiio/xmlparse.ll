@@ -205,7 +205,7 @@ bb.w:                                             ; preds = %.preheader127, %bb.
   br i1 %.not95, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %.preheader
-  %wide.trip.count = zext i32 %indvars.iv102 to i64
+  %wide.trip.count = zext nneg i32 %indvars.iv102 to i64
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.y
@@ -284,7 +284,7 @@ bb.ad:                                            ; preds = %bb.ab
 
 bb.ae:                                            ; preds = %bb.w
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %indvars.iv.next103 = add nuw i32 %indvars.iv102, 1
+  %indvars.iv.next103 = add nuw nsw i32 %indvars.iv102, 1
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.ac, i64 %indvars.iv.next
   %.pre106 = load i8, ptr %.phi.trans.insert, align 1
   br label %bb.w
@@ -687,10 +687,14 @@ bb.as:                                            ; preds = %._crit_edge
 
 .preheader705:                                    ; preds = %bb.as
   %i.go = icmp sgt i32 %.0451.lcssa, 0
-  br i1 %i.go, label %.lr.ph770, label %.loopexit706
+  br i1 %i.go, label %.lr.ph770.preheader, label %.loopexit706
 
-.lr.ph770:                                        ; preds = %.preheader705, %bb.au
-  %indvars.iv864 = phi i64 [ %indvars.iv.next865, %bb.au ], [ 0, %.preheader705 ] ; 3 uses
+.lr.ph770.preheader:                              ; preds = %.preheader705
+  %sext = zext nneg i32 %.0451.lcssa to i64
+  br label %.lr.ph770
+
+.lr.ph770:                                        ; preds = %.lr.ph770.preheader, %bb.au
+  %indvars.iv864 = phi i64 [ 0, %.lr.ph770.preheader ], [ %indvars.iv.next865, %bb.au ] ; 3 uses
   %i.gp = getelementptr inbounds nuw [8 x i8], ptr %i.cn, i64 %indvars.iv864
   %i.gq = load ptr, ptr %i.gp, align 8
   %i.gr = icmp eq ptr %i.gq, %i.gl
@@ -702,9 +706,8 @@ bb.at:                                            ; preds = %.lr.ph770
 
 bb.au:                                            ; preds = %.lr.ph770
   %indvars.iv.next865 = add nuw nsw i64 %indvars.iv864, 2 ; 2 uses
-  %7 = trunc nuw i64 %indvars.iv.next865 to i32
-  %8 = icmp sgt i32 %.0451.lcssa, %7
-  br i1 %8, label %.lr.ph770, label %.loopexit706
+  %7 = icmp samesign ult i64 %indvars.iv.next865, %sext
+  br i1 %7, label %.lr.ph770, label %.loopexit706
 
 .loopexit706.sink.split:                          ; preds = %._crit_edge, %bb.as, %bb.at
   %.sink = phi i32 [ %i.gs, %bb.at ], [ -1, %bb.as ], [ -1, %._crit_edge ]
@@ -787,9 +790,9 @@ bb.bb:                                            ; preds = %bb.ay
   br i1 %exitcond871.not, label %._crit_edge776, label %bb.av
 
 ._crit_edge776:                                   ; preds = %.thread629, %.loopexit706
-  %.4455.lcssa = phi i32 [ %.0451.lcssa, %.loopexit706 ], [ %.6457635, %.thread629 ] ; 4 uses
+  %.4455.lcssa = phi i32 [ %.0451.lcssa, %.loopexit706 ], [ %.6457635, %.thread629 ] ; 3 uses
   %.3429.lcssa = phi i32 [ %.0426.lcssa, %.loopexit706 ], [ %.5431636, %.thread629 ] ; 4 uses
-  %i.hr = sext i32 %.4455.lcssa to i64            ; 2 uses
+  %i.hr = sext i32 %.4455.lcssa to i64            ; 3 uses
   %i.hs = getelementptr inbounds [8 x i8], ptr %i.cn, i64 %i.hr
   store ptr null, ptr %i.hs, align 8
   %.not517 = icmp eq i32 %.3429.lcssa, 0
@@ -1192,10 +1195,9 @@ bb.cl:                                            ; preds = %bb.bk
 
 bb.cm:                                            ; preds = %bb.cl, %bb.ck
   %.9435.ph = phi i32 [ %i.ps, %bb.ck ], [ %.6432799, %bb.cl ]
-  %indvars.iv.next879 = add nuw nsw i64 %indvars.iv878, 2 ; 2 uses
-  %9 = trunc nuw i64 %indvars.iv.next879 to i32   ; 2 uses
-  %10 = icmp sgt i32 %.4455.lcssa, %9
-  br i1 %10, label %bb.bk, label %.thread683
+  %indvars.iv.next879 = add nuw nsw i64 %indvars.iv878, 2 ; 3 uses
+  %8 = icmp slt i64 %indvars.iv.next879, %i.hr
+  br i1 %8, label %bb.bk, label %.thread683.loopexit
 
 bb.cn:                                            ; preds = %.loopexit695
   %i.pt = trunc nuw nsw i64 %indvars.iv878 to i32
@@ -1203,8 +1205,12 @@ bb.cn:                                            ; preds = %.loopexit695
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #22
   br label %.thread683
 
-.thread683:                                       ; preds = %bb.cm, %.loopexit703, %bb.cn, %._crit_edge776
-  %.10446 = phi i32 [ 0, %._crit_edge776 ], [ %i.pu, %bb.cn ], [ 0, %.loopexit703 ], [ %9, %bb.cm ] ; 2 uses
+.thread683.loopexit:                              ; preds = %bb.cm
+  %9 = trunc nuw i64 %indvars.iv.next879 to i32
+  br label %.thread683
+
+.thread683:                                       ; preds = %.thread683.loopexit, %.loopexit703, %bb.cn, %._crit_edge776
+  %.10446 = phi i32 [ 0, %._crit_edge776 ], [ %i.pu, %bb.cn ], [ 0, %.loopexit703 ], [ %9, %.thread683.loopexit ] ; 2 uses
   %i.pv = icmp slt i32 %.10446, %.4455.lcssa
   br i1 %i.pv, label %.lr.ph804.preheader, label %.preheader694
 

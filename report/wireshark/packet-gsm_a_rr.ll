@@ -204,31 +204,32 @@ bb.m:                                             ; preds = %.lr.ph346
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.lr.ph, %f_k.exit
-  %.1352 = phi i32 [ 1, %.preheader.lr.ph ], [ %8, %f_k.exit ] ; 6 uses
+  %indvars.iv377 = phi i64 [ 1, %.preheader.lr.ph ], [ %indvars.iv.next378, %f_k.exit ] ; 5 uses
   br label %bb.n
 
 bb.n:                                             ; preds = %.preheader, %bb.n
   %.0.i.i = phi i32 [ %i.dg, %bb.n ], [ 1, %.preheader ]
   %i.dg = shl i32 %.0.i.i, 1                      ; 3 uses
-  %.not.i.i = icmp sgt i32 %i.dg, %.1352
+  %7 = sext i32 %i.dg to i64
+  %.not.i.i = icmp slt i64 %indvars.iv377, %7
   br i1 %.not.i.i, label %greatest_power_of_2_lesser_or_equal_to.exit.i, label %bb.n, !llvm.loop !6
 
 greatest_power_of_2_lesser_or_equal_to.exit.i:    ; preds = %bb.n
-  %7 = zext nneg i32 %.1352 to i64
-  %i.dh = getelementptr [4 x i8], ptr %i.c, i64 %7
+  %i.dh = getelementptr [4 x i8], ptr %i.c, i64 %indvars.iv377
   %i.di = load i32, ptr %i.dh, align 4            ; 2 uses
-  %i.dj = icmp samesign ugt i32 %.1352, 1
+  %i.dj = icmp samesign ugt i64 %indvars.iv377, 1
   br i1 %i.dj, label %.preheader.preheader.i, label %f_k.exit
 
 .preheader.preheader.i:                           ; preds = %greatest_power_of_2_lesser_or_equal_to.exit.i
   %i.dk = add i32 %i.di, -1
   %i.dl = ashr exact i32 %i.dg, 1
   %i.dm = sdiv i32 1023, %i.dl
+  %8 = trunc nuw nsw i64 %indvars.iv377 to i32
   br label %.preheader.i
 
 .preheader.i:                                     ; preds = %bb.r, %.preheader.preheader.i
   %.034.i = phi i32 [ %.1.i, %bb.r ], [ %i.dk, %.preheader.preheader.i ] ; 2 uses
-  %.02433.i = phi i32 [ %.125.i, %bb.r ], [ %.1352, %.preheader.preheader.i ] ; 4 uses
+  %.02433.i = phi i32 [ %.125.i, %bb.r ], [ %8, %.preheader.preheader.i ] ; 4 uses
   %.02632.i = phi i32 [ %i.dq, %bb.r ], [ %i.dm, %.preheader.preheader.i ]
   br label %bb.o
 
@@ -287,9 +288,10 @@ f_k.exit:                                         ; preds = %greatest_power_of_2
   %i.en = lshr i32 %i.ei, 9
   %i.eo = and i32 %i.en, 1
   %i.ep = call ptr @proto_tree_add_uint(ptr noundef %i.ci, i32 noundef %i.em, ptr noundef %0, i32 noundef %i.df, i32 noundef 0, i32 noundef %i.eo) ; 0 uses
-  %8 = add nuw nsw i32 %.1352, 1
-  %.not259.not = icmp slt i32 %.1352, %i.de
-  br i1 %.not259.not, label %.preheader, label %.loopexit, !llvm.loop !20
+  %indvars.iv.next378 = add nuw nsw i64 %indvars.iv377, 1 ; 2 uses
+  %indvars379 = trunc i64 %indvars.iv.next378 to i32
+  %.not259.not = icmp slt i32 %i.de, %indvars379
+  br i1 %.not259.not, label %.loopexit, label %.preheader, !llvm.loop !20
 
 .loopexit:                                        ; preds = %f_k.exit, %.thread, %bb.l, %bb.i
   %.6 = phi i32 [ %i.bc, %bb.i ], [ %i.bz, %bb.l ], [ %i.dd, %.thread ], [ %i.dd, %f_k.exit ]
@@ -446,31 +448,32 @@ bb.aa:                                            ; preds = %.lr.ph
   br label %.preheader310
 
 .preheader310:                                    ; preds = %.preheader310.lr.ph, %f_k.exit278
-  %.3339 = phi i32 [ 1, %.preheader310.lr.ph ], [ %10, %f_k.exit278 ] ; 6 uses
+  %indvars.iv = phi i64 [ 1, %.preheader310.lr.ph ], [ %indvars.iv.next, %f_k.exit278 ] ; 5 uses
   br label %bb.ab
 
 bb.ab:                                            ; preds = %.preheader310, %bb.ab
   %.0.i.i261 = phi i32 [ %i.hw, %bb.ab ], [ 1, %.preheader310 ]
   %i.hw = shl i32 %.0.i.i261, 1                   ; 3 uses
-  %.not.i.i262 = icmp sgt i32 %i.hw, %.3339
+  %9 = sext i32 %i.hw to i64
+  %.not.i.i262 = icmp slt i64 %indvars.iv, %9
   br i1 %.not.i.i262, label %greatest_power_of_2_lesser_or_equal_to.exit.i263, label %bb.ab, !llvm.loop !6
 
 greatest_power_of_2_lesser_or_equal_to.exit.i263: ; preds = %bb.ab
-  %9 = zext nneg i32 %.3339 to i64
-  %i.hx = getelementptr [4 x i8], ptr %i.c, i64 %9
+  %i.hx = getelementptr [4 x i8], ptr %i.c, i64 %indvars.iv
   %i.hy = load i32, ptr %i.hx, align 4            ; 2 uses
-  %i.hz = icmp samesign ugt i32 %.3339, 1
+  %i.hz = icmp samesign ugt i64 %indvars.iv, 1
   br i1 %i.hz, label %.preheader.preheader.i265, label %f_k.exit278
 
 .preheader.preheader.i265:                        ; preds = %greatest_power_of_2_lesser_or_equal_to.exit.i263
   %i.ia = add i32 %i.hy, -1
   %i.ib = ashr exact i32 %i.hw, 1
   %i.ic = sdiv i32 511, %i.ib
+  %10 = trunc nuw nsw i64 %indvars.iv to i32
   br label %.preheader.i266
 
 .preheader.i266:                                  ; preds = %bb.af, %.preheader.preheader.i265
   %.034.i267 = phi i32 [ %.1.i275, %bb.af ], [ %i.ia, %.preheader.preheader.i265 ] ; 2 uses
-  %.02433.i268 = phi i32 [ %.125.i273, %bb.af ], [ %.3339, %.preheader.preheader.i265 ] ; 4 uses
+  %.02433.i268 = phi i32 [ %.125.i273, %bb.af ], [ %10, %.preheader.preheader.i265 ] ; 4 uses
   %.02632.i269 = phi i32 [ %i.ig, %bb.af ], [ %i.ic, %.preheader.preheader.i265 ]
   br label %bb.ac
 
@@ -533,9 +536,10 @@ f_k.exit278:                                      ; preds = %greatest_power_of_2
   %i.jh = lshr i32 %i.iy, 8
   %i.ji = and i32 %i.jh, 1
   %i.jj = call ptr @proto_tree_add_uint(ptr noundef %i.gw, i32 noundef %i.jg, ptr noundef %0, i32 noundef %i.hv, i32 noundef 0, i32 noundef %i.ji) ; 0 uses
-  %10 = add nuw nsw i32 %.3339, 1
-  %.not257.not = icmp slt i32 %.3339, %i.hu
-  br i1 %.not257.not, label %.preheader310, label %.loopexit311, !llvm.loop !23
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %indvars = trunc i64 %indvars.iv.next to i32
+  %.not257.not = icmp slt i32 %i.hu, %indvars
+  br i1 %.not257.not, label %.loopexit311, label %.preheader310, !llvm.loop !23
 
 .loopexit311:                                     ; preds = %f_k.exit278, %.thread283, %bb.z, %bb.w
   %.12 = phi i32 [ %i.fq, %bb.w ], [ %i.gn, %bb.z ], [ %i.ht, %.thread283 ], [ %i.ht, %f_k.exit278 ]
@@ -938,31 +942,32 @@ bb.g:                                             ; preds = %.lr.ph
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.lr.ph, %f_k.exit
-  %.1120 = phi i32 [ 1, %.preheader.lr.ph ], [ %4, %f_k.exit ] ; 6 uses
+  %indvars.iv = phi i64 [ 1, %.preheader.lr.ph ], [ %indvars.iv.next, %f_k.exit ] ; 5 uses
   br label %bb.h
 
 bb.h:                                             ; preds = %.preheader, %bb.h
   %.0.i.i = phi i32 [ %i.bz, %bb.h ], [ 1, %.preheader ]
   %i.bz = shl i32 %.0.i.i, 1                      ; 3 uses
-  %.not.i.i = icmp sgt i32 %i.bz, %.1120
+  %3 = sext i32 %i.bz to i64
+  %.not.i.i = icmp slt i64 %indvars.iv, %3
   br i1 %.not.i.i, label %greatest_power_of_2_lesser_or_equal_to.exit.i, label %bb.h, !llvm.loop !6
 
 greatest_power_of_2_lesser_or_equal_to.exit.i:    ; preds = %bb.h
-  %3 = zext nneg i32 %.1120 to i64
-  %i.ca = getelementptr [4 x i8], ptr %i.c, i64 %3
+  %i.ca = getelementptr [4 x i8], ptr %i.c, i64 %indvars.iv
   %i.cb = load i32, ptr %i.ca, align 4            ; 2 uses
-  %i.cc = icmp samesign ugt i32 %.1120, 1
+  %i.cc = icmp samesign ugt i64 %indvars.iv, 1
   br i1 %i.cc, label %.preheader.preheader.i, label %f_k.exit
 
 .preheader.preheader.i:                           ; preds = %greatest_power_of_2_lesser_or_equal_to.exit.i
   %i.cd = add i32 %i.cb, -1
   %i.ce = ashr exact i32 %i.bz, 1
   %i.cf = sdiv i32 1023, %i.ce
+  %4 = trunc nuw nsw i64 %indvars.iv to i32
   br label %.preheader.i
 
 .preheader.i:                                     ; preds = %bb.l, %.preheader.preheader.i
   %.034.i = phi i32 [ %.1.i, %bb.l ], [ %i.cd, %.preheader.preheader.i ] ; 2 uses
-  %.02433.i = phi i32 [ %.125.i, %bb.l ], [ %.1120, %.preheader.preheader.i ] ; 4 uses
+  %.02433.i = phi i32 [ %.125.i, %bb.l ], [ %4, %.preheader.preheader.i ] ; 4 uses
   %.02632.i = phi i32 [ %i.cj, %bb.l ], [ %i.cf, %.preheader.preheader.i ]
   br label %bb.i
 
@@ -1021,9 +1026,10 @@ f_k.exit:                                         ; preds = %greatest_power_of_2
   %i.dg = lshr i32 %i.db, 9
   %i.dh = and i32 %i.dg, 1
   %i.di = call ptr @proto_tree_add_uint(ptr noundef %i.bb, i32 noundef %i.df, ptr noundef %0, i32 noundef %i.by, i32 noundef 0, i32 noundef %i.dh) ; 0 uses
-  %4 = add nuw nsw i32 %.1120, 1
-  %.not95.not = icmp slt i32 %.1120, %i.bx
-  br i1 %.not95.not, label %.preheader, label %.loopexit, !llvm.loop !57
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %indvars = trunc i64 %indvars.iv.next to i32
+  %.not95.not = icmp slt i32 %i.bx, %indvars
+  br i1 %.not95.not, label %.loopexit, label %.preheader, !llvm.loop !57
 
 .loopexit:                                        ; preds = %f_k.exit, %.thread, %bb.f
   %.5 = phi i32 [ %i.as, %bb.f ], [ %i.bw, %.thread ], [ %i.bw, %f_k.exit ]
@@ -1187,31 +1193,32 @@ bb.g:                                             ; preds = %.lr.ph
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.lr.ph, %f_k.exit
-  %.1127 = phi i32 [ 1, %.preheader.lr.ph ], [ %4, %f_k.exit ] ; 6 uses
+  %indvars.iv = phi i64 [ 1, %.preheader.lr.ph ], [ %indvars.iv.next, %f_k.exit ] ; 5 uses
   br label %bb.h
 
 bb.h:                                             ; preds = %.preheader, %bb.h
   %.0.i.i = phi i32 [ %i.ca, %bb.h ], [ 1, %.preheader ]
   %i.ca = shl i32 %.0.i.i, 1                      ; 3 uses
-  %.not.i.i = icmp sgt i32 %i.ca, %.1127
+  %3 = sext i32 %i.ca to i64
+  %.not.i.i = icmp slt i64 %indvars.iv, %3
   br i1 %.not.i.i, label %greatest_power_of_2_lesser_or_equal_to.exit.i, label %bb.h, !llvm.loop !6
 
 greatest_power_of_2_lesser_or_equal_to.exit.i:    ; preds = %bb.h
-  %3 = zext nneg i32 %.1127 to i64
-  %i.cb = getelementptr [4 x i8], ptr %i.b, i64 %3
+  %i.cb = getelementptr [4 x i8], ptr %i.b, i64 %indvars.iv
   %i.cc = load i32, ptr %i.cb, align 4            ; 2 uses
-  %i.cd = icmp samesign ugt i32 %.1127, 1
+  %i.cd = icmp samesign ugt i64 %indvars.iv, 1
   br i1 %i.cd, label %.preheader.preheader.i, label %f_k.exit
 
 .preheader.preheader.i:                           ; preds = %greatest_power_of_2_lesser_or_equal_to.exit.i
   %i.ce = add i32 %i.cc, -1
   %i.cf = ashr exact i32 %i.ca, 1
   %i.cg = sdiv i32 511, %i.cf
+  %4 = trunc nuw nsw i64 %indvars.iv to i32
   br label %.preheader.i
 
 .preheader.i:                                     ; preds = %bb.l, %.preheader.preheader.i
   %.034.i = phi i32 [ %.1.i, %bb.l ], [ %i.ce, %.preheader.preheader.i ] ; 2 uses
-  %.02433.i = phi i32 [ %.125.i, %bb.l ], [ %.1127, %.preheader.preheader.i ] ; 4 uses
+  %.02433.i = phi i32 [ %.125.i, %bb.l ], [ %4, %.preheader.preheader.i ] ; 4 uses
   %.02632.i = phi i32 [ %i.ck, %bb.l ], [ %i.cg, %.preheader.preheader.i ]
   br label %bb.i
 
@@ -1274,9 +1281,10 @@ f_k.exit:                                         ; preds = %greatest_power_of_2
   %i.dl = lshr i32 %i.dc, 8
   %i.dm = and i32 %i.dl, 1
   %i.dn = call ptr @proto_tree_add_uint(ptr noundef %i.ba, i32 noundef %i.dk, ptr noundef %0, i32 noundef %i.bz, i32 noundef 0, i32 noundef %i.dm) ; 0 uses
-  %4 = add nuw nsw i32 %.1127, 1
-  %.not102.not = icmp slt i32 %.1127, %i.by
-  br i1 %.not102.not, label %.preheader, label %.loopexit, !llvm.loop !60
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %indvars = trunc i64 %indvars.iv.next to i32
+  %.not102.not = icmp slt i32 %i.by, %indvars
+  br i1 %.not102.not, label %.loopexit, label %.preheader, !llvm.loop !60
 
 .loopexit:                                        ; preds = %f_k.exit, %.thread, %bb.f
   %.5 = phi i32 [ %i.ar, %bb.f ], [ %i.bx, %.thread ], [ %i.bx, %f_k.exit ]

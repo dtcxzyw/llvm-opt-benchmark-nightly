@@ -205,7 +205,7 @@ bb.j:                                             ; preds = %bb.h
   %.sroa.020.029.i.i = phi i64 [ %i.u, %bb.n ], [ 1, %bb.i ] ; 4 uses
   %i.o = getelementptr inbounds nuw [232 x i8], ptr %0, i64 %.sroa.020.029.i.i ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(232) %i.c, ptr noundef nonnull align 8 dereferenceable(232) %i.o, i64 232, i1 false)
-  %i.p = add i64 %.sroa.020.029.i.i, %i.e
+  %i.p = add nuw i64 %.sroa.020.029.i.i, %i.e
   br label %bb.k
 
 bb.k:                                             ; preds = %.backedge, %.lr.ph.i.i
@@ -234,7 +234,7 @@ bb.m:                                             ; preds = %bb.k
 
 bb.n:                                             ; preds = %bb.m
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(232) %i.o, ptr noundef nonnull align 8 dereferenceable(232) %i.c, i64 232, i1 false)
-  %i.u = add nuw i64 %.sroa.020.029.i.i, 1        ; 2 uses
+  %i.u = add nuw nsw i64 %.sroa.020.029.i.i, 1    ; 2 uses
   %exitcond.not.i.i = icmp eq i64 %i.u, %.sroa.018.0.i.i.ph
   br i1 %exitcond.not.i.i, label %_RINvNtNtCscI6d9CVNmLh_4core5slice6rotate14ptr_rotate_gcdTNtNtCshMFl0SviwmK_3syn2ty4TypeNtNtBX_5token5CommaEECsluMP4ekZjHw_14diesel_derives.exit.i, label %.lr.ph.i.i
 
@@ -371,7 +371,7 @@ bb.m:                                             ; preds = %bb.k
 
 bb.n:                                             ; preds = %bb.m
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(232) %i.o, ptr noundef nonnull align 8 dereferenceable(232) %i.c, i64 232, i1 false)
-  %i.u = add nuw i64 %.sroa.020.029.i.i, 1        ; 2 uses
+  %i.u = add nuw nsw i64 %.sroa.020.029.i.i, 1    ; 2 uses
   %exitcond.not.i.i = icmp eq i64 %i.u, %.sroa.018.0.i.i.ph
   br i1 %exitcond.not.i.i, label %_RINvNtNtCscI6d9CVNmLh_4core5slice6rotate14ptr_rotate_gcdTNtNtCshMFl0SviwmK_3syn2ty4TypeNtNtBX_5token5CommaEECsluMP4ekZjHw_14diesel_derives.exit.i, label %.lr.ph.i.i
 
@@ -472,7 +472,7 @@ bb.i:                                             ; preds = %bb.g
   %.sroa.020.029.i.i = phi i64 [ %i.r, %bb.m ], [ 1, %bb.h ] ; 4 uses
   %i.l = getelementptr inbounds nuw [288 x i8], ptr %0, i64 %.sroa.020.029.i.i ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(288) %i.b, ptr noundef nonnull align 8 dereferenceable(288) %i.l, i64 288, i1 false)
-  %i.m = add i64 %.sroa.020.029.i.i, %i.d
+  %i.m = add nuw i64 %.sroa.020.029.i.i, %i.d
   br label %bb.j
 
 bb.j:                                             ; preds = %.backedge, %.lr.ph.i.i
@@ -501,7 +501,7 @@ bb.l:                                             ; preds = %bb.j
 
 bb.m:                                             ; preds = %bb.l
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(288) %i.l, ptr noundef nonnull align 8 dereferenceable(288) %i.b, i64 288, i1 false)
-  %i.r = add nuw i64 %.sroa.020.029.i.i, 1        ; 2 uses
+  %i.r = add nuw nsw i64 %.sroa.020.029.i.i, 1    ; 2 uses
   %exitcond.not.i.i = icmp eq i64 %i.r, %.sroa.018.0.i.i.ph
   br i1 %exitcond.not.i.i, label %_RINvNtNtCscI6d9CVNmLh_4core5slice6rotate14ptr_rotate_gcdTNtNtCshMFl0SviwmK_3syn2ty9BareFnArgNtNtBX_5token5CommaEECsluMP4ekZjHw_14diesel_derives.exit.i, label %.lr.ph.i.i
 
@@ -605,7 +605,7 @@ bb.l:                                             ; preds = %bb.j
 
 bb.m:                                             ; preds = %bb.l
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(288) %i.l, ptr noundef nonnull align 8 dereferenceable(288) %i.b, i64 288, i1 false)
-  %i.r = add nuw i64 %.sroa.020.029.i.i, 1        ; 2 uses
+  %i.r = add nuw nsw i64 %.sroa.020.029.i.i, 1    ; 2 uses
   %exitcond.not.i.i = icmp eq i64 %i.r, %.sroa.018.0.i.i.ph
   br i1 %exitcond.not.i.i, label %_RINvNtNtCscI6d9CVNmLh_4core5slice6rotate14ptr_rotate_gcdTNtNtCshMFl0SviwmK_3syn2ty9BareFnArgNtNtBX_5token5CommaEECsluMP4ekZjHw_14diesel_derives.exit.i, label %.lr.ph.i.i
 

@@ -40,7 +40,7 @@ largeint_add_gen.exit:                            ; preds = %.lr.ph.i, %bb.a
 ; Function Attrs: nounwind uwtable
 define void @Ptngc_largeint_mul(i32 noundef %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef captures(none) %2, i32 noundef %3) local_unnamed_addr #1 {
 bb.a:
-  %i.a = sext i32 %3 to i64                       ; 3 uses
+  %i.a = sext i32 %3 to i64                       ; 4 uses
   %i.b = shl nsw i64 %i.a, 2
   tail call void @llvm.memset.p0.i64(ptr align 4 %2, i8 0, i64 %i.b, i1 false)
   %i.c = add i32 %3, -1                           ; 2 uses
@@ -49,6 +49,7 @@ bb.a:
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %wide.trip.count = zext nneg i32 %i.c to i64
+  %invariant.op = add nsw i64 %i.a, -2
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %largeint_add_gen.exit31
@@ -94,9 +95,7 @@ largeint_add_gen.exit:                            ; preds = %.lr.ph.i, %bb.b
   %i.y = xor i32 %i.i, -1
   %i.z = icmp ugt i32 %i.w, %i.y
   store i32 %i.x, ptr %i.v, align 4, !tbaa !8
-  %4 = trunc i64 %indvars.iv to i32
-  %5 = add i32 %4, 2
-  %i.aa = icmp slt i32 %5, %3
+  %i.aa = icmp slt i64 %indvars.iv, %invariant.op
   %i.ab = select i1 %i.aa, i1 %i.z, i1 false
   br i1 %i.ab, label %.lr.ph.preheader.i27, label %largeint_add_gen.exit31
 

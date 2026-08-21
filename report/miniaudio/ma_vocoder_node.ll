@@ -179,7 +179,7 @@ bb.i:                                             ; preds = %bb.i, %.lr.ph.i.new
   %i.bg = getelementptr inbounds nuw i8, ptr %i.bf, i64 60
   store float %i.au, ptr %i.bg, align 4, !tbaa !18
   %indvars.iv.next.i40.3 = add nuw nsw i64 %indvars.iv.i39, 4 ; 2 uses
-  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
+  %niter.next.3 = add nuw nsw i64 %niter, 4       ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %voclib_initialize_envelopes.exit.loopexit.unr-lcssa, label %bb.i, !llvm.loop !20
 
@@ -499,7 +499,7 @@ bb.c:                                             ; preds = %bb.b
   %i.bs = getelementptr inbounds nuw i8, ptr %i.bq, i64 124
   store float %i.bg, ptr %i.bs, align 4, !tbaa !27
   %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
-  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
+  %niter.next.3 = add nuw nsw i64 %niter, 4       ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.loopexit.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !29
 
@@ -608,7 +608,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %i.dt = getelementptr inbounds nuw i8, ptr %i.ds, i64 16
   store float %.sink, ptr %i.dt, align 4, !tbaa !27
   %indvars.iv.next170.1 = add nuw nsw i64 %indvars.iv169, 2 ; 2 uses
-  %niter188.next.1 = add nuw i64 %niter188, 2     ; 2 uses
+  %niter188.next.1 = add nuw nsw i64 %niter188, 2 ; 2 uses
   %niter188.ncmp.1 = icmp eq i64 %niter188.next.1, %unroll_iter187
   br i1 %niter188.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph161, !llvm.loop !31
 
@@ -1011,7 +1011,7 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph.i.new
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 60
   store float %i.l, ptr %i.y, align 4, !tbaa !18
   %indvars.iv.next.i.3 = add nuw nsw i64 %indvars.iv.i, 4 ; 2 uses
-  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
+  %niter.next.3 = add nuw nsw i64 %niter, 4       ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %voclib_initialize_envelopes.exit.loopexit.unr-lcssa, label %bb.c, !llvm.loop !20
 
@@ -1289,7 +1289,7 @@ bb.e:                                             ; preds = %bb.e, %.lr.ph.i.i.n
   %i.bz = getelementptr inbounds nuw i8, ptr %i.by, i64 60
   store float %i.bn, ptr %i.bz, align 4, !tbaa !18
   %indvars.iv.next.i40.i.3 = add nuw nsw i64 %indvars.iv.i39.i, 4 ; 2 uses
-  %niter31.next.3 = add nuw i64 %niter31, 4       ; 2 uses
+  %niter31.next.3 = add nuw nsw i64 %niter31, 4   ; 2 uses
   %niter31.ncmp.3 = icmp eq i64 %niter31.next.3, %unroll_iter30
   br i1 %niter31.ncmp.3, label %.loopexit.loopexit.unr-lcssa, label %bb.e, !llvm.loop !20
 

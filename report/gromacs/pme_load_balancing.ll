@@ -205,7 +205,7 @@ bb.a:
   %i.j = sub i64 %i.h, %i.i                       ; 2 uses
   %i.k = ashr exact i64 %i.j, 6                   ; 3 uses
   %i.l = add nsw i32 %i.b, 1
-  %i.m = sext i32 %i.l to i64
+  %i.m = sext i32 %i.l to i64                     ; 2 uses
   %i.n = icmp sgt i64 %i.k, %i.m
   br i1 %i.n, label %.lr.ph, label %.critedge.thread
 
@@ -219,13 +219,12 @@ bb.a:
   %i.q = sext i32 %i.p to i64
   %i.r = getelementptr inbounds nuw [64 x i8], ptr %i.g, i64 %i.q
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 56
-  %i.t = sext i32 %i.b to i64                     ; 2 uses
-  %1 = add nsw i64 %i.t, 1
+  %i.t = sext i32 %i.b to i64
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %.critedge2
   %indvars.iv18 = phi i64 [ %i.t, %.lr.ph ], [ %indvars.iv.next19, %.critedge2 ] ; 3 uses
-  %indvars.iv = phi i64 [ %1, %.lr.ph ], [ %indvars.iv.next, %.critedge2 ] ; 2 uses
+  %indvars.iv = phi i64 [ %i.m, %.lr.ph ], [ %indvars.iv.next, %.critedge2 ] ; 2 uses
   %i.u = getelementptr inbounds nuw [64 x i8], ptr %i.g, i64 %indvars.iv18 ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 48
   %i.w = load i32, ptr %i.v, align 8, !tbaa !401

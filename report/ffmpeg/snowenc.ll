@@ -205,7 +205,7 @@ add_yblock.exit.i:                                ; preds = %._crit_edge1014, %b
   br i1 %exitcond1193.not, label %predict_slice.exit, label %bb.av, !llvm.loop !247
 
 predict_slice.exit:                               ; preds = %._crit_edge1009, %add_yblock.exit.i, %bb.au, %.preheader913, %bb.at
-  %i.aoa = add nuw i32 %.0.i5871022, 1
+  %i.aoa = add nuw nsw i32 %.0.i5871022, 1
   %exitcond1194.not = icmp eq i32 %.0.i5871022, %i.tg
   br i1 %exitcond1194.not, label %predict_plane.exit589, label %bb.ao, !llvm.loop !248
 
@@ -608,7 +608,7 @@ bb.fj:                                            ; preds = %.preheader.i812
   %i.bvh = add i16 %i.bvg, %i.bvd                 ; 3 uses
   store i16 %i.bvh, ptr %i.bvf, align 2, !tbaa !184
   %indvars.iv.next15.i820.3 = add nuw nsw i64 %indvars.iv14.i819, 4 ; 2 uses
-  %niter2186.next.3 = add nuw i64 %niter2186, 4   ; 2 uses
+  %niter2186.next.3 = add nuw nsw i64 %niter2186, 4 ; 2 uses
   %niter2186.ncmp.3 = icmp eq i64 %niter2186.next.3, %unroll_iter2185
   br i1 %niter2186.ncmp.3, label %._crit_edge.i818.loopexit.unr-lcssa, label %.lr.ph.split.us.split.us.peel.next.i, !llvm.loop !326
 
@@ -1011,7 +1011,7 @@ add_yblock.exit.i647:                             ; preds = %._crit_edge1066, %b
   br i1 %exitcond1259.not, label %predict_slice.exit676, label %bb.gn, !llvm.loop !247
 
 predict_slice.exit676:                            ; preds = %._crit_edge1061, %add_yblock.exit.i647, %bb.gm, %.preheader908, %bb.gl
-  %i.czt = add nuw i32 %.0.i5841074, 1
+  %i.czt = add nuw nsw i32 %.0.i5841074, 1
   %exitcond1260.not = icmp eq i32 %.0.i5841074, %i.cda
   br i1 %exitcond1260.not, label %predict_plane.exit586, label %bb.gg, !llvm.loop !248
 
@@ -1414,7 +1414,7 @@ add_yblock.exit.i737:                             ; preds = %._crit_edge987, %bb
   br i1 %exitcond1161.not, label %predict_slice.exit768, label %bb.hl, !llvm.loop !247
 
 predict_slice.exit768:                            ; preds = %._crit_edge982, %add_yblock.exit.i737, %bb.hk, %.preheader917, %bb.hj
-  %i.dxu = add nuw i32 %.0.i995, 1
+  %i.dxu = add nuw nsw i32 %.0.i995, 1
   %exitcond1162.not = icmp eq i32 %.0.i995, %i.dbb
   br i1 %exitcond1162.not, label %predict_plane.exit586, label %bb.he, !llvm.loop !248
 
@@ -1817,8 +1817,8 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 6376 ; 23 uses
   %i.q = load i32, ptr %i.p, align 8, !tbaa !80   ; 2 uses
-  %i.r = shl i32 %.fr64, %i.q                     ; 7 uses
-  %i.s = shl i32 %i.h, %i.q                       ; 4 uses
+  %i.r = shl i32 %.fr64, %i.q                     ; 6 uses
+  %i.s = shl i32 %i.h, %i.q                       ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
   call void @llvm.lifetime.start.p0(ptr nonnull %19)
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
@@ -1885,7 +1885,7 @@ bb.c:                                             ; preds = %bb.b
   %i.bc = getelementptr inbounds nuw i8, ptr %0, i64 6224 ; 2 uses
   %i.bd = sub nsw i32 0, %i.r
   %i.be = sext i32 %i.bd to i64
-  %i.bf = sext i32 %i.r to i64                    ; 6 uses
+  %i.bf = sext i32 %i.r to i64                    ; 7 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %0, i64 155984
   %i.bh = getelementptr inbounds nuw i8, ptr %i.a, i64 4
   %i.bi = getelementptr inbounds nuw i8, ptr %i.a, i64 8
@@ -1898,7 +1898,7 @@ bb.c:                                             ; preds = %bb.b
 .preheader638.us.us.preheader.i:                  ; preds = %.split.us.i
   %i.bk = sext i32 %i.al to i64
   %i.bl = zext nneg i32 %i.ao to i64              ; 2 uses
-  %i.bm = zext nneg i32 %i.s to i64               ; 2 uses
+  %i.bm = zext nneg i32 %i.s to i64               ; 3 uses
   %i.bn = zext nneg i32 %i.ap to i64
   %wide.trip.count923.i = zext nneg i32 %i.r to i64 ; 2 uses
   %scevgep234.a = getelementptr i8, ptr %0, i64 172400
@@ -2301,7 +2301,7 @@ bb.dl:                                            ; preds = %bb.dk, %.lr.ph200.u
 ._crit_edge719.us.us.us.i:                        ; preds = %bb.df
   %indvars.iv.next902.i = add nsw i32 %indvars.iv901.i, 1
   %exitcond929.not.i = icmp eq i64 %indvars.iv.next926.i, %i.bm
-  %indvars.iv.next = add nuw i32 %indvars.iv, 1
+  %indvars.iv.next = add nuw nsw i32 %indvars.iv, 1
   br i1 %exitcond929.not.i, label %._crit_edge722.split.us.us.us.i, label %.preheader637.us.us.us.i, !llvm.loop !516
 
 ._crit_edge722.split.us.us.us.i:                  ; preds = %._crit_edge719.us.us.us.i
@@ -2704,15 +2704,13 @@ bb.ec:                                            ; preds = %bb.eb, %same_block.
   %.3.us.i = phi i32 [ %spec.select511.us.i, %bb.eb ], [ %.1802.us.i, %same_block.exit.us.i ], [ %.1802.us.i, %.split1057.i ] ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #12
   %indvars.iv.next935.i = add nuw nsw i64 %indvars.iv934.i, 2 ; 2 uses
-  %20 = trunc nuw i64 %indvars.iv.next935.i to i32
-  %21 = icmp sgt i32 %i.r, %20
-  br i1 %21, label %bb.do, label %._crit_edge804.us.i, !llvm.loop !529
+  %20 = icmp slt i64 %indvars.iv.next935.i, %i.bf
+  br i1 %20, label %bb.do, label %._crit_edge804.us.i, !llvm.loop !529
 
 ._crit_edge804.us.i:                              ; preds = %bb.ec
   %indvars.iv.next938.i = add nuw nsw i64 %indvars.iv937.i, 2 ; 2 uses
-  %22 = trunc nuw i64 %indvars.iv.next938.i to i32
-  %23 = icmp sgt i32 %i.s, %22
-  br i1 %23, label %.preheader.us.i, label %._crit_edge807.loopexit.i, !llvm.loop !530
+  %21 = icmp samesign ult i64 %indvars.iv.next938.i, %i.bm
+  br i1 %21, label %.preheader.us.i, label %._crit_edge807.loopexit.i, !llvm.loop !530
 
 ._crit_edge807.loopexit.i:                        ; preds = %._crit_edge804.us.i
   %i.cif = shl nsw i32 %.3.us.i, 2

@@ -205,18 +205,18 @@ nvme_atomic_boundary_check.exit.thread69.i:       ; preds = %nvme_atomic_boundar
 nvme_atomic_boundary_check.exit.thread.i:         ; preds = %nvme_atomic_boundary_check.exit.thread69.i, %nvme_atomic_boundary_check.exit.i, %bb.u, %.thread65.i, %.thread63.i, %bb.s
   %.1.shrunk.i = phi i1 [ false, %bb.s ], [ true, %.thread63.i ], [ false, %nvme_atomic_boundary_check.exit.thread69.i ], [ %.not.i81, %nvme_atomic_boundary_check.exit.i ], [ %.not.i81, %.thread65.i ], [ %.not.i81, %bb.u ]
   %.1.shrunk.fr.i = freeze i1 %.1.shrunk.i        ; 2 uses
-  %i.cw = load i32, ptr %i.ao, align 8            ; 3 uses
+  %i.cw = load i32, ptr %i.ao, align 8            ; 2 uses
   %i.cx = icmp ugt i32 %i.cw, 1
   br i1 %i.cx, label %.lr.ph79.i, label %._crit_edge.i
 
 .lr.ph79.i:                                       ; preds = %nvme_atomic_boundary_check.exit.thread.i
   %i.cy = load ptr, ptr %i.ap, align 16           ; 2 uses
+  %wide.trip.count86.i = zext i32 %i.cw to i64    ; 2 uses
   br i1 %.1.shrunk.fr.i, label %.lr.ph79.split.us.i, label %.lr.ph79.split.i
 
 .lr.ph79.split.us.i:                              ; preds = %.lr.ph79.i, %.loopexit.us.i
-  %.04478.us.i = phi i32 [ %3, %.loopexit.us.i ], [ 1, %.lr.ph79.i ] ; 2 uses
-  %2 = sext i32 %.04478.us.i to i64
-  %i.cz = getelementptr inbounds [8 x i8], ptr %i.cy, i64 %2
+  %indvars.iv83.i = phi i64 [ %indvars.iv.next84.i, %.loopexit.us.i ], [ 1, %.lr.ph79.i ] ; 2 uses
+  %i.cz = getelementptr inbounds nuw [8 x i8], ptr %i.cy, i64 %indvars.iv83.i
   %i.da = load ptr, ptr %i.cz, align 8            ; 2 uses
   %.not52.us.i = icmp eq ptr %i.da, null
   br i1 %.not52.us.i, label %.loopexit.us.i, label %bb.v
@@ -228,8 +228,8 @@ bb.v:                                             ; preds = %.lr.ph79.split.us.i
   br i1 %.not5376.us.i, label %.loopexit.us.i, label %.lr.ph.us.i
 
 .loopexit.us.i:                                   ; preds = %bb.y, %bb.v, %.lr.ph79.split.us.i
-  %3 = add nuw i32 %.04478.us.i, 1                ; 2 uses
-  %exitcond82.not.i = icmp eq i32 %3, %i.cw
+  %indvars.iv.next84.i = add nuw nsw i64 %indvars.iv83.i, 1 ; 2 uses
+  %exitcond82.not.i = icmp eq i64 %indvars.iv.next84.i, %wide.trip.count86.i
   br i1 %exitcond82.not.i, label %._crit_edge.i, label %.lr.ph79.split.us.i, !llvm.loop !49
 
 .lr.ph.us.i:                                      ; preds = %bb.v, %bb.y
@@ -267,9 +267,8 @@ bb.y:                                             ; preds = %bb.x, %bb.w, %.lr.p
   br i1 %.not53.us.us.i, label %.loopexit.us.i, label %.lr.ph.us.i, !llvm.loop !50
 
 .lr.ph79.split.i:                                 ; preds = %.lr.ph79.i, %.loopexit.i
-  %.04478.i = phi i32 [ %5, %.loopexit.i ], [ 1, %.lr.ph79.i ] ; 2 uses
-  %4 = sext i32 %.04478.i to i64
-  %i.dq = getelementptr inbounds [8 x i8], ptr %i.cy, i64 %4
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %.loopexit.i ], [ 1, %.lr.ph79.i ] ; 2 uses
+  %i.dq = getelementptr inbounds nuw [8 x i8], ptr %i.cy, i64 %indvars.iv.i
   %i.dr = load ptr, ptr %i.dq, align 8            ; 2 uses
   %.not52.i = icmp eq ptr %i.dr, null
   br i1 %.not52.i, label %.loopexit.i, label %bb.z
@@ -320,8 +319,8 @@ bb.ac:                                            ; preds = %bb.ab, %bb.aa, %.lr
   br i1 %.not53.i, label %.loopexit.i, label %.lr.ph.i, !llvm.loop !50
 
 .loopexit.i:                                      ; preds = %bb.ac, %bb.z, %.lr.ph79.split.i
-  %5 = add nuw i32 %.04478.i, 1                   ; 2 uses
-  %exitcond.not.i = icmp eq i32 %5, %i.cw
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
+  %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count86.i
   br i1 %exitcond.not.i, label %._crit_edge.i, label %.lr.ph79.split.i, !llvm.loop !49
 
 ._crit_edge.i:                                    ; preds = %.loopexit.i, %.loopexit.us.i, %nvme_atomic_boundary_check.exit.thread.i
@@ -724,8 +723,8 @@ bb.x:                                             ; preds = %bb.k, %bb.v, %trace
   %i.di = phi i32 [ %i.eq, %bb.af ], [ %i.bg, %bb.j ]
   %.1187245 = phi i32 [ %i.er, %bb.af ], [ 1, %bb.j ] ; 4 uses
   %i.dj = load ptr, ptr %i.t, align 16
-  %4 = sext i32 %.1187245 to i64
-  %i.dk = getelementptr inbounds [8 x i8], ptr %i.dj, i64 %4
+  %4 = zext nneg i32 %.1187245 to i64
+  %i.dk = getelementptr inbounds nuw [8 x i8], ptr %i.dj, i64 %4
   %i.dl = load ptr, ptr %i.dk, align 8            ; 12 uses
   %.not215 = icmp eq ptr %i.dl, null
   br i1 %.not215, label %bb.af, label %bb.y
@@ -814,7 +813,7 @@ trace_pci_nvme_post_load_restore_sq.exit._crit_edge: ; preds = %bb.ae, %bb.ad, %
 
 bb.af:                                            ; preds = %trace_pci_nvme_post_load_restore_sq.exit._crit_edge, %.peel.next
   %i.eq = phi i32 [ %.pre, %trace_pci_nvme_post_load_restore_sq.exit._crit_edge ], [ %i.di, %.peel.next ] ; 3 uses
-  %i.er = add nuw i32 %.1187245, 1                ; 2 uses
+  %i.er = add nuw nsw i32 %.1187245, 1            ; 2 uses
   %i.es = icmp ult i32 %i.er, %i.eq
   br i1 %i.es, label %.peel.next, label %.preheader241, !llvm.loop !109
 

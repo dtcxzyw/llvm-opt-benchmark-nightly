@@ -205,10 +205,14 @@ bb.h:                                             ; preds = %EGifPutLine.exit.us
 
 ._crit_edge.split.us.us.1:                        ; preds = %bb.h, %._crit_edge.split.us.us
   %i.cg = icmp sgt i32 %i.u, 2
-  br i1 %i.cg, label %.lr.ph77.us.2.a, label %._crit_edge.split.us.us.2
+  br i1 %i.cg, label %.lr.ph77.us.2, label %._crit_edge.split.us.us.2
 
-.lr.ph77.us.2.a:                                  ; preds = %._crit_edge.split.us.us.1, %bb.k
-  %indvars.iv132 = phi i64 [ %indvars.iv.next133, %bb.k ], [ 2, %._crit_edge.split.us.us.1 ]
+.lr.ph77.us.2:                                    ; preds = %._crit_edge.split.us.us.1
+  %sext134 = zext nneg i32 %i.u to i64
+  br label %.lr.ph77.us.2.a
+
+.lr.ph77.us.2.a:                                  ; preds = %bb.k, %.lr.ph77.us.2
+  %indvars.iv132 = phi i64 [ %indvars.iv.next133, %bb.k ], [ 2, %.lr.ph77.us.2 ]
   %i.ch = load ptr, ptr %i.x, align 8, !tbaa !107 ; 4 uses
   %i.ci = load ptr, ptr %i.p, align 8, !tbaa !14  ; 3 uses
   %i.cj = load i32, ptr %i.ci, align 8, !tbaa !22
@@ -315,16 +319,19 @@ EGifPutLine.exit.us.us.2:                         ; preds = %.lr.ph.i.us.us.2, %
 
 bb.k:                                             ; preds = %EGifPutLine.exit.us.us.2
   %indvars.iv.next133 = add nuw nsw i64 %indvars.iv132, 4 ; 2 uses
-  %1 = trunc nuw i64 %indvars.iv.next133 to i32
-  %2 = icmp sgt i32 %i.u, %1
-  br i1 %2, label %.lr.ph77.us.2.a, label %._crit_edge.split.us.us.2, !llvm.loop !115
+  %1 = icmp samesign ult i64 %indvars.iv.next133, %sext134
+  br i1 %1, label %.lr.ph77.us.2.a, label %._crit_edge.split.us.us.2, !llvm.loop !115
 
 ._crit_edge.split.us.us.2:                        ; preds = %bb.k, %._crit_edge.split.us.us.1
   %.not188 = icmp eq i32 %i.u, 1
-  br i1 %.not188, label %.critedge, label %.lr.ph77.us.3.a
+  br i1 %.not188, label %.critedge, label %.lr.ph77.us.3
 
-.lr.ph77.us.3.a:                                  ; preds = %._crit_edge.split.us.us.2, %bb.n
-  %indvars.iv129 = phi i64 [ %indvars.iv.next130, %bb.n ], [ 1, %._crit_edge.split.us.us.2 ]
+.lr.ph77.us.3:                                    ; preds = %._crit_edge.split.us.us.2
+  %sext = zext nneg i32 %i.u to i64
+  br label %.lr.ph77.us.3.a
+
+.lr.ph77.us.3.a:                                  ; preds = %bb.n, %.lr.ph77.us.3
+  %indvars.iv129 = phi i64 [ %indvars.iv.next130, %bb.n ], [ 1, %.lr.ph77.us.3 ]
   %i.dm = load ptr, ptr %i.x, align 8, !tbaa !107 ; 4 uses
   %i.dn = load ptr, ptr %i.p, align 8, !tbaa !14  ; 3 uses
   %i.do = load i32, ptr %i.dn, align 8, !tbaa !22
@@ -431,9 +438,8 @@ EGifPutLine.exit.us.us.3:                         ; preds = %.lr.ph.i.us.us.3, %
 
 bb.n:                                             ; preds = %EGifPutLine.exit.us.us.3
   %indvars.iv.next130 = add nuw nsw i64 %indvars.iv129, 2 ; 2 uses
-  %3 = trunc nuw i64 %indvars.iv.next130 to i32
-  %4 = icmp sgt i32 %i.u, %3
-  br i1 %4, label %.lr.ph77.us.3.a, label %.critedge, !llvm.loop !115
+  %2 = icmp samesign ult i64 %indvars.iv.next130, %sext
+  br i1 %2, label %.lr.ph77.us.3.a, label %.critedge, !llvm.loop !115
 
 .lr.ph77.us:                                      ; preds = %.preheader.split.us.preheader, %bb.q
   %indvars.iv138 = phi i64 [ %indvars.iv.next139, %bb.q ], [ 0, %.preheader.split.us.preheader ]

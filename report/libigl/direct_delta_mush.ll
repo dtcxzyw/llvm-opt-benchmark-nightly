@@ -205,7 +205,7 @@ bb.w:                                             ; preds = %bb.v, %bb.u
   %.sroa.7.1.i.i.1 = select i1 %i.oo, double %i.on, double %.sroa.7.1.i.i ; 3 uses
   %i.op = select i1 %i.oo, double %i.on, double %i.ok ; 2 uses
   %i.oq = add nuw nsw i64 %.02123.i.i.i.i, 2      ; 2 uses
-  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
+  %niter.next.1 = add nuw nsw i64 %niter, 2       ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZNK5Eigen9DenseBaseINS_5BlockINS_6MatrixIdLi3ELi1ELi0ELi3ELi1EEELin1ELi1ELb0EEEE8maxCoeffIlEEdPT_.exit.unr-lcssa, label %.lr.ph.i.i.i.i, !llvm.loop !111
 
@@ -608,10 +608,7 @@ bb.s:                                             ; preds = %.lr.ph200
 
 .lr.ph196.preheader:                              ; preds = %bb.t
   %i.cm = sext i32 %.0100199 to i64               ; 5 uses
-  %2 = add i64 %.098193, 2
-  %smin = tail call i64 @llvm.smin.i64(i64 %i.db, i64 1)
-  %3 = sub i64 %2, %smin                          ; 3 uses
-  %min.iters.check = icmp ult i64 %3, 8
+  %min.iters.check = icmp samesign ult i64 %.098193, 7
   br i1 %min.iters.check, label %.lr.ph196.preheader256, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph196.preheader
@@ -621,9 +618,9 @@ vector.memcheck:                                  ; preds = %.lr.ph196.preheader
   br i1 %diff.check, label %.lr.ph196.preheader256, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %3, -8                         ; 4 uses
+  %n.vec = and i64 %i.db, 9223372036854775800     ; 3 uses
   %i.co = sub i64 %i.cm, %n.vec                   ; 2 uses
-  %4 = sub i64 %i.db, %n.vec
+  %2 = and i64 %i.db, 7
   %invariant.gep = getelementptr [4 x i8], ptr %i.ah, i64 %i.cm
   br label %vector.body
 
@@ -646,12 +643,12 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.cw, label %middle.block, label %vector.body, !llvm.loop !447
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %3, %n.vec
+  %cmp.n = icmp eq i64 %i.db, %n.vec
   br i1 %cmp.n, label %.loopexit.loopexit, label %.lr.ph196.preheader256
 
 .lr.ph196.preheader256:                           ; preds = %vector.memcheck, %.lr.ph196.preheader, %middle.block
   %indvars.iv.ph = phi i64 [ %i.cm, %vector.memcheck ], [ %i.cm, %.lr.ph196.preheader ], [ %i.co, %middle.block ]
-  %.1195.ph = phi i64 [ %i.db, %vector.memcheck ], [ %i.db, %.lr.ph196.preheader ], [ %4, %middle.block ]
+  %.1195.ph = phi i64 [ %i.db, %vector.memcheck ], [ %i.db, %.lr.ph196.preheader ], [ %2, %middle.block ]
   br label %.lr.ph196
 
 bb.t:                                             ; preds = %.lr.ph, %bb.t
@@ -663,7 +660,7 @@ bb.t:                                             ; preds = %.lr.ph, %bb.t
   store i32 %.099192, ptr %i.cz, align 4, !tbaa !273
   store i32 %i.bk, ptr %i.cx, align 4, !tbaa !273
   %i.da = getelementptr inbounds [4 x i8], ptr %i.cl, i64 %i.cy
-  %i.db = add nuw i64 %.098193, 1                 ; 5 uses
+  %i.db = add nuw nsw i64 %.098193, 1             ; 6 uses
   %i.dc = load i32, ptr %i.da, align 4, !tbaa !273 ; 2 uses
   %i.dd = sext i32 %i.dc to i64                   ; 2 uses
   %i.de = getelementptr inbounds [4 x i8], ptr %i.ai, i64 %i.dd ; 2 uses

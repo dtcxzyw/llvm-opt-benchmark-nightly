@@ -205,20 +205,18 @@ bb.ad:                                            ; preds = %bb.ac
 bb.ae:                                            ; preds = %.lr.ph178, %bb.ag
   %indvars.iv194 = phi i64 [ 0, %.lr.ph178 ], [ %indvars.iv.next195, %bb.ag ] ; 4 uses
   %.0133175 = phi i64 [ 0, %.lr.ph178 ], [ %.1134, %bb.ag ] ; 4 uses
-  %1 = shl i64 %indvars.iv194, 32
-  %sext = add i64 %1, 12884901888
-  %2 = ashr exact i64 %sext, 28
-  %3 = getelementptr inbounds i8, ptr %i.d, i64 %2 ; 2 uses
-  %i.fp = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %1 = getelementptr inbounds nuw [16 x i8], ptr %i.d, i64 %indvars.iv194 ; 2 uses
+  %i.fp = getelementptr inbounds nuw i8, ptr %1, i64 56
   %i.fq = load i8, ptr %i.fp, align 8, !range !6, !noundef !7
   %i.fr = trunc nuw i8 %i.fq to i1
   br i1 %i.fr, label %bb.ag, label %bb.af
 
 bb.af:                                            ; preds = %bb.ae
+  %2 = getelementptr inbounds nuw i8, ptr %1, i64 48
   %i.fs = getelementptr inbounds nuw [48 x i8], ptr %i.fn, i64 %indvars.iv194
   %i.ft = getelementptr inbounds nuw [4 x i8], ptr %i.fo, i64 %indvars.iv194
   %i.fu = load i32, ptr %i.ft, align 4
-  %i.fv = load i64, ptr %3, align 8
+  %i.fv = load i64, ptr %2, align 8
   %i.fw = tail call i64 @FunctionCall2Coll(ptr noundef nonnull %i.fs, i32 noundef %i.fu, i64 noundef %i.fv, i64 noundef 8816678312871386365) #11
   %i.fx = shl i64 %.0133175, 54
   %i.fy = lshr i64 %.0133175, 7

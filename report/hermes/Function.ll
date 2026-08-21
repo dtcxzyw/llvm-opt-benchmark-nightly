@@ -205,14 +205,16 @@ _ZN6hermes2vm21ScopedNativeCallFrameC2ERNS0_7RuntimeEjPNS0_8CallableEbNS0_11Herm
   br i1 %i.az, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %_ZN6hermes2vm21ScopedNativeCallFrameC2ERNS0_7RuntimeEjPNS0_8CallableEbNS0_11HermesValueE.exit
-  %i.ba = load i32, ptr %i.q, align 8, !tbaa !74  ; 3 uses
-  %4 = add i32 %i.r, -1                           ; 3 uses
-  %xtraiter = and i32 %4, 1
+  %i.ba = load i32, ptr %i.q, align 8, !tbaa !74
+  %zext31 = zext i32 %i.ba to i64                 ; 3 uses
+  %wide.trip.count = zext i32 %i.r to i64
+  %4 = add nsw i64 %wide.trip.count, -1           ; 3 uses
+  %xtraiter = and i64 %4, 1
   %i.bb = icmp eq i32 %i.r, 2
   br i1 %i.bb, label %.epil.preheader, label %.lr.ph.new
 
 .lr.ph.new:                                       ; preds = %.lr.ph
-  %unroll_iter = and i32 %4, -2
+  %unroll_iter = and i64 %4, -2
   br label %bb.f
 
 bb.d:                                             ; preds = %_ZNK6hermes2vm10NativeArgs6getArgEj.exit
@@ -220,20 +222,19 @@ bb.d:                                             ; preds = %_ZNK6hermes2vm10Nat
   br label %bb.i
 
 ._crit_edge.loopexit.unr-lcssa:                   ; preds = %_ZNK6hermes2vm10NativeArgs6getArgEj.exit16.1
-  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %._crit_edge, label %.epil.preheader
 
 .epil.preheader:                                  ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph
-  %.030.epil.init = phi i32 [ 1, %.lr.ph ], [ %15, %._crit_edge.loopexit.unr-lcssa ] ; 3 uses
-  %lcmp.mod34 = trunc i32 %4 to i1
+  %indvars.iv.epil.init = phi i64 [ 1, %.lr.ph ], [ %indvars.iv.next.1, %._crit_edge.loopexit.unr-lcssa ] ; 3 uses
+  %lcmp.mod34 = trunc i64 %4 to i1
   tail call void @llvm.assume(i1 %lcmp.mod34)
-  %i.bd = icmp ult i32 %.030.epil.init, %i.ba
+  %i.bd = icmp samesign ult i64 %indvars.iv.epil.init, %zext31
   br i1 %i.bd, label %bb.e, label %_ZNK6hermes2vm10NativeArgs6getArgEj.exit16.epil
 
 bb.e:                                             ; preds = %.epil.preheader
   %i.be = load ptr, ptr %2, align 8, !tbaa !7, !noalias !324
-  %5 = zext i32 %.030.epil.init to i64
-  %i.bf = sub nsw i64 0, %5
+  %i.bf = sub nsw i64 0, %indvars.iv.epil.init
   %i.bg = getelementptr inbounds [8 x i8], ptr %i.be, i64 %i.bf
   %i.bh = getelementptr inbounds i8, ptr %i.bg, i64 -8
   %.sroa.0.0.copyload.i15.epil = load i64, ptr %i.bh, align 8, !tbaa !33
@@ -241,9 +242,10 @@ bb.e:                                             ; preds = %.epil.preheader
 
 _ZNK6hermes2vm10NativeArgs6getArgEj.exit16.epil:  ; preds = %bb.e, %.epil.preheader
   %.sroa.0.0.i14.epil = phi i64 [ %.sroa.0.0.copyload.i15.epil, %bb.e ], [ -1688849860263936, %.epil.preheader ]
-  %6 = add i32 %.030.epil.init, -1
-  %7 = sext i32 %6 to i64
-  %i.bi = sub nsw i64 0, %7
+  %5 = shl i64 %indvars.iv.epil.init, 32
+  %sext.epil = add i64 %5, -4294967296
+  %6 = ashr exact i64 %sext.epil, 32
+  %i.bi = sub nsw i64 0, %6
   %i.bj = getelementptr [8 x i8], ptr %i.ao, i64 %i.bi
   %i.bk = getelementptr i8, ptr %i.bj, i64 -64
   store i64 %.sroa.0.0.i14.epil, ptr %i.bk, align 8, !tbaa !35
@@ -269,15 +271,14 @@ _ZNK6hermes2vm10NativeArgs6getArgEj.exit16.epil:  ; preds = %bb.e, %.epil.prehea
   br label %bb.i
 
 bb.f:                                             ; preds = %_ZNK6hermes2vm10NativeArgs6getArgEj.exit16.1, %.lr.ph.new
-  %.030 = phi i32 [ 1, %.lr.ph.new ], [ %15, %_ZNK6hermes2vm10NativeArgs6getArgEj.exit16.1 ] ; 6 uses
-  %niter = phi i32 [ 0, %.lr.ph.new ], [ %niter.next.1, %_ZNK6hermes2vm10NativeArgs6getArgEj.exit16.1 ]
-  %i.by = icmp ult i32 %.030, %i.ba
+  %indvars.iv = phi i64 [ 1, %.lr.ph.new ], [ %indvars.iv.next.1, %_ZNK6hermes2vm10NativeArgs6getArgEj.exit16.1 ] ; 6 uses
+  %niter = phi i64 [ 0, %.lr.ph.new ], [ %niter.next.1, %_ZNK6hermes2vm10NativeArgs6getArgEj.exit16.1 ]
+  %i.by = icmp samesign ult i64 %indvars.iv, %zext31
   br i1 %i.by, label %bb.g, label %_ZNK6hermes2vm10NativeArgs6getArgEj.exit16
 
 bb.g:                                             ; preds = %bb.f
   %i.bz = load ptr, ptr %2, align 8, !tbaa !7, !noalias !324
-  %8 = zext i32 %.030 to i64
-  %i.ca = sub nsw i64 0, %8
+  %i.ca = sub nsw i64 0, %indvars.iv
   %i.cb = getelementptr inbounds [8 x i8], ptr %i.bz, i64 %i.ca
   %i.cc = getelementptr inbounds i8, ptr %i.cb, i64 -8
   %.sroa.0.0.copyload.i15 = load i64, ptr %i.cc, align 8, !tbaa !33
@@ -285,35 +286,37 @@ bb.g:                                             ; preds = %bb.f
 
 _ZNK6hermes2vm10NativeArgs6getArgEj.exit16:       ; preds = %bb.f, %bb.g
   %.sroa.0.0.i14 = phi i64 [ %.sroa.0.0.copyload.i15, %bb.g ], [ -1688849860263936, %bb.f ]
-  %9 = add nsw i32 %.030, -1
-  %10 = sext i32 %9 to i64
-  %i.cd = sub nsw i64 0, %10
+  %7 = shl i64 %indvars.iv, 32
+  %sext = add nsw i64 %7, -4294967296
+  %8 = ashr exact i64 %sext, 32
+  %i.cd = sub nsw i64 0, %8
   %i.ce = getelementptr [8 x i8], ptr %i.ao, i64 %i.cd
   %i.cf = getelementptr i8, ptr %i.ce, i64 -64
   store i64 %.sroa.0.0.i14, ptr %i.cf, align 8, !tbaa !35
-  %11 = add nuw i32 %.030, 1                      ; 2 uses
-  %i.cg = icmp ult i32 %11, %i.ba
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %i.cg = icmp samesign ult i64 %indvars.iv.next, %zext31
   br i1 %i.cg, label %bb.h, label %_ZNK6hermes2vm10NativeArgs6getArgEj.exit16.1
 
 bb.h:                                             ; preds = %_ZNK6hermes2vm10NativeArgs6getArgEj.exit16
   %i.ch = load ptr, ptr %2, align 8, !tbaa !7, !noalias !324
-  %12 = zext i32 %11 to i64
-  %13 = sub nsw i64 0, %12
-  %i.ci = getelementptr inbounds [8 x i8], ptr %i.ch, i64 %13
+  %9 = xor i64 %indvars.iv, -1
+  %i.ci = getelementptr inbounds [8 x i8], ptr %i.ch, i64 %9
   %i.cj = getelementptr inbounds i8, ptr %i.ci, i64 -8
   %.sroa.0.0.copyload.i15.1 = load i64, ptr %i.cj, align 8, !tbaa !33
   br label %_ZNK6hermes2vm10NativeArgs6getArgEj.exit16.1
 
 _ZNK6hermes2vm10NativeArgs6getArgEj.exit16.1:     ; preds = %bb.h, %_ZNK6hermes2vm10NativeArgs6getArgEj.exit16
   %.sroa.0.0.i14.1 = phi i64 [ %.sroa.0.0.copyload.i15.1, %bb.h ], [ -1688849860263936, %_ZNK6hermes2vm10NativeArgs6getArgEj.exit16 ]
-  %14 = sext i32 %.030 to i64
-  %i.ck = sub nsw i64 0, %14
+  %10 = shl i64 %indvars.iv.next, 32
+  %sext.1 = add i64 %10, -4294967296
+  %11 = ashr exact i64 %sext.1, 32
+  %i.ck = sub nsw i64 0, %11
   %i.cl = getelementptr [8 x i8], ptr %i.ao, i64 %i.ck
   %i.cm = getelementptr i8, ptr %i.cl, i64 -64
   store i64 %.sroa.0.0.i14.1, ptr %i.cm, align 8, !tbaa !35
-  %15 = add nuw i32 %.030, 2                      ; 2 uses
-  %niter.next.1 = add i32 %niter, 2               ; 2 uses
-  %niter.ncmp.1 = icmp eq i32 %niter.next.1, %unroll_iter
+  %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
+  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %bb.f, !llvm.loop !327
 
 bb.i:                                             ; preds = %._crit_edge, %bb.d

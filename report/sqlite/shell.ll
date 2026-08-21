@@ -206,7 +206,7 @@ bb.b:                                             ; preds = %.lr.ph212, %qrfStri
   %i.f = add i32 %i.e, 1
   %i.g = trunc i64 %indvars.iv240 to i32
   %i.h = add i32 %i.g, 1
-  %i.i = add i64 %indvars.iv240, 1                ; 2 uses
+  %i.i = add nuw i64 %indvars.iv240, 1            ; 2 uses
   %i.j = trunc i64 %i.i to i32
   %i.k = trunc i64 %indvars.iv240 to i32
   %i.l = add i32 %i.k, 1
@@ -334,7 +334,7 @@ qrfStringInArray.exit172:                         ; preds = %.lr.ph.i167.5, %.lr
   %i.bm = sub i32 %i.bl, %i.p
   %i.bn = sext i32 %i.bm to i64                   ; 2 uses
   %smax286 = tail call i64 @llvm.smax.i64(i64 %indvars.iv240, i64 %i.bn)
-  %i.bo = add i64 %smax286, 1
+  %i.bo = add nuw i64 %smax286, 1
   %i.bp = sub i64 %i.bo, %i.bn                    ; 3 uses
   %min.iters.check288 = icmp ult i64 %i.bp, 16
   br i1 %min.iters.check288, label %.lr.ph.preheader302, label %vector.scevcheck285
@@ -425,7 +425,7 @@ vector.scevcheck:                                 ; preds = %.lr.ph207.preheader
   %i.cy = add i32 %i.v, %i.l
   %i.cz = sub i32 %i.cy, %i.p                     ; 2 uses
   %i.da = zext i32 %i.cz to i64
-  %i.db = sub i64 %indvars.iv240, %i.da           ; 2 uses
+  %i.db = sub nsw i64 %indvars.iv240, %i.da       ; 2 uses
   %i.dc = trunc i64 %i.db to i32
   %i.dd = xor i32 %i.cz, -1
   %i.de = icmp ult i32 %i.dd, %i.dc
@@ -473,7 +473,7 @@ middle.block:                                     ; preds = %vector.body
   br i1 %exitcond.not, label %qrfStringInArray.exit180.thread, label %.lr.ph207, !llvm.loop !141
 
 qrfStringInArray.exit180.thread:                  ; preds = %.lr.ph207, %middle.block, %.lr.ph.i175, %qrfStringInArray.exit172.thread.thread191, %bb.f, %qrfStringInArray.exit180
-  %indvars.iv.next241 = add nuw i64 %indvars.iv240, 1 ; 2 uses
+  %indvars.iv.next241 = add nuw nsw i64 %indvars.iv240, 1 ; 2 uses
   %i.dq = load ptr, ptr %0, align 8, !tbaa !36
   %i.dr = tail call i32 @sqlite3_step(ptr noundef %i.dq) #45
   %i.ds = icmp eq i32 %i.dr, 100
@@ -876,7 +876,7 @@ bb.j:                                             ; preds = %bb.i
   %i.bj = load i8, ptr %i.bi, align 1, !tbaa !16
   %i.bk = zext i8 %i.bj to i64
   %i.bl = or disjoint i64 %i.bh, %i.bk            ; 3 uses
-  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
+  %niter.next.3 = add nuw nsw i64 %niter, 4       ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %._crit_edge.i.i.loopexit.unr-lcssa, label %.lr.ph.i.i, !llvm.loop !804
 

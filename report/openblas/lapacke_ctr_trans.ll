@@ -96,25 +96,30 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   br label %.preheader
 
 .loopexit:                                        ; preds = %scalar.ph.prol.loopexit, %scalar.ph, %middle.block172, %.preheader
-  %indvars.iv.next103 = add i32 %indvars.iv102, 1
+  %indvars.iv.next103 = add nuw nsw i32 %indvars.iv102, 1
   %exitcond110.not = icmp eq i64 %indvars.iv.next107, %wide.trip.count109
+  %indvar.next = add i32 %indvar, 1
   %indvar.next.a = add i64 %indvar.a, 1
   br i1 %exitcond110.not, label %.loopexit81, label %.preheader, !llvm.loop !8
 
 .preheader:                                       ; preds = %.preheader.preheader, %.loopexit
-  %indvar.a = phi i64 [ 0, %.preheader.preheader ], [ %indvar.next.a, %.loopexit ] ; 3 uses
+  %indvar.a = phi i64 [ 0, %.preheader.preheader ], [ %indvar.next.a, %.loopexit ] ; 4 uses
+  %indvar = phi i32 [ 0, %.preheader.preheader ], [ %indvar.next, %.loopexit ] ; 2 uses
   %indvars.iv106 = phi i64 [ %i.ah, %.preheader.preheader ], [ %indvars.iv.next107, %.loopexit ] ; 3 uses
-  %indvars.iv102 = phi i32 [ 1, %.preheader.preheader ], [ %indvars.iv.next103, %.loopexit ] ; 4 uses
+  %indvars.iv102 = phi i32 [ 1, %.preheader.preheader ], [ %indvars.iv.next103, %.loopexit ] ; 2 uses
   %i.ap = shl i64 %indvar.a, 3
   %scevgep150 = getelementptr i8, ptr %i.an, i64 %i.ap
-  %smin151 = tail call i32 @llvm.smin.i32(i32 %5, i32 %indvars.iv102)
+  %8 = trunc i64 %indvar.a to i32
+  %9 = add i32 %8, 1
+  %smin151 = tail call i32 @llvm.smin.i32(i32 %5, i32 %9)
   %i.aq = zext i32 %smin151 to i64
   %i.ar = shl nuw nsw i64 %i.aq, 3                ; 2 uses
   %scevgep152 = getelementptr i8, ptr %scevgep150, i64 %i.ar
   %i.as = mul i64 %i.am, %indvar.a
   %scevgep153 = getelementptr i8, ptr %i.ao, i64 %i.as
   %scevgep154 = getelementptr i8, ptr %scevgep153, i64 %i.ar
-  %smin145 = tail call i32 @llvm.smin.i32(i32 %5, i32 %indvars.iv102)
+  %10 = add i32 %indvar, 1
+  %smin145 = tail call i32 @llvm.smin.i32(i32 %5, i32 %10)
   %i.at = zext i32 %smin145 to i64
   %i.au = add nsw i64 %i.at, -1                   ; 2 uses
   %indvars.iv.next107 = add nuw nsw i64 %indvars.iv106, 1 ; 3 uses

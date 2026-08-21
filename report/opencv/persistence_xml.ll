@@ -202,8 +202,8 @@ bb.ap:                                            ; preds = %switch.early.test, 
   %i.cs = ptrtoint ptr %i.cq to i64
   %i.ct = ptrtoint ptr %i.cr to i64
   %i.cu = sub i64 %i.cs, %i.ct
-  %i.cv = lshr exact i64 %i.cu, 5
-  %i.cw = trunc i64 %i.cv to i32                  ; 3 uses
+  %i.cv = lshr exact i64 %i.cu, 5                 ; 2 uses
+  %i.cw = trunc i64 %i.cv to i32                  ; 2 uses
   %i.cx = and i32 %i.cw, 1
   %i.cy = icmp eq i32 %i.cx, 0
   br i1 %i.cy, label %bb.av, label %bb.aq
@@ -251,11 +251,15 @@ bb.av:                                            ; preds = %._crit_edge
   %i.dg = ashr exact i64 %sext, 32
   %i.dh = getelementptr inbounds i8, ptr %i.bz, i64 %i.dg ; 2 uses
   %i.di = icmp sgt i32 %i.cw, 0
-  br i1 %i.di, label %.lr.ph150, label %._crit_edge151
+  br i1 %i.di, label %.lr.ph150.preheader, label %._crit_edge151
 
-.lr.ph150:                                        ; preds = %bb.av, %bb.bd
-  %indvars.iv153 = phi i64 [ %indvars.iv.next154, %bb.bd ], [ 0, %bb.av ] ; 4 uses
-  %.295147 = phi ptr [ %i.er, %bb.bd ], [ %i.dh, %bb.av ]
+.lr.ph150.preheader:                              ; preds = %bb.av
+  %sext155 = and i64 %i.cv, 2147483647
+  br label %.lr.ph150
+
+.lr.ph150:                                        ; preds = %.lr.ph150.preheader, %bb.bd
+  %indvars.iv153 = phi i64 [ 0, %.lr.ph150.preheader ], [ %indvars.iv.next154, %bb.bd ] ; 4 uses
+  %.295147 = phi ptr [ %i.dh, %.lr.ph150.preheader ], [ %i.er, %bb.bd ]
   %i.dj = load ptr, ptr %3, align 8, !tbaa !60    ; 2 uses
   %i.dk = getelementptr inbounds nuw [32 x i8], ptr %i.dj, i64 %indvars.iv153
   %i.dl = getelementptr inbounds nuw i8, ptr %i.dk, i64 8
@@ -340,9 +344,8 @@ bb.bd:                                            ; preds = %bb.bc, %bb.bb
   %i.er = getelementptr inbounds nuw i8, ptr %i.eq, i64 1 ; 2 uses
   store i8 34, ptr %i.eq, align 1, !tbaa !44
   %indvars.iv.next154 = add nuw nsw i64 %indvars.iv153, 2 ; 2 uses
-  %18 = trunc nuw i64 %indvars.iv.next154 to i32
-  %19 = icmp slt i32 %18, %i.cw
-  br i1 %19, label %.lr.ph150, label %._crit_edge151, !llvm.loop !67
+  %18 = icmp samesign ult i64 %indvars.iv.next154, %sext155
+  br i1 %18, label %.lr.ph150, label %._crit_edge151, !llvm.loop !67
 
 ._crit_edge151:                                   ; preds = %bb.bd, %bb.av
   %.295.lcssa = phi ptr [ %i.dh, %bb.av ], [ %i.er, %bb.bd ] ; 3 uses

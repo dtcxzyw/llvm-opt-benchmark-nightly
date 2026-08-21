@@ -205,18 +205,16 @@ bb.d:                                             ; preds = %bb.b
   br label %.lr.ph181.us
 
 .preheader171.preheader:                          ; preds = %..loopexit_crit_edge.us, %._crit_edge
-  %i.ca = zext nneg i32 %0 to i64                 ; 6 uses
+  %i.ca = zext nneg i32 %0 to i64                 ; 8 uses
   br label %.preheader171
 
 .preheader171:                                    ; preds = %.preheader171.preheader, %.split.us
-  %indvars.iv261 = phi i64 [ 0, %.preheader171.preheader ], [ %indvars.iv.next262, %.split.us ] ; 19 uses
+  %indvars.iv261 = phi i64 [ 0, %.preheader171.preheader ], [ %indvars.iv.next262, %.split.us ] ; 20 uses
   %indvars.iv259 = phi i64 [ 1, %.preheader171.preheader ], [ %indvars.iv.next260, %.split.us ] ; 5 uses
-  %7 = trunc nuw i64 %indvars.iv261 to i32        ; 2 uses
-  %.not150.not = icmp sgt i32 %0, %7
+  %.not150.not = icmp samesign ult i64 %indvars.iv261, %i.ca
   %i.cb = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %indvars.iv261 ; 3 uses
-  %8 = sub nsw i32 %7, %0
-  %9 = zext nneg i32 %8 to i64
-  %i.cc = getelementptr inbounds nuw [12 x i8], ptr %i.e, i64 %9 ; 5 uses
+  %7 = sub nsw i64 %indvars.iv261, %i.ca
+  %i.cc = getelementptr inbounds nuw [12 x i8], ptr %i.e, i64 %7 ; 5 uses
   br i1 %.not150.not, label %.preheader171.split.us, label %.preheader171.split.preheader
 
 .preheader171.split.preheader:                    ; preds = %.preheader171
@@ -225,7 +223,7 @@ bb.d:                                             ; preds = %bb.b
   br i1 %i.cd, label %.preheader171.split.epil.preheader, label %.preheader171.split.preheader.new
 
 .preheader171.split.preheader.new:                ; preds = %.preheader171.split.preheader
-  %unroll_iter383 = and i64 %indvars.iv259, -4
+  %unroll_iter383 = and i64 %indvars.iv259, 9223372036854775804
   %i.ce = load ptr, ptr %i.cb, align 8, !tbaa !16 ; 4 uses
   br label %.preheader171.split
 
@@ -236,7 +234,7 @@ bb.d:                                             ; preds = %bb.b
   br i1 %i.cg, label %.epil.preheader, label %.preheader171.split.us.new
 
 .preheader171.split.us.new:                       ; preds = %.preheader171.split.us
-  %unroll_iter389 = and i64 %indvars.iv259, -8
+  %unroll_iter389 = and i64 %indvars.iv259, 9223372036854775800
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.e, %.preheader171.split.us.new
@@ -443,7 +441,7 @@ bb.m:                                             ; preds = %bb.l, %.preheader17
 
 .split.us:                                        ; preds = %.split.us.loopexit378.unr-lcssa, %bb.m, %.split.us.loopexit.unr-lcssa, %bb.k
   %indvars.iv.next262 = add nuw nsw i64 %indvars.iv261, 1 ; 2 uses
-  %indvars.iv.next260 = add nuw i64 %indvars.iv259, 1
+  %indvars.iv.next260 = add nuw nsw i64 %indvars.iv259, 1
   %exitcond268.not = icmp eq i64 %indvars.iv.next262, %i.i
   br i1 %exitcond268.not, label %._crit_edge190, label %.preheader171, !llvm.loop !26
 

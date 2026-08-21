@@ -204,7 +204,11 @@ Abc_Clock.exit:                                   ; preds = %bb.a, %bb.b
   %.val166 = load i32, ptr %i.k, align 8, !tbaa !26 ; 2 uses
   %i.l = sub nsw i32 %.val149, %.val166           ; 3 uses
   %i.m = icmp sgt i32 %i.l, 0
-  br i1 %i.m, label %.lr.ph, label %.preheader208
+  br i1 %i.m, label %.lr.ph.preheader, label %.preheader208
+
+.lr.ph.preheader:                                 ; preds = %Abc_Clock.exit
+  %sext = zext nneg i32 %i.l to i64
+  br label %.lr.ph
 
 .preheader208.loopexit:                           ; preds = %.lr.ph
   %.pre = load ptr, ptr %i.i, align 8, !tbaa !87  ; 2 uses
@@ -223,8 +227,8 @@ Abc_Clock.exit:                                   ; preds = %bb.a, %bb.b
   %i.q = sext i32 %i.l to i64
   br label %bb.c
 
-.lr.ph:                                           ; preds = %Abc_Clock.exit, %.lr.ph
-  %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph ], [ 0, %Abc_Clock.exit ] ; 2 uses
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
+  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %.lr.ph ] ; 2 uses
   %i.r = load ptr, ptr %i.g, align 8, !tbaa !101
   %i.s = getelementptr i8, ptr %i.r, i64 24
   %.val169 = load ptr, ptr %i.s, align 8, !tbaa !36
@@ -240,9 +244,8 @@ Abc_Clock.exit:                                   ; preds = %bb.a, %bb.b
   %.val170 = load ptr, ptr %i.z, align 8, !tbaa !37
   %i.aa = call i32 @Ssw_NodesAreConstrained(ptr noundef nonnull %0, ptr noundef %.val171, ptr noundef %.val170) #12 ; 0 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %3 = trunc nuw i64 %indvars.iv.next to i32
-  %4 = icmp sgt i32 %i.l, %3
-  br i1 %4, label %.lr.ph, label %.preheader208.loopexit, !llvm.loop !133
+  %3 = icmp samesign ult i64 %indvars.iv.next, %sext
+  br i1 %3, label %.lr.ph, label %.preheader208.loopexit, !llvm.loop !133
 
 bb.c:                                             ; preds = %.lr.ph213, %bb.c
   %indvars.iv236 = phi i64 [ 0, %.lr.ph213 ], [ %indvars.iv.next237, %bb.c ] ; 2 uses

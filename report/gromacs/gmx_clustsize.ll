@@ -205,13 +205,13 @@ bb.db:                                            ; preds = %bb.da, %bb.cz
   br i1 %i.ot, label %.lr.ph857.i, label %._crit_edge.i, !llvm.loop !66
 
 .lr.ph857.i:                                      ; preds = %.preheader781.i, %.loopexit777.i
-  %i.ou = phi i32 [ %i.or, %.loopexit777.i ], [ %i.oo, %.preheader781.i ] ; 8 uses
+  %i.ou = phi i32 [ %i.or, %.loopexit777.i ], [ %i.oo, %.preheader781.i ] ; 7 uses
   %indvars.iv1013.i = phi i64 [ %indvars.iv.next1014.i, %.loopexit777.i ], [ 0, %.preheader781.i ] ; 3 uses
   %indvars.iv980.i = phi i64 [ %indvars.iv.next981.i, %.loopexit777.i ], [ 1, %.preheader781.i ] ; 4 uses
   %i.ov = getelementptr inbounds nuw [4 x i8], ptr %i.mb, i64 %indvars.iv1013.i
   %i.ow = load i32, ptr %i.ov, align 4, !tbaa !9  ; 6 uses
   %indvars.iv.next1014.i = add nuw nsw i64 %indvars.iv1013.i, 1 ; 3 uses
-  %i.ox = sext i32 %i.ou to i64
+  %i.ox = sext i32 %i.ou to i64                   ; 2 uses
   %i.oy = icmp slt i64 %indvars.iv.next1014.i, %i.ox
   br i1 %i.oy, label %.lr.ph825.i, label %.loopexit777.i
 
@@ -441,8 +441,7 @@ bb.dl:                                            ; preds = %bb.dk
 
 .critedge.thread.us.i:                            ; preds = %.lr.ph825.split.us.split.i
   %indvars.iv.next986.i = add nuw nsw i64 %indvars.iv985.i, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next986.i to i32
-  %exitcond.not = icmp eq i32 %i.ou, %lftr.wideiv
+  %exitcond.not = icmp eq i64 %indvars.iv.next986.i, %i.ox
   br i1 %exitcond.not, label %.loopexit777.i, label %.lr.ph825.split.us.split.i, !llvm.loop !68
 
 .lr.ph825.split.i:                                ; preds = %.lr.ph825.i, %.critedge.thread.i

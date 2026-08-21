@@ -204,7 +204,7 @@ bb.a:
   %i.ak = phi ptr [ %i.ao, %.lr.ph137 ], [ %i.ai, %.lr.ph146 ]
   %.1127136 = phi i64 [ %.1127, %.lr.ph137 ], [ %.1127133, %.lr.ph146 ] ; 2 uses
   %.0119135 = phi i64 [ %i.al, %.lr.ph137 ], [ 0, %.lr.ph146 ] ; 5 uses
-  %i.al = add nuw i64 %.0119135, 1                ; 5 uses
+  %i.al = add nuw nsw i64 %.0119135, 1            ; 6 uses
   %i.am = getelementptr inbounds nuw [8 x i8], ptr %7, i64 %.0119135
   store i64 %.1127136, ptr %i.am, align 8, !tbaa !8
   store i64 %.0125162, ptr %i.ak, align 8, !tbaa !8
@@ -216,10 +216,7 @@ bb.a:
   br i1 %.not, label %.lr.ph140.preheader, label %.lr.ph137, !llvm.loop !42
 
 .lr.ph140.preheader:                              ; preds = %.lr.ph137
-  %8 = add i64 %.0119135, 2
-  %smin = tail call i64 @llvm.smin.i64(i64 %i.al, i64 1)
-  %9 = sub i64 %8, %smin                          ; 3 uses
-  %min.iters.check = icmp ult i64 %9, 6
+  %min.iters.check = icmp samesign ult i64 %.0119135, 5
   br i1 %min.iters.check, label %.lr.ph140.preheader195, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph140.preheader
@@ -229,8 +226,8 @@ vector.memcheck:                                  ; preds = %.lr.ph140.preheader
   br i1 %diff.check, label %.lr.ph140.preheader195, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %9, -4                         ; 4 uses
-  %10 = sub i64 %i.al, %n.vec
+  %n.vec = and i64 %i.al, 9223372036854775804     ; 3 uses
+  %8 = and i64 %i.al, 3
   %i.ar = sub i64 %.0121143, %n.vec               ; 2 uses
   %i.as = getelementptr [8 x i8], ptr %7, i64 %.0121143
   br label %vector.body
@@ -254,11 +251,11 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.bb, label %middle.block, label %vector.body, !llvm.loop !43
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %9, %n.vec
+  %cmp.n = icmp eq i64 %i.al, %n.vec
   br i1 %cmp.n, label %._crit_edge, label %.lr.ph140.preheader195
 
 .lr.ph140.preheader195:                           ; preds = %vector.memcheck, %.lr.ph140.preheader, %middle.block
-  %.1120139.ph = phi i64 [ %i.al, %vector.memcheck ], [ %i.al, %.lr.ph140.preheader ], [ %10, %middle.block ]
+  %.1120139.ph = phi i64 [ %i.al, %vector.memcheck ], [ %i.al, %.lr.ph140.preheader ], [ %8, %middle.block ]
   %.1122138.ph = phi i64 [ %.0121143, %vector.memcheck ], [ %.0121143, %.lr.ph140.preheader ], [ %i.ar, %middle.block ]
   br label %.lr.ph140
 
@@ -661,7 +658,7 @@ bb.am:                                            ; preds = %.lr.ph.i.1
 
 bb.an:                                            ; preds = %bb.am, %.lr.ph.i.1
   %i.gd = add nuw nsw i64 %.013.i, 2              ; 2 uses
-  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
+  %niter.next.1 = add nuw nsw i64 %niter, 2       ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN6casadi16SparsityInternal6wclearExxPxx.exit.unr-lcssa, label %.lr.ph.i, !llvm.loop !176
 
@@ -1064,7 +1061,7 @@ _ZNSt6vectorIxSaIxEED2Ev.exit189:                 ; preds = %._crit_edge295
   br i1 %.not16.not17.i, label %.lr.ph.i191, label %.loopexit267
 
 bb.ax:                                            ; preds = %.lr.ph.i191
-  %i.ib = add nuw i64 %.01319.i, 1                ; 2 uses
+  %i.ib = add nuw nsw i64 %.01319.i, 1            ; 2 uses
   %exitcond.not.i192 = icmp eq i64 %i.ib, %i.gq
   br i1 %exitcond.not.i192, label %.loopexit267, label %.lr.ph.i191, !llvm.loop !372
 
@@ -1467,7 +1464,7 @@ bb.cb:                                            ; preds = %.lr.ph.i367
   br label %.lr.ph.i373
 
 bb.cc:                                            ; preds = %.lr.ph.i373
-  %i.mu = add nuw i64 %.01319.i, 1                ; 2 uses
+  %i.mu = add nuw nsw i64 %.01319.i, 1            ; 2 uses
   %exitcond.not.i374 = icmp eq i64 %i.mu, %i.mt
   br i1 %exitcond.not.i374, label %.loopexit516, label %.lr.ph.i373, !llvm.loop !372
 
@@ -1495,7 +1492,7 @@ bb.cc:                                            ; preds = %.lr.ph.i373
   br label %.lr.ph.i380
 
 bb.cd:                                            ; preds = %.lr.ph.i380
-  %i.nb = add nuw i64 %.01319.i382, 1             ; 2 uses
+  %i.nb = add nuw nsw i64 %.01319.i382, 1         ; 2 uses
   %exitcond.not.i384 = icmp eq i64 %i.nb, %i.na
   br i1 %exitcond.not.i384, label %.loopexit514, label %.lr.ph.i380, !llvm.loop !372
 
@@ -1898,7 +1895,7 @@ bb.y:                                             ; preds = %bb.y, %.lr.ph228.ne
   %i.fi = load i64, ptr %i.fh, align 8, !tbaa !8
   %i.fj = add nsw i64 %i.fi, %i.ff                ; 3 uses
   store i64 %i.fj, ptr %i.fh, align 8, !tbaa !8
-  %niter320.next.3 = add nuw i64 %niter320, 4     ; 2 uses
+  %niter320.next.3 = add nuw nsw i64 %niter320, 4 ; 2 uses
   %niter320.ncmp.3 = icmp eq i64 %niter320.next.3, %unroll_iter319
   br i1 %niter320.ncmp.3, label %._crit_edge229.loopexit.unr-lcssa, label %bb.y, !llvm.loop !576
 
@@ -2301,7 +2298,7 @@ bb.da:                                            ; preds = %bb.da, %.lr.ph878.n
   %i.tc = load i64, ptr %i.tb, align 8, !tbaa !8
   %i.td = add nsw i64 %i.tc, %i.sz                ; 3 uses
   store i64 %i.td, ptr %i.tb, align 8, !tbaa !8
-  %niter1247.next.3 = add nuw i64 %niter1247, 4   ; 2 uses
+  %niter1247.next.3 = add nuw nsw i64 %niter1247, 4 ; 2 uses
   %niter1247.ncmp.3 = icmp eq i64 %niter1247.next.3, %unroll_iter1246
   br i1 %niter1247.ncmp.3, label %._crit_edge879.loopexit.unr-lcssa, label %bb.da, !llvm.loop !601
 
@@ -2704,7 +2701,7 @@ _ZSt6fill_nIPxmxET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i: ; preds = %.noexc43
   %i.da = load i64, ptr %i.cz, align 8, !tbaa !8
   %i.db = add nsw i64 %i.da, %i.cx                ; 3 uses
   store i64 %i.db, ptr %i.cz, align 8, !tbaa !8
-  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
+  %niter.next.3 = add nuw nsw i64 %niter, 4       ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %._crit_edge145.loopexit.unr-lcssa, label %.lr.ph144, !llvm.loop !616
 

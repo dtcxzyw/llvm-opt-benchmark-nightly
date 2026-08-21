@@ -80,7 +80,7 @@ bb.a:
   %i.c = alloca i64, align 8                      ; 6 uses
   %i.d = alloca i64, align 8                      ; 6 uses
   %i.e = alloca i64, align 8                      ; 6 uses
-  %i.f = alloca [515 x i8], align 16              ; 8 uses
+  %i.f = alloca [515 x i8], align 16              ; 9 uses
   %4 = alloca %struct.DmgHeaderState, align 8     ; 8 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.h = load ptr, ptr %i.g, align 8              ; 13 uses
@@ -169,7 +169,7 @@ bb.l:                                             ; preds = %bb.k
 
 .lr.ph.i:                                         ; preds = %.lr.ph._crit_edge.i, %.lr.ph.preheader.i
   %i.am = phi i64 [ %i.ar, %.lr.ph._crit_edge.i ], [ 0, %.lr.ph.preheader.i ] ; 2 uses
-  %.035.i = phi i32 [ %i.aq, %.lr.ph._crit_edge.i ], [ 0, %.lr.ph.preheader.i ] ; 2 uses
+  %.035.i = phi i32 [ %i.aq, %.lr.ph._crit_edge.i ], [ 0, %.lr.ph.preheader.i ] ; 3 uses
   %i.an = getelementptr inbounds i8, ptr %i.f, i64 %i.am
   %i.ao = load i8, ptr %i.an, align 1
   %i.ap = icmp eq i8 %i.ao, 107
@@ -184,15 +184,17 @@ bb.m:                                             ; preds = %.lr.ph.i
   br i1 %i.au, label %bb.n, label %.lr.ph._crit_edge.i
 
 bb.n:                                             ; preds = %bb.m
-  %5 = sext i32 %.035.i to i64
-  %6 = getelementptr i8, ptr %i.f, i64 %5         ; 2 uses
-  %i.av = getelementptr i8, ptr %6, i64 2
+  %5 = add i32 %.035.i, 2
+  %6 = sext i32 %5 to i64
+  %i.av = getelementptr inbounds i8, ptr %i.f, i64 %6
   %i.aw = load i8, ptr %i.av, align 1
   %i.ax = icmp eq i8 %i.aw, 108
   br i1 %i.ax, label %bb.o, label %.lr.ph._crit_edge.i
 
 bb.o:                                             ; preds = %bb.n
-  %i.ay = getelementptr i8, ptr %6, i64 3
+  %7 = add i32 %.035.i, 3
+  %8 = sext i32 %7 to i64
+  %i.ay = getelementptr inbounds i8, ptr %i.f, i64 %8
   %i.az = load i8, ptr %i.ay, align 1
   %i.ba = icmp eq i8 %i.az, 121
   br i1 %i.ba, label %dmg_find_koly_offset.exit, label %.lr.ph._crit_edge.i

@@ -49,23 +49,21 @@ bb.a:
 bb.b:                                             ; preds = %bb.b, %.lr.ph.new
   %.sroa.03.07 = phi i32 [ 1, %.lr.ph.new ], [ %i.t, %bb.b ] ; 3 uses
   %niter = phi i32 [ 0, %.lr.ph.new ], [ %niter.next.1, %bb.b ]
-  %1 = tail call noundef i32 @llvm.abs.i32(i32 %.sroa.03.07, i1 true)
-  %i.l = zext nneg i32 %1 to i64
+  %i.l = zext nneg i32 %.sroa.03.07 to i64
   %i.m = load ptr, ptr %i.d, align 8, !tbaa !15
   %i.n = getelementptr inbounds nuw [4 x i8], ptr %i.m, i64 %i.l ; 2 uses
   %i.o = load i32, ptr %i.n, align 1
   %i.p = and i32 %i.o, -513
   store i32 %i.p, ptr %i.n, align 1
-  %2 = add nuw i32 %.sroa.03.07, 1
-  %3 = tail call noundef i32 @llvm.abs.i32(i32 %2, i1 true)
-  %i.q = zext nneg i32 %3 to i64
-  %4 = load ptr, ptr %i.d, align 8, !tbaa !15
-  %5 = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %i.q ; 2 uses
-  %i.r = load i32, ptr %5, align 1
+  %1 = load ptr, ptr %i.d, align 8, !tbaa !15
+  %i.q = zext nneg i32 %.sroa.03.07 to i64
+  %2 = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.q
+  %3 = getelementptr inbounds nuw i8, ptr %2, i64 4 ; 2 uses
+  %i.r = load i32, ptr %3, align 1
   %i.s = and i32 %i.r, -513
-  store i32 %i.s, ptr %5, align 1
-  %i.t = add nuw i32 %.sroa.03.07, 2              ; 2 uses
-  %niter.next.1 = add nuw i32 %niter, 2           ; 2 uses
+  store i32 %i.s, ptr %3, align 1
+  %i.t = add nuw nsw i32 %.sroa.03.07, 2          ; 2 uses
+  %niter.next.1 = add nuw nsw i32 %niter, 2       ; 2 uses
   %niter.ncmp.1 = icmp eq i32 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %bb.b
 }

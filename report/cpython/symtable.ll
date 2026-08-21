@@ -202,23 +202,16 @@ bb.dg:                                            ; preds = %bb.df
   %i.ut = load ptr, ptr %i.us, align 8, !tbaa !22 ; 3 uses
   %i.uu = icmp eq ptr %i.ut, null
   %i.uv = getelementptr i8, ptr %i.ut, i64 16
-  br label %2
+  br i1 %i.uu, label %bb.dn, label %bb.dh
 
-2:                                                ; preds = %symtable_visit_match_case.exit, %bb.dg
-  %.01269 = phi i64 [ 0, %bb.dg ], [ %i.vq, %symtable_visit_match_case.exit ] ; 3 uses
-  br i1 %i.uu, label %bb.dh, label %3
-
-3:                                                ; preds = %2
-  %4 = load i64, ptr %i.ut, align 8, !tbaa !43
-  br label %bb.dh
-
-bb.dh:                                            ; preds = %2, %3
-  %i.uw = phi i64 [ %4, %3 ], [ 0, %2 ]
-  %.not1435 = icmp slt i64 %.01269, %i.uw
+bb.dh:                                            ; preds = %bb.dg, %symtable_visit_match_case.exit
+  %i.uw = phi i64 [ %i.vq, %symtable_visit_match_case.exit ], [ 0, %bb.dg ] ; 3 uses
+  %2 = load i64, ptr %i.ut, align 8, !tbaa !43
+  %.not1435 = icmp slt i64 %i.uw, %2
   br i1 %.not1435, label %bb.di, label %bb.dn
 
 bb.di:                                            ; preds = %bb.dh
-  %i.ux = getelementptr [8 x i8], ptr %i.uv, i64 %.01269
+  %i.ux = getelementptr [8 x i8], ptr %i.uv, i64 %i.uw
   %i.uy = load ptr, ptr %i.ux, align 8, !tbaa !95 ; 3 uses
   %i.uz = load ptr, ptr %i.uy, align 8, !tbaa !97
   %i.va = tail call fastcc i32 @symtable_visit_pattern(ptr noundef nonnull %0, ptr noundef %i.uz), !inline_history !100
@@ -263,10 +256,10 @@ bb.dm:                                            ; preds = %.lr.ph2012
   br i1 %.not23.not.i, label %Py_DECREF.exit1617.thread, label %bb.dm
 
 symtable_visit_match_case.exit:                   ; preds = %bb.dm, %.lr.ph2009, %bb.dl
-  %i.vq = add nuw i64 %.01269, 1
-  br label %2, !llvm.loop !103
+  %i.vq = add nuw nsw i64 %i.uw, 1
+  br label %bb.dh, !llvm.loop !103
 
-bb.dn:                                            ; preds = %bb.dh
+bb.dn:                                            ; preds = %bb.dh, %bb.dg
   %i.vr = load ptr, ptr %i.um, align 8, !tbaa !35
   %i.vs = getelementptr i8, ptr %i.vr, i64 100    ; 2 uses
   %i.vt = load i16, ptr %i.vs, align 4
@@ -341,23 +334,16 @@ bb.dt:                                            ; preds = %.lr.ph1992
   %i.xa = load ptr, ptr %i.wz, align 8, !tbaa !22 ; 3 uses
   %i.xb = icmp eq ptr %i.xa, null
   %i.xc = getelementptr i8, ptr %i.xa, i64 16
-  br label %5
+  br i1 %i.xb, label %.critedge1568, label %bb.du
 
-5:                                                ; preds = %symtable_visit_excepthandler.exit, %.critedge1566
-  %.01271 = phi i64 [ 0, %.critedge1566 ], [ %i.ym, %symtable_visit_excepthandler.exit ] ; 3 uses
-  br i1 %i.xb, label %bb.du, label %6
-
-6:                                                ; preds = %5
-  %7 = load i64, ptr %i.xa, align 8, !tbaa !43
-  br label %bb.du
-
-bb.du:                                            ; preds = %5, %6
-  %i.xd = phi i64 [ %7, %6 ], [ 0, %5 ]
-  %.not1424 = icmp slt i64 %.01271, %i.xd
+bb.du:                                            ; preds = %.critedge1566, %symtable_visit_excepthandler.exit
+  %i.xd = phi i64 [ %i.ym, %symtable_visit_excepthandler.exit ], [ 0, %.critedge1566 ] ; 3 uses
+  %3 = load i64, ptr %i.xa, align 8, !tbaa !43
+  %.not1424 = icmp slt i64 %i.xd, %3
   br i1 %.not1424, label %bb.dv, label %.critedge1568
 
 bb.dv:                                            ; preds = %bb.du
-  %i.xe = getelementptr [8 x i8], ptr %i.xc, i64 %.01271
+  %i.xe = getelementptr [8 x i8], ptr %i.xc, i64 %i.xd
   %i.xf = load ptr, ptr %i.xe, align 8, !tbaa !104 ; 7 uses
   %i.xg = getelementptr i8, ptr %i.xf, i64 8
   %i.xh = load ptr, ptr %i.xg, align 8, !tbaa !22 ; 2 uses
@@ -438,10 +424,10 @@ bb.ea:                                            ; preds = %.lr.ph1997
   br i1 %.not30.not.i, label %Py_DECREF.exit1617.thread, label %bb.ea
 
 symtable_visit_excepthandler.exit:                ; preds = %bb.ea, %.lr.ph1994, %bb.dz
-  %i.ym = add nuw i64 %.01271, 1
-  br label %5, !llvm.loop !112
+  %i.ym = add nuw nsw i64 %i.xd, 1
+  br label %bb.du, !llvm.loop !112
 
-.critedge1568:                                    ; preds = %bb.du
+.critedge1568:                                    ; preds = %bb.du, %.critedge1566
   %i.yn = getelementptr i8, ptr %1, i64 24
   %i.yo = load ptr, ptr %i.yn, align 8, !tbaa !22 ; 4 uses
   %i.yp = icmp eq ptr %i.yo, null
@@ -552,23 +538,16 @@ bb.ee:                                            ; preds = %.lr.ph1972
   %i.aat = load ptr, ptr %i.aas, align 8, !tbaa !22 ; 3 uses
   %i.aau = icmp eq ptr %i.aat, null
   %i.aav = getelementptr i8, ptr %i.aat, i64 16
-  br label %8
+  br i1 %i.aau, label %.critedge1576, label %bb.ef
 
-8:                                                ; preds = %symtable_visit_excepthandler.exit1658, %.critedge1574
-  %.01276 = phi i64 [ 0, %.critedge1574 ], [ %i.acf, %symtable_visit_excepthandler.exit1658 ] ; 3 uses
-  br i1 %i.aau, label %bb.ef, label %9
-
-9:                                                ; preds = %8
-  %10 = load i64, ptr %i.aat, align 8, !tbaa !43
-  br label %bb.ef
-
-bb.ef:                                            ; preds = %8, %9
-  %i.aaw = phi i64 [ %10, %9 ], [ 0, %8 ]
-  %.not1416 = icmp slt i64 %.01276, %i.aaw
+bb.ef:                                            ; preds = %.critedge1574, %symtable_visit_excepthandler.exit1658
+  %i.aaw = phi i64 [ %i.acf, %symtable_visit_excepthandler.exit1658 ], [ 0, %.critedge1574 ] ; 3 uses
+  %4 = load i64, ptr %i.aat, align 8, !tbaa !43
+  %.not1416 = icmp slt i64 %i.aaw, %4
   br i1 %.not1416, label %bb.eg, label %.critedge1576
 
 bb.eg:                                            ; preds = %bb.ef
-  %i.aax = getelementptr [8 x i8], ptr %i.aav, i64 %.01276
+  %i.aax = getelementptr [8 x i8], ptr %i.aav, i64 %i.aaw
   %i.aay = load ptr, ptr %i.aax, align 8, !tbaa !104 ; 7 uses
   %i.aaz = getelementptr i8, ptr %i.aay, i64 8
   %i.aba = load ptr, ptr %i.aaz, align 8, !tbaa !22 ; 2 uses
@@ -649,10 +628,10 @@ bb.el:                                            ; preds = %.lr.ph1977
   br i1 %.not30.not.i1657, label %Py_DECREF.exit1617.thread, label %bb.el
 
 symtable_visit_excepthandler.exit1658:            ; preds = %bb.el, %.lr.ph1974, %bb.ek
-  %i.acf = add nuw i64 %.01276, 1
-  br label %8, !llvm.loop !113
+  %i.acf = add nuw nsw i64 %i.aaw, 1
+  br label %bb.ef, !llvm.loop !113
 
-.critedge1576:                                    ; preds = %bb.ef
+.critedge1576:                                    ; preds = %bb.ef, %.critedge1574
   %i.acg = getelementptr i8, ptr %1, i64 24
   %i.ach = load ptr, ptr %i.acg, align 8, !tbaa !22 ; 4 uses
   %i.aci = icmp eq ptr %i.ach, null
@@ -1055,7 +1034,7 @@ bb.n:                                             ; preds = %bb.m
 
 .critedge.preheader:                              ; preds = %bb.o, %.lr.ph, %bb.n
   %i.cd = icmp eq ptr %3, null
-  br label %.critedge
+  br i1 %i.cd, label %.critedge126, label %bb.p
 
 bb.o:                                             ; preds = %.lr.ph156
   %i.ce = add nuw nsw i64 %.0104153155, 1         ; 2 uses
@@ -1071,21 +1050,14 @@ bb.o:                                             ; preds = %.lr.ph156
   %.not115.not = icmp eq i32 %i.cj, 0
   br i1 %.not115.not, label %.critedge128, label %bb.o
 
-.critedge:                                        ; preds = %.critedge.preheader, %symtable_visit_comprehension.exit
-  %.0105 = phi i64 [ %i.ea, %symtable_visit_comprehension.exit ], [ 1, %.critedge.preheader ] ; 3 uses
-  br i1 %i.cd, label %bb.p, label %6
-
-6:                                                ; preds = %.critedge
-  %7 = load i64, ptr %3, align 8, !tbaa !43
-  br label %bb.p
-
-bb.p:                                             ; preds = %.critedge, %6
-  %i.ck = phi i64 [ %7, %6 ], [ 0, %.critedge ]
-  %.not118 = icmp slt i64 %.0105, %i.ck
+bb.p:                                             ; preds = %.critedge.preheader, %symtable_visit_comprehension.exit
+  %i.ck = phi i64 [ %i.ea, %symtable_visit_comprehension.exit ], [ 1, %.critedge.preheader ] ; 3 uses
+  %6 = load i64, ptr %3, align 8, !tbaa !43
+  %.not118 = icmp slt i64 %i.ck, %6
   br i1 %.not118, label %bb.q, label %.critedge126
 
 bb.q:                                             ; preds = %bb.p
-  %i.cl = getelementptr [8 x i8], ptr %i.c, i64 %.0105
+  %i.cl = getelementptr [8 x i8], ptr %i.c, i64 %i.ck
   %i.cm = load ptr, ptr %i.cl, align 8, !tbaa !204 ; 4 uses
   %i.cn = load ptr, ptr %i.e, align 8, !tbaa !35
   %i.co = getelementptr i8, ptr %i.cn, i64 100    ; 2 uses
@@ -1160,10 +1132,10 @@ bb.u:                                             ; preds = %.critedge150
   br label %symtable_visit_comprehension.exit
 
 symtable_visit_comprehension.exit:                ; preds = %bb.u, %.critedge150
-  %i.ea = add nuw i64 %.0105, 1
-  br label %.critedge, !llvm.loop !212
+  %i.ea = add nuw nsw i64 %i.ck, 1
+  br label %bb.p, !llvm.loop !212
 
-.critedge126:                                     ; preds = %bb.p
+.critedge126:                                     ; preds = %bb.p, %.critedge.preheader
   %.not119 = icmp eq ptr %5, null
   br i1 %.not119, label %bb.w, label %bb.v
 

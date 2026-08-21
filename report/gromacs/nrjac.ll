@@ -43,7 +43,7 @@ $_ZNSt10filesystem7__cxx114pathD2Ev = comdat any
 define void @_Z6jacobiPPdiS_S0_Pi(ptr nofree noundef readonly captures(none) %0, i32 noundef %1, ptr nofree noundef captures(none) %2, ptr nofree noundef readonly captures(none) %3, ptr nofree noundef writeonly captures(address_is_null) %4) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
   %5 = alloca %"class.std::filesystem::__cxx11::path", align 8 ; 5 uses
-  %i.a = sext i32 %1 to i64                       ; 2 uses
+  %i.a = sext i32 %1 to i64                       ; 3 uses
   %i.b = tail call noundef ptr @_Z11save_callocPKcS0_imm(ptr noundef nonnull @.str, ptr noundef nonnull @.str.1, i32 noundef 75, i64 noundef range(i64 -2147483648, 2147483648) %i.a, i64 noundef 8) ; 15 uses
   %i.c = tail call noundef ptr @_Z11save_callocPKcS0_imm(ptr noundef nonnull @.str.2, ptr noundef nonnull @.str.1, i32 noundef 76, i64 noundef range(i64 -2147483648, 2147483648) %i.a, i64 noundef 8) ; 17 uses
   %i.d = icmp sgt i32 %1, 0
@@ -182,6 +182,7 @@ bb.a:
   %i.as = mul nuw nsw i32 %1, %1
   %i.at = uitofp nneg i32 %i.as to double
   %wide.trip.count259.i = zext nneg i32 %i.ar to i64 ; 2 uses
+  %invariant.op.i = add nsw i64 %i.a, -1
   br i1 %.not16, label %_ZL6jacobiIPPdEiT_iS0_S2_.exit, label %.preheader198.i.us.preheader
 
 .preheader198.i.us.preheader:                     ; preds = %.preheader199.i
@@ -563,9 +564,7 @@ bb.k:                                             ; preds = %bb.j, %bb.i, %bb.h
   br i1 %exitcond272.not.i.us.1, label %.preheader194.i.us, label %.lr.ph218.i.us.new, !llvm.loop !23
 
 .preheader194.i.us:                               ; preds = %.prol.loopexit74, %.lr.ph218.i.us.new, %.preheader195.i.us
-  %6 = trunc i64 %indvars.iv286.i.us to i32
-  %7 = add i32 %6, 1
-  %i.ig = icmp slt i32 %7, %1
+  %i.ig = icmp slt i64 %indvars.iv286.i.us, %invariant.op.i
   br i1 %i.ig, label %.lr.ph221.i.us, label %.preheader194.i.us..preheader.i.us_crit_edge
 
 .preheader194.i.us..preheader.i.us_crit_edge:     ; preds = %.preheader194.i.us
@@ -968,7 +967,7 @@ vec.epilog.middle.block245:                       ; preds = %vec.epilog.vector.b
   %i.hd = load double, ptr %i.hc, align 8, !tbaa !12
   %i.he = call double @llvm.fmuladd.f64(double %i.hb, double %i.hd, double %i.gw) ; 3 uses
   %indvars.iv.next162.7 = add nuw nsw i64 %indvars.iv161, 8 ; 2 uses
-  %niter264.next.7 = add nuw i64 %niter264, 8     ; 2 uses
+  %niter264.next.7 = add nuw nsw i64 %niter264, 8 ; 2 uses
   %niter264.ncmp.7 = icmp eq i64 %niter264.next.7, %unroll_iter263
   br i1 %niter264.ncmp.7, label %._crit_edge120.us.unr-lcssa, label %.preheader.us.new, !llvm.loop !80
 

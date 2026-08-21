@@ -204,10 +204,7 @@ bb.n:                                             ; preds = %.lr.ph202
 
 .lr.ph198.preheader:                              ; preds = %bb.o
   %i.cr = sext i32 %.0110201 to i64               ; 5 uses
-  %2 = add i64 %.0108195, 2
-  %smin = tail call i64 @llvm.smin.i64(i64 %i.dg, i64 1)
-  %3 = sub i64 %2, %smin                          ; 3 uses
-  %min.iters.check = icmp ult i64 %3, 8
+  %min.iters.check = icmp samesign ult i64 %.0108195, 7
   br i1 %min.iters.check, label %.lr.ph198.preheader257, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph198.preheader
@@ -217,9 +214,9 @@ vector.memcheck:                                  ; preds = %.lr.ph198.preheader
   br i1 %diff.check, label %.lr.ph198.preheader257, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %3, -8                         ; 4 uses
+  %n.vec = and i64 %i.dg, 9223372036854775800     ; 3 uses
   %i.ct = sub i64 %i.cr, %n.vec                   ; 2 uses
-  %4 = sub i64 %i.dg, %n.vec
+  %2 = and i64 %i.dg, 7
   %invariant.gep = getelementptr [4 x i8], ptr %i.ap, i64 %i.cr
   br label %vector.body
 
@@ -242,12 +239,12 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.db, label %middle.block, label %vector.body, !llvm.loop !445
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %3, %n.vec
+  %cmp.n = icmp eq i64 %i.dg, %n.vec
   br i1 %cmp.n, label %.loopexit.loopexit, label %.lr.ph198.preheader257
 
 .lr.ph198.preheader257:                           ; preds = %vector.memcheck, %.lr.ph198.preheader, %middle.block
   %indvars.iv.ph = phi i64 [ %i.cr, %vector.memcheck ], [ %i.cr, %.lr.ph198.preheader ], [ %i.ct, %middle.block ]
-  %.1197.ph = phi i64 [ %i.dg, %vector.memcheck ], [ %i.dg, %.lr.ph198.preheader ], [ %4, %middle.block ]
+  %.1197.ph = phi i64 [ %i.dg, %vector.memcheck ], [ %i.dg, %.lr.ph198.preheader ], [ %2, %middle.block ]
   br label %.lr.ph198
 
 bb.o:                                             ; preds = %.lr.ph, %bb.o
@@ -259,7 +256,7 @@ bb.o:                                             ; preds = %.lr.ph, %bb.o
   store i32 %.0109194, ptr %i.de, align 4, !tbaa !33
   store i32 %i.bp, ptr %i.dc, align 4, !tbaa !33
   %i.df = getelementptr inbounds [4 x i8], ptr %i.cq, i64 %i.dd
-  %i.dg = add nuw i64 %.0108195, 1                ; 5 uses
+  %i.dg = add nuw nsw i64 %.0108195, 1            ; 6 uses
   %i.dh = load i32, ptr %i.df, align 4, !tbaa !33 ; 2 uses
   %i.di = sext i32 %i.dh to i64                   ; 2 uses
   %i.dj = getelementptr inbounds [4 x i8], ptr %i.as, i64 %i.di ; 2 uses

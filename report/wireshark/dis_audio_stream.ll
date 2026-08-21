@@ -204,9 +204,8 @@ bb.ak:                                            ; preds = %.lr.ph155, %_ZN5QLi
   %smin196 = call i64 @llvm.smin.i64(i64 %i.ej, i64 %indvars.iv) ; 2 uses
   %i.fc = mul i64 %indvar, %i.ev                  ; 2 uses
   %i.fd = sub i64 %smin196, %i.fc                 ; 3 uses
-  %i.fe = add i64 %.040153, %i.ev                 ; 3 uses
-  %.sroa.speculated139 = call i64 @llvm.smin.i64(i64 %i.ej, i64 %i.fe)
-  %2 = icmp slt i64 %.040153, %.sroa.speculated139
+  %i.fe = add nuw nsw i64 %.040153, %i.ev         ; 2 uses
+  %2 = icmp sgt i64 %i.ej, %.040153
   br i1 %2, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.ak
@@ -245,7 +244,7 @@ bb.ak:                                            ; preds = %.lr.ph155, %_ZN5QLi
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.ak
   %.039.lcssa = phi double [ 0.000000e+00, %bb.ak ], [ %i.fn, %._crit_edge.loopexit ]
-  %3 = sitofp i64 %.040153 to double
+  %3 = uitofp nneg i64 %.040153 to double
   %i.fo = load i32, ptr %i.dy, align 8
   %i.fp = uitofp i32 %i.fo to double
   %i.fq = fdiv double %3, %i.fp
@@ -306,7 +305,7 @@ _ZN5QListIdE6appendEd.exit113:                    ; preds = %_ZNK17QArrayDataPoi
   %i.gh = call i32 @llvm.abs.i32(i32 %.039151, i1 false)
   %i.gi = icmp sgt i32 %i.gg, %i.gh
   %spec.select49 = select i1 %i.gi, i32 %i.gf, i32 %.039151 ; 2 uses
-  %i.gj = add nsw i64 %.038152, 1
+  %i.gj = add nuw nsw i64 %.038152, 1
   %i.gk = mul i64 %i.gj, %spec.select
   %i.gl = getelementptr [2 x i8], ptr %spec.select.i.i, i64 %i.gk
   %i.gm = load i16, ptr %i.gl, align 2
@@ -315,7 +314,7 @@ _ZN5QListIdE6appendEd.exit113:                    ; preds = %_ZNK17QArrayDataPoi
   %i.gp = call i32 @llvm.abs.i32(i32 %spec.select49, i1 false)
   %i.gq = icmp sgt i32 %i.go, %i.gp
   %spec.select49.1 = select i1 %i.gq, i32 %i.gn, i32 %spec.select49 ; 3 uses
-  %i.gr = add nsw i64 %.038152, 2                 ; 2 uses
+  %i.gr = add nuw nsw i64 %.038152, 2             ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !14

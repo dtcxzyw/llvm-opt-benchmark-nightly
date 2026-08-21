@@ -205,8 +205,8 @@ bb.b:                                             ; preds = %_ZN2v88internal12Is
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #29
   %i.ai = getelementptr inbounds nuw i8, ptr %i.v, i64 8
   %i.aj = load i64, ptr %i.ai, align 8            ; 2 uses
-  %i.ak = lshr i64 %i.aj, 32                      ; 2 uses
-  %i.al = trunc nuw i64 %i.ak to i32              ; 3 uses
+  %i.ak = lshr i64 %i.aj, 32                      ; 3 uses
+  %i.al = trunc nuw i64 %i.ak to i32              ; 2 uses
   %i.am = shl i64 %i.ah, 1
   %i.an = icmp sgt i64 %i.aj, -1
   %i.ao = icmp eq i64 %i.am, %i.ak
@@ -609,8 +609,8 @@ _ZN2v88internal12IsFixedArrayENS0_6TaggedINS0_6ObjectEEE.exit: ; preds = %bb.ad
 bb.ae:                                            ; preds = %_ZN2v88internal12IsFixedArrayENS0_6TaggedINS0_6ObjectEEE.exit
   %i.hx = getelementptr inbounds nuw i8, ptr %i.hq, i64 8
   %i.hy = load i64, ptr %i.hx, align 8
-  %i.hz = lshr i64 %i.hy, 32
-  %i.ia = trunc nuw i64 %i.hz to i32              ; 4 uses
+  %i.hz = lshr i64 %i.hy, 32                      ; 3 uses
+  %i.ia = trunc nuw i64 %i.hz to i32              ; 2 uses
   %i.ib = icmp slt i32 %i.ia, 9
   br i1 %i.ib, label %bb.ag, label %bb.af, !prof !104
 
@@ -731,9 +731,8 @@ bb.an:                                            ; preds = %.lr.ph.i.i113
 
 _ZN2v88internal4wasm13FeedbackMaker19AddCallRefCandidateENS0_6TaggedINS0_11WasmFuncRefEEEi.exit124: ; preds = %bb.ai, %bb.ak, %bb.am, %._crit_edge.i.i109
   %indvars.iv.next251 = add nuw nsw i64 %indvars.iv250, 2 ; 2 uses
-  %3 = trunc nuw i64 %indvars.iv.next251 to i32
-  %4 = icmp slt i32 %3, %i.ia
-  br i1 %4, label %bb.ah, label %_ZN2v88internal4wasm13FeedbackMaker7AddCallEii.exit, !llvm.loop !137
+  %3 = icmp samesign ult i64 %indvars.iv.next251, %i.hz
+  br i1 %3, label %bb.ah, label %_ZN2v88internal4wasm13FeedbackMaker7AddCallEii.exit, !llvm.loop !137
 
 bb.ao:                                            ; preds = %.lr.ph, %bb.ao
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.ao ] ; 2 uses
@@ -745,9 +744,8 @@ bb.ao:                                            ; preds = %.lr.ph, %bb.ao
   %i.ju = trunc nuw i64 %i.jt to i32
   call void @_ZN2v88internal4wasm13FeedbackMaker24AddCallIndirectCandidateENS0_6TaggedINS0_6ObjectEEEi(ptr noundef nonnull align 8 dereferenceable(82) %2, i64 %i.jq, i32 noundef %i.ju)
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %5 = trunc nuw i64 %indvars.iv.next to i32
-  %6 = icmp slt i32 %5, %i.ia
-  br i1 %6, label %bb.ao, label %_ZN2v88internal4wasm13FeedbackMaker7AddCallEii.exit, !llvm.loop !138
+  %4 = icmp samesign ult i64 %indvars.iv.next, %i.hz
+  br i1 %4, label %bb.ao, label %_ZN2v88internal4wasm13FeedbackMaker7AddCallEii.exit, !llvm.loop !138
 
 _ZN2v88internal12IsFixedArrayENS0_6TaggedINS0_6ObjectEEE.exit.thread: ; preds = %bb.ad, %_ZN2v88internal12IsFixedArrayENS0_6TaggedINS0_6ObjectEEE.exit
   %i.jv = getelementptr inbounds nuw i8, ptr %i.hj, i64 7872
@@ -1021,9 +1019,8 @@ _ZN2v88internal4wasm13FeedbackMaker7AddCallEii.exit144: ; preds = %._crit_edge.i
 .critedge:                                        ; preds = %_ZNK2v88internal4wasm16CallSiteFeedback9num_casesEv.exit, %_ZN2v88internal4wasm13FeedbackMaker7AddCallEii.exit, %bb.as, %bb.ar
   call void @_ZN2v88internal4wasm13FeedbackMaker12FinalizeCallEv(ptr noundef nonnull align 8 dereferenceable(82) %2)
   %indvars.iv.next263 = add nuw nsw i64 %indvars.iv262, 2 ; 2 uses
-  %7 = trunc nuw i64 %indvars.iv.next263 to i32
-  %8 = icmp slt i32 %7, %i.al
-  br i1 %8, label %bb.m, label %._crit_edge.loopexit, !llvm.loop !141
+  %5 = icmp samesign ult i64 %indvars.iv.next263, %i.ak
+  br i1 %5, label %bb.m, label %._crit_edge.loopexit, !llvm.loop !141
 
 _ZN2v88internal12IsFixedArrayENS0_6TaggedINS0_6ObjectEEE.exit97.thread: ; preds = %bb.a, %_ZN2v88internal12IsFixedArrayENS0_6TaggedINS0_6ObjectEEE.exit97, %_ZN2v88internal4wasm13FeedbackMakerD2Ev.exit
   ret void

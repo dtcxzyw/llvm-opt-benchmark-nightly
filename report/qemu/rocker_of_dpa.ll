@@ -204,21 +204,17 @@ bb.h:                                             ; preds = %.sink.split.i, %bb.
 .lr.ph.i:                                         ; preds = %.lr.ph.i, %.lr.ph.preheader.i.new
   %indvars.iv.i = phi i64 [ 1, %.lr.ph.preheader.i.new ], [ %indvars.iv.next.i.1, %.lr.ph.i ] ; 4 uses
   %niter = phi i64 [ 0, %.lr.ph.preheader.i.new ], [ %niter.next.1, %.lr.ph.i ]
-  %5 = shl nuw nsw i64 %indvars.iv.i, 32
-  %sext.i = add nuw i64 %5, 8589934592
-  %6 = ashr exact i64 %sext.i, 28
-  %i.am = getelementptr inbounds i8, ptr %i.c, i64 %6
+  %5 = getelementptr inbounds nuw [16 x i8], ptr %i.c, i64 %indvars.iv.i
+  %i.am = getelementptr inbounds nuw i8, ptr %5, i64 32
   %i.an = getelementptr inbounds nuw [16 x i8], ptr %2, i64 %indvars.iv.i
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.am, ptr noundef nonnull readonly align 8 dereferenceable(16) %i.an, i64 16, i1 false)
-  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
-  %7 = shl nuw nsw i64 %indvars.iv.next.i, 32
-  %sext.i.1 = add nuw i64 %7, 8589934592
-  %8 = ashr exact i64 %sext.i.1, 28
-  %i.ao = getelementptr inbounds i8, ptr %i.c, i64 %8
-  %i.ap = getelementptr inbounds nuw [16 x i8], ptr %2, i64 %indvars.iv.next.i
+  %sext.i.1 = add nuw nsw i64 %indvars.iv.i, 1    ; 2 uses
+  %6 = getelementptr inbounds nuw [16 x i8], ptr %i.c, i64 %sext.i.1
+  %i.ao = getelementptr inbounds nuw i8, ptr %6, i64 32
+  %i.ap = getelementptr inbounds nuw [16 x i8], ptr %2, i64 %sext.i.1
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ao, ptr noundef nonnull readonly align 8 dereferenceable(16) %i.ap, i64 16, i1 false)
   %indvars.iv.next.i.1 = add nuw nsw i64 %indvars.iv.i, 2 ; 2 uses
-  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
+  %niter.next.1 = add nuw nsw i64 %niter, 2       ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.i.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !10
 
@@ -230,10 +226,8 @@ bb.h:                                             ; preds = %.sink.split.i, %bb.
   %indvars.iv.i.epil.init = phi i64 [ 1, %.lr.ph.preheader.i ], [ %indvars.iv.next.i.1, %._crit_edge.i.loopexit.unr-lcssa ] ; 2 uses
   %lcmp.mod24 = trunc i64 %i.ak to i1
   tail call void @llvm.assume(i1 %lcmp.mod24)
-  %9 = shl nuw nsw i64 %indvars.iv.i.epil.init, 32
-  %sext.i.epil = add nuw i64 %9, 8589934592
-  %10 = ashr exact i64 %sext.i.epil, 28
-  %i.aq = getelementptr inbounds i8, ptr %i.c, i64 %10
+  %7 = getelementptr inbounds nuw [16 x i8], ptr %i.c, i64 %indvars.iv.i.epil.init
+  %i.aq = getelementptr inbounds nuw i8, ptr %7, i64 32
   %i.ar = getelementptr inbounds nuw [16 x i8], ptr %2, i64 %indvars.iv.i.epil.init
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.aq, ptr noundef nonnull readonly align 8 dereferenceable(16) %i.ar, i64 16, i1 false)
   br label %._crit_edge.i

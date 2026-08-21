@@ -202,15 +202,15 @@ bb.t:                                             ; preds = %bb.s
 
 .thread.i:                                        ; preds = %bb.t, %bb.r, %bb.o
   %.089139.i = phi ptr [ %i.ae, %bb.t ], [ %i.ae, %bb.r ], [ null, %bb.o ] ; 3 uses
-  %.0102138.i = phi i64 [ %.val.i, %bb.t ], [ %.val.i, %bb.r ], [ 0, %bb.o ] ; 5 uses
+  %.0102138.i = phi i64 [ %.val.i, %bb.t ], [ %.val.i, %bb.r ], [ 0, %bb.o ] ; 6 uses
   %.097.i = phi ptr [ %i.al, %bb.t ], [ null, %bb.r ], [ null, %bb.o ] ; 9 uses
   %i.ao = getelementptr i8, ptr %.089139.i, i64 32
-  %smax.i = call i64 @llvm.smax.i64(i64 %.0102138.i, i64 0) ; 7 uses
+  %smax.i = call i64 @llvm.smax.i64(i64 %.0102138.i, i64 0) ; 6 uses
   %exitcond.not.i72 = icmp slt i64 %.0102138.i, 1
   br i1 %exitcond.not.i72, label %._crit_edge, label %.lr.ph
 
 bb.u:                                             ; preds = %get_CMSG_SPACE.exit.i
-  %exitcond.not.i = icmp eq i64 %i.aw, %smax.i
+  %exitcond.not.i = icmp eq i64 %.0102138.i, %i.aw
   br i1 %exitcond.not.i, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.thread.i, %bb.u
@@ -226,33 +226,23 @@ bb.u:                                             ; preds = %get_CMSG_SPACE.exit
   br i1 %.not121.i, label %.thread144.i, label %bb.v
 
 bb.v:                                             ; preds = %.lr.ph
-  %i.aw = add nuw i64 %.099.i73, 1                ; 4 uses
+  %i.aw = add nuw nsw i64 %.099.i73, 1            ; 3 uses
   %i.ax = getelementptr i8, ptr %i.as, i64 24
   %i.ay = load i64, ptr %i.ax, align 8, !tbaa !174 ; 3 uses
   %i.az = icmp ugt i64 %i.ay, 2147483623
-  br i1 %i.az, label %6, label %bb.w
+  br i1 %i.az, label %.thread144.i.thread, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
   %i.ba = add nuw nsw i64 %i.ay, 7
   %i.bb = and i64 %i.ba, 4294967288
   %i.bc = add nuw nsw i64 %i.bb, 16               ; 2 uses
   %i.bd = icmp samesign ult i64 %i.bc, %i.ay
-  br i1 %i.bd, label %6, label %get_CMSG_SPACE.exit.i
-
-6:                                                ; preds = %bb.w, %bb.v
-  %7 = load ptr, ptr @PyExc_OSError, align 8, !tbaa !24
-  call void @PyErr_SetString(ptr noundef %7, ptr noundef nonnull @.str.644) #11
-  br label %.thread144.i
+  br i1 %i.bd, label %.thread144.i.thread, label %get_CMSG_SPACE.exit.i
 
 get_CMSG_SPACE.exit.i:                            ; preds = %bb.w
   %i.be = add nuw nsw i64 %i.bc, %i.ap            ; 3 uses
   %i.bf = icmp samesign ugt i64 %i.be, 2147483647
-  br i1 %i.bf, label %8, label %bb.u
-
-8:                                                ; preds = %get_CMSG_SPACE.exit.i
-  %9 = load ptr, ptr @PyExc_OSError, align 8, !tbaa !24
-  call void @PyErr_SetString(ptr noundef %9, ptr noundef nonnull @.str.645) #11
-  br label %.thread144.i
+  br i1 %i.bf, label %.thread144.i.thread, label %bb.u
 
 ._crit_edge:                                      ; preds = %bb.u, %.thread.i
   %.lcssa = phi i64 [ 0, %.thread.i ], [ %i.be, %bb.u ] ; 9 uses
@@ -422,25 +412,37 @@ bb.ag:                                            ; preds = %.loopexit.i
   call void @PyMem_Free(ptr noundef null) #11
   br label %._crit_edge.i
 
-.thread144.i:                                     ; preds = %.lr.ph, %bb.ag, %.loopexit.i, %.critedge.i, %.loopexit199.i, %__cmsg_nxthdr.exit.thread.i, %bb.y, %8, %6
-  %.2101.i = phi i64 [ %smax.i, %bb.y ], [ %smax.i, %__cmsg_nxthdr.exit.thread.i ], [ %smax.i, %.critedge.i ], [ %smax.i, %.loopexit.i ], [ %smax.i, %bb.ag ], [ %i.aw, %8 ], [ %smax.i, %.loopexit199.i ], [ %i.aw, %6 ], [ %.099.i73, %.lr.ph ] ; 2 uses
-  %.196.i = phi ptr [ null, %bb.y ], [ %i.bg, %__cmsg_nxthdr.exit.thread.i ], [ %i.bg, %.critedge.i ], [ %.095.i, %.loopexit.i ], [ %.095.i, %bb.ag ], [ null, %8 ], [ %i.bg, %.loopexit199.i ], [ null, %6 ], [ null, %.lr.ph ]
-  %.088.i = phi ptr [ null, %bb.y ], [ null, %__cmsg_nxthdr.exit.thread.i ], [ null, %.critedge.i ], [ null, %.loopexit.i ], [ %i.ea, %bb.ag ], [ null, %8 ], [ null, %.loopexit199.i ], [ null, %6 ], [ null, %.lr.ph ] ; 2 uses
-  call void @PyMem_Free(ptr noundef %.196.i) #11
-  %10 = icmp sgt i64 %.2101.i, 0
-  br i1 %10, label %.lr.ph.i, label %._crit_edge.i
+.thread144.i.thread:                              ; preds = %get_CMSG_SPACE.exit.i, %bb.v, %bb.w
+  %.str.645.sink = phi ptr [ @.str.644, %bb.v ], [ @.str.644, %bb.w ], [ @.str.645, %get_CMSG_SPACE.exit.i ]
+  %6 = load ptr, ptr @PyExc_OSError, align 8, !tbaa !24
+  call void @PyErr_SetString(ptr noundef %6, ptr noundef nonnull %.str.645.sink) #11
+  call void @PyMem_Free(ptr noundef null) #11
+  br label %.lr.ph.i.preheader
 
-.lr.ph.i:                                         ; preds = %.thread144.i, %.lr.ph.i
-  %.1104181.i = phi i64 [ %i.ed, %.lr.ph.i ], [ 0, %.thread144.i ] ; 2 uses
+.thread144.i:                                     ; preds = %.lr.ph, %bb.ag, %.loopexit.i, %.critedge.i, %.loopexit199.i, %__cmsg_nxthdr.exit.thread.i, %bb.y
+  %.2101.i = phi i64 [ %smax.i, %bb.y ], [ %smax.i, %__cmsg_nxthdr.exit.thread.i ], [ %smax.i, %.critedge.i ], [ %smax.i, %.loopexit.i ], [ %smax.i, %bb.ag ], [ %smax.i, %.loopexit199.i ], [ %.099.i73, %.lr.ph ] ; 2 uses
+  %.196.i = phi ptr [ null, %bb.y ], [ %i.bg, %__cmsg_nxthdr.exit.thread.i ], [ %i.bg, %.critedge.i ], [ %.095.i, %.loopexit.i ], [ %.095.i, %bb.ag ], [ %i.bg, %.loopexit199.i ], [ null, %.lr.ph ]
+  %.088.i = phi ptr [ null, %bb.y ], [ null, %__cmsg_nxthdr.exit.thread.i ], [ null, %.critedge.i ], [ null, %.loopexit.i ], [ %i.ea, %bb.ag ], [ null, %.loopexit199.i ], [ null, %.lr.ph ] ; 2 uses
+  call void @PyMem_Free(ptr noundef %.196.i) #11
+  %.not69 = icmp eq i64 %.2101.i, 0
+  br i1 %.not69, label %._crit_edge.i, label %.lr.ph.i.preheader
+
+.lr.ph.i.preheader:                               ; preds = %.thread144.i.thread, %.thread144.i
+  %.088.i60 = phi ptr [ null, %.thread144.i.thread ], [ %.088.i, %.thread144.i ]
+  %.2101.i59 = phi i64 [ %i.aw, %.thread144.i.thread ], [ %.2101.i, %.thread144.i ]
+  br label %.lr.ph.i
+
+.lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %.lr.ph.i
+  %.1104181.i = phi i64 [ %i.ed, %.lr.ph.i ], [ 0, %.lr.ph.i.preheader ] ; 2 uses
   %i.eb = getelementptr [88 x i8], ptr %.097.i, i64 %.1104181.i
   %i.ec = getelementptr i8, ptr %i.eb, i64 8
   call void @PyBuffer_Release(ptr noundef %i.ec) #11
   %i.ed = add nuw nsw i64 %.1104181.i, 1          ; 2 uses
-  %exitcond200.not.i = icmp eq i64 %i.ed, %.2101.i
+  %exitcond200.not.i = icmp eq i64 %i.ed, %.2101.i59
   br i1 %exitcond200.not.i, label %._crit_edge.i, label %.lr.ph.i, !llvm.loop !187
 
 ._crit_edge.i:                                    ; preds = %.lr.ph.i, %.thread144.i, %.thread144.thread.i
-  %.088231.i = phi ptr [ null, %.thread144.thread.i ], [ %.088.i, %.thread144.i ], [ %.088.i, %.lr.ph.i ]
+  %.088231.i = phi ptr [ null, %.thread144.thread.i ], [ %.088.i, %.thread144.i ], [ %.088.i60, %.lr.ph.i ]
   %.190230.i = phi ptr [ %.190.ph.i, %.thread144.thread.i ], [ %.089139.i, %.thread144.i ], [ %.089139.i, %.lr.ph.i ] ; 4 uses
   %.198229.i = phi ptr [ null, %.thread144.thread.i ], [ %.097.i, %.thread144.i ], [ %.097.i, %.lr.ph.i ]
   call void @PyMem_Free(ptr noundef %.198229.i) #11

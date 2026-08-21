@@ -205,6 +205,10 @@ _ZN2cv3MataSERKNS_7MatExprE.exit181:              ; preds = %bb.q
 .preheader244.preheader:                          ; preds = %.preheader244.lr.ph
   %i.eo = sext i32 %i.d to i64
   %i.ep = sext i32 %i.b to i64
+  %sext317 = sext i32 %3 to i64
+  %invariant.op342 = add nsw i64 %sext317, -1
+  %sext = sext i32 %4 to i64                      ; 3 uses
+  %invariant.op = add nsw i64 %sext, -1
   br label %.preheader244
 
 .preheader244:                                    ; preds = %.preheader244.preheader, %._crit_edge272
@@ -219,9 +223,7 @@ _ZN2cv3MataSERKNS_7MatExprE.exit181:              ; preds = %bb.q
 
 .lr.ph:                                           ; preds = %.preheader244
   %i.eu = shl i64 %indvars.iv289, 1               ; 4 uses
-  %16 = trunc i64 %i.eu to i32
-  %17 = or disjoint i32 %16, 1
-  %i.ev = icmp slt i32 %17, %3
+  %i.ev = icmp slt i64 %i.eu, %invariant.op342
   %i.ew = trunc i64 %i.eu to i32                  ; 2 uses
   %.sroa.speculated224 = call i32 @llvm.smin.i32(i32 %i.ee, i32 %i.ew) ; 4 uses
   %i.ex = sext i32 %.sroa.speculated224 to i64    ; 2 uses
@@ -339,9 +341,7 @@ bb.ac:                                            ; preds = %bb.ab
   %.not156 = icmp ne i8 %i.gd, 0
   %brmerge.not342 = select i1 %.not156, i1 %i.ev, i1 false
   %.pre321 = shl nuw nsw i64 %indvars.iv, 1       ; 8 uses
-  %18 = trunc i64 %.pre321 to i32
-  %19 = or disjoint i32 %18, 1
-  %i.ge = icmp slt i32 %19, %4
+  %i.ge = icmp slt i64 %.pre321, %invariant.op
   %or.cond339 = select i1 %brmerge.not342, i1 %i.ge, i1 false
   br i1 %or.cond339, label %bb.ad, label %._crit_edge320
 
@@ -567,9 +567,8 @@ bb.ai:                                            ; preds = %.split.preheader.1
 
 .split.1.1:                                       ; preds = %bb.ai, %.split.preheader.1
   %i.jm = or disjoint i64 %.pre321, 1             ; 2 uses
-  %20 = trunc nuw i64 %i.jm to i32
-  %21 = icmp sgt i32 %4, %20
-  br i1 %21, label %bb.aj, label %.loopexit
+  %16 = icmp slt i64 %i.jm, %sext
+  br i1 %16, label %bb.aj, label %.loopexit
 
 bb.aj:                                            ; preds = %.split.1.1
   %i.jn = load i32, ptr %i.eg, align 4, !tbaa !110
@@ -597,9 +596,8 @@ bb.ak:                                            ; preds = %.split.preheader
 
 .split.1:                                         ; preds = %bb.ak, %.split.preheader
   %i.jz = or disjoint i64 %.pre321, 1             ; 2 uses
-  %22 = trunc nuw i64 %i.jz to i32
-  %23 = icmp sgt i32 %4, %22
-  br i1 %23, label %bb.al, label %.split267.us
+  %17 = icmp slt i64 %i.jz, %sext
+  br i1 %17, label %bb.al, label %.split267.us
 
 bb.al:                                            ; preds = %.split.1
   %i.ka = load i32, ptr %i.eg, align 4, !tbaa !110

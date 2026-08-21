@@ -128,8 +128,9 @@ bb.k:                                             ; preds = %bb.j, %bb.i, %bb.h
   br i1 %i.q, label %bb.l, label %.preheader
 
 .preheader:                                       ; preds = %bb.k
-  %i.r = load i32, ptr @switch_context_cnt, align 4 ; 4 uses
+  %i.r = load i32, ptr @switch_context_cnt, align 4 ; 3 uses
   %i.s = load ptr, ptr @ops, align 8              ; 2 uses
+  %sext = sext i32 %i.r to i64                    ; 2 uses
   %smax = call i32 @llvm.smax.i32(i32 %i.r, i32 0)
   %wide.trip.count = zext nneg i32 %smax to i64
   %exitcond57.not75 = icmp slt i32 %i.r, 1
@@ -149,17 +150,15 @@ bb.m:                                             ; preds = %._crit_edge
   %indvars.iv77 = phi i64 [ %indvars.iv.next, %bb.m ], [ 1, %.preheader ] ; 2 uses
   %indvars.iv5476 = phi i64 [ %indvars.iv.next55, %bb.m ], [ 0, %.preheader ] ; 4 uses
   %indvars.iv.next55 = add nuw nsw i64 %indvars.iv5476, 1 ; 3 uses
-  %2 = trunc nuw i64 %indvars.iv.next55 to i32
-  %3 = icmp sgt i32 %i.r, %2
+  %2 = icmp slt i64 %indvars.iv.next55, %sext
   %i.u = getelementptr inbounds nuw [184 x i8], ptr %i.s, i64 %indvars.iv5476
   %i.v = load ptr, ptr %i.u, align 8
   %i.w = load i32, ptr %i.v, align 4              ; 4 uses
-  br i1 %3, label %.lr.ph, label %._crit_edge
+  br i1 %2, label %.lr.ph, label %._crit_edge
 
 bb.n:                                             ; preds = %.lr.ph
   %indvars.iv.next52 = add nuw nsw i64 %indvars.iv51, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next52 to i32
-  %exitcond.not = icmp eq i32 %i.r, %lftr.wideiv
+  %exitcond.not = icmp eq i64 %indvars.iv.next52, %sext
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !11
 
 .lr.ph:                                           ; preds = %.lr.ph78, %bb.n

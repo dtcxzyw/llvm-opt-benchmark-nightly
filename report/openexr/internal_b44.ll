@@ -162,12 +162,12 @@ bb.j:                                             ; preds = %.lr.ph328, %.thread
   %i.bj = getelementptr inbounds nuw i8, ptr %i.bi, i64 12
   %i.bk = load i32, ptr %i.bj, align 4, !tbaa !25 ; 5 uses
   %i.bl = getelementptr inbounds nuw i8, ptr %i.bi, i64 8
-  %i.bm = load i32, ptr %i.bl, align 8, !tbaa !28 ; 3 uses
+  %i.bm = load i32, ptr %i.bl, align 8, !tbaa !28 ; 2 uses
   %i.bn = sext i32 %i.bk to i64                   ; 5 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bi, i64 25
   %i.bp = load i8, ptr %i.bo, align 1, !tbaa !29
   %i.bq = sext i8 %i.bp to i64
-  %i.br = sext i32 %i.bm to i64                   ; 4 uses
+  %i.br = sext i32 %i.bm to i64                   ; 5 uses
   %i.bs = mul nsw i64 %i.br, %i.bn
   %i.bt = mul i64 %i.bs, %i.bq                    ; 6 uses
   %i.bu = icmp eq i64 %i.bt, 0
@@ -570,9 +570,8 @@ bb.cd:                                            ; preds = %pack.exit.us
 
 ..thread_crit_edge.us:                            ; preds = %bb.cd
   %indvars.iv.next364 = add nuw nsw i64 %indvars.iv363, 4 ; 2 uses
-  %2 = trunc nuw i64 %indvars.iv.next364 to i32
-  %3 = icmp sgt i32 %i.bm, %2
-  br i1 %3, label %.lr.ph317.split.us, label %select.unfold, !llvm.loop !41
+  %2 = icmp slt i64 %indvars.iv.next364, %i.br
+  br i1 %2, label %.lr.ph317.split.us, label %select.unfold, !llvm.loop !41
 
 bb.ce:                                            ; preds = %bb.k
   %i.pz = add i64 %i.bt, %.0185323                ; 2 uses

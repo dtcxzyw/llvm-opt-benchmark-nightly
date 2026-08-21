@@ -204,8 +204,8 @@ bb.x:                                             ; preds = %.preheader.us.i.i.1
   %.sink.i.i.1 = phi i32 [ %i.gl, %.preheader.us.i.i.1 ], [ 0, %.lr.ph48.split.us.i.i.1 ]
   %gep46.us.i.i.1 = getelementptr [4 x i8], ptr %invariant.gep4359.i.i, i64 %i.ga
   store i32 %.sink.i.i.1, ptr %gep46.us.i.i.1, align 4, !tbaa !8
-  %i.gm = add nuw i64 %.03447.us.i.i, 2           ; 2 uses
-  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
+  %i.gm = add nuw nsw i64 %.03447.us.i.i, 2       ; 2 uses
+  %niter.next.1 = add nuw nsw i64 %niter, 2       ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN4lean7mpn_mulEPKjmS1_mPj.exit.i.unr-lcssa, label %.lr.ph48.split.us.i.i, !llvm.loop !21
 
@@ -608,7 +608,7 @@ _ZN4lean6bufferIjLm16EED2Ev.exit97:               ; preds = %_ZN4lean6bufferIjLm
   %i.gc = load i8, ptr %i.ga, align 1, !tbaa !40
   store i8 %i.gc, ptr %i.fy, align 1, !tbaa !40
   store i8 %i.gb, ptr %i.ga, align 1, !tbaa !40
-  %i.gd = add nuw i64 %.0133, 2                   ; 2 uses
+  %i.gd = add nuw nsw i64 %.0133, 2               ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1.not = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1.not, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph134, !llvm.loop !83

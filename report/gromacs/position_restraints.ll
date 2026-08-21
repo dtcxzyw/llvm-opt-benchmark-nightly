@@ -44,8 +44,8 @@ bb.a:
   %i.d = ptrtoint ptr %1 to i64
   %i.e = ptrtoint ptr %0 to i64
   %i.f = sub i64 %i.d, %i.e
-  %i.g = lshr exact i64 %i.f, 2
-  %i.h = trunc i64 %i.g to i32                    ; 2 uses
+  %i.g = lshr exact i64 %i.f, 2                   ; 2 uses
+  %i.h = trunc i64 %i.g to i32
   %i.i = load ptr, ptr %11, align 8, !tbaa !9
   %i.j = load i64, ptr %6, align 8
   %i.k = inttoptr i64 %i.j to ptr
@@ -182,6 +182,7 @@ bb.b:                                             ; preds = %.unr-lcssa, %.prehe
 
 .lr.ph.i:                                         ; preds = %.loopexit6.i
   %i.bx = icmp eq ptr %.sroa.021.0.copyload, %.sroa.222.0.copyload
+  %sext.i = and i64 %i.g, 2147483647
   %i.by = getelementptr inbounds nuw i8, ptr %i.c, i64 4
   %i.bz = getelementptr inbounds nuw i8, ptr %i.b, i64 4
   %i.ca = getelementptr inbounds nuw i8, ptr %i.a, i64 4
@@ -347,9 +348,8 @@ bb.d:                                             ; preds = %bb.c
   %i.hi = call double @llvm.fmuladd.f64(double %i.hh, double %i.he, double %i.hg)
   %i.hj = fptrunc double %i.hi to float
   store float %i.hj, ptr %i.cf, align 4, !tbaa !13
-  %14 = trunc nuw i64 %indvars.iv.next28.i to i32
-  %15 = icmp sgt i32 %i.h, %14
-  br i1 %15, label %bb.c, label %_ZN12_GLOBAL__N_16posresILb1EEEfiPKiPK9t_iparamsPA3_KfPA4_fPN3gmx11BasicVectorIfEERK5t_pbcfPf15RefCoordScalingNSB_8ArrayRefIKSD_EESM_NSK_IKtEENSK_ISD_EESP_.exit, !llvm.loop !147
+  %14 = icmp samesign ult i64 %indvars.iv.next28.i, %sext.i
+  br i1 %14, label %bb.c, label %_ZN12_GLOBAL__N_16posresILb1EEEfiPKiPK9t_iparamsPA3_KfPA4_fPN3gmx11BasicVectorIfEERK5t_pbcfPf15RefCoordScalingNSB_8ArrayRefIKSD_EESM_NSK_IKtEENSK_ISD_EESP_.exit, !llvm.loop !147
 
 _ZN12_GLOBAL__N_16posresILb1EEEfiPKiPK9t_iparamsPA3_KfPA4_fPN3gmx11BasicVectorIfEERK5t_pbcfPf15RefCoordScalingNSB_8ArrayRefIKSD_EESM_NSK_IKtEENSK_ISD_EESP_.exit: ; preds = %.loopexit.i, %.loopexit6.i
   %.084.lcssa.i = phi float [ 0.000000e+00, %.loopexit6.i ], [ %i.gl, %.loopexit.i ]
@@ -752,8 +752,8 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.am = ptrtoint ptr %i.ak to i64
   %i.an = ptrtoint ptr %i.al to i64
   %i.ao = sub i64 %i.am, %i.an
-  %i.ap = lshr exact i64 %i.ao, 2
-  %i.aq = trunc i64 %i.ap to i32                  ; 2 uses
+  %i.ap = lshr exact i64 %i.ao, 2                 ; 2 uses
+  %i.aq = trunc i64 %i.ap to i32
   %i.ar = load ptr, ptr %i.l, align 8, !tbaa !177
   %i.as = load i32, ptr %i.m, align 8, !tbaa !15  ; 2 uses
   %i.at = load ptr, ptr %i.n, align 8, !tbaa !133 ; 2 uses
@@ -870,12 +870,16 @@ bb.f:                                             ; preds = %.unr-lcssa, %.prehe
 .loopexit6.i:                                     ; preds = %._crit_edge.i, %.preheader5.i, %bb.e
   %i.ct = fsub float 1.000000e+00, %i.aj          ; 3 uses
   %i.cu = icmp sgt i32 %i.aq, 0
-  br i1 %i.cu, label %.lr.ph.i.a, label %_ZN12_GLOBAL__N_16posresILb0EEEfiPKiPK9t_iparamsPA3_KfPA4_fPN3gmx11BasicVectorIfEERK5t_pbcfPf15RefCoordScalingNSB_8ArrayRefIKSD_EESM_NSK_IKtEENSK_ISD_EESP_.exit
+  br i1 %i.cu, label %.lr.ph.i, label %_ZN12_GLOBAL__N_16posresILb0EEEfiPKiPK9t_iparamsPA3_KfPA4_fPN3gmx11BasicVectorIfEERK5t_pbcfPf15RefCoordScalingNSB_8ArrayRefIKSD_EESM_NSK_IKtEENSK_ISD_EESP_.exit
 
-.lr.ph.i.a:                                       ; preds = %.loopexit6.i, %.loopexit.i
-  %.035 = phi float [ %i.gl, %.loopexit.i ], [ 0.000000e+00, %.loopexit6.i ]
-  %indvars.iv27.i = phi i64 [ %indvars.iv.next28.i, %.loopexit.i ], [ 0, %.loopexit6.i ] ; 2 uses
-  %.07512.i = phi float [ %i.ga, %.loopexit.i ], [ 0.000000e+00, %.loopexit6.i ]
+.lr.ph.i:                                         ; preds = %.loopexit6.i
+  %sext.i = and i64 %i.ap, 2147483647
+  br label %.lr.ph.i.a
+
+.lr.ph.i.a:                                       ; preds = %.loopexit.i, %.lr.ph.i
+  %.035 = phi float [ 0.000000e+00, %.lr.ph.i ], [ %i.gl, %.loopexit.i ]
+  %indvars.iv27.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next28.i, %.loopexit.i ] ; 2 uses
+  %.07512.i = phi float [ 0.000000e+00, %.lr.ph.i ], [ %i.ga, %.loopexit.i ]
   %i.cv = getelementptr inbounds nuw [4 x i8], ptr %i.al, i64 %indvars.iv27.i ; 2 uses
   %i.cw = load i32, ptr %i.cv, align 4, !tbaa !143
   %indvars.iv.next28.i = add nuw nsw i64 %indvars.iv27.i, 2 ; 2 uses
@@ -980,9 +984,8 @@ bb.g:                                             ; preds = %.lr.ph.i.a
   %i.gj = fpext float %i.fk to double
   %i.gk = fadd double %i.gi, %i.gj
   %i.gl = fptrunc double %i.gk to float           ; 2 uses
-  %10 = trunc nuw i64 %indvars.iv.next28.i to i32
-  %11 = icmp sgt i32 %i.aq, %10
-  br i1 %11, label %.lr.ph.i.a, label %_ZN12_GLOBAL__N_16posresILb0EEEfiPKiPK9t_iparamsPA3_KfPA4_fPN3gmx11BasicVectorIfEERK5t_pbcfPf15RefCoordScalingNSB_8ArrayRefIKSD_EESM_NSK_IKtEENSK_ISD_EESP_.exit.loopexit, !llvm.loop !183
+  %10 = icmp samesign ult i64 %indvars.iv.next28.i, %sext.i
+  br i1 %10, label %.lr.ph.i.a, label %_ZN12_GLOBAL__N_16posresILb0EEEfiPKiPK9t_iparamsPA3_KfPA4_fPN3gmx11BasicVectorIfEERK5t_pbcfPf15RefCoordScalingNSB_8ArrayRefIKSD_EESM_NSK_IKtEENSK_ISD_EESP_.exit.loopexit, !llvm.loop !183
 
 _ZN12_GLOBAL__N_16posresILb0EEEfiPKiPK9t_iparamsPA3_KfPA4_fPN3gmx11BasicVectorIfEERK5t_pbcfPf15RefCoordScalingNSB_8ArrayRefIKSD_EESM_NSK_IKtEENSK_ISD_EESP_.exit.loopexit: ; preds = %.loopexit.i
   %i.gm = fpext float %i.ga to double
@@ -1023,8 +1026,8 @@ bb.a:
   %i.e = ptrtoint ptr %1 to i64
   %i.f = ptrtoint ptr %0 to i64
   %i.g = sub i64 %i.e, %i.f
-  %i.h = lshr exact i64 %i.g, 2
-  %i.i = trunc i64 %i.h to i32                    ; 2 uses
+  %i.h = lshr exact i64 %i.g, 2                   ; 2 uses
+  %i.i = trunc i64 %i.h to i32
   %i.j = load ptr, ptr %9, align 8, !tbaa !9
   %i.k = getelementptr inbounds nuw i8, ptr %6, i64 16
   %i.l = load i32, ptr %i.k, align 8, !tbaa !15   ; 2 uses
@@ -1155,6 +1158,7 @@ bb.b:                                             ; preds = %.unr-lcssa, %.prehe
   %i.bi = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 5 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %i.b, i64 4 ; 3 uses
   %i.bk = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 4 uses
+  %sext.i = and i64 %i.h, 2147483647
   %i.bl = getelementptr inbounds nuw i8, ptr %i.a, i64 4
   %i.bm = getelementptr inbounds nuw i8, ptr %10, i64 4 ; 2 uses
   %i.bn = getelementptr inbounds nuw i8, ptr %i.a, i64 8
@@ -1461,9 +1465,8 @@ _ZN12_GLOBAL__N_120do_fbposres_cylinderEiPfS0_ffb.exit.i: ; preds = %bb.v, %bb.u
   %i.it = fptrunc double %i.is to float
   store float %i.it, ptr %i.bo, align 4, !tbaa !13
   %i.iu = fadd float %.013110.i, %.0137.i         ; 2 uses
-  %11 = trunc nuw i64 %indvars.iv.next26.i to i32
-  %12 = icmp sgt i32 %i.i, %11
-  br i1 %12, label %bb.c, label %_ZN12_GLOBAL__N_18fbposresEiPKiPK9t_iparamsPA3_KfPA4_fPN3gmx11BasicVectorIfEERK5t_pbc15RefCoordScaling7PbcTypeNSA_8ArrayRefIKSC_EENSJ_IKtEENSJ_ISC_EE.exit, !llvm.loop !192
+  %11 = icmp samesign ult i64 %indvars.iv.next26.i, %sext.i
+  br i1 %11, label %bb.c, label %_ZN12_GLOBAL__N_18fbposresEiPKiPK9t_iparamsPA3_KfPA4_fPN3gmx11BasicVectorIfEERK5t_pbc15RefCoordScaling7PbcTypeNSA_8ArrayRefIKSC_EENSJ_IKtEENSJ_ISC_EE.exit, !llvm.loop !192
 
 _ZN12_GLOBAL__N_18fbposresEiPKiPK9t_iparamsPA3_KfPA4_fPN3gmx11BasicVectorIfEERK5t_pbc15RefCoordScaling7PbcTypeNSA_8ArrayRefIKSC_EENSJ_IKtEENSJ_ISC_EE.exit: ; preds = %_ZN12_GLOBAL__N_120do_fbposres_cylinderEiPfS0_ffb.exit.i, %.loopexit5.i
   %.0131.lcssa.i = phi float [ 0.000000e+00, %.loopexit5.i ], [ %i.iu, %_ZN12_GLOBAL__N_120do_fbposres_cylinderEiPfS0_ffb.exit.i ]

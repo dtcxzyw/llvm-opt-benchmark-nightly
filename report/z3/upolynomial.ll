@@ -205,7 +205,7 @@ _ZN11upolynomial12core_manager5resetER7svectorI3mpzjE.exit: ; preds = %_ZN11upol
 ; Function Attrs: mustprogress uwtable
 define hidden void @_ZN11upolynomial12core_manager10derivativeEjPK3mpzR7svectorIS1_jE(ptr noundef nonnull align 8 dereferenceable(272) %0, i32 noundef %1, ptr noundef %2, ptr noundef nonnull align 8 dereferenceable(8) %3) local_unnamed_addr #0 align 2 {
 bb.a:
-  %4 = alloca %class.mpz, align 8                 ; 9 uses
+  %4 = alloca %class.mpz, align 8                 ; 7 uses
   %i.a = icmp ult i32 %1, 2
   br i1 %i.a, label %bb.b, label %bb.d
 
@@ -300,9 +300,9 @@ bb.e:                                             ; preds = %_ZNK6vectorI3mpzLb0
   br i1 %.not12.i.i, label %.lr.ph, label %.lr.ph.i.i16, !llvm.loop !43
 
 .lr.ph:                                           ; preds = %.lr.ph.i.i16, %bb.e, %_ZNK6vectorI3mpzLb0EjE4sizeEv.exit.thread.i
-  %i.af = getelementptr inbounds nuw i8, ptr %4, i64 4 ; 3 uses
+  %i.af = getelementptr inbounds nuw i8, ptr %4, i64 4 ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %4, i64 8
-  %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
+  %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %umax = tail call i32 @llvm.umax.i32(i32 %1, i32 2)
   %wide.trip.count = zext i32 %umax to i64
@@ -377,37 +377,23 @@ bb.h:                                             ; preds = %bb.h, %.lr.ph.i
   br i1 %exitcond.not.i, label %._crit_edge.i, label %bb.h, !llvm.loop !39
 
 bb.i:                                             ; preds = %.lr.ph, %_ZN13mpzzp_manager3mulERK3mpzS2_RS0_.exit
-  %indvars.iv = phi i64 [ 1, %.lr.ph ], [ %indvars.iv.next, %_ZN13mpzzp_manager3mulERK3mpzS2_RS0_.exit ] ; 5 uses
+  %indvars.iv = phi i64 [ 1, %.lr.ph ], [ %indvars.iv.next, %_ZN13mpzzp_manager3mulERK3mpzS2_RS0_.exit ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #23
-  store i32 0, ptr %4, align 8, !tbaa !11
   %i.bd = load i8, ptr %i.af, align 4
-  %i.be = and i8 %i.bd, -4                        ; 2 uses
-  store i8 %i.be, ptr %i.af, align 4
+  %i.be = and i8 %i.bd, -4
   store ptr null, ptr %i.ag, align 8, !tbaa !42
-  %5 = trunc nuw i64 %indvars.iv to i32           ; 2 uses
-  %6 = icmp sgt i32 %5, -1
-  br i1 %6, label %7, label %8
-
-7:                                                ; preds = %bb.i
+  %5 = trunc nuw i64 %indvars.iv to i32
   store i32 %5, ptr %4, align 8, !tbaa !11
   store i8 %i.be, ptr %i.af, align 4
-  br label %_ZN11mpz_managerILb0EE3setER3mpzj.exit.i
+  %.pre = load i8, ptr %i.ai, align 8, !tbaa !14, !range !18
+  %6 = trunc nuw i8 %.pre to i1
+  br i1 %6, label %_ZN13mpzzp_manager3setER3mpzj.exit, label %bb.j
 
-8:                                                ; preds = %bb.i
-  %9 = load ptr, ptr %i.ah, align 8, !tbaa !36, !nonnull !19, !align !27
-  call void @_ZN11mpz_managerILb0EE11set_big_i64ER3mpzl(ptr noundef nonnull align 8 dereferenceable(600) %9, ptr noundef nonnull align 8 dereferenceable(16) %4, i64 noundef %indvars.iv)
-  br label %_ZN11mpz_managerILb0EE3setER3mpzj.exit.i
-
-_ZN11mpz_managerILb0EE3setER3mpzj.exit.i:         ; preds = %8, %7
-  %10 = load i8, ptr %i.ai, align 8, !tbaa !14, !range !18, !noundef !19
-  %11 = trunc nuw i8 %10 to i1
-  br i1 %11, label %_ZN13mpzzp_manager3setER3mpzj.exit, label %bb.j
-
-bb.j:                                             ; preds = %_ZN11mpz_managerILb0EE3setER3mpzj.exit.i
+bb.j:                                             ; preds = %bb.i
   call void @_ZN13mpzzp_manager16p_normalize_coreER3mpz(ptr noundef nonnull align 8 dereferenceable(136) %i.ah, ptr noundef nonnull align 8 dereferenceable(16) %4)
   br label %_ZN13mpzzp_manager3setER3mpzj.exit
 
-_ZN13mpzzp_manager3setER3mpzj.exit:               ; preds = %_ZN11mpz_managerILb0EE3setER3mpzj.exit.i, %bb.j
+_ZN13mpzzp_manager3setER3mpzj.exit:               ; preds = %bb.i, %bb.j
   %i.bf = getelementptr inbounds nuw [16 x i8], ptr %2, i64 %indvars.iv
   %i.bg = load ptr, ptr %3, align 8, !tbaa !31
   %i.bh = getelementptr [16 x i8], ptr %i.bg, i64 %indvars.iv
@@ -809,8 +795,6 @@ declare void @_ZN11mpz_managerILb0EE3negER3mpz(ptr noundef nonnull align 8 deref
 declare void @_ZN11mpz_managerILb0EE5resetER3mpz(ptr noundef nonnull align 8 dereferenceable(600), ptr noundef nonnull align 8 dereferenceable(16)) local_unnamed_addr #9
 
 declare void @_ZN11mpz_managerILb0EE6addmulERK3mpzS3_S3_RS1_(ptr noundef nonnull align 8 dereferenceable(600), ptr noundef nonnull align 8 dereferenceable(16), ptr noundef nonnull align 8 dereferenceable(16), ptr noundef nonnull align 8 dereferenceable(16), ptr noundef nonnull align 8 dereferenceable(16)) local_unnamed_addr #9
-
-declare void @_ZN11mpz_managerILb0EE11set_big_i64ER3mpzl(ptr noundef nonnull align 8 dereferenceable(600), ptr noundef nonnull align 8 dereferenceable(16), i64 noundef) local_unnamed_addr #9
 
 declare void @_ZN11mpz_managerILb0EE3mulERK3mpzS3_RS1_(ptr noundef nonnull align 8 dereferenceable(600), ptr noundef nonnull align 8 dereferenceable(16), ptr noundef nonnull align 8 dereferenceable(16), ptr noundef nonnull align 8 dereferenceable(16)) local_unnamed_addr #9
 

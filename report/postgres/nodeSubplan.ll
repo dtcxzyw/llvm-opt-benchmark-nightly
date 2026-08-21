@@ -202,7 +202,7 @@ bb.bi:                                            ; preds = %bb.bh, %bb.bg
   %i.oo = call fastcc i64 @heap_getattr(ptr noundef %i.om, i32 noundef %.0125198203.i, ptr noundef %i.nh, ptr noundef nonnull %i.on)
   %i.op = getelementptr inbounds nuw i8, ptr %i.ol, i64 8
   store i64 %i.oo, ptr %i.op, align 8
-  %i.oq = add nuw i32 %.0125198203.i, 1
+  %i.oq = add nuw nsw i32 %.0125198203.i, 1
   %indvars.iv.next230.i = add nuw nsw i64 %indvars.iv229.i, 1 ; 2 uses
   %i.or = load i32, ptr %i.oc, align 4
   %i.os = sext i32 %i.or to i64
@@ -605,12 +605,12 @@ list_length.exit:                                 ; preds = %bb.j, %bb.k
   br i1 %i.co, label %.lr.ph191, label %.critedge152
 
 .lr.ph191:                                        ; preds = %.lr.ph167, %bb.o
-  %.0143163190 = phi i32 [ %4, %bb.o ], [ 1, %.lr.ph167 ] ; 3 uses
-  %.0141164189 = phi ptr [ %i.cy, %bb.o ], [ null, %.lr.ph167 ]
-  %.0140165188 = phi ptr [ %i.de, %bb.o ], [ null, %.lr.ph167 ]
-  %indvars.iv174187 = phi i64 [ %indvars.iv.next175, %bb.o ], [ 0, %.lr.ph167 ] ; 2 uses
+  %.0141164194 = phi ptr [ %i.cy, %bb.o ], [ null, %.lr.ph167 ]
+  %.0141164189 = phi ptr [ %i.de, %bb.o ], [ null, %.lr.ph167 ]
+  %indvars.iv174192 = phi i64 [ %indvars.iv.next175, %bb.o ], [ 0, %.lr.ph167 ] ; 2 uses
+  %indvars.iv174187 = phi i64 [ %indvars.iv.next177, %bb.o ], [ 1, %.lr.ph167 ] ; 3 uses
   %i.cp = load ptr, ptr %i.cm, align 8
-  %i.cq = getelementptr inbounds nuw [8 x i8], ptr %i.cp, i64 %indvars.iv174187
+  %i.cq = getelementptr inbounds nuw [8 x i8], ptr %i.cp, i64 %indvars.iv174192
   %i.cr = load ptr, ptr %i.cq, align 8            ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #8
@@ -620,27 +620,26 @@ list_length.exit:                                 ; preds = %bb.j, %bb.k
   %i.cu = getelementptr i8, ptr %i.ct, i64 16
   %.val153 = load ptr, ptr %i.cu, align 8
   %i.cv = load ptr, ptr %.val153, align 8
-  %i.cw = trunc i32 %.0143163190 to i16           ; 3 uses
+  %i.cw = trunc i64 %indvars.iv174187 to i16      ; 3 uses
   %i.cx = call ptr @makeTargetEntry(ptr noundef %i.cv, i16 noundef signext %i.cw, ptr noundef null, i1 noundef zeroext false) #8
-  %i.cy = call ptr @lappend(ptr noundef %.0141164189, ptr noundef %i.cx) #8 ; 2 uses
+  %i.cy = call ptr @lappend(ptr noundef %.0141164194, ptr noundef %i.cx) #8 ; 2 uses
   %i.cz = load ptr, ptr %i.cs, align 8
   %i.da = getelementptr i8, ptr %i.cz, i64 16
   %.val = load ptr, ptr %i.da, align 8
   %i.db = getelementptr inbounds nuw i8, ptr %.val, i64 8
   %i.dc = load ptr, ptr %i.db, align 8
   %i.dd = call ptr @makeTargetEntry(ptr noundef %i.dc, i16 noundef signext %i.cw, ptr noundef null, i1 noundef zeroext false) #8
-  %i.de = call ptr @lappend(ptr noundef %.0140165188, ptr noundef %i.dd) #8 ; 2 uses
+  %i.de = call ptr @lappend(ptr noundef %.0141164189, ptr noundef %i.dd) #8 ; 2 uses
   %i.df = getelementptr inbounds nuw i8, ptr %i.cr, i64 8
   %i.dg = load i32, ptr %i.df, align 8            ; 2 uses
-  %2 = add i32 %.0143163190, -1
-  %3 = sext i32 %2 to i64                         ; 8 uses
-  %i.dh = getelementptr inbounds [4 x i8], ptr %i.ck, i64 %3
+  %2 = add nsw i64 %indvars.iv174187, -1          ; 8 uses
+  %i.dh = getelementptr inbounds [4 x i8], ptr %i.ck, i64 %2
   store i32 %i.dg, ptr %i.dh, align 4
   %i.di = load ptr, ptr %i.ak, align 8
-  %i.dj = getelementptr inbounds [48 x i8], ptr %i.di, i64 %3
+  %i.dj = getelementptr inbounds [48 x i8], ptr %i.di, i64 %2
   call void @fmgr_info(i32 noundef %i.dg, ptr noundef %i.dj) #8
   %i.dk = load ptr, ptr %i.ak, align 8
-  %i.dl = getelementptr inbounds [48 x i8], ptr %i.dk, i64 %3
+  %i.dl = getelementptr inbounds [48 x i8], ptr %i.dk, i64 %2
   %i.dm = getelementptr inbounds nuw i8, ptr %i.dl, i64 40
   store ptr %i.cr, ptr %i.dm, align 8
   %i.dn = getelementptr inbounds nuw i8, ptr %i.cr, i64 4 ; 4 uses
@@ -687,7 +686,7 @@ bb.m:                                             ; preds = %.lr.ph191
   %i.el = load i32, ptr %i.a, align 4
   %i.em = call i32 @get_opcode(i32 noundef %i.el) #8
   %i.en = load ptr, ptr %i.ah, align 8
-  %i.eo = getelementptr inbounds [4 x i8], ptr %i.en, i64 %3
+  %i.eo = getelementptr inbounds [4 x i8], ptr %i.en, i64 %2
   store i32 %i.em, ptr %i.eo, align 4
   %i.ep = load i32, ptr %i.dn, align 4
   %i.eq = call zeroext i1 @get_op_hash_functions(i32 noundef %i.ep, ptr noundef nonnull %i.b, ptr noundef nonnull %i.c) #8
@@ -702,25 +701,25 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %bb.m
   %i.eu = load i32, ptr %i.b, align 4
-  %i.ev = getelementptr inbounds [48 x i8], ptr %i.ci, i64 %3
+  %i.ev = getelementptr inbounds [48 x i8], ptr %i.ci, i64 %2
   call void @fmgr_info(i32 noundef %i.eu, ptr noundef %i.ev) #8
   %i.ew = load i32, ptr %i.c, align 4
   %i.ex = load ptr, ptr %i.ai, align 8
-  %i.ey = getelementptr inbounds [48 x i8], ptr %i.ex, i64 %3
+  %i.ey = getelementptr inbounds [48 x i8], ptr %i.ex, i64 %2
   call void @fmgr_info(i32 noundef %i.ew, ptr noundef %i.ey) #8
   %i.ez = getelementptr inbounds nuw i8, ptr %i.cr, i64 24
   %i.fa = load i32, ptr %i.ez, align 8
   %i.fb = load ptr, ptr %i.aj, align 8
-  %i.fc = getelementptr inbounds [4 x i8], ptr %i.fb, i64 %3
+  %i.fc = getelementptr inbounds [4 x i8], ptr %i.fb, i64 %2
   store i32 %i.fa, ptr %i.fc, align 4
   %i.fd = load ptr, ptr %i.ag, align 8
-  %i.fe = getelementptr inbounds [2 x i8], ptr %i.fd, i64 %3
+  %i.fe = getelementptr inbounds [2 x i8], ptr %i.fd, i64 %2
   store i16 %i.cw, ptr %i.fe, align 2
-  %4 = add nuw i32 %.0143163190, 1
+  %indvars.iv.next177 = add nuw nsw i64 %indvars.iv174187, 1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #8
-  %indvars.iv.next175 = add nuw nsw i64 %indvars.iv174187, 1 ; 2 uses
+  %indvars.iv.next175 = add nuw nsw i64 %indvars.iv174192, 1 ; 2 uses
   %i.ff = load i32, ptr %i.cl, align 4
   %i.fg = sext i32 %i.ff to i64
   %i.fh = icmp slt i64 %indvars.iv.next175, %i.fg
@@ -1001,7 +1000,7 @@ bb.r:                                             ; preds = %bb.q, %bb.p
   %i.dg = tail call fastcc i64 @heap_getattr(ptr noundef %i.de, i32 noundef %.0102138142, ptr noundef %i.cj, ptr noundef nonnull %i.df)
   %i.dh = getelementptr inbounds nuw i8, ptr %i.dd, i64 8
   store i64 %i.dg, ptr %i.dh, align 8
-  %i.di = add nuw i32 %.0102138142, 1
+  %i.di = add nuw nsw i32 %.0102138142, 1
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.dj = load i32, ptr %i.cu, align 4
   %i.dk = sext i32 %i.dj to i64

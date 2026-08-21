@@ -117,22 +117,22 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %bb.d
   %i.e = phi i32 [ %i.b, %.lr.ph ], [ %i.m, %bb.d ]
-  %.025 = phi i32 [ 0, %.lr.ph ], [ %.1, %bb.d ]  ; 2 uses
-  %.01624 = phi i32 [ 1, %.lr.ph ], [ %4, %bb.d ] ; 4 uses
+  %indvars.iv = phi i64 [ 1, %.lr.ph ], [ %indvars.iv.next, %bb.d ] ; 3 uses
+  %.01624 = phi i32 [ 0, %.lr.ph ], [ %.1, %bb.d ] ; 2 uses
   %i.f = load ptr, ptr %i.d, align 8              ; 2 uses
-  %1 = sext i32 %.01624 to i64
-  %2 = getelementptr [8 x i8], ptr %i.f, i64 %1
-  %3 = load i32, ptr %2, align 4
-  %i.g = add i32 %.01624, -1                      ; 2 uses
+  %1 = getelementptr [8 x i8], ptr %i.f, i64 %indvars.iv
+  %2 = load i32, ptr %1, align 4
+  %3 = trunc nsw i64 %indvars.iv to i32           ; 2 uses
+  %i.g = add i32 %3, -1                           ; 2 uses
   %i.h = sext i32 %i.g to i64
   %i.i = getelementptr [8 x i8], ptr %i.f, i64 %i.h
   %i.j = load i32, ptr %i.i, align 4
   %i.k = add i32 %i.j, 1
-  %.not = icmp eq i32 %3, %i.k
+  %.not = icmp eq i32 %2, %i.k
   br i1 %.not, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.l = tail call fastcc i32 @regcache_maple_insert_block(ptr noundef %0, i32 noundef %.025, i32 noundef %i.g) #12, !srcloc !13 ; 2 uses
+  %i.l = tail call fastcc i32 @regcache_maple_insert_block(ptr noundef %0, i32 noundef %.01624, i32 noundef %i.g) #12, !srcloc !13 ; 2 uses
   %.not20 = icmp eq i32 %i.l, 0
   br i1 %.not20, label %._crit_edge29, label %.loopexit
 
@@ -142,9 +142,10 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %._crit_edge29, %bb.b
   %i.m = phi i32 [ %i.e, %bb.b ], [ %.pre, %._crit_edge29 ] ; 3 uses
-  %.1 = phi i32 [ %.025, %bb.b ], [ %.01624, %._crit_edge29 ] ; 2 uses
-  %4 = add nuw i32 %.01624, 1                     ; 2 uses
-  %5 = icmp ult i32 %4, %i.m
+  %.1 = phi i32 [ %.01624, %bb.b ], [ %3, %._crit_edge29 ] ; 2 uses
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %4 = trunc nsw i64 %indvars.iv.next to i32
+  %5 = icmp ugt i32 %i.m, %4
   br i1 %5, label %bb.b, label %._crit_edge, !llvm.loop !14
 
 ._crit_edge:                                      ; preds = %bb.d, %bb.a

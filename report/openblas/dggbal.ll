@@ -204,13 +204,13 @@ bb.o:                                             ; preds = %bb.ah
 
 bb.p:                                             ; preds = %bb.q
   %indvars.iv.next848 = add nuw nsw i64 %indvars.iv8471113, 1 ; 2 uses
-  %indvars.iv.next853 = add nuw i32 %indvars.iv8521112, 1
+  %indvars.iv.next853 = add nuw nsw i64 %indvars.iv8521112, 1
   %exitcond851.not = icmp eq i64 %indvars.iv.next848, %wide.trip.count850
   br i1 %exitcond851.not, label %.loopexit687, label %.lr.ph1114, !llvm.loop !20
 
 .lr.ph1114:                                       ; preds = %.lr.ph712, %bb.p
   %indvars.iv8471113 = phi i64 [ %indvars.iv.next848, %bb.p ], [ 1, %.lr.ph712 ] ; 4 uses
-  %indvars.iv8521112 = phi i32 [ %indvars.iv.next853, %bb.p ], [ 2, %.lr.ph712 ] ; 2 uses
+  %indvars.iv8521112 = phi i64 [ %indvars.iv.next853, %bb.p ], [ 2, %.lr.ph712 ] ; 2 uses
   %i.cg = mul nsw i64 %indvars.iv8471113, %i.ca
   %gep = getelementptr [8 x i8], ptr %invariant.gep, i64 %i.cg
   %i.ch = load double, ptr %gep, align 8, !tbaa !9
@@ -230,19 +230,18 @@ bb.r:                                             ; preds = %.lr.ph1114, %bb.q
   br i1 %.not636704.not, label %.lr.ph706.preheader, label %.loopexit687
 
 .lr.ph706.preheader:                              ; preds = %bb.r
-  %12 = sext i32 %indvars.iv8521112 to i64
   %invariant.gep1036 = getelementptr [8 x i8], ptr %i.l, i64 %indvars.iv859
   %invariant.gep1038 = getelementptr [8 x i8], ptr %i.o, i64 %indvars.iv859
   br label %.lr.ph706
 
 bb.s:                                             ; preds = %bb.t
-  %indvars.iv.next856 = add nsw i64 %indvars.iv855, 1 ; 2 uses
+  %indvars.iv.next856 = add nuw nsw i64 %indvars.iv855, 1 ; 2 uses
   %lftr.wideiv = trunc i64 %indvars.iv.next856 to i32
   %exitcond858.not = icmp eq i32 %i.ce, %lftr.wideiv
   br i1 %exitcond858.not, label %.loopexit687, label %.lr.ph706, !llvm.loop !21
 
 .lr.ph706:                                        ; preds = %.lr.ph706.preheader, %bb.s
-  %indvars.iv855 = phi i64 [ %12, %.lr.ph706.preheader ], [ %indvars.iv.next856, %bb.s ] ; 3 uses
+  %indvars.iv855 = phi i64 [ %indvars.iv8521112, %.lr.ph706.preheader ], [ %indvars.iv.next856, %bb.s ] ; 3 uses
   %i.cn = mul nsw i64 %indvars.iv855, %i.ca
   %gep1037 = getelementptr [8 x i8], ptr %invariant.gep1036, i64 %i.cn
   %i.co = load double, ptr %gep1037, align 8, !tbaa !9

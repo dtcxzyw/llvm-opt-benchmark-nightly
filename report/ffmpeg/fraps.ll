@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.at, label %.preheader.lr.ph, label %.sink.split
 
 .preheader.lr.ph:                                 ; preds = %.preheader44
-  %i.au = mul nsw i32 %8, %3                      ; 3 uses
+  %i.au = mul nsw i32 %8, %3                      ; 2 uses
   %i.av = icmp sgt i32 %i.au, 0
   %i.aw = getelementptr inbounds nuw i8, ptr %9, i64 8
   %i.ax = load ptr, ptr %i.aw, align 8            ; 6 uses
@@ -214,7 +214,7 @@ bb.d:                                             ; preds = %bb.c
 
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
   %i.az = zext nneg i32 %8 to i64                 ; 2 uses
-  %i.ba = zext nneg i32 %i.au to i64
+  %i.ba = zext nneg i32 %i.au to i64              ; 2 uses
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.preheader, %._crit_edge
@@ -246,9 +246,8 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %get_vlc2.exit.us
   %indvars.iv.next64 = add nuw nsw i64 %indvars.iv63, %i.az ; 2 uses
-  %11 = trunc nuw i64 %indvars.iv.next64 to i32
-  %12 = icmp sgt i32 %i.au, %11
-  br i1 %12, label %.lr.ph.split.us, label %._crit_edge, !llvm.loop !59
+  %11 = icmp samesign ult i64 %indvars.iv.next64, %i.ba
+  br i1 %11, label %.lr.ph.split.us, label %._crit_edge, !llvm.loop !59
 
 bb.f:                                             ; preds = %.lr.ph.split.us
   %i.bq = sext i16 %i.bl to i32

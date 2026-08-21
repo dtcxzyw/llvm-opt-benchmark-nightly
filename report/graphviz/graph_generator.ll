@@ -202,14 +202,14 @@ bb.l:                                             ; preds = %.sink.split, %bb.j,
 ._crit_edge.loopexit.peel.begin:                  ; preds = %.peel.next, %bb.ad
   %i.ad = phi i32 [ 1, %.peel.next ], [ %i.av, %bb.ad ] ; 5 uses
   %i.ae = add i32 %i.ad, %i.p                     ; 2 uses
-  %i.af = add i32 %i.ae, 1                        ; 8 uses
-  %i.ag = add nuw i32 %i.ad, 1                    ; 3 uses
+  %i.af = add i32 %i.ae, 1                        ; 7 uses
+  %i.ag = add nuw nsw i32 %i.ad, 1                ; 3 uses
   %i.ah = icmp ult i32 %i.ag, %1
   br i1 %i.ah, label %bb.m, label %bb.o
 
 bb.m:                                             ; preds = %._crit_edge.loopexit.peel.begin
-  %i.ai = icmp ult i32 %i.ad, %i.b
-  %.not118.peel167 = icmp uge i32 %i.ad, %i.d
+  %i.ai = icmp samesign ult i32 %i.ad, %i.b
+  %.not118.peel167 = icmp samesign uge i32 %i.ad, %i.d
   %i.aj = or i1 %i.ai, %.not118.peel167
   %brmerge130.reass.peel = or i1 %i.aj, %invariant.op164
   br i1 %brmerge130.reass.peel, label %bb.n, label %bb.o
@@ -236,24 +236,16 @@ bb.q:                                             ; preds = %bb.p, %bb.o
 bb.r:                                             ; preds = %bb.q
   %i.am = icmp eq i32 %i.ag, %1                   ; 2 uses
   %or.cond123.peel = and i1 %i.v, %i.am
-  br i1 %or.cond123.peel, label %6, label %bb.s
+  br i1 %or.cond123.peel, label %._crit_edge, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
   %i.an = icmp ult i32 %i.af, %i.k
   %i.ao = and i1 %i.am, %i.an
   %or.cond131.peel = and i1 %i.ao, %i.w
-  br i1 %or.cond131.peel, label %5, label %._crit_edge
+  br i1 %or.cond131.peel, label %bb.t, label %._crit_edge
 
-5:                                                ; preds = %bb.s
+bb.t:                                             ; preds = %bb.s
   tail call void %4(i32 noundef %i.af, i32 noundef %i.k) #15
-  br label %._crit_edge
-
-6:                                                ; preds = %bb.r
-  %7 = icmp eq i32 %i.af, 0
-  br i1 %7, label %bb.t, label %._crit_edge
-
-bb.t:                                             ; preds = %6
-  tail call void %4(i32 noundef 0, i32 noundef 1) #15
   br label %._crit_edge
 
 bb.u:                                             ; preds = %bb.q
@@ -279,7 +271,7 @@ bb.y:                                             ; preds = %bb.x
   tail call void %4(i32 noundef %i.af, i32 noundef %i.k) #15
   br label %._crit_edge
 
-._crit_edge:                                      ; preds = %bb.y, %bb.x, %bb.w, %bb.v, %bb.t, %6, %5, %bb.s, %bb.q, %bb.l
+._crit_edge:                                      ; preds = %bb.y, %bb.x, %bb.w, %bb.v, %bb.t, %bb.s, %bb.r, %bb.q, %bb.l
   %exitcond140.not = icmp eq i32 %i.r, %0
   br i1 %exitcond140.not, label %._crit_edge127.split, label %.preheader, !llvm.loop !34
 
@@ -287,13 +279,13 @@ bb.y:                                             ; preds = %bb.x
   %.0125 = phi i32 [ %i.av, %bb.ad ], [ 1, %.peel.next ] ; 6 uses
   %i.at = add i32 %.0125, %i.p                    ; 2 uses
   %i.au = add i32 %i.at, 1                        ; 2 uses
-  %i.av = add nuw i32 %.0125, 1                   ; 3 uses
+  %i.av = add nuw nsw i32 %.0125, 1               ; 3 uses
   %i.aw = icmp ult i32 %i.av, %1
   br i1 %i.aw, label %bb.z, label %bb.ab
 
 bb.z:                                             ; preds = %.peel.next.split
-  %i.ax = icmp ult i32 %.0125, %i.b
-  %.not118 = icmp uge i32 %.0125, %i.d
+  %i.ax = icmp samesign ult i32 %.0125, %i.b
+  %.not118 = icmp samesign uge i32 %.0125, %i.d
   %i.ay = or i1 %i.ax, %.not118
   %brmerge130.reass = or i1 %i.ay, %invariant.op164
   br i1 %brmerge130.reass, label %bb.aa, label %bb.ab
@@ -696,7 +688,7 @@ bb.c:                                             ; preds = %bb.a
   %i.e = add i32 %i.d, 1
   tail call void %1(i32 noundef %i.i, i32 noundef %i.e) #15
   %.pre44 = add i32 %.135, 2                      ; 2 uses
-  %i.f = add nuw i32 %.03138, 1
+  %i.f = add nuw nsw i32 %.03138, 1
   %indvars.iv.next = add i32 %indvars.iv, 1
   %exitcond42.not = icmp eq i32 %indvars.iv, %0
   br i1 %exitcond42.not, label %.preheader, label %.preheader34, !llvm.loop !58
@@ -710,7 +702,7 @@ bb.d:                                             ; preds = %.preheader34, %bb.d
   tail call void %1(i32 noundef %.135, i32 noundef %i.h) #15
   %i.i = add i32 %.135, 1                         ; 5 uses
   tail call void %1(i32 noundef %.135, i32 noundef %i.i) #15
-  %i.j = add nuw i32 %.03036, 1
+  %i.j = add nuw nsw i32 %.03036, 1
   %exitcond.not = icmp eq i32 %.03036, %i.c
   br i1 %exitcond.not, label %.peel.next, label %bb.d, !llvm.loop !59
 
@@ -747,7 +739,7 @@ bb.b:                                             ; preds = %bb.b, %.preheader37
   %i.b = add i32 %.03038.us.i, %.03141.us.i       ; 2 uses
   %i.c = add i32 %i.b, 1
   tail call void %2(i32 noundef %i.b, i32 noundef %i.c) #15, !inline_history !61
-  %i.d = add nuw i32 %.03038.us.i, 1              ; 2 uses
+  %i.d = add nuw nsw i32 %.03038.us.i, 1          ; 2 uses
   %exitcond.not.i = icmp eq i32 %i.d, %1
   br i1 %exitcond.not.i, label %._crit_edge.us.i, label %bb.b, !llvm.loop !30
 

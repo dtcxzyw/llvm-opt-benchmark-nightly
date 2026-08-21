@@ -204,12 +204,16 @@ bb.g:                                             ; preds = %.lr.ph, %bb.f
 define dso_local range(i32 0, 2) i32 @parseLoadexArguments(ptr nofree noundef captures(none) %0, ptr nofree noundef captures(none) %1) local_unnamed_addr #0 {
 bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !368    ; 3 uses
-  %i.b = load i32, ptr %1, align 4, !tbaa !9      ; 5 uses
+  %i.b = load i32, ptr %1, align 4, !tbaa !9      ; 4 uses
   %i.c = icmp sgt i32 %i.b, 0
-  br i1 %i.c, label %.lr.ph, label %._crit_edge
+  br i1 %i.c, label %.lr.ph.preheader, label %._crit_edge
 
-.lr.ph:                                           ; preds = %bb.a, %bb.j
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.j ], [ 0, %bb.a ] ; 4 uses
+.lr.ph.preheader:                                 ; preds = %bb.a
+  %sext = zext nneg i32 %i.b to i64               ; 2 uses
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.j
+  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.j ] ; 4 uses
   %i.d = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv ; 2 uses
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !70
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 8
@@ -220,9 +224,8 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph
   %i.i = add nuw nsw i64 %indvars.iv, 2           ; 2 uses
-  %2 = trunc nuw i64 %i.i to i32
-  %.not47 = icmp sgt i32 %i.b, %2
-  br i1 %.not47, label %bb.e, label %bb.c
+  %2 = icmp samesign ult i64 %i.i, %sext
+  br i1 %2, label %bb.e, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.j = load i32, ptr getelementptr inbounds nuw (i8, ptr @server, i64 6416), align 8, !tbaa !105
@@ -287,9 +290,8 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.f, %bb.e
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 3 ; 2 uses
-  %3 = trunc nuw i64 %indvars.iv.next to i32
-  %4 = icmp sgt i32 %i.b, %3
-  br i1 %4, label %.lr.ph, label %._crit_edge, !llvm.loop !675
+  %3 = icmp samesign ult i64 %indvars.iv.next, %sext
+  br i1 %3, label %.lr.ph, label %._crit_edge, !llvm.loop !675
 
 ._crit_edge:                                      ; preds = %bb.j, %bb.a
   store ptr null, ptr %0, align 8, !tbaa !368

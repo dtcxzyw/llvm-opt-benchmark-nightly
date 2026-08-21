@@ -205,7 +205,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %.not, label %.loopexit, label %.lr.ph133.preheader
 
 .lr.ph133.preheader:                              ; preds = %bb.k
-  %wide.trip.count = zext i32 %indvars.iv150 to i64
+  %wide.trip.count = zext nneg i32 %indvars.iv150 to i64
   br label %.lr.ph133
 
 .lr.ph133:                                        ; preds = %.lr.ph133.preheader, %.lr.ph133
@@ -223,7 +223,7 @@ bb.l:                                             ; preds = %bb.j
   %i.bj = load i32, ptr %i.ah, align 8, !tbaa !27 ; 2 uses
   %i.bk = sext i32 %i.bj to i64
   %.not.not = icmp slt i64 %indvars.iv, %i.bk
-  %indvars.iv.next151 = add nuw i32 %indvars.iv150, 1
+  %indvars.iv.next151 = add nuw nsw i32 %indvars.iv150, 1
   br i1 %.not.not, label %bb.j, label %._crit_edge, !llvm.loop !151
 
 ._crit_edge:                                      ; preds = %bb.l, %.preheader
@@ -626,7 +626,7 @@ bb.j:                                             ; preds = %bb.j, %.preheader10
   %i.dg = fmul double %i.df, %i.av                ; 3 uses
   %i.dh = getelementptr inbounds nuw [8 x i8], ptr %i.ap, i64 %indvars.iv.next144.i.3
   store double %i.dg, ptr %i.dh, align 8, !tbaa !49
-  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
+  %niter.next.3 = add nuw nsw i64 %niter, 4       ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.lr.ph124.i.unr-lcssa, label %bb.j, !llvm.loop !420
 
@@ -785,30 +785,23 @@ bb.o:                                             ; preds = %._crit_edge.i.i
   %i.gl = shufflevector <2 x double> %i.gj, <2 x double> %i.gk, <2 x i32> <i32 0, i32 3> ; 2 uses
   %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1
   %exitcond.not.i.i = icmp eq i64 %indvars.iv.next183.i.i, %wide.trip.count.i.i
-  %indvar.next88 = add i32 %indvar87, 1
   br i1 %exitcond.not.i.i, label %.loopexit141.i.i, label %.lr.ph146.preheader.i.i, !llvm.loop !425
 
 .lr.ph146.preheader.i.i:                          ; preds = %.loopexit140.i.i, %bb.o
-  %indvar87 = phi i32 [ %indvar.next88, %.loopexit140.i.i ], [ 0, %bb.o ] ; 2 uses
-  %indvars.iv182.i.i = phi i64 [ %indvars.iv.next183.i.i, %.loopexit140.i.i ], [ 1, %bb.o ]
-  %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i, %.loopexit140.i.i ], [ 3, %bb.o ] ; 4 uses
-  %.0122151.i.i = phi double [ %i.gb, %.loopexit140.i.i ], [ %i.fz, %bb.o ]
-  %.0123150.i.i = phi double [ %i.gc, %.loopexit140.i.i ], [ 1.000000e+00, %bb.o ] ; 2 uses
-  %.0124149.i.i = phi double [ %i.gd, %.loopexit140.i.i ], [ 1.000000e+00, %bb.o ]
-  %i.gm = phi <2 x double> [ %i.gl, %.loopexit140.i.i ], [ <double 1.000000e+00, double -1.000000e+00>, %bb.o ] ; 2 uses
-  %2 = add i32 %indvar87, 3                       ; 2 uses
-  %smin = tail call i32 @llvm.smin.i32(i32 %2, i32 2)
-  %3 = sub i32 %2, %smin                          ; 2 uses
-  %4 = zext i32 %3 to i64
-  %5 = add nuw nsw i64 %4, 1                      ; 2 uses
-  %indvars.iv.next183.i.i = add nuw nsw i64 %indvars.iv182.i.i, 1 ; 4 uses
+  %indvars.iv182.i.i = phi i64 [ 1, %bb.o ], [ %indvars.iv.next183.i.i, %.loopexit140.i.i ] ; 2 uses
+  %indvars.iv.i.i = phi i64 [ 3, %bb.o ], [ %indvars.iv.next.i.i, %.loopexit140.i.i ] ; 4 uses
+  %.0122151.i.i = phi double [ %i.fz, %bb.o ], [ %i.gb, %.loopexit140.i.i ]
+  %.0123150.i.i = phi double [ 1.000000e+00, %bb.o ], [ %i.gc, %.loopexit140.i.i ] ; 2 uses
+  %.0124149.i.i = phi double [ 1.000000e+00, %bb.o ], [ %i.gd, %.loopexit140.i.i ]
+  %i.gm = phi <2 x double> [ <double 1.000000e+00, double -1.000000e+00>, %bb.o ], [ %i.gl, %.loopexit140.i.i ] ; 2 uses
+  %indvars.iv.next183.i.i = add nuw nsw i64 %indvars.iv182.i.i, 1 ; 6 uses
   %i.gn = getelementptr inbounds nuw [8 x i8], ptr %i.ga, i64 %indvars.iv.next183.i.i
   %i.go = load double, ptr %i.gn, align 8, !tbaa !49
-  %min.iters.check90 = icmp ult i32 %3, 3
+  %min.iters.check90 = icmp samesign ult i64 %indvars.iv182.i.i, 3
   br i1 %min.iters.check90, label %.lr.ph146.i.i.preheader, label %vector.ph91
 
 vector.ph91:                                      ; preds = %.lr.ph146.preheader.i.i
-  %n.vec92 = and i64 %5, 8589934588               ; 3 uses
+  %n.vec92 = and i64 %indvars.iv.next183.i.i, 9223372036854775804 ; 3 uses
   %i.gp = sub nsw i64 %indvars.iv.i.i, %n.vec92
   %broadcast.splatinsert93 = insertelement <2 x double> poison, double %.0123150.i.i, i64 0 ; 2 uses
   %i.gq = shufflevector <2 x double> %broadcast.splatinsert93, <2 x double> poison, <2 x i32> zeroinitializer
@@ -836,7 +829,7 @@ vector.body95:                                    ; preds = %vector.body95, %vec
   br i1 %i.gy, label %middle.block108, label %vector.body95, !llvm.loop !426
 
 middle.block108:                                  ; preds = %vector.body95
-  %cmp.n109 = icmp eq i64 %5, %n.vec92
+  %cmp.n109 = icmp eq i64 %indvars.iv.next183.i.i, %n.vec92
   br i1 %cmp.n109, label %.loopexit140.i.i, label %.lr.ph146.i.i.preheader
 
 .lr.ph146.i.i.preheader:                          ; preds = %.lr.ph146.preheader.i.i, %middle.block108
@@ -852,8 +845,7 @@ middle.block108:                                  ; preds = %vector.body95
   %i.hd = tail call double @llvm.fmuladd.f64(double %i.ha, double %.0123150.i.i, double %i.hc)
   store double %i.hd, ptr %i.gz, align 8, !tbaa !49
   %indvars.iv.next180.i.i = add nsw i64 %indvars.iv179.i.i, -1
-  %6 = trunc nuw i64 %indvars.iv179.i.i to i32
-  %i.he = icmp sgt i32 %6, 2
+  %i.he = icmp sgt i64 %indvars.iv179.i.i, 2
   br i1 %i.he, label %.lr.ph146.i.i, label %.loopexit140.i.i, !llvm.loop !427
 
 .loopexit141.i.i:                                 ; preds = %.loopexit140.i.i, %._crit_edge.i.i
@@ -1255,9 +1247,6 @@ declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.mul.v4i32(<4 x i32>) #7
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smin.i32(i32, i32) #7
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

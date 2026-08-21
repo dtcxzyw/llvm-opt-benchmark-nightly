@@ -205,7 +205,7 @@ bb.df:                                            ; preds = %switch.lookup1742, 
 
 bb.dg:                                            ; preds = %bb.df
   store i64 %i.aec, ptr %i.aef, align 16
-  %i.aeg = getelementptr inbounds nuw i8, ptr %i.aef, i64 8 ; 9 uses
+  %i.aeg = getelementptr inbounds nuw i8, ptr %i.aef, i64 8 ; 10 uses
   %i.aeh = icmp eq i32 %i.aeb, 0
   br i1 %i.aeh, label %.loopexit583, label %bb.dh
 
@@ -280,7 +280,7 @@ bb.dh:                                            ; preds = %bb.dg
   store i32 0, ptr %i.m, align 4
   %i.afh = getelementptr inbounds nuw i8, ptr %.3.i.i.i, i64 %i.aal
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.m, ptr align 1 %i.afh, i64 %i.aah, i1 false)
-  %.0..0..0..0..0..0..0..0..i.i394 = load i32, ptr %i.m, align 4 ; 2 uses
+  %.0..0..0..0..0..0..0..0..i.i394 = load i32, ptr %i.m, align 4
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m)
   store i32 2, ptr %i.aeg, align 8
   %i.afi = invoke noalias noundef nonnull dereferenceable(8) ptr @_Znam(i64 noundef 8) #32
@@ -293,27 +293,36 @@ _ZN12_GLOBAL__N_17SetFaceER6aiFaceii.exit396:     ; preds = %.loopexit583
   %i.afk = getelementptr inbounds nuw i8, ptr %i.afi, i64 4
   store i32 %.0..0..0..0..0..0..0..0..i.i394, ptr %i.afk, align 4
   %i.afl = icmp ugt i32 %i.xd, 2
-  br i1 %i.afl, label %.lr.ph876, label %._crit_edge877
+  br i1 %i.afl, label %.lr.ph876.preheader, label %._crit_edge877
+
+.lr.ph876.preheader:                              ; preds = %_ZN12_GLOBAL__N_17SetFaceER6aiFaceii.exit396
+  %wide.trip.count = zext i32 %i.xd to i64
+  br label %.lr.ph876
 
 ._crit_edge877:                                   ; preds = %bb.di, %_ZN12_GLOBAL__N_17SetFaceER6aiFaceii.exit396
   %i.afm = load i32, ptr %i.fl, align 8
   %i.afn = icmp eq i32 %i.afm, 2
   br i1 %i.afn, label %bb.dk, label %.loopexit568
 
-.lr.ph876:                                        ; preds = %_ZN12_GLOBAL__N_17SetFaceER6aiFaceii.exit396, %bb.di
-  %9 = phi i32 [ %.0..0..0..0..0..0..0..0..i.i397, %bb.di ], [ %.0..0..0..0..0..0..0..0..i.i394, %_ZN12_GLOBAL__N_17SetFaceER6aiFaceii.exit396 ]
-  %.0232875 = phi i32 [ %13, %bb.di ], [ 2, %_ZN12_GLOBAL__N_17SetFaceER6aiFaceii.exit396 ] ; 3 uses
+.lr.ph876:                                        ; preds = %.lr.ph876.preheader, %bb.di
+  %indvars.iv1152 = phi i64 [ 2, %.lr.ph876.preheader ], [ %indvars.iv.next1153, %bb.di ] ; 4 uses
+  %9 = add nuw i64 %indvars.iv1152, 4294967294
+  %10 = and i64 %9, 4294967295
+  %11 = getelementptr inbounds nuw [16 x i8], ptr %i.aeg, i64 %10
+  %12 = getelementptr inbounds nuw i8, ptr %11, i64 8
+  %13 = load ptr, ptr %12, align 8
+  %14 = getelementptr inbounds nuw i8, ptr %13, i64 4
+  %15 = load i32, ptr %14, align 4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l)
   store i32 0, ptr %i.l, align 4
-  %10 = sext i32 %.0232875 to i64
-  %i.afo = mul nsw i64 %i.aal, %10
+  %i.afo = mul nuw nsw i64 %i.aal, %indvars.iv1152
   %i.afp = getelementptr inbounds nuw i8, ptr %.3.i.i.i, i64 %i.afo
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.l, ptr align 1 %i.afp, i64 %i.aah, i1 false)
-  %.0..0..0..0..0..0..0..0..i.i397 = load i32, ptr %i.l, align 4 ; 2 uses
+  %.0..0..0..0..0..0..0..0..i.i397 = load i32, ptr %i.l, align 4
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l)
-  %11 = add i32 %.0232875, -1
-  %12 = zext i32 %11 to i64
-  %i.afq = getelementptr inbounds nuw [16 x i8], ptr %i.aeg, i64 %12 ; 2 uses
+  %16 = add nuw i64 %indvars.iv1152, 4294967295
+  %17 = and i64 %16, 4294967295
+  %i.afq = getelementptr inbounds nuw [16 x i8], ptr %i.aeg, i64 %17 ; 2 uses
   store i32 2, ptr %i.afq, align 8
   %i.afr = invoke noalias noundef nonnull dereferenceable(8) ptr @_Znam(i64 noundef 8) #32
           to label %bb.di unwind label %bb.dj     ; 3 uses
@@ -321,11 +330,11 @@ _ZN12_GLOBAL__N_17SetFaceER6aiFaceii.exit396:     ; preds = %.loopexit583
 bb.di:                                            ; preds = %.lr.ph876
   %i.afs = getelementptr inbounds nuw i8, ptr %i.afq, i64 8
   store ptr %i.afr, ptr %i.afs, align 8
-  store i32 %9, ptr %i.afr, align 4
+  store i32 %15, ptr %i.afr, align 4
   %i.aft = getelementptr inbounds nuw i8, ptr %i.afr, i64 4
   store i32 %.0..0..0..0..0..0..0..0..i.i397, ptr %i.aft, align 4
-  %13 = add nuw i32 %.0232875, 1                  ; 2 uses
-  %exitcond1152.not = icmp eq i32 %13, %i.xd
+  %indvars.iv.next1153 = add nuw nsw i64 %indvars.iv1152, 1 ; 2 uses
+  %exitcond1152.not = icmp eq i64 %indvars.iv.next1153, %wide.trip.count
   br i1 %exitcond1152.not, label %._crit_edge877, label %.lr.ph876, !llvm.loop !39
 
 bb.dj:                                            ; preds = %.lr.ph876

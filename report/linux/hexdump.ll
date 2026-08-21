@@ -204,8 +204,7 @@ bb.i:                                             ; preds = %.lr.ph
   br i1 %i.aw, label %.lr.ph, label %.thread, !llvm.loop !16
 
 .preheader175:                                    ; preds = %bb.c, %bb.l
-  %i.ax = phi i64 [ %8, %bb.l ], [ 0, %bb.c ]
-  %.3203 = phi i32 [ %7, %bb.l ], [ 0, %bb.c ]
+  %i.ax = phi i64 [ %indvars.iv.next238, %bb.l ], [ 0, %bb.c ] ; 2 uses
   %.3142202 = phi i32 [ %i.bl, %bb.l ], [ 0, %bb.c ] ; 6 uses
   %i.ay = add i32 %.3142202, 2                    ; 2 uses
   %i.az = sext i32 %i.ay to i64                   ; 2 uses
@@ -245,13 +244,15 @@ bb.k:                                             ; preds = %bb.j
 bb.l:                                             ; preds = %bb.k
   %i.bx = getelementptr i8, ptr %4, i64 %i.az
   store i8 32, ptr %i.bx, align 1
-  %7 = add i32 %.3203, 1                          ; 3 uses
-  %8 = sext i32 %7 to i64                         ; 2 uses
-  %i.by = icmp ugt i64 %spec.select, %8
+  %indvars.iv.next238 = add i64 %i.ax, 1          ; 3 uses
+  %sext = shl i64 %indvars.iv.next238, 32
+  %7 = ashr exact i64 %sext, 32
+  %i.by = icmp ugt i64 %spec.select, %7
   br i1 %i.by, label %.preheader175, label %bb.m, !llvm.loop !17
 
 bb.m:                                             ; preds = %bb.l
-  %.not154 = icmp ne i32 %7, 0
+  %8 = and i64 %indvars.iv.next238, 4294967295
+  %.not154 = icmp ne i64 %8, 0
   %i.bz = sext i1 %.not154 to i32
   %spec.select164 = add i32 %i.bl, %i.bz
   br label %.thread
@@ -290,8 +291,7 @@ bb.n:                                             ; preds = %.lr.ph206
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.preheader, %bb.q
-  %i.cg = phi i64 [ %10, %bb.q ], [ 0, %.preheader.preheader ]
-  %.4209 = phi i32 [ %9, %bb.q ], [ 0, %.preheader.preheader ]
+  %i.cg = phi i64 [ %indvars.iv.next245, %bb.q ], [ 0, %.preheader.preheader ] ; 2 uses
   %.6208 = phi i32 [ %i.cs, %bb.q ], [ %.6208.ph, %.preheader.preheader ] ; 4 uses
   %i.ch = add i32 %.6208, 2
   %i.ci = sext i32 %i.ch to i64
@@ -319,9 +319,10 @@ bb.q:                                             ; preds = %bb.p, %bb.o
   %i.ct = sext i32 %.6208 to i64
   %i.cu = getelementptr i8, ptr %4, i64 %i.ct
   store i8 %i.cr, ptr %i.cu, align 1
-  %9 = add i32 %.4209, 1                          ; 2 uses
-  %10 = sext i32 %9 to i64                        ; 2 uses
-  %i.cv = icmp ugt i64 %spec.select, %10
+  %indvars.iv.next245 = add i64 %i.cg, 1          ; 2 uses
+  %sext255 = shl i64 %indvars.iv.next245, 32
+  %9 = ashr exact i64 %sext255, 32
+  %i.cv = icmp ugt i64 %spec.select, %9
   br i1 %i.cv, label %.preheader, label %.loopexit, !llvm.loop !19
 
 .loopexit:                                        ; preds = %bb.q, %.thread, %bb.b
