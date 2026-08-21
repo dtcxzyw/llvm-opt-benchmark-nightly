@@ -204,8 +204,7 @@ _ZNSt6vectorIhSaIhEEC2EmRKS0_.exit:               ; preds = %bb.d, %.noexc, %bb.
 .preheader:                                       ; preds = %.preheader.lr.ph, %._crit_edge2149
   %i.el = phi i32 [ %i.ay, %.preheader.lr.ph ], [ %i.axy, %._crit_edge2149 ]
   %i.em = phi i32 [ %.pre, %.preheader.lr.ph ], [ %i.axz, %._crit_edge2149 ] ; 3 uses
-  %.03602151 = phi i32 [ 0, %.preheader.lr.ph ], [ %i.aya, %._crit_edge2149 ] ; 3 uses
-  %30 = shl nuw i32 %.03602151, 6
+  %.03602151 = phi i32 [ 0, %.preheader.lr.ph ], [ %i.aya, %._crit_edge2149 ] ; 2 uses
   %i.en = add i32 %i.em, 63
   %.not2158 = icmp ult i32 %i.en, 64
   br i1 %.not2158, label %._crit_edge2149, label %.lr.ph2148
@@ -608,7 +607,7 @@ _ZNSt6vectorIhSaIhEED2Ev.exit895.thread:          ; preds = %.thread1677, %.spli
 
 .lr.ph2139:                                       ; preds = %_ZNSt6vectorIhSaIhEED2Ev.exit895.thread
   %i.aua = load ptr, ptr %i.s, align 8, !tbaa !18 ; 3 uses
-  %i.aub = load i32, ptr %i.al, align 4, !tbaa !105 ; 2 uses
+  %i.aub = load i32, ptr %i.al, align 4, !tbaa !105
   %i.auc = load i8, ptr %i.w, align 8, !tbaa !77
   %i.aud = lshr i8 %i.auc, 3
   %i.aue = zext nneg i8 %i.aud to i64
@@ -641,17 +640,13 @@ _ZNSt6vectorIhSaIhEED2Ev.exit895.thread:          ; preds = %.thread1677, %.spli
   br label %bb.gh
 
 bb.gh:                                            ; preds = %.lr.ph2139, %._crit_edge2132
-  %indvar = phi i32 [ 0, %.lr.ph2139 ], [ %indvar.next, %._crit_edge2132 ] ; 2 uses
   %.02862138 = phi i64 [ 0, %.lr.ph2139 ], [ %.1.lcssa, %._crit_edge2132 ] ; 2 uses
   %storemerge5232136 = phi i32 [ %i.eo, %.lr.ph2139 ], [ %i.awx, %._crit_edge2132 ] ; 3 uses
-  %31 = add i32 %30, %indvar
-  %32 = mul i32 %31, %i.aub
-  %33 = zext i32 %32 to i64
   br i1 %brmerge2777, label %._crit_edge2132, label %.lr.ph2124.preheader
 
 .lr.ph2124.preheader:                             ; preds = %bb.gh
   %i.aus = mul i32 %i.aub, %storemerge5232136
-  %i.aut = zext i32 %i.aus to i64
+  %i.aut = zext i32 %i.aus to i64                 ; 2 uses
   %i.auu = mul nuw nsw i64 %i.aum, %i.aut
   %gep2776 = getelementptr inbounds nuw i8, ptr %invariant.gep2775, i64 %i.auu
   br label %.lr.ph2124
@@ -673,7 +668,7 @@ bb.gh:                                            ; preds = %.lr.ph2139, %._crit
 
 vector.memcheck:                                  ; preds = %.lr.ph2124
   %i.avb = zext i32 %storemerge5252128 to i64
-  %i.avc = add nuw nsw i64 %33, %i.avb
+  %i.avc = add nuw nsw i64 %i.aut, %i.avb
   %i.avd = mul nuw nsw i64 %i.aum, %i.avc         ; 2 uses
   %scevgep3023 = getelementptr i8, ptr %scevgep3022, i64 %i.avd
   %scevgep = getelementptr i8, ptr %.sroa.01254.4, i64 %.12129
@@ -894,7 +889,6 @@ bb.gs:                                            ; preds = %scalar.ph
   %.1.lcssa = phi i64 [ %.02862138, %bb.gh ], [ %i.awu, %._crit_edge2125 ]
   %i.awx = add i32 %storemerge5232136, 1          ; 2 uses
   %.not524 = icmp ugt i32 %i.awx, %i.fb
-  %indvar.next = add i32 %indvar, 1
   br i1 %.not524, label %.thread1655, label %bb.gh, !llvm.loop !235
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i909: ; preds = %bb.gq, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i908

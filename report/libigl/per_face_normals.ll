@@ -204,7 +204,7 @@ bb.a:
   %i.a = ptrtoaddr ptr %4 to i64
   %.sroa.026.0.copyload = load ptr, ptr %0, align 8 ; 12 uses
   %.sroa.833.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %.sroa.833.0.copyload = load i64, ptr %.sroa.833.0..sroa_idx, align 8 ; 6 uses
+  %.sroa.833.0.copyload = load i64, ptr %.sroa.833.0..sroa_idx, align 8 ; 5 uses
   %.sroa.936.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
   %.sroa.936.0.copyload = load ptr, ptr %.sroa.936.0..sroa_idx, align 8 ; 2 uses
   %i.b = ptrtoint ptr %.sroa.026.0.copyload to i64 ; 3 uses
@@ -219,7 +219,7 @@ bb.b:                                             ; preds = %bb.a
   br label %_ZN5Eigen8internalL21first_default_alignedINS_5BlockINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEEEElRKNS_9DenseBaseIT_EE.exit
 
 _ZN5Eigen8internalL21first_default_alignedINS_5BlockINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEEEElRKNS_9DenseBaseIT_EE.exit: ; preds = %bb.a, %bb.b
-  %.0.i.i.i.i = phi i64 [ %i.f, %bb.b ], [ %.sroa.833.0.copyload, %bb.a ] ; 10 uses
+  %.0.i.i.i.i = phi i64 [ %i.f, %bb.b ], [ %.sroa.833.0.copyload, %bb.a ] ; 9 uses
   %i.g = icmp sgt i64 %.0.i.i.i.i, 0
   br i1 %i.g, label %bb.c, label %_ZN5Eigen8internal18stable_norm_kernelINS_11VectorBlockIKNS_5BlockINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEELin1EEEdEEvRKT_RT0_SD_SD_.exit
 
@@ -430,17 +430,13 @@ _ZN5Eigen8internal17resize_if_allowedINS_9TransposeINS_6MatrixIdLin1ELi1ELi0ELi4
   br label %_ZN5Eigen8internal17resize_if_allowedINS_9TransposeINS_6MatrixIdLin1ELi1ELi0ELi4096ELi1EEEEENS_5BlockIKNS6_INS3_IdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEELi1ELin1ELb0EEEddEEvRT_RKT0_RKNS0_9assign_opIT1_T2_EE.exit.i.i.i.i.i
 
 _ZN5Eigen8internal17resize_if_allowedINS_9TransposeINS_6MatrixIdLin1ELi1ELi0ELi4096ELi1EEEEENS_5BlockIKNS6_INS3_IdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEELi1ELin1ELb0EEEddEEvRT_RKT0_RKNS0_9assign_opIT1_T2_EE.exit.i.i.i.i.i: ; preds = %_ZN5Eigen8internal17resize_if_allowedINS_9TransposeINS_6MatrixIdLin1ELi1ELi0ELi4096ELi1EEEEENS_5BlockIKNS6_INS3_IdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEELi1ELin1ELb0EEEddEEvRT_RKT0_RKNS0_9assign_opIT1_T2_EE.exit.i.i.i.i.i.lr.ph, %_ZN5Eigen3RefIKNS_6MatrixIdLin1ELi1ELi0ELi4096ELi1EEELi0ENS_11InnerStrideILi1EEEEC2INS_5BlockIKNS8_INS1_IdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEELi1ELin1ELb0EEEEERKNS_9DenseBaseIT_EEPNS_8internal9enable_ifIXcvbsr6Traits5matchISE_EE15ScalarTypeMatchESE_E4typeE.exit.loopexit
-  %indvar = phi i64 [ 0, %_ZN5Eigen8internal17resize_if_allowedINS_9TransposeINS_6MatrixIdLin1ELi1ELi0ELi4096ELi1EEEEENS_5BlockIKNS6_INS3_IdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEELi1ELin1ELb0EEEddEEvRT_RKT0_RKNS0_9assign_opIT1_T2_EE.exit.i.i.i.i.i.lr.ph ], [ %indvar.next, %_ZN5Eigen3RefIKNS_6MatrixIdLin1ELi1ELi0ELi4096ELi1EEELi0ENS_11InnerStrideILi1EEEEC2INS_5BlockIKNS8_INS1_IdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEELi1ELin1ELb0EEEEERKNS_9DenseBaseIT_EEPNS_8internal9enable_ifIXcvbsr6Traits5matchISE_EE15ScalarTypeMatchESE_E4typeE.exit.loopexit ] ; 3 uses
+  %indvar = phi i64 [ 0, %_ZN5Eigen8internal17resize_if_allowedINS_9TransposeINS_6MatrixIdLin1ELi1ELi0ELi4096ELi1EEEEENS_5BlockIKNS6_INS3_IdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEELi1ELin1ELb0EEEddEEvRT_RKT0_RKNS0_9assign_opIT1_T2_EE.exit.i.i.i.i.i.lr.ph ], [ %indvar.next, %_ZN5Eigen3RefIKNS_6MatrixIdLin1ELi1ELi0ELi4096ELi1EEELi0ENS_11InnerStrideILi1EEEEC2INS_5BlockIKNS8_INS1_IdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEELi1ELin1ELb0EEEEERKNS_9DenseBaseIT_EEPNS_8internal9enable_ifIXcvbsr6Traits5matchISE_EE15ScalarTypeMatchESE_E4typeE.exit.loopexit ] ; 2 uses
   %.040 = phi i64 [ %.0.i.i.i.i, %_ZN5Eigen8internal17resize_if_allowedINS_9TransposeINS_6MatrixIdLin1ELi1ELi0ELi4096ELi1EEEEENS_5BlockIKNS6_INS3_IdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEELi1ELin1ELb0EEEddEEvRT_RKT0_RKNS0_9assign_opIT1_T2_EE.exit.i.i.i.i.i.lr.ph ], [ %i.ef, %_ZN5Eigen3RefIKNS_6MatrixIdLin1ELi1ELi0ELi4096ELi1EEELi0ENS_11InnerStrideILi1EEEEC2INS_5BlockIKNS8_INS1_IdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEELi1ELin1ELb0EEEEERKNS_9DenseBaseIT_EEPNS_8internal9enable_ifIXcvbsr6Traits5matchISE_EE15ScalarTypeMatchESE_E4typeE.exit.loopexit ] ; 3 uses
-  %5 = shl i64 %indvar, 12
-  %6 = add i64 %.0.i.i.i.i, %5
-  %7 = sub i64 %.sroa.833.0.copyload, %6
-  %smin = call i64 @llvm.smin.i64(i64 %7, i64 4096) ; 2 uses
   %i.cs = shl i64 %indvar, 15
   %i.ct = add i64 %i.cr, %i.cs
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #23
   %i.cu = sub nsw i64 %.sroa.833.0.copyload, %.040
-  %.sroa.speculated = call i64 @llvm.smin.i64(i64 %i.cu, i64 4096) ; 6 uses
+  %.sroa.speculated = call i64 @llvm.smin.i64(i64 %i.cu, i64 4096) ; 8 uses
   %i.cv = load i64, ptr %i.cm, align 8, !tbaa !50, !noalias !276 ; 7 uses
   %i.cw = mul nsw i64 %i.cv, %.040
   %i.cx = getelementptr inbounds [8 x i8], ptr %.sroa.026.0.copyload, i64 %i.cw ; 6 uses
@@ -477,7 +473,7 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %_ZN5Eigen8internal17resize_if_allowedINS_9TransposeINS_6MatrixIdLin1ELi1ELi0ELi4096ELi1EEEEENS_5BlockIKNS6_INS3_IdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEELi1ELin1ELb0EEEddEEvRT_RKT0_RKNS0_9assign_opIT1_T2_EE.exit.i.i.i.i.i, %middle.block
   %.05.i.i.i.i.i.i.ph = phi i64 [ 0, %_ZN5Eigen8internal17resize_if_allowedINS_9TransposeINS_6MatrixIdLin1ELi1ELi0ELi4096ELi1EEEEENS_5BlockIKNS6_INS3_IdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEELi1ELin1ELb0EEEddEEvRT_RKT0_RKNS0_9assign_opIT1_T2_EE.exit.i.i.i.i.i ], [ %n.vec, %middle.block ] ; 3 uses
-  %xtraiter58 = and i64 %smin, 3                  ; 2 uses
+  %xtraiter58 = and i64 %.sroa.speculated, 3      ; 2 uses
   %lcmp.mod59.not = icmp eq i64 %xtraiter58, 0
   br i1 %lcmp.mod59.not, label %.lr.ph.i.i.i.i.i.i.prol.loopexit, label %.lr.ph.i.i.i.i.i.i.prol
 
@@ -496,7 +492,7 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph.i.i.i.i.i.i.prol.loopexit:                 ; preds = %.lr.ph.i.i.i.i.i.i.prol, %.lr.ph.i.i.i.i.i.i.preheader
   %.05.i.i.i.i.i.i.unr = phi i64 [ %.05.i.i.i.i.i.i.ph, %.lr.ph.i.i.i.i.i.i.preheader ], [ %i.di, %.lr.ph.i.i.i.i.i.i.prol ]
-  %i.dj = sub i64 %.05.i.i.i.i.i.i.ph, %smin
+  %i.dj = sub i64 %.05.i.i.i.i.i.i.ph, %.sroa.speculated
   %i.dk = icmp ugt i64 %i.dj, -4
   br i1 %i.dk, label %_ZN5Eigen3RefIKNS_6MatrixIdLin1ELi1ELi0ELi4096ELi1EEELi0ENS_11InnerStrideILi1EEEEC2INS_5BlockIKNS8_INS1_IdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEELi1ELin1ELb0EEEEERKNS_9DenseBaseIT_EEPNS_8internal9enable_ifIXcvbsr6Traits5matchISE_EE15ScalarTypeMatchESE_E4typeE.exit.loopexit, label %.lr.ph.i.i.i.i.i.i
 

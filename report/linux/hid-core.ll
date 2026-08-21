@@ -204,9 +204,9 @@ bb.u:                                             ; preds = %hid_input_fetch_fie
   %i.be = getelementptr i8, ptr %i.bd, i64 40
   %i.bf = load i32, ptr %i.be, align 8            ; 2 uses
   %i.bg = getelementptr i8, ptr %i.bd, i64 32
-  %i.bh = load i32, ptr %i.bg, align 8            ; 4 uses
+  %i.bh = load i32, ptr %i.bg, align 8            ; 2 uses
   %i.bi = getelementptr i8, ptr %i.bd, i64 36
-  %i.bj = load i32, ptr %i.bi, align 4            ; 11 uses
+  %i.bj = load i32, ptr %i.bi, align 4            ; 9 uses
   %i.bk = getelementptr i8, ptr %i.bd, i64 72     ; 3 uses
   %i.bl = load i32, ptr %i.bk, align 8            ; 3 uses
   %i.bm = getelementptr i8, ptr %i.bd, i64 56
@@ -231,11 +231,7 @@ bb.u:                                             ; preds = %hid_input_fetch_fie
   br i1 %i.br, label %.lr.ph.split.us.i.i, label %.lr.ph.split.i.i
 
 .lr.ph.split.us.i.i:                              ; preds = %.lr.ph.i.i, %hid_array_value_is_valid.exit.thread.us.i.i
-  %indvars.iv63.i.i = phi i64 [ %indvars.iv.next64.i.i, %hid_array_value_is_valid.exit.thread.us.i.i ], [ 0, %.lr.ph.i.i ] ; 4 uses
-  %6 = trunc i64 %indvars.iv63.i.i to i32
-  %7 = mul i32 %i.bj, %6
-  %8 = add i32 %7, %i.bh
-  %9 = and i32 %8, 7
+  %indvars.iv63.i.i = phi i64 [ %indvars.iv.next64.i.i, %hid_array_value_is_valid.exit.thread.us.i.i ], [ 0, %.lr.ph.i.i ] ; 3 uses
   %i.by = trunc nuw i64 %indvars.iv63.i.i to i32
   %i.bz = mul i32 %i.bj, %i.by
   %i.ca = add i32 %i.bz, %i.bh                    ; 2 uses
@@ -258,7 +254,7 @@ bb.x:                                             ; preds = %bb.w
 
 .lr.ph.preheader.i.i.us.i.i:                      ; preds = %bb.x, %bb.w, %bb.v
   %.08.i.us.i.i = phi i32 [ %i.bj, %bb.v ], [ 32, %bb.w ], [ 32, %bb.x ] ; 4 uses
-  %i.ce = and i32 %i.ca, 7                        ; 2 uses
+  %i.ce = and i32 %i.ca, 7                        ; 3 uses
   %i.cf = sub nuw nsw i32 8, %i.ce                ; 3 uses
   %i.cg = lshr i32 %i.ca, 3
   %i.ch = zext nneg i32 %i.cg to i64              ; 3 uses
@@ -272,7 +268,7 @@ bb.x:                                             ; preds = %bb.w
 
 .lr.ph.i.i.us.i.i.preheader:                      ; preds = %.lr.ph.preheader.i.i.us.i.i
   %i.co = add nsw i32 %.08.i.us.i.i, -9
-  %i.cp = add nsw i32 %i.co, %9                   ; 2 uses
+  %i.cp = add nsw i32 %i.co, %i.ce                ; 2 uses
   %i.cq = lshr i32 %i.cp, 3
   %i.cr = add nuw nsw i32 %i.cq, 1
   %xtraiter166 = and i32 %i.cr, 3                 ; 2 uses
@@ -398,11 +394,7 @@ hid_array_value_is_valid.exit.thread.us.i.i:      ; preds = %bb.ab, %hid_array_v
   br i1 %exitcond67.not.i.i, label %hid_input_fetch_field.exit.i, label %.lr.ph.split.us.i.i, !llvm.loop !51
 
 .lr.ph.split.i.i:                                 ; preds = %.lr.ph.i.i, %hid_array_value_is_valid.exit.thread.i.i
-  %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i, %hid_array_value_is_valid.exit.thread.i.i ], [ 0, %.lr.ph.i.i ] ; 4 uses
-  %10 = trunc i64 %indvars.iv.i.i to i32
-  %11 = mul i32 %i.bj, %10
-  %12 = add i32 %11, %i.bh
-  %13 = and i32 %12, 7
+  %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i, %hid_array_value_is_valid.exit.thread.i.i ], [ 0, %.lr.ph.i.i ] ; 3 uses
   %i.ew = trunc nuw i64 %indvars.iv.i.i to i32
   %i.ex = mul i32 %i.bj, %i.ew
   %i.ey = add i32 %i.ex, %i.bh                    ; 2 uses
@@ -425,7 +417,7 @@ bb.ae:                                            ; preds = %.lr.ph.split.i.i
 
 .lr.ph.preheader.i.i37.i.i:                       ; preds = %bb.ae, %bb.ad, %bb.ac
   %.08.i38.i.i = phi i32 [ %i.bj, %bb.ae ], [ 32, %bb.ac ], [ 32, %bb.ad ] ; 4 uses
-  %i.fc = and i32 %i.ey, 7                        ; 2 uses
+  %i.fc = and i32 %i.ey, 7                        ; 3 uses
   %i.fd = sub nuw nsw i32 8, %i.fc                ; 3 uses
   %i.fe = lshr i32 %i.ey, 3
   %i.ff = zext nneg i32 %i.fe to i64              ; 3 uses
@@ -439,7 +431,7 @@ bb.ae:                                            ; preds = %.lr.ph.split.i.i
 
 .lr.ph.i.i44.i.i.preheader:                       ; preds = %.lr.ph.preheader.i.i37.i.i
   %i.fm = add nsw i32 %.08.i38.i.i, -9
-  %i.fn = add nsw i32 %i.fm, %13                  ; 2 uses
+  %i.fn = add nsw i32 %i.fm, %i.fc                ; 2 uses
   %i.fo = lshr i32 %i.fn, 3
   %i.fp = add nuw nsw i32 %i.fo, 1
   %xtraiter = and i32 %i.fp, 3                    ; 2 uses

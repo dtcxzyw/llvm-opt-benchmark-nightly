@@ -204,7 +204,7 @@ _ZL21stbi__mul2sizes_validii.exit12.i.i.i:        ; preds = %_ZL21stbi__mul2size
 _ZL17stbi__malloc_mad3iiii.exit.i:                ; preds = %_ZL21stbi__mul2sizes_validii.exit12.i.i.i, %_ZL21stbi__mul2sizes_validii.exit.thread15.i.i.i
   %i.mr = mul nsw i32 %i.ml, %i.mi
   %i.ms = sext i32 %i.mr to i64
-  %i.mt = tail call noalias noundef ptr @malloc(i64 noundef range(i64 -2147483648, 4294967296) %i.ms) #36 ; 32 uses
+  %i.mt = tail call noalias noundef ptr @malloc(i64 noundef range(i64 -2147483648, 4294967296) %i.ms) #36 ; 30 uses
   %.not369.i = icmp eq ptr %i.mt, null
   br i1 %.not369.i, label %_ZL17stbi__malloc_mad3iiii.exit.thread.i, label %bb.cr
 
@@ -607,8 +607,8 @@ bb.gx:                                            ; preds = %.loopexit40.i
   %wide.trip.count112.i = zext nneg i32 %i.ali to i64
   %wide.trip.count107.i = zext nneg i32 %factor.op.mul.i to i64 ; 10 uses
   %scevgep70.a = getelementptr i8, ptr %i.mt, i64 %wide.trip.count107.i
+  %scevgep71 = getelementptr i8, ptr %i.mt, i64 %wide.trip.count107.i
   %9 = mul i32 %spec.select.i, %.pre122.pre126.i
-  %scevgep73 = getelementptr i8, ptr %i.mt, i64 %wide.trip.count107.i
   %min.iters.check = icmp ult i32 %factor.op.mul.i, 4
   %min.iters.check79 = icmp ult i32 %factor.op.mul.i, 32
   %i.all = and i64 %wide.trip.count107.i, 28
@@ -627,12 +627,12 @@ iter.check:                                       ; preds = %._crit_edge93.i, %.
   %i.aln = trunc nuw nsw i64 %indvars.iv109.i to i32 ; 2 uses
   %.reass.i = mul i32 %factor.op.mul.i, %i.aln
   %i.alo = zext i32 %.reass.i to i64
-  %i.alp = getelementptr inbounds nuw i8, ptr %i.mt, i64 %i.alo ; 5 uses
+  %i.alp = getelementptr inbounds nuw i8, ptr %i.mt, i64 %i.alo ; 6 uses
   %i.alq = xor i32 %i.aln, -1
   %i.alr = add i32 %i.ake, %i.alq
   %i.als = mul i32 %i.alr, %factor.op.mul.i
   %i.alt = zext i32 %i.als to i64
-  %i.alu = getelementptr inbounds nuw i8, ptr %i.mt, i64 %i.alt ; 5 uses
+  %i.alu = getelementptr inbounds nuw i8, ptr %i.mt, i64 %i.alt ; 6 uses
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck68
 
 vector.memcheck68:                                ; preds = %iter.check
@@ -640,16 +640,14 @@ vector.memcheck68:                                ; preds = %iter.check
   %i.alw = xor i32 %i.alv, -1
   %i.alx = add i32 %i.ake, %i.alw
   %i.aly = mul i32 %9, %i.alx
-  %i.alz = zext i32 %i.aly to i64                 ; 2 uses
-  %scevgep74 = getelementptr i8, ptr %scevgep73, i64 %i.alz
-  %scevgep72 = getelementptr nuw i8, ptr %i.mt, i64 %i.alz
+  %i.alz = zext i32 %i.aly to i64
+  %scevgep72 = getelementptr i8, ptr %scevgep71, i64 %i.alz
   %i.ama = trunc i64 %indvars.iv109.i to i32
   %i.amb = mul i32 %factor.op.mul.i, %i.ama
-  %i.amc = zext i32 %i.amb to i64                 ; 2 uses
-  %scevgep71 = getelementptr i8, ptr %scevgep70.a, i64 %i.amc
-  %scevgep69 = getelementptr nuw i8, ptr %i.mt, i64 %i.amc
-  %bound075 = icmp ult ptr %scevgep69, %scevgep74
-  %bound176 = icmp ult ptr %scevgep72, %scevgep71
+  %i.amc = zext i32 %i.amb to i64
+  %scevgep69 = getelementptr i8, ptr %scevgep70.a, i64 %i.amc
+  %bound075 = icmp ult ptr %i.alp, %scevgep72
+  %bound176 = icmp ult ptr %i.alu, %scevgep69
   %found.conflict77 = and i1 %bound075, %bound176
   br i1 %found.conflict77, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
@@ -1052,7 +1050,7 @@ bb.fm:                                            ; preds = %bb.fl
   %.pre.pre.i = load i32, ptr %i.uw, align 8, !tbaa !51
   %factor.op.mul.i = mul i32 %.pre.pre.i, %i.sz
   %xtraiter = and i64 %i.uz, 1
-  %4 = icmp eq i32 %i.ty, 1
+  %4 = icmp ult i32 %i.ty, 2
   %unroll_iter = and i64 %i.uz, 2147483646
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   %lcmp.mod2136 = trunc i32 %i.ty to i1

@@ -203,7 +203,7 @@ bb.l:                                             ; preds = %bb.k
   %i.cg = tail call noalias ptr @malloc(i64 noundef %i.cd) #23 ; 2 uses
   %i.ch = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 4 uses
   store ptr %i.cg, ptr %i.ch, align 8, !tbaa !37
-  %i.ci = add i32 %3, 1                           ; 2 uses
+  %i.ci = add i32 %3, 1                           ; 3 uses
   %i.cj = zext i32 %i.ci to i64
   %i.ck = shl nuw nsw i64 %i.cj, 3
   %i.cl = tail call noalias ptr @malloc(i64 noundef %i.ck) #23 ; 8 uses
@@ -277,12 +277,11 @@ bb.x:                                             ; preds = %bb.m
   %i.cy = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 3 uses
   store i32 %4, ptr %i.cy, align 8, !tbaa !51
   store i64 0, ptr %i.cl, align 8, !tbaa !8
-  %umax = tail call i32 @llvm.umax.i32(i32 %i.ci, i32 2) ; 2 uses
+  %umax = tail call i32 @llvm.umax.i32(i32 %i.ci, i32 2)
   %wide.trip.count = zext i32 %umax to i64
   %i.cz = add nsw i64 %wide.trip.count, -1        ; 2 uses
   %xtraiter = and i64 %i.cz, 3                    ; 3 uses
-  %7 = add i32 %umax, -2
-  %i.da = icmp ult i32 %7, 3
+  %i.da = icmp ult i32 %i.ci, 5
   br i1 %i.da, label %.epil.preheader, label %.new
 
 .new:                                             ; preds = %bb.x

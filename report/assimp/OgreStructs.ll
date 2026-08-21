@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.d
   %i.cd = ptrtoint ptr %i.cb to i64
   %i.ce = ptrtoint ptr %i.cc to i64
   %i.cf = sub i64 %i.cd, %i.ce
-  %i.cg = sdiv exact i64 %i.cf, 24                ; 3 uses
+  %i.cg = sdiv exact i64 %i.cf, 24                ; 9 uses
   br i1 %.not106, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %.loopexit110
@@ -265,35 +265,34 @@ bb.g:                                             ; preds = %.loopexit109, %.loo
   br i1 %.fr119, label %.split.us.us.preheader, label %.split
 
 .split.us.us.preheader:                           ; preds = %.lr.ph122
-  %umax141 = tail call i64 @llvm.umax.i64(i64 %i.cg, i64 1) ; 19 uses
-  %6 = add i64 %umax141, -1                       ; 6 uses
+  %umax141 = tail call i64 @llvm.umax.i64(i64 %i.cg, i64 1) ; 18 uses
   %xtraiter171 = and i64 %umax141, 1
-  %7 = icmp eq i64 %6, 0
+  %6 = icmp ult i64 %i.cg, 2
   %unroll_iter = and i64 %umax141, -2
   %lcmp.mod172.not = icmp eq i64 %xtraiter171, 0
   %lcmp.mod173 = trunc i64 %umax141 to i1
   %xtraiter176 = and i64 %umax141, 1
-  %8 = icmp eq i64 %6, 0
+  %7 = icmp ult i64 %i.cg, 2
   %unroll_iter179 = and i64 %umax141, -2
   %lcmp.mod177.not = icmp eq i64 %xtraiter176, 0
   %lcmp.mod178 = trunc i64 %umax141 to i1
   %xtraiter182 = and i64 %umax141, 1
-  %9 = icmp eq i64 %6, 0
+  %8 = icmp ult i64 %i.cg, 2
   %unroll_iter185 = and i64 %umax141, -2
   %lcmp.mod183.not = icmp eq i64 %xtraiter182, 0
   %lcmp.mod184 = trunc i64 %umax141 to i1
   %xtraiter187 = and i64 %umax141, 1
-  %10 = icmp eq i64 %6, 0
+  %9 = icmp ult i64 %i.cg, 2
   %unroll_iter190 = and i64 %umax141, -2
   %lcmp.mod188.not = icmp eq i64 %xtraiter187, 0
   %lcmp.mod189 = trunc i64 %umax141 to i1
   %xtraiter194 = and i64 %umax141, 1
-  %11 = icmp eq i64 %6, 0
+  %10 = icmp ult i64 %i.cg, 2
   %unroll_iter197 = and i64 %umax141, -2
   %lcmp.mod195.not = icmp eq i64 %xtraiter194, 0
   %lcmp.mod196 = trunc i64 %umax141 to i1
   %xtraiter200 = and i64 %umax141, 1
-  %12 = icmp eq i64 %6, 0
+  %11 = icmp ult i64 %i.cg, 2
   %unroll_iter203 = and i64 %umax141, -2
   %lcmp.mod201.not = icmp eq i64 %xtraiter200, 0
   %lcmp.mod202 = trunc i64 %umax141 to i1
@@ -326,14 +325,14 @@ bb.g:                                             ; preds = %.loopexit109, %.loo
   br i1 %.not106, label %.lr.ph115.us.us.us.preheader.preheader, label %.lr.ph115.us.us.preheader
 
 .lr.ph115.us.us.us.preheader.preheader:           ; preds = %.split.us.us
-  br i1 %10, label %.lr.ph115.us.us.us.preheader.epil.preheader, label %.lr.ph115.us.us.us.preheader
+  br i1 %9, label %.lr.ph115.us.us.us.preheader.epil.preheader, label %.lr.ph115.us.us.us.preheader
 
 .lr.ph115.us.us.preheader:                        ; preds = %.split.us.us
   %i.du = load ptr, ptr %i.bv, align 8
   %i.dv = getelementptr inbounds nuw [12 x i8], ptr %i.du, i64 %i.dq
   %i.dw = getelementptr inbounds nuw [12 x i8], ptr %i.dd, i64 %i.dl
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.dw, ptr noundef nonnull align 4 dereferenceable(12) %i.dv, i64 12, i1 false)
-  br i1 %7, label %.epil.preheader, label %.lr.ph115.us.us.preheader.new
+  br i1 %6, label %.epil.preheader, label %.lr.ph115.us.us.preheader.new
 
 .lr.ph115.us.us.us.preheader:                     ; preds = %.lr.ph115.us.us.us.preheader.preheader, %.lr.ph115.us.us.us.preheader
   %.089114.us.us.us = phi i64 [ %i.em, %.lr.ph115.us.us.us.preheader ], [ 0, %.lr.ph115.us.us.us.preheader.preheader ] ; 4 uses
@@ -391,7 +390,7 @@ bb.g:                                             ; preds = %.loopexit109, %.loo
   %i.fd = getelementptr inbounds nuw [12 x i8], ptr %i.fc, i64 %i.fb
   %i.fe = getelementptr inbounds nuw [12 x i8], ptr %i.bf, i64 %i.eu
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.fe, ptr noundef nonnull align 4 dereferenceable(12) %i.fd, i64 12, i1 false)
-  br i1 %11, label %.epil.preheader193, label %._crit_edge.us.us.us.new
+  br i1 %10, label %.epil.preheader193, label %._crit_edge.us.us.us.new
 
 ._crit_edge.us.us.us.new:                         ; preds = %._crit_edge.us.us.us, %._crit_edge.us.us.us.new
   %.089114.us.us.us.1 = phi i64 [ %i.fu, %._crit_edge.us.us.us.new ], [ 0, %._crit_edge.us.us.us ] ; 4 uses
@@ -449,7 +448,7 @@ bb.g:                                             ; preds = %.loopexit109, %.loo
   %i.gl = getelementptr inbounds nuw [12 x i8], ptr %i.gk, i64 %i.gj
   %i.gm = getelementptr inbounds nuw [12 x i8], ptr %i.bf, i64 %i.gc
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.gm, ptr noundef nonnull align 4 dereferenceable(12) %i.gl, i64 12, i1 false)
-  br i1 %12, label %.epil.preheader199, label %._crit_edge.us.us.us.1.new
+  br i1 %11, label %.epil.preheader199, label %._crit_edge.us.us.us.1.new
 
 ._crit_edge.us.us.us.1.new:                       ; preds = %._crit_edge.us.us.us.1, %._crit_edge.us.us.us.1.new
   %.089114.us.us.us.2 = phi i64 [ %i.hc, %._crit_edge.us.us.us.1.new ], [ 0, %._crit_edge.us.us.us.1 ] ; 4 uses
@@ -537,7 +536,7 @@ bb.g:                                             ; preds = %.loopexit109, %.loo
   %i.in = load ptr, ptr %i.da, align 8            ; 4 uses
   %i.io = getelementptr inbounds nuw [12 x i8], ptr %i.in, i64 %i.ia
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.io, ptr noundef nonnull align 4 dereferenceable(12) %i.im, i64 12, i1 false)
-  br i1 %8, label %.epil.preheader175, label %._crit_edge.us.us.new
+  br i1 %7, label %.epil.preheader175, label %._crit_edge.us.us.new
 
 ._crit_edge.us.us.new:                            ; preds = %._crit_edge.us.us, %._crit_edge.us.us.new
   %.089114.us.us.1 = phi i64 [ %i.je, %._crit_edge.us.us.new ], [ 0, %._crit_edge.us.us ] ; 4 uses
@@ -599,7 +598,7 @@ bb.g:                                             ; preds = %.loopexit109, %.loo
   %i.jy = getelementptr inbounds nuw [12 x i8], ptr %i.jx, i64 %i.jt
   %i.jz = getelementptr inbounds nuw [12 x i8], ptr %i.in, i64 %i.jm
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.jz, ptr noundef nonnull align 4 dereferenceable(12) %i.jy, i64 12, i1 false)
-  br i1 %9, label %.epil.preheader181, label %._crit_edge.us.us.1.new
+  br i1 %8, label %.epil.preheader181, label %._crit_edge.us.us.1.new
 
 ._crit_edge.us.us.1.new:                          ; preds = %._crit_edge.us.us.1, %._crit_edge.us.us.1.new
   %.089114.us.us.2 = phi i64 [ %i.kp, %._crit_edge.us.us.1.new ], [ 0, %._crit_edge.us.us.1 ] ; 4 uses

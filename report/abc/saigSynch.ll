@@ -204,7 +204,7 @@ bb.a:
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %._crit_edge
-  %indvars.iv22 = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next23, %._crit_edge ] ; 5 uses
+  %indvars.iv22 = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next23, %._crit_edge ] ; 4 uses
   %i.j = getelementptr inbounds nuw [8 x i8], ptr %.val14, i64 %indvars.iv22
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !27
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 36
@@ -212,16 +212,15 @@ bb.a:
   %i.n = sext i32 %i.m to i64
   %i.o = getelementptr inbounds [8 x i8], ptr %.val, i64 %i.n
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !27   ; 6 uses
-  %i.q = getelementptr inbounds nuw i8, ptr %3, i64 %indvars.iv22 ; 4 uses
+  %i.q = getelementptr inbounds nuw i8, ptr %3, i64 %indvars.iv22 ; 5 uses
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph
   %i.r = getelementptr i8, ptr %3, i64 %indvars.iv22
-  %scevgep26 = getelementptr i8, ptr %i.r, i64 1
-  %scevgep25 = getelementptr nuw i8, ptr %3, i64 %indvars.iv22
+  %scevgep25 = getelementptr i8, ptr %i.r, i64 1
   %scevgep = getelementptr i8, ptr %i.p, i64 %i.h
-  %bound0 = icmp ult ptr %i.p, %scevgep26
-  %bound1 = icmp ult ptr %scevgep25, %scevgep
+  %bound0 = icmp ult ptr %i.p, %scevgep25
+  %bound1 = icmp ult ptr %i.q, %scevgep
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.ph
 

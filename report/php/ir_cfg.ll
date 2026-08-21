@@ -203,7 +203,7 @@ bb.l:                                             ; preds = %bb.g, %bb.i, %._cri
   %i.ex = load ptr, ptr %i.l, align 8, !tbaa !33  ; 18 uses
   %i.ey = load ptr, ptr %i.n, align 8, !tbaa !34
   %i.ez = load i32, ptr %i.a, align 4, !tbaa !12  ; 4 uses
-  %i.fa = add i32 %i.ez, 1                        ; 3 uses
+  %i.fa = add i32 %i.ez, 1                        ; 4 uses
   %umax.i = call i32 @llvm.umax.i32(i32 %i.fa, i32 1) ; 2 uses
   %xtraiter = and i32 %umax.i, 7                  ; 3 uses
   %i.fb = icmp ult i32 %i.fa, 8
@@ -271,7 +271,7 @@ bb.n:                                             ; preds = %bb.n, %.epil.prehea
   br label %ir_build_dominators_tree_iterative.exit
 
 .lr.ph131.preheader.i:                            ; preds = %.epilog-lcssa
-  %umax151.i = call i32 @llvm.umax.i32(i32 %i.fa, i32 3) ; 3 uses
+  %umax151.i = call i32 @llvm.umax.i32(i32 %i.fa, i32 3) ; 2 uses
   br label %.lr.ph131.i
 
 .lr.ph131.i:                                      ; preds = %.thread.i, %.lr.ph131.preheader.i
@@ -404,9 +404,8 @@ bb.o:                                             ; preds = %._crit_edge.i
   %i.hm = getelementptr inbounds nuw i8, ptr %i.ex, i64 84
   store i32 0, ptr %i.hm, align 4, !tbaa !39
   %i.hn = add i32 %umax151.i, -2                  ; 2 uses
-  %2 = add i32 %umax151.i, -3
   %xtraiter307 = and i32 %i.hn, 3                 ; 3 uses
-  %i.ho = icmp ult i32 %2, 3
+  %i.ho = icmp ult i32 %i.fa, 6
   br i1 %i.ho, label %.lr.ph140.i.epil.preheader, label %.split135.us.i.new
 
 .split135.us.i.new:                               ; preds = %.split135.us.i
@@ -809,13 +808,12 @@ bb.az:                                            ; preds = %._crit_edge
   br i1 %.not678.i, label %._crit_edge.i, label %.lr.ph.preheader.i61
 
 .lr.ph.preheader.i61:                             ; preds = %bb.az
-  %i.jx = add i32 %i.jw, 1
-  %umax.i62 = tail call i32 @llvm.umax.i32(i32 %i.jx, i32 2) ; 2 uses
+  %i.jx = add i32 %i.jw, 1                        ; 2 uses
+  %umax.i62 = tail call i32 @llvm.umax.i32(i32 %i.jx, i32 2)
   %wide.trip.count.i = zext i32 %umax.i62 to i64
   %i.jy = add nsw i64 %wide.trip.count.i, -1      ; 2 uses
   %xtraiter = and i64 %i.jy, 3                    ; 3 uses
-  %1 = add i32 %umax.i62, -2
-  %i.jz = icmp ult i32 %1, 3
+  %i.jz = icmp ult i32 %i.jx, 5
   br i1 %i.jz, label %.lr.ph.i63.epil.preheader, label %.lr.ph.preheader.i61.new
 
 .lr.ph.preheader.i61.new:                         ; preds = %.lr.ph.preheader.i61

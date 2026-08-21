@@ -204,8 +204,6 @@ bb.s:                                             ; preds = %bb.q
 
 .preheader72:                                     ; preds = %.preheader72.lr.ph, %_ZN6Assimp12StreamReaderILb1ELb1EE6IncPtrEl.exit
   %indvar = phi i64 [ 0, %.preheader72.lr.ph ], [ %indvar.next, %_ZN6Assimp12StreamReaderILb1ELb1EE6IncPtrEl.exit ] ; 4 uses
-  %5 = shl nuw nsw i64 %indvar, 4
-  %scevgep = getelementptr i8, ptr %1, i64 %5
   %i.bi = load i64, ptr %i.bf, align 8
   %.not85 = icmp eq i64 %i.bi, 0
   br i1 %.not85, label %.lr.ph78, label %.lr.ph
@@ -237,9 +235,10 @@ bb.s:                                             ; preds = %bb.q
 
 .lr.ph78:                                         ; preds = %.preheader72, %.preheader71
   %.0.lcssa104 = phi i32 [ %i.bq, %.preheader71 ], [ 0, %.preheader72 ] ; 2 uses
+  %5 = getelementptr inbounds nuw [16 x i8], ptr %1, i64 %indvar
   %i.bs = shl nuw nsw i32 %.0.lcssa104, 2
   %i.bt = zext nneg i32 %i.bs to i64
-  %scevgep88 = getelementptr i8, ptr %scevgep, i64 %i.bt
+  %scevgep88 = getelementptr i8, ptr %5, i64 %i.bt
   %i.bu = shl nuw nsw i32 %.0.lcssa104, 2
   %narrow = sub nuw nsw i32 16, %i.bu
   %i.bv = zext nneg i32 %narrow to i64

@@ -204,13 +204,12 @@ vec.epilog.middle.block371:                       ; preds = %vec.epilog.vector.b
   br label %.preheader.i
 
 bb.ac:                                            ; preds = %.loopexit8.i, %.lr.ph15.i
-  %indvars.iv33.i = phi i64 [ 0, %.lr.ph15.i ], [ %indvars.iv.next34.i, %.loopexit8.i ] ; 7 uses
+  %indvars.iv33.i = phi i64 [ 0, %.lr.ph15.i ], [ %indvars.iv.next34.i, %.loopexit8.i ] ; 6 uses
   %indvars.iv31.i = phi i32 [ 1, %.lr.ph15.i ], [ %indvars.iv.next32.i, %.loopexit8.i ] ; 2 uses
   %.07013.i = phi i32 [ -1, %.lr.ph15.i ], [ %.1.i147, %.loopexit8.i ] ; 5 uses
   %.07112.i = phi i32 [ -1, %.lr.ph15.i ], [ %.172.i, %.loopexit8.i ] ; 6 uses
   %.07311.i = phi i8 [ 0, %.lr.ph15.i ], [ %.174.i, %.loopexit8.i ] ; 3 uses
-  %6 = trunc i64 %indvars.iv33.i to i32
-  %i.gy = trunc nuw nsw i64 %indvars.iv33.i to i32 ; 6 uses
+  %i.gy = trunc i64 %indvars.iv33.i to i32        ; 7 uses
   %i.gz = lshr i64 %indvars.iv33.i, 6
   %.zext.i = and i64 %i.gz, 67108863              ; 2 uses
   %i.ha = getelementptr inbounds nuw [8 x i8], ptr %.val123, i64 %.zext.i
@@ -241,7 +240,7 @@ bb.af:                                            ; preds = %bb.ae
 iter.check398:                                    ; preds = %bb.af
   %i.hl = add nsw i32 %.07013.i, %i.gk
   %i.hm = sext i32 %i.hl to i64                   ; 3 uses
-  %i.hn = sub i32 %6, %.07013.i                   ; 3 uses
+  %i.hn = sub i32 %i.gy, %.07013.i                ; 3 uses
   %i.ho = zext i32 %i.hn to i64
   %i.hp = add nuw nsw i64 %i.ho, 1                ; 5 uses
   %min.iters.check374 = icmp ult i32 %i.hn, 3

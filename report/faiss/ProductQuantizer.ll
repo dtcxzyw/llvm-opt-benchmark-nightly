@@ -203,16 +203,13 @@ bb.b:                                             ; preds = %bb.a
           to label %.preheader115.us unwind label %.split.us ; 14 uses
 
 bb.c:                                             ; preds = %.preheader115.us, %.loopexit.us
-  %indvar = phi i64 [ 0, %.preheader115.us ], [ %indvar.next, %.loopexit.us ] ; 4 uses
-  %indvars.iv = phi i64 [ 65536, %.preheader115.us ], [ %indvars.iv.next, %.loopexit.us ] ; 5 uses
+  %indvar = phi i64 [ 0, %.preheader115.us ], [ %indvar.next, %.loopexit.us ] ; 2 uses
+  %indvars.iv = phi i64 [ 65536, %.preheader115.us ], [ %indvars.iv.next, %.loopexit.us ] ; 3 uses
   %.070134.us = phi i64 [ 0, %.preheader115.us ], [ %i.ak, %.loopexit.us ] ; 26 uses
-  %umin212 = tail call i64 @llvm.umin.i64(i64 %3, i64 %indvars.iv) ; 2 uses
-  %5 = shl i64 %indvar, 16
-  %umin209 = tail call i64 @llvm.umin.i64(i64 %3, i64 %indvars.iv) ; 2 uses
+  %umin209 = tail call i64 @llvm.umin.i64(i64 %3, i64 %indvars.iv) ; 4 uses
   %i.aj = shl i64 %indvar, 16
-  %umin = tail call i64 @llvm.umin.i64(i64 %3, i64 %indvars.iv) ; 2 uses
-  %6 = shl i64 %indvar, 16
-  %.neg = or disjoint i64 %6, 1
+  %5 = xor i64 %i.aj, -1
+  %6 = add i64 %umin209, %5                       ; 3 uses
   %umin165 = tail call i64 @llvm.umin.i64(i64 %3, i64 %indvars.iv) ; 4 uses
   %i.ak = add i64 %.070134.us, 65536              ; 3 uses
   %.sroa.speculated.us = tail call i64 @llvm.umin.i64(i64 %3, i64 %i.ak) ; 2 uses
@@ -295,7 +292,7 @@ bb.g:                                             ; preds = %bb.d
   %i.bu = load i64, ptr %i.o, align 8, !tbaa !86
   %i.bv = mul i64 %i.bu, %.070134.us
   %gep133.us = getelementptr i8, ptr %invariant.gep132.us, i64 %i.bv ; 2 uses
-  %xtraiter213 = and i64 %umin212, 3              ; 2 uses
+  %xtraiter213 = and i64 %umin209, 3              ; 2 uses
   %lcmp.mod214.not = icmp eq i64 %xtraiter213, 0
   br i1 %lcmp.mod214.not, label %.lr.ph129.us.prol.loopexit, label %.lr.ph129.us.prol
 
@@ -318,9 +315,8 @@ bb.g:                                             ; preds = %bb.d
 .lr.ph129.us.prol.loopexit:                       ; preds = %.lr.ph129.us.prol, %.lr.ph129.us.preheader
   %.067127.us.unr = phi i64 [ %.070134.us, %.lr.ph129.us.preheader ], [ %i.cc, %.lr.ph129.us.prol ]
   %.068126.us.unr = phi ptr [ %gep133.us, %.lr.ph129.us.preheader ], [ %i.cb, %.lr.ph129.us.prol ]
-  %7 = sub i64 %5, %umin212
-  %8 = icmp ugt i64 %7, -4
-  br i1 %8, label %.loopexit.us, label %.lr.ph129.us.preheader.new
+  %7 = icmp ult i64 %6, 3
+  br i1 %7, label %.loopexit.us, label %.lr.ph129.us.preheader.new
 
 .lr.ph129.us.preheader.new:                       ; preds = %.lr.ph129.us.prol.loopexit
   %invariant.op237.a = sub i64 1, %.070134.us
@@ -537,7 +533,7 @@ _ZN5faiss16PQEncoderGenericD2Ev.exit.us:          ; preds = %bb.k, %_ZN5faiss16P
   %i.ft = mul i64 %i.fr, %.071138.us
   %invariant.gep.us = getelementptr [4 x i8], ptr %1, i64 %i.ft ; 3 uses
   %i.fu = shl i64 %i.fr, 2                        ; 3 uses
-  %xtraiter = and i64 %umin, 1
+  %xtraiter = and i64 %umin209, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.prol.loopexit, label %.prol.loopexit.unr-lcssa
 
@@ -550,7 +546,7 @@ _ZN5faiss16PQEncoderGenericD2Ev.exit.us:          ; preds = %bb.k, %_ZN5faiss16P
 
 .prol.loopexit:                                   ; preds = %.prol.loopexit.unr-lcssa, %.lr.ph.us
   %.069121.us.unr = phi i64 [ %.070134.us, %.lr.ph.us ], [ %i.fw, %.prol.loopexit.unr-lcssa ]
-  %i.fx = icmp eq i64 %umin, %.neg
+  %i.fx = icmp eq i64 %6, 0
   br i1 %i.fx, label %._crit_edge.us, label %.lr.ph.us.new
 
 .lr.ph125.us:                                     ; preds = %bb.e
@@ -580,9 +576,8 @@ _ZN5faiss16PQEncoderGenericD2Ev.exit.us:          ; preds = %bb.k, %_ZN5faiss16P
 .prol.loopexit208:                                ; preds = %.prol.preheader207, %.lr.ph125.us
   %.065123.us.unr = phi i64 [ %.070134.us, %.lr.ph125.us ], [ %i.gg, %.prol.preheader207 ]
   %.066122.us.unr = phi ptr [ %gep137.us, %.lr.ph125.us ], [ %i.gf, %.prol.preheader207 ]
-  %9 = sub i64 %i.aj, %umin209
-  %10 = icmp ugt i64 %9, -4
-  br i1 %10, label %.loopexit.us, label %.lr.ph125.us.new
+  %8 = icmp ult i64 %6, 3
+  br i1 %8, label %.loopexit.us, label %.lr.ph125.us.new
 
 .lr.ph125.us.new:                                 ; preds = %.prol.loopexit208
   %invariant.op = sub i64 1, %.070134.us

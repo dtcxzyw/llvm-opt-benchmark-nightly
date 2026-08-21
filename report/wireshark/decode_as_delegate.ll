@@ -203,7 +203,7 @@ _ZNK17QArrayDataPointerIP17_dissector_info_tE11needsDetachEv.exit.thread.i.i.i30
   br label %bb.dn
 
 bb.dn:                                            ; preds = %_ZNK17QArrayDataPointerIP17_dissector_info_tE11needsDetachEv.exit.thread.i.i.i305._crit_edge, %_ZNK17QArrayDataPointerIP17_dissector_info_tE11needsDetachEv.exit.i.i.i304
-  %i.ld = phi ptr [ %i.lb, %_ZNK17QArrayDataPointerIP17_dissector_info_tE11needsDetachEv.exit.thread.i.i.i305._crit_edge ], [ %i.kw, %_ZNK17QArrayDataPointerIP17_dissector_info_tE11needsDetachEv.exit.i.i.i304 ] ; 15 uses
+  %i.ld = phi ptr [ %i.lb, %_ZNK17QArrayDataPointerIP17_dissector_info_tE11needsDetachEv.exit.thread.i.i.i305._crit_edge ], [ %i.kw, %_ZNK17QArrayDataPointerIP17_dissector_info_tE11needsDetachEv.exit.i.i.i304 ] ; 13 uses
   %i.le = phi ptr [ %i.lc, %_ZNK17QArrayDataPointerIP17_dissector_info_tE11needsDetachEv.exit.thread.i.i.i305._crit_edge ], [ %i.kx, %_ZNK17QArrayDataPointerIP17_dissector_info_tE11needsDetachEv.exit.i.i.i304 ] ; 3 uses
   %i.lf = phi ptr [ %.pre499, %_ZNK17QArrayDataPointerIP17_dissector_info_tE11needsDetachEv.exit.thread.i.i.i305._crit_edge ], [ %i.kw, %_ZNK17QArrayDataPointerIP17_dissector_info_tE11needsDetachEv.exit.i.i.i304 ]
   %i.lg = getelementptr inbounds nuw i8, ptr %27, i64 16 ; 2 uses
@@ -233,12 +233,8 @@ bb.do:                                            ; preds = %bb.dn
   br label %bb.dp
 
 bb.dp:                                            ; preds = %_ZSt13move_backwardIN5QListIP17_dissector_info_tE8iteratorES4_ET0_T_S6_S5_.exit.i.i.i.i, %.lr.ph.i.i.i.i308
-  %indvar.i.i.i.i = phi i64 [ 0, %.lr.ph.i.i.i.i308 ], [ %indvar.next.i.i.i.i, %_ZSt13move_backwardIN5QListIP17_dissector_info_tE8iteratorES4_ET0_T_S6_S5_.exit.i.i.i.i ] ; 2 uses
   %.sroa.0.020.i.i.i.i = phi ptr [ %.sroa.0.017.i.i.i.i, %.lr.ph.i.i.i.i308 ], [ %.sroa.0.0.i.i.i.i, %_ZSt13move_backwardIN5QListIP17_dissector_info_tE8iteratorES4_ET0_T_S6_S5_.exit.i.i.i.i ] ; 8 uses
-  %.pn19.i.i.i.i = phi ptr [ %i.ld, %.lr.ph.i.i.i.i308 ], [ %.sroa.0.020.i.i.i.i, %_ZSt13move_backwardIN5QListIP17_dissector_info_tE8iteratorES4_ET0_T_S6_S5_.exit.i.i.i.i ] ; 2 uses
-  %32 = shl nuw nsw i64 %indvar.i.i.i.i, 3
-  %33 = getelementptr i8, ptr %i.ld, i64 %32
-  %scevgep.i.i.i.i = getelementptr i8, ptr %33, i64 16
+  %.pn19.i.i.i.i = phi ptr [ %i.ld, %.lr.ph.i.i.i.i308 ], [ %.sroa.0.020.i.i.i.i, %_ZSt13move_backwardIN5QListIP17_dissector_info_tE8iteratorES4_ET0_T_S6_S5_.exit.i.i.i.i ] ; 3 uses
   %i.ls = load ptr, ptr %.sroa.0.020.i.i.i.i, align 8
   %i.lt = load ptr, ptr %i.ld, align 8
   %i.lu = invoke noundef i32 @_ZNK7QString18localeAwareCompareERKS_(ptr noundef align 8 dereferenceable_or_null(24) %i.ls, ptr noundef align 8 dereferenceable(24) %i.lt)
@@ -257,8 +253,9 @@ bb.dq:                                            ; preds = %.noexc311
   br i1 %i.ma, label %.lr.ph.i.i.i.i.i.preheader.i.i.i.i, label %_ZSt13move_backwardIN5QListIP17_dissector_info_tE8iteratorES4_ET0_T_S6_S5_.exit.i.i.i.i
 
 .lr.ph.i.i.i.i.i.preheader.i.i.i.i:               ; preds = %bb.dq
+  %32 = getelementptr i8, ptr %.pn19.i.i.i.i, i64 16
   %i.mb = mul nsw i64 %i.lz, -8                   ; 2 uses
-  %scevgep22.i.i.i.i.a = getelementptr i8, ptr %scevgep.i.i.i.i, i64 %i.mb
+  %scevgep22.i.i.i.i.a = getelementptr i8, ptr %32, i64 %i.mb
   %scevgep23.i.i.i.i = getelementptr i8, ptr %.sroa.0.020.i.i.i.i, i64 %i.mb
   call void @llvm.memmove.p0.p0.i64(ptr align 8 %scevgep22.i.i.i.i.a, ptr align 8 %scevgep23.i.i.i.i, i64 %i.ly, i1 false)
   br label %_ZSt13move_backwardIN5QListIP17_dissector_info_tE8iteratorES4_ET0_T_S6_S5_.exit.i.i.i.i
@@ -291,7 +288,6 @@ _ZSt13move_backwardIN5QListIP17_dissector_info_tE8iteratorES4_ET0_T_S6_S5_.exit.
   store ptr %i.lw, ptr %.sink.i.i.i.i, align 8
   %.sroa.0.0.i.i.i.i = getelementptr i8, ptr %.sroa.0.020.i.i.i.i, i64 8 ; 2 uses
   %.not.i.i.i.i309 = icmp eq ptr %.sroa.0.0.i.i.i.i, %i.lr
-  %indvar.next.i.i.i.i = add nuw nsw i64 %indvar.i.i.i.i, 1
   br i1 %.not.i.i.i.i309, label %"_ZSt16__insertion_sortIN5QListIP17_dissector_info_tE8iteratorEN9__gnu_cxx5__ops15_Iter_comp_iterIZNK16DecodeAsDelegate12createEditorEP7QWidgetRK20QStyleOptionViewItemRK11QModelIndexE3$_0EEEvT_SJ_T0_.exit.i.i.i", label %bb.dp, !llvm.loop !44
 
 "_ZSt16__insertion_sortIN5QListIP17_dissector_info_tE8iteratorEN9__gnu_cxx5__ops15_Iter_comp_iterIZNK16DecodeAsDelegate12createEditorEP7QWidgetRK20QStyleOptionViewItemRK11QModelIndexE3$_0EEEvT_SJ_T0_.exit.i.i.i": ; preds = %_ZSt13move_backwardIN5QListIP17_dissector_info_tE8iteratorES4_ET0_T_S6_S5_.exit.i.i.i.i
@@ -336,12 +332,8 @@ bb.ds:                                            ; preds = %.noexc310
   br i1 %.not18.i21.i.i.i, label %"_ZSt4sortIN5QListIP17_dissector_info_tE8iteratorEZNK16DecodeAsDelegate12createEditorEP7QWidgetRK20QStyleOptionViewItemRK11QModelIndexE3$_0EvT_SF_T0_.exit", label %.lr.ph.i22.i.i.i
 
 .lr.ph.i22.i.i.i:                                 ; preds = %bb.ds, %_ZSt13move_backwardIN5QListIP17_dissector_info_tE8iteratorES4_ET0_T_S6_S5_.exit.i27.i.i.i
-  %indvar.i23.i.i.i = phi i64 [ %indvar.next.i31.i.i.i, %_ZSt13move_backwardIN5QListIP17_dissector_info_tE8iteratorES4_ET0_T_S6_S5_.exit.i27.i.i.i ], [ 0, %bb.ds ] ; 2 uses
   %.sroa.0.020.i24.i.i.i = phi ptr [ %.sroa.0.0.i29.i.i.i, %_ZSt13move_backwardIN5QListIP17_dissector_info_tE8iteratorES4_ET0_T_S6_S5_.exit.i27.i.i.i ], [ %.sroa.0.017.i.i.i.i, %bb.ds ] ; 8 uses
-  %.pn19.i25.i.i.i = phi ptr [ %.sroa.0.020.i24.i.i.i, %_ZSt13move_backwardIN5QListIP17_dissector_info_tE8iteratorES4_ET0_T_S6_S5_.exit.i27.i.i.i ], [ %i.ld, %bb.ds ] ; 2 uses
-  %34 = shl i64 %indvar.i23.i.i.i, 3
-  %35 = getelementptr i8, ptr %i.ld, i64 %34
-  %scevgep.i26.i.i.i = getelementptr i8, ptr %35, i64 16
+  %.pn19.i25.i.i.i = phi ptr [ %.sroa.0.020.i24.i.i.i, %_ZSt13move_backwardIN5QListIP17_dissector_info_tE8iteratorES4_ET0_T_S6_S5_.exit.i27.i.i.i ], [ %i.ld, %bb.ds ] ; 3 uses
   %i.ms = load ptr, ptr %.sroa.0.020.i24.i.i.i, align 8
   %i.mt = load ptr, ptr %i.ld, align 8
   %i.mu = invoke noundef i32 @_ZNK7QString18localeAwareCompareERKS_(ptr noundef align 8 dereferenceable_or_null(24) %i.ms, ptr noundef align 8 dereferenceable(24) %i.mt)
@@ -360,8 +352,9 @@ bb.dt:                                            ; preds = %.noexc316
   br i1 %i.na, label %.lr.ph.i.i.i.i.i.preheader.i36.i.i.i, label %_ZSt13move_backwardIN5QListIP17_dissector_info_tE8iteratorES4_ET0_T_S6_S5_.exit.i27.i.i.i
 
 .lr.ph.i.i.i.i.i.preheader.i36.i.i.i:             ; preds = %bb.dt
+  %33 = getelementptr i8, ptr %.pn19.i25.i.i.i, i64 16
   %i.nb = mul nsw i64 %i.mz, -8                   ; 2 uses
-  %scevgep22.i37.i.i.i = getelementptr i8, ptr %scevgep.i26.i.i.i, i64 %i.nb
+  %scevgep22.i37.i.i.i = getelementptr i8, ptr %33, i64 %i.nb
   %scevgep23.i38.i.i.i = getelementptr i8, ptr %.sroa.0.020.i24.i.i.i, i64 %i.nb
   call void @llvm.memmove.p0.p0.i64(ptr align 8 %scevgep22.i37.i.i.i, ptr align 8 %scevgep23.i38.i.i.i, i64 %i.my, i1 false)
   br label %_ZSt13move_backwardIN5QListIP17_dissector_info_tE8iteratorES4_ET0_T_S6_S5_.exit.i27.i.i.i
@@ -394,7 +387,6 @@ _ZSt13move_backwardIN5QListIP17_dissector_info_tE8iteratorES4_ET0_T_S6_S5_.exit.
   store ptr %i.mw, ptr %.sink.i28.i.i.i, align 8
   %.sroa.0.0.i29.i.i.i = getelementptr i8, ptr %.sroa.0.020.i24.i.i.i, i64 8 ; 2 uses
   %.not.i30.i.i.i = icmp eq ptr %.sroa.0.0.i29.i.i.i, %i.li
-  %indvar.next.i31.i.i.i = add i64 %indvar.i23.i.i.i, 1
   br i1 %.not.i30.i.i.i, label %"_ZSt4sortIN5QListIP17_dissector_info_tE8iteratorEZNK16DecodeAsDelegate12createEditorEP7QWidgetRK20QStyleOptionViewItemRK11QModelIndexE3$_0EvT_SF_T0_.exit", label %.lr.ph.i22.i.i.i, !llvm.loop !44
 
 "_ZSt4sortIN5QListIP17_dissector_info_tE8iteratorEZNK16DecodeAsDelegate12createEditorEP7QWidgetRK20QStyleOptionViewItemRK11QModelIndexE3$_0EvT_SF_T0_.exit": ; preds = %_ZSt13move_backwardIN5QListIP17_dissector_info_tE8iteratorES4_ET0_T_S6_S5_.exit.i27.i.i.i, %"_ZSt25__unguarded_linear_insertIN5QListIP17_dissector_info_tE8iteratorEN9__gnu_cxx5__ops14_Val_comp_iterIZNK16DecodeAsDelegate12createEditorEP7QWidgetRK20QStyleOptionViewItemRK11QModelIndexE3$_0EEEvT_T0_.exit.i.i.i.i", %bb.ds, %"_ZSt16__insertion_sortIN5QListIP17_dissector_info_tE8iteratorEN9__gnu_cxx5__ops15_Iter_comp_iterIZNK16DecodeAsDelegate12createEditorEP7QWidgetRK20QStyleOptionViewItemRK11QModelIndexE3$_0EEEvT_SJ_T0_.exit.i.i.i", %bb.dn

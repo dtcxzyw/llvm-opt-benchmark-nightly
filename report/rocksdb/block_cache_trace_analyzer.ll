@@ -204,7 +204,7 @@ _ZNSt14_Function_baseD2Ev.exit:                   ; preds = %bb.d, %bb.e
   %i.aa = shl i64 %i.y, 3                         ; 2 uses
   %i.ab = select i1 %i.z, i64 -1, i64 %i.aa
   %i.ac = invoke noalias noundef nonnull ptr @_Znam(i64 noundef %i.ab) #31
-          to label %.preheader361 unwind label %bb.k ; 7 uses
+          to label %.preheader361 unwind label %bb.k ; 6 uses
 
 .preheader361:                                    ; preds = %_ZNSt14_Function_baseD2Ev.exit
   %.not = icmp eq i64 %i.x, 0
@@ -216,7 +216,7 @@ _ZNSt14_Function_baseD2Ev.exit:                   ; preds = %bb.d, %bb.e
   br i1 %i.ae, label %.preheader360.us.preheader, label %.preheader360.preheader
 
 .preheader360.preheader:                          ; preds = %.preheader360.lr.ph
-  %i.af = shl i64 %i.x, 3                         ; 2 uses
+  %i.af = shl nuw i64 %i.x, 3
   br label %.preheader.us.preheader
 
 .preheader360.us.preheader:                       ; preds = %.preheader360.lr.ph
@@ -293,20 +293,18 @@ bb.k:                                             ; preds = %_ZNSt14_Function_ba
   br label %_ZNSt14_Function_baseD2Ev.exit92
 
 .preheader.us.preheader:                          ; preds = %._crit_edge393, %.preheader360.preheader
-  %.039394 = phi i64 [ %i.dc, %._crit_edge393 ], [ 0, %.preheader360.preheader ] ; 14 uses
+  %.039394 = phi i64 [ %i.dc, %._crit_edge393 ], [ 0, %.preheader360.preheader ] ; 13 uses
   %i.az = sub i64 %i.x, %.039394
   %.neg = add i64 %.039394, 1
-  %i.ba = mul i64 %i.af, %.039394
-  %scevgep = getelementptr i8, ptr %i.ac, i64 %i.ba
-  call void @llvm.memset.p0.i64(ptr align 8 %scevgep, i8 0, i64 %i.af, i1 false), !tbaa !143
+  %i.ba = mul i64 %.039394, %i.x
+  %21 = getelementptr [8 x i8], ptr %i.ac, i64 %i.ba ; 4 uses
+  call void @llvm.memset.p0.i64(ptr align 8 %21, i8 0, i64 %i.af, i1 false), !tbaa !143
   %i.bb = sdiv i64 %.039394, 64
   %i.bc = and i64 %.039394, -9223372036854775745
   %i.bd = icmp ugt i64 %i.bc, -9223372036854775808
   %storemerge.idx.i.i.i.i.i = select i1 %i.bd, i64 -8, i64 0
   %i.be = and i64 %.039394, 63
   %i.bf = shl nuw i64 1, %i.be                    ; 3 uses
-  %21 = mul i64 %.039394, %i.x
-  %22 = getelementptr [8 x i8], ptr %i.ac, i64 %21 ; 3 uses
   %xtraiter = and i64 %i.az, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   %i.bg = sdiv i64 %.039394, 64
@@ -315,7 +313,7 @@ bb.k:                                             ; preds = %_ZNSt14_Function_ba
   %storemerge.idx.i.i.i.i.i93.us.prol = select i1 %i.bi, i64 -8, i64 0
   %i.bj = and i64 %.039394, 63
   %i.bk = shl nuw i64 1, %i.bj
-  %i.bl = getelementptr [8 x i8], ptr %22, i64 %.039394 ; 2 uses
+  %i.bl = getelementptr [8 x i8], ptr %21, i64 %.039394 ; 2 uses
   %i.bm = add nuw i64 %.039394, 1                 ; 3 uses
   %i.bn = icmp eq i64 %i.x, %.neg
   br label %.preheader.us
@@ -374,7 +372,7 @@ bb.n:                                             ; preds = %.preheader.us.new
   br i1 %.not339.us, label %bb.p, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %i.ci = getelementptr [8 x i8], ptr %22, i64 %.037391.us ; 2 uses
+  %i.ci = getelementptr [8 x i8], ptr %21, i64 %.037391.us ; 2 uses
   %i.cj = load i64, ptr %i.ci, align 8, !tbaa !143
   %i.ck = add i64 %i.cj, 1
   store i64 %i.ck, ptr %i.ci, align 8, !tbaa !143
@@ -402,7 +400,7 @@ bb.q:                                             ; preds = %bb.p
   br i1 %.not339.us.1, label %bb.s, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
-  %i.cw = getelementptr [8 x i8], ptr %22, i64 %i.cl ; 2 uses
+  %i.cw = getelementptr [8 x i8], ptr %21, i64 %i.cl ; 2 uses
   %i.cx = load i64, ptr %i.cw, align 8, !tbaa !143
   %i.cy = add i64 %i.cx, 1
   store i64 %i.cy, ptr %i.cw, align 8, !tbaa !143

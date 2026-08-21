@@ -203,10 +203,7 @@ bb.u:                                             ; preds = %.split7.us.i
   br i1 %.not2.i, label %.lr.ph.i, label %_RNvMs0_NtNtNtCscAsMj0W7j8b_3std4sync4mpmc4zeroINtB5_6PacketNtNtNtCs9GitHPCrz2Q_5rowan5green4node9GreenNodeE10wait_readyCsgIpRO4v45SJ_7base_db.exit
 
 .lr.ph.i:                                         ; preds = %.thread, %_RNvMs1_NtNtNtCscAsMj0W7j8b_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i
-  %loop-unroll.iv = phi i32 [ %loop-unroll.iv.next, %_RNvMs1_NtNtNtCscAsMj0W7j8b_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i ], [ 0, %.thread ] ; 4 uses
-  %.sroa.0.03.i = phi i32 [ %i.bv, %_RNvMs1_NtNtNtCscAsMj0W7j8b_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i ], [ 0, %.thread ] ; 4 uses
-  %1 = shl i32 %.sroa.0.03.i, 1
-  %2 = or i32 %1, 1
+  %.sroa.0.03.i = phi i32 [ %i.bv, %_RNvMs1_NtNtNtCscAsMj0W7j8b_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i ], [ 0, %.thread ] ; 6 uses
   %i.bt = icmp ult i32 %.sroa.0.03.i, 7
   br i1 %i.bt, label %_RNvMs6_NtCshzWfHUSfYae_4core3numm15overflowing_pow.exit.i.i, label %bb.v
 
@@ -219,13 +216,13 @@ _RNvMs6_NtCshzWfHUSfYae_4core3numm15overflowing_pow.exit.i.i: ; preds = %.lr.ph.
   br i1 %.not.i.i, label %_RNvMs1_NtNtNtCscAsMj0W7j8b_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i, label %.lr.ph.i.i.preheader
 
 .lr.ph.i.i.preheader:                             ; preds = %_RNvMs6_NtCshzWfHUSfYae_4core3numm15overflowing_pow.exit.i.i
-  %3 = add i32 %loop-unroll.iv, -1
-  %xtraiter = and i32 %loop-unroll.iv, 7          ; 3 uses
-  %i.bu = icmp ult i32 %3, 7
+  %1 = mul nuw i32 %.sroa.0.03.i, %.sroa.0.03.i   ; 2 uses
+  %xtraiter = and i32 %1, 7                       ; 3 uses
+  %i.bu = icmp ult i32 %.sroa.0.03.i, 3
   br i1 %i.bu, label %.lr.ph.i.i.epil.preheader, label %.lr.ph.i.i.preheader.new
 
 .lr.ph.i.i.preheader.new:                         ; preds = %.lr.ph.i.i.preheader
-  %unroll_iter = and i32 %loop-unroll.iv, -8
+  %unroll_iter = and i32 %1, 56
   br label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %.lr.ph.i.i, %.lr.ph.i.i.preheader.new
@@ -262,7 +259,6 @@ _RNvMs1_NtNtNtCscAsMj0W7j8b_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i
   %i.bv = add i32 %.sroa.0.03.i, 1
   %i.bw = load atomic i8, ptr %i.q acquire, align 8
   %.not.i40 = icmp eq i8 %i.bw, 0
-  %loop-unroll.iv.next = add i32 %loop-unroll.iv, %2
   br i1 %.not.i40, label %.lr.ph.i, label %_RNvMs0_NtNtNtCscAsMj0W7j8b_3std4sync4mpmc4zeroINtB5_6PacketNtNtNtCs9GitHPCrz2Q_5rowan5green4node9GreenNodeE10wait_readyCsgIpRO4v45SJ_7base_db.exit
 
 bb.w:                                             ; preds = %.thread9

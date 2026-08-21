@@ -203,7 +203,7 @@ bb.k:                                             ; preds = %bb.i, %.critedge
 define void @_Z28gmx_ana_index_union_unsortedP15gmx_ana_index_tS0_S0_(ptr nofree noundef captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 6 uses
-  %i.b = load i32, ptr %2, align 8, !tbaa !85     ; 6 uses
+  %i.b = load i32, ptr %2, align 8, !tbaa !85     ; 7 uses
   %i.c = add nsw i32 %i.b, -1                     ; 3 uses
   %smax.i = tail call i32 @llvm.smax.i32(i32 %i.c, i32 0)
   %wide.trip.count.i = zext nneg i32 %smax.i to i64 ; 3 uses
@@ -392,15 +392,14 @@ _Z18gmx_ana_index_copyP15gmx_ana_index_tS0_b.exit.thread: ; preds = %_Z26gmx_ana
   %i.bo = xor i64 %i.bn, 126
   tail call void @_ZSt16__introsort_loopIPilN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S4_T0_T1_(ptr noundef %i.bh, ptr noundef nonnull %i.bl, i64 noundef %i.bo)
   tail call void @_ZSt22__final_insertion_sortIPiN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S4_T0_(ptr noundef %i.bh, ptr noundef nonnull %i.bl)
-  %umax = tail call i64 @llvm.umax.i64(i64 %i.bj, i64 2) ; 2 uses
-  %3 = add nsw i64 %umax, -1                      ; 2 uses
-  %i.bp = add nsw i64 %umax, -2
-  %xtraiter = and i64 %3, 3                       ; 3 uses
-  %i.bq = icmp ult i64 %i.bp, 3
+  %umax = tail call i64 @llvm.umax.i64(i64 %i.bj, i64 2)
+  %i.bp = add nsw i64 %umax, -1                   ; 2 uses
+  %xtraiter = and i64 %i.bp, 3                    ; 3 uses
+  %i.bq = icmp ult i32 %i.b, 5
   br i1 %i.bq, label %.peel.next.i.epil.preheader, label %_Z18gmx_ana_index_copyP15gmx_ana_index_tS0_b.exit.thread.new
 
 _Z18gmx_ana_index_copyP15gmx_ana_index_tS0_b.exit.thread.new: ; preds = %_Z18gmx_ana_index_copyP15gmx_ana_index_tS0_b.exit.thread
-  %unroll_iter = and i64 %3, -4
+  %unroll_iter = and i64 %i.bp, -4
   br label %.peel.next.i
 
 .peel.next.i:                                     ; preds = %bb.r, %_Z18gmx_ana_index_copyP15gmx_ana_index_tS0_b.exit.thread.new

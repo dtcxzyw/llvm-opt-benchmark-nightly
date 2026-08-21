@@ -203,7 +203,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i85
   br label %_ZNSt6vectorIdSaIdEED2Ev.exit89
 
 bb.al:                                            ; preds = %bb.x, %bb.aa
-  %.sroa.0.1 = phi ptr [ %.sroa.0.4, %bb.x ], [ null, %bb.aa ] ; 10 uses
+  %.sroa.0.1 = phi ptr [ %.sroa.0.4, %bb.x ], [ null, %bb.aa ] ; 9 uses
   %.sroa.16.1 = phi ptr [ %.sroa.16.4, %bb.x ], [ null, %bb.aa ] ; 5 uses
   %i.es = load ptr, ptr @_ZN12colvarmodule5proxyE, align 8, !tbaa !89
   %i.et = getelementptr inbounds nuw i8, ptr %i.es, i64 800 ; 2 uses
@@ -258,8 +258,7 @@ bb.ap:                                            ; preds = %bb.ao
 .preheader.split.us:                              ; preds = %.preheader.split.us.preheader, %._crit_edge.us
   %indvar = phi i64 [ 0, %.preheader.split.us.preheader ], [ %indvar.next, %._crit_edge.us ] ; 2 uses
   %indvars.iv = phi i64 [ 1, %.preheader.split.us.preheader ], [ %indvars.iv.next, %._crit_edge.us ] ; 3 uses
-  %i.fo = mul i64 %i.q, %indvar                   ; 2 uses
-  %scevgep169 = getelementptr i8, ptr %.sroa.0.1, i64 %i.fo
+  %i.fo = mul i64 %i.q, %indvar
   %scevgep170 = getelementptr i8, ptr %i.fn, i64 %i.fo
   %i.fp = load ptr, ptr @_ZN12colvarmodule5proxyE, align 8, !tbaa !89
   %i.fq = getelementptr inbounds nuw i8, ptr %i.fp, i64 800 ; 2 uses
@@ -277,14 +276,14 @@ bb.aq:                                            ; preds = %.preheader.split.us
 .lr.ph.us:                                        ; preds = %bb.aq
   %i.fx = add nsw i64 %indvars.iv, -1
   %i.fy = mul i64 %i.r, %i.fx
-  %i.fz = getelementptr [8 x i8], ptr %.sroa.0.1, i64 %i.fy ; 6 uses
+  %i.fz = getelementptr [8 x i8], ptr %.sroa.0.1, i64 %i.fy ; 7 uses
   %i.ga = load ptr, ptr %i.ez, align 8, !tbaa !82 ; 8 uses
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.us
   %scevgep = getelementptr i8, ptr %i.ga, i64 %i.fm
   %bound0 = icmp ult ptr %i.ga, %scevgep170
-  %bound1 = icmp ult ptr %scevgep169, %scevgep
+  %bound1 = icmp ult ptr %i.fz, %scevgep
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.body
 

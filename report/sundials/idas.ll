@@ -203,7 +203,7 @@ bb.g:                                             ; preds = %bb.f
   br i1 %i.di, label %.preheader108.lr.ph.split, label %.preheader107.lr.ph
 
 .preheader108.lr.ph.split:                        ; preds = %.preheader108.lr.ph.thread, %.preheader108.lr.ph
-  %i.dj = phi i32 [ %i.dh, %.preheader108.lr.ph.thread ], [ %i.de, %.preheader108.lr.ph ] ; 6 uses
+  %i.dj = phi i32 [ %i.dh, %.preheader108.lr.ph.thread ], [ %i.de, %.preheader108.lr.ph ] ; 5 uses
   %i.dk = phi i32 [ %i.db, %.preheader108.lr.ph.thread ], [ %i.cz, %.preheader108.lr.ph ] ; 3 uses
   %i.dl = phi i32 [ %i.dc, %.preheader108.lr.ph.thread ], [ %i.da, %.preheader108.lr.ph ] ; 3 uses
   %i.dm = load ptr, ptr %i.am, align 8, !tbaa !101 ; 8 uses
@@ -232,12 +232,11 @@ bb.g:                                             ; preds = %bb.f
 
 .preheader108:                                    ; preds = %.preheader108.lr.ph.split, %._crit_edge117
   %indvars.iv158 = phi i64 [ %i.dn, %.preheader108.lr.ph.split ], [ %indvars.iv.next159, %._crit_edge117 ] ; 2 uses
-  %.085121 = phi i32 [ 0, %.preheader108.lr.ph.split ], [ %i.ef, %._crit_edge117 ] ; 5 uses
-  %2 = add i32 %i.dj, %.085121
+  %.085121 = phi i32 [ 0, %.preheader108.lr.ph.split ], [ %i.ef, %._crit_edge117 ] ; 4 uses
   %i.ec = add i32 %i.ea, %.085121
   %i.ed = getelementptr inbounds [8 x i8], ptr %i.al, i64 %indvars.iv158 ; 6 uses
   %i.ee = sext i32 %.085121 to i64                ; 4 uses
-  %i.ef = add i32 %i.dj, %.085121                 ; 2 uses
+  %i.ef = add i32 %i.dj, %.085121                 ; 3 uses
   br i1 %min.iters.check217, label %scalar.ph216.preheader, label %vector.memcheck211
 
 vector.memcheck211:                               ; preds = %.preheader108
@@ -275,7 +274,7 @@ middle.block223:                                  ; preds = %vector.body220
 scalar.ph216.preheader:                           ; preds = %vector.memcheck211, %.preheader108, %middle.block223
   %indvars.iv153.ph = phi i64 [ %i.ee, %vector.memcheck211 ], [ %i.ee, %.preheader108 ], [ %i.ei, %middle.block223 ] ; 3 uses
   %i.en = trunc i64 %indvars.iv153.ph to i32      ; 2 uses
-  %i.eo = sub i32 %2, %i.en
+  %i.eo = sub i32 %i.ef, %i.en
   %i.ep = sub i32 %i.ec, %i.en
   %xtraiter261 = and i32 %i.eo, 3                 ; 2 uses
   %lcmp.mod262.not = icmp eq i32 %xtraiter261, 0

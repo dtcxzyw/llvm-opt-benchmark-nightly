@@ -203,13 +203,12 @@ polybench_alloc_data.exit:                        ; preds = %bb.a
 
 .preheader84:                                     ; preds = %polybench_alloc_data.exit, %bb.c
   %indvars.iv133 = phi i64 [ 0, %polybench_alloc_data.exit ], [ %indvars.iv.next134, %bb.c ] ; 3 uses
-  %i.bk = shl nuw nsw i64 %indvars.iv133, 3       ; 2 uses
-  %scevgep14 = getelementptr nuw i8, ptr %0, i64 %i.bk
+  %i.bk = shl nuw nsw i64 %indvars.iv133, 3
   %i.bl = getelementptr i8, ptr %0, i64 %i.bk
   %scevgep15 = getelementptr i8, ptr %i.bl, i64 31984008
-  %invariant.gep96 = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %indvars.iv133 ; 7 uses
+  %invariant.gep96 = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %indvars.iv133 ; 8 uses
   %bound0 = icmp ult ptr %i.be, %scevgep15
-  %bound1 = icmp ult ptr %scevgep14, %scevgep13
+  %bound1 = icmp ult ptr %invariant.gep96, %scevgep13
   %found.conflict = and i1 %bound0, %bound1
   br label %.preheader83
 

@@ -199,14 +199,13 @@ bb.s:                                             ; preds = %._crit_edge900.us, 
   br label %bb.s
 
 .lr.ph891:                                        ; preds = %.lr.ph909, %bb.by
-  %indvars.iv946 = phi i32 [ %indvars.iv.next947, %bb.by ], [ 1, %.lr.ph909 ] ; 3 uses
+  %indvars.iv946 = phi i32 [ %indvars.iv.next947, %bb.by ], [ 1, %.lr.ph909 ] ; 2 uses
   %.0907 = phi i32 [ %i.si, %bb.by ], [ 1, %.lr.ph909 ] ; 4 uses
   %.0718906 = phi i32 [ %.7, %bb.by ], [ 0, %.lr.ph909 ]
   %.0719905 = phi i32 [ %.8, %bb.by ], [ 0, %.lr.ph909 ]
   %.0727904 = phi double [ %.8735, %bb.by ], [ 0.000000e+00, %.lr.ph909 ]
   %.0737903 = phi double [ %.7744, %bb.by ], [ 0.000000e+00, %.lr.ph909 ]
-  %18 = sext i32 %indvars.iv946 to i64            ; 2 uses
-  %i.dt = sext i32 %indvars.iv946 to i64          ; 6 uses
+  %i.dt = sext i32 %indvars.iv946 to i64          ; 8 uses
   %i.du = add nsw i32 %.0907, -1
   %i.dv = mul nsw i32 %i.du, %spec.select         ; 2 uses
   %i.dw = mul i32 %.0907, %spec.select            ; 2 uses
@@ -609,9 +608,9 @@ bb.bx:                                            ; preds = %.loopexit831, %bb.b
 
 iter.check1063:                                   ; preds = %..loopexit832_crit_edge
   %i.rb = sext i32 %.822 to i64                   ; 2 uses
-  %smax = call i64 @llvm.smax.i64(i64 %i.rb, i64 %18)
+  %smax = call i64 @llvm.smax.i64(i64 %i.rb, i64 %i.dt)
   %i.rc = add i64 %smax, 1
-  %i.rd = sub i64 %i.rc, %18                      ; 7 uses
+  %i.rd = sub i64 %i.rc, %i.dt                    ; 7 uses
   %min.iters.check1048 = icmp ult i64 %i.rd, 4
   br i1 %min.iters.check1048, label %.lr.ph899.preheader, label %vector.main.loop.iter.check1049
 

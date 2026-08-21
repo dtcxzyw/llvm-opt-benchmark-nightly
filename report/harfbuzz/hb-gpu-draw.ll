@@ -204,7 +204,7 @@ bb.h:                                             ; preds = %_ZL24_hb_gpu_draw_g
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.as = load ptr, ptr %i.ar, align 8, !tbaa !52 ; 9 uses
   %i.at = getelementptr inbounds nuw i8, ptr %0, i64 68
-  %i.au = load i32, ptr %i.at, align 4, !tbaa !53 ; 12 uses
+  %i.au = load i32, ptr %i.at, align 4, !tbaa !53 ; 13 uses
   %i.av = icmp eq i32 %i.au, 0
   br i1 %i.av, label %bb.i, label %bb.j
 
@@ -607,12 +607,11 @@ bb.cc:                                            ; preds = %"_ZN10hb_array_tIjE
   br i1 %.not950, label %._crit_edge893, label %.lr.ph892.preheader
 
 .lr.ph892.preheader:                              ; preds = %.preheader855
-  %umax1032 = tail call i32 @llvm.umax.i32(i32 %i.au, i32 2) ; 2 uses
+  %umax1032 = tail call i32 @llvm.umax.i32(i32 %i.au, i32 2)
   %wide.trip.count1033 = zext nneg i32 %umax1032 to i64
   %i.wq = add nsw i64 %wide.trip.count1033, -1    ; 2 uses
   %xtraiter1223 = and i64 %i.wq, 3                ; 3 uses
-  %2 = add nsw i32 %umax1032, -2
-  %i.wr = icmp ult i32 %2, 3
+  %i.wr = icmp ult i32 %i.au, 5
   br i1 %i.wr, label %.lr.ph892.epil.preheader, label %.lr.ph892.preheader.new
 
 .lr.ph892.preheader.new:                          ; preds = %.lr.ph892.preheader
