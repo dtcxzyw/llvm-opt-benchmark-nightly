@@ -204,27 +204,26 @@ bb.yi:                                            ; preds = %_ZL22lambda_vec_pri
   %i.exs = add i32 %i.exr, 1                      ; 2 uses
   %i.ext = sext i32 %i.exq to i64
   %i.exu = sext i32 %i.exs to i64
+  %invariant.op = add i32 %i.exq, -1
   br label %.preheader.i559
 
 .preheader.i559:                                  ; preds = %._crit_edge.i560, %.preheader.lr.ph.i558
   %indvar = phi i32 [ %indvar.next, %._crit_edge.i560 ], [ 0, %.preheader.lr.ph.i558 ] ; 2 uses
-  %indvars.iv44.i = phi i64 [ %indvars.iv.next45.i, %._crit_edge.i560 ], [ %i.ext, %.preheader.lr.ph.i558 ] ; 4 uses
+  %indvars.iv44.i = phi i64 [ %indvars.iv.next45.i, %._crit_edge.i560 ], [ %i.ext, %.preheader.lr.ph.i558 ] ; 6 uses
   %.02838.i = phi double [ %i.ezu, %._crit_edge.i560 ], [ 0.000000e+00, %.preheader.lr.ph.i558 ]
-  %67 = add i32 %i.exq, %indvar                   ; 2 uses
-  %68 = zext i32 %67 to i64                       ; 2 uses
   %i.exv = icmp sgt i64 %indvars.iv44.i, 0
   br i1 %i.exv, label %.lr.ph.i565, label %._crit_edge.i560
 
 .lr.ph.i565:                                      ; preds = %.preheader.i559
   %i.exw = mul nsw i64 %indvars.iv44.i, %i.exu
   %invariant.gep.i567 = getelementptr [8 x i8], ptr %i.ev, i64 %i.exw ; 9 uses
-  %xtraiter3983 = and i64 %68, 7                  ; 3 uses
-  %i.exx = add i32 %67, -1
+  %xtraiter3983 = and i64 %indvars.iv44.i, 7      ; 3 uses
+  %i.exx = add i32 %indvar, %invariant.op
   %i.exy = icmp ult i32 %i.exx, 7
   br i1 %i.exy, label %.epil.preheader3982, label %.lr.ph.i565.new
 
 .lr.ph.i565.new:                                  ; preds = %.lr.ph.i565
-  %unroll_iter3989 = and i64 %68, 4294967288
+  %unroll_iter3989 = and i64 %indvars.iv44.i, 4294967288
   br label %bb.yj
 
 bb.yj:                                            ; preds = %bb.yj, %.lr.ph.i565.new

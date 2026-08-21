@@ -28,7 +28,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not7178, label %.loopexit, label %.lr.ph81
 
 .lr.ph81:                                         ; preds = %bb.b
-  %i.i = load i32, ptr %1, align 4, !tbaa !8      ; 5 uses
+  %i.i = load i32, ptr %1, align 4, !tbaa !8      ; 4 uses
   %i.j = sext i32 %i.a to i64                     ; 3 uses
   %i.k = sext i32 %i.d to i64                     ; 3 uses
   %i.l = add nuw i32 %i.h, 1
@@ -50,15 +50,11 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %.lr.ph81, %._crit_edge
   %indvar = phi i64 [ 0, %.lr.ph81 ], [ %indvar.next, %._crit_edge ] ; 3 uses
-  %indvars.iv106 = phi i64 [ 1, %.lr.ph81 ], [ %indvars.iv.next107, %._crit_edge ] ; 7 uses
-  %7 = trunc i64 %indvars.iv106 to i32
-  %smin246 = tail call i32 @llvm.smin.i32(i32 %i.i, i32 %7)
-  %8 = add i32 %smin246, 1
-  %9 = zext i32 %8 to i64                         ; 2 uses
+  %indvars.iv106 = phi i64 [ 1, %.lr.ph81 ], [ %indvars.iv.next107, %._crit_edge ] ; 6 uses
   %i.y = trunc i64 %indvars.iv106 to i32
   %smin158 = tail call i32 @llvm.smin.i32(i32 %i.i, i32 %i.y)
   %i.z = add i32 %smin158, 1
-  %i.aa = zext i32 %i.z to i64
+  %i.aa = zext i32 %i.z to i64                    ; 3 uses
   %i.ab = add nsw i64 %i.aa, -1                   ; 7 uses
   %i.ac = mul i64 %i.o, %indvar                   ; 2 uses
   %scevgep = getelementptr i8, ptr %i.t, i64 %i.ac
@@ -157,7 +153,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 vec.epilog.scalar.ph.preheader:                   ; preds = %vector.memcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
   %indvars.iv.ph = phi i64 [ 1, %iter.check ], [ 1, %vector.memcheck ], [ %i.an, %vec.epilog.iter.check ], [ %i.ay, %vec.epilog.middle.block ] ; 4 uses
-  %i.bd = sub nsw i64 %9, %indvars.iv.ph
+  %i.bd = sub nsw i64 %i.aa, %indvars.iv.ph
   %xtraiter = and i64 %i.bd, 7                    ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %vec.epilog.scalar.ph.prol.loopexit, label %vec.epilog.scalar.ph.prol
@@ -176,7 +172,7 @@ vec.epilog.scalar.ph.prol:                        ; preds = %vec.epilog.scalar.p
 
 vec.epilog.scalar.ph.prol.loopexit:               ; preds = %vec.epilog.scalar.ph.prol, %vec.epilog.scalar.ph.preheader
   %indvars.iv.unr = phi i64 [ %indvars.iv.ph, %vec.epilog.scalar.ph.preheader ], [ %indvars.iv.next.prol, %vec.epilog.scalar.ph.prol ]
-  %i.bf = sub nsw i64 %indvars.iv.ph, %9
+  %i.bf = sub nsw i64 %indvars.iv.ph, %i.aa
   %i.bg = icmp ugt i64 %i.bf, -8
   br i1 %i.bg, label %._crit_edge, label %vec.epilog.scalar.ph
 

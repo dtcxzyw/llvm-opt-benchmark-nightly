@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %._crit_edge._crit_e
   %.val = load ptr, ptr %i.bp, align 8, !tbaa !7
   %.val.val = load ptr, ptr %.val, align 8, !tbaa !18 ; 2 uses
   %i.bq = getelementptr i8, ptr %.val75, i64 5600
-  %.val75.val = load ptr, ptr %i.bq, align 8, !tbaa !63 ; 4 uses
+  %.val75.val = load ptr, ptr %i.bq, align 8, !tbaa !63 ; 3 uses
   %i.br = getelementptr inbounds nuw i8, ptr %.val.val, i64 16 ; 3 uses
   %i.bs = load i32, ptr %i.br, align 8, !tbaa !30 ; 2 uses
   %.not.i = icmp eq i32 %i.bs, 0
@@ -218,9 +218,7 @@ bb.e:                                             ; preds = %._crit_edge._crit_e
   %.03110.i = phi ptr [ %i.eo, %.loopexit.i ], [ %.val75.val, %bb.e ] ; 4 uses
   %.0329.i = phi ptr [ %i.ep, %.loopexit.i ], [ %.pre, %bb.e ] ; 6 uses
   %.0338.i = phi i32 [ %i.eq, %.loopexit.i ], [ 0, %bb.e ]
-  %i.bu = mul nuw nsw i64 %indvar, 1080           ; 2 uses
-  %8 = getelementptr i8, ptr %.val75.val, i64 %i.bu
-  %scevgep194 = getelementptr i8, ptr %8, i64 1076
+  %i.bu = mul nuw nsw i64 %indvar, 1080
   %i.bv = getelementptr i8, ptr %.val75.val, i64 %i.bu
   %scevgep195 = getelementptr i8, ptr %i.bv, i64 1080
   %i.bw = getelementptr inbounds nuw i8, ptr %.0329.i, i64 48
@@ -291,7 +289,7 @@ scalar.ph198.preheader:                           ; preds = %.lr.ph.i, %middle.b
   br i1 %.not14.i, label %.loopexit.i, label %.lr.ph7.i
 
 .lr.ph7.i:                                        ; preds = %.preheader.i
-  %i.cz = getelementptr inbounds nuw i8, ptr %.03110.i, i64 1076 ; 6 uses
+  %i.cz = getelementptr inbounds nuw i8, ptr %.03110.i, i64 1076 ; 7 uses
   %min.iters.check = icmp ult i64 %i.cj, 8
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
@@ -300,7 +298,7 @@ vector.memcheck:                                  ; preds = %.lr.ph7.i
   %i.db = mul i64 %i.da, %i.cc
   %scevgep = getelementptr i8, ptr %i.bx, i64 %i.db
   %bound0 = icmp ult ptr %i.bx, %scevgep195
-  %bound1 = icmp ult ptr %scevgep194, %scevgep
+  %bound1 = icmp ult ptr %i.cz, %scevgep
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.ph
 
@@ -703,7 +701,7 @@ opj_tcd_mct_decode.exit:                          ; preds = %._crit_edge.i220, %
   %i.wg = load ptr, ptr %i.wf, align 8, !tbaa !70
   %i.wh = load ptr, ptr %i.j, align 8, !tbaa !161
   %i.wi = getelementptr inbounds nuw i8, ptr %i.wh, i64 5600
-  %i.wj = load ptr, ptr %i.wi, align 8, !tbaa !63 ; 3 uses
+  %i.wj = load ptr, ptr %i.wi, align 8, !tbaa !63 ; 2 uses
   %i.wk = getelementptr inbounds nuw i8, ptr %i.wb, i64 24
   %i.wl = load ptr, ptr %i.wk, align 8, !tbaa !25
   %i.wm = load ptr, ptr %i.p, align 8, !tbaa !56  ; 2 uses
@@ -715,9 +713,7 @@ bb.bw:                                            ; preds = %.loopexit.i, %.lr.p
   %.084112.i = phi ptr [ %i.wg, %.lr.ph.i222 ], [ %i.aau, %.loopexit.i ] ; 4 uses
   %.085111.i = phi ptr [ %i.wj, %.lr.ph.i222 ], [ %i.aav, %.loopexit.i ] ; 3 uses
   %.086110.i = phi ptr [ %i.wl, %.lr.ph.i222 ], [ %i.aaw, %.loopexit.i ] ; 5 uses
-  %i.wn = mul nuw nsw i64 %indvars.iv.i224, 1080  ; 2 uses
-  %12 = getelementptr i8, ptr %i.wj, i64 %i.wn
-  %scevgep380 = getelementptr i8, ptr %12, i64 1076
+  %i.wn = mul nuw nsw i64 %indvars.iv.i224, 1080
   %i.wo = getelementptr i8, ptr %i.wj, i64 %i.wn
   %scevgep381 = getelementptr i8, ptr %i.wo, i64 1080
   br i1 %.not.i223, label %bb.by, label %bb.bx
@@ -805,7 +801,7 @@ bb.cf:                                            ; preds = %bb.ce
   %i.yi = getelementptr inbounds nuw i8, ptr %.085111.i, i64 20
   %i.yj = load i32, ptr %i.yi, align 4, !tbaa !112
   %i.yk = icmp eq i32 %i.yj, 1
-  %i.yl = getelementptr inbounds nuw i8, ptr %.085111.i, i64 1076 ; 5 uses
+  %i.yl = getelementptr i8, ptr %.085111.i, i64 1076 ; 6 uses
   br i1 %i.yk, label %.preheader.i229.preheader, label %.preheader96.preheader.i
 
 .preheader.i229.preheader:                        ; preds = %bb.cf
@@ -842,7 +838,7 @@ vector.memcheck:                                  ; preds = %.preheader.i229
   %scevgep = getelementptr i8, ptr %.1109.i, i64 4
   %scevgep379 = getelementptr i8, ptr %scevgep, i64 %i.yp
   %bound0 = icmp ult ptr %.1109.i, %scevgep381
-  %bound1 = icmp ult ptr %scevgep380, %scevgep379
+  %bound1 = icmp ult ptr %i.yl, %scevgep379
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.ph
 
@@ -979,7 +975,7 @@ bb.cj:                                            ; preds = %bb.ci, %bb.ch, %bb.
 .loopexit.i:                                      ; preds = %._crit_edge.i227, %._crit_edge106.i, %bb.ce, %bb.bx
   %indvars.iv.next.i228 = add nuw nsw i64 %indvars.iv.i224, 1 ; 2 uses
   %i.aau = getelementptr inbounds nuw i8, ptr %.084112.i, i64 64
-  %i.aav = getelementptr inbounds nuw i8, ptr %.085111.i, i64 1080
+  %i.aav = getelementptr i8, ptr %.085111.i, i64 1080
   %i.aaw = getelementptr inbounds nuw i8, ptr %.086110.i, i64 112
   %i.aax = load i32, ptr %i.wc, align 8, !tbaa !30
   %i.aay = zext i32 %i.aax to i64

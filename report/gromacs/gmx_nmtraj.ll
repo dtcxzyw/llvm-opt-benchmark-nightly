@@ -204,7 +204,7 @@ _ZL13gmx_snew_implIiEvPKcS1_iRPT_m.exit207.preheader: ; preds = %_ZL13gmx_snew_i
   br i1 %i.hn, label %.preheader271.preheader, label %.lr.ph310.preheader
 
 .preheader271.preheader:                          ; preds = %.preheader272
-  %i.ho = load ptr, ptr %i.j, align 8             ; 3 uses
+  %i.ho = load ptr, ptr %i.j, align 8             ; 2 uses
   %wide.trip.count = and i64 %i.cf, 2147483647    ; 7 uses
   %i.hp = shl nuw nsw i64 %wide.trip.count, 2     ; 2 uses
   %scevgep = getelementptr i8, ptr %i.hj, i64 %i.hp ; 2 uses
@@ -226,17 +226,16 @@ _ZL13gmx_snew_implIiEvPKcS1_iRPT_m.exit207.preheader: ; preds = %_ZL13gmx_snew_i
 
 iter.check:                                       ; preds = %.preheader271.preheader, %._crit_edge307
   %indvars.iv358 = phi i64 [ 0, %.preheader271.preheader ], [ %indvars.iv.next359, %._crit_edge307 ] ; 4 uses
-  %i.hr = getelementptr inbounds nuw [4 x i8], ptr %i.ho, i64 %indvars.iv358 ; 7 uses
+  %i.hr = getelementptr inbounds nuw [4 x i8], ptr %i.ho, i64 %indvars.iv358 ; 8 uses
   %i.hs = trunc nuw nsw i64 %indvars.iv358 to i32 ; 7 uses
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.ht = shl nuw nsw i64 %indvars.iv358, 2       ; 2 uses
-  %15 = getelementptr i8, ptr %i.ho, i64 %i.ht
-  %scevgep523 = getelementptr i8, ptr %15, i64 4
-  %scevgep522 = getelementptr nuw i8, ptr %i.ho, i64 %i.ht
-  %bound0524 = icmp ult ptr %i.hj, %scevgep523
-  %bound1525 = icmp ult ptr %scevgep522, %scevgep
+  %i.ht = shl nuw nsw i64 %indvars.iv358, 2
+  %scevgep523 = getelementptr i8, ptr %i.ho, i64 %i.ht
+  %scevgep522 = getelementptr i8, ptr %scevgep523, i64 4
+  %bound0524 = icmp ult ptr %i.hj, %scevgep522
+  %bound1525 = icmp ult ptr %i.hr, %scevgep
   %found.conflict526 = and i1 %bound0524, %bound1525
   %conflict.rdx = or i1 %found.conflict, %found.conflict526
   br i1 %conflict.rdx, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check

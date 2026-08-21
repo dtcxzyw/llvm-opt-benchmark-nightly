@@ -204,11 +204,11 @@ datatype_check.exit:
   %i.e = shl i64 %1, 4
   %i.f = icmp ugt i64 %i.e, %3
   %i.g = lshr i64 %3, 4
-  %spec.select = select i1 %i.f, i64 %i.g, i64 %1 ; 7 uses
+  %spec.select = select i1 %i.f, i64 %i.g, i64 %1 ; 8 uses
   %i.h = icmp eq i64 %7, 16
   %i.i = icmp eq i64 %4, 16
   %or.cond = and i1 %i.i, %i.h                    ; 2 uses
-  %.064 = select i1 %or.cond, i64 %spec.select, i64 1 ; 7 uses
+  %.064 = select i1 %or.cond, i64 %spec.select, i64 1 ; 6 uses
   %.062 = select i1 %or.cond, i64 1, i64 %spec.select ; 7 uses
   %i.j = xor i32 %.061, %.060                     ; 2 uses
   %i.k = and i32 %i.j, 8126464
@@ -218,7 +218,6 @@ datatype_check.exit:
   %or.cond73 = icmp eq i32 %i.n, 5767168
   %i.o = and i32 %.060, 8126464
   %or.cond75 = icmp eq i32 %i.o, 5767168
-  %9 = add i64 %.064, -2
   %i.p = shl i64 %.064, 4                         ; 5 uses
   br i1 %i.l, label %datatype_check.exit.split.us, label %datatype_check.exit.split.preheader
 
@@ -502,7 +501,7 @@ opal_dt_swap_bytes.exit.loopexit.us.us:           ; preds = %.lr.ph.i.us.us
 
 datatype_check.exit.split:                        ; preds = %datatype_check.exit.split.preheader, %opal_dt_swap_bytes.exit
   %i.fx = phi i64 [ %i.lk, %opal_dt_swap_bytes.exit ], [ %alignment_of_long_double.val.promoted, %datatype_check.exit.split.preheader ] ; 3 uses
-  %.066 = phi ptr [ %i.pm, %opal_dt_swap_bytes.exit ], [ %5, %datatype_check.exit.split.preheader ] ; 51 uses
+  %.066 = phi ptr [ %i.pm, %opal_dt_swap_bytes.exit ], [ %5, %datatype_check.exit.split.preheader ] ; 50 uses
   %.065 = phi ptr [ %i.pn, %opal_dt_swap_bytes.exit ], [ %2, %datatype_check.exit.split.preheader ] ; 37 uses
   %.163 = phi i64 [ %i.po, %opal_dt_swap_bytes.exit ], [ %.062, %datatype_check.exit.split.preheader ]
   %i.fy = load i32, ptr @opal_local_arch, align 4, !tbaa !20
@@ -905,18 +904,15 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.m, label %.lr.ph.i114, label %opal_dt_swap_bytes.exit
 
 .lr.ph.i114:                                      ; preds = %bb.d, %.lr.ph.i114
-  %indvar.i = phi i64 [ %indvar.next.i, %.lr.ph.i114 ], [ 0, %bb.d ] ; 3 uses
   %.046.i = phi ptr [ %i.pj, %.lr.ph.i114 ], [ %.066, %bb.d ]
-  %10 = shl i64 %indvar.i, 4
-  %11 = getelementptr i8, ptr %.066, i64 %10
-  %scevgep.i = getelementptr i8, ptr %11, i64 16
-  %i.pj = getelementptr inbounds nuw i8, ptr %.046.i, i64 16 ; 2 uses
-  %i.pk = load <16 x i8>, ptr %scevgep.i, align 1, !tbaa !25
+  %.03545.i = phi i64 [ %indvar.next.i, %.lr.ph.i114 ], [ %spec.select, %bb.d ]
+  %i.pj = getelementptr inbounds nuw i8, ptr %.046.i, i64 16 ; 3 uses
+  %i.pk = load <16 x i8>, ptr %i.pj, align 1, !tbaa !25
   %i.pl = shufflevector <16 x i8> %i.pk, <16 x i8> poison, <16 x i32> <i32 15, i32 14, i32 13, i32 12, i32 11, i32 10, i32 9, i32 8, i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
   store <16 x i8> %i.pl, ptr %i.pj, align 1, !tbaa !25
-  %indvar.next.i = add nuw i64 %indvar.i, 1
-  %exitcond.not.i115 = icmp eq i64 %indvar.i, %9
-  br i1 %exitcond.not.i115, label %opal_dt_swap_bytes.exit, label %.lr.ph.i114, !llvm.loop !62
+  %indvar.next.i = add i64 %.03545.i, -1          ; 2 uses
+  %9 = icmp ugt i64 %indvar.next.i, 1
+  br i1 %9, label %.lr.ph.i114, label %opal_dt_swap_bytes.exit, !llvm.loop !62
 
 opal_dt_swap_bytes.exit:                          ; preds = %.lr.ph.i114, %.lr.ph.i105, %bb.d, %.preheader121.preheader, %f128_to_ldbl.exit
   %i.pm = getelementptr inbounds i8, ptr %.066, i64 %7
@@ -1319,7 +1315,6 @@ datatype_check.exit:
   %i.p = and i32 %.060, 8126464
   %or.cond75 = icmp eq i32 %i.p, 5767168
   %i.q = sdiv i64 %7, 2                           ; 3 uses
-  %9 = add i64 %.064, -2
   %i.r = shl i64 %.064, 4                         ; 5 uses
   br i1 %i.m, label %datatype_check.exit.split.us, label %datatype_check.exit.split.preheader
 
@@ -1603,7 +1598,7 @@ opal_dt_swap_bytes.exit.loopexit.us:              ; preds = %.lr.ph.i.us
 
 datatype_check.exit.split:                        ; preds = %datatype_check.exit.split.preheader, %opal_dt_swap_bytes.exit
   %i.fz = phi i64 [ %i.lm, %opal_dt_swap_bytes.exit ], [ %alignment_of_long_double.val.promoted, %datatype_check.exit.split.preheader ] ; 3 uses
-  %.066 = phi ptr [ %i.po, %opal_dt_swap_bytes.exit ], [ %5, %datatype_check.exit.split.preheader ] ; 51 uses
+  %.066 = phi ptr [ %i.po, %opal_dt_swap_bytes.exit ], [ %5, %datatype_check.exit.split.preheader ] ; 50 uses
   %.065 = phi ptr [ %i.pp, %opal_dt_swap_bytes.exit ], [ %2, %datatype_check.exit.split.preheader ] ; 37 uses
   %.163 = phi i64 [ %i.pq, %opal_dt_swap_bytes.exit ], [ %.062, %datatype_check.exit.split.preheader ]
   %i.ga = load i32, ptr @opal_local_arch, align 4, !tbaa !20
@@ -2006,18 +2001,15 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not120, label %opal_dt_swap_bytes.exit, label %.lr.ph.i114
 
 .lr.ph.i114:                                      ; preds = %bb.d, %.lr.ph.i114
-  %indvar.i = phi i64 [ %indvar.next.i, %.lr.ph.i114 ], [ 0, %bb.d ] ; 3 uses
   %.046.i = phi ptr [ %i.pl, %.lr.ph.i114 ], [ %.066, %bb.d ]
-  %10 = shl i64 %indvar.i, 4
-  %11 = getelementptr i8, ptr %.066, i64 %10
-  %scevgep.i = getelementptr i8, ptr %11, i64 16
-  %i.pl = getelementptr inbounds nuw i8, ptr %.046.i, i64 16 ; 2 uses
-  %i.pm = load <16 x i8>, ptr %scevgep.i, align 1, !tbaa !25
+  %.03545.i = phi i64 [ %indvar.next.i, %.lr.ph.i114 ], [ %.064, %bb.d ]
+  %i.pl = getelementptr inbounds nuw i8, ptr %.046.i, i64 16 ; 3 uses
+  %i.pm = load <16 x i8>, ptr %i.pl, align 1, !tbaa !25
   %i.pn = shufflevector <16 x i8> %i.pm, <16 x i8> poison, <16 x i32> <i32 15, i32 14, i32 13, i32 12, i32 11, i32 10, i32 9, i32 8, i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
   store <16 x i8> %i.pn, ptr %i.pl, align 1, !tbaa !25
-  %indvar.next.i = add nuw i64 %indvar.i, 1
-  %exitcond.not.i115 = icmp eq i64 %indvar.i, %9
-  br i1 %exitcond.not.i115, label %opal_dt_swap_bytes.exit, label %.lr.ph.i114, !llvm.loop !62
+  %indvar.next.i = add i64 %.03545.i, -1          ; 2 uses
+  %9 = icmp ugt i64 %indvar.next.i, 1
+  br i1 %9, label %.lr.ph.i114, label %opal_dt_swap_bytes.exit, !llvm.loop !62
 
 opal_dt_swap_bytes.exit:                          ; preds = %.lr.ph.i114, %.lr.ph.i105, %bb.d, %.preheader125.preheader, %f128_to_ldbl.exit
   %i.po = getelementptr inbounds i8, ptr %.066, i64 %7

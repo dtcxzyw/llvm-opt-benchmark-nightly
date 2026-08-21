@@ -204,7 +204,7 @@ bb.x:                                             ; preds = %._crit_edge
   br label %bb.y
 
 bb.y:                                             ; preds = %bb.aa, %.lr.ph.i.i.i.i
-  %indvar = phi i64 [ %indvar.next, %bb.aa ], [ 0, %.lr.ph.i.i.i.i ] ; 3 uses
+  %indvar = phi i64 [ %indvar.next, %bb.aa ], [ 0, %.lr.ph.i.i.i.i ] ; 2 uses
   %.sroa.08.020.i.idx.i.i.i = phi i64 [ %.sroa.08.020.i.add.i.i.i, %bb.aa ], [ 16, %.lr.ph.i.i.i.i ] ; 3 uses
   %.pn19.i.i.i.i = phi ptr [ %.sroa.08.020.i.ptr.i.i.i, %bb.aa ], [ %.pre, %.lr.ph.i.i.i.i ] ; 3 uses
   %.sroa.08.020.i.ptr.i.i.i = getelementptr inbounds nuw i8, ptr %.pre, i64 %.sroa.08.020.i.idx.i.i.i ; 6 uses
@@ -216,10 +216,9 @@ bb.y:                                             ; preds = %bb.aa, %.lr.ph.i.i.
   br i1 %i.ee, label %.lr.ph.i.i.i.i.i.preheader.i.i.i.i, label %bb.z
 
 .lr.ph.i.i.i.i.i.preheader.i.i.i.i:               ; preds = %bb.y
-  %7 = add i64 %indvar, 1
-  %i.ef = lshr exact i64 %.sroa.08.020.i.idx.i.i.i, 4 ; 2 uses
+  %i.ef = lshr exact i64 %.sroa.08.020.i.idx.i.i.i, 4 ; 3 uses
   %i.eg = getelementptr inbounds nuw i8, ptr %.pn19.i.i.i.i, i64 32 ; 2 uses
-  %xtraiter563 = and i64 %7, 3                    ; 2 uses
+  %xtraiter563 = and i64 %i.ef, 3                 ; 2 uses
   %lcmp.mod564.not = icmp eq i64 %xtraiter563, 0
   br i1 %lcmp.mod564.not, label %.lr.ph.i.i.i.i.i.i.i.i.i.prol.loopexit, label %.lr.ph.i.i.i.i.i.i.i.i.i.prol
 

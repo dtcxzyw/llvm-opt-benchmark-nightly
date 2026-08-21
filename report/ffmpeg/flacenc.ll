@@ -204,14 +204,11 @@ count_frame_header.exit:                          ; preds = %.loopexit.i, %bb.c,
   br label %bb.e
 
 bb.e:                                             ; preds = %.lr.ph, %encode_residual_ch.exit
-  %indvar.a = phi i64 [ 0, %.lr.ph ], [ %indvar.next, %encode_residual_ch.exit ] ; 3 uses
+  %indvar.a = phi i64 [ 0, %.lr.ph ], [ %indvar.next, %encode_residual_ch.exit ] ; 2 uses
   %.0123 = phi i64 [ %i.ao, %.lr.ph ], [ %i.aas, %encode_residual_ch.exit ]
-  %1 = mul nuw nsw i64 %indvar.a, 853192
-  %2 = getelementptr i8, ptr %0, i64 %1
-  %scevgep = getelementptr i8, ptr %2, i64 124
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #13
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #13
-  %i.be = getelementptr inbounds nuw [853192 x i8], ptr %i.as, i64 %indvar.a ; 49 uses
+  %i.be = getelementptr inbounds nuw [853192 x i8], ptr %i.as, i64 %indvar.a ; 50 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %i.be, i64 591004 ; 30 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %i.be, i64 328864 ; 31 uses
   %i.bh = load i32, ptr %i.au, align 16, !tbaa !85 ; 32 uses
@@ -614,11 +611,12 @@ lpc_encode_choose_datapath.exit:                  ; preds = %.loopexit108
   br i1 %i.xn, label %.lr.ph574.i, label %._crit_edge575.i
 
 .lr.ph574.i:                                      ; preds = %.loopexit.i16
+  %1 = getelementptr inbounds nuw i8, ptr %i.be, i64 20
   %i.xo = getelementptr [128 x i8], ptr %i.a, i64 %.pre-phi630.i
   %i.xp = getelementptr i8, ptr %i.xo, i64 -128
   %smax = call i64 @llvm.smax.i64(i64 %.pre-phi630.i, i64 1)
   %i.xq = shl nuw nsw i64 %smax, 2
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep, ptr noundef nonnull align 16 dereferenceable(1) %i.xp, i64 %i.xq, i1 false), !tbaa !47
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %1, ptr noundef nonnull align 16 dereferenceable(1) %i.xp, i64 %i.xq, i1 false), !tbaa !47
   %.pre626.i = load i32, ptr %i.xm, align 4, !tbaa !151
   br label %._crit_edge575.i
 

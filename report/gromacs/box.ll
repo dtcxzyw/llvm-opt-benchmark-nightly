@@ -204,14 +204,11 @@ bb.f:                                             ; preds = %bb.e, %.lr.ph12.spl
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.af, %.loopexit
-  %indvar.i = phi i64 [ 0, %.loopexit ], [ %indvar.next.i, %bb.af ] ; 21 uses
+  %indvar.i = phi i64 [ 0, %.loopexit ], [ %indvar.next.i, %bb.af ] ; 20 uses
   %indvars.iv.i = phi i64 [ 1, %.loopexit ], [ %indvars.iv.next.i, %bb.af ] ; 5 uses
   %i.fx = xor i64 %indvar.i, -1
   %i.fy = add nsw i64 %i.fx, %wide.trip.count.i   ; 2 uses
   %i.fz = sub i64 %i.fw, %indvar.i
-  %9 = mul nuw nsw i64 %indvar.i, 48
-  %10 = getelementptr i8, ptr %6, i64 %9
-  %scevgep.i38 = getelementptr i8, ptr %10, i64 68
   %i.ga = shl nuw nsw i64 %indvar.i, 2
   %i.gb = getelementptr inbounds nuw [4 x i8], ptr %i.fl, i64 %indvar.i ; 7 uses
   store i32 0, ptr %i.gb, align 4, !tbaa !122
@@ -393,7 +390,7 @@ bb.aa:                                            ; preds = %bb.z
   %i.id = getelementptr inbounds nuw [4 x i8], ptr %i.ic, i64 %indvar.next.i
   %i.ie = load float, ptr %i.id, align 4, !tbaa !129
   %i.if = fdiv float 1.000000e+00, %i.ie          ; 3 uses
-  %i.ig = getelementptr inbounds nuw [12 x i8], ptr %i.ia, i64 %indvar.next.i ; 7 uses
+  %i.ig = getelementptr inbounds nuw [12 x i8], ptr %i.ia, i64 %indvar.next.i ; 8 uses
   %i.ih = load float, ptr %i.ic, align 4, !tbaa !129
   %i.ii = fmul float %i.if, %i.ih                 ; 3 uses
   store float %i.ii, ptr %i.ig, align 4, !tbaa !129
@@ -462,7 +459,7 @@ bb.ab:                                            ; preds = %bb.aa
   br label %bb.ad
 
 bb.ac:                                            ; preds = %bb.aa
-  call void @llvm.memset.p0.i64(ptr align 4 %scevgep.i38, i8 0, i64 %i.ga, i1 false), !tbaa !129
+  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ig, i8 0, i64 %i.ga, i1 false), !tbaa !129
   %i.kf = getelementptr inbounds nuw i8, ptr %i.ig, i64 4
   %i.kg = load float, ptr %i.kf, align 4, !tbaa !129 ; 3 uses
   %i.kh = fmul float %i.kg, %i.kg

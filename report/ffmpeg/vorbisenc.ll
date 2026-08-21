@@ -204,10 +204,10 @@ bb.t:                                             ; preds = %._crit_edge317.i, %
   br i1 %i.gc, label %.lr.ph322.i, label %._crit_edge323.i
 
 .lr.ph322.i:                                      ; preds = %.preheader297.i, %._crit_edge320.i
-  %indvar.i = phi i64 [ %indvar.next.i, %._crit_edge320.i ], [ 0, %.preheader297.i ] ; 4 uses
+  %indvar.i = phi i64 [ %indvar.next.i, %._crit_edge320.i ], [ 0, %.preheader297.i ] ; 3 uses
   %i.gd = load ptr, ptr %i.ga, align 8, !tbaa !82
   %i.ge = getelementptr inbounds nuw [24 x i8], ptr %i.gd, i64 %indvar.i ; 3 uses
-  %i.gf = getelementptr inbounds nuw [28 x i8], ptr @floor_classes, i64 %indvar.i ; 3 uses
+  %i.gf = getelementptr inbounds nuw [28 x i8], ptr @floor_classes, i64 %indvar.i ; 4 uses
   %i.gg = getelementptr inbounds nuw i8, ptr %i.gf, i64 4
   %i.gh = load i32, ptr %i.gg, align 4, !tbaa !83
   %i.gi = load <2 x i32>, ptr %i.gf, align 4, !tbaa !46
@@ -225,9 +225,7 @@ bb.t:                                             ; preds = %._crit_edge317.i, %
   br i1 %.not273.not.i, label %create_vorbis_context.exit.thread, label %._crit_edge320.i
 
 ._crit_edge320.i:                                 ; preds = %.lr.ph322.i
-  %1 = mul nuw nsw i64 %indvar.i, 28
-  %2 = getelementptr i8, ptr @floor_classes, i64 %1
-  %scevgep.i = getelementptr i8, ptr %2, i64 12
+  %scevgep.i = getelementptr inbounds nuw i8, ptr %i.gf, i64 12
   %smax.i = tail call i32 @llvm.smax.i32(i32 %i.gm, i32 1)
   %i.gq = zext nneg i32 %smax.i to i64
   %i.gr = shl nuw nsw i64 %i.gq, 2

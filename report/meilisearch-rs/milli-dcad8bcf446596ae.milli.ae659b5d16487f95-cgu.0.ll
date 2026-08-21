@@ -205,8 +205,8 @@ _ZN4core5slice6rotate18ptr_rotate_memmove17h88c263b8adbf9a70E.exit.i.i: ; preds 
   br label %"_ZN4core5slice29_$LT$impl$u20$$u5b$T$u5d$$GT$11rotate_left17hd00322fa8685b749E.exit"
 
 .preheader.i.i:                                   ; preds = %bb.d, %.loopexit.i.i.i
-  %.sroa.016.0.i.i.i = phi i64 [ %.sroa.016.2.i.i.i, %.loopexit.i.i.i ], [ %i.t, %bb.d ] ; 22 uses
-  %.sroa.010.0.i.i.i = phi ptr [ %.sroa.010.2.i.i.i, %.loopexit.i.i.i ], [ %i.u, %bb.d ] ; 13 uses
+  %.sroa.016.0.i.i.i = phi i64 [ %.sroa.016.2.i.i.i, %.loopexit.i.i.i ], [ %i.t, %bb.d ] ; 21 uses
+  %.sroa.010.0.i.i.i = phi ptr [ %.sroa.010.2.i.i.i, %.loopexit.i.i.i ], [ %i.u, %bb.d ] ; 11 uses
   %.sroa.0.0.i.i.i = phi i64 [ %.sroa.0.1.i.i.i, %.loopexit.i.i.i ], [ %2, %bb.d ] ; 24 uses
   %.not.i2.i.i = icmp ult i64 %.sroa.0.0.i.i.i, %.sroa.016.0.i.i.i
   br i1 %.not.i2.i.i, label %.preheader.split.preheader.i.i.i, label %.preheader41.split.i.i.i
@@ -222,14 +222,13 @@ _ZN4core5slice6rotate18ptr_rotate_memmove17h88c263b8adbf9a70E.exit.i.i: ; preds 
   br i1 %.not.i.i30.i.i.i, label %.preheader41.split.split.us.i.i.i, label %.preheader.i.i31.preheader.i.i.i.preheader
 
 .preheader.i.i31.preheader.i.i.i.preheader:       ; preds = %.preheader41.split.i.i.i
-  %4 = mul i64 %.sroa.016.0.i.i.i, -4
   %i.ai = shl i64 %i.af, 3                        ; 2 uses
   %i.aj = shl i64 %.sroa.016.0.i.i.i, 2
   %i.ak = sub i64 %i.ai, %i.aj
+  %4 = mul i64 %.sroa.016.0.i.i.i, -4
   %min.iters.check291 = icmp ult i64 %.sroa.016.0.i.i.i, 8
   %i.al = getelementptr i8, ptr %.sroa.010.0.i.i.i, i64 %i.ai
   %i.am = getelementptr i8, ptr %.sroa.010.0.i.i.i, i64 %i.ak
-  %5 = shl i64 %.sroa.016.0.i.i.i, 2
   %n.vec293 = and i64 %i.af, 9223372036854775804  ; 3 uses
   %cmp.n302 = icmp eq i64 %i.af, %n.vec293
   %i.an = and i64 %.sroa.016.0.i.i.i, 2
@@ -278,13 +277,13 @@ _ZN4core3ptr25swap_nonoverlapping_bytes26swap_nonoverlapping_chunks17h7c7e4ceb13
   br i1 %.not.i.i.i.i.i, label %.preheader.split.preheader.i.split.us.i.i, label %.preheader.split.i.i.i.preheader
 
 .preheader.split.i.i.i.preheader:                 ; preds = %.preheader.split.preheader.i.i.i
-  %i.bb = shl i64 %.sroa.0.0.i.i.i, 2             ; 2 uses
-  %i.bc = shl i64 %i.ay, 3                        ; 2 uses
-  %i.bd = sub i64 %i.bc, %i.bb
+  %i.bb = shl i64 %i.ay, 3                        ; 2 uses
+  %i.bc = shl i64 %.sroa.0.0.i.i.i, 2
+  %i.bd = sub i64 %i.bb, %i.bc
+  %5 = shl i64 %.sroa.0.0.i.i.i, 2
   %min.iters.check = icmp ult i64 %.sroa.0.0.i.i.i, 8
-  %i.be = getelementptr i8, ptr %.sroa.010.0.i.i.i, i64 %i.bc
+  %i.be = getelementptr i8, ptr %.sroa.010.0.i.i.i, i64 %i.bb
   %i.bf = getelementptr i8, ptr %.sroa.010.0.i.i.i, i64 %i.bd
-  %6 = shl i64 %.sroa.0.0.i.i.i, 2
   %n.vec = and i64 %i.ay, 9223372036854775804     ; 3 uses
   %cmp.n = icmp eq i64 %i.ay, %n.vec
   %i.bg = and i64 %.sroa.0.0.i.i.i, 2
@@ -323,17 +322,15 @@ _ZN4core3ptr25swap_nonoverlapping_bytes26swap_nonoverlapping_chunks17h7c7e4ceb13
   %indvar = phi i64 [ 0, %.preheader.split.i.i.i.preheader ], [ %indvar.next, %_ZN4core3ptr19swap_nonoverlapping17hf44f21b189018eeeE.exit.i.i.i ] ; 2 uses
   %.sroa.016.1.i.i.i = phi i64 [ %.sroa.016.0.i.i.i, %.preheader.split.i.i.i.preheader ], [ %i.ck, %_ZN4core3ptr19swap_nonoverlapping17hf44f21b189018eeeE.exit.i.i.i ]
   %.sroa.010.1.i.i.i = phi ptr [ %.sroa.010.0.i.i.i, %.preheader.split.i.i.i.preheader ], [ %i.cj, %_ZN4core3ptr19swap_nonoverlapping17hf44f21b189018eeeE.exit.i.i.i ] ; 8 uses
-  %i.bq = getelementptr inbounds [4 x i8], ptr %.sroa.010.1.i.i.i, i64 %i.aw ; 5 uses
+  %i.bq = getelementptr inbounds [4 x i8], ptr %.sroa.010.1.i.i.i, i64 %i.aw ; 6 uses
   br i1 %min.iters.check, label %.preheader.i.i.i.i.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.preheader.split.i.i.i
-  %i.br = mul i64 %i.bb, %indvar                  ; 3 uses
-  %scevgep277 = getelementptr i8, ptr %i.be, i64 %i.br
-  %scevgep276 = getelementptr i8, ptr %i.bf, i64 %i.br
-  %7 = sub i64 %i.br, %6
-  %scevgep = getelementptr i8, ptr %.sroa.010.0.i.i.i, i64 %7
-  %bound0 = icmp ult ptr %scevgep, %scevgep277
-  %bound1 = icmp ult ptr %.sroa.010.1.i.i.i, %scevgep276
+  %i.br = mul i64 %5, %indvar                     ; 2 uses
+  %scevgep276 = getelementptr i8, ptr %i.be, i64 %i.br
+  %scevgep = getelementptr i8, ptr %i.bf, i64 %i.br
+  %bound0 = icmp ult ptr %i.bq, %scevgep276
+  %bound1 = icmp ult ptr %.sroa.010.1.i.i.i, %scevgep
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %.preheader.i.i.i.i.i.preheader, label %vector.body
 
@@ -439,17 +436,15 @@ _ZN4core3ptr19swap_nonoverlapping17hf44f21b189018eeeE.exit.i.i.i: ; preds = %bb.
   %indvar282 = phi i64 [ 0, %.preheader.i.i31.preheader.i.i.i.preheader ], [ %indvar.next283, %_ZN4core3ptr19swap_nonoverlapping17hf44f21b189018eeeE.exit40.i.i.i ] ; 2 uses
   %.sroa.010.3.i.i.i = phi ptr [ %.sroa.010.0.i.i.i, %.preheader.i.i31.preheader.i.i.i.preheader ], [ %i.co, %_ZN4core3ptr19swap_nonoverlapping17hf44f21b189018eeeE.exit40.i.i.i ] ; 7 uses
   %.sroa.0.2.i.i.i = phi i64 [ %.sroa.0.0.i.i.i, %.preheader.i.i31.preheader.i.i.i.preheader ], [ %i.dh, %_ZN4core3ptr19swap_nonoverlapping17hf44f21b189018eeeE.exit40.i.i.i ]
-  %i.co = getelementptr inbounds [4 x i8], ptr %.sroa.010.3.i.i.i, i64 %i.ad ; 7 uses
+  %i.co = getelementptr inbounds [4 x i8], ptr %.sroa.010.3.i.i.i, i64 %i.ad ; 8 uses
   br i1 %min.iters.check291, label %.preheader.i.i31.i.i.i.preheader, label %vector.memcheck281
 
 vector.memcheck281:                               ; preds = %.preheader.i.i31.preheader.i.i.i
-  %i.cp = mul i64 %4, %indvar282                  ; 3 uses
-  %scevgep286 = getelementptr i8, ptr %i.al, i64 %i.cp
-  %scevgep285 = getelementptr i8, ptr %i.am, i64 %i.cp
-  %8 = sub i64 %i.cp, %5
-  %scevgep284 = getelementptr i8, ptr %.sroa.010.0.i.i.i, i64 %8
-  %bound0287 = icmp ult ptr %scevgep284, %scevgep286
-  %bound1288 = icmp ult ptr %.sroa.010.3.i.i.i, %scevgep285
+  %i.cp = mul i64 %4, %indvar282                  ; 2 uses
+  %scevgep285 = getelementptr i8, ptr %i.al, i64 %i.cp
+  %scevgep284 = getelementptr i8, ptr %i.am, i64 %i.cp
+  %bound0287 = icmp ult ptr %i.co, %scevgep285
+  %bound1288 = icmp ult ptr %.sroa.010.3.i.i.i, %scevgep284
   %found.conflict289 = and i1 %bound0287, %bound1288
   br i1 %found.conflict289, label %.preheader.i.i31.i.i.i.preheader, label %vector.body294
 

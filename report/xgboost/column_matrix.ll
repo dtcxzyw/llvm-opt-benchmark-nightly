@@ -203,7 +203,7 @@ _ZNSt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14defaul
 
 _ZNSt6vectorImSaImEEC2EmRKmRKS0_.exit:            ; preds = %_ZN7xgboost6common15RefResourceViewINS0_10ColumnTypeEED2Ev.exit, %.noexc
   %.sroa.12.0 = phi i64 [ 0, %_ZN7xgboost6common15RefResourceViewINS0_10ColumnTypeEED2Ev.exit ], [ %i.bc, %.noexc ] ; 2 uses
-  %.sroa.0112.0 = phi ptr [ null, %_ZN7xgboost6common15RefResourceViewINS0_10ColumnTypeEED2Ev.exit ], [ %i.ba, %.noexc ] ; 15 uses
+  %.sroa.0112.0 = phi ptr [ null, %_ZN7xgboost6common15RefResourceViewINS0_10ColumnTypeEED2Ev.exit ], [ %i.ba, %.noexc ] ; 14 uses
   %i.ce = invoke noundef nonnull align 8 dereferenceable(24) ptr @_ZNK7xgboost16HostDeviceVectorIjE15ConstHostVectorEv(ptr noundef nonnull align 8 dereferenceable(8) %i.g)
           to label %.noexc75 unwind label %.loopexit.split-lp ; 2 uses
 
@@ -231,8 +231,7 @@ _ZNSt6vectorImSaImEEC2EmRKmRKS0_.exit:            ; preds = %_ZN7xgboost6common1
 bb.t:                                             ; preds = %.loopexit.i, %.lr.ph16.i
   %i.cp = phi i64 [ 0, %.lr.ph16.i ], [ %i.cx, %.loopexit.i ] ; 3 uses
   %.01215.i = phi i32 [ 0, %.lr.ph16.i ], [ %i.cw, %.loopexit.i ]
-  %i.cq = shl nuw nsw i64 %i.cp, 3                ; 2 uses
-  %scevgep = getelementptr i8, ptr %.sroa.0112.0, i64 %i.cq
+  %i.cq = shl nuw nsw i64 %i.cp, 3
   %scevgep159.a = getelementptr i8, ptr %scevgep158.a, i64 %i.cq
   %i.cr = invoke noundef nonnull align 8 dereferenceable(24) ptr @_ZNK7xgboost16HostDeviceVectorIjE15ConstHostVectorEv(ptr noundef nonnull align 8 dereferenceable(8) %i.g)
           to label %.noexc76 unwind label %.loopexit
@@ -255,7 +254,7 @@ bb.t:                                             ; preds = %.loopexit.i, %.lr.p
 
 .lr.ph.i:                                         ; preds = %.noexc77
   %i.dc = load ptr, ptr %i.cn, align 8, !tbaa !50 ; 8 uses
-  %i.dd = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0112.0, i64 %i.cp ; 7 uses
+  %i.dd = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0112.0, i64 %i.cp ; 8 uses
   %.promoted.i = load i64, ptr %i.dd, align 8, !tbaa !32 ; 3 uses
   %i.de = zext i32 %i.cu to i64                   ; 6 uses
   %wide.trip.count.i = zext i32 %i.da to i64      ; 5 uses
@@ -268,7 +267,7 @@ vector.memcheck:                                  ; preds = %.lr.ph.i
   %scevgep160.a = getelementptr nuw i8, ptr %i.dc, i64 %i.dg
   %i.dh = shl nuw nsw i64 %wide.trip.count.i, 3
   %scevgep161 = getelementptr i8, ptr %i.dc, i64 %i.dh
-  %bound0 = icmp ult ptr %scevgep, %scevgep161
+  %bound0 = icmp ult ptr %i.dd, %scevgep161
   %bound1 = icmp ult ptr %scevgep160.a, %scevgep159.a
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.ph

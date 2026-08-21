@@ -46,7 +46,7 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #2
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_ZN3igl9quad_gridIN5Eigen6MatrixIiLin1ELin1ELi0ELin1ELin1EEES3_EEviiRNS1_15PlainObjectBaseIT_EERNS4_IT0_EE(i32 noundef %0, i32 noundef %1, ptr noundef nonnull align 8 dereferenceable(24) %2, ptr noundef nonnull align 8 dereferenceable(24) %3) local_unnamed_addr #0 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = sext i32 %0 to i64                       ; 6 uses
+  %i.a = sext i32 %0 to i64                       ; 5 uses
   %i.b = sext i32 %1 to i64                       ; 2 uses
   %i.c = icmp eq i32 %0, 0
   %i.d = icmp eq i32 %1, 0
@@ -92,7 +92,7 @@ _ZN5Eigen8internal23check_size_for_overflowIiEEvm.exit.i.i: ; preds = %bb.c
   unreachable
 
 _ZN5Eigen6MatrixIiLin1ELin1ELi0ELin1ELin1EEC2IiiEERKT_RKT0_.exit: ; preds = %_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.i.i, %_ZN5Eigen8internal23check_size_for_overflowIiEEvm.exit.i.i
-  %.sroa.0.0 = phi ptr [ null, %_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.i.i ], [ %i.m, %_ZN5Eigen8internal23check_size_for_overflowIiEEvm.exit.i.i ] ; 9 uses
+  %.sroa.0.0 = phi ptr [ null, %_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.i.i ], [ %i.m, %_ZN5Eigen8internal23check_size_for_overflowIiEEvm.exit.i.i ] ; 8 uses
   %i.p = add nsw i32 %0, -1                       ; 2 uses
   %i.q = add nsw i32 %1, -1                       ; 2 uses
   %i.r = mul nsw i32 %i.q, %i.p
@@ -127,7 +127,6 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exi
   %wide.trip.count126 = zext nneg i32 %0 to i64
   %exitcond127.peel.not = icmp eq i32 %0, 1
   %i.ad = add nsw i64 %wide.trip.count, -2        ; 3 uses
-  %4 = shl nuw nsw i64 %i.a, 2
   %i.ae = shl nuw nsw i64 %i.a, 2
   %i.af = add nsw i64 %wide.trip.count126, -1     ; 3 uses
   %mul.result = shl nsw i64 %i.ad, 3              ; 4 uses
@@ -140,13 +139,11 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exi
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.preheader, %._crit_edge
-  %indvars.iv131 = phi i64 [ 0, %.preheader.preheader ], [ %indvars.iv.next132, %._crit_edge ] ; 6 uses
+  %indvars.iv131 = phi i64 [ 0, %.preheader.preheader ], [ %indvars.iv.next132, %._crit_edge ] ; 5 uses
   %.052117 = phi i32 [ 0, %.preheader.preheader ], [ %.us-phi114, %._crit_edge ] ; 5 uses
   %.053116 = phi i32 [ 0, %.preheader.preheader ], [ %.us-phi113, %._crit_edge ] ; 6 uses
   %.056115 = phi i32 [ 0, %.preheader.preheader ], [ %.us-phi, %._crit_edge ] ; 5 uses
-  %5 = mul i64 %i.ae, %indvars.iv131
-  %scevgep158 = getelementptr i8, ptr %.sroa.0.0, i64 %5
-  %i.ah = mul i64 %4, %indvars.iv131
+  %i.ah = mul i64 %i.ae, %indvars.iv131
   %scevgep157 = getelementptr i8, ptr %.sroa.0.0, i64 %i.ah
   %i.ai = mul nuw nsw i64 %indvars.iv131, %i.a    ; 5 uses
   %.not105 = icmp eq i64 %indvars.iv131, 0
@@ -155,7 +152,7 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exi
   br i1 %.not105, label %.thread.us.peel, label %.thread.peel
 
 .thread.us.peel:                                  ; preds = %.preheader
-  %invariant.gep = getelementptr [4 x i8], ptr %.sroa.0.0, i64 %i.ai ; 4 uses
+  %invariant.gep = getelementptr [4 x i8], ptr %.sroa.0.0, i64 %i.ai ; 5 uses
   store i32 %.056115, ptr %invariant.gep, align 4, !tbaa !9
   %i.al = add nsw i32 %.056115, 1                 ; 3 uses
   br i1 %exitcond127.peel.not, label %._crit_edge, label %.peel.next129
@@ -163,7 +160,7 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exi
 .peel.next129:                                    ; preds = %.thread.us.peel
   %i.am = load ptr, ptr %3, align 8, !tbaa !12    ; 3 uses
   %i.an = load i64, ptr %i.ab, align 8, !tbaa !17 ; 3 uses
-  %load_initial159 = load i32, ptr %scevgep158, align 4 ; 2 uses
+  %load_initial159 = load i32, ptr %invariant.gep, align 4 ; 2 uses
   br i1 %i.ag, label %.thread.us.epil.preheader, label %.thread.us
 
 .thread.us:                                       ; preds = %.peel.next129, %.thread.us

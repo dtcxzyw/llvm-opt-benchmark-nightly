@@ -204,11 +204,9 @@ bb.r:                                             ; preds = %bb.q
   br label %.preheader370.us
 
 .preheader370.us:                                 ; preds = %.preheader370.us.preheader, %._crit_edge397.us
-  %.5406.us = phi i32 [ %i.pe, %._crit_edge397.us ], [ 0, %.preheader370.us.preheader ] ; 5 uses
-  %7 = mul i32 %2, %.5406.us
-  %8 = mul i32 %2, %.5406.us
+  %.5406.us = phi i32 [ %i.pe, %._crit_edge397.us ], [ 0, %.preheader370.us.preheader ] ; 3 uses
   %i.mx = mul i32 %.5406.us, %5                   ; 7 uses
-  %i.my = mul i32 %.5406.us, %2                   ; 13 uses
+  %i.my = mul i32 %.5406.us, %2                   ; 15 uses
   br i1 %.not470, label %.lr.ph396.split.us410, label %.lr.ph396.split.us.us.preheader
 
 .lr.ph396.split.us.us.preheader:                  ; preds = %.preheader370.us
@@ -261,7 +259,7 @@ ma_channel_map_get_channel.exit350.us407.preheader: ; preds = %.lr.ph396.split.u
   br i1 %min.iters.check72, label %ma_channel_map_get_channel.exit350.us407.preheader187, label %vector.scevcheck81
 
 vector.scevcheck81:                               ; preds = %ma_channel_map_get_channel.exit350.us407.preheader
-  %i.oa = xor i32 %7, -1
+  %i.oa = xor i32 %i.my, -1
   %i.ob = icmp ult i32 %i.oa, %i.mt
   %i.oc = or i1 %i.ob, %i.mu
   br i1 %i.oc, label %ma_channel_map_get_channel.exit350.us407.preheader187, label %vector.body86
@@ -315,7 +313,7 @@ ma_channel_map_get_channel.exit350.us405.us.preheader: ; preds = %.lr.ph396.spli
   br i1 %min.iters.check72, label %ma_channel_map_get_channel.exit350.us405.us.preheader186, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %ma_channel_map_get_channel.exit350.us405.us.preheader
-  %i.op = xor i32 %8, -1
+  %i.op = xor i32 %i.my, -1
   %i.oq = icmp ult i32 %i.op, %i.mv
   %i.or = or i1 %i.oq, %i.mw
   br i1 %i.or, label %ma_channel_map_get_channel.exit350.us405.us.preheader186, label %vector.body75
@@ -718,7 +716,7 @@ bb.ad:                                            ; preds = %.lr.ph424, %bb.ad
   br i1 %i.afq, label %.preheader366, label %.loopexit362
 
 .loopexit362:                                     ; preds = %._crit_edge425, %._crit_edge443, %scalar.ph95, %middle.block135, %.preheader367, %.preheader364, %.preheader361, %._crit_edge416
-  %.3 = phi i32 [ 0, %._crit_edge416 ], [ %i.aby, %scalar.ph95 ], [ %i.adt, %._crit_edge443 ], [ 0, %.preheader361 ], [ 0, %.preheader364 ], [ 0, %.preheader367 ], [ %n.vec98, %middle.block135 ], [ %i.afo, %._crit_edge425 ] ; 3 uses
+  %.3 = phi i32 [ 0, %._crit_edge416 ], [ %i.aby, %scalar.ph95 ], [ %i.adt, %._crit_edge443 ], [ 0, %.preheader361 ], [ 0, %.preheader364 ], [ 0, %.preheader367 ], [ %n.vec98, %middle.block135 ], [ %i.afo, %._crit_edge425 ] ; 2 uses
   %i.afr = zext i32 %.3 to i64
   %i.afs = icmp ugt i64 %6, %i.afr
   br i1 %i.afs, label %.preheader360.lr.ph, label %.loopexit
@@ -748,19 +746,16 @@ bb.ad:                                            ; preds = %.lr.ph424, %bb.ad
   br label %.preheader360.us
 
 .preheader360.us:                                 ; preds = %.preheader360.lr.ph, %._crit_edge463.us
-  %indvar = phi i32 [ 0, %.preheader360.lr.ph ], [ %indvar.next, %._crit_edge463.us ] ; 2 uses
-  %.4464.us = phi i32 [ %.3, %.preheader360.lr.ph ], [ %i.ahc, %._crit_edge463.us ] ; 3 uses
-  %9 = add i32 %.3, %indvar
-  %10 = mul i32 %9, %2
+  %.4464.us = phi i32 [ %i.ahc, %._crit_edge463.us ], [ %.3, %.preheader360.lr.ph ] ; 3 uses
   %i.afy = mul i32 %.4464.us, %5                  ; 5 uses
-  %i.afz = mul i32 %.4464.us, %2                  ; 7 uses
+  %i.afz = mul i32 %.4464.us, %2                  ; 8 uses
   br i1 %.not479, label %.preheader.us465.preheader, label %.preheader.us.us
 
 .preheader.us465.preheader:                       ; preds = %.preheader360.us
   br i1 %min.iters.check140, label %.preheader.us465.preheader169, label %vector.scevcheck138
 
 vector.scevcheck138:                              ; preds = %.preheader.us465.preheader
-  %i.aga = xor i32 %10, -1
+  %i.aga = xor i32 %i.afz, -1
   %i.agb = icmp ult i32 %i.aga, %i.afw
   %i.agc = or i1 %i.agb, %i.afx
   br i1 %i.agc, label %.preheader.us465.preheader169, label %vector.body143
@@ -840,7 +835,6 @@ middle.block146:                                  ; preds = %vector.body143
   %i.ahc = add i32 %.4464.us, 1                   ; 2 uses
   %i.ahd = zext i32 %i.ahc to i64
   %i.ahe = icmp ugt i64 %6, %i.ahd
-  %indvar.next = add i32 %indvar, 1
   br i1 %i.ahe, label %.preheader360.us, label %.loopexit
 
 .preheader.us.us:                                 ; preds = %.preheader360.us, %._crit_edge460.us.us
@@ -1243,6 +1237,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.d
+  %3 = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 5 uses
   %wide.trip.count = zext i32 %i.t to i64         ; 2 uses
   %xtraiter = and i64 %wide.trip.count, 3         ; 3 uses
   %i.u = icmp ult i32 %i.t, 4
@@ -1263,15 +1258,12 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.e, %.epil.preheader
-  %indvar.epil = phi i64 [ %indvar.epil.init, %.epil.preheader ], [ %indvar.next.epil, %bb.e ] ; 3 uses
+  %indvar.epil = phi i64 [ %indvar.epil.init, %.epil.preheader ], [ %indvar.next.epil, %bb.e ] ; 2 uses
   %epil.iter = phi i64 [ 0, %.epil.preheader ], [ %epil.iter.next, %bb.e ]
-  %3 = shl nuw nsw i64 %indvar.epil, 5
-  %4 = getelementptr i8, ptr %1, i64 %3
-  %scevgep.epil = getelementptr i8, ptr %4, i64 12
-  %i.v = getelementptr inbounds nuw [32 x i8], ptr %1, i64 %indvar.epil
-  %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 28
+  %i.v = getelementptr inbounds nuw [32 x i8], ptr %3, i64 %indvar.epil ; 2 uses
+  %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 16
   store <4 x i32> <i32 0, i32 0, i32 -8192, i32 16384>, ptr %i.w, align 4
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %scevgep.epil, i8 0, i64 16, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.v, i8 0, i64 16, i1 false)
   %indvar.next.epil = add nuw nsw i64 %indvar.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
@@ -1299,37 +1291,25 @@ bb.e:                                             ; preds = %bb.e, %.epil.prehea
   br i1 %.not66, label %._crit_edge65, label %.lr.ph64
 
 bb.f:                                             ; preds = %bb.f, %.lr.ph.new
-  %indvar = phi i64 [ 0, %.lr.ph.new ], [ %indvar.next.3, %bb.f ] ; 6 uses
+  %indvar = phi i64 [ 0, %.lr.ph.new ], [ %indvar.next.3, %bb.f ] ; 5 uses
   %niter = phi i64 [ 0, %.lr.ph.new ], [ %niter.next.3, %bb.f ]
-  %5 = shl nuw nsw i64 %indvar, 5
-  %6 = getelementptr i8, ptr %1, i64 %5
-  %scevgep = getelementptr i8, ptr %6, i64 12
-  %i.aj = getelementptr inbounds nuw [32 x i8], ptr %1, i64 %indvar
-  %i.ak = getelementptr inbounds nuw i8, ptr %i.aj, i64 28
+  %i.aj = getelementptr inbounds nuw [32 x i8], ptr %3, i64 %indvar ; 2 uses
+  %i.ak = getelementptr inbounds nuw i8, ptr %i.aj, i64 16
   store <4 x i32> <i32 0, i32 0, i32 -8192, i32 16384>, ptr %i.ak, align 4
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %scevgep, i8 0, i64 16, i1 false)
-  %indvar.next = or disjoint i64 %indvar, 1       ; 2 uses
-  %7 = shl nuw nsw i64 %indvar.next, 5
-  %8 = getelementptr i8, ptr %1, i64 %7
-  %scevgep.1 = getelementptr i8, ptr %8, i64 12
-  %9 = getelementptr inbounds nuw [32 x i8], ptr %1, i64 %indvar.next
-  %i.al = getelementptr inbounds nuw i8, ptr %9, i64 28
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.aj, i8 0, i64 16, i1 false)
+  %4 = getelementptr inbounds nuw [32 x i8], ptr %3, i64 %indvar ; 2 uses
+  %scevgep.1 = getelementptr inbounds nuw i8, ptr %4, i64 32
+  %i.al = getelementptr inbounds nuw i8, ptr %4, i64 48
   store <4 x i32> <i32 0, i32 0, i32 -8192, i32 16384>, ptr %i.al, align 4
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %scevgep.1, i8 0, i64 16, i1 false)
-  %indvar.next.1 = or disjoint i64 %indvar, 2     ; 2 uses
-  %10 = shl nuw nsw i64 %indvar.next.1, 5
-  %11 = getelementptr i8, ptr %1, i64 %10
-  %scevgep.2 = getelementptr i8, ptr %11, i64 12
-  %12 = getelementptr inbounds nuw [32 x i8], ptr %1, i64 %indvar.next.1
-  %i.am = getelementptr inbounds nuw i8, ptr %12, i64 28
+  %5 = getelementptr inbounds nuw [32 x i8], ptr %3, i64 %indvar ; 2 uses
+  %scevgep.2 = getelementptr inbounds nuw i8, ptr %5, i64 64
+  %i.am = getelementptr inbounds nuw i8, ptr %5, i64 80
   store <4 x i32> <i32 0, i32 0, i32 -8192, i32 16384>, ptr %i.am, align 4
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %scevgep.2, i8 0, i64 16, i1 false)
-  %indvar.next.2 = or disjoint i64 %indvar, 3     ; 2 uses
-  %13 = shl nuw nsw i64 %indvar.next.2, 5
-  %14 = getelementptr i8, ptr %1, i64 %13
-  %scevgep.3 = getelementptr i8, ptr %14, i64 12
-  %15 = getelementptr inbounds nuw [32 x i8], ptr %1, i64 %indvar.next.2
-  %i.an = getelementptr inbounds nuw i8, ptr %15, i64 28
+  %6 = getelementptr inbounds nuw [32 x i8], ptr %3, i64 %indvar ; 2 uses
+  %scevgep.3 = getelementptr inbounds nuw i8, ptr %6, i64 96
+  %i.an = getelementptr inbounds nuw i8, ptr %6, i64 112
   store <4 x i32> <i32 0, i32 0, i32 -8192, i32 16384>, ptr %i.an, align 4
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %scevgep.3, i8 0, i64 16, i1 false)
   %indvar.next.3 = add nuw nsw i64 %indvar, 4     ; 2 uses
