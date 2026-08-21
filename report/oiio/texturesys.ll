@@ -204,9 +204,8 @@ bb.z:                                             ; preds = %_ZN11OpenImageIO4v3
   br i1 %.not372, label %.preheader2104, label %bb.aa
 
 .preheader2104:                                   ; preds = %bb.z
-  %39 = shl nuw nsw i64 %indvar, 6
-  %scevgep = getelementptr nuw i8, ptr %31, i64 %39
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(64) %scevgep, i8 0, i64 64, i1 false), !tbaa !34
+  %39 = getelementptr inbounds nuw [64 x i8], ptr %31, i64 %indvar
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(64) %39, i8 0, i64 64, i1 false), !tbaa !34
   br label %.thread
 
 bb.aa:                                            ; preds = %bb.z

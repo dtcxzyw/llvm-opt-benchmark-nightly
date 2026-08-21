@@ -43,9 +43,7 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph57, %DependencyGenerator_next.exit.thread
   %i.h = phi i32 [ %i.e, %.lr.ph57 ], [ %i.ft, %DependencyGenerator_next.exit.thread ]
   %.055 = phi ptr [ null, %.lr.ph57 ], [ %.1.lcssa, %DependencyGenerator_next.exit.thread ] ; 2 uses
-  %.03854 = phi i32 [ 2, %.lr.ph57 ], [ %i.fs, %DependencyGenerator_next.exit.thread ] ; 14 uses
-  %1 = zext i32 %.03854 to i64                    ; 2 uses
-  %2 = zext i32 %.03854 to i64                    ; 2 uses
+  %.03854 = phi i32 [ 2, %.lr.ph57 ], [ %i.fs, %DependencyGenerator_next.exit.thread ] ; 12 uses
   %i.i = call ptr @palloc0(i64 noundef 24) #7     ; 8 uses
   %i.j = sext i32 %.03854 to i64                  ; 4 uses
   %i.k = call ptr @palloc_mul(i64 noundef 2, i64 noundef %i.j) #7
@@ -69,20 +67,20 @@ bb.b:                                             ; preds = %.lr.ph57, %Dependen
 
 DependencyGenerator_next.exit.lr.ph:              ; preds = %bb.b
   %i.u = icmp sgt i32 %.03854, 0                  ; 2 uses
-  %wide.trip.count.i = zext i32 %.03854 to i64
+  %wide.trip.count.i = zext i32 %.03854 to i64    ; 5 uses
   %i.v = add i32 %.03854, -2
   %i.w = add i32 %.03854, -1
   %i.x = shl nsw i64 %i.j, 1
   %i.y = add nsw i64 %i.x, 10
   %i.z = trunc i32 %.03854 to i16
-  %xtraiter = and i64 %2, 3                       ; 3 uses
+  %xtraiter = and i64 %wide.trip.count.i, 3       ; 3 uses
   %i.aa = icmp ult i32 %.03854, 4
-  %unroll_iter = and i64 %2, 2147483644
+  %unroll_iter = and i64 %wide.trip.count.i, 2147483644
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   %lcmp.mod75 = icmp ne i64 %xtraiter, 0
-  %xtraiter76 = and i64 %1, 3                     ; 3 uses
+  %xtraiter76 = and i64 %wide.trip.count.i, 3     ; 3 uses
   %i.ab = icmp ult i32 %.03854, 4
-  %unroll_iter80 = and i64 %1, 2147483644
+  %unroll_iter80 = and i64 %wide.trip.count.i, 2147483644
   %lcmp.mod78.not = icmp eq i64 %xtraiter76, 0
   %lcmp.mod79 = icmp ne i64 %xtraiter76, 0
   br label %DependencyGenerator_next.exit

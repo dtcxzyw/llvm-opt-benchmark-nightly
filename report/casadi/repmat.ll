@@ -201,13 +201,13 @@ bb.b:                                             ; preds = %bb.a
 
 _ZNK6casadi6MXNode3depEx.exit:                    ; preds = %bb.a
   %i.e = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZNK6casadi2MX8sparsityEv(ptr noundef nonnull align 8 dereferenceable(8) %i.d)
-  %i.f = tail call noundef i64 @_ZNK6casadi8Sparsity3nnzEv(ptr noundef nonnull align 8 dereferenceable(8) %i.e) ; 6 uses
+  %i.f = tail call noundef i64 @_ZNK6casadi8Sparsity3nnzEv(ptr noundef nonnull align 8 dereferenceable(8) %i.e) ; 5 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.h = tail call noundef i64 @_ZNK6casadi8Sparsity3nnzEv(ptr noundef nonnull align 8 dereferenceable(8) %i.g) ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
   %i.j = load i64, ptr %i.i, align 8, !tbaa !10
   %i.k = icmp sgt i64 %i.j, 0
-  %.pre = load ptr, ptr %2, align 8, !tbaa !70    ; 5 uses
+  %.pre = load ptr, ptr %2, align 8, !tbaa !70    ; 3 uses
   br i1 %i.k, label %.lr.ph, label %._crit_edge.split
 
 .lr.ph:                                           ; preds = %_ZNK6casadi6MXNode3depEx.exit
@@ -216,14 +216,12 @@ _ZNK6casadi6MXNode3depEx.exit:                    ; preds = %bb.a
   br i1 %.not12.i, label %._crit_edge.split, label %.lr.ph.i.preheader.preheader
 
 .lr.ph.i.preheader.preheader:                     ; preds = %.lr.ph
-  %i.m = shl i64 %i.f, 3                          ; 2 uses
+  %i.m = shl i64 %i.f, 3
   %scevgep = getelementptr i8, ptr %i.l, i64 %i.m
-  %5 = shl i64 %i.f, 3
   %i.n = add i64 %i.f, 2305843009213693951
   %i.o = and i64 %i.n, 2305843009213693951        ; 2 uses
   %i.p = add nuw nsw i64 %i.o, 1                  ; 2 uses
   %min.iters.check = icmp samesign ult i64 %i.o, 3
-  %6 = getelementptr i8, ptr %.pre, i64 %i.m
   %n.vec = and i64 %i.p, 4611686018427387900      ; 3 uses
   %i.q = shl i64 %n.vec, 3                        ; 2 uses
   %i.r = getelementptr i8, ptr %i.l, i64 %i.q
@@ -243,20 +241,17 @@ _ZSt4fillIPyiEvT_S1_RKT0_.exit:                   ; preds = %.lr.ph.i.i.i.prehea
   ret i32 0
 
 .lr.ph.i.preheader:                               ; preds = %.lr.ph.i.preheader.preheader, %_ZSt9transformIPyS0_S0_PFyyyEET1_T_S4_T0_S3_T2_.exit.loopexit
-  %.014 = phi i64 [ %i.u, %_ZSt9transformIPyS0_S0_PFyyyEET1_T_S4_T0_S3_T2_.exit.loopexit ], [ 0, %.lr.ph.i.preheader.preheader ] ; 3 uses
-  %i.s = mul nsw i64 %.014, %i.f
-  %i.t = getelementptr inbounds [8 x i8], ptr %.pre, i64 %i.s ; 4 uses
+  %.014 = phi i64 [ %i.u, %_ZSt9transformIPyS0_S0_PFyyyEET1_T_S4_T0_S3_T2_.exit.loopexit ], [ 0, %.lr.ph.i.preheader.preheader ] ; 2 uses
+  %i.s = mul i64 %.014, %i.f
+  %i.t = getelementptr [8 x i8], ptr %.pre, i64 %i.s ; 5 uses
   %i.u = add nuw nsw i64 %.014, 1                 ; 3 uses
   %i.v = mul nsw i64 %i.u, %i.f
-  %i.w = getelementptr inbounds [8 x i8], ptr %.pre, i64 %i.v
+  %i.w = getelementptr inbounds [8 x i8], ptr %.pre, i64 %i.v ; 2 uses
   br i1 %min.iters.check, label %.lr.ph.i.preheader24, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.preheader
-  %7 = mul i64 %5, %.014                          ; 2 uses
-  %scevgep18 = getelementptr i8, ptr %6, i64 %7
-  %scevgep17 = getelementptr i8, ptr %.pre, i64 %7
-  %bound0 = icmp ult ptr %i.l, %scevgep18
-  %bound1 = icmp ult ptr %scevgep17, %scevgep
+  %bound0 = icmp ult ptr %i.l, %i.w
+  %bound1 = icmp ult ptr %i.t, %scevgep
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %.lr.ph.i.preheader24, label %vector.ph
 
@@ -659,7 +654,7 @@ bb.a:
   br label %_ZSt4fillIPyiEvT_S1_RKT0_.exit
 
 _ZSt4fillIPyiEvT_S1_RKT0_.exit:                   ; preds = %.lr.ph.i.i.i.preheader, %bb.a
-  %i.d = tail call noundef i64 @_ZNK6casadi8Sparsity3nnzEv(ptr noundef nonnull align 8 dereferenceable(8) %i.a) ; 8 uses
+  %i.d = tail call noundef i64 @_ZNK6casadi8Sparsity3nnzEv(ptr noundef nonnull align 8 dereferenceable(8) %i.a) ; 7 uses
   %i.e = icmp slt i64 %i.d, 1
   br i1 %i.e, label %_ZSt6fill_nIPyxiET_S1_T0_RKT1_.exit.i, label %.lr.ph.i.i.i.i.i
 
@@ -678,16 +673,14 @@ _ZSt6fill_nIPyxiET_S1_T0_RKT1_.exit.i:            ; preds = %.lr.ph.i.i.i.i.i, %
   br i1 %or.cond.i, label %_ZNK6casadi10HorzRepsum8eval_genIyPFyyyEEEiPPKT_PPS4_PxS8_T0_.exit, label %.lr.ph.i.preheader.i.preheader
 
 .lr.ph.i.preheader.i.preheader:                   ; preds = %_ZSt6fill_nIPyxiET_S1_T0_RKT1_.exit.i
-  %i.j = load ptr, ptr %1, align 8, !tbaa !70     ; 4 uses
+  %i.j = load ptr, ptr %1, align 8, !tbaa !70     ; 2 uses
   %i.k = load ptr, ptr %2, align 8, !tbaa !70     ; 6 uses
-  %i.l = shl i64 %i.d, 3                          ; 2 uses
+  %i.l = shl i64 %i.d, 3
   %scevgep = getelementptr i8, ptr %i.k, i64 %i.l
-  %5 = shl i64 %i.d, 3
   %i.m = add i64 %i.d, 2305843009213693951
   %i.n = and i64 %i.m, 2305843009213693951        ; 2 uses
   %i.o = add nuw nsw i64 %i.n, 1                  ; 2 uses
   %min.iters.check = icmp samesign ult i64 %i.n, 3
-  %6 = getelementptr i8, ptr %i.j, i64 %i.l
   %n.vec = and i64 %i.o, 4611686018427387900      ; 3 uses
   %i.p = shl i64 %n.vec, 3                        ; 2 uses
   %i.q = getelementptr i8, ptr %i.k, i64 %i.p
@@ -695,20 +688,17 @@ _ZSt6fill_nIPyxiET_S1_T0_RKT1_.exit.i:            ; preds = %.lr.ph.i.i.i.i.i, %
   br label %.lr.ph.i.preheader.i
 
 .lr.ph.i.preheader.i:                             ; preds = %.lr.ph.i.preheader.i.preheader, %_ZSt9transformIPKyPyS2_PFyyyEET1_T_S6_T0_S5_T2_.exit.loopexit.i
-  %.013.i = phi i64 [ %i.t, %_ZSt9transformIPKyPyS2_PFyyyEET1_T_S6_T0_S5_T2_.exit.loopexit.i ], [ 0, %.lr.ph.i.preheader.i.preheader ] ; 3 uses
-  %i.r = mul nsw i64 %.013.i, %i.d
-  %i.s = getelementptr inbounds [8 x i8], ptr %i.j, i64 %i.r ; 4 uses
+  %.013.i = phi i64 [ %i.t, %_ZSt9transformIPKyPyS2_PFyyyEET1_T_S6_T0_S5_T2_.exit.loopexit.i ], [ 0, %.lr.ph.i.preheader.i.preheader ] ; 2 uses
+  %i.r = mul i64 %.013.i, %i.d
+  %i.s = getelementptr [8 x i8], ptr %i.j, i64 %i.r ; 5 uses
   %i.t = add nuw nsw i64 %.013.i, 1               ; 3 uses
   %i.u = mul nsw i64 %i.t, %i.d
-  %i.v = getelementptr inbounds [8 x i8], ptr %i.j, i64 %i.u
+  %i.v = getelementptr inbounds [8 x i8], ptr %i.j, i64 %i.u ; 2 uses
   br i1 %min.iters.check, label %.lr.ph.i.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.preheader.i
-  %7 = mul i64 %5, %.013.i                        ; 2 uses
-  %scevgep9 = getelementptr i8, ptr %6, i64 %7
-  %scevgep8 = getelementptr i8, ptr %i.j, i64 %7
-  %bound0 = icmp ult ptr %i.k, %scevgep9
-  %bound1 = icmp ult ptr %scevgep8, %scevgep
+  %bound0 = icmp ult ptr %i.k, %i.v
+  %bound1 = icmp ult ptr %i.s, %scevgep
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %.lr.ph.i.i.preheader, label %vector.ph
 
@@ -778,7 +768,7 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a
   %i.f = getelementptr i8, ptr %.pre, i64 %.idx14 ; 2 uses
-  %i.g = load ptr, ptr %1, align 8, !tbaa !70     ; 3 uses
+  %i.g = load ptr, ptr %1, align 8, !tbaa !70     ; 2 uses
   %.not12.i = icmp eq i64 %i.b, 0
   br i1 %.not12.i, label %_ZSt4fillIPyiEvT_S1_RKT0_.exit, label %.lr.ph.i.preheader.preheader
 
@@ -808,16 +798,15 @@ _ZSt4fillIPyiEvT_S1_RKT0_.exit:                   ; preds = %.lr.ph, %.lr.ph.i.i
 
 .lr.ph.i.preheader:                               ; preds = %.lr.ph.i.preheader.preheader, %_ZSt9transformIPyS0_S0_PFyyyEET1_T_S4_T0_S3_T2_.exit.loopexit
   %.015 = phi i64 [ %i.ad, %_ZSt9transformIPyS0_S0_PFyyyEET1_T_S4_T0_S3_T2_.exit.loopexit ], [ 0, %.lr.ph.i.preheader.preheader ] ; 3 uses
-  %i.o = mul nsw i64 %.015, %i.b
-  %i.p = getelementptr inbounds [8 x i8], ptr %i.g, i64 %i.o ; 4 uses
+  %i.o = mul i64 %.015, %i.b
+  %i.p = getelementptr [8 x i8], ptr %i.g, i64 %i.o ; 5 uses
   br i1 %min.iters.check, label %.lr.ph.i.preheader26, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.preheader
-  %i.q = mul i64 %i.h, %.015                      ; 2 uses
-  %scevgep20 = getelementptr i8, ptr %i.l, i64 %i.q
-  %scevgep = getelementptr i8, ptr %i.g, i64 %i.q
-  %bound0 = icmp ult ptr %scevgep, %i.f
-  %bound1 = icmp ult ptr %.pre, %scevgep20
+  %i.q = mul i64 %i.h, %.015
+  %scevgep = getelementptr i8, ptr %i.l, i64 %i.q
+  %bound0 = icmp ult ptr %i.p, %i.f
+  %bound1 = icmp ult ptr %.pre, %scevgep
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %.lr.ph.i.preheader26, label %vector.ph
 

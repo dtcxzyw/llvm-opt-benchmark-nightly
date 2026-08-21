@@ -204,7 +204,7 @@ define internal range(i32 0, 2) i32 @_control_merge_hdr_process(ptr nofree nound
 bb.a:
   %12 = alloca %struct.dt_image_t, align 16       ; 19 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 152
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !18   ; 53 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !18   ; 54 uses
   %i.c = tail call ptr @dt_image_cache_get(i32 noundef %7, i8 noundef signext 114) #17 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #17
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(1888) %12, ptr noundef nonnull align 16 dereferenceable(1888) %i.c, i64 1888, i1 false), !tbaa.struct !233
@@ -465,18 +465,19 @@ bb.a:
   %i.gv = load float, ptr %i.gu, align 16, !tbaa !32
   %i.gw = tail call float @llvm.fabs.f32(float %i.gv)
   %i.gx = fcmp ueq float %i.gw, +inf
-  %scevgep279 = getelementptr i8, ptr %i.b, i64 112 ; 2 uses
   br i1 %i.gx, label %.preheader241, label %.preheader245
 
 .preheader245:                                    ; preds = %.preheader246
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(36) %scevgep279, ptr noundef nonnull align 16 dereferenceable(36) %i.gu, i64 36, i1 false), !tbaa !32
+  %13 = getelementptr inbounds nuw i8, ptr %i.b, i64 112
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(36) %13, ptr noundef nonnull align 16 dereferenceable(36) %i.gu, i64 36, i1 false), !tbaa !32
   %i.gy = getelementptr inbounds nuw i8, ptr %i.b, i64 148
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.gy, i8 0, i64 12, i1 false), !tbaa !32
   br label %.loopexit242
 
 .preheader241:                                    ; preds = %.preheader246
-  %scevgep280 = getelementptr inbounds nuw i8, ptr %12, i64 1792
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(48) %scevgep279, ptr noundef nonnull align 16 dereferenceable(48) %scevgep280, i64 48, i1 false), !tbaa !32
+  %14 = getelementptr inbounds nuw i8, ptr %12, i64 1792
+  %scevgep280 = getelementptr i8, ptr %i.b, i64 112
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(48) %scevgep280, ptr noundef nonnull align 16 dereferenceable(48) %14, i64 48, i1 false), !tbaa !32
   br label %.loopexit242
 
 .loopexit242:                                     ; preds = %.preheader245, %.preheader241

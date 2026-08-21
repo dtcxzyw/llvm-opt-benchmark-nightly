@@ -201,7 +201,7 @@ list_length.exit:                                 ; preds = %bb.a, %bb.b
   %i.f = phi i32 [ %i.e, %bb.b ], [ 0, %bb.a ]    ; 3 uses
   %i.g = sext i32 %i.f to i64                     ; 2 uses
   %i.h = mul nsw i64 %i.g, 72
-  %i.i = tail call ptr @palloc(i64 noundef %i.h) #7 ; 6 uses
+  %i.i = tail call ptr @palloc(i64 noundef %i.h) #7 ; 4 uses
   %i.j = load ptr, ptr %6, align 8                ; 3 uses
   %i.k = load i32, ptr %7, align 4                ; 4 uses
   %i.l = mul nsw i64 %i.g, 40
@@ -223,7 +223,6 @@ list_length.exit:                                 ; preds = %bb.a, %bb.b
   br i1 %i.w, label %.lr.ph647, label %.critedge365
 
 .lr.ph647:                                        ; preds = %.lr.ph, %bb.cg
-  %scevgep646 = phi ptr [ %scevgep, %bb.cg ], [ %i.i, %.lr.ph ]
   %.0303452645 = phi ptr [ %.8311, %bb.cg ], [ %i.j, %.lr.ph ] ; 9 uses
   %.0296453644 = phi i32 [ %.5301, %bb.cg ], [ %i.k, %.lr.ph ] ; 11 uses
   %.0292454643 = phi i32 [ %.8, %bb.cg ], [ %i.k, %.lr.ph ] ; 13 uses
@@ -232,8 +231,8 @@ list_length.exit:                                 ; preds = %bb.a, %bb.b
   %i.x = load ptr, ptr %i.p, align 8
   %i.y = getelementptr inbounds nuw [8 x i8], ptr %i.x, i64 %indvar641
   %i.z = load ptr, ptr %i.y, align 8              ; 18 uses
-  %indvar.next = add nuw nsw i64 %indvar641, 1    ; 3 uses
-  %i.aa = getelementptr inbounds nuw [72 x i8], ptr %i.i, i64 %indvar641 ; 11 uses
+  %indvar.next = add nuw nsw i64 %indvar641, 1    ; 2 uses
+  %i.aa = getelementptr [72 x i8], ptr %i.i, i64 %indvar641 ; 12 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #7
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #7
@@ -518,7 +517,7 @@ bb.af:                                            ; preds = %bb.ac, %bb.ad, %bb.
   br i1 %i.u, label %.preheader.preheader, label %bb.bb
 
 .preheader.preheader:                             ; preds = %.critedge
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %scevgep646, i8 0, i64 72, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %i.aa, i8 0, i64 72, i1 false)
   br label %.loopexit
 
 bb.ag:                                            ; preds = %bb.af
@@ -921,8 +920,6 @@ bb.cg:                                            ; preds = %.loopexit, %bb.ce, 
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #7
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #7
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
-  %10 = mul nuw nsw i64 %indvar.next, 72
-  %scevgep = getelementptr i8, ptr %i.i, i64 %10
   %i.lw = load i32, ptr %i.o, align 4
   %i.lx = sext i32 %i.lw to i64
   %i.ly = icmp slt i64 %indvar.next, %i.lx

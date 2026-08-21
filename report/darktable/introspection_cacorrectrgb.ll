@@ -204,9 +204,8 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.f, %.lr.ph319.i.i
-  %.0289317.i.i = phi i64 [ 0, %.lr.ph319.i.i ], [ %i.pz, %bb.f ] ; 3 uses
-  %6 = shl i64 %.0289317.i.i, 4
-  %i.lp = shl i64 %.0289317.i.i, 2                ; 5 uses
+  %.0289317.i.i = phi i64 [ 0, %.lr.ph319.i.i ], [ %i.pz, %bb.f ] ; 2 uses
+  %i.lp = shl i64 %.0289317.i.i, 2                ; 6 uses
   %i.lq = add i64 %i.lp, %i.lk                    ; 5 uses
   %i.lr = getelementptr inbounds nuw [4 x i8], ptr %i.au, i64 %i.lq
   %i.ls = load float, ptr %i.lr, align 4, !tbaa !64, !alias.scope !72, !noalias !78 ; 2 uses
@@ -301,7 +300,6 @@ bb.f:                                             ; preds = %bb.f, %.lr.ph319.i.
   %i.oy = fcmp reassoc nsz arcp contract afn ogt float %i.lu, %i.ox ; 2 uses
   %.sink375.i.i = select i1 %i.oy, ptr %i.gq, ptr %i.gr ; 2 uses
   %scevgep.sink.v.i.i = select i1 %i.oy, ptr %i.gr, ptr %i.gq
-  %scevgep.sink.i.i = getelementptr i8, ptr %scevgep.sink.v.i.i, i64 %6
   %i.oz = getelementptr inbounds nuw [4 x i8], ptr %i.au, i64 %i.lp ; 2 uses
   %i.pa = getelementptr inbounds nuw [4 x i8], ptr %i.oz, i64 %i.lm
   %i.pb = load float, ptr %i.pa, align 4, !tbaa !64, !alias.scope !72, !noalias !78
@@ -333,7 +331,8 @@ bb.f:                                             ; preds = %bb.f, %.lr.ph319.i.
   store float %i.pw, ptr %i.px, align 4, !tbaa !64, !noalias !78
   %i.py = getelementptr inbounds nuw i8, ptr %i.pq, i64 12
   store float %.2.i.i, ptr %i.py, align 4, !tbaa !64, !noalias !78
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %scevgep.sink.i.i, i8 0, i64 16, i1 false), !tbaa !64, !noalias !78
+  %6 = getelementptr inbounds nuw [4 x i8], ptr %scevgep.sink.v.i.i, i64 %i.lp
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %6, i8 0, i64 16, i1 false), !tbaa !64, !noalias !78
   %i.pz = add nuw i64 %.0289317.i.i, 1            ; 2 uses
   %exitcond328.not.i.i = icmp eq i64 %i.pz, %i.as
   br i1 %exitcond328.not.i.i, label %._crit_edge320.i.i, label %bb.f

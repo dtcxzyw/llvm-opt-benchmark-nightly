@@ -204,7 +204,7 @@ _ZNSt10unique_ptrIA_hSt14default_deleteIS0_EED2Ev.exit: ; preds = %bb.a
   br label %bb.b
 
 bb.b:                                             ; preds = %_ZNSt10unique_ptrIA_hSt14default_deleteIS0_EED2Ev.exit, %bb.a
-  %i.p = phi ptr [ %i.o, %_ZNSt10unique_ptrIA_hSt14default_deleteIS0_EED2Ev.exit ], [ %i.n, %bb.a ] ; 22 uses
+  %i.p = phi ptr [ %i.o, %_ZNSt10unique_ptrIA_hSt14default_deleteIS0_EED2Ev.exit ], [ %i.n, %bb.a ] ; 21 uses
   %i.q = mul nsw i32 %i.d, %.sroa.0156.0.extract.trunc ; 8 uses
   %i.r = icmp sgt i32 %i.q, -1
   tail call void @llvm.assume(i1 %i.r)
@@ -393,14 +393,13 @@ bb.d:                                             ; preds = %bb.b
 
 bb.e:                                             ; preds = %.lr.ph, %_ZN8rawspeed12_GLOBAL__N_116decodeFPDeltaRowINS_13ieee_754_20088Binary16EEEvNS_10Array1DRefIKhEEiNS_17CroppedArray1DRefIfEE.exit
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %_ZN8rawspeed12_GLOBAL__N_116decodeFPDeltaRowINS_13ieee_754_20088Binary16EEEvNS_10Array1DRefIKhEEiNS_17CroppedArray1DRefIfEE.exit ] ; 5 uses
-  %i.df = mul nuw i64 %indvars.iv, %i.au          ; 2 uses
-  %scevgep323 = getelementptr i8, ptr %i.p, i64 %i.df ; 2 uses
+  %i.df = mul nuw i64 %indvars.iv, %i.au
   %i.dg = getelementptr i8, ptr %i.p, i64 %i.df
   %scevgep325.a = getelementptr i8, ptr %i.dg, i64 1 ; 2 uses
   %i.dh = icmp samesign ult i64 %indvars.iv, %.sroa.7162.0.extract.shift
   call void @llvm.assume(i1 %i.dh)
-  %i.di = mul nuw nsw i64 %indvars.iv, %i.au
-  %i.dj = getelementptr inbounds nuw i8, ptr %i.p, i64 %i.di ; 32 uses
+  %i.di = mul nuw i64 %indvars.iv, %i.au
+  %i.dj = getelementptr i8, ptr %i.p, i64 %i.di   ; 34 uses
   %i.dk = load i32, ptr %i.at, align 8, !tbaa !27 ; 5 uses
   %i.dl = icmp slt i32 %i.dk, %i.q
   br i1 %i.dl, label %iter.check, label %_ZN8rawspeed12_GLOBAL__N_116decodeDeltaBytesENS_10Array1DRefIhEEiii.exit
@@ -417,7 +416,7 @@ iter.check:                                       ; preds = %bb.e
   br i1 %min.iters.check332.a, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck322
 
 vector.memcheck322:                               ; preds = %iter.check
-  %scevgep324 = getelementptr i8, ptr %scevgep323, i64 %i.dm
+  %scevgep324 = getelementptr i8, ptr %i.dj, i64 %i.dm
   %i.ds = xor i32 %i.dk, -1
   %i.dt = add nsw i32 %i.q, %i.ds
   %i.du = zext i32 %i.dt to i64                   ; 2 uses
@@ -425,7 +424,7 @@ vector.memcheck322:                               ; preds = %iter.check
   %scevgep326.a = getelementptr i8, ptr %i.dv, i64 %i.du
   %scevgep327 = getelementptr i8, ptr %scevgep325.a, i64 %i.du
   %bound0328 = icmp ult ptr %scevgep324, %scevgep327
-  %bound1329 = icmp ult ptr %scevgep323, %scevgep326.a
+  %bound1329 = icmp ult ptr %i.dj, %scevgep326.a
   %found.conflict330 = and i1 %bound0328, %bound1329
   br i1 %found.conflict330, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 

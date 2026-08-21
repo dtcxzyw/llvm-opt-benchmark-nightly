@@ -204,7 +204,7 @@ bb.a:
   %5 = alloca %"class.std::reverse_iterator", align 8 ; 2 uses
   %6 = alloca %"class.std::reverse_iterator", align 8 ; 2 uses
   %7 = alloca %"class.std::reverse_iterator", align 8 ; 2 uses
-  %.sroa.0.0.copyload.i.i = load ptr, ptr %0, align 8 ; 5 uses
+  %.sroa.0.0.copyload.i.i = load ptr, ptr %0, align 8 ; 4 uses
   %.sroa.0.0.copyload.i2.i = load ptr, ptr %1, align 8 ; 4 uses
   %i.a = ptrtoint ptr %.sroa.0.0.copyload.i.i to i64 ; 3 uses
   %i.b = ptrtoint ptr %.sroa.0.0.copyload.i2.i to i64
@@ -223,12 +223,8 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not12.i, label %_ZSt16__insertion_sortISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCTestBinPackerAllocationSt6vectorIS4_SaIS4_EEEEENS1_5__ops15_Iter_comp_iterIZN12_GLOBAL__N_122AllocateCTestResourcesINSD_28RoundRobinAllocationStrategyEEEbRKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN24cmCTestResourceAllocator8ResourceESt4lessISM_ESaISt4pairIKSM_SO_EEERS6_IS3_SaIS3_EEEUlS4_S4_E_EEEvT_S13_T0_.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.c, %bb.f
-  %indvar.i = phi i64 [ %indvar.next.i, %bb.f ], [ 0, %bb.c ] ; 2 uses
   %.sroa.07.013.i = phi ptr [ %i.h, %bb.f ], [ %i.g, %bb.c ] ; 6 uses
-  %8 = shl nuw i64 %indvar.i, 3
-  %9 = sub i64 -16, %8
-  %scevgep.i = getelementptr i8, ptr %.sroa.0.0.copyload.i.i, i64 %9
-  %i.h = getelementptr inbounds i8, ptr %.sroa.07.013.i, i64 -8 ; 3 uses
+  %i.h = getelementptr inbounds i8, ptr %.sroa.07.013.i, i64 -8 ; 4 uses
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !30   ; 3 uses
   %i.j = load ptr, ptr %i.g, align 8, !tbaa !30
   %i.k = getelementptr i8, ptr %i.i, i64 8
@@ -245,7 +241,7 @@ bb.d:                                             ; preds = %.lr.ph.i
   br i1 %i.p, label %.lr.ph.i.i.i.i.i.preheader.i, label %_ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCTestBinPackerAllocationSt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit.i
 
 .lr.ph.i.i.i.i.i.preheader.i:                     ; preds = %bb.d
-  tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %scevgep.i, ptr nonnull align 8 %.sroa.07.013.i, i64 %i.o, i1 false), !tbaa !30, !noalias !83
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.h, ptr nonnull align 8 %.sroa.07.013.i, i64 %i.o, i1 false), !tbaa !30, !noalias !83
   br label %_ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCTestBinPackerAllocationSt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit.i
 
 _ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCTestBinPackerAllocationSt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit.i: ; preds = %.lr.ph.i.i.i.i.i.preheader.i, %bb.d
@@ -279,7 +275,6 @@ _ZSt25__unguarded_linear_insertISt16reverse_iteratorIN9__gnu_cxx17__normal_itera
 
 bb.f:                                             ; preds = %_ZSt25__unguarded_linear_insertISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCTestBinPackerAllocationSt6vectorIS4_SaIS4_EEEEENS1_5__ops14_Val_comp_iterIZN12_GLOBAL__N_122AllocateCTestResourcesINSD_28RoundRobinAllocationStrategyEEEbRKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN24cmCTestResourceAllocator8ResourceESt4lessISM_ESaISt4pairIKSM_SO_EEERS6_IS3_SaIS3_EEEUlS4_S4_E_EEEvT_T0_.exit.i, %_ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCTestBinPackerAllocationSt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit.i
   %.not.i = icmp eq ptr %i.h, %.sroa.0.0.copyload.i2.i
-  %indvar.next.i = add nuw nsw i64 %indvar.i, 1
   br i1 %.not.i, label %_ZSt16__insertion_sortISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCTestBinPackerAllocationSt6vectorIS4_SaIS4_EEEEENS1_5__ops15_Iter_comp_iterIZN12_GLOBAL__N_122AllocateCTestResourcesINSD_28RoundRobinAllocationStrategyEEEbRKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN24cmCTestResourceAllocator8ResourceESt4lessISM_ESaISt4pairIKSM_SO_EEERS6_IS3_SaIS3_EEEUlS4_S4_E_EEEvT_S13_T0_.exit, label %.lr.ph.i, !llvm.loop !95
 
 bb.g:                                             ; preds = %bb.a
@@ -404,7 +399,7 @@ bb.a:
   %i.g = phi i64 [ %i.co, %_ZSt16__insertion_sortISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCTestBinPackerAllocationSt6vectorIS4_SaIS4_EEEEENS1_5__ops15_Iter_comp_iterIZN12_GLOBAL__N_122AllocateCTestResourcesINSD_28RoundRobinAllocationStrategyEEEbRKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN24cmCTestResourceAllocator8ResourceESt4lessISM_ESaISt4pairIKSM_SO_EEERS6_IS3_SaIS3_EEEUlS4_S4_E_EEEvT_S13_T0_.exit.i ], [ %i.a, %bb.a ] ; 7 uses
   %i.h = inttoptr i64 %i.g to ptr                 ; 8 uses
   %.ptr38.i = getelementptr inbounds i8, ptr %i.h, i64 -8 ; 13 uses
-  %scevgep.i.i = getelementptr i8, ptr %i.h, i64 -16 ; 7 uses
+  %scevgep.i.i = getelementptr inbounds i8, ptr %i.h, i64 -16 ; 7 uses
   %i.i = load ptr, ptr %scevgep.i.i, align 8, !tbaa !30 ; 3 uses
   %i.j = load ptr, ptr %.ptr38.i, align 8, !tbaa !30
   %i.k = getelementptr i8, ptr %i.i, i64 8
@@ -435,7 +430,7 @@ _ZSt25__unguarded_linear_insertISt16reverse_iteratorIN9__gnu_cxx17__normal_itera
 
 .lr.ph.i.i.1:                                     ; preds = %_ZSt25__unguarded_linear_insertISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCTestBinPackerAllocationSt6vectorIS4_SaIS4_EEEEENS1_5__ops14_Val_comp_iterIZN12_GLOBAL__N_122AllocateCTestResourcesINSD_28RoundRobinAllocationStrategyEEEbRKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN24cmCTestResourceAllocator8ResourceESt4lessISM_ESaISt4pairIKSM_SO_EEERS6_IS3_SaIS3_EEEUlS4_S4_E_EEEvT_T0_.exit.i.i, %_ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCTestBinPackerAllocationSt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit.i.i
   %.val1.i.i.i.1 = phi i32 [ %.val1.i.i.i, %_ZSt25__unguarded_linear_insertISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCTestBinPackerAllocationSt6vectorIS4_SaIS4_EEEEENS1_5__ops14_Val_comp_iterIZN12_GLOBAL__N_122AllocateCTestResourcesINSD_28RoundRobinAllocationStrategyEEEbRKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN24cmCTestResourceAllocator8ResourceESt4lessISM_ESaISt4pairIKSM_SO_EEERS6_IS3_SaIS3_EEEUlS4_S4_E_EEEvT_T0_.exit.i.i ], [ %.val.i.i.i, %_ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCTestBinPackerAllocationSt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit.i.i ]
-  %scevgep.i.i.1 = getelementptr i8, ptr %i.h, i64 -24 ; 7 uses
+  %scevgep.i.i.1 = getelementptr inbounds i8, ptr %i.h, i64 -24 ; 7 uses
   %i.r = load ptr, ptr %scevgep.i.i.1, align 8, !tbaa !30 ; 3 uses
   %i.s = getelementptr i8, ptr %i.r, i64 8
   %.val.i.i.i.1 = load i32, ptr %i.s, align 8, !tbaa !16 ; 4 uses
@@ -486,7 +481,7 @@ _ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCT
 
 .lr.ph.i.i.2:                                     ; preds = %_ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCTestBinPackerAllocationSt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit.i.i.1, %_ZSt25__unguarded_linear_insertISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCTestBinPackerAllocationSt6vectorIS4_SaIS4_EEEEENS1_5__ops14_Val_comp_iterIZN12_GLOBAL__N_122AllocateCTestResourcesINSD_28RoundRobinAllocationStrategyEEEbRKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN24cmCTestResourceAllocator8ResourceESt4lessISM_ESaISt4pairIKSM_SO_EEERS6_IS3_SaIS3_EEEUlS4_S4_E_EEEvT_T0_.exit.i.i.1
   %.val1.i.i.i.2 = phi i32 [ %.val.i.i.i.1, %_ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCTestBinPackerAllocationSt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit.i.i.1 ], [ %.val1.i.i.i.2.pre, %_ZSt25__unguarded_linear_insertISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCTestBinPackerAllocationSt6vectorIS4_SaIS4_EEEEENS1_5__ops14_Val_comp_iterIZN12_GLOBAL__N_122AllocateCTestResourcesINSD_28RoundRobinAllocationStrategyEEEbRKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN24cmCTestResourceAllocator8ResourceESt4lessISM_ESaISt4pairIKSM_SO_EEERS6_IS3_SaIS3_EEEUlS4_S4_E_EEEvT_T0_.exit.i.i.1 ]
-  %scevgep.i.i.2 = getelementptr i8, ptr %i.h, i64 -32 ; 7 uses
+  %scevgep.i.i.2 = getelementptr inbounds i8, ptr %i.h, i64 -32 ; 7 uses
   %i.ag = load ptr, ptr %scevgep.i.i.2, align 8, !tbaa !30 ; 3 uses
   %i.ah = getelementptr i8, ptr %i.ag, i64 8
   %.val.i.i.i.2 = load i32, ptr %i.ah, align 8, !tbaa !16 ; 4 uses
@@ -537,7 +532,7 @@ _ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCT
 
 .lr.ph.i.i.3:                                     ; preds = %_ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCTestBinPackerAllocationSt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit.i.i.2, %_ZSt25__unguarded_linear_insertISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCTestBinPackerAllocationSt6vectorIS4_SaIS4_EEEEENS1_5__ops14_Val_comp_iterIZN12_GLOBAL__N_122AllocateCTestResourcesINSD_28RoundRobinAllocationStrategyEEEbRKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN24cmCTestResourceAllocator8ResourceESt4lessISM_ESaISt4pairIKSM_SO_EEERS6_IS3_SaIS3_EEEUlS4_S4_E_EEEvT_T0_.exit.i.i.2
   %.val1.i.i.i.3 = phi i32 [ %.val.i.i.i.2, %_ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCTestBinPackerAllocationSt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit.i.i.2 ], [ %.val1.i.i.i.3.pre, %_ZSt25__unguarded_linear_insertISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCTestBinPackerAllocationSt6vectorIS4_SaIS4_EEEEENS1_5__ops14_Val_comp_iterIZN12_GLOBAL__N_122AllocateCTestResourcesINSD_28RoundRobinAllocationStrategyEEEbRKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN24cmCTestResourceAllocator8ResourceESt4lessISM_ESaISt4pairIKSM_SO_EEERS6_IS3_SaIS3_EEEUlS4_S4_E_EEEvT_T0_.exit.i.i.2 ]
-  %scevgep.i.i.3 = getelementptr i8, ptr %i.h, i64 -40 ; 7 uses
+  %scevgep.i.i.3 = getelementptr inbounds i8, ptr %i.h, i64 -40 ; 7 uses
   %i.av = load ptr, ptr %scevgep.i.i.3, align 8, !tbaa !30 ; 3 uses
   %i.aw = getelementptr i8, ptr %i.av, i64 8
   %.val.i.i.i.3 = load i32, ptr %i.aw, align 8, !tbaa !16 ; 4 uses
@@ -588,7 +583,7 @@ _ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCT
 
 .lr.ph.i.i.4:                                     ; preds = %_ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCTestBinPackerAllocationSt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit.i.i.3, %_ZSt25__unguarded_linear_insertISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCTestBinPackerAllocationSt6vectorIS4_SaIS4_EEEEENS1_5__ops14_Val_comp_iterIZN12_GLOBAL__N_122AllocateCTestResourcesINSD_28RoundRobinAllocationStrategyEEEbRKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN24cmCTestResourceAllocator8ResourceESt4lessISM_ESaISt4pairIKSM_SO_EEERS6_IS3_SaIS3_EEEUlS4_S4_E_EEEvT_T0_.exit.i.i.3
   %.val1.i.i.i.4 = phi i32 [ %.val.i.i.i.3, %_ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCTestBinPackerAllocationSt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit.i.i.3 ], [ %.val1.i.i.i.4.pre, %_ZSt25__unguarded_linear_insertISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCTestBinPackerAllocationSt6vectorIS4_SaIS4_EEEEENS1_5__ops14_Val_comp_iterIZN12_GLOBAL__N_122AllocateCTestResourcesINSD_28RoundRobinAllocationStrategyEEEbRKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN24cmCTestResourceAllocator8ResourceESt4lessISM_ESaISt4pairIKSM_SO_EEERS6_IS3_SaIS3_EEEUlS4_S4_E_EEEvT_T0_.exit.i.i.3 ]
-  %scevgep.i.i.4 = getelementptr i8, ptr %i.h, i64 -48 ; 7 uses
+  %scevgep.i.i.4 = getelementptr inbounds i8, ptr %i.h, i64 -48 ; 7 uses
   %i.bk = load ptr, ptr %scevgep.i.i.4, align 8, !tbaa !30 ; 3 uses
   %i.bl = getelementptr i8, ptr %i.bk, i64 8
   %.val.i.i.i.4 = load i32, ptr %i.bl, align 8, !tbaa !16 ; 4 uses
@@ -639,7 +634,7 @@ _ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCT
 
 .lr.ph.i.i.5:                                     ; preds = %_ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCTestBinPackerAllocationSt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit.i.i.4, %_ZSt25__unguarded_linear_insertISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCTestBinPackerAllocationSt6vectorIS4_SaIS4_EEEEENS1_5__ops14_Val_comp_iterIZN12_GLOBAL__N_122AllocateCTestResourcesINSD_28RoundRobinAllocationStrategyEEEbRKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN24cmCTestResourceAllocator8ResourceESt4lessISM_ESaISt4pairIKSM_SO_EEERS6_IS3_SaIS3_EEEUlS4_S4_E_EEEvT_T0_.exit.i.i.4
   %.val1.i.i.i.5 = phi i32 [ %.val.i.i.i.4, %_ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCTestBinPackerAllocationSt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit.i.i.4 ], [ %.val1.i.i.i.5.pre, %_ZSt25__unguarded_linear_insertISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCTestBinPackerAllocationSt6vectorIS4_SaIS4_EEEEENS1_5__ops14_Val_comp_iterIZN12_GLOBAL__N_122AllocateCTestResourcesINSD_28RoundRobinAllocationStrategyEEEbRKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN24cmCTestResourceAllocator8ResourceESt4lessISM_ESaISt4pairIKSM_SO_EEERS6_IS3_SaIS3_EEEUlS4_S4_E_EEEvT_T0_.exit.i.i.4 ]
-  %scevgep.i.i.5 = getelementptr i8, ptr %i.h, i64 -56 ; 3 uses
+  %scevgep.i.i.5 = getelementptr inbounds i8, ptr %i.h, i64 -56 ; 3 uses
   %i.bz = load ptr, ptr %scevgep.i.i.5, align 8, !tbaa !30 ; 3 uses
   %i.ca = getelementptr i8, ptr %i.bz, i64 8
   %.val.i.i.i.5 = load i32, ptr %i.ca, align 8, !tbaa !16 ; 3 uses
@@ -693,22 +688,18 @@ _ZSt16__insertion_sortISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26c
 
 ._crit_edge.i:                                    ; preds = %_ZSt16__insertion_sortISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCTestBinPackerAllocationSt6vectorIS4_SaIS4_EEEEENS1_5__ops15_Iter_comp_iterIZN12_GLOBAL__N_122AllocateCTestResourcesINSD_28RoundRobinAllocationStrategyEEEbRKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN24cmCTestResourceAllocator8ResourceESt4lessISM_ESaISt4pairIKSM_SO_EEERS6_IS3_SaIS3_EEEUlS4_S4_E_EEEvT_S13_T0_.exit.i, %bb.a
   %i.cr = phi i64 [ %i.a, %bb.a ], [ %i.co, %_ZSt16__insertion_sortISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCTestBinPackerAllocationSt6vectorIS4_SaIS4_EEEEENS1_5__ops15_Iter_comp_iterIZN12_GLOBAL__N_122AllocateCTestResourcesINSD_28RoundRobinAllocationStrategyEEEbRKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN24cmCTestResourceAllocator8ResourceESt4lessISM_ESaISt4pairIKSM_SO_EEERS6_IS3_SaIS3_EEEUlS4_S4_E_EEEvT_S13_T0_.exit.i ] ; 3 uses
-  %3 = inttoptr i64 %i.cr to ptr                  ; 2 uses
   %i.cs = icmp eq i64 %i.cr, %i.b
   br i1 %i.cs, label %_ZSt22__chunk_insertion_sortISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCTestBinPackerAllocationSt6vectorIS4_SaIS4_EEEEElNS1_5__ops15_Iter_comp_iterIZN12_GLOBAL__N_122AllocateCTestResourcesINSD_28RoundRobinAllocationStrategyEEEbRKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN24cmCTestResourceAllocator8ResourceESt4lessISM_ESaISt4pairIKSM_SO_EEERS6_IS3_SaIS3_EEEUlS4_S4_E_EEEvT_S13_T0_T1_.exit, label %bb.m
 
 bb.m:                                             ; preds = %._crit_edge.i
+  %3 = inttoptr i64 %i.cr to ptr
   %i.ct = getelementptr inbounds i8, ptr %3, i64 -8 ; 4 uses
   %.not12.i8.i = icmp eq ptr %i.ct, %.sroa.0.0.copyload.i2.i
   br i1 %.not12.i8.i, label %_ZSt22__chunk_insertion_sortISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCTestBinPackerAllocationSt6vectorIS4_SaIS4_EEEEElNS1_5__ops15_Iter_comp_iterIZN12_GLOBAL__N_122AllocateCTestResourcesINSD_28RoundRobinAllocationStrategyEEEbRKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN24cmCTestResourceAllocator8ResourceESt4lessISM_ESaISt4pairIKSM_SO_EEERS6_IS3_SaIS3_EEEUlS4_S4_E_EEEvT_S13_T0_T1_.exit, label %.lr.ph.i9.i
 
 .lr.ph.i9.i:                                      ; preds = %bb.m, %bb.p
-  %indvar.i10.i = phi i64 [ %indvar.next.i19.i, %bb.p ], [ 0, %bb.m ] ; 2 uses
   %.sroa.07.013.i11.i = phi ptr [ %i.cu, %bb.p ], [ %i.ct, %bb.m ] ; 6 uses
-  %4 = shl nuw i64 %indvar.i10.i, 3
-  %5 = sub i64 -16, %4
-  %scevgep.i12.i = getelementptr i8, ptr %3, i64 %5
-  %i.cu = getelementptr inbounds i8, ptr %.sroa.07.013.i11.i, i64 -8 ; 3 uses
+  %i.cu = getelementptr inbounds i8, ptr %.sroa.07.013.i11.i, i64 -8 ; 4 uses
   %i.cv = load ptr, ptr %i.cu, align 8, !tbaa !30 ; 3 uses
   %i.cw = load ptr, ptr %i.ct, align 8, !tbaa !30
   %i.cx = getelementptr i8, ptr %i.cv, i64 8
@@ -725,7 +716,7 @@ bb.n:                                             ; preds = %.lr.ph.i9.i
   br i1 %i.dc, label %.lr.ph.i.i.i.i.i.preheader.i25.i, label %_ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCTestBinPackerAllocationSt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit.i24.i
 
 .lr.ph.i.i.i.i.i.preheader.i25.i:                 ; preds = %bb.n
-  tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %scevgep.i12.i, ptr nonnull align 8 %.sroa.07.013.i11.i, i64 %i.db, i1 false), !tbaa !30, !noalias !108
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.cu, ptr nonnull align 8 %.sroa.07.013.i11.i, i64 %i.db, i1 false), !tbaa !30, !noalias !108
   br label %_ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCTestBinPackerAllocationSt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit.i24.i
 
 _ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCTestBinPackerAllocationSt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit.i24.i: ; preds = %.lr.ph.i.i.i.i.i.preheader.i25.i, %bb.n
@@ -759,7 +750,6 @@ _ZSt25__unguarded_linear_insertISt16reverse_iteratorIN9__gnu_cxx17__normal_itera
 
 bb.p:                                             ; preds = %_ZSt25__unguarded_linear_insertISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCTestBinPackerAllocationSt6vectorIS4_SaIS4_EEEEENS1_5__ops14_Val_comp_iterIZN12_GLOBAL__N_122AllocateCTestResourcesINSD_28RoundRobinAllocationStrategyEEEbRKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN24cmCTestResourceAllocator8ResourceESt4lessISM_ESaISt4pairIKSM_SO_EEERS6_IS3_SaIS3_EEEUlS4_S4_E_EEEvT_T0_.exit.i16.i, %_ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCTestBinPackerAllocationSt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit.i24.i
   %.not.i18.i = icmp eq ptr %i.cu, %.sroa.0.0.copyload.i2.i
-  %indvar.next.i19.i = add nuw nsw i64 %indvar.i10.i, 1
   br i1 %.not.i18.i, label %_ZSt22__chunk_insertion_sortISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCTestBinPackerAllocationSt6vectorIS4_SaIS4_EEEEElNS1_5__ops15_Iter_comp_iterIZN12_GLOBAL__N_122AllocateCTestResourcesINSD_28RoundRobinAllocationStrategyEEEbRKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN24cmCTestResourceAllocator8ResourceESt4lessISM_ESaISt4pairIKSM_SO_EEERS6_IS3_SaIS3_EEEUlS4_S4_E_EEEvT_S13_T0_T1_.exit, label %.lr.ph.i9.i, !llvm.loop !95
 
 _ZSt22__chunk_insertion_sortISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCTestBinPackerAllocationSt6vectorIS4_SaIS4_EEEEElNS1_5__ops15_Iter_comp_iterIZN12_GLOBAL__N_122AllocateCTestResourcesINSD_28RoundRobinAllocationStrategyEEEbRKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN24cmCTestResourceAllocator8ResourceESt4lessISM_ESaISt4pairIKSM_SO_EEERS6_IS3_SaIS3_EEEUlS4_S4_E_EEEvT_S13_T0_T1_.exit: ; preds = %bb.p, %._crit_edge.i, %bb.m
@@ -1162,7 +1152,7 @@ bb.a:
   %5 = alloca %"class.std::reverse_iterator", align 8 ; 2 uses
   %6 = alloca %"class.std::reverse_iterator", align 8 ; 2 uses
   %7 = alloca %"class.std::reverse_iterator", align 8 ; 2 uses
-  %.sroa.0.0.copyload.i.i = load ptr, ptr %0, align 8 ; 5 uses
+  %.sroa.0.0.copyload.i.i = load ptr, ptr %0, align 8 ; 4 uses
   %.sroa.0.0.copyload.i2.i = load ptr, ptr %1, align 8 ; 4 uses
   %i.a = ptrtoint ptr %.sroa.0.0.copyload.i.i to i64 ; 3 uses
   %i.b = ptrtoint ptr %.sroa.0.0.copyload.i2.i to i64
@@ -1181,12 +1171,8 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not12.i, label %_ZSt16__insertion_sortISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCTestBinPackerAllocationSt6vectorIS4_SaIS4_EEEEENS1_5__ops15_Iter_comp_iterIZN12_GLOBAL__N_122AllocateCTestResourcesINSD_23BlockAllocationStrategyEEEbRKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN24cmCTestResourceAllocator8ResourceESt4lessISM_ESaISt4pairIKSM_SO_EEERS6_IS3_SaIS3_EEEUlS4_S4_E_EEEvT_S13_T0_.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.c, %bb.f
-  %indvar.i = phi i64 [ %indvar.next.i, %bb.f ], [ 0, %bb.c ] ; 2 uses
   %.sroa.07.013.i = phi ptr [ %i.h, %bb.f ], [ %i.g, %bb.c ] ; 6 uses
-  %8 = shl nuw i64 %indvar.i, 3
-  %9 = sub i64 -16, %8
-  %scevgep.i = getelementptr i8, ptr %.sroa.0.0.copyload.i.i, i64 %9
-  %i.h = getelementptr inbounds i8, ptr %.sroa.07.013.i, i64 -8 ; 3 uses
+  %i.h = getelementptr inbounds i8, ptr %.sroa.07.013.i, i64 -8 ; 4 uses
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !30   ; 3 uses
   %i.j = load ptr, ptr %i.g, align 8, !tbaa !30
   %i.k = getelementptr i8, ptr %i.i, i64 8
@@ -1203,7 +1189,7 @@ bb.d:                                             ; preds = %.lr.ph.i
   br i1 %i.p, label %.lr.ph.i.i.i.i.i.preheader.i, label %_ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCTestBinPackerAllocationSt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit.i
 
 .lr.ph.i.i.i.i.i.preheader.i:                     ; preds = %bb.d
-  tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %scevgep.i, ptr nonnull align 8 %.sroa.07.013.i, i64 %i.o, i1 false), !tbaa !30, !noalias !595
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.h, ptr nonnull align 8 %.sroa.07.013.i, i64 %i.o, i1 false), !tbaa !30, !noalias !595
   br label %_ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCTestBinPackerAllocationSt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit.i
 
 _ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCTestBinPackerAllocationSt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit.i: ; preds = %.lr.ph.i.i.i.i.i.preheader.i, %bb.d
@@ -1237,7 +1223,6 @@ _ZSt25__unguarded_linear_insertISt16reverse_iteratorIN9__gnu_cxx17__normal_itera
 
 bb.f:                                             ; preds = %_ZSt25__unguarded_linear_insertISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCTestBinPackerAllocationSt6vectorIS4_SaIS4_EEEEENS1_5__ops14_Val_comp_iterIZN12_GLOBAL__N_122AllocateCTestResourcesINSD_23BlockAllocationStrategyEEEbRKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN24cmCTestResourceAllocator8ResourceESt4lessISM_ESaISt4pairIKSM_SO_EEERS6_IS3_SaIS3_EEEUlS4_S4_E_EEEvT_T0_.exit.i, %_ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCTestBinPackerAllocationSt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit.i
   %.not.i = icmp eq ptr %i.h, %.sroa.0.0.copyload.i2.i
-  %indvar.next.i = add nuw nsw i64 %indvar.i, 1
   br i1 %.not.i, label %_ZSt16__insertion_sortISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCTestBinPackerAllocationSt6vectorIS4_SaIS4_EEEEENS1_5__ops15_Iter_comp_iterIZN12_GLOBAL__N_122AllocateCTestResourcesINSD_23BlockAllocationStrategyEEEbRKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN24cmCTestResourceAllocator8ResourceESt4lessISM_ESaISt4pairIKSM_SO_EEERS6_IS3_SaIS3_EEEUlS4_S4_E_EEEvT_S13_T0_.exit, label %.lr.ph.i, !llvm.loop !607
 
 bb.g:                                             ; preds = %bb.a
@@ -1355,7 +1340,7 @@ bb.a:
   %i.g = phi i64 [ %i.co, %_ZSt16__insertion_sortISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCTestBinPackerAllocationSt6vectorIS4_SaIS4_EEEEENS1_5__ops15_Iter_comp_iterIZN12_GLOBAL__N_122AllocateCTestResourcesINSD_23BlockAllocationStrategyEEEbRKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN24cmCTestResourceAllocator8ResourceESt4lessISM_ESaISt4pairIKSM_SO_EEERS6_IS3_SaIS3_EEEUlS4_S4_E_EEEvT_S13_T0_.exit.i ], [ %i.a, %bb.a ] ; 7 uses
   %i.h = inttoptr i64 %i.g to ptr                 ; 8 uses
   %.ptr38.i = getelementptr inbounds i8, ptr %i.h, i64 -8 ; 13 uses
-  %scevgep.i.i = getelementptr i8, ptr %i.h, i64 -16 ; 7 uses
+  %scevgep.i.i = getelementptr inbounds i8, ptr %i.h, i64 -16 ; 7 uses
   %i.i = load ptr, ptr %scevgep.i.i, align 8, !tbaa !30 ; 3 uses
   %i.j = load ptr, ptr %.ptr38.i, align 8, !tbaa !30
   %i.k = getelementptr i8, ptr %i.i, i64 8
@@ -1386,7 +1371,7 @@ _ZSt25__unguarded_linear_insertISt16reverse_iteratorIN9__gnu_cxx17__normal_itera
 
 .lr.ph.i.i.1:                                     ; preds = %_ZSt25__unguarded_linear_insertISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCTestBinPackerAllocationSt6vectorIS4_SaIS4_EEEEENS1_5__ops14_Val_comp_iterIZN12_GLOBAL__N_122AllocateCTestResourcesINSD_23BlockAllocationStrategyEEEbRKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN24cmCTestResourceAllocator8ResourceESt4lessISM_ESaISt4pairIKSM_SO_EEERS6_IS3_SaIS3_EEEUlS4_S4_E_EEEvT_T0_.exit.i.i, %_ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCTestBinPackerAllocationSt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit.i.i
   %.val1.i.i.i.1 = phi i32 [ %.val1.i.i.i, %_ZSt25__unguarded_linear_insertISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCTestBinPackerAllocationSt6vectorIS4_SaIS4_EEEEENS1_5__ops14_Val_comp_iterIZN12_GLOBAL__N_122AllocateCTestResourcesINSD_23BlockAllocationStrategyEEEbRKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN24cmCTestResourceAllocator8ResourceESt4lessISM_ESaISt4pairIKSM_SO_EEERS6_IS3_SaIS3_EEEUlS4_S4_E_EEEvT_T0_.exit.i.i ], [ %.val.i.i.i, %_ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCTestBinPackerAllocationSt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit.i.i ]
-  %scevgep.i.i.1 = getelementptr i8, ptr %i.h, i64 -24 ; 7 uses
+  %scevgep.i.i.1 = getelementptr inbounds i8, ptr %i.h, i64 -24 ; 7 uses
   %i.r = load ptr, ptr %scevgep.i.i.1, align 8, !tbaa !30 ; 3 uses
   %i.s = getelementptr i8, ptr %i.r, i64 8
   %.val.i.i.i.1 = load i32, ptr %i.s, align 8, !tbaa !16 ; 4 uses
@@ -1437,7 +1422,7 @@ _ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCT
 
 .lr.ph.i.i.2:                                     ; preds = %_ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCTestBinPackerAllocationSt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit.i.i.1, %_ZSt25__unguarded_linear_insertISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCTestBinPackerAllocationSt6vectorIS4_SaIS4_EEEEENS1_5__ops14_Val_comp_iterIZN12_GLOBAL__N_122AllocateCTestResourcesINSD_23BlockAllocationStrategyEEEbRKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN24cmCTestResourceAllocator8ResourceESt4lessISM_ESaISt4pairIKSM_SO_EEERS6_IS3_SaIS3_EEEUlS4_S4_E_EEEvT_T0_.exit.i.i.1
   %.val1.i.i.i.2 = phi i32 [ %.val.i.i.i.1, %_ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCTestBinPackerAllocationSt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit.i.i.1 ], [ %.val1.i.i.i.2.pre, %_ZSt25__unguarded_linear_insertISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCTestBinPackerAllocationSt6vectorIS4_SaIS4_EEEEENS1_5__ops14_Val_comp_iterIZN12_GLOBAL__N_122AllocateCTestResourcesINSD_23BlockAllocationStrategyEEEbRKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN24cmCTestResourceAllocator8ResourceESt4lessISM_ESaISt4pairIKSM_SO_EEERS6_IS3_SaIS3_EEEUlS4_S4_E_EEEvT_T0_.exit.i.i.1 ]
-  %scevgep.i.i.2 = getelementptr i8, ptr %i.h, i64 -32 ; 7 uses
+  %scevgep.i.i.2 = getelementptr inbounds i8, ptr %i.h, i64 -32 ; 7 uses
   %i.ag = load ptr, ptr %scevgep.i.i.2, align 8, !tbaa !30 ; 3 uses
   %i.ah = getelementptr i8, ptr %i.ag, i64 8
   %.val.i.i.i.2 = load i32, ptr %i.ah, align 8, !tbaa !16 ; 4 uses
@@ -1488,7 +1473,7 @@ _ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCT
 
 .lr.ph.i.i.3:                                     ; preds = %_ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCTestBinPackerAllocationSt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit.i.i.2, %_ZSt25__unguarded_linear_insertISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCTestBinPackerAllocationSt6vectorIS4_SaIS4_EEEEENS1_5__ops14_Val_comp_iterIZN12_GLOBAL__N_122AllocateCTestResourcesINSD_23BlockAllocationStrategyEEEbRKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN24cmCTestResourceAllocator8ResourceESt4lessISM_ESaISt4pairIKSM_SO_EEERS6_IS3_SaIS3_EEEUlS4_S4_E_EEEvT_T0_.exit.i.i.2
   %.val1.i.i.i.3 = phi i32 [ %.val.i.i.i.2, %_ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCTestBinPackerAllocationSt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit.i.i.2 ], [ %.val1.i.i.i.3.pre, %_ZSt25__unguarded_linear_insertISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCTestBinPackerAllocationSt6vectorIS4_SaIS4_EEEEENS1_5__ops14_Val_comp_iterIZN12_GLOBAL__N_122AllocateCTestResourcesINSD_23BlockAllocationStrategyEEEbRKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN24cmCTestResourceAllocator8ResourceESt4lessISM_ESaISt4pairIKSM_SO_EEERS6_IS3_SaIS3_EEEUlS4_S4_E_EEEvT_T0_.exit.i.i.2 ]
-  %scevgep.i.i.3 = getelementptr i8, ptr %i.h, i64 -40 ; 7 uses
+  %scevgep.i.i.3 = getelementptr inbounds i8, ptr %i.h, i64 -40 ; 7 uses
   %i.av = load ptr, ptr %scevgep.i.i.3, align 8, !tbaa !30 ; 3 uses
   %i.aw = getelementptr i8, ptr %i.av, i64 8
   %.val.i.i.i.3 = load i32, ptr %i.aw, align 8, !tbaa !16 ; 4 uses
@@ -1539,7 +1524,7 @@ _ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCT
 
 .lr.ph.i.i.4:                                     ; preds = %_ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCTestBinPackerAllocationSt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit.i.i.3, %_ZSt25__unguarded_linear_insertISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCTestBinPackerAllocationSt6vectorIS4_SaIS4_EEEEENS1_5__ops14_Val_comp_iterIZN12_GLOBAL__N_122AllocateCTestResourcesINSD_23BlockAllocationStrategyEEEbRKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN24cmCTestResourceAllocator8ResourceESt4lessISM_ESaISt4pairIKSM_SO_EEERS6_IS3_SaIS3_EEEUlS4_S4_E_EEEvT_T0_.exit.i.i.3
   %.val1.i.i.i.4 = phi i32 [ %.val.i.i.i.3, %_ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCTestBinPackerAllocationSt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit.i.i.3 ], [ %.val1.i.i.i.4.pre, %_ZSt25__unguarded_linear_insertISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCTestBinPackerAllocationSt6vectorIS4_SaIS4_EEEEENS1_5__ops14_Val_comp_iterIZN12_GLOBAL__N_122AllocateCTestResourcesINSD_23BlockAllocationStrategyEEEbRKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN24cmCTestResourceAllocator8ResourceESt4lessISM_ESaISt4pairIKSM_SO_EEERS6_IS3_SaIS3_EEEUlS4_S4_E_EEEvT_T0_.exit.i.i.3 ]
-  %scevgep.i.i.4 = getelementptr i8, ptr %i.h, i64 -48 ; 7 uses
+  %scevgep.i.i.4 = getelementptr inbounds i8, ptr %i.h, i64 -48 ; 7 uses
   %i.bk = load ptr, ptr %scevgep.i.i.4, align 8, !tbaa !30 ; 3 uses
   %i.bl = getelementptr i8, ptr %i.bk, i64 8
   %.val.i.i.i.4 = load i32, ptr %i.bl, align 8, !tbaa !16 ; 4 uses
@@ -1590,7 +1575,7 @@ _ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCT
 
 .lr.ph.i.i.5:                                     ; preds = %_ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCTestBinPackerAllocationSt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit.i.i.4, %_ZSt25__unguarded_linear_insertISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCTestBinPackerAllocationSt6vectorIS4_SaIS4_EEEEENS1_5__ops14_Val_comp_iterIZN12_GLOBAL__N_122AllocateCTestResourcesINSD_23BlockAllocationStrategyEEEbRKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN24cmCTestResourceAllocator8ResourceESt4lessISM_ESaISt4pairIKSM_SO_EEERS6_IS3_SaIS3_EEEUlS4_S4_E_EEEvT_T0_.exit.i.i.4
   %.val1.i.i.i.5 = phi i32 [ %.val.i.i.i.4, %_ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCTestBinPackerAllocationSt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit.i.i.4 ], [ %.val1.i.i.i.5.pre, %_ZSt25__unguarded_linear_insertISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCTestBinPackerAllocationSt6vectorIS4_SaIS4_EEEEENS1_5__ops14_Val_comp_iterIZN12_GLOBAL__N_122AllocateCTestResourcesINSD_23BlockAllocationStrategyEEEbRKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN24cmCTestResourceAllocator8ResourceESt4lessISM_ESaISt4pairIKSM_SO_EEERS6_IS3_SaIS3_EEEUlS4_S4_E_EEEvT_T0_.exit.i.i.4 ]
-  %scevgep.i.i.5 = getelementptr i8, ptr %i.h, i64 -56 ; 3 uses
+  %scevgep.i.i.5 = getelementptr inbounds i8, ptr %i.h, i64 -56 ; 3 uses
   %i.bz = load ptr, ptr %scevgep.i.i.5, align 8, !tbaa !30 ; 3 uses
   %i.ca = getelementptr i8, ptr %i.bz, i64 8
   %.val.i.i.i.5 = load i32, ptr %i.ca, align 8, !tbaa !16 ; 3 uses
@@ -1644,22 +1629,18 @@ _ZSt16__insertion_sortISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26c
 
 ._crit_edge.i:                                    ; preds = %_ZSt16__insertion_sortISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCTestBinPackerAllocationSt6vectorIS4_SaIS4_EEEEENS1_5__ops15_Iter_comp_iterIZN12_GLOBAL__N_122AllocateCTestResourcesINSD_23BlockAllocationStrategyEEEbRKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN24cmCTestResourceAllocator8ResourceESt4lessISM_ESaISt4pairIKSM_SO_EEERS6_IS3_SaIS3_EEEUlS4_S4_E_EEEvT_S13_T0_.exit.i, %bb.a
   %i.cr = phi i64 [ %i.a, %bb.a ], [ %i.co, %_ZSt16__insertion_sortISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCTestBinPackerAllocationSt6vectorIS4_SaIS4_EEEEENS1_5__ops15_Iter_comp_iterIZN12_GLOBAL__N_122AllocateCTestResourcesINSD_23BlockAllocationStrategyEEEbRKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN24cmCTestResourceAllocator8ResourceESt4lessISM_ESaISt4pairIKSM_SO_EEERS6_IS3_SaIS3_EEEUlS4_S4_E_EEEvT_S13_T0_.exit.i ] ; 3 uses
-  %3 = inttoptr i64 %i.cr to ptr                  ; 2 uses
   %i.cs = icmp eq i64 %i.cr, %i.b
   br i1 %i.cs, label %_ZSt22__chunk_insertion_sortISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCTestBinPackerAllocationSt6vectorIS4_SaIS4_EEEEElNS1_5__ops15_Iter_comp_iterIZN12_GLOBAL__N_122AllocateCTestResourcesINSD_23BlockAllocationStrategyEEEbRKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN24cmCTestResourceAllocator8ResourceESt4lessISM_ESaISt4pairIKSM_SO_EEERS6_IS3_SaIS3_EEEUlS4_S4_E_EEEvT_S13_T0_T1_.exit, label %bb.m
 
 bb.m:                                             ; preds = %._crit_edge.i
+  %3 = inttoptr i64 %i.cr to ptr
   %i.ct = getelementptr inbounds i8, ptr %3, i64 -8 ; 4 uses
   %.not12.i8.i = icmp eq ptr %i.ct, %.sroa.0.0.copyload.i2.i
   br i1 %.not12.i8.i, label %_ZSt22__chunk_insertion_sortISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCTestBinPackerAllocationSt6vectorIS4_SaIS4_EEEEElNS1_5__ops15_Iter_comp_iterIZN12_GLOBAL__N_122AllocateCTestResourcesINSD_23BlockAllocationStrategyEEEbRKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN24cmCTestResourceAllocator8ResourceESt4lessISM_ESaISt4pairIKSM_SO_EEERS6_IS3_SaIS3_EEEUlS4_S4_E_EEEvT_S13_T0_T1_.exit, label %.lr.ph.i9.i
 
 .lr.ph.i9.i:                                      ; preds = %bb.m, %bb.p
-  %indvar.i10.i = phi i64 [ %indvar.next.i19.i, %bb.p ], [ 0, %bb.m ] ; 2 uses
   %.sroa.07.013.i11.i = phi ptr [ %i.cu, %bb.p ], [ %i.ct, %bb.m ] ; 6 uses
-  %4 = shl nuw i64 %indvar.i10.i, 3
-  %5 = sub i64 -16, %4
-  %scevgep.i12.i = getelementptr i8, ptr %3, i64 %5
-  %i.cu = getelementptr inbounds i8, ptr %.sroa.07.013.i11.i, i64 -8 ; 3 uses
+  %i.cu = getelementptr inbounds i8, ptr %.sroa.07.013.i11.i, i64 -8 ; 4 uses
   %i.cv = load ptr, ptr %i.cu, align 8, !tbaa !30 ; 3 uses
   %i.cw = load ptr, ptr %i.ct, align 8, !tbaa !30
   %i.cx = getelementptr i8, ptr %i.cv, i64 8
@@ -1676,7 +1657,7 @@ bb.n:                                             ; preds = %.lr.ph.i9.i
   br i1 %i.dc, label %.lr.ph.i.i.i.i.i.preheader.i25.i, label %_ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCTestBinPackerAllocationSt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit.i24.i
 
 .lr.ph.i.i.i.i.i.preheader.i25.i:                 ; preds = %bb.n
-  tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %scevgep.i12.i, ptr nonnull align 8 %.sroa.07.013.i11.i, i64 %i.db, i1 false), !tbaa !30, !noalias !620
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.cu, ptr nonnull align 8 %.sroa.07.013.i11.i, i64 %i.db, i1 false), !tbaa !30, !noalias !620
   br label %_ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCTestBinPackerAllocationSt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit.i24.i
 
 _ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCTestBinPackerAllocationSt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit.i24.i: ; preds = %.lr.ph.i.i.i.i.i.preheader.i25.i, %bb.n
@@ -1710,7 +1691,6 @@ _ZSt25__unguarded_linear_insertISt16reverse_iteratorIN9__gnu_cxx17__normal_itera
 
 bb.p:                                             ; preds = %_ZSt25__unguarded_linear_insertISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCTestBinPackerAllocationSt6vectorIS4_SaIS4_EEEEENS1_5__ops14_Val_comp_iterIZN12_GLOBAL__N_122AllocateCTestResourcesINSD_23BlockAllocationStrategyEEEbRKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN24cmCTestResourceAllocator8ResourceESt4lessISM_ESaISt4pairIKSM_SO_EEERS6_IS3_SaIS3_EEEUlS4_S4_E_EEEvT_T0_.exit.i16.i, %_ZSt13move_backwardISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCTestBinPackerAllocationSt6vectorIS4_SaIS4_EEEEESA_ET0_T_SC_SB_.exit.i24.i
   %.not.i18.i = icmp eq ptr %i.cu, %.sroa.0.0.copyload.i2.i
-  %indvar.next.i19.i = add nuw nsw i64 %indvar.i10.i, 1
   br i1 %.not.i18.i, label %_ZSt22__chunk_insertion_sortISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCTestBinPackerAllocationSt6vectorIS4_SaIS4_EEEEElNS1_5__ops15_Iter_comp_iterIZN12_GLOBAL__N_122AllocateCTestResourcesINSD_23BlockAllocationStrategyEEEbRKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN24cmCTestResourceAllocator8ResourceESt4lessISM_ESaISt4pairIKSM_SO_EEERS6_IS3_SaIS3_EEEUlS4_S4_E_EEEvT_S13_T0_T1_.exit, label %.lr.ph.i9.i, !llvm.loop !607
 
 _ZSt22__chunk_insertion_sortISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPP26cmCTestBinPackerAllocationSt6vectorIS4_SaIS4_EEEEElNS1_5__ops15_Iter_comp_iterIZN12_GLOBAL__N_122AllocateCTestResourcesINSD_23BlockAllocationStrategyEEEbRKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN24cmCTestResourceAllocator8ResourceESt4lessISM_ESaISt4pairIKSM_SO_EEERS6_IS3_SaIS3_EEEUlS4_S4_E_EEEvT_S13_T0_T1_.exit: ; preds = %bb.p, %._crit_edge.i, %bb.m

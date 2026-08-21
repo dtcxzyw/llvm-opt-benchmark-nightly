@@ -204,7 +204,7 @@ bb.z:                                             ; preds = %decode_rowskip.exit
   br i1 %i.nj, label %.lr.ph273, label %.loopexit
 
 .lr.ph273:                                        ; preds = %.preheader244
-  %i.nk = sext i32 %i.j to i64                    ; 2 uses
+  %i.nk = sext i32 %i.j to i64
   %i.nl = sub nsw i32 0, %i.j
   %i.nm = sext i32 %i.nl to i64
   %wide.trip.count293 = zext i32 %i.c to i64
@@ -245,10 +245,9 @@ bb.z:                                             ; preds = %decode_rowskip.exit
   br i1 %niter388.ncmp.3, label %.preheader244.loopexit.unr-lcssa, label %.lr.ph268, !llvm.loop !198
 
 bb.aa:                                            ; preds = %.lr.ph273, %._crit_edge
-  %indvar = phi i64 [ 0, %.lr.ph273 ], [ %indvar.next, %._crit_edge ] ; 2 uses
   %.6272 = phi ptr [ %0, %.lr.ph273 ], [ %i.oe, %._crit_edge ] ; 4 uses
   %.4200271 = phi i32 [ 1, %.lr.ph273 ], [ %i.oy, %._crit_edge ]
-  %i.oe = getelementptr inbounds i8, ptr %.6272, i64 %i.nk ; 7 uses
+  %i.oe = getelementptr inbounds i8, ptr %.6272, i64 %i.nk ; 8 uses
   %i.of = getelementptr inbounds i8, ptr %i.oe, i64 %i.nm
   %i.og = load i8, ptr %i.of, align 1, !tbaa !13
   %i.oh = load i8, ptr %i.oe, align 1, !tbaa !13
@@ -257,10 +256,7 @@ bb.aa:                                            ; preds = %.lr.ph273, %._crit_
   br i1 %i.nc, label %.lr.ph270.preheader, label %._crit_edge
 
 .lr.ph270.preheader:                              ; preds = %bb.aa
-  %3 = add i64 %indvar, 1
-  %4 = mul i64 %3, %i.nk
-  %scevgep = getelementptr i8, ptr %0, i64 %4
-  %load_initial = load i8, ptr %scevgep, align 1  ; 2 uses
+  %load_initial = load i8, ptr %i.oe, align 1     ; 2 uses
   br i1 %i.no, label %.lr.ph270.epil.preheader, label %.lr.ph270
 
 .lr.ph270:                                        ; preds = %.lr.ph270.preheader, %.lr.ph270
@@ -309,7 +305,6 @@ bb.aa:                                            ; preds = %.lr.ph273, %._crit_
 ._crit_edge:                                      ; preds = %.lr.ph270.epil.preheader, %._crit_edge.loopexit.unr-lcssa, %bb.aa
   %i.oy = add nuw nsw i32 %.4200271, 1            ; 2 uses
   %exitcond295.not = icmp eq i32 %i.oy, %i.h
-  %indvar.next = add i64 %indvar, 1
   br i1 %exitcond295.not, label %.loopexit, label %bb.aa, !llvm.loop !200
 
 decode_rowskip.exit.thread:                       ; preds = %bb.t, %bb.w, %._crit_edge.loopexit53.i, %bb.a, %decode_rowskip.exit

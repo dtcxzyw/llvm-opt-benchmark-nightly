@@ -203,8 +203,8 @@ bb.a:
   br i1 %i.d, label %.lr.ph.i, label %bb.i
 
 .lr.ph.i:                                         ; preds = %bb.a, %_ZN4cvc58internal12NodeTemplateILb0EEaSERKS2_.exit.i
-  %indvar = phi i64 [ %indvar.next, %_ZN4cvc58internal12NodeTemplateILb0EEaSERKS2_.exit.i ], [ 0, %bb.a ] ; 3 uses
-  %.sroa.07.020.i.idx = phi i64 [ %.sroa.07.020.i.add, %_ZN4cvc58internal12NodeTemplateILb0EEaSERKS2_.exit.i ], [ 8, %bb.a ] ; 3 uses
+  %indvar = phi i64 [ %indvar.next, %_ZN4cvc58internal12NodeTemplateILb0EEaSERKS2_.exit.i ], [ 0, %bb.a ] ; 2 uses
+  %.sroa.07.020.i.idx = phi i64 [ %.sroa.07.020.i.add, %_ZN4cvc58internal12NodeTemplateILb0EEaSERKS2_.exit.i ], [ 8, %bb.a ] ; 4 uses
   %.pn19.i = phi ptr [ %.sroa.07.020.i.ptr, %_ZN4cvc58internal12NodeTemplateILb0EEaSERKS2_.exit.i ], [ %0, %bb.a ] ; 4 uses
   %.sroa.07.020.i.ptr = getelementptr inbounds nuw i8, ptr %0, i64 %.sroa.07.020.i.idx ; 5 uses
   %i.e = load ptr, ptr %.sroa.07.020.i.ptr, align 8, !tbaa !31 ; 5 uses
@@ -219,9 +219,9 @@ bb.a:
 .lr.ph.i.i.i.i.i.preheader.i:                     ; preds = %.lr.ph.i
   %i.l = lshr exact i64 %.sroa.07.020.i.idx, 3    ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %.pn19.i, i64 16
-  %i.n = and i64 %indvar, 1
+  %i.n = and i64 %.sroa.07.020.i.idx, 8
   %lcmp.mod70.not.not = icmp eq i64 %i.n, 0
-  br i1 %lcmp.mod70.not.not, label %.lr.ph.i.i.i.i.i.i.prol, label %.lr.ph.i.i.i.i.i.i.prol.loopexit
+  br i1 %lcmp.mod70.not.not, label %.lr.ph.i.i.i.i.i.i.prol.loopexit, label %.lr.ph.i.i.i.i.i.i.prol
 
 .lr.ph.i.i.i.i.i.i.prol:                          ; preds = %.lr.ph.i.i.i.i.i.preheader.i
   %i.o = getelementptr inbounds i8, ptr %.sroa.07.020.i.ptr, i64 -8 ; 2 uses

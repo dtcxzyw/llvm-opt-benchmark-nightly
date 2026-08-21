@@ -204,7 +204,7 @@ bb.aq:                                            ; preds = %bb.ap, %bb.ao
   %i.al = mul i64 %i.ai, %i.ak
   %i.am = call ptr @dt_alloc_aligned(i64 noundef %i.al) #8 ; 13 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %i.am, i64 64) ]
-  %i.an = shl i64 %5, 2                           ; 3 uses
+  %i.an = shl i64 %5, 2                           ; 2 uses
   %i.ao = mul i64 %i.an, %i.ai
   %i.ap = call ptr @dt_alloc_aligned(i64 noundef %i.ao) #8 ; 12 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %i.ap, i64 64) ]
@@ -278,8 +278,6 @@ bb.ay:                                            ; preds = %bb.au
   br i1 %.not232, label %.loopexit, label %.lr.ph224.preheader
 
 .lr.ph224.preheader:                              ; preds = %.lr.ph227
-  %6 = mul i64 %5, %i.ag
-  %7 = shl i64 %6, 2
   %.4..4..sroa_idx = getelementptr inbounds nuw i8, ptr %i.f, i64 4
   %.4..4..sroa_idx278 = getelementptr inbounds nuw i8, ptr %i.f, i64 4
   %.8..8..sroa_idx = getelementptr inbounds nuw i8, ptr %i.f, i64 8
@@ -287,11 +285,10 @@ bb.ay:                                            ; preds = %bb.au
 
 .lr.ph224:                                        ; preds = %.lr.ph224.preheader, %._crit_edge225
   %.0168226 = phi i64 [ %i.bc, %._crit_edge225 ], [ 0, %.lr.ph224.preheader ] ; 4 uses
-  %8 = mul i64 %7, %.0168226
   %i.az = sub nsw i64 %i.ay, %.0168226
   %i.ba = select i1 %.not203, i64 %i.az, i64 %.0168226
   %i.bb = mul nsw i64 %i.ba, %i.ag
-  %9 = getelementptr i8, ptr %i.ap, i64 %8
+  %6 = mul nuw nsw i64 %.0168226, %i.ag
   br label %bb.az
 
 ._crit_edge225:                                   ; preds = %._crit_edge221
@@ -301,8 +298,6 @@ bb.ay:                                            ; preds = %bb.au
 
 bb.az:                                            ; preds = %.lr.ph224, %._crit_edge221
   %.0167222 = phi i64 [ 0, %.lr.ph224 ], [ %i.bt, %._crit_edge221 ] ; 3 uses
-  %10 = mul i64 %i.an, %.0167222
-  %scevgep = getelementptr i8, ptr %9, i64 %10
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.f, i8 0, i64 16, i1 false)
   %i.bd = add nsw i64 %.0167222, %i.bb
@@ -312,7 +307,10 @@ bb.az:                                            ; preds = %.lr.ph224, %._crit_
   br i1 %i.af, label %bb.ba, label %bb.bb
 
 .lr.ph220:                                        ; preds = %.preheader
-  call void @llvm.memcpy.p0.p0.i64(ptr align 4 %scevgep, ptr nonnull align 16 %i.f, i64 %i.an, i1 false), !tbaa !14
+  %7 = add nuw nsw i64 %.0167222, %6
+  %8 = mul i64 %7, %5
+  %9 = getelementptr [4 x i8], ptr %i.ap, i64 %8
+  call void @llvm.memcpy.p0.p0.i64(ptr align 4 %9, ptr nonnull align 16 %i.f, i64 %i.an, i1 false), !tbaa !14
   br label %._crit_edge221
 
 bb.ba:                                            ; preds = %bb.az

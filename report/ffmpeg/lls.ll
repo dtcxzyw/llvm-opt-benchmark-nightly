@@ -201,22 +201,20 @@ bb.a:
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.preheader, %.loopexit
-  %indvars.iv = phi i64 [ 0, %.preheader.preheader ], [ %indvars.iv.next, %.loopexit ] ; 11 uses
+  %indvars.iv = phi i64 [ 0, %.preheader.preheader ], [ %indvars.iv.next, %.loopexit ] ; 10 uses
   %i.g = sub nsw i64 %wide.trip.count22, %indvars.iv ; 3 uses
-  %i.h = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv ; 4 uses
+  %i.h = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv ; 5 uses
   %i.i = getelementptr inbounds nuw [288 x i8], ptr %0, i64 %indvars.iv ; 4 uses
   %min.iters.check = icmp ult i64 %i.g, 4
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.preheader
-  %2 = shl nuw nsw i64 %indvars.iv, 3
-  %scevgep25 = getelementptr nuw i8, ptr %1, i64 %2
   %i.j = mul nuw nsw i64 %indvars.iv, 288
   %scevgep24 = getelementptr i8, ptr %i.f, i64 %i.j ; 2 uses
   %i.k = mul nuw nsw i64 %indvars.iv, 296
   %scevgep = getelementptr i8, ptr %0, i64 %i.k   ; 2 uses
   %bound0 = icmp ult ptr %scevgep, %scevgep26
-  %bound1 = icmp ult ptr %scevgep25, %scevgep24
+  %bound1 = icmp ult ptr %i.h, %scevgep24
   %found.conflict = and i1 %bound0, %bound1
   %bound027 = icmp ult ptr %scevgep, %scevgep26
   %bound128 = icmp ult ptr %1, %scevgep24

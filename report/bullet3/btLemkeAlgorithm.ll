@@ -116,7 +116,7 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 128 ; 4 uses
   store i32 0, ptr %i.d, align 8, !tbaa !13
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 100 ; 2 uses
-  %i.f = load i32, ptr %i.e, align 4, !tbaa !25   ; 24 uses
+  %i.f = load i32, ptr %i.e, align 4, !tbaa !25   ; 23 uses
   %i.g = shl i32 %i.f, 1                          ; 19 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 4 uses
   store i8 1, ptr %i.h, align 8, !tbaa !26
@@ -467,7 +467,7 @@ _ZN9btMatrixXIfEC2Eii.exit93:                     ; preds = %bb.h
 .preheader.preheader.i:                           ; preds = %.preheader.lr.ph.i
   %i.dr = ptrtoaddr ptr %i.dq to i64
   %i.ds = ptrtoaddr ptr %i.dp to i64
-  %i.dt = load i32, ptr %i.cv, align 4            ; 3 uses
+  %i.dt = load i32, ptr %i.cv, align 4            ; 2 uses
   %i.du = zext nneg i32 %i.dn to i64              ; 8 uses
   %wide.trip.count24.i = zext nneg i32 %i.dl to i64
   %i.dv = add nsw i64 %i.du, -1                   ; 2 uses
@@ -483,10 +483,10 @@ _ZN9btMatrixXIfEC2Eii.exit93:                     ; preds = %bb.h
   br label %.preheader.i
 
 .preheader.i:                                     ; preds = %._crit_edge.i98, %.preheader.preheader.i
-  %indvars.iv21.i = phi i64 [ 0, %.preheader.preheader.i ], [ %indvars.iv.next22.i, %._crit_edge.i98 ] ; 6 uses
+  %indvars.iv21.i = phi i64 [ 0, %.preheader.preheader.i ], [ %indvars.iv.next22.i, %._crit_edge.i98 ] ; 5 uses
   %i.ea = mul nuw nsw i64 %indvars.iv21.i, %i.du
   %i.eb = trunc i64 %indvars.iv21.i to i32
-  %i.ec = mul i32 %i.dt, %i.eb                    ; 6 uses
+  %i.ec = mul i32 %i.dt, %i.eb                    ; 8 uses
   %i.ed = getelementptr inbounds nuw [4 x i8], ptr %i.dp, i64 %i.ea ; 6 uses
   br i1 %min.iters.check329, label %scalar.ph328.preheader, label %vector.scevcheck
 
@@ -498,10 +498,8 @@ vector.scevcheck:                                 ; preds = %.preheader.i
   %i.ei = sext i32 %i.eh to i64
   %i.ej = shl nsw i64 %i.ei, 2
   %i.ek = add i64 %i.ef, %i.ej
-  %8 = trunc i64 %indvars.iv21.i to i32
-  %9 = mul i32 %i.dt, %8                          ; 2 uses
-  %i.el = add i32 %9, %i.dy
-  %i.em = icmp slt i32 %i.el, %9
+  %i.el = add i32 %i.ec, %i.dy
+  %i.em = icmp slt i32 %i.el, %i.ec
   %i.en = or i1 %i.em, %i.dz
   %i.eo = add i64 %i.ek, -1
   %diff.check327 = icmp ult i64 %i.eo, 31
@@ -619,7 +617,7 @@ _ZN9btMatrixXIfE12setSubMatrixEiiiiRKS0_.exit:    ; preds = %._crit_edge16.i, %.
 .preheader.preheader.i101:                        ; preds = %.preheader.lr.ph.i99
   %i.gi = ptrtoaddr ptr %i.gh to i64
   %i.gj = ptrtoaddr ptr %i.gg to i64
-  %i.gk = load i32, ptr %i.cv, align 4            ; 3 uses
+  %i.gk = load i32, ptr %i.cv, align 4            ; 2 uses
   %i.gl = zext nneg i32 %i.gd to i64              ; 8 uses
   %wide.trip.count24.i102 = zext nneg i32 %i.ga to i64
   %i.gm = add nsw i64 %i.gl, -1                   ; 2 uses
@@ -635,11 +633,11 @@ _ZN9btMatrixXIfE12setSubMatrixEiiiiRKS0_.exit:    ; preds = %._crit_edge16.i, %.
   br label %.preheader.i104
 
 .preheader.i104:                                  ; preds = %._crit_edge.i110, %.preheader.preheader.i101
-  %indvars.iv21.i105 = phi i64 [ 0, %.preheader.preheader.i101 ], [ %indvars.iv.next22.i111, %._crit_edge.i110 ] ; 6 uses
+  %indvars.iv21.i105 = phi i64 [ 0, %.preheader.preheader.i101 ], [ %indvars.iv.next22.i111, %._crit_edge.i110 ] ; 5 uses
   %i.gr = mul nuw nsw i64 %indvars.iv21.i105, %i.gl
   %i.gs = trunc i64 %indvars.iv21.i105 to i32
   %i.gt = mul i32 %i.gk, %i.gs
-  %invariant.op.i = add i32 %i.gt, %i.f           ; 6 uses
+  %invariant.op.i = add i32 %i.gt, %i.f           ; 8 uses
   %i.gu = getelementptr inbounds nuw [4 x i8], ptr %i.gg, i64 %i.gr ; 6 uses
   br i1 %min.iters.check344, label %scalar.ph343.preheader, label %vector.scevcheck340
 
@@ -652,11 +650,8 @@ vector.scevcheck340:                              ; preds = %.preheader.i104
   %i.ha = sext i32 %i.gz to i64
   %i.hb = shl nsw i64 %i.ha, 2
   %i.hc = add i64 %i.gw, %i.hb
-  %10 = trunc i64 %indvars.iv21.i105 to i32
-  %11 = mul i32 %i.gk, %10
-  %12 = add i32 %11, %i.f                         ; 2 uses
-  %i.hd = add i32 %12, %i.gp
-  %i.he = icmp slt i32 %i.hd, %12
+  %i.hd = add i32 %invariant.op.i, %i.gp
+  %i.he = icmp slt i32 %i.hd, %invariant.op.i
   %i.hf = or i1 %i.he, %i.gq
   %i.hg = add i64 %i.hc, -1
   %diff.check342 = icmp ult i64 %i.hg, 31
