@@ -204,34 +204,33 @@ bb.ba:                                            ; preds = %bb.ay, %bb.ax
   br i1 %.not.i154, label %_ZN6brotli3enc9metablock17MapStaticContexts17h4e4a6d16511c8e67E.exit, label %.lr.ph.i
 
 .loopexit.i:                                      ; preds = %bb.bd
-  %exitcond9.not.i = icmp eq i64 %17, %i.ib
+  %exitcond9.not.i = icmp eq i64 %14, %i.ib
   br i1 %exitcond9.not.i, label %_ZN6brotli3enc9metablock17MapStaticContexts17h4e4a6d16511c8e67E.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %"_ZN111_$LT$alloc_stdlib..std_alloc..StandardAlloc$u20$as$u20$alloc_no_stdlib..stack_allocator..Allocator$LT$T$GT$$GT$9free_cell17hd73f7e4c840310d1E.exit.i153", %.loopexit.i
-  %.sroa.03.04.i = phi i64 [ %17, %.loopexit.i ], [ 0, %"_ZN111_$LT$alloc_stdlib..std_alloc..StandardAlloc$u20$as$u20$alloc_no_stdlib..stack_allocator..Allocator$LT$T$GT$$GT$9free_cell17hd73f7e4c840310d1E.exit.i153" ] ; 5 uses
-  %14 = shl i64 %.sroa.03.04.i, 6
-  %umax = call i64 @llvm.umax.i64(i64 %14, i64 %i.id)
-  %15 = shl i64 %.sroa.03.04.i, 6
-  %16 = sub i64 %umax, %15
-  %umin = call i64 @llvm.umin.i64(i64 %9, i64 %16) ; 2 uses
-  %17 = add nuw i64 %.sroa.03.04.i, 1             ; 2 uses
-  %18 = mul i64 %.sroa.03.04.i, %7
-  %19 = trunc i64 %18 to i32                      ; 2 uses
-  %20 = shl i64 %.sroa.03.04.i, 6                 ; 2 uses
-  %min.iters.check = icmp ult i64 %umin, 8
+  %.sroa.03.04.i = phi i64 [ %14, %.loopexit.i ], [ 0, %"_ZN111_$LT$alloc_stdlib..std_alloc..StandardAlloc$u20$as$u20$alloc_no_stdlib..stack_allocator..Allocator$LT$T$GT$$GT$9free_cell17hd73f7e4c840310d1E.exit.i153" ] ; 4 uses
+  %14 = add nuw i64 %.sroa.03.04.i, 1             ; 2 uses
+  %15 = mul i64 %.sroa.03.04.i, %7
+  %16 = trunc i64 %15 to i32                      ; 2 uses
+  %17 = shl i64 %.sroa.03.04.i, 6                 ; 3 uses
+  %umin = call i64 @llvm.umax.i64(i64 %17, i64 %i.id)
+  %18 = shl i64 %.sroa.03.04.i, 6
+  %19 = sub i64 %umin, %18
+  %20 = call i64 @llvm.umin.i64(i64 %9, i64 %19)  ; 2 uses
+  %min.iters.check = icmp ult i64 %20, 8
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i
-  %umin460 = call i64 @llvm.umin.i64(i64 %umin, i64 63)
+  %umin460 = call i64 @llvm.umin.i64(i64 %20, i64 63)
   %i.is = add nuw nsw i64 %umin460, 1             ; 2 uses
   %i.it = and i64 %i.is, 7                        ; 2 uses
   %i.iu = icmp eq i64 %i.it, 0
   %i.iv = select i1 %i.iu, i64 8, i64 %i.it
   %n.vec = sub nsw i64 %i.is, %i.iv               ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.il) ]
-  %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %19, i64 0
+  %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %16, i64 0
   %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
-  %invariant.gep = getelementptr [4 x i8], ptr %i.il, i64 %20
+  %invariant.gep = getelementptr [4 x i8], ptr %i.il, i64 %17
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -262,7 +261,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
 
 bb.bb:                                            ; preds = %scalar.ph
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.il) ]
-  %i.jd = add nuw nsw i64 %.sroa.05.03.i, %20     ; 3 uses
+  %i.jd = add nuw nsw i64 %.sroa.05.03.i, %17     ; 3 uses
   %i.je = icmp ult i64 %i.jd, %i.id
   br i1 %i.je, label %bb.bd, label %bb.be
 
@@ -273,7 +272,7 @@ bb.bc:                                            ; preds = %scalar.ph
 bb.bd:                                            ; preds = %bb.bb
   %i.jf = getelementptr inbounds nuw [4 x i8], ptr %8, i64 %.sroa.05.03.i
   %i.jg = load i32, ptr %i.jf, align 4, !alias.scope !39458, !noalias !39461, !noundef !27
-  %i.jh = add i32 %i.jg, %19
+  %i.jh = add i32 %i.jg, %16
   %i.ji = getelementptr inbounds nuw [4 x i8], ptr %i.il, i64 %i.jd
   store i32 %i.jh, ptr %i.ji, align 4, !noalias !39469
   %exitcond8.not.i = icmp eq i64 %i.jc, 64
