@@ -205,7 +205,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %.not, label %.loopexit, label %.lr.ph133.preheader
 
 .lr.ph133.preheader:                              ; preds = %bb.k
-  %wide.trip.count = zext i32 %indvars.iv150 to i64
+  %wide.trip.count = zext nneg i32 %indvars.iv150 to i64
   br label %.lr.ph133
 
 .lr.ph133:                                        ; preds = %.lr.ph133.preheader, %.lr.ph133
@@ -223,7 +223,7 @@ bb.l:                                             ; preds = %bb.j
   %i.bj = load i32, ptr %i.ah, align 8, !tbaa !26 ; 2 uses
   %i.bk = sext i32 %i.bj to i64
   %.not.not = icmp slt i64 %indvars.iv, %i.bk
-  %indvars.iv.next151 = add nuw i32 %indvars.iv150, 1
+  %indvars.iv.next151 = add nuw nsw i32 %indvars.iv150, 1
   br i1 %.not.not, label %bb.j, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.l, %.preheader
@@ -626,7 +626,7 @@ bb.gb:                                            ; preds = %bb.ga
   %i.aaj = fcmp ogt double %i.aai, %.1.i.i.2
   %.1.i.i.3 = select i1 %i.aaj, double %i.aai, double %.1.i.i.2 ; 3 uses
   %indvars.iv.next.i.i.3 = add nuw nsw i64 %indvars.iv.i.i, 4 ; 2 uses
-  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
+  %niter.next.3 = add nuw nsw i64 %niter, 4       ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %cvSensUpdateNorm.exit.loopexit.unr-lcssa, label %.lr.ph.i.i
 
@@ -719,7 +719,7 @@ bb.ge:                                            ; preds = %bb.gd
   %i.abq = fcmp ogt double %i.abp, %.1.i.i609.2
   %.1.i.i609.3 = select i1 %i.abq, double %i.abp, double %.1.i.i609.2 ; 3 uses
   %indvars.iv.next.i.i610.3 = add nuw nsw i64 %indvars.iv.i.i607, 4 ; 2 uses
-  %niter1157.next.3 = add nuw i64 %niter1157, 4   ; 2 uses
+  %niter1157.next.3 = add nuw nsw i64 %niter1157, 4 ; 2 uses
   %niter1157.ncmp.3 = icmp eq i64 %niter1157.next.3, %unroll_iter1156
   br i1 %niter1157.ncmp.3, label %cvQuadSensUpdateNorm.exit.loopexit.unr-lcssa, label %.lr.ph.i.i606
 
@@ -1122,7 +1122,7 @@ bb.kb:                                            ; preds = %bb.ka
   %i.bdq = fcmp ogt double %i.bdp, %.1.i257.i.2
   %.1.i257.i.3 = select i1 %i.bdq, double %i.bdp, double %.1.i257.i.2 ; 3 uses
   %indvars.iv.next.i258.i.3 = add nuw nsw i64 %indvars.iv.i256.i, 4 ; 2 uses
-  %niter1192.next.3 = add nuw i64 %niter1192, 4   ; 2 uses
+  %niter1192.next.3 = add nuw nsw i64 %niter1192, 4 ; 2 uses
   %niter1192.ncmp.3 = icmp eq i64 %niter1192.next.3, %unroll_iter1191
   br i1 %niter1192.ncmp.3, label %cvSensNorm.exit.i.loopexit.unr-lcssa, label %.lr.ph.i.i621
 
@@ -1344,7 +1344,7 @@ bb.kp:                                            ; preds = %bb.ko
   %i.bgx = fcmp ogt double %i.bgw, %.1.i271.i.2
   %.1.i271.i.3 = select i1 %i.bgx, double %i.bgw, double %.1.i271.i.2 ; 3 uses
   %indvars.iv.next.i272.i.3 = add nuw nsw i64 %indvars.iv.i269.i, 4 ; 2 uses
-  %niter1199.next.3 = add nuw i64 %niter1199, 4   ; 2 uses
+  %niter1199.next.3 = add nuw nsw i64 %niter1199, 4 ; 2 uses
   %niter1199.ncmp.3 = icmp eq i64 %niter1199.next.3, %unroll_iter1198
   br i1 %niter1199.ncmp.3, label %cvQuadSensNorm.exit.i.loopexit.unr-lcssa, label %.lr.ph.i268.i
 
@@ -1747,7 +1747,7 @@ bb.lv:                                            ; preds = %bb.lu
   %i.boa = fcmp ogt double %i.bnz, %.1.i.i.i.i.i.2
   %.1.i.i.i.i.i.3 = select i1 %i.boa, double %i.bnz, double %.1.i.i.i.i.i.2 ; 3 uses
   %indvars.iv.next.i.i.i.i294.i.3 = add nuw nsw i64 %indvars.iv.i.i.i.i293.i, 4 ; 2 uses
-  %niter1206.next.3 = add nuw i64 %niter1206, 4   ; 2 uses
+  %niter1206.next.3 = add nuw nsw i64 %niter1206, 4 ; 2 uses
   %niter1206.ncmp.3 = icmp eq i64 %niter1206.next.3, %unroll_iter1205
   br i1 %niter1206.ncmp.3, label %cvSensUpdateNorm.exit.i.i.i.loopexit.unr-lcssa, label %.lr.ph.i.i.i.i.i
 
@@ -1843,7 +1843,7 @@ bb.ly:                                            ; preds = %bb.lx
   %i.bpk = fcmp ogt double %i.bpj, %.1.i.i46.i.i.i.2
   %.1.i.i46.i.i.i.3 = select i1 %i.bpk, double %i.bpj, double %.1.i.i46.i.i.i.2 ; 3 uses
   %indvars.iv.next.i.i47.i.i.i.3 = add nuw nsw i64 %indvars.iv.i.i44.i.i.i, 4 ; 2 uses
-  %niter1213.next.3 = add nuw i64 %niter1213, 4   ; 2 uses
+  %niter1213.next.3 = add nuw nsw i64 %niter1213, 4 ; 2 uses
   %niter1213.ncmp.3 = icmp eq i64 %niter1213.next.3, %unroll_iter1212
   br i1 %niter1213.ncmp.3, label %cvQuadSensUpdateNorm.exit.i.i.i.loopexit.unr-lcssa, label %.lr.ph.i.i43.i.i.i
 
@@ -2015,7 +2015,7 @@ bb.mg:                                            ; preds = %bb.mf
   %i.bsr = fcmp ogt double %i.bsq, %.1.i.i.i37.i.i.2
   %.1.i.i.i37.i.i.3 = select i1 %i.bsr, double %i.bsq, double %.1.i.i.i37.i.i.2 ; 3 uses
   %indvars.iv.next.i.i.i38.i.i.3 = add nuw nsw i64 %indvars.iv.i.i.i35.i.i, 4 ; 2 uses
-  %niter1220.next.3 = add nuw i64 %niter1220, 4   ; 2 uses
+  %niter1220.next.3 = add nuw nsw i64 %niter1220, 4 ; 2 uses
   %niter1220.ncmp.3 = icmp eq i64 %niter1220.next.3, %unroll_iter1219
   br i1 %niter1220.ncmp.3, label %cvSensUpdateNorm.exit.i28.i.i.loopexit.unr-lcssa, label %.lr.ph.i.i.i34.i.i
 
@@ -2116,7 +2116,7 @@ bb.mj:                                            ; preds = %bb.mi
   %i.bug = fcmp ogt double %i.buf, %.1.i.i75.i.i.i.2
   %.1.i.i75.i.i.i.3 = select i1 %i.bug, double %i.buf, double %.1.i.i75.i.i.i.2 ; 3 uses
   %indvars.iv.next.i.i76.i.i.i.3 = add nuw nsw i64 %indvars.iv.i.i73.i.i.i, 4 ; 2 uses
-  %niter1227.next.3 = add nuw i64 %niter1227, 4   ; 2 uses
+  %niter1227.next.3 = add nuw nsw i64 %niter1227, 4 ; 2 uses
   %niter1227.ncmp.3 = icmp eq i64 %niter1227.next.3, %unroll_iter1226
   br i1 %niter1227.ncmp.3, label %cvSensUpdateNorm.exit78.i.i.i.loopexit.unr-lcssa, label %.lr.ph.i.i72.i.i.i
 
@@ -2519,7 +2519,7 @@ bb.ao:                                            ; preds = %bb.an
   %i.ju = fcmp ogt double %i.jt, %.1.i.i106.2
   %.1.i.i106.3 = select i1 %i.ju, double %i.jt, double %.1.i.i106.2 ; 3 uses
   %indvars.iv.next.i.i107.3 = add nuw nsw i64 %indvars.iv.i.i104, 4 ; 2 uses
-  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
+  %niter.next.3 = add nuw nsw i64 %niter, 4       ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %cvSensUpdateNorm.exit.loopexit.unr-lcssa, label %.lr.ph.i.i103
 
@@ -2620,7 +2620,7 @@ bb.as:                                            ; preds = %bb.ar
   %i.lf = fcmp ogt double %i.le, %.1.i.i97.2
   %.1.i.i97.3 = select i1 %i.lf, double %i.le, double %.1.i.i97.2 ; 3 uses
   %indvars.iv.next.i.i98.3 = add nuw nsw i64 %indvars.iv.i.i96, 4 ; 2 uses
-  %niter220.next.3 = add nuw i64 %niter220, 4     ; 2 uses
+  %niter220.next.3 = add nuw nsw i64 %niter220, 4 ; 2 uses
   %niter220.ncmp.3 = icmp eq i64 %niter220.next.3, %unroll_iter219
   br i1 %niter220.ncmp.3, label %cvQuadSensUpdateNorm.exit.loopexit.unr-lcssa, label %.lr.ph.i.i95
 
@@ -3023,7 +3023,7 @@ bb.a:
   %i.aa = fcmp ogt double %i.z, %.1.i.2
   %.1.i.3 = select i1 %i.aa, double %i.z, double %.1.i.2 ; 3 uses
   %indvars.iv.next.i.3 = add nuw nsw i64 %indvars.iv.i, 4 ; 2 uses
-  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
+  %niter.next.3 = add nuw nsw i64 %niter, 4       ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %cvSensNorm.exit.loopexit.unr-lcssa, label %.lr.ph.i
 
@@ -3426,7 +3426,7 @@ bb.a:
   %i.w = fmul double %i.t, %i.s                   ; 3 uses
   store double %i.w, ptr %i.v, align 8, !tbaa !29
   %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
-  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
+  %niter.next.3 = add nuw nsw i64 %niter, 4       ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph
 
@@ -3829,7 +3829,7 @@ bb.a:
   %i.aa = fcmp ogt double %i.z, %.1.2
   %.1.3 = select i1 %i.aa, double %i.z, double %.1.2 ; 3 uses
   %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
-  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
+  %niter.next.3 = add nuw nsw i64 %niter, 4       ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph
 
@@ -4232,7 +4232,7 @@ bb.i:                                             ; preds = %bb.i, %.preheader81
   %i.cw = fmul double %i.cv, %i.as                ; 3 uses
   %i.cx = getelementptr inbounds nuw [8 x i8], ptr %i.al, i64 %indvars.iv.next107.i.3
   store double %i.cw, ptr %i.cx, align 8, !tbaa !29
-  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
+  %niter.next.3 = add nuw nsw i64 %niter, 4       ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.preheader.i.unr-lcssa, label %bb.i
 
@@ -4454,30 +4454,23 @@ bb.p:                                             ; preds = %._crit_edge.i.i
   %i.gu = shufflevector <2 x double> %i.gs, <2 x double> %i.gt, <2 x i32> <i32 0, i32 3> ; 2 uses
   %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1
   %exitcond.not.i.i = icmp eq i64 %indvars.iv.next152.i.i, %wide.trip.count.i.i
-  %indvar.next45 = add i32 %indvar44, 1
   br i1 %exitcond.not.i.i, label %.loopexit123.i.i, label %.lr.ph131.preheader.i.i
 
 .lr.ph131.preheader.i.i:                          ; preds = %.loopexit.i.i, %bb.p
-  %indvar44 = phi i32 [ %indvar.next45, %.loopexit.i.i ], [ 0, %bb.p ] ; 2 uses
-  %indvars.iv151.i.i = phi i64 [ %indvars.iv.next152.i.i, %.loopexit.i.i ], [ 1, %bb.p ]
-  %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i, %.loopexit.i.i ], [ 3, %bb.p ] ; 4 uses
-  %.0105136.i.i = phi double [ %i.gk, %.loopexit.i.i ], [ %i.gi, %bb.p ]
-  %.0106135.i.i = phi double [ %i.gl, %.loopexit.i.i ], [ 1.000000e+00, %bb.p ] ; 2 uses
-  %.0107134.i.i = phi double [ %i.gm, %.loopexit.i.i ], [ 1.000000e+00, %bb.p ]
-  %i.gv = phi <2 x double> [ %i.gu, %.loopexit.i.i ], [ <double 1.000000e+00, double -1.000000e+00>, %bb.p ] ; 2 uses
-  %2 = add i32 %indvar44, 3                       ; 2 uses
-  %smin = tail call i32 @llvm.smin.i32(i32 %2, i32 2)
-  %3 = sub i32 %2, %smin                          ; 2 uses
-  %4 = zext i32 %3 to i64
-  %5 = add nuw nsw i64 %4, 1                      ; 2 uses
-  %indvars.iv.next152.i.i = add nuw nsw i64 %indvars.iv151.i.i, 1 ; 4 uses
+  %indvars.iv151.i.i = phi i64 [ 1, %bb.p ], [ %indvars.iv.next152.i.i, %.loopexit.i.i ] ; 2 uses
+  %indvars.iv.i.i = phi i64 [ 3, %bb.p ], [ %indvars.iv.next.i.i, %.loopexit.i.i ] ; 4 uses
+  %.0105136.i.i = phi double [ %i.gi, %bb.p ], [ %i.gk, %.loopexit.i.i ]
+  %.0106135.i.i = phi double [ 1.000000e+00, %bb.p ], [ %i.gl, %.loopexit.i.i ] ; 2 uses
+  %.0107134.i.i = phi double [ 1.000000e+00, %bb.p ], [ %i.gm, %.loopexit.i.i ]
+  %i.gv = phi <2 x double> [ <double 1.000000e+00, double -1.000000e+00>, %bb.p ], [ %i.gu, %.loopexit.i.i ] ; 2 uses
+  %indvars.iv.next152.i.i = add nuw nsw i64 %indvars.iv151.i.i, 1 ; 6 uses
   %i.gw = getelementptr inbounds nuw [8 x i8], ptr %i.gj, i64 %indvars.iv.next152.i.i
   %i.gx = load double, ptr %i.gw, align 8, !tbaa !29
-  %min.iters.check47 = icmp ult i32 %3, 3
+  %min.iters.check47 = icmp samesign ult i64 %indvars.iv151.i.i, 3
   br i1 %min.iters.check47, label %.lr.ph131.i.i.preheader, label %vector.ph48
 
 vector.ph48:                                      ; preds = %.lr.ph131.preheader.i.i
-  %n.vec49 = and i64 %5, 8589934588               ; 3 uses
+  %n.vec49 = and i64 %indvars.iv.next152.i.i, 9223372036854775804 ; 3 uses
   %i.gy = sub nsw i64 %indvars.iv.i.i, %n.vec49
   %broadcast.splatinsert50 = insertelement <2 x double> poison, double %.0106135.i.i, i64 0 ; 2 uses
   %i.gz = shufflevector <2 x double> %broadcast.splatinsert50, <2 x double> poison, <2 x i32> zeroinitializer
@@ -4505,7 +4498,7 @@ vector.body52:                                    ; preds = %vector.body52, %vec
   br i1 %i.hh, label %middle.block65, label %vector.body52, !llvm.loop !413
 
 middle.block65:                                   ; preds = %vector.body52
-  %cmp.n66 = icmp eq i64 %5, %n.vec49
+  %cmp.n66 = icmp eq i64 %indvars.iv.next152.i.i, %n.vec49
   br i1 %cmp.n66, label %.loopexit.i.i, label %.lr.ph131.i.i.preheader
 
 .lr.ph131.i.i.preheader:                          ; preds = %.lr.ph131.preheader.i.i, %middle.block65
@@ -4521,8 +4514,7 @@ middle.block65:                                   ; preds = %vector.body52
   %i.hm = tail call double @llvm.fmuladd.f64(double %i.hj, double %.0106135.i.i, double %i.hl)
   store double %i.hm, ptr %i.hi, align 8, !tbaa !29
   %indvars.iv.next149.i.i = add nsw i64 %indvars.iv148.i.i, -1
-  %6 = trunc nuw i64 %indvars.iv148.i.i to i32
-  %i.hn = icmp sgt i32 %6, 2
+  %i.hn = icmp sgt i64 %indvars.iv148.i.i, 2
   br i1 %i.hn, label %.lr.ph131.i.i, label %.loopexit.i.i, !llvm.loop !414
 
 .loopexit123.i.i:                                 ; preds = %.loopexit.i.i, %._crit_edge.i.i
@@ -4924,9 +4916,6 @@ declare <2 x double> @llvm.fabs.v2f64(<2 x double>) #6
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #12
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smin.i32(i32, i32) #6
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

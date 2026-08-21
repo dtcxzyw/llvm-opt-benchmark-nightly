@@ -202,13 +202,12 @@ bb.d:                                             ; preds = %bb.a
   br i1 %.not.i244, label %.lr.ph247.a, label %.loopexit
 
 .lr.ph247.a:                                      ; preds = %.thread
-  %smax.i = tail call i32 @llvm.smax.i32(i32 %6, i32 0)
   %exitcond.not.i406 = icmp slt i32 %6, 1
   br label %bb.e
 
 bb.e:                                             ; preds = %.lr.ph247.a, %bb.j
-  %.0156246 = phi i32 [ 0, %.lr.ph247.a ], [ %i.ac, %bb.j ] ; 2 uses
-  %.0162245 = phi i32 [ 0, %.lr.ph247.a ], [ %.4166407, %bb.j ]
+  %.0156246 = phi i32 [ %i.ac, %bb.j ], [ 0, %.lr.ph247.a ] ; 2 uses
+  %.0162245 = phi i32 [ %.4166407, %bb.j ], [ 0, %.lr.ph247.a ]
   %i.p = icmp eq i32 %.0156246, 0
   br i1 %i.p, label %bb.g, label %bb.f
 
@@ -223,8 +222,8 @@ bb.g:                                             ; preds = %bb.e, %bb.f
   br i1 %exitcond.not.i406, label %.loopexit, label %.lr.ph410
 
 bb.h:                                             ; preds = %bb.i
-  %i.t = add nuw i32 %.026.i408, 1                ; 2 uses
-  %exitcond.not.i = icmp eq i32 %i.t, %smax.i
+  %i.t = add nuw nsw i32 %.026.i408, 1            ; 2 uses
+  %exitcond.not.i = icmp eq i32 %6, %i.t
   br i1 %exitcond.not.i, label %.loopexit, label %.lr.ph410
 
 .lr.ph410:                                        ; preds = %bb.g, %bb.h
@@ -297,7 +296,6 @@ bb.l:                                             ; preds = %bb.d
   %i.ay = sext i32 %i.l to i64
   %i.az = tail call ptr @slurm_xcalloc(i64 noundef %i.ay, i64 noundef 4, i1 noundef zeroext true, i1 noundef zeroext false, ptr noundef nonnull @.str.2, i32 noundef 1118, ptr noundef nonnull @__func__._pick_step_nodes_cpus) #16
   store ptr %i.az, ptr %i.b, align 8
-  %smax.i108 = tail call i32 @llvm.smax.i32(i32 %6, i32 0) ; 2 uses
   %exitcond.not.i110384 = icmp slt i32 %6, 1
   br label %.outer192
 
@@ -326,8 +324,8 @@ bb.n:                                             ; preds = %.lr.ph, %bb.m
   br i1 %exitcond.not.i110384, label %.loopexit189, label %.lr.ph388
 
 bb.o:                                             ; preds = %bb.p
-  %i.be = add nuw i32 %.026.i109386, 1            ; 2 uses
-  %exitcond.not.i110 = icmp eq i32 %i.be, %smax.i108
+  %i.be = add nuw nsw i32 %.026.i109386, 1        ; 2 uses
+  %exitcond.not.i110 = icmp eq i32 %6, %i.be
   br i1 %exitcond.not.i110, label %.loopexit189, label %.lr.ph388
 
 .lr.ph388:                                        ; preds = %bb.n, %bb.o
@@ -551,8 +549,8 @@ bb.ak:                                            ; preds = %.lr.ph403
   %i.ei = add nsw i32 %.10400, 1
   %i.ej = srem i32 %i.ei, %6                      ; 2 uses
   %i.ek = icmp eq i32 %i.ej, %spec.store.select
-  %i.el = add nuw i32 %.026.i127401, 1            ; 2 uses
-  %exitcond.not.i128 = icmp eq i32 %i.el, %smax.i108
+  %i.el = add nuw nsw i32 %.026.i127401, 1        ; 2 uses
+  %exitcond.not.i128 = icmp eq i32 %6, %i.el
   %or.cond = select i1 %i.ek, i1 true, i1 %exitcond.not.i128
   br i1 %or.cond, label %_next_node_inx.exit131.thread, label %.lr.ph403
 

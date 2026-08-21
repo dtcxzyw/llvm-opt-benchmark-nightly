@@ -202,7 +202,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.e = load i32, ptr %i.d, align 8, !tbaa !18   ; 5 uses
+  %i.e = load i32, ptr %i.d, align 8, !tbaa !18   ; 4 uses
   %i.f = icmp eq i32 %i.e, 0
   br i1 %i.f, label %.thread, label %bb.c
 
@@ -218,7 +218,7 @@ bb.c:                                             ; preds = %bb.b
 _ZNK6icu_789UVector3210elementAtiEi.exit.lr.ph:   ; preds = %.preheader
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !21   ; 2 uses
-  %i.k = zext nneg i32 %i.e to i64
+  %i.k = zext nneg i32 %i.e to i64                ; 2 uses
   br label %_ZNK6icu_789UVector3210elementAtiEi.exit
 
 .loopexit.thread.thread:                          ; preds = %bb.c
@@ -227,9 +227,8 @@ _ZNK6icu_789UVector3210elementAtiEi.exit.lr.ph:   ; preds = %.preheader
 
 bb.d:                                             ; preds = %_ZNK6icu_789UVector3210elementAtiEi.exit24
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
-  %3 = trunc nuw i64 %indvars.iv.next to i32
-  %4 = icmp sgt i32 %i.e, %3
-  br i1 %4, label %_ZNK6icu_789UVector3210elementAtiEi.exit, label %.loopexit, !llvm.loop !22
+  %3 = icmp samesign ult i64 %indvars.iv.next, %i.k
+  br i1 %3, label %_ZNK6icu_789UVector3210elementAtiEi.exit, label %.loopexit, !llvm.loop !22
 
 _ZNK6icu_789UVector3210elementAtiEi.exit:         ; preds = %_ZNK6icu_789UVector3210elementAtiEi.exit.lr.ph, %bb.d
   %indvars.iv = phi i64 [ 2, %_ZNK6icu_789UVector3210elementAtiEi.exit.lr.ph ], [ %indvars.iv.next, %bb.d ] ; 3 uses

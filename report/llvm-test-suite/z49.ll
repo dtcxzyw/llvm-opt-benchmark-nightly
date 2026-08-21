@@ -204,7 +204,7 @@ bb.r:                                             ; preds = %bb.q
   br label %bb.s
 
 bb.s:                                             ; preds = %.preheader335, %bb.s
-  %indvars.iv274 = phi i32 [ %indvars.iv.next275, %bb.s ], [ 1, %.preheader335 ] ; 2 uses
+  %indvars.iv274 = phi i64 [ %indvars.iv.next275, %bb.s ], [ 1, %.preheader335 ] ; 2 uses
   %indvars.iv271 = phi i64 [ %indvars.iv.next272, %bb.s ], [ 0, %.preheader335 ] ; 2 uses
   %.1151 = phi i32 [ %i.cw, %bb.s ], [ %.1151.ph, %.preheader335 ] ; 3 uses
   %i.cs = urem i32 %.1151, 10
@@ -215,15 +215,11 @@ bb.s:                                             ; preds = %.preheader335, %bb.
   store i8 %i.cu, ptr %i.cv, align 1, !tbaa !19
   %i.cw = udiv i32 %.1151, 10
   %.not195 = icmp samesign ult i32 %.1151, 10
-  %indvars.iv.next275 = add nuw i32 %indvars.iv274, 1
-  br i1 %.not195, label %.preheader220.preheader, label %bb.s, !llvm.loop !55
+  %indvars.iv.next275 = add nuw nsw i64 %indvars.iv274, 1
+  br i1 %.not195, label %.preheader220, label %bb.s, !llvm.loop !55
 
-.preheader220.preheader:                          ; preds = %bb.s
-  %3 = sext i32 %indvars.iv274 to i64
-  br label %.preheader220
-
-.preheader220:                                    ; preds = %.preheader220.preheader, %.preheader220
-  %indvars.iv276 = phi i64 [ %3, %.preheader220.preheader ], [ %indvars.iv.next277, %.preheader220 ]
+.preheader220:                                    ; preds = %bb.s, %.preheader220
+  %indvars.iv276 = phi i64 [ %indvars.iv.next277, %.preheader220 ], [ %indvars.iv274, %bb.s ]
   %indvars.iv.next277 = add nsw i64 %indvars.iv276, -1 ; 3 uses
   %i.cx = getelementptr inbounds i8, ptr %i.a, i64 %indvars.iv.next277
   %i.cy = load i8, ptr %i.cx, align 1, !tbaa !19
@@ -258,7 +254,7 @@ bb.v:                                             ; preds = %bb.u
   br label %bb.w
 
 bb.w:                                             ; preds = %.preheader337, %bb.w
-  %indvars.iv258 = phi i32 [ %indvars.iv.next259, %bb.w ], [ 1, %.preheader337 ] ; 2 uses
+  %indvars.iv258 = phi i64 [ %indvars.iv.next259, %bb.w ], [ 1, %.preheader337 ] ; 2 uses
   %indvars.iv = phi i64 [ %indvars.iv.next, %bb.w ], [ 0, %.preheader337 ] ; 2 uses
   %.1147 = phi i32 [ %i.dn, %bb.w ], [ %.1147.ph, %.preheader337 ] ; 3 uses
   %i.dj = urem i32 %.1147, 10
@@ -269,15 +265,11 @@ bb.w:                                             ; preds = %.preheader337, %bb.
   store i8 %i.dl, ptr %i.dm, align 1, !tbaa !19
   %i.dn = udiv i32 %.1147, 10
   %.not190 = icmp samesign ult i32 %.1147, 10
-  %indvars.iv.next259 = add nuw i32 %indvars.iv258, 1
-  br i1 %.not190, label %.preheader222.preheader, label %bb.w, !llvm.loop !57
+  %indvars.iv.next259 = add nuw nsw i64 %indvars.iv258, 1
+  br i1 %.not190, label %.preheader222, label %bb.w, !llvm.loop !57
 
-.preheader222.preheader:                          ; preds = %bb.w
-  %4 = sext i32 %indvars.iv258 to i64
-  br label %.preheader222
-
-.preheader222:                                    ; preds = %.preheader222.preheader, %.preheader222
-  %indvars.iv260 = phi i64 [ %4, %.preheader222.preheader ], [ %indvars.iv.next261, %.preheader222 ]
+.preheader222:                                    ; preds = %bb.w, %.preheader222
+  %indvars.iv260 = phi i64 [ %indvars.iv.next261, %.preheader222 ], [ %indvars.iv258, %bb.w ]
   %indvars.iv.next261 = add nsw i64 %indvars.iv260, -1 ; 3 uses
   %i.do = getelementptr inbounds i8, ptr %i.b, i64 %indvars.iv.next261
   %i.dp = load i8, ptr %i.do, align 1, !tbaa !19
@@ -307,7 +299,7 @@ bb.y:                                             ; preds = %bb.x
   br label %bb.z
 
 bb.z:                                             ; preds = %.preheader336, %bb.z
-  %indvars.iv266 = phi i32 [ %indvars.iv.next267, %bb.z ], [ 1, %.preheader336 ] ; 2 uses
+  %indvars.iv266 = phi i64 [ %indvars.iv.next267, %bb.z ], [ 1, %.preheader336 ] ; 2 uses
   %indvars.iv263 = phi i64 [ %indvars.iv.next264, %bb.z ], [ 0, %.preheader336 ] ; 2 uses
   %.1143 = phi i32 [ %i.ee, %bb.z ], [ %.1143.ph, %.preheader336 ] ; 3 uses
   %i.ea = urem i32 %.1143, 10
@@ -318,15 +310,11 @@ bb.z:                                             ; preds = %.preheader336, %bb.
   store i8 %i.ec, ptr %i.ed, align 1, !tbaa !19
   %i.ee = udiv i32 %.1143, 10
   %.not192 = icmp samesign ult i32 %.1143, 10
-  %indvars.iv.next267 = add nuw i32 %indvars.iv266, 1
-  br i1 %.not192, label %.preheader221.preheader, label %bb.z, !llvm.loop !59
+  %indvars.iv.next267 = add nuw nsw i64 %indvars.iv266, 1
+  br i1 %.not192, label %.preheader221, label %bb.z, !llvm.loop !59
 
-.preheader221.preheader:                          ; preds = %bb.z
-  %5 = sext i32 %indvars.iv266 to i64
-  br label %.preheader221
-
-.preheader221:                                    ; preds = %.preheader221.preheader, %.preheader221
-  %indvars.iv268 = phi i64 [ %5, %.preheader221.preheader ], [ %indvars.iv.next269, %.preheader221 ]
+.preheader221:                                    ; preds = %bb.z, %.preheader221
+  %indvars.iv268 = phi i64 [ %indvars.iv.next269, %.preheader221 ], [ %indvars.iv266, %bb.z ]
   %indvars.iv.next269 = add nsw i64 %indvars.iv268, -1 ; 3 uses
   %i.ef = getelementptr inbounds i8, ptr %i.c, i64 %indvars.iv.next269
   %i.eg = load i8, ptr %i.ef, align 1, !tbaa !19
@@ -425,7 +413,7 @@ bb.ae:                                            ; preds = %PrintComposite.exit
   br label %bb.af
 
 bb.af:                                            ; preds = %.preheader334, %bb.af
-  %indvars.iv282 = phi i32 [ %indvars.iv.next283, %bb.af ], [ 1, %.preheader334 ] ; 2 uses
+  %indvars.iv282 = phi i64 [ %indvars.iv.next283, %bb.af ], [ 1, %.preheader334 ] ; 2 uses
   %indvars.iv279 = phi i64 [ %indvars.iv.next280, %bb.af ], [ 0, %.preheader334 ] ; 2 uses
   %.1139 = phi i32 [ %i.gj, %bb.af ], [ %.1139.ph, %.preheader334 ] ; 3 uses
   %i.gf = urem i32 %.1139, 10
@@ -436,15 +424,11 @@ bb.af:                                            ; preds = %.preheader334, %bb.
   store i8 %i.gh, ptr %i.gi, align 1, !tbaa !19
   %i.gj = udiv i32 %.1139, 10
   %.not199 = icmp ult i32 %.1139, 10
-  %indvars.iv.next283 = add nuw i32 %indvars.iv282, 1
-  br i1 %.not199, label %.preheader219.preheader, label %bb.af, !llvm.loop !69
+  %indvars.iv.next283 = add nuw nsw i64 %indvars.iv282, 1
+  br i1 %.not199, label %.preheader219, label %bb.af, !llvm.loop !69
 
-.preheader219.preheader:                          ; preds = %bb.af
-  %6 = sext i32 %indvars.iv282 to i64
-  br label %.preheader219
-
-.preheader219:                                    ; preds = %.preheader219.preheader, %.preheader219
-  %indvars.iv284 = phi i64 [ %6, %.preheader219.preheader ], [ %indvars.iv.next285, %.preheader219 ]
+.preheader219:                                    ; preds = %bb.af, %.preheader219
+  %indvars.iv284 = phi i64 [ %indvars.iv.next285, %.preheader219 ], [ %indvars.iv282, %bb.af ]
   %indvars.iv.next285 = add nsw i64 %indvars.iv284, -1 ; 3 uses
   %i.gk = getelementptr inbounds i8, ptr %i.d, i64 %indvars.iv.next285
   %i.gl = load i8, ptr %i.gk, align 1, !tbaa !19
@@ -642,7 +626,7 @@ bb.aq:                                            ; preds = %PrintComposite.exit
   br label %bb.ar
 
 bb.ar:                                            ; preds = %.preheader333, %bb.ar
-  %indvars.iv293 = phi i32 [ %indvars.iv.next294, %bb.ar ], [ 1, %.preheader333 ] ; 2 uses
+  %indvars.iv293 = phi i64 [ %indvars.iv.next294, %bb.ar ], [ 1, %.preheader333 ] ; 2 uses
   %indvars.iv290 = phi i64 [ %indvars.iv.next291, %bb.ar ], [ 0, %.preheader333 ] ; 2 uses
   %.1 = phi i32 [ %i.kz, %bb.ar ], [ %.1.ph, %.preheader333 ] ; 3 uses
   %i.kv = urem i32 %.1, 10
@@ -653,15 +637,11 @@ bb.ar:                                            ; preds = %.preheader333, %bb.
   store i8 %i.kx, ptr %i.ky, align 1, !tbaa !19
   %i.kz = udiv i32 %.1, 10
   %.not206 = icmp ult i32 %.1, 10
-  %indvars.iv.next294 = add nuw i32 %indvars.iv293, 1
-  br i1 %.not206, label %.preheader.preheader, label %bb.ar, !llvm.loop !77
+  %indvars.iv.next294 = add nuw nsw i64 %indvars.iv293, 1
+  br i1 %.not206, label %.preheader, label %bb.ar, !llvm.loop !77
 
-.preheader.preheader:                             ; preds = %bb.ar
-  %7 = sext i32 %indvars.iv293 to i64
-  br label %.preheader
-
-.preheader:                                       ; preds = %.preheader.preheader, %.preheader
-  %indvars.iv295 = phi i64 [ %7, %.preheader.preheader ], [ %indvars.iv.next296, %.preheader ]
+.preheader:                                       ; preds = %bb.ar, %.preheader
+  %indvars.iv295 = phi i64 [ %indvars.iv.next296, %.preheader ], [ %indvars.iv293, %bb.ar ]
   %indvars.iv.next296 = add nsw i64 %indvars.iv295, -1 ; 3 uses
   %i.la = getelementptr inbounds i8, ptr %i.e, i64 %indvars.iv.next296
   %i.lb = load i8, ptr %i.la, align 1, !tbaa !19

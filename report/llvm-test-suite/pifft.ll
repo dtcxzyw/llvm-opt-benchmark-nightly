@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.g, %bb.d
   %indvars.iv = phi i32 [ %indvars.iv.next, %bb.g ], [ 0, %bb.d ] ; 2 uses
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.g ], [ 0, %bb.d ] ; 3 uses
   %.0.i = phi double [ %.1.i, %bb.g ], [ 0.000000e+00, %bb.d ]
-  %indvars.iv.next.i = add nuw i64 %indvars.iv.i, 1 ; 2 uses
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %i.o = fmul double %.0.i, %i.j                  ; 2 uses
   %.not.not.i = icmp slt i64 %indvars.iv.i, %i.n
   br i1 %.not.not.i, label %bb.f, label %bb.g
@@ -219,7 +219,7 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.f, %bb.e
   %.1.i = phi double [ %i.s, %bb.f ], [ %i.o, %bb.e ] ; 3 uses
   %i.t = fcmp olt double %.1.i, %i.m
-  %indvars.iv.next = add i32 %indvars.iv, 1
+  %indvars.iv.next = add nuw nsw i32 %indvars.iv, 1
   br i1 %i.t, label %bb.e, label %bb.h, !llvm.loop !102
 
 bb.h:                                             ; preds = %bb.g
@@ -622,7 +622,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   br label %.loopexit
 
 .lr.ph63:                                         ; preds = %._crit_edge, %.lr.ph63
-  %indvar = phi i64 [ %indvar.next, %.lr.ph63 ], [ 0, %._crit_edge ] ; 4 uses
+  %indvar = phi i64 [ %indvar.next, %.lr.ph63 ], [ 0, %._crit_edge ] ; 5 uses
   %.061 = phi double [ %i.v, %.lr.ph63 ], [ %i.s, %._crit_edge ]
   %.04860 = phi i32 [ %i.w, %.lr.ph63 ], [ 0, %._crit_edge ] ; 2 uses
   %i.v = fmul double %i.a, %.061                  ; 2 uses
@@ -672,12 +672,11 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   br i1 %.not55.not71, label %.lr.ph73.preheader, label %.lr.ph76
 
 .lr.ph73.preheader:                               ; preds = %.preheader56
-  %i.aj = sext i32 %0 to i64                      ; 6 uses
-  %i.ak = zext nneg i32 %i.w to i64               ; 4 uses
-  %5 = add nsw i64 %i.aj, -1
-  %6 = tail call i64 @llvm.smin.i64(i64 %i.ak, i64 %5)
-  %7 = sub i64 %i.aj, %6                          ; 3 uses
-  %min.iters.check = icmp ult i64 %7, 12
+  %i.aj = sext i32 %0 to i64                      ; 5 uses
+  %i.ak = zext nneg i32 %i.w to i64               ; 3 uses
+  %5 = xor i64 %indvar, -1
+  %6 = add i64 %5, %i.aj                          ; 3 uses
+  %min.iters.check = icmp ult i64 %6, 12
   br i1 %min.iters.check, label %.lr.ph73.preheader104, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph73.preheader
@@ -687,7 +686,7 @@ vector.memcheck:                                  ; preds = %.lr.ph73.preheader
   br i1 %diff.check, label %.lr.ph73.preheader104, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %7, -8                         ; 3 uses
+  %n.vec = and i64 %6, -8                         ; 3 uses
   %i.an = sub i64 %i.aj, %n.vec
   br label %vector.body
 
@@ -710,7 +709,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.aw, label %middle.block, label %vector.body, !llvm.loop !123
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %7, %n.vec
+  %cmp.n = icmp eq i64 %6, %n.vec
   br i1 %cmp.n, label %.lr.ph76, label %.lr.ph73.preheader104
 
 .lr.ph73.preheader104:                            ; preds = %vector.memcheck, %.lr.ph73.preheader, %middle.block
@@ -805,7 +804,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.b, %bb.c
   %.1 = phi double [ %i.g, %bb.c ], [ %i.c, %bb.b ] ; 3 uses
   %i.h = fcmp olt double %.1, %i.a
-  %indvars.iv.next83 = add nuw i32 %indvars.iv82, 1
+  %indvars.iv.next83 = add nuw nsw i32 %indvars.iv82, 1
   br i1 %i.h, label %bb.b, label %bb.e, !llvm.loop !102
 
 bb.e:                                             ; preds = %bb.d
@@ -1207,9 +1206,6 @@ declare i32 @llvm.vector.reduce.mul.v4i32(<4 x i32>) #8
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #20
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.smin.i64(i64, i64) #8
 
 attributes #0 = { cold nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

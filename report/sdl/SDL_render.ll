@@ -205,7 +205,7 @@ bb.a:
   %12 = alloca %struct.SDL_FRect, align 8         ; 11 uses
   %13 = alloca %struct.SDL_FRect, align 16        ; 7 uses
   %.not = icmp eq ptr %9, null                    ; 2 uses
-  %i.b = select i1 %.not, i32 %8, i32 %10         ; 3 uses
+  %i.b = select i1 %.not, i32 %8, i32 %10         ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #14
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 312 ; 2 uses
   %i.d = load ptr, ptr %i.c, align 8              ; 2 uses
@@ -314,6 +314,7 @@ SDL_GetTextureSize_REAL.exit:                     ; preds = %SDL_ObjectValid.exi
   %i.au = getelementptr inbounds nuw i8, ptr %0, i64 728 ; 4 uses
   %i.av = getelementptr inbounds nuw i8, ptr %0, i64 556
   %i.aw = getelementptr inbounds nuw i8, ptr %0, i64 540
+  %sext = zext nneg i32 %i.b to i64               ; 2 uses
   br label %.backedge
 
 .backedge:                                        ; preds = %.backedge.backedge, %.lr.ph
@@ -716,9 +717,8 @@ QueueCmdGeometry.exit:                            ; preds = %.thread456, %bb.ar,
   store i32 %.0317, ptr %i.al, align 4
   store i32 %.0316, ptr %i.am, align 4
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 3 ; 2 uses
-  %14 = trunc nuw i64 %indvars.iv.next to i32
-  %15 = icmp sgt i32 %i.b, %14
-  br i1 %15, label %.backedge.backedge, label %._crit_edge
+  %14 = icmp samesign ult i64 %indvars.iv.next, %sext
+  br i1 %14, label %.backedge.backedge, label %._crit_edge
 
 .backedge.backedge:                               ; preds = %QueueCmdGeometry.exit, %.thread
   %.be = phi i32 [ %.0318, %QueueCmdGeometry.exit ], [ -1, %.thread ]
@@ -730,9 +730,8 @@ QueueCmdGeometry.exit:                            ; preds = %.thread456, %bb.ar,
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #14
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #14
   %indvars.iv.next518 = add nuw nsw i64 %indvars.iv, 3 ; 2 uses
-  %16 = trunc nuw i64 %indvars.iv.next518 to i32
-  %17 = icmp sgt i32 %i.b, %16
-  br i1 %17, label %.backedge.backedge, label %QueueCmdGeometry.exit418
+  %15 = icmp samesign ult i64 %indvars.iv.next518, %sext
+  br i1 %15, label %.backedge.backedge, label %QueueCmdGeometry.exit418
 
 ._crit_edge:                                      ; preds = %QueueCmdGeometry.exit
   %i.lg = icmp eq i32 %.0318, -1

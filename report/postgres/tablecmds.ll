@@ -205,26 +205,22 @@ bb.bm:                                            ; preds = %bb.bl, %bb.bk
 
 bb.bn:                                            ; preds = %bb.bo, %.lr.ph31.i.i
   %indvars.iv.i.i = phi i64 [ 0, %.lr.ph31.i.i ], [ %indvars.iv.next.i.i, %bb.bo ] ; 2 uses
-  %.0102130.i.i = phi i32 [ 1, %.lr.ph31.i.i ], [ %i.lm, %bb.bo ] ; 4 uses
+  %.0102130.i.i = phi i32 [ 1, %.lr.ph31.i.i ], [ %i.lm, %bb.bo ] ; 3 uses
   %i.lg = getelementptr inbounds nuw [8 x i8], ptr %i.lf, i64 %indvars.iv.i.i
   %i.lh = load ptr, ptr %i.lg, align 8
   %i.li = getelementptr inbounds nuw i8, ptr %i.lh, i64 8
   %i.lj = load ptr, ptr %i.li, align 8
   %i.lk = call i32 @strcmp(ptr noundef nonnull readonly dereferenceable(1) %i.kc, ptr noundef nonnull dereferenceable(1) %i.lj) #17
   %i.ll = icmp eq i32 %i.lk, 0
-  br i1 %i.ll, label %findAttrByName.exit.i, label %bb.bo
+  br i1 %i.ll, label %bb.bp, label %bb.bo
 
 bb.bo:                                            ; preds = %bb.bn
-  %i.lm = add nuw i32 %.0102130.i.i, 1
+  %i.lm = add nuw nsw i32 %.0102130.i.i, 1
   %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1 ; 2 uses
   %exitcond.not.i.i = icmp eq i64 %indvars.iv.next.i.i, %wide.trip.count.i.i
   br i1 %exitcond.not.i.i, label %findAttrByName.exit.thread.i, label %bb.bn
 
-findAttrByName.exit.i:                            ; preds = %bb.bn
-  %7 = icmp sgt i32 %.0102130.i.i, 0
-  br i1 %7, label %bb.bp, label %findAttrByName.exit.thread.i
-
-bb.bp:                                            ; preds = %findAttrByName.exit.i
+bb.bp:                                            ; preds = %bb.bn
   %i.ln = getelementptr inbounds nuw i8, ptr %i.km, i64 8
   %i.lo = load ptr, ptr %i.ln, align 8            ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #15
@@ -390,7 +386,7 @@ MergeInheritedAttribute.exit.i:                   ; preds = %bb.ch
   %i.oj = trunc i32 %.0102130.i.i to i16
   br label %bb.cj
 
-findAttrByName.exit.thread.i:                     ; preds = %bb.bo, %findAttrByName.exit.i, %.lr.ph.i.i, %bb.bm
+findAttrByName.exit.thread.i:                     ; preds = %bb.bo, %.lr.ph.i.i, %bb.bm
   %i.ok = getelementptr inbounds nuw i8, ptr %i.km, i64 32
   store i16 1, ptr %i.ok, align 8
   %i.ol = getelementptr inbounds nuw i8, ptr %i.km, i64 34
@@ -743,24 +739,20 @@ MergeCheckConstraint.exit.i:                      ; preds = %._crit_edge.i.i, %b
 
 bb.dk:                                            ; preds = %bb.dl, %.lr.ph31.i403.i
   %indvars.iv.i405.i = phi i64 [ 0, %.lr.ph31.i403.i ], [ %indvars.iv.next.i407.i, %bb.dl ] ; 2 uses
-  %.0102130.i406.i = phi i32 [ 1, %.lr.ph31.i403.i ], [ %i.ug, %bb.dl ] ; 4 uses
+  %.0102130.i406.i = phi i32 [ 1, %.lr.ph31.i403.i ], [ %i.ug, %bb.dl ] ; 3 uses
   %i.ua = getelementptr inbounds nuw [8 x i8], ptr %i.tz, i64 %indvars.iv.i405.i
   %i.ub = load ptr, ptr %i.ua, align 8
   %i.uc = getelementptr inbounds nuw i8, ptr %i.ub, i64 8
   %i.ud = load ptr, ptr %i.uc, align 8
   %i.ue = call i32 @strcmp(ptr noundef nonnull readonly dereferenceable(1) %i.tu, ptr noundef nonnull dereferenceable(1) %i.ud) #17
   %i.uf = icmp eq i32 %i.ue, 0
-  br i1 %i.uf, label %findAttrByName.exit409.i, label %bb.dl
+  br i1 %i.uf, label %bb.dm, label %bb.dl
 
 bb.dl:                                            ; preds = %bb.dk
-  %i.ug = add nuw i32 %.0102130.i406.i, 1
+  %i.ug = add nuw nsw i32 %.0102130.i406.i, 1
   %indvars.iv.next.i407.i = add nuw nsw i64 %indvars.iv.i405.i, 1 ; 2 uses
   %exitcond.not.i408.i = icmp eq i64 %indvars.iv.next.i407.i, %wide.trip.count.i404.i
   br i1 %exitcond.not.i408.i, label %findAttrByName.exit409.thread.i, label %bb.dk
-
-findAttrByName.exit409.i:                         ; preds = %bb.dk
-  %8 = icmp sgt i32 %.0102130.i406.i, 0
-  br i1 %8, label %bb.dm, label %findAttrByName.exit409.thread.i
 
 .critedge381.i:                                   ; preds = %bb.eq
   %.not.i410.i = icmp eq ptr %.5.i, null
@@ -773,7 +765,7 @@ list_length.exit411.i:                            ; preds = %.lr.ph759.i, %.crit
   %i.uj = icmp sgt i32 %i.ui, 1600
   br i1 %i.uj, label %bb.er, label %list_length.exit411.thread.i
 
-bb.dm:                                            ; preds = %findAttrByName.exit409.i
+bb.dm:                                            ; preds = %bb.dk
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #15
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #15
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #15
@@ -1040,7 +1032,7 @@ MergeChildAttribute.exit.i:                       ; preds = %bb.ep, %.thread.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #15
   br label %bb.eq
 
-findAttrByName.exit409.thread.i:                  ; preds = %bb.dl, %findAttrByName.exit409.i, %.lr.ph.i402.i, %.lr.ph670
+findAttrByName.exit409.thread.i:                  ; preds = %bb.dl, %.lr.ph.i402.i, %.lr.ph670
   %i.yy = call ptr @lappend(ptr noundef %.4756.i669, ptr noundef %i.ts) #15
   br label %bb.eq
 
@@ -1443,7 +1435,7 @@ StoreCatalogInheritance1.exit.i:                  ; preds = %bb.fz, %bb.fy
   call void @SetRelationHasSubclass(i32 noundef %i.agi, i1 noundef zeroext true)
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #15
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #15
-  %i.agk = add nuw i32 %.01316.i, 1
+  %i.agk = add nuw nsw i32 %.01316.i, 1
   %indvars.iv.next.i345 = add nuw nsw i64 %indvars.iv.i344, 1 ; 2 uses
   %i.agl = load i32, ptr %i.afz, align 4
   %i.agm = sext i32 %i.agl to i64

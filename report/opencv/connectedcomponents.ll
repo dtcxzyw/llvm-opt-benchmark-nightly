@@ -204,7 +204,7 @@ bb.a:
   %9 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
   %10 = alloca %"class.std::allocator", align 1   ; 3 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.b = load i32, ptr %i.a, align 8, !tbaa !32   ; 5 uses
+  %i.b = load i32, ptr %i.a, align 8, !tbaa !32   ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   %i.d = load i32, ptr %i.c, align 8, !tbaa !32
   %i.e = icmp eq i32 %i.b, %i.d
@@ -380,7 +380,7 @@ _ZNSt6vectorItSaItEEC2EmRKtRKS0_.exit:            ; preds = %.noexc2074, %_ZNSt6
 
 .lr.ph.us.preheader:                              ; preds = %.lr.ph3365
   %i.az = zext nneg i32 %i.n to i64               ; 13 uses
-  %i.ba = zext nneg i32 %i.b to i64
+  %i.ba = zext nneg i32 %i.b to i64               ; 2 uses
   br label %.lr.ph.us
 
 .lr.ph.us:                                        ; preds = %.lr.ph.us.preheader, %._crit_edge.us
@@ -783,9 +783,8 @@ bb.qt:                                            ; preds = %.critedge2063.us, %
 
 ._crit_edge.us:                                   ; preds = %bb.qt
   %indvars.iv.next3548 = add nuw nsw i64 %indvars.iv3547, 2 ; 2 uses
-  %11 = trunc nuw i64 %indvars.iv.next3548 to i32
-  %12 = icmp sgt i32 %i.b, %11
-  br i1 %12, label %.lr.ph.us, label %._crit_edge3366, !llvm.loop !112
+  %11 = icmp samesign ult i64 %indvars.iv.next3548, %i.ba
+  br i1 %11, label %.lr.ph.us, label %._crit_edge3366, !llvm.loop !112
 
 ._crit_edge3366:                                  ; preds = %._crit_edge.us
   %i.djn = icmp ugt i16 %.2.us, 1
@@ -1188,7 +1187,7 @@ bb.a:
   %9 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
   %10 = alloca %"class.std::allocator", align 1   ; 3 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.b = load i32, ptr %i.a, align 8, !tbaa !32   ; 5 uses
+  %i.b = load i32, ptr %i.a, align 8, !tbaa !32   ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 12 uses
   %i.d = load i32, ptr %i.c, align 8, !tbaa !32
   %i.e = icmp eq i32 %i.b, %i.d
@@ -1364,7 +1363,7 @@ _ZNSt6vectorIiSaIiEEC2EmRKiRKS0_.exit:            ; preds = %.noexc2074, %_ZNSt6
 
 .lr.ph.us.preheader:                              ; preds = %.lr.ph3365
   %i.az = zext nneg i32 %i.n to i64               ; 13 uses
-  %i.ba = zext nneg i32 %i.b to i64
+  %i.ba = zext nneg i32 %i.b to i64               ; 2 uses
   br label %.lr.ph.us
 
 .lr.ph.us:                                        ; preds = %.lr.ph.us.preheader, %._crit_edge.us
@@ -1767,9 +1766,8 @@ bb.qt:                                            ; preds = %.critedge2063.us, %
 
 ._crit_edge.us:                                   ; preds = %bb.qt
   %indvars.iv.next3550 = add nuw nsw i64 %indvars.iv3549, 2 ; 2 uses
-  %11 = trunc nuw i64 %indvars.iv.next3550 to i32
-  %12 = icmp sgt i32 %i.b, %11
-  br i1 %12, label %.lr.ph.us, label %._crit_edge3366, !llvm.loop !122
+  %11 = icmp samesign ult i64 %indvars.iv.next3550, %i.ba
+  br i1 %11, label %.lr.ph.us, label %._crit_edge3366, !llvm.loop !122
 
 ._crit_edge3366:                                  ; preds = %._crit_edge.us
   %i.djn = icmp sgt i32 %.2.us, 1
@@ -2172,7 +2170,7 @@ bb.a:
   %9 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
   %10 = alloca %"class.std::allocator", align 1   ; 3 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.b = load i32, ptr %i.a, align 8, !tbaa !32   ; 5 uses
+  %i.b = load i32, ptr %i.a, align 8, !tbaa !32   ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 12 uses
   %i.d = load i32, ptr %i.c, align 8, !tbaa !32
   %i.e = icmp eq i32 %i.b, %i.d
@@ -2345,7 +2343,7 @@ _ZNSt6vectorItSaItEEC2EmRKtRKS0_.exit:            ; preds = %.noexc2080, %_ZNSt6
   %i.ax = getelementptr inbounds nuw i8, ptr %2, i64 128
   %i.ay = icmp sgt i32 %i.n, 0
   %i.az = sext i32 %i.n to i64                    ; 13 uses
-  %i.ba = zext nneg i32 %i.b to i64
+  %i.ba = zext nneg i32 %i.b to i64               ; 2 uses
   br label %bb.aa
 
 ._crit_edge3517:                                  ; preds = %._crit_edge
@@ -2476,9 +2474,8 @@ bb.aa:                                            ; preds = %.lr.ph3516, %._crit
 ._crit_edge:                                      ; preds = %bb.rb, %bb.aa
   %.1.lcssa = phi i16 [ %.017903514, %bb.aa ], [ %.2, %bb.rb ] ; 4 uses
   %indvars.iv.next3693 = add nuw nsw i64 %indvars.iv3692, 2 ; 2 uses
-  %11 = trunc nuw i64 %indvars.iv.next3693 to i32
-  %12 = icmp sgt i32 %i.b, %11
-  br i1 %12, label %bb.aa, label %._crit_edge3517, !llvm.loop !294
+  %11 = icmp samesign ult i64 %indvars.iv.next3693, %i.ba
+  br i1 %11, label %bb.aa, label %._crit_edge3517, !llvm.loop !294
 
 bb.ab:                                            ; preds = %.lr.ph, %bb.rb
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.rb ] ; 265 uses
@@ -2881,7 +2878,7 @@ bb.a:
   %9 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
   %10 = alloca %"class.std::allocator", align 1   ; 3 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.b = load i32, ptr %i.a, align 8, !tbaa !32   ; 5 uses
+  %i.b = load i32, ptr %i.a, align 8, !tbaa !32   ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 12 uses
   %i.d = load i32, ptr %i.c, align 8, !tbaa !32
   %i.e = icmp eq i32 %i.b, %i.d
@@ -3054,7 +3051,7 @@ _ZNSt6vectorIiSaIiEEC2EmRKiRKS0_.exit:            ; preds = %.noexc2080, %_ZNSt6
   %i.ax = getelementptr inbounds nuw i8, ptr %2, i64 128
   %i.ay = icmp sgt i32 %i.n, 0
   %i.az = sext i32 %i.n to i64                    ; 13 uses
-  %i.ba = zext nneg i32 %i.b to i64
+  %i.ba = zext nneg i32 %i.b to i64               ; 2 uses
   br label %bb.aa
 
 ._crit_edge3517:                                  ; preds = %._crit_edge
@@ -3184,9 +3181,8 @@ bb.aa:                                            ; preds = %.lr.ph3516, %._crit
 ._crit_edge:                                      ; preds = %bb.rb, %bb.aa
   %.1.lcssa = phi i32 [ %.017903514, %bb.aa ], [ %.2, %bb.rb ] ; 4 uses
   %indvars.iv.next3694 = add nuw nsw i64 %indvars.iv3693, 2 ; 2 uses
-  %11 = trunc nuw i64 %indvars.iv.next3694 to i32
-  %12 = icmp sgt i32 %i.b, %11
-  br i1 %12, label %bb.aa, label %._crit_edge3517, !llvm.loop !307
+  %11 = icmp samesign ult i64 %indvars.iv.next3694, %i.ba
+  br i1 %11, label %bb.aa, label %._crit_edge3517, !llvm.loop !307
 
 bb.ab:                                            ; preds = %.lr.ph, %bb.rb
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.rb ] ; 265 uses

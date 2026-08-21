@@ -202,7 +202,7 @@ vec.epilog.middle.block669:                       ; preds = %vec.epilog.vector.b
   %i.fq = call double @llvm.fmuladd.f64(double %i.fk, double %i.fp, double %i.ey) ; 3 uses
   %indvars.iv.next462.1 = add nuw nsw i64 %indvars.iv461, 2 ; 2 uses
   %indvars.iv.next464.1 = add nuw nsw i64 %indvars.iv463, 2 ; 2 uses
-  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
+  %niter.next.1 = add nuw nsw i64 %niter, 2       ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge404.loopexit.unr-lcssa, label %.lr.ph403, !llvm.loop !20
 
@@ -261,7 +261,7 @@ vec.epilog.middle.block669:                       ; preds = %vec.epilog.vector.b
 bb.m:                                             ; preds = %.lr.ph420, %._crit_edge415
   %indvar685 = phi i32 [ 0, %.lr.ph420 ], [ %indvar.next686, %._crit_edge415 ] ; 3 uses
   %indvars.iv489 = phi i64 [ 1, %.lr.ph420 ], [ %indvars.iv.next490, %._crit_edge415 ] ; 4 uses
-  %indvars.iv481 = phi i32 [ 2, %.lr.ph420 ], [ %indvars.iv.next482, %._crit_edge415 ] ; 2 uses
+  %indvars.iv481 = phi i64 [ 2, %.lr.ph420 ], [ %indvars.iv.next482, %._crit_edge415 ] ; 5 uses
   %indvars.iv477 = phi i32 [ 1, %.lr.ph420 ], [ %indvars.iv.next478, %._crit_edge415 ] ; 2 uses
   %indvars.iv475 = phi i32 [ %i.bm, %.lr.ph420 ], [ %indvars.iv.next476, %._crit_edge415 ] ; 2 uses
   %i.gv = sext i32 %indvars.iv477 to i64          ; 4 uses
@@ -284,7 +284,6 @@ bb.m:                                             ; preds = %.lr.ph420, %._crit_
   br i1 %.not376409.not, label %.lr.ph414.preheader, label %._crit_edge415
 
 .lr.ph414.preheader:                              ; preds = %bb.m
-  %15 = sext i32 %indvars.iv481 to i64            ; 4 uses
   %i.hi = sub i32 %indvar685, %i.bm
   %i.hj = and i32 %i.hi, 1
   %lcmp.mod688.not.not = icmp eq i32 %i.hj, 0
@@ -297,7 +296,7 @@ bb.m:                                             ; preds = %.lr.ph420, %._crit_
   %i.hm = fcmp oge double %i.hl, 0.000000e+00
   %i.hn = fneg double %i.hl
   %i.ho = select i1 %i.hm, double %i.hl, double %i.hn
-  %i.hp = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %15 ; 2 uses
+  %i.hp = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %indvars.iv481 ; 2 uses
   %i.hq = load double, ptr %i.hp, align 8, !tbaa !9
   %i.hr = call double @llvm.fmuladd.f64(double %i.ho, double %i.gz, double %i.hq)
   store double %i.hr, ptr %i.hp, align 8, !tbaa !9
@@ -305,18 +304,18 @@ bb.m:                                             ; preds = %.lr.ph420, %._crit_
   %i.ht = fcmp oge double %i.hs, 0.000000e+00
   %i.hu = fneg double %i.hs
   %i.hv = select i1 %i.ht, double %i.hs, double %i.hu
-  %gep551.prol = getelementptr [8 x i8], ptr %invariant.gep550, i64 %15
+  %gep551.prol = getelementptr [8 x i8], ptr %invariant.gep550, i64 %indvars.iv481
   %i.hw = load double, ptr %gep551.prol, align 8, !tbaa !9 ; 3 uses
   %i.hx = fcmp oge double %i.hw, 0.000000e+00
   %i.hy = fneg double %i.hw
   %i.hz = select i1 %i.hx, double %i.hw, double %i.hy
   %i.ia = call double @llvm.fmuladd.f64(double %i.hv, double %i.hz, double 0.000000e+00) ; 2 uses
-  %indvars.iv.next484.prol = add nsw i64 %15, 1
+  %indvars.iv.next484.prol = add nuw nsw i64 %indvars.iv481, 1
   br label %.lr.ph414.prol.loopexit
 
 .lr.ph414.prol.loopexit:                          ; preds = %.lr.ph414.prol, %.lr.ph414.preheader
   %.lcssa675.unr = phi double [ poison, %.lr.ph414.preheader ], [ %i.ia, %.lr.ph414.prol ]
-  %indvars.iv483.unr = phi i64 [ %15, %.lr.ph414.preheader ], [ %indvars.iv.next484.prol, %.lr.ph414.prol ]
+  %indvars.iv483.unr = phi i64 [ %indvars.iv481, %.lr.ph414.preheader ], [ %indvars.iv.next484.prol, %.lr.ph414.prol ]
   %indvars.iv479.unr = phi i64 [ %i.gv, %.lr.ph414.preheader ], [ %indvars.iv.next480.prol, %.lr.ph414.prol ]
   %.1352411.unr = phi double [ 0.000000e+00, %.lr.ph414.preheader ], [ %i.ia, %.lr.ph414.prol ]
   %i.ib = icmp eq i32 %i.eb, %indvar685
@@ -367,7 +366,7 @@ bb.m:                                             ; preds = %.lr.ph420, %._crit_
   %i.jj = fneg double %i.jh
   %i.jk = select i1 %i.ji, double %i.jh, double %i.jj
   %i.jl = call double @llvm.fmuladd.f64(double %i.jf, double %i.jk, double %i.is) ; 2 uses
-  %indvars.iv.next484.1 = add nsw i64 %indvars.iv483, 2 ; 2 uses
+  %indvars.iv.next484.1 = add nuw nsw i64 %indvars.iv483, 2 ; 2 uses
   %lftr.wideiv.1 = trunc i64 %indvars.iv.next484.1 to i32
   %exitcond488.not.1 = icmp eq i32 %i.dz, %lftr.wideiv.1
   br i1 %exitcond488.not.1, label %._crit_edge415.loopexit, label %.lr.ph414, !llvm.loop !22
@@ -384,7 +383,7 @@ bb.m:                                             ; preds = %.lr.ph420, %._crit_
   store double %i.jn, ptr %i.hf, align 8, !tbaa !9
   %indvars.iv.next478 = add i32 %indvars.iv477, %indvars.iv475
   %indvars.iv.next476 = add i32 %indvars.iv475, -1
-  %indvars.iv.next482 = add nuw i32 %indvars.iv481, 1
+  %indvars.iv.next482 = add nuw nsw i64 %indvars.iv481, 1
   %exitcond493.not = icmp eq i64 %indvars.iv.next490, %wide.trip.count492
   %indvar.next686 = add i32 %indvar685, 1
   br i1 %exitcond493.not, label %.lr.ph425.preheader, label %bb.m, !llvm.loop !23

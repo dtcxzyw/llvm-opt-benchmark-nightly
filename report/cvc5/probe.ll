@@ -204,31 +204,28 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   br label %bb.n
 
 bb.m:                                             ; preds = %bb.m, %.lr.ph.new
-  %.sroa.036.050 = phi i32 [ 1, %.lr.ph.new ], [ %i.dm, %bb.m ] ; 6 uses
+  %.sroa.036.050 = phi i32 [ 1, %.lr.ph.new ], [ %i.dm, %bb.m ] ; 5 uses
   %niter = phi i32 [ 0, %.lr.ph.new ], [ %niter.next.1, %bb.m ]
   %i.da = sub nsw i32 0, %.sroa.036.050
-  %1 = tail call i32 @llvm.abs.i32(i32 %.sroa.036.050, i1 true) ; 2 uses
-  %i.db = tail call noundef i32 @llvm.fshl.i32(i32 %1, i32 %i.da, i32 1)
+  %i.db = tail call noundef i32 @llvm.fshl.i32(i32 %.sroa.036.050, i32 %i.da, i32 1)
   %i.dc = zext i32 %i.db to i64
   %i.dd = getelementptr inbounds nuw [4 x i8], ptr %i.bv, i64 %i.dc
   store i32 -1, ptr %i.dd, align 4, !tbaa !182
-  %2 = tail call noundef i32 @llvm.fshl.i32(i32 %1, i32 %.sroa.036.050, i32 1)
-  %i.de = zext i32 %2 to i64
+  %1 = shl nuw i32 %.sroa.036.050, 1
+  %i.de = zext i32 %1 to i64
   %i.df = getelementptr inbounds nuw [4 x i8], ptr %i.bv, i64 %i.de
   store i32 -1, ptr %i.df, align 4, !tbaa !182
-  %i.dg = add nuw i32 %.sroa.036.050, 1           ; 2 uses
-  %3 = xor i32 %.sroa.036.050, -1
-  %4 = tail call i32 @llvm.abs.i32(i32 %i.dg, i1 true) ; 2 uses
-  %i.dh = tail call noundef i32 @llvm.fshl.i32(i32 %4, i32 %3, i32 1)
+  %i.dg = add nuw nsw i32 %.sroa.036.050, 1       ; 2 uses
+  %i.dh = tail call noundef i32 @llvm.fshl.i32(i32 %i.dg, i32 -1, i32 1)
   %i.di = zext i32 %i.dh to i64
   %i.dj = getelementptr inbounds nuw [4 x i8], ptr %i.bv, i64 %i.di
   store i32 -1, ptr %i.dj, align 4, !tbaa !182
-  %5 = tail call noundef i32 @llvm.fshl.i32(i32 %4, i32 %i.dg, i32 1)
-  %i.dk = zext i32 %5 to i64
+  %2 = shl nuw i32 %i.dg, 1
+  %i.dk = zext i32 %2 to i64
   %i.dl = getelementptr inbounds nuw [4 x i8], ptr %i.bv, i64 %i.dk
   store i32 -1, ptr %i.dl, align 4, !tbaa !182
-  %i.dm = add nuw i32 %.sroa.036.050, 2           ; 2 uses
-  %niter.next.1 = add nuw i32 %niter, 2           ; 2 uses
+  %i.dm = add nuw nsw i32 %.sroa.036.050, 2       ; 2 uses
+  %niter.next.1 = add nuw nsw i32 %niter, 2       ; 2 uses
   %niter.ncmp.1 = icmp eq i32 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %bb.m
 

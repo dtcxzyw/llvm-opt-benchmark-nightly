@@ -204,15 +204,13 @@ bb.d:                                             ; preds = %bb.c
   %i.au = call i32 (ptr, i64, i32, i64, ptr, ...) @__snprintf_chk(ptr noundef nonnull %i.a, i64 noundef 64, i32 noundef 1, i64 noundef 64, ptr noundef nonnull @.str.130, i32 noundef %i.at) #9 ; 0 uses
   %i.av = getelementptr inbounds nuw [272 x i8], ptr %i.m, i64 %indvars.iv ; 2 uses
   %i.aw = load ptr, ptr %i.j, align 8
-  %2 = shl i64 %indvars.iv, 32
-  %sext54 = add i64 %2, 274877906944
-  %3 = ashr exact i64 %sext54, 32                 ; 2 uses
-  %i.ax = getelementptr inbounds [8 x i8], ptr %i.aw, i64 %3
+  %sext54 = add nuw nsw i64 %indvars.iv, 64       ; 2 uses
+  %i.ax = getelementptr inbounds nuw [8 x i8], ptr %i.aw, i64 %sext54
   %i.ay = load i64, ptr %i.ax, align 8
   call void @memory_region_init_alias(ptr noundef nonnull %i.av, ptr noundef nonnull %i.ap, ptr noundef nonnull %i.a, ptr noundef %i.as, i64 noundef %i.ay, i64 noundef 536870912) #9
   %i.az = load ptr, ptr %i.i, align 8
   %i.ba = load ptr, ptr %i.j, align 8
-  %i.bb = getelementptr inbounds [8 x i8], ptr %i.ba, i64 %3
+  %i.bb = getelementptr inbounds nuw [8 x i8], ptr %i.ba, i64 %sext54
   %i.bc = load i64, ptr %i.bb, align 8
   call void @memory_region_add_subregion(ptr noundef %i.az, i64 noundef %i.bc, ptr noundef nonnull %i.av) #9
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses

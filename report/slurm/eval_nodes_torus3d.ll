@@ -202,7 +202,7 @@ bb.ap:                                            ; preds = %.loopexit.i.i, %.lr
   %.sroa.19.1.i = phi i32 [ %.sroa.19.0115.i, %.lr.ph59.i.i ], [ %.sroa.19.2.i, %.loopexit.i.i ] ; 3 uses
   %.sroa.21.1.i = phi i8 [ %.sroa.21.0116.i, %.lr.ph59.i.i ], [ %.sroa.21.2.i, %.loopexit.i.i ] ; 3 uses
   %.sroa.26.1.i = phi i64 [ %.sroa.26.0117.i, %.lr.ph59.i.i ], [ %.sroa.26.2.i, %.loopexit.i.i ] ; 3 uses
-  %i.ew = phi i32 [ %i.et, %.lr.ph59.i.i ], [ %i.jh, %.loopexit.i.i ] ; 4 uses
+  %i.ew = phi i32 [ %i.et, %.lr.ph59.i.i ], [ %i.jh, %.loopexit.i.i ] ; 3 uses
   %indvars.iv67.i.i = phi i64 [ 0, %.lr.ph59.i.i ], [ %i.fb, %.loopexit.i.i ] ; 2 uses
   %indvars.iv.i.i = phi i64 [ 1, %.lr.ph59.i.i ], [ %indvars.iv.next.i.i, %.loopexit.i.i ] ; 2 uses
   %i.ex = load ptr, ptr %i.ev, align 8            ; 2 uses
@@ -214,7 +214,7 @@ bb.ap:                                            ; preds = %.loopexit.i.i, %.lr
   br i1 %.not.i.i, label %.preheader.i.i, label %.loopexit.i.i
 
 .preheader.i.i:                                   ; preds = %bb.ap
-  %i.fc = sext i32 %i.ew to i64
+  %i.fc = sext i32 %i.ew to i64                   ; 2 uses
   %i.fd = icmp slt i64 %i.fb, %i.fc
   br i1 %i.fd, label %.lr.ph.i.i, label %.critedge.preheader.i.i
 
@@ -242,9 +242,8 @@ bb.ap:                                            ; preds = %.loopexit.i.i, %.lr
   %i.fl = load i32, ptr %i.fk, align 4
   %i.fm = icmp ule i32 %i.fl, %.064.i135          ; 3 uses
   %indvars.iv.next62.i.i = add nuw nsw i64 %indvars.iv61.i.i, 1 ; 2 uses
-  %1 = trunc nuw i64 %indvars.iv.next62.i.i to i32
-  %2 = icmp sgt i32 %i.ew, %1
-  %or.cond.i.i = select i1 %2, i1 %i.fm, i1 false
+  %1 = icmp slt i64 %indvars.iv.next62.i.i, %i.fc
+  %or.cond.i.i = select i1 %1, i1 %i.fm, i1 false
   br i1 %or.cond.i.i, label %.lr.ph.i.i, label %.critedge.preheader.loopexit.i.i, !llvm.loop !12
 
 bb.aq:                                            ; preds = %_check_anchor.exit.i.i, %.lr.ph57.i.i

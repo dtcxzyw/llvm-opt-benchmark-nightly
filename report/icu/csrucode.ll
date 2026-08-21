@@ -86,12 +86,13 @@ bb.a:
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !8    ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 48
   %i.d = load i32, ptr %i.c, align 8, !tbaa !13   ; 4 uses
-  %3 = tail call i32 @llvm.smin.i32(i32 %i.d, i32 30)
-  %4 = add nsw i32 %3, -1
   %i.e = icmp sgt i32 %i.d, 1
   br i1 %i.e, label %.lr.ph.preheader, label %.thread
 
 .lr.ph.preheader:                                 ; preds = %bb.a
+  %3 = tail call i32 @llvm.umin.i32(i32 %i.d, i32 30)
+  %4 = add nsw i32 %3, -1
+  %sext = zext nneg i32 %4 to i64
   %i.f = load i8, ptr %i.b, align 1, !tbaa !14
   %i.g = zext i8 %i.f to i16
   %i.h = shl nuw i16 %i.g, 8
@@ -146,9 +147,8 @@ _ZN6icu_78L16adjustConfidenceEDsi.exit:           ; preds = %bb.b, %bb.c
   %.off = add nsw i32 %i.ac, -1
   %switch = icmp ult i32 %.off, 99
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %5 = trunc nuw i64 %indvars.iv.next to i32
-  %6 = icmp sgt i32 %4, %5
-  %or.cond = select i1 %switch, i1 %6, i1 false
+  %5 = icmp samesign ult i64 %indvars.iv.next, %sext
+  %or.cond = select i1 %switch, i1 %5, i1 false
   br i1 %or.cond, label %.lr.ph.peel.next, label %.thread, !llvm.loop !15
 
 .thread.fold.split:                               ; preds = %.lr.ph.preheader
@@ -189,12 +189,13 @@ bb.a:
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !8    ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 48
   %i.d = load i32, ptr %i.c, align 8, !tbaa !13   ; 5 uses
-  %3 = tail call i32 @llvm.smin.i32(i32 %i.d, i32 30)
-  %4 = add nsw i32 %3, -1
   %i.e = icmp sgt i32 %i.d, 1
   br i1 %i.e, label %.lr.ph.preheader, label %.thread
 
 .lr.ph.preheader:                                 ; preds = %bb.a
+  %3 = tail call i32 @llvm.umin.i32(i32 %i.d, i32 30)
+  %4 = add nsw i32 %3, -1
+  %sext = zext nneg i32 %4 to i64
   %i.f = load i16, ptr %i.b, align 1              ; 3 uses
   switch i16 %i.f, label %_ZN6icu_78L16adjustConfidenceEDsi.exit.peel [
     i16 -257, label %bb.b
@@ -254,9 +255,8 @@ _ZN6icu_78L16adjustConfidenceEDsi.exit:           ; preds = %bb.e, %bb.f
   %.off = add nsw i32 %i.x, -1
   %switch = icmp ult i32 %.off, 99
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %5 = trunc nuw i64 %indvars.iv.next to i32
-  %6 = icmp sgt i32 %4, %5
-  %or.cond = select i1 %switch, i1 %6, i1 false
+  %5 = icmp samesign ult i64 %indvars.iv.next, %sext
+  %or.cond = select i1 %switch, i1 %5, i1 false
   br i1 %or.cond, label %.lr.ph.peel.next, label %.thread, !llvm.loop !18
 
 .thread:                                          ; preds = %_ZN6icu_78L16adjustConfidenceEDsi.exit, %.lr.ph.preheader, %_ZN6icu_78L16adjustConfidenceEDsi.exit.peel, %bb.a, %bb.c, %bb.d, %bb.b
@@ -402,9 +402,6 @@ bb.a:
 declare void @__cxa_pure_virtual() unnamed_addr
 
 declare noundef ptr @_ZNK6icu_7817CharsetRecognizer11getLanguageEv(ptr noundef nonnull align 8 dereferenceable(8)) unnamed_addr #6
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smin.i32(i32, i32) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #8

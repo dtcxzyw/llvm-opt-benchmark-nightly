@@ -205,7 +205,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.b = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %0) #57 ; 2 uses
-  %i.c = trunc i64 %i.b to i32                    ; 3 uses
+  %i.c = trunc i64 %i.b to i32                    ; 2 uses
   %sext = shl i64 %i.b, 32
   %i.d = ashr exact i64 %sext, 32                 ; 4 uses
   br label %bb.c
@@ -227,37 +227,26 @@ bb.d:                                             ; preds = %bb.c
   %i.l = sext i32 %i.j to i64                     ; 2 uses
   %i.m = tail call noalias ptr @calloc(i64 noundef %i.l, i64 noundef 1) #60 ; 3 uses
   %i.n = icmp eq ptr %i.m, null
-  br i1 %i.n, label %bb.n, label %.preheader
+  br i1 %i.n, label %bb.n, label %.lr.ph.preheader
 
-.preheader:                                       ; preds = %bb.d
-  %2 = icmp sgt i32 %i.c, 0
-  br i1 %2, label %.lr.ph.preheader, label %.loopexit
+.lr.ph.preheader:                                 ; preds = %bb.d
+  %.not105 = icmp sgt i32 %i.c, 0
+  br i1 %.not105, label %.lr.ph, label %.loopexit
 
-.lr.ph.preheader:                                 ; preds = %.preheader
-  %.not105 = icmp sgt i64 %i.d, 2
-  br i1 %.not105, label %.lr.ph108.preheader, label %bb.e
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.k
+  %indvars.iv87 = phi i64 [ %indvars.iv.next88, %bb.k ], [ 0, %.lr.ph.preheader ] ; 4 uses
+  %indvars.iv85 = phi i64 [ %indvars.iv.next86, %bb.k ], [ 0, %.lr.ph.preheader ] ; 4 uses
+  %2 = or disjoint i64 %indvars.iv85, 2           ; 2 uses
+  %.not = icmp slt i64 %2, %i.d
+  br i1 %.not, label %.lr.ph108, label %bb.e
 
-.lr.ph108.preheader:                              ; preds = %.lr.ph.preheader
-  %invariant.op = sub nsw i64 %i.d, 2
-  br label %.lr.ph108
-
-.lr.ph:                                           ; preds = %bb.k
-  %.not = icmp slt i64 %indvars.iv.next86, %invariant.op
-  br i1 %.not, label %.lr.ph108, label %.lr.ph._crit_edge
-
-.lr.ph._crit_edge:                                ; preds = %.lr.ph
-  %3 = trunc nuw nsw i64 %indvars.iv.next88 to i32
-  br label %bb.e
-
-bb.e:                                             ; preds = %.lr.ph._crit_edge, %.lr.ph.preheader
-  %indvars.iv87.lcssa = phi i32 [ %3, %.lr.ph._crit_edge ], [ 0, %.lr.ph.preheader ]
+bb.e:                                             ; preds = %.lr.ph
+  %3 = trunc nuw nsw i64 %indvars.iv87 to i32
   tail call void (i32, ptr, ...) @TraceLog(i32 noundef 4, ptr noundef nonnull @.str.252)
   br label %.loopexit
 
-.lr.ph108:                                        ; preds = %.lr.ph108.preheader, %.lr.ph
-  %indvars.iv85107 = phi i64 [ %indvars.iv.next86, %.lr.ph ], [ 0, %.lr.ph108.preheader ] ; 4 uses
-  %indvars.iv87106 = phi i64 [ %indvars.iv.next88, %.lr.ph ], [ 0, %.lr.ph108.preheader ] ; 3 uses
-  %i.o = getelementptr inbounds nuw i8, ptr %0, i64 %indvars.iv85107 ; 2 uses
+.lr.ph108:                                        ; preds = %.lr.ph
+  %i.o = getelementptr inbounds nuw i8, ptr %0, i64 %indvars.iv85 ; 2 uses
   %i.p = load i8, ptr %i.o, align 1
   %i.q = zext i8 %i.p to i64
   %i.r = getelementptr inbounds nuw i8, ptr @DecodeDataBase64.base64DecodeTable, i64 %i.q
@@ -269,8 +258,7 @@ bb.e:                                             ; preds = %.lr.ph._crit_edge, 
   %i.x = getelementptr inbounds nuw i8, ptr @DecodeDataBase64.base64DecodeTable, i64 %i.w
   %i.y = load i8, ptr %i.x, align 1
   %i.z = zext i8 %i.y to i32
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 %indvars.iv85107
-  %i.aa = getelementptr inbounds nuw i8, ptr %4, i64 2
+  %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 %2
   %i.ab = load i8, ptr %i.aa, align 1             ; 2 uses
   %.not70 = icmp eq i8 %i.ab, 61
   br i1 %.not70, label %bb.g, label %bb.f
@@ -285,7 +273,7 @@ bb.f:                                             ; preds = %.lr.ph108
 
 bb.g:                                             ; preds = %.lr.ph108, %bb.f
   %i.ah = phi i32 [ %i.ag, %bb.f ], [ 0, %.lr.ph108 ] ; 4 uses
-  %i.ai = or disjoint i64 %indvars.iv85107, 3     ; 2 uses
+  %i.ai = or disjoint i64 %indvars.iv85, 3        ; 2 uses
   %i.aj = icmp slt i64 %i.ai, %i.d
   br i1 %i.aj, label %bb.h, label %bb.j
 
@@ -305,12 +293,12 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.g, %bb.h, %bb.i
   %i.ar = phi i32 [ %i.aq, %bb.i ], [ %i.ah, %bb.h ], [ %i.ah, %bb.g ]
-  %indvars.iv.next88 = add nuw nsw i64 %indvars.iv87106, 3 ; 4 uses
+  %indvars.iv.next88 = add nuw nsw i64 %indvars.iv87, 3 ; 3 uses
   %.not72 = icmp sgt i64 %indvars.iv.next88, %i.l
   br i1 %.not72, label %.thread, label %bb.k
 
 .thread:                                          ; preds = %bb.j
-  %i.as = trunc nuw nsw i64 %indvars.iv87106 to i32
+  %i.as = trunc nuw nsw i64 %indvars.iv87 to i32
   tail call void (i32, ptr, ...) @TraceLog(i32 noundef 4, ptr noundef nonnull @.str.253)
   br label %.loopexit
 
@@ -321,7 +309,7 @@ bb.k:                                             ; preds = %bb.j
   %i.aw = or i32 %i.av, %i.ah                     ; 2 uses
   %i.ax = lshr i32 %i.aw, 16
   %i.ay = trunc i32 %i.ax to i8
-  %i.az = getelementptr inbounds nuw i8, ptr %i.m, i64 %indvars.iv87106 ; 3 uses
+  %i.az = getelementptr inbounds nuw i8, ptr %i.m, i64 %indvars.iv87 ; 3 uses
   store i8 %i.ay, ptr %i.az, align 1
   %i.ba = lshr i32 %i.aw, 8
   %i.bb = trunc i32 %i.ba to i8
@@ -330,17 +318,16 @@ bb.k:                                             ; preds = %bb.j
   %i.bd = trunc i32 %i.ar to i8
   %i.be = getelementptr i8, ptr %i.az, i64 2
   store i8 %i.bd, ptr %i.be, align 1
-  %indvars.iv.next86 = add nuw nsw i64 %indvars.iv85107, 4 ; 3 uses
-  %5 = trunc nuw i64 %indvars.iv.next86 to i32
-  %i.bf = icmp slt i32 %5, %i.c
+  %indvars.iv.next86 = add nuw nsw i64 %indvars.iv85, 4 ; 2 uses
+  %i.bf = icmp slt i64 %indvars.iv.next86, %i.d
   br i1 %i.bf, label %.lr.ph, label %.loopexit.loopexit
 
 .loopexit.loopexit:                               ; preds = %bb.k
   %i.bg = trunc nuw nsw i64 %indvars.iv.next88 to i32
   br label %.loopexit
 
-.loopexit:                                        ; preds = %.loopexit.loopexit, %.preheader, %.thread, %bb.e
-  %.05778 = phi i32 [ %indvars.iv87.lcssa, %bb.e ], [ %i.as, %.thread ], [ 0, %.preheader ], [ %i.bg, %.loopexit.loopexit ]
+.loopexit:                                        ; preds = %.loopexit.loopexit, %.lr.ph.preheader, %.thread, %bb.e
+  %.05778 = phi i32 [ %3, %bb.e ], [ %i.as, %.thread ], [ 0, %.lr.ph.preheader ], [ %i.bg, %.loopexit.loopexit ]
   %.not73 = icmp eq i32 %i.j, %.05778
   br i1 %.not73, label %bb.m, label %bb.l
 
@@ -743,7 +730,7 @@ bb.aa:                                            ; preds = %bb.aa, %.new114
   %i.jh = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv.next38.i.2
   store i32 %i.jg, ptr %i.jh, align 4
   %indvars.iv.next38.i.3 = add nuw nsw i64 %indvars.iv37.i, 4 ; 2 uses
-  %niter121.next.3 = add nuw i64 %niter121, 4     ; 2 uses
+  %niter121.next.3 = add nuw nsw i64 %niter121, 4 ; 2 uses
   %niter121.ncmp.3 = icmp eq i64 %niter121.next.3, %unroll_iter120
   br i1 %niter121.ncmp.3, label %.preheader.i52.preheader.unr-lcssa, label %bb.aa
 

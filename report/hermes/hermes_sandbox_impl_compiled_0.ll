@@ -205,7 +205,7 @@ bb.dh:                                            ; preds = %bb.dd, %bb.df
   %i.yk = getelementptr inbounds nuw i8, ptr %.val6793, i64 %.pre-phi7459
   %i.yl = getelementptr inbounds nuw i8, ptr %i.yk, i64 20
   store i32 %.0.copyload.i7024, ptr %i.yl, align 1
-  %i.ym = add nuw i32 %.86001, 1                  ; 2 uses
+  %i.ym = add nuw nsw i32 %.86001, 1              ; 2 uses
   %.not6279 = icmp eq i32 %i.ym, %i.wu
   br i1 %.not6279, label %.loopexit7276, label %bb.dd
 
@@ -608,7 +608,7 @@ bb.hj:                                            ; preds = %.loopexit7240
   %i.bcd = getelementptr inbounds nuw i8, ptr %.val6738, i64 %i.bcc
   %i.bce = getelementptr inbounds nuw i8, ptr %i.bcd, i64 20
   store i32 %.0.copyload.i7134, ptr %i.bce, align 1
-  %i.bcf = add nuw i32 %.35847, 1                 ; 2 uses
+  %i.bcf = add nuw nsw i32 %.35847, 1             ; 2 uses
   %.not6355 = icmp eq i32 %i.bcf, %i.asc
   br i1 %.not6355, label %.loopexit7245, label %bb.gf
 
@@ -1011,7 +1011,7 @@ bb.fs:                                            ; preds = %bb.fr, %bb.fq
   br i1 %i.xi, label %.loopexit3547, label %bb.ft
 
 bb.ft:                                            ; preds = %bb.fs
-  %i.xj = add nuw i32 %.25, 1
+  %i.xj = add nuw nsw i32 %.25, 1
   %i.xk = tail call i32 @w2c_hermes_multadd(ptr noundef nonnull %0, i32 noundef %1, i32 noundef %.33036, i32 noundef 10, i32 noundef 0) #16
   br label %bb.fq
 
@@ -1414,8 +1414,8 @@ bb.a:
   %i.b = load i32, ptr %i.a, align 8, !tbaa !19   ; 4 uses
   %i.c = add i32 %i.b, -16                        ; 3 uses
   store i32 %i.c, ptr %i.a, align 8, !tbaa !19
-  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 169 uses
-  %i.e = zext i32 %i.c to i64                     ; 21 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 164 uses
+  %i.e = zext i32 %i.c to i64                     ; 20 uses
   %.val2417 = load ptr, ptr %i.d, align 8, !tbaa !21
   %i.f = getelementptr inbounds nuw i8, ptr %.val2417, i64 %i.e
   store double %2, ptr %i.f, align 1
@@ -1714,7 +1714,7 @@ bb.ac:                                            ; preds = %bb.ab
 bb.ad:                                            ; preds = %bb.u
   %i.cy = add i32 %i.b, -8
   %i.cz = add i32 %i.b, -4
-  %i.da = tail call i32 @w2c_hermes_d2b(ptr noundef nonnull %0, i32 noundef %1, i32 noundef %i.c, i32 noundef %i.cy, i32 noundef %i.cz) ; 11 uses
+  %i.da = tail call i32 @w2c_hermes_d2b(ptr noundef nonnull %0, i32 noundef %1, i32 noundef %i.c, i32 noundef %i.cy, i32 noundef %i.cz) ; 8 uses
   %i.db = add nuw nsw i64 %i.e, 4                 ; 2 uses
   %.val2312 = load ptr, ptr %i.d, align 8, !tbaa !21
   %i.dc = getelementptr inbounds nuw i8, ptr %.val2312, i64 %i.db
@@ -1839,7 +1839,7 @@ bb.ap:                                            ; preds = %bb.ao
   br label %bb.aq
 
 bb.aq:                                            ; preds = %bb.ao, %bb.an, %bb.ap
-  %.02068 = phi i32 [ %i.eu, %bb.an ], [ %i.eu, %bb.ao ], [ %i.fc, %bb.ap ] ; 17 uses
+  %.02068 = phi i32 [ %i.eu, %bb.an ], [ %i.eu, %bb.ao ], [ %i.fc, %bb.ap ] ; 14 uses
   %i.fd = add nuw nsw i64 %i.e, 12                ; 2 uses
   %.val2307 = load ptr, ptr %i.d, align 8, !tbaa !21
   %i.fe = getelementptr inbounds nuw i8, ptr %.val2307, i64 %i.fd
@@ -1943,7 +1943,7 @@ bb.az:                                            ; preds = %bb.ay, %bb.au
   %.val2352 = load ptr, ptr %i.d, align 8, !tbaa !21
   %i.go = getelementptr inbounds nuw i8, ptr %.val2352, i64 %.pre-phi2657
   store i32 0, ptr %i.go, align 1
-  %i.gp = add i32 %.12063, 4                      ; 5 uses
+  %i.gp = add i32 %.12063, 4                      ; 4 uses
   %.val2302 = load ptr, ptr %i.d, align 8, !tbaa !21
   %i.gq = getelementptr inbounds nuw i8, ptr %.val2302, i64 %i.e
   %i.gr = getelementptr inbounds nuw i8, ptr %i.gq, i64 8
@@ -1960,7 +1960,7 @@ bb.ba:                                            ; preds = %bb.az
   %i.gw = zext i32 %i.gv to i64
   %.val2410 = load ptr, ptr %i.d, align 8, !tbaa !21
   %i.gx = getelementptr inbounds nuw i8, ptr %.val2410, i64 %i.gw
-  %.0.copyload.i2444 = load double, ptr %i.gx, align 1 ; 7 uses
+  %.0.copyload.i2444 = load double, ptr %i.gx, align 1 ; 5 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(double %.0.copyload.i2444) #16, !srcloc !48
   %.val2409 = load ptr, ptr %i.d, align 8, !tbaa !21
   %i.gy = getelementptr inbounds nuw i8, ptr %.val2409, i64 %i.e
@@ -1993,13 +1993,13 @@ bb.be:                                            ; preds = %bb.ba, %bb.bd
   %.val2416 = load ptr, ptr %i.d, align 8, !tbaa !21
   %i.hi = getelementptr inbounds nuw i8, ptr %.val2416, i64 %i.e
   store double %i.hh, ptr %i.hi, align 1
-  %6 = add nuw nsw i64 %.pre-phi2657, 4           ; 3 uses
   %.val2405 = load ptr, ptr %i.d, align 8, !tbaa !21
   %i.hj = trunc i32 %.4 to i8
   %i.hk = add i8 %i.hj, 48
-  %i.hl = getelementptr inbounds nuw i8, ptr %.val2405, i64 %6
+  %6 = getelementptr inbounds nuw i8, ptr %.val2405, i64 %.pre-phi2657
+  %i.hl = getelementptr inbounds nuw i8, ptr %6, i64 4
   store i8 %i.hk, ptr %i.hl, align 1
-  %i.hm = add i32 %.12063, 5                      ; 3 uses
+  %i.hm = add i32 %.12063, 5                      ; 2 uses
   %.val2408 = load ptr, ptr %i.d, align 8, !tbaa !21
   %i.hn = getelementptr inbounds nuw i8, ptr %.val2408, i64 %i.e
   %.0.copyload.i2446 = load double, ptr %i.hn, align 1 ; 3 uses
@@ -2007,10 +2007,9 @@ bb.be:                                            ; preds = %bb.ba, %bb.bd
   %i.ho = fcmp oeq double %.0.copyload.i2446, 0.000000e+00
   br i1 %i.ho, label %.loopexit2513, label %.preheader
 
-.preheader:                                       ; preds = %bb.be, %7
-  %.62106 = phi i32 [ %i.ie, %7 ], [ %i.hm, %bb.be ] ; 2 uses
-  %.02084 = phi i32 [ %8, %7 ], [ 1, %bb.be ]
-  %.02049 = phi double [ %.0.copyload.i2447, %7 ], [ %.0.copyload.i2446, %bb.be ]
+.preheader:                                       ; preds = %bb.be, %bb.bi
+  %.02084 = phi i32 [ %i.ie, %bb.bi ], [ %i.hm, %bb.be ] ; 2 uses
+  %.02049 = phi double [ %.0.copyload.i2447, %bb.bi ], [ %.0.copyload.i2446, %bb.be ]
   %i.hp = fmul double %.02049, 1.000000e+01       ; 2 uses
   %i.hq = fdiv double %i.hp, %.0.copyload.i2444   ; 4 uses
   %i.hr = tail call noundef double @llvm.fabs.f64(double %i.hq)
@@ -2032,49 +2031,26 @@ bb.bh:                                            ; preds = %bb.bf
   br label %bb.bi
 
 bb.bi:                                            ; preds = %.preheader, %bb.bh
-  %.5 = phi i32 [ %i.hv, %bb.bh ], [ -2147483648, %.preheader ] ; 3 uses
+  %.5 = phi i32 [ %i.hv, %bb.bh ], [ -2147483648, %.preheader ] ; 2 uses
   %i.hw = sitofp i32 %.5 to double
   %i.hx = fmul double %.0.copyload.i2444, %i.hw
   %i.hy = fsub double %i.hp, %i.hx
   %.val2415 = load ptr, ptr %i.d, align 8, !tbaa !21
   %i.hz = getelementptr inbounds nuw i8, ptr %.val2415, i64 %i.e
   store double %i.hy, ptr %i.hz, align 1
-  %i.ia = zext i32 %.62106 to i64
+  %i.ia = zext i32 %.02084 to i64
   %.val2404 = load ptr, ptr %i.d, align 8, !tbaa !21
   %i.ib = trunc i32 %.5 to i8
   %i.ic = add i8 %i.ib, 48
   %i.id = getelementptr inbounds nuw i8, ptr %.val2404, i64 %i.ia
   store i8 %i.ic, ptr %i.id, align 1
-  %i.ie = add i32 %.62106, 1                      ; 4 uses
+  %i.ie = add i32 %.02084, 1                      ; 2 uses
   %.val2407 = load ptr, ptr %i.d, align 8, !tbaa !21
   %i.if = getelementptr inbounds nuw i8, ptr %.val2407, i64 %i.e
-  %.0.copyload.i2447 = load double, ptr %i.if, align 1 ; 5 uses
+  %.0.copyload.i2447 = load double, ptr %i.if, align 1 ; 3 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(double %.0.copyload.i2447) #16, !srcloc !48
   %i.ig = fcmp oeq double %.0.copyload.i2447, 0.000000e+00
-  br i1 %i.ig, label %.loopexit2513, label %7
-
-7:                                                ; preds = %bb.bi
-  %8 = add nuw i32 %.02084, 1                     ; 2 uses
-  %.not2190 = icmp eq i32 %8, -1
-  br i1 %.not2190, label %9, label %.preheader
-
-9:                                                ; preds = %7
-  %10 = fadd double %.0.copyload.i2447, %.0.copyload.i2447 ; 3 uses
-  %.val2414 = load ptr, ptr %i.d, align 8, !tbaa !21
-  %11 = getelementptr inbounds nuw i8, ptr %.val2414, i64 %i.e
-  store double %10, ptr %11, align 1
-  %12 = fcmp ogt double %10, %.0.copyload.i2444
-  br i1 %12, label %.preheader2881, label %13
-
-.preheader2881:                                   ; preds = %13, %9
-  br label %16
-
-13:                                               ; preds = %9
-  %14 = fcmp une double %10, %.0.copyload.i2444
-  %15 = and i32 %.5, 1
-  %.not2191 = icmp eq i32 %15, 0
-  %or.cond2248 = or i1 %.not2191, %14
-  br i1 %or.cond2248, label %.loopexit2513, label %.preheader2881
+  br i1 %i.ig, label %.loopexit2513, label %.preheader
 
 bb.bj:                                            ; preds = %bb.az
   %.val2301 = load ptr, ptr %i.d, align 8, !tbaa !21
@@ -2477,42 +2453,10 @@ bb.fq:                                            ; preds = %bb.fo
   store i32 %.72079, ptr %i.wu, align 1
   br label %.loopexit2513
 
-16:                                               ; preds = %.preheader2881, %20
-  %.18 = phi i32 [ %17, %20 ], [ %i.ie, %.preheader2881 ] ; 2 uses
-  %17 = add i32 %.18, -1                          ; 3 uses
-  %18 = zext i32 %17 to i64                       ; 2 uses
-  %.val2387 = load ptr, ptr %i.d, align 8, !tbaa !21
-  %19 = getelementptr inbounds nuw i8, ptr %.val2387, i64 %18
-  %.0.copyload.i2504 = load i8, ptr %19, align 1  ; 3 uses
-  tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i8 %.0.copyload.i2504) #16, !srcloc !33
-  %.not2192 = icmp eq i8 %.0.copyload.i2504, 57
-  br i1 %.not2192, label %20, label %25
-
-20:                                               ; preds = %16
-  %.not2193 = icmp eq i32 %17, %i.gp
-  br i1 %.not2193, label %21, label %16
-
-21:                                               ; preds = %20
-  %.val2396 = load ptr, ptr %i.d, align 8, !tbaa !21
-  %22 = getelementptr inbounds nuw i8, ptr %.val2396, i64 %6
-  store i8 48, ptr %22, align 1
-  %23 = add nsw i32 %.02068, 1
-  %.val2395 = load ptr, ptr %i.d, align 8, !tbaa !21
-  %24 = getelementptr inbounds nuw i8, ptr %.val2395, i64 %6
-  store i8 49, ptr %24, align 1
-  br label %.loopexit2513
-
-25:                                               ; preds = %16
-  %26 = add i8 %.0.copyload.i2504, 1
-  %.val2394 = load ptr, ptr %i.d, align 8, !tbaa !21
-  %27 = getelementptr inbounds nuw i8, ptr %.val2394, i64 %18
-  store i8 %26, ptr %27, align 1
-  br label %.loopexit2513
-
-.loopexit2513:                                    ; preds = %bb.bi, %13, %bb.be, %bb.fj, %25, %21, %bb.fq, %bb.fp
-  %.62117 = phi i32 [ %.52116, %bb.fj ], [ %.52116, %bb.fp ], [ %.52116, %bb.fq ], [ %i.da, %13 ], [ %i.da, %bb.be ], [ %i.da, %25 ], [ %i.da, %21 ], [ %i.da, %bb.bi ] ; 4 uses
-  %.62098 = phi i32 [ %.52097, %bb.fj ], [ %.52097, %bb.fp ], [ %.52097, %bb.fq ], [ %i.ie, %13 ], [ %i.hm, %bb.be ], [ %.18, %25 ], [ %i.hm, %21 ], [ %i.ie, %bb.bi ] ; 2 uses
-  %.32071 = phi i32 [ %.22070, %bb.fj ], [ %.22070, %bb.fp ], [ %.22070, %bb.fq ], [ %.02068, %13 ], [ %.02068, %bb.be ], [ %.02068, %25 ], [ %23, %21 ], [ %.02068, %bb.bi ]
+.loopexit2513:                                    ; preds = %bb.bi, %bb.be, %bb.fj, %bb.fq, %bb.fp
+  %.62117 = phi i32 [ %.52116, %bb.fj ], [ %.52116, %bb.fp ], [ %.52116, %bb.fq ], [ %i.da, %bb.be ], [ %i.da, %bb.bi ] ; 4 uses
+  %.62098 = phi i32 [ %.52097, %bb.fj ], [ %.52097, %bb.fp ], [ %.52097, %bb.fq ], [ %i.hm, %bb.be ], [ %i.ie, %bb.bi ] ; 2 uses
+  %.32071 = phi i32 [ %.22070, %bb.fj ], [ %.22070, %bb.fp ], [ %.22070, %bb.fq ], [ %.02068, %bb.be ], [ %.02068, %bb.bi ]
   %.not2233 = icmp eq i32 %.62117, 0
   br i1 %.not2233, label %bb.fu, label %bb.fr
 

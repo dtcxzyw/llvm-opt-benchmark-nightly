@@ -205,7 +205,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #17
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #17
   %i.j = getelementptr inbounds nuw i8, ptr %i.c, i64 15544
-  %i.k = load i32, ptr %i.j, align 8, !tbaa !48   ; 10 uses
+  %i.k = load i32, ptr %i.j, align 8, !tbaa !48   ; 9 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.c, i64 15548
   %i.m = load i32, ptr %i.l, align 4, !tbaa !50   ; 17 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.c, i64 15536
@@ -443,7 +443,7 @@ bb.u:                                             ; preds = %bb.t, %bb.s
   %i.dg = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
   %.not427 = icmp eq i32 %.sroa.16.1, 0           ; 12 uses
   %.not374 = icmp eq i32 %.sroa.0.1, 0            ; 12 uses
-  %i.dh = sext i32 %i.k to i64                    ; 2 uses
+  %i.dh = sext i32 %i.k to i64                    ; 3 uses
   %i.di = shl nsw i64 %i.dh, 1                    ; 4 uses
   %i.dj = icmp slt i32 %i.m, 1                    ; 6 uses
   %i.dk = icmp slt i32 %i.k, 1                    ; 4 uses
@@ -846,7 +846,7 @@ bb.ca:                                            ; preds = %._crit_edge487
   %i.ayh = load i16, ptr %i.ayg, align 2, !tbaa !179
   %i.ayi = getelementptr inbounds nuw [2 x i8], ptr %i.b, i64 %indvars.iv.next668
   store i16 %i.ayh, ptr %i.ayi, align 2, !tbaa !179
-  %niter891.next.1 = add nuw i64 %niter891, 2     ; 2 uses
+  %niter891.next.1 = add nuw nsw i64 %niter891, 2 ; 2 uses
   %niter891.ncmp.1 = icmp eq i64 %niter891.next.1, %unroll_iter890
   br i1 %niter891.ncmp.1, label %.preheader451.thread.unr-lcssa, label %.lr.ph492, !llvm.loop !233
 
@@ -1249,9 +1249,8 @@ bb.cl:                                            ; preds = %bb.cj, %bb.ci, %bb.
   store <4 x i32> %i.bgx, ptr getelementptr inbounds nuw (i8, ptr @diff, i64 48), align 16, !tbaa !4
   %i.bgy = call i32 @distortion4x4(ptr noundef nonnull @diff) #17
   %i.bgz = add nsw i32 %i.bgy, %.2523.us.us.us    ; 3 uses
-  %indvars.iv.next715 = add nuw i64 %indvars.iv714, 4 ; 2 uses
-  %indvars = trunc i64 %indvars.iv.next715 to i32
-  %5 = icmp sgt i32 %i.k, %indvars
+  %indvars.iv.next715 = add nuw nsw i64 %indvars.iv714, 4 ; 2 uses
+  %5 = icmp slt i64 %indvars.iv.next715, %i.dh
   br i1 %5, label %.preheader432.us.us.us, label %._crit_edge524.us.us.us, !llvm.loop !252
 
 ._crit_edge524.us.us.us:                          ; preds = %.preheader432.us.us.us
@@ -1358,7 +1357,7 @@ bb.cl:                                            ; preds = %bb.cj, %bb.ci, %bb.
   store <4 x i32> %i.bka, ptr getelementptr inbounds nuw (i8, ptr @diff, i64 48), align 16, !tbaa !4
   %i.bkb = call i32 @distortion4x4(ptr noundef nonnull @diff) #17
   %i.bkc = add nsw i32 %i.bkb, %.2523.us.us.us.1  ; 3 uses
-  %indvars.iv.next715.1 = add nuw i64 %indvars.iv714.1, 4 ; 2 uses
+  %indvars.iv.next715.1 = add nuw nsw i64 %indvars.iv714.1, 4 ; 2 uses
   %indvars.1 = trunc i64 %indvars.iv.next715.1 to i32
   %i.bkd = icmp sgt i32 %i.k, %indvars.1
   br i1 %i.bkd, label %.preheader432.us.us.us.1, label %._crit_edge524.us.us.us.1, !llvm.loop !252
@@ -1761,7 +1760,7 @@ bb.u:                                             ; preds = %bb.s, %bb.r, %bb.t
   store <4 x i32> %i.hb, ptr getelementptr inbounds nuw (i8, ptr @diff, i64 48), align 16, !tbaa !4
   %i.hc = call i32 @distortion4x4(ptr noundef nonnull @diff) #17
   %i.hd = add nsw i32 %i.hc, %.2147.us.us.us      ; 5 uses
-  %indvars.iv.next211 = add nuw i64 %indvars.iv210, 4 ; 2 uses
+  %indvars.iv.next211 = add nuw nsw i64 %indvars.iv210, 4 ; 2 uses
   %indvars = trunc i64 %indvars.iv.next211 to i32
   %i.he = icmp sgt i32 %i.g, %indvars
   br i1 %i.he, label %.preheader120.us.us.us, label %._crit_edge148.us.us.us, !llvm.loop !263

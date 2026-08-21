@@ -202,10 +202,10 @@ bb.e:                                             ; preds = %bb.d, %.lr.ph
 
 ._crit_edge:                                      ; preds = %bb.e, %bb.c
   %.096.lcssa = phi ptr [ %i.h, %bb.c ], [ %.197, %bb.e ] ; 5 uses
-  %.095.lcssa = phi i32 [ 0, %bb.c ], [ %i.ad, %bb.e ] ; 6 uses
+  %.095.lcssa = phi i32 [ 0, %bb.c ], [ %i.ad, %bb.e ] ; 4 uses
   call void @systable_endscan(ptr noundef %i.l) #14
   call void @table_close(ptr noundef %i.k, i32 noundef 1) #14
-  %i.af = sext i32 %.095.lcssa to i64             ; 2 uses
+  %i.af = sext i32 %.095.lcssa to i64             ; 4 uses
   call void @pg_qsort(ptr noundef %.096.lcssa, i64 noundef %i.af, i64 noundef 8, ptr noundef nonnull @enum_oid_cmp) #14
   %i.ag = add i32 %.095.lcssa, -1                 ; 2 uses
   %smax = call i32 @llvm.smax.i32(i32 %i.ag, i32 0)
@@ -223,9 +223,8 @@ bb.e:                                             ; preds = %bb.d, %.lr.ph
   %i.ai = getelementptr inbounds nuw [8 x i8], ptr %.096.lcssa, i64 %indvars.iv133142 ; 2 uses
   %i.aj = load i32, ptr %i.ai, align 4            ; 2 uses
   %indvars.iv.next134 = add nuw nsw i64 %indvars.iv133142, 1 ; 3 uses
-  %2 = trunc nuw i64 %indvars.iv.next134 to i32
-  %3 = icmp sgt i32 %.095.lcssa, %2
-  br i1 %3, label %.lr.ph123.preheader, label %._crit_edge124
+  %2 = icmp slt i64 %indvars.iv.next134, %i.af
+  br i1 %2, label %.lr.ph123.preheader, label %._crit_edge124
 
 .lr.ph123.preheader:                              ; preds = %.lr.ph147
   %i.ak = getelementptr inbounds nuw i8, ptr %i.ai, i64 4
@@ -259,8 +258,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   %.279.ph = phi i32 [ %.077119, %bb.f ], [ %i.au, %bb.g ] ; 2 uses
   %.2.ph = phi float [ %.075120, %bb.f ], [ %i.ar, %bb.g ]
   %indvars.iv.next131 = add nuw nsw i64 %indvars.iv130, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next131 to i32
-  %exitcond.not = icmp eq i32 %.095.lcssa, %lftr.wideiv
+  %exitcond.not = icmp eq i64 %indvars.iv.next131, %i.af
   br i1 %exitcond.not, label %._crit_edge124, label %.lr.ph123, !llvm.loop !31
 
 ._crit_edge124:                                   ; preds = %bb.h, %.lr.ph123, %.lr.ph147

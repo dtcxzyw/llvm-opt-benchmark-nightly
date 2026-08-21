@@ -151,7 +151,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph
 define dso_local void @_ZN14b3GeometryUtil29getPlaneEquationsFromVerticesER20b3AlignedObjectArrayI9b3Vector3ES3_(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(25) %0, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(25) %1) local_unnamed_addr #2 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 3 uses
-  %i.b = load i32, ptr %i.a, align 4, !tbaa !9    ; 5 uses
+  %i.b = load i32, ptr %i.a, align 4, !tbaa !9    ; 4 uses
   %i.c = icmp sgt i32 %i.b, 0
   br i1 %i.c, label %.lr.ph97, label %._crit_edge
 
@@ -161,7 +161,7 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 14 uses
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 4 uses
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 4 uses
-  %i.i = zext nneg i32 %i.b to i64
+  %i.i = zext nneg i32 %i.b to i64                ; 2 uses
   %wide.trip.count113 = zext nneg i32 %i.b to i64 ; 2 uses
   br label %bb.b
 
@@ -200,9 +200,8 @@ bb.c:                                             ; preds = %.lr.ph95, %.loopexi
   %i.o = load ptr, ptr %i.d, align 8, !tbaa !15
   %i.p = getelementptr inbounds nuw [16 x i8], ptr %i.o, i64 %indvars.iv106 ; 2 uses
   %indvars.iv.next107 = add nuw nsw i64 %indvars.iv106, 1 ; 3 uses
-  %2 = trunc nuw i64 %indvars.iv.next107 to i32
-  %3 = icmp sgt i32 %i.b, %2
-  br i1 %3, label %.lr.ph, label %.loopexit89
+  %2 = icmp samesign ult i64 %indvars.iv.next107, %i.i
+  br i1 %2, label %.lr.ph, label %.loopexit89
 
 .lr.ph:                                           ; preds = %bb.c
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 4
@@ -605,7 +604,7 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 define dso_local void @_ZN14b3GeometryUtil29getVerticesFromPlaneEquationsERK20b3AlignedObjectArrayI9b3Vector3ERS2_(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(25) %0, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(25) %1) local_unnamed_addr #2 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 2 uses
-  %i.b = load i32, ptr %i.a, align 4, !tbaa !9    ; 5 uses
+  %i.b = load i32, ptr %i.a, align 4, !tbaa !9    ; 4 uses
   %i.c = icmp sgt i32 %i.b, 0
   br i1 %i.c, label %.lr.ph128, label %._crit_edge
 
@@ -615,7 +614,7 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 6 uses
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
-  %i.i = zext nneg i32 %i.b to i64
+  %i.i = zext nneg i32 %i.b to i64                ; 2 uses
   %wide.trip.count143 = zext nneg i32 %i.b to i64 ; 2 uses
   br label %bb.b
 
@@ -654,9 +653,8 @@ bb.c:                                             ; preds = %.lr.ph126, %.loopex
   %i.o = load ptr, ptr %i.d, align 8, !tbaa !15
   %i.p = getelementptr inbounds nuw [16 x i8], ptr %i.o, i64 %indvars.iv136 ; 3 uses
   %indvars.iv.next137 = add nuw nsw i64 %indvars.iv136, 1 ; 3 uses
-  %2 = trunc nuw i64 %indvars.iv.next137 to i32
-  %3 = icmp sgt i32 %i.b, %2
-  br i1 %3, label %.lr.ph, label %.loopexit122
+  %2 = icmp samesign ult i64 %indvars.iv.next137, %i.i
+  br i1 %2, label %.lr.ph, label %.loopexit122
 
 .lr.ph:                                           ; preds = %bb.c
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 4

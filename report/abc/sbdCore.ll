@@ -205,7 +205,7 @@ bb.a:
   %i.e = add nsw i32 %i.d, 2                      ; 4 uses
   %i.f = sdiv i32 %2, 2
   %i.g = add nsw i32 %i.f, 3                      ; 4 uses
-  %i.h = sext i32 %2 to i64                       ; 6 uses
+  %i.h = sext i32 %2 to i64                       ; 8 uses
   %i.i = getelementptr inbounds [8 x i8], ptr %1, i64 %i.h
   %i.j = load i64, ptr %i.i, align 8, !tbaa !100  ; 8 uses
   %i.k = icmp slt i32 %2, 8
@@ -458,9 +458,8 @@ bb.x:                                             ; preds = %.loopexit134.i, %.l
   %indvars.iv201.i = phi i64 [ %indvars.iv199.i, %.lr.ph157.i ], [ %indvars.iv.next202.i, %.loopexit134.i ] ; 3 uses
   %indvars.iv193.i = phi i64 [ %indvars.iv191.i, %.lr.ph157.i ], [ %indvars.iv.next194.i, %.loopexit134.i ] ; 2 uses
   %indvars.iv.next202.i = add nuw nsw i64 %indvars.iv201.i, 1 ; 3 uses
-  %3 = trunc nuw i64 %indvars.iv.next202.i to i32
-  %4 = icmp sgt i32 %2, %3
-  br i1 %4, label %.lr.ph155.i, label %.loopexit134.i
+  %3 = icmp slt i64 %indvars.iv.next202.i, %i.h
+  br i1 %3, label %.lr.ph155.i, label %.loopexit134.i
 
 .lr.ph155.i:                                      ; preds = %bb.x
   %i.cl = load i64, ptr %i.ck, align 8, !tbaa !100
@@ -673,7 +672,7 @@ bb.av:                                            ; preds = %bb.y
   br i1 %exitcond288, label %.loopexit134.i, label %bb.y, !llvm.loop !273
 
 .loopexit132.i:                                   ; preds = %.loopexit131.i, %.lr.ph167.i
-  %indvars.iv.next212.i = add nuw i32 %indvars.iv211.i, 1
+  %indvars.iv.next212.i = add nuw nsw i32 %indvars.iv211.i, 1
   %indvars.iv.next223.i = add nuw nsw i64 %indvars.iv222.i, 1
   %indvars.iv.next232.i = add nuw nsw i64 %indvars.iv231.i, 1
   %exitcond242.not.i = icmp eq i64 %indvars.iv.next239.i, %wide.trip.count.i
@@ -703,9 +702,8 @@ bb.aw:                                            ; preds = %.loopexit131.i, %.l
   %indvars.iv224.i = phi i64 [ %indvars.iv222.i, %.lr.ph165.i ], [ %indvars.iv.next225.i, %.loopexit131.i ] ; 2 uses
   %indvars.iv213.i = phi i32 [ %indvars.iv211.i, %.lr.ph165.i ], [ %indvars.iv.next214.i, %.loopexit131.i ] ; 2 uses
   %indvars.iv.next234.i = add nuw nsw i64 %indvars.iv233.i, 1 ; 3 uses
-  %5 = trunc nuw i64 %indvars.iv.next234.i to i32
-  %6 = icmp sgt i32 %2, %5
-  br i1 %6, label %.lr.ph163.i, label %.loopexit131.i
+  %4 = icmp slt i64 %indvars.iv.next234.i, %i.h
+  br i1 %4, label %.lr.ph163.i, label %.loopexit131.i
 
 .lr.ph163.i:                                      ; preds = %bb.aw
   %i.fk = sext i32 %indvars.iv213.i to i64

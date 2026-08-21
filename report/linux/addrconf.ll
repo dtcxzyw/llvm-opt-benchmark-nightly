@@ -204,13 +204,12 @@ bb.c:                                             ; preds = %select.unfold._crit
 
 .lr.ph.i:                                         ; preds = %bb.c
   %i.n = load i32, ptr %i.h, align 4              ; 2 uses
-  %smax.i = tail call i32 @llvm.smax.i32(i32 %i.n, i32 0)
   %exitcond.not.i11 = icmp slt i32 %i.n, 1
   br i1 %exitcond.not.i11, label %if6_get_first.exit, label %select.unfold.i
 
 bb.d:                                             ; preds = %select.unfold.i
-  %i.o = add nuw i32 %.16.i13, 1                  ; 2 uses
-  %exitcond.not.i = icmp eq i32 %i.o, %smax.i
+  %i.o = add nuw nsw i32 %.16.i13, 1              ; 2 uses
+  %exitcond.not.i = icmp eq i32 %i.n, %i.o
   br i1 %exitcond.not.i, label %if6_get_first.exit, label %select.unfold.i
 
 select.unfold.i:                                  ; preds = %.lr.ph.i, %bb.d

@@ -205,11 +205,11 @@ bb.bm:                                            ; preds = %_ZL20allocateEigenv
   br label %bb.bn
 
 bb.bn:                                            ; preds = %._crit_edge.2.i256, %.lr.ph67.i
-  %indvars.iv76.i = phi i64 [ 0, %.lr.ph67.i ], [ %indvars.iv.next77.i, %._crit_edge.2.i256 ] ; 4 uses
+  %indvars.iv76.i = phi i64 [ 0, %.lr.ph67.i ], [ %indvars.iv.next77.i, %._crit_edge.2.i256 ] ; 3 uses
   %i.ud = getelementptr inbounds nuw [4 x i8], ptr %i.tr, i64 %indvars.iv76.i
   %i.ue = load i32, ptr %i.ud, align 4, !tbaa !9
   %i.uf = sext i32 %i.ue to i64                   ; 3 uses
-  %i.ug = mul nuw nsw i64 %indvars.iv76.i, 3      ; 2 uses
+  %i.ug = mul nuw nsw i64 %indvars.iv76.i, 3      ; 4 uses
   %i.uh = getelementptr inbounds nuw [4 x i8], ptr %i.ub, i64 %i.ug ; 2 uses
   %i.ui = load i32, ptr %i.uh, align 4, !tbaa !9
   %i.uj = icmp sgt i32 %i.ui, 0
@@ -248,17 +248,15 @@ bb.bo:                                            ; preds = %bb.bo, %.lr.ph.i262
   br i1 %i.vg, label %bb.bo, label %._crit_edge.i254, !llvm.loop !92
 
 ._crit_edge.i254:                                 ; preds = %bb.bo, %bb.bn
-  %27 = mul i64 %indvars.iv76.i, 12884901888      ; 2 uses
-  %sext.i = add i64 %27, 4294967296
-  %28 = ashr exact i64 %sext.i, 32                ; 2 uses
-  %i.vh = getelementptr inbounds [4 x i8], ptr %i.ub, i64 %28 ; 2 uses
+  %sext.i = add nuw nsw i64 %i.ug, 1              ; 2 uses
+  %i.vh = getelementptr inbounds nuw [4 x i8], ptr %i.ub, i64 %sext.i ; 2 uses
   %i.vi = load i32, ptr %i.vh, align 4, !tbaa !9
   %i.vj = icmp sgt i32 %i.vi, 0
   br i1 %i.vj, label %.lr.ph.1.i, label %._crit_edge.1.i255
 
 .lr.ph.1.i:                                       ; preds = %._crit_edge.i254
   %i.vk = load ptr, ptr %i.uc, align 8, !tbaa !73
-  %i.vl = getelementptr inbounds [8 x i8], ptr %i.vk, i64 %28
+  %i.vl = getelementptr inbounds nuw [8 x i8], ptr %i.vk, i64 %sext.i
   %i.vm = load ptr, ptr %i.vl, align 8, !tbaa !74
   %i.vn = getelementptr inbounds nuw [36 x i8], ptr %.sroa.5419.0.copyload, i64 %i.uf
   %i.vo = load float, ptr %i.vn, align 4, !tbaa !84
@@ -289,16 +287,15 @@ bb.bp:                                            ; preds = %bb.bp, %.lr.ph.1.i
   br i1 %i.wg, label %bb.bp, label %._crit_edge.1.i255, !llvm.loop !92
 
 ._crit_edge.1.i255:                               ; preds = %bb.bp, %._crit_edge.i254
-  %sext91.i = add i64 %27, 8589934592
-  %29 = ashr exact i64 %sext91.i, 32              ; 2 uses
-  %i.wh = getelementptr inbounds [4 x i8], ptr %i.ub, i64 %29 ; 2 uses
+  %sext91.i = add nuw nsw i64 %i.ug, 2            ; 2 uses
+  %i.wh = getelementptr inbounds nuw [4 x i8], ptr %i.ub, i64 %sext91.i ; 2 uses
   %i.wi = load i32, ptr %i.wh, align 4, !tbaa !9
   %i.wj = icmp sgt i32 %i.wi, 0
   br i1 %i.wj, label %.lr.ph.2.i, label %._crit_edge.2.i256
 
 .lr.ph.2.i:                                       ; preds = %._crit_edge.1.i255
   %i.wk = load ptr, ptr %i.uc, align 8, !tbaa !73
-  %i.wl = getelementptr inbounds [8 x i8], ptr %i.wk, i64 %29
+  %i.wl = getelementptr inbounds nuw [8 x i8], ptr %i.wk, i64 %sext91.i
   %i.wm = load ptr, ptr %i.wl, align 8, !tbaa !74
   %i.wn = getelementptr inbounds nuw [36 x i8], ptr %.sroa.5419.0.copyload, i64 %i.uf
   %i.wo = load float, ptr %i.wn, align 4, !tbaa !84

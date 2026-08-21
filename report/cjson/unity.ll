@@ -204,7 +204,7 @@ bb.p:                                             ; preds = %.preheader174, %bb.
   %i.cf = icmp ugt i32 %.6116, 9
   %i.cg = icmp eq i64 %indvars.iv135, 0
   %i.ch = or i1 %i.cf, %i.cg
-  %indvars.iv.next139 = add nuw i64 %indvars.iv138, 1
+  %indvars.iv.next139 = add nuw nsw i64 %indvars.iv138, 1
   br i1 %i.ch, label %bb.p, label %.preheader
 
 .preheader:                                       ; preds = %bb.p, %.preheader
@@ -215,8 +215,7 @@ bb.p:                                             ; preds = %.preheader174, %bb.
   %i.ck = sext i8 %i.cj to i32
   %i.cl = load ptr, ptr @stdout, align 8, !tbaa !10
   %i.cm = tail call i32 @putc(i32 noundef %i.ck, ptr noundef %i.cl), !inline_history !13 ; 0 uses
-  %1 = trunc nuw i64 %indvars.iv140 to i32
-  %i.cn = icmp sgt i32 %1, 1
+  %i.cn = icmp sgt i64 %indvars.iv140, 1
   br i1 %i.cn, label %.preheader, label %.loopexit
 
 .loopexit:                                        ; preds = %.preheader, %._crit_edge115

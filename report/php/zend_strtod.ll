@@ -205,13 +205,13 @@ bb.o:                                             ; preds = %.loopexit100
   br label %.loopexit
 
 .preheader:                                       ; preds = %.loopexit100, %.preheader
-  %indvars.iv135 = phi i32 [ %indvars.iv.next136, %.preheader ], [ 1, %.loopexit100 ] ; 2 uses
+  %indvars.iv135 = phi i64 [ %indvars.iv.next136, %.preheader ], [ 1, %.loopexit100 ] ; 2 uses
   %.0124 = phi i32 [ %i.az, %.preheader ], [ %.pr, %.loopexit100 ] ; 2 uses
   %.068123 = phi i32 [ %i.ba, %.preheader ], [ 0, %.loopexit100 ]
   %i.az = udiv i32 %.0124, 10
   %i.ba = add nuw nsw i32 %.068123, 1             ; 2 uses
   %.not93 = icmp samesign ult i32 %.0124, 100
-  %indvars.iv.next136 = add nuw i32 %indvars.iv135, 1
+  %indvars.iv.next136 = add i64 %indvars.iv135, 1
   br i1 %.not93, label %.lr.ph128.preheader, label %.preheader, !llvm.loop !116
 
 .lr.ph128.preheader:                              ; preds = %.preheader
@@ -219,11 +219,10 @@ bb.o:                                             ; preds = %.loopexit100
   %i.bc = getelementptr inbounds nuw i8, ptr %.376, i64 %i.bb
   %i.bd = getelementptr inbounds nuw i8, ptr %i.bc, i64 1
   store i8 0, ptr %i.bd, align 1, !tbaa !54
-  %5 = sext i32 %indvars.iv135 to i64
   br label %.lr.ph128
 
 .lr.ph128:                                        ; preds = %.lr.ph128.preheader, %.lr.ph128
-  %indvars.iv137 = phi i64 [ %5, %.lr.ph128.preheader ], [ %indvars.iv.next138, %.lr.ph128 ] ; 2 uses
+  %indvars.iv137 = phi i64 [ %indvars.iv135, %.lr.ph128.preheader ], [ %indvars.iv.next138, %.lr.ph128 ] ; 2 uses
   %i.be = phi i32 [ %.pr, %.lr.ph128.preheader ], [ %i.bj, %.lr.ph128 ] ; 3 uses
   %i.bf = urem i32 %i.be, 10
   %i.bg = trunc nuw nsw i32 %i.bf to i8

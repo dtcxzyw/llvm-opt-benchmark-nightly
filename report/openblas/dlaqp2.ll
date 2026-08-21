@@ -40,14 +40,13 @@ bb.a:
 
 .loopexit:                                        ; preds = %bb.n, %.thread, %bb.g
   %indvars.iv.next178.pre-phi191 = phi i64 [ %.pre183, %.thread ], [ %i.bx, %bb.g ], [ %i.bx, %bb.n ] ; 2 uses
-  %indvars.iv.next = add nuw i32 %indvars.iv, 1
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
   %exitcond.not = icmp eq i64 %indvars.iv.next178.pre-phi191, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph171, !llvm.loop !9
 
 .lr.ph171:                                        ; preds = %.lr.ph171.preheader, %.loopexit
   %indvars.iv177 = phi i64 [ 1, %.lr.ph171.preheader ], [ %indvars.iv.next178.pre-phi191, %.loopexit ] ; 17 uses
-  %indvars.iv = phi i32 [ 2, %.lr.ph171.preheader ], [ %indvars.iv.next, %.loopexit ] ; 2 uses
-  %10 = sext i32 %indvars.iv to i64
+  %indvars.iv = phi i64 [ 2, %.lr.ph171.preheader ], [ %indvars.iv.next, %.loopexit ] ; 2 uses
   %i.r = load i32, ptr %2, align 4, !tbaa !8
   %i.s = trunc nuw nsw i64 %indvars.iv177 to i32  ; 3 uses
   %i.t = add nsw i32 %i.r, %i.s                   ; 10 uses
@@ -166,7 +165,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %.lr.ph, %bb.n
   %i.ce = phi i32 [ %.pre, %.lr.ph ], [ %i.df, %bb.n ] ; 3 uses
-  %indvars.iv174 = phi i64 [ %10, %.lr.ph ], [ %indvars.iv.next175, %bb.n ] ; 5 uses
+  %indvars.iv174 = phi i64 [ %indvars.iv, %.lr.ph ], [ %indvars.iv.next175, %bb.n ] ; 5 uses
   %i.cf = getelementptr inbounds nuw [8 x i8], ptr %i.h, i64 %indvars.iv174 ; 4 uses
   %i.cg = load double, ptr %i.cf, align 8, !tbaa !11 ; 4 uses
   %i.ch = fcmp une double %i.cg, 0.000000e+00

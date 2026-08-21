@@ -205,22 +205,22 @@ bb.l:                                             ; preds = %bb.k
   br i1 %exitcond.peel.not.i, label %._crit_edge.i, label %.peel.next.i.preheader
 
 .peel.next.i.preheader:                           ; preds = %.lr.ph.i
-  %6 = add i32 %i.cj, -1                          ; 3 uses
-  %xtraiter = and i32 %6, 1
+  %6 = zext i32 %i.cj to i64
+  %7 = add nsw i64 %6, -1                         ; 3 uses
+  %xtraiter = and i64 %7, 1
   %i.cu = icmp eq i32 %i.cj, 2
   br i1 %i.cu, label %.peel.next.i.epil.preheader, label %.peel.next.i.preheader.new
 
 .peel.next.i.preheader.new:                       ; preds = %.peel.next.i.preheader
-  %unroll_iter = and i32 %6, -2
+  %unroll_iter = and i64 %7, -2
   br label %.peel.next.i
 
 .peel.next.i:                                     ; preds = %.peel.next.i, %.peel.next.i.preheader.new
+  %indvars.iv = phi i64 [ 1, %.peel.next.i.preheader.new ], [ %indvars.iv.next.1, %.peel.next.i ] ; 3 uses
   %.0189258.i = phi ptr [ %i.cl, %.peel.next.i.preheader.new ], [ %spec.select249.i.1, %.peel.next.i ]
   %.0190257.i = phi i16 [ %i.ct, %.peel.next.i.preheader.new ], [ %spec.select248.i.1, %.peel.next.i ] ; 2 uses
-  %.0203256.i = phi i32 [ 1, %.peel.next.i.preheader.new ], [ %11, %.peel.next.i ] ; 3 uses
-  %niter = phi i32 [ 0, %.peel.next.i.preheader.new ], [ %niter.next.1, %.peel.next.i ]
-  %7 = sext i32 %.0203256.i to i64
-  %i.cv = getelementptr [16 x i8], ptr %i.cl, i64 %7 ; 3 uses
+  %niter = phi i64 [ 0, %.peel.next.i.preheader.new ], [ %niter.next.1, %.peel.next.i ]
+  %i.cv = getelementptr [16 x i8], ptr %i.cl, i64 %indvars.iv ; 3 uses
   %i.cw = getelementptr i8, ptr %i.cv, i64 10
   %i.cx = load i8, ptr %i.cw, align 2
   %i.cy = getelementptr i8, ptr %i.cv, i64 11
@@ -232,12 +232,11 @@ bb.l:                                             ; preds = %bb.k
   %i.de = icmp ult i16 %.0190257.i, %i.dd
   %spec.select248.i = tail call i16 @llvm.umax.i16(i16 %.0190257.i, i16 %i.dd) ; 2 uses
   %spec.select249.i = select i1 %i.de, ptr %i.cv, ptr %.0189258.i
-  %8 = add nuw i32 %.0203256.i, 1
-  %9 = sext i32 %8 to i64
-  %10 = getelementptr [16 x i8], ptr %i.cl, i64 %9 ; 3 uses
-  %i.df = getelementptr i8, ptr %10, i64 10
+  %8 = getelementptr [16 x i8], ptr %i.cl, i64 %indvars.iv ; 3 uses
+  %9 = getelementptr i8, ptr %8, i64 16
+  %i.df = getelementptr i8, ptr %8, i64 26
   %i.dg = load i8, ptr %i.df, align 2
-  %i.dh = getelementptr i8, ptr %10, i64 11
+  %i.dh = getelementptr i8, ptr %8, i64 27
   %i.di = load i8, ptr %i.dh, align 1
   %i.dj = zext i8 %i.dg to i16
   %i.dk = shl nuw i16 %i.dj, 8
@@ -245,24 +244,23 @@ bb.l:                                             ; preds = %bb.k
   %i.dm = or disjoint i16 %i.dk, %i.dl            ; 2 uses
   %i.dn = icmp ult i16 %spec.select248.i, %i.dm
   %spec.select248.i.1 = tail call i16 @llvm.umax.i16(i16 %spec.select248.i, i16 %i.dm) ; 3 uses
-  %spec.select249.i.1 = select i1 %i.dn, ptr %10, ptr %spec.select249.i ; 3 uses
-  %11 = add nuw i32 %.0203256.i, 2                ; 2 uses
-  %niter.next.1 = add nuw i32 %niter, 2           ; 2 uses
-  %niter.ncmp.1 = icmp eq i32 %niter.next.1, %unroll_iter
+  %spec.select249.i.1 = select i1 %i.dn, ptr %9, ptr %spec.select249.i ; 3 uses
+  %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
+  %niter.next.1 = add nuw nsw i64 %niter, 2       ; 2 uses
+  %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.i.loopexit.unr-lcssa, label %.peel.next.i, !llvm.loop !17
 
 ._crit_edge.i.loopexit.unr-lcssa:                 ; preds = %.peel.next.i
-  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %._crit_edge.i, label %.peel.next.i.epil.preheader
 
 .peel.next.i.epil.preheader:                      ; preds = %._crit_edge.i.loopexit.unr-lcssa, %.peel.next.i.preheader
+  %indvars.iv.epil.init = phi i64 [ 1, %.peel.next.i.preheader ], [ %indvars.iv.next.1, %._crit_edge.i.loopexit.unr-lcssa ]
   %.0189258.i.epil.init = phi ptr [ %i.cl, %.peel.next.i.preheader ], [ %spec.select249.i.1, %._crit_edge.i.loopexit.unr-lcssa ]
   %.0190257.i.epil.init = phi i16 [ %i.ct, %.peel.next.i.preheader ], [ %spec.select248.i.1, %._crit_edge.i.loopexit.unr-lcssa ] ; 2 uses
-  %.0203256.i.epil.init = phi i32 [ 1, %.peel.next.i.preheader ], [ %11, %._crit_edge.i.loopexit.unr-lcssa ]
-  %lcmp.mod324 = trunc i32 %6 to i1
+  %lcmp.mod324 = trunc i64 %7 to i1
   tail call void @llvm.assume(i1 %lcmp.mod324)
-  %12 = sext i32 %.0203256.i.epil.init to i64
-  %i.do = getelementptr [16 x i8], ptr %i.cl, i64 %12 ; 3 uses
+  %i.do = getelementptr [16 x i8], ptr %i.cl, i64 %indvars.iv.epil.init ; 3 uses
   %i.dp = getelementptr i8, ptr %i.do, i64 10
   %i.dq = load i8, ptr %i.dp, align 2
   %i.dr = getelementptr i8, ptr %i.do, i64 11

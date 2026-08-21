@@ -205,14 +205,12 @@ bb.ag:                                            ; preds = %bb.s
   %.021.i = phi i32 [ %i.bx, %.lr.ph.i ], [ 1, %.preheader.i ]
   %.01320.i = phi i8 [ %i.bv, %.lr.ph.i ], [ 1, %.preheader.i ]
   %.01419.i = phi i32 [ %spec.select.i, %.lr.ph.i ], [ 1, %.preheader.i ]
-  %i.bv = add nuw i8 %.01320.i, 1                 ; 3 uses
+  %i.bv = add nuw nsw i8 %.01320.i, 1             ; 2 uses
   %i.bw = shl i32 %.01419.i, 1
   %spec.select.i = call i32 @llvm.smin.i32(i32 %i.bw, i32 120) ; 2 uses
   %i.bx = add i32 %spec.select.i, %.021.i         ; 2 uses
   %i.by = icmp sgt i32 %i.bt, %i.bx
-  %6 = icmp ne i8 %i.bv, -1
-  %7 = select i1 %i.by, i1 %6, i1 false
-  br i1 %7, label %.lr.ph.i, label %secs_to_retrans.exit, !llvm.loop !132
+  br i1 %i.by, label %.lr.ph.i, label %secs_to_retrans.exit, !llvm.loop !132
 
 secs_to_retrans.exit:                             ; preds = %.lr.ph.i, %bb.ag, %.preheader.i
   %.1.i = phi i8 [ 0, %bb.ag ], [ 1, %.preheader.i ], [ %i.bv, %.lr.ph.i ]

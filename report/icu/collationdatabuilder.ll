@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   %i.c = load i32, ptr %1, align 4, !tbaa !69     ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 5 uses
-  %i.f = load i32, ptr %i.e, align 8, !tbaa !126  ; 8 uses
+  %i.f = load i32, ptr %i.e, align 8, !tbaa !126  ; 7 uses
   %.not4156 = icmp slt i32 %i.f, %2
   br i1 %.not4156, label %.thread46, label %.lr.ph59
 
@@ -217,7 +217,7 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph59.split.preheader:                         ; preds = %.lr.ph59
   %i.i = zext i32 %2 to i64
-  %i.j = sext i32 %i.f to i64
+  %i.j = sext i32 %i.f to i64                     ; 2 uses
   %i.k = add i32 %i.f, 1
   %i.l = sub i32 %i.k, %2
   %wide.trip.count = zext i32 %i.l to i64
@@ -283,9 +283,8 @@ bb.h:                                             ; preds = %_ZNK6icu_789UVector
 .preheader50:                                     ; preds = %bb.g, %bb.h
   %indvars.iv = phi i64 [ %indvars.iv.next, %bb.h ], [ 1, %bb.g ] ; 3 uses
   %i.z = add nuw nsw i64 %indvars.iv, %indvars.iv68 ; 2 uses
-  %4 = trunc nuw i64 %i.z to i32
-  %5 = icmp sgt i32 %i.f, %4
-  br i1 %5, label %bb.i, label %_ZNK6icu_789UVector3210elementAtiEi.exit44
+  %4 = icmp slt i64 %i.z, %i.j
+  br i1 %4, label %bb.i, label %_ZNK6icu_789UVector3210elementAtiEi.exit44
 
 bb.i:                                             ; preds = %.preheader50
   %i.aa = getelementptr inbounds nuw [4 x i8], ptr %i.h, i64 %i.z
@@ -391,7 +390,7 @@ bb.b:                                             ; preds = %bb.a
   %i.c = load i64, ptr %1, align 8, !tbaa !84     ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 4 uses
-  %i.f = load i32, ptr %i.e, align 8, !tbaa !132  ; 8 uses
+  %i.f = load i32, ptr %i.e, align 8, !tbaa !132  ; 7 uses
   %.not4156 = icmp slt i32 %i.f, %2
   br i1 %.not4156, label %.thread46, label %.lr.ph59
 
@@ -403,7 +402,7 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph59.split.preheader:                         ; preds = %.lr.ph59
   %i.i = zext i32 %2 to i64
-  %i.j = sext i32 %i.f to i64
+  %i.j = sext i32 %i.f to i64                     ; 2 uses
   %i.k = add i32 %i.f, 1
   %i.l = sub i32 %i.k, %2
   %wide.trip.count = zext i32 %i.l to i64
@@ -469,9 +468,8 @@ bb.h:                                             ; preds = %_ZNK6icu_789UVector
 .preheader50:                                     ; preds = %bb.g, %bb.h
   %indvars.iv = phi i64 [ %indvars.iv.next, %bb.h ], [ 1, %bb.g ] ; 3 uses
   %i.z = add nuw nsw i64 %indvars.iv, %indvars.iv68 ; 2 uses
-  %4 = trunc nuw i64 %i.z to i32
-  %5 = icmp sgt i32 %i.f, %4
-  br i1 %5, label %bb.i, label %_ZNK6icu_789UVector6410elementAtiEi.exit44
+  %4 = icmp slt i64 %i.z, %i.j
+  br i1 %4, label %bb.i, label %_ZNK6icu_789UVector6410elementAtiEi.exit44
 
 bb.i:                                             ; preds = %.preheader50
   %i.aa = getelementptr inbounds nuw [8 x i8], ptr %i.h, i64 %i.z

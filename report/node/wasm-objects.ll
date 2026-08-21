@@ -205,8 +205,8 @@ _ZN2v88internal17WasmDispatchTable18set_protected_usesENS0_6TaggedINS0_23Protect
 _ZN2v88internal12_GLOBAL__N_113GetUsedLengthENS0_6TaggedINS0_23ProtectedWeakFixedArrayEEE.exit: ; preds = %_ZN2v88internal17WasmDispatchTable18set_protected_usesENS0_6TaggedINS0_23ProtectedWeakFixedArrayEEENS0_16WriteBarrierModeE.exit
   %i.bu = getelementptr inbounds nuw i8, ptr %i.bq, i64 16
   %i.bv = load atomic volatile i64, ptr %i.bu monotonic, align 8
-  %i.bw = lshr i64 %i.bv, 32
-  %i.bx = trunc nuw i64 %i.bw to i32              ; 2 uses
+  %i.bw = lshr i64 %i.bv, 32                      ; 2 uses
+  %i.bx = trunc nuw i64 %i.bw to i32
   %i.by = icmp sgt i32 %i.bx, 1
   br i1 %i.by, label %.lr.ph272, label %._crit_edge273
 
@@ -461,9 +461,8 @@ bb.ah:                                            ; preds = %bb.ag
 
 _ZN2v88internal23WasmTrustedInstanceData19set_dispatch_table0ENS0_6TaggedINS0_17WasmDispatchTableEEENS0_16WriteBarrierModeE.exit: ; preds = %_ZN2v88internal15TaggedArrayBaseINS0_19ProtectedFixedArrayENS0_19ProtectedArrayShapeENS0_19TrustedObjectLayoutEE3setEiNS0_6TaggedINS0_5UnionIJNS0_13TrustedObjectENS0_3SmiEEEEEENS0_16WriteBarrierModeE.exit, %bb.ag, %bb.ah, %bb.x
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %3 = trunc nuw i64 %indvars.iv.next to i32
-  %4 = icmp sgt i32 %i.bx, %3
-  br i1 %4, label %bb.x, label %._crit_edge273, !llvm.loop !18
+  %3 = icmp samesign ult i64 %indvars.iv.next, %i.bw
+  br i1 %3, label %bb.x, label %._crit_edge273, !llvm.loop !18
 
 ._crit_edge273:                                   ; preds = %_ZN2v88internal23WasmTrustedInstanceData19set_dispatch_table0ENS0_6TaggedINS0_17WasmDispatchTableEEENS0_16WriteBarrierModeE.exit, %_ZN2v88internal17WasmDispatchTable18set_protected_usesENS0_6TaggedINS0_23ProtectedWeakFixedArrayEEENS0_16WriteBarrierModeE.exit, %_ZN2v88internal12_GLOBAL__N_113GetUsedLengthENS0_6TaggedINS0_23ProtectedWeakFixedArrayEEE.exit, %bb.f
   %.sroa.0188.0 = phi ptr [ %1, %bb.f ], [ %i.aa, %_ZN2v88internal17WasmDispatchTable18set_protected_usesENS0_6TaggedINS0_23ProtectedWeakFixedArrayEEENS0_16WriteBarrierModeE.exit ], [ %i.aa, %_ZN2v88internal12_GLOBAL__N_113GetUsedLengthENS0_6TaggedINS0_23ProtectedWeakFixedArrayEEE.exit ], [ %i.aa, %_ZN2v88internal23WasmTrustedInstanceData19set_dispatch_table0ENS0_6TaggedINS0_17WasmDispatchTableEEENS0_16WriteBarrierModeE.exit ]
@@ -866,8 +865,8 @@ bb.a:
   %i.f = inttoptr i64 %i.e to ptr                 ; 4 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   %i.h = load i64, ptr %i.g, align 8              ; 2 uses
-  %i.i = lshr i64 %i.h, 32                        ; 2 uses
-  %i.j = trunc nuw i64 %i.i to i32                ; 5 uses
+  %i.i = lshr i64 %i.h, 32                        ; 3 uses
+  %i.j = trunc nuw i64 %i.i to i32                ; 4 uses
   %i.k = icmp eq i64 %i.i, 0
   br i1 %i.k, label %bb.b, label %bb.f
 
@@ -973,9 +972,8 @@ bb.m:                                             ; preds = %bb.l, %bb.i
   %.151 = phi i32 [ %.050118, %bb.i ], [ %i.at, %bb.l ] ; 2 uses
   %.1 = phi i32 [ %i.aq, %bb.i ], [ %.049119, %bb.l ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %2 = trunc nuw i64 %indvars.iv.next to i32
-  %3 = icmp slt i32 %2, %i.j
-  br i1 %3, label %bb.h, label %._crit_edge, !llvm.loop !99
+  %2 = icmp samesign ult i64 %indvars.iv.next, %i.i
+  br i1 %2, label %bb.h, label %._crit_edge, !llvm.loop !99
 
 bb.n:                                             ; preds = %._crit_edge
   %i.au = sext i32 %.050.lcssa to i64
@@ -1016,6 +1014,7 @@ _ZN2v88internal6HandleINS0_23ProtectedWeakFixedArrayEEC2ENS0_6TaggedIS2_EEPNS0_7
   %i.bm = add i64 %i.bk, -1
   %i.bn = inttoptr i64 %i.bm to ptr
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bn, i64 16
+  %sext129 = zext nneg i32 %.050.lcssa to i64
   br label %bb.t
 
 ._crit_edge124.loopexit:                          ; preds = %bb.v
@@ -1081,9 +1080,8 @@ bb.u:                                             ; preds = %bb.t
 bb.v:                                             ; preds = %bb.t, %bb.u
   %.3 = phi i32 [ %.2121, %bb.t ], [ %i.co, %bb.u ] ; 2 uses
   %indvars.iv.next128 = add nuw nsw i64 %indvars.iv127, 2 ; 2 uses
-  %4 = trunc nuw i64 %indvars.iv.next128 to i32
-  %5 = icmp sgt i32 %.050.lcssa, %4
-  br i1 %5, label %bb.t, label %._crit_edge124.loopexit, !llvm.loop !100
+  %3 = icmp samesign ult i64 %indvars.iv.next128, %sext129
+  br i1 %3, label %bb.t, label %._crit_edge124.loopexit, !llvm.loop !100
 
 bb.w:                                             ; preds = %_ZN2v88internal12_GLOBAL__N_113GetUsedLengthENS0_6TaggedINS0_23ProtectedWeakFixedArrayEEE.exit, %_ZN2v88internal17WasmDispatchTable18set_protected_usesENS0_6TaggedINS0_23ProtectedWeakFixedArrayEEENS0_16WriteBarrierModeE.exit60, %bb.n, %_ZN2v88internal17WasmDispatchTable18set_protected_usesENS0_6TaggedINS0_23ProtectedWeakFixedArrayEEENS0_16WriteBarrierModeE.exit
   %.sroa.047.2 = phi i64 [ %i.ac, %_ZN2v88internal17WasmDispatchTable18set_protected_usesENS0_6TaggedINS0_23ProtectedWeakFixedArrayEEENS0_16WriteBarrierModeE.exit ], [ %i.ch, %_ZN2v88internal17WasmDispatchTable18set_protected_usesENS0_6TaggedINS0_23ProtectedWeakFixedArrayEEENS0_16WriteBarrierModeE.exit60 ], [ %i.d, %bb.n ], [ %i.d, %_ZN2v88internal12_GLOBAL__N_113GetUsedLengthENS0_6TaggedINS0_23ProtectedWeakFixedArrayEEE.exit ]

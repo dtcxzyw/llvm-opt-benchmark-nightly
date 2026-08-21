@@ -202,25 +202,24 @@ bb.f:                                             ; preds = %_ZNK5arrow9ArrayDat
 _ZNK5arrow9ArrayData9GetValuesIhEEPKT_il.exit.thread.i.i.i: ; preds = %bb.f, %_ZNK5arrow9ArrayData9GetValuesIiEEPKT_i.exit5.i.i
   %i.bj = getelementptr inbounds nuw i8, ptr %1, i64 48
   %i.bk = load i64, ptr %i.bj, align 8, !tbaa !93, !noalias !888 ; 3 uses
-  %smax.i.i.i.i = tail call i64 @llvm.smax.i64(i64 %i.bk, i64 0)
   %exitcond.not.i.i.i.i19 = icmp slt i64 %i.bk, 1
   br i1 %exitcond.not.i.i.i.i19, label %._crit_edge, label %.lr.ph21
 
 bb.g:                                             ; preds = %.lr.ph21
-  %exitcond.not.i.i.i.i = icmp eq i64 %i.bl, %smax.i.i.i.i
+  %exitcond.not.i.i.i.i = icmp eq i64 %i.bk, %i.bl
   br i1 %exitcond.not.i.i.i.i, label %._crit_edge, label %.lr.ph21, !llvm.loop !891
 
 .lr.ph21:                                         ; preds = %_ZNK5arrow9ArrayData9GetValuesIhEEPKT_il.exit.thread.i.i.i, %bb.g
   %.016.i.i.i.i20 = phi i64 [ %i.bl, %bb.g ], [ 0, %_ZNK5arrow9ArrayData9GetValuesIhEEPKT_il.exit.thread.i.i.i ] ; 3 uses
-  %i.bl = add nuw i64 %.016.i.i.i.i20, 1          ; 4 uses
-  %i.bm = getelementptr inbounds [4 x i8], ptr %i.an, i64 %i.bl
+  %i.bl = add nuw nsw i64 %.016.i.i.i.i20, 1      ; 4 uses
+  %i.bm = getelementptr inbounds nuw [4 x i8], ptr %i.an, i64 %i.bl
   %i.bn = load i32, ptr %i.bm, align 4, !tbaa !3, !noalias !888
-  %i.bo = getelementptr inbounds [4 x i8], ptr %i.an, i64 %.016.i.i.i.i20
+  %i.bo = getelementptr inbounds nuw [4 x i8], ptr %i.an, i64 %.016.i.i.i.i20
   %i.bp = load i32, ptr %i.bo, align 4, !tbaa !3, !noalias !888
   %i.bq = sub nsw i32 %i.bn, %i.bp
-  %i.br = getelementptr inbounds [4 x i8], ptr %i.bb, i64 %i.bl
+  %i.br = getelementptr inbounds nuw [4 x i8], ptr %i.bb, i64 %i.bl
   %i.bs = load i32, ptr %i.br, align 4, !tbaa !3, !noalias !888
-  %i.bt = getelementptr inbounds [4 x i8], ptr %i.bb, i64 %.016.i.i.i.i20
+  %i.bt = getelementptr inbounds nuw [4 x i8], ptr %i.bb, i64 %.016.i.i.i.i20
   %i.bu = load i32, ptr %i.bt, align 4, !tbaa !3, !noalias !888
   %i.bv = sub nsw i32 %i.bs, %i.bu
   %.not.i8.i.i.i = icmp eq i32 %i.bq, %i.bv
@@ -379,25 +378,24 @@ bb.n:                                             ; preds = %_ZNK5arrow9ArrayDat
 _ZNK5arrow9ArrayData9GetValuesIhEEPKT_il.exit.thread.i.i9.i: ; preds = %bb.n, %_ZNK5arrow9ArrayData9GetValuesIiEEPKT_i.exit6.i.i
   %i.fb = getelementptr inbounds nuw i8, ptr %1, i64 48
   %i.fc = load i64, ptr %i.fb, align 8, !tbaa !93, !noalias !888 ; 3 uses
-  %smax.i.i.i10.i = tail call i64 @llvm.smax.i64(i64 %i.fc, i64 0)
   %exitcond.i.i.i.i28 = icmp slt i64 %i.fc, 1
   br i1 %exitcond.i.i.i.i28, label %_ZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl18CompareWithOffsetsIiZNS1_13CompareBinaryINS_10BinaryTypeEEENS_6StatusERKT_EUlzE_EEviOT0_ENKUlllE_clEll.exit.i.i.i, label %.lr.ph30
 
 bb.o:                                             ; preds = %.lr.ph30
-  %exitcond.i.i.i.i = icmp eq i64 %i.fd, %smax.i.i.i10.i
+  %exitcond.i.i.i.i = icmp eq i64 %i.fc, %i.fd
   br i1 %exitcond.i.i.i.i, label %_ZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl18CompareWithOffsetsIiZNS1_13CompareBinaryINS_10BinaryTypeEEENS_6StatusERKT_EUlzE_EEviOT0_ENKUlllE_clEll.exit.i.i.i, label %.lr.ph30, !llvm.loop !893
 
 .lr.ph30:                                         ; preds = %_ZNK5arrow9ArrayData9GetValuesIhEEPKT_il.exit.thread.i.i9.i, %bb.o
   %.016.i.i.i11.i29 = phi i64 [ %i.fd, %bb.o ], [ 0, %_ZNK5arrow9ArrayData9GetValuesIhEEPKT_il.exit.thread.i.i9.i ] ; 4 uses
-  %i.fd = add nuw i64 %.016.i.i.i11.i29, 1        ; 4 uses
-  %i.fe = getelementptr inbounds [4 x i8], ptr %i.ef, i64 %i.fd
+  %i.fd = add nuw nsw i64 %.016.i.i.i11.i29, 1    ; 4 uses
+  %i.fe = getelementptr inbounds nuw [4 x i8], ptr %i.ef, i64 %i.fd
   %i.ff = load i32, ptr %i.fe, align 4, !tbaa !3, !noalias !888
-  %i.fg = getelementptr inbounds [4 x i8], ptr %i.ef, i64 %.016.i.i.i11.i29
+  %i.fg = getelementptr inbounds nuw [4 x i8], ptr %i.ef, i64 %.016.i.i.i11.i29
   %i.fh = load i32, ptr %i.fg, align 4, !tbaa !3, !noalias !888
   %i.fi = sub nsw i32 %i.ff, %i.fh
-  %i.fj = getelementptr inbounds [4 x i8], ptr %i.et, i64 %i.fd
+  %i.fj = getelementptr inbounds nuw [4 x i8], ptr %i.et, i64 %i.fd
   %i.fk = load i32, ptr %i.fj, align 4, !tbaa !3, !noalias !888
-  %i.fl = getelementptr inbounds [4 x i8], ptr %i.et, i64 %.016.i.i.i11.i29
+  %i.fl = getelementptr inbounds nuw [4 x i8], ptr %i.et, i64 %.016.i.i.i11.i29
   %i.fm = load i32, ptr %i.fl, align 4, !tbaa !3, !noalias !888
   %i.fn = sub nsw i32 %i.fk, %i.fm
   %.not.i8.i.i12.i = icmp eq i32 %i.fi, %i.fn
@@ -800,25 +798,24 @@ bb.f:                                             ; preds = %_ZNK5arrow9ArrayDat
 _ZNK5arrow9ArrayData9GetValuesIhEEPKT_il.exit.thread.i.i.i: ; preds = %bb.f, %_ZNK5arrow9ArrayData9GetValuesIlEEPKT_i.exit5.i.i
   %i.bj = getelementptr inbounds nuw i8, ptr %1, i64 48
   %i.bk = load i64, ptr %i.bj, align 8, !tbaa !93, !noalias !903 ; 3 uses
-  %smax.i.i.i.i = tail call i64 @llvm.smax.i64(i64 %i.bk, i64 0)
   %exitcond.not.i.i.i.i19 = icmp slt i64 %i.bk, 1
   br i1 %exitcond.not.i.i.i.i19, label %._crit_edge, label %.lr.ph21
 
 bb.g:                                             ; preds = %.lr.ph21
-  %exitcond.not.i.i.i.i = icmp eq i64 %i.bl, %smax.i.i.i.i
+  %exitcond.not.i.i.i.i = icmp eq i64 %i.bk, %i.bl
   br i1 %exitcond.not.i.i.i.i, label %._crit_edge, label %.lr.ph21, !llvm.loop !906
 
 .lr.ph21:                                         ; preds = %_ZNK5arrow9ArrayData9GetValuesIhEEPKT_il.exit.thread.i.i.i, %bb.g
   %.016.i.i.i.i20 = phi i64 [ %i.bl, %bb.g ], [ 0, %_ZNK5arrow9ArrayData9GetValuesIhEEPKT_il.exit.thread.i.i.i ] ; 3 uses
-  %i.bl = add nuw i64 %.016.i.i.i.i20, 1          ; 4 uses
-  %i.bm = getelementptr inbounds [8 x i8], ptr %i.an, i64 %i.bl
+  %i.bl = add nuw nsw i64 %.016.i.i.i.i20, 1      ; 4 uses
+  %i.bm = getelementptr inbounds nuw [8 x i8], ptr %i.an, i64 %i.bl
   %i.bn = load i64, ptr %i.bm, align 8, !tbaa !228, !noalias !903
-  %i.bo = getelementptr inbounds [8 x i8], ptr %i.an, i64 %.016.i.i.i.i20
+  %i.bo = getelementptr inbounds nuw [8 x i8], ptr %i.an, i64 %.016.i.i.i.i20
   %i.bp = load i64, ptr %i.bo, align 8, !tbaa !228, !noalias !903
   %i.bq = sub nsw i64 %i.bn, %i.bp
-  %i.br = getelementptr inbounds [8 x i8], ptr %i.bb, i64 %i.bl
+  %i.br = getelementptr inbounds nuw [8 x i8], ptr %i.bb, i64 %i.bl
   %i.bs = load i64, ptr %i.br, align 8, !tbaa !228, !noalias !903
-  %i.bt = getelementptr inbounds [8 x i8], ptr %i.bb, i64 %.016.i.i.i.i20
+  %i.bt = getelementptr inbounds nuw [8 x i8], ptr %i.bb, i64 %.016.i.i.i.i20
   %i.bu = load i64, ptr %i.bt, align 8, !tbaa !228, !noalias !903
   %i.bv = sub nsw i64 %i.bs, %i.bu
   %.not.i8.i.i.i = icmp eq i64 %i.bq, %i.bv
@@ -971,25 +968,24 @@ bb.n:                                             ; preds = %_ZNK5arrow9ArrayDat
 _ZNK5arrow9ArrayData9GetValuesIhEEPKT_il.exit.thread.i.i9.i: ; preds = %bb.n, %_ZNK5arrow9ArrayData9GetValuesIlEEPKT_i.exit6.i.i
   %i.ev = getelementptr inbounds nuw i8, ptr %1, i64 48
   %i.ew = load i64, ptr %i.ev, align 8, !tbaa !93, !noalias !903 ; 3 uses
-  %smax.i.i.i10.i = tail call i64 @llvm.smax.i64(i64 %i.ew, i64 0)
   %exitcond.i.i.i.i28 = icmp slt i64 %i.ew, 1
   br i1 %exitcond.i.i.i.i28, label %_ZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl18CompareWithOffsetsIlZNS1_13CompareBinaryINS_15LargeBinaryTypeEEENS_6StatusERKT_EUlzE_EEviOT0_ENKUlllE_clEll.exit.i.i.i, label %.lr.ph30
 
 bb.o:                                             ; preds = %.lr.ph30
-  %exitcond.i.i.i.i = icmp eq i64 %i.ex, %smax.i.i.i10.i
+  %exitcond.i.i.i.i = icmp eq i64 %i.ew, %i.ex
   br i1 %exitcond.i.i.i.i, label %_ZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl18CompareWithOffsetsIlZNS1_13CompareBinaryINS_15LargeBinaryTypeEEENS_6StatusERKT_EUlzE_EEviOT0_ENKUlllE_clEll.exit.i.i.i, label %.lr.ph30, !llvm.loop !908
 
 .lr.ph30:                                         ; preds = %_ZNK5arrow9ArrayData9GetValuesIhEEPKT_il.exit.thread.i.i9.i, %bb.o
   %.016.i.i.i11.i29 = phi i64 [ %i.ex, %bb.o ], [ 0, %_ZNK5arrow9ArrayData9GetValuesIhEEPKT_il.exit.thread.i.i9.i ] ; 4 uses
-  %i.ex = add nuw i64 %.016.i.i.i11.i29, 1        ; 4 uses
-  %i.ey = getelementptr inbounds [8 x i8], ptr %i.dz, i64 %i.ex
+  %i.ex = add nuw nsw i64 %.016.i.i.i11.i29, 1    ; 4 uses
+  %i.ey = getelementptr inbounds nuw [8 x i8], ptr %i.dz, i64 %i.ex
   %i.ez = load i64, ptr %i.ey, align 8, !tbaa !228, !noalias !903
-  %i.fa = getelementptr inbounds [8 x i8], ptr %i.dz, i64 %.016.i.i.i11.i29
+  %i.fa = getelementptr inbounds nuw [8 x i8], ptr %i.dz, i64 %.016.i.i.i11.i29
   %i.fb = load i64, ptr %i.fa, align 8, !tbaa !228, !noalias !903
   %i.fc = sub nsw i64 %i.ez, %i.fb
-  %i.fd = getelementptr inbounds [8 x i8], ptr %i.en, i64 %i.ex
+  %i.fd = getelementptr inbounds nuw [8 x i8], ptr %i.en, i64 %i.ex
   %i.fe = load i64, ptr %i.fd, align 8, !tbaa !228, !noalias !903
-  %i.ff = getelementptr inbounds [8 x i8], ptr %i.en, i64 %.016.i.i.i11.i29
+  %i.ff = getelementptr inbounds nuw [8 x i8], ptr %i.en, i64 %.016.i.i.i11.i29
   %i.fg = load i64, ptr %i.ff, align 8, !tbaa !228, !noalias !903
   %i.fh = sub nsw i64 %i.fe, %i.fg
   %.not.i8.i.i12.i = icmp eq i64 %i.fc, %i.fh

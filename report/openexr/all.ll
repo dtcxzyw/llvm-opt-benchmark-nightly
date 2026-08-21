@@ -202,13 +202,13 @@ bb.d:                                             ; preds = %bb.c
   %i.m = getelementptr inbounds nuw i8, ptr %i.j, i64 8
   %i.n = load <2 x i32>, ptr %i.m, align 4, !tbaa !62
   store <2 x i32> %i.n, ptr %i.l, align 4, !tbaa !62
-  %i.o = load i32, ptr %i.f, align 4, !tbaa !63   ; 3 uses
-  %i.p = load i32, ptr %2, align 4, !tbaa !66     ; 3 uses
-  %i.q = sub nsw i32 %i.o, %i.p                   ; 3 uses
+  %i.o = load i32, ptr %i.f, align 4, !tbaa !63
+  %i.p = load i32, ptr %2, align 4, !tbaa !66
+  %i.q = sub nsw i32 %i.o, %i.p                   ; 4 uses
   %i.r = add nsw i32 %i.q, 1                      ; 4 uses
-  %i.s = load i32, ptr %i.h, align 4, !tbaa !67   ; 3 uses
-  %i.t = load i32, ptr %i.d, align 4, !tbaa !68   ; 3 uses
-  %i.u = sub nsw i32 %i.s, %i.t                   ; 3 uses
+  %i.s = load i32, ptr %i.h, align 4, !tbaa !67
+  %i.t = load i32, ptr %i.d, align 4, !tbaa !68
+  %i.u = sub nsw i32 %i.s, %i.t                   ; 4 uses
   %i.v = add nsw i32 %i.u, 1
   %i.w = sext i32 %i.v to i64                     ; 4 uses
   %i.x = sext i32 %i.r to i64                     ; 6 uses
@@ -368,18 +368,18 @@ bb.r:                                             ; preds = %bb.q
 
 .preheader90:                                     ; preds = %bb.r
   %i.cj = or i32 %i.u, %i.q
-  %or.cond.not = icmp sgt i32 %i.cj, -1
+  %or.cond.not = icmp sgt i32 %i.cj, -1           ; 2 uses
   br i1 %or.cond.not, label %.preheader89.lr.ph.split, label %._crit_edge95
 
 .preheader89.lr.ph.split:                         ; preds = %.preheader90
   %i.ck = load ptr, ptr %i.ad, align 8, !tbaa !69
   %i.cl = load i64, ptr %i.ag, align 8, !tbaa !73
-  %11 = add i32 %i.o, 1
-  %12 = sub i32 %11, %i.p
-  %13 = add i32 %i.s, 1
-  %14 = sub i32 %13, %i.t
-  %wide.trip.count108 = zext i32 %14 to i64
-  %wide.trip.count = zext i32 %12 to i64
+  %smax = call i32 @llvm.smax.i32(i32 %i.q, i32 0)
+  %11 = add nuw i32 %smax, 1
+  %smax107 = call i32 @llvm.smax.i32(i32 %i.u, i32 0)
+  %12 = add nuw i32 %smax107, 1
+  %wide.trip.count108 = zext i32 %12 to i64
+  %wide.trip.count = zext i32 %11 to i64
   br label %.preheader89
 
 .preheader89:                                     ; preds = %.preheader89.lr.ph.split, %._crit_edge
@@ -395,17 +395,15 @@ bb.r:                                             ; preds = %bb.q
           to label %.preheader88 unwind label %bb.x
 
 .preheader88:                                     ; preds = %._crit_edge95
-  %15 = or i32 %i.u, %i.q
-  %or.cond126.not = icmp sgt i32 %15, -1
-  br i1 %or.cond126.not, label %.preheader.preheader, label %._crit_edge101
+  br i1 %or.cond.not, label %.preheader.preheader, label %._crit_edge101
 
 .preheader.preheader:                             ; preds = %.preheader88
-  %16 = add i32 %i.o, 1
-  %17 = sub i32 %16, %i.p
-  %18 = add i32 %i.s, 1
-  %19 = sub i32 %18, %i.t
-  %wide.trip.count118 = zext i32 %19 to i64
-  %wide.trip.count113 = zext i32 %17 to i64
+  %smax113 = call i32 @llvm.smax.i32(i32 %i.q, i32 0)
+  %13 = add nuw i32 %smax113, 1
+  %smax119 = call i32 @llvm.smax.i32(i32 %i.u, i32 0)
+  %14 = add nuw i32 %smax119, 1
+  %wide.trip.count118 = zext i32 %14 to i64
+  %wide.trip.count113 = zext i32 %13 to i64
   br label %.preheader
 
 bb.s:                                             ; preds = %bb.c, %bb.b, %bb.a
@@ -808,15 +806,15 @@ bb.a:
   %i.a = tail call noundef i32 @_ZN7Imf_3_417globalThreadCountEv()
   call void @_ZN7Imf_3_418DeepTiledInputFileC1EPKci(ptr noundef nonnull align 8 dereferenceable(32) %6, ptr noundef %0, i32 noundef %i.a)
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.c = load i32, ptr %i.b, align 4, !tbaa !63   ; 3 uses
-  %i.d = load i32, ptr %2, align 4, !tbaa !66     ; 3 uses
-  %i.e = sub nsw i32 %i.c, %i.d                   ; 3 uses
+  %i.c = load i32, ptr %i.b, align 4, !tbaa !63
+  %i.d = load i32, ptr %2, align 4, !tbaa !66
+  %i.e = sub nsw i32 %i.c, %i.d                   ; 4 uses
   %i.f = add nsw i32 %i.e, 1                      ; 4 uses
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 12
-  %i.h = load i32, ptr %i.g, align 4, !tbaa !67   ; 3 uses
+  %i.h = load i32, ptr %i.g, align 4, !tbaa !67
   %i.i = getelementptr inbounds nuw i8, ptr %2, i64 4 ; 4 uses
-  %i.j = load i32, ptr %i.i, align 4, !tbaa !68   ; 3 uses
-  %i.k = sub nsw i32 %i.h, %i.j                   ; 3 uses
+  %i.j = load i32, ptr %i.i, align 4, !tbaa !68
+  %i.k = sub nsw i32 %i.h, %i.j                   ; 4 uses
   %i.l = add nsw i32 %i.k, 1
   %i.m = sext i32 %i.l to i64                     ; 4 uses
   %i.n = sext i32 %i.f to i64                     ; 6 uses
@@ -984,18 +982,18 @@ bb.q:                                             ; preds = %bb.p
 
 .preheader88:                                     ; preds = %bb.q
   %i.cb = or i32 %i.k, %i.e
-  %or.cond.not = icmp sgt i32 %i.cb, -1
+  %or.cond.not = icmp sgt i32 %i.cb, -1           ; 2 uses
   br i1 %or.cond.not, label %.preheader87.lr.ph.split, label %._crit_edge93
 
 .preheader87.lr.ph.split:                         ; preds = %.preheader88
   %i.cc = load ptr, ptr %i.t, align 8, !tbaa !69
   %i.cd = load i64, ptr %i.w, align 8, !tbaa !73
-  %11 = add i32 %i.c, 1
-  %12 = sub i32 %11, %i.d
-  %13 = add i32 %i.h, 1
-  %14 = sub i32 %13, %i.j
-  %wide.trip.count106 = zext i32 %14 to i64
-  %wide.trip.count = zext i32 %12 to i64
+  %smax = call i32 @llvm.smax.i32(i32 %i.e, i32 0)
+  %11 = add nuw i32 %smax, 1
+  %smax105 = call i32 @llvm.smax.i32(i32 %i.k, i32 0)
+  %12 = add nuw i32 %smax105, 1
+  %wide.trip.count106 = zext i32 %12 to i64
+  %wide.trip.count = zext i32 %11 to i64
   br label %.preheader87
 
 .preheader87:                                     ; preds = %.preheader87.lr.ph.split, %._crit_edge
@@ -1009,17 +1007,15 @@ bb.q:                                             ; preds = %bb.p
           to label %.preheader86 unwind label %bb.x
 
 .preheader86:                                     ; preds = %._crit_edge93
-  %15 = or i32 %i.k, %i.e
-  %or.cond124.not = icmp sgt i32 %15, -1
-  br i1 %or.cond124.not, label %.preheader.preheader, label %._crit_edge99
+  br i1 %or.cond.not, label %.preheader.preheader, label %._crit_edge99
 
 .preheader.preheader:                             ; preds = %.preheader86
-  %16 = add i32 %i.c, 1
-  %17 = sub i32 %16, %i.d
-  %18 = add i32 %i.h, 1
-  %19 = sub i32 %18, %i.j
-  %wide.trip.count116 = zext i32 %19 to i64
-  %wide.trip.count111 = zext i32 %17 to i64
+  %smax111 = call i32 @llvm.smax.i32(i32 %i.e, i32 0)
+  %13 = add nuw i32 %smax111, 1
+  %smax117 = call i32 @llvm.smax.i32(i32 %i.k, i32 0)
+  %14 = add nuw i32 %smax117, 1
+  %wide.trip.count116 = zext i32 %14 to i64
+  %wide.trip.count111 = zext i32 %13 to i64
   br label %.preheader
 
 bb.r:                                             ; preds = %bb.e, %bb.c, %bb.a
@@ -1420,6 +1416,9 @@ bb.a:
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #33
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #17
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #17
