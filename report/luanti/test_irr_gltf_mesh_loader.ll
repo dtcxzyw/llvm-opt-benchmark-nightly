@@ -203,8 +203,8 @@ bb.ag:                                            ; preds = %bb.af
   %i.di = icmp eq i16 %i.dh, %i.cx
   br i1 %i.di, label %_ZSt4findIPKttET_S2_S2_RKT0_.exit, label %_ZSt4findIPKttET_S2_S2_RKT0_.exit.thread
 
-_ZSt4findIPKttET_S2_S2_RKT0_.exit:                ; preds = %bb.ae, %bb.af, %bb.ag, %bb.ad
-  %.028.i.i.i = phi ptr [ %i.dd, %bb.af ], [ %i.dg, %bb.ag ], [ %i.da, %bb.ae ], [ %i.cv, %bb.ad ]
+_ZSt4findIPKttET_S2_S2_RKT0_.exit:                ; preds = %bb.ad, %bb.ae, %bb.af, %bb.ag
+  %.028.i.i.i = phi ptr [ %i.dd, %bb.af ], [ %i.cv, %bb.ad ], [ %i.da, %bb.ae ], [ %i.dg, %bb.ag ]
   %i.dj = ptrtoint ptr %.028.i.i.i to i64
   %i.dk = ptrtoint ptr %i.cv to i64
   %i.dl = sub i64 %i.dj, %i.dk

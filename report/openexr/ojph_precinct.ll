@@ -204,7 +204,7 @@ bb.aa:                                            ; preds = %bb.z
   %i.bly = add i32 %.4511665, 512
   br label %_ZN4ojph5localL10bb_put_bitEPNS0_13bit_write_bufEjPNS_21mem_elastic_allocatorERPNS_11coded_listsERj.exit.i374
 
-_ZN4ojph5localL10bb_put_bitEPNS0_13bit_write_bufEjPNS_21mem_elastic_allocatorERPNS_11coded_listsERj.exit.i374: ; preds = %bb.aa, %bb.z, %bb.y
+_ZN4ojph5localL10bb_put_bitEPNS0_13bit_write_bufEjPNS_21mem_elastic_allocatorERPNS_11coded_listsERj.exit.i374: ; preds = %bb.y, %bb.z, %bb.aa
   %.sroa.81494.18 = phi i64 [ 0, %bb.aa ], [ 0, %bb.z ], [ %i.ble, %bb.y ]
   %.sroa.42.21 = phi i32 [ %i.blg, %bb.aa ], [ %i.blg, %bb.z ], [ %i.bla, %bb.y ]
   %.sroa.0.21 = phi ptr [ %i.blv, %bb.aa ], [ %.sroa.0.4664, %bb.z ], [ %.sroa.0.4664, %bb.y ]
@@ -236,13 +236,8 @@ bb.ac:                                            ; preds = %bb.ai
   switch i32 %i.bme, label %_ZN4ojph5localL11bb_put_bitsEPNS0_13bit_write_bufEjiPNS_21mem_elastic_allocatorERPNS_11coded_listsERj.exit403 [
     i32 3, label %.preheader.preheader
     i32 2, label %.preheader523.preheader
-    i32 1, label %.preheader525.preheader
+    i32 1, label %.preheader525
   ]
-
-.preheader525.preheader:                          ; preds = %bb.ac
-  %8 = add nsw i32 %.sroa.42.8, -1
-  %9 = icmp slt i32 %.sroa.42.8, 2
-  br i1 %9, label %bb.av, label %_ZN4ojph5localL11bb_put_bitsEPNS0_13bit_write_bufEjiPNS_21mem_elastic_allocatorERPNS_11coded_listsERj.exit403
 
 .preheader523.preheader:                          ; preds = %bb.ac
   %i.bmf = add nsw i32 %.sroa.42.8, -1
@@ -405,7 +400,7 @@ bb.ah:                                            ; preds = %bb.ag
   %i.bpx = add i32 %.25, 512
   br label %_ZN4ojph5localL10bb_put_bitEPNS0_13bit_write_bufEjPNS_21mem_elastic_allocatorERPNS_11coded_listsERj.exit.i391
 
-_ZN4ojph5localL10bb_put_bitEPNS0_13bit_write_bufEjPNS_21mem_elastic_allocatorERPNS_11coded_listsERj.exit.i391: ; preds = %bb.ah, %bb.ag, %_ZN4ojph5localL12bb_put_zerosEPNS0_13bit_write_bufEiPNS_21mem_elastic_allocatorERPNS_11coded_listsERj.exit
+_ZN4ojph5localL10bb_put_bitEPNS0_13bit_write_bufEjPNS_21mem_elastic_allocatorERPNS_11coded_listsERj.exit.i391: ; preds = %_ZN4ojph5localL12bb_put_zerosEPNS0_13bit_write_bufEiPNS_21mem_elastic_allocatorERPNS_11coded_listsERj.exit, %bb.ag, %bb.ah
   %.sroa.81494.22 = phi i64 [ 0, %bb.ah ], [ 0, %bb.ag ], [ %i.bpd, %_ZN4ojph5localL12bb_put_zerosEPNS0_13bit_write_bufEiPNS_21mem_elastic_allocatorERPNS_11coded_listsERj.exit ]
   %.sroa.42.26 = phi i32 [ %i.bpf, %bb.ah ], [ %i.bpf, %bb.ag ], [ %i.bpa, %_ZN4ojph5localL12bb_put_zerosEPNS0_13bit_write_bufEiPNS_21mem_elastic_allocatorERPNS_11coded_listsERj.exit ]
   %.sroa.0.26 = phi ptr [ %i.bpu, %bb.ah ], [ %.sroa.0.24, %bb.ag ], [ %.sroa.0.24, %_ZN4ojph5localL12bb_put_zerosEPNS0_13bit_write_bufEiPNS_21mem_elastic_allocatorERPNS_11coded_listsERj.exit ]
@@ -651,7 +646,12 @@ bb.au:                                            ; preds = %bb.at
   %i.buv = add i32 %.8, 512
   br label %_ZN4ojph5localL11bb_put_bitsEPNS0_13bit_write_bufEjiPNS_21mem_elastic_allocatorERPNS_11coded_listsERj.exit403
 
-bb.av:                                            ; preds = %.preheader525.preheader
+.preheader525:                                    ; preds = %bb.ac
+  %8 = add nsw i32 %.sroa.42.8, -1
+  %9 = icmp slt i32 %.sroa.42.8, 2
+  br i1 %9, label %bb.av, label %_ZN4ojph5localL11bb_put_bitsEPNS0_13bit_write_bufEjiPNS_21mem_elastic_allocatorERPNS_11coded_listsERj.exit403
+
+bb.av:                                            ; preds = %.preheader525
   %.not.i.i418 = icmp eq i64 %.sroa.81494.8, 255
   %i.buw = select i1 %.not.i.i418, i32 7, i32 8   ; 2 uses
   %i.bux = trunc i64 %.sroa.81494.8 to i8
@@ -681,11 +681,11 @@ bb.aw:                                            ; preds = %bb.av
   %i.bvo = add i32 %.8, 512
   br label %_ZN4ojph5localL11bb_put_bitsEPNS0_13bit_write_bufEjiPNS_21mem_elastic_allocatorERPNS_11coded_listsERj.exit403
 
-_ZN4ojph5localL11bb_put_bitsEPNS0_13bit_write_bufEjiPNS_21mem_elastic_allocatorERPNS_11coded_listsERj.exit403: ; preds = %.preheader525.preheader, %bb.av, %bb.aw, %_ZN4ojph5localL10bb_put_bitEPNS0_13bit_write_bufEjPNS_21mem_elastic_allocatorERPNS_11coded_listsERj.exit.i408, %bb.at, %bb.au, %_ZN4ojph5localL10bb_put_bitEPNS0_13bit_write_bufEjPNS_21mem_elastic_allocatorERPNS_11coded_listsERj.exit.i408.thread, %_ZN4ojph5localL10bb_put_bitEPNS0_13bit_write_bufEjPNS_21mem_elastic_allocatorERPNS_11coded_listsERj.exit.i400.2, %bb.ap, %bb.aq, %_ZN4ojph5localL10bb_put_bitEPNS0_13bit_write_bufEjPNS_21mem_elastic_allocatorERPNS_11coded_listsERj.exit.i400.2.thread, %bb.ac
-  %.sroa.81494.9 = phi i64 [ %.sroa.81494.8, %bb.ac ], [ 0, %_ZN4ojph5localL10bb_put_bitEPNS0_13bit_write_bufEjPNS_21mem_elastic_allocatorERPNS_11coded_listsERj.exit.i408.thread ], [ %.sroa.81494.23.2.ph, %_ZN4ojph5localL10bb_put_bitEPNS0_13bit_write_bufEjPNS_21mem_elastic_allocatorERPNS_11coded_listsERj.exit.i400.2.thread ], [ 0, %bb.aq ], [ 0, %bb.ap ], [ %i.bqw, %_ZN4ojph5localL10bb_put_bitEPNS0_13bit_write_bufEjPNS_21mem_elastic_allocatorERPNS_11coded_listsERj.exit.i400.2 ], [ 0, %bb.au ], [ 0, %bb.at ], [ %i.bmi, %_ZN4ojph5localL10bb_put_bitEPNS0_13bit_write_bufEjPNS_21mem_elastic_allocatorERPNS_11coded_listsERj.exit.i408 ], [ 0, %bb.aw ], [ 0, %bb.av ], [ %.sroa.81494.8, %.preheader525.preheader ]
-  %.sroa.42.9 = phi i32 [ %.sroa.42.8, %bb.ac ], [ %i.bua, %_ZN4ojph5localL10bb_put_bitEPNS0_13bit_write_bufEjPNS_21mem_elastic_allocatorERPNS_11coded_listsERj.exit.i408.thread ], [ %i.bsm, %_ZN4ojph5localL10bb_put_bitEPNS0_13bit_write_bufEjPNS_21mem_elastic_allocatorERPNS_11coded_listsERj.exit.i400.2.thread ], [ %i.bsp, %bb.aq ], [ %i.bsp, %bb.ap ], [ %i.bsn, %_ZN4ojph5localL10bb_put_bitEPNS0_13bit_write_bufEjPNS_21mem_elastic_allocatorERPNS_11coded_listsERj.exit.i400.2 ], [ %i.bud, %bb.au ], [ %i.bud, %bb.at ], [ %i.bub, %_ZN4ojph5localL10bb_put_bitEPNS0_13bit_write_bufEjPNS_21mem_elastic_allocatorERPNS_11coded_listsERj.exit.i408 ], [ %i.buw, %bb.aw ], [ %i.buw, %bb.av ], [ %8, %.preheader525.preheader ]
-  %.sroa.0.9 = phi ptr [ %.sroa.0.8, %bb.ac ], [ %.sroa.0.30.ph, %_ZN4ojph5localL10bb_put_bitEPNS0_13bit_write_bufEjPNS_21mem_elastic_allocatorERPNS_11coded_listsERj.exit.i408.thread ], [ %.sroa.0.28.2.ph, %_ZN4ojph5localL10bb_put_bitEPNS0_13bit_write_bufEjPNS_21mem_elastic_allocatorERPNS_11coded_listsERj.exit.i400.2.thread ], [ %i.bte, %bb.aq ], [ %.sroa.0.8, %bb.ap ], [ %.sroa.0.8, %_ZN4ojph5localL10bb_put_bitEPNS0_13bit_write_bufEjPNS_21mem_elastic_allocatorERPNS_11coded_listsERj.exit.i400.2 ], [ %i.bus, %bb.au ], [ %.sroa.0.8, %bb.at ], [ %.sroa.0.8, %_ZN4ojph5localL10bb_put_bitEPNS0_13bit_write_bufEjPNS_21mem_elastic_allocatorERPNS_11coded_listsERj.exit.i408 ], [ %i.bvl, %bb.aw ], [ %.sroa.0.8, %bb.av ], [ %.sroa.0.8, %.preheader525.preheader ]
-  %.9 = phi i32 [ %.8, %bb.ac ], [ %.31.ph, %_ZN4ojph5localL10bb_put_bitEPNS0_13bit_write_bufEjPNS_21mem_elastic_allocatorERPNS_11coded_listsERj.exit.i408.thread ], [ %.29.2.ph, %_ZN4ojph5localL10bb_put_bitEPNS0_13bit_write_bufEjPNS_21mem_elastic_allocatorERPNS_11coded_listsERj.exit.i400.2.thread ], [ %i.bth, %bb.aq ], [ %.8, %bb.ap ], [ %.8, %_ZN4ojph5localL10bb_put_bitEPNS0_13bit_write_bufEjPNS_21mem_elastic_allocatorERPNS_11coded_listsERj.exit.i400.2 ], [ %i.buv, %bb.au ], [ %.8, %bb.at ], [ %.8, %_ZN4ojph5localL10bb_put_bitEPNS0_13bit_write_bufEjPNS_21mem_elastic_allocatorERPNS_11coded_listsERj.exit.i408 ], [ %i.bvo, %bb.aw ], [ %.8, %bb.av ], [ %.8, %.preheader525.preheader ]
+_ZN4ojph5localL11bb_put_bitsEPNS0_13bit_write_bufEjiPNS_21mem_elastic_allocatorERPNS_11coded_listsERj.exit403: ; preds = %_ZN4ojph5localL10bb_put_bitEPNS0_13bit_write_bufEjPNS_21mem_elastic_allocatorERPNS_11coded_listsERj.exit.i408, %bb.at, %bb.au, %_ZN4ojph5localL10bb_put_bitEPNS0_13bit_write_bufEjPNS_21mem_elastic_allocatorERPNS_11coded_listsERj.exit.i408.thread, %_ZN4ojph5localL10bb_put_bitEPNS0_13bit_write_bufEjPNS_21mem_elastic_allocatorERPNS_11coded_listsERj.exit.i400.2, %bb.ap, %bb.aq, %_ZN4ojph5localL10bb_put_bitEPNS0_13bit_write_bufEjPNS_21mem_elastic_allocatorERPNS_11coded_listsERj.exit.i400.2.thread, %bb.aw, %bb.av, %.preheader525, %bb.ac
+  %.sroa.81494.9 = phi i64 [ %.sroa.81494.8, %bb.ac ], [ %.sroa.81494.23.2.ph, %_ZN4ojph5localL10bb_put_bitEPNS0_13bit_write_bufEjPNS_21mem_elastic_allocatorERPNS_11coded_listsERj.exit.i400.2.thread ], [ %.sroa.81494.8, %.preheader525 ], [ 0, %bb.aw ], [ 0, %bb.av ], [ 0, %bb.aq ], [ 0, %bb.ap ], [ %i.bqw, %_ZN4ojph5localL10bb_put_bitEPNS0_13bit_write_bufEjPNS_21mem_elastic_allocatorERPNS_11coded_listsERj.exit.i400.2 ], [ 0, %bb.au ], [ 0, %bb.at ], [ %i.bmi, %_ZN4ojph5localL10bb_put_bitEPNS0_13bit_write_bufEjPNS_21mem_elastic_allocatorERPNS_11coded_listsERj.exit.i408 ], [ 0, %_ZN4ojph5localL10bb_put_bitEPNS0_13bit_write_bufEjPNS_21mem_elastic_allocatorERPNS_11coded_listsERj.exit.i408.thread ]
+  %.sroa.42.9 = phi i32 [ %.sroa.42.8, %bb.ac ], [ %i.bsm, %_ZN4ojph5localL10bb_put_bitEPNS0_13bit_write_bufEjPNS_21mem_elastic_allocatorERPNS_11coded_listsERj.exit.i400.2.thread ], [ %8, %.preheader525 ], [ %i.buw, %bb.aw ], [ %i.buw, %bb.av ], [ %i.bsp, %bb.aq ], [ %i.bsp, %bb.ap ], [ %i.bsn, %_ZN4ojph5localL10bb_put_bitEPNS0_13bit_write_bufEjPNS_21mem_elastic_allocatorERPNS_11coded_listsERj.exit.i400.2 ], [ %i.bud, %bb.au ], [ %i.bud, %bb.at ], [ %i.bub, %_ZN4ojph5localL10bb_put_bitEPNS0_13bit_write_bufEjPNS_21mem_elastic_allocatorERPNS_11coded_listsERj.exit.i408 ], [ %i.bua, %_ZN4ojph5localL10bb_put_bitEPNS0_13bit_write_bufEjPNS_21mem_elastic_allocatorERPNS_11coded_listsERj.exit.i408.thread ]
+  %.sroa.0.9 = phi ptr [ %.sroa.0.8, %bb.ac ], [ %.sroa.0.28.2.ph, %_ZN4ojph5localL10bb_put_bitEPNS0_13bit_write_bufEjPNS_21mem_elastic_allocatorERPNS_11coded_listsERj.exit.i400.2.thread ], [ %.sroa.0.8, %.preheader525 ], [ %i.bvl, %bb.aw ], [ %.sroa.0.8, %bb.av ], [ %i.bte, %bb.aq ], [ %.sroa.0.8, %bb.ap ], [ %.sroa.0.8, %_ZN4ojph5localL10bb_put_bitEPNS0_13bit_write_bufEjPNS_21mem_elastic_allocatorERPNS_11coded_listsERj.exit.i400.2 ], [ %i.bus, %bb.au ], [ %.sroa.0.8, %bb.at ], [ %.sroa.0.8, %_ZN4ojph5localL10bb_put_bitEPNS0_13bit_write_bufEjPNS_21mem_elastic_allocatorERPNS_11coded_listsERj.exit.i408 ], [ %.sroa.0.30.ph, %_ZN4ojph5localL10bb_put_bitEPNS0_13bit_write_bufEjPNS_21mem_elastic_allocatorERPNS_11coded_listsERj.exit.i408.thread ]
+  %.9 = phi i32 [ %.8, %bb.ac ], [ %.29.2.ph, %_ZN4ojph5localL10bb_put_bitEPNS0_13bit_write_bufEjPNS_21mem_elastic_allocatorERPNS_11coded_listsERj.exit.i400.2.thread ], [ %.8, %.preheader525 ], [ %i.bvo, %bb.aw ], [ %.8, %bb.av ], [ %i.bth, %bb.aq ], [ %.8, %bb.ap ], [ %.8, %_ZN4ojph5localL10bb_put_bitEPNS0_13bit_write_bufEjPNS_21mem_elastic_allocatorERPNS_11coded_listsERj.exit.i400.2 ], [ %i.buv, %bb.au ], [ %.8, %bb.at ], [ %.8, %_ZN4ojph5localL10bb_put_bitEPNS0_13bit_write_bufEjPNS_21mem_elastic_allocatorERPNS_11coded_listsERj.exit.i408 ], [ %.31.ph, %_ZN4ojph5localL10bb_put_bitEPNS0_13bit_write_bufEjPNS_21mem_elastic_allocatorERPNS_11coded_listsERj.exit.i408.thread ]
   %i.bvp = load i32, ptr %.1268555, align 8, !tbaa !33
   %i.bvq = call noundef range(i32 0, 32) i32 @llvm.ctlz.i32(i32 %i.bvp, i1 true)
   %i.bvr = sub nuw nsw i32 32, %i.bvq
@@ -910,7 +910,7 @@ bb.bi:                                            ; preds = %bb.ab, %_ZN4ojph5lo
   %exitcond605.not = icmp eq i32 %i.bzv, %i.bix
   br i1 %exitcond605.not, label %._crit_edge558, label %.preheader528, !llvm.loop !107
 
-_ZN4ojph5localL11bb_put_bitsEPNS0_13bit_write_bufEjiPNS_21mem_elastic_allocatorERPNS_11coded_listsERj.exit: ; preds = %._crit_edge558, %.preheader531.preheader, %bb.q, %bb.r, %_ZN4ojph5localL11bb_put_bitsEPNS0_13bit_write_bufEjiPNS_21mem_elastic_allocatorERPNS_11coded_listsERj.exit366, %bb.s
+_ZN4ojph5localL11bb_put_bitsEPNS0_13bit_write_bufEjiPNS_21mem_elastic_allocatorERPNS_11coded_listsERj.exit: ; preds = %._crit_edge558, %bb.r, %bb.q, %.preheader531.preheader, %_ZN4ojph5localL11bb_put_bitsEPNS0_13bit_write_bufEjiPNS_21mem_elastic_allocatorERPNS_11coded_listsERj.exit366, %bb.s
   %.sroa.81494.12 = phi i64 [ %.sroa.81494.0575, %.preheader531.preheader ], [ %.sroa.81494.0575, %bb.s ], [ %.sroa.81494.1, %_ZN4ojph5localL11bb_put_bitsEPNS0_13bit_write_bufEjiPNS_21mem_elastic_allocatorERPNS_11coded_listsERj.exit366 ], [ 0, %bb.r ], [ 0, %bb.q ], [ %.sroa.81494.3.lcssa, %._crit_edge558 ]
   %.sroa.42.12 = phi i32 [ %i.bhd, %.preheader531.preheader ], [ %.sroa.42.0576, %bb.s ], [ %.sroa.42.1, %_ZN4ojph5localL11bb_put_bitsEPNS0_13bit_write_bufEjiPNS_21mem_elastic_allocatorERPNS_11coded_listsERj.exit366 ], [ %i.bhf, %bb.r ], [ %i.bhf, %bb.q ], [ %.sroa.42.3.lcssa, %._crit_edge558 ]
   %.sroa.0.12 = phi ptr [ %.sroa.0.0577, %.preheader531.preheader ], [ %.sroa.0.0577, %bb.s ], [ %.sroa.0.1, %_ZN4ojph5localL11bb_put_bitsEPNS0_13bit_write_bufEjiPNS_21mem_elastic_allocatorERPNS_11coded_listsERj.exit366 ], [ %i.bhu, %bb.r ], [ %.sroa.0.0577, %bb.q ], [ %.sroa.0.3.lcssa, %._crit_edge558 ]

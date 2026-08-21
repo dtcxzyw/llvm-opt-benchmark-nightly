@@ -204,8 +204,8 @@ bb.b:                                             ; preds = %bb.a
   %.promoted.i = load i64, ptr %i.c, align 8, !alias.scope !176790 ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.e = load ptr, ptr %i.d, align 8, !alias.scope !176785, !nonnull !11
-  %2 = sub i64 %1, %i.b, !dbg !176793
-  %3 = add i64 %2, %.promoted.i, !dbg !176793
+  %2 = add i64 %.promoted.i, %1, !dbg !176793
+  %3 = sub i64 %2, %i.b, !dbg !176793
   br label %bb.c, !dbg !176793
 
 bb.c:                                             ; preds = %_RNCNvXs_NvNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator10advance_byNtNtNtCskY9G75ZWc4U_11polars_expr11expressions10group_iter7LitIterNtB6_13SpecAdvanceBy15spec_advance_by0B1l_.exit.i, %bb.b

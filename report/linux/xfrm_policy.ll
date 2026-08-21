@@ -203,32 +203,26 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.d
   %i.n = ptrtoint ptr %i.l to i64                 ; 4 uses
   %i.o = trunc i64 %i.n to i32
-  switch i32 %i.o, label %.lr.ph.i52.preheader [
-    i32 -66, label %.lr.ph.i34.preheader
+  switch i32 %i.o, label %.lr.ph.i52 [
+    i32 -66, label %.lr.ph.i52.preheader
     i32 -11, label %.thread26
   ]
-
-.lr.ph.i34.preheader:                             ; preds = %bb.e
-  %4 = getelementptr i8, ptr %i.b, i64 56         ; 3 uses
-  %5 = tail call i32 asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock xaddl $0, $1", "=r,=*m,0,*m,~{memory},~{cc},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) %4, i32 -1, ptr elementtype(i32) %4) #22, !srcloc !15 ; 2 uses
-  %6 = icmp eq i32 %5, 1
-  br i1 %6, label %bb.h, label %bb.f
 
 .lr.ph.i52.preheader:                             ; preds = %bb.e
   %i.p = getelementptr i8, ptr %i.b, i64 56       ; 3 uses
   %i.q = tail call i32 asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock xaddl $0, $1", "=r,=*m,0,*m,~{memory},~{cc},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) %i.p, i32 -1, ptr elementtype(i32) %i.p) #22, !srcloc !15 ; 2 uses
   %i.r = icmp eq i32 %i.q, 1
-  br i1 %i.r, label %bb.aq, label %bb.ao
+  br i1 %i.r, label %bb.h, label %bb.f
 
-bb.f:                                             ; preds = %.lr.ph.i34.preheader
-  %i.s = icmp slt i32 %5, 1
+bb.f:                                             ; preds = %.lr.ph.i52.preheader
+  %i.s = icmp slt i32 %i.q, 1
   br i1 %i.s, label %bb.g, label %xfrm_pols_put.exit, !prof !11
 
 bb.g:                                             ; preds = %bb.f
-  tail call void @refcount_warn_saturate(ptr noundef %4, i32 noundef 3) #20
+  tail call void @refcount_warn_saturate(ptr noundef %i.p, i32 noundef 3) #20
   br label %xfrm_pols_put.exit
 
-bb.h:                                             ; preds = %.lr.ph.i34.preheader
+bb.h:                                             ; preds = %.lr.ph.i52.preheader
   tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #22, !srcloc !16
   %i.t = getelementptr i8, ptr %i.b, i64 296
   %i.u = load i8, ptr %i.t, align 8
@@ -508,7 +502,7 @@ xfrm_create_dummy_bundle.exit:                    ; preds = %xfrm_alloc_dst.exit
   %i.cx = icmp ugt ptr %.038.i, inttoptr (i64 -4096 to ptr)
   br i1 %i.cx, label %.lr.ph.preheader.i40, label %bb.an
 
-.lr.ph.preheader.i40:                             ; preds = %.thread26, %xfrm_alloc_dst.exit.thread53.i, %xfrm_create_dummy_bundle.exit
+.lr.ph.preheader.i40:                             ; preds = %xfrm_create_dummy_bundle.exit, %xfrm_alloc_dst.exit.thread53.i, %.thread26
   %.038.i29 = phi ptr [ %.038.i, %xfrm_create_dummy_bundle.exit ], [ inttoptr (i64 -22 to ptr), %.thread26 ], [ %.0.ph.i.ph.i, %xfrm_alloc_dst.exit.thread53.i ] ; 3 uses
   %i.cy = getelementptr i8, ptr %i.b, i64 56      ; 3 uses
   %i.cz = tail call i32 asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock xaddl $0, $1", "=r,=*m,0,*m,~{memory},~{cc},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) %i.cy, i32 -1, ptr elementtype(i32) %i.cy) #22, !srcloc !15 ; 2 uses
@@ -566,15 +560,21 @@ bb.an:                                            ; preds = %xfrm_create_dummy_b
   store i64 %i.c, ptr %i.dl, align 8
   br label %xfrm_pols_put.exit
 
-bb.ao:                                            ; preds = %.lr.ph.i52.preheader
-  %i.dm = icmp slt i32 %i.q, 1
+.lr.ph.i52:                                       ; preds = %bb.e
+  %4 = getelementptr i8, ptr %i.b, i64 56         ; 3 uses
+  %5 = tail call i32 asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock xaddl $0, $1", "=r,=*m,0,*m,~{memory},~{cc},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) %4, i32 -1, ptr elementtype(i32) %4) #22, !srcloc !15 ; 2 uses
+  %6 = icmp eq i32 %5, 1
+  br i1 %6, label %bb.aq, label %bb.ao
+
+bb.ao:                                            ; preds = %.lr.ph.i52
+  %i.dm = icmp slt i32 %5, 1
   br i1 %i.dm, label %bb.ap, label %xfrm_pols_put.exit60, !prof !11
 
 bb.ap:                                            ; preds = %bb.ao
-  tail call void @refcount_warn_saturate(ptr noundef %i.p, i32 noundef 3) #20
+  tail call void @refcount_warn_saturate(ptr noundef %4, i32 noundef 3) #20
   br label %xfrm_pols_put.exit60
 
-bb.aq:                                            ; preds = %.lr.ph.i52.preheader
+bb.aq:                                            ; preds = %.lr.ph.i52
   tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #22, !srcloc !16
   %i.dn = getelementptr i8, ptr %i.b, i64 296
   %i.do = load i8, ptr %i.dn, align 8
@@ -977,7 +977,7 @@ bb.bj:                                            ; preds = %bb.bi
   %i.jd = call i32 %i.jc(ptr noundef %i.iy, ptr noundef %2, ptr noundef nonnull %6) #20, !inline_history !146 ; 0 uses
   br label %xfrm_secpath_reject.exit
 
-xfrm_secpath_reject.exit:                         ; preds = %bb.ae, %bb.bj, %bb.bi, %bb.bh, %skb_sec_path.exit.i, %bb.bg, %bb.bf
+xfrm_secpath_reject.exit:                         ; preds = %bb.ae, %bb.bf, %bb.bg, %skb_sec_path.exit.i, %bb.bh, %bb.bi, %bb.bj
   %i.je = getelementptr i8, ptr %i.cj, i64 56     ; 3 uses
   %i.jf = call i32 asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock xaddl $0, $1", "=r,=*m,0,*m,~{memory},~{cc},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) %i.je, i32 -1, ptr elementtype(i32) %i.je) #22, !srcloc !15 ; 2 uses
   %i.jg = icmp eq i32 %i.jf, 1
