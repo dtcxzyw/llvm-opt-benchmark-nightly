@@ -205,8 +205,8 @@ bb.c:                                             ; preds = %thread-pre-split.i.
   %i.ai = load ptr, ptr %i.y, align 8, !tbaa !54  ; 8 uses
   %i.aj = ptrtoaddr ptr %i.ai to i64
   %i.ak = mul i64 %i.ah, 3                        ; 6 uses
-  %i.al = sdiv i64 %i.ak, 4                       ; 2 uses
-  %i.am = shl nsw i64 %i.al, 2                    ; 5 uses
+  %i.al = sdiv i64 %i.ak, 4
+  %i.am = shl nsw i64 %i.al, 2                    ; 6 uses
   %i.an = icmp sgt i64 %i.ah, 1
   br i1 %i.an, label %.lr.ph.i.i.i.i.i.i.i.i8, label %._crit_edge.i.i.i.i.i.i.i.i
 
@@ -215,8 +215,7 @@ bb.c:                                             ; preds = %thread-pre-split.i.
   br i1 %i.ao, label %.lr.ph.i.i.i.i.i.i.i.i.i.preheader, label %_ZN5Eigen6MatrixIiLin1ELi3ELi0ELin1ELi3EEaSINS0_IiLin1ELin1ELi0ELin1ELin1EEEEERS1_RKNS_9DenseBaseIT_EE.exit
 
 .lr.ph.i.i.i.i.i.i.i.i.i.preheader:               ; preds = %._crit_edge.i.i.i.i.i.i.i.i
-  %6 = shl nsw i64 %i.al, 2
-  %i.ap = sub i64 %i.ak, %6                       ; 3 uses
+  %i.ap = sub i64 %i.ak, %i.am                    ; 3 uses
   %min.iters.check56 = icmp ult i64 %i.ap, 8
   %i.aq = sub i64 %i.aa, %i.aj
   %diff.check = icmp ugt i64 %i.aq, -32

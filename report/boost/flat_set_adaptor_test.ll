@@ -205,7 +205,7 @@ _ZN5boost7movelib11upper_boundIPiiNS_9container3dtl23flat_tree_value_compareISt4
   %i.r = sub i64 %i.e, %i.q                       ; 3 uses
   %i.s = ashr exact i64 %i.r, 2                   ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
-  %i.u = load i64, ptr %i.t, align 8, !tbaa !2566 ; 4 uses
+  %i.u = load i64, ptr %i.t, align 8, !tbaa !2566 ; 3 uses
   %.not.i39 = icmp ugt i64 %i.s, %i.u
   br i1 %.not.i39, label %bb.f, label %bb.e
 
@@ -268,7 +268,7 @@ middle.block:                                     ; preds = %vector.body
   br i1 %.not.i.i, label %_ZN5boost7movelib13adaptive_xbufIiPimE11move_assignIS2_EEvT_m.exit, label %.lr.ph.i.i, !llvm.loop !2870
 
 bb.f:                                             ; preds = %_ZN5boost7movelib11upper_boundIPiiNS_9container3dtl23flat_tree_value_compareISt4lessIiEiNS_11move_detail8identityIiEEEEEET_SC_SC_RKT0_T1_.exit
-  %.idx26.i = shl i64 %i.u, 2                     ; 4 uses
+  %.idx26.i = shl i64 %i.u, 2                     ; 5 uses
   %i.ak = getelementptr inbounds i8, ptr %.114.i, i64 %.idx26.i ; 5 uses
   %i.al = load ptr, ptr %3, align 8, !tbaa !2564  ; 8 uses
   %.not8.i17.i = icmp eq i64 %i.u, 0
@@ -334,8 +334,7 @@ _ZN5boost4moveIPiS1_EET0_T_S3_S2_.exit23.i:       ; preds = %.lr.ph.i18.i, %midd
 
 .lr.ph.i24.i.preheader:                           ; preds = %_ZN5boost4moveIPiS1_EET0_T_S3_S2_.exit23.i
   %i.bb = add i64 %i.e, -4
-  %4 = shl i64 %i.u, 2
-  %i.bc = add i64 %4, %.114.i141.le
+  %i.bc = add i64 %.idx26.i, %.114.i141.le
   %i.bd = sub i64 %i.bb, %i.bc                    ; 2 uses
   %i.be = lshr i64 %i.bd, 2
   %i.bf = add nuw nsw i64 %i.be, 1                ; 2 uses
@@ -504,7 +503,7 @@ _ZN5boost7movelib11lower_boundIPiiNS_9container3dtl23flat_tree_value_compareISt4
   %i.db = sub i64 %i.da, %i.e                     ; 3 uses
   %i.dc = ashr exact i64 %i.db, 2                 ; 2 uses
   %i.dd = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
-  %i.de = load i64, ptr %i.dd, align 8, !tbaa !2566 ; 4 uses
+  %i.de = load i64, ptr %i.dd, align 8, !tbaa !2566 ; 3 uses
   %.not.i52 = icmp ugt i64 %i.dc, %i.de
   br i1 %.not.i52, label %bb.j, label %bb.i
 
@@ -568,7 +567,7 @@ middle.block212:                                  ; preds = %vector.body205
   br i1 %.not.i.i58, label %_ZN5boost7movelib13adaptive_xbufIiPimE11move_assignIS2_EEvT_m.exit72, label %.lr.ph.i.i55, !llvm.loop !2879
 
 bb.j:                                             ; preds = %_ZN5boost7movelib11lower_boundIPiiNS_9container3dtl23flat_tree_value_compareISt4lessIiEiNS_11move_detail8identityIiEEEEEET_SC_SC_RKT0_T1_.exit
-  %.idx26.i59 = shl i64 %i.de, 2                  ; 4 uses
+  %.idx26.i59 = shl i64 %i.de, 2                  ; 5 uses
   %i.dv = getelementptr inbounds i8, ptr %1, i64 %.idx26.i59 ; 5 uses
   %i.dw = load ptr, ptr %3, align 8, !tbaa !2564  ; 8 uses
   %.not8.i17.i60 = icmp eq i64 %i.de, 0
@@ -635,8 +634,7 @@ _ZN5boost4moveIPiS1_EET0_T_S3_S2_.exit23.i65:     ; preds = %.lr.ph.i18.i61, %mi
 .lr.ph.i24.i68.preheader:                         ; preds = %_ZN5boost4moveIPiS1_EET0_T_S3_S2_.exit23.i65
   %i.em = ptrtoaddr ptr %.114.i48 to i64
   %i.en = add i64 %i.em, -4
-  %5 = shl i64 %i.de, 2
-  %i.eo = add i64 %5, %i.e
+  %i.eo = add i64 %.idx26.i59, %i.e
   %i.ep = sub i64 %i.en, %i.eo                    ; 2 uses
   %i.eq = lshr i64 %i.ep, 2
   %i.er = add nuw nsw i64 %i.eq, 1                ; 2 uses
@@ -1039,11 +1037,11 @@ bb.f:                                             ; preds = %bb.a
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.lr.ph.i.i
   %.027.i.i52.le = ptrtoaddr ptr %.027.i.i to i64 ; 2 uses
   %i.r = ptrtoaddr ptr %2 to i64
-  %3 = add i64 %i.c, %i.r
-  %i.s = add i64 %3, -4
-  %4 = shl i64 %i.l, 2
-  %i.t = add i64 %4, %.027.i.i52.le
-  %i.u = sub i64 %i.s, %i.t                       ; 2 uses
+  %3 = shl i64 %i.l, 2
+  %i.s = add i64 %i.c, %i.r
+  %4 = add i64 %i.s, -4
+  %i.t = add i64 %3, %.027.i.i52.le
+  %i.u = sub i64 %4, %i.t                         ; 2 uses
   %i.v = lshr i64 %i.u, 2
   %i.w = add nuw nsw i64 %i.v, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.u, 76
@@ -1338,7 +1336,7 @@ bb.b:                                             ; preds = %bb.a
   %i.g = sub i64 0, %.sroa.speculated63
   %i.h = getelementptr inbounds [4 x i8], ptr %i.b, i64 %i.g ; 11 uses
   %i.i = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
-  %i.j = load i64, ptr %i.i, align 8, !tbaa !2566 ; 4 uses
+  %i.j = load i64, ptr %i.i, align 8, !tbaa !2566 ; 3 uses
   %.not.i = icmp ugt i64 %.sroa.speculated63, %i.j
   %i.k = load ptr, ptr %4, align 8, !tbaa !2564   ; 10 uses
   %i.l = ptrtoaddr ptr %i.k to i64                ; 2 uses
@@ -1404,7 +1402,7 @@ middle.block:                                     ; preds = %vector.body
   br i1 %.not.i.i, label %_ZN5boost7movelib13adaptive_xbufIiPimE11move_assignIS2_EEvT_m.exit, label %.lr.ph.i.i, !llvm.loop !3340
 
 bb.c:                                             ; preds = %bb.b
-  %.idx26.i = shl i64 %i.j, 2                     ; 4 uses
+  %.idx26.i = shl i64 %i.j, 2                     ; 5 uses
   %i.ae = getelementptr inbounds i8, ptr %i.h, i64 %.idx26.i ; 5 uses
   %.not8.i17.i = icmp eq i64 %i.j, 0
   br i1 %.not8.i17.i, label %_ZN5boost4moveIPiS1_EET0_T_S3_S2_.exit23.i, label %.lr.ph.i18.i.preheader
@@ -1477,8 +1475,7 @@ _ZN5boost4moveIPiS1_EET0_T_S3_S2_.exit23.i:       ; preds = %.lr.ph.i18.i, %midd
 
 .lr.ph.i24.i.preheader:                           ; preds = %_ZN5boost4moveIPiS1_EET0_T_S3_S2_.exit23.i
   %i.ay = add i64 %.idx27.i, -4
-  %5 = shl i64 %i.j, 2
-  %i.az = sub i64 %i.ay, %5                       ; 2 uses
+  %i.az = sub i64 %i.ay, %.idx26.i                ; 2 uses
   %i.ba = lshr exact i64 %i.az, 2
   %i.bb = add nuw nsw i64 %i.ba, 1                ; 2 uses
   %min.iters.check143 = icmp ult i64 %i.az, 92
@@ -1846,7 +1843,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.l = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 2 uses
-  %i.m = load i64, ptr %i.l, align 8, !tbaa !2566 ; 4 uses
+  %i.m = load i64, ptr %i.l, align 8, !tbaa !2566 ; 3 uses
   %.not.i = icmp ugt i64 %i.c, %i.m
   %i.n = load ptr, ptr %6, align 8, !tbaa !2564   ; 8 uses
   %i.o = ptrtoaddr ptr %i.n to i64                ; 2 uses
@@ -1906,7 +1903,7 @@ middle.block:                                     ; preds = %vector.body
   br i1 %.not.i.i, label %.thread, label %.lr.ph.i.i, !llvm.loop !3351
 
 bb.c:                                             ; preds = %bb.b
-  %.idx26.i = shl i64 %i.m, 2                     ; 4 uses
+  %.idx26.i = shl i64 %i.m, 2                     ; 5 uses
   %i.ae = getelementptr inbounds i8, ptr %2, i64 %.idx26.i ; 5 uses
   %.not8.i17.i = icmp eq i64 %i.m, 0
   br i1 %.not8.i17.i, label %_ZN5boost4moveIPiS1_EET0_T_S3_S2_.exit23.i, label %.lr.ph.i18.i.preheader
@@ -1972,8 +1969,7 @@ _ZN5boost4moveIPiS1_EET0_T_S3_S2_.exit23.i:       ; preds = %.lr.ph.i18.i, %midd
 
 .lr.ph.i24.i.preheader:                           ; preds = %_ZN5boost4moveIPiS1_EET0_T_S3_S2_.exit23.i
   %i.au = add i64 %.idx27.i, -4
-  %7 = shl i64 %i.m, 2
-  %i.av = sub i64 %i.au, %7                       ; 2 uses
+  %i.av = sub i64 %i.au, %.idx26.i                ; 2 uses
   %i.aw = lshr exact i64 %i.av, 2
   %i.ax = add nuw nsw i64 %i.aw, 1                ; 2 uses
   %min.iters.check271 = icmp ult i64 %i.av, 60
@@ -2376,9 +2372,9 @@ bb.b:                                             ; preds = %bb.a
   %i.i = shl i64 %1, 2
   %i.j = udiv i64 %1, %i.b
   %i.k = mul i64 %2, %i.j
-  %3 = add i64 %i.i, -4
-  %4 = shl i64 %i.k, 3
-  %i.l = sub i64 %3, %4                           ; 2 uses
+  %3 = shl i64 %i.k, 3
+  %4 = add i64 %i.i, -4
+  %i.l = sub i64 %4, %3                           ; 2 uses
   %i.m = lshr exact i64 %i.l, 2
   %i.n = add nuw nsw i64 %i.m, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.l, 60
@@ -2450,10 +2446,10 @@ bb.c:                                             ; preds = %bb.a
   %.02541.i146.le = ptrtoaddr ptr %.02541.i to i64 ; 2 uses
   %i.af = udiv i64 %1, %i.b
   %i.ag = mul i64 %2, %i.af
-  %5 = add i64 %.02541.i146.le, -4
-  %6 = shl i64 %i.ag, 3
-  %i.ah = add i64 %6, %i.a
-  %i.ai = sub i64 %5, %i.ah                       ; 2 uses
+  %5 = shl i64 %i.ag, 3
+  %6 = add i64 %.02541.i146.le, -4
+  %i.ah = add i64 %5, %i.a
+  %i.ai = sub i64 %6, %i.ah                       ; 2 uses
   %i.aj = lshr i64 %i.ai, 2
   %i.ak = add nuw nsw i64 %i.aj, 1                ; 2 uses
   %min.iters.check149 = icmp ult i64 %i.ai, 124
@@ -2856,9 +2852,9 @@ bb.b:                                             ; preds = %bb.a
   %i.i = shl i64 %1, 2
   %i.j = udiv i64 %1, %i.b
   %i.k = mul i64 %2, %i.j
-  %3 = add i64 %i.i, -4
-  %4 = shl i64 %i.k, 3
-  %i.l = sub i64 %3, %4                           ; 2 uses
+  %3 = shl i64 %i.k, 3
+  %4 = add i64 %i.i, -4
+  %i.l = sub i64 %4, %3                           ; 2 uses
   %i.m = lshr exact i64 %i.l, 2
   %i.n = add nuw nsw i64 %i.m, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.l, 60
@@ -2944,10 +2940,10 @@ bb.c:                                             ; preds = %bb.a
   %.02541.i157.le = ptrtoaddr ptr %.02541.i to i64 ; 2 uses
   %i.aj = udiv i64 %1, %i.b
   %i.ak = mul i64 %2, %i.aj
-  %5 = add i64 %.02541.i157.le, -4
-  %6 = shl i64 %i.ak, 3
-  %i.al = add i64 %6, %i.a
-  %i.am = sub i64 %5, %i.al                       ; 2 uses
+  %5 = shl i64 %i.ak, 3
+  %6 = add i64 %.02541.i157.le, -4
+  %i.al = add i64 %5, %i.a
+  %i.am = sub i64 %6, %i.al                       ; 2 uses
   %i.an = lshr i64 %i.am, 2
   %i.ao = add nuw nsw i64 %i.an, 1                ; 2 uses
   %min.iters.check165 = icmp ult i64 %i.am, 156
@@ -3350,7 +3346,7 @@ _ZN5boost7movelib11upper_boundIPiiNS0_10antistableINS_9container3dtl23flat_tree_
   %i.p = sub i64 %i.d, %i.o                       ; 3 uses
   %i.q = ashr exact i64 %i.p, 2                   ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
-  %i.s = load i64, ptr %i.r, align 8, !tbaa !2566 ; 4 uses
+  %i.s = load i64, ptr %i.r, align 8, !tbaa !2566 ; 3 uses
   %.not.i39 = icmp ugt i64 %i.q, %i.s
   br i1 %.not.i39, label %bb.f, label %bb.e
 
@@ -3413,7 +3409,7 @@ middle.block:                                     ; preds = %vector.body
   br i1 %.not.i.i, label %_ZN5boost7movelib13adaptive_xbufIiPimE11move_assignIS2_EEvT_m.exit, label %.lr.ph.i.i, !llvm.loop !4779
 
 bb.f:                                             ; preds = %_ZN5boost7movelib11upper_boundIPiiNS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIiEiNS_11move_detail8identityIiEEEEEEEET_SE_SE_RKT0_T1_.exit
-  %.idx26.i = shl i64 %i.s, 2                     ; 4 uses
+  %.idx26.i = shl i64 %i.s, 2                     ; 5 uses
   %i.ai = getelementptr inbounds i8, ptr %.114.i, i64 %.idx26.i ; 5 uses
   %i.aj = load ptr, ptr %4, align 8, !tbaa !2564  ; 8 uses
   %.not8.i17.i = icmp eq i64 %i.s, 0
@@ -3479,8 +3475,7 @@ _ZN5boost4moveIPiS1_EET0_T_S3_S2_.exit23.i:       ; preds = %.lr.ph.i18.i, %midd
 
 .lr.ph.i24.i.preheader:                           ; preds = %_ZN5boost4moveIPiS1_EET0_T_S3_S2_.exit23.i
   %i.az = add i64 %i.d, -4
-  %5 = shl i64 %i.s, 2
-  %i.ba = add i64 %5, %.114.i147.le
+  %i.ba = add i64 %.idx26.i, %.114.i147.le
   %i.bb = sub i64 %i.az, %i.ba                    ; 2 uses
   %i.bc = lshr i64 %i.bb, 2
   %i.bd = add nuw nsw i64 %i.bc, 1                ; 2 uses
@@ -3649,7 +3644,7 @@ _ZN5boost7movelib11lower_boundIPiiNS0_10antistableINS_9container3dtl23flat_tree_
   %i.cx = sub i64 %i.cw, %i.d                     ; 3 uses
   %i.cy = ashr exact i64 %i.cx, 2                 ; 2 uses
   %i.cz = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
-  %i.da = load i64, ptr %i.cz, align 8, !tbaa !2566 ; 4 uses
+  %i.da = load i64, ptr %i.cz, align 8, !tbaa !2566 ; 3 uses
   %.not.i53 = icmp ugt i64 %i.cy, %i.da
   br i1 %.not.i53, label %bb.j, label %bb.i
 
@@ -3713,7 +3708,7 @@ middle.block218:                                  ; preds = %vector.body211
   br i1 %.not.i.i59, label %_ZN5boost7movelib13adaptive_xbufIiPimE11move_assignIS2_EEvT_m.exit73, label %.lr.ph.i.i56, !llvm.loop !4787
 
 bb.j:                                             ; preds = %_ZN5boost7movelib11lower_boundIPiiNS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIiEiNS_11move_detail8identityIiEEEEEEEET_SE_SE_RKT0_T1_.exit
-  %.idx26.i60 = shl i64 %i.da, 2                  ; 4 uses
+  %.idx26.i60 = shl i64 %i.da, 2                  ; 5 uses
   %i.dr = getelementptr inbounds i8, ptr %1, i64 %.idx26.i60 ; 5 uses
   %i.ds = load ptr, ptr %4, align 8, !tbaa !2564  ; 8 uses
   %.not8.i17.i61 = icmp eq i64 %i.da, 0
@@ -3780,8 +3775,7 @@ _ZN5boost4moveIPiS1_EET0_T_S3_S2_.exit23.i66:     ; preds = %.lr.ph.i18.i62, %mi
 .lr.ph.i24.i69.preheader:                         ; preds = %_ZN5boost4moveIPiS1_EET0_T_S3_S2_.exit23.i66
   %i.ei = ptrtoaddr ptr %.114.i49 to i64
   %i.ej = add i64 %i.ei, -4
-  %6 = shl i64 %i.da, 2
-  %i.ek = add i64 %6, %i.d
+  %i.ek = add i64 %.idx26.i60, %i.d
   %i.el = sub i64 %i.ej, %i.ek                    ; 2 uses
   %i.em = lshr i64 %i.el, 2
   %i.en = add nuw nsw i64 %i.em, 1                ; 2 uses

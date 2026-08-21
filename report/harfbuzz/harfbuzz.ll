@@ -205,8 +205,8 @@ bb.k:                                             ; preds = %bb.j
   %.idx80 = shl nuw nsw i64 %i.bq, 1              ; 3 uses
   %i.br = getelementptr inbounds nuw i8, ptr %i.ad, i64 %.idx80
   %i.bs = mul i32 %.062174, %i.ak
-  %i.bt = zext i32 %i.bs to i64                   ; 2 uses
-  %.idx = shl nuw nsw i64 %i.bt, 1                ; 3 uses
+  %i.bt = zext i32 %i.bs to i64
+  %.idx = shl nuw nsw i64 %i.bt, 1                ; 4 uses
   %i.bu = icmp samesign ult i64 %.idx, %.idx80
   br i1 %i.bu, label %.lr.ph162.preheader, label %.loopexit184
 
@@ -216,8 +216,7 @@ bb.k:                                             ; preds = %bb.j
   %.reass = add i64 %.idx80, %invariant.op217
   %i.bw = tail call i64 @llvm.umax.i64(i64 %.reass216, i64 %.reass)
   %i.bx = add i64 %i.bw, %i.ar
-  %3 = shl nuw nsw i64 %i.bt, 1
-  %i.by = add nuw nsw i64 %3, %i.ac
+  %i.by = add nuw nsw i64 %.idx, %i.ac
   %i.bz = sub i64 %i.bx, %i.by                    ; 2 uses
   %i.ca = lshr i64 %i.bz, 1
   %i.cb = add nuw i64 %i.ca, 1                    ; 2 uses
@@ -317,16 +316,15 @@ bb.n:                                             ; preds = %bb.m
   br i1 %i.dn, label %.lr.ph167.preheader, label %.loopexit
 
 .lr.ph167.preheader:                              ; preds = %bb.n
-  %i.do = zext i32 %.0147170 to i64               ; 3 uses
+  %i.do = zext i32 %.0147170 to i64               ; 2 uses
   %i.dp = getelementptr inbounds nuw [4 x i8], ptr %i.ai, i64 %i.do ; 4 uses
-  %i.dq = shl nuw nsw i64 %i.do, 2
+  %i.dq = shl nuw nsw i64 %i.do, 2                ; 2 uses
   %.reass221 = add i64 %i.dq, %invariant.op220
   %i.dr = shl nuw nsw i64 %i.dl, 2
   %.reass223 = add i64 %i.dr, %invariant.op222
   %i.ds = tail call i64 @llvm.umax.i64(i64 %.reass221, i64 %.reass223)
   %i.dt = add i64 %i.ds, %i.at
-  %4 = shl nuw nsw i64 %i.do, 2
-  %i.du = add nuw nsw i64 %4, %i.ah
+  %i.du = add nuw nsw i64 %i.dq, %i.ah
   %i.dv = sub i64 %i.dt, %i.du                    ; 2 uses
   %min.iters.check = icmp ult i64 %i.dv, 32
   br i1 %min.iters.check, label %.lr.ph167.preheader207, label %vector.ph
@@ -729,8 +727,8 @@ bb.k:                                             ; preds = %bb.j
   %.idx80 = shl nuw nsw i64 %i.bq, 1              ; 3 uses
   %i.br = getelementptr inbounds nuw i8, ptr %i.ad, i64 %.idx80
   %i.bs = mul i32 %.062174, %i.ak
-  %i.bt = zext i32 %i.bs to i64                   ; 2 uses
-  %.idx = shl nuw nsw i64 %i.bt, 1                ; 3 uses
+  %i.bt = zext i32 %i.bs to i64
+  %.idx = shl nuw nsw i64 %i.bt, 1                ; 4 uses
   %i.bu = icmp samesign ult i64 %.idx, %.idx80
   br i1 %i.bu, label %.lr.ph162.preheader, label %.loopexit184
 
@@ -740,8 +738,7 @@ bb.k:                                             ; preds = %bb.j
   %.reass = add i64 %.idx80, %invariant.op220
   %i.bw = tail call i64 @llvm.umax.i64(i64 %.reass219, i64 %.reass)
   %i.bx = add i64 %i.bw, %i.ar
-  %3 = shl nuw nsw i64 %i.bt, 1
-  %i.by = add nuw nsw i64 %3, %i.ac
+  %i.by = add nuw nsw i64 %.idx, %i.ac
   %i.bz = sub i64 %i.bx, %i.by                    ; 2 uses
   %i.ca = lshr i64 %i.bz, 1
   %i.cb = add nuw i64 %i.ca, 1                    ; 2 uses
@@ -841,16 +838,15 @@ bb.n:                                             ; preds = %bb.m
   br i1 %i.dn, label %.lr.ph167.preheader, label %.loopexit
 
 .lr.ph167.preheader:                              ; preds = %bb.n
-  %i.do = zext i32 %.0147170 to i64               ; 3 uses
+  %i.do = zext i32 %.0147170 to i64               ; 2 uses
   %i.dp = getelementptr inbounds nuw [8 x i8], ptr %i.ai, i64 %i.do ; 10 uses
-  %i.dq = shl nuw nsw i64 %i.do, 3
+  %i.dq = shl nuw nsw i64 %i.do, 3                ; 2 uses
   %.reass224 = add i64 %i.dq, %invariant.op223
   %i.dr = shl nuw nsw i64 %i.dl, 3
   %.reass226 = add i64 %i.dr, %invariant.op225
   %i.ds = tail call i64 @llvm.umax.i64(i64 %.reass224, i64 %.reass226)
   %i.dt = add i64 %i.ds, %i.at
-  %4 = shl nuw nsw i64 %i.do, 3
-  %i.du = add nuw nsw i64 %4, %i.ah
+  %i.du = add nuw nsw i64 %i.dq, %i.ah
   %i.dv = sub i64 %i.dt, %i.du                    ; 2 uses
   %min.iters.check = icmp ult i64 %i.dv, 64
   br i1 %min.iters.check, label %.lr.ph167.preheader210, label %vector.ph
@@ -1253,8 +1249,8 @@ bb.k:                                             ; preds = %bb.j
   %.idx80 = shl nuw nsw i64 %i.bo, 1              ; 3 uses
   %i.bp = getelementptr inbounds nuw i8, ptr %i.ad, i64 %.idx80
   %i.bq = mul i32 %.062174, %i.ak
-  %i.br = zext i32 %i.bq to i64                   ; 2 uses
-  %.idx = shl nuw nsw i64 %i.br, 1                ; 3 uses
+  %i.br = zext i32 %i.bq to i64
+  %.idx = shl nuw nsw i64 %i.br, 1                ; 4 uses
   %i.bs = icmp samesign ult i64 %.idx, %.idx80
   br i1 %i.bs, label %.lr.ph162.preheader, label %.loopexit184
 
@@ -1264,8 +1260,7 @@ bb.k:                                             ; preds = %bb.j
   %.reass = add i64 %.idx80, %invariant.op192
   %i.bu = tail call i64 @llvm.umax.i64(i64 %.reass191, i64 %.reass)
   %i.bv = add i64 %i.bu, %i.ar
-  %3 = shl nuw nsw i64 %i.br, 1
-  %i.bw = add nuw nsw i64 %3, %i.ac
+  %i.bw = add nuw nsw i64 %.idx, %i.ac
   %i.bx = sub i64 %i.bv, %i.bw                    ; 2 uses
   %i.by = lshr i64 %i.bx, 1
   %i.bz = add nuw i64 %i.by, 1                    ; 2 uses
@@ -1532,8 +1527,8 @@ bb.k:                                             ; preds = %bb.j
   %.idx80 = shl nuw nsw i64 %i.bq, 1              ; 3 uses
   %i.br = getelementptr inbounds nuw i8, ptr %i.ad, i64 %.idx80
   %i.bs = mul i32 %.062174, %i.ak
-  %i.bt = zext i32 %i.bs to i64                   ; 2 uses
-  %.idx = shl nuw nsw i64 %i.bt, 1                ; 3 uses
+  %i.bt = zext i32 %i.bs to i64
+  %.idx = shl nuw nsw i64 %i.bt, 1                ; 4 uses
   %i.bu = icmp samesign ult i64 %.idx, %.idx80
   br i1 %i.bu, label %.lr.ph162.preheader, label %.loopexit184
 
@@ -1543,8 +1538,7 @@ bb.k:                                             ; preds = %bb.j
   %.reass = add i64 %.idx80, %invariant.op220
   %i.bw = tail call i64 @llvm.umax.i64(i64 %.reass219, i64 %.reass)
   %i.bx = add i64 %i.bw, %i.ar
-  %3 = shl nuw nsw i64 %i.bt, 1
-  %i.by = add nuw nsw i64 %3, %i.ac
+  %i.by = add nuw nsw i64 %.idx, %i.ac
   %i.bz = sub i64 %i.bx, %i.by                    ; 2 uses
   %i.ca = lshr i64 %i.bz, 1
   %i.cb = add nuw i64 %i.ca, 1                    ; 2 uses
@@ -1644,16 +1638,15 @@ bb.n:                                             ; preds = %bb.m
   br i1 %i.dn, label %.lr.ph167.preheader, label %.loopexit
 
 .lr.ph167.preheader:                              ; preds = %bb.n
-  %i.do = zext i32 %.0147170 to i64               ; 3 uses
+  %i.do = zext i32 %.0147170 to i64               ; 2 uses
   %i.dp = getelementptr inbounds nuw [8 x i8], ptr %i.ai, i64 %i.do ; 10 uses
-  %i.dq = shl nuw nsw i64 %i.do, 3
+  %i.dq = shl nuw nsw i64 %i.do, 3                ; 2 uses
   %.reass224 = add i64 %i.dq, %invariant.op223
   %i.dr = shl nuw nsw i64 %i.dl, 3
   %.reass226 = add i64 %i.dr, %invariant.op225
   %i.ds = tail call i64 @llvm.umax.i64(i64 %.reass224, i64 %.reass226)
   %i.dt = add i64 %i.ds, %i.at
-  %4 = shl nuw nsw i64 %i.do, 3
-  %i.du = add nuw nsw i64 %4, %i.ah
+  %i.du = add nuw nsw i64 %i.dq, %i.ah
   %i.dv = sub i64 %i.dt, %i.du                    ; 2 uses
   %min.iters.check = icmp ult i64 %i.dv, 64
   br i1 %min.iters.check, label %.lr.ph167.preheader210, label %vector.ph
@@ -2056,8 +2049,8 @@ bb.k:                                             ; preds = %bb.j
   %.idx80 = shl nuw nsw i64 %i.bo, 1              ; 3 uses
   %i.bp = getelementptr inbounds nuw i8, ptr %i.ad, i64 %.idx80
   %i.bq = mul i32 %.062174, %i.ak
-  %i.br = zext i32 %i.bq to i64                   ; 2 uses
-  %.idx = shl nuw nsw i64 %i.br, 1                ; 3 uses
+  %i.br = zext i32 %i.bq to i64
+  %.idx = shl nuw nsw i64 %i.br, 1                ; 4 uses
   %i.bs = icmp samesign ult i64 %.idx, %.idx80
   br i1 %i.bs, label %.lr.ph162.preheader, label %.loopexit184
 
@@ -2067,8 +2060,7 @@ bb.k:                                             ; preds = %bb.j
   %.reass = add i64 %.idx80, %invariant.op192
   %i.bu = tail call i64 @llvm.umax.i64(i64 %.reass191, i64 %.reass)
   %i.bv = add i64 %i.bu, %i.ar
-  %3 = shl nuw nsw i64 %i.br, 1
-  %i.bw = add nuw nsw i64 %3, %i.ac
+  %i.bw = add nuw nsw i64 %.idx, %i.ac
   %i.bx = sub i64 %i.bv, %i.bw                    ; 2 uses
   %i.by = lshr i64 %i.bx, 1
   %i.bz = add nuw i64 %i.by, 1                    ; 2 uses
@@ -2330,8 +2322,8 @@ bb.k:                                             ; preds = %bb.j
   %.idx80 = shl nuw nsw i64 %i.bo, 1              ; 3 uses
   %i.bp = getelementptr inbounds nuw i8, ptr %i.ad, i64 %.idx80
   %i.bq = mul i32 %.062174, %i.ak
-  %i.br = zext i32 %i.bq to i64                   ; 2 uses
-  %.idx = shl nuw nsw i64 %i.br, 1                ; 3 uses
+  %i.br = zext i32 %i.bq to i64
+  %.idx = shl nuw nsw i64 %i.br, 1                ; 4 uses
   %i.bs = icmp samesign ult i64 %.idx, %.idx80
   br i1 %i.bs, label %.lr.ph162.preheader, label %.loopexit184
 
@@ -2341,8 +2333,7 @@ bb.k:                                             ; preds = %bb.j
   %.reass = add i64 %.idx80, %invariant.op192
   %i.bu = tail call i64 @llvm.umax.i64(i64 %.reass191, i64 %.reass)
   %i.bv = add i64 %i.bu, %i.ar
-  %3 = shl nuw nsw i64 %i.br, 1
-  %i.bw = add nuw nsw i64 %3, %i.ac
+  %i.bw = add nuw nsw i64 %.idx, %i.ac
   %i.bx = sub i64 %i.bv, %i.bw                    ; 2 uses
   %i.by = lshr i64 %i.bx, 1
   %i.bz = add nuw i64 %i.by, 1                    ; 2 uses

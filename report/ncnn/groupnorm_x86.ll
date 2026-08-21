@@ -203,7 +203,7 @@ bb.a:
   br i1 %i.d, label %.lr.ph.us.preheader, label %.lr.ph188.split
 
 .lr.ph.us.preheader:                              ; preds = %.lr.ph188
-  %i.e = and i32 %5, 2147483644                   ; 3 uses
+  %i.e = and i32 %5, 2147483644                   ; 4 uses
   %wide.trip.count270 = zext nneg i32 %4 to i64
   %i.f = icmp slt i32 %i.e, %5
   %i.g = add nsw i32 %5, -4                       ; 2 uses
@@ -214,8 +214,7 @@ bb.a:
   %unroll_iter = and i32 %i.i, 2147483644
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0
   %lcmp.mod392 = icmp ne i32 %xtraiter, 0
-  %8 = and i32 %5, 2147483644
-  %i.k = xor i32 %8, -1
+  %i.k = xor i32 %i.e, -1
   %i.l = add nsw i32 %5, %i.k                     ; 2 uses
   %i.m = zext i32 %i.l to i64
   %i.n = add nuw nsw i64 %i.m, 1                  ; 2 uses
@@ -618,7 +617,7 @@ bb.a:
   br i1 %i.d, label %.lr.ph.us.preheader, label %.lr.ph196.split
 
 .lr.ph.us.preheader:                              ; preds = %.lr.ph196
-  %i.e = and i32 %5, 2147483644                   ; 3 uses
+  %i.e = and i32 %5, 2147483644                   ; 4 uses
   %wide.trip.count278 = zext nneg i32 %4 to i64
   %i.f = icmp slt i32 %i.e, %5
   %i.g = add nsw i32 %5, -4                       ; 2 uses
@@ -629,8 +628,7 @@ bb.a:
   %i.k = and i32 %i.g, 4
   %lcmp.mod.not.not = icmp eq i32 %i.k, 0
   %lcmp.mod398 = trunc i32 %i.i to i1
-  %8 = and i32 %5, 2147483644
-  %i.l = xor i32 %8, -1
+  %i.l = xor i32 %i.e, -1
   %i.m = add nsw i32 %5, %i.l                     ; 2 uses
   %i.n = zext i32 %i.m to i64
   %i.o = add nuw nsw i64 %i.n, 1                  ; 2 uses

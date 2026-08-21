@@ -205,7 +205,7 @@ bb.i:                                             ; preds = %bb.g
   %i.bf = sub i32 %i.be, %i.au
   %i.bg = zext i32 %i.bf to i64                   ; 5 uses
   %i.bh = zext i32 %i.au to i64
-  %spec.select = tail call i64 @llvm.umin.i64(i64 %.083216, i64 %i.bh) ; 64 uses
+  %spec.select = tail call i64 @llvm.umin.i64(i64 %.083216, i64 %i.bh) ; 55 uses
   %i.bi = shl nuw i64 1, %i.ba
   %i.bj = and i64 %i.bi, 1794
   %.not117 = icmp eq i64 %i.bj, 0
@@ -283,15 +283,14 @@ bb.m:                                             ; preds = %bb.l
   br i1 %exitcond274.not, label %._crit_edge193, label %.lr.ph192, !llvm.loop !1741
 
 ._crit_edge193:                                   ; preds = %.lr.ph192, %bb.m
-  %i.cm = and i64 %spec.select, 4294967292        ; 5 uses
+  %i.cm = and i64 %spec.select, 4294967292        ; 6 uses
   %.not240 = icmp eq i64 %i.cm, %spec.select
   br i1 %.not240, label %ma_dr_flac_read_pcm_frames_f32__decode_left_side.exit, label %.lr.ph196.preheader
 
 .lr.ph196.preheader:                              ; preds = %._crit_edge193
   %i.cn = or disjoint i64 %i.cm, 1
   %i.co = tail call i64 @llvm.umax.i64(i64 %spec.select, i64 %i.cn) ; 2 uses
-  %3 = and i64 %spec.select, 4294967292
-  %i.cp = sub nsw i64 %i.co, %3                   ; 2 uses
+  %i.cp = sub nsw i64 %i.co, %i.cm                ; 2 uses
   %min.iters.check410 = icmp ult i64 %i.cp, 4
   br i1 %min.iters.check410, label %.lr.ph196.preheader606, label %vector.ph411
 
@@ -559,15 +558,14 @@ middle.block455:                                  ; preds = %vector.body451
   br i1 %exitcond273.not, label %._crit_edge186, label %.lr.ph185, !llvm.loop !1745
 
 ._crit_edge186:                                   ; preds = %.lr.ph185, %middle.block455, %bb.n
-  %i.kb = and i64 %spec.select, 4294967292        ; 5 uses
+  %i.kb = and i64 %spec.select, 4294967292        ; 6 uses
   %.not236 = icmp eq i64 %i.kb, %spec.select
   br i1 %.not236, label %ma_dr_flac_read_pcm_frames_f32__decode_left_side.exit, label %.lr.ph189.preheader
 
 .lr.ph189.preheader:                              ; preds = %._crit_edge186
   %i.kc = or disjoint i64 %i.kb, 1
   %i.kd = tail call i64 @llvm.umax.i64(i64 %spec.select, i64 %i.kc) ; 2 uses
-  %4 = and i64 %spec.select, 4294967292
-  %i.ke = sub nsw i64 %i.kd, %4                   ; 2 uses
+  %i.ke = sub nsw i64 %i.kd, %i.kb                ; 2 uses
   %min.iters.check427 = icmp ult i64 %i.ke, 4
   br i1 %min.iters.check427, label %.lr.ph189.preheader608, label %vector.ph428
 
@@ -678,15 +676,14 @@ bb.q:                                             ; preds = %bb.p
   br i1 %exitcond272.not, label %._crit_edge179, label %.lr.ph178, !llvm.loop !1748
 
 ._crit_edge179:                                   ; preds = %.lr.ph178, %bb.q
-  %i.mb = and i64 %spec.select, 4294967292        ; 5 uses
+  %i.mb = and i64 %spec.select, 4294967292        ; 6 uses
   %.not234 = icmp eq i64 %i.mb, %spec.select
   br i1 %.not234, label %ma_dr_flac_read_pcm_frames_f32__decode_left_side.exit, label %.lr.ph182.preheader
 
 .lr.ph182.preheader:                              ; preds = %._crit_edge179
   %i.mc = or disjoint i64 %i.mb, 1
   %i.md = tail call i64 @llvm.umax.i64(i64 %spec.select, i64 %i.mc) ; 2 uses
-  %5 = and i64 %spec.select, 4294967292
-  %i.me = sub nsw i64 %i.md, %5                   ; 2 uses
+  %i.me = sub nsw i64 %i.md, %i.mb                ; 2 uses
   %min.iters.check459 = icmp ult i64 %i.me, 4
   br i1 %min.iters.check459, label %.lr.ph182.preheader611, label %vector.ph460
 
@@ -954,15 +951,14 @@ middle.block504:                                  ; preds = %vector.body500
   br i1 %exitcond271.not, label %._crit_edge172, label %.lr.ph171, !llvm.loop !1752
 
 ._crit_edge172:                                   ; preds = %.lr.ph171, %middle.block504, %bb.r
-  %i.tq = and i64 %spec.select, 4294967292        ; 5 uses
+  %i.tq = and i64 %spec.select, 4294967292        ; 6 uses
   %.not231 = icmp eq i64 %i.tq, %spec.select
   br i1 %.not231, label %ma_dr_flac_read_pcm_frames_f32__decode_left_side.exit, label %.lr.ph175.preheader
 
 .lr.ph175.preheader:                              ; preds = %._crit_edge172
   %i.tr = or disjoint i64 %i.tq, 1
   %i.ts = tail call i64 @llvm.umax.i64(i64 %spec.select, i64 %i.tr) ; 2 uses
-  %6 = and i64 %spec.select, 4294967292
-  %i.tt = sub nsw i64 %i.ts, %6                   ; 2 uses
+  %i.tt = sub nsw i64 %i.ts, %i.tq                ; 2 uses
   %min.iters.check476 = icmp ult i64 %i.tt, 4
   br i1 %min.iters.check476, label %.lr.ph175.preheader613, label %vector.ph477
 
@@ -1075,7 +1071,7 @@ bb.u:                                             ; preds = %bb.t
   br i1 %exitcond270.not, label %._crit_edge165, label %.lr.ph164, !llvm.loop !1755
 
 ._crit_edge165:                                   ; preds = %.lr.ph164, %.preheader140
-  %i.vy = and i64 %spec.select, 4294967292        ; 5 uses
+  %i.vy = and i64 %spec.select, 4294967292        ; 6 uses
   %.not229 = icmp eq i64 %i.vy, %spec.select
   br i1 %.not229, label %ma_dr_flac_read_pcm_frames_f32__decode_left_side.exit, label %.lr.ph168
 
@@ -1086,8 +1082,7 @@ bb.u:                                             ; preds = %bb.t
   %i.wc = zext nneg i8 %i.wb to i32               ; 2 uses
   %i.wd = or disjoint i64 %i.vy, 1
   %i.we = tail call i64 @llvm.umax.i64(i64 %spec.select, i64 %i.wd) ; 2 uses
-  %7 = and i64 %spec.select, 4294967292
-  %i.wf = sub nsw i64 %i.we, %7                   ; 2 uses
+  %i.wf = sub nsw i64 %i.we, %i.vy                ; 2 uses
   %min.iters.check508 = icmp ult i64 %i.wf, 4
   br i1 %min.iters.check508, label %scalar.ph507.preheader, label %vector.ph509
 
@@ -1197,7 +1192,7 @@ bb.v:                                             ; preds = %bb.u
   br i1 %exitcond269.not, label %._crit_edge, label %.lr.ph159, !llvm.loop !1758
 
 ._crit_edge:                                      ; preds = %.lr.ph159, %bb.v
-  %i.yr = and i64 %spec.select, 4294967292        ; 5 uses
+  %i.yr = and i64 %spec.select, 4294967292        ; 6 uses
   %.not227 = icmp eq i64 %i.yr, %spec.select
   br i1 %.not227, label %ma_dr_flac_read_pcm_frames_f32__decode_left_side.exit, label %.lr.ph162
 
@@ -1208,8 +1203,7 @@ bb.v:                                             ; preds = %bb.u
   %i.yv = zext nneg i8 %i.yu to i32               ; 2 uses
   %i.yw = or disjoint i64 %i.yr, 1
   %i.yx = tail call i64 @llvm.umax.i64(i64 %spec.select, i64 %i.yw) ; 2 uses
-  %8 = and i64 %spec.select, 4294967292
-  %i.yy = sub nsw i64 %i.yx, %8                   ; 2 uses
+  %i.yy = sub nsw i64 %i.yx, %i.yr                ; 2 uses
   %min.iters.check525 = icmp ult i64 %i.yy, 4
   br i1 %min.iters.check525, label %scalar.ph524.preheader, label %vector.ph526
 
@@ -1612,7 +1606,7 @@ scalar.ph562:                                     ; preds = %scalar.ph562.prehea
   br i1 %exitcond268.not, label %.loopexit, label %scalar.ph562, !llvm.loop !1764
 
 .loopexit:                                        ; preds = %scalar.ph577, %scalar.ph562, %middle.block591, %middle.block574, %bb.x, %.preheader143
-  %i.aqc = and i64 %spec.select, 4294967292       ; 5 uses
+  %i.aqc = and i64 %spec.select, 4294967292       ; 6 uses
   %.not225 = icmp eq i64 %i.aqc, %spec.select
   br i1 %.not225, label %ma_dr_flac_read_pcm_frames_f32__decode_left_side.exit, label %.lr.ph157
 
@@ -1623,8 +1617,7 @@ scalar.ph562:                                     ; preds = %scalar.ph562.prehea
   %i.aqg = zext nneg i8 %i.aqf to i32             ; 2 uses
   %i.aqh = or disjoint i64 %i.aqc, 1
   %i.aqi = tail call i64 @llvm.umax.i64(i64 %spec.select, i64 %i.aqh) ; 2 uses
-  %9 = and i64 %spec.select, 4294967292
-  %i.aqj = sub nsw i64 %i.aqi, %9                 ; 2 uses
+  %i.aqj = sub nsw i64 %i.aqi, %i.aqc             ; 2 uses
   %min.iters.check544 = icmp ult i64 %i.aqj, 4
   br i1 %min.iters.check544, label %scalar.ph543.preheader, label %vector.ph545
 
@@ -1748,15 +1741,14 @@ bb.aa:                                            ; preds = %bb.z
   br i1 %exitcond276.not, label %._crit_edge207, label %.lr.ph206, !llvm.loop !1767
 
 ._crit_edge207:                                   ; preds = %.lr.ph206, %bb.aa
-  %i.ast = and i64 %spec.select, 4294967292       ; 5 uses
+  %i.ast = and i64 %spec.select, 4294967292       ; 6 uses
   %.not246 = icmp eq i64 %i.ast, %spec.select
   br i1 %.not246, label %ma_dr_flac_read_pcm_frames_f32__decode_left_side.exit, label %.lr.ph210.preheader
 
 .lr.ph210.preheader:                              ; preds = %._crit_edge207
   %i.asu = or disjoint i64 %i.ast, 1
   %i.asv = tail call i64 @llvm.umax.i64(i64 %spec.select, i64 %i.asu) ; 2 uses
-  %10 = and i64 %spec.select, 4294967292
-  %i.asw = sub nsw i64 %i.asv, %10                ; 2 uses
+  %i.asw = sub nsw i64 %i.asv, %i.ast             ; 2 uses
   %min.iters.check = icmp ult i64 %i.asw, 4
   br i1 %min.iters.check, label %.lr.ph210.preheader601, label %vector.ph
 
@@ -2040,15 +2032,14 @@ middle.block406:                                  ; preds = %vector.body402
   br i1 %exitcond275.not, label %._crit_edge200, label %.lr.ph199, !llvm.loop !1771
 
 ._crit_edge200:                                   ; preds = %.lr.ph199, %middle.block406, %bb.ab
-  %i.bay = and i64 %spec.select, 4294967292       ; 5 uses
+  %i.bay = and i64 %spec.select, 4294967292       ; 6 uses
   %.not242 = icmp eq i64 %i.bay, %spec.select
   br i1 %.not242, label %ma_dr_flac_read_pcm_frames_f32__decode_left_side.exit, label %.lr.ph203.preheader
 
 .lr.ph203.preheader:                              ; preds = %._crit_edge200
   %i.baz = or disjoint i64 %i.bay, 1
   %i.bba = tail call i64 @llvm.umax.i64(i64 %spec.select, i64 %i.baz) ; 2 uses
-  %11 = and i64 %spec.select, 4294967292
-  %i.bbb = sub nsw i64 %i.bba, %11                ; 2 uses
+  %i.bbb = sub nsw i64 %i.bba, %i.bay             ; 2 uses
   %min.iters.check378 = icmp ult i64 %i.bbb, 4
   br i1 %min.iters.check378, label %.lr.ph203.preheader603, label %vector.ph379
 
@@ -2342,7 +2333,7 @@ bb.i:                                             ; preds = %bb.g
   %i.bb = sub i32 %i.ba, %i.aq
   %i.bc = zext i32 %i.bb to i64                   ; 5 uses
   %i.bd = zext i32 %i.aq to i64
-  %spec.select = tail call i64 @llvm.umin.i64(i64 %.083216, i64 %i.bd) ; 61 uses
+  %spec.select = tail call i64 @llvm.umin.i64(i64 %.083216, i64 %i.bd) ; 52 uses
   %i.be = shl nuw i64 1, %i.aw
   %i.bf = and i64 %i.be, 1794
   %.not117 = icmp eq i64 %i.bf, 0
@@ -2419,15 +2410,14 @@ bb.m:                                             ; preds = %bb.l
   br i1 %exitcond269.not, label %._crit_edge193, label %.lr.ph192, !llvm.loop !1777
 
 ._crit_edge193:                                   ; preds = %.lr.ph192, %bb.m
-  %i.ck = and i64 %spec.select, 4294967292        ; 5 uses
+  %i.ck = and i64 %spec.select, 4294967292        ; 6 uses
   %.not237 = icmp eq i64 %i.ck, %spec.select
   br i1 %.not237, label %ma_dr_flac_read_pcm_frames_s16__decode_left_side.exit, label %.lr.ph196.preheader
 
 .lr.ph196.preheader:                              ; preds = %._crit_edge193
   %i.cl = or disjoint i64 %i.ck, 1
   %i.cm = tail call i64 @llvm.umax.i64(i64 %spec.select, i64 %i.cl) ; 2 uses
-  %3 = and i64 %spec.select, 4294967292
-  %i.cn = sub nsw i64 %i.cm, %3                   ; 2 uses
+  %i.cn = sub nsw i64 %i.cm, %i.ck                ; 2 uses
   %min.iters.check375 = icmp ult i64 %i.cn, 4
   br i1 %min.iters.check375, label %.lr.ph196.preheader540, label %vector.ph376
 
@@ -2531,15 +2521,14 @@ bb.n:                                             ; preds = %._crit_edge280, %bb
   br i1 %exitcond268.not, label %._crit_edge186, label %.lr.ph185, !llvm.loop !1780
 
 ._crit_edge186:                                   ; preds = %.lr.ph185, %bb.n
-  %i.ep = and i64 %spec.select, 4294967292        ; 5 uses
+  %i.ep = and i64 %spec.select, 4294967292        ; 6 uses
   %.not235 = icmp eq i64 %i.ep, %spec.select
   br i1 %.not235, label %ma_dr_flac_read_pcm_frames_s16__decode_left_side.exit, label %.lr.ph189.preheader
 
 .lr.ph189.preheader:                              ; preds = %._crit_edge186
   %i.eq = or disjoint i64 %i.ep, 1
   %i.er = tail call i64 @llvm.umax.i64(i64 %spec.select, i64 %i.eq) ; 2 uses
-  %4 = and i64 %spec.select, 4294967292
-  %i.es = sub nsw i64 %i.er, %4                   ; 2 uses
+  %i.es = sub nsw i64 %i.er, %i.ep                ; 2 uses
   %min.iters.check392 = icmp ult i64 %i.es, 4
   br i1 %min.iters.check392, label %.lr.ph189.preheader542, label %vector.ph393
 
@@ -2651,15 +2640,14 @@ bb.q:                                             ; preds = %bb.p
   br i1 %exitcond267.not, label %._crit_edge179, label %.lr.ph178, !llvm.loop !1783
 
 ._crit_edge179:                                   ; preds = %.lr.ph178, %bb.q
-  %i.gs = and i64 %spec.select, 4294967292        ; 5 uses
+  %i.gs = and i64 %spec.select, 4294967292        ; 6 uses
   %.not233 = icmp eq i64 %i.gs, %spec.select
   br i1 %.not233, label %ma_dr_flac_read_pcm_frames_s16__decode_left_side.exit, label %.lr.ph182.preheader
 
 .lr.ph182.preheader:                              ; preds = %._crit_edge179
   %i.gt = or disjoint i64 %i.gs, 1
   %i.gu = tail call i64 @llvm.umax.i64(i64 %spec.select, i64 %i.gt) ; 2 uses
-  %5 = and i64 %spec.select, 4294967292
-  %i.gv = sub nsw i64 %i.gu, %5                   ; 2 uses
+  %i.gv = sub nsw i64 %i.gu, %i.gs                ; 2 uses
   %min.iters.check409 = icmp ult i64 %i.gv, 4
   br i1 %min.iters.check409, label %.lr.ph182.preheader544, label %vector.ph410
 
@@ -2763,15 +2751,14 @@ bb.r:                                             ; preds = %._crit_edge276, %bb
   br i1 %exitcond266.not, label %._crit_edge172, label %.lr.ph171, !llvm.loop !1786
 
 ._crit_edge172:                                   ; preds = %.lr.ph171, %bb.r
-  %i.ix = and i64 %spec.select, 4294967292        ; 5 uses
+  %i.ix = and i64 %spec.select, 4294967292        ; 6 uses
   %.not231 = icmp eq i64 %i.ix, %spec.select
   br i1 %.not231, label %ma_dr_flac_read_pcm_frames_s16__decode_left_side.exit, label %.lr.ph175.preheader
 
 .lr.ph175.preheader:                              ; preds = %._crit_edge172
   %i.iy = or disjoint i64 %i.ix, 1
   %i.iz = tail call i64 @llvm.umax.i64(i64 %spec.select, i64 %i.iy) ; 2 uses
-  %6 = and i64 %spec.select, 4294967292
-  %i.ja = sub nsw i64 %i.iz, %6                   ; 2 uses
+  %i.ja = sub nsw i64 %i.iz, %i.ix                ; 2 uses
   %min.iters.check426 = icmp ult i64 %i.ja, 4
   br i1 %min.iters.check426, label %.lr.ph175.preheader546, label %vector.ph427
 
@@ -2883,7 +2870,7 @@ bb.u:                                             ; preds = %bb.t
   br i1 %exitcond265.not, label %._crit_edge165, label %.lr.ph164, !llvm.loop !1789
 
 ._crit_edge165:                                   ; preds = %.lr.ph164, %.preheader140
-  %i.le = and i64 %spec.select, 4294967292        ; 5 uses
+  %i.le = and i64 %spec.select, 4294967292        ; 6 uses
   %.not229 = icmp eq i64 %i.le, %spec.select
   br i1 %.not229, label %ma_dr_flac_read_pcm_frames_s16__decode_left_side.exit, label %.lr.ph168
 
@@ -2894,8 +2881,7 @@ bb.u:                                             ; preds = %bb.t
   %i.li = zext nneg i8 %i.lh to i32               ; 2 uses
   %i.lj = or disjoint i64 %i.le, 1
   %i.lk = tail call i64 @llvm.umax.i64(i64 %spec.select, i64 %i.lj) ; 2 uses
-  %7 = and i64 %spec.select, 4294967292
-  %i.ll = sub nsw i64 %i.lk, %7                   ; 2 uses
+  %i.ll = sub nsw i64 %i.lk, %i.le                ; 2 uses
   %min.iters.check443 = icmp ult i64 %i.ll, 4
   br i1 %min.iters.check443, label %scalar.ph442.preheader, label %vector.ph444
 
@@ -3004,7 +2990,7 @@ bb.v:                                             ; preds = %bb.u
   br i1 %exitcond264.not, label %._crit_edge, label %.lr.ph159, !llvm.loop !1792
 
 ._crit_edge:                                      ; preds = %.lr.ph159, %bb.v
-  %i.nw = and i64 %spec.select, 4294967292        ; 5 uses
+  %i.nw = and i64 %spec.select, 4294967292        ; 6 uses
   %.not227 = icmp eq i64 %i.nw, %spec.select
   br i1 %.not227, label %ma_dr_flac_read_pcm_frames_s16__decode_left_side.exit, label %.lr.ph162
 
@@ -3015,8 +3001,7 @@ bb.v:                                             ; preds = %bb.u
   %i.oa = zext nneg i8 %i.nz to i32               ; 2 uses
   %i.ob = or disjoint i64 %i.nw, 1
   %i.oc = tail call i64 @llvm.umax.i64(i64 %spec.select, i64 %i.ob) ; 2 uses
-  %8 = and i64 %spec.select, 4294967292
-  %i.od = sub nsw i64 %i.oc, %8                   ; 2 uses
+  %i.od = sub nsw i64 %i.oc, %i.nw                ; 2 uses
   %min.iters.check460 = icmp ult i64 %i.od, 4
   br i1 %min.iters.check460, label %scalar.ph459.preheader, label %vector.ph461
 
@@ -3419,7 +3404,7 @@ scalar.ph497:                                     ; preds = %scalar.ph497.prehea
   br i1 %exitcond263.not, label %.loopexit, label %scalar.ph497, !llvm.loop !1798
 
 .loopexit:                                        ; preds = %scalar.ph512, %scalar.ph497, %middle.block526, %middle.block509, %bb.x, %.preheader143
-  %i.adu = and i64 %spec.select, 4294967292       ; 5 uses
+  %i.adu = and i64 %spec.select, 4294967292       ; 6 uses
   %.not225 = icmp eq i64 %i.adu, %spec.select
   br i1 %.not225, label %ma_dr_flac_read_pcm_frames_s16__decode_left_side.exit, label %.lr.ph157
 
@@ -3430,8 +3415,7 @@ scalar.ph497:                                     ; preds = %scalar.ph497.prehea
   %i.ady = zext nneg i8 %i.adx to i32             ; 2 uses
   %i.adz = or disjoint i64 %i.adu, 1
   %i.aea = tail call i64 @llvm.umax.i64(i64 %spec.select, i64 %i.adz) ; 2 uses
-  %9 = and i64 %spec.select, 4294967292
-  %i.aeb = sub nsw i64 %i.aea, %9                 ; 2 uses
+  %i.aeb = sub nsw i64 %i.aea, %i.adu             ; 2 uses
   %min.iters.check479 = icmp ult i64 %i.aeb, 4
   br i1 %min.iters.check479, label %scalar.ph478.preheader, label %vector.ph480
 
@@ -3558,15 +3542,14 @@ bb.aa:                                            ; preds = %bb.z
   br i1 %exitcond271.not, label %._crit_edge207, label %.lr.ph206, !llvm.loop !1801
 
 ._crit_edge207:                                   ; preds = %.lr.ph206, %bb.aa
-  %i.agq = and i64 %spec.select, 4294967292       ; 5 uses
+  %i.agq = and i64 %spec.select, 4294967292       ; 6 uses
   %.not241 = icmp eq i64 %i.agq, %spec.select
   br i1 %.not241, label %ma_dr_flac_read_pcm_frames_s16__decode_left_side.exit, label %.lr.ph210.preheader
 
 .lr.ph210.preheader:                              ; preds = %._crit_edge207
   %i.agr = or disjoint i64 %i.agq, 1
   %i.ags = tail call i64 @llvm.umax.i64(i64 %spec.select, i64 %i.agr) ; 2 uses
-  %10 = and i64 %spec.select, 4294967292
-  %i.agt = sub nsw i64 %i.ags, %10                ; 2 uses
+  %i.agt = sub nsw i64 %i.ags, %i.agq             ; 2 uses
   %min.iters.check = icmp ult i64 %i.agt, 4
   br i1 %min.iters.check, label %.lr.ph210.preheader536, label %vector.ph
 
@@ -3707,15 +3690,14 @@ bb.ab:                                            ; preds = %._crit_edge285, %bb
   br i1 %exitcond270.not, label %._crit_edge200, label %.lr.ph199, !llvm.loop !1804
 
 ._crit_edge200:                                   ; preds = %.lr.ph199, %bb.ab
-  %i.akc = and i64 %spec.select, 4294967292       ; 5 uses
+  %i.akc = and i64 %spec.select, 4294967292       ; 6 uses
   %.not239 = icmp eq i64 %i.akc, %spec.select
   br i1 %.not239, label %ma_dr_flac_read_pcm_frames_s16__decode_left_side.exit, label %.lr.ph203.preheader
 
 .lr.ph203.preheader:                              ; preds = %._crit_edge200
   %i.akd = or disjoint i64 %i.akc, 1
   %i.ake = tail call i64 @llvm.umax.i64(i64 %spec.select, i64 %i.akd) ; 2 uses
-  %11 = and i64 %spec.select, 4294967292
-  %i.akf = sub nsw i64 %i.ake, %11                ; 2 uses
+  %i.akf = sub nsw i64 %i.ake, %i.akc             ; 2 uses
   %min.iters.check358 = icmp ult i64 %i.akf, 4
   br i1 %min.iters.check358, label %.lr.ph203.preheader538, label %vector.ph359
 
@@ -4006,7 +3988,7 @@ bb.i:                                             ; preds = %bb.g
   %i.bd = sub i32 %i.bc, %i.as
   %i.be = zext i32 %i.bd to i64                   ; 23 uses
   %i.bf = zext i32 %i.as to i64
-  %spec.select = tail call i64 @llvm.umin.i64(i64 %.081214, i64 %i.bf) ; 68 uses
+  %spec.select = tail call i64 @llvm.umin.i64(i64 %.081214, i64 %i.bf) ; 59 uses
   %i.bg = shl nuw i64 1, %i.ay
   %i.bh = and i64 %i.bg, 1794
   %.not115 = icmp eq i64 %i.bh, 0
@@ -4080,15 +4062,14 @@ bb.m:                                             ; preds = %bb.l
   br i1 %exitcond267.not, label %._crit_edge191, label %.lr.ph190, !llvm.loop !1810
 
 ._crit_edge191:                                   ; preds = %.lr.ph190, %bb.m
-  %i.ci = and i64 %spec.select, 4294967292        ; 7 uses
+  %i.ci = and i64 %spec.select, 4294967292        ; 8 uses
   %.not235 = icmp eq i64 %i.ci, %spec.select
   br i1 %.not235, label %ma_dr_flac_read_pcm_frames_s32__decode_left_side.exit, label %.lr.ph194.preheader
 
 .lr.ph194.preheader:                              ; preds = %._crit_edge191
   %i.cj = or disjoint i64 %i.ci, 1
   %i.ck = tail call i64 @llvm.umax.i64(i64 %spec.select, i64 %i.cj) ; 2 uses
-  %3 = and i64 %spec.select, 4294967292
-  %i.cl = sub nsw i64 %i.ck, %3                   ; 2 uses
+  %i.cl = sub nsw i64 %i.ck, %i.ci                ; 2 uses
   %min.iters.check410 = icmp ult i64 %i.cl, 8
   br i1 %min.iters.check410, label %.lr.ph194.preheader633, label %vector.memcheck394
 
@@ -4238,15 +4219,14 @@ bb.n:                                             ; preds = %._crit_edge278, %bb
   br i1 %exitcond266.not, label %._crit_edge184, label %.lr.ph183, !llvm.loop !1821
 
 ._crit_edge184:                                   ; preds = %.lr.ph183, %bb.n
-  %i.fm = and i64 %spec.select, 4294967292        ; 7 uses
+  %i.fm = and i64 %spec.select, 4294967292        ; 8 uses
   %.not233 = icmp eq i64 %i.fm, %spec.select
   br i1 %.not233, label %ma_dr_flac_read_pcm_frames_s32__decode_left_side.exit, label %.lr.ph187.preheader
 
 .lr.ph187.preheader:                              ; preds = %._crit_edge184
   %i.fn = or disjoint i64 %i.fm, 1
   %i.fo = tail call i64 @llvm.umax.i64(i64 %spec.select, i64 %i.fn) ; 2 uses
-  %4 = and i64 %spec.select, 4294967292
-  %i.fp = sub nsw i64 %i.fo, %4                   ; 2 uses
+  %i.fp = sub nsw i64 %i.fo, %i.fm                ; 2 uses
   %min.iters.check442 = icmp ult i64 %i.fp, 8
   br i1 %min.iters.check442, label %.lr.ph187.preheader635, label %vector.memcheck426
 
@@ -4374,15 +4354,14 @@ bb.q:                                             ; preds = %bb.p
   br i1 %exitcond265.not, label %._crit_edge177, label %.lr.ph176, !llvm.loop !1832
 
 ._crit_edge177:                                   ; preds = %.lr.ph176, %bb.q
-  %i.hn = and i64 %spec.select, 4294967292        ; 7 uses
+  %i.hn = and i64 %spec.select, 4294967292        ; 8 uses
   %.not231 = icmp eq i64 %i.hn, %spec.select
   br i1 %.not231, label %ma_dr_flac_read_pcm_frames_s32__decode_left_side.exit, label %.lr.ph180.preheader
 
 .lr.ph180.preheader:                              ; preds = %._crit_edge177
   %i.ho = or disjoint i64 %i.hn, 1
   %i.hp = tail call i64 @llvm.umax.i64(i64 %spec.select, i64 %i.ho) ; 2 uses
-  %5 = and i64 %spec.select, 4294967292
-  %i.hq = sub nsw i64 %i.hp, %5                   ; 2 uses
+  %i.hq = sub nsw i64 %i.hp, %i.hn                ; 2 uses
   %min.iters.check474 = icmp ult i64 %i.hq, 8
   br i1 %min.iters.check474, label %.lr.ph180.preheader637, label %vector.memcheck458
 
@@ -4532,15 +4511,14 @@ bb.r:                                             ; preds = %._crit_edge274, %bb
   br i1 %exitcond264.not, label %._crit_edge170, label %.lr.ph169, !llvm.loop !1843
 
 ._crit_edge170:                                   ; preds = %.lr.ph169, %bb.r
-  %i.kr = and i64 %spec.select, 4294967292        ; 7 uses
+  %i.kr = and i64 %spec.select, 4294967292        ; 8 uses
   %.not229 = icmp eq i64 %i.kr, %spec.select
   br i1 %.not229, label %ma_dr_flac_read_pcm_frames_s32__decode_left_side.exit, label %.lr.ph173.preheader
 
 .lr.ph173.preheader:                              ; preds = %._crit_edge170
   %i.ks = or disjoint i64 %i.kr, 1
   %i.kt = tail call i64 @llvm.umax.i64(i64 %spec.select, i64 %i.ks) ; 2 uses
-  %6 = and i64 %spec.select, 4294967292
-  %i.ku = sub nsw i64 %i.kt, %6                   ; 2 uses
+  %i.ku = sub nsw i64 %i.kt, %i.kr                ; 2 uses
   %min.iters.check506 = icmp ult i64 %i.ku, 8
   br i1 %min.iters.check506, label %.lr.ph173.preheader639, label %vector.memcheck490
 
@@ -4670,7 +4648,7 @@ bb.u:                                             ; preds = %bb.t
   br i1 %exitcond263.not, label %._crit_edge163, label %.lr.ph162, !llvm.loop !1854
 
 ._crit_edge163:                                   ; preds = %.lr.ph162, %.preheader138
-  %i.my = and i64 %spec.select, 4294967292        ; 7 uses
+  %i.my = and i64 %spec.select, 4294967292        ; 8 uses
   %.not227 = icmp eq i64 %i.my, %spec.select
   br i1 %.not227, label %ma_dr_flac_read_pcm_frames_s32__decode_left_side.exit, label %.lr.ph166
 
@@ -4681,8 +4659,7 @@ bb.u:                                             ; preds = %bb.t
   %i.nc = zext nneg i8 %i.nb to i32               ; 2 uses
   %i.nd = or disjoint i64 %i.my, 1
   %i.ne = tail call i64 @llvm.umax.i64(i64 %spec.select, i64 %i.nd) ; 2 uses
-  %7 = and i64 %spec.select, 4294967292
-  %i.nf = sub nsw i64 %i.ne, %7                   ; 2 uses
+  %i.nf = sub nsw i64 %i.ne, %i.my                ; 2 uses
   %min.iters.check538 = icmp ult i64 %i.nf, 6
   br i1 %min.iters.check538, label %scalar.ph537.preheader, label %vector.memcheck522
 
@@ -4810,7 +4787,7 @@ bb.v:                                             ; preds = %bb.u
   br i1 %exitcond262.not, label %._crit_edge, label %.lr.ph157, !llvm.loop !1865
 
 ._crit_edge:                                      ; preds = %.lr.ph157, %bb.v
-  %i.pr = and i64 %spec.select, 4294967292        ; 7 uses
+  %i.pr = and i64 %spec.select, 4294967292        ; 8 uses
   %.not225 = icmp eq i64 %i.pr, %spec.select
   br i1 %.not225, label %ma_dr_flac_read_pcm_frames_s32__decode_left_side.exit, label %.lr.ph160
 
@@ -4821,8 +4798,7 @@ bb.v:                                             ; preds = %bb.u
   %i.pv = zext nneg i8 %i.pu to i32               ; 2 uses
   %i.pw = or disjoint i64 %i.pr, 1
   %i.px = tail call i64 @llvm.umax.i64(i64 %spec.select, i64 %i.pw) ; 2 uses
-  %8 = and i64 %spec.select, 4294967292
-  %i.py = sub nsw i64 %i.px, %8                   ; 2 uses
+  %i.py = sub nsw i64 %i.px, %i.pr                ; 2 uses
   %min.iters.check570 = icmp ult i64 %i.py, 6
   br i1 %min.iters.check570, label %scalar.ph569.preheader, label %vector.memcheck554
 
@@ -5036,7 +5012,7 @@ bb.z:                                             ; preds = %.lr.ph, %bb.z
   br i1 %exitcond.not, label %.loopexit, label %bb.z, !llvm.loop !1877
 
 .loopexit:                                        ; preds = %bb.z, %bb.y, %.preheader141, %bb.x
-  %i.ux = and i64 %spec.select, 4294967292        ; 7 uses
+  %i.ux = and i64 %spec.select, 4294967292        ; 8 uses
   %.not223 = icmp eq i64 %i.ux, %spec.select
   br i1 %.not223, label %ma_dr_flac_read_pcm_frames_s32__decode_left_side.exit, label %.lr.ph155
 
@@ -5047,8 +5023,7 @@ bb.z:                                             ; preds = %.lr.ph, %bb.z
   %i.vb = zext nneg i8 %i.va to i32               ; 2 uses
   %i.vc = or disjoint i64 %i.ux, 1
   %i.vd = tail call i64 @llvm.umax.i64(i64 %spec.select, i64 %i.vc) ; 2 uses
-  %9 = and i64 %spec.select, 4294967292
-  %i.ve = sub nsw i64 %i.vd, %9                   ; 2 uses
+  %i.ve = sub nsw i64 %i.vd, %i.ux                ; 2 uses
   %min.iters.check604 = icmp ult i64 %i.ve, 6
   br i1 %min.iters.check604, label %scalar.ph603.preheader, label %vector.memcheck588
 
@@ -5189,15 +5164,14 @@ bb.ac:                                            ; preds = %bb.ab
   br i1 %exitcond269.not, label %._crit_edge205, label %.lr.ph204, !llvm.loop !1888
 
 ._crit_edge205:                                   ; preds = %.lr.ph204, %bb.ac
-  %i.xp = and i64 %spec.select, 4294967292        ; 7 uses
+  %i.xp = and i64 %spec.select, 4294967292        ; 8 uses
   %.not239 = icmp eq i64 %i.xp, %spec.select
   br i1 %.not239, label %ma_dr_flac_read_pcm_frames_s32__decode_left_side.exit, label %.lr.ph208.preheader
 
 .lr.ph208.preheader:                              ; preds = %._crit_edge205
   %i.xq = or disjoint i64 %i.xp, 1
   %i.xr = tail call i64 @llvm.umax.i64(i64 %spec.select, i64 %i.xq) ; 2 uses
-  %10 = and i64 %spec.select, 4294967292
-  %i.xs = sub nsw i64 %i.xr, %10                  ; 2 uses
+  %i.xs = sub nsw i64 %i.xr, %i.xp                ; 2 uses
   %min.iters.check = icmp ult i64 %i.xs, 10
   br i1 %min.iters.check, label %.lr.ph208.preheader629, label %vector.memcheck
 
@@ -5341,15 +5315,14 @@ bb.ad:                                            ; preds = %._crit_edge283, %bb
   br i1 %exitcond268.not, label %._crit_edge198, label %.lr.ph197, !llvm.loop !1899
 
 ._crit_edge198:                                   ; preds = %.lr.ph197, %bb.ad
-  %i.aan = and i64 %spec.select, 4294967292       ; 7 uses
+  %i.aan = and i64 %spec.select, 4294967292       ; 8 uses
   %.not237 = icmp eq i64 %i.aan, %spec.select
   br i1 %.not237, label %ma_dr_flac_read_pcm_frames_s32__decode_left_side.exit, label %.lr.ph201.preheader
 
 .lr.ph201.preheader:                              ; preds = %._crit_edge198
   %i.aao = or disjoint i64 %i.aan, 1
   %i.aap = tail call i64 @llvm.umax.i64(i64 %spec.select, i64 %i.aao) ; 2 uses
-  %11 = and i64 %spec.select, 4294967292
-  %i.aaq = sub nsw i64 %i.aap, %11                ; 2 uses
+  %i.aaq = sub nsw i64 %i.aap, %i.aan             ; 2 uses
   %min.iters.check378 = icmp ult i64 %i.aaq, 10
   br i1 %min.iters.check378, label %.lr.ph201.preheader631, label %vector.memcheck362
 

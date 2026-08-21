@@ -204,15 +204,14 @@ _ZN7xgboost13BatchIteratorINS_13SortedCSCPageEED2Ev.exit: ; preds = %bb.a, %bb.c
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define void @_ZN7xgboost6common13IncrementHistENS0_4SpanINS_6detail20GradientPairInternalIdEELm18446744073709551615EEENS1_IKS4_Lm18446744073709551615EEEmm(i64 %0, ptr nofree captures(none) %1, i64 %2, ptr nofree readonly captures(none) %3, i64 noundef %4, i64 noundef %5) local_unnamed_addr #11 {
 bb.a:
-  %i.a = shl i64 %4, 1                            ; 5 uses
-  %i.b = shl i64 %5, 1                            ; 4 uses
+  %i.a = shl i64 %4, 1                            ; 6 uses
+  %i.b = shl i64 %5, 1                            ; 5 uses
   %i.c = icmp ult i64 %i.a, %i.b
   br i1 %i.c, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %i.d = sub i64 %5, %4
-  %6 = shl i64 %i.d, 1                            ; 3 uses
-  %min.iters.check = icmp ult i64 %6, 8
+  %i.d = sub nuw i64 %i.b, %i.a                   ; 3 uses
+  %min.iters.check = icmp ult i64 %i.d, 8
   br i1 %min.iters.check, label %.lr.ph.preheader17, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader
@@ -228,7 +227,7 @@ vector.memcheck:                                  ; preds = %.lr.ph.preheader
   br i1 %found.conflict, label %.lr.ph.preheader17, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %6, -4                         ; 3 uses
+  %n.vec = and i64 %i.d, -4                       ; 3 uses
   %i.g = add i64 %i.a, %n.vec
   br label %vector.body
 
@@ -252,7 +251,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.o, label %middle.block, label %vector.body, !llvm.loop !262
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %6, %n.vec
+  %cmp.n = icmp eq i64 %i.d, %n.vec
   br i1 %cmp.n, label %._crit_edge, label %.lr.ph.preheader17
 
 .lr.ph.preheader17:                               ; preds = %vector.memcheck, %.lr.ph.preheader, %middle.block
@@ -322,24 +321,23 @@ middle.block:                                     ; preds = %vector.body
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define void @_ZN7xgboost6common8CopyHistENS0_4SpanINS_6detail20GradientPairInternalIdEELm18446744073709551615EEES5_mm(i64 %0, ptr nofree writeonly captures(none) %1, i64 %2, ptr nofree readonly captures(none) %3, i64 noundef %4, i64 noundef %5) local_unnamed_addr #11 {
 bb.a:
-  %i.a = shl i64 %4, 1                            ; 4 uses
-  %i.b = shl i64 %5, 1                            ; 4 uses
+  %i.a = shl i64 %4, 1                            ; 5 uses
+  %i.b = shl i64 %5, 1                            ; 5 uses
   %i.c = icmp ult i64 %i.a, %i.b
   br i1 %i.c, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %i.d = ptrtoaddr ptr %1 to i64
   %i.e = ptrtoaddr ptr %3 to i64
-  %i.f = sub i64 %5, %4
-  %6 = shl i64 %i.f, 1                            ; 3 uses
-  %min.iters.check = icmp ult i64 %6, 8
+  %i.f = sub nuw i64 %i.b, %i.a                   ; 3 uses
+  %min.iters.check = icmp ult i64 %i.f, 8
   %i.g = sub i64 %i.e, %i.d
   %diff.check = icmp ugt i64 %i.g, -32
   %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond, label %.lr.ph.preheader13, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
-  %n.vec = and i64 %6, -4                         ; 3 uses
+  %n.vec = and i64 %i.f, -4                       ; 3 uses
   %i.h = add i64 %i.a, %n.vec
   br label %vector.body
 
@@ -359,7 +357,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.n, label %middle.block, label %vector.body, !llvm.loop !265
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %6, %n.vec
+  %cmp.n = icmp eq i64 %i.f, %n.vec
   br i1 %cmp.n, label %._crit_edge, label %.lr.ph.preheader13
 
 .lr.ph.preheader13:                               ; preds = %.lr.ph.preheader, %middle.block
@@ -422,15 +420,14 @@ bb.a:
   %i.a = ptrtoaddr ptr %5 to i64
   %i.b = ptrtoaddr ptr %3 to i64
   %i.c = ptrtoaddr ptr %1 to i64                  ; 2 uses
-  %i.d = shl i64 %6, 1                            ; 5 uses
-  %i.e = shl i64 %7, 1                            ; 4 uses
+  %i.d = shl i64 %6, 1                            ; 6 uses
+  %i.e = shl i64 %7, 1                            ; 5 uses
   %i.f = icmp ult i64 %i.d, %i.e
   br i1 %i.f, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %i.g = sub i64 %7, %6
-  %8 = shl i64 %i.g, 1                            ; 3 uses
-  %min.iters.check = icmp ult i64 %8, 10
+  %i.g = sub nuw i64 %i.e, %i.d                   ; 3 uses
+  %min.iters.check = icmp ult i64 %i.g, 10
   br i1 %min.iters.check, label %.lr.ph.preheader19, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader
@@ -442,7 +439,7 @@ vector.memcheck:                                  ; preds = %.lr.ph.preheader
   br i1 %conflict.rdx, label %.lr.ph.preheader19, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %8, -4                         ; 3 uses
+  %n.vec = and i64 %i.g, -4                       ; 3 uses
   %i.j = add i64 %i.d, %n.vec
   br label %vector.body
 
@@ -468,7 +465,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.t, label %middle.block, label %vector.body, !llvm.loop !268
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %8, %n.vec
+  %cmp.n = icmp eq i64 %i.g, %n.vec
   br i1 %cmp.n, label %._crit_edge, label %.lr.ph.preheader19
 
 .lr.ph.preheader19:                               ; preds = %vector.memcheck, %.lr.ph.preheader, %middle.block

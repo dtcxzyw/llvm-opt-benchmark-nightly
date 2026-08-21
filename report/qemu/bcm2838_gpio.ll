@@ -145,50 +145,34 @@ bb.b:                                             ; preds = %bb.a, %bb.a, %bb.a,
   %i.a = lshr i64 %1, 2                           ; 2 uses
   %i.b = mul nuw nsw i64 %i.a, 10
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 1224
-  %3 = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.b ; 7 uses
-  %4 = load i8, ptr %3, align 1
-  %5 = and i8 %4, 7
-  %i.d = getelementptr inbounds nuw i8, ptr %3, i64 1
-  %6 = load i8, ptr %i.d, align 1
-  %7 = shl i8 %6, 3
-  %8 = and i8 %7, 56
-  %9 = or disjoint i8 %8, %5
-  %10 = zext nneg i8 %9 to i32
-  %i.e = getelementptr inbounds nuw i8, ptr %3, i64 2
+  %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.b ; 4 uses
+  %3 = load <4 x i8>, ptr %i.d, align 1
+  %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 4
   %i.f = load <4 x i8>, ptr %i.e, align 1
-  %i.g = and <4 x i8> %i.f, splat (i8 7)
+  %i.g = and <4 x i8> %3, splat (i8 7)
   %i.h = zext nneg <4 x i8> %i.g to <4 x i32>
-  %i.i = shl nuw nsw <4 x i32> %i.h, <i32 6, i32 9, i32 12, i32 15>
-  %11 = getelementptr inbounds nuw i8, ptr %3, i64 6
-  %12 = load i8, ptr %11, align 1
-  %13 = and i8 %12, 7
-  %14 = zext nneg i8 %13 to i32
-  %15 = shl nuw nsw i32 %14, 18
-  %16 = getelementptr inbounds nuw i8, ptr %3, i64 7
-  %17 = load i8, ptr %16, align 1
-  %18 = and i8 %17, 7
-  %19 = zext nneg i8 %18 to i32
-  %20 = shl nuw nsw i32 %19, 21
-  %i.j = tail call i32 @llvm.vector.reduce.or.v4i32(<4 x i32> %i.i)
-  %op.rdx = or i32 %i.j, %10
-  %op.rdx15 = or disjoint i32 %15, %20
-  %op.rdx16 = or disjoint i32 %op.rdx, %op.rdx15  ; 2 uses
+  %i.i = shl nuw nsw <4 x i32> %i.h, <i32 0, i32 3, i32 6, i32 9>
+  %4 = and <4 x i8> %i.f, splat (i8 7)
+  %5 = zext nneg <4 x i8> %4 to <4 x i32>
+  %6 = shl <4 x i32> %5, <i32 12, i32 15, i32 18, i32 21>
+  %rdx.op = or <4 x i32> %i.i, %6
+  %i.j = tail call i32 @llvm.vector.reduce.or.v4i32(<4 x i32> %rdx.op) ; 2 uses
   %.not.i = icmp eq i64 %i.a, 5
   br i1 %.not.i, label %gpfsel_get.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.k = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %i.k = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %i.l = load i8, ptr %i.k, align 1
   %i.m = and i8 %i.l, 7
   %i.n = zext nneg i8 %i.m to i32
   %i.o = shl nuw nsw i32 %i.n, 24
-  %i.p = getelementptr inbounds nuw i8, ptr %3, i64 9
+  %i.p = getelementptr inbounds nuw i8, ptr %i.d, i64 9
   %i.q = load i8, ptr %i.p, align 1
   %i.r = and i8 %i.q, 7
   %i.s = zext nneg i8 %i.r to i32
   %i.t = shl nuw nsw i32 %i.s, 27
   %i.u = or disjoint i32 %i.t, %i.o
-  %i.v = or disjoint i32 %i.u, %op.rdx16
+  %i.v = or i32 %i.u, %i.j
   br label %gpfsel_get.exit
 
 bb.d:                                             ; preds = %bb.a, %bb.a, %bb.a, %bb.a
@@ -240,7 +224,7 @@ bb.l:                                             ; preds = %bb.k
   br label %gpfsel_get.exit
 
 gpfsel_get.exit:                                  ; preds = %bb.c, %bb.b, %bb.k, %bb.l, %bb.h, %bb.i, %bb.d, %bb.e, %bb.j, %bb.g, %bb.f
-  %.0.shrunk = phi i32 [ 0, %bb.l ], [ 0, %bb.k ], [ %i.ai, %bb.j ], [ 0, %bb.e ], [ 0, %bb.d ], [ %i.z, %bb.f ], [ %i.ab, %bb.g ], [ 0, %bb.i ], [ 0, %bb.h ], [ %i.v, %bb.c ], [ %op.rdx16, %bb.b ]
+  %.0.shrunk = phi i32 [ 0, %bb.l ], [ 0, %bb.k ], [ %i.ai, %bb.j ], [ 0, %bb.e ], [ 0, %bb.d ], [ %i.z, %bb.f ], [ %i.ab, %bb.g ], [ 0, %bb.i ], [ 0, %bb.h ], [ %i.v, %bb.c ], [ %i.j, %bb.b ]
   %.0 = zext i32 %.0.shrunk to i64
   ret i64 %.0
 }

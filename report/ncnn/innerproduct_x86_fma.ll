@@ -205,7 +205,7 @@ bb.l:                                             ; preds = %bb.j, %bb.i
   %i.ae = load i32, ptr %i.ad, align 8, !tbaa !46
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 208
   %i.ag = load i32, ptr %i.af, align 8, !tbaa !47 ; 12 uses
-  %i.ah = sdiv i32 %i.ae, %i.ag                   ; 24 uses
+  %i.ah = sdiv i32 %i.ae, %i.ag                   ; 23 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 304 ; 5 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 600 ; 7 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %1, i64 39
@@ -608,7 +608,7 @@ bb.ac:                                            ; preds = %bb.n
   br i1 %i.hu, label %.lr.ph.us.preheader.i, label %.lr.ph51.split.i
 
 .lr.ph.us.preheader.i:                            ; preds = %.lr.ph51.i
-  %i.hv = and i32 %i.ah, 2147483644               ; 5 uses
+  %i.hv = and i32 %i.ah, 2147483644               ; 6 uses
   %i.hw = zext nneg i32 %i.ag to i64
   %.not14 = icmp eq i32 %i.hv, %i.ah
   %i.hx = xor i32 %i.hv, -1
@@ -616,8 +616,7 @@ bb.ac:                                            ; preds = %bb.n
   %i.hz = zext i32 %i.hy to i64                   ; 2 uses
   %i.ia = shl nuw nsw i64 %i.hz, 4
   %i.ib = shl nuw nsw i64 %i.hz, 2                ; 4 uses
-  %5 = and i32 %i.ah, 2147483644
-  %i.ic = xor i32 %5, -1
+  %i.ic = xor i32 %i.hv, -1
   %i.id = add nsw i32 %i.ah, %i.ic                ; 2 uses
   %i.ie = zext i32 %i.id to i64
   %i.if = add nuw nsw i64 %i.ie, 1                ; 2 uses
@@ -1020,7 +1019,7 @@ bb.a:
   %i.b = load i32, ptr %i.a, align 8, !tbaa !46
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 208
   %i.d = load i32, ptr %i.c, align 8, !tbaa !47   ; 12 uses
-  %i.e = sdiv i32 %i.b, %i.d                      ; 20 uses
+  %i.e = sdiv i32 %i.b, %i.d                      ; 19 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 304 ; 5 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 600 ; 6 uses
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 39
@@ -1417,14 +1416,13 @@ bb.r:                                             ; preds = %bb.c
   %i.ie = getelementptr inbounds nuw i8, ptr %3, i64 44 ; 2 uses
   %i.if = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
   %i.ig = icmp sgt i32 %i.e, 3
-  %i.ih = and i32 %i.e, -4                        ; 3 uses
+  %i.ih = and i32 %i.e, -4                        ; 4 uses
   %i.ii = zext nneg i32 %i.d to i64               ; 2 uses
   br i1 %i.ig, label %.lr.ph300.i.split.us, label %.lr.ph300.i.split
 
 .lr.ph300.i.split.us:                             ; preds = %.lr.ph300.i
   %.not = icmp eq i32 %i.ih, %i.e
-  %5 = and i32 %i.e, 2147483644
-  %i.ij = xor i32 %5, -1
+  %i.ij = xor i32 %i.ih, -1
   %i.ik = add nsw i32 %i.e, %i.ij                 ; 2 uses
   %i.il = zext i32 %i.ik to i64
   %i.im = add nuw nsw i64 %i.il, 1                ; 2 uses

@@ -205,7 +205,7 @@ stbir__insert_coeff.exit:                         ; preds = %._crit_edge68.i, %b
 ._crit_edge185:                                   ; preds = %._crit_edge178, %bb.y
   %.0137.lcssa = phi i32 [ %i.gl, %bb.y ], [ %.1.lcssa, %._crit_edge178 ]
   %i.kl = add nsw i32 %.0137.lcssa, %i.co
-  %i.km = sext i32 %i.kl to i64                   ; 3 uses
+  %i.km = sext i32 %i.kl to i64                   ; 2 uses
   %i.kn = getelementptr [8 x i8], ptr %.pre, i64 %i.km ; 3 uses
   %i.ko = load i32, ptr %i.j, align 8, !tbaa !147
   %i.kp = sext i32 %i.ko to i64                   ; 2 uses
@@ -215,15 +215,14 @@ stbir__insert_coeff.exit:                         ; preds = %._crit_edge68.i, %b
   br i1 %i.kr, label %.lr.ph191.preheader, label %.loopexit
 
 .lr.ph191.preheader:                              ; preds = %._crit_edge185
-  %i.ks = shl nsw i64 %i.km, 3
+  %i.ks = shl nsw i64 %i.km, 3                    ; 2 uses
   %i.kt = add i64 %i.ks, %.pre209
   %i.ku = add i64 %i.kt, 16
   %i.kv = shl nsw i64 %i.kp, 3
   %i.kw = add i64 %i.kv, %.pre209
   %i.kx = tail call i64 @llvm.umax.i64(i64 %i.ku, i64 %i.kw)
   %i.ky = add i64 %i.kx, -9
-  %3 = shl nsw i64 %i.km, 3
-  %i.kz = add i64 %3, %.pre209
+  %i.kz = add i64 %i.ks, %.pre209
   %i.la = sub i64 %i.ky, %i.kz                    ; 2 uses
   %i.lb = lshr i64 %i.la, 3
   %i.lc = add nuw nsw i64 %i.lb, 1                ; 2 uses

@@ -205,8 +205,8 @@ bb.i:                                             ; preds = %bb.b
   br i1 %.not, label %bb.s, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.i
-  %i.ag = zext nneg i32 %i.b to i64               ; 2 uses
-  %.idx.i = shl nuw nsw i64 %i.ag, 2              ; 2 uses
+  %i.ag = zext nneg i32 %i.b to i64
+  %.idx.i = shl nuw nsw i64 %i.ag, 2              ; 3 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %i.g, i64 %.idx.i ; 5 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 152 ; 3 uses
   %i.aj = add nsw i64 %.idx.i, -4                 ; 2 uses
@@ -260,8 +260,7 @@ bb.i:                                             ; preds = %bb.b
 
 .lr.ph23.i.preheader:                             ; preds = %._crit_edge.i
   %i.bk = add i64 %i.h, -4
-  %2 = shl nuw nsw i64 %i.ag, 2
-  %i.bl = add i64 %2, %i.i
+  %i.bl = add i64 %.idx.i, %i.i
   %i.bm = sub i64 %i.bk, %i.bl                    ; 2 uses
   %i.bn = lshr i64 %i.bm, 2
   %i.bo = add nuw nsw i64 %i.bn, 1                ; 2 uses

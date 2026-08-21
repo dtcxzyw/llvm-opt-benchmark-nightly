@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %_PyUnicode_DATA.exi
 .lr.ph.i.preheader:                               ; preds = %bb.f
   %i.an = ptrtoaddr ptr %.0.i to i64              ; 3 uses
   %i.ao = shl i64 %2, 2
-  %i.ap = shl i64 %1, 2                           ; 2 uses
+  %i.ap = shl i64 %1, 2                           ; 3 uses
   %i.aq = add i64 %i.ao, %i.an
   %i.ar = add i64 %i.aq, %i.ap
   %i.as = add i64 %i.ap, %i.an
@@ -213,8 +213,7 @@ bb.f:                                             ; preds = %_PyUnicode_DATA.exi
   %i.au = tail call i64 @llvm.umax.i64(i64 %i.ar, i64 %i.at)
   %i.av = xor i64 %i.an, -1
   %i.aw = add i64 %i.au, %i.av
-  %4 = shl i64 %1, 2
-  %i.ax = sub i64 %i.aw, %4                       ; 2 uses
+  %i.ax = sub i64 %i.aw, %i.ap                    ; 2 uses
   %i.ay = lshr i64 %i.ax, 2
   %i.az = add nuw nsw i64 %i.ay, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.ax, 28
@@ -469,7 +468,7 @@ bb.q:                                             ; preds = %_PyUnicode_DATA.exi
 
 .lr.ph.i.i.preheader:                             ; preds = %bb.q
   %i.bb = ptrtoaddr ptr %.0.i.i to i64            ; 2 uses
-  %i.bc = shl i64 %1, 2
+  %i.bc = shl i64 %1, 2                           ; 2 uses
   %i.bd = shl i64 %i.q, 2
   %i.be = add i64 %i.bc, %i.bb                    ; 2 uses
   %i.bf = add i64 %i.be, %i.bd
@@ -477,8 +476,7 @@ bb.q:                                             ; preds = %_PyUnicode_DATA.exi
   %i.bh = tail call i64 @llvm.umax.i64(i64 %i.bf, i64 %i.bg)
   %i.bi = xor i64 %i.bb, -1
   %i.bj = add i64 %i.bh, %i.bi
-  %4 = shl i64 %1, 2
-  %i.bk = sub i64 %i.bj, %4                       ; 2 uses
+  %i.bk = sub i64 %i.bj, %i.bc                    ; 2 uses
   %i.bl = lshr i64 %i.bk, 2
   %i.bm = add nuw nsw i64 %i.bl, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.bk, 28
@@ -881,7 +879,7 @@ _PyUnicode_DATA.exit89.i:                         ; preds = %bb.ac, %bb.ab
 
 bb.ad:                                            ; preds = %bb.as, %_PyUnicode_DATA.exit89.i
   %.2134.i = phi i64 [ 0, %_PyUnicode_DATA.exit89.i ], [ %.3.i, %bb.as ] ; 4 uses
-  %.266133.i = phi i64 [ 0, %_PyUnicode_DATA.exit89.i ], [ %.367.i, %bb.as ] ; 12 uses
+  %.266133.i = phi i64 [ 0, %_PyUnicode_DATA.exit89.i ], [ %.367.i, %bb.as ] ; 11 uses
   %.169132.i = phi i64 [ 0, %_PyUnicode_DATA.exit89.i ], [ %i.ei, %bb.as ] ; 4 uses
   switch i32 %i.r, label %bb.ag [
     i32 1, label %bb.ae
@@ -1016,16 +1014,15 @@ bb.al:                                            ; preds = %bb.ai
   br i1 %i.dj, label %.lr.ph.i.i.preheader, label %_PyUnicode_Fill.exit.i
 
 .lr.ph.i.i.preheader:                             ; preds = %bb.al
-  %i.dk = shl i64 %.266133.i, 2
-  %4 = add i64 %i.dk, %.0.i87.i79                 ; 2 uses
-  %i.dl = add i64 %4, %i.bu
-  %5 = shl i64 %i.cf, 2
-  %i.dm = sub i64 %i.dl, %5
-  %i.dn = add i64 %4, 4
+  %i.dk = shl i64 %.266133.i, 2                   ; 2 uses
+  %4 = shl i64 %i.cf, 2
+  %i.dl = add i64 %i.dk, %.0.i87.i79              ; 2 uses
+  %5 = add i64 %i.dl, %i.bu
+  %i.dm = sub i64 %5, %4
+  %i.dn = add i64 %i.dl, 4
   %i.do = call i64 @llvm.umax.i64(i64 %i.dm, i64 %i.dn)
   %i.dp = add i64 %i.do, %i.bv
-  %6 = shl i64 %.266133.i, 2
-  %i.dq = sub i64 %i.dp, %6                       ; 2 uses
+  %i.dq = sub i64 %i.dp, %i.dk                    ; 2 uses
   %i.dr = lshr i64 %i.dq, 2
   %i.ds = add nuw nsw i64 %i.dr, 1                ; 2 uses
   %min.iters.check87 = icmp ult i64 %i.dq, 28
@@ -1428,7 +1425,7 @@ _PyUnicode_Fill.exit:                             ; preds = %.lr.ph.i, %.lr.ph30
   br i1 %i.b, label %_PyUnicode_Fill.exit50, label %bb.p
 
 bb.p:                                             ; preds = %_PyUnicode_Fill.exit
-  %i.bo = add i64 %.pre55, %spec.store.select     ; 6 uses
+  %i.bo = add i64 %.pre55, %spec.store.select     ; 5 uses
   switch i32 %i.v, label %bb.t [
     i32 1, label %bb.q
     i32 2, label %bb.r
@@ -1538,7 +1535,7 @@ bb.s:                                             ; preds = %bb.p
 
 .lr.ph.i46.preheader:                             ; preds = %bb.s
   %i.cv = shl i64 %spec.store.select2, 2
-  %i.cw = shl i64 %i.bo, 2                        ; 2 uses
+  %i.cw = shl i64 %i.bo, 2                        ; 3 uses
   %i.cx = add i64 %i.cv, %.0.i4567
   %i.cy = add i64 %i.cx, %i.cw
   %i.cz = add i64 %i.cw, %.0.i4567
@@ -1546,8 +1543,7 @@ bb.s:                                             ; preds = %bb.p
   %i.db = tail call i64 @llvm.umax.i64(i64 %i.cy, i64 %i.da)
   %i.dc = xor i64 %.0.i4567, -1
   %i.dd = add i64 %i.db, %i.dc
-  %4 = shl i64 %i.bo, 2
-  %i.de = sub i64 %i.dd, %4                       ; 2 uses
+  %i.de = sub i64 %i.dd, %i.cw                    ; 2 uses
   %i.df = lshr i64 %i.de, 2
   %i.dg = add nuw nsw i64 %i.df, 1                ; 2 uses
   %min.iters.check91 = icmp ult i64 %i.de, 28

@@ -204,7 +204,7 @@ bb.a:
   %i.b = ptrtoint ptr %1 to i64                   ; 4 uses
   %i.c = ptrtoint ptr %0 to i64                   ; 5 uses
   %i.d = sub i64 %i.b, %i.c                       ; 3 uses
-  %i.e = ashr exact i64 %i.d, 1                   ; 4 uses
+  %i.e = ashr exact i64 %i.d, 1                   ; 3 uses
   %i.f = icmp ult i64 %i.e, 17
   br i1 %i.f, label %bb.b, label %bb.d
 
@@ -300,7 +300,7 @@ vec.epilog.middle.block108:                       ; preds = %vec.epilog.vector.b
   br i1 %.not22.i, label %_ZN5boost7movelib33insertion_sort_uninitialized_copyINS_9container3dtl23flat_tree_value_compareISt4lessI5emptyESt4pairIS6_S6_ENS3_9select1stIS6_EEEEPS9_SD_EEvT0_SE_T1_T_.exit, label %.lr.ph.i, !llvm.loop !3206
 
 bb.d:                                             ; preds = %bb.a
-  %.idx33 = and i64 %i.e, -2                      ; 5 uses
+  %.idx33 = and i64 %i.e, -2                      ; 6 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 %.idx33 ; 9 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %2, i64 %.idx33 ; 7 uses
   tail call void @_ZN5boost7movelib29merge_sort_uninitialized_copyIPSt4pairI5emptyS3_ES5_NS_9container3dtl23flat_tree_value_compareISt4lessIS3_ES4_NS7_9select1stIS3_EEEEEEvT_SE_T0_T1_(ptr noundef %i.ac, ptr noundef %1, ptr noundef %i.ad)
@@ -310,8 +310,7 @@ bb.d:                                             ; preds = %bb.a
   br i1 %.not, label %_ZN5boost7movelib33insertion_sort_uninitialized_copyINS_9container3dtl23flat_tree_value_compareISt4lessI5emptyESt4pairIS6_S6_ENS3_9select1stIS6_EEEEPS9_SD_EEvT0_SE_T1_T_.exit, label %.lr.ph.split.i.preheader
 
 .lr.ph.split.i.preheader:                         ; preds = %bb.d
-  %3 = and i64 %i.e, -2
-  %i.af = add i64 %3, %i.c
+  %i.af = add i64 %.idx33, %i.c
   %i.ag = sub i64 %i.b, %i.af
   %i.ah = lshr i64 %i.ag, 1
   %i.ai = add nsw i64 %i.e, -2
@@ -714,11 +713,11 @@ bb.g:                                             ; preds = %bb.f
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.lr.ph.i.i
   %.027.i.i56.le = ptrtoaddr ptr %.027.i.i to i64 ; 2 uses
-  %3 = add i64 %i.d, %i.a
-  %i.af = add i64 %3, -8
-  %4 = shl i64 %i.z, 3
-  %i.ag = add i64 %4, %.027.i.i56.le
-  %i.ah = sub i64 %i.af, %i.ag                    ; 2 uses
+  %3 = shl i64 %i.z, 3
+  %i.af = add i64 %i.d, %i.a
+  %4 = add i64 %i.af, -8
+  %i.ag = add i64 %3, %.027.i.i56.le
+  %i.ah = sub i64 %4, %i.ag                       ; 2 uses
   %i.ai = lshr i64 %i.ah, 3
   %i.aj = add nuw nsw i64 %i.ai, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.ah, 120

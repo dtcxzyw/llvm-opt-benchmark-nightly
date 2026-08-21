@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.f, %bb.e
   %i.o = add nuw nsw i32 %2, 1                    ; 4 uses
-  %i.p = and i32 %1, 31                           ; 4 uses
+  %i.p = and i32 %1, 31                           ; 5 uses
   %.not119 = icmp eq i32 %i.p, 0
   br i1 %.not119, label %_ZL9fillBlockPjiijja.exit, label %bb.h
 
@@ -219,7 +219,7 @@ bb.i:                                             ; preds = %bb.h
   %.not120 = icmp samesign ugt i32 %i.t, %i.o
   %i.u = getelementptr inbounds nuw i8, ptr %i.g, i64 144128
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !20   ; 3 uses
-  %i.w = zext nneg i32 %i.q to i64                ; 5 uses
+  %i.w = zext nneg i32 %i.q to i64                ; 3 uses
   %i.x = getelementptr inbounds nuw [4 x i8], ptr %i.v, i64 %i.w ; 31 uses
   br i1 %.not120, label %bb.m, label %bb.j
 
@@ -227,12 +227,11 @@ bb.j:                                             ; preds = %bb.i
   %i.y = getelementptr inbounds nuw i8, ptr %i.g, i64 144136
   %i.z = load i32, ptr %i.y, align 8, !tbaa !23   ; 2 uses
   %i.aa = shl nuw nsw i32 %i.p, 2
-  %.idx = zext nneg i32 %i.aa to i64              ; 17 uses
+  %.idx = zext nneg i32 %i.aa to i64              ; 18 uses
   %.not.i = icmp eq i8 %4, 0
-  %6 = and i32 %1, 31                             ; 2 uses
-  %narrow331 = sub nuw nsw i32 32, %6
-  %7 = zext nneg i32 %narrow331 to i64            ; 4 uses
-  %min.iters.check204 = icmp samesign ugt i32 %6, 24 ; 2 uses
+  %6 = lshr exact i64 %.idx, 2
+  %7 = sub nuw nsw i64 32, %6                     ; 4 uses
+  %min.iters.check204 = icmp samesign ugt i32 %i.p, 24 ; 2 uses
   br i1 %.not.i, label %.lr.ph19.i.preheader, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %bb.j
@@ -269,7 +268,7 @@ vector.body.2:                                    ; preds = %vector.body.1
   br label %middle.block
 
 middle.block:                                     ; preds = %vector.body.2, %vector.body.1, %vector.ph
-  %cmp.n = icmp eq i64 %n.vec, %7
+  %cmp.n = icmp eq i64 %7, %n.vec
   br i1 %cmp.n, label %_ZL9fillBlockPjiijja.exit, label %.lr.ph.i.preheader340
 
 .lr.ph.i.preheader340:                            ; preds = %.lr.ph.i.preheader, %middle.block
@@ -547,7 +546,7 @@ pred.store.if224.2:                               ; preds = %pred.store.continue
   br label %middle.block227
 
 middle.block227:                                  ; preds = %pred.store.continue223.2, %pred.store.if224.2, %pred.store.continue225.1, %pred.store.continue225
-  %cmp.n228 = icmp eq i64 %n.vec206, %7
+  %cmp.n228 = icmp eq i64 %7, %n.vec206
   br i1 %cmp.n228, label %_ZL9fillBlockPjiijja.exit, label %.lr.ph19.i.preheader339
 
 .lr.ph19.i.preheader339:                          ; preds = %.lr.ph19.i.preheader, %middle.block227
@@ -584,7 +583,7 @@ bb.m:                                             ; preds = %bb.i
   %i.dz = load i32, ptr %i.dy, align 8, !tbaa !23 ; 2 uses
   %i.ea = zext nneg i32 %i.dx to i64              ; 3 uses
   %i.eb = getelementptr inbounds nuw [4 x i8], ptr %i.x, i64 %i.ea ; 2 uses
-  %i.ec = zext nneg i32 %i.p to i64               ; 5 uses
+  %i.ec = zext nneg i32 %i.p to i64               ; 3 uses
   %i.ed = getelementptr inbounds nuw [4 x i8], ptr %i.x, i64 %i.ec ; 13 uses
   %.not.i129 = icmp eq i8 %4, 0
   %i.ee = icmp samesign ult i32 %i.p, %i.dx       ; 2 uses
@@ -595,8 +594,8 @@ bb.m:                                             ; preds = %bb.i
 
 .lr.ph.i131.preheader:                            ; preds = %.preheader15.i130
   %i.ef = ptrtoaddr ptr %i.v to i64               ; 2 uses
-  %i.eg = shl nuw nsw i64 %i.w, 2
-  %i.eh = shl nuw nsw i64 %i.ec, 2
+  %i.eg = shl nuw nsw i64 %i.w, 2                 ; 2 uses
+  %i.eh = shl nuw nsw i64 %i.ec, 2                ; 2 uses
   %i.ei = add i64 %i.eg, %i.ef                    ; 2 uses
   %i.ej = add i64 %i.ei, %i.eh
   %i.ek = add i64 %i.ej, 4
@@ -605,9 +604,8 @@ bb.m:                                             ; preds = %bb.i
   %i.en = tail call i64 @llvm.umax.i64(i64 %i.ek, i64 %i.em)
   %i.eo = xor i64 %i.ef, -1
   %i.ep = add i64 %i.en, %i.eo
-  %i.eq = add nuw nsw i64 %i.w, %i.ec
-  %8 = shl nuw nsw i64 %i.eq, 2
-  %i.er = sub i64 %i.ep, %8                       ; 2 uses
+  %i.eq = add nuw nsw i64 %i.eg, %i.eh
+  %i.er = sub i64 %i.ep, %i.eq                    ; 2 uses
   %i.es = lshr i64 %i.er, 2
   %i.et = add nuw nsw i64 %i.es, 1                ; 2 uses
   %min.iters.check231 = icmp ult i64 %i.er, 28
@@ -645,8 +643,8 @@ middle.block239:                                  ; preds = %vector.body236
 
 .lr.ph19.i134.preheader:                          ; preds = %.preheader.i133
   %i.ez = ptrtoaddr ptr %i.v to i64               ; 2 uses
-  %i.fa = shl nuw nsw i64 %i.w, 2
-  %i.fb = shl nuw nsw i64 %i.ec, 2
+  %i.fa = shl nuw nsw i64 %i.w, 2                 ; 2 uses
+  %i.fb = shl nuw nsw i64 %i.ec, 2                ; 2 uses
   %i.fc = add i64 %i.fa, %i.ez                    ; 2 uses
   %i.fd = add i64 %i.fc, %i.fb
   %i.fe = add i64 %i.fd, 4
@@ -655,9 +653,8 @@ middle.block239:                                  ; preds = %vector.body236
   %i.fh = tail call i64 @llvm.umax.i64(i64 %i.fe, i64 %i.fg)
   %i.fi = xor i64 %i.ez, -1
   %i.fj = add i64 %i.fh, %i.fi
-  %i.fk = add nuw nsw i64 %i.w, %i.ec
-  %9 = shl nuw nsw i64 %i.fk, 2
-  %i.fl = sub i64 %i.fj, %9                       ; 2 uses
+  %i.fk = add nuw nsw i64 %i.fa, %i.fb
+  %i.fl = sub i64 %i.fj, %i.fk                    ; 2 uses
   %i.fm = lshr i64 %i.fl, 2
   %i.fn = add nuw nsw i64 %i.fm, 1                ; 2 uses
   %min.iters.check243 = icmp ult i64 %i.fl, 28
@@ -1060,14 +1057,14 @@ bb.bm:                                            ; preds = %._crit_edge
 bb.bn:                                            ; preds = %bb.bm
   %i.ms = getelementptr inbounds nuw i8, ptr %i.g, i64 144128
   %i.mt = load ptr, ptr %i.ms, align 8, !tbaa !20 ; 2 uses
-  %i.mu = zext nneg i32 %i.mq to i64              ; 3 uses
+  %i.mu = zext nneg i32 %i.mq to i64              ; 2 uses
   %i.mv = getelementptr inbounds nuw [4 x i8], ptr %i.mt, i64 %i.mu ; 14 uses
   %i.mw = load i32, ptr %i.gs, align 8, !tbaa !23 ; 2 uses
   %i.mx = zext nneg i32 %i.gq to i64              ; 2 uses
   %i.my = getelementptr inbounds nuw [4 x i8], ptr %i.mv, i64 %i.mx ; 2 uses
   %.not.i146 = icmp eq i8 %4, 0
   %i.mz = ptrtoaddr ptr %i.mt to i64              ; 2 uses
-  %i.na = shl nuw nsw i64 %i.mu, 2
+  %i.na = shl nuw nsw i64 %i.mu, 2                ; 2 uses
   %i.nb = shl nuw nsw i64 %i.mx, 2
   %i.nc = add i64 %i.na, %i.mz                    ; 2 uses
   %i.nd = add i64 %i.nc, %i.nb
@@ -1075,8 +1072,7 @@ bb.bn:                                            ; preds = %bb.bm
   %i.nf = tail call i64 @llvm.umax.i64(i64 %i.nd, i64 %i.ne)
   %i.ng = xor i64 %i.mz, -1
   %i.nh = add i64 %i.nf, %i.ng
-  %10 = shl nuw nsw i64 %i.mu, 2
-  %i.ni = sub i64 %i.nh, %10                      ; 2 uses
+  %i.ni = sub i64 %i.nh, %i.na                    ; 2 uses
   %i.nj = lshr i64 %i.ni, 2
   %i.nk = add nuw nsw i64 %i.nj, 1                ; 4 uses
   %min.iters.check294 = icmp ult i64 %i.ni, 28    ; 2 uses

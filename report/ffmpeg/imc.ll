@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.d
   %i.fu = load i32, ptr %i.fj, align 1            ; 2 uses
-  %i.fv = call i32 @llvm.bswap.i32(i32 %i.fu)     ; 7 uses
+  %i.fv = call i32 @llvm.bswap.i32(i32 %i.fu)     ; 6 uses
   %i.fw = shl i32 %i.fv, 1                        ; 5 uses
   %.not177.i = icmp sgt i32 %i.fw, -1             ; 3 uses
   %.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %i.fp, i64 6016 ; 4 uses
@@ -608,7 +608,7 @@ bb.df:                                            ; preds = %bb.de
 .lr.ph.i207.i:                                    ; preds = %bb.df, %bb.de
   %i.asi = lshr i32 %i.fw, 28
   %i.asj = and i32 %i.asi, 4
-  %i.ask = zext nneg i32 %i.asj to i64            ; 5 uses
+  %i.ask = zext nneg i32 %i.asj to i64            ; 6 uses
   br label %bb.dg
 
 bb.dg:                                            ; preds = %bb.dg, %.lr.ph.i207.i
@@ -642,13 +642,10 @@ bb.dh:                                            ; preds = %._crit_edge.i208.i
   %i.asz = fptrunc nsz double %i.asy to float
   %i.ata = getelementptr inbounds nuw i8, ptr %i.fp, i64 2048 ; 9 uses
   %reass.sub.i.i = add i32 %i.afe, -504
-  %4 = lshr i32 %i.fv, 27
-  %5 = and i32 %4, 4
-  %narrow = sub nuw nsw i32 32, %5
-  %6 = zext nneg i32 %narrow to i64               ; 2 uses
-  %n.vec250 = and i64 %6, 56                      ; 3 uses
+  %4 = sub nuw nsw i64 32, %i.ask                 ; 2 uses
+  %n.vec250 = and i64 %4, 56                      ; 3 uses
   %i.atb = or disjoint i64 %n.vec250, %i.ask
-  %cmp.n265 = icmp eq i64 %n.vec250, %6
+  %cmp.n265 = icmp eq i64 %4, %n.vec250
   br label %bb.di
 
 bb.di:                                            ; preds = %._crit_edge263.i.i, %bb.dh

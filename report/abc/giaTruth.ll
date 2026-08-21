@@ -205,7 +205,7 @@ bb.ag:                                            ; preds = %bb.af
   %i.gk = getelementptr inbounds i8, ptr %.val5.val.i, i64 %i.gj
   %i.gl = load i32, ptr %i.gk, align 4, !tbaa !33
   %i.gm = mul i32 %i.gl, %i.gd
-  %i.gn = sext i32 %i.gm to i64                   ; 13 uses
+  %i.gn = sext i32 %i.gm to i64                   ; 9 uses
   %i.go = getelementptr inbounds [8 x i8], ptr %.val.i, i64 %i.gn ; 17 uses
   %i.gp = sext i32 %i.gd to i64
   %.idx221 = shl nsw i64 %i.gp, 3                 ; 5 uses
@@ -299,7 +299,7 @@ bb.an:                                            ; preds = %bb.am
   br i1 %i.im, label %.lr.ph.preheader, label %.loopexit
 
 .lr.ph.preheader:                                 ; preds = %.preheader199
-  %i.in = shl nsw i64 %i.gn, 3                    ; 2 uses
+  %i.in = shl nsw i64 %i.gn, 3                    ; 3 uses
   %i.io = add i64 %.idx221, %.val.i293
   %i.ip = add i64 %i.io, %i.in
   %i.iq = add i64 %i.in, %.val.i293
@@ -307,8 +307,7 @@ bb.an:                                            ; preds = %bb.am
   %i.is = tail call i64 @llvm.umax.i64(i64 %i.ip, i64 %i.ir)
   %i.it = xor i64 %.val.i293, -1
   %i.iu = add i64 %i.is, %i.it
-  %2 = shl nsw i64 %i.gn, 3
-  %i.iv = sub i64 %i.iu, %2                       ; 2 uses
+  %i.iv = sub i64 %i.iu, %i.in                    ; 2 uses
   %i.iw = lshr i64 %i.iv, 3
   %i.ix = add nuw nsw i64 %i.iw, 1                ; 2 uses
   %min.iters.check363 = icmp ult i64 %i.iv, 56
@@ -369,7 +368,7 @@ middle.block376:                                  ; preds = %vector.body366
   br i1 %i.im, label %.lr.ph208.preheader, label %.loopexit
 
 .lr.ph208.preheader:                              ; preds = %.preheader197
-  %i.jp = shl nsw i64 %i.gn, 3                    ; 2 uses
+  %i.jp = shl nsw i64 %i.gn, 3                    ; 3 uses
   %i.jq = add i64 %.idx221, %.val.i293
   %i.jr = add i64 %i.jq, %i.jp
   %i.js = add i64 %i.jp, %.val.i293
@@ -377,8 +376,7 @@ middle.block376:                                  ; preds = %vector.body366
   %i.ju = tail call i64 @llvm.umax.i64(i64 %i.jr, i64 %i.jt)
   %i.jv = xor i64 %.val.i293, -1
   %i.jw = add i64 %i.ju, %i.jv
-  %3 = shl nsw i64 %i.gn, 3
-  %i.jx = sub i64 %i.jw, %3                       ; 2 uses
+  %i.jx = sub i64 %i.jw, %i.jp                    ; 2 uses
   %i.jy = lshr i64 %i.jx, 3
   %i.jz = add nuw nsw i64 %i.jy, 1                ; 2 uses
   %min.iters.check340 = icmp ult i64 %i.jx, 56
@@ -472,7 +470,7 @@ bb.ao:                                            ; preds = %bb.am
   br i1 %i.im, label %.lr.ph212.preheader, label %.loopexit
 
 .lr.ph212.preheader:                              ; preds = %.preheader195
-  %i.lg = shl nsw i64 %i.gn, 3                    ; 2 uses
+  %i.lg = shl nsw i64 %i.gn, 3                    ; 3 uses
   %i.lh = add i64 %.idx221, %.val.i293
   %i.li = add i64 %i.lh, %i.lg
   %i.lj = add i64 %i.lg, %.val.i293
@@ -480,8 +478,7 @@ bb.ao:                                            ; preds = %bb.am
   %i.ll = tail call i64 @llvm.umax.i64(i64 %i.li, i64 %i.lk)
   %i.lm = xor i64 %.val.i293, -1
   %i.ln = add i64 %i.ll, %i.lm
-  %4 = shl nsw i64 %i.gn, 3
-  %i.lo = sub i64 %i.ln, %4                       ; 2 uses
+  %i.lo = sub i64 %i.ln, %i.lg                    ; 2 uses
   %i.lp = lshr i64 %i.lo, 3
   %i.lq = add nuw nsw i64 %i.lp, 1                ; 2 uses
   %min.iters.check317 = icmp ult i64 %i.lo, 56
@@ -542,7 +539,7 @@ middle.block330:                                  ; preds = %vector.body320
   br i1 %i.im, label %.lr.ph216.preheader, label %.loopexit
 
 .lr.ph216.preheader:                              ; preds = %.preheader
-  %i.mi = shl nsw i64 %i.gn, 3                    ; 2 uses
+  %i.mi = shl nsw i64 %i.gn, 3                    ; 3 uses
   %i.mj = add i64 %.idx221, %.val.i293
   %i.mk = add i64 %i.mj, %i.mi
   %i.ml = add i64 %i.mi, %.val.i293
@@ -550,8 +547,7 @@ middle.block330:                                  ; preds = %vector.body320
   %i.mn = tail call i64 @llvm.umax.i64(i64 %i.mk, i64 %i.mm)
   %i.mo = xor i64 %.val.i293, -1
   %i.mp = add i64 %i.mn, %i.mo
-  %5 = shl nsw i64 %i.gn, 3
-  %i.mq = sub i64 %i.mp, %5                       ; 2 uses
+  %i.mq = sub i64 %i.mp, %i.mi                    ; 2 uses
   %i.mr = lshr i64 %i.mq, 3
   %i.ms = add nuw nsw i64 %i.mr, 1                ; 2 uses
   %min.iters.check296 = icmp ult i64 %i.mq, 56

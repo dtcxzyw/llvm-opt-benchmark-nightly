@@ -205,16 +205,15 @@ bb.a:
   br i1 %i.a, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = sdiv i64 %2, 16                          ; 4 uses
-  %i.c = shl nsw i64 %i.b, 4                      ; 9 uses
+  %i.b = sdiv i64 %2, 16                          ; 3 uses
+  %i.c = shl nsw i64 %i.b, 4                      ; 10 uses
   %i.d = icmp slt i64 %i.c, %2
   br i1 %i.d, label %.lr.ph.preheader.i, label %.preheader72.i
 
 .lr.ph.preheader.i:                               ; preds = %bb.b
   %i.e = shl nsw i64 %3, 1                        ; 6 uses
   %i.f = mul nsw i64 %3, 3                        ; 6 uses
-  %5 = shl nsw i64 %i.b, 4
-  %i.g = sub i64 %2, %5                           ; 2 uses
+  %i.g = sub i64 %2, %i.c                         ; 2 uses
   %min.iters.check152 = icmp ult i64 %i.g, 24
   br i1 %min.iters.check152, label %.lr.ph.i.preheader, label %vector.memcheck125
 
@@ -422,16 +421,15 @@ middle.block162:                                  ; preds = %vector.body155
 
 bb.c:                                             ; preds = %bb.a
   %i.cd = lshr i64 %2, 5
-  %i.ce = and i64 %i.cd, 144115188075855871       ; 5 uses
-  %i.cf = shl nuw nsw i64 %i.ce, 5                ; 9 uses
+  %i.ce = and i64 %i.cd, 144115188075855871       ; 4 uses
+  %i.cf = shl nuw nsw i64 %i.ce, 5                ; 10 uses
   %i.cg = icmp samesign ult i64 %i.cf, %2
   br i1 %i.cg, label %.lr.ph.preheader, label %.preheader76
 
 .lr.ph.preheader:                                 ; preds = %bb.c
   %i.ch = shl nsw i64 %3, 1                       ; 6 uses
   %i.ci = mul nsw i64 %3, 3                       ; 6 uses
-  %6 = shl nuw nsw i64 %i.ce, 5
-  %i.cj = sub nsw i64 %2, %6                      ; 2 uses
+  %i.cj = sub nuw nsw i64 %2, %i.cf               ; 2 uses
   %min.iters.check = icmp ult i64 %i.cj, 24
   br i1 %min.iters.check, label %.lr.ph.preheader166, label %vector.memcheck
 
@@ -473,7 +471,7 @@ vector.memcheck:                                  ; preds = %.lr.ph.preheader
 
 vector.ph:                                        ; preds = %vector.memcheck
   %i.cs = and i64 %2, 7                           ; 2 uses
-  %n.vec = sub i64 %i.cj, %i.cs                   ; 2 uses
+  %n.vec = sub nsw i64 %i.cj, %i.cs               ; 2 uses
   %i.ct = add i64 %i.cf, %n.vec
   br label %vector.body
 
@@ -666,8 +664,8 @@ bb.a:
   br i1 %i.a, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = sdiv i64 %2, 16                          ; 4 uses
-  %i.c = shl nsw i64 %i.b, 4                      ; 13 uses
+  %i.b = sdiv i64 %2, 16                          ; 3 uses
+  %i.c = shl nsw i64 %i.b, 4                      ; 14 uses
   %i.d = icmp slt i64 %i.c, %2
   br i1 %i.d, label %.lr.ph.preheader.i, label %.preheader72.i
 
@@ -678,8 +676,7 @@ bb.b:                                             ; preds = %bb.a
   %i.h = mul nsw i64 %3, 5                        ; 4 uses
   %i.i = mul nsw i64 %3, 6                        ; 4 uses
   %i.j = mul nsw i64 %3, 7                        ; 4 uses
-  %5 = shl nsw i64 %i.b, 4
-  %i.k = sub i64 %2, %5                           ; 2 uses
+  %i.k = sub i64 %2, %i.c                         ; 2 uses
   %min.iters.check208 = icmp ult i64 %i.k, 20
   br i1 %min.iters.check208, label %.lr.ph.i.preheader, label %vector.memcheck157
 
@@ -939,8 +936,8 @@ middle.block222:                                  ; preds = %vector.body211
 
 bb.c:                                             ; preds = %bb.a
   %i.dv = lshr i64 %2, 5
-  %i.dw = and i64 %i.dv, 72057594037927935        ; 5 uses
-  %i.dx = shl nuw nsw i64 %i.dw, 5                ; 13 uses
+  %i.dw = and i64 %i.dv, 72057594037927935        ; 4 uses
+  %i.dx = shl nuw nsw i64 %i.dw, 5                ; 14 uses
   %i.dy = icmp samesign ult i64 %i.dx, %2
   br i1 %i.dy, label %.lr.ph.preheader, label %.preheader76
 
@@ -951,8 +948,7 @@ bb.c:                                             ; preds = %bb.a
   %i.ec = mul nsw i64 %3, 5                       ; 4 uses
   %i.ed = mul nsw i64 %3, 6                       ; 4 uses
   %i.ee = mul nsw i64 %3, 7                       ; 4 uses
-  %6 = shl nuw nsw i64 %i.dw, 5
-  %i.ef = sub nsw i64 %2, %6                      ; 2 uses
+  %i.ef = sub nuw nsw i64 %2, %i.dx               ; 2 uses
   %min.iters.check = icmp ult i64 %i.ef, 20
   br i1 %min.iters.check, label %.lr.ph.preheader226, label %vector.memcheck
 
@@ -1026,7 +1022,7 @@ vector.memcheck:                                  ; preds = %.lr.ph.preheader
 
 vector.ph:                                        ; preds = %vector.memcheck
   %i.ew = and i64 %2, 3                           ; 2 uses
-  %n.vec = sub i64 %i.ef, %i.ew                   ; 2 uses
+  %n.vec = sub nsw i64 %i.ef, %i.ew               ; 2 uses
   %i.ex = add i64 %i.dx, %n.vec
   br label %vector.body
 
