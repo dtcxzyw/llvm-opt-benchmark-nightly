@@ -204,12 +204,11 @@ bb.a:
   br label %bb.g
 
 bb.b:                                             ; preds = %bb.h
-  %13 = add nsw i32 %.03447, -1
-  %14 = zext nneg i32 %13 to i64                  ; 2 uses
-  %i.b = getelementptr inbounds nuw i8, ptr %1, i64 %14
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 2 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %1, i64 %indvars.iv.next
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 57
   %i.d = load i8, ptr %i.c, align 1, !tbaa !8     ; 2 uses
-  %i.e = getelementptr inbounds nuw i8, ptr @ossl_c448_ed448_verify.order, i64 %14
+  %i.e = getelementptr inbounds nuw i8, ptr @ossl_c448_ed448_verify.order, i64 %indvars.iv.next
   %i.f = load i8, ptr %i.e, align 1, !tbaa !8     ; 2 uses
   %i.g = icmp ugt i8 %i.d, %i.f
   br i1 %i.g, label %.thread, label %bb.c
@@ -219,12 +218,11 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.h, label %bb.i, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %15 = add nsw i32 %.03447, -2                   ; 2 uses
-  %16 = zext nneg i32 %15 to i64                  ; 2 uses
-  %i.i = getelementptr inbounds nuw i8, ptr %1, i64 %16
+  %indvars.iv.next.1 = add nsw i64 %indvars.iv, -2 ; 3 uses
+  %i.i = getelementptr inbounds nuw i8, ptr %1, i64 %indvars.iv.next.1
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 57
   %i.k = load i8, ptr %i.j, align 1, !tbaa !8     ; 2 uses
-  %i.l = getelementptr inbounds nuw i8, ptr @ossl_c448_ed448_verify.order, i64 %16
+  %i.l = getelementptr inbounds nuw i8, ptr @ossl_c448_ed448_verify.order, i64 %indvars.iv.next.1
   %i.m = load i8, ptr %i.l, align 1, !tbaa !8     ; 2 uses
   %i.n = icmp ugt i8 %i.k, %i.m
   br i1 %i.n, label %.thread, label %bb.e
@@ -234,17 +232,16 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.o, label %bb.i, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %17 = add nsw i32 %.03447, -3
-  %.not52.2 = icmp eq i32 %15, 0
+  %indvars.iv.next.2 = add nsw i64 %indvars.iv, -3
+  %.not52.2 = icmp eq i64 %indvars.iv.next.1, 0
   br i1 %.not52.2, label %.thread, label %bb.g, !llvm.loop !12
 
 bb.g:                                             ; preds = %bb.f, %bb.a
-  %.03447 = phi i32 [ 56, %bb.a ], [ %17, %bb.f ] ; 4 uses
-  %18 = zext nneg i32 %.03447 to i64              ; 2 uses
-  %i.p = getelementptr inbounds nuw i8, ptr %1, i64 %18
+  %indvars.iv = phi i64 [ 56, %bb.a ], [ %indvars.iv.next.2, %bb.f ] ; 5 uses
+  %i.p = getelementptr inbounds nuw i8, ptr %1, i64 %indvars.iv
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 57
   %i.r = load i8, ptr %i.q, align 1, !tbaa !8     ; 2 uses
-  %i.s = getelementptr inbounds nuw i8, ptr @ossl_c448_ed448_verify.order, i64 %18
+  %i.s = getelementptr inbounds nuw i8, ptr @ossl_c448_ed448_verify.order, i64 %indvars.iv
   %i.t = load i8, ptr %i.s, align 1, !tbaa !8     ; 2 uses
   %i.u = icmp ugt i8 %i.r, %i.t
   br i1 %i.u, label %.thread, label %bb.h

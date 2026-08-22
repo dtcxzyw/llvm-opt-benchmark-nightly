@@ -204,40 +204,38 @@ begin_hunk_0_@ED25519_verify:bb.a
   br label %bb.bm
 
 bb.bm:                                            ; preds = %bb.bq, %_ZL5slidePaPKh.exit54.i
-  %.0115.i = phi i32 [ 255, %_ZL5slidePaPKh.exit54.i ], [ %21, %bb.bq ] ; 3 uses
-  %18 = zext nneg i32 %.0115.i to i64             ; 4 uses
-  %i.vx = getelementptr inbounds nuw i8, ptr %i.c, i64 %18
+  %indvars.iv.i = phi i64 [ 255, %_ZL5slidePaPKh.exit54.i ], [ %indvars.iv.next.i.1, %bb.bq ] ; 6 uses
+  %i.vx = getelementptr inbounds nuw i8, ptr %i.c, i64 %indvars.iv.i
   %i.vy = load i8, ptr %i.vx, align 1, !tbaa !11
   %.not.i = icmp eq i8 %i.vy, 0
   br i1 %.not.i, label %bb.bn, label %.lr.ph.i
 
 bb.bn:                                            ; preds = %bb.bm
-  %i.vz = getelementptr inbounds nuw i8, ptr %i.d, i64 %18
+  %i.vz = getelementptr inbounds nuw i8, ptr %i.d, i64 %indvars.iv.i
   %i.wa = load i8, ptr %i.vz, align 1, !tbaa !11
   %.not22.i = icmp eq i8 %i.wa, 0
   br i1 %.not22.i, label %bb.bo, label %.lr.ph.i
 
 bb.bo:                                            ; preds = %bb.bn
-  %19 = add nsw i32 %.0115.i, -1                  ; 2 uses
-  %20 = zext nneg i32 %19 to i64                  ; 4 uses
-  %i.wb = getelementptr inbounds nuw i8, ptr %i.c, i64 %20
+  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1 ; 5 uses
+  %i.wb = getelementptr inbounds nuw i8, ptr %i.c, i64 %indvars.iv.next.i
   %i.wc = load i8, ptr %i.wb, align 1, !tbaa !11
   %.not.i.1 = icmp eq i8 %i.wc, 0
   br i1 %.not.i.1, label %bb.bp, label %.lr.ph.i
 
 bb.bp:                                            ; preds = %bb.bo
-  %i.wd = getelementptr inbounds nuw i8, ptr %i.d, i64 %20
+  %i.wd = getelementptr inbounds nuw i8, ptr %i.d, i64 %indvars.iv.next.i
   %i.we = load i8, ptr %i.wd, align 1, !tbaa !11
   %.not22.i.1 = icmp eq i8 %i.we, 0
   br i1 %.not22.i.1, label %bb.bq, label %.lr.ph.i
 
 bb.bq:                                            ; preds = %bb.bp
-  %21 = add nsw i32 %.0115.i, -2
-  %.not129.i.1 = icmp eq i32 %19, 0
+  %indvars.iv.next.i.1 = add nsw i64 %indvars.iv.i, -2
+  %.not129.i.1 = icmp eq i64 %indvars.iv.next.i, 0
   br i1 %.not129.i.1, label %_ZL28ge_double_scalarmult_vartimeP5ge_p2PKhPK5ge_p3S2_.exit, label %bb.bm, !llvm.loop !39
 
 .lr.ph.i:                                         ; preds = %bb.bp, %bb.bo, %bb.bm, %bb.bn
-  %.lcssa = phi i64 [ %18, %bb.bm ], [ %18, %bb.bn ], [ %20, %bb.bo ], [ %20, %bb.bp ]
+  %.lcssa = phi i64 [ %indvars.iv.i, %bb.bm ], [ %indvars.iv.i, %bb.bn ], [ %indvars.iv.next.i, %bb.bo ], [ %indvars.iv.next.i, %bb.bp ]
   %i.wf = getelementptr inbounds nuw i8, ptr %13, i64 8 ; 2 uses
   %i.wg = getelementptr inbounds nuw i8, ptr %13, i64 16 ; 2 uses
   %i.wh = getelementptr inbounds nuw i8, ptr %13, i64 24 ; 2 uses

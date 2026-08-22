@@ -205,18 +205,17 @@ hb_count_between.exit:                            ; preds = %bb.m, %.peel.next, 
   br label %tailrecurse.i
 
 tailrecurse.i:                                    ; preds = %bb.r, %hb_count_between.exit
-  %.tr54.i = phi i32 [ 6, %hb_count_between.exit ], [ %5, %bb.r ] ; 3 uses
-  %.tr55.i = phi i64 [ %i.w, %hb_count_between.exit ], [ %.141.i, %bb.r ] ; 4 uses
-  %.tr56.i = phi i64 [ %.pre-phi53, %hb_count_between.exit ], [ %.039.i, %bb.r ] ; 4 uses
-  %ret.known.tr.i = phi i1 [ false, %hb_count_between.exit ], [ true, %bb.r ]
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.r ], [ 6, %hb_count_between.exit ] ; 4 uses
+  %.tr55.i = phi i64 [ %.141.i, %bb.r ], [ %i.w, %hb_count_between.exit ] ; 4 uses
+  %.tr56.i = phi i64 [ %.039.i, %bb.r ], [ %.pre-phi53, %hb_count_between.exit ] ; 4 uses
+  %ret.known.tr.i = phi i1 [ true, %bb.r ], [ false, %hb_count_between.exit ]
   %i.az = lshr i64 %.tr55.i, 6                    ; 9 uses
   %i.ba = lshr i64 %.tr56.i, 6                    ; 9 uses
   %i.bb = icmp samesign ult i64 %i.az, %i.ba
-  %4 = zext nneg i32 %.tr54.i to i64              ; 2 uses
   br i1 %i.bb, label %hb_reset_elem.exit.i, label %.loopexit.i
 
 hb_reset_elem.exit.i:                             ; preds = %tailrecurse.i
-  %i.bc = getelementptr inbounds nuw [8 x i8], ptr %i.ay, i64 %4 ; 4 uses
+  %i.bc = getelementptr inbounds nuw [8 x i8], ptr %i.ay, i64 %indvars.iv.i ; 4 uses
   %i.bd = or i64 %.tr55.i, 63                     ; 2 uses
   %i.be = load ptr, ptr %i.bc, align 8
   %i.bf = getelementptr inbounds nuw [8 x i8], ptr %i.be, i64 %i.az ; 2 uses
@@ -290,7 +289,7 @@ hb_reset_elem.exit.i:                             ; preds = %tailrecurse.i
   %.141.i = phi i64 [ %i.az, %tailrecurse.i ], [ %.040.i, %hb_reset_elem.exit.i ], [ %.040.i, %.lr.ph.i ], [ %.040.i, %.lr.ph.i.prol.loopexit ]
   %.2.i = phi i1 [ false, %tailrecurse.i ], [ %not..not53.i, %hb_reset_elem.exit.i ], [ %.lcssa.unr, %.lr.ph.i.prol.loopexit ], [ %i.cl, %.lr.ph.i ]
   %.1.i37 = phi i64 [ %i.az, %tailrecurse.i ], [ %i.ba, %hb_reset_elem.exit.i ], [ %i.ba, %.lr.ph.i ], [ %i.ba, %.lr.ph.i.prol.loopexit ]
-  %i.co = getelementptr inbounds nuw [8 x i8], ptr %i.ay, i64 %4
+  %i.co = getelementptr inbounds nuw [8 x i8], ptr %i.ay, i64 %indvars.iv.i
   %i.cp = load ptr, ptr %i.co, align 8
   %i.cq = getelementptr inbounds nuw [8 x i8], ptr %i.cp, i64 %.1.i37 ; 2 uses
   %.unshifted.i49.i = xor i64 %.042.i, %.tr56.i
@@ -323,7 +322,7 @@ hb_reset_elem.exit52.i:                           ; preds = %bb.p
   %i.da = select i1 %.not14.i51.i, i1 %i.cz, i1 false ; 2 uses
   store i64 %i.cy, ptr %i.cq, align 8
   %.3.i = select i1 %i.da, i1 true, i1 %.2.i      ; 2 uses
-  %i.db = icmp ne i32 %.tr54.i, 0
+  %i.db = icmp ne i64 %indvars.iv.i, 0
   %or.cond.i = select i1 %i.db, i1 %.3.i, i1 false
   br i1 %or.cond.i, label %bb.r, label %hb_reset_between.exit
 
@@ -331,7 +330,7 @@ bb.r:                                             ; preds = %hb_reset_elem.exit5
   %not..i = xor i1 %i.da, true
   %i.dc = sext i1 %not..i to i64
   %.039.i = add nsw i64 %i.ba, %i.dc
-  %5 = add nsw i32 %.tr54.i, -1
+  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1
   br label %tailrecurse.i
 
 hb_reset_between.exit:                            ; preds = %hb_reset_elem.exit52.i
