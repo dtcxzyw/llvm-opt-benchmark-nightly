@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.c
   %i.d = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 152
   %i.f = load <2 x ptr>, ptr %3, align 16, !tbaa !106
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %3, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %3, i8 0, i64 16, i1 false)
   %i.g = load ptr, ptr %i.e, align 8, !tbaa !72   ; 8 uses
   store <2 x ptr> %i.f, ptr %i.b, align 8, !tbaa !106
   %.not.i.i.i.i = icmp eq ptr %i.g, null
@@ -607,7 +607,7 @@ _ZSt6fill_nIPmmmET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i.i: ; preds = %.noexc95
   %i.bj = ptrtoint ptr %i.bc to i64
   %i.bk = sub i64 %i.bi, %i.bj
   %i.bl = ashr exact i64 %i.bk, 3                 ; 4 uses
-  %10 = call i64 @llvm.usub.sat.i64(i64 %.fr, i64 1)
+  %10 = add nsw i64 %.fr, -1
   %umin = call i64 @llvm.umin.i64(i64 %10, i64 %i.bl) ; 2 uses
   %min.iters.check = icmp ult i64 %umin, 4
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
@@ -618,11 +618,11 @@ scalar.ph.preheader:                              ; preds = %vector.body, %.lr.p
   br label %scalar.ph
 
 vector.ph:                                        ; preds = %.lr.ph251
-  %i.bm = add nuw nsw i64 %umin, 1                ; 2 uses
+  %i.bm = add nuw i64 %umin, 1                    ; 2 uses
   %i.bn = and i64 %i.bm, 3                        ; 2 uses
   %i.bo = icmp eq i64 %i.bn, 0
   %i.bp = select i1 %i.bo, i64 4, i64 %i.bn
-  %n.vec = sub nsw i64 %i.bm, %i.bp               ; 3 uses
+  %n.vec = sub i64 %i.bm, %i.bp                   ; 3 uses
   %i.bq = add i64 %.034255, %n.vec
   %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %.034255, i64 0
   %broadcast.splat = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer
@@ -1025,10 +1025,10 @@ _ZNSt10unique_ptrIN6duckdb25ArrowCollectorGlobalStateESt14default_deleteIS1_EED2
   %i.a = tail call noalias noundef nonnull dereferenceable(184) ptr @_Znwm(i64 noundef 184) #35, !noalias !1415 ; 6 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(184) %i.a, i8 0, i64 96, i1 false), !noalias !1415
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store i8 1, ptr %i.b, align 1, !tbaa !1418, !noalias !1415
+  store i8 1, ptr %i.b, align 8, !tbaa !1418, !noalias !1415
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(65) %i.c, i8 0, i64 65, i1 false), !noalias !1415
-  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN6duckdb25ArrowCollectorGlobalStateE, i64 16), ptr %i.a, align 8, !tbaa !76, !noalias !1415
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(65) %i.c, i8 0, i64 65, i1 false), !noalias !1415
+  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN6duckdb25ArrowCollectorGlobalStateE, i64 16), ptr %i.a, align 16, !tbaa !76, !noalias !1415
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 88
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %i.d, i8 0, i64 96, i1 false), !noalias !1415
   store ptr %i.a, ptr %0, align 8, !tbaa !1419
@@ -1430,9 +1430,6 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #33
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #26
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.usub.sat.i64(i64, i64) #26
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

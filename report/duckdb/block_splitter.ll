@@ -205,7 +205,6 @@ _ZL26InitialEntropyCodesLiteralPKhmmmPN13duckdb_brotli16HistogramLiteralE.exit.i
   %i.eu = getelementptr inbounds nuw i8, ptr %i.em, i64 1032
   store double +inf, ptr %i.eu, align 8, !tbaa !30
   %i.ev = add i64 %.lcssa882, -69
-  %umax.i.i = tail call i64 @llvm.umax.i64(i64 %i.es, i64 1)
   %i.ew = mul nuw nsw i64 %., 1040
   %i.ex = getelementptr i8, ptr %i.cs, i64 %i.ew
   %scevgep = getelementptr i8, ptr %i.ex, i64 1024
@@ -323,7 +322,7 @@ scalar.ph:                                        ; preds = %_ZL19RandomSampleLi
 
 _ZN13duckdb_brotliL28HistogramAddHistogramLiteralEPNS_16HistogramLiteralEPKS0_.exit.i.i: ; preds = %vector.body, %scalar.ph
   %i.hh = add nuw i64 %.020.i.i, 1                ; 2 uses
-  %exitcond21.not.i.i = icmp eq i64 %i.hh, %umax.i.i
+  %exitcond21.not.i.i = icmp eq i64 %i.hh, %i.es
   br i1 %exitcond21.not.i.i, label %_ZL25RefineEntropyCodesLiteralPKhmmmPN13duckdb_brotli16HistogramLiteralES3_.exit.i, label %bb.ab, !llvm.loop !47
 
 _ZL25RefineEntropyCodesLiteralPKhmmmPN13duckdb_brotli16HistogramLiteralES3_.exit.i: ; preds = %_ZN13duckdb_brotliL28HistogramAddHistogramLiteralEPNS_16HistogramLiteralEPKS0_.exit.i.i
@@ -726,7 +725,6 @@ _ZL26InitialEntropyCodesCommandPKtmmmPN13duckdb_brotli16HistogramCommandE.exit.i
   %i.asb = getelementptr inbounds nuw i8, ptr %i.art, i64 2824
   store double +inf, ptr %i.asb, align 8, !tbaa !115
   %i.asc = add i64 %2, -39
-  %umax.i.i79 = tail call i64 @llvm.umax.i64(i64 %i.arz, i64 1)
   %i.asd = mul nuw nsw i64 %spec.select.i68, 2832
   %i.ase = getelementptr i8, ptr %i.ahi, i64 %i.asd
   %scevgep751 = getelementptr i8, ptr %i.ase, i64 2816
@@ -1099,7 +1097,7 @@ scalar.ph755:                                     ; preds = %vector.memcheck750,
 
 _ZN13duckdb_brotliL28HistogramAddHistogramCommandEPNS_16HistogramCommandEPKS0_.exit.i.i: ; preds = %vector.body757, %scalar.ph755
   %i.bdf = add nuw i64 %.020.i.i80, 1             ; 2 uses
-  %exitcond21.not.i.i84 = icmp eq i64 %i.bdf, %umax.i.i79
+  %exitcond21.not.i.i84 = icmp eq i64 %i.bdf, %i.arz
   br i1 %exitcond21.not.i.i84, label %_ZL25RefineEntropyCodesCommandPKtmmmPN13duckdb_brotli16HistogramCommandES3_.exit.i, label %vector.memcheck750, !llvm.loop !128
 
 _ZL25RefineEntropyCodesCommandPKtmmmPN13duckdb_brotli16HistogramCommandES3_.exit.i: ; preds = %_ZN13duckdb_brotliL28HistogramAddHistogramCommandEPNS_16HistogramCommandEPKS0_.exit.i.i
@@ -1502,7 +1500,6 @@ _ZL27InitialEntropyCodesDistancePKtmmmPN13duckdb_brotli17HistogramDistanceE.exit
   %i.clt = getelementptr inbounds nuw i8, ptr %i.cll, i64 2184
   store double +inf, ptr %i.clt, align 8, !tbaa !167
   %i.clu = add i64 %.1, -39
-  %umax.i.i252 = tail call i64 @llvm.umax.i64(i64 %i.clr, i64 1)
   %i.clv = mul nuw nsw i64 %spec.select, 2192
   %i.clw = getelementptr i8, ptr %i.cba, i64 %i.clv
   %scevgep803 = getelementptr i8, ptr %i.clw, i64 2176
@@ -1875,7 +1872,7 @@ scalar.ph807:                                     ; preds = %vector.memcheck802,
 
 _ZN13duckdb_brotliL29HistogramAddHistogramDistanceEPNS_17HistogramDistanceEPKS0_.exit.i.i: ; preds = %vector.body809, %scalar.ph807
   %i.cwx = add nuw i64 %.020.i.i253, 1            ; 2 uses
-  %exitcond21.not.i.i257 = icmp eq i64 %i.cwx, %umax.i.i252
+  %exitcond21.not.i.i257 = icmp eq i64 %i.cwx, %i.clr
   br i1 %exitcond21.not.i.i257, label %_ZL26RefineEntropyCodesDistancePKtmmmPN13duckdb_brotli17HistogramDistanceES3_.exit.i, label %vector.memcheck802, !llvm.loop !180
 
 _ZL26RefineEntropyCodesDistancePKtmmmPN13duckdb_brotli17HistogramDistanceES3_.exit.i: ; preds = %_ZN13duckdb_brotliL29HistogramAddHistogramDistanceEPNS_17HistogramDistanceEPKS0_.exit.i.i

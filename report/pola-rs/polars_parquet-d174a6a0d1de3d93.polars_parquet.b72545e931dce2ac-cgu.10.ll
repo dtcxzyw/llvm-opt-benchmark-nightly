@@ -205,8 +205,8 @@ _RINvXs_NtNtCsgZ49sUHp3tW_5alloc3vec14spec_from_elemtNtB5_12SpecFromElem9from_el
   %i.dhq = add i64 %.sroa.04.1, -1                ; 6 uses
   %i.dhr = icmp ult i64 %i.dhq, %i.dfj
   %i.dhs = getelementptr inbounds nuw i8, ptr %i.dfi, i64 %i.dhq
-  %umin4693 = call i64 @llvm.umin.i64(i64 %i.dhq, i64 %i.dfj), !dbg !12202
-  %i.dht = add i64 %umin4693, 1, !dbg !12202      ; 3 uses
+  %umin4693 = call i64 @llvm.umin.i64(i64 %i.dhq, i64 %i.dfj)
+  %i.dht = add i64 %umin4693, 1                   ; 3 uses
   %min.iters.check4695 = icmp ult i64 %i.dht, 33
   %i.dhu = and i64 %i.dht, 31                     ; 2 uses
   %i.dhv = icmp eq i64 %i.dhu, 0
@@ -609,18 +609,16 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %exitcond322.not.i, label %.invoke449.i, label %bb.en, !dbg !29552
 
 .lr.ph260.i:                                      ; preds = %bb.el, %.lr.ph263.preheader.i
-  %indvars.iv.i = phi i64 [ %i.ct, %.lr.ph263.preheader.i ], [ %indvars.iv.next.i, %bb.el ] ; 3 uses
+  %indvars.iv.i = phi i64 [ %i.ct, %.lr.ph263.preheader.i ], [ %indvars.iv.next.i, %bb.el ] ; 2 uses
   %.sroa.0.0262.i = phi i64 [ 0, %.lr.ph263.preheader.i ], [ %i.vt, %bb.el ] ; 8 uses
   %.sroa.08.0261.i = phi i64 [ 0, %.lr.ph263.preheader.i ], [ %i.vu, %bb.el ] ; 8 uses
   %umax = call i64 @llvm.umax.i64(i64 %indvars.iv.i, i64 1), !dbg !29554
-  %umin1489 = call i64 @llvm.umin.i64(i64 %umax, i64 64), !dbg !29554
-  %16 = add nsw i64 %umin1489, -1, !dbg !29554
-  %17 = call i64 @llvm.umax.i64(i64 %indvars.iv.i, i64 1), !dbg !29554
-  %umax327.i = call i64 @llvm.umin.i64(i64 %17, i64 64), !dbg !29554
-  %18 = sub nuw i64 %i.ct, %.sroa.08.0261.i, !dbg !29554
-  %.sroa.0.0.i79.i = call noundef i64 @llvm.umin.i64(i64 %18, i64 64), !dbg !29557 ; 2 uses
-  %19 = call i64 @llvm.usub.sat.i64(i64 %i.lx, i64 %.sroa.0.0262.i), !dbg !29534 ; 2 uses
-  %umin1490 = call i64 @llvm.umin.i64(i64 %16, i64 %19), !dbg !29534 ; 2 uses
+  %umin1489 = call i64 @llvm.umin.i64(i64 %umax, i64 64), !dbg !29554 ; 2 uses
+  %16 = sub nuw i64 %i.ct, %.sroa.08.0261.i, !dbg !29554
+  %umax327.i = call noundef i64 @llvm.umin.i64(i64 %16, i64 64), !dbg !29557 ; 2 uses
+  %.sroa.0.0.i79.i = call i64 @llvm.usub.sat.i64(i64 %i.lx, i64 %.sroa.0.0262.i), !dbg !29534 ; 2 uses
+  %17 = add nsw i64 %umin1489, -1, !dbg !29534
+  %umin1490 = call i64 @llvm.umin.i64(i64 %17, i64 %.sroa.0.0.i79.i), !dbg !29534 ; 2 uses
   %min.iters.check1492 = icmp ult i64 %umin1490, 8, !dbg !29534
   br i1 %min.iters.check1492, label %scalar.ph1491.preheader, label %vector.ph1493, !dbg !29534
 
@@ -1023,7 +1021,7 @@ bb.ek:                                            ; preds = %bb.ej
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ma) ]
   %i.vq = getelementptr inbounds nuw [4 x i8], ptr %i.lw, i64 %.sroa.0.0262.i, !dbg !30155
   %i.vr = sub nuw i64 %i.lx, %.sroa.0.0262.i, !dbg !30160
-  %i.vs = invoke fastcc noundef i64 @_RINvNtNtCsk4ZPsEfLtLH_6brotli3enc7cluster22BrotliHistogramCombineNtNtB4_9histogram16HistogramLiteralECsfISxE4fmY1Y_14polars_parquet(ptr noalias noundef nonnull align 8 %i.lk, i64 noundef range(i64 0, 8868626958514208) %i.ll, ptr noalias noundef nonnull align 4 %i.ls, i64 noundef %i.lt, ptr noalias noundef nonnull align 4 %i.vo, i64 noundef %i.vp, ptr noalias noundef nonnull align 4 %i.vq, i64 noundef %i.vr, ptr noalias noundef nonnull align 4 %i.ma, i64 noundef %i.mb, i64 noundef %.sroa.0.0.i79.i, i64 noundef %.sroa.0.0.i79.i, i64 noundef 256, i64 noundef 2048, ptr noalias noundef nonnull %12)
+  %i.vs = invoke fastcc noundef i64 @_RINvNtNtCsk4ZPsEfLtLH_6brotli3enc7cluster22BrotliHistogramCombineNtNtB4_9histogram16HistogramLiteralECsfISxE4fmY1Y_14polars_parquet(ptr noalias noundef nonnull align 8 %i.lk, i64 noundef range(i64 0, 8868626958514208) %i.ll, ptr noalias noundef nonnull align 4 %i.ls, i64 noundef %i.lt, ptr noalias noundef nonnull align 4 %i.vo, i64 noundef %i.vp, ptr noalias noundef nonnull align 4 %i.vq, i64 noundef %i.vr, ptr noalias noundef nonnull align 4 %i.ma, i64 noundef %i.mb, i64 noundef %umax327.i, i64 noundef %umax327.i, i64 noundef 256, i64 noundef 2048, ptr noalias noundef nonnull %12)
           to label %bb.el unwind label %.loopexit.i, !dbg !30161, !noalias !29488
 
 bb.el:                                            ; preds = %bb.ek
@@ -1036,7 +1034,7 @@ bb.el:                                            ; preds = %bb.ek
 scalar.ph1491:                                    ; preds = %scalar.ph1491.preheader, %bb.em
   %.sroa.031.0259.i = phi i64 [ %i.vy, %bb.em ], [ %.sroa.031.0259.i.ph, %scalar.ph1491.preheader ] ; 4 uses
   %i.vw = add nuw i64 %.sroa.031.0259.i, %.sroa.0.0262.i, !dbg !30168 ; 2 uses
-  %exitcond326.not.i = icmp eq i64 %.sroa.031.0259.i, %19, !dbg !29561
+  %exitcond326.not.i = icmp eq i64 %.sroa.031.0259.i, %.sroa.0.0.i79.i, !dbg !29561
   br i1 %exitcond326.not.i, label %.invoke449.i, label %bb.em, !dbg !29561
 
 bb.em:                                            ; preds = %scalar.ph1491
@@ -1045,7 +1043,7 @@ bb.em:                                            ; preds = %scalar.ph1491
   %i.vz = getelementptr inbounds nuw [4 x i8], ptr %i.lw, i64 %i.vw, !dbg !29561
   %i.wa = trunc i64 %i.vx to i32, !dbg !29561
   store i32 %i.wa, ptr %i.vz, align 4, !dbg !29561, !noalias !29511
-  %exitcond328.not.i = icmp eq i64 %i.vy, %umax327.i, !dbg !30170
+  %exitcond328.not.i = icmp eq i64 %i.vy, %umin1489, !dbg !30170
   br i1 %exitcond328.not.i, label %._crit_edge.i104, label %scalar.ph1491, !dbg !29534, !llvm.loop !30173
 
 .invoke449.i:                                     ; preds = %scalar.ph, %bb.er, %.lr.ph258.i, %scalar.ph1491
