@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.f
   %i.ag = add i64 %i.ae, 17
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.h, i8 -1, i64 %i.ag, i1 false), !noalias !35220
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 16 %i.h, i8 -1, i64 %i.ag, i1 false), !noalias !35220
   %i.ah = icmp ult i64 %i.ae, 8
   %i.ai = add i64 %i.ae, 1
   %i.aj = lshr i64 %i.ai, 3
@@ -221,7 +221,7 @@ _ZN9hashbrown3raw13RawTableInner13drop_elements17hf74cf99e73dcc373E.exit.i: ; pr
 
 bb.h:                                             ; preds = %_ZN9hashbrown3raw13RawTableInner13drop_elements17hf74cf99e73dcc373E.exit.i
   %i.ao = add i64 %i.am, 17
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.h, i8 -1, i64 %i.ao, i1 false), !noalias !35220
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 16 %i.h, i8 -1, i64 %i.ao, i1 false), !noalias !35220
   %i.ap = icmp ult i64 %i.am, 8
   %i.aq = add i64 %i.am, 1
   %i.ar = lshr i64 %i.aq, 3
@@ -624,7 +624,6 @@ scalar.ph:                                        ; preds = %vector.memcheck, %.
   %bc.merge.rdx = phi i64 [ %i.bc, %middle.block ], [ %.promoted, %.lr.ph.preheader ], [ %.promoted, %vector.memcheck ]
   %bc.resume.val = phi ptr [ %i.au, %middle.block ], [ %i.al, %.lr.ph.preheader ], [ %i.al, %vector.memcheck ] ; 2 uses
   %bc.resume.val133 = phi ptr [ %i.av, %middle.block ], [ %.sroa.532.0.copyload, %.lr.ph.preheader ], [ %.sroa.532.0.copyload, %vector.memcheck ] ; 2 uses
-  %bc.resume.val137 = ptrtoaddr ptr %bc.resume.val to i64
   %bc.resume.val133135 = ptrtoaddr ptr %bc.resume.val133 to i64 ; 4 uses
   br label %.lr.ph
 
@@ -984,17 +983,18 @@ bb.t:                                             ; preds = %bb.s
 .lr.ph57:                                         ; preds = %"_ZN5alloc3vec6splice55_$LT$impl$u20$alloc..vec..drain..Drain$LT$T$C$A$GT$$GT$9move_tail17h57ef1d815f8dc8a9E.exit.i.i"
   %i.fn = getelementptr inbounds nuw i8, ptr %i.fh, i64 %.promoted59 ; 4 uses
   %i.fo = add i64 %.sroa.7.0.copyload.fr, %.sroa.532.0.copyload129 ; 2 uses
-  %4 = add i64 %i.fo, -2
   %i.fp = xor i64 %bc.resume.val133135, -1
   %i.fq = add i64 %i.fo, %i.fp
   %i.fr = freeze i64 %i.fq
+  %4 = ptrtoaddr ptr %bc.resume.val to i64
   %i.fs = add i64 %.promoted, %i.af
   %i.ft = add i64 %i.fs, %spec.select.i
-  %i.fu = xor i64 %bc.resume.val137, -1
+  %i.fu = xor i64 %4, -1
   %i.fv = add i64 %i.ft, %i.fu
   %umin138 = tail call i64 @llvm.umin.i64(i64 %i.fr, i64 %i.fv) ; 2 uses
+  %5 = add i64 %i.fo, -2
   %i.fw = add i64 %umin138, %bc.resume.val133135
-  %i.fx = sub i64 %4, %i.fw
+  %i.fx = sub i64 %5, %i.fw
   %i.fy = freeze i64 %i.fx
   %i.fz = add i64 %.promoted, %.sroa.7.0.copyload.fr
   %i.ga = add i64 %i.fz, %.sroa.532.0.copyload129
@@ -1397,7 +1397,7 @@ bb.o:                                             ; preds = %"_ZN5alloc4sync28Un
   store i64 1, ptr %i.aa, align 8, !noalias !56277
   %i.ab = getelementptr inbounds nuw i8, ptr %i.c, i64 16
   %i.ac = getelementptr inbounds nuw i8, ptr %.sroa.07.0.i.i.i.i.i15, i64 16
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(24) %i.ac, ptr noundef nonnull align 1 dereferenceable(24) %i.ab, i64 24, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ac, ptr noundef nonnull align 8 dereferenceable(24) %i.ab, i64 24, i1 false)
   store ptr %.sroa.07.0.i.i.i.i.i15, ptr %0, align 8
   %i.ad = icmp eq ptr %i.c, inttoptr (i64 -1 to ptr)
   br i1 %i.ad, label %"_ZN4core3ptr110drop_in_place$LT$alloc..sync..Weak$LT$smartstring..SmartString$LT$smartstring..config..LazyCompact$GT$$GT$$GT$17hfe51ab6c4fb642ffE.exit20", label %bb.p
@@ -1800,7 +1800,7 @@ _ZN9hashbrown3raw13RawTableInner13drop_elements17he73de831e240945dE.exit: ; pred
 
 bb.e:                                             ; preds = %_ZN9hashbrown3raw13RawTableInner13drop_elements17he73de831e240945dE.exit
   %i.ab = add i64 %i.z, 17
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.d, i8 -1, i64 %i.ab, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 16 %i.d, i8 -1, i64 %i.ab, i1 false)
   %i.ac = icmp ult i64 %i.z, 8
   %i.ad = add i64 %i.z, 1
   %i.ae = lshr i64 %i.ad, 3

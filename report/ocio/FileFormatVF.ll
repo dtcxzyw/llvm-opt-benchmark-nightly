@@ -204,7 +204,7 @@ bb.dr:                                            ; preds = %bb.do
 bb.ds:                                            ; preds = %bb.dr
   %i.xp = getelementptr inbounds nuw i8, ptr %i.xo, i64 144
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.xp, i8 0, i64 16, i1 false)
-  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN16OpenColorIO_v2_512_GLOBAL__N_115LocalCachedFileE, i64 16), ptr %i.xo, align 8, !tbaa !8
+  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN16OpenColorIO_v2_512_GLOBAL__N_115LocalCachedFileE, i64 16), ptr %i.xo, align 16, !tbaa !8
   %i.xq = getelementptr inbounds nuw i8, ptr %i.xo, i64 8 ; 4 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(145) %i.xq, i8 0, i64 145, i1 false)
   %i.xr = invoke noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #22
@@ -215,7 +215,7 @@ bb.dt:                                            ; preds = %bb.ds
           catch ptr null
   %i.xt = extractvalue { ptr, i32 } %i.xs, 0
   %i.xu = call ptr @__cxa_begin_catch(ptr %i.xt) #23 ; 0 uses
-  %i.xv = load ptr, ptr %i.xo, align 8, !tbaa !8
+  %i.xv = load ptr, ptr %i.xo, align 16, !tbaa !8
   %i.xw = getelementptr inbounds nuw i8, ptr %i.xv, i64 8
   %i.xx = load ptr, ptr %i.xw, align 8
   call void %i.xx(ptr noundef nonnull align 8 dereferenceable(153) %i.xo) #23, !inline_history !96
@@ -378,8 +378,8 @@ _ZNSt15__allocated_ptrISaISt23_Sp_counted_ptr_inplaceIN16OpenColorIO_v2_511Lut3D
 _ZSt11make_sharedIN16OpenColorIO_v2_511Lut3DOpDataEJRiEESt10shared_ptrINSt9enable_ifIXntsr8is_arrayIT_EE5valueES5_E4typeEEDpOT0_.exit: ; preds = %.noexc441
   store ptr %i.abg, ptr %i.xq, align 8, !tbaa !117
   %i.abk = getelementptr inbounds nuw i8, ptr %i.xo, i64 16 ; 2 uses
-  %i.abl = load ptr, ptr %i.abk, align 8, !tbaa !118 ; 8 uses
-  store ptr %i.abd, ptr %i.abk, align 8, !tbaa !118
+  %i.abl = load ptr, ptr %i.abk, align 16, !tbaa !118 ; 8 uses
+  store ptr %i.abd, ptr %i.abk, align 16, !tbaa !118
   %.not.i.i.i.i = icmp eq ptr %i.abl, null
   br i1 %.not.i.i.i.i, label %_ZNSt12__shared_ptrIN16OpenColorIO_v2_511Lut3DOpDataELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit, label %bb.ea
 
@@ -697,7 +697,7 @@ bb.q:                                             ; preds = %bb.p
 
 bb.r:                                             ; preds = %bb.q
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #23
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %9, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %9, i8 0, i64 16, i1 false)
   %i.ab = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 2 uses
   %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !121
   %.not = icmp eq ptr %i.ac, null
@@ -714,7 +714,7 @@ bb.t:                                             ; preds = %bb.s
   %i.ad = getelementptr inbounds nuw i8, ptr %10, i64 8
   %i.ae = getelementptr inbounds nuw i8, ptr %9, i64 8
   %i.af = load <2 x ptr>, ptr %10, align 16, !tbaa !157
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %10, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %10, i8 0, i64 16, i1 false)
   %i.ag = load ptr, ptr %i.ae, align 8, !tbaa !118 ; 8 uses
   store <2 x ptr> %i.af, ptr %9, align 16, !tbaa !157
   %.not.i.i.i.i = icmp eq ptr %i.ag, null

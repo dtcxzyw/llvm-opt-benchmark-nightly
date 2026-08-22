@@ -205,7 +205,7 @@ _ZNK5boost6system10error_codecvbEv.exit.thread:   ; preds = %bb.b
   store <2 x ptr> %i.m, ptr %i.j, align 16, !tbaa !193, !alias.scope !190
   store ptr null, ptr %i.k, align 8, !tbaa !70, !noalias !190
   %i.n = getelementptr inbounds nuw i8, ptr %6, i64 32
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.n, ptr noundef nonnull align 8 dereferenceable(24) %3, i64 24, i1 false), !tbaa.struct !194
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %i.n, ptr noundef nonnull align 8 dereferenceable(24) %3, i64 24, i1 false), !tbaa.struct !194
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #35
   call void @_ZN5boost4asio15any_io_executorC1ERKS1_(ptr noundef nonnull align 8 dereferenceable(56) %4, ptr noundef nonnull align 8 dereferenceable(56) %i.h) #35
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #35
@@ -439,7 +439,7 @@ bb.b:                                             ; preds = %bb.a
   store ptr null, ptr %i.c, align 8, !tbaa !70, !noalias !208
   %i.f = getelementptr inbounds nuw i8, ptr %8, i64 32
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 32
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.f, ptr noundef nonnull align 8 dereferenceable(24) %i.g, i64 24, i1 false), !tbaa.struct !194
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %i.f, ptr noundef nonnull align 8 dereferenceable(24) %i.g, i64 24, i1 false), !tbaa.struct !194
   invoke void @_ZNK5boost4asio9execution6detail17any_executor_base7executeINS0_6detail7binder0INS5_7binder1INS_5beast6detail18bind_front_wrapperIM10connectionFvNS_6system10error_codeEEJSt10shared_ptrISB_EEEESD_EEEEEEvOT_(ptr noundef nonnull align 8 dereferenceable(48) %6, ptr noundef nonnull align 8 dereferenceable(56) %8)
           to label %bb.c unwind label %bb.k
 
@@ -842,7 +842,7 @@ bb.a:
   store <2 x ptr> %i.m, ptr %i.i, align 16, !tbaa !193
   store ptr null, ptr %i.j, align 8, !tbaa !70
   %i.n = getelementptr inbounds nuw i8, ptr %6, i64 32 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.n, ptr noundef nonnull align 8 dereferenceable(24) %i.e, i64 24, i1 false), !tbaa.struct !194
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %i.n, ptr noundef nonnull align 8 dereferenceable(24) %i.e, i64 24, i1 false), !tbaa.struct !194
   store ptr %6, ptr %4, align 8, !tbaa !196
   invoke void @_ZN5boost4asio6detail26reactive_socket_connect_opINS_5beast6detail18bind_front_wrapperIM10connectionFvNS_6system10error_codeEEJSt10shared_ptrIS6_EEEENS0_15any_io_executorEE3ptr5resetEv(ptr noundef nonnull align 8 dereferenceable(24) %4)
           to label %bb.b unwind label %bb.h
@@ -1245,14 +1245,14 @@ bb.d:                                             ; preds = %bb.b
   store <2 x ptr> %i.k, ptr %i.h, align 16, !tbaa !193, !alias.scope !713
   store ptr null, ptr %i.i, align 8, !tbaa !70, !noalias !713
   %i.l = getelementptr inbounds nuw i8, ptr %9, i64 32 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %2, i64 24, i1 false), !tbaa.struct !194
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %2, i64 24, i1 false), !tbaa.struct !194
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #35
   call void @_ZN5boost4asio15any_io_executorC1ERKS1_(ptr noundef nonnull align 8 dereferenceable(56) %5, ptr noundef nonnull align 8 dereferenceable(56) %8) #35
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #35
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #35
   call void @_ZN5boost4asio15any_io_executorC1EOS1_(ptr noundef nonnull align 8 dereferenceable(56) %4, ptr noundef nonnull align 8 dereferenceable(56) %5) #35
   call void @llvm.lifetime.start.p0(ptr nonnull %3)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %3, ptr noundef nonnull align 8 dereferenceable(24) %i.l, i64 24, i1 false), !tbaa.struct !194
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %3, ptr noundef nonnull align 16 dereferenceable(24) %i.l, i64 24, i1 false), !tbaa.struct !194
   invoke void @_ZNO5boost4asio12async_resultINS0_8append_tINS_5beast6detail18bind_front_wrapperIM10connectionFvNS_6system10error_codeEEJSt10shared_ptrIS6_EEEEJS8_EEEJFvvEEE12init_wrapperINS0_6detail31initiate_dispatch_with_executorINS0_15any_io_executorEEEEclISD_JNSI_19empty_work_functionEEEEvOT_St5tupleIJS8_EEDpOT0_(ptr noundef nonnull align 8 dereferenceable(56) %4, ptr noundef nonnull align 8 dereferenceable(56) %9, ptr noundef nonnull align 8 dead_on_return %3, ptr noundef nonnull align 1 dereferenceable(1) %6)
           to label %bb.e unwind label %.body.i
 
@@ -1655,7 +1655,7 @@ bb.a:
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.b, ptr noundef nonnull align 8 dereferenceable(16) %i.c, i64 16, i1 false)
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 728
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 728
-  %i.f = load i32, ptr %i.e, align 4, !tbaa !68, !noalias !2432
+  %i.f = load i32, ptr %i.e, align 8, !tbaa !68, !noalias !2432
   store i32 %i.f, ptr %i.d, align 8, !tbaa !68, !alias.scope !2432
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 736
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 736
@@ -1898,7 +1898,7 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 736
   call void @llvm.lifetime.start.p0(ptr nonnull %1)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef nonnull align 8 dereferenceable(24) %i.b, i64 24, i1 false)
-  %i.c = load i32, ptr %i.a, align 4, !tbaa !68
+  %i.c = load i32, ptr %i.a, align 8, !tbaa !68
   %i.d = sext i32 %i.c to i64                     ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.f = load i64, ptr %i.e, align 8, !tbaa !32   ; 2 uses
@@ -2046,7 +2046,7 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.d, ptr noundef nonnull align 8 dereferenceable(16) %i.e, i64 16, i1 false)
   %i.f = getelementptr inbounds nuw i8, ptr %5, i64 728 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 736
-  %i.h = load i32, ptr %i.g, align 4, !tbaa !68
+  %i.h = load i32, ptr %i.g, align 8, !tbaa !68
   store i32 %i.h, ptr %i.f, align 8, !tbaa !68
   %i.i = getelementptr inbounds nuw i8, ptr %5, i64 736 ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 744
@@ -2232,7 +2232,7 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.d, ptr noundef nonnull align 8 dereferenceable(16) %i.e, i64 16, i1 false)
   %i.f = getelementptr inbounds nuw i8, ptr %5, i64 728 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 736
-  %i.h = load i32, ptr %i.g, align 4, !tbaa !68
+  %i.h = load i32, ptr %i.g, align 8, !tbaa !68
   store i32 %i.h, ptr %i.f, align 8, !tbaa !68
   %i.i = getelementptr inbounds nuw i8, ptr %5, i64 736 ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 744

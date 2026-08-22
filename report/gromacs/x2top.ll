@@ -204,7 +204,7 @@ define internal fastcc void @_ZL18lo_set_force_constP18InteractionsOfTypePfibbb(
 bb.a:
   %i.a = alloca double, align 8                   ; 5 uses
   %i.b = alloca [32 x i8], align 16               ; 5 uses
-  %5 = alloca %"struct.std::array", align 16      ; 7 uses
+  %5 = alloca %"struct.std::array", align 4       ; 7 uses
   %6 = alloca %class.InteractionOfType, align 16  ; 14 uses
   %7 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #21
@@ -282,7 +282,7 @@ bb.f:                                             ; preds = %bb.e
 .loopexit:                                        ; preds = %vector.body39, %bb.e, %bb.f
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #21
   %wide.masked.load = call <4 x float> @llvm.masked.load.v4f32.p0(ptr nonnull align 4 %0, <4 x i1> %i.o, <4 x float> poison), !tbaa !70 ; 2 uses
-  call void @llvm.masked.store.v4f32.p0(<4 x float> %wide.masked.load, ptr align 16 %5, <4 x i1> %i.o), !tbaa !70
+  call void @llvm.masked.store.v4f32.p0(<4 x float> %wide.masked.load, ptr align 4 %5, <4 x i1> %i.o), !tbaa !70
   call void @llvm.masked.store.v4f32.p0(<4 x float> %wide.masked.load, ptr align 4 %invariant.gep, <4 x i1> %i.o), !tbaa !70
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #21
   %i.af = load ptr, ptr %.sroa.06.013, align 8, !tbaa !165 ; 3 uses

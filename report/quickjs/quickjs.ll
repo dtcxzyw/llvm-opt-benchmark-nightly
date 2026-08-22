@@ -205,7 +205,7 @@ bb.u:                                             ; preds = %bb.t
   store i32 %i.cg, ptr %i.ch, align 4, !tbaa !8
   %i.ci = add nsw i64 %i.bt, -8
   %spec.select.i29 = tail call i64 @llvm.umin.i64(i64 range(i64 1, 0) %2, i64 %i.ci)
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.bu, ptr nonnull align 1 %1, i64 %spec.select.i29, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.bu, ptr nonnull align 8 %1, i64 %spec.select.i29, i1 false)
   %i.cj = load i16, ptr %i.ad, align 8, !tbaa !35 ; 3 uses
   %i.ck = icmp eq i16 %i.cj, -1
   br i1 %i.ck, label %bb.v, label %bb.w, !prof !9
@@ -608,7 +608,7 @@ bb.j:                                             ; preds = %bb.g, %bb.f, %bb.e
   %i.aj = load i64, ptr %i.f, align 8, !tbaa !10
   %i.ak = add i64 %i.aj, %.011.i.i.i
   store i64 %i.ak, ptr %i.f, align 8, !tbaa !10
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.m, ptr align 1 %1, i64 %2, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.m, ptr align 1 %1, i64 %2, i1 false)
   %i.al = getelementptr inbounds nuw i8, ptr %i.m, i64 %2
   store i8 0, ptr %i.al, align 1, !tbaa !35
   br label %js_malloc.exit.thread
@@ -700,7 +700,7 @@ bb.j:                                             ; preds = %bb.g, %bb.f, %bb.e
   %i.ak = load i64, ptr %i.g, align 8, !tbaa !10
   %i.al = add i64 %i.ak, %.011.i.i.i.i
   store i64 %i.al, ptr %i.g, align 8, !tbaa !10
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.n, ptr nonnull readonly align 1 %1, i64 %i.a, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.n, ptr nonnull readonly align 1 %1, i64 %i.a, i1 false)
   %i.am = getelementptr inbounds nuw i8, ptr %i.n, i64 %i.a
   store i8 0, ptr %i.am, align 1, !tbaa !35
   br label %js_strndup.exit
@@ -1097,7 +1097,7 @@ __JS_NewAtomInit.exit.i:                          ; preds = %bb.j, %bb.i, %bb.h
   %i.fy = getelementptr inbounds nuw i8, ptr %i.fe, i64 8
   store i32 0, ptr %i.fy, align 8, !tbaa !80
   %i.fz = getelementptr inbounds nuw i8, ptr %i.fe, i64 24 ; 2 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.fz, ptr nonnull readonly align 1 %.023.i, i64 %i.ew, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.fz, ptr nonnull readonly align 1 %.023.i, i64 %i.ew, i1 false)
   %i.ga = getelementptr inbounds i8, ptr %i.fz, i64 %i.ew
   store i8 0, ptr %i.ga, align 1, !tbaa !35
   %i.gb = tail call fastcc i32 @__JS_NewAtom(ptr noundef nonnull %i.b, ptr noundef nonnull %i.fe, i32 noundef range(i32 1, 5) %.017.i)
@@ -1500,7 +1500,7 @@ bb.e:                                             ; preds = %bb.d
 
 js_arena_calloc.exit.thread26.i.i.i:              ; preds = %bb.e, %bb.d
   %i.ag = getelementptr inbounds nuw i8, ptr %i.u, i64 8 ; 6 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(112) %i.ag, i8 0, i64 112, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(112) %i.ag, i8 0, i64 112, i1 false)
   %i.ah = load i64, ptr %i.c, align 8, !tbaa !34
   %i.ai = add i64 %i.ah, 1
   store i64 %i.ai, ptr %i.c, align 8, !tbaa !34
@@ -1903,7 +1903,7 @@ str8.exit39:                                      ; preds = %bb.q, %bb.r, %bb.s
   %i.ch = getelementptr inbounds nuw i8, ptr %i.bh, i64 8
   store i32 0, ptr %i.ch, align 8, !tbaa !80
   %i.ci = getelementptr inbounds nuw i8, ptr %i.bh, i64 24 ; 2 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.ci, ptr align 1 %1, i64 %.331.i, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ci, ptr align 1 %1, i64 %.331.i, i1 false)
   %i.cj = getelementptr inbounds nuw i8, ptr %i.ci, i64 %.331.i
   store i8 0, ptr %i.cj, align 1, !tbaa !35
   br label %utf8_decode_buf8.exit
@@ -2306,7 +2306,7 @@ bb.l:                                             ; preds = %bb.g, %bb.h, %bb.i
   %i.as = getelementptr inbounds nuw i8, ptr %i.r, i64 8
   store i32 0, ptr %i.as, align 8, !tbaa !80
   %i.at = getelementptr inbounds nuw i8, ptr %i.r, i64 24 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.at, ptr nonnull align 16 %i.a, i64 %i.g, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.at, ptr nonnull align 16 %i.a, i64 %i.g, i1 false)
   %i.au = getelementptr inbounds i8, ptr %i.at, i64 %i.g
   store i8 0, ptr %i.au, align 1, !tbaa !35
   %i.av = load ptr, ptr %i.e, align 8, !tbaa !50
@@ -2412,7 +2412,7 @@ str8.exit10:                                      ; preds = %bb.e, %bb.f, %bb.g
   %i.ap = getelementptr inbounds nuw i8, ptr %i.n, i64 8
   store i32 0, ptr %i.ap, align 8, !tbaa !80
   %i.aq = getelementptr inbounds nuw i8, ptr %i.n, i64 24 ; 2 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.aq, ptr align 1 %1, i64 %i.c, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.aq, ptr align 1 %1, i64 %i.c, i1 false)
   %i.ar = getelementptr inbounds i8, ptr %i.aq, i64 %i.c
   store i8 0, ptr %i.ar, align 1, !tbaa !35
   %i.as = ptrtoint ptr %i.n to i64
@@ -2635,7 +2635,7 @@ bb.t:                                             ; preds = %bb.s
 
 js_arena_calloc.exit.thread26.i.i:                ; preds = %bb.t, %bb.s
   %i.db = getelementptr inbounds nuw i8, ptr %i.cp, i64 8 ; 4 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(24) %i.db, i8 0, i64 24, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.db, i8 0, i64 24, i1 false)
   %i.dc = load i64, ptr %i.bx, align 8, !tbaa !34
   %i.dd = add i64 %i.dc, 1
   store i64 %i.dd, ptr %i.bx, align 8, !tbaa !34
@@ -2913,7 +2913,7 @@ str8.exit163:                                     ; preds = %bb.ah, %bb.ai, %bb.
   %i.ic = zext i1 %isnotneg to i32
   %i.id = add nuw i32 %i.ib, %i.ic
   %i.ie = sext i32 %i.id to i64
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.hj, ptr align 1 %.0.i.i161, i64 %i.ie, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.hj, ptr align 1 %.0.i.i161, i64 %i.ie, i1 false)
   %i.if = getelementptr inbounds i8, ptr %1, i64 -4 ; 2 uses
   %i.ig = load i32, ptr %i.if, align 4, !tbaa !8  ; 2 uses
   %i.ih = add nsw i32 %i.ig, -1
@@ -3316,7 +3316,7 @@ str8.exit:                                        ; preds = %bb.f, %bb.g, %bb.h
   %i.as = getelementptr inbounds nuw i8, ptr %i.r, i64 8
   store i32 0, ptr %i.as, align 8, !tbaa !80
   %i.at = getelementptr inbounds nuw i8, ptr %i.r, i64 24 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.at, ptr nonnull align 16 %i.a, i64 %i.g, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.at, ptr nonnull align 16 %i.a, i64 %i.g, i1 false)
   %i.au = getelementptr inbounds i8, ptr %i.at, i64 %i.g
   store i8 0, ptr %i.au, align 1, !tbaa !35
   %i.av = ptrtoint ptr %i.r to i64
@@ -3646,7 +3646,7 @@ __JS_NewAtomInit.exit:                            ; preds = %bb.f, %bb.g, %bb.h
   %i.am = getelementptr inbounds nuw i8, ptr %i.q, i64 8
   store i32 0, ptr %i.am, align 8, !tbaa !80
   %i.an = getelementptr inbounds nuw i8, ptr %i.q, i64 24 ; 2 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.an, ptr readonly align 1 %i.f, i64 %i.c, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.an, ptr readonly align 1 %i.f, i64 %i.c, i1 false)
   %i.ao = getelementptr inbounds i8, ptr %i.an, i64 %i.c
   store i8 0, ptr %i.ao, align 1, !tbaa !35
   %i.ap = tail call fastcc i32 @__JS_NewAtom(ptr noundef nonnull %0, ptr noundef nonnull %i.q, i32 noundef 1) ; 2 uses
@@ -4049,7 +4049,7 @@ str8.exit:                                        ; preds = %bb.g, %bb.h, %bb.i
   %i.az = getelementptr inbounds nuw i8, ptr %i.y, i64 8
   store i32 0, ptr %i.az, align 8, !tbaa !80
   %i.ba = getelementptr inbounds nuw i8, ptr %i.y, i64 24 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.ba, ptr nonnull align 16 %i.b, i64 %i.n, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ba, ptr nonnull align 16 %i.b, i64 %i.n, i1 false)
   %i.bb = getelementptr inbounds i8, ptr %i.ba, i64 %i.n
   store i8 0, ptr %i.bb, align 1, !tbaa !35
   %i.bc = ptrtoint ptr %i.y to i64
@@ -4417,7 +4417,7 @@ str8.exit10.i141:                                 ; preds = %bb.an, %bb.am, %bb.
   %i.hv = getelementptr inbounds nuw i8, ptr %i.gk, i64 16
   store i32 0, ptr %i.hv, align 8, !tbaa !80
   %i.hw = getelementptr inbounds nuw i8, ptr %i.gk, i64 32
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(19) %i.hw, ptr noundef nonnull align 1 dereferenceable(19) @.str.146, i64 19, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(19) %i.hw, ptr noundef nonnull align 1 dereferenceable(19) @.str.146, i64 19, i1 false)
   %i.hx = getelementptr inbounds nuw i8, ptr %i.gk, i64 51
   store i8 0, ptr %i.hx, align 1, !tbaa !35
   %i.hy = ptrtoint ptr %i.gw to i64
@@ -4675,7 +4675,7 @@ str8.exit10.i152:                                 ; preds = %bb.bm, %bb.bl, %bb.
   %i.mi = getelementptr inbounds nuw i8, ptr %i.kx, i64 16
   store i32 0, ptr %i.mi, align 8, !tbaa !80
   %i.mj = getelementptr inbounds nuw i8, ptr %i.kx, i64 32
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(15) %i.mj, ptr noundef nonnull align 1 dereferenceable(15) @.str.148, i64 15, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(15) %i.mj, ptr noundef nonnull align 1 dereferenceable(15) @.str.148, i64 15, i1 false)
   %i.mk = getelementptr inbounds nuw i8, ptr %i.kx, i64 47
   store i8 0, ptr %i.mk, align 1, !tbaa !35
   %i.ml = ptrtoint ptr %i.lj to i64
@@ -4801,7 +4801,7 @@ str8.exit10.i163:                                 ; preds = %bb.bx, %bb.bw, %bb.
   %i.or = getelementptr inbounds nuw i8, ptr %i.ng, i64 16
   store i32 0, ptr %i.or, align 8, !tbaa !80
   %i.os = getelementptr inbounds nuw i8, ptr %i.ng, i64 32
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(18) %i.os, ptr noundef nonnull align 1 dereferenceable(18) @.str.149, i64 18, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(18) %i.os, ptr noundef nonnull align 1 dereferenceable(18) @.str.149, i64 18, i1 false)
   %i.ot = getelementptr inbounds nuw i8, ptr %i.ng, i64 50
   store i8 0, ptr %i.ot, align 2, !tbaa !35
   %i.ou = ptrtoint ptr %i.ns to i64
@@ -5204,7 +5204,7 @@ bb.e:                                             ; preds = %bb.d
 
 js_arena_calloc.exit.thread26.i.i.i:              ; preds = %bb.e, %bb.d
   %i.ag = getelementptr inbounds nuw i8, ptr %i.u, i64 8 ; 3 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(312) %i.ag, i8 0, i64 312, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(312) %i.ag, i8 0, i64 312, i1 false)
   %i.ah = load i64, ptr %i.c, align 8, !tbaa !34
   %i.ai = add i64 %i.ah, 1
   store i64 %i.ai, ptr %i.c, align 8, !tbaa !34
@@ -5607,7 +5607,7 @@ str8.exit10.i290.i:                               ; preds = %bb.cg, %bb.cf, %bb.
   %i.px = getelementptr inbounds nuw i8, ptr %.1.i339358.i, i64 8
   store i32 0, ptr %i.px, align 8, !tbaa !80
   %i.py = getelementptr inbounds nuw i8, ptr %.1.i339358.i, i64 24 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.py, ptr nonnull readonly align 16 %i.e, i64 %i.mp, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.py, ptr nonnull readonly align 16 %i.e, i64 %i.mp, i1 false)
   %i.pz = getelementptr inbounds i8, ptr %i.py, i64 %i.mp
   store i8 0, ptr %i.pz, align 1, !tbaa !35
   %i.qa = ptrtoint ptr %.1.i339358.i to i64
@@ -5834,7 +5834,7 @@ str8.exit10.i279.i:                               ; preds = %bb.db, %bb.da, %bb.
   %i.ue = getelementptr inbounds nuw i8, ptr %.1.i331364.i, i64 8
   store i32 0, ptr %i.ue, align 8, !tbaa !80
   %i.uf = getelementptr inbounds nuw i8, ptr %.1.i331364.i, i64 24 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.uf, ptr nonnull readonly align 16 %i.f, i64 %i.qw, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.uf, ptr nonnull readonly align 16 %i.f, i64 %i.qw, i1 false)
   %i.ug = getelementptr inbounds i8, ptr %i.uf, i64 %i.qw
   store i8 0, ptr %i.ug, align 1, !tbaa !35
   br label %JS_AtomToString.exit195.i
@@ -6163,7 +6163,7 @@ str8.exit10.i268.i:                               ; preds = %bb.ef, %bb.ee, %bb.
   %i.zy = getelementptr inbounds nuw i8, ptr %.1.i323370.i, i64 8
   store i32 0, ptr %i.zy, align 8, !tbaa !80
   %i.zz = getelementptr inbounds nuw i8, ptr %.1.i323370.i, i64 24 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.zz, ptr nonnull readonly align 16 %i.g, i64 %i.wq, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.zz, ptr nonnull readonly align 16 %i.g, i64 %i.wq, i1 false)
   %i.aaa = getelementptr inbounds i8, ptr %i.zz, i64 %i.wq
   store i8 0, ptr %i.aaa, align 1, !tbaa !35
   %i.aab = ptrtoint ptr %.1.i323370.i to i64
@@ -6390,7 +6390,7 @@ str8.exit10.i257.i:                               ; preds = %bb.fa, %bb.ez, %bb.
   %i.aef = getelementptr inbounds nuw i8, ptr %.1.i315376.i, i64 8
   store i32 0, ptr %i.aef, align 8, !tbaa !80
   %i.aeg = getelementptr inbounds nuw i8, ptr %.1.i315376.i, i64 24 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.aeg, ptr nonnull readonly align 16 %i.h, i64 %i.aax, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.aeg, ptr nonnull readonly align 16 %i.h, i64 %i.aax, i1 false)
   %i.aeh = getelementptr inbounds i8, ptr %i.aeg, i64 %i.aax
   store i8 0, ptr %i.aeh, align 1, !tbaa !35
   br label %JS_AtomToString.exit175.i
@@ -6775,7 +6775,7 @@ str8.exit10.i246.i:                               ; preds = %bb.gh, %bb.gg, %bb.
   %i.akw = getelementptr inbounds nuw i8, ptr %.1.i307382.i, i64 8
   store i32 0, ptr %i.akw, align 8, !tbaa !80
   %i.akx = getelementptr inbounds nuw i8, ptr %.1.i307382.i, i64 24 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.akx, ptr nonnull readonly align 16 %i.i, i64 %i.aho, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.akx, ptr nonnull readonly align 16 %i.i, i64 %i.aho, i1 false)
   %i.aky = getelementptr inbounds i8, ptr %i.akx, i64 %i.aho
   store i8 0, ptr %i.aky, align 1, !tbaa !35
   %i.akz = ptrtoint ptr %.1.i307382.i to i64
@@ -7002,7 +7002,7 @@ str8.exit10.i.i:                                  ; preds = %bb.hc, %bb.hb, %bb.
   %i.apd = getelementptr inbounds nuw i8, ptr %.1.i301388.i, i64 8
   store i32 0, ptr %i.apd, align 8, !tbaa !80
   %i.ape = getelementptr inbounds nuw i8, ptr %.1.i301388.i, i64 24 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.ape, ptr nonnull readonly align 16 %i.j, i64 %i.alv, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ape, ptr nonnull readonly align 16 %i.j, i64 %i.alv, i1 false)
   %i.apf = getelementptr inbounds i8, ptr %i.ape, i64 %i.alv
   store i8 0, ptr %i.apf, align 1, !tbaa !35
   br label %JS_AtomToString.exit155.i
@@ -7405,11 +7405,11 @@ bb.fo:                                            ; preds = %bb.fn
   %.promoted.i515 = ptrtoaddr ptr %.promoted.i to i64 ; 4 uses
   %wide.trip.count.i = zext nneg i32 %i.adb to i64 ; 4 uses
   %i.adf = add nsw i64 %wide.trip.count.i, -1
-  %5 = add i64 %i.add, 3
-  %6 = sub i64 %i.add, %.promoted.i515
-  %smin526 = tail call i64 @llvm.smin.i64(i64 %6, i64 3)
-  %i.adg = add i64 %smin526, %.promoted.i515
-  %i.adh = sub i64 %5, %i.adg
+  %5 = sub i64 %i.add, %.promoted.i515
+  %6 = tail call i64 @llvm.smin.i64(i64 %5, i64 3)
+  %7 = add i64 %i.add, 3
+  %i.adg = add i64 %6, %.promoted.i515
+  %i.adh = sub i64 %7, %i.adg
   %i.adi = lshr i64 %i.adh, 2
   %umin527 = tail call i64 @llvm.umin.i64(i64 %i.adf, i64 %i.adi) ; 2 uses
   %i.adj = add nuw nsw i64 %umin527, 1            ; 2 uses
@@ -7812,7 +7812,7 @@ bb.f:                                             ; preds = %bb.e
 
 js_arena_calloc.exit.thread26.i.i.i:              ; preds = %bb.f, %bb.e
   %i.ar = getelementptr inbounds nuw i8, ptr %i.af, i64 8 ; 3 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(48) %i.ar, i8 0, i64 48, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.ar, i8 0, i64 48, i1 false)
   %i.as = load i64, ptr %i.n, align 8, !tbaa !34
   %i.at = add i64 %i.as, 1
   store i64 %i.at, ptr %i.n, align 8, !tbaa !34
@@ -8215,7 +8215,7 @@ bb.g:                                             ; preds = %bb.f
 
 js_arena_calloc.exit.thread26.i.i.i:              ; preds = %bb.g, %bb.f
   %i.ao = getelementptr inbounds nuw i8, ptr %i.ac, i64 8 ; 8 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(64) %i.ao, i8 0, i64 64, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.ao, i8 0, i64 64, i1 false)
   %i.ap = load i64, ptr %i.k, align 8, !tbaa !34
   %i.aq = add i64 %i.ap, 1
   store i64 %i.aq, ptr %i.k, align 8, !tbaa !34
@@ -8422,7 +8422,7 @@ bb.u:                                             ; preds = %bb.t
 
 js_arena_calloc.exit.thread26.i.i.i.1:            ; preds = %bb.u, %bb.t
   %i.ek = getelementptr inbounds nuw i8, ptr %i.dy, i64 8 ; 6 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(64) %i.ek, i8 0, i64 64, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.ek, i8 0, i64 64, i1 false)
   %i.el = load i64, ptr %i.dg, align 8, !tbaa !34
   %i.em = add i64 %i.el, 1
   store i64 %i.em, ptr %i.dg, align 8, !tbaa !34
@@ -8825,7 +8825,7 @@ bb.e:                                             ; preds = %bb.d
 
 js_arena_calloc.exit.thread26.i.i.i:              ; preds = %bb.e, %bb.d
   %i.ag = getelementptr inbounds nuw i8, ptr %i.u, i64 8 ; 8 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(160) %i.ag, i8 0, i64 160, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(160) %i.ag, i8 0, i64 160, i1 false)
   %i.ah = load i64, ptr %i.c, align 8, !tbaa !34
   %i.ai = add i64 %i.ah, 1
   store i64 %i.ai, ptr %i.c, align 8, !tbaa !34
@@ -9118,7 +9118,7 @@ bb.e:                                             ; preds = %bb.d
 
 js_arena_calloc.exit.thread26.i.i.i:              ; preds = %bb.e, %bb.d
   %i.ag = getelementptr inbounds nuw i8, ptr %i.u, i64 8 ; 4 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(136) %i.ag, i8 0, i64 136, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(136) %i.ag, i8 0, i64 136, i1 false)
   %i.ah = load i64, ptr %i.c, align 8, !tbaa !34
   %i.ai = add i64 %i.ah, 1
   store i64 %i.ai, ptr %i.c, align 8, !tbaa !34
@@ -9521,7 +9521,7 @@ bb.h:                                             ; preds = %bb.g
 
 js_arena_calloc.exit.thread26.i.i.i:              ; preds = %bb.h, %bb.g
   %i.ao = getelementptr inbounds nuw i8, ptr %i.ac, i64 8 ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(24) %i.ao, i8 0, i64 24, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ao, i8 0, i64 24, i1 false)
   %i.ap = load i64, ptr %i.k, align 8, !tbaa !34
   %i.aq = add i64 %i.ap, 1
   store i64 %i.aq, ptr %i.k, align 8, !tbaa !34
@@ -9924,7 +9924,7 @@ bb.t:                                             ; preds = %bb.s, %bb.r
   %i.de = getelementptr inbounds nuw i8, ptr %i.bv, i64 24
   store i32 3, ptr %i.de, align 8, !tbaa !8
   %i.df = getelementptr inbounds nuw i8, ptr %i.bv, i64 56
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.df, i8 0, i64 16, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.df, i8 0, i64 16, i1 false)
   %i.dg = getelementptr inbounds nuw i8, ptr %i.bv, i64 28
   store i32 %2, ptr %i.dg, align 4, !tbaa !8
   %i.dh = getelementptr inbounds nuw i8, ptr %i.bv, i64 32
@@ -10327,7 +10327,7 @@ bb.j:                                             ; preds = %bb.e, %bb.f, %bb.g
   %i.at = load i64, ptr %i.p, align 8, !tbaa !10
   %i.au = add i64 %i.at, %.011.i.i
   store i64 %i.au, ptr %i.p, align 8, !tbaa !10
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.w, ptr nonnull align 1 %1, i64 %i.k, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.w, ptr nonnull align 8 %1, i64 %i.k, i1 false)
   %i.av = getelementptr inbounds i8, ptr %i.w, i64 -4
   store i32 1, ptr %i.av, align 4, !tbaa !8
   %i.aw = load ptr, ptr %i.l, align 8, !tbaa !50
@@ -10730,7 +10730,7 @@ str8.exit:                                        ; preds = %bb.f, %bb.g, %bb.h
   %i.at = getelementptr inbounds nuw i8, ptr %i.s, i64 8
   store i32 0, ptr %i.at, align 8, !tbaa !80
   %i.au = getelementptr inbounds nuw i8, ptr %i.s, i64 24 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.au, ptr nonnull align 16 %i.a, i64 %i.h, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.au, ptr nonnull align 16 %i.a, i64 %i.h, i1 false)
   %i.av = getelementptr inbounds i8, ptr %i.au, i64 %i.h
   store i8 0, ptr %i.av, align 1, !tbaa !35
   %i.aw = ptrtoint ptr %i.s to i64
@@ -11133,7 +11133,7 @@ str8.exit180:                                     ; preds = %bb.bk, %bb.bl, %bb.
   %i.na = getelementptr inbounds nuw i8, ptr %i.lz, i64 8
   store i32 0, ptr %i.na, align 8, !tbaa !80
   %i.nb = getelementptr inbounds nuw i8, ptr %i.lz, i64 24 ; 2 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.nb, ptr align 1 %.4, i64 %i.lo, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.nb, ptr align 1 %.4, i64 %i.lo, i1 false)
   %i.nc = getelementptr inbounds i8, ptr %i.nb, i64 %i.lo
   store i8 0, ptr %i.nc, align 1, !tbaa !35
   %i.nd = ptrtoint ptr %i.lz to i64
@@ -11536,7 +11536,7 @@ js_mp_add_mul1.exit.us.preheader.i:               ; preds = %js_mp_mul1.exit.i
   %i.cf = add i32 %i.ax, -1
   %i.cg = zext i32 %i.cf to i64
   %i.ch = shl nuw nsw i64 %i.cg, 2
-  tail call void @llvm.memset.p0.i64(ptr align 4 %scevgep.i, i8 0, i64 %i.ch, i1 false), !tbaa !8
+  tail call void @llvm.memset.p0.i64(ptr align 8 %scevgep.i, i8 0, i64 %i.ch, i1 false), !tbaa !8
   br label %js_mp_mul_basecase.exit
 
 .lr.ph.i19.i:                                     ; preds = %._crit_edge.loopexit.i24.i, %.lr.ph.i19.preheader.i
@@ -11939,7 +11939,7 @@ bb.ac:                                            ; preds = %bb.ab
   br i1 %niter408.ncmp.1, label %js_mp_neg.exit142.loopexit.unr-lcssa, label %.lr.ph.i137, !llvm.loop !1587
 
 bb.ad:                                            ; preds = %bb.ab
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.cz, ptr nonnull align 4 %i.m, i64 %i.co, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.cz, ptr nonnull align 4 %i.m, i64 %i.co, i1 false)
   br label %js_mp_neg.exit142
 
 js_mp_neg.exit142.loopexit.unr-lcssa:             ; preds = %.lr.ph.i137
@@ -12342,7 +12342,7 @@ bb.m:                                             ; preds = %bb.j, %bb.i, %bb.h
   %i.aw = load i64, ptr %i.s, align 8, !tbaa !10
   %i.ax = add i64 %i.aw, %.011.i.i.i.i
   store i64 %i.ax, ptr %i.s, align 8, !tbaa !10
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.z, ptr nonnull align 1 %1, i64 %.0.i, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.z, ptr nonnull align 1 %1, i64 %.0.i, i1 false)
   %i.ay = getelementptr inbounds i8, ptr %i.z, i64 %.0.i
   store i8 0, ptr %i.ay, align 1, !tbaa !35
   %i.az = load i8, ptr %2, align 1, !tbaa !35
@@ -12745,7 +12745,7 @@ bb.dp:                                            ; preds = %bb.dm, %bb.dl, %bb.
   store i64 %i.uf, ptr %i.ta, align 8, !tbaa !10
   %i.ug = getelementptr inbounds nuw i8, ptr %i.f, i64 24
   %i.uh = load ptr, ptr %i.ug, align 8, !tbaa !395
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.th, ptr align 1 %i.uh, i64 %i.sv, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.th, ptr align 1 %i.uh, i64 %i.sv, i1 false)
   %i.ui = icmp sgt i32 %i.st, 0
   br i1 %i.ui, label %.lr.ph.i, label %._crit_edge.i
 
@@ -12805,7 +12805,7 @@ bb.du:                                            ; preds = %._crit_edge39.i, %.
   %i.vg = phi i64 [ %.pre.i, %._crit_edge39.i ], [ %i.vb, %._crit_edge.i ]
   %i.vh = load ptr, ptr %i.g, align 8, !tbaa !458
   %i.vi = getelementptr inbounds nuw i8, ptr %i.vh, i64 %i.vg
-  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.vi, ptr nonnull readonly align 1 %i.th, i64 range(i64 -2147483648, 2147483648) %i.sv, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.vi, ptr nonnull readonly align 8 %i.th, i64 range(i64 -2147483648, 2147483648) %i.sv, i1 false)
   %i.vj = load i64, ptr %i.j, align 8, !tbaa !457
   %i.vk = add i64 %i.vj, %i.sv
   store i64 %i.vk, ptr %i.j, align 8, !tbaa !457
@@ -13208,7 +13208,7 @@ bb.k:                                             ; preds = %bb.h, %bb.g, %bb.f
   %i.ao = load i64, ptr %i.k, align 8, !tbaa !10
   %i.ap = add i64 %i.ao, %.011.i.i.i
   store i64 %i.ap, ptr %i.k, align 8, !tbaa !10
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.r, ptr align 1 %i.a, i64 %i.b, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.r, ptr align 1 %i.a, i64 %i.b, i1 false)
   br label %bb.o
 
 bb.l:                                             ; preds = %bb.a
@@ -13611,7 +13611,7 @@ bb.f:                                             ; preds = %bb.e
 
 js_arena_calloc.exit.thread26.i.i:                ; preds = %bb.f, %bb.e
   %i.al = getelementptr inbounds nuw i8, ptr %i.z, i64 8 ; 3 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(64) %i.al, i8 0, i64 64, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.al, i8 0, i64 64, i1 false)
   %i.am = load i64, ptr %i.h, align 8, !tbaa !34
   %i.an = add i64 %i.am, 1
   store i64 %i.an, ptr %i.h, align 8, !tbaa !34
@@ -14014,7 +14014,7 @@ bb.r:                                             ; preds = %bb.q
 
 js_arena_calloc.exit.thread26.i.i.i:              ; preds = %bb.r, %bb.q
   %i.co = getelementptr inbounds nuw i8, ptr %i.cc, i64 8 ; 4 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(88) %i.co, i8 0, i64 88, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(88) %i.co, i8 0, i64 88, i1 false)
   %i.cp = load i64, ptr %i.bk, align 8, !tbaa !34
   %i.cq = add i64 %i.cp, 1
   store i64 %i.cq, ptr %i.bk, align 8, !tbaa !34
@@ -14417,7 +14417,7 @@ bb.k:                                             ; preds = %bb.j
 
 js_arena_calloc.exit.thread26.i.i.i:              ; preds = %bb.k, %bb.j
   %i.ct = getelementptr inbounds nuw i8, ptr %i.ch, i64 8 ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(24) %i.ct, i8 0, i64 24, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ct, i8 0, i64 24, i1 false)
   %i.cu = load i64, ptr %i.bp, align 8, !tbaa !34
   %i.cv = add i64 %i.cu, 1
   store i64 %i.cv, ptr %i.bp, align 8, !tbaa !34
@@ -14820,7 +14820,7 @@ js_realloc_rt.exit.thread:                        ; preds = %bb.h, %bb.i, %bb.j
   %i.aw = load i32, ptr %i.c, align 4, !tbaa !1859
   %i.ax = sext i32 %i.aw to i64
   %i.ay = mul nsw i64 %i.ax, 20
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.ab, ptr align 4 %i.av, i64 %i.ay, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ab, ptr align 4 %i.av, i64 %i.ay, i1 false)
   br label %.critedge
 
 js_realloc_rt.exit:                               ; preds = %.js_realloc_rt.exit_crit_edge, %bb.e
@@ -15223,7 +15223,7 @@ js_malloc.exit.i:                                 ; preds = %bb.dg, %bb.df, %bb.
 .lr.ph.preheader.i:                               ; preds = %js_malloc.exit.i
   %i.wn = shl i64 %.val232, 1
   %i.wo = and i64 %i.wn, 4294967294
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 2 %i.vm, i8 -1, i64 %i.wo, i1 false), !tbaa !38
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.vm, i8 -1, i64 %i.wo, i1 false), !tbaa !38
   br label %bb.dj
 
 bb.dj:                                            ; preds = %.lr.ph.preheader.i, %js_malloc.exit.i
@@ -15626,7 +15626,7 @@ bb.r:                                             ; preds = %bb.k, %bb.l, %bb.m
   %i.bv = load i64, ptr %i.ak, align 8, !tbaa !10
   %i.bw = add i64 %i.bv, %.011.i.i.i
   store i64 %i.bw, ptr %i.ak, align 8, !tbaa !10
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.ar, ptr nonnull align 1 %i.ab, i64 %i.ad, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ar, ptr nonnull align 1 %i.ab, i64 %i.ad, i1 false)
   %i.bx = getelementptr i8, ptr %i.ar, i64 %i.ad  ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.bx, ptr nonnull align 1 %2, i64 %i.ac, i1 false)
   %i.by = getelementptr i8, ptr %i.bx, i64 %i.ac

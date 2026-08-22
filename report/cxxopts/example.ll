@@ -205,7 +205,7 @@ bb.a:
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 384
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !649, !nonnull !209, !align !306 ; 3 uses
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 104
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(160) %1, i8 0, i64 99, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(160) %1, i8 0, i64 99, i1 false)
   store ptr %i.l, ptr %i.m, align 8, !tbaa !493
   %i.n = lshr i16 %i.j, 8
   %i.o = trunc nuw i16 %i.n to i8
@@ -215,7 +215,7 @@ bb.a:
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 120
   store i8 %i.p, ptr %i.r, align 8, !tbaa !741
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 128
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.s, i8 0, i64 32, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.s, i8 0, i64 32, i1 false)
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 280
   %i.u = load i64, ptr %i.t, align 8, !tbaa !18
   %i.v = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.u
@@ -259,7 +259,7 @@ bb.e:                                             ; preds = %bb.d
   %i.aj = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.ak = load ptr, ptr %i.aj, align 16, !tbaa !731
   store ptr %i.ak, ptr %i.ai, align 8, !tbaa !731
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(160) %1, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(160) %1, i8 0, i64 24, i1 false)
   %i.al = getelementptr inbounds nuw i8, ptr %i.af, i64 24
   %i.am = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
   %i.an = load <2 x ptr>, ptr %i.am, align 8, !tbaa !272
@@ -277,7 +277,7 @@ bb.e:                                             ; preds = %bb.d
   %i.av = getelementptr inbounds nuw i8, ptr %1, i64 64
   %i.aw = load ptr, ptr %i.av, align 16, !tbaa !751
   store ptr %i.aw, ptr %i.au, align 8, !tbaa !751
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.as, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %i.as, i8 0, i64 24, i1 false)
   %i.ax = getelementptr inbounds nuw i8, ptr %i.af, i64 72
   %i.ay = getelementptr inbounds nuw i8, ptr %1, i64 72 ; 2 uses
   %i.az = load <2 x ptr>, ptr %i.ay, align 8, !tbaa !734
@@ -288,7 +288,7 @@ bb.e:                                             ; preds = %bb.d
   store ptr %i.bc, ptr %i.ba, align 8, !tbaa !735
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ay, i8 0, i64 24, i1 false)
   %i.bd = getelementptr inbounds nuw i8, ptr %i.af, i64 96
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.bd, ptr noundef nonnull align 8 dereferenceable(64) %i.z, i64 64, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.bd, ptr noundef nonnull align 16 dereferenceable(64) %i.z, i64 64, i1 false)
   store ptr %i.af, ptr %3, align 8, !tbaa !752
   store ptr @_ZNSt17_Function_handlerIFbcENSt8__detail15_BracketMatcherINSt7__cxx1112regex_traitsIcEELb0ELb1EEEE9_M_invokeERKSt9_Any_dataOc, ptr %i.ag, align 8, !tbaa !552
   store ptr @_ZNSt17_Function_handlerIFbcENSt8__detail15_BracketMatcherINSt7__cxx1112regex_traitsIcEELb0ELb1EEEE10_M_managerERSt9_Any_dataRKS8_St18_Manager_operation, ptr %i.ae, align 8, !tbaa !555
@@ -691,7 +691,7 @@ bb.a:
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 384
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !649, !nonnull !209, !align !306 ; 3 uses
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 104
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(160) %1, i8 0, i64 99, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(160) %1, i8 0, i64 99, i1 false)
   store ptr %i.l, ptr %i.m, align 8, !tbaa !493
   %i.n = lshr i16 %i.j, 8
   %i.o = trunc nuw i16 %i.n to i8
@@ -701,7 +701,7 @@ bb.a:
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 120
   store i8 %i.p, ptr %i.r, align 8, !tbaa !760
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 128
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.s, i8 0, i64 32, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.s, i8 0, i64 32, i1 false)
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 280
   %i.u = load i64, ptr %i.t, align 8, !tbaa !18
   %i.v = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.u
@@ -745,7 +745,7 @@ bb.e:                                             ; preds = %bb.d
   %i.aj = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.ak = load ptr, ptr %i.aj, align 16, !tbaa !731
   store ptr %i.ak, ptr %i.ai, align 8, !tbaa !731
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(160) %1, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(160) %1, i8 0, i64 24, i1 false)
   %i.al = getelementptr inbounds nuw i8, ptr %i.af, i64 24
   %i.am = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
   %i.an = load <2 x ptr>, ptr %i.am, align 8, !tbaa !272
@@ -763,7 +763,7 @@ bb.e:                                             ; preds = %bb.d
   %i.av = getelementptr inbounds nuw i8, ptr %1, i64 64
   %i.aw = load ptr, ptr %i.av, align 16, !tbaa !751
   store ptr %i.aw, ptr %i.au, align 8, !tbaa !751
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.as, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %i.as, i8 0, i64 24, i1 false)
   %i.ax = getelementptr inbounds nuw i8, ptr %i.af, i64 72
   %i.ay = getelementptr inbounds nuw i8, ptr %1, i64 72 ; 2 uses
   %i.az = load <2 x ptr>, ptr %i.ay, align 8, !tbaa !734
@@ -774,7 +774,7 @@ bb.e:                                             ; preds = %bb.d
   store ptr %i.bc, ptr %i.ba, align 8, !tbaa !735
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ay, i8 0, i64 24, i1 false)
   %i.bd = getelementptr inbounds nuw i8, ptr %i.af, i64 96
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.bd, ptr noundef nonnull align 8 dereferenceable(64) %i.z, i64 64, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.bd, ptr noundef nonnull align 16 dereferenceable(64) %i.z, i64 64, i1 false)
   store ptr %i.af, ptr %3, align 8, !tbaa !764
   store ptr @_ZNSt17_Function_handlerIFbcENSt8__detail15_BracketMatcherINSt7__cxx1112regex_traitsIcEELb1ELb1EEEE9_M_invokeERKSt9_Any_dataOc, ptr %i.ag, align 8, !tbaa !552
   store ptr @_ZNSt17_Function_handlerIFbcENSt8__detail15_BracketMatcherINSt7__cxx1112regex_traitsIcEELb1ELb1EEEE10_M_managerERSt9_Any_dataRKS8_St18_Manager_operation, ptr %i.ae, align 8, !tbaa !555
@@ -1177,7 +1177,7 @@ bb.b:                                             ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.k = load <2 x ptr>, ptr %2, align 16, !tbaa !67
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %2, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %2, i8 0, i64 16, i1 false)
   %i.l = load ptr, ptr %i.j, align 8, !tbaa !68   ; 8 uses
   store <2 x ptr> %i.k, ptr %i.a, align 8, !tbaa !67
   %.not.i.i.i.i = icmp eq ptr %i.l, null

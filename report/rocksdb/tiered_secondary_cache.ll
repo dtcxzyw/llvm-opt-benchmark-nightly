@@ -202,22 +202,22 @@ bb.r:                                             ; preds = %_ZN7rocksdb20Tiered
 bb.s:                                             ; preds = %bb.r
   %i.aw = getelementptr inbounds nuw i8, ptr %i.av, i64 16
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(88) %i.aw, i8 0, i64 88, i1 false)
-  store ptr getelementptr inbounds nuw inrange(-16, 48) (i8, ptr @_ZTVN7rocksdb20TieredSecondaryCache12ResultHandleE, i64 16), ptr %i.av, align 8, !tbaa !27
+  store ptr getelementptr inbounds nuw inrange(-16, 48) (i8, ptr @_ZTVN7rocksdb20TieredSecondaryCache12ResultHandleE, i64 16), ptr %i.av, align 16, !tbaa !27
   %i.ax = getelementptr inbounds nuw i8, ptr %i.av, i64 8 ; 4 uses
   store ptr null, ptr %i.ax, align 8, !tbaa !56
   %i.ay = getelementptr inbounds nuw i8, ptr %i.av, i64 48
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ay, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.ay, i8 0, i64 16, i1 false)
   %i.az = getelementptr inbounds nuw i8, ptr %i.av, i64 16 ; 2 uses
-  store ptr %2, ptr %i.az, align 8, !tbaa !26
+  store ptr %2, ptr %i.az, align 16, !tbaa !26
   %i.ba = getelementptr inbounds nuw i8, ptr %i.av, i64 24
   store i8 %i.b, ptr %i.ba, align 8, !tbaa !9
   %i.bb = getelementptr inbounds nuw i8, ptr %i.av, i64 32
-  store ptr %3, ptr %i.bb, align 8, !tbaa !33
+  store ptr %3, ptr %i.bb, align 16, !tbaa !33
   %i.bc = getelementptr inbounds nuw i8, ptr %i.av, i64 40
   store ptr %4, ptr %i.bc, align 8, !tbaa !37
   %i.bd = load ptr, ptr %i.c, align 8, !tbaa !39
   %i.be = getelementptr inbounds nuw i8, ptr %i.av, i64 64
-  store ptr %i.bd, ptr %i.be, align 8, !tbaa !25
+  store ptr %i.bd, ptr %i.be, align 16, !tbaa !25
   %i.bf = getelementptr inbounds nuw i8, ptr %i.av, i64 72
   store ptr %7, ptr %i.bf, align 8, !tbaa !31
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #16
@@ -272,7 +272,7 @@ _ZNSt10unique_ptrIN7rocksdb20TieredSecondaryCache12ResultHandleESt14default_dele
   %i.bv = landingpad { ptr, i32 }
           cleanup
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #16
-  %i.bw = load ptr, ptr %i.av, align 8, !tbaa !27
+  %i.bw = load ptr, ptr %i.av, align 16, !tbaa !27
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bw, i64 8
   %i.by = load ptr, ptr %i.bx, align 8
   call void %i.by(ptr noundef nonnull align 8 dereferenceable(97) %i.av) #16, !inline_history !60

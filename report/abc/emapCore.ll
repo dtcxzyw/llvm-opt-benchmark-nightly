@@ -206,7 +206,7 @@ bb.bq:                                            ; preds = %bb.bp
   %i.rf = getelementptr inbounds nuw i8, ptr %i.qy, i64 16
   %i.rg = shl nuw nsw i32 %i.qt, 2
   %i.rh = zext nneg i32 %i.rg to i64
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.rf, ptr nonnull readonly align 4 %i.re, i64 %i.rh, i1 false), !tbaa !58
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.rf, ptr nonnull readonly align 4 %i.re, i64 %i.rh, i1 false), !tbaa !58
   %i.ri = add nsw i32 %.2184281.us.i, 1
   br label %bb.br
 
@@ -263,7 +263,7 @@ bb.br:                                            ; preds = %._crit_edge280.us.i
   %i.sc = getelementptr inbounds nuw i8, ptr %i.rv, i64 16
   %i.sd = shl nuw nsw i32 %i.rm, 2
   %i.se = zext nneg i32 %i.sd to i64
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.sc, ptr nonnull readonly align 4 %i.sb, i64 %i.se, i1 false), !tbaa !58
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.sc, ptr nonnull readonly align 4 %i.sb, i64 %i.se, i1 false), !tbaa !58
   %i.sf = add nsw i32 %.2184281.1.i, 1
   br label %bb.bs
 
@@ -666,7 +666,7 @@ bb.e:                                             ; preds = %.lr.ph.split.us
   %i.be = getelementptr inbounds nuw i8, ptr %i.ax, i64 16
   %i.bf = zext nneg i32 %i.as to i64
   %i.bg = shl nuw nsw i64 %i.bf, 2
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.be, ptr nonnull align 4 %i.bd, i64 %i.bg, i1 false), !tbaa !58
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.be, ptr nonnull align 4 %i.bd, i64 %i.bg, i1 false), !tbaa !58
   %i.bh = add nsw i32 %.2173272.us, 1
   br label %bb.f
 
@@ -739,7 +739,7 @@ bb.g:                                             ; preds = %.lr.ph.split.1
   %i.ck = getelementptr inbounds nuw i8, ptr %i.cd, i64 16
   %i.cl = zext nneg i32 %i.bs to i64
   %i.cm = shl nuw nsw i64 %i.cl, 2
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.ck, ptr nonnull align 4 %i.cj, i64 %i.cm, i1 false), !tbaa !58
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ck, ptr nonnull align 4 %i.cj, i64 %i.cm, i1 false), !tbaa !58
   %i.cn = add nsw i32 %.2173272.1, 1
   br label %bb.h
 
@@ -1142,7 +1142,7 @@ bb.f:                                             ; preds = %.lr.ph.split.us
   %i.bk = getelementptr inbounds nuw i8, ptr %i.bd, i64 16
   %i.bl = zext nneg i32 %i.ay to i64
   %i.bm = shl nuw nsw i64 %i.bl, 2
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.bk, ptr nonnull align 4 %i.bj, i64 %i.bm, i1 false), !tbaa !58
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.bk, ptr nonnull align 4 %i.bj, i64 %i.bm, i1 false), !tbaa !58
   %i.bn = add nsw i32 %.2244349.us, 1
   br label %bb.g
 
@@ -1221,7 +1221,7 @@ bb.i:                                             ; preds = %.lr.ph.split.1
   %i.cs = getelementptr inbounds nuw i8, ptr %i.cl, i64 16
   %i.ct = zext nneg i32 %i.ca to i64
   %i.cu = shl nuw nsw i64 %i.ct, 2
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.cs, ptr nonnull align 4 %i.cr, i64 %i.cu, i1 false), !tbaa !58
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.cs, ptr nonnull align 4 %i.cr, i64 %i.cu, i1 false), !tbaa !58
   %i.cv = add nsw i32 %.2244349.1, 1
   br label %bb.j
 
@@ -1624,7 +1624,7 @@ bb.f:                                             ; preds = %bb.e
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bq, i64 16
   %i.by = shl nuw nsw i32 %i.bl, 2
   %i.bz = zext nneg i32 %i.by to i64
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.bx, ptr nonnull align 4 %i.bw, i64 %i.bz, i1 false), !tbaa !58
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.bx, ptr nonnull align 4 %i.bw, i64 %i.bz, i1 false), !tbaa !58
   %i.ca = add nsw i32 %.2239420.us, 1
   br label %bb.g
 
@@ -1713,7 +1713,7 @@ bb.i:                                             ; preds = %bb.h
   %i.di = getelementptr inbounds nuw i8, ptr %i.db, i64 16
   %i.dj = shl nuw nsw i32 %i.cs, 2
   %i.dk = zext nneg i32 %i.dj to i64
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.di, ptr nonnull align 4 %i.dh, i64 %i.dk, i1 false), !tbaa !58
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.di, ptr nonnull align 4 %i.dh, i64 %i.dk, i1 false), !tbaa !58
   %i.dl = add nsw i32 %.2239420.1, 1
   br label %bb.j
 
@@ -2116,7 +2116,7 @@ bb.f:                                             ; preds = %.lr.ph.split.us
   %i.bg = getelementptr inbounds nuw i8, ptr %i.az, i64 16
   %i.bh = zext nneg i32 %i.au to i64
   %i.bi = shl nuw nsw i64 %i.bh, 2
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.bg, ptr nonnull align 4 %i.bf, i64 %i.bi, i1 false), !tbaa !58
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.bg, ptr nonnull align 4 %i.bf, i64 %i.bi, i1 false), !tbaa !58
   %i.bj = add nsw i32 %.2166249.us, 1
   br label %bb.g
 
@@ -2195,7 +2195,7 @@ bb.i:                                             ; preds = %.lr.ph.split.1
   %i.co = getelementptr inbounds nuw i8, ptr %i.ch, i64 16
   %i.cp = zext nneg i32 %i.bw to i64
   %i.cq = shl nuw nsw i64 %i.cp, 2
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.co, ptr nonnull align 4 %i.cn, i64 %i.cq, i1 false), !tbaa !58
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.co, ptr nonnull align 4 %i.cn, i64 %i.cq, i1 false), !tbaa !58
   %i.cr = add nsw i32 %.2166249.1, 1
   br label %bb.j
 

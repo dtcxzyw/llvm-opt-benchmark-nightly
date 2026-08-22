@@ -186,13 +186,13 @@ bb.d:                                             ; preds = %bb.a, %bytestream2_
 ; Function Attrs: nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define i32 @ff_lzw_decode(ptr nofree noundef captures(address) %0, ptr nofree noundef writeonly captures(none) %1, i32 noundef %2) local_unnamed_addr #4 {
 bb.a:
+  %3 = ptrtoaddr ptr %0 to i64                    ; 2 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 52 ; 3 uses
   %i.b = load i32, ptr %i.a, align 4, !tbaa !32
   %i.c = icmp slt i32 %i.b, 0
   br i1 %i.c, label %bb.aa, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %3 = ptrtoaddr ptr %0 to i64
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 2 uses
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !37
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 76 ; 2 uses
@@ -215,7 +215,8 @@ bb.b:                                             ; preds = %bb.a
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 60 ; 4 uses
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 44
-  %i.y = add i64 %3, 88                           ; 2 uses
+  %4 = add i64 %3, 88
+  %i.y = add i64 %3, 88
   br label %bb.c
 
 bb.c:                                             ; preds = %.backedge, %bb.b
@@ -238,7 +239,7 @@ vector.memcheck:                                  ; preds = %bb.c
   %scevgep = getelementptr i8, ptr %.082, i64 1
   %i.ad = add i32 %.078.fr, -1
   %i.ae = zext i32 %i.ad to i64
-  %i.af = tail call i64 @llvm.usub.sat.i64(i64 %.0158, i64 %i.y)
+  %i.af = tail call i64 @llvm.usub.sat.i64(i64 %.0158, i64 %4)
   %umin159 = tail call i64 @llvm.umin.i64(i64 %i.ae, i64 %i.af) ; 2 uses
   %scevgep160 = getelementptr i8, ptr %scevgep, i64 %umin159
   %scevgep161 = getelementptr i8, ptr %.0, i64 -1
