@@ -205,7 +205,7 @@ bb.r:                                             ; preds = %bb.m
   %.sroa.518.sroa.7.0.copyload = load i64, ptr %.sroa.518.sroa.7.0..sroa.518.0..sroa_idx.sroa_idx, align 8
   %.sroa.720.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 32
   %.sroa.641.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %.sroa.641.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(80) %.sroa.720.0..sroa_idx, i64 80, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %.sroa.641.0..sroa_idx, ptr noundef nonnull align 16 dereferenceable(80) %.sroa.720.0..sroa_idx, i64 80, i1 false)
   %i.ah = load <2 x i64>, ptr %i.d, align 16
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
   store <2 x i64> %i.ah, ptr %0, align 8
@@ -608,7 +608,7 @@ bb.h:                                             ; preds = %bb.f
   %i.w = getelementptr inbounds nuw i8, ptr %i.c, i64 16
   %i.x = load ptr, ptr %i.w, align 8, !nonnull !3, !noundef !3
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 %.sroa.0.0.i10
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(256) %i.y, ptr noundef nonnull align 1 dereferenceable(256) %i.o, i64 256, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(256) %i.y, ptr noundef nonnull align 8 dereferenceable(256) %i.o, i64 256, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.b, ptr noundef nonnull align 8 dereferenceable(32) %i.c, i64 32, i1 false)
   %i.z = invoke noundef nonnull ptr @"_ZN5alloc4sync28UniqueArcUninit$LT$T$C$A$GT$8into_arc17h5303308b29217747E"(ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(32) %i.b)

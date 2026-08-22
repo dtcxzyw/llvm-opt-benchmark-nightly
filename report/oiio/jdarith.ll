@@ -204,26 +204,33 @@ bb.l:                                             ; preds = %bb.k
   %i.bo = getelementptr inbounds nuw i8, ptr %0, i64 536 ; 3 uses
   %i.bp = load i32, ptr %i.bo, align 8, !tbaa !46 ; 4 uses
   %i.bq = icmp sgt i32 %i.bp, 0
-  br i1 %i.bq, label %.lr.ph, label %._crit_edge
+  br i1 %i.bq, label %.lr.ph.preheader, label %._crit_edge
 
-.lr.ph:                                           ; preds = %bb.l, %bb.m
-  %.073 = phi i32 [ %3, %bb.m ], [ %i.bp, %bb.l ] ; 4 uses
-  %2 = zext nneg i32 %.073 to i64
-  %i.br = getelementptr inbounds nuw [4 x i8], ptr @jpeg_natural_order, i64 %2
+.lr.ph.preheader:                                 ; preds = %bb.l
+  %2 = zext nneg i32 %i.bp to i64
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.m
+  %indvars.iv = phi i64 [ %2, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.m ] ; 4 uses
+  %i.br = getelementptr inbounds nuw [4 x i8], ptr @jpeg_natural_order, i64 %indvars.iv
   %i.bs = load i32, ptr %i.br, align 4, !tbaa !3
   %i.bt = sext i32 %i.bs to i64
   %i.bu = getelementptr inbounds [2 x i8], ptr %i.bf, i64 %i.bt
   %i.bv = load i16, ptr %i.bu, align 2, !tbaa !80
   %.not58 = icmp eq i16 %i.bv, 0
-  br i1 %.not58, label %bb.m, label %._crit_edge
+  br i1 %.not58, label %bb.m, label %._crit_edge.loopexit.split.loop.exit
 
 bb.m:                                             ; preds = %.lr.ph
-  %3 = add nsw i32 %.073, -1
-  %i.bw = icmp sgt i32 %.073, 1
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
+  %i.bw = icmp sgt i64 %indvars.iv, 1
   br i1 %i.bw, label %.lr.ph, label %._crit_edge, !llvm.loop !86
 
-._crit_edge:                                      ; preds = %bb.m, %.lr.ph, %bb.l
-  %.0.lcssa = phi i32 [ %i.bp, %bb.l ], [ %.073, %.lr.ph ], [ 0, %bb.m ]
+._crit_edge.loopexit.split.loop.exit:             ; preds = %.lr.ph
+  %3 = trunc nuw nsw i64 %indvars.iv to i32
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %bb.m, %._crit_edge.loopexit.split.loop.exit, %bb.l
+  %.0.lcssa = phi i32 [ %i.bp, %bb.l ], [ %3, %._crit_edge.loopexit.split.loop.exit ], [ 0, %bb.m ]
   %i.bx = getelementptr inbounds nuw i8, ptr %0, i64 532
   %i.by = load i32, ptr %i.bx, align 4, !tbaa !45 ; 2 uses
   %.not5978 = icmp sgt i32 %i.by, %i.bp

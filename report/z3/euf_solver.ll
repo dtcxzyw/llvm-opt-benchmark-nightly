@@ -205,6 +205,7 @@ _ZNK6vectorIjLb0EjE4sizeEv.exit:                  ; preds = %_ZNK6vectorIN3euf6s
 .lr.ph31:                                         ; preds = %_ZNK6vectorIjLb0EjE4sizeEv.exit
   %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 2384
   %i.bj = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %2 = zext i32 %i.bf to i64
   br label %bb.i
 
 .lr.ph:                                           ; preds = %_ZNK17scoped_ptr_vectorIN3euf9th_solverEE3endEv.exit, %.lr.ph
@@ -246,10 +247,9 @@ _ZN6vectorIN3euf6solver5scopeELb0EjE6shrinkEj.exit: ; preds = %_ZN6vectorIjLb0Ej
   ret void
 
 bb.i:                                             ; preds = %.lr.ph31, %bb.i
-  %.030 = phi i32 [ %i.bf, %.lr.ph31 ], [ %2, %bb.i ]
-  %2 = add i32 %.030, -1                          ; 3 uses
+  %indvars.iv = phi i64 [ %2, %.lr.ph31 ], [ %3, %bb.i ]
+  %3 = add i64 %indvars.iv, -1                    ; 3 uses
   %i.bw = load ptr, ptr %i.bb, align 8, !tbaa !553
-  %3 = zext i32 %2 to i64
   %i.bx = getelementptr inbounds nuw [4 x i8], ptr %i.bw, i64 %3
   %i.by = load i32, ptr %i.bx, align 4, !tbaa !18 ; 2 uses
   %i.bz = load ptr, ptr %i.bi, align 8, !tbaa !23
@@ -259,7 +259,8 @@ bb.i:                                             ; preds = %.lr.ph31, %bb.i
   %i.cc = load ptr, ptr %i.bj, align 8, !tbaa !412
   tail call void @_ZN3sat6solver16set_non_externalEj(ptr noundef nonnull align 8 dereferenceable(4264) %i.cc, i32 noundef %i.by)
   %i.cd = load i32, ptr %i.ba, align 4, !tbaa !769 ; 2 uses
-  %i.ce = icmp ugt i32 %2, %i.cd
+  %4 = zext i32 %i.cd to i64
+  %i.ce = icmp ugt i64 %3, %4
   br i1 %i.ce, label %bb.i, label %._crit_edge32, !llvm.loop !771
 }
 

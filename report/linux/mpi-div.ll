@@ -204,24 +204,31 @@ bb.w:                                             ; preds = %bb.v, %bb.u
 
 bb.x:                                             ; preds = %bb.w, %.thread228
   %i.fh = icmp sgt i32 %i.e, 0
-  br i1 %i.fh, label %.lr.ph246, label %._crit_edge
+  br i1 %i.fh, label %.lr.ph246.preheader, label %._crit_edge
 
-.lr.ph246:                                        ; preds = %bb.x, %bb.y
-  %.3177245 = phi i32 [ %5, %bb.y ], [ %i.e, %bb.x ] ; 4 uses
-  %4 = zext nneg i32 %.3177245 to i64
-  %i.fi = getelementptr [8 x i8], ptr %i.cw, i64 %4
+.lr.ph246.preheader:                              ; preds = %bb.x
+  %4 = zext nneg i32 %i.e to i64
+  br label %.lr.ph246
+
+.lr.ph246:                                        ; preds = %.lr.ph246.preheader, %bb.y
+  %indvars.iv268 = phi i64 [ %4, %.lr.ph246.preheader ], [ %indvars.iv.next269, %bb.y ] ; 4 uses
+  %i.fi = getelementptr [8 x i8], ptr %i.cw, i64 %indvars.iv268
   %i.fj = getelementptr i8, ptr %i.fi, i64 -8
   %i.fk = load i64, ptr %i.fj, align 8
   %.not218 = icmp eq i64 %i.fk, 0
-  br i1 %.not218, label %bb.y, label %._crit_edge
+  br i1 %.not218, label %bb.y, label %._crit_edge.loopexit
 
 bb.y:                                             ; preds = %.lr.ph246
-  %5 = add nsw i32 %.3177245, -1
-  %i.fl = icmp sgt i32 %.3177245, 1
+  %indvars.iv.next269 = add nsw i64 %indvars.iv268, -1
+  %i.fl = icmp sgt i64 %indvars.iv268, 1
   br i1 %i.fl, label %.lr.ph246, label %._crit_edge.thread, !llvm.loop !22
 
-._crit_edge:                                      ; preds = %.lr.ph246, %bb.x
-  %.3177.lcssa = phi i32 [ %i.e, %bb.x ], [ %.3177245, %.lr.ph246 ] ; 5 uses
+._crit_edge.loopexit:                             ; preds = %.lr.ph246
+  %5 = trunc nuw nsw i64 %indvars.iv268 to i32
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.x
+  %.3177.lcssa = phi i32 [ %i.e, %bb.x ], [ %5, %._crit_edge.loopexit ] ; 5 uses
   %i.fm = icmp ne i32 %.3177.lcssa, 0
   %or.cond = and i1 %i.dd, %i.fm
   br i1 %or.cond, label %bb.z, label %._crit_edge.thread

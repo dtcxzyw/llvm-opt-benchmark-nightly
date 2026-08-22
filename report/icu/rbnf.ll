@@ -204,7 +204,7 @@ bb.h:                                             ; preds = %bb.f
 
 .lr.ph70:                                         ; preds = %.preheader.preheader, %.preheader
   %indvars.iv69 = phi i64 [ %indvars.iv.next, %.preheader ], [ %i.v, %.preheader.preheader ] ; 3 uses
-  %indvars.iv.next = add nsw i64 %indvars.iv69, -1 ; 3 uses
+  %indvars.iv.next = add nsw i64 %indvars.iv69, -1 ; 4 uses
   %i.ap = and i64 %indvars.iv.next, 4294967295
   %i.aq = getelementptr inbounds nuw [2 x i8], ptr %i.t, i64 %i.ap
   %i.ar = load i16, ptr %i.aq, align 2, !tbaa !30
@@ -213,31 +213,32 @@ bb.h:                                             ; preds = %bb.f
 
 .critedge:                                        ; preds = %.lr.ph70
   %i.as = trunc nuw i64 %indvars.iv69 to i32
-  %indvars.le = trunc i64 %indvars.iv.next to i32 ; 3 uses
+  %indvars.le = trunc i64 %indvars.iv.next to i32 ; 2 uses
   %i.at = icmp sgt i32 %i.as, 1
   br i1 %i.at, label %.lr.ph.preheader, label %.critedge3
 
 .lr.ph.preheader:                                 ; preds = %.critedge
+  %7 = and i64 %indvars.iv.next, 4294967295
   %smin = call i32 @llvm.smin.i32(i32 %indvars.le, i32 1)
   %i.au = add i32 %smin, -1
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.i
-  %.23649 = phi i32 [ %8, %bb.i ], [ %indvars.le, %.lr.ph.preheader ] ; 4 uses
-  %7 = zext nneg i32 %.23649 to i64
-  %i.av = getelementptr [2 x i8], ptr %i.t, i64 %7
+  %indvars.iv57 = phi i64 [ %7, %.lr.ph.preheader ], [ %indvars.iv.next58, %bb.i ] ; 3 uses
+  %i.av = getelementptr [2 x i8], ptr %i.t, i64 %indvars.iv57
   %i.aw = getelementptr i8, ptr %i.av, i64 -2
   %i.ax = load i16, ptr %i.aw, align 2, !tbaa !30
   %i.ay = icmp eq i16 %i.ax, 95
+  %8 = trunc nuw i64 %indvars.iv57 to i32         ; 2 uses
   br i1 %i.ay, label %bb.i, label %.critedge3
 
 bb.i:                                             ; preds = %.lr.ph
-  %8 = add nsw i32 %.23649, -1
-  %i.az = icmp sgt i32 %.23649, 1
+  %indvars.iv.next58 = add nsw i64 %indvars.iv57, -1
+  %i.az = icmp sgt i32 %8, 1
   br i1 %i.az, label %.lr.ph, label %.critedge3, !llvm.loop !140
 
 .critedge3:                                       ; preds = %.preheader, %bb.i, %.lr.ph, %.preheader.preheader, %.critedge
-  %.236.lcssa = phi i32 [ %indvars.le, %.critedge ], [ %.23649, %.lr.ph ], [ %i.ad, %.preheader.preheader ], [ %i.au, %bb.i ], [ %i.ad, %.preheader ] ; 2 uses
+  %.236.lcssa = phi i32 [ %indvars.le, %.critedge ], [ %8, %.lr.ph ], [ %i.ad, %.preheader.preheader ], [ %i.au, %bb.i ], [ %i.ad, %.preheader ] ; 2 uses
   %i.ba = icmp sgt i32 %.236.lcssa, -1
   br i1 %i.ba, label %.lr.ph53, label %._crit_edge, !llvm.loop !141
 

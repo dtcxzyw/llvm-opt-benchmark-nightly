@@ -205,7 +205,11 @@ _ZNK15ref_vector_coreI9func_decl19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.i = load i32, ptr %i.h, align 8, !tbaa !270  ; 2 uses
   %i.j = icmp ugt i32 %i.g, %i.i
-  br i1 %i.j, label %.lr.ph, label %_ZN6vectorIP9func_declLb0EjE3endEv.exit.i
+  br i1 %i.j, label %.lr.ph.preheader, label %_ZN6vectorIP9func_declLb0EjE3endEv.exit.i
+
+.lr.ph.preheader:                                 ; preds = %_ZNK15ref_vector_coreI9func_decl19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit
+  %1 = zext i32 %i.g to i64
+  br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %.lr.ph
   %.pre = load ptr, ptr %i.a, align 8, !tbaa !267 ; 2 uses
@@ -270,19 +274,19 @@ _ZN15ref_vector_coreI9func_decl19ref_manager_wrapperIS0_11ast_managerEE13dec_ran
 _ZN15ref_vector_coreI9func_decl19ref_manager_wrapperIS0_11ast_managerEE6shrinkEj.exit: ; preds = %bb.a, %._crit_edge, %_ZN15ref_vector_coreI9func_decl19ref_manager_wrapperIS0_11ast_managerEE13dec_range_refEPKPS0_S7_.exit.i, %_ZN15ref_vector_coreI9func_decl19ref_manager_wrapperIS0_11ast_managerEE13dec_range_refEPKPS0_S7_.exit.thread7.i
   ret void
 
-.lr.ph:                                           ; preds = %_ZNK15ref_vector_coreI9func_decl19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit, %.lr.ph
-  %.03 = phi i32 [ %1, %.lr.ph ], [ %i.g, %_ZNK15ref_vector_coreI9func_decl19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit ]
-  %1 = add i32 %.03, -1                           ; 3 uses
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
+  %indvars.iv = phi i64 [ %1, %.lr.ph.preheader ], [ %2, %.lr.ph ]
+  %2 = add i64 %indvars.iv, -1                    ; 3 uses
   %i.af = load ptr, ptr %i.a, align 8, !tbaa !267, !nonnull !136, !align !137 ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 24
   %i.ah = getelementptr inbounds nuw i8, ptr %i.af, i64 88
   %i.ai = load ptr, ptr %i.ah, align 8, !tbaa !226
-  %2 = zext i32 %1 to i64
   %i.aj = getelementptr inbounds nuw [8 x i8], ptr %i.ai, i64 %2
   %i.ak = load ptr, ptr %i.aj, align 8, !tbaa !227
   tail call void @_ZN8ast_mark4markEP3astb(ptr noundef nonnull align 8 dereferenceable(56) %i.ag, ptr noundef %i.ak, i1 noundef zeroext false)
   %i.al = load i32, ptr %i.h, align 8, !tbaa !270 ; 2 uses
-  %i.am = icmp ugt i32 %1, %i.al
+  %3 = zext i32 %i.al to i64
+  %i.am = icmp ugt i64 %2, %3
   br i1 %i.am, label %.lr.ph, label %._crit_edge, !llvm.loop !271
 }
 

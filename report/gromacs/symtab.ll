@@ -204,33 +204,41 @@ bb.d:                                             ; preds = %bb.b
   br i1 %i.g, label %.preheader.i, label %bb.e, !llvm.loop !106
 
 bb.e:                                             ; preds = %.preheader.i
-  %i.i = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %.0.i) #29
-  %i.j = trunc i64 %i.i to i32                    ; 2 uses
+  %i.i = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %.0.i) #29 ; 2 uses
+  %i.j = trunc i64 %i.i to i32
   %i.k = icmp sgt i32 %i.j, 0
-  br i1 %i.k, label %.lr.ph.i, label %_ZL11trim_stringPKcPci.exit
+  br i1 %i.k, label %.lr.ph.preheader.i, label %_ZL11trim_stringPKcPci.exit
 
-.lr.ph.i:                                         ; preds = %bb.e, %bb.f
-  %.02325.i = phi i32 [ %4, %bb.f ], [ %i.j, %bb.e ] ; 4 uses
-  %3 = zext nneg i32 %.02325.i to i64
-  %i.l = getelementptr i8, ptr %.0.i, i64 %3
+.lr.ph.preheader.i:                               ; preds = %bb.e
+  %3 = and i64 %i.i, 2147483647
+  br label %.lr.ph.i
+
+.lr.ph.i:                                         ; preds = %bb.f, %.lr.ph.preheader.i
+  %indvars.iv.i = phi i64 [ %3, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %bb.f ] ; 5 uses
+  %i.l = getelementptr i8, ptr %.0.i, i64 %indvars.iv.i
   %i.m = getelementptr i8, ptr %i.l, i64 -1
   %i.n = load i8, ptr %i.m, align 1, !tbaa !26
   %.not.i = icmp eq i8 %i.n, 32
-  br i1 %.not.i, label %bb.f, label %.lr.ph31.preheader.i
+  br i1 %.not.i, label %bb.f, label %._crit_edge.i
 
 bb.f:                                             ; preds = %.lr.ph.i
-  %4 = add nsw i32 %.02325.i, -1
-  %i.o = icmp sgt i32 %.02325.i, 1
+  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1
+  %i.o = icmp sgt i64 %indvars.iv.i, 1
   br i1 %i.o, label %.lr.ph.i, label %_ZL11trim_stringPKcPci.exit, !llvm.loop !107
 
-.lr.ph31.preheader.i:                             ; preds = %.lr.ph.i
-  %i.p = tail call i32 @llvm.umin.i32(i32 %.02325.i, i32 1023)
+._crit_edge.i:                                    ; preds = %.lr.ph.i
+  %.not = icmp eq i64 %indvars.iv.i, 0
+  br i1 %.not, label %_ZL11trim_stringPKcPci.exit, label %.lr.ph31.preheader.i
+
+.lr.ph31.preheader.i:                             ; preds = %._crit_edge.i
+  %4 = trunc nuw nsw i64 %indvars.iv.i to i32
+  %i.p = tail call i32 @llvm.smin.i32(i32 %4, i32 1023)
   %wide.trip.count.i = zext nneg i32 %i.p to i64  ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %i.a, ptr nonnull align 1 %.0.i, i64 %wide.trip.count.i, i1 false), !tbaa !26
   br label %_ZL11trim_stringPKcPci.exit
 
-_ZL11trim_stringPKcPci.exit:                      ; preds = %bb.f, %.lr.ph31.preheader.i, %bb.e
-  %.024.lcssa.i = phi i64 [ %wide.trip.count.i, %.lr.ph31.preheader.i ], [ 0, %bb.e ], [ 0, %bb.f ]
+_ZL11trim_stringPKcPci.exit:                      ; preds = %bb.f, %.lr.ph31.preheader.i, %bb.e, %._crit_edge.i
+  %.024.lcssa.i = phi i64 [ %wide.trip.count.i, %.lr.ph31.preheader.i ], [ 0, %._crit_edge.i ], [ 0, %bb.e ], [ 0, %bb.f ]
   %i.q = getelementptr inbounds nuw i8, ptr %i.a, i64 %.024.lcssa.i
   store i8 0, ptr %i.q, align 1, !tbaa !26
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
@@ -632,9 +640,6 @@ declare i64 @llvm.umax.i64(i64, i64) #21
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #21
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umin.i32(i32, i32) #21
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="skylake-avx512" "target-features"="+adx,+aes,+avx,+avx2,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512vl,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdrnd,+rdseed,+sahf,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave,+xsavec,+xsaveopt,+xsaves" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
