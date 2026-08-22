@@ -20,31 +20,27 @@ target triple = "x86_64-pc-linux-gnu"
 define internal noundef i32 @cinaudio_decode_init(ptr noundef initializes((348, 352)) %0) #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !9    ; 2 uses
-  store i32 1, ptr %i.b, align 4, !tbaa !29
-  %1 = getelementptr inbounds nuw i8, ptr %i.b, i64 4
-  store i32 0, ptr %1, align 4, !tbaa !31
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !9
+  store <2 x i32> <i32 1, i32 0>, ptr %i.b, align 4, !tbaa !29
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 348
-  store i32 1, ptr %i.c, align 4, !tbaa !32
+  store i32 1, ptr %i.c, align 4, !tbaa !30
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 344 ; 2 uses
-  %i.e = load i32, ptr %i.d, align 8, !tbaa !33
+  %i.e = load i32, ptr %i.d, align 8, !tbaa !31
   %.not = icmp eq i32 %i.e, 0
   br i1 %.not, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  store i32 8000, ptr %i.d, align 8, !tbaa !33
+  store i32 8000, ptr %i.d, align 8, !tbaa !31
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 352 ; 2 uses
   tail call void @av_channel_layout_uninit(ptr noundef nonnull %i.f) #4
-  store i32 1, ptr %i.f, align 8, !tbaa !34
-  %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 356
-  store i32 1, ptr %.sroa.2.0..sroa_idx, align 4, !tbaa !34
+  store <2 x i32> splat (i32 1), ptr %i.f, align 8, !tbaa !29
   %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 360
-  store i64 4, ptr %.sroa.3.0..sroa_idx, align 8, !tbaa !35
+  store i64 4, ptr %.sroa.3.0..sroa_idx, align 8, !tbaa !32
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 368
-  store ptr null, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !36
+  store ptr null, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !33
   ret i32 0
 }
 
@@ -52,33 +48,33 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 define internal i32 @cinaudio_decode_frame(ptr noundef %0, ptr noundef initializes((112, 116)) %1, ptr nofree noundef writeonly captures(none) %2, ptr nofree noundef readonly captures(none) %3) #1 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %3, i64 24
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !37   ; 5 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !34   ; 5 uses
   %i.c = ptrtoaddr ptr %i.b to i64                ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !9    ; 4 uses
   %i.f = getelementptr inbounds nuw i8, ptr %3, i64 32 ; 2 uses
-  %i.g = load i32, ptr %i.f, align 8, !tbaa !39   ; 2 uses
+  %i.g = load i32, ptr %i.f, align 8, !tbaa !36   ; 2 uses
   %i.h = sext i32 %i.g to i64                     ; 2 uses
   %i.i = getelementptr inbounds i8, ptr %i.b, i64 %i.h
-  %i.j = load i32, ptr %i.e, align 4, !tbaa !29
+  %i.j = load i32, ptr %i.e, align 4, !tbaa !37
   %i.k = sub nsw i32 %i.g, %i.j
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 112
-  store i32 %i.k, ptr %i.l, align 8, !tbaa !40
+  store i32 %i.k, ptr %i.l, align 8, !tbaa !39
   %i.m = tail call i32 @ff_get_buffer(ptr noundef %0, ptr noundef %1, i32 noundef 0) #4 ; 2 uses
   %i.n = icmp slt i32 %i.m, 0
   br i1 %i.n, label %bb.e, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.o = load ptr, ptr %1, align 8, !tbaa !45     ; 3 uses
+  %i.o = load ptr, ptr %1, align 8, !tbaa !44     ; 3 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.e, i64 4 ; 2 uses
-  %i.q = load i32, ptr %i.p, align 4, !tbaa !31
-  %i.r = load i32, ptr %i.e, align 4, !tbaa !29
+  %i.q = load i32, ptr %i.p, align 4, !tbaa !45
+  %i.r = load i32, ptr %i.e, align 4, !tbaa !37
   %.not = icmp eq i32 %i.r, 0
   br i1 %.not, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  store i32 0, ptr %i.e, align 4, !tbaa !29
-  %i.s = load i16, ptr %i.b, align 1, !tbaa !35   ; 2 uses
+  store i32 0, ptr %i.e, align 4, !tbaa !37
+  %i.s = load i16, ptr %i.b, align 1, !tbaa !32   ; 2 uses
   %i.t = sext i16 %i.s to i32
   %i.u = getelementptr inbounds nuw i8, ptr %i.b, i64 2 ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %i.o, i64 2
@@ -105,7 +101,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 
 .lr.ph.prol:                                      ; preds = %.lr.ph.preheader
   %i.z = getelementptr inbounds nuw i8, ptr %.031, i64 1
-  %i.aa = load i8, ptr %.031, align 1, !tbaa !35
+  %i.aa = load i8, ptr %.031, align 1, !tbaa !32
   %i.ab = zext i8 %i.aa to i64
   %i.ac = getelementptr inbounds nuw [2 x i8], ptr @cinaudio_delta16_table, i64 %i.ab
   %i.ad = load i16, ptr %i.ac, align 2, !tbaa !46
@@ -131,7 +127,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %.13036 = phi ptr [ %i.bc, %.lr.ph ], [ %.13036.unr, %.lr.ph.prol.loopexit ] ; 3 uses
   %.13235 = phi ptr [ %i.au, %.lr.ph ], [ %.13235.unr, %.lr.ph.prol.loopexit ] ; 3 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %.13235, i64 1
-  %i.al = load i8, ptr %.13235, align 1, !tbaa !35
+  %i.al = load i8, ptr %.13235, align 1, !tbaa !32
   %i.am = zext i8 %i.al to i64
   %i.an = getelementptr inbounds nuw [2 x i8], ptr @cinaudio_delta16_table, i64 %i.am
   %i.ao = load i16, ptr %i.an, align 2, !tbaa !46
@@ -143,7 +139,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.at = getelementptr inbounds nuw i8, ptr %.13036, i64 2
   store i16 %.0.i, ptr %.13036, align 2, !tbaa !46
   %i.au = getelementptr inbounds nuw i8, ptr %.13235, i64 2 ; 2 uses
-  %i.av = load i8, ptr %i.ak, align 1, !tbaa !35
+  %i.av = load i8, ptr %i.ak, align 1, !tbaa !32
   %i.aw = zext i8 %i.av to i64
   %i.ax = getelementptr inbounds nuw [2 x i8], ptr @cinaudio_delta16_table, i64 %i.aw
   %i.ay = load i16, ptr %i.ax, align 2, !tbaa !46
@@ -157,9 +153,9 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 
 ._crit_edge:                                      ; preds = %.lr.ph.prol.loopexit, %.lr.ph, %bb.d
   %.1.lcssa = phi i32 [ %.0, %bb.d ], [ %.lcssa.unr, %.lr.ph.prol.loopexit ], [ %i.bb, %.lr.ph ]
-  store i32 %.1.lcssa, ptr %i.p, align 4, !tbaa !31
-  store i32 1, ptr %2, align 4, !tbaa !34
-  %i.bd = load i32, ptr %i.f, align 8, !tbaa !39
+  store i32 %.1.lcssa, ptr %i.p, align 4, !tbaa !45
+  store i32 1, ptr %2, align 4, !tbaa !29
+  %i.bd = load i32, ptr %i.f, align 8, !tbaa !36
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.a, %._crit_edge
@@ -219,23 +215,23 @@ attributes #4 = { nounwind }
 !26 = !{!"p1 int", !12, i64 0}
 !27 = !{!"p2 _ZTS15AVFrameSideData", !28, i64 0}
 !28 = !{!"any p2 pointer", !12, i64 0}
-!29 = !{!30, !6, i64 0}
-!30 = !{!"CinAudioContext", !6, i64 0, !6, i64 4}
-!31 = !{!30, !6, i64 4}
-!32 = !{!10, !6, i64 348}
-!33 = !{!10, !6, i64 344}
-!34 = !{!6, !6, i64 0}
-!35 = !{!7, !7, i64 0}
-!36 = !{!12, !12, i64 0}
-!37 = !{!38, !16, i64 24}
-!38 = !{!"AVPacket", !23, i64 0, !15, i64 8, !15, i64 16, !16, i64 24, !6, i64 32, !6, i64 36, !6, i64 40, !25, i64 48, !6, i64 56, !15, i64 64, !15, i64 72, !12, i64 80, !23, i64 88, !17, i64 96}
-!39 = !{!38, !6, i64 32}
-!40 = !{!41, !6, i64 112}
-!41 = !{!"AVFrame", !7, i64 0, !7, i64 64, !42, i64 96, !6, i64 104, !6, i64 108, !6, i64 112, !6, i64 116, !6, i64 120, !17, i64 124, !15, i64 136, !15, i64 144, !17, i64 152, !6, i64 160, !12, i64 168, !6, i64 176, !6, i64 180, !7, i64 184, !43, i64 248, !6, i64 256, !27, i64 264, !6, i64 272, !6, i64 276, !6, i64 280, !6, i64 284, !6, i64 288, !6, i64 292, !6, i64 296, !15, i64 304, !44, i64 312, !6, i64 320, !23, i64 328, !23, i64 336, !15, i64 344, !15, i64 352, !15, i64 360, !15, i64 368, !12, i64 376, !20, i64 384, !15, i64 408, !6, i64 416}
-!42 = !{!"p2 omnipotent char", !28, i64 0}
-!43 = !{!"p2 _ZTS11AVBufferRef", !28, i64 0}
-!44 = !{!"p1 _ZTS12AVDictionary", !12, i64 0}
-!45 = !{!16, !16, i64 0}
+!29 = !{!6, !6, i64 0}
+!30 = !{!10, !6, i64 348}
+!31 = !{!10, !6, i64 344}
+!32 = !{!7, !7, i64 0}
+!33 = !{!12, !12, i64 0}
+!34 = !{!35, !16, i64 24}
+!35 = !{!"AVPacket", !23, i64 0, !15, i64 8, !15, i64 16, !16, i64 24, !6, i64 32, !6, i64 36, !6, i64 40, !25, i64 48, !6, i64 56, !15, i64 64, !15, i64 72, !12, i64 80, !23, i64 88, !17, i64 96}
+!36 = !{!35, !6, i64 32}
+!37 = !{!38, !6, i64 0}
+!38 = !{!"CinAudioContext", !6, i64 0, !6, i64 4}
+!39 = !{!40, !6, i64 112}
+!40 = !{!"AVFrame", !7, i64 0, !7, i64 64, !41, i64 96, !6, i64 104, !6, i64 108, !6, i64 112, !6, i64 116, !6, i64 120, !17, i64 124, !15, i64 136, !15, i64 144, !17, i64 152, !6, i64 160, !12, i64 168, !6, i64 176, !6, i64 180, !7, i64 184, !42, i64 248, !6, i64 256, !27, i64 264, !6, i64 272, !6, i64 276, !6, i64 280, !6, i64 284, !6, i64 288, !6, i64 292, !6, i64 296, !15, i64 304, !43, i64 312, !6, i64 320, !23, i64 328, !23, i64 336, !15, i64 344, !15, i64 352, !15, i64 360, !15, i64 368, !12, i64 376, !20, i64 384, !15, i64 408, !6, i64 416}
+!41 = !{!"p2 omnipotent char", !28, i64 0}
+!42 = !{!"p2 _ZTS11AVBufferRef", !28, i64 0}
+!43 = !{!"p1 _ZTS12AVDictionary", !12, i64 0}
+!44 = !{!16, !16, i64 0}
+!45 = !{!38, !6, i64 4}
 !46 = !{!47, !47, i64 0}
 !47 = !{!"short", !7, i64 0}
 !48 = distinct !{!48, !49}

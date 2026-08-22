@@ -204,7 +204,7 @@ define range(i32 -12, 1) i32 @ff_cavs_init(ptr noundef %0) local_unnamed_addr #6
 bb.a:
   %i.a = alloca [64 x i8], align 16               ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !70   ; 29 uses
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !70   ; 19 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #14
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   tail call void @ff_blockdsp_init(ptr noundef nonnull %i.d) #14
@@ -244,33 +244,13 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.t = getelementptr inbounds nuw i8, ptr %i.c, i64 1168
-  store i32 0, ptr %i.t, align 16, !tbaa !53
-  %1 = getelementptr inbounds nuw i8, ptr %i.c, i64 1172
-  store i32 8, ptr %1, align 4, !tbaa !53
+  store <2 x i32> <i32 0, i32 8>, ptr %i.t, align 16, !tbaa !53
   %i.u = getelementptr inbounds nuw i8, ptr %i.c, i64 1496
-  store ptr @intra_pred_vert, ptr %i.u, align 8, !tbaa !55
-  %2 = getelementptr inbounds nuw i8, ptr %i.c, i64 1504
-  store ptr @intra_pred_horiz, ptr %2, align 16, !tbaa !55
-  %3 = getelementptr inbounds nuw i8, ptr %i.c, i64 1512
-  store ptr @intra_pred_lp, ptr %3, align 8, !tbaa !55
-  %4 = getelementptr inbounds nuw i8, ptr %i.c, i64 1520
-  store ptr @intra_pred_down_left, ptr %4, align 16, !tbaa !55
+  store <4 x ptr> <ptr @intra_pred_vert, ptr @intra_pred_horiz, ptr @intra_pred_lp, ptr @intra_pred_down_left>, ptr %i.u, align 8, !tbaa !55
   %i.v = getelementptr inbounds nuw i8, ptr %i.c, i64 1528
-  store ptr @intra_pred_down_right, ptr %i.v, align 8, !tbaa !55
-  %5 = getelementptr inbounds nuw i8, ptr %i.c, i64 1536
-  store ptr @intra_pred_lp_left, ptr %5, align 16, !tbaa !55
-  %6 = getelementptr inbounds nuw i8, ptr %i.c, i64 1544
-  store ptr @intra_pred_lp_top, ptr %6, align 8, !tbaa !55
-  %7 = getelementptr inbounds nuw i8, ptr %i.c, i64 1552
-  store ptr @intra_pred_dc_128, ptr %7, align 16, !tbaa !55
+  store <4 x ptr> <ptr @intra_pred_down_right, ptr @intra_pred_lp_left, ptr @intra_pred_lp_top, ptr @intra_pred_dc_128>, ptr %i.v, align 8, !tbaa !55
   %i.w = getelementptr inbounds nuw i8, ptr %i.c, i64 1560
-  store ptr @intra_pred_lp, ptr %i.w, align 8, !tbaa !55
-  %8 = getelementptr inbounds nuw i8, ptr %i.c, i64 1568
-  store ptr @intra_pred_horiz, ptr %8, align 16, !tbaa !55
-  %9 = getelementptr inbounds nuw i8, ptr %i.c, i64 1576
-  store ptr @intra_pred_vert, ptr %9, align 8, !tbaa !55
-  %10 = getelementptr inbounds nuw i8, ptr %i.c, i64 1584
-  store ptr @intra_pred_plane, ptr %10, align 16, !tbaa !55
+  store <4 x ptr> <ptr @intra_pred_lp, ptr @intra_pred_horiz, ptr @intra_pred_vert, ptr @intra_pred_plane>, ptr %i.w, align 8, !tbaa !55
   %i.x = getelementptr inbounds nuw i8, ptr %i.c, i64 1592
   store ptr @intra_pred_lp_left, ptr %i.x, align 8, !tbaa !55
   %i.y = getelementptr inbounds nuw i8, ptr %i.c, i64 1600

@@ -30,13 +30,7 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16
   store ptr %i.d, ptr %i.e, align 8, !tbaa !9
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store ptr @put_rv40_qpel16_mc30_c, ptr %i.f, align 8, !tbaa !9
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 32
-  store ptr @put_rv40_qpel16_mc01_c, ptr %2, align 8, !tbaa !9
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 40
-  store ptr @put_rv40_qpel16_mc11_c, ptr %3, align 8, !tbaa !9
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 48
-  store ptr @put_rv40_qpel16_mc21_c, ptr %4, align 8, !tbaa !9
+  store <4 x ptr> <ptr @put_rv40_qpel16_mc30_c, ptr @put_rv40_qpel16_mc01_c, ptr @put_rv40_qpel16_mc11_c, ptr @put_rv40_qpel16_mc21_c>, ptr %i.f, align 8, !tbaa !9
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 56
   store ptr @put_rv40_qpel16_mc31_c, ptr %i.g, align 8, !tbaa !9
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 64
@@ -44,13 +38,7 @@ bb.a:
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 64
   store ptr %i.i, ptr %i.j, align 8, !tbaa !9
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 72
-  store ptr @put_rv40_qpel16_mc12_c, ptr %i.k, align 8, !tbaa !9
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 80
-  store ptr @put_rv40_qpel16_mc22_c, ptr %5, align 8, !tbaa !9
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 88
-  store ptr @put_rv40_qpel16_mc32_c, ptr %6, align 8, !tbaa !9
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 96
-  store ptr @put_rv40_qpel16_mc03_c, ptr %7, align 8, !tbaa !9
+  store <4 x ptr> <ptr @put_rv40_qpel16_mc12_c, ptr @put_rv40_qpel16_mc22_c, ptr @put_rv40_qpel16_mc32_c, ptr @put_rv40_qpel16_mc03_c>, ptr %i.k, align 8, !tbaa !9
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 104
   store ptr @put_rv40_qpel16_mc13_c, ptr %i.l, align 8, !tbaa !9
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 112
@@ -68,13 +56,7 @@ bb.a:
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 272
   store ptr %i.t, ptr %i.u, align 8, !tbaa !9
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 280
-  store ptr @avg_rv40_qpel16_mc30_c, ptr %i.v, align 8, !tbaa !9
-  %8 = getelementptr inbounds nuw i8, ptr %0, i64 288
-  store ptr @avg_rv40_qpel16_mc01_c, ptr %8, align 8, !tbaa !9
-  %9 = getelementptr inbounds nuw i8, ptr %0, i64 296
-  store ptr @avg_rv40_qpel16_mc11_c, ptr %9, align 8, !tbaa !9
-  %10 = getelementptr inbounds nuw i8, ptr %0, i64 304
-  store ptr @avg_rv40_qpel16_mc21_c, ptr %10, align 8, !tbaa !9
+  store <4 x ptr> <ptr @avg_rv40_qpel16_mc30_c, ptr @avg_rv40_qpel16_mc01_c, ptr @avg_rv40_qpel16_mc11_c, ptr @avg_rv40_qpel16_mc21_c>, ptr %i.v, align 8, !tbaa !9
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 312
   store ptr @avg_rv40_qpel16_mc31_c, ptr %i.w, align 8, !tbaa !9
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 448
@@ -82,13 +64,7 @@ bb.a:
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 320
   store ptr %i.y, ptr %i.z, align 8, !tbaa !9
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 328
-  store ptr @avg_rv40_qpel16_mc12_c, ptr %i.aa, align 8, !tbaa !9
-  %11 = getelementptr inbounds nuw i8, ptr %0, i64 336
-  store ptr @avg_rv40_qpel16_mc22_c, ptr %11, align 8, !tbaa !9
-  %12 = getelementptr inbounds nuw i8, ptr %0, i64 344
-  store ptr @avg_rv40_qpel16_mc32_c, ptr %12, align 8, !tbaa !9
-  %13 = getelementptr inbounds nuw i8, ptr %0, i64 352
-  store ptr @avg_rv40_qpel16_mc03_c, ptr %13, align 8, !tbaa !9
+  store <4 x ptr> <ptr @avg_rv40_qpel16_mc12_c, ptr @avg_rv40_qpel16_mc22_c, ptr @avg_rv40_qpel16_mc32_c, ptr @avg_rv40_qpel16_mc03_c>, ptr %i.aa, align 8, !tbaa !9
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 360
   store ptr @avg_rv40_qpel16_mc13_c, ptr %i.ab, align 8, !tbaa !9
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 368
@@ -106,13 +82,7 @@ bb.a:
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 144
   store ptr %i.aj, ptr %i.ak, align 8, !tbaa !9
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 152
-  store ptr @put_rv40_qpel8_mc30_c, ptr %i.al, align 8, !tbaa !9
-  %14 = getelementptr inbounds nuw i8, ptr %0, i64 160
-  store ptr @put_rv40_qpel8_mc01_c, ptr %14, align 8, !tbaa !9
-  %15 = getelementptr inbounds nuw i8, ptr %0, i64 168
-  store ptr @put_rv40_qpel8_mc11_c, ptr %15, align 8, !tbaa !9
-  %16 = getelementptr inbounds nuw i8, ptr %0, i64 176
-  store ptr @put_rv40_qpel8_mc21_c, ptr %16, align 8, !tbaa !9
+  store <4 x ptr> <ptr @put_rv40_qpel8_mc30_c, ptr @put_rv40_qpel8_mc01_c, ptr @put_rv40_qpel8_mc11_c, ptr @put_rv40_qpel8_mc21_c>, ptr %i.al, align 8, !tbaa !9
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 184
   store ptr @put_rv40_qpel8_mc31_c, ptr %i.am, align 8, !tbaa !9
   %i.an = getelementptr inbounds nuw i8, ptr %1, i64 192
@@ -120,13 +90,7 @@ bb.a:
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 192
   store ptr %i.ao, ptr %i.ap, align 8, !tbaa !9
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 200
-  store ptr @put_rv40_qpel8_mc12_c, ptr %i.aq, align 8, !tbaa !9
-  %17 = getelementptr inbounds nuw i8, ptr %0, i64 208
-  store ptr @put_rv40_qpel8_mc22_c, ptr %17, align 8, !tbaa !9
-  %18 = getelementptr inbounds nuw i8, ptr %0, i64 216
-  store ptr @put_rv40_qpel8_mc32_c, ptr %18, align 8, !tbaa !9
-  %19 = getelementptr inbounds nuw i8, ptr %0, i64 224
-  store ptr @put_rv40_qpel8_mc03_c, ptr %19, align 8, !tbaa !9
+  store <4 x ptr> <ptr @put_rv40_qpel8_mc12_c, ptr @put_rv40_qpel8_mc22_c, ptr @put_rv40_qpel8_mc32_c, ptr @put_rv40_qpel8_mc03_c>, ptr %i.aq, align 8, !tbaa !9
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 232
   store ptr @put_rv40_qpel8_mc13_c, ptr %i.ar, align 8, !tbaa !9
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 240
@@ -144,13 +108,7 @@ bb.a:
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 400
   store ptr %i.az, ptr %i.ba, align 8, !tbaa !9
   %i.bb = getelementptr inbounds nuw i8, ptr %0, i64 408
-  store ptr @avg_rv40_qpel8_mc30_c, ptr %i.bb, align 8, !tbaa !9
-  %20 = getelementptr inbounds nuw i8, ptr %0, i64 416
-  store ptr @avg_rv40_qpel8_mc01_c, ptr %20, align 8, !tbaa !9
-  %21 = getelementptr inbounds nuw i8, ptr %0, i64 424
-  store ptr @avg_rv40_qpel8_mc11_c, ptr %21, align 8, !tbaa !9
-  %22 = getelementptr inbounds nuw i8, ptr %0, i64 432
-  store ptr @avg_rv40_qpel8_mc21_c, ptr %22, align 8, !tbaa !9
+  store <4 x ptr> <ptr @avg_rv40_qpel8_mc30_c, ptr @avg_rv40_qpel8_mc01_c, ptr @avg_rv40_qpel8_mc11_c, ptr @avg_rv40_qpel8_mc21_c>, ptr %i.bb, align 8, !tbaa !9
   %i.bc = getelementptr inbounds nuw i8, ptr %0, i64 440
   store ptr @avg_rv40_qpel8_mc31_c, ptr %i.bc, align 8, !tbaa !9
   %i.bd = getelementptr inbounds nuw i8, ptr %1, i64 576
@@ -158,29 +116,11 @@ bb.a:
   %i.bf = getelementptr inbounds nuw i8, ptr %0, i64 448
   store ptr %i.be, ptr %i.bf, align 8, !tbaa !9
   %i.bg = getelementptr inbounds nuw i8, ptr %0, i64 456
-  store ptr @avg_rv40_qpel8_mc12_c, ptr %i.bg, align 8, !tbaa !9
-  %23 = getelementptr inbounds nuw i8, ptr %0, i64 464
-  store ptr @avg_rv40_qpel8_mc22_c, ptr %23, align 8, !tbaa !9
-  %24 = getelementptr inbounds nuw i8, ptr %0, i64 472
-  store ptr @avg_rv40_qpel8_mc32_c, ptr %24, align 8, !tbaa !9
-  %25 = getelementptr inbounds nuw i8, ptr %0, i64 480
-  store ptr @avg_rv40_qpel8_mc03_c, ptr %25, align 8, !tbaa !9
+  store <4 x ptr> <ptr @avg_rv40_qpel8_mc12_c, ptr @avg_rv40_qpel8_mc22_c, ptr @avg_rv40_qpel8_mc32_c, ptr @avg_rv40_qpel8_mc03_c>, ptr %i.bg, align 8, !tbaa !9
   %i.bh = getelementptr inbounds nuw i8, ptr %0, i64 488
-  store ptr @avg_rv40_qpel8_mc13_c, ptr %i.bh, align 8, !tbaa !9
-  %26 = getelementptr inbounds nuw i8, ptr %0, i64 496
-  store ptr @avg_rv40_qpel8_mc23_c, ptr %26, align 8, !tbaa !9
-  %27 = getelementptr inbounds nuw i8, ptr %0, i64 504
-  store ptr @avg_rv40_qpel8_mc33_c, ptr %27, align 8, !tbaa !9
-  %28 = getelementptr inbounds nuw i8, ptr %0, i64 512
-  store ptr @put_rv40_chroma_mc8_c, ptr %28, align 8, !tbaa !9
+  store <4 x ptr> <ptr @avg_rv40_qpel8_mc13_c, ptr @avg_rv40_qpel8_mc23_c, ptr @avg_rv40_qpel8_mc33_c, ptr @put_rv40_chroma_mc8_c>, ptr %i.bh, align 8, !tbaa !9
   %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 520
-  store ptr @put_rv40_chroma_mc4_c, ptr %i.bi, align 8, !tbaa !9
-  %29 = getelementptr inbounds nuw i8, ptr %0, i64 528
-  store ptr @avg_rv40_chroma_mc8_c, ptr %29, align 8, !tbaa !9
-  %30 = getelementptr inbounds nuw i8, ptr %0, i64 536
-  store ptr @avg_rv40_chroma_mc4_c, ptr %30, align 8, !tbaa !9
-  %31 = getelementptr inbounds nuw i8, ptr %0, i64 544
-  store ptr @rv40_weight_func_rnd_16, ptr %31, align 8, !tbaa !9
+  store <4 x ptr> <ptr @put_rv40_chroma_mc4_c, ptr @avg_rv40_chroma_mc8_c, ptr @avg_rv40_chroma_mc4_c, ptr @rv40_weight_func_rnd_16>, ptr %i.bi, align 8, !tbaa !9
   %i.bj = getelementptr inbounds nuw i8, ptr %0, i64 552
   store ptr @rv40_weight_func_rnd_8, ptr %i.bj, align 8, !tbaa !9
   %i.bk = getelementptr inbounds nuw i8, ptr %0, i64 560
@@ -188,13 +128,7 @@ bb.a:
   %i.bl = getelementptr inbounds nuw i8, ptr %0, i64 568
   store ptr @rv40_weight_func_nornd_8, ptr %i.bl, align 8, !tbaa !9
   %i.bm = getelementptr inbounds nuw i8, ptr %0, i64 608
-  store ptr @rv40_h_weak_loop_filter, ptr %i.bm, align 8, !tbaa !9
-  %32 = getelementptr inbounds nuw i8, ptr %0, i64 616
-  store ptr @rv40_v_weak_loop_filter, ptr %32, align 8, !tbaa !9
-  %33 = getelementptr inbounds nuw i8, ptr %0, i64 624
-  store ptr @rv40_h_strong_loop_filter, ptr %33, align 8, !tbaa !9
-  %34 = getelementptr inbounds nuw i8, ptr %0, i64 632
-  store ptr @rv40_v_strong_loop_filter, ptr %34, align 8, !tbaa !9
+  store <4 x ptr> <ptr @rv40_h_weak_loop_filter, ptr @rv40_v_weak_loop_filter, ptr @rv40_h_strong_loop_filter, ptr @rv40_v_strong_loop_filter>, ptr %i.bm, align 8, !tbaa !9
   %i.bn = getelementptr inbounds nuw i8, ptr %0, i64 640
   store ptr @rv40_h_loop_filter_strength, ptr %i.bn, align 8, !tbaa !9
   %i.bo = getelementptr inbounds nuw i8, ptr %0, i64 648

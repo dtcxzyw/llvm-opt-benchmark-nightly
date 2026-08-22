@@ -204,7 +204,7 @@ bb.a:
   %i.ah = alloca [16 x i8], align 8               ; 5 uses
   %i.ai = alloca [32 x i8], align 8               ; 7 uses
   %i.aj = alloca [16 x i8], align 8               ; 5 uses
-  %i.ak = alloca [8 x i8], align 8                ; 6 uses
+  %i.ak = alloca [8 x i8], align 8                ; 5 uses
   %i.al = alloca [8 x i8], align 8                ; 4 uses
   %i.am = alloca [16 x i8], align 8               ; 5 uses
   %i.an = alloca [16 x i8], align 8               ; 6 uses
@@ -239,7 +239,7 @@ bb.a:
   %i.bq = alloca [36 x i8], align 4               ; 4 uses
   %i.br = alloca [32 x i8], align 8               ; 4 uses
   %.sroa.491.i.i = alloca [2048 x i8], align 8    ; 4 uses
-  %i.bs = alloca [32 x i8], align 8               ; 6 uses
+  %i.bs = alloca [32 x i8], align 8               ; 5 uses
   %i.bt = alloca [32 x i8], align 8               ; 6 uses
   %i.bu = alloca [32 x i8], align 8               ; 7 uses
   %i.bv = alloca [32 x i8], align 8               ; 4 uses
@@ -642,9 +642,7 @@ _RNCNCNvNtCs8K4cjrcxBsw_6hir_ty11next_solver13default_types0sb_0CslLuZgPVt6hg_3i
   %i.if = call fastcc noundef nonnull ptr @_RNCNCNvNtCs8K4cjrcxBsw_6hir_ty11next_solver13default_types00CslLuZgPVt6hg_3ide(ptr noalias nofree noundef align 8 captures(address) dereferenceable(32) %i.bt) #46, !noalias !995
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bt), !noalias !995
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bs), !noalias !995
-  store i32 29, ptr %i.bs, align 8, !noalias !995
-  %.sroa.487.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.bs, i64 4
-  store i32 3, ptr %.sroa.487.0..sroa_idx.i.i, align 4, !noalias !995
+  store <2 x i32> <i32 29, i32 3>, ptr %i.bs, align 8, !noalias !995
   %.sroa.588.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.bs, i64 8
   store i32 0, ptr %.sroa.588.0..sroa_idx.i.i, align 8, !noalias !995
   %i.ig = call fastcc noundef nonnull ptr @_RNCNCNvNtCs8K4cjrcxBsw_6hir_ty11next_solver13default_types00CslLuZgPVt6hg_3ide(ptr noalias nofree noundef align 8 captures(address) dereferenceable(32) %i.bs) #46, !noalias !995
@@ -1047,9 +1045,7 @@ bb.gm:                                            ; preds = %_RNvMNtCs39E2wp1vf7
 
 _RNCNCNvNtCs8K4cjrcxBsw_6hir_ty11next_solver13default_types0s8_0CslLuZgPVt6hg_3ide.exit.i.i: ; preds = %_RNvMNtCs39E2wp1vf7X_6intern12intern_sliceINtB2_13InternedSliceNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver9predicate33BoundExistentialPredicatesStorageE21from_header_and_sliceCslLuZgPVt6hg_3ide.exit.i.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ak), !noalias !995
-  store i32 0, ptr %i.ak, align 8, !noalias !995
-  %0 = getelementptr inbounds nuw i8, ptr %i.ak, i64 4
-  store i32 0, ptr %0, align 4, !noalias !995
+  store <2 x i32> zeroinitializer, ptr %i.ak, align 8, !noalias !995
   %i.ahu = load atomic i32, ptr getelementptr inbounds nuw (i8, ptr @_RNvNvXs1E_NtNtCs8K4cjrcxBsw_6hir_ty11next_solver9predicateNtB8_14ClausesStorageNtNtCs39E2wp1vf7X_6intern12intern_slice15SliceInternable7storage7STORAGE, i64 24) acquire, align 8, !noalias !995
   %i.ahv = icmp eq i32 %i.ahu, 0
   br i1 %i.ahv, label %_RINvMNtNtCscAsMj0W7j8b_3std4sync9once_lockINtB3_8OnceLockINtCs2WklPA5QxgX_7dashmap7DashMapINtNtCs50pZefIA5Ye_8triomphe8thin_arc7ThinArcNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver9predicate21ClausesCachedTypeInfoNtB2b_6ClauseEuNtCsh04pLiDBs3j_10rustc_hash13FxBuildHasherEE15get_or_try_initNCINvB2_11get_or_initNCNvMsg_NtCs39E2wp1vf7X_6intern12intern_sliceINtB52_18InternSliceStorageNtB2b_14ClausesStorageE3get0E0zECslLuZgPVt6hg_3ide.exit.i.i.i.i, label %bb.gn, !prof !7

@@ -73,11 +73,13 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.n
 
 bb.f:                                             ; preds = %bb.d
-  %1 = tail call range(i32 0, 29) i32 @llvm.ctpop.i32(i32 %i.g)
-  %.not57 = icmp samesign ult i32 %1, 2
-  %2 = tail call range(i32 0, 29) i32 @llvm.ctpop.i32(i32 %i.j)
-  %.not58 = icmp samesign ult i32 %2, 2
-  %or.cond67 = select i1 %.not57, i1 %.not58, i1 false
+  %1 = insertelement <2 x i32> poison, i32 %i.j, i64 0
+  %2 = insertelement <2 x i32> %1, i32 %i.g, i64 1
+  %3 = tail call range(i32 0, 29) <2 x i32> @llvm.ctpop.v2i32(<2 x i32> %2)
+  %4 = icmp samesign ult <2 x i32> %3, splat (i32 2) ; 2 uses
+  %5 = extractelement <2 x i1> %4, i64 0
+  %6 = extractelement <2 x i1> %4, i64 1
+  %or.cond67 = select i1 %6, i1 %5, i1 false
   br i1 %or.cond67, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
@@ -480,13 +482,13 @@ declare void @av_freep(ptr noundef) local_unnamed_addr #2
 declare void @avpriv_elbg_free(ptr noundef) local_unnamed_addr #2
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.ctpop.i32(i32) #8
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #8
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x i32> @llvm.ctpop.v2i32(<2 x i32>) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #8

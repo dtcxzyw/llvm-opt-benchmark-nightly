@@ -205,37 +205,39 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   %.pn = phi i32 [ %i.cx, %bb.g ], [ %i.dc, %bb.h ]
   %.0 = mul nsw i32 %.pn, %i.g                    ; 3 uses
   %i.dd = add nsw i32 %.0107, 13
-  %i.de = sdiv i32 %i.dd, 14                      ; 10 uses
+  %i.de = sdiv i32 %i.dd, 14                      ; 9 uses
   %i.df = getelementptr inbounds nuw [4 x i8], ptr %i.cl, i64 %indvars.iv121
   store i32 %i.de, ptr %i.df, align 4, !tbaa !72
-  %i.dg = add nsw i32 %i.de, -1                   ; 2 uses
-  %i.dh = add i32 %i.dg, %.0107
-  %1 = sdiv i32 %i.dh, %i.de                      ; 3 uses
-  %2 = sdiv i32 %.0107, %i.de                     ; 2 uses
-  %3 = mul nsw i32 %1, %i.de
-  %.neg = add i32 %i.de, %.0107
-  %4 = sub i32 %.neg, %3
-  %5 = add nsw i32 %1, 1
-  %6 = sdiv i32 %5, 2
-  %7 = trunc i32 %6 to i8
-  %8 = getelementptr inbounds nuw [2 x i8], ptr %i.cm, i64 %indvars.iv121 ; 2 uses
-  store i8 %7, ptr %8, align 2, !tbaa !62
-  %9 = sdiv i32 %1, 2
-  %10 = trunc i32 %9 to i8
-  %11 = getelementptr inbounds nuw [2 x i8], ptr %i.cn, i64 %indvars.iv121 ; 2 uses
-  store i8 %10, ptr %11, align 2, !tbaa !62
-  %12 = add nsw i32 %2, 1
-  %13 = sdiv i32 %12, 2
-  %14 = trunc i32 %13 to i8
-  %15 = getelementptr inbounds nuw i8, ptr %8, i64 1
-  store i8 %14, ptr %15, align 1, !tbaa !62
-  %16 = sdiv i32 %2, 2
-  %17 = trunc i32 %16 to i8
-  %i.di = getelementptr inbounds nuw i8, ptr %11, i64 1
-  store i8 %17, ptr %i.di, align 1, !tbaa !62
+  %1 = add nsw i32 %i.de, -1                      ; 2 uses
+  %i.dg = add i32 %1, %.0107
+  %i.dh = add i32 %i.de, %.0107
+  %2 = getelementptr inbounds nuw [2 x i8], ptr %i.cm, i64 %indvars.iv121 ; 2 uses
+  %3 = getelementptr inbounds nuw [2 x i8], ptr %i.cn, i64 %indvars.iv121 ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %2, i64 1
+  %5 = insertelement <2 x i32> poison, i32 %i.dg, i64 0
+  %6 = insertelement <2 x i32> %5, i32 %.0107, i64 1
+  %7 = insertelement <2 x i32> poison, i32 %i.de, i64 0
+  %8 = shufflevector <2 x i32> %6, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
+  %9 = shufflevector <2 x i32> %7, <2 x i32> poison, <4 x i32> zeroinitializer
+  %10 = sdiv <4 x i32> %8, %9                     ; 2 uses
+  %11 = extractelement <4 x i32> %10, i64 0
+  %12 = mul nsw i32 %11, %i.de
+  %13 = sub i32 %i.dh, %12
+  %14 = add nsw <4 x i32> %10, <i32 1, i32 1, i32 0, i32 0>
+  %15 = sdiv <4 x i32> %14, splat (i32 2)
+  %16 = trunc <4 x i32> %15 to <4 x i8>           ; 4 uses
+  %17 = extractelement <4 x i8> %16, i64 0
+  store i8 %17, ptr %2, align 2, !tbaa !62
+  %18 = extractelement <4 x i8> %16, i64 2
+  store i8 %18, ptr %3, align 2, !tbaa !62
+  %19 = extractelement <4 x i8> %16, i64 1
+  store i8 %19, ptr %4, align 1, !tbaa !62
+  %i.di = getelementptr inbounds nuw i8, ptr %3, i64 1
+  %20 = extractelement <4 x i8> %16, i64 3
+  store i8 %20, ptr %i.di, align 1, !tbaa !62
   %i.dj = getelementptr inbounds nuw [4 x i8], ptr %i.co, i64 %indvars.iv121
-  store i32 %4, ptr %i.dj, align 4, !tbaa !72
-  %i.dk = add i32 %i.dg, %.0
+  store i32 %13, ptr %i.dj, align 4, !tbaa !72
+  %i.dk = add i32 %1, %.0
   %i.dl = sdiv i32 %i.dk, %i.de                   ; 2 uses
   %i.dm = sdiv i32 %.0, %i.de
   %i.dn = mul nsw i32 %i.dl, %i.de

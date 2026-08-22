@@ -202,20 +202,18 @@ declare void @snd_pcm_hw_params_free(ptr noundef) local_unnamed_addr #3
 ; Function Attrs: cold nounwind optsize uwtable
 define internal fastcc range(i32 -38, 1) i32 @find_reorder_func(ptr nofree noundef captures(none) %0, i32 noundef %1, ptr noundef %2, i32 noundef range(i32 0, 2) %3) unnamed_addr #0 {
 bb.a:
-  %4 = alloca %struct.AVChannelLayout, align 8    ; 5 uses
-  %5 = alloca %struct.AVChannelLayout, align 8    ; 5 uses
-  %6 = alloca %struct.AVChannelLayout, align 8    ; 5 uses
-  %7 = alloca %struct.AVChannelLayout, align 8    ; 5 uses
-  %8 = alloca %struct.AVChannelLayout, align 8    ; 5 uses
-  %9 = alloca %struct.AVChannelLayout, align 8    ; 5 uses
-  %10 = alloca %struct.AVChannelLayout, align 8   ; 5 uses
+  %4 = alloca %struct.AVChannelLayout, align 8    ; 4 uses
+  %5 = alloca %struct.AVChannelLayout, align 8    ; 4 uses
+  %6 = alloca %struct.AVChannelLayout, align 8    ; 4 uses
+  %7 = alloca %struct.AVChannelLayout, align 8    ; 4 uses
+  %8 = alloca %struct.AVChannelLayout, align 8    ; 4 uses
+  %9 = alloca %struct.AVChannelLayout, align 8    ; 4 uses
+  %10 = alloca %struct.AVChannelLayout, align 8   ; 4 uses
   %.not = icmp eq i32 %3, 0
   br i1 %.not, label %bb.x, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  store i32 1, ptr %4, align 8, !tbaa !42
-  %11 = getelementptr inbounds nuw i8, ptr %4, i64 4
-  store i32 4, ptr %11, align 4, !tbaa !29
+  store <2 x i32> <i32 1, i32 4>, ptr %4, align 8, !tbaa !28
   %i.a = getelementptr inbounds nuw i8, ptr %4, i64 8
   store i64 51, ptr %i.a, align 8, !tbaa !27
   %i.b = getelementptr inbounds nuw i8, ptr %4, i64 16
@@ -225,9 +223,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not26, label %bb.x, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  store i32 1, ptr %5, align 8, !tbaa !42
-  %12 = getelementptr inbounds nuw i8, ptr %5, i64 4
-  store i32 4, ptr %12, align 4, !tbaa !29
+  store <2 x i32> <i32 1, i32 4>, ptr %5, align 8, !tbaa !28
   %i.d = getelementptr inbounds nuw i8, ptr %5, i64 8
   store i64 1539, ptr %i.d, align 8, !tbaa !27
   %i.e = getelementptr inbounds nuw i8, ptr %5, i64 16
@@ -248,9 +244,7 @@ switch.lookup:                                    ; preds = %bb.d
   %i.h = zext nneg i32 %switch.tableidx to i64
   %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.find_reorder_func, i64 %i.h
   %switch.load = load i8, ptr %switch.gep, align 1 ; 3 uses
-  store i32 1, ptr %6, align 8, !tbaa !42
-  %13 = getelementptr inbounds nuw i8, ptr %6, i64 4
-  store i32 5, ptr %13, align 4, !tbaa !29
+  store <2 x i32> <i32 1, i32 5>, ptr %6, align 8, !tbaa !28
   %i.i = getelementptr inbounds nuw i8, ptr %6, i64 8
   store i64 55, ptr %i.i, align 8, !tbaa !27
   %i.j = getelementptr inbounds nuw i8, ptr %6, i64 16
@@ -260,9 +254,7 @@ switch.lookup:                                    ; preds = %bb.d
   br i1 %.not28, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %switch.lookup
-  store i32 1, ptr %7, align 8, !tbaa !42
-  %14 = getelementptr inbounds nuw i8, ptr %7, i64 4
-  store i32 5, ptr %14, align 4, !tbaa !29
+  store <2 x i32> <i32 1, i32 5>, ptr %7, align 8, !tbaa !28
   %i.l = getelementptr inbounds nuw i8, ptr %7, i64 8
   store i64 1543, ptr %i.l, align 8, !tbaa !27
   %i.m = getelementptr inbounds nuw i8, ptr %7, i64 16
@@ -297,9 +289,7 @@ bb.j:                                             ; preds = %bb.f
   br label %bb.x
 
 bb.k:                                             ; preds = %bb.e
-  store i32 1, ptr %8, align 8, !tbaa !42
-  %15 = getelementptr inbounds nuw i8, ptr %8, i64 4
-  store i32 6, ptr %15, align 4, !tbaa !29
+  store <2 x i32> <i32 1, i32 6>, ptr %8, align 8, !tbaa !28
   %i.p = getelementptr inbounds nuw i8, ptr %8, i64 8
   store i64 63, ptr %i.p, align 8, !tbaa !27
   %i.q = getelementptr inbounds nuw i8, ptr %8, i64 16
@@ -309,9 +299,7 @@ bb.k:                                             ; preds = %bb.e
   br i1 %.not30, label %bb.m, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  store i32 1, ptr %9, align 8, !tbaa !42
-  %16 = getelementptr inbounds nuw i8, ptr %9, i64 4
-  store i32 6, ptr %16, align 4, !tbaa !29
+  store <2 x i32> <i32 1, i32 6>, ptr %9, align 8, !tbaa !28
   %i.s = getelementptr inbounds nuw i8, ptr %9, i64 8
   store i64 1551, ptr %i.s, align 8, !tbaa !27
   %i.t = getelementptr inbounds nuw i8, ptr %9, i64 16
@@ -346,9 +334,7 @@ bb.q:                                             ; preds = %bb.m
   br label %bb.x
 
 bb.r:                                             ; preds = %bb.l
-  store i32 1, ptr %10, align 8, !tbaa !42
-  %17 = getelementptr inbounds nuw i8, ptr %10, i64 4
-  store i32 8, ptr %17, align 4, !tbaa !29
+  store <2 x i32> <i32 1, i32 8>, ptr %10, align 8, !tbaa !28
   %i.w = getelementptr inbounds nuw i8, ptr %10, i64 8
   store i64 1599, ptr %i.w, align 8, !tbaa !27
   %i.x = getelementptr inbounds nuw i8, ptr %10, i64 16

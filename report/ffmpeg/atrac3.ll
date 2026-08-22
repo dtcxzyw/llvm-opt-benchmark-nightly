@@ -205,12 +205,10 @@ bb.v:                                             ; preds = %bb.u
 
 vector.ph:                                        ; preds = %.preheader, %vector.ph
   %indvars.iv150 = phi i64 [ 0, %.preheader ], [ %indvars.iv.next151, %vector.ph ] ; 5 uses
-  %i.bz = getelementptr inbounds nuw [24 x i8], ptr %i.bv, i64 %indvars.iv150 ; 3 uses
+  %i.bz = getelementptr inbounds nuw [24 x i8], ptr %i.bv, i64 %indvars.iv150 ; 2 uses
   store <4 x i32> <i32 0, i32 7, i32 0, i32 7>, ptr %i.bz, align 8, !tbaa !45
-  %1 = getelementptr inbounds nuw i8, ptr %i.bz, i64 16
-  store i32 0, ptr %1, align 8, !tbaa !45
-  %i.ca = getelementptr inbounds nuw i8, ptr %i.bz, i64 20
-  store i32 7, ptr %i.ca, align 4, !tbaa !45
+  %i.ca = getelementptr inbounds nuw i8, ptr %i.bz, i64 16
+  store <2 x i32> <i32 0, i32 7>, ptr %i.ca, align 8, !tbaa !45
   %i.cb = getelementptr inbounds nuw [16 x i8], ptr %i.bw, i64 %indvars.iv150
   %i.cc = getelementptr inbounds nuw [16 x i8], ptr %i.bx, i64 %indvars.iv150
   %i.cd = getelementptr inbounds nuw [16 x i8], ptr %i.by, i64 %indvars.iv150

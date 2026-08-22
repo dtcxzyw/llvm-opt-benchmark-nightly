@@ -205,37 +205,13 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 976
   tail call void @ff_h264qpel_init(ptr noundef nonnull %i.a, i32 noundef 8) #16
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 1360
-  store ptr @put_snow_qpel2_mc00_8_c, ptr %i.b, align 8, !tbaa !12
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 1368
-  store ptr @put_snow_qpel2_mc10_8_c, ptr %1, align 8, !tbaa !12
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 1376
-  store ptr @put_snow_qpel2_mc20_8_c, ptr %2, align 8, !tbaa !12
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 1384
-  store ptr @put_snow_qpel2_mc30_8_c, ptr %3, align 8, !tbaa !12
+  store <4 x ptr> <ptr @put_snow_qpel2_mc00_8_c, ptr @put_snow_qpel2_mc10_8_c, ptr @put_snow_qpel2_mc20_8_c, ptr @put_snow_qpel2_mc30_8_c>, ptr %i.b, align 8, !tbaa !12
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 1392
-  store ptr @put_snow_qpel2_mc01_8_c, ptr %i.c, align 8, !tbaa !12
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 1400
-  store ptr @put_snow_qpel2_mc11_8_c, ptr %4, align 8, !tbaa !12
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 1408
-  store ptr @put_snow_qpel2_mc21_8_c, ptr %5, align 8, !tbaa !12
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 1416
-  store ptr @put_snow_qpel2_mc31_8_c, ptr %6, align 8, !tbaa !12
+  store <4 x ptr> <ptr @put_snow_qpel2_mc01_8_c, ptr @put_snow_qpel2_mc11_8_c, ptr @put_snow_qpel2_mc21_8_c, ptr @put_snow_qpel2_mc31_8_c>, ptr %i.c, align 8, !tbaa !12
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 1424
-  store ptr @put_snow_qpel2_mc02_8_c, ptr %i.d, align 8, !tbaa !12
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 1432
-  store ptr @put_snow_qpel2_mc12_8_c, ptr %7, align 8, !tbaa !12
-  %8 = getelementptr inbounds nuw i8, ptr %0, i64 1440
-  store ptr @put_snow_qpel2_mc22_8_c, ptr %8, align 8, !tbaa !12
-  %9 = getelementptr inbounds nuw i8, ptr %0, i64 1448
-  store ptr @put_snow_qpel2_mc32_8_c, ptr %9, align 8, !tbaa !12
+  store <4 x ptr> <ptr @put_snow_qpel2_mc02_8_c, ptr @put_snow_qpel2_mc12_8_c, ptr @put_snow_qpel2_mc22_8_c, ptr @put_snow_qpel2_mc32_8_c>, ptr %i.d, align 8, !tbaa !12
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 1456
-  store ptr @put_snow_qpel2_mc03_8_c, ptr %i.e, align 8, !tbaa !12
-  %10 = getelementptr inbounds nuw i8, ptr %0, i64 1464
-  store ptr @put_snow_qpel2_mc13_8_c, ptr %10, align 8, !tbaa !12
-  %11 = getelementptr inbounds nuw i8, ptr %0, i64 1472
-  store ptr @put_snow_qpel2_mc23_8_c, ptr %11, align 8, !tbaa !12
-  %12 = getelementptr inbounds nuw i8, ptr %0, i64 1480
-  store ptr @put_snow_qpel2_mc33_8_c, ptr %12, align 8, !tbaa !12
+  store <4 x ptr> <ptr @put_snow_qpel2_mc03_8_c, ptr @put_snow_qpel2_mc13_8_c, ptr @put_snow_qpel2_mc23_8_c, ptr @put_snow_qpel2_mc33_8_c>, ptr %i.e, align 8, !tbaa !12
   ret void
 }
 

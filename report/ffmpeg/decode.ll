@@ -204,7 +204,7 @@ define i32 @ff_decode_preinit(ptr noundef %0) local_unnamed_addr #6 {
 bb.a:
   %i.a = alloca [64 x i8], align 1                ; 6 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !9    ; 10 uses
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !9    ; 9 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 156 ; 2 uses
   store i32 0, ptr %i.d, align 4, !tbaa !56
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 728 ; 3 uses
@@ -312,11 +312,9 @@ bb.m:                                             ; preds = %bb.l
 
 bb.n:                                             ; preds = %bb.k, %bb.m, %bb.j, %bb.f
   %i.as = getelementptr inbounds nuw i8, ptr %i.c, i64 168
-  %1 = getelementptr inbounds nuw i8, ptr %i.c, i64 192
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.as, i8 0, i64 16, i1 false)
-  store i64 -9223372036854775808, ptr %1, align 8, !tbaa !95
   %i.at = getelementptr inbounds nuw i8, ptr %i.c, i64 184
-  store i64 -9223372036854775808, ptr %i.at, align 8, !tbaa !97
+  store <2 x i64> splat (i64 -9223372036854775808), ptr %i.at, align 8, !tbaa !43
   %i.au = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.av = load i32, ptr %i.au, align 8, !tbaa !110
   %i.aw = and i32 %i.av, 8192
@@ -485,11 +483,9 @@ bb.ae:                                            ; preds = %bb.ad
   br label %bb.ah
 
 bb.af:                                            ; preds = %bb.ad
-  %i.df = load ptr, ptr %i.cw, align 8, !tbaa !37 ; 3 uses
-  %2 = getelementptr inbounds nuw i8, ptr %i.df, i64 40
-  store i32 1, ptr %2, align 8, !tbaa !68
-  %.sroa.2.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.df, i64 44
-  store i32 90000, ptr %.sroa.2.0..sroa_idx.i, align 4, !tbaa !68
+  %i.df = load ptr, ptr %i.cw, align 8, !tbaa !37 ; 2 uses
+  %.sroa.2.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.df, i64 40
+  store <2 x i32> <i32 1, i32 90000>, ptr %.sroa.2.0..sroa_idx.i, align 8, !tbaa !68
   %i.dg = getelementptr inbounds nuw i8, ptr %i.df, i64 24
   %i.dh = load ptr, ptr %i.dg, align 8, !tbaa !273
   %i.di = tail call i32 @avcodec_parameters_from_context(ptr noundef %i.dh, ptr noundef nonnull %0) #11 ; 2 uses
@@ -892,19 +888,17 @@ bb.i:                                             ; preds = %bb.g, %bb.h
 define void @ff_decode_flush_buffers(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #6 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !9    ; 8 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !9    ; 6 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 56
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !39
   tail call void @av_packet_unref(ptr noundef %i.d) #11
   %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 40
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !66
   tail call void @av_packet_unref(ptr noundef %i.f) #11
-  %1 = getelementptr inbounds nuw i8, ptr %i.b, i64 168
-  %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 192
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %1, i8 0, i64 16, i1 false)
-  store i64 -9223372036854775808, ptr %i.g, align 8, !tbaa !95
+  %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 168
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.g, i8 0, i64 16, i1 false)
   %i.h = getelementptr inbounds nuw i8, ptr %i.b, i64 184
-  store i64 -9223372036854775808, ptr %i.h, align 8, !tbaa !97
+  store <2 x i64> splat (i64 -9223372036854775808), ptr %i.h, align 8, !tbaa !43
   %i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 48
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !37   ; 2 uses
   %.not = icmp eq ptr %i.j, null
@@ -916,9 +910,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b, %bb.a
   %i.k = getelementptr inbounds nuw i8, ptr %i.b, i64 160
-  store i32 0, ptr %i.k, align 8, !tbaa !75
-  %2 = getelementptr inbounds nuw i8, ptr %i.b, i64 164
-  store i32 0, ptr %2, align 4, !tbaa !53
+  store <2 x i32> zeroinitializer, ptr %i.k, align 8, !tbaa !68
   ret void
 }
 

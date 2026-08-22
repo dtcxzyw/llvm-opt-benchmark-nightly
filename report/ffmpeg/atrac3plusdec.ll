@@ -204,7 +204,7 @@ declare void @ff_atrac_init_gain_compensation(ptr noundef, i32 noundef, i32 noun
 define internal fastcc range(i32 -1094995529, 1) i32 @set_channel_params(ptr nofree noundef writeonly captures(none) initializes((65812, 65817)) %0, ptr noundef %1) unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 352 ; 8 uses
-  %i.b = getelementptr inbounds nuw i8, ptr %1, i64 356 ; 8 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %1, i64 356
   %i.c = load i32, ptr %i.b, align 4, !tbaa !114  ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 65812 ; 8 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(5) %i.d, i8 0, i64 5, i1 false)
@@ -220,8 +220,7 @@ bb.a:
   ]
 
 bb.b:                                             ; preds = %bb.a
-  store i32 1, ptr %i.a, align 8, !tbaa !76
-  store i32 1, ptr %i.b, align 4, !tbaa !76
+  store <2 x i32> splat (i32 1), ptr %i.a, align 8, !tbaa !76
   %.sroa.323.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 360
   store i64 4, ptr %.sroa.323.0..sroa_idx, align 8, !tbaa !72
   %.sroa.424.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 368
@@ -232,8 +231,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.j
 
 bb.c:                                             ; preds = %bb.a
-  store i32 1, ptr %i.a, align 8, !tbaa !76
-  store i32 2, ptr %i.b, align 4, !tbaa !76
+  store <2 x i32> <i32 1, i32 2>, ptr %i.a, align 8, !tbaa !76
   %.sroa.319.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 360
   store i64 3, ptr %.sroa.319.0..sroa_idx, align 8, !tbaa !72
   %.sroa.420.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 368
@@ -244,8 +242,7 @@ bb.c:                                             ; preds = %bb.a
   br label %bb.j
 
 bb.d:                                             ; preds = %bb.a
-  store i32 1, ptr %i.a, align 8, !tbaa !76
-  store i32 3, ptr %i.b, align 4, !tbaa !76
+  store <2 x i32> <i32 1, i32 3>, ptr %i.a, align 8, !tbaa !76
   %.sroa.315.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 360
   store i64 7, ptr %.sroa.315.0..sroa_idx, align 8, !tbaa !72
   %.sroa.416.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 368
@@ -258,8 +255,7 @@ bb.d:                                             ; preds = %bb.a
   br label %bb.j
 
 bb.e:                                             ; preds = %bb.a
-  store i32 1, ptr %i.a, align 8, !tbaa !76
-  store i32 4, ptr %i.b, align 4, !tbaa !76
+  store <2 x i32> <i32 1, i32 4>, ptr %i.a, align 8, !tbaa !76
   %.sroa.311.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 360
   store i64 263, ptr %.sroa.311.0..sroa_idx, align 8, !tbaa !72
   %.sroa.412.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 368
@@ -274,8 +270,7 @@ bb.e:                                             ; preds = %bb.a
   br label %bb.j
 
 bb.f:                                             ; preds = %bb.a
-  store i32 1, ptr %i.a, align 8, !tbaa !76
-  store i32 6, ptr %i.b, align 4, !tbaa !76
+  store <2 x i32> <i32 1, i32 6>, ptr %i.a, align 8, !tbaa !76
   %.sroa.37.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 360
   store i64 63, ptr %.sroa.37.0..sroa_idx, align 8, !tbaa !72
   %.sroa.48.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 368
@@ -286,8 +281,7 @@ bb.f:                                             ; preds = %bb.a
   br label %bb.j
 
 bb.g:                                             ; preds = %bb.a
-  store i32 1, ptr %i.a, align 8, !tbaa !76
-  store i32 7, ptr %i.b, align 4, !tbaa !76
+  store <2 x i32> <i32 1, i32 7>, ptr %i.a, align 8, !tbaa !76
   %.sroa.33.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 360
   store i64 319, ptr %.sroa.33.0..sroa_idx, align 8, !tbaa !72
   %.sroa.44.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 368
@@ -300,8 +294,7 @@ bb.g:                                             ; preds = %bb.a
   br label %bb.j
 
 bb.h:                                             ; preds = %bb.a
-  store i32 1, ptr %i.a, align 8, !tbaa !76
-  store i32 8, ptr %i.b, align 4, !tbaa !76
+  store <2 x i32> <i32 1, i32 8>, ptr %i.a, align 8, !tbaa !76
   %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 360
   store i64 1599, ptr %.sroa.3.0..sroa_idx, align 8, !tbaa !72
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 368

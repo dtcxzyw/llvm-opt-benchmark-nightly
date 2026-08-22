@@ -29,9 +29,7 @@ bb.a:
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !9    ; 2 uses
   store ptr %0, ptr %i.b, align 16, !tbaa !29
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 100
-  store i32 15, ptr %i.c, align 4, !tbaa !33
-  %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 104
-  store i32 1, ptr %.sroa.2.0..sroa_idx, align 8, !tbaa !33
+  store <2 x i32> <i32 15, i32 1>, ptr %i.c, align 4, !tbaa !33
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 136
   store i32 0, ptr %i.d, align 8, !tbaa !34
   %i.e = tail call ptr @av_frame_alloc() #7       ; 2 uses

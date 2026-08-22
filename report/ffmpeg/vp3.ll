@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.d, %bb.e
 
 bb.f:                                             ; preds = %.preheader255
   %i.as = getelementptr inbounds nuw i8, ptr %i.b, i64 848
-  %i.at = load <2 x i32>, ptr %i.g, align 8, !tbaa !29 ; 4 uses
+  %i.at = load <2 x i32>, ptr %i.g, align 8, !tbaa !29 ; 5 uses
   %i.au = add nsw <2 x i32> %i.at, splat (i32 31)
   %i.av = sdiv <2 x i32> %i.au, splat (i32 32)    ; 3 uses
   store <2 x i32> %i.av, ptr %i.as, align 16, !tbaa !29
@@ -215,10 +215,10 @@ bb.f:                                             ; preds = %.preheader255
   %i.az = getelementptr inbounds nuw i8, ptr %i.b, i64 856
   store i32 %i.ay, ptr %i.az, align 8, !tbaa !173
   %i.ba = load i32, ptr %i.ab, align 16, !tbaa !119 ; 2 uses
-  %i.bb = extractelement <2 x i32> %i.at, i64 0   ; 2 uses
+  %i.bb = extractelement <2 x i32> %i.at, i64 0
   %i.bc = ashr i32 %i.bb, %i.ba                   ; 2 uses
   %i.bd = load i32, ptr %i.ac, align 4, !tbaa !118 ; 2 uses
-  %i.be = extractelement <2 x i32> %i.at, i64 1   ; 2 uses
+  %i.be = extractelement <2 x i32> %i.at, i64 1
   %i.bf = ashr i32 %i.be, %i.bd                   ; 2 uses
   %i.bg = add nsw i32 %i.bc, 31
   %i.bh = sdiv i32 %i.bg, 32                      ; 2 uses
@@ -264,19 +264,20 @@ bb.f:                                             ; preds = %.preheader255
   %i.ck = add nsw i32 %i.cj, %i.bz
   %i.cl = getelementptr inbounds nuw i8, ptr %i.b, i64 912
   store i32 %i.ck, ptr %i.cl, align 16, !tbaa !105
-  %1 = sdiv i32 %i.bb, 8                          ; 3 uses
-  %2 = getelementptr inbounds nuw i8, ptr %i.b, i64 920
-  store i32 %1, ptr %2, align 8, !tbaa !29
-  %3 = sdiv i32 %i.be, 8                          ; 3 uses
+  %1 = getelementptr inbounds nuw i8, ptr %i.b, i64 920
+  %2 = sdiv <2 x i32> %i.at, splat (i32 8)        ; 2 uses
+  %3 = extractelement <2 x i32> %2, i64 0         ; 3 uses
+  store i32 %3, ptr %1, align 8, !tbaa !29
   %i.cm = getelementptr inbounds nuw i8, ptr %i.b, i64 928
-  store i32 %3, ptr %i.cm, align 16, !tbaa !29
-  %i.cn = ashr i32 %1, %i.ba                      ; 2 uses
+  %4 = extractelement <2 x i32> %2, i64 1         ; 3 uses
+  store i32 %4, ptr %i.cm, align 16, !tbaa !29
+  %i.cn = ashr i32 %3, %i.ba                      ; 2 uses
   %i.co = getelementptr inbounds nuw i8, ptr %i.b, i64 924
   store i32 %i.cn, ptr %i.co, align 4, !tbaa !29
-  %i.cp = ashr i32 %3, %i.bd                      ; 2 uses
+  %i.cp = ashr i32 %4, %i.bd                      ; 2 uses
   %i.cq = getelementptr inbounds nuw i8, ptr %i.b, i64 932
   store i32 %i.cp, ptr %i.cq, align 4, !tbaa !29
-  %i.cr = mul nsw i32 %3, %1                      ; 3 uses
+  %i.cr = mul nsw i32 %4, %3                      ; 3 uses
   %i.cs = mul nsw i32 %i.cp, %i.cn                ; 2 uses
   %i.ct = shl nsw i32 %i.cs, 1
   %i.cu = add nsw i32 %i.ct, %i.cr

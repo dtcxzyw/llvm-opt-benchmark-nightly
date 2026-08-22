@@ -204,6 +204,7 @@ bb.a:
   %.0307 = phi i32 [ 0, %bb.a ], [ %i.z, %bb.f ]  ; 3 uses
   %i.a = mul nuw nsw i32 %.0307, 1000             ; 3 uses
   %i.b = trunc nuw nsw i32 %.0307 to i8
+  %0 = insertelement <2 x i32> poison, i32 %i.a, i64 1
   br label %.preheader3
 
 .preheader3:                                      ; preds = %.preheader4, %bb.e
@@ -215,26 +216,29 @@ bb.a:
   %i.f = add nsw i32 %.neg.i, %i.a
   %i.g = shl nuw nsw i32 %i.e, 10
   %i.h = trunc i32 %.0296 to i8
+  %1 = insertelement <2 x i32> %0, i32 %i.f, i64 0
   br label %bb.b
 
 bb.b:                                             ; preds = %.preheader3, %mp_yuv_to_rgb.exit
   %.0285 = phi i32 [ -31, %.preheader3 ], [ %i.x, %mp_yuv_to_rgb.exit ] ; 4 uses
-  %.neg26.i.a = mul nsw i32 %.0285, -172
-  %0 = add nsw i32 %i.f, %.neg26.i.a
-  %1 = sdiv i32 %0, 1000                          ; 2 uses
-  %2 = mul nsw i32 %.0285, 886
-  %3 = add nsw i32 %2, %i.a
-  %4 = sdiv i32 %3, 1000                          ; 2 uses
-  %i.i = or i32 %1, %i.e
+  %.neg26.i = mul nsw i32 %.0285, -172
+  %.neg26.i.a = mul nsw i32 %.0285, 886
+  %2 = insertelement <2 x i32> poison, i32 %.neg26.i, i64 0
+  %3 = insertelement <2 x i32> %2, i32 %.neg26.i.a, i64 1
+  %4 = add nsw <2 x i32> %1, %3
+  %5 = sdiv <2 x i32> %4, splat (i32 1000)        ; 2 uses
+  %6 = extractelement <2 x i32> %5, i64 0         ; 2 uses
+  %i.i = or i32 %6, %i.e
   %or.cond.i = icmp ult i32 %i.i, 32
-  %i.j = icmp ult i32 %4, 32
+  %7 = extractelement <2 x i32> %5, i64 1         ; 2 uses
+  %i.j = icmp ult i32 %7, 32
   %or.cond3.i = select i1 %or.cond.i, i1 %i.j, i1 false
   br i1 %or.cond3.i, label %bb.c, label %mp_yuv_to_rgb.exit
 
 bb.c:                                             ; preds = %bb.b
-  %i.k = shl nuw nsw i32 %1, 5
+  %i.k = shl nuw nsw i32 %6, 5
   %i.l = or disjoint i32 %i.k, %i.g
-  %i.m = or disjoint i32 %i.l, %4
+  %i.m = or disjoint i32 %i.l, %7
   %i.n = zext nneg i32 %i.m to i64
   %i.o = getelementptr inbounds nuw [3 x i8], ptr @mp_rgb_yuv_table, i64 %i.n ; 4 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 2 ; 2 uses

@@ -93,48 +93,46 @@ bb.i:                                             ; preds = %bb.g
 
 bb.j:                                             ; preds = %bb.i
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 16 ; 2 uses
-  %i.r = load ptr, ptr %i.q, align 8, !tbaa !32   ; 6 uses
-  store i32 1, ptr %i.r, align 8, !tbaa !39
-  %1 = getelementptr inbounds nuw i8, ptr %i.r, i64 4
-  store i32 69659, ptr %1, align 4, !tbaa !42
-  %i.s = load i32, ptr %i.b, align 4, !tbaa !43
+  %i.r = load ptr, ptr %i.q, align 8, !tbaa !32   ; 5 uses
+  store <2 x i32> <i32 1, i32 69659>, ptr %i.r, align 8, !tbaa !39
+  %i.s = load i32, ptr %i.b, align 4, !tbaa !39
   %.not48 = icmp eq i32 %i.s, 0                   ; 2 uses
   %spec.select = select i1 %.not48, i32 1, i32 2
   %spec.select53 = select i1 %.not48, i64 4, i64 3
   %i.t = getelementptr inbounds nuw i8, ptr %i.r, i64 128
-  store i32 1, ptr %i.t, align 8, !tbaa !43
+  store i32 1, ptr %i.t, align 8, !tbaa !39
   %i.u = getelementptr inbounds nuw i8, ptr %i.r, i64 132
-  store i32 %spec.select, ptr %i.u, align 4, !tbaa !43
+  store i32 %spec.select, ptr %i.u, align 4, !tbaa !39
   %i.v = getelementptr inbounds nuw i8, ptr %i.r, i64 136
-  store i64 %spec.select53, ptr %i.v, align 8, !tbaa !44
+  store i64 %spec.select53, ptr %i.v, align 8, !tbaa !40
   %i.w = getelementptr inbounds nuw i8, ptr %i.r, i64 144
-  store ptr null, ptr %i.w, align 8, !tbaa !45
+  store ptr null, ptr %i.w, align 8, !tbaa !41
   %i.x = load ptr, ptr %i.q, align 8, !tbaa !32   ; 5 uses
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 152 ; 2 uses
-  store i32 44100, ptr %i.y, align 8, !tbaa !46
-  %i.z = load i32, ptr %i.c, align 4, !tbaa !43   ; 2 uses
+  store i32 44100, ptr %i.y, align 8, !tbaa !42
+  %i.z = load i32, ptr %i.c, align 4, !tbaa !39   ; 2 uses
   %i.aa = icmp sgt i32 %i.z, 0
   br i1 %i.aa, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %bb.j
   %i.ab = udiv i32 44100, %i.z                    ; 2 uses
-  store i32 %i.ab, ptr %i.y, align 8, !tbaa !46
+  store i32 %i.ab, ptr %i.y, align 8, !tbaa !42
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.j
   %i.ac = phi i32 [ %i.ab, %bb.k ], [ 44100, %bb.j ] ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %i.x, i64 56
-  store i32 4, ptr %i.ad, align 8, !tbaa !47
+  store i32 4, ptr %i.ad, align 8, !tbaa !45
   %i.ae = getelementptr inbounds nuw i8, ptr %i.x, i64 132
-  %i.af = load i32, ptr %i.ae, align 4, !tbaa !48
+  %i.af = load i32, ptr %i.ae, align 4, !tbaa !46
   %i.ag = shl i32 %i.af, 2
   %i.ah = mul i32 %i.ag, %i.ac
   %i.ai = sext i32 %i.ah to i64
   %i.aj = getelementptr inbounds nuw i8, ptr %i.x, i64 48
-  store i64 %i.ai, ptr %i.aj, align 8, !tbaa !49
+  store i64 %i.ai, ptr %i.aj, align 8, !tbaa !47
   %i.ak = load i32, ptr %i.e, align 4, !tbaa !29
   %i.al = getelementptr inbounds nuw i8, ptr %i.x, i64 156
-  store i32 %i.ak, ptr %i.al, align 4, !tbaa !50
+  store i32 %i.ak, ptr %i.al, align 4, !tbaa !48
   call void @avpriv_set_pts_info(ptr noundef nonnull %i.p, i32 noundef 32, i32 noundef 1, i32 noundef %i.ac) #8
   br label %bb.m
 
@@ -161,7 +159,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 36
-  store i32 0, ptr %i.h, align 4, !tbaa !51
+  store i32 0, ptr %i.h, align 4, !tbaa !49
   %i.i = load ptr, ptr %i.c, align 8, !tbaa !28
   %i.j = tail call i64 @avio_seek(ptr noundef %i.i, i64 noundef 0, i32 noundef 1) #8
   %i.k = getelementptr inbounds nuw i8, ptr %i.b, i64 4
@@ -169,14 +167,14 @@ bb.b:                                             ; preds = %bb.a
   %i.m = sext i32 %i.l to i64
   %i.n = sub nsw i64 %i.j, %i.m                   ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  store i64 %i.n, ptr %i.o, align 8, !tbaa !52
+  store i64 %i.n, ptr %i.o, align 8, !tbaa !50
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %i.q = load ptr, ptr %i.p, align 8, !tbaa !53
-  %i.r = load ptr, ptr %i.q, align 8, !tbaa !54
+  %i.q = load ptr, ptr %i.p, align 8, !tbaa !51
+  %i.r = load ptr, ptr %i.q, align 8, !tbaa !52
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 16
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !32
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 132
-  %i.v = load i32, ptr %i.u, align 4, !tbaa !48   ; 2 uses
+  %i.v = load i32, ptr %i.u, align 4, !tbaa !46   ; 2 uses
   %i.w = icmp sgt i32 %i.v, 0
   br i1 %i.w, label %bb.c, label %bb.d
 
@@ -184,7 +182,7 @@ bb.c:                                             ; preds = %bb.b
   %i.x = shl nuw nsw i32 %i.v, 1
   %i.y = zext nneg i32 %i.x to i64
   %i.z = sdiv i64 %i.n, %i.y
-  store i64 %i.z, ptr %i.o, align 8, !tbaa !52
+  store i64 %i.z, ptr %i.o, align 8, !tbaa !50
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.b, %bb.c, %bb.a
@@ -219,7 +217,7 @@ bb.b:                                             ; preds = %.lr.ph
   %i.g = add nsw i32 %.015, 1
   %i.h = sext i32 %.015 to i64
   %i.i = getelementptr inbounds i8, ptr %1, i64 %i.h
-  store i8 %i.e, ptr %i.i, align 1, !tbaa !44
+  store i8 %i.e, ptr %i.i, align 1, !tbaa !40
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %.lr.ph
@@ -230,7 +228,7 @@ bb.c:                                             ; preds = %bb.b, %.lr.ph
   %sext.mask = and i32 %i.j, 255
   %i.m = icmp eq i32 %sext.mask, 32
   %or.cond = or i1 %i.l, %i.m
-  br i1 %or.cond, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !56
+  br i1 %or.cond, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !54
 
 ._crit_edge.loopexit:                             ; preds = %bb.c
   %i.n = sext i32 %.1 to i64                      ; 2 uses
@@ -247,7 +245,7 @@ bb.d:                                             ; preds = %._crit_edge.loopexi
 bb.e:                                             ; preds = %._crit_edge.loopexit, %bb.d, %._crit_edge
   %.0.lcssa19 = phi i64 [ %i.n, %._crit_edge.loopexit ], [ %.0.lcssa20, %bb.d ], [ 0, %._crit_edge ]
   %i.p = getelementptr inbounds i8, ptr %1, i64 %.0.lcssa19
-  store i8 0, ptr %i.p, align 1, !tbaa !44
+  store i8 0, ptr %i.p, align 1, !tbaa !40
   ret void
 }
 
@@ -322,23 +320,21 @@ attributes #8 = { nounwind }
 !36 = !{!"AVPacket", !37, i64 0, !23, i64 8, !23, i64 16, !11, i64 24, !6, i64 32, !6, i64 36, !6, i64 40, !38, i64 48, !6, i64 56, !23, i64 64, !23, i64 72, !12, i64 80, !37, i64 88, !35, i64 96}
 !37 = !{!"p1 _ZTS11AVBufferRef", !12, i64 0}
 !38 = !{!"p1 _ZTS16AVPacketSideData", !12, i64 0}
-!39 = !{!40, !6, i64 0}
-!40 = !{!"AVCodecParameters", !6, i64 0, !6, i64 4, !6, i64 8, !11, i64 16, !6, i64 24, !38, i64 32, !6, i64 40, !6, i64 44, !23, i64 48, !6, i64 56, !6, i64 60, !6, i64 64, !6, i64 68, !6, i64 72, !6, i64 76, !35, i64 80, !35, i64 88, !6, i64 96, !6, i64 100, !6, i64 104, !6, i64 108, !6, i64 112, !6, i64 116, !6, i64 120, !41, i64 128, !6, i64 152, !6, i64 156, !6, i64 160, !6, i64 164, !6, i64 168, !6, i64 172, !6, i64 176}
-!41 = !{!"AVChannelLayout", !6, i64 0, !6, i64 4, !7, i64 8, !12, i64 16}
-!42 = !{!40, !6, i64 4}
-!43 = !{!6, !6, i64 0}
-!44 = !{!7, !7, i64 0}
-!45 = !{!12, !12, i64 0}
-!46 = !{!40, !6, i64 152}
-!47 = !{!40, !6, i64 56}
-!48 = !{!40, !6, i64 132}
-!49 = !{!40, !23, i64 48}
-!50 = !{!40, !6, i64 156}
-!51 = !{!36, !6, i64 36}
-!52 = !{!36, !23, i64 8}
-!53 = !{!14, !19, i64 48}
-!54 = !{!55, !55, i64 0}
-!55 = !{!"p1 _ZTS8AVStream", !12, i64 0}
-!56 = distinct !{!56, !57}
-!57 = !{!"llvm.loop.mustprogress"}
+!39 = !{!6, !6, i64 0}
+!40 = !{!7, !7, i64 0}
+!41 = !{!12, !12, i64 0}
+!42 = !{!43, !6, i64 152}
+!43 = !{!"AVCodecParameters", !6, i64 0, !6, i64 4, !6, i64 8, !11, i64 16, !6, i64 24, !38, i64 32, !6, i64 40, !6, i64 44, !23, i64 48, !6, i64 56, !6, i64 60, !6, i64 64, !6, i64 68, !6, i64 72, !6, i64 76, !35, i64 80, !35, i64 88, !6, i64 96, !6, i64 100, !6, i64 104, !6, i64 108, !6, i64 112, !6, i64 116, !6, i64 120, !44, i64 128, !6, i64 152, !6, i64 156, !6, i64 160, !6, i64 164, !6, i64 168, !6, i64 172, !6, i64 176}
+!44 = !{!"AVChannelLayout", !6, i64 0, !6, i64 4, !7, i64 8, !12, i64 16}
+!45 = !{!43, !6, i64 56}
+!46 = !{!43, !6, i64 132}
+!47 = !{!43, !23, i64 48}
+!48 = !{!43, !6, i64 156}
+!49 = !{!36, !6, i64 36}
+!50 = !{!36, !23, i64 8}
+!51 = !{!14, !19, i64 48}
+!52 = !{!53, !53, i64 0}
+!53 = !{!"p1 _ZTS8AVStream", !12, i64 0}
+!54 = distinct !{!54, !55}
+!55 = !{!"llvm.loop.mustprogress"}
 end_hunk_0

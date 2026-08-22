@@ -204,8 +204,6 @@ bb.b:                                             ; preds = %bb.a, %bb.f
   %i.c = getelementptr inbounds nuw [4 x i8], ptr @ps_tableinit.ipdopd_sin, i64 %indvars.iv190
   %i.d = load float, ptr %i.c, align 4, !tbaa !15
   %i.e = shl nuw nsw i64 %indvars.iv190, 6
-  %0 = insertelement <2 x float> poison, float %i.b, i64 0
-  %1 = insertelement <2 x float> %0, float %i.d, i64 1
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.e
@@ -214,10 +212,10 @@ bb.c:                                             ; preds = %bb.b, %bb.e
   %i.g = load float, ptr %i.f, align 4, !tbaa !15
   %i.h = getelementptr inbounds nuw [4 x i8], ptr @ps_tableinit.ipdopd_sin, i64 %indvars.iv186
   %i.i = load float, ptr %i.h, align 4, !tbaa !15
-  %2 = insertelement <2 x float> poison, float %i.g, i64 0
-  %3 = insertelement <2 x float> %2, float %i.i, i64 1
-  %4 = fmul nsz <2 x float> %3, splat (float 5.000000e-01)
-  %5 = tail call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %1, <2 x float> splat (float 2.500000e-01), <2 x float> %4)
+  %0 = fmul nsz float %i.g, 5.000000e-01
+  %1 = tail call nsz float @llvm.fmuladd.f32(float %i.b, float 2.500000e-01, float %0)
+  %2 = fmul nsz float %i.i, 5.000000e-01
+  %3 = tail call nsz float @llvm.fmuladd.f32(float %i.d, float 2.500000e-01, float %2)
   %i.j = shl nuw nsw i64 %indvars.iv186, 3
   %i.k = add nuw nsw i64 %i.j, %i.e
   br label %bb.d
@@ -228,25 +226,20 @@ bb.d:                                             ; preds = %bb.c, %bb.d
   %i.m = load float, ptr %i.l, align 4, !tbaa !15
   %i.n = getelementptr inbounds nuw [4 x i8], ptr @ps_tableinit.ipdopd_sin, i64 %indvars.iv
   %i.o = load float, ptr %i.n, align 4, !tbaa !15
-  %6 = add nuw nsw i64 %indvars.iv, %i.k          ; 2 uses
-  %7 = getelementptr inbounds nuw [4 x i8], ptr @pd_re_smooth, i64 %6
-  %8 = insertelement <2 x float> poison, float %i.m, i64 0
-  %9 = insertelement <2 x float> %8, float %i.o, i64 1
-  %10 = fadd nsz <2 x float> %5, %9               ; 2 uses
-  %11 = fpext <2 x float> %10 to <2 x double>     ; 2 uses
-  %12 = extractelement <2 x double> %11, i64 0
-  %13 = extractelement <2 x double> %11, i64 1
-  %i.p = tail call nsz double @hypot(double noundef %13, double noundef %12) #13
+  %4 = fadd nsz float %1, %i.m                    ; 2 uses
+  %5 = fadd nsz float %3, %i.o                    ; 2 uses
+  %6 = fpext nsz float %5 to double
+  %7 = fpext nsz float %4 to double
+  %i.p = tail call nsz double @hypot(double noundef %6, double noundef %7) #13
   %i.q = fdiv nsz double 1.000000e+00, %i.p
-  %i.r = fptrunc nsz double %i.q to float
-  %14 = insertelement <2 x float> poison, float %i.r, i64 0
-  %15 = shufflevector <2 x float> %14, <2 x float> poison, <2 x i32> zeroinitializer
-  %16 = fmul nsz <2 x float> %10, %15             ; 2 uses
-  %17 = extractelement <2 x float> %16, i64 0
-  store float %17, ptr %7, align 4, !tbaa !15
-  %18 = getelementptr inbounds nuw [4 x i8], ptr @pd_im_smooth, i64 %6
-  %19 = extractelement <2 x float> %16, i64 1
-  store float %19, ptr %18, align 4, !tbaa !15
+  %i.r = fptrunc nsz double %i.q to float         ; 2 uses
+  %8 = fmul nsz float %4, %i.r
+  %9 = add nuw nsw i64 %indvars.iv, %i.k          ; 2 uses
+  %10 = getelementptr inbounds nuw [4 x i8], ptr @pd_re_smooth, i64 %9
+  store float %8, ptr %10, align 4, !tbaa !15
+  %11 = fmul nsz float %5, %i.r
+  %12 = getelementptr inbounds nuw [4 x i8], ptr @pd_im_smooth, i64 %9
+  store float %11, ptr %12, align 4, !tbaa !15
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, 8
   br i1 %exitcond.not, label %bb.e, label %bb.d, !llvm.loop !65
@@ -264,33 +257,31 @@ bb.f:                                             ; preds = %bb.e
 .preheader175:                                    ; preds = %bb.f, %middle.block
   %indvars.iv198 = phi i64 [ %indvars.iv.next199, %middle.block ], [ 0, %bb.f ] ; 4 uses
   %i.s = getelementptr inbounds nuw [4 x i8], ptr @ps_tableinit.iid_par_dequant, i64 %indvars.iv198
-  %i.t = load float, ptr %i.s, align 4, !tbaa !15 ; 4 uses
-  %20 = getelementptr inbounds nuw [128 x i8], ptr @HA, i64 %indvars.iv198
-  %i.u = getelementptr inbounds nuw [128 x i8], ptr @HB, i64 %indvars.iv198
-  %21 = fmul nsz float %i.t, 2.000000e+00
-  %22 = insertelement <2 x float> poison, float %i.t, i64 0 ; 2 uses
-  %23 = shufflevector <2 x float> %22, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
-  %24 = tail call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %23, <2 x float> %23, <2 x float> <float -1.000000e+00, float 1.000000e+00>) ; 2 uses
-  %25 = extractelement <2 x float> %24, i64 1
-  %26 = tail call nsz float @llvm.sqrt.f32(float %25)
-  %27 = insertelement <2 x float> %22, float %26, i64 1
-  %28 = fdiv nsz <2 x float> <float 1.000000e+00, float f0x3FB504F3>, %27 ; 3 uses
-  %29 = extractelement <2 x float> %28, i64 1     ; 2 uses
-  %30 = extractelement <2 x float> %28, i64 0
-  %31 = fadd nsz float %i.t, %30                  ; 2 uses
-  %i.v = fmul nsz float %31, %31
-  %32 = fmul nsz float %i.t, %29                  ; 2 uses
-  %33 = fsub nsz float %29, %32
-  %broadcast.splat = shufflevector <2 x float> %28, <2 x float> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1> ; 2 uses
-  %broadcast.splatinsert218 = insertelement <4 x float> poison, float %32, i64 0
+  %i.t = load float, ptr %i.s, align 4, !tbaa !15 ; 8 uses
+  %i.u = getelementptr inbounds nuw [128 x i8], ptr @HA, i64 %indvars.iv198
+  %13 = tail call nsz float @llvm.fmuladd.f32(float %i.t, float %i.t, float -1.000000e+00)
+  %14 = getelementptr inbounds nuw [128 x i8], ptr @HB, i64 %indvars.iv198
+  %15 = fdiv nsz float 1.000000e+00, %i.t
+  %16 = fadd nsz float %i.t, %15                  ; 2 uses
+  %17 = fmul nsz float %16, %16
+  %18 = fmul nsz float %i.t, 2.000000e+00
+  %19 = tail call nsz float @llvm.fmuladd.f32(float %i.t, float %i.t, float 1.000000e+00)
+  %20 = tail call nsz float @llvm.sqrt.f32(float %19)
+  %21 = fdiv nsz float f0x3FB504F3, %20           ; 3 uses
+  %i.v = fmul nsz float %i.t, %21                 ; 2 uses
+  %22 = fsub nsz float %21, %i.v
+  %broadcast.splatinsert = insertelement <4 x float> poison, float %21, i64 0
+  %broadcast.splat = shufflevector <4 x float> %broadcast.splatinsert, <4 x float> poison, <4 x i32> zeroinitializer ; 2 uses
+  %broadcast.splatinsert218 = insertelement <4 x float> poison, float %i.v, i64 0
   %broadcast.splat219 = shufflevector <4 x float> %broadcast.splatinsert218, <4 x float> poison, <4 x i32> zeroinitializer ; 2 uses
-  %broadcast.splatinsert220 = insertelement <4 x float> poison, float %33, i64 0
+  %broadcast.splatinsert220 = insertelement <4 x float> poison, float %22, i64 0
   %broadcast.splat221 = shufflevector <4 x float> %broadcast.splatinsert220, <4 x float> poison, <4 x i32> zeroinitializer
-  %broadcast.splatinsert222 = insertelement <4 x float> poison, float %21, i64 0
+  %broadcast.splatinsert222 = insertelement <4 x float> poison, float %18, i64 0
   %broadcast.splat223 = shufflevector <4 x float> %broadcast.splatinsert222, <4 x float> poison, <4 x i32> zeroinitializer
-  %broadcast.splatinsert224 = insertelement <4 x float> poison, float %i.v, i64 0
+  %broadcast.splatinsert224 = insertelement <4 x float> poison, float %17, i64 0
   %broadcast.splat225 = shufflevector <4 x float> %broadcast.splatinsert224, <4 x float> poison, <4 x i32> zeroinitializer
-  %i.w = shufflevector <2 x float> %24, <2 x float> poison, <4 x i32> zeroinitializer
+  %23 = insertelement <2 x float> poison, float %13, i64 0
+  %i.w = shufflevector <2 x float> %23, <2 x float> poison, <4 x i32> zeroinitializer
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %.preheader175
@@ -306,7 +297,7 @@ vector.body:                                      ; preds = %vector.body, %.preh
   %i.ad = extractvalue { <4 x float>, <4 x float> } %i.ac, 0
   %i.ae = extractvalue { <4 x float>, <4 x float> } %i.ac, 1
   %i.af = fmul nsz <4 x float> %broadcast.splat219, %i.ae
-  %i.ag = getelementptr inbounds nuw [16 x i8], ptr %20, i64 %index
+  %i.ag = getelementptr inbounds nuw [16 x i8], ptr %i.u, i64 %index
   %i.ah = fsub nsz <4 x float> %i.aa, %i.y
   %i.ai = tail call nsz { <4 x float>, <4 x float> } @llvm.sincos.v4f32(<4 x float> %i.ah) ; 2 uses
   %i.aj = extractvalue { <4 x float>, <4 x float> } %i.ai, 0
@@ -333,11 +324,35 @@ vector.body:                                      ; preds = %vector.body, %.preh
   %i.ba = fsub nsz <4 x float> splat (float 1.000000e+00), %i.az
   %i.bb = fadd nsz <4 x float> %i.az, splat (float 1.000000e+00)
   %i.bc = fdiv nsz <4 x float> %i.ba, %i.bb
-  %i.bd = tail call nsz <4 x float> @llvm.sqrt.v4f32(<4 x float> %i.bc)
-  %34 = tail call nsz <4 x float> @llvm.atan.v4f32(<4 x float> %i.bd)
-  %35 = tail call nsz { <4 x float>, <4 x float> } @llvm.sincos.v4f32(<4 x float> %34) ; 2 uses
-  %36 = extractvalue { <4 x float>, <4 x float> } %35, 0
-  %37 = extractvalue { <4 x float>, <4 x float> } %35, 1
+  %i.bd = tail call nsz <4 x float> @llvm.sqrt.v4f32(<4 x float> %i.bc) ; 4 uses
+  %24 = extractelement <4 x float> %i.bd, i64 0
+  %25 = tail call nsz float @llvm.atan.f32(float %24)
+  %26 = extractelement <4 x float> %i.bd, i64 1
+  %27 = tail call nsz float @llvm.atan.f32(float %26)
+  %28 = extractelement <4 x float> %i.bd, i64 2
+  %29 = tail call nsz float @llvm.atan.f32(float %28)
+  %30 = extractelement <4 x float> %i.bd, i64 3
+  %31 = tail call nsz float @llvm.atan.f32(float %30)
+  %32 = tail call nsz { float, float } @llvm.sincos.f32(float %25) ; 2 uses
+  %33 = tail call nsz { float, float } @llvm.sincos.f32(float %27) ; 2 uses
+  %34 = tail call nsz { float, float } @llvm.sincos.f32(float %29) ; 2 uses
+  %35 = tail call nsz { float, float } @llvm.sincos.f32(float %31) ; 2 uses
+  %36 = extractvalue { float, float } %32, 0
+  %37 = insertelement <4 x float> poison, float %36, i64 0
+  %38 = extractvalue { float, float } %32, 1
+  %39 = insertelement <4 x float> poison, float %38, i64 0
+  %40 = extractvalue { float, float } %33, 0
+  %41 = insertelement <4 x float> %37, float %40, i64 1
+  %42 = extractvalue { float, float } %33, 1
+  %43 = insertelement <4 x float> %39, float %42, i64 1
+  %44 = extractvalue { float, float } %34, 0
+  %45 = insertelement <4 x float> %41, float %44, i64 2
+  %46 = extractvalue { float, float } %34, 1
+  %47 = insertelement <4 x float> %43, float %46, i64 2
+  %48 = extractvalue { float, float } %35, 0
+  %49 = insertelement <4 x float> %45, float %48, i64 3
+  %50 = extractvalue { float, float } %35, 1
+  %51 = insertelement <4 x float> %47, float %50, i64 3
   %i.be = fcmp nsz olt <4 x float> %i.au, zeroinitializer
   %i.bf = fpext nsz <4 x float> %i.au to <4 x double>
   %i.bg = fadd nsz <4 x double> %i.bf, splat (double f0x3FF921FB54442D18)
@@ -348,12 +363,12 @@ vector.body:                                      ; preds = %vector.body, %.preh
   %i.bl = extractvalue { <4 x float>, <4 x float> } %i.bj, 1
   %i.bm = fpext nsz <4 x float> %i.bl to <4 x double>
   %i.bn = fmul nsz <4 x double> %i.bm, splat (double f0x3FF6A09E667F3BCD) ; 2 uses
-  %i.bo = fpext nsz <4 x float> %37 to <4 x double>
-  %i.bp = getelementptr inbounds nuw [16 x i8], ptr %i.u, i64 %index
+  %i.bo = fpext nsz <4 x float> %51 to <4 x double>
+  %i.bp = getelementptr inbounds nuw [16 x i8], ptr %14, i64 %index
   %i.bq = fpext nsz <4 x float> %i.bk to <4 x double> ; 2 uses
   %i.br = fmul nsz <4 x double> %i.bq, splat (double f0x3FF6A09E667F3BCD)
   %i.bs = fmul nsz <4 x double> %i.bq, splat (double f0xBFF6A09E667F3BCD)
-  %i.bt = fpext nsz <4 x float> %36 to <4 x double>
+  %i.bt = fpext nsz <4 x float> %49 to <4 x double>
   %i.bu = shufflevector <4 x double> %i.bn, <4 x double> %i.br, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
   %i.bv = shufflevector <4 x double> %i.bo, <4 x double> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 0, i32 1, i32 2, i32 3>
   %i.bw = fmul nsz <8 x double> %i.bu, %i.bv
@@ -756,8 +771,11 @@ declare double @hypot(double noundef, double noundef) local_unnamed_addr #8
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.sqrt.f32(float) #5
 
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.atan.f32(float) #9
+
 ; Function Attrs: cold nofree norecurse nosync nounwind optsize memory(argmem: readwrite) uwtable
-define internal fastcc void @make_filters_from_proto(ptr nofree noundef writeonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, i32 noundef range(i32 4, 13) %2) unnamed_addr #9 {
+define internal fastcc void @make_filters_from_proto(ptr nofree noundef writeonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, i32 noundef range(i32 4, 13) %2) unnamed_addr #10 {
 bb.a:
   %i.a = uitofp nneg i32 %2 to double
   %wide.trip.count = zext nneg i32 %2 to i64
@@ -810,7 +828,10 @@ bb.d:                                             ; preds = %bb.c
 }
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
-declare { double, double } @llvm.sincos.f64(double) #10
+declare { double, double } @llvm.sincos.f64(double) #9
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare { float, float } @llvm.sincos.f32(float) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #5
@@ -822,16 +843,13 @@ declare <4 x float> @llvm.fmuladd.v4f32(<4 x float>, <4 x float>, <4 x float>) #
 declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #5
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
-declare { <4 x float>, <4 x float> } @llvm.sincos.v4f32(<4 x float>) #10
+declare { <4 x float>, <4 x float> } @llvm.sincos.v4f32(<4 x float>) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x float> @llvm.sqrt.v4f32(<4 x float>) #5
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
-declare <4 x float> @llvm.atan.v4f32(<4 x float>) #10
-
-; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
-declare <4 x float> @llvm.atan2.v4f32(<4 x float>, <4 x float>) #10
+declare <4 x float> @llvm.atan2.v4f32(<4 x float>, <4 x float>) #9
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
@@ -842,8 +860,8 @@ attributes #5 = { nocallback nocreateundeforpoison nofree nosync nounwind specul
 attributes #6 = { nofree norecurse nosync nounwind memory(write, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #7 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #8 = { mustprogress nocallback nofree nosync nounwind willreturn memory(none) "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #9 = { cold nofree norecurse nosync nounwind optsize memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #10 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #9 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #10 = { cold nofree norecurse nosync nounwind optsize memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #11 = { nounwind }
 attributes #12 = { cold }
 attributes #13 = { nounwind willreturn memory(none) }

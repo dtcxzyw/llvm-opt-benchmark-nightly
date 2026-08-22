@@ -205,7 +205,7 @@ bb.a:
   %i.a = alloca ptr, align 8                      ; 9 uses
   %i.b = alloca ptr, align 8                      ; 9 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !9    ; 49 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !9    ; 48 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
   %i.f = load i32, ptr %i.e, align 8, !tbaa !87
   %i.g = and i32 %i.f, 1536
@@ -608,7 +608,6 @@ bb.bc:                                            ; preds = %bb.bb, %bb.ba
 .preheader343.lr.ph:                              ; preds = %bb.bc
   %i.go = uitofp nneg i32 %i.gb to double         ; 2 uses
   %i.gp = getelementptr inbounds nuw i8, ptr %i.d, i64 25088
-  %2 = insertelement <2 x double> poison, double %i.go, i64 1
   br label %.preheader343
 
 .preheader343:                                    ; preds = %.preheader343.lr.ph, %bb.be
@@ -713,24 +712,20 @@ bb.bd:                                            ; preds = %.lr.ph403
   %i.is = fadd nsz <2 x double> %i.im, %i.ir      ; 3 uses
   %i.it = extractelement <2 x double> %i.is, i64 1 ; 3 uses
   %i.iu = extractelement <2 x double> %i.is, i64 0 ; 2 uses
-  %3 = load ptr, ptr %i.a, align 8, !tbaa !62
   %i.iv = fadd nsz double %i.iu, %i.it            ; 3 uses
-  %4 = fmul nsz double %i.it, 2.560000e+02
   %i.iw = fcmp nsz une double %i.iv, 0.000000e+00
-  %5 = insertelement <2 x double> poison, double %4, i64 0
-  %6 = insertelement <2 x double> %5, double %i.iv, i64 1
-  %7 = insertelement <2 x double> %2, double %i.iv, i64 0
-  %8 = fdiv nsz <2 x double> %6, %7               ; 2 uses
-  %9 = extractelement <2 x double> %8, i64 0
-  %.2 = select nsz i1 %i.iw, double %9, double %.1
+  %2 = fmul nsz double %i.it, 2.560000e+02
+  %3 = fdiv nsz double %2, %i.iv
+  %.2 = select nsz i1 %i.iw, double %3, double %.1
+  %4 = load ptr, ptr %i.a, align 8, !tbaa !62
   %i.ix = call nsz double @llvm.round.f64(double %.2)
   %i.iy = fptosi double %i.ix to i32
   %i.iz = call i32 @llvm.smax.i32(i32 %i.iy, i32 1)
   %i.ja = call i32 @llvm.umin.i32(i32 %i.iz, i32 255)
   %i.jb = zext nneg i32 %i.ja to i64
-  %i.jc = getelementptr inbounds nuw [256 x i8], ptr %3, i64 %i.jb
-  %10 = extractelement <2 x double> %8, i64 1
-  %i.jd = fptosi double %10 to i32                ; 3 uses
+  %i.jc = getelementptr inbounds nuw [256 x i8], ptr %4, i64 %i.jb
+  %5 = fdiv nsz double %i.iv, %i.go
+  %i.jd = fptosi double %5 to i32                 ; 3 uses
   %.not.i = icmp ult i32 %i.jd, 256
   %isnotneg.i = icmp sgt i32 %i.jd, -1
   %i.je = sext i1 %isnotneg.i to i64
@@ -784,10 +779,8 @@ bb.bf:                                            ; preds = %._crit_edge407, %.l
   br i1 %i.ju, label %.thread340, label %bb.bg
 
 .thread340:                                       ; preds = %bb.bf
-  %11 = getelementptr inbounds nuw i8, ptr %i.d, i64 25232
-  store i32 1, ptr %11, align 8, !tbaa !58
   %i.jv = getelementptr inbounds nuw i8, ptr %i.d, i64 25228
-  store i32 1, ptr %i.jv, align 4, !tbaa !59
+  store <2 x i32> splat (i32 1), ptr %i.jv, align 4, !tbaa !63
   %i.jw = shl i32 %i.jt, 16
   %i.jx = getelementptr inbounds nuw i8, ptr %i.d, i64 4184
   store i32 %i.jw, ptr %i.jx, align 8, !tbaa !71

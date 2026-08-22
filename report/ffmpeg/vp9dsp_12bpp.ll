@@ -61,45 +61,15 @@ bb.a:
 define internal fastcc void @vp9dsp_itxfm_init(ptr nofree noundef writeonly captures(none) initializes((480, 640)) %0) unnamed_addr #1 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 480
-  store ptr @idct_idct_4x4_add_c, ptr %i.a, align 8, !tbaa !9
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 488
-  store ptr @iadst_idct_4x4_add_c, ptr %1, align 8, !tbaa !9
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 496
-  store ptr @idct_iadst_4x4_add_c, ptr %2, align 8, !tbaa !9
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 504
-  store ptr @iadst_iadst_4x4_add_c, ptr %3, align 8, !tbaa !9
+  store <4 x ptr> <ptr @idct_idct_4x4_add_c, ptr @iadst_idct_4x4_add_c, ptr @idct_iadst_4x4_add_c, ptr @iadst_iadst_4x4_add_c>, ptr %i.a, align 8, !tbaa !9
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 512
-  store ptr @idct_idct_8x8_add_c, ptr %i.b, align 8, !tbaa !9
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 520
-  store ptr @iadst_idct_8x8_add_c, ptr %4, align 8, !tbaa !9
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 528
-  store ptr @idct_iadst_8x8_add_c, ptr %5, align 8, !tbaa !9
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 536
-  store ptr @iadst_iadst_8x8_add_c, ptr %6, align 8, !tbaa !9
+  store <4 x ptr> <ptr @idct_idct_8x8_add_c, ptr @iadst_idct_8x8_add_c, ptr @idct_iadst_8x8_add_c, ptr @iadst_iadst_8x8_add_c>, ptr %i.b, align 8, !tbaa !9
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 544
-  store ptr @idct_idct_16x16_add_c, ptr %i.c, align 8, !tbaa !9
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 552
-  store ptr @iadst_idct_16x16_add_c, ptr %7, align 8, !tbaa !9
-  %8 = getelementptr inbounds nuw i8, ptr %0, i64 560
-  store ptr @idct_iadst_16x16_add_c, ptr %8, align 8, !tbaa !9
-  %9 = getelementptr inbounds nuw i8, ptr %0, i64 568
-  store ptr @iadst_iadst_16x16_add_c, ptr %9, align 8, !tbaa !9
+  store <4 x ptr> <ptr @idct_idct_16x16_add_c, ptr @iadst_idct_16x16_add_c, ptr @idct_iadst_16x16_add_c, ptr @iadst_iadst_16x16_add_c>, ptr %i.c, align 8, !tbaa !9
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 576
-  %10 = getelementptr inbounds nuw i8, ptr %0, i64 600
-  store ptr @idct_idct_32x32_add_c, ptr %10, align 8, !tbaa !9
-  %11 = getelementptr inbounds nuw i8, ptr %0, i64 584
-  store ptr @idct_idct_32x32_add_c, ptr %11, align 8, !tbaa !9
-  %12 = getelementptr inbounds nuw i8, ptr %0, i64 592
-  store ptr @idct_idct_32x32_add_c, ptr %12, align 8, !tbaa !9
-  store ptr @idct_idct_32x32_add_c, ptr %i.d, align 8, !tbaa !9
+  store <4 x ptr> <ptr @idct_idct_32x32_add_c, ptr @idct_idct_32x32_add_c, ptr @idct_idct_32x32_add_c, ptr @idct_idct_32x32_add_c>, ptr %i.d, align 8, !tbaa !9
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 608
-  %13 = getelementptr inbounds nuw i8, ptr %0, i64 632
-  store ptr @iwht_iwht_4x4_add_c, ptr %13, align 8, !tbaa !9
-  %14 = getelementptr inbounds nuw i8, ptr %0, i64 616
-  store ptr @iwht_iwht_4x4_add_c, ptr %14, align 8, !tbaa !9
-  %15 = getelementptr inbounds nuw i8, ptr %0, i64 624
-  store ptr @iwht_iwht_4x4_add_c, ptr %15, align 8, !tbaa !9
-  store ptr @iwht_iwht_4x4_add_c, ptr %i.e, align 8, !tbaa !9
+  store <4 x ptr> <ptr @iwht_iwht_4x4_add_c, ptr @iwht_iwht_4x4_add_c, ptr @iwht_iwht_4x4_add_c, ptr @iwht_iwht_4x4_add_c>, ptr %i.e, align 8, !tbaa !9
   ret void
 }
 
@@ -107,37 +77,13 @@ bb.a:
 define internal fastcc void @vp9dsp_loopfilter_init(ptr nofree noundef writeonly captures(none) initializes((640, 768)) %0) unnamed_addr #1 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 640
-  store ptr @loop_filter_h_4_8_c, ptr %i.a, align 8, !tbaa !9
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 648
-  store ptr @loop_filter_v_4_8_c, ptr %1, align 8, !tbaa !9
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 656
-  store ptr @loop_filter_h_8_8_c, ptr %2, align 8, !tbaa !9
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 664
-  store ptr @loop_filter_v_8_8_c, ptr %3, align 8, !tbaa !9
+  store <4 x ptr> <ptr @loop_filter_h_4_8_c, ptr @loop_filter_v_4_8_c, ptr @loop_filter_h_8_8_c, ptr @loop_filter_v_8_8_c>, ptr %i.a, align 8, !tbaa !9
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 672
-  store ptr @loop_filter_h_16_8_c, ptr %i.b, align 8, !tbaa !9
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 680
-  store ptr @loop_filter_v_16_8_c, ptr %4, align 8, !tbaa !9
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 688
-  store ptr @loop_filter_h_16_16_c, ptr %5, align 8, !tbaa !9
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 696
-  store ptr @loop_filter_v_16_16_c, ptr %6, align 8, !tbaa !9
+  store <4 x ptr> <ptr @loop_filter_h_16_8_c, ptr @loop_filter_v_16_8_c, ptr @loop_filter_h_16_16_c, ptr @loop_filter_v_16_16_c>, ptr %i.b, align 8, !tbaa !9
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 704
-  store ptr @loop_filter_h_44_16_c, ptr %i.c, align 8, !tbaa !9
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 712
-  store ptr @loop_filter_v_44_16_c, ptr %7, align 8, !tbaa !9
-  %8 = getelementptr inbounds nuw i8, ptr %0, i64 720
-  store ptr @loop_filter_h_48_16_c, ptr %8, align 8, !tbaa !9
-  %9 = getelementptr inbounds nuw i8, ptr %0, i64 728
-  store ptr @loop_filter_v_48_16_c, ptr %9, align 8, !tbaa !9
+  store <4 x ptr> <ptr @loop_filter_h_44_16_c, ptr @loop_filter_v_44_16_c, ptr @loop_filter_h_48_16_c, ptr @loop_filter_v_48_16_c>, ptr %i.c, align 8, !tbaa !9
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 736
-  store ptr @loop_filter_h_84_16_c, ptr %i.d, align 8, !tbaa !9
-  %10 = getelementptr inbounds nuw i8, ptr %0, i64 744
-  store ptr @loop_filter_v_84_16_c, ptr %10, align 8, !tbaa !9
-  %11 = getelementptr inbounds nuw i8, ptr %0, i64 752
-  store ptr @loop_filter_h_88_16_c, ptr %11, align 8, !tbaa !9
-  %12 = getelementptr inbounds nuw i8, ptr %0, i64 760
-  store ptr @loop_filter_v_88_16_c, ptr %12, align 8, !tbaa !9
+  store <4 x ptr> <ptr @loop_filter_h_84_16_c, ptr @loop_filter_v_84_16_c, ptr @loop_filter_h_88_16_c, ptr @loop_filter_v_88_16_c>, ptr %i.d, align 8, !tbaa !9
   ret void
 }
 
@@ -333,63 +279,33 @@ define internal fastcc void @ff_vp9dsp_scaled_mc_init_12(ptr noundef %0) unnamed
 bb.a:
   tail call void @ff_vp9dsp_scaled_mc_init_10(ptr noundef %0) #13
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 2048
-  store ptr @put_scaled_smooth_64_c, ptr %i.a, align 8, !tbaa !9
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 2064
-  store ptr @put_scaled_regular_64_c, ptr %1, align 8, !tbaa !9
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 2080
   store ptr @put_scaled_sharp_64_c, ptr %i.b, align 8, !tbaa !9
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 2056
-  store ptr @avg_scaled_smooth_64_c, ptr %2, align 8, !tbaa !9
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 2072
-  store ptr @avg_scaled_regular_64_c, ptr %3, align 8, !tbaa !9
+  store <4 x ptr> <ptr @put_scaled_smooth_64_c, ptr @avg_scaled_smooth_64_c, ptr @put_scaled_regular_64_c, ptr @avg_scaled_regular_64_c>, ptr %i.a, align 8, !tbaa !9
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 2088
   store ptr @avg_scaled_sharp_64_c, ptr %i.c, align 8, !tbaa !9
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 2112
-  store ptr @put_scaled_smooth_32_c, ptr %i.d, align 8, !tbaa !9
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 2128
-  store ptr @put_scaled_regular_32_c, ptr %4, align 8, !tbaa !9
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 2144
   store ptr @put_scaled_sharp_32_c, ptr %i.e, align 8, !tbaa !9
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 2120
-  store ptr @avg_scaled_smooth_32_c, ptr %5, align 8, !tbaa !9
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 2136
-  store ptr @avg_scaled_regular_32_c, ptr %6, align 8, !tbaa !9
+  store <4 x ptr> <ptr @put_scaled_smooth_32_c, ptr @avg_scaled_smooth_32_c, ptr @put_scaled_regular_32_c, ptr @avg_scaled_regular_32_c>, ptr %i.d, align 8, !tbaa !9
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 2152
   store ptr @avg_scaled_sharp_32_c, ptr %i.f, align 8, !tbaa !9
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 2176
-  store ptr @put_scaled_smooth_16_c, ptr %i.g, align 8, !tbaa !9
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 2192
-  store ptr @put_scaled_regular_16_c, ptr %7, align 8, !tbaa !9
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 2208
   store ptr @put_scaled_sharp_16_c, ptr %i.h, align 8, !tbaa !9
-  %8 = getelementptr inbounds nuw i8, ptr %0, i64 2184
-  store ptr @avg_scaled_smooth_16_c, ptr %8, align 8, !tbaa !9
-  %9 = getelementptr inbounds nuw i8, ptr %0, i64 2200
-  store ptr @avg_scaled_regular_16_c, ptr %9, align 8, !tbaa !9
+  store <4 x ptr> <ptr @put_scaled_smooth_16_c, ptr @avg_scaled_smooth_16_c, ptr @put_scaled_regular_16_c, ptr @avg_scaled_regular_16_c>, ptr %i.g, align 8, !tbaa !9
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 2216
   store ptr @avg_scaled_sharp_16_c, ptr %i.i, align 8, !tbaa !9
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 2240
-  store ptr @put_scaled_smooth_8_c, ptr %i.j, align 8, !tbaa !9
-  %10 = getelementptr inbounds nuw i8, ptr %0, i64 2256
-  store ptr @put_scaled_regular_8_c, ptr %10, align 8, !tbaa !9
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 2272
   store ptr @put_scaled_sharp_8_c, ptr %i.k, align 8, !tbaa !9
-  %11 = getelementptr inbounds nuw i8, ptr %0, i64 2248
-  store ptr @avg_scaled_smooth_8_c, ptr %11, align 8, !tbaa !9
-  %12 = getelementptr inbounds nuw i8, ptr %0, i64 2264
-  store ptr @avg_scaled_regular_8_c, ptr %12, align 8, !tbaa !9
+  store <4 x ptr> <ptr @put_scaled_smooth_8_c, ptr @avg_scaled_smooth_8_c, ptr @put_scaled_regular_8_c, ptr @avg_scaled_regular_8_c>, ptr %i.j, align 8, !tbaa !9
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 2280
   store ptr @avg_scaled_sharp_8_c, ptr %i.l, align 8, !tbaa !9
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 2304
-  store ptr @put_scaled_smooth_4_c, ptr %i.m, align 8, !tbaa !9
-  %13 = getelementptr inbounds nuw i8, ptr %0, i64 2320
-  store ptr @put_scaled_regular_4_c, ptr %13, align 8, !tbaa !9
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 2336
   store ptr @put_scaled_sharp_4_c, ptr %i.n, align 8, !tbaa !9
-  %14 = getelementptr inbounds nuw i8, ptr %0, i64 2312
-  store ptr @avg_scaled_smooth_4_c, ptr %14, align 8, !tbaa !9
-  %15 = getelementptr inbounds nuw i8, ptr %0, i64 2328
-  store ptr @avg_scaled_regular_4_c, ptr %15, align 8, !tbaa !9
+  store <4 x ptr> <ptr @put_scaled_smooth_4_c, ptr @avg_scaled_smooth_4_c, ptr @put_scaled_regular_4_c, ptr @avg_scaled_regular_4_c>, ptr %i.m, align 8, !tbaa !9
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 2344
   store ptr @avg_scaled_sharp_4_c, ptr %i.o, align 8, !tbaa !9
   ret void

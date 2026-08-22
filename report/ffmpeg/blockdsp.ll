@@ -8,13 +8,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: cold mustprogress nofree norecurse nosync nounwind optsize willreturn memory(argmem: write) uwtable
 define void @ff_blockdsp_init(ptr nofree noundef writeonly captures(none) initializes((0, 32)) %0) local_unnamed_addr #0 {
 bb.a:
-  store ptr @clear_block_c, ptr %0, align 8, !tbaa !9
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr @clear_blocks_c, ptr %1, align 8, !tbaa !12
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store ptr @fill_block16_c, ptr %2, align 8, !tbaa !13
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store ptr @fill_block8_c, ptr %3, align 8, !tbaa !13
+  store <4 x ptr> <ptr @clear_block_c, ptr @clear_blocks_c, ptr @fill_block16_c, ptr @fill_block8_c>, ptr %0, align 8, !tbaa !9
   ret void
 }
 
@@ -68,7 +62,7 @@ bb.a:
   %i.j = getelementptr inbounds i8, ptr %i.i, i64 %2 ; 2 uses
   %niter.next.7 = add nuw nsw i32 %niter, 8       ; 2 uses
   %niter.ncmp.7 = icmp eq i32 %niter.next.7, %unroll_iter
-  br i1 %niter.ncmp.7, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !14
+  br i1 %niter.ncmp.7, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !11
 
 ._crit_edge.loopexit.unr-lcssa:                   ; preds = %.lr.ph
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0
@@ -87,7 +81,7 @@ bb.a:
   %i.k = getelementptr inbounds i8, ptr %.067.epil, i64 %2
   %epil.iter.next = add i32 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i32 %epil.iter.next, %xtraiter
-  br i1 %epil.iter.cmp.not, label %._crit_edge, label %.lr.ph.epil, !llvm.loop !16
+  br i1 %epil.iter.cmp.not, label %._crit_edge, label %.lr.ph.epil, !llvm.loop !13
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph.epil, %bb.a
   ret void
@@ -129,7 +123,7 @@ bb.a:
   %i.j = getelementptr inbounds i8, ptr %i.i, i64 %2 ; 2 uses
   %niter.next.7 = add nuw nsw i32 %niter, 8       ; 2 uses
   %niter.ncmp.7 = icmp eq i32 %niter.next.7, %unroll_iter
-  br i1 %niter.ncmp.7, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !18
+  br i1 %niter.ncmp.7, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !15
 
 ._crit_edge.loopexit.unr-lcssa:                   ; preds = %.lr.ph
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0
@@ -148,7 +142,7 @@ bb.a:
   %i.k = getelementptr inbounds i8, ptr %.067.epil, i64 %2
   %epil.iter.next = add i32 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i32 %epil.iter.next, %xtraiter
-  br i1 %epil.iter.cmp.not, label %._crit_edge, label %.lr.ph.epil, !llvm.loop !19
+  br i1 %epil.iter.cmp.not, label %._crit_edge, label %.lr.ph.epil, !llvm.loop !16
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph.epil, %bb.a
   ret void
@@ -179,15 +173,12 @@ attributes #4 = { nocallback nofree nosync nounwind willreturn memory(inaccessib
 !6 = !{!"int", !7, i64 0}
 !7 = !{!"omnipotent char", !8, i64 0}
 !8 = !{!"Simple C/C++ TBAA"}
-!9 = !{!10, !11, i64 0}
-!10 = !{!"BlockDSPContext", !11, i64 0, !11, i64 8, !7, i64 16}
-!11 = !{!"any pointer", !7, i64 0}
-!12 = !{!10, !11, i64 8}
-!13 = !{!11, !11, i64 0}
-!14 = distinct !{!14, !15}
-!15 = !{!"llvm.loop.mustprogress"}
-!16 = distinct !{!16, !17}
-!17 = !{!"llvm.loop.unroll.disable"}
-!18 = distinct !{!18, !15}
-!19 = distinct !{!19, !17}
+!9 = !{!10, !10, i64 0}
+!10 = !{!"any pointer", !7, i64 0}
+!11 = distinct !{!11, !12}
+!12 = !{!"llvm.loop.mustprogress"}
+!13 = distinct !{!13, !14}
+!14 = !{!"llvm.loop.unroll.disable"}
+!15 = distinct !{!15, !12}
+!16 = distinct !{!16, !14}
 end_hunk_0

@@ -204,10 +204,8 @@ bb.c:                                             ; preds = %bb.b, %bb.e
 
 bb.d:                                             ; preds = %bb.c, %bb.d
   %indvars.iv = phi i64 [ 0, %bb.c ], [ %indvars.iv.next, %bb.d ] ; 2 uses
-  %i.p = getelementptr inbounds nuw [320 x i8], ptr %i.o, i64 %indvars.iv ; 2 uses
-  store i32 1, ptr %i.p, align 4, !tbaa !14
-  %1 = getelementptr inbounds nuw i8, ptr %i.p, i64 4
-  store i32 1, ptr %1, align 4, !tbaa !14
+  %i.p = getelementptr inbounds nuw [320 x i8], ptr %i.o, i64 %indvars.iv
+  store <2 x i32> splat (i32 1), ptr %i.p, align 4, !tbaa !14
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, 4
   br i1 %exitcond.not, label %bb.e, label %bb.d, !llvm.loop !62

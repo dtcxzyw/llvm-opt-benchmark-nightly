@@ -204,24 +204,22 @@ bb.ab:                                            ; preds = %.lr.ph, %bb.ab
   %i.if = getelementptr i8, ptr %i.ie, i64 -8
   %i.ig = load ptr, ptr %i.if, align 8, !tbaa !52 ; 2 uses
   %i.ih = getelementptr inbounds nuw i8, ptr %i.w, i64 16
-  %i.ii = load ptr, ptr %i.ih, align 8, !tbaa !55 ; 2 uses
-  store i32 3, ptr %i.ii, align 8, !tbaa !58
-  %3 = getelementptr inbounds nuw i8, ptr %i.ii, i64 4
-  store i32 94210, ptr %3, align 4, !tbaa !61
+  %i.ii = load ptr, ptr %i.ih, align 8, !tbaa !55
+  store <2 x i32> <i32 3, i32 94210>, ptr %i.ii, align 8, !tbaa !33
   call void @avpriv_set_pts_info(ptr noundef nonnull %i.w, i32 noundef 64, i32 noundef 1, i32 noundef 1000) #7
   %i.ij = getelementptr inbounds nuw i8, ptr %i.w, i64 804
-  store i32 0, ptr %i.ij, align 4, !tbaa !62
+  store i32 0, ptr %i.ij, align 4, !tbaa !58
   %i.ik = getelementptr inbounds nuw i8, ptr %i.w, i64 40
-  store i64 0, ptr %i.ik, align 8, !tbaa !74
+  store i64 0, ptr %i.ik, align 8, !tbaa !70
   %i.il = getelementptr inbounds nuw i8, ptr %i.ig, i64 8
   %i.im = load i64, ptr %i.il, align 8, !tbaa !44
   %i.in = getelementptr inbounds nuw i8, ptr %i.ig, i64 64
   %i.io = load i64, ptr %i.in, align 8, !tbaa !45
   %i.ip = add nsw i64 %i.io, %i.im
   %i.iq = getelementptr inbounds nuw i8, ptr %i.w, i64 48
-  store i64 %i.ip, ptr %i.iq, align 8, !tbaa !75
+  store i64 %i.ip, ptr %i.iq, align 8, !tbaa !71
   %i.ir = getelementptr inbounds nuw i8, ptr %i.w, i64 848
-  store i64 0, ptr %i.ir, align 8, !tbaa !76
+  store i64 0, ptr %i.ir, align 8, !tbaa !72
   br label %bb.ac
 
 bb.ac:                                            ; preds = %.thread55, %select.unfold45, %bb.z, %bb.a, %._crit_edge
@@ -314,7 +312,7 @@ bb.b:                                             ; preds = %.critedge.i, %bb.a
   %i.j = select i1 %i.e, i32 %i.g, i32 %i.i       ; 2 uses
   store i32 %i.j, ptr %1, align 4, !tbaa !33
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #7
-  br label %bb.b, !llvm.loop !77
+  br label %bb.b, !llvm.loop !73
 
 skip_spaces.exit:                                 ; preds = %bb.b
   %i.k = zext nneg i8 %2 to i32
@@ -379,7 +377,7 @@ bb.c:                                             ; preds = %.critedge.i.i, %bb.
   %i.l = select i1 %i.g, i32 %i.i, i32 %i.k       ; 2 uses
   store i32 %i.l, ptr %1, align 4, !tbaa !33
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #7
-  br label %bb.c, !llvm.loop !77
+  br label %bb.c, !llvm.loop !73
 
 bb.d:                                             ; preds = %bb.c
   %i.m = icmp slt i32 %i.e, 0
@@ -441,7 +439,7 @@ bb.b:                                             ; preds = %.critedge.i.i, %bb.
   %i.o = select i1 %i.j, i32 %i.l, i32 %i.n       ; 2 uses
   store i32 %i.o, ptr %1, align 4, !tbaa !33
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #7
-  br label %bb.b, !llvm.loop !77
+  br label %bb.b, !llvm.loop !73
 
 bb.c:                                             ; preds = %bb.b
   %i.p = icmp slt i32 %i.h, 0
@@ -635,7 +633,7 @@ bb.j:                                             ; preds = %.preheader.3._crit_
   %i.dt = or disjoint i8 %i.ds, -128
   call void @av_bprint_chars(ptr noundef nonnull %2, i8 noundef signext %i.dt, i32 noundef 1) #7
   %i.du = icmp samesign ugt i32 %.0.in14.i, 1
-  br i1 %i.du, label %.lr.ph.i, label %av_bprint_utf8.exit.thread, !llvm.loop !78
+  br i1 %i.du, label %.lr.ph.i, label %av_bprint_utf8.exit.thread, !llvm.loop !74
 
 av_bprint_utf8.exit:                              ; preds = %bb.i, %bb.h, %bb.g, %bb.f
   %.lcssa79 = phi i32 [ %i.aq, %bb.f ], [ %i.bf, %bb.g ], [ %i.bu, %bb.h ], [ %i.cn, %bb.i ] ; 2 uses
@@ -663,7 +661,7 @@ av_bprint_utf8.exit.thread:                       ; preds = %.lr.ph.i, %av_bprin
   %i.ee = icmp slt i32 %i.ed, 1
   %.not = icmp eq i32 %i.ed, 34
   %or.cond = or i1 %i.ee, %.not
-  br i1 %or.cond, label %.critedge.preheader, label %.lr.ph, !llvm.loop !79
+  br i1 %or.cond, label %.critedge.preheader, label %.lr.ph, !llvm.loop !75
 
 .critedge.preheader:                              ; preds = %av_bprint_utf8.exit.thread, %expect_byte.exit
   %.ph = phi i32 [ %i.w, %expect_byte.exit ], [ %i.ed, %av_bprint_utf8.exit.thread ]
@@ -690,7 +688,7 @@ av_bprint_utf8.exit.thread:                       ; preds = %.lr.ph.i, %av_bprin
   %i.em = select i1 %i.eh, i32 %i.ej, i32 %i.el   ; 2 uses
   store i32 %i.em, ptr %1, align 4, !tbaa !33
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #7
-  br label %.critedge, !llvm.loop !77
+  br label %.critedge, !llvm.loop !73
 
 bb.k:                                             ; preds = %.critedge
   %i.en = icmp slt i32 %i.ef, 0
@@ -713,7 +711,7 @@ bb.l:                                             ; preds = %.critedge
 
 bb.m:                                             ; preds = %bb.l
   %i.ev = getelementptr i8, ptr %2, i64 8
-  %.val = load i32, ptr %i.ev, align 8, !tbaa !80
+  %.val = load i32, ptr %i.ev, align 8, !tbaa !76
   %i.ew = getelementptr i8, ptr %2, i64 12
   %.val50 = load i32, ptr %i.ew, align 4, !tbaa !38
   %.not65 = icmp ult i32 %.val, %.val50
@@ -754,7 +752,7 @@ bb.b:                                             ; preds = %.critedge, %bb.a
   %i.i = select i1 %i.d, i32 %i.f, i32 %i.h       ; 2 uses
   store i32 %i.i, ptr %1, align 4, !tbaa !33
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
-  br label %bb.b, !llvm.loop !77
+  br label %bb.b, !llvm.loop !73
 
 bb.c:                                             ; preds = %bb.b
   ret void
@@ -849,27 +847,23 @@ attributes #7 = { nounwind }
 !55 = !{!56, !57, i64 16}
 !56 = !{!"AVStream", !19, i64 0, !6, i64 8, !6, i64 12, !57, i64 16, !12, i64 24, !43, i64 32, !27, i64 40, !27, i64 48, !27, i64 56, !6, i64 64, !6, i64 68, !43, i64 72, !29, i64 80, !43, i64 88, !40, i64 96, !6, i64 200, !43, i64 204, !6, i64 212}
 !57 = !{!"p1 _ZTS17AVCodecParameters", !12, i64 0}
-!58 = !{!59, !6, i64 0}
-!59 = !{!"AVCodecParameters", !6, i64 0, !6, i64 4, !6, i64 8, !11, i64 16, !6, i64 24, !42, i64 32, !6, i64 40, !6, i64 44, !27, i64 48, !6, i64 56, !6, i64 60, !6, i64 64, !6, i64 68, !6, i64 72, !6, i64 76, !43, i64 80, !43, i64 88, !6, i64 96, !6, i64 100, !6, i64 104, !6, i64 108, !6, i64 112, !6, i64 116, !6, i64 120, !60, i64 128, !6, i64 152, !6, i64 156, !6, i64 160, !6, i64 164, !6, i64 168, !6, i64 172, !6, i64 176}
-!60 = !{!"AVChannelLayout", !6, i64 0, !6, i64 4, !7, i64 8, !12, i64 16}
-!61 = !{!59, !6, i64 4}
-!62 = !{!63, !6, i64 804}
-!63 = !{!"FFStream", !56, i64 0, !64, i64 216, !6, i64 224, !65, i64 232, !6, i64 240, !66, i64 248, !6, i64 256, !67, i64 264, !6, i64 280, !6, i64 284, !68, i64 288, !69, i64 312, !70, i64 320, !6, i64 328, !6, i64 332, !27, i64 336, !27, i64 344, !6, i64 352, !6, i64 356, !6, i64 360, !27, i64 368, !27, i64 376, !27, i64 384, !6, i64 392, !27, i64 400, !27, i64 408, !27, i64 416, !6, i64 424, !6, i64 428, !7, i64 432, !7, i64 568, !7, i64 592, !27, i64 728, !7, i64 736, !7, i64 737, !43, i64 740, !10, i64 752, !71, i64 784, !27, i64 792, !6, i64 800, !6, i64 804, !6, i64 808, !72, i64 816, !53, i64 824, !6, i64 832, !6, i64 836, !27, i64 840, !27, i64 848, !73, i64 856}
-!64 = !{!"p1 _ZTS15AVFormatContext", !12, i64 0}
-!65 = !{!"p1 _ZTS12AVBSFContext", !12, i64 0}
-!66 = !{!"p1 _ZTS14AVCodecContext", !12, i64 0}
-!67 = !{!"", !65, i64 0, !6, i64 8}
-!68 = !{!"FFFrac", !27, i64 0, !27, i64 8, !27, i64 16}
-!69 = !{!"p1 _ZTS12FFStreamInfo", !12, i64 0}
-!70 = !{!"p1 _ZTS12AVIndexEntry", !12, i64 0}
-!71 = !{!"p1 _ZTS15PacketListEntry", !12, i64 0}
-!72 = !{!"p1 _ZTS20AVCodecParserContext", !12, i64 0}
-!73 = !{!"p1 _ZTS17AVCodecDescriptor", !12, i64 0}
-!74 = !{!56, !27, i64 40}
-!75 = !{!56, !27, i64 48}
-!76 = !{!63, !27, i64 848}
-!77 = distinct !{!77, !16}
-!78 = distinct !{!78, !16}
-!79 = distinct !{!79, !16}
-!80 = !{!35, !6, i64 8}
+!58 = !{!59, !6, i64 804}
+!59 = !{!"FFStream", !56, i64 0, !60, i64 216, !6, i64 224, !61, i64 232, !6, i64 240, !62, i64 248, !6, i64 256, !63, i64 264, !6, i64 280, !6, i64 284, !64, i64 288, !65, i64 312, !66, i64 320, !6, i64 328, !6, i64 332, !27, i64 336, !27, i64 344, !6, i64 352, !6, i64 356, !6, i64 360, !27, i64 368, !27, i64 376, !27, i64 384, !6, i64 392, !27, i64 400, !27, i64 408, !27, i64 416, !6, i64 424, !6, i64 428, !7, i64 432, !7, i64 568, !7, i64 592, !27, i64 728, !7, i64 736, !7, i64 737, !43, i64 740, !10, i64 752, !67, i64 784, !27, i64 792, !6, i64 800, !6, i64 804, !6, i64 808, !68, i64 816, !53, i64 824, !6, i64 832, !6, i64 836, !27, i64 840, !27, i64 848, !69, i64 856}
+!60 = !{!"p1 _ZTS15AVFormatContext", !12, i64 0}
+!61 = !{!"p1 _ZTS12AVBSFContext", !12, i64 0}
+!62 = !{!"p1 _ZTS14AVCodecContext", !12, i64 0}
+!63 = !{!"", !61, i64 0, !6, i64 8}
+!64 = !{!"FFFrac", !27, i64 0, !27, i64 8, !27, i64 16}
+!65 = !{!"p1 _ZTS12FFStreamInfo", !12, i64 0}
+!66 = !{!"p1 _ZTS12AVIndexEntry", !12, i64 0}
+!67 = !{!"p1 _ZTS15PacketListEntry", !12, i64 0}
+!68 = !{!"p1 _ZTS20AVCodecParserContext", !12, i64 0}
+!69 = !{!"p1 _ZTS17AVCodecDescriptor", !12, i64 0}
+!70 = !{!56, !27, i64 40}
+!71 = !{!56, !27, i64 48}
+!72 = !{!59, !27, i64 848}
+!73 = distinct !{!73, !16}
+!74 = distinct !{!74, !16}
+!75 = distinct !{!75, !16}
+!76 = !{!35, !6, i64 8}
 end_hunk_0

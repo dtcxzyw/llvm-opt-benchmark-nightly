@@ -202,13 +202,11 @@ bb.e:                                             ; preds = %bb.c
 ; Function Attrs: nonlazybind optsize uwtable
 define noundef zeroext i1 @_RINvNtCsfcROwRM8ZtH_11polars_plan5utils8has_exprNCNCNvMs1_NtCshquuC4dCYVj_10polars_sql7contextNtBU_10SQLContext14execute_selects5_00EBW_(ptr noundef nonnull align 16 %0) unnamed_addr #0 personality ptr @rust_eh_personality !dbg !10414 {
 bb.a:
-  %i.a = alloca [16 x i8], align 8                ; 8 uses
+  %i.a = alloca [16 x i8], align 8                ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !dbg !10415
   store ptr %0, ptr %i.a, align 8, !dbg !10416
-  %.sroa.45.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8, !dbg !10416
-  store i32 1, ptr %.sroa.45.0..sroa_idx, align 8, !dbg !10416
-  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 12, !dbg !10416
-  store i32 1, ptr %.sroa.5.0..sroa_idx, align 4, !dbg !10416
+  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8, !dbg !10416
+  store <2 x i32> splat (i32 1), ptr %.sroa.5.0..sroa_idx, align 8, !dbg !10416
   br label %_RNCINvNvNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator3any5checkRNtNtNtCsfcROwRM8ZtH_11polars_plan3dsl4expr4ExprNCNCNvMs1_NtCshquuC4dCYVj_10polars_sql7contextNtB27_10SQLContext14execute_selects5_00E0B29_.exit.i, !dbg !10424
 
 _RNCINvNvNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator3any5checkRNtNtNtCsfcROwRM8ZtH_11polars_plan3dsl4expr4ExprNCNCNvMs1_NtCshquuC4dCYVj_10polars_sql7contextNtB27_10SQLContext14execute_selects5_00E0B29_.exit.i: ; preds = %bb.b, %bb.a
@@ -258,13 +256,11 @@ _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtCsfcROwRM8ZtH_11polars_plan5p
 ; Function Attrs: nonlazybind optsize uwtable
 define noundef zeroext i1 @_RINvNtCsfcROwRM8ZtH_11polars_plan5utils8has_exprNCNCNvMs1_NtCshquuC4dCYVj_10polars_sql7contextNtBU_10SQLContext16process_group_bys3_00EBW_(ptr noundef nonnull align 16 %0) unnamed_addr #0 personality ptr @rust_eh_personality !dbg !10463 {
 bb.a:
-  %i.a = alloca [16 x i8], align 8                ; 8 uses
+  %i.a = alloca [16 x i8], align 8                ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !dbg !10464
   store ptr %0, ptr %i.a, align 8, !dbg !10465
-  %.sroa.45.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8, !dbg !10465
-  store i32 1, ptr %.sroa.45.0..sroa_idx, align 8, !dbg !10465
-  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 12, !dbg !10465
-  store i32 1, ptr %.sroa.5.0..sroa_idx, align 4, !dbg !10465
+  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8, !dbg !10465
+  store <2 x i32> splat (i32 1), ptr %.sroa.5.0..sroa_idx, align 8, !dbg !10465
   br label %_RNCINvNvNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator3any5checkRNtNtNtCsfcROwRM8ZtH_11polars_plan3dsl4expr4ExprNCNCNvMs1_NtCshquuC4dCYVj_10polars_sql7contextNtB27_10SQLContext16process_group_bys3_00E0B29_.exit.i, !dbg !10469
 
 _RNCINvNvNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator3any5checkRNtNtNtCsfcROwRM8ZtH_11polars_plan3dsl4expr4ExprNCNCNvMs1_NtCshquuC4dCYVj_10polars_sql7contextNtB27_10SQLContext16process_group_bys3_00E0B29_.exit.i: ; preds = %bb.b, %bb.a
@@ -313,13 +309,11 @@ _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtCsfcROwRM8ZtH_11polars_plan5p
 ; Function Attrs: nonlazybind optsize uwtable
 define noundef zeroext i1 @_RINvNtCsfcROwRM8ZtH_11polars_plan5utils8has_exprNCNCNvNtCshquuC4dCYVj_10polars_sql7context18expr_reduces_group00EBS_(ptr noundef nonnull align 16 %0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(64) %1) unnamed_addr #0 personality ptr @rust_eh_personality !dbg !10499 {
 bb.a:
-  %i.a = alloca [16 x i8], align 8                ; 9 uses
+  %i.a = alloca [16 x i8], align 8                ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !dbg !10500
   store ptr %0, ptr %i.a, align 8, !dbg !10501
-  %.sroa.48.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8, !dbg !10501
-  store i32 1, ptr %.sroa.48.0..sroa_idx, align 8, !dbg !10501
-  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 12, !dbg !10501
-  store i32 1, ptr %.sroa.5.0..sroa_idx, align 4, !dbg !10501
+  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8, !dbg !10501
+  store <2 x i32> splat (i32 1), ptr %.sroa.5.0..sroa_idx, align 8, !dbg !10501
   %i.b = invoke noundef align 16 ptr @_RNvXNtNtCsfcROwRM8ZtH_11polars_plan5plans8iteratorNtB2_8ExprIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next(ptr noalias noundef nonnull align 8 dereferenceable(16) %i.a)
           to label %.noexc unwind label %.loopexit.split-lp, !dbg !10505 ; 2 uses
 
@@ -405,13 +399,11 @@ _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtCsfcROwRM8ZtH_11polars_plan5p
 ; Function Attrs: nonlazybind optsize uwtable
 define noundef zeroext i1 @_RINvNtCsfcROwRM8ZtH_11polars_plan5utils8has_exprNCNvMNtCshquuC4dCYVj_10polars_sql8subqueryNtNtBR_7context10SQLContext25try_parse_inner_only_expr0EBR_(ptr noundef nonnull align 16 %0) unnamed_addr #0 personality ptr @rust_eh_personality !dbg !10579 {
 bb.a:
-  %i.a = alloca [16 x i8], align 8                ; 8 uses
+  %i.a = alloca [16 x i8], align 8                ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !dbg !10580
   store ptr %0, ptr %i.a, align 8, !dbg !10581
-  %.sroa.45.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8, !dbg !10581
-  store i32 1, ptr %.sroa.45.0..sroa_idx, align 8, !dbg !10581
-  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 12, !dbg !10581
-  store i32 1, ptr %.sroa.5.0..sroa_idx, align 4, !dbg !10581
+  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8, !dbg !10581
+  store <2 x i32> splat (i32 1), ptr %.sroa.5.0..sroa_idx, align 8, !dbg !10581
   br label %bb.b, !dbg !10585
 
 bb.b:                                             ; preds = %bb.c, %bb.a
@@ -454,13 +446,11 @@ _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtCsfcROwRM8ZtH_11polars_plan5p
 ; Function Attrs: nonlazybind optsize uwtable
 define noundef zeroext i1 @_RINvNtCsfcROwRM8ZtH_11polars_plan5utils8has_exprNCNvMNtCshquuC4dCYVj_10polars_sql8subqueryNtNtBR_7context10SQLContext31try_rewrite_in_subquery_as_join0EBR_(ptr noundef nonnull align 16 %0) unnamed_addr #0 personality ptr @rust_eh_personality !dbg !10617 {
 bb.a:
-  %i.a = alloca [16 x i8], align 8                ; 8 uses
+  %i.a = alloca [16 x i8], align 8                ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !dbg !10618
   store ptr %0, ptr %i.a, align 8, !dbg !10619
-  %.sroa.45.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8, !dbg !10619
-  store i32 1, ptr %.sroa.45.0..sroa_idx, align 8, !dbg !10619
-  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 12, !dbg !10619
-  store i32 1, ptr %.sroa.5.0..sroa_idx, align 4, !dbg !10619
+  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8, !dbg !10619
+  store <2 x i32> splat (i32 1), ptr %.sroa.5.0..sroa_idx, align 8, !dbg !10619
   br label %bb.b, !dbg !10623
 
 bb.b:                                             ; preds = %bb.c, %bb.a
@@ -503,13 +493,11 @@ _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtCsfcROwRM8ZtH_11polars_plan5p
 ; Function Attrs: nonlazybind optsize uwtable
 define noundef zeroext i1 @_RINvNtCsfcROwRM8ZtH_11polars_plan5utils8has_exprNCNvMs1_NtCshquuC4dCYVj_10polars_sql7contextNtBS_10SQLContext14execute_selects2_0EBU_(ptr noundef nonnull align 16 %0) unnamed_addr #0 personality ptr @rust_eh_personality !dbg !10652 {
 bb.a:
-  %i.a = alloca [16 x i8], align 8                ; 8 uses
+  %i.a = alloca [16 x i8], align 8                ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !dbg !10653
   store ptr %0, ptr %i.a, align 8, !dbg !10654
-  %.sroa.45.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8, !dbg !10654
-  store i32 1, ptr %.sroa.45.0..sroa_idx, align 8, !dbg !10654
-  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 12, !dbg !10654
-  store i32 1, ptr %.sroa.5.0..sroa_idx, align 4, !dbg !10654
+  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8, !dbg !10654
+  store <2 x i32> splat (i32 1), ptr %.sroa.5.0..sroa_idx, align 8, !dbg !10654
   br label %bb.b, !dbg !10658
 
 bb.b:                                             ; preds = %bb.c, %bb.a
@@ -557,13 +545,11 @@ _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtCsfcROwRM8ZtH_11polars_plan5p
 ; Function Attrs: nonlazybind optsize uwtable
 define noundef zeroext i1 @_RINvNtCsfcROwRM8ZtH_11polars_plan5utils8has_exprNCNvNtCshquuC4dCYVj_10polars_sql7context18expr_reduces_group0EBQ_(ptr noundef nonnull align 16 %0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(64) %1) unnamed_addr #0 personality ptr @rust_eh_personality !dbg !10685 {
 bb.a:
-  %i.a = alloca [16 x i8], align 8                ; 9 uses
+  %i.a = alloca [16 x i8], align 8                ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !dbg !10686
   store ptr %0, ptr %i.a, align 8, !dbg !10687
-  %.sroa.48.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8, !dbg !10687
-  store i32 1, ptr %.sroa.48.0..sroa_idx, align 8, !dbg !10687
-  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 12, !dbg !10687
-  store i32 1, ptr %.sroa.5.0..sroa_idx, align 4, !dbg !10687
+  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8, !dbg !10687
+  store <2 x i32> splat (i32 1), ptr %.sroa.5.0..sroa_idx, align 8, !dbg !10687
   %i.b = invoke noundef align 16 ptr @_RNvXNtNtCsfcROwRM8ZtH_11polars_plan5plans8iteratorNtB2_8ExprIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next(ptr noalias noundef nonnull align 8 dereferenceable(16) %i.a)
           to label %.noexc unwind label %.loopexit.split-lp, !dbg !10691 ; 2 uses
 
@@ -966,7 +952,7 @@ _RNvXs0_NtCscgRAwXFJnXP_4core5allocRNtNtCsgZ49sUHp3tW_5alloc5alloc6GlobalNtB5_9A
 ; Function Attrs: nonlazybind optsize uwtable
 define { i64, i64 } @_RNvMs2_NtCsgZ49sUHp3tW_5alloc7raw_vecNtB5_11RawVecInner10grow_exactCshquuC4dCYVj_10polars_sql(ptr noalias nofree noundef align 8 captures(address, read_provenance) dereferenceable(16) %0, i64 noundef %1, i64 noundef %2, i64 noundef range(i64 1, -9223372036854775807) %3, i64 noundef %4) unnamed_addr #0 !dbg !22738 {
 bb.a:
-  %i.a = alloca [24 x i8], align 8                ; 7 uses
+  %i.a = alloca [24 x i8], align 8                ; 6 uses
   %i.b = icmp eq i64 %4, 0, !dbg !22739
   br i1 %i.b, label %bb.c, label %bb.b, !dbg !22739, !prof !20658
 
@@ -976,10 +962,11 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.d, label %bb.c, label %bb.d, !dbg !22743
 
 bb.c:                                             ; preds = %bb.b, %bb.a, %bb.e, %bb.f
-  %.sroa.5.0 = phi i64 [ undef, %bb.f ], [ undef, %bb.a ], [ %7, %bb.e ], [ undef, %bb.b ], !dbg !22746
-  %.sroa.0.0 = phi i64 [ -9223372036854775807, %bb.f ], [ 0, %bb.a ], [ %5, %bb.e ], [ 0, %bb.b ], !dbg !22746
-  %i.e = insertvalue { i64, i64 } poison, i64 %.sroa.0.0, 0, !dbg !22747
-  %i.f = insertvalue { i64, i64 } %i.e, i64 %.sroa.5.0, 1, !dbg !22747
+  %5 = phi <2 x i64> [ <i64 -9223372036854775807, i64 undef>, %bb.f ], [ <i64 0, i64 undef>, %bb.a ], [ %6, %bb.e ], [ <i64 0, i64 undef>, %bb.b ], !dbg !22746 ; 2 uses
+  %vec2struct.slot.sroa.0.0.vec.extract = extractelement <2 x i64> %5, i64 0, !dbg !22747
+  %i.e = insertvalue { i64, i64 } poison, i64 %vec2struct.slot.sroa.0.0.vec.extract, 0, !dbg !22747
+  %vec2struct.slot.sroa.0.8.vec.extract = extractelement <2 x i64> %5, i64 1, !dbg !22747
+  %i.f = insertvalue { i64, i64 } %i.e, i64 %vec2struct.slot.sroa.0.8.vec.extract, 1, !dbg !22747
   ret { i64, i64 } %i.f, !dbg !22747
 
 bb.d:                                             ; preds = %bb.b
@@ -991,9 +978,7 @@ bb.d:                                             ; preds = %bb.b
   br i1 %i.h, label %bb.e, label %bb.f, !dbg !22753
 
 bb.e:                                             ; preds = %bb.d
-  %5 = load i64, ptr %i.i, align 8, !dbg !22755, !range !74, !noundef !13
-  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 16, !dbg !22755
-  %7 = load i64, ptr %6, align 8, !dbg !22755
+  %6 = load <2 x i64>, ptr %i.i, align 8, !dbg !22755
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !22756
   br label %bb.c, !dbg !22757
 

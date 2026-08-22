@@ -205,9 +205,7 @@ bb.m:                                             ; preds = %bb.l, %.preheader
   %i.ce = getelementptr inbounds nuw i8, ptr %0, i64 4968
   store i32 %i.cd, ptr %i.ce, align 8, !tbaa !70
   %i.cf = getelementptr inbounds nuw i8, ptr %0, i64 4960
-  store i32 3, ptr %i.cf, align 16, !tbaa !100
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 4964
-  store i32 6, ptr %1, align 4, !tbaa !9
+  store <2 x i32> <i32 3, i32 6>, ptr %i.cf, align 16, !tbaa !45
   br label %bb.n
 
 bb.n:                                             ; preds = %.critedge, %bb.m
@@ -610,12 +608,10 @@ bb.n:                                             ; preds = %bb.l, %bb.m
 ; Function Attrs: cold nofree norecurse nosync nounwind optsize memory(argmem: readwrite) uwtable
 define internal fastcc void @bit_alloc_init(ptr nofree noundef captures(none) initializes((5144, 5164)) %0) unnamed_addr #6 {
 bb.a:
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 5148
-  store i32 2, ptr %1, align 4, !tbaa !186
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 5152
   store i32 1, ptr %i.a, align 16, !tbaa !187
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 5144
-  store i32 1, ptr %i.b, align 8, !tbaa !188
+  store <2 x i32> <i32 1, i32 2>, ptr %i.b, align 8, !tbaa !45
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 4940
   %i.d = load i32, ptr %i.c, align 4, !tbaa !64
   %.not = icmp eq i32 %i.d, 0                     ; 2 uses
@@ -669,9 +665,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 5188
   store i32 %i.ac, ptr %i.ad, align 4, !tbaa !252
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 5192
-  store i32 0, ptr %i.ae, align 8, !tbaa !192
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 5196
-  store i32 0, ptr %2, align 4, !tbaa !193
+  store <2 x i32> zeroinitializer, ptr %i.ae, align 8, !tbaa !45
   br i1 %.not, label %bb.f, label %bb.c
 
 bb.c:                                             ; preds = %._crit_edge

@@ -205,26 +205,24 @@ bb.c:                                             ; preds = %bb.a, %bb.c
   %i.b = sub i32 0, %i.a
   %i.c = sitofp nsz i32 %i.b to double
   %i.d = fmul nnan nsz double %i.c, f0x3F40000000000000
-  %i.e = tail call nsz double @llvm.exp2.f64(double %i.d) ; 3 uses
+  %i.e = tail call nsz double @llvm.exp2.f64(double %i.d) ; 4 uses
   %i.f = fptrunc nsz double %i.e to float
   %i.g = getelementptr inbounds nuw [4 x i8], ptr @pow_table, i64 %indvars.iv ; 2 uses
   store float %i.f, ptr %i.g, align 4, !tbaa !29
-  %0 = sub nuw nsw i64 1024, %indvars.iv
-  %1 = getelementptr inbounds nuw [4 x i8], ptr @pow_table, i64 %0
-  %2 = fmul nnan nsz double %i.e, f0x3FE6A09E667F3BCD
-  %i.h = fptrunc nsz double %2 to float
-  %3 = getelementptr inbounds nuw i8, ptr %i.g, i64 4096
-  %4 = insertelement <2 x double> poison, double %i.e, i64 0
-  %5 = shufflevector <2 x double> %4, <2 x double> poison, <2 x i32> zeroinitializer
-  %6 = fdiv nsz <2 x double> <double f0x3FE6A09E667F3BCD, double 5.000000e-01>, %5
-  %7 = fptrunc <2 x double> %6 to <2 x float>     ; 2 uses
-  %8 = extractelement <2 x float> %7, i64 0
-  store float %8, ptr %1, align 4, !tbaa !29
-  store float %i.h, ptr %3, align 4, !tbaa !29
-  %9 = sub nuw nsw i64 2048, %indvars.iv
-  %10 = getelementptr inbounds nuw [4 x i8], ptr @pow_table, i64 %9
-  %11 = extractelement <2 x float> %7, i64 1
-  store float %11, ptr %10, align 4, !tbaa !29
+  %0 = fdiv nsz double f0x3FE6A09E667F3BCD, %i.e
+  %i.h = fptrunc nsz double %0 to float
+  %1 = sub nuw nsw i64 1024, %indvars.iv
+  %2 = getelementptr inbounds nuw [4 x i8], ptr @pow_table, i64 %1
+  store float %i.h, ptr %2, align 4, !tbaa !29
+  %3 = fmul nnan nsz double %i.e, f0x3FE6A09E667F3BCD
+  %4 = fptrunc nsz double %3 to float
+  %5 = getelementptr inbounds nuw i8, ptr %i.g, i64 4096
+  store float %4, ptr %5, align 4, !tbaa !29
+  %6 = fdiv nsz double 5.000000e-01, %i.e
+  %7 = fptrunc nsz double %6 to float
+  %8 = sub nuw nsw i64 2048, %indvars.iv
+  %9 = getelementptr inbounds nuw [4 x i8], ptr @pow_table, i64 %8
+  store float %7, ptr %9, align 4, !tbaa !29
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, 513
   br i1 %exitcond.not, label %bb.b, label %bb.c, !llvm.loop !88

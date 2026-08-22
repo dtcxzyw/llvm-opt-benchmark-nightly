@@ -202,15 +202,13 @@ delta_decode.exit:                                ; preds = %bb.r
 define internal noundef i32 @eightsvx_decode_close(ptr nofree noundef readonly captures(none) %0) #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !9    ; 4 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !9    ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   tail call void @av_freep(ptr noundef nonnull %i.c) #5
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 24
   tail call void @av_freep(ptr noundef nonnull %i.d) #5
-  %1 = getelementptr inbounds nuw i8, ptr %i.b, i64 32
-  store i32 0, ptr %1, align 8, !tbaa !43
-  %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 36
-  store i32 0, ptr %i.e, align 4, !tbaa !42
+  %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 32
+  store <2 x i32> zeroinitializer, ptr %i.e, align 8, !tbaa !44
   ret i32 0
 }
 

@@ -29,9 +29,8 @@ define internal noundef i32 @g722_decode_init(ptr noundef %0) #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !9    ; 4 uses
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 352 ; 2 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 352
   tail call void @av_channel_layout_uninit(ptr noundef nonnull %i.c) #5
-  store i32 1, ptr %i.c, align 8, !tbaa !29
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 356
   store i32 1, ptr %.sroa.2.0..sroa_idx, align 4, !tbaa !29
   %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 360
@@ -39,23 +38,23 @@ bb.a:
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 368
   store ptr null, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !31
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 348
-  store i32 1, ptr %i.d, align 4, !tbaa !32
+  store <2 x i32> splat (i32 1), ptr %i.d, align 4, !tbaa !29
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 344 ; 2 uses
-  %i.f = load i32, ptr %i.e, align 8, !tbaa !33
+  %i.f = load i32, ptr %i.e, align 8, !tbaa !32
   %.not = icmp eq i32 %i.f, 0
   br i1 %.not, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  store i32 16000, ptr %i.e, align 8, !tbaa !33
+  store i32 16000, ptr %i.e, align 8, !tbaa !32
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 2118
-  store i16 8, ptr %i.g, align 2, !tbaa !34
+  store i16 8, ptr %i.g, align 2, !tbaa !33
   %i.h = getelementptr inbounds nuw i8, ptr %i.b, i64 2174
-  store i16 2, ptr %i.h, align 2, !tbaa !34
+  store i16 2, ptr %i.h, align 2, !tbaa !33
   %i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 2060
-  store i32 22, ptr %i.i, align 4, !tbaa !37
+  store i32 22, ptr %i.i, align 4, !tbaa !36
   %i.j = getelementptr inbounds nuw i8, ptr %i.b, i64 2224
   tail call void @ff_g722dsp_init(ptr noundef nonnull %i.j) #5
   ret i32 0
@@ -68,25 +67,25 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !9    ; 8 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 8
-  %i.e = load i32, ptr %i.d, align 8, !tbaa !40   ; 4 uses
+  %i.e = load i32, ptr %i.d, align 8, !tbaa !39   ; 4 uses
   %i.f = sub nsw i32 8, %i.e                      ; 2 uses
   %i.g = sext i32 %i.f to i64
   %i.h = getelementptr inbounds [8 x i8], ptr @low_inv_quants, i64 %i.g
-  %i.i = load ptr, ptr %i.h, align 8, !tbaa !41
+  %i.i = load ptr, ptr %i.h, align 8, !tbaa !40
   %i.j = getelementptr inbounds nuw i8, ptr %3, i64 32 ; 4 uses
-  %i.k = load i32, ptr %i.j, align 8, !tbaa !42
+  %i.k = load i32, ptr %i.j, align 8, !tbaa !41
   %i.l = shl nsw i32 %i.k, 1
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 112
-  store i32 %i.l, ptr %i.m, align 8, !tbaa !44
+  store i32 %i.l, ptr %i.m, align 8, !tbaa !43
   %i.n = tail call i32 @ff_get_buffer(ptr noundef %0, ptr noundef %1, i32 noundef 0) #5 ; 2 uses
   %i.o = icmp slt i32 %i.n, 0
   br i1 %i.o, label %bb.f, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.p = load ptr, ptr %1, align 8, !tbaa !49
+  %i.p = load ptr, ptr %1, align 8, !tbaa !48
   %i.q = getelementptr inbounds nuw i8, ptr %3, i64 24
-  %i.r = load ptr, ptr %i.q, align 8, !tbaa !50   ; 3 uses
-  %i.s = load i32, ptr %i.j, align 8, !tbaa !42   ; 3 uses
+  %i.r = load ptr, ptr %i.q, align 8, !tbaa !49   ; 3 uses
+  %i.s = load i32, ptr %i.j, align 8, !tbaa !41   ; 3 uses
   %or.cond.i = icmp ugt i32 %i.s, 268435455
   %i.t = shl nuw nsw i32 %i.s, 3
   %i.u = select i1 %or.cond.i, i32 -8, i32 %i.t   ; 2 uses
@@ -141,30 +140,30 @@ bb.c:                                             ; preds = %.lr.ph, %bb.e
   %i.bc = call i32 @llvm.umin.i32(i32 %i.x, i32 %i.bb)
   %i.bd = add i32 %i.bc, %i.f
   %i.be = call i32 @llvm.umin.i32(i32 %i.x, i32 %i.bd)
-  %i.bf = load i16, ptr %i.ac, align 2, !tbaa !34
+  %i.bf = load i16, ptr %i.ac, align 2, !tbaa !33
   %i.bg = sext i16 %i.bf to i32
   %i.bh = sext i32 %i.ba to i64
   %i.bi = getelementptr inbounds [2 x i8], ptr %i.i, i64 %i.bh
-  %i.bj = load i16, ptr %i.bi, align 2, !tbaa !51
+  %i.bj = load i16, ptr %i.bi, align 2, !tbaa !50
   %i.bk = sext i16 %i.bj to i32
   %i.bl = mul nsw i32 %i.bk, %i.bg
   %i.bm = ashr i32 %i.bl, 10
-  %i.bn = load i16, ptr %i.ab, align 8, !tbaa !52
+  %i.bn = load i16, ptr %i.ab, align 8, !tbaa !51
   %i.bo = sext i16 %i.bn to i32
   %i.bp = add nsw i32 %i.bm, %i.bo
   %i.bq = call i32 @llvm.smax.i32(i32 %i.bp, i32 -16384)
   %.0.i57 = call i32 @llvm.smin.i32(i32 %i.bq, i32 16383) ; 2 uses
   %i.br = ashr i32 %i.ba, %i.ad
   call void @ff_g722_update_low_predictor(ptr noundef nonnull %i.ab, i32 noundef %i.br) #5
-  %i.bs = load i16, ptr %i.af, align 2, !tbaa !34
+  %i.bs = load i16, ptr %i.af, align 2, !tbaa !33
   %i.bt = sext i16 %i.bs to i32
   %i.bu = zext nneg i32 %i.aq to i64
   %i.bv = getelementptr inbounds nuw [2 x i8], ptr @ff_g722_high_inv_quant, i64 %i.bu
-  %i.bw = load i16, ptr %i.bv, align 2, !tbaa !51
+  %i.bw = load i16, ptr %i.bv, align 2, !tbaa !50
   %i.bx = sext i16 %i.bw to i32
   %i.by = mul nsw i32 %i.bx, %i.bt
   %i.bz = ashr i32 %i.by, 10                      ; 2 uses
-  %i.ca = load i16, ptr %i.ae, align 8, !tbaa !52
+  %i.ca = load i16, ptr %i.ae, align 8, !tbaa !51
   %i.cb = sext i16 %i.ca to i32
   %i.cc = add nsw i32 %i.bz, %i.cb
   %i.cd = call i32 @llvm.smax.i32(i32 %i.cc, i32 -16384)
@@ -172,19 +171,19 @@ bb.c:                                             ; preds = %.lr.ph, %bb.e
   call void @ff_g722_update_high_predictor(ptr noundef nonnull %i.ae, i32 noundef %i.bz, i32 noundef %i.aq) #5
   %i.ce = add nsw i32 %.0.i, %.0.i57
   %i.cf = trunc nsw i32 %i.ce to i16
-  %i.cg = load i32, ptr %i.ah, align 4, !tbaa !37 ; 3 uses
+  %i.cg = load i32, ptr %i.ah, align 4, !tbaa !36 ; 3 uses
   %i.ch = sext i32 %i.cg to i64
   %i.ci = getelementptr inbounds [2 x i8], ptr %i.ag, i64 %i.ch
-  store i16 %i.cf, ptr %i.ci, align 2, !tbaa !51
+  store i16 %i.cf, ptr %i.ci, align 2, !tbaa !50
   %i.cj = sub nsw i32 %.0.i57, %.0.i
   %i.ck = trunc nsw i32 %i.cj to i16
   %i.cl = add nsw i32 %i.cg, 2                    ; 2 uses
-  store i32 %i.cl, ptr %i.ah, align 4, !tbaa !37
+  store i32 %i.cl, ptr %i.ah, align 4, !tbaa !36
   %i.cm = sext i32 %i.cg to i64
   %i.cn = getelementptr [2 x i8], ptr %i.ag, i64 %i.cm
   %i.co = getelementptr i8, ptr %i.cn, i64 2
-  store i16 %i.ck, ptr %i.co, align 2, !tbaa !51
-  %i.cp = load ptr, ptr %i.ai, align 8, !tbaa !53
+  store i16 %i.ck, ptr %i.co, align 2, !tbaa !50
+  %i.cp = load ptr, ptr %i.ai, align 8, !tbaa !52
   %i.cq = sext i32 %i.cl to i64
   %i.cr = getelementptr inbounds [2 x i8], ptr %i.ag, i64 %i.cq
   %i.cs = getelementptr inbounds i8, ptr %i.cr, i64 -48
@@ -195,8 +194,8 @@ bb.c:                                             ; preds = %.lr.ph, %bb.e
   %i.cw = call <2 x i32> @llvm.smax.v2i32(<2 x i32> %i.cv, <2 x i32> splat (i32 -32768))
   %i.cx = call <2 x i32> @llvm.smin.v2i32(<2 x i32> %i.cw, <2 x i32> splat (i32 32767))
   %i.cy = trunc nsw <2 x i32> %i.cx to <2 x i16>
-  store <2 x i16> %i.cy, ptr %.05266, align 2, !tbaa !51
-  %i.cz = load i32, ptr %i.ah, align 4, !tbaa !37 ; 2 uses
+  store <2 x i16> %i.cy, ptr %.05266, align 2, !tbaa !50
+  %i.cz = load i32, ptr %i.ah, align 4, !tbaa !36 ; 2 uses
   %i.da = icmp sgt i32 %i.cz, 1023
   br i1 %i.da, label %bb.d, label %bb.e
 
@@ -205,19 +204,19 @@ bb.d:                                             ; preds = %bb.c
   %i.dc = getelementptr inbounds nuw [2 x i8], ptr %i.ag, i64 %i.db
   %i.dd = getelementptr inbounds i8, ptr %i.dc, i64 -44
   call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(44) %i.ag, ptr noundef nonnull align 2 dereferenceable(44) %i.dd, i64 44, i1 false)
-  store i32 22, ptr %i.ah, align 4, !tbaa !37
+  store i32 22, ptr %i.ah, align 4, !tbaa !36
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #5
   %i.de = add nuw nsw i32 %.067, 1                ; 2 uses
-  %i.df = load i32, ptr %i.j, align 8, !tbaa !42
+  %i.df = load i32, ptr %i.j, align 8, !tbaa !41
   %i.dg = icmp slt i32 %i.de, %i.df
-  br i1 %i.dg, label %bb.c, label %._crit_edge, !llvm.loop !54
+  br i1 %i.dg, label %bb.c, label %._crit_edge, !llvm.loop !53
 
 ._crit_edge:                                      ; preds = %bb.e, %.preheader
   store i32 1, ptr %2, align 4, !tbaa !29
-  %i.dh = load i32, ptr %i.j, align 8, !tbaa !42
+  %i.dh = load i32, ptr %i.j, align 8, !tbaa !41
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.b, %bb.a, %._crit_edge
@@ -307,28 +306,27 @@ attributes #5 = { nounwind }
 !29 = !{!6, !6, i64 0}
 !30 = !{!7, !7, i64 0}
 !31 = !{!12, !12, i64 0}
-!32 = !{!10, !6, i64 348}
-!33 = !{!10, !6, i64 344}
-!34 = !{!35, !36, i64 54}
-!35 = !{!"G722Band", !36, i64 0, !6, i64 4, !7, i64 8, !36, i64 10, !7, i64 12, !7, i64 16, !7, i64 40, !36, i64 52, !36, i64 54}
-!36 = !{!"short", !7, i64 0}
-!37 = !{!38, !6, i64 2060}
-!38 = !{!"G722Context", !11, i64 0, !6, i64 8, !7, i64 12, !6, i64 2060, !7, i64 2064, !7, i64 2176, !7, i64 2192, !7, i64 2208, !39, i64 2224}
-!39 = !{!"G722DSPContext", !12, i64 0}
-!40 = !{!38, !6, i64 8}
-!41 = !{!19, !19, i64 0}
-!42 = !{!43, !6, i64 32}
-!43 = !{!"AVPacket", !23, i64 0, !15, i64 8, !15, i64 16, !16, i64 24, !6, i64 32, !6, i64 36, !6, i64 40, !25, i64 48, !6, i64 56, !15, i64 64, !15, i64 72, !12, i64 80, !23, i64 88, !17, i64 96}
-!44 = !{!45, !6, i64 112}
-!45 = !{!"AVFrame", !7, i64 0, !7, i64 64, !46, i64 96, !6, i64 104, !6, i64 108, !6, i64 112, !6, i64 116, !6, i64 120, !17, i64 124, !15, i64 136, !15, i64 144, !17, i64 152, !6, i64 160, !12, i64 168, !6, i64 176, !6, i64 180, !7, i64 184, !47, i64 248, !6, i64 256, !27, i64 264, !6, i64 272, !6, i64 276, !6, i64 280, !6, i64 284, !6, i64 288, !6, i64 292, !6, i64 296, !15, i64 304, !48, i64 312, !6, i64 320, !23, i64 328, !23, i64 336, !15, i64 344, !15, i64 352, !15, i64 360, !15, i64 368, !12, i64 376, !20, i64 384, !15, i64 408, !6, i64 416}
-!46 = !{!"p2 omnipotent char", !28, i64 0}
-!47 = !{!"p2 _ZTS11AVBufferRef", !28, i64 0}
-!48 = !{!"p1 _ZTS12AVDictionary", !12, i64 0}
-!49 = !{!16, !16, i64 0}
-!50 = !{!43, !16, i64 24}
-!51 = !{!36, !36, i64 0}
-!52 = !{!35, !36, i64 0}
-!53 = !{!38, !12, i64 2224}
-!54 = distinct !{!54, !55}
-!55 = !{!"llvm.loop.mustprogress"}
+!32 = !{!10, !6, i64 344}
+!33 = !{!34, !35, i64 54}
+!34 = !{!"G722Band", !35, i64 0, !6, i64 4, !7, i64 8, !35, i64 10, !7, i64 12, !7, i64 16, !7, i64 40, !35, i64 52, !35, i64 54}
+!35 = !{!"short", !7, i64 0}
+!36 = !{!37, !6, i64 2060}
+!37 = !{!"G722Context", !11, i64 0, !6, i64 8, !7, i64 12, !6, i64 2060, !7, i64 2064, !7, i64 2176, !7, i64 2192, !7, i64 2208, !38, i64 2224}
+!38 = !{!"G722DSPContext", !12, i64 0}
+!39 = !{!37, !6, i64 8}
+!40 = !{!19, !19, i64 0}
+!41 = !{!42, !6, i64 32}
+!42 = !{!"AVPacket", !23, i64 0, !15, i64 8, !15, i64 16, !16, i64 24, !6, i64 32, !6, i64 36, !6, i64 40, !25, i64 48, !6, i64 56, !15, i64 64, !15, i64 72, !12, i64 80, !23, i64 88, !17, i64 96}
+!43 = !{!44, !6, i64 112}
+!44 = !{!"AVFrame", !7, i64 0, !7, i64 64, !45, i64 96, !6, i64 104, !6, i64 108, !6, i64 112, !6, i64 116, !6, i64 120, !17, i64 124, !15, i64 136, !15, i64 144, !17, i64 152, !6, i64 160, !12, i64 168, !6, i64 176, !6, i64 180, !7, i64 184, !46, i64 248, !6, i64 256, !27, i64 264, !6, i64 272, !6, i64 276, !6, i64 280, !6, i64 284, !6, i64 288, !6, i64 292, !6, i64 296, !15, i64 304, !47, i64 312, !6, i64 320, !23, i64 328, !23, i64 336, !15, i64 344, !15, i64 352, !15, i64 360, !15, i64 368, !12, i64 376, !20, i64 384, !15, i64 408, !6, i64 416}
+!45 = !{!"p2 omnipotent char", !28, i64 0}
+!46 = !{!"p2 _ZTS11AVBufferRef", !28, i64 0}
+!47 = !{!"p1 _ZTS12AVDictionary", !12, i64 0}
+!48 = !{!16, !16, i64 0}
+!49 = !{!42, !16, i64 24}
+!50 = !{!35, !35, i64 0}
+!51 = !{!34, !35, i64 0}
+!52 = !{!37, !12, i64 2224}
+!53 = distinct !{!53, !54}
+!54 = !{!"llvm.loop.mustprogress"}
 end_hunk_0

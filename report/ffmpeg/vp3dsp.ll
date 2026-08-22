@@ -205,21 +205,9 @@ vp3_h_loop_filter_c.exit:                         ; preds = %.lr.ph, %bb.a
 ; Function Attrs: cold mustprogress nofree norecurse nosync nounwind optsize willreturn memory(argmem: write) uwtable
 define void @ff_vp3dsp_init(ptr nofree noundef writeonly captures(none) initializes((0, 64)) %0) local_unnamed_addr #2 {
 bb.a:
-  store ptr @put_no_rnd_pixels_l2, ptr %0, align 8, !tbaa !17
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr @vp3_idct_put_c, ptr %1, align 8, !tbaa !20
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store ptr @vp3_idct_add_c, ptr %2, align 8, !tbaa !21
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store ptr @vp3_idct_dc_add_c, ptr %3, align 8, !tbaa !22
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 48
-  store ptr @vp3_v_loop_filter_8_c, ptr %4, align 8, !tbaa !23
+  store <4 x ptr> <ptr @put_no_rnd_pixels_l2, ptr @vp3_idct_put_c, ptr @vp3_idct_add_c, ptr @vp3_idct_dc_add_c>, ptr %0, align 8, !tbaa !17
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
-  store ptr @vp3_v_loop_filter_8_c, ptr %i.a, align 8, !tbaa !24
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 56
-  store ptr @vp3_h_loop_filter_8_c, ptr %5, align 8, !tbaa !25
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 40
-  store ptr @vp3_h_loop_filter_8_c, ptr %6, align 8, !tbaa !26
+  store <4 x ptr> <ptr @vp3_v_loop_filter_8_c, ptr @vp3_h_loop_filter_8_c, ptr @vp3_v_loop_filter_8_c, ptr @vp3_h_loop_filter_8_c>, ptr %i.a, align 8, !tbaa !17
   ret void
 }
 
@@ -261,7 +249,7 @@ bb.a:
   store i32 %i.v, ptr %i.w, align 4, !tbaa !11
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !27
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !19
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.a
   ret void
@@ -398,7 +386,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.cy = getelementptr inbounds nuw i8, ptr %.0266.i3, i64 2
   %i.cz = add nuw nsw i32 %.0263.i4, 1            ; 2 uses
   %exitcond.not = icmp eq i32 %i.cz, 8
-  br i1 %exitcond.not, label %.preheader, label %bb.b, !llvm.loop !28
+  br i1 %exitcond.not, label %.preheader, label %bb.b, !llvm.loop !20
 
 bb.e:                                             ; preds = %.preheader, %bb.h
   %.0.i7 = phi ptr [ %0, %.preheader ], [ %i.ig, %bb.h ] ; 17 uses
@@ -596,7 +584,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   %i.ig = getelementptr inbounds nuw i8, ptr %.0.i7, i64 1
   %i.ih = add nuw nsw i32 %.1.i6, 1               ; 2 uses
   %exitcond8.not = icmp eq i32 %i.ih, 8
-  br i1 %exitcond8.not, label %idct.exit, label %bb.e, !llvm.loop !29
+  br i1 %exitcond8.not, label %idct.exit, label %bb.e, !llvm.loop !21
 
 idct.exit:                                        ; preds = %bb.h
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(128) %2, i8 0, i64 128, i1 false)
@@ -734,7 +722,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.cy = getelementptr inbounds nuw i8, ptr %.0266.i3, i64 2
   %i.cz = add nuw nsw i32 %.0263.i4, 1            ; 2 uses
   %exitcond.not = icmp eq i32 %i.cz, 8
-  br i1 %exitcond.not, label %.preheader, label %bb.b, !llvm.loop !28
+  br i1 %exitcond.not, label %.preheader, label %bb.b, !llvm.loop !20
 
 bb.e:                                             ; preds = %.preheader, %bb.i
   %.0.i7 = phi ptr [ %0, %.preheader ], [ %i.kp, %bb.i ] ; 19 uses
@@ -1018,7 +1006,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g, %bb.f
   %i.kp = getelementptr inbounds nuw i8, ptr %.0.i7, i64 1
   %i.kq = add nuw nsw i32 %.1.i6, 1               ; 2 uses
   %exitcond8.not = icmp eq i32 %i.kq, 8
-  br i1 %exitcond8.not, label %idct.exit, label %bb.e, !llvm.loop !29
+  br i1 %exitcond8.not, label %idct.exit, label %bb.e, !llvm.loop !21
 
 idct.exit:                                        ; preds = %bb.i
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(128) %2, i8 0, i64 128, i1 false)
@@ -1421,7 +1409,7 @@ bb.c:                                             ; preds = %bb.a
   %indvars.iv.next.epil = add nuw nsw i64 %indvars.iv.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
-  br i1 %epil.iter.cmp.not, label %.lr.ph33.preheader, label %.lr.ph.epil, !llvm.loop !30
+  br i1 %epil.iter.cmp.not, label %.lr.ph33.preheader, label %.lr.ph.epil, !llvm.loop !22
 
 .lr.ph33.preheader:                               ; preds = %.lr.ph.epil, %.lr.ph33.preheader.unr-lcssa
   %i.i = zext nneg i32 %1 to i64
@@ -1464,7 +1452,7 @@ bb.c:                                             ; preds = %bb.a
   %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
   %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
-  br i1 %niter.ncmp.3, label %.lr.ph33.preheader.unr-lcssa, label %.lr.ph, !llvm.loop !32
+  br i1 %niter.ncmp.3, label %.lr.ph33.preheader.unr-lcssa, label %.lr.ph, !llvm.loop !24
 
 .lr.ph33:                                         ; preds = %.lr.ph33.preheader, %.lr.ph33
   %indvars.iv39 = phi i64 [ %i.i, %.lr.ph33.preheader ], [ %indvars.iv.next40, %.lr.ph33 ] ; 4 uses
@@ -1480,7 +1468,7 @@ bb.c:                                             ; preds = %bb.a
   %i.ai = icmp samesign ult i64 %indvars.iv39, 127
   %i.aj = icmp ne i32 %i.ah, 0                    ; 2 uses
   %i.ak = select i1 %i.ai, i1 %i.aj, i1 false
-  br i1 %i.ak, label %.lr.ph33, label %._crit_edge, !llvm.loop !33
+  br i1 %i.ak, label %.lr.ph33, label %._crit_edge, !llvm.loop !25
 
 ._crit_edge:                                      ; preds = %.lr.ph33
   br i1 %i.aj, label %bb.d, label %._crit_edge.thread
@@ -1539,21 +1527,13 @@ attributes #9 = { noreturn nounwind }
 !14 = !{!6, !6, i64 0}
 !15 = distinct !{!15, !13}
 !16 = distinct !{!16, !13}
-!17 = !{!18, !19, i64 0}
-!18 = !{!"VP3DSPContext", !19, i64 0, !19, i64 8, !19, i64 16, !19, i64 24, !19, i64 32, !19, i64 40, !19, i64 48, !19, i64 56}
-!19 = !{!"any pointer", !7, i64 0}
-!20 = !{!18, !19, i64 8}
-!21 = !{!18, !19, i64 16}
-!22 = !{!18, !19, i64 24}
-!23 = !{!18, !19, i64 48}
-!24 = !{!18, !19, i64 32}
-!25 = !{!18, !19, i64 56}
-!26 = !{!18, !19, i64 40}
-!27 = distinct !{!27, !13}
-!28 = distinct !{!28, !13}
-!29 = distinct !{!29, !13}
-!30 = distinct !{!30, !31}
-!31 = !{!"llvm.loop.unroll.disable"}
-!32 = distinct !{!32, !13}
-!33 = distinct !{!33, !13}
+!17 = !{!18, !18, i64 0}
+!18 = !{!"any pointer", !7, i64 0}
+!19 = distinct !{!19, !13}
+!20 = distinct !{!20, !13}
+!21 = distinct !{!21, !13}
+!22 = distinct !{!22, !23}
+!23 = !{!"llvm.loop.unroll.disable"}
+!24 = distinct !{!24, !13}
+!25 = distinct !{!25, !13}
 end_hunk_1

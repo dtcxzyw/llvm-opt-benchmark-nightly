@@ -202,9 +202,7 @@ bb.a:
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 48
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 48
-  store i64 9223372036854775807, ptr %i.n, align 8, !tbaa !25
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 56
-  store i64 0, ptr %2, align 8, !tbaa !22
+  store <2 x i64> <i64 9223372036854775807, i64 0>, ptr %i.n, align 8, !tbaa !24
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 64
   store i32 0, ptr %i.o, align 8, !tbaa !38
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 72
@@ -238,7 +236,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not16, label %bb.f, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.f = tail call ptr @zcalloc_num(i64 noundef 1, i64 noundef 104) #21 ; 14 uses
+  %i.f = tail call ptr @zcalloc_num(i64 noundef 1, i64 noundef 104) #21 ; 13 uses
   %.not17 = icmp eq ptr %i.f, null
   br i1 %.not17, label %bb.d, label %bb.e
 
@@ -267,9 +265,7 @@ bb.e:                                             ; preds = %bb.c
   %i.s = getelementptr inbounds nuw i8, ptr %4, i64 48
   %i.t = getelementptr inbounds nuw i8, ptr %i.f, i64 40
   %i.u = getelementptr inbounds nuw i8, ptr %i.f, i64 48
-  store i64 9223372036854775807, ptr %i.u, align 8, !tbaa !25
-  %5 = getelementptr inbounds nuw i8, ptr %i.f, i64 56
-  store i64 0, ptr %5, align 8, !tbaa !22
+  store <2 x i64> <i64 9223372036854775807, i64 0>, ptr %i.u, align 8, !tbaa !24
   %i.v = getelementptr inbounds nuw i8, ptr %i.f, i64 64
   store i32 0, ptr %i.v, align 8, !tbaa !38
   %i.w = getelementptr inbounds nuw i8, ptr %i.f, i64 72
@@ -325,9 +321,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 88
   store i64 0, ptr %i.a, align 8, !tbaa !26
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 48
-  store i64 9223372036854775807, ptr %i.b, align 8, !tbaa !25
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 56
-  store i64 0, ptr %1, align 8, !tbaa !22
+  store <2 x i64> <i64 9223372036854775807, i64 0>, ptr %i.b, align 8, !tbaa !24
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 96
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !23
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 80

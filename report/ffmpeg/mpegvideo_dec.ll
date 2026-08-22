@@ -204,19 +204,17 @@ declare void @ff_draw_horiz_band(ptr noundef, ptr noundef, ptr noundef, i32 noun
 define void @ff_mpeg_flush(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !72   ; 6 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !72   ; 5 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 1008
   tail call void @ff_mpv_unref_picture(ptr noundef nonnull %i.c) #11
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 768
   tail call void @ff_mpv_unref_picture(ptr noundef nonnull %i.d) #11
   %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 888
   tail call void @ff_mpv_unref_picture(ptr noundef nonnull %i.e) #11
-  %1 = getelementptr inbounds nuw i8, ptr %i.b, i64 3112
-  store i32 0, ptr %1, align 8, !tbaa !135
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 3108
-  store i32 0, ptr %i.f, align 4, !tbaa !136
+  store <2 x i32> zeroinitializer, ptr %i.f, align 4, !tbaa !37
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 3760
-  store i16 0, ptr %i.g, align 16, !tbaa !137
+  store i16 0, ptr %i.g, align 16, !tbaa !135
   ret void
 }
 
@@ -224,12 +222,12 @@ bb.a:
 define void @ff_mpv_reconstruct_mb(ptr noundef %0, ptr noundef %1) local_unnamed_addr #4 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 3112 ; 3 uses
-  %i.b = load i32, ptr %i.a, align 8, !tbaa !135
+  %i.b = load i32, ptr %i.a, align 8, !tbaa !136
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 396
-  %i.d = load i32, ptr %i.c, align 4, !tbaa !138
+  %i.d = load i32, ptr %i.c, align 4, !tbaa !137
   %i.e = mul nsw i32 %i.d, %i.b
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 3108
-  %i.g = load i32, ptr %i.f, align 4, !tbaa !136
+  %i.g = load i32, ptr %i.f, align 4, !tbaa !138
   %i.h = add nsw i32 %i.e, %i.g
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 1208
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !139
@@ -632,7 +630,7 @@ bb.cn:                                            ; preds = %bb.cn, %.epil.prehe
   %i.ut = shl i32 %i.us, %i.ub
   %i.uu = add nsw i32 %i.ut, 63
   %i.uv = ashr i32 %i.uu, 6
-  %i.uw = load i32, ptr %i.a, align 8, !tbaa !135
+  %i.uw = load i32, ptr %i.a, align 8, !tbaa !136
   %i.ux = add nsw i32 %i.uw, %i.uv                ; 2 uses
   %i.uy = getelementptr inbounds nuw i8, ptr %0, i64 392
   %i.uz = load i32, ptr %i.uy, align 8, !tbaa !115
@@ -764,7 +762,7 @@ bb.cu:                                            ; preds = %bb.cu, %.epil.prehe
   %i.wy = shl i32 %i.wx, %i.wg
   %i.wz = add nsw i32 %i.wy, 63
   %i.xa = ashr i32 %i.wz, 6
-  %i.xb = load i32, ptr %i.a, align 8, !tbaa !135
+  %i.xb = load i32, ptr %i.a, align 8, !tbaa !136
   %i.xc = add nsw i32 %i.xb, %i.xa                ; 2 uses
   %i.xd = getelementptr inbounds nuw i8, ptr %0, i64 392
   %i.xe = load i32, ptr %i.xd, align 8, !tbaa !115
@@ -1167,9 +1165,9 @@ bb.b:                                             ; preds = %bb.a
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !9    ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 1816
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 3108
-  %i.e = load i32, ptr %i.d, align 4, !tbaa !136
+  %i.e = load i32, ptr %i.d, align 4, !tbaa !138
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 3112
-  %i.g = load i32, ptr %i.f, align 8, !tbaa !135
+  %i.g = load i32, ptr %i.f, align 8, !tbaa !136
   tail call void (ptr, i32, ptr, ...) @av_log(ptr noundef %i.b, i32 noundef 48, ptr noundef nonnull @.str.9, i32 noundef %i.e, i32 noundef %i.g) #11
   br label %.preheader
 
@@ -1293,7 +1291,7 @@ bb.d:                                             ; preds = %bb.d, %.epil.prehea
   %i.x = add nsw i32 %i.w, 63
   %i.y = ashr i32 %i.x, 6
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 3112
-  %i.aa = load i32, ptr %i.z, align 8, !tbaa !135
+  %i.aa = load i32, ptr %i.z, align 8, !tbaa !136
   %i.ab = add nsw i32 %i.aa, %i.y                 ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 392
   %i.ad = load i32, ptr %i.ac, align 8, !tbaa !115
@@ -1353,9 +1351,9 @@ bb.a:
   %i.d = load i32, ptr %i.c, align 8, !tbaa !142  ; 38 uses
   %i.e = lshr i32 8, %i.d                         ; 40 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 3108 ; 6 uses
-  %i.g = load i32, ptr %i.f, align 4, !tbaa !136  ; 4 uses
+  %i.g = load i32, ptr %i.f, align 4, !tbaa !138  ; 4 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 3112 ; 2 uses
-  %i.i = load i32, ptr %i.h, align 8, !tbaa !135  ; 16 uses
+  %i.i = load i32, ptr %i.h, align 8, !tbaa !136  ; 16 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 2732
   %i.k = load i32, ptr %i.j, align 4, !tbaa !163
   switch i32 %i.k, label %bb.dm [
@@ -1651,11 +1649,11 @@ bb.n:                                             ; preds = %hpel_motion_lowres.
   %i.ho = add nsw i32 %i.hn, %i.hm                ; 2 uses
   %i.hp = and i32 %i.hg, %i.gq                    ; 2 uses
   %i.hq = and i32 %i.ho, %i.gq                    ; 2 uses
-  %i.hr = load i32, ptr %i.f, align 4, !tbaa !136
+  %i.hr = load i32, ptr %i.f, align 4, !tbaa !138
   %i.hs = mul nsw i32 %i.hr, %i.go
   %i.ht = ashr i32 %i.hg, %i.gs
   %i.hu = add nsw i32 %i.hs, %i.ht                ; 4 uses
-  %i.hv = load i32, ptr %i.h, align 8, !tbaa !135
+  %i.hv = load i32, ptr %i.h, align 8, !tbaa !136
   %i.hw = mul nsw i32 %i.hv, %i.go
   %i.hx = ashr i32 %i.ho, %i.gs
   %i.hy = add nsw i32 %i.hw, %i.hx                ; 4 uses
@@ -2058,7 +2056,7 @@ mpeg_motion_lowres.exit366:                       ; preds = %bb.ah, %bb.ai
   %i.tm = add nsw i32 %i.tl, %i.tk                ; 6 uses
   %i.tn = and i32 %i.ti, %i.st                    ; 3 uses
   %i.to = and i32 %i.tm, %i.st                    ; 4 uses
-  %i.tp = load i32, ptr %i.f, align 4, !tbaa !136 ; 4 uses
+  %i.tp = load i32, ptr %i.f, align 4, !tbaa !138 ; 4 uses
   %i.tq = shl nuw nsw i32 %i.sr, 1                ; 2 uses
   %i.tr = mul i32 %i.tq, %i.tp
   %i.ts = add nsw i32 %i.sn, 1                    ; 5 uses
@@ -2461,7 +2459,7 @@ bb.br:                                            ; preds = %bb.bq, %bb.bp
   %.0245.i246 = phi i32 [ %i.afv, %bb.bq ], [ %i.afb, %bb.bp ] ; 6 uses
   %i.afw = and i32 %.0247.i245, %i.afk            ; 3 uses
   %i.afx = and i32 %.0245.i246, %i.afk            ; 4 uses
-  %i.afy = load i32, ptr %i.f, align 4, !tbaa !136 ; 4 uses
+  %i.afy = load i32, ptr %i.f, align 4, !tbaa !138 ; 4 uses
   %i.afz = shl nuw nsw i32 %i.afi, 1              ; 2 uses
   %i.aga = mul i32 %i.afz, %i.afy
   %i.agb = add nsw i32 %i.afe, 1                  ; 5 uses
@@ -2764,7 +2762,7 @@ bb.ch:                                            ; preds = %.preheader421, %mpe
   %i.anp = add nsw i32 %i.ano, %i.ann             ; 6 uses
   %i.anq = and i32 %i.anl, %i.amu                 ; 3 uses
   %i.anr = and i32 %i.anp, %i.amu                 ; 4 uses
-  %i.ans = load i32, ptr %i.f, align 4, !tbaa !136 ; 4 uses
+  %i.ans = load i32, ptr %i.f, align 4, !tbaa !138 ; 4 uses
   %i.ant = shl nuw nsw i32 %i.ams, 1              ; 2 uses
   %i.anu = mul i32 %i.ant, %i.ans
   %i.anv = add nsw i32 %i.amo, 1                  ; 5 uses
@@ -3007,7 +3005,7 @@ bb.cw:                                            ; preds = %.preheader424, %bb.
   %i.atj = insertelement <2 x i32> poison, i32 %i.asx, i64 0
   %i.atk = shufflevector <2 x i32> %i.atj, <2 x i32> poison, <2 x i32> zeroinitializer ; 4 uses
   %i.atl = and <2 x i32> %i.ati, %i.atk           ; 5 uses
-  %i.atm = load i32, ptr %i.f, align 4, !tbaa !136 ; 4 uses
+  %i.atm = load i32, ptr %i.f, align 4, !tbaa !138 ; 4 uses
   %i.atn = shl nuw nsw i32 %i.asv, 1              ; 2 uses
   %i.ato = mul i32 %i.atn, %i.atm
   %i.atp = add nsw i32 %i.asr, 1                  ; 5 uses
@@ -3381,10 +3379,10 @@ attributes #13 = { cold }
 !132 = !{!129, !6, i64 12}
 !133 = !{!129, !6, i64 16}
 !134 = distinct !{!134, !64}
-!135 = !{!10, !6, i64 3112}
-!136 = !{!10, !6, i64 3108}
-!137 = !{!10, !31, i64 3760}
-!138 = !{!10, !6, i64 396}
+!135 = !{!10, !31, i64 3760}
+!136 = !{!10, !6, i64 3112}
+!137 = !{!10, !6, i64 396}
+!138 = !{!10, !6, i64 3108}
 !139 = !{!10, !14, i64 1208}
 !140 = !{!10, !6, i64 1272}
 !141 = !{!10, !14, i64 1064}

@@ -205,197 +205,53 @@ bb.a:
 ; Function Attrs: cold mustprogress nofree norecurse nosync nounwind optsize willreturn memory(argmem: write) uwtable
 define void @ff_qpeldsp_init(ptr nofree noundef writeonly initializes((0, 768)) %0) local_unnamed_addr #7 {
 bb.a:
-  store ptr @ff_put_pixels16x16_c, ptr %0, align 8, !tbaa !38
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr @put_qpel16_mc10_c, ptr %1, align 8, !tbaa !38
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store ptr @put_qpel16_mc20_c, ptr %2, align 8, !tbaa !38
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store ptr @put_qpel16_mc30_c, ptr %3, align 8, !tbaa !38
+  store <4 x ptr> <ptr @ff_put_pixels16x16_c, ptr @put_qpel16_mc10_c, ptr @put_qpel16_mc20_c, ptr @put_qpel16_mc30_c>, ptr %0, align 8, !tbaa !38
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
-  store ptr @put_qpel16_mc01_c, ptr %i.a, align 8, !tbaa !38
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 40
-  store ptr @put_qpel16_mc11_c, ptr %4, align 8, !tbaa !38
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 48
-  store ptr @put_qpel16_mc21_c, ptr %5, align 8, !tbaa !38
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 56
-  store ptr @put_qpel16_mc31_c, ptr %6, align 8, !tbaa !38
+  store <4 x ptr> <ptr @put_qpel16_mc01_c, ptr @put_qpel16_mc11_c, ptr @put_qpel16_mc21_c, ptr @put_qpel16_mc31_c>, ptr %i.a, align 8, !tbaa !38
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 64
-  store ptr @put_qpel16_mc02_c, ptr %i.b, align 8, !tbaa !38
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 72
-  store ptr @put_qpel16_mc12_c, ptr %7, align 8, !tbaa !38
-  %8 = getelementptr inbounds nuw i8, ptr %0, i64 80
-  store ptr @put_qpel16_mc22_c, ptr %8, align 8, !tbaa !38
-  %9 = getelementptr inbounds nuw i8, ptr %0, i64 88
-  store ptr @put_qpel16_mc32_c, ptr %9, align 8, !tbaa !38
+  store <4 x ptr> <ptr @put_qpel16_mc02_c, ptr @put_qpel16_mc12_c, ptr @put_qpel16_mc22_c, ptr @put_qpel16_mc32_c>, ptr %i.b, align 8, !tbaa !38
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 96
-  store ptr @put_qpel16_mc03_c, ptr %i.c, align 8, !tbaa !38
-  %10 = getelementptr inbounds nuw i8, ptr %0, i64 104
-  store ptr @put_qpel16_mc13_c, ptr %10, align 8, !tbaa !38
-  %11 = getelementptr inbounds nuw i8, ptr %0, i64 112
-  store ptr @put_qpel16_mc23_c, ptr %11, align 8, !tbaa !38
-  %12 = getelementptr inbounds nuw i8, ptr %0, i64 120
-  store ptr @put_qpel16_mc33_c, ptr %12, align 8, !tbaa !38
+  store <4 x ptr> <ptr @put_qpel16_mc03_c, ptr @put_qpel16_mc13_c, ptr @put_qpel16_mc23_c, ptr @put_qpel16_mc33_c>, ptr %i.c, align 8, !tbaa !38
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 128
-  store ptr @ff_put_pixels8x8_c, ptr %i.d, align 8, !tbaa !38
-  %13 = getelementptr inbounds nuw i8, ptr %0, i64 136
-  store ptr @put_qpel8_mc10_c, ptr %13, align 8, !tbaa !38
-  %14 = getelementptr inbounds nuw i8, ptr %0, i64 144
-  store ptr @put_qpel8_mc20_c, ptr %14, align 8, !tbaa !38
-  %15 = getelementptr inbounds nuw i8, ptr %0, i64 152
-  store ptr @put_qpel8_mc30_c, ptr %15, align 8, !tbaa !38
+  store <4 x ptr> <ptr @ff_put_pixels8x8_c, ptr @put_qpel8_mc10_c, ptr @put_qpel8_mc20_c, ptr @put_qpel8_mc30_c>, ptr %i.d, align 8, !tbaa !38
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 160
-  store ptr @put_qpel8_mc01_c, ptr %i.e, align 8, !tbaa !38
-  %16 = getelementptr inbounds nuw i8, ptr %0, i64 168
-  store ptr @put_qpel8_mc11_c, ptr %16, align 8, !tbaa !38
-  %17 = getelementptr inbounds nuw i8, ptr %0, i64 176
-  store ptr @put_qpel8_mc21_c, ptr %17, align 8, !tbaa !38
-  %18 = getelementptr inbounds nuw i8, ptr %0, i64 184
-  store ptr @put_qpel8_mc31_c, ptr %18, align 8, !tbaa !38
+  store <4 x ptr> <ptr @put_qpel8_mc01_c, ptr @put_qpel8_mc11_c, ptr @put_qpel8_mc21_c, ptr @put_qpel8_mc31_c>, ptr %i.e, align 8, !tbaa !38
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 192
-  store ptr @put_qpel8_mc02_c, ptr %i.f, align 8, !tbaa !38
-  %19 = getelementptr inbounds nuw i8, ptr %0, i64 200
-  store ptr @put_qpel8_mc12_c, ptr %19, align 8, !tbaa !38
-  %20 = getelementptr inbounds nuw i8, ptr %0, i64 208
-  store ptr @put_qpel8_mc22_c, ptr %20, align 8, !tbaa !38
-  %21 = getelementptr inbounds nuw i8, ptr %0, i64 216
-  store ptr @put_qpel8_mc32_c, ptr %21, align 8, !tbaa !38
+  store <4 x ptr> <ptr @put_qpel8_mc02_c, ptr @put_qpel8_mc12_c, ptr @put_qpel8_mc22_c, ptr @put_qpel8_mc32_c>, ptr %i.f, align 8, !tbaa !38
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 224
-  store ptr @put_qpel8_mc03_c, ptr %i.g, align 8, !tbaa !38
-  %22 = getelementptr inbounds nuw i8, ptr %0, i64 232
-  store ptr @put_qpel8_mc13_c, ptr %22, align 8, !tbaa !38
-  %23 = getelementptr inbounds nuw i8, ptr %0, i64 240
-  store ptr @put_qpel8_mc23_c, ptr %23, align 8, !tbaa !38
-  %24 = getelementptr inbounds nuw i8, ptr %0, i64 248
-  store ptr @put_qpel8_mc33_c, ptr %24, align 8, !tbaa !38
+  store <4 x ptr> <ptr @put_qpel8_mc03_c, ptr @put_qpel8_mc13_c, ptr @put_qpel8_mc23_c, ptr @put_qpel8_mc33_c>, ptr %i.g, align 8, !tbaa !38
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 512
-  store ptr @ff_put_pixels16x16_c, ptr %i.h, align 8, !tbaa !38
-  %25 = getelementptr inbounds nuw i8, ptr %0, i64 520
-  store ptr @put_no_rnd_qpel16_mc10_c, ptr %25, align 8, !tbaa !38
-  %26 = getelementptr inbounds nuw i8, ptr %0, i64 528
-  store ptr @put_no_rnd_qpel16_mc20_c, ptr %26, align 8, !tbaa !38
-  %27 = getelementptr inbounds nuw i8, ptr %0, i64 536
-  store ptr @put_no_rnd_qpel16_mc30_c, ptr %27, align 8, !tbaa !38
+  store <4 x ptr> <ptr @ff_put_pixels16x16_c, ptr @put_no_rnd_qpel16_mc10_c, ptr @put_no_rnd_qpel16_mc20_c, ptr @put_no_rnd_qpel16_mc30_c>, ptr %i.h, align 8, !tbaa !38
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 544
-  store ptr @put_no_rnd_qpel16_mc01_c, ptr %i.i, align 8, !tbaa !38
-  %28 = getelementptr inbounds nuw i8, ptr %0, i64 552
-  store ptr @put_no_rnd_qpel16_mc11_c, ptr %28, align 8, !tbaa !38
-  %29 = getelementptr inbounds nuw i8, ptr %0, i64 560
-  store ptr @put_no_rnd_qpel16_mc21_c, ptr %29, align 8, !tbaa !38
-  %30 = getelementptr inbounds nuw i8, ptr %0, i64 568
-  store ptr @put_no_rnd_qpel16_mc31_c, ptr %30, align 8, !tbaa !38
+  store <4 x ptr> <ptr @put_no_rnd_qpel16_mc01_c, ptr @put_no_rnd_qpel16_mc11_c, ptr @put_no_rnd_qpel16_mc21_c, ptr @put_no_rnd_qpel16_mc31_c>, ptr %i.i, align 8, !tbaa !38
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 576
-  store ptr @put_no_rnd_qpel16_mc02_c, ptr %i.j, align 8, !tbaa !38
-  %31 = getelementptr inbounds nuw i8, ptr %0, i64 584
-  store ptr @put_no_rnd_qpel16_mc12_c, ptr %31, align 8, !tbaa !38
-  %32 = getelementptr inbounds nuw i8, ptr %0, i64 592
-  store ptr @put_no_rnd_qpel16_mc22_c, ptr %32, align 8, !tbaa !38
-  %33 = getelementptr inbounds nuw i8, ptr %0, i64 600
-  store ptr @put_no_rnd_qpel16_mc32_c, ptr %33, align 8, !tbaa !38
+  store <4 x ptr> <ptr @put_no_rnd_qpel16_mc02_c, ptr @put_no_rnd_qpel16_mc12_c, ptr @put_no_rnd_qpel16_mc22_c, ptr @put_no_rnd_qpel16_mc32_c>, ptr %i.j, align 8, !tbaa !38
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 608
-  store ptr @put_no_rnd_qpel16_mc03_c, ptr %i.k, align 8, !tbaa !38
-  %34 = getelementptr inbounds nuw i8, ptr %0, i64 616
-  store ptr @put_no_rnd_qpel16_mc13_c, ptr %34, align 8, !tbaa !38
-  %35 = getelementptr inbounds nuw i8, ptr %0, i64 624
-  store ptr @put_no_rnd_qpel16_mc23_c, ptr %35, align 8, !tbaa !38
-  %36 = getelementptr inbounds nuw i8, ptr %0, i64 632
-  store ptr @put_no_rnd_qpel16_mc33_c, ptr %36, align 8, !tbaa !38
+  store <4 x ptr> <ptr @put_no_rnd_qpel16_mc03_c, ptr @put_no_rnd_qpel16_mc13_c, ptr @put_no_rnd_qpel16_mc23_c, ptr @put_no_rnd_qpel16_mc33_c>, ptr %i.k, align 8, !tbaa !38
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 640
-  store ptr @ff_put_pixels8x8_c, ptr %i.l, align 8, !tbaa !38
-  %37 = getelementptr inbounds nuw i8, ptr %0, i64 648
-  store ptr @put_no_rnd_qpel8_mc10_c, ptr %37, align 8, !tbaa !38
-  %38 = getelementptr inbounds nuw i8, ptr %0, i64 656
-  store ptr @put_no_rnd_qpel8_mc20_c, ptr %38, align 8, !tbaa !38
-  %39 = getelementptr inbounds nuw i8, ptr %0, i64 664
-  store ptr @put_no_rnd_qpel8_mc30_c, ptr %39, align 8, !tbaa !38
+  store <4 x ptr> <ptr @ff_put_pixels8x8_c, ptr @put_no_rnd_qpel8_mc10_c, ptr @put_no_rnd_qpel8_mc20_c, ptr @put_no_rnd_qpel8_mc30_c>, ptr %i.l, align 8, !tbaa !38
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 672
-  store ptr @put_no_rnd_qpel8_mc01_c, ptr %i.m, align 8, !tbaa !38
-  %40 = getelementptr inbounds nuw i8, ptr %0, i64 680
-  store ptr @put_no_rnd_qpel8_mc11_c, ptr %40, align 8, !tbaa !38
-  %41 = getelementptr inbounds nuw i8, ptr %0, i64 688
-  store ptr @put_no_rnd_qpel8_mc21_c, ptr %41, align 8, !tbaa !38
-  %42 = getelementptr inbounds nuw i8, ptr %0, i64 696
-  store ptr @put_no_rnd_qpel8_mc31_c, ptr %42, align 8, !tbaa !38
+  store <4 x ptr> <ptr @put_no_rnd_qpel8_mc01_c, ptr @put_no_rnd_qpel8_mc11_c, ptr @put_no_rnd_qpel8_mc21_c, ptr @put_no_rnd_qpel8_mc31_c>, ptr %i.m, align 8, !tbaa !38
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 704
-  store ptr @put_no_rnd_qpel8_mc02_c, ptr %i.n, align 8, !tbaa !38
-  %43 = getelementptr inbounds nuw i8, ptr %0, i64 712
-  store ptr @put_no_rnd_qpel8_mc12_c, ptr %43, align 8, !tbaa !38
-  %44 = getelementptr inbounds nuw i8, ptr %0, i64 720
-  store ptr @put_no_rnd_qpel8_mc22_c, ptr %44, align 8, !tbaa !38
-  %45 = getelementptr inbounds nuw i8, ptr %0, i64 728
-  store ptr @put_no_rnd_qpel8_mc32_c, ptr %45, align 8, !tbaa !38
+  store <4 x ptr> <ptr @put_no_rnd_qpel8_mc02_c, ptr @put_no_rnd_qpel8_mc12_c, ptr @put_no_rnd_qpel8_mc22_c, ptr @put_no_rnd_qpel8_mc32_c>, ptr %i.n, align 8, !tbaa !38
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 736
-  store ptr @put_no_rnd_qpel8_mc03_c, ptr %i.o, align 8, !tbaa !38
-  %46 = getelementptr inbounds nuw i8, ptr %0, i64 744
-  store ptr @put_no_rnd_qpel8_mc13_c, ptr %46, align 8, !tbaa !38
-  %47 = getelementptr inbounds nuw i8, ptr %0, i64 752
-  store ptr @put_no_rnd_qpel8_mc23_c, ptr %47, align 8, !tbaa !38
-  %48 = getelementptr inbounds nuw i8, ptr %0, i64 760
-  store ptr @put_no_rnd_qpel8_mc33_c, ptr %48, align 8, !tbaa !38
+  store <4 x ptr> <ptr @put_no_rnd_qpel8_mc03_c, ptr @put_no_rnd_qpel8_mc13_c, ptr @put_no_rnd_qpel8_mc23_c, ptr @put_no_rnd_qpel8_mc33_c>, ptr %i.o, align 8, !tbaa !38
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 256
-  store ptr @ff_avg_pixels16x16_c, ptr %i.p, align 8, !tbaa !38
-  %49 = getelementptr inbounds nuw i8, ptr %0, i64 264
-  store ptr @avg_qpel16_mc10_c, ptr %49, align 8, !tbaa !38
-  %50 = getelementptr inbounds nuw i8, ptr %0, i64 272
-  store ptr @avg_qpel16_mc20_c, ptr %50, align 8, !tbaa !38
-  %51 = getelementptr inbounds nuw i8, ptr %0, i64 280
-  store ptr @avg_qpel16_mc30_c, ptr %51, align 8, !tbaa !38
+  store <4 x ptr> <ptr @ff_avg_pixels16x16_c, ptr @avg_qpel16_mc10_c, ptr @avg_qpel16_mc20_c, ptr @avg_qpel16_mc30_c>, ptr %i.p, align 8, !tbaa !38
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 288
-  store ptr @avg_qpel16_mc01_c, ptr %i.q, align 8, !tbaa !38
-  %52 = getelementptr inbounds nuw i8, ptr %0, i64 296
-  store ptr @avg_qpel16_mc11_c, ptr %52, align 8, !tbaa !38
-  %53 = getelementptr inbounds nuw i8, ptr %0, i64 304
-  store ptr @avg_qpel16_mc21_c, ptr %53, align 8, !tbaa !38
-  %54 = getelementptr inbounds nuw i8, ptr %0, i64 312
-  store ptr @avg_qpel16_mc31_c, ptr %54, align 8, !tbaa !38
+  store <4 x ptr> <ptr @avg_qpel16_mc01_c, ptr @avg_qpel16_mc11_c, ptr @avg_qpel16_mc21_c, ptr @avg_qpel16_mc31_c>, ptr %i.q, align 8, !tbaa !38
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 320
-  store ptr @avg_qpel16_mc02_c, ptr %i.r, align 8, !tbaa !38
-  %55 = getelementptr inbounds nuw i8, ptr %0, i64 328
-  store ptr @avg_qpel16_mc12_c, ptr %55, align 8, !tbaa !38
-  %56 = getelementptr inbounds nuw i8, ptr %0, i64 336
-  store ptr @avg_qpel16_mc22_c, ptr %56, align 8, !tbaa !38
-  %57 = getelementptr inbounds nuw i8, ptr %0, i64 344
-  store ptr @avg_qpel16_mc32_c, ptr %57, align 8, !tbaa !38
+  store <4 x ptr> <ptr @avg_qpel16_mc02_c, ptr @avg_qpel16_mc12_c, ptr @avg_qpel16_mc22_c, ptr @avg_qpel16_mc32_c>, ptr %i.r, align 8, !tbaa !38
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 352
-  store ptr @avg_qpel16_mc03_c, ptr %i.s, align 8, !tbaa !38
-  %58 = getelementptr inbounds nuw i8, ptr %0, i64 360
-  store ptr @avg_qpel16_mc13_c, ptr %58, align 8, !tbaa !38
-  %59 = getelementptr inbounds nuw i8, ptr %0, i64 368
-  store ptr @avg_qpel16_mc23_c, ptr %59, align 8, !tbaa !38
-  %60 = getelementptr inbounds nuw i8, ptr %0, i64 376
-  store ptr @avg_qpel16_mc33_c, ptr %60, align 8, !tbaa !38
+  store <4 x ptr> <ptr @avg_qpel16_mc03_c, ptr @avg_qpel16_mc13_c, ptr @avg_qpel16_mc23_c, ptr @avg_qpel16_mc33_c>, ptr %i.s, align 8, !tbaa !38
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 384
-  store ptr @ff_avg_pixels8x8_c, ptr %i.t, align 8, !tbaa !38
-  %61 = getelementptr inbounds nuw i8, ptr %0, i64 392
-  store ptr @avg_qpel8_mc10_c, ptr %61, align 8, !tbaa !38
-  %62 = getelementptr inbounds nuw i8, ptr %0, i64 400
-  store ptr @avg_qpel8_mc20_c, ptr %62, align 8, !tbaa !38
-  %63 = getelementptr inbounds nuw i8, ptr %0, i64 408
-  store ptr @avg_qpel8_mc30_c, ptr %63, align 8, !tbaa !38
+  store <4 x ptr> <ptr @ff_avg_pixels8x8_c, ptr @avg_qpel8_mc10_c, ptr @avg_qpel8_mc20_c, ptr @avg_qpel8_mc30_c>, ptr %i.t, align 8, !tbaa !38
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 416
-  store ptr @avg_qpel8_mc01_c, ptr %i.u, align 8, !tbaa !38
-  %64 = getelementptr inbounds nuw i8, ptr %0, i64 424
-  store ptr @avg_qpel8_mc11_c, ptr %64, align 8, !tbaa !38
-  %65 = getelementptr inbounds nuw i8, ptr %0, i64 432
-  store ptr @avg_qpel8_mc21_c, ptr %65, align 8, !tbaa !38
-  %66 = getelementptr inbounds nuw i8, ptr %0, i64 440
-  store ptr @avg_qpel8_mc31_c, ptr %66, align 8, !tbaa !38
+  store <4 x ptr> <ptr @avg_qpel8_mc01_c, ptr @avg_qpel8_mc11_c, ptr @avg_qpel8_mc21_c, ptr @avg_qpel8_mc31_c>, ptr %i.u, align 8, !tbaa !38
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 448
-  store ptr @avg_qpel8_mc02_c, ptr %i.v, align 8, !tbaa !38
-  %67 = getelementptr inbounds nuw i8, ptr %0, i64 456
-  store ptr @avg_qpel8_mc12_c, ptr %67, align 8, !tbaa !38
-  %68 = getelementptr inbounds nuw i8, ptr %0, i64 464
-  store ptr @avg_qpel8_mc22_c, ptr %68, align 8, !tbaa !38
-  %69 = getelementptr inbounds nuw i8, ptr %0, i64 472
-  store ptr @avg_qpel8_mc32_c, ptr %69, align 8, !tbaa !38
+  store <4 x ptr> <ptr @avg_qpel8_mc02_c, ptr @avg_qpel8_mc12_c, ptr @avg_qpel8_mc22_c, ptr @avg_qpel8_mc32_c>, ptr %i.v, align 8, !tbaa !38
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 480
-  store ptr @avg_qpel8_mc03_c, ptr %i.w, align 8, !tbaa !38
-  %70 = getelementptr inbounds nuw i8, ptr %0, i64 488
-  store ptr @avg_qpel8_mc13_c, ptr %70, align 8, !tbaa !38
-  %71 = getelementptr inbounds nuw i8, ptr %0, i64 496
-  store ptr @avg_qpel8_mc23_c, ptr %71, align 8, !tbaa !38
-  %72 = getelementptr inbounds nuw i8, ptr %0, i64 504
-  store ptr @avg_qpel8_mc33_c, ptr %72, align 8, !tbaa !38
+  store <4 x ptr> <ptr @avg_qpel8_mc03_c, ptr @avg_qpel8_mc13_c, ptr @avg_qpel8_mc23_c, ptr @avg_qpel8_mc33_c>, ptr %i.w, align 8, !tbaa !38
   ret void
 }
 

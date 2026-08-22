@@ -44,11 +44,9 @@ bb.c:                                             ; preds = %bb.a
   br label %bb.e
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  store i32 48, ptr %i.a, align 8, !tbaa !9
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 116
-  store i32 48, ptr %1, align 4, !tbaa !29
+  store <2 x i32> splat (i32 48), ptr %i.a, align 8, !tbaa !30
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 136
-  store i32 9, ptr %i.c, align 8, !tbaa !30
+  store i32 9, ptr %i.c, align 8, !tbaa !31
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %.thread
@@ -61,7 +59,7 @@ define internal i32 @xface_decode_frame(ptr noundef %0, ptr noundef %1, ptr nofr
 bb.a:
   %4 = alloca %struct.BigInt, align 4             ; 14 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !31   ; 13 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !32   ; 13 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #5
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(552) %4, i8 0, i64 552, i1 false)
   %i.c = tail call i32 @ff_get_buffer(ptr noundef %0, ptr noundef %1, i32 noundef 0) #5 ; 2 uses
@@ -70,7 +68,7 @@ bb.a:
 
 .preheader:                                       ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %3, i64 32 ; 3 uses
-  %i.f = load i32, ptr %i.e, align 8, !tbaa !32   ; 2 uses
+  %i.f = load i32, ptr %i.e, align 8, !tbaa !33   ; 2 uses
   %i.g = icmp sgt i32 %i.f, 0
   br i1 %i.g, label %.lr.ph, label %.critedge
 
@@ -82,9 +80,9 @@ bb.b:                                             ; preds = %.lr.ph, %bb.g
   %i.i = phi i32 [ %i.f, %.lr.ph ], [ %i.r, %bb.g ]
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.g ] ; 3 uses
   %.05069 = phi i32 [ 0, %.lr.ph ], [ %.151, %bb.g ] ; 3 uses
-  %i.j = load ptr, ptr %i.h, align 8, !tbaa !34
+  %i.j = load ptr, ptr %i.h, align 8, !tbaa !35
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 %indvars.iv
-  %i.l = load i8, ptr %i.k, align 1, !tbaa !35    ; 3 uses
+  %i.l = load i8, ptr %i.k, align 1, !tbaa !36    ; 3 uses
   %.not = icmp eq i8 %i.l, 0
   br i1 %.not, label %.critedge, label %bb.c
 
@@ -107,7 +105,7 @@ bb.f:                                             ; preds = %bb.d
   call void @ff_big_mul(ptr noundef nonnull %4, i8 noundef zeroext 94) #5
   %i.q = add nsw i8 %i.l, -33
   call void @ff_big_add(ptr noundef nonnull %4, i8 noundef zeroext %i.q) #5
-  %.pre = load i32, ptr %i.e, align 8, !tbaa !32
+  %.pre = load i32, ptr %i.e, align 8, !tbaa !33
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.c, %bb.f
@@ -116,7 +114,7 @@ bb.g:                                             ; preds = %bb.c, %bb.f
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.s = sext i32 %i.r to i64
   %i.t = icmp slt i64 %indvars.iv.next, %i.s
-  br i1 %i.t, label %bb.b, label %.critedge, !llvm.loop !36
+  br i1 %i.t, label %bb.b, label %.critedge, !llvm.loop !37
 
 .critedge:                                        ; preds = %bb.b, %bb.g, %.preheader, %bb.e
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(2304) %i.b, i8 0, i64 2304, i1 false)
@@ -138,7 +136,7 @@ bb.g:                                             ; preds = %bb.c, %bb.f
   %i.ab = getelementptr inbounds nuw i8, ptr %i.b, i64 1568
   call fastcc void @decode_block(ptr noundef %4, ptr noundef nonnull %i.ab, i32 noundef 16, i32 noundef 16, i32 noundef 0)
   call void @ff_xface_generate_face(ptr noundef nonnull %i.b, ptr noundef nonnull %i.b) #5
-  %i.ac = load ptr, ptr %1, align 8, !tbaa !38
+  %i.ac = load ptr, ptr %1, align 8, !tbaa !39
   %i.ad = getelementptr inbounds nuw i8, ptr %1, i64 64
   br label %bb.h
 
@@ -149,7 +147,7 @@ bb.h:                                             ; preds = %.critedge, %bb.k
   %.273 = phi i32 [ 0, %.critedge ], [ %.364, %bb.k ] ; 2 uses
   %.05272 = phi i32 [ 0, %.critedge ], [ %.254, %bb.k ] ; 3 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %i.b, i64 %indvars.iv78
-  %i.af = load i8, ptr %i.ae, align 1, !tbaa !35
+  %i.af = load i8, ptr %i.ae, align 1, !tbaa !36
   %i.ag = add i8 %i.af, %.04874                   ; 2 uses
   %i.ah = icmp eq i32 %.273, 7
   br i1 %i.ah, label %bb.i, label %.thread
@@ -163,12 +161,12 @@ bb.i:                                             ; preds = %bb.h
   %i.ak = add nsw i32 %.05272, 1                  ; 2 uses
   %i.al = sext i32 %.05272 to i64
   %i.am = getelementptr inbounds i8, ptr %.075, i64 %i.al
-  store i8 %i.ag, ptr %i.am, align 1, !tbaa !35
+  store i8 %i.ag, ptr %i.am, align 1, !tbaa !36
   %i.an = icmp eq i32 %i.ak, 6
   br i1 %i.an, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %bb.i
-  %i.ao = load i32, ptr %i.ad, align 8, !tbaa !39
+  %i.ao = load i32, ptr %i.ad, align 8, !tbaa !30
   %i.ap = sext i32 %i.ao to i64
   %i.aq = getelementptr inbounds i8, ptr %.075, i64 %i.ap
   br label %bb.k
@@ -183,8 +181,8 @@ bb.k:                                             ; preds = %.thread, %bb.i, %bb
   br i1 %exitcond.not, label %bb.l, label %bb.h, !llvm.loop !40
 
 bb.l:                                             ; preds = %bb.k
-  store i32 1, ptr %2, align 4, !tbaa !39
-  %i.ar = load i32, ptr %i.e, align 8, !tbaa !32
+  store i32 1, ptr %2, align 4, !tbaa !30
+  %i.ar = load i32, ptr %i.e, align 8, !tbaa !33
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.a, %bb.l
@@ -215,7 +213,7 @@ bb.a:
   %i.c = getelementptr inbounds [6 x i8], ptr @ff_xface_probranges_per_level, i64 %i.b
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #5
   call void @ff_big_div(ptr noundef nonnull %0, i8 noundef zeroext 0, ptr noundef nonnull %i.a) #5
-  %i.d = load i8, ptr %i.a, align 1, !tbaa !35    ; 2 uses
+  %i.d = load i8, ptr %i.a, align 1, !tbaa !36    ; 2 uses
   %i.e = zext i8 %i.d to i32
   br label %bb.b
 
@@ -242,7 +240,7 @@ bb.c:                                             ; preds = %bb.b
 
 pop_integer.exit:                                 ; preds = %bb.c
   call void @ff_big_mul(ptr noundef nonnull %0, i8 noundef zeroext %i.j) #5
-  %i.o = load i8, ptr %i.a, align 1, !tbaa !35
+  %i.o = load i8, ptr %i.a, align 1, !tbaa !36
   %i.p = sub i8 %i.o, %i.g
   call void @ff_big_add(ptr noundef nonnull %0, i8 noundef zeroext %i.p) #5
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #5
@@ -309,7 +307,7 @@ tailrecurse._crit_edge:                           ; preds = %tailrecurse, %bb.a
   %.tr34.lcssa = phi ptr [ %1, %bb.a ], [ %i.j, %tailrecurse ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #5
   call void @ff_big_div(ptr noundef nonnull %0, i8 noundef zeroext 0, ptr noundef nonnull %i.a) #5
-  %i.l = load i8, ptr %i.a, align 1, !tbaa !35    ; 2 uses
+  %i.l = load i8, ptr %i.a, align 1, !tbaa !36    ; 2 uses
   %i.m = zext i8 %i.l to i32
   br label %bb.b
 
@@ -336,7 +334,7 @@ bb.c:                                             ; preds = %bb.b
 
 pop_integer.exit:                                 ; preds = %bb.c
   call void @ff_big_mul(ptr noundef nonnull %0, i8 noundef zeroext %i.r) #5
-  %i.w = load i8, ptr %i.a, align 1, !tbaa !35
+  %i.w = load i8, ptr %i.a, align 1, !tbaa !36
   %i.x = sub i8 %i.w, %i.o
   call void @ff_big_add(ptr noundef nonnull %0, i8 noundef zeroext %i.x) #5
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #5
@@ -345,7 +343,7 @@ pop_integer.exit:                                 ; preds = %bb.c
   br i1 %.not, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %pop_integer.exit
-  store i8 1, ptr %.tr34.lcssa, align 1, !tbaa !35
+  store i8 1, ptr %.tr34.lcssa, align 1, !tbaa !36
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %pop_integer.exit
@@ -355,7 +353,7 @@ bb.e:                                             ; preds = %bb.d, %pop_integer.
 
 bb.f:                                             ; preds = %bb.e
   %i.aa = getelementptr inbounds nuw i8, ptr %.tr34.lcssa, i64 1
-  store i8 1, ptr %i.aa, align 1, !tbaa !35
+  store i8 1, ptr %i.aa, align 1, !tbaa !36
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
@@ -365,7 +363,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
 
 bb.h:                                             ; preds = %bb.g
   %i.ac = getelementptr inbounds nuw i8, ptr %.tr34.lcssa, i64 48
-  store i8 1, ptr %i.ac, align 1, !tbaa !35
+  store i8 1, ptr %i.ac, align 1, !tbaa !36
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g
@@ -375,7 +373,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g
 
 bb.j:                                             ; preds = %bb.i
   %i.ae = getelementptr inbounds nuw i8, ptr %.tr34.lcssa, i64 49
-  store i8 1, ptr %i.ae, align 1, !tbaa !35
+  store i8 1, ptr %i.ae, align 1, !tbaa !36
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.i, %bb.j
@@ -425,19 +423,19 @@ attributes #5 = { nounwind }
 !27 = !{!"p2 _ZTS15AVFrameSideData", !28, i64 0}
 !28 = !{!"any p2 pointer", !12, i64 0}
 !29 = !{!10, !6, i64 116}
-!30 = !{!10, !6, i64 136}
-!31 = !{!10, !12, i64 32}
-!32 = !{!33, !6, i64 32}
-!33 = !{!"AVPacket", !23, i64 0, !15, i64 8, !15, i64 16, !16, i64 24, !6, i64 32, !6, i64 36, !6, i64 40, !25, i64 48, !6, i64 56, !15, i64 64, !15, i64 72, !12, i64 80, !23, i64 88, !17, i64 96}
-!34 = !{!33, !16, i64 24}
-!35 = !{!7, !7, i64 0}
-!36 = distinct !{!36, !37}
-!37 = !{!"llvm.loop.mustprogress"}
-!38 = !{!16, !16, i64 0}
-!39 = !{!6, !6, i64 0}
-!40 = distinct !{!40, !37}
+!30 = !{!6, !6, i64 0}
+!31 = !{!10, !6, i64 136}
+!32 = !{!10, !12, i64 32}
+!33 = !{!34, !6, i64 32}
+!34 = !{!"AVPacket", !23, i64 0, !15, i64 8, !15, i64 16, !16, i64 24, !6, i64 32, !6, i64 36, !6, i64 40, !25, i64 48, !6, i64 56, !15, i64 64, !15, i64 72, !12, i64 80, !23, i64 88, !17, i64 96}
+!35 = !{!34, !16, i64 24}
+!36 = !{!7, !7, i64 0}
+!37 = distinct !{!37, !38}
+!38 = !{!"llvm.loop.mustprogress"}
+!39 = !{!16, !16, i64 0}
+!40 = distinct !{!40, !38}
 !41 = !{!42, !7, i64 1}
 !42 = !{!"", !7, i64 0, !7, i64 1}
 !43 = !{!42, !7, i64 0}
-!44 = distinct !{!44, !37}
+!44 = distinct !{!44, !38}
 end_hunk_0

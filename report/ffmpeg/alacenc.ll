@@ -101,7 +101,7 @@ bb.h:                                             ; preds = %bb.f, %bb.g
   %i.ac = ashr exact i32 %i.ab, 3
   %i.ad = getelementptr inbounds nuw i8, ptr %i.b, i64 36 ; 2 uses
   store i32 %i.ac, ptr %i.ad, align 4, !tbaa !44
-  %i.ae = tail call noalias ptr @av_mallocz(i64 noundef 100) #7 ; 13 uses
+  %i.ae = tail call noalias ptr @av_mallocz(i64 noundef 100) #7 ; 12 uses
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 72
   store ptr %i.ae, ptr %i.af, align 8, !tbaa !45
   %.not63 = icmp eq ptr %i.ae, null
@@ -111,9 +111,7 @@ bb.i:                                             ; preds = %bb.h
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 652
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 80
   store i32 36, ptr %i.ah, align 8, !tbaa !46
-  store i32 603979776, ptr %i.ae, align 1, !tbaa !47
-  %1 = getelementptr inbounds nuw i8, ptr %i.ae, i64 4
-  store i32 1667329121, ptr %1, align 1, !tbaa !47
+  store <2 x i32> <i32 603979776, i32 1667329121>, ptr %i.ae, align 1, !tbaa !47
   %i.ai = load i32, ptr %i.d, align 8, !tbaa !36  ; 2 uses
   %i.aj = tail call i32 @llvm.bswap.i32(i32 %i.ai)
   %i.ak = getelementptr inbounds nuw i8, ptr %i.ae, i64 12

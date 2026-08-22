@@ -22,11 +22,9 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 136
   store i32 11, ptr %i.c, align 8, !tbaa !29
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 112
-  store i32 320, ptr %i.d, align 8, !tbaa !30
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 116
-  store i32 160, ptr %1, align 4, !tbaa !31
+  store <2 x i32> <i32 320, i32 160>, ptr %i.d, align 8, !tbaa !30
   %i.e = tail call ptr @av_frame_alloc() #6       ; 2 uses
-  store ptr %i.e, ptr %i.b, align 8, !tbaa !32
+  store ptr %i.e, ptr %i.b, align 8, !tbaa !31
   %.not = icmp eq ptr %i.e, null
   %. = select i1 %.not, i32 -12, i32 0
   ret i32 %.
@@ -37,7 +35,7 @@ define internal i32 @imx_decode_frame(ptr noundef %0, ptr noundef %1, ptr nofree
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !9    ; 4 uses
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !32   ; 11 uses
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !31   ; 11 uses
   %i.d = tail call i32 @ff_reget_buffer(ptr noundef %0, ptr noundef %i.c, i32 noundef 0) #6 ; 2 uses
   %i.e = icmp slt i32 %i.d, 0
   br i1 %i.e, label %.critedge, label %bb.b
@@ -47,15 +45,15 @@ bb.b:                                             ; preds = %bb.a
   %i.g = tail call i32 @ff_copy_palette(ptr noundef nonnull %i.f, ptr noundef %3, ptr noundef nonnull %0) #6
   %.not = icmp eq i32 %i.g, 0
   %i.h = getelementptr inbounds nuw i8, ptr %i.c, i64 276 ; 2 uses
-  %i.i = load i32, ptr %i.h, align 4, !tbaa !35
+  %i.i = load i32, ptr %i.h, align 4, !tbaa !34
   %i.j = and i32 %i.i, -3
   %masksel = select i1 %.not, i32 0, i32 2
   %.sink = or disjoint i32 %i.j, %masksel
-  store i32 %.sink, ptr %i.h, align 4, !tbaa !35
+  store i32 %.sink, ptr %i.h, align 4, !tbaa !34
   %i.k = getelementptr inbounds nuw i8, ptr %3, i64 24
-  %i.l = load ptr, ptr %i.k, align 8, !tbaa !40   ; 3 uses
+  %i.l = load ptr, ptr %i.k, align 8, !tbaa !39   ; 3 uses
   %i.m = getelementptr inbounds nuw i8, ptr %3, i64 32 ; 2 uses
-  %i.n = load i32, ptr %i.m, align 8, !tbaa !42   ; 3 uses
+  %i.n = load i32, ptr %i.m, align 8, !tbaa !41   ; 3 uses
   %i.o = icmp ne ptr %i.l, null
   %i.p = icmp sgt i32 %i.n, -1
   %or.cond.i = and i1 %i.o, %i.p
@@ -70,7 +68,7 @@ bytestream2_init.exit:                            ; preds = %bb.b
   %i.q = zext nneg i32 %i.n to i64                ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %i.l, i64 %i.q ; 7 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.c, i64 8
-  %i.t = load ptr, ptr %i.s, align 8, !tbaa !43
+  %i.t = load ptr, ptr %i.s, align 8, !tbaa !42
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1024) %i.t, ptr noundef nonnull align 8 dereferenceable(1024) %i.f, i64 1024, i1 false)
   %i.u = ptrtoint ptr %i.r to i64                 ; 7 uses
   %.not198 = icmp eq i32 %i.n, 0
@@ -93,7 +91,7 @@ bb.d:                                             ; preds = %.lr.ph, %.loopexit
 
 bytestream2_get_byte.exit150:                     ; preds = %bb.d
   %i.ab = getelementptr inbounds nuw i8, ptr %.sroa.0.0183, i64 1 ; 8 uses
-  %i.ac = load i8, ptr %.sroa.0.0183, align 1, !tbaa !44
+  %i.ac = load i8, ptr %.sroa.0.0183, align 1, !tbaa !43
   %i.ad = zext i8 %i.ac to i32                    ; 2 uses
   %i.ae = and i32 %i.ad, 63                       ; 6 uses
   %i.af = lshr i32 %i.ad, 6
@@ -113,7 +111,7 @@ bb.e:                                             ; preds = %bytestream2_get_byt
 
 bb.f:                                             ; preds = %bb.e
   %i.ak = getelementptr inbounds nuw i8, ptr %.sroa.0.0183, i64 2
-  %i.al = load i8, ptr %i.ab, align 1, !tbaa !44
+  %i.al = load i8, ptr %i.ab, align 1, !tbaa !43
   %i.am = zext i8 %i.al to i32
   br label %bytestream2_get_byte.exit148
 
@@ -142,7 +140,7 @@ bb.g:                                             ; preds = %bytestream2_get_byt
   %i.as = icmp slt i32 %spec.select135, 160
   %i.at = icmp samesign ugt i32 %.1, 1
   %or.cond6 = select i1 %i.as, i1 %i.at, i1 false
-  br i1 %or.cond6, label %.preheader, label %.loopexit.sink.split, !llvm.loop !45
+  br i1 %or.cond6, label %.preheader, label %.loopexit.sink.split, !llvm.loop !44
 
 bb.h:                                             ; preds = %bytestream2_get_byte.exit150
   %i.au = icmp eq i32 %i.ae, 0
@@ -155,7 +153,7 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.ax, label %bytestream2_get_le16.exit.thread, label %bytestream2_get_le16.exit
 
 bytestream2_get_le16.exit:                        ; preds = %bb.i
-  %i.ay = load i16, ptr %i.ab, align 1, !tbaa !44 ; 2 uses
+  %i.ay = load i16, ptr %i.ab, align 1, !tbaa !43 ; 2 uses
   %i.az = icmp sgt i16 %i.ay, -1
   br i1 %i.az, label %bytestream2_get_le16.exit.bytestream2_get_le16.exit.thread_crit_edge, label %.critedge
 
@@ -175,7 +173,7 @@ bytestream2_get_le16.exit.thread:                 ; preds = %bytestream2_get_le1
 
 bb.j:                                             ; preds = %bytestream2_get_le16.exit.thread
   %i.be = getelementptr inbounds nuw i8, ptr %.sroa.0.9178, i64 1
-  %i.bf = load i8, ptr %.sroa.0.9178, align 1, !tbaa !44
+  %i.bf = load i8, ptr %.sroa.0.9178, align 1, !tbaa !43
   %i.bg = zext i8 %i.bf to i32
   br label %bytestream2_get_byte.exit146
 
@@ -191,7 +189,7 @@ bb.k:                                             ; preds = %.lr.ph205
   %i.bi = icmp sgt i32 %.2204, 1
   %i.bj = icmp samesign ult i64 %indvars.iv201, 32767
   %i.bk = select i1 %i.bi, i1 %i.bj, i1 false
-  br i1 %i.bk, label %.lr.ph205, label %.loopexit.sink.split, !llvm.loop !47
+  br i1 %i.bk, label %.lr.ph205, label %.loopexit.sink.split, !llvm.loop !46
 
 .lr.ph205:                                        ; preds = %bytestream2_get_byte.exit146, %bb.k
   %.2204 = phi i32 [ %i.bh, %bb.k ], [ %.0.i145, %bytestream2_get_byte.exit146 ] ; 2 uses
@@ -199,21 +197,21 @@ bb.k:                                             ; preds = %.lr.ph205
   %.4106202 = phi i32 [ %spec.select136, %bb.k ], [ %.0102184, %bytestream2_get_byte.exit146 ] ; 3 uses
   %indvars.iv201 = phi i64 [ %indvars.iv.next, %bb.k ], [ %.0.i151179, %bytestream2_get_byte.exit146 ] ; 3 uses
   %i.bl = getelementptr inbounds nuw i8, ptr %i.x, i64 %indvars.iv201
-  %i.bm = load i8, ptr %i.bl, align 1, !tbaa !44
-  %i.bn = load ptr, ptr %i.c, align 8, !tbaa !43
-  %i.bo = load i32, ptr %i.v, align 8, !tbaa !48
+  %i.bm = load i8, ptr %i.bl, align 1, !tbaa !43
+  %i.bn = load ptr, ptr %i.c, align 8, !tbaa !42
+  %i.bo = load i32, ptr %i.v, align 8, !tbaa !30
   %i.bp = mul nsw i32 %i.bo, %.4101203
   %i.bq = add nsw i32 %i.bp, %.4106202
   %i.br = sext i32 %i.bq to i64
   %i.bs = getelementptr inbounds i8, ptr %i.bn, i64 %i.br
-  store i8 %i.bm, ptr %i.bs, align 1, !tbaa !44
+  store i8 %i.bm, ptr %i.bs, align 1, !tbaa !43
   %i.bt = add nsw i32 %.4106202, 1
   %i.bu = icmp sgt i32 %.4106202, 318             ; 2 uses
   %spec.select136 = select i1 %i.bu, i32 0, i32 %i.bt ; 3 uses
   %i.bv = zext i1 %i.bu to i32
   %spec.select137 = add nsw i32 %.4101203, %i.bv  ; 3 uses
   %i.bw = icmp sgt i32 %spec.select137, 159
-  br i1 %i.bw, label %..loopexit.sink.split.loopexit199_crit_edge, label %bb.k, !llvm.loop !47
+  br i1 %i.bw, label %..loopexit.sink.split.loopexit199_crit_edge, label %bb.k, !llvm.loop !46
 
 .preheader180:                                    ; preds = %bb.h, %bb.n
   %.sroa.0.2 = phi ptr [ %.sroa.0.5, %bb.n ], [ %i.ab, %bb.h ] ; 3 uses
@@ -227,29 +225,29 @@ bb.k:                                             ; preds = %.lr.ph205
 
 bb.l:                                             ; preds = %.preheader180
   %i.ca = getelementptr inbounds nuw i8, ptr %.sroa.0.2, i64 1
-  %i.cb = load i8, ptr %.sroa.0.2, align 1, !tbaa !44
+  %i.cb = load i8, ptr %.sroa.0.2, align 1, !tbaa !43
   br label %bytestream2_get_byte.exit144
 
 bytestream2_get_byte.exit144:                     ; preds = %.preheader180, %bb.l
   %.sroa.0.5 = phi ptr [ %i.ca, %bb.l ], [ %i.r, %.preheader180 ] ; 2 uses
   %.0.i143 = phi i8 [ %i.cb, %bb.l ], [ 0, %.preheader180 ] ; 2 uses
-  %i.cc = load ptr, ptr %i.c, align 8, !tbaa !43
-  %i.cd = load i32, ptr %i.v, align 8, !tbaa !48
+  %i.cc = load ptr, ptr %i.c, align 8, !tbaa !42
+  %i.cd = load i32, ptr %i.v, align 8, !tbaa !30
   %i.ce = mul nsw i32 %i.cd, %.8
   %i.cf = add nsw i32 %i.ce, %.8110
   %i.cg = sext i32 %i.cf to i64
   %i.ch = getelementptr inbounds i8, ptr %i.cc, i64 %i.cg
-  store i8 %.0.i143, ptr %i.ch, align 1, !tbaa !44
-  %i.ci = load i32, ptr %i.w, align 8, !tbaa !49  ; 3 uses
+  store i8 %.0.i143, ptr %i.ch, align 1, !tbaa !43
+  %i.ci = load i32, ptr %i.w, align 8, !tbaa !47  ; 3 uses
   %i.cj = icmp slt i32 %i.ci, 32768
   br i1 %i.cj, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %bytestream2_get_byte.exit144
   %i.ck = add nsw i32 %i.ci, 1
-  store i32 %i.ck, ptr %i.w, align 8, !tbaa !49
+  store i32 %i.ck, ptr %i.w, align 8, !tbaa !47
   %i.cl = sext i32 %i.ci to i64
   %i.cm = getelementptr inbounds i8, ptr %i.x, i64 %i.cl
-  store i8 %.0.i143, ptr %i.cm, align 1, !tbaa !44
+  store i8 %.0.i143, ptr %i.cm, align 1, !tbaa !43
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %bytestream2_get_byte.exit144
@@ -262,7 +260,7 @@ bb.n:                                             ; preds = %bb.m, %bytestream2_
   %i.cr = icmp slt i32 %spec.select139, 160
   %i.cs = icmp sgt i32 %.3, 1
   %or.cond9 = select i1 %i.cr, i1 %i.cs, i1 false
-  br i1 %or.cond9, label %.preheader180, label %.loopexit, !llvm.loop !50
+  br i1 %or.cond9, label %.preheader180, label %.loopexit, !llvm.loop !48
 
 bb.o:                                             ; preds = %bytestream2_get_byte.exit150
   %i.ct = ptrtoint ptr %i.ab to i64
@@ -272,7 +270,7 @@ bb.o:                                             ; preds = %bytestream2_get_byt
 
 bb.p:                                             ; preds = %bb.o
   %i.cw = getelementptr inbounds nuw i8, ptr %.sroa.0.0183, i64 2
-  %i.cx = load i8, ptr %i.ab, align 1, !tbaa !44
+  %i.cx = load i8, ptr %i.ab, align 1, !tbaa !43
   br label %bytestream2_get_byte.exit
 
 bytestream2_get_byte.exit:                        ; preds = %bb.o, %bb.p
@@ -285,13 +283,13 @@ bytestream2_get_byte.exit:                        ; preds = %bb.o, %bb.p
   %.10112 = phi i32 [ %spec.select140, %.preheader181 ], [ %.0102184, %bytestream2_get_byte.exit ] ; 3 uses
   %.10 = phi i32 [ %spec.select141, %.preheader181 ], [ %.097185, %bytestream2_get_byte.exit ] ; 2 uses
   %.4 = phi i32 [ %i.df, %.preheader181 ], [ %i.ae, %bytestream2_get_byte.exit ] ; 2 uses
-  %i.cy = load ptr, ptr %i.c, align 8, !tbaa !43
-  %i.cz = load i32, ptr %i.v, align 8, !tbaa !48
+  %i.cy = load ptr, ptr %i.c, align 8, !tbaa !42
+  %i.cz = load i32, ptr %i.v, align 8, !tbaa !30
   %i.da = mul nsw i32 %i.cz, %.10
   %i.db = add nsw i32 %i.da, %.10112
   %i.dc = sext i32 %i.db to i64
   %i.dd = getelementptr inbounds i8, ptr %i.cy, i64 %i.dc
-  store i8 %.0.i, ptr %i.dd, align 1, !tbaa !44
+  store i8 %.0.i, ptr %i.dd, align 1, !tbaa !43
   %i.de = add nsw i32 %.10112, 1
   %i.df = add nsw i32 %.4, -1
   %i.dg = icmp sgt i32 %.10112, 318               ; 2 uses
@@ -301,21 +299,21 @@ bytestream2_get_byte.exit:                        ; preds = %bb.o, %bb.p
   %i.di = icmp slt i32 %spec.select141, 160
   %i.dj = icmp samesign ugt i32 %.4, 1
   %or.cond12 = select i1 %i.di, i1 %i.dj, i1 false
-  br i1 %or.cond12, label %.preheader181, label %.loopexit, !llvm.loop !51
+  br i1 %or.cond12, label %.preheader181, label %.loopexit, !llvm.loop !49
 
 default.unreachable194:                           ; preds = %bytestream2_get_byte.exit150
   unreachable
 
 ..loopexit.sink.split.loopexit199_crit_edge:      ; preds = %.lr.ph205
-  br label %.loopexit.sink.split, !llvm.loop !47
+  br label %.loopexit.sink.split, !llvm.loop !46
 
 .loopexit.sink.split:                             ; preds = %bb.k, %.preheader, %bytestream2_get_byte.exit146, %..loopexit.sink.split.loopexit199_crit_edge, %bb.g, %bb.d
   %.sroa.0.3.ph = phi ptr [ %.sroa.0.6, %bytestream2_get_byte.exit146 ], [ %i.r, %bb.d ], [ %.sroa.0.1, %bb.g ], [ %.sroa.0.1, %.preheader ], [ %.sroa.0.6, %..loopexit.sink.split.loopexit199_crit_edge ], [ %.sroa.0.6, %bb.k ]
   %.13115.ph = phi i32 [ %.0102184, %bytestream2_get_byte.exit146 ], [ %.0102184, %bb.d ], [ %.0102184, %bb.g ], [ %spec.select, %.preheader ], [ %spec.select136, %..loopexit.sink.split.loopexit199_crit_edge ], [ %spec.select136, %bb.k ]
   %.13.ph = phi i32 [ %.097185, %bytestream2_get_byte.exit146 ], [ %.097185, %bb.d ], [ %.097185, %bb.g ], [ %spec.select135, %.preheader ], [ 160, %..loopexit.sink.split.loopexit199_crit_edge ], [ %spec.select137, %bb.k ]
-  %i.dk = load i32, ptr %i.y, align 4, !tbaa !35
+  %i.dk = load i32, ptr %i.y, align 4, !tbaa !34
   %i.dl = and i32 %i.dk, -3
-  store i32 %i.dl, ptr %i.y, align 4, !tbaa !35
+  store i32 %i.dl, ptr %i.y, align 4, !tbaa !34
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.preheader181, %bb.n, %.loopexit.sink.split, %bytestream2_get_byte.exit
@@ -330,23 +328,23 @@ default.unreachable194:                           ; preds = %bytestream2_get_byt
   %or.cond = select i1 %i.dp, i1 %i.dq, i1 false
   %i.dr = icmp slt i32 %.13, 160
   %i.ds = select i1 %or.cond, i1 %i.dr, i1 false
-  br i1 %i.ds, label %bb.d, label %._crit_edge, !llvm.loop !52
+  br i1 %i.ds, label %bb.d, label %._crit_edge, !llvm.loop !50
 
 ._crit_edge:                                      ; preds = %.loopexit, %bytestream2_init.exit
   %i.dt = getelementptr inbounds nuw i8, ptr %i.c, i64 276
-  %i.du = load i32, ptr %i.dt, align 4, !tbaa !35
+  %i.du = load i32, ptr %i.dt, align 4, !tbaa !34
   %i.dv = and i32 %i.du, 2
   %.not134 = icmp eq i32 %i.dv, 0
   %i.dw = select i1 %.not134, i32 2, i32 1
   %i.dx = getelementptr inbounds nuw i8, ptr %i.c, i64 120
-  store i32 %i.dw, ptr %i.dx, align 8, !tbaa !53
+  store i32 %i.dw, ptr %i.dx, align 8, !tbaa !51
   %i.dy = tail call i32 @av_frame_ref(ptr noundef %1, ptr noundef %i.c) #6 ; 2 uses
   %i.dz = icmp slt i32 %i.dy, 0
   br i1 %i.dz, label %.critedge, label %bb.q
 
 bb.q:                                             ; preds = %._crit_edge
-  store i32 1, ptr %2, align 4, !tbaa !48
-  %i.ea = load i32, ptr %i.m, align 8, !tbaa !42
+  store i32 1, ptr %2, align 4, !tbaa !30
+  %i.ea = load i32, ptr %i.m, align 8, !tbaa !41
   br label %.critedge
 
 .critedge:                                        ; preds = %bytestream2_get_le16.exit, %._crit_edge, %bb.a, %bb.q
@@ -368,7 +366,7 @@ define internal void @imx_decode_flush(ptr nofree noundef readonly captures(none
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !9    ; 2 uses
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !32
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !31
   tail call void @av_frame_unref(ptr noundef %i.c) #6
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(33796) %i.d, i8 0, i64 33796, i1 false)
@@ -441,28 +439,26 @@ attributes #7 = { noreturn nounwind }
 !27 = !{!"p2 _ZTS15AVFrameSideData", !28, i64 0}
 !28 = !{!"any p2 pointer", !12, i64 0}
 !29 = !{!10, !6, i64 136}
-!30 = !{!10, !6, i64 112}
-!31 = !{!10, !6, i64 116}
-!32 = !{!33, !34, i64 0}
-!33 = !{!"SimbiosisIMXContext", !34, i64 0, !7, i64 8, !7, i64 1032, !6, i64 33800}
-!34 = !{!"p1 _ZTS7AVFrame", !12, i64 0}
-!35 = !{!36, !6, i64 276}
-!36 = !{!"AVFrame", !7, i64 0, !7, i64 64, !37, i64 96, !6, i64 104, !6, i64 108, !6, i64 112, !6, i64 116, !6, i64 120, !17, i64 124, !15, i64 136, !15, i64 144, !17, i64 152, !6, i64 160, !12, i64 168, !6, i64 176, !6, i64 180, !7, i64 184, !38, i64 248, !6, i64 256, !27, i64 264, !6, i64 272, !6, i64 276, !6, i64 280, !6, i64 284, !6, i64 288, !6, i64 292, !6, i64 296, !15, i64 304, !39, i64 312, !6, i64 320, !23, i64 328, !23, i64 336, !15, i64 344, !15, i64 352, !15, i64 360, !15, i64 368, !12, i64 376, !20, i64 384, !15, i64 408, !6, i64 416}
-!37 = !{!"p2 omnipotent char", !28, i64 0}
-!38 = !{!"p2 _ZTS11AVBufferRef", !28, i64 0}
-!39 = !{!"p1 _ZTS12AVDictionary", !12, i64 0}
-!40 = !{!41, !16, i64 24}
-!41 = !{!"AVPacket", !23, i64 0, !15, i64 8, !15, i64 16, !16, i64 24, !6, i64 32, !6, i64 36, !6, i64 40, !25, i64 48, !6, i64 56, !15, i64 64, !15, i64 72, !12, i64 80, !23, i64 88, !17, i64 96}
-!42 = !{!41, !6, i64 32}
-!43 = !{!16, !16, i64 0}
-!44 = !{!7, !7, i64 0}
-!45 = distinct !{!45, !46}
-!46 = !{!"llvm.loop.mustprogress"}
-!47 = distinct !{!47, !46}
-!48 = !{!6, !6, i64 0}
-!49 = !{!33, !6, i64 33800}
-!50 = distinct !{!50, !46}
-!51 = distinct !{!51, !46}
-!52 = distinct !{!52, !46}
-!53 = !{!36, !6, i64 120}
+!30 = !{!6, !6, i64 0}
+!31 = !{!32, !33, i64 0}
+!32 = !{!"SimbiosisIMXContext", !33, i64 0, !7, i64 8, !7, i64 1032, !6, i64 33800}
+!33 = !{!"p1 _ZTS7AVFrame", !12, i64 0}
+!34 = !{!35, !6, i64 276}
+!35 = !{!"AVFrame", !7, i64 0, !7, i64 64, !36, i64 96, !6, i64 104, !6, i64 108, !6, i64 112, !6, i64 116, !6, i64 120, !17, i64 124, !15, i64 136, !15, i64 144, !17, i64 152, !6, i64 160, !12, i64 168, !6, i64 176, !6, i64 180, !7, i64 184, !37, i64 248, !6, i64 256, !27, i64 264, !6, i64 272, !6, i64 276, !6, i64 280, !6, i64 284, !6, i64 288, !6, i64 292, !6, i64 296, !15, i64 304, !38, i64 312, !6, i64 320, !23, i64 328, !23, i64 336, !15, i64 344, !15, i64 352, !15, i64 360, !15, i64 368, !12, i64 376, !20, i64 384, !15, i64 408, !6, i64 416}
+!36 = !{!"p2 omnipotent char", !28, i64 0}
+!37 = !{!"p2 _ZTS11AVBufferRef", !28, i64 0}
+!38 = !{!"p1 _ZTS12AVDictionary", !12, i64 0}
+!39 = !{!40, !16, i64 24}
+!40 = !{!"AVPacket", !23, i64 0, !15, i64 8, !15, i64 16, !16, i64 24, !6, i64 32, !6, i64 36, !6, i64 40, !25, i64 48, !6, i64 56, !15, i64 64, !15, i64 72, !12, i64 80, !23, i64 88, !17, i64 96}
+!41 = !{!40, !6, i64 32}
+!42 = !{!16, !16, i64 0}
+!43 = !{!7, !7, i64 0}
+!44 = distinct !{!44, !45}
+!45 = !{!"llvm.loop.mustprogress"}
+!46 = distinct !{!46, !45}
+!47 = !{!32, !6, i64 33800}
+!48 = distinct !{!48, !45}
+!49 = distinct !{!49, !45}
+!50 = distinct !{!50, !45}
+!51 = !{!35, !6, i64 120}
 end_hunk_0

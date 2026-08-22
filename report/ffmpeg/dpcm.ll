@@ -56,7 +56,7 @@ target triple = "x86_64-pc-linux-gnu"
 define internal range(i32 -22, 1) i32 @dpcm_decode_init(ptr noundef %0) #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !9    ; 11 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !9    ; 10 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 356
   %i.d = load i32, ptr %i.c, align 4, !tbaa !29
   %i.e = add i32 %i.d, -3
@@ -69,9 +69,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 512 ; 3 uses
-  %1 = getelementptr inbounds nuw i8, ptr %i.b, i64 516 ; 3 uses
-  store i32 0, ptr %1, align 4, !tbaa !30
-  store i32 0, ptr %i.f, align 8, !tbaa !30
+  store <2 x i32> zeroinitializer, ptr %i.f, align 8, !tbaa !30
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !31
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 20 ; 2 uses
@@ -142,15 +140,13 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.d
   %i.ag = getelementptr inbounds nuw i8, ptr %i.b, i64 528
   store ptr @sol_table_old, ptr %i.ag, align 8, !tbaa !44
-  store i32 128, ptr %1, align 4, !tbaa !30
-  store i32 128, ptr %i.f, align 8, !tbaa !30
+  store <2 x i32> splat (i32 128), ptr %i.f, align 8, !tbaa !30
   br label %.loopexit
 
 bb.f:                                             ; preds = %bb.d
   %i.ah = getelementptr inbounds nuw i8, ptr %i.b, i64 528
   store ptr @sol_table_new, ptr %i.ah, align 8, !tbaa !44
-  store i32 128, ptr %1, align 4, !tbaa !30
-  store i32 128, ptr %i.f, align 8, !tbaa !30
+  store <2 x i32> splat (i32 128), ptr %i.f, align 8, !tbaa !30
   br label %.loopexit
 
 bb.g:                                             ; preds = %bb.d
@@ -553,11 +549,9 @@ bb.ai:                                            ; preds = %bb.j, %.loopexit, %
 define internal void @dpcm_flush(ptr nofree noundef readonly captures(none) %0) #2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !9    ; 2 uses
-  %1 = getelementptr inbounds nuw i8, ptr %i.b, i64 512
-  %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 516
-  store i32 0, ptr %i.c, align 4, !tbaa !30
-  store i32 0, ptr %1, align 8, !tbaa !30
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !9
+  %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 512
+  store <2 x i32> zeroinitializer, ptr %i.c, align 8, !tbaa !30
   ret void
 }
 
