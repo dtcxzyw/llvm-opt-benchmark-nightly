@@ -204,12 +204,12 @@ bb.a:
 .noexc:                                           ; preds = %bb.a
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 16 ; 4 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(160) %i.n, i8 0, i64 160, i1 false), !noalias !616
-  store ptr %i.n, ptr %i.m, align 8, !tbaa !22, !noalias !616
+  store ptr %i.n, ptr %i.m, align 16, !tbaa !22, !noalias !616
   %i.o = getelementptr inbounds nuw i8, ptr %i.m, i64 8 ; 2 uses
   store i64 0, ptr %i.o, align 8, !tbaa !26, !noalias !616
   %i.p = getelementptr inbounds nuw i8, ptr %i.m, i64 32 ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.m, i64 80 ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.p, i8 0, i64 48, i1 false), !noalias !616
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(48) %i.p, i8 0, i64 48, i1 false), !noalias !616
   call void @_ZN5vcpkg18PlatformExpression4ExprC1Ev(ptr noundef nonnull align 8 dereferenceable(8) %i.q) #22, !noalias !616
   %i.r = getelementptr inbounds nuw i8, ptr %i.m, i64 88
   invoke void @_ZN5vcpkg28ParsedSpdxLicenseDeclarationC1Ev(ptr noundef nonnull align 8 dereferenceable(64) %i.r)
@@ -222,12 +222,12 @@ bb.b:                                             ; preds = %.noexc
   call void @_ZN5vcpkg18PlatformExpression4ExprD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %i.q) #22, !noalias !616
   call void @_ZNSt6vectorIN5vcpkg10DependencyESaIS1_EED2Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %i.t) #22, !noalias !616
   call void @_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %i.p) #22, !noalias !616
-  %i.u = load ptr, ptr %i.m, align 8, !tbaa !28, !noalias !616 ; 2 uses
+  %i.u = load ptr, ptr %i.m, align 16, !tbaa !28, !noalias !616 ; 2 uses
   %i.v = icmp eq ptr %i.u, %i.n
   br i1 %i.v, label %.body.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i: ; preds = %bb.b
-  %i.w = load i64, ptr %i.n, align 8, !tbaa !25, !noalias !616
+  %i.w = load i64, ptr %i.n, align 16, !tbaa !25, !noalias !616
   %i.x = add i64 %i.w, 1
   call void @_ZdlPvm(ptr noundef %i.u, i64 noundef %i.x) #23, !noalias !616
   br label %.body.i
@@ -442,12 +442,12 @@ _ZNSt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS1_EED2Ev.exit: ;
 .noexc311:                                        ; preds = %_ZNSt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS1_EED2Ev.exit
   %i.ci = getelementptr inbounds nuw i8, ptr %i.ch, i64 16 ; 4 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(160) %i.ci, i8 0, i64 160, i1 false), !noalias !640
-  store ptr %i.ci, ptr %i.ch, align 8, !tbaa !22, !noalias !640
+  store ptr %i.ci, ptr %i.ch, align 16, !tbaa !22, !noalias !640
   %i.cj = getelementptr inbounds nuw i8, ptr %i.ch, i64 8 ; 2 uses
   store i64 0, ptr %i.cj, align 8, !tbaa !26, !noalias !640
   %i.ck = getelementptr inbounds nuw i8, ptr %i.ch, i64 32 ; 2 uses
   %i.cl = getelementptr inbounds nuw i8, ptr %i.ch, i64 80 ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.ck, i8 0, i64 48, i1 false), !noalias !640
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(48) %i.ck, i8 0, i64 48, i1 false), !noalias !640
   call void @_ZN5vcpkg18PlatformExpression4ExprC1Ev(ptr noundef nonnull align 8 dereferenceable(8) %i.cl) #22, !noalias !640
   %i.cm = getelementptr inbounds nuw i8, ptr %i.ch, i64 88
   invoke void @_ZN5vcpkg28ParsedSpdxLicenseDeclarationC1Ev(ptr noundef nonnull align 8 dereferenceable(64) %i.cm)
@@ -460,12 +460,12 @@ bb.i:                                             ; preds = %.noexc311
   call void @_ZN5vcpkg18PlatformExpression4ExprD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %i.cl) #22, !noalias !640
   call void @_ZNSt6vectorIN5vcpkg10DependencyESaIS1_EED2Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %i.co) #22, !noalias !640
   call void @_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %i.ck) #22, !noalias !640
-  %i.cp = load ptr, ptr %i.ch, align 8, !tbaa !28, !noalias !640 ; 2 uses
+  %i.cp = load ptr, ptr %i.ch, align 16, !tbaa !28, !noalias !640 ; 2 uses
   %i.cq = icmp eq ptr %i.cp, %i.ci
   br i1 %i.cq, label %.body.i309, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i308
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i308: ; preds = %bb.i
-  %i.cr = load i64, ptr %i.ci, align 8, !tbaa !25, !noalias !640
+  %i.cr = load i64, ptr %i.ci, align 16, !tbaa !25, !noalias !640
   %i.cs = add i64 %i.cr, 1
   call void @_ZdlPvm(ptr noundef %i.cp, i64 noundef %i.cs) #23, !noalias !640
   br label %.body.i309
@@ -680,12 +680,12 @@ _ZNSt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS1_EED2Ev.exit336
 .noexc340:                                        ; preds = %_ZNSt10unique_ptrIN5vcpkg16FeatureParagraphESt14default_deleteIS1_EED2Ev.exit336
   %i.fd = getelementptr inbounds nuw i8, ptr %i.fc, i64 16 ; 4 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(160) %i.fd, i8 0, i64 160, i1 false), !noalias !655
-  store ptr %i.fd, ptr %i.fc, align 8, !tbaa !22, !noalias !655
+  store ptr %i.fd, ptr %i.fc, align 16, !tbaa !22, !noalias !655
   %i.fe = getelementptr inbounds nuw i8, ptr %i.fc, i64 8 ; 2 uses
   store i64 0, ptr %i.fe, align 8, !tbaa !26, !noalias !655
   %i.ff = getelementptr inbounds nuw i8, ptr %i.fc, i64 32 ; 2 uses
   %i.fg = getelementptr inbounds nuw i8, ptr %i.fc, i64 80 ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.ff, i8 0, i64 48, i1 false), !noalias !655
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(48) %i.ff, i8 0, i64 48, i1 false), !noalias !655
   call void @_ZN5vcpkg18PlatformExpression4ExprC1Ev(ptr noundef nonnull align 8 dereferenceable(8) %i.fg) #22, !noalias !655
   %i.fh = getelementptr inbounds nuw i8, ptr %i.fc, i64 88
   invoke void @_ZN5vcpkg28ParsedSpdxLicenseDeclarationC1Ev(ptr noundef nonnull align 8 dereferenceable(64) %i.fh)
@@ -698,12 +698,12 @@ bb.p:                                             ; preds = %.noexc340
   call void @_ZN5vcpkg18PlatformExpression4ExprD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %i.fg) #22, !noalias !655
   call void @_ZNSt6vectorIN5vcpkg10DependencyESaIS1_EED2Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %i.fj) #22, !noalias !655
   call void @_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %i.ff) #22, !noalias !655
-  %i.fk = load ptr, ptr %i.fc, align 8, !tbaa !28, !noalias !655 ; 2 uses
+  %i.fk = load ptr, ptr %i.fc, align 16, !tbaa !28, !noalias !655 ; 2 uses
   %i.fl = icmp eq ptr %i.fk, %i.fd
   br i1 %i.fl, label %.body.i338, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i337
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i337: ; preds = %bb.p
-  %i.fm = load i64, ptr %i.fd, align 8, !tbaa !25, !noalias !655
+  %i.fm = load i64, ptr %i.fd, align 16, !tbaa !25, !noalias !655
   %i.fn = add i64 %i.fm, 1
   call void @_ZdlPvm(ptr noundef %i.fk, i64 noundef %i.fn) #23, !noalias !655
   br label %.body.i338
@@ -1106,12 +1106,12 @@ _ZN5vcpkg7VersionD2Ev.exit:                       ; preds = %_ZNSt7__cxx1112basi
 .noexc230:                                        ; preds = %_ZN5vcpkg7VersionD2Ev.exit
   %i.bd = getelementptr inbounds nuw i8, ptr %i.bc, i64 16 ; 4 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(160) %i.bd, i8 0, i64 160, i1 false), !noalias !1169
-  store ptr %i.bd, ptr %i.bc, align 8, !tbaa !22, !noalias !1169
+  store ptr %i.bd, ptr %i.bc, align 16, !tbaa !22, !noalias !1169
   %i.be = getelementptr inbounds nuw i8, ptr %i.bc, i64 8 ; 2 uses
   store i64 0, ptr %i.be, align 8, !tbaa !26, !noalias !1169
   %i.bf = getelementptr inbounds nuw i8, ptr %i.bc, i64 32 ; 2 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %i.bc, i64 80 ; 3 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.bf, i8 0, i64 48, i1 false), !noalias !1169
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(48) %i.bf, i8 0, i64 48, i1 false), !noalias !1169
   call void @_ZN5vcpkg18PlatformExpression4ExprC1Ev(ptr noundef nonnull align 8 dereferenceable(8) %i.bg) #22, !noalias !1169
   %i.bh = getelementptr inbounds nuw i8, ptr %i.bc, i64 88
   invoke void @_ZN5vcpkg28ParsedSpdxLicenseDeclarationC1Ev(ptr noundef nonnull align 8 dereferenceable(64) %i.bh)
@@ -1124,12 +1124,12 @@ bb.i:                                             ; preds = %.noexc230
   call void @_ZN5vcpkg18PlatformExpression4ExprD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %i.bg) #22, !noalias !1169
   call void @_ZNSt6vectorIN5vcpkg10DependencyESaIS1_EED2Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %i.bj) #22, !noalias !1169
   call void @_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %i.bf) #22, !noalias !1169
-  %i.bk = load ptr, ptr %i.bc, align 8, !tbaa !28, !noalias !1169 ; 2 uses
+  %i.bk = load ptr, ptr %i.bc, align 16, !tbaa !28, !noalias !1169 ; 2 uses
   %i.bl = icmp eq ptr %i.bk, %i.bd
   br i1 %i.bl, label %.body.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i: ; preds = %bb.i
-  %i.bm = load i64, ptr %i.bd, align 8, !tbaa !25, !noalias !1169
+  %i.bm = load i64, ptr %i.bd, align 16, !tbaa !25, !noalias !1169
   %i.bn = add i64 %i.bm, 1
   call void @_ZdlPvm(ptr noundef %i.bk, i64 noundef %i.bn) #23, !noalias !1169
   br label %.body.i
@@ -1398,12 +1398,12 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit248: ; preds = %_Z
 .noexc252:                                        ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit248
   %i.eo = getelementptr inbounds nuw i8, ptr %i.en, i64 16 ; 4 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(160) %i.eo, i8 0, i64 160, i1 false), !noalias !1184
-  store ptr %i.eo, ptr %i.en, align 8, !tbaa !22, !noalias !1184
+  store ptr %i.eo, ptr %i.en, align 16, !tbaa !22, !noalias !1184
   %i.ep = getelementptr inbounds nuw i8, ptr %i.en, i64 8 ; 2 uses
   store i64 0, ptr %i.ep, align 8, !tbaa !26, !noalias !1184
   %i.eq = getelementptr inbounds nuw i8, ptr %i.en, i64 32 ; 2 uses
   %i.er = getelementptr inbounds nuw i8, ptr %i.en, i64 80 ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.eq, i8 0, i64 48, i1 false), !noalias !1184
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(48) %i.eq, i8 0, i64 48, i1 false), !noalias !1184
   call void @_ZN5vcpkg18PlatformExpression4ExprC1Ev(ptr noundef nonnull align 8 dereferenceable(8) %i.er) #22, !noalias !1184
   %i.es = getelementptr inbounds nuw i8, ptr %i.en, i64 88
   invoke void @_ZN5vcpkg28ParsedSpdxLicenseDeclarationC1Ev(ptr noundef nonnull align 8 dereferenceable(64) %i.es)
@@ -1416,12 +1416,12 @@ bb.v:                                             ; preds = %.noexc252
   call void @_ZN5vcpkg18PlatformExpression4ExprD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %i.er) #22, !noalias !1184
   call void @_ZNSt6vectorIN5vcpkg10DependencyESaIS1_EED2Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %i.eu) #22, !noalias !1184
   call void @_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %i.eq) #22, !noalias !1184
-  %i.ev = load ptr, ptr %i.en, align 8, !tbaa !28, !noalias !1184 ; 2 uses
+  %i.ev = load ptr, ptr %i.en, align 16, !tbaa !28, !noalias !1184 ; 2 uses
   %i.ew = icmp eq ptr %i.ev, %i.eo
   br i1 %i.ew, label %.body.i250, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i249
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i249: ; preds = %bb.v
-  %i.ex = load i64, ptr %i.eo, align 8, !tbaa !25, !noalias !1184
+  %i.ex = load i64, ptr %i.eo, align 16, !tbaa !25, !noalias !1184
   %i.ey = add i64 %i.ex, 1
   call void @_ZdlPvm(ptr noundef %i.ev, i64 noundef %i.ey) #23, !noalias !1184
   br label %.body.i250
@@ -1824,12 +1824,12 @@ _ZN5vcpkg7VersionD2Ev.exit:                       ; preds = %_ZNSt7__cxx1112basi
 .noexc137:                                        ; preds = %_ZN5vcpkg7VersionD2Ev.exit
   %i.bl = getelementptr inbounds nuw i8, ptr %i.bk, i64 16 ; 4 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(160) %i.bl, i8 0, i64 160, i1 false), !noalias !1217
-  store ptr %i.bl, ptr %i.bk, align 8, !tbaa !22, !noalias !1217
+  store ptr %i.bl, ptr %i.bk, align 16, !tbaa !22, !noalias !1217
   %i.bm = getelementptr inbounds nuw i8, ptr %i.bk, i64 8 ; 2 uses
   store i64 0, ptr %i.bm, align 8, !tbaa !26, !noalias !1217
   %i.bn = getelementptr inbounds nuw i8, ptr %i.bk, i64 32 ; 2 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bk, i64 80 ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.bn, i8 0, i64 48, i1 false), !noalias !1217
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(48) %i.bn, i8 0, i64 48, i1 false), !noalias !1217
   call void @_ZN5vcpkg18PlatformExpression4ExprC1Ev(ptr noundef nonnull align 8 dereferenceable(8) %i.bo) #22, !noalias !1217
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bk, i64 88
   invoke void @_ZN5vcpkg28ParsedSpdxLicenseDeclarationC1Ev(ptr noundef nonnull align 8 dereferenceable(64) %i.bp)
@@ -1842,12 +1842,12 @@ bb.i:                                             ; preds = %.noexc137
   call void @_ZN5vcpkg18PlatformExpression4ExprD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %i.bo) #22, !noalias !1217
   call void @_ZNSt6vectorIN5vcpkg10DependencyESaIS1_EED2Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %i.br) #22, !noalias !1217
   call void @_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %i.bn) #22, !noalias !1217
-  %i.bs = load ptr, ptr %i.bk, align 8, !tbaa !28, !noalias !1217 ; 2 uses
+  %i.bs = load ptr, ptr %i.bk, align 16, !tbaa !28, !noalias !1217 ; 2 uses
   %i.bt = icmp eq ptr %i.bs, %i.bl
   br i1 %i.bt, label %.body.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i: ; preds = %bb.i
-  %i.bu = load i64, ptr %i.bl, align 8, !tbaa !25, !noalias !1217
+  %i.bu = load i64, ptr %i.bl, align 16, !tbaa !25, !noalias !1217
   %i.bv = add i64 %i.bu, 1
   call void @_ZdlPvm(ptr noundef %i.bs, i64 noundef %i.bv) #23, !noalias !1217
   br label %.body.i
@@ -2250,12 +2250,12 @@ _ZN5vcpkg7VersionD2Ev.exit:                       ; preds = %_ZNSt7__cxx1112basi
 .noexc137:                                        ; preds = %_ZN5vcpkg7VersionD2Ev.exit
   %i.bl = getelementptr inbounds nuw i8, ptr %i.bk, i64 16 ; 4 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(160) %i.bl, i8 0, i64 160, i1 false), !noalias !1256
-  store ptr %i.bl, ptr %i.bk, align 8, !tbaa !22, !noalias !1256
+  store ptr %i.bl, ptr %i.bk, align 16, !tbaa !22, !noalias !1256
   %i.bm = getelementptr inbounds nuw i8, ptr %i.bk, i64 8 ; 2 uses
   store i64 0, ptr %i.bm, align 8, !tbaa !26, !noalias !1256
   %i.bn = getelementptr inbounds nuw i8, ptr %i.bk, i64 32 ; 2 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bk, i64 80 ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.bn, i8 0, i64 48, i1 false), !noalias !1256
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(48) %i.bn, i8 0, i64 48, i1 false), !noalias !1256
   call void @_ZN5vcpkg18PlatformExpression4ExprC1Ev(ptr noundef nonnull align 8 dereferenceable(8) %i.bo) #22, !noalias !1256
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bk, i64 88
   invoke void @_ZN5vcpkg28ParsedSpdxLicenseDeclarationC1Ev(ptr noundef nonnull align 8 dereferenceable(64) %i.bp)
@@ -2268,12 +2268,12 @@ bb.i:                                             ; preds = %.noexc137
   call void @_ZN5vcpkg18PlatformExpression4ExprD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %i.bo) #22, !noalias !1256
   call void @_ZNSt6vectorIN5vcpkg10DependencyESaIS1_EED2Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %i.br) #22, !noalias !1256
   call void @_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %i.bn) #22, !noalias !1256
-  %i.bs = load ptr, ptr %i.bk, align 8, !tbaa !28, !noalias !1256 ; 2 uses
+  %i.bs = load ptr, ptr %i.bk, align 16, !tbaa !28, !noalias !1256 ; 2 uses
   %i.bt = icmp eq ptr %i.bs, %i.bl
   br i1 %i.bt, label %.body.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i: ; preds = %bb.i
-  %i.bu = load i64, ptr %i.bl, align 8, !tbaa !25, !noalias !1256
+  %i.bu = load i64, ptr %i.bl, align 16, !tbaa !25, !noalias !1256
   %i.bv = add i64 %i.bu, 1
   call void @_ZdlPvm(ptr noundef %i.bs, i64 noundef %i.bv) #23, !noalias !1256
   br label %.body.i
@@ -2676,7 +2676,7 @@ bb.c:                                             ; preds = %.noexc
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit: ; preds = %bb.c
   %i.o = getelementptr inbounds nuw i8, ptr %i.m, i64 32
-  store i32 %3, ptr %i.o, align 8, !tbaa !1548
+  store i32 %3, ptr %i.o, align 16, !tbaa !1548
   %i.p = getelementptr inbounds nuw i8, ptr %i.m, i64 40
   invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_assignERKS4_(ptr noundef nonnull align 8 dereferenceable(36) %i.p, ptr noundef nonnull align 8 dereferenceable(36) %2)
           to label %bb.d unwind label %bb.l
@@ -3079,12 +3079,12 @@ bb.a:
   %i.a = tail call noalias noundef nonnull dereferenceable(176) ptr @_Znwm(i64 noundef 176) #24, !noalias !1947 ; 16 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 6 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(160) %i.b, i8 0, i64 160, i1 false), !noalias !1947
-  store ptr %i.b, ptr %i.a, align 8, !tbaa !22, !noalias !1947
+  store ptr %i.b, ptr %i.a, align 16, !tbaa !22, !noalias !1947
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 4 uses
   store i64 0, ptr %i.c, align 8, !tbaa !26, !noalias !1947
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 32 ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 80 ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.d, i8 0, i64 48, i1 false), !noalias !1947
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(48) %i.d, i8 0, i64 48, i1 false), !noalias !1947
   tail call void @_ZN5vcpkg18PlatformExpression4ExprC1Ev(ptr noundef nonnull align 8 dereferenceable(8) %i.e) #22, !noalias !1947
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 88
   invoke void @_ZN5vcpkg28ParsedSpdxLicenseDeclarationC1Ev(ptr noundef nonnull align 8 dereferenceable(64) %i.f)
@@ -3097,12 +3097,12 @@ bb.b:                                             ; preds = %bb.a
   tail call void @_ZN5vcpkg18PlatformExpression4ExprD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %i.e) #22, !noalias !1947
   tail call void @_ZNSt6vectorIN5vcpkg10DependencyESaIS1_EED2Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %i.h) #22, !noalias !1947
   tail call void @_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %i.d) #22, !noalias !1947
-  %i.i = load ptr, ptr %i.a, align 8, !tbaa !28, !noalias !1947 ; 2 uses
+  %i.i = load ptr, ptr %i.a, align 16, !tbaa !28, !noalias !1947 ; 2 uses
   %i.j = icmp eq ptr %i.i, %i.b
   br i1 %i.j, label %.body.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i: ; preds = %bb.b
-  %i.k = load i64, ptr %i.b, align 8, !tbaa !25, !noalias !1947
+  %i.k = load i64, ptr %i.b, align 16, !tbaa !25, !noalias !1947
   %i.l = add i64 %i.k, 1
   tail call void @_ZdlPvm(ptr noundef %i.i, i64 noundef %i.l) #23, !noalias !1947
   br label %.body.i
@@ -3115,7 +3115,7 @@ _ZSt11make_uniqueIN5vcpkg16FeatureParagraphEJEENSt8__detail9_MakeUniqIT_E15__sin
   %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 152
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.m, i8 0, i64 24, i1 false), !noalias !1947
   store ptr %i.a, ptr %0, align 8, !tbaa !619, !alias.scope !1947
-  %i.n = load ptr, ptr %i.a, align 8, !tbaa !28   ; 6 uses
+  %i.n = load ptr, ptr %i.a, align 16, !tbaa !28  ; 6 uses
   %i.o = icmp eq ptr %i.n, %i.b
   %i.p = load ptr, ptr %1, align 8, !tbaa !28     ; 6 uses
   %i.q = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 4 uses
@@ -3154,22 +3154,22 @@ bb.f:                                             ; preds = %bb.d
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i: ; preds = %bb.f, %bb.e, %bb.d
   %i.w = load i64, ptr %i.s, align 8, !tbaa !26   ; 2 uses
   store i64 %i.w, ptr %i.c, align 8, !tbaa !26
-  %i.x = load ptr, ptr %i.a, align 8, !tbaa !28
+  %i.x = load ptr, ptr %i.a, align 16, !tbaa !28
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 %i.w
   store i8 0, ptr %i.y, align 1, !tbaa !25
   %.pre.i = load ptr, ptr %1, align 8, !tbaa !28
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit
 
 .thread.i:                                        ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i
-  store ptr %i.p, ptr %i.a, align 8, !tbaa !28
+  store ptr %i.p, ptr %i.a, align 16, !tbaa !28
   %i.z = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.aa = load <2 x i64>, ptr %i.z, align 8, !tbaa !25
   store <2 x i64> %i.aa, ptr %i.c, align 8, !tbaa !25
   br label %bb.h
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit23.thread25.i: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i
-  %i.ab = load i64, ptr %i.b, align 8, !tbaa !25
-  store ptr %i.p, ptr %i.a, align 8, !tbaa !28
+  %i.ab = load i64, ptr %i.b, align 16, !tbaa !25
+  store ptr %i.p, ptr %i.a, align 16, !tbaa !28
   %i.ac = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.ad = load <2 x i64>, ptr %i.ac, align 8, !tbaa !25
   store <2 x i64> %i.ad, ptr %i.c, align 8, !tbaa !25
@@ -3572,7 +3572,7 @@ bb.e:                                             ; preds = %.noexc
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit: ; preds = %bb.e
   %i.ab = getelementptr inbounds nuw i8, ptr %i.z, i64 32
-  store i32 %3, ptr %i.ab, align 8, !tbaa !1548
+  store i32 %3, ptr %i.ab, align 16, !tbaa !1548
   %i.ac = getelementptr inbounds nuw i8, ptr %i.z, i64 40 ; 5 uses
   %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !28 ; 6 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %i.z, i64 56 ; 2 uses
@@ -3614,7 +3614,7 @@ bb.i:                                             ; preds = %bb.g
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i: ; preds = %bb.i, %bb.h, %bb.g
   %i.an = load i64, ptr %i.aj, align 8, !tbaa !26 ; 2 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %i.z, i64 48
-  store i64 %i.an, ptr %i.ao, align 8, !tbaa !26
+  store i64 %i.an, ptr %i.ao, align 16, !tbaa !26
   %i.ap = load ptr, ptr %i.ac, align 8, !tbaa !28
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ap, i64 %i.an
   store i8 0, ptr %i.aq, align 1, !tbaa !25
@@ -3626,7 +3626,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i: ;
   store ptr %i.ag, ptr %i.ac, align 8, !tbaa !28
   %i.as = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.at = load <2 x i64>, ptr %i.as, align 8, !tbaa !25
-  store <2 x i64> %i.at, ptr %i.ar, align 8, !tbaa !25
+  store <2 x i64> %i.at, ptr %i.ar, align 16, !tbaa !25
   br label %bb.k
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit23.thread25.i.i: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i
@@ -3635,7 +3635,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit23.thr
   %i.av = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.aw = getelementptr inbounds nuw i8, ptr %i.z, i64 48
   %i.ax = load <2 x i64>, ptr %i.av, align 8, !tbaa !25
-  store <2 x i64> %i.ax, ptr %i.aw, align 8, !tbaa !25
+  store <2 x i64> %i.ax, ptr %i.aw, align 16, !tbaa !25
   %.not.i.i = icmp eq ptr %i.ad, null
   br i1 %.not.i.i, label %bb.k, label %bb.j
 

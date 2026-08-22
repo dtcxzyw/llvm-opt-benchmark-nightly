@@ -202,8 +202,8 @@ streamCompareID.exit.thread:                      ; preds = %bb.i, %bb.h, %bb.d
   %i.ap = phi i64 [ %i.aj, %bb.i ], [ %i.aj, %bb.h ], [ %i.n, %bb.d ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
   %i.aq = load i32, ptr %i.g, align 8, !tbaa !202 ; 2 uses
-  %4 = trunc nuw i64 %indvars.iv.next to i32
-  %5 = icmp sgt i32 %i.aq, %4
+  %4 = sext i32 %i.aq to i64
+  %5 = icmp slt i64 %indvars.iv.next, %4
   br i1 %5, label %bb.b, label %._crit_edge.loopexit, !llvm.loop !251
 
 ._crit_edge.loopexit:                             ; preds = %streamCompareID.exit.thread

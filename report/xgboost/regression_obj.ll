@@ -205,17 +205,17 @@ bb.h:                                             ; preds = %_ZNKSt3mapINSt7__cx
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 16
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(136) %i.ae, i8 0, i64 136, i1 false)
   %i.af = getelementptr inbounds nuw i8, ptr %i.ad, i64 16
-  store ptr %i.af, ptr %i.ad, align 8, !tbaa !16
+  store ptr %i.af, ptr %i.ad, align 16, !tbaa !16
   %i.ag = getelementptr inbounds nuw i8, ptr %i.ad, i64 8
   store i64 0, ptr %i.ag, align 8, !tbaa !18
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ad, i64 32
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ad, i64 48 ; 2 uses
-  store ptr %i.ai, ptr %i.ah, align 8, !tbaa !16
-  store i8 0, ptr %i.ai, align 8, !tbaa !15
+  store ptr %i.ai, ptr %i.ah, align 16, !tbaa !16
+  store i8 0, ptr %i.ai, align 16, !tbaa !15
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ad, i64 64
   %i.ak = getelementptr inbounds nuw i8, ptr %i.ad, i64 120
   %i.al = getelementptr inbounds nuw i8, ptr %i.ad, i64 136 ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.aj, i8 0, i64 56, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(56) %i.aj, i8 0, i64 56, i1 false)
   store ptr %i.al, ptr %i.ak, align 8, !tbaa !16
   store i8 0, ptr %i.al, align 8, !tbaa !15
   invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_assignERKS4_(ptr noundef nonnull align 8 dereferenceable(32) %i.ad, ptr noundef nonnull align 8 dereferenceable(32) %1)
@@ -618,12 +618,12 @@ define linkonce_odr void @_ZN7xgboost3obj12RegLossParam11__DECLARE__EPN4dmlc9par
   store ptr %i.p, ptr %i.o, align 8, !tbaa !16
   %i.q = getelementptr inbounds nuw i8, ptr %i.i, i64 133
   store i8 0, ptr %i.q, align 1, !tbaa !63
-  store ptr getelementptr inbounds nuw inrange(-16, 88) (i8, ptr @_ZTVN4dmlc9parameter10FieldEntryIfEE, i64 16), ptr %i.i, align 8, !tbaa !57
+  store ptr getelementptr inbounds nuw inrange(-16, 88) (i8, ptr @_ZTVN4dmlc9parameter10FieldEntryIfEE, i64 16), ptr %i.i, align 16, !tbaa !57
   invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_assignERKS4_(ptr noundef nonnull align 8 dereferenceable(32) %i.j, ptr noundef nonnull align 8 dereferenceable(32) %3)
           to label %.noexc12 unwind label %bb.a
 
 .noexc12:                                         ; preds = %.noexc11
-  %i.r = load i64, ptr %i.n, align 8, !tbaa !18
+  %i.r = load i64, ptr %i.n, align 16, !tbaa !18
   %i.s = icmp eq i64 %i.r, 0
   br i1 %i.s, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit.i.i, label %_ZN4dmlc9parameter14FieldEntryBaseINS0_10FieldEntryIfEEfE4InitERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPvRf.exit.i
 
@@ -639,7 +639,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit.i.i: ; preds =
   %i.w = load ptr, ptr %i.l, align 8, !tbaa !9
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(5) %i.w, ptr noundef nonnull align 1 dereferenceable(5) @.str.94, i64 5, i1 false)
   %i.x = load i64, ptr %i.u, align 8, !tbaa !18   ; 2 uses
-  store i64 %i.x, ptr %i.n, align 8, !tbaa !18
+  store i64 %i.x, ptr %i.n, align 16, !tbaa !18
   %i.y = load ptr, ptr %i.l, align 8, !tbaa !9
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 %i.x
   store i8 0, ptr %i.z, align 1, !tbaa !15
@@ -668,10 +668,10 @@ _ZN4dmlc9parameter14FieldEntryBaseINS0_10FieldEntryIfEEfE4InitERKNSt7__cxx1112ba
 
 _ZN4dmlc9ParameterIN7xgboost3obj12RegLossParamEE7DECLAREIfEERNS_9parameter10FieldEntryIT_EEPNS6_21ParamManagerSingletonIS3_EERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERS8_.exit: ; preds = %_ZN4dmlc9parameter14FieldEntryBaseINS0_10FieldEntryIfEEfE4InitERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPvRf.exit.i
   %i.af = getelementptr inbounds nuw i8, ptr %i.i, i64 128
-  store float 1.000000e+00, ptr %i.af, align 8, !tbaa !74
+  store float 1.000000e+00, ptr %i.af, align 16, !tbaa !74
   %i.ag = getelementptr inbounds nuw i8, ptr %i.i, i64 8
   store i8 1, ptr %i.ag, align 8, !tbaa !75
-  %i.ah = load ptr, ptr %i.i, align 8, !tbaa !57
+  %i.ah = load ptr, ptr %i.i, align 16, !tbaa !57
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, i64 80
   %i.aj = load ptr, ptr %i.ai, align 8
   %i.ak = invoke noundef nonnull align 8 dereferenceable(144) ptr %i.aj(ptr noundef nonnull align 8 dereferenceable(144) %i.i, float noundef 0.000000e+00)
@@ -1074,7 +1074,7 @@ define internal noalias noundef nonnull ptr @"_ZNSt17_Function_handlerIFPN7xgboo
 bb.a:
   %i.a = tail call noalias noundef nonnull dereferenceable(16) ptr @_Znwm(i64 noundef 16) #38 ; 3 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.a, i8 0, i64 16, i1 false)
-  store ptr getelementptr inbounds nuw inrange(-16, 112) (i8, ptr @_ZTVN7xgboost3obj25SquaredLogErrorRegressionE, i64 16), ptr %i.a, align 8, !tbaa !57
+  store ptr getelementptr inbounds nuw inrange(-16, 112) (i8, ptr @_ZTVN7xgboost3obj25SquaredLogErrorRegressionE, i64 16), ptr %i.a, align 16, !tbaa !57
   ret ptr %i.a
 }
 
@@ -1477,7 +1477,7 @@ define internal noalias noundef nonnull ptr @"_ZNSt17_Function_handlerIFPN7xgboo
 bb.a:
   %i.a = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #38 ; 4 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %i.a, i8 0, i64 24, i1 false)
-  store ptr getelementptr inbounds nuw inrange(-16, 112) (i8, ptr @_ZTVN7xgboost3obj21PseudoHuberRegressionE, i64 16), ptr %i.a, align 8, !tbaa !57
+  store ptr getelementptr inbounds nuw inrange(-16, 112) (i8, ptr @_ZTVN7xgboost3obj21PseudoHuberRegressionE, i64 16), ptr %i.a, align 16, !tbaa !57
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 20
   store float 1.000000e+00, ptr %i.b, align 4, !tbaa !982
   ret ptr %i.a
@@ -1880,13 +1880,13 @@ define internal noundef nonnull ptr @"_ZNSt17_Function_handlerIFPN7xgboost11ObjF
 bb.a:
   %i.a = tail call noalias noundef nonnull dereferenceable(88) ptr @_Znwm(i64 noundef 88) #38 ; 10 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(88) %i.a, i8 0, i64 88, i1 false)
-  store ptr getelementptr inbounds nuw inrange(-16, 112) (i8, ptr @_ZTVN7xgboost3obj19ExpectileRegressionE, i64 16), ptr %i.a, align 8, !tbaa !57
+  store ptr getelementptr inbounds nuw inrange(-16, 112) (i8, ptr @_ZTVN7xgboost3obj19ExpectileRegressionE, i64 16), ptr %i.a, align 16, !tbaa !57
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 40 ; 2 uses
   store ptr %i.c, ptr %i.b, align 8, !tbaa !16, !alias.scope !1080
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(15) %i.c, ptr noundef nonnull align 1 dereferenceable(15) @.str.148, i64 15, i1 false)
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 32
-  store i64 15, ptr %i.d, align 8, !tbaa !18, !alias.scope !1080
+  store i64 15, ptr %i.d, align 16, !tbaa !18, !alias.scope !1080
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 55
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(25) %i.e, i8 0, i64 25, i1 false)
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 80
@@ -2289,12 +2289,12 @@ define linkonce_odr void @_ZN7xgboost3obj22PoissonRegressionParam11__DECLARE__EP
   store ptr %i.l, ptr %i.k, align 8, !tbaa !16
   %i.m = getelementptr inbounds nuw i8, ptr %i.e, i64 133
   store i8 0, ptr %i.m, align 1, !tbaa !63
-  store ptr getelementptr inbounds nuw inrange(-16, 88) (i8, ptr @_ZTVN4dmlc9parameter10FieldEntryIfEE, i64 16), ptr %i.e, align 8, !tbaa !57
+  store ptr getelementptr inbounds nuw inrange(-16, 88) (i8, ptr @_ZTVN4dmlc9parameter10FieldEntryIfEE, i64 16), ptr %i.e, align 16, !tbaa !57
   invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_assignERKS4_(ptr noundef nonnull align 8 dereferenceable(32) %i.f, ptr noundef nonnull align 8 dereferenceable(32) %3)
           to label %.noexc10 unwind label %bb.a
 
 .noexc10:                                         ; preds = %.noexc9
-  %i.n = load i64, ptr %i.j, align 8, !tbaa !18
+  %i.n = load i64, ptr %i.j, align 16, !tbaa !18
   %i.o = icmp eq i64 %i.n, 0
   br i1 %i.o, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit.i.i, label %_ZN4dmlc9parameter14FieldEntryBaseINS0_10FieldEntryIfEEfE4InitERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPvRf.exit.i
 
@@ -2310,7 +2310,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit.i.i: ; preds =
   %i.s = load ptr, ptr %i.h, align 8, !tbaa !9
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(5) %i.s, ptr noundef nonnull align 1 dereferenceable(5) @.str.94, i64 5, i1 false)
   %i.t = load i64, ptr %i.q, align 8, !tbaa !18   ; 2 uses
-  store i64 %i.t, ptr %i.j, align 8, !tbaa !18
+  store i64 %i.t, ptr %i.j, align 16, !tbaa !18
   %i.u = load ptr, ptr %i.h, align 8, !tbaa !9
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 %i.t
   store i8 0, ptr %i.v, align 1, !tbaa !15
@@ -2338,7 +2338,7 @@ _ZN4dmlc9parameter14FieldEntryBaseINS0_10FieldEntryIfEEfE4InitERKNSt7__cxx1112ba
           to label %_ZN4dmlc9ParameterIN7xgboost3obj22PoissonRegressionParamEE7DECLAREIfEERNS_9parameter10FieldEntryIT_EEPNS6_21ParamManagerSingletonIS3_EERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERS8_.exit unwind label %bb.a
 
 _ZN4dmlc9ParameterIN7xgboost3obj22PoissonRegressionParamEE7DECLAREIfEERNS_9parameter10FieldEntryIT_EEPNS6_21ParamManagerSingletonIS3_EERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERS8_.exit: ; preds = %_ZN4dmlc9parameter14FieldEntryBaseINS0_10FieldEntryIfEEfE4InitERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPvRf.exit.i
-  %i.ab = load ptr, ptr %i.e, align 8, !tbaa !57
+  %i.ab = load ptr, ptr %i.e, align 16, !tbaa !57
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 80
   %i.ad = load ptr, ptr %i.ac, align 8
   %i.ae = invoke noundef nonnull align 8 dereferenceable(144) ptr %i.ad(ptr noundef nonnull align 8 dereferenceable(144) %i.e, float noundef 0.000000e+00)
@@ -2448,7 +2448,7 @@ define internal noalias noundef nonnull ptr @"_ZNSt17_Function_handlerIFPN7xgboo
 bb.a:
   %i.a = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #38 ; 3 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %i.a, i8 0, i64 24, i1 false)
-  store ptr getelementptr inbounds nuw inrange(-16, 112) (i8, ptr @_ZTVN7xgboost3obj17PoissonRegressionE, i64 16), ptr %i.a, align 8, !tbaa !57
+  store ptr getelementptr inbounds nuw inrange(-16, 112) (i8, ptr @_ZTVN7xgboost3obj17PoissonRegressionE, i64 16), ptr %i.a, align 16, !tbaa !57
   ret ptr %i.a
 }
 
@@ -2851,7 +2851,7 @@ define internal noalias noundef nonnull ptr @"_ZNSt17_Function_handlerIFPN7xgboo
 bb.a:
   %i.a = tail call noalias noundef nonnull dereferenceable(16) ptr @_Znwm(i64 noundef 16) #38 ; 3 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.a, i8 0, i64 16, i1 false)
-  store ptr getelementptr inbounds nuw inrange(-16, 112) (i8, ptr @_ZTVN7xgboost3obj13CoxRegressionE, i64 16), ptr %i.a, align 8, !tbaa !57
+  store ptr getelementptr inbounds nuw inrange(-16, 112) (i8, ptr @_ZTVN7xgboost3obj13CoxRegressionE, i64 16), ptr %i.a, align 16, !tbaa !57
   ret ptr %i.a
 }
 
@@ -3254,12 +3254,12 @@ define linkonce_odr void @_ZN7xgboost3obj22TweedieRegressionParam11__DECLARE__EP
   store ptr %i.p, ptr %i.o, align 8, !tbaa !16
   %i.q = getelementptr inbounds nuw i8, ptr %i.i, i64 133
   store i8 0, ptr %i.q, align 1, !tbaa !63
-  store ptr getelementptr inbounds nuw inrange(-16, 88) (i8, ptr @_ZTVN4dmlc9parameter10FieldEntryIfEE, i64 16), ptr %i.i, align 8, !tbaa !57
+  store ptr getelementptr inbounds nuw inrange(-16, 88) (i8, ptr @_ZTVN4dmlc9parameter10FieldEntryIfEE, i64 16), ptr %i.i, align 16, !tbaa !57
   invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_assignERKS4_(ptr noundef nonnull align 8 dereferenceable(32) %i.j, ptr noundef nonnull align 8 dereferenceable(32) %3)
           to label %.noexc10 unwind label %bb.a
 
 .noexc10:                                         ; preds = %.noexc9
-  %i.r = load i64, ptr %i.n, align 8, !tbaa !18
+  %i.r = load i64, ptr %i.n, align 16, !tbaa !18
   %i.s = icmp eq i64 %i.r, 0
   br i1 %i.s, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit.i.i, label %_ZN4dmlc9parameter14FieldEntryBaseINS0_10FieldEntryIfEEfE4InitERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPvRf.exit.i
 
@@ -3275,7 +3275,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit.i.i: ; preds =
   %i.w = load ptr, ptr %i.l, align 8, !tbaa !9
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(5) %i.w, ptr noundef nonnull align 1 dereferenceable(5) @.str.94, i64 5, i1 false)
   %i.x = load i64, ptr %i.u, align 8, !tbaa !18   ; 2 uses
-  store i64 %i.x, ptr %i.n, align 8, !tbaa !18
+  store i64 %i.x, ptr %i.n, align 16, !tbaa !18
   %i.y = load ptr, ptr %i.l, align 8, !tbaa !9
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 %i.x
   store i8 0, ptr %i.z, align 1, !tbaa !15
@@ -3303,7 +3303,7 @@ _ZN4dmlc9parameter14FieldEntryBaseINS0_10FieldEntryIfEEfE4InitERKNSt7__cxx1112ba
           to label %_ZN4dmlc9ParameterIN7xgboost3obj22TweedieRegressionParamEE7DECLAREIfEERNS_9parameter10FieldEntryIT_EEPNS6_21ParamManagerSingletonIS3_EERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERS8_.exit unwind label %bb.a
 
 _ZN4dmlc9ParameterIN7xgboost3obj22TweedieRegressionParamEE7DECLAREIfEERNS_9parameter10FieldEntryIT_EEPNS6_21ParamManagerSingletonIS3_EERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERS8_.exit: ; preds = %_ZN4dmlc9parameter14FieldEntryBaseINS0_10FieldEntryIfEEfE4InitERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPvRf.exit.i
-  %i.af = load ptr, ptr %i.i, align 8, !tbaa !57
+  %i.af = load ptr, ptr %i.i, align 16, !tbaa !57
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 72
   %i.ah = load ptr, ptr %i.ag, align 8
   %i.ai = invoke noundef nonnull align 8 dereferenceable(144) ptr %i.ah(ptr noundef nonnull align 8 dereferenceable(144) %i.i, float noundef 1.000000e+00, float noundef 2.000000e+00)
@@ -3413,10 +3413,10 @@ define internal noundef nonnull ptr @"_ZNSt17_Function_handlerIFPN7xgboost11ObjF
 bb.a:
   %i.a = tail call noalias noundef nonnull dereferenceable(56) ptr @_Znwm(i64 noundef 56) #38 ; 5 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(56) %i.a, i8 0, i64 56, i1 false)
-  store ptr getelementptr inbounds nuw inrange(-16, 112) (i8, ptr @_ZTVN7xgboost3obj17TweedieRegressionE, i64 16), ptr %i.a, align 8, !tbaa !57
+  store ptr getelementptr inbounds nuw inrange(-16, 112) (i8, ptr @_ZTVN7xgboost3obj17TweedieRegressionE, i64 16), ptr %i.a, align 16, !tbaa !57
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 32
-  store ptr %i.c, ptr %i.b, align 8, !tbaa !16
+  store ptr %i.c, ptr %i.b, align 16, !tbaa !16
   ret ptr %i.a
 }
 
@@ -3819,7 +3819,7 @@ define internal noalias noundef nonnull ptr @"_ZNSt17_Function_handlerIFPN7xgboo
 bb.a:
   %i.a = tail call noalias noundef nonnull dereferenceable(16) ptr @_Znwm(i64 noundef 16) #38 ; 3 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.a, i8 0, i64 16, i1 false)
-  store ptr getelementptr inbounds nuw inrange(-16, 112) (i8, ptr @_ZTVN7xgboost3obj17MeanAbsoluteErrorE, i64 16), ptr %i.a, align 8, !tbaa !57
+  store ptr getelementptr inbounds nuw inrange(-16, 112) (i8, ptr @_ZTVN7xgboost3obj17MeanAbsoluteErrorE, i64 16), ptr %i.a, align 16, !tbaa !57
   ret ptr %i.a
 }
 

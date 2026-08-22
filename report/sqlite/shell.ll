@@ -206,7 +206,7 @@ bb.g:                                             ; preds = %bb.f
   %i.ab = getelementptr inbounds nuw i8, ptr %i.z, i64 8
   store ptr %i.aa, ptr %i.ab, align 8, !tbaa !307
   %i.ac = add nsw i64 %i.x, 1
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.aa, ptr nonnull align 1 %i.v, i64 %i.ac, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.aa, ptr nonnull align 1 %i.v, i64 %i.ac, i1 false)
   %i.ad = load ptr, ptr %i.e, align 8, !tbaa !291 ; 3 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %i.z, i64 32
   store ptr %i.ad, ptr %i.ae, align 8, !tbaa !292
@@ -609,7 +609,7 @@ bb.cb:                                            ; preds = %._crit_edge.i76.i
   call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.ty, i8 0, i64 %i.tx, i1 false)
   %i.tz = getelementptr inbounds nuw i8, ptr %i.ty, i64 40 ; 2 uses
   store ptr %i.tz, ptr %i.ty, align 8, !tbaa !339
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.tz, ptr nonnull readonly align 1 %i.sg, i64 %.pre52.i.i, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.tz, ptr nonnull readonly align 1 %i.sg, i64 %.pre52.i.i, i1 false)
   %i.ua = getelementptr inbounds nuw i8, ptr %i.ty, i64 24
   store ptr %.049.i.i, ptr %i.ua, align 8, !tbaa !300
   store ptr %i.ty, ptr %i.tq, align 8, !tbaa !299
@@ -1012,7 +1012,7 @@ bb.c:                                             ; preds = %bb.b
   %i.o = getelementptr inbounds nuw i8, ptr %i.e, i64 24
   store ptr %i.n, ptr %i.o, align 8, !tbaa !388
   %i.p = add i64 %i.c, 1
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.n, ptr nonnull align 1 %0, i64 %i.p, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.n, ptr nonnull align 1 %0, i64 %i.p, i1 false)
   %i.q = getelementptr inbounds nuw i8, ptr %i.e, i64 32
   store ptr %i.g, ptr %i.q, align 8, !tbaa !241
   %i.r = getelementptr inbounds nuw i8, ptr %i.e, i64 40
@@ -1415,7 +1415,7 @@ bb.c:                                             ; preds = %recoverStrlen.exit
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 1 ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.l, i64 16
   store ptr %i.r, ptr %i.s, align 8, !tbaa !447
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.o, ptr nonnull align 1 %spec.store.select, i64 %i.m, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.o, ptr nonnull align 1 %spec.store.select, i64 %i.m, i1 false)
   %i.t = icmp ne i32 %.0.i, 0
   %i.u = icmp ne ptr %2, null
   %or.cond = and i1 %i.u, %i.t
@@ -1476,7 +1476,7 @@ bb.c:                                             ; preds = %recoverStrlen.exit.
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 1 ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.l, i64 16
   store ptr %i.r, ptr %i.s, align 8, !tbaa !447
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.o, ptr nonnull align 1 %spec.store.select.i, i64 %i.m, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.o, ptr nonnull align 1 %spec.store.select.i, i64 %i.m, i1 false)
   %i.t = icmp ne i32 %.0.i.i, 0
   %i.u = icmp ne ptr %2, null
   %or.cond.i = and i1 %i.u, %i.t
@@ -1522,7 +1522,7 @@ bb.b:                                             ; preds = %bb.a
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 1
   %i.m = getelementptr inbounds nuw i8, ptr %i.f, i64 16
   store ptr %i.l, ptr %i.m, align 8, !tbaa !447
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.i, ptr nonnull align 1 %spec.store.select.i, i64 %i.g, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.i, ptr nonnull align 1 %spec.store.select.i, i64 %i.g, i1 false)
   %i.n = getelementptr inbounds nuw i8, ptr %i.f, i64 32
   store ptr %2, ptr %i.n, align 8, !tbaa !448
   %i.o = getelementptr inbounds nuw i8, ptr %i.f, i64 24
@@ -1925,7 +1925,7 @@ bb.h:                                             ; preds = %bb.g
   %i.y = getelementptr inbounds nuw i8, ptr %i.r, i64 204904 ; 7 uses
   %i.z = getelementptr inbounds nuw i8, ptr %i.r, i64 24
   store ptr %i.y, ptr %i.z, align 8, !tbaa !987
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.y, ptr nonnull align 1 %.033, i64 %i.p, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.y, ptr nonnull align 1 %.033, i64 %i.p, i1 false)
   %i.aa = load i8, ptr %i.y, align 8, !tbaa !16   ; 3 uses
   switch i8 %i.aa, label %zipfileDequote.exit [
     i8 96, label %bb.i
@@ -2328,7 +2328,7 @@ zipfileReadData.exit134:                          ; preds = %bb.k, %bb.i
   store ptr %i.cp, ptr %i.cq, align 8, !tbaa !1055
   %i.cr = zext i16 %.val125197 to i64
   %i.cs = getelementptr inbounds nuw i8, ptr %.1105, i64 %i.cr
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.cp, ptr align 1 %i.cs, i64 %i.af, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.cp, ptr align 1 %i.cs, i64 %i.af, i1 false)
   br label %.thread177
 
 bb.m:                                             ; preds = %zipfileReadData.exit134
@@ -2342,7 +2342,7 @@ bb.m:                                             ; preds = %zipfileReadData.exi
   %i.cx = getelementptr inbounds nuw i8, ptr %i.al, i64 64 ; 2 uses
   store ptr %i.cw, ptr %i.cx, align 8, !tbaa !1055
   %i.cy = getelementptr inbounds nuw i8, ptr %.1105, i64 %i.ct ; 3 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.cw, ptr align 1 %i.cy, i64 %i.af, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.cw, ptr align 1 %i.cy, i64 %i.af, i1 false)
   %i.cz = icmp eq ptr %.pr, null
   br i1 %i.cz, label %.thread177, label %bb.n
 
@@ -2745,7 +2745,7 @@ bb.h:                                             ; preds = %bb.g
   store ptr %i.an, ptr %i.am, align 8, !tbaa !1094
   %sext9.i = add i64 %sext.i, 4294967296
   %i.ao = ashr exact i64 %sext9.i, 32
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.an, ptr nonnull readonly align 1 %i.ah, i64 %i.ao, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.an, ptr nonnull readonly align 1 %i.ah, i64 %i.ao, i1 false)
   %i.ap = load i32, ptr %i.q, align 4, !tbaa !890
   %i.aq = getelementptr inbounds nuw i8, ptr %i.am, i64 12
   store i32 %i.ap, ptr %i.aq, align 4, !tbaa !316
@@ -2835,7 +2835,7 @@ bb.n:                                             ; preds = %bb.m
   store ptr %i.ca, ptr %i.bz, align 8, !tbaa !1094
   %sext9.i73 = add i64 %sext.i71, 4294967296
   %i.cb = ashr exact i64 %sext9.i73, 32
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.ca, ptr nonnull readonly align 1 %i.bu, i64 %i.cb, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ca, ptr nonnull readonly align 1 %i.bu, i64 %i.cb, i1 false)
   %i.cc = getelementptr inbounds nuw i8, ptr %i.bz, i64 12
   store i32 %i.bm, ptr %i.cc, align 4, !tbaa !316
   %i.cd = load ptr, ptr %i.bh, align 8, !tbaa !902
@@ -3238,7 +3238,7 @@ bb.f:                                             ; preds = %._crit_edge
   tail call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.aw, i8 0, i64 %i.av, i1 false)
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 40 ; 3 uses
   store ptr %i.ax, ptr %i.aw, align 8, !tbaa !339
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.ax, ptr nonnull align 1 %2, i64 %.pre52, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ax, ptr nonnull align 1 %2, i64 %.pre52, i1 false)
   br i1 %.not, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f

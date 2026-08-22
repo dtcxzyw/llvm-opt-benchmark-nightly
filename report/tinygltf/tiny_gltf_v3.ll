@@ -205,7 +205,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.a = load ptr, ptr %0, align 8, !tbaa !87
   tail call void @free(ptr noundef %i.a) #28
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(24) %0, i8 0, i64 24, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, i8 0, i64 24, i1 false)
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
@@ -608,7 +608,7 @@ bb.fu:                                            ; preds = %bb.ft, %bb.fs
   br i1 %exitcond.not.i.i.i.i47.i, label %tg3__json_get.exit.thread.i.i, label %bb.fs, !llvm.loop !59
 
 tg3__json_get.exit.thread.i.i:                    ; preds = %bb.fu, %.preheader.i.i.i.i43.i, %bb.fr
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(208) %i.afp, i8 0, i64 208, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(208) %i.afp, i8 0, i64 208, i1 false)
   %i.agl = getelementptr inbounds nuw i8, ptr %i.acp, i64 104
   store i32 -1, ptr %i.agl, align 8, !tbaa !231
   %i.agm = getelementptr inbounds nuw i8, ptr %i.acp, i64 168
@@ -618,7 +618,7 @@ tg3__json_get.exit.thread.i.i:                    ; preds = %bb.fu, %.preheader.
 tg3__json_get.exit.i49.i:                         ; preds = %bb.ft
   %i.agn = getelementptr inbounds nuw i8, ptr %i.afv, i64 16
   %i.ago = load ptr, ptr %i.agn, align 8, !tbaa !44 ; 8 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(208) %i.afp, i8 0, i64 208, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(208) %i.afp, i8 0, i64 208, i1 false)
   %i.agp = getelementptr inbounds nuw i8, ptr %i.acp, i64 96
   %i.agq = getelementptr inbounds nuw i8, ptr %i.acp, i64 104 ; 2 uses
   store i32 -1, ptr %i.agq, align 8, !tbaa !231
@@ -1021,27 +1021,27 @@ bb.mb:                                            ; preds = %tg3__json_is_object
   store <2 x double> splat (double 1.000000e+00), ptr %i.brj, align 8, !tbaa !76
   %i.brl = getelementptr inbounds nuw i8, ptr %i.brf, i64 120 ; 2 uses
   %i.brm = getelementptr inbounds nuw i8, ptr %i.brf, i64 124
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(60) %i.brm, i8 0, i64 60, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(60) %i.brm, i8 0, i64 60, i1 false)
   store i32 -1, ptr %i.brl, align 8, !tbaa !278
   %i.brn = getelementptr inbounds nuw i8, ptr %i.brf, i64 200 ; 2 uses
   %i.bro = getelementptr inbounds nuw i8, ptr %i.brf, i64 204
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(60) %i.bro, i8 0, i64 60, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(60) %i.bro, i8 0, i64 60, i1 false)
   store i32 -1, ptr %i.brn, align 8, !tbaa !278
   %i.brp = getelementptr inbounds nuw i8, ptr %i.brf, i64 320 ; 4 uses
   %i.brq = getelementptr inbounds nuw i8, ptr %i.brf, i64 324 ; 4 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(68) %i.brq, i8 0, i64 68, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(68) %i.brq, i8 0, i64 68, i1 false)
   store i32 -1, ptr %i.brp, align 8, !tbaa !280
   %i.brr = getelementptr inbounds nuw i8, ptr %i.brf, i64 328 ; 4 uses
   store double 1.000000e+00, ptr %i.brr, align 8, !tbaa !282
   %i.brs = getelementptr inbounds nuw i8, ptr %i.brf, i64 392 ; 4 uses
   %i.brt = getelementptr inbounds nuw i8, ptr %i.brf, i64 396 ; 4 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(68) %i.brt, i8 0, i64 68, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(68) %i.brt, i8 0, i64 68, i1 false)
   store i32 -1, ptr %i.brs, align 8, !tbaa !283
   %i.bru = getelementptr inbounds nuw i8, ptr %i.brf, i64 400 ; 4 uses
   store double 1.000000e+00, ptr %i.bru, align 8, !tbaa !285
   %i.brv = getelementptr inbounds nuw i8, ptr %i.brf, i64 464 ; 2 uses
   %i.brw = getelementptr inbounds nuw i8, ptr %i.brf, i64 468
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(60) %i.brw, i8 0, i64 60, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(60) %i.brw, i8 0, i64 60, i1 false)
   store i32 -1, ptr %i.brv, align 8, !tbaa !278
   %i.brx = getelementptr inbounds nuw i8, ptr %i.brf, i64 56 ; 2 uses
   store double 5.000000e-01, ptr %i.brx, align 8, !tbaa !286
@@ -1334,7 +1334,7 @@ bb.mx:                                            ; preds = %bb.mw, %bb.mv
   br i1 %exitcond.not.i.i.i.i74.i, label %tg3__json_get.exit.thread.i.i1186, label %bb.mv, !llvm.loop !59
 
 tg3__json_get.exit.thread.i.i1186:                ; preds = %bb.mx, %.preheader.i.i.i.i70.i, %tg3__json_is_object.exit.thread.thread139.i, %.preheader.i.i.i.i1199, %tg3__parse_bool.exit.thread.i, %bb.ml
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(68) %i.brq, i8 0, i64 68, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(68) %i.brq, i8 0, i64 68, i1 false)
   store i32 -1, ptr %i.brp, align 8, !tbaa !280
   store double 1.000000e+00, ptr %i.brr, align 8, !tbaa !282
   br label %tg3__parse_normal_texture_info.exit.i
@@ -1342,7 +1342,7 @@ tg3__json_get.exit.thread.i.i1186:                ; preds = %bb.mx, %.preheader.
 tg3__json_get.exit.i76.i:                         ; preds = %bb.mw
   %i.bwe = getelementptr inbounds nuw i8, ptr %i.bvp, i64 16
   %i.bwf = load ptr, ptr %i.bwe, align 8, !tbaa !44 ; 8 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(68) %i.brq, i8 0, i64 68, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(68) %i.brq, i8 0, i64 68, i1 false)
   store i32 -1, ptr %i.brp, align 8, !tbaa !280
   store double 1.000000e+00, ptr %i.brr, align 8, !tbaa !282
   %.not.i77.i = icmp eq ptr %i.bwf, null
@@ -1476,7 +1476,7 @@ bb.nh:                                            ; preds = %bb.ng, %bb.nf
   br i1 %exitcond.not.i.i.i.i86.i, label %tg3__json_get.exit.thread.i80.i, label %bb.nf, !llvm.loop !59
 
 tg3__json_get.exit.thread.i80.i:                  ; preds = %bb.nh, %.preheader.i.i.i.i82.i, %tg3__parse_normal_texture_info.exit.i
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(68) %i.brt, i8 0, i64 68, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(68) %i.brt, i8 0, i64 68, i1 false)
   store i32 -1, ptr %i.brs, align 8, !tbaa !283
   store double 1.000000e+00, ptr %i.bru, align 8, !tbaa !285
   br label %tg3__parse_occlusion_texture_info.exit.i
@@ -1484,7 +1484,7 @@ tg3__json_get.exit.thread.i80.i:                  ; preds = %bb.nh, %.preheader.
 tg3__json_get.exit.i88.i:                         ; preds = %bb.ng
   %i.byc = getelementptr inbounds nuw i8, ptr %i.bxs, i64 16
   %i.byd = load ptr, ptr %i.byc, align 8, !tbaa !44 ; 8 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(68) %i.brt, i8 0, i64 68, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(68) %i.brt, i8 0, i64 68, i1 false)
   store i32 -1, ptr %i.brs, align 8, !tbaa !283
   store double 1.000000e+00, ptr %i.bru, align 8, !tbaa !285
   %.not.i89.i = icmp eq ptr %i.byd, null
@@ -1887,7 +1887,7 @@ tg3__arena_destroy.exit:                          ; preds = %.lr.ph.i, %bb.c
   br label %bb.d
 
 bb.d:                                             ; preds = %tg3__arena_destroy.exit, %bb.b
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(472) %0, i8 0, i64 472, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(472) %0, i8 0, i64 472, i1 false)
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 260
   store i32 -1, ptr %i.g, align 4, !tbaa !118
   br label %bb.e
@@ -2290,7 +2290,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.b
   %i.c = getelementptr inbounds nuw i8, ptr %calloc, i64 20
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(156) %i.c, i8 0, i64 156, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(156) %i.c, i8 0, i64 156, i1 false)
   store i32 1, ptr %i.b, align 8, !tbaa !101
   %i.d = getelementptr inbounds nuw i8, ptr %calloc, i64 120
   store i64 1073741824, ptr %i.d, align 8, !tbaa !103

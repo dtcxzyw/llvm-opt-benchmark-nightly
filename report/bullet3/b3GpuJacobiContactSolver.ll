@@ -205,7 +205,7 @@ bb.a:
   %i.f = fdiv float 1.000000e+00, %11
   %i.g = getelementptr inbounds nuw i8, ptr %16, i64 144
   %i.h = getelementptr inbounds nuw i8, ptr %10, i64 64 ; 4 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(24) %i.e, i8 0, i64 24, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %i.e, i8 0, i64 24, i1 false)
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %16, ptr noundef nonnull align 16 dereferenceable(16) %i.h, i64 16, i1 false), !tbaa.struct !82
   %i.i = getelementptr inbounds nuw i8, ptr %16, i64 12
   store float f0x3F333333, ptr %i.i, align 4, !tbaa !76
@@ -434,7 +434,7 @@ bb.g:                                             ; preds = %bb.f
   %i.gu = insertelement <4 x float> %i.gt, float %i.gp, i64 0
   %i.gv = fmul <4 x float> %i.gs, %i.gu           ; 3 uses
   %i.gw = extractelement <4 x float> %i.gv, i64 0
-  %i.gx = load float, ptr %i.h, align 8, !tbaa !76 ; 2 uses
+  %i.gx = load float, ptr %i.h, align 16, !tbaa !76 ; 2 uses
   %i.gy = fneg float %i.gx
   %i.gz = insertelement <4 x float> poison, float %i.gn, i64 0
   %i.ha = shufflevector <4 x float> %i.gv, <4 x float> %i.gz, <4 x i32> <i32 1, i32 0, i32 4, i32 4>
@@ -446,7 +446,7 @@ bb.g:                                             ; preds = %bb.f
   br label %_Z13b3PlaneSpace1I9b3Vector3EvRKT_RS1_S4_.exit
 
 bb.h:                                             ; preds = %bb.f
-  %i.hg = load float, ptr %i.h, align 8, !tbaa !76 ; 3 uses
+  %i.hg = load float, ptr %i.h, align 16, !tbaa !76 ; 3 uses
   %i.hh = load float, ptr %.sroa.6193.0..sroa_idx, align 4, !tbaa !76 ; 3 uses
   %i.hi = fmul float %i.hh, %i.hh
   %i.hj = tail call float @llvm.fmuladd.f32(float %i.hg, float %i.hg, float %i.hi) ; 2 uses
