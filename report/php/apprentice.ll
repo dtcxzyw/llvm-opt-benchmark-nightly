@@ -205,9 +205,9 @@ bb.r:                                             ; preds = %bb.p, %bb.q
   %indvars.iv185.sroa.phi = phi ptr [ %4, %bb.r ], [ %indvars.iv185.sroa.gep283, %set_last_default.exit.thread ] ; 2 uses
   %indvars.iv185 = phi i64 [ 0, %bb.r ], [ 1, %set_last_default.exit.thread ] ; 2 uses
   %i.bm = getelementptr inbounds nuw i8, ptr %indvars.iv185.sroa.phi, i64 8
-  %i.bn = load i32, ptr %i.bm, align 8, !tbaa !91 ; 11 uses
+  %i.bn = load i32, ptr %i.bm, align 8, !tbaa !91 ; 10 uses
   %.not165 = icmp eq i32 %i.bn, 0
-  %.pre = load ptr, ptr %indvars.iv185.sroa.phi, align 16, !tbaa !94 ; 21 uses
+  %.pre = load ptr, ptr %indvars.iv185.sroa.phi, align 16, !tbaa !94 ; 20 uses
   br i1 %.not165, label %._crit_edge158, label %.lr.ph157
 
 .lr.ph157:                                        ; preds = %.preheader124
@@ -473,12 +473,11 @@ bb.am:                                            ; preds = %bb.al
 .loopexit220:                                     ; preds = %.backedge, %bb.al
   %i.fd = zext i32 %i.bn to i64
   call void @qsort(ptr noundef nonnull %.pre, i64 noundef %i.fd, i64 noundef 16, ptr noundef nonnull @apprentice_sort) #28
-  %wide.trip.count.i = zext i32 %i.bn to i64      ; 6 uses
+  %wide.trip.count.i = zext i32 %i.bn to i64      ; 4 uses
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.ap, %.loopexit220
-  %indvars.iv27.i = phi i32 [ 1, %.loopexit220 ], [ %indvars.iv.next28.i, %bb.ap ] ; 2 uses
-  %indvars.iv.i = phi i64 [ 0, %.loopexit220 ], [ %indvars.iv.next.i, %bb.ap ] ; 3 uses
+  %indvars.iv.i = phi i64 [ 0, %.loopexit220 ], [ %indvars.iv.next.i, %bb.ap ] ; 4 uses
   %i.fe = getelementptr inbounds nuw [16 x i8], ptr %.pre, i64 %indvars.iv.i
   %i.ff = load ptr, ptr %i.fe, align 8, !tbaa !95 ; 2 uses
   %i.fg = load i16, ptr %i.ff, align 8, !tbaa !64
@@ -492,38 +491,26 @@ bb.an:                                            ; preds = %.lr.ph.i
   br i1 %i.fk, label %.preheader.preheader.i, label %bb.ap
 
 .preheader.preheader.i:                           ; preds = %bb.an
-  %umax.i = call i32 @llvm.umax.i32(i32 %i.bn, i32 %indvars.iv27.i) ; 2 uses
-  %indvars.iv.next26.i257 = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
-  %6 = icmp samesign ult i64 %indvars.iv.next26.i257, %wide.trip.count.i
-  br i1 %6, label %.lr.ph259, label %.split.loop.exit33.i
+  %6 = add i32 %i.bn, -1
+  %wide.trip.count28.i = zext i32 %6 to i64       ; 2 uses
+  %exitcond29.not.i258 = icmp eq i64 %indvars.iv.i, %wide.trip.count28.i
+  br i1 %exitcond29.not.i258, label %set_last_default.exit, label %.lr.ph259
 
 .preheader.i:                                     ; preds = %.lr.ph259
-  %indvars.iv.next26.i = add nuw nsw i64 %indvars.iv.next26.i258, 1 ; 2 uses
-  %7 = icmp samesign ult i64 %indvars.iv.next26.i, %wide.trip.count.i
-  br i1 %7, label %.lr.ph259, label %.split.loop.exit33.i, !llvm.loop !101
+  %exitcond29.not.i = icmp eq i64 %indvars.iv.next26.i, %wide.trip.count28.i
+  br i1 %exitcond29.not.i, label %set_last_default.exit, label %.lr.ph259, !llvm.loop !101
 
 .lr.ph259:                                        ; preds = %.preheader.preheader.i, %.preheader.i
-  %indvars.iv.next26.i258 = phi i64 [ %indvars.iv.next26.i, %.preheader.i ], [ %indvars.iv.next26.i257, %.preheader.preheader.i ] ; 3 uses
-  %i.fl = getelementptr inbounds nuw [16 x i8], ptr %.pre, i64 %indvars.iv.next26.i258
-  %i.fm = load ptr, ptr %i.fl, align 8, !tbaa !95
+  %indvars.iv.next26.i258 = phi i64 [ %indvars.iv.next26.i, %.preheader.i ], [ %indvars.iv.i, %.preheader.preheader.i ]
+  %indvars.iv.next26.i = add nuw nsw i64 %indvars.iv.next26.i258, 1 ; 3 uses
+  %i.fl = getelementptr inbounds nuw [16 x i8], ptr %.pre, i64 %indvars.iv.next26.i
+  %i.fm = load ptr, ptr %i.fl, align 8, !tbaa !95 ; 2 uses
   %i.fn = load i16, ptr %i.fm, align 8, !tbaa !64
   %i.fo = icmp eq i16 %i.fn, 0
-  br i1 %i.fo, label %.split.loop.exit.i, label %.preheader.i, !llvm.loop !101
+  br i1 %i.fo, label %bb.ao, label %.preheader.i, !llvm.loop !101
 
-.split.loop.exit.i:                               ; preds = %.lr.ph259
-  %8 = trunc nuw i64 %indvars.iv.next26.i258 to i32
-  br label %.split.loop.exit33.i
-
-.split.loop.exit33.i:                             ; preds = %.preheader.i, %.preheader.preheader.i, %.split.loop.exit.i
-  %.lcssa.i = phi i32 [ %8, %.split.loop.exit.i ], [ %umax.i, %.preheader.preheader.i ], [ %umax.i, %.preheader.i ] ; 2 uses
-  %.not.i100 = icmp eq i32 %.lcssa.i, %i.bn
-  br i1 %.not.i100, label %set_last_default.exit, label %bb.ao
-
-bb.ao:                                            ; preds = %.split.loop.exit33.i
-  %9 = zext i32 %.lcssa.i to i64
-  %10 = getelementptr inbounds nuw [16 x i8], ptr %.pre, i64 %9
-  %11 = load ptr, ptr %10, align 8, !tbaa !95
-  %i.fp = getelementptr inbounds nuw i8, ptr %11, i64 20
+bb.ao:                                            ; preds = %.lr.ph259
+  %i.fp = getelementptr inbounds nuw i8, ptr %i.fm, i64 20
   %i.fq = load i32, ptr %i.fp, align 4, !tbaa !68
   %i.fr = zext i32 %i.fq to i64
   store i64 %i.fr, ptr %i.bi, align 8, !tbaa !40
@@ -533,10 +520,9 @@ bb.ao:                                            ; preds = %.split.loop.exit33.
 bb.ap:                                            ; preds = %bb.an, %.lr.ph.i
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
-  %indvars.iv.next28.i = add i32 %indvars.iv27.i, 1
   br i1 %exitcond.not.i, label %set_last_default.exit, label %.lr.ph.i, !llvm.loop !102
 
-set_last_default.exit:                            ; preds = %bb.ap, %bb.ao, %.split.loop.exit33.i
+set_last_default.exit:                            ; preds = %bb.ap, %.preheader.i, %.preheader.preheader.i, %bb.ao
   %min.iters.check = icmp ult i32 %i.bn, 9
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
@@ -937,9 +923,6 @@ declare i64 @llvm.umax.i64(i64, i64) #24
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.usub.sat.i32(i32, i32) #24
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umax.i32(i32, i32) #24
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.bswap.i32(i32) #24

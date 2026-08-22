@@ -204,9 +204,10 @@ bb.t:                                             ; preds = %_ZN8MapBlock19setLi
   %i.fs = phi i1 [ true, %_ZN8MapBlock19setLightingCompleteE9LightBankhb.exit199 ], [ false, %._crit_edge274.split ]
   %indvars.iv295.sroa.phi = phi ptr [ %5, %_ZN8MapBlock19setLightingCompleteE9LightBankhb.exit199 ], [ %indvars.iv295.sroa.gep373, %._crit_edge274.split ] ; 6 uses
   %indvars.iv295.sroa.phi374.sroa.speculated = phi ptr [ %1, %_ZN8MapBlock19setLightingCompleteE9LightBankhb.exit199 ], [ %i.dw, %._crit_edge274.split ] ; 14 uses
-  %.sroa.040.0.copyload = load i16, ptr %indvars.iv295.sroa.phi, align 8, !tbaa !86 ; 3 uses
+  %.sroa.040.0.copyload = load i16, ptr %indvars.iv295.sroa.phi, align 8, !tbaa !86 ; 2 uses
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %indvars.iv295.sroa.phi, i64 6
   %.sroa.7.0.copyload = load i16, ptr %.sroa.7.0..sroa_idx, align 2, !tbaa !86 ; 2 uses
+  %6 = sext i16 %.sroa.7.0.copyload to i32
   %.not117270 = icmp sgt i16 %.sroa.040.0.copyload, %.sroa.7.0.copyload
   br i1 %.not117270, label %._crit_edge274.split, label %.lr.ph273
 
@@ -240,8 +241,6 @@ bb.t:                                             ; preds = %_ZN8MapBlock19setLi
   %i.gf = sext i16 %.sroa.040.0.copyload to i32
   %i.gg = sext i16 %.sroa.5.0.copyload to i64
   %i.gh = sext i16 %.sroa.6.0.copyload to i64
-  %6 = tail call i16 @llvm.smax.i16(i16 %.sroa.040.0.copyload, i16 %.sroa.7.0.copyload)
-  %smax293 = sext i16 %6 to i32
   br label %.lr.ph268
 
 ._crit_edge274.split:                             ; preds = %._crit_edge269, %.lr.ph273, %bb.t
@@ -257,7 +256,7 @@ bb.t:                                             ; preds = %_ZN8MapBlock19setLi
 
 ._crit_edge269:                                   ; preds = %._crit_edge
   %i.gk = add nsw i32 %.0114271, 1
-  %exitcond294.not = icmp eq i32 %.0114271, %smax293
+  %exitcond294.not = icmp eq i32 %.0114271, %6
   br i1 %exitcond294.not, label %._crit_edge274.split, label %.lr.ph268, !llvm.loop !167
 
 .lr.ph:                                           ; preds = %.lr.ph268, %._crit_edge
@@ -658,9 +657,6 @@ declare i64 @llvm.umin.i64(i64, i64) #17
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #19
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i16 @llvm.smax.i16(i16, i16) #17
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <16 x i8> @llvm.umax.v16i8(<16 x i8>, <16 x i8>) #17

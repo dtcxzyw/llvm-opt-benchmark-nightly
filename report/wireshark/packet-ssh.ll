@@ -204,11 +204,11 @@ bb.cz:                                            ; preds = %bb.cy
   br i1 %.not.i91.i, label %bb.db, label %bb.da
 
 bb.da:                                            ; preds = %bb.cz
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef align 1 dereferenceable(32) %i.fc, ptr noundef nonnull align 1 dereferenceable(32) %i.ov, i64 noundef 32, i1 noundef false) #25
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef align 4 dereferenceable(32) %i.fc, ptr noundef nonnull align 1 dereferenceable(32) %i.ov, i64 noundef 32, i1 noundef false) #25
   br label %bb.dc
 
 bb.db:                                            ; preds = %bb.cz
-  call void @llvm.memset.p0.i64(ptr noundef align 1 dereferenceable(32) %i.fc, i8 noundef 0, i64 noundef 32, i1 noundef false) #25
+  call void @llvm.memset.p0.i64(ptr noundef align 4 dereferenceable(32) %i.fc, i8 noundef 0, i64 noundef 32, i1 noundef false) #25
   br label %bb.dc
 
 bb.dc:                                            ; preds = %bb.db, %bb.da
@@ -232,11 +232,11 @@ bb.de:                                            ; preds = %bb.dd
   br i1 %.not.i165.i.i, label %bb.dg, label %bb.df
 
 bb.df:                                            ; preds = %bb.de
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef align 1 dereferenceable(32) %i.ew, ptr noundef nonnull align 1 dereferenceable(32) %i.pa, i64 noundef 32, i1 noundef false) #25
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef align 4 dereferenceable(32) %i.ew, ptr noundef nonnull align 1 dereferenceable(32) %i.pa, i64 noundef 32, i1 noundef false) #25
   br label %bb.dh
 
 bb.dg:                                            ; preds = %bb.de
-  call void @llvm.memset.p0.i64(ptr noundef align 1 dereferenceable(32) %i.ew, i8 noundef 0, i64 noundef 32, i1 noundef false) #25
+  call void @llvm.memset.p0.i64(ptr noundef align 4 dereferenceable(32) %i.ew, i8 noundef 0, i64 noundef 32, i1 noundef false) #25
   br label %bb.dh
 
 bb.dh:                                            ; preds = %bb.dg, %bb.df
@@ -639,7 +639,7 @@ ssh_get_packet_info.exit.i:                       ; preds = %bb.bs, %bb.br
   %i.lh = getelementptr i8, ptr %i.ky, i64 32
   store ptr null, ptr %i.lh, align 8
   %i.li = getelementptr i8, ptr %i.ky, i64 40
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef align 1 dereferenceable(48) %i.li, ptr noundef nonnull align 16 dereferenceable(48) %i.f, i64 noundef 48, i1 noundef false) #25
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef align 8 dereferenceable(48) %i.li, ptr noundef nonnull align 16 dereferenceable(48) %i.f, i64 noundef 48, i1 noundef false) #25
   %i.lj = select i1 %i.y, ptr @.str.783, ptr @.str.784
   %i.lk = load i32, ptr %i.ac, align 8
   call void (ptr, ...) @ssh_debug_printf(ptr noundef nonnull @.str.782, ptr noundef nonnull %i.lj, i32 noundef %i.lk)
@@ -1042,16 +1042,17 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph43, %._crit_edge40
-  %indvars.iv = phi i64 [ %i.e, %.lr.ph43 ], [ %indvars.iv.next, %._crit_edge40 ] ; 2 uses
+  %indvars.iv = phi i64 [ %i.e, %.lr.ph43 ], [ %indvars.iv.next, %._crit_edge40 ] ; 3 uses
   %.041 = phi i64 [ 0, %.lr.ph43 ], [ %i.ak, %._crit_edge40 ] ; 4 uses
-  %umin = tail call i64 @llvm.umin.i64(i64 %indvars.iv, i64 15)
+  %umin = tail call i64 @llvm.umin.i64(i64 %indvars.iv, i64 15) ; 3 uses
   %i.f = load ptr, ptr @ssh_debug_file, align 8
   %i.g = trunc nuw i64 %.041 to i32
   %i.h = tail call i32 (ptr, i32, ptr, ...) @__fprintf_chk(ptr noundef %i.f, i32 noundef 2, ptr noundef nonnull @.str.752, i32 noundef %i.g) ; 0 uses
   br label %bb.d
 
 .preheader:                                       ; preds = %bb.d
-  br i1 %3, label %.lr.ph, label %.lr.ph39.preheader
+  %.not50 = icmp ugt i64 %indvars.iv, 14
+  br i1 %.not50, label %.lr.ph39.preheader, label %.lr.ph
 
 bb.d:                                             ; preds = %bb.c, %bb.d
   %.02834 = phi i64 [ 0, %bb.c ], [ %i.o, %bb.d ] ; 2 uses
@@ -1061,19 +1062,17 @@ bb.d:                                             ; preds = %bb.c, %bb.d
   %i.k = load i8, ptr %i.j, align 1
   %i.l = zext i8 %i.k to i32
   %i.m = tail call i32 (ptr, i32, ptr, ...) @__fprintf_chk(ptr noundef %i.i, i32 noundef 2, ptr noundef nonnull @.str.753, i32 noundef %i.l) ; 0 uses
-  %i.n = add nuw nsw i64 %.02933, 1               ; 2 uses
-  %i.o = add nuw nsw i64 %.02834, 1               ; 2 uses
-  %3 = icmp samesign ult i64 %.02834, 15          ; 2 uses
-  %4 = icmp samesign ult i64 %i.n, %2
-  %5 = select i1 %3, i1 %4, i1 false
-  br i1 %5, label %bb.d, label %.preheader, !llvm.loop !72
+  %i.n = add nuw nsw i64 %.02933, 1
+  %i.o = add nuw nsw i64 %.02834, 1
+  %exitcond.not = icmp eq i64 %.02834, %umin
+  br i1 %exitcond.not, label %.preheader, label %bb.d, !llvm.loop !72
 
 .lr.ph:                                           ; preds = %.preheader, %.lr.ph
-  %.135.a = phi i64 [ %6, %.lr.ph ], [ %i.o, %.preheader ] ; 2 uses
+  %.135.a = phi i64 [ %.135, %.lr.ph ], [ %umin, %.preheader ] ; 2 uses
+  %.135 = add nuw nsw i64 %.135.a, 1
   %i.p = load ptr, ptr @ssh_debug_file, align 8
   %i.q = tail call i32 (ptr, i32, ptr, ...) @__fprintf_chk(ptr noundef %i.p, i32 noundef 2, ptr noundef nonnull @.str.754) ; 0 uses
-  %6 = add nuw nsw i64 %.135.a, 1
-  %i.r = icmp samesign ult i64 %.135.a, 15
+  %i.r = icmp samesign ult i64 %.135.a, 14
   br i1 %i.r, label %.lr.ph, label %.lr.ph39.preheader, !llvm.loop !73
 
 .lr.ph39.preheader:                               ; preds = %.lr.ph, %.preheader
@@ -1476,7 +1475,7 @@ bb.ap:                                            ; preds = %bb.ao, %bb.an
 
 bb.aq:                                            ; preds = %bb.ap
   %i.cg = getelementptr i8, ptr %0, i64 160
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef align 1 dereferenceable(12) %i.cg, ptr noundef nonnull align 1 dereferenceable(12) %i.cf, i64 noundef 12, i1 noundef false) #25
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef align 4 dereferenceable(12) %i.cg, ptr noundef nonnull align 1 dereferenceable(12) %i.cf, i64 noundef 12, i1 noundef false) #25
   br label %bb.ar
 
 bb.ar:                                            ; preds = %bb.ap, %bb.aq
@@ -1537,11 +1536,11 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef align 1 dereferenceable(32) %i.e, ptr noundef nonnull align 1 dereferenceable(32) %i.d, i64 noundef 32, i1 noundef false) #25
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef align 4 dereferenceable(32) %i.e, ptr noundef nonnull align 1 dereferenceable(32) %i.d, i64 noundef 32, i1 noundef false) #25
   br label %bb.e
 
 bb.d:                                             ; preds = %bb.b
-  tail call void @llvm.memset.p0.i64(ptr noundef align 1 dereferenceable(32) %i.e, i8 noundef 0, i64 noundef 32, i1 noundef false) #25
+  tail call void @llvm.memset.p0.i64(ptr noundef align 4 dereferenceable(32) %i.e, i8 noundef 0, i64 noundef 32, i1 noundef false) #25
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c

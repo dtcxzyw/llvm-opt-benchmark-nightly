@@ -206,7 +206,7 @@ bb.ai:                                            ; preds = %sqlite3DbMallocRaw.
   store i32 %i.dn, ptr %i.do, align 4, !tbaa !1264
   %i.dp = add nuw nsw i32 %.0.i, 1
   %i.dq = zext nneg i32 %i.dp to i64
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.dk, ptr noundef nonnull align 1 dereferenceable(1) %1, i64 %i.dq, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.dk, ptr noundef nonnull align 1 dereferenceable(1) %1, i64 %i.dq, i1 false)
   %i.dr = load i8, ptr %i.dk, align 8, !tbaa !229 ; 2 uses
   %.not86136 = icmp eq i8 %i.dr, 0
   br i1 %.not86136, label %._crit_edge140, label %.lr.ph139
@@ -609,7 +609,7 @@ rbuObjIterGetSetlist.exit.i.i:                    ; preds = %bb.ar, %bb.am, %.pr
   %i.fw = getelementptr inbounds nuw i8, ptr %0, i64 104
   %i.fx = load i32, ptr %i.fw, align 8, !tbaa !1393
   %i.fy = sext i32 %i.fx to i64
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.fv, ptr readonly align 1 %i.cd, i64 %i.fy, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.fv, ptr readonly align 1 %i.cd, i64 %i.fy, i1 false)
   %i.fz = load ptr, ptr %i.db, align 8, !tbaa !1390
   %i.ga = getelementptr inbounds nuw i8, ptr %.1.i.i, i64 16
   store ptr %i.fz, ptr %i.ga, align 8, !tbaa !1389
@@ -1012,7 +1012,7 @@ bb.j:                                             ; preds = %bb.i
   %i.am = getelementptr inbounds nuw i8, ptr %i.l, i64 24
   store ptr %i.al, ptr %i.am, align 8, !tbaa !1367
   %i.an = add i64 %i.g, 1                         ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.al, ptr nonnull align 1 %0, i64 %i.an, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.al, ptr nonnull align 1 %0, i64 %i.an, i1 false)
   %i.ao = getelementptr inbounds nuw i8, ptr %i.al, i64 %i.an
   br label %bb.k
 
@@ -1415,7 +1415,7 @@ bb.g:                                             ; preds = %sqlite3_vfs_find.ex
   %i.z = getelementptr inbounds nuw i8, ptr %i.d, i64 208 ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %i.d, i64 24
   store ptr %i.z, ptr %i.aa, align 8, !tbaa !1532
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.z, ptr nonnull align 1 %0, i64 %i.a, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.z, ptr nonnull align 1 %0, i64 %i.a, i1 false)
   %i.ab = tail call i32 @sqlite3_initialize(), !inline_history !1533
   %.not.i30 = icmp eq i32 %i.ab, 0
   br i1 %.not.i30, label %sqlite3_mutex_alloc.exit, label %sqlite3_mutex_alloc.exit.thread
@@ -1818,7 +1818,7 @@ bb.c:                                             ; preds = %sqlite3_malloc64.ex
   store i32 1, ptr %i.k, align 4, !tbaa !1598
   %i.l = add nuw nsw i32 %.0.i, 1
   %i.m = zext nneg i32 %i.l to i64
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.i, ptr noundef nonnull align 1 dereferenceable(1) %1, i64 %i.m, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.i, ptr noundef nonnull align 1 dereferenceable(1) %1, i64 %i.m, i1 false)
   %i.n = getelementptr inbounds nuw i8, ptr %i.g, i64 96
   store ptr %0, ptr %i.n, align 8, !tbaa !1546
   %i.o = getelementptr inbounds nuw i8, ptr %i.g, i64 104
@@ -2221,7 +2221,7 @@ bb.h:                                             ; preds = %bb.g
   store ptr %i.ao, ptr %i.ap, align 8, !tbaa !1561
   %i.aq = add nuw nsw i32 %i.h, 1
   %i.ar = zext nneg i32 %i.aq to i64
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.ao, ptr noundef nonnull align 1 dereferenceable(1) %1, i64 %i.ar, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.ao, ptr noundef nonnull align 1 dereferenceable(1) %1, i64 %i.ar, i1 false)
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.i, %bb.h
@@ -2624,7 +2624,7 @@ bb.f:                                             ; preds = %sqlite3_malloc64.ex
   %i.bt = getelementptr inbounds nuw i8, ptr %i.br, i64 88 ; 3 uses
   %i.bu = getelementptr inbounds nuw i8, ptr %i.br, i64 56
   store ptr %i.bt, ptr %i.bu, align 8, !tbaa !1558
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.bt, ptr readonly align 1 %.val69, i64 %i.bm, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.bt, ptr readonly align 1 %.val69, i64 %i.bm, i1 false)
   %i.bv = getelementptr inbounds i8, ptr %i.bt, i64 %i.bm ; 2 uses
   %i.bw = getelementptr inbounds nuw i8, ptr %i.br, i64 8
   store ptr %i.bv, ptr %i.bw, align 8, !tbaa !1561
@@ -3027,7 +3027,7 @@ bb.do:                                            ; preds = %sqlite3_malloc64.ex
 bb.dp:                                            ; preds = %bb.do
   %i.sl = getelementptr inbounds nuw i8, ptr %i.sa, i64 8
   store i32 %.054151, ptr %i.sl, align 8, !tbaa !1645
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.se, ptr align 1 %.055149, i64 %i.rx, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.se, ptr align 1 %.055149, i64 %i.rx, i1 false)
   br label %sessionChangeMerge.exit
 
 bb.dq:                                            ; preds = %bb.ec, %.lr.ph285.i
@@ -3430,7 +3430,7 @@ bb.fx:                                            ; preds = %bb.fw
   br i1 %.not66, label %bb.fz, label %bb.fy
 
 bb.fy:                                            ; preds = %bb.fx
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.aad, ptr align 1 %.055149, i64 %i.zr, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.aad, ptr align 1 %.055149, i64 %i.zr, i1 false)
   %i.aai = getelementptr inbounds i8, ptr %i.aad, i64 %i.zr
   store ptr %i.aai, ptr %i.d, align 8, !tbaa !253
   br label %.thread.i85
@@ -3486,7 +3486,7 @@ bb.gd:                                            ; preds = %bb.ga
   br i1 %.not66, label %bb.gf, label %bb.ge
 
 bb.ge:                                            ; preds = %bb.gd
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.aad, ptr align 1 %.055149, i64 %i.zr, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.aad, ptr align 1 %.055149, i64 %i.zr, i1 false)
   %i.aas = getelementptr inbounds i8, ptr %i.aad, i64 %i.zr
   store ptr %i.aas, ptr %i.d, align 8, !tbaa !253
   br label %.thread.i85
@@ -3889,7 +3889,7 @@ bb.tf:                                            ; preds = %bb.te
   store ptr %i.cal, ptr %i.cak, align 8, !tbaa !2679
   %i.cam = add nuw nsw i32 %.0.i4243, 1
   %i.can = zext nneg i32 %i.cam to i64
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.cal, ptr noundef nonnull align 1 dereferenceable(1) %i.bzx, i64 %i.can, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.cal, ptr noundef nonnull align 1 dereferenceable(1) %i.bzx, i64 %i.can, i1 false)
   %i.cao = load i8, ptr %i.cw, align 1, !tbaa !593
   %.not3740 = icmp eq i8 %i.cao, 0
   br i1 %.not3740, label %bb.th, label %bb.tg
@@ -4292,7 +4292,7 @@ bb.bv:                                            ; preds = %bb.bu, %bb.bt, %bb.
 
 bb.bw:                                            ; preds = %bb.bv, %bb.bq
   %.1536.i = phi i32 [ %.0535.i, %bb.bv ], [ 0, %bb.bq ] ; 5 uses
-  %.0499.i = phi i32 [ %i.ux, %bb.bv ], [ %i.uq, %bb.bq ] ; 6 uses
+  %.0499.i = phi i32 [ %i.ux, %bb.bv ], [ %i.uq, %bb.bq ] ; 5 uses
   %i.uy = add nuw nsw i32 %.0499.i, 1             ; 5 uses
   %i.uz = sub nsw i32 %.1536.i, %i.um
   %i.va = add nsw i32 %i.uz, %.0499.i             ; 2 uses
@@ -4544,7 +4544,7 @@ bb.cn:                                            ; preds = %bb.cm
   %i.aba = getelementptr inbounds nuw i8, ptr %i.aas, i64 80 ; 2 uses
   %i.abb = icmp ne i8 %i.aay, 0
   %i.abc = zext nneg i16 %i.aaw to i64
-  %wide.trip.count940.i = zext nneg i32 %i.uy to i64 ; 2 uses
+  %wide.trip.count940.i = zext nneg i32 %i.uy to i64 ; 3 uses
   %i.abd = add i64 %i.aap, -40
   br label %bb.co
 
@@ -4947,7 +4947,7 @@ bb.dz:                                            ; preds = %bb.dy
 
 bb.ea:                                            ; preds = %._crit_edge1065.i, %._crit_edge801.i
   %indvars.iv.next953.pre-phi.i = phi i64 [ %.pre1066.i, %._crit_edge1065.i ], [ %i.alk, %._crit_edge801.i ] ; 2 uses
-  %.8545.ph.i = phi i32 [ %.5542.lcssa.i, %._crit_edge1065.i ], [ %i.all, %._crit_edge801.i ] ; 9 uses
+  %.8545.ph.i = phi i32 [ %.5542.lcssa.i, %._crit_edge1065.i ], [ %i.all, %._crit_edge801.i ] ; 8 uses
   %i.alp = sext i32 %.8545.ph.i to i64
   %i.alq = icmp slt i64 %indvars.iv.next953.pre-phi.i, %i.alp
   br i1 %i.alq, label %.preheader724.i, label %bb.eb, !llvm.loop !3116
@@ -5350,9 +5350,6 @@ freePage.exit.i:                                  ; preds = %freePage.exit.loope
 
 .lr.ph867.preheader.i:                            ; preds = %freePage.exit.i
   %i.bdx = zext nneg i32 %.0496.lcssa11251127.i to i64
-  %smax.i = call i32 @llvm.smax.i32(i32 %.8545.ph.i, i32 %.0499.i)
-  %6 = add nuw i32 %smax.i, 1
-  %wide.trip.count1034.i = zext i32 %6 to i64
   br label %.lr.ph867.i
 
 .lr.ph867.i:                                      ; preds = %freePage.exit658.i, %.lr.ph867.preheader.i
@@ -5374,7 +5371,7 @@ bb.gy:                                            ; preds = %.lr.ph867.i
 freePage.exit658.i:                               ; preds = %bb.gy, %.lr.ph867.i
   %i.beh = phi i32 [ %i.bdy, %.lr.ph867.i ], [ %i.beg, %bb.gy ] ; 2 uses
   %indvars.iv.next1030.i = add nuw nsw i64 %indvars.iv1029.i, 1 ; 2 uses
-  %exitcond1035.not.i = icmp eq i64 %indvars.iv.next1030.i, %wide.trip.count1034.i
+  %exitcond1035.not.i = icmp eq i64 %indvars.iv.next1030.i, %wide.trip.count940.i
   br i1 %exitcond1035.not.i, label %.thread705.i, label %.lr.ph867.i, !llvm.loop !3133
 
 .thread705.i:                                     ; preds = %bb.ft, %bb.gk, %bb.gr, %freePage.exit658.i, %freePage.exit.i, %bb.gj, %.thread692.i, %bb.el, %bb.dz, %bb.dn, %bb.cs, %bb.cp, %bb.cc, %.thread.i87
@@ -5777,7 +5774,7 @@ bb.n:                                             ; preds = %sqlite3DbMallocRaw.
   store ptr %i.as, ptr %i.aw, align 8, !tbaa !571
   %i.ax = getelementptr inbounds nuw i8, ptr %.0.i.i33.i, i64 88
   store i8 3, ptr %i.ax, align 8, !tbaa !574
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.as, ptr noundef nonnull readonly align 1 dereferenceable(1) %2, i64 %i.ao, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.as, ptr noundef nonnull readonly align 1 dereferenceable(1) %2, i64 %i.ao, i1 false)
   %i.ay = tail call fastcc ptr @sqlite3HashInsert(ptr noundef nonnull %i.a, ptr noundef nonnull %i.as, ptr noundef nonnull %.0.i.i33.i) ; 12 uses
   %.not31.i = icmp eq ptr %i.ay, null
   br i1 %.not31.i, label %findCollSeqEntry.exit.thread15, label %bb.o
@@ -6180,7 +6177,7 @@ bb.n:                                             ; preds = %bb.h
   store ptr %i.ay, ptr %i.az, align 8, !tbaa !507
   %i.ba = add nuw nsw i32 %i.d, 1
   %i.bb = zext nneg i32 %i.ba to i64
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.ay, ptr noundef nonnull align 1 dereferenceable(1) %1, i64 %i.bb, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.ay, ptr noundef nonnull align 1 dereferenceable(1) %1, i64 %i.bb, i1 false)
   %i.bc = tail call i32 @sqlite3_initialize(), !inline_history !1533
   %.not.i73 = icmp eq i32 %i.bc, 0
   br i1 %.not.i73, label %sqlite3_mutex_alloc.exit, label %sqlite3_mutex_alloc.exit.thread
@@ -6583,7 +6580,7 @@ bb.t:                                             ; preds = %sqlite3_malloc64.ex
   %i.bx = load ptr, ptr %i.bw, align 8, !tbaa !3347
   %i.by = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.bz = load i64, ptr %i.by, align 8, !tbaa !3364
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.bv, ptr align 1 %i.bx, i64 %i.bz, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.bv, ptr align 1 %i.bx, i64 %i.bz, i1 false)
   store ptr %i.bv, ptr %i.bw, align 8, !tbaa !3347
   store i8 0, ptr %i.i, align 8, !tbaa !3349
   br label %bb.aa
@@ -6986,7 +6983,7 @@ bb.b:                                             ; preds = %bb.a
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.h, i8 0, i64 24, i1 false)
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.i, i8 0, i64 16, i1 false)
   store ptr %i.m, ptr %i.n, align 8, !tbaa !229
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.m, ptr align 1 %2, i64 %i.b, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.m, ptr align 1 %2, i64 %i.b, i1 false)
   %i.o = getelementptr inbounds nuw i8, ptr %i.m, i64 %i.b
   store i8 0, ptr %i.o, align 1, !tbaa !229
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 336
@@ -7389,7 +7386,7 @@ bb.cc:                                            ; preds = %bb.bz
   store i16 %i.kv, ptr %i.kt, align 1
   store ptr %i.ka, ptr %i.kq, align 8, !tbaa !387
   %i.kw = getelementptr inbounds nuw i8, ptr %i.kq, i64 8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %i.kw, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.kw, i8 0, i64 16, i1 false)
   %i.kx = load ptr, ptr %i.dq, align 8, !tbaa !3036
   %i.ky = getelementptr inbounds nuw i8, ptr %i.kx, i64 33 ; 2 uses
   %i.kz = load i16, ptr %i.ky, align 1
@@ -7792,7 +7789,7 @@ bb.ab:                                            ; preds = %bb.aa
   store i16 %i.bl, ptr %i.bj, align 1
   store ptr %5, ptr %i.bg, align 8, !tbaa !387
   %i.bm = getelementptr inbounds nuw i8, ptr %i.bg, i64 8
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %i.bm, i8 0, i64 16, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bm, i8 0, i64 16, i1 false)
   %i.bn = getelementptr inbounds nuw i8, ptr %5, i64 4
   %i.bo = load i32, ptr %i.bn, align 4, !tbaa !390
   %i.bp = and i32 %i.bo, 2048
@@ -8195,7 +8192,7 @@ bb.c:                                             ; preds = %sqlite3Strlen30.exi
 
 bb.d:                                             ; preds = %bb.c
   %i.k = zext nneg i32 %.0.i to i64               ; 2 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.i, ptr align 1 %2, i64 %i.k, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.i, ptr align 1 %2, i64 %i.k, i1 false)
   br label %sqlite3DequoteExpr.exit.i
 
 sqlite3DequoteExpr.exit.i:                        ; preds = %bb.c, %bb.d
@@ -8598,7 +8595,7 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.e
   %i.n = load ptr, ptr %2, align 8, !tbaa !379
   %i.o = zext i32 %i.m to i64
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.j, ptr align 1 %i.n, i64 %i.o, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.j, ptr align 1 %i.n, i64 %i.o, i1 false)
   %.pre = load i32, ptr %i.l, align 8, !tbaa !378
   %i.p = zext i32 %.pre to i64
   br label %bb.g
@@ -8991,7 +8988,7 @@ bb.af:                                            ; preds = %.thread48.i, %bb.x
   %i.dn = getelementptr i8, ptr %i.dl, i64 8      ; 2 uses
   store i32 %.pre-phi.i, ptr %i.dj, align 4, !tbaa !24
   %i.do = sext i32 %2 to i64                      ; 2 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.dn, ptr nonnull readonly align 1 %i.e, i64 %i.do, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 4 %i.dn, ptr nonnull readonly align 1 %i.e, i64 %i.do, i1 false)
   %i.dp = getelementptr inbounds i8, ptr %i.dn, i64 %i.do
   store i8 0, ptr %i.dp, align 1, !tbaa !229
   br label %sqlite3VListAdd.exit
@@ -9086,7 +9083,7 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.d
   %i.l = load ptr, ptr %2, align 8, !tbaa !379
   %i.m = zext i32 %i.k to i64
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.i, ptr align 1 %i.l, i64 %i.m, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.i, ptr align 1 %i.l, i64 %i.m, i1 false)
   %.pre.i = load i32, ptr %i.a, align 8, !tbaa !378
   %i.n = zext i32 %.pre.i to i64
   br label %bb.f
@@ -9275,7 +9272,7 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.e
   %i.n = load ptr, ptr %2, align 8, !tbaa !379
   %i.o = zext i32 %i.m to i64
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.j, ptr align 1 %i.n, i64 %i.o, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.j, ptr align 1 %i.n, i64 %i.o, i1 false)
   %.pre.i = load i32, ptr %i.l, align 8, !tbaa !378
   %i.p = zext i32 %.pre.i to i64
   br label %bb.g
@@ -9678,7 +9675,7 @@ bb.l:                                             ; preds = %bb.k
 
 sqlite3Strlen30.exit42:                           ; preds = %bb.k, %bb.l
   %.0.i41 = phi i64 [ %i.ak, %bb.l ], [ 1, %bb.k ]
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.ae, ptr noundef nonnull align 1 dereferenceable(1) %i.ag, i64 %.0.i41, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.ae, ptr noundef nonnull align 1 dereferenceable(1) %i.ag, i64 %.0.i41, i1 false)
   %i.al = load ptr, ptr %i.a, align 8, !tbaa !452
   %i.am = getelementptr inbounds nuw i8, ptr %.0.i.i, i64 24
   store ptr %i.al, ptr %i.am, align 8, !tbaa !1265
@@ -10081,7 +10078,7 @@ bb.l:                                             ; preds = %sqlite3TokenInit.ex
 
 bb.m:                                             ; preds = %bb.l
   %i.bc = zext nneg i32 %.0.i.i175 to i64         ; 2 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.ba, ptr align 1 %i.as, i64 %i.bc, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ba, ptr align 1 %i.as, i64 %i.bc, i1 false)
   br label %sqlite3DequoteExpr.exit.i
 
 sqlite3DequoteExpr.exit.i:                        ; preds = %bb.l, %bb.m
@@ -10484,8 +10481,8 @@ bb.g:                                             ; preds = %bb.c
   %i.r = add i8 %i.q, 1
   store i8 %i.r, ptr %i.p, align 2, !tbaa !3503
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 280 ; 3 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(136) %i.a, ptr noundef nonnull align 1 dereferenceable(136) %i.s, i64 136, i1 false)
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(136) %i.s, i8 0, i64 136, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(136) %i.a, ptr noundef nonnull align 8 dereferenceable(136) %i.s, i64 136, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(136) %i.s, i8 0, i64 136, i1 false)
   %i.t = load i32, ptr %i.c, align 4, !tbaa !697
   %i.u = or i32 %i.t, 2
   store i32 %i.u, ptr %i.c, align 4, !tbaa !697
@@ -10574,7 +10571,7 @@ bb.r:                                             ; preds = %bb.n
   br label %sqlite3DbFreeNN.exit
 
 sqlite3DbFreeNN.exit:                             ; preds = %bb.i, %bb.k, %bb.m, %sqlite3_mutex_enter.exit.i.i, %bb.q, %bb.r
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(136) %i.s, ptr noundef nonnull align 16 dereferenceable(136) %i.a, i64 136, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(136) %i.s, ptr noundef nonnull align 16 dereferenceable(136) %i.a, i64 136, i1 false)
   %i.ax = load i8, ptr %i.p, align 2, !tbaa !3503
   %i.ay = add i8 %i.ax, -1
   store i8 %i.ay, ptr %i.p, align 2, !tbaa !3503
@@ -10977,7 +10974,7 @@ bb.j:                                             ; preds = %bb.i
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ac, i64 72 ; 3 uses
   %i.af = getelementptr inbounds nuw i8, ptr %i.ac, i64 8
   store ptr %i.ae, ptr %i.af, align 8, !tbaa !229
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.ae, ptr nonnull readonly align 1 %i.w, i64 %i.z, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ae, ptr nonnull readonly align 1 %i.w, i64 %i.z, i1 false)
   %i.ag = getelementptr inbounds nuw i8, ptr %i.ae, i64 %i.z
   store i8 0, ptr %i.ag, align 1, !tbaa !229
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ac, i64 40
@@ -11046,7 +11043,7 @@ bb.c:                                             ; preds = %bb.b
   %i.h = getelementptr inbounds nuw i8, ptr %i.f, i64 72 ; 3 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   store ptr %i.h, ptr %i.i, align 8, !tbaa !229
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.h, ptr nonnull align 1 %2, i64 %i.c, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.h, ptr nonnull align 1 %2, i64 %i.c, i1 false)
   %i.j = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.c
   store i8 0, ptr %i.j, align 1, !tbaa !229
   %i.k = getelementptr inbounds nuw i8, ptr %i.f, i64 40
@@ -11449,7 +11446,7 @@ bb.ha:                                            ; preds = %sqlite3Strlen30.exi
 
 bb.hb:                                            ; preds = %bb.ha
   %i.ahu = zext nneg i32 %.0.i.i491 to i64        ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.ahs, ptr readonly align 1 %i.ahk, i64 %i.ahu, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ahs, ptr readonly align 1 %i.ahk, i64 %i.ahu, i1 false)
   br label %bb.hc
 
 bb.hc:                                            ; preds = %bb.ha, %bb.hb
@@ -11852,7 +11849,7 @@ bb.jh:                                            ; preds = %sqlite3Strlen30.exi
 
 bb.ji:                                            ; preds = %bb.jh
   %i.aqu = zext nneg i32 %.0.i.i524 to i64        ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.aqs, ptr readonly align 1 %.0, i64 %i.aqu, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.aqs, ptr readonly align 1 %.0, i64 %i.aqu, i1 false)
   br label %sqlite3DequoteExpr.exit.i.i528
 
 sqlite3DequoteExpr.exit.i.i528:                   ; preds = %bb.ji, %bb.jh
@@ -11982,7 +11979,7 @@ bb.js:                                            ; preds = %sqlite3Strlen30.exi
 
 bb.jt:                                            ; preds = %bb.js
   %i.asq = zext nneg i32 %.0.i.i543 to i64        ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.aso, ptr readonly align 1 %.0315, i64 %i.asq, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.aso, ptr readonly align 1 %.0315, i64 %i.asq, i1 false)
   br label %sqlite3DequoteExpr.exit.i.i547
 
 sqlite3DequoteExpr.exit.i.i547:                   ; preds = %bb.jt, %bb.js
@@ -12051,7 +12048,7 @@ bb.jy:                                            ; preds = %sqlite3Strlen30.exi
 
 bb.jz:                                            ; preds = %bb.jy
   %i.atj = and i64 %i.atb, 1073741823             ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.ath, ptr nonnull readonly align 1 %.0314, i64 %i.atj, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ath, ptr nonnull readonly align 1 %.0314, i64 %i.atj, i1 false)
   br label %sqlite3DequoteExpr.exit.i.i559
 
 sqlite3DequoteExpr.exit.i.i559:                   ; preds = %bb.jz, %bb.jy
@@ -12454,7 +12451,7 @@ bb.i:                                             ; preds = %bb.f
   store i16 %i.r, ptr %i.p, align 1
   store ptr %.020, ptr %i.l, align 8, !tbaa !387
   %i.s = getelementptr inbounds nuw i8, ptr %i.l, i64 8
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %i.s, i8 0, i64 16, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.s, i8 0, i64 16, i1 false)
   br label %sqlite3SelectDelete.exit
 
 sqlite3SelectDelete.exit:                         ; preds = %bb.h, %bb.g, %bb.e, %bb.i
@@ -12857,7 +12854,7 @@ bb.j:                                             ; preds = %bb.i
   %i.ah = getelementptr inbounds nuw i8, ptr %i.af, i64 72 ; 3 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %i.af, i64 8
   store ptr %i.ah, ptr %i.ai, align 8, !tbaa !229
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.ah, ptr nonnull readonly align 1 %i.z, i64 %i.ac, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ah, ptr nonnull readonly align 1 %i.z, i64 %i.ac, i1 false)
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ah, i64 %i.ac
   store i8 0, ptr %i.aj, align 1, !tbaa !229
   %i.ak = getelementptr inbounds nuw i8, ptr %i.af, i64 40
@@ -13260,7 +13257,7 @@ bb.al:                                            ; preds = %sqlite3Strlen30.exi
 
 bb.am:                                            ; preds = %bb.al
   %i.fb = and i64 %i.et, 1073741823               ; 2 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.ez, ptr nonnull readonly align 1 %.1126, i64 %i.fb, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ez, ptr nonnull readonly align 1 %.1126, i64 %i.fb, i1 false)
   br label %.lr.ph238
 
 .lr.ph238:                                        ; preds = %bb.al, %bb.am
@@ -13663,7 +13660,7 @@ sqlite3WhereMalloc.exit.i:                        ; preds = %bb.aw
 bb.ax:                                            ; preds = %sqlite3WhereMalloc.exit.i
   %i.jh = getelementptr inbounds i8, ptr %i.iw, i64 -8
   %i.ji = load i64, ptr %i.jh, align 8, !tbaa !4324
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.jg, ptr nonnull readonly align 1 %i.iw, i64 %i.ji, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.jg, ptr nonnull readonly align 8 %i.iw, i64 %i.ji, i1 false)
   br label %bb.ay
 
 bb.ay:                                            ; preds = %sqlite3WhereMalloc.exit.i, %bb.ax
@@ -14066,7 +14063,7 @@ sqlite3DbMallocRawNN.exit.thread.i:               ; preds = %sqlite3DbMallocRawN
 
 bb.x:                                             ; preds = %sqlite3DbMallocRawNN.exit.thread.i
   %i.ck = zext nneg i32 %.0.i.i101.i to i64       ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.ci, ptr readonly align 1 %i.bb, i64 %i.ck, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ci, ptr readonly align 1 %i.bb, i64 %i.ck, i1 false)
   br label %sqlite3DequoteExpr.exit.i.i.i
 
 sqlite3DequoteExpr.exit.i.i.i:                    ; preds = %bb.x, %sqlite3DbMallocRawNN.exit.thread.i
@@ -14469,7 +14466,7 @@ bb.m:                                             ; preds = %sqlite3Strlen30.exi
 
 bb.n:                                             ; preds = %bb.m
   %i.bj = zext nneg i32 %.0.i.i94 to i64          ; 2 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.bh, ptr readonly align 1 %i.az, i64 %i.bj, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.bh, ptr readonly align 1 %i.az, i64 %i.bj, i1 false)
   br label %sqlite3DequoteExpr.exit.i.i
 
 sqlite3DequoteExpr.exit.i.i:                      ; preds = %bb.n, %bb.m
@@ -14656,7 +14653,7 @@ bb.aa:                                            ; preds = %sqlite3Strlen30.exi
 
 bb.ab:                                            ; preds = %bb.aa
   %i.eg = zext nneg i32 %.0.i.i98 to i64          ; 2 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.ee, ptr readonly align 1 %i.dw, i64 %i.eg, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ee, ptr readonly align 1 %i.dw, i64 %i.eg, i1 false)
   br label %sqlite3DequoteExpr.exit.i.i102
 
 sqlite3DequoteExpr.exit.i.i102:                   ; preds = %bb.ab, %bb.aa
@@ -15059,7 +15056,7 @@ bb.i:                                             ; preds = %bb.h
   %i.fc = getelementptr inbounds nuw i8, ptr %i.fa, i64 72 ; 3 uses
   %i.fd = getelementptr inbounds nuw i8, ptr %i.fa, i64 8
   store ptr %i.fc, ptr %i.fd, align 8, !tbaa !229
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.fc, ptr nonnull readonly align 1 %.030, i64 %i.ex, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.fc, ptr nonnull readonly align 1 %.030, i64 %i.ex, i1 false)
   %i.fe = getelementptr inbounds nuw i8, ptr %i.fc, i64 %i.ex
   store i8 0, ptr %i.fe, align 1, !tbaa !229
   %i.ff = getelementptr inbounds nuw i8, ptr %i.fa, i64 40
@@ -15207,7 +15204,7 @@ sqlite3DequoteExpr.exit.i:                        ; preds = %sqlite3TokenInit.ex
   %i.bd = getelementptr inbounds nuw i8, ptr %i.bb, i64 72 ; 2 uses
   %i.be = getelementptr inbounds nuw i8, ptr %i.bb, i64 8
   store ptr %i.bd, ptr %i.be, align 8, !tbaa !229
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.bd, ptr noundef nonnull align 1 dereferenceable(3) @.str.734, i64 3, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(3) %i.bd, ptr noundef nonnull align 1 dereferenceable(3) @.str.734, i64 3, i1 false)
   %i.bf = getelementptr inbounds nuw i8, ptr %i.bb, i64 75
   store i8 0, ptr %i.bf, align 1, !tbaa !229
   %i.bg = getelementptr inbounds nuw i8, ptr %i.bb, i64 40
@@ -15234,7 +15231,7 @@ bb.i:                                             ; preds = %sqlite3ExprAlloc.ex
 
 bb.j:                                             ; preds = %bb.i
   %i.bm = zext nneg i32 %.0.i.i to i64            ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.bk, ptr align 1 %i.am, i64 %i.bm, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.bk, ptr align 1 %i.am, i64 %i.bm, i1 false)
   br label %sqlite3DequoteExpr.exit.i201
 
 sqlite3DequoteExpr.exit.i201:                     ; preds = %bb.i, %bb.j
@@ -15266,7 +15263,7 @@ bb.k:                                             ; preds = %sqlite3ExprAlloc.ex
 
 bb.l:                                             ; preds = %bb.k
   %i.bw = zext nneg i32 %.0.i.i195 to i64         ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.bu, ptr align 1 %i.aw, i64 %i.bw, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.bu, ptr align 1 %i.aw, i64 %i.bw, i1 false)
   br label %sqlite3DequoteExpr.exit.i207
 
 sqlite3DequoteExpr.exit.i207:                     ; preds = %bb.k, %bb.l
@@ -15341,7 +15338,7 @@ sqlite3DequoteExpr.exit.i213:                     ; preds = %bb.s
   %i.cw = getelementptr inbounds nuw i8, ptr %i.cu, i64 72 ; 2 uses
   %i.cx = getelementptr inbounds nuw i8, ptr %i.cu, i64 8
   store ptr %i.cw, ptr %i.cx, align 8, !tbaa !229
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.cw, ptr noundef nonnull align 1 dereferenceable(3) @.str.734, i64 3, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(3) %i.cw, ptr noundef nonnull align 1 dereferenceable(3) @.str.734, i64 3, i1 false)
   %i.cy = getelementptr inbounds nuw i8, ptr %i.cu, i64 75
   store i8 0, ptr %i.cy, align 1, !tbaa !229
   %i.cz = getelementptr inbounds nuw i8, ptr %i.cu, i64 40
@@ -15366,7 +15363,7 @@ bb.t:                                             ; preds = %sqlite3ExprAlloc.ex
 
 bb.u:                                             ; preds = %bb.t
   %i.de = zext nneg i32 %.0.i.i to i64            ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.dc, ptr align 1 %i.am, i64 %i.de, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.dc, ptr align 1 %i.am, i64 %i.de, i1 false)
   br label %sqlite3DequoteExpr.exit.i219
 
 sqlite3DequoteExpr.exit.i219:                     ; preds = %bb.t, %bb.u
@@ -15391,7 +15388,7 @@ sqlite3DequoteExpr.exit.i225:                     ; preds = %sqlite3ExprAlloc.ex
   %i.dl = getelementptr inbounds nuw i8, ptr %i.dj, i64 72 ; 2 uses
   %i.dm = getelementptr inbounds nuw i8, ptr %i.dj, i64 8
   store ptr %i.dl, ptr %i.dm, align 8, !tbaa !229
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.dl, ptr noundef nonnull align 1 dereferenceable(3) @.str.733, i64 3, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(3) %i.dl, ptr noundef nonnull align 1 dereferenceable(3) @.str.733, i64 3, i1 false)
   %i.dn = getelementptr inbounds nuw i8, ptr %i.dj, i64 75
   store i8 0, ptr %i.dn, align 1, !tbaa !229
   %i.do = getelementptr inbounds nuw i8, ptr %i.dj, i64 40
@@ -15416,7 +15413,7 @@ bb.v:                                             ; preds = %sqlite3ExprAlloc.ex
 
 bb.w:                                             ; preds = %bb.v
   %i.dt = zext nneg i32 %.0.i.i to i64            ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.dr, ptr align 1 %i.am, i64 %i.dt, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.dr, ptr align 1 %i.am, i64 %i.dt, i1 false)
   br label %sqlite3DequoteExpr.exit.i231
 
 sqlite3DequoteExpr.exit.i231:                     ; preds = %bb.v, %bb.w
@@ -15498,7 +15495,7 @@ sqlite3DequoteExpr.exit.i240:                     ; preds = %bb.ae
   %i.eu = getelementptr inbounds nuw i8, ptr %i.es, i64 72 ; 2 uses
   %i.ev = getelementptr inbounds nuw i8, ptr %i.es, i64 8
   store ptr %i.eu, ptr %i.ev, align 8, !tbaa !229
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.eu, ptr noundef nonnull align 1 dereferenceable(3) @.str.733, i64 3, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(3) %i.eu, ptr noundef nonnull align 1 dereferenceable(3) @.str.733, i64 3, i1 false)
   %i.ew = getelementptr inbounds nuw i8, ptr %i.es, i64 75
   store i8 0, ptr %i.ew, align 1, !tbaa !229
   %i.ex = getelementptr inbounds nuw i8, ptr %i.es, i64 40
@@ -15523,7 +15520,7 @@ bb.af:                                            ; preds = %sqlite3ExprAlloc.ex
 
 bb.ag:                                            ; preds = %bb.af
   %i.fc = zext nneg i32 %.0.i.i to i64            ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.fa, ptr align 1 %i.am, i64 %i.fc, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.fa, ptr align 1 %i.am, i64 %i.fc, i1 false)
   br label %sqlite3DequoteExpr.exit.i246
 
 sqlite3DequoteExpr.exit.i246:                     ; preds = %bb.af, %bb.ag
@@ -15747,7 +15744,7 @@ sqlite3Expr.exit.thread:                          ; preds = %sqlite3SchemaToInde
   %i.ia = getelementptr inbounds nuw i8, ptr %i.hy, i64 72 ; 2 uses
   %i.ib = getelementptr inbounds nuw i8, ptr %i.hy, i64 8
   store ptr %i.ia, ptr %i.ib, align 8, !tbaa !229
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(29) %i.ia, ptr noundef nonnull align 1 dereferenceable(29) @.str.125, i64 29, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(29) %i.ia, ptr noundef nonnull align 1 dereferenceable(29) @.str.125, i64 29, i1 false)
   %i.ic = getelementptr inbounds nuw i8, ptr %i.hy, i64 101
   store i8 0, ptr %i.ic, align 1, !tbaa !229
   %i.id = getelementptr inbounds nuw i8, ptr %i.hy, i64 40 ; 2 uses
@@ -16150,7 +16147,7 @@ bb.m:                                             ; preds = %sqlite3DbMallocRaw.
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(112) %i.bm, i8 0, i64 112, i1 false)
   %i.bn = getelementptr inbounds nuw i8, ptr %i.bl, i64 120 ; 2 uses
   store ptr %i.bn, ptr %i.bl, align 8, !tbaa !949
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(13) %i.bn, ptr noundef nonnull align 1 dereferenceable(13) @.str.405, i64 13, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(13) %i.bn, ptr noundef nonnull align 1 dereferenceable(13) @.str.405, i64 13, i1 false)
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bl, i64 54
   store i16 3, ptr %i.bo, align 2, !tbaa !883
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bl, i64 52
@@ -16553,7 +16550,7 @@ bb.be:                                            ; preds = %sqlite3_malloc64.ex
   %i.fn = load ptr, ptr %i.ea, align 8, !tbaa !3388
   %i.fo = load i32, ptr %i.en, align 8, !tbaa !3389
   %i.fp = sext i32 %i.fo to i64
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.fm, ptr align 1 %i.fn, i64 %i.fp, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.fm, ptr align 1 %i.fn, i64 %i.fp, i1 false)
   store ptr %i.fm, ptr %i.ea, align 8, !tbaa !3388
   %i.fq = load i32, ptr %i.en, align 8, !tbaa !3389
   %i.fr = sext i32 %i.fq to i64
@@ -16956,7 +16953,7 @@ bb.f:                                             ; preds = %sqlite3_malloc64.ex
   store ptr %0, ptr %i.av, align 8, !tbaa !5303
   %i.aw = getelementptr inbounds nuw i8, ptr %i.an, i64 524
   store i32 1, ptr %i.aw, align 4, !tbaa !5304
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.aq, ptr nonnull align 1 %.043, i64 %i.ai, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.aq, ptr nonnull align 1 %.043, i64 %i.ai, i1 false)
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.at, ptr nonnull align 1 %.042, i64 %i.aj, i1 false)
   %i.ax = load ptr, ptr %i.ap, align 8, !tbaa !5296
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ax, i64 40
@@ -17359,7 +17356,7 @@ bb.au:                                            ; preds = %bb.at
 
 bb.av:                                            ; preds = %bb.au
   %i.gz = sext i32 %i.gb to i64                   ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.gv, ptr readonly align 1 %i.gc, i64 %i.gz, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.gv, ptr readonly align 1 %i.gc, i64 %i.gz, i1 false)
   br label %._crit_edge.i
 
 ._crit_edge.i:                                    ; preds = %bb.av, %bb.au
@@ -17762,15 +17759,15 @@ vector.body:                                      ; preds = %bb.b
   %i.t = getelementptr inbounds nuw i8, ptr %i.b, i64 129
   store i8 0, ptr %i.t, align 1, !tbaa !229
   %i.u = getelementptr inbounds nuw i8, ptr %i.b, i64 130
-  store i8 0, ptr %i.u, align 1, !tbaa !229
+  store i8 0, ptr %i.u, align 2, !tbaa !229
   %i.v = getelementptr inbounds nuw i8, ptr %i.b, i64 131
   store i8 -1, ptr %i.v, align 1, !tbaa !229
   %i.w = getelementptr inbounds nuw i8, ptr %i.b, i64 132
-  store i8 -1, ptr %i.w, align 1, !tbaa !229
+  store i8 -1, ptr %i.w, align 4, !tbaa !229
   %i.x = getelementptr inbounds nuw i8, ptr %i.b, i64 133
   store i8 -1, ptr %i.x, align 1, !tbaa !229
   %i.y = getelementptr inbounds nuw i8, ptr %i.b, i64 134
-  store i8 -1, ptr %i.y, align 1, !tbaa !229
+  store i8 -1, ptr %i.y, align 2, !tbaa !229
   %i.z = getelementptr inbounds nuw i8, ptr %i.b, i64 135
   store i8 -1, ptr %i.z, align 1, !tbaa !229
   br label %.critedge
@@ -18173,7 +18170,7 @@ bb.h:                                             ; preds = %sqlite3_malloc64.ex
   store ptr %i.aw, ptr %i.av, align 8, !tbaa !5749
   %i.ax = load ptr, ptr %i.b, align 8, !tbaa !253
   %i.ay = sext i32 %i.at to i64
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.aw, ptr align 1 %i.ax, i64 %i.ay, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.aw, ptr align 1 %i.ax, i64 %i.ay, i1 false)
   %i.az = load i32, ptr %i.e, align 4, !tbaa !24  ; 5 uses
   %i.ba = icmp slt i32 %i.az, %3
   br i1 %i.ba, label %bb.i, label %bb.k
@@ -18576,7 +18573,7 @@ bb.bs:                                            ; preds = %bb.br
 
 bb.bt:                                            ; preds = %bb.bs
   %i.lp = sext i32 %i.ky to i64                   ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.ll, ptr readonly align 1 %i.kx, i64 %i.lp, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ll, ptr readonly align 1 %i.kx, i64 %i.lp, i1 false)
   br label %._crit_edge.i.i
 
 ._crit_edge.i.i:                                  ; preds = %bb.bt, %bb.bs
@@ -18979,7 +18976,7 @@ bb.e:                                             ; preds = %sqlite3_malloc64.ex
   %i.r = getelementptr inbounds nuw i8, ptr %i.p, i64 48 ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.p, i64 8
   store ptr %i.r, ptr %i.s, align 8, !tbaa !6471
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.r, ptr nonnull align 1 %1, i64 %i.q, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.r, ptr nonnull align 1 %1, i64 %i.q, i1 false)
   store ptr %0, ptr %i.p, align 8, !tbaa !6538
   %i.t = getelementptr inbounds nuw i8, ptr %i.p, i64 16
   store ptr %2, ptr %i.t, align 8, !tbaa !6539
@@ -19018,7 +19015,7 @@ bb.b:                                             ; preds = %sqlite3_malloc64.ex
   %i.f = add i64 %i.a, 1
   %i.g = getelementptr inbounds nuw i8, ptr %i.d, i64 96 ; 2 uses
   store ptr %i.g, ptr %i.d, align 8, !tbaa !6545
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.g, ptr nonnull readonly align 1 %1, i64 %i.f, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.g, ptr nonnull readonly align 1 %1, i64 %i.f, i1 false)
   %i.h = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   store ptr %2, ptr %i.h, align 8, !tbaa !6547
   %i.i = getelementptr inbounds nuw i8, ptr %i.d, i64 80
@@ -19167,7 +19164,7 @@ bb.c:                                             ; preds = %sqlite3_malloc64.ex
   %i.h = add i64 %i.c, 1
   %i.i = getelementptr inbounds nuw i8, ptr %i.f, i64 96 ; 2 uses
   store ptr %i.i, ptr %i.f, align 8, !tbaa !6545
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.i, ptr nonnull readonly align 1 %1, i64 %i.h, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.i, ptr nonnull readonly align 1 %1, i64 %i.h, i1 false)
   %i.j = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   store ptr %2, ptr %i.j, align 8, !tbaa !6547
   %i.k = getelementptr inbounds nuw i8, ptr %i.f, i64 80
@@ -19570,7 +19567,7 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.m, ptr align 1 %2, i64 %i.h, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.m, ptr align 1 %2, i64 %i.h, i1 false)
   %i.w = load i32, ptr %i.d, align 8, !tbaa !24
   %i.x = sext i32 %i.w to i64
   %i.y = getelementptr [40 x i8], ptr %i.a, i64 %i.x
@@ -19973,7 +19970,7 @@ bb.if:                                            ; preds = %sqlite3_malloc64.ex
 bb.ig:                                            ; preds = %bb.if
   %i.agu = load ptr, ptr %i.agf, align 8, !tbaa !7134
   %i.agv = sext i32 %i.agr to i64
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.agq, ptr align 1 %i.agu, i64 %i.agv, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.agq, ptr align 1 %i.agu, i64 %i.agv, i1 false)
   br label %bb.ih
 
 bb.ih:                                            ; preds = %bb.ig, %bb.if
@@ -20376,7 +20373,7 @@ bb.ad:                                            ; preds = %sqlite3Fts5BufferSi
   %i.dw = phi i64 [ %i.dv, %sqlite3Fts5BufferSize.exit.thread.i.i ], [ 0, %._crit_edge.i.i ]
   %i.dx = phi ptr [ %i.ds, %sqlite3Fts5BufferSize.exit.thread.i.i ], [ %.pre.i.i, %._crit_edge.i.i ]
   %i.dy = getelementptr inbounds i8, ptr %i.dx, i64 %i.dw
-  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.dy, ptr nonnull readonly align 1 %i.cw, i64 %.pre-phi.i, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.dy, ptr nonnull readonly align 8 %i.cw, i64 %.pre-phi.i, i1 false)
   %i.dz = load i32, ptr %i.dk, align 8, !tbaa !6439
   %i.ea = add i32 %i.dz, %i.cy
   store i32 %i.ea, ptr %i.dk, align 8, !tbaa !6439
@@ -20765,7 +20762,7 @@ bb.ac:                                            ; preds = %sqlite3Fts5BufferSi
   %i.ec = phi i64 [ %i.eb, %sqlite3Fts5BufferSize.exit.thread.i.i ], [ 0, %._crit_edge.i.i ]
   %i.ed = phi ptr [ %i.dy, %sqlite3Fts5BufferSize.exit.thread.i.i ], [ %.pre.i.i, %._crit_edge.i.i ]
   %i.ee = getelementptr inbounds i8, ptr %i.ed, i64 %i.ec
-  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ee, ptr nonnull readonly align 1 %i.db, i64 %.pre-phi.i, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ee, ptr nonnull readonly align 8 %i.db, i64 %.pre-phi.i, i1 false)
   %i.ef = load i32, ptr %i.dq, align 8, !tbaa !6439
   %i.eg = add i32 %i.ef, %i.dd
   store i32 %i.eg, ptr %i.dq, align 8, !tbaa !6439
@@ -21168,7 +21165,7 @@ bb.f:                                             ; preds = %sqlite3_malloc64.ex
   store i32 %3, ptr %i.bf, align 8, !tbaa !7684
   %i.bg = getelementptr inbounds nuw i8, ptr %i.bb, i64 12
   store i32 %1, ptr %i.bg, align 4, !tbaa !7683
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.be, ptr align 1 %2, i64 %.pre, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.be, ptr align 1 %2, i64 %.pre, i1 false)
   %i.bh = load ptr, ptr %i.ap, align 8, !tbaa !7675
   %i.bi = getelementptr inbounds nuw i8, ptr %i.bb, i64 16
   store ptr %i.bh, ptr %i.bi, align 8, !tbaa !7677
@@ -21571,7 +21568,7 @@ bb.ao:                                            ; preds = %bb.ah
   br label %sqlite3Fts5UnicodeCatParse.exit.thread.i.preheader
 
 bb.ap:                                            ; preds = %bb.ah
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %i.ap, i8 1, i64 7, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(7) %i.ap, i8 1, i64 7, i1 false)
   br label %sqlite3Fts5UnicodeCatParse.exit.thread.i.preheader
 
 bb.aq:                                            ; preds = %bb.h
@@ -21974,7 +21971,7 @@ bb.aa:                                            ; preds = %sqlite3_malloc64.ex
   %i.dk = getelementptr inbounds i8, ptr %i.di, i64 %i.w ; 2 uses
   %i.dl = getelementptr inbounds nuw i8, ptr %i.dc, i64 32 ; 2 uses
   store ptr %i.dk, ptr %i.dl, align 8, !tbaa !7838
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.di, ptr nonnull align 1 %i.q, i64 %i.w, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.di, ptr nonnull align 1 %i.q, i64 %i.w, i1 false)
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.dk, ptr nonnull align 1 %i.o, i64 %i.u, i1 false)
   %i.dm = load ptr, ptr %i.dj, align 8, !tbaa !7839 ; 6 uses
   %i.dn = load i8, ptr %i.dm, align 1, !tbaa !229 ; 3 uses
@@ -22377,7 +22374,7 @@ bb.d:                                             ; preds = %sqlite3_malloc64.ex
   %i.ak = getelementptr inbounds nuw i8, ptr %i.y, i64 38
   store i8 %i.aj, ptr %i.ak, align 2, !tbaa !7958
   %i.al = load ptr, ptr %i.l, align 8, !tbaa !253
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.aa, ptr align 1 %i.al, i64 %i.s, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.aa, ptr align 1 %i.al, i64 %i.s, i1 false)
   %i.am = load ptr, ptr %i.o, align 8, !tbaa !253
   %i.an = ashr exact i64 %i.af, 32                ; 3 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.ad, ptr align 1 %i.am, i64 %i.an, i1 false)
@@ -22780,7 +22777,7 @@ bb.b:                                             ; preds = %sqlite3_malloc64.ex
   %i.y = getelementptr inbounds nuw i8, ptr %i.m, i64 37 ; 2 uses
   store i8 4, ptr %i.y, align 1, !tbaa !7907
   %i.z = load ptr, ptr %i.c, align 8, !tbaa !253
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.o, ptr align 1 %i.z, i64 %i.e, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.o, ptr align 1 %i.z, i64 %i.e, i1 false)
   %i.aa = load ptr, ptr %i.f, align 8, !tbaa !253
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.r, ptr align 1 %i.aa, i64 %i.h, i1 false)
   %i.ab = load ptr, ptr %i.v, align 8, !tbaa !7974
@@ -23183,7 +23180,7 @@ bb.ar:                                            ; preds = %sqlite3Malloc.exit
   %i.ev = load ptr, ptr %i.eu, align 8, !tbaa !1620
   %i.ew = load i32, ptr %i.cy, align 8, !tbaa !1645
   %i.ex = sext i32 %i.ew to i64
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.es, ptr align 1 %i.ev, i64 %i.ex, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.es, ptr align 1 %i.ev, i64 %i.ex, i1 false)
   %i.ey = getelementptr inbounds nuw i8, ptr %.0.i, i64 8 ; 12 uses
   %i.ez = load i32, ptr %i.ey, align 8, !tbaa !1645 ; 2 uses
   %i.fa = add nsw i32 %i.ez, 1
@@ -23586,7 +23583,7 @@ bb.al:                                            ; preds = %sqlite3_malloc.exit
   %i.ex = getelementptr inbounds nuw i8, ptr %i.eu, i64 8
   store ptr %i.ew, ptr %i.ex, align 8, !tbaa !8327
   %i.ey = load ptr, ptr %i.bi, align 8, !tbaa !8325
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.ew, ptr align 4 %i.ey, i64 %i.bt, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ew, ptr align 4 %i.ey, i64 %i.bt, i1 false)
   %i.ez = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 13 uses
   %i.fa = getelementptr inbounds nuw i8, ptr %6, i64 12 ; 19 uses
   %i.fb = tail call i32 @sqlite3_initialize(), !inline_history !1059

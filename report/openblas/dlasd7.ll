@@ -202,7 +202,7 @@ middle.block:                                     ; preds = %vector.body
   br i1 %.not417434, label %._crit_edge438, label %iter.check
 
 iter.check:                                       ; preds = %._crit_edge
-  %i.ch = sext i32 %i.ah to i64                   ; 9 uses
+  %i.ch = sext i32 %i.ah to i64                   ; 8 uses
   %i.ci = sext i32 %i.z to i64                    ; 3 uses
   %i.cj = add nsw i64 %i.ci, 1
   %i.ck = sub nsw i64 %i.cj, %i.ch                ; 7 uses
@@ -213,8 +213,7 @@ vector.memcheck580:                               ; preds = %iter.check
   %i.cl = shl nsw i64 %i.ch, 3
   %i.cm = add nsw i64 %i.cl, -8                   ; 2 uses
   %scevgep581 = getelementptr i8, ptr %6, i64 %i.cm ; 2 uses
-  %smax582 = tail call i64 @llvm.smax.i64(i64 %i.ci, i64 %i.ch)
-  %i.cn = shl nsw i64 %smax582, 3                 ; 2 uses
+  %i.cn = shl nsw i64 %i.ci, 3                    ; 2 uses
   %scevgep583.a = getelementptr i8, ptr %6, i64 %i.cn ; 2 uses
   %scevgep584.a = getelementptr i8, ptr %8, i64 %i.cm ; 2 uses
   %scevgep585.a = getelementptr i8, ptr %8, i64 %i.cn ; 2 uses
@@ -616,9 +615,6 @@ declare double @llvm.fabs.f64(double) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #3
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.smax.i64(i64, i64) #3
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #4
