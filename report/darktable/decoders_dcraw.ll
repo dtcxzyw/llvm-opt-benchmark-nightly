@@ -205,26 +205,33 @@ bb.g:                                             ; preds = %bb.d, %bb.f, %bb.c
   %.065 = phi i32 [ %i.ax, %bb.f ], [ 0, %bb.d ], [ 0, %bb.c ] ; 2 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 5600 ; 2 uses
   %i.az = icmp samesign ugt i32 %.168, 2
-  br i1 %i.az, label %.lr.ph, label %.critedge
+  br i1 %i.az, label %.lr.ph.preheader, label %.critedge
 
-.lr.ph:                                           ; preds = %bb.g, %bb.h
-  %.2119 = phi i32 [ %2, %bb.h ], [ %.168, %bb.g ] ; 4 uses
-  %1 = zext nneg i32 %.2119 to i64
-  %i.ba = getelementptr [2 x i8], ptr %i.ay, i64 %1 ; 2 uses
+.lr.ph.preheader:                                 ; preds = %bb.g
+  %1 = zext nneg i32 %.168 to i64
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.h
+  %indvars.iv = phi i64 [ %1, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.h ] ; 4 uses
+  %i.ba = getelementptr [2 x i8], ptr %i.ay, i64 %indvars.iv ; 2 uses
   %i.bb = getelementptr i8, ptr %i.ba, i64 -4
   %i.bc = load i16, ptr %i.bb, align 2, !tbaa !96
   %i.bd = getelementptr i8, ptr %i.ba, i64 -2
   %i.be = load i16, ptr %i.bd, align 2, !tbaa !96
   %i.bf = icmp eq i16 %i.bc, %i.be
-  br i1 %i.bf, label %bb.h, label %.critedge
+  br i1 %i.bf, label %bb.h, label %.critedge.loopexit.split.loop.exit171
 
 bb.h:                                             ; preds = %.lr.ph
-  %2 = add nsw i32 %.2119, -1
-  %i.bg = icmp sgt i32 %.2119, 3
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
+  %i.bg = icmp sgt i64 %indvars.iv, 3
   br i1 %i.bg, label %.lr.ph, label %.critedge, !llvm.loop !208
 
-.critedge:                                        ; preds = %.lr.ph, %bb.h, %bb.g
-  %.2.lcssa = phi i32 [ %.168, %bb.g ], [ 2, %bb.h ], [ %.2119, %.lr.ph ]
+.critedge.loopexit.split.loop.exit171:            ; preds = %.lr.ph
+  %2 = trunc nuw nsw i64 %indvars.iv to i32
+  br label %.critedge
+
+.critedge:                                        ; preds = %bb.h, %.critedge.loopexit.split.loop.exit171, %bb.g
+  %.2.lcssa = phi i32 [ %.168, %bb.g ], [ %2, %.critedge.loopexit.split.loop.exit171 ], [ 2, %bb.h ]
   %i.bh = zext nneg i32 %.1 to i64
   %i.bi = getelementptr inbounds nuw [32 x i8], ptr @_ZZN6LibRaw14nikon_load_rawEvE10nikon_tree, i64 %i.bh ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)

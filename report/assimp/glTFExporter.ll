@@ -205,7 +205,7 @@ bb.x:                                             ; preds = %bb.t
   %i.cv = getelementptr inbounds nuw i8, ptr %i.cq, i64 56 ; 2 uses
   store ptr %i.cv, ptr %i.cu, align 8
   store i8 0, ptr %i.cv, align 8
-  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN4glTF4NodeE, i64 16), ptr %i.cq, align 8
+  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN4glTF4NodeE, i64 16), ptr %i.cq, align 16
   %i.cw = getelementptr inbounds nuw i8, ptr %i.cq, i64 72
   %i.cx = getelementptr inbounds nuw i8, ptr %i.cq, i64 200
   store i8 0, ptr %i.cx, align 8
@@ -219,11 +219,11 @@ bb.x:                                             ; preds = %bb.t
   %i.dc = getelementptr inbounds nuw i8, ptr %i.cq, i64 312
   %i.dd = getelementptr inbounds nuw i8, ptr %i.cq, i64 328 ; 2 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.cw, i8 0, i64 48, i1 false)
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(36) %i.db, i8 0, i64 36, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(36) %i.db, i8 0, i64 36, i1 false)
   store ptr %i.dd, ptr %i.dc, align 8
   store i8 0, ptr %i.dd, align 8
   %i.de = getelementptr inbounds nuw i8, ptr %i.cq, i64 352
-  store i32 0, ptr %i.de, align 8
+  store i32 0, ptr %i.de, align 16
   %i.df = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %1) #30
   %i.dg = call noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %i.cs, i64 noundef 0, i64 noundef 0, ptr noundef nonnull %1, i64 noundef %i.df) ; 0 uses
   %i.dh = load i16, ptr %i.cl, align 2
@@ -626,7 +626,7 @@ bb.l:                                             ; preds = %_ZNSt7__cxx1112basi
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ad, i64 56 ; 2 uses
   store ptr %i.ai, ptr %i.ah, align 8
   store i8 0, ptr %i.ai, align 8
-  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN4glTF5SceneE, i64 16), ptr %i.ad, align 8
+  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN4glTF5SceneE, i64 16), ptr %i.ad, align 16
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ad, i64 72
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.aj, i8 0, i64 24, i1 false)
   %i.ak = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %1) #30
@@ -1029,23 +1029,24 @@ bb.i:                                             ; preds = %._crit_edge
 
 .lr.ph121.preheader:                              ; preds = %bb.i
   %i.aw = add nuw nsw i32 %3, 1
+  %4 = zext nneg i32 %i.aw to i64
   br label %.lr.ph121
 
 bb.j:                                             ; preds = %.lr.ph121
-  %4 = add nsw i32 %.0119, -1
-  %i.ax = icmp slt i32 %.0119, 4
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
+  %5 = trunc nuw i64 %indvars.iv to i32
+  %i.ax = icmp slt i32 %5, 4
   br i1 %i.ax, label %.loopexit142, label %.lr.ph121, !llvm.loop !225
 
 .lr.ph121:                                        ; preds = %.lr.ph121.preheader, %bb.j
-  %.0119 = phi i32 [ %4, %bb.j ], [ %i.aw, %.lr.ph121.preheader ] ; 3 uses
-  %5 = zext nneg i32 %.0119 to i64                ; 2 uses
-  %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 %5
+  %indvars.iv = phi i64 [ %4, %.lr.ph121.preheader ], [ %indvars.iv.next, %bb.j ] ; 4 uses
+  %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 %indvars.iv
   %i.az = load i8, ptr %i.ay, align 1
   %.not = icmp eq i8 %i.az, 48
   br i1 %.not, label %bb.j, label %.loopexit
 
 .loopexit:                                        ; preds = %.lr.ph121
-  %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 %5
+  %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 %indvars.iv
   %i.bb = getelementptr inbounds nuw i8, ptr %i.ba, i64 1
   br label %_ZN9rapidjson8internal13WriteExponentEiPc.exit
 
@@ -1448,9 +1449,9 @@ bb.l:                                             ; preds = %_ZNSt7__cxx1112basi
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ad, i64 56 ; 2 uses
   store ptr %i.ai, ptr %i.ah, align 8
   store i8 0, ptr %i.ai, align 8
-  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN4glTF10BufferViewE, i64 16), ptr %i.ad, align 8
+  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN4glTF10BufferViewE, i64 16), ptr %i.ad, align 16
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ad, i64 80
-  store i32 0, ptr %i.aj, align 8
+  store i32 0, ptr %i.aj, align 16
   %i.ak = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %1) #30
   %i.al = call noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %i.af, i64 noundef 0, i64 noundef 0, ptr noundef nonnull %1, i64 noundef %i.ak) ; 0 uses
   %i.am = call { ptr, i32 } @_ZN4glTF8LazyDictINS_10BufferViewEE3AddEPS1_(ptr noundef nonnull align 8 dereferenceable(120) %0, ptr noundef nonnull %i.ad)
@@ -1853,11 +1854,11 @@ bb.l:                                             ; preds = %_ZNSt7__cxx1112basi
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ad, i64 56 ; 2 uses
   store ptr %i.ai, ptr %i.ah, align 8
   store i8 0, ptr %i.ai, align 8
-  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN4glTF8AccessorE, i64 16), ptr %i.ad, align 8
+  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN4glTF8AccessorE, i64 16), ptr %i.ad, align 16
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ad, i64 80
-  store i32 0, ptr %i.aj, align 8
+  store i32 0, ptr %i.aj, align 16
   %i.ak = getelementptr inbounds nuw i8, ptr %i.ad, i64 112
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.ak, i8 0, i64 48, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(48) %i.ak, i8 0, i64 48, i1 false)
   %i.al = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %1) #30
   %i.am = call noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %i.af, i64 noundef 0, i64 noundef 0, ptr noundef nonnull %1, i64 noundef %i.al) ; 0 uses
   %i.an = call { ptr, i32 } @_ZN4glTF8LazyDictINS_8AccessorEE3AddEPS1_(ptr noundef nonnull align 8 dereferenceable(120) %0, ptr noundef nonnull %i.ad)
@@ -2260,15 +2261,15 @@ bb.x:                                             ; preds = %bb.t
   %i.cv = getelementptr inbounds nuw i8, ptr %i.cq, i64 56 ; 2 uses
   store ptr %i.cv, ptr %i.cu, align 8
   store i8 0, ptr %i.cv, align 8
-  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN4glTF4MeshE, i64 16), ptr %i.cq, align 8
+  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN4glTF4MeshE, i64 16), ptr %i.cq, align 16
   %i.cw = getelementptr inbounds nuw i8, ptr %i.cq, i64 72
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.cw, i8 0, i64 24, i1 false)
   %i.cx = getelementptr inbounds nuw i8, ptr %i.cq, i64 96 ; 3 uses
   %i.cy = getelementptr inbounds nuw i8, ptr %i.cq, i64 104
   store ptr %i.cx, ptr %i.cy, align 8
-  store ptr %i.cx, ptr %i.cx, align 8
+  store ptr %i.cx, ptr %i.cx, align 16
   %i.cz = getelementptr inbounds nuw i8, ptr %i.cq, i64 112
-  store i64 0, ptr %i.cz, align 8
+  store i64 0, ptr %i.cz, align 16
   %i.da = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %1) #30
   %i.db = call noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %i.cs, i64 noundef 0, i64 noundef 0, ptr noundef nonnull %1, i64 noundef %i.da) ; 0 uses
   %i.dc = load i16, ptr %i.cl, align 2
@@ -2647,7 +2648,7 @@ bb.x:                                             ; preds = %bb.t
   %i.cv = getelementptr inbounds nuw i8, ptr %i.cq, i64 56 ; 2 uses
   store ptr %i.cv, ptr %i.cu, align 8
   store i8 0, ptr %i.cv, align 8
-  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN4glTF6CameraE, i64 16), ptr %i.cq, align 8
+  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN4glTF6CameraE, i64 16), ptr %i.cq, align 16
   %i.cw = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %1) #30
   %i.cx = call noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %i.cs, i64 noundef 0, i64 noundef 0, ptr noundef nonnull %1, i64 noundef %i.cw) ; 0 uses
   %i.cy = load i16, ptr %i.cl, align 2
@@ -3026,7 +3027,7 @@ bb.x:                                             ; preds = %bb.t
   %i.cv = getelementptr inbounds nuw i8, ptr %i.cq, i64 56 ; 2 uses
   store ptr %i.cv, ptr %i.cu, align 8
   store i8 0, ptr %i.cv, align 8
-  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN4glTF5LightE, i64 16), ptr %i.cq, align 8
+  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN4glTF5LightE, i64 16), ptr %i.cq, align 16
   %i.cw = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %1) #30
   %i.cx = call noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %i.cs, i64 noundef 0, i64 noundef 0, ptr noundef nonnull %1, i64 noundef %i.cw) ; 0 uses
   %i.cy = load i16, ptr %i.cl, align 2
@@ -3429,11 +3430,11 @@ bb.x:                                             ; preds = %bb.t
   %i.cv = getelementptr inbounds nuw i8, ptr %i.cq, i64 56 ; 2 uses
   store ptr %i.cv, ptr %i.cu, align 8
   store i8 0, ptr %i.cv, align 8
-  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN4glTF8AccessorE, i64 16), ptr %i.cq, align 8
+  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN4glTF8AccessorE, i64 16), ptr %i.cq, align 16
   %i.cw = getelementptr inbounds nuw i8, ptr %i.cq, i64 80
-  store i32 0, ptr %i.cw, align 8
+  store i32 0, ptr %i.cw, align 16
   %i.cx = getelementptr inbounds nuw i8, ptr %i.cq, i64 112
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.cx, i8 0, i64 48, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(48) %i.cx, i8 0, i64 48, i1 false)
   %i.cy = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %1) #30
   %i.cz = call noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %i.cs, i64 noundef 0, i64 noundef 0, ptr noundef nonnull %1, i64 noundef %i.cy) ; 0 uses
   %i.da = load i16, ptr %i.cl, align 2
@@ -3836,9 +3837,9 @@ bb.x:                                             ; preds = %bb.t
   %i.cv = getelementptr inbounds nuw i8, ptr %i.cq, i64 56 ; 2 uses
   store ptr %i.cv, ptr %i.cu, align 8
   store i8 0, ptr %i.cv, align 8
-  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN4glTF10BufferViewE, i64 16), ptr %i.cq, align 8
+  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN4glTF10BufferViewE, i64 16), ptr %i.cq, align 16
   %i.cw = getelementptr inbounds nuw i8, ptr %i.cq, i64 80
-  store i32 0, ptr %i.cw, align 8
+  store i32 0, ptr %i.cw, align 16
   %i.cx = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %1) #30
   %i.cy = call noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %i.cs, i64 noundef 0, i64 noundef 0, ptr noundef nonnull %1, i64 noundef %i.cx) ; 0 uses
   %i.cz = load i16, ptr %i.cl, align 2
@@ -4241,11 +4242,11 @@ bb.x:                                             ; preds = %bb.t
   %i.cv = getelementptr inbounds nuw i8, ptr %i.cq, i64 56 ; 2 uses
   store ptr %i.cv, ptr %i.cu, align 8
   store i8 0, ptr %i.cv, align 8
-  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN4glTF7TextureE, i64 16), ptr %i.cq, align 8
+  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN4glTF7TextureE, i64 16), ptr %i.cq, align 16
   %i.cw = getelementptr inbounds nuw i8, ptr %i.cq, i64 80
-  store i32 0, ptr %i.cw, align 8
+  store i32 0, ptr %i.cw, align 16
   %i.cx = getelementptr inbounds nuw i8, ptr %i.cq, i64 96
-  store i32 0, ptr %i.cx, align 8
+  store i32 0, ptr %i.cx, align 16
   %i.cy = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %1) #30
   %i.cz = call noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %i.cs, i64 noundef 0, i64 noundef 0, ptr noundef nonnull %1, i64 noundef %i.cy) ; 0 uses
   %i.da = load i16, ptr %i.cl, align 2
@@ -4648,7 +4649,7 @@ bb.x:                                             ; preds = %bb.t
   %i.cv = getelementptr inbounds nuw i8, ptr %i.cq, i64 56 ; 2 uses
   store ptr %i.cv, ptr %i.cu, align 8
   store i8 0, ptr %i.cv, align 8
-  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN4glTF7SamplerE, i64 16), ptr %i.cq, align 8
+  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN4glTF7SamplerE, i64 16), ptr %i.cq, align 16
   %i.cw = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %1) #30
   %i.cx = call noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %i.cs, i64 noundef 0, i64 noundef 0, ptr noundef nonnull %1, i64 noundef %i.cw) ; 0 uses
   %i.cy = load i16, ptr %i.cl, align 2
@@ -5051,7 +5052,7 @@ bb.l:                                             ; preds = %_ZNSt7__cxx1112basi
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ad, i64 56 ; 2 uses
   store ptr %i.ai, ptr %i.ah, align 8
   store i8 0, ptr %i.ai, align 8
-  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN4glTF7SamplerE, i64 16), ptr %i.ad, align 8
+  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN4glTF7SamplerE, i64 16), ptr %i.ad, align 16
   %i.aj = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %1) #30
   %i.ak = call noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %i.af, i64 noundef 0, i64 noundef 0, ptr noundef nonnull %1, i64 noundef %i.aj) ; 0 uses
   %i.al = call { ptr, i32 } @_ZN4glTF8LazyDictINS_7SamplerEE3AddEPS1_(ptr noundef nonnull align 8 dereferenceable(120) %0, ptr noundef nonnull %i.ad)
@@ -5193,11 +5194,11 @@ bb.l:                                             ; preds = %_ZNSt7__cxx1112basi
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ad, i64 56 ; 2 uses
   store ptr %i.ai, ptr %i.ah, align 8
   store i8 0, ptr %i.ai, align 8
-  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN4glTF7TextureE, i64 16), ptr %i.ad, align 8
+  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN4glTF7TextureE, i64 16), ptr %i.ad, align 16
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ad, i64 80
-  store i32 0, ptr %i.aj, align 8
+  store i32 0, ptr %i.aj, align 16
   %i.ak = getelementptr inbounds nuw i8, ptr %i.ad, i64 96
-  store i32 0, ptr %i.ak, align 8
+  store i32 0, ptr %i.ak, align 16
   %i.al = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %1) #30
   %i.am = call noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %i.af, i64 noundef 0, i64 noundef 0, ptr noundef nonnull %1, i64 noundef %i.al) ; 0 uses
   %i.an = call { ptr, i32 } @_ZN4glTF8LazyDictINS_7TextureEE3AddEPS1_(ptr noundef nonnull align 8 dereferenceable(120) %0, ptr noundef nonnull %i.ad)
@@ -5600,11 +5601,11 @@ bb.l:                                             ; preds = %_ZNSt7__cxx1112basi
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ad, i64 56 ; 2 uses
   store ptr %i.ai, ptr %i.ah, align 8
   store i8 0, ptr %i.ai, align 8
-  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN4glTF4SkinE, i64 16), ptr %i.ad, align 8
+  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN4glTF4SkinE, i64 16), ptr %i.ad, align 16
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ad, i64 144
-  store ptr null, ptr %i.aj, align 8
+  store ptr null, ptr %i.aj, align 16
   %i.ak = getelementptr inbounds nuw i8, ptr %i.ad, i64 160
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ak, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %i.ak, i8 0, i64 24, i1 false)
   %i.al = getelementptr inbounds nuw i8, ptr %i.ad, i64 184
   %i.am = getelementptr inbounds nuw i8, ptr %i.ad, i64 200 ; 2 uses
   store ptr %i.am, ptr %i.al, align 8
@@ -6007,15 +6008,15 @@ bb.l:                                             ; preds = %_ZNSt7__cxx1112basi
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ad, i64 56 ; 2 uses
   store ptr %i.ai, ptr %i.ah, align 8
   store i8 0, ptr %i.ai, align 8
-  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN4glTF4MeshE, i64 16), ptr %i.ad, align 8
+  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN4glTF4MeshE, i64 16), ptr %i.ad, align 16
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ad, i64 72
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.aj, i8 0, i64 24, i1 false)
   %i.ak = getelementptr inbounds nuw i8, ptr %i.ad, i64 96 ; 3 uses
   %i.al = getelementptr inbounds nuw i8, ptr %i.ad, i64 104
   store ptr %i.ak, ptr %i.al, align 8
-  store ptr %i.ak, ptr %i.ak, align 8
+  store ptr %i.ak, ptr %i.ak, align 16
   %i.am = getelementptr inbounds nuw i8, ptr %i.ad, i64 112
-  store i64 0, ptr %i.am, align 8
+  store i64 0, ptr %i.am, align 16
   %i.an = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %1) #30
   %i.ao = call noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %i.af, i64 noundef 0, i64 noundef 0, ptr noundef nonnull %1, i64 noundef %i.an) ; 0 uses
   %i.ap = call { ptr, i32 } @_ZN4glTF8LazyDictINS_4MeshEE3AddEPS1_(ptr noundef nonnull align 8 dereferenceable(120) %0, ptr noundef nonnull %i.ad)
@@ -6418,7 +6419,7 @@ bb.l:                                             ; preds = %_ZNSt7__cxx1112basi
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ad, i64 56 ; 2 uses
   store ptr %i.ai, ptr %i.ah, align 8
   store i8 0, ptr %i.ai, align 8
-  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN4glTF4NodeE, i64 16), ptr %i.ad, align 8
+  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN4glTF4NodeE, i64 16), ptr %i.ad, align 16
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ad, i64 72
   %i.ak = getelementptr inbounds nuw i8, ptr %i.ad, i64 200
   store i8 0, ptr %i.ak, align 8
@@ -6432,11 +6433,11 @@ bb.l:                                             ; preds = %_ZNSt7__cxx1112basi
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ad, i64 312
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ad, i64 328 ; 2 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.aj, i8 0, i64 48, i1 false)
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(36) %i.ao, i8 0, i64 36, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(36) %i.ao, i8 0, i64 36, i1 false)
   store ptr %i.aq, ptr %i.ap, align 8
   store i8 0, ptr %i.aq, align 8
   %i.ar = getelementptr inbounds nuw i8, ptr %i.ad, i64 352
-  store i32 0, ptr %i.ar, align 8
+  store i32 0, ptr %i.ar, align 16
   %i.as = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %1) #30
   %i.at = call noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %i.af, i64 noundef 0, i64 noundef 0, ptr noundef nonnull %1, i64 noundef %i.as) ; 0 uses
   %i.au = call { ptr, i32 } @_ZN4glTF8LazyDictINS_4NodeEE3AddEPS1_(ptr noundef nonnull align 8 dereferenceable(120) %0, ptr noundef nonnull %i.ad)
@@ -6759,7 +6760,7 @@ bb.l:                                             ; preds = %_ZNSt7__cxx1112basi
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ad, i64 56 ; 2 uses
   store ptr %i.ai, ptr %i.ah, align 8
   store i8 0, ptr %i.ai, align 8
-  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN4glTF9AnimationE, i64 16), ptr %i.ad, align 8
+  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN4glTF9AnimationE, i64 16), ptr %i.ad, align 16
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ad, i64 72
   %i.ak = getelementptr inbounds nuw i8, ptr %i.ad, i64 120
   store i32 0, ptr %i.ak, align 8
@@ -6768,7 +6769,7 @@ bb.l:                                             ; preds = %_ZNSt7__cxx1112basi
   %i.am = getelementptr inbounds nuw i8, ptr %i.ad, i64 152
   store i32 0, ptr %i.am, align 8
   %i.an = getelementptr inbounds nuw i8, ptr %i.ad, i64 160
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.an, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %i.an, i8 0, i64 24, i1 false)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(36) %i.aj, i8 0, i64 36, i1 false)
   %i.ao = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %1) #30
   %i.ap = call noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %i.af, i64 noundef 0, i64 noundef 0, ptr noundef nonnull %1, i64 noundef %i.ao) ; 0 uses

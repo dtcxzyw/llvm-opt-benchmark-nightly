@@ -205,11 +205,11 @@ bb.ax:                                            ; preds = %bb.av
   %i.fv = getelementptr inbounds nuw i8, ptr %0, i64 48
   store i32 32, ptr %i.fv, align 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(32) %i.ab, i8 5, i64 32, i1 false)
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(144) %i.aa, i8 8, i64 144, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(144) %i.aa, i8 8, i64 144, i1 false)
   %scevgep = getelementptr i8, ptr %0, i64 7716
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(112) %scevgep, i8 9, i64 112, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(112) %scevgep, i8 9, i64 112, i1 false)
   %scevgep1882 = getelementptr i8, ptr %0, i64 7828
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(24) %scevgep1882, i8 7, i64 24, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(24) %scevgep1882, i8 7, i64 24, i1 false)
   %scevgep1883 = getelementptr i8, ptr %0, i64 7852
   store i64 578721382704613384, ptr %scevgep1883, align 4
   br label %.loopexit1734
@@ -612,7 +612,7 @@ tdefl_optimize_huffman_table.exit.i:              ; preds = %bb.h
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #36
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #36
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(132) %i.c, i8 0, i64 132, i1 false)
-  %i.ef = load i8, ptr %i.h, align 1
+  %i.ef = load i8, ptr %i.h, align 2
   %i.eg = zext i8 %i.ef to i64
   %i.eh = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %i.eg ; 2 uses
   %i.ei = load i32, ptr %i.eh, align 4
@@ -626,7 +626,7 @@ tdefl_optimize_huffman_table.exit.i:              ; preds = %bb.h
   %i.ep = add nsw i32 %i.eo, 1
   store i32 %i.ep, ptr %i.en, align 4
   %i.eq = getelementptr inbounds nuw i8, ptr %0, i64 36972
-  %i.er = load i8, ptr %i.eq, align 1
+  %i.er = load i8, ptr %i.eq, align 2
   %i.es = zext i8 %i.er to i64
   %i.et = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %i.es ; 2 uses
   %i.eu = load i32, ptr %i.et, align 4
@@ -640,7 +640,7 @@ tdefl_optimize_huffman_table.exit.i:              ; preds = %bb.h
   %i.fb = add nsw i32 %i.fa, 1
   store i32 %i.fb, ptr %i.ez, align 4
   %i.fc = getelementptr inbounds nuw i8, ptr %0, i64 36974
-  %i.fd = load i8, ptr %i.fc, align 1
+  %i.fd = load i8, ptr %i.fc, align 2
   %i.fe = zext i8 %i.fd to i64
   %i.ff = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %i.fe ; 2 uses
   %i.fg = load i32, ptr %i.ff, align 4
@@ -654,7 +654,7 @@ tdefl_optimize_huffman_table.exit.i:              ; preds = %bb.h
   %i.fn = add nsw i32 %i.fm, 1
   store i32 %i.fn, ptr %i.fl, align 4
   %i.fo = getelementptr inbounds nuw i8, ptr %0, i64 36976
-  %i.fp = load i8, ptr %i.fo, align 1
+  %i.fp = load i8, ptr %i.fo, align 2
   %i.fq = zext i8 %i.fp to i64
   %i.fr = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %i.fq ; 2 uses
   %i.fs = load i32, ptr %i.fr, align 4
@@ -668,7 +668,7 @@ tdefl_optimize_huffman_table.exit.i:              ; preds = %bb.h
   %i.fz = add nsw i32 %i.fy, 1
   store i32 %i.fz, ptr %i.fx, align 4
   %i.ga = getelementptr inbounds nuw i8, ptr %0, i64 36978
-  %i.gb = load i8, ptr %i.ga, align 1
+  %i.gb = load i8, ptr %i.ga, align 2
   %i.gc = zext i8 %i.gb to i64
   %i.gd = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %i.gc ; 2 uses
   %i.ge = load i32, ptr %i.gd, align 4
@@ -682,7 +682,7 @@ tdefl_optimize_huffman_table.exit.i:              ; preds = %bb.h
   %i.gl = add nsw i32 %i.gk, 1
   store i32 %i.gl, ptr %i.gj, align 4
   %i.gm = getelementptr inbounds nuw i8, ptr %0, i64 36980
-  %i.gn = load i8, ptr %i.gm, align 1
+  %i.gn = load i8, ptr %i.gm, align 2
   %i.go = zext i8 %i.gn to i64
   %i.gp = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %i.go ; 2 uses
   %i.gq = load i32, ptr %i.gp, align 4
@@ -696,7 +696,7 @@ tdefl_optimize_huffman_table.exit.i:              ; preds = %bb.h
   %i.gx = add nsw i32 %i.gw, 1
   store i32 %i.gx, ptr %i.gv, align 4
   %i.gy = getelementptr inbounds nuw i8, ptr %0, i64 36982
-  %i.gz = load i8, ptr %i.gy, align 1
+  %i.gz = load i8, ptr %i.gy, align 2
   %i.ha = zext i8 %i.gz to i64
   %i.hb = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %i.ha ; 2 uses
   %i.hc = load i32, ptr %i.hb, align 4
@@ -710,7 +710,7 @@ tdefl_optimize_huffman_table.exit.i:              ; preds = %bb.h
   %i.hj = add nsw i32 %i.hi, 1
   store i32 %i.hj, ptr %i.hh, align 4
   %i.hk = getelementptr inbounds nuw i8, ptr %0, i64 36984
-  %i.hl = load i8, ptr %i.hk, align 1
+  %i.hl = load i8, ptr %i.hk, align 2
   %i.hm = zext i8 %i.hl to i64
   %i.hn = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %i.hm ; 2 uses
   %i.ho = load i32, ptr %i.hn, align 4
@@ -724,7 +724,7 @@ tdefl_optimize_huffman_table.exit.i:              ; preds = %bb.h
   %i.hv = add nsw i32 %i.hu, 1
   store i32 %i.hv, ptr %i.ht, align 4
   %i.hw = getelementptr inbounds nuw i8, ptr %0, i64 36986
-  %i.hx = load i8, ptr %i.hw, align 1
+  %i.hx = load i8, ptr %i.hw, align 2
   %i.hy = zext i8 %i.hx to i64
   %i.hz = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %i.hy ; 2 uses
   %i.ia = load i32, ptr %i.hz, align 4
@@ -738,7 +738,7 @@ tdefl_optimize_huffman_table.exit.i:              ; preds = %bb.h
   %i.ih = add nsw i32 %i.ig, 1
   store i32 %i.ih, ptr %i.if, align 4
   %i.ii = getelementptr inbounds nuw i8, ptr %0, i64 36988
-  %i.ij = load i8, ptr %i.ii, align 1
+  %i.ij = load i8, ptr %i.ii, align 2
   %i.ik = zext i8 %i.ij to i64
   %i.il = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %i.ik ; 2 uses
   %i.im = load i32, ptr %i.il, align 4
@@ -752,7 +752,7 @@ tdefl_optimize_huffman_table.exit.i:              ; preds = %bb.h
   %i.it = add nsw i32 %i.is, 1
   store i32 %i.it, ptr %i.ir, align 4
   %i.iu = getelementptr inbounds nuw i8, ptr %0, i64 36990
-  %i.iv = load i8, ptr %i.iu, align 1
+  %i.iv = load i8, ptr %i.iu, align 2
   %i.iw = zext i8 %i.iv to i64
   %i.ix = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %i.iw ; 2 uses
   %i.iy = load i32, ptr %i.ix, align 4
@@ -766,7 +766,7 @@ tdefl_optimize_huffman_table.exit.i:              ; preds = %bb.h
   %i.jf = add nsw i32 %i.je, 1
   store i32 %i.jf, ptr %i.jd, align 4
   %i.jg = getelementptr inbounds nuw i8, ptr %0, i64 36992
-  %i.jh = load i8, ptr %i.jg, align 1
+  %i.jh = load i8, ptr %i.jg, align 2
   %i.ji = zext i8 %i.jh to i64
   %i.jj = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %i.ji ; 2 uses
   %i.jk = load i32, ptr %i.jj, align 4
@@ -780,7 +780,7 @@ tdefl_optimize_huffman_table.exit.i:              ; preds = %bb.h
   %i.jr = add nsw i32 %i.jq, 1
   store i32 %i.jr, ptr %i.jp, align 4
   %i.js = getelementptr inbounds nuw i8, ptr %0, i64 36994
-  %i.jt = load i8, ptr %i.js, align 1
+  %i.jt = load i8, ptr %i.js, align 2
   %i.ju = zext i8 %i.jt to i64
   %i.jv = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %i.ju ; 2 uses
   %i.jw = load i32, ptr %i.jv, align 4
@@ -794,7 +794,7 @@ tdefl_optimize_huffman_table.exit.i:              ; preds = %bb.h
   %i.kd = add nsw i32 %i.kc, 1
   store i32 %i.kd, ptr %i.kb, align 4
   %i.ke = getelementptr inbounds nuw i8, ptr %0, i64 36996
-  %i.kf = load i8, ptr %i.ke, align 1
+  %i.kf = load i8, ptr %i.ke, align 2
   %i.kg = zext i8 %i.kf to i64
   %i.kh = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %i.kg ; 2 uses
   %i.ki = load i32, ptr %i.kh, align 4
@@ -808,7 +808,7 @@ tdefl_optimize_huffman_table.exit.i:              ; preds = %bb.h
   %i.kp = add nsw i32 %i.ko, 1
   store i32 %i.kp, ptr %i.kn, align 4
   %i.kq = getelementptr inbounds nuw i8, ptr %0, i64 36998
-  %i.kr = load i8, ptr %i.kq, align 1
+  %i.kr = load i8, ptr %i.kq, align 2
   %i.ks = zext i8 %i.kr to i64
   %i.kt = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %i.ks ; 2 uses
   %i.ku = load i32, ptr %i.kt, align 4
@@ -822,7 +822,7 @@ tdefl_optimize_huffman_table.exit.i:              ; preds = %bb.h
   %i.lb = add nsw i32 %i.la, 1
   store i32 %i.lb, ptr %i.kz, align 4
   %i.lc = getelementptr inbounds nuw i8, ptr %0, i64 37000
-  %i.ld = load i8, ptr %i.lc, align 1
+  %i.ld = load i8, ptr %i.lc, align 2
   %i.le = zext i8 %i.ld to i64
   %i.lf = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %i.le ; 2 uses
   %i.lg = load i32, ptr %i.lf, align 4
@@ -1225,33 +1225,37 @@ bb.s:                                             ; preds = %bb.r, %bb.q
   %.0113.i = phi i32 [ %i.jw, %._crit_edge108.i ], [ 0, %.preheader.i81.preheader ] ; 3 uses
   %.075112.i = phi i32 [ %i.jv, %._crit_edge108.i ], [ 1, %.preheader.i81.preheader ] ; 5 uses
   %.2111.i = phi i32 [ %.3.lcssa.i, %._crit_edge108.i ], [ %i.fz, %.preheader.i81.preheader ] ; 2 uses
-  %.385110.i = phi i32 [ %.4.lcssa.i, %._crit_edge108.i ], [ %.385110.i.ph, %.preheader.i81.preheader ] ; 5 uses
+  %.385110.i = phi i32 [ %.4.lcssa.i, %._crit_edge108.i ], [ %.385110.i.ph, %.preheader.i81.preheader ] ; 4 uses
   %i.iw = icmp sgt i32 %.385110.i, -1
   br i1 %i.iw, label %.lr.ph99.preheader.i, label %.critedge.i
 
 .lr.ph99.preheader.i:                             ; preds = %.preheader.i81
+  %7 = zext nneg i32 %.385110.i to i64
   %i.ix = add nuw i32 %.385110.i, 1
   br label %.lr.ph99.i
 
 .lr.ph99.i:                                       ; preds = %bb.t, %.lr.ph99.preheader.i
-  %.198.i = phi i32 [ %i.jc, %bb.t ], [ 0, %.lr.ph99.preheader.i ] ; 3 uses
-  %.497.i = phi i32 [ %8, %bb.t ], [ %.385110.i, %.lr.ph99.preheader.i ] ; 3 uses
-  %7 = zext nneg i32 %.497.i to i64
-  %i.iy = getelementptr inbounds nuw [4 x i8], ptr %.03953.us.i, i64 %7
+  %indvars.iv118.i = phi i64 [ %7, %.lr.ph99.preheader.i ], [ %indvars.iv.next119.i, %bb.t ] ; 4 uses
+  %.497.i = phi i32 [ 0, %.lr.ph99.preheader.i ], [ %i.jc, %bb.t ] ; 2 uses
+  %i.iy = getelementptr inbounds nuw [4 x i8], ptr %.03953.us.i, i64 %indvars.iv118.i
   %i.iz = load i16, ptr %i.iy, align 2
   %i.ja = zext i16 %i.iz to i32
   %i.jb = icmp eq i32 %.0113.i, %i.ja
-  br i1 %i.jb, label %bb.t, label %.critedge.i
+  br i1 %i.jb, label %bb.t, label %.critedge.loopexit.split.loop.exit140.i
 
 bb.t:                                             ; preds = %.lr.ph99.i
-  %i.jc = add nuw i32 %.198.i, 1
-  %8 = add nsw i32 %.497.i, -1
-  %exitcond118.not.i = icmp eq i32 %.198.i, %.385110.i
-  br i1 %exitcond118.not.i, label %.critedge.i, label %.lr.ph99.i
+  %i.jc = add nuw nsw i32 %.497.i, 1
+  %indvars.iv.next119.i = add nsw i64 %indvars.iv118.i, -1
+  %8 = icmp sgt i64 %indvars.iv118.i, 0
+  br i1 %8, label %.lr.ph99.i, label %.critedge.i
 
-.critedge.i:                                      ; preds = %bb.t, %.lr.ph99.i, %.preheader.i81
-  %.4.lcssa.i = phi i32 [ %.385110.i, %.preheader.i81 ], [ %.497.i, %.lr.ph99.i ], [ -1, %bb.t ]
-  %.1.lcssa.i = phi i32 [ 0, %.preheader.i81 ], [ %.198.i, %.lr.ph99.i ], [ %i.ix, %bb.t ] ; 6 uses
+.critedge.loopexit.split.loop.exit140.i:          ; preds = %.lr.ph99.i
+  %9 = trunc nuw nsw i64 %indvars.iv118.i to i32
+  br label %.critedge.i
+
+.critedge.i:                                      ; preds = %bb.t, %.critedge.loopexit.split.loop.exit140.i, %.preheader.i81
+  %.4.lcssa.i = phi i32 [ %.385110.i, %.preheader.i81 ], [ %9, %.critedge.loopexit.split.loop.exit140.i ], [ -1, %bb.t ]
+  %.1.lcssa.i = phi i32 [ 0, %.preheader.i81 ], [ %.497.i, %.critedge.loopexit.split.loop.exit140.i ], [ %i.ix, %bb.t ] ; 6 uses
   %i.jd = icmp sgt i32 %.075112.i, %.1.lcssa.i
   br i1 %i.jd, label %.lr.ph107.i, label %._crit_edge108.i
 

@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.d
 bb.d:                                             ; preds = %.lr.ph224, %bb.c
   %indvar = phi i64 [ 0, %.lr.ph224 ], [ %indvar.next, %bb.c ] ; 2 uses
   %indvars.iv222 = phi i64 [ %i.x, %.lr.ph224 ], [ %i.aa, %bb.c ] ; 3 uses
-  %i.aa = add nsw i64 %indvars.iv222, -1          ; 13 uses
+  %i.aa = add nsw i64 %indvars.iv222, -1          ; 14 uses
   %i.ab = getelementptr inbounds nuw [24 x i8], ptr %i.y, i64 %i.aa ; 8 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 4
   %i.ad = load i32, ptr %i.ac, align 4, !tbaa !162
@@ -270,7 +270,7 @@ bb.j:                                             ; preds = %bb.i, %bb.g, %bb.f
   br i1 %.062.shrunk.i, label %bb.k, label %bb.n
 
 bb.k:                                             ; preds = %bb.j
-  %i.bd = trunc i64 %i.aa to i16                  ; 3 uses
+  %i.bd = trunc i64 %i.aa to i16                  ; 2 uses
   %i.be = load i16, ptr %i.s, align 4, !tbaa !114 ; 4 uses
   %i.bf = icmp ult i16 %i.be, %i.bd
   br i1 %i.bf, label %.lr.ph83.i, label %.critedge.loopexit.i
@@ -281,19 +281,19 @@ bb.k:                                             ; preds = %bb.j
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.m, %.lr.ph83.i
-  %storemerge82.i = phi i16 [ %i.bd, %.lr.ph83.i ], [ %3, %bb.m ] ; 3 uses
-  %2 = zext i16 %storemerge82.i to i64
-  %i.bi = add nuw nsw i64 %2, 4294967295
+  %indvars.iv91.i = phi i64 [ %i.aa, %.lr.ph83.i ], [ %indvars.iv.next92.i, %bb.m ] ; 3 uses
+  %i.bi = add nuw nsw i64 %indvars.iv91.i, 4294967295
   %i.bj = and i64 %i.bi, 4294967295
   %i.bk = getelementptr inbounds nuw [24 x i8], ptr %i.bg, i64 %i.bj
   %i.bl = load i32, ptr %i.bk, align 4, !tbaa !166
   %i.bm = icmp eq i32 %i.bl, %i.bh
-  br i1 %i.bm, label %bb.m, label %.critedge.loopexit.i
+  br i1 %i.bm, label %bb.m, label %.critedge.loopexit.loopexit.split.loop.exit.i
 
 bb.m:                                             ; preds = %bb.l
-  %3 = add i16 %storemerge82.i, -1                ; 2 uses
-  %4 = icmp ugt i16 %3, %i.be
-  br i1 %4, label %bb.l, label %.critedge.loopexit.i, !llvm.loop !167
+  %indvars.iv.next92.i = add nsw i64 %indvars.iv91.i, -1 ; 2 uses
+  %indvars.i = trunc i64 %indvars.iv.next92.i to i16
+  %2 = icmp ult i16 %i.be, %indvars.i
+  br i1 %2, label %bb.l, label %.critedge.loopexit.i, !llvm.loop !167
 
 bb.n:                                             ; preds = %bb.j
   %i.bn = sub nsw i32 0, %1
@@ -356,8 +356,12 @@ bb.t:                                             ; preds = %bb.s, %bb.r
   %exitcond.not.i = icmp eq i64 %indvars.iv.next89.i, %wide.trip.count.i
   br i1 %exitcond.not.i, label %_ZL21bracketProcessClosingP11BracketDataii.exit, label %bb.q, !llvm.loop !169
 
-.critedge.loopexit.i:                             ; preds = %bb.m, %bb.l, %bb.k
-  %storemerge.lcssa.i = phi i16 [ %i.bd, %bb.k ], [ %i.be, %bb.m ], [ %storemerge82.i, %bb.l ]
+.critedge.loopexit.loopexit.split.loop.exit.i:    ; preds = %bb.l
+  %3 = trunc nuw i64 %indvars.iv91.i to i16
+  br label %.critedge.loopexit.i
+
+.critedge.loopexit.i:                             ; preds = %bb.m, %.critedge.loopexit.loopexit.split.loop.exit.i, %bb.k
+  %storemerge.lcssa.i = phi i16 [ %i.bd, %bb.k ], [ %3, %.critedge.loopexit.loopexit.split.loop.exit.i ], [ %i.be, %bb.m ]
   store i16 %storemerge.lcssa.i, ptr %i.q, align 2, !tbaa !117
   br label %_ZL21bracketProcessClosingP11BracketDataii.exit
 

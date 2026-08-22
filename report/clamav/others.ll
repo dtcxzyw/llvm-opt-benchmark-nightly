@@ -204,20 +204,21 @@ bb.a:
 .lr.ph.i:                                         ; preds = %.preheader.i
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !144
+  %2 = zext nneg i32 %i.b to i64
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.b, %.lr.ph.i
-  %.020.i = phi i32 [ %i.b, %.lr.ph.i ], [ %3, %bb.b ] ; 4 uses
+  %indvars.iv.i = phi i64 [ %2, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.b ] ; 4 uses
   %.119.i = phi i32 [ %.015.i, %.lr.ph.i ], [ %spec.select.i, %bb.b ]
-  %2 = zext nneg i32 %.020.i to i64
-  %i.j = getelementptr inbounds nuw [104 x i8], ptr %i.i, i64 %2
+  %i.j = getelementptr inbounds nuw [104 x i8], ptr %i.i, i64 %indvars.iv.i
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 36
   %i.l = load i32, ptr %i.k, align 4, !tbaa !161
   %i.m = and i32 %i.l, 1
   %spec.select.i = sub nsw i32 %.119.i, %i.m      ; 3 uses
-  %3 = add nsw i32 %.020.i, -1
-  %i.n = icmp sgt i32 %.020.i, %spec.select.i
-  %i.o = icmp samesign ugt i32 %.020.i, 1
+  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1
+  %3 = sext i32 %spec.select.i to i64
+  %i.n = icmp sgt i64 %indvars.iv.i, %3
+  %i.o = icmp samesign ugt i64 %indvars.iv.i, 1
   %i.p = and i1 %i.o, %i.n
   br i1 %i.p, label %bb.b, label %recursion_stack_get.exit
 
@@ -262,20 +263,21 @@ bb.a:
 .lr.ph.i:                                         ; preds = %.preheader.i
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !144
+  %2 = zext nneg i32 %i.b to i64
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.b, %.lr.ph.i
-  %.020.i = phi i32 [ %i.b, %.lr.ph.i ], [ %3, %bb.b ] ; 4 uses
+  %indvars.iv.i = phi i64 [ %2, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.b ] ; 4 uses
   %.119.i = phi i32 [ %.015.i, %.lr.ph.i ], [ %spec.select.i, %bb.b ]
-  %2 = zext nneg i32 %.020.i to i64
-  %i.j = getelementptr inbounds nuw [104 x i8], ptr %i.i, i64 %2
+  %i.j = getelementptr inbounds nuw [104 x i8], ptr %i.i, i64 %indvars.iv.i
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 36
   %i.l = load i32, ptr %i.k, align 4, !tbaa !161
   %i.m = and i32 %i.l, 1
   %spec.select.i = sub nsw i32 %.119.i, %i.m      ; 3 uses
-  %3 = add nsw i32 %.020.i, -1
-  %i.n = icmp sgt i32 %.020.i, %spec.select.i
-  %i.o = icmp samesign ugt i32 %.020.i, 1
+  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1
+  %3 = sext i32 %spec.select.i to i64
+  %i.n = icmp sgt i64 %indvars.iv.i, %3
+  %i.o = icmp samesign ugt i64 %indvars.iv.i, 1
   %i.p = and i1 %i.o, %i.n
   br i1 %i.p, label %bb.b, label %recursion_stack_get.exit
 

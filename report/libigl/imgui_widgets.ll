@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.d
   %.0100116 = phi float [ %i.ac, %bb.e ], [ 1.000000e+00, %bb.d ], [ 1.000000e+00, %bb.c ] ; 2 uses
   %i.ae = fcmp oge float %.0100116, 1.000000e+00
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #36
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %7, ptr noundef nonnull align 4 dereferenceable(16) %0, i64 16, i1 false), !tbaa.struct !186
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %7, ptr noundef nonnull align 4 dereferenceable(16) %0, i64 16, i1 false), !tbaa.struct !186
   %i.af = fadd <2 x float> %i.l, splat (float -2.000000e+00)
   %i.ag = getelementptr inbounds nuw i8, ptr %7, i64 4 ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 2 uses
@@ -608,7 +608,7 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #36
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #36
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #36
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %9, ptr noundef nonnull align 4 dereferenceable(16) %0, i64 16, i1 false), !tbaa.struct !186
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %9, ptr noundef nonnull align 4 dereferenceable(16) %0, i64 16, i1 false), !tbaa.struct !186
   %i.j = icmp eq i32 %2, 1                        ; 5 uses
   %i.k = getelementptr inbounds nuw i8, ptr %9, i64 4
   %.sroa.668.0 = select i1 %i.j, float %7, float 0.000000e+00
@@ -672,7 +672,7 @@ bb.i:                                             ; preds = %bb.h
   %i.aj = select i1 %i.j, i32 3, i32 4
   call void @_ZN5ImGui14SetMouseCursorEi(i32 noundef %i.aj)
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #36
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %10, ptr noundef nonnull align 4 dereferenceable(16) %0, i64 16, i1 false), !tbaa.struct !186
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %10, ptr noundef nonnull align 4 dereferenceable(16) %0, i64 16, i1 false), !tbaa.struct !186
   %i.ak = getelementptr inbounds nuw i8, ptr %i.c, i64 296
   %i.al = getelementptr inbounds nuw i8, ptr %i.c, i64 7296
   %.val57 = load float, ptr %i.ak, align 8, !tbaa !135
@@ -725,12 +725,12 @@ bb.j:                                             ; preds = %.critedge
 
 bb.k:                                             ; preds = %bb.g
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #36
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %10, ptr noundef nonnull align 4 dereferenceable(16) %0, i64 16, i1 false), !tbaa.struct !186
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %10, ptr noundef nonnull align 4 dereferenceable(16) %0, i64 16, i1 false), !tbaa.struct !186
   br label %.thread71
 
 .thread73:                                        ; preds = %bb.i, %bb.h, %.thread72
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #36
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %10, ptr noundef nonnull align 4 dereferenceable(16) %0, i64 16, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %10, ptr noundef nonnull align 4 dereferenceable(16) %0, i64 16, i1 false)
   %i.bq = getelementptr inbounds nuw i8, ptr %i.c, i64 7252
   %i.br = load float, ptr %i.bq, align 4, !tbaa !153
   %i.bs = fcmp oge float %i.br, %8
@@ -1133,27 +1133,31 @@ bb.eu:                                            ; preds = %_ZN5ImStbL18stb_tex
 bb.ev:                                            ; preds = %bb.eu, %_ZN5ImStbL18stb_textedit_clampEP19ImGuiInputTextStatePNS_17STB_TexteditStateE.exit497.i
   %i.ue = phi i32 [ %i.ud, %bb.eu ], [ %i.ua, %_ZN5ImStbL18stb_textedit_clampEP19ImGuiInputTextStatePNS_17STB_TexteditStateE.exit497.i ]
   %i.uf = icmp sgt i32 %i.si, 1
-  br i1 %i.uf, label %.lr.ph305.a, label %._crit_edge307
+  br i1 %i.uf, label %.lr.ph305, label %._crit_edge307
+
+.lr.ph305:                                        ; preds = %bb.ev
+  %4 = zext nneg i32 %i.si to i64
+  br label %.lr.ph305.a
 
 bb.ew:                                            ; preds = %.lr.ph305.a
-  %i.ug = icmp sgt i32 %.0300.in.i303, 2
+  %i.ug = icmp sgt i64 %indvars.iv712.i303, 2
   br i1 %i.ug, label %.lr.ph305.a, label %._crit_edge307, !llvm.loop !423
 
-.lr.ph305.a:                                      ; preds = %bb.ev, %bb.ew
-  %.0300.in.i303 = phi i32 [ %.0300.i, %bb.ew ], [ %i.si, %bb.ev ] ; 3 uses
-  %.0300.i = add nsw i32 %.0300.in.i303, -1       ; 2 uses
-  %4 = zext nneg i32 %.0300.in.i303 to i64
-  %i.uh = getelementptr [2 x i8], ptr %.val387.i, i64 %4
+.lr.ph305.a:                                      ; preds = %.lr.ph305, %bb.ew
+  %indvars.iv712.i303 = phi i64 [ %4, %.lr.ph305 ], [ %indvars.iv.next713.i, %bb.ew ] ; 3 uses
+  %indvars.iv.next713.i = add nsw i64 %indvars.iv712.i303, -1 ; 2 uses
+  %i.uh = getelementptr [2 x i8], ptr %.val387.i, i64 %indvars.iv712.i303
   %i.ui = getelementptr i8, ptr %i.uh, i64 -4
   %i.uj = load i16, ptr %i.ui, align 2, !tbaa !258
   %.not341.i = icmp eq i16 %i.uj, 10
   br i1 %.not341.i, label %._crit_edge306, label %bb.ew, !llvm.loop !423
 
 ._crit_edge306:                                   ; preds = %.lr.ph305.a
-  br label %._crit_edge307, !llvm.loop !423
+  %5 = trunc nuw nsw i64 %indvars.iv.next713.i to i32
+  br label %._crit_edge307
 
-._crit_edge307:                                   ; preds = %bb.ew, %._crit_edge306, %bb.ev
-  %.0300.lcssa.i = phi i32 [ %.0300.i, %._crit_edge306 ], [ 0, %bb.ev ], [ 0, %bb.ew ]
+._crit_edge307:                                   ; preds = %bb.ew, %bb.ev, %._crit_edge306
+  %.0300.lcssa.i = phi i32 [ %5, %._crit_edge306 ], [ 0, %bb.ev ], [ 0, %bb.ew ]
   %i.uk = add nuw nsw i32 %.0301621.i, 1          ; 2 uses
   %exitcond712.not.i = icmp eq i32 %i.uk, %i.qx
   br i1 %exitcond712.not.i, label %.thread560.i, label %bb.eh, !llvm.loop !424
@@ -1556,7 +1560,7 @@ bb.e:                                             ; preds = %bb.d
   %i.y = and i32 %2, -393217
   %spec.select = select i1 %.not, i32 %2, i32 %i.y ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #36
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %5, ptr noundef nonnull align 4 dereferenceable(16) %1, i64 16, i1 false), !tbaa.struct !186
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %5, ptr noundef nonnull align 4 dereferenceable(16) %1, i64 16, i1 false), !tbaa.struct !186
   %i.z = and i32 %spec.select, 268435456
   %.not66 = icmp eq i32 %i.z, 0
   br i1 %.not66, label %bb.g, label %bb.f
@@ -1589,7 +1593,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.aq = fcmp olt float %i.ao, %i.ap
   %i.ar = select i1 %i.aq, float %i.ao, float %i.ap ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #36
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %7, ptr noundef nonnull align 8 dereferenceable(16) %4, i64 16, i1 false), !tbaa.struct !186
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %7, ptr noundef nonnull align 8 dereferenceable(16) %4, i64 16, i1 false), !tbaa.struct !186
   %i.as = and i32 %spec.select, 1024
   %i.at = icmp eq i32 %i.as, 0                    ; 2 uses
   br i1 %i.at, label %bb.h, label %bb.i
@@ -1648,7 +1652,7 @@ bb.k:                                             ; preds = %bb.i
   %i.bu = and i32 %spec.select, 131072
   %.not67 = icmp eq i32 %i.bu, 0
   %. = select i1 %.not67, ptr %6, ptr %5
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %9, ptr noundef nonnull align 4 dereferenceable(16) %., i64 16, i1 false), !tbaa.struct !186
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %9, ptr noundef nonnull align 8 dereferenceable(16) %., i64 16, i1 false), !tbaa.struct !186
   %i.bv = getelementptr inbounds nuw i8, ptr %9, i64 12
   %i.bw = load float, ptr %i.bv, align 4, !tbaa !193
   %i.bx = fcmp olt float %i.bw, 1.000000e+00

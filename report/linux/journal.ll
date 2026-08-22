@@ -202,13 +202,16 @@ bb.a:
   %i.d = getelementptr i8, ptr %0, i64 1176       ; 2 uses
   %.010 = add i32 %i.c, -1                        ; 2 uses
   %i.e = icmp sgt i32 %.010, -1
-  br i1 %i.e, label %.lr.ph, label %._crit_edge
+  br i1 %i.e, label %.lr.ph.preheader, label %._crit_edge
 
-.lr.ph:                                           ; preds = %bb.a, %bb.b
-  %.011 = phi i32 [ %.0, %bb.b ], [ %.010, %bb.a ] ; 3 uses
+.lr.ph.preheader:                                 ; preds = %bb.a
+  %1 = zext nneg i32 %.010 to i64
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.b
+  %indvars.iv = phi i64 [ %1, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.b ] ; 4 uses
   %i.f = load ptr, ptr %i.d, align 8
-  %1 = zext nneg i32 %.011 to i64                 ; 2 uses
-  %i.g = getelementptr [8 x i8], ptr %i.f, i64 %1
+  %i.g = getelementptr [8 x i8], ptr %i.f, i64 %indvars.iv
   %i.h = load ptr, ptr %i.g, align 8              ; 2 uses
   %.not = icmp eq ptr %i.h, null
   br i1 %.not, label %._crit_edge, label %bb.b
@@ -217,10 +220,10 @@ bb.b:                                             ; preds = %.lr.ph
   %i.i = getelementptr i8, ptr %i.h, i64 88       ; 2 uses
   tail call void asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock decl $0", "=*m,*m,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) %i.i, ptr elementtype(i32) %i.i) #20, !srcloc !107
   %i.j = load ptr, ptr %i.d, align 8
-  %i.k = getelementptr [8 x i8], ptr %i.j, i64 %1
+  %i.k = getelementptr [8 x i8], ptr %i.j, i64 %indvars.iv
   store ptr null, ptr %i.k, align 8
-  %.0 = add nsw i32 %.011, -1
-  %i.l = icmp sgt i32 %.011, 0
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
+  %i.l = icmp sgt i64 %indvars.iv, 0
   br i1 %i.l, label %.lr.ph, label %._crit_edge, !llvm.loop !109
 
 ._crit_edge:                                      ; preds = %bb.b, %.lr.ph, %bb.a

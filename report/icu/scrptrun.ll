@@ -204,20 +204,21 @@ bb.h:                                             ; preds = %bb.f
 
 bb.i:                                             ; preds = %bb.h
   %i.bn = and i32 %spec.store.select.i, 2147483646
+  %1 = zext nneg i32 %i.bg to i64
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.k
-  %1 = phi i32 [ %i.bg, %bb.i ], [ %3, %bb.k ]    ; 4 uses
-  %2 = zext nneg i32 %1 to i64                    ; 2 uses
-  %i.bo = getelementptr inbounds nuw [8 x i8], ptr %i.k, i64 %2
+  %indvars.iv = phi i64 [ %1, %bb.i ], [ %indvars.iv.next, %bb.k ] ; 5 uses
+  %i.bo = getelementptr inbounds nuw [8 x i8], ptr %i.k, i64 %indvars.iv
   %i.bp = load i32, ptr %i.bo, align 4, !tbaa !25
   %.not49 = icmp eq i32 %i.bp, %i.bn
   br i1 %.not49, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %3 = add nsw i32 %1, -1                         ; 2 uses
-  store i32 %3, ptr %i.b, align 4, !tbaa !10
-  %i.bq = icmp sgt i32 %1, 0
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 2 uses
+  %2 = trunc nsw i64 %indvars.iv.next to i32
+  store i32 %2, ptr %i.b, align 4, !tbaa !10
+  %i.bq = icmp sgt i64 %indvars.iv, 0
   br i1 %i.bq, label %bb.j, label %.critedge, !llvm.loop !28
 
 .critedge:                                        ; preds = %bb.k
@@ -225,8 +226,9 @@ bb.k:                                             ; preds = %bb.j
   br label %bb.m
 
 bb.l:                                             ; preds = %bb.j
-  %spec.select56 = call i32 @llvm.smin.i32(i32 %1, i32 %.03664)
-  %i.br = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %2
+  %3 = trunc nuw nsw i64 %indvars.iv to i32
+  %spec.select56 = call i32 @llvm.smin.i32(i32 %3, i32 %.03664)
+  %i.br = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %indvars.iv
   %i.bs = getelementptr inbounds nuw i8, ptr %i.br, i64 40
   %i.bt = load i32, ptr %i.bs, align 8, !tbaa !27
   br label %bb.m

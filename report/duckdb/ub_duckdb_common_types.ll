@@ -205,7 +205,7 @@ _ZN6duckdb12ValidityMaskaSERKS0_.exit39:          ; preds = %bb.ab, %_ZN6duckdb1
   %i.dp = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.dq = getelementptr inbounds nuw i8, ptr %0, i64 96
   %i.dr = load <2 x ptr>, ptr %4, align 16, !tbaa !363
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %4, i8 0, i64 16, i1 false)
   %i.ds = load ptr, ptr %i.dq, align 8, !tbaa !408 ; 8 uses
   store <2 x ptr> %i.dr, ptr %i.al, align 8, !tbaa !363
   %.not.i.i.i.i = icmp eq ptr %i.ds, null
@@ -608,7 +608,7 @@ bb.c:                                             ; preds = %bb.a
   ]
 
 bb.d:                                             ; preds = %bb.c
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef nonnull readonly align 8 dereferenceable(16) %0, i64 16, i1 false), !tbaa.struct !311
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %2, ptr noundef nonnull readonly align 8 dereferenceable(16) %0, i64 16, i1 false), !tbaa.struct !311
   br label %_ZNK6duckdb9hugeint_trsERKS0_.exit
 
 bb.e:                                             ; preds = %bb.c
@@ -688,7 +688,7 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.k
 
 bb.g:                                             ; preds = %bb.e
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef nonnull readonly align 8 dereferenceable(16) %0, i64 16, i1 false), !tbaa.struct !311
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %2, ptr noundef nonnull readonly align 8 dereferenceable(16) %0, i64 16, i1 false), !tbaa.struct !311
   br label %_ZNK6duckdb9hugeint_tlsERKS0_.exit
 
 bb.h:                                             ; preds = %bb.e
@@ -1091,7 +1091,7 @@ bb.c:                                             ; preds = %bb.a
   ]
 
 bb.d:                                             ; preds = %bb.c
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef nonnull readonly align 8 dereferenceable(16) %0, i64 16, i1 false), !tbaa.struct !311
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %2, ptr noundef nonnull readonly align 8 dereferenceable(16) %0, i64 16, i1 false), !tbaa.struct !311
   br label %_ZNK6duckdb10uhugeint_tlsERKS0_.exit
 
 bb.e:                                             ; preds = %bb.c
@@ -1494,7 +1494,7 @@ bb.c:                                             ; preds = %bb.a
   ]
 
 bb.d:                                             ; preds = %bb.c
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef nonnull readonly align 8 dereferenceable(16) %0, i64 16, i1 false), !tbaa.struct !311
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %2, ptr noundef nonnull readonly align 8 dereferenceable(16) %0, i64 16, i1 false), !tbaa.struct !311
   br label %_ZNK6duckdb10uhugeint_trsERKS0_.exit
 
 bb.e:                                             ; preds = %bb.c
@@ -1897,7 +1897,7 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.f = load <2 x ptr>, ptr %2, align 16, !tbaa !363
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %2, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %2, i8 0, i64 16, i1 false)
   %i.g = load ptr, ptr %i.e, align 8, !tbaa !408  ; 8 uses
   store <2 x ptr> %i.f, ptr %i.c, align 8, !tbaa !363
   %.not.i.i.i.i = icmp eq ptr %i.g, null
@@ -2300,7 +2300,7 @@ bb.ba:                                            ; preds = %_ZNSt10unique_ptrIN
   %i.ej = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.ek = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.el = load <2 x ptr>, ptr %3, align 16, !tbaa !363
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %3, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %3, i8 0, i64 16, i1 false)
   %i.em = load ptr, ptr %i.ek, align 8, !tbaa !408 ; 8 uses
   store <2 x ptr> %i.el, ptr %i.ei, align 8, !tbaa !363
   %.not.i.i.i.i59 = icmp eq ptr %i.em, null
@@ -2703,7 +2703,7 @@ bb.q:                                             ; preds = %bb.p
   %i.an = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 96
   %i.ap = load <2 x ptr>, ptr %4, align 16, !tbaa !363
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %4, i8 0, i64 16, i1 false)
   %i.aq = load ptr, ptr %i.ao, align 8, !tbaa !408 ; 8 uses
   store <2 x ptr> %i.ap, ptr %i.am, align 8, !tbaa !363
   %.not.i.i.i.i = icmp eq ptr %i.aq, null
@@ -3106,7 +3106,7 @@ bb.i:                                             ; preds = %bb.a
   %i.q = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.s = load <2 x ptr>, ptr %5, align 16, !tbaa !363
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %5, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %5, i8 0, i64 16, i1 false)
   %i.t = load ptr, ptr %i.r, align 8, !tbaa !408  ; 8 uses
   store <2 x ptr> %i.s, ptr %i.f, align 8, !tbaa !363
   %.not.i.i.i.i = icmp eq ptr %i.t, null
@@ -3509,7 +3509,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZN6d
   %i.bq = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.br = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.bs = load <2 x ptr>, ptr %4, align 16, !tbaa !363
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %4, i8 0, i64 16, i1 false)
   %i.bt = load ptr, ptr %i.br, align 8, !tbaa !408 ; 8 uses
   store <2 x ptr> %i.bs, ptr %i.bp, align 8, !tbaa !363
   %.not.i.i.i.i = icmp eq ptr %i.bt, null
@@ -3912,7 +3912,7 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.e = load <2 x ptr>, ptr %4, align 16, !tbaa !363
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %4, i8 0, i64 16, i1 false)
   %i.f = load ptr, ptr %i.d, align 8, !tbaa !408  ; 8 uses
   store <2 x ptr> %i.e, ptr %i.b, align 8, !tbaa !363
   %.not.i.i.i.i = icmp eq ptr %i.f, null
@@ -4315,7 +4315,7 @@ bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.d = load <2 x ptr>, ptr %4, align 16, !tbaa !363
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %4, i8 0, i64 16, i1 false)
   %i.e = load ptr, ptr %i.c, align 8, !tbaa !408  ; 8 uses
   store <2 x ptr> %i.d, ptr %0, align 8, !tbaa !363
   %.not.i.i.i.i = icmp eq ptr %i.e, null
@@ -4718,20 +4718,20 @@ bb.x:                                             ; preds = %bb.w
 
 .preheader228:                                    ; preds = %bb.x
   %i.dr = load ptr, ptr %0, align 8, !tbaa !3950
+  %2 = zext nneg i32 %i.b to i64
   br label %bb.y
 
 bb.y:                                             ; preds = %.preheader228, %bb.z
-  %.0 = phi i32 [ %3, %bb.z ], [ %i.b, %.preheader228 ] ; 4 uses
-  %2 = zext nneg i32 %.0 to i64
-  %i.ds = getelementptr i8, ptr %i.dr, i64 %2
+  %indvars.iv = phi i64 [ %2, %.preheader228 ], [ %indvars.iv.next, %bb.z ] ; 4 uses
+  %i.ds = getelementptr i8, ptr %i.dr, i64 %indvars.iv
   %i.dt = getelementptr i8, ptr %i.ds, i64 -1
   %i.du = load i8, ptr %i.dt, align 1, !tbaa !153
   %i.dv = icmp eq i8 %i.du, 48
-  br i1 %i.dv, label %bb.z, label %.critedge7.thread
+  br i1 %i.dv, label %bb.z, label %.critedge7.thread.loopexit
 
 bb.z:                                             ; preds = %bb.y
-  %3 = add nsw i32 %.0, -1
-  %.old10 = icmp sgt i32 %.0, 1
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
+  %.old10 = icmp sgt i64 %indvars.iv, 1
   br i1 %.old10, label %bb.y, label %.critedge7
 
 .critedge7:                                       ; preds = %bb.z, %.thread210
@@ -4739,9 +4739,13 @@ bb.z:                                             ; preds = %bb.y
   %.not225 = icmp eq i32 %.0100214, 0
   br i1 %.not225, label %.thread, label %.critedge7.thread
 
-.critedge7.thread:                                ; preds = %bb.y, %bb.x, %.critedge7
-  %.1219 = phi i32 [ 0, %.critedge7 ], [ %i.b, %bb.x ], [ %.0, %bb.y ]
-  %.0100214218 = phi i32 [ %.0100214, %.critedge7 ], [ %i.dk, %bb.x ], [ %i.dk, %bb.y ] ; 2 uses
+.critedge7.thread.loopexit:                       ; preds = %bb.y
+  %3 = trunc nuw nsw i64 %indvars.iv to i32
+  br label %.critedge7.thread
+
+.critedge7.thread:                                ; preds = %.critedge7.thread.loopexit, %bb.x, %.critedge7
+  %.1219 = phi i32 [ 0, %.critedge7 ], [ %i.b, %bb.x ], [ %3, %.critedge7.thread.loopexit ]
+  %.0100214218 = phi i32 [ %.0100214, %.critedge7 ], [ %i.dk, %bb.x ], [ %i.dk, %.critedge7.thread.loopexit ] ; 2 uses
   %i.dw = add i64 %1, 2
   %i.dx = icmp sgt i32 %.0100214218, 0
   %i.dy = add nsw i32 %.0100214218, -1

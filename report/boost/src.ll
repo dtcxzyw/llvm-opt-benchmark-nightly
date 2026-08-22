@@ -206,7 +206,7 @@ _ZN5boost4json5array5table8allocateEmRKNS0_11storage_ptrE.exit: ; preds = %_ZNK5
 bb.j:                                             ; preds = %_ZN5boost4json5array5table8allocateEmRKNS0_11storage_ptrE.exit
   %i.bh = getelementptr inbounds nuw i8, ptr %i.ax, i64 8
   %i.bi = mul i64 %i.bd, 24
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.bc, ptr nonnull align 1 %i.bh, i64 %i.bi, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.bc, ptr nonnull align 8 %i.bh, i64 %i.bi, i1 false)
   %.pre16 = load i64, ptr %i.a, align 8, !tbaa !47
   %.pre17 = load ptr, ptr %0, align 8, !tbaa !39  ; 2 uses
   %.phi.trans.insert18 = getelementptr inbounds nuw i8, ptr %.pre17, i64 16
@@ -461,7 +461,7 @@ bb.h:                                             ; preds = %bb.g
   %i.ac = getelementptr inbounds nuw i8, ptr %i.w, i64 8
   %i.ad = load ptr, ptr %1, align 8, !tbaa !66
   %i.ae = mul i64 %i.aa, 24
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.ac, ptr align 8 %i.ad, i64 %i.ae, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ac, ptr align 8 %i.ad, i64 %i.ae, i1 false)
   br label %_ZN5boost4json6detail15unchecked_array8relocateEPNS0_5valueE.exit
 
 _ZN5boost4json6detail15unchecked_array8relocateEPNS0_5valueE.exit: ; preds = %bb.g, %bb.h
@@ -864,7 +864,7 @@ bb.h:                                             ; preds = %bb.g
   %i.af = getelementptr inbounds nuw i8, ptr %i.ab, i64 8
   %i.ag = getelementptr inbounds nuw i8, ptr %i.z, i64 8
   %i.ah = mul nuw nsw i64 %i.ae, 24
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.ag, ptr nonnull align 1 %i.af, i64 %i.ah, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.ag, ptr nonnull align 8 %i.af, i64 %i.ah, i1 false)
   %.pre = load ptr, ptr %i.a, align 8, !tbaa !43  ; 2 uses
   %.pre14 = load i32, ptr %.pre, align 8, !tbaa !49
   br label %_ZN5boost4json5array8relocateEPNS0_5valueES3_m.exit
@@ -1267,7 +1267,7 @@ bb.d:                                             ; preds = %_ZN5boost4json5arra
   %i.aa = getelementptr inbounds nuw i8, ptr %i.w, i64 8
   %i.ab = getelementptr inbounds nuw i8, ptr %i.t, i64 8
   %i.ac = mul nuw nsw i64 %i.z, 24
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.ab, ptr nonnull align 1 %i.aa, i64 %i.ac, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.ab, ptr nonnull align 8 %i.aa, i64 %i.ac, i1 false)
   %.pre = load ptr, ptr %i.b, align 8, !tbaa !43  ; 2 uses
   %.pre7 = load i32, ptr %.pre, align 8, !tbaa !49
   br label %_ZN5boost4json5array8relocateEPNS0_5valueES3_m.exit
@@ -1505,7 +1505,7 @@ _ZN5boost4json5array5table8allocateEmRKNS0_11storage_ptrE.exit: ; preds = %_ZNK5
 bb.g:                                             ; preds = %_ZN5boost4json5array5table8allocateEmRKNS0_11storage_ptrE.exit
   %i.as = load ptr, ptr %i.a, align 8, !tbaa !43
   %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 8
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.ao, ptr nonnull align 1 %i.at, i64 %i.h, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.ao, ptr nonnull align 1 %i.at, i64 %i.h, i1 false)
   br label %_ZN5boost4json5array8relocateEPNS0_5valueES3_m.exit27
 
 _ZN5boost4json5array8relocateEPNS0_5valueES3_m.exit27: ; preds = %_ZN5boost4json5array5table8allocateEmRKNS0_11storage_ptrE.exit, %bb.g
@@ -1519,7 +1519,7 @@ bb.h:                                             ; preds = %_ZN5boost4json5arra
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ax, i64 %i.h
   %i.az = getelementptr inbounds nuw i8, ptr %i.ap, i64 24
   %i.ba = mul i64 %i.av, 24
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.az, ptr nonnull align 1 %i.ay, i64 %i.ba, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.az, ptr nonnull align 1 %i.ay, i64 %i.ba, i1 false)
   br label %_ZN5boost4json5array8relocateEPNS0_5valueES3_m.exit28
 
 _ZN5boost4json5array8relocateEPNS0_5valueES3_m.exit28: ; preds = %_ZN5boost4json5array8relocateEPNS0_5valueES3_m.exit27, %bb.h
@@ -1922,7 +1922,7 @@ bb.r:                                             ; preds = %bb.q
 
 _ZN5boost4json14key_value_pairD2Ev.exit:          ; preds = %bb.o, %bb.p, %bb.q
   tail call void @_ZN5boost4json5valueD1Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(40) %i.bm) #47, !inline_history !172
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(40) %i.bm, ptr noundef nonnull align 8 dereferenceable(40) %.099, i64 40, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.bm, ptr noundef nonnull align 8 dereferenceable(40) %.099, i64 40, i1 false)
   br label %bb.s
 
 bb.s:                                             ; preds = %_ZN5boost4json14key_value_pairD2Ev.exit, %bb.k
@@ -2325,7 +2325,7 @@ _ZN5boost4json14key_value_pairD2Ev.exit.i:        ; preds = %bb.d, %bb.c, %bb.b
   br i1 %.not13.i, label %"_ZN5boost4json6object8do_eraseIZNS1_5eraseEPKNS0_14key_value_pairEE3$_0ZNS1_5eraseES5_E3$_1EEPS3_S5_T_T0_.exit", label %bb.f
 
 bb.f:                                             ; preds = %_ZN5boost4json14key_value_pairD2Ev.exit.i
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(40) %i.g, ptr noundef nonnull readonly align 1 dereferenceable(40) %i.ag, i64 40, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.g, ptr noundef nonnull readonly align 1 dereferenceable(40) %i.ag, i64 40, i1 false)
   br label %"_ZN5boost4json6object8do_eraseIZNS1_5eraseEPKNS0_14key_value_pairEE3$_0ZNS1_5eraseES5_E3$_1EEPS3_S5_T_T0_.exit"
 
 bb.g:                                             ; preds = %bb.a
@@ -2667,7 +2667,7 @@ bb.f:                                             ; preds = %_ZN5boost4json14key
   %i.ah = getelementptr inbounds nuw i8, ptr %i.g, i64 40
   %i.ai = ptrtoint ptr %i.ag to i64
   %i.aj = sub i64 %i.ai, %i.d
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.g, ptr nonnull align 1 %i.ah, i64 %i.aj, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.g, ptr nonnull align 8 %i.ah, i64 %i.aj, i1 false)
   br label %"_ZN5boost4json6object8do_eraseIZNS1_12stable_eraseEPKNS0_14key_value_pairEE3$_0ZNS1_12stable_eraseES5_E3$_1EEPS3_S5_T_T0_.exit"
 
 bb.g:                                             ; preds = %bb.a
@@ -3070,7 +3070,7 @@ bb.i:                                             ; preds = %.preheader.i
   br label %_ZN5boost4json6object6removeERjRNS0_14key_value_pairE.exit
 
 _ZN5boost4json6object6removeERjRNS0_14key_value_pairE.exit: ; preds = %bb.h, %bb.i
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(40) %2, ptr noundef nonnull align 1 dereferenceable(40) %1, i64 40, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(40) %2, ptr noundef nonnull align 8 dereferenceable(40) %1, i64 40, i1 false)
   %i.cs = load i32, ptr %i.cf, align 4, !tbaa !149
   %i.ct = getelementptr inbounds nuw i8, ptr %2, i64 36
   store i32 %i.cs, ptr %i.ct, align 4, !tbaa !149
@@ -3473,20 +3473,21 @@ _ZN5boost4json6detail8charconv6detail10fast_float8stackvecILt62EE10try_extendENS
 
 .lr.ph.i50:                                       ; preds = %.critedge34
   %i.dr = getelementptr i8, ptr %0, i64 -8
+  %5 = zext i16 %.promoted.i to i64
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.w, %.lr.ph.i50
-  %5 = phi i16 [ %.promoted.i, %.lr.ph.i50 ], [ %7, %bb.w ] ; 2 uses
-  %6 = zext i16 %5 to i64
-  %i.ds = getelementptr [8 x i8], ptr %i.dr, i64 %6
+  %indvars.iv.i = phi i64 [ %5, %.lr.ph.i50 ], [ %indvars.iv.next.i, %bb.w ] ; 2 uses
+  %i.ds = getelementptr [8 x i8], ptr %i.dr, i64 %indvars.iv.i
   %i.dt = load i64, ptr %i.ds, align 8, !tbaa !15
   %i.du = icmp eq i64 %i.dt, 0
   br i1 %i.du, label %bb.w, label %.critedge32
 
 bb.w:                                             ; preds = %bb.v
-  %7 = add i16 %5, -1                             ; 3 uses
-  store i16 %7, ptr %i.a, align 8, !tbaa !991
-  %.not.i51 = icmp eq i16 %7, 0
+  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1 ; 2 uses
+  %indvars.i = trunc i64 %indvars.iv.next.i to i16 ; 2 uses
+  store i16 %indvars.i, ptr %i.a, align 8, !tbaa !991
+  %.not.i51 = icmp eq i16 %indvars.i, 0
   br i1 %.not.i51, label %.critedge32, label %bb.v, !llvm.loop !1017
 
 .critedge32:                                      ; preds = %bb.w, %bb.v, %bb.g, %.critedge34, %_ZN5boost4json6detail8charconv6detail10fast_float8stackvecILt62EE10try_extendENS4_4spanImEE.exit

@@ -204,8 +204,8 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr i8, ptr %0, i64 8          ; 2 uses
   %i.d = load ptr, ptr %i.c, align 8              ; 3 uses
-  %i.e = tail call i64 @strlen(ptr noundef %i.d) #18
-  %i.f = trunc i64 %i.e to i32                    ; 4 uses
+  %i.e = tail call i64 @strlen(ptr noundef %i.d) #18 ; 2 uses
+  %i.f = trunc i64 %i.e to i32                    ; 3 uses
   %i.g = add i32 %i.f, -512
   %or.cond = icmp ult i32 %i.g, -509
   br i1 %or.cond, label %.thread, label %bb.c
@@ -218,18 +218,18 @@ bb.c:                                             ; preds = %bb.b
   br i1 %or.cond45, label %.lr.ph, label %.thread
 
 .lr.ph:                                           ; preds = %bb.c
-  %.02836 = add nsw i32 %i.f, -1
+  %.02836 = add i64 %i.e, 4294967295
   %i.j = getelementptr i8, ptr %0, i64 67
   %i.k = getelementptr i8, ptr %0, i64 66
   %i.l = getelementptr i8, ptr %0, i64 65
   %i.m = getelementptr i8, ptr %0, i64 64
+  %1 = and i64 %.02836, 4294967295
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph, %bb.i
-  %.02838 = phi i32 [ %.02836, %.lr.ph ], [ %.028, %bb.i ] ; 3 uses
-  %.028.in37 = phi i32 [ %i.f, %.lr.ph ], [ %.02838, %bb.i ]
-  %1 = zext nneg i32 %.02838 to i64               ; 3 uses
-  %i.n = getelementptr i8, ptr %i.d, i64 %1
+  %indvars.iv = phi i64 [ %1, %.lr.ph ], [ %indvars.iv.next, %bb.i ] ; 5 uses
+  %.028.in37 = phi i32 [ %i.f, %.lr.ph ], [ %2, %bb.i ]
+  %i.n = getelementptr i8, ptr %i.d, i64 %indvars.iv
   %i.o = load i8, ptr %i.n, align 1
   switch i8 %i.o, label %bb.i [
     i8 47, label %bb.j
@@ -256,18 +256,20 @@ bb.h:                                             ; preds = %bb.d
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.d, %bb.h, %bb.g, %bb.f, %bb.e
-  %.028 = add nsw i32 %.02838, -1                 ; 2 uses
-  %i.p = icmp ugt i32 %.028, 2
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 2 uses
+  %indvars = trunc i64 %indvars.iv.next to i32
+  %i.p = icmp ugt i32 %indvars, 2
+  %2 = trunc nuw i64 %indvars.iv to i32
   br i1 %i.p, label %bb.d, label %.thread, !llvm.loop !66
 
 bb.j:                                             ; preds = %bb.d
-  %i.q = tail call noalias ptr @g_malloc(i64 noundef %1) #20 ; 3 uses
+  %i.q = tail call noalias ptr @g_malloc(i64 noundef %indvars.iv) #20 ; 3 uses
   store ptr %i.q, ptr %i.a, align 8
   %i.r = load ptr, ptr %i.c, align 8
   %i.s = getelementptr i8, ptr %i.r, i64 1
   %i.t = add nsw i32 %.028.in37, -2               ; 2 uses
   %i.u = zext nneg i32 %i.t to i64                ; 2 uses
-  %i.v = tail call ptr @__memcpy_chk(ptr noundef %i.q, ptr noundef %i.s, i64 noundef %i.u, i64 noundef %1) #17, !alias.scope !67 ; 0 uses
+  %i.v = tail call ptr @__memcpy_chk(ptr noundef %i.q, ptr noundef %i.s, i64 noundef %i.u, i64 noundef %indvars.iv) #17, !alias.scope !67 ; 0 uses
   %i.w = getelementptr i8, ptr %i.q, i64 %i.u
   store i8 0, ptr %i.w, align 1
   %i.x = getelementptr i8, ptr %0, i64 56
