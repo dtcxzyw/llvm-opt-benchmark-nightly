@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b, %._crit_edge
   %i.dd = uitofp nneg i32 %i.dc to double
   %i.de = fmul double %i.m, %i.dd
   %i.df = mul nsw i64 %indvars.iv93, %i.v
-  %i.dg = add i64 %i.df, %i.bn                    ; 5 uses
+  %i.dg = add nsw i64 %i.df, %i.bn                ; 5 uses
   %i.dh = getelementptr [8 x i8], ptr %i.a, i64 %i.dg ; 7 uses
   %i.di = getelementptr [8 x i8], ptr %i.b, i64 %i.dg ; 6 uses
   %i.dj = getelementptr inbounds [8 x i8], ptr %i.g, i64 %i.dg ; 13 uses
@@ -608,7 +608,7 @@ bb.a:
   %.02841 = phi double [ 0.000000e+00, %.preheader35 ], [ %.230.19, %bb.ao ] ; 2 uses
   %i.f = phi <2 x double> [ %i.d, %.preheader35 ], [ %i.gi, %bb.ao ]
   %i.g = mul nuw nsw i64 %indvars.iv, 120
-  %i.h = add nuw nsw i64 %i.e, %i.g               ; 20 uses
+  %i.h = add nsw i64 %i.e, %i.g                   ; 20 uses
   %i.i = trunc nuw nsw i64 %indvars.iv to i32
   %i.j = uitofp nneg i32 %i.i to double           ; 20 uses
   %i.k = getelementptr inbounds [8 x i8], ptr %i.a, i64 %i.h
