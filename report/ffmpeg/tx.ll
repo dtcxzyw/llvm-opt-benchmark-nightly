@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a, %.critedge355
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph, %.backedge
-  %i.s = phi ptr [ %i.r, %.lr.ph ], [ %i.ah, %.backedge ] ; 13 uses
+  %i.s = phi ptr [ %i.r, %.lr.ph ], [ %i.ah, %.backedge ] ; 16 uses
   %.lcssa410.pn.pn = phi ptr [ %.lcssa410.pn, %.lr.ph ], [ %i.t, %.backedge ]
   %i.t = getelementptr inbounds nuw i8, ptr %.lcssa410.pn.pn, i64 8 ; 4 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.s, i64 16
@@ -414,9 +414,17 @@ bb.v:                                             ; preds = %bb.u
 
 get_codelet_prio.exit:                            ; preds = %bb.u, %bb.v
   %.3.i = phi i32 [ %.2.i, %bb.u ], [ %spec.select.i371, %bb.v ] ; 2 uses
-  %16 = load <4 x i32>, ptr %i.at, align 4, !tbaa !22
-  %17 = call i32 @llvm.vector.reduce.smax.v4i32(<4 x i32> %16)
-  %i.cu = call i32 @llvm.smax.i32(i32 %17, i32 0)
+  %16 = load i32, ptr %i.at, align 4, !tbaa !22
+  %17 = getelementptr inbounds nuw i8, ptr %i.s, i64 36
+  %18 = load i32, ptr %17, align 4, !tbaa !22
+  %..030.i = call i32 @llvm.smax.i32(i32 %16, i32 %18)
+  %19 = getelementptr inbounds nuw i8, ptr %i.s, i64 40
+  %20 = load i32, ptr %19, align 8, !tbaa !22
+  %..030.1.i = call i32 @llvm.smax.i32(i32 %..030.i, i32 %20)
+  %21 = getelementptr inbounds nuw i8, ptr %i.s, i64 44
+  %22 = load i32, ptr %21, align 4, !tbaa !22
+  %..030.2.i = call i32 @llvm.smax.i32(i32 %..030.1.i, i32 %22)
+  %i.cu = call i32 @llvm.smax.i32(i32 %..030.2.i, i32 0)
   %i.cv = and i64 %i.cm, 1729382256910270464
   %.not36.i = icmp eq i64 %i.cv, 0
   %i.cw = add nsw i32 %.3.i, 64
@@ -818,9 +826,6 @@ declare i32 @llvm.cttz.i32(i32, i1 immarg) #12
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #13
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.vector.reduce.smax.v4i32(<4 x i32>) #11
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

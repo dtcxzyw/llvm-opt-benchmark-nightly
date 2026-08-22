@@ -36,6 +36,8 @@ bb.a:
   %.neg = mul nsw i32 %.04453, -81
   %i.e = sub nsw i32 255, %.04453
   %i.f = mul nsw i32 %.04453, 114
+  %1 = insertelement <2 x i32> poison, i32 %.neg, i64 0
+  %2 = insertelement <2 x i32> %1, i32 %i.d, i64 1
   br label %bb.b
 
 bb.b:                                             ; preds = %.preheader, %._crit_edge
@@ -60,13 +62,15 @@ bb.b:                                             ; preds = %.preheader, %._crit
   %i.s = add i32 %i.q, %i.r
   %i.t = sdiv i32 %i.s, 1000
   %i.u = mul nsw i32 %.04352, 500
-  %1 = add nsw i32 %i.u, %.neg
-  %2 = sdiv i32 %1, 1000
   %3 = mul nsw i32 %.04352, -169
-  %4 = add nsw i32 %3, %i.d
-  %5 = sdiv i32 %4, 1000
-  %i.v = shl nsw i32 %5, 8
-  %i.w = add nsw i32 %2, 32896
+  %4 = insertelement <2 x i32> poison, i32 %i.u, i64 0
+  %5 = insertelement <2 x i32> %4, i32 %3, i64 1
+  %6 = add nsw <2 x i32> %5, %2
+  %7 = sdiv <2 x i32> %6, splat (i32 1000)        ; 2 uses
+  %8 = extractelement <2 x i32> %7, i64 1
+  %i.v = shl nsw i32 %8, 8
+  %9 = extractelement <2 x i32> %7, i64 0
+  %i.w = add nsw i32 %9, 32896
   %i.x = add nsw i32 %i.w, %i.v
   br label %bb.c
 
