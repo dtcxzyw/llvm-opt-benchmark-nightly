@@ -205,7 +205,7 @@ _ZNSt6vectorIN11OpenImageIO4v3_114ImageCacheFile12SubimageInfoESaIS3_EE6resizeEm
   %i.nx = load i32, ptr %i.nw, align 4, !tbaa !492 ; 3 uses
   %i.ny = icmp eq i64 %indvars.iv655, 0
   %i.nz = getelementptr inbounds nuw i8, ptr %i.nu, i64 40 ; 2 uses
-  %i.oa = getelementptr inbounds nuw i8, ptr %i.nu, i64 43
+  %i.oa = getelementptr inbounds nuw i8, ptr %i.nu, i64 43 ; 2 uses
   %i.ob = getelementptr inbounds nuw i8, ptr %i.nu, i64 100 ; 3 uses
   %i.oc = getelementptr inbounds nuw i8, ptr %i.nu, i64 8 ; 6 uses
   %i.od = getelementptr inbounds nuw i8, ptr %i.nu, i64 16 ; 2 uses
@@ -599,7 +599,7 @@ bb.dv:                                            ; preds = %_ZN11OpenImageIO4v3
   store i8 1, ptr %i.nz, align 8, !tbaa !500
   %i.sl = load ptr, ptr %i.t, align 8, !tbaa !289, !nonnull !290, !align !291
   %i.sm = getelementptr inbounds nuw i8, ptr %i.sl, i64 136
-  %i.sn = load i32, ptr %i.sm, align 8, !tbaa !501 ; 2 uses
+  %i.sn = load i32, ptr %i.sm, align 8, !tbaa !501 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #5
   store ptr @.str.58, ptr %6, align 8, !tbaa !7
@@ -621,37 +621,38 @@ bb.dx:                                            ; preds = %bb.dw
   %.0.i281 = add nuw i32 %i.sr, %.pre.i.sroa.speculate.load.true ; 2 uses
   %i.ss = urem i32 %.0.i281, %.pre.i.sroa.speculate.load.true
   %i.st = sub nsw i32 %.0.i281, %i.ss
-  br label %bb.dz
+  store i8 1, ptr %i.oa, align 1, !tbaa !502
+  br label %bb.ea
 
 bb.dy:                                            ; preds = %bb.dv
   %i.su = landingpad { ptr, i32 }
           cleanup
   br label %.loopexit.split-lp
 
-bb.dz:                                            ; preds = %bb.dx, %bb.dw
-  %.0538 = phi i32 [ %i.st, %bb.dx ], [ %i.sn, %bb.dw ] ; 5 uses
-  %i.sv = icmp ne i32 %.0538, 0
+bb.dz:                                            ; preds = %bb.dw
+  %i.sv = icmp ne i32 %i.sn, 0
   %i.sw = zext i1 %i.sv to i8
   store i8 %i.sw, ptr %i.oa, align 1, !tbaa !502
-  %.not157 = icmp eq i32 %.0538, 0
+  %.not157 = icmp eq i32 %i.sn, 0
   br i1 %.not157, label %bb.eb, label %bb.ea
 
-bb.ea:                                            ; preds = %bb.dz
+bb.ea:                                            ; preds = %bb.dx, %bb.dz
+  %.0538804 = phi i32 [ %i.st, %bb.dx ], [ %i.sn, %bb.dz ] ; 3 uses
   %i.sx = load ptr, ptr %i.t, align 8, !tbaa !289, !nonnull !290, !align !291
   %i.sy = getelementptr inbounds nuw i8, ptr %i.sx, i64 140
   %i.sz = load i8, ptr %i.sy, align 4, !tbaa !503, !range !368, !noundef !290
   %i.ta = trunc nuw i8 %i.sz to i1
   %or.cond4 = or i1 %i.sq, %i.ta
   %i.tb = load i32, ptr %i.lt, align 4            ; 3 uses
-  %.sroa.speculated502 = call i32 @llvm.smin.i32(i32 %.0538, i32 %i.tb)
+  %.sroa.speculated502 = call i32 @llvm.smin.i32(i32 %.0538804, i32 %i.tb)
   %storemerge = select i1 %or.cond4, i32 %i.tb, i32 %.sroa.speculated502
   store i32 %storemerge, ptr %i.lq, align 8, !tbaa !379
   %i.tc = load i32, ptr %i.lu, align 8, !tbaa !3  ; 2 uses
-  %.sroa.speculated499 = call i32 @llvm.smin.i32(i32 %.0538, i32 %i.tc)
+  %.sroa.speculated499 = call i32 @llvm.smin.i32(i32 %.0538804, i32 %i.tc)
   store i32 %.sroa.speculated499, ptr %i.lr, align 4, !tbaa !380
   %i.td = load i32, ptr %i.lv, align 4, !tbaa !3  ; 2 uses
   %i.te = call i32 @llvm.smax.i32(i32 %i.td, i32 1)
-  %.sroa.speculated496 = call i32 @llvm.smin.i32(i32 %.0538, i32 %i.te)
+  %.sroa.speculated496 = call i32 @llvm.smin.i32(i32 %.0538804, i32 %i.te)
   store i32 %.sroa.speculated496, ptr %i.lw, align 8, !tbaa !381
   br label %bb.ec
 
