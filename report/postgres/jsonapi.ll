@@ -204,20 +204,23 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %bb.g
   %.0318409 = add i32 %i.ak, -1                   ; 4 uses
   %i.ao = icmp sgt i32 %.0318409, 0
-  br i1 %i.ao, label %.lr.ph, label %._crit_edge
+  br i1 %i.ao, label %.lr.ph.preheader, label %._crit_edge
 
-.lr.ph:                                           ; preds = %bb.h, %bb.i
-  %.0318411 = phi i32 [ %.0318, %bb.i ], [ %.0318409, %bb.h ] ; 2 uses
-  %.0319410 = phi i32 [ %i.as, %bb.i ], [ 0, %bb.h ] ; 2 uses
-  %2 = zext nneg i32 %.0318411 to i64
-  %i.ap = getelementptr inbounds nuw i8, ptr %i.am, i64 %2
+.lr.ph.preheader:                                 ; preds = %bb.h
+  %2 = zext nneg i32 %.0318409 to i64
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.i
+  %indvars.iv = phi i64 [ %2, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.i ] ; 2 uses
+  %.0319410 = phi i32 [ 0, %.lr.ph.preheader ], [ %i.as, %bb.i ] ; 2 uses
+  %i.ap = getelementptr inbounds nuw i8, ptr %i.am, i64 %indvars.iv
   %i.aq = load i8, ptr %i.ap, align 1
   %i.ar = icmp eq i8 %i.aq, 92
   br i1 %i.ar, label %bb.i, label %._crit_edge
 
 bb.i:                                             ; preds = %.lr.ph
   %i.as = add nuw nsw i32 %.0319410, 1            ; 2 uses
-  %.0318 = add nsw i32 %.0318411, -1
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
   %exitcond.not = icmp eq i32 %i.as, %.0318409
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !13
 

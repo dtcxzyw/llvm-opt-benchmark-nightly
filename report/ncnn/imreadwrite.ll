@@ -205,7 +205,7 @@ _ZL14stbiw__sbgrowfPPvii.exit499:                 ; preds = %bb.bl, %bb.bk, %bb.
   store i32 %i.yz, ptr %2, align 4, !tbaa !13
   %i.za = getelementptr inbounds i8, ptr %.17, i64 -8 ; 2 uses
   %i.zb = sext i32 %i.yz to i64
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.za, ptr nonnull align 1 %.17, i64 %i.zb, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.za, ptr nonnull align 4 %.17, i64 %i.zb, i1 false)
   br label %bb.bm
 
 bb.bm:                                            ; preds = %bb.a, %_ZL14stbiw__sbgrowfPPvii.exit499

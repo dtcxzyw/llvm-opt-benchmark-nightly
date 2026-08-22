@@ -204,25 +204,28 @@ bb.h:                                             ; preds = %bb.g
 
 .preheader.i:                                     ; preds = %bb.h
   %i.ah = icmp sgt i32 %i.ae, 0
-  br i1 %i.ah, label %.lr.ph.i, label %.critedge.i
+  br i1 %i.ah, label %.lr.ph.preheader.i, label %.critedge.i
+
+.lr.ph.preheader.i:                               ; preds = %.preheader.i
+  %4 = zext nneg i32 %i.ae to i64
+  br label %.lr.ph.i
 
 bb.i:                                             ; preds = %bb.h, %bb.h, %bb.h
   %i.ai = icmp sgt i32 %i.ae, 268435455
   %i.aj = shl nsw i32 %i.ae, 3
   br i1 %i.ai, label %get_obu_bit_length.exit.thread, label %get_obu_bit_length.exit
 
-.lr.ph.i:                                         ; preds = %.preheader.i, %bb.j
-  %.02129.i = phi i32 [ %5, %bb.j ], [ %i.ae, %.preheader.i ] ; 5 uses
-  %4 = zext nneg i32 %.02129.i to i64
-  %i.ak = getelementptr i8, ptr %i.ad, i64 %4
+.lr.ph.i:                                         ; preds = %bb.j, %.lr.ph.preheader.i
+  %indvars.iv.i = phi i64 [ %4, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %bb.j ] ; 5 uses
+  %i.ak = getelementptr i8, ptr %i.ad, i64 %indvars.iv.i
   %i.al = getelementptr i8, ptr %i.ak, i64 -1
   %i.am = load i8, ptr %i.al, align 1, !tbaa !9   ; 2 uses
   %i.an = icmp eq i8 %i.am, 0
   br i1 %i.an, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %.lr.ph.i
-  %5 = add nsw i32 %.02129.i, -1
-  %i.ao = icmp sgt i32 %.02129.i, 1
+  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1
+  %i.ao = icmp sgt i64 %indvars.iv.i, 1
   br i1 %i.ao, label %.lr.ph.i, label %.thread62, !llvm.loop !25
 
 .critedge.i:                                      ; preds = %.preheader.i
@@ -230,11 +233,12 @@ bb.j:                                             ; preds = %.lr.ph.i
   br i1 %.not.i, label %.thread62, label %bb.l
 
 bb.k:                                             ; preds = %.lr.ph.i
-  %i.ap = icmp samesign ugt i32 %.02129.i, 268435455
+  %i.ap = icmp samesign ugt i64 %indvars.iv.i, 268435455
   br i1 %i.ap, label %get_obu_bit_length.exit.thread, label %.thread36.i
 
 .thread36.i:                                      ; preds = %bb.k
-  %i.aq = shl nuw nsw i32 %.02129.i, 3
+  %5 = trunc nuw nsw i64 %indvars.iv.i to i32
+  %i.aq = shl nuw nsw i32 %5, 3
   br label %bb.m
 
 bb.l:                                             ; preds = %.critedge.i

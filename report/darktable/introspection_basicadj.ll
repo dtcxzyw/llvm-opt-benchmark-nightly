@@ -204,7 +204,7 @@ bb.bb:                                            ; preds = %.preheader.i
   br label %.lr.ph357.i.i
 
 .lr.ph357.i.i:                                    ; preds = %bb.bc, %bb.bb
-  %indvars.iv.i = phi i64 [ 8191, %bb.bb ], [ %indvars.iv.next.i.8, %bb.bc ] ; 12 uses
+  %indvars.iv.i = phi i64 [ 8191, %bb.bb ], [ %indvars.iv.next.i.8, %bb.bc ] ; 11 uses
   %.1236354.i.i = phi i32 [ 0, %bb.bb ], [ %i.qn, %bb.bc ]
   %i.pn = getelementptr inbounds nuw [4 x i8], ptr %i.cm, i64 %indvars.iv.i
   %i.po = load i32, ptr %i.pn, align 4, !tbaa !26
@@ -269,7 +269,7 @@ bb.bb:                                            ; preds = %.preheader.i
   br i1 %.not.i.i.7, label %.lr.ph363.preheader.i.i.a, label %.lr.ph357.i.i.8
 
 .lr.ph357.i.i.8:                                  ; preds = %.lr.ph357.i.i.7
-  %indvars.iv.next.i.7 = add nsw i64 %indvars.iv.i, -8 ; 2 uses
+  %indvars.iv.next.i.7 = add nsw i64 %indvars.iv.i, -8 ; 3 uses
   %i.ql = getelementptr inbounds nuw [4 x i8], ptr %i.cm, i64 %indvars.iv.next.i.7
   %i.qm = load i32, ptr %i.ql, align 4, !tbaa !26
   %i.qn = add i32 %i.qm, %i.qk                    ; 2 uses
@@ -278,19 +278,23 @@ bb.bb:                                            ; preds = %.preheader.i
 
 bb.bc:                                            ; preds = %.lr.ph357.i.i.8
   %indvars.iv.next.i.8 = add nsw i64 %indvars.iv.i, -9
-  %6 = icmp sgt i64 %indvars.iv.i, 10
+  %6 = icmp ugt i64 %indvars.iv.next.i.7, 2
   br i1 %6, label %.lr.ph357.i.i, label %.critedge5.i.i
 
 .lr.ph363.preheader.i.i.a:                        ; preds = %.lr.ph357.i.i.8, %.lr.ph357.i.i.7, %.lr.ph357.i.i.6, %.lr.ph357.i.i.5, %.lr.ph357.i.i.4, %.lr.ph357.i.i.3, %.lr.ph357.i.i.2, %.lr.ph357.i.i.1, %.lr.ph357.i.i
   %indvars.iv.i.lcssa = phi i64 [ %indvars.iv.i, %.lr.ph357.i.i ], [ %indvars.iv.next.i, %.lr.ph357.i.i.1 ], [ %indvars.iv.next.i.1, %.lr.ph357.i.i.2 ], [ %indvars.iv.next.i.2, %.lr.ph357.i.i.3 ], [ %indvars.iv.next.i.3, %.lr.ph357.i.i.4 ], [ %indvars.iv.next.i.4, %.lr.ph357.i.i.5 ], [ %indvars.iv.next.i.5, %.lr.ph357.i.i.6 ], [ %indvars.iv.next.i.6, %.lr.ph357.i.i.7 ], [ %indvars.iv.next.i.7, %.lr.ph357.i.i.8 ]
-  %i.qo = trunc nuw nsw i64 %indvars.iv.i.lcssa to i32 ; 3 uses
+  %i.qo = trunc i64 %indvars.iv.i.lcssa to i32    ; 5 uses
   %i.qp = add nsw i32 %i.qo, -1                   ; 2 uses
-  %wide.trip.count405.i.i = zext nneg i32 %i.qp to i64
+  %7 = icmp sgt i32 %i.qo, 1
+  br i1 %7, label %.lr.ph363.preheader.i.i, label %.critedge5.i.i
+
+.lr.ph363.preheader.i.i:                          ; preds = %.lr.ph363.preheader.i.i.a
+  %wide.trip.count408.i.i = zext nneg i32 %i.qp to i64
   br label %.lr.ph363.i.i
 
-.lr.ph363.i.i:                                    ; preds = %bb.bd, %.lr.ph363.preheader.i.i.a
-  %indvars.iv402.i.i = phi i64 [ 0, %.lr.ph363.preheader.i.i.a ], [ %indvars.iv.next403.i.i, %bb.bd ] ; 3 uses
-  %.2237361.i.i = phi i32 [ 0, %.lr.ph363.preheader.i.i.a ], [ %i.qs, %bb.bd ]
+.lr.ph363.i.i:                                    ; preds = %bb.bd, %.lr.ph363.preheader.i.i
+  %indvars.iv402.i.i = phi i64 [ 0, %.lr.ph363.preheader.i.i ], [ %indvars.iv.next403.i.i, %bb.bd ] ; 3 uses
+  %.2237361.i.i = phi i32 [ 0, %.lr.ph363.preheader.i.i ], [ %i.qs, %bb.bd ]
   %i.qq = getelementptr inbounds nuw [4 x i8], ptr %i.cm, i64 %indvars.iv402.i.i
   %i.qr = load i32, ptr %i.qq, align 4, !tbaa !26
   %i.qs = add i32 %i.qr, %.2237361.i.i            ; 2 uses
@@ -299,16 +303,16 @@ bb.bc:                                            ; preds = %.lr.ph357.i.i.8
 
 bb.bd:                                            ; preds = %.lr.ph363.i.i
   %indvars.iv.next403.i.i = add nuw nsw i64 %indvars.iv402.i.i, 1 ; 2 uses
-  %exitcond406.not.i.i = icmp eq i64 %indvars.iv.next403.i.i, %wide.trip.count405.i.i
+  %exitcond406.not.i.i = icmp eq i64 %indvars.iv.next403.i.i, %wide.trip.count408.i.i
   br i1 %exitcond406.not.i.i, label %.critedge5.i.i, label %.lr.ph363.i.i
 
 .critedge5.loopexit.split.loop.exit456.i.i:       ; preds = %.lr.ph363.i.i
   %i.qt = trunc nuw nsw i64 %indvars.iv402.i.i to i32
   br label %.critedge5.i.i
 
-.critedge5.i.i:                                   ; preds = %bb.bc, %bb.bd, %.critedge5.loopexit.split.loop.exit456.i.i
-  %.0233.lcssa.i23.i = phi i32 [ %i.qo, %bb.bd ], [ %i.qo, %.critedge5.loopexit.split.loop.exit456.i.i ], [ 1, %bb.bc ]
-  %.0232.lcssa.i.i = phi i32 [ %i.qp, %bb.bd ], [ %i.qt, %.critedge5.loopexit.split.loop.exit456.i.i ], [ 0, %bb.bc ]
+.critedge5.i.i:                                   ; preds = %bb.bc, %bb.bd, %.critedge5.loopexit.split.loop.exit456.i.i, %.lr.ph363.preheader.i.i.a
+  %.0233.lcssa.i23.i = phi i32 [ %i.qo, %.lr.ph363.preheader.i.i.a ], [ %i.qo, %.critedge5.loopexit.split.loop.exit456.i.i ], [ %i.qo, %bb.bd ], [ 1, %bb.bc ]
+  %.0232.lcssa.i.i = phi i32 [ 0, %.lr.ph363.preheader.i.i.a ], [ %i.qt, %.critedge5.loopexit.split.loop.exit456.i.i ], [ %i.qp, %bb.bd ], [ 0, %bb.bc ]
   %i.qu = shl i32 %i.pk, 3
   %i.qv = shl i32 %.0233.lcssa.i23.i, 3
   %i.qw = fmul reassoc nsz arcp contract afn float %i.hm, 8.000000e+00 ; 2 uses

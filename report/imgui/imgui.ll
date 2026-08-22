@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %bb.g, %bb.f
   %.1 = phi float [ %i.w, %bb.g ], [ %.0, %bb.f ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #41
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, ptr noundef nonnull align 4 dereferenceable(16) %0, i64 16, i1 false), !tbaa.struct !419
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %4, ptr noundef nonnull align 4 dereferenceable(16) %0, i64 16, i1 false), !tbaa.struct !419
   %i.x = getelementptr inbounds nuw i8, ptr %i.o, i64 616
   %i.y = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 5 uses
   %i.z = load <4 x float>, ptr %4, align 16, !tbaa !8 ; 3 uses
@@ -608,20 +608,21 @@ bb.bm:                                            ; preds = %bb.bl
 
 .lr.ph.preheader.i78:                             ; preds = %bb.bm
   %i.ke = add nsw i32 %i.ju, -2
+  %2 = zext nneg i32 %i.ke to i64
   br label %.lr.ph.i79
 
 .lr.ph.i79:                                       ; preds = %bb.bo, %.lr.ph.preheader.i78
-  %.023.i = phi i32 [ %3, %bb.bo ], [ %i.ke, %.lr.ph.preheader.i78 ] ; 4 uses
-  %2 = zext nneg i32 %.023.i to i64               ; 2 uses
-  %i.kf = getelementptr inbounds nuw [8 x i8], ptr %i.jt, i64 %2
+  %indvars.iv.i80 = phi i64 [ %2, %.lr.ph.preheader.i78 ], [ %indvars.iv.next.i81, %bb.bo ] ; 5 uses
+  %i.kf = getelementptr inbounds nuw [8 x i8], ptr %i.jt, i64 %indvars.iv.i80
   %i.kg = load ptr, ptr %i.kf, align 8, !tbaa !705
   %i.kh = icmp eq ptr %i.kg, %i.hn
   br i1 %i.kh, label %bb.bn, label %bb.bo
 
 bb.bn:                                            ; preds = %.lr.ph.i79
-  %i.ki = getelementptr inbounds nuw [8 x i8], ptr %i.jt, i64 %2 ; 2 uses
+  %i.ki = getelementptr inbounds nuw [8 x i8], ptr %i.jt, i64 %indvars.iv.i80 ; 2 uses
+  %3 = trunc nuw nsw i64 %indvars.iv.i80 to i32
   %i.kj = getelementptr inbounds nuw i8, ptr %i.ki, i64 8
-  %i.kk = xor i32 %.023.i, -1
+  %i.kk = xor i32 %3, -1
   %i.kl = add i32 %i.ju, %i.kk
   %i.km = sext i32 %i.kl to i64
   %i.kn = shl nsw i64 %i.km, 3
@@ -635,8 +636,8 @@ bb.bn:                                            ; preds = %.lr.ph.i79
   br label %_ZN5ImGui25BringWindowToDisplayFrontEP11ImGuiWindow.exit
 
 bb.bo:                                            ; preds = %.lr.ph.i79
-  %3 = add nsw i32 %.023.i, -1
-  %i.kt = icmp sgt i32 %.023.i, 0
+  %indvars.iv.next.i81 = add nsw i64 %indvars.iv.i80, -1
+  %i.kt = icmp sgt i64 %indvars.iv.i80, 0
   br i1 %i.kt, label %.lr.ph.i79, label %_ZN5ImGui25BringWindowToDisplayFrontEP11ImGuiWindow.exit, !llvm.loop !902
 
 _ZN5ImGui25BringWindowToDisplayFrontEP11ImGuiWindow.exit: ; preds = %select.unfold.i, %bb.bo, %bb.ai, %_ZN5ImGui26IsWindowWithinBeginStackOfEP11ImGuiWindowS1_.exit.i, %_ZN5ImGui20GetTopMostPopupModalEv.exit, %bb.bn, %bb.bm, %bb.bl, %bb.bi, %_ZN5ImGui23BringWindowToFocusFrontEP11ImGuiWindow.exit
@@ -1039,20 +1040,21 @@ bb.p:                                             ; preds = %bb.o
 
 .lr.ph.preheader.i:                               ; preds = %bb.p
   %i.df = add nsw i32 %i.cv, -2
+  %1 = zext nneg i32 %i.df to i64
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.r, %.lr.ph.preheader.i
-  %.023.i = phi i32 [ %2, %bb.r ], [ %i.df, %.lr.ph.preheader.i ] ; 4 uses
-  %1 = zext nneg i32 %.023.i to i64               ; 2 uses
-  %i.dg = getelementptr inbounds nuw [8 x i8], ptr %i.cu, i64 %1
+  %indvars.iv.i = phi i64 [ %1, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %bb.r ] ; 5 uses
+  %i.dg = getelementptr inbounds nuw [8 x i8], ptr %i.cu, i64 %indvars.iv.i
   %i.dh = load ptr, ptr %i.dg, align 8, !tbaa !705
   %i.di = icmp eq ptr %i.dh, %i.cq
   br i1 %i.di, label %bb.q, label %bb.r
 
 bb.q:                                             ; preds = %.lr.ph.i
-  %i.dj = getelementptr inbounds nuw [8 x i8], ptr %i.cu, i64 %1 ; 2 uses
+  %i.dj = getelementptr inbounds nuw [8 x i8], ptr %i.cu, i64 %indvars.iv.i ; 2 uses
+  %2 = trunc nuw nsw i64 %indvars.iv.i to i32
   %i.dk = getelementptr inbounds nuw i8, ptr %i.dj, i64 8
-  %i.dl = xor i32 %.023.i, -1
+  %i.dl = xor i32 %2, -1
   %i.dm = add i32 %i.cv, %i.dl
   %i.dn = sext i32 %i.dm to i64
   %i.do = shl nsw i64 %i.dn, 3
@@ -1068,8 +1070,8 @@ bb.q:                                             ; preds = %.lr.ph.i
   br label %_ZN5ImGui25BringWindowToDisplayFrontEP11ImGuiWindow.exit
 
 bb.r:                                             ; preds = %.lr.ph.i
-  %2 = add nsw i32 %.023.i, -1
-  %i.du = icmp sgt i32 %.023.i, 0
+  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1
+  %i.du = icmp sgt i64 %indvars.iv.i, 0
   br i1 %i.du, label %.lr.ph.i, label %_ZN5ImGui25BringWindowToDisplayFrontEP11ImGuiWindow.exit, !llvm.loop !902
 
 _ZN5ImGui25BringWindowToDisplayFrontEP11ImGuiWindow.exit: ; preds = %bb.r, %bb.o, %bb.p, %bb.q
@@ -1298,20 +1300,21 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph.preheader:                                 ; preds = %bb.b
   %i.o = add nsw i32 %i.e, -2
+  %1 = zext nneg i32 %i.o to i64
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.d
-  %.023 = phi i32 [ %2, %bb.d ], [ %i.o, %.lr.ph.preheader ] ; 4 uses
-  %1 = zext nneg i32 %.023 to i64                 ; 2 uses
-  %i.p = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %1
+  %indvars.iv = phi i64 [ %1, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.d ] ; 5 uses
+  %i.p = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %indvars.iv
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !705
   %i.r = icmp eq ptr %i.q, %0
   br i1 %i.r, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %.lr.ph
-  %i.s = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %1 ; 2 uses
+  %i.s = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %indvars.iv ; 2 uses
+  %2 = trunc nuw nsw i64 %indvars.iv to i32
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 8
-  %i.u = xor i32 %.023, -1
+  %i.u = xor i32 %2, -1
   %i.v = add i32 %i.e, %i.u
   %i.w = sext i32 %i.v to i64
   %i.x = shl nsw i64 %i.w, 3
@@ -1325,8 +1328,8 @@ bb.c:                                             ; preds = %.lr.ph
   br label %.loopexit
 
 bb.d:                                             ; preds = %.lr.ph
-  %2 = add nsw i32 %.023, -1
-  %i.ad = icmp sgt i32 %.023, 0
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
+  %i.ad = icmp sgt i64 %indvars.iv, 0
   br i1 %i.ad, label %.lr.ph, label %.loopexit, !llvm.loop !902
 
 .loopexit:                                        ; preds = %bb.d, %bb.c, %bb.a, %bb.b
@@ -1729,7 +1732,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   store i32 %i.ae, ptr %i.aq, align 4, !tbaa !205
   %i.ar = getelementptr inbounds nuw i8, ptr %i.an, i64 1016
   %i.as = getelementptr inbounds nuw [16 x i8], ptr %i.ar, i64 %i.ap
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.as, ptr noundef nonnull readonly align 4 dereferenceable(16) %i.aj, i64 16, i1 false), !tbaa.struct !419
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.as, ptr noundef nonnull readonly align 8 dereferenceable(16) %i.aj, i64 16, i1 false), !tbaa.struct !419
   %i.at = load ptr, ptr @GImGui, align 8, !tbaa !193 ; 9 uses
   %i.au = getelementptr inbounds nuw i8, ptr %i.at, i64 8224
   %i.av = load ptr, ptr %i.au, align 8, !tbaa !389 ; 2 uses
@@ -2132,7 +2135,7 @@ bb.ar:                                            ; preds = %bb.aq, %bb.ap
   store i32 %i.gh, ptr %i.gr, align 4, !tbaa !205
   %i.gs = getelementptr inbounds nuw i8, ptr %i.gp, i64 1016
   %i.gt = getelementptr inbounds nuw [16 x i8], ptr %i.gs, i64 %i.ge
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.gt, ptr noundef nonnull readonly align 4 dereferenceable(16) %i.gk, i64 16, i1 false), !tbaa.struct !419
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.gt, ptr noundef nonnull readonly align 8 dereferenceable(16) %i.gk, i64 16, i1 false), !tbaa.struct !419
   %i.gu = load ptr, ptr @GImGui, align 8, !tbaa !193 ; 2 uses
   %i.gv = getelementptr inbounds nuw i8, ptr %i.gu, i64 8224
   %i.gw = load ptr, ptr %i.gv, align 8, !tbaa !389
@@ -2535,7 +2538,7 @@ bb.i:                                             ; preds = %bb.h
   %i.y = getelementptr inbounds nuw i8, ptr %i.a, i64 8944 ; 3 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.y, i8 0, i64 16, i1 false)
   store ptr %i.y, ptr %i.b, align 8, !tbaa !1511
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.y, ptr align 1 %1, i64 %2, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.y, ptr align 1 %1, i64 %2, i1 false)
   br label %bb.k
 
 bb.j:                                             ; preds = %bb.h
@@ -2938,7 +2941,7 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 5312
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !298  ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #41
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %1, ptr noundef nonnull align 4 dereferenceable(16) %0, i64 16, i1 false), !tbaa.struct !419
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %1, ptr noundef nonnull align 4 dereferenceable(16) %0, i64 16, i1 false), !tbaa.struct !419
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 8872
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 3444
   %i.f = load float, ptr %i.e, align 4, !tbaa !1518
@@ -3341,7 +3344,7 @@ _Z9ImHashStrPKcmj.exit:                           ; preds = %bb.k, %bb.p, %.preh
   store i32 %i.bs, ptr %i.ae, align 4, !tbaa !715
   %i.bt = getelementptr inbounds nuw i8, ptr %i.ad, i64 20
   %i.bu = add i64 %i.m, 1
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.bt, ptr nonnull align 1 %.0, i64 %i.bu, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.bt, ptr nonnull align 1 %.0, i64 %i.bu, i1 false)
   ret ptr %i.ae
 }
 

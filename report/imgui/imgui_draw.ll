@@ -205,50 +205,57 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   tail call void @_ZN18ImDrawListSplitter17SetCurrentChannelEP10ImDrawListi(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef %1, i32 noundef 0)
-  %.pr.i = load i32, ptr %1, align 8, !tbaa !89   ; 3 uses
+  %.pr.i = load i32, ptr %1, align 8, !tbaa !89   ; 5 uses
   %i.d = icmp sgt i32 %.pr.i, 0
   br i1 %i.d, label %.lr.ph.i, label %_ZN10ImDrawList17_PopUnusedDrawCmdEv.exit
 
 .lr.ph.i:                                         ; preds = %bb.b
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.f = load ptr, ptr %i.e, align 8, !tbaa !90
-  br label %bb.c
+  %i.f = load ptr, ptr %i.e, align 8, !tbaa !90   ; 3 uses
+  %2 = zext nneg i32 %.pr.i to i64                ; 2 uses
+  %3 = getelementptr [72 x i8], ptr %i.f, i64 %2
+  %4 = getelementptr i8, ptr %3, i64 -32
+  %5 = load i32, ptr %4, align 8, !tbaa !91
+  %.not.i205 = icmp eq i32 %5, 0
+  br i1 %.not.i205, label %bb.d, label %_ZN10ImDrawList17_PopUnusedDrawCmdEv.exit
 
-bb.c:                                             ; preds = %bb.e, %.lr.ph.i
-  %2 = phi i32 [ %.pr.i, %.lr.ph.i ], [ %4, %bb.e ] ; 5 uses
-  %3 = zext nneg i32 %2 to i64
-  %i.g = getelementptr [72 x i8], ptr %i.f, i64 %3 ; 2 uses
+bb.c:                                             ; preds = %bb.e
+  %i.g = getelementptr [72 x i8], ptr %i.f, i64 %indvars.iv.next.i
   %i.h = getelementptr i8, ptr %i.g, i64 -32
   %i.i = load i32, ptr %i.h, align 8, !tbaa !91
   %.not.i = icmp eq i32 %i.i, 0
   br i1 %.not.i, label %bb.d, label %_ZN10ImDrawList17_PopUnusedDrawCmdEv.exit
 
-bb.d:                                             ; preds = %bb.c
-  %i.j = getelementptr i8, ptr %i.g, i64 -24
+bb.d:                                             ; preds = %.lr.ph.i, %bb.c
+  %indvars.iv.i206 = phi i64 [ %indvars.iv.next.i, %bb.c ], [ %2, %.lr.ph.i ] ; 3 uses
+  %6 = phi i32 [ %8, %bb.c ], [ %.pr.i, %.lr.ph.i ]
+  %7 = getelementptr [72 x i8], ptr %i.f, i64 %indvars.iv.i206
+  %i.j = getelementptr i8, ptr %7, i64 -24
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !93
   %.not4.i = icmp eq ptr %i.k, null
   br i1 %.not4.i, label %bb.e, label %_ZN10ImDrawList17_PopUnusedDrawCmdEv.exit
 
 bb.e:                                             ; preds = %bb.d
-  %4 = add nsw i32 %2, -1                         ; 3 uses
-  store i32 %4, ptr %1, align 8, !tbaa !69
-  %i.l = icmp sgt i32 %2, 1
+  %indvars.iv.next.i = add nsw i64 %indvars.iv.i206, -1 ; 3 uses
+  %8 = trunc nuw nsw i64 %indvars.iv.next.i to i32 ; 3 uses
+  store i32 %8, ptr %1, align 8, !tbaa !69
+  %i.l = icmp sgt i64 %indvars.iv.i206, 1
   br i1 %i.l, label %bb.c, label %_ZN10ImDrawList17_PopUnusedDrawCmdEv.exit
 
-_ZN10ImDrawList17_PopUnusedDrawCmdEv.exit:        ; preds = %bb.c, %bb.d, %bb.e, %bb.b
-  %5 = phi i32 [ %.pr.i, %bb.b ], [ %2, %bb.c ], [ %2, %bb.d ], [ %4, %bb.e ] ; 4 uses
+_ZN10ImDrawList17_PopUnusedDrawCmdEv.exit:        ; preds = %bb.e, %bb.d, %bb.c, %.lr.ph.i, %bb.b
+  %9 = phi i32 [ %.pr.i, %bb.b ], [ %.pr.i, %.lr.ph.i ], [ %8, %bb.c ], [ %6, %bb.d ], [ 0, %bb.e ] ; 4 uses
   %i.m = load i32, ptr %i.a, align 4, !tbaa !87   ; 2 uses
   %i.n = icmp sgt i32 %i.m, 0
   br i1 %i.n, label %bb.f, label %._crit_edge134
 
 bb.f:                                             ; preds = %_ZN10ImDrawList17_PopUnusedDrawCmdEv.exit
-  %i.o = icmp sgt i32 %5, 0
+  %i.o = icmp sgt i32 %9, 0
   br i1 %i.o, label %bb.g, label %.thread
 
 bb.g:                                             ; preds = %bb.f
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !67
-  %i.r = zext nneg i32 %5 to i64
+  %i.r = zext nneg i32 %9 to i64
   %i.s = getelementptr [72 x i8], ptr %i.q, i64 %i.r ; 3 uses
   %i.t = getelementptr i8, ptr %i.s, i64 -72      ; 2 uses
   %.not = icmp eq ptr %i.t, null
@@ -277,7 +284,7 @@ bb.h:                                             ; preds = %bb.g
   br label %._crit_edge134
 
 ._crit_edge134:                                   ; preds = %_ZN10ImDrawList17_PopUnusedDrawCmdEv.exit, %._crit_edge134.loopexit, %.thread
-  %i.ac = phi i32 [ %5, %.thread ], [ %.pre, %._crit_edge134.loopexit ], [ %5, %_ZN10ImDrawList17_PopUnusedDrawCmdEv.exit ]
+  %i.ac = phi i32 [ %9, %.thread ], [ %.pre, %._crit_edge134.loopexit ], [ %9, %_ZN10ImDrawList17_PopUnusedDrawCmdEv.exit ]
   %.095.lcssa = phi i32 [ 0, %.thread ], [ %i.ej, %._crit_edge134.loopexit ], [ 0, %_ZN10ImDrawList17_PopUnusedDrawCmdEv.exit ] ; 2 uses
   %.094.lcssa = phi i32 [ 0, %.thread ], [ %i.ek, %._crit_edge134.loopexit ], [ 0, %_ZN10ImDrawList17_PopUnusedDrawCmdEv.exit ] ; 2 uses
   %i.ad = add nsw i32 %i.ac, %.095.lcssa          ; 4 uses
@@ -680,12 +687,12 @@ bb.a:
 .lr.ph:                                           ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !90
+  %1 = zext nneg i32 %.pr to i64
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.d
-  %1 = phi i32 [ %.pr, %.lr.ph ], [ %3, %bb.d ]   ; 3 uses
-  %2 = zext nneg i32 %1 to i64
-  %i.d = getelementptr [72 x i8], ptr %i.c, i64 %2 ; 2 uses
+  %indvars.iv = phi i64 [ %1, %.lr.ph ], [ %indvars.iv.next, %bb.d ] ; 3 uses
+  %i.d = getelementptr [72 x i8], ptr %i.c, i64 %indvars.iv ; 2 uses
   %i.e = getelementptr i8, ptr %i.d, i64 -32
   %i.f = load i32, ptr %i.e, align 8, !tbaa !91
   %.not = icmp eq i32 %i.f, 0
@@ -698,9 +705,10 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not4, label %bb.d, label %.thread
 
 bb.d:                                             ; preds = %bb.c
-  %3 = add nsw i32 %1, -1                         ; 2 uses
-  store i32 %3, ptr %0, align 8, !tbaa !69
-  %i.i = icmp sgt i32 %1, 1
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 2 uses
+  %2 = trunc nuw nsw i64 %indvars.iv.next to i32
+  store i32 %2, ptr %0, align 8, !tbaa !69
+  %i.i = icmp sgt i64 %indvars.iv, 1
   br i1 %i.i, label %bb.b, label %.thread
 
 .thread:                                          ; preds = %bb.d, %bb.c, %bb.b, %bb.a
@@ -1103,12 +1111,12 @@ bb.a:
 .lr.ph.i:                                         ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !90
+  %2 = zext nneg i32 %.pr.i to i64
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.d, %.lr.ph.i
-  %2 = phi i32 [ %.pr.i, %.lr.ph.i ], [ %4, %bb.d ] ; 3 uses
-  %3 = zext nneg i32 %2 to i64
-  %i.d = getelementptr [72 x i8], ptr %i.c, i64 %3 ; 2 uses
+  %indvars.iv.i = phi i64 [ %2, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.d ] ; 3 uses
+  %i.d = getelementptr [72 x i8], ptr %i.c, i64 %indvars.iv.i ; 2 uses
   %i.e = getelementptr i8, ptr %i.d, i64 -32
   %i.f = load i32, ptr %i.e, align 8, !tbaa !91
   %.not.i = icmp eq i32 %i.f, 0
@@ -1121,9 +1129,10 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not4.i, label %bb.d, label %_ZN10ImDrawList17_PopUnusedDrawCmdEv.exit
 
 bb.d:                                             ; preds = %bb.c
-  %4 = add nsw i32 %2, -1                         ; 2 uses
-  store i32 %4, ptr %1, align 8, !tbaa !69
-  %i.i = icmp sgt i32 %2, 1
+  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1 ; 2 uses
+  %3 = trunc nuw nsw i64 %indvars.iv.next.i to i32
+  store i32 %3, ptr %1, align 8, !tbaa !69
+  %i.i = icmp sgt i64 %indvars.iv.i, 1
   br i1 %i.i, label %bb.b, label %_ZN10ImDrawList17_PopUnusedDrawCmdEv.exit
 
 _ZN10ImDrawList17_PopUnusedDrawCmdEv.exit:        ; preds = %bb.b, %bb.c, %bb.d, %bb.a

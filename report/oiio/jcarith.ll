@@ -203,9 +203,8 @@ bb.n:                                             ; preds = %.sink.split, %bb.l
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.r, %.loopexit171
-  %.0140180 = phi i32 [ 63, %.loopexit171 ], [ %7, %bb.r ] ; 6 uses
-  %2 = zext nneg i32 %.0140180 to i64
-  %i.ci = getelementptr inbounds nuw [4 x i8], ptr @jpeg_natural_order, i64 %2
+  %indvars.iv = phi i64 [ 63, %.loopexit171 ], [ %indvars.iv.next.2, %bb.r ] ; 6 uses
+  %i.ci = getelementptr inbounds nuw [4 x i8], ptr @jpeg_natural_order, i64 %indvars.iv
   %i.cj = load i32, ptr %i.ci, align 4, !tbaa !3
   %i.ck = sext i32 %i.cj to i64
   %i.cl = getelementptr inbounds [2 x i8], ptr %i.ad, i64 %i.ck
@@ -214,9 +213,8 @@ bb.o:                                             ; preds = %bb.r, %.loopexit171
   br i1 %.not163, label %bb.p, label %bb.s
 
 bb.p:                                             ; preds = %bb.o
-  %3 = add nsw i32 %.0140180, -1                  ; 2 uses
-  %4 = zext nneg i32 %3 to i64
-  %i.cn = getelementptr inbounds nuw [4 x i8], ptr @jpeg_natural_order, i64 %4
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 2 uses
+  %i.cn = getelementptr inbounds nuw [4 x i8], ptr @jpeg_natural_order, i64 %indvars.iv.next
   %i.co = load i32, ptr %i.cn, align 4, !tbaa !3
   %i.cp = sext i32 %i.co to i64
   %i.cq = getelementptr inbounds [2 x i8], ptr %i.ad, i64 %i.cp
@@ -225,9 +223,8 @@ bb.p:                                             ; preds = %bb.o
   br i1 %.not163.1, label %bb.q, label %bb.s
 
 bb.q:                                             ; preds = %bb.p
-  %5 = add nsw i32 %.0140180, -2                  ; 2 uses
-  %6 = zext nneg i32 %5 to i64
-  %i.cs = getelementptr inbounds nuw [4 x i8], ptr @jpeg_natural_order, i64 %6
+  %indvars.iv.next.1 = add nsw i64 %indvars.iv, -2 ; 2 uses
+  %i.cs = getelementptr inbounds nuw [4 x i8], ptr @jpeg_natural_order, i64 %indvars.iv.next.1
   %i.ct = load i32, ptr %i.cs, align 4, !tbaa !3
   %i.cu = sext i32 %i.ct to i64
   %i.cv = getelementptr inbounds [2 x i8], ptr %i.ad, i64 %i.cu
@@ -236,13 +233,14 @@ bb.q:                                             ; preds = %bb.p
   br i1 %.not163.2, label %bb.r, label %bb.s
 
 bb.r:                                             ; preds = %bb.q
-  %7 = add nsw i32 %.0140180, -3
-  %i.cx = icmp sgt i32 %.0140180, 3
+  %indvars.iv.next.2 = add nsw i64 %indvars.iv, -3
+  %i.cx = icmp sgt i64 %indvars.iv, 3
   br i1 %i.cx, label %bb.o, label %._crit_edge204.thread, !llvm.loop !93
 
 bb.s:                                             ; preds = %bb.q, %bb.p, %bb.o
-  %.0140180.lcssa = phi i32 [ %.0140180, %bb.o ], [ %3, %bb.p ], [ %5, %bb.q ] ; 2 uses
-  %.not164200 = icmp slt i32 %.0140180.lcssa, 1
+  %indvars.iv.lcssa = phi i64 [ %indvars.iv, %bb.o ], [ %indvars.iv.next, %bb.p ], [ %indvars.iv.next.1, %bb.q ] ; 2 uses
+  %2 = trunc nuw nsw i64 %indvars.iv.lcssa to i32
+  %.not164200 = icmp slt i64 %indvars.iv.lcssa, 1
   br i1 %.not164200, label %._crit_edge204.thread, label %.lr.ph203
 
 .lr.ph203:                                        ; preds = %bb.s
@@ -364,7 +362,7 @@ bb.v:                                             ; preds = %bb.u
 
 ._crit_edge199:                                   ; preds = %.lr.ph198, %.loopexit.thread, %.loopexit
   %i.et = add nsw i32 %.1142.lcssa, 1             ; 2 uses
-  %.not164.not = icmp slt i32 %.1142.lcssa, %.0140180.lcssa
+  %.not164.not = icmp slt i32 %.1142.lcssa, %2
   br i1 %.not164.not, label %bb.t, label %._crit_edge204, !llvm.loop !97
 
 ._crit_edge204:                                   ; preds = %._crit_edge199

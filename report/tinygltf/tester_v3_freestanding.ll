@@ -205,16 +205,15 @@ begin_hunk_0_@tg3json__stringify_value_ex:bb.a
   br i1 %i.kv, label %.lr.ph147.i, label %.preheader132.i, !llvm.loop !114
 
 .preheader.i171:                                  ; preds = %.preheader132.i, %.preheader.i171
-  %.186152.i = phi i32 [ %6, %.preheader.i171 ], [ 16, %.preheader132.i ] ; 3 uses
-  %5 = zext nneg i32 %.186152.i to i64
-  %i.kw = getelementptr inbounds nuw i8, ptr %i.a, i64 %5 ; 2 uses
+  %indvars.iv.i172 = phi i64 [ %indvars.iv.next.i173, %.preheader.i171 ], [ 16, %.preheader132.i ] ; 3 uses
+  %i.kw = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv.i172 ; 2 uses
   %i.kx = load i8, ptr %i.kw, align 1, !tbaa !12  ; 2 uses
   %i.ky = icmp eq i8 %i.kx, 57                    ; 3 uses
   %i.kz = add i8 %i.kx, 1
   %storemerge.i = select i1 %i.ky, i8 48, i8 %i.kz
   store i8 %storemerge.i, ptr %i.kw, align 1, !tbaa !12
-  %6 = add nsw i32 %.186152.i, -1
-  %i.la = icmp ne i32 %.186152.i, 0
+  %indvars.iv.next.i173 = add nsw i64 %indvars.iv.i172, -1
+  %i.la = icmp ne i64 %indvars.iv.i172, 0
   %i.lb = and i1 %i.la, %i.ky
   br i1 %i.lb, label %.preheader.i171, label %bb.s, !llvm.loop !115
 

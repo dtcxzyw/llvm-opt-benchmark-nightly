@@ -204,31 +204,31 @@ define void @_ZN8bitwuzla11TermManagerC2Ev(ptr nofree noundef nonnull writeonly 
 bb.a:
   %i.a = tail call noalias noundef nonnull dereferenceable(216) ptr @_Znwm(i64 noundef 216) #34 ; 21 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(216) %i.a, i8 0, i64 216, i1 false)
-  store i64 1, ptr %i.a, align 8, !tbaa !478
+  store i64 1, ptr %i.a, align 16, !tbaa !478
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.b, i8 0, i64 24, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %i.b, i8 0, i64 24, i1 false)
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 40
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 88
   store ptr %i.d, ptr %i.c, align 8, !tbaa !487
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 48
-  store i64 1, ptr %i.e, align 8, !tbaa !488
+  store i64 1, ptr %i.e, align 16, !tbaa !488
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 56
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 72
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.f, i8 0, i64 16, i1 false)
   store float 1.000000e+00, ptr %i.g, align 8, !tbaa !357
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 80
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.h, i8 0, i64 16, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.h, i8 0, i64 16, i1 false)
   %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 96
-  store i64 1, ptr %i.i, align 8, !tbaa !489
+  store i64 1, ptr %i.i, align 16, !tbaa !489
   %i.j = getelementptr inbounds nuw i8, ptr %i.a, i64 112 ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.a, i64 160
-  store ptr %i.k, ptr %i.j, align 8, !tbaa !500
+  store ptr %i.k, ptr %i.j, align 16, !tbaa !500
   %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 120
   store i64 1, ptr %i.l, align 8, !tbaa !501
   %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 128
   %i.n = getelementptr inbounds nuw i8, ptr %i.a, i64 144
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.m, i8 0, i64 16, i1 false)
-  store float 1.000000e+00, ptr %i.n, align 8, !tbaa !357
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.m, i8 0, i64 16, i1 false)
+  store float 1.000000e+00, ptr %i.n, align 16, !tbaa !357
   %i.o = getelementptr inbounds nuw i8, ptr %i.a, i64 152
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.o, i8 0, i64 16, i1 false)
   %i.p = getelementptr inbounds nuw i8, ptr %i.a, i64 168

@@ -65,7 +65,7 @@ define dso_local void @_ZN9Stockfish9Bitboards6prettyB5cxx11Em(ptr dead_on_unwin
 
 bb.a:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit11, %._crit_edge.i.i
   %indvars.iv = phi i64 [ %indvars.iv.next, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit11 ], [ 7, %._crit_edge.i.i ] ; 5 uses
-  %i.l = shl nuw nsw i64 %indvars.iv, 3           ; 8 uses
+  %i.l = shl nsw i64 %indvars.iv, 3               ; 8 uses
   %i.m = load i64, ptr %i.e, align 8, !tbaa !20
   %i.n = and i64 %i.m, -4
   %i.o = icmp eq i64 %i.n, 4611686018427387900

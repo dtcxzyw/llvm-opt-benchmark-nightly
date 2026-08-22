@@ -204,7 +204,11 @@ bb.v:                                             ; preds = %bb.u
   %.05570.i.i = add i32 %i.af, -1                 ; 2 uses
   %i.as = icmp sgt i32 %.05570.i.i, -1
   %i.at = select i1 %i.as, i1 %i.ar, i1 false
-  br i1 %i.at, label %.lr.ph72.i.i, label %n_fold.exit.i
+  br i1 %i.at, label %.lr.ph72.preheader.i.i, label %n_fold.exit.i
+
+.lr.ph72.preheader.i.i:                           ; preds = %.preheader.i.i
+  %4 = zext nneg i32 %.05570.i.i to i64
+  br label %.lr.ph72.i.i
 
 .lr.ph68.i.i:                                     ; preds = %._crit_edge.i.i, %.lr.ph68.i.i
   %.05466.i.i = phi i32 [ %.054.i.i, %.lr.ph68.i.i ], [ %.05464.i.i, %._crit_edge.i.i ] ; 5 uses
@@ -244,15 +248,14 @@ bb.v:                                             ; preds = %bb.u
   %.not76.i.i = icmp eq i32 %.05466.i.i, 0
   br i1 %.not76.i.i, label %.preheader.i.i, label %.lr.ph68.i.i, !llvm.loop !22
 
-.lr.ph72.i.i:                                     ; preds = %.preheader.i.i, %.lr.ph72.i.i
-  %.05571.i.i = phi i32 [ %.055.i.i, %.lr.ph72.i.i ], [ %.05570.i.i, %.preheader.i.i ] ; 3 uses
-  %4 = zext nneg i32 %.05571.i.i to i64
-  %i.bx = getelementptr inbounds nuw i8, ptr %i.a, i64 %4 ; 2 uses
+.lr.ph72.i.i:                                     ; preds = %.lr.ph72.i.i, %.lr.ph72.preheader.i.i
+  %indvars.iv.i.i = phi i64 [ %4, %.lr.ph72.preheader.i.i ], [ %indvars.iv.next.i.i, %.lr.ph72.i.i ] ; 3 uses
+  %i.bx = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv.i.i ; 2 uses
   %i.by = load i8, ptr %i.bx, align 1, !tbaa !21  ; 2 uses
   %i.bz = add i8 %i.by, 1
   store i8 %i.bz, ptr %i.bx, align 1, !tbaa !21
-  %.055.i.i = add nsw i32 %.05571.i.i, -1
-  %i.ca = icmp ne i32 %.05571.i.i, 0
+  %indvars.iv.next.i.i = add nsw i64 %indvars.iv.i.i, -1
+  %i.ca = icmp ne i64 %indvars.iv.i.i, 0
   %i.cb = icmp eq i8 %i.by, -1
   %i.cc = select i1 %i.ca, i1 %i.cb, i1 false
   br i1 %i.cc, label %.lr.ph72.i.i, label %n_fold.exit.i, !llvm.loop !23

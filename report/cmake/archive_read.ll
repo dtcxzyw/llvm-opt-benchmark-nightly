@@ -205,7 +205,7 @@ bb.v:                                             ; preds = %.lr.ph334
 
 bb.w:                                             ; preds = %bb.af, %._crit_edge
   %i.cz = phi ptr [ %i.i, %._crit_edge ], [ %.pre, %bb.af ] ; 8 uses
-  %.3 = phi i32 [ %.2.lcssa, %._crit_edge ], [ %i.ek, %bb.af ] ; 8 uses
+  %.3 = phi i32 [ %.2.lcssa, %._crit_edge ], [ %i.ek, %bb.af ] ; 7 uses
   %i.da = getelementptr inbounds nuw i8, ptr %i.cz, i64 228 ; 2 uses
   %i.db = load i32, ptr %i.da, align 4, !tbaa !84
   %i.dc = icmp eq i32 %i.db, %.3
@@ -286,13 +286,13 @@ client_seek_proxy.exit171.thread:                 ; preds = %client_switch_proxy
 
 client_seek_proxy.exit171:                        ; preds = %client_switch_proxy.exit169.thread
   %i.eb = load ptr, ptr %i.cx, align 8, !tbaa !50
-  %i.ec = tail call i64 %i.dz(ptr noundef nonnull %i.dx, ptr noundef %i.eb, i64 noundef 0, i32 noundef 2) #14, !inline_history !135 ; 5 uses
+  %i.ec = tail call i64 %i.dz(ptr noundef nonnull %i.dx, ptr noundef %i.eb, i64 noundef 0, i32 noundef 2) #14, !inline_history !135 ; 4 uses
   %i.ed = icmp slt i64 %i.ec, 0
   br i1 %i.ed, label %.loopexit, label %bb.ae
 
 bb.ae:                                            ; preds = %client_seek_proxy.exit171
-  %i.ee = load ptr, ptr %i.j, align 8, !tbaa !132 ; 3 uses
-  %i.ef = zext i32 %.3 to i64
+  %i.ee = load ptr, ptr %i.j, align 8, !tbaa !132 ; 5 uses
+  %i.ef = zext i32 %.3 to i64                     ; 3 uses
   %i.eg = getelementptr inbounds nuw [24 x i8], ptr %i.ee, i64 %i.ef ; 2 uses
   %i.eh = getelementptr inbounds nuw i8, ptr %i.eg, i64 8
   store i64 %i.ec, ptr %i.eh, align 8, !tbaa !133
@@ -309,7 +309,10 @@ bb.ae:                                            ; preds = %client_seek_proxy.e
   br i1 %.not156206, label %.lr.ph210.preheader, label %._crit_edge211
 
 .lr.ph210.preheader:                              ; preds = %.preheader
-  %i.en = add nsw i64 %i.ec, %1                   ; 2 uses
+  %3 = getelementptr inbounds nuw [24 x i8], ptr %i.ee, i64 %i.ef
+  %4 = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %5 = load i64, ptr %4, align 8, !tbaa !133
+  %i.en = add nsw i64 %5, %1                      ; 2 uses
   %i.eo = icmp eq i32 %.3, 0
   br i1 %i.eo, label %._crit_edge211, label %.lr.ph338
 
@@ -321,29 +324,36 @@ bb.af:                                            ; preds = %bb.ae
   br label %bb.w
 
 .lr.ph210:                                        ; preds = %.lr.ph338
-  %i.er = add nsw i64 %i.ex, %i.et                ; 2 uses
-  %i.es = icmp eq i32 %3, 0
+  %6 = getelementptr inbounds nuw [24 x i8], ptr %i.ee, i64 %indvars.iv.next257
+  %7 = getelementptr inbounds nuw i8, ptr %6, i64 8
+  %8 = load i64, ptr %7, align 8, !tbaa !133
+  %i.er = add nsw i64 %8, %i.et                   ; 2 uses
+  %i.es = icmp eq i64 %indvars.iv.next257, 0
   br i1 %i.es, label %._crit_edge211, label %.lr.ph338
 
 .lr.ph338:                                        ; preds = %.lr.ph210.preheader, %.lr.ph210
   %i.et = phi i64 [ %i.er, %.lr.ph210 ], [ %i.en, %.lr.ph210.preheader ] ; 3 uses
-  %.4209337 = phi i32 [ %3, %.lr.ph210 ], [ %.3, %.lr.ph210.preheader ]
-  %3 = add i32 %.4209337, -1                      ; 4 uses
-  %4 = zext i32 %3 to i64
-  %i.eu = getelementptr inbounds nuw [24 x i8], ptr %i.ee, i64 %4 ; 2 uses
+  %indvars.iv256357 = phi i64 [ %indvars.iv.next257, %.lr.ph210 ], [ %i.ef, %.lr.ph210.preheader ]
+  %indvars.iv.next257 = add nsw i64 %indvars.iv256357, -1 ; 5 uses
+  %9 = and i64 %indvars.iv.next257, 4294967295
+  %i.eu = getelementptr inbounds nuw [24 x i8], ptr %i.ee, i64 %9 ; 2 uses
   %i.ev = load i64, ptr %i.eu, align 8, !tbaa !56 ; 4 uses
   %i.ew = getelementptr inbounds nuw i8, ptr %i.eu, i64 8
-  %i.ex = load i64, ptr %i.ew, align 8, !tbaa !133 ; 2 uses
+  %i.ex = load i64, ptr %i.ew, align 8, !tbaa !133
   %i.ey = add nsw i64 %i.ex, %i.ev                ; 3 uses
   %i.ez = add nsw i64 %i.ey, %i.et
   %.not156 = icmp slt i64 %i.ez, %i.ev
-  br i1 %.not156, label %.lr.ph210, label %._crit_edge211
+  br i1 %.not156, label %.lr.ph210, label %._crit_edge211.loopexit.split.loop.exit322
 
-._crit_edge211:                                   ; preds = %.lr.ph210, %.lr.ph338, %.lr.ph210.preheader, %.preheader
-  %.0125.lcssa = phi i64 [ %i.ej, %.preheader ], [ %i.ej, %.lr.ph210.preheader ], [ %i.ey, %.lr.ph338 ], [ %i.ey, %.lr.ph210 ]
-  %.4.lcssa = phi i32 [ %.3, %.preheader ], [ 0, %.lr.ph210.preheader ], [ %3, %.lr.ph338 ], [ 0, %.lr.ph210 ] ; 2 uses
-  %.lcssa189 = phi i64 [ %i.ei, %.preheader ], [ %i.ei, %.lr.ph210.preheader ], [ %i.ev, %.lr.ph338 ], [ %i.ev, %.lr.ph210 ]
-  %.2130 = phi i64 [ %1, %.preheader ], [ %i.en, %.lr.ph210.preheader ], [ %i.et, %.lr.ph338 ], [ %i.er, %.lr.ph210 ]
+._crit_edge211.loopexit.split.loop.exit322:       ; preds = %.lr.ph338
+  %indvars258.le = trunc i64 %indvars.iv.next257 to i32
+  br label %._crit_edge211
+
+._crit_edge211:                                   ; preds = %.lr.ph210, %.lr.ph210.preheader, %._crit_edge211.loopexit.split.loop.exit322, %.preheader
+  %.0125.lcssa = phi i64 [ %i.ej, %.preheader ], [ %i.ey, %._crit_edge211.loopexit.split.loop.exit322 ], [ %i.ej, %.lr.ph210.preheader ], [ %i.ey, %.lr.ph210 ]
+  %.4.lcssa = phi i32 [ %.3, %.preheader ], [ %indvars258.le, %._crit_edge211.loopexit.split.loop.exit322 ], [ 0, %.lr.ph210.preheader ], [ 0, %.lr.ph210 ] ; 2 uses
+  %.lcssa189 = phi i64 [ %i.ei, %.preheader ], [ %i.ev, %._crit_edge211.loopexit.split.loop.exit322 ], [ %i.ei, %.lr.ph210.preheader ], [ %i.ev, %.lr.ph210 ]
+  %.2130 = phi i64 [ %1, %.preheader ], [ %i.et, %._crit_edge211.loopexit.split.loop.exit322 ], [ %i.en, %.lr.ph210.preheader ], [ %i.er, %.lr.ph210 ]
   %i.fa = tail call fastcc i32 @client_switch_proxy(ptr noundef %0, i32 noundef %.4.lcssa) ; 2 uses
   %.not157 = icmp eq i32 %i.fa, 0
   br i1 %.not157, label %bb.ah, label %bb.ag

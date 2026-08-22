@@ -205,7 +205,7 @@ cf2_hintmask_setCounts.exit.i:                    ; preds = %bb.e
 
 .lr.ph.i:                                         ; preds = %.preheader.i
   %i.w = getelementptr inbounds nuw i8, ptr %3, i64 32
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.w, i8 -1, i64 %i.s, i1 false), !tbaa !40
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.w, i8 -1, i64 %i.s, i1 false), !tbaa !40
   br label %cf2_hintmask_setAll.exit
 
 cf2_hintmask_setAll.exit:                         ; preds = %.preheader.i, %.lr.ph.i
@@ -608,25 +608,29 @@ bb.f:                                             ; preds = %.lr.ph57, %bb.e
 .critedge:                                        ; preds = %bb.e, %bb.d, %.critedge.split.loop.exit50
   %.0.lcssa = phi i32 [ %i.w, %.critedge.split.loop.exit50 ], [ %umax, %bb.d ], [ %umax, %bb.e ] ; 2 uses
   %.not3942 = icmp eq i32 %.0.lcssa, 0
-  br i1 %.not3942, label %._crit_edge, label %.lr.ph
+  br i1 %.not3942, label %._crit_edge, label %.lr.ph.preheader
 
-.lr.ph:                                           ; preds = %.critedge, %bb.g
-  %.143 = phi i32 [ %3, %bb.g ], [ %.0.lcssa, %.critedge ] ; 4 uses
-  %2 = zext i32 %.143 to i64
-  %i.x = getelementptr inbounds nuw [32 x i8], ptr %0, i64 %2
+.lr.ph.preheader:                                 ; preds = %.critedge
+  %2 = zext i32 %.0.lcssa to i64
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.g
+  %indvars.iv46 = phi i64 [ %2, %.lr.ph.preheader ], [ %indvars.iv.next47, %bb.g ] ; 4 uses
+  %i.x = getelementptr inbounds nuw [32 x i8], ptr %0, i64 %indvars.iv46
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 56
   %i.z = load i32, ptr %i.y, align 8, !tbaa !723
   %i.aa = icmp slt i32 %1, %i.z
   br i1 %i.aa, label %bb.g, label %.critedge2
 
 bb.g:                                             ; preds = %.lr.ph
-  %3 = add i32 %.143, -1                          ; 2 uses
-  %.not39 = icmp eq i32 %3, 0
+  %indvars.iv.next47 = add nsw i64 %indvars.iv46, -1 ; 2 uses
+  %3 = and i64 %indvars.iv.next47, 4294967295
+  %.not39 = icmp eq i64 %3, 0
   br i1 %.not39, label %._crit_edge, label %.lr.ph, !llvm.loop !750
 
 .critedge2:                                       ; preds = %.lr.ph
-  store i32 %.143, ptr %i.p, align 4, !tbaa !719
-  %4 = zext i32 %.143 to i64
+  %4 = trunc nuw i64 %indvars.iv46 to i32
+  store i32 %4, ptr %i.p, align 4, !tbaa !719
   br label %._crit_edge._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.g, %.critedge
@@ -653,8 +657,8 @@ bb.h:                                             ; preds = %._crit_edge
   %i.ar = add i32 %i.aq, %i.ao
   br label %bb.i
 
-._crit_edge._crit_edge:                           ; preds = %._crit_edge, %.critedge2
-  %.141 = phi i64 [ %4, %.critedge2 ], [ 0, %._crit_edge ]
+._crit_edge._crit_edge:                           ; preds = %.critedge2, %._crit_edge
+  %.141 = phi i64 [ %indvars.iv46, %.critedge2 ], [ 0, %._crit_edge ]
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.at = getelementptr inbounds nuw [32 x i8], ptr %i.as, i64 %.141 ; 3 uses
   %i.au = getelementptr inbounds nuw i8, ptr %i.at, i64 16
