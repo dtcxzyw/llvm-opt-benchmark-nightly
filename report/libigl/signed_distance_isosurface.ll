@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   %i.u = getelementptr inbounds nuw i8, ptr %i.m, i64 16
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(48) %i.u, ptr noundef nonnull align 16 dereferenceable(48) %.sroa.04.i.i.i.i, i64 48, i1 false)
   %i.v = getelementptr inbounds nuw i8, ptr %i.m, i64 64
-  store ptr null, ptr %i.v, align 8, !tbaa !724
+  store ptr null, ptr %i.v, align 16, !tbaa !724
   %i.w = getelementptr inbounds nuw i8, ptr %i.m, i64 72
   store i32 0, ptr %i.w, align 8, !tbaa !666
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN4CGAL10Lazy_rep_nINS_7Point_3INS_16Simple_cartesianINS_11Interval_ntILb0EEEEEEENS1_INS2_IN5boost14multiprecision6numberINS8_8backends16rational_adaptorINSA_15cpp_int_backendILm0ELm0ELNS8_16cpp_integer_typeE1ELNS8_18cpp_int_check_typeE0ESaIyEEEEELNS8_26expression_template_optionE1EEEEEEENS_23CartesianKernelFunctors17Construct_point_3IS5_EENSN_ISK_EENS_19Cartesian_converterISK_S5_NS_12NT_converterISJ_S4_EEEELb0EJNS_15Return_base_tagENS_13Lazy_exact_ntISJ_EESW_SW_EEE, i64 16), ptr %i.m, align 16, !tbaa !68
@@ -217,9 +217,9 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not.i.i.i.i.i.i.i.i.i.i.i, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.aa = load atomic i32, ptr %i.z monotonic, align 4
+  %i.aa = load atomic i32, ptr %i.z monotonic, align 8
   %i.ab = add nsw i32 %i.aa, 1
-  store atomic i32 %i.ab, ptr %i.z monotonic, align 4
+  store atomic i32 %i.ab, ptr %i.z monotonic, align 8
   %i.ac = getelementptr inbounds nuw i8, ptr %i.m, i64 96
   %i.ad = load ptr, ptr %4, align 8, !tbaa !654   ; 2 uses
   store ptr %i.ad, ptr %i.ac, align 16, !tbaa !654
@@ -622,9 +622,9 @@ bb.b:                                             ; preds = %bb.a
   %i.v = getelementptr inbounds nuw i8, ptr %i.n, i64 64
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.v, ptr noundef nonnull align 16 dereferenceable(16) %i.r, i64 16, i1 false)
   %i.w = getelementptr inbounds nuw i8, ptr %i.n, i64 80
-  store i32 %i.s, ptr %i.w, align 4, !tbaa !141
+  store i32 %i.s, ptr %i.w, align 16, !tbaa !141
   %i.x = getelementptr inbounds nuw i8, ptr %i.n, i64 96
-  store ptr %i.u, ptr %i.x, align 8, !tbaa !762
+  store ptr %i.u, ptr %i.x, align 16, !tbaa !762
   %i.y = getelementptr inbounds nuw i8, ptr %i.n, i64 104
   store i32 0, ptr %i.y, align 8, !tbaa !666
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN4CGAL10Lazy_rep_nINS_8Sphere_3INS_16Simple_cartesianINS_11Interval_ntILb0EEEEEEENS1_INS2_IN5boost14multiprecision6numberINS8_8backends16rational_adaptorINSA_15cpp_int_backendILm0ELm0ELNS8_16cpp_integer_typeE1ELNS8_18cpp_int_check_typeE0ESaIyEEEEELNS8_26expression_template_optionE1EEEEEEENS_20CommonKernelFunctors18Construct_sphere_3IS5_EENSN_ISK_EENS_19Cartesian_converterISK_S5_NS_12NT_converterISJ_S4_EEEELb0EJNS_15Return_base_tagENS_7Point_3INS_5EpeckEEENS_13Lazy_exact_ntISJ_EENS_4SignEEEE, i64 16), ptr %i.n, align 16, !tbaa !68
@@ -638,9 +638,9 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not.i.i.i.i.i.i.i.i.i.i, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.ad = load atomic i32, ptr %i.ac monotonic, align 4
+  %i.ad = load atomic i32, ptr %i.ac monotonic, align 8
   %i.ae = add nsw i32 %i.ad, 1
-  store atomic i32 %i.ae, ptr %i.ac monotonic, align 4
+  store atomic i32 %i.ae, ptr %i.ac monotonic, align 8
   %i.af = getelementptr inbounds nuw i8, ptr %i.n, i64 136
   %i.ag = load ptr, ptr %3, align 8, !tbaa !654   ; 2 uses
   store ptr %i.ag, ptr %i.af, align 8, !tbaa !654
@@ -1043,7 +1043,7 @@ _ZNSt5arrayIN5boost14multiprecision6numberINS1_8backends16rational_adaptorINS3_1
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(20) %i.hb, ptr noundef nonnull align 16 dereferenceable(20) %i.ha, i64 16, i1 false), !tbaa.struct !130
   %i.hc = getelementptr inbounds nuw i8, ptr %1, i64 64
   %i.hd = load i32, ptr %i.hc, align 16, !tbaa !141
-  store i32 %i.hd, ptr %i.ah, align 4, !tbaa !141
+  store i32 %i.hd, ptr %i.ah, align 16, !tbaa !141
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #38
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #38
   %i.he = getelementptr inbounds nuw i8, ptr %0, i64 96
@@ -1446,7 +1446,7 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %i.c, i64 64
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 64
   %i.h = load i32, ptr %i.g, align 16, !tbaa !141
-  store i32 %i.h, ptr %i.f, align 4, !tbaa !141
+  store i32 %i.h, ptr %i.f, align 16, !tbaa !141
   %i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 80 ; 2 uses
   invoke void @_ZN5boost14multiprecision8backends16rational_adaptorINS1_15cpp_int_backendILm0ELm0ELNS0_16cpp_integer_typeE1ELNS0_18cpp_int_check_typeE0ESaIyEEEEC2ERKS8_(ptr noundef nonnull align 16 dereferenceable(272) %i.i, ptr noundef nonnull align 16 dereferenceable(272) %2)
           to label %.noexc unwind label %bb.d
@@ -1493,7 +1493,7 @@ bb.c:                                             ; preds = %_ZN4CGAL7Point_3INS
   %i.p = getelementptr inbounds nuw i8, ptr %i.c, i64 336
   %i.q = getelementptr inbounds nuw i8, ptr %2, i64 256
   %i.r = load i32, ptr %i.q, align 16, !tbaa !141
-  store i32 %i.r, ptr %i.p, align 4, !tbaa !141
+  store i32 %i.r, ptr %i.p, align 16, !tbaa !141
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 96
   store ptr %i.c, ptr %i.s, align 16, !tbaa !762
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 104
@@ -1896,7 +1896,7 @@ bb.b:                                             ; preds = %bb.a
   %i.q = getelementptr inbounds nuw i8, ptr %i.m, i64 16
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.q, ptr noundef nonnull align 16 dereferenceable(16) %i.o, i64 16, i1 false), !tbaa.struct !130
   %i.r = getelementptr inbounds nuw i8, ptr %i.m, i64 32
-  store ptr null, ptr %i.r, align 8, !tbaa !663
+  store ptr null, ptr %i.r, align 16, !tbaa !663
   %i.s = getelementptr inbounds nuw i8, ptr %i.m, i64 40
   store i32 0, ptr %i.s, align 8, !tbaa !666
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN4CGAL10Lazy_rep_nINS_11Interval_ntILb0EEEN5boost14multiprecision6numberINS4_8backends16rational_adaptorINS6_15cpp_int_backendILm0ELm0ELNS4_16cpp_integer_typeE1ELNS4_18cpp_int_check_typeE0ESaIyEEEEELNS4_26expression_template_optionE1EEENS_23CartesianKernelFunctors11Compute_x_3INS_16Simple_cartesianIS2_EEEENSH_INSI_ISF_EEEENS_11To_intervalISF_EELb0EJNS_7Point_3INS_5EpeckEEEEEE, i64 16), ptr %i.m, align 16, !tbaa !68
@@ -1908,9 +1908,9 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not.i.i.i.i.i.i.i.i, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.w = load atomic i32, ptr %i.v monotonic, align 4
+  %i.w = load atomic i32, ptr %i.v monotonic, align 8
   %i.x = add nsw i32 %i.w, 1
-  store atomic i32 %i.x, ptr %i.v monotonic, align 4
+  store atomic i32 %i.x, ptr %i.v monotonic, align 8
   br label %_ZN4CGAL10Lazy_rep_nINS_11Interval_ntILb0EEEN5boost14multiprecision6numberINS4_8backends16rational_adaptorINS6_15cpp_int_backendILm0ELm0ELNS4_16cpp_integer_typeE1ELNS4_18cpp_int_check_typeE0ESaIyEEEEELNS4_26expression_template_optionE1EEENS_23CartesianKernelFunctors11Compute_x_3INS_16Simple_cartesianIS2_EEEENSH_INSI_ISF_EEEENS_11To_intervalISF_EELb0EJNS_7Point_3INS_5EpeckEEEEEC2IJRKSR_EEERKSK_RKSM_DpOT_.exit
 
 bb.d:                                             ; preds = %bb.b
@@ -2313,7 +2313,7 @@ bb.b:                                             ; preds = %bb.a
   %i.q = getelementptr inbounds nuw i8, ptr %i.m, i64 16
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.q, ptr noundef nonnull align 16 dereferenceable(16) %i.o, i64 16, i1 false), !tbaa.struct !130
   %i.r = getelementptr inbounds nuw i8, ptr %i.m, i64 32
-  store ptr null, ptr %i.r, align 8, !tbaa !663
+  store ptr null, ptr %i.r, align 16, !tbaa !663
   %i.s = getelementptr inbounds nuw i8, ptr %i.m, i64 40
   store i32 0, ptr %i.s, align 8, !tbaa !666
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN4CGAL10Lazy_rep_nINS_11Interval_ntILb0EEEN5boost14multiprecision6numberINS4_8backends16rational_adaptorINS6_15cpp_int_backendILm0ELm0ELNS4_16cpp_integer_typeE1ELNS4_18cpp_int_check_typeE0ESaIyEEEEELNS4_26expression_template_optionE1EEENS_23CartesianKernelFunctors11Compute_y_3INS_16Simple_cartesianIS2_EEEENSH_INSI_ISF_EEEENS_11To_intervalISF_EELb0EJNS_7Point_3INS_5EpeckEEEEEE, i64 16), ptr %i.m, align 16, !tbaa !68
@@ -2325,9 +2325,9 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not.i.i.i.i.i.i.i.i, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.w = load atomic i32, ptr %i.v monotonic, align 4
+  %i.w = load atomic i32, ptr %i.v monotonic, align 8
   %i.x = add nsw i32 %i.w, 1
-  store atomic i32 %i.x, ptr %i.v monotonic, align 4
+  store atomic i32 %i.x, ptr %i.v monotonic, align 8
   br label %_ZN4CGAL10Lazy_rep_nINS_11Interval_ntILb0EEEN5boost14multiprecision6numberINS4_8backends16rational_adaptorINS6_15cpp_int_backendILm0ELm0ELNS4_16cpp_integer_typeE1ELNS4_18cpp_int_check_typeE0ESaIyEEEEELNS4_26expression_template_optionE1EEENS_23CartesianKernelFunctors11Compute_y_3INS_16Simple_cartesianIS2_EEEENSH_INSI_ISF_EEEENS_11To_intervalISF_EELb0EJNS_7Point_3INS_5EpeckEEEEEC2IJRKSR_EEERKSK_RKSM_DpOT_.exit
 
 bb.d:                                             ; preds = %bb.b
@@ -2730,7 +2730,7 @@ bb.b:                                             ; preds = %bb.a
   %i.q = getelementptr inbounds nuw i8, ptr %i.m, i64 16
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.q, ptr noundef nonnull align 16 dereferenceable(16) %i.o, i64 16, i1 false), !tbaa.struct !130
   %i.r = getelementptr inbounds nuw i8, ptr %i.m, i64 32
-  store ptr null, ptr %i.r, align 8, !tbaa !663
+  store ptr null, ptr %i.r, align 16, !tbaa !663
   %i.s = getelementptr inbounds nuw i8, ptr %i.m, i64 40
   store i32 0, ptr %i.s, align 8, !tbaa !666
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN4CGAL10Lazy_rep_nINS_11Interval_ntILb0EEEN5boost14multiprecision6numberINS4_8backends16rational_adaptorINS6_15cpp_int_backendILm0ELm0ELNS4_16cpp_integer_typeE1ELNS4_18cpp_int_check_typeE0ESaIyEEEEELNS4_26expression_template_optionE1EEENS_23CartesianKernelFunctors11Compute_z_3INS_16Simple_cartesianIS2_EEEENSH_INSI_ISF_EEEENS_11To_intervalISF_EELb0EJNS_7Point_3INS_5EpeckEEEEEE, i64 16), ptr %i.m, align 16, !tbaa !68
@@ -2742,9 +2742,9 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not.i.i.i.i.i.i.i.i, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.w = load atomic i32, ptr %i.v monotonic, align 4
+  %i.w = load atomic i32, ptr %i.v monotonic, align 8
   %i.x = add nsw i32 %i.w, 1
-  store atomic i32 %i.x, ptr %i.v monotonic, align 4
+  store atomic i32 %i.x, ptr %i.v monotonic, align 8
   br label %_ZN4CGAL10Lazy_rep_nINS_11Interval_ntILb0EEEN5boost14multiprecision6numberINS4_8backends16rational_adaptorINS6_15cpp_int_backendILm0ELm0ELNS4_16cpp_integer_typeE1ELNS4_18cpp_int_check_typeE0ESaIyEEEEELNS4_26expression_template_optionE1EEENS_23CartesianKernelFunctors11Compute_z_3INS_16Simple_cartesianIS2_EEEENSH_INSI_ISF_EEEENS_11To_intervalISF_EELb0EJNS_7Point_3INS_5EpeckEEEEEC2IJRKSR_EEERKSK_RKSM_DpOT_.exit
 
 bb.d:                                             ; preds = %bb.b

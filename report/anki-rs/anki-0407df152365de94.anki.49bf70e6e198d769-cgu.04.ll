@@ -206,7 +206,7 @@ bb.bn:                                            ; preds = %"_ZN103_$LT$alloc..
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(31) %.sroa.8.0..sroa_idx12.i.i.i.i.i, ptr noundef nonnull align 1 dereferenceable(31) %.sroa.8.0..sroa_idx.i.i.i.i.i, i64 31, i1 false), !noalias !322
   %i.gb = getelementptr inbounds nuw i8, ptr %i.fx, i64 32
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.l, ptr noundef nonnull align 1 dereferenceable(32) %i.gb, i64 32, i1 false), !noalias !322
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.l, ptr noundef nonnull align 8 dereferenceable(32) %i.gb, i64 32, i1 false), !noalias !322
   %i.gc = load i8, ptr %i.y, align 8, !range !157, !alias.scope !324, !noalias !322, !noundef !13
   %i.gd = icmp eq i8 %i.gc, 22
   br i1 %i.gd, label %"_ZN4core3ptr86drop_in_place$LT$core..option..Option$LT$serde_core..private..content..Content$GT$$GT$17h77b4fb3b55976cb7E.exit.i.i.i.i.i", label %bb.bo
@@ -609,7 +609,7 @@ bb.bb:                                            ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(31) %.sroa.6, ptr noundef nonnull align 1 dereferenceable(31) %.sroa.8.0..sroa_idx.i.i.i, i64 31, i1 false), !noalias !653
   %i.gj = getelementptr inbounds nuw i8, ptr %.sroa.277.0.copyload, i64 32
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.al, ptr noundef nonnull align 1 dereferenceable(32) %i.gj, i64 32, i1 false), !noalias !652
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.al, ptr noundef nonnull align 8 dereferenceable(32) %i.gj, i64 32, i1 false), !noalias !652
   call void @llvm.lifetime.start.p0(ptr nonnull %i.v), !noalias !654
   call void @llvm.lifetime.start.p0(ptr nonnull %i.u), !noalias !654
   store i8 %.sroa.0.0.copyload.i.i.i, ptr %i.u, align 8, !noalias !654
@@ -1012,7 +1012,7 @@ bb.ch:                                            ; preds = %"_ZN103_$LT$alloc..
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(31) %.sroa.4112.0..sroa_idx, ptr noundef nonnull align 1 dereferenceable(31) %.sroa.11109.0..sroa_idx, i64 31, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !noalias !785
   %i.jl = getelementptr inbounds nuw i8, ptr %i.jh, i64 32
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.g, ptr noundef nonnull align 1 dereferenceable(32) %i.jl, i64 32, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.g, ptr noundef nonnull align 8 dereferenceable(32) %i.jl, i64 32, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !785
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !noalias !785
   store i8 %.sroa.0105.0.copyload, ptr %i.d, align 8, !noalias !785
@@ -1415,7 +1415,7 @@ bb.x:                                             ; preds = %"_ZN103_$LT$alloc..
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(31) %.sroa.4.0..sroa_idx.i.i.i.i.i, ptr noundef nonnull align 1 dereferenceable(31) %.sroa.10.0..sroa_idx.i.i.i.i.i, i64 31, i1 false), !noalias !911
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !911
   %i.ds = getelementptr inbounds nuw i8, ptr %i.dp, i64 32
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.c, ptr noundef nonnull align 1 dereferenceable(32) %i.ds, i64 32, i1 false), !noalias !911
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.c, ptr noundef nonnull align 8 dereferenceable(32) %i.ds, i64 32, i1 false), !noalias !911
   store i8 %.sroa.0.0.copyload.i.i.i.i.i, ptr %i.b, align 8, !noalias !911
   invoke fastcc void @"_ZN4core3ptr58drop_in_place$LT$serde_core..private..content..Content$GT$17hc73ed48ceb330642E"(ptr noalias noundef nonnull align 8 dereferenceable(32) %i.b)
           to label %bb.aa unwind label %bb.y, !noalias !911
@@ -1818,7 +1818,7 @@ bb.bb:                                            ; preds = %"_ZN103_$LT$alloc..
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(31) %.sroa.8.0..sroa_idx12.i.i.i.i.i, ptr noundef nonnull align 1 dereferenceable(31) %.sroa.8.0..sroa_idx.i.i.i.i.i, i64 31, i1 false), !noalias !1021
   %i.fi = getelementptr inbounds nuw i8, ptr %i.fe, i64 32
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.j, ptr noundef nonnull align 1 dereferenceable(32) %i.fi, i64 32, i1 false), !noalias !1021
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.j, ptr noundef nonnull align 8 dereferenceable(32) %i.fi, i64 32, i1 false), !noalias !1021
   %i.fj = load i8, ptr %i.u, align 8, !range !157, !alias.scope !1023, !noalias !1021, !noundef !13
   %i.fk = icmp eq i8 %i.fj, 22
   br i1 %i.fk, label %"_ZN4core3ptr86drop_in_place$LT$core..option..Option$LT$serde_core..private..content..Content$GT$$GT$17h77b4fb3b55976cb7E.exit.i.i.i.i.i", label %bb.bc
@@ -2221,7 +2221,7 @@ bb.d:                                             ; preds = %"_ZN103_$LT$alloc..
 
 bb.e:                                             ; preds = %bb.d
   %i.ad = getelementptr inbounds nuw i8, ptr %i.aa, i64 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.b, ptr noundef nonnull align 1 dereferenceable(16) %i.ad, i64 16, i1 false), !noalias !3679
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.b, ptr noundef nonnull align 8 dereferenceable(16) %i.ad, i64 16, i1 false), !noalias !3679
   invoke void @"_ZN75_$LT$serde_json..number..Number$u20$as$u20$serde_core..de..Deserializer$GT$15deserialize_any17h1ec98e9df5f3b2b3E"(ptr noalias noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.c, ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(16) %i.b)
           to label %"_ZN86_$LT$core..marker..PhantomData$LT$T$GT$$u20$as$u20$serde_core..de..DeserializeSeed$GT$11deserialize17hfa813a4ed5481969E.exit.i.i.i.i.i" unwind label %.thread.i.i, !noalias !3687
 
@@ -2555,7 +2555,7 @@ bb.d:                                             ; preds = %"_ZN103_$LT$alloc..
 
 bb.e:                                             ; preds = %bb.d
   %i.ad = getelementptr inbounds nuw i8, ptr %i.aa, i64 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.b, ptr noundef nonnull align 1 dereferenceable(16) %i.ad, i64 16, i1 false), !noalias !3733
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.b, ptr noundef nonnull align 8 dereferenceable(16) %i.ad, i64 16, i1 false), !noalias !3733
   invoke void @"_ZN75_$LT$serde_json..number..Number$u20$as$u20$serde_core..de..Deserializer$GT$15deserialize_any17hfe953255f0f995fbE"(ptr noalias noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.c, ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(16) %i.b)
           to label %"_ZN86_$LT$core..marker..PhantomData$LT$T$GT$$u20$as$u20$serde_core..de..DeserializeSeed$GT$11deserialize17h7b9ddc4fee00f050E.exit.i.i.i.i.i" unwind label %.thread.i.i, !noalias !3741
 
@@ -2958,7 +2958,7 @@ bb.g:                                             ; preds = %"_ZN103_$LT$alloc..
 
 bb.h:                                             ; preds = %bb.g
   %i.al = getelementptr inbounds nuw i8, ptr %.sroa.2.0.copyload, i64 40
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.n, ptr noundef nonnull align 1 dereferenceable(16) %i.al, i64 16, i1 false), !noalias !3979
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.n, ptr noundef nonnull align 8 dereferenceable(16) %i.al, i64 16, i1 false), !noalias !3979
   invoke void @"_ZN75_$LT$serde_json..number..Number$u20$as$u20$serde_core..de..Deserializer$GT$15deserialize_any17h8992d3add85845fcE"(ptr noalias noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.o, ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(16) %i.n)
           to label %"_ZN86_$LT$core..marker..PhantomData$LT$T$GT$$u20$as$u20$serde_core..de..DeserializeSeed$GT$11deserialize17h3a22ff36cf9a192cE.exit.i.i.i.i.i" unwind label %bb.j, !noalias !3992
 
@@ -3052,7 +3052,7 @@ bb.r:                                             ; preds = %"_ZN103_$LT$alloc..
 
 bb.s:                                             ; preds = %bb.r
   %i.az = getelementptr inbounds nuw i8, ptr %.sroa.2.0.copyload, i64 72
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.k, ptr noundef nonnull align 1 dereferenceable(16) %i.az, i64 16, i1 false), !noalias !4014
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.k, ptr noundef nonnull align 8 dereferenceable(16) %i.az, i64 16, i1 false), !noalias !4014
   invoke void @"_ZN75_$LT$serde_json..number..Number$u20$as$u20$serde_core..de..Deserializer$GT$15deserialize_any17h8992d3add85845fcE"(ptr noalias noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.l, ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(16) %i.k)
           to label %"_ZN86_$LT$core..marker..PhantomData$LT$T$GT$$u20$as$u20$serde_core..de..DeserializeSeed$GT$11deserialize17h3a22ff36cf9a192cE.exit.i.i.i79.i.i" unwind label %bb.u, !noalias !4027
 
@@ -3146,7 +3146,7 @@ bb.ac:                                            ; preds = %"_ZN103_$LT$alloc..
 
 bb.ad:                                            ; preds = %bb.ac
   %i.bn = getelementptr inbounds nuw i8, ptr %.sroa.2.0.copyload, i64 104
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.h, ptr noundef nonnull align 1 dereferenceable(16) %i.bn, i64 16, i1 false), !noalias !4049
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.h, ptr noundef nonnull align 8 dereferenceable(16) %i.bn, i64 16, i1 false), !noalias !4049
   invoke void @"_ZN75_$LT$serde_json..number..Number$u20$as$u20$serde_core..de..Deserializer$GT$15deserialize_any17h8992d3add85845fcE"(ptr noalias noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.i, ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(16) %i.h)
           to label %"_ZN86_$LT$core..marker..PhantomData$LT$T$GT$$u20$as$u20$serde_core..de..DeserializeSeed$GT$11deserialize17h3a22ff36cf9a192cE.exit.i.i.i93.i.i" unwind label %bb.af, !noalias !4062
 
@@ -3240,7 +3240,7 @@ bb.an:                                            ; preds = %"_ZN103_$LT$alloc..
 
 bb.ao:                                            ; preds = %bb.an
   %i.cb = getelementptr inbounds nuw i8, ptr %.sroa.2.0.copyload, i64 136
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.e, ptr noundef nonnull align 1 dereferenceable(16) %i.cb, i64 16, i1 false), !noalias !4084
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.e, ptr noundef nonnull align 8 dereferenceable(16) %i.cb, i64 16, i1 false), !noalias !4084
   invoke void @"_ZN75_$LT$serde_json..number..Number$u20$as$u20$serde_core..de..Deserializer$GT$15deserialize_any17h8992d3add85845fcE"(ptr noalias noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.f, ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(16) %i.e)
           to label %"_ZN86_$LT$core..marker..PhantomData$LT$T$GT$$u20$as$u20$serde_core..de..DeserializeSeed$GT$11deserialize17h3a22ff36cf9a192cE.exit.i.i.i107.i.i" unwind label %bb.aq, !noalias !4097
 
@@ -3333,7 +3333,7 @@ bb.ay:                                            ; preds = %"_ZN103_$LT$alloc..
 
 bb.az:                                            ; preds = %bb.ay
   %i.cp = getelementptr inbounds nuw i8, ptr %.sroa.2.0.copyload, i64 168
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.b, ptr noundef nonnull align 1 dereferenceable(16) %i.cp, i64 16, i1 false), !noalias !4119
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.b, ptr noundef nonnull align 8 dereferenceable(16) %i.cp, i64 16, i1 false), !noalias !4119
   invoke void @"_ZN75_$LT$serde_json..number..Number$u20$as$u20$serde_core..de..Deserializer$GT$15deserialize_any17h8992d3add85845fcE"(ptr noalias noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.c, ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(16) %i.b)
           to label %"_ZN86_$LT$core..marker..PhantomData$LT$T$GT$$u20$as$u20$serde_core..de..DeserializeSeed$GT$11deserialize17h3a22ff36cf9a192cE.exit.i.i.i121.i.i" unwind label %bb.bb, !noalias !4132
 
@@ -3643,7 +3643,7 @@ bb.d:                                             ; preds = %"_ZN103_$LT$alloc..
 
 bb.e:                                             ; preds = %bb.d
   %i.r = getelementptr inbounds nuw i8, ptr %.sroa.2.0.copyload, i64 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.e, ptr noundef nonnull align 1 dereferenceable(16) %i.r, i64 16, i1 false), !noalias !4168
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.e, ptr noundef nonnull align 8 dereferenceable(16) %i.r, i64 16, i1 false), !noalias !4168
   invoke void @"_ZN75_$LT$serde_json..number..Number$u20$as$u20$serde_core..de..Deserializer$GT$15deserialize_any17h8992d3add85845fcE"(ptr noalias noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.f, ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(16) %i.e)
           to label %"_ZN86_$LT$core..marker..PhantomData$LT$T$GT$$u20$as$u20$serde_core..de..DeserializeSeed$GT$11deserialize17h3a22ff36cf9a192cE.exit.i.i.i.i.i" unwind label %bb.g, !noalias !4181
 
@@ -3732,7 +3732,7 @@ bb.n:                                             ; preds = %"_ZN103_$LT$alloc..
 
 bb.o:                                             ; preds = %bb.n
   %i.af = getelementptr inbounds nuw i8, ptr %.sroa.2.0.copyload, i64 40
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.b, ptr noundef nonnull align 1 dereferenceable(16) %i.af, i64 16, i1 false), !noalias !4203
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.b, ptr noundef nonnull align 8 dereferenceable(16) %i.af, i64 16, i1 false), !noalias !4203
   invoke void @"_ZN75_$LT$serde_json..number..Number$u20$as$u20$serde_core..de..Deserializer$GT$15deserialize_any17h8992d3add85845fcE"(ptr noalias noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.c, ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(16) %i.b)
           to label %"_ZN86_$LT$core..marker..PhantomData$LT$T$GT$$u20$as$u20$serde_core..de..DeserializeSeed$GT$11deserialize17h3a22ff36cf9a192cE.exit.i.i.i18.i.i" unwind label %bb.q, !noalias !4216
 
@@ -4101,7 +4101,7 @@ bb.l:                                             ; preds = %"_ZN103_$LT$alloc..
 
 bb.m:                                             ; preds = %bb.l
   %i.al = getelementptr inbounds nuw i8, ptr %.sroa.2.0.copyload, i64 72
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.b, ptr noundef nonnull align 1 dereferenceable(16) %i.al, i64 16, i1 false), !noalias !4293
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.b, ptr noundef nonnull align 8 dereferenceable(16) %i.al, i64 16, i1 false), !noalias !4293
   invoke void @"_ZN75_$LT$serde_json..number..Number$u20$as$u20$serde_core..de..Deserializer$GT$15deserialize_any17hc7602f8754811eb8E"(ptr noalias noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.c, ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(16) %i.b)
           to label %"_ZN86_$LT$core..marker..PhantomData$LT$T$GT$$u20$as$u20$serde_core..de..DeserializeSeed$GT$11deserialize17h048ab60c9ccb499dE.exit.i.i.i.i.i" unwind label %bb.o, !noalias !4306
 
@@ -4395,7 +4395,7 @@ bb.d:                                             ; preds = %"_ZN103_$LT$alloc..
 
 bb.e:                                             ; preds = %bb.d
   %i.t = getelementptr inbounds nuw i8, ptr %.sroa.2.0.copyload, i64 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.f, ptr noundef nonnull align 1 dereferenceable(16) %i.t, i64 16, i1 false), !noalias !4339
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.f, ptr noundef nonnull align 8 dereferenceable(16) %i.t, i64 16, i1 false), !noalias !4339
   invoke void @"_ZN75_$LT$serde_json..number..Number$u20$as$u20$serde_core..de..Deserializer$GT$15deserialize_any17hfe953255f0f995fbE"(ptr noalias noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.g, ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(16) %i.f)
           to label %"_ZN86_$LT$core..marker..PhantomData$LT$T$GT$$u20$as$u20$serde_core..de..DeserializeSeed$GT$11deserialize17h7b9ddc4fee00f050E.exit.i.i.i.i.i" unwind label %bb.g, !noalias !4352
 
@@ -4743,7 +4743,7 @@ bb.d:                                             ; preds = %"_ZN103_$LT$alloc..
 
 bb.e:                                             ; preds = %bb.d
   %i.u = getelementptr inbounds nuw i8, ptr %.sroa.2.0.copyload, i64 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.h, ptr noundef nonnull align 1 dereferenceable(16) %i.u, i64 16, i1 false), !noalias !4426
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.h, ptr noundef nonnull align 8 dereferenceable(16) %i.u, i64 16, i1 false), !noalias !4426
   invoke void @"_ZN75_$LT$serde_json..number..Number$u20$as$u20$serde_core..de..Deserializer$GT$15deserialize_any17h8992d3add85845fcE"(ptr noalias noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.i, ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(16) %i.h)
           to label %"_ZN86_$LT$core..marker..PhantomData$LT$T$GT$$u20$as$u20$serde_core..de..DeserializeSeed$GT$11deserialize17h3a22ff36cf9a192cE.exit.i.i.i.i.i" unwind label %bb.g, !noalias !4439
 
@@ -4832,7 +4832,7 @@ bb.n:                                             ; preds = %"_ZN103_$LT$alloc..
 
 bb.o:                                             ; preds = %bb.n
   %i.ai = getelementptr inbounds nuw i8, ptr %.sroa.2.0.copyload, i64 40
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.e, ptr noundef nonnull align 1 dereferenceable(16) %i.ai, i64 16, i1 false), !noalias !4461
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.e, ptr noundef nonnull align 8 dereferenceable(16) %i.ai, i64 16, i1 false), !noalias !4461
   invoke void @"_ZN75_$LT$serde_json..number..Number$u20$as$u20$serde_core..de..Deserializer$GT$15deserialize_any17h8992d3add85845fcE"(ptr noalias noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.f, ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(16) %i.e)
           to label %"_ZN86_$LT$core..marker..PhantomData$LT$T$GT$$u20$as$u20$serde_core..de..DeserializeSeed$GT$11deserialize17h3a22ff36cf9a192cE.exit.i.i.i28.i.i" unwind label %bb.q, !noalias !4474
 
@@ -4925,7 +4925,7 @@ bb.y:                                             ; preds = %"_ZN103_$LT$alloc..
 
 bb.z:                                             ; preds = %bb.y
   %i.aw = getelementptr inbounds nuw i8, ptr %.sroa.2.0.copyload, i64 72
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.b, ptr noundef nonnull align 1 dereferenceable(16) %i.aw, i64 16, i1 false), !noalias !4496
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.b, ptr noundef nonnull align 8 dereferenceable(16) %i.aw, i64 16, i1 false), !noalias !4496
   invoke void @"_ZN75_$LT$serde_json..number..Number$u20$as$u20$serde_core..de..Deserializer$GT$15deserialize_any17h8992d3add85845fcE"(ptr noalias noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.c, ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(16) %i.b)
           to label %"_ZN86_$LT$core..marker..PhantomData$LT$T$GT$$u20$as$u20$serde_core..de..DeserializeSeed$GT$11deserialize17h3a22ff36cf9a192cE.exit.i.i.i42.i.i" unwind label %bb.ab, !noalias !4509
 
@@ -5328,7 +5328,7 @@ bb.b:                                             ; preds = %"_ZN103_$LT$alloc..
 
 bb.c:                                             ; preds = %bb.b
   %i.l = getelementptr inbounds nuw i8, ptr %i.h, i64 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.b, ptr noundef nonnull align 1 dereferenceable(16) %i.l, i64 16, i1 false), !noalias !10037
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.b, ptr noundef nonnull align 8 dereferenceable(16) %i.l, i64 16, i1 false), !noalias !10037
   invoke void @"_ZN75_$LT$serde_json..number..Number$u20$as$u20$serde_core..de..Deserializer$GT$15deserialize_any17h8992d3add85845fcE"(ptr noalias noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.c, ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(16) %i.b)
           to label %"_ZN86_$LT$core..marker..PhantomData$LT$T$GT$$u20$as$u20$serde_core..de..DeserializeSeed$GT$11deserialize17h3a22ff36cf9a192cE.exit.i.i" unwind label %bb.e, !noalias !10050
 

@@ -205,8 +205,8 @@ define internal fastcc void @_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bf, ptr noundef nonnull align 8 dereferenceable(16) %i.av, i64 16, i1 false)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !23364)
   %i.bg = getelementptr inbounds nuw i8, ptr %1, i64 112
-  %.sroa.011.0.val.i = load i32, ptr %i.ad, align 4, !range !775, !alias.scope !23364, !noundef !29
-  %.sroa.06.0.val.i = load i32, ptr %2, align 4, !range !775, !alias.scope !23364, !noundef !29
+  %.sroa.011.0.val.i = load i32, ptr %i.ad, align 8, !range !775, !alias.scope !23364, !noundef !29
+  %.sroa.06.0.val.i = load i32, ptr %2, align 8, !range !775, !alias.scope !23364, !noundef !29
   %i.bh = icmp samesign ult i32 %.sroa.011.0.val.i, %.sroa.06.0.val.i ; 3 uses
   %..i21.i = select i1 %i.bh, ptr %i.ad, ptr %2
   %i.bi = xor i1 %i.bh, true
@@ -216,8 +216,8 @@ define internal fastcc void @_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9
   %i.bl = zext i1 %i.bi to i64
   %i.bm = getelementptr inbounds nuw [16 x i8], ptr %2, i64 %i.bl ; 3 uses
   %i.bn = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %.sroa.017.0.val.i = load i32, ptr %i.bf, align 4, !range !775, !alias.scope !23364, !noundef !29
-  %.sroa.015.0.val.i = load i32, ptr %i.ab, align 4, !range !775, !alias.scope !23364, !noundef !29
+  %.sroa.017.0.val.i = load i32, ptr %i.bf, align 8, !range !775, !alias.scope !23364, !noundef !29
+  %.sroa.015.0.val.i = load i32, ptr %i.ab, align 8, !range !775, !alias.scope !23364, !noundef !29
   %i.bo = icmp samesign ult i32 %.sroa.017.0.val.i, %.sroa.015.0.val.i ; 3 uses
   %..i.i = select i1 %i.bo, ptr %i.ab, ptr %i.bf
   %i.bp = xor i1 %i.bo, true
@@ -620,7 +620,7 @@ bb.z:                                             ; preds = %bb.z, %.lr.ph.i40
   %i.fe = zext i1 %i.fb to i64
   %i.ff = add i64 %.sroa.27.130.i, %i.fe          ; 2 uses
   %i.fg = getelementptr inbounds nuw i8, ptr %.sroa.9.131.i, i64 16 ; 2 uses
-  %.val19.i = load i32, ptr %i.fg, align 4, !range !775, !alias.scope !27619, !noalias !27616, !noundef !29
+  %.val19.i = load i32, ptr %i.fg, align 8, !range !775, !alias.scope !27619, !noalias !27616, !noundef !29
   %i.fh = icmp samesign ult i32 %.val19.i, %.val22.i ; 2 uses
   %i.fi = getelementptr inbounds i8, ptr %.sroa.43.129.i, i64 -32
   %.sroa.01.0.i23.i = select i1 %i.fh, ptr %2, ptr %i.fi
@@ -629,7 +629,7 @@ bb.z:                                             ; preds = %bb.z, %.lr.ph.i40
   %i.fk = zext i1 %i.fh to i64
   %i.fl = add i64 %i.ff, %i.fk                    ; 2 uses
   %i.fm = getelementptr inbounds nuw i8, ptr %.sroa.9.131.i, i64 32 ; 2 uses
-  %.val17.i = load i32, ptr %i.fm, align 4, !range !775, !alias.scope !27619, !noalias !27616, !noundef !29
+  %.val17.i = load i32, ptr %i.fm, align 8, !range !775, !alias.scope !27619, !noalias !27616, !noundef !29
   %i.fn = icmp samesign ult i32 %.val17.i, %.val22.i ; 2 uses
   %i.fo = getelementptr inbounds i8, ptr %.sroa.43.129.i, i64 -48
   %.sroa.01.0.i24.i = select i1 %i.fn, ptr %2, ptr %i.fo
@@ -638,7 +638,7 @@ bb.z:                                             ; preds = %bb.z, %.lr.ph.i40
   %i.fq = zext i1 %i.fn to i64
   %i.fr = add i64 %i.fl, %i.fq                    ; 2 uses
   %i.fs = getelementptr inbounds nuw i8, ptr %.sroa.9.131.i, i64 48 ; 2 uses
-  %.val15.i = load i32, ptr %i.fs, align 4, !range !775, !alias.scope !27619, !noalias !27616, !noundef !29
+  %.val15.i = load i32, ptr %i.fs, align 8, !range !775, !alias.scope !27619, !noalias !27616, !noundef !29
   %i.ft = icmp samesign ult i32 %.val15.i, %.val22.i ; 2 uses
   %i.fu = getelementptr inbounds i8, ptr %.sroa.43.129.i, i64 -64 ; 3 uses
   %.sroa.01.0.i25.i = select i1 %i.ft, ptr %2, ptr %i.fu
@@ -798,7 +798,7 @@ bb.ai:                                            ; preds = %bb.ai, %.lr.ph.i67
   %i.hm = zext i1 %i.hj to i64
   %i.hn = add i64 %.sroa.27.130.i70, %i.hm        ; 2 uses
   %i.ho = getelementptr inbounds nuw i8, ptr %.sroa.9.131.i69, i64 16 ; 2 uses
-  %.val19.i74 = load i32, ptr %i.ho, align 4, !range !775, !alias.scope !27647, !noalias !27644, !noundef !29
+  %.val19.i74 = load i32, ptr %i.ho, align 8, !range !775, !alias.scope !27647, !noalias !27644, !noundef !29
   %i.hp = icmp samesign uge i32 %.val22.i68, %.val19.i74 ; 2 uses
   %i.hq = getelementptr inbounds i8, ptr %.sroa.43.129.i71, i64 -32
   %.sroa.01.0.i23.i75 = select i1 %i.hp, ptr %2, ptr %i.hq
@@ -807,7 +807,7 @@ bb.ai:                                            ; preds = %bb.ai, %.lr.ph.i67
   %i.hs = zext i1 %i.hp to i64
   %i.ht = add i64 %i.hn, %i.hs                    ; 2 uses
   %i.hu = getelementptr inbounds nuw i8, ptr %.sroa.9.131.i69, i64 32 ; 2 uses
-  %.val17.i76 = load i32, ptr %i.hu, align 4, !range !775, !alias.scope !27647, !noalias !27644, !noundef !29
+  %.val17.i76 = load i32, ptr %i.hu, align 8, !range !775, !alias.scope !27647, !noalias !27644, !noundef !29
   %i.hv = icmp samesign uge i32 %.val22.i68, %.val17.i76 ; 2 uses
   %i.hw = getelementptr inbounds i8, ptr %.sroa.43.129.i71, i64 -48
   %.sroa.01.0.i24.i77 = select i1 %i.hv, ptr %2, ptr %i.hw
@@ -816,7 +816,7 @@ bb.ai:                                            ; preds = %bb.ai, %.lr.ph.i67
   %i.hy = zext i1 %i.hv to i64
   %i.hz = add i64 %i.ht, %i.hy                    ; 2 uses
   %i.ia = getelementptr inbounds nuw i8, ptr %.sroa.9.131.i69, i64 48 ; 2 uses
-  %.val15.i78 = load i32, ptr %i.ia, align 4, !range !775, !alias.scope !27647, !noalias !27644, !noundef !29
+  %.val15.i78 = load i32, ptr %i.ia, align 8, !range !775, !alias.scope !27647, !noalias !27644, !noundef !29
   %i.ib = icmp samesign uge i32 %.val22.i68, %.val15.i78 ; 2 uses
   %i.ic = getelementptr inbounds i8, ptr %.sroa.43.129.i71, i64 -64 ; 3 uses
   %.sroa.01.0.i25.i79 = select i1 %i.ib, ptr %2, ptr %i.ic
@@ -1219,7 +1219,7 @@ _RINvNtNtNtCs4wP2HXfJTCR_5alloc11collections5btree4node13move_to_slicejECskXtk6F
   %i.aci = getelementptr inbounds nuw i8, ptr %i.abk, i64 96 ; 2 uses
   %i.acj = getelementptr inbounds nuw [4 x i8], ptr %i.aci, i64 %i.acg
   %i.ack = shl nuw nsw i64 %i.ach, 2
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.aca, ptr nonnull readonly align 4 %i.acj, i64 %i.ack, i1 false), !alias.scope !36668, !noalias !36659
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.aca, ptr nonnull readonly align 4 %i.acj, i64 %i.ack, i1 false), !alias.scope !36668, !noalias !36659
   %i.acl = getelementptr inbounds nuw i8, ptr %i.abk, i64 8 ; 2 uses
   %i.acm = getelementptr inbounds nuw [8 x i8], ptr %i.acl, i64 %i.acg
   %i.acn = shl nuw nsw i64 %i.ach, 3
@@ -1622,7 +1622,7 @@ _RNvXs4_NtNtCs4wP2HXfJTCR_5alloc3vec9into_iterINtB5_8IntoIterTNtNtCskXtk6F4WjxZ_
 bb.cg:                                            ; preds = %_RNvXs4_NtNtCs4wP2HXfJTCR_5alloc3vec9into_iterINtB5_8IntoIterTNtNtCskXtk6F4WjxZ_4just12list_feature11ListFeatureNtNtB11_5token5TokenEENtNtNtNtCsj6eKBz9Db1c_4core4iter6traits8iterator8Iterator4nextB11_.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %i.dz)
   %i.aam = getelementptr inbounds nuw i8, ptr %.sroa.71648.03354, i64 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %i.dz, ptr noundef nonnull align 1 dereferenceable(72) %i.aam, i64 72, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %i.dz, ptr noundef nonnull align 8 dereferenceable(72) %i.aam, i64 72, i1 false)
   switch i8 %.sroa.01653.0.copyload, label %default.unreachable1.i [
     i8 0, label %_RNvMNtCskXtk6F4WjxZ_4just12list_featureNtB2_11ListFeature8function.exit
     i8 1, label %_RNvMNtCskXtk6F4WjxZ_4just12list_featureNtB2_11ListFeature8function.exit
@@ -2025,7 +2025,7 @@ _RINvNtNtNtCs4wP2HXfJTCR_5alloc11collections5btree4node13move_to_sliceNtNtCsaKJj
   %i.ab = getelementptr inbounds nuw i8, ptr %i.d, i64 2208 ; 2 uses
   %i.ac = getelementptr inbounds nuw [4 x i8], ptr %i.ab, i64 %i.x
   %i.ad = shl nuw nsw i64 %i.y, 2
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.r, ptr nonnull readonly align 4 %i.ac, i64 %i.ad, i1 false), !alias.scope !62241
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.r, ptr nonnull readonly align 4 %i.ac, i64 %i.ad, i1 false), !alias.scope !62241
   %i.ae = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 2 uses
   %i.af = getelementptr inbounds nuw [200 x i8], ptr %i.ae, i64 %i.x
   %i.ag = mul nuw nsw i64 %i.y, 200
@@ -2236,7 +2236,7 @@ bb.e:                                             ; preds = %bb.c
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ak, ptr nonnull readonly align 8 %i.v, i64 %i.al, i1 false), !alias.scope !62270
   %i.am = getelementptr inbounds nuw [4 x i8], ptr %i.s, i64 %1
   %i.an = shl nuw nsw i64 %i.o, 2
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.s, ptr nonnull align 4 %i.am, i64 %i.an, i1 false), !alias.scope !62274
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.s, ptr nonnull align 4 %i.am, i64 %i.an, i1 false), !alias.scope !62274
   %i.ao = getelementptr inbounds nuw [200 x i8], ptr %i.v, i64 %1
   %i.ap = mul nuw nsw i64 %i.o, 200
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.v, ptr nonnull align 8 %i.ao, i64 %i.ap, i1 false), !alias.scope !62277

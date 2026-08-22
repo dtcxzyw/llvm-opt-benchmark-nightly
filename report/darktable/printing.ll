@@ -42,7 +42,7 @@ bb.a:
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(36) %0, i8 0, i64 36, i1 false)
   store i32 4, ptr %i.a, align 4, !tbaa !11
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 40
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(56) %i.b, i8 0, i64 56, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.b, i8 0, i64 56, i1 false)
   ret void
 }
 
@@ -55,87 +55,87 @@ bb.a:
   store i32 4, ptr %i.b, align 4, !tbaa !11
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 148
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(92) %i.c, i8 0, i64 92, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(92) %i.c, i8 0, i64 92, i1 false)
   store i32 4, ptr %i.d, align 4, !tbaa !11
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 152
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 244
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(92) %i.e, i8 0, i64 92, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(92) %i.e, i8 0, i64 92, i1 false)
   store i32 4, ptr %i.f, align 4, !tbaa !11
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 248
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 340
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(92) %i.g, i8 0, i64 92, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(92) %i.g, i8 0, i64 92, i1 false)
   store i32 4, ptr %i.h, align 4, !tbaa !11
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 344
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 436
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(92) %i.i, i8 0, i64 92, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(92) %i.i, i8 0, i64 92, i1 false)
   store i32 4, ptr %i.j, align 4, !tbaa !11
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 440
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 532
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(92) %i.k, i8 0, i64 92, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(92) %i.k, i8 0, i64 92, i1 false)
   store i32 4, ptr %i.l, align 4, !tbaa !11
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 536
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 628
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(92) %i.m, i8 0, i64 92, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(92) %i.m, i8 0, i64 92, i1 false)
   store i32 4, ptr %i.n, align 4, !tbaa !11
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 632
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 724
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(92) %i.o, i8 0, i64 92, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(92) %i.o, i8 0, i64 92, i1 false)
   store i32 4, ptr %i.p, align 4, !tbaa !11
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 728
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 820
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(92) %i.q, i8 0, i64 92, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(92) %i.q, i8 0, i64 92, i1 false)
   store i32 4, ptr %i.r, align 4, !tbaa !11
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 824
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 916
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(92) %i.s, i8 0, i64 92, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(92) %i.s, i8 0, i64 92, i1 false)
   store i32 4, ptr %i.t, align 4, !tbaa !11
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 920
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 1012
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(92) %i.u, i8 0, i64 92, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(92) %i.u, i8 0, i64 92, i1 false)
   store i32 4, ptr %i.v, align 4, !tbaa !11
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 1016
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 1108
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(92) %i.w, i8 0, i64 92, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(92) %i.w, i8 0, i64 92, i1 false)
   store i32 4, ptr %i.x, align 4, !tbaa !11
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 1112
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 1204
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(92) %i.y, i8 0, i64 92, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(92) %i.y, i8 0, i64 92, i1 false)
   store i32 4, ptr %i.z, align 4, !tbaa !11
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 1208
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 1300
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(92) %i.aa, i8 0, i64 92, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(92) %i.aa, i8 0, i64 92, i1 false)
   store i32 4, ptr %i.ab, align 4, !tbaa !11
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 1304
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 1396
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(92) %i.ac, i8 0, i64 92, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(92) %i.ac, i8 0, i64 92, i1 false)
   store i32 4, ptr %i.ad, align 4, !tbaa !11
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 1400
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 1492
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(92) %i.ae, i8 0, i64 92, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(92) %i.ae, i8 0, i64 92, i1 false)
   store i32 4, ptr %i.af, align 4, !tbaa !11
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 1496
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 1588
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(92) %i.ag, i8 0, i64 92, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(92) %i.ag, i8 0, i64 92, i1 false)
   store i32 4, ptr %i.ah, align 4, !tbaa !11
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 1592
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 1684
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(92) %i.ai, i8 0, i64 92, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(92) %i.ai, i8 0, i64 92, i1 false)
   store i32 4, ptr %i.aj, align 4, !tbaa !11
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 1688
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 1780
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(92) %i.ak, i8 0, i64 92, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(92) %i.ak, i8 0, i64 92, i1 false)
   store i32 4, ptr %i.al, align 4, !tbaa !11
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 1784
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 1876
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(92) %i.am, i8 0, i64 92, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(92) %i.am, i8 0, i64 92, i1 false)
   store i32 4, ptr %i.an, align 4, !tbaa !11
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 1880
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(56) %i.ao, i8 0, i64 56, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.ao, i8 0, i64 56, i1 false)
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 1952
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i32 0, ptr %i.aq, align 8, !tbaa !17
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 4
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(32) %i.ap, i8 0, i64 32, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.ap, i8 0, i64 32, i1 false)
   store i32 -1, ptr %i.ar, align 4, !tbaa !20
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 1936
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.as, i8 0, i64 16, i1 false)
@@ -538,7 +538,7 @@ define void @dt_printing_get_screen_rel_pos(ptr nofree noundef readonly captures
 bb.a:
   %3 = alloca %struct._image_pos, align 8         ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #12
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %3, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %3, i8 0, i64 16, i1 false)
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 56
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 36
   %i.c = load i32, ptr %i.b, align 4, !tbaa !11
@@ -568,7 +568,7 @@ define void @dt_printing_get_image_pos_mm(ptr nofree noundef readonly captures(n
 bb.a:
   %3 = alloca %struct._image_pos, align 8         ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #12
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %3, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %3, i8 0, i64 16, i1 false)
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 56
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 36
   %i.c = load i32, ptr %i.b, align 4, !tbaa !11
@@ -602,7 +602,7 @@ define void @dt_printing_get_image_pos(ptr nofree noundef readonly captures(none
 bb.a:
   %3 = alloca %struct._image_pos, align 8         ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #12
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %3, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %3, i8 0, i64 16, i1 false)
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 56
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 36
   %i.c = load i32, ptr %i.b, align 4, !tbaa !11

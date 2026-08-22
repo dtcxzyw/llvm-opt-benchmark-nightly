@@ -205,9 +205,9 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #22
   call void @_Z8generatemm(ptr dead_on_unwind nonnull writable sret(%"class.std::vector.5") align 8 %3, i64 noundef %0, i64 noundef %1)
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #22
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %4, i8 0, i64 16, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #22
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %5, i8 0, i64 24, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #22
   invoke void @_Z12trainDatasetRKSt6vectorIfSaIfEEmmRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr dead_on_unwind nonnull writable sret(%"class.std::tuple") align 8 %6, ptr noundef nonnull align 8 dereferenceable(24) %3, i64 noundef %0, i64 noundef %1, ptr noundef nonnull align 8 dereferenceable(32) %2)
           to label %bb.b unwind label %.thread
@@ -277,7 +277,7 @@ _ZNSt10shared_ptrIN5faiss5IndexEEaSEOS2_.exit.i:  ; preds = %bb.h, %_ZN9__gnu_cx
   %i.z = load ptr, ptr %i.y, align 16, !tbaa !42
   store ptr %i.z, ptr %i.v, align 16, !tbaa !42
   %.not.i.i.i.i.i.i.i = icmp eq ptr %i.u, null
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %6, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(40) %6, i8 0, i64 24, i1 false)
   br i1 %.not.i.i.i.i.i.i.i, label %_ZNSt5tupleIJRSt10shared_ptrIN5faiss5IndexEERSt6vectorIhSaIhEEEEaSIS3_S7_EENSt9enable_ifIXcl12__assignableIT_T0_EEERS9_E4typeEOS_IJSC_SD_EE.exit, label %bb.i
 
 bb.i:                                             ; preds = %_ZNSt10shared_ptrIN5faiss5IndexEEaSEOS2_.exit.i
@@ -680,9 +680,9 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #22
   call void @_Z8generatemm(ptr dead_on_unwind nonnull writable sret(%"class.std::vector.5") align 8 %3, i64 noundef %0, i64 noundef %1)
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #22
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %4, i8 0, i64 16, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #22
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %5, i8 0, i64 24, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #22
   invoke void @_Z12trainDatasetRKSt6vectorIfSaIfEEmmRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr dead_on_unwind nonnull writable sret(%"class.std::tuple") align 8 %6, ptr noundef nonnull align 8 dereferenceable(24) %3, i64 noundef %0, i64 noundef %1, ptr noundef nonnull align 8 dereferenceable(32) %2)
           to label %bb.b unwind label %.thread
@@ -752,7 +752,7 @@ _ZNSt10shared_ptrIN5faiss5IndexEEaSEOS2_.exit.i:  ; preds = %bb.h, %_ZN9__gnu_cx
   %i.z = load ptr, ptr %i.y, align 16, !tbaa !42
   store ptr %i.z, ptr %i.v, align 16, !tbaa !42
   %.not.i.i.i.i.i.i.i = icmp eq ptr %i.u, null
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %6, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(40) %6, i8 0, i64 24, i1 false)
   br i1 %.not.i.i.i.i.i.i.i, label %_ZNSt5tupleIJRSt10shared_ptrIN5faiss5IndexEERSt6vectorIhSaIhEEEEaSIS3_S7_EENSt9enable_ifIXcl12__assignableIT_T0_EEERS9_E4typeEOS_IJSC_SD_EE.exit, label %bb.i
 
 bb.i:                                             ; preds = %_ZNSt10shared_ptrIN5faiss5IndexEEaSEOS2_.exit.i
@@ -1155,9 +1155,9 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #22
   call void @_Z8generatemm(ptr dead_on_unwind nonnull writable sret(%"class.std::vector.5") align 8 %3, i64 noundef %0, i64 noundef %1)
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #22
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %4, i8 0, i64 16, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #22
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %5, i8 0, i64 24, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #22
   invoke void @_Z12trainDatasetRKSt6vectorIfSaIfEEmmRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr dead_on_unwind nonnull writable sret(%"class.std::tuple") align 8 %6, ptr noundef nonnull align 8 dereferenceable(24) %3, i64 noundef %0, i64 noundef %1, ptr noundef nonnull align 8 dereferenceable(32) %2)
           to label %bb.b unwind label %.thread
@@ -1227,7 +1227,7 @@ _ZNSt10shared_ptrIN5faiss5IndexEEaSEOS2_.exit.i:  ; preds = %bb.h, %_ZN9__gnu_cx
   %i.z = load ptr, ptr %i.y, align 16, !tbaa !42
   store ptr %i.z, ptr %i.v, align 16, !tbaa !42
   %.not.i.i.i.i.i.i.i = icmp eq ptr %i.u, null
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %6, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(40) %6, i8 0, i64 24, i1 false)
   br i1 %.not.i.i.i.i.i.i.i, label %_ZNSt5tupleIJRSt10shared_ptrIN5faiss5IndexEERSt6vectorIhSaIhEEEEaSIS3_S7_EENSt9enable_ifIXcl12__assignableIT_T0_EEERS9_E4typeEOS_IJSC_SD_EE.exit, label %bb.i
 
 bb.i:                                             ; preds = %_ZNSt10shared_ptrIN5faiss5IndexEEaSEOS2_.exit.i
@@ -1630,9 +1630,9 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #22
   call void @_Z8generatemm(ptr dead_on_unwind nonnull writable sret(%"class.std::vector.5") align 8 %3, i64 noundef %0, i64 noundef %1)
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #22
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %4, i8 0, i64 16, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #22
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %5, i8 0, i64 24, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #22
   invoke void @_Z12trainDatasetRKSt6vectorIfSaIfEEmmRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr dead_on_unwind nonnull writable sret(%"class.std::tuple") align 8 %6, ptr noundef nonnull align 8 dereferenceable(24) %3, i64 noundef %0, i64 noundef %1, ptr noundef nonnull align 8 dereferenceable(32) %2)
           to label %bb.b unwind label %.thread
@@ -1702,7 +1702,7 @@ _ZNSt10shared_ptrIN5faiss5IndexEEaSEOS2_.exit.i:  ; preds = %bb.h, %_ZN9__gnu_cx
   %i.z = load ptr, ptr %i.y, align 16, !tbaa !42
   store ptr %i.z, ptr %i.v, align 16, !tbaa !42
   %.not.i.i.i.i.i.i.i = icmp eq ptr %i.u, null
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %6, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(40) %6, i8 0, i64 24, i1 false)
   br i1 %.not.i.i.i.i.i.i.i, label %_ZNSt5tupleIJRSt10shared_ptrIN5faiss5IndexEERSt6vectorIhSaIhEEEEaSIS3_S7_EENSt9enable_ifIXcl12__assignableIT_T0_EEERS9_E4typeEOS_IJSC_SD_EE.exit, label %bb.i
 
 bb.i:                                             ; preds = %_ZNSt10shared_ptrIN5faiss5IndexEEaSEOS2_.exit.i
@@ -2105,9 +2105,9 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #22
   call void @_Z8generatemm(ptr dead_on_unwind nonnull writable sret(%"class.std::vector.5") align 8 %3, i64 noundef %0, i64 noundef %1)
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #22
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %4, i8 0, i64 16, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #22
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %5, i8 0, i64 24, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #22
   invoke void @_Z12trainDatasetRKSt6vectorIfSaIfEEmmRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr dead_on_unwind nonnull writable sret(%"class.std::tuple") align 8 %6, ptr noundef nonnull align 8 dereferenceable(24) %3, i64 noundef %0, i64 noundef %1, ptr noundef nonnull align 8 dereferenceable(32) %2)
           to label %bb.b unwind label %.thread
@@ -2177,7 +2177,7 @@ _ZNSt10shared_ptrIN5faiss5IndexEEaSEOS2_.exit.i:  ; preds = %bb.h, %_ZN9__gnu_cx
   %i.z = load ptr, ptr %i.y, align 16, !tbaa !42
   store ptr %i.z, ptr %i.v, align 16, !tbaa !42
   %.not.i.i.i.i.i.i.i = icmp eq ptr %i.u, null
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %6, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(40) %6, i8 0, i64 24, i1 false)
   br i1 %.not.i.i.i.i.i.i.i, label %_ZNSt5tupleIJRSt10shared_ptrIN5faiss5IndexEERSt6vectorIhSaIhEEEEaSIS3_S7_EENSt9enable_ifIXcl12__assignableIT_T0_EEERS9_E4typeEOS_IJSC_SD_EE.exit, label %bb.i
 
 bb.i:                                             ; preds = %_ZNSt10shared_ptrIN5faiss5IndexEEaSEOS2_.exit.i
@@ -2580,9 +2580,9 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #22
   call void @_Z8generatemm(ptr dead_on_unwind nonnull writable sret(%"class.std::vector.5") align 8 %3, i64 noundef %0, i64 noundef %1)
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #22
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %4, i8 0, i64 16, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #22
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %5, i8 0, i64 24, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #22
   invoke void @_Z12trainDatasetRKSt6vectorIfSaIfEEmmRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr dead_on_unwind nonnull writable sret(%"class.std::tuple") align 8 %6, ptr noundef nonnull align 8 dereferenceable(24) %3, i64 noundef %0, i64 noundef %1, ptr noundef nonnull align 8 dereferenceable(32) %2)
           to label %bb.b unwind label %.thread
@@ -2652,7 +2652,7 @@ _ZNSt10shared_ptrIN5faiss5IndexEEaSEOS2_.exit.i:  ; preds = %bb.h, %_ZN9__gnu_cx
   %i.z = load ptr, ptr %i.y, align 16, !tbaa !42
   store ptr %i.z, ptr %i.v, align 16, !tbaa !42
   %.not.i.i.i.i.i.i.i = icmp eq ptr %i.u, null
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %6, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(40) %6, i8 0, i64 24, i1 false)
   br i1 %.not.i.i.i.i.i.i.i, label %_ZNSt5tupleIJRSt10shared_ptrIN5faiss5IndexEERSt6vectorIhSaIhEEEEaSIS3_S7_EENSt9enable_ifIXcl12__assignableIT_T0_EEERS9_E4typeEOS_IJSC_SD_EE.exit, label %bb.i
 
 bb.i:                                             ; preds = %_ZNSt10shared_ptrIN5faiss5IndexEEaSEOS2_.exit.i
@@ -3055,9 +3055,9 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #22
   call void @_Z8generatemm(ptr dead_on_unwind nonnull writable sret(%"class.std::vector.5") align 8 %3, i64 noundef %0, i64 noundef %1)
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #22
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %4, i8 0, i64 16, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #22
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %5, i8 0, i64 24, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #22
   invoke void @_Z12trainDatasetRKSt6vectorIfSaIfEEmmRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr dead_on_unwind nonnull writable sret(%"class.std::tuple") align 8 %6, ptr noundef nonnull align 8 dereferenceable(24) %3, i64 noundef %0, i64 noundef %1, ptr noundef nonnull align 8 dereferenceable(32) %2)
           to label %bb.b unwind label %.thread
@@ -3127,7 +3127,7 @@ _ZNSt10shared_ptrIN5faiss5IndexEEaSEOS2_.exit.i:  ; preds = %bb.h, %_ZN9__gnu_cx
   %i.z = load ptr, ptr %i.y, align 16, !tbaa !42
   store ptr %i.z, ptr %i.v, align 16, !tbaa !42
   %.not.i.i.i.i.i.i.i = icmp eq ptr %i.u, null
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %6, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(40) %6, i8 0, i64 24, i1 false)
   br i1 %.not.i.i.i.i.i.i.i, label %_ZNSt5tupleIJRSt10shared_ptrIN5faiss5IndexEERSt6vectorIhSaIhEEEEaSIS3_S7_EENSt9enable_ifIXcl12__assignableIT_T0_EEERS9_E4typeEOS_IJSC_SD_EE.exit, label %bb.i
 
 bb.i:                                             ; preds = %_ZNSt10shared_ptrIN5faiss5IndexEEaSEOS2_.exit.i
@@ -3530,9 +3530,9 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #22
   call void @_Z8generatemm(ptr dead_on_unwind nonnull writable sret(%"class.std::vector.5") align 8 %3, i64 noundef %0, i64 noundef %1)
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #22
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %4, i8 0, i64 16, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #22
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %5, i8 0, i64 24, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #22
   invoke void @_Z12trainDatasetRKSt6vectorIfSaIfEEmmRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr dead_on_unwind nonnull writable sret(%"class.std::tuple") align 8 %6, ptr noundef nonnull align 8 dereferenceable(24) %3, i64 noundef %0, i64 noundef %1, ptr noundef nonnull align 8 dereferenceable(32) %2)
           to label %bb.b unwind label %.thread
@@ -3602,7 +3602,7 @@ _ZNSt10shared_ptrIN5faiss5IndexEEaSEOS2_.exit.i:  ; preds = %bb.h, %_ZN9__gnu_cx
   %i.z = load ptr, ptr %i.y, align 16, !tbaa !42
   store ptr %i.z, ptr %i.v, align 16, !tbaa !42
   %.not.i.i.i.i.i.i.i = icmp eq ptr %i.u, null
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %6, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(40) %6, i8 0, i64 24, i1 false)
   br i1 %.not.i.i.i.i.i.i.i, label %_ZNSt5tupleIJRSt10shared_ptrIN5faiss5IndexEERSt6vectorIhSaIhEEEEaSIS3_S7_EENSt9enable_ifIXcl12__assignableIT_T0_EEERS9_E4typeEOS_IJSC_SD_EE.exit, label %bb.i
 
 bb.i:                                             ; preds = %_ZNSt10shared_ptrIN5faiss5IndexEEaSEOS2_.exit.i
@@ -4005,9 +4005,9 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #22
   call void @_Z8generatemm(ptr dead_on_unwind nonnull writable sret(%"class.std::vector.5") align 8 %3, i64 noundef %0, i64 noundef %1)
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #22
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %4, i8 0, i64 16, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #22
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %5, i8 0, i64 24, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #22
   invoke void @_Z12trainDatasetRKSt6vectorIfSaIfEEmmRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr dead_on_unwind nonnull writable sret(%"class.std::tuple") align 8 %6, ptr noundef nonnull align 8 dereferenceable(24) %3, i64 noundef %0, i64 noundef %1, ptr noundef nonnull align 8 dereferenceable(32) %2)
           to label %bb.b unwind label %.thread
@@ -4077,7 +4077,7 @@ _ZNSt10shared_ptrIN5faiss5IndexEEaSEOS2_.exit.i:  ; preds = %bb.h, %_ZN9__gnu_cx
   %i.z = load ptr, ptr %i.y, align 16, !tbaa !42
   store ptr %i.z, ptr %i.v, align 16, !tbaa !42
   %.not.i.i.i.i.i.i.i = icmp eq ptr %i.u, null
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %6, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(40) %6, i8 0, i64 24, i1 false)
   br i1 %.not.i.i.i.i.i.i.i, label %_ZNSt5tupleIJRSt10shared_ptrIN5faiss5IndexEERSt6vectorIhSaIhEEEEaSIS3_S7_EENSt9enable_ifIXcl12__assignableIT_T0_EEERS9_E4typeEOS_IJSC_SD_EE.exit, label %bb.i
 
 bb.i:                                             ; preds = %_ZNSt10shared_ptrIN5faiss5IndexEEaSEOS2_.exit.i
@@ -4480,9 +4480,9 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #22
   call void @_Z8generatemm(ptr dead_on_unwind nonnull writable sret(%"class.std::vector.5") align 8 %3, i64 noundef %0, i64 noundef %1)
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #22
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %4, i8 0, i64 16, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #22
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %5, i8 0, i64 24, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #22
   invoke void @_Z12trainDatasetRKSt6vectorIfSaIfEEmmRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr dead_on_unwind nonnull writable sret(%"class.std::tuple") align 8 %6, ptr noundef nonnull align 8 dereferenceable(24) %3, i64 noundef %0, i64 noundef %1, ptr noundef nonnull align 8 dereferenceable(32) %2)
           to label %bb.b unwind label %.thread
@@ -4552,7 +4552,7 @@ _ZNSt10shared_ptrIN5faiss5IndexEEaSEOS2_.exit.i:  ; preds = %bb.h, %_ZN9__gnu_cx
   %i.z = load ptr, ptr %i.y, align 16, !tbaa !42
   store ptr %i.z, ptr %i.v, align 16, !tbaa !42
   %.not.i.i.i.i.i.i.i = icmp eq ptr %i.u, null
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %6, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(40) %6, i8 0, i64 24, i1 false)
   br i1 %.not.i.i.i.i.i.i.i, label %_ZNSt5tupleIJRSt10shared_ptrIN5faiss5IndexEERSt6vectorIhSaIhEEEEaSIS3_S7_EENSt9enable_ifIXcl12__assignableIT_T0_EEERS9_E4typeEOS_IJSC_SD_EE.exit, label %bb.i
 
 bb.i:                                             ; preds = %_ZNSt10shared_ptrIN5faiss5IndexEEaSEOS2_.exit.i
@@ -4955,9 +4955,9 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #22
   call void @_Z8generatemm(ptr dead_on_unwind nonnull writable sret(%"class.std::vector.5") align 8 %3, i64 noundef %0, i64 noundef %1)
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #22
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %4, i8 0, i64 16, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #22
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %5, i8 0, i64 24, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #22
   invoke void @_Z12trainDatasetRKSt6vectorIfSaIfEEmmRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr dead_on_unwind nonnull writable sret(%"class.std::tuple") align 8 %6, ptr noundef nonnull align 8 dereferenceable(24) %3, i64 noundef %0, i64 noundef %1, ptr noundef nonnull align 8 dereferenceable(32) %2)
           to label %bb.b unwind label %.thread
@@ -5027,7 +5027,7 @@ _ZNSt10shared_ptrIN5faiss5IndexEEaSEOS2_.exit.i:  ; preds = %bb.h, %_ZN9__gnu_cx
   %i.z = load ptr, ptr %i.y, align 16, !tbaa !42
   store ptr %i.z, ptr %i.v, align 16, !tbaa !42
   %.not.i.i.i.i.i.i.i = icmp eq ptr %i.u, null
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %6, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(40) %6, i8 0, i64 24, i1 false)
   br i1 %.not.i.i.i.i.i.i.i, label %_ZNSt5tupleIJRSt10shared_ptrIN5faiss5IndexEERSt6vectorIhSaIhEEEEaSIS3_S7_EENSt9enable_ifIXcl12__assignableIT_T0_EEERS9_E4typeEOS_IJSC_SD_EE.exit, label %bb.i
 
 bb.i:                                             ; preds = %_ZNSt10shared_ptrIN5faiss5IndexEEaSEOS2_.exit.i
@@ -5430,9 +5430,9 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #22
   call void @_Z8generatemm(ptr dead_on_unwind nonnull writable sret(%"class.std::vector.5") align 8 %3, i64 noundef %0, i64 noundef %1)
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #22
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %4, i8 0, i64 16, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #22
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %5, i8 0, i64 24, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #22
   invoke void @_Z12trainDatasetRKSt6vectorIfSaIfEEmmRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr dead_on_unwind nonnull writable sret(%"class.std::tuple") align 8 %6, ptr noundef nonnull align 8 dereferenceable(24) %3, i64 noundef %0, i64 noundef %1, ptr noundef nonnull align 8 dereferenceable(32) %2)
           to label %bb.b unwind label %.thread
@@ -5502,7 +5502,7 @@ _ZNSt10shared_ptrIN5faiss5IndexEEaSEOS2_.exit.i:  ; preds = %bb.h, %_ZN9__gnu_cx
   %i.z = load ptr, ptr %i.y, align 16, !tbaa !42
   store ptr %i.z, ptr %i.v, align 16, !tbaa !42
   %.not.i.i.i.i.i.i.i = icmp eq ptr %i.u, null
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %6, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(40) %6, i8 0, i64 24, i1 false)
   br i1 %.not.i.i.i.i.i.i.i, label %_ZNSt5tupleIJRSt10shared_ptrIN5faiss5IndexEERSt6vectorIhSaIhEEEEaSIS3_S7_EENSt9enable_ifIXcl12__assignableIT_T0_EEERS9_E4typeEOS_IJSC_SD_EE.exit, label %bb.i
 
 bb.i:                                             ; preds = %_ZNSt10shared_ptrIN5faiss5IndexEEaSEOS2_.exit.i
@@ -5905,9 +5905,9 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #22
   call void @_Z8generatemm(ptr dead_on_unwind nonnull writable sret(%"class.std::vector.5") align 8 %3, i64 noundef %0, i64 noundef %1)
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #22
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %4, i8 0, i64 16, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #22
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %5, i8 0, i64 24, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #22
   invoke void @_Z12trainDatasetRKSt6vectorIfSaIfEEmmRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr dead_on_unwind nonnull writable sret(%"class.std::tuple") align 8 %6, ptr noundef nonnull align 8 dereferenceable(24) %3, i64 noundef %0, i64 noundef %1, ptr noundef nonnull align 8 dereferenceable(32) %2)
           to label %bb.b unwind label %.thread
@@ -5977,7 +5977,7 @@ _ZNSt10shared_ptrIN5faiss5IndexEEaSEOS2_.exit.i:  ; preds = %bb.h, %_ZN9__gnu_cx
   %i.z = load ptr, ptr %i.y, align 16, !tbaa !42
   store ptr %i.z, ptr %i.v, align 16, !tbaa !42
   %.not.i.i.i.i.i.i.i = icmp eq ptr %i.u, null
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %6, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(40) %6, i8 0, i64 24, i1 false)
   br i1 %.not.i.i.i.i.i.i.i, label %_ZNSt5tupleIJRSt10shared_ptrIN5faiss5IndexEERSt6vectorIhSaIhEEEEaSIS3_S7_EENSt9enable_ifIXcl12__assignableIT_T0_EEERS9_E4typeEOS_IJSC_SD_EE.exit, label %bb.i
 
 bb.i:                                             ; preds = %_ZNSt10shared_ptrIN5faiss5IndexEEaSEOS2_.exit.i
@@ -6380,9 +6380,9 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #22
   call void @_Z8generatemm(ptr dead_on_unwind nonnull writable sret(%"class.std::vector.5") align 8 %3, i64 noundef %0, i64 noundef %1)
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #22
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %4, i8 0, i64 16, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #22
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %5, i8 0, i64 24, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #22
   invoke void @_Z12trainDatasetRKSt6vectorIfSaIfEEmmRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr dead_on_unwind nonnull writable sret(%"class.std::tuple") align 8 %6, ptr noundef nonnull align 8 dereferenceable(24) %3, i64 noundef %0, i64 noundef %1, ptr noundef nonnull align 8 dereferenceable(32) %2)
           to label %bb.b unwind label %.thread
@@ -6452,7 +6452,7 @@ _ZNSt10shared_ptrIN5faiss5IndexEEaSEOS2_.exit.i:  ; preds = %bb.h, %_ZN9__gnu_cx
   %i.z = load ptr, ptr %i.y, align 16, !tbaa !42
   store ptr %i.z, ptr %i.v, align 16, !tbaa !42
   %.not.i.i.i.i.i.i.i = icmp eq ptr %i.u, null
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %6, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(40) %6, i8 0, i64 24, i1 false)
   br i1 %.not.i.i.i.i.i.i.i, label %_ZNSt5tupleIJRSt10shared_ptrIN5faiss5IndexEERSt6vectorIhSaIhEEEEaSIS3_S7_EENSt9enable_ifIXcl12__assignableIT_T0_EEERS9_E4typeEOS_IJSC_SD_EE.exit, label %bb.i
 
 bb.i:                                             ; preds = %_ZNSt10shared_ptrIN5faiss5IndexEEaSEOS2_.exit.i
@@ -6855,9 +6855,9 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #22
   call void @_Z8generatemm(ptr dead_on_unwind nonnull writable sret(%"class.std::vector.5") align 8 %3, i64 noundef %0, i64 noundef %1)
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #22
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %4, i8 0, i64 16, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #22
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %5, i8 0, i64 24, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #22
   invoke void @_Z12trainDatasetRKSt6vectorIfSaIfEEmmRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr dead_on_unwind nonnull writable sret(%"class.std::tuple") align 8 %6, ptr noundef nonnull align 8 dereferenceable(24) %3, i64 noundef %0, i64 noundef %1, ptr noundef nonnull align 8 dereferenceable(32) %2)
           to label %bb.b unwind label %.thread
@@ -6927,7 +6927,7 @@ _ZNSt10shared_ptrIN5faiss5IndexEEaSEOS2_.exit.i:  ; preds = %bb.h, %_ZN9__gnu_cx
   %i.z = load ptr, ptr %i.y, align 16, !tbaa !42
   store ptr %i.z, ptr %i.v, align 16, !tbaa !42
   %.not.i.i.i.i.i.i.i = icmp eq ptr %i.u, null
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %6, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(40) %6, i8 0, i64 24, i1 false)
   br i1 %.not.i.i.i.i.i.i.i, label %_ZNSt5tupleIJRSt10shared_ptrIN5faiss5IndexEERSt6vectorIhSaIhEEEEaSIS3_S7_EENSt9enable_ifIXcl12__assignableIT_T0_EEERS9_E4typeEOS_IJSC_SD_EE.exit, label %bb.i
 
 bb.i:                                             ; preds = %_ZNSt10shared_ptrIN5faiss5IndexEEaSEOS2_.exit.i
@@ -7330,9 +7330,9 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #22
   call void @_Z8generatemm(ptr dead_on_unwind nonnull writable sret(%"class.std::vector.5") align 8 %3, i64 noundef %0, i64 noundef %1)
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #22
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %4, i8 0, i64 16, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #22
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %5, i8 0, i64 24, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #22
   invoke void @_Z12trainDatasetRKSt6vectorIfSaIfEEmmRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr dead_on_unwind nonnull writable sret(%"class.std::tuple") align 8 %6, ptr noundef nonnull align 8 dereferenceable(24) %3, i64 noundef %0, i64 noundef %1, ptr noundef nonnull align 8 dereferenceable(32) %2)
           to label %bb.b unwind label %.thread
@@ -7402,7 +7402,7 @@ _ZNSt10shared_ptrIN5faiss5IndexEEaSEOS2_.exit.i:  ; preds = %bb.h, %_ZN9__gnu_cx
   %i.z = load ptr, ptr %i.y, align 16, !tbaa !42
   store ptr %i.z, ptr %i.v, align 16, !tbaa !42
   %.not.i.i.i.i.i.i.i = icmp eq ptr %i.u, null
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %6, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(40) %6, i8 0, i64 24, i1 false)
   br i1 %.not.i.i.i.i.i.i.i, label %_ZNSt5tupleIJRSt10shared_ptrIN5faiss5IndexEERSt6vectorIhSaIhEEEEaSIS3_S7_EENSt9enable_ifIXcl12__assignableIT_T0_EEERS9_E4typeEOS_IJSC_SD_EE.exit, label %bb.i
 
 bb.i:                                             ; preds = %_ZNSt10shared_ptrIN5faiss5IndexEEaSEOS2_.exit.i
@@ -7805,9 +7805,9 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #22
   call void @_Z8generatemm(ptr dead_on_unwind nonnull writable sret(%"class.std::vector.5") align 8 %3, i64 noundef %0, i64 noundef %1)
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #22
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %4, i8 0, i64 16, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #22
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %5, i8 0, i64 24, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #22
   invoke void @_Z12trainDatasetRKSt6vectorIfSaIfEEmmRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr dead_on_unwind nonnull writable sret(%"class.std::tuple") align 8 %6, ptr noundef nonnull align 8 dereferenceable(24) %3, i64 noundef %0, i64 noundef %1, ptr noundef nonnull align 8 dereferenceable(32) %2)
           to label %bb.b unwind label %.thread
@@ -7877,7 +7877,7 @@ _ZNSt10shared_ptrIN5faiss5IndexEEaSEOS2_.exit.i:  ; preds = %bb.h, %_ZN9__gnu_cx
   %i.z = load ptr, ptr %i.y, align 16, !tbaa !42
   store ptr %i.z, ptr %i.v, align 16, !tbaa !42
   %.not.i.i.i.i.i.i.i = icmp eq ptr %i.u, null
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %6, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(40) %6, i8 0, i64 24, i1 false)
   br i1 %.not.i.i.i.i.i.i.i, label %_ZNSt5tupleIJRSt10shared_ptrIN5faiss5IndexEERSt6vectorIhSaIhEEEEaSIS3_S7_EENSt9enable_ifIXcl12__assignableIT_T0_EEERS9_E4typeEOS_IJSC_SD_EE.exit, label %bb.i
 
 bb.i:                                             ; preds = %_ZNSt10shared_ptrIN5faiss5IndexEEaSEOS2_.exit.i
@@ -8280,9 +8280,9 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #22
   call void @_Z8generatemm(ptr dead_on_unwind nonnull writable sret(%"class.std::vector.5") align 8 %3, i64 noundef %0, i64 noundef %1)
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #22
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %4, i8 0, i64 16, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #22
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %5, i8 0, i64 24, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #22
   invoke void @_Z12trainDatasetRKSt6vectorIfSaIfEEmmRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr dead_on_unwind nonnull writable sret(%"class.std::tuple") align 8 %6, ptr noundef nonnull align 8 dereferenceable(24) %3, i64 noundef %0, i64 noundef %1, ptr noundef nonnull align 8 dereferenceable(32) %2)
           to label %bb.b unwind label %.thread
@@ -8352,7 +8352,7 @@ _ZNSt10shared_ptrIN5faiss5IndexEEaSEOS2_.exit.i:  ; preds = %bb.h, %_ZN9__gnu_cx
   %i.z = load ptr, ptr %i.y, align 16, !tbaa !42
   store ptr %i.z, ptr %i.v, align 16, !tbaa !42
   %.not.i.i.i.i.i.i.i = icmp eq ptr %i.u, null
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %6, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(40) %6, i8 0, i64 24, i1 false)
   br i1 %.not.i.i.i.i.i.i.i, label %_ZNSt5tupleIJRSt10shared_ptrIN5faiss5IndexEERSt6vectorIhSaIhEEEEaSIS3_S7_EENSt9enable_ifIXcl12__assignableIT_T0_EEERS9_E4typeEOS_IJSC_SD_EE.exit, label %bb.i
 
 bb.i:                                             ; preds = %_ZNSt10shared_ptrIN5faiss5IndexEEaSEOS2_.exit.i
@@ -8755,9 +8755,9 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #22
   call void @_Z8generatemm(ptr dead_on_unwind nonnull writable sret(%"class.std::vector.5") align 8 %3, i64 noundef %0, i64 noundef %1)
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #22
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %4, i8 0, i64 16, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #22
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %5, i8 0, i64 24, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #22
   invoke void @_Z12trainDatasetRKSt6vectorIfSaIfEEmmRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr dead_on_unwind nonnull writable sret(%"class.std::tuple") align 8 %6, ptr noundef nonnull align 8 dereferenceable(24) %3, i64 noundef %0, i64 noundef %1, ptr noundef nonnull align 8 dereferenceable(32) %2)
           to label %bb.b unwind label %.thread
@@ -8827,7 +8827,7 @@ _ZNSt10shared_ptrIN5faiss5IndexEEaSEOS2_.exit.i:  ; preds = %bb.h, %_ZN9__gnu_cx
   %i.z = load ptr, ptr %i.y, align 16, !tbaa !42
   store ptr %i.z, ptr %i.v, align 16, !tbaa !42
   %.not.i.i.i.i.i.i.i = icmp eq ptr %i.u, null
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %6, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(40) %6, i8 0, i64 24, i1 false)
   br i1 %.not.i.i.i.i.i.i.i, label %_ZNSt5tupleIJRSt10shared_ptrIN5faiss5IndexEERSt6vectorIhSaIhEEEEaSIS3_S7_EENSt9enable_ifIXcl12__assignableIT_T0_EEERS9_E4typeEOS_IJSC_SD_EE.exit, label %bb.i
 
 bb.i:                                             ; preds = %_ZNSt10shared_ptrIN5faiss5IndexEEaSEOS2_.exit.i
@@ -9230,9 +9230,9 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #22
   call void @_Z8generatemm(ptr dead_on_unwind nonnull writable sret(%"class.std::vector.5") align 8 %3, i64 noundef %0, i64 noundef %1)
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #22
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %4, i8 0, i64 16, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #22
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %5, i8 0, i64 24, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #22
   invoke void @_Z12trainDatasetRKSt6vectorIfSaIfEEmmRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr dead_on_unwind nonnull writable sret(%"class.std::tuple") align 8 %6, ptr noundef nonnull align 8 dereferenceable(24) %3, i64 noundef %0, i64 noundef %1, ptr noundef nonnull align 8 dereferenceable(32) %2)
           to label %bb.b unwind label %.thread
@@ -9302,7 +9302,7 @@ _ZNSt10shared_ptrIN5faiss5IndexEEaSEOS2_.exit.i:  ; preds = %bb.h, %_ZN9__gnu_cx
   %i.z = load ptr, ptr %i.y, align 16, !tbaa !42
   store ptr %i.z, ptr %i.v, align 16, !tbaa !42
   %.not.i.i.i.i.i.i.i = icmp eq ptr %i.u, null
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %6, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(40) %6, i8 0, i64 24, i1 false)
   br i1 %.not.i.i.i.i.i.i.i, label %_ZNSt5tupleIJRSt10shared_ptrIN5faiss5IndexEERSt6vectorIhSaIhEEEEaSIS3_S7_EENSt9enable_ifIXcl12__assignableIT_T0_EEERS9_E4typeEOS_IJSC_SD_EE.exit, label %bb.i
 
 bb.i:                                             ; preds = %_ZNSt10shared_ptrIN5faiss5IndexEEaSEOS2_.exit.i
@@ -9705,9 +9705,9 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #22
   call void @_Z8generatemm(ptr dead_on_unwind nonnull writable sret(%"class.std::vector.5") align 8 %3, i64 noundef %0, i64 noundef %1)
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #22
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %4, i8 0, i64 16, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #22
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %5, i8 0, i64 24, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #22
   invoke void @_Z12trainDatasetRKSt6vectorIfSaIfEEmmRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr dead_on_unwind nonnull writable sret(%"class.std::tuple") align 8 %6, ptr noundef nonnull align 8 dereferenceable(24) %3, i64 noundef %0, i64 noundef %1, ptr noundef nonnull align 8 dereferenceable(32) %2)
           to label %bb.b unwind label %.thread
@@ -9777,7 +9777,7 @@ _ZNSt10shared_ptrIN5faiss5IndexEEaSEOS2_.exit.i:  ; preds = %bb.h, %_ZN9__gnu_cx
   %i.z = load ptr, ptr %i.y, align 16, !tbaa !42
   store ptr %i.z, ptr %i.v, align 16, !tbaa !42
   %.not.i.i.i.i.i.i.i = icmp eq ptr %i.u, null
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %6, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(40) %6, i8 0, i64 24, i1 false)
   br i1 %.not.i.i.i.i.i.i.i, label %_ZNSt5tupleIJRSt10shared_ptrIN5faiss5IndexEERSt6vectorIhSaIhEEEEaSIS3_S7_EENSt9enable_ifIXcl12__assignableIT_T0_EEERS9_E4typeEOS_IJSC_SD_EE.exit, label %bb.i
 
 bb.i:                                             ; preds = %_ZNSt10shared_ptrIN5faiss5IndexEEaSEOS2_.exit.i
@@ -10180,9 +10180,9 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #22
   call void @_Z8generatemm(ptr dead_on_unwind nonnull writable sret(%"class.std::vector.5") align 8 %3, i64 noundef %0, i64 noundef %1)
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #22
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %4, i8 0, i64 16, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #22
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %5, i8 0, i64 24, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #22
   invoke void @_Z12trainDatasetRKSt6vectorIfSaIfEEmmRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr dead_on_unwind nonnull writable sret(%"class.std::tuple") align 8 %6, ptr noundef nonnull align 8 dereferenceable(24) %3, i64 noundef %0, i64 noundef %1, ptr noundef nonnull align 8 dereferenceable(32) %2)
           to label %bb.b unwind label %.thread
@@ -10252,7 +10252,7 @@ _ZNSt10shared_ptrIN5faiss5IndexEEaSEOS2_.exit.i:  ; preds = %bb.h, %_ZN9__gnu_cx
   %i.z = load ptr, ptr %i.y, align 16, !tbaa !42
   store ptr %i.z, ptr %i.v, align 16, !tbaa !42
   %.not.i.i.i.i.i.i.i = icmp eq ptr %i.u, null
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %6, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(40) %6, i8 0, i64 24, i1 false)
   br i1 %.not.i.i.i.i.i.i.i, label %_ZNSt5tupleIJRSt10shared_ptrIN5faiss5IndexEERSt6vectorIhSaIhEEEEaSIS3_S7_EENSt9enable_ifIXcl12__assignableIT_T0_EEERS9_E4typeEOS_IJSC_SD_EE.exit, label %bb.i
 
 bb.i:                                             ; preds = %_ZNSt10shared_ptrIN5faiss5IndexEEaSEOS2_.exit.i
@@ -10655,9 +10655,9 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #22
   call void @_Z8generatemm(ptr dead_on_unwind nonnull writable sret(%"class.std::vector.5") align 8 %3, i64 noundef %0, i64 noundef %1)
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #22
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %4, i8 0, i64 16, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #22
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %5, i8 0, i64 24, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #22
   invoke void @_Z12trainDatasetRKSt6vectorIfSaIfEEmmRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr dead_on_unwind nonnull writable sret(%"class.std::tuple") align 8 %6, ptr noundef nonnull align 8 dereferenceable(24) %3, i64 noundef %0, i64 noundef %1, ptr noundef nonnull align 8 dereferenceable(32) %2)
           to label %bb.b unwind label %.thread
@@ -10727,7 +10727,7 @@ _ZNSt10shared_ptrIN5faiss5IndexEEaSEOS2_.exit.i:  ; preds = %bb.h, %_ZN9__gnu_cx
   %i.z = load ptr, ptr %i.y, align 16, !tbaa !42
   store ptr %i.z, ptr %i.v, align 16, !tbaa !42
   %.not.i.i.i.i.i.i.i = icmp eq ptr %i.u, null
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %6, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(40) %6, i8 0, i64 24, i1 false)
   br i1 %.not.i.i.i.i.i.i.i, label %_ZNSt5tupleIJRSt10shared_ptrIN5faiss5IndexEERSt6vectorIhSaIhEEEEaSIS3_S7_EENSt9enable_ifIXcl12__assignableIT_T0_EEERS9_E4typeEOS_IJSC_SD_EE.exit, label %bb.i
 
 bb.i:                                             ; preds = %_ZNSt10shared_ptrIN5faiss5IndexEEaSEOS2_.exit.i
@@ -11130,9 +11130,9 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #22
   call void @_Z8generatemm(ptr dead_on_unwind nonnull writable sret(%"class.std::vector.5") align 8 %3, i64 noundef %0, i64 noundef %1)
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #22
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %4, i8 0, i64 16, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #22
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %5, i8 0, i64 24, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #22
   invoke void @_Z12trainDatasetRKSt6vectorIfSaIfEEmmRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr dead_on_unwind nonnull writable sret(%"class.std::tuple") align 8 %6, ptr noundef nonnull align 8 dereferenceable(24) %3, i64 noundef %0, i64 noundef %1, ptr noundef nonnull align 8 dereferenceable(32) %2)
           to label %bb.b unwind label %.thread
@@ -11202,7 +11202,7 @@ _ZNSt10shared_ptrIN5faiss5IndexEEaSEOS2_.exit.i:  ; preds = %bb.h, %_ZN9__gnu_cx
   %i.z = load ptr, ptr %i.y, align 16, !tbaa !42
   store ptr %i.z, ptr %i.v, align 16, !tbaa !42
   %.not.i.i.i.i.i.i.i = icmp eq ptr %i.u, null
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %6, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(40) %6, i8 0, i64 24, i1 false)
   br i1 %.not.i.i.i.i.i.i.i, label %_ZNSt5tupleIJRSt10shared_ptrIN5faiss5IndexEERSt6vectorIhSaIhEEEEaSIS3_S7_EENSt9enable_ifIXcl12__assignableIT_T0_EEERS9_E4typeEOS_IJSC_SD_EE.exit, label %bb.i
 
 bb.i:                                             ; preds = %_ZNSt10shared_ptrIN5faiss5IndexEEaSEOS2_.exit.i
@@ -11605,9 +11605,9 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #22
   call void @_Z8generatemm(ptr dead_on_unwind nonnull writable sret(%"class.std::vector.5") align 8 %3, i64 noundef %0, i64 noundef %1)
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #22
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %4, i8 0, i64 16, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #22
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %5, i8 0, i64 24, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #22
   invoke void @_Z12trainDatasetRKSt6vectorIfSaIfEEmmRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr dead_on_unwind nonnull writable sret(%"class.std::tuple") align 8 %6, ptr noundef nonnull align 8 dereferenceable(24) %3, i64 noundef %0, i64 noundef %1, ptr noundef nonnull align 8 dereferenceable(32) %2)
           to label %bb.b unwind label %.thread
@@ -11677,7 +11677,7 @@ _ZNSt10shared_ptrIN5faiss5IndexEEaSEOS2_.exit.i:  ; preds = %bb.h, %_ZN9__gnu_cx
   %i.z = load ptr, ptr %i.y, align 16, !tbaa !42
   store ptr %i.z, ptr %i.v, align 16, !tbaa !42
   %.not.i.i.i.i.i.i.i = icmp eq ptr %i.u, null
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %6, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(40) %6, i8 0, i64 24, i1 false)
   br i1 %.not.i.i.i.i.i.i.i, label %_ZNSt5tupleIJRSt10shared_ptrIN5faiss5IndexEERSt6vectorIhSaIhEEEEaSIS3_S7_EENSt9enable_ifIXcl12__assignableIT_T0_EEERS9_E4typeEOS_IJSC_SD_EE.exit, label %bb.i
 
 bb.i:                                             ; preds = %_ZNSt10shared_ptrIN5faiss5IndexEEaSEOS2_.exit.i
@@ -12080,9 +12080,9 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #22
   call void @_Z8generatemm(ptr dead_on_unwind nonnull writable sret(%"class.std::vector.5") align 8 %3, i64 noundef %0, i64 noundef %1)
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #22
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %4, i8 0, i64 16, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #22
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %5, i8 0, i64 24, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #22
   invoke void @_Z12trainDatasetRKSt6vectorIfSaIfEEmmRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr dead_on_unwind nonnull writable sret(%"class.std::tuple") align 8 %6, ptr noundef nonnull align 8 dereferenceable(24) %3, i64 noundef %0, i64 noundef %1, ptr noundef nonnull align 8 dereferenceable(32) %2)
           to label %bb.b unwind label %.thread
@@ -12152,7 +12152,7 @@ _ZNSt10shared_ptrIN5faiss5IndexEEaSEOS2_.exit.i:  ; preds = %bb.h, %_ZN9__gnu_cx
   %i.z = load ptr, ptr %i.y, align 16, !tbaa !42
   store ptr %i.z, ptr %i.v, align 16, !tbaa !42
   %.not.i.i.i.i.i.i.i = icmp eq ptr %i.u, null
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %6, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(40) %6, i8 0, i64 24, i1 false)
   br i1 %.not.i.i.i.i.i.i.i, label %_ZNSt5tupleIJRSt10shared_ptrIN5faiss5IndexEERSt6vectorIhSaIhEEEEaSIS3_S7_EENSt9enable_ifIXcl12__assignableIT_T0_EEERS9_E4typeEOS_IJSC_SD_EE.exit, label %bb.i
 
 bb.i:                                             ; preds = %_ZNSt10shared_ptrIN5faiss5IndexEEaSEOS2_.exit.i
@@ -12555,9 +12555,9 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #22
   call void @_Z8generatemm(ptr dead_on_unwind nonnull writable sret(%"class.std::vector.5") align 8 %3, i64 noundef %0, i64 noundef %1)
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #22
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %4, i8 0, i64 16, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #22
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %5, i8 0, i64 24, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #22
   invoke void @_Z12trainDatasetRKSt6vectorIfSaIfEEmmRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr dead_on_unwind nonnull writable sret(%"class.std::tuple") align 8 %6, ptr noundef nonnull align 8 dereferenceable(24) %3, i64 noundef %0, i64 noundef %1, ptr noundef nonnull align 8 dereferenceable(32) %2)
           to label %bb.b unwind label %.thread
@@ -12627,7 +12627,7 @@ _ZNSt10shared_ptrIN5faiss5IndexEEaSEOS2_.exit.i:  ; preds = %bb.h, %_ZN9__gnu_cx
   %i.z = load ptr, ptr %i.y, align 16, !tbaa !42
   store ptr %i.z, ptr %i.v, align 16, !tbaa !42
   %.not.i.i.i.i.i.i.i = icmp eq ptr %i.u, null
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %6, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(40) %6, i8 0, i64 24, i1 false)
   br i1 %.not.i.i.i.i.i.i.i, label %_ZNSt5tupleIJRSt10shared_ptrIN5faiss5IndexEERSt6vectorIhSaIhEEEEaSIS3_S7_EENSt9enable_ifIXcl12__assignableIT_T0_EEERS9_E4typeEOS_IJSC_SD_EE.exit, label %bb.i
 
 bb.i:                                             ; preds = %_ZNSt10shared_ptrIN5faiss5IndexEEaSEOS2_.exit.i
@@ -13030,9 +13030,9 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #22
   call void @_Z8generatemm(ptr dead_on_unwind nonnull writable sret(%"class.std::vector.5") align 8 %3, i64 noundef %0, i64 noundef %1)
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #22
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %4, i8 0, i64 16, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #22
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %5, i8 0, i64 24, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #22
   invoke void @_Z12trainDatasetRKSt6vectorIfSaIfEEmmRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr dead_on_unwind nonnull writable sret(%"class.std::tuple") align 8 %6, ptr noundef nonnull align 8 dereferenceable(24) %3, i64 noundef %0, i64 noundef %1, ptr noundef nonnull align 8 dereferenceable(32) %2)
           to label %bb.b unwind label %.thread
@@ -13102,7 +13102,7 @@ _ZNSt10shared_ptrIN5faiss5IndexEEaSEOS2_.exit.i:  ; preds = %bb.h, %_ZN9__gnu_cx
   %i.z = load ptr, ptr %i.y, align 16, !tbaa !42
   store ptr %i.z, ptr %i.v, align 16, !tbaa !42
   %.not.i.i.i.i.i.i.i = icmp eq ptr %i.u, null
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %6, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(40) %6, i8 0, i64 24, i1 false)
   br i1 %.not.i.i.i.i.i.i.i, label %_ZNSt5tupleIJRSt10shared_ptrIN5faiss5IndexEERSt6vectorIhSaIhEEEEaSIS3_S7_EENSt9enable_ifIXcl12__assignableIT_T0_EEERS9_E4typeEOS_IJSC_SD_EE.exit, label %bb.i
 
 bb.i:                                             ; preds = %_ZNSt10shared_ptrIN5faiss5IndexEEaSEOS2_.exit.i
@@ -13505,9 +13505,9 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #22
   call void @_Z8generatemm(ptr dead_on_unwind nonnull writable sret(%"class.std::vector.5") align 8 %3, i64 noundef %0, i64 noundef %1)
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #22
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %4, i8 0, i64 16, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #22
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %5, i8 0, i64 24, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #22
   invoke void @_Z12trainDatasetRKSt6vectorIfSaIfEEmmRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr dead_on_unwind nonnull writable sret(%"class.std::tuple") align 8 %6, ptr noundef nonnull align 8 dereferenceable(24) %3, i64 noundef %0, i64 noundef %1, ptr noundef nonnull align 8 dereferenceable(32) %2)
           to label %bb.b unwind label %.thread
@@ -13577,7 +13577,7 @@ _ZNSt10shared_ptrIN5faiss5IndexEEaSEOS2_.exit.i:  ; preds = %bb.h, %_ZN9__gnu_cx
   %i.z = load ptr, ptr %i.y, align 16, !tbaa !42
   store ptr %i.z, ptr %i.v, align 16, !tbaa !42
   %.not.i.i.i.i.i.i.i = icmp eq ptr %i.u, null
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %6, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(40) %6, i8 0, i64 24, i1 false)
   br i1 %.not.i.i.i.i.i.i.i, label %_ZNSt5tupleIJRSt10shared_ptrIN5faiss5IndexEERSt6vectorIhSaIhEEEEaSIS3_S7_EENSt9enable_ifIXcl12__assignableIT_T0_EEERS9_E4typeEOS_IJSC_SD_EE.exit, label %bb.i
 
 bb.i:                                             ; preds = %_ZNSt10shared_ptrIN5faiss5IndexEEaSEOS2_.exit.i

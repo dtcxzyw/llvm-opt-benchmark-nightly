@@ -202,7 +202,7 @@ bb.a:
 .critedge2.i:                                     ; preds = %.lr.ph25.i
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.l = lshr exact i64 %.024.i.in, 3
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.k, i8 -1, i64 %i.l, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.k, i8 -1, i64 %i.l, i1 false)
   br label %bit_nset.exit
 
 bit_nset.exit:                                    ; preds = %.critedge.i, %bb.a, %.critedge2.i
@@ -240,7 +240,7 @@ bb.a:
 .critedge2.i:                                     ; preds = %.lr.ph25.i
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.m = lshr exact i64 %.024.i.in, 3
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.l, i8 0, i64 %i.m, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.l, i8 0, i64 %i.m, i1 false)
   br label %bit_nclear.exit
 
 bit_nclear.exit:                                  ; preds = %.critedge.i, %bb.a, %.critedge2.i
@@ -643,7 +643,7 @@ bb.b:                                             ; preds = %bb.a
 .critedge2.i:                                     ; preds = %.lr.ph25.i
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.s = lshr exact i64 %.024.i.in, 3
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.r, i8 0, i64 %i.s, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.r, i8 0, i64 %i.s, i1 false)
   br label %bit_nclear.exit
 
 bit_nclear.exit:                                  ; preds = %.critedge.i, %bb.b, %.critedge2.i
@@ -1046,7 +1046,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %.critedge2.i
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.s = lshr exact i64 %i.g, 3
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.r, i8 0, i64 %i.s, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.r, i8 0, i64 %i.s, i1 false)
   br label %bit_nclear.exit
 
 bit_nclear.exit:                                  ; preds = %.critedge.i, %bb.c, %.critedge2.i, %bb.a
@@ -1449,7 +1449,7 @@ bit_nclear.exit:                                  ; preds = %.critedge2.i, %bb.e
 bb.f:                                             ; preds = %.critedge2.i19
   %i.bq = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.br = lshr exact i64 %i.bg, 3
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.bq, i8 -1, i64 %i.br, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.bq, i8 -1, i64 %i.br, i1 false)
   br label %bit_nset.exit
 
 bit_nset.exit:                                    ; preds = %.critedge.i22, %bit_nclear.exit, %bb.f, %.critedge2.i19, %bb.c, %bit_set_count.exit

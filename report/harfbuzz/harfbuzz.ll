@@ -205,7 +205,7 @@ _ZN15hb_draw_funcs_t15emit_close_pathEPvR15hb_draw_state_t.exit.i: ; preds = %bb
   br label %_ZN17cff1_path_param_t8end_pathEv.exit
 
 _ZN17cff1_path_param_t8end_pathEv.exit:           ; preds = %bb.x, %_ZN15hb_draw_funcs_t15emit_close_pathEPvR15hb_draw_state_t.exit.i
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %i.ed, i8 0, i64 20, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %i.ed, i8 0, i64 20, i1 false)
   br label %bb.ad
 
 bb.ad:                                            ; preds = %_ZN3CFF16cs_interpreter_tINS_20cff1_cs_interp_env_tE20cff1_cs_opset_path_t17cff1_path_param_tE9interpretERS3_Pl.exit, %_ZN17cff1_path_param_t8end_pathEv.exit
@@ -608,7 +608,7 @@ bb.o:                                             ; preds = %bb.n
 _ZN15hb_draw_funcs_t10close_pathEPvR15hb_draw_state_t.exit.i98: ; preds = %bb.o, %bb.n
   %i.dc = phi ptr [ %i.db, %bb.o ], [ null, %bb.n ]
   call void %i.cx(ptr noundef nonnull align 8 dereferenceable(72) %i.cc, ptr noundef %i.ce, ptr noundef nonnull align 4 dereferenceable(48) %i.cf, ptr noundef %i.dc) #63, !inline_history !822
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.cf, i8 0, i64 12, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %i.cf, i8 0, i64 12, i1 false)
   br label %_ZN17hb_draw_session_t7move_toEff.exit99
 
 _ZN17hb_draw_session_t7move_toEff.exit99:         ; preds = %bb.j, %_ZN15hb_draw_funcs_t10close_pathEPvR15hb_draw_state_t.exit.i98
@@ -688,7 +688,7 @@ bb.v:                                             ; preds = %bb.u
 _ZN15hb_draw_funcs_t10close_pathEPvR15hb_draw_state_t.exit.i: ; preds = %bb.v, %bb.u
   %i.ek = phi ptr [ %i.ej, %bb.v ], [ null, %bb.u ]
   call void %i.ef(ptr noundef nonnull align 8 dereferenceable(72) %i.dk, ptr noundef %i.dm, ptr noundef nonnull align 4 dereferenceable(48) %i.dn, ptr noundef %i.ek) #63, !inline_history !822
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.dn, i8 0, i64 12, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %i.dn, i8 0, i64 12, i1 false)
   br label %_ZN17hb_draw_session_t7move_toEff.exit
 
 _ZN17hb_draw_session_t7move_toEff.exit:           ; preds = %bb.q, %_ZN15hb_draw_funcs_t10close_pathEPvR15hb_draw_state_t.exit.i
@@ -992,7 +992,7 @@ bb.az:                                            ; preds = %bb.ay
 _ZN15hb_draw_funcs_t10close_pathEPvR15hb_draw_state_t.exit.i106: ; preds = %bb.az, %bb.ay
   %i.jg = phi ptr [ %i.jf, %bb.az ], [ null, %bb.ay ]
   call void %i.jb(ptr noundef nonnull align 8 dereferenceable(72) %i.ig, ptr noundef %i.ii, ptr noundef nonnull align 4 dereferenceable(48) %i.ij, ptr noundef %i.jg) #63, !inline_history !822
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.ij, i8 0, i64 12, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %i.ij, i8 0, i64 12, i1 false)
   br label %_ZN17hb_draw_session_t7move_toEff.exit107
 
 _ZN17hb_draw_session_t7move_toEff.exit107:        ; preds = %bb.au, %_ZN15hb_draw_funcs_t10close_pathEPvR15hb_draw_state_t.exit.i106
@@ -1072,7 +1072,7 @@ bb.bg:                                            ; preds = %bb.bf
 _ZN15hb_draw_funcs_t10close_pathEPvR15hb_draw_state_t.exit.i102: ; preds = %bb.bg, %bb.bf
   %i.ko = phi ptr [ %i.kn, %bb.bg ], [ null, %bb.bf ]
   call void %i.kj(ptr noundef nonnull align 8 dereferenceable(72) %i.jo, ptr noundef %i.jq, ptr noundef nonnull align 4 dereferenceable(48) %i.jr, ptr noundef %i.ko) #63, !inline_history !822
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.jr, i8 0, i64 12, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %i.jr, i8 0, i64 12, i1 false)
   br label %_ZN17hb_draw_session_t7move_toEff.exit103
 
 _ZN17hb_draw_session_t7move_toEff.exit103:        ; preds = %bb.bb, %_ZN15hb_draw_funcs_t10close_pathEPvR15hb_draw_state_t.exit.i102
@@ -1353,7 +1353,7 @@ bb.cg:                                            ; preds = %bb.cf
 _ZN15hb_draw_funcs_t10close_pathEPvR15hb_draw_state_t.exit.i114: ; preds = %bb.cg, %bb.cf
   %i.pd = phi ptr [ %i.pc, %bb.cg ], [ null, %bb.cf ]
   call void %i.oy(ptr noundef nonnull align 8 dereferenceable(72) %i.od, ptr noundef %i.of, ptr noundef nonnull align 4 dereferenceable(48) %i.og, ptr noundef %i.pd) #63, !inline_history !822
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.og, i8 0, i64 12, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %i.og, i8 0, i64 12, i1 false)
   br label %_ZN17hb_draw_session_t7move_toEff.exit115
 
 _ZN17hb_draw_session_t7move_toEff.exit115:        ; preds = %bb.cb, %_ZN15hb_draw_funcs_t10close_pathEPvR15hb_draw_state_t.exit.i114
@@ -1433,7 +1433,7 @@ bb.cn:                                            ; preds = %bb.cm
 _ZN15hb_draw_funcs_t10close_pathEPvR15hb_draw_state_t.exit.i110: ; preds = %bb.cn, %bb.cm
   %i.ql = phi ptr [ %i.qk, %bb.cn ], [ null, %bb.cm ]
   call void %i.qg(ptr noundef nonnull align 8 dereferenceable(72) %i.pl, ptr noundef %i.pn, ptr noundef nonnull align 4 dereferenceable(48) %i.po, ptr noundef %i.ql) #63, !inline_history !822
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.po, i8 0, i64 12, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %i.po, i8 0, i64 12, i1 false)
   br label %_ZN17hb_draw_session_t7move_toEff.exit111
 
 _ZN17hb_draw_session_t7move_toEff.exit111:        ; preds = %bb.ci, %_ZN15hb_draw_funcs_t10close_pathEPvR15hb_draw_state_t.exit.i110
@@ -1836,7 +1836,7 @@ bb.ai:                                            ; preds = %bb.ah
 _ZN17hb_draw_session_t7move_toEff.exit:           ; preds = %bb.ah, %bb.ai
   %i.hh = phi ptr [ %i.hg, %bb.ai ], [ null, %bb.ah ]
   tail call void %i.hc(ptr noundef nonnull align 8 dereferenceable(72) %i.gf, ptr noundef %i.gh, ptr noundef nonnull align 4 dereferenceable(48) %i.gi, ptr noundef %i.hh) #63, !inline_history !822
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %i.gi, i8 0, i64 20, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %i.gi, i8 0, i64 20, i1 false)
   %.pre56 = load ptr, ptr %i.gd, align 8, !tbaa !191 ; 6 uses
   %.pre57 = load ptr, ptr %.pre56, align 8, !tbaa !175 ; 2 uses
   %.phi.trans.insert58 = getelementptr inbounds nuw i8, ptr %.pre56, i64 8
@@ -1960,7 +1960,7 @@ _ZN15hb_draw_funcs_t15emit_close_pathEPvR15hb_draw_state_t.exit49: ; preds = %bb
   br label %_ZN17hb_draw_session_t10close_pathEv.exit
 
 _ZN17hb_draw_session_t10close_pathEv.exit:        ; preds = %bb.al, %_ZN15hb_draw_funcs_t15emit_close_pathEPvR15hb_draw_state_t.exit49
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %i.ik, i8 0, i64 20, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %i.ik, i8 0, i64 20, i1 false)
   ret void
 }
 
@@ -2363,7 +2363,7 @@ bb.b:                                             ; preds = %bb.a
 _ZN14hb_free_pool_tIN22hb_serialize_context_t8object_tELj32EE5allocEv.exit.thread9: ; preds = %bb.b
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !1025
   store ptr %i.f, ptr %i.d, align 8, !tbaa !2793
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(56) %i.e, i8 0, i64 56, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.e, i8 0, i64 56, i1 false)
   br label %bb.h
 
 bb.c:                                             ; preds = %bb.b
@@ -2393,7 +2393,7 @@ _ZN14hb_free_pool_tIN22hb_serialize_context_t8object_tELj32EE5allocEv.exit: ; pr
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #63
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !1025
   store ptr %i.p, ptr %i.d, align 8, !tbaa !2793
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(56) %i.o, i8 0, i64 56, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.o, i8 0, i64 56, i1 false)
   br label %bb.h
 
 bb.f:                                             ; preds = %bb.e, %bb.c
@@ -2796,14 +2796,14 @@ _ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit29: ; preds = %bb.a
   %i.h = fadd double %i.f, %i.g
   store double %i.h, ptr %2, align 8, !tbaa !325
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #63
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %3, ptr noundef nonnull align 8 dereferenceable(16) %2, i64 16, i1 false), !tbaa.struct !2963
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %3, ptr noundef nonnull align 8 dereferenceable(16) %2, i64 16, i1 false), !tbaa.struct !2963
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.j = load <2 x double>, ptr %i.i, align 8, !tbaa !325
   %i.k = load <2 x double>, ptr %3, align 16, !tbaa !325
   %i.l = fadd <2 x double> %i.k, %i.j
   store <2 x double> %i.l, ptr %3, align 16, !tbaa !325
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #63
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, ptr noundef nonnull align 8 dereferenceable(16) %3, i64 16, i1 false), !tbaa.struct !2963
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, ptr noundef nonnull align 16 dereferenceable(16) %3, i64 16, i1 false), !tbaa.struct !2963
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 48
   %.pre30 = load double, ptr %i.m, align 8, !tbaa !325
   %i.n = load double, ptr %4, align 8, !tbaa !325
@@ -2873,42 +2873,42 @@ bb.a:
 _ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit49: ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #63
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 4448
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef nonnull align 8 dereferenceable(16) %i.d, i64 16, i1 false), !tbaa.struct !2963
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %2, ptr noundef nonnull align 8 dereferenceable(16) %i.d, i64 16, i1 false), !tbaa.struct !2963
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.f = load <2 x double>, ptr %i.e, align 8, !tbaa !325
   %i.g = load <2 x double>, ptr %2, align 16, !tbaa !325
   %i.h = fadd <2 x double> %i.g, %i.f
   store <2 x double> %i.h, ptr %2, align 16, !tbaa !325
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #63
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %3, ptr noundef nonnull align 8 dereferenceable(16) %2, i64 16, i1 false), !tbaa.struct !2963
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %3, ptr noundef nonnull align 16 dereferenceable(16) %2, i64 16, i1 false), !tbaa.struct !2963
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.j = load <2 x double>, ptr %i.i, align 8, !tbaa !325
   %i.k = load <2 x double>, ptr %3, align 16, !tbaa !325
   %i.l = fadd <2 x double> %i.k, %i.j
   store <2 x double> %i.l, ptr %3, align 16, !tbaa !325
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #63
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, ptr noundef nonnull align 8 dereferenceable(16) %3, i64 16, i1 false), !tbaa.struct !2963
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %4, ptr noundef nonnull align 16 dereferenceable(16) %3, i64 16, i1 false), !tbaa.struct !2963
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.n = load <2 x double>, ptr %i.m, align 8, !tbaa !325
   %i.o = load <2 x double>, ptr %4, align 16, !tbaa !325
   %i.p = fadd <2 x double> %i.o, %i.n
   store <2 x double> %i.p, ptr %4, align 16, !tbaa !325
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #63
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %5, ptr noundef nonnull align 8 dereferenceable(16) %4, i64 16, i1 false), !tbaa.struct !2963
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %5, ptr noundef nonnull align 16 dereferenceable(16) %4, i64 16, i1 false), !tbaa.struct !2963
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.r = load <2 x double>, ptr %i.q, align 8, !tbaa !325
   %i.s = load <2 x double>, ptr %5, align 16, !tbaa !325
   %i.t = fadd <2 x double> %i.s, %i.r
   store <2 x double> %i.t, ptr %5, align 16, !tbaa !325
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #63
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %6, ptr noundef nonnull align 8 dereferenceable(16) %5, i64 16, i1 false), !tbaa.struct !2963
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %6, ptr noundef nonnull align 16 dereferenceable(16) %5, i64 16, i1 false), !tbaa.struct !2963
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 88
   %i.v = load <2 x double>, ptr %i.u, align 8, !tbaa !325
   %i.w = load <2 x double>, ptr %6, align 16, !tbaa !325
   %i.x = fadd <2 x double> %i.w, %i.v
   store <2 x double> %i.x, ptr %6, align 16, !tbaa !325
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #63
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %7, ptr noundef nonnull align 8 dereferenceable(16) %6, i64 16, i1 false), !tbaa.struct !2963
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %7, ptr noundef nonnull align 16 dereferenceable(16) %6, i64 16, i1 false), !tbaa.struct !2963
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 104
   %i.z = load <2 x double>, ptr %i.y, align 8, !tbaa !325
   %i.aa = load <2 x double>, ptr %7, align 16, !tbaa !325
@@ -2953,21 +2953,21 @@ bb.a:
 _ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit38: ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #63
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 4448
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef nonnull align 8 dereferenceable(16) %i.d, i64 16, i1 false), !tbaa.struct !2963
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %2, ptr noundef nonnull align 8 dereferenceable(16) %i.d, i64 16, i1 false), !tbaa.struct !2963
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.f = load <2 x double>, ptr %i.e, align 8, !tbaa !325
   %i.g = load <2 x double>, ptr %2, align 16, !tbaa !325
   %i.h = fadd <2 x double> %i.g, %i.f
   store <2 x double> %i.h, ptr %2, align 16, !tbaa !325
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #63
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %3, ptr noundef nonnull align 8 dereferenceable(16) %2, i64 16, i1 false), !tbaa.struct !2963
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %3, ptr noundef nonnull align 16 dereferenceable(16) %2, i64 16, i1 false), !tbaa.struct !2963
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.j = load <2 x double>, ptr %i.i, align 8, !tbaa !325
   %i.k = load <2 x double>, ptr %3, align 16, !tbaa !325
   %i.l = fadd <2 x double> %i.k, %i.j
   store <2 x double> %i.l, ptr %3, align 16, !tbaa !325
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #63
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, ptr noundef nonnull align 8 dereferenceable(16) %3, i64 16, i1 false), !tbaa.struct !2963
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, ptr noundef nonnull align 16 dereferenceable(16) %3, i64 16, i1 false), !tbaa.struct !2963
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 56
   %.pre40 = load double, ptr %i.m, align 8, !tbaa !325
   %i.n = load double, ptr %4, align 8, !tbaa !325
@@ -2981,14 +2981,14 @@ _ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit38: ; preds = %bb.a
   %i.r = fadd double %i.q, %.pre41
   store double %i.r, ptr %5, align 8, !tbaa !325
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #63
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %6, ptr noundef nonnull align 8 dereferenceable(16) %5, i64 16, i1 false), !tbaa.struct !2963
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %6, ptr noundef nonnull align 8 dereferenceable(16) %5, i64 16, i1 false), !tbaa.struct !2963
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.t = load <2 x double>, ptr %i.s, align 8, !tbaa !325
   %i.u = load <2 x double>, ptr %6, align 16, !tbaa !325
   %i.v = fadd <2 x double> %i.u, %i.t
   store <2 x double> %i.v, ptr %6, align 16, !tbaa !325
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #63
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %7, ptr noundef nonnull align 8 dereferenceable(16) %6, i64 16, i1 false), !tbaa.struct !2963
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %7, ptr noundef nonnull align 16 dereferenceable(16) %6, i64 16, i1 false), !tbaa.struct !2963
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 88
   %.pre43 = load double, ptr %i.w, align 8, !tbaa !325
   %i.x = load double, ptr %7, align 8, !tbaa !325
@@ -3044,41 +3044,41 @@ _ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit50: ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 88
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #63
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 4448 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef nonnull align 8 dereferenceable(16) %i.j, i64 16, i1 false), !tbaa.struct !2963
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %2, ptr noundef nonnull align 8 dereferenceable(16) %i.j, i64 16, i1 false), !tbaa.struct !2963
   %i.k = load <2 x double>, ptr %i.d, align 8, !tbaa !325 ; 2 uses
   %i.l = load <2 x double>, ptr %2, align 16, !tbaa !325
   %i.m = fadd <2 x double> %i.l, %i.k
   store <2 x double> %i.m, ptr %2, align 16, !tbaa !325
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #63
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %3, ptr noundef nonnull align 8 dereferenceable(16) %2, i64 16, i1 false), !tbaa.struct !2963
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %3, ptr noundef nonnull align 16 dereferenceable(16) %2, i64 16, i1 false), !tbaa.struct !2963
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.o = load <2 x double>, ptr %i.n, align 8, !tbaa !325
   %i.p = load <2 x double>, ptr %3, align 16, !tbaa !325
   %i.q = fadd <2 x double> %i.p, %i.o
   store <2 x double> %i.q, ptr %3, align 16, !tbaa !325
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #63
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, ptr noundef nonnull align 8 dereferenceable(16) %3, i64 16, i1 false), !tbaa.struct !2963
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %4, ptr noundef nonnull align 16 dereferenceable(16) %3, i64 16, i1 false), !tbaa.struct !2963
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.s = load <2 x double>, ptr %i.r, align 8, !tbaa !325
   %i.t = load <2 x double>, ptr %4, align 16, !tbaa !325
   %i.u = fadd <2 x double> %i.t, %i.s
   store <2 x double> %i.u, ptr %4, align 16, !tbaa !325
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #63
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %5, ptr noundef nonnull align 8 dereferenceable(16) %4, i64 16, i1 false), !tbaa.struct !2963
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %5, ptr noundef nonnull align 16 dereferenceable(16) %4, i64 16, i1 false), !tbaa.struct !2963
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.w = load <2 x double>, ptr %i.v, align 8, !tbaa !325
   %i.x = load <2 x double>, ptr %5, align 16, !tbaa !325
   %i.y = fadd <2 x double> %i.x, %i.w
   store <2 x double> %i.y, ptr %5, align 16, !tbaa !325
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #63
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %6, ptr noundef nonnull align 8 dereferenceable(16) %5, i64 16, i1 false), !tbaa.struct !2963
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %6, ptr noundef nonnull align 16 dereferenceable(16) %5, i64 16, i1 false), !tbaa.struct !2963
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 88
   %i.aa = load <2 x double>, ptr %i.z, align 8, !tbaa !325
   %i.ab = load <2 x double>, ptr %6, align 16, !tbaa !325
   %i.ac = fadd <2 x double> %i.ab, %i.aa
   store <2 x double> %i.ac, ptr %6, align 16, !tbaa !325
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #63
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %7, ptr noundef nonnull align 8 dereferenceable(16) %6, i64 16, i1 false), !tbaa.struct !2963
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %7, ptr noundef nonnull align 16 dereferenceable(16) %6, i64 16, i1 false), !tbaa.struct !2963
   %i.ad = load <2 x double>, ptr %i.f, align 8, !tbaa !325
   %i.ae = load <2 x double>, ptr %i.g, align 8, !tbaa !325
   %i.af = load <2 x double>, ptr %i.h, align 8, !tbaa !325
@@ -3481,7 +3481,7 @@ _ZN15hb_draw_funcs_t15emit_close_pathEPvR15hb_draw_state_t.exit.i: ; preds = %bb
   br label %_ZN17cff1_path_param_t8end_pathEv.exit
 
 _ZN17cff1_path_param_t8end_pathEv.exit:           ; preds = %bb.a, %_ZN15hb_draw_funcs_t15emit_close_pathEPvR15hb_draw_state_t.exit.i
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %i.f, i8 0, i64 20, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %i.f, i8 0, i64 20, i1 false)
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 2 uses
   %i.af = load i32, ptr %i.ae, align 4, !tbaa !1554 ; 10 uses
@@ -3884,7 +3884,7 @@ bb.i:                                             ; preds = %bb.h
 _ZN15hb_draw_funcs_t10close_pathEPvR15hb_draw_state_t.exit.i.i.i: ; preds = %bb.i, %bb.h
   %i.bc = phi ptr [ %i.bb, %bb.i ], [ null, %bb.h ]
   tail call void %i.ax(ptr noundef nonnull align 8 dereferenceable(72) %i.ac, ptr noundef %i.ae, ptr noundef nonnull align 4 dereferenceable(48) %i.af, ptr noundef %i.bc) #63, !inline_history !2975
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.af, i8 0, i64 12, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %i.af, i8 0, i64 12, i1 false)
   br label %_ZN22cff1_path_procs_path_t6movetoERN3CFF20cff1_cs_interp_env_tER17cff1_path_param_tRKNS0_7point_tE.exit
 
 _ZN22cff1_path_procs_path_t6movetoERN3CFF20cff1_cs_interp_env_tER17cff1_path_param_tRKNS0_7point_tE.exit: ; preds = %bb.d, %_ZN15hb_draw_funcs_t10close_pathEPvR15hb_draw_state_t.exit.i.i.i
@@ -4003,7 +4003,7 @@ bb.j:                                             ; preds = %bb.i
 _ZN15hb_draw_funcs_t10close_pathEPvR15hb_draw_state_t.exit.i.i.i: ; preds = %bb.j, %bb.i
   %i.aw = phi ptr [ %i.av, %bb.j ], [ null, %bb.i ]
   tail call void %i.ar(ptr noundef nonnull align 8 dereferenceable(72) %i.w, ptr noundef %i.y, ptr noundef nonnull align 4 dereferenceable(48) %i.z, ptr noundef %i.aw) #63, !inline_history !2975
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.z, i8 0, i64 12, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %i.z, i8 0, i64 12, i1 false)
   br label %_ZN22cff1_path_procs_path_t6movetoERN3CFF20cff1_cs_interp_env_tER17cff1_path_param_tRKNS0_7point_tE.exit
 
 _ZN22cff1_path_procs_path_t6movetoERN3CFF20cff1_cs_interp_env_tER17cff1_path_param_tRKNS0_7point_tE.exit: ; preds = %bb.e, %_ZN15hb_draw_funcs_t10close_pathEPvR15hb_draw_state_t.exit.i.i.i
@@ -4123,7 +4123,7 @@ bb.j:                                             ; preds = %bb.i
 _ZN15hb_draw_funcs_t10close_pathEPvR15hb_draw_state_t.exit.i.i.i: ; preds = %bb.j, %bb.i
   %i.aw = phi ptr [ %i.av, %bb.j ], [ null, %bb.i ]
   tail call void %i.ar(ptr noundef nonnull align 8 dereferenceable(72) %i.w, ptr noundef %i.y, ptr noundef nonnull align 4 dereferenceable(48) %i.z, ptr noundef %i.aw) #63, !inline_history !2975
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.z, i8 0, i64 12, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %i.z, i8 0, i64 12, i1 false)
   br label %_ZN22cff1_path_procs_path_t6movetoERN3CFF20cff1_cs_interp_env_tER17cff1_path_param_tRKNS0_7point_tE.exit
 
 _ZN22cff1_path_procs_path_t6movetoERN3CFF20cff1_cs_interp_env_tER17cff1_path_param_tRKNS0_7point_tE.exit: ; preds = %bb.e, %_ZN15hb_draw_funcs_t10close_pathEPvR15hb_draw_state_t.exit.i.i.i
@@ -4526,7 +4526,7 @@ bb.b:                                             ; preds = %bb.a
 _ZN14hb_free_pool_tIN22hb_serialize_context_t8object_tELj32EE5allocEv.exit.thread9: ; preds = %bb.b
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !1025
   store ptr %i.f, ptr %i.d, align 8, !tbaa !2793
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(56) %i.e, i8 0, i64 56, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.e, i8 0, i64 56, i1 false)
   br label %bb.h
 
 bb.c:                                             ; preds = %bb.b
@@ -4556,7 +4556,7 @@ _ZN14hb_free_pool_tIN22hb_serialize_context_t8object_tELj32EE5allocEv.exit: ; pr
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #63
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !1025
   store ptr %i.p, ptr %i.d, align 8, !tbaa !2793
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(56) %i.o, i8 0, i64 56, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.o, i8 0, i64 56, i1 false)
   br label %bb.h
 
 bb.f:                                             ; preds = %bb.e, %bb.c
@@ -4822,7 +4822,7 @@ bb.b:                                             ; preds = %bb.a
 _ZN14hb_free_pool_tIN22hb_serialize_context_t8object_tELj32EE5allocEv.exit.thread9: ; preds = %bb.b
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !1025
   store ptr %i.f, ptr %i.d, align 8, !tbaa !2793
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(56) %i.e, i8 0, i64 56, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.e, i8 0, i64 56, i1 false)
   br label %bb.h
 
 bb.c:                                             ; preds = %bb.b
@@ -4852,7 +4852,7 @@ _ZN14hb_free_pool_tIN22hb_serialize_context_t8object_tELj32EE5allocEv.exit: ; pr
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #63
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !1025
   store ptr %i.p, ptr %i.d, align 8, !tbaa !2793
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(56) %i.o, i8 0, i64 56, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.o, i8 0, i64 56, i1 false)
   br label %bb.h
 
 bb.f:                                             ; preds = %bb.e, %bb.c
@@ -5255,7 +5255,7 @@ bb.b:                                             ; preds = %bb.a
 _ZN14hb_free_pool_tIN22hb_serialize_context_t8object_tELj32EE5allocEv.exit.thread9: ; preds = %bb.b
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !1025
   store ptr %i.f, ptr %i.d, align 8, !tbaa !2793
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(56) %i.e, i8 0, i64 56, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.e, i8 0, i64 56, i1 false)
   br label %bb.h
 
 bb.c:                                             ; preds = %bb.b
@@ -5285,7 +5285,7 @@ _ZN14hb_free_pool_tIN22hb_serialize_context_t8object_tELj32EE5allocEv.exit: ; pr
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #63
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !1025
   store ptr %i.p, ptr %i.d, align 8, !tbaa !2793
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(56) %i.o, i8 0, i64 56, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.o, i8 0, i64 56, i1 false)
   br label %bb.h
 
 bb.f:                                             ; preds = %bb.e, %bb.c
@@ -5688,7 +5688,7 @@ bb.b:                                             ; preds = %bb.a
 _ZN14hb_free_pool_tIN22hb_serialize_context_t8object_tELj32EE5allocEv.exit.thread9: ; preds = %bb.b
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !1025
   store ptr %i.f, ptr %i.d, align 8, !tbaa !2793
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(56) %i.e, i8 0, i64 56, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.e, i8 0, i64 56, i1 false)
   br label %bb.h
 
 bb.c:                                             ; preds = %bb.b
@@ -5718,7 +5718,7 @@ _ZN14hb_free_pool_tIN22hb_serialize_context_t8object_tELj32EE5allocEv.exit: ; pr
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #63
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !1025
   store ptr %i.p, ptr %i.d, align 8, !tbaa !2793
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(56) %i.o, i8 0, i64 56, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.o, i8 0, i64 56, i1 false)
   br label %bb.h
 
 bb.f:                                             ; preds = %bb.e, %bb.c
@@ -6121,7 +6121,7 @@ bb.b:                                             ; preds = %bb.a
 _ZN14hb_free_pool_tIN22hb_serialize_context_t8object_tELj32EE5allocEv.exit.thread9: ; preds = %bb.b
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !1025
   store ptr %i.f, ptr %i.d, align 8, !tbaa !2793
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(56) %i.e, i8 0, i64 56, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.e, i8 0, i64 56, i1 false)
   br label %bb.h
 
 bb.c:                                             ; preds = %bb.b
@@ -6151,7 +6151,7 @@ _ZN14hb_free_pool_tIN22hb_serialize_context_t8object_tELj32EE5allocEv.exit: ; pr
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #63
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !1025
   store ptr %i.p, ptr %i.d, align 8, !tbaa !2793
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(56) %i.o, i8 0, i64 56, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.o, i8 0, i64 56, i1 false)
   br label %bb.h
 
 bb.f:                                             ; preds = %bb.e, %bb.c
@@ -6554,14 +6554,14 @@ _ZN3CFF20cff2_cs_interp_env_tINS_8number_tEE8eval_argEj.exit29: ; preds = %bb.a
   %i.h = fadd double %i.f, %i.g
   store double %i.h, ptr %2, align 8, !tbaa !325
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #63
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %3, ptr noundef nonnull align 8 dereferenceable(16) %2, i64 16, i1 false), !tbaa.struct !2963
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %3, ptr noundef nonnull align 8 dereferenceable(16) %2, i64 16, i1 false), !tbaa.struct !2963
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.j = load <2 x double>, ptr %i.i, align 8, !tbaa !325
   %i.k = load <2 x double>, ptr %3, align 16, !tbaa !325
   %i.l = fadd <2 x double> %i.k, %i.j
   store <2 x double> %i.l, ptr %3, align 16, !tbaa !325
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #63
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, ptr noundef nonnull align 8 dereferenceable(16) %3, i64 16, i1 false), !tbaa.struct !2963
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, ptr noundef nonnull align 16 dereferenceable(16) %3, i64 16, i1 false), !tbaa.struct !2963
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 48
   %.pre30 = load double, ptr %i.m, align 8, !tbaa !325
   %i.n = load double, ptr %4, align 8, !tbaa !325
@@ -6631,42 +6631,42 @@ bb.a:
 _ZN3CFF20cff2_cs_interp_env_tINS_8number_tEE8eval_argEj.exit49: ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #63
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 4448
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef nonnull align 8 dereferenceable(16) %i.d, i64 16, i1 false), !tbaa.struct !2963
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %2, ptr noundef nonnull align 8 dereferenceable(16) %i.d, i64 16, i1 false), !tbaa.struct !2963
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.f = load <2 x double>, ptr %i.e, align 8, !tbaa !325
   %i.g = load <2 x double>, ptr %2, align 16, !tbaa !325
   %i.h = fadd <2 x double> %i.g, %i.f
   store <2 x double> %i.h, ptr %2, align 16, !tbaa !325
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #63
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %3, ptr noundef nonnull align 8 dereferenceable(16) %2, i64 16, i1 false), !tbaa.struct !2963
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %3, ptr noundef nonnull align 16 dereferenceable(16) %2, i64 16, i1 false), !tbaa.struct !2963
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.j = load <2 x double>, ptr %i.i, align 8, !tbaa !325
   %i.k = load <2 x double>, ptr %3, align 16, !tbaa !325
   %i.l = fadd <2 x double> %i.k, %i.j
   store <2 x double> %i.l, ptr %3, align 16, !tbaa !325
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #63
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, ptr noundef nonnull align 8 dereferenceable(16) %3, i64 16, i1 false), !tbaa.struct !2963
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %4, ptr noundef nonnull align 16 dereferenceable(16) %3, i64 16, i1 false), !tbaa.struct !2963
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.n = load <2 x double>, ptr %i.m, align 8, !tbaa !325
   %i.o = load <2 x double>, ptr %4, align 16, !tbaa !325
   %i.p = fadd <2 x double> %i.o, %i.n
   store <2 x double> %i.p, ptr %4, align 16, !tbaa !325
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #63
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %5, ptr noundef nonnull align 8 dereferenceable(16) %4, i64 16, i1 false), !tbaa.struct !2963
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %5, ptr noundef nonnull align 16 dereferenceable(16) %4, i64 16, i1 false), !tbaa.struct !2963
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.r = load <2 x double>, ptr %i.q, align 8, !tbaa !325
   %i.s = load <2 x double>, ptr %5, align 16, !tbaa !325
   %i.t = fadd <2 x double> %i.s, %i.r
   store <2 x double> %i.t, ptr %5, align 16, !tbaa !325
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #63
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %6, ptr noundef nonnull align 8 dereferenceable(16) %5, i64 16, i1 false), !tbaa.struct !2963
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %6, ptr noundef nonnull align 16 dereferenceable(16) %5, i64 16, i1 false), !tbaa.struct !2963
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 88
   %i.v = load <2 x double>, ptr %i.u, align 8, !tbaa !325
   %i.w = load <2 x double>, ptr %6, align 16, !tbaa !325
   %i.x = fadd <2 x double> %i.w, %i.v
   store <2 x double> %i.x, ptr %6, align 16, !tbaa !325
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #63
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %7, ptr noundef nonnull align 8 dereferenceable(16) %6, i64 16, i1 false), !tbaa.struct !2963
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %7, ptr noundef nonnull align 16 dereferenceable(16) %6, i64 16, i1 false), !tbaa.struct !2963
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 104
   %i.z = load <2 x double>, ptr %i.y, align 8, !tbaa !325
   %i.aa = load <2 x double>, ptr %7, align 16, !tbaa !325
@@ -6711,21 +6711,21 @@ bb.a:
 _ZN3CFF20cff2_cs_interp_env_tINS_8number_tEE8eval_argEj.exit38: ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #63
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 4448
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef nonnull align 8 dereferenceable(16) %i.d, i64 16, i1 false), !tbaa.struct !2963
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %2, ptr noundef nonnull align 8 dereferenceable(16) %i.d, i64 16, i1 false), !tbaa.struct !2963
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.f = load <2 x double>, ptr %i.e, align 8, !tbaa !325
   %i.g = load <2 x double>, ptr %2, align 16, !tbaa !325
   %i.h = fadd <2 x double> %i.g, %i.f
   store <2 x double> %i.h, ptr %2, align 16, !tbaa !325
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #63
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %3, ptr noundef nonnull align 8 dereferenceable(16) %2, i64 16, i1 false), !tbaa.struct !2963
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %3, ptr noundef nonnull align 16 dereferenceable(16) %2, i64 16, i1 false), !tbaa.struct !2963
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.j = load <2 x double>, ptr %i.i, align 8, !tbaa !325
   %i.k = load <2 x double>, ptr %3, align 16, !tbaa !325
   %i.l = fadd <2 x double> %i.k, %i.j
   store <2 x double> %i.l, ptr %3, align 16, !tbaa !325
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #63
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, ptr noundef nonnull align 8 dereferenceable(16) %3, i64 16, i1 false), !tbaa.struct !2963
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, ptr noundef nonnull align 16 dereferenceable(16) %3, i64 16, i1 false), !tbaa.struct !2963
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 56
   %.pre40 = load double, ptr %i.m, align 8, !tbaa !325
   %i.n = load double, ptr %4, align 8, !tbaa !325
@@ -6739,14 +6739,14 @@ _ZN3CFF20cff2_cs_interp_env_tINS_8number_tEE8eval_argEj.exit38: ; preds = %bb.a
   %i.r = fadd double %i.q, %.pre41
   store double %i.r, ptr %5, align 8, !tbaa !325
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #63
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %6, ptr noundef nonnull align 8 dereferenceable(16) %5, i64 16, i1 false), !tbaa.struct !2963
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %6, ptr noundef nonnull align 8 dereferenceable(16) %5, i64 16, i1 false), !tbaa.struct !2963
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.t = load <2 x double>, ptr %i.s, align 8, !tbaa !325
   %i.u = load <2 x double>, ptr %6, align 16, !tbaa !325
   %i.v = fadd <2 x double> %i.u, %i.t
   store <2 x double> %i.v, ptr %6, align 16, !tbaa !325
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #63
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %7, ptr noundef nonnull align 8 dereferenceable(16) %6, i64 16, i1 false), !tbaa.struct !2963
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %7, ptr noundef nonnull align 16 dereferenceable(16) %6, i64 16, i1 false), !tbaa.struct !2963
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 88
   %.pre43 = load double, ptr %i.w, align 8, !tbaa !325
   %i.x = load double, ptr %7, align 8, !tbaa !325
@@ -6802,41 +6802,41 @@ _ZN3CFF20cff2_cs_interp_env_tINS_8number_tEE8eval_argEj.exit50: ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 88
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #63
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 4448 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef nonnull align 8 dereferenceable(16) %i.j, i64 16, i1 false), !tbaa.struct !2963
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %2, ptr noundef nonnull align 8 dereferenceable(16) %i.j, i64 16, i1 false), !tbaa.struct !2963
   %i.k = load <2 x double>, ptr %i.d, align 8, !tbaa !325 ; 2 uses
   %i.l = load <2 x double>, ptr %2, align 16, !tbaa !325
   %i.m = fadd <2 x double> %i.l, %i.k
   store <2 x double> %i.m, ptr %2, align 16, !tbaa !325
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #63
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %3, ptr noundef nonnull align 8 dereferenceable(16) %2, i64 16, i1 false), !tbaa.struct !2963
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %3, ptr noundef nonnull align 16 dereferenceable(16) %2, i64 16, i1 false), !tbaa.struct !2963
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.o = load <2 x double>, ptr %i.n, align 8, !tbaa !325
   %i.p = load <2 x double>, ptr %3, align 16, !tbaa !325
   %i.q = fadd <2 x double> %i.p, %i.o
   store <2 x double> %i.q, ptr %3, align 16, !tbaa !325
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #63
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, ptr noundef nonnull align 8 dereferenceable(16) %3, i64 16, i1 false), !tbaa.struct !2963
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %4, ptr noundef nonnull align 16 dereferenceable(16) %3, i64 16, i1 false), !tbaa.struct !2963
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.s = load <2 x double>, ptr %i.r, align 8, !tbaa !325
   %i.t = load <2 x double>, ptr %4, align 16, !tbaa !325
   %i.u = fadd <2 x double> %i.t, %i.s
   store <2 x double> %i.u, ptr %4, align 16, !tbaa !325
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #63
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %5, ptr noundef nonnull align 8 dereferenceable(16) %4, i64 16, i1 false), !tbaa.struct !2963
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %5, ptr noundef nonnull align 16 dereferenceable(16) %4, i64 16, i1 false), !tbaa.struct !2963
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.w = load <2 x double>, ptr %i.v, align 8, !tbaa !325
   %i.x = load <2 x double>, ptr %5, align 16, !tbaa !325
   %i.y = fadd <2 x double> %i.x, %i.w
   store <2 x double> %i.y, ptr %5, align 16, !tbaa !325
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #63
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %6, ptr noundef nonnull align 8 dereferenceable(16) %5, i64 16, i1 false), !tbaa.struct !2963
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %6, ptr noundef nonnull align 16 dereferenceable(16) %5, i64 16, i1 false), !tbaa.struct !2963
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 88
   %i.aa = load <2 x double>, ptr %i.z, align 8, !tbaa !325
   %i.ab = load <2 x double>, ptr %6, align 16, !tbaa !325
   %i.ac = fadd <2 x double> %i.ab, %i.aa
   store <2 x double> %i.ac, ptr %6, align 16, !tbaa !325
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #63
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %7, ptr noundef nonnull align 8 dereferenceable(16) %6, i64 16, i1 false), !tbaa.struct !2963
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %7, ptr noundef nonnull align 16 dereferenceable(16) %6, i64 16, i1 false), !tbaa.struct !2963
   %i.ad = load <2 x double>, ptr %i.f, align 8, !tbaa !325
   %i.ae = load <2 x double>, ptr %i.g, align 8, !tbaa !325
   %i.af = load <2 x double>, ptr %i.h, align 8, !tbaa !325
@@ -7239,7 +7239,7 @@ bb.g:                                             ; preds = %bb.f
 _ZN15hb_draw_funcs_t10close_pathEPvR15hb_draw_state_t.exit.i.i.i: ; preds = %bb.g, %bb.f
   %i.au = phi ptr [ %i.at, %bb.g ], [ null, %bb.f ]
   tail call void %i.ap(ptr noundef nonnull align 8 dereferenceable(72) %i.u, ptr noundef %i.w, ptr noundef nonnull align 4 dereferenceable(48) %i.x, ptr noundef %i.au) #63, !inline_history !5839
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.x, i8 0, i64 12, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %i.x, i8 0, i64 12, i1 false)
   br label %_ZN22cff2_path_procs_path_t6movetoERN3CFF20cff2_cs_interp_env_tINS0_8number_tEEER17cff2_path_param_tRKNS0_7point_tE.exit
 
 _ZN22cff2_path_procs_path_t6movetoERN3CFF20cff2_cs_interp_env_tINS0_8number_tEEER17cff2_path_param_tRKNS0_7point_tE.exit: ; preds = %_ZN3CFF20cff2_cs_interp_env_tINS_8number_tEE7pop_argEv.exit9, %_ZN15hb_draw_funcs_t10close_pathEPvR15hb_draw_state_t.exit.i.i.i
@@ -7346,7 +7346,7 @@ bb.h:                                             ; preds = %bb.g
 _ZN15hb_draw_funcs_t10close_pathEPvR15hb_draw_state_t.exit.i.i.i: ; preds = %bb.h, %bb.g
   %i.ao = phi ptr [ %i.an, %bb.h ], [ null, %bb.g ]
   tail call void %i.aj(ptr noundef nonnull align 8 dereferenceable(72) %i.o, ptr noundef %i.q, ptr noundef nonnull align 4 dereferenceable(48) %i.r, ptr noundef %i.ao) #63, !inline_history !5839
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.r, i8 0, i64 12, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %i.r, i8 0, i64 12, i1 false)
   br label %_ZN22cff2_path_procs_path_t6movetoERN3CFF20cff2_cs_interp_env_tINS0_8number_tEEER17cff2_path_param_tRKNS0_7point_tE.exit
 
 _ZN22cff2_path_procs_path_t6movetoERN3CFF20cff2_cs_interp_env_tINS0_8number_tEEER17cff2_path_param_tRKNS0_7point_tE.exit: ; preds = %_ZN3CFF20cff2_cs_interp_env_tINS_8number_tEE7pop_argEv.exit, %_ZN15hb_draw_funcs_t10close_pathEPvR15hb_draw_state_t.exit.i.i.i
@@ -7454,7 +7454,7 @@ bb.h:                                             ; preds = %bb.g
 _ZN15hb_draw_funcs_t10close_pathEPvR15hb_draw_state_t.exit.i.i.i: ; preds = %bb.h, %bb.g
   %i.ao = phi ptr [ %i.an, %bb.h ], [ null, %bb.g ]
   tail call void %i.aj(ptr noundef nonnull align 8 dereferenceable(72) %i.o, ptr noundef %i.q, ptr noundef nonnull align 4 dereferenceable(48) %i.r, ptr noundef %i.ao) #63, !inline_history !5839
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.r, i8 0, i64 12, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %i.r, i8 0, i64 12, i1 false)
   br label %_ZN22cff2_path_procs_path_t6movetoERN3CFF20cff2_cs_interp_env_tINS0_8number_tEEER17cff2_path_param_tRKNS0_7point_tE.exit
 
 _ZN22cff2_path_procs_path_t6movetoERN3CFF20cff2_cs_interp_env_tINS0_8number_tEEER17cff2_path_param_tRKNS0_7point_tE.exit: ; preds = %_ZN3CFF20cff2_cs_interp_env_tINS_8number_tEE7pop_argEv.exit, %_ZN15hb_draw_funcs_t10close_pathEPvR15hb_draw_state_t.exit.i.i.i
@@ -7857,14 +7857,14 @@ _ZN3CFF20cff2_cs_interp_env_tINS_8number_tEE8eval_argEj.exit29: ; preds = %bb.a
   %i.h = fadd double %i.f, %i.g
   store double %i.h, ptr %2, align 8, !tbaa !325
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #63
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %3, ptr noundef nonnull align 8 dereferenceable(16) %2, i64 16, i1 false), !tbaa.struct !2963
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %3, ptr noundef nonnull align 8 dereferenceable(16) %2, i64 16, i1 false), !tbaa.struct !2963
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.j = load <2 x double>, ptr %i.i, align 8, !tbaa !325
   %i.k = load <2 x double>, ptr %3, align 16, !tbaa !325
   %i.l = fadd <2 x double> %i.k, %i.j
   store <2 x double> %i.l, ptr %3, align 16, !tbaa !325
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #63
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, ptr noundef nonnull align 8 dereferenceable(16) %3, i64 16, i1 false), !tbaa.struct !2963
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, ptr noundef nonnull align 16 dereferenceable(16) %3, i64 16, i1 false), !tbaa.struct !2963
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 48
   %.pre30 = load double, ptr %i.m, align 8, !tbaa !325
   %i.n = load double, ptr %4, align 8, !tbaa !325
@@ -7933,42 +7933,42 @@ bb.a:
 _ZN3CFF20cff2_cs_interp_env_tINS_8number_tEE8eval_argEj.exit49: ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #63
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 4448
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef nonnull align 8 dereferenceable(16) %i.d, i64 16, i1 false), !tbaa.struct !2963
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %2, ptr noundef nonnull align 8 dereferenceable(16) %i.d, i64 16, i1 false), !tbaa.struct !2963
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.f = load <2 x double>, ptr %i.e, align 8, !tbaa !325
   %i.g = load <2 x double>, ptr %2, align 16, !tbaa !325
   %i.h = fadd <2 x double> %i.g, %i.f
   store <2 x double> %i.h, ptr %2, align 16, !tbaa !325
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #63
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %3, ptr noundef nonnull align 8 dereferenceable(16) %2, i64 16, i1 false), !tbaa.struct !2963
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %3, ptr noundef nonnull align 16 dereferenceable(16) %2, i64 16, i1 false), !tbaa.struct !2963
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.j = load <2 x double>, ptr %i.i, align 8, !tbaa !325
   %i.k = load <2 x double>, ptr %3, align 16, !tbaa !325
   %i.l = fadd <2 x double> %i.k, %i.j
   store <2 x double> %i.l, ptr %3, align 16, !tbaa !325
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #63
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, ptr noundef nonnull align 8 dereferenceable(16) %3, i64 16, i1 false), !tbaa.struct !2963
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %4, ptr noundef nonnull align 16 dereferenceable(16) %3, i64 16, i1 false), !tbaa.struct !2963
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.n = load <2 x double>, ptr %i.m, align 8, !tbaa !325
   %i.o = load <2 x double>, ptr %4, align 16, !tbaa !325
   %i.p = fadd <2 x double> %i.o, %i.n
   store <2 x double> %i.p, ptr %4, align 16, !tbaa !325
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #63
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %5, ptr noundef nonnull align 8 dereferenceable(16) %4, i64 16, i1 false), !tbaa.struct !2963
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %5, ptr noundef nonnull align 16 dereferenceable(16) %4, i64 16, i1 false), !tbaa.struct !2963
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.r = load <2 x double>, ptr %i.q, align 8, !tbaa !325
   %i.s = load <2 x double>, ptr %5, align 16, !tbaa !325
   %i.t = fadd <2 x double> %i.s, %i.r
   store <2 x double> %i.t, ptr %5, align 16, !tbaa !325
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #63
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %6, ptr noundef nonnull align 8 dereferenceable(16) %5, i64 16, i1 false), !tbaa.struct !2963
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %6, ptr noundef nonnull align 16 dereferenceable(16) %5, i64 16, i1 false), !tbaa.struct !2963
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 88
   %i.v = load <2 x double>, ptr %i.u, align 8, !tbaa !325
   %i.w = load <2 x double>, ptr %6, align 16, !tbaa !325
   %i.x = fadd <2 x double> %i.w, %i.v
   store <2 x double> %i.x, ptr %6, align 16, !tbaa !325
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #63
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %7, ptr noundef nonnull align 8 dereferenceable(16) %6, i64 16, i1 false), !tbaa.struct !2963
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %7, ptr noundef nonnull align 16 dereferenceable(16) %6, i64 16, i1 false), !tbaa.struct !2963
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 104
   %i.z = load <2 x double>, ptr %i.y, align 8, !tbaa !325
   %i.aa = load <2 x double>, ptr %7, align 16, !tbaa !325
@@ -8012,21 +8012,21 @@ bb.a:
 _ZN3CFF20cff2_cs_interp_env_tINS_8number_tEE8eval_argEj.exit38: ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #63
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 4448
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef nonnull align 8 dereferenceable(16) %i.d, i64 16, i1 false), !tbaa.struct !2963
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %2, ptr noundef nonnull align 8 dereferenceable(16) %i.d, i64 16, i1 false), !tbaa.struct !2963
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.f = load <2 x double>, ptr %i.e, align 8, !tbaa !325
   %i.g = load <2 x double>, ptr %2, align 16, !tbaa !325
   %i.h = fadd <2 x double> %i.g, %i.f
   store <2 x double> %i.h, ptr %2, align 16, !tbaa !325
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #63
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %3, ptr noundef nonnull align 8 dereferenceable(16) %2, i64 16, i1 false), !tbaa.struct !2963
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %3, ptr noundef nonnull align 16 dereferenceable(16) %2, i64 16, i1 false), !tbaa.struct !2963
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.j = load <2 x double>, ptr %i.i, align 8, !tbaa !325
   %i.k = load <2 x double>, ptr %3, align 16, !tbaa !325
   %i.l = fadd <2 x double> %i.k, %i.j
   store <2 x double> %i.l, ptr %3, align 16, !tbaa !325
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #63
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, ptr noundef nonnull align 8 dereferenceable(16) %3, i64 16, i1 false), !tbaa.struct !2963
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, ptr noundef nonnull align 16 dereferenceable(16) %3, i64 16, i1 false), !tbaa.struct !2963
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 56
   %.pre40 = load double, ptr %i.m, align 8, !tbaa !325
   %i.n = load double, ptr %4, align 8, !tbaa !325
@@ -8040,14 +8040,14 @@ _ZN3CFF20cff2_cs_interp_env_tINS_8number_tEE8eval_argEj.exit38: ; preds = %bb.a
   %i.r = fadd double %i.q, %.pre41
   store double %i.r, ptr %5, align 8, !tbaa !325
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #63
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %6, ptr noundef nonnull align 8 dereferenceable(16) %5, i64 16, i1 false), !tbaa.struct !2963
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %6, ptr noundef nonnull align 8 dereferenceable(16) %5, i64 16, i1 false), !tbaa.struct !2963
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.t = load <2 x double>, ptr %i.s, align 8, !tbaa !325
   %i.u = load <2 x double>, ptr %6, align 16, !tbaa !325
   %i.v = fadd <2 x double> %i.u, %i.t
   store <2 x double> %i.v, ptr %6, align 16, !tbaa !325
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #63
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %7, ptr noundef nonnull align 8 dereferenceable(16) %6, i64 16, i1 false), !tbaa.struct !2963
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %7, ptr noundef nonnull align 16 dereferenceable(16) %6, i64 16, i1 false), !tbaa.struct !2963
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 88
   %.pre43 = load double, ptr %i.w, align 8, !tbaa !325
   %i.x = load double, ptr %7, align 8, !tbaa !325
@@ -8102,41 +8102,41 @@ _ZN3CFF20cff2_cs_interp_env_tINS_8number_tEE8eval_argEj.exit50: ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 88
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #63
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 4448 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef nonnull align 8 dereferenceable(16) %i.j, i64 16, i1 false), !tbaa.struct !2963
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %2, ptr noundef nonnull align 8 dereferenceable(16) %i.j, i64 16, i1 false), !tbaa.struct !2963
   %i.k = load <2 x double>, ptr %i.d, align 8, !tbaa !325 ; 2 uses
   %i.l = load <2 x double>, ptr %2, align 16, !tbaa !325
   %i.m = fadd <2 x double> %i.l, %i.k
   store <2 x double> %i.m, ptr %2, align 16, !tbaa !325
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #63
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %3, ptr noundef nonnull align 8 dereferenceable(16) %2, i64 16, i1 false), !tbaa.struct !2963
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %3, ptr noundef nonnull align 16 dereferenceable(16) %2, i64 16, i1 false), !tbaa.struct !2963
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.o = load <2 x double>, ptr %i.n, align 8, !tbaa !325
   %i.p = load <2 x double>, ptr %3, align 16, !tbaa !325
   %i.q = fadd <2 x double> %i.p, %i.o
   store <2 x double> %i.q, ptr %3, align 16, !tbaa !325
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #63
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, ptr noundef nonnull align 8 dereferenceable(16) %3, i64 16, i1 false), !tbaa.struct !2963
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %4, ptr noundef nonnull align 16 dereferenceable(16) %3, i64 16, i1 false), !tbaa.struct !2963
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.s = load <2 x double>, ptr %i.r, align 8, !tbaa !325
   %i.t = load <2 x double>, ptr %4, align 16, !tbaa !325
   %i.u = fadd <2 x double> %i.t, %i.s
   store <2 x double> %i.u, ptr %4, align 16, !tbaa !325
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #63
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %5, ptr noundef nonnull align 8 dereferenceable(16) %4, i64 16, i1 false), !tbaa.struct !2963
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %5, ptr noundef nonnull align 16 dereferenceable(16) %4, i64 16, i1 false), !tbaa.struct !2963
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.w = load <2 x double>, ptr %i.v, align 8, !tbaa !325
   %i.x = load <2 x double>, ptr %5, align 16, !tbaa !325
   %i.y = fadd <2 x double> %i.x, %i.w
   store <2 x double> %i.y, ptr %5, align 16, !tbaa !325
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #63
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %6, ptr noundef nonnull align 8 dereferenceable(16) %5, i64 16, i1 false), !tbaa.struct !2963
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %6, ptr noundef nonnull align 16 dereferenceable(16) %5, i64 16, i1 false), !tbaa.struct !2963
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 88
   %i.aa = load <2 x double>, ptr %i.z, align 8, !tbaa !325
   %i.ab = load <2 x double>, ptr %6, align 16, !tbaa !325
   %i.ac = fadd <2 x double> %i.ab, %i.aa
   store <2 x double> %i.ac, ptr %6, align 16, !tbaa !325
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #63
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %7, ptr noundef nonnull align 8 dereferenceable(16) %6, i64 16, i1 false), !tbaa.struct !2963
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %7, ptr noundef nonnull align 16 dereferenceable(16) %6, i64 16, i1 false), !tbaa.struct !2963
   %i.ad = load <2 x double>, ptr %i.f, align 8, !tbaa !325
   %i.ae = load <2 x double>, ptr %i.g, align 8, !tbaa !325
   %i.af = load <2 x double>, ptr %i.h, align 8, !tbaa !325
