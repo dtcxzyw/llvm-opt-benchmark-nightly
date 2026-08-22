@@ -204,8 +204,7 @@ bb.e:                                             ; preds = %bb.d
   %i.aj = getelementptr i8, ptr %i.ah, i64 12
   store i32 0, ptr %i.aj, align 4
   %i.ak = ptrtoint ptr %i.v to i64
-  %7 = and i64 %i.ak, -4
-  %i.al = or disjoint i64 %7, 1
+  %i.al = or disjoint i64 %i.ak, 1
   store i64 %i.al, ptr %i.ah, align 8
   %.not59.peel89 = icmp eq i32 %i.u, 0
   br i1 %.not59.peel89, label %.thread72, label %.peel.next81
@@ -253,8 +252,7 @@ bb.g:                                             ; preds = %bb.f
   %i.be = getelementptr i8, ptr %i.bc, i64 12
   store i32 0, ptr %i.be, align 4
   %i.bf = ptrtoint ptr %i.an to i64
-  %8 = and i64 %i.bf, -4
-  %i.bg = or disjoint i64 %8, 1
+  %i.bg = or disjoint i64 %i.bf, 1
   store i64 %i.bg, ptr %i.bc, align 8
   %.not59 = icmp eq i32 %i.ar, 0
   br i1 %.not59, label %.thread72, label %bb.f, !llvm.loop !25
@@ -586,8 +584,7 @@ bb.t:                                             ; preds = %bb.s
   %i.db = getelementptr i8, ptr %.027.i, i64 12
   store i32 0, ptr %i.db, align 4
   %i.dc = ptrtoint ptr %.0.i.i to i64
-  %8 = and i64 %i.dc, -4
-  %i.dd = or disjoint i64 %8, 1
+  %i.dd = or disjoint i64 %i.dc, 1
   store i64 %i.dd, ptr %.027.i, align 8
   br label %get_next_sg.exit
 
