@@ -202,7 +202,7 @@ bb.a:
           to label %bb.b unwind label %bb.c, !inline_history !12
 
 bb.b:                                             ; preds = %bb.a
-  store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVN7Imf_3_414TypedAttributeIN9Imath_3_28Matrix33IfEEEE, i64 16), ptr %i.a, align 8, !tbaa !8
+  store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVN7Imf_3_414TypedAttributeIN9Imath_3_28Matrix33IfEEEE, i64 16), ptr %i.a, align 16, !tbaa !8
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store <4 x float> <float 1.000000e+00, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00>, ptr %i.b, align 8, !tbaa !10
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 24
@@ -235,7 +235,7 @@ bb.a:
           to label %bb.b unwind label %bb.c, !inline_history !12
 
 bb.b:                                             ; preds = %bb.a
-  store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVN7Imf_3_414TypedAttributeIN9Imath_3_28Matrix33IfEEEE, i64 16), ptr %i.a, align 8, !tbaa !8
+  store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVN7Imf_3_414TypedAttributeIN9Imath_3_28Matrix33IfEEEE, i64 16), ptr %i.a, align 16, !tbaa !8
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store <4 x float> <float 1.000000e+00, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00>, ptr %i.b, align 8, !tbaa !10
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 24
@@ -558,16 +558,16 @@ bb.a:
           to label %bb.b unwind label %bb.c, !inline_history !15
 
 bb.b:                                             ; preds = %bb.a
-  store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVN7Imf_3_414TypedAttributeIN9Imath_3_28Matrix33IdEEEE, i64 16), ptr %i.a, align 8, !tbaa !8
+  store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVN7Imf_3_414TypedAttributeIN9Imath_3_28Matrix33IdEEEE, i64 16), ptr %i.a, align 16, !tbaa !8
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store double 1.000000e+00, ptr %i.b, align 8, !tbaa !13
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 40
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.c, i8 0, i64 24, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %i.c, i8 0, i64 24, i1 false)
   store double 1.000000e+00, ptr %i.d, align 8, !tbaa !13
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 48
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 72
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.e, i8 0, i64 24, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %i.e, i8 0, i64 24, i1 false)
   store double 1.000000e+00, ptr %i.f, align 8, !tbaa !13
   ret ptr %i.a
 
@@ -587,16 +587,16 @@ bb.a:
           to label %bb.b unwind label %bb.c, !inline_history !15
 
 bb.b:                                             ; preds = %bb.a
-  store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVN7Imf_3_414TypedAttributeIN9Imath_3_28Matrix33IdEEEE, i64 16), ptr %i.a, align 8, !tbaa !8
+  store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVN7Imf_3_414TypedAttributeIN9Imath_3_28Matrix33IdEEEE, i64 16), ptr %i.a, align 16, !tbaa !8
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store double 1.000000e+00, ptr %i.b, align 8, !tbaa !13
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 40
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.c, i8 0, i64 24, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %i.c, i8 0, i64 24, i1 false)
   store double 1.000000e+00, ptr %i.d, align 8, !tbaa !13
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 48
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 72
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.e, i8 0, i64 24, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %i.e, i8 0, i64 24, i1 false)
   store double 1.000000e+00, ptr %i.f, align 8, !tbaa !13
   tail call void @_ZN7Imf_3_414TypedAttributeIN9Imath_3_28Matrix33IdEEE13copyValueFromERKNS_9AttributeE(ptr noundef nonnull align 8 dereferenceable(8) %i.a, ptr noundef nonnull align 8 dereferenceable(8) %0)
   ret ptr %i.a
@@ -917,7 +917,7 @@ bb.a:
           to label %bb.b unwind label %bb.c, !inline_history !16
 
 bb.b:                                             ; preds = %bb.a
-  store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVN7Imf_3_414TypedAttributeIN9Imath_3_28Matrix44IfEEEE, i64 16), ptr %i.a, align 8, !tbaa !8
+  store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVN7Imf_3_414TypedAttributeIN9Imath_3_28Matrix44IfEEEE, i64 16), ptr %i.a, align 16, !tbaa !8
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store float 1.000000e+00, ptr %i.b, align 8, !tbaa !10
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 12
@@ -926,8 +926,8 @@ bb.b:                                             ; preds = %bb.a
   store float 1.000000e+00, ptr %i.d, align 4, !tbaa !10
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 32
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 48
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.e, i8 0, i64 16, i1 false)
-  store float 1.000000e+00, ptr %i.f, align 8, !tbaa !10
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.e, i8 0, i64 16, i1 false)
+  store float 1.000000e+00, ptr %i.f, align 16, !tbaa !10
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 52
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 68
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.g, i8 0, i64 16, i1 false)
@@ -950,7 +950,7 @@ bb.a:
           to label %bb.b unwind label %bb.c, !inline_history !16
 
 bb.b:                                             ; preds = %bb.a
-  store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVN7Imf_3_414TypedAttributeIN9Imath_3_28Matrix44IfEEEE, i64 16), ptr %i.a, align 8, !tbaa !8
+  store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVN7Imf_3_414TypedAttributeIN9Imath_3_28Matrix44IfEEEE, i64 16), ptr %i.a, align 16, !tbaa !8
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store float 1.000000e+00, ptr %i.b, align 8, !tbaa !10
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 12
@@ -959,8 +959,8 @@ bb.b:                                             ; preds = %bb.a
   store float 1.000000e+00, ptr %i.d, align 4, !tbaa !10
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 32
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 48
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.e, i8 0, i64 16, i1 false)
-  store float 1.000000e+00, ptr %i.f, align 8, !tbaa !10
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.e, i8 0, i64 16, i1 false)
+  store float 1.000000e+00, ptr %i.f, align 16, !tbaa !10
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 52
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 68
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.g, i8 0, i64 16, i1 false)
@@ -1312,21 +1312,21 @@ bb.a:
           to label %bb.b unwind label %bb.c, !inline_history !17
 
 bb.b:                                             ; preds = %bb.a
-  store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVN7Imf_3_414TypedAttributeIN9Imath_3_28Matrix44IdEEEE, i64 16), ptr %i.a, align 8, !tbaa !8
+  store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVN7Imf_3_414TypedAttributeIN9Imath_3_28Matrix44IdEEEE, i64 16), ptr %i.a, align 16, !tbaa !8
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store double 1.000000e+00, ptr %i.b, align 8, !tbaa !13
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 48
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.c, i8 0, i64 32, i1 false)
-  store double 1.000000e+00, ptr %i.d, align 8, !tbaa !13
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.c, i8 0, i64 32, i1 false)
+  store double 1.000000e+00, ptr %i.d, align 16, !tbaa !13
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 56
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 88
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.e, i8 0, i64 32, i1 false)
   store double 1.000000e+00, ptr %i.f, align 8, !tbaa !13
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 96
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 128
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.g, i8 0, i64 32, i1 false)
-  store double 1.000000e+00, ptr %i.h, align 8, !tbaa !13
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.g, i8 0, i64 32, i1 false)
+  store double 1.000000e+00, ptr %i.h, align 16, !tbaa !13
   ret ptr %i.a
 
 bb.c:                                             ; preds = %bb.a
@@ -1345,21 +1345,21 @@ bb.a:
           to label %bb.b unwind label %bb.c, !inline_history !17
 
 bb.b:                                             ; preds = %bb.a
-  store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVN7Imf_3_414TypedAttributeIN9Imath_3_28Matrix44IdEEEE, i64 16), ptr %i.a, align 8, !tbaa !8
+  store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVN7Imf_3_414TypedAttributeIN9Imath_3_28Matrix44IdEEEE, i64 16), ptr %i.a, align 16, !tbaa !8
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store double 1.000000e+00, ptr %i.b, align 8, !tbaa !13
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 48
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.c, i8 0, i64 32, i1 false)
-  store double 1.000000e+00, ptr %i.d, align 8, !tbaa !13
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.c, i8 0, i64 32, i1 false)
+  store double 1.000000e+00, ptr %i.d, align 16, !tbaa !13
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 56
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 88
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.e, i8 0, i64 32, i1 false)
   store double 1.000000e+00, ptr %i.f, align 8, !tbaa !13
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 96
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 128
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.g, i8 0, i64 32, i1 false)
-  store double 1.000000e+00, ptr %i.h, align 8, !tbaa !13
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.g, i8 0, i64 32, i1 false)
+  store double 1.000000e+00, ptr %i.h, align 16, !tbaa !13
   tail call void @_ZN7Imf_3_414TypedAttributeIN9Imath_3_28Matrix44IdEEE13copyValueFromERKNS_9AttributeE(ptr noundef nonnull align 8 dereferenceable(8) %i.a, ptr noundef nonnull align 8 dereferenceable(8) %0)
   ret ptr %i.a
 

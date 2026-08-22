@@ -205,7 +205,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(12312) %i.c, i8 0, i64 12312, i1 false)
   %i.d = getelementptr inbounds nuw i8, ptr %3, i64 13160 ; 2 uses
-  store i32 -1, ptr %i.d, align 4, !tbaa !40
+  store i32 -1, ptr %i.d, align 8, !tbaa !40
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 111 uses
   %i.f = load i32, ptr %i.e, align 8, !tbaa !41   ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 20 uses
@@ -608,7 +608,7 @@ get_escaped_value.exit.i:                         ; preds = %bb.ac, %bb.ab, %bb.
   br i1 %i.gz, label %bb.ad, label %bb.ae
 
 bb.ad:                                            ; preds = %get_escaped_value.exit.i
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(52) %i.ah, ptr noundef nonnull align 4 dereferenceable(52) %5, i64 52, i1 false), !tbaa.struct !147
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(52) %i.ah, ptr noundef nonnull align 4 dereferenceable(52) %5, i64 52, i1 false), !tbaa.struct !147
   br label %.loopexit320
 
 bb.ae:                                            ; preds = %get_escaped_value.exit.i
@@ -1011,8 +1011,8 @@ bb.bb:                                            ; preds = %bb.ba, %bb.az
 
 bb.bc:                                            ; preds = %.lr.ph, %.loopexit
   %indvars.iv317 = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next318, %.loopexit ] ; 3 uses
-  %i.va = load ptr, ptr %i.ux, align 8, !tbaa !194
-  %i.vb = load i8, ptr %i.la, align 8, !tbaa !181
+  %i.va = load ptr, ptr %i.ux, align 16, !tbaa !194
+  %i.vb = load i8, ptr %i.la, align 16, !tbaa !181
   %i.vc = zext i8 %i.vb to i64
   %i.vd = getelementptr inbounds nuw [2 x i8], ptr %i.va, i64 %i.vc
   %i.ve = load i16, ptr %i.vd, align 2, !tbaa !195 ; 4 uses
@@ -1415,7 +1415,7 @@ bb.ci:                                            ; preds = %bb.ch
 
 bb.cj:                                            ; preds = %bb.ch, %bb.cg, %bb.cf
   %i.anf = getelementptr inbounds nuw i8, ptr %3, i64 93728 ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(36) %i.anf, i8 0, i64 36, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(36) %i.anf, i8 0, i64 36, i1 false)
   %i.ang = load i8, ptr %i.aeq, align 4
   %i.anh = and i8 %i.ang, 1
   %.not152.i233 = icmp eq i8 %i.anh, 0

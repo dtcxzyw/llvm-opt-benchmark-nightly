@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %"_ZN4core3ptr92drop
 
 bb.h:                                             ; preds = %.body.i
   %i.am = add i64 %i.ak, 17
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.d, i8 -1, i64 %i.am, i1 false), !noalias !1480
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 16 %i.d, i8 -1, i64 %i.am, i1 false), !noalias !1480
   %i.an = icmp ult i64 %i.ak, 8
   %i.ao = add i64 %i.ak, 1
   %i.ap = lshr i64 %i.ao, 3
@@ -221,7 +221,7 @@ _ZN9hashbrown3raw13RawTableInner13drop_elements17hf53e62ef9197ab22E.exit.i: ; pr
 
 bb.i:                                             ; preds = %_ZN9hashbrown3raw13RawTableInner13drop_elements17hf53e62ef9197ab22E.exit.i
   %i.au = add i64 %i.as, 17
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.d, i8 -1, i64 %i.au, i1 false), !noalias !1480
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 16 %i.d, i8 -1, i64 %i.au, i1 false), !noalias !1480
   %i.av = icmp ult i64 %i.as, 8
   %i.aw = add i64 %i.as, 1
   %i.ax = lshr i64 %i.aw, 3
@@ -624,31 +624,31 @@ bb.i:                                             ; preds = %bb.h
   store float 3.402000e+38, ptr %i.cb, align 8, !alias.scope !8288, !noalias !8287
   %i.cc = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i.i, i64 2080
   %i.cd = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i.i, i64 2072
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1032) %i.ca, i8 0, i64 1032, i1 false), !alias.scope !8284, !noalias !8287
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1032) %i.ca, i8 0, i64 1032, i1 false), !alias.scope !8284, !noalias !8287
   store float 3.402000e+38, ptr %i.cd, align 8, !alias.scope !8288, !noalias !8287
   %i.ce = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i.i, i64 3120
   %i.cf = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i.i, i64 3112
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1032) %i.cc, i8 0, i64 1032, i1 false), !alias.scope !8284, !noalias !8287
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1032) %i.cc, i8 0, i64 1032, i1 false), !alias.scope !8284, !noalias !8287
   store float 3.402000e+38, ptr %i.cf, align 8, !alias.scope !8288, !noalias !8287
   %i.cg = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i.i, i64 4160
   %i.ch = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i.i, i64 4152
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1032) %i.ce, i8 0, i64 1032, i1 false), !alias.scope !8284, !noalias !8287
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1032) %i.ce, i8 0, i64 1032, i1 false), !alias.scope !8284, !noalias !8287
   store float 3.402000e+38, ptr %i.ch, align 8, !alias.scope !8288, !noalias !8287
   %i.ci = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i.i, i64 5200
   %i.cj = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i.i, i64 5192
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1032) %i.cg, i8 0, i64 1032, i1 false), !alias.scope !8284, !noalias !8287
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1032) %i.cg, i8 0, i64 1032, i1 false), !alias.scope !8284, !noalias !8287
   store float 3.402000e+38, ptr %i.cj, align 8, !alias.scope !8288, !noalias !8287
   %i.ck = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i.i, i64 6240
   %i.cl = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i.i, i64 6232
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1032) %i.ci, i8 0, i64 1032, i1 false), !alias.scope !8284, !noalias !8287
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1032) %i.ci, i8 0, i64 1032, i1 false), !alias.scope !8284, !noalias !8287
   store float 3.402000e+38, ptr %i.cl, align 8, !alias.scope !8288, !noalias !8287
   %i.cm = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i.i, i64 7280
   %i.cn = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i.i, i64 7272
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1032) %i.ck, i8 0, i64 1032, i1 false), !alias.scope !8284, !noalias !8287
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1032) %i.ck, i8 0, i64 1032, i1 false), !alias.scope !8284, !noalias !8287
   store float 3.402000e+38, ptr %i.cn, align 8, !alias.scope !8288, !noalias !8287
   %i.co = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i.i, i64 8320 ; 2 uses
   %i.cp = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i.i, i64 8312
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1032) %i.cm, i8 0, i64 1032, i1 false), !alias.scope !8284, !noalias !8287
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1032) %i.cm, i8 0, i64 1032, i1 false), !alias.scope !8284, !noalias !8287
   store float 3.402000e+38, ptr %i.cp, align 8, !alias.scope !8288, !noalias !8287
   %i.cq = icmp eq ptr %i.co, %i.bw
   br i1 %i.cq, label %_ZN6brotli3enc9histogram15ClearHistograms17he6ac40c6e1754f5eE.exit.preheader.split.i.i, label %.lr.ph.i.i.i
@@ -1051,31 +1051,31 @@ bb.ge:                                            ; preds = %bb.gd
   store float 3.402000e+38, ptr %i.aom, align 8, !alias.scope !8648, !noalias !8647
   %i.aon = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i207.i, i64 2080
   %i.aoo = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i207.i, i64 2072
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1032) %i.aol, i8 0, i64 1032, i1 false), !alias.scope !8644, !noalias !8647
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1032) %i.aol, i8 0, i64 1032, i1 false), !alias.scope !8644, !noalias !8647
   store float 3.402000e+38, ptr %i.aoo, align 8, !alias.scope !8648, !noalias !8647
   %i.aop = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i207.i, i64 3120
   %i.aoq = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i207.i, i64 3112
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1032) %i.aon, i8 0, i64 1032, i1 false), !alias.scope !8644, !noalias !8647
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1032) %i.aon, i8 0, i64 1032, i1 false), !alias.scope !8644, !noalias !8647
   store float 3.402000e+38, ptr %i.aoq, align 8, !alias.scope !8648, !noalias !8647
   %i.aor = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i207.i, i64 4160
   %i.aos = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i207.i, i64 4152
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1032) %i.aop, i8 0, i64 1032, i1 false), !alias.scope !8644, !noalias !8647
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1032) %i.aop, i8 0, i64 1032, i1 false), !alias.scope !8644, !noalias !8647
   store float 3.402000e+38, ptr %i.aos, align 8, !alias.scope !8648, !noalias !8647
   %i.aot = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i207.i, i64 5200
   %i.aou = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i207.i, i64 5192
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1032) %i.aor, i8 0, i64 1032, i1 false), !alias.scope !8644, !noalias !8647
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1032) %i.aor, i8 0, i64 1032, i1 false), !alias.scope !8644, !noalias !8647
   store float 3.402000e+38, ptr %i.aou, align 8, !alias.scope !8648, !noalias !8647
   %i.aov = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i207.i, i64 6240
   %i.aow = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i207.i, i64 6232
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1032) %i.aot, i8 0, i64 1032, i1 false), !alias.scope !8644, !noalias !8647
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1032) %i.aot, i8 0, i64 1032, i1 false), !alias.scope !8644, !noalias !8647
   store float 3.402000e+38, ptr %i.aow, align 8, !alias.scope !8648, !noalias !8647
   %i.aox = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i207.i, i64 7280
   %i.aoy = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i207.i, i64 7272
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1032) %i.aov, i8 0, i64 1032, i1 false), !alias.scope !8644, !noalias !8647
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1032) %i.aov, i8 0, i64 1032, i1 false), !alias.scope !8644, !noalias !8647
   store float 3.402000e+38, ptr %i.aoy, align 8, !alias.scope !8648, !noalias !8647
   %i.aoz = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i207.i, i64 8320 ; 2 uses
   %i.apa = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i207.i, i64 8312
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1032) %i.aox, i8 0, i64 1032, i1 false), !alias.scope !8644, !noalias !8647
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1032) %i.aox, i8 0, i64 1032, i1 false), !alias.scope !8644, !noalias !8647
   store float 3.402000e+38, ptr %i.apa, align 8, !alias.scope !8648, !noalias !8647
   %i.apb = icmp eq ptr %i.aoz, %i.aod
   br i1 %i.apb, label %_ZN6brotli3enc9histogram15ClearHistograms17he6ac40c6e1754f5eE.exit.i.i.preheader, label %.lr.ph.i.i206.i
@@ -1478,31 +1478,31 @@ bb.gw:                                            ; preds = %bb.gv
   store float 3.402000e+38, ptr %i.aup, align 8, !alias.scope !8729, !noalias !8728
   %i.auq = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i.i54, i64 5664
   %i.aur = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i.i54, i64 5656
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(2824) %i.auo, i8 0, i64 2824, i1 false), !alias.scope !8725, !noalias !8728
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(2824) %i.auo, i8 0, i64 2824, i1 false), !alias.scope !8725, !noalias !8728
   store float 3.402000e+38, ptr %i.aur, align 8, !alias.scope !8729, !noalias !8728
   %i.aus = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i.i54, i64 8496
   %i.aut = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i.i54, i64 8488
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(2824) %i.auq, i8 0, i64 2824, i1 false), !alias.scope !8725, !noalias !8728
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(2824) %i.auq, i8 0, i64 2824, i1 false), !alias.scope !8725, !noalias !8728
   store float 3.402000e+38, ptr %i.aut, align 8, !alias.scope !8729, !noalias !8728
   %i.auu = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i.i54, i64 11328
   %i.auv = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i.i54, i64 11320
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(2824) %i.aus, i8 0, i64 2824, i1 false), !alias.scope !8725, !noalias !8728
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(2824) %i.aus, i8 0, i64 2824, i1 false), !alias.scope !8725, !noalias !8728
   store float 3.402000e+38, ptr %i.auv, align 8, !alias.scope !8729, !noalias !8728
   %i.auw = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i.i54, i64 14160
   %i.aux = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i.i54, i64 14152
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(2824) %i.auu, i8 0, i64 2824, i1 false), !alias.scope !8725, !noalias !8728
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(2824) %i.auu, i8 0, i64 2824, i1 false), !alias.scope !8725, !noalias !8728
   store float 3.402000e+38, ptr %i.aux, align 8, !alias.scope !8729, !noalias !8728
   %i.auy = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i.i54, i64 16992
   %i.auz = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i.i54, i64 16984
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(2824) %i.auw, i8 0, i64 2824, i1 false), !alias.scope !8725, !noalias !8728
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(2824) %i.auw, i8 0, i64 2824, i1 false), !alias.scope !8725, !noalias !8728
   store float 3.402000e+38, ptr %i.auz, align 8, !alias.scope !8729, !noalias !8728
   %i.ava = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i.i54, i64 19824
   %i.avb = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i.i54, i64 19816
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(2824) %i.auy, i8 0, i64 2824, i1 false), !alias.scope !8725, !noalias !8728
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(2824) %i.auy, i8 0, i64 2824, i1 false), !alias.scope !8725, !noalias !8728
   store float 3.402000e+38, ptr %i.avb, align 8, !alias.scope !8729, !noalias !8728
   %i.avc = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i.i54, i64 22656 ; 2 uses
   %i.avd = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i.i54, i64 22648
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(2824) %i.ava, i8 0, i64 2824, i1 false), !alias.scope !8725, !noalias !8728
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(2824) %i.ava, i8 0, i64 2824, i1 false), !alias.scope !8725, !noalias !8728
   store float 3.402000e+38, ptr %i.avd, align 8, !alias.scope !8729, !noalias !8728
   %i.ave = icmp eq ptr %i.avc, %i.auk
   br i1 %i.ave, label %_ZN6brotli3enc9histogram15ClearHistograms17h29a33954c97a6384E.exit.preheader.split.i.i, label %.lr.ph.i.i.i53
@@ -1905,31 +1905,31 @@ bb.nx:                                            ; preds = %bb.nw
   store float 3.402000e+38, ptr %i.cho, align 8, !alias.scope !9101, !noalias !9100
   %i.chp = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i209.i, i64 5664
   %i.chq = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i209.i, i64 5656
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(2824) %i.chn, i8 0, i64 2824, i1 false), !alias.scope !9097, !noalias !9100
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(2824) %i.chn, i8 0, i64 2824, i1 false), !alias.scope !9097, !noalias !9100
   store float 3.402000e+38, ptr %i.chq, align 8, !alias.scope !9101, !noalias !9100
   %i.chr = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i209.i, i64 8496
   %i.chs = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i209.i, i64 8488
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(2824) %i.chp, i8 0, i64 2824, i1 false), !alias.scope !9097, !noalias !9100
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(2824) %i.chp, i8 0, i64 2824, i1 false), !alias.scope !9097, !noalias !9100
   store float 3.402000e+38, ptr %i.chs, align 8, !alias.scope !9101, !noalias !9100
   %i.cht = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i209.i, i64 11328
   %i.chu = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i209.i, i64 11320
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(2824) %i.chr, i8 0, i64 2824, i1 false), !alias.scope !9097, !noalias !9100
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(2824) %i.chr, i8 0, i64 2824, i1 false), !alias.scope !9097, !noalias !9100
   store float 3.402000e+38, ptr %i.chu, align 8, !alias.scope !9101, !noalias !9100
   %i.chv = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i209.i, i64 14160
   %i.chw = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i209.i, i64 14152
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(2824) %i.cht, i8 0, i64 2824, i1 false), !alias.scope !9097, !noalias !9100
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(2824) %i.cht, i8 0, i64 2824, i1 false), !alias.scope !9097, !noalias !9100
   store float 3.402000e+38, ptr %i.chw, align 8, !alias.scope !9101, !noalias !9100
   %i.chx = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i209.i, i64 16992
   %i.chy = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i209.i, i64 16984
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(2824) %i.chv, i8 0, i64 2824, i1 false), !alias.scope !9097, !noalias !9100
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(2824) %i.chv, i8 0, i64 2824, i1 false), !alias.scope !9097, !noalias !9100
   store float 3.402000e+38, ptr %i.chy, align 8, !alias.scope !9101, !noalias !9100
   %i.chz = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i209.i, i64 19824
   %i.cia = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i209.i, i64 19816
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(2824) %i.chx, i8 0, i64 2824, i1 false), !alias.scope !9097, !noalias !9100
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(2824) %i.chx, i8 0, i64 2824, i1 false), !alias.scope !9097, !noalias !9100
   store float 3.402000e+38, ptr %i.cia, align 8, !alias.scope !9101, !noalias !9100
   %i.cib = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i209.i, i64 22656 ; 2 uses
   %i.cic = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i209.i, i64 22648
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(2824) %i.chz, i8 0, i64 2824, i1 false), !alias.scope !9097, !noalias !9100
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(2824) %i.chz, i8 0, i64 2824, i1 false), !alias.scope !9097, !noalias !9100
   store float 3.402000e+38, ptr %i.cic, align 8, !alias.scope !9101, !noalias !9100
   %i.cid = icmp eq ptr %i.cib, %i.chf
   br i1 %i.cid, label %_ZN6brotli3enc9histogram15ClearHistograms17h29a33954c97a6384E.exit.i.i.preheader, label %.lr.ph.i.i208.i
@@ -2332,31 +2332,31 @@ bb.or:                                            ; preds = %bb.oq
   store float 3.402000e+38, ptr %i.clp, align 8, !alias.scope !9175, !noalias !9174
   %i.clq = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i.i460, i64 4384
   %i.clr = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i.i460, i64 4376
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(2184) %i.clo, i8 0, i64 2184, i1 false), !alias.scope !9171, !noalias !9174
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(2184) %i.clo, i8 0, i64 2184, i1 false), !alias.scope !9171, !noalias !9174
   store float 3.402000e+38, ptr %i.clr, align 8, !alias.scope !9175, !noalias !9174
   %i.cls = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i.i460, i64 6576
   %i.clt = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i.i460, i64 6568
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(2184) %i.clq, i8 0, i64 2184, i1 false), !alias.scope !9171, !noalias !9174
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(2184) %i.clq, i8 0, i64 2184, i1 false), !alias.scope !9171, !noalias !9174
   store float 3.402000e+38, ptr %i.clt, align 8, !alias.scope !9175, !noalias !9174
   %i.clu = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i.i460, i64 8768
   %i.clv = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i.i460, i64 8760
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(2184) %i.cls, i8 0, i64 2184, i1 false), !alias.scope !9171, !noalias !9174
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(2184) %i.cls, i8 0, i64 2184, i1 false), !alias.scope !9171, !noalias !9174
   store float 3.402000e+38, ptr %i.clv, align 8, !alias.scope !9175, !noalias !9174
   %i.clw = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i.i460, i64 10960
   %i.clx = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i.i460, i64 10952
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(2184) %i.clu, i8 0, i64 2184, i1 false), !alias.scope !9171, !noalias !9174
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(2184) %i.clu, i8 0, i64 2184, i1 false), !alias.scope !9171, !noalias !9174
   store float 3.402000e+38, ptr %i.clx, align 8, !alias.scope !9175, !noalias !9174
   %i.cly = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i.i460, i64 13152
   %i.clz = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i.i460, i64 13144
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(2184) %i.clw, i8 0, i64 2184, i1 false), !alias.scope !9171, !noalias !9174
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(2184) %i.clw, i8 0, i64 2184, i1 false), !alias.scope !9171, !noalias !9174
   store float 3.402000e+38, ptr %i.clz, align 8, !alias.scope !9175, !noalias !9174
   %i.cma = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i.i460, i64 15344
   %i.cmb = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i.i460, i64 15336
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(2184) %i.cly, i8 0, i64 2184, i1 false), !alias.scope !9171, !noalias !9174
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(2184) %i.cly, i8 0, i64 2184, i1 false), !alias.scope !9171, !noalias !9174
   store float 3.402000e+38, ptr %i.cmb, align 8, !alias.scope !9175, !noalias !9174
   %i.cmc = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i.i460, i64 17536 ; 2 uses
   %i.cmd = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i.i460, i64 17528
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(2184) %i.cma, i8 0, i64 2184, i1 false), !alias.scope !9171, !noalias !9174
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(2184) %i.cma, i8 0, i64 2184, i1 false), !alias.scope !9171, !noalias !9174
   store float 3.402000e+38, ptr %i.cmd, align 8, !alias.scope !9175, !noalias !9174
   %i.cme = icmp eq ptr %i.cmc, %i.clk
   br i1 %i.cme, label %_ZN6brotli3enc9histogram15ClearHistograms17h1d067a6c8fdd55f6E.exit.preheader.split.i.i, label %.lr.ph.i.i.i459
@@ -2759,31 +2759,31 @@ bb.vu:                                            ; preds = %bb.vt
   store float 3.402000e+38, ptr %i.dzb, align 8, !alias.scope !9547, !noalias !9546
   %i.dzc = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i209.i644, i64 4384
   %i.dzd = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i209.i644, i64 4376
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(2184) %i.dza, i8 0, i64 2184, i1 false), !alias.scope !9543, !noalias !9546
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(2184) %i.dza, i8 0, i64 2184, i1 false), !alias.scope !9543, !noalias !9546
   store float 3.402000e+38, ptr %i.dzd, align 8, !alias.scope !9547, !noalias !9546
   %i.dze = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i209.i644, i64 6576
   %i.dzf = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i209.i644, i64 6568
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(2184) %i.dzc, i8 0, i64 2184, i1 false), !alias.scope !9543, !noalias !9546
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(2184) %i.dzc, i8 0, i64 2184, i1 false), !alias.scope !9543, !noalias !9546
   store float 3.402000e+38, ptr %i.dzf, align 8, !alias.scope !9547, !noalias !9546
   %i.dzg = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i209.i644, i64 8768
   %i.dzh = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i209.i644, i64 8760
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(2184) %i.dze, i8 0, i64 2184, i1 false), !alias.scope !9543, !noalias !9546
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(2184) %i.dze, i8 0, i64 2184, i1 false), !alias.scope !9543, !noalias !9546
   store float 3.402000e+38, ptr %i.dzh, align 8, !alias.scope !9547, !noalias !9546
   %i.dzi = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i209.i644, i64 10960
   %i.dzj = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i209.i644, i64 10952
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(2184) %i.dzg, i8 0, i64 2184, i1 false), !alias.scope !9543, !noalias !9546
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(2184) %i.dzg, i8 0, i64 2184, i1 false), !alias.scope !9543, !noalias !9546
   store float 3.402000e+38, ptr %i.dzj, align 8, !alias.scope !9547, !noalias !9546
   %i.dzk = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i209.i644, i64 13152
   %i.dzl = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i209.i644, i64 13144
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(2184) %i.dzi, i8 0, i64 2184, i1 false), !alias.scope !9543, !noalias !9546
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(2184) %i.dzi, i8 0, i64 2184, i1 false), !alias.scope !9543, !noalias !9546
   store float 3.402000e+38, ptr %i.dzl, align 8, !alias.scope !9547, !noalias !9546
   %i.dzm = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i209.i644, i64 15344
   %i.dzn = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i209.i644, i64 15336
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(2184) %i.dzk, i8 0, i64 2184, i1 false), !alias.scope !9543, !noalias !9546
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(2184) %i.dzk, i8 0, i64 2184, i1 false), !alias.scope !9543, !noalias !9546
   store float 3.402000e+38, ptr %i.dzn, align 8, !alias.scope !9547, !noalias !9546
   %i.dzo = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i209.i644, i64 17536 ; 2 uses
   %i.dzp = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i209.i644, i64 17528
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(2184) %i.dzm, i8 0, i64 2184, i1 false), !alias.scope !9543, !noalias !9546
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(2184) %i.dzm, i8 0, i64 2184, i1 false), !alias.scope !9543, !noalias !9546
   store float 3.402000e+38, ptr %i.dzp, align 8, !alias.scope !9547, !noalias !9546
   %i.dzq = icmp eq ptr %i.dzo, %i.dys
   br i1 %i.dzq, label %_ZN6brotli3enc9histogram15ClearHistograms17h1d067a6c8fdd55f6E.exit.i.i.preheader, label %.lr.ph.i.i208.i643
@@ -3186,31 +3186,31 @@ bb.n:                                             ; preds = %bb.l
   store float 3.402000e+38, ptr %i.au, align 8, !alias.scope !12716
   %i.av = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i, i64 2080
   %i.aw = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i, i64 2072
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1032) %i.at, i8 0, i64 1032, i1 false), !alias.scope !12713
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1032) %i.at, i8 0, i64 1032, i1 false), !alias.scope !12713
   store float 3.402000e+38, ptr %i.aw, align 8, !alias.scope !12716
   %i.ax = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i, i64 3120
   %i.ay = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i, i64 3112
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1032) %i.av, i8 0, i64 1032, i1 false), !alias.scope !12713
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1032) %i.av, i8 0, i64 1032, i1 false), !alias.scope !12713
   store float 3.402000e+38, ptr %i.ay, align 8, !alias.scope !12716
   %i.az = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i, i64 4160
   %i.ba = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i, i64 4152
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1032) %i.ax, i8 0, i64 1032, i1 false), !alias.scope !12713
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1032) %i.ax, i8 0, i64 1032, i1 false), !alias.scope !12713
   store float 3.402000e+38, ptr %i.ba, align 8, !alias.scope !12716
   %i.bb = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i, i64 5200
   %i.bc = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i, i64 5192
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1032) %i.az, i8 0, i64 1032, i1 false), !alias.scope !12713
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1032) %i.az, i8 0, i64 1032, i1 false), !alias.scope !12713
   store float 3.402000e+38, ptr %i.bc, align 8, !alias.scope !12716
   %i.bd = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i, i64 6240
   %i.be = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i, i64 6232
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1032) %i.bb, i8 0, i64 1032, i1 false), !alias.scope !12713
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1032) %i.bb, i8 0, i64 1032, i1 false), !alias.scope !12713
   store float 3.402000e+38, ptr %i.be, align 8, !alias.scope !12716
   %i.bf = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i, i64 7280
   %i.bg = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i, i64 7272
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1032) %i.bd, i8 0, i64 1032, i1 false), !alias.scope !12713
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1032) %i.bd, i8 0, i64 1032, i1 false), !alias.scope !12713
   store float 3.402000e+38, ptr %i.bg, align 8, !alias.scope !12716
   %i.bh = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i, i64 8320 ; 2 uses
   %i.bi = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i, i64 8312
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1032) %i.bf, i8 0, i64 1032, i1 false), !alias.scope !12713
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1032) %i.bf, i8 0, i64 1032, i1 false), !alias.scope !12713
   store float 3.402000e+38, ptr %i.bi, align 8, !alias.scope !12716
   %i.bj = icmp eq ptr %i.bh, %i.al
   br i1 %i.bj, label %_ZN6brotli3enc9histogram15ClearHistograms17he6ac40c6e1754f5eE.exit, label %.lr.ph.i
@@ -3613,31 +3613,31 @@ bb.bb:                                            ; preds = %bb.ba
   store float 3.402000e+38, ptr %i.ij, align 8, !alias.scope !12742
   %i.ik = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i144, i64 2080
   %i.il = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i144, i64 2072
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1032) %i.ii, i8 0, i64 1032, i1 false), !alias.scope !12739
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1032) %i.ii, i8 0, i64 1032, i1 false), !alias.scope !12739
   store float 3.402000e+38, ptr %i.il, align 8, !alias.scope !12742
   %i.im = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i144, i64 3120
   %i.in = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i144, i64 3112
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1032) %i.ik, i8 0, i64 1032, i1 false), !alias.scope !12739
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1032) %i.ik, i8 0, i64 1032, i1 false), !alias.scope !12739
   store float 3.402000e+38, ptr %i.in, align 8, !alias.scope !12742
   %i.io = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i144, i64 4160
   %i.ip = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i144, i64 4152
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1032) %i.im, i8 0, i64 1032, i1 false), !alias.scope !12739
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1032) %i.im, i8 0, i64 1032, i1 false), !alias.scope !12739
   store float 3.402000e+38, ptr %i.ip, align 8, !alias.scope !12742
   %i.iq = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i144, i64 5200
   %i.ir = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i144, i64 5192
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1032) %i.io, i8 0, i64 1032, i1 false), !alias.scope !12739
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1032) %i.io, i8 0, i64 1032, i1 false), !alias.scope !12739
   store float 3.402000e+38, ptr %i.ir, align 8, !alias.scope !12742
   %i.is = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i144, i64 6240
   %i.it = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i144, i64 6232
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1032) %i.iq, i8 0, i64 1032, i1 false), !alias.scope !12739
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1032) %i.iq, i8 0, i64 1032, i1 false), !alias.scope !12739
   store float 3.402000e+38, ptr %i.it, align 8, !alias.scope !12742
   %i.iu = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i144, i64 7280
   %i.iv = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i144, i64 7272
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1032) %i.is, i8 0, i64 1032, i1 false), !alias.scope !12739
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1032) %i.is, i8 0, i64 1032, i1 false), !alias.scope !12739
   store float 3.402000e+38, ptr %i.iv, align 8, !alias.scope !12742
   %i.iw = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i144, i64 8320 ; 2 uses
   %i.ix = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i144, i64 8312
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1032) %i.iu, i8 0, i64 1032, i1 false), !alias.scope !12739
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1032) %i.iu, i8 0, i64 1032, i1 false), !alias.scope !12739
   store float 3.402000e+38, ptr %i.ix, align 8, !alias.scope !12742
   %i.iy = icmp eq ptr %i.iw, %i.ia
   br i1 %i.iy, label %_ZN6brotli3enc9histogram15ClearHistograms17he6ac40c6e1754f5eE.exit146, label %.lr.ph.i143
@@ -4007,7 +4007,7 @@ bb.cj:                                            ; preds = %middle.block347
   %i.ow = load float, ptr %i.ov, align 4, !noundef !4
   %i.ox = fsub float %i.ou, %i.ow
   %i.oy = fadd float %.sroa.0.0, %i.ox            ; 2 uses
-  %i.oz = add i64 %i.d, %.sroa.028.074            ; 7 uses
+  %i.oz = add nsw i64 %i.d, %.sroa.028.074        ; 7 uses
   %i.pa = load i64, ptr %i.cq, align 8, !noundef !4
   %i.pb = add i64 %i.pa, %.sroa.028.074           ; 3 uses
   %i.pc = icmp ult i64 %i.oz, %i.bv
@@ -4410,31 +4410,31 @@ bb.z:                                             ; preds = %_ZN4core5alloc6layo
   store float 3.402000e+38, ptr %i.dt, align 8, !alias.scope !12875, !noalias !12829
   %i.du = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i, i64 2080
   %i.dv = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i, i64 2072
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1032) %i.ds, i8 0, i64 1032, i1 false), !alias.scope !12872, !noalias !12829
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1032) %i.ds, i8 0, i64 1032, i1 false), !alias.scope !12872, !noalias !12829
   store float 3.402000e+38, ptr %i.dv, align 8, !alias.scope !12875, !noalias !12829
   %i.dw = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i, i64 3120
   %i.dx = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i, i64 3112
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1032) %i.du, i8 0, i64 1032, i1 false), !alias.scope !12872, !noalias !12829
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1032) %i.du, i8 0, i64 1032, i1 false), !alias.scope !12872, !noalias !12829
   store float 3.402000e+38, ptr %i.dx, align 8, !alias.scope !12875, !noalias !12829
   %i.dy = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i, i64 4160
   %i.dz = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i, i64 4152
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1032) %i.dw, i8 0, i64 1032, i1 false), !alias.scope !12872, !noalias !12829
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1032) %i.dw, i8 0, i64 1032, i1 false), !alias.scope !12872, !noalias !12829
   store float 3.402000e+38, ptr %i.dz, align 8, !alias.scope !12875, !noalias !12829
   %i.ea = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i, i64 5200
   %i.eb = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i, i64 5192
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1032) %i.dy, i8 0, i64 1032, i1 false), !alias.scope !12872, !noalias !12829
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1032) %i.dy, i8 0, i64 1032, i1 false), !alias.scope !12872, !noalias !12829
   store float 3.402000e+38, ptr %i.eb, align 8, !alias.scope !12875, !noalias !12829
   %i.ec = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i, i64 6240
   %i.ed = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i, i64 6232
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1032) %i.ea, i8 0, i64 1032, i1 false), !alias.scope !12872, !noalias !12829
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1032) %i.ea, i8 0, i64 1032, i1 false), !alias.scope !12872, !noalias !12829
   store float 3.402000e+38, ptr %i.ed, align 8, !alias.scope !12875, !noalias !12829
   %i.ee = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i, i64 7280
   %i.ef = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i, i64 7272
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1032) %i.ec, i8 0, i64 1032, i1 false), !alias.scope !12872, !noalias !12829
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1032) %i.ec, i8 0, i64 1032, i1 false), !alias.scope !12872, !noalias !12829
   store float 3.402000e+38, ptr %i.ef, align 8, !alias.scope !12875, !noalias !12829
   %i.eg = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i, i64 8320 ; 2 uses
   %i.eh = getelementptr inbounds nuw i8, ptr %.sroa.02.05.i.i, i64 8312
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1032) %i.ee, i8 0, i64 1032, i1 false), !alias.scope !12872, !noalias !12829
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1032) %i.ee, i8 0, i64 1032, i1 false), !alias.scope !12872, !noalias !12829
   store float 3.402000e+38, ptr %i.eh, align 8, !alias.scope !12875, !noalias !12829
   %i.ei = icmp eq ptr %i.eg, %i.dl
   br i1 %i.ei, label %_ZN6brotli3enc9metablock24InitContextBlockSplitter17h21afd52017b8c5bfE.exit, label %.lr.ph.i.i

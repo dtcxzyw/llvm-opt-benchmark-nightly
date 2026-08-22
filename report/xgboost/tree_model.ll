@@ -205,12 +205,12 @@ define linkonce_odr void @_ZN7xgboost4tree10TrainParam11__DECLARE__EPN4dmlc9para
   store ptr %i.ao, ptr %i.an, align 8, !tbaa !8
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ah, i64 133
   store i8 0, ptr %i.ap, align 1, !tbaa !664
-  store ptr getelementptr inbounds nuw inrange(-16, 88) (i8, ptr @_ZTVN4dmlc9parameter10FieldEntryIfEE, i64 16), ptr %i.ah, align 8, !tbaa !47
+  store ptr getelementptr inbounds nuw inrange(-16, 88) (i8, ptr @_ZTVN4dmlc9parameter10FieldEntryIfEE, i64 16), ptr %i.ah, align 16, !tbaa !47
   invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_assignERKS4_(ptr noundef nonnull align 8 dereferenceable(32) %i.ai, ptr noundef nonnull align 8 dereferenceable(32) %16)
           to label %.noexc224 unwind label %bb.j
 
 .noexc224:                                        ; preds = %.noexc223
-  %i.aq = load i64, ptr %i.am, align 8, !tbaa !12
+  %i.aq = load i64, ptr %i.am, align 16, !tbaa !12
   %i.ar = icmp eq i64 %i.aq, 0
   br i1 %i.ar, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit.i.i, label %_ZN4dmlc9parameter14FieldEntryBaseINS0_10FieldEntryIfEEfE4InitERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPvRf.exit.i
 
@@ -226,7 +226,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit.i.i: ; preds =
   %i.av = load ptr, ptr %i.ak, align 8, !tbaa !17
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(5) %i.av, ptr noundef nonnull align 1 dereferenceable(5) @.str.160, i64 5, i1 false)
   %i.aw = load i64, ptr %i.at, align 8, !tbaa !12 ; 2 uses
-  store i64 %i.aw, ptr %i.am, align 8, !tbaa !12
+  store i64 %i.aw, ptr %i.am, align 16, !tbaa !12
   %i.ax = load ptr, ptr %i.ak, align 8, !tbaa !17
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ax, i64 %i.aw
   store i8 0, ptr %i.ay, align 1, !tbaa !15
@@ -254,7 +254,7 @@ _ZN4dmlc9parameter14FieldEntryBaseINS0_10FieldEntryIfEEfE4InitERKNSt7__cxx1112ba
           to label %_ZN4dmlc9ParameterIN7xgboost4tree10TrainParamEE7DECLAREIfEERNS_9parameter10FieldEntryIT_EEPNS6_21ParamManagerSingletonIS3_EERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERS8_.exit unwind label %bb.j
 
 _ZN4dmlc9ParameterIN7xgboost4tree10TrainParamEE7DECLAREIfEERNS_9parameter10FieldEntryIT_EEPNS6_21ParamManagerSingletonIS3_EERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERS8_.exit: ; preds = %_ZN4dmlc9parameter14FieldEntryBaseINS0_10FieldEntryIfEEfE4InitERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPvRf.exit.i
-  %i.be = load ptr, ptr %i.ah, align 8, !tbaa !47
+  %i.be = load ptr, ptr %i.ah, align 16, !tbaa !47
   %i.bf = getelementptr inbounds nuw i8, ptr %i.be, i64 80
   %i.bg = load ptr, ptr %i.bf, align 8
   %i.bh = invoke noundef nonnull align 8 dereferenceable(144) ptr %i.bg(ptr noundef nonnull align 8 dereferenceable(144) %i.ah, float noundef 0.000000e+00)
@@ -337,12 +337,12 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit233: ; preds = %_Z
   store ptr %i.ci, ptr %i.ch, align 8, !tbaa !8
   %i.cj = getelementptr inbounds nuw i8, ptr %i.cb, i64 133
   store i8 0, ptr %i.cj, align 1, !tbaa !664
-  store ptr getelementptr inbounds nuw inrange(-16, 88) (i8, ptr @_ZTVN4dmlc9parameter10FieldEntryIfEE, i64 16), ptr %i.cb, align 8, !tbaa !47
+  store ptr getelementptr inbounds nuw inrange(-16, 88) (i8, ptr @_ZTVN4dmlc9parameter10FieldEntryIfEE, i64 16), ptr %i.cb, align 16, !tbaa !47
   invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_assignERKS4_(ptr noundef nonnull align 8 dereferenceable(32) %i.cc, ptr noundef nonnull align 8 dereferenceable(32) %18)
           to label %.noexc245 unwind label %bb.n
 
 .noexc245:                                        ; preds = %.noexc244
-  %i.ck = load i64, ptr %i.cg, align 8, !tbaa !12
+  %i.ck = load i64, ptr %i.cg, align 16, !tbaa !12
   %i.cl = icmp eq i64 %i.ck, 0
   br i1 %i.cl, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit.i.i239, label %_ZN4dmlc9parameter14FieldEntryBaseINS0_10FieldEntryIfEEfE4InitERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPvRf.exit.i238
 
@@ -358,7 +358,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit.i.i239: ; pred
   %i.cp = load ptr, ptr %i.ce, align 8, !tbaa !17
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(5) %i.cp, ptr noundef nonnull align 1 dereferenceable(5) @.str.160, i64 5, i1 false)
   %i.cq = load i64, ptr %i.cn, align 8, !tbaa !12 ; 2 uses
-  store i64 %i.cq, ptr %i.cg, align 8, !tbaa !12
+  store i64 %i.cq, ptr %i.cg, align 16, !tbaa !12
   %i.cr = load ptr, ptr %i.ce, align 8, !tbaa !17
   %i.cs = getelementptr inbounds nuw i8, ptr %i.cr, i64 %i.cq
   store i8 0, ptr %i.cs, align 1, !tbaa !15
@@ -386,7 +386,7 @@ _ZN4dmlc9parameter14FieldEntryBaseINS0_10FieldEntryIfEEfE4InitERKNSt7__cxx1112ba
           to label %_ZN4dmlc9ParameterIN7xgboost4tree10TrainParamEE7DECLAREIfEERNS_9parameter10FieldEntryIT_EEPNS6_21ParamManagerSingletonIS3_EERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERS8_.exit247 unwind label %bb.n
 
 _ZN4dmlc9ParameterIN7xgboost4tree10TrainParamEE7DECLAREIfEERNS_9parameter10FieldEntryIT_EEPNS6_21ParamManagerSingletonIS3_EERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERS8_.exit247: ; preds = %_ZN4dmlc9parameter14FieldEntryBaseINS0_10FieldEntryIfEEfE4InitERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPvRf.exit.i238
-  %i.cy = load ptr, ptr %i.cb, align 8, !tbaa !47
+  %i.cy = load ptr, ptr %i.cb, align 16, !tbaa !47
   %i.cz = getelementptr inbounds nuw i8, ptr %i.cy, i64 80
   %i.da = load ptr, ptr %i.cz, align 8
   %i.db = invoke noundef nonnull align 8 dereferenceable(144) ptr %i.da(ptr noundef nonnull align 8 dereferenceable(144) %i.cb, float noundef 0.000000e+00)
@@ -789,7 +789,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit336: ; preds = %_Z
   store ptr %i.in, ptr %i.im, align 8, !tbaa !8
   %i.io = getelementptr inbounds nuw i8, ptr %i.ig, i64 133
   store i8 0, ptr %i.io, align 1, !tbaa !683
-  store ptr getelementptr inbounds nuw inrange(-16, 88) (i8, ptr @_ZTVN4dmlc9parameter10FieldEntryIjEE, i64 16), ptr %i.ig, align 8, !tbaa !47
+  store ptr getelementptr inbounds nuw inrange(-16, 88) (i8, ptr @_ZTVN4dmlc9parameter10FieldEntryIjEE, i64 16), ptr %i.ig, align 16, !tbaa !47
   invoke void @_ZN4dmlc9parameter14FieldEntryBaseINS0_10FieldEntryIjEEjE4InitERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPvRj(ptr noundef nonnull align 8 dereferenceable(132) %i.ig, ptr noundef nonnull align 8 dereferenceable(32) %30, ptr noundef nonnull align 1 dereferenceable(1) %0, ptr noundef nonnull align 4 dereferenceable(4) %i.ih)
           to label %.noexc342 unwind label %bb.am
 
@@ -799,10 +799,10 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit336: ; preds = %_Z
 
 _ZN4dmlc9ParameterIN7xgboost4tree10TrainParamEE7DECLAREIjEERNS_9parameter10FieldEntryIT_EEPNS6_21ParamManagerSingletonIS3_EERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERS8_.exit: ; preds = %.noexc342
   %i.ip = getelementptr inbounds nuw i8, ptr %i.ig, i64 128
-  store i32 4, ptr %i.ip, align 8, !tbaa !686
+  store i32 4, ptr %i.ip, align 16, !tbaa !686
   %i.iq = getelementptr inbounds nuw i8, ptr %i.ig, i64 8
   store i8 1, ptr %i.iq, align 8, !tbaa !675
-  %i.ir = load ptr, ptr %i.ig, align 8, !tbaa !47
+  %i.ir = load ptr, ptr %i.ig, align 16, !tbaa !47
   %i.is = getelementptr inbounds nuw i8, ptr %i.ir, i64 80
   %i.it = load ptr, ptr %i.is, align 8
   %i.iu = invoke noundef nonnull align 8 dereferenceable(144) ptr %i.it(ptr noundef nonnull align 8 dereferenceable(144) %i.ig, i32 noundef 1)
@@ -974,12 +974,12 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit370: ; preds = %_Z
   store ptr %i.ky, ptr %i.kx, align 8, !tbaa !8
   %i.kz = getelementptr inbounds nuw i8, ptr %i.kr, i64 133
   store i8 0, ptr %i.kz, align 1, !tbaa !664
-  store ptr getelementptr inbounds nuw inrange(-16, 88) (i8, ptr @_ZTVN4dmlc9parameter10FieldEntryIfEE, i64 16), ptr %i.kr, align 8, !tbaa !47
+  store ptr getelementptr inbounds nuw inrange(-16, 88) (i8, ptr @_ZTVN4dmlc9parameter10FieldEntryIfEE, i64 16), ptr %i.kr, align 16, !tbaa !47
   invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_assignERKS4_(ptr noundef nonnull align 8 dereferenceable(32) %i.ks, ptr noundef nonnull align 8 dereferenceable(32) %34)
           to label %.noexc382 unwind label %bb.ay
 
 .noexc382:                                        ; preds = %.noexc381
-  %i.la = load i64, ptr %i.kw, align 8, !tbaa !12
+  %i.la = load i64, ptr %i.kw, align 16, !tbaa !12
   %i.lb = icmp eq i64 %i.la, 0
   br i1 %i.lb, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit.i.i376, label %_ZN4dmlc9parameter14FieldEntryBaseINS0_10FieldEntryIfEEfE4InitERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPvRf.exit.i375
 
@@ -995,7 +995,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit.i.i376: ; pred
   %i.lf = load ptr, ptr %i.ku, align 8, !tbaa !17
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(5) %i.lf, ptr noundef nonnull align 1 dereferenceable(5) @.str.160, i64 5, i1 false)
   %i.lg = load i64, ptr %i.ld, align 8, !tbaa !12 ; 2 uses
-  store i64 %i.lg, ptr %i.kw, align 8, !tbaa !12
+  store i64 %i.lg, ptr %i.kw, align 16, !tbaa !12
   %i.lh = load ptr, ptr %i.ku, align 8, !tbaa !17
   %i.li = getelementptr inbounds nuw i8, ptr %i.lh, i64 %i.lg
   store i8 0, ptr %i.li, align 1, !tbaa !15
@@ -1023,7 +1023,7 @@ _ZN4dmlc9parameter14FieldEntryBaseINS0_10FieldEntryIfEEfE4InitERKNSt7__cxx1112ba
           to label %_ZN4dmlc9ParameterIN7xgboost4tree10TrainParamEE7DECLAREIfEERNS_9parameter10FieldEntryIT_EEPNS6_21ParamManagerSingletonIS3_EERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERS8_.exit384 unwind label %bb.ay
 
 _ZN4dmlc9ParameterIN7xgboost4tree10TrainParamEE7DECLAREIfEERNS_9parameter10FieldEntryIT_EEPNS6_21ParamManagerSingletonIS3_EERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERS8_.exit384: ; preds = %_ZN4dmlc9parameter14FieldEntryBaseINS0_10FieldEntryIfEEfE4InitERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPvRf.exit.i375
-  %i.lo = load ptr, ptr %i.kr, align 8, !tbaa !47
+  %i.lo = load ptr, ptr %i.kr, align 16, !tbaa !47
   %i.lp = getelementptr inbounds nuw i8, ptr %i.lo, i64 80
   %i.lq = load ptr, ptr %i.lp, align 8
   %i.lr = invoke noundef nonnull align 8 dereferenceable(144) ptr %i.lq(ptr noundef nonnull align 8 dereferenceable(144) %i.kr, float noundef 0.000000e+00)
@@ -1106,12 +1106,12 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit396: ; preds = %_Z
   store ptr %i.ms, ptr %i.mr, align 8, !tbaa !8
   %i.mt = getelementptr inbounds nuw i8, ptr %i.ml, i64 133
   store i8 0, ptr %i.mt, align 1, !tbaa !664
-  store ptr getelementptr inbounds nuw inrange(-16, 88) (i8, ptr @_ZTVN4dmlc9parameter10FieldEntryIfEE, i64 16), ptr %i.ml, align 8, !tbaa !47
+  store ptr getelementptr inbounds nuw inrange(-16, 88) (i8, ptr @_ZTVN4dmlc9parameter10FieldEntryIfEE, i64 16), ptr %i.ml, align 16, !tbaa !47
   invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_assignERKS4_(ptr noundef nonnull align 8 dereferenceable(32) %i.mm, ptr noundef nonnull align 8 dereferenceable(32) %36)
           to label %.noexc408 unwind label %bb.bc
 
 .noexc408:                                        ; preds = %.noexc407
-  %i.mu = load i64, ptr %i.mq, align 8, !tbaa !12
+  %i.mu = load i64, ptr %i.mq, align 16, !tbaa !12
   %i.mv = icmp eq i64 %i.mu, 0
   br i1 %i.mv, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit.i.i402, label %_ZN4dmlc9parameter14FieldEntryBaseINS0_10FieldEntryIfEEfE4InitERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPvRf.exit.i401
 
@@ -1127,7 +1127,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit.i.i402: ; pred
   %i.mz = load ptr, ptr %i.mo, align 8, !tbaa !17
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(5) %i.mz, ptr noundef nonnull align 1 dereferenceable(5) @.str.160, i64 5, i1 false)
   %i.na = load i64, ptr %i.mx, align 8, !tbaa !12 ; 2 uses
-  store i64 %i.na, ptr %i.mq, align 8, !tbaa !12
+  store i64 %i.na, ptr %i.mq, align 16, !tbaa !12
   %i.nb = load ptr, ptr %i.mo, align 8, !tbaa !17
   %i.nc = getelementptr inbounds nuw i8, ptr %i.nb, i64 %i.na
   store i8 0, ptr %i.nc, align 1, !tbaa !15
@@ -1155,7 +1155,7 @@ _ZN4dmlc9parameter14FieldEntryBaseINS0_10FieldEntryIfEEfE4InitERKNSt7__cxx1112ba
           to label %_ZN4dmlc9ParameterIN7xgboost4tree10TrainParamEE7DECLAREIfEERNS_9parameter10FieldEntryIT_EEPNS6_21ParamManagerSingletonIS3_EERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERS8_.exit410 unwind label %bb.bc
 
 _ZN4dmlc9ParameterIN7xgboost4tree10TrainParamEE7DECLAREIfEERNS_9parameter10FieldEntryIT_EEPNS6_21ParamManagerSingletonIS3_EERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERS8_.exit410: ; preds = %_ZN4dmlc9parameter14FieldEntryBaseINS0_10FieldEntryIfEEfE4InitERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPvRf.exit.i401
-  %i.ni = load ptr, ptr %i.ml, align 8, !tbaa !47
+  %i.ni = load ptr, ptr %i.ml, align 16, !tbaa !47
   %i.nj = getelementptr inbounds nuw i8, ptr %i.ni, i64 80
   %i.nk = load ptr, ptr %i.nj, align 8
   %i.nl = invoke noundef nonnull align 8 dereferenceable(144) ptr %i.nk(ptr noundef nonnull align 8 dereferenceable(144) %i.ml, float noundef 0.000000e+00)
@@ -1239,12 +1239,12 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit422: ; preds = %_Z
   store ptr %i.on, ptr %i.om, align 8, !tbaa !8
   %i.oo = getelementptr inbounds nuw i8, ptr %i.og, i64 133
   store i8 0, ptr %i.oo, align 1, !tbaa !664
-  store ptr getelementptr inbounds nuw inrange(-16, 88) (i8, ptr @_ZTVN4dmlc9parameter10FieldEntryIfEE, i64 16), ptr %i.og, align 8, !tbaa !47
+  store ptr getelementptr inbounds nuw inrange(-16, 88) (i8, ptr @_ZTVN4dmlc9parameter10FieldEntryIfEE, i64 16), ptr %i.og, align 16, !tbaa !47
   invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_assignERKS4_(ptr noundef nonnull align 8 dereferenceable(32) %i.oh, ptr noundef nonnull align 8 dereferenceable(32) %38)
           to label %.noexc434 unwind label %bb.bg
 
 .noexc434:                                        ; preds = %.noexc433
-  %i.op = load i64, ptr %i.ol, align 8, !tbaa !12
+  %i.op = load i64, ptr %i.ol, align 16, !tbaa !12
   %i.oq = icmp eq i64 %i.op, 0
   br i1 %i.oq, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit.i.i428, label %_ZN4dmlc9parameter14FieldEntryBaseINS0_10FieldEntryIfEEfE4InitERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPvRf.exit.i427
 
@@ -1260,7 +1260,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit.i.i428: ; pred
   %i.ou = load ptr, ptr %i.oj, align 8, !tbaa !17
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(5) %i.ou, ptr noundef nonnull align 1 dereferenceable(5) @.str.160, i64 5, i1 false)
   %i.ov = load i64, ptr %i.os, align 8, !tbaa !12 ; 2 uses
-  store i64 %i.ov, ptr %i.ol, align 8, !tbaa !12
+  store i64 %i.ov, ptr %i.ol, align 16, !tbaa !12
   %i.ow = load ptr, ptr %i.oj, align 8, !tbaa !17
   %i.ox = getelementptr inbounds nuw i8, ptr %i.ow, i64 %i.ov
   store i8 0, ptr %i.ox, align 1, !tbaa !15
@@ -1288,7 +1288,7 @@ _ZN4dmlc9parameter14FieldEntryBaseINS0_10FieldEntryIfEEfE4InitERKNSt7__cxx1112ba
           to label %_ZN4dmlc9ParameterIN7xgboost4tree10TrainParamEE7DECLAREIfEERNS_9parameter10FieldEntryIT_EEPNS6_21ParamManagerSingletonIS3_EERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERS8_.exit436 unwind label %bb.bg
 
 _ZN4dmlc9ParameterIN7xgboost4tree10TrainParamEE7DECLAREIfEERNS_9parameter10FieldEntryIT_EEPNS6_21ParamManagerSingletonIS3_EERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERS8_.exit436: ; preds = %_ZN4dmlc9parameter14FieldEntryBaseINS0_10FieldEntryIfEEfE4InitERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPvRf.exit.i427
-  %i.pd = load ptr, ptr %i.og, align 8, !tbaa !47
+  %i.pd = load ptr, ptr %i.og, align 16, !tbaa !47
   %i.pe = getelementptr inbounds nuw i8, ptr %i.pd, i64 80
   %i.pf = load ptr, ptr %i.pe, align 8
   %i.pg = invoke noundef nonnull align 8 dereferenceable(144) ptr %i.pf(ptr noundef nonnull align 8 dereferenceable(144) %i.og, float noundef 0.000000e+00)
@@ -1372,12 +1372,12 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit448: ; preds = %_Z
   store ptr %i.qi, ptr %i.qh, align 8, !tbaa !8
   %i.qj = getelementptr inbounds nuw i8, ptr %i.qb, i64 133
   store i8 0, ptr %i.qj, align 1, !tbaa !664
-  store ptr getelementptr inbounds nuw inrange(-16, 88) (i8, ptr @_ZTVN4dmlc9parameter10FieldEntryIfEE, i64 16), ptr %i.qb, align 8, !tbaa !47
+  store ptr getelementptr inbounds nuw inrange(-16, 88) (i8, ptr @_ZTVN4dmlc9parameter10FieldEntryIfEE, i64 16), ptr %i.qb, align 16, !tbaa !47
   invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_assignERKS4_(ptr noundef nonnull align 8 dereferenceable(32) %i.qc, ptr noundef nonnull align 8 dereferenceable(32) %40)
           to label %.noexc460 unwind label %bb.bk
 
 .noexc460:                                        ; preds = %.noexc459
-  %i.qk = load i64, ptr %i.qg, align 8, !tbaa !12
+  %i.qk = load i64, ptr %i.qg, align 16, !tbaa !12
   %i.ql = icmp eq i64 %i.qk, 0
   br i1 %i.ql, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit.i.i454, label %_ZN4dmlc9parameter14FieldEntryBaseINS0_10FieldEntryIfEEfE4InitERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPvRf.exit.i453
 
@@ -1393,7 +1393,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit.i.i454: ; pred
   %i.qp = load ptr, ptr %i.qe, align 8, !tbaa !17
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(5) %i.qp, ptr noundef nonnull align 1 dereferenceable(5) @.str.160, i64 5, i1 false)
   %i.qq = load i64, ptr %i.qn, align 8, !tbaa !12 ; 2 uses
-  store i64 %i.qq, ptr %i.qg, align 8, !tbaa !12
+  store i64 %i.qq, ptr %i.qg, align 16, !tbaa !12
   %i.qr = load ptr, ptr %i.qe, align 8, !tbaa !17
   %i.qs = getelementptr inbounds nuw i8, ptr %i.qr, i64 %i.qq
   store i8 0, ptr %i.qs, align 1, !tbaa !15
@@ -1421,7 +1421,7 @@ _ZN4dmlc9parameter14FieldEntryBaseINS0_10FieldEntryIfEEfE4InitERKNSt7__cxx1112ba
           to label %_ZN4dmlc9ParameterIN7xgboost4tree10TrainParamEE7DECLAREIfEERNS_9parameter10FieldEntryIT_EEPNS6_21ParamManagerSingletonIS3_EERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERS8_.exit462 unwind label %bb.bk
 
 _ZN4dmlc9ParameterIN7xgboost4tree10TrainParamEE7DECLAREIfEERNS_9parameter10FieldEntryIT_EEPNS6_21ParamManagerSingletonIS3_EERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERS8_.exit462: ; preds = %_ZN4dmlc9parameter14FieldEntryBaseINS0_10FieldEntryIfEEfE4InitERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPvRf.exit.i453
-  %i.qy = load ptr, ptr %i.qb, align 8, !tbaa !47
+  %i.qy = load ptr, ptr %i.qb, align 16, !tbaa !47
   %i.qz = getelementptr inbounds nuw i8, ptr %i.qy, i64 80
   %i.ra = load ptr, ptr %i.qz, align 8
   %i.rb = invoke noundef nonnull align 8 dereferenceable(144) ptr %i.ra(ptr noundef nonnull align 8 dereferenceable(144) %i.qb, float noundef 0.000000e+00)
@@ -1504,12 +1504,12 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit474: ; preds = %_Z
   store ptr %i.sc, ptr %i.sb, align 8, !tbaa !8
   %i.sd = getelementptr inbounds nuw i8, ptr %i.rv, i64 133
   store i8 0, ptr %i.sd, align 1, !tbaa !664
-  store ptr getelementptr inbounds nuw inrange(-16, 88) (i8, ptr @_ZTVN4dmlc9parameter10FieldEntryIfEE, i64 16), ptr %i.rv, align 8, !tbaa !47
+  store ptr getelementptr inbounds nuw inrange(-16, 88) (i8, ptr @_ZTVN4dmlc9parameter10FieldEntryIfEE, i64 16), ptr %i.rv, align 16, !tbaa !47
   invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_assignERKS4_(ptr noundef nonnull align 8 dereferenceable(32) %i.rw, ptr noundef nonnull align 8 dereferenceable(32) %42)
           to label %.noexc486 unwind label %bb.bo
 
 .noexc486:                                        ; preds = %.noexc485
-  %i.se = load i64, ptr %i.sa, align 8, !tbaa !12
+  %i.se = load i64, ptr %i.sa, align 16, !tbaa !12
   %i.sf = icmp eq i64 %i.se, 0
   br i1 %i.sf, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit.i.i480, label %_ZN4dmlc9parameter14FieldEntryBaseINS0_10FieldEntryIfEEfE4InitERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPvRf.exit.i479
 
@@ -1525,7 +1525,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit.i.i480: ; pred
   %i.sj = load ptr, ptr %i.ry, align 8, !tbaa !17
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(5) %i.sj, ptr noundef nonnull align 1 dereferenceable(5) @.str.160, i64 5, i1 false)
   %i.sk = load i64, ptr %i.sh, align 8, !tbaa !12 ; 2 uses
-  store i64 %i.sk, ptr %i.sa, align 8, !tbaa !12
+  store i64 %i.sk, ptr %i.sa, align 16, !tbaa !12
   %i.sl = load ptr, ptr %i.ry, align 8, !tbaa !17
   %i.sm = getelementptr inbounds nuw i8, ptr %i.sl, i64 %i.sk
   store i8 0, ptr %i.sm, align 1, !tbaa !15
@@ -1553,7 +1553,7 @@ _ZN4dmlc9parameter14FieldEntryBaseINS0_10FieldEntryIfEEfE4InitERKNSt7__cxx1112ba
           to label %_ZN4dmlc9ParameterIN7xgboost4tree10TrainParamEE7DECLAREIfEERNS_9parameter10FieldEntryIT_EEPNS6_21ParamManagerSingletonIS3_EERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERS8_.exit488 unwind label %bb.bo
 
 _ZN4dmlc9ParameterIN7xgboost4tree10TrainParamEE7DECLAREIfEERNS_9parameter10FieldEntryIT_EEPNS6_21ParamManagerSingletonIS3_EERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERS8_.exit488: ; preds = %_ZN4dmlc9parameter14FieldEntryBaseINS0_10FieldEntryIfEEfE4InitERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPvRf.exit.i479
-  %i.ss = load ptr, ptr %i.rv, align 8, !tbaa !47
+  %i.ss = load ptr, ptr %i.rv, align 16, !tbaa !47
   %i.st = getelementptr inbounds nuw i8, ptr %i.ss, i64 72
   %i.su = load ptr, ptr %i.st, align 8
   %i.sv = invoke noundef nonnull align 8 dereferenceable(144) ptr %i.su(ptr noundef nonnull align 8 dereferenceable(144) %i.rv, float noundef 0.000000e+00, float noundef 1.000000e+00)
@@ -1759,12 +1759,12 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit530: ; preds = %_Z
   store ptr %i.vk, ptr %i.vj, align 8, !tbaa !8
   %i.vl = getelementptr inbounds nuw i8, ptr %i.vd, i64 133
   store i8 0, ptr %i.vl, align 1, !tbaa !664
-  store ptr getelementptr inbounds nuw inrange(-16, 88) (i8, ptr @_ZTVN4dmlc9parameter10FieldEntryIfEE, i64 16), ptr %i.vd, align 8, !tbaa !47
+  store ptr getelementptr inbounds nuw inrange(-16, 88) (i8, ptr @_ZTVN4dmlc9parameter10FieldEntryIfEE, i64 16), ptr %i.vd, align 16, !tbaa !47
   invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_assignERKS4_(ptr noundef nonnull align 8 dereferenceable(32) %i.ve, ptr noundef nonnull align 8 dereferenceable(32) %48)
           to label %.noexc542 unwind label %bb.cb
 
 .noexc542:                                        ; preds = %.noexc541
-  %i.vm = load i64, ptr %i.vi, align 8, !tbaa !12
+  %i.vm = load i64, ptr %i.vi, align 16, !tbaa !12
   %i.vn = icmp eq i64 %i.vm, 0
   br i1 %i.vn, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit.i.i536, label %_ZN4dmlc9parameter14FieldEntryBaseINS0_10FieldEntryIfEEfE4InitERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPvRf.exit.i535
 
@@ -1780,7 +1780,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit.i.i536: ; pred
   %i.vr = load ptr, ptr %i.vg, align 8, !tbaa !17
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(5) %i.vr, ptr noundef nonnull align 1 dereferenceable(5) @.str.160, i64 5, i1 false)
   %i.vs = load i64, ptr %i.vp, align 8, !tbaa !12 ; 2 uses
-  store i64 %i.vs, ptr %i.vi, align 8, !tbaa !12
+  store i64 %i.vs, ptr %i.vi, align 16, !tbaa !12
   %i.vt = load ptr, ptr %i.vg, align 8, !tbaa !17
   %i.vu = getelementptr inbounds nuw i8, ptr %i.vt, i64 %i.vs
   store i8 0, ptr %i.vu, align 1, !tbaa !15
@@ -1808,7 +1808,7 @@ _ZN4dmlc9parameter14FieldEntryBaseINS0_10FieldEntryIfEEfE4InitERKNSt7__cxx1112ba
           to label %_ZN4dmlc9ParameterIN7xgboost4tree10TrainParamEE7DECLAREIfEERNS_9parameter10FieldEntryIT_EEPNS6_21ParamManagerSingletonIS3_EERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERS8_.exit544 unwind label %bb.cb
 
 _ZN4dmlc9ParameterIN7xgboost4tree10TrainParamEE7DECLAREIfEERNS_9parameter10FieldEntryIT_EEPNS6_21ParamManagerSingletonIS3_EERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERS8_.exit544: ; preds = %_ZN4dmlc9parameter14FieldEntryBaseINS0_10FieldEntryIfEEfE4InitERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPvRf.exit.i535
-  %i.wa = load ptr, ptr %i.vd, align 8, !tbaa !47
+  %i.wa = load ptr, ptr %i.vd, align 16, !tbaa !47
   %i.wb = getelementptr inbounds nuw i8, ptr %i.wa, i64 72
   %i.wc = load ptr, ptr %i.wb, align 8
   %i.wd = invoke noundef nonnull align 8 dereferenceable(144) ptr %i.wc(ptr noundef nonnull align 8 dereferenceable(144) %i.vd, float noundef 0.000000e+00, float noundef 1.000000e+00)
@@ -1902,12 +1902,12 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit556: ; preds = %_Z
   store ptr %i.xh, ptr %i.xg, align 8, !tbaa !8
   %i.xi = getelementptr inbounds nuw i8, ptr %i.xa, i64 133
   store i8 0, ptr %i.xi, align 1, !tbaa !664
-  store ptr getelementptr inbounds nuw inrange(-16, 88) (i8, ptr @_ZTVN4dmlc9parameter10FieldEntryIfEE, i64 16), ptr %i.xa, align 8, !tbaa !47
+  store ptr getelementptr inbounds nuw inrange(-16, 88) (i8, ptr @_ZTVN4dmlc9parameter10FieldEntryIfEE, i64 16), ptr %i.xa, align 16, !tbaa !47
   invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_assignERKS4_(ptr noundef nonnull align 8 dereferenceable(32) %i.xb, ptr noundef nonnull align 8 dereferenceable(32) %50)
           to label %.noexc568 unwind label %bb.cg
 
 .noexc568:                                        ; preds = %.noexc567
-  %i.xj = load i64, ptr %i.xf, align 8, !tbaa !12
+  %i.xj = load i64, ptr %i.xf, align 16, !tbaa !12
   %i.xk = icmp eq i64 %i.xj, 0
   br i1 %i.xk, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit.i.i562, label %_ZN4dmlc9parameter14FieldEntryBaseINS0_10FieldEntryIfEEfE4InitERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPvRf.exit.i561
 
@@ -1923,7 +1923,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit.i.i562: ; pred
   %i.xo = load ptr, ptr %i.xd, align 8, !tbaa !17
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(5) %i.xo, ptr noundef nonnull align 1 dereferenceable(5) @.str.160, i64 5, i1 false)
   %i.xp = load i64, ptr %i.xm, align 8, !tbaa !12 ; 2 uses
-  store i64 %i.xp, ptr %i.xf, align 8, !tbaa !12
+  store i64 %i.xp, ptr %i.xf, align 16, !tbaa !12
   %i.xq = load ptr, ptr %i.xd, align 8, !tbaa !17
   %i.xr = getelementptr inbounds nuw i8, ptr %i.xq, i64 %i.xp
   store i8 0, ptr %i.xr, align 1, !tbaa !15
@@ -1951,7 +1951,7 @@ _ZN4dmlc9parameter14FieldEntryBaseINS0_10FieldEntryIfEEfE4InitERKNSt7__cxx1112ba
           to label %_ZN4dmlc9ParameterIN7xgboost4tree10TrainParamEE7DECLAREIfEERNS_9parameter10FieldEntryIT_EEPNS6_21ParamManagerSingletonIS3_EERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERS8_.exit570 unwind label %bb.cg
 
 _ZN4dmlc9ParameterIN7xgboost4tree10TrainParamEE7DECLAREIfEERNS_9parameter10FieldEntryIT_EEPNS6_21ParamManagerSingletonIS3_EERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERS8_.exit570: ; preds = %_ZN4dmlc9parameter14FieldEntryBaseINS0_10FieldEntryIfEEfE4InitERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPvRf.exit.i561
-  %i.xx = load ptr, ptr %i.xa, align 8, !tbaa !47
+  %i.xx = load ptr, ptr %i.xa, align 16, !tbaa !47
   %i.xy = getelementptr inbounds nuw i8, ptr %i.xx, i64 72
   %i.xz = load ptr, ptr %i.xy, align 8
   %i.ya = invoke noundef nonnull align 8 dereferenceable(144) ptr %i.xz(ptr noundef nonnull align 8 dereferenceable(144) %i.xa, float noundef 0.000000e+00, float noundef 1.000000e+00)
@@ -2045,12 +2045,12 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit582: ; preds = %_Z
   store ptr %i.ze, ptr %i.zd, align 8, !tbaa !8
   %i.zf = getelementptr inbounds nuw i8, ptr %i.yx, i64 133
   store i8 0, ptr %i.zf, align 1, !tbaa !664
-  store ptr getelementptr inbounds nuw inrange(-16, 88) (i8, ptr @_ZTVN4dmlc9parameter10FieldEntryIfEE, i64 16), ptr %i.yx, align 8, !tbaa !47
+  store ptr getelementptr inbounds nuw inrange(-16, 88) (i8, ptr @_ZTVN4dmlc9parameter10FieldEntryIfEE, i64 16), ptr %i.yx, align 16, !tbaa !47
   invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_assignERKS4_(ptr noundef nonnull align 8 dereferenceable(32) %i.yy, ptr noundef nonnull align 8 dereferenceable(32) %52)
           to label %.noexc594 unwind label %bb.cl
 
 .noexc594:                                        ; preds = %.noexc593
-  %i.zg = load i64, ptr %i.zc, align 8, !tbaa !12
+  %i.zg = load i64, ptr %i.zc, align 16, !tbaa !12
   %i.zh = icmp eq i64 %i.zg, 0
   br i1 %i.zh, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit.i.i588, label %_ZN4dmlc9parameter14FieldEntryBaseINS0_10FieldEntryIfEEfE4InitERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPvRf.exit.i587
 
@@ -2066,7 +2066,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit.i.i588: ; pred
   %i.zl = load ptr, ptr %i.za, align 8, !tbaa !17
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(5) %i.zl, ptr noundef nonnull align 1 dereferenceable(5) @.str.160, i64 5, i1 false)
   %i.zm = load i64, ptr %i.zj, align 8, !tbaa !12 ; 2 uses
-  store i64 %i.zm, ptr %i.zc, align 8, !tbaa !12
+  store i64 %i.zm, ptr %i.zc, align 16, !tbaa !12
   %i.zn = load ptr, ptr %i.za, align 8, !tbaa !17
   %i.zo = getelementptr inbounds nuw i8, ptr %i.zn, i64 %i.zm
   store i8 0, ptr %i.zo, align 1, !tbaa !15
@@ -2094,7 +2094,7 @@ _ZN4dmlc9parameter14FieldEntryBaseINS0_10FieldEntryIfEEfE4InitERKNSt7__cxx1112ba
           to label %_ZN4dmlc9ParameterIN7xgboost4tree10TrainParamEE7DECLAREIfEERNS_9parameter10FieldEntryIT_EEPNS6_21ParamManagerSingletonIS3_EERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERS8_.exit596 unwind label %bb.cl
 
 _ZN4dmlc9ParameterIN7xgboost4tree10TrainParamEE7DECLAREIfEERNS_9parameter10FieldEntryIT_EEPNS6_21ParamManagerSingletonIS3_EERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERS8_.exit596: ; preds = %_ZN4dmlc9parameter14FieldEntryBaseINS0_10FieldEntryIfEEfE4InitERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPvRf.exit.i587
-  %i.zu = load ptr, ptr %i.yx, align 8, !tbaa !47
+  %i.zu = load ptr, ptr %i.yx, align 16, !tbaa !47
   %i.zv = getelementptr inbounds nuw i8, ptr %i.zu, i64 72
   %i.zw = load ptr, ptr %i.zv, align 8
   %i.zx = invoke noundef nonnull align 8 dereferenceable(144) ptr %i.zw(ptr noundef nonnull align 8 dereferenceable(144) %i.yx, float noundef 0.000000e+00, float noundef 1.000000e+00)
@@ -2175,12 +2175,12 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit608: ; preds = %_Z
   %i.aax = getelementptr inbounds nuw i8, ptr %i.aar, i64 88 ; 2 uses
   %i.aay = getelementptr inbounds nuw i8, ptr %i.aar, i64 104
   store ptr %i.aay, ptr %i.aax, align 8, !tbaa !8
-  store ptr getelementptr inbounds nuw inrange(-16, 72) (i8, ptr @_ZTVN4dmlc9parameter10FieldEntryIbEE, i64 16), ptr %i.aar, align 8, !tbaa !47
+  store ptr getelementptr inbounds nuw inrange(-16, 72) (i8, ptr @_ZTVN4dmlc9parameter10FieldEntryIbEE, i64 16), ptr %i.aar, align 16, !tbaa !47
   invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_assignERKS4_(ptr noundef nonnull align 8 dereferenceable(32) %i.aas, ptr noundef nonnull align 8 dereferenceable(32) %54)
           to label %.noexc619 unwind label %bb.cp
 
 .noexc619:                                        ; preds = %.noexc618
-  %i.aaz = load i64, ptr %i.aaw, align 8, !tbaa !12
+  %i.aaz = load i64, ptr %i.aaw, align 16, !tbaa !12
   %i.aba = icmp eq i64 %i.aaz, 0
   br i1 %i.aba, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit.i.i613, label %_ZN4dmlc9parameter14FieldEntryBaseINS0_10FieldEntryIbEEbE4InitERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPvRb.exit.i
 
@@ -2196,7 +2196,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit.i.i613: ; pred
   %i.abe = load ptr, ptr %i.aau, align 8, !tbaa !17
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %i.abe, ptr noundef nonnull align 1 dereferenceable(7) @.str.182, i64 7, i1 false)
   %i.abf = load i64, ptr %i.abc, align 8, !tbaa !12 ; 2 uses
-  store i64 %i.abf, ptr %i.aaw, align 8, !tbaa !12
+  store i64 %i.abf, ptr %i.aaw, align 16, !tbaa !12
   %i.abg = load ptr, ptr %i.aau, align 8, !tbaa !17
   %i.abh = getelementptr inbounds nuw i8, ptr %i.abg, i64 %i.abf
   store i8 0, ptr %i.abh, align 1, !tbaa !15
@@ -2225,7 +2225,7 @@ _ZN4dmlc9parameter14FieldEntryBaseINS0_10FieldEntryIbEEbE4InitERKNSt7__cxx1112ba
 
 .noexc.i622:                                      ; preds = %_ZN4dmlc9parameter14FieldEntryBaseINS0_10FieldEntryIbEEbE4InitERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPvRb.exit.i
   %i.abn = getelementptr inbounds nuw i8, ptr %i.aar, i64 128
-  store i8 1, ptr %i.abn, align 8, !tbaa !732
+  store i8 1, ptr %i.abn, align 16, !tbaa !732
   %i.abo = getelementptr inbounds nuw i8, ptr %i.aar, i64 8
   store i8 1, ptr %i.abo, align 8, !tbaa !675
   call void @llvm.lifetime.start.p0(ptr nonnull %55) #15
@@ -2308,14 +2308,14 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit631: ; preds = %_Z
   %i.aco = getelementptr inbounds nuw i8, ptr %i.aci, i64 104
   store ptr %i.aco, ptr %i.acn, align 8, !tbaa !8
   %i.acp = getelementptr inbounds nuw i8, ptr %i.aci, i64 128 ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.acp, i8 0, i64 24, i1 false)
-  store ptr getelementptr inbounds nuw inrange(-16, 72) (i8, ptr @_ZTVN4dmlc9parameter10FieldEntryISt6vectorIiSaIiEEEE, i64 16), ptr %i.aci, align 8, !tbaa !47
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %i.acp, i8 0, i64 24, i1 false)
+  store ptr getelementptr inbounds nuw inrange(-16, 72) (i8, ptr @_ZTVN4dmlc9parameter10FieldEntryISt6vectorIiSaIiEEEE, i64 16), ptr %i.aci, align 16, !tbaa !47
   invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_assignERKS4_(ptr noundef nonnull align 8 dereferenceable(32) %i.acj, ptr noundef nonnull align 8 dereferenceable(32) %56)
           to label %.noexc642 unwind label %bb.cu
 
 .noexc642:                                        ; preds = %.noexc641
   %i.acq = getelementptr inbounds nuw i8, ptr %i.aci, i64 64
-  %i.acr = load i64, ptr %i.acq, align 8, !tbaa !12
+  %i.acr = load i64, ptr %i.acq, align 16, !tbaa !12
   %i.acs = icmp eq i64 %i.acr, 0
   br i1 %i.acs, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit.i.i636, label %_ZN4dmlc9parameter14FieldEntryBaseINS0_10FieldEntryISt6vectorIiSaIiEEEES5_E4InitERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPvRS5_.exit.i
 
@@ -2456,13 +2456,13 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit655: ; preds = %_Z
   store ptr %i.aej, ptr %i.aei, align 8, !tbaa !8
   %i.aek = getelementptr inbounds nuw i8, ptr %i.aec, i64 128 ; 2 uses
   %i.ael = getelementptr inbounds nuw i8, ptr %i.aec, i64 144
-  store ptr %i.ael, ptr %i.aek, align 8, !tbaa !8
-  store ptr getelementptr inbounds nuw inrange(-16, 72) (i8, ptr @_ZTVN4dmlc9parameter10FieldEntryINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE, i64 16), ptr %i.aec, align 8, !tbaa !47
+  store ptr %i.ael, ptr %i.aek, align 16, !tbaa !8
+  store ptr getelementptr inbounds nuw inrange(-16, 72) (i8, ptr @_ZTVN4dmlc9parameter10FieldEntryINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE, i64 16), ptr %i.aec, align 16, !tbaa !47
   invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_assignERKS4_(ptr noundef nonnull align 8 dereferenceable(32) %i.aed, ptr noundef nonnull align 8 dereferenceable(32) %59)
           to label %.noexc666 unwind label %bb.dc
 
 .noexc666:                                        ; preds = %.noexc665
-  %i.aem = load i64, ptr %i.aeh, align 8, !tbaa !12
+  %i.aem = load i64, ptr %i.aeh, align 16, !tbaa !12
   %i.aen = icmp eq i64 %i.aem, 0
   br i1 %i.aen, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit.i.i660, label %_ZN4dmlc9parameter14FieldEntryBaseINS0_10FieldEntryINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEES8_E4InitERKS8_PvRS8_.exit.i
 
@@ -2478,7 +2478,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit.i.i660: ; pred
   %i.aer = load ptr, ptr %i.aef, align 8, !tbaa !17
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(6) %i.aer, ptr noundef nonnull align 1 dereferenceable(6) @.str.183, i64 6, i1 false)
   %i.aes = load i64, ptr %i.aep, align 8, !tbaa !12 ; 2 uses
-  store i64 %i.aes, ptr %i.aeh, align 8, !tbaa !12
+  store i64 %i.aes, ptr %i.aeh, align 16, !tbaa !12
   %i.aet = load ptr, ptr %i.aef, align 8, !tbaa !17
   %i.aeu = getelementptr inbounds nuw i8, ptr %i.aet, i64 %i.aes
   store i8 0, ptr %i.aeu, align 1, !tbaa !15
@@ -2612,12 +2612,12 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit686: ; preds = %_Z
   store ptr %i.agh, ptr %i.agg, align 8, !tbaa !8
   %i.agi = getelementptr inbounds nuw i8, ptr %i.aga, i64 137
   store i8 0, ptr %i.agi, align 1, !tbaa !744
-  store ptr getelementptr inbounds nuw inrange(-16, 88) (i8, ptr @_ZTVN4dmlc9parameter10FieldEntryIdEE, i64 16), ptr %i.aga, align 8, !tbaa !47
+  store ptr getelementptr inbounds nuw inrange(-16, 88) (i8, ptr @_ZTVN4dmlc9parameter10FieldEntryIdEE, i64 16), ptr %i.aga, align 16, !tbaa !47
   invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_assignERKS4_(ptr noundef nonnull align 8 dereferenceable(32) %i.agb, ptr noundef nonnull align 8 dereferenceable(32) %62)
           to label %.noexc697 unwind label %bb.dj
 
 .noexc697:                                        ; preds = %.noexc696
-  %i.agj = load i64, ptr %i.agf, align 8, !tbaa !12
+  %i.agj = load i64, ptr %i.agf, align 16, !tbaa !12
   %i.agk = icmp eq i64 %i.agj, 0
   br i1 %i.agk, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit.i.i691, label %_ZN4dmlc9parameter14FieldEntryBaseINS0_10FieldEntryIdEEdE4InitERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPvRd.exit.i
 
@@ -2633,7 +2633,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit.i.i691: ; pred
   %i.ago = load ptr, ptr %i.agd, align 8, !tbaa !17
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(6) %i.ago, ptr noundef nonnull align 1 dereferenceable(6) @.str.184, i64 6, i1 false)
   %i.agp = load i64, ptr %i.agm, align 8, !tbaa !12 ; 2 uses
-  store i64 %i.agp, ptr %i.agf, align 8, !tbaa !12
+  store i64 %i.agp, ptr %i.agf, align 16, !tbaa !12
   %i.agq = load ptr, ptr %i.agd, align 8, !tbaa !17
   %i.agr = getelementptr inbounds nuw i8, ptr %i.agq, i64 %i.agp
   store i8 0, ptr %i.agr, align 1, !tbaa !15
@@ -2661,7 +2661,7 @@ _ZN4dmlc9parameter14FieldEntryBaseINS0_10FieldEntryIdEEdE4InitERKNSt7__cxx1112ba
           to label %_ZN4dmlc9ParameterIN7xgboost4tree10TrainParamEE7DECLAREIdEERNS_9parameter10FieldEntryIT_EEPNS6_21ParamManagerSingletonIS3_EERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERS8_.exit unwind label %bb.dj
 
 _ZN4dmlc9ParameterIN7xgboost4tree10TrainParamEE7DECLAREIdEERNS_9parameter10FieldEntryIT_EEPNS6_21ParamManagerSingletonIS3_EERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERS8_.exit: ; preds = %_ZN4dmlc9parameter14FieldEntryBaseINS0_10FieldEntryIdEEdE4InitERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPvRd.exit.i
-  %i.agx = load ptr, ptr %i.aga, align 8, !tbaa !47
+  %i.agx = load ptr, ptr %i.aga, align 16, !tbaa !47
   %i.agy = getelementptr inbounds nuw i8, ptr %i.agx, i64 72
   %i.agz = load ptr, ptr %i.agy, align 8
   %i.aha = invoke noundef nonnull align 8 dereferenceable(160) ptr %i.agz(ptr noundef nonnull align 8 dereferenceable(160) %i.aga, double noundef 0.000000e+00, double noundef 1.000000e+00)
@@ -3064,13 +3064,13 @@ define linkonce_odr void @_ZN7xgboost13GraphvizParam11__DECLARE__EPN4dmlc9parame
   store ptr %i.s, ptr %i.r, align 8, !tbaa !8
   %i.t = getelementptr inbounds nuw i8, ptr %i.l, i64 128 ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.l, i64 144
-  store ptr %i.u, ptr %i.t, align 8, !tbaa !8
-  store ptr getelementptr inbounds nuw inrange(-16, 72) (i8, ptr @_ZTVN4dmlc9parameter10FieldEntryINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE, i64 16), ptr %i.l, align 8, !tbaa !47
+  store ptr %i.u, ptr %i.t, align 16, !tbaa !8
+  store ptr getelementptr inbounds nuw inrange(-16, 72) (i8, ptr @_ZTVN4dmlc9parameter10FieldEntryINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE, i64 16), ptr %i.l, align 16, !tbaa !47
   invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_assignERKS4_(ptr noundef nonnull align 8 dereferenceable(32) %i.m, ptr noundef nonnull align 8 dereferenceable(32) %8)
           to label %.noexc77 unwind label %bb.a
 
 .noexc77:                                         ; preds = %.noexc76
-  %i.v = load i64, ptr %i.q, align 8, !tbaa !12
+  %i.v = load i64, ptr %i.q, align 16, !tbaa !12
   %i.w = icmp eq i64 %i.v, 0
   br i1 %i.w, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit.i.i, label %_ZN4dmlc9parameter14FieldEntryBaseINS0_10FieldEntryINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEES8_E4InitERKS8_PvRS8_.exit.i
 
@@ -3086,7 +3086,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit.i.i: ; preds =
   %i.aa = load ptr, ptr %i.o, align 8, !tbaa !17
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(6) %i.aa, ptr noundef nonnull align 1 dereferenceable(6) @.str.183, i64 6, i1 false)
   %i.ab = load i64, ptr %i.y, align 8, !tbaa !12  ; 2 uses
-  store i64 %i.ab, ptr %i.q, align 8, !tbaa !12
+  store i64 %i.ab, ptr %i.q, align 16, !tbaa !12
   %i.ac = load ptr, ptr %i.o, align 8, !tbaa !17
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 %i.ab
   store i8 0, ptr %i.ad, align 1, !tbaa !15
@@ -3211,13 +3211,13 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit94: ; preds = %_ZN
   store ptr %i.bo, ptr %i.bn, align 8, !tbaa !8
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bh, i64 128 ; 2 uses
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bh, i64 144
-  store ptr %i.bq, ptr %i.bp, align 8, !tbaa !8
-  store ptr getelementptr inbounds nuw inrange(-16, 72) (i8, ptr @_ZTVN4dmlc9parameter10FieldEntryINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE, i64 16), ptr %i.bh, align 8, !tbaa !47
+  store ptr %i.bq, ptr %i.bp, align 16, !tbaa !8
+  store ptr getelementptr inbounds nuw inrange(-16, 72) (i8, ptr @_ZTVN4dmlc9parameter10FieldEntryINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE, i64 16), ptr %i.bh, align 16, !tbaa !47
   invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_assignERKS4_(ptr noundef nonnull align 8 dereferenceable(32) %i.bi, ptr noundef nonnull align 8 dereferenceable(32) %11)
           to label %.noexc106 unwind label %bb.g
 
 .noexc106:                                        ; preds = %.noexc105
-  %i.br = load i64, ptr %i.bm, align 8, !tbaa !12
+  %i.br = load i64, ptr %i.bm, align 16, !tbaa !12
   %i.bs = icmp eq i64 %i.br, 0
   br i1 %i.bs, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit.i.i100, label %_ZN4dmlc9parameter14FieldEntryBaseINS0_10FieldEntryINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEES8_E4InitERKS8_PvRS8_.exit.i99
 
@@ -3233,7 +3233,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit.i.i100: ; pred
   %i.bw = load ptr, ptr %i.bk, align 8, !tbaa !17
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(6) %i.bw, ptr noundef nonnull align 1 dereferenceable(6) @.str.183, i64 6, i1 false)
   %i.bx = load i64, ptr %i.bu, align 8, !tbaa !12 ; 2 uses
-  store i64 %i.bx, ptr %i.bm, align 8, !tbaa !12
+  store i64 %i.bx, ptr %i.bm, align 16, !tbaa !12
   %i.by = load ptr, ptr %i.bk, align 8, !tbaa !17
   %i.bz = getelementptr inbounds nuw i8, ptr %i.by, i64 %i.bx
   store i8 0, ptr %i.bz, align 1, !tbaa !15
@@ -3358,13 +3358,13 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit129: ; preds = %_Z
   store ptr %i.dk, ptr %i.dj, align 8, !tbaa !8
   %i.dl = getelementptr inbounds nuw i8, ptr %i.dd, i64 128 ; 2 uses
   %i.dm = getelementptr inbounds nuw i8, ptr %i.dd, i64 144
-  store ptr %i.dm, ptr %i.dl, align 8, !tbaa !8
-  store ptr getelementptr inbounds nuw inrange(-16, 72) (i8, ptr @_ZTVN4dmlc9parameter10FieldEntryINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE, i64 16), ptr %i.dd, align 8, !tbaa !47
+  store ptr %i.dm, ptr %i.dl, align 16, !tbaa !8
+  store ptr getelementptr inbounds nuw inrange(-16, 72) (i8, ptr @_ZTVN4dmlc9parameter10FieldEntryINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE, i64 16), ptr %i.dd, align 16, !tbaa !47
   invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_assignERKS4_(ptr noundef nonnull align 8 dereferenceable(32) %i.de, ptr noundef nonnull align 8 dereferenceable(32) %14)
           to label %.noexc141 unwind label %bb.m
 
 .noexc141:                                        ; preds = %.noexc140
-  %i.dn = load i64, ptr %i.di, align 8, !tbaa !12
+  %i.dn = load i64, ptr %i.di, align 16, !tbaa !12
   %i.do = icmp eq i64 %i.dn, 0
   br i1 %i.do, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit.i.i135, label %_ZN4dmlc9parameter14FieldEntryBaseINS0_10FieldEntryINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEES8_E4InitERKS8_PvRS8_.exit.i134
 
@@ -3380,7 +3380,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit.i.i135: ; pred
   %i.ds = load ptr, ptr %i.dg, align 8, !tbaa !17
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(6) %i.ds, ptr noundef nonnull align 1 dereferenceable(6) @.str.183, i64 6, i1 false)
   %i.dt = load i64, ptr %i.dq, align 8, !tbaa !12 ; 2 uses
-  store i64 %i.dt, ptr %i.di, align 8, !tbaa !12
+  store i64 %i.dt, ptr %i.di, align 16, !tbaa !12
   %i.du = load ptr, ptr %i.dg, align 8, !tbaa !17
   %i.dv = getelementptr inbounds nuw i8, ptr %i.du, i64 %i.dt
   store i8 0, ptr %i.dv, align 1, !tbaa !15
@@ -3516,13 +3516,13 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit164: ; preds = %_Z
   store ptr %i.fj, ptr %i.fi, align 8, !tbaa !8
   %i.fk = getelementptr inbounds nuw i8, ptr %i.fc, i64 128 ; 2 uses
   %i.fl = getelementptr inbounds nuw i8, ptr %i.fc, i64 144
-  store ptr %i.fl, ptr %i.fk, align 8, !tbaa !8
-  store ptr getelementptr inbounds nuw inrange(-16, 72) (i8, ptr @_ZTVN4dmlc9parameter10FieldEntryINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE, i64 16), ptr %i.fc, align 8, !tbaa !47
+  store ptr %i.fl, ptr %i.fk, align 16, !tbaa !8
+  store ptr getelementptr inbounds nuw inrange(-16, 72) (i8, ptr @_ZTVN4dmlc9parameter10FieldEntryINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE, i64 16), ptr %i.fc, align 16, !tbaa !47
   invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_assignERKS4_(ptr noundef nonnull align 8 dereferenceable(32) %i.fd, ptr noundef nonnull align 8 dereferenceable(32) %17)
           to label %.noexc176 unwind label %bb.t
 
 .noexc176:                                        ; preds = %.noexc175
-  %i.fm = load i64, ptr %i.fh, align 8, !tbaa !12
+  %i.fm = load i64, ptr %i.fh, align 16, !tbaa !12
   %i.fn = icmp eq i64 %i.fm, 0
   br i1 %i.fn, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit.i.i170, label %_ZN4dmlc9parameter14FieldEntryBaseINS0_10FieldEntryINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEES8_E4InitERKS8_PvRS8_.exit.i169
 
@@ -3538,7 +3538,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit.i.i170: ; pred
   %i.fr = load ptr, ptr %i.ff, align 8, !tbaa !17
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(6) %i.fr, ptr noundef nonnull align 1 dereferenceable(6) @.str.183, i64 6, i1 false)
   %i.fs = load i64, ptr %i.fp, align 8, !tbaa !12 ; 2 uses
-  store i64 %i.fs, ptr %i.fh, align 8, !tbaa !12
+  store i64 %i.fs, ptr %i.fh, align 16, !tbaa !12
   %i.ft = load ptr, ptr %i.ff, align 8, !tbaa !17
   %i.fu = getelementptr inbounds nuw i8, ptr %i.ft, i64 %i.fs
   store i8 0, ptr %i.fu, align 1, !tbaa !15
@@ -3673,13 +3673,13 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit199: ; preds = %_Z
   store ptr %i.hi, ptr %i.hh, align 8, !tbaa !8
   %i.hj = getelementptr inbounds nuw i8, ptr %i.hb, i64 128 ; 2 uses
   %i.hk = getelementptr inbounds nuw i8, ptr %i.hb, i64 144
-  store ptr %i.hk, ptr %i.hj, align 8, !tbaa !8
-  store ptr getelementptr inbounds nuw inrange(-16, 72) (i8, ptr @_ZTVN4dmlc9parameter10FieldEntryINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE, i64 16), ptr %i.hb, align 8, !tbaa !47
+  store ptr %i.hk, ptr %i.hj, align 16, !tbaa !8
+  store ptr getelementptr inbounds nuw inrange(-16, 72) (i8, ptr @_ZTVN4dmlc9parameter10FieldEntryINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE, i64 16), ptr %i.hb, align 16, !tbaa !47
   invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_assignERKS4_(ptr noundef nonnull align 8 dereferenceable(32) %i.hc, ptr noundef nonnull align 8 dereferenceable(32) %20)
           to label %.noexc211 unwind label %bb.aa
 
 .noexc211:                                        ; preds = %.noexc210
-  %i.hl = load i64, ptr %i.hg, align 8, !tbaa !12
+  %i.hl = load i64, ptr %i.hg, align 16, !tbaa !12
   %i.hm = icmp eq i64 %i.hl, 0
   br i1 %i.hm, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit.i.i205, label %_ZN4dmlc9parameter14FieldEntryBaseINS0_10FieldEntryINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEES8_E4InitERKS8_PvRS8_.exit.i204
 
@@ -3695,7 +3695,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit.i.i205: ; pred
   %i.hq = load ptr, ptr %i.he, align 8, !tbaa !17
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(6) %i.hq, ptr noundef nonnull align 1 dereferenceable(6) @.str.183, i64 6, i1 false)
   %i.hr = load i64, ptr %i.ho, align 8, !tbaa !12 ; 2 uses
-  store i64 %i.hr, ptr %i.hg, align 8, !tbaa !12
+  store i64 %i.hr, ptr %i.hg, align 16, !tbaa !12
   %i.hs = load ptr, ptr %i.he, align 8, !tbaa !17
   %i.ht = getelementptr inbounds nuw i8, ptr %i.hs, i64 %i.hr
   store i8 0, ptr %i.ht, align 1, !tbaa !15
@@ -3819,13 +3819,13 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit234: ; preds = %_Z
   store ptr %i.je, ptr %i.jd, align 8, !tbaa !8
   %i.jf = getelementptr inbounds nuw i8, ptr %i.ix, i64 128 ; 2 uses
   %i.jg = getelementptr inbounds nuw i8, ptr %i.ix, i64 144
-  store ptr %i.jg, ptr %i.jf, align 8, !tbaa !8
-  store ptr getelementptr inbounds nuw inrange(-16, 72) (i8, ptr @_ZTVN4dmlc9parameter10FieldEntryINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE, i64 16), ptr %i.ix, align 8, !tbaa !47
+  store ptr %i.jg, ptr %i.jf, align 16, !tbaa !8
+  store ptr getelementptr inbounds nuw inrange(-16, 72) (i8, ptr @_ZTVN4dmlc9parameter10FieldEntryINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE, i64 16), ptr %i.ix, align 16, !tbaa !47
   invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_assignERKS4_(ptr noundef nonnull align 8 dereferenceable(32) %i.iy, ptr noundef nonnull align 8 dereferenceable(32) %23)
           to label %.noexc246 unwind label %bb.ag
 
 .noexc246:                                        ; preds = %.noexc245
-  %i.jh = load i64, ptr %i.jc, align 8, !tbaa !12
+  %i.jh = load i64, ptr %i.jc, align 16, !tbaa !12
   %i.ji = icmp eq i64 %i.jh, 0
   br i1 %i.ji, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit.i.i240, label %_ZN4dmlc9parameter14FieldEntryBaseINS0_10FieldEntryINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEES8_E4InitERKS8_PvRS8_.exit.i239
 
@@ -3841,7 +3841,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit.i.i240: ; pred
   %i.jm = load ptr, ptr %i.ja, align 8, !tbaa !17
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(6) %i.jm, ptr noundef nonnull align 1 dereferenceable(6) @.str.183, i64 6, i1 false)
   %i.jn = load i64, ptr %i.jk, align 8, !tbaa !12 ; 2 uses
-  store i64 %i.jn, ptr %i.jc, align 8, !tbaa !12
+  store i64 %i.jn, ptr %i.jc, align 16, !tbaa !12
   %i.jo = load ptr, ptr %i.ja, align 8, !tbaa !17
   %i.jp = getelementptr inbounds nuw i8, ptr %i.jo, i64 %i.jn
   store i8 0, ptr %i.jp, align 1, !tbaa !15

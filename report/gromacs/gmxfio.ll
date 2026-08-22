@@ -152,10 +152,10 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   %i.s = getelementptr inbounds nuw i8, ptr %i.o, i64 16 ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.o, i64 32 ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(11) %i.o, i8 0, i64 11, i1 false)
-  store ptr %i.t, ptr %i.s, align 8, !tbaa !9
+  store ptr %i.t, ptr %i.s, align 16, !tbaa !9
   %i.u = getelementptr inbounds nuw i8, ptr %i.o, i64 24
   store i64 0, ptr %i.u, align 8, !tbaa !13
-  store i8 0, ptr %i.t, align 8, !tbaa !16
+  store i8 0, ptr %i.t, align 16, !tbaa !16
   %i.v = getelementptr inbounds nuw i8, ptr %i.o, i64 48
   invoke void @_ZNSt10filesystem7__cxx114path5_ListC1Ev(ptr noundef nonnull align 8 dereferenceable(8) %i.v)
           to label %_ZNSt10filesystem7__cxx114pathC2Ev.exit unwind label %bb.m
@@ -172,11 +172,11 @@ _ZNSt10filesystem7__cxx114pathC2Ev.exit:          ; preds = %bb.l
   %i.z = getelementptr inbounds nuw i8, ptr %i.o, i64 64 ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %i.o, i64 68 ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %i.o, i64 64
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ab, i8 0, i64 24, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %i.ab, i8 0, i64 24, i1 false)
   %i.ac = load i8, ptr %i.a, align 2, !tbaa !16
   %i.ad = getelementptr inbounds nuw i8, ptr %i.a, i64 1
   %i.ae = load i8, ptr %i.ad, align 1             ; 2 uses
-  store ptr null, ptr %i.o, align 8, !tbaa !17
+  store ptr null, ptr %i.o, align 16, !tbaa !17
   store ptr null, ptr %i.y, align 8, !tbaa !33
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.ag = load i64, ptr %i.af, align 8, !tbaa !13
@@ -252,7 +252,7 @@ bb.x:                                             ; preds = %bb.o
   store i32 %i.au, ptr %i.aa, align 4, !tbaa !35
   %i.av = tail call noundef nonnull align 8 dereferenceable(40) ptr @_ZNSt10filesystem7__cxx114pathaSERKS1_(ptr noundef nonnull align 8 dereferenceable(40) %i.s, ptr noundef nonnull align 8 dereferenceable(40) %0) ; 0 uses
   %i.aw = call noundef ptr @_Z10gmx_ffopenRKNSt10filesystem7__cxx114pathEPKc(ptr noundef nonnull align 8 dereferenceable(40) %0, ptr noundef nonnull %i.a)
-  store ptr %i.aw, ptr %i.o, align 8, !tbaa !17
+  store ptr %i.aw, ptr %i.o, align 16, !tbaa !17
   %i.ax = load i32, ptr %i.aa, align 4, !tbaa !35
   %i.ay = call noundef zeroext i1 @_Z10ftp_is_xdri(i32 noundef %i.ax)
   br i1 %i.ay, label %bb.y, label %bb.z
@@ -263,11 +263,11 @@ bb.y:                                             ; preds = %bb.x
   %switch.selectcmp.case2 = icmp ne i8 %i.az, 97
   %switch.selectcmp.not = and i1 %switch.selectcmp.case1, %switch.selectcmp.case2
   %i.ba = zext i1 %switch.selectcmp.not to i32
-  store i32 %i.ba, ptr %i.z, align 8, !tbaa !36
+  store i32 %i.ba, ptr %i.z, align 16, !tbaa !36
   %i.bb = call noundef ptr @_Z11save_callocPKcS0_imm(ptr noundef nonnull @.str.11, ptr noundef nonnull @.str.6, i32 noundef 268, i64 noundef 1, i64 noundef 48) ; 2 uses
   store ptr %i.bb, ptr %i.y, align 8, !tbaa !37
-  %i.bc = load ptr, ptr %i.o, align 8, !tbaa !17
-  %i.bd = load i32, ptr %i.z, align 8, !tbaa !36
+  %i.bc = load ptr, ptr %i.o, align 16, !tbaa !17
+  %i.bd = load i32, ptr %i.z, align 16, !tbaa !36
   call void @_Z15xdrstdio_createP3XDRP8_IO_FILE6xdr_op(ptr noundef %i.bb, ptr noundef %i.bc, i32 noundef %i.bd)
   br label %bb.z
 
@@ -277,7 +277,7 @@ bb.z:                                             ; preds = %bb.y, %bb.x
   br i1 %i.bf, label %bb.aa, label %bb.ae
 
 bb.aa:                                            ; preds = %bb.z
-  %i.bg = load ptr, ptr %i.o, align 8, !tbaa !17
+  %i.bg = load ptr, ptr %i.o, align 16, !tbaa !17
   %i.bh = call noundef i32 @_Z9gmx_fseekP8_IO_FILEli(ptr noundef %i.bg, i64 noundef 0, i32 noundef 2) ; 0 uses
   br label %bb.ae
 
@@ -333,10 +333,10 @@ bb.ag:                                            ; preds = %_ZNSt10lock_guardIS
   %i.bs = getelementptr inbounds nuw i8, ptr %i.br, i64 16 ; 3 uses
   %i.bt = getelementptr inbounds nuw i8, ptr %i.br, i64 32 ; 2 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(11) %i.br, i8 0, i64 11, i1 false)
-  store ptr %i.bt, ptr %i.bs, align 8, !tbaa !9
+  store ptr %i.bt, ptr %i.bs, align 16, !tbaa !9
   %i.bu = getelementptr inbounds nuw i8, ptr %i.br, i64 24 ; 2 uses
   store i64 0, ptr %i.bu, align 8, !tbaa !13
-  store i8 0, ptr %i.bt, align 8, !tbaa !16
+  store i8 0, ptr %i.bt, align 16, !tbaa !16
   %i.bv = getelementptr inbounds nuw i8, ptr %i.br, i64 48
   invoke void @_ZNSt10filesystem7__cxx114path5_ListC1Ev(ptr noundef nonnull align 8 dereferenceable(8) %i.bv)
           to label %_ZNSt10filesystem7__cxx114pathC2Ev.exit.i.i unwind label %bb.ah
@@ -352,9 +352,9 @@ _ZNSt10filesystem7__cxx114pathC2Ev.exit.i.i:      ; preds = %.noexc.i
   %i.by = getelementptr inbounds nuw i8, ptr %i.br, i64 56
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.by, i8 0, i64 32, i1 false)
   store ptr %i.br, ptr @_ZL10open_files, align 8, !tbaa !41
-  store ptr null, ptr %i.br, align 8, !tbaa !17
+  store ptr null, ptr %i.br, align 16, !tbaa !17
   store i64 0, ptr %i.bu, align 8, !tbaa !13
-  %i.bz = load ptr, ptr %i.bs, align 8, !tbaa !34
+  %i.bz = load ptr, ptr %i.bs, align 16, !tbaa !34
   store i8 0, ptr %i.bz, align 1, !tbaa !16
   invoke void @_ZNSt10filesystem7__cxx114path14_M_split_cmptsEv(ptr noundef nonnull align 8 dereferenceable(40) %i.bs)
           to label %_ZNSt10filesystem7__cxx114path5clearEv.exit.i.i unwind label %bb.ai
@@ -394,7 +394,7 @@ _ZL14gmx_fio_insertP8t_fileio.exit:               ; preds = %_ZNSt10lock_guardIS
   store ptr %i.o, ptr %i.cl, align 8, !tbaa !42
   %i.cm = getelementptr inbounds nuw i8, ptr %i.ch, i64 72
   store ptr %i.o, ptr %i.cm, align 8, !tbaa !43
-  store ptr %i.ch, ptr %i.cj, align 8, !tbaa !42
+  store ptr %i.ch, ptr %i.cj, align 16, !tbaa !42
   %i.cn = call noundef i32 @pthread_mutex_unlock(ptr noundef nonnull align 8 dereferenceable(40) @_ZL15open_file_mutex) #22 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #22
   ret ptr %i.o
@@ -797,10 +797,10 @@ bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 16 ; 3 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.d, i64 32 ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(11) %i.d, i8 0, i64 11, i1 false)
-  store ptr %i.f, ptr %i.e, align 8, !tbaa !9
+  store ptr %i.f, ptr %i.e, align 16, !tbaa !9
   %i.g = getelementptr inbounds nuw i8, ptr %i.d, i64 24 ; 2 uses
   store i64 0, ptr %i.g, align 8, !tbaa !13
-  store i8 0, ptr %i.f, align 8, !tbaa !16
+  store i8 0, ptr %i.f, align 16, !tbaa !16
   %i.h = getelementptr inbounds nuw i8, ptr %i.d, i64 48
   invoke void @_ZNSt10filesystem7__cxx114path5_ListC1Ev(ptr noundef nonnull align 8 dereferenceable(8) %i.h)
           to label %_ZNSt10filesystem7__cxx114pathC2Ev.exit.i unwind label %bb.c
@@ -816,9 +816,9 @@ _ZNSt10filesystem7__cxx114pathC2Ev.exit.i:        ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %i.d, i64 56
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.k, i8 0, i64 32, i1 false)
   store ptr %i.d, ptr @_ZL10open_files, align 8, !tbaa !41
-  store ptr null, ptr %i.d, align 8, !tbaa !17
+  store ptr null, ptr %i.d, align 16, !tbaa !17
   store i64 0, ptr %i.g, align 8, !tbaa !13
-  %i.l = load ptr, ptr %i.e, align 8, !tbaa !34
+  %i.l = load ptr, ptr %i.e, align 16, !tbaa !34
   store i8 0, ptr %i.l, align 1, !tbaa !16
   invoke void @_ZNSt10filesystem7__cxx114path14_M_split_cmptsEv(ptr noundef nonnull align 8 dereferenceable(40) %i.e)
           to label %_ZNSt10filesystem7__cxx114path5clearEv.exit.i unwind label %bb.d

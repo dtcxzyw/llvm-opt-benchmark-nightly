@@ -205,7 +205,7 @@ _ZN10btSoftBody10clusterComEPKNS_7ClusterE.exit:  ; preds = %.epil.preheader, %_
   %.sroa.5142.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.g, i64 208 ; 2 uses
   %.sroa.6143.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.g, i64 212
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.ds, i8 0, i64 40, i1 false)
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(48) %i.dt, i8 0, i64 48, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.dt, i8 0, i64 48, i1 false)
   br i1 %i.bf, label %.lr.ph163, label %_ZN10btSoftBody10clusterComEPKNS_7ClusterE.exit.._crit_edge164_crit_edge
 
 _ZN10btSoftBody10clusterComEPKNS_7ClusterE.exit.._crit_edge164_crit_edge: ; preds = %_ZN10btSoftBody10clusterComEPKNS_7ClusterE.exit
@@ -387,12 +387,12 @@ bb.l:                                             ; preds = %.lr.ph163, %bb.l
   store float 1.000000e+00, ptr %i.ii, align 4, !tbaa !159
   %i.ij = getelementptr inbounds nuw i8, ptr %i.g, i64 120
   %i.ik = getelementptr inbounds nuw i8, ptr %i.g, i64 136
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.ij, i8 0, i64 16, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ij, i8 0, i64 16, i1 false)
   store float 1.000000e+00, ptr %i.ik, align 8, !tbaa !159
   %i.il = getelementptr inbounds nuw i8, ptr %i.g, i64 140
   store i32 0, ptr %i.il, align 4
   %i.im = getelementptr inbounds nuw i8, ptr %i.g, i64 144
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.im, ptr noundef nonnull align 4 dereferenceable(16) %i.dr, i64 16, i1 false), !tbaa.struct !198
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.im, ptr noundef nonnull align 8 dereferenceable(16) %i.dr, i64 16, i1 false), !tbaa.struct !198
   %i.in = getelementptr inbounds nuw i8, ptr %i.g, i64 68 ; 4 uses
   %i.io = load i32, ptr %i.in, align 4, !tbaa !37 ; 2 uses
   %i.ip = icmp sgt i32 %i.be, %i.io
@@ -707,12 +707,12 @@ bb.e:                                             ; preds = %._crit_edge, %.loop
   call fastcc void @_ZL14PolarDecomposeRK11btMatrix3x3RS_S2_(ptr noundef nonnull align 4 dereferenceable(48) %1, ptr noundef nonnull align 4 dereferenceable(48) %2, ptr noundef nonnull align 4 dereferenceable(48) %3)
   %i.cj = getelementptr inbounds nuw i8, ptr %i.s, i64 96 ; 3 uses
   %i.ck = getelementptr inbounds nuw i8, ptr %i.s, i64 144 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.ck, ptr noundef nonnull align 4 dereferenceable(16) %i.ca, i64 16, i1 false), !tbaa.struct !198
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(64) %i.cj, ptr noundef nonnull align 4 dereferenceable(48) %2, i64 16, i1 false), !tbaa.struct !198
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ck, ptr noundef nonnull align 8 dereferenceable(16) %i.ca, i64 16, i1 false), !tbaa.struct !198
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.cj, ptr noundef nonnull align 4 dereferenceable(48) %2, i64 16, i1 false), !tbaa.struct !198
   %i.cl = getelementptr inbounds nuw i8, ptr %i.s, i64 112 ; 3 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.cl, ptr noundef nonnull align 4 dereferenceable(16) %i.i, i64 16, i1 false), !tbaa.struct !198
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.cl, ptr noundef nonnull align 4 dereferenceable(16) %i.i, i64 16, i1 false), !tbaa.struct !198
   %i.cm = getelementptr inbounds nuw i8, ptr %i.s, i64 128 ; 3 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.cm, ptr noundef nonnull align 4 dereferenceable(16) %i.j, i64 16, i1 false), !tbaa.struct !198
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.cm, ptr noundef nonnull align 4 dereferenceable(16) %i.j, i64 16, i1 false), !tbaa.struct !198
   %i.cn = getelementptr inbounds nuw i8, ptr %i.s, i64 168
   %i.co = load float, ptr %i.cn, align 8, !tbaa !159, !noalias !456 ; 2 uses
   %i.cp = getelementptr inbounds nuw i8, ptr %i.s, i64 184
@@ -1115,39 +1115,39 @@ bb.i:                                             ; preds = %.lr.ph, %bb.i
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bz, ptr noundef nonnull align 8 dereferenceable(16) %i.by, i64 16, i1 false), !tbaa.struct !198
   %i.ca = getelementptr inbounds nuw i8, ptr %i.bx, i64 64 ; 2 uses
   %i.cb = getelementptr inbounds nuw i8, ptr %i.bx, i64 96
-  %i.cc = load float, ptr %i.cb, align 4, !tbaa !159 ; 3 uses
+  %i.cc = load float, ptr %i.cb, align 8, !tbaa !159 ; 3 uses
   %i.cd = getelementptr inbounds nuw i8, ptr %i.bx, i64 72
-  %i.ce = load float, ptr %i.cd, align 4, !tbaa !159
+  %i.ce = load float, ptr %i.cd, align 8, !tbaa !159
   %i.cf = fmul float %i.cc, %i.ce
   %i.cg = load float, ptr %i.k, align 8, !tbaa !159 ; 2 uses
   %i.ch = fmul float %i.cg, %i.cf
   %i.ci = getelementptr inbounds nuw i8, ptr %i.bx, i64 48 ; 2 uses
   %i.cj = getelementptr inbounds nuw i8, ptr %i.bx, i64 56 ; 2 uses
-  %i.ck = load float, ptr %i.cj, align 4, !tbaa !159
+  %i.ck = load float, ptr %i.cj, align 8, !tbaa !159
   %i.cl = fadd float %i.ch, %i.ck                 ; 2 uses
-  store float %i.cl, ptr %i.cj, align 4, !tbaa !159
-  %i.cm = load <2 x float>, ptr %i.ca, align 4, !tbaa !159 ; 2 uses
+  store float %i.cl, ptr %i.cj, align 8, !tbaa !159
+  %i.cm = load <2 x float>, ptr %i.ca, align 8, !tbaa !159 ; 2 uses
   %i.cn = insertelement <2 x float> %i.cm, float %i.cc, i64 1
   %i.co = insertelement <2 x float> %i.cm, float %i.cc, i64 0
   %i.cp = fmul <2 x float> %i.cn, %i.co
   %i.cq = insertelement <2 x float> poison, float %i.cg, i64 0
   %i.cr = shufflevector <2 x float> %i.cq, <2 x float> poison, <2 x i32> zeroinitializer
   %i.cs = fmul <2 x float> %i.cp, %i.cr
-  %i.ct = load <2 x float>, ptr %i.ci, align 4, !tbaa !159
+  %i.ct = load <2 x float>, ptr %i.ci, align 8, !tbaa !159
   %i.cu = fadd <2 x float> %i.cs, %i.ct           ; 2 uses
-  store <2 x float> %i.cu, ptr %i.ci, align 4, !tbaa !159
+  store <2 x float> %i.cu, ptr %i.ci, align 8, !tbaa !159
   %i.cv = load float, ptr %i.k, align 8, !tbaa !159 ; 2 uses
   %i.cw = insertelement <2 x float> poison, float %i.cv, i64 0
   %i.cx = shufflevector <2 x float> %i.cw, <2 x float> poison, <2 x i32> zeroinitializer
   %i.cy = fmul <2 x float> %i.cu, %i.cx
   %i.cz = fmul float %i.cl, %i.cv
-  %i.da = load <2 x float>, ptr %i.by, align 4, !tbaa !159
+  %i.da = load <2 x float>, ptr %i.by, align 8, !tbaa !159
   %i.db = fadd <2 x float> %i.cy, %i.da
-  store <2 x float> %i.db, ptr %i.by, align 4, !tbaa !159
+  store <2 x float> %i.db, ptr %i.by, align 8, !tbaa !159
   %i.dc = getelementptr inbounds nuw i8, ptr %i.bx, i64 24 ; 2 uses
-  %i.dd = load float, ptr %i.dc, align 4, !tbaa !159
+  %i.dd = load float, ptr %i.dc, align 8, !tbaa !159
   %i.de = fadd float %i.cz, %i.dd
-  store float %i.de, ptr %i.dc, align 4, !tbaa !159
+  store float %i.de, ptr %i.dc, align 8, !tbaa !159
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ca, i8 0, i64 16, i1 false)
@@ -1550,11 +1550,11 @@ bb.c:                                             ; preds = %.lr.ph140, %bb.c
   %i.cg = getelementptr inbounds nuw i8, ptr %i.ap, i64 280
   call fastcc void @_ZL13ImpulseMatrixfffRK11btMatrix3x3RK9btVector3(ptr dead_on_unwind noalias writable align 4 %2, float noundef %i.ca, float noundef %i.cd, float noundef %i.cf, ptr noundef nonnull align 4 dereferenceable(48) %i.cg, ptr noundef nonnull align 4 dereferenceable(16) %1)
   %i.ch = getelementptr inbounds nuw i8, ptr %i.an, i64 32
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(48) %i.ch, ptr noundef nonnull align 4 dereferenceable(48) %2, i64 16, i1 false), !tbaa.struct !198
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.ch, ptr noundef nonnull align 4 dereferenceable(48) %2, i64 16, i1 false), !tbaa.struct !198
   %i.ci = getelementptr inbounds nuw i8, ptr %i.an, i64 48
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.ci, ptr noundef nonnull align 4 dereferenceable(16) %i.ak, i64 16, i1 false), !tbaa.struct !198
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ci, ptr noundef nonnull align 4 dereferenceable(16) %i.ak, i64 16, i1 false), !tbaa.struct !198
   %i.cj = getelementptr inbounds nuw i8, ptr %i.an, i64 64
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.cj, ptr noundef nonnull align 4 dereferenceable(16) %i.al, i64 16, i1 false), !tbaa.struct !198
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.cj, ptr noundef nonnull align 4 dereferenceable(16) %i.al, i64 16, i1 false), !tbaa.struct !198
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #34
   %i.ck = getelementptr inbounds nuw i8, ptr %i.an, i64 80
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ck, ptr noundef nonnull align 8 dereferenceable(16) %1, i64 16, i1 false), !tbaa.struct !198
@@ -1957,14 +1957,14 @@ bb.f:                                             ; preds = %bb.e, %bb.d, %bb.c,
   %i.dw = tail call noalias noundef nonnull dereferenceable(296) ptr @_Znwm(i64 noundef 296) #32 ; 10 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(296) %i.dw, i8 0, i64 288, i1 false)
   %i.dx = getelementptr inbounds nuw i8, ptr %i.dw, i64 288
-  store ptr %i.ct, ptr %i.dx, align 8, !tbaa !582
+  store ptr %i.ct, ptr %i.dx, align 16, !tbaa !582
   store ptr %i.dw, ptr %i.cs, align 8, !tbaa !575
   %i.dy = getelementptr inbounds nuw i8, ptr %i.dw, i64 280
   store ptr %2, ptr %i.dy, align 8, !tbaa !581
   %i.dz = getelementptr inbounds nuw i8, ptr %i.dw, i64 272
-  store i32 %i.cl, ptr %i.dz, align 8, !tbaa !579
+  store i32 %i.cl, ptr %i.dz, align 16, !tbaa !579
   %i.ea = getelementptr inbounds nuw i8, ptr %i.dw, i64 256
-  store i32 %i.s, ptr %i.ea, align 8, !tbaa !4
+  store i32 %i.s, ptr %i.ea, align 16, !tbaa !4
   %i.eb = getelementptr inbounds nuw i8, ptr %i.dw, i64 260
   store i32 %i.t, ptr %i.eb, align 4, !tbaa !4
   %i.ec = getelementptr inbounds nuw i8, ptr %i.dw, i64 264
@@ -2367,7 +2367,7 @@ _ZNK10btSoftBody4Body12applyImpulseERKNS_7ImpulseERK9btVector3.exit: ; preds = %
   %i.gp = load ptr, ptr %i.a, align 8, !tbaa !293
   %i.gq = getelementptr inbounds nuw i8, ptr %i.gp, i64 412
   %i.gr = load float, ptr %i.gq, align 4, !tbaa !629 ; 3 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(36) %5, ptr noundef nonnull align 8 dereferenceable(36) %3, i64 36, i1 false), !tbaa.struct !612
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(36) %5, ptr noundef nonnull align 8 dereferenceable(36) %3, i64 36, i1 false), !tbaa.struct !612
   %i.gs = load <2 x float>, ptr %5, align 8, !tbaa !159, !alias.scope !633
   %i.gt = insertelement <2 x float> poison, float %i.gr, i64 0
   %i.gu = shufflevector <2 x float> %i.gt, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses

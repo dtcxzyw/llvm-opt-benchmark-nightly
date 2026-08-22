@@ -205,7 +205,7 @@ _Z11do_fit_ndimiiPfPA3_KfPA3_f.exit:              ; preds = %.preheader29.i, %mi
 ; Function Attrs: mustprogress uwtable
 define void @_Z12reset_x_ndimiiPKiiS0_PA3_fPKf(i32 noundef %0, i32 noundef %1, ptr nofree noundef readonly captures(address_is_null) %2, i32 noundef %3, ptr nofree noundef readonly captures(address_is_null) %4, ptr nofree noundef captures(none) %5, ptr nofree noundef readonly captures(none) %6) local_unnamed_addr #4 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = alloca [3 x float], align 16             ; 30 uses
+  %i.a = alloca [3 x float], align 8              ; 30 uses
   %7 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
   %8 = alloca %"class.std::allocator", align 1    ; 3 uses
   %9 = alloca %"class.std::filesystem::__cxx11::path", align 8 ; 5 uses
@@ -260,7 +260,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.g,
   resume { ptr, i32 } %.pn
 
 bb.h:                                             ; preds = %bb.a
-  store <2 x float> zeroinitializer, ptr %i.a, align 16, !tbaa !9
+  store <2 x float> zeroinitializer, ptr %i.a, align 8, !tbaa !9
   %i.j = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 3 uses
   store float 0.000000e+00, ptr %i.j, align 8, !tbaa !9
   %.not = icmp eq ptr %2, null
@@ -302,9 +302,9 @@ bb.h:                                             ; preds = %bb.a
   %broadcast.splat158 = shufflevector <4 x float> %broadcast.splatinsert157, <4 x float> poison, <4 x i32> zeroinitializer
   %i.t = getelementptr inbounds [12 x i8], ptr %5, i64 %i.q
   %wide.masked.load = tail call <4 x float> @llvm.masked.load.v4f32.p0(ptr align 4 %i.t, <4 x i1> %i.m, <4 x float> poison), !tbaa !9
-  %wide.masked.load159 = call <4 x float> @llvm.masked.load.v4f32.p0(ptr nonnull align 16 %i.a, <4 x i1> %i.m, <4 x float> poison), !tbaa !9
+  %wide.masked.load159 = call <4 x float> @llvm.masked.load.v4f32.p0(ptr nonnull align 8 %i.a, <4 x i1> %i.m, <4 x float> poison), !tbaa !9
   %i.u = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %broadcast.splat158, <4 x float> %wide.masked.load, <4 x float> %wide.masked.load159)
-  call void @llvm.masked.store.v4f32.p0(<4 x float> %i.u, ptr align 16 %i.a, <4 x i1> %i.m), !tbaa !9
+  call void @llvm.masked.store.v4f32.p0(<4 x float> %i.u, ptr align 8 %i.a, <4 x i1> %i.m), !tbaa !9
   %i.v = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %indvars.iv104
   %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 4
   %i.x = load i32, ptr %i.w, align 4, !tbaa !13
@@ -315,9 +315,9 @@ bb.h:                                             ; preds = %bb.a
   %broadcast.splat158.1 = shufflevector <4 x float> %broadcast.splatinsert157.1, <4 x float> poison, <4 x i32> zeroinitializer
   %i.ab = getelementptr inbounds [12 x i8], ptr %5, i64 %i.y
   %wide.masked.load.1 = tail call <4 x float> @llvm.masked.load.v4f32.p0(ptr align 4 %i.ab, <4 x i1> %i.m, <4 x float> poison), !tbaa !9
-  %wide.masked.load159.1 = call <4 x float> @llvm.masked.load.v4f32.p0(ptr nonnull align 16 %i.a, <4 x i1> %i.m, <4 x float> poison), !tbaa !9
+  %wide.masked.load159.1 = call <4 x float> @llvm.masked.load.v4f32.p0(ptr nonnull align 8 %i.a, <4 x i1> %i.m, <4 x float> poison), !tbaa !9
   %i.ac = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %broadcast.splat158.1, <4 x float> %wide.masked.load.1, <4 x float> %wide.masked.load159.1)
-  call void @llvm.masked.store.v4f32.p0(<4 x float> %i.ac, ptr align 16 %i.a, <4 x i1> %i.m), !tbaa !9
+  call void @llvm.masked.store.v4f32.p0(<4 x float> %i.ac, ptr align 8 %i.a, <4 x i1> %i.m), !tbaa !9
   %i.ad = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %indvars.iv104
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 8
   %i.af = load i32, ptr %i.ae, align 4, !tbaa !13
@@ -328,9 +328,9 @@ bb.h:                                             ; preds = %bb.a
   %broadcast.splat158.2 = shufflevector <4 x float> %broadcast.splatinsert157.2, <4 x float> poison, <4 x i32> zeroinitializer
   %i.aj = getelementptr inbounds [12 x i8], ptr %5, i64 %i.ag
   %wide.masked.load.2 = tail call <4 x float> @llvm.masked.load.v4f32.p0(ptr align 4 %i.aj, <4 x i1> %i.m, <4 x float> poison), !tbaa !9
-  %wide.masked.load159.2 = call <4 x float> @llvm.masked.load.v4f32.p0(ptr nonnull align 16 %i.a, <4 x i1> %i.m, <4 x float> poison), !tbaa !9
+  %wide.masked.load159.2 = call <4 x float> @llvm.masked.load.v4f32.p0(ptr nonnull align 8 %i.a, <4 x i1> %i.m, <4 x float> poison), !tbaa !9
   %i.ak = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %broadcast.splat158.2, <4 x float> %wide.masked.load.2, <4 x float> %wide.masked.load159.2)
-  call void @llvm.masked.store.v4f32.p0(<4 x float> %i.ak, ptr align 16 %i.a, <4 x i1> %i.m), !tbaa !9
+  call void @llvm.masked.store.v4f32.p0(<4 x float> %i.ak, ptr align 8 %i.a, <4 x i1> %i.m), !tbaa !9
   %i.al = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %indvars.iv104
   %i.am = getelementptr inbounds nuw i8, ptr %i.al, i64 12
   %i.an = load i32, ptr %i.am, align 4, !tbaa !13
@@ -344,9 +344,9 @@ bb.h:                                             ; preds = %bb.a
   %i.at = fadd float %i.as, %i.aa
   %i.au = fadd float %i.at, %i.ai
   %wide.masked.load.3 = tail call <4 x float> @llvm.masked.load.v4f32.p0(ptr align 4 %i.ar, <4 x i1> %i.m, <4 x float> poison), !tbaa !9
-  %wide.masked.load159.3 = call <4 x float> @llvm.masked.load.v4f32.p0(ptr nonnull align 16 %i.a, <4 x i1> %i.m, <4 x float> poison), !tbaa !9
+  %wide.masked.load159.3 = call <4 x float> @llvm.masked.load.v4f32.p0(ptr nonnull align 8 %i.a, <4 x i1> %i.m, <4 x float> poison), !tbaa !9
   %i.av = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %broadcast.splat158.3, <4 x float> %wide.masked.load.3, <4 x float> %wide.masked.load159.3)
-  call void @llvm.masked.store.v4f32.p0(<4 x float> %i.av, ptr align 16 %i.a, <4 x i1> %i.m), !tbaa !9
+  call void @llvm.masked.store.v4f32.p0(<4 x float> %i.av, ptr align 8 %i.a, <4 x i1> %i.m), !tbaa !9
   %i.aw = fadd float %i.au, %i.aq                 ; 3 uses
   %indvars.iv.next105.3 = add nuw nsw i64 %indvars.iv104, 4 ; 2 uses
   %niter.next.3 = add i64 %niter, 4               ; 2 uses
@@ -385,9 +385,9 @@ bb.h:                                             ; preds = %bb.a
   %broadcast.splat167 = shufflevector <4 x float> %broadcast.splatinsert166, <4 x float> poison, <4 x i32> zeroinitializer
   %i.bc = getelementptr inbounds nuw [12 x i8], ptr %5, i64 %indvars.iv119
   %wide.masked.load171 = tail call <4 x float> @llvm.masked.load.v4f32.p0(ptr align 4 %i.bc, <4 x i1> %i.ay, <4 x float> poison), !tbaa !9
-  %wide.masked.load172 = call <4 x float> @llvm.masked.load.v4f32.p0(ptr nonnull align 16 %i.a, <4 x i1> %i.ay, <4 x float> poison), !tbaa !9
+  %wide.masked.load172 = call <4 x float> @llvm.masked.load.v4f32.p0(ptr nonnull align 8 %i.a, <4 x i1> %i.ay, <4 x float> poison), !tbaa !9
   %i.bd = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %broadcast.splat167, <4 x float> %wide.masked.load171, <4 x float> %wide.masked.load172)
-  call void @llvm.masked.store.v4f32.p0(<4 x float> %i.bd, ptr align 16 %i.a, <4 x i1> %i.ay), !tbaa !9
+  call void @llvm.masked.store.v4f32.p0(<4 x float> %i.bd, ptr align 8 %i.a, <4 x i1> %i.ay), !tbaa !9
   %indvars.iv.next120 = or disjoint i64 %indvars.iv119, 1 ; 2 uses
   %i.be = getelementptr inbounds nuw [4 x i8], ptr %6, i64 %indvars.iv.next120
   %i.bf = load float, ptr %i.be, align 4, !tbaa !9 ; 2 uses
@@ -395,9 +395,9 @@ bb.h:                                             ; preds = %bb.a
   %broadcast.splat167.1 = shufflevector <4 x float> %broadcast.splatinsert166.1, <4 x float> poison, <4 x i32> zeroinitializer
   %i.bg = getelementptr inbounds nuw [12 x i8], ptr %5, i64 %indvars.iv.next120
   %wide.masked.load171.1 = tail call <4 x float> @llvm.masked.load.v4f32.p0(ptr nonnull align 4 %i.bg, <4 x i1> %i.ay, <4 x float> poison), !tbaa !9
-  %wide.masked.load172.1 = call <4 x float> @llvm.masked.load.v4f32.p0(ptr nonnull align 16 %i.a, <4 x i1> %i.ay, <4 x float> poison), !tbaa !9
+  %wide.masked.load172.1 = call <4 x float> @llvm.masked.load.v4f32.p0(ptr nonnull align 8 %i.a, <4 x i1> %i.ay, <4 x float> poison), !tbaa !9
   %i.bh = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %broadcast.splat167.1, <4 x float> %wide.masked.load171.1, <4 x float> %wide.masked.load172.1)
-  call void @llvm.masked.store.v4f32.p0(<4 x float> %i.bh, ptr align 16 %i.a, <4 x i1> %i.ay), !tbaa !9
+  call void @llvm.masked.store.v4f32.p0(<4 x float> %i.bh, ptr align 8 %i.a, <4 x i1> %i.ay), !tbaa !9
   %indvars.iv.next120.1 = or disjoint i64 %indvars.iv119, 2 ; 2 uses
   %i.bi = getelementptr inbounds nuw [4 x i8], ptr %6, i64 %indvars.iv.next120.1
   %i.bj = load float, ptr %i.bi, align 4, !tbaa !9 ; 2 uses
@@ -405,9 +405,9 @@ bb.h:                                             ; preds = %bb.a
   %broadcast.splat167.2 = shufflevector <4 x float> %broadcast.splatinsert166.2, <4 x float> poison, <4 x i32> zeroinitializer
   %i.bk = getelementptr inbounds nuw [12 x i8], ptr %5, i64 %indvars.iv.next120.1
   %wide.masked.load171.2 = tail call <4 x float> @llvm.masked.load.v4f32.p0(ptr nonnull align 4 %i.bk, <4 x i1> %i.ay, <4 x float> poison), !tbaa !9
-  %wide.masked.load172.2 = call <4 x float> @llvm.masked.load.v4f32.p0(ptr nonnull align 16 %i.a, <4 x i1> %i.ay, <4 x float> poison), !tbaa !9
+  %wide.masked.load172.2 = call <4 x float> @llvm.masked.load.v4f32.p0(ptr nonnull align 8 %i.a, <4 x i1> %i.ay, <4 x float> poison), !tbaa !9
   %i.bl = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %broadcast.splat167.2, <4 x float> %wide.masked.load171.2, <4 x float> %wide.masked.load172.2)
-  call void @llvm.masked.store.v4f32.p0(<4 x float> %i.bl, ptr align 16 %i.a, <4 x i1> %i.ay), !tbaa !9
+  call void @llvm.masked.store.v4f32.p0(<4 x float> %i.bl, ptr align 8 %i.a, <4 x i1> %i.ay), !tbaa !9
   %indvars.iv.next120.2 = or disjoint i64 %indvars.iv119, 3 ; 2 uses
   %i.bm = getelementptr inbounds nuw [4 x i8], ptr %6, i64 %indvars.iv.next120.2
   %i.bn = load float, ptr %i.bm, align 4, !tbaa !9 ; 2 uses
@@ -418,9 +418,9 @@ bb.h:                                             ; preds = %bb.a
   %i.bq = fadd float %i.bp, %i.bf
   %i.br = fadd float %i.bq, %i.bj
   %wide.masked.load171.3 = tail call <4 x float> @llvm.masked.load.v4f32.p0(ptr nonnull align 4 %i.bo, <4 x i1> %i.ay, <4 x float> poison), !tbaa !9
-  %wide.masked.load172.3 = call <4 x float> @llvm.masked.load.v4f32.p0(ptr nonnull align 16 %i.a, <4 x i1> %i.ay, <4 x float> poison), !tbaa !9
+  %wide.masked.load172.3 = call <4 x float> @llvm.masked.load.v4f32.p0(ptr nonnull align 8 %i.a, <4 x i1> %i.ay, <4 x float> poison), !tbaa !9
   %i.bs = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %broadcast.splat167.3, <4 x float> %wide.masked.load171.3, <4 x float> %wide.masked.load172.3)
-  call void @llvm.masked.store.v4f32.p0(<4 x float> %i.bs, ptr align 16 %i.a, <4 x i1> %i.ay), !tbaa !9
+  call void @llvm.masked.store.v4f32.p0(<4 x float> %i.bs, ptr align 8 %i.a, <4 x i1> %i.ay), !tbaa !9
   %i.bt = fadd float %i.br, %i.bn                 ; 3 uses
   %indvars.iv.next120.3 = add nuw nsw i64 %indvars.iv119, 4 ; 2 uses
   %niter223.next.3 = add i64 %niter223, 4         ; 2 uses
@@ -448,9 +448,9 @@ bb.h:                                             ; preds = %bb.a
   %broadcast.splat167.epil = shufflevector <4 x float> %broadcast.splatinsert166.epil, <4 x float> poison, <4 x i32> zeroinitializer
   %i.bw = getelementptr inbounds nuw [12 x i8], ptr %5, i64 %indvars.iv119.epil
   %wide.masked.load171.epil = tail call <4 x float> @llvm.masked.load.v4f32.p0(ptr align 4 %i.bw, <4 x i1> %i.ay, <4 x float> poison), !tbaa !9
-  %wide.masked.load172.epil = call <4 x float> @llvm.masked.load.v4f32.p0(ptr nonnull align 16 %i.a, <4 x i1> %i.ay, <4 x float> poison), !tbaa !9
+  %wide.masked.load172.epil = call <4 x float> @llvm.masked.load.v4f32.p0(ptr nonnull align 8 %i.a, <4 x i1> %i.ay, <4 x float> poison), !tbaa !9
   %i.bx = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %broadcast.splat167.epil, <4 x float> %wide.masked.load171.epil, <4 x float> %wide.masked.load172.epil)
-  call void @llvm.masked.store.v4f32.p0(<4 x float> %i.bx, ptr align 16 %i.a, <4 x i1> %i.ay), !tbaa !9
+  call void @llvm.masked.store.v4f32.p0(<4 x float> %i.bx, ptr align 8 %i.a, <4 x i1> %i.ay), !tbaa !9
   %i.by = fadd float %.15580.us.epil, %i.bv       ; 2 uses
   %indvars.iv.next120.epil = add nuw nsw i64 %indvars.iv119.epil, 1
   %epil.iter218.next = add i64 %epil.iter218, 1   ; 2 uses
@@ -481,9 +481,9 @@ bb.h:                                             ; preds = %bb.a
   %broadcast.splat158.epil = shufflevector <4 x float> %broadcast.splatinsert157.epil, <4 x float> poison, <4 x i32> zeroinitializer
   %i.ce = getelementptr inbounds [12 x i8], ptr %5, i64 %i.cb
   %wide.masked.load.epil = tail call <4 x float> @llvm.masked.load.v4f32.p0(ptr align 4 %i.ce, <4 x i1> %i.m, <4 x float> poison), !tbaa !9
-  %wide.masked.load159.epil = call <4 x float> @llvm.masked.load.v4f32.p0(ptr nonnull align 16 %i.a, <4 x i1> %i.m, <4 x float> poison), !tbaa !9
+  %wide.masked.load159.epil = call <4 x float> @llvm.masked.load.v4f32.p0(ptr nonnull align 8 %i.a, <4 x i1> %i.m, <4 x float> poison), !tbaa !9
   %i.cf = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %broadcast.splat158.epil, <4 x float> %wide.masked.load.epil, <4 x float> %wide.masked.load159.epil)
-  call void @llvm.masked.store.v4f32.p0(<4 x float> %i.cf, ptr align 16 %i.a, <4 x i1> %i.m), !tbaa !9
+  call void @llvm.masked.store.v4f32.p0(<4 x float> %i.cf, ptr align 8 %i.a, <4 x i1> %i.m), !tbaa !9
   %i.cg = fadd float %.05476.us.epil, %i.cd       ; 2 uses
   %indvars.iv.next105.epil = add nuw nsw i64 %indvars.iv104.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
@@ -517,18 +517,18 @@ vector.body181:                                   ; preds = %vector.body181, %ve
   %i.ck = getelementptr inbounds nuw i8, ptr %i.cj, i64 32 ; 2 uses
   %i.cl = getelementptr inbounds nuw i8, ptr %i.cj, i64 64 ; 2 uses
   %i.cm = getelementptr inbounds nuw i8, ptr %i.cj, i64 96 ; 2 uses
-  %wide.load = load <8 x float>, ptr %i.cj, align 16, !tbaa !9
-  %wide.load183 = load <8 x float>, ptr %i.ck, align 16, !tbaa !9
-  %wide.load184 = load <8 x float>, ptr %i.cl, align 16, !tbaa !9
-  %wide.load185 = load <8 x float>, ptr %i.cm, align 16, !tbaa !9
+  %wide.load = load <8 x float>, ptr %i.cj, align 8, !tbaa !9
+  %wide.load183 = load <8 x float>, ptr %i.ck, align 8, !tbaa !9
+  %wide.load184 = load <8 x float>, ptr %i.cl, align 8, !tbaa !9
+  %wide.load185 = load <8 x float>, ptr %i.cm, align 8, !tbaa !9
   %i.cn = fdiv <8 x float> %wide.load, %broadcast.splat180
   %i.co = fdiv <8 x float> %wide.load183, %broadcast.splat180
   %i.cp = fdiv <8 x float> %wide.load184, %broadcast.splat180
   %i.cq = fdiv <8 x float> %wide.load185, %broadcast.splat180
-  store <8 x float> %i.cn, ptr %i.cj, align 16, !tbaa !9
-  store <8 x float> %i.co, ptr %i.ck, align 16, !tbaa !9
-  store <8 x float> %i.cp, ptr %i.cl, align 16, !tbaa !9
-  store <8 x float> %i.cq, ptr %i.cm, align 16, !tbaa !9
+  store <8 x float> %i.cn, ptr %i.cj, align 8, !tbaa !9
+  store <8 x float> %i.co, ptr %i.ck, align 8, !tbaa !9
+  store <8 x float> %i.cp, ptr %i.cl, align 8, !tbaa !9
+  store <8 x float> %i.cq, ptr %i.cm, align 8, !tbaa !9
   %index.next186 = add nuw i64 %index182, 32      ; 2 uses
   %i.cr = icmp eq i64 %index.next186, %n.vec178
   br i1 %i.cr, label %middle.block187, label %vector.body181, !llvm.loop !60
@@ -551,9 +551,9 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index191 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next193, %vec.epilog.vector.body ] ; 2 uses
   %i.cs = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %index191 ; 2 uses
-  %wide.load192 = load <4 x float>, ptr %i.cs, align 16, !tbaa !9
+  %wide.load192 = load <4 x float>, ptr %i.cs, align 8, !tbaa !9
   %i.ct = fdiv <4 x float> %wide.load192, %broadcast.splat190
-  store <4 x float> %i.ct, ptr %i.cs, align 16, !tbaa !9
+  store <4 x float> %i.ct, ptr %i.cs, align 8, !tbaa !9
   %index.next193 = add nuw i64 %index191, 4       ; 2 uses
   %i.cu = icmp eq i64 %index.next193, %n.vec188
   br i1 %i.cu, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !62
@@ -585,7 +585,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br i1 %i.cy, label %.lr.ph88, label %.loopexit
 
 .lr.ph88:                                         ; preds = %.preheader68
-  %i.cz = load <2 x float>, ptr %i.a, align 16, !tbaa !9 ; 5 uses
+  %i.cz = load <2 x float>, ptr %i.a, align 8, !tbaa !9 ; 5 uses
   %i.da = load float, ptr %i.j, align 8, !tbaa !9 ; 5 uses
   %wide.trip.count132 = zext nneg i32 %3 to i64   ; 2 uses
   %xtraiter224 = and i64 %wide.trip.count132, 3   ; 3 uses
@@ -600,7 +600,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br i1 %i.cy, label %.lr.ph90, label %.loopexit
 
 .lr.ph90:                                         ; preds = %.preheader
-  %i.dc = load <2 x float>, ptr %i.a, align 16, !tbaa !9 ; 3 uses
+  %i.dc = load <2 x float>, ptr %i.a, align 8, !tbaa !9 ; 3 uses
   %i.dd = load float, ptr %i.j, align 8, !tbaa !9 ; 2 uses
   %wide.trip.count137 = zext nneg i32 %3 to i64   ; 3 uses
   %min.iters.check195 = icmp ult i32 %3, 8

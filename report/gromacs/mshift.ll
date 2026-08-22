@@ -205,11 +205,11 @@ define void @_Z9mk_mshiftP8_IO_FILEP7t_graph7PbcTypePA3_KfS6_(ptr nofree noundef
 bb.a:
   %5 = alloca %struct.t_pbc, align 4              ; 4 uses
   %i.a = alloca [3 x float], align 4              ; 6 uses
-  %i.b = alloca [3 x float], align 16             ; 5 uses
+  %i.b = alloca [3 x float], align 8              ; 5 uses
   %i.c = alloca [3 x float], align 8              ; 11 uses
   %i.d = alloca [3 x float], align 4              ; 5 uses
-  %i.e = alloca [3 x float], align 16             ; 7 uses
-  %i.f = alloca [3 x i32], align 16               ; 12 uses
+  %i.e = alloca [3 x float], align 4              ; 7 uses
+  %i.f = alloca [3 x i32], align 8                ; 12 uses
   %6 = alloca %struct.t_pbc, align 4              ; 4 uses
   %7 = alloca %"class.std::filesystem::__cxx11::path", align 8 ; 5 uses
   %8 = alloca %"class.std::filesystem::__cxx11::path", align 8 ; 5 uses
@@ -444,13 +444,13 @@ bb.l:                                             ; preds = %_ZL12first_colouri5
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #24
   %i.db = load float, ptr %3, align 4, !tbaa !136
   %i.dc = fmul float %i.db, 5.000000e-01          ; 3 uses
-  store float %i.dc, ptr %i.e, align 16, !tbaa !136
+  store float %i.dc, ptr %i.e, align 4, !tbaa !136
   %i.dd = load float, ptr %i.ak, align 4, !tbaa !136
   %i.de = fmul float %i.dd, 5.000000e-01          ; 3 uses
   store float %i.de, ptr %i.al, align 4, !tbaa !136
   %i.df = load float, ptr %i.am, align 4, !tbaa !136
   %i.dg = fmul float %i.df, 5.000000e-01          ; 3 uses
-  store float %i.dg, ptr %i.an, align 8, !tbaa !136
+  store float %i.dg, ptr %i.an, align 4, !tbaa !136
   %i.dh = load float, ptr %i.aj, align 4, !tbaa !136
   %i.di = fcmp une float %i.dh, 0.000000e+00
   br i1 %i.di, label %bb.o, label %bb.m
@@ -533,13 +533,13 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.fd, label %bb.s, label %bb.t
 
 bb.s:                                             ; preds = %bb.r
-  store i32 %i.eo, ptr %i.f, align 16, !tbaa !15
+  store i32 %i.eo, ptr %i.f, align 8, !tbaa !15
   br label %bb.u
 
 bb.t:                                             ; preds = %bb.r, %bb.q
   %.sink.i = phi i32 [ -1, %bb.q ], [ 1, %bb.r ]
   %i.fe = add nsw i32 %.sink.i, %i.eo
-  store i32 %i.fe, ptr %i.f, align 16, !tbaa !15
+  store i32 %i.fe, ptr %i.f, align 8, !tbaa !15
   %i.ff = load float, ptr %i.ak, align 4, !tbaa !136
   %i.fg = load float, ptr %i.ap, align 4, !tbaa !136
   %i.fh = fadd float %i.ff, %i.fg
@@ -869,11 +869,11 @@ vector.ph292:                                     ; preds = %bb.ac
   %i.jt = load <2 x float>, ptr %i.ea, align 4, !tbaa !136
   %i.ju = load <2 x float>, ptr %i.el, align 4, !tbaa !136
   %i.jv = fsub <2 x float> %i.jt, %i.ju
-  store <2 x float> %i.jv, ptr %i.b, align 16, !tbaa !136
+  store <2 x float> %i.jv, ptr %i.b, align 8, !tbaa !136
   store float %i.js, ptr %i.at, align 8, !tbaa !136
   store i32 0, ptr %i.au, align 8, !tbaa !15
-  %wide.masked.load = call <4 x float> @llvm.masked.load.v4f32.p0(ptr nonnull align 16 %i.b, <4 x i1> %i.az, <4 x float> poison), !tbaa !136 ; 2 uses
-  %wide.masked.load294 = call <4 x float> @llvm.masked.load.v4f32.p0(ptr nonnull align 16 %i.e, <4 x i1> %i.az, <4 x float> poison), !tbaa !136 ; 2 uses
+  %wide.masked.load = call <4 x float> @llvm.masked.load.v4f32.p0(ptr nonnull align 8 %i.b, <4 x i1> %i.az, <4 x float> poison), !tbaa !136 ; 2 uses
+  %wide.masked.load294 = call <4 x float> @llvm.masked.load.v4f32.p0(ptr nonnull align 4 %i.e, <4 x i1> %i.az, <4 x float> poison), !tbaa !136 ; 2 uses
   %i.jw = fneg <4 x float> %wide.masked.load294
   %i.jx = fcmp olt <4 x float> %wide.masked.load, %i.jw ; 4 uses
   %i.jy = xor <4 x i1> %i.jx, splat (i1 true)
@@ -887,7 +887,7 @@ vector.ph292:                                     ; preds = %bb.ac
   %i.kd = zext <4 x i1> %.not300 to <4 x i32>
   %predphi = add nsw <4 x i32> %wide.masked.load295, %i.kd
   %predphi297 = select <4 x i1> %i.jx, <4 x i32> %i.kc, <4 x i32> %predphi
-  call void @llvm.masked.store.v4i32.p0(<4 x i32> %predphi297, ptr align 16 %i.f, <4 x i1> %i.az), !tbaa !15
+  call void @llvm.masked.store.v4i32.p0(<4 x i32> %predphi297, ptr align 8 %i.f, <4 x i1> %i.az), !tbaa !15
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #24
   br label %bb.aj
 
@@ -903,7 +903,7 @@ bb.ak:                                            ; preds = %bb.aj
   %spec.select = call i32 @llvm.smin.i32(i32 %i.ke, i32 %.1)
   store i32 1, ptr %i.kg, align 4, !tbaa !43
   %i.kj = getelementptr inbounds nuw [12 x i8], ptr %i.em, i64 %i.ek ; 2 uses
-  %i.kk = load <2 x i32>, ptr %i.f, align 16, !tbaa !15
+  %i.kk = load <2 x i32>, ptr %i.f, align 8, !tbaa !15
   store <2 x i32> %i.kk, ptr %i.kj, align 4, !tbaa !15
   %i.kl = load i32, ptr %i.au, align 8, !tbaa !15
   %i.km = getelementptr inbounds nuw i8, ptr %i.kj, i64 8
@@ -912,7 +912,7 @@ bb.ak:                                            ; preds = %bb.aj
   br label %bb.ar
 
 bb.al:                                            ; preds = %bb.aj
-  %i.ko = load i32, ptr %i.f, align 16, !tbaa !15 ; 2 uses
+  %i.ko = load i32, ptr %i.f, align 8, !tbaa !15  ; 2 uses
   %i.kp = getelementptr inbounds nuw [12 x i8], ptr %i.em, i64 %i.ek ; 3 uses
   %i.kq = load i32, ptr %i.kp, align 4, !tbaa !15
   %.not.i = icmp eq i32 %i.ko, %i.kq

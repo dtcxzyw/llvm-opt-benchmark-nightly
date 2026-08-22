@@ -205,7 +205,7 @@ bb.a:
   %i.f = fdiv float 1.000000e+00, %i.e
   store float %i.f, ptr %i.c, align 8, !tbaa !246
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #25
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %7, ptr noundef nonnull align 4 dereferenceable(12) %6, i64 12, i1 false), !tbaa.struct !248
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %7, ptr noundef nonnull align 8 dereferenceable(12) %6, i64 12, i1 false), !tbaa.struct !248
   call void @_ZN3igl13increment_ulpIN5Eigen6MatrixIfLi1ELi3ELi1ELi1ELi3EEEEEvRNS1_10MatrixBaseIT_EEi(ptr noundef nonnull align 1 dereferenceable(1) %7, i32 noundef 2)
   %i.g = call noundef zeroext i1 @_ZNK3igl4AABBIN5Eigen6MatrixIfLin1ELin1ELi0ELin1ELin1EEELi3EE17intersect_ray_optINS2_IiLin1ELin1ELi0ELin1ELin1EEEEEbRKNS1_10MatrixBaseIS3_EERKNS7_IT_EERKNS2_IfLi1ELi3ELi1ELi1ELi3EEESH_SH_SH_RSt6vectorINS_3HitIfEESaISK_EE(ptr noundef nonnull align 8 dereferenceable(52) %0, ptr noundef nonnull align 1 dereferenceable(1) %1, ptr noundef nonnull align 1 dereferenceable(1) %2, ptr noundef nonnull align 4 dereferenceable(12) %3, ptr noundef nonnull align 4 dereferenceable(12) %4, ptr noundef nonnull align 4 dereferenceable(12) %6, ptr noundef nonnull align 4 dereferenceable(12) %7, ptr noundef nonnull align 1 %5)
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #25
@@ -577,9 +577,9 @@ bb.c:                                             ; preds = %bb.b
   %i.bp = tail call noalias noundef nonnull dereferenceable(56) ptr @_Znwm(i64 noundef 56) #27 ; 6 uses
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bp, i64 24
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(52) %i.bp, i8 0, i64 24, i1 false)
-  store <4 x float> <float f0x7F7FFFFF, float f0x7F7FFFFF, float f0x7F7FFFFF, float f0xFF7FFFFF>, ptr %i.bq, align 4, !tbaa !246
+  store <4 x float> <float f0x7F7FFFFF, float f0x7F7FFFFF, float f0x7F7FFFFF, float f0xFF7FFFFF>, ptr %i.bq, align 8, !tbaa !246
   %.07.i.i.i.i.ptr.1.i.i.i.i.i.i.i.i1.i.i.i = getelementptr inbounds nuw i8, ptr %i.bp, i64 40
-  store <2 x float> splat (float f0xFF7FFFFF), ptr %.07.i.i.i.i.ptr.1.i.i.i.i.i.i.i.i1.i.i.i, align 4, !tbaa !246
+  store <2 x float> splat (float f0xFF7FFFFF), ptr %.07.i.i.i.i.ptr.1.i.i.i.i.i.i.i.i1.i.i.i, align 8, !tbaa !246
   %i.br = getelementptr inbounds nuw i8, ptr %i.bp, i64 48
   store i32 -1, ptr %i.br, align 8, !tbaa !261
   store ptr %i.bp, ptr %0, align 8, !tbaa !253
@@ -592,9 +592,9 @@ bb.c:                                             ; preds = %bb.b
   %i.bw = tail call noalias noundef nonnull dereferenceable(56) ptr @_Znwm(i64 noundef 56) #27 ; 6 uses
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bw, i64 24
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(52) %i.bw, i8 0, i64 24, i1 false)
-  store <4 x float> <float f0x7F7FFFFF, float f0x7F7FFFFF, float f0x7F7FFFFF, float f0xFF7FFFFF>, ptr %i.bx, align 4, !tbaa !246
+  store <4 x float> <float f0x7F7FFFFF, float f0x7F7FFFFF, float f0x7F7FFFFF, float f0xFF7FFFFF>, ptr %i.bx, align 8, !tbaa !246
   %.07.i.i.i.i.ptr.1.i.i.i.i.i.i.i.i1.i.i.i63 = getelementptr inbounds nuw i8, ptr %i.bw, i64 40
-  store <2 x float> splat (float f0xFF7FFFFF), ptr %.07.i.i.i.i.ptr.1.i.i.i.i.i.i.i.i1.i.i.i63, align 4, !tbaa !246
+  store <2 x float> splat (float f0xFF7FFFFF), ptr %.07.i.i.i.i.ptr.1.i.i.i.i.i.i.i.i1.i.i.i63, align 8, !tbaa !246
   %i.by = getelementptr inbounds nuw i8, ptr %i.bw, i64 48
   store i32 -1, ptr %i.by, align 8, !tbaa !261
   %i.bz = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
@@ -997,7 +997,7 @@ _ZNK5Eigen10AlignedBoxIfLi3EE8containsINS_9TransposeIKNS_6MatrixIfLi1ELi3ELi1ELi
 bb.f:                                             ; preds = %_ZNK5Eigen10AlignedBoxIfLi3EE8containsINS_9TransposeIKNS_6MatrixIfLi1ELi3ELi1ELi1ELi3EEEEEEEbRKNS_10MatrixBaseIT_EE.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #25
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %13, ptr noundef nonnull align 4 dereferenceable(12) %7, i64 12, i1 false), !tbaa.struct !248
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %13, ptr noundef nonnull align 4 dereferenceable(12) %7, i64 12, i1 false), !tbaa.struct !248
   %i.av = call noundef float @_ZNK3igl4AABBIN5Eigen6MatrixIfLin1ELi3ELi0ELin1ELi3EEELi3EE16squared_distanceINS2_IiLin1ELi3ELi0ELin1ELi3EEEEEfRKNS1_10MatrixBaseIS3_EERKNS7_IT_EERKNS2_IfLi1ELi3ELi1ELi1ELi3EEEffRiRNS1_15PlainObjectBaseISF_EE(ptr noundef nonnull align 8 dereferenceable(52) %i.i, ptr noundef nonnull align 1 dereferenceable(1) %1, ptr noundef nonnull align 1 dereferenceable(1) %2, ptr noundef nonnull align 4 dereferenceable(12) %3, float noundef %4, float noundef %5, ptr noundef nonnull align 4 dereferenceable(4) %i.f, ptr noundef nonnull align 4 dereferenceable(12) %13), !inline_history !355 ; 2 uses
   %i.aw = fcmp olt float %i.av, %5
   br i1 %i.aw, label %bb.g, label %_ZNK3igl4AABBIN5Eigen6MatrixIfLin1ELi3ELi0ELin1ELi3EEELi3EE7set_minERKNS2_IfLi1ELi3ELi1ELi1ELi3EEEfRKiS7_RfRiRNS1_15PlainObjectBaseIS5_EE.exit
@@ -1064,7 +1064,7 @@ _ZNK5Eigen10AlignedBoxIfLi3EE8containsINS_9TransposeIKNS_6MatrixIfLi1ELi3ELi1ELi
 bb.h:                                             ; preds = %_ZNK5Eigen10AlignedBoxIfLi3EE8containsINS_9TransposeIKNS_6MatrixIfLi1ELi3ELi1ELi1ELi3EEEEEEEbRKNS_10MatrixBaseIT_EE.exit54
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #25
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %12, ptr noundef nonnull align 4 dereferenceable(12) %7, i64 12, i1 false), !tbaa.struct !248
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %12, ptr noundef nonnull align 4 dereferenceable(12) %7, i64 12, i1 false), !tbaa.struct !248
   %i.ca = call noundef float @_ZNK3igl4AABBIN5Eigen6MatrixIfLin1ELi3ELi0ELin1ELi3EEELi3EE16squared_distanceINS2_IiLin1ELi3ELi0ELin1ELi3EEEEEfRKNS1_10MatrixBaseIS3_EERKNS7_IT_EERKNS2_IfLi1ELi3ELi1ELi1ELi3EEEffRiRNS1_15PlainObjectBaseISF_EE(ptr noundef nonnull align 8 dereferenceable(52) %i.bd, ptr noundef nonnull align 1 dereferenceable(1) %1, ptr noundef nonnull align 1 dereferenceable(1) %2, ptr noundef nonnull align 4 dereferenceable(12) %3, float noundef %4, float noundef %.0161, ptr noundef nonnull align 4 dereferenceable(4) %i.e, ptr noundef nonnull align 4 dereferenceable(12) %12), !inline_history !357 ; 2 uses
   %i.cb = fcmp olt float %i.ca, %.0161
   br i1 %i.cb, label %bb.i, label %_ZNK3igl4AABBIN5Eigen6MatrixIfLin1ELi3ELi0ELin1ELi3EEELi3EE7set_minERKNS2_IfLi1ELi3ELi1ELi1ELi3EEEfRKiS7_RfRiRNS1_15PlainObjectBaseIS5_EE.exit59
@@ -1246,7 +1246,7 @@ bb.af:                                            ; preds = %_ZNK5Eigen10Aligned
 bb.ag:                                            ; preds = %bb.af
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #25
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %11, ptr noundef nonnull align 4 dereferenceable(12) %7, i64 12, i1 false), !tbaa.struct !248
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %11, ptr noundef nonnull align 4 dereferenceable(12) %7, i64 12, i1 false), !tbaa.struct !248
   %i.ey = call noundef float @_ZNK3igl4AABBIN5Eigen6MatrixIfLin1ELi3ELi0ELin1ELi3EEELi3EE16squared_distanceINS2_IiLin1ELi3ELi0ELin1ELi3EEEEEfRKNS1_10MatrixBaseIS3_EERKNS7_IT_EERKNS2_IfLi1ELi3ELi1ELi1ELi3EEEffRiRNS1_15PlainObjectBaseISF_EE(ptr noundef nonnull align 8 dereferenceable(52) %i.ci, ptr noundef nonnull align 1 dereferenceable(1) %1, ptr noundef nonnull align 1 dereferenceable(1) %2, ptr noundef nonnull align 4 dereferenceable(12) %3, float noundef %4, float noundef %.1, ptr noundef nonnull align 4 dereferenceable(4) %i.d, ptr noundef nonnull align 4 dereferenceable(12) %11), !inline_history !355 ; 2 uses
   %i.ez = fcmp olt float %i.ey, %.1
   br i1 %i.ez, label %bb.ah, label %_ZNK3igl4AABBIN5Eigen6MatrixIfLin1ELi3ELi0ELin1ELi3EEELi3EE7set_minERKNS2_IfLi1ELi3ELi1ELi1ELi3EEEfRKiS7_RfRiRNS1_15PlainObjectBaseIS5_EE.exit60
@@ -1277,7 +1277,7 @@ bb.ai:                                            ; preds = %_ZNK3igl4AABBIN5Eig
 bb.aj:                                            ; preds = %bb.ai
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #25
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %10, ptr noundef nonnull align 4 dereferenceable(12) %7, i64 12, i1 false), !tbaa.struct !248
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %10, ptr noundef nonnull align 4 dereferenceable(12) %7, i64 12, i1 false), !tbaa.struct !248
   %i.fg = load ptr, ptr %i.k, align 8, !tbaa !356
   %i.fh = call noundef float @_ZNK3igl4AABBIN5Eigen6MatrixIfLin1ELi3ELi0ELin1ELi3EEELi3EE16squared_distanceINS2_IiLin1ELi3ELi0ELin1ELi3EEEEEfRKNS1_10MatrixBaseIS3_EERKNS7_IT_EERKNS2_IfLi1ELi3ELi1ELi1ELi3EEEffRiRNS1_15PlainObjectBaseISF_EE(ptr noundef nonnull align 8 dereferenceable(52) %i.fg, ptr noundef nonnull align 1 dereferenceable(1) %1, ptr noundef nonnull align 1 dereferenceable(1) %2, ptr noundef nonnull align 4 dereferenceable(12) %3, float noundef %4, float noundef %.2, ptr noundef nonnull align 4 dereferenceable(4) %i.c, ptr noundef nonnull align 4 dereferenceable(12) %10), !inline_history !357 ; 2 uses
   %i.fi = fcmp olt float %i.fh, %.2
@@ -1308,7 +1308,7 @@ bb.al:                                            ; preds = %_ZNK5Eigen10Aligned
 bb.am:                                            ; preds = %bb.al
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #25
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %9, ptr noundef nonnull align 4 dereferenceable(12) %7, i64 12, i1 false), !tbaa.struct !248
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %9, ptr noundef nonnull align 4 dereferenceable(12) %7, i64 12, i1 false), !tbaa.struct !248
   %i.fp = call noundef float @_ZNK3igl4AABBIN5Eigen6MatrixIfLin1ELi3ELi0ELin1ELi3EEELi3EE16squared_distanceINS2_IiLin1ELi3ELi0ELin1ELi3EEEEEfRKNS1_10MatrixBaseIS3_EERKNS7_IT_EERKNS2_IfLi1ELi3ELi1ELi1ELi3EEEffRiRNS1_15PlainObjectBaseISF_EE(ptr noundef nonnull align 8 dereferenceable(52) %i.dr, ptr noundef nonnull align 1 dereferenceable(1) %1, ptr noundef nonnull align 1 dereferenceable(1) %2, ptr noundef nonnull align 4 dereferenceable(12) %3, float noundef %4, float noundef %.1, ptr noundef nonnull align 4 dereferenceable(4) %i.b, ptr noundef nonnull align 4 dereferenceable(12) %9), !inline_history !357 ; 2 uses
   %i.fq = fcmp olt float %i.fp, %.1
   br i1 %i.fq, label %bb.an, label %_ZNK3igl4AABBIN5Eigen6MatrixIfLin1ELi3ELi0ELin1ELi3EEELi3EE7set_minERKNS2_IfLi1ELi3ELi1ELi1ELi3EEEfRKiS7_RfRiRNS1_15PlainObjectBaseIS5_EE.exit62
@@ -1339,7 +1339,7 @@ bb.ao:                                            ; preds = %_ZNK3igl4AABBIN5Eig
 bb.ap:                                            ; preds = %bb.ao
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #25
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %8, ptr noundef nonnull align 4 dereferenceable(12) %7, i64 12, i1 false), !tbaa.struct !248
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %8, ptr noundef nonnull align 4 dereferenceable(12) %7, i64 12, i1 false), !tbaa.struct !248
   %i.fx = load ptr, ptr %0, align 8, !tbaa !351
   %i.fy = call noundef float @_ZNK3igl4AABBIN5Eigen6MatrixIfLin1ELi3ELi0ELin1ELi3EEELi3EE16squared_distanceINS2_IiLin1ELi3ELi0ELin1ELi3EEEEEfRKNS1_10MatrixBaseIS3_EERKNS7_IT_EERKNS2_IfLi1ELi3ELi1ELi1ELi3EEEffRiRNS1_15PlainObjectBaseISF_EE(ptr noundef nonnull align 8 dereferenceable(52) %i.fx, ptr noundef nonnull align 1 dereferenceable(1) %1, ptr noundef nonnull align 1 dereferenceable(1) %2, ptr noundef nonnull align 4 dereferenceable(12) %3, float noundef %4, float noundef %.3, ptr noundef nonnull align 4 dereferenceable(4) %i.a, ptr noundef nonnull align 4 dereferenceable(12) %8), !inline_history !355 ; 2 uses
   %i.fz = fcmp olt float %i.fy, %.3
@@ -1591,7 +1591,7 @@ bb.m:                                             ; preds = %bb.j
   %i.dk = getelementptr inbounds nuw i8, ptr %10, i64 16
   %i.dl = load ptr, ptr %i.dk, align 16, !tbaa !368
   store ptr %i.dl, ptr %i.dj, align 8, !tbaa !368
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %10, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %10, i8 0, i64 24, i1 false)
   %.pr = load ptr, ptr %11, align 16, !tbaa !366  ; 3 uses
   %.not.i.i.i25 = icmp eq ptr %.pr, null
   br i1 %.not.i.i.i25, label %bb.p, label %bb.n
@@ -1987,7 +1987,7 @@ bb.m:                                             ; preds = %bb.j
   %i.gf = getelementptr inbounds nuw i8, ptr %14, i64 16
   %i.gg = load ptr, ptr %i.gf, align 16, !tbaa !368
   store ptr %i.gg, ptr %i.ge, align 8, !tbaa !368
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %14, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %14, i8 0, i64 24, i1 false)
   %.pr = load ptr, ptr %15, align 16, !tbaa !366  ; 3 uses
   %.not.i.i.i25 = icmp eq ptr %.pr, null
   br i1 %.not.i.i.i25, label %bb.p, label %bb.n
@@ -2343,7 +2343,7 @@ bb.m:                                             ; preds = %bb.j
   %i.fg = getelementptr inbounds nuw i8, ptr %14, i64 16
   %i.fh = load ptr, ptr %i.fg, align 16, !tbaa !368
   store ptr %i.fh, ptr %i.ff, align 8, !tbaa !368
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %14, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %14, i8 0, i64 24, i1 false)
   %.pr = load ptr, ptr %15, align 16, !tbaa !366  ; 3 uses
   %.not.i.i.i25 = icmp eq ptr %.pr, null
   br i1 %.not.i.i.i25, label %bb.p, label %bb.n
@@ -2619,7 +2619,7 @@ bb.m:                                             ; preds = %bb.j
   %i.di = getelementptr inbounds nuw i8, ptr %10, i64 16
   %i.dj = load ptr, ptr %i.di, align 16, !tbaa !368
   store ptr %i.dj, ptr %i.dh, align 8, !tbaa !368
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %10, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %10, i8 0, i64 24, i1 false)
   %.pr = load ptr, ptr %11, align 16, !tbaa !366  ; 3 uses
   %.not.i.i.i25 = icmp eq ptr %.pr, null
   br i1 %.not.i.i.i25, label %bb.p, label %bb.n
@@ -2968,7 +2968,7 @@ bb.m:                                             ; preds = %bb.j
   %i.ex = getelementptr inbounds nuw i8, ptr %14, i64 16
   %i.ey = load ptr, ptr %i.ex, align 16, !tbaa !368
   store ptr %i.ey, ptr %i.ew, align 8, !tbaa !368
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %14, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %14, i8 0, i64 24, i1 false)
   %.pr = load ptr, ptr %15, align 16, !tbaa !366  ; 3 uses
   %.not.i.i.i25 = icmp eq ptr %.pr, null
   br i1 %.not.i.i.i25, label %bb.p, label %bb.n
@@ -3371,9 +3371,9 @@ bb.c:                                             ; preds = %bb.b
   %i.bp = tail call noalias noundef nonnull dereferenceable(56) ptr @_Znwm(i64 noundef 56) #27 ; 6 uses
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bp, i64 24
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(52) %i.bp, i8 0, i64 24, i1 false)
-  store <4 x float> <float f0x7F7FFFFF, float f0x7F7FFFFF, float f0x7F7FFFFF, float f0xFF7FFFFF>, ptr %i.bq, align 4, !tbaa !246
+  store <4 x float> <float f0x7F7FFFFF, float f0x7F7FFFFF, float f0x7F7FFFFF, float f0xFF7FFFFF>, ptr %i.bq, align 8, !tbaa !246
   %.07.i.i.i.i.ptr.1.i.i.i.i.i.i.i.i1.i.i.i = getelementptr inbounds nuw i8, ptr %i.bp, i64 40
-  store <2 x float> splat (float f0xFF7FFFFF), ptr %.07.i.i.i.i.ptr.1.i.i.i.i.i.i.i.i1.i.i.i, align 4, !tbaa !246
+  store <2 x float> splat (float f0xFF7FFFFF), ptr %.07.i.i.i.i.ptr.1.i.i.i.i.i.i.i.i1.i.i.i, align 8, !tbaa !246
   %i.br = getelementptr inbounds nuw i8, ptr %i.bp, i64 48
   store i32 -1, ptr %i.br, align 8, !tbaa !354
   store ptr %i.bp, ptr %0, align 8, !tbaa !351
@@ -3386,9 +3386,9 @@ bb.c:                                             ; preds = %bb.b
   %i.bw = tail call noalias noundef nonnull dereferenceable(56) ptr @_Znwm(i64 noundef 56) #27 ; 6 uses
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bw, i64 24
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(52) %i.bw, i8 0, i64 24, i1 false)
-  store <4 x float> <float f0x7F7FFFFF, float f0x7F7FFFFF, float f0x7F7FFFFF, float f0xFF7FFFFF>, ptr %i.bx, align 4, !tbaa !246
+  store <4 x float> <float f0x7F7FFFFF, float f0x7F7FFFFF, float f0x7F7FFFFF, float f0xFF7FFFFF>, ptr %i.bx, align 8, !tbaa !246
   %.07.i.i.i.i.ptr.1.i.i.i.i.i.i.i.i1.i.i.i63 = getelementptr inbounds nuw i8, ptr %i.bw, i64 40
-  store <2 x float> splat (float f0xFF7FFFFF), ptr %.07.i.i.i.i.ptr.1.i.i.i.i.i.i.i.i1.i.i.i63, align 4, !tbaa !246
+  store <2 x float> splat (float f0xFF7FFFFF), ptr %.07.i.i.i.i.ptr.1.i.i.i.i.i.i.i.i1.i.i.i63, align 8, !tbaa !246
   %i.by = getelementptr inbounds nuw i8, ptr %i.bw, i64 48
   store i32 -1, ptr %i.by, align 8, !tbaa !354
   %i.bz = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
@@ -3784,9 +3784,9 @@ bb.c:                                             ; preds = %bb.b
   %i.bp = tail call noalias noundef nonnull dereferenceable(56) ptr @_Znwm(i64 noundef 56) #27 ; 6 uses
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bp, i64 24
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(52) %i.bp, i8 0, i64 24, i1 false)
-  store <4 x float> <float f0x7F7FFFFF, float f0x7F7FFFFF, float f0x7F7FFFFF, float f0xFF7FFFFF>, ptr %i.bq, align 4, !tbaa !246
+  store <4 x float> <float f0x7F7FFFFF, float f0x7F7FFFFF, float f0x7F7FFFFF, float f0xFF7FFFFF>, ptr %i.bq, align 8, !tbaa !246
   %.07.i.i.i.i.ptr.1.i.i.i.i.i.i.i.i1.i.i.i = getelementptr inbounds nuw i8, ptr %i.bp, i64 40
-  store <2 x float> splat (float f0xFF7FFFFF), ptr %.07.i.i.i.i.ptr.1.i.i.i.i.i.i.i.i1.i.i.i, align 4, !tbaa !246
+  store <2 x float> splat (float f0xFF7FFFFF), ptr %.07.i.i.i.i.ptr.1.i.i.i.i.i.i.i.i1.i.i.i, align 8, !tbaa !246
   %i.br = getelementptr inbounds nuw i8, ptr %i.bp, i64 48
   store i32 -1, ptr %i.br, align 8, !tbaa !560
   store ptr %i.bp, ptr %0, align 8, !tbaa !563
@@ -3799,9 +3799,9 @@ bb.c:                                             ; preds = %bb.b
   %i.bw = tail call noalias noundef nonnull dereferenceable(56) ptr @_Znwm(i64 noundef 56) #27 ; 6 uses
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bw, i64 24
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(52) %i.bw, i8 0, i64 24, i1 false)
-  store <4 x float> <float f0x7F7FFFFF, float f0x7F7FFFFF, float f0x7F7FFFFF, float f0xFF7FFFFF>, ptr %i.bx, align 4, !tbaa !246
+  store <4 x float> <float f0x7F7FFFFF, float f0x7F7FFFFF, float f0x7F7FFFFF, float f0xFF7FFFFF>, ptr %i.bx, align 8, !tbaa !246
   %.07.i.i.i.i.ptr.1.i.i.i.i.i.i.i.i1.i.i.i63 = getelementptr inbounds nuw i8, ptr %i.bw, i64 40
-  store <2 x float> splat (float f0xFF7FFFFF), ptr %.07.i.i.i.i.ptr.1.i.i.i.i.i.i.i.i1.i.i.i63, align 4, !tbaa !246
+  store <2 x float> splat (float f0xFF7FFFFF), ptr %.07.i.i.i.i.ptr.1.i.i.i.i.i.i.i.i1.i.i.i63, align 8, !tbaa !246
   %i.by = getelementptr inbounds nuw i8, ptr %i.bw, i64 48
   store i32 -1, ptr %i.by, align 8, !tbaa !560
   %i.bz = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
@@ -4204,9 +4204,9 @@ bb.w:                                             ; preds = %bb.u, %bb.v
 bb.x:                                             ; preds = %._crit_edge177
   %i.fz = getelementptr inbounds nuw i8, ptr %i.fy, i64 24
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(52) %i.fy, i8 0, i64 24, i1 false)
-  store <4 x float> <float f0x7F7FFFFF, float f0x7F7FFFFF, float f0x7F7FFFFF, float f0xFF7FFFFF>, ptr %i.fz, align 4, !tbaa !246
+  store <4 x float> <float f0x7F7FFFFF, float f0x7F7FFFFF, float f0x7F7FFFFF, float f0xFF7FFFFF>, ptr %i.fz, align 8, !tbaa !246
   %.07.i.i.i.i.ptr.1.i.i.i.i.i.i.i.i1.i.i.i = getelementptr inbounds nuw i8, ptr %i.fy, i64 40
-  store <2 x float> splat (float f0xFF7FFFFF), ptr %.07.i.i.i.i.ptr.1.i.i.i.i.i.i.i.i1.i.i.i, align 4, !tbaa !246
+  store <2 x float> splat (float f0xFF7FFFFF), ptr %.07.i.i.i.i.ptr.1.i.i.i.i.i.i.i.i1.i.i.i, align 8, !tbaa !246
   %i.ga = getelementptr inbounds nuw i8, ptr %i.fy, i64 48
   store i32 -1, ptr %i.ga, align 8, !tbaa !261
   store ptr %i.fy, ptr %0, align 8, !tbaa !253
@@ -4235,9 +4235,9 @@ bb.aa:                                            ; preds = %bb.z
 bb.ab:                                            ; preds = %bb.aa
   %i.gg = getelementptr inbounds nuw i8, ptr %i.gf, i64 24
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(52) %i.gf, i8 0, i64 24, i1 false)
-  store <4 x float> <float f0x7F7FFFFF, float f0x7F7FFFFF, float f0x7F7FFFFF, float f0xFF7FFFFF>, ptr %i.gg, align 4, !tbaa !246
+  store <4 x float> <float f0x7F7FFFFF, float f0x7F7FFFFF, float f0x7F7FFFFF, float f0xFF7FFFFF>, ptr %i.gg, align 8, !tbaa !246
   %.07.i.i.i.i.ptr.1.i.i.i.i.i.i.i.i1.i.i.i99 = getelementptr inbounds nuw i8, ptr %i.gf, i64 40
-  store <2 x float> splat (float f0xFF7FFFFF), ptr %.07.i.i.i.i.ptr.1.i.i.i.i.i.i.i.i1.i.i.i99, align 4, !tbaa !246
+  store <2 x float> splat (float f0xFF7FFFFF), ptr %.07.i.i.i.i.ptr.1.i.i.i.i.i.i.i.i1.i.i.i99, align 8, !tbaa !246
   %i.gh = getelementptr inbounds nuw i8, ptr %i.gf, i64 48
   store i32 -1, ptr %i.gh, align 8, !tbaa !261
   %i.gi = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
@@ -4640,7 +4640,7 @@ _ZNK5Eigen10AlignedBoxIfLi3EE8containsINS_9TransposeIKNS_6MatrixIfLi1ELi3ELi1ELi
 bb.f:                                             ; preds = %_ZNK5Eigen10AlignedBoxIfLi3EE8containsINS_9TransposeIKNS_6MatrixIfLi1ELi3ELi1ELi1ELi3EEEEEEEbRKNS_10MatrixBaseIT_EE.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #25
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %13, ptr noundef nonnull align 4 dereferenceable(12) %7, i64 12, i1 false), !tbaa.struct !248
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %13, ptr noundef nonnull align 4 dereferenceable(12) %7, i64 12, i1 false), !tbaa.struct !248
   %i.av = call noundef float @_ZNK3igl4AABBIN5Eigen6MatrixIfLin1ELi3ELi1ELin1ELi3EEELi3EE16squared_distanceINS2_IiLin1ELi3ELi1ELin1ELi3EEEEEfRKNS1_10MatrixBaseIS3_EERKNS7_IT_EERKNS2_IfLi1ELi3ELi1ELi1ELi3EEEffRiRNS1_15PlainObjectBaseISF_EE(ptr noundef nonnull align 8 dereferenceable(52) %i.i, ptr noundef nonnull align 1 dereferenceable(1) %1, ptr noundef nonnull align 1 dereferenceable(1) %2, ptr noundef nonnull align 4 dereferenceable(12) %3, float noundef %4, float noundef %5, ptr noundef nonnull align 4 dereferenceable(4) %i.f, ptr noundef nonnull align 4 dereferenceable(12) %13), !inline_history !738 ; 2 uses
   %i.aw = fcmp olt float %i.av, %5
   br i1 %i.aw, label %bb.g, label %_ZNK3igl4AABBIN5Eigen6MatrixIfLin1ELi3ELi1ELin1ELi3EEELi3EE7set_minERKNS2_IfLi1ELi3ELi1ELi1ELi3EEEfRKiS7_RfRiRNS1_15PlainObjectBaseIS5_EE.exit
@@ -4707,7 +4707,7 @@ _ZNK5Eigen10AlignedBoxIfLi3EE8containsINS_9TransposeIKNS_6MatrixIfLi1ELi3ELi1ELi
 bb.h:                                             ; preds = %_ZNK5Eigen10AlignedBoxIfLi3EE8containsINS_9TransposeIKNS_6MatrixIfLi1ELi3ELi1ELi1ELi3EEEEEEEbRKNS_10MatrixBaseIT_EE.exit54
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #25
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %12, ptr noundef nonnull align 4 dereferenceable(12) %7, i64 12, i1 false), !tbaa.struct !248
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %12, ptr noundef nonnull align 4 dereferenceable(12) %7, i64 12, i1 false), !tbaa.struct !248
   %i.ca = call noundef float @_ZNK3igl4AABBIN5Eigen6MatrixIfLin1ELi3ELi1ELin1ELi3EEELi3EE16squared_distanceINS2_IiLin1ELi3ELi1ELin1ELi3EEEEEfRKNS1_10MatrixBaseIS3_EERKNS7_IT_EERKNS2_IfLi1ELi3ELi1ELi1ELi3EEEffRiRNS1_15PlainObjectBaseISF_EE(ptr noundef nonnull align 8 dereferenceable(52) %i.bd, ptr noundef nonnull align 1 dereferenceable(1) %1, ptr noundef nonnull align 1 dereferenceable(1) %2, ptr noundef nonnull align 4 dereferenceable(12) %3, float noundef %4, float noundef %.0161, ptr noundef nonnull align 4 dereferenceable(4) %i.e, ptr noundef nonnull align 4 dereferenceable(12) %12), !inline_history !739 ; 2 uses
   %i.cb = fcmp olt float %i.ca, %.0161
   br i1 %i.cb, label %bb.i, label %_ZNK3igl4AABBIN5Eigen6MatrixIfLin1ELi3ELi1ELin1ELi3EEELi3EE7set_minERKNS2_IfLi1ELi3ELi1ELi1ELi3EEEfRKiS7_RfRiRNS1_15PlainObjectBaseIS5_EE.exit59
@@ -4889,7 +4889,7 @@ bb.af:                                            ; preds = %_ZNK5Eigen10Aligned
 bb.ag:                                            ; preds = %bb.af
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #25
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %11, ptr noundef nonnull align 4 dereferenceable(12) %7, i64 12, i1 false), !tbaa.struct !248
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %11, ptr noundef nonnull align 4 dereferenceable(12) %7, i64 12, i1 false), !tbaa.struct !248
   %i.ey = call noundef float @_ZNK3igl4AABBIN5Eigen6MatrixIfLin1ELi3ELi1ELin1ELi3EEELi3EE16squared_distanceINS2_IiLin1ELi3ELi1ELin1ELi3EEEEEfRKNS1_10MatrixBaseIS3_EERKNS7_IT_EERKNS2_IfLi1ELi3ELi1ELi1ELi3EEEffRiRNS1_15PlainObjectBaseISF_EE(ptr noundef nonnull align 8 dereferenceable(52) %i.ci, ptr noundef nonnull align 1 dereferenceable(1) %1, ptr noundef nonnull align 1 dereferenceable(1) %2, ptr noundef nonnull align 4 dereferenceable(12) %3, float noundef %4, float noundef %.1, ptr noundef nonnull align 4 dereferenceable(4) %i.d, ptr noundef nonnull align 4 dereferenceable(12) %11), !inline_history !738 ; 2 uses
   %i.ez = fcmp olt float %i.ey, %.1
   br i1 %i.ez, label %bb.ah, label %_ZNK3igl4AABBIN5Eigen6MatrixIfLin1ELi3ELi1ELin1ELi3EEELi3EE7set_minERKNS2_IfLi1ELi3ELi1ELi1ELi3EEEfRKiS7_RfRiRNS1_15PlainObjectBaseIS5_EE.exit60
@@ -4920,7 +4920,7 @@ bb.ai:                                            ; preds = %_ZNK3igl4AABBIN5Eig
 bb.aj:                                            ; preds = %bb.ai
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #25
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %10, ptr noundef nonnull align 4 dereferenceable(12) %7, i64 12, i1 false), !tbaa.struct !248
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %10, ptr noundef nonnull align 4 dereferenceable(12) %7, i64 12, i1 false), !tbaa.struct !248
   %i.fg = load ptr, ptr %i.k, align 8, !tbaa !565
   %i.fh = call noundef float @_ZNK3igl4AABBIN5Eigen6MatrixIfLin1ELi3ELi1ELin1ELi3EEELi3EE16squared_distanceINS2_IiLin1ELi3ELi1ELin1ELi3EEEEEfRKNS1_10MatrixBaseIS3_EERKNS7_IT_EERKNS2_IfLi1ELi3ELi1ELi1ELi3EEEffRiRNS1_15PlainObjectBaseISF_EE(ptr noundef nonnull align 8 dereferenceable(52) %i.fg, ptr noundef nonnull align 1 dereferenceable(1) %1, ptr noundef nonnull align 1 dereferenceable(1) %2, ptr noundef nonnull align 4 dereferenceable(12) %3, float noundef %4, float noundef %.2, ptr noundef nonnull align 4 dereferenceable(4) %i.c, ptr noundef nonnull align 4 dereferenceable(12) %10), !inline_history !739 ; 2 uses
   %i.fi = fcmp olt float %i.fh, %.2
@@ -4951,7 +4951,7 @@ bb.al:                                            ; preds = %_ZNK5Eigen10Aligned
 bb.am:                                            ; preds = %bb.al
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #25
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %9, ptr noundef nonnull align 4 dereferenceable(12) %7, i64 12, i1 false), !tbaa.struct !248
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %9, ptr noundef nonnull align 4 dereferenceable(12) %7, i64 12, i1 false), !tbaa.struct !248
   %i.fp = call noundef float @_ZNK3igl4AABBIN5Eigen6MatrixIfLin1ELi3ELi1ELin1ELi3EEELi3EE16squared_distanceINS2_IiLin1ELi3ELi1ELin1ELi3EEEEEfRKNS1_10MatrixBaseIS3_EERKNS7_IT_EERKNS2_IfLi1ELi3ELi1ELi1ELi3EEEffRiRNS1_15PlainObjectBaseISF_EE(ptr noundef nonnull align 8 dereferenceable(52) %i.dr, ptr noundef nonnull align 1 dereferenceable(1) %1, ptr noundef nonnull align 1 dereferenceable(1) %2, ptr noundef nonnull align 4 dereferenceable(12) %3, float noundef %4, float noundef %.1, ptr noundef nonnull align 4 dereferenceable(4) %i.b, ptr noundef nonnull align 4 dereferenceable(12) %9), !inline_history !739 ; 2 uses
   %i.fq = fcmp olt float %i.fp, %.1
   br i1 %i.fq, label %bb.an, label %_ZNK3igl4AABBIN5Eigen6MatrixIfLin1ELi3ELi1ELin1ELi3EEELi3EE7set_minERKNS2_IfLi1ELi3ELi1ELi1ELi3EEEfRKiS7_RfRiRNS1_15PlainObjectBaseIS5_EE.exit62
@@ -4982,7 +4982,7 @@ bb.ao:                                            ; preds = %_ZNK3igl4AABBIN5Eig
 bb.ap:                                            ; preds = %bb.ao
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #25
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %8, ptr noundef nonnull align 4 dereferenceable(12) %7, i64 12, i1 false), !tbaa.struct !248
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %8, ptr noundef nonnull align 4 dereferenceable(12) %7, i64 12, i1 false), !tbaa.struct !248
   %i.fx = load ptr, ptr %0, align 8, !tbaa !563
   %i.fy = call noundef float @_ZNK3igl4AABBIN5Eigen6MatrixIfLin1ELi3ELi1ELin1ELi3EEELi3EE16squared_distanceINS2_IiLin1ELi3ELi1ELin1ELi3EEEEEfRKNS1_10MatrixBaseIS3_EERKNS7_IT_EERKNS2_IfLi1ELi3ELi1ELi1ELi3EEEffRiRNS1_15PlainObjectBaseISF_EE(ptr noundef nonnull align 8 dereferenceable(52) %i.fx, ptr noundef nonnull align 1 dereferenceable(1) %1, ptr noundef nonnull align 1 dereferenceable(1) %2, ptr noundef nonnull align 4 dereferenceable(12) %3, float noundef %4, float noundef %.3, ptr noundef nonnull align 4 dereferenceable(4) %i.a, ptr noundef nonnull align 4 dereferenceable(12) %8), !inline_history !738 ; 2 uses
   %i.fz = fcmp olt float %i.fy, %.3
@@ -5385,9 +5385,9 @@ bb.v:                                             ; preds = %bb.t, %bb.u
 bb.w:                                             ; preds = %._crit_edge173
   %i.ik = getelementptr inbounds nuw i8, ptr %i.ij, i64 24
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(52) %i.ij, i8 0, i64 24, i1 false)
-  store <4 x float> <float f0x7F7FFFFF, float f0x7F7FFFFF, float f0x7F7FFFFF, float f0xFF7FFFFF>, ptr %i.ik, align 4, !tbaa !246
+  store <4 x float> <float f0x7F7FFFFF, float f0x7F7FFFFF, float f0x7F7FFFFF, float f0xFF7FFFFF>, ptr %i.ik, align 8, !tbaa !246
   %.07.i.i.i.i.ptr.1.i.i.i.i.i.i.i.i1.i.i.i = getelementptr inbounds nuw i8, ptr %i.ij, i64 40
-  store <2 x float> splat (float f0xFF7FFFFF), ptr %.07.i.i.i.i.ptr.1.i.i.i.i.i.i.i.i1.i.i.i, align 4, !tbaa !246
+  store <2 x float> splat (float f0xFF7FFFFF), ptr %.07.i.i.i.i.ptr.1.i.i.i.i.i.i.i.i1.i.i.i, align 8, !tbaa !246
   %i.il = getelementptr inbounds nuw i8, ptr %i.ij, i64 48
   store i32 -1, ptr %i.il, align 8, !tbaa !354
   store ptr %i.ij, ptr %0, align 8, !tbaa !351
@@ -5416,9 +5416,9 @@ bb.z:                                             ; preds = %bb.y
 bb.aa:                                            ; preds = %bb.z
   %i.ir = getelementptr inbounds nuw i8, ptr %i.iq, i64 24
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(52) %i.iq, i8 0, i64 24, i1 false)
-  store <4 x float> <float f0x7F7FFFFF, float f0x7F7FFFFF, float f0x7F7FFFFF, float f0xFF7FFFFF>, ptr %i.ir, align 4, !tbaa !246
+  store <4 x float> <float f0x7F7FFFFF, float f0x7F7FFFFF, float f0x7F7FFFFF, float f0xFF7FFFFF>, ptr %i.ir, align 8, !tbaa !246
   %.07.i.i.i.i.ptr.1.i.i.i.i.i.i.i.i1.i.i.i99 = getelementptr inbounds nuw i8, ptr %i.iq, i64 40
-  store <2 x float> splat (float f0xFF7FFFFF), ptr %.07.i.i.i.i.ptr.1.i.i.i.i.i.i.i.i1.i.i.i99, align 4, !tbaa !246
+  store <2 x float> splat (float f0xFF7FFFFF), ptr %.07.i.i.i.i.ptr.1.i.i.i.i.i.i.i.i1.i.i.i99, align 8, !tbaa !246
   %i.is = getelementptr inbounds nuw i8, ptr %i.iq, i64 48
   store i32 -1, ptr %i.is, align 8, !tbaa !354
   %i.it = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
@@ -5821,9 +5821,9 @@ bb.v:                                             ; preds = %bb.t, %bb.u
 bb.w:                                             ; preds = %._crit_edge173
   %i.ik = getelementptr inbounds nuw i8, ptr %i.ij, i64 24
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(52) %i.ij, i8 0, i64 24, i1 false)
-  store <4 x float> <float f0x7F7FFFFF, float f0x7F7FFFFF, float f0x7F7FFFFF, float f0xFF7FFFFF>, ptr %i.ik, align 4, !tbaa !246
+  store <4 x float> <float f0x7F7FFFFF, float f0x7F7FFFFF, float f0x7F7FFFFF, float f0xFF7FFFFF>, ptr %i.ik, align 8, !tbaa !246
   %.07.i.i.i.i.ptr.1.i.i.i.i.i.i.i.i1.i.i.i = getelementptr inbounds nuw i8, ptr %i.ij, i64 40
-  store <2 x float> splat (float f0xFF7FFFFF), ptr %.07.i.i.i.i.ptr.1.i.i.i.i.i.i.i.i1.i.i.i, align 4, !tbaa !246
+  store <2 x float> splat (float f0xFF7FFFFF), ptr %.07.i.i.i.i.ptr.1.i.i.i.i.i.i.i.i1.i.i.i, align 8, !tbaa !246
   %i.il = getelementptr inbounds nuw i8, ptr %i.ij, i64 48
   store i32 -1, ptr %i.il, align 8, !tbaa !560
   store ptr %i.ij, ptr %0, align 8, !tbaa !563
@@ -5852,9 +5852,9 @@ bb.z:                                             ; preds = %bb.y
 bb.aa:                                            ; preds = %bb.z
   %i.ir = getelementptr inbounds nuw i8, ptr %i.iq, i64 24
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(52) %i.iq, i8 0, i64 24, i1 false)
-  store <4 x float> <float f0x7F7FFFFF, float f0x7F7FFFFF, float f0x7F7FFFFF, float f0xFF7FFFFF>, ptr %i.ir, align 4, !tbaa !246
+  store <4 x float> <float f0x7F7FFFFF, float f0x7F7FFFFF, float f0x7F7FFFFF, float f0xFF7FFFFF>, ptr %i.ir, align 8, !tbaa !246
   %.07.i.i.i.i.ptr.1.i.i.i.i.i.i.i.i1.i.i.i99 = getelementptr inbounds nuw i8, ptr %i.iq, i64 40
-  store <2 x float> splat (float f0xFF7FFFFF), ptr %.07.i.i.i.i.ptr.1.i.i.i.i.i.i.i.i1.i.i.i99, align 4, !tbaa !246
+  store <2 x float> splat (float f0xFF7FFFFF), ptr %.07.i.i.i.i.ptr.1.i.i.i.i.i.i.i.i1.i.i.i99, align 8, !tbaa !246
   %i.is = getelementptr inbounds nuw i8, ptr %i.iq, i64 48
   store i32 -1, ptr %i.is, align 8, !tbaa !560
   %i.it = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses

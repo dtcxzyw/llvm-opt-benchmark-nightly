@@ -205,7 +205,7 @@ _ZN5arrow7compute10OutputTypeD2Ev.exit:           ; preds = %_ZNSt14_Function_ba
   call void @llvm.lifetime.start.p0(ptr nonnull %180)
   call void @llvm.lifetime.start.p0(ptr nonnull %173) #20
   %i.ak = getelementptr inbounds nuw i8, ptr %173, i64 48 ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(92) %173, i8 0, i64 48, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(92) %173, i8 0, i64 48, i1 false)
   store i8 1, ptr %i.ak, align 16, !tbaa !59
   %i.al = getelementptr inbounds nuw i8, ptr %173, i64 52
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %i.al, i8 0, i64 20, i1 false)
@@ -263,7 +263,7 @@ bb.n:                                             ; preds = %bb.m
   %i.ba = getelementptr inbounds nuw i8, ptr %174, i64 8
   %i.bb = getelementptr inbounds nuw i8, ptr %173, i64 8 ; 2 uses
   %i.bc = load <2 x ptr>, ptr %174, align 16, !tbaa !86
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %174, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %174, i8 0, i64 16, i1 false)
   %i.bd = load ptr, ptr %i.bb, align 8, !tbaa !46 ; 8 uses
   store <2 x ptr> %i.bc, ptr %173, align 16, !tbaa !86
   %.not.i.i.i.i.i = icmp eq ptr %i.bd, null
@@ -616,7 +616,7 @@ _ZN5arrow7compute9InputTypeD2Ev.exit.i:           ; preds = %bb.bb, %_ZN9__gnu_c
   %i.fo = getelementptr inbounds nuw i8, ptr %180, i64 16 ; 2 uses
   %i.fp = getelementptr inbounds nuw i8, ptr %180, i64 40
   %i.fq = getelementptr inbounds nuw i8, ptr %173, i64 40
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.fo, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.fo, i8 0, i64 24, i1 false)
   %i.fr = load ptr, ptr %i.fq, align 8, !tbaa !99
   store ptr %i.fr, ptr %i.fp, align 8, !tbaa !99
   %i.fs = getelementptr inbounds nuw i8, ptr %173, i64 32 ; 2 uses
@@ -627,9 +627,9 @@ _ZN5arrow7compute9InputTypeD2Ev.exit.i:           ; preds = %bb.bb, %_ZN9__gnu_c
 bb.bc:                                            ; preds = %_ZN5arrow7compute9InputTypeD2Ev.exit.i
   %i.fu = getelementptr inbounds nuw i8, ptr %173, i64 16
   %i.fv = getelementptr inbounds nuw i8, ptr %180, i64 32
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.fo, ptr noundef nonnull align 8 dereferenceable(32) %i.fu, i64 16, i1 false), !tbaa.struct !100
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.fo, ptr noundef nonnull align 16 dereferenceable(32) %i.fu, i64 16, i1 false), !tbaa.struct !100
   store ptr %i.ft, ptr %i.fv, align 16, !tbaa !52
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.fs, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.fs, i8 0, i64 16, i1 false)
   br label %_ZN5arrow7compute12ScalarKernelC2EOS1_.exit.i
 
 _ZN5arrow7compute12ScalarKernelC2EOS1_.exit.i:    ; preds = %bb.bc, %_ZN5arrow7compute9InputTypeD2Ev.exit.i
@@ -725,7 +725,7 @@ bb.bm:                                            ; preds = %bb.bf, %bb.be, %bb.
   call void @llvm.lifetime.start.p0(ptr nonnull %171)
   call void @llvm.lifetime.start.p0(ptr nonnull %164) #20
   %i.gm = getelementptr inbounds nuw i8, ptr %164, i64 48 ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(92) %164, i8 0, i64 48, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(92) %164, i8 0, i64 48, i1 false)
   store i8 1, ptr %i.gm, align 16, !tbaa !59
   %i.gn = getelementptr inbounds nuw i8, ptr %164, i64 52
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %i.gn, i8 0, i64 20, i1 false)
@@ -783,7 +783,7 @@ bb.bp:                                            ; preds = %bb.bo
   %i.hc = getelementptr inbounds nuw i8, ptr %165, i64 8
   %i.hd = getelementptr inbounds nuw i8, ptr %164, i64 8 ; 2 uses
   %i.he = load <2 x ptr>, ptr %165, align 16, !tbaa !86
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %165, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %165, i8 0, i64 16, i1 false)
   %i.hf = load ptr, ptr %i.hd, align 8, !tbaa !46 ; 8 uses
   store <2 x ptr> %i.he, ptr %164, align 16, !tbaa !86
   %.not.i.i.i.i.i36 = icmp eq ptr %i.hf, null
@@ -1136,7 +1136,7 @@ _ZN5arrow7compute9InputTypeD2Ev.exit.i70:         ; preds = %bb.dd, %_ZN9__gnu_c
   %i.lq = getelementptr inbounds nuw i8, ptr %171, i64 16 ; 2 uses
   %i.lr = getelementptr inbounds nuw i8, ptr %171, i64 40
   %i.ls = getelementptr inbounds nuw i8, ptr %164, i64 40
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.lq, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.lq, i8 0, i64 24, i1 false)
   %i.lt = load ptr, ptr %i.ls, align 8, !tbaa !99
   store ptr %i.lt, ptr %i.lr, align 8, !tbaa !99
   %i.lu = getelementptr inbounds nuw i8, ptr %164, i64 32 ; 2 uses
@@ -1147,9 +1147,9 @@ _ZN5arrow7compute9InputTypeD2Ev.exit.i70:         ; preds = %bb.dd, %_ZN9__gnu_c
 bb.de:                                            ; preds = %_ZN5arrow7compute9InputTypeD2Ev.exit.i70
   %i.lw = getelementptr inbounds nuw i8, ptr %164, i64 16
   %i.lx = getelementptr inbounds nuw i8, ptr %171, i64 32
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.lq, ptr noundef nonnull align 8 dereferenceable(32) %i.lw, i64 16, i1 false), !tbaa.struct !100
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.lq, ptr noundef nonnull align 16 dereferenceable(32) %i.lw, i64 16, i1 false), !tbaa.struct !100
   store ptr %i.lv, ptr %i.lx, align 16, !tbaa !52
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.lu, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.lu, i8 0, i64 16, i1 false)
   br label %_ZN5arrow7compute12ScalarKernelC2EOS1_.exit.i72
 
 _ZN5arrow7compute12ScalarKernelC2EOS1_.exit.i72:  ; preds = %bb.de, %_ZN5arrow7compute9InputTypeD2Ev.exit.i70
@@ -1245,7 +1245,7 @@ bb.do:                                            ; preds = %bb.dh, %bb.dg, %bb.
   call void @llvm.lifetime.start.p0(ptr nonnull %162)
   call void @llvm.lifetime.start.p0(ptr nonnull %155) #20
   %i.mo = getelementptr inbounds nuw i8, ptr %155, i64 48 ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(92) %155, i8 0, i64 48, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(92) %155, i8 0, i64 48, i1 false)
   store i8 1, ptr %i.mo, align 16, !tbaa !59
   %i.mp = getelementptr inbounds nuw i8, ptr %155, i64 52
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %i.mp, i8 0, i64 20, i1 false)
@@ -1303,7 +1303,7 @@ bb.dr:                                            ; preds = %bb.dq
   %i.ne = getelementptr inbounds nuw i8, ptr %156, i64 8
   %i.nf = getelementptr inbounds nuw i8, ptr %155, i64 8 ; 2 uses
   %i.ng = load <2 x ptr>, ptr %156, align 16, !tbaa !86
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %156, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %156, i8 0, i64 16, i1 false)
   %i.nh = load ptr, ptr %i.nf, align 8, !tbaa !46 ; 8 uses
   store <2 x ptr> %i.ng, ptr %155, align 16, !tbaa !86
   %.not.i.i.i.i.i84 = icmp eq ptr %i.nh, null
@@ -1656,7 +1656,7 @@ _ZN5arrow7compute9InputTypeD2Ev.exit.i118:        ; preds = %bb.ff, %_ZN9__gnu_c
   %i.rs = getelementptr inbounds nuw i8, ptr %162, i64 16 ; 2 uses
   %i.rt = getelementptr inbounds nuw i8, ptr %162, i64 40
   %i.ru = getelementptr inbounds nuw i8, ptr %155, i64 40
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.rs, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.rs, i8 0, i64 24, i1 false)
   %i.rv = load ptr, ptr %i.ru, align 8, !tbaa !99
   store ptr %i.rv, ptr %i.rt, align 8, !tbaa !99
   %i.rw = getelementptr inbounds nuw i8, ptr %155, i64 32 ; 2 uses
@@ -1667,9 +1667,9 @@ _ZN5arrow7compute9InputTypeD2Ev.exit.i118:        ; preds = %bb.ff, %_ZN9__gnu_c
 bb.fg:                                            ; preds = %_ZN5arrow7compute9InputTypeD2Ev.exit.i118
   %i.ry = getelementptr inbounds nuw i8, ptr %155, i64 16
   %i.rz = getelementptr inbounds nuw i8, ptr %162, i64 32
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.rs, ptr noundef nonnull align 8 dereferenceable(32) %i.ry, i64 16, i1 false), !tbaa.struct !100
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.rs, ptr noundef nonnull align 16 dereferenceable(32) %i.ry, i64 16, i1 false), !tbaa.struct !100
   store ptr %i.rx, ptr %i.rz, align 16, !tbaa !52
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.rw, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.rw, i8 0, i64 16, i1 false)
   br label %_ZN5arrow7compute12ScalarKernelC2EOS1_.exit.i120
 
 _ZN5arrow7compute12ScalarKernelC2EOS1_.exit.i120: ; preds = %bb.fg, %_ZN5arrow7compute9InputTypeD2Ev.exit.i118
@@ -1765,7 +1765,7 @@ bb.fq:                                            ; preds = %bb.fj, %bb.fi, %bb.
   call void @llvm.lifetime.start.p0(ptr nonnull %153)
   call void @llvm.lifetime.start.p0(ptr nonnull %146) #20
   %i.sq = getelementptr inbounds nuw i8, ptr %146, i64 48 ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(92) %146, i8 0, i64 48, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(92) %146, i8 0, i64 48, i1 false)
   store i8 1, ptr %i.sq, align 16, !tbaa !59
   %i.sr = getelementptr inbounds nuw i8, ptr %146, i64 52
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %i.sr, i8 0, i64 20, i1 false)
@@ -1823,7 +1823,7 @@ bb.ft:                                            ; preds = %bb.fs
   %i.tg = getelementptr inbounds nuw i8, ptr %147, i64 8
   %i.th = getelementptr inbounds nuw i8, ptr %146, i64 8 ; 2 uses
   %i.ti = load <2 x ptr>, ptr %147, align 16, !tbaa !86
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %147, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %147, i8 0, i64 16, i1 false)
   %i.tj = load ptr, ptr %i.th, align 8, !tbaa !46 ; 8 uses
   store <2 x ptr> %i.ti, ptr %146, align 16, !tbaa !86
   %.not.i.i.i.i.i132 = icmp eq ptr %i.tj, null
@@ -2176,7 +2176,7 @@ _ZN5arrow7compute9InputTypeD2Ev.exit.i166:        ; preds = %bb.hh, %_ZN9__gnu_c
   %i.xu = getelementptr inbounds nuw i8, ptr %153, i64 16 ; 2 uses
   %i.xv = getelementptr inbounds nuw i8, ptr %153, i64 40
   %i.xw = getelementptr inbounds nuw i8, ptr %146, i64 40
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.xu, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.xu, i8 0, i64 24, i1 false)
   %i.xx = load ptr, ptr %i.xw, align 8, !tbaa !99
   store ptr %i.xx, ptr %i.xv, align 8, !tbaa !99
   %i.xy = getelementptr inbounds nuw i8, ptr %146, i64 32 ; 2 uses
@@ -2187,9 +2187,9 @@ _ZN5arrow7compute9InputTypeD2Ev.exit.i166:        ; preds = %bb.hh, %_ZN9__gnu_c
 bb.hi:                                            ; preds = %_ZN5arrow7compute9InputTypeD2Ev.exit.i166
   %i.ya = getelementptr inbounds nuw i8, ptr %146, i64 16
   %i.yb = getelementptr inbounds nuw i8, ptr %153, i64 32
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.xu, ptr noundef nonnull align 8 dereferenceable(32) %i.ya, i64 16, i1 false), !tbaa.struct !100
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.xu, ptr noundef nonnull align 16 dereferenceable(32) %i.ya, i64 16, i1 false), !tbaa.struct !100
   store ptr %i.xz, ptr %i.yb, align 16, !tbaa !52
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.xy, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.xy, i8 0, i64 16, i1 false)
   br label %_ZN5arrow7compute12ScalarKernelC2EOS1_.exit.i168
 
 _ZN5arrow7compute12ScalarKernelC2EOS1_.exit.i168: ; preds = %bb.hi, %_ZN5arrow7compute9InputTypeD2Ev.exit.i166
@@ -2285,7 +2285,7 @@ bb.hs:                                            ; preds = %bb.hl, %bb.hk, %bb.
   call void @llvm.lifetime.start.p0(ptr nonnull %144)
   call void @llvm.lifetime.start.p0(ptr nonnull %137) #20
   %i.ys = getelementptr inbounds nuw i8, ptr %137, i64 48 ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(92) %137, i8 0, i64 48, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(92) %137, i8 0, i64 48, i1 false)
   store i8 1, ptr %i.ys, align 16, !tbaa !59
   %i.yt = getelementptr inbounds nuw i8, ptr %137, i64 52
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %i.yt, i8 0, i64 20, i1 false)
@@ -2343,7 +2343,7 @@ bb.hv:                                            ; preds = %bb.hu
   %i.zi = getelementptr inbounds nuw i8, ptr %138, i64 8
   %i.zj = getelementptr inbounds nuw i8, ptr %137, i64 8 ; 2 uses
   %i.zk = load <2 x ptr>, ptr %138, align 16, !tbaa !86
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %138, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %138, i8 0, i64 16, i1 false)
   %i.zl = load ptr, ptr %i.zj, align 8, !tbaa !46 ; 8 uses
   store <2 x ptr> %i.zk, ptr %137, align 16, !tbaa !86
   %.not.i.i.i.i.i180 = icmp eq ptr %i.zl, null
@@ -2696,7 +2696,7 @@ _ZN5arrow7compute9InputTypeD2Ev.exit.i214:        ; preds = %bb.jj, %_ZN9__gnu_c
   %i.adw = getelementptr inbounds nuw i8, ptr %144, i64 16 ; 2 uses
   %i.adx = getelementptr inbounds nuw i8, ptr %144, i64 40
   %i.ady = getelementptr inbounds nuw i8, ptr %137, i64 40
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.adw, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.adw, i8 0, i64 24, i1 false)
   %i.adz = load ptr, ptr %i.ady, align 8, !tbaa !99
   store ptr %i.adz, ptr %i.adx, align 8, !tbaa !99
   %i.aea = getelementptr inbounds nuw i8, ptr %137, i64 32 ; 2 uses
@@ -2707,9 +2707,9 @@ _ZN5arrow7compute9InputTypeD2Ev.exit.i214:        ; preds = %bb.jj, %_ZN9__gnu_c
 bb.jk:                                            ; preds = %_ZN5arrow7compute9InputTypeD2Ev.exit.i214
   %i.aec = getelementptr inbounds nuw i8, ptr %137, i64 16
   %i.aed = getelementptr inbounds nuw i8, ptr %144, i64 32
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.adw, ptr noundef nonnull align 8 dereferenceable(32) %i.aec, i64 16, i1 false), !tbaa.struct !100
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.adw, ptr noundef nonnull align 16 dereferenceable(32) %i.aec, i64 16, i1 false), !tbaa.struct !100
   store ptr %i.aeb, ptr %i.aed, align 16, !tbaa !52
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.aea, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.aea, i8 0, i64 16, i1 false)
   br label %_ZN5arrow7compute12ScalarKernelC2EOS1_.exit.i216
 
 _ZN5arrow7compute12ScalarKernelC2EOS1_.exit.i216: ; preds = %bb.jk, %_ZN5arrow7compute9InputTypeD2Ev.exit.i214
@@ -2909,7 +2909,7 @@ _ZN5arrow7compute10OutputTypeD2Ev.exit229:        ; preds = %_ZNSt14_Function_ba
   call void @llvm.lifetime.start.p0(ptr nonnull %135)
   call void @llvm.lifetime.start.p0(ptr nonnull %128) #20
   %i.afx = getelementptr inbounds nuw i8, ptr %128, i64 48 ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(92) %128, i8 0, i64 48, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(92) %128, i8 0, i64 48, i1 false)
   store i8 1, ptr %i.afx, align 16, !tbaa !59
   %i.afy = getelementptr inbounds nuw i8, ptr %128, i64 52
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %i.afy, i8 0, i64 20, i1 false)
@@ -2967,7 +2967,7 @@ bb.ki:                                            ; preds = %bb.kh
   %i.agn = getelementptr inbounds nuw i8, ptr %129, i64 8
   %i.ago = getelementptr inbounds nuw i8, ptr %128, i64 8 ; 2 uses
   %i.agp = load <2 x ptr>, ptr %129, align 16, !tbaa !86
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %129, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %129, i8 0, i64 16, i1 false)
   %i.agq = load ptr, ptr %i.ago, align 8, !tbaa !46 ; 8 uses
   store <2 x ptr> %i.agp, ptr %128, align 16, !tbaa !86
   %.not.i.i.i.i.i238 = icmp eq ptr %i.agq, null
@@ -3320,7 +3320,7 @@ _ZN5arrow7compute9InputTypeD2Ev.exit.i272:        ; preds = %bb.lw, %_ZN9__gnu_c
   %i.alb = getelementptr inbounds nuw i8, ptr %135, i64 16 ; 2 uses
   %i.alc = getelementptr inbounds nuw i8, ptr %135, i64 40
   %i.ald = getelementptr inbounds nuw i8, ptr %128, i64 40
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.alb, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.alb, i8 0, i64 24, i1 false)
   %i.ale = load ptr, ptr %i.ald, align 8, !tbaa !99
   store ptr %i.ale, ptr %i.alc, align 8, !tbaa !99
   %i.alf = getelementptr inbounds nuw i8, ptr %128, i64 32 ; 2 uses
@@ -3331,9 +3331,9 @@ _ZN5arrow7compute9InputTypeD2Ev.exit.i272:        ; preds = %bb.lw, %_ZN9__gnu_c
 bb.lx:                                            ; preds = %_ZN5arrow7compute9InputTypeD2Ev.exit.i272
   %i.alh = getelementptr inbounds nuw i8, ptr %128, i64 16
   %i.ali = getelementptr inbounds nuw i8, ptr %135, i64 32
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.alb, ptr noundef nonnull align 8 dereferenceable(32) %i.alh, i64 16, i1 false), !tbaa.struct !100
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.alb, ptr noundef nonnull align 16 dereferenceable(32) %i.alh, i64 16, i1 false), !tbaa.struct !100
   store ptr %i.alg, ptr %i.ali, align 16, !tbaa !52
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.alf, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.alf, i8 0, i64 16, i1 false)
   br label %_ZN5arrow7compute12ScalarKernelC2EOS1_.exit.i274
 
 _ZN5arrow7compute12ScalarKernelC2EOS1_.exit.i274: ; preds = %bb.lx, %_ZN5arrow7compute9InputTypeD2Ev.exit.i272
@@ -3429,7 +3429,7 @@ bb.mh:                                            ; preds = %bb.ma, %bb.lz, %bb.
   call void @llvm.lifetime.start.p0(ptr nonnull %126)
   call void @llvm.lifetime.start.p0(ptr nonnull %119) #20
   %i.alz = getelementptr inbounds nuw i8, ptr %119, i64 48 ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(92) %119, i8 0, i64 48, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(92) %119, i8 0, i64 48, i1 false)
   store i8 1, ptr %i.alz, align 16, !tbaa !59
   %i.ama = getelementptr inbounds nuw i8, ptr %119, i64 52
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %i.ama, i8 0, i64 20, i1 false)
@@ -3487,7 +3487,7 @@ bb.mk:                                            ; preds = %bb.mj
   %i.amp = getelementptr inbounds nuw i8, ptr %120, i64 8
   %i.amq = getelementptr inbounds nuw i8, ptr %119, i64 8 ; 2 uses
   %i.amr = load <2 x ptr>, ptr %120, align 16, !tbaa !86
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %120, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %120, i8 0, i64 16, i1 false)
   %i.ams = load ptr, ptr %i.amq, align 8, !tbaa !46 ; 8 uses
   store <2 x ptr> %i.amr, ptr %119, align 16, !tbaa !86
   %.not.i.i.i.i.i286 = icmp eq ptr %i.ams, null
@@ -3840,7 +3840,7 @@ _ZN5arrow7compute9InputTypeD2Ev.exit.i320:        ; preds = %bb.ny, %_ZN9__gnu_c
   %i.ard = getelementptr inbounds nuw i8, ptr %126, i64 16 ; 2 uses
   %i.are = getelementptr inbounds nuw i8, ptr %126, i64 40
   %i.arf = getelementptr inbounds nuw i8, ptr %119, i64 40
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.ard, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.ard, i8 0, i64 24, i1 false)
   %i.arg = load ptr, ptr %i.arf, align 8, !tbaa !99
   store ptr %i.arg, ptr %i.are, align 8, !tbaa !99
   %i.arh = getelementptr inbounds nuw i8, ptr %119, i64 32 ; 2 uses
@@ -3851,9 +3851,9 @@ _ZN5arrow7compute9InputTypeD2Ev.exit.i320:        ; preds = %bb.ny, %_ZN9__gnu_c
 bb.nz:                                            ; preds = %_ZN5arrow7compute9InputTypeD2Ev.exit.i320
   %i.arj = getelementptr inbounds nuw i8, ptr %119, i64 16
   %i.ark = getelementptr inbounds nuw i8, ptr %126, i64 32
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.ard, ptr noundef nonnull align 8 dereferenceable(32) %i.arj, i64 16, i1 false), !tbaa.struct !100
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.ard, ptr noundef nonnull align 16 dereferenceable(32) %i.arj, i64 16, i1 false), !tbaa.struct !100
   store ptr %i.ari, ptr %i.ark, align 16, !tbaa !52
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.arh, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.arh, i8 0, i64 16, i1 false)
   br label %_ZN5arrow7compute12ScalarKernelC2EOS1_.exit.i322
 
 _ZN5arrow7compute12ScalarKernelC2EOS1_.exit.i322: ; preds = %bb.nz, %_ZN5arrow7compute9InputTypeD2Ev.exit.i320
@@ -3949,7 +3949,7 @@ bb.oj:                                            ; preds = %bb.oc, %bb.ob, %bb.
   call void @llvm.lifetime.start.p0(ptr nonnull %117)
   call void @llvm.lifetime.start.p0(ptr nonnull %110) #20
   %i.asb = getelementptr inbounds nuw i8, ptr %110, i64 48 ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(92) %110, i8 0, i64 48, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(92) %110, i8 0, i64 48, i1 false)
   store i8 1, ptr %i.asb, align 16, !tbaa !59
   %i.asc = getelementptr inbounds nuw i8, ptr %110, i64 52
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %i.asc, i8 0, i64 20, i1 false)
@@ -4007,7 +4007,7 @@ bb.om:                                            ; preds = %bb.ol
   %i.asr = getelementptr inbounds nuw i8, ptr %111, i64 8
   %i.ass = getelementptr inbounds nuw i8, ptr %110, i64 8 ; 2 uses
   %i.ast = load <2 x ptr>, ptr %111, align 16, !tbaa !86
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %111, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %111, i8 0, i64 16, i1 false)
   %i.asu = load ptr, ptr %i.ass, align 8, !tbaa !46 ; 8 uses
   store <2 x ptr> %i.ast, ptr %110, align 16, !tbaa !86
   %.not.i.i.i.i.i334 = icmp eq ptr %i.asu, null
@@ -4360,7 +4360,7 @@ _ZN5arrow7compute9InputTypeD2Ev.exit.i368:        ; preds = %bb.qa, %_ZN9__gnu_c
   %i.axf = getelementptr inbounds nuw i8, ptr %117, i64 16 ; 2 uses
   %i.axg = getelementptr inbounds nuw i8, ptr %117, i64 40
   %i.axh = getelementptr inbounds nuw i8, ptr %110, i64 40
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.axf, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.axf, i8 0, i64 24, i1 false)
   %i.axi = load ptr, ptr %i.axh, align 8, !tbaa !99
   store ptr %i.axi, ptr %i.axg, align 8, !tbaa !99
   %i.axj = getelementptr inbounds nuw i8, ptr %110, i64 32 ; 2 uses
@@ -4371,9 +4371,9 @@ _ZN5arrow7compute9InputTypeD2Ev.exit.i368:        ; preds = %bb.qa, %_ZN9__gnu_c
 bb.qb:                                            ; preds = %_ZN5arrow7compute9InputTypeD2Ev.exit.i368
   %i.axl = getelementptr inbounds nuw i8, ptr %110, i64 16
   %i.axm = getelementptr inbounds nuw i8, ptr %117, i64 32
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.axf, ptr noundef nonnull align 8 dereferenceable(32) %i.axl, i64 16, i1 false), !tbaa.struct !100
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.axf, ptr noundef nonnull align 16 dereferenceable(32) %i.axl, i64 16, i1 false), !tbaa.struct !100
   store ptr %i.axk, ptr %i.axm, align 16, !tbaa !52
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.axj, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.axj, i8 0, i64 16, i1 false)
   br label %_ZN5arrow7compute12ScalarKernelC2EOS1_.exit.i370
 
 _ZN5arrow7compute12ScalarKernelC2EOS1_.exit.i370: ; preds = %bb.qb, %_ZN5arrow7compute9InputTypeD2Ev.exit.i368
@@ -4469,7 +4469,7 @@ bb.ql:                                            ; preds = %bb.qe, %bb.qd, %bb.
   call void @llvm.lifetime.start.p0(ptr nonnull %108)
   call void @llvm.lifetime.start.p0(ptr nonnull %101) #20
   %i.ayd = getelementptr inbounds nuw i8, ptr %101, i64 48 ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(92) %101, i8 0, i64 48, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(92) %101, i8 0, i64 48, i1 false)
   store i8 1, ptr %i.ayd, align 16, !tbaa !59
   %i.aye = getelementptr inbounds nuw i8, ptr %101, i64 52
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %i.aye, i8 0, i64 20, i1 false)
@@ -4527,7 +4527,7 @@ bb.qo:                                            ; preds = %bb.qn
   %i.ayt = getelementptr inbounds nuw i8, ptr %102, i64 8
   %i.ayu = getelementptr inbounds nuw i8, ptr %101, i64 8 ; 2 uses
   %i.ayv = load <2 x ptr>, ptr %102, align 16, !tbaa !86
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %102, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %102, i8 0, i64 16, i1 false)
   %i.ayw = load ptr, ptr %i.ayu, align 8, !tbaa !46 ; 8 uses
   store <2 x ptr> %i.ayv, ptr %101, align 16, !tbaa !86
   %.not.i.i.i.i.i382 = icmp eq ptr %i.ayw, null
@@ -4880,7 +4880,7 @@ _ZN5arrow7compute9InputTypeD2Ev.exit.i416:        ; preds = %bb.sc, %_ZN9__gnu_c
   %i.bdh = getelementptr inbounds nuw i8, ptr %108, i64 16 ; 2 uses
   %i.bdi = getelementptr inbounds nuw i8, ptr %108, i64 40
   %i.bdj = getelementptr inbounds nuw i8, ptr %101, i64 40
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.bdh, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.bdh, i8 0, i64 24, i1 false)
   %i.bdk = load ptr, ptr %i.bdj, align 8, !tbaa !99
   store ptr %i.bdk, ptr %i.bdi, align 8, !tbaa !99
   %i.bdl = getelementptr inbounds nuw i8, ptr %101, i64 32 ; 2 uses
@@ -4891,9 +4891,9 @@ _ZN5arrow7compute9InputTypeD2Ev.exit.i416:        ; preds = %bb.sc, %_ZN9__gnu_c
 bb.sd:                                            ; preds = %_ZN5arrow7compute9InputTypeD2Ev.exit.i416
   %i.bdn = getelementptr inbounds nuw i8, ptr %101, i64 16
   %i.bdo = getelementptr inbounds nuw i8, ptr %108, i64 32
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.bdh, ptr noundef nonnull align 8 dereferenceable(32) %i.bdn, i64 16, i1 false), !tbaa.struct !100
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.bdh, ptr noundef nonnull align 16 dereferenceable(32) %i.bdn, i64 16, i1 false), !tbaa.struct !100
   store ptr %i.bdm, ptr %i.bdo, align 16, !tbaa !52
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bdl, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.bdl, i8 0, i64 16, i1 false)
   br label %_ZN5arrow7compute12ScalarKernelC2EOS1_.exit.i418
 
 _ZN5arrow7compute12ScalarKernelC2EOS1_.exit.i418: ; preds = %bb.sd, %_ZN5arrow7compute9InputTypeD2Ev.exit.i416
@@ -4989,7 +4989,7 @@ bb.sn:                                            ; preds = %bb.sg, %bb.sf, %bb.
   call void @llvm.lifetime.start.p0(ptr nonnull %99)
   call void @llvm.lifetime.start.p0(ptr nonnull %92) #20
   %i.bef = getelementptr inbounds nuw i8, ptr %92, i64 48 ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(92) %92, i8 0, i64 48, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(92) %92, i8 0, i64 48, i1 false)
   store i8 1, ptr %i.bef, align 16, !tbaa !59
   %i.beg = getelementptr inbounds nuw i8, ptr %92, i64 52
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %i.beg, i8 0, i64 20, i1 false)
@@ -5047,7 +5047,7 @@ bb.sq:                                            ; preds = %bb.sp
   %i.bev = getelementptr inbounds nuw i8, ptr %93, i64 8
   %i.bew = getelementptr inbounds nuw i8, ptr %92, i64 8 ; 2 uses
   %i.bex = load <2 x ptr>, ptr %93, align 16, !tbaa !86
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %93, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %93, i8 0, i64 16, i1 false)
   %i.bey = load ptr, ptr %i.bew, align 8, !tbaa !46 ; 8 uses
   store <2 x ptr> %i.bex, ptr %92, align 16, !tbaa !86
   %.not.i.i.i.i.i430 = icmp eq ptr %i.bey, null
@@ -5400,7 +5400,7 @@ _ZN5arrow7compute9InputTypeD2Ev.exit.i464:        ; preds = %bb.ue, %_ZN9__gnu_c
   %i.bjj = getelementptr inbounds nuw i8, ptr %99, i64 16 ; 2 uses
   %i.bjk = getelementptr inbounds nuw i8, ptr %99, i64 40
   %i.bjl = getelementptr inbounds nuw i8, ptr %92, i64 40
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.bjj, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.bjj, i8 0, i64 24, i1 false)
   %i.bjm = load ptr, ptr %i.bjl, align 8, !tbaa !99
   store ptr %i.bjm, ptr %i.bjk, align 8, !tbaa !99
   %i.bjn = getelementptr inbounds nuw i8, ptr %92, i64 32 ; 2 uses
@@ -5411,9 +5411,9 @@ _ZN5arrow7compute9InputTypeD2Ev.exit.i464:        ; preds = %bb.ue, %_ZN9__gnu_c
 bb.uf:                                            ; preds = %_ZN5arrow7compute9InputTypeD2Ev.exit.i464
   %i.bjp = getelementptr inbounds nuw i8, ptr %92, i64 16
   %i.bjq = getelementptr inbounds nuw i8, ptr %99, i64 32
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.bjj, ptr noundef nonnull align 8 dereferenceable(32) %i.bjp, i64 16, i1 false), !tbaa.struct !100
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.bjj, ptr noundef nonnull align 16 dereferenceable(32) %i.bjp, i64 16, i1 false), !tbaa.struct !100
   store ptr %i.bjo, ptr %i.bjq, align 16, !tbaa !52
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bjn, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.bjn, i8 0, i64 16, i1 false)
   br label %_ZN5arrow7compute12ScalarKernelC2EOS1_.exit.i466
 
 _ZN5arrow7compute12ScalarKernelC2EOS1_.exit.i466: ; preds = %bb.uf, %_ZN5arrow7compute9InputTypeD2Ev.exit.i464
@@ -5613,7 +5613,7 @@ _ZN5arrow7compute10OutputTypeD2Ev.exit480:        ; preds = %_ZNSt14_Function_ba
   call void @llvm.lifetime.start.p0(ptr nonnull %90)
   call void @llvm.lifetime.start.p0(ptr nonnull %83) #20
   %i.blk = getelementptr inbounds nuw i8, ptr %83, i64 48 ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(92) %83, i8 0, i64 48, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(92) %83, i8 0, i64 48, i1 false)
   store i8 1, ptr %i.blk, align 16, !tbaa !59
   %i.bll = getelementptr inbounds nuw i8, ptr %83, i64 52
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %i.bll, i8 0, i64 20, i1 false)
@@ -5671,7 +5671,7 @@ bb.vd:                                            ; preds = %bb.vc
   %i.bma = getelementptr inbounds nuw i8, ptr %84, i64 8
   %i.bmb = getelementptr inbounds nuw i8, ptr %83, i64 8 ; 2 uses
   %i.bmc = load <2 x ptr>, ptr %84, align 16, !tbaa !86
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %84, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %84, i8 0, i64 16, i1 false)
   %i.bmd = load ptr, ptr %i.bmb, align 8, !tbaa !46 ; 8 uses
   store <2 x ptr> %i.bmc, ptr %83, align 16, !tbaa !86
   %.not.i.i.i.i.i489 = icmp eq ptr %i.bmd, null
@@ -6024,7 +6024,7 @@ _ZN5arrow7compute9InputTypeD2Ev.exit.i523:        ; preds = %bb.wr, %_ZN9__gnu_c
   %i.bqo = getelementptr inbounds nuw i8, ptr %90, i64 16 ; 2 uses
   %i.bqp = getelementptr inbounds nuw i8, ptr %90, i64 40
   %i.bqq = getelementptr inbounds nuw i8, ptr %83, i64 40
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.bqo, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.bqo, i8 0, i64 24, i1 false)
   %i.bqr = load ptr, ptr %i.bqq, align 8, !tbaa !99
   store ptr %i.bqr, ptr %i.bqp, align 8, !tbaa !99
   %i.bqs = getelementptr inbounds nuw i8, ptr %83, i64 32 ; 2 uses
@@ -6035,9 +6035,9 @@ _ZN5arrow7compute9InputTypeD2Ev.exit.i523:        ; preds = %bb.wr, %_ZN9__gnu_c
 bb.ws:                                            ; preds = %_ZN5arrow7compute9InputTypeD2Ev.exit.i523
   %i.bqu = getelementptr inbounds nuw i8, ptr %83, i64 16
   %i.bqv = getelementptr inbounds nuw i8, ptr %90, i64 32
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.bqo, ptr noundef nonnull align 8 dereferenceable(32) %i.bqu, i64 16, i1 false), !tbaa.struct !100
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.bqo, ptr noundef nonnull align 16 dereferenceable(32) %i.bqu, i64 16, i1 false), !tbaa.struct !100
   store ptr %i.bqt, ptr %i.bqv, align 16, !tbaa !52
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bqs, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.bqs, i8 0, i64 16, i1 false)
   br label %_ZN5arrow7compute12ScalarKernelC2EOS1_.exit.i525
 
 _ZN5arrow7compute12ScalarKernelC2EOS1_.exit.i525: ; preds = %bb.ws, %_ZN5arrow7compute9InputTypeD2Ev.exit.i523
@@ -6133,7 +6133,7 @@ bb.xc:                                            ; preds = %bb.wv, %bb.wu, %bb.
   call void @llvm.lifetime.start.p0(ptr nonnull %81)
   call void @llvm.lifetime.start.p0(ptr nonnull %74) #20
   %i.brm = getelementptr inbounds nuw i8, ptr %74, i64 48 ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(92) %74, i8 0, i64 48, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(92) %74, i8 0, i64 48, i1 false)
   store i8 1, ptr %i.brm, align 16, !tbaa !59
   %i.brn = getelementptr inbounds nuw i8, ptr %74, i64 52
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %i.brn, i8 0, i64 20, i1 false)
@@ -6191,7 +6191,7 @@ bb.xf:                                            ; preds = %bb.xe
   %i.bsc = getelementptr inbounds nuw i8, ptr %75, i64 8
   %i.bsd = getelementptr inbounds nuw i8, ptr %74, i64 8 ; 2 uses
   %i.bse = load <2 x ptr>, ptr %75, align 16, !tbaa !86
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %75, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %75, i8 0, i64 16, i1 false)
   %i.bsf = load ptr, ptr %i.bsd, align 8, !tbaa !46 ; 8 uses
   store <2 x ptr> %i.bse, ptr %74, align 16, !tbaa !86
   %.not.i.i.i.i.i537 = icmp eq ptr %i.bsf, null
@@ -6544,7 +6544,7 @@ _ZN5arrow7compute9InputTypeD2Ev.exit.i571:        ; preds = %bb.yt, %_ZN9__gnu_c
   %i.bwq = getelementptr inbounds nuw i8, ptr %81, i64 16 ; 2 uses
   %i.bwr = getelementptr inbounds nuw i8, ptr %81, i64 40
   %i.bws = getelementptr inbounds nuw i8, ptr %74, i64 40
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.bwq, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.bwq, i8 0, i64 24, i1 false)
   %i.bwt = load ptr, ptr %i.bws, align 8, !tbaa !99
   store ptr %i.bwt, ptr %i.bwr, align 8, !tbaa !99
   %i.bwu = getelementptr inbounds nuw i8, ptr %74, i64 32 ; 2 uses
@@ -6555,9 +6555,9 @@ _ZN5arrow7compute9InputTypeD2Ev.exit.i571:        ; preds = %bb.yt, %_ZN9__gnu_c
 bb.yu:                                            ; preds = %_ZN5arrow7compute9InputTypeD2Ev.exit.i571
   %i.bww = getelementptr inbounds nuw i8, ptr %74, i64 16
   %i.bwx = getelementptr inbounds nuw i8, ptr %81, i64 32
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.bwq, ptr noundef nonnull align 8 dereferenceable(32) %i.bww, i64 16, i1 false), !tbaa.struct !100
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.bwq, ptr noundef nonnull align 16 dereferenceable(32) %i.bww, i64 16, i1 false), !tbaa.struct !100
   store ptr %i.bwv, ptr %i.bwx, align 16, !tbaa !52
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bwu, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.bwu, i8 0, i64 16, i1 false)
   br label %_ZN5arrow7compute12ScalarKernelC2EOS1_.exit.i573
 
 _ZN5arrow7compute12ScalarKernelC2EOS1_.exit.i573: ; preds = %bb.yu, %_ZN5arrow7compute9InputTypeD2Ev.exit.i571
@@ -6653,7 +6653,7 @@ bb.ze:                                            ; preds = %bb.yx, %bb.yw, %bb.
   call void @llvm.lifetime.start.p0(ptr nonnull %72)
   call void @llvm.lifetime.start.p0(ptr nonnull %65) #20
   %i.bxo = getelementptr inbounds nuw i8, ptr %65, i64 48 ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(92) %65, i8 0, i64 48, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(92) %65, i8 0, i64 48, i1 false)
   store i8 1, ptr %i.bxo, align 16, !tbaa !59
   %i.bxp = getelementptr inbounds nuw i8, ptr %65, i64 52
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %i.bxp, i8 0, i64 20, i1 false)
@@ -6711,7 +6711,7 @@ bb.zh:                                            ; preds = %bb.zg
   %i.bye = getelementptr inbounds nuw i8, ptr %66, i64 8
   %i.byf = getelementptr inbounds nuw i8, ptr %65, i64 8 ; 2 uses
   %i.byg = load <2 x ptr>, ptr %66, align 16, !tbaa !86
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %66, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %66, i8 0, i64 16, i1 false)
   %i.byh = load ptr, ptr %i.byf, align 8, !tbaa !46 ; 8 uses
   store <2 x ptr> %i.byg, ptr %65, align 16, !tbaa !86
   %.not.i.i.i.i.i585 = icmp eq ptr %i.byh, null
@@ -7064,7 +7064,7 @@ _ZN5arrow7compute9InputTypeD2Ev.exit.i619:        ; preds = %bb.aav, %_ZN9__gnu_
   %i.ccs = getelementptr inbounds nuw i8, ptr %72, i64 16 ; 2 uses
   %i.cct = getelementptr inbounds nuw i8, ptr %72, i64 40
   %i.ccu = getelementptr inbounds nuw i8, ptr %65, i64 40
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.ccs, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.ccs, i8 0, i64 24, i1 false)
   %i.ccv = load ptr, ptr %i.ccu, align 8, !tbaa !99
   store ptr %i.ccv, ptr %i.cct, align 8, !tbaa !99
   %i.ccw = getelementptr inbounds nuw i8, ptr %65, i64 32 ; 2 uses
@@ -7075,9 +7075,9 @@ _ZN5arrow7compute9InputTypeD2Ev.exit.i619:        ; preds = %bb.aav, %_ZN9__gnu_
 bb.aaw:                                           ; preds = %_ZN5arrow7compute9InputTypeD2Ev.exit.i619
   %i.ccy = getelementptr inbounds nuw i8, ptr %65, i64 16
   %i.ccz = getelementptr inbounds nuw i8, ptr %72, i64 32
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.ccs, ptr noundef nonnull align 8 dereferenceable(32) %i.ccy, i64 16, i1 false), !tbaa.struct !100
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.ccs, ptr noundef nonnull align 16 dereferenceable(32) %i.ccy, i64 16, i1 false), !tbaa.struct !100
   store ptr %i.ccx, ptr %i.ccz, align 16, !tbaa !52
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ccw, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.ccw, i8 0, i64 16, i1 false)
   br label %_ZN5arrow7compute12ScalarKernelC2EOS1_.exit.i621
 
 _ZN5arrow7compute12ScalarKernelC2EOS1_.exit.i621: ; preds = %bb.aaw, %_ZN5arrow7compute9InputTypeD2Ev.exit.i619
@@ -7277,7 +7277,7 @@ _ZN5arrow7compute10OutputTypeD2Ev.exit635:        ; preds = %_ZNSt14_Function_ba
   call void @llvm.lifetime.start.p0(ptr nonnull %63)
   call void @llvm.lifetime.start.p0(ptr nonnull %56) #20
   %i.cet = getelementptr inbounds nuw i8, ptr %56, i64 48 ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(92) %56, i8 0, i64 48, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(92) %56, i8 0, i64 48, i1 false)
   store i8 1, ptr %i.cet, align 16, !tbaa !59
   %i.ceu = getelementptr inbounds nuw i8, ptr %56, i64 52
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %i.ceu, i8 0, i64 20, i1 false)
@@ -7335,7 +7335,7 @@ bb.abu:                                           ; preds = %bb.abt
   %i.cfj = getelementptr inbounds nuw i8, ptr %57, i64 8
   %i.cfk = getelementptr inbounds nuw i8, ptr %56, i64 8 ; 2 uses
   %i.cfl = load <2 x ptr>, ptr %57, align 16, !tbaa !86
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %57, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %57, i8 0, i64 16, i1 false)
   %i.cfm = load ptr, ptr %i.cfk, align 8, !tbaa !46 ; 8 uses
   store <2 x ptr> %i.cfl, ptr %56, align 16, !tbaa !86
   %.not.i.i.i.i.i644 = icmp eq ptr %i.cfm, null
@@ -7688,7 +7688,7 @@ _ZN5arrow7compute9InputTypeD2Ev.exit.i678:        ; preds = %bb.adi, %_ZN9__gnu_
   %i.cjx = getelementptr inbounds nuw i8, ptr %63, i64 16 ; 2 uses
   %i.cjy = getelementptr inbounds nuw i8, ptr %63, i64 40
   %i.cjz = getelementptr inbounds nuw i8, ptr %56, i64 40
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.cjx, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.cjx, i8 0, i64 24, i1 false)
   %i.cka = load ptr, ptr %i.cjz, align 8, !tbaa !99
   store ptr %i.cka, ptr %i.cjy, align 8, !tbaa !99
   %i.ckb = getelementptr inbounds nuw i8, ptr %56, i64 32 ; 2 uses
@@ -7699,9 +7699,9 @@ _ZN5arrow7compute9InputTypeD2Ev.exit.i678:        ; preds = %bb.adi, %_ZN9__gnu_
 bb.adj:                                           ; preds = %_ZN5arrow7compute9InputTypeD2Ev.exit.i678
   %i.ckd = getelementptr inbounds nuw i8, ptr %56, i64 16
   %i.cke = getelementptr inbounds nuw i8, ptr %63, i64 32
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.cjx, ptr noundef nonnull align 8 dereferenceable(32) %i.ckd, i64 16, i1 false), !tbaa.struct !100
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.cjx, ptr noundef nonnull align 16 dereferenceable(32) %i.ckd, i64 16, i1 false), !tbaa.struct !100
   store ptr %i.ckc, ptr %i.cke, align 16, !tbaa !52
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ckb, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.ckb, i8 0, i64 16, i1 false)
   br label %_ZN5arrow7compute12ScalarKernelC2EOS1_.exit.i680
 
 _ZN5arrow7compute12ScalarKernelC2EOS1_.exit.i680: ; preds = %bb.adj, %_ZN5arrow7compute9InputTypeD2Ev.exit.i678
@@ -7797,7 +7797,7 @@ bb.adt:                                           ; preds = %bb.adm, %bb.adl, %b
   call void @llvm.lifetime.start.p0(ptr nonnull %54)
   call void @llvm.lifetime.start.p0(ptr nonnull %47) #20
   %i.ckv = getelementptr inbounds nuw i8, ptr %47, i64 48 ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(92) %47, i8 0, i64 48, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(92) %47, i8 0, i64 48, i1 false)
   store i8 1, ptr %i.ckv, align 16, !tbaa !59
   %i.ckw = getelementptr inbounds nuw i8, ptr %47, i64 52
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %i.ckw, i8 0, i64 20, i1 false)
@@ -7855,7 +7855,7 @@ bb.adw:                                           ; preds = %bb.adv
   %i.cll = getelementptr inbounds nuw i8, ptr %48, i64 8
   %i.clm = getelementptr inbounds nuw i8, ptr %47, i64 8 ; 2 uses
   %i.cln = load <2 x ptr>, ptr %48, align 16, !tbaa !86
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %48, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %48, i8 0, i64 16, i1 false)
   %i.clo = load ptr, ptr %i.clm, align 8, !tbaa !46 ; 8 uses
   store <2 x ptr> %i.cln, ptr %47, align 16, !tbaa !86
   %.not.i.i.i.i.i692 = icmp eq ptr %i.clo, null
@@ -8208,7 +8208,7 @@ _ZN5arrow7compute9InputTypeD2Ev.exit.i726:        ; preds = %bb.afk, %_ZN9__gnu_
   %i.cpz = getelementptr inbounds nuw i8, ptr %54, i64 16 ; 2 uses
   %i.cqa = getelementptr inbounds nuw i8, ptr %54, i64 40
   %i.cqb = getelementptr inbounds nuw i8, ptr %47, i64 40
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.cpz, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.cpz, i8 0, i64 24, i1 false)
   %i.cqc = load ptr, ptr %i.cqb, align 8, !tbaa !99
   store ptr %i.cqc, ptr %i.cqa, align 8, !tbaa !99
   %i.cqd = getelementptr inbounds nuw i8, ptr %47, i64 32 ; 2 uses
@@ -8219,9 +8219,9 @@ _ZN5arrow7compute9InputTypeD2Ev.exit.i726:        ; preds = %bb.afk, %_ZN9__gnu_
 bb.afl:                                           ; preds = %_ZN5arrow7compute9InputTypeD2Ev.exit.i726
   %i.cqf = getelementptr inbounds nuw i8, ptr %47, i64 16
   %i.cqg = getelementptr inbounds nuw i8, ptr %54, i64 32
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.cpz, ptr noundef nonnull align 8 dereferenceable(32) %i.cqf, i64 16, i1 false), !tbaa.struct !100
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.cpz, ptr noundef nonnull align 16 dereferenceable(32) %i.cqf, i64 16, i1 false), !tbaa.struct !100
   store ptr %i.cqe, ptr %i.cqg, align 16, !tbaa !52
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.cqd, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.cqd, i8 0, i64 16, i1 false)
   br label %_ZN5arrow7compute12ScalarKernelC2EOS1_.exit.i728
 
 _ZN5arrow7compute12ScalarKernelC2EOS1_.exit.i728: ; preds = %bb.afl, %_ZN5arrow7compute9InputTypeD2Ev.exit.i726
@@ -8317,7 +8317,7 @@ bb.afv:                                           ; preds = %bb.afo, %bb.afn, %b
   call void @llvm.lifetime.start.p0(ptr nonnull %45)
   call void @llvm.lifetime.start.p0(ptr nonnull %38) #20
   %i.cqx = getelementptr inbounds nuw i8, ptr %38, i64 48 ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(92) %38, i8 0, i64 48, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(92) %38, i8 0, i64 48, i1 false)
   store i8 1, ptr %i.cqx, align 16, !tbaa !59
   %i.cqy = getelementptr inbounds nuw i8, ptr %38, i64 52
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %i.cqy, i8 0, i64 20, i1 false)
@@ -8375,7 +8375,7 @@ bb.afy:                                           ; preds = %bb.afx
   %i.crn = getelementptr inbounds nuw i8, ptr %39, i64 8
   %i.cro = getelementptr inbounds nuw i8, ptr %38, i64 8 ; 2 uses
   %i.crp = load <2 x ptr>, ptr %39, align 16, !tbaa !86
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %39, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %39, i8 0, i64 16, i1 false)
   %i.crq = load ptr, ptr %i.cro, align 8, !tbaa !46 ; 8 uses
   store <2 x ptr> %i.crp, ptr %38, align 16, !tbaa !86
   %.not.i.i.i.i.i740 = icmp eq ptr %i.crq, null
@@ -8728,7 +8728,7 @@ _ZN5arrow7compute9InputTypeD2Ev.exit.i774:        ; preds = %bb.ahm, %_ZN9__gnu_
   %i.cwb = getelementptr inbounds nuw i8, ptr %45, i64 16 ; 2 uses
   %i.cwc = getelementptr inbounds nuw i8, ptr %45, i64 40
   %i.cwd = getelementptr inbounds nuw i8, ptr %38, i64 40
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.cwb, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.cwb, i8 0, i64 24, i1 false)
   %i.cwe = load ptr, ptr %i.cwd, align 8, !tbaa !99
   store ptr %i.cwe, ptr %i.cwc, align 8, !tbaa !99
   %i.cwf = getelementptr inbounds nuw i8, ptr %38, i64 32 ; 2 uses
@@ -8739,9 +8739,9 @@ _ZN5arrow7compute9InputTypeD2Ev.exit.i774:        ; preds = %bb.ahm, %_ZN9__gnu_
 bb.ahn:                                           ; preds = %_ZN5arrow7compute9InputTypeD2Ev.exit.i774
   %i.cwh = getelementptr inbounds nuw i8, ptr %38, i64 16
   %i.cwi = getelementptr inbounds nuw i8, ptr %45, i64 32
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.cwb, ptr noundef nonnull align 8 dereferenceable(32) %i.cwh, i64 16, i1 false), !tbaa.struct !100
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.cwb, ptr noundef nonnull align 16 dereferenceable(32) %i.cwh, i64 16, i1 false), !tbaa.struct !100
   store ptr %i.cwg, ptr %i.cwi, align 16, !tbaa !52
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.cwf, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.cwf, i8 0, i64 16, i1 false)
   br label %_ZN5arrow7compute12ScalarKernelC2EOS1_.exit.i776
 
 _ZN5arrow7compute12ScalarKernelC2EOS1_.exit.i776: ; preds = %bb.ahn, %_ZN5arrow7compute9InputTypeD2Ev.exit.i774
@@ -8837,7 +8837,7 @@ bb.ahx:                                           ; preds = %bb.ahq, %bb.ahp, %b
   call void @llvm.lifetime.start.p0(ptr nonnull %36)
   call void @llvm.lifetime.start.p0(ptr nonnull %29) #20
   %i.cwz = getelementptr inbounds nuw i8, ptr %29, i64 48 ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(92) %29, i8 0, i64 48, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(92) %29, i8 0, i64 48, i1 false)
   store i8 1, ptr %i.cwz, align 16, !tbaa !59
   %i.cxa = getelementptr inbounds nuw i8, ptr %29, i64 52
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %i.cxa, i8 0, i64 20, i1 false)
@@ -8895,7 +8895,7 @@ bb.aia:                                           ; preds = %bb.ahz
   %i.cxp = getelementptr inbounds nuw i8, ptr %30, i64 8
   %i.cxq = getelementptr inbounds nuw i8, ptr %29, i64 8 ; 2 uses
   %i.cxr = load <2 x ptr>, ptr %30, align 16, !tbaa !86
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %30, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %30, i8 0, i64 16, i1 false)
   %i.cxs = load ptr, ptr %i.cxq, align 8, !tbaa !46 ; 8 uses
   store <2 x ptr> %i.cxr, ptr %29, align 16, !tbaa !86
   %.not.i.i.i.i.i788 = icmp eq ptr %i.cxs, null
@@ -9248,7 +9248,7 @@ _ZN5arrow7compute9InputTypeD2Ev.exit.i822:        ; preds = %bb.ajo, %_ZN9__gnu_
   %i.dcd = getelementptr inbounds nuw i8, ptr %36, i64 16 ; 2 uses
   %i.dce = getelementptr inbounds nuw i8, ptr %36, i64 40
   %i.dcf = getelementptr inbounds nuw i8, ptr %29, i64 40
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.dcd, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.dcd, i8 0, i64 24, i1 false)
   %i.dcg = load ptr, ptr %i.dcf, align 8, !tbaa !99
   store ptr %i.dcg, ptr %i.dce, align 8, !tbaa !99
   %i.dch = getelementptr inbounds nuw i8, ptr %29, i64 32 ; 2 uses
@@ -9259,9 +9259,9 @@ _ZN5arrow7compute9InputTypeD2Ev.exit.i822:        ; preds = %bb.ajo, %_ZN9__gnu_
 bb.ajp:                                           ; preds = %_ZN5arrow7compute9InputTypeD2Ev.exit.i822
   %i.dcj = getelementptr inbounds nuw i8, ptr %29, i64 16
   %i.dck = getelementptr inbounds nuw i8, ptr %36, i64 32
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.dcd, ptr noundef nonnull align 8 dereferenceable(32) %i.dcj, i64 16, i1 false), !tbaa.struct !100
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.dcd, ptr noundef nonnull align 16 dereferenceable(32) %i.dcj, i64 16, i1 false), !tbaa.struct !100
   store ptr %i.dci, ptr %i.dck, align 16, !tbaa !52
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.dch, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.dch, i8 0, i64 16, i1 false)
   br label %_ZN5arrow7compute12ScalarKernelC2EOS1_.exit.i824
 
 _ZN5arrow7compute12ScalarKernelC2EOS1_.exit.i824: ; preds = %bb.ajp, %_ZN5arrow7compute9InputTypeD2Ev.exit.i822
@@ -9357,7 +9357,7 @@ bb.ajz:                                           ; preds = %bb.ajs, %bb.ajr, %b
   call void @llvm.lifetime.start.p0(ptr nonnull %27)
   call void @llvm.lifetime.start.p0(ptr nonnull %20) #20
   %i.ddb = getelementptr inbounds nuw i8, ptr %20, i64 48 ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(92) %20, i8 0, i64 48, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(92) %20, i8 0, i64 48, i1 false)
   store i8 1, ptr %i.ddb, align 16, !tbaa !59
   %i.ddc = getelementptr inbounds nuw i8, ptr %20, i64 52
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %i.ddc, i8 0, i64 20, i1 false)
@@ -9415,7 +9415,7 @@ bb.akc:                                           ; preds = %bb.akb
   %i.ddr = getelementptr inbounds nuw i8, ptr %21, i64 8
   %i.dds = getelementptr inbounds nuw i8, ptr %20, i64 8 ; 2 uses
   %i.ddt = load <2 x ptr>, ptr %21, align 16, !tbaa !86
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %21, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %21, i8 0, i64 16, i1 false)
   %i.ddu = load ptr, ptr %i.dds, align 8, !tbaa !46 ; 8 uses
   store <2 x ptr> %i.ddt, ptr %20, align 16, !tbaa !86
   %.not.i.i.i.i.i836 = icmp eq ptr %i.ddu, null
@@ -9768,7 +9768,7 @@ _ZN5arrow7compute9InputTypeD2Ev.exit.i870:        ; preds = %bb.alq, %_ZN9__gnu_
   %i.dif = getelementptr inbounds nuw i8, ptr %27, i64 16 ; 2 uses
   %i.dig = getelementptr inbounds nuw i8, ptr %27, i64 40
   %i.dih = getelementptr inbounds nuw i8, ptr %20, i64 40
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.dif, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.dif, i8 0, i64 24, i1 false)
   %i.dii = load ptr, ptr %i.dih, align 8, !tbaa !99
   store ptr %i.dii, ptr %i.dig, align 8, !tbaa !99
   %i.dij = getelementptr inbounds nuw i8, ptr %20, i64 32 ; 2 uses
@@ -9779,9 +9779,9 @@ _ZN5arrow7compute9InputTypeD2Ev.exit.i870:        ; preds = %bb.alq, %_ZN9__gnu_
 bb.alr:                                           ; preds = %_ZN5arrow7compute9InputTypeD2Ev.exit.i870
   %i.dil = getelementptr inbounds nuw i8, ptr %20, i64 16
   %i.dim = getelementptr inbounds nuw i8, ptr %27, i64 32
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.dif, ptr noundef nonnull align 8 dereferenceable(32) %i.dil, i64 16, i1 false), !tbaa.struct !100
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.dif, ptr noundef nonnull align 16 dereferenceable(32) %i.dil, i64 16, i1 false), !tbaa.struct !100
   store ptr %i.dik, ptr %i.dim, align 16, !tbaa !52
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.dij, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.dij, i8 0, i64 16, i1 false)
   br label %_ZN5arrow7compute12ScalarKernelC2EOS1_.exit.i872
 
 _ZN5arrow7compute12ScalarKernelC2EOS1_.exit.i872: ; preds = %bb.alr, %_ZN5arrow7compute9InputTypeD2Ev.exit.i870
@@ -9877,7 +9877,7 @@ bb.amb:                                           ; preds = %bb.alu, %bb.alt, %b
   call void @llvm.lifetime.start.p0(ptr nonnull %18)
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #20
   %i.djd = getelementptr inbounds nuw i8, ptr %11, i64 48 ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(92) %11, i8 0, i64 48, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(92) %11, i8 0, i64 48, i1 false)
   store i8 1, ptr %i.djd, align 16, !tbaa !59
   %i.dje = getelementptr inbounds nuw i8, ptr %11, i64 52
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %i.dje, i8 0, i64 20, i1 false)
@@ -9935,7 +9935,7 @@ bb.ame:                                           ; preds = %bb.amd
   %i.djt = getelementptr inbounds nuw i8, ptr %12, i64 8
   %i.dju = getelementptr inbounds nuw i8, ptr %11, i64 8 ; 2 uses
   %i.djv = load <2 x ptr>, ptr %12, align 16, !tbaa !86
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %12, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %12, i8 0, i64 16, i1 false)
   %i.djw = load ptr, ptr %i.dju, align 8, !tbaa !46 ; 8 uses
   store <2 x ptr> %i.djv, ptr %11, align 16, !tbaa !86
   %.not.i.i.i.i.i884 = icmp eq ptr %i.djw, null
@@ -10288,7 +10288,7 @@ _ZN5arrow7compute9InputTypeD2Ev.exit.i918:        ; preds = %bb.ans, %_ZN9__gnu_
   %i.doh = getelementptr inbounds nuw i8, ptr %18, i64 16 ; 2 uses
   %i.doi = getelementptr inbounds nuw i8, ptr %18, i64 40
   %i.doj = getelementptr inbounds nuw i8, ptr %11, i64 40
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.doh, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.doh, i8 0, i64 24, i1 false)
   %i.dok = load ptr, ptr %i.doj, align 8, !tbaa !99
   store ptr %i.dok, ptr %i.doi, align 8, !tbaa !99
   %i.dol = getelementptr inbounds nuw i8, ptr %11, i64 32 ; 2 uses
@@ -10299,9 +10299,9 @@ _ZN5arrow7compute9InputTypeD2Ev.exit.i918:        ; preds = %bb.ans, %_ZN9__gnu_
 bb.ant:                                           ; preds = %_ZN5arrow7compute9InputTypeD2Ev.exit.i918
   %i.don = getelementptr inbounds nuw i8, ptr %11, i64 16
   %i.doo = getelementptr inbounds nuw i8, ptr %18, i64 32
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.doh, ptr noundef nonnull align 8 dereferenceable(32) %i.don, i64 16, i1 false), !tbaa.struct !100
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.doh, ptr noundef nonnull align 16 dereferenceable(32) %i.don, i64 16, i1 false), !tbaa.struct !100
   store ptr %i.dom, ptr %i.doo, align 16, !tbaa !52
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.dol, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.dol, i8 0, i64 16, i1 false)
   br label %_ZN5arrow7compute12ScalarKernelC2EOS1_.exit.i920
 
 _ZN5arrow7compute12ScalarKernelC2EOS1_.exit.i920: ; preds = %bb.ant, %_ZN5arrow7compute9InputTypeD2Ev.exit.i918
@@ -10501,7 +10501,7 @@ _ZN5arrow7compute10OutputTypeD2Ev.exit934:        ; preds = %_ZNSt14_Function_ba
   call void @llvm.lifetime.start.p0(ptr nonnull %9)
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #20
   %i.dqi = getelementptr inbounds nuw i8, ptr %2, i64 48 ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(92) %2, i8 0, i64 48, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(92) %2, i8 0, i64 48, i1 false)
   store i8 1, ptr %i.dqi, align 16, !tbaa !59
   %i.dqj = getelementptr inbounds nuw i8, ptr %2, i64 52
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %i.dqj, i8 0, i64 20, i1 false)
@@ -10559,7 +10559,7 @@ bb.aor:                                           ; preds = %bb.aoq
   %i.dqy = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.dqz = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   %i.dra = load <2 x ptr>, ptr %3, align 16, !tbaa !86
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %3, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %3, i8 0, i64 16, i1 false)
   %i.drb = load ptr, ptr %i.dqz, align 8, !tbaa !46 ; 8 uses
   store <2 x ptr> %i.dra, ptr %2, align 16, !tbaa !86
   %.not.i.i.i.i.i943 = icmp eq ptr %i.drb, null
@@ -10912,7 +10912,7 @@ _ZN5arrow7compute9InputTypeD2Ev.exit.i977:        ; preds = %bb.aqf, %_ZN9__gnu_
   %i.dvm = getelementptr inbounds nuw i8, ptr %9, i64 16 ; 2 uses
   %i.dvn = getelementptr inbounds nuw i8, ptr %9, i64 40
   %i.dvo = getelementptr inbounds nuw i8, ptr %2, i64 40
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.dvm, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.dvm, i8 0, i64 24, i1 false)
   %i.dvp = load ptr, ptr %i.dvo, align 8, !tbaa !99
   store ptr %i.dvp, ptr %i.dvn, align 8, !tbaa !99
   %i.dvq = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 2 uses
@@ -10923,9 +10923,9 @@ _ZN5arrow7compute9InputTypeD2Ev.exit.i977:        ; preds = %bb.aqf, %_ZN9__gnu_
 bb.aqg:                                           ; preds = %_ZN5arrow7compute9InputTypeD2Ev.exit.i977
   %i.dvs = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.dvt = getelementptr inbounds nuw i8, ptr %9, i64 32
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.dvm, ptr noundef nonnull align 8 dereferenceable(32) %i.dvs, i64 16, i1 false), !tbaa.struct !100
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.dvm, ptr noundef nonnull align 16 dereferenceable(32) %i.dvs, i64 16, i1 false), !tbaa.struct !100
   store ptr %i.dvr, ptr %i.dvt, align 16, !tbaa !52
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.dvq, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.dvq, i8 0, i64 16, i1 false)
   br label %_ZN5arrow7compute12ScalarKernelC2EOS1_.exit.i979
 
 _ZN5arrow7compute12ScalarKernelC2EOS1_.exit.i979: ; preds = %bb.aqg, %_ZN5arrow7compute9InputTypeD2Ev.exit.i977
@@ -11328,7 +11328,7 @@ bb.b:                                             ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.k = load <2 x ptr>, ptr %3, align 16, !tbaa !86
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %3, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %3, i8 0, i64 16, i1 false)
   %i.l = load ptr, ptr %i.j, align 8, !tbaa !46   ; 8 uses
   store <2 x ptr> %i.k, ptr %i.h, align 8, !tbaa !86
   %.not.i.i.i.i.i = icmp eq ptr %i.l, null
@@ -11731,7 +11731,7 @@ bb.a:
   %4 = alloca %"class.arrow::Status", align 8     ; 8 uses
   %5 = alloca %"class.arrow::Status", align 8     ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #20
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %3, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %3, i8 0, i64 16, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #20
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #20
   invoke void @_ZN5arrow13BufferBuilder6FinishEPSt10shared_ptrINS_6BufferEEb(ptr dead_on_unwind nonnull writable sret(%"class.arrow::Status") align 8 %5, ptr noundef nonnull align 8 dereferenceable(56) %1, ptr noundef nonnull %3, i1 noundef zeroext %2)
