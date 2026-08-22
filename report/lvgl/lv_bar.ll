@@ -202,7 +202,7 @@ bb.an:                                            ; preds = %bb.am, %.thread273.
   %i.hc = getelementptr inbounds nuw i8, ptr %7, i64 97
   store i8 0, ptr %i.hc, align 1, !tbaa !67
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #6
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %8, ptr noundef nonnull align 4 dereferenceable(16) %3, i64 16, i1 false), !tbaa.struct !68
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %8, ptr noundef nonnull align 16 dereferenceable(16) %3, i64 16, i1 false), !tbaa.struct !68
   br i1 %spec.select258.not299.i, label %bb.as, label %bb.ao
 
 bb.ao:                                            ; preds = %bb.an
@@ -242,7 +242,7 @@ bb.as:                                            ; preds = %bb.ar, %bb.an
 
 bb.at:                                            ; preds = %bb.as
   %i.ho = getelementptr inbounds nuw i8, ptr %9, i64 64
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ho, ptr noundef nonnull align 4 dereferenceable(16) %2, i64 16, i1 false), !tbaa.struct !68
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ho, ptr noundef nonnull align 16 dereferenceable(16) %2, i64 16, i1 false), !tbaa.struct !68
   %i.hp = getelementptr inbounds nuw i8, ptr %9, i64 80
   store i32 %spec.select.i, ptr %i.hp, align 8, !tbaa !73
   call void @lv_draw_mask_rect(ptr noundef %i.hn, ptr noundef nonnull %9) #6
@@ -253,7 +253,7 @@ bb.au:                                            ; preds = %bb.at, %bb.as
 
 bb.av:                                            ; preds = %bb.au
   %i.hq = getelementptr inbounds nuw i8, ptr %9, i64 64
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.hq, ptr noundef nonnull align 4 dereferenceable(16) %3, i64 16, i1 false), !tbaa.struct !68
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.hq, ptr noundef nonnull align 16 dereferenceable(16) %3, i64 16, i1 false), !tbaa.struct !68
   %i.hr = getelementptr inbounds nuw i8, ptr %9, i64 80
   store i32 %spec.select254.i, ptr %i.hr, align 8, !tbaa !73
   call void @lv_draw_mask_rect(ptr noundef %i.hn, ptr noundef nonnull %9) #6

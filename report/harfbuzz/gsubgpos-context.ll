@@ -202,7 +202,7 @@ bb.i:                                             ; preds = %bb.i, %.lr.ph.i
   %i.x = getelementptr inbounds nuw i8, ptr %i.v, i64 96
   %i.y = getelementptr inbounds nuw i8, ptr %i.v, i64 100
   %i.z = getelementptr inbounds nuw i8, ptr %i.v, i64 104
-  store atomic i32 1, ptr %i.x monotonic, align 4
+  store atomic i32 1, ptr %i.x monotonic, align 8
   store atomic i8 1, ptr %i.y monotonic, align 4
   store atomic ptr null, ptr %i.z monotonic, align 8
   %i.aa = getelementptr inbounds nuw i8, ptr %i.v, i64 112
@@ -382,7 +382,7 @@ bb.d:                                             ; preds = %.lr.ph, %_ZN5graph7
   %i.o = getelementptr inbounds nuw i8, ptr %i.k, i64 96
   %i.p = getelementptr inbounds nuw i8, ptr %i.k, i64 100
   %i.q = getelementptr inbounds nuw i8, ptr %i.k, i64 104
-  store atomic i32 1, ptr %i.o monotonic, align 4
+  store atomic i32 1, ptr %i.o monotonic, align 8
   store atomic i8 1, ptr %i.p monotonic, align 4
   store atomic ptr null, ptr %i.q monotonic, align 8
   %i.r = getelementptr inbounds nuw i8, ptr %i.k, i64 112
@@ -409,9 +409,9 @@ bb.d:                                             ; preds = %.lr.ph, %_ZN5graph7
   %i.ac = getelementptr inbounds nuw [216 x i8], ptr %i.ab, i64 %indvars.iv ; 17 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(216) %i.k, ptr noundef nonnull align 8 dereferenceable(216) %i.ac, i64 16, i1 false)
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 16 ; 2 uses
-  %i.ae = load i32, ptr %i.ad, align 4, !tbaa !38
+  %i.ae = load i32, ptr %i.ad, align 8, !tbaa !38
   store i32 %i.ae, ptr %i.l, align 8, !tbaa !38
-  store i32 0, ptr %i.ad, align 4, !tbaa !38
+  store i32 0, ptr %i.ad, align 8, !tbaa !38
   %i.af = getelementptr inbounds nuw i8, ptr %i.k, i64 20 ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.ac, i64 20 ; 2 uses
   %i.ah = load i32, ptr %i.af, align 4, !tbaa !38

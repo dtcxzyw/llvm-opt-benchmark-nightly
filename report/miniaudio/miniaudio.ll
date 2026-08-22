@@ -205,7 +205,7 @@ ma_zero_memory_default.exit:                      ; preds = %bb.c, %bb.d
   %i.x = getelementptr inbounds nuw i8, ptr %2, i64 160 ; 2 uses
   store ptr %i.w, ptr %i.x, align 8, !tbaa !84
   %i.y = getelementptr inbounds nuw i8, ptr %2, i64 120 ; 3 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(40) %i.y, i8 0, i64 40, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.y, i8 0, i64 40, i1 false)
   %i.z = icmp eq i32 %i.t, 0
   %or.cond = select i1 %.not, i1 true, i1 %i.z
   br i1 %or.cond, label %ma_job_queue_get_heap_layout.exit.thread, label %bb.e
@@ -608,7 +608,7 @@ bb.as:                                            ; preds = %bb.ar
 bb.at:                                            ; preds = %bb.as
   %i.dw = getelementptr inbounds nuw i8, ptr %0, i64 2824
   %i.dx = zext i32 %i.dp to i64
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.dq, ptr nonnull readonly align 1 %i.dw, i64 %i.dx, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.dq, ptr nonnull readonly align 8 %i.dw, i64 %i.dx, i1 false)
   br label %ma_channel_map_copy.exit.i
 
 bb.au:                                            ; preds = %bb.ar
@@ -623,7 +623,7 @@ bb.av:                                            ; preds = %bb.au
 
 bb.aw:                                            ; preds = %bb.av
   %i.eb = zext i32 %i.dp to i64
-  call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.dq, i8 0, i64 %i.eb, i1 false)
+  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.dq, i8 0, i64 %i.eb, i1 false)
   br label %ma_channel_map_copy.exit.i
 
 bb.ax:                                            ; preds = %bb.au
@@ -690,7 +690,7 @@ bb.be:                                            ; preds = %bb.bd
 bb.bf:                                            ; preds = %bb.be
   %i.ez = getelementptr inbounds nuw i8, ptr %0, i64 1392
   %i.fa = zext i32 %i.es to i64
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.et, ptr nonnull readonly align 1 %i.ez, i64 %i.fa, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.et, ptr nonnull readonly align 8 %i.ez, i64 %i.fa, i1 false)
   br label %ma_channel_map_copy.exit166.i
 
 bb.bg:                                            ; preds = %bb.bd
@@ -705,7 +705,7 @@ bb.bh:                                            ; preds = %bb.bg
 
 bb.bi:                                            ; preds = %bb.bh
   %i.fe = zext i32 %i.es to i64
-  call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.et, i8 0, i64 %i.fe, i1 false)
+  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.et, i8 0, i64 %i.fe, i1 false)
   br label %ma_channel_map_copy.exit166.i
 
 bb.bj:                                            ; preds = %bb.bg
@@ -1108,7 +1108,7 @@ bb.r:                                             ; preds = %bb.q, %.thread22.i.
 
 ma_allocation_callbacks_init_copy.exit.i:         ; preds = %bb.r, %bb.q, %bb.p, %bb.o, %bb.n, %bb.m
   %i.ak = getelementptr inbounds nuw i8, ptr %3, i64 224 ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(40) %i.ak, i8 0, i64 40, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.ak, i8 0, i64 40, i1 false)
   %i.al = tail call i32 @pthread_mutex_init(ptr noundef nonnull %i.ak, ptr noundef null) #55 ; 2 uses
   %.not.i.i.i = icmp eq i32 %i.al, 0
   br i1 %.not.i.i.i, label %ma_log_init.exit.thread, label %ma_log_init.exit
@@ -1158,7 +1158,7 @@ ma_zero_memory_default.exit113:                   ; preds = %ma_zero_memory_defa
   %indvars.iv = phi i64 [ 0, %ma_zero_memory_default.exit113.lr.ph ], [ %indvars.iv.next, %bb.x ] ; 2 uses
   %i.bc = getelementptr inbounds nuw [4 x i8], ptr %spec.select, i64 %indvars.iv
   %i.bd = load i32, ptr %i.bc, align 4, !tbaa !8  ; 6 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(104) %3, i8 0, i64 104, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(104) %3, i8 0, i64 104, i1 false)
   switch i32 %i.bd, label %.thread164 [
     i32 7, label %ma_context_get_log.exit.thread
     i32 8, label %bb.s
@@ -1214,7 +1214,7 @@ ma_context_get_log.exit136.thread:                ; preds = %ma_context_get_log.
 
 bb.v:                                             ; preds = %ma_context_get_log.exit.thread163
   %i.bo = getelementptr inbounds nuw i8, ptr %3, i64 320 ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(40) %i.bo, i8 0, i64 40, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.bo, i8 0, i64 40, i1 false)
   %i.bp = call i32 @pthread_mutex_init(ptr noundef nonnull %i.bo, ptr noundef null) #55 ; 2 uses
   %.not.i.i = icmp eq i32 %i.bp, 0
   br i1 %.not.i.i, label %ma_mutex_init.exit.thread, label %ma_mutex_init.exit
@@ -1231,7 +1231,7 @@ ma_context_get_log.exit119:                       ; preds = %ma_mutex_init.exit
 
 ma_mutex_init.exit.thread:                        ; preds = %bb.v, %ma_context_get_log.exit119, %ma_mutex_init.exit
   %i.bt = getelementptr inbounds nuw i8, ptr %3, i64 360 ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(40) %i.bt, i8 0, i64 40, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.bt, i8 0, i64 40, i1 false)
   %i.bu = call i32 @pthread_mutex_init(ptr noundef nonnull %i.bt, ptr noundef null) #55 ; 2 uses
   %.not.i.i120 = icmp eq i32 %i.bu, 0
   br i1 %.not.i.i120, label %ma_mutex_init.exit122.thread, label %ma_mutex_init.exit122
@@ -1295,7 +1295,7 @@ bb.x:                                             ; preds = %ma_get_backend_name
   br i1 %exitcond.not, label %._crit_edge, label %ma_zero_memory_default.exit113, !llvm.loop !219
 
 ._crit_edge:                                      ; preds = %bb.x, %ma_log_init.exit.thread
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1024) %3, i8 0, i64 1024, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1024) %3, i8 0, i64 1024, i1 false)
   br label %ma_zero_memory_default.exit
 
 ma_zero_memory_default.exit:                      ; preds = %bb.f, %bb.i, %bb.h, %bb.e, %._crit_edge, %ma_mutex_init.exit122.thread, %bb.a
@@ -1698,7 +1698,7 @@ ma_dlsym.exit425:                                 ; preds = %ma_context_get_log.
   %i.rr = getelementptr inbounds nuw i8, ptr %0, i64 1008
   store i32 %i.rq, ptr %i.rr, align 8, !tbaa !9
   %i.rs = getelementptr inbounds nuw i8, ptr %0, i64 968 ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(40) %i.rs, i8 0, i64 40, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.rs, i8 0, i64 40, i1 false)
   %i.rt = tail call i32 @pthread_mutex_init(ptr noundef nonnull %i.rs, ptr noundef null) #55 ; 2 uses
   %.not.i.i = icmp eq i32 %i.rt, 0
   br i1 %.not.i.i, label %ma_mutex_init.exit.thread, label %ma_mutex_init.exit
@@ -2101,7 +2101,7 @@ bb.v:                                             ; preds = %bb.u
 
 bb.w:                                             ; preds = %bb.v
   %i.cj = zext i32 %i.cd to i64
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.cf, ptr nonnull readonly align 1 %i.ch, i64 %i.cj, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.cf, ptr nonnull readonly align 1 %i.ch, i64 %i.cj, i1 false)
   br label %ma_channel_map_copy_or_default.exit
 
 .preheader.i.i:                                   ; preds = %bb.v, %.preheader.i.i
@@ -2146,7 +2146,7 @@ bb.x:                                             ; preds = %ma_channel_map_copy
 
 bb.y:                                             ; preds = %bb.x
   %i.dg = zext i32 %i.da to i64
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.dc, ptr nonnull readonly align 1 %i.de, i64 %i.dg, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.dc, ptr nonnull readonly align 1 %i.de, i64 %i.dg, i1 false)
   br label %ma_channel_map_copy_or_default.exit373
 
 .preheader.i.i368:                                ; preds = %bb.x, %.preheader.i.i368
@@ -2169,7 +2169,7 @@ ma_channel_map_copy_or_default.exit373:           ; preds = %.preheader.i.i368, 
   %i.dp = load <2 x i32>, ptr %i.dn, align 8, !tbaa !8
   store <2 x i32> %i.dp, ptr %i.do, align 8, !tbaa !8
   %i.dq = getelementptr inbounds nuw i8, ptr %2, i64 56 ; 6 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(40) %i.dq, i8 0, i64 40, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.dq, i8 0, i64 40, i1 false)
   %i.dr = tail call i32 @pthread_mutex_init(ptr noundef nonnull %i.dq, ptr noundef null) #55 ; 2 uses
   %.not.i.i = icmp eq i32 %i.dr, 0
   br i1 %.not.i.i, label %ma_mutex_init.exit.thread, label %ma_mutex_init.exit
@@ -2572,7 +2572,7 @@ bb.ay:                                            ; preds = %ma_context_uninit.e
   br label %ma_zero_memory_default.exit
 
 ma_zero_memory_default.exit:                      ; preds = %bb.ay, %ma_context_uninit.exit, %ma_free.exit74
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(3776) %0, i8 0, i64 3776, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(3776) %0, i8 0, i64 3776, i1 false)
   br label %ma_device__is_initialized.exit.thread
 
 ma_device__is_initialized.exit.thread:            ; preds = %bb.a, %ma_device__is_initialized.exit, %ma_zero_memory_default.exit
@@ -2975,7 +2975,7 @@ bb.l:                                             ; preds = %ma_aligned_malloc.e
   %i.bx = getelementptr inbounds nuw i8, ptr %6, i64 144
   store i32 0, ptr %i.bx, align 8, !tbaa !352
   %i.by = getelementptr inbounds nuw i8, ptr %6, i64 8
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(64) %i.by, i8 0, i64 64, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.by, i8 0, i64 64, i1 false)
   store ptr @ma_gRBDataSourceVTable, ptr %6, align 8, !tbaa !353
   %i.bz = getelementptr inbounds nuw i8, ptr %6, i64 16
   store i64 -1, ptr %i.bz, align 8, !tbaa !354
@@ -3378,7 +3378,7 @@ ma_zero_memory_default.exit:                      ; preds = %bb.c, %bb.d
   %i.i = getelementptr inbounds nuw i8, ptr %2, i64 48
   %i.j = getelementptr inbounds nuw i8, ptr %2, i64 64 ; 2 uses
   %.sroa.23.0..sroa_idx.i65 = getelementptr inbounds nuw i8, ptr %2, i64 72 ; 3 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(24) %i.i, i8 0, i64 24, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.i, i8 0, i64 24, i1 false)
   store float -1.000000e+00, ptr %.sroa.23.0..sroa_idx.i65, align 8, !tbaa !336
   %i.k = getelementptr inbounds nuw i8, ptr %2, i64 76 ; 11 uses
   %i.l = getelementptr inbounds nuw i8, ptr %2, i64 96
@@ -3781,7 +3781,7 @@ ma_spatializer_validate_config.exit.i:            ; preds = %bb.c
   %i.as = getelementptr inbounds nuw i8, ptr %2, i64 72
   %i.at = getelementptr inbounds nuw i8, ptr %2, i64 88 ; 2 uses
   %.sroa.23.0..sroa_idx.i110 = getelementptr inbounds nuw i8, ptr %2, i64 96 ; 3 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(24) %i.as, i8 0, i64 24, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.as, i8 0, i64 24, i1 false)
   store float -1.000000e+00, ptr %.sroa.23.0..sroa_idx.i110, align 8, !tbaa !336
   %i.au = getelementptr inbounds nuw i8, ptr %2, i64 100 ; 11 uses
   %i.av = getelementptr inbounds nuw i8, ptr %2, i64 120
@@ -3869,7 +3869,7 @@ ma_channel_map_copy_or_default.exit:              ; preds = %bb.g, %bb.f, %bb.e
   %.val109 = load i32, ptr %i.ap, align 8, !tbaa !1139
   %i.bx = getelementptr inbounds nuw i8, ptr %1, i64 %i.s ; 6 uses
   %i.by = getelementptr inbounds nuw i8, ptr %2, i64 128 ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(48) %i.by, i8 0, i64 48, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.by, i8 0, i64 48, i1 false)
   %i.bz = icmp eq i32 %.val, 0
   br i1 %i.bz, label %ma_spatializer_get_heap_layout.exit.thread, label %.lr.ph.preheader.i
 
@@ -4272,7 +4272,7 @@ bb.g:                                             ; preds = %bb.e
   %i.x = load i64, ptr %i.w, align 8, !tbaa !1252
   %i.y = getelementptr inbounds nuw i8, ptr %1, i64 %i.x
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(56) %i.z, i8 0, i64 56, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.z, i8 0, i64 56, i1 false)
   %i.aa = call fastcc i32 @ma_lpf_reinit__internal(ptr noundef nonnull readonly %6, ptr noundef %i.y, ptr noundef nonnull %i.z, i32 noundef 1)
   br label %bb.h
 
@@ -4675,7 +4675,7 @@ ma_resampler_config_init_from_data_converter_config.exit: ; preds = %ma_data_con
   %i.bv = load i64, ptr %i.bu, align 8, !tbaa !790
   %i.bw = getelementptr inbounds nuw i8, ptr %1, i64 %i.bv ; 2 uses
   %i.bx = getelementptr inbounds nuw i8, ptr %2, i64 104 ; 4 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(192) %i.bx, i8 0, i64 192, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(192) %i.bx, i8 0, i64 192, i1 false)
   %i.by = getelementptr inbounds nuw i8, ptr %2, i64 280
   store ptr %i.bw, ptr %i.by, align 8, !tbaa !172
   %i.bz = getelementptr inbounds nuw i8, ptr %2, i64 128
@@ -5078,7 +5078,7 @@ bb.c:                                             ; preds = %bb.b
   %i.p = getelementptr inbounds nuw i8, ptr %7, i64 144
   store i32 0, ptr %i.p, align 8, !tbaa !352
   %i.q = getelementptr inbounds nuw i8, ptr %7, i64 8
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(64) %i.q, i8 0, i64 64, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.q, i8 0, i64 64, i1 false)
   store ptr @ma_gRBDataSourceVTable, ptr %7, align 8, !tbaa !353
   %i.r = getelementptr inbounds nuw i8, ptr %7, i64 16
   store i64 -1, ptr %i.r, align 8, !tbaa !354
@@ -5165,7 +5165,7 @@ bb.c:                                             ; preds = %bb.b
   %i.m = getelementptr inbounds nuw i8, ptr %5, i64 144
   store i32 0, ptr %i.m, align 8, !tbaa !352
   %i.n = getelementptr inbounds nuw i8, ptr %5, i64 8
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(64) %i.n, i8 0, i64 64, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.n, i8 0, i64 64, i1 false)
   store ptr @ma_gRBDataSourceVTable, ptr %5, align 8, !tbaa !353
   %i.o = getelementptr inbounds nuw i8, ptr %5, i64 16
   store i64 -1, ptr %i.o, align 8, !tbaa !354
@@ -5568,7 +5568,7 @@ bb.c:                                             ; preds = %bb.b, %bb.b, %bb.b
 
 bb.d:                                             ; preds = %ma_zero_memory_default.exit.i, %bb.b, %bb.c
   %i.d = getelementptr inbounds nuw i8, ptr %6, i64 8
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(64) %i.d, i8 0, i64 64, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.d, i8 0, i64 64, i1 false)
   store ptr @g_ma_flac_ds_vtable, ptr %6, align 8, !tbaa !353
   %i.e = getelementptr inbounds nuw i8, ptr %6, i64 16
   store i64 -1, ptr %i.e, align 8, !tbaa !354
@@ -5692,7 +5692,7 @@ bb.c:                                             ; preds = %bb.b, %bb.b, %bb.b
 
 bb.d:                                             ; preds = %ma_zero_memory_default.exit.i, %bb.b, %bb.c
   %i.d = getelementptr inbounds nuw i8, ptr %3, i64 8
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(64) %i.d, i8 0, i64 64, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.d, i8 0, i64 64, i1 false)
   store ptr @g_ma_flac_ds_vtable, ptr %3, align 8, !tbaa !353
   %i.e = getelementptr inbounds nuw i8, ptr %3, i64 16
   store i64 -1, ptr %i.e, align 8, !tbaa !354
@@ -5785,7 +5785,7 @@ bb.c:                                             ; preds = %bb.b, %bb.b, %bb.b
 
 bb.d:                                             ; preds = %ma_zero_memory_default.exit.i, %bb.b, %bb.c
   %i.e = getelementptr inbounds nuw i8, ptr %3, i64 8
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(64) %i.e, i8 0, i64 64, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.e, i8 0, i64 64, i1 false)
   store ptr @g_ma_flac_ds_vtable, ptr %3, align 8, !tbaa !353
   %i.f = getelementptr inbounds nuw i8, ptr %3, i64 16
   store i64 -1, ptr %i.f, align 8, !tbaa !354
@@ -5877,7 +5877,7 @@ bb.c:                                             ; preds = %bb.b, %bb.b, %bb.b
 
 bb.d:                                             ; preds = %ma_zero_memory_default.exit.i, %bb.b, %bb.c
   %i.d = getelementptr inbounds nuw i8, ptr %4, i64 8
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(64) %i.d, i8 0, i64 64, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.d, i8 0, i64 64, i1 false)
   store ptr @g_ma_flac_ds_vtable, ptr %4, align 8, !tbaa !353
   %i.e = getelementptr inbounds nuw i8, ptr %4, i64 16
   store i64 -1, ptr %i.e, align 8, !tbaa !354
@@ -6280,7 +6280,7 @@ bb.c:                                             ; preds = %bb.b, %bb.b
 
 bb.d:                                             ; preds = %ma_zero_memory_default.exit.i, %bb.b, %bb.c
   %i.m = getelementptr inbounds nuw i8, ptr %6, i64 8
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(64) %i.m, i8 0, i64 64, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.m, i8 0, i64 64, i1 false)
   store ptr @g_ma_mp3_ds_vtable, ptr %6, align 8, !tbaa !353
   %i.n = getelementptr inbounds nuw i8, ptr %6, i64 16
   store i64 -1, ptr %i.n, align 8, !tbaa !354
@@ -6683,7 +6683,7 @@ bb.c:                                             ; preds = %bb.b, %bb.b
 
 bb.d:                                             ; preds = %ma_zero_memory_default.exit.i, %bb.b, %bb.c
   %i.e = getelementptr inbounds nuw i8, ptr %3, i64 8
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(64) %i.e, i8 0, i64 64, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.e, i8 0, i64 64, i1 false)
   store ptr @g_ma_mp3_ds_vtable, ptr %3, align 8, !tbaa !353
   %i.f = getelementptr inbounds nuw i8, ptr %3, i64 16
   store i64 -1, ptr %i.f, align 8, !tbaa !354
@@ -7086,7 +7086,7 @@ bb.c:                                             ; preds = %bb.b, %bb.b
 
 bb.d:                                             ; preds = %ma_zero_memory_default.exit.i, %bb.b, %bb.c
   %i.e = getelementptr inbounds nuw i8, ptr %3, i64 8
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(64) %i.e, i8 0, i64 64, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.e, i8 0, i64 64, i1 false)
   store ptr @g_ma_mp3_ds_vtable, ptr %3, align 8, !tbaa !353
   %i.f = getelementptr inbounds nuw i8, ptr %3, i64 16
   store i64 -1, ptr %i.f, align 8, !tbaa !354
@@ -7489,7 +7489,7 @@ bb.c:                                             ; preds = %bb.b, %bb.b
 
 bb.d:                                             ; preds = %ma_zero_memory_default.exit.i, %bb.b, %bb.c
   %i.e = getelementptr inbounds nuw i8, ptr %4, i64 8
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(64) %i.e, i8 0, i64 64, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.e, i8 0, i64 64, i1 false)
   store ptr @g_ma_mp3_ds_vtable, ptr %4, align 8, !tbaa !353
   %i.f = getelementptr inbounds nuw i8, ptr %4, i64 16
   store i64 -1, ptr %i.f, align 8, !tbaa !354
@@ -7892,7 +7892,7 @@ ma_allocation_callbacks_init_copy.exit:           ; preds = %bb.e, %bb.f, %bb.g,
 
 bb.k:                                             ; preds = %ma_allocation_callbacks_init_copy.exit
   %i.z = getelementptr inbounds nuw i8, ptr %1, i64 1000 ; 3 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(144) %i.z, i8 0, i64 104, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(144) %i.z, i8 0, i64 104, i1 false)
   %i.aa = getelementptr inbounds nuw i8, ptr %1, i64 1072
   %i.ab = load ptr, ptr %1, align 8, !tbaa !25
   %i.ac = icmp eq ptr %i.ab, null
@@ -7946,7 +7946,7 @@ bb.r:                                             ; preds = %bb.q, %.thread22.i.
 
 ma_allocation_callbacks_init_copy.exit.i:         ; preds = %bb.r, %bb.q, %bb.p, %bb.o, %bb.n, %bb.m
   %i.as = getelementptr inbounds nuw i8, ptr %1, i64 1104 ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(40) %i.as, i8 0, i64 40, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.as, i8 0, i64 40, i1 false)
   %i.at = tail call i32 @pthread_mutex_init(ptr noundef nonnull %i.as, ptr noundef null) #55 ; 2 uses
   %.not.i.i.i = icmp eq i32 %i.at, 0
   br i1 %.not.i.i.i, label %.sink.split, label %ma_log_init.exit
@@ -8349,7 +8349,7 @@ ma_engine_get_sample_rate.exit116:                ; preds = %bb.p, %bb.q
   %i.cj = load i64, ptr %i.ci, align 8, !tbaa !1331
   %i.ck = getelementptr inbounds nuw i8, ptr %1, i64 %i.cj ; 2 uses
   %i.cl = getelementptr inbounds nuw i8, ptr %2, i64 424 ; 5 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(192) %i.cl, i8 0, i64 192, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(192) %i.cl, i8 0, i64 192, i1 false)
   %i.cm = getelementptr inbounds nuw i8, ptr %2, i64 600 ; 2 uses
   store ptr %i.ck, ptr %i.cm, align 8, !tbaa !172
   %i.cn = getelementptr inbounds nuw i8, ptr %2, i64 448
@@ -8752,7 +8752,7 @@ bb.q:                                             ; preds = %bb.p
   br label %ma_zero_memory_default.exit
 
 ma_zero_memory_default.exit:                      ; preds = %bb.l, %ma_resource_manager_data_source_uninit.exit, %bb.p, %bb.q
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1024) %2, i8 0, i64 1024, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1024) %2, i8 0, i64 1024, i1 false)
   br label %ma_free.exit
 
 ma_free.exit:                                     ; preds = %ma_fence_acquire.exit, %bb.j, %bb.i, %ma_resource_manager_data_source_init_ex.exit.thread, %bb.k, %ma_zero_memory_default.exit
@@ -9155,7 +9155,7 @@ bb.m:                                             ; preds = %bb.l
   br label %ma_zero_memory_default.exit
 
 ma_zero_memory_default.exit:                      ; preds = %bb.h, %ma_resource_manager_data_source_uninit.exit, %bb.l, %bb.m
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1024) %4, i8 0, i64 1024, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1024) %4, i8 0, i64 1024, i1 false)
   br label %ma_free.exit
 
 bb.n:                                             ; preds = %ma_sound_config_init_2.exit
@@ -9558,7 +9558,7 @@ ma_dr_flac__malloc_from_callbacks.exit463.thread.i: ; preds = %bb.bx, %ma_dr_fla
   %i.if = load i64, ptr %.1301207.i, align 8, !tbaa !2843
   %i.ig = call i64 @llvm.bswap.i64(i64 %i.if)
   store i64 %i.ig, ptr %.1301207.i, align 8, !tbaa !2843
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(12) %i.ie, ptr noundef nonnull align 1 dereferenceable(12) %i.id, i64 12, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %i.ie, ptr noundef nonnull align 1 dereferenceable(12) %i.id, i64 12, i1 false)
   %i.ih = getelementptr inbounds nuw i8, ptr %.4312205.i, i64 24 ; 3 uses
   %i.ii = getelementptr inbounds nuw i8, ptr %.1301207.i, i64 32 ; 3 uses
   %i.ij = load i64, ptr %i.ie, align 8, !tbaa !2843
@@ -9961,7 +9961,7 @@ ma_dr_mp3_L3_reorder.exit.loopexit.i:             ; preds = %bb.eg
 bb.eh:                                            ; preds = %ma_dr_mp3_L3_reorder.exit.loopexit.i, %bb.ee
   %.pre-phi.i = phi i64 [ %.pre225.i, %ma_dr_mp3_L3_reorder.exit.loopexit.i ], [ %i.oc, %bb.ee ]
   %i.bcx = sub i64 %.pre-phi.i, %i.oc
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.bbg, ptr nonnull align 4 %i.ob, i64 %i.bcx, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.bbg, ptr nonnull align 8 %i.ob, i64 %i.bcx, i1 false)
   br i1 %.not57.i, label %ma_dr_mp3_L3_antialias.exit.i.thread, label %.preheader.i90.preheader.i
 
 ma_dr_mp3_L3_antialias.exit.i.thread:             ; preds = %bb.eh
@@ -10364,13 +10364,13 @@ bb.c:                                             ; preds = %bb.b
   %i.n = load i64, ptr %i.m, align 8, !tbaa !9    ; 2 uses
   %i.o = load ptr, ptr %i.j, align 8, !tbaa !9
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 3 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(151) %i.p, i8 0, i64 151, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(151) %i.p, i8 0, i64 151, i1 false)
   %i.q = icmp eq i64 %i.n, 0
   br i1 %i.q, label %ma_fence_release.exit, label %ma_allocation_callbacks_init_copy.exit.i.i
 
 ma_allocation_callbacks_init_copy.exit.i.i:       ; preds = %bb.c
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 136
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(80) %i.r, i8 0, i64 80, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %i.r, i8 0, i64 80, i1 false)
   store ptr @g_ma_audio_buffer_ref_data_source_vtable, ptr %i.p, align 8, !tbaa !353
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 144
   store i64 -1, ptr %i.s, align 8, !tbaa !354
@@ -10403,7 +10403,7 @@ ma_paged_audio_buffer_init.exit:                  ; preds = %bb.b
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 32
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 2 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 136
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(64) %i.ae, i8 0, i64 64, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.ae, i8 0, i64 64, i1 false)
   store ptr @g_ma_paged_audio_buffer_data_source_vtable, ptr %i.ad, align 8, !tbaa !353
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 144
   store i64 -1, ptr %i.af, align 8, !tbaa !354
@@ -10806,7 +10806,7 @@ bb.dp:                                            ; preds = %bb.do
   %i.yh = call i32 @llvm.umin.i32(i32 %i.ix, i32 254)
   %i.yi = getelementptr inbounds nuw i8, ptr %2, i64 24
   %i.yj = zext nneg i32 %i.yh to i64
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.yi, ptr nonnull readonly align 16 %i.b, i64 %i.yj, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.yi, ptr nonnull readonly align 16 %i.b, i64 %i.yj, i1 false)
   br label %ma_channel_map_copy.exit
 
 ma_channel_map_copy.exit:                         ; preds = %bb.do, %bb.dp
@@ -11209,7 +11209,7 @@ bb.f:                                             ; preds = %bb.e, %bb.e, %bb.e
 
 bb.g:                                             ; preds = %bb.f, %bb.e, %ma_zero_memory_default.exit.i.i
   %i.i = getelementptr inbounds nuw i8, ptr %.0.i, i64 8
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(64) %i.i, i8 0, i64 64, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.i, i8 0, i64 64, i1 false)
   store ptr @g_ma_flac_ds_vtable, ptr %.0.i, align 8, !tbaa !353
   %i.j = getelementptr inbounds nuw i8, ptr %.0.i, i64 16
   store i64 -1, ptr %i.j, align 8, !tbaa !354
@@ -11314,7 +11314,7 @@ bb.f:                                             ; preds = %bb.e, %bb.e, %bb.e
 
 bb.g:                                             ; preds = %bb.f, %bb.e, %ma_zero_memory_default.exit.i.i
   %i.i = getelementptr inbounds nuw i8, ptr %.0.i, i64 8
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(64) %i.i, i8 0, i64 64, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.i, i8 0, i64 64, i1 false)
   store ptr @g_ma_flac_ds_vtable, ptr %.0.i, align 8, !tbaa !353
   %i.j = getelementptr inbounds nuw i8, ptr %.0.i, i64 16
   store i64 -1, ptr %i.j, align 8, !tbaa !354
@@ -11420,7 +11420,7 @@ bb.f:                                             ; preds = %bb.e, %bb.e, %bb.e
 
 bb.g:                                             ; preds = %bb.f, %bb.e, %ma_zero_memory_default.exit.i.i
   %i.j = getelementptr inbounds nuw i8, ptr %.0.i, i64 8
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(64) %i.j, i8 0, i64 64, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.j, i8 0, i64 64, i1 false)
   store ptr @g_ma_flac_ds_vtable, ptr %.0.i, align 8, !tbaa !353
   %i.k = getelementptr inbounds nuw i8, ptr %.0.i, i64 16
   store i64 -1, ptr %i.k, align 8, !tbaa !354
@@ -11526,7 +11526,7 @@ bb.f:                                             ; preds = %bb.e, %bb.e, %bb.e
 
 bb.g:                                             ; preds = %bb.f, %bb.e, %ma_zero_memory_default.exit.i.i
   %i.i = getelementptr inbounds nuw i8, ptr %.0.i, i64 8
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(64) %i.i, i8 0, i64 64, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.i, i8 0, i64 64, i1 false)
   store ptr @g_ma_flac_ds_vtable, ptr %.0.i, align 8, !tbaa !353
   %i.j = getelementptr inbounds nuw i8, ptr %.0.i, i64 16
   store i64 -1, ptr %i.j, align 8, !tbaa !354
@@ -11929,7 +11929,7 @@ ma_dr_wav_buffer_reader_seek.exit61:              ; preds = %ma_dr_wav_buffer_re
   store ptr %.0.i58, ptr %i.au, align 8, !tbaa !9
   %i.av = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.aw = getelementptr inbounds nuw i8, ptr %i.a, i64 320
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(10) %i.av, ptr noundef nonnull align 16 dereferenceable(10) %i.aw, i64 10, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(10) %i.av, ptr noundef nonnull align 16 dereferenceable(10) %i.aw, i64 10, i1 false)
   %i.ax = getelementptr inbounds nuw i8, ptr %1, i64 42
   %i.ay = getelementptr inbounds nuw i8, ptr %i.a, i64 330
   %i.az = load i64, ptr %i.ay, align 2

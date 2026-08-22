@@ -205,9 +205,9 @@ bb.c:                                             ; preds = %bb.b
 
 .preheader.us.preheader.i.i:                      ; preds = %bb.c
   %i.u = getelementptr inbounds nuw i8, ptr %3, i64 85224 ; 2 uses
-  store <2 x float> <float 3.000000e-02, float 1.000000e+00>, ptr %i.u, align 4, !tbaa !8
+  store <2 x float> <float 3.000000e-02, float 1.000000e+00>, ptr %i.u, align 8, !tbaa !8
   %i.v = getelementptr inbounds nuw i8, ptr %3, i64 85232 ; 2 uses
-  store i32 %i.m, ptr %i.v, align 4, !tbaa !10
+  store i32 %i.m, ptr %i.v, align 8, !tbaa !10
   %i.w = getelementptr inbounds nuw i8, ptr %3, i64 85236 ; 2 uses
   store i8 %i.h, ptr %i.w, align 4, !tbaa !12
   %i.x = getelementptr inbounds nuw i8, ptr %3, i64 85237
@@ -311,15 +311,15 @@ bb.d:                                             ; preds = %bb.d, %.epil.prehea
 voclib_reset_history.exit.i:                      ; preds = %._crit_edge.us.i.i
   tail call fastcc void @voclib_initialize_filterbank(ptr noundef nonnull %i.e, i32 noundef 0)
   %i.bf = getelementptr inbounds nuw i8, ptr %3, i64 28008 ; 6 uses
-  %i.bg = load float, ptr %i.u, align 4, !tbaa !17
+  %i.bg = load float, ptr %i.u, align 8, !tbaa !17
   %i.bh = fpext float %i.bg to double
-  %i.bi = load i32, ptr %i.v, align 4, !tbaa !10
+  %i.bi = load i32, ptr %i.v, align 8, !tbaa !10
   %i.bj = uitofp i32 %i.bi to double
   %i.bk = fmul double %i.bh, %i.bj
   %i.bl = fdiv double 1.000000e+00, %i.bk
   %i.bm = tail call double @pow(double noundef 1.000000e-02, double noundef %i.bl) #11
   %i.bn = fptrunc double %i.bm to float           ; 6 uses
-  store float %i.bn, ptr %i.bf, align 4, !tbaa !18
+  store float %i.bn, ptr %i.bf, align 8, !tbaa !18
   %i.bo = load i8, ptr %i.w, align 4, !tbaa !12   ; 3 uses
   %i.bp = icmp ugt i8 %i.bo, 1
   br i1 %i.bp, label %.lr.ph.i.i, label %.loopexit

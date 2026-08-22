@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.d, %.new
 
 .preheader49.preheader.i:                         ; preds = %.preheader49.preheader.i.unr-lcssa, %.epil.preheader
   %.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %i.g, i64 4860
-  %.pre.i = load i16, ptr %.phi.trans.insert.i, align 2, !tbaa !39
+  %.pre.i = load i16, ptr %.phi.trans.insert.i, align 4, !tbaa !39
   br label %.preheader49.i
 
 .preheader49.i:                                   ; preds = %.preheader49.i.3, %.preheader49.preheader.i

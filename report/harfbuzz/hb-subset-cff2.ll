@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
 _ZN14hb_free_pool_tIN22hb_serialize_context_t8object_tELj32EE5allocEv.exit.thread9: ; preds = %bb.b
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !407
   store ptr %i.f, ptr %i.d, align 8, !tbaa !406
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(56) %i.e, i8 0, i64 56, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.e, i8 0, i64 56, i1 false)
   br label %bb.h
 
 bb.c:                                             ; preds = %bb.b
@@ -235,7 +235,7 @@ _ZN14hb_free_pool_tIN22hb_serialize_context_t8object_tELj32EE5allocEv.exit: ; pr
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #16
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !407
   store ptr %i.p, ptr %i.d, align 8, !tbaa !406
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(56) %i.o, i8 0, i64 56, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.o, i8 0, i64 56, i1 false)
   br label %bb.h
 
 bb.f:                                             ; preds = %bb.e, %bb.c
@@ -638,7 +638,7 @@ bb.b:                                             ; preds = %bb.a
 _ZN14hb_free_pool_tIN22hb_serialize_context_t8object_tELj32EE5allocEv.exit.thread9: ; preds = %bb.b
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !407
   store ptr %i.f, ptr %i.d, align 8, !tbaa !406
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(56) %i.e, i8 0, i64 56, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.e, i8 0, i64 56, i1 false)
   br label %bb.h
 
 bb.c:                                             ; preds = %bb.b
@@ -668,7 +668,7 @@ _ZN14hb_free_pool_tIN22hb_serialize_context_t8object_tELj32EE5allocEv.exit: ; pr
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #16
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !407
   store ptr %i.p, ptr %i.d, align 8, !tbaa !406
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(56) %i.o, i8 0, i64 56, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.o, i8 0, i64 56, i1 false)
   br label %bb.h
 
 bb.f:                                             ; preds = %bb.e, %bb.c
@@ -1071,7 +1071,7 @@ bb.b:                                             ; preds = %bb.a
 _ZN14hb_free_pool_tIN22hb_serialize_context_t8object_tELj32EE5allocEv.exit.thread9: ; preds = %bb.b
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !407
   store ptr %i.f, ptr %i.d, align 8, !tbaa !406
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(56) %i.e, i8 0, i64 56, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.e, i8 0, i64 56, i1 false)
   br label %bb.h
 
 bb.c:                                             ; preds = %bb.b
@@ -1101,7 +1101,7 @@ _ZN14hb_free_pool_tIN22hb_serialize_context_t8object_tELj32EE5allocEv.exit: ; pr
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #16
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !407
   store ptr %i.p, ptr %i.d, align 8, !tbaa !406
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(56) %i.o, i8 0, i64 56, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.o, i8 0, i64 56, i1 false)
   br label %bb.h
 
 bb.f:                                             ; preds = %bb.e, %bb.c
@@ -1149,7 +1149,7 @@ bb.b:                                             ; preds = %bb.a
 _ZN14hb_free_pool_tIN22hb_serialize_context_t8object_tELj32EE5allocEv.exit.thread9: ; preds = %bb.b
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !407
   store ptr %i.f, ptr %i.d, align 8, !tbaa !406
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(56) %i.e, i8 0, i64 56, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.e, i8 0, i64 56, i1 false)
   br label %bb.h
 
 bb.c:                                             ; preds = %bb.b
@@ -1179,7 +1179,7 @@ _ZN14hb_free_pool_tIN22hb_serialize_context_t8object_tELj32EE5allocEv.exit: ; pr
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #16
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !407
   store ptr %i.p, ptr %i.d, align 8, !tbaa !406
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(56) %i.o, i8 0, i64 56, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.o, i8 0, i64 56, i1 false)
   br label %bb.h
 
 bb.f:                                             ; preds = %bb.e, %bb.c
@@ -1385,7 +1385,7 @@ bb.b:                                             ; preds = %bb.a
 _ZN14hb_free_pool_tIN22hb_serialize_context_t8object_tELj32EE5allocEv.exit.thread9: ; preds = %bb.b
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !407
   store ptr %i.f, ptr %i.d, align 8, !tbaa !406
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(56) %i.e, i8 0, i64 56, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.e, i8 0, i64 56, i1 false)
   br label %bb.h
 
 bb.c:                                             ; preds = %bb.b
@@ -1415,7 +1415,7 @@ _ZN14hb_free_pool_tIN22hb_serialize_context_t8object_tELj32EE5allocEv.exit: ; pr
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #16
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !407
   store ptr %i.p, ptr %i.d, align 8, !tbaa !406
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(56) %i.o, i8 0, i64 56, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.o, i8 0, i64 56, i1 false)
   br label %bb.h
 
 bb.f:                                             ; preds = %bb.e, %bb.c
@@ -1818,7 +1818,7 @@ bb.b:                                             ; preds = %bb.a
 _ZN14hb_free_pool_tIN22hb_serialize_context_t8object_tELj32EE5allocEv.exit.thread9: ; preds = %bb.b
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !407
   store ptr %i.f, ptr %i.d, align 8, !tbaa !406
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(56) %i.e, i8 0, i64 56, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.e, i8 0, i64 56, i1 false)
   br label %bb.h
 
 bb.c:                                             ; preds = %bb.b
@@ -1848,7 +1848,7 @@ _ZN14hb_free_pool_tIN22hb_serialize_context_t8object_tELj32EE5allocEv.exit: ; pr
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #16
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !407
   store ptr %i.p, ptr %i.d, align 8, !tbaa !406
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(56) %i.o, i8 0, i64 56, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.o, i8 0, i64 56, i1 false)
   br label %bb.h
 
 bb.f:                                             ; preds = %bb.e, %bb.c
@@ -2251,7 +2251,7 @@ bb.b:                                             ; preds = %bb.a
 _ZN14hb_free_pool_tIN22hb_serialize_context_t8object_tELj32EE5allocEv.exit.thread9: ; preds = %bb.b
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !407
   store ptr %i.f, ptr %i.d, align 8, !tbaa !406
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(56) %i.e, i8 0, i64 56, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.e, i8 0, i64 56, i1 false)
   br label %bb.h
 
 bb.c:                                             ; preds = %bb.b
@@ -2281,7 +2281,7 @@ _ZN14hb_free_pool_tIN22hb_serialize_context_t8object_tELj32EE5allocEv.exit: ; pr
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #16
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !407
   store ptr %i.p, ptr %i.d, align 8, !tbaa !406
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(56) %i.o, i8 0, i64 56, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.o, i8 0, i64 56, i1 false)
   br label %bb.h
 
 bb.f:                                             ; preds = %bb.e, %bb.c
@@ -2329,7 +2329,7 @@ bb.b:                                             ; preds = %bb.a
 _ZN14hb_free_pool_tIN22hb_serialize_context_t8object_tELj32EE5allocEv.exit.thread9: ; preds = %bb.b
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !407
   store ptr %i.f, ptr %i.d, align 8, !tbaa !406
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(56) %i.e, i8 0, i64 56, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.e, i8 0, i64 56, i1 false)
   br label %bb.h
 
 bb.c:                                             ; preds = %bb.b
@@ -2359,7 +2359,7 @@ _ZN14hb_free_pool_tIN22hb_serialize_context_t8object_tELj32EE5allocEv.exit: ; pr
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #16
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !407
   store ptr %i.p, ptr %i.d, align 8, !tbaa !406
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(56) %i.o, i8 0, i64 56, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.o, i8 0, i64 56, i1 false)
   br label %bb.h
 
 bb.f:                                             ; preds = %bb.e, %bb.c
@@ -2762,7 +2762,7 @@ bb.b:                                             ; preds = %bb.a
 _ZN14hb_free_pool_tIN22hb_serialize_context_t8object_tELj32EE5allocEv.exit.thread9: ; preds = %bb.b
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !407
   store ptr %i.f, ptr %i.d, align 8, !tbaa !406
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(56) %i.e, i8 0, i64 56, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.e, i8 0, i64 56, i1 false)
   br label %bb.h
 
 bb.c:                                             ; preds = %bb.b
@@ -2792,7 +2792,7 @@ _ZN14hb_free_pool_tIN22hb_serialize_context_t8object_tELj32EE5allocEv.exit: ; pr
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #16
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !407
   store ptr %i.p, ptr %i.d, align 8, !tbaa !406
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(56) %i.o, i8 0, i64 56, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.o, i8 0, i64 56, i1 false)
   br label %bb.h
 
 bb.f:                                             ; preds = %bb.e, %bb.c
@@ -3195,7 +3195,7 @@ bb.d:                                             ; preds = %.lr.ph, %_ZN3CFF22c
   %i.l = load ptr, ptr %i.h, align 8, !tbaa !486
   %i.m = getelementptr inbounds nuw [72 x i8], ptr %i.l, i64 %indvars.iv ; 14 uses
   %i.n = load i32, ptr %i.m, align 4, !tbaa !59
-  store i32 %i.n, ptr %i.k, align 4, !tbaa !59
+  store i32 %i.n, ptr %i.k, align 8, !tbaa !59
   store i32 0, ptr %i.m, align 4, !tbaa !59
   %i.o = getelementptr inbounds nuw i8, ptr %i.k, i64 4 ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.m, i64 4 ; 2 uses
@@ -3598,7 +3598,7 @@ bb.i:                                             ; preds = %bb.i, %.lr.ph.i
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %i.v, i8 0, i64 72, i1 false)
   %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 4
   %i.x = getelementptr inbounds nuw i8, ptr %i.v, i64 8
-  store atomic i32 1, ptr %i.v monotonic, align 4
+  store atomic i32 1, ptr %i.v monotonic, align 8
   store atomic i8 1, ptr %i.w monotonic, align 4
   store atomic ptr null, ptr %i.x monotonic, align 8
   %i.y = getelementptr inbounds nuw i8, ptr %i.v, i64 16
@@ -3741,7 +3741,7 @@ bb.d:                                             ; preds = %.lr.ph, %_ZN14hb_in
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %i.k, i8 0, i64 72, i1 false)
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 4
   %i.m = getelementptr inbounds nuw i8, ptr %i.k, i64 8
-  store atomic i32 1, ptr %i.k monotonic, align 4
+  store atomic i32 1, ptr %i.k monotonic, align 8
   store atomic i8 1, ptr %i.l monotonic, align 4
   store atomic ptr null, ptr %i.m monotonic, align 8
   %i.n = getelementptr inbounds nuw i8, ptr %i.k, i64 16

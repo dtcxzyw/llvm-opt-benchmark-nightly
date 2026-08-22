@@ -204,7 +204,7 @@ _ZN5Eigen8internal13first_alignedILi16EdlEET1_PKT0_S2_.exit.i.i.i.i.i.i.i.i.i.i.
   br label %_ZN5Eigen11VectorBlockINS_6MatrixIdLi1ELi3ELi1ELi1ELi3EEELin1EEaSEOS3_.exit
 
 _ZN5Eigen11VectorBlockINS_6MatrixIdLi1ELi3ELi1ELi1ELi3EEELin1EEaSEOS3_.exit: ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i, %.lr.ph.i17.i.i.i.i.i.i.i.i.i.i.i.i
-  %i.be = load <2 x double>, ptr %0, align 1, !tbaa !12
+  %i.be = load <2 x double>, ptr %0, align 8, !tbaa !12
   %i.bf = load <2 x double>, ptr %5, align 8, !tbaa !12
   %i.bg = fsub <2 x double> %i.be, %i.bf          ; 2 uses
   %i.bh = fmul <2 x double> %i.bg, %i.bg          ; 2 uses
@@ -595,7 +595,7 @@ middle.block68:                                   ; preds = %vector.body63
   br i1 %i.dp, label %.lr.ph.i.i.i.i.i.i.i.i.i.i, label %._crit_edge.i.i.i.i.i.i.i.i.i.i, !llvm.loop !62
 
 _ZN5Eigen5BlockINS_6MatrixIdLi1ELin1ELi1ELi1ELin1EEELi1ELin1ELb0EEaSINS0_INS1_IdLi1ELi3ELi1ELi1ELi3EEELi1ELin1ELb0EEEEERS3_RKNS_9DenseBaseIT_EE.exit: ; preds = %.lr.ph.i17.i.i.i.i.i.i.i.i.i.i.prol.loopexit, %.lr.ph.i17.i.i.i.i.i.i.i.i.i.i, %middle.block68, %._crit_edge.i.i.i.i.i.i.i.i.i.i
-  %i.dq = load <2 x double>, ptr %0, align 1, !tbaa !12
+  %i.dq = load <2 x double>, ptr %0, align 8, !tbaa !12
   %i.dr = load <2 x double>, ptr %5, align 8, !tbaa !12
   %i.ds = fsub <2 x double> %i.dq, %i.dr          ; 2 uses
   %i.dt = fmul <2 x double> %i.ds, %i.ds          ; 2 uses
@@ -682,7 +682,7 @@ _ZN3igl30point_simplex_squared_distanceILi3EN5Eigen6MatrixIdLi1ELi3ELi1ELi1ELi3E
   %i.ad = load double, ptr %i.ac, align 16, !tbaa !25 ; 2 uses
   store double %i.ad, ptr %i.ab, align 8, !tbaa !25
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #11
-  %i.ae = load <2 x double>, ptr %0, align 1, !tbaa !12
+  %i.ae = load <2 x double>, ptr %0, align 8, !tbaa !12
   %i.af = fsub <2 x double> %i.ae, %i.aa          ; 2 uses
   %i.ag = fmul <2 x double> %i.af, %i.af          ; 2 uses
   %shift = shufflevector <2 x double> %i.ag, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
@@ -1085,7 +1085,7 @@ middle.block70:                                   ; preds = %vector.body65
   br i1 %i.ea, label %.lr.ph.i.i.i.i.i.i.i.i.i.i, label %._crit_edge.i.i.i.i.i.i.i.i.i.i, !llvm.loop !62
 
 _ZN5Eigen5BlockINS_6MatrixIdLi1ELin1ELi1ELi1ELin1EEELi1ELin1ELb0EEaSINS0_INS1_IdLi1ELi3ELi1ELi1ELi3EEELi1ELin1ELb0EEEEERS3_RKNS_9DenseBaseIT_EE.exit: ; preds = %.lr.ph.i17.i.i.i.i.i.i.i.i.i.i.prol.loopexit, %.lr.ph.i17.i.i.i.i.i.i.i.i.i.i, %middle.block70, %._crit_edge.i.i.i.i.i.i.i.i.i.i
-  %i.eb = load <2 x double>, ptr %0, align 1, !tbaa !12
+  %i.eb = load <2 x double>, ptr %0, align 8, !tbaa !12
   %i.ec = load <2 x double>, ptr %5, align 8, !tbaa !12
   %i.ed = fsub <2 x double> %i.eb, %i.ec          ; 2 uses
   %i.ee = fmul <2 x double> %i.ed, %i.ed          ; 2 uses
@@ -1488,7 +1488,7 @@ _ZN5Eigen8internal31unaligned_dense_assignment_loopILb0EE3runINS0_31generic_dens
   br label %_ZN5Eigen11VectorBlockINS_6MatrixIdLi1ELi3ELi1ELi1ELi3EEELin1EEaSEOS3_.exit
 
 _ZN5Eigen11VectorBlockINS_6MatrixIdLi1ELi3ELi1ELi1ELi3EEELin1EEaSEOS3_.exit: ; preds = %.lr.ph.i17.i.i.i.i.i.i.i.i.i.i.i.i.preheader, %._crit_edge.i.i.i.i.i.i.i.i.i.i.i.i
-  %i.bv = load <2 x double>, ptr %0, align 1, !tbaa !12
+  %i.bv = load <2 x double>, ptr %0, align 8, !tbaa !12
   %i.bw = load <2 x double>, ptr %5, align 8, !tbaa !12
   %i.bx = fsub <2 x double> %i.bv, %i.bw          ; 2 uses
   %i.by = fmul <2 x double> %i.bx, %i.bx          ; 2 uses
@@ -1891,7 +1891,7 @@ _ZN5Eigen8internal31unaligned_dense_assignment_loopILb0EE3runINS0_31generic_dens
   br label %_ZN5Eigen5BlockINS_6MatrixIdLi3ELi1ELi1ELi1ELi3EEELi1ELin1ELb0EEaSINS0_INS1_IdLi1ELi3ELi1ELi1ELi3EEELi1ELin1ELb0EEEEERS3_RKNS_9DenseBaseIT_EE.exit
 
 _ZN5Eigen5BlockINS_6MatrixIdLi3ELi1ELi1ELi1ELi3EEELi1ELin1ELb0EEaSINS0_INS1_IdLi1ELi3ELi1ELi1ELi3EEELi1ELin1ELb0EEEEERS3_RKNS_9DenseBaseIT_EE.exit: ; preds = %.lr.ph.i17.i.i.i.i.i.i.i.i.i.i.preheader, %._crit_edge.i.i.i.i.i.i.i.i.i.i
-  %i.bv = load <2 x double>, ptr %0, align 1, !tbaa !12
+  %i.bv = load <2 x double>, ptr %0, align 8, !tbaa !12
   %i.bw = load <2 x double>, ptr %5, align 8, !tbaa !12
   %i.bx = fsub <2 x double> %i.bv, %i.bw          ; 2 uses
   %i.by = fmul <2 x double> %i.bx, %i.bx          ; 2 uses
@@ -2294,7 +2294,7 @@ bb.a:
   %i.w = load double, ptr %i.v, align 16, !tbaa !25 ; 2 uses
   store double %i.w, ptr %i.u, align 8, !tbaa !25
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #11
-  %i.x = load <2 x double>, ptr %0, align 1, !tbaa !12
+  %i.x = load <2 x double>, ptr %0, align 8, !tbaa !12
   %i.y = fsub <2 x double> %i.x, %i.t             ; 2 uses
   %i.z = fmul <2 x double> %i.y, %i.y             ; 2 uses
   %shift = shufflevector <2 x double> %i.z, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
