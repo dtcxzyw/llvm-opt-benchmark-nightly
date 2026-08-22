@@ -205,6 +205,7 @@ bb.p:                                             ; preds = %bb.j
 
 .lr.ph.i:                                         ; preds = %.preheader103.i
   %i.av = load ptr, ptr %i.u, align 8, !tbaa !59
+  %15 = zext nneg i32 %i.s to i64
   br label %bb.r
 
 .preheader.i:                                     ; preds = %bb.p
@@ -219,21 +220,20 @@ bb.q:                                             ; preds = %bb.q, %.preheader.i
   %i.ba = load i32, ptr %i.az, align 4, !tbaa !64
   %i.bb = icmp sgt i32 %i.ba, -1
   %indvars.iv.next.i.a = add nuw nsw i64 %indvars.iv.i.a, 1
-  br i1 %i.bb, label %bb.q, label %.critedge.loopexit.i.a, !llvm.loop !69
+  br i1 %i.bb, label %bb.q, label %.critedge.loopexit.i, !llvm.loop !69
 
 bb.r:                                             ; preds = %bb.s, %.lr.ph.i
-  %.053106.i = phi i32 [ %i.s, %.lr.ph.i ], [ %16, %bb.s ] ; 4 uses
-  %15 = zext nneg i32 %.053106.i to i64
-  %i.bc = getelementptr inbounds nuw [8 x i8], ptr %i.av, i64 %15
+  %indvars.iv.i = phi i64 [ %15, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.s ] ; 4 uses
+  %i.bc = getelementptr inbounds nuw [8 x i8], ptr %i.av, i64 %indvars.iv.i
   %i.bd = load ptr, ptr %i.bc, align 8, !tbaa !62
   %i.be = getelementptr inbounds nuw i8, ptr %i.bd, i64 8
   %i.bf = load i32, ptr %i.be, align 4, !tbaa !64
   %i.bg = icmp slt i32 %i.bf, 0
-  br i1 %i.bg, label %bb.s, label %.critedge.i
+  br i1 %i.bg, label %bb.s, label %.critedge.loopexit.i.a
 
 bb.s:                                             ; preds = %bb.r
-  %16 = add nsw i32 %.053106.i, -1
-  %i.bh = icmp sgt i32 %.053106.i, 0
+  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1
+  %i.bh = icmp sgt i64 %indvars.iv.i, 0
   br i1 %i.bh, label %bb.r, label %._crit_edge.i, !llvm.loop !71
 
 ._crit_edge.i:                                    ; preds = %bb.s, %.preheader103.i
@@ -242,13 +242,17 @@ bb.s:                                             ; preds = %bb.r
   store i16 2, ptr %i.bi, align 8, !tbaa !10, !alias.scope !45
   br label %.critedge91.i
 
-.critedge.loopexit.i.a:                           ; preds = %bb.q
-  %i.bj = trunc nuw nsw i64 %indvars.iv.i.a to i32
+.critedge.loopexit.i:                             ; preds = %bb.q
+  %16 = trunc nuw nsw i64 %indvars.iv.i.a to i32
   br label %.critedge.i
 
-.critedge.i:                                      ; preds = %bb.r, %.critedge.loopexit.i.a
-  %.259.i = phi i32 [ %i.bj, %.critedge.loopexit.i.a ], [ 0, %bb.r ]
-  %.255.i = phi i32 [ %i.s, %.critedge.loopexit.i.a ], [ %.053106.i, %bb.r ]
+.critedge.loopexit.i.a:                           ; preds = %bb.r
+  %i.bj = trunc nuw nsw i64 %indvars.iv.i to i32
+  br label %.critedge.i
+
+.critedge.i:                                      ; preds = %.critedge.loopexit.i.a, %.critedge.loopexit.i
+  %.259.i = phi i32 [ %16, %.critedge.loopexit.i ], [ 0, %.critedge.loopexit.i.a ]
+  %.255.i = phi i32 [ %i.s, %.critedge.loopexit.i ], [ %i.bj, %.critedge.loopexit.i.a ]
   call void @_ZN6icu_7813UnicodeStringD1Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %5) #21
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #21, !noalias !45
   br label %bb.u

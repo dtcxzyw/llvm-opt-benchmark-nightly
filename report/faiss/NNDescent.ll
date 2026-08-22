@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 12
   %i.f = sext i32 %1 to i64
   %i.g = mul nsw i64 %i.f, 12
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.e, ptr nonnull align 4 %0, i64 %i.g, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.e, ptr nonnull align 4 %0, i64 %i.g, i1 false)
   store i64 %2, ptr %0, align 4
   %.sroa.12.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i8 %3, ptr %.sroa.12.0..sroa_idx, align 4, !tbaa !53
@@ -234,7 +234,11 @@ bb.d:                                             ; preds = %bb.c
 
 .preheader:                                       ; preds = %.lr.ph
   %i.q = icmp sgt i32 %.063., 0
-  br i1 %i.q, label %.lr.ph74, label %._crit_edge
+  br i1 %i.q, label %.lr.ph74.preheader, label %._crit_edge
+
+.lr.ph74.preheader:                               ; preds = %.preheader
+  %4 = zext nneg i32 %.063. to i64
+  br label %.lr.ph74
 
 .lr.ph:                                           ; preds = %.preheader68, %.lr.ph
   %.071 = phi i32 [ %..0, %.lr.ph ], [ %i.h, %.preheader68 ] ; 2 uses
@@ -252,14 +256,13 @@ bb.d:                                             ; preds = %bb.c
   %i.z = icmp slt i32 %.063., %i.y
   br i1 %i.z, label %.lr.ph, label %.preheader, !llvm.loop !81
 
-.lr.ph74:                                         ; preds = %.preheader, %bb.g
-  %.273 = phi i32 [ %5, %bb.g ], [ %.063., %.preheader ] ; 4 uses
-  %4 = zext nneg i32 %.273 to i64
-  %i.aa = getelementptr inbounds nuw [12 x i8], ptr %0, i64 %4 ; 2 uses
+.lr.ph74:                                         ; preds = %.lr.ph74.preheader, %bb.g
+  %indvars.iv = phi i64 [ %4, %.lr.ph74.preheader ], [ %indvars.iv.next, %bb.g ] ; 4 uses
+  %i.aa = getelementptr inbounds nuw [12 x i8], ptr %0, i64 %indvars.iv ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 4
   %i.ac = load float, ptr %i.ab, align 4, !tbaa !57
   %i.ad = fcmp olt float %i.ac, %i.a
-  br i1 %i.ad, label %._crit_edge, label %bb.e
+  br i1 %i.ad, label %._crit_edge.loopexit.split.loop.exit, label %bb.e
 
 bb.e:                                             ; preds = %.lr.ph74
   %i.ae = load i32, ptr %i.aa, align 4, !tbaa !60
@@ -271,13 +274,17 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.k
 
 bb.g:                                             ; preds = %bb.e
-  %5 = add nsw i32 %.273, -1
-  %i.ah = icmp sgt i32 %.273, 1
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
+  %i.ah = icmp sgt i64 %indvars.iv, 1
   br i1 %i.ah, label %.lr.ph74, label %._crit_edge, !llvm.loop !82
 
-._crit_edge:                                      ; preds = %bb.g, %.lr.ph74, %.preheader68, %.preheader
-  %.0.lcssa80 = phi i32 [ %..0, %.preheader ], [ %i.h, %.preheader68 ], [ %..0, %.lr.ph74 ], [ %..0, %bb.g ] ; 3 uses
-  %.2.lcssa = phi i32 [ %.063., %.preheader ], [ 0, %.preheader68 ], [ 0, %bb.g ], [ %.273, %.lr.ph74 ]
+._crit_edge.loopexit.split.loop.exit:             ; preds = %.lr.ph74
+  %5 = trunc nuw nsw i64 %indvars.iv to i32
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %bb.g, %._crit_edge.loopexit.split.loop.exit, %.preheader68, %.preheader
+  %.0.lcssa80 = phi i32 [ %..0, %.preheader ], [ %i.h, %.preheader68 ], [ %..0, %._crit_edge.loopexit.split.loop.exit ], [ %..0, %bb.g ] ; 3 uses
+  %.2.lcssa = phi i32 [ %.063., %.preheader ], [ 0, %.preheader68 ], [ %5, %._crit_edge.loopexit.split.loop.exit ], [ 0, %bb.g ]
   %i.ai = sext i32 %.2.lcssa to i64
   %i.aj = getelementptr inbounds [12 x i8], ptr %0, i64 %i.ai
   %i.ak = load i32, ptr %i.aj, align 4, !tbaa !60
@@ -300,7 +307,7 @@ bb.j:                                             ; preds = %bb.h
   %i.as = sub nsw i32 %1, %.0.lcssa80
   %i.at = sext i32 %i.as to i64
   %i.au = mul nsw i64 %i.at, 12
-  tail call void @llvm.memmove.p0.p0.i64(ptr align 1 %i.ar, ptr nonnull align 4 %i.an, i64 %i.au, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr align 4 %i.ar, ptr nonnull align 4 %i.an, i64 %i.au, i1 false)
   store i64 %2, ptr %i.an, align 4
   %.sroa.12.0..sroa_idx60 = getelementptr inbounds nuw i8, ptr %i.an, i64 8
   store i8 %3, ptr %.sroa.12.0..sroa_idx60, align 4, !tbaa !53
@@ -703,7 +710,7 @@ bb.z:                                             ; preds = %bb.x
   br i1 %i.do, label %bb.aa, label %.preheader68.i
 
 bb.aa:                                            ; preds = %bb.z
-  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.cc, ptr nonnull align 4 %i.y, i64 %.idx, i1 false)
+  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.cc, ptr nonnull align 4 %i.y, i64 %.idx, i1 false)
   store i64 %.sroa.0.sroa.0.0.insert.insert, ptr %i.y, align 4
   store i8 1, ptr %.sroa.12.0..sroa_idx.i, align 4, !tbaa !53
   br label %_ZN5faiss9nndescent16insert_into_poolEPNS0_8NeighborEiS1_.exit
@@ -735,7 +742,7 @@ bb.aa:                                            ; preds = %bb.z
   %i.dy = icmp slt i32 %.063..i, %i.dx
   br i1 %i.dy, label %.lr.ph.i, label %.preheader.i, !llvm.loop !81
 
-.lr.ph74.i:                                       ; preds = %.lr.ph74.i.preheader, %bb.ac
+.lr.ph74.i:                                       ; preds = %bb.ac, %.lr.ph74.i.preheader
   %indvars.iv151 = phi i64 [ %i.dp, %.lr.ph74.i.preheader ], [ %indvars.iv.next152, %bb.ac ] ; 4 uses
   %i.dz = getelementptr inbounds nuw [12 x i8], ptr %i.y, i64 %indvars.iv151 ; 2 uses
   %i.ea = getelementptr inbounds nuw i8, ptr %i.dz, i64 4
@@ -773,7 +780,7 @@ bb.ae:                                            ; preds = %bb.ad
   %i.eo = sub nsw i32 %.sroa.speculated, %.0.lcssa80.i
   %i.ep = sext i32 %i.eo to i64
   %i.eq = mul nsw i64 %i.ep, 12
-  call void @llvm.memmove.p0.p0.i64(ptr align 1 %i.en, ptr nonnull align 4 %i.ek, i64 %i.eq, i1 false)
+  call void @llvm.memmove.p0.p0.i64(ptr align 4 %i.en, ptr nonnull align 4 %i.ek, i64 %i.eq, i1 false)
   store i64 %.sroa.0.sroa.0.0.insert.insert, ptr %i.ek, align 4
   %.sroa.12.0..sroa_idx60.i = getelementptr inbounds nuw i8, ptr %i.ek, i64 8
   store i8 1, ptr %.sroa.12.0..sroa_idx60.i, align 4, !tbaa !53

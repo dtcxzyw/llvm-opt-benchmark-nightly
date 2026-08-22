@@ -205,7 +205,7 @@ bb.a:                                             ; preds = %_ZN5boost9container
   %.idx97 = shl nuw nsw i64 %.045111, 2           ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 %.idx97 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 4
-  %gepdiff99.reass = sub nuw nsw i64 36, %.idx97
+  %gepdiff99.reass = sub nsw i64 36, %.idx97
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.e, ptr nonnull align 4 %i.f, i64 %gepdiff99.reass, i1 false), !noalias !537
   %.pre.i = load i64, ptr %i.a, align 8, !tbaa !228, !noalias !537
   %i.g = icmp eq i64 %.pre.i, 10
@@ -608,7 +608,7 @@ _ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2
 
 _ZN5boost9container13static_vectorI14counting_valueLm10EvEC2ERKS3_.exit.thread: ; preds = %_ZN5boost9container19vector_alloc_holderINS0_3dtl24static_storage_allocatorI14counting_valueLm10ELm0ELb1EEEmNS_11move_detail17integral_constantIjLj0EEEEC2IRKS5_EENS0_27vector_uninitialized_size_tEOT_m.exit.i.i.preheader, %_ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2_Lm10ELm0ELb1EEEvED2Ev.exit97
   %_ZZN14counting_value1cEvE2co.promoted.i.i.i = phi i64 [ %i.av, %_ZN5boost9container19vector_alloc_holderINS0_3dtl24static_storage_allocatorI14counting_valueLm10ELm0ELb1EEEmNS_11move_detail17integral_constantIjLj0EEEEC2IRKS5_EENS0_27vector_uninitialized_size_tEOT_m.exit.i.i.preheader ], [ %i.dw, %_ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2_Lm10ELm0ELb1EEEvED2Ev.exit97 ] ; 3 uses
-  %indvars.iv202 = phi i64 [ 0, %_ZN5boost9container19vector_alloc_holderINS0_3dtl24static_storage_allocatorI14counting_valueLm10ELm0ELb1EEEmNS_11move_detail17integral_constantIjLj0EEEEC2IRKS5_EENS0_27vector_uninitialized_size_tEOT_m.exit.i.i.preheader ], [ %indvars.iv.next203, %_ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2_Lm10ELm0ELb1EEEvED2Ev.exit97 ] ; 12 uses
+  %indvars.iv202 = phi i64 [ 0, %_ZN5boost9container19vector_alloc_holderINS0_3dtl24static_storage_allocatorI14counting_valueLm10ELm0ELb1EEEmNS_11move_detail17integral_constantIjLj0EEEEC2IRKS5_EENS0_27vector_uninitialized_size_tEOT_m.exit.i.i.preheader ], [ %indvars.iv.next203, %_ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2_Lm10ELm0ELb1EEEvED2Ev.exit97 ] ; 9 uses
   %indvars.iv198 = phi i32 [ 5, %_ZN5boost9container19vector_alloc_holderINS0_3dtl24static_storage_allocatorI14counting_valueLm10ELm0ELb1EEEmNS_11move_detail17integral_constantIjLj0EEEEC2IRKS5_EENS0_27vector_uninitialized_size_tEOT_m.exit.i.i.preheader ], [ %indvars.iv.next199, %_ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2_Lm10ELm0ELb1EEEvED2Ev.exit97 ] ; 2 uses
   %smax = tail call i32 @llvm.smax.i32(i32 %indvars.iv198, i32 1)
   call void @llvm.lifetime.start.p0(ptr nonnull %0) #25
@@ -618,7 +618,7 @@ _ZN5boost9container13static_vectorI14counting_valueLm10EvEC2ERKS3_.exit.thread: 
   store i32 104, ptr %i.bd, align 4, !tbaa !74
   %i.bf = add i64 %_ZZN14counting_value1cEvE2co.promoted.i.i.i, 5
   store i64 %i.bf, ptr @_ZZN14counting_value1cEvE2co, align 8, !tbaa !69
-  %.idx151 = shl nuw nsw i64 %indvars.iv202, 3
+  %.idx151 = shl nuw nsw i64 %indvars.iv202, 3    ; 2 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %0, i64 %.idx151 ; 4 uses
   %i.bh = add nuw nsw i64 %indvars.iv202, 100     ; 2 uses
   %i.bi = or disjoint i64 %indvars.iv202, 200     ; 2 uses
@@ -634,6 +634,8 @@ bb.o:                                             ; preds = %_ZN5boost9container
   br label %_ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2_Lm10ELm0ELb1EEEvE7emplaceIJiiEEENS0_12vec_iteratorIPS2_Lb0EEENS8_IS9_Lb1EEEDpOT_.exit
 
 bb.p:                                             ; preds = %_ZN5boost9container13static_vectorI14counting_valueLm10EvEC2ERKS3_.exit.thread
+  %gepdiff = sub nsw i64 40, %.idx151
+  %1 = ashr exact i64 %gepdiff, 3                 ; 2 uses
   %i.bk = load <2 x i32>, ptr %i.ay, align 16, !tbaa !18, !noalias !1268
   store <2 x i32> %i.bk, ptr %i.ax, align 8, !tbaa !18, !noalias !1268
   store i32 0, ptr %i.ay, align 16, !tbaa !72, !noalias !1268
@@ -641,18 +643,19 @@ bb.p:                                             ; preds = %_ZN5boost9container
   %i.bl = add i64 %_ZZN14counting_value1cEvE2co.promoted.i.i.i, 6
   store i64 %i.bl, ptr @_ZZN14counting_value1cEvE2co, align 8, !tbaa !69, !noalias !1268
   store i64 6, ptr %i.aw, align 16, !tbaa !167, !noalias !1268
-  %.not8.i.i.i.i = icmp eq i64 %indvars.iv202, 4
+  %2 = add nsw i64 %1, -1                         ; 4 uses
+  %.not8.i.i.i.i = icmp eq i64 %2, 0
   br i1 %.not8.i.i.i.i, label %_ZN5boost9container15move_backward_nIP14counting_valueS3_EENS0_3dtl38disable_if_memtransfer_copy_assignableIT_T0_S7_E4typeES6_mS7_.exit.i.i.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %bb.p
-  %1 = sub nsw i64 4, %indvars.iv202              ; 3 uses
-  %xtraiter = and i64 %1, 3                       ; 2 uses
+  %3 = add nsw i64 %1, -2
+  %xtraiter = and i64 %2, 3                       ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.i.i.i.i.prol.loopexit, label %.lr.ph.i.i.i.i.prol
 
 .lr.ph.i.i.i.i.prol:                              ; preds = %.lr.ph.i.i.i.i.preheader, %.lr.ph.i.i.i.i.prol
   %.011.i.i.i.i.prol = phi ptr [ %i.bo, %.lr.ph.i.i.i.i.prol ], [ %i.ax, %.lr.ph.i.i.i.i.preheader ]
-  %.0610.i.i.i.i.prol = phi i64 [ %i.bm, %.lr.ph.i.i.i.i.prol ], [ %1, %.lr.ph.i.i.i.i.preheader ]
+  %.0610.i.i.i.i.prol = phi i64 [ %i.bm, %.lr.ph.i.i.i.i.prol ], [ %2, %.lr.ph.i.i.i.i.preheader ]
   %.079.i.i.i.i.prol = phi ptr [ %i.bn, %.lr.ph.i.i.i.i.prol ], [ %i.ay, %.lr.ph.i.i.i.i.preheader ] ; 2 uses
   %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph.i.i.i.i.prol ], [ 0, %.lr.ph.i.i.i.i.preheader ]
   %i.bm = add i64 %.0610.i.i.i.i.prol, -1         ; 2 uses
@@ -669,10 +672,9 @@ bb.p:                                             ; preds = %_ZN5boost9container
 
 .lr.ph.i.i.i.i.prol.loopexit:                     ; preds = %.lr.ph.i.i.i.i.prol, %.lr.ph.i.i.i.i.preheader
   %.011.i.i.i.i.unr = phi ptr [ %i.ax, %.lr.ph.i.i.i.i.preheader ], [ %i.bo, %.lr.ph.i.i.i.i.prol ]
-  %.0610.i.i.i.i.unr = phi i64 [ %1, %.lr.ph.i.i.i.i.preheader ], [ %i.bm, %.lr.ph.i.i.i.i.prol ]
+  %.0610.i.i.i.i.unr = phi i64 [ %2, %.lr.ph.i.i.i.i.preheader ], [ %i.bm, %.lr.ph.i.i.i.i.prol ]
   %.079.i.i.i.i.unr = phi ptr [ %i.ay, %.lr.ph.i.i.i.i.preheader ], [ %i.bn, %.lr.ph.i.i.i.i.prol ]
-  %2 = add nsw i64 %indvars.iv202, -1
-  %i.br = icmp ult i64 %2, 3
+  %i.br = icmp ult i64 %3, 3
   br i1 %i.br, label %_ZN5boost9container15move_backward_nIP14counting_valueS3_EENS0_3dtl38disable_if_memtransfer_copy_assignableIT_T0_S7_E4typeES6_mS7_.exit.i.i.i, label %.lr.ph.i.i.i.i
 
 .lr.ph.i.i.i.i:                                   ; preds = %.lr.ph.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i

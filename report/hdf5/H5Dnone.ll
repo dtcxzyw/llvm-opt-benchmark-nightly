@@ -189,11 +189,15 @@ bb.b:                                             ; preds = %bb.a
   %i.q = getelementptr inbounds nuw i8, ptr %3, i64 280 ; 2 uses
   %i.r = add i32 %.fr, -2                         ; 2 uses
   %i.s = icmp sgt i32 %i.r, -1
-  br i1 %i.s, label %.lr.ph30.split.us, label %.lr.ph30.split
+  br i1 %i.s, label %.lr.ph30.split.us.preheader, label %.lr.ph30.split
 
-.lr.ph30.split.us:                                ; preds = %.lr.ph30, %._crit_edge.us
-  %i.t = phi ptr [ %i.af, %._crit_edge.us ], [ %i.h, %.lr.ph30 ]
-  %.02328.us = phi i32 [ %i.an, %._crit_edge.us ], [ 0, %.lr.ph30 ]
+.lr.ph30.split.us.preheader:                      ; preds = %.lr.ph30
+  %4 = zext nneg i32 %i.r to i64
+  br label %.lr.ph30.split.us
+
+.lr.ph30.split.us:                                ; preds = %.lr.ph30.split.us.preheader, %._crit_edge.us
+  %i.t = phi ptr [ %i.af, %._crit_edge.us ], [ %i.h, %.lr.ph30.split.us.preheader ]
+  %.02328.us = phi i32 [ %i.an, %._crit_edge.us ], [ 0, %.lr.ph30.split.us.preheader ]
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 1120
   %i.v = call i64 @H5VM_array_offset_pre(i32 noundef %i.n, ptr noundef nonnull %i.u, ptr noundef nonnull %3) #9
   %i.w = load ptr, ptr %i.g, align 8, !tbaa !13   ; 2 uses
@@ -214,21 +218,20 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph.us, %bb.d
-  %.02226.us = phi i32 [ %i.r, %.lr.ph.us ], [ %5, %bb.d ] ; 3 uses
-  %4 = zext nneg i32 %.02226.us to i64            ; 2 uses
-  %i.ah = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %4 ; 3 uses
+  %indvars.iv = phi i64 [ %4, %.lr.ph.us ], [ %indvars.iv.next, %bb.d ] ; 4 uses
+  %i.ah = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %indvars.iv ; 3 uses
   %i.ai = load i64, ptr %i.ah, align 8, !tbaa !21
   %i.aj = add i64 %i.ai, 1                        ; 2 uses
   store i64 %i.aj, ptr %i.ah, align 8, !tbaa !21
-  %i.ak = getelementptr inbounds nuw [8 x i8], ptr %i.ag, i64 %4
+  %i.ak = getelementptr inbounds nuw [8 x i8], ptr %i.ag, i64 %indvars.iv
   %i.al = load i64, ptr %i.ak, align 8, !tbaa !19
   %.not.us = icmp ult i64 %i.aj, %i.al
   br i1 %.not.us, label %._crit_edge.us, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   store i64 0, ptr %i.ah, align 8, !tbaa !21
-  %5 = add nsw i32 %.02226.us, -1
-  %i.am = icmp sgt i32 %.02226.us, 0
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
+  %i.am = icmp sgt i64 %indvars.iv, 0
   br i1 %i.am, label %bb.c, label %._crit_edge.us, !llvm.loop !40
 
 ._crit_edge.us:                                   ; preds = %bb.c, %bb.d

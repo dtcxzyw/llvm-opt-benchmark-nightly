@@ -3,7 +3,7 @@ inline.NumInlined: 273
 inline.NumDeleted: 73
 loop-unroll.NumCompletelyUnrolled: 48
 loop-unroll.NumRuntimeUnrolled: 3
-loop-unroll.NumUnrolled: 53
+loop-unroll.NumUnrolled: 54
 begin_hunk_0_@process:bb.a
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %i.ds = getelementptr inbounds nuw [4 x i8], ptr %.0131.i, i64 %index
@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.aw = tail call i32 @pthread_mutex_unlock(ptr noundef nonnull %i.ao) #28 ; 0 uses
   %i.ax = tail call fastcc i32 @update_curve_lut(ptr noundef nonnull %0) ; 0 uses
   %i.ay = tail call i32 @pthread_mutex_lock(ptr noundef nonnull %i.ao) #28 ; 0 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(32) %i.d, ptr noundef nonnull readonly align 4 dereferenceable(32) %i.f, i64 32, i1 false), !tbaa !11, !alias.scope !178
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.d, ptr noundef nonnull readonly align 4 dereferenceable(32) %i.f, i64 32, i1 false), !tbaa !11, !alias.scope !178
   %i.az = tail call i32 @pthread_mutex_unlock(ptr noundef nonnull %i.ao) #28 ; 0 uses
   br label %vector.ph
 
@@ -294,7 +294,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.dk = tail call reassoc nsz arcp contract afn <8 x float> @llvm.exp.v8f32(<8 x float> %i.dj)
   store <8 x float> %i.dk, ptr %i.di, align 64, !tbaa !11
   %i.dl = call fastcc i32 @pseudo_solve(ptr noundef nonnull %i.b, ptr noundef %i.a, i32 noundef 1) ; 0 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(32) %i.d, ptr noundef nonnull readonly align 64 dereferenceable(32) %i.a, i64 32, i1 false), !tbaa !11, !alias.scope !190
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.d, ptr noundef nonnull readonly align 64 dereferenceable(32) %i.a, i64 32, i1 false), !tbaa !11, !alias.scope !190
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #28
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #28
   br label %vector.ph
@@ -538,14 +538,14 @@ bb.e:                                             ; preds = %bb.d, %.thread
   %i.bw = getelementptr inbounds nuw i8, ptr %i.e, i64 3040
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #28
   %i.bx = getelementptr inbounds nuw i8, ptr %i.e, i64 2432
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 64 dereferenceable(36) %i.a, ptr noundef nonnull readonly align 4 dereferenceable(36) %i.bx, i64 36, i1 false), !tbaa !11, !alias.scope !206
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 64 dereferenceable(36) %i.a, ptr noundef nonnull readonly align 8 dereferenceable(36) %i.bx, i64 36, i1 false), !tbaa !11, !alias.scope !206
   %i.by = getelementptr inbounds nuw i8, ptr %i.e, i64 1088
   %i.bz = call fastcc i32 @pseudo_solve(ptr noundef nonnull %i.by, ptr noundef %i.a, i32 noundef 0) ; 3 uses
   %.not33 = icmp eq i32 %i.bz, 0
   br i1 %.not33, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(32) %i.e, ptr noundef nonnull readonly align 64 dereferenceable(32) %i.a, i64 32, i1 false), !tbaa !11, !alias.scope !210
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.e, ptr noundef nonnull readonly align 64 dereferenceable(32) %i.a, i64 32, i1 false), !tbaa !11, !alias.scope !210
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
@@ -948,7 +948,7 @@ declare void @cairo_pattern_add_color_stop_rgba(ptr noundef, double noundef, dou
 ; Function Attrs: inlinehint nounwind uwtable
 define internal fastcc void @update_histogram(ptr noundef %0) unnamed_addr #14 {
 bb.a:
-  %i.a = alloca [512 x i32], align 16             ; 13 uses
+  %i.a = alloca [512 x i32], align 16             ; 16 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 704
   %i.c = load ptr, ptr %i.b, align 16, !tbaa !74  ; 11 uses
   %i.d = icmp eq ptr %i.c, null
@@ -981,7 +981,7 @@ bb.d:                                             ; preds = %bb.c
   %i.t = getelementptr inbounds nuw i8, ptr %i.c, i64 2564
   %i.u = getelementptr inbounds nuw i8, ptr %i.c, i64 2568
   tail call void @llvm.experimental.noalias.scope.decl(metadata !666)
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1024) %i.r, i8 0, i64 1024, i1 false), !noalias !666
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1024) %i.r, i8 0, i64 1024, i1 false), !noalias !666
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #28, !noalias !666
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(2048) %i.a, i8 0, i64 2048, i1 false), !noalias !666
   %.not83.i = icmp eq i64 %i.o, 0
@@ -1024,7 +1024,7 @@ bb.d:                                             ; preds = %bb.c
   %i.ai = fmul reassoc nnan nsz arcp contract afn float %i.ah, 5.000000e-02
   %i.aj = fptosi float %i.ai to i32               ; 8 uses
   %i.ak = fmul reassoc nnan nsz arcp contract afn float %i.ah, f0x3D4CCCD0
-  %i.al = fptosi float %i.ak to i32               ; 2 uses
+  %i.al = fptosi float %i.ak to i32               ; 8 uses
   br label %bb.e
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i, %.lr.ph.i.preheader.new
@@ -1121,35 +1121,72 @@ bb.i:                                             ; preds = %bb.h
   %i.cf = phi float [ %i.ce, %.split.loop.exit88.i ], [ -1.000000e+01, %bb.i ] ; 2 uses
   br label %bb.j
 
-bb.j:                                             ; preds = %bb.j, %.split.loop.exit.i
-  %.05581.i = phi i32 [ 511, %.split.loop.exit.i ], [ %3, %bb.j ] ; 4 uses
-  %.16480.i = phi i32 [ 0, %.split.loop.exit.i ], [ %i.ci, %bb.j ] ; 2 uses
-  %1 = zext nneg i32 %.05581.i to i64
-  %i.cg = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %1
+bb.j:                                             ; preds = %17, %.split.loop.exit.i
+  %indvars.iv86.i = phi i64 [ 511, %.split.loop.exit.i ], [ %indvars.iv.next87.i.3, %17 ] ; 6 uses
+  %.16480.i = phi i32 [ 0, %.split.loop.exit.i ], [ %15, %17 ] ; 2 uses
+  %i.cg = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv86.i
   %i.ch = load i32, ptr %i.cg, align 4, !tbaa !29, !noalias !666
-  %i.ci = add nsw i32 %i.ch, %.16480.i            ; 2 uses
-  %2 = icmp ult i32 %.16480.i, %i.al
-  %.not71.i = icmp sge i32 %i.ci, %i.al
-  %or.cond72.not92.i = select i1 %2, i1 %.not71.i, i1 false
-  %3 = add nsw i32 %.05581.i, -1
-  %.not87.i = icmp eq i32 %.05581.i, 0
-  %or.cond90.i = or i1 %.not87.i, %or.cond72.not92.i
-  br i1 %or.cond90.i, label %bb.k, label %bb.j
+  %i.ci = add nsw i32 %i.ch, %.16480.i            ; 3 uses
+  %1 = icmp uge i32 %.16480.i, %i.al
+  %.not71.i = icmp slt i32 %i.ci, %i.al
+  %or.cond72.not92.i = select i1 %1, i1 true, i1 %.not71.i
+  br i1 %or.cond72.not92.i, label %2, label %bb.k
 
-bb.k:                                             ; preds = %bb.j
-  store float %i.cf, ptr %i.t, align 4, !tbaa !11, !noalias !666
-  %i.cj = uitofp nneg i32 %.05581.i to float
+2:                                                ; preds = %bb.j
+  %indvars.iv.next87.i = add nsw i64 %indvars.iv86.i, -1 ; 2 uses
+  %3 = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv.next87.i
+  %4 = load i32, ptr %3, align 4, !tbaa !29, !noalias !666
+  %5 = add nsw i32 %4, %i.ci                      ; 3 uses
+  %6 = icmp uge i32 %i.ci, %i.al
+  %.not71.i.1 = icmp slt i32 %5, %i.al
+  %or.cond72.i.1 = select i1 %6, i1 true, i1 %.not71.i.1
+  br i1 %or.cond72.i.1, label %7, label %bb.k
+
+7:                                                ; preds = %2
+  %indvars.iv.next87.i.1 = add nsw i64 %indvars.iv86.i, -2 ; 2 uses
+  %8 = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv.next87.i.1
+  %9 = load i32, ptr %8, align 4, !tbaa !29, !noalias !666
+  %10 = add nsw i32 %9, %5                        ; 3 uses
+  %11 = icmp uge i32 %5, %i.al
+  %.not71.i.2 = icmp slt i32 %10, %i.al
+  %or.cond72.i.2 = select i1 %11, i1 true, i1 %.not71.i.2
+  br i1 %or.cond72.i.2, label %12, label %bb.k
+
+12:                                               ; preds = %7
+  %indvars.iv.next87.i.2 = add nsw i64 %indvars.iv86.i, -3 ; 3 uses
+  %13 = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv.next87.i.2
+  %14 = load i32, ptr %13, align 4, !tbaa !29, !noalias !666
+  %15 = add nsw i32 %14, %10                      ; 2 uses
+  %16 = icmp uge i32 %10, %i.al
+  %.not71.i.3 = icmp slt i32 %15, %i.al
+  %or.cond72.i.3 = select i1 %16, i1 true, i1 %.not71.i.3
+  br i1 %or.cond72.i.3, label %17, label %bb.k
+
+17:                                               ; preds = %12
+  %indvars.iv.next87.i.3 = add nsw i64 %indvars.iv86.i, -4
+  %.not90.i.3 = icmp eq i64 %indvars.iv.next87.i.2, 0
+  br i1 %.not90.i.3, label %.split.loop.exit93.i, label %bb.j
+
+bb.k:                                             ; preds = %12, %7, %2, %bb.j
+  %indvars.iv86.i.lcssa = phi i64 [ %indvars.iv86.i, %bb.j ], [ %indvars.iv.next87.i, %2 ], [ %indvars.iv.next87.i.1, %7 ], [ %indvars.iv.next87.i.2, %12 ]
+  %18 = trunc nuw nsw i64 %indvars.iv86.i.lcssa to i32
+  %i.cj = uitofp nneg i32 %18 to float
   %i.ck = fpext fast float %i.cj to double
   %i.cl = fmul reassoc nnan nsz arcp contract afn double %i.ck, f0x3FA0080402010080
   %i.cm = fadd reassoc nsz arcp contract afn double %i.cl, -1.000000e+01
-  %i.cn = fptrunc reassoc nsz arcp contract afn double %i.cm to float ; 2 uses
-  store float %i.cn, ptr %i.u, align 8, !tbaa !11, !noalias !666
+  %i.cn = fptrunc reassoc nsz arcp contract afn double %i.cm to float
+  br label %.split.loop.exit93.i
+
+.split.loop.exit93.i:                             ; preds = %17, %bb.k
+  %.2.i = phi float [ %i.cn, %bb.k ], [ -1.000000e+01, %17 ] ; 2 uses
+  store float %i.cf, ptr %i.t, align 4, !tbaa !11, !noalias !666
+  store float %.2.i, ptr %i.u, align 8, !tbaa !11, !noalias !666
   %.promoted = load i32, ptr %i.s, align 16, !tbaa !29, !noalias !666
   br label %bb.l
 
-bb.l:                                             ; preds = %bb.l, %bb.k
-  %..i19 = phi i32 [ %.promoted, %bb.k ], [ %..i.1, %bb.l ]
-  %.082.i = phi i64 [ 0, %bb.k ], [ %i.dr, %bb.l ] ; 4 uses
+bb.l:                                             ; preds = %bb.l, %.split.loop.exit93.i
+  %..i19 = phi i32 [ %.promoted, %.split.loop.exit93.i ], [ %..i.1, %bb.l ]
+  %.082.i = phi i64 [ 0, %.split.loop.exit93.i ], [ %i.dr, %bb.l ] ; 4 uses
   %i.co = uitofp nneg i64 %.082.i to double
   %i.cp = fmul reassoc nnan nsz arcp contract afn double %i.co, f0x3FA0080402010080
   %i.cq = fadd reassoc nnan nsz arcp contract afn double %i.cp, -1.000000e+01
@@ -1192,7 +1229,7 @@ bb.l:                                             ; preds = %bb.l, %bb.k
 compute_log_histogram_and_stats.exit:             ; preds = %bb.l
   store i32 %..i.1, ptr %i.s, align 16, !tbaa !29, !noalias !666
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #28, !noalias !666
-  %i.ds = fadd reassoc nsz arcp contract afn float %i.cf, %i.cn
+  %i.ds = fadd reassoc nsz arcp contract afn float %i.cf, %.2.i
   %i.dt = fmul reassoc nsz arcp contract afn float %i.ds, 5.000000e-01
   %i.du = getelementptr inbounds nuw i8, ptr %i.c, i64 2560
   store float %i.dt, ptr %i.du, align 64, !tbaa !669
