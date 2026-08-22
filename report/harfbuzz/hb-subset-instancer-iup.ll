@@ -205,7 +205,7 @@ _ZL9hb_memcpyPvPKvm.exit.i:                       ; preds = %bb.bu, %bb.bv
   %i.lu = zext i32 %i.lt to i64
   %i.lv = load ptr, ptr %i.en, align 8, !tbaa !30
   %i.lw = getelementptr inbounds nuw [12 x i8], ptr %i.lv, i64 %i.ll
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.lw, ptr nonnull readonly align 1 %i.fa, i64 range(i64 0, 51539607541) %i.lu, i1 false), !alias.scope !61
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.lw, ptr nonnull readonly align 4 %i.fa, i64 range(i64 0, 51539607541) %i.lu, i1 false), !alias.scope !61
   %i.lx = call fastcc noundef zeroext i1 @_ZL12rotate_arrayIiTnPN12hb_enable_ifIXsr3std21is_trivially_copyableIT_EE5valueEvE4typeELPv0EEbRK10hb_array_tIKS1_EiR11hb_vector_tIS1_Lb0EE(ptr nonnull readonly %i.fd, i32 %.sroa.speculated.i.i, i32 noundef %i.ky, ptr noundef nonnull align 8 dereferenceable(16) %i.eg)
   br i1 %i.lx, label %bb.bw, label %.critedge170.critedge.i
 
@@ -509,12 +509,12 @@ bb.cj:                                            ; preds = %_ZL9hb_memcpyPvPKvm
 
 _ZL9hb_memcpyPvPKvm.exit204.i:                    ; preds = %_ZL9hb_memcpyPvPKvm.exit204.i, %_ZN11hb_vector_tI15contour_point_tLb0EE12resize_dirtyEi.exit.i
   %.013940.i = phi i32 [ 0, %_ZN11hb_vector_tI15contour_point_tLb0EE12resize_dirtyEi.exit.i ], [ %i.pk, %_ZL9hb_memcpyPvPKvm.exit204.i ]
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.on, ptr nonnull readonly align 1 %i.fd, i64 range(i64 0, 51539607541) %i.pe, i1 false), !alias.scope !84
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.pf, ptr nonnull readonly align 1 %i.fd, i64 range(i64 0, 51539607541) %i.pe, i1 false), !alias.scope !88
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.on, ptr nonnull readonly align 4 %i.fd, i64 range(i64 0, 51539607541) %i.pe, i1 false), !alias.scope !84
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.pf, ptr nonnull readonly align 4 %i.fd, i64 range(i64 0, 51539607541) %i.pe, i1 false), !alias.scope !88
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.ov, ptr readonly align 1 %i.fg, i64 range(i64 0, 51539607541) %i.pe, i1 false), !alias.scope !92
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.pg, ptr readonly align 1 %i.fg, i64 range(i64 0, 51539607541) %i.pe, i1 false), !alias.scope !96
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.pd, ptr nonnull readonly align 1 %i.fa, i64 range(i64 0, 51539607541) %i.ph, i1 false), !alias.scope !100
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.pi, ptr nonnull readonly align 1 %i.fa, i64 range(i64 0, 51539607541) %i.ph, i1 false), !alias.scope !104
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.pd, ptr nonnull readonly align 4 %i.fa, i64 range(i64 0, 51539607541) %i.ph, i1 false), !alias.scope !100
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.pi, ptr nonnull readonly align 4 %i.fa, i64 range(i64 0, 51539607541) %i.ph, i1 false), !alias.scope !104
   %i.pk = add nuw nsw i32 %.013940.i, 1           ; 2 uses
   %exitcond68.not.i = icmp eq i32 %i.pk, %.sroa.speculated.i.i
   br i1 %exitcond68.not.i, label %bb.cj, label %_ZL9hb_memcpyPvPKvm.exit204.i, !llvm.loop !108

@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.a
   %i.an = load float, ptr %i.am, align 4
   %i.ao = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 16
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ap, ptr noundef nonnull align 8 dereferenceable(24) %i.ao, i64 24, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ap, ptr noundef nonnull align 16 dereferenceable(24) %i.ao, i64 24, i1 false)
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.ar = load <2 x i64>, ptr %i.g, align 8
   store <2 x i64> %i.ar, ptr %i.aq, align 8
@@ -608,7 +608,7 @@ define internal fastcc void @_ZN4core5slice4sort6shared9smallsort12sort8_stable1
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ct, ptr noundef nonnull align 8 dereferenceable(16) %i.cf, i64 16, i1 false)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2132)
   %i.cu = getelementptr inbounds nuw i8, ptr %1, i64 112
-  %.sroa.011.0.val.i = load i32, ptr %i.ax, align 4, !alias.scope !2132, !noundef !4 ; 2 uses
+  %.sroa.011.0.val.i = load i32, ptr %i.ax, align 8, !alias.scope !2132, !noundef !4 ; 2 uses
   %i.cv = getelementptr i8, ptr %2, i64 72
   %.sroa.011.0.val24.i = load i64, ptr %i.cv, align 8, !alias.scope !2132
   %.sroa.06.0.val.i = load i32, ptr %2, align 8, !alias.scope !2132, !noundef !4 ; 2 uses

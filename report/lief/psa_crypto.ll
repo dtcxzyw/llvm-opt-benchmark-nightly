@@ -204,7 +204,7 @@ bb.ba:                                            ; preds = %bb.az
   br i1 %i.fl, label %psa_mac_update.exit111.thread144.i.i, label %bb.bb
 
 bb.bb:                                            ; preds = %bb.ba
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.fk, ptr noundef nonnull readonly align 1 dereferenceable(1) %i.di, i64 range(i64 1, 0) %i.fh, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.fk, ptr noundef nonnull readonly align 8 dereferenceable(1) %i.di, i64 range(i64 1, 0) %i.fh, i1 false)
   %cond.i.i99.i.i = icmp eq i32 %i.fi, 1
   br i1 %cond.i.i99.i.i, label %psa_driver_wrapper_mac_update.exit.i107.i.i, label %psa_driver_wrapper_mac_update.exit.thread.i100.i.i
 
@@ -305,7 +305,7 @@ bb.bh:                                            ; preds = %bb.bg
   br i1 %i.ge, label %psa_mac_update.exit.thread61.i, label %bb.bi
 
 bb.bi:                                            ; preds = %bb.bh
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.gd, ptr noundef nonnull readonly align 1 dereferenceable(1) %i.di, i64 range(i64 1, 0) %i.fr, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.gd, ptr noundef nonnull readonly align 8 dereferenceable(1) %i.di, i64 range(i64 1, 0) %i.fr, i1 false)
   %cond.i.i54.i = icmp eq i32 %i.gb, 1
   br i1 %cond.i.i54.i, label %psa_driver_wrapper_mac_update.exit.i.i76, label %psa_driver_wrapper_mac_update.exit.thread.i.i72
 
@@ -708,7 +708,7 @@ bb.o:                                             ; preds = %bb.n
   br i1 %.not41.i, label %bb.p, label %.thread67.sink.split
 
 bb.p:                                             ; preds = %bb.o
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.s, ptr nonnull align 16 %i.b, i64 %i.ab, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.s, ptr nonnull align 16 %i.b, i64 %i.ab, i1 false)
   %i.ck = load i64, ptr %i.ac, align 8, !tbaa !103
   %i.cl = icmp ugt i64 %i.ck, 1
   br i1 %i.cl, label %.lr.ph90.i, label %psa_key_derivation_pbkdf2_generate_block.exit.thread75
@@ -1111,7 +1111,7 @@ bb.bl:                                            ; preds = %bb.bk
 
 bb.bm:                                            ; preds = %bb.bl
   %i.fc = getelementptr inbounds nuw i8, ptr %3, i64 1
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(32) %i.ey, ptr noundef nonnull readonly align 1 dereferenceable(32) %i.fc, i64 32, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.ey, ptr noundef nonnull readonly align 1 dereferenceable(32) %i.fc, i64 32, i1 false)
   br label %psa_key_derivation_check_input_type.exit.thread61
 
 bb.bn:                                            ; preds = %bb.bj
@@ -1514,7 +1514,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 16
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.z, i8 0, i64 12, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %i.z, i8 0, i64 12, i1 false)
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 26
   store i8 1, ptr %i.aa, align 2, !tbaa !151
   store i8 1, ptr %i.b, align 4, !tbaa !143
@@ -1917,7 +1917,7 @@ bb.m:                                             ; preds = %bb.k
   br i1 %.not.i.i, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.o, ptr readonly align 1 %3, i64 %4, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.o, ptr readonly align 1 %3, i64 %4, i1 false)
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %bb.m
@@ -1964,7 +1964,7 @@ psa_driver_wrapper_mac_compute.exit.i.i:          ; preds = %bb.r
   br label %psa_pbkdf2_hmac_set_password.exit.i
 
 bb.s:                                             ; preds = %bb.r
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %i.z, ptr noundef nonnull align 1 dereferenceable(16) %3, i64 16, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.z, ptr noundef nonnull align 1 dereferenceable(16) %3, i64 16, i1 false)
   store i64 16, ptr %i.aa, align 8, !tbaa !27
   br label %psa_pbkdf2_hmac_set_password.exit.i
 
