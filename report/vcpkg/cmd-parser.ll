@@ -204,7 +204,7 @@ _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12empla
 ._crit_edge.i.i.i219:                             ; preds = %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12emplace_backIJRA3_KcEEERS5_DpOT_.exit
   %i.u = getelementptr inbounds nuw i8, ptr %i.s, i64 16 ; 2 uses
   store ptr %i.u, ptr %i.s, align 8, !tbaa !9
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.u, ptr noundef nonnull align 1 dereferenceable(4) @.str.101, i64 3, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(3) %i.u, ptr noundef nonnull align 1 dereferenceable(4) @.str.101, i64 3, i1 false)
   %i.v = getelementptr inbounds nuw i8, ptr %i.s, i64 8
   store i64 3, ptr %i.v, align 8, !tbaa !13
   %i.w = getelementptr inbounds nuw i8, ptr %i.s, i64 19
@@ -411,7 +411,7 @@ _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12empla
 ._crit_edge.i.i.i252:                             ; preds = %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12emplace_backIJRA28_KcEEERS5_DpOT_.exit
   %i.by = getelementptr inbounds nuw i8, ptr %i.bw, i64 16 ; 2 uses
   store ptr %i.by, ptr %i.bw, align 8, !tbaa !9
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(11) %i.by, ptr noundef nonnull align 1 dereferenceable(12) @.str.106, i64 11, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(11) %i.by, ptr noundef nonnull align 1 dereferenceable(12) @.str.106, i64 11, i1 false)
   %i.bz = getelementptr inbounds nuw i8, ptr %i.bw, i64 8
   store i64 11, ptr %i.bz, align 8, !tbaa !13
   %i.ca = getelementptr inbounds nuw i8, ptr %i.bw, i64 27
@@ -437,7 +437,7 @@ _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12empla
 ._crit_edge.i.i.i258:                             ; preds = %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12emplace_backIJRA12_KcEEERS5_DpOT_.exit
   %i.ce = getelementptr inbounds nuw i8, ptr %i.cc, i64 16 ; 2 uses
   store ptr %i.ce, ptr %i.cc, align 8, !tbaa !9
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(11) %i.ce, ptr noundef nonnull align 1 dereferenceable(12) @.str.106, i64 11, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(11) %i.ce, ptr noundef nonnull align 1 dereferenceable(12) @.str.106, i64 11, i1 false)
   %i.cf = getelementptr inbounds nuw i8, ptr %i.cc, i64 8
   store i64 11, ptr %i.cf, align 8, !tbaa !13
   %i.cg = getelementptr inbounds nuw i8, ptr %i.cc, i64 27
@@ -463,7 +463,7 @@ _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12empla
 ._crit_edge.i.i.i266:                             ; preds = %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12emplace_backIJRA12_KcEEERS5_DpOT_.exit264
   %i.ck = getelementptr inbounds nuw i8, ptr %i.ci, i64 16 ; 2 uses
   store ptr %i.ck, ptr %i.ci, align 8, !tbaa !9
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(11) %i.ck, ptr noundef nonnull align 1 dereferenceable(12) @.str.106, i64 11, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(11) %i.ck, ptr noundef nonnull align 1 dereferenceable(12) @.str.106, i64 11, i1 false)
   %i.cl = getelementptr inbounds nuw i8, ptr %i.ci, i64 8
   store i64 11, ptr %i.cl, align 8, !tbaa !13
   %i.cm = getelementptr inbounds nuw i8, ptr %i.ci, i64 27
@@ -489,7 +489,7 @@ _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12empla
 ._crit_edge.i.i.i274:                             ; preds = %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12emplace_backIJRA12_KcEEERS5_DpOT_.exit272
   %i.cq = getelementptr inbounds nuw i8, ptr %i.co, i64 16 ; 2 uses
   store ptr %i.cq, ptr %i.co, align 8, !tbaa !9
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(11) %i.cq, ptr noundef nonnull align 1 dereferenceable(12) @.str.106, i64 11, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(11) %i.cq, ptr noundef nonnull align 1 dereferenceable(12) @.str.106, i64 11, i1 false)
   %i.cr = getelementptr inbounds nuw i8, ptr %i.co, i64 8
   store i64 11, ptr %i.cr, align 8, !tbaa !13
   %i.cs = getelementptr inbounds nuw i8, ptr %i.co, i64 27
@@ -591,7 +591,7 @@ _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12empla
 ._crit_edge.i.i.i294:                             ; preds = %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12emplace_backIJRA25_KcEEERS5_DpOT_.exit
   %i.dq = getelementptr inbounds nuw i8, ptr %i.do, i64 16 ; 2 uses
   store ptr %i.dq, ptr %i.do, align 8, !tbaa !9
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(13) %i.dq, ptr noundef nonnull align 1 dereferenceable(14) @.str.109, i64 13, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(13) %i.dq, ptr noundef nonnull align 1 dereferenceable(14) @.str.109, i64 13, i1 false)
   %i.dr = getelementptr inbounds nuw i8, ptr %i.do, i64 8
   store i64 13, ptr %i.dr, align 8, !tbaa !13
   %i.ds = getelementptr inbounds nuw i8, ptr %i.do, i64 29
@@ -994,7 +994,7 @@ bb.a:
 ._crit_edge.i.i.i62:                              ; preds = %.noexc60
   %i.f = getelementptr inbounds nuw i8, ptr %i.d, i64 16 ; 2 uses
   store ptr %i.f, ptr %i.d, align 8, !tbaa !9
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(5) %i.f, ptr noundef nonnull align 1 dereferenceable(6) @.str.151, i64 5, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(5) %i.f, ptr noundef nonnull align 1 dereferenceable(6) @.str.151, i64 5, i1 false)
   %i.g = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   store i64 5, ptr %i.g, align 8, !tbaa !13
   %i.h = getelementptr inbounds nuw i8, ptr %i.d, i64 21
@@ -1020,7 +1020,7 @@ _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12empla
 ._crit_edge.i.i.i68:                              ; preds = %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12emplace_backIJRA6_KcEEERS5_DpOT_.exit
   %i.l = getelementptr inbounds nuw i8, ptr %i.j, i64 16 ; 2 uses
   store ptr %i.l, ptr %i.j, align 8, !tbaa !9
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(5) %i.l, ptr noundef nonnull align 1 dereferenceable(6) @.str.152, i64 5, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(5) %i.l, ptr noundef nonnull align 1 dereferenceable(6) @.str.152, i64 5, i1 false)
   %i.m = getelementptr inbounds nuw i8, ptr %i.j, i64 8
   store i64 5, ptr %i.m, align 8, !tbaa !13
   %i.n = getelementptr inbounds nuw i8, ptr %i.j, i64 21
@@ -1046,7 +1046,7 @@ _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12empla
 ._crit_edge.i.i.i76:                              ; preds = %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12emplace_backIJRA6_KcEEERS5_DpOT_.exit74
   %i.r = getelementptr inbounds nuw i8, ptr %i.p, i64 16 ; 2 uses
   store ptr %i.r, ptr %i.p, align 8, !tbaa !9
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.r, ptr noundef nonnull align 1 dereferenceable(4) @.str.153, i64 3, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(3) %i.r, ptr noundef nonnull align 1 dereferenceable(4) @.str.153, i64 3, i1 false)
   %i.s = getelementptr inbounds nuw i8, ptr %i.p, i64 8
   store i64 3, ptr %i.s, align 8, !tbaa !13
   %i.t = getelementptr inbounds nuw i8, ptr %i.p, i64 19
@@ -1072,7 +1072,7 @@ _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12empla
 ._crit_edge.i.i.i84:                              ; preds = %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12emplace_backIJRA4_KcEEERS5_DpOT_.exit82
   %i.x = getelementptr inbounds nuw i8, ptr %i.v, i64 16 ; 2 uses
   store ptr %i.x, ptr %i.v, align 8, !tbaa !9
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(5) %i.x, ptr noundef nonnull align 1 dereferenceable(6) @.str.154, i64 5, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(5) %i.x, ptr noundef nonnull align 1 dereferenceable(6) @.str.154, i64 5, i1 false)
   %i.y = getelementptr inbounds nuw i8, ptr %i.v, i64 8
   store i64 5, ptr %i.y, align 8, !tbaa !13
   %i.z = getelementptr inbounds nuw i8, ptr %i.v, i64 21
@@ -1098,7 +1098,7 @@ _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12empla
 ._crit_edge.i.i.i92:                              ; preds = %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12emplace_backIJRA6_KcEEERS5_DpOT_.exit90
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ab, i64 16 ; 2 uses
   store ptr %i.ad, ptr %i.ab, align 8, !tbaa !9
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(5) %i.ad, ptr noundef nonnull align 1 dereferenceable(6) @.str.155, i64 5, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(5) %i.ad, ptr noundef nonnull align 1 dereferenceable(6) @.str.155, i64 5, i1 false)
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ab, i64 8
   store i64 5, ptr %i.ae, align 8, !tbaa !13
   %i.af = getelementptr inbounds nuw i8, ptr %i.ab, i64 21
@@ -1124,7 +1124,7 @@ _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12empla
 ._crit_edge.i.i.i100:                             ; preds = %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12emplace_backIJRA6_KcEEERS5_DpOT_.exit98
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ah, i64 16 ; 2 uses
   store ptr %i.aj, ptr %i.ah, align 8, !tbaa !9
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.aj, ptr noundef nonnull align 1 dereferenceable(4) @.str.156, i64 3, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(3) %i.aj, ptr noundef nonnull align 1 dereferenceable(4) @.str.156, i64 3, i1 false)
   %i.ak = getelementptr inbounds nuw i8, ptr %i.ah, i64 8
   store i64 3, ptr %i.ak, align 8, !tbaa !13
   %i.al = getelementptr inbounds nuw i8, ptr %i.ah, i64 19
@@ -1150,7 +1150,7 @@ _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12empla
 ._crit_edge.i.i.i108:                             ; preds = %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12emplace_backIJRA4_KcEEERS5_DpOT_.exit106
   %i.ap = getelementptr inbounds nuw i8, ptr %i.an, i64 16 ; 2 uses
   store ptr %i.ap, ptr %i.an, align 8, !tbaa !9
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(5) %i.ap, ptr noundef nonnull align 1 dereferenceable(6) @.str.157, i64 5, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(5) %i.ap, ptr noundef nonnull align 1 dereferenceable(6) @.str.157, i64 5, i1 false)
   %i.aq = getelementptr inbounds nuw i8, ptr %i.an, i64 8
   store i64 5, ptr %i.aq, align 8, !tbaa !13
   %i.ar = getelementptr inbounds nuw i8, ptr %i.an, i64 21
@@ -1176,7 +1176,7 @@ _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12empla
 ._crit_edge.i.i.i116:                             ; preds = %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12emplace_backIJRA6_KcEEERS5_DpOT_.exit114
   %i.av = getelementptr inbounds nuw i8, ptr %i.at, i64 16 ; 2 uses
   store ptr %i.av, ptr %i.at, align 8, !tbaa !9
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(5) %i.av, ptr noundef nonnull align 1 dereferenceable(6) @.str.158, i64 5, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(5) %i.av, ptr noundef nonnull align 1 dereferenceable(6) @.str.158, i64 5, i1 false)
   %i.aw = getelementptr inbounds nuw i8, ptr %i.at, i64 8
   store i64 5, ptr %i.aw, align 8, !tbaa !13
   %i.ax = getelementptr inbounds nuw i8, ptr %i.at, i64 21
@@ -1579,7 +1579,7 @@ _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12empla
 ._crit_edge.i.i.i232:                             ; preds = %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12emplace_backIJRA18_KcEEERS5_DpOT_.exit230
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ac, i64 16 ; 2 uses
   store ptr %i.ae, ptr %i.ac, align 8, !tbaa !9
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(15) %i.ae, ptr noundef nonnull align 1 dereferenceable(16) @.str.177, i64 15, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(15) %i.ae, ptr noundef nonnull align 1 dereferenceable(16) @.str.177, i64 15, i1 false)
   %i.af = getelementptr inbounds nuw i8, ptr %i.ac, i64 8
   store i64 15, ptr %i.af, align 8, !tbaa !13
   %i.ag = getelementptr inbounds nuw i8, ptr %i.ac, i64 31
@@ -1605,7 +1605,7 @@ _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12empla
 ._crit_edge.i.i.i238:                             ; preds = %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12emplace_backIJRA16_KcEEERS5_DpOT_.exit
   %i.ak = getelementptr inbounds nuw i8, ptr %i.ai, i64 16 ; 2 uses
   store ptr %i.ak, ptr %i.ai, align 8, !tbaa !9
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(12) %i.ak, ptr noundef nonnull align 1 dereferenceable(13) @.str.178, i64 12, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %i.ak, ptr noundef nonnull align 1 dereferenceable(13) @.str.178, i64 12, i1 false)
   %i.al = getelementptr inbounds nuw i8, ptr %i.ai, i64 8
   store i64 12, ptr %i.al, align 8, !tbaa !13
   %i.am = getelementptr inbounds nuw i8, ptr %i.ai, i64 28
@@ -1707,7 +1707,7 @@ _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12empla
 ._crit_edge.i.i.i258:                             ; preds = %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12emplace_backIJRA31_KcEEERS5_DpOT_.exit256
   %i.bk = getelementptr inbounds nuw i8, ptr %i.bi, i64 16 ; 2 uses
   store ptr %i.bk, ptr %i.bi, align 8, !tbaa !9
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(13) %i.bk, ptr noundef nonnull align 1 dereferenceable(14) @.str.181, i64 13, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(13) %i.bk, ptr noundef nonnull align 1 dereferenceable(14) @.str.181, i64 13, i1 false)
   %i.bl = getelementptr inbounds nuw i8, ptr %i.bi, i64 8
   store i64 13, ptr %i.bl, align 8, !tbaa !13
   %i.bm = getelementptr inbounds nuw i8, ptr %i.bi, i64 29
@@ -1733,7 +1733,7 @@ _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12empla
 ._crit_edge.i.i.i264:                             ; preds = %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12emplace_backIJRA14_KcEEERS5_DpOT_.exit
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bo, i64 16 ; 2 uses
   store ptr %i.bq, ptr %i.bo, align 8, !tbaa !9
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(11) %i.bq, ptr noundef nonnull align 1 dereferenceable(12) @.str.106, i64 11, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(11) %i.bq, ptr noundef nonnull align 1 dereferenceable(12) @.str.106, i64 11, i1 false)
   %i.br = getelementptr inbounds nuw i8, ptr %i.bo, i64 8
   store i64 11, ptr %i.br, align 8, !tbaa !13
   %i.bs = getelementptr inbounds nuw i8, ptr %i.bo, i64 27
@@ -2136,7 +2136,7 @@ bb.a:
 ._crit_edge.i.i.i133:                             ; preds = %.noexc131
   %i.e = getelementptr inbounds nuw i8, ptr %i.c, i64 16 ; 2 uses
   store ptr %i.e, ptr %i.c, align 8, !tbaa !9
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %i.e, ptr noundef nonnull align 1 dereferenceable(8) @.str.222, i64 7, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(7) %i.e, ptr noundef nonnull align 1 dereferenceable(8) @.str.222, i64 7, i1 false)
   %i.f = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   store i64 7, ptr %i.f, align 8, !tbaa !13
   %i.g = getelementptr inbounds nuw i8, ptr %i.c, i64 23
@@ -2162,7 +2162,7 @@ _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12empla
 ._crit_edge.i.i.i139:                             ; preds = %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12emplace_backIJRA8_KcEEERS5_DpOT_.exit
   %i.k = getelementptr inbounds nuw i8, ptr %i.i, i64 16 ; 2 uses
   store ptr %i.k, ptr %i.i, align 8, !tbaa !9
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %i.k, ptr noundef nonnull align 1 dereferenceable(8) @.str.223, i64 7, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(7) %i.k, ptr noundef nonnull align 1 dereferenceable(8) @.str.223, i64 7, i1 false)
   %i.l = getelementptr inbounds nuw i8, ptr %i.i, i64 8
   store i64 7, ptr %i.l, align 8, !tbaa !13
   %i.m = getelementptr inbounds nuw i8, ptr %i.i, i64 23
@@ -2188,7 +2188,7 @@ _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12empla
 ._crit_edge.i.i.i147:                             ; preds = %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12emplace_backIJRA8_KcEEERS5_DpOT_.exit145
   %i.q = getelementptr inbounds nuw i8, ptr %i.o, i64 16 ; 2 uses
   store ptr %i.q, ptr %i.o, align 8, !tbaa !9
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(5) %i.q, ptr noundef nonnull align 1 dereferenceable(6) @.str.224, i64 5, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(5) %i.q, ptr noundef nonnull align 1 dereferenceable(6) @.str.224, i64 5, i1 false)
   %i.r = getelementptr inbounds nuw i8, ptr %i.o, i64 8
   store i64 5, ptr %i.r, align 8, !tbaa !13
   %i.s = getelementptr inbounds nuw i8, ptr %i.o, i64 21
@@ -2214,7 +2214,7 @@ _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12empla
 ._crit_edge.i.i.i155:                             ; preds = %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12emplace_backIJRA6_KcEEERS5_DpOT_.exit153
   %i.w = getelementptr inbounds nuw i8, ptr %i.u, i64 16 ; 2 uses
   store ptr %i.w, ptr %i.u, align 8, !tbaa !9
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %i.w, ptr noundef nonnull align 1 dereferenceable(8) @.str.225, i64 7, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(7) %i.w, ptr noundef nonnull align 1 dereferenceable(8) @.str.225, i64 7, i1 false)
   %i.x = getelementptr inbounds nuw i8, ptr %i.u, i64 8
   store i64 7, ptr %i.x, align 8, !tbaa !13
   %i.y = getelementptr inbounds nuw i8, ptr %i.u, i64 23
@@ -2240,7 +2240,7 @@ _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12empla
 ._crit_edge.i.i.i163:                             ; preds = %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12emplace_backIJRA8_KcEEERS5_DpOT_.exit161
   %i.ac = getelementptr inbounds nuw i8, ptr %i.aa, i64 16 ; 2 uses
   store ptr %i.ac, ptr %i.aa, align 8, !tbaa !9
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %i.ac, ptr noundef nonnull align 1 dereferenceable(8) @.str.226, i64 7, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(7) %i.ac, ptr noundef nonnull align 1 dereferenceable(8) @.str.226, i64 7, i1 false)
   %i.ad = getelementptr inbounds nuw i8, ptr %i.aa, i64 8
   store i64 7, ptr %i.ad, align 8, !tbaa !13
   %i.ae = getelementptr inbounds nuw i8, ptr %i.aa, i64 23
@@ -2266,7 +2266,7 @@ _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12empla
 ._crit_edge.i.i.i171:                             ; preds = %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12emplace_backIJRA8_KcEEERS5_DpOT_.exit169
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ag, i64 16 ; 2 uses
   store ptr %i.ai, ptr %i.ag, align 8, !tbaa !9
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(5) %i.ai, ptr noundef nonnull align 1 dereferenceable(6) @.str.227, i64 5, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(5) %i.ai, ptr noundef nonnull align 1 dereferenceable(6) @.str.227, i64 5, i1 false)
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ag, i64 8
   store i64 5, ptr %i.aj, align 8, !tbaa !13
   %i.ak = getelementptr inbounds nuw i8, ptr %i.ag, i64 21
@@ -2292,7 +2292,7 @@ _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12empla
 ._crit_edge.i.i.i179:                             ; preds = %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12emplace_backIJRA6_KcEEERS5_DpOT_.exit177
   %i.ao = getelementptr inbounds nuw i8, ptr %i.am, i64 16 ; 2 uses
   store ptr %i.ao, ptr %i.am, align 8, !tbaa !9
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %i.ao, ptr noundef nonnull align 1 dereferenceable(8) @.str.228, i64 7, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(7) %i.ao, ptr noundef nonnull align 1 dereferenceable(8) @.str.228, i64 7, i1 false)
   %i.ap = getelementptr inbounds nuw i8, ptr %i.am, i64 8
   store i64 7, ptr %i.ap, align 8, !tbaa !13
   %i.aq = getelementptr inbounds nuw i8, ptr %i.am, i64 23
@@ -2318,7 +2318,7 @@ _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12empla
 ._crit_edge.i.i.i187:                             ; preds = %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12emplace_backIJRA8_KcEEERS5_DpOT_.exit185
   %i.au = getelementptr inbounds nuw i8, ptr %i.as, i64 16 ; 2 uses
   store ptr %i.au, ptr %i.as, align 8, !tbaa !9
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %i.au, ptr noundef nonnull align 1 dereferenceable(8) @.str.229, i64 7, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(7) %i.au, ptr noundef nonnull align 1 dereferenceable(8) @.str.229, i64 7, i1 false)
   %i.av = getelementptr inbounds nuw i8, ptr %i.as, i64 8
   store i64 7, ptr %i.av, align 8, !tbaa !13
   %i.aw = getelementptr inbounds nuw i8, ptr %i.as, i64 23
@@ -2721,7 +2721,7 @@ _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12empla
 ._crit_edge.i.i.i283:                             ; preds = %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12emplace_backIJRA18_KcEEERS5_DpOT_.exit281
   %i.ag = getelementptr inbounds nuw i8, ptr %i.ae, i64 16 ; 2 uses
   store ptr %i.ag, ptr %i.ae, align 8, !tbaa !9
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(15) %i.ag, ptr noundef nonnull align 1 dereferenceable(16) @.str.177, i64 15, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(15) %i.ag, ptr noundef nonnull align 1 dereferenceable(16) @.str.177, i64 15, i1 false)
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ae, i64 8
   store i64 15, ptr %i.ah, align 8, !tbaa !13
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ae, i64 31
@@ -2747,7 +2747,7 @@ _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12empla
 ._crit_edge.i.i.i289:                             ; preds = %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12emplace_backIJRA16_KcEEERS5_DpOT_.exit
   %i.am = getelementptr inbounds nuw i8, ptr %i.ak, i64 16 ; 2 uses
   store ptr %i.am, ptr %i.ak, align 8, !tbaa !9
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(12) %i.am, ptr noundef nonnull align 1 dereferenceable(13) @.str.178, i64 12, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %i.am, ptr noundef nonnull align 1 dereferenceable(13) @.str.178, i64 12, i1 false)
   %i.an = getelementptr inbounds nuw i8, ptr %i.ak, i64 8
   store i64 12, ptr %i.an, align 8, !tbaa !13
   %i.ao = getelementptr inbounds nuw i8, ptr %i.ak, i64 28
@@ -2887,7 +2887,7 @@ _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12empla
 ._crit_edge.i.i.i315:                             ; preds = %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12emplace_backIJRA31_KcEEERS5_DpOT_.exit313
   %i.bw = getelementptr inbounds nuw i8, ptr %i.bu, i64 16 ; 2 uses
   store ptr %i.bw, ptr %i.bu, align 8, !tbaa !9
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(13) %i.bw, ptr noundef nonnull align 1 dereferenceable(14) @.str.181, i64 13, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(13) %i.bw, ptr noundef nonnull align 1 dereferenceable(14) @.str.181, i64 13, i1 false)
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
   store i64 13, ptr %i.bx, align 8, !tbaa !13
   %i.by = getelementptr inbounds nuw i8, ptr %i.bu, i64 29
@@ -2913,7 +2913,7 @@ _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12empla
 ._crit_edge.i.i.i321:                             ; preds = %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12emplace_backIJRA14_KcEEERS5_DpOT_.exit
   %i.cc = getelementptr inbounds nuw i8, ptr %i.ca, i64 16 ; 2 uses
   store ptr %i.cc, ptr %i.ca, align 8, !tbaa !9
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(11) %i.cc, ptr noundef nonnull align 1 dereferenceable(12) @.str.106, i64 11, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(11) %i.cc, ptr noundef nonnull align 1 dereferenceable(12) @.str.106, i64 11, i1 false)
   %i.cd = getelementptr inbounds nuw i8, ptr %i.ca, i64 8
   store i64 11, ptr %i.cd, align 8, !tbaa !13
   %i.ce = getelementptr inbounds nuw i8, ptr %i.ca, i64 27
@@ -3316,7 +3316,7 @@ bb.a:
 ._crit_edge.i.i.i176:                             ; preds = %.noexc174
   %i.e = getelementptr inbounds nuw i8, ptr %i.c, i64 16 ; 2 uses
   store ptr %i.e, ptr %i.c, align 8, !tbaa !9
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %i.e, ptr noundef nonnull align 1 dereferenceable(8) @.str.222, i64 7, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(7) %i.e, ptr noundef nonnull align 1 dereferenceable(8) @.str.222, i64 7, i1 false)
   %i.f = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   store i64 7, ptr %i.f, align 8, !tbaa !13
   %i.g = getelementptr inbounds nuw i8, ptr %i.c, i64 23
@@ -3342,7 +3342,7 @@ _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12empla
 ._crit_edge.i.i.i182:                             ; preds = %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12emplace_backIJRA8_KcEEERS5_DpOT_.exit
   %i.k = getelementptr inbounds nuw i8, ptr %i.i, i64 16 ; 2 uses
   store ptr %i.k, ptr %i.i, align 8, !tbaa !9
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %i.k, ptr noundef nonnull align 1 dereferenceable(8) @.str.223, i64 7, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(7) %i.k, ptr noundef nonnull align 1 dereferenceable(8) @.str.223, i64 7, i1 false)
   %i.l = getelementptr inbounds nuw i8, ptr %i.i, i64 8
   store i64 7, ptr %i.l, align 8, !tbaa !13
   %i.m = getelementptr inbounds nuw i8, ptr %i.i, i64 23
@@ -3368,7 +3368,7 @@ _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12empla
 ._crit_edge.i.i.i190:                             ; preds = %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12emplace_backIJRA8_KcEEERS5_DpOT_.exit188
   %i.q = getelementptr inbounds nuw i8, ptr %i.o, i64 16 ; 2 uses
   store ptr %i.q, ptr %i.o, align 8, !tbaa !9
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(5) %i.q, ptr noundef nonnull align 1 dereferenceable(6) @.str.224, i64 5, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(5) %i.q, ptr noundef nonnull align 1 dereferenceable(6) @.str.224, i64 5, i1 false)
   %i.r = getelementptr inbounds nuw i8, ptr %i.o, i64 8
   store i64 5, ptr %i.r, align 8, !tbaa !13
   %i.s = getelementptr inbounds nuw i8, ptr %i.o, i64 21
@@ -3394,7 +3394,7 @@ _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12empla
 ._crit_edge.i.i.i198:                             ; preds = %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12emplace_backIJRA6_KcEEERS5_DpOT_.exit196
   %i.w = getelementptr inbounds nuw i8, ptr %i.u, i64 16 ; 2 uses
   store ptr %i.w, ptr %i.u, align 8, !tbaa !9
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %i.w, ptr noundef nonnull align 1 dereferenceable(8) @.str.225, i64 7, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(7) %i.w, ptr noundef nonnull align 1 dereferenceable(8) @.str.225, i64 7, i1 false)
   %i.x = getelementptr inbounds nuw i8, ptr %i.u, i64 8
   store i64 7, ptr %i.x, align 8, !tbaa !13
   %i.y = getelementptr inbounds nuw i8, ptr %i.u, i64 23
@@ -3420,7 +3420,7 @@ _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12empla
 ._crit_edge.i.i.i206:                             ; preds = %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12emplace_backIJRA8_KcEEERS5_DpOT_.exit204
   %i.ac = getelementptr inbounds nuw i8, ptr %i.aa, i64 16 ; 2 uses
   store ptr %i.ac, ptr %i.aa, align 8, !tbaa !9
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %i.ac, ptr noundef nonnull align 1 dereferenceable(8) @.str.226, i64 7, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(7) %i.ac, ptr noundef nonnull align 1 dereferenceable(8) @.str.226, i64 7, i1 false)
   %i.ad = getelementptr inbounds nuw i8, ptr %i.aa, i64 8
   store i64 7, ptr %i.ad, align 8, !tbaa !13
   %i.ae = getelementptr inbounds nuw i8, ptr %i.aa, i64 23
@@ -3446,7 +3446,7 @@ _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12empla
 ._crit_edge.i.i.i214:                             ; preds = %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12emplace_backIJRA8_KcEEERS5_DpOT_.exit212
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ag, i64 16 ; 2 uses
   store ptr %i.ai, ptr %i.ag, align 8, !tbaa !9
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(5) %i.ai, ptr noundef nonnull align 1 dereferenceable(6) @.str.227, i64 5, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(5) %i.ai, ptr noundef nonnull align 1 dereferenceable(6) @.str.227, i64 5, i1 false)
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ag, i64 8
   store i64 5, ptr %i.aj, align 8, !tbaa !13
   %i.ak = getelementptr inbounds nuw i8, ptr %i.ag, i64 21
@@ -3472,7 +3472,7 @@ _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12empla
 ._crit_edge.i.i.i222:                             ; preds = %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12emplace_backIJRA6_KcEEERS5_DpOT_.exit220
   %i.ao = getelementptr inbounds nuw i8, ptr %i.am, i64 16 ; 2 uses
   store ptr %i.ao, ptr %i.am, align 8, !tbaa !9
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %i.ao, ptr noundef nonnull align 1 dereferenceable(8) @.str.228, i64 7, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(7) %i.ao, ptr noundef nonnull align 1 dereferenceable(8) @.str.228, i64 7, i1 false)
   %i.ap = getelementptr inbounds nuw i8, ptr %i.am, i64 8
   store i64 7, ptr %i.ap, align 8, !tbaa !13
   %i.aq = getelementptr inbounds nuw i8, ptr %i.am, i64 23
@@ -3498,7 +3498,7 @@ _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12empla
 ._crit_edge.i.i.i230:                             ; preds = %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12emplace_backIJRA8_KcEEERS5_DpOT_.exit228
   %i.au = getelementptr inbounds nuw i8, ptr %i.as, i64 16 ; 2 uses
   store ptr %i.au, ptr %i.as, align 8, !tbaa !9
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %i.au, ptr noundef nonnull align 1 dereferenceable(8) @.str.229, i64 7, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(7) %i.au, ptr noundef nonnull align 1 dereferenceable(8) @.str.229, i64 7, i1 false)
   %i.av = getelementptr inbounds nuw i8, ptr %i.as, i64 8
   store i64 7, ptr %i.av, align 8, !tbaa !13
   %i.aw = getelementptr inbounds nuw i8, ptr %i.as, i64 23

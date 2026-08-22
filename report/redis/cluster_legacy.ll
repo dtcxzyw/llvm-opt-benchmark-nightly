@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.e, %bb.f
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.ao = call fastcc ptr @createClusterMsgSendBlock(i32 noundef 3, i32 noundef 2296) ; 5 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ao, i64 2272
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.ap, ptr noundef nonnull readonly align 1 dereferenceable(40) %i.an, i64 40, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.ap, ptr noundef nonnull readonly align 8 dereferenceable(40) %i.an, i64 40, i1 false)
   call void @clusterBroadcastMessage(ptr noundef %i.ao)
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ao, i64 8 ; 2 uses
   %i.ar = load i32, ptr %i.aq, align 8, !tbaa !9  ; 2 uses
@@ -608,7 +608,7 @@ bb.aq:                                            ; preds = %bb.ap
 bb.ar:                                            ; preds = %bb.aq
   %i.fd = call noalias dereferenceable_or_null(2368) ptr @zmalloc(i64 noundef 2368) #35 ; 18 uses
   %i.fe = getelementptr inbounds nuw i8, ptr %i.fd, i64 8 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.fe, ptr noundef nonnull readonly align 1 dereferenceable(40) %.094157, i64 40, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.fe, ptr noundef nonnull readonly align 2 dereferenceable(40) %.094157, i64 40, i1 false)
   %i.ff = getelementptr inbounds nuw i8, ptr %i.fd, i64 48 ; 2 uses
   call void @getRandomHexChars(ptr noundef nonnull %i.ff, i64 noundef 40) #30
   %i.fg = call i64 @mstime() #30
@@ -949,7 +949,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not.i30, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(46) %i.a, ptr noundef nonnull readonly align 1 dereferenceable(46) %i.m, i64 45, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(46) %i.a, ptr noundef nonnull readonly align 8 dereferenceable(46) %i.m, i64 45, i1 false)
   %i.o = getelementptr inbounds nuw i8, ptr %i.a, i64 45
   store i8 0, ptr %i.o, align 1, !tbaa !58
   br label %nodeIp2String.exit
@@ -1352,7 +1352,7 @@ bb.x:                                             ; preds = %getHostnamePingExtS
 
 sdslen.exit68:                                    ; preds = %getHostnamePingExtSize.exit, %bb.t, %bb.u, %bb.v, %bb.w, %bb.x
   %.0.i67 = phi i64 [ %i.bp, %bb.x ], [ %i.be, %bb.t ], [ %i.bh, %bb.u ], [ %i.bk, %bb.v ], [ %i.bn, %bb.w ], [ 0, %getHostnamePingExtSize.exit ]
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.bb, ptr nonnull align 1 %i.f, i64 %.0.i67, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.bb, ptr nonnull align 1 %i.f, i64 %.0.i67, i1 false)
   %i.bq = zext i32 %.0.i65 to i64
   %i.br = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.bq
   %.pre = load ptr, ptr %i.e, align 8, !tbaa !82  ; 2 uses
@@ -1646,7 +1646,7 @@ bb.bg:                                            ; preds = %getHumanNodenamePin
 
 sdslen.exit89:                                    ; preds = %getHumanNodenamePingExtSize.exit, %bb.bc, %bb.bd, %bb.be, %bb.bf, %bb.bg
   %.0.i88 = phi i64 [ %i.fj, %bb.bg ], [ %i.ey, %bb.bc ], [ %i.fb, %bb.bd ], [ %i.fe, %bb.be ], [ %i.fh, %bb.bf ], [ 0, %getHumanNodenamePingExtSize.exit ]
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.ev, ptr nonnull align 1 %i.cz, i64 %.0.i88, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ev, ptr nonnull align 1 %i.cz, i64 %.0.i88, i1 false)
   %i.fk = zext i32 %.0.i85 to i64
   %i.fl = getelementptr inbounds nuw i8, ptr %.249, i64 %i.fk
   %.pre123 = load ptr, ptr %i.cy, align 8, !tbaa !57 ; 2 uses
@@ -1840,7 +1840,7 @@ bb.bw:                                            ; preds = %bb.bv
   %i.hv = getelementptr inbounds nuw i8, ptr %.8, i64 8
   %i.hw = load ptr, ptr @myself, align 8, !tbaa !54
   %i.hx = getelementptr inbounds nuw i8, ptr %i.hw, i64 48
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(40) %i.hv, ptr noundef nonnull align 8 dereferenceable(40) %i.hx, i64 40, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.hv, ptr noundef nonnull align 8 dereferenceable(40) %i.hx, i64 40, i1 false)
   %i.hy = getelementptr inbounds nuw i8, ptr %.8, i64 48
   %i.hz = getelementptr inbounds nuw i8, ptr %.8, i64 52
   store i16 1024, ptr %i.hz, align 4, !tbaa !59
@@ -1848,7 +1848,7 @@ bb.bw:                                            ; preds = %bb.bv
   %i.ia = getelementptr inbounds nuw i8, ptr %.8, i64 56
   %i.ib = load ptr, ptr getelementptr inbounds nuw (i8, ptr @server, i64 8224), align 8, !tbaa !66
   %i.ic = getelementptr inbounds nuw i8, ptr %i.ib, i64 393264
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(40) %i.ia, ptr noundef nonnull align 8 dereferenceable(40) %i.ic, i64 40, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.ia, ptr noundef nonnull align 8 dereferenceable(40) %i.ic, i64 40, i1 false)
   br label %.thread104
 
 .thread104:                                       ; preds = %bb.bv, %bb.bw
@@ -2024,7 +2024,7 @@ bb.p:                                             ; preds = %.lr.ph
   br i1 %i.bj, label %bb.q, label %clusterLookupNode.exit65.thread
 
 bb.q:                                             ; preds = %bb.p
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.bh, ptr noundef nonnull align 1 dereferenceable(40) %i.bf, i64 40, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.bh, ptr noundef nonnull align 4 dereferenceable(40) %i.bf, i64 40, i1 false)
   br label %clusterLookupNode.exit65.thread
 
 bb.r:                                             ; preds = %.lr.ph
@@ -2427,7 +2427,7 @@ bb.bb:                                            ; preds = %bb.ax
   %.sink.i = zext i16 %rev.i9.i to i32
   store i32 %.sink.i, ptr %i.fq, align 4, !tbaa !9
   %storemerge.i = zext i16 %rev.i10.i to i32
-  store i32 %storemerge.i, ptr %i.fr, align 4, !tbaa !9
+  store i32 %storemerge.i, ptr %i.fr, align 8, !tbaa !9
   %i.fx = getelementptr inbounds nuw i8, ptr %i.d, i64 2248
   %i.fy = load i16, ptr %i.fx, align 8, !tbaa !215
   %rev.i500 = call noundef i16 @llvm.bswap.i16(i16 %i.fy)

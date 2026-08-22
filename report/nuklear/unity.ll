@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   %scevgep.i.i.i = getelementptr i8, ptr %0, i64 %i.c ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(116) %scevgep.i.i.i, i8 0, i64 116, i1 false), !tbaa !10
   %scevgep53.i.i.i = getelementptr i8, ptr %scevgep.i.i.i, i64 116
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep53.i.i.i, i8 0, i64 %i.b, i1 false), !tbaa !11
+  tail call void @llvm.memset.p0.i64(ptr align 4 %scevgep53.i.i.i, i8 0, i64 %i.b, i1 false), !tbaa !11
   br label %nk_zero.exit.i
 
 nk_zero.exit.i:                                   ; preds = %.loopexit46.i.i.i, %.loopexit46.i.i.thread.i
@@ -272,7 +272,7 @@ bb.b:                                             ; preds = %bb.a
   %scevgep.i.i = getelementptr i8, ptr %0, i64 %i.f ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(116) %scevgep.i.i, i8 0, i64 116, i1 false), !tbaa !10
   %scevgep53.i.i = getelementptr i8, ptr %scevgep.i.i, i64 116
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep53.i.i, i8 0, i64 %i.e, i1 false), !tbaa !11
+  tail call void @llvm.memset.p0.i64(ptr align 4 %scevgep53.i.i, i8 0, i64 %i.e, i1 false), !tbaa !11
   br label %nk_zero.exit
 
 nk_zero.exit:                                     ; preds = %.loopexit46.i.i.thread, %.loopexit46.i.i
@@ -324,7 +324,7 @@ bb.b:                                             ; preds = %bb.a
   %scevgep.i.i = getelementptr i8, ptr %0, i64 %i.f ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(116) %scevgep.i.i, i8 0, i64 116, i1 false), !tbaa !10
   %scevgep53.i.i = getelementptr i8, ptr %scevgep.i.i, i64 116
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep53.i.i, i8 0, i64 %i.e, i1 false), !tbaa !11
+  tail call void @llvm.memset.p0.i64(ptr align 4 %scevgep53.i.i, i8 0, i64 %i.e, i1 false), !tbaa !11
   br label %nk_zero.exit
 
 nk_zero.exit:                                     ; preds = %.loopexit46.i.i.thread, %.loopexit46.i.i
@@ -727,7 +727,7 @@ bb.b:                                             ; preds = %bb.a
   %scevgep.i.i.i = getelementptr i8, ptr %0, i64 %i.c ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(116) %scevgep.i.i.i, i8 0, i64 116, i1 false), !tbaa !10
   %scevgep53.i.i.i = getelementptr i8, ptr %scevgep.i.i.i, i64 116
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep53.i.i.i, i8 0, i64 %i.b, i1 false), !tbaa !11
+  tail call void @llvm.memset.p0.i64(ptr align 4 %scevgep53.i.i.i, i8 0, i64 %i.b, i1 false), !tbaa !11
   br label %nk_zero.exit.i
 
 nk_zero.exit.i:                                   ; preds = %.loopexit46.i.i.i, %.loopexit46.i.i.thread.i
@@ -782,7 +782,7 @@ bb.b:                                             ; preds = %bb.a
   %scevgep.i.i.i = getelementptr i8, ptr %0, i64 %i.f ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(116) %scevgep.i.i.i, i8 0, i64 116, i1 false), !tbaa !10
   %scevgep53.i.i.i = getelementptr i8, ptr %scevgep.i.i.i, i64 116
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep53.i.i.i, i8 0, i64 %i.e, i1 false), !tbaa !11
+  tail call void @llvm.memset.p0.i64(ptr align 4 %scevgep53.i.i.i, i8 0, i64 %i.e, i1 false), !tbaa !11
   br label %nk_zero.exit.i
 
 nk_zero.exit.i:                                   ; preds = %.loopexit46.i.i.i, %.loopexit46.i.i.thread.i
@@ -836,7 +836,7 @@ bb.b:                                             ; preds = %bb.a
   %scevgep.i.i.i = getelementptr i8, ptr %0, i64 %i.f ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(116) %scevgep.i.i.i, i8 0, i64 116, i1 false), !tbaa !10
   %scevgep53.i.i.i = getelementptr i8, ptr %scevgep.i.i.i, i64 116
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep53.i.i.i, i8 0, i64 %i.e, i1 false), !tbaa !11
+  tail call void @llvm.memset.p0.i64(ptr align 4 %scevgep53.i.i.i, i8 0, i64 %i.e, i1 false), !tbaa !11
   br label %nk_zero.exit.i
 
 nk_zero.exit.i:                                   ; preds = %.loopexit46.i.i.i, %.loopexit46.i.i.thread.i
@@ -1239,7 +1239,7 @@ bb.b:                                             ; preds = %bb.a
   %scevgep.i.i = getelementptr i8, ptr %0, i64 %i.c ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(236) %scevgep.i.i, i8 0, i64 236, i1 false), !tbaa !10
   %scevgep53.i.i = getelementptr i8, ptr %scevgep.i.i, i64 236
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep53.i.i, i8 0, i64 %i.b, i1 false), !tbaa !11
+  tail call void @llvm.memset.p0.i64(ptr align 4 %scevgep53.i.i, i8 0, i64 %i.b, i1 false), !tbaa !11
   br label %vector.body
 
 vector.body:                                      ; preds = %.loopexit46.i.i, %.loopexit46.i.i.thread
@@ -1642,7 +1642,7 @@ bb.b:                                             ; preds = %bb.a
   %scevgep.i.i = getelementptr i8, ptr %0, i64 %i.c ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(396) %scevgep.i.i, i8 0, i64 396, i1 false), !tbaa !10
   %scevgep53.i.i = getelementptr i8, ptr %scevgep.i.i, i64 396
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep53.i.i, i8 0, i64 %i.b, i1 false), !tbaa !11
+  tail call void @llvm.memset.p0.i64(ptr align 4 %scevgep53.i.i, i8 0, i64 %i.b, i1 false), !tbaa !11
   br label %nk_zero.exit
 
 nk_zero.exit:                                     ; preds = %.loopexit46.i.i.thread, %.loopexit46.i.i
@@ -1688,7 +1688,7 @@ bb.b:                                             ; preds = %bb.a
   %scevgep.i.i = getelementptr i8, ptr %0, i64 %i.e ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(396) %scevgep.i.i, i8 0, i64 396, i1 false), !tbaa !10
   %scevgep53.i.i = getelementptr i8, ptr %scevgep.i.i, i64 396
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep53.i.i, i8 0, i64 %i.d, i1 false), !tbaa !11
+  tail call void @llvm.memset.p0.i64(ptr align 4 %scevgep53.i.i, i8 0, i64 %i.d, i1 false), !tbaa !11
   br label %nk_zero.exit
 
 nk_zero.exit:                                     ; preds = %.loopexit46.i.i.thread, %.loopexit46.i.i
@@ -1728,7 +1728,7 @@ bb.b:                                             ; preds = %bb.a
   %scevgep.i.i = getelementptr i8, ptr %0, i64 %i.f ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(396) %scevgep.i.i, i8 0, i64 396, i1 false), !tbaa !10
   %scevgep53.i.i = getelementptr i8, ptr %scevgep.i.i, i64 396
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep53.i.i, i8 0, i64 %i.e, i1 false), !tbaa !11
+  tail call void @llvm.memset.p0.i64(ptr align 4 %scevgep53.i.i, i8 0, i64 %i.e, i1 false), !tbaa !11
   br label %nk_zero.exit
 
 nk_zero.exit:                                     ; preds = %.loopexit46.i.i.thread, %.loopexit46.i.i
@@ -1905,7 +1905,7 @@ nk_zero.exit.thread:                              ; preds = %bb.m
   %scevgep.i.i = getelementptr i8, ptr %i.ae, i64 %i.ah ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(124) %scevgep.i.i, i8 0, i64 124, i1 false), !tbaa !10
   %scevgep53.i.i = getelementptr i8, ptr %scevgep.i.i, i64 124
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep53.i.i, i8 0, i64 %i.ag, i1 false), !tbaa !11
+  tail call void @llvm.memset.p0.i64(ptr align 4 %scevgep53.i.i, i8 0, i64 %i.ag, i1 false), !tbaa !11
   br label %bb.n
 
 bb.n:                                             ; preds = %.loopexit46.i.i, %nk_zero.exit.thread
@@ -2308,7 +2308,7 @@ bb.m:                                             ; preds = %bb.l
   br label %.loopexit46.i.i.thread
 
 .loopexit46.i.i.thread:                           ; preds = %bb.l, %bb.m
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(400) %0, i8 0, i64 400, i1 false), !tbaa !10
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(400) %0, i8 0, i64 400, i1 false), !tbaa !10
   br label %nk_zero.exit
 
 nk_zero.exit:                                     ; preds = %.loopexit46.i.i.thread, %bb.a, %bb.b, %bb.c
@@ -2711,7 +2711,7 @@ bb.a:
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 696
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 712 ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ah, i8 0, i64 16, i1 false)
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(216) %i.ai, i8 0, i64 216, i1 false), !tbaa !10
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(216) %i.ai, i8 0, i64 216, i1 false), !tbaa !10
   %i.aj = getelementptr inbounds nuw i8, ptr %i.a, i64 4 ; 15 uses
   %i.ak = load i32, ptr %i.aj, align 1
   store i32 0, ptr %i.ai, align 8, !tbaa !10
@@ -2761,7 +2761,7 @@ bb.a:
   %i.bh = getelementptr inbounds nuw i8, ptr %0, i64 912
   %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 928 ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bh, i8 0, i64 16, i1 false)
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(216) %i.bi, i8 0, i64 216, i1 false), !tbaa !10
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(216) %i.bi, i8 0, i64 216, i1 false), !tbaa !10
   %i.bj = load i32, ptr %i.aj, align 1
   store i32 0, ptr %i.bi, align 8, !tbaa !10
   %.sroa.41378.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 936
@@ -2810,7 +2810,7 @@ bb.a:
   %i.cg = getelementptr inbounds nuw i8, ptr %0, i64 1128
   %i.ch = getelementptr inbounds nuw i8, ptr %0, i64 1432 ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.cg, i8 0, i64 16, i1 false)
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(288) %i.ch, i8 0, i64 288, i1 false), !tbaa !10
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(288) %i.ch, i8 0, i64 288, i1 false), !tbaa !10
   %i.ci = getelementptr inbounds nuw i8, ptr %i.a, i64 28 ; 2 uses
   %i.cj = load i32, ptr %i.ci, align 1
   store i32 0, ptr %i.ch, align 8, !tbaa !10
@@ -2861,7 +2861,7 @@ bb.a:
   %i.dg = getelementptr inbounds nuw i8, ptr %0, i64 1676
   store <4 x float> <float 4.000000e+00, float 0.000000e+00, float 1.000000e+00, float 5.000000e-01>, ptr %i.dg, align 4, !tbaa !8
   %i.dh = getelementptr inbounds nuw i8, ptr %0, i64 1144 ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(288) %i.dh, i8 0, i64 288, i1 false), !tbaa !10
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(288) %i.dh, i8 0, i64 288, i1 false), !tbaa !10
   %i.di = load i32, ptr %i.ci, align 1
   store i32 0, ptr %i.dh, align 8, !tbaa !10
   %.sroa.41346.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 1152
@@ -2909,7 +2909,7 @@ bb.a:
   %i.ed = getelementptr inbounds nuw i8, ptr %0, i64 1388
   store <4 x float> <float 4.000000e+00, float 0.000000e+00, float 1.000000e+00, float 5.000000e-01>, ptr %i.ed, align 4, !tbaa !8
   %i.ee = getelementptr inbounds nuw i8, ptr %0, i64 1720 ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(336) %i.ee, i8 0, i64 336, i1 false), !tbaa !10
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(336) %i.ee, i8 0, i64 336, i1 false), !tbaa !10
   %i.ef = getelementptr inbounds nuw i8, ptr %i.a, i64 40 ; 3 uses
   %i.eg = load i32, ptr %i.ef, align 1
   store i32 0, ptr %i.ee, align 8, !tbaa !10
@@ -3126,7 +3126,7 @@ bb.a:
   %i.ih = getelementptr inbounds nuw i8, ptr %0, i64 3024
   %i.ii = getelementptr inbounds nuw i8, ptr %0, i64 3048 ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ih, i8 0, i64 24, i1 false)
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(312) %i.ii, i8 0, i64 312, i1 false), !tbaa !10
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(312) %i.ii, i8 0, i64 312, i1 false), !tbaa !10
   %i.ij = load i32, ptr %i.fq, align 1
   store i32 0, ptr %i.ii, align 8, !tbaa !10
   %.sroa.41254.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 3056
@@ -3171,7 +3171,7 @@ bb.a:
   %i.ja = getelementptr inbounds nuw i8, ptr %0, i64 3344
   %i.jb = getelementptr inbounds nuw i8, ptr %0, i64 6000 ; 3 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ja, i8 0, i64 16, i1 false)
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(752) %i.jb, i8 0, i64 752, i1 false), !tbaa !10
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(752) %i.jb, i8 0, i64 752, i1 false), !tbaa !10
   %i.jc = getelementptr inbounds nuw i8, ptr %i.a, i64 92 ; 5 uses
   %i.jd = load i32, ptr %i.jc, align 1
   store i32 0, ptr %i.jb, align 8, !tbaa !10
@@ -3268,7 +3268,7 @@ bb.a:
   %i.kt = getelementptr inbounds nuw i8, ptr %0, i64 7256
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(216) %i.kt, ptr noundef nonnull align 8 dereferenceable(216) %i.kd, i64 216, i1 false), !tbaa.struct !728
   %i.ku = getelementptr inbounds nuw i8, ptr %0, i64 4952 ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(968) %i.ku, i8 0, i64 968, i1 false), !tbaa !10
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(968) %i.ku, i8 0, i64 968, i1 false), !tbaa !10
   %i.kv = getelementptr inbounds nuw i8, ptr %i.a, i64 68 ; 11 uses
   %i.kw = load i32, ptr %i.kv, align 1
   store i32 0, ptr %i.ku, align 8, !tbaa !10
@@ -3335,7 +3335,7 @@ bb.a:
   %i.mf = getelementptr inbounds nuw i8, ptr %0, i64 5912
   store float 5.000000e-01, ptr %i.mf, align 8, !tbaa !736
   %i.mg = getelementptr inbounds nuw i8, ptr %0, i64 3360 ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1592) %i.mg, i8 0, i64 1592, i1 false), !tbaa !10
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1592) %i.mg, i8 0, i64 1592, i1 false), !tbaa !10
   %i.mh = getelementptr inbounds nuw i8, ptr %i.a, i64 64 ; 10 uses
   %i.mi = load i32, ptr %i.mh, align 1
   store i32 0, ptr %i.mg, align 8, !tbaa !10
@@ -3378,7 +3378,7 @@ bb.a:
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.na, i8 0, i64 16, i1 false)
   store <2 x float> <float 1.000000e+00, float 5.000000e-01>, ptr %i.nb, align 8, !tbaa !8
   %i.nc = getelementptr inbounds nuw i8, ptr %0, i64 4712 ; 3 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(216) %i.nc, i8 0, i64 216, i1 false), !tbaa !10
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(216) %i.nc, i8 0, i64 216, i1 false), !tbaa !10
   %i.nd = load i32, ptr %i.mh, align 1
   store i32 0, ptr %i.nc, align 8, !tbaa !10
   %.sroa.41170.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 4720
@@ -3428,7 +3428,7 @@ bb.a:
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.nz, i8 0, i64 16, i1 false)
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(216) %i.oa, ptr noundef nonnull align 8 dereferenceable(216) %i.nc, i64 216, i1 false), !tbaa.struct !728
   %i.ob = getelementptr inbounds nuw i8, ptr %0, i64 3528 ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(968) %i.ob, i8 0, i64 968, i1 false), !tbaa !10
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(968) %i.ob, i8 0, i64 968, i1 false), !tbaa !10
   %i.oc = load i32, ptr %i.mh, align 1
   store i32 0, ptr %i.ob, align 8, !tbaa !10
   %.sroa.41158.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 3536
@@ -3487,7 +3487,7 @@ bb.a:
   %i.ph = getelementptr inbounds nuw i8, ptr %0, i64 4484
   store <2 x float> <float 1.000000e+00, float 5.000000e-01>, ptr %i.ph, align 4, !tbaa !8
   %i.pi = getelementptr inbounds nuw i8, ptr %0, i64 5920 ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(80) %i.pi, i8 0, i64 80, i1 false), !tbaa !10
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %i.pi, i8 0, i64 80, i1 false), !tbaa !10
   %i.pj = getelementptr inbounds nuw i8, ptr %i.a, i64 80
   %i.pk = load i32, ptr %i.pj, align 1
   store i32 0, ptr %i.pi, align 8, !tbaa !10
@@ -3557,7 +3557,7 @@ bb.a:
   %i.qt = getelementptr inbounds nuw i8, ptr %0, i64 8876
   store <2 x float> <float 1.000000e+00, float 5.000000e-01>, ptr %i.qt, align 4, !tbaa !8
   %i.qu = getelementptr inbounds nuw i8, ptr %0, i64 8616 ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(216) %i.qu, i8 0, i64 216, i1 false), !tbaa !10
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(216) %i.qu, i8 0, i64 216, i1 false), !tbaa !10
   %i.qv = load i32, ptr %i.py, align 1
   store i32 0, ptr %i.qu, align 8, !tbaa !10
   %.sroa.41130.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8624
@@ -3631,7 +3631,7 @@ bb.a:
   %i.sf = getelementptr inbounds nuw i8, ptr %0, i64 8452
   store <2 x float> <float 1.000000e+00, float 5.000000e-01>, ptr %i.sf, align 4, !tbaa !8
   %i.sg = getelementptr inbounds nuw i8, ptr %0, i64 7768 ; 3 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(216) %i.sg, i8 0, i64 216, i1 false), !tbaa !10
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(216) %i.sg, i8 0, i64 216, i1 false), !tbaa !10
   %i.sh = load i32, ptr %i.rt, align 1
   store i32 0, ptr %i.sg, align 8, !tbaa !10
   %.sroa.41114.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 7776
@@ -3681,7 +3681,7 @@ bb.a:
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.td, i8 0, i64 16, i1 false)
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(216) %i.te, ptr noundef nonnull align 8 dereferenceable(216) %i.sg, i64 216, i1 false), !tbaa.struct !728
   %i.tf = getelementptr inbounds nuw i8, ptr %0, i64 8200 ; 3 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(216) %i.tf, i8 0, i64 216, i1 false), !tbaa !10
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(216) %i.tf, i8 0, i64 216, i1 false), !tbaa !10
   %i.tg = load i32, ptr %i.aj, align 1
   store i32 0, ptr %i.tf, align 8, !tbaa !10
   %.sroa.41102.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8208
@@ -3770,7 +3770,7 @@ bb.a:
   %i.ux = getelementptr inbounds nuw i8, ptr %0, i64 9484
   store <2 x float> zeroinitializer, ptr %i.ux, align 4
   %i.uy = getelementptr inbounds nuw i8, ptr %0, i64 9008 ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(216) %i.uy, i8 0, i64 216, i1 false), !tbaa !10
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(216) %i.uy, i8 0, i64 216, i1 false), !tbaa !10
   %i.uz = load i32, ptr %i.uj, align 1
   store i32 0, ptr %i.uy, align 8, !tbaa !10
   %.sroa.41078.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 9016
@@ -3818,7 +3818,7 @@ bb.a:
   %i.vv = getelementptr inbounds nuw i8, ptr %0, i64 9208
   %i.vw = getelementptr inbounds nuw i8, ptr %0, i64 9224 ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.vv, i8 0, i64 16, i1 false)
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(216) %i.vw, i8 0, i64 216, i1 false), !tbaa !10
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(216) %i.vw, i8 0, i64 216, i1 false), !tbaa !10
   %i.vx = load i32, ptr %i.uj, align 1
   store i32 0, ptr %i.vw, align 8, !tbaa !10
   %.sroa.41066.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 9232
@@ -4221,7 +4221,7 @@ bb.c:                                             ; preds = %bb.b
   %scevgep.i.i.i = getelementptr i8, ptr %0, i64 %i.c ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(18580) %scevgep.i.i.i, i8 0, i64 18580, i1 false), !tbaa !10
   %scevgep53.i.i.i = getelementptr i8, ptr %scevgep.i.i.i, i64 18580
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep53.i.i.i, i8 0, i64 %i.b, i1 false), !tbaa !11
+  tail call void @llvm.memset.p0.i64(ptr align 4 %scevgep53.i.i.i, i8 0, i64 %i.b, i1 false), !tbaa !11
   br label %nk_zero.exit.i
 
 nk_zero.exit.i:                                   ; preds = %.loopexit46.i.i.i, %.loopexit46.i.i.thread.i
@@ -4264,7 +4264,7 @@ bb.d:                                             ; preds = %nk_zero.exit.i
   %scevgep.i.i.i12 = getelementptr i8, ptr %i.j, i64 %i.m ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(116) %scevgep.i.i.i12, i8 0, i64 116, i1 false), !tbaa !10
   %scevgep53.i.i.i13 = getelementptr i8, ptr %scevgep.i.i.i12, i64 116
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep53.i.i.i13, i8 0, i64 %i.l, i1 false), !tbaa !11
+  tail call void @llvm.memset.p0.i64(ptr align 4 %scevgep53.i.i.i13, i8 0, i64 %i.l, i1 false), !tbaa !11
   br label %nk_buffer_init.exit
 
 nk_buffer_init.exit:                              ; preds = %.loopexit46.i.i.thread.i15, %.loopexit46.i.i.i11
@@ -4285,7 +4285,7 @@ nk_buffer_init.exit:                              ; preds = %.loopexit46.i.i.thr
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 9768
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.w, ptr noundef nonnull readonly align 8 dereferenceable(24) %1, i64 24, i1 false), !tbaa.struct !50
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 18464 ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(72) %i.x, i8 0, i64 72, i1 false), !tbaa !10
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %i.x, i8 0, i64 72, i1 false), !tbaa !10
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.x, ptr noundef nonnull readonly align 8 dereferenceable(24) %1, i64 24, i1 false), !tbaa.struct !50
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 18512
   store i32 16, ptr %i.y, align 8, !tbaa !798
@@ -4327,7 +4327,7 @@ bb.c:                                             ; preds = %bb.b
   %scevgep.i.i.i = getelementptr i8, ptr %0, i64 %i.c ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(18580) %scevgep.i.i.i, i8 0, i64 18580, i1 false), !tbaa !10
   %scevgep53.i.i.i = getelementptr i8, ptr %scevgep.i.i.i, i64 18580
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep53.i.i.i, i8 0, i64 %i.b, i1 false), !tbaa !11
+  tail call void @llvm.memset.p0.i64(ptr align 4 %scevgep53.i.i.i, i8 0, i64 %i.b, i1 false), !tbaa !11
   br label %nk_zero.exit.i
 
 nk_zero.exit.i:                                   ; preds = %.loopexit46.i.i.i, %.loopexit46.i.i.thread.i
@@ -4374,7 +4374,7 @@ bb.e:                                             ; preds = %nk_setup.exit
   %scevgep.i.i.i10 = getelementptr i8, ptr %i.j, i64 %i.m ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(116) %scevgep.i.i.i10, i8 0, i64 116, i1 false), !tbaa !10
   %scevgep53.i.i.i11 = getelementptr i8, ptr %scevgep.i.i.i10, i64 116
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep53.i.i.i11, i8 0, i64 %i.l, i1 false), !tbaa !11
+  tail call void @llvm.memset.p0.i64(ptr align 4 %scevgep53.i.i.i11, i8 0, i64 %i.l, i1 false), !tbaa !11
   br label %nk_zero.exit.i12
 
 nk_zero.exit.i12:                                 ; preds = %.loopexit46.i.i.i9, %.loopexit46.i.i.thread.i13
@@ -4425,7 +4425,7 @@ bb.c:                                             ; preds = %bb.b
   %scevgep.i.i.i = getelementptr i8, ptr %0, i64 %i.e ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(18580) %scevgep.i.i.i, i8 0, i64 18580, i1 false), !tbaa !10
   %scevgep53.i.i.i = getelementptr i8, ptr %scevgep.i.i.i, i64 18580
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep53.i.i.i, i8 0, i64 %i.d, i1 false), !tbaa !11
+  tail call void @llvm.memset.p0.i64(ptr align 4 %scevgep53.i.i.i, i8 0, i64 %i.d, i1 false), !tbaa !11
   br label %nk_zero.exit.i
 
 nk_zero.exit.i:                                   ; preds = %.loopexit46.i.i.i, %.loopexit46.i.i.thread.i
@@ -4457,37 +4457,19 @@ nk_setup.exit:                                    ; preds = %.loopexit46.i.i.thr
   %i.m = getelementptr inbounds nuw i8, ptr %2, i64 56
   %i.n = load i32, ptr %i.m, align 8, !tbaa !39
   %i.o = icmp eq i32 %i.n, 0
-  br i1 %i.o, label %bb.e, label %9
+  br i1 %i.o, label %bb.e, label %nk_pool_init.exit
 
 bb.e:                                             ; preds = %nk_setup.exit
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 18464 ; 4 uses
   %i.p = getelementptr inbounds nuw i8, ptr %2, i64 64
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !44
   %i.r = getelementptr inbounds nuw i8, ptr %2, i64 72
   %i.s = load i64, ptr %i.r, align 8, !tbaa !45   ; 3 uses
-  %5 = ptrtoint ptr %4 to i64
-  %6 = and i64 %5, 3                              ; 3 uses
-  %.not.i.i.i18 = icmp eq i64 %6, 0
-  br i1 %.not.i.i.i18, label %.loopexit46.i.i.thread.i23, label %.loopexit46.i.i.i19
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 18464
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %4, i8 0, i64 72, i1 false), !tbaa !10
+  %5 = icmp ult i64 %i.s, 608
+  br i1 %5, label %nk_pool_init_fixed.exit, label %bb.f
 
-.loopexit46.i.i.thread.i23:                       ; preds = %bb.e
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(72) %4, i8 0, i64 72, i1 false), !tbaa !10
-  br label %nk_zero.exit.i22
-
-.loopexit46.i.i.i19:                              ; preds = %bb.e
-  %7 = sub nuw nsw i64 4, %6                      ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %4, i8 0, i64 %7, i1 false), !tbaa !11
-  %scevgep.i.i.i20 = getelementptr i8, ptr %4, i64 %7 ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(68) %scevgep.i.i.i20, i8 0, i64 68, i1 false), !tbaa !10
-  %scevgep53.i.i.i21 = getelementptr i8, ptr %scevgep.i.i.i20, i64 68
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep53.i.i.i21, i8 0, i64 %6, i1 false), !tbaa !11
-  br label %nk_zero.exit.i22
-
-nk_zero.exit.i22:                                 ; preds = %.loopexit46.i.i.i19, %.loopexit46.i.i.thread.i23
-  %8 = icmp ult i64 %i.s, 608
-  br i1 %8, label %nk_pool_init_fixed.exit, label %bb.f
-
-bb.f:                                             ; preds = %nk_zero.exit.i22
+bb.f:                                             ; preds = %bb.e
   %i.t = add i64 %i.s, -608
   %i.u = udiv i64 %i.t, 592
   %i.v = trunc i64 %i.u to i32
@@ -4502,29 +4484,11 @@ bb.f:                                             ; preds = %nk_zero.exit.i22
   store i64 %i.s, ptr %i.aa, align 8, !tbaa !803
   br label %nk_pool_init_fixed.exit
 
-9:                                                ; preds = %nk_setup.exit
-  %10 = getelementptr inbounds nuw i8, ptr %2, i64 32
-  %11 = getelementptr inbounds nuw i8, ptr %0, i64 18464 ; 5 uses
-  %12 = ptrtoint ptr %11 to i64
-  %13 = and i64 %12, 3                            ; 3 uses
-  %.not.i.i.i24 = icmp eq i64 %13, 0
-  br i1 %.not.i.i.i24, label %.loopexit46.i.i.thread.i29, label %.loopexit46.i.i.i25
-
-.loopexit46.i.i.thread.i29:                       ; preds = %9
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(72) %11, i8 0, i64 72, i1 false), !tbaa !10
-  br label %nk_pool_init.exit
-
-.loopexit46.i.i.i25:                              ; preds = %9
-  %14 = sub nuw nsw i64 4, %13                    ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %11, i8 0, i64 %14, i1 false), !tbaa !11
-  %scevgep.i.i.i26 = getelementptr i8, ptr %11, i64 %14 ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(68) %scevgep.i.i.i26, i8 0, i64 68, i1 false), !tbaa !10
-  %scevgep53.i.i.i27 = getelementptr i8, ptr %scevgep.i.i.i26, i64 68
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep53.i.i.i27, i8 0, i64 %13, i1 false), !tbaa !11
-  br label %nk_pool_init.exit
-
-nk_pool_init.exit:                                ; preds = %.loopexit46.i.i.thread.i29, %.loopexit46.i.i.i25
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %11, ptr noundef nonnull readonly align 8 dereferenceable(24) %10, i64 24, i1 false), !tbaa.struct !50
+nk_pool_init.exit:                                ; preds = %nk_setup.exit
+  %6 = getelementptr inbounds nuw i8, ptr %2, i64 32
+  %7 = getelementptr inbounds nuw i8, ptr %0, i64 18464 ; 2 uses
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %7, i8 0, i64 72, i1 false), !tbaa !10
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %7, ptr noundef nonnull readonly align 8 dereferenceable(24) %6, i64 24, i1 false), !tbaa.struct !50
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 18512
   store i32 16, ptr %i.ab, align 8, !tbaa !798
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 18488
@@ -4533,7 +4497,7 @@ nk_pool_init.exit:                                ; preds = %.loopexit46.i.i.thr
   store ptr null, ptr %i.ad, align 8, !tbaa !800
   br label %nk_pool_init_fixed.exit
 
-nk_pool_init_fixed.exit:                          ; preds = %bb.f, %nk_zero.exit.i22, %nk_pool_init.exit
+nk_pool_init_fixed.exit:                          ; preds = %bb.f, %bb.e, %nk_pool_init.exit
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 18460
   store i32 1, ptr %i.ae, align 4, !tbaa !801
   br label %bb.g
@@ -4605,10 +4569,10 @@ bb.g:                                             ; preds = %bb.g, %.lr.ph.i
   br i1 %.not.i, label %.loopexit46.i.i.thread, label %bb.g, !llvm.loop !808
 
 .loopexit46.i.i.thread:                           ; preds = %bb.g, %nk_buffer_free.exit, %bb.f
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(392) %0, i8 0, i64 392, i1 false), !tbaa !10
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(392) %0, i8 0, i64 392, i1 false), !tbaa !10
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 392
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(9344) %i.x, i8 0, i64 9344, i1 false), !tbaa !10
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(120) %i.a, i8 0, i64 120, i1 false), !tbaa !10
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(9344) %i.x, i8 0, i64 9344, i1 false), !tbaa !10
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(120) %i.a, i8 0, i64 120, i1 false), !tbaa !10
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 18456
   store i32 0, ptr %i.y, align 8, !tbaa !293
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 18536
@@ -4671,7 +4635,7 @@ bb.d:                                             ; preds = %bb.b
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 456
   store ptr %i.u, ptr %i.v, align 8, !tbaa !295
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 18392
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(64) %i.w, i8 0, i64 64, i1 false), !tbaa !10
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.w, i8 0, i64 64, i1 false), !tbaa !10
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 18536 ; 4 uses
   %i.y = load ptr, ptr %i.x, align 8, !tbaa !300  ; 2 uses
   %.not6693 = icmp eq ptr %i.y, null
@@ -4803,7 +4767,7 @@ bb.s:                                             ; preds = %._crit_edge15.i
 
 nk_remove_table.exit:                             ; preds = %._crit_edge15.i, %bb.s
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bd, i8 0, i64 16, i1 false)
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(576) %.092, i8 0, i64 576, i1 false), !tbaa !10
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(576) %.092, i8 0, i64 576, i1 false), !tbaa !10
   %i.bk = load i32, ptr %i.a, align 4, !tbaa !801
   %.not.i.i81 = icmp eq i32 %i.bk, 0
   br i1 %.not.i.i81, label %bb.v, label %bb.t
@@ -5206,7 +5170,7 @@ bb.bp:                                            ; preds = %bb.bo, %nk_pool_all
   %scevgep.i.i.i.i = getelementptr i8, ptr %.0.i.i310, i64 %i.jy ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(588) %scevgep.i.i.i.i, i8 0, i64 588, i1 false), !tbaa !10
   %scevgep53.i.i.i.i = getelementptr i8, ptr %scevgep.i.i.i.i, i64 588
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep53.i.i.i.i, i8 0, i64 %i.jx, i1 false), !tbaa !11
+  tail call void @llvm.memset.p0.i64(ptr align 4 %scevgep53.i.i.i.i, i8 0, i64 %i.jx, i1 false), !tbaa !11
   br label %nk_zero.exit.i.i
 
 nk_zero.exit.i.i:                                 ; preds = %.loopexit46.i.i.i.i, %.loopexit46.i.i.thread.i.i
@@ -5325,7 +5289,7 @@ bb.h:                                             ; preds = %bb.g, %nk_pool_allo
   %scevgep.i.i.i = getelementptr i8, ptr %.0.i, i64 %i.al ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(588) %scevgep.i.i.i, i8 0, i64 588, i1 false), !tbaa !10
   %scevgep53.i.i.i = getelementptr i8, ptr %scevgep.i.i.i, i64 588
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep53.i.i.i, i8 0, i64 %i.ak, i1 false), !tbaa !11
+  tail call void @llvm.memset.p0.i64(ptr align 4 %scevgep53.i.i.i, i8 0, i64 %i.ak, i1 false), !tbaa !11
   br label %bb.i
 
 bb.i:                                             ; preds = %.loopexit46.i.i.i, %.loopexit46.i.i.thread.i
@@ -5458,7 +5422,7 @@ bb.d:                                             ; preds = %bb.c
   %scevgep.i.i = getelementptr i8, ptr %i.f, i64 %i.i ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(460) %scevgep.i.i, i8 0, i64 460, i1 false), !tbaa !10
   %scevgep53.i.i = getelementptr i8, ptr %scevgep.i.i, i64 460
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep53.i.i, i8 0, i64 %i.h, i1 false), !tbaa !11
+  tail call void @llvm.memset.p0.i64(ptr align 4 %scevgep53.i.i, i8 0, i64 %i.h, i1 false), !tbaa !11
   %.pre = load ptr, ptr %i.c, align 8, !tbaa !756
   br label %nk_zero.exit
 
@@ -5488,7 +5452,7 @@ bb.e:                                             ; preds = %nk_zero.exit
   %scevgep.i.i393 = getelementptr i8, ptr %i.o, i64 %i.r ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(460) %scevgep.i.i393, i8 0, i64 460, i1 false), !tbaa !10
   %scevgep53.i.i399 = getelementptr i8, ptr %scevgep.i.i393, i64 460
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep53.i.i399, i8 0, i64 %i.q, i1 false), !tbaa !11
+  tail call void @llvm.memset.p0.i64(ptr align 4 %scevgep53.i.i399, i8 0, i64 %i.q, i1 false), !tbaa !11
   %.pre438 = load ptr, ptr %i.c, align 8, !tbaa !756
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.pre438, i64 168
   %.pre439 = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !757
@@ -5891,7 +5855,7 @@ bb.cu:                                            ; preds = %bb.ct
   br i1 %i.sy, label %.loopexit46.i.i488.thread.i, label %bb.cv
 
 .loopexit46.i.i488.thread.i:                      ; preds = %bb.cu
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(44) %i.sp, i8 0, i64 44, i1 false), !tbaa !10
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(44) %i.sp, i8 0, i64 44, i1 false), !tbaa !10
   br label %nk_zero.exit494.i
 
 bb.cv:                                            ; preds = %bb.cu, %bb.ct, %nk_zero.exit._crit_edge.i
@@ -6294,7 +6258,7 @@ bb.h:                                             ; preds = %bb.g
   %scevgep.i.i = getelementptr i8, ptr %.077, i64 %i.v ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(548) %scevgep.i.i, i8 0, i64 548, i1 false), !tbaa !10
   %scevgep53.i.i = getelementptr i8, ptr %scevgep.i.i, i64 548
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep53.i.i, i8 0, i64 %i.u, i1 false), !tbaa !11
+  tail call void @llvm.memset.p0.i64(ptr align 4 %scevgep53.i.i, i8 0, i64 %i.u, i1 false), !tbaa !11
   br label %nk_zero.exit
 
 nk_zero.exit:                                     ; preds = %.loopexit46.i.i.thread, %.loopexit46.i.i
@@ -6407,7 +6371,7 @@ bb.p:                                             ; preds = %bb.o, %nk_pool_allo
   %scevgep.i.i.i.i = getelementptr i8, ptr %.0.i.i, i64 %i.bq ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(588) %scevgep.i.i.i.i, i8 0, i64 588, i1 false), !tbaa !10
   %scevgep53.i.i.i.i = getelementptr i8, ptr %scevgep.i.i.i.i, i64 588
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep53.i.i.i.i, i8 0, i64 %i.bp, i1 false), !tbaa !11
+  tail call void @llvm.memset.p0.i64(ptr align 4 %scevgep53.i.i.i.i, i8 0, i64 %i.bp, i1 false), !tbaa !11
   br label %nk_zero.exit.i.i
 
 nk_zero.exit.i.i:                                 ; preds = %.loopexit46.i.i.i.i, %.loopexit46.i.i.thread.i.i
@@ -6810,7 +6774,7 @@ bb.s:                                             ; preds = %bb.r, %nk_pool_allo
   %scevgep.i.i.i.i = getelementptr i8, ptr %.0.i.i, i64 %i.ch ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(588) %scevgep.i.i.i.i, i8 0, i64 588, i1 false), !tbaa !10
   %scevgep53.i.i.i.i = getelementptr i8, ptr %scevgep.i.i.i.i, i64 588
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep53.i.i.i.i, i8 0, i64 %i.cg, i1 false), !tbaa !11
+  tail call void @llvm.memset.p0.i64(ptr align 4 %scevgep53.i.i.i.i, i8 0, i64 %i.cg, i1 false), !tbaa !11
   br label %nk_zero.exit.i.i
 
 nk_zero.exit.i.i:                                 ; preds = %.loopexit46.i.i.i.i, %.loopexit46.i.i.thread.i.i
@@ -7213,7 +7177,7 @@ bb.c:                                             ; preds = %bb.b
   %i.f = getelementptr inbounds nuw i8, ptr %i.d, i64 152
   store float 0.000000e+00, ptr %i.f, align 8, !tbaa !934
   %i.g = getelementptr inbounds nuw i8, ptr %i.d, i64 160
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.g, i8 0, i64 16, i1 false), !tbaa !10
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.g, i8 0, i64 16, i1 false), !tbaa !10
   br label %nk_zero.exit
 
 nk_zero.exit:                                     ; preds = %.loopexit46.i.i.thread, %bb.a, %bb.b, %bb.c
@@ -7616,7 +7580,7 @@ bb.l:                                             ; preds = %bb.k, %nk_pool_allo
   %scevgep.i.i.i.i = getelementptr i8, ptr %.0.i.i, i64 %i.by ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(588) %scevgep.i.i.i.i, i8 0, i64 588, i1 false), !tbaa !10
   %scevgep53.i.i.i.i = getelementptr i8, ptr %scevgep.i.i.i.i, i64 588
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep53.i.i.i.i, i8 0, i64 %i.bx, i1 false), !tbaa !11
+  tail call void @llvm.memset.p0.i64(ptr align 4 %scevgep53.i.i.i.i, i8 0, i64 %i.bx, i1 false), !tbaa !11
   br label %nk_zero.exit.i.i
 
 nk_zero.exit.i.i:                                 ; preds = %.loopexit46.i.i.i.i, %.loopexit46.i.i.thread.i.i
@@ -8019,7 +7983,7 @@ bb.k:                                             ; preds = %bb.j, %nk_pool_allo
   %scevgep.i.i.i.i = getelementptr i8, ptr %.0.i.i, i64 %i.as ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(588) %scevgep.i.i.i.i, i8 0, i64 588, i1 false), !tbaa !10
   %scevgep53.i.i.i.i = getelementptr i8, ptr %scevgep.i.i.i.i, i64 588
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep53.i.i.i.i, i8 0, i64 %i.ar, i1 false), !tbaa !11
+  tail call void @llvm.memset.p0.i64(ptr align 4 %scevgep53.i.i.i.i, i8 0, i64 %i.ar, i1 false), !tbaa !11
   br label %bb.l
 
 bb.l:                                             ; preds = %.loopexit46.i.i.i.i, %.loopexit46.i.i.thread.i.i
@@ -8422,7 +8386,7 @@ bb.b:                                             ; preds = %bb.a
   %scevgep.i = getelementptr i8, ptr %0, i64 %i.f ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(5380) %scevgep.i, i8 0, i64 5380, i1 false), !tbaa !10
   %scevgep53.i = getelementptr i8, ptr %scevgep.i, i64 5380
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep53.i, i8 0, i64 %i.e, i1 false), !tbaa !11
+  tail call void @llvm.memset.p0.i64(ptr align 4 %scevgep53.i, i8 0, i64 %i.e, i1 false), !tbaa !11
   br label %.loopexit46.i.i.thread.i.i
 
 .loopexit46.i.i.thread.i.i:                       ; preds = %.loopexit46.i, %.loopexit46.i.thread
@@ -8443,7 +8407,7 @@ bb.b:                                             ; preds = %bb.a
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 152
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.n, i8 0, i64 16, i1 false)
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 24
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(120) %i.o, i8 0, i64 112, i1 false), !tbaa !10
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(120) %i.o, i8 0, i64 112, i1 false), !tbaa !10
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 80
   store i32 0, ptr %i.p, align 8, !tbaa !39
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 88
@@ -8484,7 +8448,7 @@ bb.b:                                             ; preds = %bb.a
   %scevgep.i = getelementptr i8, ptr %0, i64 %i.e ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(5380) %scevgep.i, i8 0, i64 5380, i1 false), !tbaa !10
   %scevgep53.i = getelementptr i8, ptr %scevgep.i, i64 5380
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep53.i, i8 0, i64 %i.d, i1 false), !tbaa !11
+  tail call void @llvm.memset.p0.i64(ptr align 4 %scevgep53.i, i8 0, i64 %i.d, i1 false), !tbaa !11
   br label %nk_memset.exit
 
 nk_memset.exit:                                   ; preds = %.loopexit46.i.thread, %.loopexit46.i
@@ -8509,7 +8473,7 @@ nk_memset.exit:                                   ; preds = %.loopexit46.i.threa
 
 .loopexit46.i.i.thread.i.i:                       ; preds = %nk_memset.exit
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 24
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(120) %i.n, i8 0, i64 120, i1 false), !tbaa !10
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(120) %i.n, i8 0, i64 120, i1 false), !tbaa !10
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 80
   store i32 1, ptr %i.o, align 8, !tbaa !39
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -8559,7 +8523,7 @@ bb.b:                                             ; preds = %bb.a
   %scevgep.i = getelementptr i8, ptr %0, i64 %i.c ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(5380) %scevgep.i, i8 0, i64 5380, i1 false), !tbaa !10
   %scevgep53.i = getelementptr i8, ptr %scevgep.i, i64 5380
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep53.i, i8 0, i64 %i.b, i1 false), !tbaa !11
+  tail call void @llvm.memset.p0.i64(ptr align 4 %scevgep53.i, i8 0, i64 %i.b, i1 false), !tbaa !11
   br label %nk_memset.exit
 
 nk_memset.exit:                                   ; preds = %.loopexit46.i.thread, %.loopexit46.i
@@ -8580,7 +8544,7 @@ nk_memset.exit:                                   ; preds = %.loopexit46.i.threa
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 152
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.k, i8 0, i64 16, i1 false)
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 24
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(120) %i.l, i8 0, i64 112, i1 false), !tbaa !10
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(120) %i.l, i8 0, i64 112, i1 false), !tbaa !10
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 80
   store i32 1, ptr %i.m, align 8, !tbaa !39
   %i.n = tail call noalias noundef dereferenceable_or_null(32) ptr @malloc(i64 noundef 32) #49
@@ -8882,7 +8846,7 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   store i32 %., ptr %3, align 4, !tbaa !10
   %i.ax = zext nneg i32 %i.au to i64              ; 2 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 13032
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(120) %i.ay, i8 0, i64 112, i1 false), !tbaa !10
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(120) %i.ay, i8 0, i64 112, i1 false), !tbaa !10
   %i.az = getelementptr inbounds nuw i8, ptr %0, i64 13088
   store i32 0, ptr %i.az, align 8, !tbaa !39
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 13096
@@ -9285,7 +9249,7 @@ bb.e:                                             ; preds = %bb.d
   %scevgep.i.i = getelementptr i8, ptr %i.i, i64 %i.l ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(192) %scevgep.i.i, i8 0, i64 192, i1 false), !tbaa !10
   %scevgep53.i.i = getelementptr i8, ptr %scevgep.i.i, i64 192
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep53.i.i, i8 0, i64 %i.k, i1 false), !tbaa !11
+  tail call void @llvm.memset.p0.i64(ptr align 4 %scevgep53.i.i, i8 0, i64 %i.k, i1 false), !tbaa !11
   br label %nk_zero.exit
 
 bb.f:                                             ; preds = %bb.d
@@ -9306,7 +9270,7 @@ bb.f:                                             ; preds = %bb.d
   %scevgep.i.i88 = getelementptr i8, ptr %i.i, i64 %i.q ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(192) %scevgep.i.i88, i8 0, i64 192, i1 false), !tbaa !10
   %scevgep53.i.i94 = getelementptr i8, ptr %scevgep.i.i88, i64 192
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep53.i.i94, i8 0, i64 %i.o, i1 false), !tbaa !11
+  tail call void @llvm.memset.p0.i64(ptr align 4 %scevgep53.i.i94, i8 0, i64 %i.o, i1 false), !tbaa !11
   %.pre = load i32, ptr %i.i, align 4, !tbaa !1171
   br label %nk_zero.exit95
 
@@ -9709,7 +9673,7 @@ bb.c:                                             ; preds = %bb.b
   %scevgep.i = getelementptr i8, ptr %i.e, i64 %i.h ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(192) %scevgep.i, i8 0, i64 192, i1 false), !tbaa !10
   %scevgep53.i = getelementptr i8, ptr %scevgep.i, i64 192
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep53.i, i8 0, i64 %i.g, i1 false), !tbaa !11
+  tail call void @llvm.memset.p0.i64(ptr align 4 %scevgep53.i, i8 0, i64 %i.g, i1 false), !tbaa !11
   br label %nk_memset.exit
 
 nk_memset.exit:                                   ; preds = %.loopexit46.i, %.loopexit46.i.thread, %bb.a, %bb.b
@@ -9842,7 +9806,7 @@ bb.c:                                             ; preds = %._crit_edge54
   %scevgep.i.i = getelementptr i8, ptr %i.al, i64 %i.ao ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(192) %scevgep.i.i, i8 0, i64 192, i1 false), !tbaa !10
   %scevgep53.i.i = getelementptr i8, ptr %scevgep.i.i, i64 192
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep53.i.i, i8 0, i64 %i.an, i1 false), !tbaa !11
+  tail call void @llvm.memset.p0.i64(ptr align 4 %scevgep53.i.i, i8 0, i64 %i.an, i1 false), !tbaa !11
   br label %nk_chart_end.exit
 
 nk_chart_end.exit:                                ; preds = %._crit_edge.thread, %.loopexit46.i.i, %.loopexit46.i.thread.i, %._crit_edge54, %._crit_edge, %bb.a
@@ -9928,7 +9892,7 @@ bb.c:                                             ; preds = %._crit_edge48
   %scevgep.i.i = getelementptr i8, ptr %i.ae, i64 %i.ah ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(192) %scevgep.i.i, i8 0, i64 192, i1 false), !tbaa !10
   %scevgep53.i.i = getelementptr i8, ptr %scevgep.i.i, i64 192
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep53.i.i, i8 0, i64 %i.ag, i1 false), !tbaa !11
+  tail call void @llvm.memset.p0.i64(ptr align 4 %scevgep53.i.i, i8 0, i64 %i.ag, i1 false), !tbaa !11
   br label %nk_chart_end.exit
 
 nk_chart_end.exit:                                ; preds = %._crit_edge.thread, %.loopexit46.i.i, %.loopexit46.i.thread.i, %._crit_edge48, %._crit_edge, %bb.a
@@ -10331,7 +10295,7 @@ bb.f:                                             ; preds = %.loopexit
   %i.ck = and i64 %i.cj, 3
   %.not = icmp eq i64 %i.ck, 0
   %.074.i = select i1 %.not, i64 4, i64 %i.cd     ; 4 uses
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %0, ptr align 1 %i.cb, i64 %.074.i, i1 false), !tbaa !11
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %0, ptr align 4 %i.cb, i64 %.074.i, i1 false), !tbaa !11
   %i.cl = getelementptr i8, ptr %0, i64 %.074.i
   %scevgep = getelementptr i8, ptr %i.cl, i64 12
   %scevgep32 = getelementptr i8, ptr %0, i64 %.074.i

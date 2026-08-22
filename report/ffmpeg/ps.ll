@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 81
 inline.NumDeleted: 68
 loop-unroll.NumCompletelyUnrolled: 15
-loop-unroll.NumRuntimeUnrolled: 4
-loop-unroll.NumUnrolled: 22
+loop-unroll.NumRuntimeUnrolled: 5
+loop-unroll.NumUnrolled: 23
 begin_hunk_0_@ff_vvc_decode_frame_ps:bb.a
   %i.cx = getelementptr inbounds nuw i8, ptr %i.as, i64 38
   store i8 %i.cw, ptr %i.cx, align 2, !tbaa !139
@@ -205,8 +205,8 @@ bb.y:                                             ; preds = %._crit_edge.i.i.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i) #8
-  %i.gw = load i8, ptr %i.ba, align 1, !tbaa !126 ; 2 uses
-  %i.gx = zext i8 %i.gw to i32                    ; 6 uses
+  %i.gw = load i8, ptr %i.ba, align 1, !tbaa !126
+  %i.gx = zext i8 %i.gw to i32                    ; 7 uses
   %i.gy = getelementptr inbounds nuw i8, ptr %i.gn, i64 %indvars.iv149.i.i.i.i.i
   %i.gz = load i8, ptr %i.gy, align 1, !tbaa !131
   %i.ha = zext i8 %i.gz to i64                    ; 3 uses
@@ -255,7 +255,7 @@ bb.aa:                                            ; preds = %bb.z
   br i1 %exitcond.not.i23.i.i.i.i, label %.critedge115.i.i.i.i.i, label %bb.z, !llvm.loop !168
 
 .critedge115.i.i.i.i.i:                           ; preds = %.critedge.i.i.i.i.i
-  %i.ib = getelementptr inbounds nuw [111 x i8], ptr %i.gr, i64 %indvars.iv149.i.i.i.i.i ; 9 uses
+  %i.ib = getelementptr inbounds nuw [111 x i8], ptr %i.gr, i64 %indvars.iv149.i.i.i.i.i ; 11 uses
   %i.ic = add nsw i32 %i.hg, %i.gx                ; 4 uses
   %i.id = sext i32 %i.ic to i64
   %i.ie = getelementptr inbounds i8, ptr %i.ib, i64 %i.id
@@ -320,31 +320,48 @@ bb.aa:                                            ; preds = %bb.z
   %.not157.i.i.i.i.i.1 = icmp eq i64 %indvars.iv.next136.i.i.i.i.i, 0
   br i1 %.not157.i.i.i.i.i.1, label %.preheader.i.i.i.i.i, label %.lr.ph.i25.i.i.i.i.new, !llvm.loop !169
 
-.loopexit.i.i.i.i.i:                              ; preds = %bb.ad, %bb.ac
+.loopexit.i.i.i.i.i.loopexit.unr-lcssa:           ; preds = %bb.ad
+  %lcmp.mod389.not = icmp eq i32 %xtraiter387, 0
+  br i1 %lcmp.mod389.not, label %.loopexit.i.i.i.i.i, label %.epil.preheader386
+
+.epil.preheader386:                               ; preds = %.loopexit.i.i.i.i.i.loopexit.unr-lcssa, %.lr.ph128.i.i.i.i.i
+  %indvars.iv138.i.in.i.i.i.i.epil.init = phi i64 [ %i.jz, %.lr.ph128.i.i.i.i.i ], [ %indvars.iv138.i.i.i.i.i, %.loopexit.i.i.i.i.i.loopexit.unr-lcssa ]
+  %.094127.i.i.i.i.i.epil.init = phi i32 [ 1, %.lr.ph128.i.i.i.i.i ], [ %24, %.loopexit.i.i.i.i.i.loopexit.unr-lcssa ]
+  %lcmp.mod390 = trunc i32 %i.kh to i1
+  tail call void @llvm.assume(i1 %lcmp.mod390)
+  %2 = load i8, ptr %i.ka, align 1, !tbaa !131
+  %3 = mul nsw i32 %.094127.i.i.i.i.i.epil.init, %12
+  %4 = add nsw i32 %3, %i.jr
+  %5 = udiv i32 %4, %i.jq
+  %6 = trunc i32 %5 to i8
+  %7 = add i8 %2, %6
+  %8 = getelementptr i8, ptr %i.ib, i64 %indvars.iv138.i.in.i.i.i.i.epil.init
+  %9 = getelementptr i8, ptr %8, i64 1
+  store i8 %7, ptr %9, align 1, !tbaa !131
+  br label %.loopexit.i.i.i.i.i
+
+.loopexit.i.i.i.i.i:                              ; preds = %.epil.preheader386, %.loopexit.i.i.i.i.i.loopexit.unr-lcssa, %bb.ac
   %exitcond145.not.i.i.i.i.i = icmp eq i64 %indvars.iv141.i.i.i.i.i, %i.ha
   br i1 %exitcond145.not.i.i.i.i.i, label %bb.ab, label %bb.ac, !llvm.loop !170
 
 bb.ab:                                            ; preds = %.loopexit.i.i.i.i.i
   %i.iy = getelementptr inbounds nuw i8, ptr %i.g, i64 %i.ha
   %i.iz = getelementptr inbounds nuw i8, ptr %i.iy, i64 1
-  %i.ja = load i8, ptr %i.iz, align 1, !tbaa !131
+  %i.ja = load i8, ptr %i.iz, align 1, !tbaa !131 ; 3 uses
   %i.jb = sext i8 %i.ja to i32
   %i.jc = add nsw i32 %i.ip, %i.jb                ; 2 uses
-  %i.jd = add nuw nsw i32 %i.gx, 63               ; 2 uses
+  %i.jd = add nuw nsw i32 %i.gx, 63
   %.not110130.i.i.i.i.i = icmp sgt i32 %i.jc, %i.jd
   br i1 %.not110130.i.i.i.i.i, label %._crit_edge.i.i.i.i.i, label %.lr.ph132.preheader.i.i.i.i.i
 
 .lr.ph132.preheader.i.i.i.i.i:                    ; preds = %bb.ab
-  %i.je = sext i32 %i.jc to i64                   ; 6 uses
-  %2 = zext nneg i32 %i.jd to i64
+  %i.je = sext i32 %i.jc to i64                   ; 4 uses
+  %10 = add nuw nsw i32 %i.gx, 64
   %scevgep333 = getelementptr i8, ptr %scevgep332, i64 %i.je
   %load_initial334 = load i8, ptr %scevgep333, align 1 ; 2 uses
-  %3 = zext i8 %i.gw to i64                       ; 2 uses
-  %4 = sub nsw i64 %3, %i.je
-  %5 = add nuw nsw i64 %3, 63
-  %xtraiter388 = and i64 %4, 1
-  %lcmp.mod389.not.a = icmp eq i64 %xtraiter388, 0
-  br i1 %lcmp.mod389.not.a, label %.lr.ph132.i.i.i.i.i.prol.loopexit, label %.lr.ph132.i.i.i.i.i.prol
+  %11 = and i8 %i.ja, 1
+  %lcmp.mod389.not.a = icmp eq i8 %11, 0
+  br i1 %lcmp.mod389.not.a, label %.lr.ph132.i.i.i.i.i.prol, label %.lr.ph132.i.i.i.i.i.prol.loopexit
 
 .lr.ph132.i.i.i.i.i.prol:                         ; preds = %.lr.ph132.preheader.i.i.i.i.i
   %i.jf = getelementptr i8, ptr %i.ib, i64 %i.je
@@ -364,54 +381,73 @@ bb.ab:                                            ; preds = %.loopexit.i.i.i.i.i
 .lr.ph132.i.i.i.i.i.prol.loopexit:                ; preds = %.lr.ph132.i.i.i.i.i.prol, %.lr.ph132.preheader.i.i.i.i.i
   %store_forwarded335.unr = phi i8 [ %load_initial334, %.lr.ph132.preheader.i.i.i.i.i ], [ %i.jm, %.lr.ph132.i.i.i.i.i.prol ]
   %indvars.iv146.i.i.i.i.i.unr = phi i64 [ %i.je, %.lr.ph132.preheader.i.i.i.i.i ], [ %indvars.iv.next147.i.i.i.i.i.prol, %.lr.ph132.i.i.i.i.i.prol ]
-  %i.jn = icmp eq i64 %5, %i.je
+  %i.jn = icmp eq i8 %i.ja, 62
   br i1 %i.jn, label %._crit_edge.i.i.i.i.i, label %.lr.ph132.i.i.i.i.i
 
 bb.ac:                                            ; preds = %.loopexit.i.i.i.i.i, %.preheader.i.i.i.i.i
   %i.jo = phi i8 [ %i.hd, %.preheader.i.i.i.i.i ], [ %i.jv, %.loopexit.i.i.i.i.i ]
   %indvars.iv141.i.i.i.i.i = phi i64 [ 0, %.preheader.i.i.i.i.i ], [ %indvars.iv.next142.i.i.i.i.i, %.loopexit.i.i.i.i.i ] ; 4 uses
   %i.jp = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %indvars.iv141.i.i.i.i.i
-  %i.jq = load i32, ptr %i.jp, align 4, !tbaa !160 ; 2 uses
-  %i.jr = lshr i32 %i.jq, 1
-  %i.js = sext i8 %i.jo to i32                    ; 2 uses
+  %i.jq = load i32, ptr %i.jp, align 4, !tbaa !160 ; 4 uses
+  %i.jr = lshr i32 %i.jq, 1                       ; 3 uses
+  %i.js = sext i8 %i.jo to i32                    ; 4 uses
   %i.jt = add nsw i32 %i.ip, %i.js
   %indvars.iv.next142.i.i.i.i.i = add nuw nsw i64 %indvars.iv141.i.i.i.i.i, 1 ; 3 uses
   %i.ju = getelementptr inbounds nuw i8, ptr %i.g, i64 %indvars.iv.next142.i.i.i.i.i
   %i.jv = load i8, ptr %i.ju, align 1, !tbaa !131 ; 2 uses
-  %i.jw = sext i8 %i.jv to i32
-  %i.jx = add nsw i32 %i.jw, %i.gx                ; 2 uses
+  %i.jw = sext i8 %i.jv to i32                    ; 3 uses
+  %i.jx = add nsw i32 %i.jw, %i.gx
   %.not113125.i.i.i.i.i = icmp sgt i32 %i.jt, %i.jx
   br i1 %.not113125.i.i.i.i.i, label %.loopexit.i.i.i.i.i, label %.lr.ph128.i.i.i.i.i
 
 .lr.ph128.i.i.i.i.i:                              ; preds = %bb.ac
   %i.jy = add nsw i32 %i.js, %i.gx
-  %i.jz = sext i32 %i.jy to i64                   ; 2 uses
-  %i.ka = getelementptr inbounds i8, ptr %i.ib, i64 %i.jz
+  %i.jz = sext i32 %i.jy to i64                   ; 3 uses
+  %i.ka = getelementptr inbounds i8, ptr %i.ib, i64 %i.jz ; 3 uses
   %i.kb = getelementptr inbounds nuw i8, ptr %i.h, i64 %indvars.iv.next142.i.i.i.i.i
   %i.kc = load i8, ptr %i.kb, align 1, !tbaa !131
   %i.kd = sext i8 %i.kc to i32
   %i.ke = getelementptr inbounds nuw i8, ptr %i.h, i64 %indvars.iv141.i.i.i.i.i
   %i.kf = load i8, ptr %i.ke, align 1, !tbaa !131
   %i.kg = sext i8 %i.kf to i32
-  %i.kh = sub nsw i32 %i.kd, %i.kg
-  %6 = sext i32 %i.jx to i64
+  %12 = sub nsw i32 %i.kd, %i.kg                  ; 3 uses
+  %i.kh = sub nsw i32 %i.jw, %i.js                ; 3 uses
+  %xtraiter387 = and i32 %i.kh, 1
+  %13 = add nsw i32 %i.jw, -1
+  %14 = icmp eq i32 %13, %i.js
+  br i1 %14, label %.epil.preheader386, label %.lr.ph128.i.i.i.i.i.new
+
+.lr.ph128.i.i.i.i.i.new:                          ; preds = %.lr.ph128.i.i.i.i.i
+  %unroll_iter391 = and i32 %i.kh, -2
   br label %bb.ad
 
-bb.ad:                                            ; preds = %bb.ad, %.lr.ph128.i.i.i.i.i
-  %indvars.iv138.in.i.i.i.i.i = phi i64 [ %i.jz, %.lr.ph128.i.i.i.i.i ], [ %indvars.iv138.i.i.i.i.i, %bb.ad ]
-  %.094127.i.i.i.i.i.a = phi i32 [ 1, %.lr.ph128.i.i.i.i.i ], [ %i.kp, %bb.ad ] ; 2 uses
-  %indvars.iv138.i.i.i.i.i = add nsw i64 %indvars.iv138.in.i.i.i.i.i, 1 ; 3 uses
+bb.ad:                                            ; preds = %bb.ad, %.lr.ph128.i.i.i.i.i.new
+  %indvars.iv138.in.i.i.i.i.i = phi i64 [ %i.jz, %.lr.ph128.i.i.i.i.i.new ], [ %indvars.iv138.i.i.i.i.i, %bb.ad ] ; 2 uses
+  %.094127.i.i.i.i.i = phi i32 [ 1, %.lr.ph128.i.i.i.i.i.new ], [ %24, %bb.ad ] ; 3 uses
+  %.094127.i.i.i.i.i.a = phi i32 [ 0, %.lr.ph128.i.i.i.i.i.new ], [ %i.kp, %bb.ad ]
+  %15 = load i8, ptr %i.ka, align 1, !tbaa !131
+  %16 = mul nsw i32 %.094127.i.i.i.i.i, %12
+  %17 = add nsw i32 %16, %i.jr
+  %18 = udiv i32 %17, %i.jq
+  %19 = trunc i32 %18 to i8
+  %20 = add i8 %15, %19
+  %21 = getelementptr i8, ptr %i.ib, i64 %indvars.iv138.in.i.i.i.i.i
+  %22 = getelementptr i8, ptr %21, i64 1
+  store i8 %20, ptr %22, align 1, !tbaa !131
+  %23 = add nuw i32 %.094127.i.i.i.i.i, 1
+  %indvars.iv138.i.i.i.i.i = add nsw i64 %indvars.iv138.in.i.i.i.i.i, 2 ; 3 uses
   %i.ki = load i8, ptr %i.ka, align 1, !tbaa !131
-  %i.kj = mul nsw i32 %.094127.i.i.i.i.i.a, %i.kh
+  %i.kj = mul nsw i32 %23, %12
   %i.kk = add nsw i32 %i.kj, %i.jr
   %i.kl = udiv i32 %i.kk, %i.jq
   %i.km = trunc i32 %i.kl to i8
   %i.kn = add i8 %i.ki, %i.km
   %i.ko = getelementptr inbounds i8, ptr %i.ib, i64 %indvars.iv138.i.i.i.i.i
   store i8 %i.kn, ptr %i.ko, align 1, !tbaa !131
-  %i.kp = add nuw nsw i32 %.094127.i.i.i.i.i.a, 1
-  %.not113.not.i.i.i.i.i = icmp slt i64 %indvars.iv138.i.i.i.i.i, %6
-  br i1 %.not113.not.i.i.i.i.i, label %bb.ad, label %.loopexit.i.i.i.i.i, !llvm.loop !171
+  %24 = add nuw i32 %.094127.i.i.i.i.i, 2         ; 2 uses
+  %i.kp = add i32 %.094127.i.i.i.i.i.a, 2         ; 2 uses
+  %niter392.ncmp.1 = icmp eq i32 %i.kp, %unroll_iter391
+  br i1 %niter392.ncmp.1, label %.loopexit.i.i.i.i.i.loopexit.unr-lcssa, label %bb.ad, !llvm.loop !171
 
 .lr.ph132.i.i.i.i.i:                              ; preds = %.lr.ph132.i.i.i.i.i.prol.loopexit, %.lr.ph132.i.i.i.i.i
   %store_forwarded335 = phi i8 [ %i.lf, %.lr.ph132.i.i.i.i.i ], [ %store_forwarded335.unr, %.lr.ph132.i.i.i.i.i.prol.loopexit ]
@@ -427,8 +463,8 @@ bb.ad:                                            ; preds = %bb.ad, %.lr.ph128.i
   %.0.i.i24.i.i.i.i = select i1 %i.kw, i32 %i.kv, i32 %..i.i.i.i.i.i ; 2 uses
   %i.kx = trunc i32 %.0.i.i24.i.i.i.i to i8
   store i8 %i.kx, ptr %i.kq, align 1, !tbaa !131
-  %indvars.iv.next147.i.i.i.i.i = add nsw i64 %indvars.iv146.i.i.i.i.i, 1 ; 2 uses
-  %i.ky = getelementptr i8, ptr %i.ib, i64 %indvars.iv.next147.i.i.i.i.i
+  %25 = getelementptr i8, ptr %i.ib, i64 %indvars.iv146.i.i.i.i.i
+  %i.ky = getelementptr i8, ptr %25, i64 1
   %sext390 = shl i32 %.0.i.i24.i.i.i.i, 24
   %i.kz = ashr exact i32 %sext390, 24
   %i.la = add nsw i32 %i.kz, 1                    ; 2 uses
@@ -440,8 +476,9 @@ bb.ad:                                            ; preds = %bb.ad, %.lr.ph128.i
   %.0.i.i24.i.i.i.i.1 = select i1 %i.le, i32 %i.ld, i32 %..i.i.i.i.i.i.1
   %i.lf = trunc i32 %.0.i.i24.i.i.i.i.1 to i8     ; 2 uses
   store i8 %i.lf, ptr %i.ky, align 1, !tbaa !131
-  %indvars.iv.next147.i.i.i.i.i.1 = add nsw i64 %indvars.iv146.i.i.i.i.i, 2
-  %exitcond.not.i.i.i.i.1 = icmp eq i64 %indvars.iv.next147.i.i.i.i.i, %2
+  %indvars.iv.next147.i.i.i.i.i.1 = add nsw i64 %indvars.iv146.i.i.i.i.i, 2 ; 2 uses
+  %lftr.wideiv150.i.i.i.i.i.1 = trunc i64 %indvars.iv.next147.i.i.i.i.i.1 to i32
+  %exitcond.not.i.i.i.i.1 = icmp eq i32 %10, %lftr.wideiv150.i.i.i.i.i.1
   br i1 %exitcond.not.i.i.i.i.1, label %._crit_edge.i.i.i.i.i, label %.lr.ph132.i.i.i.i.i, !llvm.loop !172
 
 ._crit_edge.i.i.i.i.i:                            ; preds = %.lr.ph132.i.i.i.i.i.prol.loopexit, %.lr.ph132.i.i.i.i.i, %bb.ab

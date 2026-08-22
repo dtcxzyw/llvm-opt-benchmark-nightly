@@ -205,22 +205,18 @@ bb.ak:                                            ; preds = %.epil.preheader
 
 .lr.ph587:                                        ; preds = %._crit_edge567, %.loopexit543
   %indvars.iv653 = phi i64 [ %indvars.iv.next654, %.loopexit543 ], [ 0, %._crit_edge567 ] ; 2 uses
-  %.0373586 = phi i32 [ %.pre-phi, %.loopexit543 ], [ 0, %._crit_edge567 ] ; 4 uses
+  %.0373586 = phi i32 [ %12, %.loopexit543 ], [ 0, %._crit_edge567 ] ; 4 uses
   %i.qd = shl nuw nsw i64 %indvars.iv653, 1
   %i.qe = getelementptr inbounds nuw i8, ptr %i.ct, i64 %i.qd ; 2 uses
   %.val = load i8, ptr %i.qe, align 1, !tbaa !14  ; 2 uses
   %i.qf = getelementptr i8, ptr %i.qe, i64 1
   %.val486 = load i8, ptr %i.qf, align 1, !tbaa !14 ; 2 uses
   %i.qg = zext i8 %.val to i32
-  %i.qh = shl nuw nsw i32 %i.qg, 8                ; 2 uses
-  %i.qi = zext i8 %.val486 to i32                 ; 2 uses
-  %i.qj = or disjoint i32 %i.qh, %i.qi            ; 6 uses
+  %i.qh = shl nuw nsw i32 %i.qg, 8                ; 3 uses
+  %i.qi = zext i8 %.val486 to i32                 ; 3 uses
+  %i.qj = or disjoint i32 %i.qh, %i.qi            ; 5 uses
   %.not467574 = icmp sgt i32 %.0373586, %i.qj
-  br i1 %.not467574, label %.lr.ph587..loopexit543_crit_edge, label %.lr.ph581.preheader
-
-.lr.ph587..loopexit543_crit_edge:                 ; preds = %.lr.ph587
-  %.pre = add nuw nsw i32 %i.qj, 1
-  br label %.loopexit543
+  br i1 %.not467574, label %.loopexit543, label %.lr.ph581.preheader
 
 .lr.ph581.preheader:                              ; preds = %.lr.ph587
   %i.qk = zext i8 %.val to i64
@@ -229,7 +225,8 @@ bb.ak:                                            ; preds = %.epil.preheader
   %i.qn = or disjoint i64 %i.ql, %i.qm
   %i.qo = zext nneg i32 %.0373586 to i64
   %i.qp = zext nneg i32 %i.qj to i64              ; 3 uses
-  %i.qq = add nuw nsw i32 %i.qj, 1                ; 4 uses
+  %11 = or disjoint i32 %i.qh, 1
+  %i.qq = add nuw nsw i32 %11, %i.qi
   %wide.trip.count645 = zext nneg i32 %i.qq to i64
   br label %.lr.ph581
 
@@ -486,8 +483,8 @@ bb.bh:                                            ; preds = %bb.al, %bb.bg
   %indvar.next = add i64 %indvar, 1
   br i1 %exitcond646.not, label %.loopexit543, label %.lr.ph581, !llvm.loop !290
 
-.loopexit543:                                     ; preds = %bb.bh, %.lr.ph587..loopexit543_crit_edge, %.lr.ph584.preheader, %.preheader542
-  %.pre-phi = phi i32 [ %.pre, %.lr.ph587..loopexit543_crit_edge ], [ %i.qq, %.preheader542 ], [ %i.qq, %.lr.ph584.preheader ], [ %i.qq, %bb.bh ]
+.loopexit543:                                     ; preds = %bb.bh, %.lr.ph584.preheader, %.lr.ph587, %.preheader542
+  %12 = add nuw nsw i32 %i.qj, 1
   %indvars.iv.next654 = add nuw nsw i64 %indvars.iv653, 1 ; 2 uses
   %exitcond657.not = icmp eq i64 %indvars.iv.next654, %wide.trip.count656
   br i1 %exitcond657.not, label %.loopexit547, label %.lr.ph587, !llvm.loop !291

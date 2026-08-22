@@ -205,23 +205,19 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.d
   %i.ag = getelementptr inbounds [4 x i8], ptr %i.j, i64 %i.s ; 2 uses
   %i.ah = load i32, ptr %i.ag, align 4, !tbaa !104 ; 2 uses
-  %i.ai = sext i32 %i.ah to i64                   ; 4 uses
+  %i.ai = sext i32 %i.ah to i64                   ; 3 uses
   %i.aj = add i32 %i.af, -1
   %i.ak = sext i32 %i.aj to i64                   ; 3 uses
   %.not8187.not = icmp slt i32 %i.ah, %i.af
-  br i1 %.not8187.not, label %.lr.ph.preheader, label %.thread
-
-.lr.ph.preheader:                                 ; preds = %bb.e
-  %smax = tail call i64 @llvm.smax.i64(i64 %i.ai, i64 %i.ak)
-  br label %.lr.ph
+  br i1 %.not8187.not, label %.lr.ph, label %.thread
 
 bb.f:                                             ; preds = %.lr.ph
   %i.al = add nsw i64 %.088, 1
-  %exitcond.not = icmp eq i64 %.088, %smax
+  %exitcond.not = icmp eq i64 %.088, %i.ak
   br i1 %exitcond.not, label %.thread, label %.lr.ph, !llvm.loop !822
 
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.f
-  %.088 = phi i64 [ %i.al, %bb.f ], [ %i.ai, %.lr.ph.preheader ] ; 3 uses
+.lr.ph:                                           ; preds = %bb.e, %bb.f
+  %.088 = phi i64 [ %i.al, %bb.f ], [ %i.ai, %bb.e ] ; 3 uses
   %i.am = getelementptr inbounds [4 x i8], ptr %i.l, i64 %.088
   %i.an = load i32, ptr %i.am, align 4, !tbaa !104
   %i.ao = sext i32 %i.an to i64

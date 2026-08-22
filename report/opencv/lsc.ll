@@ -205,13 +205,14 @@ bb.s:                                             ; preds = %.loopexit156
   %i.ev = add nuw i32 %i.es, 1
   %i.ew = zext nneg i32 %i.ei to i64
   %i.ex = add nsw i64 %i.ew, -1
-  %i.ey = zext nneg i32 %. to i64
+  %6 = add nuw nsw i32 %., 1
+  %i.ey = zext nneg i32 %6 to i64
   %wide.trip.count = zext i32 %i.ev to i64
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.preheader, %._crit_edge
   %i.ez = phi ptr [ %i.ec, %.preheader.preheader ], [ %i.hj, %._crit_edge ]
-  %indvars.iv221 = phi i64 [ %i.ex, %.preheader.preheader ], [ %indvars.iv.next222, %._crit_edge ] ; 6 uses
+  %indvars.iv221 = phi i64 [ %i.ex, %.preheader.preheader ], [ %indvars.iv.next222, %._crit_edge ] ; 5 uses
   %i.fa = trunc nuw nsw i64 %indvars.iv221 to i32
   %i.fb = trunc nuw nsw i64 %indvars.iv221 to i32
   br label %bb.v
@@ -227,9 +228,9 @@ bb.u:                                             ; preds = %bb.s
   br label %bb.aj
 
 ._crit_edge:                                      ; preds = %_ZNSt6vectorIiSaIiEE6insertEN9__gnu_cxx17__normal_iteratorIPKiS1_EERS4_.exit114
-  %indvars.iv.next222 = add nuw nsw i64 %indvars.iv221, 1
-  %.not74.not = icmp slt i64 %indvars.iv221, %i.ey
-  br i1 %.not74.not, label %.preheader, label %.loopexit152.loopexit, !llvm.loop !157
+  %indvars.iv.next222 = add nuw nsw i64 %indvars.iv221, 1 ; 2 uses
+  %exitcond225.not = icmp eq i64 %indvars.iv.next222, %i.ey
+  br i1 %exitcond225.not, label %.loopexit152.loopexit, label %.preheader, !llvm.loop !157
 
 bb.v:                                             ; preds = %.preheader, %_ZNSt6vectorIiSaIiEE6insertEN9__gnu_cxx17__normal_iteratorIPKiS1_EERS4_.exit114
   %i.fe = phi ptr [ %i.ez, %.preheader ], [ %i.hj, %_ZNSt6vectorIiSaIiEE6insertEN9__gnu_cxx17__normal_iteratorIPKiS1_EERS4_.exit114 ] ; 2 uses
@@ -632,14 +633,15 @@ _ZNSt5queueIiSt5dequeIiSaIiEEE3popEv.exit432:     ; preds = %bb.ax, %bb.ay
   %i.pt = add nuw i32 %i.pq, 1
   %i.pu = zext nneg i32 %i.pg to i64
   %i.pv = add nsw i64 %i.pu, -1
-  %i.pw = zext nneg i32 %. to i64
+  %21 = add nuw nsw i32 %., 1
+  %i.pw = zext nneg i32 %21 to i64
   %wide.trip.count1296 = zext i32 %i.pt to i64
   br label %.preheader1049
 
 .preheader1049:                                   ; preds = %.preheader1049.preheader, %._crit_edge1143
   %i.px = phi ptr [ %i.ok, %.preheader1049.preheader ], [ %i.aek, %._crit_edge1143 ]
   %i.py = phi ptr [ %i.ol, %.preheader1049.preheader ], [ %i.ael, %._crit_edge1143 ]
-  %indvars.iv1298 = phi i64 [ %i.pv, %.preheader1049.preheader ], [ %indvars.iv.next1299, %._crit_edge1143 ] ; 8 uses
+  %indvars.iv1298 = phi i64 [ %i.pv, %.preheader1049.preheader ], [ %indvars.iv.next1299, %._crit_edge1143 ] ; 7 uses
   %i.pz = trunc nuw nsw i64 %indvars.iv1298 to i32 ; 3 uses
   %i.qa = sitofp i32 %i.pz to float
   br label %bb.ba
@@ -650,9 +652,9 @@ bb.az:                                            ; preds = %bb.au, %bb.as
   br label %bb.dd
 
 ._crit_edge1143:                                  ; preds = %bb.da
-  %indvars.iv.next1299 = add nuw nsw i64 %indvars.iv1298, 1
-  %.not354.not = icmp slt i64 %indvars.iv1298, %i.pw
-  br i1 %.not354.not, label %.preheader1049, label %.loopexit1055, !llvm.loop !185
+  %indvars.iv.next1299 = add nuw nsw i64 %indvars.iv1298, 1 ; 2 uses
+  %exitcond1302.not = icmp eq i64 %indvars.iv.next1299, %i.pw
+  br i1 %exitcond1302.not, label %.loopexit1055, label %.preheader1049, !llvm.loop !185
 
 bb.ba:                                            ; preds = %.preheader1049, %bb.da
   %i.qc = phi ptr [ %i.px, %.preheader1049 ], [ %i.aek, %bb.da ] ; 3 uses
@@ -1055,12 +1057,13 @@ bb.dh:                                            ; preds = %bb.dg
   %i.aiy = add nuw i32 %i.aiv, 1
   %i.aiz = zext nneg i32 %i.ail to i64
   %i.aja = add nsw i64 %i.aiz, -1
-  %i.ajb = zext nneg i32 %.376 to i64
+  %22 = add nuw nsw i32 %.376, 1
+  %i.ajb = zext nneg i32 %22 to i64
   %wide.trip.count1309 = zext i32 %i.aiy to i64
   br label %.preheader1035
 
 .preheader1035:                                   ; preds = %.preheader1035.preheader, %._crit_edge1174
-  %indvars.iv1311 = phi i64 [ %i.aja, %.preheader1035.preheader ], [ %indvars.iv.next1312, %._crit_edge1174 ] ; 7 uses
+  %indvars.iv1311 = phi i64 [ %i.aja, %.preheader1035.preheader ], [ %indvars.iv.next1312, %._crit_edge1174 ] ; 6 uses
   %i.ajc = trunc nuw nsw i64 %indvars.iv1311 to i32
   %i.ajd = trunc nuw nsw i64 %indvars.iv1311 to i32
   br label %bb.dk
@@ -1076,9 +1079,9 @@ bb.dj:                                            ; preds = %bb.dh
   br label %bb.ex
 
 ._crit_edge1174:                                  ; preds = %_ZNSt6vectorIiSaIiEE6insertEN9__gnu_cxx17__normal_iteratorIPKiS1_EERS4_.exit491
-  %indvars.iv.next1312 = add nuw nsw i64 %indvars.iv1311, 1
-  %.not339.not = icmp slt i64 %indvars.iv1311, %i.ajb
-  br i1 %.not339.not, label %.preheader1035, label %.loopexit1047.loopexit, !llvm.loop !200
+  %indvars.iv.next1312 = add nuw nsw i64 %indvars.iv1311, 1 ; 2 uses
+  %exitcond1317.not = icmp eq i64 %indvars.iv.next1312, %i.ajb
+  br i1 %exitcond1317.not, label %.loopexit1047.loopexit, label %.preheader1035, !llvm.loop !200
 
 bb.dk:                                            ; preds = %.preheader1035, %_ZNSt6vectorIiSaIiEE6insertEN9__gnu_cxx17__normal_iteratorIPKiS1_EERS4_.exit491
   %indvars.iv1306 = phi i64 [ %i.aix, %.preheader1035 ], [ %indvars.iv.next1307, %_ZNSt6vectorIiSaIiEE6insertEN9__gnu_cxx17__normal_iteratorIPKiS1_EERS4_.exit491 ] ; 6 uses

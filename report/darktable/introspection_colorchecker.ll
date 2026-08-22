@@ -205,7 +205,7 @@ bb.a:
   %i.s = load ptr, ptr %i.r, align 16, !tbaa !43  ; 65 uses
   %i.t = getelementptr inbounds nuw i8, ptr %1, i64 1176
   %i.u = load i32, ptr %i.t, align 4, !tbaa !18   ; 16 uses
-  %spec.select = tail call i32 @llvm.smin.i32(i32 %i.u, i32 49) ; 11 uses
+  %spec.select = tail call i32 @llvm.smin.i32(i32 %i.u, i32 49) ; 10 uses
   store i32 %spec.select, ptr %i.s, align 4, !tbaa !46
   %i.v = tail call i32 @llvm.smax.i32(i32 %spec.select, i32 0) ; 9 uses
   %i.w = add nuw nsw i32 %i.v, 4                  ; 9 uses
@@ -608,8 +608,7 @@ bb.s:                                             ; preds = %.preheader512
 
 .preheader511.lr.ph:                              ; preds = %bb.s
   %i.wk = getelementptr inbounds nuw i8, ptr %i.s, i64 4 ; 2 uses
-  %4 = zext nneg i32 %spec.select to i64
-  %wide.trip.count561 = zext nneg i32 %spec.select to i64 ; 9 uses
+  %wide.trip.count561 = zext nneg i32 %spec.select to i64 ; 10 uses
   br label %.preheader511
 
 .preheader511:                                    ; preds = %.preheader511.lr.ph, %bb.t
@@ -680,8 +679,8 @@ bb.u:                                             ; preds = %.preheader511, %bb.
   %gep638 = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep637, i64 %indvars.iv557
   store double %i.xs, ptr %gep638, align 8, !tbaa !83
   %indvars.iv.next558 = add nuw nsw i64 %indvars.iv557, 1 ; 2 uses
-  %5 = icmp samesign ult i64 %indvars.iv.next558, %4
-  br i1 %5, label %bb.u, label %bb.t
+  %exitcond561.not = icmp eq i64 %indvars.iv.next558, %wide.trip.count561
+  br i1 %exitcond561.not, label %bb.t, label %bb.u
 
 .lr.ph520.unr-lcssa:                              ; preds = %bb.w
   %lcmp.mod1169.not = icmp eq i64 %xtraiter1168, 0

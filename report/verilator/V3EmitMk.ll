@@ -204,7 +204,7 @@ bb.h:                                             ; preds = %_ZSt9transformIN9__
           to label %_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEEEvT_S7_.exit unwind label %.loopexit.split-lp
 
 _ZSt4sortIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEEEvT_S7_.exit: ; preds = %_ZSt9transformIN9__gnu_cxx17__normal_iteratorIPKN9EmitGroup17FilenameWithScoreESt6vectorIS3_SaIS3_EEEESt20back_insert_iteratorIS6_ImSaImEEEZNS2_21dumpLogScoreHistogramERSoEUlRS4_E_ET0_T_SI_SH_T1_.exit, %.noexc65
-  %i.aq = load i64, ptr %.pn175, align 8, !tbaa !78 ; 6 uses
+  %i.aq = load i64, ptr %.pn175, align 8, !tbaa !78 ; 5 uses
   %i.ar = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull @.str.556, i64 noundef 11)
           to label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit unwind label %bb.v ; 0 uses
 
@@ -356,7 +356,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: 
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #23
-  %i.cy = add nsw i64 %i.aq, 1                    ; 9 uses
+  %i.cy = add nsw i64 %i.aq, 1                    ; 10 uses
   %.sroa.speculated154 = call i64 @llvm.smin.i64(i64 %i.cy, i64 60) ; 9 uses
   %i.cz = icmp ne i64 %i.cy, 0
   call void @llvm.assume(i1 %i.cz)
@@ -383,10 +383,9 @@ _ZNKSt6vectorIZN9EmitGroup21dumpLogScoreHistogramERSoE8IntervalSaIS2_EE12_M_chec
   br i1 %i.de, label %.lr.ph.preheader, label %.preheader181
 
 .lr.ph.preheader:                                 ; preds = %.noexc74
-  %umax = call i64 @llvm.umax.i64(i64 %.sroa.speculated154, i64 2)
-  %i.df = add nsw i64 %umax, -1                   ; 3 uses
+  %i.df = add nsw i64 %.sroa.speculated154, -1    ; 3 uses
   %xtraiter = and i64 %i.df, 1
-  %i.dg = icmp eq i64 %i.aq, 1
+  %i.dg = icmp eq i64 %i.cy, 2
   br i1 %i.dg, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
 
 .lr.ph.preheader.new:                             ; preds = %.lr.ph.preheader

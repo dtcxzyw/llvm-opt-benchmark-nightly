@@ -205,7 +205,7 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.f = load <2 x ptr>, ptr %2, align 16, !tbaa !90
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %2, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %2, i8 0, i64 16, i1 false)
   %i.g = load ptr, ptr %i.e, align 8, !tbaa !116  ; 8 uses
   store <2 x ptr> %i.f, ptr %i.c, align 8, !tbaa !90
   %.not.i.i.i.i = icmp eq ptr %i.g, null

@@ -205,7 +205,8 @@ bb.g:                                             ; preds = %.lr.ph149, %._crit_
   %i.ci = add nuw i32 %.sroa.speculated102, 1
   %i.cj = zext nneg i32 %i.cc to i64
   %i.ck = add nsw i64 %i.cj, -1
-  %i.cl = zext nneg i32 %.sroa.speculated to i64
+  %5 = add nuw nsw i32 %.sroa.speculated, 1
+  %i.cl = zext nneg i32 %5 to i64
   %wide.trip.count = zext i32 %i.ci to i64
   br label %.lr.ph
 
@@ -228,7 +229,7 @@ bb.g:                                             ; preds = %.lr.ph149, %._crit_
   br i1 %i.ct, label %bb.g, label %._crit_edge150, !llvm.loop !155
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %._crit_edge
-  %indvars.iv154 = phi i64 [ %i.ck, %.lr.ph.preheader ], [ %indvars.iv.next155, %._crit_edge ] ; 8 uses
+  %indvars.iv154 = phi i64 [ %i.ck, %.lr.ph.preheader ], [ %indvars.iv.next155, %._crit_edge ] ; 7 uses
   %.1139 = phi float [ %.0148, %.lr.ph.preheader ], [ %.3, %._crit_edge ]
   %.161137 = phi float [ %.060146, %.lr.ph.preheader ], [ %.363, %._crit_edge ]
   %i.cu = load ptr, ptr %i.k, align 8, !tbaa !83
@@ -247,9 +248,9 @@ bb.g:                                             ; preds = %.lr.ph149, %._crit_
   br label %bb.h
 
 ._crit_edge:                                      ; preds = %_ZNK2cv23LineSegmentDetectorImpl9isAlignedEiiRKdS2_.exit.thread
-  %indvars.iv.next155 = add nuw nsw i64 %indvars.iv154, 1
-  %.not.not = icmp slt i64 %indvars.iv154, %i.cl
-  br i1 %.not.not, label %.lr.ph, label %._crit_edge142.loopexit152, !llvm.loop !156
+  %indvars.iv.next155 = add nuw nsw i64 %indvars.iv154, 1 ; 2 uses
+  %exitcond158.not = icmp eq i64 %indvars.iv.next155, %i.cl
+  br i1 %exitcond158.not, label %._crit_edge142.loopexit152, label %.lr.ph, !llvm.loop !156
 
 bb.h:                                             ; preds = %.lr.ph, %_ZNK2cv23LineSegmentDetectorImpl9isAlignedEiiRKdS2_.exit.thread
   %indvars.iv = phi i64 [ %i.ch, %.lr.ph ], [ %indvars.iv.next, %_ZNK2cv23LineSegmentDetectorImpl9isAlignedEiiRKdS2_.exit.thread ] ; 7 uses
