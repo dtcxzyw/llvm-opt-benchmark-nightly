@@ -205,7 +205,7 @@ _ZN7testing7MessagelsIA2_cEERS0_RKT_.exit.i:      ; preds = %_ZN7testing7Message
   %i.ec = getelementptr inbounds nuw i8, ptr %i.dz, i64 24 ; 2 uses
   %i.ed = getelementptr inbounds nuw i8, ptr %i.dz, i64 40 ; 4 uses
   store ptr %i.ed, ptr %i.ec, align 8, !tbaa !16
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(6) %i.ed, ptr noundef nonnull align 1 dereferenceable(6) @.str.103, i64 6, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(6) %i.ed, ptr noundef nonnull align 1 dereferenceable(6) @.str.103, i64 6, i1 false)
   %i.ee = getelementptr inbounds nuw i8, ptr %i.dz, i64 32
   store i64 6, ptr %i.ee, align 8, !tbaa !17
   %i.ef = getelementptr inbounds nuw i8, ptr %i.dz, i64 46
@@ -608,7 +608,7 @@ _ZN7testing7MessagelsIA6_cEERS0_RKT_.exit55:      ; preds = %_ZN7testing7Message
   %i.bk = getelementptr inbounds nuw i8, ptr %i.bh, i64 24 ; 2 uses
   %i.bl = getelementptr inbounds nuw i8, ptr %i.bh, i64 40 ; 4 uses
   store ptr %i.bl, ptr %i.bk, align 8, !tbaa !16
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(6) %i.bl, ptr noundef nonnull align 1 dereferenceable(6) @.str.103, i64 6, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(6) %i.bl, ptr noundef nonnull align 1 dereferenceable(6) @.str.103, i64 6, i1 false)
   %i.bm = getelementptr inbounds nuw i8, ptr %i.bh, i64 32
   store i64 6, ptr %i.bm, align 8, !tbaa !17
   %i.bn = getelementptr inbounds nuw i8, ptr %i.bh, i64 46
@@ -790,7 +790,7 @@ _ZN7testing7MessagelsIA60_cEERS0_RKT_.exit88:     ; preds = %_ZN7testing7Message
   %i.dn = getelementptr inbounds nuw i8, ptr %i.dk, i64 24 ; 2 uses
   %i.do = getelementptr inbounds nuw i8, ptr %i.dk, i64 40 ; 4 uses
   store ptr %i.do, ptr %i.dn, align 8, !tbaa !16
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(6) %i.do, ptr noundef nonnull align 1 dereferenceable(6) @.str.103, i64 6, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(6) %i.do, ptr noundef nonnull align 1 dereferenceable(6) @.str.103, i64 6, i1 false)
   %i.dp = getelementptr inbounds nuw i8, ptr %i.dk, i64 32
   store i64 6, ptr %i.dp, align 8, !tbaa !17
   %i.dq = getelementptr inbounds nuw i8, ptr %i.dk, i64 46

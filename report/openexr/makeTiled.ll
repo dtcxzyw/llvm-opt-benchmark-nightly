@@ -204,7 +204,7 @@ bb.ap:                                            ; preds = %._crit_edge.i.i
   br label %bb.ar
 
 bb.aq:                                            ; preds = %._crit_edge.i.i
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.cy, ptr nonnull align 1 %i.cl, i64 %i.cu, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.cy, ptr nonnull align 4 %i.cl, i64 %i.cu, i1 false)
   br label %bb.ar
 
 bb.ar:                                            ; preds = %bb.aq, %bb.ap, %._crit_edge.i.i
@@ -262,7 +262,7 @@ bb.at:                                            ; preds = %._crit_edge.i.i203
   br label %bb.av
 
 bb.au:                                            ; preds = %._crit_edge.i.i203
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.dm, ptr nonnull align 1 %i.cl, i64 %i.di, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.dm, ptr nonnull align 4 %i.cl, i64 %i.di, i1 false)
   br label %bb.av
 
 bb.av:                                            ; preds = %bb.au, %bb.at, %._crit_edge.i.i203
@@ -320,7 +320,7 @@ bb.ax:                                            ; preds = %._crit_edge.i.i210
   br label %bb.az
 
 bb.ay:                                            ; preds = %._crit_edge.i.i210
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ea, ptr nonnull align 1 %i.cl, i64 %i.dw, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ea, ptr nonnull align 4 %i.cl, i64 %i.dw, i1 false)
   br label %bb.az
 
 bb.az:                                            ; preds = %bb.ay, %bb.ax, %._crit_edge.i.i210
@@ -379,7 +379,7 @@ bb.bb:                                            ; preds = %._crit_edge.i.i217
   br label %bb.bd
 
 bb.bc:                                            ; preds = %._crit_edge.i.i217
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.eo, ptr nonnull align 1 %i.cl, i64 %i.ek, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.eo, ptr nonnull align 4 %i.cl, i64 %i.ek, i1 false)
   br label %bb.bd
 
 bb.bd:                                            ; preds = %bb.bc, %bb.bb, %._crit_edge.i.i217
@@ -782,7 +782,7 @@ bb.i:                                             ; preds = %._crit_edge.i.i55
   br label %bb.k
 
 bb.j:                                             ; preds = %._crit_edge.i.i55
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.bl, ptr nonnull align 1 %i.z, i64 %i.bh, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.bl, ptr nonnull align 4 %i.z, i64 %i.bh, i1 false)
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.i, %._crit_edge.i.i55
@@ -839,7 +839,7 @@ bb.m:                                             ; preds = %._crit_edge.i.i61
   br label %bb.o
 
 bb.n:                                             ; preds = %._crit_edge.i.i61
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.bx, ptr nonnull align 1 %i.z, i64 %i.bt, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.bx, ptr nonnull align 4 %i.z, i64 %i.bt, i1 false)
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %bb.m, %._crit_edge.i.i61
@@ -1242,7 +1242,7 @@ bb.ak:                                            ; preds = %._crit_edge.i.i79
   br label %bb.am
 
 bb.al:                                            ; preds = %._crit_edge.i.i79
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.iv, ptr nonnull align 1 %i.z, i64 %i.ir, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.iv, ptr nonnull align 4 %i.z, i64 %i.ir, i1 false)
   br label %bb.am
 
 bb.am:                                            ; preds = %bb.al, %bb.ak, %._crit_edge.i.i79
@@ -1299,7 +1299,7 @@ bb.ao:                                            ; preds = %._crit_edge.i.i85
   br label %bb.aq
 
 bb.ap:                                            ; preds = %._crit_edge.i.i85
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.jh, ptr nonnull align 1 %i.z, i64 %i.jd, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.jh, ptr nonnull align 4 %i.z, i64 %i.jd, i1 false)
   br label %bb.aq
 
 bb.aq:                                            ; preds = %bb.ap, %bb.ao, %._crit_edge.i.i85
@@ -1679,7 +1679,7 @@ bb.bc:                                            ; preds = %._crit_edge.i.i132
   br label %bb.be
 
 bb.bd:                                            ; preds = %._crit_edge.i.i132
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.op, ptr nonnull align 1 %i.z, i64 %i.ol, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.op, ptr nonnull align 4 %i.z, i64 %i.ol, i1 false)
   br label %bb.be
 
 bb.be:                                            ; preds = %bb.bd, %bb.bc, %._crit_edge.i.i132
@@ -1736,7 +1736,7 @@ bb.bg:                                            ; preds = %._crit_edge.i.i138
   br label %bb.bi
 
 bb.bh:                                            ; preds = %._crit_edge.i.i138
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.pb, ptr nonnull align 1 %i.z, i64 %i.ox, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.pb, ptr nonnull align 4 %i.z, i64 %i.ox, i1 false)
   br label %bb.bi
 
 bb.bi:                                            ; preds = %bb.bh, %bb.bg, %._crit_edge.i.i138
@@ -2139,7 +2139,7 @@ bb.i:                                             ; preds = %._crit_edge.i.i56
   br label %bb.k
 
 bb.j:                                             ; preds = %._crit_edge.i.i56
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.bl, ptr nonnull align 1 %i.z, i64 %i.bh, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.bl, ptr nonnull align 4 %i.z, i64 %i.bh, i1 false)
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.i, %._crit_edge.i.i56
@@ -2196,7 +2196,7 @@ bb.m:                                             ; preds = %._crit_edge.i.i62
   br label %bb.o
 
 bb.n:                                             ; preds = %._crit_edge.i.i62
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.bx, ptr nonnull align 1 %i.z, i64 %i.bt, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.bx, ptr nonnull align 4 %i.z, i64 %i.bt, i1 false)
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %bb.m, %._crit_edge.i.i62
@@ -2599,7 +2599,7 @@ bb.aj:                                            ; preds = %._crit_edge.i.i80
   br label %bb.al
 
 bb.ak:                                            ; preds = %._crit_edge.i.i80
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.jd, ptr nonnull align 1 %i.z, i64 %i.iz, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.jd, ptr nonnull align 4 %i.z, i64 %i.iz, i1 false)
   br label %bb.al
 
 bb.al:                                            ; preds = %bb.ak, %bb.aj, %._crit_edge.i.i80
@@ -2656,7 +2656,7 @@ bb.an:                                            ; preds = %._crit_edge.i.i86
   br label %bb.ap
 
 bb.ao:                                            ; preds = %._crit_edge.i.i86
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.jp, ptr nonnull align 1 %i.z, i64 %i.jl, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.jp, ptr nonnull align 4 %i.z, i64 %i.jl, i1 false)
   br label %bb.ap
 
 bb.ap:                                            ; preds = %bb.ao, %bb.an, %._crit_edge.i.i86
@@ -3030,7 +3030,7 @@ bb.ba:                                            ; preds = %._crit_edge.i.i132
   br label %bb.bc
 
 bb.bb:                                            ; preds = %._crit_edge.i.i132
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.pb, ptr nonnull align 1 %i.z, i64 %i.ox, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.pb, ptr nonnull align 4 %i.z, i64 %i.ox, i1 false)
   br label %bb.bc
 
 bb.bc:                                            ; preds = %bb.bb, %bb.ba, %._crit_edge.i.i132
@@ -3087,7 +3087,7 @@ bb.be:                                            ; preds = %._crit_edge.i.i138
   br label %bb.bg
 
 bb.bf:                                            ; preds = %._crit_edge.i.i138
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.pn, ptr nonnull align 1 %i.z, i64 %i.pj, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.pn, ptr nonnull align 4 %i.z, i64 %i.pj, i1 false)
   br label %bb.bg
 
 bb.bg:                                            ; preds = %bb.bf, %bb.be, %._crit_edge.i.i138

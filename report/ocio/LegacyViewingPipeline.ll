@@ -168,13 +168,13 @@ bb.a:
   %i.a = tail call noalias noundef nonnull dereferenceable(128) ptr @_Znwm(i64 noundef 128) #21 ; 9 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 80
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(48) %i.b, i8 0, i64 48, i1 false)
-  store ptr getelementptr inbounds nuw inrange(-16, 144) (i8, ptr @_ZTVN16OpenColorIO_v2_525LegacyViewingPipelineImplE, i64 16), ptr %i.a, align 8, !tbaa !8
+  store ptr getelementptr inbounds nuw inrange(-16, 144) (i8, ptr @_ZTVN16OpenColorIO_v2_525LegacyViewingPipelineImplE, i64 16), ptr %i.a, align 16, !tbaa !8
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 96
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 112 ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(82) %i.c, i8 0, i64 82, i1 false)
-  store ptr %i.e, ptr %i.d, align 8, !tbaa !10
-  store i8 0, ptr %i.e, align 8, !tbaa !14
+  store ptr %i.e, ptr %i.d, align 16, !tbaa !10
+  store i8 0, ptr %i.e, align 16, !tbaa !14
   store ptr %i.a, ptr %0, align 8, !tbaa !15
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   store ptr null, ptr %i.f, align 8, !tbaa !20
@@ -186,7 +186,7 @@ bb.b:                                             ; preds = %bb.a
           catch ptr null
   %i.i = extractvalue { ptr, i32 } %i.h, 0
   %i.j = tail call ptr @__cxa_begin_catch(ptr %i.i) #22 ; 0 uses
-  %i.k = load ptr, ptr %i.a, align 8, !tbaa !8
+  %i.k = load ptr, ptr %i.a, align 16, !tbaa !8
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 136
   %i.m = load ptr, ptr %i.l, align 8
   tail call void %i.m(ptr noundef nonnull align 8 dereferenceable(128) %i.a) #22, !inline_history !21
@@ -589,7 +589,7 @@ bb.c:                                             ; preds = %bb.b
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.g = load <2 x ptr>, ptr %2, align 16, !tbaa !30
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %2, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %2, i8 0, i64 16, i1 false)
   %i.h = load ptr, ptr %i.f, align 8, !tbaa !20   ; 8 uses
   store <2 x ptr> %i.g, ptr %i.d, align 8, !tbaa !30
   %.not.i.i.i.i = icmp eq ptr %i.h, null
@@ -807,7 +807,7 @@ bb.c:                                             ; preds = %bb.b
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.g = load <2 x ptr>, ptr %2, align 16, !tbaa !30
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %2, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %2, i8 0, i64 16, i1 false)
   %i.h = load ptr, ptr %i.f, align 8, !tbaa !20   ; 8 uses
   store <2 x ptr> %i.g, ptr %i.d, align 8, !tbaa !30
   %.not.i.i.i.i = icmp eq ptr %i.h, null
@@ -1025,7 +1025,7 @@ bb.c:                                             ; preds = %bb.b
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.g = load <2 x ptr>, ptr %2, align 16, !tbaa !30
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %2, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %2, i8 0, i64 16, i1 false)
   %i.h = load ptr, ptr %i.f, align 8, !tbaa !20   ; 8 uses
   store <2 x ptr> %i.g, ptr %i.d, align 8, !tbaa !30
   %.not.i.i.i.i = icmp eq ptr %i.h, null
@@ -1243,7 +1243,7 @@ bb.c:                                             ; preds = %bb.b
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.g = load <2 x ptr>, ptr %2, align 16, !tbaa !30
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %2, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %2, i8 0, i64 16, i1 false)
   %i.h = load ptr, ptr %i.f, align 8, !tbaa !20   ; 8 uses
   store <2 x ptr> %i.g, ptr %i.d, align 8, !tbaa !30
   %.not.i.i.i.i = icmp eq ptr %i.h, null
@@ -1646,7 +1646,7 @@ bb.ar:                                            ; preds = %bb.aq, %bb.ap, %._c
   store i8 0, ptr %i.dd, align 1, !tbaa !14
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #22
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #22
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %12, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %12, i8 0, i64 16, i1 false)
   %i.de = load i64, ptr %i.db, align 8, !tbaa !62
   %i.df = icmp eq i64 %i.de, 0
   br i1 %i.df, label %bb.ay, label %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_513ViewTransformELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit
@@ -2049,7 +2049,7 @@ bb.js:                                            ; preds = %bb.jq
   br label %_ZSt20dynamic_pointer_castIN16OpenColorIO_v2_520DisplayViewTransformENS0_9TransformEESt10shared_ptrIT_ERKS3_IT0_E.exit
 
 _ZNSt10shared_ptrIN16OpenColorIO_v2_520DisplayViewTransformEEC2INS0_9TransformEEERKS_IT_EPS1_.exit.i: ; preds = %bb.jo, %bb.jn
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %42, i8 0, i64 16, i1 false), !alias.scope !101
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %42, i8 0, i64 16, i1 false), !alias.scope !101
   br label %_ZSt20dynamic_pointer_castIN16OpenColorIO_v2_520DisplayViewTransformENS0_9TransformEESt10shared_ptrIT_ERKS3_IT0_E.exit
 
 _ZSt20dynamic_pointer_castIN16OpenColorIO_v2_520DisplayViewTransformENS0_9TransformEESt10shared_ptrIT_ERKS3_IT0_E.exit: ; preds = %bb.jp, %bb.jr, %bb.js, %_ZNSt10shared_ptrIN16OpenColorIO_v2_520DisplayViewTransformEEC2INS0_9TransformEEERKS_IT_EPS1_.exit.i

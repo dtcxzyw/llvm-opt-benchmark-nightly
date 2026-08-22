@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.a
   %i.h = tail call noalias noundef nonnull dereferenceable(40) ptr @_Znwm(i64 noundef 40) #31 ; 5 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 16
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %i.i, i8 0, i64 24, i1 false)
-  store ptr getelementptr inbounds nuw inrange(-16, 32) (i8, ptr @_ZTVN9SampleICC28IccTextDescriptionTypeReaderE, i64 16), ptr %i.h, align 8, !tbaa !16
+  store ptr getelementptr inbounds nuw inrange(-16, 32) (i8, ptr @_ZTVN9SampleICC28IccTextDescriptionTypeReaderE, i64 16), ptr %i.h, align 16, !tbaa !16
   %i.j = getelementptr inbounds nuw i8, ptr %i.h, i64 8
   %i.k = getelementptr inbounds nuw i8, ptr %i.h, i64 24 ; 2 uses
   store ptr %i.k, ptr %i.j, align 8, !tbaa !40
@@ -216,7 +216,7 @@ bb.f:                                             ; preds = %bb.a
   %i.l = tail call noalias noundef nonnull dereferenceable(40) ptr @_Znwm(i64 noundef 40) #31 ; 5 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 16
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %i.m, i8 0, i64 24, i1 false)
-  store ptr getelementptr inbounds nuw inrange(-16, 32) (i8, ptr @_ZTVN9SampleICC34IccMultiLocalizedUnicodeTypeReaderE, i64 16), ptr %i.l, align 8, !tbaa !16
+  store ptr getelementptr inbounds nuw inrange(-16, 32) (i8, ptr @_ZTVN9SampleICC34IccMultiLocalizedUnicodeTypeReaderE, i64 16), ptr %i.l, align 16, !tbaa !16
   %i.n = getelementptr inbounds nuw i8, ptr %i.l, i64 8
   %i.o = getelementptr inbounds nuw i8, ptr %i.l, i64 24 ; 2 uses
   store ptr %i.o, ptr %i.n, align 8, !tbaa !40
@@ -619,7 +619,7 @@ bb.al:                                            ; preds = %bb.ai
 bb.am:                                            ; preds = %bb.al
   %i.ld = getelementptr inbounds nuw i8, ptr %i.lc, i64 16
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.ld, i8 0, i64 32, i1 false)
-  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN16OpenColorIO_v2_515LocalCachedFileE, i64 16), ptr %i.lc, align 8, !tbaa !16
+  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN16OpenColorIO_v2_515LocalCachedFileE, i64 16), ptr %i.lc, align 16, !tbaa !16
   %i.le = getelementptr inbounds nuw i8, ptr %i.lc, i64 8 ; 4 uses
   %i.lf = getelementptr inbounds nuw i8, ptr %i.lc, i64 24 ; 2 uses
   store ptr %i.lf, ptr %i.le, align 8, !tbaa !40
@@ -642,7 +642,7 @@ bb.an:                                            ; preds = %bb.am
           catch ptr null
   %i.lm = extractvalue { ptr, i32 } %i.ll, 0
   %i.ln = call ptr @__cxa_begin_catch(ptr %i.lm) #30 ; 0 uses
-  %i.lo = load ptr, ptr %i.lc, align 8, !tbaa !16
+  %i.lo = load ptr, ptr %i.lc, align 16, !tbaa !16
   %i.lp = getelementptr inbounds nuw i8, ptr %i.lo, i64 8
   %i.lq = load ptr, ptr %i.lp, align 8
   call void %i.lq(ptr noundef nonnull align 8 dereferenceable(200) %i.lc) #30, !inline_history !89
@@ -708,7 +708,7 @@ bb.aw:                                            ; preds = %bb.at
   br i1 %.not144, label %bb.ax, label %.thread
 
 bb.ax:                                            ; preds = %bb.aw
-  %i.mb = load i64, ptr %i.lg, align 8, !tbaa !43
+  %i.mb = load i64, ptr %i.lg, align 16, !tbaa !43
   %i.mc = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %i.le, i64 noundef 0, i64 noundef %i.mb, ptr noundef nonnull @.str.13, i64 noundef 0)
           to label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEPKc.exit unwind label %bb.ay ; 0 uses
 
@@ -1111,7 +1111,7 @@ bb.p:                                             ; preds = %_ZN16OpenColorIO_v2
 
 bb.q:                                             ; preds = %bb.p
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #30
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %10, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %10, i8 0, i64 16, i1 false)
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ab, i64 184 ; 2 uses
   %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !187
   %.not157 = icmp eq ptr %i.aj, null
@@ -1128,7 +1128,7 @@ bb.s:                                             ; preds = %bb.r
   %i.ak = getelementptr inbounds nuw i8, ptr %11, i64 8
   %i.al = getelementptr inbounds nuw i8, ptr %10, i64 8
   %i.am = load <2 x ptr>, ptr %11, align 16, !tbaa !253
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %11, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %11, i8 0, i64 16, i1 false)
   %i.an = load ptr, ptr %i.al, align 8, !tbaa !88 ; 8 uses
   store <2 x ptr> %i.am, ptr %10, align 16, !tbaa !253
   %.not.i.i.i.i = icmp eq ptr %i.an, null

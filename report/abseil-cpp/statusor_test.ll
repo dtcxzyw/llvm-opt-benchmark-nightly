@@ -205,7 +205,7 @@ bb.dh:                                            ; preds = %bb.dg
   %i.jl = getelementptr inbounds nuw i8, ptr %i.ji, i64 16 ; 2 uses
   %i.jm = getelementptr inbounds nuw i8, ptr %i.ji, i64 32 ; 2 uses
   store ptr %i.jm, ptr %i.jl, align 8, !tbaa !78
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.jm, ptr noundef nonnull align 1 dereferenceable(4) @.str.449, i64 3, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(3) %i.jm, ptr noundef nonnull align 1 dereferenceable(4) @.str.449, i64 3, i1 false)
   %i.jn = getelementptr inbounds nuw i8, ptr %51, i64 8 ; 2 uses
   %i.jo = getelementptr inbounds nuw i8, ptr %i.ji, i64 24
   store i64 3, ptr %i.jo, align 8, !tbaa !62
@@ -608,8 +608,8 @@ bb.a:
   %i.a = tail call noalias noundef nonnull dereferenceable(32) ptr @_Znwm(i64 noundef 32) #31, !noalias !2833 ; 4 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.a, i8 0, i64 32, i1 false), !noalias !2833
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN12_GLOBAL__N_17DerivedE, i64 16), ptr %i.a, align 8, !tbaa !9, !noalias !2833
-  store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN12_GLOBAL__N_17DerivedE, i64 48), ptr %i.b, align 8, !tbaa !9, !noalias !2833
+  store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN12_GLOBAL__N_17DerivedE, i64 16), ptr %i.a, align 16, !tbaa !9, !noalias !2833
+  store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN12_GLOBAL__N_17DerivedE, i64 48), ptr %i.b, align 16, !tbaa !9, !noalias !2833
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.d = ptrtoint ptr %i.a to i64
   store i64 %i.d, ptr %i.c, align 8, !tbaa !2836, !alias.scope !2838
@@ -1012,8 +1012,8 @@ _ZN4absl12lts_202605268StatusOrISt10unique_ptrIN12_GLOBAL__N_15Base1ESt14default
 bb.c:                                             ; preds = %_ZN4absl12lts_202605268StatusOrISt10unique_ptrIN12_GLOBAL__N_15Base1ESt14default_deleteIS4_EEEC2Ev.exit
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.d, i8 0, i64 32, i1 false), !noalias !3498
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 16
-  store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN12_GLOBAL__N_17DerivedE, i64 16), ptr %i.d, align 8, !tbaa !9, !noalias !3498
-  store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN12_GLOBAL__N_17DerivedE, i64 48), ptr %i.e, align 8, !tbaa !9, !noalias !3498
+  store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN12_GLOBAL__N_17DerivedE, i64 16), ptr %i.d, align 16, !tbaa !9, !noalias !3498
+  store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN12_GLOBAL__N_17DerivedE, i64 48), ptr %i.e, align 16, !tbaa !9, !noalias !3498
   %.val.i.i = load i64, ptr %2, align 8, !tbaa !31 ; 3 uses
   %i.f = icmp eq i64 %.val.i.i, 1
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 4 uses
@@ -1416,7 +1416,7 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !4226)
   call void @llvm.lifetime.start.p0(ptr nonnull %5)
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #28, !noalias !4226
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %4, i8 0, i64 24, i1 false), !noalias !4226
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %4, i8 0, i64 24, i1 false), !noalias !4226
   invoke void @_ZNK7testing8internal15VariadicMatcherINS0_16AllOfMatcherImplEJNS_18PolymorphicMatcherINS0_16HasSubstrMatcherINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEESC_NS1_INS0_16AnyOfMatcherImplEJNS1_IS2_JNS3_INS0_17StartsWithMatcherISA_EEEENS3_INS0_15EndsWithMatcherISA_EEEEEEESK_EEEEE21CreateVariadicMatcherIRKSA_Lm0EEEvPSt6vectorINS_7MatcherIT_EESaIST_EESt17integral_constantImXT0_EE(ptr noundef nonnull align 8 dereferenceable(192) %1, ptr noundef nonnull %4)
           to label %bb.b unwind label %bb.d, !noalias !4226
 
@@ -1429,7 +1429,7 @@ bb.c:                                             ; preds = %bb.b
   %i.c = load ptr, ptr %i.b, align 16, !tbaa !4229, !noalias !4226
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.e = load <2 x ptr>, ptr %4, align 16, !tbaa !4232, !noalias !4226
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %4, i8 0, i64 24, i1 false), !noalias !4226
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %4, i8 0, i64 24, i1 false), !noalias !4226
   store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVN7testing8internal16AllOfMatcherImplIRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE, i64 16), ptr %i.a, align 8, !tbaa !9, !noalias !4226
   store <2 x ptr> %i.e, ptr %i.d, align 8, !tbaa !4232, !noalias !4226
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 24
@@ -1832,7 +1832,7 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !4270)
   call void @llvm.lifetime.start.p0(ptr nonnull %3)
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #28, !noalias !4270
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %2, i8 0, i64 24, i1 false), !noalias !4270
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %2, i8 0, i64 24, i1 false), !noalias !4270
   invoke void @_ZNK7testing8internal15VariadicMatcherINS0_16AnyOfMatcherImplEJNS1_INS0_16AllOfMatcherImplEJNS_18PolymorphicMatcherINS0_17StartsWithMatcherINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEENS4_INS0_15EndsWithMatcherISB_EEEEEEESH_EE21CreateVariadicMatcherIRKSB_Lm0EEEvPSt6vectorINS_7MatcherIT_EESaISP_EESt17integral_constantImXT0_EE(ptr noundef nonnull align 8 dereferenceable(128) %0, ptr noundef nonnull %2)
           to label %bb.b unwind label %bb.d, !noalias !4270
 
@@ -1845,7 +1845,7 @@ bb.c:                                             ; preds = %bb.b
   %i.c = load ptr, ptr %i.b, align 16, !tbaa !4229, !noalias !4270
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.e = load <2 x ptr>, ptr %2, align 16, !tbaa !4232, !noalias !4270
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %2, i8 0, i64 24, i1 false), !noalias !4270
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %2, i8 0, i64 24, i1 false), !noalias !4270
   store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVN7testing8internal16AnyOfMatcherImplIRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE, i64 16), ptr %i.a, align 8, !tbaa !9, !noalias !4270
   store <2 x ptr> %i.e, ptr %i.d, align 8, !tbaa !4232, !noalias !4270
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 24
@@ -1966,7 +1966,7 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !4273)
   call void @llvm.lifetime.start.p0(ptr nonnull %3)
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #28, !noalias !4273
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %2, i8 0, i64 24, i1 false), !noalias !4273
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %2, i8 0, i64 24, i1 false), !noalias !4273
   invoke void @_ZNK7testing8internal15VariadicMatcherINS0_16AllOfMatcherImplEJNS_18PolymorphicMatcherINS0_17StartsWithMatcherINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEENS3_INS0_15EndsWithMatcherISA_EEEEEE21CreateVariadicMatcherIRKSA_Lm0EEEvPSt6vectorINS_7MatcherIT_EESaISN_EESt17integral_constantImXT0_EE(ptr noundef nonnull align 8 dereferenceable(64) %i.a, ptr noundef nonnull %2)
           to label %bb.b unwind label %bb.d, !noalias !4273
 
@@ -1979,7 +1979,7 @@ bb.c:                                             ; preds = %bb.b
   %i.d = load ptr, ptr %i.c, align 16, !tbaa !4229, !noalias !4273
   %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.f = load <2 x ptr>, ptr %2, align 16, !tbaa !4232, !noalias !4273
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %2, i8 0, i64 24, i1 false), !noalias !4273
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %2, i8 0, i64 24, i1 false), !noalias !4273
   store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVN7testing8internal16AllOfMatcherImplIRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE, i64 16), ptr %i.b, align 8, !tbaa !9, !noalias !4273
   store <2 x ptr> %i.f, ptr %i.e, align 8, !tbaa !4232, !noalias !4273
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 24
@@ -2100,7 +2100,7 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !4276)
   call void @llvm.lifetime.start.p0(ptr nonnull %3)
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #28, !noalias !4276
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %2, i8 0, i64 24, i1 false), !noalias !4276
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %2, i8 0, i64 24, i1 false), !noalias !4276
   invoke void @_ZNK7testing8internal15VariadicMatcherINS0_16AllOfMatcherImplEJNS_18PolymorphicMatcherINS0_17StartsWithMatcherINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEENS3_INS0_15EndsWithMatcherISA_EEEEEE21CreateVariadicMatcherIRKSA_Lm0EEEvPSt6vectorINS_7MatcherIT_EESaISN_EESt17integral_constantImXT0_EE(ptr noundef nonnull align 8 dereferenceable(64) %0, ptr noundef nonnull %2)
           to label %bb.b unwind label %bb.d, !noalias !4276
 
@@ -2113,7 +2113,7 @@ bb.c:                                             ; preds = %bb.b
   %i.c = load ptr, ptr %i.b, align 16, !tbaa !4229, !noalias !4276
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.e = load <2 x ptr>, ptr %2, align 16, !tbaa !4232, !noalias !4276
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %2, i8 0, i64 24, i1 false), !noalias !4276
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %2, i8 0, i64 24, i1 false), !noalias !4276
   store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVN7testing8internal16AllOfMatcherImplIRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE, i64 16), ptr %i.a, align 8, !tbaa !9, !noalias !4276
   store <2 x ptr> %i.e, ptr %i.d, align 8, !tbaa !4232, !noalias !4276
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 24

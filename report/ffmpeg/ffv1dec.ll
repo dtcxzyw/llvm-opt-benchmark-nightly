@@ -205,8 +205,8 @@ bb.dc:                                            ; preds = %bb.db
   %i.aaq = getelementptr i8, ptr %i.aap, i64 %i.zu
   %i.aar = getelementptr i8, ptr %i.aaq, i64 %i.wg
   %scevgep627 = getelementptr i8, ptr %i.aar, i64 %i.wb ; 3 uses
-  %narrow = add nsw i32 %i.wn, -2
-  %3 = sext i32 %narrow to i64
+  %3 = zext nneg i32 %i.wn to i64
+  %4 = add nsw i64 %3, -2
   %i.aas = add nsw i32 %i.wn, -12
   %or.cond743.a = icmp ult i32 %i.aas, 536870901
   %bound0628 = icmp ult ptr %i.wh, %scevgep623
@@ -609,7 +609,7 @@ bb.ef:                                            ; preds = %bb.ee, %bb.eb, %bb.
   br i1 %i.ako, label %.lr.ph149.i.preheader, label %.loopexit.i
 
 .lr.ph149.i.preheader:                            ; preds = %.preheader129.i
-  %i.akq = sub nsw i64 %3, %i.agk
+  %i.akq = sub nsw i64 %4, %i.agk
   %i.akr = freeze i64 %i.akq
   %i.aks = add nsw i32 %.2129.i.i, -2
   %i.akt = zext i32 %i.aks to i64

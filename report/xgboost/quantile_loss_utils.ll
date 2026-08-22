@@ -202,16 +202,16 @@ define linkonce_odr void @_ZN7xgboost6common17QuantileLossParam11__DECLARE__EPN4
   store ptr %i.k, ptr %i.j, align 8, !tbaa !16
   %i.l = getelementptr inbounds nuw i8, ptr %i.e, i64 128 ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.e, i64 144
-  store ptr %i.m, ptr %i.l, align 8, !tbaa !16
+  store ptr %i.m, ptr %i.l, align 16, !tbaa !16
   %i.n = getelementptr inbounds nuw i8, ptr %i.e, i64 160 ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.n, i8 0, i64 24, i1 false)
-  store ptr getelementptr inbounds nuw inrange(-16, 72) (i8, ptr @_ZTVN4dmlc9parameter10FieldEntryIN7xgboost6common10ParamArrayIfEEEE, i64 16), ptr %i.e, align 8, !tbaa !46
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %i.n, i8 0, i64 24, i1 false)
+  store ptr getelementptr inbounds nuw inrange(-16, 72) (i8, ptr @_ZTVN4dmlc9parameter10FieldEntryIN7xgboost6common10ParamArrayIfEEEE, i64 16), ptr %i.e, align 16, !tbaa !46
   invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_assignERKS4_(ptr noundef nonnull align 8 dereferenceable(32) %i.f, ptr noundef nonnull align 8 dereferenceable(32) %3)
           to label %.noexc14 unwind label %bb.c
 
 .noexc14:                                         ; preds = %.noexc13
   %i.o = getelementptr inbounds nuw i8, ptr %i.e, i64 64
-  %i.p = load i64, ptr %i.o, align 8, !tbaa !18
+  %i.p = load i64, ptr %i.o, align 16, !tbaa !18
   %i.q = icmp eq i64 %i.p, 0
   br i1 %i.q, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit.i.i, label %_ZN4dmlc9parameter14FieldEntryBaseINS0_10FieldEntryIN7xgboost6common10ParamArrayIfEEEES6_E4InitERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPvRS6_.exit.i
 

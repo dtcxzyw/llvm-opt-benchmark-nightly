@@ -205,7 +205,7 @@ bb.db:                                            ; preds = %bb.cz, %bb.cy
   store i16 255, ptr %.sroa.9.0..sroa_idx, align 4, !tbaa !324
   %.sroa.10.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.vg, i64 106
   %i.vs = getelementptr inbounds nuw i8, ptr %i.vg, i64 108
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(5) %i.vs, i8 0, i64 5, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(5) %i.vs, i8 0, i64 5, i1 false)
   %.sroa.10401.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.vg, i64 113
   %.sroa.11.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.vg, i64 114
   store i32 0, ptr %.sroa.11.0..sroa_idx, align 2
@@ -608,10 +608,10 @@ bb.a:
   %i.g = getelementptr inbounds nuw i8, ptr %i.e, i64 368
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.g, ptr noundef nonnull align 8 dereferenceable(16) %i.f, i64 16, i1 false), !tbaa.struct !237
   %i.h = getelementptr inbounds nuw i8, ptr %i.e, i64 336 ; 2 uses
-  %i.i = load <4 x float>, ptr %i.h, align 4      ; 2 uses
+  %i.i = load <4 x float>, ptr %i.h, align 8      ; 2 uses
   %.sroa.0.4.vec.insert.i.i = shufflevector <4 x float> %i.i, <4 x float> poison, <2 x i32> <i32 0, i32 1> ; 2 uses
   %.sroa.3.12.vec.insert.i.i = shufflevector <4 x float> %i.i, <4 x float> poison, <2 x i32> <i32 2, i32 3> ; 2 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.f, ptr noundef nonnull readonly align 4 dereferenceable(16) %i.h, i64 16, i1 false), !tbaa.struct !237
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.f, ptr noundef nonnull readonly align 8 dereferenceable(16) %i.h, i64 16, i1 false), !tbaa.struct !237
   %i.j = getelementptr inbounds nuw i8, ptr %i.c, i64 712 ; 3 uses
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !456  ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 96

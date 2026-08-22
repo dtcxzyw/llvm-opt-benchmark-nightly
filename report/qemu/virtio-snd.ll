@@ -202,7 +202,7 @@ bb.d:                                             ; preds = %bb.c
   br label %trace_virtio_snd_get_config.exit
 
 trace_virtio_snd_get_config.exit:                 ; preds = %bb.a, %bb.b, %bb.c, %bb.d
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %1, ptr noundef nonnull align 1 dereferenceable(16) %i.b, i64 noundef 16, i1 noundef false) #10
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %1, ptr noundef nonnull align 8 dereferenceable(16) %i.b, i64 noundef 16, i1 noundef false) #10
   ret void
 }
 
