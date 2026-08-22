@@ -204,7 +204,7 @@ bb.a:
   %i.ba = getelementptr inbounds nuw i8, ptr %i.a, i64 2856
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.ba, ptr noundef nonnull align 16 dereferenceable(56) getelementptr inbounds nuw (i8, ptr @PQconninfoOptions, i64 3264), i64 56, i1 false)
   %i.bb = getelementptr inbounds nuw i8, ptr %i.a, i64 2912
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(56) %i.bb, i8 0, i64 56, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.bb, i8 0, i64 56, i1 false)
   br label %.loopexit
 
 bb.b:                                             ; preds = %bb.a
@@ -607,15 +607,13 @@ bb.d:                                             ; preds = %.lr.ph146
   br i1 %.not151, label %.critedge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.d
-  %5 = trunc nuw nsw i64 %i.g to i32
   %i.i = tail call ptr @__ctype_b_loc() #25
   br label %bb.e
 
 bb.e:                                             ; preds = %.lr.ph, %bb.f
-  %.087135 = phi i32 [ %5, %.lr.ph ], [ %7, %bb.f ] ; 3 uses
+  %indvars.iv = phi i64 [ %i.g, %.lr.ph ], [ %indvars.iv.next, %bb.f ] ; 3 uses
   %i.j = load ptr, ptr %i.i, align 8
-  %6 = zext nneg i32 %.087135 to i64
-  %i.k = getelementptr i8, ptr %i.e, i64 %6
+  %i.k = getelementptr i8, ptr %i.e, i64 %indvars.iv
   %i.l = getelementptr i8, ptr %i.k, i64 -1
   %i.m = load i8, ptr %i.l, align 1
   %i.n = zext i8 %i.m to i64
@@ -626,11 +624,12 @@ bb.e:                                             ; preds = %.lr.ph, %bb.f
   br i1 %.not102, label %.critedge, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %7 = add nsw i32 %.087135, -1                   ; 2 uses
-  %8 = zext nneg i32 %7 to i64
-  %i.r = getelementptr inbounds nuw i8, ptr %i.e, i64 %8
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 2 uses
+  %5 = and i64 %indvars.iv.next, 4294967295
+  %i.r = getelementptr inbounds nuw i8, ptr %i.e, i64 %5
   store i8 0, ptr %i.r, align 1
-  %i.s = icmp sgt i32 %.087135, 1
+  %6 = trunc nuw i64 %indvars.iv to i32
+  %i.s = icmp sgt i32 %6, 1
   br i1 %i.s, label %bb.e, label %.critedge, !llvm.loop !54
 
 .critedge:                                        ; preds = %bb.e, %bb.f, %bb.d

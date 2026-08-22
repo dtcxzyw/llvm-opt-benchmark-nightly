@@ -96,8 +96,7 @@ bb.b:                                             ; preds = %bb.a
   br label %.loopexit
 
 .preheader:                                       ; preds = %bb.a, %bb.e
-  %indvar = phi i64 [ %indvar.next, %bb.e ], [ 0, %bb.a ] ; 2 uses
-  %indvars.iv55 = phi i64 [ %indvars.iv.next56, %bb.e ], [ 8, %bb.a ] ; 8 uses
+  %indvars.iv55 = phi i64 [ %indvars.iv.next56, %bb.e ], [ 8, %bb.a ] ; 9 uses
   %indvars.iv53 = phi i64 [ %indvars.iv.next54, %bb.e ], [ 9, %bb.a ] ; 4 uses
   %.03948 = phi ptr [ %.04047, %bb.e ], [ %i.b, %bb.a ] ; 8 uses
   %.04047 = phi ptr [ %.03948, %bb.e ], [ %i.a, %bb.a ] ; 5 uses
@@ -112,7 +111,7 @@ bb.b:                                             ; preds = %bb.a
   %i.z = sdiv i32 16777216, %spec.store.select    ; 3 uses
   %i.aa = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.t ; 3 uses
   %xtraiter = and i64 %indvars.iv53, 1
-  %i.ab = icmp eq i64 %indvar, 8
+  %i.ab = icmp eq i64 %indvars.iv55, 0
   br i1 %i.ab, label %.epil.preheader, label %.preheader.new
 
 .preheader.new:                                   ; preds = %.preheader
@@ -190,7 +189,6 @@ bb.e:                                             ; preds = %bb.d
   %indvars.iv.next56 = add nsw i64 %indvars.iv55, -1
   %.not60 = icmp eq i64 %indvars.iv55, 0
   %indvars.iv.next54 = add nsw i64 %indvars.iv53, -1
-  %indvar.next = add i64 %indvar, 1
   br i1 %.not60, label %.loopexit, label %.preheader, !llvm.loop !14
 
 .loopexit:                                        ; preds = %bb.e, %bb.d, %bb.b
