@@ -202,7 +202,7 @@ bb.i:                                             ; preds = %bb.e
 ; Function Attrs: inlinehint nonlazybind optsize uwtable
 define internal fastcc noundef nonnull ptr @_RNCNvMs8_NtNtCs1LHh8CLbVkQ_11polars_core9datatypes9any_valueNtB7_8AnyValue11into_static0CshquuC4dCYVj_10polars_sql(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %0) unnamed_addr #4 personality ptr @rust_eh_personality !dbg !13619 {
 bb.a:
-  %i.a = alloca [40 x i8], align 8                ; 7 uses
+  %i.a = alloca [40 x i8], align 16               ; 6 uses
   %i.b = alloca [24 x i8], align 8                ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 23, !dbg !13624
   %i.d = load i8, ptr %i.c, align 1, !dbg !13624, !range !619, !noundef !13
@@ -219,9 +219,7 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.c, %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !dbg !13647
-  store i64 1, ptr %i.a, align 8, !dbg !13647
-  %1 = getelementptr inbounds nuw i8, ptr %i.a, i64 8, !dbg !13647
-  store i64 1, ptr %1, align 8, !dbg !13647
+  store <2 x i64> splat (i64 1), ptr %i.a, align 16, !dbg !13647
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 16, !dbg !13647 ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.f, ptr noundef nonnull align 8 dereferenceable(24) %i.b, i64 24, i1 false), !dbg !13647
   tail call void @_RNvCs9MrPpZx4smZ_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #41, !dbg !13650, !noalias !13658
@@ -624,9 +622,7 @@ bb.f:                                             ; preds = %._crit_edge, %bb.c
   store i64 1, ptr %i.m, align 8, !dbg !14028, !alias.scope !14020, !noalias !14023
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.b, i64 24, i1 false), !dbg !14029
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 24, !dbg !14030
-  store i32 1, ptr %i.q, align 8, !dbg !14030
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 28, !dbg !14030
-  store i32 0, ptr %2, align 4, !dbg !14030
+  store <2 x i32> <i32 1, i32 0>, ptr %i.q, align 8, !dbg !14030
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !14025
   ret void, !dbg !14031
 
@@ -808,9 +804,7 @@ bb.f:                                             ; preds = %._crit_edge, %bb.c
   store i64 1, ptr %i.m, align 8, !dbg !14216, !alias.scope !14208, !noalias !14211
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.b, i64 24, i1 false), !dbg !14217
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 24, !dbg !14218
-  store i32 1, ptr %i.q, align 8, !dbg !14218
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 28, !dbg !14218
-  store i32 0, ptr %2, align 4, !dbg !14218
+  store <2 x i32> <i32 1, i32 0>, ptr %i.q, align 8, !dbg !14218
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !14213
   ret void, !dbg !14219
 
@@ -1213,14 +1207,14 @@ bb.bx:                                            ; preds = %bb.g
 bb.by:                                            ; preds = %bb.g
   %i.gm = getelementptr inbounds nuw i8, ptr %1, i64 16, !dbg !24124
   %i.gn = getelementptr inbounds nuw i8, ptr %1, i64 64, !dbg !24124
-  %2 = load i128, ptr %i.gn, align 16, !dbg !24124, !alias.scope !23778, !noalias !23789, !noundef !13
-  %3 = getelementptr inbounds nuw i8, ptr %1, i64 80, !dbg !24124
-  %4 = load i128, ptr %3, align 16, !dbg !24124, !alias.scope !23778, !noalias !23789, !noundef !13
+  %2 = load <2 x i128>, ptr %i.gn, align 16, !dbg !24124, !alias.scope !23778, !noalias !23789 ; 2 uses
   %i.go = getelementptr inbounds nuw i8, ptr %i.bh, i64 16, !dbg !24129
   call fastcc void @_RNvXsk_NtNtCs1LHh8CLbVkQ_11polars_core9datatypes5dtypeNtB5_8DataTypeNtNtCscgRAwXFJnXP_4core5clone5Clone5clone(ptr noalias noundef align 16 captures(none) dereferenceable(48) %i.go, ptr noalias noundef readonly align 16 captures(address, read_provenance) dereferenceable(48) %i.gm) #45, !dbg !24124
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.bh, i64 64, !dbg !24129
-  store i128 %2, ptr %.sroa.4.0..sroa_idx.i, align 16, !dbg !24129
+  %3 = extractelement <2 x i128> %2, i64 0, !dbg !24129
+  store i128 %3, ptr %.sroa.4.0..sroa_idx.i, align 16, !dbg !24129
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.bh, i64 80, !dbg !24129
+  %4 = extractelement <2 x i128> %2, i64 1, !dbg !24129
   store i128 %4, ptr %.sroa.5.0..sroa_idx.i, align 16, !dbg !24129
   store i8 34, ptr %i.bh, align 16, !dbg !24129
   br label %_RNvXsw_NtNtCsfcROwRM8ZtH_11polars_plan5plans3litNtB5_12LiteralValueNtNtCscgRAwXFJnXP_4core5clone5Clone5clone.exit, !dbg !23855

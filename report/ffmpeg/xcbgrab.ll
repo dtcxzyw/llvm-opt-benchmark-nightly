@@ -64,8 +64,8 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: cold nounwind optsize uwtable
 define internal range(i32 -2147483648, 1) i32 @xcbgrab_read_header(ptr noundef %0) #0 {
 bb.a:
-  %i.a = alloca [5 x i32], align 16               ; 7 uses
-  %1 = alloca %struct.xcb_rectangle_t, align 2    ; 6 uses
+  %i.a = alloca [5 x i32], align 16               ; 6 uses
+  %1 = alloca %struct.xcb_rectangle_t, align 4    ; 5 uses
   %i.b = alloca [2 x i32], align 8                ; 4 uses
   %2 = alloca %struct.xcb_rectangle_t, align 8    ; 11 uses
   %i.c = alloca [2 x i32], align 8                ; 4 uses
@@ -468,20 +468,18 @@ bb.ay:                                            ; preds = %bb.ab, %bb.ak, %bb.
   br label %bb.bc
 
 bb.az:                                            ; preds = %bb.ax
-  %i.im = load ptr, ptr %i.fh, align 8, !tbaa !75 ; 4 uses
-  store i32 0, ptr %i.im, align 8, !tbaa !90
-  %4 = getelementptr inbounds nuw i8, ptr %i.im, i64 4
-  store i32 13, ptr %4, align 4, !tbaa !93
+  %i.im = load ptr, ptr %i.fh, align 8, !tbaa !75 ; 3 uses
+  store <2 x i32> <i32 0, i32 13>, ptr %i.im, align 8, !tbaa !35
   %i.in = getelementptr inbounds nuw i8, ptr %i.im, i64 72
   %i.io = load <2 x i32>, ptr %i.ea, align 4, !tbaa !35
   store <2 x i32> %i.io, ptr %i.in, align 8, !tbaa !35
-  %i.ip = load i32, ptr %i.dn, align 8, !tbaa !94
+  %i.ip = load i32, ptr %i.dn, align 8, !tbaa !90
   %i.iq = sext i32 %i.ip to i64
-  %i.ir = load i32, ptr %i.ey, align 4, !tbaa !95
+  %i.ir = load i32, ptr %i.ey, align 4, !tbaa !91
   %i.is = sext i32 %i.ir to i64
   %i.it = call i64 @av_rescale(i64 noundef %i.ib, i64 noundef %i.iq, i64 noundef %i.is) #13
   %i.iu = getelementptr inbounds nuw i8, ptr %i.im, i64 48
-  store i64 %i.it, ptr %i.iu, align 8, !tbaa !96
+  store i64 %i.it, ptr %i.iu, align 8, !tbaa !92
   %i.iv = load ptr, ptr %i.v, align 8, !tbaa !29  ; 2 uses
   %i.iw = call i32 @xcb_shm_query_version(ptr noundef %i.iv) #11
   %i.ix = call ptr @xcb_shm_query_version_reply(ptr noundef %i.iv, i32 %i.iw, ptr noundef null) #11 ; 2 uses
@@ -495,9 +493,9 @@ bb.ba:                                            ; preds = %bb.az
 check_shm.exit:                                   ; preds = %bb.az, %bb.ba
   %.0.i66 = phi i32 [ 1, %bb.ba ], [ 0, %bb.az ]
   %i.iy = getelementptr inbounds nuw i8, ptr %i.g, i64 128
-  store i32 %.0.i66, ptr %i.iy, align 8, !tbaa !97
+  store i32 %.0.i66, ptr %i.iy, align 8, !tbaa !95
   %i.iz = getelementptr inbounds nuw i8, ptr %i.g, i64 100
-  %i.ja = load i32, ptr %i.iz, align 4, !tbaa !98
+  %i.ja = load i32, ptr %i.iz, align 4, !tbaa !96
   %.not59 = icmp eq i32 %i.ja, 0
   br i1 %.not59, label %bb.bc, label %bb.bb
 
@@ -511,7 +509,7 @@ bb.bb:                                            ; preds = %check_shm.exit
   %i.jf = load ptr, ptr %i.je, align 8, !tbaa !29
   %i.jg = call i32 @xcb_generate_id(ptr noundef %i.jf) #11 ; 2 uses
   %i.jh = getelementptr inbounds nuw i8, ptr %i.jb, i64 24 ; 2 uses
-  store i32 %i.jg, ptr %i.jh, align 8, !tbaa !99
+  store i32 %i.jg, ptr %i.jh, align 8, !tbaa !97
   %i.ji = load ptr, ptr %i.je, align 8, !tbaa !29
   %i.jj = getelementptr inbounds nuw i8, ptr %i.jb, i64 16
   %i.jk = load ptr, ptr %i.jj, align 8, !tbaa !40
@@ -519,7 +517,7 @@ bb.bb:                                            ; preds = %check_shm.exit
   %i.jm = getelementptr inbounds nuw i8, ptr %i.jb, i64 68
   %i.jn = load i32, ptr %i.jm, align 4, !tbaa !66
   %i.jo = getelementptr inbounds nuw i8, ptr %i.jb, i64 104
-  %i.jp = load i32, ptr %i.jo, align 8, !tbaa !100 ; 3 uses
+  %i.jp = load i32, ptr %i.jo, align 8, !tbaa !98 ; 3 uses
   %i.jq = sub nsw i32 %i.jn, %i.jp
   %i.jr = trunc i32 %i.jq to i16
   %i.js = getelementptr inbounds nuw i8, ptr %i.jb, i64 72
@@ -535,7 +533,7 @@ bb.bb:                                            ; preds = %check_shm.exit
   %i.kc = trunc i32 %i.kb to i16
   %i.kd = call i32 @xcb_create_window(ptr noundef %i.ji, i8 noundef zeroext 0, i32 noundef %i.jg, i32 noundef %i.jl, i16 noundef signext %i.jr, i16 noundef signext %i.jv, i16 noundef zeroext %i.jz, i16 noundef zeroext %i.kc, i16 noundef zeroext 0, i16 noundef zeroext 1, i32 noundef 0, i32 noundef 2560, ptr noundef nonnull %i.b) #11 ; 0 uses
   %i.ke = load ptr, ptr %i.je, align 8, !tbaa !29
-  %i.kf = load i32, ptr %i.jh, align 8, !tbaa !99
+  %i.kf = load i32, ptr %i.jh, align 8, !tbaa !97
   %i.kg = call i32 @xcb_map_window(ptr noundef %i.ke, i32 noundef %i.kf) #11 ; 0 uses
   %.val.i = load ptr, ptr %i.f, align 8, !tbaa !9 ; 5 uses
   %i.kh = getelementptr inbounds nuw i8, ptr %.val.i, i64 8 ; 3 uses
@@ -550,16 +548,12 @@ bb.bb:                                            ; preds = %check_shm.exit
   store <2 x i32> %i.ko, ptr %i.a, align 16, !tbaa !35
   %i.kp = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.kq = getelementptr inbounds nuw i8, ptr %.val.i, i64 104
-  %i.kr = load i32, ptr %i.kq, align 8, !tbaa !100 ; 2 uses
+  %i.kr = load i32, ptr %i.kq, align 8, !tbaa !98 ; 2 uses
   store i32 %i.kr, ptr %i.kp, align 8, !tbaa !35
   %i.ks = getelementptr inbounds nuw i8, ptr %i.a, i64 12
-  store i32 2, ptr %i.ks, align 4, !tbaa !35
-  %5 = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  store i32 0, ptr %5, align 16, !tbaa !35
+  store <2 x i32> <i32 2, i32 0>, ptr %i.ks, align 4, !tbaa !35
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #11
-  store i16 1, ptr %1, align 2, !tbaa !55
-  %6 = getelementptr inbounds nuw i8, ptr %1, i64 2
-  store i16 1, ptr %6, align 2, !tbaa !57
+  store <2 x i16> splat (i16 1), ptr %1, align 4, !tbaa !99
   %i.kt = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.ku = getelementptr inbounds nuw i8, ptr %.val.i, i64 76
   %i.kv = shl nsw i32 %i.kr, 1
@@ -569,13 +563,13 @@ bb.bb:                                            ; preds = %check_shm.exit
   %i.kz = add nsw <2 x i32> %i.kw, %i.ky
   %i.la = trunc <2 x i32> %i.kz to <2 x i16>
   %i.lb = add <2 x i16> %i.la, splat (i16 -3)
-  store <2 x i16> %i.lb, ptr %i.kt, align 2, !tbaa !101
+  store <2 x i16> %i.lb, ptr %i.kt, align 4, !tbaa !99
   %i.lc = load ptr, ptr %i.kh, align 8, !tbaa !29
   %i.ld = getelementptr inbounds nuw i8, ptr %.val.i, i64 24 ; 2 uses
-  %i.le = load i32, ptr %i.ld, align 8, !tbaa !99
+  %i.le = load i32, ptr %i.ld, align 8, !tbaa !97
   %i.lf = call i32 @xcb_create_gc(ptr noundef %i.lc, i32 noundef %i.kj, i32 noundef %i.le, i32 noundef 316, ptr noundef nonnull %i.a) #11 ; 0 uses
   %i.lg = load ptr, ptr %i.kh, align 8, !tbaa !29
-  %i.lh = load i32, ptr %i.ld, align 8, !tbaa !99
+  %i.lh = load i32, ptr %i.ld, align 8, !tbaa !97
   %i.li = call i32 @xcb_poly_rectangle(ptr noundef %i.lg, i32 noundef %i.lh, i32 noundef %i.kj, i32 noundef 1, ptr noundef nonnull %1) #11 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #11
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11
@@ -629,7 +623,7 @@ wait_frame.exit:                                  ; preds = %.lr.ph.i, %bb.a
 
 bb.b:                                             ; preds = %wait_frame.exit
   %i.z = getelementptr inbounds nuw i8, ptr %i.f, i64 92
-  %i.aa = load i32, ptr %i.z, align 4, !tbaa !102
+  %i.aa = load i32, ptr %i.z, align 4, !tbaa !100
   %.not69 = icmp eq i32 %i.aa, 0
   br i1 %.not69, label %bb.g, label %bb.c
 
@@ -690,10 +684,10 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.h
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 12
-  %i.ay = load i16, ptr %i.ax, align 4, !tbaa !103
+  %i.ay = load i16, ptr %i.ax, align 4, !tbaa !101
   %i.az = sext i16 %i.ay to i32
   %i.ba = getelementptr inbounds nuw i8, ptr %i.aw, i64 14
-  %i.bb = load i16, ptr %i.ba, align 2, !tbaa !105
+  %i.bb = load i16, ptr %i.ba, align 2, !tbaa !103
   %i.bc = sext i16 %i.bb to i32
   tail call void @free(ptr noundef nonnull %i.aw) #11
   br label %bb.k
@@ -707,7 +701,7 @@ bb.k:                                             ; preds = %bb.j, %bb.g
 
 bb.l:                                             ; preds = %bb.k
   %i.be = getelementptr inbounds nuw i8, ptr %.063, i64 1
-  %i.bf = load i8, ptr %i.be, align 1, !tbaa !106
+  %i.bf = load i8, ptr %i.be, align 1, !tbaa !104
   %.not75 = icmp eq i8 %i.bf, 0
   br i1 %.not75, label %xcbgrab_reposition.exit, label %bb.m
 
@@ -728,10 +722,10 @@ bb.m:                                             ; preds = %bb.l
 
 bb.n:                                             ; preds = %bb.m
   %i.bq = getelementptr inbounds nuw i8, ptr %.063, i64 20
-  %i.br = load i16, ptr %i.bq, align 4, !tbaa !108
+  %i.br = load i16, ptr %i.bq, align 4, !tbaa !106
   %i.bs = sext i16 %i.br to i32                   ; 5 uses
   %i.bt = getelementptr inbounds nuw i8, ptr %.063, i64 22
-  %i.bu = load i16, ptr %i.bt, align 2, !tbaa !109
+  %i.bu = load i16, ptr %i.bt, align 2, !tbaa !107
   %i.bv = sext i16 %i.bu to i32                   ; 5 uses
   %i.bw = icmp eq i32 %i.bp, -1
   br i1 %i.bw, label %bb.o, label %bb.p
@@ -801,7 +795,7 @@ bb.v:                                             ; preds = %bb.u, %bb.t, %bb.o
 
 xcbgrab_reposition.exit:                          ; preds = %bb.v, %bb.m, %bb.l, %bb.k
   %i.da = getelementptr inbounds nuw i8, ptr %i.f, i64 100
-  %i.db = load i32, ptr %i.da, align 4, !tbaa !98
+  %i.db = load i32, ptr %i.da, align 4, !tbaa !96
   %.not76 = icmp eq i32 %i.db, 0
   br i1 %.not76, label %bb.x, label %bb.w
 
@@ -812,7 +806,7 @@ bb.w:                                             ; preds = %xcbgrab_reposition.
   %i.dd = load i32, ptr %i.dc, align 4, !tbaa !66
   %i.de = add nsw i32 %i.dd, %.060
   %i.df = getelementptr inbounds nuw i8, ptr %.val80, i64 104
-  %i.dg = load i32, ptr %i.df, align 8, !tbaa !100 ; 2 uses
+  %i.dg = load i32, ptr %i.df, align 8, !tbaa !98 ; 2 uses
   %i.dh = sub i32 %i.de, %i.dg
   store i32 %i.dh, ptr %i.d, align 4, !tbaa !35
   %i.di = getelementptr inbounds nuw i8, ptr %i.d, i64 4
@@ -824,14 +818,14 @@ bb.w:                                             ; preds = %xcbgrab_reposition.
   %i.dn = getelementptr inbounds nuw i8, ptr %.val80, i64 8
   %i.do = load ptr, ptr %i.dn, align 8, !tbaa !29
   %i.dp = getelementptr inbounds nuw i8, ptr %.val80, i64 24
-  %i.dq = load i32, ptr %i.dp, align 8, !tbaa !99
+  %i.dq = load i32, ptr %i.dp, align 8, !tbaa !97
   %i.dr = call i32 @xcb_configure_window(ptr noundef %i.do, i32 noundef %i.dq, i16 noundef zeroext 3, ptr noundef nonnull %i.d) #11 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #11
   br label %bb.x
 
 bb.x:                                             ; preds = %bb.w, %xcbgrab_reposition.exit
   %i.ds = getelementptr inbounds nuw i8, ptr %i.f, i64 128 ; 3 uses
-  %i.dt = load i32, ptr %i.ds, align 8, !tbaa !97
+  %i.dt = load i32, ptr %i.ds, align 8, !tbaa !95
   %.not77 = icmp eq i32 %i.dt, 0
   br i1 %.not77, label %.thread, label %bb.y
 
@@ -840,12 +834,12 @@ bb.y:                                             ; preds = %bb.x
   %i.dv = getelementptr inbounds nuw i8, ptr %i.du, i64 64
   %i.dw = load i32, ptr %i.dv, align 8, !tbaa !42
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #11
-  store ptr null, ptr %i.b, align 8, !tbaa !110
+  store ptr null, ptr %i.b, align 8, !tbaa !108
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #11
   %i.dx = getelementptr inbounds nuw i8, ptr %i.du, i64 32
   %i.dy = load ptr, ptr %i.dx, align 8, !tbaa !89
   %i.dz = call ptr @av_buffer_pool_get(ptr noundef %i.dy) #11 ; 5 uses
-  store ptr %i.dz, ptr %i.c, align 8, !tbaa !111
+  store ptr %i.dz, ptr %i.c, align 8, !tbaa !109
   %.not.i = icmp eq ptr %i.dz, null
   br i1 %.not.i, label %bb.z, label %bb.aa
 
@@ -876,29 +870,29 @@ bb.aa:                                            ; preds = %bb.y
   %i.et = call ptr @xcb_shm_get_image_reply(ptr noundef %i.es, i32 %i.er, ptr noundef nonnull %i.b) #11
   %i.eu = load ptr, ptr %i.ed, align 8, !tbaa !29
   %i.ev = call i32 @xcb_flush(ptr noundef %i.eu) #11 ; 0 uses
-  %i.ew = load ptr, ptr %i.b, align 8, !tbaa !110 ; 7 uses
+  %i.ew = load ptr, ptr %i.b, align 8, !tbaa !108 ; 7 uses
   %.not22.i = icmp eq ptr %i.ew, null
   br i1 %.not22.i, label %bb.ad, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
-  %i.ex = load i8, ptr %i.ew, align 4, !tbaa !112
+  %i.ex = load i8, ptr %i.ew, align 4, !tbaa !110
   %i.ey = zext i8 %i.ex to i32
   %i.ez = getelementptr inbounds nuw i8, ptr %i.ew, i64 1
-  %i.fa = load i8, ptr %i.ez, align 1, !tbaa !114
+  %i.fa = load i8, ptr %i.ez, align 1, !tbaa !112
   %i.fb = zext i8 %i.fa to i32
   %i.fc = getelementptr inbounds nuw i8, ptr %i.ew, i64 2
-  %i.fd = load i16, ptr %i.fc, align 2, !tbaa !115
+  %i.fd = load i16, ptr %i.fc, align 2, !tbaa !113
   %i.fe = zext i16 %i.fd to i32
   %i.ff = getelementptr inbounds nuw i8, ptr %i.ew, i64 4
-  %i.fg = load i32, ptr %i.ff, align 4, !tbaa !116
+  %i.fg = load i32, ptr %i.ff, align 4, !tbaa !114
   %i.fh = getelementptr inbounds nuw i8, ptr %i.ew, i64 8
-  %i.fi = load i16, ptr %i.fh, align 4, !tbaa !117
+  %i.fi = load i16, ptr %i.fh, align 4, !tbaa !115
   %i.fj = zext i16 %i.fi to i32
   %i.fk = getelementptr inbounds nuw i8, ptr %i.ew, i64 10
-  %i.fl = load i8, ptr %i.fk, align 2, !tbaa !118
+  %i.fl = load i8, ptr %i.fk, align 2, !tbaa !116
   %i.fm = zext i8 %i.fl to i32
   call void (ptr, i32, ptr, ...) @av_log(ptr noundef nonnull %0, i32 noundef 16, ptr noundef nonnull @.str.49, i32 noundef %i.ey, i32 noundef %i.fb, i32 noundef %i.fe, i32 noundef %i.fg, i32 noundef %i.fj, i32 noundef %i.fm) #11
-  %i.fn = load ptr, ptr %i.b, align 8, !tbaa !110
+  %i.fn = load ptr, ptr %i.b, align 8, !tbaa !108
   call void @free(ptr noundef %i.fn) #11
   call void @av_buffer_unref(ptr noundef nonnull %i.c) #11
   br label %bb.ac
@@ -907,23 +901,23 @@ bb.ac:                                            ; preds = %bb.ab, %bb.z
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #11
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #11
   call void (ptr, i32, ptr, ...) @av_log(ptr noundef nonnull %0, i32 noundef 24, ptr noundef nonnull @.str.47) #11
-  store i32 0, ptr %i.ds, align 8, !tbaa !97
+  store i32 0, ptr %i.ds, align 8, !tbaa !95
   br label %.thread
 
 bb.ad:                                            ; preds = %bb.aa
   call void @free(ptr noundef %i.et) #11
-  store ptr %i.dz, ptr %1, align 8, !tbaa !119
+  store ptr %i.dz, ptr %1, align 8, !tbaa !117
   %i.fo = getelementptr inbounds nuw i8, ptr %i.dz, i64 8
-  %i.fp = load ptr, ptr %i.fo, align 8, !tbaa !120
+  %i.fp = load ptr, ptr %i.fo, align 8, !tbaa !118
   %i.fq = getelementptr inbounds nuw i8, ptr %1, i64 24
-  store ptr %i.fp, ptr %i.fq, align 8, !tbaa !123
+  store ptr %i.fp, ptr %i.fq, align 8, !tbaa !121
   %i.fr = getelementptr inbounds nuw i8, ptr %i.du, i64 84
   %i.fs = load i32, ptr %i.fr, align 4, !tbaa !88
   %i.ft = getelementptr inbounds nuw i8, ptr %1, i64 32
-  store i32 %i.fs, ptr %i.ft, align 8, !tbaa !124
+  store i32 %i.fs, ptr %i.ft, align 8, !tbaa !122
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #11
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #11
-  %.pr = load i32, ptr %i.ds, align 8, !tbaa !97
+  %.pr = load i32, ptr %i.ds, align 8, !tbaa !95
   %.not78 = icmp eq i32 %.pr, 0
   br i1 %.not78, label %.thread, label %bb.aj
 
@@ -932,7 +926,7 @@ bb.ad:                                            ; preds = %bb.aa
   %i.fv = getelementptr inbounds nuw i8, ptr %i.fu, i64 64
   %i.fw = load i32, ptr %i.fv, align 8, !tbaa !42
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #11
-  store ptr null, ptr %i.a, align 8, !tbaa !110
+  store ptr null, ptr %i.a, align 8, !tbaa !108
   %i.fx = getelementptr inbounds nuw i8, ptr %i.fu, i64 8 ; 2 uses
   %i.fy = load ptr, ptr %i.fx, align 8, !tbaa !29
   %i.fz = getelementptr inbounds nuw i8, ptr %i.fu, i64 68
@@ -950,29 +944,29 @@ bb.ad:                                            ; preds = %bb.aa
   %i.gl = call i32 @xcb_get_image(ptr noundef %i.fy, i8 noundef zeroext 2, i32 noundef %i.fw, i16 noundef signext %i.gb, i16 noundef signext %i.ge, i16 noundef zeroext %i.gh, i16 noundef zeroext %i.gk, i32 noundef -1) #11
   %i.gm = load ptr, ptr %i.fx, align 8, !tbaa !29
   %i.gn = call ptr @xcb_get_image_reply(ptr noundef %i.gm, i32 %i.gl, ptr noundef nonnull %i.a) #11 ; 5 uses
-  %i.go = load ptr, ptr %i.a, align 8, !tbaa !110 ; 7 uses
+  %i.go = load ptr, ptr %i.a, align 8, !tbaa !108 ; 7 uses
   %.not.i81 = icmp eq ptr %i.go, null
   br i1 %.not.i81, label %bb.af, label %bb.ae
 
 bb.ae:                                            ; preds = %.thread
-  %i.gp = load i8, ptr %i.go, align 4, !tbaa !112
+  %i.gp = load i8, ptr %i.go, align 4, !tbaa !110
   %i.gq = zext i8 %i.gp to i32
   %i.gr = getelementptr inbounds nuw i8, ptr %i.go, i64 1
-  %i.gs = load i8, ptr %i.gr, align 1, !tbaa !114
+  %i.gs = load i8, ptr %i.gr, align 1, !tbaa !112
   %i.gt = zext i8 %i.gs to i32
   %i.gu = getelementptr inbounds nuw i8, ptr %i.go, i64 2
-  %i.gv = load i16, ptr %i.gu, align 2, !tbaa !115
+  %i.gv = load i16, ptr %i.gu, align 2, !tbaa !113
   %i.gw = zext i16 %i.gv to i32
   %i.gx = getelementptr inbounds nuw i8, ptr %i.go, i64 4
-  %i.gy = load i32, ptr %i.gx, align 4, !tbaa !116
+  %i.gy = load i32, ptr %i.gx, align 4, !tbaa !114
   %i.gz = getelementptr inbounds nuw i8, ptr %i.go, i64 8
-  %i.ha = load i16, ptr %i.gz, align 4, !tbaa !117
+  %i.ha = load i16, ptr %i.gz, align 4, !tbaa !115
   %i.hb = zext i16 %i.ha to i32
   %i.hc = getelementptr inbounds nuw i8, ptr %i.go, i64 10
-  %i.hd = load i8, ptr %i.hc, align 2, !tbaa !118
+  %i.hd = load i8, ptr %i.hc, align 2, !tbaa !116
   %i.he = zext i8 %i.hd to i32
   call void (ptr, i32, ptr, ...) @av_log(ptr noundef nonnull %0, i32 noundef 16, ptr noundef nonnull @.str.49, i32 noundef %i.gq, i32 noundef %i.gt, i32 noundef %i.gw, i32 noundef %i.gy, i32 noundef %i.hb, i32 noundef %i.he) #11
-  %i.hf = load ptr, ptr %i.a, align 8, !tbaa !110
+  %i.hf = load ptr, ptr %i.a, align 8, !tbaa !108
   call void @free(ptr noundef %i.hf) #11
   br label %xcbgrab_frame.exit
 
@@ -985,7 +979,7 @@ bb.ag:                                            ; preds = %bb.af
   %i.hh = call i32 @xcb_get_image_data_length(ptr noundef nonnull %i.gn) #11 ; 2 uses
   %i.hi = sext i32 %i.hh to i64
   %i.hj = call ptr @av_buffer_create(ptr noundef %i.hg, i64 noundef %i.hi, ptr noundef nonnull @xcbgrab_image_reply_free, ptr noundef nonnull %i.gn, i32 noundef 0) #11 ; 2 uses
-  store ptr %i.hj, ptr %1, align 8, !tbaa !119
+  store ptr %i.hj, ptr %1, align 8, !tbaa !117
   %.not27.i = icmp eq ptr %i.hj, null
   br i1 %.not27.i, label %bb.ah, label %bb.ai
 
@@ -995,9 +989,9 @@ bb.ah:                                            ; preds = %bb.ag
 
 bb.ai:                                            ; preds = %bb.ag
   %i.hk = getelementptr inbounds nuw i8, ptr %1, i64 24
-  store ptr %i.hg, ptr %i.hk, align 8, !tbaa !123
+  store ptr %i.hg, ptr %i.hk, align 8, !tbaa !121
   %i.hl = getelementptr inbounds nuw i8, ptr %1, i64 32
-  store i32 %i.hh, ptr %i.hl, align 8, !tbaa !124
+  store i32 %i.hh, ptr %i.hl, align 8, !tbaa !122
   br label %xcbgrab_frame.exit
 
 xcbgrab_frame.exit:                               ; preds = %bb.ae, %bb.af, %bb.ah, %bb.ai
@@ -1008,12 +1002,12 @@ xcbgrab_frame.exit:                               ; preds = %bb.ae, %bb.af, %bb.
 bb.aj:                                            ; preds = %xcbgrab_frame.exit, %bb.ad
   %.061 = phi i32 [ 0, %bb.ad ], [ %.0.i82, %xcbgrab_frame.exit ]
   %i.hm = getelementptr inbounds nuw i8, ptr %1, i64 8
-  store i64 %i.w, ptr %i.hm, align 8, !tbaa !125
+  store i64 %i.w, ptr %i.hm, align 8, !tbaa !123
   %i.hn = getelementptr inbounds nuw i8, ptr %1, i64 16
-  store i64 %i.w, ptr %i.hn, align 8, !tbaa !126
+  store i64 %i.w, ptr %i.hn, align 8, !tbaa !124
   %i.ho = load i64, ptr %i.g, align 8, !tbaa !72
   %i.hp = getelementptr inbounds nuw i8, ptr %1, i64 64
-  store i64 %i.ho, ptr %i.hp, align 8, !tbaa !127
+  store i64 %i.ho, ptr %i.hp, align 8, !tbaa !125
   call void @free(ptr noundef %.063) #11
   call void @free(ptr noundef %.062) #11
   br label %bb.ak
@@ -1350,42 +1344,40 @@ attributes #13 = { nounwind willreturn memory(none) }
 !87 = !{!30, !6, i64 88}
 !88 = !{!30, !6, i64 84}
 !89 = !{!30, !33, i64 32}
-!90 = !{!91, !6, i64 0}
-!91 = !{!"AVCodecParameters", !6, i64 0, !6, i64 4, !6, i64 8, !20, i64 16, !6, i64 24, !80, i64 32, !6, i64 40, !6, i64 44, !21, i64 48, !6, i64 56, !6, i64 60, !6, i64 64, !6, i64 68, !6, i64 72, !6, i64 76, !34, i64 80, !34, i64 88, !6, i64 96, !6, i64 100, !6, i64 104, !6, i64 108, !6, i64 112, !6, i64 116, !6, i64 120, !92, i64 128, !6, i64 152, !6, i64 156, !6, i64 160, !6, i64 164, !6, i64 168, !6, i64 172, !6, i64 176}
-!92 = !{!"AVChannelLayout", !6, i64 0, !6, i64 4, !7, i64 8, !12, i64 16}
-!93 = !{!91, !6, i64 4}
-!94 = !{!76, !6, i64 88}
-!95 = !{!76, !6, i64 92}
-!96 = !{!91, !21, i64 48}
-!97 = !{!30, !6, i64 128}
-!98 = !{!30, !6, i64 100}
-!99 = !{!30, !6, i64 24}
-!100 = !{!30, !6, i64 104}
-!101 = !{!45, !45, i64 0}
-!102 = !{!30, !6, i64 92}
-!103 = !{!104, !45, i64 12}
-!104 = !{!"xcb_translate_coordinates_reply_t", !7, i64 0, !7, i64 1, !45, i64 2, !6, i64 4, !6, i64 8, !45, i64 12, !45, i64 14}
-!105 = !{!104, !45, i64 14}
-!106 = !{!107, !7, i64 1}
-!107 = !{!"xcb_query_pointer_reply_t", !7, i64 0, !7, i64 1, !45, i64 2, !6, i64 4, !6, i64 8, !6, i64 12, !45, i64 16, !45, i64 18, !45, i64 20, !45, i64 22, !45, i64 24, !7, i64 26}
-!108 = !{!107, !45, i64 20}
-!109 = !{!107, !45, i64 22}
-!110 = !{!12, !12, i64 0}
-!111 = !{!79, !79, i64 0}
-!112 = !{!113, !7, i64 0}
-!113 = !{!"", !7, i64 0, !7, i64 1, !45, i64 2, !6, i64 4, !45, i64 8, !7, i64 10, !7, i64 11, !7, i64 12, !6, i64 32}
-!114 = !{!113, !7, i64 1}
-!115 = !{!113, !45, i64 2}
-!116 = !{!113, !6, i64 4}
-!117 = !{!113, !45, i64 8}
-!118 = !{!113, !7, i64 10}
-!119 = !{!78, !79, i64 0}
-!120 = !{!121, !20, i64 8}
-!121 = !{!"AVBufferRef", !122, i64 0, !20, i64 8, !21, i64 16}
-!122 = !{!"p1 _ZTS8AVBuffer", !12, i64 0}
-!123 = !{!78, !20, i64 24}
-!124 = !{!78, !6, i64 32}
-!125 = !{!78, !21, i64 8}
-!126 = !{!78, !21, i64 16}
-!127 = !{!78, !21, i64 64}
+!90 = !{!76, !6, i64 88}
+!91 = !{!76, !6, i64 92}
+!92 = !{!93, !21, i64 48}
+!93 = !{!"AVCodecParameters", !6, i64 0, !6, i64 4, !6, i64 8, !20, i64 16, !6, i64 24, !80, i64 32, !6, i64 40, !6, i64 44, !21, i64 48, !6, i64 56, !6, i64 60, !6, i64 64, !6, i64 68, !6, i64 72, !6, i64 76, !34, i64 80, !34, i64 88, !6, i64 96, !6, i64 100, !6, i64 104, !6, i64 108, !6, i64 112, !6, i64 116, !6, i64 120, !94, i64 128, !6, i64 152, !6, i64 156, !6, i64 160, !6, i64 164, !6, i64 168, !6, i64 172, !6, i64 176}
+!94 = !{!"AVChannelLayout", !6, i64 0, !6, i64 4, !7, i64 8, !12, i64 16}
+!95 = !{!30, !6, i64 128}
+!96 = !{!30, !6, i64 100}
+!97 = !{!30, !6, i64 24}
+!98 = !{!30, !6, i64 104}
+!99 = !{!45, !45, i64 0}
+!100 = !{!30, !6, i64 92}
+!101 = !{!102, !45, i64 12}
+!102 = !{!"xcb_translate_coordinates_reply_t", !7, i64 0, !7, i64 1, !45, i64 2, !6, i64 4, !6, i64 8, !45, i64 12, !45, i64 14}
+!103 = !{!102, !45, i64 14}
+!104 = !{!105, !7, i64 1}
+!105 = !{!"xcb_query_pointer_reply_t", !7, i64 0, !7, i64 1, !45, i64 2, !6, i64 4, !6, i64 8, !6, i64 12, !45, i64 16, !45, i64 18, !45, i64 20, !45, i64 22, !45, i64 24, !7, i64 26}
+!106 = !{!105, !45, i64 20}
+!107 = !{!105, !45, i64 22}
+!108 = !{!12, !12, i64 0}
+!109 = !{!79, !79, i64 0}
+!110 = !{!111, !7, i64 0}
+!111 = !{!"", !7, i64 0, !7, i64 1, !45, i64 2, !6, i64 4, !45, i64 8, !7, i64 10, !7, i64 11, !7, i64 12, !6, i64 32}
+!112 = !{!111, !7, i64 1}
+!113 = !{!111, !45, i64 2}
+!114 = !{!111, !6, i64 4}
+!115 = !{!111, !45, i64 8}
+!116 = !{!111, !7, i64 10}
+!117 = !{!78, !79, i64 0}
+!118 = !{!119, !20, i64 8}
+!119 = !{!"AVBufferRef", !120, i64 0, !20, i64 8, !21, i64 16}
+!120 = !{!"p1 _ZTS8AVBuffer", !12, i64 0}
+!121 = !{!78, !20, i64 24}
+!122 = !{!78, !6, i64 32}
+!123 = !{!78, !21, i64 8}
+!124 = !{!78, !21, i64 16}
+!125 = !{!78, !21, i64 64}
 end_hunk_1

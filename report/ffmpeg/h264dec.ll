@@ -204,7 +204,7 @@ declare i32 @ff_h264_update_thread_context_for_user(ptr noundef, ptr noundef) #3
 define internal range(i32 -2147483648, 1) i32 @h264_decode_init(ptr noundef %0) #6 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !9    ; 32 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !9    ; 31 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 2 uses
   store ptr %0, ptr %i.c, align 8, !tbaa !76
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 35856
@@ -219,14 +219,12 @@ bb.a:
   store i32 %i.i, ptr %i.j, align 8, !tbaa !163
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.l = load i32, ptr %i.k, align 8, !tbaa !164
-  %1 = getelementptr inbounds nuw i8, ptr %i.b, i64 30116
-  store i32 %i.l, ptr %1, align 4, !tbaa !165
-  %i.m = getelementptr inbounds nuw i8, ptr %i.b, i64 34128
-  store i32 65536, ptr %i.m, align 8, !tbaa !150
-  %i.n = getelementptr inbounds nuw i8, ptr %i.b, i64 35836
-  store i32 -1, ptr %i.n, align 4, !tbaa !157
-  %i.o = getelementptr inbounds nuw i8, ptr %i.b, i64 35840
-  store i32 0, ptr %i.o, align 8, !tbaa !158
+  %i.m = getelementptr inbounds nuw i8, ptr %i.b, i64 30116
+  store i32 %i.l, ptr %i.m, align 4, !tbaa !165
+  %i.n = getelementptr inbounds nuw i8, ptr %i.b, i64 34128
+  store i32 65536, ptr %i.n, align 8, !tbaa !150
+  %i.o = getelementptr inbounds nuw i8, ptr %i.b, i64 35836
+  store <2 x i32> <i32 -1, i32 0>, ptr %i.o, align 4, !tbaa !86
   %i.p = getelementptr inbounds nuw i8, ptr %i.b, i64 34144
   store i32 -1, ptr %i.p, align 8, !tbaa !152
   %i.q = getelementptr inbounds nuw i8, ptr %i.b, i64 36568

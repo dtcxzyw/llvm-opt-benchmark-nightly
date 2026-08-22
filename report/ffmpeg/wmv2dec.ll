@@ -204,23 +204,11 @@ declare void @ff_er_add_slice(ptr noundef, i32 noundef, i32 noundef, i32 noundef
 define internal i32 @wmv2_decode_init(ptr noundef %0) #5 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !128  ; 15 uses
-  %1 = getelementptr inbounds nuw i8, ptr %i.b, i64 6224
-  store ptr @ff_put_pixels8x8_c, ptr %1, align 16, !tbaa !56
-  %2 = getelementptr inbounds nuw i8, ptr %i.b, i64 6232
-  store ptr @put_mspel8_mc10_c, ptr %2, align 8, !tbaa !56
-  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 6240
-  store ptr @put_mspel8_mc20_c, ptr %3, align 16, !tbaa !56
-  %4 = getelementptr inbounds nuw i8, ptr %i.b, i64 6248
-  store ptr @put_mspel8_mc30_c, ptr %4, align 8, !tbaa !56
-  %5 = getelementptr inbounds nuw i8, ptr %i.b, i64 6256
-  store ptr @put_mspel8_mc02_c, ptr %5, align 16, !tbaa !56
-  %6 = getelementptr inbounds nuw i8, ptr %i.b, i64 6264
-  store ptr @put_mspel8_mc12_c, ptr %6, align 8, !tbaa !56
-  %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 6272
-  store ptr @put_mspel8_mc22_c, ptr %i.c, align 16, !tbaa !56
-  %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 6280
-  store ptr @put_mspel8_mc32_c, ptr %i.d, align 8, !tbaa !56
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !128  ; 9 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 6224
+  store <4 x ptr> <ptr @ff_put_pixels8x8_c, ptr @put_mspel8_mc10_c, ptr @put_mspel8_mc20_c, ptr @put_mspel8_mc30_c>, ptr %i.c, align 16, !tbaa !56
+  %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 6256
+  store <4 x ptr> <ptr @put_mspel8_mc02_c, ptr @put_mspel8_mc12_c, ptr @put_mspel8_mc22_c, ptr @put_mspel8_mc32_c>, ptr %i.d, align 16, !tbaa !56
   %i.e = tail call i32 @ff_msmpeg4_decode_init(ptr noundef %0) #9 ; 2 uses
   %i.f = icmp slt i32 %i.e, 0
   br i1 %i.f, label %bb.c, label %bb.b

@@ -28,7 +28,7 @@ target triple = "x86_64-pc-linux-gnu"
 define internal range(i32 -1094995529, 1) i32 @decode_init(ptr noundef initializes((136, 140)) %0) #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !9    ; 11 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !9    ; 10 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 136
   store i32 11, ptr %i.c, align 8, !tbaa !29
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 72
@@ -64,10 +64,8 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not54, label %.sink.split, label %bb.d
 
 .thread:                                          ; preds = %bb.a
-  %1 = getelementptr inbounds nuw i8, ptr %i.b, i64 76
-  store i32 8, ptr %1, align 4, !tbaa !32
   %i.w = getelementptr inbounds nuw i8, ptr %i.b, i64 72
-  store i32 0, ptr %i.w, align 8, !tbaa !35
+  store <2 x i32> <i32 0, i32 8>, ptr %i.w, align 8, !tbaa !37
   %i.x = getelementptr inbounds nuw i8, ptr %i.b, i64 72
   br label %.preheader
 

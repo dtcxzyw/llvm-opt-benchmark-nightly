@@ -202,8 +202,7 @@ vector.ph:
   tail call fastcc void @rv10_build_vlc(ptr noundef nonnull @rv_dc_lum, i32 noundef 1472, ptr noundef nonnull @rv_lum_len_count, i32 noundef 19) #11
   store <8 x i16> <i16 255, i16 18, i16 255, i16 18, i16 255, i16 18, i16 255, i16 18>, ptr getelementptr inbounds nuw (i8, ptr @rv_dc_lum, i64 2032), align 16, !tbaa !15
   tail call fastcc void @rv10_build_vlc(ptr noundef nonnull @rv_dc_chrom, i32 noundef 992, ptr noundef nonnull @rv_chrom_len_count, i32 noundef 17) #11
-  store i16 255, ptr getelementptr inbounds nuw (i8, ptr @rv_dc_chrom, i64 2040), align 8, !tbaa !15
-  store i16 18, ptr getelementptr inbounds nuw (i8, ptr @rv_dc_chrom, i64 2042), align 2, !tbaa !15
+  store <2 x i16> <i16 255, i16 18>, ptr getelementptr inbounds nuw (i8, ptr @rv_dc_chrom, i64 2040), align 8, !tbaa !15
   ret void
 }
 

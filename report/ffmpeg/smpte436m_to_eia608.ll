@@ -16,10 +16,8 @@ target triple = "x86_64-pc-linux-gnu"
 define internal noundef i32 @ff_smpte436m_to_eia608_init(ptr nofree noundef readonly captures(none) %0) #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !9    ; 2 uses
-  store i32 3, ptr %i.b, align 8, !tbaa !16
-  %1 = getelementptr inbounds nuw i8, ptr %i.b, i64 4
-  store i32 94218, ptr %1, align 4, !tbaa !22
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !9
+  store <2 x i32> <i32 3, i32 94218>, ptr %i.b, align 8, !tbaa !16
   ret i32 0
 }
 
@@ -37,11 +35,11 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #4
-  %i.d = load ptr, ptr %i.a, align 8, !tbaa !23   ; 2 uses
+  %i.d = load ptr, ptr %i.a, align 8, !tbaa !17   ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 24
-  %i.f = load ptr, ptr %i.e, align 8, !tbaa !25
+  %i.f = load ptr, ptr %i.e, align 8, !tbaa !19
   %i.g = getelementptr inbounds nuw i8, ptr %i.d, i64 32
-  %i.h = load i32, ptr %i.g, align 8, !tbaa !28
+  %i.h = load i32, ptr %i.g, align 8, !tbaa !25
   %i.i = call i32 @av_smpte_436m_anc_iter_init(ptr noundef nonnull %2, ptr noundef %i.f, i32 noundef %i.h) #4 ; 2 uses
   %i.j = icmp slt i32 %i.i, 0
   br i1 %i.j, label %bb.i, label %.preheader
@@ -59,8 +57,8 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %.lr.ph, %bb.h
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #4
-  %i.p = load i32, ptr %i.m, align 4, !tbaa !29
-  %i.q = load i16, ptr %i.n, align 4, !tbaa !32
+  %i.p = load i32, ptr %i.m, align 4, !tbaa !26
+  %i.q = load i16, ptr %i.n, align 4, !tbaa !29
   %i.r = call i32 @av_smpte_291m_anc_8bit_decode(ptr noundef nonnull %4, i32 noundef %i.p, i16 noundef zeroext %i.q, ptr noundef nonnull %i.o, ptr noundef %0) #4 ; 2 uses
   %i.s = icmp slt i32 %i.r, 0
   br i1 %i.s, label %.thread, label %bb.d
@@ -68,7 +66,7 @@ bb.c:                                             ; preds = %.lr.ph, %bb.h
 bb.d:                                             ; preds = %bb.c
   %i.t = call i32 @av_smpte_291m_anc_8bit_extract_cta_708(ptr noundef nonnull %4, ptr noundef null, ptr noundef %0) #4 ; 4 uses
   %i.u = icmp eq i32 %i.t, -11
-  br i1 %i.u, label %bb.h, label %bb.e, !llvm.loop !33
+  br i1 %i.u, label %bb.h, label %bb.e, !llvm.loop !30
 
 bb.e:                                             ; preds = %bb.d
   %i.v = icmp slt i32 %i.t, 0
@@ -81,14 +79,14 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.y, label %.thread, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.z = load ptr, ptr %i.a, align 8, !tbaa !23
+  %i.z = load ptr, ptr %i.a, align 8, !tbaa !17
   %i.aa = call i32 @av_packet_copy_props(ptr noundef %1, ptr noundef %i.z) #4 ; 2 uses
   %i.ab = icmp slt i32 %i.aa, 0
   br i1 %i.ab, label %.thread, label %.thread38
 
 .thread38:                                        ; preds = %bb.g
   %i.ac = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !25
+  %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !19
   %i.ae = call i32 @av_smpte_291m_anc_8bit_extract_cta_708(ptr noundef nonnull %4, ptr noundef %i.ad, ptr noundef %0) #4 ; 0 uses
   call void @av_packet_free(ptr noundef nonnull %i.a) #4
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #4
@@ -178,23 +176,20 @@ attributes #4 = { nounwind }
 !13 = !{!"p1 _ZTS17AVBitStreamFilter", !12, i64 0}
 !14 = !{!"p1 _ZTS17AVCodecParameters", !12, i64 0}
 !15 = !{!"AVRational", !6, i64 0, !6, i64 4}
-!16 = !{!17, !6, i64 0}
-!17 = !{!"AVCodecParameters", !6, i64 0, !6, i64 4, !6, i64 8, !18, i64 16, !6, i64 24, !19, i64 32, !6, i64 40, !6, i64 44, !20, i64 48, !6, i64 56, !6, i64 60, !6, i64 64, !6, i64 68, !6, i64 72, !6, i64 76, !15, i64 80, !15, i64 88, !6, i64 96, !6, i64 100, !6, i64 104, !6, i64 108, !6, i64 112, !6, i64 116, !6, i64 120, !21, i64 128, !6, i64 152, !6, i64 156, !6, i64 160, !6, i64 164, !6, i64 168, !6, i64 172, !6, i64 176}
-!18 = !{!"p1 omnipotent char", !12, i64 0}
-!19 = !{!"p1 _ZTS16AVPacketSideData", !12, i64 0}
-!20 = !{!"long", !7, i64 0}
-!21 = !{!"AVChannelLayout", !6, i64 0, !6, i64 4, !7, i64 8, !12, i64 16}
-!22 = !{!17, !6, i64 4}
-!23 = !{!24, !24, i64 0}
-!24 = !{!"p1 _ZTS8AVPacket", !12, i64 0}
-!25 = !{!26, !18, i64 24}
-!26 = !{!"AVPacket", !27, i64 0, !20, i64 8, !20, i64 16, !18, i64 24, !6, i64 32, !6, i64 36, !6, i64 40, !19, i64 48, !6, i64 56, !20, i64 64, !20, i64 72, !12, i64 80, !27, i64 88, !15, i64 96}
-!27 = !{!"p1 _ZTS11AVBufferRef", !12, i64 0}
-!28 = !{!26, !6, i64 32}
-!29 = !{!30, !6, i64 8}
-!30 = !{!"AVSmpte436mCodedAnc", !31, i64 0, !6, i64 4, !6, i64 8, !31, i64 12, !6, i64 16, !7, i64 20}
-!31 = !{!"short", !7, i64 0}
-!32 = !{!30, !31, i64 12}
-!33 = distinct !{!33, !34}
-!34 = !{!"llvm.loop.mustprogress"}
+!16 = !{!6, !6, i64 0}
+!17 = !{!18, !18, i64 0}
+!18 = !{!"p1 _ZTS8AVPacket", !12, i64 0}
+!19 = !{!20, !23, i64 24}
+!20 = !{!"AVPacket", !21, i64 0, !22, i64 8, !22, i64 16, !23, i64 24, !6, i64 32, !6, i64 36, !6, i64 40, !24, i64 48, !6, i64 56, !22, i64 64, !22, i64 72, !12, i64 80, !21, i64 88, !15, i64 96}
+!21 = !{!"p1 _ZTS11AVBufferRef", !12, i64 0}
+!22 = !{!"long", !7, i64 0}
+!23 = !{!"p1 omnipotent char", !12, i64 0}
+!24 = !{!"p1 _ZTS16AVPacketSideData", !12, i64 0}
+!25 = !{!20, !6, i64 32}
+!26 = !{!27, !6, i64 8}
+!27 = !{!"AVSmpte436mCodedAnc", !28, i64 0, !6, i64 4, !6, i64 8, !28, i64 12, !6, i64 16, !7, i64 20}
+!28 = !{!"short", !7, i64 0}
+!29 = !{!27, !28, i64 12}
+!30 = distinct !{!30, !31}
+!31 = !{!"llvm.loop.mustprogress"}
 end_hunk_0

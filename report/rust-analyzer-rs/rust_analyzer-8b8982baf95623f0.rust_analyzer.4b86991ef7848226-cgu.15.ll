@@ -205,92 +205,92 @@ bb.a:
   %i.x = alloca [2048 x i8], align 8              ; 4 uses
   %i.y = alloca [8 x i8], align 8                 ; 4 uses
   %i.z = alloca [8 x i8], align 8                 ; 4 uses
-  %i.aa = alloca [8 x i8], align 8                ; 6 uses
+  %i.aa = alloca [8 x i8], align 8                ; 5 uses
   %i.ab = alloca [40 x i8], align 8               ; 5 uses
   %i.ac = alloca [8 x i8], align 8                ; 4 uses
-  %i.ad = alloca [8 x i8], align 8                ; 6 uses
+  %i.ad = alloca [8 x i8], align 8                ; 5 uses
   %i.ae = alloca [40 x i8], align 8               ; 5 uses
   %i.af = alloca [8 x i8], align 8                ; 4 uses
-  %i.ag = alloca [8 x i8], align 8                ; 6 uses
+  %i.ag = alloca [8 x i8], align 8                ; 5 uses
   %i.ah = alloca [40 x i8], align 8               ; 5 uses
   %i.ai = alloca [8 x i8], align 8                ; 4 uses
-  %i.aj = alloca [8 x i8], align 8                ; 6 uses
+  %i.aj = alloca [8 x i8], align 8                ; 5 uses
   %i.ak = alloca [40 x i8], align 8               ; 5 uses
   %i.al = alloca [8 x i8], align 8                ; 4 uses
-  %i.am = alloca [8 x i8], align 8                ; 6 uses
+  %i.am = alloca [8 x i8], align 8                ; 5 uses
   %i.an = alloca [40 x i8], align 8               ; 5 uses
   %i.ao = alloca [8 x i8], align 8                ; 4 uses
-  %i.ap = alloca [8 x i8], align 8                ; 6 uses
+  %i.ap = alloca [8 x i8], align 8                ; 5 uses
   %i.aq = alloca [40 x i8], align 8               ; 5 uses
   %i.ar = alloca [8 x i8], align 8                ; 4 uses
-  %i.as = alloca [8 x i8], align 8                ; 6 uses
+  %i.as = alloca [8 x i8], align 8                ; 5 uses
   %i.at = alloca [40 x i8], align 8               ; 5 uses
   %i.au = alloca [8 x i8], align 8                ; 4 uses
-  %i.av = alloca [8 x i8], align 8                ; 6 uses
+  %i.av = alloca [8 x i8], align 8                ; 5 uses
   %i.aw = alloca [40 x i8], align 8               ; 5 uses
   %i.ax = alloca [8 x i8], align 8                ; 4 uses
-  %i.ay = alloca [8 x i8], align 8                ; 6 uses
+  %i.ay = alloca [8 x i8], align 8                ; 5 uses
   %i.az = alloca [40 x i8], align 8               ; 5 uses
   %i.ba = alloca [8 x i8], align 8                ; 4 uses
-  %i.bb = alloca [8 x i8], align 8                ; 6 uses
+  %i.bb = alloca [8 x i8], align 8                ; 5 uses
   %i.bc = alloca [40 x i8], align 8               ; 5 uses
   %i.bd = alloca [8 x i8], align 8                ; 4 uses
-  %i.be = alloca [8 x i8], align 8                ; 6 uses
+  %i.be = alloca [8 x i8], align 8                ; 5 uses
   %i.bf = alloca [40 x i8], align 8               ; 5 uses
   %i.bg = alloca [8 x i8], align 8                ; 4 uses
-  %i.bh = alloca [8 x i8], align 8                ; 6 uses
+  %i.bh = alloca [8 x i8], align 8                ; 5 uses
   %i.bi = alloca [40 x i8], align 8               ; 5 uses
   %i.bj = alloca [8 x i8], align 8                ; 4 uses
-  %i.bk = alloca [8 x i8], align 8                ; 6 uses
+  %i.bk = alloca [8 x i8], align 8                ; 5 uses
   %i.bl = alloca [40 x i8], align 8               ; 5 uses
   %i.bm = alloca [8 x i8], align 8                ; 4 uses
-  %i.bn = alloca [8 x i8], align 8                ; 6 uses
+  %i.bn = alloca [8 x i8], align 8                ; 5 uses
   %i.bo = alloca [40 x i8], align 8               ; 5 uses
   %i.bp = alloca [8 x i8], align 8                ; 4 uses
-  %i.bq = alloca [8 x i8], align 8                ; 6 uses
+  %i.bq = alloca [8 x i8], align 8                ; 5 uses
   %i.br = alloca [40 x i8], align 8               ; 5 uses
   %i.bs = alloca [8 x i8], align 8                ; 4 uses
-  %i.bt = alloca [8 x i8], align 8                ; 6 uses
+  %i.bt = alloca [8 x i8], align 8                ; 5 uses
   %i.bu = alloca [40 x i8], align 8               ; 5 uses
   %i.bv = alloca [8 x i8], align 8                ; 4 uses
-  %i.bw = alloca [8 x i8], align 8                ; 6 uses
+  %i.bw = alloca [8 x i8], align 8                ; 5 uses
   %i.bx = alloca [40 x i8], align 8               ; 5 uses
   %i.by = alloca [8 x i8], align 8                ; 4 uses
-  %i.bz = alloca [8 x i8], align 8                ; 6 uses
+  %i.bz = alloca [8 x i8], align 8                ; 5 uses
   %i.ca = alloca [40 x i8], align 8               ; 5 uses
   %i.cb = alloca [8 x i8], align 8                ; 4 uses
-  %i.cc = alloca [8 x i8], align 8                ; 6 uses
+  %i.cc = alloca [8 x i8], align 8                ; 5 uses
   %i.cd = alloca [40 x i8], align 8               ; 5 uses
   %i.ce = alloca [8 x i8], align 8                ; 4 uses
-  %i.cf = alloca [8 x i8], align 8                ; 6 uses
+  %i.cf = alloca [8 x i8], align 8                ; 5 uses
   %i.cg = alloca [40 x i8], align 8               ; 5 uses
   %i.ch = alloca [8 x i8], align 8                ; 4 uses
-  %i.ci = alloca [8 x i8], align 8                ; 6 uses
+  %i.ci = alloca [8 x i8], align 8                ; 5 uses
   %i.cj = alloca [40 x i8], align 8               ; 5 uses
   %i.ck = alloca [8 x i8], align 8                ; 4 uses
-  %i.cl = alloca [8 x i8], align 8                ; 6 uses
+  %i.cl = alloca [8 x i8], align 8                ; 5 uses
   %i.cm = alloca [40 x i8], align 8               ; 5 uses
   %i.cn = alloca [8 x i8], align 8                ; 4 uses
-  %i.co = alloca [8 x i8], align 8                ; 6 uses
+  %i.co = alloca [8 x i8], align 8                ; 5 uses
   %i.cp = alloca [40 x i8], align 8               ; 5 uses
   %i.cq = alloca [8 x i8], align 8                ; 4 uses
-  %i.cr = alloca [8 x i8], align 8                ; 6 uses
+  %i.cr = alloca [8 x i8], align 8                ; 5 uses
   %i.cs = alloca [40 x i8], align 8               ; 5 uses
   %i.ct = alloca [8 x i8], align 8                ; 4 uses
-  %i.cu = alloca [8 x i8], align 8                ; 6 uses
+  %i.cu = alloca [8 x i8], align 8                ; 5 uses
   %i.cv = alloca [40 x i8], align 8               ; 5 uses
   %i.cw = alloca [8 x i8], align 8                ; 4 uses
-  %i.cx = alloca [8 x i8], align 8                ; 6 uses
+  %i.cx = alloca [8 x i8], align 8                ; 5 uses
   %i.cy = alloca [40 x i8], align 8               ; 5 uses
   %i.cz = alloca [8 x i8], align 8                ; 4 uses
   %i.da = alloca [8 x i8], align 8                ; 4 uses
-  %i.db = alloca [8 x i8], align 8                ; 6 uses
+  %i.db = alloca [8 x i8], align 8                ; 5 uses
   %i.dc = alloca [40 x i8], align 8               ; 5 uses
   %i.dd = alloca [36 x i8], align 4               ; 4 uses
   %i.de = alloca [36 x i8], align 4               ; 4 uses
   %i.df = alloca [32 x i8], align 8               ; 4 uses
   %.sroa.491.i.i = alloca [2048 x i8], align 8    ; 4 uses
-  %i.dg = alloca [32 x i8], align 8               ; 7 uses
+  %i.dg = alloca [32 x i8], align 8               ; 6 uses
   %i.dh = alloca [32 x i8], align 8               ; 7 uses
   %i.di = alloca [32 x i8], align 8               ; 8 uses
   %i.dj = alloca [32 x i8], align 8               ; 5 uses
@@ -323,9 +323,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.eh), !noalias !5331
   store i32 9, ptr %i.eh, align 8, !noalias !5331
   call void @llvm.lifetime.start.p0(ptr nonnull %i.db), !noalias !5338
-  store i32 0, ptr %i.db, align 8, !noalias !5338
-  %0 = getelementptr inbounds nuw i8, ptr %i.db, i64 4
-  store i32 0, ptr %0, align 4, !noalias !5338
+  store <2 x i32> zeroinitializer, ptr %i.db, align 8, !noalias !5338
   call fastcc void @_RNvMNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir5flagsINtB2_15FlagComputationNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerE8add_kindCs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef align 4 dereferenceable(8) %i.db, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.eh), !noalias !5331
   %.sroa.4.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.dc, i64 32
   %i.ei = load <2 x i32>, ptr %i.db, align 8, !noalias !5338
@@ -427,9 +425,7 @@ _RNCNCNvNtCs8K4cjrcxBsw_6hir_ty11next_solver13default_types0sb_0Cs6u1mgJOKDyY_13
   %.sroa.45.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.ef, i64 8
   store ptr %i.ez, ptr %.sroa.45.0..sroa_idx.i.i, align 8, !noalias !5331
   call void @llvm.lifetime.start.p0(ptr nonnull %i.cx), !noalias !5359
-  store i32 0, ptr %i.cx, align 8, !noalias !5359
-  %1 = getelementptr inbounds nuw i8, ptr %i.cx, i64 4
-  store i32 0, ptr %1, align 4, !noalias !5359
+  store <2 x i32> zeroinitializer, ptr %i.cx, align 8, !noalias !5359
   call fastcc void @_RNvMNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir5flagsINtB2_15FlagComputationNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerE8add_kindCs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef align 4 dereferenceable(8) %i.cx, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.ef), !noalias !5331
   %.sroa.4.0..sroa_idx.i119.i.i = getelementptr inbounds nuw i8, ptr %i.cy, i64 32
   %i.fc = load <2 x i32>, ptr %i.cx, align 8, !noalias !5359
@@ -479,9 +475,7 @@ _RNCNCNvNtCs8K4cjrcxBsw_6hir_ty11next_solver13default_types00Cs6u1mgJOKDyY_13rus
   %.sroa.47.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.ee, i64 4
   store i8 1, ptr %.sroa.47.0..sroa_idx.i.i, align 4, !noalias !5331
   call void @llvm.lifetime.start.p0(ptr nonnull %i.cu), !noalias !5369
-  store i32 0, ptr %i.cu, align 8, !noalias !5369
-  %2 = getelementptr inbounds nuw i8, ptr %i.cu, i64 4
-  store i32 0, ptr %2, align 4, !noalias !5369
+  store <2 x i32> zeroinitializer, ptr %i.cu, align 8, !noalias !5369
   call fastcc void @_RNvMNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir5flagsINtB2_15FlagComputationNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerE8add_kindCs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef align 4 dereferenceable(8) %i.cu, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.ee), !noalias !5331
   %.sroa.4.0..sroa_idx.i123.i.i = getelementptr inbounds nuw i8, ptr %i.cv, i64 32
   %i.fl = load <2 x i32>, ptr %i.cu, align 8, !noalias !5369
@@ -531,9 +525,7 @@ _RNCNCNvNtCs8K4cjrcxBsw_6hir_ty11next_solver13default_types00Cs6u1mgJOKDyY_13rus
   %.sroa.411.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.ed, i64 8
   store ptr %i.fm, ptr %.sroa.411.0..sroa_idx.i.i, align 8, !noalias !5331
   call void @llvm.lifetime.start.p0(ptr nonnull %i.cr), !noalias !5379
-  store i32 0, ptr %i.cr, align 8, !noalias !5379
-  %3 = getelementptr inbounds nuw i8, ptr %i.cr, i64 4
-  store i32 0, ptr %3, align 4, !noalias !5379
+  store <2 x i32> zeroinitializer, ptr %i.cr, align 8, !noalias !5379
   call fastcc void @_RNvMNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir5flagsINtB2_15FlagComputationNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerE8add_kindCs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef align 4 dereferenceable(8) %i.cr, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.ed), !noalias !5331
   %.sroa.4.0..sroa_idx.i127.i.i = getelementptr inbounds nuw i8, ptr %i.cs, i64 32
   %i.fu = load <2 x i32>, ptr %i.cr, align 8, !noalias !5379
@@ -587,9 +579,7 @@ _RNCNCNvNtCs8K4cjrcxBsw_6hir_ty11next_solver13default_types00Cs6u1mgJOKDyY_13rus
   %.sroa.6.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.ec, i64 24
   store i8 0, ptr %.sroa.6.0..sroa_idx.i.i, align 8, !noalias !5331
   call void @llvm.lifetime.start.p0(ptr nonnull %i.co), !noalias !5389
-  store i32 0, ptr %i.co, align 8, !noalias !5389
-  %4 = getelementptr inbounds nuw i8, ptr %i.co, i64 4
-  store i32 0, ptr %4, align 4, !noalias !5389
+  store <2 x i32> zeroinitializer, ptr %i.co, align 8, !noalias !5389
   call fastcc void @_RNvMNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir5flagsINtB2_15FlagComputationNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerE8add_kindCs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef align 4 dereferenceable(8) %i.co, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.ec), !noalias !5331
   %.sroa.4.0..sroa_idx.i131.i.i = getelementptr inbounds nuw i8, ptr %i.cp, i64 32
   %i.gd = load <2 x i32>, ptr %i.co, align 8, !noalias !5389
@@ -639,9 +629,7 @@ _RNCNCNvNtCs8K4cjrcxBsw_6hir_ty11next_solver13default_types00Cs6u1mgJOKDyY_13rus
   %.sroa.423.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.eb, i64 4
   store i8 0, ptr %.sroa.423.0..sroa_idx.i.i, align 4, !noalias !5331
   call void @llvm.lifetime.start.p0(ptr nonnull %i.cl), !noalias !5399
-  store i32 0, ptr %i.cl, align 8, !noalias !5399
-  %5 = getelementptr inbounds nuw i8, ptr %i.cl, i64 4
-  store i32 0, ptr %5, align 4, !noalias !5399
+  store <2 x i32> zeroinitializer, ptr %i.cl, align 8, !noalias !5399
   call fastcc void @_RNvMNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir5flagsINtB2_15FlagComputationNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerE8add_kindCs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef align 4 dereferenceable(8) %i.cl, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.eb), !noalias !5331
   %.sroa.4.0..sroa_idx.i135.i.i = getelementptr inbounds nuw i8, ptr %i.cm, i64 32
   %i.gm = load <2 x i32>, ptr %i.cl, align 8, !noalias !5399
@@ -691,9 +679,7 @@ _RNCNCNvNtCs8K4cjrcxBsw_6hir_ty11next_solver13default_types00Cs6u1mgJOKDyY_13rus
   %.sroa.426.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.ea, i64 4
   store i8 2, ptr %.sroa.426.0..sroa_idx.i.i, align 4, !noalias !5331
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ci), !noalias !5409
-  store i32 0, ptr %i.ci, align 8, !noalias !5409
-  %6 = getelementptr inbounds nuw i8, ptr %i.ci, i64 4
-  store i32 0, ptr %6, align 4, !noalias !5409
+  store <2 x i32> zeroinitializer, ptr %i.ci, align 8, !noalias !5409
   call fastcc void @_RNvMNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir5flagsINtB2_15FlagComputationNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerE8add_kindCs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef align 4 dereferenceable(8) %i.ci, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.ea), !noalias !5331
   %.sroa.4.0..sroa_idx.i139.i.i = getelementptr inbounds nuw i8, ptr %i.cj, i64 32
   %i.gv = load <2 x i32>, ptr %i.ci, align 8, !noalias !5409
@@ -743,9 +729,7 @@ _RNCNCNvNtCs8K4cjrcxBsw_6hir_ty11next_solver13default_types00Cs6u1mgJOKDyY_13rus
   %.sroa.429.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.dz, i64 4
   store i8 3, ptr %.sroa.429.0..sroa_idx.i.i, align 4, !noalias !5331
   call void @llvm.lifetime.start.p0(ptr nonnull %i.cf), !noalias !5419
-  store i32 0, ptr %i.cf, align 8, !noalias !5419
-  %7 = getelementptr inbounds nuw i8, ptr %i.cf, i64 4
-  store i32 0, ptr %7, align 4, !noalias !5419
+  store <2 x i32> zeroinitializer, ptr %i.cf, align 8, !noalias !5419
   call fastcc void @_RNvMNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir5flagsINtB2_15FlagComputationNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerE8add_kindCs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef align 4 dereferenceable(8) %i.cf, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.dz), !noalias !5331
   %.sroa.4.0..sroa_idx.i143.i.i = getelementptr inbounds nuw i8, ptr %i.cg, i64 32
   %i.he = load <2 x i32>, ptr %i.cf, align 8, !noalias !5419
@@ -795,9 +779,7 @@ _RNCNCNvNtCs8K4cjrcxBsw_6hir_ty11next_solver13default_types00Cs6u1mgJOKDyY_13rus
   %.sroa.432.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.dy, i64 4
   store i8 4, ptr %.sroa.432.0..sroa_idx.i.i, align 4, !noalias !5331
   call void @llvm.lifetime.start.p0(ptr nonnull %i.cc), !noalias !5429
-  store i32 0, ptr %i.cc, align 8, !noalias !5429
-  %8 = getelementptr inbounds nuw i8, ptr %i.cc, i64 4
-  store i32 0, ptr %8, align 4, !noalias !5429
+  store <2 x i32> zeroinitializer, ptr %i.cc, align 8, !noalias !5429
   call fastcc void @_RNvMNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir5flagsINtB2_15FlagComputationNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerE8add_kindCs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef align 4 dereferenceable(8) %i.cc, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.dy), !noalias !5331
   %.sroa.4.0..sroa_idx.i147.i.i = getelementptr inbounds nuw i8, ptr %i.cd, i64 32
   %i.hn = load <2 x i32>, ptr %i.cc, align 8, !noalias !5429
@@ -847,9 +829,7 @@ _RNCNCNvNtCs8K4cjrcxBsw_6hir_ty11next_solver13default_types00Cs6u1mgJOKDyY_13rus
   %.sroa.435.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.dx, i64 4
   store i8 5, ptr %.sroa.435.0..sroa_idx.i.i, align 4, !noalias !5331
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bz), !noalias !5439
-  store i32 0, ptr %i.bz, align 8, !noalias !5439
-  %9 = getelementptr inbounds nuw i8, ptr %i.bz, i64 4
-  store i32 0, ptr %9, align 4, !noalias !5439
+  store <2 x i32> zeroinitializer, ptr %i.bz, align 8, !noalias !5439
   call fastcc void @_RNvMNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir5flagsINtB2_15FlagComputationNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerE8add_kindCs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef align 4 dereferenceable(8) %i.bz, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.dx), !noalias !5331
   %.sroa.4.0..sroa_idx.i151.i.i = getelementptr inbounds nuw i8, ptr %i.ca, i64 32
   %i.hw = load <2 x i32>, ptr %i.bz, align 8, !noalias !5439
@@ -899,9 +879,7 @@ _RNCNCNvNtCs8K4cjrcxBsw_6hir_ty11next_solver13default_types00Cs6u1mgJOKDyY_13rus
   %.sroa.438.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.dw, i64 4
   store i8 0, ptr %.sroa.438.0..sroa_idx.i.i, align 4, !noalias !5331
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bw), !noalias !5449
-  store i32 0, ptr %i.bw, align 8, !noalias !5449
-  %10 = getelementptr inbounds nuw i8, ptr %i.bw, i64 4
-  store i32 0, ptr %10, align 4, !noalias !5449
+  store <2 x i32> zeroinitializer, ptr %i.bw, align 8, !noalias !5449
   call fastcc void @_RNvMNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir5flagsINtB2_15FlagComputationNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerE8add_kindCs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef align 4 dereferenceable(8) %i.bw, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.dw), !noalias !5331
   %.sroa.4.0..sroa_idx.i155.i.i = getelementptr inbounds nuw i8, ptr %i.bx, i64 32
   %i.if = load <2 x i32>, ptr %i.bw, align 8, !noalias !5449
@@ -951,9 +929,7 @@ _RNCNCNvNtCs8K4cjrcxBsw_6hir_ty11next_solver13default_types00Cs6u1mgJOKDyY_13rus
   %.sroa.441.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.dv, i64 4
   store i8 1, ptr %.sroa.441.0..sroa_idx.i.i, align 4, !noalias !5331
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bt), !noalias !5459
-  store i32 0, ptr %i.bt, align 8, !noalias !5459
-  %11 = getelementptr inbounds nuw i8, ptr %i.bt, i64 4
-  store i32 0, ptr %11, align 4, !noalias !5459
+  store <2 x i32> zeroinitializer, ptr %i.bt, align 8, !noalias !5459
   call fastcc void @_RNvMNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir5flagsINtB2_15FlagComputationNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerE8add_kindCs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef align 4 dereferenceable(8) %i.bt, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.dv), !noalias !5331
   %.sroa.4.0..sroa_idx.i159.i.i = getelementptr inbounds nuw i8, ptr %i.bu, i64 32
   %i.io = load <2 x i32>, ptr %i.bt, align 8, !noalias !5459
@@ -1003,9 +979,7 @@ _RNCNCNvNtCs8K4cjrcxBsw_6hir_ty11next_solver13default_types00Cs6u1mgJOKDyY_13rus
   %.sroa.444.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.du, i64 4
   store i8 2, ptr %.sroa.444.0..sroa_idx.i.i, align 4, !noalias !5331
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bq), !noalias !5469
-  store i32 0, ptr %i.bq, align 8, !noalias !5469
-  %12 = getelementptr inbounds nuw i8, ptr %i.bq, i64 4
-  store i32 0, ptr %12, align 4, !noalias !5469
+  store <2 x i32> zeroinitializer, ptr %i.bq, align 8, !noalias !5469
   call fastcc void @_RNvMNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir5flagsINtB2_15FlagComputationNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerE8add_kindCs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef align 4 dereferenceable(8) %i.bq, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.du), !noalias !5331
   %.sroa.4.0..sroa_idx.i163.i.i = getelementptr inbounds nuw i8, ptr %i.br, i64 32
   %i.ix = load <2 x i32>, ptr %i.bq, align 8, !noalias !5469
@@ -1055,9 +1029,7 @@ _RNCNCNvNtCs8K4cjrcxBsw_6hir_ty11next_solver13default_types00Cs6u1mgJOKDyY_13rus
   %.sroa.447.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.dt, i64 4
   store i8 3, ptr %.sroa.447.0..sroa_idx.i.i, align 4, !noalias !5331
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bn), !noalias !5479
-  store i32 0, ptr %i.bn, align 8, !noalias !5479
-  %13 = getelementptr inbounds nuw i8, ptr %i.bn, i64 4
-  store i32 0, ptr %13, align 4, !noalias !5479
+  store <2 x i32> zeroinitializer, ptr %i.bn, align 8, !noalias !5479
   call fastcc void @_RNvMNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir5flagsINtB2_15FlagComputationNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerE8add_kindCs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef align 4 dereferenceable(8) %i.bn, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.dt), !noalias !5331
   %.sroa.4.0..sroa_idx.i167.i.i = getelementptr inbounds nuw i8, ptr %i.bo, i64 32
   %i.jg = load <2 x i32>, ptr %i.bn, align 8, !noalias !5479
@@ -1107,9 +1079,7 @@ _RNCNCNvNtCs8K4cjrcxBsw_6hir_ty11next_solver13default_types00Cs6u1mgJOKDyY_13rus
   %.sroa.450.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.ds, i64 4
   store i8 4, ptr %.sroa.450.0..sroa_idx.i.i, align 4, !noalias !5331
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bk), !noalias !5489
-  store i32 0, ptr %i.bk, align 8, !noalias !5489
-  %14 = getelementptr inbounds nuw i8, ptr %i.bk, i64 4
-  store i32 0, ptr %14, align 4, !noalias !5489
+  store <2 x i32> zeroinitializer, ptr %i.bk, align 8, !noalias !5489
   call fastcc void @_RNvMNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir5flagsINtB2_15FlagComputationNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerE8add_kindCs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef align 4 dereferenceable(8) %i.bk, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.ds), !noalias !5331
   %.sroa.4.0..sroa_idx.i171.i.i = getelementptr inbounds nuw i8, ptr %i.bl, i64 32
   %i.jp = load <2 x i32>, ptr %i.bk, align 8, !noalias !5489
@@ -1159,9 +1129,7 @@ _RNCNCNvNtCs8K4cjrcxBsw_6hir_ty11next_solver13default_types00Cs6u1mgJOKDyY_13rus
   %.sroa.453.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.dr, i64 4
   store i8 5, ptr %.sroa.453.0..sroa_idx.i.i, align 4, !noalias !5331
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bh), !noalias !5499
-  store i32 0, ptr %i.bh, align 8, !noalias !5499
-  %15 = getelementptr inbounds nuw i8, ptr %i.bh, i64 4
-  store i32 0, ptr %15, align 4, !noalias !5499
+  store <2 x i32> zeroinitializer, ptr %i.bh, align 8, !noalias !5499
   call fastcc void @_RNvMNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir5flagsINtB2_15FlagComputationNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerE8add_kindCs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef align 4 dereferenceable(8) %i.bh, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.dr), !noalias !5331
   %.sroa.4.0..sroa_idx.i175.i.i = getelementptr inbounds nuw i8, ptr %i.bi, i64 32
   %i.jy = load <2 x i32>, ptr %i.bh, align 8, !noalias !5499
@@ -1211,9 +1179,7 @@ _RNCNCNvNtCs8K4cjrcxBsw_6hir_ty11next_solver13default_types00Cs6u1mgJOKDyY_13rus
   %.sroa.456.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.dq, i64 4
   store i8 0, ptr %.sroa.456.0..sroa_idx.i.i, align 4, !noalias !5331
   call void @llvm.lifetime.start.p0(ptr nonnull %i.be), !noalias !5509
-  store i32 0, ptr %i.be, align 8, !noalias !5509
-  %16 = getelementptr inbounds nuw i8, ptr %i.be, i64 4
-  store i32 0, ptr %16, align 4, !noalias !5509
+  store <2 x i32> zeroinitializer, ptr %i.be, align 8, !noalias !5509
   call fastcc void @_RNvMNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir5flagsINtB2_15FlagComputationNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerE8add_kindCs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef align 4 dereferenceable(8) %i.be, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.dq), !noalias !5331
   %.sroa.4.0..sroa_idx.i179.i.i = getelementptr inbounds nuw i8, ptr %i.bf, i64 32
   %i.kh = load <2 x i32>, ptr %i.be, align 8, !noalias !5509
@@ -1263,9 +1229,7 @@ _RNCNCNvNtCs8K4cjrcxBsw_6hir_ty11next_solver13default_types00Cs6u1mgJOKDyY_13rus
   %.sroa.459.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.dp, i64 4
   store i8 1, ptr %.sroa.459.0..sroa_idx.i.i, align 4, !noalias !5331
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bb), !noalias !5519
-  store i32 0, ptr %i.bb, align 8, !noalias !5519
-  %17 = getelementptr inbounds nuw i8, ptr %i.bb, i64 4
-  store i32 0, ptr %17, align 4, !noalias !5519
+  store <2 x i32> zeroinitializer, ptr %i.bb, align 8, !noalias !5519
   call fastcc void @_RNvMNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir5flagsINtB2_15FlagComputationNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerE8add_kindCs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef align 4 dereferenceable(8) %i.bb, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.dp), !noalias !5331
   %.sroa.4.0..sroa_idx.i183.i.i = getelementptr inbounds nuw i8, ptr %i.bc, i64 32
   %i.kq = load <2 x i32>, ptr %i.bb, align 8, !noalias !5519
@@ -1315,9 +1279,7 @@ _RNCNCNvNtCs8K4cjrcxBsw_6hir_ty11next_solver13default_types00Cs6u1mgJOKDyY_13rus
   %.sroa.462.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.do, i64 4
   store i8 2, ptr %.sroa.462.0..sroa_idx.i.i, align 4, !noalias !5331
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ay), !noalias !5529
-  store i32 0, ptr %i.ay, align 8, !noalias !5529
-  %18 = getelementptr inbounds nuw i8, ptr %i.ay, i64 4
-  store i32 0, ptr %18, align 4, !noalias !5529
+  store <2 x i32> zeroinitializer, ptr %i.ay, align 8, !noalias !5529
   call fastcc void @_RNvMNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir5flagsINtB2_15FlagComputationNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerE8add_kindCs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef align 4 dereferenceable(8) %i.ay, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.do), !noalias !5331
   %.sroa.4.0..sroa_idx.i187.i.i = getelementptr inbounds nuw i8, ptr %i.az, i64 32
   %i.kz = load <2 x i32>, ptr %i.ay, align 8, !noalias !5529
@@ -1367,9 +1329,7 @@ _RNCNCNvNtCs8K4cjrcxBsw_6hir_ty11next_solver13default_types00Cs6u1mgJOKDyY_13rus
   %.sroa.465.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.dn, i64 4
   store i8 3, ptr %.sroa.465.0..sroa_idx.i.i, align 4, !noalias !5331
   call void @llvm.lifetime.start.p0(ptr nonnull %i.av), !noalias !5539
-  store i32 0, ptr %i.av, align 8, !noalias !5539
-  %19 = getelementptr inbounds nuw i8, ptr %i.av, i64 4
-  store i32 0, ptr %19, align 4, !noalias !5539
+  store <2 x i32> zeroinitializer, ptr %i.av, align 8, !noalias !5539
   call fastcc void @_RNvMNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir5flagsINtB2_15FlagComputationNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerE8add_kindCs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef align 4 dereferenceable(8) %i.av, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.dn), !noalias !5331
   %.sroa.4.0..sroa_idx.i191.i.i = getelementptr inbounds nuw i8, ptr %i.aw, i64 32
   %i.li = load <2 x i32>, ptr %i.av, align 8, !noalias !5539
@@ -1417,9 +1377,7 @@ _RNCNCNvNtCs8K4cjrcxBsw_6hir_ty11next_solver13default_types00Cs6u1mgJOKDyY_13rus
   call void @llvm.lifetime.start.p0(ptr nonnull %i.dm), !noalias !5331
   store i32 2, ptr %i.dm, align 8, !noalias !5331
   call void @llvm.lifetime.start.p0(ptr nonnull %i.as), !noalias !5549
-  store i32 0, ptr %i.as, align 8, !noalias !5549
-  %20 = getelementptr inbounds nuw i8, ptr %i.as, i64 4
-  store i32 0, ptr %20, align 4, !noalias !5549
+  store <2 x i32> zeroinitializer, ptr %i.as, align 8, !noalias !5549
   call fastcc void @_RNvMNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir5flagsINtB2_15FlagComputationNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerE8add_kindCs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef align 4 dereferenceable(8) %i.as, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.dm), !noalias !5331
   %.sroa.4.0..sroa_idx.i195.i.i = getelementptr inbounds nuw i8, ptr %i.at, i64 32
   %i.lr = load <2 x i32>, ptr %i.as, align 8, !noalias !5549
@@ -1467,9 +1425,7 @@ _RNCNCNvNtCs8K4cjrcxBsw_6hir_ty11next_solver13default_types00Cs6u1mgJOKDyY_13rus
   call void @llvm.lifetime.start.p0(ptr nonnull %i.dl), !noalias !5331
   store i32 3, ptr %i.dl, align 8, !noalias !5331
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ap), !noalias !5559
-  store i32 0, ptr %i.ap, align 8, !noalias !5559
-  %21 = getelementptr inbounds nuw i8, ptr %i.ap, i64 4
-  store i32 0, ptr %21, align 4, !noalias !5559
+  store <2 x i32> zeroinitializer, ptr %i.ap, align 8, !noalias !5559
   call fastcc void @_RNvMNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir5flagsINtB2_15FlagComputationNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerE8add_kindCs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef align 4 dereferenceable(8) %i.ap, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.dl), !noalias !5331
   %.sroa.4.0..sroa_idx.i199.i.i = getelementptr inbounds nuw i8, ptr %i.aq, i64 32
   %i.ma = load <2 x i32>, ptr %i.ap, align 8, !noalias !5559
@@ -1517,9 +1473,7 @@ _RNCNCNvNtCs8K4cjrcxBsw_6hir_ty11next_solver13default_types00Cs6u1mgJOKDyY_13rus
   call void @llvm.lifetime.start.p0(ptr nonnull %i.dk), !noalias !5331
   store i32 23, ptr %i.dk, align 8, !noalias !5331
   call void @llvm.lifetime.start.p0(ptr nonnull %i.am), !noalias !5569
-  store i32 0, ptr %i.am, align 8, !noalias !5569
-  %22 = getelementptr inbounds nuw i8, ptr %i.am, i64 4
-  store i32 0, ptr %22, align 4, !noalias !5569
+  store <2 x i32> zeroinitializer, ptr %i.am, align 8, !noalias !5569
   call fastcc void @_RNvMNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir5flagsINtB2_15FlagComputationNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerE8add_kindCs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef align 4 dereferenceable(8) %i.am, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.dk), !noalias !5331
   %.sroa.4.0..sroa_idx.i203.i.i = getelementptr inbounds nuw i8, ptr %i.an, i64 32
   %i.mj = load <2 x i32>, ptr %i.am, align 8, !noalias !5569
@@ -1567,9 +1521,7 @@ _RNCNCNvNtCs8K4cjrcxBsw_6hir_ty11next_solver13default_types00Cs6u1mgJOKDyY_13rus
   call void @llvm.lifetime.start.p0(ptr nonnull %i.dj), !noalias !5331
   store i32 30, ptr %i.dj, align 8, !noalias !5331
   call void @llvm.lifetime.start.p0(ptr nonnull %i.aj), !noalias !5579
-  store i32 0, ptr %i.aj, align 8, !noalias !5579
-  %23 = getelementptr inbounds nuw i8, ptr %i.aj, i64 4
-  store i32 0, ptr %23, align 4, !noalias !5579
+  store <2 x i32> zeroinitializer, ptr %i.aj, align 8, !noalias !5579
   call fastcc void @_RNvMNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir5flagsINtB2_15FlagComputationNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerE8add_kindCs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef align 4 dereferenceable(8) %i.aj, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.dj), !noalias !5331
   %.sroa.4.0..sroa_idx.i207.i.i = getelementptr inbounds nuw i8, ptr %i.ak, i64 32
   %i.ms = load <2 x i32>, ptr %i.aj, align 8, !noalias !5579
@@ -1623,9 +1575,7 @@ _RNCNCNvNtCs8K4cjrcxBsw_6hir_ty11next_solver13default_types00Cs6u1mgJOKDyY_13rus
   %.sroa.679.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.di, i64 24
   store i8 0, ptr %.sroa.679.0..sroa_idx.i.i, align 8, !noalias !5331
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ag), !noalias !5589
-  store i32 0, ptr %i.ag, align 8, !noalias !5589
-  %24 = getelementptr inbounds nuw i8, ptr %i.ag, i64 4
-  store i32 0, ptr %24, align 4, !noalias !5589
+  store <2 x i32> zeroinitializer, ptr %i.ag, align 8, !noalias !5589
   call fastcc void @_RNvMNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir5flagsINtB2_15FlagComputationNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerE8add_kindCs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef align 4 dereferenceable(8) %i.ag, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.di), !noalias !5331
   %.sroa.4.0..sroa_idx.i211.i.i = getelementptr inbounds nuw i8, ptr %i.ah, i64 32
   %i.nb = load <2 x i32>, ptr %i.ag, align 8, !noalias !5589
@@ -1677,9 +1627,7 @@ _RNCNCNvNtCs8K4cjrcxBsw_6hir_ty11next_solver13default_types00Cs6u1mgJOKDyY_13rus
   %.sroa.584.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.dh, i64 16
   store i8 1, ptr %.sroa.584.0..sroa_idx.i.i, align 8, !noalias !5331
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ad), !noalias !5599
-  store i32 0, ptr %i.ad, align 8, !noalias !5599
-  %25 = getelementptr inbounds nuw i8, ptr %i.ad, i64 4
-  store i32 0, ptr %25, align 4, !noalias !5599
+  store <2 x i32> zeroinitializer, ptr %i.ad, align 8, !noalias !5599
   call fastcc void @_RNvMNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir5flagsINtB2_15FlagComputationNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerE8add_kindCs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef align 4 dereferenceable(8) %i.ad, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.dh), !noalias !5331
   %.sroa.4.0..sroa_idx.i215.i.i = getelementptr inbounds nuw i8, ptr %i.ae, i64 32
   %i.nk = load <2 x i32>, ptr %i.ad, align 8, !noalias !5599
@@ -1725,15 +1673,11 @@ _RNCNCNvNtCs8K4cjrcxBsw_6hir_ty11next_solver13default_types00Cs6u1mgJOKDyY_13rus
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ac), !noalias !5599
   call void @llvm.lifetime.end.p0(ptr nonnull %i.dh), !noalias !5331
   call void @llvm.lifetime.start.p0(ptr nonnull %i.dg), !noalias !5331
-  store i32 29, ptr %i.dg, align 8, !noalias !5331
-  %.sroa.487.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.dg, i64 4
-  store i32 3, ptr %.sroa.487.0..sroa_idx.i.i, align 4, !noalias !5331
+  store <2 x i32> <i32 29, i32 3>, ptr %i.dg, align 8, !noalias !5331
   %.sroa.588.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.dg, i64 8
   store i32 0, ptr %.sroa.588.0..sroa_idx.i.i, align 8, !noalias !5331
   call void @llvm.lifetime.start.p0(ptr nonnull %i.aa), !noalias !5609
-  store i32 0, ptr %i.aa, align 8, !noalias !5609
-  %26 = getelementptr inbounds nuw i8, ptr %i.aa, i64 4
-  store i32 0, ptr %26, align 4, !noalias !5609
+  store <2 x i32> zeroinitializer, ptr %i.aa, align 8, !noalias !5609
   call fastcc void @_RNvMNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir5flagsINtB2_15FlagComputationNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerE8add_kindCs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef align 4 dereferenceable(8) %i.aa, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.dg), !noalias !5331
   %.sroa.4.0..sroa_idx.i219.i.i = getelementptr inbounds nuw i8, ptr %i.ab, i64 32
   %i.nt = load <2 x i32>, ptr %i.aa, align 8, !noalias !5609
@@ -2136,7 +2080,7 @@ bb.fz:                                            ; preds = %bb.fw, %bb.fv
   call void @llvm.lifetime.end.p0(ptr nonnull %i.q), !noalias !5678
   call void @llvm.lifetime.end.p0(ptr nonnull %i.r), !noalias !5331
   call void @_RNvCsiZ68L5R9VjM_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #59, !noalias !5331
-  %i.rr = call noundef align 8 dereferenceable_or_null(16) ptr @_RNvCsiZ68L5R9VjM_7___rustc12___rust_alloc(i64 noundef 16, i64 noundef 8) #59, !noalias !5331 ; 5 uses
+  %i.rr = call noundef align 8 dereferenceable_or_null(16) ptr @_RNvCsiZ68L5R9VjM_7___rustc12___rust_alloc(i64 noundef 16, i64 noundef 8) #59, !noalias !5331 ; 4 uses
   %i.rs = icmp eq ptr %i.rr, null
   br i1 %i.rs, label %bb.ga, label %bb.gd
 
@@ -2158,9 +2102,7 @@ bb.gc:                                            ; preds = %bb.gb
   br label %_RNvMNtCs39E2wp1vf7X_6intern12intern_sliceINtB2_13InternedSliceNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner20CanonicalVarsStorageE21from_header_and_sliceCs6u1mgJOKDyY_13rust_analyzer.exit.i.i.i
 
 bb.gd:                                            ; preds = %bb.fz
-  store i64 1, ptr %i.rr, align 8, !noalias !5331
-  %27 = getelementptr inbounds nuw i8, ptr %i.rr, i64 8
-  store i64 0, ptr %27, align 8, !noalias !5331
+  store <2 x i64> <i64 1, i64 0>, ptr %i.rr, align 8, !noalias !5331
   call void @llvm.experimental.noalias.scope.decl(metadata !5683)
   %i.rv = load ptr, ptr %i.qb, align 8, !alias.scope !5683, !noalias !5331, !nonnull !18, !noundef !18 ; 3 uses
   %i.rw = getelementptr inbounds nuw i8, ptr %i.rv, i64 %.sroa.3.0.i.i.ph.i.i.i.i ; 2 uses
@@ -2381,7 +2323,7 @@ bb.gs:                                            ; preds = %.body.i.i235.i.i
 bb.gt:                                            ; preds = %bb.gr, %.split.us.i.i.i.i.i
   %.sroa.3.0.i.ph.i.i.i.i.i = phi i64 [ %i.vb, %bb.gr ], [ %.sroa.4.1.i.us.i.i.i.i.i, %.split.us.i.i.i.i.i ] ; 3 uses
   call void @_RNvCsiZ68L5R9VjM_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #59, !noalias !5331
-  %i.ve = call noundef align 8 dereferenceable_or_null(16) ptr @_RNvCsiZ68L5R9VjM_7___rustc12___rust_alloc(i64 noundef 16, i64 noundef 8) #59, !noalias !5331 ; 5 uses
+  %i.ve = call noundef align 8 dereferenceable_or_null(16) ptr @_RNvCsiZ68L5R9VjM_7___rustc12___rust_alloc(i64 noundef 16, i64 noundef 8) #59, !noalias !5331 ; 4 uses
   %i.vf = icmp eq ptr %i.ve, null
   br i1 %i.vf, label %bb.gu, label %bb.gw
 
@@ -2403,9 +2345,7 @@ bb.gv:                                            ; preds = %.loopexit.i.i.i.i
   br label %_RNvMNtCs39E2wp1vf7X_6intern12intern_sliceINtB2_13InternedSliceNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver7opaques24PredefinedOpaquesStorageE21from_header_and_sliceCs6u1mgJOKDyY_13rust_analyzer.exit.i.i.i
 
 bb.gw:                                            ; preds = %bb.gt
-  store i64 1, ptr %i.ve, align 8, !noalias !5331
-  %28 = getelementptr inbounds nuw i8, ptr %i.ve, i64 8
-  store i64 0, ptr %28, align 8, !noalias !5331
+  store <2 x i64> <i64 1, i64 0>, ptr %i.ve, align 8, !noalias !5331
   call void @llvm.experimental.noalias.scope.decl(metadata !5704)
   %i.vi = load ptr, ptr %i.tb, align 8, !alias.scope !5704, !noalias !5331, !nonnull !18, !noundef !18 ; 3 uses
   %i.vj = getelementptr inbounds nuw i8, ptr %i.vi, i64 %.sroa.3.0.i.ph.i.i.i.i.i ; 2 uses
@@ -2615,7 +2555,7 @@ bb.hk:                                            ; preds = %.body.i.i267.i.i
 bb.hl:                                            ; preds = %bb.hj, %.split.us.i.i.i265.i.i
   %.sroa.3.0.i.ph.i.i.i266.i.i = phi i64 [ %i.yk, %bb.hj ], [ %.sroa.4.1.i.us.i.i.i263.i.i, %.split.us.i.i.i265.i.i ] ; 3 uses
   call void @_RNvCsiZ68L5R9VjM_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #59, !noalias !5331
-  %i.yn = call noundef align 8 dereferenceable_or_null(16) ptr @_RNvCsiZ68L5R9VjM_7___rustc12___rust_alloc(i64 noundef 16, i64 noundef 8) #59, !noalias !5331 ; 5 uses
+  %i.yn = call noundef align 8 dereferenceable_or_null(16) ptr @_RNvCsiZ68L5R9VjM_7___rustc12___rust_alloc(i64 noundef 16, i64 noundef 8) #59, !noalias !5331 ; 4 uses
   %i.yo = icmp eq ptr %i.yn, null
   br i1 %i.yo, label %bb.hm, label %bb.ho
 
@@ -2637,9 +2577,7 @@ bb.hn:                                            ; preds = %.loopexit.i.i254.i.
   br label %_RNvMNtCs39E2wp1vf7X_6intern12intern_sliceINtB2_13InternedSliceNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver7opaques19SolverDefIdsStorageE21from_header_and_sliceCs6u1mgJOKDyY_13rust_analyzer.exit.i.i.i
 
 bb.ho:                                            ; preds = %bb.hl
-  store i64 1, ptr %i.yn, align 8, !noalias !5331
-  %29 = getelementptr inbounds nuw i8, ptr %i.yn, i64 8
-  store i64 0, ptr %29, align 8, !noalias !5331
+  store <2 x i64> <i64 1, i64 0>, ptr %i.yn, align 8, !noalias !5331
   call void @llvm.experimental.noalias.scope.decl(metadata !5725)
   %i.yr = load ptr, ptr %i.wk, align 8, !alias.scope !5725, !noalias !5331, !nonnull !18, !noundef !18 ; 3 uses
   %i.ys = getelementptr inbounds nuw i8, ptr %i.yr, i64 %.sroa.3.0.i.ph.i.i.i266.i.i ; 2 uses
@@ -3042,7 +2980,7 @@ bb.iy:                                            ; preds = %.body.i.i324.i.i
 bb.iz:                                            ; preds = %bb.ix, %.split.us.i.i.i322.i.i
   %.sroa.3.0.i.ph.i.i.i323.i.i = phi i64 [ %i.afi, %bb.ix ], [ %.sroa.4.1.i.us.i.i.i320.i.i, %.split.us.i.i.i322.i.i ] ; 3 uses
   call void @_RNvCsiZ68L5R9VjM_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #59, !noalias !5331
-  %i.afl = call noundef align 8 dereferenceable_or_null(16) ptr @_RNvCsiZ68L5R9VjM_7___rustc12___rust_alloc(i64 noundef 16, i64 noundef 8) #59, !noalias !5331 ; 5 uses
+  %i.afl = call noundef align 8 dereferenceable_or_null(16) ptr @_RNvCsiZ68L5R9VjM_7___rustc12___rust_alloc(i64 noundef 16, i64 noundef 8) #59, !noalias !5331 ; 4 uses
   %i.afm = icmp eq ptr %i.afl, null
   br i1 %i.afm, label %bb.ja, label %bb.jc
 
@@ -3064,9 +3002,7 @@ bb.jb:                                            ; preds = %.loopexit.i.i311.i.
   br label %_RNvMNtCs39E2wp1vf7X_6intern12intern_sliceINtB2_13InternedSliceNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver6region24RegionAssumptionsStorageE21from_header_and_sliceCs6u1mgJOKDyY_13rust_analyzer.exit.i.i.i
 
 bb.jc:                                            ; preds = %bb.iz
-  store i64 1, ptr %i.afl, align 8, !noalias !5331
-  %30 = getelementptr inbounds nuw i8, ptr %i.afl, i64 8
-  store i64 0, ptr %30, align 8, !noalias !5331
+  store <2 x i64> <i64 1, i64 0>, ptr %i.afl, align 8, !noalias !5331
   call void @llvm.experimental.noalias.scope.decl(metadata !5788)
   %i.afp = load ptr, ptr %i.adi, align 8, !alias.scope !5788, !noalias !5331, !nonnull !18, !noundef !18 ; 3 uses
   %i.afq = getelementptr inbounds nuw i8, ptr %i.afp, i64 %.sroa.3.0.i.ph.i.i.i323.i.i ; 2 uses
@@ -3282,7 +3218,7 @@ bb.jx:                                            ; preds = %bb.ju, %bb.jt
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n), !noalias !5803
   call void @llvm.lifetime.end.p0(ptr nonnull %i.o), !noalias !5331
   call void @_RNvCsiZ68L5R9VjM_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #59, !noalias !5331
-  %i.aik = call noundef align 8 dereferenceable_or_null(16) ptr @_RNvCsiZ68L5R9VjM_7___rustc12___rust_alloc(i64 noundef 16, i64 noundef 8) #59, !noalias !5331 ; 5 uses
+  %i.aik = call noundef align 8 dereferenceable_or_null(16) ptr @_RNvCsiZ68L5R9VjM_7___rustc12___rust_alloc(i64 noundef 16, i64 noundef 8) #59, !noalias !5331 ; 4 uses
   %i.ail = icmp eq ptr %i.aik, null
   br i1 %i.ail, label %bb.jy, label %bb.kb
 
@@ -3304,9 +3240,7 @@ bb.ka:                                            ; preds = %bb.jz
   br label %_RNvMNtCs39E2wp1vf7X_6intern12intern_sliceINtB2_13InternedSliceNtNtCs8K4cjrcxBsw_6hir_ty3mir17ProjectionStorageE21from_header_and_sliceCs6u1mgJOKDyY_13rust_analyzer.exit.i.i.i
 
 bb.kb:                                            ; preds = %bb.jx
-  store i64 1, ptr %i.aik, align 8, !noalias !5331
-  %31 = getelementptr inbounds nuw i8, ptr %i.aik, i64 8
-  store i64 0, ptr %31, align 8, !noalias !5331
+  store <2 x i64> <i64 1, i64 0>, ptr %i.aik, align 8, !noalias !5331
   call void @llvm.experimental.noalias.scope.decl(metadata !5807)
   %i.aio = load ptr, ptr %i.agu, align 8, !alias.scope !5807, !noalias !5331, !nonnull !18, !noundef !18 ; 3 uses
   %i.aip = getelementptr inbounds nuw i8, ptr %i.aio, i64 %.sroa.3.0.i.i.ph.i.i349.i.i ; 2 uses

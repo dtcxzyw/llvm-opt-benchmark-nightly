@@ -155,15 +155,13 @@ bb.m:                                             ; preds = %bb.l
 
 bb.n:                                             ; preds = %bb.l
   %i.bm = getelementptr inbounds nuw i8, ptr %i.g, i64 16 ; 2 uses
-  %i.bn = load ptr, ptr %i.bm, align 8, !tbaa !48 ; 5 uses
-  store i32 0, ptr %i.bn, align 8, !tbaa !54
-  %1 = getelementptr inbounds nuw i8, ptr %i.bn, i64 4
-  store i32 13, ptr %1, align 4, !tbaa !57
+  %i.bn = load ptr, ptr %i.bm, align 8, !tbaa !48 ; 4 uses
+  store <2 x i32> <i32 0, i32 13>, ptr %i.bn, align 8, !tbaa !36
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bn, i64 72
   %i.bp = load <2 x i32>, ptr %i.an, align 4, !tbaa !36
   store <2 x i32> %i.bp, ptr %i.bo, align 8, !tbaa !36
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bn, i64 44
-  store i32 %i.ak, ptr %i.bq, align 4, !tbaa !58
+  store i32 %i.ak, ptr %i.bq, align 4, !tbaa !54
   %i.br = getelementptr inbounds nuw i8, ptr %i.g, i64 88
   %i.bs = getelementptr inbounds nuw i8, ptr %i.f, i64 12 ; 3 uses
   %i.bt = load i64, ptr %i.bs, align 4
@@ -185,15 +183,15 @@ bb.n:                                             ; preds = %bb.l
   %i.cf = fmul nsz double %i.ce, 8.000000e+00
   %i.cg = fptosi double %i.cf to i64
   %i.ch = getelementptr inbounds nuw i8, ptr %i.bn, i64 48
-  store i64 %i.cg, ptr %i.ch, align 8, !tbaa !59
+  store i64 %i.cg, ptr %i.ch, align 8, !tbaa !57
   %i.ci = load i32, ptr %i.ar, align 4, !tbaa !41
   %i.cj = tail call ptr @av_get_pix_fmt_name(i32 noundef %i.ak) #7
-  %i.ck = load i32, ptr %i.bs, align 4, !tbaa !60
+  %i.ck = load i32, ptr %i.bs, align 4, !tbaa !58
   %i.cl = getelementptr inbounds nuw i8, ptr %i.f, i64 16
-  %i.cm = load i32, ptr %i.cl, align 8, !tbaa !61
+  %i.cm = load i32, ptr %i.cl, align 8, !tbaa !59
   %i.cn = load ptr, ptr %i.bm, align 8, !tbaa !48
   %i.co = getelementptr inbounds nuw i8, ptr %i.cn, i64 48
-  %i.cp = load i64, ptr %i.co, align 8, !tbaa !59
+  %i.cp = load i64, ptr %i.co, align 8, !tbaa !57
   tail call void (ptr, i32, ptr, ...) @av_log(ptr noundef nonnull %0, i32 noundef 32, ptr noundef nonnull @.str.13, i32 noundef %i.bu, i32 noundef %i.bv, i32 noundef %i.ci, ptr noundef %i.cj, i32 noundef %i.ck, i32 noundef %i.cm, i64 noundef %i.cp) #7
   br label %bb.p
 
@@ -269,10 +267,10 @@ bb.d:                                             ; preds = %.lr.ph, %.critedge
 
 bb.e:                                             ; preds = %bb.d
   %i.ae = udiv i64 %i.ab, 1000000
-  store i64 %i.ae, ptr %2, align 8, !tbaa !62
+  store i64 %i.ae, ptr %2, align 8, !tbaa !60
   %i.af = urem i64 %i.ab, 1000000
   %i.ag = mul nuw nsw i64 %i.af, 1000
-  store i64 %i.ag, ptr %i.m, align 8, !tbaa !64
+  store i64 %i.ag, ptr %i.m, align 8, !tbaa !62
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.g, %bb.e
@@ -284,7 +282,7 @@ bb.g:                                             ; preds = %bb.f
   %i.aj = tail call ptr @__errno_location() #8
   %i.ak = load i32, ptr %i.aj, align 4, !tbaa !36
   %i.al = icmp eq i32 %i.ak, 4
-  br i1 %i.al, label %bb.f, label %.critedge, !llvm.loop !65
+  br i1 %i.al, label %bb.f, label %.critedge, !llvm.loop !63
 
 .critedge:                                        ; preds = %bb.f, %bb.g
   %i.am = call i64 @av_gettime_relative() #7      ; 2 uses
@@ -314,7 +312,7 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %bb.i, %bb.h
   %i.az = call i64 @av_gettime() #7
   %i.ba = getelementptr inbounds nuw i8, ptr %1, i64 8
-  store i64 %i.az, ptr %i.ba, align 8, !tbaa !67
+  store i64 %i.az, ptr %i.ba, align 8, !tbaa !65
   %i.bb = getelementptr inbounds nuw i8, ptr %i.c, i64 264 ; 2 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %i.c, i64 40 ; 2 uses
   %i.bd = load i32, ptr %i.bc, align 8, !tbaa !40
@@ -323,19 +321,19 @@ bb.j:                                             ; preds = %bb.i, %bb.h
 
 .lr.ph48:                                         ; preds = %bb.j
   %i.bf = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %i.bg = load ptr, ptr %i.bf, align 8, !tbaa !68
+  %i.bg = load ptr, ptr %i.bf, align 8, !tbaa !66
   %i.bh = getelementptr inbounds nuw i8, ptr %i.c, i64 296
   %i.bi = load ptr, ptr %i.bh, align 8, !tbaa !47
   %i.bj = getelementptr inbounds nuw i8, ptr %i.c, i64 68
-  %i.bk = load i32, ptr %i.bj, align 4, !tbaa !69
+  %i.bk = load i32, ptr %i.bj, align 4, !tbaa !67
   %i.bl = getelementptr inbounds nuw i8, ptr %i.c, i64 48
   %i.bm = load i32, ptr %i.bl, align 8, !tbaa !42
   %i.bn = mul i32 %i.bk, %i.bm
   %i.bo = zext i32 %i.bn to i64
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bi, i64 %i.bo
-  %i.bq = load i32, ptr %i.bb, align 8, !tbaa !70
+  %i.bq = load i32, ptr %i.bb, align 8, !tbaa !68
   %i.br = getelementptr inbounds nuw i8, ptr %i.c, i64 72
-  %i.bs = load i32, ptr %i.br, align 8, !tbaa !71
+  %i.bs = load i32, ptr %i.br, align 8, !tbaa !69
   %i.bt = mul i32 %i.bq, %i.bs
   %i.bu = zext i32 %i.bt to i64
   %i.bv = getelementptr inbounds nuw i8, ptr %i.bp, i64 %i.bu
@@ -350,7 +348,7 @@ bb.k:                                             ; preds = %.lr.ph48, %bb.k
   %.04044 = phi i32 [ 0, %.lr.ph48 ], [ %i.cf, %bb.k ]
   %i.by = sext i32 %i.bx to i64
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.046, ptr align 1 %.03945, i64 %i.by, i1 false)
-  %i.bz = load i32, ptr %i.bb, align 8, !tbaa !70
+  %i.bz = load i32, ptr %i.bb, align 8, !tbaa !68
   %i.ca = zext i32 %i.bz to i64
   %i.cb = getelementptr inbounds nuw i8, ptr %.03945, i64 %i.ca
   %i.cc = load i32, ptr %i.bw, align 4, !tbaa !43 ; 2 uses
@@ -359,7 +357,7 @@ bb.k:                                             ; preds = %.lr.ph48, %bb.k
   %i.cf = add nuw nsw i32 %.04044, 1              ; 2 uses
   %i.cg = load i32, ptr %i.bc, align 8, !tbaa !40
   %i.ch = icmp slt i32 %i.cf, %i.cg
-  br i1 %i.ch, label %bb.k, label %._crit_edge49, !llvm.loop !72
+  br i1 %i.ch, label %bb.k, label %._crit_edge49, !llvm.loop !70
 
 ._crit_edge49:                                    ; preds = %bb.k, %bb.j
   %i.ci = load i32, ptr %i.x, align 8, !tbaa !44
@@ -517,23 +515,21 @@ attributes #8 = { nounwind willreturn memory(none) }
 !51 = !{!"AVPacket", !52, i64 0, !21, i64 8, !21, i64 16, !20, i64 24, !6, i64 32, !6, i64 36, !6, i64 40, !53, i64 48, !6, i64 56, !21, i64 64, !21, i64 72, !12, i64 80, !52, i64 88, !31, i64 96}
 !52 = !{!"p1 _ZTS11AVBufferRef", !12, i64 0}
 !53 = !{!"p1 _ZTS16AVPacketSideData", !12, i64 0}
-!54 = !{!55, !6, i64 0}
+!54 = !{!55, !6, i64 44}
 !55 = !{!"AVCodecParameters", !6, i64 0, !6, i64 4, !6, i64 8, !20, i64 16, !6, i64 24, !53, i64 32, !6, i64 40, !6, i64 44, !21, i64 48, !6, i64 56, !6, i64 60, !6, i64 64, !6, i64 68, !6, i64 72, !6, i64 76, !31, i64 80, !31, i64 88, !6, i64 96, !6, i64 100, !6, i64 104, !6, i64 108, !6, i64 112, !6, i64 116, !6, i64 120, !56, i64 128, !6, i64 152, !6, i64 156, !6, i64 160, !6, i64 164, !6, i64 168, !6, i64 172, !6, i64 176}
 !56 = !{!"AVChannelLayout", !6, i64 0, !6, i64 4, !7, i64 8, !12, i64 16}
-!57 = !{!55, !6, i64 4}
-!58 = !{!55, !6, i64 44}
-!59 = !{!55, !21, i64 48}
-!60 = !{!30, !6, i64 12}
-!61 = !{!30, !6, i64 16}
-!62 = !{!63, !21, i64 0}
-!63 = !{!"timespec", !21, i64 0, !21, i64 8}
-!64 = !{!63, !21, i64 8}
-!65 = distinct !{!65, !66}
-!66 = !{!"llvm.loop.mustprogress"}
-!67 = !{!51, !21, i64 8}
-!68 = !{!51, !20, i64 24}
-!69 = !{!30, !6, i64 68}
-!70 = !{!30, !6, i64 264}
-!71 = !{!30, !6, i64 72}
-!72 = distinct !{!72, !66}
+!57 = !{!55, !21, i64 48}
+!58 = !{!30, !6, i64 12}
+!59 = !{!30, !6, i64 16}
+!60 = !{!61, !21, i64 0}
+!61 = !{!"timespec", !21, i64 0, !21, i64 8}
+!62 = !{!61, !21, i64 8}
+!63 = distinct !{!63, !64}
+!64 = !{!"llvm.loop.mustprogress"}
+!65 = !{!51, !21, i64 8}
+!66 = !{!51, !20, i64 24}
+!67 = !{!30, !6, i64 68}
+!68 = !{!30, !6, i64 264}
+!69 = !{!30, !6, i64 72}
+!70 = distinct !{!70, !64}
 end_hunk_0

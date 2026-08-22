@@ -52,7 +52,7 @@ define internal range(i32 -2147483648, 1) i32 @decode_init(ptr noundef %0) #0 {
 bb.a:
   %1 = alloca %struct.GetBitContext, align 8      ; 14 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !9    ; 34 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !9    ; 30 uses
   store ptr %0, ptr %i.b, align 8, !tbaa !29
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 136
   store i32 11, ptr %i.c, align 8, !tbaa !33
@@ -123,9 +123,7 @@ bb.g:                                             ; preds = %bb.f
   %i.ag = getelementptr inbounds nuw i8, ptr %i.b, i64 48
   %i.ah = getelementptr inbounds nuw i8, ptr %i.b, i64 56
   store i32 1, ptr %i.ah, align 8, !tbaa !44
-  %2 = getelementptr inbounds nuw i8, ptr %i.b, i64 52
-  store i32 1, ptr %2, align 4, !tbaa !44
-  store i32 1, ptr %i.ag, align 8, !tbaa !44
+  store <2 x i32> splat (i32 1), ptr %i.ag, align 8, !tbaa !44
   br label %bb.i
 
 bb.h:                                             ; preds = %bb.e
@@ -172,9 +170,7 @@ bb.k:                                             ; preds = %bb.j
   %i.bb = getelementptr inbounds nuw i8, ptr %i.b, i64 60
   %i.bc = getelementptr inbounds nuw i8, ptr %i.b, i64 68
   store i32 1, ptr %i.bc, align 4, !tbaa !44
-  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 64
-  store i32 1, ptr %3, align 8, !tbaa !44
-  store i32 1, ptr %i.bb, align 4, !tbaa !44
+  store <2 x i32> splat (i32 1), ptr %i.bb, align 4, !tbaa !44
   br label %bb.m
 
 bb.l:                                             ; preds = %bb.i
@@ -216,9 +212,7 @@ bb.o:                                             ; preds = %bb.n
   %i.bw = getelementptr inbounds nuw i8, ptr %i.b, i64 72
   %i.bx = getelementptr inbounds nuw i8, ptr %i.b, i64 80
   store i32 1, ptr %i.bx, align 8, !tbaa !44
-  %4 = getelementptr inbounds nuw i8, ptr %i.b, i64 76
-  store i32 1, ptr %4, align 4, !tbaa !44
-  store i32 1, ptr %i.bw, align 8, !tbaa !44
+  store <2 x i32> splat (i32 1), ptr %i.bw, align 8, !tbaa !44
   br label %bb.q
 
 bb.p:                                             ; preds = %bb.m
@@ -266,9 +260,7 @@ bb.t:                                             ; preds = %bb.r
   %i.cu = getelementptr inbounds nuw i8, ptr %i.b, i64 84
   %i.cv = getelementptr inbounds nuw i8, ptr %i.b, i64 92
   store i32 1, ptr %i.cv, align 4, !tbaa !44
-  %5 = getelementptr inbounds nuw i8, ptr %i.b, i64 88
-  store i32 1, ptr %5, align 8, !tbaa !44
-  store i32 1, ptr %i.cu, align 4, !tbaa !44
+  store <2 x i32> splat (i32 1), ptr %i.cu, align 4, !tbaa !44
   %i.cw = icmp eq i32 %.2.i, 3
   br i1 %i.cw, label %select.unfold, label %.thread.i
 

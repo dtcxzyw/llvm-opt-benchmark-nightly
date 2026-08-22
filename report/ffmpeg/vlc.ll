@@ -205,11 +205,9 @@ vlc_common_init.exit.thread:                      ; preds = %bb.e, %bb.y, %bb.z,
 ; Function Attrs: cold nounwind optsize uwtable
 define void @ff_vlc_init_table_from_lengths(ptr noundef %0, i32 noundef %1, i32 noundef %2, i32 noundef %3, ptr nofree noundef readonly captures(none) %4, i32 noundef %5, ptr nofree noundef readonly captures(address_is_null) %6, i32 noundef %7, i32 noundef %8, i32 noundef %9, i32 noundef %10) local_unnamed_addr #4 {
 bb.a:
-  %11 = alloca %struct.VLC, align 8               ; 8 uses
+  %11 = alloca %struct.VLC, align 8               ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #9
-  store i32 0, ptr %11, align 8, !tbaa !9
-  %12 = getelementptr inbounds nuw i8, ptr %11, i64 4
-  store i32 0, ptr %12, align 4
+  store <2 x i32> zeroinitializer, ptr %11, align 8
   %i.a = getelementptr inbounds nuw i8, ptr %11, i64 8
   store ptr %0, ptr %i.a, align 8, !tbaa !14
   %i.b = getelementptr inbounds nuw i8, ptr %11, i64 16
@@ -228,11 +226,9 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 ; Function Attrs: cold nounwind optsize uwtable
 define ptr @ff_vlc_init_tables_from_lengths(ptr nofree noundef captures(none) %0, i32 noundef %1, i32 noundef %2, ptr nofree noundef readonly captures(none) %3, i32 noundef %4, ptr nofree noundef readonly captures(address_is_null) %5, i32 noundef %6, i32 noundef %7, i32 noundef %8, i32 noundef %9) local_unnamed_addr #4 {
 bb.a:
-  %10 = alloca %struct.VLC, align 8               ; 8 uses
+  %10 = alloca %struct.VLC, align 8               ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #9
-  store i32 0, ptr %10, align 8, !tbaa !9
-  %11 = getelementptr inbounds nuw i8, ptr %10, i64 4
-  store i32 0, ptr %11, align 4
+  store <2 x i32> zeroinitializer, ptr %10, align 8
   %i.a = getelementptr inbounds nuw i8, ptr %10, i64 8 ; 2 uses
   %i.b = load ptr, ptr %0, align 8, !tbaa !34
   store ptr %i.b, ptr %i.a, align 8, !tbaa !14
@@ -260,11 +256,9 @@ bb.a:
 ; Function Attrs: cold nounwind optsize uwtable
 define void @ff_vlc_init_table_sparse(ptr noundef %0, i32 noundef %1, i32 noundef %2, i32 noundef %3, ptr nofree noundef readonly captures(none) %4, i32 noundef %5, i32 noundef %6, ptr nofree noundef readonly captures(none) %7, i32 noundef %8, i32 noundef %9, ptr nofree noundef readonly captures(address_is_null) %10, i32 noundef %11, i32 noundef %12, i32 noundef %13) local_unnamed_addr #4 {
 bb.a:
-  %14 = alloca %struct.VLC, align 8               ; 8 uses
+  %14 = alloca %struct.VLC, align 8               ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #9
-  store i32 0, ptr %14, align 8, !tbaa !9
-  %15 = getelementptr inbounds nuw i8, ptr %14, i64 4
-  store i32 0, ptr %15, align 4
+  store <2 x i32> zeroinitializer, ptr %14, align 8
   %i.a = getelementptr inbounds nuw i8, ptr %14, i64 8
   store ptr %0, ptr %i.a, align 8, !tbaa !14
   %i.b = getelementptr inbounds nuw i8, ptr %14, i64 16
@@ -280,11 +274,9 @@ bb.a:
 ; Function Attrs: cold nounwind optsize uwtable
 define ptr @ff_vlc_init_tables_sparse(ptr nofree noundef captures(none) %0, i32 noundef %1, i32 noundef %2, ptr nofree noundef readonly captures(none) %3, i32 noundef %4, i32 noundef %5, ptr nofree noundef readonly captures(none) %6, i32 noundef %7, i32 noundef %8, ptr nofree noundef readonly captures(address_is_null) %9, i32 noundef %10, i32 noundef %11, i32 noundef %12) local_unnamed_addr #4 {
 bb.a:
-  %13 = alloca %struct.VLC, align 8               ; 8 uses
+  %13 = alloca %struct.VLC, align 8               ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #9
-  store i32 0, ptr %13, align 8, !tbaa !9
-  %14 = getelementptr inbounds nuw i8, ptr %13, i64 4
-  store i32 0, ptr %14, align 4
+  store <2 x i32> zeroinitializer, ptr %13, align 8
   %i.a = getelementptr inbounds nuw i8, ptr %13, i64 8 ; 2 uses
   %i.b = load ptr, ptr %0, align 8, !tbaa !34
   store ptr %i.b, ptr %i.a, align 8, !tbaa !14

@@ -161,7 +161,7 @@ put_bits_le.exit:                                 ; preds = %flush_put_bits_le.e
 define internal range(i32 -2147483648, 1) i32 @speedhq_encode_init(ptr noundef %0) #1 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !63   ; 7 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !63   ; 6 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 112
   %i.d = load i32, ptr %i.c, align 8, !tbaa !75   ; 2 uses
   %i.e = icmp sgt i32 %i.d, 65500
@@ -199,15 +199,13 @@ switch.lookup:                                    ; preds = %bb.d
   %i.o = getelementptr inbounds nuw i8, ptr %i.b, i64 6552
   store ptr @speedhq_encode_mb, ptr %i.o, align 8, !tbaa !80
   %i.p = getelementptr inbounds nuw i8, ptr %i.b, i64 6128
-  store i32 -2048, ptr %i.p, align 16, !tbaa !81
-  %1 = getelementptr inbounds nuw i8, ptr %i.b, i64 6132
-  store i32 2047, ptr %1, align 4, !tbaa !82
+  store <2 x i32> <i32 -2048, i32 2047>, ptr %i.p, align 16, !tbaa !81
   %i.q = getelementptr inbounds nuw i8, ptr %i.b, i64 6144
-  store <4 x ptr> <ptr @uni_speedhq_ac_vlc_len, ptr @uni_speedhq_ac_vlc_len, ptr @uni_speedhq_ac_vlc_len, ptr @uni_speedhq_ac_vlc_len>, ptr %i.q, align 16, !tbaa !83
+  store <4 x ptr> <ptr @uni_speedhq_ac_vlc_len, ptr @uni_speedhq_ac_vlc_len, ptr @uni_speedhq_ac_vlc_len, ptr @uni_speedhq_ac_vlc_len>, ptr %i.q, align 16, !tbaa !82
   %i.r = getelementptr inbounds nuw i8, ptr %i.b, i64 1144
-  store ptr getelementptr inbounds nuw (i8, ptr @ff_mpeg12_dc_scale_table, i64 96), ptr %i.r, align 8, !tbaa !84
+  store ptr getelementptr inbounds nuw (i8, ptr @ff_mpeg12_dc_scale_table, i64 96), ptr %i.r, align 8, !tbaa !83
   %i.s = getelementptr inbounds nuw i8, ptr %i.b, i64 1136
-  store ptr getelementptr inbounds nuw (i8, ptr @ff_mpeg12_dc_scale_table, i64 96), ptr %i.s, align 16, !tbaa !85
+  store ptr getelementptr inbounds nuw (i8, ptr @ff_mpeg12_dc_scale_table, i64 96), ptr %i.s, align 16, !tbaa !84
   %i.t = tail call i32 @ff_mpv_encode_init(ptr noundef nonnull %0) #5 ; 2 uses
   %i.u = icmp slt i32 %i.t, 0
   br i1 %i.u, label %bb.g, label %bb.f
@@ -236,7 +234,7 @@ put_bits_le.exit:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 4384 ; 3 uses
   %i.b = getelementptr i8, ptr %0, i64 4388       ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 1272
-  %i.d = load i32, ptr %i.c, align 8, !tbaa !86
+  %i.d = load i32, ptr %i.c, align 8, !tbaa !85
   %i.e = shl nsw i32 %i.d, 1
   %i.f = sub nsw i32 100, %i.e
   %i.g = load i32, ptr %i.a, align 8, !tbaa !15
@@ -288,7 +286,7 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 640
   tail call fastcc void @encode_block(ptr noundef %0, ptr noundef nonnull %i.e, i32 noundef 5)
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 3856
-  %i.g = load i32, ptr %i.f, align 16, !tbaa !87
+  %i.g = load i32, ptr %i.f, align 16, !tbaa !86
   switch i32 %i.g, label %bb.c [
     i32 3, label %bb.b
     i32 2, label %.sink.split
@@ -331,13 +329,13 @@ bb.c:                                             ; preds = %.sink.split, %bb.a
   %reass.sub.i.i = sub i32 %i.w, %i.v
   %i.x = add i32 %reass.sub.i.i, 32               ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 6352 ; 2 uses
-  %i.z = load i32, ptr %i.y, align 16, !tbaa !88
-  store i32 %i.x, ptr %i.y, align 16, !tbaa !88
+  %i.z = load i32, ptr %i.y, align 16, !tbaa !87
+  store i32 %i.x, ptr %i.y, align 16, !tbaa !87
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 6336 ; 2 uses
-  %i.ab = load i32, ptr %i.aa, align 16, !tbaa !89
+  %i.ab = load i32, ptr %i.aa, align 16, !tbaa !88
   %i.ac = sub i32 %i.ab, %i.z
   %i.ad = add i32 %i.ac, %i.x
-  store i32 %i.ad, ptr %i.aa, align 16, !tbaa !89
+  store i32 %i.ad, ptr %i.aa, align 16, !tbaa !88
   ret void
 }
 
@@ -382,7 +380,7 @@ bb.c:                                             ; preds = %bb.a, %bb.c
   %i.o = zext i8 %i.n to i32                      ; 2 uses
   %i.p = add nuw nsw i32 %i.k, %i.o
   %i.q = getelementptr inbounds nuw [2 x i8], ptr @mpeg12_vlc_dc_lum_code_reversed, i64 %i.l
-  %i.r = load i16, ptr %i.q, align 2, !tbaa !90
+  %i.r = load i16, ptr %i.q, align 2, !tbaa !89
   %i.s = zext i16 %i.r to i32
   %notmask.i = shl nsw i32 -1, %i.k
   %i.t = xor i32 %notmask.i, -1
@@ -393,23 +391,23 @@ bb.c:                                             ; preds = %bb.a, %bb.c
   %i.y = add nsw i32 %i.p, %i.x
   %i.z = add nsw i64 %indvars.iv, 255             ; 2 uses
   %i.aa = getelementptr inbounds [4 x i8], ptr @speedhq_lum_dc_uni, i64 %i.z
-  store i32 %i.y, ptr %i.aa, align 4, !tbaa !91
+  store i32 %i.y, ptr %i.aa, align 4, !tbaa !81
   %i.ab = getelementptr inbounds nuw i8, ptr @ff_mpeg12_vlc_dc_chroma_bits, i64 %i.l
   %i.ac = load i8, ptr %i.ab, align 1, !tbaa !16
   %i.ad = zext i8 %i.ac to i32                    ; 2 uses
   %i.ae = add nuw nsw i32 %i.k, %i.ad
   %i.af = getelementptr inbounds nuw [2 x i8], ptr @mpeg12_vlc_dc_chroma_code_reversed, i64 %i.l
-  %i.ag = load i16, ptr %i.af, align 2, !tbaa !90
+  %i.ag = load i16, ptr %i.af, align 2, !tbaa !89
   %i.ah = zext i16 %i.ag to i32
   %i.ai = shl i32 %i.u, %i.ad
   %i.aj = add i32 %i.ai, %i.ah
   %i.ak = shl i32 %i.aj, 8
   %i.al = add nsw i32 %i.ae, %i.ak
   %i.am = getelementptr inbounds [4 x i8], ptr @speedhq_chr_dc_uni, i64 %i.z
-  store i32 %i.al, ptr %i.am, align 4, !tbaa !91
+  store i32 %i.al, ptr %i.am, align 4, !tbaa !81
   %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, 256
-  br i1 %exitcond.not, label %bb.b, label %bb.c, !llvm.loop !92
+  br i1 %exitcond.not, label %bb.b, label %bb.c, !llvm.loop !90
 }
 
 ; Function Attrs: nounwind uwtable
@@ -419,12 +417,12 @@ bb.a:
   %i.b = and i32 %2, 1
   %i.c = add nuw nsw i32 %i.b, 1
   %i.d = select i1 %i.a, i32 0, i32 %i.c
-  %i.e = load i16, ptr %1, align 2, !tbaa !90
+  %i.e = load i16, ptr %1, align 2, !tbaa !89
   %i.f = sext i16 %i.e to i32                     ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 6360
   %i.h = zext nneg i32 %i.d to i64
   %i.i = getelementptr inbounds nuw [4 x i8], ptr %i.g, i64 %i.h ; 2 uses
-  %i.j = load i32, ptr %i.i, align 4, !tbaa !91
+  %i.j = load i32, ptr %i.i, align 4, !tbaa !81
   %i.k = sub nsw i32 %i.j, %i.f                   ; 8 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 4384 ; 8 uses
   %i.m = add nsw i32 %i.k, 255                    ; 2 uses
@@ -483,7 +481,7 @@ bb.f:                                             ; preds = %bb.e
   %i.ap = zext i8 %i.ao to i32                    ; 2 uses
   %i.aq = add nuw nsw i32 %.0.i, %i.ap            ; 2 uses
   %i.ar = getelementptr inbounds nuw [2 x i8], ptr @mpeg12_vlc_dc_lum_code_reversed, i64 %i.ag
-  %i.as = load i16, ptr %i.ar, align 2, !tbaa !90
+  %i.as = load i16, ptr %i.ar, align 2, !tbaa !89
   %i.at = zext i16 %i.as to i32
   %i.au = shl i32 %i.ai, %i.ap
   %i.av = add i32 %i.au, %i.at                    ; 2 uses
@@ -533,7 +531,7 @@ bb.k:                                             ; preds = %bb.e
   %i.bn = zext i8 %i.bm to i32                    ; 2 uses
   %i.bo = add nuw nsw i32 %.0.i, %i.bn            ; 2 uses
   %i.bp = getelementptr inbounds nuw [2 x i8], ptr @mpeg12_vlc_dc_chroma_code_reversed, i64 %i.ag
-  %i.bq = load i16, ptr %i.bp, align 2, !tbaa !90
+  %i.bq = load i16, ptr %i.bp, align 2, !tbaa !89
   %i.br = zext i16 %i.bq to i32
   %i.bs = shl i32 %i.ai, %i.bn
   %i.bt = add i32 %i.bs, %i.br                    ; 2 uses
@@ -587,7 +585,7 @@ bb.p:                                             ; preds = %bb.a
 
 bb.q:                                             ; preds = %bb.p
   %i.co = getelementptr inbounds nuw [4 x i8], ptr @speedhq_lum_dc_uni, i64 %i.cj
-  %i.cp = load i32, ptr %i.co, align 4, !tbaa !91 ; 2 uses
+  %i.cp = load i32, ptr %i.co, align 4, !tbaa !81 ; 2 uses
   %i.cq = and i32 %i.cp, 255                      ; 2 uses
   %i.cr = lshr i32 %i.cp, 8                       ; 2 uses
   %i.cs = shl i32 %i.cr, %i.cn
@@ -632,7 +630,7 @@ put_bits_le.exit42.i:                             ; preds = %bb.u, %bb.q
 
 bb.v:                                             ; preds = %bb.p
   %i.dh = getelementptr inbounds nuw [4 x i8], ptr @speedhq_chr_dc_uni, i64 %i.cj
-  %i.di = load i32, ptr %i.dh, align 4, !tbaa !91 ; 2 uses
+  %i.di = load i32, ptr %i.dh, align 4, !tbaa !81 ; 2 uses
   %i.dj = and i32 %i.di, 255                      ; 2 uses
   %i.dk = lshr i32 %i.di, 8                       ; 2 uses
   %i.dl = shl i32 %i.dk, %i.cn
@@ -678,11 +676,11 @@ put_bits_le.exit46.i:                             ; preds = %bb.z, %bb.v
 encode_dc.exit:                                   ; preds = %put_bits_le.exit.i, %put_bits_le.exit38.i, %put_bits_le.exit42.i, %put_bits_le.exit46.i
   %i.ea = phi i32 [ %i.bk, %put_bits_le.exit.i ], [ %i.ci, %put_bits_le.exit38.i ], [ %i.dg, %put_bits_le.exit42.i ], [ %i.dz, %put_bits_le.exit46.i ] ; 2 uses
   %i.eb = phi i32 [ %.020.i.i, %put_bits_le.exit.i ], [ %.020.i36.i, %put_bits_le.exit38.i ], [ %.020.i40.i, %put_bits_le.exit42.i ], [ %.020.i44.i, %put_bits_le.exit46.i ] ; 2 uses
-  store i32 %i.f, ptr %i.i, align 4, !tbaa !91
+  store i32 %i.f, ptr %i.i, align 4, !tbaa !81
   %i.ec = getelementptr inbounds nuw i8, ptr %0, i64 20
   %i.ed = sext i32 %2 to i64
   %i.ee = getelementptr inbounds [4 x i8], ptr %i.ec, i64 %i.ed
-  %i.ef = load i32, ptr %i.ee, align 4, !tbaa !91 ; 2 uses
+  %i.ef = load i32, ptr %i.ee, align 4, !tbaa !81 ; 2 uses
   %.not57 = icmp slt i32 %i.ef, 1
   br i1 %.not57, label %._crit_edge, label %.lr.ph
 
@@ -704,7 +702,7 @@ bb.aa:                                            ; preds = %.lr.ph, %bb.am
   %i.eo = load i8, ptr %i.en, align 1, !tbaa !16
   %i.ep = zext i8 %i.eo to i64
   %i.eq = getelementptr inbounds nuw [2 x i8], ptr %1, i64 %i.ep
-  %i.er = load i16, ptr %i.eq, align 2, !tbaa !90 ; 2 uses
+  %i.er = load i16, ptr %i.eq, align 2, !tbaa !89 ; 2 uses
   %i.es = sext i16 %i.er to i32                   ; 3 uses
   %.not46 = icmp eq i16 %i.er, 0
   br i1 %.not46, label %bb.am, label %bb.ab
@@ -731,10 +729,10 @@ bb.ac:                                            ; preds = %bb.ab
   %i.fh = getelementptr [4 x i8], ptr @ff_speedhq_vlc_table, i64 %i.fg ; 2 uses
   %i.fi = getelementptr i8, ptr %i.fh, i64 -4
   %i.fj = getelementptr i8, ptr %i.fh, i64 -2
-  %i.fk = load i16, ptr %i.fj, align 2, !tbaa !90
+  %i.fk = load i16, ptr %i.fj, align 2, !tbaa !89
   %i.fl = zext i16 %i.fk to i32                   ; 2 uses
   %i.fm = add nuw nsw i32 %i.fl, 1                ; 2 uses
-  %i.fn = load i16, ptr %i.fi, align 4, !tbaa !90
+  %i.fn = load i16, ptr %i.fi, align 4, !tbaa !89
   %i.fo = zext i16 %i.fn to i32
   %i.fp = shl nuw i32 %i.fb, %i.fl
   %i.fq = or i32 %i.fp, %i.fo                     ; 2 uses
@@ -831,7 +829,7 @@ bb.am:                                            ; preds = %.sink.split, %bb.aa
   %.1 = phi i32 [ %.04358, %bb.aa ], [ %i.eu, %.sink.split ]
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %bb.aa, !llvm.loop !93
+  br i1 %exitcond.not, label %._crit_edge, label %bb.aa, !llvm.loop !91
 
 ._crit_edge:                                      ; preds = %bb.am, %encode_dc.exit
   %i.ha = phi i32 [ %i.ea, %encode_dc.exit ], [ %i.gy, %bb.am ] ; 5 uses
@@ -979,17 +977,15 @@ attributes #6 = { noreturn nounwind }
 !78 = !{!64, !6, i64 28}
 !79 = !{!22, !12, i64 10392}
 !80 = !{!23, !12, i64 6552}
-!81 = !{!23, !6, i64 6128}
-!82 = !{!23, !6, i64 6132}
-!83 = !{!11, !11, i64 0}
-!84 = !{!23, !11, i64 1144}
-!85 = !{!23, !11, i64 1136}
-!86 = !{!23, !6, i64 1272}
-!87 = !{!23, !6, i64 3856}
-!88 = !{!23, !6, i64 6352}
-!89 = !{!23, !6, i64 6336}
-!90 = !{!43, !43, i64 0}
-!91 = !{!6, !6, i64 0}
-!92 = distinct !{!92, !18}
-!93 = distinct !{!93, !18}
+!81 = !{!6, !6, i64 0}
+!82 = !{!11, !11, i64 0}
+!83 = !{!23, !11, i64 1144}
+!84 = !{!23, !11, i64 1136}
+!85 = !{!23, !6, i64 1272}
+!86 = !{!23, !6, i64 3856}
+!87 = !{!23, !6, i64 6352}
+!88 = !{!23, !6, i64 6336}
+!89 = !{!43, !43, i64 0}
+!90 = distinct !{!90, !18}
+!91 = distinct !{!91, !18}
 end_hunk_0

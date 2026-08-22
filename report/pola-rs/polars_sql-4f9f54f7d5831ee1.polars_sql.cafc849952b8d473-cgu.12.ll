@@ -202,7 +202,7 @@ define { i64, i64 } @_RINvMs6_NtCs7tGzs63DEEy_9hashbrown3rawINtB6_8RawTableTNtNt
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   %i.b = alloca [32 x i8], align 8                ; 8 uses
-  %i.c = alloca [56 x i8], align 8                ; 12 uses
+  %i.c = alloca [56 x i8], align 8                ; 11 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32, !dbg !334
   tail call void @llvm.experimental.noalias.scope.decl(metadata !335), !dbg !338
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 24, !dbg !339 ; 4 uses
@@ -258,9 +258,7 @@ bb.g:                                             ; preds = %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !396, !noalias !382
   store ptr %i.d, ptr %i.c, align 8, !dbg !402, !noalias !382
   %.sroa.4.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 8, !dbg !402
-  store i64 48, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !dbg !402, !noalias !382
-  %.sroa.5.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 16, !dbg !402
-  store i64 16, ptr %.sroa.5.0..sroa_idx.i.i, align 8, !dbg !402, !noalias !382
+  store <2 x i64> <i64 48, i64 16>, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !dbg !402, !noalias !382
   %.sroa.619.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 24, !dbg !402 ; 2 uses
   store ptr %i.q, ptr %.sroa.619.0..sroa_idx.i.i, align 8, !dbg !402, !noalias !382
   %.sroa.619.sroa.4.0..sroa.619.0..sroa_idx.sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 32, !dbg !402
@@ -641,7 +639,7 @@ define { i64, i64 } @_RINvMs6_NtCs7tGzs63DEEy_9hashbrown3rawINtB6_8RawTableTNtNt
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   %i.b = alloca [32 x i8], align 8                ; 8 uses
-  %i.c = alloca [56 x i8], align 8                ; 12 uses
+  %i.c = alloca [56 x i8], align 8                ; 11 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32, !dbg !1036
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1037), !dbg !1040
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 24, !dbg !1041 ; 4 uses
@@ -697,9 +695,7 @@ bb.g:                                             ; preds = %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !1075, !noalias !1066
   store ptr %i.d, ptr %i.c, align 8, !dbg !1081, !noalias !1066
   %.sroa.4.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 8, !dbg !1081
-  store i64 32, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !dbg !1081, !noalias !1066
-  %.sroa.5.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 16, !dbg !1081
-  store i64 16, ptr %.sroa.5.0..sroa_idx.i.i, align 8, !dbg !1081, !noalias !1066
+  store <2 x i64> <i64 32, i64 16>, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !dbg !1081, !noalias !1066
   %.sroa.619.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 24, !dbg !1081 ; 2 uses
   store ptr %i.q, ptr %.sroa.619.0..sroa_idx.i.i, align 8, !dbg !1081, !noalias !1066
   %.sroa.619.sroa.4.0..sroa.619.0..sroa_idx.sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 32, !dbg !1081
@@ -1080,7 +1076,7 @@ define { i64, i64 } @_RINvMs6_NtCs7tGzs63DEEy_9hashbrown3rawINtB6_8RawTableTNtNt
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   %i.b = alloca [32 x i8], align 8                ; 8 uses
-  %i.c = alloca [56 x i8], align 8                ; 12 uses
+  %i.c = alloca [56 x i8], align 8                ; 11 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32, !dbg !1463
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1464), !dbg !1467
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 24, !dbg !1468 ; 4 uses
@@ -1136,9 +1132,7 @@ bb.g:                                             ; preds = %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !1502, !noalias !1493
   store ptr %i.d, ptr %i.c, align 8, !dbg !1508, !noalias !1493
   %.sroa.4.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 8, !dbg !1508
-  store i64 48, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !dbg !1508, !noalias !1493
-  %.sroa.5.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 16, !dbg !1508
-  store i64 16, ptr %.sroa.5.0..sroa_idx.i.i, align 8, !dbg !1508, !noalias !1493
+  store <2 x i64> <i64 48, i64 16>, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !dbg !1508, !noalias !1493
   %.sroa.619.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 24, !dbg !1508 ; 2 uses
   store ptr %i.q, ptr %.sroa.619.0..sroa_idx.i.i, align 8, !dbg !1508, !noalias !1493
   %.sroa.619.sroa.4.0..sroa.619.0..sroa_idx.sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 32, !dbg !1508
@@ -1519,7 +1513,7 @@ define { i64, i64 } @_RINvMs6_NtCs7tGzs63DEEy_9hashbrown3rawINtB6_8RawTableTNtNt
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   %i.b = alloca [32 x i8], align 8                ; 8 uses
-  %i.c = alloca [56 x i8], align 8                ; 12 uses
+  %i.c = alloca [56 x i8], align 8                ; 11 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32, !dbg !1890
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1891), !dbg !1894
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 24, !dbg !1895 ; 4 uses
@@ -1575,9 +1569,7 @@ bb.g:                                             ; preds = %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !1929, !noalias !1920
   store ptr %i.d, ptr %i.c, align 8, !dbg !1935, !noalias !1920
   %.sroa.4.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 8, !dbg !1935
-  store i64 64, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !dbg !1935, !noalias !1920
-  %.sroa.5.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 16, !dbg !1935
-  store i64 16, ptr %.sroa.5.0..sroa_idx.i.i, align 8, !dbg !1935, !noalias !1920
+  store <2 x i64> <i64 64, i64 16>, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !dbg !1935, !noalias !1920
   %.sroa.619.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 24, !dbg !1935 ; 2 uses
   store ptr %i.q, ptr %.sroa.619.0..sroa_idx.i.i, align 8, !dbg !1935, !noalias !1920
   %.sroa.619.sroa.4.0..sroa.619.0..sroa_idx.sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 32, !dbg !1935
@@ -1958,7 +1950,7 @@ define { i64, i64 } @_RINvMs6_NtCs7tGzs63DEEy_9hashbrown3rawINtB6_8RawTableTNtNt
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   %i.b = alloca [32 x i8], align 8                ; 8 uses
-  %i.c = alloca [56 x i8], align 8                ; 12 uses
+  %i.c = alloca [56 x i8], align 8                ; 11 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32, !dbg !2317
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2318), !dbg !2321
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 24, !dbg !2322 ; 4 uses
@@ -2014,9 +2006,7 @@ bb.g:                                             ; preds = %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !2356, !noalias !2347
   store ptr %i.d, ptr %i.c, align 8, !dbg !2362, !noalias !2347
   %.sroa.4.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 8, !dbg !2362
-  store i64 416, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !dbg !2362, !noalias !2347
-  %.sroa.5.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 16, !dbg !2362
-  store i64 16, ptr %.sroa.5.0..sroa_idx.i.i, align 8, !dbg !2362, !noalias !2347
+  store <2 x i64> <i64 416, i64 16>, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !dbg !2362, !noalias !2347
   %.sroa.619.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 24, !dbg !2362 ; 2 uses
   store ptr %i.q, ptr %.sroa.619.0..sroa_idx.i.i, align 8, !dbg !2362, !noalias !2347
   %.sroa.619.sroa.4.0..sroa.619.0..sroa_idx.sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 32, !dbg !2362
@@ -2397,7 +2387,7 @@ define { i64, i64 } @_RINvMs6_NtCs7tGzs63DEEy_9hashbrown3rawINtB6_8RawTableTNtNt
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   %i.b = alloca [32 x i8], align 8                ; 8 uses
-  %i.c = alloca [56 x i8], align 8                ; 12 uses
+  %i.c = alloca [56 x i8], align 8                ; 11 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32, !dbg !2744
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2745), !dbg !2748
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 24, !dbg !2749 ; 4 uses
@@ -2453,9 +2443,7 @@ bb.g:                                             ; preds = %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !2783, !noalias !2774
   store ptr %i.d, ptr %i.c, align 8, !dbg !2789, !noalias !2774
   %.sroa.4.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 8, !dbg !2789
-  store i64 176, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !dbg !2789, !noalias !2774
-  %.sroa.5.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 16, !dbg !2789
-  store i64 16, ptr %.sroa.5.0..sroa_idx.i.i, align 8, !dbg !2789, !noalias !2774
+  store <2 x i64> <i64 176, i64 16>, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !dbg !2789, !noalias !2774
   %.sroa.619.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 24, !dbg !2789 ; 2 uses
   store ptr %i.q, ptr %.sroa.619.0..sroa_idx.i.i, align 8, !dbg !2789, !noalias !2774
   %.sroa.619.sroa.4.0..sroa.619.0..sroa_idx.sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 32, !dbg !2789
@@ -2836,7 +2824,7 @@ define { i64, i64 } @_RINvMs6_NtCs7tGzs63DEEy_9hashbrown3rawINtB6_8RawTableTNtNt
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   %i.b = alloca [32 x i8], align 8                ; 8 uses
-  %i.c = alloca [56 x i8], align 8                ; 12 uses
+  %i.c = alloca [56 x i8], align 8                ; 11 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32, !dbg !3171
   tail call void @llvm.experimental.noalias.scope.decl(metadata !3172), !dbg !3175
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 24, !dbg !3176 ; 4 uses
@@ -2892,9 +2880,7 @@ bb.g:                                             ; preds = %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !3210, !noalias !3201
   store ptr %i.d, ptr %i.c, align 8, !dbg !3216, !noalias !3201
   %.sroa.4.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 8, !dbg !3216
-  store i64 24, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !dbg !3216, !noalias !3201
-  %.sroa.5.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 16, !dbg !3216
-  store i64 16, ptr %.sroa.5.0..sroa_idx.i.i, align 8, !dbg !3216, !noalias !3201
+  store <2 x i64> <i64 24, i64 16>, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !dbg !3216, !noalias !3201
   %.sroa.619.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 24, !dbg !3216 ; 2 uses
   store ptr %i.q, ptr %.sroa.619.0..sroa_idx.i.i, align 8, !dbg !3216, !noalias !3201
   %.sroa.619.sroa.4.0..sroa.619.0..sroa_idx.sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 32, !dbg !3216
@@ -3275,7 +3261,7 @@ define { i64, i64 } @_RINvMs6_NtCs7tGzs63DEEy_9hashbrown3rawINtB6_8RawTableTNtNt
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   %i.b = alloca [32 x i8], align 8                ; 8 uses
-  %i.c = alloca [56 x i8], align 8                ; 12 uses
+  %i.c = alloca [56 x i8], align 8                ; 11 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32, !dbg !3598
   tail call void @llvm.experimental.noalias.scope.decl(metadata !3599), !dbg !3602
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 24, !dbg !3603 ; 4 uses
@@ -3331,9 +3317,7 @@ bb.g:                                             ; preds = %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !3637, !noalias !3628
   store ptr %i.d, ptr %i.c, align 8, !dbg !3643, !noalias !3628
   %.sroa.4.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 8, !dbg !3643
-  store i64 176, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !dbg !3643, !noalias !3628
-  %.sroa.5.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 16, !dbg !3643
-  store i64 16, ptr %.sroa.5.0..sroa_idx.i.i, align 8, !dbg !3643, !noalias !3628
+  store <2 x i64> <i64 176, i64 16>, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !dbg !3643, !noalias !3628
   %.sroa.619.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 24, !dbg !3643 ; 2 uses
   store ptr %i.q, ptr %.sroa.619.0..sroa_idx.i.i, align 8, !dbg !3643, !noalias !3628
   %.sroa.619.sroa.4.0..sroa.619.0..sroa_idx.sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 32, !dbg !3643
@@ -3714,7 +3698,7 @@ define { i64, i64 } @_RINvMs6_NtCs7tGzs63DEEy_9hashbrown3rawINtB6_8RawTableTReNt
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   %i.b = alloca [32 x i8], align 8                ; 8 uses
-  %i.c = alloca [56 x i8], align 8                ; 12 uses
+  %i.c = alloca [56 x i8], align 8                ; 11 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32, !dbg !4025
   tail call void @llvm.experimental.noalias.scope.decl(metadata !4026), !dbg !4029
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 24, !dbg !4030 ; 4 uses
@@ -3770,9 +3754,7 @@ bb.g:                                             ; preds = %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !4064, !noalias !4055
   store ptr %i.d, ptr %i.c, align 8, !dbg !4070, !noalias !4055
   %.sroa.4.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 8, !dbg !4070
-  store i64 160, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !dbg !4070, !noalias !4055
-  %.sroa.5.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 16, !dbg !4070
-  store i64 16, ptr %.sroa.5.0..sroa_idx.i.i, align 8, !dbg !4070, !noalias !4055
+  store <2 x i64> <i64 160, i64 16>, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !dbg !4070, !noalias !4055
   %.sroa.619.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 24, !dbg !4070 ; 2 uses
   store ptr %i.q, ptr %.sroa.619.0..sroa_idx.i.i, align 8, !dbg !4070, !noalias !4055
   %.sroa.619.sroa.4.0..sroa.619.0..sroa_idx.sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 32, !dbg !4070
@@ -4153,7 +4135,7 @@ define { i64, i64 } @_RINvMs6_NtCs7tGzs63DEEy_9hashbrown3rawINtB6_8RawTablejE14r
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   %i.b = alloca [32 x i8], align 8                ; 8 uses
-  %i.c = alloca [56 x i8], align 8                ; 12 uses
+  %i.c = alloca [56 x i8], align 8                ; 11 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32, !dbg !4452
   tail call void @llvm.experimental.noalias.scope.decl(metadata !4453), !dbg !4456
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 24, !dbg !4457 ; 4 uses
@@ -4209,9 +4191,7 @@ bb.g:                                             ; preds = %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !4491, !noalias !4482
   store ptr %i.d, ptr %i.c, align 8, !dbg !4497, !noalias !4482
   %.sroa.4.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 8, !dbg !4497
-  store i64 8, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !dbg !4497, !noalias !4482
-  %.sroa.5.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 16, !dbg !4497
-  store i64 16, ptr %.sroa.5.0..sroa_idx.i.i, align 8, !dbg !4497, !noalias !4482
+  store <2 x i64> <i64 8, i64 16>, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !dbg !4497, !noalias !4482
   %.sroa.619.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 24, !dbg !4497 ; 2 uses
   store ptr %i.q, ptr %.sroa.619.0..sroa_idx.i.i, align 8, !dbg !4497, !noalias !4482
   %.sroa.619.sroa.4.0..sroa.619.0..sroa_idx.sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 32, !dbg !4497

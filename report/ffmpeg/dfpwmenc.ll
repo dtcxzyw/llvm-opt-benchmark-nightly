@@ -21,28 +21,26 @@ define internal noundef i32 @dfpwm_enc_init(ptr nofree noundef captures(none) in
 bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !9    ; 3 uses
-  store i32 0, ptr %i.c, align 4, !tbaa !29
-  %1 = getelementptr inbounds nuw i8, ptr %i.c, i64 4
-  store i32 0, ptr %1, align 4, !tbaa !31
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !9    ; 2 uses
+  store <2 x i32> zeroinitializer, ptr %i.c, align 4, !tbaa !29
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 8
-  store i32 -128, ptr %i.d, align 4, !tbaa !32
+  store i32 -128, ptr %i.d, align 4, !tbaa !30
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 648
-  store i32 1, ptr %i.e, align 8, !tbaa !33
-  store <8 x i8> <i8 1, i8 8, i8 4, i8 8, i8 2, i8 8, i8 4, i8 8>, ptr %i.a, align 8, !tbaa !34
+  store i32 1, ptr %i.e, align 8, !tbaa !32
+  store <8 x i8> <i8 1, i8 8, i8 4, i8 8, i8 2, i8 8, i8 4, i8 8>, ptr %i.a, align 8, !tbaa !33
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 356
-  %i.g = load i32, ptr %i.f, align 4, !tbaa !35   ; 2 uses
+  %i.g = load i32, ptr %i.f, align 4, !tbaa !34   ; 2 uses
   %i.h = and i32 %i.g, 7
   %i.i = zext nneg i32 %i.h to i64
   %i.j = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.i
-  %i.k = load i8, ptr %i.j, align 1, !tbaa !34
+  %i.k = load i8, ptr %i.j, align 1, !tbaa !33
   %i.l = zext i8 %i.k to i32
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %i.n = load ptr, ptr %i.m, align 8, !tbaa !36
+  %i.n = load ptr, ptr %i.m, align 8, !tbaa !35
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 8
-  store i32 %i.l, ptr %i.o, align 8, !tbaa !37
+  store i32 %i.l, ptr %i.o, align 8, !tbaa !36
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 376 ; 2 uses
-  %i.q = load i32, ptr %i.p, align 8, !tbaa !44   ; 2 uses
+  %i.q = load i32, ptr %i.p, align 8, !tbaa !43   ; 2 uses
   %i.r = icmp slt i32 %i.q, 1
   br i1 %i.r, label %bb.c, label %bb.b
 
@@ -53,7 +51,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  store i32 4096, ptr %i.p, align 8, !tbaa !44
+  store i32 4096, ptr %i.p, align 8, !tbaa !43
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
@@ -66,9 +64,9 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !9    ; 11 uses
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 112
-  %i.d = load i32, ptr %i.c, align 8, !tbaa !45
+  %i.d = load i32, ptr %i.c, align 8, !tbaa !44
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 388
-  %i.f = load i32, ptr %i.e, align 4, !tbaa !50
+  %i.f = load i32, ptr %i.e, align 4, !tbaa !49
   %i.g = mul nsw i32 %i.f, %i.d
   %i.h = lshr i32 %i.g, 3                         ; 3 uses
   %i.i = zext nneg i32 %i.h to i64
@@ -81,9 +79,9 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not74.i, label %au_compress.exit, label %.preheader.lr.ph.i
 
 .preheader.lr.ph.i:                               ; preds = %bb.b
-  %i.k = load ptr, ptr %2, align 8, !tbaa !51
+  %i.k = load ptr, ptr %2, align 8, !tbaa !50
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %i.m = load ptr, ptr %i.l, align 8, !tbaa !52
+  %i.m = load ptr, ptr %i.l, align 8, !tbaa !51
   %i.n = getelementptr inbounds nuw i8, ptr %i.b, i64 4 ; 9 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 9 uses
   br label %.preheader.i
@@ -93,11 +91,11 @@ bb.b:                                             ; preds = %bb.a
   %.04272.i = phi i32 [ 0, %.preheader.lr.ph.i ], [ %i.gn, %bb.r ] ; 2 uses
   %.04371.i = phi ptr [ %i.k, %.preheader.lr.ph.i ], [ %scevgep.i, %bb.r ] ; 9 uses
   %.04570.i = phi ptr [ %i.m, %.preheader.lr.ph.i ], [ %i.gz, %bb.r ] ; 2 uses
-  %.promoted.i = load i32, ptr %i.b, align 4, !tbaa !29 ; 4 uses
-  %.promoted64.i = load i32, ptr %i.n, align 4, !tbaa !31 ; 3 uses
-  %.promoted65.i = load i32, ptr %i.o, align 4, !tbaa !32
+  %.promoted.i = load i32, ptr %i.b, align 4, !tbaa !53 ; 4 uses
+  %.promoted64.i = load i32, ptr %i.n, align 4, !tbaa !54 ; 3 uses
+  %.promoted65.i = load i32, ptr %i.o, align 4, !tbaa !30
   %i.p = getelementptr inbounds nuw i8, ptr %.04371.i, i64 1
-  %i.q = load i8, ptr %.04371.i, align 1, !tbaa !34
+  %i.q = load i8, ptr %.04371.i, align 1, !tbaa !33
   %i.r = zext i8 %i.q to i32
   %i.s = add nsw i32 %i.r, -128                   ; 2 uses
   %i.t = icmp sgt i32 %i.s, %.promoted.i
@@ -134,7 +132,7 @@ bb.d:                                             ; preds = %.split.i, %bb.c, %.
   %or.cond.i = or i1 %i.ai, %.not.i
   %i.aj = select i1 %or.cond.i, i32 0, i32 %spec.select62.i
   %.039.i = add nsw i32 %i.aj, %i.ah              ; 5 uses
-  store i32 %.039.i, ptr %i.b, align 4, !tbaa !29
+  store i32 %.039.i, ptr %i.b, align 4, !tbaa !53
   %.not53.i = icmp eq i32 %i.ab, %.promoted65.i   ; 2 uses
   %i.ak = select i1 %.not53.i, i32 1023, i32 0
   %.not54.i = icmp eq i32 %.promoted64.i, %i.ak
@@ -142,10 +140,10 @@ bb.d:                                             ; preds = %.split.i, %bb.c, %.
   %i.am = select i1 %.not54.i, i32 0, i32 %i.al
   %.0.i = add nsw i32 %i.am, %.promoted64.i       ; 2 uses
   %spec.store.select.i = tail call i32 @llvm.smax.i32(i32 %.0.i, i32 8) ; 3 uses
-  store i32 %spec.store.select.i, ptr %i.n, align 4, !tbaa !31
-  store i32 %i.ab, ptr %i.o, align 4, !tbaa !32
+  store i32 %spec.store.select.i, ptr %i.n, align 4, !tbaa !54
+  store i32 %i.ab, ptr %i.o, align 4, !tbaa !30
   %i.an = getelementptr inbounds nuw i8, ptr %.04371.i, i64 2
-  %i.ao = load i8, ptr %i.p, align 1, !tbaa !34
+  %i.ao = load i8, ptr %i.p, align 1, !tbaa !33
   %i.ap = zext i8 %i.ao to i32
   %i.aq = add nsw i32 %i.ap, -128                 ; 2 uses
   %i.ar = icmp sgt i32 %i.aq, %.039.i
@@ -182,17 +180,17 @@ bb.f:                                             ; preds = %.thread57.1.i, %.sp
   %or.cond.1.i = or i1 %i.bg, %.not.1.i
   %i.bh = select i1 %or.cond.1.i, i32 0, i32 %spec.select62.1.i
   %.039.1.i = add nsw i32 %i.bh, %i.bf            ; 5 uses
-  store i32 %.039.1.i, ptr %i.b, align 4, !tbaa !29
+  store i32 %.039.1.i, ptr %i.b, align 4, !tbaa !53
   %.not53.1.i = icmp eq i32 %i.az, %i.ab
   %.not54.186.i = icmp ne i32 %.0.i, 1023
   %i.bi = zext i1 %.not54.186.i to i32
   %i.bj = select i1 %.not53.1.i, i32 %i.bi, i32 -1
   %.0.1.i = add nsw i32 %i.bj, %spec.store.select.i ; 2 uses
   %i.bk = tail call i32 @llvm.umax.i32(i32 %.0.1.i, i32 8) ; 3 uses
-  store i32 %i.bk, ptr %i.n, align 4, !tbaa !31
-  store i32 %i.az, ptr %i.o, align 4, !tbaa !32
+  store i32 %i.bk, ptr %i.n, align 4, !tbaa !54
+  store i32 %i.az, ptr %i.o, align 4, !tbaa !30
   %i.bl = getelementptr inbounds nuw i8, ptr %.04371.i, i64 3
-  %i.bm = load i8, ptr %i.an, align 1, !tbaa !34
+  %i.bm = load i8, ptr %i.an, align 1, !tbaa !33
   %i.bn = zext i8 %i.bm to i32
   %i.bo = add nsw i32 %i.bn, -128                 ; 2 uses
   %i.bp = icmp sgt i32 %i.bo, %.039.1.i
@@ -229,17 +227,17 @@ bb.h:                                             ; preds = %.thread57.2.i, %.sp
   %or.cond.2.i = or i1 %i.ce, %.not.2.i
   %i.cf = select i1 %or.cond.2.i, i32 0, i32 %spec.select62.2.i
   %.039.2.i = add nsw i32 %i.cf, %i.cd            ; 5 uses
-  store i32 %.039.2.i, ptr %i.b, align 4, !tbaa !29
+  store i32 %.039.2.i, ptr %i.b, align 4, !tbaa !53
   %.not53.2.i = icmp eq i32 %i.bx, %i.az
   %.not54.287.i = icmp ne i32 %.0.1.i, 1023
   %i.cg = zext i1 %.not54.287.i to i32
   %i.ch = select i1 %.not53.2.i, i32 %i.cg, i32 -1
   %.0.2.i = add nsw i32 %i.ch, %i.bk              ; 2 uses
   %i.ci = tail call i32 @llvm.umax.i32(i32 %.0.2.i, i32 8) ; 3 uses
-  store i32 %i.ci, ptr %i.n, align 4, !tbaa !31
-  store i32 %i.bx, ptr %i.o, align 4, !tbaa !32
+  store i32 %i.ci, ptr %i.n, align 4, !tbaa !54
+  store i32 %i.bx, ptr %i.o, align 4, !tbaa !30
   %i.cj = getelementptr inbounds nuw i8, ptr %.04371.i, i64 4
-  %i.ck = load i8, ptr %i.bl, align 1, !tbaa !34
+  %i.ck = load i8, ptr %i.bl, align 1, !tbaa !33
   %i.cl = zext i8 %i.ck to i32
   %i.cm = add nsw i32 %i.cl, -128                 ; 2 uses
   %i.cn = icmp sgt i32 %i.cm, %.039.2.i
@@ -276,17 +274,17 @@ bb.j:                                             ; preds = %.thread57.3.i, %.sp
   %or.cond.3.i = or i1 %i.dc, %.not.3.i
   %i.dd = select i1 %or.cond.3.i, i32 0, i32 %spec.select62.3.i
   %.039.3.i = add nsw i32 %i.dd, %i.db            ; 5 uses
-  store i32 %.039.3.i, ptr %i.b, align 4, !tbaa !29
+  store i32 %.039.3.i, ptr %i.b, align 4, !tbaa !53
   %.not53.3.i = icmp eq i32 %i.cv, %i.bx
   %.not54.388.i = icmp ne i32 %.0.2.i, 1023
   %i.de = zext i1 %.not54.388.i to i32
   %i.df = select i1 %.not53.3.i, i32 %i.de, i32 -1
   %.0.3.i = add nsw i32 %i.df, %i.ci              ; 2 uses
   %i.dg = tail call i32 @llvm.umax.i32(i32 %.0.3.i, i32 8) ; 3 uses
-  store i32 %i.dg, ptr %i.n, align 4, !tbaa !31
-  store i32 %i.cv, ptr %i.o, align 4, !tbaa !32
+  store i32 %i.dg, ptr %i.n, align 4, !tbaa !54
+  store i32 %i.cv, ptr %i.o, align 4, !tbaa !30
   %i.dh = getelementptr inbounds nuw i8, ptr %.04371.i, i64 5
-  %i.di = load i8, ptr %i.cj, align 1, !tbaa !34
+  %i.di = load i8, ptr %i.cj, align 1, !tbaa !33
   %i.dj = zext i8 %i.di to i32
   %i.dk = add nsw i32 %i.dj, -128                 ; 2 uses
   %i.dl = icmp sgt i32 %i.dk, %.039.3.i
@@ -323,17 +321,17 @@ bb.l:                                             ; preds = %.thread57.4.i, %.sp
   %or.cond.4.i = or i1 %i.ea, %.not.4.i
   %i.eb = select i1 %or.cond.4.i, i32 0, i32 %spec.select62.4.i
   %.039.4.i = add nsw i32 %i.eb, %i.dz            ; 5 uses
-  store i32 %.039.4.i, ptr %i.b, align 4, !tbaa !29
+  store i32 %.039.4.i, ptr %i.b, align 4, !tbaa !53
   %.not53.4.i = icmp eq i32 %i.dt, %i.cv
   %.not54.489.i = icmp ne i32 %.0.3.i, 1023
   %i.ec = zext i1 %.not54.489.i to i32
   %i.ed = select i1 %.not53.4.i, i32 %i.ec, i32 -1
   %.0.4.i = add nsw i32 %i.ed, %i.dg              ; 2 uses
   %i.ee = tail call i32 @llvm.umax.i32(i32 %.0.4.i, i32 8) ; 3 uses
-  store i32 %i.ee, ptr %i.n, align 4, !tbaa !31
-  store i32 %i.dt, ptr %i.o, align 4, !tbaa !32
+  store i32 %i.ee, ptr %i.n, align 4, !tbaa !54
+  store i32 %i.dt, ptr %i.o, align 4, !tbaa !30
   %i.ef = getelementptr inbounds nuw i8, ptr %.04371.i, i64 6
-  %i.eg = load i8, ptr %i.dh, align 1, !tbaa !34
+  %i.eg = load i8, ptr %i.dh, align 1, !tbaa !33
   %i.eh = zext i8 %i.eg to i32
   %i.ei = add nsw i32 %i.eh, -128                 ; 2 uses
   %i.ej = icmp sgt i32 %i.ei, %.039.4.i
@@ -370,17 +368,17 @@ bb.n:                                             ; preds = %.thread57.5.i, %.sp
   %or.cond.5.i = or i1 %i.ey, %.not.5.i
   %i.ez = select i1 %or.cond.5.i, i32 0, i32 %spec.select62.5.i
   %.039.5.i = add nsw i32 %i.ez, %i.ex            ; 5 uses
-  store i32 %.039.5.i, ptr %i.b, align 4, !tbaa !29
+  store i32 %.039.5.i, ptr %i.b, align 4, !tbaa !53
   %.not53.5.i = icmp eq i32 %i.er, %i.dt
   %.not54.590.i = icmp ne i32 %.0.4.i, 1023
   %i.fa = zext i1 %.not54.590.i to i32
   %i.fb = select i1 %.not53.5.i, i32 %i.fa, i32 -1
   %.0.5.i = add nsw i32 %i.fb, %i.ee              ; 2 uses
   %i.fc = tail call i32 @llvm.umax.i32(i32 %.0.5.i, i32 8) ; 3 uses
-  store i32 %i.fc, ptr %i.n, align 4, !tbaa !31
-  store i32 %i.er, ptr %i.o, align 4, !tbaa !32
+  store i32 %i.fc, ptr %i.n, align 4, !tbaa !54
+  store i32 %i.er, ptr %i.o, align 4, !tbaa !30
   %i.fd = getelementptr inbounds nuw i8, ptr %.04371.i, i64 7
-  %i.fe = load i8, ptr %i.ef, align 1, !tbaa !34
+  %i.fe = load i8, ptr %i.ef, align 1, !tbaa !33
   %i.ff = zext i8 %i.fe to i32
   %i.fg = add nsw i32 %i.ff, -128                 ; 2 uses
   %i.fh = icmp sgt i32 %i.fg, %.039.5.i
@@ -417,16 +415,16 @@ bb.p:                                             ; preds = %.thread57.6.i, %.sp
   %or.cond.6.i = or i1 %i.fw, %.not.6.i
   %i.fx = select i1 %or.cond.6.i, i32 0, i32 %spec.select62.6.i
   %.039.6.i = add nsw i32 %i.fx, %i.fv            ; 5 uses
-  store i32 %.039.6.i, ptr %i.b, align 4, !tbaa !29
+  store i32 %.039.6.i, ptr %i.b, align 4, !tbaa !53
   %.not53.6.i = icmp eq i32 %i.fp, %i.er
   %.not54.691.i = icmp ne i32 %.0.5.i, 1023
   %i.fy = zext i1 %.not54.691.i to i32
   %i.fz = select i1 %.not53.6.i, i32 %i.fy, i32 -1
   %.0.6.i = add nsw i32 %i.fz, %i.fc              ; 2 uses
   %i.ga = tail call i32 @llvm.umax.i32(i32 %.0.6.i, i32 8) ; 3 uses
-  store i32 %i.ga, ptr %i.n, align 4, !tbaa !31
-  store i32 %i.fp, ptr %i.o, align 4, !tbaa !32
-  %i.gb = load i8, ptr %i.fd, align 1, !tbaa !34
+  store i32 %i.ga, ptr %i.n, align 4, !tbaa !54
+  store i32 %i.fp, ptr %i.o, align 4, !tbaa !30
+  %i.gb = load i8, ptr %i.fd, align 1, !tbaa !33
   %i.gc = zext i8 %i.gb to i32
   %i.gd = add nsw i32 %i.gc, -128                 ; 2 uses
   %i.ge = icmp sgt i32 %i.gd, %.039.6.i
@@ -463,27 +461,27 @@ bb.r:                                             ; preds = %.thread57.7.i, %.sp
   %or.cond.7.i = select i1 %i.gt, i1 true, i1 %.not.7.i
   %i.gu = select i1 %or.cond.7.i, i32 0, i32 %spec.select62.7.i
   %.039.7.i = add nsw i32 %i.gu, %i.gs
-  store i32 %.039.7.i, ptr %i.b, align 4, !tbaa !29
+  store i32 %.039.7.i, ptr %i.b, align 4, !tbaa !53
   %.not53.7.i = icmp eq i32 %i.gm, %i.fp
   %.not54.792.i = icmp ne i32 %.0.6.i, 1023
   %i.gv = zext i1 %.not54.792.i to i32
   %i.gw = select i1 %.not53.7.i, i32 %i.gv, i32 -1
   %.0.7.i = add nsw i32 %i.gw, %i.ga
   %i.gx = tail call i32 @llvm.umax.i32(i32 %.0.7.i, i32 8)
-  store i32 %i.gx, ptr %i.n, align 4, !tbaa !31
-  store i32 %i.gm, ptr %i.o, align 4, !tbaa !32
+  store i32 %i.gx, ptr %i.n, align 4, !tbaa !54
+  store i32 %i.gm, ptr %i.o, align 4, !tbaa !30
   %scevgep.i = getelementptr i8, ptr %.04371.i, i64 8
   %i.gy = trunc nuw i32 %i.gn to i8
   %i.gz = getelementptr inbounds nuw i8, ptr %.04570.i, i64 1
-  store i8 %i.gy, ptr %.04570.i, align 1, !tbaa !34
+  store i8 %i.gy, ptr %.04570.i, align 1, !tbaa !33
   %i.ha = add nuw nsw i32 %.04173.i, 1            ; 2 uses
   %exitcond.not.i = icmp eq i32 %i.ha, %i.h
-  br i1 %exitcond.not.i, label %au_compress.exit, label %.preheader.i, !llvm.loop !54
+  br i1 %exitcond.not.i, label %au_compress.exit, label %.preheader.i, !llvm.loop !55
 
 au_compress.exit:                                 ; preds = %bb.r, %bb.b, %bb.a
   %storemerge = phi i32 [ 0, %bb.a ], [ 1, %bb.b ], [ 1, %bb.r ]
   %.0 = phi i32 [ %i.j, %bb.a ], [ 0, %bb.b ], [ 0, %bb.r ]
-  store i32 %storemerge, ptr %3, align 4, !tbaa !56
+  store i32 %storemerge, ptr %3, align 4, !tbaa !29
   ret i32 %.0
 }
 
@@ -534,32 +532,32 @@ attributes #4 = { nounwind }
 !26 = !{!"p1 int", !12, i64 0}
 !27 = !{!"p2 _ZTS15AVFrameSideData", !28, i64 0}
 !28 = !{!"any p2 pointer", !12, i64 0}
-!29 = !{!30, !6, i64 0}
-!30 = !{!"", !6, i64 0, !6, i64 4, !6, i64 8}
-!31 = !{!30, !6, i64 4}
-!32 = !{!30, !6, i64 8}
-!33 = !{!10, !6, i64 648}
-!34 = !{!7, !7, i64 0}
-!35 = !{!10, !6, i64 356}
-!36 = !{!10, !14, i64 40}
-!37 = !{!38, !6, i64 8}
-!38 = !{!"AVCodecInternal", !6, i64 0, !6, i64 4, !6, i64 8, !39, i64 16, !40, i64 24, !12, i64 32, !41, i64 40, !42, i64 48, !41, i64 56, !16, i64 64, !6, i64 72, !12, i64 80, !43, i64 88, !43, i64 96, !6, i64 104, !6, i64 108, !12, i64 112, !6, i64 120, !41, i64 128, !43, i64 136, !6, i64 144, !6, i64 148}
-!39 = !{!"p1 _ZTS9FramePool", !12, i64 0}
-!40 = !{!"p1 _ZTS15AVRefStructPool", !12, i64 0}
-!41 = !{!"p1 _ZTS8AVPacket", !12, i64 0}
-!42 = !{!"p1 _ZTS12AVBSFContext", !12, i64 0}
-!43 = !{!"p1 _ZTS7AVFrame", !12, i64 0}
-!44 = !{!10, !6, i64 376}
-!45 = !{!46, !6, i64 112}
-!46 = !{!"AVFrame", !7, i64 0, !7, i64 64, !47, i64 96, !6, i64 104, !6, i64 108, !6, i64 112, !6, i64 116, !6, i64 120, !17, i64 124, !15, i64 136, !15, i64 144, !17, i64 152, !6, i64 160, !12, i64 168, !6, i64 176, !6, i64 180, !7, i64 184, !48, i64 248, !6, i64 256, !27, i64 264, !6, i64 272, !6, i64 276, !6, i64 280, !6, i64 284, !6, i64 288, !6, i64 292, !6, i64 296, !15, i64 304, !49, i64 312, !6, i64 320, !23, i64 328, !23, i64 336, !15, i64 344, !15, i64 352, !15, i64 360, !15, i64 368, !12, i64 376, !20, i64 384, !15, i64 408, !6, i64 416}
-!47 = !{!"p2 omnipotent char", !28, i64 0}
-!48 = !{!"p2 _ZTS11AVBufferRef", !28, i64 0}
-!49 = !{!"p1 _ZTS12AVDictionary", !12, i64 0}
-!50 = !{!46, !6, i64 388}
-!51 = !{!16, !16, i64 0}
-!52 = !{!53, !16, i64 24}
-!53 = !{!"AVPacket", !23, i64 0, !15, i64 8, !15, i64 16, !16, i64 24, !6, i64 32, !6, i64 36, !6, i64 40, !25, i64 48, !6, i64 56, !15, i64 64, !15, i64 72, !12, i64 80, !23, i64 88, !17, i64 96}
-!54 = distinct !{!54, !55}
-!55 = !{!"llvm.loop.mustprogress"}
-!56 = !{!6, !6, i64 0}
+!29 = !{!6, !6, i64 0}
+!30 = !{!31, !6, i64 8}
+!31 = !{!"", !6, i64 0, !6, i64 4, !6, i64 8}
+!32 = !{!10, !6, i64 648}
+!33 = !{!7, !7, i64 0}
+!34 = !{!10, !6, i64 356}
+!35 = !{!10, !14, i64 40}
+!36 = !{!37, !6, i64 8}
+!37 = !{!"AVCodecInternal", !6, i64 0, !6, i64 4, !6, i64 8, !38, i64 16, !39, i64 24, !12, i64 32, !40, i64 40, !41, i64 48, !40, i64 56, !16, i64 64, !6, i64 72, !12, i64 80, !42, i64 88, !42, i64 96, !6, i64 104, !6, i64 108, !12, i64 112, !6, i64 120, !40, i64 128, !42, i64 136, !6, i64 144, !6, i64 148}
+!38 = !{!"p1 _ZTS9FramePool", !12, i64 0}
+!39 = !{!"p1 _ZTS15AVRefStructPool", !12, i64 0}
+!40 = !{!"p1 _ZTS8AVPacket", !12, i64 0}
+!41 = !{!"p1 _ZTS12AVBSFContext", !12, i64 0}
+!42 = !{!"p1 _ZTS7AVFrame", !12, i64 0}
+!43 = !{!10, !6, i64 376}
+!44 = !{!45, !6, i64 112}
+!45 = !{!"AVFrame", !7, i64 0, !7, i64 64, !46, i64 96, !6, i64 104, !6, i64 108, !6, i64 112, !6, i64 116, !6, i64 120, !17, i64 124, !15, i64 136, !15, i64 144, !17, i64 152, !6, i64 160, !12, i64 168, !6, i64 176, !6, i64 180, !7, i64 184, !47, i64 248, !6, i64 256, !27, i64 264, !6, i64 272, !6, i64 276, !6, i64 280, !6, i64 284, !6, i64 288, !6, i64 292, !6, i64 296, !15, i64 304, !48, i64 312, !6, i64 320, !23, i64 328, !23, i64 336, !15, i64 344, !15, i64 352, !15, i64 360, !15, i64 368, !12, i64 376, !20, i64 384, !15, i64 408, !6, i64 416}
+!46 = !{!"p2 omnipotent char", !28, i64 0}
+!47 = !{!"p2 _ZTS11AVBufferRef", !28, i64 0}
+!48 = !{!"p1 _ZTS12AVDictionary", !12, i64 0}
+!49 = !{!45, !6, i64 388}
+!50 = !{!16, !16, i64 0}
+!51 = !{!52, !16, i64 24}
+!52 = !{!"AVPacket", !23, i64 0, !15, i64 8, !15, i64 16, !16, i64 24, !6, i64 32, !6, i64 36, !6, i64 40, !25, i64 48, !6, i64 56, !15, i64 64, !15, i64 72, !12, i64 80, !23, i64 88, !17, i64 96}
+!53 = !{!31, !6, i64 0}
+!54 = !{!31, !6, i64 4}
+!55 = distinct !{!55, !56}
+!56 = !{!"llvm.loop.mustprogress"}
 end_hunk_0

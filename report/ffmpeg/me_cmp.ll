@@ -95,33 +95,15 @@ bb.a:
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(768) %i.a, i8 0, i64 768, i1 false)
   store ptr @sum_abs_dctelem_c, ptr %0, align 8, !tbaa !19
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 680
-  store ptr @pix_abs16_c, ptr %i.b, align 8, !tbaa !9
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 688
-  store ptr @pix_abs16_x2_c, ptr %2, align 8, !tbaa !9
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 696
-  store ptr @pix_abs16_y2_c, ptr %3, align 8, !tbaa !9
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 704
-  store ptr @pix_abs16_xy2_c, ptr %4, align 8, !tbaa !9
+  store <4 x ptr> <ptr @pix_abs16_c, ptr @pix_abs16_x2_c, ptr @pix_abs16_y2_c, ptr @pix_abs16_xy2_c>, ptr %i.b, align 8, !tbaa !9
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 712
-  store ptr @pix_abs8_c, ptr %i.c, align 8, !tbaa !9
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 720
-  store ptr @pix_abs8_x2_c, ptr %5, align 8, !tbaa !9
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 728
-  store ptr @pix_abs8_y2_c, ptr %6, align 8, !tbaa !9
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 736
-  store ptr @pix_abs8_xy2_c, ptr %7, align 8, !tbaa !9
+  store <4 x ptr> <ptr @pix_abs8_c, ptr @pix_abs8_x2_c, ptr @pix_abs8_y2_c, ptr @pix_abs8_xy2_c>, ptr %i.c, align 8, !tbaa !9
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 104
   store ptr @hadamard8_diff16_c, ptr %i.d, align 8, !tbaa !9
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 112
   store ptr @hadamard8_diff8x8_c, ptr %i.e, align 8, !tbaa !9
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 136
-  store ptr @hadamard8_intra16_c, ptr %i.f, align 8, !tbaa !9
-  %8 = getelementptr inbounds nuw i8, ptr %0, i64 144
-  store ptr @hadamard8_intra8x8_c, ptr %8, align 8, !tbaa !9
-  %9 = getelementptr inbounds nuw i8, ptr %0, i64 152
-  store ptr @dct_sad16_c, ptr %9, align 8, !tbaa !9
-  %10 = getelementptr inbounds nuw i8, ptr %0, i64 160
-  store ptr @dct_sad8x8_c, ptr %10, align 8, !tbaa !9
+  store <4 x ptr> <ptr @hadamard8_intra16_c, ptr @hadamard8_intra8x8_c, ptr @dct_sad16_c, ptr @dct_sad8x8_c>, ptr %i.f, align 8, !tbaa !9
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 584
   store ptr @dct_max16_c, ptr %i.g, align 8, !tbaa !9
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 592
@@ -153,21 +135,9 @@ bb.a:
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 352
   store ptr @vsad8_c, ptr %i.u, align 8, !tbaa !9
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 376
-  store ptr @vsad_intra16_c, ptr %i.v, align 8, !tbaa !9
-  %11 = getelementptr inbounds nuw i8, ptr %0, i64 384
-  store ptr @vsad_intra8_c, ptr %11, align 8, !tbaa !9
-  %12 = getelementptr inbounds nuw i8, ptr %0, i64 392
-  store ptr @vsse16_c, ptr %12, align 8, !tbaa !9
-  %13 = getelementptr inbounds nuw i8, ptr %0, i64 400
-  store ptr @vsse8_c, ptr %13, align 8, !tbaa !9
+  store <4 x ptr> <ptr @vsad_intra16_c, ptr @vsad_intra8_c, ptr @vsse16_c, ptr @vsse8_c>, ptr %i.v, align 8, !tbaa !9
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 424
-  store ptr @vsse_intra16_c, ptr %i.w, align 8, !tbaa !9
-  %14 = getelementptr inbounds nuw i8, ptr %0, i64 432
-  store ptr @vsse_intra8_c, ptr %14, align 8, !tbaa !9
-  %15 = getelementptr inbounds nuw i8, ptr %0, i64 440
-  store ptr @nsse16_c, ptr %15, align 8, !tbaa !9
-  %16 = getelementptr inbounds nuw i8, ptr %0, i64 448
-  store ptr @nsse8_c, ptr %16, align 8, !tbaa !9
+  store <4 x ptr> <ptr @vsse_intra16_c, ptr @vsse_intra8_c, ptr @nsse16_c, ptr @nsse8_c>, ptr %i.w, align 8, !tbaa !9
   tail call void @ff_dsputil_init_dwt(ptr noundef %0) #11
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 744
   store ptr @pix_median_abs16_c, ptr %i.x, align 8, !tbaa !9

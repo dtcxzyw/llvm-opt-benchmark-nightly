@@ -202,11 +202,9 @@ bb.a:
 define internal void @frame_merge_flush(ptr nofree noundef readonly captures(none) %0) #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !9    ; 4 uses
-  %1 = getelementptr inbounds nuw i8, ptr %i.b, i64 20
-  store i32 0, ptr %1, align 4, !tbaa !26
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !9    ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 16
-  store i32 0, ptr %i.c, align 8, !tbaa !27
+  store <2 x i32> zeroinitializer, ptr %i.c, align 8, !tbaa !31
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !16
   tail call void @av_packet_unref(ptr noundef %i.e) #5
@@ -280,4 +278,5 @@ attributes #6 = { cold }
 !28 = !{!21, !6, i64 40}
 !29 = !{!21, !6, i64 32}
 !30 = !{!7, !7, i64 0}
+!31 = !{!6, !6, i64 0}
 end_hunk_0

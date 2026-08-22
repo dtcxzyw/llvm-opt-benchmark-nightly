@@ -202,9 +202,8 @@ isUnsupportedTerm.exit.thread:                    ; preds = %bb.l, %bb.k, %bb.j
 
 bb.n:                                             ; preds = %isUnsupportedTerm.exit.thread
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #28
-  store i32 0, ptr %3, align 8, !tbaa !57
-  %i.ar = getelementptr inbounds nuw i8, ptr %3, i64 4 ; 2 uses
-  store i32 1, ptr %i.ar, align 4, !tbaa !32
+  %i.ar = getelementptr inbounds nuw i8, ptr %3, i64 4
+  store <2 x i32> <i32 0, i32 1>, ptr %3, align 8, !tbaa !7
   %i.as = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 7 uses
   store ptr %i.e, ptr %i.as, align 8, !tbaa !24
   %i.at = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 4 uses

@@ -22,13 +22,7 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 48
   store ptr @put_tpel_pixels_mc21_c, ptr %i.e, align 8, !tbaa !9
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 64
-  store ptr @put_tpel_pixels_mc02_c, ptr %i.f, align 8, !tbaa !9
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 72
-  store ptr @put_tpel_pixels_mc12_c, ptr %1, align 8, !tbaa !9
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 80
-  store ptr @put_tpel_pixels_mc22_c, ptr %2, align 8, !tbaa !9
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 88
-  store ptr @avg_tpel_pixels_mc00_c, ptr %3, align 8, !tbaa !9
+  store <4 x ptr> <ptr @put_tpel_pixels_mc02_c, ptr @put_tpel_pixels_mc12_c, ptr @put_tpel_pixels_mc22_c, ptr @avg_tpel_pixels_mc00_c>, ptr %i.f, align 8, !tbaa !9
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 96
   store ptr @avg_tpel_pixels_mc10_c, ptr %i.g, align 8, !tbaa !9
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 104

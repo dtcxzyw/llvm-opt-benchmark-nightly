@@ -202,7 +202,7 @@ bb.a:
   %i.a = alloca [40 x i8], align 8                ; 9 uses
   %i.b = alloca [24 x i8], align 8                ; 4 uses
   %i.c = alloca [144 x i8], align 16              ; 4 uses
-  %i.d = alloca [12 x i8], align 4                ; 5 uses
+  %i.d = alloca [12 x i8], align 8                ; 4 uses
   %i.e = alloca [160 x i8], align 16              ; 5 uses
   %i.f = alloca [144 x i8], align 16              ; 4 uses
   %i.g = alloca [144 x i8], align 16              ; 4 uses
@@ -509,9 +509,7 @@ bb.ab:                                            ; preds = %_RNCNvMs0_NtCshquuC
 _RNCNvMs0_NtCshquuC4dCYVj_10polars_sql9functionsNtB7_18SQLFunctionVisitor11visit_counts0_0B9_.exit.i: ; preds = %bb.y
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !dbg !15755, !noalias !15541
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !dbg !15756, !noalias !15541
-  %2 = getelementptr inbounds nuw i8, ptr %i.d, i64 4, !dbg !15756
-  store i32 0, ptr %2, align 4, !dbg !15756, !noalias !15541
-  store i32 1, ptr %i.d, align 4, !dbg !15756, !noalias !15541
+  store <2 x i32> <i32 1, i32 0>, ptr %i.d, align 8, !dbg !15756, !noalias !15541
   invoke void @_RNvMNtCsfcROwRM8ZtH_11polars_plan3dslNtNtB2_4expr4Expr23fill_null_with_strategy(ptr noalias noundef nonnull sret([144 x i8]) align 16 captures(address) dereferenceable(144) %i.g, ptr noalias noundef nonnull align 16 captures(address) dereferenceable(144) %i.f, ptr noalias noundef nonnull readonly align 4 captures(none) dereferenceable(12) %i.d)
           to label %bb.ac unwind label %bb.ab, !dbg !15757, !noalias !15528
 
@@ -649,7 +647,7 @@ bb.a:
   %i.b = alloca [40 x i8], align 8                ; 9 uses
   %i.c = alloca [24 x i8], align 8                ; 4 uses
   %i.d = alloca [144 x i8], align 16              ; 4 uses
-  %i.e = alloca [12 x i8], align 4                ; 5 uses
+  %i.e = alloca [12 x i8], align 8                ; 4 uses
   %i.f = alloca [144 x i8], align 16              ; 4 uses
   %i.g = alloca [144 x i8], align 16              ; 4 uses
   %.sroa.769.i = alloca [24 x i8], align 8        ; 5 uses
@@ -955,9 +953,7 @@ bb.ab:                                            ; preds = %bb.ac, %bb.y
 bb.ac:                                            ; preds = %bb.y
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !16012, !noalias !15852
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !dbg !16036, !noalias !15852
-  %2 = getelementptr inbounds nuw i8, ptr %i.e, i64 4, !dbg !16036
-  store i32 0, ptr %2, align 4, !dbg !16036, !noalias !15852
-  store i32 1, ptr %i.e, align 4, !dbg !16036, !noalias !15852
+  store <2 x i32> <i32 1, i32 0>, ptr %i.e, align 8, !dbg !16036, !noalias !15852
   invoke void @_RNvMNtCsfcROwRM8ZtH_11polars_plan3dslNtNtB2_4expr4Expr23fill_null_with_strategy(ptr noalias noundef nonnull sret([144 x i8]) align 16 captures(address) dereferenceable(144) %i.g, ptr noalias noundef nonnull align 16 captures(address) dereferenceable(144) %i.f, ptr noalias noundef nonnull readonly align 4 captures(none) dereferenceable(12) %i.e)
           to label %bb.ad unwind label %bb.ab, !dbg !16037, !noalias !15839
 
@@ -1095,7 +1091,7 @@ bb.a:
   %i.b = alloca [40 x i8], align 8                ; 9 uses
   %i.c = alloca [24 x i8], align 8                ; 4 uses
   %i.d = alloca [144 x i8], align 16              ; 4 uses
-  %i.e = alloca [12 x i8], align 4                ; 5 uses
+  %i.e = alloca [12 x i8], align 8                ; 4 uses
   %i.f = alloca [144 x i8], align 16              ; 4 uses
   %i.g = alloca [144 x i8], align 16              ; 4 uses
   %.sroa.769.i = alloca [24 x i8], align 8        ; 5 uses
@@ -1401,9 +1397,7 @@ bb.ab:                                            ; preds = %bb.ac, %bb.y
 bb.ac:                                            ; preds = %bb.y
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !16292, !noalias !16132
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !dbg !16316, !noalias !16132
-  %2 = getelementptr inbounds nuw i8, ptr %i.e, i64 4, !dbg !16316
-  store i32 0, ptr %2, align 4, !dbg !16316, !noalias !16132
-  store i32 1, ptr %i.e, align 4, !dbg !16316, !noalias !16132
+  store <2 x i32> <i32 1, i32 0>, ptr %i.e, align 8, !dbg !16316, !noalias !16132
   invoke void @_RNvMNtCsfcROwRM8ZtH_11polars_plan3dslNtNtB2_4expr4Expr23fill_null_with_strategy(ptr noalias noundef nonnull sret([144 x i8]) align 16 captures(address) dereferenceable(144) %i.g, ptr noalias noundef nonnull align 16 captures(address) dereferenceable(144) %i.f, ptr noalias noundef nonnull readonly align 4 captures(none) dereferenceable(12) %i.e)
           to label %bb.ad unwind label %bb.ab, !dbg !16317, !noalias !16119
 
@@ -1541,7 +1535,7 @@ bb.a:
   %i.b = alloca [40 x i8], align 8                ; 9 uses
   %i.c = alloca [24 x i8], align 8                ; 4 uses
   %i.d = alloca [144 x i8], align 16              ; 4 uses
-  %i.e = alloca [12 x i8], align 4                ; 5 uses
+  %i.e = alloca [12 x i8], align 8                ; 4 uses
   %i.f = alloca [144 x i8], align 16              ; 4 uses
   %i.g = alloca [144 x i8], align 16              ; 4 uses
   %.sroa.769.i = alloca [24 x i8], align 8        ; 5 uses
@@ -1847,9 +1841,7 @@ bb.ab:                                            ; preds = %bb.ac, %bb.y
 bb.ac:                                            ; preds = %bb.y
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !16572, !noalias !16412
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !dbg !16596, !noalias !16412
-  %2 = getelementptr inbounds nuw i8, ptr %i.e, i64 4, !dbg !16596
-  store i32 0, ptr %2, align 4, !dbg !16596, !noalias !16412
-  store i32 1, ptr %i.e, align 4, !dbg !16596, !noalias !16412
+  store <2 x i32> <i32 1, i32 0>, ptr %i.e, align 8, !dbg !16596, !noalias !16412
   invoke void @_RNvMNtCsfcROwRM8ZtH_11polars_plan3dslNtNtB2_4expr4Expr23fill_null_with_strategy(ptr noalias noundef nonnull sret([144 x i8]) align 16 captures(address) dereferenceable(144) %i.g, ptr noalias noundef nonnull align 16 captures(address) dereferenceable(144) %i.f, ptr noalias noundef nonnull readonly align 4 captures(none) dereferenceable(12) %i.e)
           to label %bb.ad unwind label %bb.ab, !dbg !16597, !noalias !16399
 
@@ -1987,7 +1979,7 @@ bb.a:
   %i.b = alloca [40 x i8], align 8                ; 9 uses
   %i.c = alloca [24 x i8], align 8                ; 4 uses
   %i.d = alloca [144 x i8], align 16              ; 4 uses
-  %i.e = alloca [12 x i8], align 4                ; 5 uses
+  %i.e = alloca [12 x i8], align 8                ; 4 uses
   %i.f = alloca [144 x i8], align 16              ; 4 uses
   %i.g = alloca [144 x i8], align 16              ; 4 uses
   %.sroa.769.i = alloca [24 x i8], align 8        ; 5 uses
@@ -2293,9 +2285,7 @@ bb.ab:                                            ; preds = %bb.ac, %bb.y
 bb.ac:                                            ; preds = %bb.y
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !16852, !noalias !16692
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !dbg !16875, !noalias !16692
-  %2 = getelementptr inbounds nuw i8, ptr %i.e, i64 4, !dbg !16875
-  store i32 0, ptr %2, align 4, !dbg !16875, !noalias !16692
-  store i32 1, ptr %i.e, align 4, !dbg !16875, !noalias !16692
+  store <2 x i32> <i32 1, i32 0>, ptr %i.e, align 8, !dbg !16875, !noalias !16692
   invoke void @_RNvMNtCsfcROwRM8ZtH_11polars_plan3dslNtNtB2_4expr4Expr23fill_null_with_strategy(ptr noalias noundef nonnull sret([144 x i8]) align 16 captures(address) dereferenceable(144) %i.g, ptr noalias noundef nonnull align 16 captures(address) dereferenceable(144) %i.f, ptr noalias noundef nonnull readonly align 4 captures(none) dereferenceable(12) %i.e)
           to label %bb.ad unwind label %bb.ab, !dbg !16876, !noalias !16679
 
@@ -2698,7 +2688,7 @@ bb.ap:                                            ; preds = %bb.d
 define internal fastcc void @_RNvMs0_NtCshquuC4dCYVj_10polars_sql9functionsNtB5_18SQLFunctionVisitor19not_supported_error(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 16 captures(none) dereferenceable(144) %0, ptr nonnull captures(address, read_provenance) %.144.val) unnamed_addr #0 personality ptr @rust_eh_personality !dbg !32795 {
 bb.a:
   %i.a = alloca [0 x i8], align 1
-  %i.b = alloca [24 x i8], align 8                ; 8 uses
+  %i.b = alloca [24 x i8], align 8                ; 7 uses
   %i.c = alloca [24 x i8], align 8                ; 8 uses
   %i.d = alloca [16 x i8], align 8                ; 5 uses
   %i.e = alloca [24 x i8], align 8                ; 6 uses
@@ -2714,12 +2704,10 @@ bb.a:
   %.sroa.53.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 16, !dbg !32811
   store i64 0, ptr %.sroa.53.0..sroa_idx.i.i, align 8, !dbg !32811, !noalias !32804
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !dbg !32814, !noalias !32804
-  %1 = getelementptr inbounds nuw i8, ptr %i.b, i64 16, !dbg !32816
-  store i32 1610612768, ptr %1, align 8, !dbg !32816, !noalias !32804
-  %.sroa.4.0..sroa_idx.i.i.a = getelementptr inbounds nuw i8, ptr %i.b, i64 20, !dbg !32816
-  store i16 0, ptr %.sroa.4.0..sroa_idx.i.i.a, align 4, !dbg !32816, !noalias !32804
-  %.sroa.5.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 22, !dbg !32816
-  store i16 0, ptr %.sroa.5.0..sroa_idx.i.i, align 2, !dbg !32816, !noalias !32804
+  %.sroa.4.0..sroa_idx.i.i.a = getelementptr inbounds nuw i8, ptr %i.b, i64 16, !dbg !32816
+  store i32 1610612768, ptr %.sroa.4.0..sroa_idx.i.i.a, align 8, !dbg !32816, !noalias !32804
+  %.sroa.5.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 20, !dbg !32816
+  store <2 x i16> zeroinitializer, ptr %.sroa.5.0..sroa_idx.i.i, align 4, !dbg !32816, !noalias !32804
   store ptr %i.c, ptr %i.b, align 8, !dbg !32816, !noalias !32804
   %i.h = getelementptr inbounds nuw i8, ptr %i.b, i64 8, !dbg !32816
   store ptr @232, ptr %i.h, align 8, !dbg !32816, !noalias !32804
@@ -3122,15 +3110,13 @@ bb.a:
   br i1 %i.e, label %bb.b, label %bb.c, !dbg !33696
 
 bb.b:                                             ; preds = %bb.a
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !33697
-  store i64 0, ptr %3, align 8, !dbg !33697
   %.sroa.0.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !33697
   store ptr inttoptr (i64 16 to ptr), ptr %.sroa.0.sroa.4.0..sroa_idx, align 8, !dbg !33697
   %.sroa.0.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24, !dbg !33697
   store i64 0, ptr %.sroa.0.sroa.5.0..sroa_idx, align 8, !dbg !33697
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32, !dbg !33697
   store i8 0, ptr %.sroa.4.0..sroa_idx, align 8, !dbg !33697
-  store i64 18, ptr %0, align 8, !dbg !33697
+  store <2 x i64> <i64 18, i64 0>, ptr %0, align 8, !dbg !33697
   br label %bb.f, !dbg !33698
 
 bb.c:                                             ; preds = %bb.a
@@ -3533,8 +3519,6 @@ bb.d:                                             ; preds = %bb.a
   br i1 %.not8, label %bb.j, label %bb.i, !dbg !34515
 
 bb.e:                                             ; preds = %bb.a
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !34516
-  store i64 0, ptr %4, align 8, !dbg !34516
   %.sroa.04.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !34516
   store ptr inttoptr (i64 8 to ptr), ptr %.sroa.04.sroa.4.0..sroa_idx, align 8, !dbg !34516
   %.sroa.04.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24, !dbg !34516
@@ -3547,7 +3531,7 @@ bb.e:                                             ; preds = %bb.a
   store ptr inttoptr (i64 8 to ptr), ptr %.sroa.56.sroa.4.0..sroa.56.0..sroa_idx.sroa_idx, align 8, !dbg !34516
   %.sroa.56.sroa.5.0..sroa.56.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 56, !dbg !34516
   store i64 0, ptr %.sroa.56.sroa.5.0..sroa.56.0..sroa_idx.sroa_idx, align 8, !dbg !34516
-  store i64 18, ptr %0, align 8, !dbg !34516
+  store <2 x i64> <i64 18, i64 0>, ptr %0, align 8, !dbg !34516
   br label %bb.f, !dbg !34517
 
 bb.f:                                             ; preds = %bb.n, %_RNvXsc_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VecNtNtCsaRr8xKSRVhT_9sqlparser3ast22FunctionArgumentClauseEINtNtNtCscgRAwXFJnXP_4core3ops5index5IndexjE5indexCshquuC4dCYVj_10polars_sql.exit, %bb.p, %bb.e, %bb.c
@@ -3950,14 +3934,14 @@ bb.bx:                                            ; preds = %bb.g
 bb.by:                                            ; preds = %bb.g
   %i.gm = getelementptr inbounds nuw i8, ptr %1, i64 16, !dbg !53302
   %i.gn = getelementptr inbounds nuw i8, ptr %1, i64 64, !dbg !53302
-  %2 = load i128, ptr %i.gn, align 16, !dbg !53302, !alias.scope !52952, !noalias !52961, !noundef !13
-  %3 = getelementptr inbounds nuw i8, ptr %1, i64 80, !dbg !53302
-  %4 = load i128, ptr %3, align 16, !dbg !53302, !alias.scope !52952, !noalias !52961, !noundef !13
+  %2 = load <2 x i128>, ptr %i.gn, align 16, !dbg !53302, !alias.scope !52952, !noalias !52961 ; 2 uses
   %i.go = getelementptr inbounds nuw i8, ptr %i.bh, i64 16, !dbg !53307
   call fastcc void @_RNvXsk_NtNtCs1LHh8CLbVkQ_11polars_core9datatypes5dtypeNtB5_8DataTypeNtNtCscgRAwXFJnXP_4core5clone5Clone5clone(ptr noalias noundef align 16 captures(none) dereferenceable(48) %i.go, ptr noalias noundef readonly align 16 captures(address, read_provenance) dereferenceable(48) %i.gm) #29, !dbg !53302
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.bh, i64 64, !dbg !53307
-  store i128 %2, ptr %.sroa.4.0..sroa_idx.i, align 16, !dbg !53307
+  %3 = extractelement <2 x i128> %2, i64 0, !dbg !53307
+  store i128 %3, ptr %.sroa.4.0..sroa_idx.i, align 16, !dbg !53307
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.bh, i64 80, !dbg !53307
+  %4 = extractelement <2 x i128> %2, i64 1, !dbg !53307
   store i128 %4, ptr %.sroa.5.0..sroa_idx.i, align 16, !dbg !53307
   store i8 34, ptr %i.bh, align 16, !dbg !53307
   br label %_RNvXsw_NtNtCsfcROwRM8ZtH_11polars_plan5plans3litNtB5_12LiteralValueNtNtCscgRAwXFJnXP_4core5clone5Clone5clone.exit, !dbg !53027

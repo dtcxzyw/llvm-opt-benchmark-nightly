@@ -37,7 +37,7 @@ target triple = "x86_64-pc-linux-gnu"
 define internal range(i32 -12, 1) i32 @magy_encode_init(ptr nofree noundef captures(none) %0) #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !9    ; 23 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !9    ; 20 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 2 uses
   %i.d = load i32, ptr %i.c, align 8, !tbaa !29
   switch i32 %i.d, label %bb.i [
@@ -67,23 +67,17 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 28
   store i32 811153485, ptr %i.i, align 4, !tbaa !30
-  %1 = getelementptr inbounds nuw i8, ptr %i.b, i64 56
-  store i32 1, ptr %1, align 8, !tbaa !35
-  %2 = getelementptr inbounds nuw i8, ptr %i.b, i64 40
-  store i32 1, ptr %2, align 8, !tbaa !35
   %i.j = getelementptr inbounds nuw i8, ptr %i.b, i64 52
-  store i32 1, ptr %i.j, align 4, !tbaa !35
+  store <2 x i32> splat (i32 1), ptr %i.j, align 4, !tbaa !35
   %i.k = getelementptr inbounds nuw i8, ptr %i.b, i64 36
-  store i32 1, ptr %i.k, align 4, !tbaa !35
+  store <2 x i32> splat (i32 1), ptr %i.k, align 4, !tbaa !35
   br label %.sink.split
 
 bb.e:                                             ; preds = %bb.a
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 28
   store i32 844707917, ptr %i.l, align 4, !tbaa !30
-  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 40
-  store i32 1, ptr %3, align 8, !tbaa !35
   %i.m = getelementptr inbounds nuw i8, ptr %i.b, i64 36
-  store i32 1, ptr %i.m, align 4, !tbaa !35
+  store <2 x i32> splat (i32 1), ptr %i.m, align 4, !tbaa !35
   br label %.sink.split
 
 bb.f:                                             ; preds = %bb.a
@@ -306,16 +300,14 @@ switch.lookup:                                    ; preds = %.critedge162
 bb.t:                                             ; preds = %.critedge162, %switch.lookup
   %i.dw = getelementptr inbounds nuw i8, ptr %0, i64 80
   store i32 32, ptr %i.dw, align 8, !tbaa !55
-  %i.dx = tail call noalias ptr @av_mallocz(i64 noundef 96) #9 ; 10 uses
+  %i.dx = tail call noalias ptr @av_mallocz(i64 noundef 96) #9 ; 9 uses
   %i.dy = getelementptr inbounds nuw i8, ptr %0, i64 72
   store ptr %i.dx, ptr %i.dy, align 8, !tbaa !56
   %.not158 = icmp eq ptr %i.dx, null
   br i1 %.not158, label %.critedge, label %bytestream2_init_writer.exit
 
 bytestream2_init_writer.exit:                     ; preds = %bb.t
-  store i32 1497841997, ptr %i.dx, align 1, !tbaa !57
-  %4 = getelementptr inbounds nuw i8, ptr %i.dx, i64 4
-  store i32 32, ptr %4, align 1, !tbaa !57
+  store <2 x i32> <i32 1497841997, i32 32>, ptr %i.dx, align 1, !tbaa !57
   %i.dz = getelementptr inbounds nuw i8, ptr %i.dx, i64 8
   store i8 7, ptr %i.dz, align 1, !tbaa !57
   %i.ea = getelementptr inbounds nuw i8, ptr %i.dx, i64 9

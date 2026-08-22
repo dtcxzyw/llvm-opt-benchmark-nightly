@@ -204,9 +204,7 @@ bb.d:                                             ; preds = %_RINvMNtCscgRAwXFJn
   %.sroa.418.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !22298
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %.sroa.418.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(24) %i.h, i64 24, i1 false), !dbg !22298
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h), !dbg !22298
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !22298
-  store i64 7, ptr %5, align 8, !dbg !22298
-  store i64 1, ptr %0, align 16, !dbg !22298
+  store <2 x i64> <i64 1, i64 7>, ptr %0, align 16, !dbg !22298
   invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtCs1LHh8CLbVkQ_11polars_core9datatypes5dtype8DataTypeECshquuC4dCYVj_10polars_sql(ptr noalias noundef align 16 dereferenceable(48) %4)
           to label %bb.f unwind label %bb.e, !dbg !22338
 
@@ -563,7 +561,7 @@ define void @_RNvMs2_NtNtNtCs8774dFTUdNv_12polars_arrow5array7binview7mutableINt
 bb.a:
   %i.a = alloca [0 x i8], align 1
   %i.b = alloca [24 x i8], align 8                ; 6 uses
-  %.sroa.4 = alloca [12 x i8], align 4            ; 7 uses
+  %.sroa.4 = alloca [12 x i8], align 8            ; 6 uses
   %i.c = alloca [24 x i8], align 8                ; 6 uses
   %i.d = alloca [24 x i8], align 8                ; 6 uses
   %i.e = icmp samesign ult i64 %3, 4294967296, !dbg !22598
@@ -743,15 +741,13 @@ bb.p:                                             ; preds = %bb.q, %.split9
 bb.q:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4), !dbg !22802
   %i.bo = trunc nuw nsw i64 %3 to i32, !dbg !22807
-  store i32 0, ptr %.sroa.4, align 4, !dbg !22808
-  %.sroa.4.4..sroa_idx16 = getelementptr inbounds nuw i8, ptr %.sroa.4, i64 4, !dbg !22808
-  store i32 0, ptr %.sroa.4.4..sroa_idx16, align 4, !dbg !22808
+  store <2 x i32> zeroinitializer, ptr %.sroa.4, align 8, !dbg !22808
   %.sroa.4.8..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.4, i64 8, !dbg !22808
-  store i32 0, ptr %.sroa.4.8..sroa_idx, align 4, !dbg !22808
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %.sroa.4, ptr nonnull align 1 %2, i64 %3, i1 false), !dbg !22809
+  store i32 0, ptr %.sroa.4.8..sroa_idx, align 8, !dbg !22808
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %.sroa.4, ptr nonnull align 1 %2, i64 %3, i1 false), !dbg !22809
   store i32 %i.bo, ptr %0, align 4, !dbg !22815
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 4, !dbg !22815
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.sroa.4.0..sroa_idx, ptr noundef nonnull align 4 dereferenceable(12) %.sroa.4, i64 12, i1 false), !dbg !22815
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.sroa.4.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(12) %.sroa.4, i64 12, i1 false), !dbg !22815
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4), !dbg !22816
   br label %bb.p, !dbg !22817
 }
@@ -1154,7 +1150,7 @@ bb.a:
   %i.e = alloca [16 x i8], align 8                ; 5 uses
   %i.f = alloca [8 x i8], align 8                 ; 4 uses
   %i.g = alloca [24 x i8], align 8                ; 4 uses
-  %i.h = alloca [376 x i8], align 8               ; 23 uses
+  %i.h = alloca [376 x i8], align 8               ; 22 uses
   %i.i = alloca [384 x i8], align 16              ; 7 uses
   %.sroa.719.i15 = alloca [72 x i8], align 8      ; 6 uses
   %i.j = alloca [72 x i8], align 8                ; 8 uses
@@ -1223,10 +1219,8 @@ bb.d:                                             ; preds = %bb.b
   %.sroa.44.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 32, !dbg !23292
   call void @_RNvXs_CsgjwxzEoLG5s_12polars_errorNtB4_9ErrStringINtNtCscgRAwXFJnXP_4core7convert4FromNtNtCsgZ49sUHp3tW_5alloc6string6StringE4fromCshquuC4dCYVj_10polars_sql(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %.sroa.44.0..sroa_idx.i, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(24) %i.ad, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) @45), !dbg !23297, !noalias !23299
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ad), !dbg !23292, !noalias !23276
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 24, !dbg !23292
-  store i64 12, ptr %4, align 8, !dbg !23292, !alias.scope !23268, !noalias !23299
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !23292
-  store i64 -9223372036854775778, ptr %i.al, align 16, !dbg !23292, !alias.scope !23268, !noalias !23299
+  store <2 x i64> <i64 -9223372036854775778, i64 12>, ptr %i.al, align 16, !dbg !23292, !alias.scope !23268, !noalias !23299
   br label %_RNvMs_NtCshquuC4dCYVj_10polars_sql15table_functionsNtB4_20PolarsTableFunctions8read_csv.exit, !dbg !23300
 
 bb.e:                                             ; preds = %bb.c
@@ -1391,10 +1385,8 @@ bb.u:                                             ; preds = %bb.s
   %.sroa.44.0..sroa_idx.i3 = getelementptr inbounds nuw i8, ptr %0, i64 32, !dbg !23467
   call void @_RNvXs_CsgjwxzEoLG5s_12polars_errorNtB4_9ErrStringINtNtCscgRAwXFJnXP_4core7convert4FromNtNtCsgZ49sUHp3tW_5alloc6string6StringE4fromCshquuC4dCYVj_10polars_sql(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %.sroa.44.0..sroa_idx.i3, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(24) %i.u, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) @41), !dbg !23472, !noalias !23474
   call void @llvm.lifetime.end.p0(ptr nonnull %i.u), !dbg !23467, !noalias !23452
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 24, !dbg !23467
-  store i64 12, ptr %5, align 8, !dbg !23467, !alias.scope !23444, !noalias !23474
   %i.bl = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !23467
-  store i64 -9223372036854775778, ptr %i.bl, align 16, !dbg !23467, !alias.scope !23444, !noalias !23474
+  store <2 x i64> <i64 -9223372036854775778, i64 12>, ptr %i.bl, align 16, !dbg !23467, !alias.scope !23444, !noalias !23474
   br label %_RNvMs_NtCshquuC4dCYVj_10polars_sql15table_functionsNtB4_20PolarsTableFunctions8read_csv.exit, !dbg !23475
 
 bb.v:                                             ; preds = %bb.t
@@ -1550,10 +1542,8 @@ bb.ai:                                            ; preds = %bb.ag
   %.sroa.44.0..sroa_idx.i17 = getelementptr inbounds nuw i8, ptr %0, i64 32, !dbg !23607
   call void @_RNvXs_CsgjwxzEoLG5s_12polars_errorNtB4_9ErrStringINtNtCscgRAwXFJnXP_4core7convert4FromNtNtCsgZ49sUHp3tW_5alloc6string6StringE4fromCshquuC4dCYVj_10polars_sql(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %.sroa.44.0..sroa_idx.i17, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(24) %i.n, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) @47), !dbg !23612, !noalias !23614
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n), !dbg !23607, !noalias !23592
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 24, !dbg !23607
-  store i64 12, ptr %6, align 8, !dbg !23607, !alias.scope !23584, !noalias !23614
   %i.co = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !23607
-  store i64 -9223372036854775778, ptr %i.co, align 16, !dbg !23607, !alias.scope !23584, !noalias !23614
+  store <2 x i64> <i64 -9223372036854775778, i64 12>, ptr %i.co, align 16, !dbg !23607, !alias.scope !23584, !noalias !23614
   br label %_RNvMs_NtCshquuC4dCYVj_10polars_sql15table_functionsNtB4_20PolarsTableFunctions8read_csv.exit, !dbg !23615
 
 bb.aj:                                            ; preds = %bb.ah
@@ -1602,7 +1592,6 @@ bb.an:                                            ; preds = %bb.ao
 bb.ao:                                            ; preds = %bb.ak
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h), !dbg !23664, !noalias !23592
   %i.cx = getelementptr inbounds nuw i8, ptr %i.h, i64 288, !dbg !23665
-  store ptr null, ptr %i.cx, align 8, !dbg !23665, !alias.scope !23671, !noalias !23592
   %i.cy = getelementptr inbounds nuw i8, ptr %i.h, i64 24, !dbg !23665
   store i64 2, ptr %i.cy, align 8, !dbg !23665, !alias.scope !23671, !noalias !23592
   %i.cz = getelementptr inbounds nuw i8, ptr %i.h, i64 208, !dbg !23665
@@ -1617,8 +1606,7 @@ bb.ao:                                            ; preds = %bb.ak
   store i8 0, ptr %i.db, align 1, !dbg !23665, !alias.scope !23671, !noalias !23592
   %i.dc = getelementptr inbounds nuw i8, ptr %i.h, i64 354, !dbg !23665
   store i8 1, ptr %i.dc, align 2, !dbg !23665, !alias.scope !23671, !noalias !23592
-  %7 = getelementptr inbounds nuw i8, ptr %i.h, i64 296, !dbg !23665
-  store ptr null, ptr %7, align 8, !dbg !23665, !alias.scope !23671, !noalias !23592
+  store <2 x ptr> splat (ptr null), ptr %i.cx, align 8, !dbg !23665, !alias.scope !23671, !noalias !23592
   %i.dd = getelementptr inbounds nuw i8, ptr %i.h, i64 312, !dbg !23665
   store ptr null, ptr %i.dd, align 8, !dbg !23665, !alias.scope !23671, !noalias !23592
   %i.de = getelementptr inbounds nuw i8, ptr %i.h, i64 328, !dbg !23665
@@ -1725,10 +1713,8 @@ bb.aw:                                            ; preds = %bb.au
   %.sroa.44.0..sroa_idx.i35 = getelementptr inbounds nuw i8, ptr %0, i64 32, !dbg !23746
   call void @_RNvXs_CsgjwxzEoLG5s_12polars_errorNtB4_9ErrStringINtNtCscgRAwXFJnXP_4core7convert4FromNtNtCsgZ49sUHp3tW_5alloc6string6StringE4fromCshquuC4dCYVj_10polars_sql(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %.sroa.44.0..sroa_idx.i35, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(24) %i.g, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) @39), !dbg !23751, !noalias !23753
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g), !dbg !23746, !noalias !23731
-  %8 = getelementptr inbounds nuw i8, ptr %0, i64 24, !dbg !23746
-  store i64 12, ptr %8, align 8, !dbg !23746, !alias.scope !23723, !noalias !23753
   %i.dy = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !23746
-  store i64 -9223372036854775778, ptr %i.dy, align 16, !dbg !23746, !alias.scope !23723, !noalias !23753
+  store <2 x i64> <i64 -9223372036854775778, i64 12>, ptr %i.dy, align 16, !dbg !23746, !alias.scope !23723, !noalias !23753
   br label %_RNvMs_NtCshquuC4dCYVj_10polars_sql15table_functionsNtB4_20PolarsTableFunctions8read_csv.exit, !dbg !23754
 
 bb.ax:                                            ; preds = %bb.av
@@ -2131,9 +2117,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a, %bb.b
   %.sink = phi i64 [ %i.h, %bb.b ], [ 0, %bb.a ], !dbg !24798
-  store i64 0, ptr %0, align 8, !dbg !24798
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !24798
-  store i64 1, ptr %2, align 8, !dbg !24798
+  store <2 x i64> <i64 0, i64 1>, ptr %0, align 8, !dbg !24798
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !24798
   store i64 %.sink, ptr %i.i, align 8, !dbg !24798
   ret void, !dbg !24799
@@ -2187,9 +2171,7 @@ bb.f:                                             ; preds = %bb.c
 
 _RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtB7_5chain5ChainINtNtNtB9_7sources4once4OnceRNtNtNtCsaRr8xKSRVhT_9sqlparser3ast5query11TableFactorEIBN_INtNtNtBb_5slice4iter4IterNtB1L_4JoinENCNvMNtCshquuC4dCYVj_10polars_sql8subqueryNtNtB3o_7context10SQLContext21resolve_subquery_from0EENvB3Z_14get_table_nameENtNtNtB9_6traits8iterator8Iterator9size_hintB3o_.exit: ; preds = %bb.f, %bb.e, %bb.d, %bb.c, %bb.a
   %.sink20.i.i.sink = phi i64 [ 0, %bb.a ], [ %i.v, %bb.f ], [ %i.p, %bb.e ], [ %i.k, %bb.c ], [ 0, %bb.d ]
-  store i64 0, ptr %0, align 8, !dbg !24866
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !24866
-  store i64 1, ptr %2, align 8, !dbg !24866
+  store <2 x i64> <i64 0, i64 1>, ptr %0, align 8, !dbg !24866
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !24866
   store i64 %.sink20.i.i.sink, ptr %i.w, align 8, !dbg !24866
   ret void, !dbg !24867
@@ -2246,9 +2228,7 @@ bb.e:                                             ; preds = %bb.c
 
 _RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtB7_9enumerate9EnumerateINtNtNtBb_5slice4iter6ChunkshEENCINvXs2_Cs1tlcHH8F7Uh_3hexINtNtCsgZ49sUHp3tW_5alloc3vec3VechENtB22_7FromHex8from_hexNtNtB2p_6string6StringE0ENtNtNtB9_6traits8iterator8Iterator9size_hintCshquuC4dCYVj_10polars_sql.exit: ; preds = %bb.d, %bb.b, %bb.a
   %.sroa.0.0.sink1.i.i.i.sink = phi i64 [ 0, %bb.a ], [ %.sroa.0.0.i.i.i, %bb.d ], [ 0, %bb.b ]
-  store i64 0, ptr %0, align 8, !dbg !24916
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !24916
-  store i64 1, ptr %2, align 8, !dbg !24916
+  store <2 x i64> <i64 0, i64 1>, ptr %0, align 8, !dbg !24916
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !24916
   store i64 %.sroa.0.0.sink1.i.i.i.sink, ptr %i.k, align 8, !dbg !24916
   ret void, !dbg !24917
@@ -2321,9 +2301,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a, %bb.b
   %.sink = phi i64 [ %i.h, %bb.b ], [ 0, %bb.a ], !dbg !24972
-  store i64 0, ptr %0, align 8, !dbg !24972
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !24972
-  store i64 1, ptr %2, align 8, !dbg !24972
+  store <2 x i64> <i64 0, i64 1>, ptr %0, align 8, !dbg !24972
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !24972
   store i64 %.sink, ptr %i.i, align 8, !dbg !24972
   ret void, !dbg !24973
@@ -2396,9 +2374,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a, %bb.b
   %.sink = phi i64 [ %i.h, %bb.b ], [ 0, %bb.a ], !dbg !25028
-  store i64 0, ptr %0, align 8, !dbg !25028
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !25028
-  store i64 1, ptr %2, align 8, !dbg !25028
+  store <2 x i64> <i64 0, i64 1>, ptr %0, align 8, !dbg !25028
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !25028
   store i64 %.sink, ptr %i.i, align 8, !dbg !25028
   ret void, !dbg !25029
@@ -2471,9 +2447,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a, %bb.b
   %.sink = phi i64 [ %i.h, %bb.b ], [ 0, %bb.a ], !dbg !25077
-  store i64 0, ptr %0, align 8, !dbg !25077
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !25077
-  store i64 1, ptr %2, align 8, !dbg !25077
+  store <2 x i64> <i64 0, i64 1>, ptr %0, align 8, !dbg !25077
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !25077
   store i64 %.sink, ptr %i.i, align 8, !dbg !25077
   ret void, !dbg !25078
@@ -2546,9 +2520,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a, %bb.b
   %.sink = phi i64 [ %i.h, %bb.b ], [ 0, %bb.a ], !dbg !25126
-  store i64 0, ptr %0, align 8, !dbg !25126
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !25126
-  store i64 1, ptr %2, align 8, !dbg !25126
+  store <2 x i64> <i64 0, i64 1>, ptr %0, align 8, !dbg !25126
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !25126
   store i64 %.sink, ptr %i.i, align 8, !dbg !25126
   ret void, !dbg !25127
@@ -2621,9 +2593,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a, %bb.b
   %.sink = phi i64 [ %i.h, %bb.b ], [ 0, %bb.a ], !dbg !25175
-  store i64 0, ptr %0, align 8, !dbg !25175
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !25175
-  store i64 1, ptr %2, align 8, !dbg !25175
+  store <2 x i64> <i64 0, i64 1>, ptr %0, align 8, !dbg !25175
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !25175
   store i64 %.sink, ptr %i.i, align 8, !dbg !25175
   ret void, !dbg !25176
@@ -2696,9 +2666,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a, %bb.b
   %.sink = phi i64 [ %i.h, %bb.b ], [ 0, %bb.a ], !dbg !25224
-  store i64 0, ptr %0, align 8, !dbg !25224
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !25224
-  store i64 1, ptr %2, align 8, !dbg !25224
+  store <2 x i64> <i64 0, i64 1>, ptr %0, align 8, !dbg !25224
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !25224
   store i64 %.sink, ptr %i.i, align 8, !dbg !25224
   ret void, !dbg !25225
@@ -2764,9 +2732,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a, %bb.b
   %.sink = phi i64 [ %i.h, %bb.b ], [ 0, %bb.a ], !dbg !25273
-  store i64 0, ptr %0, align 8, !dbg !25273
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !25273
-  store i64 1, ptr %2, align 8, !dbg !25273
+  store <2 x i64> <i64 0, i64 1>, ptr %0, align 8, !dbg !25273
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !25273
   store i64 %.sink, ptr %i.i, align 8, !dbg !25273
   ret void, !dbg !25274
@@ -2839,9 +2805,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a, %bb.b
   %.sink = phi i64 [ %i.h, %bb.b ], [ 0, %bb.a ], !dbg !25322
-  store i64 0, ptr %0, align 8, !dbg !25322
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !25322
-  store i64 1, ptr %2, align 8, !dbg !25322
+  store <2 x i64> <i64 0, i64 1>, ptr %0, align 8, !dbg !25322
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !25322
   store i64 %.sink, ptr %i.i, align 8, !dbg !25322
   ret void, !dbg !25323
@@ -2914,9 +2878,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a, %bb.b
   %.sink = phi i64 [ %i.h, %bb.b ], [ 0, %bb.a ], !dbg !25371
-  store i64 0, ptr %0, align 8, !dbg !25371
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !25371
-  store i64 1, ptr %2, align 8, !dbg !25371
+  store <2 x i64> <i64 0, i64 1>, ptr %0, align 8, !dbg !25371
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !25371
   store i64 %.sink, ptr %i.i, align 8, !dbg !25371
   ret void, !dbg !25372
@@ -2989,9 +2951,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a, %bb.b
   %.sink = phi i64 [ %i.h, %bb.b ], [ 0, %bb.a ], !dbg !25420
-  store i64 0, ptr %0, align 8, !dbg !25420
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !25420
-  store i64 1, ptr %2, align 8, !dbg !25420
+  store <2 x i64> <i64 0, i64 1>, ptr %0, align 8, !dbg !25420
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !25420
   store i64 %.sink, ptr %i.i, align 8, !dbg !25420
   ret void, !dbg !25421
@@ -3057,9 +3017,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a, %bb.b
   %.sink = phi i64 [ %i.h, %bb.b ], [ 0, %bb.a ], !dbg !25467
-  store i64 0, ptr %0, align 8, !dbg !25467
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !25467
-  store i64 1, ptr %2, align 8, !dbg !25467
+  store <2 x i64> <i64 0, i64 1>, ptr %0, align 8, !dbg !25467
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !25467
   store i64 %.sink, ptr %i.i, align 8, !dbg !25467
   ret void, !dbg !25468
@@ -3111,9 +3069,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a, %bb.b
   %.sink = phi i64 [ %i.h, %bb.b ], [ 0, %bb.a ], !dbg !25506
-  store i64 0, ptr %0, align 8, !dbg !25506
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !25506
-  store i64 1, ptr %2, align 8, !dbg !25506
+  store <2 x i64> <i64 0, i64 1>, ptr %0, align 8, !dbg !25506
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !25506
   store i64 %.sink, ptr %i.i, align 8, !dbg !25506
   ret void, !dbg !25507
@@ -3179,9 +3135,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a, %bb.b
   %.sink = phi i64 [ %i.h, %bb.b ], [ 0, %bb.a ], !dbg !25555
-  store i64 0, ptr %0, align 8, !dbg !25555
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !25555
-  store i64 1, ptr %2, align 8, !dbg !25555
+  store <2 x i64> <i64 0, i64 1>, ptr %0, align 8, !dbg !25555
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !25555
   store i64 %.sink, ptr %i.i, align 8, !dbg !25555
   ret void, !dbg !25556
@@ -3254,9 +3208,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a, %bb.b
   %.sink = phi i64 [ %i.h, %bb.b ], [ 0, %bb.a ], !dbg !25619
-  store i64 0, ptr %0, align 8, !dbg !25619
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !25619
-  store i64 1, ptr %2, align 8, !dbg !25619
+  store <2 x i64> <i64 0, i64 1>, ptr %0, align 8, !dbg !25619
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !25619
   store i64 %.sink, ptr %i.i, align 8, !dbg !25619
   ret void, !dbg !25620
@@ -3324,9 +3276,7 @@ bb.a:
   %i.h = sub nuw i64 %i.f, %i.g, !dbg !25653
   %i.i = lshr exact i64 %i.h, 3, !dbg !25653
   %.sink = select i1 %.not, i64 %i.i, i64 0, !dbg !25653
-  store i64 0, ptr %0, align 8, !dbg !25659
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !25659
-  store i64 1, ptr %2, align 8, !dbg !25659
+  store <2 x i64> <i64 0, i64 1>, ptr %0, align 8, !dbg !25659
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !25659
   store i64 %.sink, ptr %i.j, align 8, !dbg !25659
   ret void, !dbg !25660
@@ -3729,9 +3679,7 @@ bb.a:
   %i.c = ptrtoint ptr %.val to i64, !dbg !29602
   %i.d = sub nuw i64 %i.b, %i.c, !dbg !29602
   %i.e = udiv exact i64 %i.d, 80, !dbg !29602
-  store i64 0, ptr %0, align 8, !dbg !29610, !alias.scope !29612
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !29610
-  store i64 1, ptr %2, align 8, !dbg !29610, !alias.scope !29612
+  store <2 x i64> <i64 0, i64 1>, ptr %0, align 8, !dbg !29610, !alias.scope !29612
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !29610
   store i64 %i.e, ptr %i.f, align 8, !dbg !29610, !alias.scope !29612
   ret void, !dbg !29615
@@ -4134,14 +4082,14 @@ bb.x:                                             ; preds = %bb.g
 bb.y:                                             ; preds = %bb.g
   %i.dp = getelementptr inbounds nuw i8, ptr %1, i64 16, !dbg !30264
   %i.dq = getelementptr inbounds nuw i8, ptr %1, i64 64, !dbg !30264
-  %2 = load i128, ptr %i.dq, align 16, !dbg !30264, !alias.scope !30150, !noalias !30161, !noundef !13
-  %3 = getelementptr inbounds nuw i8, ptr %1, i64 80, !dbg !30264
-  %4 = load i128, ptr %3, align 16, !dbg !30264, !alias.scope !30150, !noalias !30161, !noundef !13
+  %2 = load <2 x i128>, ptr %i.dq, align 16, !dbg !30264, !alias.scope !30150, !noalias !30161 ; 2 uses
   %i.dr = getelementptr inbounds nuw i8, ptr %i.bf, i64 16, !dbg !30269
   call fastcc void @_RNvXsk_NtNtCs1LHh8CLbVkQ_11polars_core9datatypes5dtypeNtB5_8DataTypeNtNtCscgRAwXFJnXP_4core5clone5Clone5clone(ptr noalias noundef align 16 captures(none) dereferenceable(48) %i.dr, ptr noalias noundef readonly align 16 captures(address, read_provenance) dereferenceable(48) %i.dp) #41, !dbg !30264
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.bf, i64 64, !dbg !30269
-  store i128 %2, ptr %.sroa.4.0..sroa_idx.i, align 16, !dbg !30269
+  %3 = extractelement <2 x i128> %2, i64 0, !dbg !30269
+  store i128 %3, ptr %.sroa.4.0..sroa_idx.i, align 16, !dbg !30269
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.bf, i64 80, !dbg !30269
+  %4 = extractelement <2 x i128> %2, i64 1, !dbg !30269
   store i128 %4, ptr %.sroa.5.0..sroa_idx.i, align 16, !dbg !30269
   store i8 34, ptr %i.bf, align 16, !dbg !30269
   br label %_RNvXsw_NtNtCsfcROwRM8ZtH_11polars_plan5plans3litNtB5_12LiteralValueNtNtCscgRAwXFJnXP_4core5clone5Clone5clone.exit, !dbg !30227

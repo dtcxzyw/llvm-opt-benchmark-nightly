@@ -21,15 +21,11 @@ target triple = "x86_64-pc-linux-gnu"
 define internal noundef i32 @init(ptr nofree noundef readonly captures(none) %0) #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 72
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !9    ; 4 uses
-  %1 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  store i64 -9223372036854775808, ptr %1, align 8, !tbaa !20
-  %2 = getelementptr inbounds nuw i8, ptr %i.b, i64 16
-  store i64 -9223372036854775808, ptr %2, align 8, !tbaa !23
-  %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 24
-  store i64 9223372036854775807, ptr %i.c, align 8, !tbaa !24
-  %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 32
-  store i64 -9223372036854775808, ptr %i.d, align 8, !tbaa !25
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !9    ; 2 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 8
+  store <2 x i64> splat (i64 -9223372036854775808), ptr %i.c, align 8, !tbaa !20
+  %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 24
+  store <2 x i64> <i64 9223372036854775807, i64 -9223372036854775808>, ptr %i.d, align 8, !tbaa !20
   ret i32 0
 }
 
@@ -39,26 +35,26 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !9    ; 5 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 48 ; 2 uses
-  %i.d = load i64, ptr %i.c, align 8, !tbaa !26   ; 3 uses
+  %i.d = load i64, ptr %i.c, align 8, !tbaa !22   ; 3 uses
   %i.e = uitofp nsz i64 %i.d to float
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 56
-  %i.g = load i64, ptr %i.f, align 8, !tbaa !27   ; 2 uses
+  %i.g = load i64, ptr %i.f, align 8, !tbaa !24   ; 2 uses
   %i.h = add i64 %i.g, %i.d
   %i.i = uitofp nsz i64 %i.h to float
   %i.j = fdiv nsz float %i.e, %i.i
   %i.k = fpext nsz float %i.j to double
   tail call void (ptr, i32, ptr, ...) @av_log(ptr noundef %0, i32 noundef 32, ptr noundef nonnull @.str.3, double noundef %i.k, i64 noundef %i.d, i64 noundef %i.g) #5
-  %i.l = load i64, ptr %i.c, align 8, !tbaa !26   ; 2 uses
+  %i.l = load i64, ptr %i.c, align 8, !tbaa !22   ; 2 uses
   %.not = icmp eq i64 %i.l, 0
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.m = getelementptr inbounds nuw i8, ptr %i.b, i64 24
-  %i.n = load i64, ptr %i.m, align 8, !tbaa !24
+  %i.n = load i64, ptr %i.m, align 8, !tbaa !25
   %i.o = getelementptr inbounds nuw i8, ptr %i.b, i64 32
-  %i.p = load i64, ptr %i.o, align 8, !tbaa !25
+  %i.p = load i64, ptr %i.o, align 8, !tbaa !26
   %i.q = getelementptr inbounds nuw i8, ptr %i.b, i64 40
-  %i.r = load i64, ptr %i.q, align 8, !tbaa !28
+  %i.r = load i64, ptr %i.q, align 8, !tbaa !27
   %i.s = udiv i64 %i.r, %i.l
   tail call void (ptr, i32, ptr, ...) @av_log(ptr noundef nonnull %0, i32 noundef 32, ptr noundef nonnull @.str.4, i64 noundef %i.n, i64 noundef %i.p, i64 noundef %i.s) #5
   br label %bb.c
@@ -72,11 +68,11 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 define internal i32 @filter_frame(ptr nofree noundef readonly captures(none) %0, ptr noundef %1) #2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !29   ; 2 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !28   ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 72
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !9    ; 8 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 2 uses
-  %i.f = load i64, ptr %i.e, align 8, !tbaa !20   ; 2 uses
+  %i.f = load i64, ptr %i.e, align 8, !tbaa !37   ; 2 uses
   %.not = icmp eq i64 %i.f, -9223372036854775808
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %1, i64 136
   %.pre = load i64, ptr %.phi.trans.insert, align 8, !tbaa !38 ; 2 uses
@@ -85,16 +81,16 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.g = sub nsw i64 %.pre, %i.f                  ; 8 uses
   %i.h = getelementptr inbounds nuw i8, ptr %i.d, i64 16 ; 3 uses
-  %i.i = load i64, ptr %i.h, align 8, !tbaa !23   ; 2 uses
+  %i.i = load i64, ptr %i.h, align 8, !tbaa !43   ; 2 uses
   %i.j = icmp eq i64 %i.i, -9223372036854775808
   br i1 %i.j, label %.thread, label %bb.c
 
 .thread:                                          ; preds = %bb.b
-  store i64 %i.g, ptr %i.h, align 8, !tbaa !23
+  store i64 %i.g, ptr %i.h, align 8, !tbaa !43
   %i.k = getelementptr inbounds nuw i8, ptr %i.d, i64 24
-  store i64 %i.g, ptr %i.k, align 8, !tbaa !24
+  store i64 %i.g, ptr %i.k, align 8, !tbaa !25
   %i.l = getelementptr inbounds nuw i8, ptr %i.d, i64 32
-  store i64 %i.g, ptr %i.l, align 8, !tbaa !25
+  store i64 %i.g, ptr %i.l, align 8, !tbaa !26
   br label %._crit_edge.sink.split
 
 bb.c:                                             ; preds = %bb.b
@@ -103,31 +99,31 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.m = getelementptr inbounds nuw i8, ptr %i.d, i64 48 ; 2 uses
-  %i.n = load i64, ptr %i.m, align 8, !tbaa !26
+  %i.n = load i64, ptr %i.m, align 8, !tbaa !22
   %i.o = add i64 %i.n, 1
-  store i64 %i.o, ptr %i.m, align 8, !tbaa !26
-  store i64 %i.g, ptr %i.h, align 8, !tbaa !23
+  store i64 %i.o, ptr %i.m, align 8, !tbaa !22
+  store i64 %i.g, ptr %i.h, align 8, !tbaa !43
   %i.p = getelementptr inbounds nuw i8, ptr %i.d, i64 24 ; 2 uses
-  %i.q = load i64, ptr %i.p, align 8, !tbaa !24
+  %i.q = load i64, ptr %i.p, align 8, !tbaa !25
   %. = tail call i64 @llvm.smin.i64(i64 %i.g, i64 %i.q)
-  store i64 %., ptr %i.p, align 8, !tbaa !24
+  store i64 %., ptr %i.p, align 8, !tbaa !25
   %i.r = getelementptr inbounds nuw i8, ptr %i.d, i64 32 ; 2 uses
-  %i.s = load i64, ptr %i.r, align 8, !tbaa !25
+  %i.s = load i64, ptr %i.r, align 8, !tbaa !26
   %i.t = tail call i64 @llvm.smax.i64(i64 %i.g, i64 %i.s)
-  store i64 %i.t, ptr %i.r, align 8, !tbaa !25
+  store i64 %i.t, ptr %i.r, align 8, !tbaa !26
   br label %._crit_edge.sink.split
 
 ._crit_edge.sink.split:                           ; preds = %bb.c, %.thread, %bb.d
   %.sink43 = phi i64 [ 40, %bb.d ], [ 56, %.thread ], [ 56, %bb.c ]
   %.sink42 = phi i64 [ %i.g, %bb.d ], [ 1, %.thread ], [ 1, %bb.c ]
   %i.u = getelementptr inbounds nuw i8, ptr %i.d, i64 %.sink43 ; 2 uses
-  %i.v = load i64, ptr %i.u, align 8, !tbaa !43
+  %i.v = load i64, ptr %i.u, align 8, !tbaa !20
   %i.w = add i64 %i.v, %.sink42
-  store i64 %i.w, ptr %i.u, align 8, !tbaa !43
+  store i64 %i.w, ptr %i.u, align 8, !tbaa !20
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.sink.split, %bb.a
-  store i64 %.pre, ptr %i.e, align 8, !tbaa !20
+  store i64 %.pre, ptr %i.e, align 8, !tbaa !37
   %i.x = getelementptr inbounds nuw i8, ptr %i.b, i64 56
   %i.y = load ptr, ptr %i.x, align 8, !tbaa !44
   %i.z = load ptr, ptr %i.y, align 8, !tbaa !45
@@ -176,30 +172,30 @@ attributes #5 = { nounwind }
 !17 = !{!"any p2 pointer", !12, i64 0}
 !18 = !{!"p1 _ZTS13AVFilterGraph", !12, i64 0}
 !19 = !{!"p1 _ZTS11AVBufferRef", !12, i64 0}
-!20 = !{!21, !22, i64 8}
-!21 = !{!"VFRDETContext", !11, i64 0, !22, i64 8, !22, i64 16, !22, i64 24, !22, i64 32, !22, i64 40, !22, i64 48, !22, i64 56}
-!22 = !{!"long", !7, i64 0}
-!23 = !{!21, !22, i64 16}
-!24 = !{!21, !22, i64 24}
-!25 = !{!21, !22, i64 32}
-!26 = !{!21, !22, i64 48}
-!27 = !{!21, !22, i64 56}
-!28 = !{!21, !22, i64 40}
-!29 = !{!30, !31, i64 16}
-!30 = !{!"AVFilterLink", !31, i64 0, !15, i64 8, !31, i64 16, !15, i64 24, !6, i64 32, !6, i64 36, !6, i64 40, !6, i64 44, !32, i64 48, !6, i64 56, !6, i64 60, !6, i64 64, !33, i64 72, !32, i64 96, !34, i64 104, !6, i64 112, !6, i64 116, !35, i64 120, !35, i64 168}
-!31 = !{!"p1 _ZTS15AVFilterContext", !12, i64 0}
-!32 = !{!"AVRational", !6, i64 0, !6, i64 4}
-!33 = !{!"AVChannelLayout", !6, i64 0, !6, i64 4, !7, i64 8, !12, i64 16}
-!34 = !{!"p2 _ZTS15AVFrameSideData", !17, i64 0}
-!35 = !{!"AVFilterFormatsConfig", !36, i64 0, !36, i64 8, !37, i64 16, !36, i64 24, !36, i64 32, !36, i64 40}
-!36 = !{!"p1 _ZTS15AVFilterFormats", !12, i64 0}
-!37 = !{!"p1 _ZTS22AVFilterChannelLayouts", !12, i64 0}
-!38 = !{!39, !22, i64 136}
-!39 = !{!"AVFrame", !7, i64 0, !7, i64 64, !40, i64 96, !6, i64 104, !6, i64 108, !6, i64 112, !6, i64 116, !6, i64 120, !32, i64 124, !22, i64 136, !22, i64 144, !32, i64 152, !6, i64 160, !12, i64 168, !6, i64 176, !6, i64 180, !7, i64 184, !41, i64 248, !6, i64 256, !34, i64 264, !6, i64 272, !6, i64 276, !6, i64 280, !6, i64 284, !6, i64 288, !6, i64 292, !6, i64 296, !22, i64 304, !42, i64 312, !6, i64 320, !19, i64 328, !19, i64 336, !22, i64 344, !22, i64 352, !22, i64 360, !22, i64 368, !12, i64 376, !33, i64 384, !22, i64 408, !6, i64 416}
+!20 = !{!21, !21, i64 0}
+!21 = !{!"long", !7, i64 0}
+!22 = !{!23, !21, i64 48}
+!23 = !{!"VFRDETContext", !11, i64 0, !21, i64 8, !21, i64 16, !21, i64 24, !21, i64 32, !21, i64 40, !21, i64 48, !21, i64 56}
+!24 = !{!23, !21, i64 56}
+!25 = !{!23, !21, i64 24}
+!26 = !{!23, !21, i64 32}
+!27 = !{!23, !21, i64 40}
+!28 = !{!29, !30, i64 16}
+!29 = !{!"AVFilterLink", !30, i64 0, !15, i64 8, !30, i64 16, !15, i64 24, !6, i64 32, !6, i64 36, !6, i64 40, !6, i64 44, !31, i64 48, !6, i64 56, !6, i64 60, !6, i64 64, !32, i64 72, !31, i64 96, !33, i64 104, !6, i64 112, !6, i64 116, !34, i64 120, !34, i64 168}
+!30 = !{!"p1 _ZTS15AVFilterContext", !12, i64 0}
+!31 = !{!"AVRational", !6, i64 0, !6, i64 4}
+!32 = !{!"AVChannelLayout", !6, i64 0, !6, i64 4, !7, i64 8, !12, i64 16}
+!33 = !{!"p2 _ZTS15AVFrameSideData", !17, i64 0}
+!34 = !{!"AVFilterFormatsConfig", !35, i64 0, !35, i64 8, !36, i64 16, !35, i64 24, !35, i64 32, !35, i64 40}
+!35 = !{!"p1 _ZTS15AVFilterFormats", !12, i64 0}
+!36 = !{!"p1 _ZTS22AVFilterChannelLayouts", !12, i64 0}
+!37 = !{!23, !21, i64 8}
+!38 = !{!39, !21, i64 136}
+!39 = !{!"AVFrame", !7, i64 0, !7, i64 64, !40, i64 96, !6, i64 104, !6, i64 108, !6, i64 112, !6, i64 116, !6, i64 120, !31, i64 124, !21, i64 136, !21, i64 144, !31, i64 152, !6, i64 160, !12, i64 168, !6, i64 176, !6, i64 180, !7, i64 184, !41, i64 248, !6, i64 256, !33, i64 264, !6, i64 272, !6, i64 276, !6, i64 280, !6, i64 284, !6, i64 288, !6, i64 292, !6, i64 296, !21, i64 304, !42, i64 312, !6, i64 320, !19, i64 328, !19, i64 336, !21, i64 344, !21, i64 352, !21, i64 360, !21, i64 368, !12, i64 376, !32, i64 384, !21, i64 408, !6, i64 416}
 !40 = !{!"p2 omnipotent char", !17, i64 0}
 !41 = !{!"p2 _ZTS11AVBufferRef", !17, i64 0}
 !42 = !{!"p1 _ZTS12AVDictionary", !12, i64 0}
-!43 = !{!22, !22, i64 0}
+!43 = !{!23, !21, i64 16}
 !44 = !{!10, !16, i64 56}
 !45 = !{!46, !46, i64 0}
 !46 = !{!"p1 _ZTS12AVFilterLink", !12, i64 0}

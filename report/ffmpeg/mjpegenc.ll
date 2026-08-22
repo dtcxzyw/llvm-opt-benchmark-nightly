@@ -205,7 +205,7 @@ declare void @ff_mjpeg_escape_FF(ptr noundef, i32 noundef) local_unnamed_addr #3
 define internal range(i32 -2147483648, 1) i32 @mjpeg_encode_init(ptr noundef %0) #4 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !100  ; 24 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !100  ; 23 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 10992 ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 6424
   store ptr %i.c, ptr %i.d, align 8, !tbaa !9
@@ -262,9 +262,7 @@ bb.g:                                             ; preds = %bb.e
   %i.aa = getelementptr inbounds nuw i8, ptr %i.b, i64 20800 ; 3 uses
   tail call fastcc void @init_uni_ac_vlc(ptr noundef nonnull %i.x, ptr noundef nonnull %i.aa) #10
   %i.ab = getelementptr inbounds nuw i8, ptr %i.b, i64 6128
-  store i32 -1023, ptr %i.ab, align 16, !tbaa !118
-  %1 = getelementptr inbounds nuw i8, ptr %i.b, i64 6132
-  store i32 1023, ptr %1, align 4, !tbaa !119
+  store <2 x i32> <i32 -1023, i32 1023>, ptr %i.ab, align 16, !tbaa !61
   %i.ac = getelementptr inbounds nuw i8, ptr %i.b, i64 6152
   store ptr %i.z, ptr %i.ac, align 8, !tbaa !64
   %i.ad = getelementptr inbounds nuw i8, ptr %i.b, i64 6144
@@ -329,7 +327,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 516
-  %i.c = load i32, ptr %i.b, align 4, !tbaa !120
+  %i.c = load i32, ptr %i.b, align 4, !tbaa !118
   %i.d = icmp sgt i32 %i.c, -1
   %i.e = zext i1 %i.d to i64
   br label %bb.d
@@ -337,7 +335,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.b, %bb.c
   %i.f = phi i64 [ %i.e, %bb.c ], [ 1, %bb.b ]    ; 2 uses
   %i.g = getelementptr inbounds nuw [4 x i8], ptr @mjpeg_get_supported_config.mjpeg_ranges, i64 %i.f
-  store ptr %i.g, ptr %4, align 8, !tbaa !121
+  store ptr %i.g, ptr %4, align 8, !tbaa !119
   %i.h = trunc nuw nsw i64 %i.f to i32
   %i.i = sub nuw nsw i32 2, %i.h
   store i32 %i.i, ptr %5, align 4, !tbaa !61
@@ -367,7 +365,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 516
-  %i.h = load i32, ptr %i.g, align 4, !tbaa !120
+  %i.h = load i32, ptr %i.g, align 4, !tbaa !118
   %i.i = icmp sgt i32 %i.h, -1
   br i1 %i.i, label %bb.c, label %bb.d
 
@@ -378,7 +376,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.b, %bb.a
   %i.j = tail call ptr @av_frame_clone(ptr noundef %2) #9 ; 10 uses
-  store ptr %i.j, ptr %i.a, align 8, !tbaa !122
+  store ptr %i.j, ptr %i.a, align 8, !tbaa !120
   %.not21 = icmp eq ptr %i.j, null
   br i1 %.not21, label %bb.e, label %.preheader
 
@@ -386,7 +384,7 @@ bb.d:                                             ; preds = %bb.b, %bb.a
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 64 ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.c, i64 356 ; 3 uses
   %i.m = load i32, ptr %i.k, align 4, !tbaa !61   ; 2 uses
-  %i.n = load i32, ptr %i.l, align 4, !tbaa !123
+  %i.n = load i32, ptr %i.l, align 4, !tbaa !121
   %i.o = shl i32 %i.n, 1
   %i.p = ashr exact i32 %i.o, 1
   %i.q = add nsw i32 %i.p, -1
@@ -399,7 +397,7 @@ bb.d:                                             ; preds = %bb.b, %bb.a
   store i32 %i.v, ptr %i.k, align 8, !tbaa !61
   %i.w = getelementptr inbounds nuw i8, ptr %i.j, i64 68 ; 2 uses
   %i.x = load i32, ptr %i.w, align 4, !tbaa !61   ; 2 uses
-  %i.y = load i32, ptr %i.l, align 4, !tbaa !123
+  %i.y = load i32, ptr %i.l, align 4, !tbaa !121
   %i.z = sdiv i32 %i.y, 2
   %i.aa = add nsw i32 %i.z, -1
   %i.ab = mul nsw i32 %i.aa, %i.x
@@ -412,7 +410,7 @@ bb.d:                                             ; preds = %bb.b, %bb.a
   store i32 %i.ag, ptr %i.w, align 4, !tbaa !61
   %i.ah = getelementptr inbounds nuw i8, ptr %i.j, i64 72 ; 2 uses
   %i.ai = load i32, ptr %i.ah, align 8, !tbaa !61 ; 2 uses
-  %i.aj = load i32, ptr %i.l, align 4, !tbaa !123
+  %i.aj = load i32, ptr %i.l, align 4, !tbaa !121
   %i.ak = sdiv i32 %i.aj, 2
   %i.al = add nsw i32 %i.ak, -1
   %i.am = mul nsw i32 %i.al, %i.ai
@@ -447,7 +445,7 @@ declare ptr @av_default_item_name(ptr noundef) #3
 define internal noundef i32 @mjpeg_amv_encode_picture_header(ptr noundef %0) #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 10992
-  %i.b = load i32, ptr %i.a, align 16, !tbaa !124
+  %i.b = load i32, ptr %i.a, align 16, !tbaa !122
   %.not = icmp eq i32 %i.b, 1
   br i1 %.not, label %mjpeg_encode_picture_header.exit, label %bb.b
 
@@ -567,7 +565,7 @@ bb.d:                                             ; preds = %bb.d, %.epil.prehea
   %indvars.iv.next.i.epil = add nuw nsw i64 %indvars.iv.i.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
-  br i1 %epil.iter.cmp.not, label %mjpeg_encode_picture_header.exit, label %bb.d, !llvm.loop !125
+  br i1 %epil.iter.cmp.not, label %mjpeg_encode_picture_header.exit, label %bb.d, !llvm.loop !123
 
 mjpeg_encode_picture_header.exit:                 ; preds = %mjpeg_encode_picture_header.exit.loopexit.unr-lcssa, %bb.d, %bb.b, %bb.a
   ret i32 0
@@ -577,7 +575,7 @@ mjpeg_encode_picture_header.exit:                 ; preds = %mjpeg_encode_pictur
 define internal void @mjpeg_encode_mb(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, i32 %2, i32 %3) #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 3856 ; 2 uses
-  %i.b = load i32, ptr %i.a, align 16, !tbaa !126
+  %i.b = load i32, ptr %i.a, align 16, !tbaa !124
   %i.c = icmp eq i32 %i.b, 3
   tail call fastcc void @encode_block(ptr noundef nonnull %0, ptr noundef %1, i32 noundef 0)
   br i1 %i.c, label %bb.b, label %.preheader.preheader
@@ -591,7 +589,7 @@ bb.a:
   tail call fastcc void @encode_block(ptr noundef nonnull %0, ptr noundef nonnull %i.f, i32 noundef 3)
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 512
   tail call fastcc void @encode_block(ptr noundef nonnull %0, ptr noundef nonnull %i.g, i32 noundef 4)
-  %i.h = load i32, ptr %i.a, align 16, !tbaa !126
+  %i.h = load i32, ptr %i.a, align 16, !tbaa !124
   %i.i = icmp eq i32 %i.h, 1
   br i1 %i.i, label %.sink.split, label %.sink.split.sink.split
 
@@ -611,7 +609,7 @@ bb.b:                                             ; preds = %bb.a
   %i.q = shl nsw i32 %i.p, 4
   %i.r = or disjoint i32 %i.q, 8
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 352
-  %i.t = load i32, ptr %i.s, align 16, !tbaa !127
+  %i.t = load i32, ptr %i.s, align 16, !tbaa !125
   %i.u = icmp slt i32 %i.r, %i.t
   br i1 %i.u, label %bb.c, label %bb.d
 
@@ -677,7 +675,7 @@ declare i32 @ff_mpv_encode_init(ptr noundef) local_unnamed_addr #3
 define internal void @mjpeg_record_mb(ptr nofree noundef captures(none) %0, ptr nofree noundef readonly captures(none) %1, i32 %2, i32 %3) #5 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 3856 ; 2 uses
-  %i.b = load i32, ptr %i.a, align 16, !tbaa !126
+  %i.b = load i32, ptr %i.a, align 16, !tbaa !124
   %i.c = icmp eq i32 %i.b, 3
   tail call fastcc void @record_block(ptr noundef nonnull %0, ptr noundef %1, i32 noundef 0)
   br i1 %i.c, label %bb.b, label %.preheader.preheader
@@ -691,7 +689,7 @@ bb.a:
   tail call fastcc void @record_block(ptr noundef nonnull %0, ptr noundef nonnull %i.f, i32 noundef 3)
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 512
   tail call fastcc void @record_block(ptr noundef nonnull %0, ptr noundef nonnull %i.g, i32 noundef 4)
-  %i.h = load i32, ptr %i.a, align 16, !tbaa !126
+  %i.h = load i32, ptr %i.a, align 16, !tbaa !124
   %i.i = icmp eq i32 %i.h, 1
   br i1 %i.i, label %.sink.split, label %.sink.split.sink.split
 
@@ -711,7 +709,7 @@ bb.b:                                             ; preds = %bb.a
   %i.q = shl nsw i32 %i.p, 4
   %i.r = or disjoint i32 %i.q, 8
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 352
-  %i.t = load i32, ptr %i.s, align 16, !tbaa !127
+  %i.t = load i32, ptr %i.s, align 16, !tbaa !125
   %i.u = icmp slt i32 %i.r, %i.t
   br i1 %i.u, label %bb.c, label %bb.d
 
@@ -752,9 +750,9 @@ bb.d:                                             ; preds = %.sink.split, %bb.b
 define internal fastcc range(i32 -12, 1) i32 @alloc_huffman(ptr nofree noundef captures(none) initializes((29608, 29616)) %0) unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 412
-  %i.b = load i32, ptr %i.a, align 4, !tbaa !128
+  %i.b = load i32, ptr %i.a, align 4, !tbaa !126
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 3856
-  %i.d = load i32, ptr %i.c, align 16, !tbaa !126
+  %i.d = load i32, ptr %i.c, align 16, !tbaa !124
   %i.e = sext i32 %i.d to i64
   %i.f = getelementptr inbounds i8, ptr @alloc_huffman.blocks_per_mb, i64 %i.e
   %i.g = load i8, ptr %i.f, align 1, !tbaa !75
@@ -891,7 +889,7 @@ put_bits.exit:                                    ; preds = %bb.d, %bb.h
   store i32 %.0.i.i, ptr %i.aa, align 4, !tbaa !53
   %i.bl = add nsw i32 %.179, -16                  ; 2 uses
   %i.bm = icmp sgt i32 %.179, 31
-  br i1 %i.bm, label %.lr.ph, label %._crit_edge, !llvm.loop !129
+  br i1 %i.bm, label %.lr.ph, label %._crit_edge, !llvm.loop !127
 
 ._crit_edge:                                      ; preds = %put_bits.exit, %.preheader
   %i.bn = phi i32 [ %.pre, %.preheader ], [ %.0.i.i, %put_bits.exit ] ; 5 uses
@@ -1018,7 +1016,7 @@ bb.s:                                             ; preds = %bb.c, %put_sbits.ex
   %.2 = phi i32 [ %i.am, %bb.c ], [ 0, %put_sbits.exit ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge85, label %bb.b, !llvm.loop !130
+  br i1 %exitcond.not, label %._crit_edge85, label %bb.b, !llvm.loop !128
 
 ._crit_edge85:                                    ; preds = %bb.s
   %i.dt = icmp ne i32 %.2, 0
@@ -1208,7 +1206,7 @@ bb.d:                                             ; preds = %.lr.ph52, %bb.f
   %i.bl = add nsw i32 %.148.prol, -16             ; 3 uses
   %prol.iter.next = add i32 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i32 %prol.iter.next, %xtraiter
-  br i1 %prol.iter.cmp.not, label %.lr.ph.prol.loopexit, label %.lr.ph.prol, !llvm.loop !131
+  br i1 %prol.iter.cmp.not, label %.lr.ph.prol.loopexit, label %.lr.ph.prol, !llvm.loop !129
 
 .lr.ph.prol.loopexit:                             ; preds = %.lr.ph.prol, %.lr.ph.preheader
   %.unr = phi i64 [ %.promoted, %.lr.ph.preheader ], [ %i.bi, %.lr.ph.prol ]
@@ -1247,7 +1245,7 @@ bb.e:                                             ; preds = %bb.d
   store i8 -16, ptr %i.ca, align 1, !tbaa !60
   %i.cb = add nsw i32 %.148, -64                  ; 2 uses
   %i.cc = icmp sgt i32 %.148, 79
-  br i1 %i.cc, label %.lr.ph, label %mjpeg_encode_coef.exit47, !llvm.loop !132
+  br i1 %i.cc, label %.lr.ph, label %mjpeg_encode_coef.exit47, !llvm.loop !130
 
 mjpeg_encode_coef.exit47:                         ; preds = %.lr.ph.prol.loopexit, %.lr.ph, %.preheader
   %i.cd = phi i64 [ %.promoted, %.preheader ], [ %.lcssa66.unr, %.lr.ph.prol.loopexit ], [ %i.bx, %.lr.ph ] ; 2 uses
@@ -1284,7 +1282,7 @@ bb.f:                                             ; preds = %bb.e, %mjpeg_encode
   %.2 = phi i32 [ %i.bn, %bb.e ], [ 0, %mjpeg_encode_coef.exit47 ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %bb.d, !llvm.loop !133
+  br i1 %exitcond.not, label %._crit_edge, label %bb.d, !llvm.loop !131
 
 ._crit_edge:                                      ; preds = %bb.f
   %i.cv = icmp ne i32 %.2, 0
@@ -1463,20 +1461,18 @@ attributes #10 = { cold }
 !115 = !{!10, !6, i64 4456}
 !116 = !{!101, !6, i64 112}
 !117 = !{!101, !6, i64 116}
-!118 = !{!10, !6, i64 6128}
-!119 = !{!10, !6, i64 6132}
-!120 = !{!101, !6, i64 516}
-!121 = !{!13, !13, i64 0}
-!122 = !{!35, !35, i64 0}
-!123 = !{!10, !6, i64 356}
-!124 = !{!113, !6, i64 10992}
-!125 = distinct !{!125, !78}
-!126 = !{!10, !6, i64 3856}
-!127 = !{!10, !6, i64 352}
-!128 = !{!10, !6, i64 412}
-!129 = distinct !{!129, !63}
+!118 = !{!101, !6, i64 516}
+!119 = !{!13, !13, i64 0}
+!120 = !{!35, !35, i64 0}
+!121 = !{!10, !6, i64 356}
+!122 = !{!113, !6, i64 10992}
+!123 = distinct !{!123, !78}
+!124 = !{!10, !6, i64 3856}
+!125 = !{!10, !6, i64 352}
+!126 = !{!10, !6, i64 412}
+!127 = distinct !{!127, !63}
+!128 = distinct !{!128, !63}
+!129 = distinct !{!129, !78}
 !130 = distinct !{!130, !63}
-!131 = distinct !{!131, !78}
-!132 = distinct !{!132, !63}
-!133 = distinct !{!133, !63}
+!131 = distinct !{!131, !63}
 end_hunk_0

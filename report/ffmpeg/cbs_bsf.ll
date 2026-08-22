@@ -175,19 +175,17 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.l, label %bb.h, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.m = load ptr, ptr %i.i, align 8, !tbaa !29   ; 5 uses
-  %2 = getelementptr inbounds nuw i8, ptr %i.m, i64 36
-  store i32 1, ptr %2, align 4, !tbaa !36
-  %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 40
-  store i32 56, ptr %i.n, align 8, !tbaa !40
+  %i.m = load ptr, ptr %i.i, align 8, !tbaa !29   ; 4 uses
+  %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 36
+  store <2 x i32> <i32 1, i32 56>, ptr %i.n, align 4, !tbaa !36
   %i.o = getelementptr inbounds nuw i8, ptr %i.m, i64 48
-  store ptr %i.m, ptr %i.o, align 8, !tbaa !41
+  store ptr %i.m, ptr %i.o, align 8, !tbaa !37
   %i.p = getelementptr inbounds nuw i8, ptr %i.m, i64 64
-  store ptr @ff_cbs_trace_write_log, ptr %i.p, align 8, !tbaa !42
+  store ptr @ff_cbs_trace_write_log, ptr %i.p, align 8, !tbaa !41
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.r = load ptr, ptr %i.q, align 8, !tbaa !43   ; 2 uses
+  %i.r = load ptr, ptr %i.q, align 8, !tbaa !42   ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 16
-  %i.t = load ptr, ptr %i.s, align 8, !tbaa !44
+  %i.t = load ptr, ptr %i.s, align 8, !tbaa !43
   %.not = icmp eq ptr %i.t, null
   br i1 %.not, label %bb.g, label %bb.d
 
@@ -207,7 +205,7 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.e
   %i.ab = load ptr, ptr %i.i, align 8, !tbaa !29
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !48
+  %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !47
   %i.ae = tail call i32 @ff_cbs_write_extradata(ptr noundef %i.ab, ptr noundef %i.ad, ptr noundef nonnull %i.c) #4 ; 2 uses
   %i.af = icmp slt i32 %i.ae, 0
   br i1 %i.af, label %.sink.split, label %bb.g
@@ -311,17 +309,16 @@ attributes #4 = { nounwind }
 !33 = !{!20, !6, i64 32}
 !34 = !{!27, !21, i64 16}
 !35 = !{!27, !6, i64 0}
-!36 = !{!37, !6, i64 36}
-!37 = !{!"CodedBitstreamContext", !12, i64 0, !38, i64 8, !12, i64 16, !39, i64 24, !6, i64 32, !6, i64 36, !6, i64 40, !12, i64 48, !12, i64 56, !12, i64 64, !21, i64 72, !22, i64 80}
-!38 = !{!"p1 _ZTS18CodedBitstreamType", !12, i64 0}
-!39 = !{!"p1 int", !12, i64 0}
-!40 = !{!37, !6, i64 40}
-!41 = !{!37, !12, i64 48}
-!42 = !{!37, !12, i64 64}
-!43 = !{!10, !14, i64 24}
-!44 = !{!45, !21, i64 16}
-!45 = !{!"AVCodecParameters", !6, i64 0, !6, i64 4, !6, i64 8, !21, i64 16, !6, i64 24, !46, i64 32, !6, i64 40, !6, i64 44, !22, i64 48, !6, i64 56, !6, i64 60, !6, i64 64, !6, i64 68, !6, i64 72, !6, i64 76, !15, i64 80, !15, i64 88, !6, i64 96, !6, i64 100, !6, i64 104, !6, i64 108, !6, i64 112, !6, i64 116, !6, i64 120, !47, i64 128, !6, i64 152, !6, i64 156, !6, i64 160, !6, i64 164, !6, i64 168, !6, i64 172, !6, i64 176}
-!46 = !{!"p1 _ZTS16AVPacketSideData", !12, i64 0}
-!47 = !{!"AVChannelLayout", !6, i64 0, !6, i64 4, !7, i64 8, !12, i64 16}
-!48 = !{!10, !14, i64 32}
+!36 = !{!6, !6, i64 0}
+!37 = !{!38, !12, i64 48}
+!38 = !{!"CodedBitstreamContext", !12, i64 0, !39, i64 8, !12, i64 16, !40, i64 24, !6, i64 32, !6, i64 36, !6, i64 40, !12, i64 48, !12, i64 56, !12, i64 64, !21, i64 72, !22, i64 80}
+!39 = !{!"p1 _ZTS18CodedBitstreamType", !12, i64 0}
+!40 = !{!"p1 int", !12, i64 0}
+!41 = !{!38, !12, i64 64}
+!42 = !{!10, !14, i64 24}
+!43 = !{!44, !21, i64 16}
+!44 = !{!"AVCodecParameters", !6, i64 0, !6, i64 4, !6, i64 8, !21, i64 16, !6, i64 24, !45, i64 32, !6, i64 40, !6, i64 44, !22, i64 48, !6, i64 56, !6, i64 60, !6, i64 64, !6, i64 68, !6, i64 72, !6, i64 76, !15, i64 80, !15, i64 88, !6, i64 96, !6, i64 100, !6, i64 104, !6, i64 108, !6, i64 112, !6, i64 116, !6, i64 120, !46, i64 128, !6, i64 152, !6, i64 156, !6, i64 160, !6, i64 164, !6, i64 168, !6, i64 172, !6, i64 176}
+!45 = !{!"p1 _ZTS16AVPacketSideData", !12, i64 0}
+!46 = !{!"AVChannelLayout", !6, i64 0, !6, i64 4, !7, i64 8, !12, i64 16}
+!47 = !{!10, !14, i64 32}
 end_hunk_0

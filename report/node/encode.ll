@@ -205,13 +205,11 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 ; Function Attrs: cold nounwind optsize uwtable
 define hidden i64 @BrotliEncoderEstimatePeakMemoryUsage(i32 noundef %0, i32 noundef %1, i64 noundef %2) local_unnamed_addr #6 {
 SanitizeParams.exit:
-  %3 = alloca %struct.BrotliEncoderParams, align 8 ; 23 uses
+  %3 = alloca %struct.BrotliEncoderParams, align 8 ; 22 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #19
-  store i32 0, ptr %3, align 8, !tbaa !49
   %i.a = getelementptr inbounds nuw i8, ptr %3, i64 36
   store i32 0, ptr %i.a, align 4, !tbaa !50
-  %4 = getelementptr inbounds nuw i8, ptr %3, i64 4
-  store i32 11, ptr %4, align 4, !tbaa !51
+  store <2 x i32> <i32 0, i32 11>, ptr %3, align 8, !tbaa !53
   %i.b = getelementptr inbounds nuw i8, ptr %3, i64 8
   store i32 22, ptr %i.b, align 8, !tbaa !52
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 12 ; 2 uses

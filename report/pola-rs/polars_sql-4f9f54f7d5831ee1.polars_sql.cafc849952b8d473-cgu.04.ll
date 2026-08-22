@@ -202,7 +202,7 @@ bb.l:                                             ; preds = %bb.k
 ; Function Attrs: nonlazybind optsize uwtable
 define void @_RINvXs2_Cs1tlcHH8F7Uh_3hexINtNtCsgZ49sUHp3tW_5alloc3vec3VechENtB6_7FromHex8from_hexNtNtBt_6string6StringECshquuC4dCYVj_10polars_sql(ptr dead_on_unwind noalias noundef writable sret([24 x i8]) align 8 captures(address) dereferenceable(24) %0, ptr noalias noundef align 8 captures(address) dead_on_return dereferenceable(24) %1) unnamed_addr #0 personality ptr @rust_eh_personality !dbg !15890 {
 bb.a:
-  %i.a = alloca [32 x i8], align 8                ; 5 uses
+  %i.a = alloca [32 x i8], align 8                ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 16, !dbg !15894
   %.val7 = load i64, ptr %i.b, align 8, !dbg !15894, !noundef !13 ; 2 uses
   %i.c = and i64 %.val7, 1, !dbg !15895
@@ -222,9 +222,7 @@ bb.c:                                             ; preds = %bb.a
   %.sroa.01.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8, !dbg !15899
   store i64 %.val7, ptr %.sroa.01.sroa.4.0..sroa_idx, align 8, !dbg !15899
   %.sroa.01.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 16, !dbg !15899
-  store i64 2, ptr %.sroa.01.sroa.5.0..sroa_idx, align 8, !dbg !15899
-  %.sroa.42.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 24, !dbg !15899
-  store i64 0, ptr %.sroa.42.0..sroa_idx, align 8, !dbg !15899
+  store <2 x i64> <i64 2, i64 0>, ptr %.sroa.01.sroa.5.0..sroa_idx, align 8, !dbg !15899
   invoke void @_RINvNtNtCscgRAwXFJnXP_4core4iter8adapters11try_processINtNtB2_3map3MapINtNtB2_9enumerate9EnumerateINtNtNtB6_5slice4iter6ChunkshEENCINvXs2_Cs1tlcHH8F7Uh_3hexINtNtCsgZ49sUHp3tW_5alloc3vec3VechENtB2c_7FromHex8from_hexNtNtB2z_6string6StringE0EhINtNtB6_6result6ResultNtNtB6_7convert10InfallibleNtNtB2c_5error12FromHexErrorENCINvXso_B3T_IB3R_B2u_B4D_EINtNtNtB4_6traits7collect12FromIteratorIB3R_hB4D_EE9from_iterBQ_E0B2u_ECshquuC4dCYVj_10polars_sql(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %0, ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(32) %i.a)
           to label %bb.e unwind label %bb.b, !dbg !15905
 
@@ -627,14 +625,14 @@ bb.x:                                             ; preds = %bb.g
 bb.y:                                             ; preds = %bb.g
   %i.eg = getelementptr inbounds nuw i8, ptr %1, i64 16, !dbg !38404
   %i.eh = getelementptr inbounds nuw i8, ptr %1, i64 64, !dbg !38404
-  %2 = load i128, ptr %i.eh, align 16, !dbg !38404, !alias.scope !38288, !noalias !38299, !noundef !13
-  %3 = getelementptr inbounds nuw i8, ptr %1, i64 80, !dbg !38404
-  %4 = load i128, ptr %3, align 16, !dbg !38404, !alias.scope !38288, !noalias !38299, !noundef !13
+  %2 = load <2 x i128>, ptr %i.eh, align 16, !dbg !38404, !alias.scope !38288, !noalias !38299 ; 2 uses
   %i.ei = getelementptr inbounds nuw i8, ptr %i.bx, i64 16, !dbg !38409
   call fastcc void @_RNvXsk_NtNtCs1LHh8CLbVkQ_11polars_core9datatypes5dtypeNtB5_8DataTypeNtNtCscgRAwXFJnXP_4core5clone5Clone5clone(ptr noalias noundef align 16 captures(none) dereferenceable(48) %i.ei, ptr noalias noundef readonly align 16 captures(address, read_provenance) dereferenceable(48) %i.eg) #30, !dbg !38404
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.bx, i64 64, !dbg !38409
-  store i128 %2, ptr %.sroa.4.0..sroa_idx.i, align 16, !dbg !38409
+  %3 = extractelement <2 x i128> %2, i64 0, !dbg !38409
+  store i128 %3, ptr %.sroa.4.0..sroa_idx.i, align 16, !dbg !38409
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.bx, i64 80, !dbg !38409
+  %4 = extractelement <2 x i128> %2, i64 1, !dbg !38409
   store i128 %4, ptr %.sroa.5.0..sroa_idx.i, align 16, !dbg !38409
   store i8 34, ptr %i.bx, align 16, !dbg !38409
   br label %_RNvXsw_NtNtCsfcROwRM8ZtH_11polars_plan5plans3litNtB5_12LiteralValueNtNtCscgRAwXFJnXP_4core5clone5Clone5clone.exit, !dbg !38365

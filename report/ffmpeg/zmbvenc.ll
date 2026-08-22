@@ -94,12 +94,11 @@ bb.f:                                             ; preds = %.lr.ph, %bb.f
   %i.ac = load i32, ptr %i.ab, align 8, !tbaa !41
   %i.ad = getelementptr inbounds nuw i8, ptr %i.b, i64 1848
   store i32 %i.ac, ptr %i.ad, align 8, !tbaa !42
-  %i.ae = getelementptr inbounds nuw i8, ptr %i.b, i64 12 ; 3 uses
-  store i32 8, ptr %i.ae, align 4, !tbaa !43
+  %i.ae = getelementptr inbounds nuw i8, ptr %i.b, i64 12 ; 2 uses
   %i.af = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 3 uses
-  store i32 8, ptr %i.af, align 8, !tbaa !44
+  store <2 x i32> splat (i32 8), ptr %i.af, align 8, !tbaa !30
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 280
-  %i.ah = load i32, ptr %i.ag, align 8, !tbaa !45 ; 3 uses
+  %i.ah = load i32, ptr %i.ag, align 8, !tbaa !43 ; 3 uses
   %i.ai = icmp sgt i32 %i.ah, 0
   br i1 %i.ai, label %bb.g, label %bb.h
 
@@ -107,7 +106,7 @@ bb.g:                                             ; preds = %._crit_edge
   %spec.select = tail call i32 @llvm.umin.i32(i32 %i.ah, i32 64)
   store i32 %spec.select, ptr %i.af, align 8, !tbaa !44
   %i.aj = tail call i32 @llvm.umin.i32(i32 %i.ah, i32 63)
-  store i32 %i.aj, ptr %i.ae, align 4, !tbaa !43
+  store i32 %i.aj, ptr %i.ae, align 4, !tbaa !45
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %._crit_edge
@@ -186,7 +185,7 @@ bb.n:                                             ; preds = %bb.l
   %i.cb = and i32 %i.ca, -16                      ; 2 uses
   %i.cc = load i32, ptr %i.ar, align 4, !tbaa !48
   %i.cd = add nsw i32 %i.cc, %i.bs
-  %i.ce = load i32, ptr %i.ae, align 4, !tbaa !43
+  %i.ce = load i32, ptr %i.ae, align 4, !tbaa !45
   %i.cf = add nsw i32 %i.cd, %i.ce
   %i.cg = mul nsw i32 %i.cf, %i.bx
   %i.ch = add nsw i32 %i.cg, %i.cb
@@ -589,7 +588,7 @@ bb.n:                                             ; preds = %bb.m, %block_cmp.ex
   %.0.i.fr = freeze i32 %.0.i                     ; 3 uses
   %i.ku = load i32, ptr %i.ek, align 8, !tbaa !44 ; 4 uses
   %i.kv = sub nsw i32 0, %i.ku                    ; 9 uses
-  %i.kw = load i32, ptr %i.el, align 4, !tbaa !43 ; 9 uses
+  %i.kw = load i32, ptr %i.el, align 4, !tbaa !45 ; 9 uses
   %.not90169.i = icmp slt i32 %i.kw, %i.kv
   br i1 %.not90169.i, label %.loopexit590, label %.lr.ph174.i
 
@@ -992,9 +991,9 @@ attributes #9 = { nounwind }
 !40 = !{!32, !6, i64 1852}
 !41 = !{!10, !6, i64 328}
 !42 = !{!32, !6, i64 1848}
-!43 = !{!32, !6, i64 12}
+!43 = !{!10, !6, i64 280}
 !44 = !{!32, !6, i64 8}
-!45 = !{!10, !6, i64 280}
+!45 = !{!32, !6, i64 12}
 !46 = !{!10, !6, i64 424}
 !47 = !{!10, !6, i64 112}
 !48 = !{!10, !6, i64 116}

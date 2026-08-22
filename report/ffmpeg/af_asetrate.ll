@@ -137,18 +137,15 @@ bb.c:                                             ; preds = %bb.a
   %i.q = getelementptr inbounds nuw i8, ptr %i.o, i64 12
   store i32 1, ptr %i.q, align 4, !tbaa !44
   %i.r = sitofp nsz i32 %.sroa.0.0.copyload to double
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 64
-  %2 = load i32, ptr %1, align 8, !tbaa !37
-  %. = tail call i32 @llvm.smax.i32(i32 %i.g, i32 %2)
-  %3 = insertelement <2 x i32> poison, i32 %.sroa.6.0.copyload, i64 0
-  %4 = insertelement <2 x i32> %3, i32 %., i64 1
-  %5 = sitofp <2 x i32> %4 to <2 x double>
-  %6 = insertelement <2 x double> <double poison, double 1.000000e+00>, double %i.r, i64 0
-  %7 = fdiv nsz <2 x double> %6, %5               ; 2 uses
-  %shift = shufflevector <2 x double> %7, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %8 = fcmp ogt <2 x double> %7, %shift
-  %9 = extractelement <2 x i1> %8, i64 0
-  br i1 %9, label %bb.d, label %bb.e
+  %1 = sitofp nsz i32 %.sroa.6.0.copyload to double
+  %2 = fdiv nsz double %i.r, %1
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 64
+  %4 = load i32, ptr %3, align 8, !tbaa !37
+  %. = tail call i32 @llvm.smax.i32(i32 %i.g, i32 %4)
+  %5 = sitofp nsz i32 %. to double
+  %6 = fdiv nsz double 1.000000e+00, %5
+  %7 = fcmp nsz ogt double %2, %6
+  br i1 %7, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
   tail call void (ptr, i32, ptr, ...) @av_log(ptr noundef nonnull %i.a, i32 noundef 24, ptr noundef nonnull @.str.3) #6

@@ -115,15 +115,13 @@ bb.d:                                             ; preds = %.thread29
   %i.y = load i32, ptr %i.x, align 8, !tbaa !27
   %i.z = icmp eq i32 %i.y, 0
   %i.aa = select i1 %i.z, ptr @.str.10, ptr @.str.12
-  %1 = insertelement <2 x i64> poison, i64 %i.w, i64 0
-  %2 = insertelement <2 x i64> %1, i64 %.pre, i64 1
-  %3 = uitofp <2 x i64> %2 to <2 x double>
-  %4 = fdiv nsz <2 x double> %3, splat (double 1.000000e+06) ; 2 uses
+  %1 = uitofp nsz i64 %i.w to double
+  %2 = fdiv nsz double %1, 1.000000e+06
+  %3 = uitofp nsz i64 %.pre to double
+  %4 = fdiv nsz double %3, 1.000000e+06
   %i.ab = getelementptr inbounds nuw i8, ptr %i.b, i64 60
   %i.ac = load i32, ptr %i.ab, align 4, !tbaa !28
-  %5 = extractelement <2 x double> %4, i64 0
-  %6 = extractelement <2 x double> %4, i64 1
-  tail call void (ptr, i32, ptr, ...) @av_log(ptr noundef nonnull %0, i32 noundef 40, ptr noundef nonnull @.str.34, ptr noundef nonnull %i.aa, double noundef %5, double noundef %6, i32 noundef %i.ac) #9
+  tail call void (ptr, i32, ptr, ...) @av_log(ptr noundef nonnull %0, i32 noundef 40, ptr noundef nonnull @.str.34, ptr noundef nonnull %i.aa, double noundef %2, double noundef %4, i32 noundef %i.ac) #9
   br label %bb.e
 
 bb.e:                                             ; preds = %.thread29, %bb.d

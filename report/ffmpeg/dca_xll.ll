@@ -205,9 +205,7 @@ declare i32 @ff_side_data_update_matrix_encoding(ptr noundef, i32 noundef) local
 define void @ff_dca_xll_flush(ptr nofree noundef writeonly captures(none) initializes((8712, 8720)) %0) local_unnamed_addr #4 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8712
-  store i32 0, ptr %i.a, align 8, !tbaa !19
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 8716
-  store i32 0, ptr %1, align 4, !tbaa !20
+  store <2 x i32> zeroinitializer, ptr %i.a, align 8, !tbaa !76
   ret void
 }
 
@@ -248,9 +246,7 @@ bb.d:                                             ; preds = %bb.c
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 8704
   tail call void @av_freep(ptr noundef nonnull %i.j) #12
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 8712
-  store i32 0, ptr %i.k, align 8, !tbaa !19
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 8716
-  store i32 0, ptr %1, align 4, !tbaa !20
+  store <2 x i32> zeroinitializer, ptr %i.k, align 8, !tbaa !76
   ret void
 }
 

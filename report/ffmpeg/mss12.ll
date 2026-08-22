@@ -205,9 +205,7 @@ bb.r:                                             ; preds = %bb.p
 
 bb.s:                                             ; preds = %bb.m
   %i.cp = getelementptr inbounds nuw i8, ptr %0, i64 1116
-  store i32 0, ptr %i.cp, align 4, !tbaa !131
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 1120
-  store i32 256, ptr %4, align 8, !tbaa !132
+  store <2 x i32> <i32 0, i32 256>, ptr %i.cp, align 4, !tbaa !117
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.s, %bb.r
@@ -293,33 +291,23 @@ declare ptr @av_malloc_array(i64 noundef, i64 noundef) local_unnamed_addr #4
 define internal fastcc void @slicecontext_init(ptr nofree noundef writeonly captures(none) initializes((1296, 1308), (2596, 2608), (3896, 3908), (5196, 5208), (6496, 6516), (7816, 7828), (9116, 9128), (87128, 87140), (88440, 88452), (89740, 89752), (167752, 167756)) %0, i32 noundef range(i32 0, 2) %1, i32 noundef %2) unnamed_addr #5 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 1296
-  store i32 2, ptr %i.a, align 4, !tbaa !23
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 1300
-  store i32 -1, ptr %3, align 4, !tbaa !20
+  store <2 x i32> <i32 2, i32 -1>, ptr %i.a, align 4, !tbaa !117
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 1304
   store i32 -2, ptr %i.b, align 4, !tbaa !22
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 2596
-  store i32 2, ptr %i.c, align 4, !tbaa !23
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 2600
-  store i32 -1, ptr %4, align 4, !tbaa !20
+  store <2 x i32> <i32 2, i32 -1>, ptr %i.c, align 4, !tbaa !117
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 2604
   store i32 -2, ptr %i.d, align 4, !tbaa !22
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 6496
-  store i32 3, ptr %i.e, align 4, !tbaa !23
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 6500
-  store i32 50, ptr %5, align 4, !tbaa !20
+  store <2 x i32> <i32 3, i32 50>, ptr %i.e, align 4, !tbaa !117
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 6504
   store i32 150, ptr %i.f, align 4, !tbaa !22
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 5196
-  store i32 2, ptr %i.g, align 4, !tbaa !23
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 5200
-  store i32 50, ptr %6, align 4, !tbaa !20
+  store <2 x i32> <i32 2, i32 50>, ptr %i.g, align 4, !tbaa !117
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 5204
   store i32 100, ptr %i.h, align 4, !tbaa !22
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 3896
-  store i32 3, ptr %i.i, align 4, !tbaa !23
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 3900
-  store i32 15, ptr %7, align 4, !tbaa !20
+  store <2 x i32> <i32 3, i32 15>, ptr %i.i, align 4, !tbaa !117
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 3904
   store i32 45, ptr %i.j, align 4, !tbaa !22
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 6508

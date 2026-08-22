@@ -9,34 +9,28 @@ target triple = "x86_64-pc-linux-gnu"
 define void @ff_rv34dsp_init(ptr nofree noundef writeonly captures(none) initializes((576, 608)) %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 576
-  store ptr @rv34_inv_transform_noround_c, ptr %i.a, align 8, !tbaa !9
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 584
-  store ptr @rv34_inv_transform_dc_noround_c, ptr %1, align 8, !tbaa !12
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 592
-  store ptr @rv34_idct_add_c, ptr %2, align 8, !tbaa !13
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 600
-  store ptr @rv34_idct_dc_add_c, ptr %3, align 8, !tbaa !14
+  store <4 x ptr> <ptr @rv34_inv_transform_noround_c, ptr @rv34_inv_transform_dc_noround_c, ptr @rv34_idct_add_c, ptr @rv34_idct_dc_add_c>, ptr %i.a, align 8, !tbaa !9
   ret void
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
 define internal void @rv34_inv_transform_noround_c(ptr nofree noundef captures(none) %0) #1 {
 rv34_row_transform.exit.preheader:
-  %i.a = load i16, ptr %0, align 2, !tbaa !15
+  %i.a = load i16, ptr %0, align 2, !tbaa !11
   %i.b = sext i16 %i.a to i32                     ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %i.d = load i16, ptr %i.c, align 2, !tbaa !15
+  %i.d = load i16, ptr %i.c, align 2, !tbaa !11
   %i.e = sext i16 %i.d to i32                     ; 2 uses
   %i.f = add nsw i32 %i.e, %i.b
   %i.g = mul nsw i32 %i.f, 13                     ; 2 uses
   %i.h = sub nsw i32 %i.b, %i.e
   %i.i = mul nsw i32 %i.h, 13                     ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.k = load i16, ptr %i.j, align 2, !tbaa !15
+  %i.k = load i16, ptr %i.j, align 2, !tbaa !11
   %i.l = sext i16 %i.k to i32                     ; 2 uses
   %i.m = mul nsw i32 %i.l, 7
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
-  %i.o = load i16, ptr %i.n, align 2, !tbaa !15
+  %i.o = load i16, ptr %i.n, align 2, !tbaa !11
   %i.p = sext i16 %i.o to i32                     ; 2 uses
   %.neg.i = mul nsw i32 %i.p, -17
   %i.q = add nsw i32 %.neg.i, %i.m                ; 2 uses
@@ -48,21 +42,21 @@ rv34_row_transform.exit.preheader:
   %i.w = sub nsw i32 %i.i, %i.q                   ; 2 uses
   %i.x = sub nsw i32 %i.g, %i.t                   ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 2 ; 2 uses
-  %i.z = load i16, ptr %i.y, align 2, !tbaa !15
+  %i.z = load i16, ptr %i.y, align 2, !tbaa !11
   %i.aa = sext i16 %i.z to i32                    ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 18
-  %i.ac = load i16, ptr %i.ab, align 2, !tbaa !15
+  %i.ac = load i16, ptr %i.ab, align 2, !tbaa !11
   %i.ad = sext i16 %i.ac to i32                   ; 2 uses
   %i.ae = add nsw i32 %i.ad, %i.aa
   %i.af = mul nsw i32 %i.ae, 13                   ; 2 uses
   %i.ag = sub nsw i32 %i.aa, %i.ad
   %i.ah = mul nsw i32 %i.ag, 13                   ; 2 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 10
-  %i.aj = load i16, ptr %i.ai, align 2, !tbaa !15
+  %i.aj = load i16, ptr %i.ai, align 2, !tbaa !11
   %i.ak = sext i16 %i.aj to i32                   ; 2 uses
   %i.al = mul nsw i32 %i.ak, 7
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 26
-  %i.an = load i16, ptr %i.am, align 2, !tbaa !15
+  %i.an = load i16, ptr %i.am, align 2, !tbaa !11
   %i.ao = sext i16 %i.an to i32                   ; 2 uses
   %.neg.i.1 = mul nsw i32 %i.ao, -17
   %i.ap = add nsw i32 %.neg.i.1, %i.al            ; 2 uses
@@ -74,21 +68,21 @@ rv34_row_transform.exit.preheader:
   %i.av = sub nsw i32 %i.ah, %i.ap                ; 2 uses
   %i.aw = sub nsw i32 %i.af, %i.as                ; 2 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 2 uses
-  %i.ay = load i16, ptr %i.ax, align 2, !tbaa !15
+  %i.ay = load i16, ptr %i.ax, align 2, !tbaa !11
   %i.az = sext i16 %i.ay to i32                   ; 2 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 20
-  %i.bb = load i16, ptr %i.ba, align 2, !tbaa !15
+  %i.bb = load i16, ptr %i.ba, align 2, !tbaa !11
   %i.bc = sext i16 %i.bb to i32                   ; 2 uses
   %i.bd = add nsw i32 %i.bc, %i.az
   %i.be = mul nsw i32 %i.bd, 13                   ; 2 uses
   %i.bf = sub nsw i32 %i.az, %i.bc
   %i.bg = mul nsw i32 %i.bf, 13                   ; 2 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %0, i64 12
-  %i.bi = load i16, ptr %i.bh, align 2, !tbaa !15
+  %i.bi = load i16, ptr %i.bh, align 2, !tbaa !11
   %i.bj = sext i16 %i.bi to i32                   ; 2 uses
   %i.bk = mul nsw i32 %i.bj, 7
   %i.bl = getelementptr inbounds nuw i8, ptr %0, i64 28
-  %i.bm = load i16, ptr %i.bl, align 2, !tbaa !15
+  %i.bm = load i16, ptr %i.bl, align 2, !tbaa !11
   %i.bn = sext i16 %i.bm to i32                   ; 2 uses
   %.neg.i.2 = mul nsw i32 %i.bn, -17
   %i.bo = add nsw i32 %.neg.i.2, %i.bk            ; 2 uses
@@ -100,21 +94,21 @@ rv34_row_transform.exit.preheader:
   %i.bu = sub nsw i32 %i.bg, %i.bo                ; 2 uses
   %i.bv = sub nsw i32 %i.be, %i.br                ; 2 uses
   %i.bw = getelementptr inbounds nuw i8, ptr %0, i64 6 ; 2 uses
-  %i.bx = load i16, ptr %i.bw, align 2, !tbaa !15
+  %i.bx = load i16, ptr %i.bw, align 2, !tbaa !11
   %i.by = sext i16 %i.bx to i32                   ; 2 uses
   %i.bz = getelementptr inbounds nuw i8, ptr %0, i64 22
-  %i.ca = load i16, ptr %i.bz, align 2, !tbaa !15
+  %i.ca = load i16, ptr %i.bz, align 2, !tbaa !11
   %i.cb = sext i16 %i.ca to i32                   ; 2 uses
   %i.cc = add nsw i32 %i.cb, %i.by
   %i.cd = mul nsw i32 %i.cc, 13                   ; 2 uses
   %i.ce = sub nsw i32 %i.by, %i.cb
   %i.cf = mul nsw i32 %i.ce, 13                   ; 2 uses
   %i.cg = getelementptr inbounds nuw i8, ptr %0, i64 14
-  %i.ch = load i16, ptr %i.cg, align 2, !tbaa !15
+  %i.ch = load i16, ptr %i.cg, align 2, !tbaa !11
   %i.ci = sext i16 %i.ch to i32                   ; 2 uses
   %i.cj = mul nsw i32 %i.ci, 7
   %i.ck = getelementptr inbounds nuw i8, ptr %0, i64 30
-  %i.cl = load i16, ptr %i.ck, align 2, !tbaa !15
+  %i.cl = load i16, ptr %i.ck, align 2, !tbaa !11
   %i.cm = sext i16 %i.cl to i32                   ; 2 uses
   %.neg.i.3 = mul nsw i32 %i.cm, -17
   %i.cn = add nsw i32 %.neg.i.3, %i.cj            ; 2 uses
@@ -138,19 +132,19 @@ rv34_row_transform.exit.preheader:
   %i.de = add nsw i32 %i.dd, %i.cw
   %i.df = lshr i32 %i.de, 11
   %i.dg = trunc i32 %i.df to i16
-  store i16 %i.dg, ptr %0, align 2, !tbaa !15
+  store i16 %i.dg, ptr %0, align 2, !tbaa !11
   %i.dh = add nsw i32 %i.da, %i.cy
   %i.di = lshr i32 %i.dh, 11
   %i.dj = trunc i32 %i.di to i16
-  store i16 %i.dj, ptr %i.y, align 2, !tbaa !15
+  store i16 %i.dj, ptr %i.y, align 2, !tbaa !11
   %i.dk = sub nsw i32 %i.cy, %i.da
   %i.dl = lshr i32 %i.dk, 11
   %i.dm = trunc i32 %i.dl to i16
-  store i16 %i.dm, ptr %i.ax, align 2, !tbaa !15
+  store i16 %i.dm, ptr %i.ax, align 2, !tbaa !11
   %i.dn = sub nsw i32 %i.cw, %i.dd
   %i.do = lshr i32 %i.dn, 11
   %i.dp = trunc i32 %i.do to i16
-  store i16 %i.dp, ptr %i.bw, align 2, !tbaa !15
+  store i16 %i.dp, ptr %i.bw, align 2, !tbaa !11
   %i.dq = add nsw i32 %i.bt, %i.v
   %i.dr = mul nsw i32 %i.dq, 39                   ; 2 uses
   %i.ds = sub nsw i32 %i.v, %i.bt
@@ -164,22 +158,22 @@ rv34_row_transform.exit.preheader:
   %i.dz = add nsw i32 %i.dy, %i.dr
   %i.ea = lshr i32 %i.dz, 11
   %i.eb = trunc i32 %i.ea to i16
-  store i16 %i.eb, ptr %i.j, align 2, !tbaa !15
+  store i16 %i.eb, ptr %i.j, align 2, !tbaa !11
   %i.ec = add nsw i32 %i.dv, %i.dt
   %i.ed = lshr i32 %i.ec, 11
   %i.ee = trunc i32 %i.ed to i16
   %i.ef = getelementptr inbounds nuw i8, ptr %0, i64 10
-  store i16 %i.ee, ptr %i.ef, align 2, !tbaa !15
+  store i16 %i.ee, ptr %i.ef, align 2, !tbaa !11
   %i.eg = sub nsw i32 %i.dt, %i.dv
   %i.eh = lshr i32 %i.eg, 11
   %i.ei = trunc i32 %i.eh to i16
   %i.ej = getelementptr inbounds nuw i8, ptr %0, i64 12
-  store i16 %i.ei, ptr %i.ej, align 2, !tbaa !15
+  store i16 %i.ei, ptr %i.ej, align 2, !tbaa !11
   %i.ek = sub nsw i32 %i.dr, %i.dy
   %i.el = lshr i32 %i.ek, 11
   %i.em = trunc i32 %i.el to i16
   %i.en = getelementptr inbounds nuw i8, ptr %0, i64 14
-  store i16 %i.em, ptr %i.en, align 2, !tbaa !15
+  store i16 %i.em, ptr %i.en, align 2, !tbaa !11
   %i.eo = add nsw i32 %i.bu, %i.w
   %i.ep = mul nsw i32 %i.eo, 39                   ; 2 uses
   %i.eq = sub nsw i32 %i.w, %i.bu
@@ -193,22 +187,22 @@ rv34_row_transform.exit.preheader:
   %i.ex = add nsw i32 %i.ew, %i.ep
   %i.ey = lshr i32 %i.ex, 11
   %i.ez = trunc i32 %i.ey to i16
-  store i16 %i.ez, ptr %i.c, align 2, !tbaa !15
+  store i16 %i.ez, ptr %i.c, align 2, !tbaa !11
   %i.fa = add nsw i32 %i.et, %i.er
   %i.fb = lshr i32 %i.fa, 11
   %i.fc = trunc i32 %i.fb to i16
   %i.fd = getelementptr inbounds nuw i8, ptr %0, i64 18
-  store i16 %i.fc, ptr %i.fd, align 2, !tbaa !15
+  store i16 %i.fc, ptr %i.fd, align 2, !tbaa !11
   %i.fe = sub nsw i32 %i.er, %i.et
   %i.ff = lshr i32 %i.fe, 11
   %i.fg = trunc i32 %i.ff to i16
   %i.fh = getelementptr inbounds nuw i8, ptr %0, i64 20
-  store i16 %i.fg, ptr %i.fh, align 2, !tbaa !15
+  store i16 %i.fg, ptr %i.fh, align 2, !tbaa !11
   %i.fi = sub nsw i32 %i.ep, %i.ew
   %i.fj = lshr i32 %i.fi, 11
   %i.fk = trunc i32 %i.fj to i16
   %i.fl = getelementptr inbounds nuw i8, ptr %0, i64 22
-  store i16 %i.fk, ptr %i.fl, align 2, !tbaa !15
+  store i16 %i.fk, ptr %i.fl, align 2, !tbaa !11
   %i.fm = add nsw i32 %i.bv, %i.x
   %i.fn = mul nsw i32 %i.fm, 39                   ; 2 uses
   %i.fo = sub nsw i32 %i.x, %i.bv
@@ -222,38 +216,38 @@ rv34_row_transform.exit.preheader:
   %i.fv = add nsw i32 %i.fu, %i.fn
   %i.fw = lshr i32 %i.fv, 11
   %i.fx = trunc i32 %i.fw to i16
-  store i16 %i.fx, ptr %i.n, align 2, !tbaa !15
+  store i16 %i.fx, ptr %i.n, align 2, !tbaa !11
   %i.fy = add nsw i32 %i.fr, %i.fp
   %i.fz = lshr i32 %i.fy, 11
   %i.ga = trunc i32 %i.fz to i16
   %i.gb = getelementptr inbounds nuw i8, ptr %0, i64 26
-  store i16 %i.ga, ptr %i.gb, align 2, !tbaa !15
+  store i16 %i.ga, ptr %i.gb, align 2, !tbaa !11
   %i.gc = sub nsw i32 %i.fp, %i.fr
   %i.gd = lshr i32 %i.gc, 11
   %i.ge = trunc i32 %i.gd to i16
   %i.gf = getelementptr inbounds nuw i8, ptr %0, i64 28
-  store i16 %i.ge, ptr %i.gf, align 2, !tbaa !15
+  store i16 %i.ge, ptr %i.gf, align 2, !tbaa !11
   %i.gg = sub nsw i32 %i.fn, %i.fu
   %i.gh = lshr i32 %i.gg, 11
   %i.gi = trunc i32 %i.gh to i16
   %i.gj = getelementptr inbounds nuw i8, ptr %0, i64 30
-  store i16 %i.gi, ptr %i.gj, align 2, !tbaa !15
+  store i16 %i.gi, ptr %i.gj, align 2, !tbaa !11
   ret void
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
 define internal void @rv34_inv_transform_dc_noround_c(ptr nofree noundef captures(none) initializes((2, 32)) %0) #1 {
 .preheader:
-  %i.a = load i16, ptr %0, align 2, !tbaa !15
+  %i.a = load i16, ptr %0, align 2, !tbaa !11
   %i.b = sext i16 %i.a to i32
   %i.c = mul nsw i32 %i.b, 507
   %i.d = lshr i32 %i.c, 11
   %i.e = trunc i32 %i.d to i16
   %i.f = insertelement <8 x i16> poison, i16 %i.e, i64 0
   %i.g = shufflevector <8 x i16> %i.f, <8 x i16> poison, <8 x i32> zeroinitializer ; 2 uses
-  store <8 x i16> %i.g, ptr %0, align 2, !tbaa !15
+  store <8 x i16> %i.g, ptr %0, align 2, !tbaa !11
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store <8 x i16> %i.g, ptr %i.h, align 2, !tbaa !15
+  store <8 x i16> %i.g, ptr %i.h, align 2, !tbaa !11
   ret void
 }
 
@@ -267,43 +261,43 @@ rv34_row_transform.exit:
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 18
   %i.f = getelementptr inbounds nuw i8, ptr %2, i64 10
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 26
-  %i.h = load i16, ptr %i.g, align 2, !tbaa !15
+  %i.h = load i16, ptr %i.g, align 2, !tbaa !11
   %i.i = sext i16 %i.h to i32                     ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %2, i64 4
   %i.k = getelementptr inbounds nuw i8, ptr %2, i64 20
   %i.l = getelementptr inbounds nuw i8, ptr %2, i64 12
   %i.m = getelementptr inbounds nuw i8, ptr %2, i64 28
-  %i.n = load i16, ptr %i.m, align 2, !tbaa !15
+  %i.n = load i16, ptr %i.m, align 2, !tbaa !11
   %i.o = getelementptr inbounds nuw i8, ptr %2, i64 6
   %i.p = getelementptr inbounds nuw i8, ptr %2, i64 22
   %i.q = getelementptr inbounds nuw i8, ptr %2, i64 14
-  %i.r = load i16, ptr %i.q, align 2, !tbaa !15
+  %i.r = load i16, ptr %i.q, align 2, !tbaa !11
   %i.s = getelementptr inbounds nuw i8, ptr %2, i64 30
-  %i.t = load i16, ptr %i.s, align 2, !tbaa !15
+  %i.t = load i16, ptr %i.s, align 2, !tbaa !11
   %i.u = sext i16 %i.t to i32                     ; 2 uses
   %i.v = getelementptr inbounds i8, ptr %0, i64 %1 ; 3 uses
   %i.w = getelementptr inbounds i8, ptr %i.v, i64 %1 ; 3 uses
   %i.x = getelementptr inbounds i8, ptr %i.w, i64 %1 ; 2 uses
-  %i.y = load i16, ptr %i.j, align 2, !tbaa !15
-  %i.z = load i16, ptr %2, align 2, !tbaa !15
-  %i.aa = load i16, ptr %i.d, align 2, !tbaa !15
+  %i.y = load i16, ptr %i.j, align 2, !tbaa !11
+  %i.z = load i16, ptr %2, align 2, !tbaa !11
+  %i.aa = load i16, ptr %i.d, align 2, !tbaa !11
   %i.ab = sext i16 %i.y to i32                    ; 2 uses
   %i.ac = sext i16 %i.z to i32                    ; 2 uses
-  %i.ad = load i16, ptr %i.k, align 2, !tbaa !15
-  %i.ae = load i16, ptr %i.a, align 2, !tbaa !15
-  %i.af = load i16, ptr %i.e, align 2, !tbaa !15
+  %i.ad = load i16, ptr %i.k, align 2, !tbaa !11
+  %i.ae = load i16, ptr %i.a, align 2, !tbaa !11
+  %i.af = load i16, ptr %i.e, align 2, !tbaa !11
   %i.ag = sext i16 %i.ad to i32                   ; 2 uses
   %i.ah = sext i16 %i.ae to i32                   ; 2 uses
   %i.ai = sub nsw i32 %i.ac, %i.ah
   %i.aj = add nsw i32 %i.ag, %i.ab
   %i.ak = add nsw i32 %i.ah, %i.ac
   %i.al = sub nsw i32 %i.ab, %i.ag
-  %i.am = load i16, ptr %i.l, align 2, !tbaa !15
-  %i.an = load i16, ptr %i.f, align 2, !tbaa !15
-  %i.ao = load i16, ptr %i.b, align 2, !tbaa !15
-  %i.ap = load i16, ptr %i.o, align 2, !tbaa !15
-  %i.aq = load i16, ptr %i.c, align 2, !tbaa !15
-  %i.ar = load i16, ptr %i.p, align 2, !tbaa !15
+  %i.am = load i16, ptr %i.l, align 2, !tbaa !11
+  %i.an = load i16, ptr %i.f, align 2, !tbaa !11
+  %i.ao = load i16, ptr %i.b, align 2, !tbaa !11
+  %i.ap = load i16, ptr %i.o, align 2, !tbaa !11
+  %i.aq = load i16, ptr %i.c, align 2, !tbaa !11
+  %i.ar = load i16, ptr %i.p, align 2, !tbaa !11
   %i.as = sext i16 %i.ao to i32                   ; 2 uses
   %i.at = sext i16 %i.am to i32                   ; 2 uses
   %i.au = sext i16 %i.ar to i32                   ; 2 uses
@@ -319,7 +313,7 @@ rv34_row_transform.exit:
   %.neg.i.1 = mul nsw i32 %i.i, -17
   %i.bc = mul nsw i32 %i.u, 7
   %i.bd = mul nsw i32 %i.i, 7
-  %i.be = load <4 x i8>, ptr %0, align 1, !tbaa !17
+  %i.be = load <4 x i8>, ptr %0, align 1, !tbaa !13
   %i.bf = zext <4 x i8> %i.be to <4 x i32>
   %i.bg = sext i16 %i.ap to i32                   ; 2 uses
   %i.bh = sext i16 %i.aa to i32                   ; 2 uses
@@ -390,7 +384,7 @@ rv34_row_transform.exit:
   %i.dr = sext <4 x i1> %i.dq to <4 x i8>
   %i.ds = trunc <4 x i32> %i.do to <4 x i8>
   %i.dt = select <4 x i1> %i.dp, <4 x i8> %i.dr, <4 x i8> %i.ds
-  store <4 x i8> %i.dt, ptr %0, align 1, !tbaa !17
+  store <4 x i8> %i.dt, ptr %0, align 1, !tbaa !13
   %i.du = add nsw i32 %i.cp, %i.co
   %i.dv = sub nsw i32 %i.co, %i.cp
   %i.dw = add nsw i32 %i.cm, %i.cq                ; 2 uses
@@ -405,7 +399,7 @@ rv34_row_transform.exit:
   %i.ee = add nsw i32 %i.dz, 512                  ; 2 uses
   %i.ef = add nsw i32 %.neg.1, %i.eb              ; 2 uses
   %i.eg = add nsw i32 %i.ec, %i.ea                ; 2 uses
-  %i.eh = load <4 x i8>, ptr %i.v, align 1, !tbaa !17
+  %i.eh = load <4 x i8>, ptr %i.v, align 1, !tbaa !13
   %i.ei = zext <4 x i8> %i.eh to <4 x i32>
   %i.ej = sub nsw i32 %i.ed, %i.eg
   %i.ek = sub nsw i32 %i.ee, %i.ef
@@ -422,7 +416,7 @@ rv34_row_transform.exit:
   %i.ev = sext <4 x i1> %i.eu to <4 x i8>
   %i.ew = trunc <4 x i32> %i.es to <4 x i8>
   %i.ex = select <4 x i1> %i.et, <4 x i8> %i.ev, <4 x i8> %i.ew
-  store <4 x i8> %i.ex, ptr %i.v, align 1, !tbaa !17
+  store <4 x i8> %i.ex, ptr %i.v, align 1, !tbaa !13
   %i.ey = add nsw i32 %i.cd, %i.cc
   %i.ez = sub nsw i32 %i.cc, %i.cd
   %i.fa = sub nsw i32 %i.cq, %i.cm                ; 2 uses
@@ -437,7 +431,7 @@ rv34_row_transform.exit:
   %i.fi = add nsw i32 %i.fd, 512                  ; 2 uses
   %i.fj = add nsw i32 %.neg.2, %i.ff              ; 2 uses
   %i.fk = add nsw i32 %i.fg, %i.fe                ; 2 uses
-  %i.fl = load <4 x i8>, ptr %i.w, align 1, !tbaa !17
+  %i.fl = load <4 x i8>, ptr %i.w, align 1, !tbaa !13
   %i.fm = zext <4 x i8> %i.fl to <4 x i32>
   %i.fn = sub nsw i32 %i.fh, %i.fk
   %i.fo = sub nsw i32 %i.fi, %i.fj
@@ -454,7 +448,7 @@ rv34_row_transform.exit:
   %i.fz = sext <4 x i1> %i.fy to <4 x i8>
   %i.ga = trunc <4 x i32> %i.fw to <4 x i8>
   %i.gb = select <4 x i1> %i.fx, <4 x i8> %i.fz, <4 x i8> %i.ga
-  store <4 x i8> %i.gb, ptr %i.w, align 1, !tbaa !17
+  store <4 x i8> %i.gb, ptr %i.w, align 1, !tbaa !13
   %i.gc = add nsw i32 %i.bx, %i.bw
   %i.gd = sub nsw i32 %i.bw, %i.bx
   %i.ge = sub nsw i32 %i.ck, %i.ce                ; 2 uses
@@ -469,7 +463,7 @@ rv34_row_transform.exit:
   %i.gm = add nsw i32 %i.gh, 512                  ; 2 uses
   %i.gn = add nsw i32 %.neg.3, %i.gj              ; 2 uses
   %i.go = add nsw i32 %i.gk, %i.gi                ; 2 uses
-  %i.gp = load <4 x i8>, ptr %i.x, align 1, !tbaa !17
+  %i.gp = load <4 x i8>, ptr %i.x, align 1, !tbaa !13
   %i.gq = zext <4 x i8> %i.gp to <4 x i32>
   %i.gr = sub nsw i32 %i.gl, %i.go
   %i.gs = sub nsw i32 %i.gm, %i.gn
@@ -486,7 +480,7 @@ rv34_row_transform.exit:
   %i.hd = sext <4 x i1> %i.hc to <4 x i8>
   %i.he = trunc <4 x i32> %i.ha to <4 x i8>
   %i.hf = select <4 x i1> %i.hb, <4 x i8> %i.hd, <4 x i8> %i.he
-  store <4 x i8> %i.hf, ptr %i.x, align 1, !tbaa !17
+  store <4 x i8> %i.hf, ptr %i.x, align 1, !tbaa !13
   ret void
 }
 
@@ -496,7 +490,7 @@ define internal void @rv34_idct_dc_add_c(ptr nofree noundef captures(none) %0, i
   %i.a = mul nsw i32 %2, 169
   %i.b = add nsw i32 %i.a, 512
   %i.c = ashr i32 %i.b, 10
-  %i.d = load <4 x i8>, ptr %0, align 1, !tbaa !17
+  %i.d = load <4 x i8>, ptr %0, align 1, !tbaa !13
   %i.e = zext <4 x i8> %i.d to <4 x i32>
   %i.f = insertelement <4 x i32> poison, i32 %i.c, i64 0
   %i.g = shufflevector <4 x i32> %i.f, <4 x i32> poison, <4 x i32> zeroinitializer ; 4 uses
@@ -506,9 +500,9 @@ define internal void @rv34_idct_dc_add_c(ptr nofree noundef captures(none) %0, i
   %i.k = sext <4 x i1> %i.j to <4 x i8>
   %i.l = trunc <4 x i32> %i.h to <4 x i8>
   %i.m = select <4 x i1> %i.i, <4 x i8> %i.k, <4 x i8> %i.l
-  store <4 x i8> %i.m, ptr %0, align 1, !tbaa !17
+  store <4 x i8> %i.m, ptr %0, align 1, !tbaa !13
   %i.n = getelementptr inbounds i8, ptr %0, i64 %1 ; 3 uses
-  %i.o = load <4 x i8>, ptr %i.n, align 1, !tbaa !17
+  %i.o = load <4 x i8>, ptr %i.n, align 1, !tbaa !13
   %i.p = zext <4 x i8> %i.o to <4 x i32>
   %i.q = add nsw <4 x i32> %i.g, %i.p             ; 3 uses
   %i.r = icmp ugt <4 x i32> %i.q, splat (i32 255)
@@ -516,9 +510,9 @@ define internal void @rv34_idct_dc_add_c(ptr nofree noundef captures(none) %0, i
   %i.t = sext <4 x i1> %i.s to <4 x i8>
   %i.u = trunc <4 x i32> %i.q to <4 x i8>
   %i.v = select <4 x i1> %i.r, <4 x i8> %i.t, <4 x i8> %i.u
-  store <4 x i8> %i.v, ptr %i.n, align 1, !tbaa !17
+  store <4 x i8> %i.v, ptr %i.n, align 1, !tbaa !13
   %i.w = getelementptr inbounds i8, ptr %i.n, i64 %1 ; 3 uses
-  %i.x = load <4 x i8>, ptr %i.w, align 1, !tbaa !17
+  %i.x = load <4 x i8>, ptr %i.w, align 1, !tbaa !13
   %i.y = zext <4 x i8> %i.x to <4 x i32>
   %i.z = add nsw <4 x i32> %i.g, %i.y             ; 3 uses
   %i.aa = icmp ugt <4 x i32> %i.z, splat (i32 255)
@@ -526,9 +520,9 @@ define internal void @rv34_idct_dc_add_c(ptr nofree noundef captures(none) %0, i
   %i.ac = sext <4 x i1> %i.ab to <4 x i8>
   %i.ad = trunc <4 x i32> %i.z to <4 x i8>
   %i.ae = select <4 x i1> %i.aa, <4 x i8> %i.ac, <4 x i8> %i.ad
-  store <4 x i8> %i.ae, ptr %i.w, align 1, !tbaa !17
+  store <4 x i8> %i.ae, ptr %i.w, align 1, !tbaa !13
   %i.af = getelementptr inbounds i8, ptr %i.w, i64 %1 ; 2 uses
-  %i.ag = load <4 x i8>, ptr %i.af, align 1, !tbaa !17
+  %i.ag = load <4 x i8>, ptr %i.af, align 1, !tbaa !13
   %i.ah = zext <4 x i8> %i.ag to <4 x i32>
   %i.ai = add nsw <4 x i32> %i.g, %i.ah           ; 3 uses
   %i.aj = icmp ugt <4 x i32> %i.ai, splat (i32 255)
@@ -536,7 +530,7 @@ define internal void @rv34_idct_dc_add_c(ptr nofree noundef captures(none) %0, i
   %i.al = sext <4 x i1> %i.ak to <4 x i8>
   %i.am = trunc <4 x i32> %i.ai to <4 x i8>
   %i.an = select <4 x i1> %i.aj, <4 x i8> %i.al, <4 x i8> %i.am
-  store <4 x i8> %i.an, ptr %i.af, align 1, !tbaa !17
+  store <4 x i8> %i.an, ptr %i.af, align 1, !tbaa !13
   ret void
 }
 
@@ -560,13 +554,9 @@ attributes #2 = { nocallback nofree nosync nounwind willreturn memory(argmem: wr
 !6 = !{!"int", !7, i64 0}
 !7 = !{!"omnipotent char", !8, i64 0}
 !8 = !{!"Simple C/C++ TBAA"}
-!9 = !{!10, !11, i64 576}
-!10 = !{!"RV34DSPContext", !7, i64 0, !7, i64 256, !7, i64 512, !7, i64 528, !7, i64 544, !11, i64 576, !11, i64 584, !11, i64 592, !11, i64 600, !7, i64 608, !7, i64 624, !7, i64 640}
-!11 = !{!"any pointer", !7, i64 0}
-!12 = !{!10, !11, i64 584}
-!13 = !{!10, !11, i64 592}
-!14 = !{!10, !11, i64 600}
-!15 = !{!16, !16, i64 0}
-!16 = !{!"short", !7, i64 0}
-!17 = !{!7, !7, i64 0}
+!9 = !{!10, !10, i64 0}
+!10 = !{!"any pointer", !7, i64 0}
+!11 = !{!12, !12, i64 0}
+!12 = !{!"short", !7, i64 0}
+!13 = !{!7, !7, i64 0}
 end_hunk_0
