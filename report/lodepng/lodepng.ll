@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
 
 _Z26lodepng_color_mode_cleanupP16LodePNGColorMode.exit: ; preds = %bb.a, %bb.b
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.a, i8 0, i64 16, i1 false)
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(40) %0, ptr noundef nonnull readonly align 1 dereferenceable(40) %1, i64 40, i1 false), !tbaa !20, !alias.scope !202
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %0, ptr noundef nonnull readonly align 1 dereferenceable(40) %1, i64 40, i1 false), !tbaa !20, !alias.scope !202
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !201
   %.not = icmp eq ptr %i.d, null
@@ -608,7 +608,7 @@ _Z26lodepng_color_mode_cleanupP16LodePNGColorMode.exit.i:
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 16
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.d, i8 0, i64 16, i1 false)
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(68) %i.e, i8 0, i64 68, i1 false)
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(40) %i.a, ptr noundef nonnull readonly align 1 dereferenceable(40) %i.l, i64 40, i1 false), !tbaa !20, !alias.scope !281
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.a, ptr noundef nonnull readonly align 1 dereferenceable(40) %i.l, i64 40, i1 false), !tbaa !20, !alias.scope !281
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !201
   %.not.i = icmp eq ptr %i.n, null
@@ -1011,7 +1011,7 @@ bb.ev:                                            ; preds = %_ZL24lodepng_color_
   br label %_Z26lodepng_color_mode_cleanupP16LodePNGColorMode.exit.i
 
 _Z26lodepng_color_mode_cleanupP16LodePNGColorMode.exit.i: ; preds = %bb.ev, %_ZL24lodepng_color_mode_equalPK16LodePNGColorModeS1_.exit.thread86
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(40) %i.s, ptr noundef nonnull readonly align 1 dereferenceable(40) %i.r, i64 40, i1 false), !tbaa !20, !alias.scope !582
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.s, ptr noundef nonnull readonly align 8 dereferenceable(40) %i.r, i64 40, i1 false), !tbaa !20, !alias.scope !582
   %i.awu = load ptr, ptr %i.ca, align 8, !tbaa !201 ; 2 uses
   %.not.i51 = icmp eq ptr %i.awu, null
   br i1 %.not.i51, label %_Z23lodepng_color_mode_copyP16LodePNGColorModePKS_.exit.thread, label %bb.ew
@@ -1414,7 +1414,7 @@ _Z26lodepng_color_mode_cleanupP16LodePNGColorMode.exit.i: ; preds = %bb.b, %bb.a
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(120) %i.n, i8 0, i64 120, i1 false)
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 168
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.a, i8 0, i64 16, i1 false)
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(40) %i.d, ptr noundef nonnull readonly align 1 dereferenceable(40) %i.u, i64 40, i1 false), !tbaa !20, !alias.scope !603
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.d, ptr noundef nonnull readonly align 8 dereferenceable(40) %i.u, i64 40, i1 false), !tbaa !20, !alias.scope !603
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 176 ; 2 uses
   %i.w = load ptr, ptr %i.v, align 8, !tbaa !201
   %.not.i = icmp eq ptr %i.w, null
@@ -1817,7 +1817,7 @@ bb.k:                                             ; preds = %bb.j
 
 _Z26lodepng_color_mode_cleanupP16LodePNGColorMode.exit.i: ; preds = %bb.k, %bb.j
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ak, i8 0, i64 16, i1 false)
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(40) %0, ptr noundef nonnull readonly align 1 dereferenceable(40) %1, i64 40, i1 false), !tbaa !20, !alias.scope !623
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %0, ptr noundef nonnull readonly align 8 dereferenceable(40) %1, i64 40, i1 false), !tbaa !20, !alias.scope !623
   %i.dl = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.dm = load ptr, ptr %i.dl, align 8, !tbaa !201
   %.not.i103 = icmp eq ptr %i.dm, null
@@ -2220,7 +2220,7 @@ bb.n:                                             ; preds = %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #31
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #31
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #31
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %5, ptr noundef nonnull readonly align 1 dereferenceable(48) %4, i64 48, i1 false), !tbaa !20, !alias.scope !1030
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %5, ptr noundef nonnull readonly align 8 dereferenceable(48) %4, i64 48, i1 false), !tbaa !20, !alias.scope !1030
   store i32 1, ptr %5, align 8, !tbaa !115
   %i.ln = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 6 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ln, i8 0, i64 16, i1 false)
