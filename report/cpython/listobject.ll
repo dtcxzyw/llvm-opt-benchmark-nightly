@@ -204,28 +204,21 @@ count_run.exit.thread275:                         ; preds = %._crit_edge.thread1
 
 bb.au:                                            ; preds = %count_run.exit.thread275
   %i.hv = call i64 @llvm.smin.i64(i64 %.0159, i64 %i.hr) ; 6 uses
-  %spec.select.i208 = call i64 @llvm.umax.i64(i64 range(i64 0, -9223372036854775808) %.070.i277, i64 1) ; 7 uses
+  %spec.select.i208 = call i64 @llvm.umax.i64(i64 range(i64 0, -9223372036854775808) %.070.i277, i64 1) ; 3 uses
   %i.hw = icmp slt i64 %spec.select.i208, %i.hv
   br i1 %i.hw, label %.lr.ph10.i, label %binarysort.exit.thread
 
 .lr.ph10.i:                                       ; preds = %bb.au
   %.not.i209 = icmp eq ptr %.8.val.fr.i, null
   %scevgep21.i = getelementptr i8, ptr %.sroa.0.1, i64 8 ; 2 uses
-  br i1 %.not.i209, label %.lr.ph10.split.us.preheader.i, label %.lr.ph10.split.preheader.i
+  br i1 %.not.i209, label %.lr.ph10.split.us.i, label %.lr.ph10.split.preheader.i
 
 .lr.ph10.split.preheader.i:                       ; preds = %.lr.ph10.i
   %scevgep17.i = getelementptr i8, ptr %.8.val.fr.i, i64 8
-  %4 = sub nsw i64 %i.hv, %spec.select.i208
   br label %.lr.ph10.split.i
 
-.lr.ph10.split.us.preheader.i:                    ; preds = %.lr.ph10.i
-  %5 = sub nsw i64 %i.hv, %spec.select.i208
-  br label %.lr.ph10.split.us.i
-
-.lr.ph10.split.us.i:                              ; preds = %._crit_edge.us.i, %.lr.ph10.split.us.preheader.i
-  %indvar25.i = phi i64 [ 0, %.lr.ph10.split.us.preheader.i ], [ %indvar.next26.i, %._crit_edge.us.i ] ; 2 uses
-  %.1537.us.i = phi i64 [ %spec.select.i208, %.lr.ph10.split.us.preheader.i ], [ %i.ij, %._crit_edge.us.i ] ; 4 uses
-  %6 = add nuw i64 %indvar25.i, %spec.select.i208
+.lr.ph10.split.us.i:                              ; preds = %.lr.ph10.i, %._crit_edge.us.i
+  %.1537.us.i = phi i64 [ %i.ij, %._crit_edge.us.i ], [ %spec.select.i208, %.lr.ph10.i ] ; 5 uses
   %i.hx = getelementptr [8 x i8], ptr %.sroa.0.1, i64 %.1537.us.i
   %i.hy = load ptr, ptr %i.hx, align 8, !tbaa !50 ; 2 uses
   br label %bb.av
@@ -253,9 +246,8 @@ bb.aw:                                            ; preds = %bb.av
 ._crit_edge.us.i:                                 ; preds = %.lr.ph.us.preheader.i, %.preheader.us.i
   %i.ii = getelementptr [8 x i8], ptr %.sroa.0.1, i64 %.149.us.i
   store ptr %i.hy, ptr %i.ii, align 8, !tbaa !50
-  %i.ij = add nuw nsw i64 %.1537.us.i, 1
-  %indvar.next26.i = add nuw i64 %indvar25.i, 1   ; 2 uses
-  %exitcond27.not.i = icmp eq i64 %indvar.next26.i, %5
+  %i.ij = add nuw nsw i64 %.1537.us.i, 1          ; 2 uses
+  %exitcond27.not.i = icmp eq i64 %i.ij, %i.hv
   br i1 %exitcond27.not.i, label %binarysort.exit.thread, label %.lr.ph10.split.us.i, !llvm.loop !93
 
 .preheader.us.i:                                  ; preds = %bb.aw
@@ -266,15 +258,13 @@ bb.aw:                                            ; preds = %bb.av
   %i.il = shl i64 %.149.us.i, 3                   ; 2 uses
   %scevgep23.i = getelementptr i8, ptr %scevgep21.i, i64 %i.il
   %scevgep24.i = getelementptr i8, ptr %.sroa.0.1, i64 %i.il
-  %i.im = sub i64 %6, %.149.us.i
+  %i.im = sub i64 %.1537.us.i, %.149.us.i
   %i.in = shl i64 %i.im, 3
   call void @llvm.memmove.p0.p0.i64(ptr align 8 %scevgep23.i, ptr align 8 %scevgep24.i, i64 %i.in, i1 false), !tbaa !50
   br label %._crit_edge.us.i
 
 .lr.ph10.split.i:                                 ; preds = %._crit_edge6.i, %.lr.ph10.split.preheader.i
-  %indvar.i = phi i64 [ 0, %.lr.ph10.split.preheader.i ], [ %indvar.next.i, %._crit_edge6.i ] ; 2 uses
-  %.1537.i = phi i64 [ %spec.select.i208, %.lr.ph10.split.preheader.i ], [ %i.jl, %._crit_edge6.i ] ; 6 uses
-  %7 = add nuw i64 %indvar.i, %spec.select.i208
+  %.1537.i = phi i64 [ %i.jl, %._crit_edge6.i ], [ %spec.select.i208, %.lr.ph10.split.preheader.i ] ; 7 uses
   %i.io = getelementptr [8 x i8], ptr %.sroa.0.1, i64 %.1537.i
   %i.ip = load ptr, ptr %i.io, align 8, !tbaa !50 ; 3 uses
   br label %bb.ax
@@ -314,7 +304,7 @@ bb.ay:                                            ; preds = %bb.ax
   %i.jd = shl i64 %.149.i, 3                      ; 4 uses
   %scevgep15.i = getelementptr i8, ptr %scevgep21.i, i64 %i.jd
   %scevgep16.i = getelementptr i8, ptr %.sroa.0.1, i64 %i.jd
-  %i.je = sub i64 %7, %.149.i
+  %i.je = sub i64 %.1537.i, %.149.i
   %i.jf = shl i64 %i.je, 3                        ; 2 uses
   call void @llvm.memmove.p0.p0.i64(ptr align 8 %scevgep15.i, ptr align 8 %scevgep16.i, i64 %i.jf, i1 false), !tbaa !50
   %i.jg = getelementptr [8 x i8], ptr %.sroa.0.1, i64 %.149.i
@@ -330,9 +320,8 @@ bb.ay:                                            ; preds = %bb.ax
   %i.jj = phi ptr [ %i.ji, %.lr.ph5.preheader.i ], [ %i.jc, %._crit_edge.i211 ]
   %i.jk = getelementptr [8 x i8], ptr %.8.val.fr.i, i64 %.149.i
   store ptr %i.jj, ptr %i.jk, align 8, !tbaa !50
-  %i.jl = add nuw nsw i64 %.1537.i, 1
-  %indvar.next.i = add nuw i64 %indvar.i, 1       ; 2 uses
-  %exitcond.not.i212 = icmp eq i64 %indvar.next.i, %4
+  %i.jl = add nuw nsw i64 %.1537.i, 1             ; 2 uses
+  %exitcond.not.i212 = icmp eq i64 %i.jl, %i.hv
   br i1 %exitcond.not.i212, label %binarysort.exit.thread, label %.lr.ph10.split.i, !llvm.loop !93
 
 binarysort.exit.thread:                           ; preds = %._crit_edge6.i, %._crit_edge.us.i, %bb.au, %count_run.exit.thread275

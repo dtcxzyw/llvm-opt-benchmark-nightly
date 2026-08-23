@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.g, %.lr.ph120.ne
   br i1 %i.cz, label %.lr.ph129.preheader, label %._crit_edge134.split
 
 .lr.ph129.preheader:                              ; preds = %._crit_edge126
-  %i.da = zext i32 %indvars.iv177 to i64          ; 2 uses
+  %i.da = zext i32 %indvars.iv177 to i64
   %i.db = add i32 %spec.store.select, %indvars.iv182
   %wide.trip.count175 = zext i32 %indvars.iv158 to i64
   %i.dc = add nsw i64 %wide.trip.count169, -1     ; 3 uses
@@ -216,16 +216,14 @@ bb.g:                                             ; preds = %bb.g, %.lr.ph120.ne
   br label %.lr.ph129
 
 .lr.ph129:                                        ; preds = %.lr.ph129.preheader, %._crit_edge130
-  %indvar = phi i64 [ 0, %.lr.ph129.preheader ], [ %indvar.next, %._crit_edge130 ] ; 2 uses
-  %indvars.iv179 = phi i64 [ %i.da, %.lr.ph129.preheader ], [ %indvars.iv.next180, %._crit_edge130 ] ; 3 uses
+  %indvars.iv179 = phi i64 [ %i.da, %.lr.ph129.preheader ], [ %indvars.iv.next180, %._crit_edge130 ] ; 4 uses
   %i.de = getelementptr inbounds nuw [52 x i8], ptr %3, i64 %indvars.iv179 ; 6 uses
   %i.df = trunc nuw i64 %indvars.iv179 to i32     ; 6 uses
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph129
-  %6 = add i64 %indvar, %i.da
-  %i.dg = mul i64 %6, 52
-  %i.dh = add i64 %i.dg, -1
+  %i.dg = mul nuw nsw i64 %indvars.iv179, 52
+  %i.dh = add nsw i64 %i.dg, -1
   %diff.check = icmp ult i64 %i.dh, 31
   br i1 %diff.check, label %scalar.ph.preheader, label %vector.ph
 
@@ -313,7 +311,6 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   %indvars.iv.next180 = add nuw nsw i64 %indvars.iv179, 1 ; 2 uses
   %lftr.wideiv = trunc i64 %indvars.iv.next180 to i32
   %exitcond184.not = icmp eq i32 %i.db, %lftr.wideiv
-  %indvar.next = add i64 %indvar, 1
   br i1 %exitcond184.not, label %._crit_edge134.split, label %.lr.ph129, !llvm.loop !50
 
 ._crit_edge134.split:                             ; preds = %._crit_edge130, %._crit_edge126

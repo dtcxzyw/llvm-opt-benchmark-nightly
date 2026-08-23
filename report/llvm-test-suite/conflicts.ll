@@ -204,7 +204,7 @@ bb.s:                                             ; preds = %bb.r
   %i.fo = ptrtoaddr ptr %i.fn to i64
   %i.fp = icmp sgt i32 %i.fh, 0                   ; 2 uses
   %i.fq = load ptr, ptr @LAruleno, align 8
-  %i.fr = sext i16 %i.bx to i64                   ; 2 uses
+  %i.fr = sext i16 %i.bx to i64
   %wide.trip.count297 = sext i16 %i.ca to i64
   %i.fs = add i64 %.idx280, %i.fg
   %i.ft = add i64 %i.fg, 4
@@ -250,13 +250,11 @@ bb.s:                                             ; preds = %bb.r
   br label %bb.t
 
 bb.t:                                             ; preds = %.lr.ph253, %._crit_edge248
-  %indvar = phi i64 [ 0, %.lr.ph253 ], [ %indvar.next, %._crit_edge248 ] ; 2 uses
-  %indvars.iv294 = phi i64 [ %i.fr, %.lr.ph253 ], [ %indvars.iv.next295, %._crit_edge248 ] ; 4 uses
+  %indvars.iv294 = phi i64 [ %i.fr, %.lr.ph253 ], [ %indvars.iv.next295, %._crit_edge248 ] ; 5 uses
   %.0142252 = phi i32 [ 0, %.lr.ph253 ], [ %.1143, %._crit_edge248 ] ; 2 uses
   %.0144251 = phi i32 [ undef, %.lr.ph253 ], [ %.1145, %._crit_edge248 ]
   %.0147250 = phi i32 [ -1, %.lr.ph253 ], [ %.1148, %._crit_edge248 ]
-  %1 = add i64 %indvar, %i.fr
-  %i.gt = shl i64 %1, 2
+  %i.gt = shl i64 %indvars.iv294, 2
   br i1 %i.fp, label %.lr.ph236.preheader, label %.preheader
 
 .lr.ph236.preheader:                              ; preds = %bb.t
@@ -448,7 +446,6 @@ middle.block368:                                  ; preds = %vector.body359
 ._crit_edge248:                                   ; preds = %.lr.ph247, %middle.block368, %bb.v
   %indvars.iv.next295 = add nsw i64 %indvars.iv294, 1 ; 2 uses
   %exitcond298.not = icmp eq i64 %indvars.iv.next295, %wide.trip.count297
-  %indvar.next = add i64 %indvar, 1
   br i1 %exitcond298.not, label %.loopexit208.loopexit, label %bb.t, !llvm.loop !96
 
 .loopexit208.loopexit:                            ; preds = %._crit_edge248

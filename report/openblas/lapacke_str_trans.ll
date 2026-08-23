@@ -31,7 +31,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not, label %.loopexit81, label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
-  %.not76 = icmp ne i32 %i.d, 0                   ; 9 uses
+  %.not76 = icmp ne i32 %i.d, 0                   ; 8 uses
   br i1 %.not76, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
@@ -82,11 +82,9 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %.neg = sext i1 %.not76 to i64
   %i.ae = sext i32 %5 to i64                      ; 3 uses
   %wide.trip.count109 = zext nneg i32 %i.aa to i64
-  %8 = select i1 %.not76, i64 4, i64 0
   %i.af = shl nsw i64 %i.ae, 2
   %i.ag = select i1 %.not76, i64 %i.af, i64 0
   %i.ah = shl nsw i64 %i.ae, 2
-  %9 = getelementptr i8, ptr %6, i64 %8
   %i.ai = getelementptr i8, ptr %4, i64 %i.ag
   %ident.check137.not = icmp eq i32 %7, 1
   br label %.preheader
@@ -98,11 +96,11 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   br i1 %exitcond110.not, label %.loopexit81, label %.preheader, !llvm.loop !8
 
 .preheader:                                       ; preds = %.preheader.preheader, %.loopexit
-  %indvar = phi i64 [ 0, %.preheader.preheader ], [ %indvar.next, %.loopexit ] ; 3 uses
-  %indvars.iv106 = phi i64 [ %i.ad, %.preheader.preheader ], [ %indvars.iv.next107, %.loopexit ] ; 3 uses
+  %indvar = phi i64 [ 0, %.preheader.preheader ], [ %indvar.next, %.loopexit ] ; 2 uses
+  %indvars.iv106 = phi i64 [ %i.ad, %.preheader.preheader ], [ %indvars.iv.next107, %.loopexit ] ; 4 uses
   %indvars.iv102 = phi i32 [ 1, %.preheader.preheader ], [ %indvars.iv.next103, %.loopexit ] ; 3 uses
-  %i.aj = shl i64 %indvar, 2
-  %scevgep139 = getelementptr i8, ptr %9, i64 %i.aj
+  %i.aj = shl i64 %indvars.iv106, 2
+  %scevgep139 = getelementptr i8, ptr %6, i64 %i.aj
   %smin140 = tail call i32 @llvm.smin.i32(i32 %5, i32 %indvars.iv102)
   %i.ak = zext i32 %smin140 to i64
   %i.al = shl nuw nsw i64 %i.ak, 2                ; 2 uses

@@ -204,14 +204,13 @@ middle.block92:                                   ; preds = %vector.body87, %sca
   br label %.preheader29.i
 
 .preheader29.i:                                   ; preds = %.preheader29.i.preheader, %bb.e
-  %indvars.iv48.i = phi i64 [ %indvars.iv.next49.i, %bb.e ], [ 0, %.preheader29.i.preheader ] ; 6 uses
-  %indvars.iv46.i = phi i64 [ %indvars.iv.next47.i, %bb.e ], [ 1, %.preheader29.i.preheader ] ; 10 uses
+  %indvars.iv48.i = phi i64 [ %indvars.iv.next49.i, %bb.e ], [ 0, %.preheader29.i.preheader ] ; 5 uses
+  %indvars.iv46.i = phi i64 [ %indvars.iv.next47.i, %bb.e ], [ 1, %.preheader29.i.preheader ] ; 11 uses
   %i.bb = mul nuw nsw i64 %indvars.iv48.i, 9608
   %i.bc = getelementptr i8, ptr %i.e, i64 %i.bb
   %scevgep = getelementptr i8, ptr %i.bc, i64 8
-  %i.bd = mul nuw nsw i64 %indvars.iv48.i, 8000
-  %2 = getelementptr i8, ptr %i.s, i64 %i.bd
-  %scevgep94 = getelementptr i8, ptr %2, i64 8000
+  %i.bd = mul nuw nsw i64 %indvars.iv46.i, 8000
+  %scevgep94 = getelementptr i8, ptr %i.s, i64 %i.bd
   %i.be = getelementptr inbounds nuw [9600 x i8], ptr %i.e, i64 %indvars.iv48.i ; 7 uses
   %min.iters.check108 = icmp samesign ult i64 %indvars.iv46.i, 4
   br i1 %min.iters.check108, label %scalar.ph107.preheader, label %vector.ph109
@@ -375,14 +374,13 @@ bb.e:                                             ; preds = %.loopexit155
   br i1 %exitcond53.not.i, label %.preheader29.i29, label %.preheader29.i, !llvm.loop !35
 
 .preheader29.i29:                                 ; preds = %bb.e, %bb.f
-  %indvars.iv48.i30 = phi i64 [ %indvars.iv.next49.i45, %bb.f ], [ 0, %bb.e ] ; 6 uses
-  %indvars.iv46.i31 = phi i64 [ %indvars.iv.next47.i46, %bb.f ], [ 1, %bb.e ] ; 10 uses
+  %indvars.iv48.i30 = phi i64 [ %indvars.iv.next49.i45, %bb.f ], [ 0, %bb.e ] ; 5 uses
+  %indvars.iv46.i31 = phi i64 [ %indvars.iv.next47.i46, %bb.f ], [ 1, %bb.e ] ; 11 uses
   %i.do = mul nuw nsw i64 %indvars.iv48.i30, 9608
   %i.dp = getelementptr i8, ptr %i.l, i64 %i.do
   %scevgep120 = getelementptr i8, ptr %i.dp, i64 8
-  %i.dq = mul nuw nsw i64 %indvars.iv48.i30, 8000
-  %3 = getelementptr i8, ptr %i.s, i64 %i.dq
-  %scevgep121 = getelementptr i8, ptr %3, i64 8000
+  %i.dq = mul nuw nsw i64 %indvars.iv46.i31, 8000
+  %scevgep121 = getelementptr i8, ptr %i.s, i64 %i.dq
   %i.dr = getelementptr inbounds nuw [9600 x i8], ptr %i.l, i64 %indvars.iv48.i30 ; 7 uses
   %min.iters.check144 = icmp samesign ult i64 %indvars.iv46.i31, 4
   br i1 %min.iters.check144, label %scalar.ph143.preheader, label %vector.ph145

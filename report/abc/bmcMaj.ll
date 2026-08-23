@@ -206,7 +206,7 @@ bb.j:                                             ; preds = %bb.h
   br i1 %i.ba, label %.preheader63.preheader.i, label %.preheader63.lr.ph.split.us.i
 
 .preheader63.preheader.i:                         ; preds = %.preheader63.lr.ph.i
-  %i.bb = sext i32 %i.aw to i64                   ; 2 uses
+  %i.bb = sext i32 %i.aw to i64
   %i.bc = add nsw i64 %i.bb, 2
   %i.bd = zext nneg i32 %i.ay to i64              ; 4 uses
   br label %.preheader63.i
@@ -325,11 +325,8 @@ Abc_TtMaj.exit.loopexit.us.us.i:                  ; preds = %.lr.ph.i57.us.us.i.
   br i1 %exitcond.not, label %.preheader.i, label %.preheader63.us.us.i, !llvm.loop !81
 
 .preheader63.i:                                   ; preds = %Abc_TtMaj.exit.i, %.preheader63.preheader.i
-  %indvar = phi i64 [ %indvar.next, %Abc_TtMaj.exit.i ], [ 0, %.preheader63.preheader.i ] ; 2 uses
-  %indvars.iv84.i = phi i64 [ %indvars.iv.next85.i, %Abc_TtMaj.exit.i ], [ %i.bc, %.preheader63.preheader.i ] ; 3 uses
-  %9 = add i64 %indvar, %i.bb
-  %i.cr = shl i64 %9, 3
-  %10 = add i64 %i.cr, 16
+  %indvars.iv84.i = phi i64 [ %i.bc, %.preheader63.preheader.i ], [ %indvars.iv.next85.i, %Abc_TtMaj.exit.i ] ; 4 uses
+  %i.cr = shl i64 %indvars.iv84.i, 3
   %i.cs = getelementptr inbounds [768 x i8], ptr %i.r, i64 %indvars.iv84.i ; 3 uses
   br label %.lr.ph.i.i
 
@@ -446,7 +443,7 @@ Maj_ManFindFanin.exit.loopexit.2.i:               ; preds = %bb.r
   br i1 %min.iters.check, label %.lr.ph.i57.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader.i.i
-  %i.dz = mul i64 %10, %i.dv                      ; 2 uses
+  %i.dz = mul i64 %i.cr, %i.dv                    ; 2 uses
   %i.ea = add i64 %i.dz, %.val56.val.2.pre.i64    ; 2 uses
   %i.eb = shl nsw i64 %i.dn, 3
   %i.ec = add i64 %i.eb, %.val56.val.i65
@@ -563,7 +560,6 @@ middle.block:                                     ; preds = %vector.body
 Abc_TtMaj.exit.i:                                 ; preds = %.lr.ph.i57.i.prol.loopexit, %.lr.ph.i57.i, %middle.block, %Maj_ManFindFanin.exit.loopexit.2.i
   %indvars.iv.next85.i = add nsw i64 %indvars.iv84.i, 1 ; 2 uses
   %exitcond49.not = icmp eq i64 %indvars.iv.next85.i, %i.bd
-  %indvar.next = add i64 %indvar, 1
   br i1 %exitcond49.not, label %.preheader.i, label %.preheader63.i, !llvm.loop !84
 
 bb.s:                                             ; preds = %select.unfold.i, %.lr.ph.i

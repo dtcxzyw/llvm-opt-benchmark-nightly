@@ -204,14 +204,14 @@ _ZSt12__move_mergeIPiN7xgboost6common6detail12SpanIteratorINS2_4SpanIiLm18446744
   br i1 %.not.i25.us, label %_ZSt17__merge_sort_loopIPiN7xgboost6common6detail12SpanIteratorINS2_4SpanIiLm18446744073709551615EEELb0EEElN9__gnu_cxx5__ops15_Iter_comp_iterIZN3enc8cpu_impl7ArgSortINS2_18IndexTransformIterIZNSC_9SortNamesINSB_6PolicyIJNS1_14EncErrorPolicyEEEEEEvRKT_RKSt7variantIJNSB_15CatStrArrayViewENS5_IKhLm18446744073709551615EEENS5_IKaLm18446744073709551615EEENS5_IKtLm18446744073709551615EEENS5_IKsLm18446744073709551615EEENS5_IKjLm18446744073709551615EEENS5_IKiLm18446744073709551615EEENS5_IKmLm18446744073709551615EEENS5_IKlLm18446744073709551615EEEEES6_EUlSJ_E_EES7_ZZNSF_ISI_EEvSL_S16_S6_ENKUlRKSN_E_clES1A_EUlmmE_EEvSJ_SJ_T0_T1_EUlRSY_S1F_E_EEEvSJ_SJ_S1D_S1E_T2_.exit, label %.lr.ph.i.i.i.i.i.i.us, !llvm.loop !446
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %_ZSt12__move_mergeIPiN7xgboost6common6detail12SpanIteratorINS2_4SpanIiLm18446744073709551615EEELb0EEEN9__gnu_cxx5__ops15_Iter_comp_iterIZN3enc8cpu_impl7ArgSortINS2_18IndexTransformIterIZNSC_9SortNamesINSB_6PolicyIJNS1_14EncErrorPolicyEEEEEEvRKT_RKSt7variantIJNSB_15CatStrArrayViewENS5_IKhLm18446744073709551615EEENS5_IKaLm18446744073709551615EEENS5_IKtLm18446744073709551615EEENS5_IKsLm18446744073709551615EEENS5_IKjLm18446744073709551615EEENS5_IKiLm18446744073709551615EEENS5_IKmLm18446744073709551615EEENS5_IKlLm18446744073709551615EEEEES6_EUlSJ_E_EES7_ZZNSF_ISI_EEvSL_S16_S6_ENKUlRKSN_E_clES1A_EUlmmE_EEvSJ_SJ_T0_T1_EUlRSY_S1F_E_EEES1D_SJ_SJ_SJ_SJ_S1D_S1E_.exit
-  %.sroa.420.031.i = phi i64 [ %.sroa.4.0.lcssa.i.i.i.i.i21.i, %_ZSt12__move_mergeIPiN7xgboost6common6detail12SpanIteratorINS2_4SpanIiLm18446744073709551615EEELb0EEEN9__gnu_cxx5__ops15_Iter_comp_iterIZN3enc8cpu_impl7ArgSortINS2_18IndexTransformIterIZNSC_9SortNamesINSB_6PolicyIJNS1_14EncErrorPolicyEEEEEEvRKT_RKSt7variantIJNSB_15CatStrArrayViewENS5_IKhLm18446744073709551615EEENS5_IKaLm18446744073709551615EEENS5_IKtLm18446744073709551615EEENS5_IKsLm18446744073709551615EEENS5_IKjLm18446744073709551615EEENS5_IKiLm18446744073709551615EEENS5_IKmLm18446744073709551615EEENS5_IKlLm18446744073709551615EEEEES6_EUlSJ_E_EES7_ZZNSF_ISI_EEvSL_S16_S6_ENKUlRKSN_E_clES1A_EUlmmE_EEvSJ_SJ_T0_T1_EUlRSY_S1F_E_EEES1D_SJ_SJ_SJ_SJ_S1D_S1E_.exit ], [ %1, %.lr.ph.i.preheader ] ; 3 uses
+  %.sroa.420.031.i = phi i64 [ %.sroa.4.0.lcssa.i.i.i.i.i21.i, %_ZSt12__move_mergeIPiN7xgboost6common6detail12SpanIteratorINS2_4SpanIiLm18446744073709551615EEELb0EEEN9__gnu_cxx5__ops15_Iter_comp_iterIZN3enc8cpu_impl7ArgSortINS2_18IndexTransformIterIZNSC_9SortNamesINSB_6PolicyIJNS1_14EncErrorPolicyEEEEEEvRKT_RKSt7variantIJNSB_15CatStrArrayViewENS5_IKhLm18446744073709551615EEENS5_IKaLm18446744073709551615EEENS5_IKtLm18446744073709551615EEENS5_IKsLm18446744073709551615EEENS5_IKjLm18446744073709551615EEENS5_IKiLm18446744073709551615EEENS5_IKmLm18446744073709551615EEENS5_IKlLm18446744073709551615EEEEES6_EUlSJ_E_EES7_ZZNSF_ISI_EEvSL_S16_S6_ENKUlRKSN_E_clES1A_EUlmmE_EEvSJ_SJ_T0_T1_EUlRSY_S1F_E_EEES1D_SJ_SJ_SJ_SJ_S1D_S1E_.exit ], [ %1, %.lr.ph.i.preheader ] ; 2 uses
   %.029.i = phi ptr [ %i.ao, %_ZSt12__move_mergeIPiN7xgboost6common6detail12SpanIteratorINS2_4SpanIiLm18446744073709551615EEELb0EEEN9__gnu_cxx5__ops15_Iter_comp_iterIZN3enc8cpu_impl7ArgSortINS2_18IndexTransformIterIZNSC_9SortNamesINSB_6PolicyIJNS1_14EncErrorPolicyEEEEEEvRKT_RKSt7variantIJNSB_15CatStrArrayViewENS5_IKhLm18446744073709551615EEENS5_IKaLm18446744073709551615EEENS5_IKtLm18446744073709551615EEENS5_IKsLm18446744073709551615EEENS5_IKjLm18446744073709551615EEENS5_IKiLm18446744073709551615EEENS5_IKmLm18446744073709551615EEENS5_IKlLm18446744073709551615EEEEES6_EUlSJ_E_EES7_ZZNSF_ISI_EEvSL_S16_S6_ENKUlRKSN_E_clES1A_EUlmmE_EEvSJ_SJ_T0_T1_EUlRSY_S1F_E_EEES1D_SJ_SJ_SJ_SJ_S1D_S1E_.exit ], [ %4, %.lr.ph.i.preheader ] ; 3 uses
   %i.an = getelementptr inbounds nuw i8, ptr %.029.i, i64 %.idx ; 3 uses
   %i.ao = getelementptr inbounds i8, ptr %.029.i, i64 %.idx36 ; 4 uses
   br label %bb.h
 
 bb.h:                                             ; preds = %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEppEv.exit.i, %.lr.ph.i
-  %indvar = phi i64 [ %indvar.next, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEppEv.exit.i ], [ 0, %.lr.ph.i ] ; 3 uses
+  %indvar = phi i64 [ %indvar.next, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEppEv.exit.i ], [ 0, %.lr.ph.i ] ; 2 uses
   %.049.i = phi ptr [ %.1.i, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEppEv.exit.i ], [ %.029.i, %.lr.ph.i ] ; 4 uses
   %.01848.i = phi ptr [ %.119.i, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEppEv.exit.i ], [ %i.an, %.lr.ph.i ] ; 4 uses
   %.sroa.5.047.i = phi i64 [ %i.bh, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEppEv.exit.i ], [ %.sroa.420.031.i, %.lr.ph.i ] ; 4 uses
@@ -261,7 +261,7 @@ _ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0E
   %i.bg = phi ptr [ %i.az, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit.i ], [ %i.bd, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit20.i ] ; 5 uses
   %.119.i = phi ptr [ %i.bb, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit.i ], [ %.01848.i, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit20.i ] ; 8 uses
   %.1.i = phi ptr [ %.049.i, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit.i ], [ %i.bf, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit20.i ] ; 8 uses
-  %i.bh = add nuw i64 %.sroa.5.047.i, 1           ; 7 uses
+  %i.bh = add i64 %.sroa.5.047.i, 1               ; 8 uses
   %i.bi = icmp ne ptr %.1.i, %i.an
   %i.bj = icmp ne ptr %.119.i, %i.ao
   %i.bk = select i1 %i.bi, i1 %i.bj, i1 false
@@ -291,10 +291,8 @@ _ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0E
   br i1 %min.iters.check137, label %scalar.ph136.preheader, label %vector.memcheck133
 
 vector.memcheck133:                               ; preds = %.lr.ph.i.i.i.i.i.i
-  %6 = add i64 %.sroa.420.031.i, %indvar
-  %i.bw = shl i64 %6, 2
-  %7 = add i64 %i.bw, 4
-  %i.bx = add i64 %7, %i.bl
+  %i.bw = shl i64 %i.bh, 2
+  %i.bx = add i64 %i.bw, %i.bl
   %i.by = sub i64 %.1.i134.le, %i.bx
   %diff.check135 = icmp ugt i64 %i.by, -32
   br i1 %diff.check135, label %scalar.ph136.preheader, label %vector.ph138
@@ -697,14 +695,14 @@ _ZSt12__move_mergeIPiN7xgboost6common6detail12SpanIteratorINS2_4SpanIiLm18446744
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader.split, %_ZSt12__move_mergeIPiN7xgboost6common6detail12SpanIteratorINS2_4SpanIiLm18446744073709551615EEELb0EEEN9__gnu_cxx5__ops15_Iter_comp_iterIZN3enc8cpu_impl7ArgSortINS2_18IndexTransformIterIZNSC_9SortNamesINSB_6PolicyIJNS1_14EncErrorPolicyEEEEEEvRKT_RKSt7variantIJNSB_15CatStrArrayViewENS5_IKhLm18446744073709551615EEENS5_IKaLm18446744073709551615EEENS5_IKtLm18446744073709551615EEENS5_IKsLm18446744073709551615EEENS5_IKjLm18446744073709551615EEENS5_IKiLm18446744073709551615EEENS5_IKmLm18446744073709551615EEENS5_IKlLm18446744073709551615EEEEES6_EUlSJ_E_EES7_ZZNSF_ISI_EEvSL_S16_S6_ENKUlOSJ_E0_clIRKSP_EEDaS19_EUlmmE_EEvSJ_SJ_T0_T1_EUlRSY_S1H_E_EEES1F_SJ_SJ_SJ_SJ_S1F_S1G_.exit
-  %.sroa.420.031.i = phi i64 [ %.sroa.4.0.lcssa.i.i.i.i.i21.i, %_ZSt12__move_mergeIPiN7xgboost6common6detail12SpanIteratorINS2_4SpanIiLm18446744073709551615EEELb0EEEN9__gnu_cxx5__ops15_Iter_comp_iterIZN3enc8cpu_impl7ArgSortINS2_18IndexTransformIterIZNSC_9SortNamesINSB_6PolicyIJNS1_14EncErrorPolicyEEEEEEvRKT_RKSt7variantIJNSB_15CatStrArrayViewENS5_IKhLm18446744073709551615EEENS5_IKaLm18446744073709551615EEENS5_IKtLm18446744073709551615EEENS5_IKsLm18446744073709551615EEENS5_IKjLm18446744073709551615EEENS5_IKiLm18446744073709551615EEENS5_IKmLm18446744073709551615EEENS5_IKlLm18446744073709551615EEEEES6_EUlSJ_E_EES7_ZZNSF_ISI_EEvSL_S16_S6_ENKUlOSJ_E0_clIRKSP_EEDaS19_EUlmmE_EEvSJ_SJ_T0_T1_EUlRSY_S1H_E_EEES1F_SJ_SJ_SJ_SJ_S1F_S1G_.exit ], [ %1, %.lr.ph.i.preheader.split ] ; 3 uses
+  %.sroa.420.031.i = phi i64 [ %.sroa.4.0.lcssa.i.i.i.i.i21.i, %_ZSt12__move_mergeIPiN7xgboost6common6detail12SpanIteratorINS2_4SpanIiLm18446744073709551615EEELb0EEEN9__gnu_cxx5__ops15_Iter_comp_iterIZN3enc8cpu_impl7ArgSortINS2_18IndexTransformIterIZNSC_9SortNamesINSB_6PolicyIJNS1_14EncErrorPolicyEEEEEEvRKT_RKSt7variantIJNSB_15CatStrArrayViewENS5_IKhLm18446744073709551615EEENS5_IKaLm18446744073709551615EEENS5_IKtLm18446744073709551615EEENS5_IKsLm18446744073709551615EEENS5_IKjLm18446744073709551615EEENS5_IKiLm18446744073709551615EEENS5_IKmLm18446744073709551615EEENS5_IKlLm18446744073709551615EEEEES6_EUlSJ_E_EES7_ZZNSF_ISI_EEvSL_S16_S6_ENKUlOSJ_E0_clIRKSP_EEDaS19_EUlmmE_EEvSJ_SJ_T0_T1_EUlRSY_S1H_E_EEES1F_SJ_SJ_SJ_SJ_S1F_S1G_.exit ], [ %1, %.lr.ph.i.preheader.split ] ; 2 uses
   %.029.i = phi ptr [ %i.ar, %_ZSt12__move_mergeIPiN7xgboost6common6detail12SpanIteratorINS2_4SpanIiLm18446744073709551615EEELb0EEEN9__gnu_cxx5__ops15_Iter_comp_iterIZN3enc8cpu_impl7ArgSortINS2_18IndexTransformIterIZNSC_9SortNamesINSB_6PolicyIJNS1_14EncErrorPolicyEEEEEEvRKT_RKSt7variantIJNSB_15CatStrArrayViewENS5_IKhLm18446744073709551615EEENS5_IKaLm18446744073709551615EEENS5_IKtLm18446744073709551615EEENS5_IKsLm18446744073709551615EEENS5_IKjLm18446744073709551615EEENS5_IKiLm18446744073709551615EEENS5_IKmLm18446744073709551615EEENS5_IKlLm18446744073709551615EEEEES6_EUlSJ_E_EES7_ZZNSF_ISI_EEvSL_S16_S6_ENKUlOSJ_E0_clIRKSP_EEDaS19_EUlmmE_EEvSJ_SJ_T0_T1_EUlRSY_S1H_E_EEES1F_SJ_SJ_SJ_SJ_S1F_S1G_.exit ], [ %4, %.lr.ph.i.preheader.split ] ; 3 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %.029.i, i64 %.idx ; 3 uses
   %i.ar = getelementptr inbounds i8, ptr %.029.i, i64 %.idx36 ; 4 uses
   br label %bb.h
 
 bb.h:                                             ; preds = %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEppEv.exit.i, %.lr.ph.i
-  %indvar = phi i64 [ %indvar.next, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEppEv.exit.i ], [ 0, %.lr.ph.i ] ; 3 uses
+  %indvar = phi i64 [ %indvar.next, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEppEv.exit.i ], [ 0, %.lr.ph.i ] ; 2 uses
   %.055.i = phi ptr [ %.1.i, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEppEv.exit.i ], [ %.029.i, %.lr.ph.i ] ; 3 uses
   %.01854.i = phi ptr [ %.119.i, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEppEv.exit.i ], [ %i.aq, %.lr.ph.i ] ; 3 uses
   %.sroa.5.053.i = phi i64 [ %i.bp, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEppEv.exit.i ], [ %.sroa.420.031.i, %.lr.ph.i ] ; 4 uses
@@ -772,7 +770,7 @@ _ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0E
   %i.bo = phi ptr [ %i.bi, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit.i ], [ %i.bl, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit20.i ] ; 5 uses
   %.119.i = phi ptr [ %i.bk, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit.i ], [ %.01854.i, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit20.i ] ; 8 uses
   %.1.i = phi ptr [ %.055.i, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit.i ], [ %i.bn, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit20.i ] ; 8 uses
-  %i.bp = add nuw i64 %.sroa.5.053.i, 1           ; 7 uses
+  %i.bp = add i64 %.sroa.5.053.i, 1               ; 8 uses
   %i.bq = icmp ne ptr %.1.i, %i.aq
   %i.br = icmp ne ptr %.119.i, %i.ar
   %i.bs = select i1 %i.bq, i1 %i.br, i1 false
@@ -802,10 +800,8 @@ _ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0E
   br i1 %min.iters.check146, label %scalar.ph145.preheader, label %vector.memcheck142
 
 vector.memcheck142:                               ; preds = %.lr.ph.i.i.i.i.i.i
-  %6 = add i64 %.sroa.420.031.i, %indvar
-  %i.ce = shl i64 %6, 2
-  %7 = add i64 %i.ce, 4
-  %i.cf = add i64 %7, %i.bt
+  %i.ce = shl i64 %i.bp, 2
+  %i.cf = add i64 %i.ce, %i.bt
   %i.cg = sub i64 %.1.i143.le, %i.cf
   %diff.check144 = icmp ugt i64 %i.cg, -32
   br i1 %diff.check144, label %scalar.ph145.preheader, label %vector.ph147
@@ -1208,14 +1204,14 @@ _ZSt12__move_mergeIPiN7xgboost6common6detail12SpanIteratorINS2_4SpanIiLm18446744
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader.split, %_ZSt12__move_mergeIPiN7xgboost6common6detail12SpanIteratorINS2_4SpanIiLm18446744073709551615EEELb0EEEN9__gnu_cxx5__ops15_Iter_comp_iterIZN3enc8cpu_impl7ArgSortINS2_18IndexTransformIterIZNSC_9SortNamesINSB_6PolicyIJNS1_14EncErrorPolicyEEEEEEvRKT_RKSt7variantIJNSB_15CatStrArrayViewENS5_IKhLm18446744073709551615EEENS5_IKaLm18446744073709551615EEENS5_IKtLm18446744073709551615EEENS5_IKsLm18446744073709551615EEENS5_IKjLm18446744073709551615EEENS5_IKiLm18446744073709551615EEENS5_IKmLm18446744073709551615EEENS5_IKlLm18446744073709551615EEEEES6_EUlSJ_E_EES7_ZZNSF_ISI_EEvSL_S16_S6_ENKUlOSJ_E0_clIRKSR_EEDaS19_EUlmmE_EEvSJ_SJ_T0_T1_EUlRSY_S1H_E_EEES1F_SJ_SJ_SJ_SJ_S1F_S1G_.exit
-  %.sroa.420.031.i = phi i64 [ %.sroa.4.0.lcssa.i.i.i.i.i21.i, %_ZSt12__move_mergeIPiN7xgboost6common6detail12SpanIteratorINS2_4SpanIiLm18446744073709551615EEELb0EEEN9__gnu_cxx5__ops15_Iter_comp_iterIZN3enc8cpu_impl7ArgSortINS2_18IndexTransformIterIZNSC_9SortNamesINSB_6PolicyIJNS1_14EncErrorPolicyEEEEEEvRKT_RKSt7variantIJNSB_15CatStrArrayViewENS5_IKhLm18446744073709551615EEENS5_IKaLm18446744073709551615EEENS5_IKtLm18446744073709551615EEENS5_IKsLm18446744073709551615EEENS5_IKjLm18446744073709551615EEENS5_IKiLm18446744073709551615EEENS5_IKmLm18446744073709551615EEENS5_IKlLm18446744073709551615EEEEES6_EUlSJ_E_EES7_ZZNSF_ISI_EEvSL_S16_S6_ENKUlOSJ_E0_clIRKSR_EEDaS19_EUlmmE_EEvSJ_SJ_T0_T1_EUlRSY_S1H_E_EEES1F_SJ_SJ_SJ_SJ_S1F_S1G_.exit ], [ %1, %.lr.ph.i.preheader.split ] ; 3 uses
+  %.sroa.420.031.i = phi i64 [ %.sroa.4.0.lcssa.i.i.i.i.i21.i, %_ZSt12__move_mergeIPiN7xgboost6common6detail12SpanIteratorINS2_4SpanIiLm18446744073709551615EEELb0EEEN9__gnu_cxx5__ops15_Iter_comp_iterIZN3enc8cpu_impl7ArgSortINS2_18IndexTransformIterIZNSC_9SortNamesINSB_6PolicyIJNS1_14EncErrorPolicyEEEEEEvRKT_RKSt7variantIJNSB_15CatStrArrayViewENS5_IKhLm18446744073709551615EEENS5_IKaLm18446744073709551615EEENS5_IKtLm18446744073709551615EEENS5_IKsLm18446744073709551615EEENS5_IKjLm18446744073709551615EEENS5_IKiLm18446744073709551615EEENS5_IKmLm18446744073709551615EEENS5_IKlLm18446744073709551615EEEEES6_EUlSJ_E_EES7_ZZNSF_ISI_EEvSL_S16_S6_ENKUlOSJ_E0_clIRKSR_EEDaS19_EUlmmE_EEvSJ_SJ_T0_T1_EUlRSY_S1H_E_EEES1F_SJ_SJ_SJ_SJ_S1F_S1G_.exit ], [ %1, %.lr.ph.i.preheader.split ] ; 2 uses
   %.029.i = phi ptr [ %i.ar, %_ZSt12__move_mergeIPiN7xgboost6common6detail12SpanIteratorINS2_4SpanIiLm18446744073709551615EEELb0EEEN9__gnu_cxx5__ops15_Iter_comp_iterIZN3enc8cpu_impl7ArgSortINS2_18IndexTransformIterIZNSC_9SortNamesINSB_6PolicyIJNS1_14EncErrorPolicyEEEEEEvRKT_RKSt7variantIJNSB_15CatStrArrayViewENS5_IKhLm18446744073709551615EEENS5_IKaLm18446744073709551615EEENS5_IKtLm18446744073709551615EEENS5_IKsLm18446744073709551615EEENS5_IKjLm18446744073709551615EEENS5_IKiLm18446744073709551615EEENS5_IKmLm18446744073709551615EEENS5_IKlLm18446744073709551615EEEEES6_EUlSJ_E_EES7_ZZNSF_ISI_EEvSL_S16_S6_ENKUlOSJ_E0_clIRKSR_EEDaS19_EUlmmE_EEvSJ_SJ_T0_T1_EUlRSY_S1H_E_EEES1F_SJ_SJ_SJ_SJ_S1F_S1G_.exit ], [ %4, %.lr.ph.i.preheader.split ] ; 3 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %.029.i, i64 %.idx ; 3 uses
   %i.ar = getelementptr inbounds i8, ptr %.029.i, i64 %.idx36 ; 4 uses
   br label %bb.h
 
 bb.h:                                             ; preds = %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEppEv.exit.i, %.lr.ph.i
-  %indvar = phi i64 [ %indvar.next, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEppEv.exit.i ], [ 0, %.lr.ph.i ] ; 3 uses
+  %indvar = phi i64 [ %indvar.next, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEppEv.exit.i ], [ 0, %.lr.ph.i ] ; 2 uses
   %.055.i = phi ptr [ %.1.i, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEppEv.exit.i ], [ %.029.i, %.lr.ph.i ] ; 3 uses
   %.01854.i = phi ptr [ %.119.i, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEppEv.exit.i ], [ %i.aq, %.lr.ph.i ] ; 3 uses
   %.sroa.5.053.i = phi i64 [ %i.bp, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEppEv.exit.i ], [ %.sroa.420.031.i, %.lr.ph.i ] ; 4 uses
@@ -1283,7 +1279,7 @@ _ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0E
   %i.bo = phi ptr [ %i.bi, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit.i ], [ %i.bl, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit20.i ] ; 5 uses
   %.119.i = phi ptr [ %i.bk, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit.i ], [ %.01854.i, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit20.i ] ; 8 uses
   %.1.i = phi ptr [ %.055.i, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit.i ], [ %i.bn, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit20.i ] ; 8 uses
-  %i.bp = add nuw i64 %.sroa.5.053.i, 1           ; 7 uses
+  %i.bp = add i64 %.sroa.5.053.i, 1               ; 8 uses
   %i.bq = icmp ne ptr %.1.i, %i.aq
   %i.br = icmp ne ptr %.119.i, %i.ar
   %i.bs = select i1 %i.bq, i1 %i.br, i1 false
@@ -1313,10 +1309,8 @@ _ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0E
   br i1 %min.iters.check146, label %scalar.ph145.preheader, label %vector.memcheck142
 
 vector.memcheck142:                               ; preds = %.lr.ph.i.i.i.i.i.i
-  %6 = add i64 %.sroa.420.031.i, %indvar
-  %i.ce = shl i64 %6, 2
-  %7 = add i64 %i.ce, 4
-  %i.cf = add i64 %7, %i.bt
+  %i.ce = shl i64 %i.bp, 2
+  %i.cf = add i64 %i.ce, %i.bt
   %i.cg = sub i64 %.1.i143.le, %i.cf
   %diff.check144 = icmp ugt i64 %i.cg, -32
   br i1 %diff.check144, label %scalar.ph145.preheader, label %vector.ph147
@@ -1719,14 +1713,14 @@ _ZSt12__move_mergeIPiN7xgboost6common6detail12SpanIteratorINS2_4SpanIiLm18446744
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader.split, %_ZSt12__move_mergeIPiN7xgboost6common6detail12SpanIteratorINS2_4SpanIiLm18446744073709551615EEELb0EEEN9__gnu_cxx5__ops15_Iter_comp_iterIZN3enc8cpu_impl7ArgSortINS2_18IndexTransformIterIZNSC_9SortNamesINSB_6PolicyIJNS1_14EncErrorPolicyEEEEEEvRKT_RKSt7variantIJNSB_15CatStrArrayViewENS5_IKhLm18446744073709551615EEENS5_IKaLm18446744073709551615EEENS5_IKtLm18446744073709551615EEENS5_IKsLm18446744073709551615EEENS5_IKjLm18446744073709551615EEENS5_IKiLm18446744073709551615EEENS5_IKmLm18446744073709551615EEENS5_IKlLm18446744073709551615EEEEES6_EUlSJ_E_EES7_ZZNSF_ISI_EEvSL_S16_S6_ENKUlOSJ_E0_clIRKST_EEDaS19_EUlmmE_EEvSJ_SJ_T0_T1_EUlRSY_S1H_E_EEES1F_SJ_SJ_SJ_SJ_S1F_S1G_.exit
-  %.sroa.420.031.i = phi i64 [ %.sroa.4.0.lcssa.i.i.i.i.i21.i, %_ZSt12__move_mergeIPiN7xgboost6common6detail12SpanIteratorINS2_4SpanIiLm18446744073709551615EEELb0EEEN9__gnu_cxx5__ops15_Iter_comp_iterIZN3enc8cpu_impl7ArgSortINS2_18IndexTransformIterIZNSC_9SortNamesINSB_6PolicyIJNS1_14EncErrorPolicyEEEEEEvRKT_RKSt7variantIJNSB_15CatStrArrayViewENS5_IKhLm18446744073709551615EEENS5_IKaLm18446744073709551615EEENS5_IKtLm18446744073709551615EEENS5_IKsLm18446744073709551615EEENS5_IKjLm18446744073709551615EEENS5_IKiLm18446744073709551615EEENS5_IKmLm18446744073709551615EEENS5_IKlLm18446744073709551615EEEEES6_EUlSJ_E_EES7_ZZNSF_ISI_EEvSL_S16_S6_ENKUlOSJ_E0_clIRKST_EEDaS19_EUlmmE_EEvSJ_SJ_T0_T1_EUlRSY_S1H_E_EEES1F_SJ_SJ_SJ_SJ_S1F_S1G_.exit ], [ %1, %.lr.ph.i.preheader.split ] ; 3 uses
+  %.sroa.420.031.i = phi i64 [ %.sroa.4.0.lcssa.i.i.i.i.i21.i, %_ZSt12__move_mergeIPiN7xgboost6common6detail12SpanIteratorINS2_4SpanIiLm18446744073709551615EEELb0EEEN9__gnu_cxx5__ops15_Iter_comp_iterIZN3enc8cpu_impl7ArgSortINS2_18IndexTransformIterIZNSC_9SortNamesINSB_6PolicyIJNS1_14EncErrorPolicyEEEEEEvRKT_RKSt7variantIJNSB_15CatStrArrayViewENS5_IKhLm18446744073709551615EEENS5_IKaLm18446744073709551615EEENS5_IKtLm18446744073709551615EEENS5_IKsLm18446744073709551615EEENS5_IKjLm18446744073709551615EEENS5_IKiLm18446744073709551615EEENS5_IKmLm18446744073709551615EEENS5_IKlLm18446744073709551615EEEEES6_EUlSJ_E_EES7_ZZNSF_ISI_EEvSL_S16_S6_ENKUlOSJ_E0_clIRKST_EEDaS19_EUlmmE_EEvSJ_SJ_T0_T1_EUlRSY_S1H_E_EEES1F_SJ_SJ_SJ_SJ_S1F_S1G_.exit ], [ %1, %.lr.ph.i.preheader.split ] ; 2 uses
   %.029.i = phi ptr [ %i.ar, %_ZSt12__move_mergeIPiN7xgboost6common6detail12SpanIteratorINS2_4SpanIiLm18446744073709551615EEELb0EEEN9__gnu_cxx5__ops15_Iter_comp_iterIZN3enc8cpu_impl7ArgSortINS2_18IndexTransformIterIZNSC_9SortNamesINSB_6PolicyIJNS1_14EncErrorPolicyEEEEEEvRKT_RKSt7variantIJNSB_15CatStrArrayViewENS5_IKhLm18446744073709551615EEENS5_IKaLm18446744073709551615EEENS5_IKtLm18446744073709551615EEENS5_IKsLm18446744073709551615EEENS5_IKjLm18446744073709551615EEENS5_IKiLm18446744073709551615EEENS5_IKmLm18446744073709551615EEENS5_IKlLm18446744073709551615EEEEES6_EUlSJ_E_EES7_ZZNSF_ISI_EEvSL_S16_S6_ENKUlOSJ_E0_clIRKST_EEDaS19_EUlmmE_EEvSJ_SJ_T0_T1_EUlRSY_S1H_E_EEES1F_SJ_SJ_SJ_SJ_S1F_S1G_.exit ], [ %4, %.lr.ph.i.preheader.split ] ; 3 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %.029.i, i64 %.idx ; 3 uses
   %i.ar = getelementptr inbounds i8, ptr %.029.i, i64 %.idx36 ; 4 uses
   br label %bb.h
 
 bb.h:                                             ; preds = %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEppEv.exit.i, %.lr.ph.i
-  %indvar = phi i64 [ %indvar.next, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEppEv.exit.i ], [ 0, %.lr.ph.i ] ; 3 uses
+  %indvar = phi i64 [ %indvar.next, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEppEv.exit.i ], [ 0, %.lr.ph.i ] ; 2 uses
   %.055.i = phi ptr [ %.1.i, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEppEv.exit.i ], [ %.029.i, %.lr.ph.i ] ; 3 uses
   %.01854.i = phi ptr [ %.119.i, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEppEv.exit.i ], [ %i.aq, %.lr.ph.i ] ; 3 uses
   %.sroa.5.053.i = phi i64 [ %i.bp, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEppEv.exit.i ], [ %.sroa.420.031.i, %.lr.ph.i ] ; 4 uses
@@ -1794,7 +1788,7 @@ _ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0E
   %i.bo = phi ptr [ %i.bi, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit.i ], [ %i.bl, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit20.i ] ; 5 uses
   %.119.i = phi ptr [ %i.bk, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit.i ], [ %.01854.i, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit20.i ] ; 8 uses
   %.1.i = phi ptr [ %.055.i, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit.i ], [ %i.bn, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit20.i ] ; 8 uses
-  %i.bp = add nuw i64 %.sroa.5.053.i, 1           ; 7 uses
+  %i.bp = add i64 %.sroa.5.053.i, 1               ; 8 uses
   %i.bq = icmp ne ptr %.1.i, %i.aq
   %i.br = icmp ne ptr %.119.i, %i.ar
   %i.bs = select i1 %i.bq, i1 %i.br, i1 false
@@ -1824,10 +1818,8 @@ _ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0E
   br i1 %min.iters.check146, label %scalar.ph145.preheader, label %vector.memcheck142
 
 vector.memcheck142:                               ; preds = %.lr.ph.i.i.i.i.i.i
-  %6 = add i64 %.sroa.420.031.i, %indvar
-  %i.ce = shl i64 %6, 2
-  %7 = add i64 %i.ce, 4
-  %i.cf = add i64 %7, %i.bt
+  %i.ce = shl i64 %i.bp, 2
+  %i.cf = add i64 %i.ce, %i.bt
   %i.cg = sub i64 %.1.i143.le, %i.cf
   %diff.check144 = icmp ugt i64 %i.cg, -32
   br i1 %diff.check144, label %scalar.ph145.preheader, label %vector.ph147
@@ -2230,14 +2222,14 @@ _ZSt12__move_mergeIPiN7xgboost6common6detail12SpanIteratorINS2_4SpanIiLm18446744
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader.split, %_ZSt12__move_mergeIPiN7xgboost6common6detail12SpanIteratorINS2_4SpanIiLm18446744073709551615EEELb0EEEN9__gnu_cxx5__ops15_Iter_comp_iterIZN3enc8cpu_impl7ArgSortINS2_18IndexTransformIterIZNSC_9SortNamesINSB_6PolicyIJNS1_14EncErrorPolicyEEEEEEvRKT_RKSt7variantIJNSB_15CatStrArrayViewENS5_IKhLm18446744073709551615EEENS5_IKaLm18446744073709551615EEENS5_IKtLm18446744073709551615EEENS5_IKsLm18446744073709551615EEENS5_IKjLm18446744073709551615EEENS5_IKiLm18446744073709551615EEENS5_IKmLm18446744073709551615EEENS5_IKlLm18446744073709551615EEEEES6_EUlSJ_E_EES7_ZZNSF_ISI_EEvSL_S16_S6_ENKUlOSJ_E0_clIRKSV_EEDaS19_EUlmmE_EEvSJ_SJ_T0_T1_EUlRSY_S1H_E_EEES1F_SJ_SJ_SJ_SJ_S1F_S1G_.exit
-  %.sroa.420.031.i = phi i64 [ %.sroa.4.0.lcssa.i.i.i.i.i21.i, %_ZSt12__move_mergeIPiN7xgboost6common6detail12SpanIteratorINS2_4SpanIiLm18446744073709551615EEELb0EEEN9__gnu_cxx5__ops15_Iter_comp_iterIZN3enc8cpu_impl7ArgSortINS2_18IndexTransformIterIZNSC_9SortNamesINSB_6PolicyIJNS1_14EncErrorPolicyEEEEEEvRKT_RKSt7variantIJNSB_15CatStrArrayViewENS5_IKhLm18446744073709551615EEENS5_IKaLm18446744073709551615EEENS5_IKtLm18446744073709551615EEENS5_IKsLm18446744073709551615EEENS5_IKjLm18446744073709551615EEENS5_IKiLm18446744073709551615EEENS5_IKmLm18446744073709551615EEENS5_IKlLm18446744073709551615EEEEES6_EUlSJ_E_EES7_ZZNSF_ISI_EEvSL_S16_S6_ENKUlOSJ_E0_clIRKSV_EEDaS19_EUlmmE_EEvSJ_SJ_T0_T1_EUlRSY_S1H_E_EEES1F_SJ_SJ_SJ_SJ_S1F_S1G_.exit ], [ %1, %.lr.ph.i.preheader.split ] ; 3 uses
+  %.sroa.420.031.i = phi i64 [ %.sroa.4.0.lcssa.i.i.i.i.i21.i, %_ZSt12__move_mergeIPiN7xgboost6common6detail12SpanIteratorINS2_4SpanIiLm18446744073709551615EEELb0EEEN9__gnu_cxx5__ops15_Iter_comp_iterIZN3enc8cpu_impl7ArgSortINS2_18IndexTransformIterIZNSC_9SortNamesINSB_6PolicyIJNS1_14EncErrorPolicyEEEEEEvRKT_RKSt7variantIJNSB_15CatStrArrayViewENS5_IKhLm18446744073709551615EEENS5_IKaLm18446744073709551615EEENS5_IKtLm18446744073709551615EEENS5_IKsLm18446744073709551615EEENS5_IKjLm18446744073709551615EEENS5_IKiLm18446744073709551615EEENS5_IKmLm18446744073709551615EEENS5_IKlLm18446744073709551615EEEEES6_EUlSJ_E_EES7_ZZNSF_ISI_EEvSL_S16_S6_ENKUlOSJ_E0_clIRKSV_EEDaS19_EUlmmE_EEvSJ_SJ_T0_T1_EUlRSY_S1H_E_EEES1F_SJ_SJ_SJ_SJ_S1F_S1G_.exit ], [ %1, %.lr.ph.i.preheader.split ] ; 2 uses
   %.029.i = phi ptr [ %i.ar, %_ZSt12__move_mergeIPiN7xgboost6common6detail12SpanIteratorINS2_4SpanIiLm18446744073709551615EEELb0EEEN9__gnu_cxx5__ops15_Iter_comp_iterIZN3enc8cpu_impl7ArgSortINS2_18IndexTransformIterIZNSC_9SortNamesINSB_6PolicyIJNS1_14EncErrorPolicyEEEEEEvRKT_RKSt7variantIJNSB_15CatStrArrayViewENS5_IKhLm18446744073709551615EEENS5_IKaLm18446744073709551615EEENS5_IKtLm18446744073709551615EEENS5_IKsLm18446744073709551615EEENS5_IKjLm18446744073709551615EEENS5_IKiLm18446744073709551615EEENS5_IKmLm18446744073709551615EEENS5_IKlLm18446744073709551615EEEEES6_EUlSJ_E_EES7_ZZNSF_ISI_EEvSL_S16_S6_ENKUlOSJ_E0_clIRKSV_EEDaS19_EUlmmE_EEvSJ_SJ_T0_T1_EUlRSY_S1H_E_EEES1F_SJ_SJ_SJ_SJ_S1F_S1G_.exit ], [ %4, %.lr.ph.i.preheader.split ] ; 3 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %.029.i, i64 %.idx ; 3 uses
   %i.ar = getelementptr inbounds i8, ptr %.029.i, i64 %.idx36 ; 4 uses
   br label %bb.h
 
 bb.h:                                             ; preds = %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEppEv.exit.i, %.lr.ph.i
-  %indvar = phi i64 [ %indvar.next, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEppEv.exit.i ], [ 0, %.lr.ph.i ] ; 3 uses
+  %indvar = phi i64 [ %indvar.next, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEppEv.exit.i ], [ 0, %.lr.ph.i ] ; 2 uses
   %.055.i = phi ptr [ %.1.i, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEppEv.exit.i ], [ %.029.i, %.lr.ph.i ] ; 3 uses
   %.01854.i = phi ptr [ %.119.i, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEppEv.exit.i ], [ %i.aq, %.lr.ph.i ] ; 3 uses
   %.sroa.5.053.i = phi i64 [ %i.bp, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEppEv.exit.i ], [ %.sroa.420.031.i, %.lr.ph.i ] ; 4 uses
@@ -2305,7 +2297,7 @@ _ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0E
   %i.bo = phi ptr [ %i.bi, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit.i ], [ %i.bl, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit20.i ] ; 5 uses
   %.119.i = phi ptr [ %i.bk, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit.i ], [ %.01854.i, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit20.i ] ; 8 uses
   %.1.i = phi ptr [ %.055.i, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit.i ], [ %i.bn, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit20.i ] ; 8 uses
-  %i.bp = add nuw i64 %.sroa.5.053.i, 1           ; 7 uses
+  %i.bp = add i64 %.sroa.5.053.i, 1               ; 8 uses
   %i.bq = icmp ne ptr %.1.i, %i.aq
   %i.br = icmp ne ptr %.119.i, %i.ar
   %i.bs = select i1 %i.bq, i1 %i.br, i1 false
@@ -2335,10 +2327,8 @@ _ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0E
   br i1 %min.iters.check146, label %scalar.ph145.preheader, label %vector.memcheck142
 
 vector.memcheck142:                               ; preds = %.lr.ph.i.i.i.i.i.i
-  %6 = add i64 %.sroa.420.031.i, %indvar
-  %i.ce = shl i64 %6, 2
-  %7 = add i64 %i.ce, 4
-  %i.cf = add i64 %7, %i.bt
+  %i.ce = shl i64 %i.bp, 2
+  %i.cf = add i64 %i.ce, %i.bt
   %i.cg = sub i64 %.1.i143.le, %i.cf
   %diff.check144 = icmp ugt i64 %i.cg, -32
   br i1 %diff.check144, label %scalar.ph145.preheader, label %vector.ph147
@@ -2741,14 +2731,14 @@ _ZSt12__move_mergeIPiN7xgboost6common6detail12SpanIteratorINS2_4SpanIiLm18446744
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader.split, %_ZSt12__move_mergeIPiN7xgboost6common6detail12SpanIteratorINS2_4SpanIiLm18446744073709551615EEELb0EEEN9__gnu_cxx5__ops15_Iter_comp_iterIZN3enc8cpu_impl7ArgSortINS2_18IndexTransformIterIZNSC_9SortNamesINSB_6PolicyIJNS1_14EncErrorPolicyEEEEEEvRKT_RKSt7variantIJNSB_15CatStrArrayViewENS5_IKhLm18446744073709551615EEENS5_IKaLm18446744073709551615EEENS5_IKtLm18446744073709551615EEENS5_IKsLm18446744073709551615EEENS5_IKjLm18446744073709551615EEENS5_IKiLm18446744073709551615EEENS5_IKmLm18446744073709551615EEENS5_IKlLm18446744073709551615EEEEES6_EUlSJ_E_EES7_ZZNSF_ISI_EEvSL_S16_S6_ENKUlOSJ_E0_clIRKSX_EEDaS19_EUlmmE_EEvSJ_SJ_T0_T1_EUlRSY_S1H_E_EEES1F_SJ_SJ_SJ_SJ_S1F_S1G_.exit
-  %.sroa.420.031.i = phi i64 [ %.sroa.4.0.lcssa.i.i.i.i.i21.i, %_ZSt12__move_mergeIPiN7xgboost6common6detail12SpanIteratorINS2_4SpanIiLm18446744073709551615EEELb0EEEN9__gnu_cxx5__ops15_Iter_comp_iterIZN3enc8cpu_impl7ArgSortINS2_18IndexTransformIterIZNSC_9SortNamesINSB_6PolicyIJNS1_14EncErrorPolicyEEEEEEvRKT_RKSt7variantIJNSB_15CatStrArrayViewENS5_IKhLm18446744073709551615EEENS5_IKaLm18446744073709551615EEENS5_IKtLm18446744073709551615EEENS5_IKsLm18446744073709551615EEENS5_IKjLm18446744073709551615EEENS5_IKiLm18446744073709551615EEENS5_IKmLm18446744073709551615EEENS5_IKlLm18446744073709551615EEEEES6_EUlSJ_E_EES7_ZZNSF_ISI_EEvSL_S16_S6_ENKUlOSJ_E0_clIRKSX_EEDaS19_EUlmmE_EEvSJ_SJ_T0_T1_EUlRSY_S1H_E_EEES1F_SJ_SJ_SJ_SJ_S1F_S1G_.exit ], [ %1, %.lr.ph.i.preheader.split ] ; 3 uses
+  %.sroa.420.031.i = phi i64 [ %.sroa.4.0.lcssa.i.i.i.i.i21.i, %_ZSt12__move_mergeIPiN7xgboost6common6detail12SpanIteratorINS2_4SpanIiLm18446744073709551615EEELb0EEEN9__gnu_cxx5__ops15_Iter_comp_iterIZN3enc8cpu_impl7ArgSortINS2_18IndexTransformIterIZNSC_9SortNamesINSB_6PolicyIJNS1_14EncErrorPolicyEEEEEEvRKT_RKSt7variantIJNSB_15CatStrArrayViewENS5_IKhLm18446744073709551615EEENS5_IKaLm18446744073709551615EEENS5_IKtLm18446744073709551615EEENS5_IKsLm18446744073709551615EEENS5_IKjLm18446744073709551615EEENS5_IKiLm18446744073709551615EEENS5_IKmLm18446744073709551615EEENS5_IKlLm18446744073709551615EEEEES6_EUlSJ_E_EES7_ZZNSF_ISI_EEvSL_S16_S6_ENKUlOSJ_E0_clIRKSX_EEDaS19_EUlmmE_EEvSJ_SJ_T0_T1_EUlRSY_S1H_E_EEES1F_SJ_SJ_SJ_SJ_S1F_S1G_.exit ], [ %1, %.lr.ph.i.preheader.split ] ; 2 uses
   %.029.i = phi ptr [ %i.ar, %_ZSt12__move_mergeIPiN7xgboost6common6detail12SpanIteratorINS2_4SpanIiLm18446744073709551615EEELb0EEEN9__gnu_cxx5__ops15_Iter_comp_iterIZN3enc8cpu_impl7ArgSortINS2_18IndexTransformIterIZNSC_9SortNamesINSB_6PolicyIJNS1_14EncErrorPolicyEEEEEEvRKT_RKSt7variantIJNSB_15CatStrArrayViewENS5_IKhLm18446744073709551615EEENS5_IKaLm18446744073709551615EEENS5_IKtLm18446744073709551615EEENS5_IKsLm18446744073709551615EEENS5_IKjLm18446744073709551615EEENS5_IKiLm18446744073709551615EEENS5_IKmLm18446744073709551615EEENS5_IKlLm18446744073709551615EEEEES6_EUlSJ_E_EES7_ZZNSF_ISI_EEvSL_S16_S6_ENKUlOSJ_E0_clIRKSX_EEDaS19_EUlmmE_EEvSJ_SJ_T0_T1_EUlRSY_S1H_E_EEES1F_SJ_SJ_SJ_SJ_S1F_S1G_.exit ], [ %4, %.lr.ph.i.preheader.split ] ; 3 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %.029.i, i64 %.idx ; 3 uses
   %i.ar = getelementptr inbounds i8, ptr %.029.i, i64 %.idx36 ; 4 uses
   br label %bb.h
 
 bb.h:                                             ; preds = %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEppEv.exit.i, %.lr.ph.i
-  %indvar = phi i64 [ %indvar.next, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEppEv.exit.i ], [ 0, %.lr.ph.i ] ; 3 uses
+  %indvar = phi i64 [ %indvar.next, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEppEv.exit.i ], [ 0, %.lr.ph.i ] ; 2 uses
   %.055.i = phi ptr [ %.1.i, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEppEv.exit.i ], [ %.029.i, %.lr.ph.i ] ; 3 uses
   %.01854.i = phi ptr [ %.119.i, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEppEv.exit.i ], [ %i.aq, %.lr.ph.i ] ; 3 uses
   %.sroa.5.053.i = phi i64 [ %i.bp, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEppEv.exit.i ], [ %.sroa.420.031.i, %.lr.ph.i ] ; 4 uses
@@ -2816,7 +2806,7 @@ _ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0E
   %i.bo = phi ptr [ %i.bi, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit.i ], [ %i.bl, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit20.i ] ; 5 uses
   %.119.i = phi ptr [ %i.bk, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit.i ], [ %.01854.i, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit20.i ] ; 8 uses
   %.1.i = phi ptr [ %.055.i, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit.i ], [ %i.bn, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit20.i ] ; 8 uses
-  %i.bp = add nuw i64 %.sroa.5.053.i, 1           ; 7 uses
+  %i.bp = add i64 %.sroa.5.053.i, 1               ; 8 uses
   %i.bq = icmp ne ptr %.1.i, %i.aq
   %i.br = icmp ne ptr %.119.i, %i.ar
   %i.bs = select i1 %i.bq, i1 %i.br, i1 false
@@ -2846,10 +2836,8 @@ _ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0E
   br i1 %min.iters.check146, label %scalar.ph145.preheader, label %vector.memcheck142
 
 vector.memcheck142:                               ; preds = %.lr.ph.i.i.i.i.i.i
-  %6 = add i64 %.sroa.420.031.i, %indvar
-  %i.ce = shl i64 %6, 2
-  %7 = add i64 %i.ce, 4
-  %i.cf = add i64 %7, %i.bt
+  %i.ce = shl i64 %i.bp, 2
+  %i.cf = add i64 %i.ce, %i.bt
   %i.cg = sub i64 %.1.i143.le, %i.cf
   %diff.check144 = icmp ugt i64 %i.cg, -32
   br i1 %diff.check144, label %scalar.ph145.preheader, label %vector.ph147
@@ -3252,14 +3240,14 @@ _ZSt12__move_mergeIPiN7xgboost6common6detail12SpanIteratorINS2_4SpanIiLm18446744
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader.split, %_ZSt12__move_mergeIPiN7xgboost6common6detail12SpanIteratorINS2_4SpanIiLm18446744073709551615EEELb0EEEN9__gnu_cxx5__ops15_Iter_comp_iterIZN3enc8cpu_impl7ArgSortINS2_18IndexTransformIterIZNSC_9SortNamesINSB_6PolicyIJNS1_14EncErrorPolicyEEEEEEvRKT_RKSt7variantIJNSB_15CatStrArrayViewENS5_IKhLm18446744073709551615EEENS5_IKaLm18446744073709551615EEENS5_IKtLm18446744073709551615EEENS5_IKsLm18446744073709551615EEENS5_IKjLm18446744073709551615EEENS5_IKiLm18446744073709551615EEENS5_IKmLm18446744073709551615EEENS5_IKlLm18446744073709551615EEEEES6_EUlSJ_E_EES7_ZZNSF_ISI_EEvSL_S16_S6_ENKUlOSJ_E0_clIRKSZ_EEDaS19_EUlmmE_EEvSJ_SJ_T0_T1_EUlRSY_S1H_E_EEES1F_SJ_SJ_SJ_SJ_S1F_S1G_.exit
-  %.sroa.420.031.i = phi i64 [ %.sroa.4.0.lcssa.i.i.i.i.i21.i, %_ZSt12__move_mergeIPiN7xgboost6common6detail12SpanIteratorINS2_4SpanIiLm18446744073709551615EEELb0EEEN9__gnu_cxx5__ops15_Iter_comp_iterIZN3enc8cpu_impl7ArgSortINS2_18IndexTransformIterIZNSC_9SortNamesINSB_6PolicyIJNS1_14EncErrorPolicyEEEEEEvRKT_RKSt7variantIJNSB_15CatStrArrayViewENS5_IKhLm18446744073709551615EEENS5_IKaLm18446744073709551615EEENS5_IKtLm18446744073709551615EEENS5_IKsLm18446744073709551615EEENS5_IKjLm18446744073709551615EEENS5_IKiLm18446744073709551615EEENS5_IKmLm18446744073709551615EEENS5_IKlLm18446744073709551615EEEEES6_EUlSJ_E_EES7_ZZNSF_ISI_EEvSL_S16_S6_ENKUlOSJ_E0_clIRKSZ_EEDaS19_EUlmmE_EEvSJ_SJ_T0_T1_EUlRSY_S1H_E_EEES1F_SJ_SJ_SJ_SJ_S1F_S1G_.exit ], [ %1, %.lr.ph.i.preheader.split ] ; 3 uses
+  %.sroa.420.031.i = phi i64 [ %.sroa.4.0.lcssa.i.i.i.i.i21.i, %_ZSt12__move_mergeIPiN7xgboost6common6detail12SpanIteratorINS2_4SpanIiLm18446744073709551615EEELb0EEEN9__gnu_cxx5__ops15_Iter_comp_iterIZN3enc8cpu_impl7ArgSortINS2_18IndexTransformIterIZNSC_9SortNamesINSB_6PolicyIJNS1_14EncErrorPolicyEEEEEEvRKT_RKSt7variantIJNSB_15CatStrArrayViewENS5_IKhLm18446744073709551615EEENS5_IKaLm18446744073709551615EEENS5_IKtLm18446744073709551615EEENS5_IKsLm18446744073709551615EEENS5_IKjLm18446744073709551615EEENS5_IKiLm18446744073709551615EEENS5_IKmLm18446744073709551615EEENS5_IKlLm18446744073709551615EEEEES6_EUlSJ_E_EES7_ZZNSF_ISI_EEvSL_S16_S6_ENKUlOSJ_E0_clIRKSZ_EEDaS19_EUlmmE_EEvSJ_SJ_T0_T1_EUlRSY_S1H_E_EEES1F_SJ_SJ_SJ_SJ_S1F_S1G_.exit ], [ %1, %.lr.ph.i.preheader.split ] ; 2 uses
   %.029.i = phi ptr [ %i.ar, %_ZSt12__move_mergeIPiN7xgboost6common6detail12SpanIteratorINS2_4SpanIiLm18446744073709551615EEELb0EEEN9__gnu_cxx5__ops15_Iter_comp_iterIZN3enc8cpu_impl7ArgSortINS2_18IndexTransformIterIZNSC_9SortNamesINSB_6PolicyIJNS1_14EncErrorPolicyEEEEEEvRKT_RKSt7variantIJNSB_15CatStrArrayViewENS5_IKhLm18446744073709551615EEENS5_IKaLm18446744073709551615EEENS5_IKtLm18446744073709551615EEENS5_IKsLm18446744073709551615EEENS5_IKjLm18446744073709551615EEENS5_IKiLm18446744073709551615EEENS5_IKmLm18446744073709551615EEENS5_IKlLm18446744073709551615EEEEES6_EUlSJ_E_EES7_ZZNSF_ISI_EEvSL_S16_S6_ENKUlOSJ_E0_clIRKSZ_EEDaS19_EUlmmE_EEvSJ_SJ_T0_T1_EUlRSY_S1H_E_EEES1F_SJ_SJ_SJ_SJ_S1F_S1G_.exit ], [ %4, %.lr.ph.i.preheader.split ] ; 3 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %.029.i, i64 %.idx ; 3 uses
   %i.ar = getelementptr inbounds i8, ptr %.029.i, i64 %.idx36 ; 4 uses
   br label %bb.h
 
 bb.h:                                             ; preds = %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEppEv.exit.i, %.lr.ph.i
-  %indvar = phi i64 [ %indvar.next, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEppEv.exit.i ], [ 0, %.lr.ph.i ] ; 3 uses
+  %indvar = phi i64 [ %indvar.next, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEppEv.exit.i ], [ 0, %.lr.ph.i ] ; 2 uses
   %.055.i = phi ptr [ %.1.i, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEppEv.exit.i ], [ %.029.i, %.lr.ph.i ] ; 3 uses
   %.01854.i = phi ptr [ %.119.i, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEppEv.exit.i ], [ %i.aq, %.lr.ph.i ] ; 3 uses
   %.sroa.5.053.i = phi i64 [ %i.bp, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEppEv.exit.i ], [ %.sroa.420.031.i, %.lr.ph.i ] ; 4 uses
@@ -3327,7 +3315,7 @@ _ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0E
   %i.bo = phi ptr [ %i.bi, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit.i ], [ %i.bl, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit20.i ] ; 5 uses
   %.119.i = phi ptr [ %i.bk, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit.i ], [ %.01854.i, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit20.i ] ; 8 uses
   %.1.i = phi ptr [ %.055.i, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit.i ], [ %i.bn, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit20.i ] ; 8 uses
-  %i.bp = add nuw i64 %.sroa.5.053.i, 1           ; 7 uses
+  %i.bp = add i64 %.sroa.5.053.i, 1               ; 8 uses
   %i.bq = icmp ne ptr %.1.i, %i.aq
   %i.br = icmp ne ptr %.119.i, %i.ar
   %i.bs = select i1 %i.bq, i1 %i.br, i1 false
@@ -3357,10 +3345,8 @@ _ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0E
   br i1 %min.iters.check146, label %scalar.ph145.preheader, label %vector.memcheck142
 
 vector.memcheck142:                               ; preds = %.lr.ph.i.i.i.i.i.i
-  %6 = add i64 %.sroa.420.031.i, %indvar
-  %i.ce = shl i64 %6, 2
-  %7 = add i64 %i.ce, 4
-  %i.cf = add i64 %7, %i.bt
+  %i.ce = shl i64 %i.bp, 2
+  %i.cf = add i64 %i.ce, %i.bt
   %i.cg = sub i64 %.1.i143.le, %i.cf
   %diff.check144 = icmp ugt i64 %i.cg, -32
   br i1 %diff.check144, label %scalar.ph145.preheader, label %vector.ph147
@@ -3763,14 +3749,14 @@ _ZSt12__move_mergeIPiN7xgboost6common6detail12SpanIteratorINS2_4SpanIiLm18446744
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader.split, %_ZSt12__move_mergeIPiN7xgboost6common6detail12SpanIteratorINS2_4SpanIiLm18446744073709551615EEELb0EEEN9__gnu_cxx5__ops15_Iter_comp_iterIZN3enc8cpu_impl7ArgSortINS2_18IndexTransformIterIZNSC_9SortNamesINSB_6PolicyIJNS1_14EncErrorPolicyEEEEEEvRKT_RKSt7variantIJNSB_15CatStrArrayViewENS5_IKhLm18446744073709551615EEENS5_IKaLm18446744073709551615EEENS5_IKtLm18446744073709551615EEENS5_IKsLm18446744073709551615EEENS5_IKjLm18446744073709551615EEENS5_IKiLm18446744073709551615EEENS5_IKmLm18446744073709551615EEENS5_IKlLm18446744073709551615EEEEES6_EUlSJ_E_EES7_ZZNSF_ISI_EEvSL_S16_S6_ENKUlOSJ_E0_clIRKS11_EEDaS19_EUlmmE_EEvSJ_SJ_T0_T1_EUlRSY_S1H_E_EEES1F_SJ_SJ_SJ_SJ_S1F_S1G_.exit
-  %.sroa.420.031.i = phi i64 [ %.sroa.4.0.lcssa.i.i.i.i.i21.i, %_ZSt12__move_mergeIPiN7xgboost6common6detail12SpanIteratorINS2_4SpanIiLm18446744073709551615EEELb0EEEN9__gnu_cxx5__ops15_Iter_comp_iterIZN3enc8cpu_impl7ArgSortINS2_18IndexTransformIterIZNSC_9SortNamesINSB_6PolicyIJNS1_14EncErrorPolicyEEEEEEvRKT_RKSt7variantIJNSB_15CatStrArrayViewENS5_IKhLm18446744073709551615EEENS5_IKaLm18446744073709551615EEENS5_IKtLm18446744073709551615EEENS5_IKsLm18446744073709551615EEENS5_IKjLm18446744073709551615EEENS5_IKiLm18446744073709551615EEENS5_IKmLm18446744073709551615EEENS5_IKlLm18446744073709551615EEEEES6_EUlSJ_E_EES7_ZZNSF_ISI_EEvSL_S16_S6_ENKUlOSJ_E0_clIRKS11_EEDaS19_EUlmmE_EEvSJ_SJ_T0_T1_EUlRSY_S1H_E_EEES1F_SJ_SJ_SJ_SJ_S1F_S1G_.exit ], [ %1, %.lr.ph.i.preheader.split ] ; 3 uses
+  %.sroa.420.031.i = phi i64 [ %.sroa.4.0.lcssa.i.i.i.i.i21.i, %_ZSt12__move_mergeIPiN7xgboost6common6detail12SpanIteratorINS2_4SpanIiLm18446744073709551615EEELb0EEEN9__gnu_cxx5__ops15_Iter_comp_iterIZN3enc8cpu_impl7ArgSortINS2_18IndexTransformIterIZNSC_9SortNamesINSB_6PolicyIJNS1_14EncErrorPolicyEEEEEEvRKT_RKSt7variantIJNSB_15CatStrArrayViewENS5_IKhLm18446744073709551615EEENS5_IKaLm18446744073709551615EEENS5_IKtLm18446744073709551615EEENS5_IKsLm18446744073709551615EEENS5_IKjLm18446744073709551615EEENS5_IKiLm18446744073709551615EEENS5_IKmLm18446744073709551615EEENS5_IKlLm18446744073709551615EEEEES6_EUlSJ_E_EES7_ZZNSF_ISI_EEvSL_S16_S6_ENKUlOSJ_E0_clIRKS11_EEDaS19_EUlmmE_EEvSJ_SJ_T0_T1_EUlRSY_S1H_E_EEES1F_SJ_SJ_SJ_SJ_S1F_S1G_.exit ], [ %1, %.lr.ph.i.preheader.split ] ; 2 uses
   %.029.i = phi ptr [ %i.ar, %_ZSt12__move_mergeIPiN7xgboost6common6detail12SpanIteratorINS2_4SpanIiLm18446744073709551615EEELb0EEEN9__gnu_cxx5__ops15_Iter_comp_iterIZN3enc8cpu_impl7ArgSortINS2_18IndexTransformIterIZNSC_9SortNamesINSB_6PolicyIJNS1_14EncErrorPolicyEEEEEEvRKT_RKSt7variantIJNSB_15CatStrArrayViewENS5_IKhLm18446744073709551615EEENS5_IKaLm18446744073709551615EEENS5_IKtLm18446744073709551615EEENS5_IKsLm18446744073709551615EEENS5_IKjLm18446744073709551615EEENS5_IKiLm18446744073709551615EEENS5_IKmLm18446744073709551615EEENS5_IKlLm18446744073709551615EEEEES6_EUlSJ_E_EES7_ZZNSF_ISI_EEvSL_S16_S6_ENKUlOSJ_E0_clIRKS11_EEDaS19_EUlmmE_EEvSJ_SJ_T0_T1_EUlRSY_S1H_E_EEES1F_SJ_SJ_SJ_SJ_S1F_S1G_.exit ], [ %4, %.lr.ph.i.preheader.split ] ; 3 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %.029.i, i64 %.idx ; 3 uses
   %i.ar = getelementptr inbounds i8, ptr %.029.i, i64 %.idx36 ; 4 uses
   br label %bb.h
 
 bb.h:                                             ; preds = %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEppEv.exit.i, %.lr.ph.i
-  %indvar = phi i64 [ %indvar.next, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEppEv.exit.i ], [ 0, %.lr.ph.i ] ; 3 uses
+  %indvar = phi i64 [ %indvar.next, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEppEv.exit.i ], [ 0, %.lr.ph.i ] ; 2 uses
   %.055.i = phi ptr [ %.1.i, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEppEv.exit.i ], [ %.029.i, %.lr.ph.i ] ; 3 uses
   %.01854.i = phi ptr [ %.119.i, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEppEv.exit.i ], [ %i.aq, %.lr.ph.i ] ; 3 uses
   %.sroa.5.053.i = phi i64 [ %i.bp, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEppEv.exit.i ], [ %.sroa.420.031.i, %.lr.ph.i ] ; 4 uses
@@ -3838,7 +3824,7 @@ _ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0E
   %i.bo = phi ptr [ %i.bi, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit.i ], [ %i.bl, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit20.i ] ; 5 uses
   %.119.i = phi ptr [ %i.bk, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit.i ], [ %.01854.i, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit20.i ] ; 8 uses
   %.1.i = phi ptr [ %.055.i, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit.i ], [ %i.bn, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit20.i ] ; 8 uses
-  %i.bp = add nuw i64 %.sroa.5.053.i, 1           ; 7 uses
+  %i.bp = add i64 %.sroa.5.053.i, 1               ; 8 uses
   %i.bq = icmp ne ptr %.1.i, %i.aq
   %i.br = icmp ne ptr %.119.i, %i.ar
   %i.bs = select i1 %i.bq, i1 %i.br, i1 false
@@ -3868,10 +3854,8 @@ _ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0E
   br i1 %min.iters.check146, label %scalar.ph145.preheader, label %vector.memcheck142
 
 vector.memcheck142:                               ; preds = %.lr.ph.i.i.i.i.i.i
-  %6 = add i64 %.sroa.420.031.i, %indvar
-  %i.ce = shl i64 %6, 2
-  %7 = add i64 %i.ce, 4
-  %i.cf = add i64 %7, %i.bt
+  %i.ce = shl i64 %i.bp, 2
+  %i.cf = add i64 %i.ce, %i.bt
   %i.cg = sub i64 %.1.i143.le, %i.cf
   %diff.check144 = icmp ugt i64 %i.cg, -32
   br i1 %diff.check144, label %scalar.ph145.preheader, label %vector.ph147
@@ -4274,14 +4258,14 @@ _ZSt12__move_mergeIPiN7xgboost6common6detail12SpanIteratorINS2_4SpanIiLm18446744
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader.split, %_ZSt12__move_mergeIPiN7xgboost6common6detail12SpanIteratorINS2_4SpanIiLm18446744073709551615EEELb0EEEN9__gnu_cxx5__ops15_Iter_comp_iterIZN3enc8cpu_impl7ArgSortINS2_18IndexTransformIterIZNSC_9SortNamesINSB_6PolicyIJNS1_14EncErrorPolicyEEEEEEvRKT_RKSt7variantIJNSB_15CatStrArrayViewENS5_IKhLm18446744073709551615EEENS5_IKaLm18446744073709551615EEENS5_IKtLm18446744073709551615EEENS5_IKsLm18446744073709551615EEENS5_IKjLm18446744073709551615EEENS5_IKiLm18446744073709551615EEENS5_IKmLm18446744073709551615EEENS5_IKlLm18446744073709551615EEEEES6_EUlSJ_E_EES7_ZZNSF_ISI_EEvSL_S16_S6_ENKUlOSJ_E0_clIRKS13_EEDaS19_EUlmmE_EEvSJ_SJ_T0_T1_EUlRSY_S1H_E_EEES1F_SJ_SJ_SJ_SJ_S1F_S1G_.exit
-  %.sroa.420.031.i = phi i64 [ %.sroa.4.0.lcssa.i.i.i.i.i21.i, %_ZSt12__move_mergeIPiN7xgboost6common6detail12SpanIteratorINS2_4SpanIiLm18446744073709551615EEELb0EEEN9__gnu_cxx5__ops15_Iter_comp_iterIZN3enc8cpu_impl7ArgSortINS2_18IndexTransformIterIZNSC_9SortNamesINSB_6PolicyIJNS1_14EncErrorPolicyEEEEEEvRKT_RKSt7variantIJNSB_15CatStrArrayViewENS5_IKhLm18446744073709551615EEENS5_IKaLm18446744073709551615EEENS5_IKtLm18446744073709551615EEENS5_IKsLm18446744073709551615EEENS5_IKjLm18446744073709551615EEENS5_IKiLm18446744073709551615EEENS5_IKmLm18446744073709551615EEENS5_IKlLm18446744073709551615EEEEES6_EUlSJ_E_EES7_ZZNSF_ISI_EEvSL_S16_S6_ENKUlOSJ_E0_clIRKS13_EEDaS19_EUlmmE_EEvSJ_SJ_T0_T1_EUlRSY_S1H_E_EEES1F_SJ_SJ_SJ_SJ_S1F_S1G_.exit ], [ %1, %.lr.ph.i.preheader.split ] ; 3 uses
+  %.sroa.420.031.i = phi i64 [ %.sroa.4.0.lcssa.i.i.i.i.i21.i, %_ZSt12__move_mergeIPiN7xgboost6common6detail12SpanIteratorINS2_4SpanIiLm18446744073709551615EEELb0EEEN9__gnu_cxx5__ops15_Iter_comp_iterIZN3enc8cpu_impl7ArgSortINS2_18IndexTransformIterIZNSC_9SortNamesINSB_6PolicyIJNS1_14EncErrorPolicyEEEEEEvRKT_RKSt7variantIJNSB_15CatStrArrayViewENS5_IKhLm18446744073709551615EEENS5_IKaLm18446744073709551615EEENS5_IKtLm18446744073709551615EEENS5_IKsLm18446744073709551615EEENS5_IKjLm18446744073709551615EEENS5_IKiLm18446744073709551615EEENS5_IKmLm18446744073709551615EEENS5_IKlLm18446744073709551615EEEEES6_EUlSJ_E_EES7_ZZNSF_ISI_EEvSL_S16_S6_ENKUlOSJ_E0_clIRKS13_EEDaS19_EUlmmE_EEvSJ_SJ_T0_T1_EUlRSY_S1H_E_EEES1F_SJ_SJ_SJ_SJ_S1F_S1G_.exit ], [ %1, %.lr.ph.i.preheader.split ] ; 2 uses
   %.029.i = phi ptr [ %i.ar, %_ZSt12__move_mergeIPiN7xgboost6common6detail12SpanIteratorINS2_4SpanIiLm18446744073709551615EEELb0EEEN9__gnu_cxx5__ops15_Iter_comp_iterIZN3enc8cpu_impl7ArgSortINS2_18IndexTransformIterIZNSC_9SortNamesINSB_6PolicyIJNS1_14EncErrorPolicyEEEEEEvRKT_RKSt7variantIJNSB_15CatStrArrayViewENS5_IKhLm18446744073709551615EEENS5_IKaLm18446744073709551615EEENS5_IKtLm18446744073709551615EEENS5_IKsLm18446744073709551615EEENS5_IKjLm18446744073709551615EEENS5_IKiLm18446744073709551615EEENS5_IKmLm18446744073709551615EEENS5_IKlLm18446744073709551615EEEEES6_EUlSJ_E_EES7_ZZNSF_ISI_EEvSL_S16_S6_ENKUlOSJ_E0_clIRKS13_EEDaS19_EUlmmE_EEvSJ_SJ_T0_T1_EUlRSY_S1H_E_EEES1F_SJ_SJ_SJ_SJ_S1F_S1G_.exit ], [ %4, %.lr.ph.i.preheader.split ] ; 3 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %.029.i, i64 %.idx ; 3 uses
   %i.ar = getelementptr inbounds i8, ptr %.029.i, i64 %.idx36 ; 4 uses
   br label %bb.h
 
 bb.h:                                             ; preds = %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEppEv.exit.i, %.lr.ph.i
-  %indvar = phi i64 [ %indvar.next, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEppEv.exit.i ], [ 0, %.lr.ph.i ] ; 3 uses
+  %indvar = phi i64 [ %indvar.next, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEppEv.exit.i ], [ 0, %.lr.ph.i ] ; 2 uses
   %.055.i = phi ptr [ %.1.i, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEppEv.exit.i ], [ %.029.i, %.lr.ph.i ] ; 3 uses
   %.01854.i = phi ptr [ %.119.i, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEppEv.exit.i ], [ %i.aq, %.lr.ph.i ] ; 3 uses
   %.sroa.5.053.i = phi i64 [ %i.bp, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEppEv.exit.i ], [ %.sroa.420.031.i, %.lr.ph.i ] ; 4 uses
@@ -4349,7 +4333,7 @@ _ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0E
   %i.bo = phi ptr [ %i.bi, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit.i ], [ %i.bl, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit20.i ] ; 5 uses
   %.119.i = phi ptr [ %i.bk, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit.i ], [ %.01854.i, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit20.i ] ; 8 uses
   %.1.i = phi ptr [ %.055.i, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit.i ], [ %i.bn, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit20.i ] ; 8 uses
-  %i.bp = add nuw i64 %.sroa.5.053.i, 1           ; 7 uses
+  %i.bp = add i64 %.sroa.5.053.i, 1               ; 8 uses
   %i.bq = icmp ne ptr %.1.i, %i.aq
   %i.br = icmp ne ptr %.119.i, %i.ar
   %i.bs = select i1 %i.bq, i1 %i.br, i1 false
@@ -4379,10 +4363,8 @@ _ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0E
   br i1 %min.iters.check146, label %scalar.ph145.preheader, label %vector.memcheck142
 
 vector.memcheck142:                               ; preds = %.lr.ph.i.i.i.i.i.i
-  %6 = add i64 %.sroa.420.031.i, %indvar
-  %i.ce = shl i64 %6, 2
-  %7 = add i64 %i.ce, 4
-  %i.cf = add i64 %7, %i.bt
+  %i.ce = shl i64 %i.bp, 2
+  %i.cf = add i64 %i.ce, %i.bt
   %i.cg = sub i64 %.1.i143.le, %i.cf
   %diff.check144 = icmp ugt i64 %i.cg, -32
   br i1 %diff.check144, label %scalar.ph145.preheader, label %vector.ph147

@@ -204,14 +204,14 @@ bb.a:
   br i1 %exitcond207.not, label %._crit_edge, label %bb.b, !llvm.loop !83
 
 bb.b:                                             ; preds = %.lr.ph171, %.loopexit166
-  %indvars.iv203 = phi i64 [ 0, %.lr.ph171 ], [ %indvars.iv.next204, %.loopexit166 ] ; 6 uses
-  %indvars.iv196 = phi i64 [ 1, %.lr.ph171 ], [ %indvars.iv.next197, %.loopexit166 ] ; 6 uses
+  %indvars.iv203 = phi i64 [ 0, %.lr.ph171 ], [ %indvars.iv.next204, %.loopexit166 ] ; 5 uses
+  %indvars.iv196 = phi i64 [ 1, %.lr.ph171 ], [ %indvars.iv.next197, %.loopexit166 ] ; 7 uses
   %.089170 = phi i32 [ 0, %.lr.ph171 ], [ %.190.lcssa, %.loopexit166 ] ; 2 uses
   %i.p = xor i64 %indvars.iv203, -1
   %i.q = add nsw i64 %i.p, %wide.trip.count206    ; 3 uses
   %i.r = mul nsw i64 %indvars.iv203, -12
   %scevgep251 = getelementptr i8, ptr %i.n, i64 %i.r
-  %i.s = shl nuw nsw i64 %indvars.iv203, 2
+  %i.s = shl nuw nsw i64 %indvars.iv196, 2
   %indvars.iv.next204 = add nuw nsw i64 %indvars.iv203, 1 ; 3 uses
   %i.t = icmp samesign ult i64 %indvars.iv.next204, %i.j
   br i1 %i.t, label %.lr.ph, label %.loopexit166
@@ -230,10 +230,9 @@ vector.memcheck:                                  ; preds = %.lr.ph
   %scevgep250 = getelementptr i8, ptr %scevgep, i64 %i.z
   %scevgep252 = getelementptr i8, ptr %scevgep251, i64 %i.z
   %i.aa = getelementptr nuw i8, ptr %i.w, i64 %i.s
-  %scevgep253 = getelementptr nuw i8, ptr %i.aa, i64 4
   %scevgep254 = getelementptr i8, ptr %i.w, i64 %i.l
   %bound0 = icmp ult ptr %scevgep250, %scevgep254
-  %bound1 = icmp ult ptr %scevgep253, %scevgep252
+  %bound1 = icmp ult ptr %i.aa, %scevgep252
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.ph
 

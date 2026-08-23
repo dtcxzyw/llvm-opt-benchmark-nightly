@@ -204,10 +204,8 @@ bb.g:                                             ; preds = %bb.f
   br i1 %.not169, label %.loopexit215, label %.preheader212
 
 .preheader212:                                    ; preds = %bb.g, %bb.ak
-  %indvar = phi i64 [ %indvar.next, %bb.ak ], [ 0, %bb.g ] ; 2 uses
-  %.0154235 = phi i64 [ %i.ii, %bb.ak ], [ 1, %bb.g ] ; 24 uses
-  %i.ak = shl nuw nsw i64 %indvar, 3
-  %4 = add nuw nsw i64 %i.ak, 8
+  %.0154235 = phi i64 [ %i.ii, %bb.ak ], [ 1, %bb.g ] ; 25 uses
+  %i.ak = shl nuw nsw i64 %.0154235, 3
   %min.iters.check332 = icmp samesign ult i64 %.0154235, 4
   %n.vec334 = and i64 %.0154235, 9223372036854775804 ; 3 uses
   %cmp.n347 = icmp eq i64 %.0154235, %n.vec334
@@ -345,7 +343,7 @@ bb.u:                                             ; preds = %bb.t
   br i1 %.not177, label %.loopexit, label %.preheader210.preheader
 
 .preheader210.preheader:                          ; preds = %bb.u
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(1) %i.j, ptr noundef nonnull align 16 dereferenceable(1) %i.i, i64 %4, i1 false), !tbaa !16
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(1) %i.j, ptr noundef nonnull align 16 dereferenceable(1) %i.i, i64 %i.ak, i1 false), !tbaa !16
   br i1 %min.iters.check332, label %.preheader210.preheader357, label %vector.body335
 
 vector.body335:                                   ; preds = %.preheader210.preheader, %vector.body335
@@ -748,9 +746,8 @@ bb.aj:                                            ; preds = %.preheader
   br i1 %exitcond261.not, label %bb.ak, label %bb.h, !llvm.loop !98
 
 bb.ak:                                            ; preds = %bb.aj
-  %i.ii = add nuw nsw i64 %.0154235, 1
-  %indvar.next = add nuw nsw i64 %indvar, 1       ; 2 uses
-  %exitcond262.not = icmp eq i64 %indvar.next, 32
+  %i.ii = add nuw nsw i64 %.0154235, 1            ; 2 uses
+  %exitcond262.not = icmp eq i64 %i.ii, 33
   br i1 %exitcond262.not, label %.loopexit215, label %.preheader212, !llvm.loop !99
 
 bb.al:                                            ; preds = %.loopexit, %bb.al

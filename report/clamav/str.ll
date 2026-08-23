@@ -204,9 +204,9 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.c
-  %.01624 = phi i64 [ 0, %.lr.ph ], [ %i.b, %bb.c ] ; 4 uses
+  %.01624 = phi i64 [ 0, %.lr.ph ], [ %i.b, %bb.c ] ; 3 uses
   %.01823 = phi ptr [ %0, %.lr.ph ], [ %i.k, %bb.c ] ; 2 uses
-  %i.b = add nuw i64 %.01624, 1                   ; 5 uses
+  %i.b = add nuw i64 %.01624, 1                   ; 6 uses
   %i.c = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %.01624
   store ptr %.01823, ptr %i.c, align 8, !tbaa !23
   %i.d = tail call ptr @strchr(ptr noundef nonnull dereferenceable(1) %.01823, i32 noundef %i.a) #22 ; 3 uses
@@ -218,9 +218,8 @@ bb.b:                                             ; preds = %.lr.ph, %bb.c
   br i1 %i.e, label %.lr.ph26.preheader, label %.loopexit
 
 .lr.ph26.preheader:                               ; preds = %.preheader
-  %i.f = shl i64 %.01624, 3
-  %4 = getelementptr i8, ptr %3, i64 %i.f
-  %scevgep = getelementptr i8, ptr %4, i64 8
+  %i.f = shl i64 %i.b, 3
+  %scevgep = getelementptr i8, ptr %3, i64 %i.f
   %i.g = shl i64 %2, 3
   %i.h = add i64 %i.g, -8
   %i.i = shl i64 %.01624, 3

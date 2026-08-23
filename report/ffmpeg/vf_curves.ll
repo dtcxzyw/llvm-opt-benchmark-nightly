@@ -205,7 +205,7 @@ bb.u:                                             ; preds = %bb.t, %bb.s
   br i1 %i.cg, label %.preheader262.i, label %.preheader270.i
 
 .lr.ph.i.i:                                       ; preds = %bb.u, %.lr.ph.i.i
-  %indvar = phi i64 [ %indvar.next, %.lr.ph.i.i ], [ 0, %bb.u ] ; 7 uses
+  %indvar = phi i64 [ %indvar.next, %.lr.ph.i.i ], [ 0, %bb.u ] ; 5 uses
   %.06.i.i = phi i32 [ %i.ck, %.lr.ph.i.i ], [ 0, %bb.u ] ; 9 uses
   %.035.i.i = phi ptr [ %i.cm, %.lr.ph.i.i ], [ %i.bu, %bb.u ]
   %i.ck = add nuw nsw i32 %.06.i.i, 1             ; 5 uses
@@ -417,24 +417,18 @@ bb.y:                                             ; preds = %bb.x
   %i.ej = getelementptr inbounds nuw [8 x i8], ptr %i.ei, i64 %i.dx ; 11 uses
   %i.ek = getelementptr inbounds nuw [8 x i8], ptr %i.ej, i64 %i.dx ; 4 uses
   %i.el = getelementptr inbounds i8, ptr %i.ek, i64 -8 ; 10 uses
-  %wide.trip.count329.i = zext nneg i32 %.06.i.i to i64 ; 11 uses
+  %wide.trip.count329.i = zext nneg i32 %.06.i.i to i64 ; 12 uses
   %.pre.i = load double, ptr %i.dw, align 8, !tbaa !90 ; 4 uses
   %.pre349.i = load double, ptr %i.dy, align 8, !tbaa !90 ; 4 uses
   %min.iters.check477 = icmp samesign ult i32 %.06.i.i, 4
   br i1 %min.iters.check477, label %.lr.ph274.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph274.preheader.i
-  %2 = shl i64 %indvar, 3
-  %3 = add i64 %2, -1
-  %diff.check = icmp ult i64 %3, 15
-  %i.em = mul i64 %indvar, 24                     ; 2 uses
-  %diff.check469 = icmp ugt i64 %i.em, -16
-  %conflict.rdx = or i1 %diff.check, %diff.check469
+  %i.em = mul nuw nsw i64 %wide.trip.count329.i, 24
   %i.en = shl i64 %indvar, 4
   %diff.check470 = icmp ugt i64 %i.en, -24
-  %conflict.rdx471 = or i1 %conflict.rdx, %diff.check470
   %diff.check474 = icmp ult i64 %i.em, 8
-  %conflict.rdx475 = or i1 %conflict.rdx471, %diff.check474
+  %conflict.rdx475 = or i1 %diff.check470, %diff.check474
   br i1 %conflict.rdx475, label %.lr.ph274.i.preheader, label %vector.ph478
 
 vector.ph478:                                     ; preds = %vector.memcheck

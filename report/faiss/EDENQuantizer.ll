@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %_ZNSt6vectorIfSaIfE
   %i.t = load i64, ptr %i.b, align 8, !tbaa !28
   %i.u = call i64 @llvm.smin.i64(i64 %i.t, i64 %i.s) ; 2 uses
   store i64 %i.u, ptr %i.b, align 8, !tbaa !28
-  %i.v = load i64, ptr %i.a, align 8, !tbaa !28   ; 4 uses
+  %i.v = load i64, ptr %i.a, align 8, !tbaa !28   ; 2 uses
   %.not135 = icmp sgt i64 %i.v, %i.u
   br i1 %.not135, label %._crit_edge139, label %.lr.ph138.preheader
 
@@ -213,13 +213,10 @@ bb.f:                                             ; preds = %_ZNSt6vectorIfSaIfE
   br label %.lr.ph138
 
 .lr.ph138:                                        ; preds = %.lr.ph138.preheader, %bb.r
-  %indvar = phi i64 [ 0, %.lr.ph138.preheader ], [ %indvar.next, %bb.r ] ; 3 uses
-  %i.w = phi i64 [ %.pre, %.lr.ph138.preheader ], [ %i.ja, %bb.r ] ; 3 uses
-  %.077136 = phi i64 [ %i.v, %.lr.ph138.preheader ], [ %i.jb, %bb.r ] ; 4 uses
-  %12 = add i64 %i.v, %indvar
-  %i.x = shl i64 %12, 2
-  %13 = add i64 %i.v, %indvar
-  %i.y = shl i64 %13, 2
+  %i.w = phi i64 [ %i.ja, %bb.r ], [ %.pre, %.lr.ph138.preheader ] ; 3 uses
+  %.077136 = phi i64 [ %i.jb, %bb.r ], [ %i.v, %.lr.ph138.preheader ] ; 6 uses
+  %i.x = shl i64 %.077136, 2
+  %i.y = shl i64 %.077136, 2
   %i.z = load ptr, ptr %5, align 8, !tbaa !25     ; 2 uses
   %i.aa = ptrtoaddr ptr %i.z to i64               ; 2 uses
   %i.ab = mul i64 %i.w, %.077136
@@ -622,10 +619,9 @@ bb.q:                                             ; preds = %bb.p, %bb.o
 
 bb.r:                                             ; preds = %bb.q, %bb.g
   %i.ja = phi i64 [ %i.gp, %bb.q ], [ %i.ah, %bb.g ]
-  %i.jb = add nsw i64 %.077136, 1
+  %i.jb = add i64 %.077136, 1
   %i.jc = load i64, ptr %i.b, align 8, !tbaa !28
   %.not.not = icmp slt i64 %.077136, %i.jc
-  %indvar.next = add i64 %indvar, 1
   br i1 %.not.not, label %.lr.ph138, label %._crit_edge139
 
 ._crit_edge139:                                   ; preds = %bb.r, %bb.f
@@ -927,7 +923,7 @@ bb.e:                                             ; preds = %_ZNSt6vectorIfSaIfE
   %i.q = load i64, ptr %i.b, align 8, !tbaa !28
   %i.r = call i64 @llvm.smin.i64(i64 %i.q, i64 %i.p) ; 2 uses
   store i64 %i.r, ptr %i.b, align 8, !tbaa !28
-  %i.s = load i64, ptr %i.a, align 8, !tbaa !28   ; 4 uses
+  %i.s = load i64, ptr %i.a, align 8, !tbaa !28   ; 2 uses
   %.not41 = icmp sgt i64 %i.s, %i.r
   br i1 %.not41, label %._crit_edge45, label %.lr.ph44.preheader
 
@@ -936,13 +932,10 @@ bb.e:                                             ; preds = %_ZNSt6vectorIfSaIfE
   br label %.lr.ph44
 
 .lr.ph44:                                         ; preds = %.lr.ph44.preheader, %._crit_edge
-  %indvar = phi i64 [ 0, %.lr.ph44.preheader ], [ %indvar.next, %._crit_edge ] ; 3 uses
-  %i.t = phi i64 [ %.pre, %.lr.ph44.preheader ], [ %i.ai, %._crit_edge ] ; 3 uses
-  %.03142 = phi i64 [ %i.s, %.lr.ph44.preheader ], [ %i.cn, %._crit_edge ] ; 4 uses
-  %10 = add i64 %i.s, %indvar
-  %i.u = shl i64 %10, 2
-  %11 = add i64 %i.s, %indvar
-  %i.v = shl i64 %11, 2
+  %i.t = phi i64 [ %i.ai, %._crit_edge ], [ %.pre, %.lr.ph44.preheader ] ; 3 uses
+  %.03142 = phi i64 [ %i.cn, %._crit_edge ], [ %i.s, %.lr.ph44.preheader ] ; 6 uses
+  %i.u = shl i64 %.03142, 2
+  %i.v = shl i64 %.03142, 2
   %i.w = load ptr, ptr %5, align 8, !tbaa !27     ; 3 uses
   %i.x = load i64, ptr %6, align 8, !tbaa !28
   %i.y = mul i64 %i.x, %.03142                    ; 3 uses
@@ -1144,7 +1137,6 @@ middle.block:                                     ; preds = %vector.body
   %i.cn = add nsw i64 %.03142, 1
   %i.co = load i64, ptr %i.b, align 8, !tbaa !28
   %.not.not = icmp slt i64 %.03142, %i.co
-  %indvar.next = add i64 %indvar, 1
   br i1 %.not.not, label %.lr.ph44, label %._crit_edge45
 
 .lr.ph.split:                                     ; preds = %.lr.ph.split.prol.loopexit, %.lr.ph.split

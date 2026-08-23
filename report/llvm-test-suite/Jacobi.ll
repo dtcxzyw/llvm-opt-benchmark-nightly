@@ -158,7 +158,7 @@ bb.a:
 
 .preheader.preheader:                             ; preds = %bb.a
   %i.e = zext nneg i32 %1 to i64                  ; 2 uses
-  %i.f = shl nuw nsw i64 %i.e, 3                  ; 2 uses
+  %i.f = shl nuw nsw i64 %i.e, 3
   %i.g = add nsw i64 %i.f, -8
   %i.h = mul i32 %1, 3                            ; 2 uses
   %i.i = zext i32 %i.h to i64
@@ -176,7 +176,7 @@ bb.a:
 
 .preheader:                                       ; preds = %.preheader.preheader, %._crit_edge75
   %indvar = phi i64 [ 0, %.preheader.preheader ], [ %indvar.next, %._crit_edge75 ] ; 10 uses
-  %indvars.iv = phi i64 [ %i.e, %.preheader.preheader ], [ %indvars.iv.next, %._crit_edge75 ] ; 11 uses
+  %indvars.iv = phi i64 [ %i.e, %.preheader.preheader ], [ %indvars.iv.next, %._crit_edge75 ] ; 12 uses
   %i.t = shl i64 %indvar, 1
   %i.u = sub i64 %i.s, %i.t
   %i.v = shl i64 %indvar, 1
@@ -185,9 +185,9 @@ bb.a:
   %i.y = add i64 %i.x, %i.n
   %i.z = add i64 %indvar, %i.o
   %i.aa = add i64 %indvar, %i.p
-  %2 = mul nsw i64 %indvar, -8                    ; 2 uses
-  %3 = add i64 %i.g, %2
-  %4 = add i64 %i.f, %2                           ; 2 uses
+  %2 = shl i64 %indvar, 3
+  %3 = sub i64 %i.g, %2
+  %4 = shl nsw i64 %indvars.iv, 3
   %i.ab = mul i64 %indvar, 4294967293
   %i.ac = add i64 %i.ab, %i.i
   %i.ad = add i64 %indvar, %i.k
@@ -204,7 +204,7 @@ bb.a:
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.lr.ph, %._crit_edge
   %indvars.iv83 = phi i64 [ 0, %.lr.ph.i.lr.ph ], [ %indvars.iv.next84, %._crit_edge ] ; 20 uses
-  %indvars.iv78 = phi i64 [ %indvars.iv, %.lr.ph.i.lr.ph ], [ %indvars.iv.next79, %._crit_edge ] ; 2 uses
+  %indvars.iv78 = phi i64 [ %indvars.iv, %.lr.ph.i.lr.ph ], [ %indvars.iv.next79, %._crit_edge ] ; 3 uses
   %i.aj = add i64 %i.u, %indvars.iv83
   %i.ak = trunc i64 %i.aj to i32
   %umin111 = call i32 @llvm.umin.i32(i32 %i.ak, i32 50) ; 2 uses
@@ -214,9 +214,8 @@ bb.a:
   %i.ao = add nuw nsw i64 %i.an, 1                ; 2 uses
   %i.ap = add i64 %i.y, %indvars.iv83
   %i.aq = sub i64 %i.z, %indvars.iv83
-  %i.ar = shl nuw nsw i64 %indvars.iv83, 3        ; 3 uses
-  %5 = add i64 %3, %i.ar
-  %i.as = add i64 %4, %i.ar
+  %i.ar = shl nuw nsw i64 %indvars.iv83, 3        ; 2 uses
+  %i.as = add i64 %3, %i.ar
   %i.at = add i64 %i.ac, %indvars.iv83
   %i.au = sub i64 %i.ad, %indvars.iv83
   %indvars86 = trunc i64 %indvars.iv83 to i32
@@ -374,8 +373,7 @@ ApplyGivens.exit.loopexit:                        ; preds = %.lr.ph53.i
   %i.dz = zext i32 %i.dy to i64
   %i.ea = add nuw nsw i64 %i.dz, 1                ; 2 uses
   %i.eb = mul i64 %4, %indvar94                   ; 2 uses
-  %6 = add i64 %5, %i.eb                          ; 2 uses
-  %i.ec = add i64 %i.as, %i.eb
+  %i.ec = add i64 %i.as, %i.eb                    ; 2 uses
   %i.ed = mul i64 %indvars.iv, %indvar94
   %i.ee = add i64 %i.at, %i.ed
   %i.ef = trunc i64 %i.ee to i32
@@ -385,8 +383,9 @@ ApplyGivens.exit.loopexit:                        ; preds = %.lr.ph53.i
   %i.ei = trunc i64 %i.eh to i32
   %i.ej = add i32 %smin, %i.ei
   %i.ek = zext i32 %i.ej to i64
-  %i.el = shl nuw nsw i64 %i.ek, 3
-  %i.em = add i64 %i.ec, %i.el                    ; 2 uses
+  %5 = add nuw i64 %indvars.iv78, %i.ek
+  %i.el = shl i64 %5, 3
+  %i.em = add i64 %i.el, %i.eb                    ; 2 uses
   %i.en = add nsw i64 %indvars.iv80, -1           ; 7 uses
   %i.eo = getelementptr inbounds [8 x i8], ptr %0, i64 %i.en
   %i.ep = load ptr, ptr %i.eo, align 8, !tbaa !8  ; 2 uses
@@ -418,9 +417,9 @@ ApplyGivens.exit.loopexit:                        ; preds = %.lr.ph53.i
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i62
-  %scevgep = getelementptr i8, ptr %i.fd, i64 %6
+  %scevgep = getelementptr i8, ptr %i.fd, i64 %i.ec
   %scevgep96 = getelementptr i8, ptr %i.fd, i64 %i.em
-  %scevgep97 = getelementptr i8, ptr %i.ff, i64 %6
+  %scevgep97 = getelementptr i8, ptr %i.ff, i64 %i.ec
   %scevgep98 = getelementptr i8, ptr %i.ff, i64 %i.em
   %bound0 = icmp ult ptr %scevgep, %scevgep98
   %bound1 = icmp ult ptr %scevgep97, %scevgep96

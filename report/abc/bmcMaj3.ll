@@ -205,14 +205,13 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.cj, label %.lr.ph158.i, label %._crit_edge159.i
 
 .lr.ph158.i:                                      ; preds = %.thread.thread122
-  %i.ck = sext i32 %i.ch to i64                   ; 3 uses
+  %i.ck = sext i32 %i.ch to i64                   ; 2 uses
   br label %bb.j
 
 bb.j:                                             ; preds = %Abc_TtMaj.exit.i, %.lr.ph158.i
-  %indvar = phi i64 [ %indvar.next, %Abc_TtMaj.exit.i ], [ 0, %.lr.ph158.i ] ; 3 uses
-  %indvars.iv181.i = phi i64 [ %indvars.iv.next182.i, %Abc_TtMaj.exit.i ], [ %i.ck, %.lr.ph158.i ] ; 9 uses
-  %9 = add i64 %indvar, %i.ck
-  %i.cl = shl i64 %9, 3
+  %indvar = phi i64 [ %indvar.next, %Abc_TtMaj.exit.i ], [ 0, %.lr.ph158.i ] ; 2 uses
+  %indvars.iv181.i = phi i64 [ %indvars.iv.next182.i, %Abc_TtMaj.exit.i ], [ %i.ck, %.lr.ph158.i ] ; 10 uses
+  %i.cl = shl nsw i64 %indvars.iv181.i, 3
   %i.cm = add i64 %indvar, %i.ck
   %i.cn = shl i64 %i.cm, 3
   %i.co = add i64 %i.cn, 8

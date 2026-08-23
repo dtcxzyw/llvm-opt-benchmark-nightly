@@ -203,7 +203,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !8    ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.d = load i64, ptr %i.c, align 8, !tbaa !15   ; 6 uses
+  %i.d = load i64, ptr %i.c, align 8, !tbaa !15   ; 5 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.f = load i64, ptr %i.e, align 8, !tbaa !18   ; 7 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 40
@@ -227,9 +227,7 @@ bb.a:
 
 .lr.ph73.i.preheader:                             ; preds = %.preheader.i
   %i.m = xor i64 %i.f, -1
-  %3 = add i64 %i.d, %i.m
-  %4 = shl i64 %i.d, 3
-  %i.n = add i64 %4, -8
+  %i.n = add i64 %i.d, %i.m
   %i.o = shl nsw i64 %i.f, 3
   %invariant.op = sub i64 1, %i.d
   br label %.lr.ph73.i
@@ -239,7 +237,7 @@ bb.a:
   %.05967.i = phi i64 [ %i.ag, %.loopexit.i ], [ 0, %.lr.ph68.i.preheader ] ; 14 uses
   %smin12 = tail call i64 @llvm.smin.i64(i64 %indvars.iv.i, i64 %i.i) ; 3 uses
   %i.p = sub i64 %smin12, %.05967.i               ; 3 uses
-  %i.q = shl i64 %.05967.i, 3                     ; 2 uses
+  %i.q = shl nuw nsw i64 %.05967.i, 3             ; 2 uses
   %i.r = getelementptr i8, ptr %2, i64 %i.q
   %scevgep = getelementptr i8, ptr %i.r, i64 8
   %i.s = getelementptr i8, ptr %2, i64 %i.q
@@ -365,15 +363,14 @@ middle.block:                                     ; preds = %vector.body
   br i1 %exitcond.not.i.1, label %.loopexit.i, label %.lr.ph.i, !llvm.loop !42
 
 .lr.ph73.i:                                       ; preds = %.lr.ph73.i.preheader, %._crit_edge.i
-  %indvar = phi i64 [ 0, %.lr.ph73.i.preheader ], [ %indvar.next, %._crit_edge.i ] ; 4 uses
-  %.16072.i = phi i64 [ %i.i, %.lr.ph73.i.preheader ], [ %i.cy, %._crit_edge.i ] ; 10 uses
-  %i.br = sub i64 %3, %indvar
+  %indvar = phi i64 [ 0, %.lr.ph73.i.preheader ], [ %indvar.next, %._crit_edge.i ] ; 3 uses
+  %.16072.i = phi i64 [ %i.i, %.lr.ph73.i.preheader ], [ %i.cy, %._crit_edge.i ] ; 11 uses
+  %i.br = sub i64 %i.n, %indvar
   %smax = tail call i64 @llvm.smax.i64(i64 %i.br, i64 0) ; 2 uses
   %i.bs = shl i64 %smax, 3
   %scevgep17 = getelementptr i8, ptr %2, i64 %i.bs
-  %i.bt = shl i64 %indvar, 3
-  %5 = sub i64 %i.n, %i.bt
-  %scevgep18 = getelementptr i8, ptr %2, i64 %5
+  %i.bt = shl i64 %.16072.i, 3
+  %scevgep18 = getelementptr i8, ptr %2, i64 %i.bt
   %.reass = add i64 %indvar, %invariant.op
   %i.bu = add i64 %smax, %.reass
   %i.bv = shl i64 %i.bu, 3
@@ -484,9 +481,7 @@ bb.a:
 
 .lr.ph73.preheader:                               ; preds = %.preheader
   %i.e = xor i64 %2, -1
-  %6 = add i64 %1, %i.e
-  %7 = shl i64 %1, 3
-  %i.f = add i64 %7, -8
+  %i.f = add i64 %1, %i.e
   %i.g = shl nsw i64 %2, 3
   %invariant.op = sub i64 1, %1
   br label %.lr.ph73
@@ -496,7 +491,7 @@ bb.a:
   %.05967 = phi i64 [ %i.y, %.loopexit ], [ 0, %.lr.ph68.preheader ] ; 14 uses
   %smin83 = tail call i64 @llvm.smin.i64(i64 %indvars.iv, i64 %i.a) ; 3 uses
   %i.h = sub i64 %smin83, %.05967                 ; 3 uses
-  %i.i = shl i64 %.05967, 3                       ; 2 uses
+  %i.i = shl nuw nsw i64 %.05967, 3               ; 2 uses
   %i.j = getelementptr i8, ptr %5, i64 %i.i
   %scevgep = getelementptr i8, ptr %i.j, i64 8
   %i.k = getelementptr i8, ptr %5, i64 %i.i
@@ -622,15 +617,14 @@ middle.block:                                     ; preds = %vector.body
   br i1 %exitcond.not.1, label %.loopexit, label %.lr.ph, !llvm.loop !56
 
 .lr.ph73:                                         ; preds = %.lr.ph73.preheader, %._crit_edge
-  %indvar = phi i64 [ 0, %.lr.ph73.preheader ], [ %indvar.next, %._crit_edge ] ; 4 uses
-  %.16072 = phi i64 [ %i.a, %.lr.ph73.preheader ], [ %i.cq, %._crit_edge ] ; 10 uses
-  %i.bj = sub i64 %6, %indvar
+  %indvar = phi i64 [ 0, %.lr.ph73.preheader ], [ %indvar.next, %._crit_edge ] ; 3 uses
+  %.16072 = phi i64 [ %i.a, %.lr.ph73.preheader ], [ %i.cq, %._crit_edge ] ; 11 uses
+  %i.bj = sub i64 %i.f, %indvar
   %smax = tail call i64 @llvm.smax.i64(i64 %i.bj, i64 0) ; 2 uses
   %i.bk = shl i64 %smax, 3
   %scevgep88 = getelementptr i8, ptr %5, i64 %i.bk
-  %i.bl = shl i64 %indvar, 3
-  %8 = sub i64 %i.f, %i.bl
-  %scevgep89 = getelementptr i8, ptr %5, i64 %8
+  %i.bl = shl i64 %.16072, 3
+  %scevgep89 = getelementptr i8, ptr %5, i64 %i.bl
   %.reass = add i64 %indvar, %invariant.op
   %i.bm = add i64 %smax, %.reass
   %i.bn = shl i64 %i.bm, 3

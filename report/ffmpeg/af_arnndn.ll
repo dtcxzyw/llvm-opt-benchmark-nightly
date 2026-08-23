@@ -205,10 +205,9 @@ bb.a:
   %i.cx = getelementptr inbounds nuw i8, ptr %i.ad, i64 16
   %i.cy = getelementptr inbounds nuw i8, ptr %i.a, i64 1920
   %sext = shl i64 %i.am, 32
-  %i.cz = ashr exact i64 %sext, 32                ; 2 uses
+  %i.cz = ashr exact i64 %sext, 32
   %sext108 = shl i64 %i.ar, 32
   %wide.trip.count = ashr exact i64 %sext108, 32
-  %12 = mul nsw i64 %i.cz, 20512                  ; 3 uses
   %scevgep341 = getelementptr inbounds nuw i8, ptr %i.t, i64 4
   %scevgep342 = getelementptr inbounds nuw i8, ptr %i.t, i64 3456
   %i.da = getelementptr inbounds nuw i8, ptr %i.t, i64 1568
@@ -401,10 +400,9 @@ bb.a:
   ret i32 0
 
 bb.b:                                             ; preds = %.lr.ph, %rnnoise_channel.exit
-  %indvar = phi i64 [ 0, %.lr.ph ], [ %indvar.next, %rnnoise_channel.exit ] ; 3 uses
-  %indvars.iv = phi i64 [ %i.cz, %.lr.ph ], [ %indvars.iv.next, %rnnoise_channel.exit ] ; 4 uses
-  %i.jx = mul i64 %indvar, 20512                  ; 2 uses
-  %i.jy = mul i64 %indvar, 20512
+  %indvars.iv = phi i64 [ %i.cz, %.lr.ph ], [ %indvars.iv.next, %rnnoise_channel.exit ] ; 6 uses
+  %i.jx = mul i64 %indvars.iv, 20512              ; 2 uses
+  %i.jy = mul i64 %indvars.iv, 20512
   %i.jz = load ptr, ptr %i.av, align 8, !tbaa !35 ; 4 uses
   %i.ka = getelementptr inbounds [20512 x i8], ptr %i.jz, i64 %indvars.iv ; 29 uses
   %i.kb = load ptr, ptr %i.aw, align 8, !tbaa !131
@@ -589,14 +587,12 @@ frame_analysis.exit.i.i:                          ; preds = %.loopexit.i.i.i.i
   call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(4992) %i.nb, ptr noundef nonnull align 16 dereferenceable(4992) %i.nc, i64 4992, i1 false)
   %i.nd = getelementptr inbounds nuw i8, ptr %i.ka, i64 9552
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(1920) %i.nd, ptr noundef nonnull readonly align 16 dereferenceable(1920) %i.v, i64 1920, i1 false)
-  %13 = getelementptr i8, ptr %i.jz, i64 %12
-  %14 = getelementptr i8, ptr %13, i64 4564
-  %scevgep343.a = getelementptr i8, ptr %14, i64 %i.jx
-  %i.ne = getelementptr i8, ptr %i.jz, i64 %12
-  %i.nf = getelementptr i8, ptr %i.ne, i64 11472
-  %scevgep344 = getelementptr i8, ptr %i.nf, i64 %i.jx
+  %scevgep343.a = getelementptr i8, ptr %i.jz, i64 %i.jx
+  %i.ne = getelementptr i8, ptr %scevgep343.a, i64 4564
+  %i.nf = getelementptr i8, ptr %i.jz, i64 %i.jx
+  %scevgep344 = getelementptr i8, ptr %i.nf, i64 11472
   %bound0345 = icmp ult ptr %scevgep341, %scevgep344
-  %bound1346 = icmp ult ptr %scevgep343.a, %scevgep342
+  %bound1346 = icmp ult ptr %i.ne, %scevgep342
   %found.conflict347 = and i1 %bound0345, %bound1346
   br i1 %found.conflict347, label %scalar.ph348.prol, label %vector.body350
 
@@ -999,9 +995,8 @@ scalar.ph179:                                     ; preds = %vector.body181
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1920) %i.kd, ptr noundef nonnull align 16 dereferenceable(1920) %i.a, i64 1920, i1 false)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(1920) %i.buv, ptr noundef nonnull align 16 dereferenceable(1920) %i.cy, i64 1920, i1 false)
   %scevgep = getelementptr i8, ptr %i.kd, i64 1920
-  %15 = getelementptr i8, ptr %i.jz, i64 %12
-  %i.buw = getelementptr i8, ptr %15, i64 20408
-  %scevgep173 = getelementptr i8, ptr %i.buw, i64 %i.jy
+  %i.buw = getelementptr i8, ptr %i.jz, i64 %i.jy
+  %scevgep173 = getelementptr i8, ptr %i.buw, i64 20408
   %bound0 = icmp ult ptr %i.kd, %scevgep173
   %bound1 = icmp ult ptr %i.bum, %scevgep
   %found.conflict = and i1 %bound0, %bound1
@@ -1077,7 +1072,6 @@ rnnoise_channel.exit:                             ; preds = %vector.body, %scala
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #11
   %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  %indvar.next = add i64 %indvar, 1
   br i1 %exitcond.not, label %._crit_edge, label %bb.b, !llvm.loop !195
 }
 

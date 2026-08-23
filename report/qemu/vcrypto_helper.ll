@@ -205,20 +205,17 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
-  %i.s = lshr i32 %i.c, 2                         ; 2 uses
+  %i.s = lshr i32 %i.c, 2                         ; 3 uses
   %i.t = icmp samesign ult i32 %i.s, %i.f
   br i1 %i.t, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.c
   %i.u = shl i32 %2, 2
   %i.v = and i32 %i.u, 28
-  %5 = zext i32 %i.c to i64                       ; 2 uses
-  %6 = shl nuw nsw i64 %5, 2
-  %7 = and i64 %6, 17179869168
+  %5 = lshr i32 %i.c, 2
+  %6 = zext nneg i32 %5 to i64
   %i.w = and i32 %i.c, -4                         ; 2 uses
   %i.x = add i32 %i.w, 4
-  %8 = and i64 %5, 4294967292
-  %9 = or disjoint i64 %8, 1
   %i.y = sub nuw nsw i32 -4, %i.w
   %i.z = or disjoint i32 %i.y, 3
   %i.aa = zext nneg i32 %i.v to i64               ; 4 uses
@@ -258,15 +255,16 @@ bb.c:                                             ; preds = %bb.a
 
 .preheader60.preheader:                           ; preds = %.lr.ph, %.preheader60.preheader
   %indvar = phi i64 [ 0, %.lr.ph ], [ %indvar.next, %.preheader60.preheader ] ; 4 uses
-  %10 = shl nuw nsw i64 %indvar, 4
-  %i.ar = add nuw nsw i64 %7, %10                 ; 2 uses
-  %scevgep75 = getelementptr i8, ptr %0, i64 %i.ar
-  %11 = shl nuw nsw i64 %indvar, 2                ; 2 uses
-  %12 = trunc i64 %11 to i32
-  %i.as = add i32 %i.x, %12
-  %13 = add nuw nsw i64 %9, %11
-  %14 = trunc i64 %13 to i32
-  %umax77 = tail call i32 @llvm.umax.i32(i32 %i.as, i32 %14)
+  %.05765 = phi i32 [ %i.s, %.lr.ph ], [ %11, %.preheader60.preheader ] ; 2 uses
+  %i.ar = add nuw i64 %indvar, %6
+  %7 = shl nuw i64 %i.ar, 4                       ; 2 uses
+  %scevgep75 = getelementptr i8, ptr %0, i64 %7
+  %indvar.tr = trunc i64 %indvar to i32
+  %8 = shl i32 %indvar.tr, 2
+  %i.as = add i32 %8, %i.x
+  %9 = shl nuw i32 %.05765, 2
+  %10 = or disjoint i32 %9, 1
+  %umax77 = tail call i32 @llvm.umax.i32(i32 %i.as, i32 %10)
   %indvar.tr.a = trunc i64 %indvar to i32
   %i.at = shl i32 %indvar.tr.a, 2
   %i.au = sub i32 %i.z, %i.at
@@ -274,7 +272,7 @@ bb.c:                                             ; preds = %bb.a
   %i.aw = zext i32 %i.av to i64
   %i.ax = shl nuw nsw i64 %i.aw, 2                ; 2 uses
   %i.ay = add nuw nsw i64 %i.ax, 4                ; 3 uses
-  %scevgep = getelementptr nuw i8, ptr %1, i64 %i.ar
+  %scevgep = getelementptr nuw i8, ptr %1, i64 %7
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.14)
   %i.az = icmp ugt i32 %i.av, 2
@@ -436,6 +434,7 @@ bb.c:                                             ; preds = %bb.a
   %i.gq = xor i32 %i.gp, %i.gl
   store i32 %i.gq, ptr %.sroa.14.12..sroa_idx107, align 4
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep75, ptr noundef nonnull align 16 dereferenceable(1) %.sroa.14, i64 %i.ay, i1 false)
+  %11 = add nuw nsw i32 %.05765, 1
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.14)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %indvar.next = add nuw nsw i64 %indvar, 1       ; 2 uses
@@ -478,18 +477,15 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
-  %i.t = lshr i32 %i.d, 2                         ; 2 uses
+  %i.t = lshr i32 %i.d, 2                         ; 3 uses
   %i.u = icmp samesign ult i32 %i.t, %i.g
   br i1 %i.u, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.c
-  %4 = zext i32 %i.d to i64                       ; 2 uses
-  %5 = shl nuw nsw i64 %4, 2
-  %6 = and i64 %5, 17179869168
+  %4 = lshr i32 %i.d, 2
+  %5 = zext nneg i32 %4 to i64
   %i.v = and i32 %i.d, -4                         ; 2 uses
   %i.w = add i32 %i.v, 4
-  %7 = and i64 %4, 4294967292
-  %8 = or disjoint i64 %7, 1
   %i.x = sub nuw nsw i32 -4, %i.v
   %i.y = or disjoint i32 %i.x, 3
   %scevgep60 = getelementptr inbounds nuw i8, ptr %i.b, i64 16
@@ -512,15 +508,16 @@ bb.c:                                             ; preds = %bb.a
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
   %indvar = phi i64 [ 0, %.lr.ph.preheader ], [ %indvar.next, %.lr.ph ] ; 4 uses
-  %9 = shl nuw nsw i64 %indvar, 4
-  %i.ae = add nuw nsw i64 %6, %9                  ; 2 uses
-  %scevgep59 = getelementptr i8, ptr %0, i64 %i.ae ; 2 uses
-  %10 = shl nuw nsw i64 %indvar, 2                ; 2 uses
-  %11 = trunc i64 %10 to i32
-  %i.af = add i32 %i.w, %11
-  %12 = add nuw nsw i64 %8, %10
-  %13 = trunc i64 %12 to i32
-  %umax61 = tail call i32 @llvm.umax.i32(i32 %i.af, i32 %13)
+  %.04651 = phi i32 [ %i.t, %.lr.ph.preheader ], [ %10, %.lr.ph ] ; 2 uses
+  %i.ae = add nuw i64 %indvar, %5
+  %6 = shl nuw i64 %i.ae, 4                       ; 2 uses
+  %scevgep59 = getelementptr i8, ptr %0, i64 %6   ; 2 uses
+  %indvar.tr = trunc i64 %indvar to i32
+  %7 = shl i32 %indvar.tr, 2
+  %i.af = add i32 %7, %i.w
+  %8 = shl nuw i32 %.04651, 2
+  %9 = or disjoint i32 %8, 1
+  %umax61 = tail call i32 @llvm.umax.i32(i32 %i.af, i32 %9)
   %indvar.tr.a = trunc i64 %indvar to i32
   %i.ag = shl i32 %indvar.tr.a, 2
   %i.ah = sub i32 %i.y, %i.ag
@@ -528,7 +525,7 @@ bb.c:                                             ; preds = %bb.a
   %i.aj = zext i32 %i.ai to i64
   %i.ak = shl nuw nsw i64 %i.aj, 2                ; 3 uses
   %i.al = add nuw nsw i64 %i.ak, 4                ; 5 uses
-  %scevgep = getelementptr nuw i8, ptr %1, i64 %i.ae
+  %scevgep = getelementptr nuw i8, ptr %1, i64 %6
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #12
   %i.am = icmp ugt i32 %i.ai, 2
@@ -545,6 +542,7 @@ bb.c:                                             ; preds = %bb.a
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(1) %i.b, ptr noundef nonnull align 4 dereferenceable(1) %scevgep59, i64 %i.al, i1 false)
   call fastcc void @do_sm4_round(ptr noundef %i.a, ptr noundef %i.b)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep59, ptr noundef nonnull align 16 dereferenceable(1) %scevgep60, i64 %i.al, i1 false)
+  %10 = add nuw nsw i32 %.04651, 1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #12
   %indvar.next = add nuw nsw i64 %indvar, 1       ; 2 uses
@@ -751,7 +749,7 @@ bb.a:
   %i.a = alloca [4 x i32], align 16               ; 4 uses
   %i.b = alloca [8 x i32], align 16               ; 6 uses
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 4620 ; 3 uses
-  %i.d = load i32, ptr %i.c, align 4              ; 3 uses
+  %i.d = load i32, ptr %i.c, align 4              ; 4 uses
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 4616 ; 2 uses
   %i.f = load i32, ptr %i.e, align 8              ; 3 uses
   %i.g = lshr i32 %i.f, 2                         ; 2 uses
@@ -782,13 +780,13 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.u, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.c
-  %i.v = and i32 %i.d, -4                         ; 4 uses
+  %i.v = and i32 %i.d, -4                         ; 2 uses
   %i.w = add i32 %i.v, 4
-  %4 = or disjoint i32 %i.v, 1
   %i.x = xor i32 %i.v, -1
   %scevgep55 = getelementptr inbounds nuw i8, ptr %i.b, i64 16
+  %4 = lshr i32 %i.d, 2
+  %wide.trip.count = zext nneg i32 %4 to i64
   %5 = sub nuw nsw i32 %i.g, %i.t
-  %wide.trip.count = zext nneg i32 %5 to i64
   br label %.lr.ph
 
 ._crit_edge.loopexit:                             ; preds = %.lr.ph
@@ -805,18 +803,18 @@ bb.c:                                             ; preds = %bb.a
   br label %bb.d
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
-  %indvars.iv61 = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next62, %.lr.ph ] ; 3 uses
-  %indvars.iv61.tr = trunc i64 %indvars.iv61 to i32
-  %6 = shl i32 %indvars.iv61.tr, 2                ; 3 uses
-  %7 = add i32 %i.v, %6
+  %indvars.iv61 = phi i64 [ %wide.trip.count, %.lr.ph.preheader ], [ %indvars.iv.next62, %.lr.ph ] ; 2 uses
+  %indvar = phi i32 [ 0, %.lr.ph.preheader ], [ %indvar.next, %.lr.ph ] ; 3 uses
+  %6 = trunc nuw nsw i64 %indvars.iv61 to i32
+  %7 = shl i32 %6, 2                              ; 2 uses
   %i.ac = zext i32 %7 to i64
   %i.ad = shl nuw nsw i64 %i.ac, 2
   %scevgep54 = getelementptr i8, ptr %0, i64 %i.ad ; 2 uses
-  %8 = add i32 %i.w, %6
-  %i.ae = add i32 %4, %6
-  %umax56 = tail call i32 @llvm.umax.i32(i32 %8, i32 %i.ae)
-  %9 = trunc nuw nsw i64 %indvars.iv61 to i32
-  %i.af = shl i32 %9, 2
+  %8 = shl nuw i32 %indvar, 2
+  %i.ae = add i32 %i.w, %8
+  %9 = or disjoint i32 %7, 1
+  %umax56 = tail call i32 @llvm.umax.i32(i32 %i.ae, i32 %9)
+  %i.af = shl i32 %indvar, 2
   %i.ag = sub i32 %i.x, %i.af
   %i.ah = add i32 %umax56, %i.ag                  ; 2 uses
   %i.ai = zext i32 %i.ah to i64
@@ -833,10 +831,11 @@ bb.c:                                             ; preds = %bb.a
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(1) %i.b, ptr noundef nonnull align 4 dereferenceable(1) %scevgep54, i64 %i.ak, i1 false)
   call fastcc void @do_sm4_round(ptr noundef %i.a, ptr noundef %i.b)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep54, ptr noundef nonnull align 16 dereferenceable(1) %scevgep55, i64 %i.ak, i1 false)
+  %indvars.iv.next62 = add nuw nsw i64 %indvars.iv61, 1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #12
-  %indvars.iv.next62 = add nuw nsw i64 %indvars.iv61, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next62, %wide.trip.count
+  %indvar.next = add nuw nsw i32 %indvar, 1       ; 2 uses
+  %exitcond.not = icmp eq i32 %indvar.next, %5
   br i1 %exitcond.not, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !120
 
 bb.d:                                             ; preds = %._crit_edge, %bb.b
