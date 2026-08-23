@@ -27,8 +27,8 @@ bb.b:                                             ; preds = %.preheader, %bb.d
   br i1 %i.f, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.g = sub nuw nsw i64 %indvars.iv, %indvars.iv27
-  %i.h = trunc nuw i64 %i.g to i32
+  %i.g = sub nsw i64 %indvars.iv, %indvars.iv27
+  %i.h = trunc nsw i64 %i.g to i32
   %i.i = sitofp i32 %i.h to double                ; 2 uses
   %i.j = fmul nnan double %i.i, -3.200000e-01
   %i.k = fmul double %i.j, %i.i

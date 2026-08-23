@@ -204,194 +204,194 @@ vector.body:                                      ; preds = %vector.body, %._cri
   %i.gs = mul nuw nsw <4 x i64> %vec.ind, splat (i64 65)
   %i.gt = sub <4 x i32> splat (i32 1), %vec.ind283
   %i.gu = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.gt, <4 x i32> splat (i32 -1))
-  %i.gv = add nuw nsw <4 x i32> %i.gu, splat (i32 1)
+  %i.gv = add nsw <4 x i32> %i.gu, splat (i32 1)
   %i.gw = uitofp nneg <4 x i32> %i.gv to <4 x double>
   %wide.gep = getelementptr [8 x i8], ptr @main.a, <4 x i64> %i.gs ; 32 uses
   %wide.gep316 = getelementptr i8, <4 x ptr> %wide.gep, i64 -520
   call void @llvm.masked.scatter.v4f64.v4p0(<4 x double> %i.gw, <4 x ptr> align 8 %wide.gep316, <4 x i1> splat (i1 true)), !tbaa !22
   %i.gx = sub <4 x i32> splat (i32 2), %vec.ind284
   %i.gy = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.gx, <4 x i32> splat (i32 -1))
-  %i.gz = add nuw nsw <4 x i32> %i.gy, splat (i32 1)
+  %i.gz = add nsw <4 x i32> %i.gy, splat (i32 1)
   %i.ha = uitofp nneg <4 x i32> %i.gz to <4 x double>
   %wide.gep317 = getelementptr i8, <4 x ptr> %wide.gep, i64 -512
   call void @llvm.masked.scatter.v4f64.v4p0(<4 x double> %i.ha, <4 x ptr> align 8 %wide.gep317, <4 x i1> splat (i1 true)), !tbaa !22
   %i.hb = sub <4 x i32> splat (i32 3), %vec.ind285
   %i.hc = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.hb, <4 x i32> splat (i32 -1))
-  %i.hd = add nuw nsw <4 x i32> %i.hc, splat (i32 1)
+  %i.hd = add nsw <4 x i32> %i.hc, splat (i32 1)
   %i.he = uitofp nneg <4 x i32> %i.hd to <4 x double>
   %wide.gep318 = getelementptr i8, <4 x ptr> %wide.gep, i64 -504
   call void @llvm.masked.scatter.v4f64.v4p0(<4 x double> %i.he, <4 x ptr> align 8 %wide.gep318, <4 x i1> splat (i1 true)), !tbaa !22
   %i.hf = sub <4 x i32> splat (i32 4), %vec.ind286
   %i.hg = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.hf, <4 x i32> splat (i32 -1))
-  %i.hh = add nuw nsw <4 x i32> %i.hg, splat (i32 1)
+  %i.hh = add nsw <4 x i32> %i.hg, splat (i32 1)
   %i.hi = uitofp nneg <4 x i32> %i.hh to <4 x double>
   %wide.gep319 = getelementptr i8, <4 x ptr> %wide.gep, i64 -496
   call void @llvm.masked.scatter.v4f64.v4p0(<4 x double> %i.hi, <4 x ptr> align 8 %wide.gep319, <4 x i1> splat (i1 true)), !tbaa !22
   %i.hj = sub <4 x i32> splat (i32 5), %vec.ind287
   %i.hk = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.hj, <4 x i32> splat (i32 -1))
-  %i.hl = add nuw nsw <4 x i32> %i.hk, splat (i32 1)
+  %i.hl = add nsw <4 x i32> %i.hk, splat (i32 1)
   %i.hm = uitofp nneg <4 x i32> %i.hl to <4 x double>
   %wide.gep320 = getelementptr i8, <4 x ptr> %wide.gep, i64 -488
   call void @llvm.masked.scatter.v4f64.v4p0(<4 x double> %i.hm, <4 x ptr> align 8 %wide.gep320, <4 x i1> splat (i1 true)), !tbaa !22
   %i.hn = sub <4 x i32> splat (i32 6), %vec.ind288
   %i.ho = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.hn, <4 x i32> splat (i32 -1))
-  %i.hp = add nuw nsw <4 x i32> %i.ho, splat (i32 1)
+  %i.hp = add nsw <4 x i32> %i.ho, splat (i32 1)
   %i.hq = uitofp nneg <4 x i32> %i.hp to <4 x double>
   %wide.gep321 = getelementptr i8, <4 x ptr> %wide.gep, i64 -480
   call void @llvm.masked.scatter.v4f64.v4p0(<4 x double> %i.hq, <4 x ptr> align 8 %wide.gep321, <4 x i1> splat (i1 true)), !tbaa !22
   %i.hr = sub <4 x i32> splat (i32 7), %vec.ind289
   %i.hs = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.hr, <4 x i32> splat (i32 -1))
-  %i.ht = add nuw nsw <4 x i32> %i.hs, splat (i32 1)
+  %i.ht = add nsw <4 x i32> %i.hs, splat (i32 1)
   %i.hu = uitofp nneg <4 x i32> %i.ht to <4 x double>
   %wide.gep322 = getelementptr i8, <4 x ptr> %wide.gep, i64 -472
   call void @llvm.masked.scatter.v4f64.v4p0(<4 x double> %i.hu, <4 x ptr> align 8 %wide.gep322, <4 x i1> splat (i1 true)), !tbaa !22
   %i.hv = sub <4 x i32> splat (i32 8), %vec.ind290
   %i.hw = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.hv, <4 x i32> splat (i32 -1))
-  %i.hx = add nuw nsw <4 x i32> %i.hw, splat (i32 1)
+  %i.hx = add nsw <4 x i32> %i.hw, splat (i32 1)
   %i.hy = uitofp nneg <4 x i32> %i.hx to <4 x double>
   %wide.gep323 = getelementptr i8, <4 x ptr> %wide.gep, i64 -464
   call void @llvm.masked.scatter.v4f64.v4p0(<4 x double> %i.hy, <4 x ptr> align 8 %wide.gep323, <4 x i1> splat (i1 true)), !tbaa !22
   %i.hz = sub <4 x i32> splat (i32 9), %vec.ind291
   %i.ia = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.hz, <4 x i32> splat (i32 -1))
-  %i.ib = add nuw nsw <4 x i32> %i.ia, splat (i32 1)
+  %i.ib = add nsw <4 x i32> %i.ia, splat (i32 1)
   %i.ic = uitofp nneg <4 x i32> %i.ib to <4 x double>
   %wide.gep324 = getelementptr i8, <4 x ptr> %wide.gep, i64 -456
   call void @llvm.masked.scatter.v4f64.v4p0(<4 x double> %i.ic, <4 x ptr> align 8 %wide.gep324, <4 x i1> splat (i1 true)), !tbaa !22
   %i.id = sub <4 x i32> splat (i32 10), %vec.ind292
   %i.ie = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.id, <4 x i32> splat (i32 -1))
-  %i.if = add nuw nsw <4 x i32> %i.ie, splat (i32 1)
+  %i.if = add nsw <4 x i32> %i.ie, splat (i32 1)
   %i.ig = uitofp nneg <4 x i32> %i.if to <4 x double>
   %wide.gep325 = getelementptr i8, <4 x ptr> %wide.gep, i64 -448
   call void @llvm.masked.scatter.v4f64.v4p0(<4 x double> %i.ig, <4 x ptr> align 8 %wide.gep325, <4 x i1> splat (i1 true)), !tbaa !22
   %i.ih = sub <4 x i32> splat (i32 11), %vec.ind293
   %i.ii = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.ih, <4 x i32> splat (i32 -1))
-  %i.ij = add nuw nsw <4 x i32> %i.ii, splat (i32 1)
+  %i.ij = add nsw <4 x i32> %i.ii, splat (i32 1)
   %i.ik = uitofp nneg <4 x i32> %i.ij to <4 x double>
   %wide.gep326 = getelementptr i8, <4 x ptr> %wide.gep, i64 -440
   call void @llvm.masked.scatter.v4f64.v4p0(<4 x double> %i.ik, <4 x ptr> align 8 %wide.gep326, <4 x i1> splat (i1 true)), !tbaa !22
   %i.il = sub <4 x i32> splat (i32 12), %vec.ind294
   %i.im = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.il, <4 x i32> splat (i32 -1))
-  %i.in = add nuw nsw <4 x i32> %i.im, splat (i32 1)
+  %i.in = add nsw <4 x i32> %i.im, splat (i32 1)
   %i.io = uitofp nneg <4 x i32> %i.in to <4 x double>
   %wide.gep327 = getelementptr i8, <4 x ptr> %wide.gep, i64 -432
   call void @llvm.masked.scatter.v4f64.v4p0(<4 x double> %i.io, <4 x ptr> align 8 %wide.gep327, <4 x i1> splat (i1 true)), !tbaa !22
   %i.ip = sub <4 x i32> splat (i32 13), %vec.ind295
   %i.iq = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.ip, <4 x i32> splat (i32 -1))
-  %i.ir = add nuw nsw <4 x i32> %i.iq, splat (i32 1)
+  %i.ir = add nsw <4 x i32> %i.iq, splat (i32 1)
   %i.is = uitofp nneg <4 x i32> %i.ir to <4 x double>
   %wide.gep328 = getelementptr i8, <4 x ptr> %wide.gep, i64 -424
   call void @llvm.masked.scatter.v4f64.v4p0(<4 x double> %i.is, <4 x ptr> align 8 %wide.gep328, <4 x i1> splat (i1 true)), !tbaa !22
   %i.it = sub <4 x i32> splat (i32 14), %vec.ind296
   %i.iu = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.it, <4 x i32> splat (i32 -1))
-  %i.iv = add nuw nsw <4 x i32> %i.iu, splat (i32 1)
+  %i.iv = add nsw <4 x i32> %i.iu, splat (i32 1)
   %i.iw = uitofp nneg <4 x i32> %i.iv to <4 x double>
   %wide.gep329 = getelementptr i8, <4 x ptr> %wide.gep, i64 -416
   call void @llvm.masked.scatter.v4f64.v4p0(<4 x double> %i.iw, <4 x ptr> align 8 %wide.gep329, <4 x i1> splat (i1 true)), !tbaa !22
   %i.ix = sub <4 x i32> splat (i32 15), %vec.ind297
   %i.iy = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.ix, <4 x i32> splat (i32 -1))
-  %i.iz = add nuw nsw <4 x i32> %i.iy, splat (i32 1)
+  %i.iz = add nsw <4 x i32> %i.iy, splat (i32 1)
   %i.ja = uitofp nneg <4 x i32> %i.iz to <4 x double>
   %wide.gep330 = getelementptr i8, <4 x ptr> %wide.gep, i64 -408
   call void @llvm.masked.scatter.v4f64.v4p0(<4 x double> %i.ja, <4 x ptr> align 8 %wide.gep330, <4 x i1> splat (i1 true)), !tbaa !22
   %i.jb = sub <4 x i32> splat (i32 16), %vec.ind298
   %i.jc = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.jb, <4 x i32> splat (i32 -1))
-  %i.jd = add nuw nsw <4 x i32> %i.jc, splat (i32 1)
+  %i.jd = add nsw <4 x i32> %i.jc, splat (i32 1)
   %i.je = uitofp nneg <4 x i32> %i.jd to <4 x double>
   %wide.gep331 = getelementptr i8, <4 x ptr> %wide.gep, i64 -400
   call void @llvm.masked.scatter.v4f64.v4p0(<4 x double> %i.je, <4 x ptr> align 8 %wide.gep331, <4 x i1> splat (i1 true)), !tbaa !22
   %i.jf = sub <4 x i32> splat (i32 17), %vec.ind299
   %i.jg = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.jf, <4 x i32> splat (i32 -1))
-  %i.jh = add nuw nsw <4 x i32> %i.jg, splat (i32 1)
+  %i.jh = add nsw <4 x i32> %i.jg, splat (i32 1)
   %i.ji = uitofp nneg <4 x i32> %i.jh to <4 x double>
   %wide.gep332 = getelementptr i8, <4 x ptr> %wide.gep, i64 -392
   call void @llvm.masked.scatter.v4f64.v4p0(<4 x double> %i.ji, <4 x ptr> align 8 %wide.gep332, <4 x i1> splat (i1 true)), !tbaa !22
   %i.jj = sub <4 x i32> splat (i32 18), %vec.ind300
   %i.jk = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.jj, <4 x i32> splat (i32 -1))
-  %i.jl = add nuw nsw <4 x i32> %i.jk, splat (i32 1)
+  %i.jl = add nsw <4 x i32> %i.jk, splat (i32 1)
   %i.jm = uitofp nneg <4 x i32> %i.jl to <4 x double>
   %wide.gep333 = getelementptr i8, <4 x ptr> %wide.gep, i64 -384
   call void @llvm.masked.scatter.v4f64.v4p0(<4 x double> %i.jm, <4 x ptr> align 8 %wide.gep333, <4 x i1> splat (i1 true)), !tbaa !22
   %i.jn = sub <4 x i32> splat (i32 19), %vec.ind301
   %i.jo = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.jn, <4 x i32> splat (i32 -1))
-  %i.jp = add nuw nsw <4 x i32> %i.jo, splat (i32 1)
+  %i.jp = add nsw <4 x i32> %i.jo, splat (i32 1)
   %i.jq = uitofp nneg <4 x i32> %i.jp to <4 x double>
   %wide.gep334 = getelementptr i8, <4 x ptr> %wide.gep, i64 -376
   call void @llvm.masked.scatter.v4f64.v4p0(<4 x double> %i.jq, <4 x ptr> align 8 %wide.gep334, <4 x i1> splat (i1 true)), !tbaa !22
   %i.jr = sub <4 x i32> splat (i32 20), %vec.ind302
   %i.js = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.jr, <4 x i32> splat (i32 -1))
-  %i.jt = add nuw nsw <4 x i32> %i.js, splat (i32 1)
+  %i.jt = add nsw <4 x i32> %i.js, splat (i32 1)
   %i.ju = uitofp nneg <4 x i32> %i.jt to <4 x double>
   %wide.gep335 = getelementptr i8, <4 x ptr> %wide.gep, i64 -368
   call void @llvm.masked.scatter.v4f64.v4p0(<4 x double> %i.ju, <4 x ptr> align 8 %wide.gep335, <4 x i1> splat (i1 true)), !tbaa !22
   %i.jv = sub <4 x i32> splat (i32 21), %vec.ind303
   %i.jw = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.jv, <4 x i32> splat (i32 -1))
-  %i.jx = add nuw nsw <4 x i32> %i.jw, splat (i32 1)
+  %i.jx = add nsw <4 x i32> %i.jw, splat (i32 1)
   %i.jy = uitofp nneg <4 x i32> %i.jx to <4 x double>
   %wide.gep336 = getelementptr i8, <4 x ptr> %wide.gep, i64 -360
   call void @llvm.masked.scatter.v4f64.v4p0(<4 x double> %i.jy, <4 x ptr> align 8 %wide.gep336, <4 x i1> splat (i1 true)), !tbaa !22
   %i.jz = sub <4 x i32> splat (i32 22), %vec.ind304
   %i.ka = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.jz, <4 x i32> splat (i32 -1))
-  %i.kb = add nuw nsw <4 x i32> %i.ka, splat (i32 1)
+  %i.kb = add nsw <4 x i32> %i.ka, splat (i32 1)
   %i.kc = uitofp nneg <4 x i32> %i.kb to <4 x double>
   %wide.gep337 = getelementptr i8, <4 x ptr> %wide.gep, i64 -352
   call void @llvm.masked.scatter.v4f64.v4p0(<4 x double> %i.kc, <4 x ptr> align 8 %wide.gep337, <4 x i1> splat (i1 true)), !tbaa !22
   %i.kd = sub <4 x i32> splat (i32 23), %vec.ind305
   %i.ke = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.kd, <4 x i32> splat (i32 -1))
-  %i.kf = add nuw nsw <4 x i32> %i.ke, splat (i32 1)
+  %i.kf = add nsw <4 x i32> %i.ke, splat (i32 1)
   %i.kg = uitofp nneg <4 x i32> %i.kf to <4 x double>
   %wide.gep338 = getelementptr i8, <4 x ptr> %wide.gep, i64 -344
   call void @llvm.masked.scatter.v4f64.v4p0(<4 x double> %i.kg, <4 x ptr> align 8 %wide.gep338, <4 x i1> splat (i1 true)), !tbaa !22
   %i.kh = sub <4 x i32> splat (i32 24), %vec.ind306
   %i.ki = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.kh, <4 x i32> splat (i32 -1))
-  %i.kj = add nuw nsw <4 x i32> %i.ki, splat (i32 1)
+  %i.kj = add nsw <4 x i32> %i.ki, splat (i32 1)
   %i.kk = uitofp nneg <4 x i32> %i.kj to <4 x double>
   %wide.gep339 = getelementptr i8, <4 x ptr> %wide.gep, i64 -336
   call void @llvm.masked.scatter.v4f64.v4p0(<4 x double> %i.kk, <4 x ptr> align 8 %wide.gep339, <4 x i1> splat (i1 true)), !tbaa !22
   %i.kl = sub <4 x i32> splat (i32 25), %vec.ind307
   %i.km = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.kl, <4 x i32> splat (i32 -1))
-  %i.kn = add nuw nsw <4 x i32> %i.km, splat (i32 1)
+  %i.kn = add nsw <4 x i32> %i.km, splat (i32 1)
   %i.ko = uitofp nneg <4 x i32> %i.kn to <4 x double>
   %wide.gep340 = getelementptr i8, <4 x ptr> %wide.gep, i64 -328
   call void @llvm.masked.scatter.v4f64.v4p0(<4 x double> %i.ko, <4 x ptr> align 8 %wide.gep340, <4 x i1> splat (i1 true)), !tbaa !22
   %i.kp = sub <4 x i32> splat (i32 26), %vec.ind308
   %i.kq = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.kp, <4 x i32> splat (i32 -1))
-  %i.kr = add nuw nsw <4 x i32> %i.kq, splat (i32 1)
+  %i.kr = add nsw <4 x i32> %i.kq, splat (i32 1)
   %i.ks = uitofp nneg <4 x i32> %i.kr to <4 x double>
   %wide.gep341 = getelementptr i8, <4 x ptr> %wide.gep, i64 -320
   call void @llvm.masked.scatter.v4f64.v4p0(<4 x double> %i.ks, <4 x ptr> align 8 %wide.gep341, <4 x i1> splat (i1 true)), !tbaa !22
   %i.kt = sub <4 x i32> splat (i32 27), %vec.ind309
   %i.ku = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.kt, <4 x i32> splat (i32 -1))
-  %i.kv = add nuw nsw <4 x i32> %i.ku, splat (i32 1)
+  %i.kv = add nsw <4 x i32> %i.ku, splat (i32 1)
   %i.kw = uitofp nneg <4 x i32> %i.kv to <4 x double>
   %wide.gep342 = getelementptr i8, <4 x ptr> %wide.gep, i64 -312
   call void @llvm.masked.scatter.v4f64.v4p0(<4 x double> %i.kw, <4 x ptr> align 8 %wide.gep342, <4 x i1> splat (i1 true)), !tbaa !22
   %i.kx = sub <4 x i32> splat (i32 28), %vec.ind310
   %i.ky = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.kx, <4 x i32> splat (i32 -1))
-  %i.kz = add nuw nsw <4 x i32> %i.ky, splat (i32 1)
+  %i.kz = add nsw <4 x i32> %i.ky, splat (i32 1)
   %i.la = uitofp nneg <4 x i32> %i.kz to <4 x double>
   %wide.gep343 = getelementptr i8, <4 x ptr> %wide.gep, i64 -304
   call void @llvm.masked.scatter.v4f64.v4p0(<4 x double> %i.la, <4 x ptr> align 8 %wide.gep343, <4 x i1> splat (i1 true)), !tbaa !22
   %i.lb = sub <4 x i32> splat (i32 29), %vec.ind311
   %i.lc = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.lb, <4 x i32> splat (i32 -1))
-  %i.ld = add nuw nsw <4 x i32> %i.lc, splat (i32 1)
+  %i.ld = add nsw <4 x i32> %i.lc, splat (i32 1)
   %i.le = uitofp nneg <4 x i32> %i.ld to <4 x double>
   %wide.gep344 = getelementptr i8, <4 x ptr> %wide.gep, i64 -296
   call void @llvm.masked.scatter.v4f64.v4p0(<4 x double> %i.le, <4 x ptr> align 8 %wide.gep344, <4 x i1> splat (i1 true)), !tbaa !22
   %i.lf = sub <4 x i32> splat (i32 30), %vec.ind312
   %i.lg = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.lf, <4 x i32> splat (i32 -1))
-  %i.lh = add nuw nsw <4 x i32> %i.lg, splat (i32 1)
+  %i.lh = add nsw <4 x i32> %i.lg, splat (i32 1)
   %i.li = uitofp nneg <4 x i32> %i.lh to <4 x double>
   %wide.gep345 = getelementptr i8, <4 x ptr> %wide.gep, i64 -288
   call void @llvm.masked.scatter.v4f64.v4p0(<4 x double> %i.li, <4 x ptr> align 8 %wide.gep345, <4 x i1> splat (i1 true)), !tbaa !22
   %i.lj = sub <4 x i32> splat (i32 31), %vec.ind313
   %i.lk = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.lj, <4 x i32> splat (i32 -1))
-  %i.ll = add nuw nsw <4 x i32> %i.lk, splat (i32 1)
+  %i.ll = add nsw <4 x i32> %i.lk, splat (i32 1)
   %i.lm = uitofp nneg <4 x i32> %i.ll to <4 x double>
   %wide.gep346 = getelementptr i8, <4 x ptr> %wide.gep, i64 -280
   call void @llvm.masked.scatter.v4f64.v4p0(<4 x double> %i.lm, <4 x ptr> align 8 %wide.gep346, <4 x i1> splat (i1 true)), !tbaa !22
   %i.ln = sub <4 x i32> splat (i32 32), %vec.ind314
   %i.lo = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.ln, <4 x i32> splat (i32 -1))
-  %i.lp = add nuw nsw <4 x i32> %i.lo, splat (i32 1)
+  %i.lp = add nsw <4 x i32> %i.lo, splat (i32 1)
   %i.lq = uitofp nneg <4 x i32> %i.lp to <4 x double>
   %wide.gep347 = getelementptr i8, <4 x ptr> %wide.gep, i64 -272
   call void @llvm.masked.scatter.v4f64.v4p0(<4 x double> %i.lq, <4 x ptr> align 8 %wide.gep347, <4 x i1> splat (i1 true)), !tbaa !22

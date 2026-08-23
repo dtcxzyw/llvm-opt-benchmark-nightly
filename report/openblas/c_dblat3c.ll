@@ -204,7 +204,7 @@ bb.l:                                             ; preds = %.preheader146.5, %.
   %i.eh = getelementptr i8, ptr %i.eg, i64 -520
   %i.ei = sub <4 x i32> <i32 1, i32 2, i32 3, i32 4>, %i.ef
   %i.ej = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.ei, <4 x i32> splat (i32 -1))
-  %i.ek = add nuw nsw <4 x i32> %i.ej, splat (i32 1)
+  %i.ek = add nsw <4 x i32> %i.ej, splat (i32 1)
   %i.el = uitofp <4 x i32> %i.ek to <4 x double>
   store <4 x double> %i.el, ptr %i.eh, align 8, !tbaa !18
   %i.em = trunc i64 %indvars.iv228 to i32
@@ -214,7 +214,7 @@ bb.l:                                             ; preds = %.preheader146.5, %.
   %i.eq = getelementptr i8, ptr %i.ep, i64 -488
   %i.er = sub <4 x i32> <i32 5, i32 6, i32 7, i32 8>, %i.eo
   %i.es = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.er, <4 x i32> splat (i32 -1))
-  %i.et = add nuw nsw <4 x i32> %i.es, splat (i32 1)
+  %i.et = add nsw <4 x i32> %i.es, splat (i32 1)
   %i.eu = uitofp <4 x i32> %i.et to <4 x double>
   store <4 x double> %i.eu, ptr %i.eq, align 8, !tbaa !18
   %i.ev = trunc i64 %indvars.iv228 to i32
@@ -224,7 +224,7 @@ bb.l:                                             ; preds = %.preheader146.5, %.
   %i.ez = getelementptr i8, ptr %i.ey, i64 -456
   %i.fa = sub <4 x i32> <i32 9, i32 10, i32 11, i32 12>, %i.ex
   %i.fb = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.fa, <4 x i32> splat (i32 -1))
-  %i.fc = add nuw nsw <4 x i32> %i.fb, splat (i32 1)
+  %i.fc = add nsw <4 x i32> %i.fb, splat (i32 1)
   %i.fd = uitofp <4 x i32> %i.fc to <4 x double>
   store <4 x double> %i.fd, ptr %i.ez, align 8, !tbaa !18
   %i.fe = trunc i64 %indvars.iv228 to i32
@@ -234,7 +234,7 @@ bb.l:                                             ; preds = %.preheader146.5, %.
   %i.fi = getelementptr i8, ptr %i.fh, i64 -424
   %i.fj = sub <4 x i32> <i32 13, i32 14, i32 15, i32 16>, %i.fg
   %i.fk = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.fj, <4 x i32> splat (i32 -1))
-  %i.fl = add nuw nsw <4 x i32> %i.fk, splat (i32 1)
+  %i.fl = add nsw <4 x i32> %i.fk, splat (i32 1)
   %i.fm = uitofp <4 x i32> %i.fl to <4 x double>
   store <4 x double> %i.fm, ptr %i.fi, align 8, !tbaa !18
   %i.fn = trunc i64 %indvars.iv228 to i32
@@ -244,7 +244,7 @@ bb.l:                                             ; preds = %.preheader146.5, %.
   %i.fr = getelementptr i8, ptr %i.fq, i64 -392
   %i.fs = sub <4 x i32> <i32 17, i32 18, i32 19, i32 20>, %i.fp
   %i.ft = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.fs, <4 x i32> splat (i32 -1))
-  %i.fu = add nuw nsw <4 x i32> %i.ft, splat (i32 1)
+  %i.fu = add nsw <4 x i32> %i.ft, splat (i32 1)
   %i.fv = uitofp <4 x i32> %i.fu to <4 x double>
   store <4 x double> %i.fv, ptr %i.fr, align 8, !tbaa !18
   %i.fw = trunc i64 %indvars.iv228 to i32
@@ -254,7 +254,7 @@ bb.l:                                             ; preds = %.preheader146.5, %.
   %i.ga = getelementptr i8, ptr %i.fz, i64 -360
   %i.gb = sub <4 x i32> <i32 21, i32 22, i32 23, i32 24>, %i.fy
   %i.gc = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.gb, <4 x i32> splat (i32 -1))
-  %i.gd = add nuw nsw <4 x i32> %i.gc, splat (i32 1)
+  %i.gd = add nsw <4 x i32> %i.gc, splat (i32 1)
   %i.ge = uitofp <4 x i32> %i.gd to <4 x double>
   store <4 x double> %i.ge, ptr %i.ga, align 8, !tbaa !18
   %i.gf = trunc i64 %indvars.iv228 to i32
@@ -264,7 +264,7 @@ bb.l:                                             ; preds = %.preheader146.5, %.
   %i.gj = getelementptr i8, ptr %i.gi, i64 -328
   %i.gk = sub <4 x i32> <i32 25, i32 26, i32 27, i32 28>, %i.gh
   %i.gl = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.gk, <4 x i32> splat (i32 -1))
-  %i.gm = add nuw nsw <4 x i32> %i.gl, splat (i32 1)
+  %i.gm = add nsw <4 x i32> %i.gl, splat (i32 1)
   %i.gn = uitofp <4 x i32> %i.gm to <4 x double>
   store <4 x double> %i.gn, ptr %i.gj, align 8, !tbaa !18
   %i.go = trunc i64 %indvars.iv228 to i32
@@ -274,7 +274,7 @@ bb.l:                                             ; preds = %.preheader146.5, %.
   %i.gs = getelementptr i8, ptr %i.gr, i64 -296
   %i.gt = sub <4 x i32> <i32 29, i32 30, i32 31, i32 32>, %i.gq
   %i.gu = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.gt, <4 x i32> splat (i32 -1))
-  %i.gv = add nuw nsw <4 x i32> %i.gu, splat (i32 1)
+  %i.gv = add nsw <4 x i32> %i.gu, splat (i32 1)
   %i.gw = uitofp <4 x i32> %i.gv to <4 x double>
   store <4 x double> %i.gw, ptr %i.gs, align 8, !tbaa !18
   %i.gx = trunc nuw nsw i64 %indvars.iv228 to i32

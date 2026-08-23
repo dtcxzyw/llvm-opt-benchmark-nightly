@@ -205,7 +205,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit207: ; preds = %.b
 bb.r:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit204, %bb.bp
   %i.gz = phi i64 [ %i.et, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit204 ], [ %i.tj, %bb.bp ]
   %.068583 = phi i64 [ 0, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit204 ], [ %i.td, %bb.bp ] ; 7 uses
-  %i.ha = sub nuw nsw i64 1, %.068583
+  %i.ha = sub nsw i64 1, %.068583
   %i.hb = select i1 %i.dc, i64 %i.ha, i64 %.068583 ; 2 uses
   br i1 %i.dc, label %bb.v, label %bb.s
 
