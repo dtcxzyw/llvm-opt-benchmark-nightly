@@ -134,48 +134,43 @@ bb.g:                                             ; preds = %bb.f
   br label %.thread
 
 .preheader95:                                     ; preds = %bb.f, %bb.h
-  %.058115 = phi i32 [ %13, %bb.h ], [ 349, %bb.f ] ; 7 uses
-  %4 = zext nneg i32 %.058115 to i64
-  %i.o = getelementptr inbounds nuw i8, ptr %i.a, i64 %4
+  %indvars.iv = phi i64 [ %indvars.iv.next.4, %bb.h ], [ 349, %bb.f ] ; 7 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv
   %i.p = load i8, ptr %i.o, align 1, !tbaa !8
   %i.q = icmp eq i8 %i.p, 58
   br i1 %i.q, label %bb.i, label %.preheader95.1
 
 .preheader95.1:                                   ; preds = %.preheader95
-  %5 = add nsw i32 %.058115, -1                   ; 2 uses
-  %6 = zext nneg i32 %5 to i64
-  %i.r = getelementptr inbounds nuw i8, ptr %i.a, i64 %6
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 2 uses
+  %i.r = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv.next
   %i.s = load i8, ptr %i.r, align 1, !tbaa !8
   %i.t = icmp eq i8 %i.s, 58
   br i1 %i.t, label %bb.i, label %.preheader95.2
 
 .preheader95.2:                                   ; preds = %.preheader95.1
-  %7 = add nsw i32 %.058115, -2                   ; 2 uses
-  %8 = zext nneg i32 %7 to i64
-  %i.u = getelementptr inbounds nuw i8, ptr %i.a, i64 %8
+  %indvars.iv.next.1 = add nsw i64 %indvars.iv, -2 ; 2 uses
+  %i.u = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv.next.1
   %i.v = load i8, ptr %i.u, align 1, !tbaa !8
   %i.w = icmp eq i8 %i.v, 58
   br i1 %i.w, label %bb.i, label %.preheader95.3
 
 .preheader95.3:                                   ; preds = %.preheader95.2
-  %9 = add nsw i32 %.058115, -3                   ; 2 uses
-  %10 = zext nneg i32 %9 to i64
-  %i.x = getelementptr inbounds nuw i8, ptr %i.a, i64 %10
+  %indvars.iv.next.2 = add nsw i64 %indvars.iv, -3 ; 2 uses
+  %i.x = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv.next.2
   %i.y = load i8, ptr %i.x, align 1, !tbaa !8
   %i.z = icmp eq i8 %i.y, 58
   br i1 %i.z, label %bb.i, label %.preheader95.4
 
 .preheader95.4:                                   ; preds = %.preheader95.3
-  %11 = add nsw i32 %.058115, -4                  ; 3 uses
-  %12 = zext nneg i32 %11 to i64
-  %i.aa = getelementptr inbounds nuw i8, ptr %i.a, i64 %12
+  %indvars.iv.next.3 = add nsw i64 %indvars.iv, -4 ; 3 uses
+  %i.aa = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv.next.3
   %i.ab = load i8, ptr %i.aa, align 1, !tbaa !8
   %i.ac = icmp eq i8 %i.ab, 58
   br i1 %i.ac, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %.preheader95.4
-  %13 = add nsw i32 %.058115, -5
-  %i.ad = icmp eq i32 %11, 0
+  %indvars.iv.next.4 = add nsw i64 %indvars.iv, -5
+  %i.ad = icmp eq i64 %indvars.iv.next.3, 0
   br i1 %i.ad, label %.critedge89, label %.preheader95, !llvm.loop !9
 
 .critedge89:                                      ; preds = %bb.h
@@ -184,7 +179,7 @@ bb.h:                                             ; preds = %.preheader95.4
   br label %.thread
 
 bb.i:                                             ; preds = %.preheader95.4, %.preheader95.3, %.preheader95.2, %.preheader95.1, %.preheader95
-  %.058115.lcssa = phi i32 [ %.058115, %.preheader95 ], [ %5, %.preheader95.1 ], [ %7, %.preheader95.2 ], [ %9, %.preheader95.3 ], [ %11, %.preheader95.4 ]
+  %indvars.iv.lcssa = phi i64 [ %indvars.iv, %.preheader95 ], [ %indvars.iv.next, %.preheader95.1 ], [ %indvars.iv.next.1, %.preheader95.2 ], [ %indvars.iv.next.2, %.preheader95.3 ], [ %indvars.iv.next.3, %.preheader95.4 ]
   %i.ag = call i32 @fstat(i32 noundef %i.d, ptr noundef nonnull %3) #18
   %i.ah = icmp eq i32 %i.ag, -1
   br i1 %i.ah, label %bb.j, label %bb.k
@@ -195,9 +190,10 @@ bb.j:                                             ; preds = %bb.i
   br label %.thread
 
 bb.k:                                             ; preds = %bb.i
+  %4 = trunc nuw nsw i64 %indvars.iv.lcssa to i32
   %i.ak = getelementptr inbounds nuw i8, ptr %3, i64 48
   %i.al = load i64, ptr %i.ak, align 8, !tbaa !11
-  %.neg = add nsw i32 %.058115.lcssa, -350
+  %.neg = add nsw i32 %4, -350
   %i.am = trunc i64 %i.al to i32
   %i.an = add i32 %.neg, %i.am
   %i.ao = icmp slt i32 %i.an, 0
