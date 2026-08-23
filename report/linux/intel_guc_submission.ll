@@ -205,8 +205,7 @@ intel_gt_is_wedged.exit.i:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #19
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #19
   store i32 28672, ptr %i.b, align 4
-  %i.j = getelementptr inbounds nuw i8, ptr %i.b, i64 4 ; 2 uses
-  store i32 0, ptr %i.j, align 4
+  %i.j = getelementptr inbounds nuw i8, ptr %i.b, i64 4
   %i.k = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.l = or disjoint i32 %1, -2147483648
   store i32 %i.l, ptr %i.k, align 4

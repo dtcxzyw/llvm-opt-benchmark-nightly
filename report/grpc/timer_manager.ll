@@ -202,7 +202,7 @@ bb.a:
   %0 = alloca %"class.absl::lts_20250512::log_internal::LogMessageFatal", align 8 ; 4 uses
   %1 = alloca %"class.absl::lts_20250512::log_internal::LogMessageFatal", align 8 ; 5 uses
   %2 = alloca %"class.absl::lts_20250512::log_internal::LogMessage", align 8 ; 8 uses
-  %3 = alloca %"class.grpc_core::Thread", align 8 ; 10 uses
+  %3 = alloca %"class.grpc_core::Thread", align 8 ; 9 uses
   %4 = alloca %"class.grpc_core::Thread::Options", align 8 ; 6 uses
   %.b = load i1, ptr @_ZL10g_threaded, align 1
   br i1 %.b, label %.critedge, label %bb.b, !prof !44
@@ -276,8 +276,6 @@ _ZN9grpc_core6ThreadaSEOS0_.exit.thread:          ; preds = %.critedge19
   store i32 5, ptr %3, align 8, !tbaa !49
   store ptr null, ptr %.phi.trans.insert22, align 8, !tbaa !53
   store i8 1, ptr %i.n, align 8, !tbaa !41
-  %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %3, i64 17
-  store i8 1, ptr %.sroa.4.0..sroa_idx.i, align 1, !tbaa !41
   br label %_ZN9grpc_core6ThreadD2Ev.exit
 
 _ZN9grpc_core6ThreadaSEOS0_.exit:                 ; preds = %.critedge19

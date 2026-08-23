@@ -206,11 +206,10 @@ _ZN7rocksdb19status_to_io_statusEONS_6StatusE.exit.thread: ; preds = %_ZNSt10uni
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 4
   store i8 %i.ab, ptr %i.ac, align 4, !tbaa !147, !alias.scope !567
   store i8 0, ptr %i.aa, align 4, !tbaa !147, !noalias !567
-  %i.ad = getelementptr inbounds nuw i8, ptr %7, i64 5 ; 2 uses
+  %i.ad = getelementptr inbounds nuw i8, ptr %7, i64 5
   %i.ae = load i8, ptr %i.ad, align 1, !tbaa !15, !noalias !567
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 5
   store i8 %i.ae, ptr %i.af, align 1, !tbaa !123, !alias.scope !567
-  store i8 0, ptr %i.ad, align 1, !tbaa !123, !noalias !567
   %i.ag = getelementptr inbounds nuw i8, ptr %7, i64 8
   %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !125, !noalias !567
   store ptr %i.ah, ptr %i.y, align 8, !tbaa !125, !alias.scope !567
@@ -351,11 +350,10 @@ _ZN7rocksdb19status_to_io_statusEONS_6StatusE.exit.thread: ; preds = %_ZNSt10uni
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 4
   store i8 %i.ab, ptr %i.ac, align 4, !tbaa !147, !alias.scope !570
   store i8 0, ptr %i.aa, align 4, !tbaa !147, !noalias !570
-  %i.ad = getelementptr inbounds nuw i8, ptr %7, i64 5 ; 2 uses
+  %i.ad = getelementptr inbounds nuw i8, ptr %7, i64 5
   %i.ae = load i8, ptr %i.ad, align 1, !tbaa !15, !noalias !570
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 5
   store i8 %i.ae, ptr %i.af, align 1, !tbaa !123, !alias.scope !570
-  store i8 0, ptr %i.ad, align 1, !tbaa !123, !noalias !570
   %i.ag = getelementptr inbounds nuw i8, ptr %7, i64 8
   %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !125, !noalias !570
   store ptr %i.ah, ptr %i.y, align 8, !tbaa !125, !alias.scope !570
@@ -496,11 +494,10 @@ _ZN7rocksdb19status_to_io_statusEONS_6StatusE.exit.thread: ; preds = %_ZNSt10uni
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 4
   store i8 %i.ab, ptr %i.ac, align 4, !tbaa !147, !alias.scope !573
   store i8 0, ptr %i.aa, align 4, !tbaa !147, !noalias !573
-  %i.ad = getelementptr inbounds nuw i8, ptr %8, i64 5 ; 2 uses
+  %i.ad = getelementptr inbounds nuw i8, ptr %8, i64 5
   %i.ae = load i8, ptr %i.ad, align 1, !tbaa !15, !noalias !573
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 5
   store i8 %i.ae, ptr %i.af, align 1, !tbaa !123, !alias.scope !573
-  store i8 0, ptr %i.ad, align 1, !tbaa !123, !noalias !573
   %i.ag = getelementptr inbounds nuw i8, ptr %8, i64 8
   %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !125, !noalias !573
   store ptr %i.ah, ptr %i.y, align 8, !tbaa !125, !alias.scope !573

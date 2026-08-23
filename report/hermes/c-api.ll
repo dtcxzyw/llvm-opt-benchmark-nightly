@@ -101,7 +101,7 @@ bb.a:
   %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %4 = alloca %"class.hermes::SourceErrorManager", align 8 ; 7 uses
   %5 = alloca %"class.hermes::SimpleDiagHandlerRAII", align 8 ; 6 uses
-  %6 = alloca %"class.std::unique_ptr", align 8   ; 7 uses
+  %6 = alloca %"class.std::unique_ptr", align 8   ; 6 uses
   %7 = alloca %"class.llvh::Twine", align 8       ; 6 uses
   %8 = alloca %"class.std::__cxx11::basic_string", align 8 ; 7 uses
   %i.b = icmp eq i64 %1, 0
@@ -211,7 +211,6 @@ bb.f:                                             ; preds = %bb.e
   %.in = phi ptr [ %i.aa, %bb.d ], [ %.pr.pre, %bb.f ]
   %i.ag = ptrtoint ptr %.in to i64
   %i.ah = call noalias noundef nonnull dereferenceable(88) ptr @_Znwm(i64 noundef 88) #14 ; 8 uses
-  store ptr null, ptr %6, align 8, !tbaa !28
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, i64 16 ; 2 uses
   store ptr %i.ai, ptr %i.ah, align 8, !tbaa !8
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ah, i64 8
