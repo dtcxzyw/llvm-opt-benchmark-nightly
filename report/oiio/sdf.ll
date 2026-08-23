@@ -205,60 +205,51 @@ compare_neighbor.exit35.us.i:                     ; preds = %bb.n, %bb.m, %bb.l
 
 .preheader.lr.ph.split.i:                         ; preds = %.preheader.lr.ph.i
   %i.ce = icmp eq i32 %i.c, 2
-  br i1 %i.ce, label %.preheader.preheader.i, label %first_pass.exit
+  br i1 %i.ce, label %.preheader.i.a, label %first_pass.exit
 
-.preheader.preheader.i:                           ; preds = %.preheader.lr.ph.split.i
+.preheader.i.a:                                   ; preds = %.preheader.lr.ph.split.i
   %11 = zext nneg i32 %i.k to i64
   %wide.trip.count.i = zext nneg i32 %i.e to i64
-  br label %.preheader.i.a
-
-.preheader.i.a:                                   ; preds = %._crit_edge40.i, %.preheader.preheader.i
-  %indvars.iv45.i = phi i64 [ 1, %.preheader.preheader.i ], [ %indvars.iv.next46.i, %._crit_edge40.i ] ; 2 uses
-  %.idx.i = shl nuw nsw i64 %indvars.iv45.i, 6
-  %invariant.gep.i = getelementptr i8, ptr %i.a, i64 %.idx.i
+  %invariant.gep = getelementptr [32 x i8], ptr %i.a, i64 %11
   br label %bb.o
 
 bb.o:                                             ; preds = %compare_neighbor.exit35.i, %.preheader.i.a
-  %indvars.iv.i = phi i64 [ %11, %.preheader.i.a ], [ %indvars.iv.next.i, %compare_neighbor.exit35.i ] ; 3 uses
-  %gep.i = getelementptr [32 x i8], ptr %invariant.gep.i, i64 %indvars.iv.i ; 6 uses
+  %indvars.iv.i = phi i64 [ 1, %.preheader.i.a ], [ %indvars.iv.next.i, %compare_neighbor.exit35.i ] ; 2 uses
+  %.idx.i = shl nuw nsw i64 %indvars.iv.i, 6
+  %gep = getelementptr i8, ptr %invariant.gep, i64 %.idx.i ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #12
-  %i.cf = getelementptr inbounds nuw i8, ptr %gep.i, i64 32
+  %i.cf = getelementptr inbounds nuw i8, ptr %gep, i64 32
   %i.cg = load i32, ptr %i.cf, align 8, !tbaa !115
   %i.ch = add nsw i32 %i.cg, -65536
-  %i.ci = load i32, ptr %gep.i, align 8, !tbaa !115
+  %i.ci = load i32, ptr %gep, align 8, !tbaa !115
   %i.cj = icmp slt i32 %i.ch, %i.ci
   br i1 %i.cj, label %bb.p, label %compare_neighbor.exit35.i
 
 bb.p:                                             ; preds = %bb.o
-  %i.ck = getelementptr inbounds nuw i8, ptr %gep.i, i64 40
+  %i.ck = getelementptr inbounds nuw i8, ptr %gep, i64 40
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %6, ptr noundef nonnull align 8 dereferenceable(16) %i.ck, i64 16, i1 false), !tbaa.struct !121
   %i.cl = load i64, ptr %6, align 8, !tbaa !52
   %i.cm = add nsw i64 %i.cl, 65536
   store i64 %i.cm, ptr %6, align 8, !tbaa !52
   %i.cn = call i64 @FT_Vector_Length(ptr noundef nonnull %6) #12
   %i.co = trunc i64 %i.cn to i32                  ; 2 uses
-  %i.cp = load i32, ptr %gep.i, align 8, !tbaa !115
+  %i.cp = load i32, ptr %gep, align 8, !tbaa !115
   %i.cq = icmp sgt i32 %i.cp, %i.co
   br i1 %i.cq, label %bb.q, label %compare_neighbor.exit35.i
 
 bb.q:                                             ; preds = %bb.p
-  store i32 %i.co, ptr %gep.i, align 8, !tbaa !115
-  %i.cr = getelementptr inbounds nuw i8, ptr %gep.i, i64 8
+  store i32 %i.co, ptr %gep, align 8, !tbaa !115
+  %i.cr = getelementptr inbounds nuw i8, ptr %gep, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.cr, ptr noundef nonnull align 8 dereferenceable(16) %6, i64 16, i1 false), !tbaa.struct !121
   br label %compare_neighbor.exit35.i
 
 compare_neighbor.exit35.i:                        ; preds = %bb.q, %bb.p, %bb.o
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #12
-  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1
-  %12 = icmp sgt i64 %indvars.iv.i, 0
-  br i1 %12, label %bb.o, label %._crit_edge40.i, !llvm.loop !123
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
+  %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
+  br i1 %exitcond.not.i, label %first_pass.exit, label %bb.o, !llvm.loop !124
 
-._crit_edge40.i:                                  ; preds = %compare_neighbor.exit35.i
-  %indvars.iv.next46.i = add nuw nsw i64 %indvars.iv45.i, 1 ; 2 uses
-  %exitcond.not.i = icmp eq i64 %indvars.iv.next46.i, %wide.trip.count.i
-  br i1 %exitcond.not.i, label %first_pass.exit, label %.preheader.i.a, !llvm.loop !124
-
-first_pass.exit:                                  ; preds = %._crit_edge40.i, %._crit_edge40.us.i.loopexit, %.preheader.lr.ph.split.i
+first_pass.exit:                                  ; preds = %compare_neighbor.exit35.i, %._crit_edge40.us.i.loopexit, %.preheader.lr.ph.split.i
   %.pr = load i32, ptr %i.d, align 4, !tbaa !103  ; 2 uses
   %i.cs = load ptr, ptr %0, align 8, !tbaa !83    ; 2 uses
   %i.ct = add nsw i32 %.pr, -2                    ; 2 uses
@@ -447,22 +438,18 @@ compare_neighbor.exit35.us.i30:                   ; preds = %bb.ab, %bb.aa, %.lr
 
 .preheader.lr.ph.split.i6:                        ; preds = %.preheader.lr.ph.i5
   %i.ft = icmp eq i32 %i.cv, 2
-  br i1 %i.ft, label %.preheader.preheader.i7, label %second_pass.exit
+  br i1 %i.ft, label %.preheader.i8.a, label %second_pass.exit
 
-.preheader.preheader.i7:                          ; preds = %.preheader.lr.ph.split.i6
-  %13 = zext nneg i32 %i.cz to i64
-  %14 = zext nneg i32 %i.ct to i64
-  br label %.preheader.i8.a
-
-.preheader.i8.a:                                  ; preds = %._crit_edge40.i15, %.preheader.preheader.i7
-  %indvars.iv45.i9 = phi i64 [ %14, %.preheader.preheader.i7 ], [ %indvars.iv.next46.i16, %._crit_edge40.i15 ] ; 3 uses
-  %15 = mul nsw i64 %indvars.iv45.i9, %i.cx
-  %invariant.gep.i10 = getelementptr [32 x i8], ptr %i.cs, i64 %15
+.preheader.i8.a:                                  ; preds = %.preheader.lr.ph.split.i6
+  %12 = zext nneg i32 %i.cz to i64
+  %13 = zext nneg i32 %i.ct to i64
+  %invariant.gep.i10 = getelementptr [32 x i8], ptr %i.cs, i64 %12
   br label %bb.ac
 
 bb.ac:                                            ; preds = %compare_neighbor.exit35.i13, %.preheader.i8.a
   %indvars.iv.i11 = phi i64 [ %13, %.preheader.i8.a ], [ %indvars.iv.next.i14, %compare_neighbor.exit35.i13 ] ; 3 uses
-  %gep.i12 = getelementptr [32 x i8], ptr %invariant.gep.i10, i64 %indvars.iv.i11 ; 6 uses
+  %14 = mul nsw i64 %indvars.iv.i11, %i.cx
+  %gep.i12 = getelementptr [32 x i8], ptr %invariant.gep.i10, i64 %14 ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #12
   %i.fu = getelementptr inbounds nuw i8, ptr %gep.i12, i64 32
   %i.fv = load i32, ptr %i.fu, align 8, !tbaa !115
@@ -493,15 +480,10 @@ compare_neighbor.exit35.i13:                      ; preds = %bb.ae, %bb.ad, %bb.
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #12
   %indvars.iv.next.i14 = add nsw i64 %indvars.iv.i11, -1
   %i.gh = icmp sgt i64 %indvars.iv.i11, 0
-  br i1 %i.gh, label %bb.ac, label %._crit_edge40.i15, !llvm.loop !126
+  br i1 %i.gh, label %bb.ac, label %second_pass.exit, !llvm.loop !127
 
-._crit_edge40.i15:                                ; preds = %compare_neighbor.exit35.i13
-  %indvars.iv.next46.i16 = add nsw i64 %indvars.iv45.i9, -1
-  %16 = icmp sgt i64 %indvars.iv45.i9, 0
-  br i1 %16, label %.preheader.i8.a, label %second_pass.exit, !llvm.loop !127
-
-second_pass.exit:                                 ; preds = %._crit_edge40.i15, %._crit_edge40.us.i28.loopexit, %bb.b, %.preheader.lr.ph.split.i6, %first_pass.exit, %bb.a
-  %.0 = phi i32 [ 6, %bb.a ], [ 0, %._crit_edge40.us.i28.loopexit ], [ 0, %first_pass.exit ], [ 0, %bb.b ], [ 0, %.preheader.lr.ph.split.i6 ], [ 0, %._crit_edge40.i15 ]
+second_pass.exit:                                 ; preds = %compare_neighbor.exit35.i13, %._crit_edge40.us.i28.loopexit, %bb.b, %.preheader.lr.ph.split.i6, %first_pass.exit, %bb.a
+  %.0 = phi i32 [ 6, %bb.a ], [ 0, %._crit_edge40.us.i28.loopexit ], [ 0, %first_pass.exit ], [ 0, %bb.b ], [ 0, %.preheader.lr.ph.split.i6 ], [ 0, %compare_neighbor.exit35.i13 ]
   ret i32 %.0
 }
 

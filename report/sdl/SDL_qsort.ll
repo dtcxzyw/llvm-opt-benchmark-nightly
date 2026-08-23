@@ -204,10 +204,10 @@ bb.df:                                            ; preds = %bb.de, %._crit_edge
 .lr.ph229.i.i:                                    ; preds = %.lr.ph.i
   %i.aiq = tail call i32 %3(ptr noundef nonnull %.0166.ptr.i.i, ptr noundef nonnull %i.adm) #4, !inline_history !270
   %i.air = icmp sgt i32 %i.aiq, 0
-  br i1 %i.air, label %.lr.ph.i, label %.critedge.i118.i, !llvm.loop !146
+  br i1 %i.air, label %.lr.ph.i, label %bb.dg, !llvm.loop !146
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %.lr.ph229.i.i
-  %.0166.idx224.i143.i = phi i64 [ %.0166.add.i.i, %.lr.ph229.i.i ], [ 0, %.lr.ph.i.preheader ] ; 3 uses
+  %.0166.idx224.i143.i = phi i64 [ %.0166.add.i.i, %.lr.ph229.i.i ], [ 0, %.lr.ph.i.preheader ] ; 2 uses
   %.0.ptr227.i142.i = phi ptr [ %.0166.ptr226.i144.i, %.lr.ph229.i.i ], [ %.0.ptr222.i.i, %.lr.ph.i.preheader ]
   %.0166.ptr226.i144.i = getelementptr inbounds i8, ptr %.pn196237.i.i, i64 %.0166.idx224.i143.i ; 3 uses
   %i.ais = load i32, ptr %.0166.ptr226.i144.i, align 4
@@ -218,18 +218,14 @@ bb.df:                                            ; preds = %bb.de, %._crit_edge
   br i1 %.not198.i.i, label %..critedge.i118_crit_edge.i, label %.lr.ph229.i.i, !llvm.loop !146
 
 ..critedge.i118_crit_edge.i:                      ; preds = %.lr.ph.i
-  br label %.critedge.i118.i, !llvm.loop !146
+  br label %bb.dg, !llvm.loop !146
 
-.critedge.i118.i:                                 ; preds = %.lr.ph229.i.i, %..critedge.i118_crit_edge.i
-  %7 = icmp eq i64 %.0166.idx224.i143.i, 4
-  br i1 %7, label %.critedge.thread.i119.i, label %bb.dg
-
-bb.dg:                                            ; preds = %.critedge.i118.i
+bb.dg:                                            ; preds = %.lr.ph229.i.i, %..critedge.i118_crit_edge.i
   %i.ait = load i32, ptr %i.adm, align 4
   store i32 %i.ait, ptr %.0166.ptr226.i144.i, align 4
   br label %.critedge.thread.i119.i
 
-.critedge.thread.i119.i:                          ; preds = %bb.dg, %.critedge.i118.i, %.lr.ph229.i.preheader.i, %.lr.ph240.i.i
+.critedge.thread.i119.i:                          ; preds = %bb.dg, %.lr.ph229.i.preheader.i, %.lr.ph240.i.i
   %.10.ptr.i.i = getelementptr inbounds nuw i8, ptr %.10.ptr238.i.i, i64 4 ; 2 uses
   %.not197.i.i = icmp eq ptr %.10.ptr.i.i, %i.aim
   br i1 %.not197.i.i, label %qsort_r_words.exit.i, label %.lr.ph240.i.i, !llvm.loop !147

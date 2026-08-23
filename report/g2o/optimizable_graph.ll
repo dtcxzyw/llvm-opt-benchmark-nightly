@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %.lr.ph142
   br i1 %i.aa, label %.lr.ph142, label %.critedge.thread, !llvm.loop !332
 
 .lr.ph142:                                        ; preds = %.preheader95, %bb.d
-  %.169141 = phi i64 [ %i.ab, %bb.d ], [ %.068101, %.preheader95 ] ; 8 uses
+  %.169141 = phi i64 [ %i.ab, %bb.d ], [ %.068101, %.preheader95 ] ; 7 uses
   %i.ab = add nsw i64 %.169141, -1                ; 5 uses
   %i.ac = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %i.ab
   %i.ad = load double, ptr %i.ac, align 8, !tbaa !242
@@ -238,7 +238,7 @@ bb.d:                                             ; preds = %.lr.ph142
   br label %.critedge2, !llvm.loop !333
 
 .critedge2:                                       ; preds = %.preheader94, %..critedge2_crit_edge, %.preheader94.preheader
-  %.167.lcssa = phi i64 [ 0, %.preheader94.preheader ], [ %.167, %..critedge2_crit_edge ], [ 0, %.preheader94 ] ; 6 uses
+  %.167.lcssa = phi i64 [ 0, %.preheader94.preheader ], [ %.167, %..critedge2_crit_edge ], [ 0, %.preheader94 ] ; 5 uses
   %i.am = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %i.ab
   %i.an = load double, ptr %i.am, align 8, !tbaa !242
   %i.ao = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %.169141
@@ -300,10 +300,8 @@ bb.j:                                             ; preds = %_ZN5Eigen6numext5hy
   %.1.i = phi double [ %i.aw, %bb.e ], [ %.073.i, %_ZN5Eigen6numext5hypotIdEENS_8internal12hypot_retvalINS2_36global_math_functions_filtering_baseIT_vE4typeEE4typeERKS5_SB_.exit.i ], [ %i.ap, %bb.f ]
   %i.br = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %.167.lcssa
   %i.bs = load double, ptr %i.br, align 8, !tbaa !242 ; 2 uses
-  %5 = icmp samesign ult i64 %.167.lcssa, %.169141
   %i.bt = fcmp une double %i.bs, 0.000000e+00
-  %6 = select i1 %5, i1 %i.bt, i1 false
-  br i1 %6, label %.lr.ph.i, label %.preheader96.backedge
+  br i1 %i.bt, label %.lr.ph.i, label %.preheader96.backedge
 
 .preheader96.backedge:                            ; preds = %_ZN5Eigen10MatrixBaseINS_3MapINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi0ENS_6StrideILi0ELi0EEEEEE15applyOnTheRightIdEEvllRKNS_14JacobiRotationIT_EE.exit.i, %bb.j
   br label %.preheader96

@@ -206,7 +206,7 @@ bb.r:                                             ; preds = %bb.q
   br label %.critedge
 
 .critedge:                                        ; preds = %bb.r, %.critedge.loopexit.split.loop.exit, %.critedge.loopexit.split.loop.exit530, %.critedge.loopexit.split.loop.exit534, %bb.n
-  %.0183.lcssa = phi i32 [ 1, %bb.n ], [ %i.dd, %.critedge.loopexit.split.loop.exit534 ], [ %i.db, %.critedge.loopexit.split.loop.exit ], [ %i.dc, %.critedge.loopexit.split.loop.exit530 ], [ %i.k, %bb.r ] ; 12 uses
+  %.0183.lcssa = phi i32 [ 1, %bb.n ], [ %i.dd, %.critedge.loopexit.split.loop.exit534 ], [ %i.db, %.critedge.loopexit.split.loop.exit ], [ %i.dc, %.critedge.loopexit.split.loop.exit530 ], [ %i.k, %bb.r ] ; 11 uses
   %i.de = icmp ne i32 %.0183.lcssa, 1
   %or.cond8 = select i1 %i.de, i1 true, i1 %i.af
   br i1 %or.cond8, label %bb.y, label %bb.s
@@ -318,19 +318,15 @@ bb.aa:                                            ; preds = %bb.z
 
 .preheader.i242:                                  ; preds = %.thread.i246, %.preheader.lr.ph.i241
   %indvars.iv.i243 = phi i64 [ %i.ep, %.preheader.lr.ph.i241 ], [ %indvars.iv.next.i247, %.thread.i246 ] ; 3 uses
-  %.02532.in.i244 = phi i32 [ %spec.select.i239, %.preheader.lr.ph.i241 ], [ %.02532.i245, %.thread.i246 ] ; 3 uses
+  %.02532.in.i244 = phi i32 [ %spec.select.i239, %.preheader.lr.ph.i241 ], [ %.02532.i245, %.thread.i246 ] ; 2 uses
   %.02532.i245 = add nsw i32 %.02532.in.i244, -1
-  %2 = icmp slt i32 %.02532.in.i244, %.0183.lcssa
-  br i1 %2, label %.lr.ph.preheader.i248, label %.thread.i246
-
-.lr.ph.preheader.i248:                            ; preds = %.preheader.i242
   %.phi.trans.insert.i249 = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %indvars.iv.i243
   %.pre.i250 = load ptr, ptr %.phi.trans.insert.i249, align 8, !tbaa !5381
   br label %.lr.ph.i251
 
-.lr.ph.i251:                                      ; preds = %bb.ab, %.lr.ph.preheader.i248
-  %i.eq = phi ptr [ %.pre.i250, %.lr.ph.preheader.i248 ], [ %i.ex, %bb.ab ]
-  %indvars.iv33.i252 = phi i64 [ %indvars.iv.i243, %.lr.ph.preheader.i248 ], [ %indvars.iv.next34.i253, %bb.ab ] ; 2 uses
+.lr.ph.i251:                                      ; preds = %bb.ab, %.preheader.i242
+  %i.eq = phi ptr [ %.pre.i250, %.preheader.i242 ], [ %i.ex, %bb.ab ]
+  %indvars.iv33.i252 = phi i64 [ %indvars.iv.i243, %.preheader.i242 ], [ %indvars.iv.next34.i253, %bb.ab ] ; 2 uses
   %indvars.iv.next34.i253 = add nuw nsw i64 %indvars.iv33.i252, 1 ; 3 uses
   %i.er = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %indvars.iv.next34.i253 ; 3 uses
   %i.es = load ptr, ptr %i.er, align 8, !tbaa !5381
@@ -348,7 +344,7 @@ bb.ab:                                            ; preds = %.lr.ph.i251
   %i.ez = icmp sgt i32 %spec.select.i239, %i.ey
   br i1 %i.ez, label %.lr.ph.i251, label %.thread.i246, !llvm.loop !5436
 
-.thread.i246:                                     ; preds = %bb.ab, %.lr.ph.i251, %.preheader.i242
+.thread.i246:                                     ; preds = %.lr.ph.i251, %bb.ab
   %i.fa = icmp sgt i32 %.02532.in.i244, 1
   %indvars.iv.next.i247 = add nsw i64 %indvars.iv.i243, -1
   br i1 %i.fa, label %.preheader.i242, label %fts3SegReaderSort.exit254, !llvm.loop !5437
@@ -751,7 +747,7 @@ bb.k:                                             ; preds = %.lr.ph51.i
   br i1 %i.bl, label %.lr.ph51.i, label %._crit_edge.i, !llvm.loop !5866
 
 ._crit_edge.i:                                    ; preds = %bb.k
-  %i.bm = trunc nuw nsw i64 %indvars.iv.next57.i to i32 ; 2 uses
+  %i.bm = trunc nuw nsw i64 %indvars.iv.next57.i to i32
   %i.bn = load ptr, ptr %i.af, align 8, !tbaa !5380 ; 3 uses
   %spec.select.i42.i = add nsw i32 %i.bm, -1      ; 2 uses
   %.not70.i = icmp eq i64 %indvars.iv56.i, 0
@@ -764,19 +760,15 @@ bb.k:                                             ; preds = %.lr.ph51.i
 
 .preheader.i.i:                                   ; preds = %.thread.i.i, %.preheader.lr.ph.i.i
   %indvars.iv.i.i = phi i64 [ %i.bp, %.preheader.lr.ph.i.i ], [ %indvars.iv.next.i.i, %.thread.i.i ] ; 3 uses
-  %.02532.in.i.i = phi i32 [ %spec.select.i42.i, %.preheader.lr.ph.i.i ], [ %.02532.i.i, %.thread.i.i ] ; 3 uses
+  %.02532.in.i.i = phi i32 [ %spec.select.i42.i, %.preheader.lr.ph.i.i ], [ %.02532.i.i, %.thread.i.i ] ; 2 uses
   %.02532.i.i = add nsw i32 %.02532.in.i.i, -1
-  %3 = icmp slt i32 %.02532.in.i.i, %i.bm
-  br i1 %3, label %.lr.ph.preheader.i.i, label %.thread.i.i
-
-.lr.ph.preheader.i.i:                             ; preds = %.preheader.i.i
   %.phi.trans.insert.i.i = getelementptr inbounds nuw [8 x i8], ptr %i.bn, i64 %indvars.iv.i.i
   %.pre.i.i = load ptr, ptr %.phi.trans.insert.i.i, align 8, !tbaa !5381
   br label %.lr.ph.i.i
 
-.lr.ph.i.i:                                       ; preds = %bb.l, %.lr.ph.preheader.i.i
-  %i.bq = phi ptr [ %.pre.i.i, %.lr.ph.preheader.i.i ], [ %i.bx, %bb.l ]
-  %indvars.iv33.i.i = phi i64 [ %indvars.iv.i.i, %.lr.ph.preheader.i.i ], [ %indvars.iv.next34.i.i, %bb.l ] ; 2 uses
+.lr.ph.i.i:                                       ; preds = %bb.l, %.preheader.i.i
+  %i.bq = phi ptr [ %.pre.i.i, %.preheader.i.i ], [ %i.bx, %bb.l ]
+  %indvars.iv33.i.i = phi i64 [ %indvars.iv.i.i, %.preheader.i.i ], [ %indvars.iv.next34.i.i, %bb.l ] ; 2 uses
   %indvars.iv.next34.i.i = add nuw nsw i64 %indvars.iv33.i.i, 1 ; 3 uses
   %i.br = getelementptr inbounds nuw [8 x i8], ptr %i.bn, i64 %indvars.iv.next34.i.i ; 3 uses
   %i.bs = load ptr, ptr %i.br, align 8, !tbaa !5381
@@ -794,7 +786,7 @@ bb.l:                                             ; preds = %.lr.ph.i.i
   %i.bz = icmp sgt i32 %spec.select.i42.i, %i.by
   br i1 %i.bz, label %.lr.ph.i.i, label %.thread.i.i, !llvm.loop !5436
 
-.thread.i.i:                                      ; preds = %bb.l, %.lr.ph.i.i, %.preheader.i.i
+.thread.i.i:                                      ; preds = %bb.l, %.lr.ph.i.i
   %i.ca = icmp sgt i32 %.02532.in.i.i, 1
   %indvars.iv.next.i.i = add nsw i64 %indvars.iv.i.i, -1
   br i1 %i.ca, label %.preheader.i.i, label %fts3SegReaderSort.exit.i, !llvm.loop !5437

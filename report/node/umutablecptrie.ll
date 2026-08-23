@@ -205,7 +205,7 @@ bb.ef:                                            ; preds = %bb.ey, %.lr.ph387.i
   %i.aet = phi i32 [ %.pre476.i.i.i, %.lr.ph387.i.i.i ], [ %i.axd, %bb.ey ]
   %indvars.iv460.i.i.i = phi i64 [ 0, %.lr.ph387.i.i.i ], [ %indvars.iv.next461.i.i.i, %bb.ey ] ; 2 uses
   %indvars.iv434.i.i.i = phi i64 [ %i.aeo, %.lr.ph387.i.i.i ], [ %indvars.iv.next435.i.i.i, %bb.ey ] ; 17 uses
-  %.0248382.i.i.i = phi i32 [ %i.act, %.lr.ph387.i.i.i ], [ %.6.i98.i.i, %bb.ey ] ; 20 uses
+  %.0248382.i.i.i = phi i32 [ %i.act, %.lr.ph387.i.i.i ], [ %.6.i98.i.i, %bb.ey ] ; 18 uses
   %.4274380.i.i.i = phi i32 [ %.pre476.i.i.i, %.lr.ph387.i.i.i ], [ %.5275335.i.i.i, %bb.ey ] ; 5 uses
   %i.aeu = getelementptr inbounds nuw i8, ptr %i.gg, i64 %indvars.iv434.i.i.i
   %i.aev = load i8, ptr %i.aeu, align 1           ; 2 uses
@@ -234,7 +234,7 @@ bb.ei:                                            ; preds = %bb.eh
 
 .thread337.i.i.i:                                 ; preds = %bb.eh, %bb.eg
   %.5275340.i.i.i = phi i32 [ %.4274380.i.i.i, %bb.eh ], [ 0, %bb.eg ] ; 3 uses
-  %i.afd = load ptr, ptr %i.ada, align 8          ; 4 uses
+  %i.afd = load ptr, ptr %i.ada, align 8          ; 3 uses
   %i.afe = load ptr, ptr %0, align 8              ; 2 uses
   %i.aff = trunc nuw nsw i64 %indvars.iv434.i.i.i to i32
   %i.afg = call fastcc noundef i32 @_ZNK6icu_7812_GLOBAL__N_111MixedBlocks9findBlockItjEEiPKT_PKT0_i(ptr noundef nonnull align 8 dereferenceable(28) %6, ptr noundef %i.afd, ptr noundef %i.afe, i32 noundef %i.aff) ; 2 uses
@@ -307,15 +307,14 @@ bb.eo:                                            ; preds = %.lr.ph.i.i.i93.i.i.
   br i1 %i.agh, label %.lr.ph.i.i.i93.i.i.1, label %_ZN6icu_7812_GLOBAL__N_110getOverlapItjEEiPKT_iPKT0_ii.exit.i.i.i, !llvm.loop !56
 
 _ZN6icu_7812_GLOBAL__N_110getOverlapItjEEiPKT_iPKT0_ii.exit.i.i.i: ; preds = %bb.em, %bb.eo
-  %indvars.iv.i.i92.i.i.lcssa = phi i64 [ %indvars.iv.next.i.i97.i.i, %bb.eo ], [ %indvars.iv.i.i92.i.i, %bb.em ] ; 2 uses
+  %indvars.iv.i.i92.i.i.lcssa = phi i64 [ %indvars.iv.next.i.i97.i.i, %bb.eo ], [ %indvars.iv.i.i92.i.i, %bb.em ]
   %.lcssa296 = phi i32 [ %i.afz, %bb.eo ], [ %i.afn, %bb.em ]
-  %i.agi = sub nsw i32 %.0248382.i.i.i, %.lcssa296 ; 2 uses
-  %7 = icmp slt i64 %indvars.iv.i.i92.i.i.lcssa, 32
-  br i1 %7, label %.lr.ph377.preheader.i.i.i, label %._crit_edge378.i.i.i
+  %i.agi = sub nsw i32 %.0248382.i.i.i, %.lcssa296
+  br label %.lr.ph377.preheader.i.i.i
 
 .lr.ph377.preheader.i.i.i:                        ; preds = %_ZN6icu_7812_GLOBAL__N_111equalBlocksItjEEbPKT_PKT0_i.exit.i.i.i.i, %_ZN6icu_7812_GLOBAL__N_110getOverlapItjEEiPKT_iPKT0_ii.exit.i.i.i, %bb.ej
   %.pre-phi230.i.i = phi i64 [ %.pre229.i.i, %bb.ej ], [ %i.afk, %_ZN6icu_7812_GLOBAL__N_110getOverlapItjEEiPKT_iPKT0_ii.exit.i.i.i ], [ %i.afk, %_ZN6icu_7812_GLOBAL__N_111equalBlocksItjEEbPKT_PKT0_i.exit.i.i.i.i ]
-  %i.agj = phi i32 [ %i.act, %bb.ej ], [ %i.agi, %_ZN6icu_7812_GLOBAL__N_110getOverlapItjEEiPKT_iPKT0_ii.exit.i.i.i ], [ %.0248382.i.i.i, %_ZN6icu_7812_GLOBAL__N_111equalBlocksItjEEbPKT_PKT0_i.exit.i.i.i.i ]
+  %i.agj = phi i32 [ %i.act, %bb.ej ], [ %i.agi, %_ZN6icu_7812_GLOBAL__N_110getOverlapItjEEiPKT_iPKT0_ii.exit.i.i.i ], [ %.0248382.i.i.i, %_ZN6icu_7812_GLOBAL__N_111equalBlocksItjEEbPKT_PKT0_i.exit.i.i.i.i ] ; 2 uses
   %.0241496.i.i.i = phi i64 [ 0, %bb.ej ], [ %indvars.iv.i.i92.i.i.lcssa, %_ZN6icu_7812_GLOBAL__N_110getOverlapItjEEiPKT_iPKT0_ii.exit.i.i.i ], [ 0, %_ZN6icu_7812_GLOBAL__N_111equalBlocksItjEEbPKT_PKT0_i.exit.i.i.i.i ]
   br label %.lr.ph377.i.i.i
 
@@ -334,23 +333,17 @@ _ZN6icu_7812_GLOBAL__N_110getOverlapItjEEiPKT_iPKT0_ii.exit.i.i.i: ; preds = %bb
   store i16 %i.ago, ptr %i.agq, align 2
   %i.agr = and i64 %indvars.iv.next453.i.i.i, 4294967295
   %exitcond459.not.i.i.i = icmp eq i64 %i.agr, 32
-  br i1 %exitcond459.not.i.i.i, label %._crit_edge378.loopexit.i.i.i, label %.lr.ph377.i.i.i, !llvm.loop !57
+  br i1 %exitcond459.not.i.i.i, label %._crit_edge378.i.i.i, label %.lr.ph377.i.i.i, !llvm.loop !57
 
-._crit_edge378.loopexit.i.i.i:                    ; preds = %.lr.ph377.i.i.i
-  %8 = trunc nsw i64 %indvars.iv.next455.i.i.i to i32
+._crit_edge378.i.i.i:                             ; preds = %.lr.ph377.i.i.i
+  %7 = trunc nsw i64 %indvars.iv.next455.i.i.i to i32 ; 4 uses
   %.pre475.i.i.i = load ptr, ptr %i.ada, align 8
-  br label %._crit_edge378.i.i.i
-
-._crit_edge378.i.i.i:                             ; preds = %._crit_edge378.loopexit.i.i.i, %_ZN6icu_7812_GLOBAL__N_110getOverlapItjEEiPKT_iPKT0_ii.exit.i.i.i
-  %9 = phi i32 [ %i.agi, %_ZN6icu_7812_GLOBAL__N_110getOverlapItjEEiPKT_iPKT0_ii.exit.i.i.i ], [ %i.agj, %._crit_edge378.loopexit.i.i.i ] ; 2 uses
-  %10 = phi ptr [ %i.afd, %_ZN6icu_7812_GLOBAL__N_110getOverlapItjEEiPKT_iPKT0_ii.exit.i.i.i ], [ %.pre475.i.i.i, %._crit_edge378.loopexit.i.i.i ]
-  %.1249.lcssa.i.i.i = phi i32 [ %.0248382.i.i.i, %_ZN6icu_7812_GLOBAL__N_110getOverlapItjEEiPKT_iPKT0_ii.exit.i.i.i ], [ %8, %._crit_edge378.loopexit.i.i.i ] ; 4 uses
-  call fastcc void @_ZN6icu_7812_GLOBAL__N_111MixedBlocks6extendItEEvPKT_iii(ptr noundef nonnull align 8 dereferenceable(28) %6, ptr noundef %10, i32 noundef %i.act, i32 noundef %.0248382.i.i.i, i32 noundef %.1249.lcssa.i.i.i)
+  call fastcc void @_ZN6icu_7812_GLOBAL__N_111MixedBlocks6extendItEEvPKT_iii(ptr noundef nonnull align 8 dereferenceable(28) %6, ptr noundef %.pre475.i.i.i, i32 noundef %i.act, i32 noundef %.0248382.i.i.i, i32 noundef %7)
   br i1 %.0259.lcssa.i.i.i, label %bb.ep, label %bb.ew
 
 bb.ep:                                            ; preds = %._crit_edge378.i.i.i
   %i.ags = load ptr, ptr %i.ada, align 8
-  call fastcc void @_ZN6icu_7812_GLOBAL__N_111MixedBlocks6extendItEEvPKT_iii(ptr noundef nonnull align 8 dereferenceable(28) %4, ptr noundef %i.ags, i32 noundef %i.act, i32 noundef %.0248382.i.i.i, i32 noundef %.1249.lcssa.i.i.i)
+  call fastcc void @_ZN6icu_7812_GLOBAL__N_111MixedBlocks6extendItEEvPKT_iii(ptr noundef nonnull align 8 dereferenceable(28) %4, ptr noundef %i.ags, i32 noundef %i.act, i32 noundef %.0248382.i.i.i, i32 noundef %7)
   br label %bb.ew
 
 .thread.i99.i.i:                                  ; preds = %bb.eh, %bb.eg
@@ -753,7 +746,7 @@ begin_hunk_1_@umutablecptrie_buildImmutable_78:bb.a
   %i.auk = load ptr, ptr %i.ada, align 8
   %i.aul = getelementptr inbounds [2 x i8], ptr %i.auk, i64 %indvars.iv.next439.2.i.i.i
   store i16 %i.auj, ptr %i.aul, align 2
-  %i.aum = load ptr, ptr %i.ada, align 8          ; 7 uses
+  %i.aum = load ptr, ptr %i.ada, align 8          ; 6 uses
   %i.aun = call fastcc noundef i32 @_ZNK6icu_7812_GLOBAL__N_111MixedBlocks9findBlockIttEEiPKT_PKT0_i(ptr noundef nonnull align 8 dereferenceable(28) %4, ptr noundef %i.aum, ptr noundef %i.aum, i32 noundef %.0248382.i.i.i) ; 2 uses
   %i.auo = icmp sgt i32 %i.aun, -1
   br i1 %i.auo, label %bb.ev, label %bb.eq
@@ -828,17 +821,13 @@ _ZN6icu_7812_GLOBAL__N_110getOverlapIttEEiPKT_iPKT0_ii.exit.i.i.i.loopexit: ; pr
 
 _ZN6icu_7812_GLOBAL__N_110getOverlapIttEEiPKT_iPKT0_ii.exit.i.i.i: ; preds = %bb.et, %_ZN6icu_7812_GLOBAL__N_110getOverlapIttEEiPKT_iPKT0_ii.exit.i.i.i.loopexit
   %indvars.iv441.i.i.i.lcssa = phi i64 [ %indvars.iv.next442.i.i.i.le, %_ZN6icu_7812_GLOBAL__N_110getOverlapIttEEiPKT_iPKT0_ii.exit.i.i.i.loopexit ], [ %indvars.iv441.i.i.i, %bb.et ] ; 4 uses
-  %indvars.iv.in.i.i101.i.i.lcssa = phi i64 [ %indvars.iv.i310.i.i.i, %_ZN6icu_7812_GLOBAL__N_110getOverlapIttEEiPKT_iPKT0_ii.exit.i.i.i.loopexit ], [ %indvars.iv.in.i.i101.i.i, %bb.et ] ; 2 uses
+  %indvars.iv.in.i.i101.i.i.lcssa = phi i64 [ %indvars.iv.i310.i.i.i, %_ZN6icu_7812_GLOBAL__N_110getOverlapIttEEiPKT_iPKT0_ii.exit.i.i.i.loopexit ], [ %indvars.iv.in.i.i101.i.i, %bb.et ]
   %.lcssa292 = phi i32 [ %i.auu, %_ZN6icu_7812_GLOBAL__N_110getOverlapIttEEiPKT_iPKT0_ii.exit.i.i.i.loopexit ], [ %i.ave, %bb.et ]
-  %i.avm = sub nsw i32 %.0248382.i.i.i, %.lcssa292 ; 3 uses
+  %i.avm = sub nsw i32 %.0248382.i.i.i, %.lcssa292 ; 2 uses
   %i.avn = icmp sgt i64 %indvars.iv.in.i.i101.i.i.lcssa, 1
-  br i1 %i.avn, label %.preheader349.i.i.i, label %_ZN6icu_7812_GLOBAL__N_110getOverlapIttEEiPKT_iPKT0_ii.exit.thread.i.i.i
+  br i1 %i.avn, label %.lr.ph.i102.i.i.preheader, label %_ZN6icu_7812_GLOBAL__N_110getOverlapIttEEiPKT_iPKT0_ii.exit.thread.i.i.i
 
-.preheader349.i.i.i:                              ; preds = %_ZN6icu_7812_GLOBAL__N_110getOverlapIttEEiPKT_iPKT0_ii.exit.i.i.i
-  %11 = icmp samesign ult i64 %indvars.iv.in.i.i101.i.i.lcssa, 37
-  br i1 %11, label %.lr.ph.i102.i.i.preheader, label %.loopexit350.i.i.i
-
-.lr.ph.i102.i.i.preheader:                        ; preds = %.preheader349.i.i.i
+.lr.ph.i102.i.i.preheader:                        ; preds = %_ZN6icu_7812_GLOBAL__N_110getOverlapIttEEiPKT_iPKT0_ii.exit.i.i.i
   %i.avo = sub i64 0, %indvars.iv441.i.i.i.lcssa
   %xtraiter383 = and i64 %i.avo, 3                ; 2 uses
   %lcmp.mod384.not = icmp eq i64 %xtraiter383, 0
@@ -917,11 +906,11 @@ _ZN6icu_7812_GLOBAL__N_110getOverlapIttEEiPKT_iPKT0_ii.exit.thread.i.i.i: ; pred
   %.pre.i.i.i = load ptr, ptr %i.ada, align 8
   br label %.loopexit350.i.i.i
 
-.loopexit350.i.i.i:                               ; preds = %.loopexit350.loopexit.i.i.i, %_ZN6icu_7812_GLOBAL__N_110getOverlapIttEEiPKT_iPKT0_ii.exit.thread.i.i.i, %.preheader349.i.i.i
-  %12 = phi ptr [ %i.aum, %_ZN6icu_7812_GLOBAL__N_110getOverlapIttEEiPKT_iPKT0_ii.exit.thread.i.i.i ], [ %i.aum, %.preheader349.i.i.i ], [ %.pre.i.i.i, %.loopexit350.loopexit.i.i.i ]
-  %13 = phi i32 [ %i.aww, %_ZN6icu_7812_GLOBAL__N_110getOverlapIttEEiPKT_iPKT0_ii.exit.thread.i.i.i ], [ %i.avm, %.preheader349.i.i.i ], [ %i.avm, %.loopexit350.loopexit.i.i.i ] ; 2 uses
-  %.4252.i.i.i = phi i32 [ %i.awx, %_ZN6icu_7812_GLOBAL__N_110getOverlapIttEEiPKT_iPKT0_ii.exit.thread.i.i.i ], [ %.0248382.i.i.i, %.preheader349.i.i.i ], [ %i.awy, %.loopexit350.loopexit.i.i.i ] ; 4 uses
-  call fastcc void @_ZN6icu_7812_GLOBAL__N_111MixedBlocks6extendItEEvPKT_iii(ptr noundef nonnull align 8 dereferenceable(28) %6, ptr noundef %12, i32 noundef %i.act, i32 noundef %.0248382.i.i.i, i32 noundef %.4252.i.i.i)
+.loopexit350.i.i.i:                               ; preds = %.loopexit350.loopexit.i.i.i, %_ZN6icu_7812_GLOBAL__N_110getOverlapIttEEiPKT_iPKT0_ii.exit.thread.i.i.i
+  %8 = phi ptr [ %i.aum, %_ZN6icu_7812_GLOBAL__N_110getOverlapIttEEiPKT_iPKT0_ii.exit.thread.i.i.i ], [ %.pre.i.i.i, %.loopexit350.loopexit.i.i.i ]
+  %9 = phi i32 [ %i.aww, %_ZN6icu_7812_GLOBAL__N_110getOverlapIttEEiPKT_iPKT0_ii.exit.thread.i.i.i ], [ %i.avm, %.loopexit350.loopexit.i.i.i ] ; 2 uses
+  %.4252.i.i.i = phi i32 [ %i.awx, %_ZN6icu_7812_GLOBAL__N_110getOverlapIttEEiPKT_iPKT0_ii.exit.thread.i.i.i ], [ %i.awy, %.loopexit350.loopexit.i.i.i ] ; 4 uses
+  call fastcc void @_ZN6icu_7812_GLOBAL__N_111MixedBlocks6extendItEEvPKT_iii(ptr noundef nonnull align 8 dereferenceable(28) %6, ptr noundef %8, i32 noundef %i.act, i32 noundef %.0248382.i.i.i, i32 noundef %.4252.i.i.i)
   br i1 %.0259.lcssa.i.i.i, label %bb.eu, label %bb.ev
 
 bb.eu:                                            ; preds = %.loopexit350.i.i.i
@@ -931,14 +920,14 @@ bb.eu:                                            ; preds = %.loopexit350.i.i.i
 
 bb.ev:                                            ; preds = %bb.eu, %.loopexit350.i.i.i, %.thread.i99.i.i
   %.5.i.i.i = phi i32 [ %.0248382.i.i.i, %.thread.i99.i.i ], [ %.4252.i.i.i, %bb.eu ], [ %.4252.i.i.i, %.loopexit350.i.i.i ]
-  %.1245.in.i.i.i = phi i32 [ %i.aun, %.thread.i99.i.i ], [ %13, %bb.eu ], [ %13, %.loopexit350.i.i.i ]
+  %.1245.in.i.i.i = phi i32 [ %i.aun, %.thread.i99.i.i ], [ %9, %bb.eu ], [ %9, %.loopexit350.i.i.i ]
   %.1245.i.i.i = or i32 %.1245.in.i.i.i, 32768
   br label %bb.ew
 
 bb.ew:                                            ; preds = %bb.ev, %bb.ep, %._crit_edge378.i.i.i, %.thread337.i.i.i, %bb.ei, %bb.eh
   %.5275335.i.i.i = phi i32 [ %.5275340.i.i.i, %._crit_edge378.i.i.i ], [ %.4274380.i.i.i, %bb.ei ], [ %.5275336.i.i.i, %bb.ev ], [ %.5275340.i.i.i, %.thread337.i.i.i ], [ %.5275340.i.i.i, %bb.ep ], [ %.4274380.i.i.i, %bb.eh ] ; 2 uses
-  %.6.i98.i.i = phi i32 [ %.1249.lcssa.i.i.i, %._crit_edge378.i.i.i ], [ %.0248382.i.i.i, %bb.ei ], [ %.5.i.i.i, %bb.ev ], [ %.0248382.i.i.i, %.thread337.i.i.i ], [ %.1249.lcssa.i.i.i, %bb.ep ], [ %.0248382.i.i.i, %bb.eh ] ; 2 uses
-  %.2246.i.i.i = phi i32 [ %9, %._crit_edge378.i.i.i ], [ %i.afc, %bb.ei ], [ %.1245.i.i.i, %bb.ev ], [ %i.afg, %.thread337.i.i.i ], [ %9, %bb.ep ], [ %i.aet, %bb.eh ] ; 3 uses
+  %.6.i98.i.i = phi i32 [ %7, %._crit_edge378.i.i.i ], [ %.0248382.i.i.i, %bb.ei ], [ %.5.i.i.i, %bb.ev ], [ %.0248382.i.i.i, %.thread337.i.i.i ], [ %7, %bb.ep ], [ %.0248382.i.i.i, %bb.eh ] ; 2 uses
+  %.2246.i.i.i = phi i32 [ %i.agj, %._crit_edge378.i.i.i ], [ %i.afc, %bb.ei ], [ %.1245.i.i.i, %bb.ev ], [ %i.afg, %.thread337.i.i.i ], [ %i.agj, %bb.ep ], [ %i.aet, %bb.eh ] ; 3 uses
   %i.axa = load i32, ptr %i.ym, align 4           ; 2 uses
   %i.axb = icmp slt i32 %i.axa, 0
   %i.axc = icmp sgt i32 %.5275335.i.i.i, -1

@@ -205,7 +205,7 @@ bb.ar:                                            ; preds = %_ZN3fmt3v126detail6
   %i.nb = load i64, ptr %i.h, align 8, !tbaa !508 ; 2 uses
   %i.nc = trunc i64 %i.nb to i32
   %i.nd = load i32, ptr %i.j, align 8, !tbaa !500 ; 3 uses
-  %i.ne = add nsw i32 %i.nd, %i.nc                ; 4 uses
+  %i.ne = add nsw i32 %i.nd, %i.nc                ; 3 uses
   %i.nf = add nsw i32 %i.na, 1
   %i.ng = icmp slt i32 %i.nf, %i.ne
   br i1 %i.ng, label %_ZN3fmt3v126detail11add_compareERKNS1_6bigintES4_S4_.exit, label %bb.as
@@ -228,7 +228,6 @@ bb.at:                                            ; preds = %bb.as
   %sext.i = shl i64 %i.nb, 32
   %i.no = ashr exact i64 %sext.i, 32
   %i.np = add nsw i64 %i.no, %i.nn
-  %9 = sext i32 %i.ne to i64
   %i.nq = sext i32 %i.mz to i64
   %i.nr = sext i32 %i.my to i64                   ; 2 uses
   %i.ns = sext i32 %i.mv to i64
@@ -237,7 +236,7 @@ bb.at:                                            ; preds = %bb.as
   br label %bb.au
 
 bb.au:                                            ; preds = %bb.az, %.lr.ph.i280
-  %indvars.iv.i = phi i64 [ %i.np, %.lr.ph.i280 ], [ %indvars.iv.next.i, %bb.az ] ; 7 uses
+  %indvars.iv.i = phi i64 [ %i.np, %.lr.ph.i280 ], [ %indvars.iv.next.i, %bb.az ] ; 6 uses
   %.03254.i = phi i64 [ 0, %.lr.ph.i280 ], [ %i.or, %bb.az ] ; 2 uses
   %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1 ; 5 uses
   %.not.i.i281 = icmp sgt i64 %indvars.iv.i, %i.nt
@@ -270,9 +269,7 @@ _ZNK3fmt3v126detail6bigint9get_bigitEi.exit44.i:  ; preds = %bb.aw, %_ZNK3fmt3v1
   %i.og = phi i64 [ %i.of, %bb.aw ], [ 0, %_ZNK3fmt3v126detail6bigint9get_bigitEi.exit.i ]
   %i.oh = add nuw nsw i64 %i.og, %i.oa            ; 3 uses
   %.not.i45.i = icmp sgt i64 %indvars.iv.i, %i.nn
-  %10 = icmp sle i64 %indvars.iv.i, %9
-  %or.cond51.i = and i1 %.not.i45.i, %10
-  br i1 %or.cond51.i, label %bb.ax, label %_ZNK3fmt3v126detail6bigint9get_bigitEi.exit46.i
+  br i1 %.not.i45.i, label %bb.ax, label %_ZNK3fmt3v126detail6bigint9get_bigitEi.exit46.i
 
 bb.ax:                                            ; preds = %_ZNK3fmt3v126detail6bigint9get_bigitEi.exit44.i
   %i.oi = sub nsw i64 %indvars.iv.next.i, %i.nn
@@ -675,7 +672,7 @@ _ZN3fmt3v126detail7compareERKNS1_6bigintES4_.exit: ; preds = %bb.bu, %._crit_edg
   %i.uo = load i64, ptr %i.h, align 8, !tbaa !508 ; 2 uses
   %i.up = trunc i64 %i.uo to i32
   %i.uq = load i32, ptr %i.j, align 8, !tbaa !500 ; 3 uses
-  %i.ur = add nsw i32 %i.uq, %i.up                ; 4 uses
+  %i.ur = add nsw i32 %i.uq, %i.up                ; 3 uses
   %i.us = add nsw i32 %i.un, 1
   %i.ut = icmp slt i32 %i.us, %i.ur
   br i1 %i.ut, label %_ZN3fmt3v126detail11add_compareERKNS1_6bigintES4_S4_.exit344, label %bb.by
@@ -698,7 +695,6 @@ bb.bz:                                            ; preds = %bb.by
   %sext.i329 = shl i64 %i.uo, 32
   %i.vb = ashr exact i64 %sext.i329, 32
   %i.vc = add nsw i64 %i.vb, %i.va
-  %11 = sext i32 %i.ur to i64
   %i.vd = sext i32 %i.um to i64
   %i.ve = sext i32 %i.ul to i64                   ; 2 uses
   %i.vf = sext i32 %i.tn to i64
@@ -707,7 +703,7 @@ bb.bz:                                            ; preds = %bb.by
   br label %bb.ca
 
 bb.ca:                                            ; preds = %bb.cf, %.lr.ph.i328
-  %indvars.iv.i330 = phi i64 [ %i.vc, %.lr.ph.i328 ], [ %indvars.iv.next.i332, %bb.cf ] ; 7 uses
+  %indvars.iv.i330 = phi i64 [ %i.vc, %.lr.ph.i328 ], [ %indvars.iv.next.i332, %bb.cf ] ; 6 uses
   %.03254.i331 = phi i64 [ 0, %.lr.ph.i328 ], [ %i.we, %bb.cf ] ; 2 uses
   %indvars.iv.next.i332 = add nsw i64 %indvars.iv.i330, -1 ; 5 uses
   %.not.i.i333 = icmp sgt i64 %indvars.iv.i330, %i.vg
@@ -740,9 +736,7 @@ _ZNK3fmt3v126detail6bigint9get_bigitEi.exit44.i338: ; preds = %bb.cc, %_ZNK3fmt3
   %i.vt = phi i64 [ %i.vs, %bb.cc ], [ 0, %_ZNK3fmt3v126detail6bigint9get_bigitEi.exit.i335 ]
   %i.vu = add nuw nsw i64 %i.vt, %i.vn            ; 3 uses
   %.not.i45.i339 = icmp sgt i64 %indvars.iv.i330, %i.va
-  %12 = icmp sle i64 %indvars.iv.i330, %11
-  %or.cond51.i340 = and i1 %.not.i45.i339, %12
-  br i1 %or.cond51.i340, label %bb.cd, label %_ZNK3fmt3v126detail6bigint9get_bigitEi.exit46.i341
+  br i1 %.not.i45.i339, label %bb.cd, label %_ZNK3fmt3v126detail6bigint9get_bigitEi.exit46.i341
 
 bb.cd:                                            ; preds = %_ZNK3fmt3v126detail6bigint9get_bigitEi.exit44.i338
   %i.vv = sub nsw i64 %indvars.iv.next.i332, %i.va
@@ -817,7 +811,7 @@ bb.cj:                                            ; preds = %bb.cg
   %i.wv = load i64, ptr %i.h, align 8, !tbaa !508 ; 2 uses
   %i.ww = trunc i64 %i.wv to i32
   %i.wx = load i32, ptr %i.j, align 8, !tbaa !500 ; 3 uses
-  %i.wy = add nsw i32 %i.wx, %i.ww                ; 4 uses
+  %i.wy = add nsw i32 %i.wx, %i.ww                ; 3 uses
   %i.wz = add nsw i32 %i.wu, 1
   %i.xa = icmp slt i32 %i.wz, %i.wy
   br i1 %i.xa, label %.thread547, label %bb.ck
@@ -838,14 +832,13 @@ bb.cl:                                            ; preds = %bb.ck
   %sext.i348 = shl i64 %i.wv, 32
   %i.xg = ashr exact i64 %sext.i348, 32
   %i.xh = add nsw i64 %i.xg, %i.xf
-  %13 = sext i32 %i.wy to i64
   %i.xi = sext i32 %i.wu to i64
   %i.xj = sext i32 %i.wt to i64                   ; 2 uses
   %i.xk = sext i32 %i.xc to i64
   br label %bb.cm
 
 bb.cm:                                            ; preds = %bb.cq, %.lr.ph.i347
-  %indvars.iv.i349 = phi i64 [ %i.xh, %.lr.ph.i347 ], [ %indvars.iv.next.i351, %bb.cq ] ; 5 uses
+  %indvars.iv.i349 = phi i64 [ %i.xh, %.lr.ph.i347 ], [ %indvars.iv.next.i351, %bb.cq ] ; 4 uses
   %.03254.i350 = phi i64 [ 0, %.lr.ph.i347 ], [ %i.yb, %bb.cq ] ; 2 uses
   %indvars.iv.next.i351 = add nsw i64 %indvars.iv.i349, -1 ; 4 uses
   %.not.i.i352 = icmp sgt i64 %indvars.iv.i349, %i.xj
@@ -864,9 +857,7 @@ bb.cn:                                            ; preds = %bb.cm
 _ZNK3fmt3v126detail6bigint9get_bigitEi.exit44.i357: ; preds = %bb.cm, %bb.cn
   %i.xr = phi i64 [ %i.xq, %bb.cn ], [ 0, %bb.cm ] ; 3 uses
   %.not.i45.i358 = icmp sgt i64 %indvars.iv.i349, %i.xf
-  %14 = icmp sle i64 %indvars.iv.i349, %13
-  %or.cond51.i359 = and i1 %.not.i45.i358, %14
-  br i1 %or.cond51.i359, label %bb.co, label %_ZNK3fmt3v126detail6bigint9get_bigitEi.exit46.i360
+  br i1 %.not.i45.i358, label %bb.co, label %_ZNK3fmt3v126detail6bigint9get_bigitEi.exit46.i360
 
 bb.co:                                            ; preds = %_ZNK3fmt3v126detail6bigint9get_bigitEi.exit44.i357
   %i.xs = sub nsw i64 %indvars.iv.next.i351, %i.xf
@@ -1269,7 +1260,7 @@ _ZN3fmt3v126detail6bigintmLIiEERS2_T_.exit421:    ; preds = %_ZN3fmt3v126detail6
   %i.aec = add nsw i32 %i.aeb, %i.aea             ; 3 uses
   %i.aed = trunc i64 %i.ady to i32
   %i.aee = load i32, ptr %i.j, align 8, !tbaa !500 ; 3 uses
-  %i.aef = add nsw i32 %i.aee, %i.aed             ; 4 uses
+  %i.aef = add nsw i32 %i.aee, %i.aed             ; 3 uses
   %i.aeg = add nsw i32 %i.aec, 1
   %i.aeh = icmp slt i32 %i.aeg, %i.aef
   br i1 %i.aeh, label %_ZN3fmt3v126detail11add_compareERKNS1_6bigintES4_S4_.exit440, label %bb.dk
@@ -1290,14 +1281,13 @@ bb.dl:                                            ; preds = %bb.dk
   %sext.i425 = shl i64 %i.ady, 32
   %i.aen = ashr exact i64 %sext.i425, 32
   %i.aeo = add nsw i64 %i.aen, %i.aem
-  %15 = sext i32 %i.aef to i64
   %i.aep = sext i32 %i.aec to i64
   %i.aeq = sext i32 %i.aeb to i64                 ; 2 uses
   %i.aer = sext i32 %i.aej to i64
   br label %bb.dm
 
 bb.dm:                                            ; preds = %bb.dp, %.lr.ph.i424
-  %indvars.iv.i426 = phi i64 [ %i.aeo, %.lr.ph.i424 ], [ %indvars.iv.next.i428, %bb.dp ] ; 5 uses
+  %indvars.iv.i426 = phi i64 [ %i.aeo, %.lr.ph.i424 ], [ %indvars.iv.next.i428, %bb.dp ] ; 4 uses
   %.03254.i427 = phi i64 [ 0, %.lr.ph.i424 ], [ %i.afi, %bb.dp ] ; 2 uses
   %indvars.iv.next.i428 = add nsw i64 %indvars.iv.i426, -1 ; 4 uses
   %.not.i.i429 = icmp sgt i64 %indvars.iv.i426, %i.aeq
@@ -1316,9 +1306,7 @@ bb.dn:                                            ; preds = %bb.dm
 _ZNK3fmt3v126detail6bigint9get_bigitEi.exit44.i434: ; preds = %bb.dm, %bb.dn
   %i.aey = phi i64 [ %i.aex, %bb.dn ], [ 0, %bb.dm ] ; 2 uses
   %.not.i45.i435 = icmp sgt i64 %indvars.iv.i426, %i.aem
-  %16 = icmp sle i64 %indvars.iv.i426, %15
-  %or.cond51.i436 = and i1 %.not.i45.i435, %16
-  br i1 %or.cond51.i436, label %bb.do, label %_ZNK3fmt3v126detail6bigint9get_bigitEi.exit46.i437
+  br i1 %.not.i45.i435, label %bb.do, label %_ZNK3fmt3v126detail6bigint9get_bigitEi.exit46.i437
 
 bb.do:                                            ; preds = %_ZNK3fmt3v126detail6bigint9get_bigitEi.exit44.i434
   %i.aez = sub nsw i64 %indvars.iv.next.i428, %i.aem
@@ -1529,7 +1517,7 @@ bb.ea:                                            ; preds = %._crit_edge
   %i.ahx = load i64, ptr %i.h, align 8, !tbaa !508 ; 2 uses
   %i.ahy = trunc i64 %i.ahx to i32
   %i.ahz = load i32, ptr %i.j, align 8, !tbaa !500 ; 3 uses
-  %i.aia = add nsw i32 %i.ahz, %i.ahy             ; 4 uses
+  %i.aia = add nsw i32 %i.ahz, %i.ahy             ; 3 uses
   %i.aib = add nsw i32 %i.ahw, 1
   %i.aic = icmp slt i32 %i.aib, %i.aia
   br i1 %i.aic, label %.thread556, label %bb.eb
@@ -1550,14 +1538,13 @@ bb.ec:                                            ; preds = %bb.eb
   %sext.i463 = shl i64 %i.ahx, 32
   %i.aii = ashr exact i64 %sext.i463, 32
   %i.aij = add nsw i64 %i.aii, %i.aih
-  %17 = sext i32 %i.aia to i64
   %i.aik = sext i32 %i.ahw to i64
   %i.ail = sext i32 %i.ahv to i64                 ; 2 uses
   %i.aim = sext i32 %i.aie to i64
   br label %bb.ed
 
 bb.ed:                                            ; preds = %bb.eh, %.lr.ph.i462
-  %indvars.iv.i464 = phi i64 [ %i.aij, %.lr.ph.i462 ], [ %indvars.iv.next.i466, %bb.eh ] ; 5 uses
+  %indvars.iv.i464 = phi i64 [ %i.aij, %.lr.ph.i462 ], [ %indvars.iv.next.i466, %bb.eh ] ; 4 uses
   %.03254.i465 = phi i64 [ 0, %.lr.ph.i462 ], [ %i.ajd, %bb.eh ] ; 2 uses
   %indvars.iv.next.i466 = add nsw i64 %indvars.iv.i464, -1 ; 4 uses
   %.not.i.i467 = icmp sgt i64 %indvars.iv.i464, %i.ail
@@ -1576,9 +1563,7 @@ bb.ee:                                            ; preds = %bb.ed
 _ZNK3fmt3v126detail6bigint9get_bigitEi.exit44.i472: ; preds = %bb.ed, %bb.ee
   %i.ait = phi i64 [ %i.ais, %bb.ee ], [ 0, %bb.ed ] ; 3 uses
   %.not.i45.i473 = icmp sgt i64 %indvars.iv.i464, %i.aih
-  %18 = icmp sle i64 %indvars.iv.i464, %17
-  %or.cond51.i474 = and i1 %.not.i45.i473, %18
-  br i1 %or.cond51.i474, label %bb.ef, label %_ZNK3fmt3v126detail6bigint9get_bigitEi.exit46.i475
+  br i1 %.not.i45.i473, label %bb.ef, label %_ZNK3fmt3v126detail6bigint9get_bigitEi.exit46.i475
 
 bb.ef:                                            ; preds = %_ZNK3fmt3v126detail6bigint9get_bigitEi.exit44.i472
   %i.aiu = sub nsw i64 %indvars.iv.next.i466, %i.aih
