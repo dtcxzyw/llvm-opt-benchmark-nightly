@@ -205,7 +205,7 @@ bb.ac:                                            ; preds = %.lr.ph292, %bb.ad
   br i1 %i.ds, label %.lr.ph294.preheader, label %._crit_edge
 
 .lr.ph294.preheader:                              ; preds = %.preheader235
-  %i.dt = shl i64 %.2184291, 1                    ; 2 uses
+  %i.dt = shl nuw i64 %.2184291, 1                ; 2 uses
   %scevgep = getelementptr nuw i8, ptr %i.dn, i64 %i.dt
   %i.du = getelementptr i8, ptr %i.dn, i64 %i.dt
   %scevgep348 = getelementptr i8, ptr %i.du, i64 2
@@ -280,7 +280,7 @@ bb.ah:                                            ; preds = %.lr.ph305, %bb.ai
   br i1 %i.et, label %.lr.ph307.preheader, label %._crit_edge308
 
 .lr.ph307.preheader:                              ; preds = %.preheader233
-  %i.eu = shl i64 %.3185303, 1                    ; 2 uses
+  %i.eu = shl nuw i64 %.3185303, 1                ; 2 uses
   %scevgep353 = getelementptr nuw i8, ptr %i.eo, i64 %i.eu
   %i.ev = getelementptr i8, ptr %i.eo, i64 %i.eu
   %scevgep354 = getelementptr i8, ptr %i.ev, i64 2

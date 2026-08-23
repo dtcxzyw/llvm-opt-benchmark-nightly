@@ -205,7 +205,7 @@ bb.a:
   %i.a = alloca [8 x float], align 32             ; 36 uses
   %i.b = alloca [8 x float], align 32             ; 37 uses
   %i.c = alloca [8 x float], align 32             ; 52 uses
-  %i.d = load i32, ptr %1, align 4, !tbaa !308    ; 5 uses
+  %i.d = load i32, ptr %1, align 4, !tbaa !308    ; 4 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.f = load i32, ptr %i.e, align 4, !tbaa !310  ; 2 uses
   %i.g = icmp slt i32 %i.d, %i.f
@@ -355,8 +355,8 @@ bb.a:
   ret void
 
 bb.b:                                             ; preds = %.lr.ph73, %._crit_edge
-  %indvars.iv138 = phi i64 [ %i.am, %.lr.ph73 ], [ %indvars.iv.next139, %._crit_edge ] ; 3 uses
-  %indvar = phi i32 [ 0, %.lr.ph73 ], [ %indvar.next, %._crit_edge ] ; 3 uses
+  %indvars.iv138 = phi i64 [ %i.am, %.lr.ph73 ], [ %indvars.iv.next139, %._crit_edge ] ; 4 uses
+  %indvar = phi i32 [ 0, %.lr.ph73 ], [ %indvar.next, %._crit_edge ] ; 2 uses
   %i.ao = add i32 %i.d, %indvar
   %i.ap = shl i32 %i.ao, 3
   %i.aq = sub i32 %i.i, %i.ap
@@ -364,7 +364,7 @@ bb.b:                                             ; preds = %.lr.ph73, %._crit_e
   %i.as = tail call i32 @llvm.umin.i32(i32 %i.ar, i32 8)
   %i.at = shl nuw nsw i32 %i.as, 2
   %i.au = zext nneg i32 %i.at to i64              ; 4 uses
-  %2 = add i32 %i.d, %indvar
+  %2 = trunc nsw i64 %indvars.iv138 to i32
   %i.av = shl i32 %2, 3
   %i.aw = sext i32 %i.av to i64
   %i.ax = shl nsw i64 %i.aw, 2                    ; 3 uses

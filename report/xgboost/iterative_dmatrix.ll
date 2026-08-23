@@ -205,7 +205,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph161, %_ZZN7xgboost6common10PartialSumINS0_18IndexTransformIterIZNS_16GHistIndexMatrix16PushAdapterBatchINS_4data17DenseAdapterBatchEEEvPKNS_7ContextEmmRKT_fNS0_4SpanIKNS_11FeatureTypeELm18446744073709551615EEEdmEUlmE_EEPmmEEviSA_SA_T1_T0_ENKUlSA_E0_clImEEDaSA_.exit
   %.048160 = phi i64 [ 0, %.lr.ph161 ], [ %i.ax, %_ZZN7xgboost6common10PartialSumINS0_18IndexTransformIterIZNS_16GHistIndexMatrix16PushAdapterBatchINS_4data17DenseAdapterBatchEEEvPKNS_7ContextEmmRKT_fNS0_4SpanIKNS_11FeatureTypeELm18446744073709551615EEEdmEUlmE_EEPmmEEviSA_SA_T1_T0_ENKUlSA_E0_clImEEDaSA_.exit ] ; 8 uses
-  %i.m = shl i64 %.048160, 3                      ; 2 uses
+  %i.m = shl nuw i64 %.048160, 3                  ; 2 uses
   %i.n = load i64, ptr %i.d, align 8, !tbaa !109  ; 5 uses
   %i.o = mul i64 %i.n, %.048160                   ; 5 uses
   %i.p = load i64, ptr %i.f, align 8, !tbaa !109
@@ -440,7 +440,7 @@ _ZNSt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14defaul
 
 bb.m:                                             ; preds = %.lr.ph159, %_ZN4dmlc12OMPException3RunIZN7xgboost6common10PartialSumINS3_18IndexTransformIterIZNS2_16GHistIndexMatrix16PushAdapterBatchINS2_4data17DenseAdapterBatchEEEvPKNS2_7ContextEmmRKT_fNS3_4SpanIKNS2_11FeatureTypeELm18446744073709551615EEEdmEUlmE_EEPmmEEviSD_SD_T1_T0_EUlSD_E0_JmEEEvSD_DpT0_.exit
   %.044158 = phi i64 [ 0, %.lr.ph159 ], [ %i.da, %_ZN4dmlc12OMPException3RunIZN7xgboost6common10PartialSumINS3_18IndexTransformIterIZNS2_16GHistIndexMatrix16PushAdapterBatchINS2_4data17DenseAdapterBatchEEEvPKNS2_7ContextEmmRKT_fNS3_4SpanIKNS2_11FeatureTypeELm18446744073709551615EEEdmEUlmE_EEPmmEEviSD_SD_T1_T0_EUlSD_E0_JmEEEvSD_DpT0_.exit ] ; 8 uses
-  %i.bp = shl i64 %.044158, 3                     ; 2 uses
+  %i.bp = shl nuw i64 %.044158, 3                 ; 2 uses
   %i.bq = load i64, ptr %.sroa.082.0.copyload, align 8, !tbaa !109 ; 5 uses
   %i.br = mul i64 %i.bq, %.044158                 ; 5 uses
   %i.bs = load i64, ptr %.sroa.2.0.copyload, align 8, !tbaa !109
@@ -571,7 +571,7 @@ bb.q:                                             ; preds = %_ZNSt10unique_ptrIN
 
 bb.r:                                             ; preds = %.lr.ph157, %_ZN4dmlc12OMPException3RunIZN7xgboost6common10PartialSumINS3_18IndexTransformIterIZNS2_16GHistIndexMatrix16PushAdapterBatchINS2_4data17DenseAdapterBatchEEEvPKNS2_7ContextEmmRKT_fNS3_4SpanIKNS2_11FeatureTypeELm18446744073709551615EEEdmEUlmE_EEPmmEEviSD_SD_T1_T0_EUlSD_E0_JmEEEvSD_DpT0_.exit64
   %.043156 = phi i64 [ 0, %.lr.ph157 ], [ %i.en, %_ZN4dmlc12OMPException3RunIZN7xgboost6common10PartialSumINS3_18IndexTransformIterIZNS2_16GHistIndexMatrix16PushAdapterBatchINS2_4data17DenseAdapterBatchEEEvPKNS2_7ContextEmmRKT_fNS3_4SpanIKNS2_11FeatureTypeELm18446744073709551615EEEdmEUlmE_EEPmmEEviSD_SD_T1_T0_EUlSD_E0_JmEEEvSD_DpT0_.exit64 ] ; 8 uses
-  %i.dc = shl i64 %.043156, 3                     ; 2 uses
+  %i.dc = shl nuw i64 %.043156, 3                 ; 2 uses
   %i.dd = load i64, ptr %.sroa.090.0.copyload, align 8, !tbaa !109 ; 5 uses
   %i.de = mul i64 %i.dd, %.043156                 ; 5 uses
   %i.df = load i64, ptr %.sroa.291.0.copyload, align 8, !tbaa !109
@@ -669,7 +669,7 @@ _ZN4dmlc12OMPException3RunIZN7xgboost6common10PartialSumINS3_18IndexTransformIte
 
 bb.v:                                             ; preds = %.lr.ph155, %_ZN4dmlc12OMPException3RunIZN7xgboost6common10PartialSumINS3_18IndexTransformIterIZNS2_16GHistIndexMatrix16PushAdapterBatchINS2_4data17DenseAdapterBatchEEEvPKNS2_7ContextEmmRKT_fNS3_4SpanIKNS2_11FeatureTypeELm18446744073709551615EEEdmEUlmE_EEPmmEEviSD_SD_T1_T0_EUlSD_E0_JmEEEvSD_DpT0_.exit67
   %.042154 = phi i64 [ 0, %.lr.ph155 ], [ %i.fz, %_ZN4dmlc12OMPException3RunIZN7xgboost6common10PartialSumINS3_18IndexTransformIterIZNS2_16GHistIndexMatrix16PushAdapterBatchINS2_4data17DenseAdapterBatchEEEvPKNS2_7ContextEmmRKT_fNS3_4SpanIKNS2_11FeatureTypeELm18446744073709551615EEEdmEUlmE_EEPmmEEviSD_SD_T1_T0_EUlSD_E0_JmEEEvSD_DpT0_.exit67 ] ; 8 uses
-  %i.eo = shl i64 %.042154, 3                     ; 2 uses
+  %i.eo = shl nuw i64 %.042154, 3                 ; 2 uses
   %i.ep = load i64, ptr %.sroa.0100.0.copyload, align 8, !tbaa !109 ; 5 uses
   %i.eq = mul i64 %i.ep, %.042154                 ; 5 uses
   %i.er = load i64, ptr %.sroa.2101.0.copyload, align 8, !tbaa !109
@@ -800,7 +800,7 @@ bb.z:                                             ; preds = %_ZNSt10unique_ptrIN
 
 bb.aa:                                            ; preds = %.lr.ph153, %_ZN4dmlc12OMPException3RunIZN7xgboost6common10PartialSumINS3_18IndexTransformIterIZNS2_16GHistIndexMatrix16PushAdapterBatchINS2_4data17DenseAdapterBatchEEEvPKNS2_7ContextEmmRKT_fNS3_4SpanIKNS2_11FeatureTypeELm18446744073709551615EEEdmEUlmE_EEPmmEEviSD_SD_T1_T0_EUlSD_E0_JmEEEvSD_DpT0_.exit70
   %.041152 = phi i64 [ 0, %.lr.ph153 ], [ %i.hm, %_ZN4dmlc12OMPException3RunIZN7xgboost6common10PartialSumINS3_18IndexTransformIterIZNS2_16GHistIndexMatrix16PushAdapterBatchINS2_4data17DenseAdapterBatchEEEvPKNS2_7ContextEmmRKT_fNS3_4SpanIKNS2_11FeatureTypeELm18446744073709551615EEEdmEUlmE_EEPmmEEviSD_SD_T1_T0_EUlSD_E0_JmEEEvSD_DpT0_.exit70 ] ; 8 uses
-  %i.gb = shl i64 %.041152, 3                     ; 2 uses
+  %i.gb = shl nuw i64 %.041152, 3                 ; 2 uses
   %i.gc = load i64, ptr %.sroa.0110.0.copyload, align 8, !tbaa !109 ; 5 uses
   %i.gd = mul i64 %i.gc, %.041152                 ; 5 uses
   %i.ge = load i64, ptr %.sroa.2111.0.copyload, align 8, !tbaa !109
@@ -898,7 +898,7 @@ _ZN4dmlc12OMPException3RunIZN7xgboost6common10PartialSumINS3_18IndexTransformIte
 
 bb.ae:                                            ; preds = %.lr.ph151, %_ZN4dmlc12OMPException3RunIZN7xgboost6common10PartialSumINS3_18IndexTransformIterIZNS2_16GHistIndexMatrix16PushAdapterBatchINS2_4data17DenseAdapterBatchEEEvPKNS2_7ContextEmmRKT_fNS3_4SpanIKNS2_11FeatureTypeELm18446744073709551615EEEdmEUlmE_EEPmmEEviSD_SD_T1_T0_EUlSD_E0_JmEEEvSD_DpT0_.exit73
   %.040150 = phi i64 [ 0, %.lr.ph151 ], [ %i.iy, %_ZN4dmlc12OMPException3RunIZN7xgboost6common10PartialSumINS3_18IndexTransformIterIZNS2_16GHistIndexMatrix16PushAdapterBatchINS2_4data17DenseAdapterBatchEEEvPKNS2_7ContextEmmRKT_fNS3_4SpanIKNS2_11FeatureTypeELm18446744073709551615EEEdmEUlmE_EEPmmEEviSD_SD_T1_T0_EUlSD_E0_JmEEEvSD_DpT0_.exit73 ] ; 8 uses
-  %i.hn = shl i64 %.040150, 3                     ; 2 uses
+  %i.hn = shl nuw i64 %.040150, 3                 ; 2 uses
   %i.ho = load i64, ptr %.sroa.0120.0.copyload, align 8, !tbaa !109 ; 5 uses
   %i.hp = mul i64 %i.ho, %.040150                 ; 5 uses
   %i.hq = load i64, ptr %.sroa.2121.0.copyload, align 8, !tbaa !109
@@ -996,7 +996,7 @@ _ZN4dmlc12OMPException3RunIZN7xgboost6common10PartialSumINS3_18IndexTransformIte
 
 bb.ai:                                            ; preds = %.lr.ph, %_ZN4dmlc12OMPException3RunIZN7xgboost6common10PartialSumINS3_18IndexTransformIterIZNS2_16GHistIndexMatrix16PushAdapterBatchINS2_4data17DenseAdapterBatchEEEvPKNS2_7ContextEmmRKT_fNS3_4SpanIKNS2_11FeatureTypeELm18446744073709551615EEEdmEUlmE_EEPmmEEviSD_SD_T1_T0_EUlSD_E0_JmEEEvSD_DpT0_.exit76
   %.0149 = phi i64 [ 0, %.lr.ph ], [ %i.kk, %_ZN4dmlc12OMPException3RunIZN7xgboost6common10PartialSumINS3_18IndexTransformIterIZNS2_16GHistIndexMatrix16PushAdapterBatchINS2_4data17DenseAdapterBatchEEEvPKNS2_7ContextEmmRKT_fNS3_4SpanIKNS2_11FeatureTypeELm18446744073709551615EEEdmEUlmE_EEPmmEEviSD_SD_T1_T0_EUlSD_E0_JmEEEvSD_DpT0_.exit76 ] ; 8 uses
-  %i.iz = shl i64 %.0149, 3                       ; 2 uses
+  %i.iz = shl nuw i64 %.0149, 3                   ; 2 uses
   %i.ja = load i64, ptr %.sroa.0130.0.copyload, align 8, !tbaa !109 ; 5 uses
   %i.jb = mul i64 %i.ja, %.0149                   ; 5 uses
   %i.jc = load i64, ptr %.sroa.2131.0.copyload, align 8, !tbaa !109
@@ -1399,7 +1399,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph161, %_ZZN7xgboost6common10PartialSumINS0_18IndexTransformIterIZNS_16GHistIndexMatrix16PushAdapterBatchINS_4data17ArrayAdapterBatchEEEvPKNS_7ContextEmmRKT_fNS0_4SpanIKNS_11FeatureTypeELm18446744073709551615EEEdmEUlmE_EEPmmEEviSA_SA_T1_T0_ENKUlSA_E0_clImEEDaSA_.exit
   %.048160 = phi i64 [ 0, %.lr.ph161 ], [ %i.ax, %_ZZN7xgboost6common10PartialSumINS0_18IndexTransformIterIZNS_16GHistIndexMatrix16PushAdapterBatchINS_4data17ArrayAdapterBatchEEEvPKNS_7ContextEmmRKT_fNS0_4SpanIKNS_11FeatureTypeELm18446744073709551615EEEdmEUlmE_EEPmmEEviSA_SA_T1_T0_ENKUlSA_E0_clImEEDaSA_.exit ] ; 8 uses
-  %i.m = shl i64 %.048160, 3                      ; 2 uses
+  %i.m = shl nuw i64 %.048160, 3                  ; 2 uses
   %i.n = load i64, ptr %i.d, align 8, !tbaa !109  ; 5 uses
   %i.o = mul i64 %i.n, %.048160                   ; 5 uses
   %i.p = load i64, ptr %i.f, align 8, !tbaa !109
@@ -1634,7 +1634,7 @@ _ZNSt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14defaul
 
 bb.m:                                             ; preds = %.lr.ph159, %_ZN4dmlc12OMPException3RunIZN7xgboost6common10PartialSumINS3_18IndexTransformIterIZNS2_16GHistIndexMatrix16PushAdapterBatchINS2_4data17ArrayAdapterBatchEEEvPKNS2_7ContextEmmRKT_fNS3_4SpanIKNS2_11FeatureTypeELm18446744073709551615EEEdmEUlmE_EEPmmEEviSD_SD_T1_T0_EUlSD_E0_JmEEEvSD_DpT0_.exit
   %.044158 = phi i64 [ 0, %.lr.ph159 ], [ %i.da, %_ZN4dmlc12OMPException3RunIZN7xgboost6common10PartialSumINS3_18IndexTransformIterIZNS2_16GHistIndexMatrix16PushAdapterBatchINS2_4data17ArrayAdapterBatchEEEvPKNS2_7ContextEmmRKT_fNS3_4SpanIKNS2_11FeatureTypeELm18446744073709551615EEEdmEUlmE_EEPmmEEviSD_SD_T1_T0_EUlSD_E0_JmEEEvSD_DpT0_.exit ] ; 8 uses
-  %i.bp = shl i64 %.044158, 3                     ; 2 uses
+  %i.bp = shl nuw i64 %.044158, 3                 ; 2 uses
   %i.bq = load i64, ptr %.sroa.082.0.copyload, align 8, !tbaa !109 ; 5 uses
   %i.br = mul i64 %i.bq, %.044158                 ; 5 uses
   %i.bs = load i64, ptr %.sroa.2.0.copyload, align 8, !tbaa !109
@@ -1765,7 +1765,7 @@ bb.q:                                             ; preds = %_ZNSt10unique_ptrIN
 
 bb.r:                                             ; preds = %.lr.ph157, %_ZN4dmlc12OMPException3RunIZN7xgboost6common10PartialSumINS3_18IndexTransformIterIZNS2_16GHistIndexMatrix16PushAdapterBatchINS2_4data17ArrayAdapterBatchEEEvPKNS2_7ContextEmmRKT_fNS3_4SpanIKNS2_11FeatureTypeELm18446744073709551615EEEdmEUlmE_EEPmmEEviSD_SD_T1_T0_EUlSD_E0_JmEEEvSD_DpT0_.exit64
   %.043156 = phi i64 [ 0, %.lr.ph157 ], [ %i.en, %_ZN4dmlc12OMPException3RunIZN7xgboost6common10PartialSumINS3_18IndexTransformIterIZNS2_16GHistIndexMatrix16PushAdapterBatchINS2_4data17ArrayAdapterBatchEEEvPKNS2_7ContextEmmRKT_fNS3_4SpanIKNS2_11FeatureTypeELm18446744073709551615EEEdmEUlmE_EEPmmEEviSD_SD_T1_T0_EUlSD_E0_JmEEEvSD_DpT0_.exit64 ] ; 8 uses
-  %i.dc = shl i64 %.043156, 3                     ; 2 uses
+  %i.dc = shl nuw i64 %.043156, 3                 ; 2 uses
   %i.dd = load i64, ptr %.sroa.090.0.copyload, align 8, !tbaa !109 ; 5 uses
   %i.de = mul i64 %i.dd, %.043156                 ; 5 uses
   %i.df = load i64, ptr %.sroa.291.0.copyload, align 8, !tbaa !109
@@ -1863,7 +1863,7 @@ _ZN4dmlc12OMPException3RunIZN7xgboost6common10PartialSumINS3_18IndexTransformIte
 
 bb.v:                                             ; preds = %.lr.ph155, %_ZN4dmlc12OMPException3RunIZN7xgboost6common10PartialSumINS3_18IndexTransformIterIZNS2_16GHistIndexMatrix16PushAdapterBatchINS2_4data17ArrayAdapterBatchEEEvPKNS2_7ContextEmmRKT_fNS3_4SpanIKNS2_11FeatureTypeELm18446744073709551615EEEdmEUlmE_EEPmmEEviSD_SD_T1_T0_EUlSD_E0_JmEEEvSD_DpT0_.exit67
   %.042154 = phi i64 [ 0, %.lr.ph155 ], [ %i.fz, %_ZN4dmlc12OMPException3RunIZN7xgboost6common10PartialSumINS3_18IndexTransformIterIZNS2_16GHistIndexMatrix16PushAdapterBatchINS2_4data17ArrayAdapterBatchEEEvPKNS2_7ContextEmmRKT_fNS3_4SpanIKNS2_11FeatureTypeELm18446744073709551615EEEdmEUlmE_EEPmmEEviSD_SD_T1_T0_EUlSD_E0_JmEEEvSD_DpT0_.exit67 ] ; 8 uses
-  %i.eo = shl i64 %.042154, 3                     ; 2 uses
+  %i.eo = shl nuw i64 %.042154, 3                 ; 2 uses
   %i.ep = load i64, ptr %.sroa.0100.0.copyload, align 8, !tbaa !109 ; 5 uses
   %i.eq = mul i64 %i.ep, %.042154                 ; 5 uses
   %i.er = load i64, ptr %.sroa.2101.0.copyload, align 8, !tbaa !109
@@ -1994,7 +1994,7 @@ bb.z:                                             ; preds = %_ZNSt10unique_ptrIN
 
 bb.aa:                                            ; preds = %.lr.ph153, %_ZN4dmlc12OMPException3RunIZN7xgboost6common10PartialSumINS3_18IndexTransformIterIZNS2_16GHistIndexMatrix16PushAdapterBatchINS2_4data17ArrayAdapterBatchEEEvPKNS2_7ContextEmmRKT_fNS3_4SpanIKNS2_11FeatureTypeELm18446744073709551615EEEdmEUlmE_EEPmmEEviSD_SD_T1_T0_EUlSD_E0_JmEEEvSD_DpT0_.exit70
   %.041152 = phi i64 [ 0, %.lr.ph153 ], [ %i.hm, %_ZN4dmlc12OMPException3RunIZN7xgboost6common10PartialSumINS3_18IndexTransformIterIZNS2_16GHistIndexMatrix16PushAdapterBatchINS2_4data17ArrayAdapterBatchEEEvPKNS2_7ContextEmmRKT_fNS3_4SpanIKNS2_11FeatureTypeELm18446744073709551615EEEdmEUlmE_EEPmmEEviSD_SD_T1_T0_EUlSD_E0_JmEEEvSD_DpT0_.exit70 ] ; 8 uses
-  %i.gb = shl i64 %.041152, 3                     ; 2 uses
+  %i.gb = shl nuw i64 %.041152, 3                 ; 2 uses
   %i.gc = load i64, ptr %.sroa.0110.0.copyload, align 8, !tbaa !109 ; 5 uses
   %i.gd = mul i64 %i.gc, %.041152                 ; 5 uses
   %i.ge = load i64, ptr %.sroa.2111.0.copyload, align 8, !tbaa !109
@@ -2092,7 +2092,7 @@ _ZN4dmlc12OMPException3RunIZN7xgboost6common10PartialSumINS3_18IndexTransformIte
 
 bb.ae:                                            ; preds = %.lr.ph151, %_ZN4dmlc12OMPException3RunIZN7xgboost6common10PartialSumINS3_18IndexTransformIterIZNS2_16GHistIndexMatrix16PushAdapterBatchINS2_4data17ArrayAdapterBatchEEEvPKNS2_7ContextEmmRKT_fNS3_4SpanIKNS2_11FeatureTypeELm18446744073709551615EEEdmEUlmE_EEPmmEEviSD_SD_T1_T0_EUlSD_E0_JmEEEvSD_DpT0_.exit73
   %.040150 = phi i64 [ 0, %.lr.ph151 ], [ %i.iy, %_ZN4dmlc12OMPException3RunIZN7xgboost6common10PartialSumINS3_18IndexTransformIterIZNS2_16GHistIndexMatrix16PushAdapterBatchINS2_4data17ArrayAdapterBatchEEEvPKNS2_7ContextEmmRKT_fNS3_4SpanIKNS2_11FeatureTypeELm18446744073709551615EEEdmEUlmE_EEPmmEEviSD_SD_T1_T0_EUlSD_E0_JmEEEvSD_DpT0_.exit73 ] ; 8 uses
-  %i.hn = shl i64 %.040150, 3                     ; 2 uses
+  %i.hn = shl nuw i64 %.040150, 3                 ; 2 uses
   %i.ho = load i64, ptr %.sroa.0120.0.copyload, align 8, !tbaa !109 ; 5 uses
   %i.hp = mul i64 %i.ho, %.040150                 ; 5 uses
   %i.hq = load i64, ptr %.sroa.2121.0.copyload, align 8, !tbaa !109
@@ -2190,7 +2190,7 @@ _ZN4dmlc12OMPException3RunIZN7xgboost6common10PartialSumINS3_18IndexTransformIte
 
 bb.ai:                                            ; preds = %.lr.ph, %_ZN4dmlc12OMPException3RunIZN7xgboost6common10PartialSumINS3_18IndexTransformIterIZNS2_16GHistIndexMatrix16PushAdapterBatchINS2_4data17ArrayAdapterBatchEEEvPKNS2_7ContextEmmRKT_fNS3_4SpanIKNS2_11FeatureTypeELm18446744073709551615EEEdmEUlmE_EEPmmEEviSD_SD_T1_T0_EUlSD_E0_JmEEEvSD_DpT0_.exit76
   %.0149 = phi i64 [ 0, %.lr.ph ], [ %i.kk, %_ZN4dmlc12OMPException3RunIZN7xgboost6common10PartialSumINS3_18IndexTransformIterIZNS2_16GHistIndexMatrix16PushAdapterBatchINS2_4data17ArrayAdapterBatchEEEvPKNS2_7ContextEmmRKT_fNS3_4SpanIKNS2_11FeatureTypeELm18446744073709551615EEEdmEUlmE_EEPmmEEviSD_SD_T1_T0_EUlSD_E0_JmEEEvSD_DpT0_.exit76 ] ; 8 uses
-  %i.iz = shl i64 %.0149, 3                       ; 2 uses
+  %i.iz = shl nuw i64 %.0149, 3                   ; 2 uses
   %i.ja = load i64, ptr %.sroa.0130.0.copyload, align 8, !tbaa !109 ; 5 uses
   %i.jb = mul i64 %i.ja, %.0149                   ; 5 uses
   %i.jc = load i64, ptr %.sroa.2131.0.copyload, align 8, !tbaa !109
@@ -2593,7 +2593,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph161, %_ZZN7xgboost6common10PartialSumINS0_18IndexTransformIterIZNS_16GHistIndexMatrix16PushAdapterBatchINS_4data20CSRArrayAdapterBatchEEEvPKNS_7ContextEmmRKT_fNS0_4SpanIKNS_11FeatureTypeELm18446744073709551615EEEdmEUlmE_EEPmmEEviSA_SA_T1_T0_ENKUlSA_E0_clImEEDaSA_.exit
   %.048160 = phi i64 [ 0, %.lr.ph161 ], [ %i.ax, %_ZZN7xgboost6common10PartialSumINS0_18IndexTransformIterIZNS_16GHistIndexMatrix16PushAdapterBatchINS_4data20CSRArrayAdapterBatchEEEvPKNS_7ContextEmmRKT_fNS0_4SpanIKNS_11FeatureTypeELm18446744073709551615EEEdmEUlmE_EEPmmEEviSA_SA_T1_T0_ENKUlSA_E0_clImEEDaSA_.exit ] ; 8 uses
-  %i.m = shl i64 %.048160, 3                      ; 2 uses
+  %i.m = shl nuw i64 %.048160, 3                  ; 2 uses
   %i.n = load i64, ptr %i.d, align 8, !tbaa !109  ; 5 uses
   %i.o = mul i64 %i.n, %.048160                   ; 5 uses
   %i.p = load i64, ptr %i.f, align 8, !tbaa !109
@@ -2828,7 +2828,7 @@ _ZNSt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14defaul
 
 bb.m:                                             ; preds = %.lr.ph159, %_ZN4dmlc12OMPException3RunIZN7xgboost6common10PartialSumINS3_18IndexTransformIterIZNS2_16GHistIndexMatrix16PushAdapterBatchINS2_4data20CSRArrayAdapterBatchEEEvPKNS2_7ContextEmmRKT_fNS3_4SpanIKNS2_11FeatureTypeELm18446744073709551615EEEdmEUlmE_EEPmmEEviSD_SD_T1_T0_EUlSD_E0_JmEEEvSD_DpT0_.exit
   %.044158 = phi i64 [ 0, %.lr.ph159 ], [ %i.da, %_ZN4dmlc12OMPException3RunIZN7xgboost6common10PartialSumINS3_18IndexTransformIterIZNS2_16GHistIndexMatrix16PushAdapterBatchINS2_4data20CSRArrayAdapterBatchEEEvPKNS2_7ContextEmmRKT_fNS3_4SpanIKNS2_11FeatureTypeELm18446744073709551615EEEdmEUlmE_EEPmmEEviSD_SD_T1_T0_EUlSD_E0_JmEEEvSD_DpT0_.exit ] ; 8 uses
-  %i.bp = shl i64 %.044158, 3                     ; 2 uses
+  %i.bp = shl nuw i64 %.044158, 3                 ; 2 uses
   %i.bq = load i64, ptr %.sroa.082.0.copyload, align 8, !tbaa !109 ; 5 uses
   %i.br = mul i64 %i.bq, %.044158                 ; 5 uses
   %i.bs = load i64, ptr %.sroa.2.0.copyload, align 8, !tbaa !109
@@ -2959,7 +2959,7 @@ bb.q:                                             ; preds = %_ZNSt10unique_ptrIN
 
 bb.r:                                             ; preds = %.lr.ph157, %_ZN4dmlc12OMPException3RunIZN7xgboost6common10PartialSumINS3_18IndexTransformIterIZNS2_16GHistIndexMatrix16PushAdapterBatchINS2_4data20CSRArrayAdapterBatchEEEvPKNS2_7ContextEmmRKT_fNS3_4SpanIKNS2_11FeatureTypeELm18446744073709551615EEEdmEUlmE_EEPmmEEviSD_SD_T1_T0_EUlSD_E0_JmEEEvSD_DpT0_.exit64
   %.043156 = phi i64 [ 0, %.lr.ph157 ], [ %i.en, %_ZN4dmlc12OMPException3RunIZN7xgboost6common10PartialSumINS3_18IndexTransformIterIZNS2_16GHistIndexMatrix16PushAdapterBatchINS2_4data20CSRArrayAdapterBatchEEEvPKNS2_7ContextEmmRKT_fNS3_4SpanIKNS2_11FeatureTypeELm18446744073709551615EEEdmEUlmE_EEPmmEEviSD_SD_T1_T0_EUlSD_E0_JmEEEvSD_DpT0_.exit64 ] ; 8 uses
-  %i.dc = shl i64 %.043156, 3                     ; 2 uses
+  %i.dc = shl nuw i64 %.043156, 3                 ; 2 uses
   %i.dd = load i64, ptr %.sroa.090.0.copyload, align 8, !tbaa !109 ; 5 uses
   %i.de = mul i64 %i.dd, %.043156                 ; 5 uses
   %i.df = load i64, ptr %.sroa.291.0.copyload, align 8, !tbaa !109
@@ -3057,7 +3057,7 @@ _ZN4dmlc12OMPException3RunIZN7xgboost6common10PartialSumINS3_18IndexTransformIte
 
 bb.v:                                             ; preds = %.lr.ph155, %_ZN4dmlc12OMPException3RunIZN7xgboost6common10PartialSumINS3_18IndexTransformIterIZNS2_16GHistIndexMatrix16PushAdapterBatchINS2_4data20CSRArrayAdapterBatchEEEvPKNS2_7ContextEmmRKT_fNS3_4SpanIKNS2_11FeatureTypeELm18446744073709551615EEEdmEUlmE_EEPmmEEviSD_SD_T1_T0_EUlSD_E0_JmEEEvSD_DpT0_.exit67
   %.042154 = phi i64 [ 0, %.lr.ph155 ], [ %i.fz, %_ZN4dmlc12OMPException3RunIZN7xgboost6common10PartialSumINS3_18IndexTransformIterIZNS2_16GHistIndexMatrix16PushAdapterBatchINS2_4data20CSRArrayAdapterBatchEEEvPKNS2_7ContextEmmRKT_fNS3_4SpanIKNS2_11FeatureTypeELm18446744073709551615EEEdmEUlmE_EEPmmEEviSD_SD_T1_T0_EUlSD_E0_JmEEEvSD_DpT0_.exit67 ] ; 8 uses
-  %i.eo = shl i64 %.042154, 3                     ; 2 uses
+  %i.eo = shl nuw i64 %.042154, 3                 ; 2 uses
   %i.ep = load i64, ptr %.sroa.0100.0.copyload, align 8, !tbaa !109 ; 5 uses
   %i.eq = mul i64 %i.ep, %.042154                 ; 5 uses
   %i.er = load i64, ptr %.sroa.2101.0.copyload, align 8, !tbaa !109
@@ -3188,7 +3188,7 @@ bb.z:                                             ; preds = %_ZNSt10unique_ptrIN
 
 bb.aa:                                            ; preds = %.lr.ph153, %_ZN4dmlc12OMPException3RunIZN7xgboost6common10PartialSumINS3_18IndexTransformIterIZNS2_16GHistIndexMatrix16PushAdapterBatchINS2_4data20CSRArrayAdapterBatchEEEvPKNS2_7ContextEmmRKT_fNS3_4SpanIKNS2_11FeatureTypeELm18446744073709551615EEEdmEUlmE_EEPmmEEviSD_SD_T1_T0_EUlSD_E0_JmEEEvSD_DpT0_.exit70
   %.041152 = phi i64 [ 0, %.lr.ph153 ], [ %i.hm, %_ZN4dmlc12OMPException3RunIZN7xgboost6common10PartialSumINS3_18IndexTransformIterIZNS2_16GHistIndexMatrix16PushAdapterBatchINS2_4data20CSRArrayAdapterBatchEEEvPKNS2_7ContextEmmRKT_fNS3_4SpanIKNS2_11FeatureTypeELm18446744073709551615EEEdmEUlmE_EEPmmEEviSD_SD_T1_T0_EUlSD_E0_JmEEEvSD_DpT0_.exit70 ] ; 8 uses
-  %i.gb = shl i64 %.041152, 3                     ; 2 uses
+  %i.gb = shl nuw i64 %.041152, 3                 ; 2 uses
   %i.gc = load i64, ptr %.sroa.0110.0.copyload, align 8, !tbaa !109 ; 5 uses
   %i.gd = mul i64 %i.gc, %.041152                 ; 5 uses
   %i.ge = load i64, ptr %.sroa.2111.0.copyload, align 8, !tbaa !109
@@ -3286,7 +3286,7 @@ _ZN4dmlc12OMPException3RunIZN7xgboost6common10PartialSumINS3_18IndexTransformIte
 
 bb.ae:                                            ; preds = %.lr.ph151, %_ZN4dmlc12OMPException3RunIZN7xgboost6common10PartialSumINS3_18IndexTransformIterIZNS2_16GHistIndexMatrix16PushAdapterBatchINS2_4data20CSRArrayAdapterBatchEEEvPKNS2_7ContextEmmRKT_fNS3_4SpanIKNS2_11FeatureTypeELm18446744073709551615EEEdmEUlmE_EEPmmEEviSD_SD_T1_T0_EUlSD_E0_JmEEEvSD_DpT0_.exit73
   %.040150 = phi i64 [ 0, %.lr.ph151 ], [ %i.iy, %_ZN4dmlc12OMPException3RunIZN7xgboost6common10PartialSumINS3_18IndexTransformIterIZNS2_16GHistIndexMatrix16PushAdapterBatchINS2_4data20CSRArrayAdapterBatchEEEvPKNS2_7ContextEmmRKT_fNS3_4SpanIKNS2_11FeatureTypeELm18446744073709551615EEEdmEUlmE_EEPmmEEviSD_SD_T1_T0_EUlSD_E0_JmEEEvSD_DpT0_.exit73 ] ; 8 uses
-  %i.hn = shl i64 %.040150, 3                     ; 2 uses
+  %i.hn = shl nuw i64 %.040150, 3                 ; 2 uses
   %i.ho = load i64, ptr %.sroa.0120.0.copyload, align 8, !tbaa !109 ; 5 uses
   %i.hp = mul i64 %i.ho, %.040150                 ; 5 uses
   %i.hq = load i64, ptr %.sroa.2121.0.copyload, align 8, !tbaa !109
@@ -3384,7 +3384,7 @@ _ZN4dmlc12OMPException3RunIZN7xgboost6common10PartialSumINS3_18IndexTransformIte
 
 bb.ai:                                            ; preds = %.lr.ph, %_ZN4dmlc12OMPException3RunIZN7xgboost6common10PartialSumINS3_18IndexTransformIterIZNS2_16GHistIndexMatrix16PushAdapterBatchINS2_4data20CSRArrayAdapterBatchEEEvPKNS2_7ContextEmmRKT_fNS3_4SpanIKNS2_11FeatureTypeELm18446744073709551615EEEdmEUlmE_EEPmmEEviSD_SD_T1_T0_EUlSD_E0_JmEEEvSD_DpT0_.exit76
   %.0149 = phi i64 [ 0, %.lr.ph ], [ %i.kk, %_ZN4dmlc12OMPException3RunIZN7xgboost6common10PartialSumINS3_18IndexTransformIterIZNS2_16GHistIndexMatrix16PushAdapterBatchINS2_4data20CSRArrayAdapterBatchEEEvPKNS2_7ContextEmmRKT_fNS3_4SpanIKNS2_11FeatureTypeELm18446744073709551615EEEdmEUlmE_EEPmmEEviSD_SD_T1_T0_EUlSD_E0_JmEEEvSD_DpT0_.exit76 ] ; 8 uses
-  %i.iz = shl i64 %.0149, 3                       ; 2 uses
+  %i.iz = shl nuw i64 %.0149, 3                   ; 2 uses
   %i.ja = load i64, ptr %.sroa.0130.0.copyload, align 8, !tbaa !109 ; 5 uses
   %i.jb = mul i64 %i.ja, %.0149                   ; 5 uses
   %i.jc = load i64, ptr %.sroa.2131.0.copyload, align 8, !tbaa !109
@@ -3787,7 +3787,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph161, %_ZZN7xgboost6common10PartialSumINS0_18IndexTransformIterIZNS_16GHistIndexMatrix16PushAdapterBatchINS_4data27EncColumnarAdapterBatchImplINS_11CatAccessorEEEEEvPKNS_7ContextEmmRKT_fNS0_4SpanIKNS_11FeatureTypeELm18446744073709551615EEEdmEUlmE_EEPmmEEviSC_SC_T1_T0_ENKUlSC_E0_clImEEDaSC_.exit
   %.048160 = phi i64 [ 0, %.lr.ph161 ], [ %i.ax, %_ZZN7xgboost6common10PartialSumINS0_18IndexTransformIterIZNS_16GHistIndexMatrix16PushAdapterBatchINS_4data27EncColumnarAdapterBatchImplINS_11CatAccessorEEEEEvPKNS_7ContextEmmRKT_fNS0_4SpanIKNS_11FeatureTypeELm18446744073709551615EEEdmEUlmE_EEPmmEEviSC_SC_T1_T0_ENKUlSC_E0_clImEEDaSC_.exit ] ; 8 uses
-  %i.m = shl i64 %.048160, 3                      ; 2 uses
+  %i.m = shl nuw i64 %.048160, 3                  ; 2 uses
   %i.n = load i64, ptr %i.d, align 8, !tbaa !109  ; 5 uses
   %i.o = mul i64 %i.n, %.048160                   ; 5 uses
   %i.p = load i64, ptr %i.f, align 8, !tbaa !109
@@ -4022,7 +4022,7 @@ _ZNSt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14defaul
 
 bb.m:                                             ; preds = %.lr.ph159, %_ZN4dmlc12OMPException3RunIZN7xgboost6common10PartialSumINS3_18IndexTransformIterIZNS2_16GHistIndexMatrix16PushAdapterBatchINS2_4data27EncColumnarAdapterBatchImplINS2_11CatAccessorEEEEEvPKNS2_7ContextEmmRKT_fNS3_4SpanIKNS2_11FeatureTypeELm18446744073709551615EEEdmEUlmE_EEPmmEEviSF_SF_T1_T0_EUlSF_E0_JmEEEvSF_DpT0_.exit
   %.044158 = phi i64 [ 0, %.lr.ph159 ], [ %i.da, %_ZN4dmlc12OMPException3RunIZN7xgboost6common10PartialSumINS3_18IndexTransformIterIZNS2_16GHistIndexMatrix16PushAdapterBatchINS2_4data27EncColumnarAdapterBatchImplINS2_11CatAccessorEEEEEvPKNS2_7ContextEmmRKT_fNS3_4SpanIKNS2_11FeatureTypeELm18446744073709551615EEEdmEUlmE_EEPmmEEviSF_SF_T1_T0_EUlSF_E0_JmEEEvSF_DpT0_.exit ] ; 8 uses
-  %i.bp = shl i64 %.044158, 3                     ; 2 uses
+  %i.bp = shl nuw i64 %.044158, 3                 ; 2 uses
   %i.bq = load i64, ptr %.sroa.082.0.copyload, align 8, !tbaa !109 ; 5 uses
   %i.br = mul i64 %i.bq, %.044158                 ; 5 uses
   %i.bs = load i64, ptr %.sroa.2.0.copyload, align 8, !tbaa !109
@@ -4153,7 +4153,7 @@ bb.q:                                             ; preds = %_ZNSt10unique_ptrIN
 
 bb.r:                                             ; preds = %.lr.ph157, %_ZN4dmlc12OMPException3RunIZN7xgboost6common10PartialSumINS3_18IndexTransformIterIZNS2_16GHistIndexMatrix16PushAdapterBatchINS2_4data27EncColumnarAdapterBatchImplINS2_11CatAccessorEEEEEvPKNS2_7ContextEmmRKT_fNS3_4SpanIKNS2_11FeatureTypeELm18446744073709551615EEEdmEUlmE_EEPmmEEviSF_SF_T1_T0_EUlSF_E0_JmEEEvSF_DpT0_.exit64
   %.043156 = phi i64 [ 0, %.lr.ph157 ], [ %i.en, %_ZN4dmlc12OMPException3RunIZN7xgboost6common10PartialSumINS3_18IndexTransformIterIZNS2_16GHistIndexMatrix16PushAdapterBatchINS2_4data27EncColumnarAdapterBatchImplINS2_11CatAccessorEEEEEvPKNS2_7ContextEmmRKT_fNS3_4SpanIKNS2_11FeatureTypeELm18446744073709551615EEEdmEUlmE_EEPmmEEviSF_SF_T1_T0_EUlSF_E0_JmEEEvSF_DpT0_.exit64 ] ; 8 uses
-  %i.dc = shl i64 %.043156, 3                     ; 2 uses
+  %i.dc = shl nuw i64 %.043156, 3                 ; 2 uses
   %i.dd = load i64, ptr %.sroa.090.0.copyload, align 8, !tbaa !109 ; 5 uses
   %i.de = mul i64 %i.dd, %.043156                 ; 5 uses
   %i.df = load i64, ptr %.sroa.291.0.copyload, align 8, !tbaa !109
@@ -4251,7 +4251,7 @@ _ZN4dmlc12OMPException3RunIZN7xgboost6common10PartialSumINS3_18IndexTransformIte
 
 bb.v:                                             ; preds = %.lr.ph155, %_ZN4dmlc12OMPException3RunIZN7xgboost6common10PartialSumINS3_18IndexTransformIterIZNS2_16GHistIndexMatrix16PushAdapterBatchINS2_4data27EncColumnarAdapterBatchImplINS2_11CatAccessorEEEEEvPKNS2_7ContextEmmRKT_fNS3_4SpanIKNS2_11FeatureTypeELm18446744073709551615EEEdmEUlmE_EEPmmEEviSF_SF_T1_T0_EUlSF_E0_JmEEEvSF_DpT0_.exit67
   %.042154 = phi i64 [ 0, %.lr.ph155 ], [ %i.fz, %_ZN4dmlc12OMPException3RunIZN7xgboost6common10PartialSumINS3_18IndexTransformIterIZNS2_16GHistIndexMatrix16PushAdapterBatchINS2_4data27EncColumnarAdapterBatchImplINS2_11CatAccessorEEEEEvPKNS2_7ContextEmmRKT_fNS3_4SpanIKNS2_11FeatureTypeELm18446744073709551615EEEdmEUlmE_EEPmmEEviSF_SF_T1_T0_EUlSF_E0_JmEEEvSF_DpT0_.exit67 ] ; 8 uses
-  %i.eo = shl i64 %.042154, 3                     ; 2 uses
+  %i.eo = shl nuw i64 %.042154, 3                 ; 2 uses
   %i.ep = load i64, ptr %.sroa.0100.0.copyload, align 8, !tbaa !109 ; 5 uses
   %i.eq = mul i64 %i.ep, %.042154                 ; 5 uses
   %i.er = load i64, ptr %.sroa.2101.0.copyload, align 8, !tbaa !109
@@ -4382,7 +4382,7 @@ bb.z:                                             ; preds = %_ZNSt10unique_ptrIN
 
 bb.aa:                                            ; preds = %.lr.ph153, %_ZN4dmlc12OMPException3RunIZN7xgboost6common10PartialSumINS3_18IndexTransformIterIZNS2_16GHistIndexMatrix16PushAdapterBatchINS2_4data27EncColumnarAdapterBatchImplINS2_11CatAccessorEEEEEvPKNS2_7ContextEmmRKT_fNS3_4SpanIKNS2_11FeatureTypeELm18446744073709551615EEEdmEUlmE_EEPmmEEviSF_SF_T1_T0_EUlSF_E0_JmEEEvSF_DpT0_.exit70
   %.041152 = phi i64 [ 0, %.lr.ph153 ], [ %i.hm, %_ZN4dmlc12OMPException3RunIZN7xgboost6common10PartialSumINS3_18IndexTransformIterIZNS2_16GHistIndexMatrix16PushAdapterBatchINS2_4data27EncColumnarAdapterBatchImplINS2_11CatAccessorEEEEEvPKNS2_7ContextEmmRKT_fNS3_4SpanIKNS2_11FeatureTypeELm18446744073709551615EEEdmEUlmE_EEPmmEEviSF_SF_T1_T0_EUlSF_E0_JmEEEvSF_DpT0_.exit70 ] ; 8 uses
-  %i.gb = shl i64 %.041152, 3                     ; 2 uses
+  %i.gb = shl nuw i64 %.041152, 3                 ; 2 uses
   %i.gc = load i64, ptr %.sroa.0110.0.copyload, align 8, !tbaa !109 ; 5 uses
   %i.gd = mul i64 %i.gc, %.041152                 ; 5 uses
   %i.ge = load i64, ptr %.sroa.2111.0.copyload, align 8, !tbaa !109
@@ -4480,7 +4480,7 @@ _ZN4dmlc12OMPException3RunIZN7xgboost6common10PartialSumINS3_18IndexTransformIte
 
 bb.ae:                                            ; preds = %.lr.ph151, %_ZN4dmlc12OMPException3RunIZN7xgboost6common10PartialSumINS3_18IndexTransformIterIZNS2_16GHistIndexMatrix16PushAdapterBatchINS2_4data27EncColumnarAdapterBatchImplINS2_11CatAccessorEEEEEvPKNS2_7ContextEmmRKT_fNS3_4SpanIKNS2_11FeatureTypeELm18446744073709551615EEEdmEUlmE_EEPmmEEviSF_SF_T1_T0_EUlSF_E0_JmEEEvSF_DpT0_.exit73
   %.040150 = phi i64 [ 0, %.lr.ph151 ], [ %i.iy, %_ZN4dmlc12OMPException3RunIZN7xgboost6common10PartialSumINS3_18IndexTransformIterIZNS2_16GHistIndexMatrix16PushAdapterBatchINS2_4data27EncColumnarAdapterBatchImplINS2_11CatAccessorEEEEEvPKNS2_7ContextEmmRKT_fNS3_4SpanIKNS2_11FeatureTypeELm18446744073709551615EEEdmEUlmE_EEPmmEEviSF_SF_T1_T0_EUlSF_E0_JmEEEvSF_DpT0_.exit73 ] ; 8 uses
-  %i.hn = shl i64 %.040150, 3                     ; 2 uses
+  %i.hn = shl nuw i64 %.040150, 3                 ; 2 uses
   %i.ho = load i64, ptr %.sroa.0120.0.copyload, align 8, !tbaa !109 ; 5 uses
   %i.hp = mul i64 %i.ho, %.040150                 ; 5 uses
   %i.hq = load i64, ptr %.sroa.2121.0.copyload, align 8, !tbaa !109
@@ -4578,7 +4578,7 @@ _ZN4dmlc12OMPException3RunIZN7xgboost6common10PartialSumINS3_18IndexTransformIte
 
 bb.ai:                                            ; preds = %.lr.ph, %_ZN4dmlc12OMPException3RunIZN7xgboost6common10PartialSumINS3_18IndexTransformIterIZNS2_16GHistIndexMatrix16PushAdapterBatchINS2_4data27EncColumnarAdapterBatchImplINS2_11CatAccessorEEEEEvPKNS2_7ContextEmmRKT_fNS3_4SpanIKNS2_11FeatureTypeELm18446744073709551615EEEdmEUlmE_EEPmmEEviSF_SF_T1_T0_EUlSF_E0_JmEEEvSF_DpT0_.exit76
   %.0149 = phi i64 [ 0, %.lr.ph ], [ %i.kk, %_ZN4dmlc12OMPException3RunIZN7xgboost6common10PartialSumINS3_18IndexTransformIterIZNS2_16GHistIndexMatrix16PushAdapterBatchINS2_4data27EncColumnarAdapterBatchImplINS2_11CatAccessorEEEEEvPKNS2_7ContextEmmRKT_fNS3_4SpanIKNS2_11FeatureTypeELm18446744073709551615EEEdmEUlmE_EEPmmEEviSF_SF_T1_T0_EUlSF_E0_JmEEEvSF_DpT0_.exit76 ] ; 8 uses
-  %i.iz = shl i64 %.0149, 3                       ; 2 uses
+  %i.iz = shl nuw i64 %.0149, 3                   ; 2 uses
   %i.ja = load i64, ptr %.sroa.0130.0.copyload, align 8, !tbaa !109 ; 5 uses
   %i.jb = mul i64 %i.ja, %.0149                   ; 5 uses
   %i.jc = load i64, ptr %.sroa.2131.0.copyload, align 8, !tbaa !109
@@ -4981,7 +4981,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph161, %_ZZN7xgboost6common10PartialSumINS0_18IndexTransformIterIZNS_16GHistIndexMatrix16PushAdapterBatchINS_4data27EncColumnarAdapterBatchImplINS_12NoOpAccessorEEEEEvPKNS_7ContextEmmRKT_fNS0_4SpanIKNS_11FeatureTypeELm18446744073709551615EEEdmEUlmE_EEPmmEEviSC_SC_T1_T0_ENKUlSC_E0_clImEEDaSC_.exit
   %.048160 = phi i64 [ 0, %.lr.ph161 ], [ %i.ax, %_ZZN7xgboost6common10PartialSumINS0_18IndexTransformIterIZNS_16GHistIndexMatrix16PushAdapterBatchINS_4data27EncColumnarAdapterBatchImplINS_12NoOpAccessorEEEEEvPKNS_7ContextEmmRKT_fNS0_4SpanIKNS_11FeatureTypeELm18446744073709551615EEEdmEUlmE_EEPmmEEviSC_SC_T1_T0_ENKUlSC_E0_clImEEDaSC_.exit ] ; 8 uses
-  %i.m = shl i64 %.048160, 3                      ; 2 uses
+  %i.m = shl nuw i64 %.048160, 3                  ; 2 uses
   %i.n = load i64, ptr %i.d, align 8, !tbaa !109  ; 5 uses
   %i.o = mul i64 %i.n, %.048160                   ; 5 uses
   %i.p = load i64, ptr %i.f, align 8, !tbaa !109
@@ -5216,7 +5216,7 @@ _ZNSt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14defaul
 
 bb.m:                                             ; preds = %.lr.ph159, %_ZN4dmlc12OMPException3RunIZN7xgboost6common10PartialSumINS3_18IndexTransformIterIZNS2_16GHistIndexMatrix16PushAdapterBatchINS2_4data27EncColumnarAdapterBatchImplINS2_12NoOpAccessorEEEEEvPKNS2_7ContextEmmRKT_fNS3_4SpanIKNS2_11FeatureTypeELm18446744073709551615EEEdmEUlmE_EEPmmEEviSF_SF_T1_T0_EUlSF_E0_JmEEEvSF_DpT0_.exit
   %.044158 = phi i64 [ 0, %.lr.ph159 ], [ %i.da, %_ZN4dmlc12OMPException3RunIZN7xgboost6common10PartialSumINS3_18IndexTransformIterIZNS2_16GHistIndexMatrix16PushAdapterBatchINS2_4data27EncColumnarAdapterBatchImplINS2_12NoOpAccessorEEEEEvPKNS2_7ContextEmmRKT_fNS3_4SpanIKNS2_11FeatureTypeELm18446744073709551615EEEdmEUlmE_EEPmmEEviSF_SF_T1_T0_EUlSF_E0_JmEEEvSF_DpT0_.exit ] ; 8 uses
-  %i.bp = shl i64 %.044158, 3                     ; 2 uses
+  %i.bp = shl nuw i64 %.044158, 3                 ; 2 uses
   %i.bq = load i64, ptr %.sroa.082.0.copyload, align 8, !tbaa !109 ; 5 uses
   %i.br = mul i64 %i.bq, %.044158                 ; 5 uses
   %i.bs = load i64, ptr %.sroa.2.0.copyload, align 8, !tbaa !109
@@ -5347,7 +5347,7 @@ bb.q:                                             ; preds = %_ZNSt10unique_ptrIN
 
 bb.r:                                             ; preds = %.lr.ph157, %_ZN4dmlc12OMPException3RunIZN7xgboost6common10PartialSumINS3_18IndexTransformIterIZNS2_16GHistIndexMatrix16PushAdapterBatchINS2_4data27EncColumnarAdapterBatchImplINS2_12NoOpAccessorEEEEEvPKNS2_7ContextEmmRKT_fNS3_4SpanIKNS2_11FeatureTypeELm18446744073709551615EEEdmEUlmE_EEPmmEEviSF_SF_T1_T0_EUlSF_E0_JmEEEvSF_DpT0_.exit64
   %.043156 = phi i64 [ 0, %.lr.ph157 ], [ %i.en, %_ZN4dmlc12OMPException3RunIZN7xgboost6common10PartialSumINS3_18IndexTransformIterIZNS2_16GHistIndexMatrix16PushAdapterBatchINS2_4data27EncColumnarAdapterBatchImplINS2_12NoOpAccessorEEEEEvPKNS2_7ContextEmmRKT_fNS3_4SpanIKNS2_11FeatureTypeELm18446744073709551615EEEdmEUlmE_EEPmmEEviSF_SF_T1_T0_EUlSF_E0_JmEEEvSF_DpT0_.exit64 ] ; 8 uses
-  %i.dc = shl i64 %.043156, 3                     ; 2 uses
+  %i.dc = shl nuw i64 %.043156, 3                 ; 2 uses
   %i.dd = load i64, ptr %.sroa.090.0.copyload, align 8, !tbaa !109 ; 5 uses
   %i.de = mul i64 %i.dd, %.043156                 ; 5 uses
   %i.df = load i64, ptr %.sroa.291.0.copyload, align 8, !tbaa !109
@@ -5445,7 +5445,7 @@ _ZN4dmlc12OMPException3RunIZN7xgboost6common10PartialSumINS3_18IndexTransformIte
 
 bb.v:                                             ; preds = %.lr.ph155, %_ZN4dmlc12OMPException3RunIZN7xgboost6common10PartialSumINS3_18IndexTransformIterIZNS2_16GHistIndexMatrix16PushAdapterBatchINS2_4data27EncColumnarAdapterBatchImplINS2_12NoOpAccessorEEEEEvPKNS2_7ContextEmmRKT_fNS3_4SpanIKNS2_11FeatureTypeELm18446744073709551615EEEdmEUlmE_EEPmmEEviSF_SF_T1_T0_EUlSF_E0_JmEEEvSF_DpT0_.exit67
   %.042154 = phi i64 [ 0, %.lr.ph155 ], [ %i.fz, %_ZN4dmlc12OMPException3RunIZN7xgboost6common10PartialSumINS3_18IndexTransformIterIZNS2_16GHistIndexMatrix16PushAdapterBatchINS2_4data27EncColumnarAdapterBatchImplINS2_12NoOpAccessorEEEEEvPKNS2_7ContextEmmRKT_fNS3_4SpanIKNS2_11FeatureTypeELm18446744073709551615EEEdmEUlmE_EEPmmEEviSF_SF_T1_T0_EUlSF_E0_JmEEEvSF_DpT0_.exit67 ] ; 8 uses
-  %i.eo = shl i64 %.042154, 3                     ; 2 uses
+  %i.eo = shl nuw i64 %.042154, 3                 ; 2 uses
   %i.ep = load i64, ptr %.sroa.0100.0.copyload, align 8, !tbaa !109 ; 5 uses
   %i.eq = mul i64 %i.ep, %.042154                 ; 5 uses
   %i.er = load i64, ptr %.sroa.2101.0.copyload, align 8, !tbaa !109
@@ -5576,7 +5576,7 @@ bb.z:                                             ; preds = %_ZNSt10unique_ptrIN
 
 bb.aa:                                            ; preds = %.lr.ph153, %_ZN4dmlc12OMPException3RunIZN7xgboost6common10PartialSumINS3_18IndexTransformIterIZNS2_16GHistIndexMatrix16PushAdapterBatchINS2_4data27EncColumnarAdapterBatchImplINS2_12NoOpAccessorEEEEEvPKNS2_7ContextEmmRKT_fNS3_4SpanIKNS2_11FeatureTypeELm18446744073709551615EEEdmEUlmE_EEPmmEEviSF_SF_T1_T0_EUlSF_E0_JmEEEvSF_DpT0_.exit70
   %.041152 = phi i64 [ 0, %.lr.ph153 ], [ %i.hm, %_ZN4dmlc12OMPException3RunIZN7xgboost6common10PartialSumINS3_18IndexTransformIterIZNS2_16GHistIndexMatrix16PushAdapterBatchINS2_4data27EncColumnarAdapterBatchImplINS2_12NoOpAccessorEEEEEvPKNS2_7ContextEmmRKT_fNS3_4SpanIKNS2_11FeatureTypeELm18446744073709551615EEEdmEUlmE_EEPmmEEviSF_SF_T1_T0_EUlSF_E0_JmEEEvSF_DpT0_.exit70 ] ; 8 uses
-  %i.gb = shl i64 %.041152, 3                     ; 2 uses
+  %i.gb = shl nuw i64 %.041152, 3                 ; 2 uses
   %i.gc = load i64, ptr %.sroa.0110.0.copyload, align 8, !tbaa !109 ; 5 uses
   %i.gd = mul i64 %i.gc, %.041152                 ; 5 uses
   %i.ge = load i64, ptr %.sroa.2111.0.copyload, align 8, !tbaa !109
@@ -5674,7 +5674,7 @@ _ZN4dmlc12OMPException3RunIZN7xgboost6common10PartialSumINS3_18IndexTransformIte
 
 bb.ae:                                            ; preds = %.lr.ph151, %_ZN4dmlc12OMPException3RunIZN7xgboost6common10PartialSumINS3_18IndexTransformIterIZNS2_16GHistIndexMatrix16PushAdapterBatchINS2_4data27EncColumnarAdapterBatchImplINS2_12NoOpAccessorEEEEEvPKNS2_7ContextEmmRKT_fNS3_4SpanIKNS2_11FeatureTypeELm18446744073709551615EEEdmEUlmE_EEPmmEEviSF_SF_T1_T0_EUlSF_E0_JmEEEvSF_DpT0_.exit73
   %.040150 = phi i64 [ 0, %.lr.ph151 ], [ %i.iy, %_ZN4dmlc12OMPException3RunIZN7xgboost6common10PartialSumINS3_18IndexTransformIterIZNS2_16GHistIndexMatrix16PushAdapterBatchINS2_4data27EncColumnarAdapterBatchImplINS2_12NoOpAccessorEEEEEvPKNS2_7ContextEmmRKT_fNS3_4SpanIKNS2_11FeatureTypeELm18446744073709551615EEEdmEUlmE_EEPmmEEviSF_SF_T1_T0_EUlSF_E0_JmEEEvSF_DpT0_.exit73 ] ; 8 uses
-  %i.hn = shl i64 %.040150, 3                     ; 2 uses
+  %i.hn = shl nuw i64 %.040150, 3                 ; 2 uses
   %i.ho = load i64, ptr %.sroa.0120.0.copyload, align 8, !tbaa !109 ; 5 uses
   %i.hp = mul i64 %i.ho, %.040150                 ; 5 uses
   %i.hq = load i64, ptr %.sroa.2121.0.copyload, align 8, !tbaa !109
@@ -5772,7 +5772,7 @@ _ZN4dmlc12OMPException3RunIZN7xgboost6common10PartialSumINS3_18IndexTransformIte
 
 bb.ai:                                            ; preds = %.lr.ph, %_ZN4dmlc12OMPException3RunIZN7xgboost6common10PartialSumINS3_18IndexTransformIterIZNS2_16GHistIndexMatrix16PushAdapterBatchINS2_4data27EncColumnarAdapterBatchImplINS2_12NoOpAccessorEEEEEvPKNS2_7ContextEmmRKT_fNS3_4SpanIKNS2_11FeatureTypeELm18446744073709551615EEEdmEUlmE_EEPmmEEviSF_SF_T1_T0_EUlSF_E0_JmEEEvSF_DpT0_.exit76
   %.0149 = phi i64 [ 0, %.lr.ph ], [ %i.kk, %_ZN4dmlc12OMPException3RunIZN7xgboost6common10PartialSumINS3_18IndexTransformIterIZNS2_16GHistIndexMatrix16PushAdapterBatchINS2_4data27EncColumnarAdapterBatchImplINS2_12NoOpAccessorEEEEEvPKNS2_7ContextEmmRKT_fNS3_4SpanIKNS2_11FeatureTypeELm18446744073709551615EEEdmEUlmE_EEPmmEEviSF_SF_T1_T0_EUlSF_E0_JmEEEvSF_DpT0_.exit76 ] ; 8 uses
-  %i.iz = shl i64 %.0149, 3                       ; 2 uses
+  %i.iz = shl nuw i64 %.0149, 3                   ; 2 uses
   %i.ja = load i64, ptr %.sroa.0130.0.copyload, align 8, !tbaa !109 ; 5 uses
   %i.jb = mul i64 %i.ja, %.0149                   ; 5 uses
   %i.jc = load i64, ptr %.sroa.2131.0.copyload, align 8, !tbaa !109

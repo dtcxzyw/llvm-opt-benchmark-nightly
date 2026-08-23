@@ -205,12 +205,12 @@ bb.c:                                             ; preds = %bb.d, %.lr.ph.i
 
 .lr.ph15.i:                                       ; preds = %.preheader.i
   %i.i = shl i64 %indvars.iv.i, 3                 ; 2 uses
-  %scevgep.i = getelementptr i8, ptr %i.c, i64 %i.i ; 2 uses
-  %scevgep20.i = getelementptr i8, ptr %scevgep.i, i64 8
+  %scevgep.i = getelementptr nuw i8, ptr %i.c, i64 %i.i ; 2 uses
+  %scevgep20.i = getelementptr nuw i8, ptr %scevgep.i, i64 8
   %i.j = shl i64 %i.b, 3
   %i.k = add i64 %i.j, -8
   %i.l = sub i64 %i.k, %i.i
-  tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %scevgep.i, ptr align 8 %scevgep20.i, i64 %i.l, i1 false), !tbaa !48
+  tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %scevgep.i, ptr nonnull align 8 %scevgep20.i, i64 %i.l, i1 false), !tbaa !48
   br label %check_vector_remove.exit
 
 bb.d:                                             ; preds = %bb.c

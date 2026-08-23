@@ -205,13 +205,13 @@ bb.by:                                            ; preds = %.split654.2
   br label %bb.ca
 
 .preheader908:                                    ; preds = %bb.bq, %.preheader908
-  %indvar = phi i64 [ %indvar.next, %.preheader908 ], [ 0, %bb.bq ] ; 4 uses
+  %indvar = phi i64 [ %indvar.next, %.preheader908 ], [ 0, %bb.bq ] ; 3 uses
   %indvars.iv745 = phi i32 [ %indvars.iv.next746, %.preheader908 ], [ 1, %bb.bq ] ; 2 uses
   %indvars.iv740 = phi i64 [ %indvars.iv.next741, %.preheader908 ], [ 1, %bb.bq ] ; 5 uses
   %.sroa.0523.6 = phi ptr [ %i.and, %.preheader908 ], [ %i.xo, %bb.bq ]
   %.sroa.51.6 = phi i32 [ %i.ang, %.preheader908 ], [ %i.xp, %bb.bq ]
-  %.0307 = phi i32 [ %i.amt, %.preheader908 ], [ 0, %bb.bq ] ; 6 uses
-  %i.amt = add nuw nsw i32 %.0307, 1              ; 4 uses
+  %.0307 = phi i32 [ %i.amt, %.preheader908 ], [ 0, %bb.bq ] ; 7 uses
+  %i.amt = add nuw i32 %.0307, 1                  ; 4 uses
   %i.amu = sext i32 %.sroa.51.6 to i64            ; 2 uses
   %i.amv = getelementptr inbounds [4 x i8], ptr @_ZN10tetgenmesh10facepivot1E, i64 %i.amu
   %i.amw = load i32, ptr %i.amv, align 4, !tbaa !33
@@ -427,9 +427,8 @@ bb.bz:                                            ; preds = %.preheader908
   %.pre762 = load ptr, ptr %.phi.trans.insert761, align 8, !tbaa !330 ; 2 uses
   %.phi.trans.insert763 = getelementptr inbounds nuw i8, ptr %.phi.trans.insert761, i64 8
   %.pre764 = load i32, ptr %.phi.trans.insert763, align 8, !tbaa !335 ; 2 uses
-  %7 = shl i64 %indvar, 1
-  %8 = and i64 %7, 4294967294
-  %.neg = add i64 %indvar, 1
+  %7 = shl nuw i32 %.0307, 1
+  %8 = zext i32 %7 to i64
   %xtraiter934 = and i64 %indvar, 1
   %lcmp.mod935.not = icmp eq i64 %xtraiter934, 0
   br i1 %lcmp.mod935.not, label %.lr.ph680.prol.loopexit, label %.lr.ph680.prol
@@ -459,7 +458,8 @@ bb.bz:                                            ; preds = %.preheader908
   %.unr937 = phi i32 [ %.pre764, %.lr.ph680.preheader ], [ %i.asa, %.lr.ph680.prol ]
   %.unr938 = phi ptr [ %.pre762, %.lr.ph680.preheader ], [ %i.arw, %.lr.ph680.prol ]
   %indvars.iv742.unr = phi i64 [ %indvars.iv740, %.lr.ph680.preheader ], [ %indvars.iv.next743.prol, %.lr.ph680.prol ]
-  %i.asb = icmp eq i64 %8, %.neg
+  %9 = add nsw i64 %8, -1
+  %i.asb = icmp eq i64 %indvar, %9
   br i1 %i.asb, label %._crit_edge681.loopexit, label %.lr.ph680
 
 .lr.ph680:                                        ; preds = %.lr.ph680.prol.loopexit, %.lr.ph680
