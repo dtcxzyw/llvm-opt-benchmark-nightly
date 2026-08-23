@@ -204,7 +204,12 @@ bb.d:                                             ; preds = %bb.b
   %i.j = getelementptr inbounds nuw i8, ptr %3, i64 300 ; 12 uses
   %i.k = load i32, ptr %i.j, align 4              ; 3 uses
   %i.l = icmp ugt i32 %i.k, 299
-  br i1 %i.l, label %rsp_buffer_push.exit18.thread, label %rsp_buffer_push.exit
+  br i1 %i.l, label %rsp_buffer_push.exit.thread, label %rsp_buffer_push.exit
+
+rsp_buffer_push.exit.thread:                      ; preds = %bb.d
+  %4 = getelementptr inbounds nuw i8, ptr %3, i64 2
+  store i8 -58, ptr %4, align 2
+  br label %rsp_buffer_push.exit21.thread
 
 rsp_buffer_push.exit:                             ; preds = %bb.d
   %i.m = getelementptr inbounds nuw i8, ptr %i.f, i64 1
@@ -216,12 +221,7 @@ rsp_buffer_push.exit:                             ; preds = %bb.d
   store i8 %i.n, ptr %i.q, align 1
   %.pr = load i32, ptr %i.j, align 4              ; 3 uses
   %i.r = icmp ugt i32 %.pr, 299
-  br i1 %i.r, label %rsp_buffer_push.exit18.thread, label %rsp_buffer_push.exit18
-
-rsp_buffer_push.exit18.thread:                    ; preds = %bb.d, %rsp_buffer_push.exit
-  %4 = getelementptr inbounds nuw i8, ptr %3, i64 2
-  store i8 -58, ptr %4, align 2
-  br label %rsp_buffer_push.exit21.thread
+  br i1 %i.r, label %rsp_buffer_push.exit21.thread, label %rsp_buffer_push.exit18
 
 rsp_buffer_push.exit18:                           ; preds = %rsp_buffer_push.exit
   %i.s = load i8, ptr %i.f, align 4
@@ -274,7 +274,7 @@ rsp_buffer_push.exit21:                           ; preds = %rsp_buffer_push.exi
   %i.as = icmp ugt i32 %.pr24, 299
   br i1 %i.as, label %rsp_buffer_push.exit21.thread, label %bb.e
 
-rsp_buffer_push.exit21.thread:                    ; preds = %rsp_buffer_push.exit20, %rsp_buffer_push.exit18, %rsp_buffer_push.exit18.thread, %rsp_buffer_push.exit19, %rsp_buffer_push.exit21
+rsp_buffer_push.exit21.thread:                    ; preds = %rsp_buffer_push.exit20, %rsp_buffer_push.exit18, %rsp_buffer_push.exit, %rsp_buffer_push.exit.thread, %rsp_buffer_push.exit19, %rsp_buffer_push.exit21
   %i.at = getelementptr inbounds nuw i8, ptr %3, i64 2
   store i8 -58, ptr %i.at, align 2
   br label %rsp_buffer_push.exit22

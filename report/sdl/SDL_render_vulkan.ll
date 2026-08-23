@@ -205,7 +205,7 @@ bb.bl:                                            ; preds = %bb.bk
 bb.bm:                                            ; preds = %bb.bl, %bb.bk
   %i.kj = phi ptr [ %i.ki, %bb.bl ], [ %i.kg, %bb.bk ]
   %i.kk = icmp ne ptr %i.kb, null
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(40) %i.bu, i8 0, i64 40, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(44) %i.bu, i8 0, i64 44, i1 false)
   %i.kl = call zeroext i1 @SDL_RenderingLinearSpace(ptr noundef nonnull %0) #7
   %i.km = uitofp i1 %i.kl to float
   store float %i.km, ptr %10, align 4

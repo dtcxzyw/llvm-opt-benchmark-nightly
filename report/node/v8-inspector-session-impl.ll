@@ -204,7 +204,7 @@ _ZNKSt14default_deleteIN12v8_inspector8protocol5ValueEEclEPS2_.exit.i4.i: ; pred
   call void %i.al(ptr noundef nonnull align 8 dereferenceable(12) %.pre.i) #17, !noalias !7, !inline_history !14
   br label %_ZNSt10unique_ptrIN12v8_inspector8protocol5ValueESt14default_deleteIS2_EED2Ev.exit5.i
 
-_ZNSt10unique_ptrIN12v8_inspector8protocol5ValueESt14default_deleteIS2_EED2Ev.exit5.i: ; preds = %.thread30.i, %_ZNKSt14default_deleteIN12v8_inspector8protocol5ValueEEclEPS2_.exit.i4.i, %_ZNSt10unique_ptrIN12v8_inspector8protocol15DictionaryValueESt14default_deleteIS2_EED2Ev.exit.i
+_ZNSt10unique_ptrIN12v8_inspector8protocol5ValueESt14default_deleteIS2_EED2Ev.exit5.i: ; preds = %_ZNKSt14default_deleteIN12v8_inspector8protocol5ValueEEclEPS2_.exit.i4.i, %_ZNSt10unique_ptrIN12v8_inspector8protocol15DictionaryValueESt14default_deleteIS2_EED2Ev.exit.i, %.thread30.i
   call void @llvm.lifetime.end.p0(ptr nonnull %15) #17, !noalias !7
   br label %.thread35.i
 

@@ -205,14 +205,13 @@ bb.q:                                             ; preds = %bb.p
 
 Vec_StrPush.exit68.thread:                        ; preds = %bb.q
   %i.bi = load ptr, ptr %i.ao, align 8, !tbaa !72
-  %2 = add nuw nsw i32 %i.d, 2                    ; 2 uses
-  store i32 %2, ptr %i.h, align 4, !tbaa !69
   %i.bj = zext nneg i32 %i.ba to i64
   %i.bk = getelementptr inbounds nuw i8, ptr %i.bi, i64 %i.bj
   store i8 49, ptr %i.bk, align 1, !tbaa !73
   %i.bl = load ptr, ptr %i.ao, align 8, !tbaa !72
-  %i.bm = zext nneg i32 %2 to i64
-  %i.bn = getelementptr inbounds nuw i8, ptr %i.bl, i64 %i.bm
+  %i.bm = zext nneg i32 %i.d to i64
+  %2 = getelementptr inbounds nuw i8, ptr %i.bl, i64 %i.bm
+  %i.bn = getelementptr inbounds nuw i8, ptr %2, i64 2
   store i8 10, ptr %i.bn, align 1, !tbaa !73
   br label %Vec_StrPush.exit76thread-pre-split
 
@@ -231,7 +230,8 @@ Vec_StrGrow.exit11.sink.split.i56:                ; preds = %bb.p, %bb.r
 Vec_StrPush.exit60:                               ; preds = %Vec_StrPush.exit, %Vec_StrGrow.exit11.sink.split.i56
   %i.bq = phi i32 [ %i.bd, %Vec_StrPush.exit ], [ %spec.select.sink.i57, %Vec_StrGrow.exit11.sink.split.i56 ] ; 5 uses
   %i.br = load ptr, ptr %i.ao, align 8, !tbaa !72 ; 2 uses
-  %i.bs = add nsw i32 %i.d, 2                     ; 2 uses
+  %i.bs = add nsw i32 %i.d, 2                     ; 3 uses
+  store i32 %i.bs, ptr %i.h, align 4, !tbaa !69
   %i.bt = sext i32 %i.ba to i64
   %i.bu = getelementptr inbounds i8, ptr %i.br, i64 %i.bt
   store i8 49, ptr %i.bu, align 1, !tbaa !73

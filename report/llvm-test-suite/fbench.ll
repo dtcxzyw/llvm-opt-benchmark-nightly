@@ -204,7 +204,8 @@ bb.d:                                             ; preds = %bb.c
   %i.ac = fmul double %i.v, %i.ab
   %i.ad = tail call double @cos(double noundef %axis_slope_angle.promoted) #8, !tbaa !4
   %i.ae = fdiv double %i.ac, %i.ad
-  %i.af = fmul double %i.ae, 0.000000e+00
+  %i.af = fmul double %i.ae, 0.000000e+00         ; 2 uses
+  store double %i.af, ptr @object_distance, align 8, !tbaa !8
   br label %.lr.ph.split.us.1
 
 bb.e:                                             ; preds = %bb.c
@@ -224,8 +225,7 @@ bb.e:                                             ; preds = %bb.c
   %i.at = fmul double %i.g, %i.as
   %i.au = tail call double @tan(double noundef %i.am) #8, !tbaa !4
   %i.av = fdiv double 1.000000e+00, %i.au
-  %i.aw = tail call double @llvm.fmuladd.f64(double %i.at, double %i.av, double %i.ar) ; 2 uses
-  store double %i.aw, ptr @object_distance, align 8, !tbaa !8
+  %i.aw = tail call double @llvm.fmuladd.f64(double %i.at, double %i.av, double %i.ar)
   br label %.lr.ph.split.us.1
 
 .lr.ph.split.us.1:                                ; preds = %bb.e, %bb.d
