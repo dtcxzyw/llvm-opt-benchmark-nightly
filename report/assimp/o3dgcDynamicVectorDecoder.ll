@@ -205,19 +205,16 @@ bb.b:                                             ; preds = %.lr.ph39, %_ZN5o3dg
   br i1 %i.af, label %_ZN5o3dgc5MergeEPll.exit, label %.preheader.i
 
 .preheader.i:                                     ; preds = %.preheader.i.prol.loopexit, %._crit_edge.i.1
-  %.01519.in.i = phi i64 [ %.01519.i.1, %._crit_edge.i.1 ], [ %.01519.in.i.unr, %.preheader.i.prol.loopexit ] ; 4 uses
-  %.01418.i = phi i64 [ %i.ak, %._crit_edge.i.1 ], [ %.01418.i.unr, %.preheader.i.prol.loopexit ] ; 5 uses
-  %.01519.i = add nsw i64 %.01519.in.i, -1        ; 2 uses
-  %.not.i = icmp sgt i64 %.01519.in.i, %.01418.i
-  br i1 %.not.i, label %._crit_edge.i, label %.lr.ph.i
+  %.01519.in.i = phi i64 [ %.01519.i.1, %._crit_edge.i.1 ], [ %.01519.in.i.unr, %.preheader.i.prol.loopexit ] ; 3 uses
+  %.01418.i = phi i64 [ %i.ak, %._crit_edge.i.1 ], [ %.01418.i.unr, %.preheader.i.prol.loopexit ] ; 3 uses
+  %.01519.i = add nsw i64 %.01519.in.i, -1
+  br label %.lr.ph.i
 
-._crit_edge.i:                                    ; preds = %.lr.ph.i, %.preheader.i
-  %2 = add nuw nsw i64 %.01418.i, 1
+._crit_edge.i:                                    ; preds = %.lr.ph.i
   %.01519.i.1 = add nsw i64 %.01519.in.i, -2      ; 2 uses
-  %.not.i.1 = icmp sgt i64 %.01519.i, %2
-  br i1 %.not.i.1, label %._crit_edge.i.1, label %.lr.ph.i.1
+  br label %.lr.ph.i.1
 
-.lr.ph.i.1:                                       ; preds = %._crit_edge.i, %.lr.ph.i.1
+.lr.ph.i.1:                                       ; preds = %.lr.ph.i.1, %._crit_edge.i
   %.016.i.1 = phi i64 [ %i.aj, %.lr.ph.i.1 ], [ %.01519.i.1, %._crit_edge.i ] ; 2 uses
   %i.ag = getelementptr inbounds [8 x i8], ptr %0, i64 %.016.i.1 ; 2 uses
   %i.ah = load <2 x i64>, ptr %i.ag, align 8
@@ -227,7 +224,7 @@ bb.b:                                             ; preds = %.lr.ph39, %_ZN5o3dg
   %.not = icmp sgt i64 %i.aj, %.01418.i
   br i1 %.not, label %._crit_edge.i.1, label %.lr.ph.i.1, !llvm.loop !6
 
-._crit_edge.i.1:                                  ; preds = %.lr.ph.i.1, %._crit_edge.i
+._crit_edge.i.1:                                  ; preds = %.lr.ph.i.1
   %i.ak = add nuw nsw i64 %.01418.i, 2
   %i.al = icmp sgt i64 %.01519.in.i, 3
   br i1 %i.al, label %.preheader.i, label %_ZN5o3dgc5MergeEPll.exit, !llvm.loop !7

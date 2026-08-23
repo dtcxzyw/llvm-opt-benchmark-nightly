@@ -204,7 +204,7 @@ bb.z:                                             ; preds = %.lr.ph524, %._crit_
   %.0228517 = phi i32 [ 1, %.lr.ph524 ], [ %.0224.lcssa, %._crit_edge512 ] ; 2 uses
   %i.kg = add i32 %indvar, 1
   %i.kh = sext i32 %indvars.iv568 to i64
-  %i.ki = sub nsw i64 %i.fq, %indvars.iv580       ; 11 uses
+  %i.ki = sub nsw i64 %i.fq, %indvars.iv580       ; 10 uses
   %i.kj = icmp sgt i32 %.0228517, 0
   br i1 %i.kj, label %.lr.ph511, label %._crit_edge512
 
@@ -449,7 +449,7 @@ updateUB.exit:                                    ; preds = %.lr.ph.i289, %.thre
   br label %bb.al
 
 bb.al:                                            ; preds = %.lr.ph502, %checkSymmInfo.exit
-  %indvars.iv570 = phi i64 [ %i.kh, %.lr.ph502 ], [ %indvars.iv.next571.pre-phi, %checkSymmInfo.exit ] ; 7 uses
+  %indvars.iv570 = phi i64 [ %i.kh, %.lr.ph502 ], [ %indvars.iv.next571.pre-phi, %checkSymmInfo.exit ] ; 6 uses
   %.2501 = phi i32 [ %.015.i, %.lr.ph502 ], [ %.3, %checkSymmInfo.exit ] ; 6 uses
   %.1225500 = phi i32 [ %.0224508, %.lr.ph502 ], [ %.2226, %checkSymmInfo.exit ] ; 10 uses
   %i.ou = load ptr, ptr %i.a, align 8, !tbaa !8   ; 2 uses
@@ -754,7 +754,7 @@ bb.as:                                            ; preds = %updateEntry.exit
   %.0.in15.i = getelementptr inbounds [4 x i8], ptr %i.fx, i64 %.pn14.i
   %.016.i = load i32, ptr %.0.in15.i, align 4, !tbaa !30 ; 2 uses
   %.not17.i = icmp eq i32 %.016.i, %i.tp
-  br i1 %.not17.i, label %.loopexit, label %.lr.ph.i304
+  br i1 %.not17.i, label %.lr.ph.preheader.i, label %.lr.ph.i304
 
 .lr.ph.i304:                                      ; preds = %bb.as, %bb.au
   %.018.i = phi i32 [ %.0.i307, %bb.au ], [ %.016.i, %bb.as ] ; 3 uses
@@ -779,13 +779,9 @@ bb.au:                                            ; preds = %bb.at, %.lr.ph._cri
   %.0.in.i306 = getelementptr inbounds [4 x i8], ptr %i.fx, i64 %.pn.pre-phi.i
   %.0.i307 = load i32, ptr %.0.in.i306, align 4, !tbaa !30 ; 2 uses
   %.not.i = icmp eq i32 %.0.i307, %i.tp
-  br i1 %.not.i, label %.loopexit, label %.lr.ph.i304, !llvm.loop !68
+  br i1 %.not.i, label %.lr.ph.preheader.i, label %.lr.ph.i304, !llvm.loop !68
 
-.loopexit:                                        ; preds = %bb.au, %bb.as
-  %.not434 = icmp sgt i64 %indvars.iv570, %i.ki
-  br i1 %.not434, label %pushDown.exit, label %.lr.ph.preheader.i
-
-.lr.ph.preheader.i:                               ; preds = %.loopexit
+.lr.ph.preheader.i:                               ; preds = %bb.au, %bb.as
   %i.tw = shl nuw nsw i64 %i.tn, 2
   %scevgep.i = getelementptr i8, ptr %i.ku, i64 %i.tw ; 2 uses
   %scevgep14.i = getelementptr i8, ptr %scevgep.i, i64 4
@@ -794,14 +790,11 @@ bb.au:                                            ; preds = %bb.at, %.lr.ph._cri
   %i.tz = and i64 %i.ty, 17179869180
   %i.ua = add nuw nsw i64 %i.tz, 4
   tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep.i, ptr noundef nonnull align 4 dereferenceable(1) %scevgep14.i, i64 %i.ua, i1 false), !tbaa !30
-  br label %pushDown.exit
-
-pushDown.exit:                                    ; preds = %.loopexit, %.lr.ph.preheader.i
   store i32 %i.tp, ptr %i.ot, align 4, !tbaa !30
   br i1 %.not18.i, label %.thread346, label %.lr.ph.i311
 
-.lr.ph.i311:                                      ; preds = %pushDown.exit, %.loopexit.i319
-  %indvars.iv.i313 = phi i64 [ %indvars.iv.next.i320, %.loopexit.i319 ], [ 0, %pushDown.exit ] ; 3 uses
+.lr.ph.i311:                                      ; preds = %.lr.ph.preheader.i, %.loopexit.i319
+  %indvars.iv.i313 = phi i64 [ %indvars.iv.next.i320, %.loopexit.i319 ], [ 0, %.lr.ph.preheader.i ] ; 3 uses
   %i.ub = getelementptr inbounds nuw [4 x i8], ptr %i.ku, i64 %indvars.iv.i313
   %i.uc = load i32, ptr %i.ub, align 4, !tbaa !30
   %i.ud = load ptr, ptr %i.jp, align 8, !tbaa !55
@@ -840,7 +833,7 @@ bb.aw:                                            ; preds = %.loopexit.i319
   %.2.mux = tail call i32 @llvm.smin.i32(i32 %i.uq, i32 %.2501)
   br i1 %.not435, label %.lr.ph.i328, label %checkSymmInfo.exit
 
-.thread346:                                       ; preds = %pushDown.exit
+.thread346:                                       ; preds = %.lr.ph.preheader.i
   %i.ur = load i32, ptr %i.jh, align 4, !tbaa !51
   %i.us = load i32, ptr %i.ji, align 8, !tbaa !52
   %i.ut = sub i32 %i.ur, %i.us

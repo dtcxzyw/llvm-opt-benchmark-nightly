@@ -204,6 +204,11 @@ bb.e:                                             ; preds = %.lr.ph206
   %i.am = icmp eq i32 %i.al, 0
   br i1 %i.am, label %_ZN12_GLOBAL__N_121IsValidMacroNamespaceERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.thread.jt2.preheader, label %_ZN12_GLOBAL__N_121IsValidMacroNamespaceERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit
 
+_ZN12_GLOBAL__N_121IsValidMacroNamespaceERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.thread.jt2.preheader: ; preds = %"_ZN9__gnu_cxx5__ops10_Iter_predIZN12_GLOBAL__N_121IsValidMacroNamespaceERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3$_0EclIPKPKcEEbT_.exit43.i.i.i.i.i.i", %"_ZN9__gnu_cxx5__ops10_Iter_predIZN12_GLOBAL__N_121IsValidMacroNamespaceERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3$_0EclIPKPKcEEbT_.exit45.i.i.i.i.i.i", %bb.e, %"_ZN9__gnu_cxx5__ops10_Iter_predIZN12_GLOBAL__N_121IsValidMacroNamespaceERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3$_0EclIPKPKcEEbT_.exit41.i.i.i.i.i.i"
+  %6 = getelementptr inbounds nuw i8, ptr %i.aa, i64 1 ; 2 uses
+  %.not.jt2207 = icmp eq ptr %6, %i.j
+  br i1 %.not.jt2207, label %.thread121, label %.lr.ph208
+
 "_ZN9__gnu_cxx5__ops10_Iter_predIZN12_GLOBAL__N_121IsValidMacroNamespaceERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3$_0EclIPKPKcEEbT_.exit43.i.i.i.i.i.i": ; preds = %bb.e
   %i.an = load i32, ptr %.val, align 1
   %i.ao = icmp ne i32 %i.an, 1986946416
@@ -224,12 +229,7 @@ bb.e:                                             ; preds = %.lr.ph206
   %i.ba = icmp eq i32 %i.az, 0
   br i1 %i.ba, label %_ZN12_GLOBAL__N_121IsValidMacroNamespaceERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.thread.jt2.preheader, label %_ZN12_GLOBAL__N_121IsValidMacroNamespaceERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit
 
-_ZN12_GLOBAL__N_121IsValidMacroNamespaceERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.thread.jt2.preheader: ; preds = %bb.e, %"_ZN9__gnu_cxx5__ops10_Iter_predIZN12_GLOBAL__N_121IsValidMacroNamespaceERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3$_0EclIPKPKcEEbT_.exit43.i.i.i.i.i.i", %"_ZN9__gnu_cxx5__ops10_Iter_predIZN12_GLOBAL__N_121IsValidMacroNamespaceERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3$_0EclIPKPKcEEbT_.exit41.i.i.i.i.i.i", %"_ZN9__gnu_cxx5__ops10_Iter_predIZN12_GLOBAL__N_121IsValidMacroNamespaceERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3$_0EclIPKPKcEEbT_.exit45.i.i.i.i.i.i"
-  %6 = getelementptr inbounds nuw i8, ptr %i.aa, i64 1 ; 2 uses
-  %.not.jt2207 = icmp eq ptr %6, %i.j
-  br i1 %.not.jt2207, label %.thread121, label %.lr.ph208
-
-_ZN12_GLOBAL__N_121IsValidMacroNamespaceERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit: ; preds = %"_ZN9__gnu_cxx5__ops10_Iter_predIZN12_GLOBAL__N_121IsValidMacroNamespaceERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3$_0EclIPKPKcEEbT_.exit45.i.i.i.i.i.i", %"_ZN9__gnu_cxx5__ops10_Iter_predIZN12_GLOBAL__N_121IsValidMacroNamespaceERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3$_0EclIPKPKcEEbT_.exit43.i.i.i.i.i.i", %"_ZN9__gnu_cxx5__ops10_Iter_predIZN12_GLOBAL__N_121IsValidMacroNamespaceERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3$_0EclIPKPKcEEbT_.exit41.i.i.i.i.i.i", %bb.e
+_ZN12_GLOBAL__N_121IsValidMacroNamespaceERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit: ; preds = %"_ZN9__gnu_cxx5__ops10_Iter_predIZN12_GLOBAL__N_121IsValidMacroNamespaceERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3$_0EclIPKPKcEEbT_.exit43.i.i.i.i.i.i", %"_ZN9__gnu_cxx5__ops10_Iter_predIZN12_GLOBAL__N_121IsValidMacroNamespaceERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3$_0EclIPKPKcEEbT_.exit41.i.i.i.i.i.i", %bb.e, %"_ZN9__gnu_cxx5__ops10_Iter_predIZN12_GLOBAL__N_121IsValidMacroNamespaceERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3$_0EclIPKPKcEEbT_.exit45.i.i.i.i.i.i"
   %i.bb = load i64, ptr %i.b, align 8, !tbaa !68  ; 4 uses
   %i.bc = add i64 %i.bb, 1                        ; 3 uses
   %i.bd = load ptr, ptr %3, align 8, !tbaa !67    ; 2 uses

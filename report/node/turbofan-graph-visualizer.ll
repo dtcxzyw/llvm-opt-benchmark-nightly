@@ -205,7 +205,6 @@ _ZN2v88internal8compiler17GraphC1Visualizer11PrintInputsINS1_4Node6Inputs14const
 .lr.ph.i7:                                        ; preds = %_ZN2v88internal8compiler17GraphC1Visualizer11PrintInputsINS1_4Node6Inputs14const_iteratorEEEvPT_iPKc.exit
   %i.af = load ptr, ptr %0, align 8, !nonnull !6, !align !28
   %i.ag = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.af, ptr noundef nonnull @.str.94, i64 noundef 5) #24 ; 0 uses
-  %2 = getelementptr inbounds nuw i8, ptr %.sroa.023.1, i64 8
   %i.ah = load ptr, ptr %0, align 8, !nonnull !6, !align !28
   %i.ai = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.ah, ptr noundef nonnull @.str.84, i64 noundef 1) #24 ; 0 uses
   %i.aj = load ptr, ptr %.sroa.023.1, align 8     ; 2 uses
@@ -223,6 +222,7 @@ bb.e:                                             ; preds = %.lr.ph.i7
 _ZN2v88internal8compiler17GraphC1Visualizer11PrintNodeIdEPNS1_4NodeE.exit.i9: ; preds = %bb.e, %.lr.ph.i7
   %i.aq = phi i32 [ %i.ap, %bb.e ], [ -1, %.lr.ph.i7 ]
   %i.ar = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSolsEi(ptr noundef nonnull align 8 dereferenceable(8) %i.ak, i32 noundef %i.aq) #24 ; 0 uses
+  %2 = getelementptr inbounds nuw i8, ptr %.sroa.023.1, i64 8
   br label %_ZN2v88internal8compiler17GraphC1Visualizer11PrintInputsINS1_4Node6Inputs14const_iteratorEEEvPT_iPKc.exit10
 
 _ZN2v88internal8compiler17GraphC1Visualizer11PrintInputsINS1_4Node6Inputs14const_iteratorEEEvPT_iPKc.exit10: ; preds = %_ZN2v88internal8compiler17GraphC1Visualizer11PrintNodeIdEPNS1_4NodeE.exit.i9, %_ZN2v88internal8compiler17GraphC1Visualizer11PrintInputsINS1_4Node6Inputs14const_iteratorEEEvPT_iPKc.exit
@@ -234,7 +234,6 @@ _ZN2v88internal8compiler17GraphC1Visualizer11PrintInputsINS1_4Node6Inputs14const
 .lr.ph.i11:                                       ; preds = %_ZN2v88internal8compiler17GraphC1Visualizer11PrintInputsINS1_4Node6Inputs14const_iteratorEEEvPT_iPKc.exit10
   %i.au = load ptr, ptr %0, align 8, !nonnull !6, !align !28
   %i.av = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.au, ptr noundef nonnull @.str.95, i64 noundef 4) #24 ; 0 uses
-  %3 = getelementptr inbounds nuw i8, ptr %.sroa.023.3, i64 8
   %i.aw = load ptr, ptr %0, align 8, !nonnull !6, !align !28
   %i.ax = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.aw, ptr noundef nonnull @.str.84, i64 noundef 1) #24 ; 0 uses
   %i.ay = load ptr, ptr %.sroa.023.3, align 8     ; 2 uses
@@ -252,6 +251,7 @@ bb.f:                                             ; preds = %.lr.ph.i11
 _ZN2v88internal8compiler17GraphC1Visualizer11PrintNodeIdEPNS1_4NodeE.exit.i13: ; preds = %bb.f, %.lr.ph.i11
   %i.bf = phi i32 [ %i.be, %bb.f ], [ -1, %.lr.ph.i11 ]
   %i.bg = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSolsEi(ptr noundef nonnull align 8 dereferenceable(8) %i.az, i32 noundef %i.bf) #24 ; 0 uses
+  %3 = getelementptr inbounds nuw i8, ptr %.sroa.023.3, i64 8
   br label %_ZN2v88internal8compiler17GraphC1Visualizer11PrintInputsINS1_4Node6Inputs14const_iteratorEEEvPT_iPKc.exit14
 
 _ZN2v88internal8compiler17GraphC1Visualizer11PrintInputsINS1_4Node6Inputs14const_iteratorEEEvPT_iPKc.exit14: ; preds = %_ZN2v88internal8compiler17GraphC1Visualizer11PrintNodeIdEPNS1_4NodeE.exit.i13, %_ZN2v88internal8compiler17GraphC1Visualizer11PrintInputsINS1_4Node6Inputs14const_iteratorEEEvPT_iPKc.exit10

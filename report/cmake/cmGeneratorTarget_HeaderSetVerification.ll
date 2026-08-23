@@ -204,7 +204,7 @@ _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i62.i.i.i: ; preds = %bb.a
   br label %bb.q
 
 "_ZSt7find_ifIPKSt4pairISt17basic_string_viewIcSt11char_traitsIcEES4_EZNK17cmGeneratorTarget23GenerateStubForLanguageERKNSt7__cxx1112basic_stringIcS3_SaIcEEESE_SE_R12cmSourceFileE3$_0ET_SI_SI_T0_.exit": ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i62.i.i.i, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i54.i.i.i, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i.i.i, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i58.i.i.i
-  %.028.i.i.i.idx.ph73 = phi i64 [ 64, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i58.i.i.i ], [ 0, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i.i.i ], [ 32, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i54.i.i.i ], [ 96, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i62.i.i.i ]
+  %.028.i.i.i.idx.ph73 = phi i64 [ 96, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i62.i.i.i ], [ 64, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i58.i.i.i ], [ 0, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i.i.i ], [ 32, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i54.i.i.i ]
   %.028.i.i.i.ptr = getelementptr inbounds nuw i8, ptr @_ZZNK17cmGeneratorTarget23GenerateStubForLanguageERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES7_S7_R12cmSourceFileE9langToExt, i64 %.028.i.i.i.idx.ph73 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #21
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 16

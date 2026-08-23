@@ -206,7 +206,7 @@ bb.bv:                                            ; preds = %bb.bu
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.sk, ptr nonnull readonly align 4 %i.tn, i64 %i.uc, i1 false), !tbaa !58
   br label %.lr.ph50.i.i.preheader
 
-.lr.ph50.i.i.preheader:                           ; preds = %bb.bv, %.lr.ph.i.i551
+.lr.ph50.i.i.preheader:                           ; preds = %.lr.ph.i.i551, %bb.bv
   br label %.lr.ph50.i.i
 
 .lr.ph50.i.i:                                     ; preds = %.lr.ph50.i.i.preheader, %Emap_PackEntryCompare.exit.i.i

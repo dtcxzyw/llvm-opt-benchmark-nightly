@@ -205,7 +205,7 @@ bb.fp:                                            ; preds = %bb.fo
   br label %fold_constant_intrinsic_list_to_tuple.exit.i.i
 
 bb.fq:                                            ; preds = %bb.fo
-  %i.afc = add i32 %.0205471.i.i, -1              ; 4 uses
+  %i.afc = add i32 %.0205471.i.i, -1              ; 3 uses
   %i.afd = icmp slt i32 %i.afc, 0
   br i1 %i.afd, label %fold_constant_intrinsic_list_to_tuple.exit.i.i, label %.lr.ph.i325.i.i
 
@@ -231,7 +231,7 @@ bb.fs:                                            ; preds = %bb.fr
   br i1 %or.cond.i.i31.i, label %bb.ft, label %bb.gk
 
 bb.ft:                                            ; preds = %bb.fs
-  %i.afm = trunc nuw nsw i64 %indvars.iv.i326.i.i to i32 ; 2 uses
+  %i.afm = trunc nuw nsw i64 %indvars.iv.i326.i.i to i32
   %i.afn = trunc nuw i8 %.046103.i.i.i to i1
   br i1 %i.afn, label %bb.fu, label %fold_constant_intrinsic_list_to_tuple.exit.i.i
 
@@ -239,13 +239,9 @@ bb.fu:                                            ; preds = %bb.ft
   %i.afo = sext i32 %.048102.i.i.i to i64
   %i.afp = call ptr @PyTuple_New(i64 noundef %i.afo) #8 ; 11 uses
   %i.afq = icmp eq ptr %i.afp, null
-  br i1 %i.afq, label %.loopexit82.i, label %.preheader.i329.i.i
+  br i1 %i.afq, label %.loopexit82.i, label %.lr.ph110.i.i.i
 
-.preheader.i329.i.i:                              ; preds = %bb.fu
-  %.not66107.i.i.i = icmp slt i32 %i.afc, %i.afm
-  br i1 %.not66107.i.i.i, label %._crit_edge.i.i.i, label %.lr.ph110.i.i.i
-
-.lr.ph110.i.i.i:                                  ; preds = %.preheader.i329.i.i
+.lr.ph110.i.i.i:                                  ; preds = %bb.fu
   %i.afr = getelementptr i8, ptr %i.afp, i64 32
   br label %bb.fv
 
@@ -345,7 +341,7 @@ nop_out.exit.i332.i.i:                            ; preds = %nop_out.exit.loopex
   %.not66.not.i.i.i = icmp sgt i32 %.0109.i.i.i, %i.afm
   br i1 %.not66.not.i.i.i, label %bb.fv, label %._crit_edge.i.i.i, !llvm.loop !77
 
-._crit_edge.i.i.i:                                ; preds = %nop_out.exit.i332.i.i, %.preheader.i329.i.i
+._crit_edge.i.i.i:                                ; preds = %nop_out.exit.i332.i.i
   %i.aha = getelementptr i8, ptr %i.afp, i64 8
   %.val.i.i.i333.i.i = load ptr, ptr %i.aha, align 8, !tbaa !65
   %.not.i17.i.i334.i.i = icmp eq ptr %.val.i.i.i333.i.i, @PyLong_Type

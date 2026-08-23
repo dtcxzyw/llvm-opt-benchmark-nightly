@@ -204,28 +204,24 @@ bb.g:                                             ; preds = %._crit_edge
   %i.n = sub nuw nsw i64 %2, %.sroa.09.0.i.i.lcssa ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 %.sroa.09.0.i.i.lcssa ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !405)
-  %3 = icmp eq i64 %2, %.sroa.09.0.i.i.lcssa
-  br i1 %3, label %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultbNtNtCs79ICTHwG85D_12regex_syntax7unicode16UnicodeWordErrorE6expectCs98D8VPWzHuM_14regex_automata.exit, label %4
+  %3 = load i8, ptr %i.o, align 1, !alias.scope !408, !noundef !4 ; 6 uses
+  %4 = icmp sgt i8 %3, -1
+  br i1 %4, label %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i9.thread.thread, label %bb.h
 
-4:                                                ; preds = %bb.g
-  %5 = load i8, ptr %i.o, align 1, !alias.scope !408, !noundef !4 ; 6 uses
-  %6 = icmp sgt i8 %5, -1
-  br i1 %6, label %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf811decode_last.exit.i.thread60, label %bb.h
-
-bb.h:                                             ; preds = %4
-  %i.p = icmp samesign ult i8 %5, -64
+bb.h:                                             ; preds = %bb.g
+  %i.p = icmp samesign ult i8 %3, -64
   br i1 %i.p, label %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultbNtNtCs79ICTHwG85D_12regex_syntax7unicode16UnicodeWordErrorE6expectCs98D8VPWzHuM_14regex_automata.exit, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %i.q = icmp samesign ult i8 %5, -32
+  %i.q = icmp samesign ult i8 %3, -32
   br i1 %i.q, label %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i9.thread, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %i.r = icmp samesign ult i8 %5, -16
+  %i.r = icmp samesign ult i8 %3, -16
   br i1 %i.r, label %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i9.thread, label %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i9
 
 _RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i9: ; preds = %bb.j
-  %i.s = icmp samesign ugt i8 %5, -9
+  %i.s = icmp samesign ugt i8 %3, -9
   %i.t = icmp ult i64 %i.n, 4
   %or.cond = select i1 %i.s, i1 true, i1 %i.t
   br i1 %or.cond, label %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultbNtNtCs79ICTHwG85D_12regex_syntax7unicode16UnicodeWordErrorE6expectCs98D8VPWzHuM_14regex_automata.exit, label %.thread11
@@ -235,8 +231,12 @@ _RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i9.thread: ; preds =
   %i.u = icmp ugt i64 %.sroa.7.0.i.i.i10.ph, %i.n
   br i1 %i.u, label %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultbNtNtCs79ICTHwG85D_12regex_syntax7unicode16UnicodeWordErrorE6expectCs98D8VPWzHuM_14regex_automata.exit, label %.thread11
 
-_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf811decode_last.exit.i.thread60: ; preds = %4
-  %.sroa.419.4.insert.ext.i.i28 = zext nneg i8 %5 to i32
+_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i9.thread.thread: ; preds = %bb.g
+  %5 = icmp eq i64 %2, %.sroa.09.0.i.i.lcssa
+  br i1 %5, label %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultbNtNtCs79ICTHwG85D_12regex_syntax7unicode16UnicodeWordErrorE6expectCs98D8VPWzHuM_14regex_automata.exit, label %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf811decode_last.exit.i.thread60
+
+_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf811decode_last.exit.i.thread60: ; preds = %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i9.thread.thread
+  %.sroa.419.4.insert.ext.i.i28 = zext nneg i8 %3 to i32
   br label %bb.q
 
 .thread11:                                        ; preds = %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i9.thread, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i9
@@ -339,8 +339,8 @@ bb.r:                                             ; preds = %bb.q
   call void @_RNvNtCs4NRVxsYgnAr_4core6result13unwrap_failed(ptr noalias noundef nonnull readonly captures(address, read_provenance) @63, i64 noundef 120, ptr noundef nonnull %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @4, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @64) #28
   unreachable
 
-_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultbNtNtCs79ICTHwG85D_12regex_syntax7unicode16UnicodeWordErrorE6expectCs98D8VPWzHuM_14regex_automata.exit: ; preds = %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i9, %bb.h, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i9.thread, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf811decode_last.exit.i.thread64, %bb.g, %bb.b, %bb.q
-  %.sroa.0.0.i21 = phi i8 [ %i.bk, %bb.q ], [ 0, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf811decode_last.exit.i.thread64 ], [ 0, %bb.b ], [ 0, %bb.g ], [ 0, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i9.thread ], [ 0, %bb.h ], [ 0, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i9 ]
+_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultbNtNtCs79ICTHwG85D_12regex_syntax7unicode16UnicodeWordErrorE6expectCs98D8VPWzHuM_14regex_automata.exit: ; preds = %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i9.thread, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i9.thread.thread, %bb.h, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i9, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf811decode_last.exit.i.thread64, %bb.b, %bb.q
+  %.sroa.0.0.i21 = phi i8 [ %i.bk, %bb.q ], [ 0, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf811decode_last.exit.i.thread64 ], [ 0, %bb.b ], [ 0, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i9 ], [ 0, %bb.h ], [ 0, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i9.thread.thread ], [ 0, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i9.thread ]
   tail call void @llvm.experimental.noalias.scope.decl(metadata !412)
   %i.bm = sub nuw nsw i64 %1, %2                  ; 2 uses
   %i.bn = getelementptr inbounds nuw i8, ptr %0, i64 %2 ; 2 uses
@@ -535,28 +535,24 @@ bb.g:                                             ; preds = %._crit_edge
   %i.n = sub nuw nsw i64 %2, %.sroa.09.0.i.i.lcssa ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 %.sroa.09.0.i.i.lcssa ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !429)
-  %3 = icmp eq i64 %2, %.sroa.09.0.i.i.lcssa
-  br i1 %3, label %.critedge, label %4
+  %3 = load i8, ptr %i.o, align 1, !alias.scope !432, !noundef !4 ; 6 uses
+  %4 = icmp sgt i8 %3, -1
+  br i1 %4, label %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i10.thread.thread, label %bb.h
 
-4:                                                ; preds = %bb.g
-  %5 = load i8, ptr %i.o, align 1, !alias.scope !432, !noundef !4 ; 6 uses
-  %6 = icmp sgt i8 %5, -1
-  br i1 %6, label %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf811decode_last.exit.i.thread60, label %bb.h
-
-bb.h:                                             ; preds = %4
-  %i.p = icmp samesign ult i8 %5, -64
+bb.h:                                             ; preds = %bb.g
+  %i.p = icmp samesign ult i8 %3, -64
   br i1 %i.p, label %.critedge, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %i.q = icmp samesign ult i8 %5, -32
+  %i.q = icmp samesign ult i8 %3, -32
   br i1 %i.q, label %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i10.thread, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %i.r = icmp samesign ult i8 %5, -16
+  %i.r = icmp samesign ult i8 %3, -16
   br i1 %i.r, label %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i10.thread, label %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i10
 
 _RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i10: ; preds = %bb.j
-  %i.s = icmp samesign ugt i8 %5, -9
+  %i.s = icmp samesign ugt i8 %3, -9
   %i.t = icmp ult i64 %i.n, 4
   %or.cond = select i1 %i.s, i1 true, i1 %i.t
   br i1 %or.cond, label %.critedge, label %.thread11
@@ -566,8 +562,12 @@ _RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i10.thread: ; preds 
   %i.u = icmp ugt i64 %.sroa.7.0.i.i.i11.ph, %i.n
   br i1 %i.u, label %.critedge, label %.thread11
 
-_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf811decode_last.exit.i.thread60: ; preds = %4
-  %.sroa.419.4.insert.ext.i.i29 = zext nneg i8 %5 to i32
+_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i10.thread.thread: ; preds = %bb.g
+  %5 = icmp eq i64 %2, %.sroa.09.0.i.i.lcssa
+  br i1 %5, label %.critedge, label %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf811decode_last.exit.i.thread60
+
+_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf811decode_last.exit.i.thread60: ; preds = %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i10.thread.thread
+  %.sroa.419.4.insert.ext.i.i29 = zext nneg i8 %3 to i32
   br label %bb.q
 
 .thread11:                                        ; preds = %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i10.thread, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i10
@@ -674,8 +674,8 @@ _RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultbNtNtCs79ICTHwG85D_12regex_syntax7
   %i.bm = trunc nuw i8 %i.bk to i1
   br label %.critedge
 
-.critedge:                                        ; preds = %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i10, %bb.h, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i10.thread, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf811decode_last.exit.i.thread64, %bb.g, %bb.b, %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultbNtNtCs79ICTHwG85D_12regex_syntax7unicode16UnicodeWordErrorE6expectCs98D8VPWzHuM_14regex_automata.exit
-  %.sroa.0.0.i22 = phi i1 [ %i.bm, %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultbNtNtCs79ICTHwG85D_12regex_syntax7unicode16UnicodeWordErrorE6expectCs98D8VPWzHuM_14regex_automata.exit ], [ false, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf811decode_last.exit.i.thread64 ], [ false, %bb.b ], [ false, %bb.g ], [ false, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i10.thread ], [ false, %bb.h ], [ false, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i10 ]
+.critedge:                                        ; preds = %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i10.thread, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i10.thread.thread, %bb.h, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i10, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf811decode_last.exit.i.thread64, %bb.b, %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultbNtNtCs79ICTHwG85D_12regex_syntax7unicode16UnicodeWordErrorE6expectCs98D8VPWzHuM_14regex_automata.exit
+  %.sroa.0.0.i22 = phi i1 [ %i.bm, %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultbNtNtCs79ICTHwG85D_12regex_syntax7unicode16UnicodeWordErrorE6expectCs98D8VPWzHuM_14regex_automata.exit ], [ false, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf811decode_last.exit.i.thread64 ], [ false, %bb.b ], [ false, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i10 ], [ false, %bb.h ], [ false, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i10.thread.thread ], [ false, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i10.thread ]
   tail call void @llvm.experimental.noalias.scope.decl(metadata !436)
   %i.bn = sub nuw nsw i64 %1, %2                  ; 2 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %0, i64 %2 ; 2 uses
@@ -873,28 +873,24 @@ bb.g:                                             ; preds = %._crit_edge
   %i.n = sub nuw nsw i64 %2, %.sroa.09.0.i.i.lcssa ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 %.sroa.09.0.i.i.lcssa ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !453)
-  %3 = icmp eq i64 %2, %.sroa.09.0.i.i.lcssa
-  br i1 %3, label %.critedge, label %4
+  %3 = load i8, ptr %i.o, align 1, !alias.scope !456, !noundef !4 ; 6 uses
+  %4 = icmp sgt i8 %3, -1
+  br i1 %4, label %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i10.thread.thread, label %bb.h
 
-4:                                                ; preds = %bb.g
-  %5 = load i8, ptr %i.o, align 1, !alias.scope !456, !noundef !4 ; 6 uses
-  %6 = icmp sgt i8 %5, -1
-  br i1 %6, label %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf811decode_last.exit.i.thread60, label %bb.h
-
-bb.h:                                             ; preds = %4
-  %i.p = icmp samesign ult i8 %5, -64
+bb.h:                                             ; preds = %bb.g
+  %i.p = icmp samesign ult i8 %3, -64
   br i1 %i.p, label %.critedge, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %i.q = icmp samesign ult i8 %5, -32
+  %i.q = icmp samesign ult i8 %3, -32
   br i1 %i.q, label %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i10.thread, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %i.r = icmp samesign ult i8 %5, -16
+  %i.r = icmp samesign ult i8 %3, -16
   br i1 %i.r, label %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i10.thread, label %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i10
 
 _RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i10: ; preds = %bb.j
-  %i.s = icmp samesign ugt i8 %5, -9
+  %i.s = icmp samesign ugt i8 %3, -9
   %i.t = icmp ult i64 %i.n, 4
   %or.cond = select i1 %i.s, i1 true, i1 %i.t
   br i1 %or.cond, label %.critedge, label %.thread11
@@ -904,8 +900,12 @@ _RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i10.thread: ; preds 
   %i.u = icmp ugt i64 %.sroa.7.0.i.i.i11.ph, %i.n
   br i1 %i.u, label %.critedge, label %.thread11
 
-_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf811decode_last.exit.i.thread60: ; preds = %4
-  %.sroa.419.4.insert.ext.i.i29 = zext nneg i8 %5 to i32
+_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i10.thread.thread: ; preds = %bb.g
+  %5 = icmp eq i64 %2, %.sroa.09.0.i.i.lcssa
+  br i1 %5, label %.critedge, label %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf811decode_last.exit.i.thread60
+
+_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf811decode_last.exit.i.thread60: ; preds = %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i10.thread.thread
+  %.sroa.419.4.insert.ext.i.i29 = zext nneg i8 %3 to i32
   br label %bb.q
 
 .thread11:                                        ; preds = %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i10.thread, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i10
@@ -1012,8 +1012,8 @@ _RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultbNtNtCs79ICTHwG85D_12regex_syntax7
   %i.bm = trunc nuw i8 %i.bk to i1
   br label %.critedge
 
-.critedge:                                        ; preds = %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i10, %bb.h, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i10.thread, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf811decode_last.exit.i.thread64, %bb.g, %bb.b, %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultbNtNtCs79ICTHwG85D_12regex_syntax7unicode16UnicodeWordErrorE6expectCs98D8VPWzHuM_14regex_automata.exit
-  %.sroa.0.0.i22 = phi i1 [ %i.bm, %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultbNtNtCs79ICTHwG85D_12regex_syntax7unicode16UnicodeWordErrorE6expectCs98D8VPWzHuM_14regex_automata.exit ], [ false, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf811decode_last.exit.i.thread64 ], [ false, %bb.b ], [ false, %bb.g ], [ false, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i10.thread ], [ false, %bb.h ], [ false, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i10 ]
+.critedge:                                        ; preds = %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i10.thread, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i10.thread.thread, %bb.h, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i10, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf811decode_last.exit.i.thread64, %bb.b, %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultbNtNtCs79ICTHwG85D_12regex_syntax7unicode16UnicodeWordErrorE6expectCs98D8VPWzHuM_14regex_automata.exit
+  %.sroa.0.0.i22 = phi i1 [ %i.bm, %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultbNtNtCs79ICTHwG85D_12regex_syntax7unicode16UnicodeWordErrorE6expectCs98D8VPWzHuM_14regex_automata.exit ], [ false, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf811decode_last.exit.i.thread64 ], [ false, %bb.b ], [ false, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i10 ], [ false, %bb.h ], [ false, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i10.thread.thread ], [ false, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i10.thread ]
   tail call void @llvm.experimental.noalias.scope.decl(metadata !460)
   %i.bn = sub nuw nsw i64 %1, %2                  ; 2 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %0, i64 %2 ; 2 uses
@@ -1160,7 +1160,7 @@ define internal fastcc noundef range(i8 0, 2) i8 @_RNvMs2_NtNtCs98D8VPWzHuM_14re
 bb.a:
   %i.a = alloca [0 x i8], align 1                 ; 2 uses
   %i.b = alloca [16 x i8], align 8                ; 5 uses
-  %i.c = alloca [24 x i8], align 8                ; 6 uses
+  %i.c = alloca [24 x i8], align 8                ; 7 uses
   %i.d = alloca [16 x i8], align 8                ; 5 uses
   %i.e = alloca [24 x i8], align 8                ; 7 uses
   %i.f = alloca [16 x i8], align 8                ; 5 uses
@@ -1174,8 +1174,8 @@ bb.b:                                             ; preds = %bb.a
   %.not20 = icmp ugt i64 %2, %1
   br i1 %.not20, label %bb.n, label %bb.c, !prof !108
 
-_RNvNtNtNtCs98D8VPWzHuM_14regex_automata4util4look12is_word_char3rev.exit: ; preds = %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i54.thread, %bb.s, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i54, %bb.r, %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultbNtNtCs79ICTHwG85D_12regex_syntax7unicode16UnicodeWordErrorE6expectCs98D8VPWzHuM_14regex_automata.exit, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf86decode.exit.i57, %bb.a
-  %.sroa.06.0 = phi i1 [ false, %bb.a ], [ %i.bo, %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultbNtNtCs79ICTHwG85D_12regex_syntax7unicode16UnicodeWordErrorE6expectCs98D8VPWzHuM_14regex_automata.exit ], [ false, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf86decode.exit.i57 ], [ false, %bb.r ], [ false, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i54 ], [ false, %bb.s ], [ false, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i54.thread ] ; 5 uses
+_RNvNtNtNtCs98D8VPWzHuM_14regex_automata4util4look12is_word_char3rev.exit: ; preds = %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i54.thread, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i54.thread.thread, %bb.s, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i54, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf86decode.exit.i57.thread79, %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultbNtNtCs79ICTHwG85D_12regex_syntax7unicode16UnicodeWordErrorE6expectCs98D8VPWzHuM_14regex_automata.exit, %bb.a
+  %.sroa.06.0 = phi i1 [ false, %bb.a ], [ %i.bo, %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultbNtNtCs79ICTHwG85D_12regex_syntax7unicode16UnicodeWordErrorE6expectCs98D8VPWzHuM_14regex_automata.exit ], [ false, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf86decode.exit.i57.thread79 ], [ false, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i54 ], [ false, %bb.s ], [ false, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i54.thread.thread ], [ false, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i54.thread ] ; 5 uses
   %i.j = icmp ult i64 %2, %1
   br i1 %i.j, label %bb.ab, label %_RNvNtNtNtCs98D8VPWzHuM_14regex_automata4util4look12is_word_char3fwd.exit
 
@@ -1217,28 +1217,28 @@ bb.g:                                             ; preds = %._crit_edge
   %i.t = sub nuw nsw i64 %2, %.sroa.09.0.i.lcssa  ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 %.sroa.09.0.i.lcssa ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !473)
-  %3 = icmp eq i64 %2, %.sroa.09.0.i.lcssa
-  br i1 %3, label %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf86decode.exit.thread, label %bb.h
+  %3 = load i8, ptr %i.u, align 1, !alias.scope !473, !noundef !4 ; 5 uses
+  %4 = icmp sgt i8 %3, -1
+  br i1 %4, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g
-  %4 = load i8, ptr %i.u, align 1, !alias.scope !473, !noundef !4 ; 5 uses
-  %5 = icmp sgt i8 %4, -1
-  br i1 %5, label %.critedge, label %bb.i
+  %5 = icmp eq i64 %2, %.sroa.09.0.i.lcssa
+  br i1 %5, label %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf86decode.exit.thread, label %.critedge
 
-bb.i:                                             ; preds = %bb.h
-  %i.v = icmp samesign ult i8 %4, -64
+bb.i:                                             ; preds = %bb.g
+  %i.v = icmp samesign ult i8 %3, -64
   br i1 %i.v, label %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf86decode.exit.thread, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %i.w = icmp samesign ult i8 %4, -32
+  %i.w = icmp samesign ult i8 %3, -32
   br i1 %i.w, label %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.thread, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %i.x = icmp samesign ult i8 %4, -16
+  %i.x = icmp samesign ult i8 %3, -16
   br i1 %i.x, label %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.thread, label %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i
 
 _RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i: ; preds = %bb.k
-  %i.y = icmp samesign ugt i8 %4, -9
+  %i.y = icmp samesign ugt i8 %3, -9
   %i.z = icmp ult i64 %i.t, 4
   %or.cond49 = select i1 %i.y, i1 true, i1 %i.z
   br i1 %or.cond49, label %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf86decode.exit.thread, label %.thread9
@@ -1254,7 +1254,11 @@ _RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.thread: ; preds = %b
   call void @_RNvNtNtCs4NRVxsYgnAr_4core3str8converts9from_utf8(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.i, ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.u, i64 noundef %.sroa.7.0.i.i3811)
   %i.ab = load i64, ptr %i.i, align 8, !range !106, !noalias !473, !noundef !4
   %i.ac = trunc nuw i64 %i.ab to i1
-  br i1 %i.ac, label %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf86decode.exit.thread.critedge, label %bb.l
+  br i1 %i.ac, label %.split.thread, label %bb.l
+
+.split.thread:                                    ; preds = %.thread9
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.i), !noalias !473
+  br label %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf86decode.exit.thread
 
 bb.l:                                             ; preds = %.thread9
   %i.ad = getelementptr inbounds nuw i8, ptr %i.i, i64 8
@@ -1271,14 +1275,14 @@ bb.l:                                             ; preds = %.thread9
   %i.al = trunc i32 %i.ak to i1
   br i1 %i.al, label %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf86decode.exit, label %6, !prof !169
 
+6:                                                ; preds = %bb.l
+  tail call void @_RNvNtCs4NRVxsYgnAr_4core6option13unwrap_failed(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @62) #28
+  unreachable
+
 _RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf86decode.exit: ; preds = %bb.l
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h), !noalias !473
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i), !noalias !473
   br label %.critedge
-
-6:                                                ; preds = %bb.l
-  tail call void @_RNvNtCs4NRVxsYgnAr_4core6option13unwrap_failed(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @62) #28
-  unreachable
 
 bb.m:                                             ; preds = %._crit_edge
   tail call void @_RNvNtNtCs4NRVxsYgnAr_4core5slice5index16slice_index_fail(i64 noundef %.sroa.09.0.i.lcssa, i64 noundef range(i64 0, -9223372036854775808) %2, i64 noundef range(i64 0, -9223372036854775808) %2, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @61) #28, !noalias !470
@@ -1324,28 +1328,24 @@ bb.r:                                             ; preds = %._crit_edge112
   %i.at = sub nuw nsw i64 %2, %.sroa.09.0.i.i.lcssa ; 2 uses
   %i.au = getelementptr inbounds nuw i8, ptr %0, i64 %.sroa.09.0.i.i.lcssa ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !483)
-  %7 = icmp eq i64 %2, %.sroa.09.0.i.i.lcssa
-  br i1 %7, label %_RNvNtNtNtCs98D8VPWzHuM_14regex_automata4util4look12is_word_char3rev.exit, label %8
+  %7 = load i8, ptr %i.au, align 1, !alias.scope !486, !noundef !4 ; 6 uses
+  %8 = icmp sgt i8 %7, -1
+  br i1 %8, label %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i54.thread.thread, label %bb.s
 
-8:                                                ; preds = %bb.r
-  %9 = load i8, ptr %i.au, align 1, !alias.scope !486, !noundef !4 ; 6 uses
-  %10 = icmp sgt i8 %9, -1
-  br i1 %10, label %.thread, label %bb.s
-
-bb.s:                                             ; preds = %8
-  %i.av = icmp samesign ult i8 %9, -64
+bb.s:                                             ; preds = %bb.r
+  %i.av = icmp samesign ult i8 %7, -64
   br i1 %i.av, label %_RNvNtNtNtCs98D8VPWzHuM_14regex_automata4util4look12is_word_char3rev.exit, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
-  %i.aw = icmp samesign ult i8 %9, -32
+  %i.aw = icmp samesign ult i8 %7, -32
   br i1 %i.aw, label %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i54.thread, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
-  %i.ax = icmp samesign ult i8 %9, -16
+  %i.ax = icmp samesign ult i8 %7, -16
   br i1 %i.ax, label %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i54.thread, label %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i54
 
 _RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i54: ; preds = %bb.u
-  %i.ay = icmp samesign ugt i8 %9, -9
+  %i.ay = icmp samesign ugt i8 %7, -9
   %i.az = icmp ult i64 %i.at, 4
   %or.cond = select i1 %i.ay, i1 true, i1 %i.az
   br i1 %or.cond, label %_RNvNtNtNtCs98D8VPWzHuM_14regex_automata4util4look12is_word_char3rev.exit, label %.thread21
@@ -1355,17 +1355,25 @@ _RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i54.thread: ; preds 
   %i.ba = icmp ugt i64 %.sroa.7.0.i.i.i55.ph, %i.at
   br i1 %i.ba, label %_RNvNtNtNtCs98D8VPWzHuM_14regex_automata4util4look12is_word_char3rev.exit, label %.thread21
 
-.thread:                                          ; preds = %8
-  %.sroa.419.4.insert.ext.i.i73 = zext nneg i8 %9 to i32
-  br label %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf86decode.exit.i57
+_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i54.thread.thread: ; preds = %bb.r
+  %9 = icmp eq i64 %2, %.sroa.09.0.i.i.lcssa
+  br i1 %9, label %_RNvNtNtNtCs98D8VPWzHuM_14regex_automata4util4look12is_word_char3rev.exit, label %.thread
+
+.thread:                                          ; preds = %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i54.thread.thread
+  %.sroa.419.4.insert.ext.i.i73 = zext nneg i8 %7 to i32
+  br label %bb.z
 
 .thread21:                                        ; preds = %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i54.thread, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i54
   %.sroa.7.0.i.i.i55142023 = phi i64 [ 4, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i54 ], [ %.sroa.7.0.i.i.i55.ph, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i54.thread ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !486
   call void @_RNvNtNtCs4NRVxsYgnAr_4core3str8converts9from_utf8(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.c, ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.au, i64 noundef %.sroa.7.0.i.i.i55142023)
   %i.bb = load i64, ptr %i.c, align 8, !range !106, !noalias !486, !noundef !4
-  %i.bc = trunc nuw i64 %i.bb to i1               ; 2 uses
-  br i1 %i.bc, label %bb.x, label %bb.v
+  %i.bc = trunc nuw i64 %i.bb to i1
+  br i1 %i.bc, label %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf86decode.exit.i57.thread79, label %bb.v
+
+_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf86decode.exit.i57.thread79: ; preds = %.thread21
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !486
+  br label %_RNvNtNtNtCs98D8VPWzHuM_14regex_automata4util4look12is_word_char3rev.exit
 
 bb.v:                                             ; preds = %.thread21
   %i.bd = getelementptr inbounds nuw i8, ptr %i.c, i64 8
@@ -1380,35 +1388,27 @@ bb.v:                                             ; preds = %.thread21
   %i.bj = call fastcc { i32, i32 } @_RINvNtNtCs4NRVxsYgnAr_4core3str11validations15next_code_pointINtNtNtB6_5slice4iter4IterhEECs98D8VPWzHuM_14regex_automata(ptr noalias noundef align 8 dereferenceable(16) %i.b) ; 2 uses
   %i.bk = extractvalue { i32, i32 } %i.bj, 0
   %i.bl = trunc i32 %i.bk to i1
-  br i1 %i.bl, label %11, label %bb.w, !prof !169
-
-11:                                               ; preds = %bb.v
-  %12 = extractvalue { i32, i32 } %i.bj, 1        ; 2 uses
-  %13 = icmp ult i32 %12, 1114112
-  tail call void @llvm.assume(i1 %13)
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !486
-  br label %bb.x
+  br i1 %i.bl, label %bb.x, label %bb.w, !prof !169
 
 bb.w:                                             ; preds = %bb.v
   tail call void @_RNvNtCs4NRVxsYgnAr_4core6option13unwrap_failed(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @62) #28
   unreachable
 
-bb.x:                                             ; preds = %.thread21, %11
-  %.sroa.7.sroa.0.1.i.i70 = phi i32 [ %12, %11 ], [ 0, %.thread21 ]
+bb.x:                                             ; preds = %bb.v
+  %10 = extractvalue { i32, i32 } %i.bj, 1        ; 2 uses
+  %11 = icmp ult i32 %10, 1114112
+  tail call void @llvm.assume(i1 %11)
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !486
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !486
-  br label %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf86decode.exit.i57
-
-_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf86decode.exit.i57: ; preds = %bb.x, %.thread
-  %.sroa.7.sroa.0.0.i9.i = phi i32 [ %.sroa.419.4.insert.ext.i.i73, %.thread ], [ %.sroa.7.sroa.0.1.i.i70, %bb.x ]
-  %.sroa.0.0.i10.i = phi i1 [ false, %.thread ], [ %i.bc, %bb.x ]
-  br i1 %.sroa.0.0.i10.i, label %_RNvNtNtNtCs98D8VPWzHuM_14regex_automata4util4look12is_word_char3rev.exit, label %bb.z
+  br label %bb.z
 
 bb.y:                                             ; preds = %._crit_edge112
   tail call void @_RNvNtNtCs4NRVxsYgnAr_4core5slice5index16slice_index_fail(i64 noundef %.sroa.09.0.i.i.lcssa, i64 noundef range(i64 0, -9223372036854775808) %2, i64 noundef range(i64 0, -9223372036854775808) %2, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @61) #28, !noalias !482
   unreachable
 
-bb.z:                                             ; preds = %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf86decode.exit.i57
-  %i.bm = tail call noundef i8 @_RNvCs79ICTHwG85D_12regex_syntax21try_is_word_character(i32 noundef %.sroa.7.sroa.0.0.i9.i) ; 2 uses
+bb.z:                                             ; preds = %bb.x, %.thread
+  %.sroa.7.sroa.0.0.i9.i78 = phi i32 [ %.sroa.419.4.insert.ext.i.i73, %.thread ], [ %10, %bb.x ]
+  %i.bm = tail call noundef i8 @_RNvCs79ICTHwG85D_12regex_syntax21try_is_word_character(i32 noundef %.sroa.7.sroa.0.0.i9.i78) ; 2 uses
   %i.bn = icmp eq i8 %i.bm, 2
   br i1 %i.bn, label %bb.aa, label %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultbNtNtCs79ICTHwG85D_12regex_syntax7unicode16UnicodeWordErrorE6expectCs98D8VPWzHuM_14regex_automata.exit, !prof !108
 
@@ -1569,12 +1569,8 @@ _RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultbNtNtCs79ICTHwG85D_12regex_syntax7
   %i.dh = xor i1 %.sroa.06.0, %i.dg
   br label %_RNvNtNtNtCs98D8VPWzHuM_14regex_automata4util4look12is_word_char3fwd.exit
 
-_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf86decode.exit.thread.critedge: ; preds = %.thread9
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.i), !noalias !473
-  br label %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf86decode.exit.thread
-
-_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf86decode.exit.thread: ; preds = %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf86decode.exit.thread.critedge, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.thread, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i31.thread, %bb.ac, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i31, %.split.thread.a, %bb.i, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i, %bb.g, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i31.thread.thread, %_RNvNtNtNtCs98D8VPWzHuM_14regex_automata4util4look12is_word_char3fwd.exit
-  %.sroa.0.0 = phi i8 [ 0, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i31.thread ], [ %i.cn, %_RNvNtNtNtCs98D8VPWzHuM_14regex_automata4util4look12is_word_char3fwd.exit ], [ 0, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf86decode.exit.thread.critedge ], [ 0, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i31.thread.thread ], [ 0, %bb.i ], [ 0, %.split.thread.a ], [ 0, %bb.g ], [ 0, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i ], [ 0, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i31 ], [ 0, %bb.ac ], [ 0, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.thread ]
+_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf86decode.exit.thread: ; preds = %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i31.thread, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.thread, %bb.ac, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i31, %.split.thread.a, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i, %bb.i, %.split.thread, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i31.thread.thread, %bb.h, %_RNvNtNtNtCs98D8VPWzHuM_14regex_automata4util4look12is_word_char3fwd.exit
+  %.sroa.0.0 = phi i8 [ 0, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.thread ], [ %i.cn, %_RNvNtNtNtCs98D8VPWzHuM_14regex_automata4util4look12is_word_char3fwd.exit ], [ 0, %bb.ac ], [ 0, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i31.thread.thread ], [ 0, %.split.thread ], [ 0, %bb.h ], [ 0, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i ], [ 0, %.split.thread.a ], [ 0, %bb.i ], [ 0, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i31 ], [ 0, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i31.thread ]
   ret i8 %.sroa.0.0
 }
 
@@ -1741,7 +1737,7 @@ define internal fastcc noundef range(i8 0, 2) i8 @_RNvMs2_NtNtCs98D8VPWzHuM_14re
 bb.a:
   %i.a = alloca [0 x i8], align 1
   %i.b = alloca [16 x i8], align 8                ; 5 uses
-  %i.c = alloca [24 x i8], align 8                ; 6 uses
+  %i.c = alloca [24 x i8], align 8                ; 7 uses
   %i.d = alloca [16 x i8], align 8                ; 5 uses
   %i.e = alloca [24 x i8], align 8                ; 7 uses
   %.not = icmp eq i64 %2, 0
@@ -1789,28 +1785,28 @@ bb.g:                                             ; preds = %._crit_edge
   %i.o = sub nuw nsw i64 %2, %.sroa.09.0.i.lcssa  ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 %.sroa.09.0.i.lcssa ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !506)
-  %3 = icmp eq i64 %2, %.sroa.09.0.i.lcssa
-  br i1 %3, label %_RNvNtNtNtCs98D8VPWzHuM_14regex_automata4util4look12is_word_char3rev.exit, label %bb.h
+  %3 = load i8, ptr %i.p, align 1, !alias.scope !506, !noundef !4 ; 5 uses
+  %4 = icmp sgt i8 %3, -1
+  br i1 %4, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g
-  %4 = load i8, ptr %i.p, align 1, !alias.scope !506, !noundef !4 ; 5 uses
-  %5 = icmp sgt i8 %4, -1
-  br i1 %5, label %.critedge, label %bb.i
+  %5 = icmp eq i64 %2, %.sroa.09.0.i.lcssa
+  br i1 %5, label %_RNvNtNtNtCs98D8VPWzHuM_14regex_automata4util4look12is_word_char3rev.exit, label %.critedge
 
-bb.i:                                             ; preds = %bb.h
-  %i.q = icmp samesign ult i8 %4, -64
+bb.i:                                             ; preds = %bb.g
+  %i.q = icmp samesign ult i8 %3, -64
   br i1 %i.q, label %_RNvNtNtNtCs98D8VPWzHuM_14regex_automata4util4look12is_word_char3rev.exit, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %i.r = icmp samesign ult i8 %4, -32
+  %i.r = icmp samesign ult i8 %3, -32
   br i1 %i.r, label %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.thread, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %i.s = icmp samesign ult i8 %4, -16
+  %i.s = icmp samesign ult i8 %3, -16
   br i1 %i.s, label %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.thread, label %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i
 
 _RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i: ; preds = %bb.k
-  %i.t = icmp samesign ugt i8 %4, -9
+  %i.t = icmp samesign ugt i8 %3, -9
   %i.u = icmp ult i64 %i.o, 4
   %or.cond25 = select i1 %i.t, i1 true, i1 %i.u
   br i1 %or.cond25, label %_RNvNtNtNtCs98D8VPWzHuM_14regex_automata4util4look12is_word_char3rev.exit, label %.thread9
@@ -1826,7 +1822,11 @@ _RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.thread: ; preds = %b
   call void @_RNvNtNtCs4NRVxsYgnAr_4core3str8converts9from_utf8(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.e, ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.p, i64 noundef %.sroa.7.0.i.i3811)
   %i.w = load i64, ptr %i.e, align 8, !range !106, !noalias !506, !noundef !4
   %i.x = trunc nuw i64 %i.w to i1
-  br i1 %i.x, label %_RNvNtNtNtCs98D8VPWzHuM_14regex_automata4util4look12is_word_char3rev.exit.critedge, label %bb.l
+  br i1 %i.x, label %.split.thread, label %bb.l
+
+.split.thread:                                    ; preds = %.thread9
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !506
+  br label %_RNvNtNtNtCs98D8VPWzHuM_14regex_automata4util4look12is_word_char3rev.exit
 
 bb.l:                                             ; preds = %.thread9
   %i.y = getelementptr inbounds nuw i8, ptr %i.e, i64 8
@@ -1843,14 +1843,14 @@ bb.l:                                             ; preds = %.thread9
   %i.ag = trunc i32 %i.af to i1
   br i1 %i.ag, label %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf86decode.exit, label %6, !prof !169
 
+6:                                                ; preds = %bb.l
+  tail call void @_RNvNtCs4NRVxsYgnAr_4core6option13unwrap_failed(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @62) #28
+  unreachable
+
 _RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf86decode.exit: ; preds = %bb.l
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !506
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !506
   br label %.critedge
-
-6:                                                ; preds = %bb.l
-  tail call void @_RNvNtCs4NRVxsYgnAr_4core6option13unwrap_failed(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @62) #28
-  unreachable
 
 bb.m:                                             ; preds = %._crit_edge
   tail call void @_RNvNtNtCs4NRVxsYgnAr_4core5slice5index16slice_index_fail(i64 noundef %.sroa.09.0.i.lcssa, i64 noundef range(i64 0, -9223372036854775808) %2, i64 noundef range(i64 0, -9223372036854775808) %2, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @61) #28, !noalias !503
@@ -1896,28 +1896,24 @@ bb.r:                                             ; preds = %._crit_edge64
   %i.ao = sub nuw nsw i64 %2, %.sroa.09.0.i.i.lcssa ; 2 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 %.sroa.09.0.i.i.lcssa ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !516)
-  %7 = icmp eq i64 %2, %.sroa.09.0.i.i.lcssa
-  br i1 %7, label %_RNvNtNtNtCs98D8VPWzHuM_14regex_automata4util4look12is_word_char3rev.exit, label %8
+  %7 = load i8, ptr %i.ap, align 1, !alias.scope !519, !noundef !4 ; 6 uses
+  %8 = icmp sgt i8 %7, -1
+  br i1 %8, label %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i.thread.thread, label %bb.s
 
-8:                                                ; preds = %bb.r
-  %9 = load i8, ptr %i.ap, align 1, !alias.scope !519, !noundef !4 ; 6 uses
-  %10 = icmp sgt i8 %9, -1
-  br i1 %10, label %.thread, label %bb.s
-
-bb.s:                                             ; preds = %8
-  %i.aq = icmp samesign ult i8 %9, -64
+bb.s:                                             ; preds = %bb.r
+  %i.aq = icmp samesign ult i8 %7, -64
   br i1 %i.aq, label %_RNvNtNtNtCs98D8VPWzHuM_14regex_automata4util4look12is_word_char3rev.exit, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
-  %i.ar = icmp samesign ult i8 %9, -32
+  %i.ar = icmp samesign ult i8 %7, -32
   br i1 %i.ar, label %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i.thread, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
-  %i.as = icmp samesign ult i8 %9, -16
+  %i.as = icmp samesign ult i8 %7, -16
   br i1 %i.as, label %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i.thread, label %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i
 
 _RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i: ; preds = %bb.u
-  %i.at = icmp samesign ugt i8 %9, -9
+  %i.at = icmp samesign ugt i8 %7, -9
   %i.au = icmp ult i64 %i.ao, 4
   %or.cond = select i1 %i.at, i1 true, i1 %i.au
   br i1 %or.cond, label %_RNvNtNtNtCs98D8VPWzHuM_14regex_automata4util4look12is_word_char3rev.exit, label %.thread21
@@ -1927,17 +1923,25 @@ _RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i.thread: ; preds = 
   %i.av = icmp ugt i64 %.sroa.7.0.i.i.i.ph, %i.ao
   br i1 %i.av, label %_RNvNtNtNtCs98D8VPWzHuM_14regex_automata4util4look12is_word_char3rev.exit, label %.thread21
 
-.thread:                                          ; preds = %8
-  %.sroa.419.4.insert.ext.i.i = zext nneg i8 %9 to i32
-  br label %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf86decode.exit.i
+_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i.thread.thread: ; preds = %bb.r
+  %9 = icmp eq i64 %2, %.sroa.09.0.i.i.lcssa
+  br i1 %9, label %_RNvNtNtNtCs98D8VPWzHuM_14regex_automata4util4look12is_word_char3rev.exit, label %.thread
+
+.thread:                                          ; preds = %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i.thread.thread
+  %.sroa.419.4.insert.ext.i.i = zext nneg i8 %7 to i32
+  br label %bb.z
 
 .thread21:                                        ; preds = %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i.thread, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i
   %.sroa.7.0.i.i.i142023 = phi i64 [ 4, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i ], [ %.sroa.7.0.i.i.i.ph, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i.thread ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !519
   call void @_RNvNtNtCs4NRVxsYgnAr_4core3str8converts9from_utf8(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.c, ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.ap, i64 noundef %.sroa.7.0.i.i.i142023)
   %i.aw = load i64, ptr %i.c, align 8, !range !106, !noalias !519, !noundef !4
-  %i.ax = trunc nuw i64 %i.aw to i1               ; 2 uses
-  br i1 %i.ax, label %bb.x, label %bb.v
+  %i.ax = trunc nuw i64 %i.aw to i1
+  br i1 %i.ax, label %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf86decode.exit.i.thread47, label %bb.v
+
+_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf86decode.exit.i.thread47: ; preds = %.thread21
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !519
+  br label %_RNvNtNtNtCs98D8VPWzHuM_14regex_automata4util4look12is_word_char3rev.exit
 
 bb.v:                                             ; preds = %.thread21
   %i.ay = getelementptr inbounds nuw i8, ptr %i.c, i64 8
@@ -1952,35 +1956,27 @@ bb.v:                                             ; preds = %.thread21
   %i.be = call fastcc { i32, i32 } @_RINvNtNtCs4NRVxsYgnAr_4core3str11validations15next_code_pointINtNtNtB6_5slice4iter4IterhEECs98D8VPWzHuM_14regex_automata(ptr noalias noundef align 8 dereferenceable(16) %i.b) ; 2 uses
   %i.bf = extractvalue { i32, i32 } %i.be, 0
   %i.bg = trunc i32 %i.bf to i1
-  br i1 %i.bg, label %11, label %bb.w, !prof !169
-
-11:                                               ; preds = %bb.v
-  %12 = extractvalue { i32, i32 } %i.be, 1        ; 2 uses
-  %13 = icmp ult i32 %12, 1114112
-  tail call void @llvm.assume(i1 %13)
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !519
-  br label %bb.x
+  br i1 %i.bg, label %bb.x, label %bb.w, !prof !169
 
 bb.w:                                             ; preds = %bb.v
   tail call void @_RNvNtCs4NRVxsYgnAr_4core6option13unwrap_failed(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @62) #28
   unreachable
 
-bb.x:                                             ; preds = %.thread21, %11
-  %.sroa.7.sroa.0.1.i.i = phi i32 [ %12, %11 ], [ 0, %.thread21 ]
+bb.x:                                             ; preds = %bb.v
+  %10 = extractvalue { i32, i32 } %i.be, 1        ; 2 uses
+  %11 = icmp ult i32 %10, 1114112
+  tail call void @llvm.assume(i1 %11)
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !519
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !519
-  br label %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf86decode.exit.i
-
-_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf86decode.exit.i: ; preds = %bb.x, %.thread
-  %.sroa.7.sroa.0.0.i9.i = phi i32 [ %.sroa.419.4.insert.ext.i.i, %.thread ], [ %.sroa.7.sroa.0.1.i.i, %bb.x ]
-  %.sroa.0.0.i10.i = phi i1 [ false, %.thread ], [ %i.ax, %bb.x ]
-  br i1 %.sroa.0.0.i10.i, label %_RNvNtNtNtCs98D8VPWzHuM_14regex_automata4util4look12is_word_char3rev.exit, label %bb.z
+  br label %bb.z
 
 bb.y:                                             ; preds = %._crit_edge64
   tail call void @_RNvNtNtCs4NRVxsYgnAr_4core5slice5index16slice_index_fail(i64 noundef %.sroa.09.0.i.i.lcssa, i64 noundef range(i64 0, -9223372036854775808) %2, i64 noundef range(i64 0, -9223372036854775808) %2, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @61) #28, !noalias !515
   unreachable
 
-bb.z:                                             ; preds = %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf86decode.exit.i
-  %i.bh = tail call noundef i8 @_RNvCs79ICTHwG85D_12regex_syntax21try_is_word_character(i32 noundef %.sroa.7.sroa.0.0.i9.i) ; 2 uses
+bb.z:                                             ; preds = %bb.x, %.thread
+  %.sroa.7.sroa.0.0.i9.i46 = phi i32 [ %.sroa.419.4.insert.ext.i.i, %.thread ], [ %10, %bb.x ]
+  %i.bh = tail call noundef i8 @_RNvCs79ICTHwG85D_12regex_syntax21try_is_word_character(i32 noundef %.sroa.7.sroa.0.0.i9.i46) ; 2 uses
   %i.bi = icmp eq i8 %i.bh, 2
   br i1 %i.bi, label %bb.aa, label %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultbNtNtCs79ICTHwG85D_12regex_syntax7unicode16UnicodeWordErrorE6expectCs98D8VPWzHuM_14regex_automata.exit, !prof !108
 
@@ -1992,12 +1988,8 @@ _RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultbNtNtCs79ICTHwG85D_12regex_syntax7
   %i.bj = xor i8 %i.bh, 1
   br label %_RNvNtNtNtCs98D8VPWzHuM_14regex_automata4util4look12is_word_char3rev.exit
 
-_RNvNtNtNtCs98D8VPWzHuM_14regex_automata4util4look12is_word_char3rev.exit.critedge: ; preds = %.thread9
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !506
-  br label %_RNvNtNtNtCs98D8VPWzHuM_14regex_automata4util4look12is_word_char3rev.exit
-
-_RNvNtNtNtCs98D8VPWzHuM_14regex_automata4util4look12is_word_char3rev.exit: ; preds = %_RNvNtNtNtCs98D8VPWzHuM_14regex_automata4util4look12is_word_char3rev.exit.critedge, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.thread, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i.thread, %bb.s, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i, %bb.r, %bb.i, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i, %bb.g, %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultbNtNtCs79ICTHwG85D_12regex_syntax7unicode16UnicodeWordErrorE6expectCs98D8VPWzHuM_14regex_automata.exit, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf86decode.exit.i, %bb.a
-  %.sroa.0.0 = phi i8 [ 1, %bb.a ], [ 0, %_RNvNtNtNtCs98D8VPWzHuM_14regex_automata4util4look12is_word_char3rev.exit.critedge ], [ %i.bj, %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultbNtNtCs79ICTHwG85D_12regex_syntax7unicode16UnicodeWordErrorE6expectCs98D8VPWzHuM_14regex_automata.exit ], [ 1, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf86decode.exit.i ], [ 0, %bb.i ], [ 0, %bb.g ], [ 0, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i ], [ 1, %bb.r ], [ 1, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i ], [ 1, %bb.s ], [ 1, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i.thread ], [ 0, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.thread ]
+_RNvNtNtNtCs98D8VPWzHuM_14regex_automata4util4look12is_word_char3rev.exit: ; preds = %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.thread, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i.thread, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i.thread.thread, %bb.s, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i, %bb.i, %.split.thread, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf86decode.exit.i.thread47, %bb.h, %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultbNtNtCs79ICTHwG85D_12regex_syntax7unicode16UnicodeWordErrorE6expectCs98D8VPWzHuM_14regex_automata.exit, %bb.a
+  %.sroa.0.0 = phi i8 [ 1, %bb.a ], [ 1, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i.thread ], [ %i.bj, %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultbNtNtCs79ICTHwG85D_12regex_syntax7unicode16UnicodeWordErrorE6expectCs98D8VPWzHuM_14regex_automata.exit ], [ 1, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf86decode.exit.i.thread47 ], [ 0, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i ], [ 0, %.split.thread ], [ 0, %bb.h ], [ 0, %bb.i ], [ 1, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i ], [ 1, %bb.s ], [ 1, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.i.thread.thread ], [ 0, %_RNvNtNtCs98D8VPWzHuM_14regex_automata4util4utf83len.exit.i.thread ]
   ret i8 %.sroa.0.0
 }
 

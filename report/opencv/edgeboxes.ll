@@ -205,7 +205,7 @@ bb.j:                                             ; preds = %._crit_edge111
 .lr.ph.i.i:                                       ; preds = %bb.m, %.lr.ph.i.preheader.i
   %.sroa.010.018.i.idx.i = phi i64 [ %.sroa.010.018.i.add.i, %bb.m ], [ -20, %.lr.ph.i.preheader.i ] ; 3 uses
   %.sroa.010.018.i.ptr.i = getelementptr inbounds i8, ptr %i.ea, i64 %.sroa.010.018.i.idx.i ; 4 uses
-  %.sroa.010.018.i.add.i = add i64 %.sroa.010.018.i.idx.i, -20 ; 3 uses
+  %.sroa.010.018.i.add.i = add nsw i64 %.sroa.010.018.i.idx.i, -20 ; 3 uses
   %.ptr.i = getelementptr inbounds i8, ptr %i.ea, i64 %.sroa.010.018.i.add.i ; 4 uses
   %i.ek = getelementptr inbounds nuw i8, ptr %.ptr.i, i64 16
   %i.el = load float, ptr %i.ek, align 4, !tbaa !161 ; 4 uses
@@ -216,10 +216,8 @@ bb.j:                                             ; preds = %._crit_edge111
 bb.k:                                             ; preds = %.lr.ph.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %3)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %3, ptr noundef nonnull align 4 dereferenceable(20) %.ptr.i, i64 20, i1 false), !tbaa.struct !169
-  %gepdiff.i = sub i64 0, %.sroa.010.018.i.idx.i  ; 2 uses
-  %6 = urem i64 %gepdiff.i, 20
-  %7 = sub i64 %gepdiff.i, %6
-  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %.ptr.i, ptr nonnull align 4 %.sroa.010.018.i.ptr.i, i64 %7, i1 false), !noalias !189
+  %gepdiff.i = sub nsw i64 0, %.sroa.010.018.i.idx.i
+  call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %.ptr.i, ptr noundef nonnull align 4 dereferenceable(1) %.sroa.010.018.i.ptr.i, i64 %gepdiff.i, i1 false), !noalias !189
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.ptr49.i, ptr noundef nonnull align 4 dereferenceable(20) %3, i64 20, i1 false), !tbaa.struct !169
   call void @llvm.lifetime.end.p0(ptr nonnull %3)
   br label %bb.m
@@ -504,7 +502,7 @@ bb.b:                                             ; preds = %bb.a
 .lr.ph.i.i:                                       ; preds = %bb.e, %.lr.ph.i.preheader.i
   %.sroa.010.018.i.idx.i = phi i64 [ %.sroa.010.018.i.add.i, %bb.e ], [ -20, %.lr.ph.i.preheader.i ] ; 3 uses
   %.sroa.010.018.i.ptr.i = getelementptr inbounds i8, ptr %i.b, i64 %.sroa.010.018.i.idx.i ; 4 uses
-  %.sroa.010.018.i.add.i = add i64 %.sroa.010.018.i.idx.i, -20 ; 3 uses
+  %.sroa.010.018.i.add.i = add nsw i64 %.sroa.010.018.i.idx.i, -20 ; 3 uses
   %.ptr.i = getelementptr inbounds i8, ptr %i.b, i64 %.sroa.010.018.i.add.i ; 4 uses
   %i.m = getelementptr inbounds nuw i8, ptr %.ptr.i, i64 16
   %i.n = load float, ptr %i.m, align 4, !tbaa !161 ; 4 uses
@@ -515,10 +513,8 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %.lr.ph.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %8)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %8, ptr noundef nonnull align 4 dereferenceable(20) %.ptr.i, i64 20, i1 false), !tbaa.struct !169
-  %gepdiff.i = sub i64 0, %.sroa.010.018.i.idx.i  ; 2 uses
-  %14 = urem i64 %gepdiff.i, 20
-  %15 = sub i64 %gepdiff.i, %14
-  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %.ptr.i, ptr nonnull align 4 %.sroa.010.018.i.ptr.i, i64 %15, i1 false), !noalias !220
+  %gepdiff.i = sub nsw i64 0, %.sroa.010.018.i.idx.i
+  call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %.ptr.i, ptr noundef nonnull align 4 dereferenceable(1) %.sroa.010.018.i.ptr.i, i64 %gepdiff.i, i1 false), !noalias !220
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.ptr49.i, ptr noundef nonnull align 4 dereferenceable(20) %8, i64 20, i1 false), !tbaa.struct !169
   call void @llvm.lifetime.end.p0(ptr nonnull %8)
   br label %bb.e
@@ -921,7 +917,7 @@ bb.z:                                             ; preds = %bb.y
 .lr.ph.i.i121:                                    ; preds = %bb.ac, %.lr.ph.i.preheader.i119
   %.sroa.010.018.i.idx.i122 = phi i64 [ %.sroa.010.018.i.add.i124, %bb.ac ], [ -20, %.lr.ph.i.preheader.i119 ] ; 3 uses
   %.sroa.010.018.i.ptr.i123 = getelementptr inbounds i8, ptr %i.hp, i64 %.sroa.010.018.i.idx.i122 ; 4 uses
-  %.sroa.010.018.i.add.i124 = add i64 %.sroa.010.018.i.idx.i122, -20 ; 3 uses
+  %.sroa.010.018.i.add.i124 = add nsw i64 %.sroa.010.018.i.idx.i122, -20 ; 3 uses
   %.ptr.i125 = getelementptr inbounds i8, ptr %i.hp, i64 %.sroa.010.018.i.add.i124 ; 4 uses
   %i.ia = getelementptr inbounds nuw i8, ptr %.ptr.i125, i64 16
   %i.ib = load float, ptr %i.ia, align 4, !tbaa !161 ; 4 uses
@@ -932,10 +928,8 @@ bb.z:                                             ; preds = %bb.y
 bb.aa:                                            ; preds = %.lr.ph.i.i121
   call void @llvm.lifetime.start.p0(ptr nonnull %6)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %6, ptr noundef nonnull align 4 dereferenceable(20) %.ptr.i125, i64 20, i1 false), !tbaa.struct !169
-  %gepdiff.i144 = sub i64 0, %.sroa.010.018.i.idx.i122 ; 2 uses
-  %16 = urem i64 %gepdiff.i144, 20
-  %17 = sub i64 %gepdiff.i144, %16
-  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %.ptr.i125, ptr nonnull align 4 %.sroa.010.018.i.ptr.i123, i64 %17, i1 false), !noalias !260
+  %gepdiff.i144 = sub nsw i64 0, %.sroa.010.018.i.idx.i122
+  call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %.ptr.i125, ptr noundef nonnull align 4 dereferenceable(1) %.sroa.010.018.i.ptr.i123, i64 %gepdiff.i144, i1 false), !noalias !260
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.ptr49.i120, ptr noundef nonnull align 4 dereferenceable(20) %6, i64 20, i1 false), !tbaa.struct !169
   call void @llvm.lifetime.end.p0(ptr nonnull %6)
   br label %bb.ac

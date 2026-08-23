@@ -204,15 +204,15 @@ bb.a:
   %.not = icmp eq ptr %.07.i, null
   br i1 %.not, label %check_stack.exit.thread, label %check_stack.exit
 
-check_stack.exit.thread:                          ; preds = %bb.a
-  tail call void (ptr, ...) @rt_error(ptr noundef nonnull @.str.1) #10
-  br label %bb.g
-
 check_stack.exit:                                 ; preds = %bb.a
   %i.a = load ptr, ptr %.07.i, align 8, !tbaa !59
   %i.b = tail call i64 @num2long(ptr noundef %i.a) #10 ; 3 uses
   %or.cond = icmp ugt i64 %i.b, 2048
   br i1 %or.cond, label %bb.d, label %bb.b
+
+check_stack.exit.thread:                          ; preds = %bb.a
+  tail call void (ptr, ...) @rt_error(ptr noundef nonnull @.str.1) #10
+  br label %bb.g
 
 bb.b:                                             ; preds = %check_stack.exit
   %i.c = icmp eq i64 %i.b, 0
@@ -353,15 +353,15 @@ bb.a:
   %.not = icmp eq ptr %.07.i, null
   br i1 %.not, label %check_stack.exit.thread, label %check_stack.exit
 
-check_stack.exit.thread:                          ; preds = %bb.a
-  tail call void (ptr, ...) @rt_error(ptr noundef nonnull @.str.1) #10
-  br label %bb.g
-
 check_stack.exit:                                 ; preds = %bb.a
   %i.a = load ptr, ptr %.07.i, align 8, !tbaa !59
   %i.b = tail call i64 @num2long(ptr noundef %i.a) #10 ; 3 uses
   %or.cond = icmp ugt i64 %i.b, 2048
   br i1 %or.cond, label %bb.d, label %bb.b
+
+check_stack.exit.thread:                          ; preds = %bb.a
+  tail call void (ptr, ...) @rt_error(ptr noundef nonnull @.str.1) #10
+  br label %bb.g
 
 bb.b:                                             ; preds = %check_stack.exit
   %i.c = icmp eq i64 %i.b, 0
@@ -498,15 +498,15 @@ bb.a:
   %.not = icmp eq ptr %.07.i, null
   br i1 %.not, label %check_stack.exit.thread, label %check_stack.exit
 
-check_stack.exit.thread:                          ; preds = %bb.a
-  tail call void (ptr, ...) @rt_error(ptr noundef nonnull @.str.1) #10
-  br label %bb.g
-
 check_stack.exit:                                 ; preds = %bb.a
   %i.a = load ptr, ptr %.07.i, align 8, !tbaa !59
   %i.b = tail call i64 @num2long(ptr noundef %i.a) #10 ; 3 uses
   %or.cond = icmp ugt i64 %i.b, 2048
   br i1 %or.cond, label %bb.d, label %bb.b
+
+check_stack.exit.thread:                          ; preds = %bb.a
+  tail call void (ptr, ...) @rt_error(ptr noundef nonnull @.str.1) #10
+  br label %bb.g
 
 bb.b:                                             ; preds = %check_stack.exit
   %i.c = icmp eq i64 %i.b, 0

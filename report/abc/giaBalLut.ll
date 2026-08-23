@@ -204,7 +204,7 @@ Vec_IntSelectSortCostLit.exit.i:                  ; preds = %._crit_edge.i.i
 
 .lr.ph.i85:                                       ; preds = %Vec_IntSelectSortCostLit.exit.i, %Vec_IntPushOrderCost2.exit.i
   %.val57.i = phi ptr [ %i.zc, %Vec_IntPushOrderCost2.exit.i ], [ %.val55.i, %Vec_IntSelectSortCostLit.exit.i ] ; 7 uses
-  %.val52148.i = phi i32 [ %.val52.pre.i, %Vec_IntPushOrderCost2.exit.i ], [ %.val52147.pre.i, %Vec_IntSelectSortCostLit.exit.i ] ; 7 uses
+  %.val52148.i = phi i32 [ %.val52.pre.i, %Vec_IntPushOrderCost2.exit.i ], [ %.val52147.pre.i, %Vec_IntSelectSortCostLit.exit.i ] ; 6 uses
   %.val99.i.i = load ptr, ptr %i.pk, align 8, !tbaa !43
   %i.rm = getelementptr i8, ptr %.val99.i.i, i64 8
   %.val99.val.i.i = load ptr, ptr %i.rm, align 8, !tbaa !42 ; 2 uses
@@ -225,8 +225,8 @@ bb.de:                                            ; preds = %.lr.ph192
   br i1 %i.rx, label %.lr.ph192, label %.lr.ph52.i.i.preheader, !llvm.loop !118
 
 .lr.ph192:                                        ; preds = %.lr.ph.i85, %bb.de
-  %.0.in.i.i.i191 = phi i32 [ %.0.i.i.i, %bb.de ], [ %.val52148.i, %.lr.ph.i85 ] ; 5 uses
-  %.0.i.i.i = add nsw i32 %.0.in.i.i.i191, -1     ; 3 uses
+  %.0.in.i.i.i191 = phi i32 [ %.0.i.i.i, %bb.de ], [ %.val52148.i, %.lr.ph.i85 ] ; 4 uses
+  %.0.i.i.i = add nsw i32 %.0.in.i.i.i191, -1     ; 4 uses
   %i.ry = zext nneg i32 %.0.in.i.i.i191 to i64
   %i.rz = getelementptr [4 x i8], ptr %.val57.i, i64 %i.ry
   %i.sa = getelementptr i8, ptr %i.rz, i64 -8
@@ -237,13 +237,9 @@ bb.de:                                            ; preds = %.lr.ph192
   %i.sf = load i32, ptr %i.se, align 4, !tbaa !50
   %i.sg = ashr i32 %i.sf, 4
   %i.sh = icmp sgt i32 %i.sg, %i.rv
-  br i1 %i.sh, label %.preheader.lr.ph.i.i, label %bb.de, !llvm.loop !118
+  br i1 %i.sh, label %.preheader.preheader.i.i, label %bb.de, !llvm.loop !118
 
-.preheader.lr.ph.i.i:                             ; preds = %.lr.ph192
-  %.not9420.not.i.not.i = icmp slt i32 %.val52148.i, %.0.in.i.i.i191
-  br i1 %.not9420.not.i.not.i, label %._crit_edge53.thread.i.i, label %.preheader.preheader.i.i
-
-.preheader.preheader.i.i:                         ; preds = %.preheader.lr.ph.i.i
+.preheader.preheader.i.i:                         ; preds = %.lr.ph192
   %.08227.i.i = add nsw i32 %.0.in.i.i.i191, -2
   %i.si = zext nneg i32 %.0.i.i.i to i64
   %i.sj = zext nneg i32 %.08227.i.i to i64
@@ -330,15 +326,15 @@ bb.di:                                            ; preds = %bb.dh
   br label %Bal_ManEvalTwo.exit.thread.i.i
 
 Bal_ManEvalTwo.exit.thread.i.i:                   ; preds = %bb.di, %bb.dh, %Bal_ManEvalTwo.exit.i.i, %Gia_ObjIsXor.exit.i93.i
-  %.278.i.i = phi i32 [ %.17722.i.i, %Bal_ManEvalTwo.exit.i.i ], [ %i.tz, %bb.di ], [ %.17722.i.i, %bb.dh ], [ %.17722.i.i, %Gia_ObjIsXor.exit.i93.i ] ; 4 uses
-  %.272.i.i = phi i32 [ %.17123.i.i, %Bal_ManEvalTwo.exit.i.i ], [ %i.sm, %bb.di ], [ %.17123.i.i, %bb.dh ], [ %.17123.i.i, %Gia_ObjIsXor.exit.i93.i ] ; 5 uses
+  %.278.i.i = phi i32 [ %.17722.i.i, %Bal_ManEvalTwo.exit.i.i ], [ %i.tz, %bb.di ], [ %.17722.i.i, %bb.dh ], [ %.17722.i.i, %Gia_ObjIsXor.exit.i93.i ] ; 5 uses
+  %.272.i.i = phi i32 [ %.17123.i.i, %Bal_ManEvalTwo.exit.i.i ], [ %i.sm, %bb.di ], [ %.17123.i.i, %bb.dh ], [ %.17123.i.i, %Gia_ObjIsXor.exit.i93.i ] ; 6 uses
   %.2.i.i = phi i32 [ %.124.i.i, %Bal_ManEvalTwo.exit.i.i ], [ %i.tm, %bb.di ], [ %.124.i.i, %bb.dh ], [ %.124.i.i, %Gia_ObjIsXor.exit.i93.i ] ; 4 uses
   %.not94.not.i.i = icmp sgt i64 %indvars.iv.i90.i, %i.si
   br i1 %.not94.not.i.i, label %Gia_ObjIsXor.exit.i93.i, label %..loopexit3_crit_edge.i.i, !llvm.loop !120
 
 ._crit_edge.i94.i:                                ; preds = %..loopexit3_crit_edge.i.i
   %.not.i95.i = icmp eq i32 %.2.i.i, 1000000000
-  br i1 %.not.i95.i, label %._crit_edge.thread.i.i, label %bb.dj
+  br i1 %.not.i95.i, label %.lr.ph52.i.i.preheader, label %bb.dj
 
 bb.dj:                                            ; preds = %._crit_edge.i94.i
   %i.ua = sext i32 %.272.i.i to i64
@@ -353,21 +349,18 @@ bb.dj:                                            ; preds = %._crit_edge.i94.i
   %i.uh = load i32, ptr %i.ug, align 4, !tbaa !50
   %.unshifted.i.i = xor i32 %i.uh, %.2.i.i
   %i.ui = icmp ult i32 %.unshifted.i.i, 16
-  br i1 %i.ui, label %bb.dk, label %._crit_edge.thread.i.i
+  br i1 %i.ui, label %bb.dk, label %.lr.ph52.i.i.preheader
 
 bb.dk:                                            ; preds = %bb.dj
   %i.uj = shl i32 %.272.i.i, 16
   %i.uk = or i32 %i.uj, %.278.i.i
   br label %Bal_ManFindBestPair.exit.i
 
-._crit_edge.thread.i.i:                           ; preds = %bb.dj, %._crit_edge.i94.i
-  %3 = zext nneg i32 %.0.i.i.i to i64
-  br label %.lr.ph52.i.i.preheader
-
-.lr.ph52.i.i.preheader:                           ; preds = %bb.de, %.lr.ph.i85, %._crit_edge.thread.i.i
-  %indvars.iv71.i.i.ph = phi i64 [ 0, %.lr.ph.i85 ], [ %3, %._crit_edge.thread.i.i ], [ 0, %bb.de ]
-  %.37349.i.i.ph = phi i32 [ -1, %.lr.ph.i85 ], [ %.272.i.i, %._crit_edge.thread.i.i ], [ -1, %bb.de ]
-  %.37948.i.i.ph = phi i32 [ -1, %.lr.ph.i85 ], [ %.278.i.i, %._crit_edge.thread.i.i ], [ -1, %bb.de ]
+.lr.ph52.i.i.preheader:                           ; preds = %bb.de, %.lr.ph.i85, %._crit_edge.i94.i, %bb.dj
+  %.0.lcssa.i7986.i.i98 = phi i32 [ %.0.i.i.i, %._crit_edge.i94.i ], [ %.0.i.i.i, %bb.dj ], [ 0, %.lr.ph.i85 ], [ 0, %bb.de ]
+  %.076.lcssa87.i.i97 = phi i32 [ %.278.i.i, %._crit_edge.i94.i ], [ %.278.i.i, %bb.dj ], [ -1, %.lr.ph.i85 ], [ -1, %bb.de ]
+  %.070.lcssa88.i.i96 = phi i32 [ %.272.i.i, %._crit_edge.i94.i ], [ %.272.i.i, %bb.dj ], [ -1, %.lr.ph.i85 ], [ -1, %bb.de ]
+  %3 = zext nneg i32 %.0.lcssa.i7986.i.i98 to i64
   br label %.lr.ph52.i.i
 
 .loopexit.i.i:                                    ; preds = %Bal_ManEvalTwo.exit112.thread.i.i, %.lr.ph52.i.i
@@ -377,11 +370,11 @@ bb.dk:                                            ; preds = %bb.dj
   %exitcond74.not.i.i = icmp eq i64 %indvars.iv.next72.i.i, %i.rn
   br i1 %exitcond74.not.i.i, label %._crit_edge53.i.i, label %.lr.ph52.i.i, !llvm.loop !121
 
-.lr.ph52.i.i:                                     ; preds = %.lr.ph52.i.i.preheader, %.loopexit.i.i
-  %indvars.iv71.i.i = phi i64 [ %indvars.iv.next72.i.i, %.loopexit.i.i ], [ %indvars.iv71.i.i.ph, %.lr.ph52.i.i.preheader ] ; 3 uses
-  %.350.i.i = phi i32 [ %.4.lcssa.i.i, %.loopexit.i.i ], [ 1000000000, %.lr.ph52.i.i.preheader ] ; 2 uses
-  %.37349.i.i = phi i32 [ %.474.lcssa.i.i, %.loopexit.i.i ], [ %.37349.i.i.ph, %.lr.ph52.i.i.preheader ] ; 2 uses
-  %.37948.i.i = phi i32 [ %.480.lcssa.i.i, %.loopexit.i.i ], [ %.37948.i.i.ph, %.lr.ph52.i.i.preheader ] ; 2 uses
+.lr.ph52.i.i:                                     ; preds = %.loopexit.i.i, %.lr.ph52.i.i.preheader
+  %indvars.iv71.i.i = phi i64 [ %3, %.lr.ph52.i.i.preheader ], [ %indvars.iv.next72.i.i, %.loopexit.i.i ] ; 3 uses
+  %.350.i.i = phi i32 [ 1000000000, %.lr.ph52.i.i.preheader ], [ %.4.lcssa.i.i, %.loopexit.i.i ] ; 2 uses
+  %.37349.i.i = phi i32 [ %.070.lcssa88.i.i96, %.lr.ph52.i.i.preheader ], [ %.474.lcssa.i.i, %.loopexit.i.i ] ; 2 uses
+  %.37948.i.i = phi i32 [ %.076.lcssa87.i.i97, %.lr.ph52.i.i.preheader ], [ %.480.lcssa.i.i, %.loopexit.i.i ] ; 2 uses
   %indvars.iv.next72.i.i = add nuw nsw i64 %indvars.iv71.i.i, 1 ; 4 uses
   %.not93.not37.i.i = icmp samesign ult i64 %indvars.iv.next72.i.i, %i.rn
   br i1 %.not93.not37.i.i, label %.lr.ph.i88.i, label %.loopexit.i.i
@@ -480,7 +473,7 @@ bb.dp:                                            ; preds = %._crit_edge53.i.i
   %i.wi = or i32 %i.wh, %.480.lcssa.i.i
   br label %Bal_ManFindBestPair.exit.i
 
-._crit_edge53.thread.i.i:                         ; preds = %.preheader.lr.ph.i.i, %._crit_edge53.i.i
+._crit_edge53.thread.i.i:                         ; preds = %._crit_edge53.i.i
   %i.wj = shl i32 %.val52148.i, 16
   %i.wk = add i32 %i.wj, -65536
   %i.wl = add nsw i32 %.val52148.i, -2

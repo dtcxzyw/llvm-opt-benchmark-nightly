@@ -204,15 +204,15 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   br label %.split74.preheader.i
 
 .split74.preheader.i:                             ; preds = %.split90.us.i, %.preheader70.i
-  %.195.i = phi i1 [ %.098.i, %.preheader70.i ], [ %.4.1.i, %.split90.us.i ]
-  %.14294.i = phi i32 [ %.04197.i, %.preheader70.i ], [ %.445.1.i, %.split90.us.i ]
-  %storemerge4893.i = phi i32 [ 3, %.preheader70.i ], [ %i.ds, %.split90.us.i ] ; 5 uses
+  %.195.i = phi i1 [ %.4.1.i, %.split90.us.i ], [ %.098.i, %.preheader70.i ]
+  %.14294.i = phi i32 [ %.445.1.i, %.split90.us.i ], [ %.04197.i, %.preheader70.i ]
+  %storemerge4893.i = phi i32 [ %i.ds, %.split90.us.i ], [ 3, %.preheader70.i ] ; 5 uses
   br label %.split74.i
 
 .split74.i:                                       ; preds = %intel_pll_is_valid.exit.thread.1.i, %.split74.preheader.i
-  %.282.i = phi i1 [ %.4.1.i, %intel_pll_is_valid.exit.thread.1.i ], [ %.195.i, %.split74.preheader.i ] ; 6 uses
-  %.24381.i = phi i32 [ %.445.1.i, %intel_pll_is_valid.exit.thread.1.i ], [ %.14294.i, %.split74.preheader.i ] ; 7 uses
-  %storemerge4980.i = phi i32 [ %i.dq, %intel_pll_is_valid.exit.thread.1.i ], [ 20, %.split74.preheader.i ] ; 5 uses
+  %.282.i = phi i1 [ %.195.i, %.split74.preheader.i ], [ %.4.1.i, %intel_pll_is_valid.exit.thread.1.i ] ; 6 uses
+  %.24381.i = phi i32 [ %.14294.i, %.split74.preheader.i ], [ %.445.1.i, %intel_pll_is_valid.exit.thread.1.i ] ; 7 uses
+  %storemerge4980.i = phi i32 [ 20, %.split74.preheader.i ], [ %i.dq, %intel_pll_is_valid.exit.thread.1.i ] ; 5 uses
   %i.s = mul i32 %storemerge4980.i, %storemerge4893.i ; 3 uses
   %i.t = mul i32 %i.s, 5                          ; 12 uses
   %i.u = mul i32 %i.r, %i.t                       ; 3 uses
@@ -235,8 +235,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 bb.e:                                             ; preds = %.split74.i
   %i.ad = icmp sgt i32 %i.ac, 0
   %i.ae = xor i1 %i.x, %i.ad
-  %2 = freeze i1 %i.ae
-  %..neg34.i.v.i = select i1 %2, i32 2, i32 -2
+  %..neg34.i.v.i = select i1 %i.ae, i32 2, i32 -2
   %..neg34.i.i = sdiv i32 %i.t, %..neg34.i.v.i
   %.pn35.i.i = add i32 %..neg34.i.i, %i.ac
   %i.af = sdiv i32 %.pn35.i.i, %i.t
@@ -380,8 +379,7 @@ intel_pll_is_valid.exit.thread.i:                 ; preds = %vlv_PLL_is_optimal.
 bb.p:                                             ; preds = %intel_pll_is_valid.exit.thread.i
   %i.bw = icmp sgt i32 %i.bv, 0
   %i.bx = xor i1 %i.x, %i.bw
-  %3 = freeze i1 %i.bx
-  %..neg34.i.v.1.i = select i1 %3, i32 2, i32 -2
+  %..neg34.i.v.1.i = select i1 %i.bx, i32 2, i32 -2
   %..neg34.i.1.i = sdiv i32 %i.t, %..neg34.i.v.1.i
   %.pn35.i.1.i = add i32 %..neg34.i.1.i, %i.bv
   %i.by = sdiv i32 %.pn35.i.1.i, %i.t

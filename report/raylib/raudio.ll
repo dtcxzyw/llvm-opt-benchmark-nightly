@@ -205,8 +205,8 @@ bb.ff:                                            ; preds = %bb.fe
   br i1 %i.bsq, label %.lr.ph.i74.preheader.i, label %._crit_edge.i69.i
 
 .lr.ph.i74.preheader.i:                           ; preds = %bb.ff
-  %7 = shl nuw nsw i32 %i.bsp, 1
   %.0.i79.i = getelementptr inbounds nuw i8, ptr %i.bsj, i64 1
+  %7 = shl nuw nsw i32 %i.bsp, 1
   %i.bsr = load i8, ptr %.0.i79.i, align 1
   %i.bss = zext i8 %i.bsr to i32
   br label %._crit_edge.i69.i
@@ -609,8 +609,8 @@ bb.j:                                             ; preds = %bb.i
   br i1 %i.id, label %.lr.ph.i197.preheader, label %drmp3_bs_get_bits.exit203
 
 .lr.ph.i197.preheader:                            ; preds = %bb.j
-  %3 = shl nuw nsw i32 %i.ic, 1
   %.0.i202 = getelementptr inbounds nuw i8, ptr %i.hw, i64 1
+  %3 = shl nuw nsw i32 %i.ic, 1
   %i.ie = load i8, ptr %.0.i202, align 1
   %i.if = zext i8 %i.ie to i32
   br label %drmp3_bs_get_bits.exit203

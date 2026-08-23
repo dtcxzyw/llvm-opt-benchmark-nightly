@@ -206,7 +206,7 @@ bb.de:                                            ; preds = %bb.dd
 
 bb.df:                                            ; preds = %bb.dd
   %.sroa.521.sroa.5.0..sroa.521.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.o, i64 16
-  %.sroa.521.sroa.5.0.copyload = load i64, ptr %.sroa.521.sroa.5.0..sroa.521.0..sroa_idx.sroa_idx, align 8 ; 7 uses
+  %.sroa.521.sroa.5.0.copyload = load i64, ptr %.sroa.521.sroa.5.0..sroa.521.0..sroa_idx.sroa_idx, align 8 ; 5 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.o)
   %i.vs = getelementptr inbounds nuw i8, ptr %1, i64 64
   %i.vt = load i64, ptr %i.vs, align 8, !noundef !10 ; 3 uses
@@ -224,14 +224,10 @@ bb.dg:                                            ; preds = %bb.df
   br label %bb.dh
 
 bb.dh:                                            ; preds = %.backedge.i55, %.lr.ph.i
-  %.sroa.4.032.i = phi i64 [ %i.vt, %.lr.ph.i ], [ %i.vv, %.backedge.i55 ] ; 5 uses
+  %.sroa.4.032.i = phi i64 [ %i.vt, %.lr.ph.i ], [ %i.vv, %.backedge.i55 ] ; 4 uses
   %i.vv = add nsw i64 %.sroa.4.032.i, -1          ; 2 uses
   %.not10.i = icmp ult i64 %.sroa.4.032.i, %.sroa.521.sroa.5.0.copyload
-  br i1 %.not10.i, label %bb.di, label %.split23.i
-
-.split23.i:                                       ; preds = %bb.dh
-  %6 = icmp eq i64 %.sroa.4.032.i, %.sroa.521.sroa.5.0.copyload
-  br i1 %6, label %_ZN5milli6prompt8truncate17h982bb0acbc2e5e52E.exit, label %.backedge.i55
+  br i1 %.not10.i, label %bb.di, label %.backedge.i55
 
 bb.di:                                            ; preds = %bb.dh
   %i.vw = getelementptr inbounds nuw i8, ptr %i.vq, i64 %.sroa.4.032.i
@@ -239,12 +235,12 @@ bb.di:                                            ; preds = %bb.dh
   %i.vy = icmp sgt i8 %i.vx, -65
   br i1 %i.vy, label %_ZN5milli6prompt8truncate17h982bb0acbc2e5e52E.exit, label %.backedge.i55
 
-.backedge.i55:                                    ; preds = %bb.di, %.split23.i
+.backedge.i55:                                    ; preds = %bb.dh, %bb.di
   %.not26.i = icmp eq i64 %i.vv, 0
   br i1 %.not26.i, label %_ZN5milli6prompt8truncate17h982bb0acbc2e5e52E.exit, label %bb.dh
 
-_ZN5milli6prompt8truncate17h982bb0acbc2e5e52E.exit: ; preds = %.backedge.i55, %bb.di, %.split23.i, %bb.dg, %bb.df
-  %.sroa.9.0 = phi i64 [ %.sroa.521.sroa.5.0.copyload, %bb.df ], [ %.sroa.521.sroa.5.0.copyload, %bb.dg ], [ %.sroa.4.032.i, %bb.di ], [ 0, %.backedge.i55 ], [ %.sroa.521.sroa.5.0.copyload, %.split23.i ]
+_ZN5milli6prompt8truncate17h982bb0acbc2e5e52E.exit: ; preds = %.backedge.i55, %bb.di, %bb.dg, %bb.df
+  %.sroa.9.0 = phi i64 [ %.sroa.521.sroa.5.0.copyload, %bb.df ], [ %.sroa.521.sroa.5.0.copyload, %bb.dg ], [ %.sroa.4.032.i, %bb.di ], [ 0, %.backedge.i55 ]
   %i.vz = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %i.vn, ptr %i.vz, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16

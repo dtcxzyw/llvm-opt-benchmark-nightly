@@ -204,22 +204,17 @@ bb.x:                                             ; preds = %bb.w
 
 bb.y:                                             ; preds = %bb.x
   %i.di = add nsw i32 %i.p, -2                    ; 2 uses
-  %i.dj = lshr i32 %i.di, 1                       ; 3 uses
+  %i.dj = lshr i32 %i.di, 1                       ; 2 uses
   %i.dk = lshr i32 %i.di, 1
-  %4 = zext nneg i32 %i.dk to i64
-  %sext = zext nneg i32 %i.dj to i64
-  br label %5
+  %sext = zext nneg i32 %i.dk to i64
+  br label %bb.z
 
-5:                                                ; preds = %bb.ay, %bb.y
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.ay ], [ %4, %bb.y ] ; 4 uses
-  %6 = icmp sgt i64 %indvars.iv, %sext
-  br i1 %6, label %bb.ay, label %bb.z
-
-bb.z:                                             ; preds = %5
+bb.z:                                             ; preds = %bb.ay, %bb.y
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.ay ], [ %sext, %bb.y ] ; 3 uses
   %i.dl = trunc nuw i64 %indvars.iv to i32        ; 2 uses
   %i.dm = mul i32 %i.dl, 12
   %i.dn = add i32 %i.dm, %.01926
-  %i.do = shl nuw i32 %i.dl, 1                    ; 2 uses
+  %i.do = shl i32 %i.dl, 1                        ; 2 uses
   %i.dp = or disjoint i32 %i.do, 1                ; 5 uses
   %i.dq = mul i32 %i.dp, 12
   %i.dr = add i32 %i.dq, %.01926                  ; 6 uses
@@ -502,10 +497,10 @@ bb.ax:                                            ; preds = %bb.aw, %bb.av, %bb.
   store i32 %.0.copyload.i2326, ptr %i.hh, align 1
   br label %bb.ay
 
-bb.ay:                                            ; preds = %bb.ak, %bb.ai, %bb.ag, %5, %.loopexit2450
+bb.ay:                                            ; preds = %bb.ak, %bb.ai, %bb.ag, %.loopexit2450
   %.not2071 = icmp eq i64 %indvars.iv, 0
   %indvars.iv.next = add nsw i64 %indvars.iv, -1
-  br i1 %.not2071, label %bb.az, label %5
+  br i1 %.not2071, label %bb.az, label %bb.z
 
 bb.az:                                            ; preds = %bb.ay
   %i.hi = udiv i32 %i.o, 12
@@ -908,22 +903,17 @@ bb.ac:                                            ; preds = %bb.ab
 
 bb.ad:                                            ; preds = %bb.ac
   %i.dt = add nsw i32 %i.p, -2                    ; 2 uses
-  %i.du = lshr i32 %i.dt, 1                       ; 3 uses
+  %i.du = lshr i32 %i.dt, 1                       ; 2 uses
   %i.dv = lshr i32 %i.dt, 1
-  %4 = zext nneg i32 %i.dv to i64
-  %sext = zext nneg i32 %i.du to i64
-  br label %5
+  %sext = zext nneg i32 %i.dv to i64
+  br label %bb.ae
 
-5:                                                ; preds = %bb.bj, %bb.ad
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.bj ], [ %4, %bb.ad ] ; 4 uses
-  %6 = icmp sgt i64 %indvars.iv, %sext
-  br i1 %6, label %bb.bj, label %bb.ae
-
-bb.ae:                                            ; preds = %5
+bb.ae:                                            ; preds = %bb.bj, %bb.ad
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.bj ], [ %sext, %bb.ad ] ; 3 uses
   %i.dw = trunc nuw i64 %indvars.iv to i32        ; 2 uses
   %i.dx = shl i32 %i.dw, 4
   %i.dy = add i32 %i.dx, %.02294
-  %i.dz = shl nuw i32 %i.dw, 1                    ; 2 uses
+  %i.dz = shl i32 %i.dw, 1                        ; 2 uses
   %i.ea = or disjoint i32 %i.dz, 1                ; 5 uses
   %i.eb = shl i32 %i.ea, 4
   %i.ec = add i32 %i.eb, %.02294                  ; 6 uses
@@ -1221,10 +1211,10 @@ bb.bi:                                            ; preds = %bb.bh, %bb.bg, %bb.
   store i32 %.0.copyload.i2678, ptr %i.ic, align 1
   br label %bb.bj
 
-bb.bj:                                            ; preds = %bb.ar, %bb.aq, %bb.am, %5, %.loopexit2775
+bb.bj:                                            ; preds = %bb.ar, %bb.aq, %bb.am, %.loopexit2775
   %.not2444 = icmp eq i64 %indvars.iv, 0
   %indvars.iv.next = add nsw i64 %indvars.iv, -1
-  br i1 %.not2444, label %bb.bk, label %5
+  br i1 %.not2444, label %bb.bk, label %bb.ae
 
 bb.bk:                                            ; preds = %bb.bj
   %i.id = lshr i32 %i.o, 4
@@ -1627,22 +1617,17 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %bb.n
   %i.dv = add nsw i32 %i.m, -2                    ; 2 uses
-  %i.dw = lshr i32 %i.dv, 1                       ; 2 uses
+  %i.dw = lshr i32 %i.dv, 1
   %i.dx = lshr i32 %i.dv, 1
-  %4 = zext nneg i32 %i.dx to i64
-  %sext = zext nneg i32 %i.dw to i64
-  br label %5
+  %sext = zext nneg i32 %i.dx to i64
+  br label %bb.p
 
-5:                                                ; preds = %bb.y, %bb.o
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.y ], [ %4, %bb.o ] ; 4 uses
-  %6 = icmp sgt i64 %indvars.iv, %sext
-  br i1 %6, label %bb.y, label %bb.p
-
-bb.p:                                             ; preds = %5
+bb.p:                                             ; preds = %bb.y, %bb.o
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.y ], [ %sext, %bb.o ] ; 3 uses
   %i.dy = trunc nuw i64 %indvars.iv to i32        ; 2 uses
   %i.dz = mul i32 %i.dy, 24
   %i.ea = add i32 %i.dz, %.01747                  ; 5 uses
-  %i.eb = shl nuw i32 %i.dy, 1                    ; 2 uses
+  %i.eb = shl i32 %i.dy, 1                        ; 2 uses
   %i.ec = or disjoint i32 %i.eb, 1                ; 3 uses
   %i.ed = mul i32 %i.ec, 24
   %i.ee = add i32 %i.ed, %.01747                  ; 3 uses
@@ -1832,10 +1817,10 @@ bb.x:                                             ; preds = %bb.w, %bb.t
   store i32 %.0.copyload.i2095, ptr %i.he, align 1
   br label %bb.y
 
-bb.y:                                             ; preds = %bb.r, %5, %bb.x
+bb.y:                                             ; preds = %bb.r, %bb.x
   %.not1807 = icmp eq i64 %indvars.iv, 0
   %indvars.iv.next = add nsw i64 %indvars.iv, -1
-  br i1 %.not1807, label %bb.z, label %5
+  br i1 %.not1807, label %bb.z, label %bb.p
 
 bb.z:                                             ; preds = %bb.y
   %i.hf = udiv i32 %i.l, 24
@@ -2238,23 +2223,18 @@ bb.am:                                            ; preds = %bb.al
 bb.an:                                            ; preds = %bb.am
   %i.in = add i32 %i.b, -24                       ; 3 uses
   %i.io = add nsw i32 %i.y, -2                    ; 2 uses
-  %i.ip = lshr i32 %i.io, 1                       ; 2 uses
+  %i.ip = lshr i32 %i.io, 1
   %i.iq = zext i32 %i.in to i64                   ; 5 uses
   %i.ir = add nuw nsw i64 %i.iq, 8                ; 4 uses
   %i.is = add nuw nsw i64 %i.e, 52                ; 4 uses
   %i.it = lshr i32 %i.io, 1
-  %4 = zext nneg i32 %i.it to i64
-  %sext = zext nneg i32 %i.ip to i64
-  br label %5
+  %sext = zext nneg i32 %i.it to i64
+  br label %bb.ao
 
-5:                                                ; preds = %bb.ca, %bb.an
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.ca ], [ %4, %bb.an ] ; 4 uses
-  %6 = icmp sgt i64 %indvars.iv, %sext
-  br i1 %6, label %bb.ca, label %bb.ao
-
-bb.ao:                                            ; preds = %5
+bb.ao:                                            ; preds = %bb.ca, %bb.an
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.ca ], [ %sext, %bb.an ] ; 3 uses
   %i.iu = trunc nuw i64 %indvars.iv to i32        ; 2 uses
-  %i.iv = shl nuw i32 %i.iu, 1                    ; 2 uses
+  %i.iv = shl i32 %i.iu, 1                        ; 2 uses
   %i.iw = or disjoint i32 %i.iv, 1                ; 5 uses
   %i.ix = mul i32 %i.iw, 36
   %i.iy = add i32 %i.ix, %.04275                  ; 8 uses
@@ -2657,10 +2637,10 @@ bb.bz:                                            ; preds = %bb.by, %bb.bx
   store i64 %.0.copyload.i5373, ptr %i.qg, align 1
   br label %bb.ca
 
-bb.ca:                                            ; preds = %bb.bd, %bb.bc, %5, %bb.bz
+bb.ca:                                            ; preds = %bb.bd, %bb.bc, %bb.bz
   %.not4505 = icmp eq i64 %indvars.iv, 0
   %indvars.iv.next = add nsw i64 %indvars.iv, -1
-  br i1 %.not4505, label %bb.cb, label %5
+  br i1 %.not4505, label %bb.cb, label %bb.ao
 
 bb.cb:                                            ; preds = %bb.ca
   %i.qh = udiv i32 %i.x, 36

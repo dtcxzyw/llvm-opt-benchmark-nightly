@@ -205,7 +205,7 @@ _ZN10duckdb_fmt2v68internal7compareERKNS1_6bigintES4_.exit: ; preds = %.loopexit
   %i.lr = load i64, ptr %i.h, align 8, !tbaa !100 ; 2 uses
   %i.ls = trunc i64 %i.lr to i32
   %i.lt = load i32, ptr %i.j, align 8, !tbaa !97  ; 3 uses
-  %i.lu = add nsw i32 %i.lt, %i.ls                ; 4 uses
+  %i.lu = add nsw i32 %i.lt, %i.ls                ; 3 uses
   %i.lv = add nsw i32 %.sroa.speculated.i, 1
   %i.lw = icmp slt i32 %i.lv, %i.lu
   br i1 %i.lw, label %_ZN10duckdb_fmt2v68internal11add_compareERKNS1_6bigintES4_S4_.exit, label %bb.az
@@ -225,7 +225,6 @@ bb.ba:                                            ; preds = %bb.az
   %sext.i205 = shl i64 %i.lr, 32
   %i.mb = ashr exact i64 %sext.i205, 32
   %i.mc = add nsw i64 %i.mb, %i.ma
-  %7 = sext i32 %i.lu to i64
   %i.md = sext i32 %i.lq to i64
   %i.me = sext i32 %i.lp to i64                   ; 2 uses
   %i.mf = sext i32 %i.kr to i64
@@ -236,7 +235,7 @@ bb.ba:                                            ; preds = %bb.az
   br label %bb.bb
 
 bb.bb:                                            ; preds = %bb.bg, %.lr.ph.i204
-  %indvars.iv.i206 = phi i64 [ %i.mc, %.lr.ph.i204 ], [ %indvars.iv.next.i207, %bb.bg ] ; 7 uses
+  %indvars.iv.i206 = phi i64 [ %i.mc, %.lr.ph.i204 ], [ %indvars.iv.next.i207, %bb.bg ] ; 6 uses
   %.03261.i = phi i64 [ 0, %.lr.ph.i204 ], [ %i.nh, %bb.bg ] ; 2 uses
   %indvars.iv.next.i207 = add nsw i64 %indvars.iv.i206, -1 ; 5 uses
   %.not.i.i208 = icmp sgt i64 %indvars.iv.i206, %i.mg
@@ -270,9 +269,7 @@ _ZZN10duckdb_fmt2v68internal11add_compareERKNS1_6bigintES4_S4_ENKUlS4_iE_clES4_i
   %i.mw = phi i64 [ %i.mv, %bb.bd ], [ 0, %_ZZN10duckdb_fmt2v68internal11add_compareERKNS1_6bigintES4_S4_ENKUlS4_iE_clES4_i.exit.i ]
   %i.mx = add nuw nsw i64 %i.mw, %i.mp            ; 3 uses
   %.not.i47.i = icmp sgt i64 %indvars.iv.i206, %i.ma
-  %8 = icmp sle i64 %indvars.iv.i206, %7
-  %or.cond56.i = and i1 %.not.i47.i, %8
-  br i1 %or.cond56.i, label %bb.be, label %_ZZN10duckdb_fmt2v68internal11add_compareERKNS1_6bigintES4_S4_ENKUlS4_iE_clES4_i.exit48.i
+  br i1 %.not.i47.i, label %bb.be, label %_ZZN10duckdb_fmt2v68internal11add_compareERKNS1_6bigintES4_S4_ENKUlS4_iE_clES4_i.exit48.i
 
 bb.be:                                            ; preds = %_ZZN10duckdb_fmt2v68internal11add_compareERKNS1_6bigintES4_S4_ENKUlS4_iE_clES4_i.exit46.i
   %i.my = sub nsw i64 %indvars.iv.next.i207, %i.ma
@@ -354,7 +351,7 @@ bb.bj:                                            ; preds = %bb.bh
   %i.nz = load i64, ptr %i.h, align 8, !tbaa !100 ; 2 uses
   %i.oa = trunc i64 %i.nz to i32
   %i.ob = load i32, ptr %i.j, align 8, !tbaa !97  ; 3 uses
-  %i.oc = add nsw i32 %i.ob, %i.oa                ; 4 uses
+  %i.oc = add nsw i32 %i.ob, %i.oa                ; 3 uses
   %i.od = add nsw i32 %i.ny, 1
   %i.oe = icmp slt i32 %i.od, %i.oc
   br i1 %i.oe, label %.thread310, label %bb.bk
@@ -373,7 +370,6 @@ bb.bl:                                            ; preds = %bb.bk
   %sext.i213 = shl i64 %i.nz, 32
   %i.oi = ashr exact i64 %sext.i213, 32
   %i.oj = add nsw i64 %i.oi, %i.oh
-  %9 = sext i32 %i.oc to i64
   %i.ok = sext i32 %i.ny to i64
   %i.ol = sext i32 %i.nx to i64                   ; 2 uses
   %i.om = sext i32 %i.og to i64
@@ -382,7 +378,7 @@ bb.bl:                                            ; preds = %bb.bk
   br label %bb.bm
 
 bb.bm:                                            ; preds = %bb.bq, %.lr.ph.i212
-  %indvars.iv.i214 = phi i64 [ %i.oj, %.lr.ph.i212 ], [ %indvars.iv.next.i216, %bb.bq ] ; 5 uses
+  %indvars.iv.i214 = phi i64 [ %i.oj, %.lr.ph.i212 ], [ %indvars.iv.next.i216, %bb.bq ] ; 4 uses
   %.03261.i215 = phi i64 [ 0, %.lr.ph.i212 ], [ %i.pf, %bb.bq ] ; 2 uses
   %indvars.iv.next.i216 = add nsw i64 %indvars.iv.i214, -1 ; 4 uses
   %.not.i.i217 = icmp sgt i64 %indvars.iv.i214, %i.ol
@@ -401,9 +397,7 @@ bb.bn:                                            ; preds = %bb.bm
 _ZZN10duckdb_fmt2v68internal11add_compareERKNS1_6bigintES4_S4_ENKUlS4_iE_clES4_i.exit46.i222: ; preds = %bb.bm, %bb.bn
   %i.ov = phi i64 [ %i.ou, %bb.bn ], [ 0, %bb.bm ] ; 3 uses
   %.not.i47.i223 = icmp sgt i64 %indvars.iv.i214, %i.oh
-  %10 = icmp sle i64 %indvars.iv.i214, %9
-  %or.cond56.i224 = and i1 %.not.i47.i223, %10
-  br i1 %or.cond56.i224, label %bb.bo, label %_ZZN10duckdb_fmt2v68internal11add_compareERKNS1_6bigintES4_S4_ENKUlS4_iE_clES4_i.exit48.i225
+  br i1 %.not.i47.i223, label %bb.bo, label %_ZZN10duckdb_fmt2v68internal11add_compareERKNS1_6bigintES4_S4_ENKUlS4_iE_clES4_i.exit48.i225
 
 bb.bo:                                            ; preds = %_ZZN10duckdb_fmt2v68internal11add_compareERKNS1_6bigintES4_S4_ENKUlS4_iE_clES4_i.exit46.i222
   %i.ow = sub nsw i64 %indvars.iv.next.i216, %i.oh

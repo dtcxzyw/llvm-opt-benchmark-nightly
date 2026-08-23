@@ -205,11 +205,12 @@ define internal fastcc void @_ZN5arrowL31AppendLittleEndianArrayToStringILm4EEEv
   %3 = alloca %"struct.std::array.26", align 1    ; 3 uses
   %4 = alloca %"struct.std::array.18", align 8    ; 6 uses
   %5 = alloca %"struct.std::array.53", align 4    ; 5 uses
+  %6 = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.a = ptrtoint ptr %0 to i64
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %.val7.val.i.i.i = load i64, ptr %i.b, align 8, !tbaa !132, !noalias !281
   %.not16.i.i.i = icmp eq i64 %.val7.val.i.i.i, 0
-  br i1 %.not16.i.i.i, label %bb.a, label %_ZSt7find_ifISt16reverse_iteratorIPKmEZN5arrowL31AppendLittleEndianArrayToStringILm4EEEvRKSt5arrayImXT_EEPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEUlmE_ET_SI_SI_T0_.exit.loopexit
+  br i1 %.not16.i.i.i, label %bb.a, label %_ZSt7find_ifISt16reverse_iteratorIPKmEZN5arrowL31AppendLittleEndianArrayToStringILm4EEEvRKSt5arrayImXT_EEPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEUlmE_ET_SI_SI_T0_.exit
 
 bb.a:                                             ; preds = %.lr.ph.i.preheader.i.i
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
@@ -227,10 +228,6 @@ bb.c:                                             ; preds = %bb.b
   %.val4.val.i.i.i = load i64, ptr %0, align 8, !tbaa !132, !noalias !281
   %.not19.i.i.i = icmp eq i64 %.val4.val.i.i.i, 0
   br i1 %.not19.i.i.i, label %_ZSt7find_ifISt16reverse_iteratorIPKmEZN5arrowL31AppendLittleEndianArrayToStringILm4EEEvRKSt5arrayImXT_EEPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEUlmE_ET_SI_SI_T0_.exit.thread, label %_ZSt7find_ifISt16reverse_iteratorIPKmEZN5arrowL31AppendLittleEndianArrayToStringILm4EEEvRKSt5arrayImXT_EEPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEUlmE_ET_SI_SI_T0_.exit
-
-_ZSt7find_ifISt16reverse_iteratorIPKmEZN5arrowL31AppendLittleEndianArrayToStringILm4EEEvRKSt5arrayImXT_EEPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEUlmE_ET_SI_SI_T0_.exit.loopexit: ; preds = %.lr.ph.i.preheader.i.i
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 32
-  br label %_ZSt7find_ifISt16reverse_iteratorIPKmEZN5arrowL31AppendLittleEndianArrayToStringILm4EEEvRKSt5arrayImXT_EEPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEUlmE_ET_SI_SI_T0_.exit
 
 _ZSt7find_ifISt16reverse_iteratorIPKmEZN5arrowL31AppendLittleEndianArrayToStringILm4EEEvRKSt5arrayImXT_EEPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEUlmE_ET_SI_SI_T0_.exit.thread: ; preds = %bb.c
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
@@ -270,8 +267,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9push_backEc.exit: ; preds 
   store i8 0, ptr %i.r, align 1, !tbaa !49
   br label %bb.o
 
-_ZSt7find_ifISt16reverse_iteratorIPKmEZN5arrowL31AppendLittleEndianArrayToStringILm4EEEvRKSt5arrayImXT_EEPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEUlmE_ET_SI_SI_T0_.exit: ; preds = %_ZSt7find_ifISt16reverse_iteratorIPKmEZN5arrowL31AppendLittleEndianArrayToStringILm4EEEvRKSt5arrayImXT_EEPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEUlmE_ET_SI_SI_T0_.exit.loopexit, %bb.c, %bb.b, %bb.a
-  %.sink.i.i.i = phi ptr [ %6, %_ZSt7find_ifISt16reverse_iteratorIPKmEZN5arrowL31AppendLittleEndianArrayToStringILm4EEEvRKSt5arrayImXT_EEPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEUlmE_ET_SI_SI_T0_.exit.loopexit ], [ %i.d, %bb.c ], [ %i.c, %bb.b ], [ %i.b, %bb.a ]
+_ZSt7find_ifISt16reverse_iteratorIPKmEZN5arrowL31AppendLittleEndianArrayToStringILm4EEEvRKSt5arrayImXT_EEPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEUlmE_ET_SI_SI_T0_.exit: ; preds = %.lr.ph.i.preheader.i.i, %bb.c, %bb.b, %bb.a
+  %.sink.i.i.i = phi ptr [ %6, %.lr.ph.i.preheader.i.i ], [ %i.d, %bb.c ], [ %i.c, %bb.b ], [ %i.b, %bb.a ]
   %i.s = getelementptr inbounds i8, ptr %.sink.i.i.i, i64 -8
   %i.t = ptrtoint ptr %i.s to i64
   %i.u = sub i64 %i.t, %i.a

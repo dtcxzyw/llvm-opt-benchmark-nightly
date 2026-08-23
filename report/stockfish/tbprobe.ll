@@ -205,8 +205,8 @@ bb.h:                                             ; preds = %bb.g
   %spec.select = select i1 %i.ae, ptr %i.ac, ptr %i.l
   br label %_ZSt4findIPiiET_S1_S1_RKT0_.exit
 
-_ZSt4findIPiiET_S1_S1_RKT0_.exit:                 ; preds = %bb.c, %bb.f, %bb.e, %bb.d, %bb.h, %._crit_edge.loopexit.i.i.i, %bb.g
-  %.028.i.i.i = phi ptr [ %i.z, %bb.g ], [ %scevgep.i.i.i, %._crit_edge.loopexit.i.i.i ], [ %spec.select, %bb.h ], [ %i.r, %bb.e ], [ %i.o, %bb.d ], [ %i.u, %bb.f ], [ %i.k, %bb.c ]
+_ZSt4findIPiiET_S1_S1_RKT0_.exit:                 ; preds = %bb.f, %bb.e, %bb.d, %bb.c, %bb.h, %._crit_edge.loopexit.i.i.i, %bb.g
+  %.028.i.i.i = phi ptr [ %i.z, %bb.g ], [ %scevgep.i.i.i, %._crit_edge.loopexit.i.i.i ], [ %spec.select, %bb.h ], [ %i.r, %bb.e ], [ %i.o, %bb.d ], [ %i.k, %bb.c ], [ %i.u, %bb.f ]
   %i.af = ptrtoint ptr %.028.i.i.i to i64
   %i.ag = ptrtoint ptr %i.k to i64
   %i.ah = sub i64 %i.af, %i.ag
