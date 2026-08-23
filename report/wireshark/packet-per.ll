@@ -205,7 +205,7 @@ bb.i:                                             ; preds = %bb.a, %bb.h
 ; Function Attrs: null_pointer_is_valid sspstrong uwtable
 define i32 @dissect_per_constrained_integer(ptr noundef %0, i32 noundef %1, ptr nofree noundef captures(none) %2, ptr noundef %3, i32 noundef %4, i32 noundef %5, i32 noundef %6, ptr nofree noundef writeonly captures(address_is_null) %7, i1 noundef zeroext %8) local_unnamed_addr #0 {
 bb.a:
-  %9 = alloca %struct.nstime_t, align 8           ; 6 uses
+  %9 = alloca %struct.nstime_t, align 8           ; 7 uses
   %i.a = alloca i8, align 1                       ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #13
   br i1 %8, label %bb.b, label %bb.g
@@ -279,6 +279,7 @@ bb.j:                                             ; preds = %bb.i
 
 .thread253:                                       ; preds = %bb.j, %bb.h, %bb.i
   %.0226.ph = phi i32 [ -1, %bb.i ], [ 1000000, %bb.h ], [ -1, %bb.j ]
+  store i64 0, ptr %9, align 8
   %i.aa = getelementptr inbounds nuw i8, ptr %9, i64 8
   store i32 0, ptr %i.aa, align 8
   br label %bb.o

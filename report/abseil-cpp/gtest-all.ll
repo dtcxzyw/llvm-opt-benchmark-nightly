@@ -205,7 +205,7 @@ bb.a:
   %i.a = alloca i8, align 1                       ; 4 uses
   %i.b = alloca i64, align 8                      ; 6 uses
   %3 = alloca %"class.testing::internal::FilePath", align 8 ; 10 uses
-  %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 5 uses
+  %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
   %5 = alloca %"class.std::__cxx11::basic_string", align 8 ; 13 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.d = load i64, ptr %i.c, align 8, !tbaa !29
@@ -331,7 +331,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendERKS4_.exit.i: ; pre
           to label %.noexc9 unwind label %bb.n    ; 8 uses
 
 .noexc9:                                          ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendERKS4_.exit.i
-  %i.ap = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 9 uses
+  %i.ap = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 10 uses
+  store ptr %i.ap, ptr %4, align 8, !tbaa !23, !alias.scope !428
   %i.aq = load ptr, ptr %i.ao, align 8, !tbaa !26 ; 4 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %i.ao, i64 16 ; 7 uses
   %i.as = icmp eq ptr %i.aq, %i.ar

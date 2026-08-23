@@ -205,7 +205,7 @@ bb.a:
   br i1 %i.b, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 5 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 7 uses
   %i.d = load i64, ptr %i.c, align 8, !noundef !4 ; 15 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 80
   %i.f = load i64, ptr %i.e, align 8, !noundef !4 ; 14 uses
@@ -387,7 +387,7 @@ bb.t:                                             ; preds = %bb.b
   %i.cm = sub i64 %i.cc, %i.cl
   %i.cn = add i64 %i.d, 1
   %invariant.op.i = sub i64 %i.cn, %i.cj          ; 2 uses
-  %i.co = add i64 %i.cl, %i.d                     ; 2 uses
+  %i.co = add i64 %i.cl, %i.d                     ; 4 uses
   %i.cp = add i64 %i.d, %i.cc                     ; 6 uses
   br i1 %i.bx, label %.lr.ph.i.split.us, label %.lr.ph.i.split
 
@@ -460,14 +460,18 @@ bb.x:                                             ; preds = %.lr.ph118
   %i.dl = getelementptr inbounds nuw i8, ptr %i.by, i64 %i.dj
   %i.dm = load i8, ptr %i.dl, align 1, !alias.scope !4634, !noalias !4639, !noundef !4
   %.not21.i.us = icmp eq i8 %i.di, %i.dm
-  br i1 %.not21.i.us, label %.preheader, label %.loopexit98
+  br i1 %.not21.i.us, label %.preheader, label %2
+
+2:                                                ; preds = %bb.x
+  store i64 %i.co, ptr %i.c, align 8, !alias.scope !4632, !noalias !4638
+  br label %.loopexit98
 
 bb.y:                                             ; preds = %bb.v
   store i64 %i.cp, ptr %i.c, align 8, !alias.scope !4632, !noalias !4638
   br label %.loopexit98
 
-.loopexit98:                                      ; preds = %bb.x, %bb.y, %bb.w
-  %i.dn = phi i64 [ %.reass.i.us, %bb.w ], [ %i.cp, %bb.y ], [ %i.co, %bb.x ] ; 2 uses
+.loopexit98:                                      ; preds = %bb.y, %2, %bb.w
+  %i.dn = phi i64 [ %.reass.i.us, %bb.w ], [ %i.cp, %bb.y ], [ %i.co, %2 ] ; 2 uses
   %i.do = add i64 %i.dn, %i.cd                    ; 2 uses
   %i.dp = icmp ult i64 %i.do, %i.f
   br i1 %i.dp, label %bb.u, label %.loopexit
@@ -499,9 +503,9 @@ bb.ab:                                            ; preds = %bb.z
   %exitcond.not.i108.not = icmp ult i64 %..i.i, %i.cc
   br i1 %exitcond.not.i108.not, label %.lr.ph110, label %.preheader44.preheader
 
-.sink.split.i:                                    ; preds = %bb.ae, %bb.aa, %bb.af
-  %.sink55.i = phi i64 [ 0, %bb.aa ], [ 0, %bb.af ], [ %i.cm, %bb.ae ] ; 2 uses
-  %.ph54.i = phi i64 [ %i.cp, %bb.aa ], [ %.reass.i, %bb.af ], [ %i.co, %bb.ae ] ; 2 uses
+.sink.split.i:                                    ; preds = %bb.aa, %3, %bb.af
+  %.sink55.i = phi i64 [ %i.cm, %3 ], [ 0, %bb.af ], [ 0, %bb.aa ] ; 2 uses
+  %.ph54.i = phi i64 [ %i.co, %3 ], [ %.reass.i, %bb.af ], [ %i.cp, %bb.aa ] ; 2 uses
   store i64 %.sink55.i, ptr %i.bv, align 8, !alias.scope !4632, !noalias !4638
   %i.dz = add i64 %.ph54.i, %i.cd                 ; 2 uses
   %i.ea = icmp ult i64 %i.dz, %i.f
@@ -555,12 +559,16 @@ bb.ae:                                            ; preds = %.lr.ph112
   %i.eq = getelementptr inbounds nuw i8, ptr %i.by, i64 %i.eo
   %i.er = load i8, ptr %i.eq, align 1, !alias.scope !4634, !noalias !4639, !noundef !4
   %.not21.i = icmp eq i8 %i.en, %i.er
-  br i1 %.not21.i, label %.preheader44, label %.sink.split.i
+  br i1 %.not21.i, label %.preheader44, label %3
 
 .split40.us:                                      ; preds = %.lr.ph112, %.lr.ph118
   %.us-phi41 = phi i64 [ %i.dg, %.lr.ph118 ], [ %i.ek, %.lr.ph112 ]
   tail call void @_RNvNtCs6JMX4GRUq9U_4core9panicking18panic_bounds_check(i64 noundef %.us-phi41, i64 noundef range(i64 0, -9223372036854775808) %i.cc, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @29) #27, !noalias !4641
   unreachable
+
+3:                                                ; preds = %bb.ae
+  store i64 %i.co, ptr %i.c, align 8, !alias.scope !4632, !noalias !4638
+  br label %.sink.split.i
 
 bb.af:                                            ; preds = %.lr.ph110
   %.reass.i = add i64 %invariant.op.i, %.sroa.04.0.i109

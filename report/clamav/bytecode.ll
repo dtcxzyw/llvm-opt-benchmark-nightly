@@ -205,7 +205,7 @@ bb.a:
   %i.b = alloca i32, align 4                      ; 49 uses
   %.sroa.38.i = alloca [3 x i8], align 1          ; 5 uses
   %.sroa.88.i = alloca [5 x i8], align 1          ; 5 uses
-  %i.c = alloca i8, align 1                       ; 10 uses
+  %i.c = alloca i8, align 1                       ; 11 uses
   %i.d = alloca i32, align 4                      ; 7 uses
   %i.e = alloca i32, align 4                      ; 8 uses
   %i.f = alloca i8, align 1                       ; 6 uses
@@ -608,6 +608,7 @@ bb.ip:                                            ; preds = %bb.in
 
 bb.iq:                                            ; preds = %bb.ip
   call void (ptr, ...) @cli_errmsg(ptr noundef nonnull @.str.288) #24
+  store i8 0, ptr %i.c, align 1, !tbaa !132
   br label %readFixedNumber.exit.i236
 
 bb.ir:                                            ; preds = %.lr.ph.i.preheader.i234
@@ -769,7 +770,7 @@ bb.iz:                                            ; preds = %readTypeID.exit.i24
   br label %bb.kc
 
 bb.ja:                                            ; preds = %readTypeID.exit.i247
-  %5 = zext nneg i32 %i.beo to i64
+  %5 = sext i32 %i.beo to i64
   %i.bfb = getelementptr inbounds nuw i8, ptr %i.sj, i64 %5
   %i.bfc = getelementptr inbounds nuw i8, ptr %i.bfb, i64 1
   %i.bfd = load i8, ptr %i.bfc, align 1, !tbaa !123 ; 2 uses

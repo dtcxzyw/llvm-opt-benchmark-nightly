@@ -202,7 +202,8 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 
 bb.d:                                             ; preds = %bb.c
   %i.k = load ptr, ptr @no_fpos, align 8, !tbaa !9
-  %i.l = tail call ptr @GetMemory(i32 noundef %i.f, ptr noundef %i.k) #5
+  %i.l = tail call ptr @GetMemory(i32 noundef %i.f, ptr noundef %i.k) #5 ; 2 uses
+  store ptr %i.l, ptr @zz_hold, align 8, !tbaa !17
   br label %bb.f
 
 bb.e:                                             ; preds = %bb.c

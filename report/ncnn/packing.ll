@@ -181,7 +181,7 @@ bb.k:                                             ; preds = %bb.a
   %i.bj = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 5 uses
   %i.bk = load i32, ptr %i.bj, align 8, !tbaa !48 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #6
-  %i.bl = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 4 uses
+  %i.bl = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 5 uses
   %i.bm = load i64, ptr %i.bl, align 8, !tbaa !43 ; 7 uses
   store i64 %i.bm, ptr %i.f, align 8, !tbaa !49
   %i.bn = getelementptr inbounds nuw i8, ptr %0, i64 212
@@ -507,6 +507,7 @@ bb.az:                                            ; preds = %bb.ay
   br label %_ZN4ncnn3Mat7releaseEv.exit85
 
 _ZN4ncnn3Mat7releaseEv.exit85:                    ; preds = %bb.az, %bb.ay, %bb.au, %bb.av, %bb.ax
+  %4 = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.fu = getelementptr inbounds nuw i8, ptr %2, i64 40 ; 2 uses
   %i.fv = getelementptr inbounds nuw i8, ptr %2, i64 48
   %i.fw = getelementptr inbounds nuw i8, ptr %2, i64 56
@@ -516,6 +517,8 @@ _ZN4ncnn3Mat7releaseEv.exit85:                    ; preds = %bb.az, %bb.ay, %bb.
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %i.fu, i8 0, i64 20, i1 false)
   %i.fy = load <2 x ptr>, ptr %1, align 8, !tbaa !42
   store <2 x ptr> %i.fy, ptr %2, align 8, !tbaa !42
+  %5 = load i64, ptr %i.bl, align 8, !tbaa !43
+  store i64 %5, ptr %4, align 8, !tbaa !43
   %i.fz = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.ga = load ptr, ptr %i.fz, align 8, !tbaa !36
   %i.gb = getelementptr inbounds nuw i8, ptr %2, i64 32

@@ -205,7 +205,7 @@ bb.ax:                                            ; preds = %_ZNSt7__cxx1112basi
 define internal void @_ZN8facebook6hermes12_GLOBAL__N_117HermesRuntimeImpl14collectGarbageENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(192) %0, ptr noundef %1) unnamed_addr #6 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %2 = alloca %"class.std::__cxx11::basic_string", align 8 ; 12 uses
-  %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
+  %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 7 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 160
   %i.b = load i32, ptr %i.a, align 8, !tbaa !260
   %i.c = and i32 %i.b, 512
@@ -239,7 +239,8 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
   %i.p = phi ptr [ %.pre, %._ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread6_crit_edge ], [ %.pre7, %bb.b ], [ %.pre7, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit ] ; 3 uses
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 144
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !305, !nonnull !30, !align !31 ; 2 uses
-  %i.s = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 10 uses
+  %i.s = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 11 uses
+  store ptr %i.s, ptr %3, align 8, !tbaa !112
   %i.t = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 6 uses
   %i.u = icmp eq ptr %i.p, %i.t
   br i1 %i.u, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EOS4_.exit.thread, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EOS4_.exit
@@ -248,7 +249,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EOS4_.exit.thread: ; pred
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.w = load i64, ptr %i.v, align 8, !tbaa !26   ; 4 uses
   %i.x = icmp ult i64 %i.w, 16
-  tail call void @llvm.assume(i1 %i.x)
+  call void @llvm.assume(i1 %i.x)
   %i.y = add nuw nsw i64 %i.w, 1
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.s, ptr noundef nonnull align 8 dereferenceable(1) %i.t, i64 %i.y, i1 false)
   %i.z = getelementptr inbounds nuw i8, ptr %1, i64 8

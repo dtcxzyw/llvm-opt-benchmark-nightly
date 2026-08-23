@@ -205,7 +205,7 @@ bb.i:                                             ; preds = %bb.h
 .preheader61.us:                                  ; preds = %.preheader61.us.preheader, %._crit_edge.split.us81
   %.072.us = phi i32 [ %.2.us75, %._crit_edge.split.us81 ], [ 0, %.preheader61.us.preheader ]
   %.05370.us = phi i32 [ %i.bk, %._crit_edge.split.us81 ], [ 0, %.preheader61.us.preheader ] ; 3 uses
-  %i.ay = shl i32 %.05370.us, %2
+  %i.ay = shl nuw nsw i32 %.05370.us, %2
   br label %.preheader.us76
 
 bb.j:                                             ; preds = %.preheader.us76
@@ -227,10 +227,10 @@ bb.l:                                             ; preds = %.preheader.us76, %b
   %.169.us77 = phi i32 [ %.072.us, %.preheader61.us ], [ %.2.us75, %bb.l ] ; 3 uses
   %.05067.us78 = phi i32 [ 0, %.preheader61.us ], [ %i.bc, %bb.l ] ; 3 uses
   %.val59.us79 = load ptr, ptr %i.h, align 8, !tbaa !33
-  %i.bd = add nsw i32 %.05067.us78, %i.ay         ; 2 uses
-  %4 = ashr i32 %i.bd, 6
-  %5 = sext i32 %4 to i64
-  %i.be = getelementptr inbounds [8 x i8], ptr %.val59.us79, i64 %5
+  %i.bd = add nuw nsw i32 %.05067.us78, %i.ay     ; 2 uses
+  %4 = lshr i32 %i.bd, 6
+  %5 = zext nneg i32 %4 to i64
+  %i.be = getelementptr inbounds nuw [8 x i8], ptr %.val59.us79, i64 %5
   %i.bf = load i64, ptr %i.be, align 8, !tbaa !43
   %i.bg = and i32 %i.bd, 63
   %i.bh = zext nneg i32 %i.bg to i64
@@ -633,14 +633,17 @@ Vec_WrdStart.exit:                                ; preds = %bb.a, %bb.b
   br label %.preheader.us
 
 .preheader.us:                                    ; preds = %._crit_edge98.us, %.preheader.lr.ph.split.us
-  %.0102.us = phi i32 [ 0, %.preheader.lr.ph.split.us ], [ %i.bn, %._crit_edge98.us ] ; 4 uses
+  %.0102.us = phi i32 [ 0, %.preheader.lr.ph.split.us ], [ %i.bn, %._crit_edge98.us ] ; 5 uses
   %.063101.us = phi i32 [ 0, %.preheader.lr.ph.split.us ], [ %i.bm, %._crit_edge98.us ]
-  %.pre = shl i32 %.0102.us, %2                   ; 2 uses
-  br i1 %.not124, label %.lr.ph97.us, label %.lr.ph.us.a
+  br i1 %.not124, label %.preheader.us..lr.ph97.us_crit_edge, label %.lr.ph.us
 
-.lr.ph.us.a:                                      ; preds = %.preheader.us, %bb.c
-  %.06492.us = phi i32 [ %i.af, %bb.c ], [ 0, %.preheader.us ] ; 3 uses
-  %i.w = add nsw i32 %.06492.us, %.pre            ; 2 uses
+.preheader.us..lr.ph97.us_crit_edge:              ; preds = %.preheader.us
+  %.pre = shl i32 %.0102.us, 31
+  br label %.lr.ph97.us
+
+.lr.ph.us.a:                                      ; preds = %.lr.ph.us, %bb.c
+  %.06492.us = phi i32 [ 0, %.lr.ph.us ], [ %i.af, %bb.c ] ; 3 uses
+  %i.w = add nsw i32 %.06492.us, %3               ; 2 uses
   %i.x = ashr i32 %i.w, 6
   %i.y = sext i32 %i.x to i64
   %i.z = getelementptr inbounds [8 x i8], ptr %.val74.us, i64 %i.y
@@ -657,8 +660,9 @@ bb.c:                                             ; preds = %.lr.ph.us.a
   %exitcond134.not = icmp eq i32 %i.af, %smax133
   br i1 %exitcond134.not, label %.lr.ph97.us, label %.lr.ph.us.a, !llvm.loop !335
 
-.lr.ph97.us:                                      ; preds = %bb.c, %.lr.ph.us.a, %.preheader.us
-  %.064.lcssa.us = phi i32 [ 0, %.preheader.us ], [ %.06492.us, %.lr.ph.us.a ], [ %smax133, %bb.c ] ; 3 uses
+.lr.ph97.us:                                      ; preds = %bb.c, %.lr.ph.us.a, %.preheader.us..lr.ph97.us_crit_edge
+  %.pre-phi = phi i32 [ %.pre, %.preheader.us..lr.ph97.us_crit_edge ], [ %3, %.lr.ph.us.a ], [ %3, %bb.c ]
+  %.064.lcssa.us = phi i32 [ 0, %.preheader.us..lr.ph97.us_crit_edge ], [ %smax133, %bb.c ], [ %.06492.us, %.lr.ph.us.a ] ; 3 uses
   %i.ag = and i32 %.0102.us, 63
   %i.ah = zext nneg i32 %i.ag to i64
   %i.ai = shl nuw i64 1, %i.ah                    ; 2 uses
@@ -672,7 +676,7 @@ bb.d:                                             ; preds = %.lr.ph97.us, %bb.i
   %i.al = trunc nuw nsw i64 %indvars.iv to i32    ; 2 uses
   %i.am = shl nuw i32 1, %i.al                    ; 2 uses
   %i.an = xor i32 %i.am, %.064.lcssa.us
-  %i.ao = add nsw i32 %i.an, %.pre                ; 2 uses
+  %i.ao = add nsw i32 %i.an, %.pre-phi            ; 2 uses
   %i.ap = ashr i32 %i.ao, 6
   %i.aq = sext i32 %i.ap to i64
   %i.ar = getelementptr inbounds [8 x i8], ptr %.val74.us, i64 %i.aq
@@ -719,6 +723,10 @@ bb.i:                                             ; preds = %bb.h, %bb.g, %bb.e
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond136.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond136.not, label %._crit_edge98.us, label %bb.d, !llvm.loop !336
+
+.lr.ph.us:                                        ; preds = %.preheader.us
+  %3 = shl i32 %.0102.us, %2                      ; 3 uses
+  br label %.lr.ph.us.a
 
 ._crit_edge98.us:                                 ; preds = %bb.i
   %i.bk = icmp eq i32 %.064.lcssa.us, %i.b

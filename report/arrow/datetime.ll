@@ -204,6 +204,8 @@ _ZNK14arrow_vendored4date9time_zone4initEv.exit:  ; preds = %_ZL14__gthread_once
 "_ZSt11upper_boundIN9__gnu_cxx17__normal_iteratorIPKN14arrow_vendored4date6detail10transitionESt6vectorIS5_SaIS5_EEEENSt6chrono10time_pointINSC_3_V212system_clockENSC_8durationIlSt5ratioILl1ELl1EEEEEEZNKS3_9time_zone13get_info_implESK_E3$_0ET_SN_SN_RKT0_T1_.exit.thread": ; preds = %_ZNK14arrow_vendored4date9time_zone4initEv.exit
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 3 uses
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store i64 0, ptr %5, align 8
   store ptr %i.q, ptr %i.p, align 8, !tbaa !38, !alias.scope !135
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 40
   store i64 0, ptr %i.r, align 8, !tbaa !39, !alias.scope !135
