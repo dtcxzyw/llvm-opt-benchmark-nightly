@@ -1,0 +1,186 @@
+diff --git a/llvm/include/llvm/Analysis/ScalarEvolution.h b/llvm/include/llvm/Analysis/ScalarEvolution.h
+index d17c21ea3401e..3e15471a38a8f 100644
+--- a/llvm/include/llvm/Analysis/ScalarEvolution.h
++++ b/llvm/include/llvm/Analysis/ScalarEvolution.h
+@@ -2413,7 +2413,7 @@ class ScalarEvolution {
+   /// equivalent to proving no signed (resp. unsigned) wrap in
+   /// {`Start`,+,`Step`} if `ExtendOpTy` is `SCEVSignExtendExpr`
+   /// (resp. `SCEVZeroExtendExpr`).
+-  template <typename ExtendOpTy>
++  template <typename ExtendOpTy, SCEVNoWrapFlags WrapType>
+   bool proveNoWrapByVaryingStart(const SCEV *Start, const SCEV *Step,
+                                  const Loop *L);
+ 
+diff --git a/llvm/lib/Analysis/ScalarEvolution.cpp b/llvm/lib/Analysis/ScalarEvolution.cpp
+index a05b7e9714f01..9a0edae572fe4 100644
+--- a/llvm/lib/Analysis/ScalarEvolution.cpp
++++ b/llvm/lib/Analysis/ScalarEvolution.cpp
+@@ -1471,12 +1471,10 @@ static const SCEV *getExtendAddRecStart(const SCEVAddRecExpr *AR, Type *Ty,
+ //
+ // In the current context, S is `Start`, X is `Step`, Ext is `ExtendOpTy` and T
+ // is `Delta` (defined below).
+-template <typename ExtendOpTy>
++template <typename ExtendOpTy, SCEVNoWrapFlags WrapType>
+ bool ScalarEvolution::proveNoWrapByVaryingStart(const SCEV *Start,
+                                                 const SCEV *Step,
+                                                 const Loop *L) {
+-  auto WrapType = ExtendOpTraits<ExtendOpTy>::WrapType;
+-
+   // We restrict `Start` to a constant to prevent SCEV from spending too much
+   // time here.  It is correct (but more expensive) to continue with a
+   // non-constant `Start` and do a general SCEV subtraction to compute
+@@ -1785,7 +1783,8 @@ const SCEV *ScalarEvolution::getZeroExtendExprImpl(SCEVUse Op, Type *Ty,
+       }
+     }
+ 
+-    if (proveNoWrapByVaryingStart<SCEVZeroExtendExpr>(Start, Step, L)) {
++    if (proveNoWrapByVaryingStart<SCEVZeroExtendExpr, SCEV::FlagNUW>(Start,
++                                                                     Step, L)) {
+       setNoWrapFlags(const_cast<SCEVAddRecExpr *>(AR), SCEV::FlagNUW);
+       Start = getExtendAddRecStart<SCEVZeroExtendExpr>(AR, Ty, this, Depth + 1);
+       Step = getZeroExtendExpr(Step, Ty, Depth + 1);
+@@ -2044,91 +2043,18 @@ const SCEV *ScalarEvolution::getSignExtendExprImpl(SCEVUse Op, Type *Ty,
+   // operands (often constants).  This allows analysis of something like
+   // this:  for (signed char X = 0; X < 100; ++X) { int Y = X; }
+   if (match(Op, m_scev_AffineAddRec(m_SCEV(Start), m_SCEV(Step), m_Loop(L)))) {
++    // Redo the AddRec check, attempting to prove no-wrap this time.
+     const auto *AR = cast<SCEVAddRecExpr>(Op);
+-    unsigned BitWidth = getTypeSizeInBits(AR->getType());
+-
+-    // The no-signed-wrap case is handled before the uniquing lookup above.
+-
+-    // Check whether the backedge-taken count is SCEVCouldNotCompute.
+-    // Note that this serves two purposes: It filters out loops that are
+-    // simply not analyzable, and it covers the case where this code is
+-    // being called from within backedge-taken count analysis, such that
+-    // attempting to ask for the backedge-taken count would likely result
+-    // in infinite recursion. In the later case, the analysis code will
+-    // cope with a conservative value, and it will take care to purge
+-    // that value once it has finished.
+-    const SCEV *MaxBECount = getConstantMaxBackedgeTakenCount(L);
+-    if (!isa<SCEVCouldNotCompute>(MaxBECount)) {
+-      // Manually compute the final value for AR, checking for
+-      // overflow.
+-
+-      // Check whether the backedge-taken count can be losslessly casted to
+-      // the addrec's type. The count is always unsigned.
+-      const SCEV *CastedMaxBECount =
+-          getTruncateOrZeroExtend(MaxBECount, Start->getType(), Depth);
+-      const SCEV *RecastedMaxBECount = getTruncateOrZeroExtend(
+-          CastedMaxBECount, MaxBECount->getType(), Depth);
+-      if (MaxBECount == RecastedMaxBECount) {
+-        Type *WideTy = IntegerType::get(getContext(), BitWidth * 2);
+-        // Check whether Start+Step*MaxBECount has no signed overflow.
+-        const SCEV *SMul =
+-            getMulExpr(CastedMaxBECount, Step, SCEV::FlagAnyWrap, Depth + 1);
+-        const SCEV *SAdd = getSignExtendExpr(
+-            getAddExpr(Start, SMul, SCEV::FlagAnyWrap, Depth + 1), WideTy,
+-            Depth + 1);
+-        const SCEV *WideStart = getSignExtendExpr(Start, WideTy, Depth + 1);
+-        const SCEV *WideMaxBECount =
+-            getZeroExtendExpr(CastedMaxBECount, WideTy, Depth + 1);
+-        const SCEV *OperandExtendedAdd =
+-            getAddExpr(WideStart,
+-                       getMulExpr(WideMaxBECount,
+-                                  getSignExtendExpr(Step, WideTy, Depth + 1),
+-                                  SCEV::FlagAnyWrap, Depth + 1),
+-                       SCEV::FlagAnyWrap, Depth + 1);
+-        if (SAdd == OperandExtendedAdd) {
+-          // Cache knowledge of AR NSW, which is propagated to this AddRec.
+-          setNoWrapFlags(const_cast<SCEVAddRecExpr *>(AR), SCEV::FlagNSW);
+-          // Return the expression with the addrec on the outside.
+-          Start =
+-              getExtendAddRecStart<SCEVSignExtendExpr>(AR, Ty, this, Depth + 1);
+-          Step = getSignExtendExpr(Step, Ty, Depth + 1);
+-          return getAddRecExpr(Start, Step, L, AR->getNoWrapFlags());
+-        }
+-        // Similar to above, only this time treat the step value as unsigned.
+-        // This covers loops that count up with an unsigned step.
+-        OperandExtendedAdd =
+-            getAddExpr(WideStart,
+-                       getMulExpr(WideMaxBECount,
+-                                  getZeroExtendExpr(Step, WideTy, Depth + 1),
+-                                  SCEV::FlagAnyWrap, Depth + 1),
+-                       SCEV::FlagAnyWrap, Depth + 1);
+-        if (SAdd == OperandExtendedAdd) {
+-          // If AR wraps around then
+-          //
+-          //    abs(Step) * MaxBECount > unsigned-max(AR->getType())
+-          // => SAdd != OperandExtendedAdd
+-          //
+-          // Thus (AR is not NW => SAdd != OperandExtendedAdd) <=>
+-          // (SAdd == OperandExtendedAdd => AR is NW)
+-
+-          setNoWrapFlags(const_cast<SCEVAddRecExpr *>(AR), SCEV::FlagNW);
+-
+-          // Return the expression with the addrec on the outside.
+-          Start =
+-              getExtendAddRecStart<SCEVSignExtendExpr>(AR, Ty, this, Depth + 1);
+-          Step = getZeroExtendExpr(Step, Ty, Depth + 1);
+-          return getAddRecExpr(Start, Step, L, AR->getNoWrapFlags());
+-        }
+-      }
+-    }
+-
++    inferNoWrapViaConstantRanges(AR);
+     auto NewFlags = proveNoSignedWrapViaInduction(AR);
++    if (!hasFlags(NewFlags, SCEV::FlagNSW) &&
++        proveNoWrapByVaryingStart<SCEVSignExtendExpr, SCEV::FlagNSW>(Start,
++                                                                     Step, L))
++      NewFlags |= SCEV::FlagNSW;
+     setNoWrapFlags(const_cast<SCEVAddRecExpr *>(AR), NewFlags);
++
++    // If we have nsw, the sign-extend distributes over the recurrence.
+     if (AR->hasNoSignedWrap()) {
+-      // Same as nsw case above - duplicated here to avoid a compile time
+-      // issue.  It's not clear that the order of checks does matter, but
+-      // it's one of two issue possible causes for a change which was
+-      // reverted.  Be conservative for the moment.
+       Start = getExtendAddRecStart<SCEVSignExtendExpr>(AR, Ty, this, Depth + 1);
+       Step = getSignExtendExpr(Step, Ty, Depth + 1);
+       return getAddRecExpr(Start, Step, L, AR->getNoWrapFlags());
+@@ -2150,10 +2076,14 @@ const SCEV *ScalarEvolution::getSignExtendExprImpl(SCEVUse Op, Type *Ty,
+       }
+     }
+ 
+-    if (proveNoWrapByVaryingStart<SCEVSignExtendExpr>(Start, Step, L)) {
+-      setNoWrapFlags(const_cast<SCEVAddRecExpr *>(AR), SCEV::FlagNSW);
++    // Handle the nsuw case. nw on pre-inc AR and no-overflow proven with signed
++    // overflow limit implies nsuw on the parent AR, of which nw is a weaker
++    // version.
++    if (proveNoWrapByVaryingStart<SCEVSignExtendExpr, SCEV::FlagNW>(Start, Step,
++                                                                    L)) {
++      setNoWrapFlags(const_cast<SCEVAddRecExpr *>(AR), SCEV::FlagNW);
+       Start = getExtendAddRecStart<SCEVSignExtendExpr>(AR, Ty, this, Depth + 1);
+-      Step = getSignExtendExpr(Step, Ty, Depth + 1);
++      Step = getZeroExtendExpr(Step, Ty, Depth + 1);
+       return getAddRecExpr(Start, Step, L, AR->getNoWrapFlags());
+     }
+   }
+diff --git a/llvm/test/Analysis/ScalarEvolution/incorrect-nsw.ll b/llvm/test/Analysis/ScalarEvolution/incorrect-nsw.ll
+index f7edf493c64c4..1490c6710bced 100644
+--- a/llvm/test/Analysis/ScalarEvolution/incorrect-nsw.ll
++++ b/llvm/test/Analysis/ScalarEvolution/incorrect-nsw.ll
+@@ -3,13 +3,13 @@
+ define void @bad.nsw() {
+ ; CHECK-LABEL: Classifying expressions for: @bad.nsw
+ ; CHECK-LABEL: Classifying expressions for: @bad.nsw
+- entry: 
++ entry:
+   br label %loop
+ 
+  loop:
+   %i = phi i8 [ -1, %entry ], [ %i.inc, %loop ]
+ ; CHECK:  %i = phi i8 [ -1, %entry ], [ %i.inc, %loop ]
+-; CHECK-NEXT: -->  {-1,+,-128}<nw><%loop>
++; CHECK-NEXT: -->  {-1,+,-128}<%loop>
+ ; CHECK-NOT: -->  {-1,+,-128}<nsw><%loop>
+ 
+   %counter = phi i8 [ 0, %entry ], [ %counter.inc, %loop ]
+@@ -22,5 +22,5 @@ define void @bad.nsw() {
+   br i1 %continue, label %exit, label %loop
+ 
+  exit:
+-  ret void  
++  ret void
+ }
