@@ -204,7 +204,7 @@ bb.a:
   %6 = alloca %"class.rocksdb::Slice", align 8    ; 6 uses
   %7 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %8 = alloca %"class.std::__cxx11::basic_string", align 8 ; 14 uses
-  %9 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
+  %9 = alloca %"class.std::__cxx11::basic_string", align 8 ; 11 uses
   %10 = alloca %"class.rocksdb::Slice", align 8   ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #30
   store ptr @.str, ptr %3, align 8, !tbaa !86
@@ -271,23 +271,22 @@ _ZNSt8__detail14__to_chars_lenIjEEjT_i.exit.i:    ; preds = %bb.b
   %i.t = icmp ult i8 %i.r, 100
   %. = select i1 %i.t, i32 2, i32 3               ; 3 uses
   %i.u = zext nneg i32 %. to i64
-  %i.v = select i1 %i.s, i64 1, i64 %i.u          ; 4 uses
-  %i.w = getelementptr inbounds nuw i8, ptr %9, i64 16 ; 11 uses
+  %i.v = select i1 %i.s, i64 1, i64 %i.u          ; 5 uses
+  %i.w = getelementptr inbounds nuw i8, ptr %9, i64 16 ; 10 uses
   store ptr %i.w, ptr %9, align 8, !tbaa !42, !alias.scope !677
-  %11 = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 2 uses
-  %12 = getelementptr inbounds nuw i8, ptr %i.w, i64 %i.v ; 2 uses
   br i1 %i.s, label %.thread, label %bb.c
 
 .thread:                                          ; preds = %_ZNSt8__detail14__to_chars_lenIjEEjT_i.exit.i
-  store i8 45, ptr %i.w, align 8, !tbaa !15, !alias.scope !677
+  %11 = getelementptr inbounds nuw i8, ptr %9, i64 8
   store i64 %i.v, ptr %11, align 8, !tbaa !43, !alias.scope !677
-  store i8 0, ptr %12, align 1, !tbaa !15
   br label %bb.d
 
 bb.c:                                             ; preds = %_ZNSt8__detail14__to_chars_lenIjEEjT_i.exit.i
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.w, i8 45, i64 %i.v, i1 false)
-  store i64 %i.v, ptr %11, align 8, !tbaa !43, !alias.scope !677
-  store i8 0, ptr %12, align 1, !tbaa !15
+  %12 = getelementptr inbounds nuw i8, ptr %9, i64 8
+  store i64 %i.v, ptr %12, align 8, !tbaa !43, !alias.scope !677
+  %13 = getelementptr inbounds nuw i8, ptr %i.w, i64 %i.v
+  store i8 0, ptr %13, align 1, !tbaa !15
   %i.x = icmp ugt i8 %i.r, 99
   br i1 %i.x, label %.lr.ph.preheader.i.i, label %._crit_edge.i.i
 
@@ -304,10 +303,8 @@ bb.c:                                             ; preds = %_ZNSt8__detail14__t
   %i.ah = getelementptr i8, ptr %i.ag, i64 -1
   store i8 %i.ae, ptr %i.ah, align 1, !tbaa !15
   %i.ai = load i8, ptr %i.ac, align 2, !tbaa !15, !noalias !677
-  %13 = zext nneg i32 %. to i64
-  %14 = getelementptr i8, ptr %i.w, i64 %13
-  %15 = getelementptr i8, ptr %14, i64 -2
-  store i8 %i.ai, ptr %15, align 1, !tbaa !15
+  %14 = add nsw i32 %., -2
+  %15 = zext nneg i32 %14 to i64
   br label %bb.d, !llvm.loop !680
 
 ._crit_edge.i.i:                                  ; preds = %bb.c
@@ -322,7 +319,11 @@ bb.c:                                             ; preds = %_ZNSt8__detail14__t
   br label %_ZNSt7__cxx119to_stringEi.exit
 
 bb.d:                                             ; preds = %.lr.ph.preheader.i.i, %.thread
-  %.0.lcssa.i.i.ph = phi i8 [ %i.r, %.thread ], [ %i.aa, %.lr.ph.preheader.i.i ]
+  %.sink65 = phi i64 [ %15, %.lr.ph.preheader.i.i ], [ %i.v, %.thread ]
+  %.sink = phi i8 [ %i.ai, %.lr.ph.preheader.i.i ], [ 0, %.thread ]
+  %.0.lcssa.i.i.ph = phi i8 [ %i.aa, %.lr.ph.preheader.i.i ], [ %i.r, %.thread ]
+  %16 = getelementptr inbounds nuw i8, ptr %i.w, i64 %.sink65
+  store i8 %.sink, ptr %16, align 1, !tbaa !15
   %i.aq = or disjoint i8 %.0.lcssa.i.i.ph, 48
   br label %_ZNSt7__cxx119to_stringEi.exit
 

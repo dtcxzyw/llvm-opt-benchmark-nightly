@@ -204,7 +204,7 @@ bb.i:                                             ; preds = %bb.a, %._crit_edge5
 ; Function Attrs: nounwind uwtable
 define range(i32 0, 2) i32 @stbi__tga_test(ptr noundef %0) local_unnamed_addr #2 {
 bb.a:
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 192 ; 22 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 192 ; 21 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !16   ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 200 ; 8 uses
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !18   ; 3 uses
@@ -607,8 +607,6 @@ stbi__refill_buffer.exit.i94:                     ; preds = %bb.am, %bb.al
   %i.gt = phi i8 [ 0, %bb.al ], [ %.pre.i93, %bb.am ]
   %.sink.i.i95 = phi ptr [ %i.gq, %bb.al ], [ %i.gs, %bb.am ]
   store ptr %.sink.i.i95, ptr %i.c, align 8, !tbaa !18
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 57
-  store ptr %1, ptr %i.a, align 8, !tbaa !16
   br label %stbi__get8.exit97
 
 stbi__get8.exit97:                                ; preds = %bb.ai, %bb.aj, %stbi__refill_buffer.exit.i94

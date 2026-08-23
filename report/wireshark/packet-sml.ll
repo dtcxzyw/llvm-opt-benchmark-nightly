@@ -202,7 +202,7 @@ bb.a:
   %i.c = alloca ptr, align 8                      ; 9 uses
   %i.d = alloca ptr, align 8                      ; 9 uses
   %i.e = alloca i32, align 4                      ; 22 uses
-  %i.f = alloca i32, align 4                      ; 22 uses
+  %i.f = alloca i32, align 4                      ; 23 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #5
   store ptr null, ptr %i.a, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #5
@@ -562,7 +562,8 @@ bb.ag:                                            ; preds = %bb.af
   %i.ff = and i32 %.0301.i150, 15
   %i.fg = or disjoint i32 %i.fe, %i.ff
   %i.fh = shl i32 %i.fg, 4                        ; 2 uses
-  %i.fi = add i32 %i.fd, 1
+  %i.fi = add i32 %i.fd, 1                        ; 2 uses
+  store i32 %i.fi, ptr %i.f, align 4
   %i.fj = add i32 %.02.i149, 1                    ; 2 uses
   %i.fk = call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef %i.fj) ; 2 uses
   %i.fl = zext i8 %i.fk to i32                    ; 2 uses
@@ -573,13 +574,13 @@ bb.ah:                                            ; preds = %.preheader.i148
   %i.fm = and i32 %i.fl, 15
   %i.fn = or disjoint i32 %i.fh, %i.fm            ; 2 uses
   store i32 %i.fn, ptr %i.e, align 4
-  %i.fo = add i32 %i.fd, 2                        ; 3 uses
-  store i32 %i.fo, ptr %i.f, align 4
+  %i.fo = add i32 %i.fd, 2                        ; 2 uses
   %i.fp = sub i32 %i.fn, %i.fo
   br label %get_length.exit152
 
 bb.ai:                                            ; preds = %bb.ag
   %i.fq = and i32 %i.fb, 15
+  store i32 1, ptr %i.f, align 4
   %i.fr = add nsw i32 %i.fq, -1
   br label %get_length.exit152
 
