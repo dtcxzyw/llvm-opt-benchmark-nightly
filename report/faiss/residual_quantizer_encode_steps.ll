@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not, label %._crit_edge129, label %.lr.ph128
 
 .lr.ph128:                                        ; preds = %bb.b, %.loopexit109
-  %i.k = load i64, ptr %i.a, align 8, !tbaa !9    ; 4 uses
+  %i.k = load i64, ptr %i.a, align 8, !tbaa !9    ; 3 uses
   %i.l = load i64, ptr %i.b, align 8, !tbaa !9, !llvm.access.group !86
   %.not61122 = icmp sgt i64 %i.k, %i.l
   br i1 %.not61122, label %.loopexit109, label %.lr.ph125.preheader
@@ -216,10 +216,9 @@ bb.b:                                             ; preds = %bb.a
   br label %.lr.ph125
 
 .lr.ph125:                                        ; preds = %.lr.ph125.preheader, %_ZNSt6vectorIfSaIfEED2Ev.exit88
-  %indvar = phi i64 [ 0, %.lr.ph125.preheader ], [ %indvar.next, %_ZNSt6vectorIfSaIfEED2Ev.exit88 ] ; 4 uses
-  %.058123 = phi i64 [ %i.k, %.lr.ph125.preheader ], [ %i.nl, %_ZNSt6vectorIfSaIfEED2Ev.exit88 ] ; 5 uses
-  %18 = add i64 %i.k, %indvar
-  %i.o = shl i64 %18, 2
+  %indvar = phi i64 [ 0, %.lr.ph125.preheader ], [ %indvar.next, %_ZNSt6vectorIfSaIfEED2Ev.exit88 ] ; 3 uses
+  %.058123 = phi i64 [ %i.k, %.lr.ph125.preheader ], [ %i.nl, %_ZNSt6vectorIfSaIfEED2Ev.exit88 ] ; 6 uses
+  %i.o = shl i64 %.058123, 2
   %i.p = shl i64 %indvar, 2
   %i.q = add i64 %i.n, %i.p
   %i.r = shl i64 %indvar, 2

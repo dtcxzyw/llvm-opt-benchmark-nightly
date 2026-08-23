@@ -205,8 +205,8 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph, %.loopexit
   %i.ap = phi i64 [ %i.i, %.lr.ph ], [ %i.xs, %.loopexit ]
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %.loopexit ] ; 7 uses
-  %i.aq = shl i64 %indvars.iv, 3
-  %i.ar = add i64 %i.aq, 8                        ; 4 uses
+  %i.aq = shl nuw nsw i64 %indvars.iv, 3
+  %i.ar = add nuw i64 %i.aq, 8                    ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #20
   %i.as = load i64, ptr %i.a, align 8, !tbaa !19  ; 11 uses
   %i.at = add nsw i64 %i.as, 1                    ; 7 uses
@@ -609,8 +609,8 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %.loopexit
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %.loopexit ] ; 7 uses
-  %i.aw = shl i64 %indvars.iv, 3
-  %i.ax = add i64 %i.aw, 8                        ; 3 uses
+  %i.aw = shl nuw nsw i64 %indvars.iv, 3
+  %i.ax = add nuw i64 %i.aw, 8                    ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #20
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #20
   %i.ay = load ptr, ptr %1, align 8, !tbaa !282, !noalias !283
@@ -1013,8 +1013,8 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %.loopexit
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %.loopexit ] ; 7 uses
-  %i.as = shl i64 %indvars.iv, 3
-  %i.at = add i64 %i.as, 8                        ; 3 uses
+  %i.as = shl nuw nsw i64 %indvars.iv, 3
+  %i.at = add nuw i64 %i.as, 8                    ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #20
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #20
   %i.au = load ptr, ptr %1, align 8, !tbaa !282, !noalias !468
@@ -1417,7 +1417,7 @@ _ZN5Eigen8internal13first_alignedILi16EdlEET1_PKT0_S2_.exit: ; preds = %bb.a
 bb.c:                                             ; preds = %.lr.ph52, %._crit_edge
   %.03451 = phi i64 [ 0, %.lr.ph52 ], [ %i.fg, %._crit_edge ] ; 8 uses
   %.03550 = phi i64 [ %i.ca, %.lr.ph52 ], [ %.sroa.speculated, %._crit_edge ] ; 7 uses
-  %i.cd = shl i64 %.03451, 3                      ; 2 uses
+  %i.cd = shl nuw nsw i64 %.03451, 3              ; 2 uses
   %i.ce = sub i64 %i.bp, %.03550                  ; 3 uses
   %i.cf = and i64 %i.ce, -2                       ; 2 uses
   %i.cg = add nsw i64 %i.cf, %.03550              ; 6 uses
@@ -1820,7 +1820,7 @@ bb.c:                                             ; preds = %.lr.ph54, %._crit_e
   %.03453 = phi i64 [ 0, %.lr.ph54 ], [ %i.ek, %._crit_edge ] ; 9 uses
   %.03552 = phi i64 [ %i.bp, %.lr.ph54 ], [ %.sroa.speculated, %._crit_edge ] ; 7 uses
   %i.bs = shl i64 %.03453, 5
-  %i.bt = shl i64 %.03453, 3
+  %i.bt = shl nuw nsw i64 %.03453, 3
   %i.bu = sub i64 %i.bj, %.03552                  ; 3 uses
   %i.bv = and i64 %i.bu, -2                       ; 2 uses
   %i.bw = add nsw i64 %i.bv, %.03552              ; 6 uses
@@ -2223,7 +2223,7 @@ bb.c:                                             ; preds = %.lr.ph54, %._crit_e
   %.03453 = phi i64 [ 0, %.lr.ph54 ], [ %i.ek, %._crit_edge ] ; 9 uses
   %.03552 = phi i64 [ %i.bp, %.lr.ph54 ], [ %.sroa.speculated, %._crit_edge ] ; 7 uses
   %i.bs = shl i64 %.03453, 5
-  %i.bt = shl i64 %.03453, 3
+  %i.bt = shl nuw nsw i64 %.03453, 3
   %i.bu = sub i64 %i.bj, %.03552                  ; 3 uses
   %i.bv = and i64 %i.bu, -2                       ; 2 uses
   %i.bw = add nsw i64 %i.bv, %.03552              ; 6 uses
@@ -2626,8 +2626,8 @@ bb.d:                                             ; preds = %_ZN5Eigen15PlainObj
   %.03249.i = phi i64 [ %.sroa.speculated.i, %._crit_edge.i ], [ 0, %.lr.ph52.i.preheader ] ; 7 uses
   %i.ag = mul i64 %i.ae, %.03150.i
   %scevgep35 = getelementptr i8, ptr %i.af, i64 %i.ag ; 6 uses
-  %i.ah = shl i64 %.03150.i, 3
-  %i.ai = add i64 %i.ah, 8                        ; 3 uses
+  %i.ah = shl nuw nsw i64 %.03150.i, 3
+  %i.ai = add nuw i64 %i.ah, 8                    ; 3 uses
   %i.aj = sub i64 %i.x, %.03249.i                 ; 3 uses
   %i.ak = and i64 %i.aj, -2                       ; 2 uses
   %i.al = add nsw i64 %i.ak, %.03249.i            ; 6 uses
@@ -3030,7 +3030,7 @@ bb.c:                                             ; preds = %.lr.ph54, %._crit_e
   %.03453 = phi i64 [ 0, %.lr.ph54 ], [ %i.el, %._crit_edge ] ; 9 uses
   %.03552 = phi i64 [ %i.bp, %.lr.ph54 ], [ %.sroa.speculated, %._crit_edge ] ; 7 uses
   %i.bs = mul i64 %.03453, 40
-  %i.bt = shl i64 %.03453, 3
+  %i.bt = shl nuw nsw i64 %.03453, 3
   %i.bu = sub i64 %i.bj, %.03552                  ; 3 uses
   %i.bv = and i64 %i.bu, -2                       ; 2 uses
   %i.bw = add nsw i64 %i.bv, %.03552              ; 6 uses
@@ -3433,7 +3433,7 @@ bb.c:                                             ; preds = %.lr.ph54, %._crit_e
   %.03453 = phi i64 [ 0, %.lr.ph54 ], [ %i.el, %._crit_edge ] ; 9 uses
   %.03552 = phi i64 [ %i.bp, %.lr.ph54 ], [ %.sroa.speculated, %._crit_edge ] ; 7 uses
   %i.bs = mul i64 %.03453, 40
-  %i.bt = shl i64 %.03453, 3
+  %i.bt = shl nuw nsw i64 %.03453, 3
   %i.bu = sub i64 %i.bj, %.03552                  ; 3 uses
   %i.bv = and i64 %i.bu, -2                       ; 2 uses
   %i.bw = add nsw i64 %i.bv, %.03552              ; 6 uses

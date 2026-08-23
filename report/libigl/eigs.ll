@@ -205,13 +205,11 @@ bb.z:                                             ; preds = %._crit_edge.i.i.i.i
   br label %bb.cr
 
 bb.aa:                                            ; preds = %.lr.ph, %.critedge
-  %indvar = phi i64 [ 0, %.lr.ph ], [ %indvar.next, %.critedge ] ; 5 uses
-  %.055452 = phi i64 [ %1, %.lr.ph ], [ %i.yd, %.critedge ] ; 29 uses
-  %19 = add i64 %i.hm, %indvar
-  %i.hp = add i64 %1, %indvar
-  %i.hq = shl i64 %i.hp, 3
-  %20 = add i64 %1, %indvar
-  %i.hr = shl i64 %20, 3
+  %indvar = phi i64 [ 0, %.lr.ph ], [ %indvar.next, %.critedge ] ; 3 uses
+  %.055452 = phi i64 [ %1, %.lr.ph ], [ %i.yd, %.critedge ] ; 31 uses
+  %i.hp = add i64 %i.hm, %indvar
+  %i.hq = shl i64 %.055452, 3
+  %i.hr = shl i64 %.055452, 3
   %i.hs = add i64 %1, %indvar
   %i.ht = shl i64 %i.hs, 3
   %i.hu = add i64 %i.ht, -8
@@ -614,7 +612,7 @@ _ZNK5Eigen9DenseBaseINS_12CwiseUnaryOpINS_8internal13scalar_abs_opIdEEKNS_5Block
   %i.aan = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0404.0, i64 %i.yh
   %.not425 = icmp sgt i64 %i.yj, %.055452
   %xtraiter716 = and i64 %.055452, 3              ; 3 uses
-  %i.aao = icmp ult i64 %19, 3
+  %i.aao = icmp ult i64 %i.hp, 3
   %unroll_iter721 = and i64 %.055452, 9223372036854775804
   %lcmp.mod718.not = icmp eq i64 %xtraiter716, 0
   %lcmp.mod720 = icmp ne i64 %xtraiter716, 0
@@ -1017,10 +1015,7 @@ bb.aa:                                            ; preds = %._crit_edge.i.i.i.i
   %i.hl = getelementptr inbounds nuw i8, ptr %24, i64 8 ; 2 uses
   %i.hm = getelementptr inbounds nuw i8, ptr %4, i64 8
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %8, i64 8
-  %25 = shl nsw i64 %1, 3                         ; 2 uses
   %i.hn = add i64 %1, -1                          ; 2 uses
-  %26 = getelementptr i8, ptr %.sroa.0377.0, i64 %25
-  %27 = getelementptr i8, ptr %26, i64 8
   br label %bb.ab
 
 ._crit_edge:                                      ; preds = %.critedge
@@ -1032,19 +1027,18 @@ bb.aa:                                            ; preds = %._crit_edge.i.i.i.i
   br label %bb.cy
 
 bb.ab:                                            ; preds = %.lr.ph, %.critedge
-  %indvar = phi i64 [ 0, %.lr.ph ], [ %indvar.next, %.critedge ] ; 7 uses
-  %.037423 = phi i64 [ %1, %.lr.ph ], [ %i.na, %.critedge ] ; 30 uses
+  %indvar = phi i64 [ 0, %.lr.ph ], [ %indvar.next, %.critedge ] ; 4 uses
+  %.037423 = phi i64 [ %1, %.lr.ph ], [ %i.na, %.critedge ] ; 34 uses
   %i.ho = add i64 %i.hn, %indvar
   %i.hp = add i64 %i.hn, %indvar
-  %28 = add i64 %1, %indvar
-  %i.hq = shl i64 %28, 3
-  %29 = add i64 %1, %indvar
-  %i.hr = shl i64 %29, 3
+  %25 = shl i64 %.037423, 3
+  %i.hq = shl i64 %.037423, 3
+  %26 = shl i64 %.037423, 3
+  %i.hr = shl i64 %.037423, 3                     ; 2 uses
   %i.hs = add i64 %1, %indvar
-  %30 = shl i64 %i.hs, 3
-  %i.ht = shl i64 %indvar, 3                      ; 2 uses
-  %31 = add i64 %25, %i.ht                        ; 2 uses
-  %scevgep619 = getelementptr i8, ptr %27, i64 %i.ht
+  %i.ht = shl i64 %i.hs, 3
+  %27 = getelementptr i8, ptr %.sroa.0377.0, i64 %i.ht
+  %scevgep619 = getelementptr i8, ptr %27, i64 8
   %i.hu = load double, ptr %i.go, align 8, !tbaa !911 ; 2 uses
   %i.hv = fcmp olt double %i.hu, f0x0044000000000000 ; 2 uses
   br i1 %i.hv, label %bb.ac, label %bb.af
@@ -1106,7 +1100,7 @@ _ZN5Eigen8internal13first_alignedILi16EdlEET1_PKT0_S2_.exit.i.i.i.i.i: ; preds =
   br i1 %min.iters.check684, label %.lr.ph.i.i.i.i.i.i.preheader720, label %vector.memcheck681
 
 vector.memcheck681:                               ; preds = %.lr.ph.i.i.i.i.i.i.preheader
-  %i.is = mul i64 %i.id, %i.hq
+  %i.is = mul i64 %i.id, %25
   %i.it = add i64 %i.is, %i.ic
   %i.iu = sub i64 %i.ih, %i.it
   %diff.check682 = icmp ugt i64 %i.iu, -16
@@ -1207,7 +1201,7 @@ _ZN5Eigen8internal31unaligned_dense_assignment_loopILb0EE3runINS0_31generic_dens
   br i1 %min.iters.check671, label %.lr.ph.i17.i.i.i.i.i.preheader719, label %vector.memcheck668
 
 vector.memcheck668:                               ; preds = %.lr.ph.i17.i.i.i.i.i.preheader
-  %i.kg = mul i64 %i.id, %i.hr
+  %i.kg = mul i64 %i.id, %i.hq
   %i.kh = add i64 %i.kg, %i.ic
   %i.ki = sub i64 %i.ih, %i.kh
   %diff.check669 = icmp ugt i64 %i.ki, -16
@@ -1610,7 +1604,7 @@ _ZNK5Eigen9DenseBaseINS_12CwiseUnaryOpINS_8internal13scalar_abs_opIdEEKNS_5Block
   %i.aaf = icmp sgt i64 %spec.select, 0
   %i.aag = icmp sgt i64 %i.aab, 1
   %.not394 = icmp sgt i64 %i.aae, %.037423
-  %i.aah = mul i64 %i.ne, %31
+  %i.aah = mul i64 %i.ne, %i.hr
   %i.aai = shl i64 %i.aac, 4                      ; 2 uses
   %i.aaj = shl i64 %spec.select, 3                ; 2 uses
   %i.aak = getelementptr i8, ptr %i.nd, i64 %i.aah
@@ -1618,11 +1612,11 @@ _ZNK5Eigen9DenseBaseINS_12CwiseUnaryOpINS_8internal13scalar_abs_opIdEEKNS_5Block
   %scevgep = getelementptr i8, ptr %i.aal, i64 %i.aaj
   %scevgep616 = getelementptr i8, ptr %i.nd, i64 8
   %i.aam = add i64 %i.ne, 1
-  %i.aan = mul i64 %31, %i.aam
+  %i.aan = mul i64 %i.hr, %i.aam
   %scevgep617 = getelementptr i8, ptr %scevgep616, i64 %i.aan
   %i.aao = getelementptr i8, ptr %.sroa.0377.0, i64 %i.aai
   %scevgep618 = getelementptr i8, ptr %i.aao, i64 %i.aaj
-  %i.aap = mul i64 %i.ne, %30
+  %i.aap = mul i64 %i.ne, %26
   %i.aaq = shl i64 %spec.select, 3                ; 2 uses
   %i.aar = getelementptr i8, ptr %i.nd, i64 %i.aap
   %scevgep635 = getelementptr i8, ptr %i.aar, i64 %i.aaq

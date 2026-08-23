@@ -204,7 +204,7 @@ bb.a:
   %i.g = getelementptr i8, ptr %i.b, i64 16
   %.val.i = load i64, ptr %i.g, align 8, !tbaa !69
   %i.h = getelementptr i8, ptr %0, i64 40
-  %i.i = load i64, ptr %i.h, align 8, !tbaa !100  ; 15 uses
+  %i.i = load i64, ptr %i.h, align 8, !tbaa !100  ; 14 uses
   %i.j = getelementptr i8, ptr %0, i64 48         ; 2 uses
   %i.k = load i32, ptr %i.j, align 8, !tbaa !101
   %.not.i = icmp eq i32 %i.k, 0
@@ -368,8 +368,8 @@ bb.p:                                             ; preds = %.lr.ph
   br i1 %i.by, label %.lr.ph, label %Py_DECREF.exit78.i, !llvm.loop !118
 
 .lr.ph:                                           ; preds = %_PyTuple_Recycle.exit.i, %bb.p
-  %indvar = phi i64 [ %indvar.next, %bb.p ], [ 0, %_PyTuple_Recycle.exit.i ] ; 4 uses
-  %.1.i29 = phi i64 [ %.1.i, %bb.p ], [ %.1.i27, %_PyTuple_Recycle.exit.i ] ; 8 uses
+  %indvar = phi i64 [ %indvar.next, %bb.p ], [ 0, %_PyTuple_Recycle.exit.i ] ; 3 uses
+  %.1.i29 = phi i64 [ %.1.i, %bb.p ], [ %.1.i27, %_PyTuple_Recycle.exit.i ] ; 9 uses
   %.1.in.i28 = phi i64 [ %.1.i29, %bb.p ], [ %i.i, %_PyTuple_Recycle.exit.i ] ; 3 uses
   %i.bz = getelementptr [8 x i8], ptr %i.d, i64 %.1.i29
   %i.ca = load i64, ptr %i.bz, align 8, !tbaa !102 ; 2 uses
@@ -385,11 +385,8 @@ bb.p:                                             ; preds = %.lr.ph
   br i1 %i.cf, label %.lr.ph.i.preheader, label %.preheader.i
 
 .lr.ph.i.preheader:                               ; preds = %.critedge.i
-  %1 = shl i64 %i.i, 3
-  %2 = add i64 %1, -8
-  %i.cg = shl i64 %indvar, 3
-  %3 = sub i64 %2, %i.cg
-  %scevgep = getelementptr i8, ptr %i.d, i64 %3
+  %i.cg = shl i64 %.1.i29, 3
+  %scevgep = getelementptr i8, ptr %i.d, i64 %i.cg
   %load_initial = load i64, ptr %scevgep, align 8 ; 2 uses
   %i.ch = add i64 %indvar, -1
   %xtraiter = and i64 %indvar, 3                  ; 2 uses
@@ -792,7 +789,7 @@ bb.a:
   %i.a = getelementptr i8, ptr %0, i64 16
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !178  ; 3 uses
   %i.c = getelementptr i8, ptr %0, i64 24
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !181  ; 9 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !181  ; 10 uses
   %i.e = getelementptr i8, ptr %0, i64 32
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !182
   %i.g = getelementptr i8, ptr %0, i64 40         ; 3 uses
@@ -963,18 +960,17 @@ _PyTuple_Recycle.exit.i:                          ; preds = %bb.p, %bb.o, %bb.n,
 .lr.ph116.i:                                      ; preds = %_PyTuple_Recycle.exit.i
   %i.ca = add i64 %.val.i, -1                     ; 2 uses
   %i.cb = getelementptr [8 x i8], ptr %i.d, i64 %i.ca
-  %1 = shl i64 %i.k, 3
   %i.cc = sub i64 %.val.i, %i.k
-  %2 = getelementptr i8, ptr %i.d, i64 %1         ; 2 uses
-  %3 = getelementptr i8, ptr %2, i64 -8
   br label %bb.q
 
 bb.q:                                             ; preds = %._crit_edge.i, %.lr.ph116.i
   %indvar.i = phi i64 [ 0, %.lr.ph116.i ], [ %indvar.next.i, %._crit_edge.i ] ; 3 uses
-  %.1115.i = phi i64 [ %.1114.i, %.lr.ph116.i ], [ %.1.i, %._crit_edge.i ] ; 8 uses
-  %4 = mul i64 %indvar.i, -8                      ; 2 uses
-  %scevgep.i = getelementptr i8, ptr %3, i64 %4
-  %scevgep126.i = getelementptr i8, ptr %2, i64 %4
+  %.1115.i = phi i64 [ %.1114.i, %.lr.ph116.i ], [ %.1.i, %._crit_edge.i ] ; 9 uses
+  %1 = shl i64 %.1115.i, 3
+  %scevgep.i = getelementptr i8, ptr %i.d, i64 %1
+  %2 = sub i64 %i.k, %indvar.i
+  %3 = shl i64 %2, 3
+  %scevgep126.i = getelementptr i8, ptr %i.d, i64 %3
   %i.cd = add i64 %i.cc, %indvar.i
   %i.ce = shl i64 %i.cd, 3
   %i.cf = getelementptr [8 x i8], ptr %i.f, i64 %.1115.i ; 3 uses

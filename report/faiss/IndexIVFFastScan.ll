@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %_ZNSt6vectorIfSaIfE
   %i.r = load i64, ptr %i.b, align 8, !tbaa !61
   %i.s = call i64 @llvm.smin.i64(i64 %i.r, i64 %i.q) ; 2 uses
   store i64 %i.s, ptr %i.b, align 8, !tbaa !61
-  %i.t = load i64, ptr %i.a, align 8, !tbaa !61   ; 3 uses
+  %i.t = load i64, ptr %i.a, align 8, !tbaa !61   ; 2 uses
   %.not33 = icmp sgt i64 %i.t, %i.s
   br i1 %.not33, label %._crit_edge, label %.lr.ph35
 
@@ -217,10 +217,8 @@ bb.d:                                             ; preds = %_ZNSt6vectorIfSaIfE
   br label %bb.e
 
 bb.e:                                             ; preds = %.lr.ph35, %.loopexit
-  %indvar = phi i64 [ 0, %.lr.ph35 ], [ %indvar.next, %.loopexit ] ; 2 uses
-  %.02634 = phi i64 [ %i.t, %.lr.ph35 ], [ %i.ck, %.loopexit ] ; 4 uses
-  %7 = add i64 %i.t, %indvar
-  %i.y = shl i64 %7, 2
+  %.02634 = phi i64 [ %i.t, %.lr.ph35 ], [ %i.ck, %.loopexit ] ; 5 uses
+  %i.y = shl i64 %.02634, 2
   %i.z = load ptr, ptr %4, align 8, !tbaa !59
   %i.aa = load i64, ptr %i.u, align 8, !tbaa !41
   %i.ab = load i64, ptr %5, align 8, !tbaa !61
@@ -368,7 +366,6 @@ middle.block:                                     ; preds = %vector.body
   %i.ck = add nsw i64 %.02634, 1
   %i.cl = load i64, ptr %i.b, align 8, !tbaa !61
   %.not.not = icmp slt i64 %.02634, %i.cl
-  %indvar.next = add i64 %indvar, 1
   br i1 %.not.not, label %bb.e, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.loopexit, %bb.d

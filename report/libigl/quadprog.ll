@@ -205,33 +205,30 @@ _ZN5Eigen5BlockINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELin1ELi1ELb1EEaSERKS3_.exi
   %i.eg = load i64, ptr %i.a, align 8, !tbaa !14  ; 4 uses
   %i.eh = icmp sgt i32 %i.c, 0
   %i.ei = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.ej = sext i32 %.0130 to i64                  ; 4 uses
+  %i.ej = sext i32 %.0130 to i64                  ; 3 uses
   %i.ek = sext i32 %i.dw to i64                   ; 2 uses
   %wide.trip.count = and i64 %i.b, 2147483647     ; 4 uses
-  %7 = shl nsw i64 %i.ej, 3                       ; 2 uses
-  %8 = shl nuw nsw i64 %wide.trip.count, 3
-  %9 = add nsw i64 %7, 8
-  %i.el = shl nsw i64 %i.ej, 4
-  %10 = getelementptr i8, ptr %i.ef, i64 %i.el
-  %11 = getelementptr i8, ptr %10, i64 8
+  %i.el = shl nuw nsw i64 %wide.trip.count, 3
   %ident.check.not = icmp eq i64 %i.eg, 1
   %i.em = load ptr, ptr %1, align 8               ; 5 uses
   %i.en = load i64, ptr %i.ei, align 8            ; 4 uses
   %min.iters.check100 = icmp samesign ult i64 %wide.trip.count, 2
-  %scevgep95 = getelementptr i8, ptr %i.em, i64 %8 ; 2 uses
+  %scevgep95 = getelementptr i8, ptr %i.em, i64 %i.el ; 2 uses
   %n.vec102 = and i64 %i.b, 2147483646            ; 3 uses
   %cmp.n113 = icmp eq i64 %wide.trip.count, %n.vec102
   br label %bb.e
 
 bb.e:                                             ; preds = %.lr.ph30, %.loopexit
-  %indvar = phi i64 [ 0, %.lr.ph30 ], [ %indvar.next, %.loopexit ] ; 3 uses
+  %indvar = phi i64 [ 0, %.lr.ph30 ], [ %indvar.next, %.loopexit ] ; 2 uses
   %indvars.iv53 = phi i64 [ %i.ej, %.lr.ph30 ], [ %indvars.iv.next54, %.loopexit ] ; 4 uses
-  %indvars.iv42.in = phi i64 [ %i.ej, %.lr.ph30 ], [ %indvars.iv42, %.loopexit ]
-  %i.eo = shl i64 %indvar, 4
-  %scevgep116 = getelementptr i8, ptr %11, i64 %i.eo
-  %i.ep = shl i64 %indvar, 3                      ; 2 uses
-  %i.eq = add i64 %7, %i.ep
-  %i.er = add i64 %9, %i.ep
+  %indvars.iv42.in = phi i64 [ %i.ej, %.lr.ph30 ], [ %indvars.iv42, %.loopexit ] ; 3 uses
+  %i.eo = shl i64 %indvars.iv42.in, 4
+  %7 = getelementptr i8, ptr %i.ef, i64 %i.eo
+  %scevgep116 = getelementptr i8, ptr %7, i64 8
+  %i.ep = shl i64 %indvars.iv42.in, 3
+  %i.eq = add i64 %indvar, %i.ej
+  %8 = shl i64 %i.eq, 3
+  %i.er = add i64 %8, 8
   %indvars.iv42 = add nsw i64 %indvars.iv42.in, 1 ; 3 uses
   %i.es = mul nsw i64 %i.eg, %indvars.iv53        ; 2 uses
   %i.et = getelementptr [8 x i8], ptr %i.ef, i64 %indvars.iv53 ; 3 uses
@@ -328,7 +325,7 @@ bb.j:                                             ; preds = %"_ZZN3igl8copyleft8
   br i1 %min.iters.check100, label %scalar.ph99.preheader, label %vector.memcheck94
 
 vector.memcheck94:                                ; preds = %.lr.ph28
-  %i.gj = mul i64 %i.en, %i.eq                    ; 2 uses
+  %i.gj = mul i64 %i.en, %i.ep                    ; 2 uses
   %scevgep = getelementptr i8, ptr %i.em, i64 %i.gj
   %scevgep96 = getelementptr i8, ptr %scevgep95, i64 %i.gj
   %i.gk = mul i64 %i.en, %i.er                    ; 2 uses

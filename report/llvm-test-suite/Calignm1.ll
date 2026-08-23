@@ -203,8 +203,9 @@ bb.n:                                             ; preds = %bb.k, %bb.m, %bb.l
   br i1 %exitcond562.not, label %.preheader375, label %.lr.ph434, !llvm.loop !62
 
 .preheader374:                                    ; preds = %.preheader374.lr.ph, %._crit_edge444
-  %indvars.iv570 = phi i64 [ 0, %.preheader374.lr.ph ], [ %indvars.iv.next571, %._crit_edge444 ] ; 9 uses
-  %i.zz = shl i64 %indvars.iv570, 2
+  %indvars.iv575 = phi i64 [ 1, %.preheader374.lr.ph ], [ %indvars.iv.next576, %._crit_edge444 ] ; 2 uses
+  %indvars.iv570 = phi i64 [ 0, %.preheader374.lr.ph ], [ %indvars.iv.next571, %._crit_edge444 ] ; 8 uses
+  %i.zz = shl i64 %indvars.iv575, 2
   %.not359439 = icmp eq i64 %indvars.iv570, 0
   br i1 %.not359439, label %._crit_edge444, label %.lr.ph441
 
@@ -248,8 +249,7 @@ bb.o:                                             ; preds = %bb.o, %.epil.prehea
 .lr.ph443:                                        ; preds = %bb.o, %.lr.ph443.unr-lcssa
   %i.aah = getelementptr inbounds nuw [8 x i8], ptr %i.yz, i64 %indvars.iv570
   %i.aai = load ptr, ptr %i.aah, align 8, !tbaa !43 ; 2 uses
-  %6 = getelementptr i8, ptr %i.aai, i64 %i.zz
-  %scevgep = getelementptr i8, ptr %6, i64 4
+  %scevgep = getelementptr i8, ptr %i.aai, i64 %i.zz
   %load_initial = load float, ptr %scevgep, align 4
   br label %bb.q
 
@@ -294,6 +294,7 @@ bb.q:                                             ; preds = %.lr.ph443, %bb.q
 
 ._crit_edge444:                                   ; preds = %bb.q, %.preheader374
   %indvars.iv.next571 = add nuw nsw i64 %indvars.iv570, 1 ; 2 uses
+  %indvars.iv.next576 = add nuw i64 %indvars.iv575, 1
   %exitcond581.not = icmp eq i64 %indvars.iv.next571, %wide.trip.count580
   br i1 %exitcond581.not, label %._crit_edge447, label %.preheader374, !llvm.loop !66
 

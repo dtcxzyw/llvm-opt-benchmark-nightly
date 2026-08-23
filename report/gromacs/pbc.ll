@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.a
 
 vector.ph:                                        ; preds = %bb.a, %bb.e
   %exitcond23.not.1 = phi i1 [ false, %bb.e ], [ true, %bb.a ]
-  %.0 = phi i64 [ 3, %bb.e ], [ 2, %bb.a ]        ; 5 uses
+  %.0 = phi i64 [ 3, %bb.e ], [ 2, %bb.a ]        ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #20
   %trip.count.minus.1 = add nsw i64 %.0, -1
   %broadcast.splatinsert = insertelement <4 x i64> poison, i64 %trip.count.minus.1, i64 0
@@ -261,14 +261,12 @@ bb.h:                                             ; preds = %bb.g, %bb.f, %vecto
 .preheader.lr.ph:                                 ; preds = %bb.h
   %i.ad = udiv exact i64 %i.ab, 12
   %i.ae = shl nuw nsw i64 %.0, 2
-  %6 = shl nuw nsw i64 %.0, 4
-  %7 = add nsw i64 %6, -12
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.lr.ph, %bb.i
   %.04916 = phi i64 [ 0, %.preheader.lr.ph ], [ %i.aj, %bb.i ] ; 3 uses
-  %i.af = mul i64 %.04916, 12
-  %i.ag = add i64 %i.ae, %i.af
+  %i.af = mul nuw nsw i64 %.04916, 12
+  %i.ag = add nuw i64 %i.ae, %i.af
   %i.ah = getelementptr inbounds nuw [12 x i8], ptr %2, i64 %.04916 ; 12 uses
   br label %bb.j
 
@@ -283,8 +281,8 @@ bb.i:                                             ; preds = %.loopexit
   br i1 %exitcond34.not, label %.loopexit5, label %.preheader, !llvm.loop !72
 
 bb.j:                                             ; preds = %.preheader, %.loopexit
-  %indvar = phi i64 [ 0, %.preheader ], [ %indvar.next, %.loopexit ] ; 4 uses
-  %indvars.iv30 = phi i64 [ %.0, %.preheader ], [ %indvars.iv.next31, %.loopexit ] ; 7 uses
+  %indvar = phi i64 [ 0, %.preheader ], [ %indvar.next, %.loopexit ] ; 3 uses
+  %indvars.iv30 = phi i64 [ %.0, %.preheader ], [ %indvars.iv.next31, %.loopexit ] ; 8 uses
   %indvars.iv.next31 = add nsw i64 %indvars.iv30, -1 ; 4 uses
   %i.ak = getelementptr inbounds nuw [4 x i8], ptr %i.ah, i64 %indvars.iv.next31
   %i.al = load float, ptr %i.ak, align 4, !tbaa !23
@@ -298,9 +296,9 @@ bb.j:                                             ; preds = %.preheader, %.loope
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %bb.j
-  %i.as = shl i64 %indvar, 4
-  %8 = sub i64 %7, %i.as
-  %scevgep40 = getelementptr i8, ptr %1, i64 %8
+  %i.as = shl nuw nsw i64 %indvars.iv30, 4
+  %6 = getelementptr i8, ptr %1, i64 %i.as
+  %scevgep40 = getelementptr i8, ptr %6, i64 -12
   %i.at = shl i64 %indvar, 2
   %i.au = sub i64 %i.ag, %i.at
   %scevgep = getelementptr i8, ptr %2, i64 %i.au

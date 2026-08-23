@@ -204,10 +204,9 @@ iter.check:                                       ; preds = %.preheader64
 vector.memcheck:                                  ; preds = %iter.check
   %i.aj = ptrtoaddr ptr %i.ah to i64
   %i.ak = ptrtoaddr ptr %i.ag to i64
-  %i.al = shl i64 %indvars.iv, 2
-  %6 = add i64 %i.al, 4
+  %i.al = shl i64 %indvars.iv.next, 2
   %i.am = shl nsw i64 %i.ad, 2
-  %i.an = add i64 %6, %i.aj
+  %i.an = add i64 %i.al, %i.aj
   %i.ao = add i64 %i.am, %i.ak
   %i.ap = sub i64 %i.ao, %i.an
   %diff.check = icmp ugt i64 %i.ap, -128
@@ -285,7 +284,7 @@ vec.epilog.scalar.ph.preheader:                   ; preds = %vector.memcheck, %i
   br label %vec.epilog.scalar.ph
 
 bb.h:                                             ; preds = %.lr.ph, %bb.m
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.m ] ; 3 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.m ] ; 2 uses
   %i.bh = phi i64 [ 0, %.lr.ph ], [ %i.cc, %bb.m ]
   %i.bi = phi i64 [ 0, %.lr.ph ], [ %i.ca, %bb.m ]
   %.03967 = phi i32 [ 0, %.lr.ph ], [ %.1, %bb.m ] ; 3 uses
@@ -327,7 +326,7 @@ bb.m:                                             ; preds = %bb.k, %bb.l, %bb.i
   %.1 = phi i32 [ %i.bs, %bb.k ], [ %i.bv, %bb.l ], [ %.03967, %bb.i ] ; 3 uses
   %i.bz = getelementptr inbounds nuw [4 x i8], ptr %i.ac, i64 %indvars.iv
   store i32 %.sink, ptr %i.bz, align 4, !tbaa !33
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 8 uses
+  %indvars.iv.next = add nuw i64 %indvars.iv, 1   ; 9 uses
   %i.ca = sext i32 %.141 to i64                   ; 2 uses
   %i.cb = icmp ugt i64 %i.q, %i.ca
   %i.cc = sext i32 %.1 to i64                     ; 2 uses

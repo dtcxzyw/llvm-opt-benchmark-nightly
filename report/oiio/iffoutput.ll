@@ -205,15 +205,13 @@ _ZNSt6vectorIhSaIhEEC2EmRKS0_.exit:               ; preds = %bb.d, %.noexc, %bb.
   br label %bb.e
 
 bb.e:                                             ; preds = %.lr.ph2148, %bb.hg
-  %indvar = phi i64 [ 0, %.lr.ph2148 ], [ %indvar.next, %bb.hg ] ; 11 uses
+  %indvar = phi i64 [ 0, %.lr.ph2148 ], [ %indvar.next, %bb.hg ] ; 9 uses
   %i.es = phi i32 [ %i.em, %.lr.ph2148 ], [ %i.axv, %bb.hg ]
-  %.03472147 = phi i32 [ 0, %.lr.ph2148 ], [ %i.axu, %bb.hg ] ; 2 uses
+  %.03472147 = phi i32 [ 0, %.lr.ph2148 ], [ %i.axu, %bb.hg ] ; 4 uses
   %i.et = shl nuw nsw i64 %indvar, 6              ; 2 uses
-  %indvar.tr = trunc i64 %indvar to i32
-  %i.eu = shl i32 %indvar.tr, 6
+  %i.eu = shl nuw i32 %.03472147, 6
   %i.ev = shl nuw nsw i64 %indvar, 6              ; 2 uses
-  %indvar.tr3080 = trunc i64 %indvar to i32
-  %i.ew = shl i32 %indvar.tr3080, 6
+  %i.ew = shl nuw i32 %.03472147, 6
   %i.ex = shl nuw i32 %.03472147, 6               ; 26 uses
   %i.ey = add nuw i32 %i.ex, 64
   %.sroa.speculated1418 = call i32 @llvm.umin.i32(i32 %i.es, i32 %i.ey)

@@ -205,9 +205,9 @@ bb.bn:                                            ; preds = %bb.bm
 
 .preheader3.i:                                    ; preds = %._crit_edge6.i, %.preheader3.preheader.i
   %indvars.iv18.i = phi i64 [ 0, %.preheader3.preheader.i ], [ %indvars.iv.next19.i, %._crit_edge6.i ] ; 5 uses
-  %i.rt = shl i64 %indvars.iv18.i, 3              ; 2 uses
+  %i.rt = shl nuw i64 %indvars.iv18.i, 3          ; 2 uses
   %i.ru = add i64 %i.rt, %.val140857
-  %i.rv = shl i64 %indvars.iv18.i, 3
+  %i.rv = shl nuw i64 %indvars.iv18.i, 3
   %invariant.gep.i192 = getelementptr [8 x i8], ptr %.val140, i64 %indvars.iv18.i
   br label %.preheader.i193
 
@@ -610,9 +610,9 @@ bb.bo:                                            ; preds = %bb.bn
 
 .preheader3.i:                                    ; preds = %._crit_edge6.i, %.preheader3.preheader.i
   %indvars.iv18.i = phi i64 [ 0, %.preheader3.preheader.i ], [ %indvars.iv.next19.i, %._crit_edge6.i ] ; 5 uses
-  %i.sl = shl i64 %indvars.iv18.i, 2              ; 2 uses
+  %i.sl = shl nuw i64 %indvars.iv18.i, 2          ; 2 uses
   %i.sm = add i64 %i.sl, %.val143708
-  %i.sn = shl i64 %indvars.iv18.i, 2
+  %i.sn = shl nuw i64 %indvars.iv18.i, 2
   %invariant.gep.i200 = getelementptr [4 x i8], ptr %.val143, i64 %indvars.iv18.i
   br label %.preheader.i201
 

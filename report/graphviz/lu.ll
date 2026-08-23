@@ -156,13 +156,12 @@ bb.i:                                             ; preds = %._crit_edge.us
 .preheader:                                       ; preds = %.preheader.preheader, %.critedge
   %i.av = phi ptr [ %i.e, %.preheader.preheader ], [ %i.cw, %.critedge ] ; 7 uses
   %i.aw = phi ptr [ %i.a, %.preheader.preheader ], [ %i.cx, %.critedge ] ; 6 uses
-  %indvars.iv173 = phi i64 [ 1, %.preheader.preheader ], [ %indvars.iv.next174, %.critedge ] ; 6 uses
-  %indvars.iv166 = phi i64 [ 0, %.preheader.preheader ], [ %indvars.iv.next167, %.critedge ] ; 18 uses
+  %indvars.iv173 = phi i64 [ 1, %.preheader.preheader ], [ %indvars.iv.next174, %.critedge ] ; 7 uses
+  %indvars.iv166 = phi i64 [ 0, %.preheader.preheader ], [ %indvars.iv.next167, %.critedge ] ; 17 uses
   %.0108158 = phi i32 [ 0, %.preheader.preheader ], [ %.2110.lcssa, %.critedge ] ; 2 uses
   %i.ax = xor i64 %indvars.iv166, -1
   %i.ay = add nsw i64 %i.ax, %wide.trip.count164  ; 3 uses
-  %i.az = shl nuw nsw i64 %indvars.iv166, 3
-  %3 = add nuw i64 %i.az, 8                       ; 2 uses
+  %i.az = shl nuw nsw i64 %indvars.iv173, 3       ; 2 uses
   %i.ba = icmp slt i64 %indvars.iv166, %i.b
   br i1 %i.ba, label %.lr.ph.preheader, label %bb.j
 
@@ -287,7 +286,7 @@ bb.m:                                             ; preds = %bb.l
   %i.dd = getelementptr inbounds nuw [8 x i8], ptr %i.dc, i64 %indvars.iv166
   %i.de = load double, ptr %i.dd, align 8, !tbaa !19
   %indvars.iv.next167 = add nuw nsw i64 %indvars.iv166, 1 ; 2 uses
-  %scevgep218 = getelementptr i8, ptr %i.dc, i64 %3
+  %scevgep218 = getelementptr i8, ptr %i.dc, i64 %i.az
   %scevgep219 = getelementptr i8, ptr %i.dc, i64 %i.at
   %min.iters.check = icmp ult i64 %i.ay, 4
   %n.vec = and i64 %i.ay, -4                      ; 3 uses
@@ -310,7 +309,7 @@ bb.m:                                             ; preds = %bb.l
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph150.us
-  %scevgep = getelementptr nuw i8, ptr %i.dk, i64 %3
+  %scevgep = getelementptr nuw i8, ptr %i.dk, i64 %i.az
   %scevgep217 = getelementptr i8, ptr %i.dk, i64 %i.at
   %bound0 = icmp ult ptr %scevgep, %scevgep219
   %bound1 = icmp ult ptr %scevgep218, %scevgep217

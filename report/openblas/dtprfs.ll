@@ -202,7 +202,7 @@ bb.s:                                             ; preds = %bb.r
 
 iter.check1142:                                   ; preds = %.lr.ph575.preheader, %.loopexit1192
   %indvar1111 = phi i64 [ 0, %.lr.ph575.preheader ], [ %indvar.next1112, %.loopexit1192 ] ; 2 uses
-  %indvars.iv692 = phi i64 [ 1, %.lr.ph575.preheader ], [ %indvars.iv.next693, %.loopexit1192 ] ; 11 uses
+  %indvars.iv692 = phi i64 [ 1, %.lr.ph575.preheader ], [ %indvars.iv.next693, %.loopexit1192 ] ; 12 uses
   %indvars.iv690 = phi i64 [ 2, %.lr.ph575.preheader ], [ %indvars.iv.next691, %.loopexit1192 ] ; 3 uses
   %.0476574 = phi i32 [ 1, %.lr.ph575.preheader ], [ %i.ht, %.loopexit1192 ] ; 3 uses
   %gep844 = getelementptr [8 x i8], ptr %invariant.gep843, i64 %indvars.iv692
@@ -216,13 +216,13 @@ iter.check1142:                                   ; preds = %.lr.ph575.preheader
   br i1 %min.iters.check1120, label %vec.epilog.scalar.ph1143.preheader, label %vector.memcheck1110
 
 vector.memcheck1110:                              ; preds = %iter.check1142
-  %i.ep = shl nuw nsw i64 %indvar1111, 3          ; 2 uses
+  %i.ep = shl nuw nsw i64 %indvar1111, 3
   %scevgep1114 = getelementptr i8, ptr %5, i64 %i.ep
   %i.eq = zext i32 %.0476574 to i64
   %i.er = shl nuw nsw i64 %i.eq, 3
   %scevgep1115 = getelementptr i8, ptr %scevgep1114, i64 %i.er
-  %15 = getelementptr i8, ptr %12, i64 %i.ep
-  %scevgep1113 = getelementptr i8, ptr %15, i64 8
+  %15 = shl nuw nsw i64 %indvars.iv692, 3
+  %scevgep1113 = getelementptr i8, ptr %12, i64 %15
   %bound01116 = icmp ult ptr %12, %scevgep1115
   %bound11117 = icmp ult ptr %invariant.gep841, %scevgep1113
   %found.conflict1118 = and i1 %bound01116, %bound11117

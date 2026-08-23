@@ -1,0 +1,463 @@
+diff --git a/llvm/include/llvm/Transforms/Utils/ScalarEvolutionExpander.h b/llvm/include/llvm/Transforms/Utils/ScalarEvolutionExpander.h
+index 9f8fd66c0c6f4..129180317e365 100644
+--- a/llvm/include/llvm/Transforms/Utils/ScalarEvolutionExpander.h
++++ b/llvm/include/llvm/Transforms/Utils/ScalarEvolutionExpander.h
+@@ -565,6 +565,9 @@ class SCEVExpander : public SCEVUseVisitor<SCEVExpander, Value *> {
+ 
+   void fixupInsertPoints(Instruction *I);
+ 
++  Value *tryToReuseScaledAddRec(const SCEVAddRecExpr *S,
++                                BasicBlock::iterator InsertPt);
++
+   /// Create LCSSA PHIs for \p V, if it is required for uses at the Builder's
+   /// current insertion point.
+   Value *fixupLCSSAFormFor(Value *V);
+diff --git a/llvm/lib/Transforms/Utils/ScalarEvolutionExpander.cpp b/llvm/lib/Transforms/Utils/ScalarEvolutionExpander.cpp
+index 45a9f7309ab6c..8ed7302ab4ed0 100644
+--- a/llvm/lib/Transforms/Utils/ScalarEvolutionExpander.cpp
++++ b/llvm/lib/Transforms/Utils/ScalarEvolutionExpander.cpp
+@@ -17,6 +17,7 @@
+ #include "llvm/ADT/ScopeExit.h"
+ #include "llvm/Analysis/InstructionSimplify.h"
+ #include "llvm/Analysis/LoopInfo.h"
++#include "llvm/Analysis/ScalarEvolutionDivision.h"
+ #include "llvm/Analysis/ScalarEvolutionPatternMatch.h"
+ #include "llvm/Analysis/TargetTransformInfo.h"
+ #include "llvm/Analysis/ValueTracking.h"
+@@ -1334,6 +1335,72 @@ Value *SCEVExpander::tryToReuseLCSSAPhi(SCEVUseT<const SCEVAddRecExpr *> S) {
+   return nullptr;
+ }
+ 
++/// ScalarEvolution distributes a constant factor into an AddRec's operands, so
++/// `{8 * X,+,-8}` and `{X,+,-1}` have no expression in common even though the
++/// former is just eight times the latter. If the scaled-down recurrence is
++/// already available, reuse it: expanding \p S structurally instead builds a
++/// second induction variable for the same recurrence.
++Value *SCEVExpander::tryToReuseScaledAddRec(const SCEVAddRecExpr *S,
++                                            BasicBlock::iterator InsertPt) {
++  if (!S->isAffine() || S->getType()->isPointerTy())
++    return nullptr;
++  const APInt *Step;
++  if (!match(S->getStepRecurrence(SE), m_scev_APInt(Step)))
++    return nullptr;
++  // Scaling down to a unit step is what recovers a plain induction variable.
++  APInt Factor = Step->abs();
++  if (Factor.ule(1))
++    return nullptr;
++  const SCEV *FactorS = SE.getConstant(Factor);
++
++  // Anything that does not divide is left in Offset, and only a constant one
++  // can be added back cheaply: `{5 + 8 * X,+,-8}` leaves 5 behind. divide()
++  // does not guarantee that the quotient multiplies back to S, so check it.
++  const SCEV *Divided, *Offset;
++  SCEVDivision::divide(SE, S, FactorS, &Divided, &Offset);
++  if (!isa<SCEVConstant>(Offset) ||
++      SE.getAddExpr(SE.getMulExpr(Divided, FactorS), Offset) != S)
++    return nullptr;
++
++  // A value for S with the non-dividing constant taken off only needs that
++  // constant added back, which is cheaper than scaling. It is also what the
++  // structural expansion finds once it splits the start off, so looking for it
++  // second would lose those cases.
++  SmallVector<Instruction *> DropPoisonGeneratingInsts;
++  Value *V = nullptr;
++  bool AddOffsetToV = false;
++  if (!Offset->isZero()) {
++    V = FindValueInExprValueMap(SE.getMulExpr(Divided, FactorS), &*InsertPt,
++                                DropPoisonGeneratingInsts);
++    AddOffsetToV = V != nullptr;
++  }
++  if (!V) {
++    DropPoisonGeneratingInsts.clear();
++    V = FindValueInExprValueMap(Divided, &*InsertPt, DropPoisonGeneratingInsts);
++  }
++  if (!V)
++    return nullptr;
++  for (Instruction *I : DropPoisonGeneratingInsts) {
++    rememberFlags(I);
++    dropPoisonGeneratingAnnotationsAndReinfer(SE, I);
++  }
++  if (AddOffsetToV)
++    return expand(SE.getAddExpr(SE.getUnknown(V), Offset));
++
++  // Carry over the no-wrap facts that hold for the scaling, so the reused form
++  // is no weaker than a structural expansion.
++  SCEV::NoWrapFlags Flags = SCEV::FlagAnyWrap;
++  if (SE.willNotOverflow(Instruction::Mul, /*Signed=*/false, Divided, FactorS))
++    Flags = SE.setFlags(Flags, SCEV::FlagNUW);
++  if (SE.willNotOverflow(Instruction::Mul, /*Signed=*/true, Divided, FactorS))
++    Flags = SE.setFlags(Flags, SCEV::FlagNSW);
++
++  SCEVUse Scaled = SE.getMulExpr(SE.getUnknown(V), FactorS, Flags);
++  if (!Offset->isZero())
++    Scaled = SE.getAddExpr(Scaled, Offset);
++  return expand(Scaled);
++}
++
+ Value *SCEVExpander::visitAddRecExpr(SCEVUseT<const SCEVAddRecExpr *> S) {
+   // In canonical mode we compute the addrec as an expression of a canonical IV
+   // using evaluateAtIteration and expand the resulting SCEV expression. This
+@@ -1749,7 +1816,11 @@ Value *SCEVExpander::expand(SCEVUse S) {
+       rememberFlags(I);
+       dropPoisonGeneratingAnnotationsAndReinfer(SE, I);
+     }
+-  } else {
++  } else if (const auto *AR = dyn_cast<SCEVAddRecExpr>(S.getPointer());
++             AR && CanonicalMode && PostIncLoops.empty()) {
++    V = tryToReuseScaledAddRec(AR, InsertPt);
++  }
++  if (!V) {
+     V = visit(S);
+     V = fixupLCSSAFormFor(V);
+   }
+diff --git a/llvm/test/Transforms/LoopDataPrefetch/AMDGPU/vmem-cache-line-size.ll b/llvm/test/Transforms/LoopDataPrefetch/AMDGPU/vmem-cache-line-size.ll
+index 8cca57c170eee..ba65b202387ec 100644
+--- a/llvm/test/Transforms/LoopDataPrefetch/AMDGPU/vmem-cache-line-size.ll
++++ b/llvm/test/Transforms/LoopDataPrefetch/AMDGPU/vmem-cache-line-size.ll
+@@ -10,7 +10,7 @@ define amdgpu_kernel void @prefetch_two_streams_80B(ptr addrspace(1) nocapture %
+ ; GFX1250-NEXT:    br label %[[FOR_BODY:.*]]
+ ; GFX1250:       [[FOR_BODY]]:
+ ; GFX1250-NEXT:    [[IV:%.*]] = phi i64 [ 0, %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[FOR_BODY]] ]
+-; GFX1250-NEXT:    [[TMP0:%.*]] = shl i64 [[IV]], 2
++; GFX1250-NEXT:    [[TMP0:%.*]] = shl nuw nsw i64 [[IV]], 2
+ ; GFX1250-NEXT:    [[TMP1:%.*]] = add i64 [[TMP0]], 28
+ ; GFX1250-NEXT:    [[SCEVGEP:%.*]] = getelementptr i8, ptr addrspace(1) [[B]], i64 [[TMP1]]
+ ; GFX1250-NEXT:    [[IDX0:%.*]] = getelementptr inbounds i32, ptr addrspace(1) [[B]], i64 [[IV]]
+@@ -34,7 +34,7 @@ define amdgpu_kernel void @prefetch_two_streams_80B(ptr addrspace(1) nocapture %
+ ; GFX1200-NEXT:    br label %[[FOR_BODY:.*]]
+ ; GFX1200:       [[FOR_BODY]]:
+ ; GFX1200-NEXT:    [[IV:%.*]] = phi i64 [ 0, %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[FOR_BODY]] ]
+-; GFX1200-NEXT:    [[TMP0:%.*]] = shl i64 [[IV]], 2
++; GFX1200-NEXT:    [[TMP0:%.*]] = shl nuw nsw i64 [[IV]], 2
+ ; GFX1200-NEXT:    [[TMP1:%.*]] = add i64 [[TMP0]], 28
+ ; GFX1200-NEXT:    [[SCEVGEP:%.*]] = getelementptr i8, ptr addrspace(1) [[B]], i64 [[TMP1]]
+ ; GFX1200-NEXT:    [[IDX0:%.*]] = getelementptr inbounds i32, ptr addrspace(1) [[B]], i64 [[IV]]
+@@ -100,10 +100,10 @@ define amdgpu_kernel void @prefetch_two_streams_160B(ptr addrspace(1) nocapture
+ ; GFX1250-NEXT:    br label %[[FOR_BODY:.*]]
+ ; GFX1250:       [[FOR_BODY]]:
+ ; GFX1250-NEXT:    [[IV:%.*]] = phi i64 [ 0, %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[FOR_BODY]] ]
+-; GFX1250-NEXT:    [[TMP0:%.*]] = shl i64 [[IV]], 2
++; GFX1250-NEXT:    [[TMP0:%.*]] = shl nuw nsw i64 [[IV]], 2
+ ; GFX1250-NEXT:    [[TMP1:%.*]] = add i64 [[TMP0]], 188
+ ; GFX1250-NEXT:    [[SCEVGEP1:%.*]] = getelementptr i8, ptr addrspace(1) [[B]], i64 [[TMP1]]
+-; GFX1250-NEXT:    [[TMP2:%.*]] = shl i64 [[IV]], 2
++; GFX1250-NEXT:    [[TMP2:%.*]] = shl nuw nsw i64 [[IV]], 2
+ ; GFX1250-NEXT:    [[TMP3:%.*]] = add i64 [[TMP2]], 28
+ ; GFX1250-NEXT:    [[SCEVGEP:%.*]] = getelementptr i8, ptr addrspace(1) [[B]], i64 [[TMP3]]
+ ; GFX1250-NEXT:    [[IDX0:%.*]] = getelementptr inbounds i32, ptr addrspace(1) [[B]], i64 [[IV]]
+@@ -128,10 +128,10 @@ define amdgpu_kernel void @prefetch_two_streams_160B(ptr addrspace(1) nocapture
+ ; GFX1200-NEXT:    br label %[[FOR_BODY:.*]]
+ ; GFX1200:       [[FOR_BODY]]:
+ ; GFX1200-NEXT:    [[IV:%.*]] = phi i64 [ 0, %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[FOR_BODY]] ]
+-; GFX1200-NEXT:    [[TMP0:%.*]] = shl i64 [[IV]], 2
++; GFX1200-NEXT:    [[TMP0:%.*]] = shl nuw nsw i64 [[IV]], 2
+ ; GFX1200-NEXT:    [[TMP1:%.*]] = add i64 [[TMP0]], 188
+ ; GFX1200-NEXT:    [[SCEVGEP1:%.*]] = getelementptr i8, ptr addrspace(1) [[B]], i64 [[TMP1]]
+-; GFX1200-NEXT:    [[TMP2:%.*]] = shl i64 [[IV]], 2
++; GFX1200-NEXT:    [[TMP2:%.*]] = shl nuw nsw i64 [[IV]], 2
+ ; GFX1200-NEXT:    [[TMP3:%.*]] = add i64 [[TMP2]], 28
+ ; GFX1200-NEXT:    [[SCEVGEP:%.*]] = getelementptr i8, ptr addrspace(1) [[B]], i64 [[TMP3]]
+ ; GFX1200-NEXT:    [[IDX0:%.*]] = getelementptr inbounds i32, ptr addrspace(1) [[B]], i64 [[IV]]
+@@ -198,10 +198,10 @@ define amdgpu_kernel void @prefetch_two_streams_320B(ptr addrspace(1) nocapture
+ ; GFX1250-NEXT:    br label %[[FOR_BODY:.*]]
+ ; GFX1250:       [[FOR_BODY]]:
+ ; GFX1250-NEXT:    [[IV:%.*]] = phi i64 [ 0, %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[FOR_BODY]] ]
+-; GFX1250-NEXT:    [[TMP0:%.*]] = shl i64 [[IV]], 2
++; GFX1250-NEXT:    [[TMP0:%.*]] = shl nuw nsw i64 [[IV]], 2
+ ; GFX1250-NEXT:    [[TMP1:%.*]] = add i64 [[TMP0]], 348
+ ; GFX1250-NEXT:    [[SCEVGEP1:%.*]] = getelementptr i8, ptr addrspace(1) [[B]], i64 [[TMP1]]
+-; GFX1250-NEXT:    [[TMP2:%.*]] = shl i64 [[IV]], 2
++; GFX1250-NEXT:    [[TMP2:%.*]] = shl nuw nsw i64 [[IV]], 2
+ ; GFX1250-NEXT:    [[TMP3:%.*]] = add i64 [[TMP2]], 28
+ ; GFX1250-NEXT:    [[SCEVGEP:%.*]] = getelementptr i8, ptr addrspace(1) [[B]], i64 [[TMP3]]
+ ; GFX1250-NEXT:    [[IDX0:%.*]] = getelementptr inbounds i32, ptr addrspace(1) [[B]], i64 [[IV]]
+@@ -226,10 +226,10 @@ define amdgpu_kernel void @prefetch_two_streams_320B(ptr addrspace(1) nocapture
+ ; GFX1200-NEXT:    br label %[[FOR_BODY:.*]]
+ ; GFX1200:       [[FOR_BODY]]:
+ ; GFX1200-NEXT:    [[IV:%.*]] = phi i64 [ 0, %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[FOR_BODY]] ]
+-; GFX1200-NEXT:    [[TMP0:%.*]] = shl i64 [[IV]], 2
++; GFX1200-NEXT:    [[TMP0:%.*]] = shl nuw nsw i64 [[IV]], 2
+ ; GFX1200-NEXT:    [[TMP1:%.*]] = add i64 [[TMP0]], 348
+ ; GFX1200-NEXT:    [[SCEVGEP1:%.*]] = getelementptr i8, ptr addrspace(1) [[B]], i64 [[TMP1]]
+-; GFX1200-NEXT:    [[TMP2:%.*]] = shl i64 [[IV]], 2
++; GFX1200-NEXT:    [[TMP2:%.*]] = shl nuw nsw i64 [[IV]], 2
+ ; GFX1200-NEXT:    [[TMP3:%.*]] = add i64 [[TMP2]], 28
+ ; GFX1200-NEXT:    [[SCEVGEP:%.*]] = getelementptr i8, ptr addrspace(1) [[B]], i64 [[TMP3]]
+ ; GFX1200-NEXT:    [[IDX0:%.*]] = getelementptr inbounds i32, ptr addrspace(1) [[B]], i64 [[IV]]
+diff --git a/llvm/test/Transforms/LoopIdiom/reuse-lcssa-phi-scev-expansion.ll b/llvm/test/Transforms/LoopIdiom/reuse-lcssa-phi-scev-expansion.ll
+index 05ef5d111fe55..2ee7555513512 100644
+--- a/llvm/test/Transforms/LoopIdiom/reuse-lcssa-phi-scev-expansion.ll
++++ b/llvm/test/Transforms/LoopIdiom/reuse-lcssa-phi-scev-expansion.ll
+@@ -178,14 +178,13 @@ define void @phi_ptr_addressspace_ptrtoint_fail(ptr addrspace(1) %arg) {
+ ; CHECK-NEXT:    br i1 false, label %[[LOOP_1]], label %[[LOOP_2_PH:.*]]
+ ; CHECK:       [[LOOP_2_PH]]:
+ ; CHECK-NEXT:    [[IV_1_LCSSA1:%.*]] = phi i64 [ [[IV_1]], %[[LOOP_1]] ]
+-; CHECK-NEXT:    [[IV_1_LCSSA:%.*]] = phi i64 [ [[IV_1]], %[[LOOP_1]] ]
+ ; CHECK-NEXT:    [[PHI:%.*]] = phi ptr addrspace(1) [ [[GETELEMENTPTR]], %[[LOOP_1]] ]
+ ; CHECK-NEXT:    [[TMP0:%.*]] = shl nuw nsw i64 [[IV_1_LCSSA1]], 2
+ ; CHECK-NEXT:    [[SCEVGEP:%.*]] = getelementptr i8, ptr addrspace(1) [[ARG]], i64 [[TMP0]]
+ ; CHECK-NEXT:    call void @llvm.memset.p1.i64(ptr addrspace(1) align 4 [[SCEVGEP]], i8 0, i64 8, i1 false)
+ ; CHECK-NEXT:    br label %[[LOOP_2_HEADER:.*]]
+ ; CHECK:       [[LOOP_2_HEADER]]:
+-; CHECK-NEXT:    [[IV_2:%.*]] = phi i64 [ [[IV_1_LCSSA]], %[[LOOP_2_PH]] ], [ [[IV_2_NEXT:%.*]], %[[LOOP_2_LATCH:.*]] ]
++; CHECK-NEXT:    [[IV_2:%.*]] = phi i64 [ [[IV_1_LCSSA1]], %[[LOOP_2_PH]] ], [ [[IV_2_NEXT:%.*]], %[[LOOP_2_LATCH:.*]] ]
+ ; CHECK-NEXT:    [[GREP_ARG:%.*]] = getelementptr i32, ptr addrspace(1) [[ARG]], i64 [[IV_2]]
+ ; CHECK-NEXT:    [[EC:%.*]] = icmp ult i64 [[IV_2]], 1
+ ; CHECK-NEXT:    br i1 [[EC]], label %[[LOOP_2_LATCH]], label %[[EXIT:.*]]
+diff --git a/llvm/test/Transforms/LoopVectorize/runtime-checks-difference.ll b/llvm/test/Transforms/LoopVectorize/runtime-checks-difference.ll
+index 337d3187a274b..100486177cdca 100644
+--- a/llvm/test/Transforms/LoopVectorize/runtime-checks-difference.ll
++++ b/llvm/test/Transforms/LoopVectorize/runtime-checks-difference.ll
+@@ -249,7 +249,7 @@ define void @nested_loop_outer_iv_addrec_invariant_in_inner1(ptr %a, ptr %b, i64
+ ; CHECK-NEXT:    br label %[[OUTER_HEADER:.*]]
+ ; CHECK:       [[OUTER_HEADER]]:
+ ; CHECK-NEXT:    [[OUTER_IV:%.*]] = phi i64 [ [[OUTER_IV_NEXT:%.*]], [[OUTER_LATCH:%.*]] ], [ 0, %[[ENTRY]] ]
+-; CHECK-NEXT:    [[TMP1:%.*]] = shl i64 [[OUTER_IV]], 2
++; CHECK-NEXT:    [[TMP1:%.*]] = shl nuw nsw i64 [[OUTER_IV]], 2
+ ; CHECK-NEXT:    [[TMP2:%.*]] = add i64 [[TMP1]], 4
+ ; CHECK-NEXT:    [[SCEVGEP1:%.*]] = getelementptr i8, ptr [[A]], i64 [[TMP2]]
+ ; CHECK-NEXT:    [[GEP_A:%.*]] = getelementptr inbounds i32, ptr [[A]], i64 [[OUTER_IV]]
+@@ -301,7 +301,7 @@ define void @nested_loop_outer_iv_addrec_invariant_in_inner2(ptr %a, ptr %b, i64
+ ; CHECK-NEXT:    br label %[[OUTER_HEADER:.*]]
+ ; CHECK:       [[OUTER_HEADER]]:
+ ; CHECK-NEXT:    [[OUTER_IV:%.*]] = phi i64 [ [[OUTER_IV_NEXT:%.*]], [[OUTER_LATCH:%.*]] ], [ 0, %[[ENTRY]] ]
+-; CHECK-NEXT:    [[TMP1:%.*]] = shl i64 [[OUTER_IV]], 2
++; CHECK-NEXT:    [[TMP1:%.*]] = shl nuw nsw i64 [[OUTER_IV]], 2
+ ; CHECK-NEXT:    [[TMP2:%.*]] = add i64 [[TMP1]], 4
+ ; CHECK-NEXT:    [[SCEVGEP2:%.*]] = getelementptr i8, ptr [[A]], i64 [[TMP2]]
+ ; CHECK-NEXT:    [[GEP_A:%.*]] = getelementptr inbounds i32, ptr [[A]], i64 [[OUTER_IV]]
+@@ -342,6 +342,234 @@ exit:
+   ret void
+ }
+ 
++; The bounds of the inner loop's accesses are 4 and 8 times the outer induction
++; variable, which is already available. Expanding them without reusing it
++; introduces a second induction variable for the same recurrence.
++define void @nested_loop_bounds_are_scaled_outer_iv(ptr %a, ptr %b, i32 %n, i32 %is, i32 %js) {
++; CHECK-LABEL: define void @nested_loop_bounds_are_scaled_outer_iv(
++; CHECK-SAME: ptr [[A:%.*]], ptr [[B:%.*]], i32 [[N:%.*]], i32 [[IS:%.*]], i32 [[JS:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[CMP:%.*]] = icmp sgt i32 [[N]], 1
++; CHECK-NEXT:    br i1 [[CMP]], label %[[OUTER_PH:.*]], [[EXIT:label %.*]]
++; CHECK:       [[OUTER_PH]]:
++; CHECK-NEXT:    [[JS_EXT:%.*]] = sext i32 [[JS]] to i64
++; CHECK-NEXT:    [[IS_EXT:%.*]] = sext i32 [[IS]] to i64
++; CHECK-NEXT:    [[N_EXT:%.*]] = zext nneg i32 [[N]] to i64
++; CHECK-NEXT:    br label %[[OUTER_HEADER:.*]]
++; CHECK:       [[OUTER_HEADER]]:
++; CHECK-NEXT:    [[OUTER_IV:%.*]] = phi i64 [ 1, %[[OUTER_PH]] ], [ [[OUTER_IV_NEXT:%.*]], [[OUTER_LATCH:%.*]] ]
++; CHECK-NEXT:    [[TMP0:%.*]] = shl nuw nsw i64 [[OUTER_IV]], 2
++; CHECK-NEXT:    [[SCEVGEP:%.*]] = getelementptr i8, ptr [[A]], i64 [[TMP0]]
++; CHECK-NEXT:    [[TMP1:%.*]] = shl nuw nsw i64 [[OUTER_IV]], 3
++; CHECK-NEXT:    [[SCEVGEP2:%.*]] = getelementptr i8, ptr [[A]], i64 [[TMP1]]
++; CHECK-NEXT:    [[SCEVGEP3:%.*]] = getelementptr i8, ptr [[B]], i64 [[TMP0]]
++; CHECK-NEXT:    [[SCEVGEP4:%.*]] = getelementptr i8, ptr [[B]], i64 [[TMP1]]
++; CHECK-NEXT:    [[OUTER_OFF_IS:%.*]] = mul nsw i64 [[OUTER_IV]], [[IS_EXT]]
++; CHECK-NEXT:    [[OUTER_OFF_JS:%.*]] = mul nsw i64 [[OUTER_IV]], [[JS_EXT]]
++; CHECK-NEXT:    [[MIN_ITERS_CHECK:%.*]] = icmp ult i64 [[OUTER_IV]], 4
++; CHECK-NEXT:    br i1 [[MIN_ITERS_CHECK]], [[SCALAR_PH:label %.*]], label %[[VECTOR_SCEVCHECK:.*]]
++; CHECK:       [[VECTOR_SCEVCHECK]]:
++; CHECK-NEXT:    [[IDENT_CHECK:%.*]] = icmp ne i32 [[JS]], 1
++; CHECK-NEXT:    [[IDENT_CHECK1:%.*]] = icmp ne i32 [[IS]], 1
++; CHECK-NEXT:    [[TMP2:%.*]] = or i1 [[IDENT_CHECK]], [[IDENT_CHECK1]]
++; CHECK-NEXT:    br i1 [[TMP2]], [[SCALAR_PH]], label %[[VECTOR_MEMCHECK:.*]]
++; CHECK:       [[VECTOR_MEMCHECK]]:
++; CHECK-NEXT:    [[BOUND0:%.*]] = icmp ult ptr [[SCEVGEP]], [[SCEVGEP4]]
++; CHECK-NEXT:    [[BOUND1:%.*]] = icmp ult ptr [[SCEVGEP3]], [[SCEVGEP2]]
++; CHECK-NEXT:    [[FOUND_CONFLICT:%.*]] = and i1 [[BOUND0]], [[BOUND1]]
++; CHECK-NEXT:    br i1 [[FOUND_CONFLICT]], [[SCALAR_PH]], [[VECTOR_PH:label %.*]]
++;
++entry:
++  %cmp = icmp sgt i32 %n, 1
++  br i1 %cmp, label %outer.ph, label %exit
++
++outer.ph:
++  %js.ext = sext i32 %js to i64
++  %is.ext = sext i32 %is to i64
++  %n.ext = zext nneg i32 %n to i64
++  br label %outer.header
++
++outer.header:
++  %outer.iv = phi i64 [ 1, %outer.ph ], [ %outer.iv.next, %outer.latch ]
++  %outer.off.is = mul nsw i64 %outer.iv, %is.ext
++  %outer.off.js = mul nsw i64 %outer.iv, %js.ext
++  br label %inner.body
++
++inner.body:
++  %inner.iv = phi i64 [ 0, %outer.header ], [ %inner.iv.next, %inner.body ]
++  %inner.off.js = mul nsw i64 %inner.iv, %js.ext
++  %idx.1 = add nsw i64 %inner.off.js, %outer.off.is
++  %gep.a.1 = getelementptr inbounds [4 x i8], ptr %a, i64 %idx.1
++  %l.a.1 = load float, ptr %gep.a.1, align 4
++  %gep.b.1 = getelementptr inbounds [4 x i8], ptr %b, i64 %idx.1
++  %l.b.1 = load float, ptr %gep.b.1, align 4
++  %inner.off.is = mul nsw i64 %inner.iv, %is.ext
++  %idx.2 = add nsw i64 %inner.off.is, %outer.off.js
++  %gep.a.2 = getelementptr inbounds [4 x i8], ptr %a, i64 %idx.2
++  %l.a.2 = load float, ptr %gep.a.2, align 4
++  %gep.b.2 = getelementptr inbounds [4 x i8], ptr %b, i64 %idx.2
++  %l.b.2 = load float, ptr %gep.b.2, align 4
++  store float %l.a.1, ptr %gep.a.2, align 4
++  store float %l.b.1, ptr %gep.b.2, align 4
++  store float %l.a.2, ptr %gep.a.1, align 4
++  store float %l.b.2, ptr %gep.b.1, align 4
++  %inner.iv.next = add nuw nsw i64 %inner.iv, 1
++  %inner.cond = icmp eq i64 %inner.iv.next, %outer.iv
++  br i1 %inner.cond, label %outer.latch, label %inner.body
++
++outer.latch:
++  %outer.iv.next = add nuw nsw i64 %outer.iv, 1
++  %outer.cond = icmp eq i64 %outer.iv.next, %n.ext
++  br i1 %outer.cond, label %exit, label %outer.header
++
++exit:
++  ret void
++}
++
++; Same, with a factor that is not a power of two, so the scaling is a multiply.
++; Only the first bound is a multiple of the outer induction variable; the second
++; one still needs a canonical induction variable of its own, which is what the
++; expansion introduces for both bounds without the reuse.
++define void @nested_loop_only_one_bound_is_scaled_outer_iv(ptr %a, ptr %b, i32 %n, i32 %is, i32 %js) {
++; CHECK-LABEL: define void @nested_loop_only_one_bound_is_scaled_outer_iv(
++; CHECK-SAME: ptr [[A:%.*]], ptr [[B:%.*]], i32 [[N:%.*]], i32 [[IS:%.*]], i32 [[JS:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[CMP:%.*]] = icmp sgt i32 [[N]], 1
++; CHECK-NEXT:    br i1 [[CMP]], label %[[OUTER_PH:.*]], [[EXIT:label %.*]]
++; CHECK:       [[OUTER_PH]]:
++; CHECK-NEXT:    [[JS_EXT:%.*]] = sext i32 [[JS]] to i64
++; CHECK-NEXT:    [[IS_EXT:%.*]] = sext i32 [[IS]] to i64
++; CHECK-NEXT:    [[N_EXT:%.*]] = zext nneg i32 [[N]] to i64
++; CHECK-NEXT:    br label %[[OUTER_HEADER:.*]]
++; CHECK:       [[OUTER_HEADER]]:
++; CHECK-NEXT:    [[INDVAR:%.*]] = phi i64 [ [[INDVAR_NEXT:%.*]], [[OUTER_LATCH:%.*]] ], [ 0, %[[OUTER_PH]] ]
++; CHECK-NEXT:    [[OUTER_IV:%.*]] = phi i64 [ 1, %[[OUTER_PH]] ], [ [[OUTER_IV_NEXT:%.*]], [[OUTER_LATCH]] ]
++; CHECK-NEXT:    [[TMP0:%.*]] = mul nuw nsw i64 [[OUTER_IV]], 12
++; CHECK-NEXT:    [[SCEVGEP:%.*]] = getelementptr i8, ptr [[A]], i64 [[TMP0]]
++; CHECK-NEXT:    [[TMP1:%.*]] = mul nuw nsw i64 [[INDVAR]], 24
++; CHECK-NEXT:    [[TMP2:%.*]] = add i64 [[TMP1]], 16
++; CHECK-NEXT:    [[SCEVGEP2:%.*]] = getelementptr i8, ptr [[A]], i64 [[TMP2]]
++; CHECK-NEXT:    [[SCEVGEP3:%.*]] = getelementptr i8, ptr [[B]], i64 [[TMP0]]
++; CHECK-NEXT:    [[SCEVGEP4:%.*]] = getelementptr i8, ptr [[B]], i64 [[TMP2]]
++; CHECK-NEXT:    [[OUTER_OFF_IS:%.*]] = mul nsw i64 [[OUTER_IV]], [[IS_EXT]]
++; CHECK-NEXT:    [[OUTER_OFF_JS:%.*]] = mul nsw i64 [[OUTER_IV]], [[JS_EXT]]
++; CHECK-NEXT:    [[MIN_ITERS_CHECK:%.*]] = icmp ult i64 [[OUTER_IV]], 4
++; CHECK-NEXT:    br i1 [[MIN_ITERS_CHECK]], [[SCALAR_PH:label %.*]], label %[[VECTOR_SCEVCHECK:.*]]
++; CHECK:       [[VECTOR_SCEVCHECK]]:
++; CHECK-NEXT:    [[IDENT_CHECK:%.*]] = icmp ne i32 [[JS]], 1
++; CHECK-NEXT:    [[IDENT_CHECK1:%.*]] = icmp ne i32 [[IS]], 1
++; CHECK-NEXT:    [[TMP3:%.*]] = or i1 [[IDENT_CHECK]], [[IDENT_CHECK1]]
++; CHECK-NEXT:    br i1 [[TMP3]], [[SCALAR_PH]], label %[[VECTOR_MEMCHECK:.*]]
++; CHECK:       [[VECTOR_MEMCHECK]]:
++; CHECK-NEXT:    [[BOUND0:%.*]] = icmp ult ptr [[SCEVGEP]], [[SCEVGEP4]]
++; CHECK-NEXT:    [[BOUND1:%.*]] = icmp ult ptr [[SCEVGEP3]], [[SCEVGEP2]]
++; CHECK-NEXT:    [[FOUND_CONFLICT:%.*]] = and i1 [[BOUND0]], [[BOUND1]]
++; CHECK-NEXT:    br i1 [[FOUND_CONFLICT]], [[SCALAR_PH]], [[VECTOR_PH:label %.*]]
++;
++entry:
++  %cmp = icmp sgt i32 %n, 1
++  br i1 %cmp, label %outer.ph, label %exit
++
++outer.ph:
++  %js.ext = sext i32 %js to i64
++  %is.ext = sext i32 %is to i64
++  %n.ext = zext nneg i32 %n to i64
++  br label %outer.header
++
++outer.header:
++  %outer.iv = phi i64 [ 1, %outer.ph ], [ %outer.iv.next, %outer.latch ]
++  %outer.off.is = mul nsw i64 %outer.iv, %is.ext
++  %outer.off.js = mul nsw i64 %outer.iv, %js.ext
++  br label %inner.body
++
++inner.body:
++  %inner.iv = phi i64 [ 0, %outer.header ], [ %inner.iv.next, %inner.body ]
++  %inner.off.js = mul nsw i64 %inner.iv, %js.ext
++  %idx.1 = add nsw i64 %inner.off.js, %outer.off.is
++  %gep.a.1 = getelementptr inbounds [12 x i8], ptr %a, i64 %idx.1
++  %l.a.1 = load float, ptr %gep.a.1, align 4
++  %gep.b.1 = getelementptr inbounds [12 x i8], ptr %b, i64 %idx.1
++  %l.b.1 = load float, ptr %gep.b.1, align 4
++  %inner.off.is = mul nsw i64 %inner.iv, %is.ext
++  %idx.2 = add nsw i64 %inner.off.is, %outer.off.js
++  %gep.a.2 = getelementptr inbounds [12 x i8], ptr %a, i64 %idx.2
++  %l.a.2 = load float, ptr %gep.a.2, align 4
++  %gep.b.2 = getelementptr inbounds [12 x i8], ptr %b, i64 %idx.2
++  %l.b.2 = load float, ptr %gep.b.2, align 4
++  store float %l.a.1, ptr %gep.a.2, align 4
++  store float %l.b.1, ptr %gep.b.2, align 4
++  store float %l.a.2, ptr %gep.a.1, align 4
++  store float %l.b.2, ptr %gep.b.1, align 4
++  %inner.iv.next = add nuw nsw i64 %inner.iv, 1
++  %inner.cond = icmp eq i64 %inner.iv.next, %outer.iv
++  br i1 %inner.cond, label %outer.latch, label %inner.body
++
++outer.latch:
++  %outer.iv.next = add nuw nsw i64 %outer.iv, 1
++  %outer.cond = icmp eq i64 %outer.iv.next, %n.ext
++  br i1 %outer.cond, label %exit, label %outer.header
++
++exit:
++  ret void
++}
++
++; The lower bound of the inner loop's accesses is 8 times the outer induction
++; variable plus 4, which the factor does not divide, so the reuse needs a
++; constant correction on top of the scaling. That saves no instructions over
++; expanding the bound from a canonical induction variable, only the no-wrap
++; flags on the correction.
++define void @nested_loop_bound_needs_constant_correction(ptr %a, ptr %b, i64 %n) {
++; CHECK-LABEL: define void @nested_loop_bound_needs_constant_correction(
++; CHECK-SAME: ptr [[A:%.*]], ptr [[B:%.*]], i64 [[N:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[TMP0:%.*]] = shl i64 [[N]], 2
++; CHECK-NEXT:    [[SCEVGEP1:%.*]] = getelementptr i8, ptr [[B]], i64 [[TMP0]]
++; CHECK-NEXT:    [[TMP1:%.*]] = shl i64 [[N]], 3
++; CHECK-NEXT:    [[SCEVGEP3:%.*]] = getelementptr i8, ptr [[A]], i64 [[TMP1]]
++; CHECK-NEXT:    br label %[[OUTER_HEADER:.*]]
++; CHECK:       [[OUTER_HEADER]]:
++; CHECK-NEXT:    [[OUTER_IV:%.*]] = phi i64 [ 0, %[[ENTRY]] ], [ [[OUTER_IV_NEXT:%.*]], [[OUTER_LATCH:%.*]] ]
++; CHECK-NEXT:    [[TMP2:%.*]] = mul nsw i64 [[OUTER_IV]], -1
++; CHECK-NEXT:    [[TMP3:%.*]] = add i64 [[N]], [[TMP2]]
++; CHECK-NEXT:    [[TMP4:%.*]] = shl i64 [[OUTER_IV]], 2
++; CHECK-NEXT:    [[SCEVGEP:%.*]] = getelementptr i8, ptr [[B]], i64 [[TMP4]]
++; CHECK-NEXT:    [[TMP5:%.*]] = shl i64 [[OUTER_IV]], 3
++; CHECK-NEXT:    [[TMP6:%.*]] = add nuw nsw i64 [[TMP5]], 4
++; CHECK-NEXT:    [[SCEVGEP2:%.*]] = getelementptr i8, ptr [[A]], i64 [[TMP6]]
++; CHECK-NEXT:    [[MIN_ITERS_CHECK:%.*]] = icmp ult i64 [[TMP3]], 4
++; CHECK-NEXT:    br i1 [[MIN_ITERS_CHECK]], [[SCALAR_PH:label %.*]], label %[[VECTOR_MEMCHECK:.*]]
++; CHECK:       [[VECTOR_MEMCHECK]]:
++; CHECK-NEXT:    [[BOUND0:%.*]] = icmp ult ptr [[SCEVGEP]], [[SCEVGEP3]]
++; CHECK-NEXT:    [[BOUND1:%.*]] = icmp ult ptr [[SCEVGEP2]], [[SCEVGEP1]]
++; CHECK-NEXT:    [[FOUND_CONFLICT:%.*]] = and i1 [[BOUND0]], [[BOUND1]]
++; CHECK-NEXT:    br i1 [[FOUND_CONFLICT]], [[SCALAR_PH]], [[VECTOR_PH:label %.*]]
++;
++entry:
++  br label %outer.header
++
++outer.header:
++  %outer.iv = phi i64 [ 0, %entry ], [ %outer.iv.next, %outer.latch ]
++  br label %inner.body
++
++inner.body:
++  %inner.iv = phi i64 [ %outer.iv, %outer.header ], [ %inner.iv.next, %inner.body ]
++  %gep.a = getelementptr inbounds { i32, i32 }, ptr %a, i64 %inner.iv, i32 1
++  %l = load i32, ptr %gep.a, align 4
++  %gep.b = getelementptr inbounds i32, ptr %b, i64 %inner.iv
++  store i32 %l, ptr %gep.b, align 4
++  %inner.iv.next = add nuw nsw i64 %inner.iv, 1
++  %inner.cond = icmp eq i64 %inner.iv.next, %n
++  br i1 %inner.cond, label %outer.latch, label %inner.body
++
++outer.latch:
++  %outer.iv.next = add nuw nsw i64 %outer.iv, 1
++  %outer.cond = icmp eq i64 %outer.iv.next, %n
++  br i1 %outer.cond, label %exit, label %outer.header
++
++exit:
++  ret void
++}
++
+ ; Test case where the AddRec for the pointers in the inner loop have the AddRec
+ ; of the outer loop as start value. It is sufficient to subtract the start
+ ; values (%dst, %src) of the outer AddRecs.

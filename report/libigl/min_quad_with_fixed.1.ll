@@ -205,7 +205,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
 
 _ZNK5Eigen19ColPivHouseholderQRINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE4rankEv.exit: ; preds = %scalar.ph, %middle.block, %_ZNK5Eigen19ColPivHouseholderQRINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE9thresholdEv.exit.i._ZNK5Eigen19ColPivHouseholderQRINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE4rankEv.exit_crit_edge
   %i.bm = phi i64 [ %.pre, %_ZNK5Eigen19ColPivHouseholderQRINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE9thresholdEv.exit.i._ZNK5Eigen19ColPivHouseholderQRINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE4rankEv.exit_crit_edge ], [ %i.v, %middle.block ], [ %i.v, %scalar.ph ]
-  %.07.lcssa.i = phi i64 [ 0, %_ZNK5Eigen19ColPivHouseholderQRINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE9thresholdEv.exit.i._ZNK5Eigen19ColPivHouseholderQRINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE4rankEv.exit_crit_edge ], [ %i.bc, %middle.block ], [ %i.bk, %scalar.ph ] ; 10 uses
+  %.07.lcssa.i = phi i64 [ 0, %_ZNK5Eigen19ColPivHouseholderQRINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE9thresholdEv.exit.i._ZNK5Eigen19ColPivHouseholderQRINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE4rankEv.exit_crit_edge ], [ %i.bc, %middle.block ], [ %i.bk, %scalar.ph ] ; 11 uses
   %i.bn = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.bo = load i64, ptr %i.bn, align 8, !tbaa !75 ; 13 uses
   %i.bp = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
@@ -320,8 +320,6 @@ bb.l:                                             ; preds = %_ZN5Eigen15PlainObj
   %.sroa.1192.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 72
   %.sroa.1294.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 88
   %.sroa.1395.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 96
-  %3 = shl i64 %.07.lcssa.i, 3                    ; 3 uses
-  %4 = add i64 %3, -8                             ; 4 uses
   %i.cz = shl i64 %i.cn, 3
   %i.da = shl i64 %i.cn, 3
   %i.db = shl i64 %i.cn, 3
@@ -347,16 +345,16 @@ bb.l:                                             ; preds = %_ZN5Eigen15PlainObj
   br label %bb.m
 
 bb.m:                                             ; preds = %.lr.ph, %_ZN5Eigen9DenseBaseINS_5BlockINS1_INS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELin1ELi1ELb1EEELin1ELi1ELb0EEEE4swapIS5_EEvRKNS0_IT_EE.exit48
-  %indvar = phi i64 [ 0, %.lr.ph ], [ %indvar.next, %_ZN5Eigen9DenseBaseINS_5BlockINS1_INS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELin1ELi1ELb1EEELin1ELi1ELb0EEEE4swapIS5_EEvRKNS0_IT_EE.exit48 ] ; 5 uses
-  %.0169 = phi i64 [ %i.cn, %.lr.ph ], [ %i.oj, %_ZN5Eigen9DenseBaseINS_5BlockINS1_INS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELin1ELi1ELb1EEELin1ELi1ELb0EEEE4swapIS5_EEvRKNS0_IT_EE.exit48 ] ; 18 uses
-  %i.dj = shl i64 %indvar, 3
-  %5 = sub i64 %4, %i.dj
-  %6 = mul i64 %indvar, -8                        ; 2 uses
-  %7 = add i64 %4, %6                             ; 2 uses
-  %i.dk = shl i64 %indvar, 3
-  %8 = sub i64 %4, %i.dk
-  %9 = mul i64 %indvar, -8                        ; 2 uses
-  %10 = add i64 %4, %9                            ; 2 uses
+  %indvar = phi i64 [ 0, %.lr.ph ], [ %indvar.next, %_ZN5Eigen9DenseBaseINS_5BlockINS1_INS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELin1ELi1ELb1EEELin1ELi1ELb0EEEE4swapIS5_EEvRKNS0_IT_EE.exit48 ] ; 3 uses
+  %.0169 = phi i64 [ %i.cn, %.lr.ph ], [ %i.oj, %_ZN5Eigen9DenseBaseINS_5BlockINS1_INS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELin1ELi1ELb1EEELin1ELi1ELb0EEEE4swapIS5_EEvRKNS0_IT_EE.exit48 ] ; 22 uses
+  %i.dj = shl i64 %.0169, 3
+  %3 = shl i64 %.0169, 3                          ; 2 uses
+  %4 = sub i64 %.07.lcssa.i, %indvar
+  %5 = shl i64 %4, 3
+  %i.dk = shl i64 %.0169, 3
+  %6 = shl i64 %.0169, 3                          ; 2 uses
+  %7 = sub i64 %.07.lcssa.i, %indvar
+  %8 = shl i64 %7, 3
   %.not = icmp eq i64 %.0169, %i.cn               ; 2 uses
   br i1 %.not, label %_ZN5Eigen9DenseBaseINS_5BlockINS1_INS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELin1ELi1ELb1EEELin1ELi1ELb0EEEE4swapIS5_EEvRKNS0_IT_EE.exit, label %_ZN5Eigen8internal13first_alignedILi16EdlEET1_PKT0_S2_.exit.i.i.i.i.i.i
 
@@ -386,7 +384,7 @@ _ZN5Eigen8internal13first_alignedILi16EdlEET1_PKT0_S2_.exit.i.i.i.i.i.i: ; preds
   br i1 %min.iters.check275, label %.lr.ph.i.i.i.i.i.i.i.preheader293, label %vector.memcheck268
 
 vector.memcheck268:                               ; preds = %.lr.ph.i.i.i.i.i.i.i.preheader
-  %i.ea = mul i64 %i.dm, %5
+  %i.ea = mul i64 %i.dm, %i.dj
   %i.eb = shl i64 %.0.i.i.i.i.i.i.i, 3            ; 2 uses
   %i.ec = getelementptr i8, ptr %i.dl, i64 %i.ea
   %scevgep269 = getelementptr i8, ptr %i.ec, i64 %i.eb
@@ -480,7 +478,7 @@ _ZN5Eigen8internal31unaligned_dense_assignment_loopILb0EE3runINS0_31generic_dens
   br i1 %min.iters.check255, label %.lr.ph.i17.i.i.i.i.i.i.preheader292, label %vector.memcheck245
 
 vector.memcheck245:                               ; preds = %.lr.ph.i17.i.i.i.i.i.i.preheader
-  %i.fd = mul i64 %i.dm, %7
+  %i.fd = mul i64 %i.dm, %3
   %i.fe = shl i64 %i.dx, 4                        ; 2 uses
   %i.ff = shl i64 %.0.i.i.i.i.i.i.i, 3            ; 2 uses
   %i.fg = getelementptr i8, ptr %i.dl, i64 %i.fd
@@ -488,17 +486,16 @@ vector.memcheck245:                               ; preds = %.lr.ph.i17.i.i.i.i.
   %scevgep246 = getelementptr i8, ptr %i.fh, i64 %i.ff
   %scevgep247 = getelementptr i8, ptr %i.dl, i64 8
   %i.fi = add i64 %i.dm, 1
-  %i.fj = mul i64 %7, %i.fi
+  %i.fj = mul i64 %3, %i.fi
   %scevgep248 = getelementptr i8, ptr %scevgep247, i64 %i.fj
   %i.fk = mul i64 %i.db, %i.dm                    ; 2 uses
-  %11 = getelementptr i8, ptr %i.dl, i64 %i.fk
-  %i.fl = getelementptr i8, ptr %11, i64 %i.fe
-  %scevgep249.a = getelementptr i8, ptr %i.fl, i64 %i.ff
-  %i.fm = getelementptr i8, ptr %i.dl, i64 %3
-  %i.fn = getelementptr i8, ptr %i.fm, i64 %6
+  %i.fl = getelementptr i8, ptr %i.dl, i64 %i.fk
+  %scevgep249.a = getelementptr i8, ptr %i.fl, i64 %i.fe
+  %i.fm = getelementptr i8, ptr %scevgep249.a, i64 %i.ff
+  %i.fn = getelementptr i8, ptr %i.dl, i64 %5
   %scevgep250 = getelementptr i8, ptr %i.fn, i64 %i.fk
   %bound0251 = icmp ult ptr %scevgep246, %scevgep250
-  %bound1252 = icmp ult ptr %scevgep249.a, %scevgep248
+  %bound1252 = icmp ult ptr %i.fm, %scevgep248
   %found.conflict253 = and i1 %bound0251, %bound1252
   br i1 %found.conflict253, label %.lr.ph.i17.i.i.i.i.i.i.preheader292, label %vector.ph256
 
@@ -889,7 +886,7 @@ _ZN5Eigen8internal13first_alignedILi16EdlEET1_PKT0_S2_.exit.i.i.i.i.i.i36: ; pre
   br i1 %min.iters.check207, label %.lr.ph.i.i.i.i.i.i.i45.preheader290, label %vector.memcheck200
 
 vector.memcheck200:                               ; preds = %.lr.ph.i.i.i.i.i.i.i45.preheader
-  %i.lr = mul i64 %i.lb, %8
+  %i.lr = mul i64 %i.lb, %i.dk
   %i.ls = shl i64 %.0.i.i.i.i.i.i.i37, 3          ; 2 uses
   %i.lt = getelementptr i8, ptr %i.la, i64 %i.lr
   %scevgep201 = getelementptr i8, ptr %i.lt, i64 %i.ls
@@ -983,7 +980,7 @@ _ZN5Eigen8internal31unaligned_dense_assignment_loopILb0EE3runINS0_31generic_dens
   br i1 %min.iters.check188, label %.lr.ph.i17.i.i.i.i.i.i40.preheader289, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i17.i.i.i.i.i.i40.preheader
-  %i.mu = mul i64 %i.lb, %10
+  %i.mu = mul i64 %i.lb, %6
   %i.mv = shl i64 %i.ln, 4                        ; 2 uses
   %i.mw = shl i64 %.0.i.i.i.i.i.i.i37, 3          ; 2 uses
   %i.mx = getelementptr i8, ptr %i.la, i64 %i.mu
@@ -991,17 +988,16 @@ vector.memcheck:                                  ; preds = %.lr.ph.i17.i.i.i.i.
   %scevgep = getelementptr i8, ptr %i.my, i64 %i.mw
   %scevgep183 = getelementptr i8, ptr %i.la, i64 8
   %i.mz = add i64 %i.lb, 1
-  %i.na = mul i64 %10, %i.mz
+  %i.na = mul i64 %6, %i.mz
   %scevgep184 = getelementptr i8, ptr %scevgep183, i64 %i.na
   %i.nb = mul i64 %i.cz, %i.lb                    ; 2 uses
-  %12 = getelementptr i8, ptr %i.la, i64 %i.nb
-  %i.nc = getelementptr i8, ptr %12, i64 %i.mv
-  %scevgep185.a = getelementptr i8, ptr %i.nc, i64 %i.mw
-  %i.nd = getelementptr i8, ptr %i.la, i64 %3
-  %i.ne = getelementptr i8, ptr %i.nd, i64 %9
+  %i.nc = getelementptr i8, ptr %i.la, i64 %i.nb
+  %scevgep185.a = getelementptr i8, ptr %i.nc, i64 %i.mv
+  %i.nd = getelementptr i8, ptr %scevgep185.a, i64 %i.mw
+  %i.ne = getelementptr i8, ptr %i.la, i64 %8
   %scevgep186 = getelementptr i8, ptr %i.ne, i64 %i.nb
   %bound0 = icmp ult ptr %scevgep, %scevgep186
-  %bound1 = icmp ult ptr %scevgep185.a, %scevgep184
+  %bound1 = icmp ult ptr %i.nd, %scevgep184
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %.lr.ph.i17.i.i.i.i.i.i40.preheader289, label %vector.ph189
 
@@ -1404,7 +1400,7 @@ _ZN5Eigen8internal13first_alignedILi16EdlEET1_PKT0_S2_.exit: ; preds = %bb.a
 bb.c:                                             ; preds = %.lr.ph52, %._crit_edge
   %.03451 = phi i64 [ 0, %.lr.ph52 ], [ %i.fg, %._crit_edge ] ; 8 uses
   %.03550 = phi i64 [ %i.ca, %.lr.ph52 ], [ %.sroa.speculated, %._crit_edge ] ; 7 uses
-  %i.cd = shl i64 %.03451, 3                      ; 2 uses
+  %i.cd = shl nuw nsw i64 %.03451, 3              ; 2 uses
   %i.ce = sub i64 %i.bp, %.03550                  ; 3 uses
   %i.cf = and i64 %i.ce, -2                       ; 2 uses
   %i.cg = add nsw i64 %i.cf, %.03550              ; 6 uses

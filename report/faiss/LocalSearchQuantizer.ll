@@ -205,16 +205,14 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not, label %._crit_edge79, label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph78, %.loopexit58
-  %i.o = load i64, ptr %i.a, align 8, !tbaa !63   ; 3 uses
+  %i.o = load i64, ptr %i.a, align 8, !tbaa !63   ; 2 uses
   %i.p = load i64, ptr %i.b, align 8, !tbaa !63, !llvm.access.group !197
   %.not4871 = icmp sgt i64 %i.o, %i.p
   br i1 %.not4871, label %.loopexit58, label %.lr.ph75
 
 .lr.ph75:                                         ; preds = %bb.c, %_ZNSt6vectorIfSaIfEED2Ev.exit
-  %indvar = phi i64 [ %indvar.next, %_ZNSt6vectorIfSaIfEED2Ev.exit ], [ 0, %bb.c ] ; 2 uses
-  %.072 = phi i64 [ %i.ag, %_ZNSt6vectorIfSaIfEED2Ev.exit ], [ %i.o, %bb.c ] ; 5 uses
-  %8 = add i64 %i.o, %indvar
-  %i.q = shl i64 %8, 2
+  %.072 = phi i64 [ %i.ag, %_ZNSt6vectorIfSaIfEED2Ev.exit ], [ %i.o, %bb.c ] ; 6 uses
+  %i.q = shl i64 %.072, 2
   %i.r = load i64, ptr %i.l, align 8, !tbaa !56, !llvm.access.group !197 ; 5 uses
   %i.s = icmp ugt i64 %i.r, 2305843009213693951
   br i1 %i.s, label %bb.d, label %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i
@@ -280,10 +278,9 @@ bb.f:                                             ; preds = %._crit_edge70
   br label %_ZNSt6vectorIfSaIfEED2Ev.exit
 
 _ZNSt6vectorIfSaIfEED2Ev.exit:                    ; preds = %._crit_edge70, %bb.f
-  %i.ag = add nsw i64 %.072, 1
+  %i.ag = add i64 %.072, 1
   %i.ah = load i64, ptr %i.b, align 8, !tbaa !63, !llvm.access.group !197
   %.not48.not = icmp slt i64 %.072, %i.ah
-  %indvar.next = add i64 %indvar, 1
   br i1 %.not48.not, label %.lr.ph75, label %.loopexit58, !llvm.loop !198
 
 ._crit_edge.loopexit:                             ; preds = %_ZN5faiss24HeapWithBucketsCMaxFloatILj16ELj1ELNS_9SIMDLevelE0EE4addnEjPKfjPfPi.exit

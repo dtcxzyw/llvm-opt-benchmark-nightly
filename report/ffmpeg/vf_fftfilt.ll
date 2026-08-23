@@ -205,10 +205,9 @@ bb.b:                                             ; preds = %.lr.ph, %._crit_edg
   %i.bj = shl nuw nsw i64 %wide.trip.count78, 2
   %i.bk = add nsw i64 %i.bj, -4
   %i.bl = mul i64 %i.bk, %i.aw
-  %i.bm = ashr exact i64 %sext100, 30             ; 2 uses
-  %4 = getelementptr i8, ptr %i.aj, i64 %i.bl
-  %i.bn = getelementptr i8, ptr %4, i64 %i.bm
-  %i.bo = getelementptr i8, ptr %i.aj, i64 %i.bm
+  %i.bm = ashr exact i64 %sext100, 30
+  %i.bn = getelementptr i8, ptr %i.aj, i64 %i.bl
+  %i.bo = getelementptr i8, ptr %i.bn, i64 %i.bm
   %min.iters.check = icmp ult i32 %i.ah, 72
   %i.bp = icmp slt i64 %i.ba, 0                   ; 2 uses
   %i.bq = select i1 %i.bp, i64 %i.bb, i64 %i.ba
@@ -225,10 +224,11 @@ bb.b:                                             ; preds = %.lr.ph, %._crit_edg
 
 .preheader.us:                                    ; preds = %.preheader.us.preheader, %copy_rev.exit.us
   %indvar = phi i64 [ 0, %.preheader.us.preheader ], [ %indvar.next, %copy_rev.exit.us ] ; 2 uses
-  %indvars.iv80 = phi i64 [ %i.ax, %.preheader.us.preheader ], [ %indvars.iv.next81, %copy_rev.exit.us ] ; 3 uses
-  %i.bs = shl i64 %indvar, 2                      ; 2 uses
-  %scevgep110 = getelementptr i8, ptr %i.bn, i64 %i.bs ; 4 uses
-  %scevgep111 = getelementptr i8, ptr %i.bo, i64 %i.bs ; 4 uses
+  %indvars.iv80 = phi i64 [ %i.ax, %.preheader.us.preheader ], [ %indvars.iv.next81, %copy_rev.exit.us ] ; 4 uses
+  %i.bs = shl i64 %indvar, 2
+  %scevgep110 = getelementptr i8, ptr %i.bo, i64 %i.bs ; 4 uses
+  %4 = shl i64 %indvars.iv80, 2
+  %scevgep111 = getelementptr i8, ptr %i.aj, i64 %4 ; 4 uses
   %i.bt = icmp ult ptr %scevgep110, %scevgep111
   %umin = select i1 %i.bt, ptr %scevgep110, ptr %scevgep111
   %i.bu = icmp ugt ptr %scevgep110, %scevgep111
@@ -631,7 +631,7 @@ bb.b:                                             ; preds = %.lr.ph70, %._crit_e
   %i.ah = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %indvars.iv82
   %i.ai = getelementptr inbounds nuw [8 x i8], ptr %i.p, i64 %indvars.iv82
   %i.aj = getelementptr inbounds nuw [8 x i8], ptr %i.q, i64 %indvars.iv82
-  %sext = shl i64 %i.aa, 32                       ; 2 uses
+  %sext = shl i64 %i.aa, 32
   %i.ak = ashr exact i64 %sext, 32
   br label %bb.c
 
@@ -652,7 +652,6 @@ bb.b:                                             ; preds = %.lr.ph70, %._crit_e
   %wide.trip.count80 = ashr exact i64 %sext89, 32
   %wide.trip.count = zext nneg i32 %i.v to i64    ; 7 uses
   %i.at = shl nuw nsw i64 %wide.trip.count, 2
-  %4 = ashr exact i64 %sext, 30
   %min.iters.check = icmp ult i32 %i.v, 4
   %n.vec = and i64 %wide.trip.count, 2147483644   ; 3 uses
   %cmp.n = icmp eq i64 %n.vec, %wide.trip.count
@@ -685,8 +684,7 @@ bb.c:                                             ; preds = %.lr.ph, %bb.c
   br i1 %i.bf, label %bb.b, label %._crit_edge71, !llvm.loop !128
 
 .lr.ph64:                                         ; preds = %.lr.ph64.preheader, %._crit_edge
-  %indvar = phi i64 [ 0, %.lr.ph64.preheader ], [ %indvar.next, %._crit_edge ] ; 2 uses
-  %indvars.iv77 = phi i64 [ %i.as, %.lr.ph64.preheader ], [ %indvars.iv.next78, %._crit_edge ] ; 3 uses
+  %indvars.iv77 = phi i64 [ %i.as, %.lr.ph64.preheader ], [ %indvars.iv.next78, %._crit_edge ] ; 4 uses
   %i.bg = load i64, ptr %i.al, align 8, !tbaa !56
   %i.bh = load i64, ptr %i.am, align 8, !tbaa !56
   %i.bi = mul i64 %i.bh, %i.bg
@@ -704,12 +702,11 @@ bb.c:                                             ; preds = %.lr.ph, %bb.c
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph64
-  %i.bu = shl i64 %indvar, 2
-  %5 = add i64 %4, %i.bu
+  %i.bu = shl i64 %indvars.iv77, 2
   %scevgep = getelementptr i8, ptr %i.bp, i64 %wide.trip.count
   %scevgep90 = getelementptr i8, ptr %scevgep, i64 %i.bs
   %scevgep91 = getelementptr i8, ptr %i.bl, i64 %i.at
-  %i.bv = mul i64 %i.bm, %5
+  %i.bv = mul i64 %i.bm, %i.bu
   %scevgep92 = getelementptr i8, ptr %scevgep91, i64 %i.bv
   %bound0 = icmp ult ptr %i.bt, %scevgep92
   %bound1 = icmp ult ptr %i.bo, %scevgep90
@@ -770,7 +767,6 @@ scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %sc
 ._crit_edge:                                      ; preds = %scalar.ph.prol.loopexit, %scalar.ph, %middle.block
   %indvars.iv.next78 = add nsw i64 %indvars.iv77, 1 ; 2 uses
   %exitcond81.not = icmp eq i64 %indvars.iv.next78, %wide.trip.count80
-  %indvar.next = add i64 %indvar, 1
   br i1 %exitcond81.not, label %._crit_edge67.split, label %.lr.ph64, !llvm.loop !135
 
 scalar.ph:                                        ; preds = %scalar.ph.prol.loopexit, %scalar.ph

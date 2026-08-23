@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   %i.i = load i32, ptr %i.b, align 4, !tbaa !92
   %i.j = call i32 @llvm.smin.i32(i32 %i.i, i32 %i.g) ; 2 uses
   store i32 %i.j, ptr %i.b, align 4, !tbaa !92
-  %i.k = load i32, ptr %i.a, align 4, !tbaa !92   ; 3 uses
+  %i.k = load i32, ptr %i.a, align 4, !tbaa !92   ; 2 uses
   %.not110 = icmp sgt i32 %i.k, %i.j
   br i1 %.not110, label %._crit_edge, label %.lr.ph112
 
@@ -228,10 +228,8 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph112, %_ZN4ncnn3MatD2Ev.exit
-  %indvar = phi i32 [ 0, %.lr.ph112 ], [ %indvar.next, %_ZN4ncnn3MatD2Ev.exit ] ; 2 uses
-  %.033111 = phi i32 [ %i.k, %.lr.ph112 ], [ %i.ao, %_ZN4ncnn3MatD2Ev.exit ] ; 3 uses
-  %12 = add i32 %i.k, %indvar
-  %i.aa = mul i32 %12, 9
+  %.033111 = phi i32 [ %i.k, %.lr.ph112 ], [ %i.ao, %_ZN4ncnn3MatD2Ev.exit ] ; 4 uses
+  %i.aa = mul i32 %.033111, 9
   %i.ab = load i32, ptr %3, align 4, !tbaa !92    ; 2 uses
   %i.ac = mul nsw i32 %i.ab, %.033111             ; 3 uses
   %i.ad = invoke noundef i32 @_ZN4ncnn18get_omp_thread_numEv()
@@ -255,10 +253,9 @@ bb.c:                                             ; preds = %.lr.ph112, %_ZN4ncn
   br label %.lr.ph
 
 _ZN4ncnn3MatD2Ev.exit:                            ; preds = %.noexc, %.noexc34
-  %i.ao = add nsw i32 %.033111, 1
+  %i.ao = add i32 %.033111, 1
   %i.ap = load i32, ptr %i.b, align 4, !tbaa !92
   %.not.not = icmp slt i32 %.033111, %i.ap
-  %indvar.next = add i32 %indvar, 1
   br i1 %.not.not, label %bb.c, label %._crit_edge
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.noexc

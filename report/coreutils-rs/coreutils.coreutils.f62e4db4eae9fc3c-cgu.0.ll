@@ -205,7 +205,7 @@ bb.ab:                                            ; preds = %_RNvXsj_NtCs7tKScEo
   br label %_RNvXs_NtNtCs7tKScEop1B6_5alloc3vec21spec_from_iter_nestedINtB6_3VecNtNtCs3ewIIPtxFMv_10rayon_core8registry10ThreadInfoEINtB4_18SpecFromIterNestedB13_INtNtNtNtCs6JMX4GRUq9U_4core4iter8adapters3map3MapINtNtB6_9into_iter8IntoIterINtNtCs9kq6bdmb9x3_15crossbeam_deque5deque7StealerNtNtB17_3job6JobRefEENvMs5_B15_B13_3newEE9from_iterCsl8pJiQOn4hA_9coreutils.exit.i.i.i
 
 .lr.ph.i.i.i.i.i.i.i.i:                           ; preds = %bb.ab, %_RNvXsj_NtCs7tKScEop1B6_5alloc3vecINtB5_3VecINtNtCs9kq6bdmb9x3_15crossbeam_deque5deque6WorkerNtNtCs3ewIIPtxFMv_10rayon_core3job6JobRefEEINtNtNtNtCs6JMX4GRUq9U_4core4iter6traits7collect6ExtendBF_E14extend_reserveCsl8pJiQOn4hA_9coreutils.exit.i.i.i.i.i.i
-  %.promoted9.i.i.i.i.i.i.i.i = phi i64 [ %.promoted9.i.i.i.i.pre.i.i.i.i, %bb.ab ], [ %i.dj, %_RNvXsj_NtCs7tKScEop1B6_5alloc3vecINtB5_3VecINtNtCs9kq6bdmb9x3_15crossbeam_deque5deque6WorkerNtNtCs3ewIIPtxFMv_10rayon_core3job6JobRefEEINtNtNtNtCs6JMX4GRUq9U_4core4iter6traits7collect6ExtendBF_E14extend_reserveCsl8pJiQOn4hA_9coreutils.exit.i.i.i.i.i.i ] ; 2 uses
+  %.promoted9.i.i.i.i.i.i.i.i = phi i64 [ %.promoted9.i.i.i.i.pre.i.i.i.i, %bb.ab ], [ %i.dj, %_RNvXsj_NtCs7tKScEop1B6_5alloc3vecINtB5_3VecINtNtCs9kq6bdmb9x3_15crossbeam_deque5deque6WorkerNtNtCs3ewIIPtxFMv_10rayon_core3job6JobRefEEINtNtNtNtCs6JMX4GRUq9U_4core4iter6traits7collect6ExtendBF_E14extend_reserveCsl8pJiQOn4hA_9coreutils.exit.i.i.i.i.i.i ]
   %i.dn = load ptr, ptr %.sroa.42.0..sroa_idx.i.i.i.i.i, align 8, !alias.scope !32730, !noalias !32737, !nonnull !12 ; 3 uses
   %i.do = load ptr, ptr %.sroa.2.0..sroa_idx.i.i.i.i.i, align 8, !alias.scope !32730, !noalias !32737, !nonnull !12 ; 4 uses
   %.promoted.i.i.i.i.i.i.i.i = load i64, ptr %.sroa.53.0..sroa_idx.i.i.i.i.i, align 8, !alias.scope !32730, !noalias !32737
@@ -216,9 +216,9 @@ bb.ab:                                            ; preds = %_RNvXsj_NtCs7tKScEo
   br label %bb.ac
 
 bb.ac:                                            ; preds = %_RNCINvMs4_NtCs3ewIIPtxFMv_10rayon_core8registryNtB8_8Registry3newNtB8_12DefaultSpawnE0Csl8pJiQOn4hA_9coreutils.exit.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i.i
-  %i.dt = phi i64 [ %.promoted9.i.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i.i ], [ %i.eo, %_RNCINvMs4_NtCs3ewIIPtxFMv_10rayon_core8registryNtB8_8Registry3newNtB8_12DefaultSpawnE0Csl8pJiQOn4hA_9coreutils.exit.i.i.i.i ] ; 6 uses
+  %i.dt = phi i64 [ %.promoted9.i.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i.i ], [ %i.eo, %_RNCINvMs4_NtCs3ewIIPtxFMv_10rayon_core8registryNtB8_8Registry3newNtB8_12DefaultSpawnE0Csl8pJiQOn4hA_9coreutils.exit.i.i.i.i ] ; 9 uses
   %i.du = phi i64 [ %.promoted.i.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i.i ], [ %i.ek, %_RNCINvMs4_NtCs3ewIIPtxFMv_10rayon_core8registryNtB8_8Registry3newNtB8_12DefaultSpawnE0Csl8pJiQOn4hA_9coreutils.exit.i.i.i.i ] ; 3 uses
-  %.sroa.0.08.i.i.i.i.i.i.i.i = phi i64 [ 0, %.lr.ph.i.i.i.i.i.i.i.i ], [ %i.dv, %_RNCINvMs4_NtCs3ewIIPtxFMv_10rayon_core8registryNtB8_8Registry3newNtB8_12DefaultSpawnE0Csl8pJiQOn4hA_9coreutils.exit.i.i.i.i ] ; 2 uses
+  %.sroa.0.08.i.i.i.i.i.i.i.i = phi i64 [ 0, %.lr.ph.i.i.i.i.i.i.i.i ], [ %i.dv, %_RNCINvMs4_NtCs3ewIIPtxFMv_10rayon_core8registryNtB8_8Registry3newNtB8_12DefaultSpawnE0Csl8pJiQOn4hA_9coreutils.exit.i.i.i.i ]
   %i.dv = add i64 %.sroa.0.08.i.i.i.i.i.i.i.i, 1  ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.01.i.i.i.i)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !32710
@@ -421,14 +421,12 @@ _RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VecNtNtCs3ewIIPtxFMv_10rayon_core8regist
   %.sroa.4.0.i.i.i.i.i = phi i64 [ 0, %bb.am ], [ %i.eo, %bb.an ] ; 3 uses
   %i.fu = icmp samesign ult i64 %i.dt, %.sroa.4.0.i.i.i.i.i
   call void @llvm.assume(i1 %i.fu)
-  %2 = add i64 %.promoted9.i.i.i.i.i.i.i.i, %.sroa.0.08.i.i.i.i.i.i.i.i ; 2 uses
-  %3 = and i64 %2, 1152921504606846975            ; 2 uses
-  %i.fv = add nuw nsw i64 %3, 1                   ; 2 uses
-  %i.fw = icmp eq i64 %3, 0
+  %i.fv = add nuw nsw i64 %i.dt, 1                ; 2 uses
+  %i.fw = icmp eq i64 %i.dt, 0
   br i1 %i.fw, label %.lr.ph.i.i.i.i.i.i.i.i.i.epil.preheader, label %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VecNtNtCs3ewIIPtxFMv_10rayon_core8registry10ThreadInfoE7reserveCsl8pJiQOn4hA_9coreutils.exit.i.i.i.i.i.i.new
 
 _RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VecNtNtCs3ewIIPtxFMv_10rayon_core8registry10ThreadInfoE7reserveCsl8pJiQOn4hA_9coreutils.exit.i.i.i.i.i.i.new: ; preds = %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VecNtNtCs3ewIIPtxFMv_10rayon_core8registry10ThreadInfoE7reserveCsl8pJiQOn4hA_9coreutils.exit.i.i.i.i.i.i
-  %unroll_iter = and i64 %i.fv, 2305843009213693950
+  %unroll_iter = and i64 %i.fv, 576460752303423486
   br label %.lr.ph.i.i.i.i.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i.i.i.i.i:                         ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i, %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VecNtNtCs3ewIIPtxFMv_10rayon_core8registry10ThreadInfoE7reserveCsl8pJiQOn4hA_9coreutils.exit.i.i.i.i.i.i.new
@@ -470,7 +468,7 @@ _RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VecNtNtCs3ewIIPtxFMv_10rayon_core8regist
   br i1 %niter.ncmp.1, label %._crit_edge.i.i.i.i.i.i.i.i.i.unr-lcssa, label %.lr.ph.i.i.i.i.i.i.i.i.i
 
 ._crit_edge.i.i.i.i.i.i.i.i.i.unr-lcssa:          ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i
-  %i.gp = and i64 %2, 1
+  %i.gp = and i64 %i.dt, 1
   %lcmp.mod.not.not = icmp eq i64 %i.gp, 0
   br i1 %lcmp.mod.not.not, label %.lr.ph.i.i.i.i.i.i.i.i.i.epil.preheader, label %._crit_edge.i.i.i.i.i.i.i.i.i
 

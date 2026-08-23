@@ -203,10 +203,9 @@ init_array.exit:                                  ; preds = %middle.block
   br label %.lver.check
 
 .lver.check:                                      ; preds = %bb.h, %.preheader154.i
-  %indvar = phi i64 [ %indvar.next, %bb.h ], [ 0, %.preheader154.i ] ; 2 uses
-  %indvars.iv166.i = phi i64 [ %indvars.iv.next167.i, %bb.h ], [ 1, %.preheader154.i ] ; 10 uses
-  %i.ar = mul nuw nsw i64 %indvar, 8000
-  %i.as = add nuw i64 %i.ar, 15992                ; 2 uses
+  %indvars.iv166.i = phi i64 [ 1, %.preheader154.i ], [ %indvars.iv.next167.i, %bb.h ] ; 11 uses
+  %i.ar = mul nuw nsw i64 %indvars.iv166.i, 8000
+  %i.as = add nuw nsw i64 %i.ar, 7992             ; 2 uses
   %scevgep = getelementptr i8, ptr %i.r, i64 %i.as
   %scevgep31 = getelementptr i8, ptr %i.x, i64 %i.as
   %i.at = getelementptr inbounds nuw [8 x i8], ptr %i.l, i64 %indvars.iv166.i ; 2 uses
@@ -325,17 +324,15 @@ bb.g:                                             ; preds = %bb.g, %.loopexit
 bb.h:                                             ; preds = %bb.g
   %indvars.iv.next167.i = add nuw nsw i64 %indvars.iv166.i, 1 ; 2 uses
   %exitcond169.not.i = icmp eq i64 %indvars.iv.next167.i, 999
-  %indvar.next = add i64 %indvar, 1
   br i1 %exitcond169.not.i, label %.lver.check42, label %.lver.check, !llvm.loop !21
 
 .lver.check42:                                    ; preds = %bb.h, %bb.k
-  %indvar35 = phi i64 [ %indvar.next36, %bb.k ], [ 0, %bb.h ] ; 3 uses
-  %indvars.iv177.i = phi i64 [ %indvars.iv.next178.i, %bb.k ], [ 1, %bb.h ] ; 5 uses
-  %i.dh = mul nuw nsw i64 %indvar35, 8000
+  %indvars.iv177.i = phi i64 [ %indvars.iv.next178.i, %bb.k ], [ 1, %bb.h ] ; 7 uses
+  %i.dh = mul nuw nsw i64 %indvars.iv177.i, 8000
   %i.di = getelementptr i8, ptr %i.f, i64 %i.dh
-  %scevgep50 = getelementptr i8, ptr %i.di, i64 15992
-  %i.dj = mul nuw nsw i64 %indvar35, 8000
-  %i.dk = add nuw i64 %i.dj, 15992                ; 2 uses
+  %scevgep50 = getelementptr i8, ptr %i.di, i64 7992
+  %i.dj = mul nuw nsw i64 %indvars.iv177.i, 8000
+  %i.dk = add nuw nsw i64 %i.dj, 7992             ; 2 uses
   %scevgep37 = getelementptr i8, ptr %i.r, i64 %i.dk
   %scevgep38 = getelementptr i8, ptr %i.x, i64 %i.dk
   %i.dl = getelementptr inbounds nuw [8000 x i8], ptr %i.f, i64 %indvars.iv177.i ; 5 uses
@@ -452,7 +449,6 @@ bb.j:                                             ; preds = %bb.j, %.loopexit44
 bb.k:                                             ; preds = %bb.j
   %indvars.iv.next178.i = add nuw nsw i64 %indvars.iv177.i, 1 ; 2 uses
   %exitcond180.not.i = icmp eq i64 %indvars.iv.next178.i, 999
-  %indvar.next36 = add i64 %indvar35, 1
   br i1 %exitcond180.not.i, label %bb.l, label %.lver.check42, !llvm.loop !24
 
 bb.l:                                             ; preds = %bb.k

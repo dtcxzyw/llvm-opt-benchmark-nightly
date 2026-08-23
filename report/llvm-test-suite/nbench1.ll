@@ -205,8 +205,8 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %._crit_edge.i, %bb.a
-  %indvars.iv = phi i64 [ %indvars.iv.next, %._crit_edge.i ], [ 1, %bb.a ] ; 6 uses
-  %.028 = phi i64 [ %i.u, %._crit_edge.i ], [ 0, %bb.a ] ; 19 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %._crit_edge.i ], [ 1, %bb.a ] ; 7 uses
+  %.028 = phi i64 [ %i.u, %._crit_edge.i ], [ 0, %bb.a ] ; 18 uses
   %.063.i = phi i64 [ %.164.lcssa.i, %._crit_edge.i ], [ 0, %bb.a ] ; 4 uses
   %i.e = tail call i32 @abs_randwc(i32 noundef 76) #11
   %i.f = trunc i32 %i.e to i8
@@ -406,8 +406,7 @@ bb.d:                                             ; preds = %bb.c, %._crit_edge8
   br i1 %i.v, label %.lr.ph91.i.preheader.preheader, label %LoadStringArray.exit
 
 .lr.ph91.i.preheader.preheader:                   ; preds = %.preheader.i
-  %i.bk = shl i64 %.028, 3
-  %3 = add i64 %i.bk, 8
+  %i.bk = shl i64 %indvars.iv, 3
   %min.iters.check72 = icmp ult i64 %indvars.iv, 10
   %i.bl = and i64 %.028, 4294967295
   %i.bm = icmp eq i64 %i.bl, 4294967295
@@ -466,7 +465,7 @@ bb.d:                                             ; preds = %bb.c, %._crit_edge8
 
 vector.scevcheck67:                               ; preds = %.lr.ph91.i.preheader
   %i.cs = add i64 %indvar69, 1
-  %i.ct = mul i64 %3, %i.cs
+  %i.ct = mul i64 %i.bk, %i.cs
   %i.cu = add i64 %i.ct, -1
   %diff.check71 = icmp ult i64 %i.cu, 31
   %or.cond139 = select i1 %i.bo, i1 true, i1 %diff.check71
@@ -869,12 +868,11 @@ LoadAssign.exit.i:                                ; preds = %bb.c
   br i1 %i.i, label %.preheader.i, label %LoadAssignArrayWithRand.exit
 
 .preheader.i:                                     ; preds = %LoadAssign.exit.i, %CopyToAssign.exit.i
-  %indvar = phi i64 [ %indvar.next, %CopyToAssign.exit.i ], [ 0, %LoadAssign.exit.i ] ; 2 uses
-  %.014.i = phi i64 [ %i.dx, %CopyToAssign.exit.i ], [ 1, %LoadAssign.exit.i ]
+  %.014.i = phi i64 [ %i.dx, %CopyToAssign.exit.i ], [ 1, %LoadAssign.exit.i ] ; 2 uses
   %.sroa.0.013.i = phi ptr [ %i.k, %CopyToAssign.exit.i ], [ %0, %LoadAssign.exit.i ]
-  %i.j = mul i64 %indvar, 81608
+  %i.j = mul i64 %.014.i, 81608
   %i.k = getelementptr inbounds nuw i8, ptr %.sroa.0.013.i, i64 81608 ; 2 uses
-  %i.l = add i64 %i.j, 81576
+  %i.l = add i64 %i.j, -32
   %diff.check = icmp ult i64 %i.l, -31            ; 2 uses
   br label %.preheader.i9.i
 
@@ -1137,7 +1135,6 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
 CopyToAssign.exit.i:                              ; preds = %.unr-lcssa
   %i.dx = add nuw i64 %.014.i, 1                  ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.dx, %1
-  %indvar.next = add i64 %indvar, 1
   br i1 %exitcond.not.i, label %LoadAssignArrayWithRand.exit.thread, label %.preheader.i, !llvm.loop !87
 
 LoadAssignArrayWithRand.exit.thread:              ; preds = %CopyToAssign.exit.i
