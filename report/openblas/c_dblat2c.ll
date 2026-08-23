@@ -204,7 +204,7 @@ begin_hunk_0_@main:bb.a
   call void @llvm.masked.scatter.v4f64.v4p0(<4 x double> %i.lm, <4 x ptr> align 8 %wide.gep346, <4 x i1> splat (i1 true)), !tbaa !22
   %i.ln = sub <4 x i32> splat (i32 32), %vec.ind314
   %i.lo = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.ln, <4 x i32> splat (i32 -1))
-  %i.lp = add nuw nsw <4 x i32> %i.lo, splat (i32 1)
+  %i.lp = add nsw <4 x i32> %i.lo, splat (i32 1)
   %i.lq = uitofp nneg <4 x i32> %i.lp to <4 x double>
   %wide.gep347 = getelementptr i8, <4 x ptr> %wide.gep, i64 -272
   call void @llvm.masked.scatter.v4f64.v4p0(<4 x double> %i.lq, <4 x ptr> align 8 %wide.gep347, <4 x i1> splat (i1 true)), !tbaa !22

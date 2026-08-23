@@ -205,7 +205,7 @@ bb.aj:                                            ; preds = %_ZN4bssl5ArrayIiEix
   br i1 %.not28.i, label %.preheader.i, label %.lr.ph61.i, !llvm.loop !72
 
 _ZN4bssl5ArrayIiEixEm.exit41.i:                   ; preds = %bb.al, %.preheader.i
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.al ], [ %i.cp, %.preheader.i ] ; 4 uses
+  %indvars.iv = phi i64 [ %i.cp, %.preheader.i ], [ %indvars.iv.next, %bb.al ] ; 4 uses
   %i.dh = getelementptr inbounds nuw [4 x i8], ptr %i.ck, i64 %indvars.iv
   %i.di = load i32, ptr %i.dh, align 4, !tbaa !68
   %i.dj = icmp sgt i32 %i.di, 0
