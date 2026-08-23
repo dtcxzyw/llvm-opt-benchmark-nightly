@@ -205,7 +205,7 @@ bb.ae:                                            ; preds = %.noexc86
   %.sroa.4.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.j, i64 16
   store i64 2, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !noalias !2839
   %.sroa.5.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.j, i64 24 ; 2 uses
-  %.sroa.6.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.j, i64 32 ; 7 uses
+  %.sroa.6.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.j, i64 32 ; 6 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !2842)
   call void @llvm.experimental.noalias.scope.decl(metadata !2845)
   %.idx.i.i.i.i = mul nuw nsw i64 %.val75, 72
@@ -608,7 +608,6 @@ _RINvNtCscvBHLZPbXnS_10serde_json3ser18format_escaped_strQINtNtCscdodAO9FK5_5all
   br i1 %i.hx, label %.lr.ph.i.i15.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
 
 .lr.ph.i.i15.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i: ; preds = %.noexc80.i
-  store i8 1, ptr %.sroa.6.0..sroa_idx.i.i, align 8, !noalias !2839
   invoke void @_RNvMs1_NtCscdodAO9FK5_5alloc3vecINtB5_3VechE17extend_from_sliceCs8EvorvD8vmS_4ruff(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.l, ptr noalias noundef nonnull readonly captures(address, read_provenance) @80, i64 noundef range(i64 0, -9223372036854775808) 1)
           to label %.noexc81.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.i, !noalias !2836
 

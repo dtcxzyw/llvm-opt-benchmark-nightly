@@ -204,9 +204,8 @@ _ZNK4absl12lts_2025051218debugging_internal12_GLOBAL__N_115ComplexityGuard12IsTo
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc void @_ZN4absl12lts_2025051218debugging_internalL18ParseDiscriminatorEPNS1_5StateE(ptr nofree noundef captures(none) %0) unnamed_addr #7 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 8 uses
-  %i.b = load i32, ptr %i.a, align 4, !tbaa !17   ; 7 uses
-  %1 = add nsw i32 %i.b, 1
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 7 uses
+  %i.b = load i32, ptr %i.a, align 4, !tbaa !17   ; 6 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 9 uses
   %i.d = load i32, ptr %i.c, align 8, !tbaa !15   ; 15 uses
   %i.e = add nsw i32 %i.d, 1
@@ -249,7 +248,7 @@ bb.d:                                             ; preds = %bb.c
 .thread40:                                        ; preds = %bb.d
   %i.t = add nuw nsw i32 %i.d, 4
   store i32 %i.t, ptr %i.c, align 8, !tbaa !15
-  br label %.thread30
+  br label %.thread33
 
 bb.e:                                             ; preds = %bb.d
   %i.u = sext i32 %i.q to i64
@@ -268,18 +267,14 @@ bb.f:                                             ; preds = %bb.e
   %i.y = add nsw i32 %i.d, 4
   store i32 %i.y, ptr %i.c, align 8, !tbaa !15
   %i.z = icmp eq i32 %i.d, 131069
-  br i1 %i.z, label %.thread30, label %bb.g
+  br i1 %i.z, label %.thread33, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
   %i.aa = sext i32 %i.q to i64
   %i.ab = getelementptr inbounds i8, ptr %.val6.i, i64 %i.aa
   %i.ac = load i8, ptr %i.ab, align 1, !tbaa !7
   %i.ad = icmp eq i8 %i.ac, 95
-  br i1 %i.ad, label %bb.h, label %.thread30
-
-.thread30:                                        ; preds = %.thread40, %bb.f, %bb.g
-  store i32 %1, ptr %i.a, align 4, !tbaa !17
-  br label %.thread33
+  br i1 %i.ad, label %bb.h, label %.thread33
 
 bb.h:                                             ; preds = %bb.g
   %i.ae = add nsw i32 %.val7.i, 2                 ; 4 uses
@@ -354,7 +349,7 @@ bb.n:                                             ; preds = %bb.m
   store i32 %i.bk, ptr %i.h, align 4, !tbaa !16
   br label %_ZNK4absl12lts_2025051218debugging_internal12_GLOBAL__N_115ComplexityGuard12IsTooComplexEv.exit.thread
 
-.thread33:                                        ; preds = %bb.m, %bb.l, %._crit_edge44.i, %bb.h, %.thread30
+.thread33:                                        ; preds = %bb.m, %bb.l, %._crit_edge44.i, %bb.h, %bb.g, %bb.f, %.thread40
   store <4 x i32> %.sroa.0.0.copyload, ptr %i.h, align 4
   br label %_ZNK4absl12lts_2025051218debugging_internal12_GLOBAL__N_115ComplexityGuard12IsTooComplexEv.exit.thread
 

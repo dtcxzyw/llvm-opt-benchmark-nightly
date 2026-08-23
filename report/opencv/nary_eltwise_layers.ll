@@ -205,9 +205,9 @@ bb.i:                                             ; preds = %bb.h
   %i.aq = load ptr, ptr %i.ap, align 8, !tbaa !2658, !nonnull !359, !align !389
   %i.ar = load ptr, ptr %i.aq, align 8, !tbaa !286
   %i.as = load i32, ptr %i.ar, align 4, !tbaa !112
-  %.fr57 = freeze i32 %i.as                       ; 7 uses
+  %.fr57 = freeze i32 %i.as                       ; 6 uses
   %i.at = load i32, ptr %1, align 4, !tbaa !368   ; 2 uses
-  %i.au = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 4 uses
+  %i.au = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 3 uses
   %i.av = load i32, ptr %i.au, align 4, !tbaa !370
   %i.aw = icmp slt i32 %i.at, %i.av
   br i1 %i.aw, label %.lr.ph46, label %.loopexit
@@ -215,33 +215,20 @@ bb.i:                                             ; preds = %bb.h
 .lr.ph46:                                         ; preds = %bb.i
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.ay = load ptr, ptr %i.ax, align 8, !tbaa !2657, !nonnull !359, !align !389
-  %i.az = load ptr, ptr %i.ay, align 8, !tbaa !286 ; 3 uses
+  %i.az = load ptr, ptr %i.ay, align 8, !tbaa !286 ; 2 uses
   %i.ba = icmp sgt i32 %.fr57, 0
   %i.bb = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.bc = load ptr, ptr %i.bb, align 8, !tbaa !2659, !nonnull !359, !align !389
-  %i.bd = load ptr, ptr %i.bc, align 8, !tbaa !286 ; 3 uses
-  %i.be = sext i32 %i.at to i64                   ; 3 uses
-  br i1 %i.ba, label %.lr.ph46.split.split.us, label %.lr.ph46.split.us
+  %i.bd = load ptr, ptr %i.bc, align 8, !tbaa !286 ; 2 uses
+  %i.be = sext i32 %i.at to i64                   ; 2 uses
+  br i1 %i.ba, label %.lr.ph46.split.split.us, label %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIiJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKiSG_E8_clESG_SG_.exit29.us.us
 
-.lr.ph46.split.us:                                ; preds = %.lr.ph46
-  %2 = icmp slt i32 %.fr57, 0
-  br i1 %2, label %.lr.ph46.split.us.split, label %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIiJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKiSG_E8_clESG_SG_.exit29.us.us
+_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIiJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKiSG_E8_clESG_SG_.exit29.us.us: ; preds = %.lr.ph46
+  %i.bf = icmp slt i32 %.fr57, 0
+  br i1 %i.bf, label %.lr.ph46.split.us.split, label %.loopexit
 
-_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIiJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKiSG_E8_clESG_SG_.exit29.us.us: ; preds = %.lr.ph46.split.us, %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIiJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKiSG_E8_clESG_SG_.exit29.us.us
-  %indvars.iv65 = phi i64 [ %indvars.iv.next66, %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIiJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKiSG_E8_clESG_SG_.exit29.us.us ], [ %i.be, %.lr.ph46.split.us ] ; 3 uses
-  %3 = getelementptr inbounds [4 x i8], ptr %i.az, i64 %indvars.iv65
-  %4 = load i32, ptr %3, align 4, !tbaa !112
-  %5 = srem i32 %4, %.fr57
-  %6 = getelementptr inbounds [4 x i8], ptr %i.bd, i64 %indvars.iv65
-  store i32 %5, ptr %6, align 4, !tbaa !112
-  %indvars.iv.next66 = add nsw i64 %indvars.iv65, 1 ; 2 uses
-  %7 = load i32, ptr %i.au, align 4, !tbaa !370
-  %8 = sext i32 %7 to i64
-  %i.bf = icmp slt i64 %indvars.iv.next66, %8
-  br i1 %i.bf, label %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIiJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKiSG_E8_clESG_SG_.exit29.us.us, label %.loopexit, !llvm.loop !2661
-
-.lr.ph46.split.us.split:                          ; preds = %.lr.ph46.split.us, %.lr.ph46.split.us.split
-  %indvars.iv68 = phi i64 [ %indvars.iv.next69, %.lr.ph46.split.us.split ], [ %i.be, %.lr.ph46.split.us ] ; 3 uses
+.lr.ph46.split.us.split:                          ; preds = %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIiJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKiSG_E8_clESG_SG_.exit29.us.us, %.lr.ph46.split.us.split
+  %indvars.iv68 = phi i64 [ %indvars.iv.next69, %.lr.ph46.split.us.split ], [ %i.be, %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIiJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKiSG_E8_clESG_SG_.exit29.us.us ] ; 3 uses
   %i.bg = getelementptr inbounds [4 x i8], ptr %i.az, i64 %indvars.iv68
   %i.bh = load i32, ptr %i.bg, align 4, !tbaa !112
   %i.bi = srem i32 %i.bh, %.fr57                  ; 2 uses
@@ -398,7 +385,7 @@ _ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIiJRSt6vectorINS_3MatESaIS4_EES7_EE
   %i.ep = icmp slt i32 %i.ei, %i.eo
   br i1 %i.ep, label %bb.p, label %.loopexit, !llvm.loop !2663
 
-.loopexit:                                        ; preds = %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIiJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKiSG_E8_clESG_SG_.exit33, %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIiJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKiSG_E8_clESG_SG_.exit29.us.us, %.lr.ph46.split.us.split, %.lr.ph46.split.split.us, %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIiJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKiSG_E8_clESG_SG_.exit, %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIiJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKiSG_E8_clESG_SG_.exit37, %bb.l, %bb.i, %bb.d, %.thread40
+.loopexit:                                        ; preds = %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIiJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKiSG_E8_clESG_SG_.exit33, %.lr.ph46.split.us.split, %.lr.ph46.split.split.us, %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIiJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKiSG_E8_clESG_SG_.exit, %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIiJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKiSG_E8_clESG_SG_.exit37, %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIiJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKiSG_E8_clESG_SG_.exit29.us.us, %bb.l, %bb.i, %bb.d, %.thread40
   ret void
 }
 
@@ -801,15 +788,15 @@ bb.i:                                             ; preds = %bb.h
   %i.aw = load i64, ptr %i.av, align 8, !tbaa !45
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.ay = load ptr, ptr %i.ax, align 8, !tbaa !3437, !nonnull !359, !align !389
-  %i.az = load ptr, ptr %i.ay, align 8, !tbaa !288 ; 9 uses
+  %i.az = load ptr, ptr %i.ay, align 8, !tbaa !288 ; 6 uses
   %.fr = freeze i64 %i.aw
-  %i.ba = trunc i64 %.fr to i32                   ; 17 uses
+  %i.ba = trunc i64 %.fr to i32                   ; 14 uses
   %i.bb = icmp sgt i32 %i.ba, 0
   %i.bc = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.bd = load ptr, ptr %i.bc, align 8, !tbaa !3439, !nonnull !359, !align !389
-  %i.be = load ptr, ptr %i.bd, align 8, !tbaa !288 ; 9 uses
-  %i.bf = sext i32 %i.ap to i64                   ; 18 uses
-  %wide.trip.count78 = sext i32 %i.ar to i64      ; 9 uses
+  %i.be = load ptr, ptr %i.bd, align 8, !tbaa !288 ; 6 uses
+  %i.bf = sext i32 %i.ap to i64                   ; 12 uses
+  %wide.trip.count78 = sext i32 %i.ar to i64      ; 6 uses
   br i1 %i.bb, label %.lr.ph46.split.split.us.preheader, label %.lr.ph46.split.us
 
 .lr.ph46.split.split.us.preheader:                ; preds = %.lr.ph46
@@ -840,36 +827,13 @@ bb.i:                                             ; preds = %bb.h
 
 .lr.ph46.split.us:                                ; preds = %.lr.ph46
   %i.br = icmp slt i32 %i.ba, 0
-  br i1 %i.br, label %.lr.ph46.split.us.split.preheader, label %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIlJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKlSG_E8_clESG_SG_.exit29.us.us.preheader
-
-_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIlJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKlSG_E8_clESG_SG_.exit29.us.us.preheader: ; preds = %.lr.ph46.split.us
-  %2 = sub nsw i64 %wide.trip.count78, %i.bf
-  %xtraiter = and i64 %2, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIlJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKlSG_E8_clESG_SG_.exit29.us.us.prol.loopexit, label %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIlJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKlSG_E8_clESG_SG_.exit29.us.us.prol
-
-_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIlJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKlSG_E8_clESG_SG_.exit29.us.us.prol: ; preds = %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIlJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKlSG_E8_clESG_SG_.exit29.us.us.preheader
-  %3 = getelementptr inbounds [8 x i8], ptr %i.az, i64 %i.bf
-  %4 = load i64, ptr %3, align 8, !tbaa !45
-  %5 = trunc i64 %4 to i32
-  %6 = srem i32 %5, %i.ba
-  %7 = zext nneg i32 %6 to i64
-  %8 = getelementptr inbounds [8 x i8], ptr %i.be, i64 %i.bf
-  store i64 %7, ptr %8, align 8, !tbaa !45
-  %indvars.iv.next66.prol = add nsw i64 %i.bf, 1
-  br label %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIlJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKlSG_E8_clESG_SG_.exit29.us.us.prol.loopexit
-
-_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIlJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKlSG_E8_clESG_SG_.exit29.us.us.prol.loopexit: ; preds = %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIlJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKlSG_E8_clESG_SG_.exit29.us.us.prol, %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIlJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKlSG_E8_clESG_SG_.exit29.us.us.preheader
-  %indvars.iv65.unr = phi i64 [ %i.bf, %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIlJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKlSG_E8_clESG_SG_.exit29.us.us.preheader ], [ %indvars.iv.next66.prol, %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIlJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKlSG_E8_clESG_SG_.exit29.us.us.prol ]
-  %9 = add nsw i64 %wide.trip.count78, -1
-  %10 = icmp eq i64 %9, %i.bf
-  br i1 %10, label %.loopexit, label %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIlJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKlSG_E8_clESG_SG_.exit29.us.us
+  br i1 %i.br, label %.lr.ph46.split.us.split.preheader, label %.loopexit
 
 .lr.ph46.split.us.split.preheader:                ; preds = %.lr.ph46.split.us
   %i.bs = sub nsw i64 %wide.trip.count78, %i.bf
   %xtraiter115 = and i64 %i.bs, 1
   %lcmp.mod116.not = icmp eq i64 %xtraiter115, 0
-  br i1 %lcmp.mod116.not, label %.lr.ph46.split.us.split.prol.loopexit, label %.lr.ph46.split.us.split.prol
+  br i1 %lcmp.mod116.not, label %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIlJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKlSG_E8_clESG_SG_.exit29.us.us, label %.lr.ph46.split.us.split.prol
 
 .lr.ph46.split.us.split.prol:                     ; preds = %.lr.ph46.split.us.split.preheader
   %i.bt = getelementptr inbounds [8 x i8], ptr %i.az, i64 %i.bf
@@ -883,37 +847,16 @@ _ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIlJRSt6vectorINS_3MatESaIS4_EES7_EE
   %i.ca = getelementptr inbounds [8 x i8], ptr %i.be, i64 %i.bf
   store i64 %i.bz, ptr %i.ca, align 8, !tbaa !45
   %indvars.iv.next71.prol = add nsw i64 %i.bf, 1
-  br label %.lr.ph46.split.us.split.prol.loopexit
+  br label %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIlJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKlSG_E8_clESG_SG_.exit29.us.us
 
-.lr.ph46.split.us.split.prol.loopexit:            ; preds = %.lr.ph46.split.us.split.prol, %.lr.ph46.split.us.split.preheader
-  %indvars.iv70.unr = phi i64 [ %i.bf, %.lr.ph46.split.us.split.preheader ], [ %indvars.iv.next71.prol, %.lr.ph46.split.us.split.prol ]
-  %11 = add nsw i64 %wide.trip.count78, -1
-  %12 = icmp eq i64 %11, %i.bf
-  br i1 %12, label %.loopexit, label %.lr.ph46.split.us.split
+_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIlJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKlSG_E8_clESG_SG_.exit29.us.us: ; preds = %.lr.ph46.split.us.split.prol, %.lr.ph46.split.us.split.preheader
+  %indvars.iv65 = phi i64 [ %i.bf, %.lr.ph46.split.us.split.preheader ], [ %indvars.iv.next71.prol, %.lr.ph46.split.us.split.prol ]
+  %indvars.iv.next66.1 = add nsw i64 %wide.trip.count78, -1
+  %exitcond69.not.1 = icmp eq i64 %indvars.iv.next66.1, %i.bf
+  br i1 %exitcond69.not.1, label %.loopexit, label %.lr.ph46.split.us.split
 
-_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIlJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKlSG_E8_clESG_SG_.exit29.us.us: ; preds = %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIlJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKlSG_E8_clESG_SG_.exit29.us.us.prol.loopexit, %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIlJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKlSG_E8_clESG_SG_.exit29.us.us
-  %indvars.iv65 = phi i64 [ %indvars.iv.next66.1, %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIlJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKlSG_E8_clESG_SG_.exit29.us.us ], [ %indvars.iv65.unr, %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIlJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKlSG_E8_clESG_SG_.exit29.us.us.prol.loopexit ] ; 4 uses
-  %13 = getelementptr inbounds [8 x i8], ptr %i.az, i64 %indvars.iv65
-  %14 = load i64, ptr %13, align 8, !tbaa !45
-  %15 = trunc i64 %14 to i32
-  %16 = srem i32 %15, %i.ba
-  %17 = zext nneg i32 %16 to i64
-  %18 = getelementptr inbounds [8 x i8], ptr %i.be, i64 %indvars.iv65
-  store i64 %17, ptr %18, align 8, !tbaa !45
-  %indvars.iv.next66 = add nsw i64 %indvars.iv65, 1 ; 2 uses
-  %19 = getelementptr inbounds [8 x i8], ptr %i.az, i64 %indvars.iv.next66
-  %20 = load i64, ptr %19, align 8, !tbaa !45
-  %21 = trunc i64 %20 to i32
-  %22 = srem i32 %21, %i.ba
-  %23 = zext nneg i32 %22 to i64
-  %24 = getelementptr inbounds [8 x i8], ptr %i.be, i64 %indvars.iv.next66
-  store i64 %23, ptr %24, align 8, !tbaa !45
-  %indvars.iv.next66.1 = add nsw i64 %indvars.iv65, 2 ; 2 uses
-  %exitcond69.not.1 = icmp eq i64 %indvars.iv.next66.1, %wide.trip.count78
-  br i1 %exitcond69.not.1, label %.loopexit, label %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIlJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKlSG_E8_clESG_SG_.exit29.us.us, !llvm.loop !3441
-
-.lr.ph46.split.us.split:                          ; preds = %.lr.ph46.split.us.split.prol.loopexit, %.lr.ph46.split.us.split
-  %indvars.iv70 = phi i64 [ %indvars.iv.next71.1, %.lr.ph46.split.us.split ], [ %indvars.iv70.unr, %.lr.ph46.split.us.split.prol.loopexit ] ; 4 uses
+.lr.ph46.split.us.split:                          ; preds = %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIlJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKlSG_E8_clESG_SG_.exit29.us.us, %.lr.ph46.split.us.split
+  %indvars.iv70 = phi i64 [ %indvars.iv.next71.1, %.lr.ph46.split.us.split ], [ %indvars.iv65, %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIlJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKlSG_E8_clESG_SG_.exit29.us.us ] ; 4 uses
   %i.cb = getelementptr inbounds [8 x i8], ptr %i.az, i64 %indvars.iv70
   %i.cc = load i64, ptr %i.cb, align 8, !tbaa !45
   %i.cd = trunc i64 %i.cc to i32
@@ -1098,7 +1041,7 @@ _ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIlJRSt6vectorINS_3MatESaIS4_EES7_EE
   %exitcond90.not = icmp eq i32 %i.fq, %i.es
   br i1 %exitcond90.not, label %.loopexit, label %bb.p, !llvm.loop !3443
 
-.loopexit:                                        ; preds = %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIlJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKlSG_E8_clESG_SG_.exit33, %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIlJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKlSG_E8_clESG_SG_.exit29.us.us.prol.loopexit, %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIlJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKlSG_E8_clESG_SG_.exit29.us.us, %.lr.ph46.split.us.split.prol.loopexit, %.lr.ph46.split.us.split, %.lr.ph46.split.split.us.prol.loopexit, %.lr.ph46.split.split.us, %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIlJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKlSG_E8_clESG_SG_.exit, %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIlJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKlSG_E8_clESG_SG_.exit37, %bb.l, %bb.i, %bb.d, %.thread40
+.loopexit:                                        ; preds = %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIlJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKlSG_E8_clESG_SG_.exit33, %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIlJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKlSG_E8_clESG_SG_.exit29.us.us, %.lr.ph46.split.us.split, %.lr.ph46.split.split.us.prol.loopexit, %.lr.ph46.split.split.us, %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIlJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKlSG_E8_clESG_SG_.exit, %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIlJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKlSG_E8_clESG_SG_.exit37, %.lr.ph46.split.us, %bb.l, %bb.i, %bb.d, %.thread40
   ret void
 }
 
@@ -1501,15 +1444,15 @@ bb.i:                                             ; preds = %bb.h
   %i.aw = load double, ptr %i.av, align 8, !tbaa !5533
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.ay = load ptr, ptr %i.ax, align 8, !tbaa !5855, !nonnull !359, !align !389
-  %i.az = load ptr, ptr %i.ay, align 8, !tbaa !5542 ; 9 uses
+  %i.az = load ptr, ptr %i.ay, align 8, !tbaa !5542 ; 6 uses
   %i.ba = fptosi double %i.aw to i32
-  %.fr57 = freeze i32 %i.ba                       ; 17 uses
+  %.fr57 = freeze i32 %i.ba                       ; 14 uses
   %i.bb = icmp sgt i32 %.fr57, 0
   %i.bc = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.bd = load ptr, ptr %i.bc, align 8, !tbaa !5857, !nonnull !359, !align !389
-  %i.be = load ptr, ptr %i.bd, align 8, !tbaa !5542 ; 9 uses
-  %i.bf = sext i32 %i.ap to i64                   ; 18 uses
-  %wide.trip.count78 = sext i32 %i.ar to i64      ; 9 uses
+  %i.be = load ptr, ptr %i.bd, align 8, !tbaa !5542 ; 6 uses
+  %i.bf = sext i32 %i.ap to i64                   ; 12 uses
+  %wide.trip.count78 = sext i32 %i.ar to i64      ; 6 uses
   br i1 %i.bb, label %.lr.ph46.split.split.us.preheader, label %.lr.ph46.split.us
 
 .lr.ph46.split.split.us.preheader:                ; preds = %.lr.ph46
@@ -1540,36 +1483,13 @@ bb.i:                                             ; preds = %bb.h
 
 .lr.ph46.split.us:                                ; preds = %.lr.ph46
   %i.br = icmp slt i32 %.fr57, 0
-  br i1 %i.br, label %.lr.ph46.split.us.split.preheader, label %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIdJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXoontsr3std11is_integralIT_EE5valuesr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKdSG_E8_clESG_SG_.exit29.us.us.preheader
-
-_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIdJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXoontsr3std11is_integralIT_EE5valuesr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKdSG_E8_clESG_SG_.exit29.us.us.preheader: ; preds = %.lr.ph46.split.us
-  %2 = sub nsw i64 %wide.trip.count78, %i.bf
-  %xtraiter = and i64 %2, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIdJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXoontsr3std11is_integralIT_EE5valuesr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKdSG_E8_clESG_SG_.exit29.us.us.prol.loopexit, label %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIdJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXoontsr3std11is_integralIT_EE5valuesr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKdSG_E8_clESG_SG_.exit29.us.us.prol
-
-_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIdJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXoontsr3std11is_integralIT_EE5valuesr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKdSG_E8_clESG_SG_.exit29.us.us.prol: ; preds = %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIdJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXoontsr3std11is_integralIT_EE5valuesr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKdSG_E8_clESG_SG_.exit29.us.us.preheader
-  %3 = getelementptr inbounds [8 x i8], ptr %i.az, i64 %i.bf
-  %4 = load double, ptr %3, align 8, !tbaa !5533
-  %5 = fptosi double %4 to i32
-  %6 = srem i32 %5, %.fr57
-  %7 = uitofp nneg i32 %6 to double
-  %8 = getelementptr inbounds [8 x i8], ptr %i.be, i64 %i.bf
-  store double %7, ptr %8, align 8, !tbaa !5533
-  %indvars.iv.next66.prol = add nsw i64 %i.bf, 1
-  br label %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIdJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXoontsr3std11is_integralIT_EE5valuesr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKdSG_E8_clESG_SG_.exit29.us.us.prol.loopexit
-
-_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIdJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXoontsr3std11is_integralIT_EE5valuesr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKdSG_E8_clESG_SG_.exit29.us.us.prol.loopexit: ; preds = %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIdJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXoontsr3std11is_integralIT_EE5valuesr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKdSG_E8_clESG_SG_.exit29.us.us.prol, %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIdJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXoontsr3std11is_integralIT_EE5valuesr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKdSG_E8_clESG_SG_.exit29.us.us.preheader
-  %indvars.iv65.unr = phi i64 [ %i.bf, %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIdJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXoontsr3std11is_integralIT_EE5valuesr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKdSG_E8_clESG_SG_.exit29.us.us.preheader ], [ %indvars.iv.next66.prol, %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIdJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXoontsr3std11is_integralIT_EE5valuesr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKdSG_E8_clESG_SG_.exit29.us.us.prol ]
-  %9 = add nsw i64 %wide.trip.count78, -1
-  %10 = icmp eq i64 %9, %i.bf
-  br i1 %10, label %.loopexit, label %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIdJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXoontsr3std11is_integralIT_EE5valuesr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKdSG_E8_clESG_SG_.exit29.us.us
+  br i1 %i.br, label %.lr.ph46.split.us.split.preheader, label %.loopexit
 
 .lr.ph46.split.us.split.preheader:                ; preds = %.lr.ph46.split.us
   %i.bs = sub nsw i64 %wide.trip.count78, %i.bf
   %xtraiter114 = and i64 %i.bs, 1
   %lcmp.mod115.not = icmp eq i64 %xtraiter114, 0
-  br i1 %lcmp.mod115.not, label %.lr.ph46.split.us.split.prol.loopexit, label %.lr.ph46.split.us.split.prol
+  br i1 %lcmp.mod115.not, label %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIdJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXoontsr3std11is_integralIT_EE5valuesr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKdSG_E8_clESG_SG_.exit29.us.us, label %.lr.ph46.split.us.split.prol
 
 .lr.ph46.split.us.split.prol:                     ; preds = %.lr.ph46.split.us.split.preheader
   %i.bt = getelementptr inbounds [8 x i8], ptr %i.az, i64 %i.bf
@@ -1583,37 +1503,16 @@ _ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIdJRSt6vectorINS_3MatESaIS4_EES7_EE
   %i.ca = getelementptr inbounds [8 x i8], ptr %i.be, i64 %i.bf
   store double %i.bz, ptr %i.ca, align 8, !tbaa !5533
   %indvars.iv.next71.prol = add nsw i64 %i.bf, 1
-  br label %.lr.ph46.split.us.split.prol.loopexit
+  br label %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIdJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXoontsr3std11is_integralIT_EE5valuesr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKdSG_E8_clESG_SG_.exit29.us.us
 
-.lr.ph46.split.us.split.prol.loopexit:            ; preds = %.lr.ph46.split.us.split.prol, %.lr.ph46.split.us.split.preheader
-  %indvars.iv70.unr = phi i64 [ %i.bf, %.lr.ph46.split.us.split.preheader ], [ %indvars.iv.next71.prol, %.lr.ph46.split.us.split.prol ]
-  %11 = add nsw i64 %wide.trip.count78, -1
-  %12 = icmp eq i64 %11, %i.bf
-  br i1 %12, label %.loopexit, label %.lr.ph46.split.us.split
+_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIdJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXoontsr3std11is_integralIT_EE5valuesr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKdSG_E8_clESG_SG_.exit29.us.us: ; preds = %.lr.ph46.split.us.split.prol, %.lr.ph46.split.us.split.preheader
+  %indvars.iv65 = phi i64 [ %i.bf, %.lr.ph46.split.us.split.preheader ], [ %indvars.iv.next71.prol, %.lr.ph46.split.us.split.prol ]
+  %indvars.iv.next66.1 = add nsw i64 %wide.trip.count78, -1
+  %exitcond69.not.1 = icmp eq i64 %indvars.iv.next66.1, %i.bf
+  br i1 %exitcond69.not.1, label %.loopexit, label %.lr.ph46.split.us.split
 
-_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIdJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXoontsr3std11is_integralIT_EE5valuesr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKdSG_E8_clESG_SG_.exit29.us.us: ; preds = %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIdJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXoontsr3std11is_integralIT_EE5valuesr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKdSG_E8_clESG_SG_.exit29.us.us.prol.loopexit, %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIdJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXoontsr3std11is_integralIT_EE5valuesr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKdSG_E8_clESG_SG_.exit29.us.us
-  %indvars.iv65 = phi i64 [ %indvars.iv.next66.1, %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIdJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXoontsr3std11is_integralIT_EE5valuesr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKdSG_E8_clESG_SG_.exit29.us.us ], [ %indvars.iv65.unr, %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIdJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXoontsr3std11is_integralIT_EE5valuesr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKdSG_E8_clESG_SG_.exit29.us.us.prol.loopexit ] ; 4 uses
-  %13 = getelementptr inbounds [8 x i8], ptr %i.az, i64 %indvars.iv65
-  %14 = load double, ptr %13, align 8, !tbaa !5533
-  %15 = fptosi double %14 to i32
-  %16 = srem i32 %15, %.fr57
-  %17 = uitofp nneg i32 %16 to double
-  %18 = getelementptr inbounds [8 x i8], ptr %i.be, i64 %indvars.iv65
-  store double %17, ptr %18, align 8, !tbaa !5533
-  %indvars.iv.next66 = add nsw i64 %indvars.iv65, 1 ; 2 uses
-  %19 = getelementptr inbounds [8 x i8], ptr %i.az, i64 %indvars.iv.next66
-  %20 = load double, ptr %19, align 8, !tbaa !5533
-  %21 = fptosi double %20 to i32
-  %22 = srem i32 %21, %.fr57
-  %23 = uitofp nneg i32 %22 to double
-  %24 = getelementptr inbounds [8 x i8], ptr %i.be, i64 %indvars.iv.next66
-  store double %23, ptr %24, align 8, !tbaa !5533
-  %indvars.iv.next66.1 = add nsw i64 %indvars.iv65, 2 ; 2 uses
-  %exitcond69.not.1 = icmp eq i64 %indvars.iv.next66.1, %wide.trip.count78
-  br i1 %exitcond69.not.1, label %.loopexit, label %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIdJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXoontsr3std11is_integralIT_EE5valuesr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKdSG_E8_clESG_SG_.exit29.us.us, !llvm.loop !5859
-
-.lr.ph46.split.us.split:                          ; preds = %.lr.ph46.split.us.split.prol.loopexit, %.lr.ph46.split.us.split
-  %indvars.iv70 = phi i64 [ %indvars.iv.next71.1, %.lr.ph46.split.us.split ], [ %indvars.iv70.unr, %.lr.ph46.split.us.split.prol.loopexit ] ; 4 uses
+.lr.ph46.split.us.split:                          ; preds = %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIdJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXoontsr3std11is_integralIT_EE5valuesr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKdSG_E8_clESG_SG_.exit29.us.us, %.lr.ph46.split.us.split
+  %indvars.iv70 = phi i64 [ %indvars.iv.next71.1, %.lr.ph46.split.us.split ], [ %indvars.iv65, %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIdJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXoontsr3std11is_integralIT_EE5valuesr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKdSG_E8_clESG_SG_.exit29.us.us ] ; 4 uses
   %i.cb = getelementptr inbounds [8 x i8], ptr %i.az, i64 %indvars.iv70
   %i.cc = load double, ptr %i.cb, align 8, !tbaa !5533
   %i.cd = fptosi double %i.cc to i32
@@ -1796,7 +1695,7 @@ _ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIdJRSt6vectorINS_3MatESaIS4_EES7_EE
   %exitcond90.not = icmp eq i32 %i.fu, %i.es
   br i1 %exitcond90.not, label %.loopexit, label %bb.p, !llvm.loop !5861
 
-.loopexit:                                        ; preds = %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIdJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXoontsr3std11is_integralIT_EE5valuesr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKdSG_E8_clESG_SG_.exit33, %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIdJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXoontsr3std11is_integralIT_EE5valuesr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKdSG_E8_clESG_SG_.exit29.us.us.prol.loopexit, %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIdJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXoontsr3std11is_integralIT_EE5valuesr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKdSG_E8_clESG_SG_.exit29.us.us, %.lr.ph46.split.us.split.prol.loopexit, %.lr.ph46.split.us.split, %.lr.ph46.split.split.us.prol.loopexit, %.lr.ph46.split.split.us, %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIdJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXoontsr3std11is_integralIT_EE5valuesr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKdSG_E8_clESG_SG_.exit, %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIdJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXoontsr3std11is_integralIT_EE5valuesr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKdSG_E8_clESG_SG_.exit37, %bb.l, %bb.i, %bb.d, %.thread40
+.loopexit:                                        ; preds = %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIdJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXoontsr3std11is_integralIT_EE5valuesr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKdSG_E8_clESG_SG_.exit33, %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIdJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXoontsr3std11is_integralIT_EE5valuesr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKdSG_E8_clESG_SG_.exit29.us.us, %.lr.ph46.split.us.split, %.lr.ph46.split.split.us.prol.loopexit, %.lr.ph46.split.split.us, %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIdJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXoontsr3std11is_integralIT_EE5valuesr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKdSG_E8_clESG_SG_.exit, %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIdJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXoontsr3std11is_integralIT_EE5valuesr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKdSG_E8_clESG_SG_.exit37, %.lr.ph46.split.us, %bb.l, %bb.i, %bb.d, %.thread40
   ret void
 }
 
@@ -2199,9 +2098,9 @@ bb.i:                                             ; preds = %bb.h
   %i.aq = load ptr, ptr %i.ap, align 8, !tbaa !9118, !nonnull !359, !align !389
   %i.ar = load ptr, ptr %i.aq, align 8, !tbaa !286
   %i.as = load i32, ptr %i.ar, align 4, !tbaa !112
-  %.fr57 = freeze i32 %i.as                       ; 7 uses
+  %.fr57 = freeze i32 %i.as                       ; 6 uses
   %i.at = load i32, ptr %1, align 4, !tbaa !368   ; 2 uses
-  %i.au = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 4 uses
+  %i.au = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 3 uses
   %i.av = load i32, ptr %i.au, align 4, !tbaa !370
   %i.aw = icmp slt i32 %i.at, %i.av
   br i1 %i.aw, label %.lr.ph46, label %.loopexit
@@ -2209,33 +2108,20 @@ bb.i:                                             ; preds = %bb.h
 .lr.ph46:                                         ; preds = %bb.i
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.ay = load ptr, ptr %i.ax, align 8, !tbaa !9117, !nonnull !359, !align !389
-  %i.az = load ptr, ptr %i.ay, align 8, !tbaa !286 ; 3 uses
+  %i.az = load ptr, ptr %i.ay, align 8, !tbaa !286 ; 2 uses
   %i.ba = icmp sgt i32 %.fr57, 0
   %i.bb = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.bc = load ptr, ptr %i.bb, align 8, !tbaa !9119, !nonnull !359, !align !389
-  %i.bd = load ptr, ptr %i.bc, align 8, !tbaa !286 ; 3 uses
-  %i.be = sext i32 %i.at to i64                   ; 3 uses
-  br i1 %i.ba, label %.lr.ph46.split.split.us, label %.lr.ph46.split.us
+  %i.bd = load ptr, ptr %i.bc, align 8, !tbaa !286 ; 2 uses
+  %i.be = sext i32 %i.at to i64                   ; 2 uses
+  br i1 %i.ba, label %.lr.ph46.split.split.us, label %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIjJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKjSG_E8_clESG_SG_.exit29.us.us
 
-.lr.ph46.split.us:                                ; preds = %.lr.ph46
-  %2 = icmp slt i32 %.fr57, 0
-  br i1 %2, label %.lr.ph46.split.us.split, label %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIjJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKjSG_E8_clESG_SG_.exit29.us.us
+_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIjJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKjSG_E8_clESG_SG_.exit29.us.us: ; preds = %.lr.ph46
+  %i.bf = icmp slt i32 %.fr57, 0
+  br i1 %i.bf, label %.lr.ph46.split.us.split, label %.loopexit
 
-_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIjJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKjSG_E8_clESG_SG_.exit29.us.us: ; preds = %.lr.ph46.split.us, %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIjJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKjSG_E8_clESG_SG_.exit29.us.us
-  %indvars.iv65 = phi i64 [ %indvars.iv.next66, %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIjJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKjSG_E8_clESG_SG_.exit29.us.us ], [ %i.be, %.lr.ph46.split.us ] ; 3 uses
-  %3 = getelementptr inbounds [4 x i8], ptr %i.az, i64 %indvars.iv65
-  %4 = load i32, ptr %3, align 4, !tbaa !112
-  %5 = srem i32 %4, %.fr57
-  %6 = getelementptr inbounds [4 x i8], ptr %i.bd, i64 %indvars.iv65
-  store i32 %5, ptr %6, align 4, !tbaa !112
-  %indvars.iv.next66 = add nsw i64 %indvars.iv65, 1 ; 2 uses
-  %7 = load i32, ptr %i.au, align 4, !tbaa !370
-  %8 = sext i32 %7 to i64
-  %i.bf = icmp slt i64 %indvars.iv.next66, %8
-  br i1 %i.bf, label %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIjJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKjSG_E8_clESG_SG_.exit29.us.us, label %.loopexit, !llvm.loop !9121
-
-.lr.ph46.split.us.split:                          ; preds = %.lr.ph46.split.us, %.lr.ph46.split.us.split
-  %indvars.iv68 = phi i64 [ %indvars.iv.next69, %.lr.ph46.split.us.split ], [ %i.be, %.lr.ph46.split.us ] ; 3 uses
+.lr.ph46.split.us.split:                          ; preds = %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIjJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKjSG_E8_clESG_SG_.exit29.us.us, %.lr.ph46.split.us.split
+  %indvars.iv68 = phi i64 [ %indvars.iv.next69, %.lr.ph46.split.us.split ], [ %i.be, %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIjJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKjSG_E8_clESG_SG_.exit29.us.us ] ; 3 uses
   %i.bg = getelementptr inbounds [4 x i8], ptr %i.az, i64 %indvars.iv68
   %i.bh = load i32, ptr %i.bg, align 4, !tbaa !112
   %i.bi = srem i32 %i.bh, %.fr57                  ; 2 uses
@@ -2392,7 +2278,7 @@ _ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIjJRSt6vectorINS_3MatESaIS4_EES7_EE
   %i.ep = icmp slt i32 %i.ei, %i.eo
   br i1 %i.ep, label %bb.p, label %.loopexit, !llvm.loop !9123
 
-.loopexit:                                        ; preds = %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIjJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKjSG_E8_clESG_SG_.exit33, %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIjJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKjSG_E8_clESG_SG_.exit29.us.us, %.lr.ph46.split.us.split, %.lr.ph46.split.split.us, %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIjJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKjSG_E8_clESG_SG_.exit, %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIjJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKjSG_E8_clESG_SG_.exit37, %bb.l, %bb.i, %bb.d, %.thread40
+.loopexit:                                        ; preds = %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIjJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKjSG_E8_clESG_SG_.exit33, %.lr.ph46.split.us.split, %.lr.ph46.split.split.us, %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIjJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKjSG_E8_clESG_SG_.exit, %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIjJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKjSG_E8_clESG_SG_.exit37, %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchIjJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKjSG_E8_clESG_SG_.exit29.us.us, %bb.l, %bb.i, %bb.d, %.thread40
   ret void
 }
 
@@ -2795,15 +2681,15 @@ bb.i:                                             ; preds = %bb.h
   %i.aw = load i64, ptr %i.av, align 8, !tbaa !45
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.ay = load ptr, ptr %i.ax, align 8, !tbaa !9888, !nonnull !359, !align !389
-  %i.az = load ptr, ptr %i.ay, align 8, !tbaa !288 ; 9 uses
+  %i.az = load ptr, ptr %i.ay, align 8, !tbaa !288 ; 6 uses
   %.fr = freeze i64 %i.aw
-  %i.ba = trunc i64 %.fr to i32                   ; 17 uses
+  %i.ba = trunc i64 %.fr to i32                   ; 14 uses
   %i.bb = icmp sgt i32 %i.ba, 0
   %i.bc = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.bd = load ptr, ptr %i.bc, align 8, !tbaa !9890, !nonnull !359, !align !389
-  %i.be = load ptr, ptr %i.bd, align 8, !tbaa !288 ; 9 uses
-  %i.bf = sext i32 %i.ap to i64                   ; 18 uses
-  %wide.trip.count78 = sext i32 %i.ar to i64      ; 9 uses
+  %i.be = load ptr, ptr %i.bd, align 8, !tbaa !288 ; 6 uses
+  %i.bf = sext i32 %i.ap to i64                   ; 12 uses
+  %wide.trip.count78 = sext i32 %i.ar to i64      ; 6 uses
   br i1 %i.bb, label %.lr.ph46.split.split.us.preheader, label %.lr.ph46.split.us
 
 .lr.ph46.split.split.us.preheader:                ; preds = %.lr.ph46
@@ -2834,36 +2720,13 @@ bb.i:                                             ; preds = %bb.h
 
 .lr.ph46.split.us:                                ; preds = %.lr.ph46
   %i.br = icmp slt i32 %i.ba, 0
-  br i1 %i.br, label %.lr.ph46.split.us.split.preheader, label %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchImJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKmSG_E8_clESG_SG_.exit29.us.us.preheader
-
-_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchImJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKmSG_E8_clESG_SG_.exit29.us.us.preheader: ; preds = %.lr.ph46.split.us
-  %2 = sub nsw i64 %wide.trip.count78, %i.bf
-  %xtraiter = and i64 %2, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchImJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKmSG_E8_clESG_SG_.exit29.us.us.prol.loopexit, label %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchImJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKmSG_E8_clESG_SG_.exit29.us.us.prol
-
-_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchImJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKmSG_E8_clESG_SG_.exit29.us.us.prol: ; preds = %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchImJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKmSG_E8_clESG_SG_.exit29.us.us.preheader
-  %3 = getelementptr inbounds [8 x i8], ptr %i.az, i64 %i.bf
-  %4 = load i64, ptr %3, align 8, !tbaa !45
-  %5 = trunc i64 %4 to i32
-  %6 = srem i32 %5, %i.ba
-  %7 = zext nneg i32 %6 to i64
-  %8 = getelementptr inbounds [8 x i8], ptr %i.be, i64 %i.bf
-  store i64 %7, ptr %8, align 8, !tbaa !45
-  %indvars.iv.next66.prol = add nsw i64 %i.bf, 1
-  br label %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchImJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKmSG_E8_clESG_SG_.exit29.us.us.prol.loopexit
-
-_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchImJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKmSG_E8_clESG_SG_.exit29.us.us.prol.loopexit: ; preds = %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchImJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKmSG_E8_clESG_SG_.exit29.us.us.prol, %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchImJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKmSG_E8_clESG_SG_.exit29.us.us.preheader
-  %indvars.iv65.unr = phi i64 [ %i.bf, %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchImJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKmSG_E8_clESG_SG_.exit29.us.us.preheader ], [ %indvars.iv.next66.prol, %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchImJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKmSG_E8_clESG_SG_.exit29.us.us.prol ]
-  %9 = add nsw i64 %wide.trip.count78, -1
-  %10 = icmp eq i64 %9, %i.bf
-  br i1 %10, label %.loopexit, label %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchImJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKmSG_E8_clESG_SG_.exit29.us.us
+  br i1 %i.br, label %.lr.ph46.split.us.split.preheader, label %.loopexit
 
 .lr.ph46.split.us.split.preheader:                ; preds = %.lr.ph46.split.us
   %i.bs = sub nsw i64 %wide.trip.count78, %i.bf
   %xtraiter115 = and i64 %i.bs, 1
   %lcmp.mod116.not = icmp eq i64 %xtraiter115, 0
-  br i1 %lcmp.mod116.not, label %.lr.ph46.split.us.split.prol.loopexit, label %.lr.ph46.split.us.split.prol
+  br i1 %lcmp.mod116.not, label %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchImJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKmSG_E8_clESG_SG_.exit29.us.us, label %.lr.ph46.split.us.split.prol
 
 .lr.ph46.split.us.split.prol:                     ; preds = %.lr.ph46.split.us.split.preheader
   %i.bt = getelementptr inbounds [8 x i8], ptr %i.az, i64 %i.bf
@@ -2877,37 +2740,16 @@ _ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchImJRSt6vectorINS_3MatESaIS4_EES7_EE
   %i.ca = getelementptr inbounds [8 x i8], ptr %i.be, i64 %i.bf
   store i64 %i.bz, ptr %i.ca, align 8, !tbaa !45
   %indvars.iv.next71.prol = add nsw i64 %i.bf, 1
-  br label %.lr.ph46.split.us.split.prol.loopexit
+  br label %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchImJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKmSG_E8_clESG_SG_.exit29.us.us
 
-.lr.ph46.split.us.split.prol.loopexit:            ; preds = %.lr.ph46.split.us.split.prol, %.lr.ph46.split.us.split.preheader
-  %indvars.iv70.unr = phi i64 [ %i.bf, %.lr.ph46.split.us.split.preheader ], [ %indvars.iv.next71.prol, %.lr.ph46.split.us.split.prol ]
-  %11 = add nsw i64 %wide.trip.count78, -1
-  %12 = icmp eq i64 %11, %i.bf
-  br i1 %12, label %.loopexit, label %.lr.ph46.split.us.split
+_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchImJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKmSG_E8_clESG_SG_.exit29.us.us: ; preds = %.lr.ph46.split.us.split.prol, %.lr.ph46.split.us.split.preheader
+  %indvars.iv65 = phi i64 [ %i.bf, %.lr.ph46.split.us.split.preheader ], [ %indvars.iv.next71.prol, %.lr.ph46.split.us.split.prol ]
+  %indvars.iv.next66.1 = add nsw i64 %wide.trip.count78, -1
+  %exitcond69.not.1 = icmp eq i64 %indvars.iv.next66.1, %i.bf
+  br i1 %exitcond69.not.1, label %.loopexit, label %.lr.ph46.split.us.split
 
-_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchImJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKmSG_E8_clESG_SG_.exit29.us.us: ; preds = %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchImJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKmSG_E8_clESG_SG_.exit29.us.us.prol.loopexit, %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchImJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKmSG_E8_clESG_SG_.exit29.us.us
-  %indvars.iv65 = phi i64 [ %indvars.iv.next66.1, %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchImJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKmSG_E8_clESG_SG_.exit29.us.us ], [ %indvars.iv65.unr, %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchImJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKmSG_E8_clESG_SG_.exit29.us.us.prol.loopexit ] ; 4 uses
-  %13 = getelementptr inbounds [8 x i8], ptr %i.az, i64 %indvars.iv65
-  %14 = load i64, ptr %13, align 8, !tbaa !45
-  %15 = trunc i64 %14 to i32
-  %16 = srem i32 %15, %i.ba
-  %17 = zext nneg i32 %16 to i64
-  %18 = getelementptr inbounds [8 x i8], ptr %i.be, i64 %indvars.iv65
-  store i64 %17, ptr %18, align 8, !tbaa !45
-  %indvars.iv.next66 = add nsw i64 %indvars.iv65, 1 ; 2 uses
-  %19 = getelementptr inbounds [8 x i8], ptr %i.az, i64 %indvars.iv.next66
-  %20 = load i64, ptr %19, align 8, !tbaa !45
-  %21 = trunc i64 %20 to i32
-  %22 = srem i32 %21, %i.ba
-  %23 = zext nneg i32 %22 to i64
-  %24 = getelementptr inbounds [8 x i8], ptr %i.be, i64 %indvars.iv.next66
-  store i64 %23, ptr %24, align 8, !tbaa !45
-  %indvars.iv.next66.1 = add nsw i64 %indvars.iv65, 2 ; 2 uses
-  %exitcond69.not.1 = icmp eq i64 %indvars.iv.next66.1, %wide.trip.count78
-  br i1 %exitcond69.not.1, label %.loopexit, label %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchImJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKmSG_E8_clESG_SG_.exit29.us.us, !llvm.loop !9892
-
-.lr.ph46.split.us.split:                          ; preds = %.lr.ph46.split.us.split.prol.loopexit, %.lr.ph46.split.us.split
-  %indvars.iv70 = phi i64 [ %indvars.iv.next71.1, %.lr.ph46.split.us.split ], [ %indvars.iv70.unr, %.lr.ph46.split.us.split.prol.loopexit ] ; 4 uses
+.lr.ph46.split.us.split:                          ; preds = %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchImJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKmSG_E8_clESG_SG_.exit29.us.us, %.lr.ph46.split.us.split
+  %indvars.iv70 = phi i64 [ %indvars.iv.next71.1, %.lr.ph46.split.us.split ], [ %indvars.iv65, %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchImJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKmSG_E8_clESG_SG_.exit29.us.us ] ; 4 uses
   %i.cb = getelementptr inbounds [8 x i8], ptr %i.az, i64 %indvars.iv70
   %i.cc = load i64, ptr %i.cb, align 8, !tbaa !45
   %i.cd = trunc i64 %i.cc to i32
@@ -3092,7 +2934,7 @@ _ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchImJRSt6vectorINS_3MatESaIS4_EES7_EE
   %exitcond90.not = icmp eq i32 %i.fq, %i.es
   br i1 %exitcond90.not, label %.loopexit, label %bb.p, !llvm.loop !9894
 
-.loopexit:                                        ; preds = %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchImJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKmSG_E8_clESG_SG_.exit33, %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchImJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKmSG_E8_clESG_SG_.exit29.us.us.prol.loopexit, %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchImJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKmSG_E8_clESG_SG_.exit29.us.us, %.lr.ph46.split.us.split.prol.loopexit, %.lr.ph46.split.us.split, %.lr.ph46.split.split.us.prol.loopexit, %.lr.ph46.split.split.us, %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchImJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKmSG_E8_clESG_SG_.exit, %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchImJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKmSG_E8_clESG_SG_.exit37, %bb.l, %bb.i, %bb.d, %.thread40
+.loopexit:                                        ; preds = %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchImJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKmSG_E8_clESG_SG_.exit33, %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchImJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKmSG_E8_clESG_SG_.exit29.us.us, %.lr.ph46.split.us.split, %.lr.ph46.split.split.us.prol.loopexit, %.lr.ph46.split.split.us, %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchImJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKmSG_E8_clESG_SG_.exit, %_ZZN2cv3dnn20NaryEltwiseLayerImpl10opDispatchImJRSt6vectorINS_3MatESaIS4_EES7_EEENSt9enable_ifIXaasr3std11is_integralIT_EE5valuentsr3std7is_sameIS9_bEE5valueEvE4typeEmDpOT0_ENKUlRKmSG_E8_clESG_SG_.exit37, %.lr.ph46.split.us, %bb.l, %bb.i, %bb.d, %.thread40
   ret void
 }
 
