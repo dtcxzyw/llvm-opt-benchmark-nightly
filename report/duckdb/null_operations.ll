@@ -204,7 +204,9 @@ _ZNK6duckdb21TemplatedValidityMaskImE16GetValidityEntryEm.exit.i26.preheader: ; 
   %i.bk = load i64, ptr %i.b, align 8, !tbaa !35
   %i.bl = and i64 %i.bk, 1
   %.not2932.i30 = icmp eq i64 %i.bl, 0
-  %spec.select = select i1 %.not2932.i30, i64 0, i64 %1
+  br i1 %.not2932.i30, label %_ZNK6duckdb21TemplatedValidityMaskImE10CountValidEm.exit, label %.loopexit.i35.loopexit
+
+.loopexit.i35.loopexit:                           ; preds = %_ZNK6duckdb21TemplatedValidityMaskImE16GetValidityEntryEm.exit.i26.preheader
   br label %_ZNK6duckdb21TemplatedValidityMaskImE10CountValidEm.exit
 
 .lr.ph.split:                                     ; preds = %.lr.ph.split, %.lr.ph.split.preheader.new
@@ -288,8 +290,8 @@ bb.m:                                             ; preds = %_ZNK6duckdb21Templa
   %.not29.us.i.epil = icmp eq i64 %i.cx, 0
   br i1 %.not29.us.i.epil, label %_ZNK6duckdb21TemplatedValidityMaskImE10CountValidEm.exit, label %.lr.ph.us.i.epil, !llvm.loop !75
 
-_ZNK6duckdb21TemplatedValidityMaskImE10CountValidEm.exit: ; preds = %.loopexit.i, %_ZNK6duckdb21TemplatedValidityMaskImE10CountValidEm.exit.loopexit85.unr-lcssa, %.lr.ph.us.i.epil, %bb.m, %_ZNK6duckdb21TemplatedValidityMaskImE16GetValidityEntryEm.exit.us.i.epil.preheader, %.lr.ph.split.epil.preheader, %_ZNK6duckdb21TemplatedValidityMaskImE10CountValidEm.exit.loopexit83.unr-lcssa, %.lr.ph.split.us, %middle.block, %_ZNK6duckdb21TemplatedValidityMaskImE16GetValidityEntryEm.exit.i26.preheader, %.preheader, %bb.f, %bb.e, %bb.b
-  %.020 = phi i64 [ %1, %bb.b ], [ %i.cy, %.lr.ph.us.i.epil ], [ %i.cr, %.lr.ph.split.epil.preheader ], [ 0, %bb.e ], [ 0, %bb.f ], [ %i.ad, %.lr.ph.split.us ], [ 0, %.preheader ], [ %spec.select, %_ZNK6duckdb21TemplatedValidityMaskImE16GetValidityEntryEm.exit.i26.preheader ], [ %i.w, %middle.block ], [ %i.cg, %_ZNK6duckdb21TemplatedValidityMaskImE10CountValidEm.exit.loopexit83.unr-lcssa ], [ %.2.us.i.1, %_ZNK6duckdb21TemplatedValidityMaskImE10CountValidEm.exit.loopexit85.unr-lcssa ], [ %i.cv, %bb.m ], [ %.02236.us.i.epil.init, %_ZNK6duckdb21TemplatedValidityMaskImE16GetValidityEntryEm.exit.us.i.epil.preheader ], [ %.2.i, %.loopexit.i ]
+_ZNK6duckdb21TemplatedValidityMaskImE10CountValidEm.exit: ; preds = %.loopexit.i, %_ZNK6duckdb21TemplatedValidityMaskImE10CountValidEm.exit.loopexit85.unr-lcssa, %.lr.ph.us.i.epil, %bb.m, %_ZNK6duckdb21TemplatedValidityMaskImE16GetValidityEntryEm.exit.us.i.epil.preheader, %.lr.ph.split.epil.preheader, %_ZNK6duckdb21TemplatedValidityMaskImE10CountValidEm.exit.loopexit83.unr-lcssa, %.lr.ph.split.us, %middle.block, %_ZNK6duckdb21TemplatedValidityMaskImE16GetValidityEntryEm.exit.i26.preheader, %.loopexit.i35.loopexit, %.preheader, %bb.f, %bb.e, %bb.b
+  %.020 = phi i64 [ %1, %bb.b ], [ 0, %_ZNK6duckdb21TemplatedValidityMaskImE16GetValidityEntryEm.exit.i26.preheader ], [ %i.cy, %.lr.ph.us.i.epil ], [ 0, %bb.e ], [ 0, %bb.f ], [ %i.ad, %.lr.ph.split.us ], [ 0, %.preheader ], [ %i.cr, %.lr.ph.split.epil.preheader ], [ %1, %.loopexit.i35.loopexit ], [ %i.w, %middle.block ], [ %i.cg, %_ZNK6duckdb21TemplatedValidityMaskImE10CountValidEm.exit.loopexit83.unr-lcssa ], [ %.2.us.i.1, %_ZNK6duckdb21TemplatedValidityMaskImE10CountValidEm.exit.loopexit85.unr-lcssa ], [ %i.cv, %bb.m ], [ %.02236.us.i.epil.init, %_ZNK6duckdb21TemplatedValidityMaskImE16GetValidityEntryEm.exit.us.i.epil.preheader ], [ %.2.i, %.loopexit.i ]
   %i.cz = getelementptr inbounds nuw i8, ptr %2, i64 64
   %i.da = load ptr, ptr %i.cz, align 8, !tbaa !50 ; 8 uses
   %.not.i.i.i.i.i = icmp eq ptr %i.da, null

@@ -205,7 +205,7 @@ bb.ai:                                            ; preds = %bb.af
   %i.gq = icmp ne i64 %i.gp, 0
   %i.gr = zext i1 %i.gq to i32
   %i.gs = icmp eq i32 %i.gr, 0
-  br label %bb.ap
+  br i1 %i.gs, label %bb.ap, label %5
 
 bb.aj:                                            ; preds = %bb.ah
   %i.gt = load i32, ptr %i.fy, align 1
@@ -218,7 +218,7 @@ bb.aj:                                            ; preds = %bb.ah
   %i.ha = icmp ne i32 %i.gz, 0
   %i.hb = zext i1 %i.ha to i32
   %i.hc = icmp eq i32 %i.hb, 0
-  br label %bb.ap
+  br i1 %i.hc, label %bb.ap, label %5
 
 bb.ak:                                            ; preds = %bb.af
   %i.hd = load i128, ptr %i.fy, align 1
@@ -231,7 +231,7 @@ bb.ak:                                            ; preds = %bb.af
   %i.hk = icmp ne i128 %i.hj, 0
   %i.hl = zext i1 %i.hk to i32
   %i.hm = icmp eq i32 %i.hl, 0
-  br label %bb.ap
+  br i1 %i.hm, label %bb.ap, label %5
 
 bb.al:                                            ; preds = %bb.af
   %i.hn = load i32, ptr %i.fy, align 1
@@ -257,7 +257,7 @@ bb.am:                                            ; preds = %bb.al
   %i.ie = icmp ne i32 %i.id, 0
   %i.if = zext i1 %i.ie to i32
   %i.ig = icmp eq i32 %i.if, 0
-  br label %bb.ap
+  br i1 %i.ig, label %bb.ap, label %5
 
 bb.an:                                            ; preds = %bb.af
   %i.ih = load i64, ptr %i.fy, align 1
@@ -269,6 +269,9 @@ bb.an:                                            ; preds = %bb.af
   %i.in = icmp ne i64 %i.im, 0
   %i.io = zext i1 %i.in to i32
   %i.ip = icmp eq i32 %i.io, 0
+  br i1 %i.ip, label %bb.ap, label %5
+
+5:                                                ; preds = %bb.an, %bb.am, %bb.ak, %bb.aj, %bb.ai
   br label %bb.ap
 
 bb.ao:                                            ; preds = %bb.af
@@ -282,11 +285,11 @@ bb.ao:                                            ; preds = %bb.af
   %i.ix = icmp ne i64 %i.iw, 0
   %i.iy = zext i1 %i.ix to i32
   %i.iz = icmp eq i32 %i.iy, 0
+  %6 = zext i1 %i.iz to i8
   br label %bb.ap
 
-bb.ap:                                            ; preds = %bb.ao, %bb.an, %bb.am, %bb.al, %bb.ak, %bb.aj, %bb.ai, %bb.ah, %bb.af
-  %.sroa.05.0.shrunk.i = phi i1 [ true, %bb.ah ], [ %i.hm, %bb.ak ], [ %i.ig, %bb.am ], [ true, %bb.al ], [ false, %bb.af ], [ %i.gs, %bb.ai ], [ %i.ip, %bb.an ], [ %i.iz, %bb.ao ], [ %i.hc, %bb.aj ]
-  %.sroa.05.0.i = zext i1 %.sroa.05.0.shrunk.i to i8
+bb.ap:                                            ; preds = %bb.ao, %5, %bb.an, %bb.am, %bb.al, %bb.ak, %bb.aj, %bb.ai, %bb.ah, %bb.af
+  %.sroa.05.0.i = phi i8 [ 1, %bb.ah ], [ 1, %bb.an ], [ 1, %bb.am ], [ 1, %bb.al ], [ 1, %bb.ak ], [ 1, %bb.aj ], [ 1, %bb.ai ], [ %6, %bb.ao ], [ 0, %bb.af ], [ 0, %5 ]
   store i8 %.sroa.05.0.i, ptr %3, align 1, !alias.scope !1441, !noalias !1446
   br label %bb.ag
 

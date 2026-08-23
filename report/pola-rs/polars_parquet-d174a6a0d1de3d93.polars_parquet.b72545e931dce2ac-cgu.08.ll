@@ -205,9 +205,9 @@ bb.a:
     i64 1, label %bb.b
   ], !dbg !280
 
-_RNvXCs6WitO0SpKBq_10equivalentShINtB2_10EquivalentINtNtCsgZ49sUHp3tW_5alloc5boxed3BoxBs_EE10equivalentCsfISxE4fmY1Y_14polars_parquet.exit.thread: ; preds = %_RNvXCs6WitO0SpKBq_10equivalentShINtB2_10EquivalentINtNtCsgZ49sUHp3tW_5alloc5boxed3BoxBs_EE10equivalentCsfISxE4fmY1Y_14polars_parquet.exit, %bb.b, %bb.a, %bb.c
-  %.sroa.5.0 = phi i64 [ %i.n, %bb.c ], [ undef, %bb.a ], [ 0, %bb.b ], [ 0, %_RNvXCs6WitO0SpKBq_10equivalentShINtB2_10EquivalentINtNtCsgZ49sUHp3tW_5alloc5boxed3BoxBs_EE10equivalentCsfISxE4fmY1Y_14polars_parquet.exit ], !dbg !281
-  %.sroa.0.0 = phi i64 [ %i.m, %bb.c ], [ %i.b, %bb.a ], [ 0, %bb.b ], [ %spec.select, %_RNvXCs6WitO0SpKBq_10equivalentShINtB2_10EquivalentINtNtCsgZ49sUHp3tW_5alloc5boxed3BoxBs_EE10equivalentCsfISxE4fmY1Y_14polars_parquet.exit ], !dbg !281
+_RNvXCs6WitO0SpKBq_10equivalentShINtB2_10EquivalentINtNtCsgZ49sUHp3tW_5alloc5boxed3BoxBs_EE10equivalentCsfISxE4fmY1Y_14polars_parquet.exit.thread: ; preds = %bb.b, %3, %_RNvXCs6WitO0SpKBq_10equivalentShINtB2_10EquivalentINtNtCsgZ49sUHp3tW_5alloc5boxed3BoxBs_EE10equivalentCsfISxE4fmY1Y_14polars_parquet.exit, %bb.a, %bb.c
+  %.sroa.5.0 = phi i64 [ %i.n, %bb.c ], [ undef, %bb.a ], [ 0, %3 ], [ 0, %_RNvXCs6WitO0SpKBq_10equivalentShINtB2_10EquivalentINtNtCsgZ49sUHp3tW_5alloc5boxed3BoxBs_EE10equivalentCsfISxE4fmY1Y_14polars_parquet.exit ], [ 0, %bb.b ], !dbg !281
+  %.sroa.0.0 = phi i64 [ %i.m, %bb.c ], [ %i.b, %bb.a ], [ 1, %3 ], [ 0, %_RNvXCs6WitO0SpKBq_10equivalentShINtB2_10EquivalentINtNtCsgZ49sUHp3tW_5alloc5boxed3BoxBs_EE10equivalentCsfISxE4fmY1Y_14polars_parquet.exit ], [ 0, %bb.b ], !dbg !281
   %i.c = insertvalue { i64, i64 } poison, i64 %.sroa.0.0, 0, !dbg !282
   %i.d = insertvalue { i64, i64 } %i.c, i64 %.sroa.5.0, 1, !dbg !282
   ret { i64, i64 } %i.d, !dbg !282
@@ -225,7 +225,9 @@ _RNvXCs6WitO0SpKBq_10equivalentShINtB2_10EquivalentINtNtCsgZ49sUHp3tW_5alloc5box
   %bcmp.i.i.i = tail call i32 @bcmp(ptr nonnull readonly %1, ptr nonnull readonly %.val, i64 range(i64 0, -9223372036854775808) %2), !dbg !311, !alias.scope !316
   %bcmp.i.i.i.fr = freeze i32 %bcmp.i.i.i, !dbg !311
   %i.i = icmp eq i32 %bcmp.i.i.i.fr, 0, !dbg !311
-  %spec.select = zext i1 %i.i to i64, !dbg !320
+  br i1 %i.i, label %3, label %_RNvXCs6WitO0SpKBq_10equivalentShINtB2_10EquivalentINtNtCsgZ49sUHp3tW_5alloc5boxed3BoxBs_EE10equivalentCsfISxE4fmY1Y_14polars_parquet.exit.thread, !dbg !320
+
+3:                                                ; preds = %_RNvXCs6WitO0SpKBq_10equivalentShINtB2_10EquivalentINtNtCsgZ49sUHp3tW_5alloc5boxed3BoxBs_EE10equivalentCsfISxE4fmY1Y_14polars_parquet.exit
   br label %_RNvXCs6WitO0SpKBq_10equivalentShINtB2_10EquivalentINtNtCsgZ49sUHp3tW_5alloc5boxed3BoxBs_EE10equivalentCsfISxE4fmY1Y_14polars_parquet.exit.thread, !dbg !320
 
 bb.c:                                             ; preds = %bb.a

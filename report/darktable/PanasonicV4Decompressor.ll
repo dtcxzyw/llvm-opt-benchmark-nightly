@@ -173,11 +173,13 @@ bb.j:                                             ; preds = %bb.i
   %i.ao = icmp eq i64 %i.an, 0
   %i.ap = add nuw nsw i64 %i.ak, 16384
   %.0.i.i = and i64 %i.ap, 9223372036854759424
-  %spec.select = select i1 %i.ao, i64 %i.ak, i64 %.0.i.i
+  br i1 %i.ao, label %_ZN8rawspeed21getMisalignmentOffsetImQsr3stdE13is_integral_vIT_EEEmS1_m.exit.thread.i.i, label %_ZN8rawspeed7roundUpEmm.exit
+
+_ZN8rawspeed21getMisalignmentOffsetImQsr3stdE13is_integral_vIT_EEEmS1_m.exit.thread.i.i: ; preds = %bb.j
   br label %_ZN8rawspeed7roundUpEmm.exit
 
-_ZN8rawspeed7roundUpEmm.exit:                     ; preds = %bb.j, %bb.i
-  %5 = phi i64 [ %i.ak, %bb.i ], [ %spec.select, %bb.j ] ; 4 uses
+_ZN8rawspeed7roundUpEmm.exit:                     ; preds = %_ZN8rawspeed21getMisalignmentOffsetImQsr3stdE13is_integral_vIT_EEEmS1_m.exit.thread.i.i, %bb.j, %bb.i
+  %5 = phi i64 [ %i.ak, %bb.i ], [ %i.ak, %_ZN8rawspeed21getMisalignmentOffsetImQsr3stdE13is_integral_vIT_EEEmS1_m.exit.thread.i.i ], [ %.0.i.i, %bb.j ] ; 4 uses
   %i.aq = icmp samesign ugt i64 %5, 4294967295
   br i1 %i.aq, label %bb.k, label %bb.n
 

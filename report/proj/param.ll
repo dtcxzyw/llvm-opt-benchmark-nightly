@@ -89,8 +89,10 @@ bb.e:                                             ; preds = %bb.d
   %i.o = add i64 %.03453, 1                       ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %spec.select, i64 %i.o
   %i.q = load i8, ptr %i.p, align 1, !tbaa !8
-  %i.r = icmp eq i8 %i.q, 34                      ; 2 uses
-  %spec.select48 = select i1 %i.r, i64 %i.o, i64 %.03453
+  %i.r = icmp eq i8 %i.q, 34
+  br i1 %i.r, label %bb.i, label %2
+
+2:                                                ; preds = %bb.e
   br label %bb.i
 
 bb.f:                                             ; preds = %.lr.ph
@@ -111,9 +113,9 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   %.not45 = icmp eq i16 %i.z, 0
   br i1 %.not45, label %bb.i, label %._crit_edge
 
-bb.i:                                             ; preds = %bb.e, %bb.d, %bb.g, %bb.h
-  %.135 = phi i64 [ %.03453, %bb.h ], [ %spec.select48, %bb.e ], [ %.03453, %bb.g ], [ %.03453, %bb.d ]
-  %.1 = phi i1 [ false, %bb.h ], [ %i.r, %bb.e ], [ true, %bb.g ], [ true, %bb.d ]
+bb.i:                                             ; preds = %bb.d, %bb.g, %bb.e, %2, %bb.h
+  %.135 = phi i64 [ %.03453, %bb.h ], [ %.03453, %2 ], [ %.03453, %bb.g ], [ %i.o, %bb.e ], [ %.03453, %bb.d ]
+  %.1 = phi i1 [ false, %bb.h ], [ false, %2 ], [ true, %bb.g ], [ true, %bb.e ], [ true, %bb.d ]
   %i.aa = add i64 %.135, 1                        ; 3 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %spec.select, i64 %i.aa ; 3 uses
   %i.ac = load i8, ptr %i.ab, align 1, !tbaa !8   ; 2 uses

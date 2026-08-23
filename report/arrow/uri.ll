@@ -204,13 +204,15 @@ _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i:   ; preds = %bb.l
   %i.cc = icmp ne i32 %i.cb, 1701603686
   %i.cd = zext i1 %i.cc to i32
   %i.ce = icmp eq i32 %i.cd, 0
-  %10 = zext i1 %i.ce to i8
+  br i1 %i.ce, label %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.thread.i.i, label %_ZSteqIcSt11char_traitsIcEEbSt17basic_string_viewIT_T0_ENSt15__type_identityIS5_E4typeE.exit
+
+_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.thread.i.i: ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i
   br label %_ZSteqIcSt11char_traitsIcEEbSt17basic_string_viewIT_T0_ENSt15__type_identityIS5_E4typeE.exit
 
-_ZSteqIcSt11char_traitsIcEEbSt17basic_string_viewIT_T0_ENSt15__type_identityIS5_E4typeE.exit: ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i, %bb.l
-  %11 = phi i8 [ 0, %bb.l ], [ %10, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i ]
+_ZSteqIcSt11char_traitsIcEEbSt17basic_string_viewIT_T0_ENSt15__type_identityIS5_E4typeE.exit: ; preds = %bb.l, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.thread.i.i
+  %10 = phi i8 [ 0, %bb.l ], [ 1, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.thread.i.i ], [ 0, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i ]
   %i.cf = getelementptr inbounds nuw i8, ptr %i.bh, i64 248
-  store i8 %11, ptr %i.cf, align 8, !tbaa !46
+  store i8 %10, ptr %i.cf, align 8, !tbaa !46
   %i.cg = getelementptr inbounds nuw i8, ptr %i.bh, i64 96
   %.056 = load ptr, ptr %i.cg, align 8, !tbaa !143 ; 2 uses
   %.not1957 = icmp eq ptr %.056, null

@@ -204,7 +204,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i248: ; p
   store ptr %i.o, ptr %15, align 8, !tbaa !30, !alias.scope !101
   store i64 0, ptr %i.p, align 8, !tbaa !33, !alias.scope !101
   store i8 0, ptr %i.o, align 8, !tbaa !38, !alias.scope !101
-  %i.hp = add i64 %i.ho, 73                       ; 8 uses
+  %i.hp = add i64 %i.ho, 73                       ; 9 uses
   %.not.i249 = icmp ult i64 %i.hp, 16             ; 2 uses
   br i1 %.not.i249, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit.i231, label %bb.cs
 
@@ -234,13 +234,14 @@ bb.cu:                                            ; preds = %_ZNKSt7__cxx1112bas
   br label %bb.cv
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i229: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE15_M_check_lengthEmmPKc.exit.i.i
+  %16 = icmp ugt i64 %i.hp, 36
   %i.hu = shl nuw nsw i64 %.0.i251, 1
-  %spec.select538 = call i64 @llvm.umax.i64(i64 %i.hu, i64 73)
+  %spec.select539 = select i1 %16, i64 %i.hu, i64 73
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit.i231
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit.i231: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i229, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i248
   %i.hv = phi ptr [ %i.o, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i248 ], [ %i.ht, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i229 ] ; 2 uses
-  %.0.i230 = phi i64 [ 73, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i248 ], [ %spec.select538, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i229 ] ; 3 uses
+  %.0.i230 = phi i64 [ 73, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i248 ], [ %spec.select539, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i229 ] ; 3 uses
   %i.hw = add nuw nsw i64 %.0.i230, 1
   %i.hx = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.hw) #27
           to label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i232 unwind label %.loopexit ; 3 uses

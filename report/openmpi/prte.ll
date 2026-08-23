@@ -202,10 +202,13 @@ bb.ap:                                            ; preds = %bb.ao
   %i.eb = load i8, ptr getelementptr inbounds nuw (i8, ptr @prte_schizo_base, i64 272), align 8, !range !37
   %i.ec = trunc nuw i8 %i.eb to i1
   %or.cond = select i1 %i.ea, i1 true, i1 %i.ec
+  br i1 %or.cond, label %11, label %bb.aq
+
+11:                                               ; preds = %bb.ap
   br label %bb.aq
 
-bb.aq:                                            ; preds = %bb.ap, %bb.ao
-  %.0551 = phi i1 [ %or.cond, %bb.ap ], [ true, %bb.ao ] ; 4 uses
+bb.aq:                                            ; preds = %bb.ao, %11, %bb.ap
+  %.0551 = phi i1 [ false, %bb.ap ], [ true, %11 ], [ true, %bb.ao ] ; 4 uses
   %i.ed = call i32 @unsetenv(ptr noundef nonnull @.str.22) #22 ; 0 uses
   %i.ee = call i32 @prte_register_params() #22    ; 3 uses
   switch i32 %i.ee, label %bb.ar [

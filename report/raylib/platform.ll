@@ -129,11 +129,13 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %i.b = and i32 %0, 393222
   %switch = icmp eq i32 %i.b, 393220
-  %spec.select = zext i1 %switch to i32
+  br i1 %switch, label %.loopexit, label %.preheader.split.preheader
+
+.preheader.split.preheader:                       ; preds = %bb.c
   br label %.loopexit
 
-.loopexit:                                        ; preds = %bb.c, %bb.b
-  %.019 = phi i32 [ 0, %bb.b ], [ %spec.select, %bb.c ]
+.loopexit:                                        ; preds = %bb.c, %.preheader.split.preheader, %bb.b
+  %.019 = phi i32 [ 0, %bb.b ], [ 1, %bb.c ], [ 0, %.preheader.split.preheader ]
   ret i32 %.019
 }
 

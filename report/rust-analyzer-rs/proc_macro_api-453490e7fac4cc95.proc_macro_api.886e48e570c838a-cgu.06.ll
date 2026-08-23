@@ -204,10 +204,13 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c
   %i.i = getelementptr inbounds nuw i8, ptr %i.g, i64 16
   %i.j = tail call noundef zeroext i1 @_RNvXs3_NtNtCshzWfHUSfYae_4core2io5errorNtB5_5ErrorNtNtB9_3fmt7Display3fmt(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.i, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1)
+  br i1 %i.j, label %2, label %bb.e
+
+2:                                                ; preds = %bb.d
   br label %bb.e
 
-bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b, %bb.a
-  %.sroa.0.0 = phi i1 [ true, %bb.a ], [ false, %bb.b ], [ true, %bb.c ], [ %i.j, %bb.d ]
+bb.e:                                             ; preds = %bb.c, %bb.b, %bb.d, %bb.a, %2
+  %.sroa.0.0 = phi i1 [ true, %bb.a ], [ false, %bb.b ], [ true, %2 ], [ false, %bb.d ], [ true, %bb.c ]
   ret i1 %.sroa.0.0
 }
 

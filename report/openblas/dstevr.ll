@@ -202,11 +202,13 @@ bb.af:                                            ; preds = %bb.ae
 bb.ag:                                            ; preds = %bb.af
   %i.cr = load i32, ptr %8, align 4, !tbaa !8
   %i.cs = icmp eq i32 %i.cr, %i.cm
-  %20 = or i1 %i.ag, %i.cs
+  br i1 %i.cs, label %20, label %bb.ah
+
+20:                                               ; preds = %bb.ag
   br label %bb.ah
 
-bb.ah:                                            ; preds = %bb.ag, %bb.af, %bb.ae
-  %or.cond11 = phi i1 [ %i.ag, %bb.ae ], [ %20, %bb.ag ], [ %i.ag, %bb.af ]
+bb.ah:                                            ; preds = %bb.af, %bb.ag, %20, %bb.ae
+  %or.cond11 = phi i1 [ true, %20 ], [ %i.ag, %bb.ag ], [ %i.ag, %bb.af ], [ %i.ag, %bb.ae ]
   %i.ct = icmp eq i32 %i.p, 1
   %or.cond13 = select i1 %or.cond11, i1 %i.ct, i1 false
   br i1 %or.cond13, label %bb.ai, label %bb.ao

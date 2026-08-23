@@ -202,11 +202,13 @@ bb.g:                                             ; preds = %bb.e, %bb.c
 bb.h:                                             ; preds = %bb.f
   %i.p = call i32 @rename(ptr noundef nonnull @.str.1, ptr noundef nonnull %i.a) #3
   %.not29 = icmp eq i32 %i.p, 0
-  %spec.select = select i1 %.not29, i32 0, i32 -146
+  br i1 %.not29, label %.thread33, label %5
+
+5:                                                ; preds = %bb.h
   br label %.thread33
 
-.thread33:                                        ; preds = %bb.g, %bb.f, %bb.b, %bb.h
-  %.2 = phi i32 [ -142, %bb.g ], [ %spec.select, %bb.h ], [ -146, %bb.b ], [ -142, %bb.f ]
+.thread33:                                        ; preds = %bb.g, %bb.f, %bb.b, %bb.h, %5
+  %.2 = phi i32 [ -146, %5 ], [ 0, %bb.h ], [ -142, %bb.g ], [ -146, %bb.b ], [ -142, %bb.f ]
   %i.q = tail call i32 @remove(ptr noundef nonnull @.str.1) #3 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #3
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #3

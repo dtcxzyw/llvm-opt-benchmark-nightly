@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.c
   store i32 1, ptr %i.bl, align 8, !tbaa !83
   %i.bm = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.bn = getelementptr inbounds nuw i8, ptr %1, i64 408
-  %i.bo = load i8, ptr %i.bn, align 8, !tbaa !73
+  %i.bo = load i8, ptr %i.bn, align 8, !tbaa !73  ; 2 uses
   %i.bp = icmp eq i8 %i.bo, 1
   br i1 %i.bp, label %bb.h, label %bb.i
 
@@ -215,6 +215,8 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.g
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #20
+  %8 = icmp eq i8 %i.bo, 0
+  tail call void @llvm.assume(i1 %8)
   %i.br = load ptr, ptr %i.bm, align 8, !tbaa !86
   invoke void @_ZN6icu_788message213InternalValue15forceFormattingERNS0_13DynamicErrorsER10UErrorCode(ptr dead_on_unwind nonnull writable sret(%"class.icu_78::message2::FormattedPlaceholder") align 8 %5, ptr noundef nonnull align 8 dereferenceable(520) %i.br, ptr noundef nonnull align 8 dereferenceable(29) %2, ptr noundef nonnull align 4 dereferenceable(4) %3)
           to label %bb.j unwind label %bb.k

@@ -204,11 +204,13 @@ bb.i:                                             ; preds = %bb.h
   %i.bk = getelementptr inbounds nuw [16 x i8], ptr %i.bj, i64 %i.bf
   %i.bl = load i32, ptr %i.bk, align 8, !tbaa !198
   %.not9.i = icmp eq i32 %i.bl, 0
-  %spec.select.i80 = select i1 %.not9.i, i32 %i.bi, i32 0
+  br i1 %.not9.i, label %_ZN7CaDiCaL8Internal5fixedEi.exit, label %4
+
+4:                                                ; preds = %bb.i
   br label %_ZN7CaDiCaL8Internal5fixedEi.exit
 
-_ZN7CaDiCaL8Internal5fixedEi.exit:                ; preds = %bb.h, %bb.i
-  %.0.i = phi i32 [ 0, %bb.h ], [ %spec.select.i80, %bb.i ] ; 2 uses
+_ZN7CaDiCaL8Internal5fixedEi.exit:                ; preds = %bb.h, %bb.i, %4
+  %.0.i = phi i32 [ 0, %4 ], [ %i.bi, %bb.i ], [ 0, %bb.h ] ; 2 uses
   %i.bm = icmp slt i32 %i.bc, 0                   ; 2 uses
   %i.bn = sub nsw i32 0, %.0.i
   %spec.select10.i = select i1 %i.bm, i32 %i.bn, i32 %.0.i ; 2 uses

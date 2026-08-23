@@ -202,7 +202,9 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %.not11.i = icmp eq i32 %i.n, 0
-  %spec.select.i = select i1 %.not11.i, i32 81, i32 %i.n
+  br i1 %.not11.i, label %cf_dns_result.exit, label %3
+
+3:                                                ; preds = %bb.d
   br label %cf_dns_result.exit
 
 bb.e:                                             ; preds = %.lr.ph.i
@@ -211,8 +213,8 @@ bb.e:                                             ; preds = %.lr.ph.i
   %.not.i = icmp eq ptr %i.p, null
   br i1 %.not.i, label %cf_dns_result.exit, label %.lr.ph.i, !llvm.loop !115
 
-cf_dns_result.exit:                               ; preds = %bb.e, %bb.a, %bb.b, %bb.c, %bb.d
-  %.1.i = phi i32 [ 0, %bb.b ], [ %i.n, %bb.c ], [ %spec.select.i, %bb.d ], [ 2, %bb.a ], [ 2, %bb.e ]
+cf_dns_result.exit:                               ; preds = %bb.e, %bb.a, %bb.b, %bb.c, %bb.d, %3
+  %.1.i = phi i32 [ 0, %bb.b ], [ %i.n, %3 ], [ 81, %bb.d ], [ 2, %bb.a ], [ %i.n, %bb.c ], [ 2, %bb.e ]
   ret i32 %.1.i
 }
 

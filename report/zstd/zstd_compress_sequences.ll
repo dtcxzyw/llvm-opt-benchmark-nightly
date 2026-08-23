@@ -204,7 +204,9 @@ bb.e:                                             ; preds = %bb.a
 bb.f:                                             ; preds = %bb.a
   %i.f = tail call i64 @FSE_buildCTable_wksp(ptr noundef %2, ptr noundef %9, i32 noundef %11, i32 noundef %10, ptr noundef %14, i64 noundef %15) #8 ; 2 uses
   %i.g = icmp ult i64 %i.f, -119
-  %spec.select = select i1 %i.g, i64 0, i64 %i.f
+  br i1 %i.g, label %16, label %bb.l
+
+16:                                               ; preds = %bb.f
   br label %bb.l
 
 bb.g:                                             ; preds = %bb.a
@@ -241,11 +243,13 @@ bb.k:                                             ; preds = %bb.j
   %i.x = getelementptr inbounds nuw i8, ptr %14, i64 108
   %i.y = tail call i64 @FSE_buildCTable_wksp(ptr noundef %2, ptr noundef %14, i32 noundef %6, i32 noundef %i.h, ptr noundef nonnull %i.x, i64 noundef 1140) #8 ; 2 uses
   %i.z = icmp ult i64 %i.y, -119
-  %spec.select79 = select i1 %i.z, i64 %i.v, i64 %i.y
+  br i1 %i.z, label %17, label %bb.l
+
+17:                                               ; preds = %bb.k
   br label %bb.l
 
-bb.l:                                             ; preds = %bb.k, %bb.f, %bb.a, %bb.i, %bb.j, %bb.c, %bb.b, %bb.e, %bb.d
-  %.7 = phi i64 [ %i.v, %bb.j ], [ -70, %bb.c ], [ 1, %bb.d ], [ %i.b, %bb.b ], [ 0, %bb.e ], [ -1, %bb.a ], [ %spec.select79, %bb.k ], [ %i.t, %bb.i ], [ %spec.select, %bb.f ]
+bb.l:                                             ; preds = %bb.a, %bb.i, %bb.k, %bb.j, %17, %bb.c, %bb.b, %bb.f, %16, %bb.e, %bb.d
+  %.7 = phi i64 [ %i.v, %bb.j ], [ -70, %bb.c ], [ 1, %bb.d ], [ %i.b, %bb.b ], [ 0, %bb.e ], [ 0, %16 ], [ %i.f, %bb.f ], [ %i.t, %bb.i ], [ %i.v, %17 ], [ %i.y, %bb.k ], [ -1, %bb.a ]
   ret i64 %.7
 }
 

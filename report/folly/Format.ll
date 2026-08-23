@@ -205,6 +205,9 @@ _ZNK5folly9FormatArg8validateENS0_4TypeE.exit:    ; preds = %_ZNK5folly9FormatAr
 
 bb.e:                                             ; preds = %_ZNK5folly9FormatArg8validateENS0_4TypeE.exit
   store i8 103, ptr %i.p, align 4, !tbaa !27
+  br i1 %i.u, label %.thread204.thread.a, label %.thread204.thread
+
+.thread204.thread:                                ; preds = %bb.e
   br label %.thread204.thread.a
 
 .thread204:                                       ; preds = %_ZNK5folly9FormatArg8validateENS0_4TypeE.exit
@@ -215,10 +218,10 @@ bb.f:                                             ; preds = %.thread204
   store i32 6, ptr %i.v, align 8, !tbaa !28
   br label %.thread204.thread.a
 
-.thread204.thread.a:                              ; preds = %bb.e, %bb.f, %.thread204
-  %21 = phi i32 [ 6, %bb.f ], [ %i.t, %.thread204 ], [ %i.t, %bb.e ] ; 7 uses
-  %22 = phi i8 [ %i.q, %bb.f ], [ %i.q, %.thread204 ], [ 103, %bb.e ] ; 7 uses
-  %23 = phi i1 [ false, %bb.f ], [ false, %.thread204 ], [ %i.u, %bb.e ] ; 2 uses
+.thread204.thread.a:                              ; preds = %.thread204.thread, %bb.f, %.thread204, %bb.e
+  %21 = phi i32 [ 6, %bb.f ], [ %i.t, %.thread204 ], [ -1, %bb.e ], [ %i.t, %.thread204.thread ] ; 7 uses
+  %22 = phi i8 [ %i.q, %bb.f ], [ %i.q, %.thread204 ], [ 103, %bb.e ], [ 103, %.thread204.thread ] ; 7 uses
+  %23 = phi i1 [ false, %bb.f ], [ false, %.thread204 ], [ true, %bb.e ], [ false, %.thread204.thread ] ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %3, i64 18
   %i.x = load i8, ptr %i.w, align 2, !tbaa !29
   switch i8 %i.x, label %bb.h [

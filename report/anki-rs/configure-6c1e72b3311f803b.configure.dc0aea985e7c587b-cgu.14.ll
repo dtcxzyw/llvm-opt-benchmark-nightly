@@ -202,12 +202,16 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.a, ptr noundef nonnull align 8 dereferenceable(24) %i.d, i64 24, i1 false)
-  %i.n = call noundef ptr @_ZN9ninja_gen5build5Build10add_action17h3ed76dd2a42139d1E(ptr noalias noundef nonnull align 8 dereferenceable(248) %0, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @35, i64 noundef 17, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(24) %i.a)
+  %i.n = call noundef ptr @_ZN9ninja_gen5build5Build10add_action17h3ed76dd2a42139d1E(ptr noalias noundef nonnull align 8 dereferenceable(248) %0, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @35, i64 noundef 17, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(24) %i.a) ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
+  %.not18 = icmp eq ptr %i.n, null
+  br i1 %.not18, label %1, label %.sink.split
+
+1:                                                ; preds = %bb.f
   br label %.sink.split
 
-.sink.split:                                      ; preds = %bb.f, %"_ZN4core3ptr42drop_in_place$LT$alloc..string..String$GT$17hd440d1522a579274E.exit"
-  %.sroa.0.0.ph = phi ptr [ %i.n, %bb.f ], [ %i.m, %"_ZN4core3ptr42drop_in_place$LT$alloc..string..String$GT$17hd440d1522a579274E.exit" ]
+.sink.split:                                      ; preds = %"_ZN4core3ptr42drop_in_place$LT$alloc..string..String$GT$17hd440d1522a579274E.exit", %bb.f, %1
+  %.sroa.0.0.ph = phi ptr [ null, %1 ], [ %i.m, %"_ZN4core3ptr42drop_in_place$LT$alloc..string..String$GT$17hd440d1522a579274E.exit" ], [ %i.n, %bb.f ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
   br label %bb.g
 

@@ -83,9 +83,9 @@ bb.a:
     i64 1, label %bb.b
   ], !dbg !31
 
-_RNvXCs6WitO0SpKBq_10equivalenteINtB2_10EquivalentNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrE10equivalentCskAlUH1kY1DR_10polars_ooc.exit.thread: ; preds = %_RNvXCs6WitO0SpKBq_10equivalenteINtB2_10EquivalentNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrE10equivalentCskAlUH1kY1DR_10polars_ooc.exit, %_RNvMs0_NtCs7VARH73bmU_11compact_str4reprNtB5_4Repr8as_slice.exit.i, %bb.a, %_RINvYNtNtCsk79RHlfmHDk_8foldhash7quality11RandomStateNtNtCscgRAwXFJnXP_4core4hash11BuildHasher8hash_oneReECskAlUH1kY1DR_10polars_ooc.exit
-  %.sroa.5.0 = phi i64 [ %i.bp, %_RINvYNtNtCsk79RHlfmHDk_8foldhash7quality11RandomStateNtNtCscgRAwXFJnXP_4core4hash11BuildHasher8hash_oneReECskAlUH1kY1DR_10polars_ooc.exit ], [ undef, %bb.a ], [ 0, %_RNvMs0_NtCs7VARH73bmU_11compact_str4reprNtB5_4Repr8as_slice.exit.i ], [ 0, %_RNvXCs6WitO0SpKBq_10equivalenteINtB2_10EquivalentNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrE10equivalentCskAlUH1kY1DR_10polars_ooc.exit ], !dbg !32
-  %.sroa.0.0 = phi i64 [ %i.bo, %_RINvYNtNtCsk79RHlfmHDk_8foldhash7quality11RandomStateNtNtCscgRAwXFJnXP_4core4hash11BuildHasher8hash_oneReECskAlUH1kY1DR_10polars_ooc.exit ], [ %i.b, %bb.a ], [ 0, %_RNvMs0_NtCs7VARH73bmU_11compact_str4reprNtB5_4Repr8as_slice.exit.i ], [ %spec.select, %_RNvXCs6WitO0SpKBq_10equivalenteINtB2_10EquivalentNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrE10equivalentCskAlUH1kY1DR_10polars_ooc.exit ], !dbg !32
+_RNvXCs6WitO0SpKBq_10equivalenteINtB2_10EquivalentNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrE10equivalentCskAlUH1kY1DR_10polars_ooc.exit.thread: ; preds = %_RNvMs0_NtCs7VARH73bmU_11compact_str4reprNtB5_4Repr8as_slice.exit.i, %3, %_RNvXCs6WitO0SpKBq_10equivalenteINtB2_10EquivalentNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrE10equivalentCskAlUH1kY1DR_10polars_ooc.exit, %bb.a, %_RINvYNtNtCsk79RHlfmHDk_8foldhash7quality11RandomStateNtNtCscgRAwXFJnXP_4core4hash11BuildHasher8hash_oneReECskAlUH1kY1DR_10polars_ooc.exit
+  %.sroa.5.0 = phi i64 [ %i.bp, %_RINvYNtNtCsk79RHlfmHDk_8foldhash7quality11RandomStateNtNtCscgRAwXFJnXP_4core4hash11BuildHasher8hash_oneReECskAlUH1kY1DR_10polars_ooc.exit ], [ undef, %bb.a ], [ 0, %3 ], [ 0, %_RNvXCs6WitO0SpKBq_10equivalenteINtB2_10EquivalentNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrE10equivalentCskAlUH1kY1DR_10polars_ooc.exit ], [ 0, %_RNvMs0_NtCs7VARH73bmU_11compact_str4reprNtB5_4Repr8as_slice.exit.i ], !dbg !32
+  %.sroa.0.0 = phi i64 [ %i.bo, %_RINvYNtNtCsk79RHlfmHDk_8foldhash7quality11RandomStateNtNtCscgRAwXFJnXP_4core4hash11BuildHasher8hash_oneReECskAlUH1kY1DR_10polars_ooc.exit ], [ %i.b, %bb.a ], [ 1, %3 ], [ 0, %_RNvXCs6WitO0SpKBq_10equivalenteINtB2_10EquivalentNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrE10equivalentCskAlUH1kY1DR_10polars_ooc.exit ], [ 0, %_RNvMs0_NtCs7VARH73bmU_11compact_str4reprNtB5_4Repr8as_slice.exit.i ], !dbg !32
   %i.c = insertvalue { i64, i64 } poison, i64 %.sroa.0.0, 0, !dbg !33
   %i.d = insertvalue { i64, i64 } %i.c, i64 %.sroa.5.0, 1, !dbg !33
   ret { i64, i64 } %i.d, !dbg !33
@@ -121,7 +121,9 @@ _RNvXCs6WitO0SpKBq_10equivalenteINtB2_10EquivalentNtNtCs2mZqlW55729_12polars_uti
   %bcmp.i.i = tail call i32 @bcmp(ptr nonnull readonly %1, ptr nonnull readonly %.sroa.0.0.i.i, i64 %2), !dbg !130, !alias.scope !135
   %bcmp.i.i.fr = freeze i32 %bcmp.i.i, !dbg !130
   %i.q = icmp eq i32 %bcmp.i.i.fr, 0, !dbg !130
-  %spec.select = zext i1 %i.q to i64, !dbg !139
+  br i1 %i.q, label %3, label %_RNvXCs6WitO0SpKBq_10equivalenteINtB2_10EquivalentNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrE10equivalentCskAlUH1kY1DR_10polars_ooc.exit.thread, !dbg !139
+
+3:                                                ; preds = %_RNvXCs6WitO0SpKBq_10equivalenteINtB2_10EquivalentNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrE10equivalentCskAlUH1kY1DR_10polars_ooc.exit
   br label %_RNvXCs6WitO0SpKBq_10equivalenteINtB2_10EquivalentNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrE10equivalentCskAlUH1kY1DR_10polars_ooc.exit.thread, !dbg !139
 
 bb.e:                                             ; preds = %bb.a

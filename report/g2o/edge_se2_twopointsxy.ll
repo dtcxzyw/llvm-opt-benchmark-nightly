@@ -205,7 +205,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %bb.d
   %.029 = phi i1 [ true, %.lr.ph ], [ %.1, %bb.d ] ; 2 uses
-  %.01028 = phi i1 [ true, %.lr.ph ], [ %.111, %bb.d ]
+  %.01028 = phi i1 [ true, %.lr.ph ], [ %.111, %bb.d ] ; 2 uses
   %.sroa.022.027 = phi ptr [ %i.i, %.lr.ph ], [ %i.t, %bb.d ] ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %.sroa.022.027, i64 32
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !42
@@ -216,13 +216,15 @@ bb.b:                                             ; preds = %.lr.ph, %bb.d
 
 bb.c:                                             ; preds = %bb.b
   %i.s = load i32, ptr %i.m, align 8, !tbaa !108
-  %3 = icmp ne i32 %i.s, %i.q
-  %spec.select = select i1 %3, i1 %.029, i1 false
+  %3 = icmp eq i32 %i.s, %i.q
+  br i1 %3, label %4, label %bb.d
+
+4:                                                ; preds = %bb.c
   br label %bb.d
 
-bb.d:                                             ; preds = %bb.c, %bb.b
-  %.111 = phi i1 [ %.01028, %bb.c ], [ false, %bb.b ] ; 2 uses
-  %.1 = phi i1 [ %spec.select, %bb.c ], [ %.029, %bb.b ] ; 3 uses
+bb.d:                                             ; preds = %bb.b, %4, %bb.c
+  %.111 = phi i1 [ %.01028, %bb.c ], [ %.01028, %4 ], [ false, %bb.b ] ; 2 uses
+  %.1 = phi i1 [ %.029, %bb.c ], [ false, %4 ], [ %.029, %bb.b ] ; 3 uses
   %i.t = tail call noundef ptr @_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base(ptr noundef nonnull %.sroa.022.027) #30 ; 2 uses
   %.not = icmp eq ptr %i.t, %i.j
   br i1 %.not, label %._crit_edge, label %bb.b, !llvm.loop !115

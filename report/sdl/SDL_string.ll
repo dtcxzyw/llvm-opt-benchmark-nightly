@@ -204,7 +204,9 @@ select.unfold:                                    ; preds = %bb.f, %bb.e, %.lr.p
   %.0.i.ph = phi i64 [ 3, %bb.e ], [ 2, %.lr.ph ], [ 4, %bb.f ]
   %i.m = sub i64 %i.c, %.049
   %.not43 = icmp eq i64 %i.m, %.0.i.ph
-  %spec.select = select i1 %.not43, i64 %i.c, i64 %.049
+  br i1 %.not43, label %.loopexit, label %3
+
+3:                                                ; preds = %select.unfold
   br label %.loopexit
 
 UTF8_GetTrailingBytes.exit:                       ; preds = %bb.f
@@ -212,8 +214,8 @@ UTF8_GetTrailingBytes.exit:                       ; preds = %bb.f
   %.not41 = icmp eq i64 %i.n, 0
   br i1 %.not41, label %.loopexit, label %.lr.ph, !llvm.loop !10
 
-.loopexit:                                        ; preds = %UTF8_GetTrailingBytes.exit, %bb.c, %select.unfold, %bb.d
-  %.035 = phi i64 [ %i.d, %bb.c ], [ %i.c, %bb.d ], [ %spec.select, %select.unfold ], [ %i.c, %UTF8_GetTrailingBytes.exit ] ; 2 uses
+.loopexit:                                        ; preds = %UTF8_GetTrailingBytes.exit, %bb.c, %bb.d, %select.unfold, %3
+  %.035 = phi i64 [ %i.c, %bb.d ], [ %.049, %3 ], [ %i.c, %select.unfold ], [ %i.d, %bb.c ], [ %i.c, %UTF8_GetTrailingBytes.exit ] ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %0, ptr nonnull align 1 %1, i64 %.035, i1 false)
   br label %bb.g
 

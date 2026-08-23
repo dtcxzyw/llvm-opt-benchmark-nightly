@@ -202,10 +202,13 @@ bb.b:                                             ; preds = %bb.a
   %or.cond5 = icmp eq i2 %i.cn, 0
   %i.co = fcmp ole float %i.cg, 0.000000e+00
   %or.cond7 = and i1 %i.co, %or.cond5
+  br i1 %or.cond7, label %bb.c, label %4
+
+4:                                                ; preds = %bb.b
   br label %bb.c
 
-bb.c:                                             ; preds = %bb.b, %bb.a
-  %.0 = phi i1 [ true, %bb.a ], [ %or.cond7, %bb.b ]
+bb.c:                                             ; preds = %bb.a, %bb.b, %4
+  %.0 = phi i1 [ false, %4 ], [ true, %bb.b ], [ true, %bb.a ]
   ret i1 %.0
 }
 

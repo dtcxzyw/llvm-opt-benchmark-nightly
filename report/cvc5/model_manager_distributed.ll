@@ -202,10 +202,13 @@ bb.k:                                             ; preds = %bb.i
 bb.l:                                             ; preds = %.thread
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #15
   %i.ai = call noundef zeroext i1 @_ZN4cvc58internal6theory12ModelManager28collectModelBooleanVariablesEv(ptr noundef nonnull align 8 dereferenceable(122) %0)
+  br i1 %i.ai, label %bb.m, label %2
+
+2:                                                ; preds = %bb.l
   br label %bb.m
 
-bb.m:                                             ; preds = %bb.l, %bb.k
-  %.5 = phi i1 [ false, %bb.k ], [ %i.ai, %bb.l ]
+bb.m:                                             ; preds = %bb.k, %bb.l, %2
+  %.5 = phi i1 [ false, %bb.k ], [ false, %2 ], [ true, %bb.l ]
   ret i1 %.5
 }
 

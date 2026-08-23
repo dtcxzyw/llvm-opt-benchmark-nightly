@@ -70,6 +70,9 @@ bb.e:                                             ; preds = %bb.d
   %i.h = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.i = load i32, ptr %i.h, align 8, !tbaa !7
   %i.j = icmp sgt i32 %i.i, 0
+  br i1 %i.j, label %.thread.a, label %.thread
+
+.thread:                                          ; preds = %bb.e
   br label %.thread.a
 
 bb.f:                                             ; preds = %bb.d
@@ -82,8 +85,8 @@ bb.g:                                             ; preds = %bb.f
   %i.m = icmp slt i32 %i.l, 0
   br label %.thread.a
 
-.thread.a:                                        ; preds = %bb.e, %bb.f, %bb.g
-  %3 = phi i1 [ %i.j, %bb.e ], [ false, %bb.f ], [ %i.m, %bb.g ] ; 2 uses
+.thread.a:                                        ; preds = %.thread, %bb.f, %bb.g, %bb.e
+  %3 = phi i1 [ true, %bb.e ], [ false, %bb.f ], [ %i.m, %bb.g ], [ false, %.thread ] ; 2 uses
   %i.n = load ptr, ptr %0, align 8, !tbaa !12     ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 3 uses
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !19

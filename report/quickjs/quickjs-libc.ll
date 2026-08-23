@@ -205,7 +205,7 @@ bb.k:                                             ; preds = %bb.d, %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #34
   %i.ae = tail call i64 @strlen(ptr noundef nonnull readonly dereferenceable(1) %1) #36 ; 2 uses
   %.not.i75 = icmp ult i64 %i.ae, 5
-  br i1 %.not.i75, label %js__has_suffix.exit.thread.a, label %js__has_suffix.exit
+  br i1 %.not.i75, label %bb.l, label %js__has_suffix.exit
 
 js__has_suffix.exit:                              ; preds = %bb.k
   %i.af = getelementptr inbounds nuw i8, ptr %1, i64 %i.ae
@@ -219,15 +219,14 @@ js__has_suffix.exit:                              ; preds = %bb.k
   %i.an = or i32 %i.ai, %i.am
   %i.ao = icmp ne i32 %i.an, 0
   %i.ap = zext i1 %i.ao to i32
-  %bcmp.i76.fr = freeze i32 %i.ap
-  %.not9.i.not = icmp eq i32 %bcmp.i76.fr, 0
-  br i1 %.not9.i.not, label %bb.l, label %js__has_suffix.exit.thread.a
+  %.not9.i.not = icmp eq i32 %i.ap, 0
+  br i1 %.not9.i.not, label %js__has_suffix.exit.thread.a, label %bb.l
 
-js__has_suffix.exit.thread.a:                     ; preds = %bb.k, %js__has_suffix.exit
+js__has_suffix.exit.thread.a:                     ; preds = %js__has_suffix.exit
   br label %bb.l
 
-bb.l:                                             ; preds = %js__has_suffix.exit.thread.a, %js__has_suffix.exit, %bb.j
-  %.069 = phi i32 [ %.026.i.ph, %bb.j ], [ 0, %js__has_suffix.exit.thread.a ], [ 1, %js__has_suffix.exit ] ; 2 uses
+bb.l:                                             ; preds = %bb.k, %bb.j, %js__has_suffix.exit, %js__has_suffix.exit.thread.a
+  %.069 = phi i32 [ 1, %js__has_suffix.exit.thread.a ], [ 0, %js__has_suffix.exit ], [ %.026.i.ph, %bb.j ], [ 0, %bb.k ] ; 2 uses
   %i.aq = call ptr %5(ptr noundef %0, ptr noundef nonnull %i.b, ptr noundef %1) #34 ; 9 uses
   %.not73 = icmp eq ptr %i.aq, null
   br i1 %.not73, label %bb.m, label %bb.n
@@ -630,11 +629,15 @@ bb.f:                                             ; preds = %bb.e
   br i1 %.not35, label %bb.g, label %dbuf_free.exit
 
 bb.g:                                             ; preds = %bb.f
-  %i.n = load i64, ptr %i.a, align 8, !tbaa !12
+  %i.n = load i64, ptr %i.a, align 8, !tbaa !12   ; 2 uses
+  %.not36 = icmp eq i64 %i.n, -1
+  br i1 %.not36, label %.thread, label %7
+
+7:                                                ; preds = %bb.g
   br label %.thread
 
-.thread:                                          ; preds = %bb.d, %bb.g, %bb.e
-  %.0 = phi i64 [ -1, %bb.e ], [ %i.n, %bb.g ], [ -1, %bb.d ] ; 2 uses
+.thread:                                          ; preds = %bb.d, %bb.g, %7, %bb.e
+  %.0 = phi i64 [ -1, %bb.e ], [ %i.n, %7 ], [ -1, %bb.g ], [ -1, %bb.d ] ; 2 uses
   %i.o = call ptr @JS_GetRuntime(ptr noundef %0) #34
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %6, i8 0, i64 32, i1 false)
   %i.p = getelementptr inbounds nuw i8, ptr %6, i64 40 ; 3 uses
@@ -1037,12 +1040,14 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.d = call i32 @pthread_create(ptr noundef nonnull %0, ptr noundef nonnull %2, ptr noundef nonnull @worker_func, ptr noundef nonnull %1) #34
-  %.not9 = icmp ne i32 %i.d, 0
-  %spec.select = sext i1 %.not9 to i32
+  %.not9 = icmp eq i32 %i.d, 0
+  br i1 %.not9, label %3, label %bb.e
+
+3:                                                ; preds = %bb.d
   br label %bb.e
 
-bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b
-  %.0 = phi i32 [ -1, %bb.b ], [ -1, %bb.c ], [ %spec.select, %bb.d ]
+bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b, %3
+  %.0 = phi i32 [ -1, %bb.b ], [ -1, %bb.c ], [ -1, %bb.d ], [ 0, %3 ]
   %i.e = call i32 @pthread_attr_destroy(ptr noundef nonnull %2) #34 ; 0 uses
   br label %bb.f
 

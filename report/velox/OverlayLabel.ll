@@ -183,10 +183,13 @@ bb.b:                                             ; preds = %bb.a
   %i.l = load i8, ptr %i.k, align 1
   %i.m = icmp eq i8 %i.l, 0
   %or.cond11 = select i1 %or.cond8, i1 %i.m, i1 false
+  br i1 %or.cond11, label %bb.c, label %1
+
+1:                                                ; preds = %bb.b
   br label %bb.c
 
-bb.c:                                             ; preds = %bb.b, %bb.a
-  %.0 = phi i1 [ %or.cond11, %bb.b ], [ true, %bb.a ]
+bb.c:                                             ; preds = %bb.b, %bb.a, %1
+  %.0 = phi i1 [ false, %1 ], [ true, %bb.a ], [ true, %bb.b ]
   ret i1 %.0
 }
 

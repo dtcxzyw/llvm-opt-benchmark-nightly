@@ -204,8 +204,8 @@ _ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i30.i45.i: ; preds = %.noexc52.
   br label %_ZNSt6vectorIiSaIiEE6resizeEm.exit.i.i
 
 _ZNSt6vectorIiSaIiEE6resizeEm.exit.i.i:           ; preds = %._ZNSt6vectorIiSaIiEE6resizeEm.exit_crit_edge9.i.i, %bb.n
-  %.sroa.29.1.i = phi ptr [ null, %bb.n ], [ %i.bj, %._ZNSt6vectorIiSaIiEE6resizeEm.exit_crit_edge9.i.i ] ; 6 uses
-  %.sroa.657.1.i = phi ptr [ null, %bb.n ], [ %i.bh, %._ZNSt6vectorIiSaIiEE6resizeEm.exit_crit_edge9.i.i ] ; 9 uses
+  %.sroa.29.1.i = phi ptr [ null, %bb.n ], [ %i.bj, %._ZNSt6vectorIiSaIiEE6resizeEm.exit_crit_edge9.i.i ] ; 7 uses
+  %.sroa.657.1.i = phi ptr [ null, %bb.n ], [ %i.bh, %._ZNSt6vectorIiSaIiEE6resizeEm.exit_crit_edge9.i.i ] ; 10 uses
   %i.bk = ptrtoint ptr %.sroa.29.1.i to i64
   %i.bl = ptrtoint ptr %.sroa.657.1.i to i64
   %i.bm = sub i64 %i.bk, %i.bl                    ; 6 uses
@@ -264,7 +264,9 @@ bb.s:                                             ; preds = %_ZNSt6vectorIiSaIiE
 bb.t:                                             ; preds = %bb.s
   %i.cc = getelementptr inbounds nuw [4 x i8], ptr %.sroa.657.1.i, i64 %i.bb ; 2 uses
   %.not.i.i5.i.i = icmp eq ptr %.sroa.29.1.i, %i.cc
-  %spec.select.i = select i1 %.not.i.i5.i.i, ptr %.sroa.29.1.i, ptr %i.cc
+  br i1 %.not.i.i5.i.i, label %_ZN5faiss12_GLOBAL__N_115SemiSortedArrayIfEC2Ei.exit.i, label %_ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i6.i.i
+
+_ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i6.i.i:   ; preds = %bb.t
   br label %_ZN5faiss12_GLOBAL__N_115SemiSortedArrayIfEC2Ei.exit.i
 
 .thread.loopexit.i:                               ; preds = %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i43.i
@@ -287,10 +289,10 @@ bb.u:                                             ; preds = %.loopexit.i
   tail call void @_ZdlPvm(ptr noundef nonnull %.sroa.657.1.i, i64 noundef %i.bm) #31
   br label %.body.i
 
-_ZN5faiss12_GLOBAL__N_115SemiSortedArrayIfEC2Ei.exit.i: ; preds = %bb.t, %bb.s, %_ZNSt12_Vector_baseIiSaIiEE13_M_deallocateEPim.exit36.i.i
-  %.sroa.29.2.i = phi ptr [ %.sroa.29.1.i, %bb.s ], [ %.sroa.29.1.i, %bb.t ], [ %i.ca, %_ZNSt12_Vector_baseIiSaIiEE13_M_deallocateEPim.exit36.i.i ] ; 3 uses
-  %.sroa.19.1.i = phi ptr [ %.sroa.29.1.i, %bb.s ], [ %spec.select.i, %bb.t ], [ %i.bz, %_ZNSt12_Vector_baseIiSaIiEE13_M_deallocateEPim.exit36.i.i ] ; 2 uses
-  %.sroa.657.2.i = phi ptr [ %.sroa.657.1.i, %bb.s ], [ %.sroa.657.1.i, %bb.t ], [ %i.bt, %_ZNSt12_Vector_baseIiSaIiEE13_M_deallocateEPim.exit36.i.i ] ; 5 uses
+_ZN5faiss12_GLOBAL__N_115SemiSortedArrayIfEC2Ei.exit.i: ; preds = %_ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i6.i.i, %bb.t, %bb.s, %_ZNSt12_Vector_baseIiSaIiEE13_M_deallocateEPim.exit36.i.i
+  %.sroa.29.2.i = phi ptr [ %.sroa.29.1.i, %bb.s ], [ %.sroa.29.1.i, %bb.t ], [ %.sroa.29.1.i, %_ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i6.i.i ], [ %i.ca, %_ZNSt12_Vector_baseIiSaIiEE13_M_deallocateEPim.exit36.i.i ] ; 3 uses
+  %.sroa.19.1.i = phi ptr [ %.sroa.29.1.i, %bb.s ], [ %.sroa.29.1.i, %bb.t ], [ %i.cc, %_ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i6.i.i ], [ %i.bz, %_ZNSt12_Vector_baseIiSaIiEE13_M_deallocateEPim.exit36.i.i ] ; 2 uses
+  %.sroa.657.2.i = phi ptr [ %.sroa.657.1.i, %bb.s ], [ %.sroa.657.1.i, %bb.t ], [ %.sroa.657.1.i, %_ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i6.i.i ], [ %i.bt, %_ZNSt12_Vector_baseIiSaIiEE13_M_deallocateEPim.exit36.i.i ] ; 5 uses
   %i.cd = load ptr, ptr %i.ba, align 8, !tbaa !336
   %.not.i.i.i = icmp eq ptr %.pre.pre.i, %i.cd
   br i1 %.not.i.i.i, label %bb.w, label %bb.v

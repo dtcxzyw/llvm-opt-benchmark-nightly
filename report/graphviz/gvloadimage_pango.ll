@@ -148,11 +148,13 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.d = tail call i32 @feof(ptr noundef %0) #4
   %.not = icmp eq i32 %i.d, 0
-  %spec.select = select i1 %.not, i32 10, i32 0
+  br i1 %.not, label %3, label %bb.c
+
+3:                                                ; preds = %bb.b
   br label %bb.c
 
-bb.c:                                             ; preds = %bb.b, %bb.a
-  %.0 = phi i32 [ 0, %bb.a ], [ %spec.select, %bb.b ]
+bb.c:                                             ; preds = %bb.a, %bb.b, %3
+  %.0 = phi i32 [ 10, %3 ], [ 0, %bb.b ], [ 0, %bb.a ]
   ret i32 %.0
 }
 

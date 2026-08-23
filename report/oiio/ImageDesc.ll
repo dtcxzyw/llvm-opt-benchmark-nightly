@@ -202,10 +202,13 @@ bb.s:                                             ; preds = %bb.r
   %i.av = trunc i64 %i.ae to i32
   %i.aw = tail call i64 @div(i32 noundef %i.au, i32 noundef %i.av) #26
   %.not23 = icmp eq i64 %i.aw, 4
+  br i1 %.not23, label %3, label %bb.t
+
+3:                                                ; preds = %bb.s
   br label %bb.t
 
-bb.t:                                             ; preds = %bb.s, %bb.r, %bb.q, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %bb.a
-  %.2 = phi i1 [ false, %bb.g ], [ false, %bb.h ], [ false, %bb.q ], [ false, %bb.r ], [ false, %bb.f ], [ %.not23, %bb.s ], [ false, %bb.a ], [ false, %bb.c ], [ false, %bb.d ], [ false, %bb.e ]
+bb.t:                                             ; preds = %bb.s, %bb.r, %bb.q, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %bb.a, %3
+  %.2 = phi i1 [ false, %bb.g ], [ false, %bb.h ], [ false, %bb.q ], [ false, %bb.r ], [ true, %3 ], [ false, %bb.s ], [ false, %bb.a ], [ false, %bb.c ], [ false, %bb.d ], [ false, %bb.e ], [ false, %bb.f ]
   ret i1 %.2
 
 bb.u:                                             ; preds = %bb.m

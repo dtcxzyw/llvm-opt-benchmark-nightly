@@ -190,14 +190,16 @@ bb.e:                                             ; preds = %_ZStlsISt11char_tra
 ._crit_edge:                                      ; preds = %bb.n
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #7
   %.not = icmp eq i32 %.1, 0
-  %spec.select = select i1 %.not, i32 0, i32 1610612736
+  br i1 %.not, label %4, label %bb.f
+
+4:                                                ; preds = %._crit_edge
   br label %bb.f
 
-bb.f:                                             ; preds = %._crit_edge, %._crit_edge.thread
-  %.047.lcssa65 = phi i32 [ %.1, %._crit_edge ], [ 0, %._crit_edge.thread ] ; 3 uses
-  %4 = phi i32 [ %spec.select, %._crit_edge ], [ 0, %._crit_edge.thread ]
+bb.f:                                             ; preds = %._crit_edge.thread, %._crit_edge, %4
+  %.047.lcssa65 = phi i32 [ %.1, %._crit_edge ], [ 0, %._crit_edge.thread ], [ %.1, %4 ] ; 3 uses
+  %5 = phi i32 [ 1610612736, %._crit_edge ], [ 0, %._crit_edge.thread ], [ 0, %4 ]
   %i.t = sub i32 %i.l, %.047.lcssa65              ; 2 uses
-  %i.u = or i32 %4, %i.t
+  %i.u = or i32 %5, %i.t
   store i32 %i.u, ptr %i.c, align 4, !tbaa !8
   %i.v = load ptr, ptr %0, align 8, !tbaa !9      ; 2 uses
   %i.w = load ptr, ptr %i.v, align 8, !tbaa !15
@@ -287,7 +289,7 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.g, %bb.h, %bb.i, %bb.j, %bb.m
-  %.1 = phi i32 [ %i.by, %bb.m ], [ %.04755, %bb.j ], [ %.04755, %bb.i ], [ %.04755, %bb.h ], [ %.04755, %bb.g ] ; 3 uses
+  %.1 = phi i32 [ %i.by, %bb.m ], [ %.04755, %bb.j ], [ %.04755, %bb.i ], [ %.04755, %bb.h ], [ %.04755, %bb.g ] ; 4 uses
   %indvars.iv.next = add i64 %indvars.iv, 4       ; 2 uses
   %i.bz = icmp samesign ult i64 %indvars.iv.next, %i.s
   br i1 %i.bz, label %bb.g, label %._crit_edge, !llvm.loop !19

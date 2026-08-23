@@ -205,11 +205,13 @@ _ZL10HelpMarkerPKc.exit36.i86:                    ; preds = %bb.xt, %bb.xs
 
 bb.xu:                                            ; preds = %_ZL10HelpMarkerPKc.exit36.i86
   %i.chf = call noundef zeroext i1 @_ZN5ImGui17IsItemToggledOpenEv()
-  %spec.select35.i = sext i1 %i.chf to i32
+  br i1 %i.chf, label %bb.xv, label %84
+
+84:                                               ; preds = %bb.xu
   br label %bb.xv
 
-bb.xv:                                            ; preds = %bb.xu, %_ZL10HelpMarkerPKc.exit36.i86
-  %.1.i88 = phi i32 [ %spec.select35.i, %bb.xu ], [ -1, %_ZL10HelpMarkerPKc.exit36.i86 ] ; 2 uses
+bb.xv:                                            ; preds = %84, %bb.xu, %_ZL10HelpMarkerPKc.exit36.i86
+  %.1.i88 = phi i32 [ -1, %bb.xu ], [ 0, %84 ], [ -1, %_ZL10HelpMarkerPKc.exit36.i86 ] ; 2 uses
   br i1 %i.chd, label %bb.xw, label %bb.xx
 
 bb.xw:                                            ; preds = %bb.xv
@@ -228,11 +230,13 @@ bb.xx:                                            ; preds = %bb.xw, %bb.xv
 
 bb.xy:                                            ; preds = %bb.xx
   %i.chk = call noundef zeroext i1 @_ZN5ImGui17IsItemToggledOpenEv()
-  %spec.select35.1.i = select i1 %i.chk, i32 %.1.i88, i32 1
+  br i1 %i.chk, label %bb.xz, label %85
+
+85:                                               ; preds = %bb.xy
   br label %bb.xz
 
-bb.xz:                                            ; preds = %bb.xy, %bb.xx
-  %.1.1.i = phi i32 [ %spec.select35.1.i, %bb.xy ], [ %.1.i88, %bb.xx ] ; 2 uses
+bb.xz:                                            ; preds = %85, %bb.xy, %bb.xx
+  %.1.1.i = phi i32 [ %.1.i88, %bb.xy ], [ 1, %85 ], [ %.1.i88, %bb.xx ] ; 2 uses
   br i1 %i.chi, label %bb.ya, label %bb.yb
 
 bb.ya:                                            ; preds = %bb.xz
@@ -251,11 +255,13 @@ bb.yb:                                            ; preds = %bb.ya, %bb.xz
 
 bb.yc:                                            ; preds = %bb.yb
   %i.chp = call noundef zeroext i1 @_ZN5ImGui17IsItemToggledOpenEv()
-  %spec.select35.2.i = select i1 %i.chp, i32 %.1.1.i, i32 2
+  br i1 %i.chp, label %bb.yd, label %86
+
+86:                                               ; preds = %bb.yc
   br label %bb.yd
 
-bb.yd:                                            ; preds = %bb.yc, %bb.yb
-  %.1.2.i = phi i32 [ %spec.select35.2.i, %bb.yc ], [ %.1.1.i, %bb.yb ] ; 2 uses
+bb.yd:                                            ; preds = %86, %bb.yc, %bb.yb
+  %.1.2.i = phi i32 [ %.1.1.i, %bb.yc ], [ 2, %86 ], [ %.1.1.i, %bb.yb ] ; 2 uses
   br i1 %i.chn, label %bb.ye, label %bb.yf
 
 bb.ye:                                            ; preds = %bb.yd
@@ -274,11 +280,13 @@ bb.yf:                                            ; preds = %bb.ye, %bb.yd
 
 bb.yg:                                            ; preds = %bb.yf
   %i.chu = call noundef zeroext i1 @_ZN5ImGui17IsItemToggledOpenEv()
-  %spec.select35.3.i = select i1 %i.chu, i32 %.1.2.i, i32 3
+  br i1 %i.chu, label %bb.yh, label %87
+
+87:                                               ; preds = %bb.yg
   br label %bb.yh
 
-bb.yh:                                            ; preds = %bb.yg, %bb.yf
-  %.1.3.i = phi i32 [ %spec.select35.3.i, %bb.yg ], [ %.1.2.i, %bb.yf ] ; 2 uses
+bb.yh:                                            ; preds = %87, %bb.yg, %bb.yf
+  %.1.3.i = phi i32 [ %.1.2.i, %bb.yg ], [ 3, %87 ], [ %.1.2.i, %bb.yf ] ; 2 uses
   br i1 %i.chs, label %bb.yi, label %bb.yj
 
 bb.yi:                                            ; preds = %bb.yh
@@ -297,11 +305,13 @@ bb.yj:                                            ; preds = %bb.yi, %bb.yh
 
 bb.yk:                                            ; preds = %bb.yj
   %i.chz = call noundef zeroext i1 @_ZN5ImGui17IsItemToggledOpenEv()
-  %spec.select35.4.i = select i1 %i.chz, i32 %.1.3.i, i32 4
+  br i1 %i.chz, label %bb.yl, label %88
+
+88:                                               ; preds = %bb.yk
   br label %bb.yl
 
-bb.yl:                                            ; preds = %bb.yk, %bb.yj
-  %.1.4.i = phi i32 [ %spec.select35.4.i, %bb.yk ], [ %.1.3.i, %bb.yj ] ; 2 uses
+bb.yl:                                            ; preds = %88, %bb.yk, %bb.yj
+  %.1.4.i = phi i32 [ %.1.3.i, %bb.yk ], [ 4, %88 ], [ %.1.3.i, %bb.yj ] ; 2 uses
   br i1 %i.chx, label %bb.ym, label %bb.yn
 
 bb.ym:                                            ; preds = %bb.yl
@@ -320,11 +330,13 @@ bb.yn:                                            ; preds = %bb.ym, %bb.yl
 
 bb.yo:                                            ; preds = %bb.yn
   %i.cie = call noundef zeroext i1 @_ZN5ImGui17IsItemToggledOpenEv()
-  %spec.select35.5.i = select i1 %i.cie, i32 %.1.4.i, i32 5
+  br i1 %i.cie, label %bb.yp, label %89
+
+89:                                               ; preds = %bb.yo
   br label %bb.yp
 
-bb.yp:                                            ; preds = %bb.yo, %bb.yn
-  %.1.5.i = phi i32 [ %spec.select35.5.i, %bb.yo ], [ %.1.4.i, %bb.yn ] ; 2 uses
+bb.yp:                                            ; preds = %89, %bb.yo, %bb.yn
+  %.1.5.i = phi i32 [ %.1.4.i, %bb.yo ], [ 5, %89 ], [ %.1.4.i, %bb.yn ] ; 2 uses
   br i1 %i.cic, label %bb.yq, label %bb.yr
 
 bb.yq:                                            ; preds = %bb.yp
@@ -727,7 +739,7 @@ bb.cp:                                            ; preds = %.lr.ph204
   br label %_ZN28ExampleSelectionWithDeletion20ApplyDeletionPreLoopEP18ImGuiMultiSelectIOi.exit, !llvm.loop !351
 
 _ZN28ExampleSelectionWithDeletion20ApplyDeletionPreLoopEP18ImGuiMultiSelectIOi.exit: ; preds = %.lr.ph202, %bb.cp, %.critedge.i, %._ZN28ExampleSelectionWithDeletion20ApplyDeletionPreLoopEP18ImGuiMultiSelectIOi.exit.loopexit_crit_edge205, %bb.co, %bb.cm
-  %i.jb = phi i32 [ -1, %bb.cm ], [ -1, %bb.cp ], [ %i.in, %bb.co ], [ %.0.i, %._ZN28ExampleSelectionWithDeletion20ApplyDeletionPreLoopEP18ImGuiMultiSelectIOi.exit.loopexit_crit_edge205 ], [ -1, %.critedge.i ], [ %.022.i201, %.lr.ph202 ] ; 2 uses
+  %i.jb = phi i32 [ -1, %bb.cm ], [ -1, %bb.cp ], [ %i.in, %bb.co ], [ -1, %.critedge.i ], [ %.0.i, %._ZN28ExampleSelectionWithDeletion20ApplyDeletionPreLoopEP18ImGuiMultiSelectIOi.exit.loopexit_crit_edge205 ], [ %.022.i201, %.lr.ph202 ] ; 2 uses
   %i.jc = load i32, ptr @_ZZL40DemoWindowWidgetsSelectionAndMultiSelectP19ImGuiDemoWindowDataE5items, align 8, !tbaa !339
   %i.jd = icmp sgt i32 %i.jc, 0
   br i1 %i.jd, label %.lr.ph57, label %._crit_edge
@@ -1130,7 +1142,7 @@ bb.hk:                                            ; preds = %.lr.ph212
   br label %_ZN28ExampleSelectionWithDeletion20ApplyDeletionPreLoopEP18ImGuiMultiSelectIOi.exit286, !llvm.loop !351
 
 _ZN28ExampleSelectionWithDeletion20ApplyDeletionPreLoopEP18ImGuiMultiSelectIOi.exit286: ; preds = %.lr.ph210, %bb.hk, %.critedge.i282, %._ZN28ExampleSelectionWithDeletion20ApplyDeletionPreLoopEP18ImGuiMultiSelectIOi.exit286.loopexit_crit_edge214, %bb.hj, %bb.hh, %bb.hg
-  %i.wt = phi i32 [ -1, %bb.hg ], [ -1, %bb.hh ], [ %i.wf, %bb.hj ], [ -1, %bb.hk ], [ %.0.i284, %._ZN28ExampleSelectionWithDeletion20ApplyDeletionPreLoopEP18ImGuiMultiSelectIOi.exit286.loopexit_crit_edge214 ], [ -1, %.critedge.i282 ], [ %.022.i280209, %.lr.ph210 ] ; 5 uses
+  %i.wt = phi i32 [ -1, %bb.hg ], [ -1, %bb.hh ], [ %i.wf, %bb.hj ], [ -1, %bb.hk ], [ -1, %.critedge.i282 ], [ %.0.i284, %._ZN28ExampleSelectionWithDeletion20ApplyDeletionPreLoopEP18ImGuiMultiSelectIOi.exit286.loopexit_crit_edge214 ], [ %.022.i280209, %.lr.ph210 ] ; 5 uses
   store i1 false, ptr @_ZZL40DemoWindowWidgetsSelectionAndMultiSelectP19ImGuiDemoWindowDataE26request_deletion_from_menu, align 1
   %i.wu = load i8, ptr @_ZZL40DemoWindowWidgetsSelectionAndMultiSelectP19ImGuiDemoWindowDataE13show_in_table, align 1, !tbaa !33, !range !14, !noundef !15
   %i.wv = trunc nuw i8 %i.wu to i1
@@ -1533,11 +1545,13 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 bb.e:                                             ; preds = %bb.d, %bb.c
   %.2 = phi i32 [ 0, %bb.d ], [ %.149, %bb.c ]
   %i.al = call noundef zeroext i1 @_ZN5ImGui20IsMouseDoubleClickedEi(i32 noundef 0)
-  %spec.select45 = select i1 %i.al, i32 0, i32 %.2
+  br i1 %i.al, label %9, label %bb.f
+
+9:                                                ; preds = %bb.e
   br label %bb.f
 
-bb.f:                                             ; preds = %bb.e, %.lr.ph
-  %.3 = phi i32 [ %.149, %.lr.ph ], [ %spec.select45, %bb.e ] ; 2 uses
+bb.f:                                             ; preds = %bb.e, %9, %.lr.ph
+  %.3 = phi i32 [ 0, %9 ], [ %.2, %bb.e ], [ %.149, %.lr.ph ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.am = load i32, ptr %0, align 8, !tbaa !339
   %i.an = sext i32 %i.am to i64
@@ -1615,11 +1629,13 @@ bb.j:                                             ; preds = %bb.i, %bb.h
 bb.k:                                             ; preds = %bb.j, %bb.i
   %.2.1 = phi i32 [ 1, %bb.j ], [ %.149.1, %bb.i ]
   %i.br = call noundef zeroext i1 @_ZN5ImGui20IsMouseDoubleClickedEi(i32 noundef 0)
-  %spec.select45.1 = select i1 %i.br, i32 1, i32 %.2.1
+  br i1 %i.br, label %10, label %bb.l
+
+10:                                               ; preds = %bb.k
   br label %bb.l
 
-bb.l:                                             ; preds = %bb.k, %.lr.ph.1
-  %.3.1 = phi i32 [ %.149.1, %.lr.ph.1 ], [ %spec.select45.1, %bb.k ] ; 2 uses
+bb.l:                                             ; preds = %10, %bb.k, %.lr.ph.1
+  %.3.1 = phi i32 [ 1, %10 ], [ %.2.1, %bb.k ], [ %.149.1, %.lr.ph.1 ] ; 2 uses
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv.1, 1 ; 2 uses
   %i.bs = load i32, ptr %i.ap, align 8, !tbaa !339
   %i.bt = sext i32 %i.bs to i64

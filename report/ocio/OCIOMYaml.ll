@@ -202,8 +202,8 @@ bb.p:                                             ; preds = %bb.o
   %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !152
   br label %_ZNSt12__shared_ptrIN4YAML6detail13memory_holderELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit
 
-_ZNSt12__shared_ptrIN4YAML6detail13memory_holderELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit: ; preds = %bb.p, %bb.o, %bb.k, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i, %bb.g, %bb.b, %bb.a, %bb.a
-  %.1 = phi ptr [ null, %bb.k ], [ null, %bb.a ], [ null, %bb.a ], [ null, %bb.b ], [ null, %bb.g ], [ null, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i ], [ %i.ah, %bb.p ], [ null, %bb.o ]
+_ZNSt12__shared_ptrIN4YAML6detail13memory_holderELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit: ; preds = %bb.p, %bb.o, %bb.b, %bb.g, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i, %bb.k, %bb.a, %bb.a
+  %.1 = phi ptr [ null, %bb.b ], [ null, %bb.a ], [ null, %bb.a ], [ null, %bb.k ], [ null, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i ], [ null, %bb.g ], [ %i.ah, %bb.p ], [ null, %bb.o ]
   ret ptr %.1
 }
 
@@ -470,11 +470,13 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %bb.i, %._crit_edge
   %.sroa.025.2 = phi ptr [ %i.u, %bb.i ], [ %.sroa.025.0.lcssa, %._crit_edge ] ; 2 uses
   %i.v = call noundef zeroext i1 @_ZN9__gnu_cxx5__ops10_Iter_predIZNK4YAML6detail9node_data3getIA14_cEEPNS3_4nodeERKT_St10shared_ptrINS3_13memory_holderEEEUlSt4pairIS8_S8_EE_EclINS_17__normal_iteratorIPKSG_St6vectorISG_SaISG_EEEEEEbS9_(ptr noundef nonnull align 8 dereferenceable(16) %4, ptr %.sroa.025.2)
-  %spec.select = select i1 %i.v, ptr %.sroa.025.2, ptr %1
+  br i1 %i.v, label %.loopexit, label %5
+
+5:                                                ; preds = %bb.j
   br label %.loopexit
 
-.loopexit:                                        ; preds = %bb.d, %bb.c, %bb.b, %.lr.ph, %bb.j, %._crit_edge, %bb.h, %bb.f
-  %.sroa.08.0.in.sroa.speculated = phi ptr [ %.sroa.025.1, %bb.h ], [ %spec.select, %bb.j ], [ %1, %._crit_edge ], [ %.sroa.025.0.lcssa, %bb.f ], [ %i.l, %bb.d ], [ %i.j, %bb.c ], [ %i.h, %bb.b ], [ %.sroa.025.035, %.lr.ph ]
+.loopexit:                                        ; preds = %bb.d, %bb.c, %bb.b, %.lr.ph, %._crit_edge, %5, %bb.j, %bb.h, %bb.f
+  %.sroa.08.0.in.sroa.speculated = phi ptr [ %.sroa.025.1, %bb.h ], [ %1, %._crit_edge ], [ %.sroa.025.0.lcssa, %bb.f ], [ %1, %5 ], [ %.sroa.025.2, %bb.j ], [ %i.l, %bb.d ], [ %i.j, %bb.c ], [ %i.h, %bb.b ], [ %.sroa.025.035, %.lr.ph ]
   ret ptr %.sroa.08.0.in.sroa.speculated
 }
 

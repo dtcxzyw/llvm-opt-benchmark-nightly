@@ -202,6 +202,9 @@ bb.d:                                             ; preds = %bb.c
   %i.ba = getelementptr i8, ptr %1, i64 20
   %i.bb = load i32, ptr %i.ba, align 4
   %.not13.i = icmp eq i32 %i.bb, %i.az
+  br i1 %.not13.i, label %is_first_frame_in_msg.exit, label %4
+
+4:                                                ; preds = %bb.d
   br label %is_first_frame_in_msg.exit
 
 bb.e:                                             ; preds = %bb.c
@@ -215,8 +218,8 @@ bb.e:                                             ; preds = %bb.c
   %i.bj = call ptr @wmem_map_insert(ptr noundef %i.be, ptr noundef %i.bd, ptr noundef %i.bi) ; 0 uses
   br label %is_first_frame_in_msg.exit
 
-is_first_frame_in_msg.exit:                       ; preds = %bb.d, %bb.e
-  %.0.i = phi i1 [ true, %bb.e ], [ %.not13.i, %bb.d ]
+is_first_frame_in_msg.exit:                       ; preds = %bb.d, %4, %bb.e
+  %.0.i = phi i1 [ false, %4 ], [ true, %bb.d ], [ true, %bb.e ]
   %i.bk = load i64, ptr %i.c, align 8
   %i.bl = and i64 %i.bk, 8
   %.not.i96 = icmp ne i64 %i.bl, 0                ; 2 uses

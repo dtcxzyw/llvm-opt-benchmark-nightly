@@ -203,11 +203,13 @@ bb.e:                                             ; preds = %bb.d
   %i.w = getelementptr inbounds nuw i8, ptr %i.q, i64 12
   %i.x = load i32, ptr %i.w, align 4
   %i.y = icmp eq i32 %i.x, 0
-  %spec.select = zext i1 %i.y to i32
+  br i1 %i.y, label %3, label %bb.f
+
+3:                                                ; preds = %bb.e
   br label %bb.f
 
-bb.f:                                             ; preds = %bb.e, %bb.d
-  %.0126 = phi i32 [ 0, %bb.d ], [ %spec.select, %bb.e ] ; 2 uses
+bb.f:                                             ; preds = %3, %bb.e, %bb.d
+  %.0126 = phi i32 [ 1, %3 ], [ 0, %bb.e ], [ 0, %bb.d ] ; 2 uses
   %i.z = load i32, ptr %i.e, align 8              ; 3 uses
   %i.aa = icmp sgt i32 %i.z, 0
   br i1 %i.aa, label %bb.g, label %bb.h

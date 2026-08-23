@@ -52,10 +52,13 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.h = tail call zeroext i1 @lv_obj_has_state(ptr noundef %i.a, i32 noundef 128) #3
+  br i1 %i.h, label %5, label %bb.c
+
+5:                                                ; preds = %bb.b
   br label %bb.c
 
-bb.c:                                             ; preds = %bb.b, %bb.a
-  %.027 = phi i1 [ false, %bb.a ], [ %i.h, %bb.b ]
+bb.c:                                             ; preds = %5, %bb.b, %bb.a
+  %.027 = phi i1 [ true, %5 ], [ false, %bb.b ], [ false, %bb.a ]
   %i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   %i.j = load i32, ptr %i.i, align 8, !tbaa !16
   %i.k = icmp eq i32 %i.j, 327680

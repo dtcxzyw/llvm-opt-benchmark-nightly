@@ -169,11 +169,13 @@ bb.f:                                             ; preds = %bb.e
   %i.z = getelementptr inbounds nuw i8, ptr %i.x, i64 8
   %i.aa = load ptr, ptr %i.z, align 8, !tbaa !40
   %i.ab = icmp eq ptr %i.aa, null
-  %spec.select.i = select i1 %i.ab, i32 2, i32 %.0104166.i
+  br i1 %i.ab, label %5, label %bb.g
+
+5:                                                ; preds = %bb.f
   br label %bb.g
 
-bb.g:                                             ; preds = %bb.f, %bb.e
-  %.1105.i = phi i32 [ %.0104166.i, %bb.e ], [ %spec.select.i, %bb.f ] ; 2 uses
+bb.g:                                             ; preds = %5, %bb.f, %bb.e
+  %.1105.i = phi i32 [ 2, %5 ], [ %.0104166.i, %bb.f ], [ %.0104166.i, %bb.e ] ; 2 uses
   br i1 %i.q, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g

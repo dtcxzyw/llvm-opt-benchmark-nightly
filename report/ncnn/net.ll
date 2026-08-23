@@ -204,7 +204,9 @@ bb.aj:                                            ; preds = %bb.ai
 bb.ak:                                            ; preds = %bb.aj, %bb.ai
   %i.dd = and i32 %.2, 3
   %i.de = icmp eq i32 %i.dd, 0
-  %spec.select = select i1 %i.de, i32 4, i32 1
+  br i1 %i.de, label %7, label %.thread140
+
+7:                                                ; preds = %bb.ak
   br label %.thread140
 
 bb.al:                                            ; preds = %bb.af
@@ -230,13 +232,15 @@ bb.ao:                                            ; preds = %bb.an
 bb.ap:                                            ; preds = %bb.ao, %bb.an
   %i.dl = and i32 %.2, 3
   %i.dm = icmp eq i32 %i.dl, 0
-  %spec.select69 = select i1 %i.dm, i32 4, i32 1
+  br i1 %i.dm, label %8, label %.thread140
+
+8:                                                ; preds = %bb.ap
   br label %.thread140
 
-.thread140:                                       ; preds = %bb.af, %_ZNK4ncnn3Mat8elembitsEv.exit114.thread, %bb.ak, %bb.aj, %bb.ah, %bb.ap, %bb.ao, %bb.am
-  %7 = phi i32 [ %i.cw, %bb.af ], [ 16, %bb.am ], [ 16, %bb.ao ], [ 16, %bb.ap ], [ 32, %bb.ah ], [ 32, %bb.ak ], [ 32, %bb.aj ], [ 0, %_ZNK4ncnn3Mat8elembitsEv.exit114.thread ]
-  %.154 = phi i32 [ 1, %bb.af ], [ 16, %bb.am ], [ 8, %bb.ao ], [ %spec.select69, %bb.ap ], [ 16, %bb.ah ], [ %spec.select, %bb.ak ], [ 8, %bb.aj ], [ 1, %_ZNK4ncnn3Mat8elembitsEv.exit114.thread ]
-  %i.dn = icmp eq i32 %7, 8
+.thread140:                                       ; preds = %bb.af, %_ZNK4ncnn3Mat8elembitsEv.exit114.thread, %bb.aj, %bb.ak, %7, %bb.ah, %bb.ao, %bb.am, %bb.ap, %8
+  %9 = phi i32 [ %i.cw, %bb.af ], [ 16, %bb.am ], [ 16, %8 ], [ 16, %bb.ap ], [ 16, %bb.ao ], [ 32, %bb.ah ], [ 32, %bb.aj ], [ 32, %bb.ak ], [ 32, %7 ], [ 0, %_ZNK4ncnn3Mat8elembitsEv.exit114.thread ]
+  %.154 = phi i32 [ 1, %bb.af ], [ 16, %bb.am ], [ 4, %8 ], [ 1, %bb.ap ], [ 8, %bb.ao ], [ 16, %bb.ah ], [ 8, %bb.aj ], [ 1, %bb.ak ], [ 4, %7 ], [ 1, %_ZNK4ncnn3Mat8elembitsEv.exit114.thread ]
+  %i.dn = icmp eq i32 %9, 8
   %i.do = and i32 %.2, 7
   %i.dp = icmp eq i32 %i.do, 0
   %or.cond71 = select i1 %i.dn, i1 %i.dp, i1 false

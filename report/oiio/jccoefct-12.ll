@@ -205,11 +205,13 @@ bb.d:                                             ; preds = %bb.b
   %i.ad = load i32, ptr %i.u, align 4, !tbaa !48  ; 2 uses
   %i.ae = urem i32 %i.ac, %i.ad                   ; 2 uses
   %i.af = icmp eq i32 %i.ae, 0
-  %spec.select = select i1 %i.af, i32 %i.ad, i32 %i.ae
+  br i1 %i.af, label %2, label %bb.e
+
+2:                                                ; preds = %bb.d
   br label %bb.e
 
-bb.e:                                             ; preds = %bb.d, %bb.c
-  %.088 = phi i32 [ %i.aa, %bb.c ], [ %spec.select, %bb.d ] ; 5 uses
+bb.e:                                             ; preds = %bb.d, %2, %bb.c
+  %.088 = phi i32 [ %i.aa, %bb.c ], [ %i.ad, %2 ], [ %i.ae, %bb.d ] ; 5 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %.086118, i64 28
   %i.ah = load i32, ptr %i.ag, align 4, !tbaa !44
   %.fr124 = freeze i32 %i.ah                      ; 5 uses

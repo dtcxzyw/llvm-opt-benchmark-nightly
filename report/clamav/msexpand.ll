@@ -202,11 +202,13 @@ bb.aj:                                            ; preds = %bb.ai
   %i.cs = trunc i64 %i.cq to i32
   %.not201 = icmp eq i32 %.0140, %i.cs
   %or.cond221 = select i1 %i.cr, i1 %.not201, i1 false
-  %spec.select222 = select i1 %or.cond221, i32 0, i32 14
+  br i1 %or.cond221, label %2, label %.loopexit227
+
+2:                                                ; preds = %bb.aj
   br label %.loopexit227
 
-.loopexit227:                                     ; preds = %bb.j, %bb.ab, %bb.x, %bb.t, %bb.s, %bb.p, %bb.ag, %bb.af, %bb.aj, %bb.ai, %bb.f, %bb.a, %bb.e
-  %.0170 = phi i32 [ 26, %bb.e ], [ 12, %bb.a ], [ 0, %bb.ai ], [ 14, %bb.af ], [ 14, %bb.s ], [ 0, %bb.f ], [ %spec.select222, %bb.aj ], [ 0, %bb.ag ], [ 0, %bb.t ], [ 12, %bb.x ], [ 12, %bb.ab ], [ 12, %bb.p ], [ 12, %bb.j ]
+.loopexit227:                                     ; preds = %bb.j, %bb.ab, %bb.x, %bb.t, %bb.s, %bb.p, %bb.ag, %bb.af, %2, %bb.ai, %bb.aj, %bb.f, %bb.a, %bb.e
+  %.0170 = phi i32 [ 26, %bb.e ], [ 12, %bb.a ], [ 14, %bb.af ], [ 0, %bb.f ], [ 14, %bb.s ], [ 0, %2 ], [ 0, %bb.ai ], [ 14, %bb.aj ], [ 0, %bb.ag ], [ 0, %bb.t ], [ 12, %bb.x ], [ 12, %bb.ab ], [ 12, %bb.p ], [ 12, %bb.j ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #5
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #5
   ret i32 %.0170

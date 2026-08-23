@@ -205,11 +205,13 @@ bb.bw:                                            ; preds = %bb.bv
   %i.hr = getelementptr inbounds nuw i8, ptr %i.gd, i64 10
   %i.hs = load i8, ptr %i.hr, align 1, !noalias !1338, !noundef !4
   %i.ht = icmp eq i8 %i.hs, 48
-  %spec.select.i.i.i.i.i = select i1 %i.ht, i8 1, i8 4
+  br i1 %i.ht, label %2, label %bb.bx
+
+2:                                                ; preds = %bb.bw
   br label %bb.bx
 
-bb.bx:                                            ; preds = %bb.cw, %bb.ct, %bb.cs, %bb.cr, %bb.cq, %bb.cp, %bb.co, %bb.cn, %bb.cm, %bb.cl, %bb.cj, %bb.cg, %bb.cf, %bb.ce, %bb.cd, %bb.cc, %bb.cb, %bb.ca, %bb.bz, %bb.by, %bb.bw, %bb.bv, %bb.bu, %bb.bt, %bb.bs, %bb.br, %bb.bq, %bb.bp, %bb.bo, %bb.bn, %bb.bm, %bb.bl, %bb.bk, %bb.bf
-  %.sroa.0.0.i.i.i.i.i = phi i8 [ 3, %bb.cw ], [ 4, %bb.bf ], [ 2, %bb.cj ], [ 4, %bb.ct ], [ 4, %bb.cs ], [ 4, %bb.cr ], [ 4, %bb.cq ], [ 4, %bb.cp ], [ 4, %bb.co ], [ 4, %bb.cn ], [ 4, %bb.cm ], [ 4, %bb.cl ], [ 4, %bb.cg ], [ 4, %bb.cf ], [ 4, %bb.ce ], [ 4, %bb.cd ], [ 4, %bb.cc ], [ 4, %bb.cb ], [ 4, %bb.ca ], [ 4, %bb.bz ], [ 4, %bb.by ], [ %spec.select.i.i.i.i.i, %bb.bw ], [ 4, %bb.bv ], [ 4, %bb.bu ], [ 4, %bb.bt ], [ 4, %bb.bs ], [ 4, %bb.br ], [ 4, %bb.bq ], [ 4, %bb.bp ], [ 4, %bb.bo ], [ 4, %bb.bn ], [ 4, %bb.bm ], [ 4, %bb.bl ], [ 4, %bb.bk ]
+bb.bx:                                            ; preds = %bb.cw, %bb.ct, %bb.cs, %bb.cr, %bb.cq, %bb.cp, %bb.co, %bb.cn, %bb.cm, %bb.cl, %bb.cj, %bb.cg, %bb.cf, %bb.ce, %bb.cd, %bb.cc, %bb.cb, %bb.ca, %bb.bz, %bb.by, %2, %bb.bw, %bb.bv, %bb.bu, %bb.bt, %bb.bs, %bb.br, %bb.bq, %bb.bp, %bb.bo, %bb.bn, %bb.bm, %bb.bl, %bb.bk, %bb.bf
+  %.sroa.0.0.i.i.i.i.i = phi i8 [ 3, %bb.cw ], [ 1, %2 ], [ 2, %bb.cj ], [ 4, %bb.ct ], [ 4, %bb.cs ], [ 4, %bb.cr ], [ 4, %bb.cq ], [ 4, %bb.cp ], [ 4, %bb.co ], [ 4, %bb.cn ], [ 4, %bb.cm ], [ 4, %bb.cl ], [ 4, %bb.cg ], [ 4, %bb.cf ], [ 4, %bb.ce ], [ 4, %bb.cd ], [ 4, %bb.cc ], [ 4, %bb.cb ], [ 4, %bb.ca ], [ 4, %bb.bz ], [ 4, %bb.by ], [ 4, %bb.bw ], [ 4, %bb.bv ], [ 4, %bb.bu ], [ 4, %bb.bt ], [ 4, %bb.bs ], [ 4, %bb.br ], [ 4, %bb.bq ], [ 4, %bb.bp ], [ 4, %bb.bo ], [ 4, %bb.bn ], [ 4, %bb.bm ], [ 4, %bb.bl ], [ 4, %bb.bk ], [ 4, %bb.bf ]
   store i8 %.sroa.0.0.i.i.i.i.i, ptr %i.fg, align 8, !alias.scope !1335, !noalias !1336
   br label %bb.bj
 
@@ -612,13 +614,13 @@ bb.c:                                             ; preds = %bb.e, %bb.d, %bb.b,
   br label %bb.i
 
 bb.d:                                             ; preds = %bb.b
-  %i.e = zext i32 %3 to i64                       ; 2 uses
+  %i.e = zext i32 %3 to i64                       ; 3 uses
   %i.f = add nsw i64 %5, %i.e                     ; 2 uses
   %i.g = icmp slt i64 %i.f, 1
   br i1 %i.g, label %bb.c, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.h = zext i32 %4 to i64                       ; 2 uses
+  %i.h = zext i32 %4 to i64                       ; 3 uses
   %i.i = add nsw i64 %6, %i.h                     ; 2 uses
   %i.j = icmp slt i64 %i.i, 1
   br i1 %i.j, label %bb.c, label %bb.f
@@ -645,12 +647,14 @@ bb.g:                                             ; preds = %bb.f
   %i.v = sub nsw i64 0, %5
   %i.w = icmp sgt i64 %5, 0
   %..i13 = tail call i64 @llvm.umin.i64(i64 %i.v, i64 range(i64 0, 4294967296) %i.e)
-  %7 = trunc nuw i64 %..i13 to i32
-  %8 = select i1 %i.w, i32 0, i32 %7
+  br i1 %i.w, label %7, label %.thread
+
+7:                                                ; preds = %bb.g
   br label %.thread
 
-.thread:                                          ; preds = %bb.g, %bb.f
-  %9 = phi i32 [ %3, %bb.f ], [ %8, %bb.g ]
+.thread:                                          ; preds = %bb.f, %bb.g, %7
+  %8 = phi i64 [ 0, %7 ], [ %..i13, %bb.g ], [ %i.e, %bb.f ]
+  %9 = trunc nuw i64 %8 to i32
   %i.x = icmp eq i64 %6, -9223372036854775808
   br i1 %i.x, label %.thread19, label %bb.h, !prof !10
 
@@ -658,12 +662,14 @@ bb.h:                                             ; preds = %.thread
   %i.y = sub nsw i64 0, %6
   %i.z = icmp sgt i64 %6, 0
   %..i15 = tail call i64 @llvm.umin.i64(i64 %i.y, i64 range(i64 0, 4294967296) %i.h)
-  %10 = trunc nuw i64 %..i15 to i32
-  %11 = select i1 %i.z, i32 0, i32 %10
+  br i1 %i.z, label %10, label %.thread19
+
+10:                                               ; preds = %bb.h
   br label %.thread19
 
-.thread19:                                        ; preds = %bb.h, %.thread
-  %12 = phi i32 [ %4, %.thread ], [ %11, %bb.h ]
+.thread19:                                        ; preds = %.thread, %bb.h, %10
+  %11 = phi i64 [ 0, %10 ], [ %..i15, %bb.h ], [ %i.h, %.thread ]
+  %12 = trunc nuw i64 %11 to i32
   store i32 %i.o, ptr %0, align 4
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 4
   store i32 %i.r, ptr %i.aa, align 4

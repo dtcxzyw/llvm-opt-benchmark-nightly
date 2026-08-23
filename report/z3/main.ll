@@ -204,10 +204,13 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.e
   %i.f = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %0, ptr noundef nonnull dereferenceable(4) @.str.114) #22
   %.not11.5 = icmp eq i32 %i.f, 0
+  br i1 %.not11.5, label %bb.g, label %1
+
+1:                                                ; preds = %bb.f
   br label %bb.g
 
-bb.g:                                             ; preds = %bb.f, %bb.e, %bb.d, %bb.c, %bb.b, %bb.a
-  %.not11.lcssa = phi i1 [ true, %bb.d ], [ true, %bb.a ], [ true, %bb.b ], [ %.not11.5, %bb.f ], [ true, %bb.c ], [ true, %bb.e ]
+bb.g:                                             ; preds = %1, %bb.f, %bb.e, %bb.d, %bb.c, %bb.b, %bb.a
+  %.not11.lcssa = phi i1 [ false, %1 ], [ true, %bb.a ], [ true, %bb.b ], [ true, %bb.f ], [ true, %bb.c ], [ true, %bb.e ], [ true, %bb.d ]
   ret i1 %.not11.lcssa
 }
 

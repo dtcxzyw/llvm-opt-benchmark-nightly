@@ -204,13 +204,14 @@ bb.g:                                             ; preds = %.lr.ph.i269
 stbiw__zlib_countm.exit:                          ; preds = %bb.g, %._crit_edge.loopexit.split.loop.exit.i
   %.0.lcssa.i268 = phi i32 [ %i.bf, %._crit_edge.loopexit.split.loop.exit.i ], [ %invariant.smin.i, %bb.g ] ; 2 uses
   %.not250 = icmp slt i32 %.0.lcssa.i268, %.0182750
-  %spec.select = tail call i32 @llvm.smax.i32(i32 %.0.lcssa.i268, i32 %.0182750)
-  %spec.select709 = select i1 %.not250, ptr %.0180751, ptr %i.ax
+  br i1 %.not250, label %bb.h, label %4
+
+4:                                                ; preds = %stbiw__zlib_countm.exit
   br label %bb.h
 
-bb.h:                                             ; preds = %stbiw__zlib_countm.exit, %bb.f
-  %.2184 = phi i32 [ %.0182750, %bb.f ], [ %spec.select, %stbiw__zlib_countm.exit ] ; 2 uses
-  %.2 = phi ptr [ %.0180751, %bb.f ], [ %spec.select709, %stbiw__zlib_countm.exit ] ; 2 uses
+bb.h:                                             ; preds = %stbiw__zlib_countm.exit, %4, %bb.f
+  %.2184 = phi i32 [ %.0182750, %bb.f ], [ %.0.lcssa.i268, %4 ], [ %.0182750, %stbiw__zlib_countm.exit ] ; 2 uses
+  %.2 = phi ptr [ %.0180751, %bb.f ], [ %i.ax, %4 ], [ %.0180751, %stbiw__zlib_countm.exit ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge.thread995, label %bb.f, !llvm.loop !51

@@ -203,10 +203,13 @@ bb.as:                                            ; preds = %bb.ar
   %i.rd = load ptr, ptr @L, align 8
   %i.re = tail call i32 @lua_toboolean(ptr noundef %i.rd, i32 noundef -1)
   %.not59 = icmp eq i32 %i.re, 0
+  br i1 %.not59, label %bb.at, label %3
+
+3:                                                ; preds = %bb.as
   br label %bb.at
 
-bb.at:                                            ; preds = %bb.as, %bb.ar
-  %.047.not = phi i1 [ true, %bb.ar ], [ %.not59, %bb.as ]
+bb.at:                                            ; preds = %3, %bb.as, %bb.ar
+  %.047.not = phi i1 [ false, %3 ], [ true, %bb.as ], [ true, %bb.ar ]
   %i.rf = load ptr, ptr @L, align 8
   tail call void @lua_settop(ptr noundef %i.rf, i32 noundef -2)
   %i.rg = tail call zeroext i1 @started_with_special_privs()

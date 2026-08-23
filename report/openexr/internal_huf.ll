@@ -205,7 +205,9 @@ bb.aq:                                            ; preds = %bb.an
   %i.nm = getelementptr inbounds nuw i8, ptr %5, i64 262168
   %i.nn = load i64, ptr %i.nm, align 8, !tbaa !10 ; 2 uses
   %i.no = icmp eq i64 %i.nn, -1
-  %spec.select.i.i = select i1 %i.no, i64 %i.jm, i64 %i.nn
+  br i1 %i.no, label %bb.ar, label %.critedge.thread.loopexit.i.i
+
+.critedge.thread.loopexit.i.i:                    ; preds = %.critedge86.10.i.i
   br label %bb.ar
 
 fasthuf_initialize.exit.thread.sink.split:        ; preds = %bb.ao, %bb.ae, %bb.z, %bb.x, %bb.t, %bb.j
@@ -222,8 +224,8 @@ fasthuf_initialize.exit.thread:                   ; preds = %fasthuf_initialize.
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #10
   br label %.critedge
 
-bb.ar:                                            ; preds = %.critedge86.10.i.i, %.critedge86.9.i.i, %.critedge86.8.i.i, %.critedge86.7.i.i, %.critedge86.6.i.i, %.critedge86.5.i.i, %.critedge86.4.i.i, %.critedge86.3.i.i, %.critedge86.2.i.i, %.critedge86.1.i.i, %.critedge86.i.i, %.critedge86.preheader.i.i
-  %7 = phi i64 [ %spec.select.i.i, %.critedge86.10.i.i ], [ %i.lq, %.critedge86.preheader.i.i ], [ %i.mj, %.critedge86.i.i ], [ %i.mm, %.critedge86.1.i.i ], [ %i.mp, %.critedge86.2.i.i ], [ %i.ms, %.critedge86.3.i.i ], [ %i.mv, %.critedge86.4.i.i ], [ %i.my, %.critedge86.5.i.i ], [ %i.nb, %.critedge86.6.i.i ], [ %i.ne, %.critedge86.7.i.i ], [ %i.nh, %.critedge86.8.i.i ], [ %i.nk, %.critedge86.9.i.i ]
+bb.ar:                                            ; preds = %.critedge.thread.loopexit.i.i, %.critedge86.10.i.i, %.critedge86.9.i.i, %.critedge86.8.i.i, %.critedge86.7.i.i, %.critedge86.6.i.i, %.critedge86.5.i.i, %.critedge86.4.i.i, %.critedge86.3.i.i, %.critedge86.2.i.i, %.critedge86.1.i.i, %.critedge86.i.i, %.critedge86.preheader.i.i
+  %7 = phi i64 [ %i.jm, %.critedge86.10.i.i ], [ %i.lq, %.critedge86.preheader.i.i ], [ %i.mj, %.critedge86.i.i ], [ %i.mm, %.critedge86.1.i.i ], [ %i.mp, %.critedge86.2.i.i ], [ %i.ms, %.critedge86.3.i.i ], [ %i.mv, %.critedge86.4.i.i ], [ %i.my, %.critedge86.5.i.i ], [ %i.nb, %.critedge86.6.i.i ], [ %i.ne, %.critedge86.7.i.i ], [ %i.nh, %.critedge86.8.i.i ], [ %i.nk, %.critedge86.9.i.i ], [ %i.nn, %.critedge.thread.loopexit.i.i ]
   %i.ns = getelementptr inbounds nuw i8, ptr %5, i64 283592
   store i64 %7, ptr %i.ns, align 8, !tbaa !97
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #10
@@ -626,7 +628,7 @@ bb.bl:                                            ; preds = %bb.bk, %bb.bj
   br i1 %exitcond.not.i89, label %.critedge, label %bb.bj, !llvm.loop !106
 
 .critedge:                                        ; preds = %bb.bl, %hufUnpackEncTable.exit, %fasthuf_initialize.exit.thread, %bb.ar, %bb.as, %bb.g, %bb.f, %bb.e, %bb.d
-  %.265 = phi i32 [ %., %bb.d ], [ %i.ny, %bb.as ], [ 1, %bb.ar ], [ 3, %bb.e ], [ 23, %bb.f ], [ 23, %hufUnpackEncTable.exit ], [ 1, %bb.g ], [ 23, %fasthuf_initialize.exit.thread ], [ %.2, %bb.bl ]
+  %.265 = phi i32 [ %., %bb.d ], [ 1, %bb.ar ], [ %i.ny, %bb.as ], [ 3, %bb.e ], [ 23, %bb.f ], [ 23, %hufUnpackEncTable.exit ], [ 1, %bb.g ], [ 23, %fasthuf_initialize.exit.thread ], [ %.2, %bb.bl ]
   ret i32 %.265
 }
 
@@ -1029,7 +1031,7 @@ bb.af:                                            ; preds = %bb.ae
   br label %.thread314
 
 .thread314:                                       ; preds = %.loopexit329, %bb.r, %bb.p, %bb.s, %bb.u, %bb.l, %bb.g, %bb.e, %bb.h, %bb.b, %bb.j, %bb.w, %bb.ab, %bb.z, %bb.ac, %.lr.ph414, %bb.ae, %._crit_edge415
-  %.15214 = phi i32 [ %.262, %._crit_edge415 ], [ 23, %bb.w ], [ 23, %bb.ab ], [ 23, %bb.ae ], [ 23, %.lr.ph414 ], [ 1, %bb.ac ], [ 1, %bb.z ], [ 23, %.loopexit329 ], [ 1, %bb.p ], [ 23, %bb.r ], [ 23, %bb.u ], [ 23, %bb.l ], [ 1, %bb.s ], [ 1, %bb.e ], [ 23, %bb.g ], [ 23, %bb.j ], [ 1, %bb.h ], [ 23, %bb.b ]
+  %.15214 = phi i32 [ %.262, %._crit_edge415 ], [ 23, %bb.w ], [ 23, %bb.ae ], [ 1, %bb.ac ], [ 1, %bb.z ], [ 23, %bb.ab ], [ 23, %.lr.ph414 ], [ 23, %.loopexit329 ], [ 1, %bb.p ], [ 23, %bb.r ], [ 23, %bb.u ], [ 23, %bb.l ], [ 1, %bb.s ], [ 1, %bb.e ], [ 23, %bb.g ], [ 23, %bb.j ], [ 1, %bb.h ], [ 23, %bb.b ]
   ret i32 %.15214
 }
 

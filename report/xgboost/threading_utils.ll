@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %bb.b
   br label %bb.i
 
 bb.g:                                             ; preds = %bb.c, %bb.d
-  %.014 = phi i32 [ %i.c, %bb.d ], [ undef, %bb.c ]
+  %.014 = phi i32 [ %i.c, %bb.d ], [ undef, %bb.c ] ; 3 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !31   ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.g, null
@@ -305,7 +305,8 @@ bb.t:                                             ; preds = %bb.n, %bb.l
   br label %bb.w
 
 _ZN7xgboost6common16GetCGroupV1CountERKNSt10filesystem7__cxx114pathES5_.exit: ; preds = %bb.o, %bb.m, %bb.q, %bb.p
-  %spec.select = phi i32 [ %.sroa.speculated.i, %bb.q ], [ -1, %bb.m ], [ -1, %bb.p ], [ -1, %bb.o ]
+  %3 = phi i1 [ false, %bb.q ], [ true, %bb.m ], [ false, %bb.p ], [ true, %bb.o ]
+  %spec.select = phi i32 [ %.sroa.speculated.i, %bb.q ], [ %.014, %bb.m ], [ -1, %bb.p ], [ %.014, %bb.o ]
   %i.ad = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 2 uses
   %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !31 ; 2 uses
   %.not.i.i.i23 = icmp eq ptr %i.ae, null
@@ -352,7 +353,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 
 _ZNSt10filesystem7__cxx114pathD2Ev.exit32:        ; preds = %_ZNSt10filesystem7__cxx114path5_ListD2Ev.exit.i29, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i30
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #18
-  br label %bb.y
+  br i1 %3, label %4, label %bb.y
 
 bb.w:                                             ; preds = %bb.t, %bb.s
   %.pn18 = phi { ptr, i32 } [ %i.ac, %bb.t ], [ %i.ab, %bb.s ]
@@ -375,8 +376,11 @@ bb.x:                                             ; preds = %bb.w, %bb.r
   invoke void @__cxa_end_catch()
           to label %bb.y unwind label %bb.z
 
-bb.y:                                             ; preds = %.invoke, %_ZNSt10filesystem7__cxx114pathD2Ev.exit, %_ZNSt10filesystem7__cxx114pathD2Ev.exit32
-  %.216 = phi i32 [ -1, %.invoke ], [ %spec.select, %_ZNSt10filesystem7__cxx114pathD2Ev.exit32 ], [ %.014, %_ZNSt10filesystem7__cxx114pathD2Ev.exit ]
+4:                                                ; preds = %_ZNSt10filesystem7__cxx114pathD2Ev.exit32
+  br label %bb.y
+
+bb.y:                                             ; preds = %.invoke, %_ZNSt10filesystem7__cxx114pathD2Ev.exit, %_ZNSt10filesystem7__cxx114pathD2Ev.exit32, %4
+  %.216 = phi i32 [ -1, %4 ], [ %spec.select, %_ZNSt10filesystem7__cxx114pathD2Ev.exit32 ], [ -1, %.invoke ], [ %.014, %_ZNSt10filesystem7__cxx114pathD2Ev.exit ]
   ret i32 %.216
 
 bb.z:                                             ; preds = %.invoke

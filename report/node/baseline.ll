@@ -194,10 +194,13 @@ _ZNRSt8optionalIN2v88internal6TaggedINS1_9DebugInfoEEEE5valueEv.exit5: ; preds =
   %i.ag = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 368), align 16
   %i.ah = call noundef zeroext i1 @_ZN2v88internal18SharedFunctionInfo12PassesFilterEPKc(ptr noundef nonnull align 8 dereferenceable(8) %4, ptr noundef %i.ag) #7
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #7
+  br i1 %i.ah, label %5, label %_ZNK2v88internal18SharedFunctionInfo16HasBytecodeArrayEv.exit.thread
+
+5:                                                ; preds = %.critedge
   br label %_ZNK2v88internal18SharedFunctionInfo16HasBytecodeArrayEv.exit.thread
 
-_ZNK2v88internal18SharedFunctionInfo16HasBytecodeArrayEv.exit.thread: ; preds = %bb.d, %_ZNRSt8optionalIN2v88internal6TaggedINS1_9DebugInfoEEEE5valueEv.exit, %_ZNRSt8optionalIN2v88internal6TaggedINS1_9DebugInfoEEEE5valueEv.exit5, %.critedge, %bb.e, %_ZNK2v88internal18SharedFunctionInfo16HasBytecodeArrayEv.exit.a, %bb.c, %bb.a
-  %.1 = phi i1 [ false, %bb.c ], [ false, %_ZNK2v88internal18SharedFunctionInfo16HasBytecodeArrayEv.exit.a ], [ false, %bb.e ], [ %i.ah, %.critedge ], [ false, %_ZNRSt8optionalIN2v88internal6TaggedINS1_9DebugInfoEEEE5valueEv.exit ], [ false, %bb.a ], [ false, %_ZNRSt8optionalIN2v88internal6TaggedINS1_9DebugInfoEEEE5valueEv.exit5 ], [ false, %bb.d ]
+_ZNK2v88internal18SharedFunctionInfo16HasBytecodeArrayEv.exit.thread: ; preds = %_ZNK2v88internal18SharedFunctionInfo16HasBytecodeArrayEv.exit.a, %bb.d, %_ZNRSt8optionalIN2v88internal6TaggedINS1_9DebugInfoEEEE5valueEv.exit, %_ZNRSt8optionalIN2v88internal6TaggedINS1_9DebugInfoEEEE5valueEv.exit5, %.critedge, %bb.e, %bb.c, %bb.a, %5
+  %.1 = phi i1 [ false, %bb.c ], [ false, %_ZNRSt8optionalIN2v88internal6TaggedINS1_9DebugInfoEEEE5valueEv.exit ], [ false, %bb.e ], [ true, %5 ], [ false, %.critedge ], [ false, %bb.a ], [ false, %_ZNRSt8optionalIN2v88internal6TaggedINS1_9DebugInfoEEEE5valueEv.exit5 ], [ false, %bb.d ], [ false, %_ZNK2v88internal18SharedFunctionInfo16HasBytecodeArrayEv.exit.a ]
   ret i1 %.1
 }
 

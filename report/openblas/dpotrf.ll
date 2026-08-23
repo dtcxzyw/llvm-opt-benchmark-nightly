@@ -110,11 +110,13 @@ bb.h:                                             ; preds = %num_cpu_avail.exit
 bb.i:                                             ; preds = %num_cpu_avail.exit, %bb.h
   %i.aj = phi i64 [ %.0.i, %num_cpu_avail.exit ], [ %i.ai, %bb.h ]
   %i.ak = icmp eq i64 %i.aj, 1
-  %spec.select34 = select i1 %i.ak, ptr @potrf_single, ptr @potrf_parallel
+  br i1 %i.ak, label %bb.j, label %6
+
+6:                                                ; preds = %bb.i
   br label %bb.j
 
-bb.j:                                             ; preds = %bb.i, %.thread32
-  %potrf_parallel.sink = phi ptr [ %spec.select34, %bb.i ], [ @potrf_single, %.thread32 ]
+bb.j:                                             ; preds = %bb.i, %.thread32, %6
+  %potrf_parallel.sink = phi ptr [ @potrf_parallel, %6 ], [ @potrf_single, %.thread32 ], [ @potrf_single, %bb.i ]
   %i.al = getelementptr inbounds [8 x i8], ptr %potrf_parallel.sink, i64 %spec.store.select1
   %i.am = load ptr, ptr %i.al, align 8, !tbaa !18
   %i.an = call i32 %i.am(ptr noundef nonnull %5, ptr noundef null, ptr noundef null, ptr noundef %i.t, ptr noundef %i.w, i64 noundef 0) #4

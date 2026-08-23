@@ -204,10 +204,13 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d
   %i.e = tail call noundef zeroext i1 @_ZN6hermes2vm15instrumentation11PerfCounter17endAndInsertStatsERNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr noundef nonnull align 8 dereferenceable(32) getelementptr inbounds nuw (i8, ptr @_ZN6hermes2vm15instrumentationL8countersE, i64 128), ptr noundef nonnull align 8 dereferenceable(32) %0)
+  br i1 %i.e, label %1, label %bb.f
+
+1:                                                ; preds = %bb.e
   br label %bb.f
 
-bb.f:                                             ; preds = %bb.e, %bb.d, %bb.c, %bb.b, %bb.a
-  %.lcssa = phi i1 [ false, %bb.d ], [ false, %bb.a ], [ false, %bb.b ], [ %i.e, %bb.e ], [ false, %bb.c ]
+bb.f:                                             ; preds = %1, %bb.e, %bb.d, %bb.c, %bb.b, %bb.a
+  %.lcssa = phi i1 [ true, %1 ], [ false, %bb.a ], [ false, %bb.b ], [ false, %bb.e ], [ false, %bb.c ], [ false, %bb.d ]
   ret i1 %.lcssa
 }
 

@@ -204,10 +204,13 @@ bb.b:                                             ; preds = %bb.a
   %i.x = getelementptr inbounds nuw i8, ptr %i.n, i64 424
   %i.y = load i32, ptr %i.x, align 8, !tbaa !39
   %.not132 = icmp eq i32 %i.y, 0
+  br i1 %.not132, label %bb.c, label %4
+
+4:                                                ; preds = %bb.b
   br label %bb.c
 
-bb.c:                                             ; preds = %bb.b, %bb.a
-  %.0124.shrunk = phi i1 [ %i.j, %bb.a ], [ %.not132, %bb.b ]
+bb.c:                                             ; preds = %4, %bb.b, %bb.a
+  %.0124.shrunk = phi i1 [ false, %4 ], [ true, %bb.b ], [ %i.j, %bb.a ]
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.aa = load i32, ptr %i.z, align 8, !tbaa !40
   %.not133 = icmp eq i32 %i.aa, 0

@@ -204,7 +204,9 @@ bb.j:                                             ; preds = %bb.i, %._crit_edge
   %i.ai = zext i8 %i.ah to i32
   %i.aj = tail call i32 @isspace(i32 noundef %i.ai) #20
   %.not.i.i21 = icmp eq i32 %i.aj, 0
-  %spec.select = select i1 %.not.i.i21, ptr %.sroa.031.2, ptr %1
+  br i1 %.not.i.i21, label %.loopexit, label %2
+
+2:                                                ; preds = %bb.j
   br label %.loopexit
 
 .loopexit.loopexit.split.loop.exit:               ; preds = %bb.b
@@ -219,8 +221,8 @@ bb.j:                                             ; preds = %bb.i, %._crit_edge
   %i.am = getelementptr inbounds nuw i8, ptr %.sroa.031.050, i64 3
   br label %.loopexit
 
-.loopexit:                                        ; preds = %.lr.ph, %.loopexit.loopexit.split.loop.exit, %.loopexit.loopexit.split.loop.exit56, %.loopexit.loopexit.split.loop.exit58, %bb.j, %._crit_edge, %bb.h, %bb.f
-  %.sroa.08.0.in.sroa.speculated = phi ptr [ %.sroa.031.1, %bb.h ], [ %spec.select, %bb.j ], [ %1, %._crit_edge ], [ %.sroa.031.0.lcssa, %bb.f ], [ %i.am, %.loopexit.loopexit.split.loop.exit58 ], [ %i.ak, %.loopexit.loopexit.split.loop.exit ], [ %i.al, %.loopexit.loopexit.split.loop.exit56 ], [ %.sroa.031.050, %.lr.ph ]
+.loopexit:                                        ; preds = %.lr.ph, %.loopexit.loopexit.split.loop.exit, %.loopexit.loopexit.split.loop.exit56, %.loopexit.loopexit.split.loop.exit58, %._crit_edge, %2, %bb.j, %bb.h, %bb.f
+  %.sroa.08.0.in.sroa.speculated = phi ptr [ %.sroa.031.1, %bb.h ], [ %1, %._crit_edge ], [ %.sroa.031.0.lcssa, %bb.f ], [ %1, %2 ], [ %.sroa.031.2, %bb.j ], [ %i.am, %.loopexit.loopexit.split.loop.exit58 ], [ %i.ak, %.loopexit.loopexit.split.loop.exit ], [ %i.al, %.loopexit.loopexit.split.loop.exit56 ], [ %.sroa.031.050, %.lr.ph ]
   ret ptr %.sroa.08.0.in.sroa.speculated
 }
 

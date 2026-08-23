@@ -204,10 +204,13 @@ bb.i:                                             ; preds = %bb.h
   %i.bb = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.bc = getelementptr inbounds nuw i8, ptr %1, i64 72
   %i.bd = tail call noundef zeroext i1 @_ZNK5video14SMaterialLayerneERKS0_(ptr noundef nonnull align 8 dereferenceable(24) %i.bb, ptr noundef nonnull align 8 dereferenceable(24) %i.bc)
+  br i1 %i.bd, label %.critedge, label %2
+
+2:                                                ; preds = %.preheader.3
   br label %.critedge
 
-.critedge:                                        ; preds = %.preheader.3, %.preheader.preheader, %.preheader.1, %.preheader.2, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %bb.b, %bb.a
-  %.1 = phi i1 [ true, %bb.i ], [ true, %bb.h ], [ true, %bb.f ], [ true, %bb.a ], [ true, %bb.b ], [ true, %bb.c ], [ true, %bb.d ], [ true, %bb.e ], [ true, %bb.g ], [ true, %.preheader.preheader ], [ true, %.preheader.2 ], [ true, %.preheader.1 ], [ %i.bd, %.preheader.3 ]
+.critedge:                                        ; preds = %.preheader.preheader, %.preheader.1, %.preheader.2, %.preheader.3, %2, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %bb.b, %bb.a
+  %.1 = phi i1 [ true, %bb.h ], [ true, %bb.f ], [ true, %bb.i ], [ true, %bb.a ], [ true, %bb.b ], [ true, %bb.c ], [ true, %bb.d ], [ true, %bb.e ], [ true, %bb.g ], [ true, %.preheader.preheader ], [ false, %2 ], [ true, %.preheader.1 ], [ true, %.preheader.3 ], [ true, %.preheader.2 ]
   ret i1 %.1
 }
 

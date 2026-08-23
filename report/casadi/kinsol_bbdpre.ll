@@ -202,11 +202,13 @@ KBBDDQJac.exit:                                   ; preds = %KBBDDQJac.exit.loop
   %i.ei = load ptr, ptr %i.eh, align 8, !tbaa !35
   %i.ej = tail call i64 @BandGBTRF(ptr noundef %i.eg, ptr noundef %i.ei) #5
   %i.ek = icmp sgt i64 %i.ej, 0
-  %spec.select = zext i1 %i.ek to i32
+  br i1 %i.ek, label %bb.j, label %7
+
+7:                                                ; preds = %KBBDDQJac.exit
   br label %bb.j
 
-bb.j:                                             ; preds = %KBBDDQJac.exit, %.loopexit
-  %.0 = phi i32 [ -1, %.loopexit ], [ %spec.select, %KBBDDQJac.exit ]
+bb.j:                                             ; preds = %KBBDDQJac.exit, %7, %.loopexit
+  %.0 = phi i32 [ -1, %.loopexit ], [ 0, %7 ], [ 1, %KBBDDQJac.exit ]
   ret i32 %.0
 }
 

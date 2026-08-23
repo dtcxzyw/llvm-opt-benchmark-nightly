@@ -71,11 +71,13 @@ bb.c:                                             ; preds = %bb.b
   %i.i = load i32, ptr %i.h, align 8, !tbaa !27
   %i.j = lshr i32 %i.i, 3
   %i.k = icmp ult i32 %i.g, %i.j
-  %spec.select = select i1 %i.k, i32 0, i32 -2000
+  br i1 %i.k, label %.thread, label %3
+
+3:                                                ; preds = %bb.c
   br label %.thread
 
-.thread:                                          ; preds = %bb.c, %bb.a, %bb.b
-  %.08 = phi i32 [ %spec.select, %bb.c ], [ %i.d, %bb.b ], [ -1, %bb.a ]
+.thread:                                          ; preds = %bb.a, %bb.b, %bb.c, %3
+  %.08 = phi i32 [ 0, %bb.c ], [ -2000, %3 ], [ -1, %bb.a ], [ %i.d, %bb.b ]
   ret i32 %.08
 }
 

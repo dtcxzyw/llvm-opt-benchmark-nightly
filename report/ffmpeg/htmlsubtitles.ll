@@ -203,7 +203,7 @@ select.unfold:                                    ; preds = %html_color_parse.ex
   %i.er = call ptr @strchr(ptr noundef nonnull dereferenceable(1) %.2148, i32 noundef 32) #10 ; 2 uses
   %.not181 = icmp eq ptr %i.er, null
   %i.es = getelementptr inbounds nuw i8, ptr %i.er, i64 1
-  br i1 %.not181, label %.loopexit, label %bb.ar
+  br i1 %.not181, label %.loopexit, label %bb.ar, !llvm.loop !29
 
 .loopexit:                                        ; preds = %select.unfold, %bb.aq, %bb.ak, %bb.an, %bb.ao, %bb.am, %bb.ap
   %.1143 = phi i32 [ %.0142288, %bb.ap ], [ %i.bu, %bb.ak ], [ %i.bu, %bb.am ], [ %i.bu, %bb.ao ], [ %i.bu, %bb.an ], [ %i.cn, %bb.aq ], [ %i.cn, %select.unfold ]
@@ -317,7 +317,7 @@ handle_open_brace.exit.thread:                    ; preds = %bb.f, %bb.b, %handl
   %.2247259 = phi ptr [ %.2247.ph, %bb.bo ], [ %.2247.ph, %handle_open_brace.exit ], [ %.2247.ph, %handle_open_brace.exit ], [ %.2247.ph, %handle_open_brace.exit ], [ %.0245285, %bb.f ], [ %.0245285, %bb.b ]
   %.2141 = phi i32 [ 0, %bb.bo ], [ %.1140.ph, %handle_open_brace.exit ], [ %.1140.ph, %handle_open_brace.exit ], [ %.1140.ph, %handle_open_brace.exit ], [ 1, %bb.f ], [ %.0139289, %bb.b ]
   %i.fp = getelementptr inbounds nuw i8, ptr %.2247259, i64 1
-  br label %bb.b, !llvm.loop !29
+  br label %bb.b, !llvm.loop !30
 
 .critedge:                                        ; preds = %bb.c, %bb.b
   %.val = load i32, ptr %i.d, align 8, !tbaa !10  ; 4 uses
@@ -357,7 +357,7 @@ sub_0:                                            ; preds = %sub_0.lr.ph, %bb.bp
 bb.bp:                                            ; preds = %.tail
   store i32 %indvars, ptr %i.d, align 8, !tbaa !10
   %i.fz = icmp ugt i32 %indvars, 1
-  br i1 %i.fz, label %sub_0, label %.critedge8, !llvm.loop !30
+  br i1 %i.fz, label %sub_0, label %.critedge8, !llvm.loop !31
 
 .critedge8.loopexit.split.loop.exit337:           ; preds = %.tail
   %i.ga = trunc nuw i64 %indvars.iv298 to i32
@@ -500,4 +500,5 @@ attributes #11 = { noreturn nounwind }
 !28 = distinct !{!28, !17}
 !29 = distinct !{!29, !17}
 !30 = distinct !{!30, !17}
+!31 = distinct !{!31, !17}
 end_hunk_0

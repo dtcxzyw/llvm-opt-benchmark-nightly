@@ -204,7 +204,7 @@ case_insensitive_strcmp.exit.thread30.i:          ; preds = %bb.d, %.preheader.i
   br i1 %.not23.i, label %get_object_item.exit, label %.lr.ph51.i
 
 get_object_item.exit:                             ; preds = %case_insensitive_strcmp.exit.thread30.i, %bb.c, %.lr.ph.i.i, %bb.a, %bb.b
-  %.019.i = phi ptr [ null, %bb.b ], [ null, %bb.a ], [ %.150.i, %.lr.ph.i.i ], [ %.150.i, %bb.c ], [ null, %case_insensitive_strcmp.exit.thread30.i ]
+  %.019.i = phi ptr [ null, %bb.b ], [ null, %bb.a ], [ %.150.i, %.lr.ph.i.i ], [ null, %case_insensitive_strcmp.exit.thread30.i ], [ %.150.i, %bb.c ]
   ret ptr %.019.i
 }
 
@@ -239,8 +239,8 @@ bb.d:                                             ; preds = %bb.c
   %.not25.i = icmp eq ptr %i.h, null
   br i1 %.not25.i, label %get_object_item.exit, label %.lr.ph.i
 
-get_object_item.exit:                             ; preds = %bb.d, %.lr.ph.i, %bb.c, %bb.a, %bb.b
-  %.019.i = phi ptr [ null, %bb.b ], [ null, %bb.a ], [ null, %bb.d ], [ %.048.i, %bb.c ], [ null, %.lr.ph.i ]
+get_object_item.exit:                             ; preds = %.lr.ph.i, %bb.c, %bb.d, %bb.a, %bb.b
+  %.019.i = phi ptr [ null, %bb.b ], [ null, %bb.a ], [ %.048.i, %bb.c ], [ null, %.lr.ph.i ], [ null, %bb.d ]
   ret ptr %.019.i
 }
 
@@ -310,7 +310,7 @@ case_insensitive_strcmp.exit.thread30.i.i:        ; preds = %bb.d, %.preheader.i
   br i1 %.not23.i.i, label %cJSON_GetObjectItem.exit, label %.lr.ph51.i.i
 
 cJSON_GetObjectItem.exit:                         ; preds = %bb.c, %case_insensitive_strcmp.exit.thread30.i.i, %.lr.ph.i.i.i, %bb.a, %bb.b
-  %.019.i.i = phi i32 [ 0, %bb.b ], [ 0, %bb.a ], [ 1, %.lr.ph.i.i.i ], [ 1, %bb.c ], [ 0, %case_insensitive_strcmp.exit.thread30.i.i ]
+  %.019.i.i = phi i32 [ 0, %bb.b ], [ 0, %bb.a ], [ 1, %.lr.ph.i.i.i ], [ 0, %case_insensitive_strcmp.exit.thread30.i.i ], [ 1, %bb.c ]
   ret i32 %.019.i.i
 }
 
@@ -713,8 +713,8 @@ bb.h:                                             ; preds = %bb.g, %bb.f, %.thre
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.048.i.i, i8 0, i64 16, i1 false)
   br label %cJSON_DetachItemViaPointer.exit
 
-cJSON_DetachItemViaPointer.exit:                  ; preds = %.lr.ph.i.i, %bb.d, %bb.a, %bb.b, %bb.e, %bb.h
-  %.0.i = phi ptr [ %.048.i.i, %bb.h ], [ null, %bb.e ], [ null, %bb.a ], [ null, %bb.b ], [ null, %bb.d ], [ null, %.lr.ph.i.i ]
+cJSON_DetachItemViaPointer.exit:                  ; preds = %bb.d, %.lr.ph.i.i, %bb.a, %bb.b, %bb.e, %bb.h
+  %.0.i = phi ptr [ %.048.i.i, %bb.h ], [ null, %bb.e ], [ null, %bb.a ], [ null, %bb.b ], [ null, %.lr.ph.i.i ], [ null, %bb.d ]
   ret ptr %.0.i
 }
 
@@ -1117,7 +1117,7 @@ default.unreachable169:                           ; preds = %.split2
   unreachable
 
 get_object_item.exit.thread:                      ; preds = %get_object_item.exit.loopexit111, %bb.o, %.preheader41.i, %.lr.ph.i, %bb.q, %get_object_item.exit.us, %.preheader.i.us, %bb.l, %case_insensitive_strcmp.exit.thread30.i.us, %.split124, %get_object_item.exit93.loopexit106, %bb.u, %.preheader41.i74, %.lr.ph.i75, %bb.w, %get_object_item.exit93.us, %.preheader.i84.us, %bb.r, %.split124.us, %case_insensitive_strcmp.exit.thread30.i88.us, %bb.i, %bb.j, %bb.f, %bb.d, %bb.e, %bb.c, %.split2, %.split2, %.split2, %.split, %bb.a, %bb.b
-  %.2.shrunk = phi i1 [ %.not64, %bb.j ], [ false, %bb.a ], [ false, %.lr.ph.i ], [ false, %case_insensitive_strcmp.exit.thread30.i88.us ], [ true, %.split ], [ %i.w, %bb.c ], [ true, %.split2 ], [ true, %.split2 ], [ %i.ae, %bb.f ], [ false, %bb.d ], [ false, %bb.e ], [ false, %bb.b ], [ true, %.split2 ], [ false, %bb.i ], [ %.not61.us, %get_object_item.exit93.us ], [ false, %case_insensitive_strcmp.exit.thread30.i.us ], [ false, %get_object_item.exit.us ], [ false, %.lr.ph.i75 ], [ %.not61, %.split124 ], [ %.not61.us, %.split124.us ], [ %.not61.us, %bb.r ], [ %.not61.us, %.preheader.i84.us ], [ false, %bb.w ], [ %.not61, %.preheader41.i74 ], [ %.not61, %bb.u ], [ %.not61, %get_object_item.exit93.loopexit106 ], [ false, %bb.l ], [ false, %.preheader.i.us ], [ false, %bb.q ], [ false, %.preheader41.i ], [ false, %bb.o ], [ false, %get_object_item.exit.loopexit111 ]
+  %.2.shrunk = phi i1 [ %.not64, %bb.j ], [ false, %bb.a ], [ false, %bb.i ], [ false, %.lr.ph.i ], [ true, %.split ], [ %i.w, %bb.c ], [ true, %.split2 ], [ true, %.split2 ], [ %i.ae, %bb.f ], [ false, %bb.d ], [ false, %bb.e ], [ false, %bb.b ], [ true, %.split2 ], [ false, %case_insensitive_strcmp.exit.thread30.i88.us ], [ false, %case_insensitive_strcmp.exit.thread30.i.us ], [ %.not61.us, %get_object_item.exit93.us ], [ false, %get_object_item.exit.us ], [ false, %.lr.ph.i75 ], [ %.not61, %.split124 ], [ %.not61.us, %.split124.us ], [ %.not61.us, %bb.r ], [ %.not61.us, %.preheader.i84.us ], [ false, %bb.w ], [ %.not61, %.preheader41.i74 ], [ %.not61, %bb.u ], [ %.not61, %get_object_item.exit93.loopexit106 ], [ false, %bb.l ], [ false, %.preheader.i.us ], [ false, %bb.q ], [ false, %.preheader41.i ], [ false, %bb.o ], [ false, %get_object_item.exit.loopexit111 ]
   %.2 = zext i1 %.2.shrunk to i32
   ret i32 %.2
 }
@@ -1520,7 +1520,7 @@ bb.d:                                             ; preds = %cJSON_IsString.exit
   %i.l = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.22, ptr noundef %i.k) ; 0 uses
   br label %bb.e
 
-cJSON_IsString.exit.thread:                       ; preds = %.lr.ph.i.i, %bb.c, %bb.a, %cJSON_IsString.exit
+cJSON_IsString.exit.thread:                       ; preds = %bb.c, %.lr.ph.i.i, %bb.a, %cJSON_IsString.exit
   %puts = tail call i32 @puts(ptr nonnull dereferenceable(1) @str) ; 0 uses
   br label %bb.e
 
@@ -1553,7 +1553,7 @@ cJSON_IsTrue.exit:                                ; preds = %bb.f
   %.not103 = icmp eq i32 %i.t, 2
   br i1 %.not103, label %bb.t, label %.lr.ph.i.i47.preheader
 
-.lr.ph.i.i47.preheader:                           ; preds = %.lr.ph.i.i38, %bb.g, %cJSON_IsTrue.exit
+.lr.ph.i.i47.preheader:                           ; preds = %bb.g, %.lr.ph.i.i38, %cJSON_IsTrue.exit
   br label %.lr.ph.i.i47
 
 .lr.ph.i.i47:                                     ; preds = %.lr.ph.i.i47.preheader, %bb.i
@@ -1573,7 +1573,7 @@ bb.i:                                             ; preds = %bb.h
   %.not25.i.i51 = icmp eq ptr %i.x, null
   br i1 %.not25.i.i51, label %cJSON_IsTrue.exit.thread.thread, label %.lr.ph.i.i47
 
-cJSON_IsTrue.exit.thread.thread:                  ; preds = %.lr.ph.i.i47, %bb.i, %bb.e
+cJSON_IsTrue.exit.thread.thread:                  ; preds = %bb.i, %.lr.ph.i.i47, %bb.e
   tail call void @UnityFail(ptr noundef nonnull @.str.27, i64 noundef 80) #29
   %.pre = load ptr, ptr %i.a, align 8, !tbaa !28
   br label %cJSON_GetObjectItemCaseSensitive.exit53
@@ -1601,7 +1601,7 @@ bb.k:                                             ; preds = %bb.j
   %.not25.i.i59 = icmp eq ptr %i.ac, null
   br i1 %.not25.i.i59, label %.loopexit, label %.lr.ph.i.i55
 
-.loopexit:                                        ; preds = %.lr.ph.i.i55, %bb.k, %cJSON_GetObjectItemCaseSensitive.exit53
+.loopexit:                                        ; preds = %bb.k, %.lr.ph.i.i55, %cJSON_GetObjectItemCaseSensitive.exit53
   tail call void @UnityFail(ptr noundef nonnull @.str.29, i64 noundef 82) #29
   br label %cJSON_GetObjectItemCaseSensitive.exit61
 
@@ -1638,7 +1638,7 @@ bb.o:                                             ; preds = %bb.n
   br i1 %.not25.i.i67, label %cJSON_GetObjectItemCaseSensitive.exit69, label %.lr.ph.i.i63
 
 cJSON_GetObjectItemCaseSensitive.exit69:          ; preds = %.lr.ph.i.i63, %bb.n, %bb.o
-  %.019.i.i68 = phi ptr [ %.048.i.i64, %bb.n ], [ null, %.lr.ph.i.i63 ], [ null, %bb.o ] ; 2 uses
+  %.019.i.i68 = phi ptr [ null, %.lr.ph.i.i63 ], [ null, %bb.o ], [ %.048.i.i64, %bb.n ] ; 2 uses
   br label %.lr.ph.i.i71
 
 .lr.ph.i.i71:                                     ; preds = %cJSON_GetObjectItemCaseSensitive.exit69, %bb.q
@@ -1667,8 +1667,8 @@ bb.r:                                             ; preds = %cJSON_GetObjectItem
   tail call void @UnityFail(ptr noundef nonnull @.str.33, i64 noundef 92) #29
   br label %.thread
 
-cJSON_GetObjectItemCaseSensitive.exit69.thread:   ; preds = %.lr.ph.i.i71, %bb.q, %bb.m
-  %.019.i.i6895.ph = phi ptr [ null, %bb.m ], [ %.019.i.i68, %bb.q ], [ %.019.i.i68, %.lr.ph.i.i71 ] ; 2 uses
+cJSON_GetObjectItemCaseSensitive.exit69.thread:   ; preds = %bb.q, %.lr.ph.i.i71, %bb.m
+  %.019.i.i6895.ph = phi ptr [ null, %bb.m ], [ %.019.i.i68, %.lr.ph.i.i71 ], [ %.019.i.i68, %bb.q ] ; 2 uses
   %i.ao = tail call i32 @cJSONUtils_ApplyPatchesCaseSensitive(ptr noundef %i.ad, ptr noundef %.019.i.i6092) #29
   %i.ap = sext i32 %i.ao to i64
   tail call void @UnityAssertEqualNumber(i64 noundef 0, i64 noundef %i.ap, ptr noundef nonnull @.str.34, i64 noundef 99, i32 noundef 20) #29
@@ -1680,15 +1680,17 @@ cJSON_GetObjectItemCaseSensitive.exit69.thread:   ; preds = %.lr.ph.i.i71, %bb.q
   br label %bb.t
 
 bb.s:                                             ; preds = %cJSON_GetObjectItemCaseSensitive.exit69.thread
-  %i.aq = tail call i32 @cJSON_Compare(ptr noundef %i.ad, ptr noundef nonnull %.019.i.i6895.ph, i32 noundef 1) ; 2 uses
+  %i.aq = tail call i32 @cJSON_Compare(ptr noundef %i.ad, ptr noundef nonnull %.019.i.i6895.ph, i32 noundef 1)
   tail call void @cJSON_Delete(ptr noundef %i.ad)
   %.not33.not = icmp eq i32 %i.aq, 0
-  %spec.select = select i1 %.not33.not, ptr @str.1, ptr @str.2
+  br i1 %.not33.not, label %1, label %bb.t
+
+1:                                                ; preds = %bb.s
   br label %bb.t
 
-bb.t:                                             ; preds = %bb.s, %.thread, %cJSON_IsTrue.exit
-  %str.2.sink = phi ptr [ @str.6, %cJSON_IsTrue.exit ], [ %spec.select, %bb.s ], [ @str.2, %.thread ]
-  %.024 = phi i32 [ 1, %cJSON_IsTrue.exit ], [ %i.aq, %bb.s ], [ 1, %.thread ]
+bb.t:                                             ; preds = %bb.s, %.thread, %cJSON_IsTrue.exit, %1
+  %str.2.sink = phi ptr [ @str.6, %cJSON_IsTrue.exit ], [ @str.1, %1 ], [ @str.2, %.thread ], [ @str.2, %bb.s ]
+  %.024 = phi i32 [ 1, %cJSON_IsTrue.exit ], [ 0, %1 ], [ 1, %.thread ], [ 1, %bb.s ]
   %puts35 = tail call i32 @puts(ptr nonnull dereferenceable(1) %str.2.sink) ; 0 uses
   ret i32 %.024
 }
@@ -1725,7 +1727,7 @@ cJSON_IsTrue.exit:                                ; preds = %bb.b
   %.not = icmp eq i32 %i.i, 2
   br i1 %.not, label %bb.d, label %.lr.ph.i.i39.preheader
 
-.lr.ph.i.i39.preheader:                           ; preds = %.lr.ph.i.i, %bb.c, %cJSON_IsTrue.exit
+.lr.ph.i.i39.preheader:                           ; preds = %bb.c, %.lr.ph.i.i, %cJSON_IsTrue.exit
   br label %.lr.ph.i.i39
 
 bb.d:                                             ; preds = %cJSON_IsTrue.exit
@@ -1749,7 +1751,7 @@ bb.f:                                             ; preds = %bb.e
   %.not25.i.i43 = icmp eq ptr %i.m, null
   br i1 %.not25.i.i43, label %.thread, label %.lr.ph.i.i39
 
-.thread:                                          ; preds = %bb.f, %.lr.ph.i.i39, %bb.a
+.thread:                                          ; preds = %.lr.ph.i.i39, %bb.f, %bb.a
   tail call void @UnityFail(ptr noundef nonnull @.str.27, i64 noundef 142) #29
   br label %bb.h
 
@@ -1787,7 +1789,7 @@ bb.k:                                             ; preds = %bb.j
   %.not25.i.i51 = icmp eq ptr %i.s, null
   br i1 %.not25.i.i51, label %.loopexit, label %.lr.ph.i.i47
 
-.loopexit:                                        ; preds = %.lr.ph.i.i47, %bb.k, %bb.i
+.loopexit:                                        ; preds = %bb.k, %.lr.ph.i.i47, %bb.i
   tail call void @cJSON_Delete(ptr noundef %phi.call66)
   br label %bb.n
 

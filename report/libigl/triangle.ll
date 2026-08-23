@@ -205,7 +205,9 @@ bb.bp:                                            ; preds = %bb.bo
 bb.bq:                                            ; preds = %bb.bp
   %i.zv = call noundef i32 @_Z17checkseg4encroachP4meshP8behaviorP4osub(ptr noundef nonnull %0, ptr noundef %1, ptr noundef nonnull %14)
   %.not549 = icmp eq i32 %i.zv, 0
-  %spec.select = select i1 %.not549, i32 %.0495.ph, i32 1
+  br i1 %.not549, label %.thread608, label %15
+
+15:                                               ; preds = %bb.bq
   br label %.thread608
 
 ._crit_edge666:                                   ; preds = %bb.bn, %bb.bo
@@ -608,8 +610,8 @@ bb.dj:                                            ; preds = %bb.dh, %bb.di
   store ptr %i.zw, ptr %14, align 1
   br label %.thread608
 
-.thread608:                                       ; preds = %.thread608.loopexit, %bb.bp, %bb.bq
-  %.1496602613 = phi i32 [ %.0495.ph, %bb.bp ], [ %spec.select, %bb.bq ], [ %.0495.ph, %.thread608.loopexit ] ; 2 uses
+.thread608:                                       ; preds = %.thread608.loopexit, %bb.bp, %bb.bq, %15
+  %.1496602613 = phi i32 [ 1, %15 ], [ %.0495.ph, %bb.bp ], [ %.0495.ph, %bb.bq ], [ %.0495.ph, %.thread608.loopexit ] ; 2 uses
   br i1 %.not555, label %bb.dl, label %bb.dk
 
 bb.dk:                                            ; preds = %.thread608

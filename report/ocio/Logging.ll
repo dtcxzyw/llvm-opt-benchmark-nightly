@@ -202,11 +202,13 @@ bb.o:                                             ; preds = %bb.n, %._crit_edge.
   %i.bl = getelementptr inbounds i8, ptr %i.bk, i64 -1
   %i.bm = load i8, ptr %i.bl, align 1, !tbaa !30, !noalias !56
   %i.bn = icmp ugt i8 %i.bm, 32
-  %spec.select.i.i.i = select i1 %i.bn, i64 %i.bj, i64 %i.r
+  br i1 %i.bn, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5eraseEN9__gnu_cxx17__normal_iteratorIPKcS4_EES9_.exit.i, label %5
+
+5:                                                ; preds = %bb.o
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5eraseEN9__gnu_cxx17__normal_iteratorIPKcS4_EES9_.exit.i
 
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5eraseEN9__gnu_cxx17__normal_iteratorIPKcS4_EES9_.exit.i: ; preds = %.lr.ph.i.i.i.i, %bb.o, %bb.m, %bb.k, %._crit_edge.i.i.i.i, %bb.i, %bb.g, %bb.e
-  %.sink.i.i.i.i = phi i64 [ %spec.select.i.i.i, %bb.o ], [ %i.bc, %bb.m ], [ %i.as, %bb.k ], [ %i.r, %._crit_edge.i.i.i.i ], [ %.cast11.i.i.i.i, %bb.i ], [ %.cast10.i.i.i.i, %bb.g ], [ %.cast.i.i.i.i, %bb.e ], [ %i.y, %.lr.ph.i.i.i.i ]
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5eraseEN9__gnu_cxx17__normal_iteratorIPKcS4_EES9_.exit.i: ; preds = %.lr.ph.i.i.i.i, %5, %bb.o, %bb.m, %bb.k, %._crit_edge.i.i.i.i, %bb.i, %bb.g, %bb.e
+  %.sink.i.i.i.i = phi i64 [ %i.bj, %bb.o ], [ %i.bc, %bb.m ], [ %i.as, %bb.k ], [ %i.r, %._crit_edge.i.i.i.i ], [ %.cast11.i.i.i.i, %bb.i ], [ %.cast10.i.i.i.i, %bb.g ], [ %.cast.i.i.i.i, %bb.e ], [ %i.r, %5 ], [ %i.y, %.lr.ph.i.i.i.i ]
   %i.bo = sub i64 %.sink.i.i.i.i, %i.r            ; 2 uses
   store i64 %i.bo, ptr %i.k, align 8, !tbaa !28, !noalias !50
   %i.bp = getelementptr inbounds nuw i8, ptr %i.n, i64 %i.bo

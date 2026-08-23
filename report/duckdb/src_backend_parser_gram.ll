@@ -202,11 +202,13 @@ bb.qy:                                            ; preds = %bb.x
 bb.qz:                                            ; preds = %bb.qy
   %i.ckv = load i32, ptr %.pre5793, align 4, !tbaa !272
   %i.ckw = icmp eq i32 %i.ckv, 223
-  %spec.select5894 = select i1 %i.ckw, i64 32, i64 24
+  br i1 %i.ckw, label %._crit_edge5792.a, label %._crit_edge5792
+
+._crit_edge5792:                                  ; preds = %bb.qz
   br label %._crit_edge5792.a
 
-._crit_edge5792.a:                                ; preds = %bb.qz, %bb.qy
-  %.sink5877 = phi i64 [ %spec.select5894, %bb.qz ], [ 24, %bb.qy ]
+._crit_edge5792.a:                                ; preds = %bb.qy, %bb.qz, %._crit_edge5792
+  %.sink5877 = phi i64 [ 32, %bb.qz ], [ 24, %bb.qy ], [ 24, %._crit_edge5792 ]
   %i.ckx = getelementptr inbounds nuw i8, ptr %i.ckm, i64 %.sink5877
   store ptr %.pre5793, ptr %i.ckx, align 8, !tbaa !150
   %i.cky = getelementptr inbounds i8, ptr %.35474, i64 -8

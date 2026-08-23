@@ -205,11 +205,13 @@ bb.e:                                             ; preds = %_ZNK7rocksdb21UserC
 
 bb.f:                                             ; preds = %bb.e
   %i.ah = icmp ult i64 %.0.copyload.i, %.0.copyload.i18
-  %spec.select = zext i1 %i.ah to i32
+  br i1 %i.ah, label %5, label %bb.g
+
+5:                                                ; preds = %bb.f
   br label %bb.g
 
-bb.g:                                             ; preds = %bb.f, %bb.e, %_ZNK7rocksdb21UserComparatorWrapper7CompareERKNS_5SliceES3_.exit
-  %.1 = phi i32 [ %i.w, %_ZNK7rocksdb21UserComparatorWrapper7CompareERKNS_5SliceES3_.exit ], [ %spec.select, %bb.f ], [ -1, %bb.e ]
+bb.g:                                             ; preds = %5, %bb.f, %bb.e, %_ZNK7rocksdb21UserComparatorWrapper7CompareERKNS_5SliceES3_.exit
+  %.1 = phi i32 [ %i.w, %_ZNK7rocksdb21UserComparatorWrapper7CompareERKNS_5SliceES3_.exit ], [ 0, %bb.f ], [ 1, %5 ], [ -1, %bb.e ]
   ret i32 %.1
 }
 

@@ -202,11 +202,13 @@ bb.ao:                                            ; preds = %bb.an
   %i.ey = load ptr, ptr %i.ex, align 8
   %i.ez = tail call i32 @xstrcmp(ptr noundef %i.ew, ptr noundef %i.ey) #11
   %.not347 = icmp eq i32 %i.ez, 0
-  %spec.select = select i1 %.not347, i1 %.0282, i1 false
+  br i1 %.not347, label %3, label %bb.ap
+
+3:                                                ; preds = %bb.ao
   br label %bb.ap
 
-bb.ap:                                            ; preds = %bb.ao, %bb.an
-  %.0281 = phi i1 [ %.0282, %bb.an ], [ %spec.select, %bb.ao ]
+bb.ap:                                            ; preds = %bb.an, %bb.ao, %3
+  %.0281 = phi i1 [ %.0282, %3 ], [ false, %bb.ao ], [ %.0282, %bb.an ]
   %i.fa = load i32, ptr %i.b, align 4
   switch i32 %i.fa, label %bb.as [
     i32 0, label %bb.aq

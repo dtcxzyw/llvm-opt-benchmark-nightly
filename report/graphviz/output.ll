@@ -204,11 +204,13 @@ bb.bi:                                            ; preds = %bb.bh
   %i.hd = call i64 @strtoul(ptr noundef nonnull captures(none) %i.hc, ptr noundef null, i32 noundef 0) #18
   %.fr = freeze i64 %i.hd                         ; 2 uses
   %i.he = icmp ult i64 %.fr, 3
-  %spec.select = select i1 %i.he, i64 8, i64 %.fr
+  br i1 %i.he, label %4, label %agxbputc.exit.peel
+
+4:                                                ; preds = %bb.bi
   br label %agxbputc.exit.peel
 
-agxbputc.exit.peel:                               ; preds = %bb.bi, %bb.bh
-  %.1.ph = phi i64 [ %spec.select, %bb.bi ], [ 8, %bb.bh ] ; 3 uses
+agxbputc.exit.peel:                               ; preds = %bb.bh, %4, %bb.bi
+  %.1.ph = phi i64 [ 8, %bb.bh ], [ %.fr, %bb.bi ], [ 8, %4 ] ; 3 uses
   %.pre563.pr = load i64, ptr %i.gx, align 8, !tbaa !137
   %i.hf = uitofp i64 %.1.ph to double             ; 3 uses
   %i.hg = getelementptr inbounds nuw i8, ptr %i.gw, i64 56 ; 2 uses

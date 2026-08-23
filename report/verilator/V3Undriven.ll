@@ -205,7 +205,9 @@ _ZNK16UndrivenVarEntry10drivenFlagEi.exit93:      ; preds = %_ZNK16UndrivenVarEn
 
 _ZNK16UndrivenVarEntry10drivenFlagEi.exit.thread: ; preds = %bb.g, %_ZNK16UndrivenVarEntry10drivenFlagEi.exit93, %_ZNK16UndrivenVarEntry10drivenFlagEi.exit83, %_ZNK16UndrivenVarEntry10drivenFlagEi.exit
   %i.dq = trunc nuw i8 %.048363 to i1
-  %spec.select69 = select i1 %i.dq, i32 %.046364, i32 %.045366
+  br i1 %i.dq, label %bb.bt, label %14
+
+14:                                               ; preds = %_ZNK16UndrivenVarEntry10drivenFlagEi.exit.thread
   br label %bb.bt
 
 _ZNK16UndrivenVarEntry8usedFlagEi.exit.thread:    ; preds = %bb.i, %_ZNK16UndrivenVarEntry8usedFlagEi.exit78.thread, %bb.f, %_ZNK16UndrivenVarEntry8usedFlagEi.exit78, %_ZNK16UndrivenVarEntry10drivenFlagEi.exit83, %_ZNK16UndrivenVarEntry8usedFlagEi.exit, %_ZNK16UndrivenVarEntry10drivenFlagEi.exit, %bb.e, %_ZNK16UndrivenVarEntry10drivenFlagEi.exit93, %_ZNK16UndrivenVarEntry8usedFlagEi.exit88, %bb.d
@@ -608,9 +610,9 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit253: ; preds = %_Z
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #19
   br label %bb.by
 
-bb.bt:                                            ; preds = %_ZNK16UndrivenVarEntry10drivenFlagEi.exit.thread, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit241, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit162, %_ZNK16UndrivenVarEntry8usedFlagEi.exit.thread
-  %.149 = phi i8 [ 0, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ 0, %_ZNK16UndrivenVarEntry8usedFlagEi.exit.thread ], [ 1, %_ZNK16UndrivenVarEntry10drivenFlagEi.exit.thread ], [ 0, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit162 ], [ 0, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit241 ]
-  %.147 = phi i32 [ %.045.in365, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ %.046364, %_ZNK16UndrivenVarEntry8usedFlagEi.exit.thread ], [ %spec.select69, %_ZNK16UndrivenVarEntry10drivenFlagEi.exit.thread ], [ %.046364, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit162 ], [ %.046364, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit241 ]
+bb.bt:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit241, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit162, %14, %_ZNK16UndrivenVarEntry10drivenFlagEi.exit.thread, %_ZNK16UndrivenVarEntry8usedFlagEi.exit.thread
+  %.149 = phi i8 [ 1, %14 ], [ 0, %_ZNK16UndrivenVarEntry8usedFlagEi.exit.thread ], [ 1, %_ZNK16UndrivenVarEntry10drivenFlagEi.exit.thread ], [ 0, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit162 ], [ 0, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit241 ], [ 0, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ]
+  %.147 = phi i32 [ %.045366, %14 ], [ %.046364, %_ZNK16UndrivenVarEntry8usedFlagEi.exit.thread ], [ %.046364, %_ZNK16UndrivenVarEntry10drivenFlagEi.exit.thread ], [ %.046364, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit162 ], [ %.046364, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit241 ], [ %.045.in365, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ]
   %i.ra = icmp ult i32 %.045366, -2147483647
   br i1 %i.ra, label %bb.d, label %._crit_edge.loopexit, !llvm.loop !518
 

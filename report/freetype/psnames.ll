@@ -204,7 +204,9 @@ bb.am:                                            ; preds = %bb.al
   store ptr null, ptr %i.f, align 8, !tbaa !21
   %i.cf = load i32, ptr %i.a, align 4, !tbaa !22  ; 2 uses
   %.not57 = icmp eq i32 %i.cf, 0
-  %spec.select = select i1 %.not57, i32 163, i32 %i.cf
+  br i1 %.not57, label %6, label %bb.ap
+
+6:                                                ; preds = %bb.am
   br label %bb.ap
 
 bb.an:                                            ; preds = %bb.al
@@ -225,8 +227,8 @@ bb.ao:                                            ; preds = %bb.an
   %.pre.pre = load i32, ptr %i.a, align 4, !tbaa !22
   br label %bb.ap
 
-bb.ap:                                            ; preds = %bb.am, %._crit_edge
-  %.pre = phi i32 [ %spec.select, %bb.am ], [ %.pre.pre, %._crit_edge ]
+bb.ap:                                            ; preds = %bb.am, %6, %._crit_edge
+  %.pre = phi i32 [ %i.cf, %bb.am ], [ 163, %6 ], [ %.pre.pre, %._crit_edge ]
   store i32 %i.cd, ptr %i.b, align 8, !tbaa !12
   br label %bb.aq
 

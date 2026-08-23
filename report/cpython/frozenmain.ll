@@ -50,10 +50,13 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.c
   %i.g = load i8, ptr %i.f, align 1, !tbaa !20
   %.not12 = icmp eq i8 %i.g, 0
+  br i1 %.not12, label %bb.e, label %5
+
+5:                                                ; preds = %bb.d
   br label %bb.e
 
-bb.e:                                             ; preds = %bb.d, %bb.c
-  %.not15 = phi i1 [ true, %bb.c ], [ %.not12, %bb.d ]
+bb.e:                                             ; preds = %5, %bb.d, %bb.c
+  %.not15 = phi i1 [ false, %5 ], [ true, %bb.d ], [ true, %bb.c ]
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #7
   call void @Py_InitializeFromConfig(ptr dead_on_unwind nonnull writable sret(%struct.PyStatus) align 8 %4, ptr noundef nonnull %2) #7
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %3, ptr noundef nonnull align 8 dereferenceable(32) %4, i64 32, i1 false), !tbaa.struct !21

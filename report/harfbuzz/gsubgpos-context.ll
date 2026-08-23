@@ -202,16 +202,18 @@ bb.f:                                             ; preds = %bb.d
 .loopexit:                                        ; preds = %bb.f, %bb.e
   %.03043 = phi i32 [ %.03045, %bb.e ], [ %spec.select, %bb.f ]
   %.02941 = phi i32 [ %.02946, %bb.e ], [ %i.af, %bb.f ]
-  %.02839 = phi i32 [ %.048, %bb.e ], [ %i.ac, %bb.f ]
+  %.02839 = phi i32 [ %.048, %bb.e ], [ %i.ac, %bb.f ] ; 2 uses
   %.03043.fr = freeze i32 %.03043                 ; 2 uses
   %i.al = icmp eq i32 %.03043.fr, -1
-  %spec.select67 = select i1 %i.al, i32 %.02941, i32 %.03043.fr
+  br i1 %i.al, label %5, label %.loopexit.thread
+
+5:                                                ; preds = %.loopexit
   br label %.loopexit.thread
 
-.loopexit.thread:                                 ; preds = %.loopexit, %.critedge
-  %.0283961 = phi i32 [ %.02839, %.loopexit ], [ 0, %.critedge ]
-  %5 = phi i32 [ %spec.select67, %.loopexit ], [ %i.n, %.critedge ]
-  %i.am = zext i32 %5 to i64
+.loopexit.thread:                                 ; preds = %.critedge, %.loopexit, %5
+  %.0283961 = phi i32 [ %.02839, %.loopexit ], [ %.02839, %5 ], [ 0, %.critedge ]
+  %6 = phi i32 [ %.03043.fr, %.loopexit ], [ %.02941, %5 ], [ %i.n, %.critedge ]
+  %i.am = zext i32 %6 to i64
   %i.an = getelementptr inbounds nuw [16 x i8], ptr %i.p, i64 %i.am ; 3 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %i.an, i64 4 ; 3 uses
   %i.ap = load i32, ptr %i.ao, align 4
@@ -456,16 +458,18 @@ bb.f:                                             ; preds = %bb.d
 .loopexit:                                        ; preds = %bb.f, %bb.e
   %.03043 = phi i32 [ %.03045, %bb.e ], [ %spec.select, %bb.f ]
   %.02941 = phi i32 [ %.02946, %bb.e ], [ %i.af, %bb.f ]
-  %.02839 = phi i32 [ %.048, %bb.e ], [ %i.ac, %bb.f ]
+  %.02839 = phi i32 [ %.048, %bb.e ], [ %i.ac, %bb.f ] ; 2 uses
   %.03043.fr = freeze i32 %.03043                 ; 2 uses
   %i.al = icmp eq i32 %.03043.fr, -1
-  %spec.select67 = select i1 %i.al, i32 %.02941, i32 %.03043.fr
+  br i1 %i.al, label %5, label %.loopexit.thread
+
+5:                                                ; preds = %.loopexit
   br label %.loopexit.thread
 
-.loopexit.thread:                                 ; preds = %.loopexit, %.critedge
-  %.0283961 = phi i32 [ %.02839, %.loopexit ], [ 0, %.critedge ]
-  %5 = phi i32 [ %spec.select67, %.loopexit ], [ %i.n, %.critedge ]
-  %i.am = zext i32 %5 to i64
+.loopexit.thread:                                 ; preds = %.critedge, %.loopexit, %5
+  %.0283961 = phi i32 [ %.02839, %.loopexit ], [ %.02839, %5 ], [ 0, %.critedge ]
+  %6 = phi i32 [ %.03043.fr, %.loopexit ], [ %.02941, %5 ], [ %i.n, %.critedge ]
+  %i.am = zext i32 %6 to i64
   %i.an = getelementptr inbounds nuw [16 x i8], ptr %i.p, i64 %i.am ; 3 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %i.an, i64 4 ; 3 uses
   %i.ap = load i32, ptr %i.ao, align 4

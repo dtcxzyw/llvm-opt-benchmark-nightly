@@ -202,7 +202,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define hidden zeroext i1 @_RNCNCNvNtCskarGseaywcB_14diesel_derives8query_id6derive00B7_(ptr nofree readnone captures(none) %0, ptr align 8 %1) unnamed_addr #0 {
+define hidden noundef zeroext i1 @_RNCNCNvNtCskarGseaywcB_14diesel_derives8query_id6derive00B7_(ptr nofree readnone captures(none) %0, ptr align 8 %1) unnamed_addr #0 {
 bb.a:
   %i.a = load i64, ptr %1, align 8                ; 2 uses
   %i.b = icmp ult i64 %i.a, 40
@@ -220,8 +220,8 @@ bb.c:                                             ; preds = %bb.b
   %i.h = icmp eq i64 %i.g, 19
   br i1 %i.h, label %bb.e, label %bb.d
 
-bb.d:                                             ; preds = %bb.f, %bb.c, %bb.e, %bb.b, %bb.a
-  %.sroa.0.0 = phi i1 [ false, %bb.c ], [ false, %bb.b ], [ false, %bb.a ], [ %i.n, %bb.f ], [ false, %bb.e ]
+bb.d:                                             ; preds = %bb.c, %bb.e, %bb.f, %bb.b, %bb.a, %2
+  %.sroa.0.0 = phi i1 [ true, %2 ], [ false, %bb.b ], [ false, %bb.a ], [ false, %bb.f ], [ false, %bb.e ], [ false, %bb.c ]
   ret i1 %.sroa.0.0
 
 bb.e:                                             ; preds = %bb.c
@@ -234,6 +234,9 @@ bb.f:                                             ; preds = %bb.e
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 44
   %i.m = load i8, ptr %i.l, align 4
   %i.n = trunc nuw i8 %i.m to i1
+  br i1 %i.n, label %2, label %bb.d
+
+2:                                                ; preds = %bb.f
   br label %bb.d
 }
 

@@ -201,11 +201,13 @@ bb.av:                                            ; preds = %bb.au
   %i.fo = icmp eq i32 %i.fn, 0
   %i.fp = icmp sgt i32 %.1352, -1
   %or.cond = select i1 %i.fo, i1 %i.fp, i1 false
-  %spec.select = select i1 %or.cond, i32 %.1352, i32 %i.fh
+  br i1 %or.cond, label %9, label %bb.aw
+
+9:                                                ; preds = %bb.av
   br label %bb.aw
 
-bb.aw:                                            ; preds = %bb.av, %bb.at, %bb.au, %bb.as
-  %.2 = phi i32 [ %i.fh, %bb.as ], [ %spec.select, %bb.av ], [ %i.fh, %bb.au ], [ %i.fh, %bb.at ] ; 2 uses
+bb.aw:                                            ; preds = %bb.at, %bb.au, %9, %bb.av, %bb.as
+  %.2 = phi i32 [ %.1352, %9 ], [ %i.fh, %bb.av ], [ %i.fh, %bb.au ], [ %i.fh, %bb.at ], [ %i.fh, %bb.as ] ; 2 uses
   br i1 %.not271, label %bb.ay, label %bb.ax
 
 bb.ax:                                            ; preds = %bb.aw

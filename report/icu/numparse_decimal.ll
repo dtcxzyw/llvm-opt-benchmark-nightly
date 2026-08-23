@@ -204,10 +204,13 @@ bb.f:                                             ; preds = %bb.e
   %i.ak = load ptr, ptr %i.a, align 8, !tbaa !34
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 576
   %i.am = tail call noundef zeroext i1 @_ZNK6icu_7813StringSegment10startsWithERKNS_13UnicodeStringE(ptr noundef nonnull align 8 dereferenceable(17) %1, ptr noundef nonnull align 8 dereferenceable(64) %i.al)
+  br i1 %i.am, label %.loopexit, label %2
+
+2:                                                ; preds = %.preheader.9
   br label %.loopexit
 
-.loopexit:                                        ; preds = %.preheader.9, %.preheader.preheader, %.preheader.1, %.preheader.2, %.preheader.3, %.preheader.4, %.preheader.5, %.preheader.6, %.preheader.7, %.preheader.8, %bb.f, %bb.d, %bb.e, %bb.c
-  %.1 = phi i1 [ %i.e, %bb.c ], [ true, %bb.e ], [ true, %bb.d ], [ false, %bb.f ], [ true, %.preheader.preheader ], [ true, %.preheader.5 ], [ true, %.preheader.1 ], [ %i.am, %.preheader.9 ], [ true, %.preheader.2 ], [ true, %.preheader.7 ], [ true, %.preheader.3 ], [ true, %.preheader.8 ], [ true, %.preheader.4 ], [ true, %.preheader.6 ]
+.loopexit:                                        ; preds = %.preheader.preheader, %.preheader.1, %.preheader.2, %.preheader.3, %.preheader.4, %.preheader.5, %.preheader.6, %.preheader.7, %.preheader.8, %.preheader.9, %2, %bb.f, %bb.d, %bb.e, %bb.c
+  %.1 = phi i1 [ %i.e, %bb.c ], [ false, %bb.f ], [ true, %bb.d ], [ true, %bb.e ], [ true, %.preheader.preheader ], [ false, %2 ], [ true, %.preheader.1 ], [ true, %.preheader.9 ], [ true, %.preheader.2 ], [ true, %.preheader.7 ], [ true, %.preheader.3 ], [ true, %.preheader.8 ], [ true, %.preheader.4 ], [ true, %.preheader.6 ], [ true, %.preheader.5 ]
   ret i1 %.1
 }
 

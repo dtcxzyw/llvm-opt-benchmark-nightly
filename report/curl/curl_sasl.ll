@@ -204,7 +204,9 @@ bb.u:                                             ; preds = %bb.t
   %i.ao = load i16, ptr %i.an, align 2, !tbaa !109
   %i.ap = and i16 %i.ao, 1
   %.not91 = icmp eq i16 %i.ap, 0
-  %spec.select98 = select i1 %.not91, i32 17, i32 7
+  br i1 %.not91, label %.thread101, label %6
+
+6:                                                ; preds = %bb.u
   br label %.thread101
 
 bb.v:                                             ; preds = %bb.e
@@ -276,8 +278,8 @@ bb.ad:                                            ; preds = %bb.a
   call void @Curl_bufref_free(ptr noundef nonnull %5) #7
   br label %bb.ah
 
-.thread101:                                       ; preds = %bb.j, %bb.m, %bb.p, %bb.ab, %bb.u, %bb.e
-  %.0.ph = phi i32 [ 17, %bb.e ], [ %spec.select98, %bb.u ], [ 17, %bb.ab ], [ 17, %bb.p ], [ 17, %bb.m ], [ 3, %bb.j ]
+.thread101:                                       ; preds = %bb.j, %bb.m, %bb.p, %6, %bb.u, %bb.e, %bb.ab
+  %.0.ph = phi i32 [ 17, %bb.ab ], [ 17, %bb.e ], [ 17, %bb.u ], [ 7, %6 ], [ 17, %bb.p ], [ 17, %bb.m ], [ 3, %bb.j ]
   call void @Curl_bufref_free(ptr noundef nonnull %5) #7
   br label %bb.af
 

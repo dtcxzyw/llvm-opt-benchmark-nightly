@@ -203,8 +203,10 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.au, label %.thread, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %.inv = icmp sgt i32 %i.ar, -1
-  %spec.select = select i1 %.inv, i32 1, i32 -1
+  %10 = icmp slt i32 %i.ar, 0
+  br i1 %10, label %idaLs_AccessLMem.exit.thread, label %11
+
+11:                                               ; preds = %bb.l
   br label %idaLs_AccessLMem.exit.thread
 
 .thread:                                          ; preds = %bb.k, %bb.i, %bb.g
@@ -214,8 +216,8 @@ bb.l:                                             ; preds = %bb.k
   tail call void @N_VLinearSum(double noundef %i.av, ptr noundef %5, double noundef %i.aw, ptr noundef %3, ptr noundef %5) #11
   br label %idaLs_AccessLMem.exit.thread
 
-idaLs_AccessLMem.exit.thread:                     ; preds = %bb.l, %bb.h, %bb.j, %bb.d, %bb.b, %.thread
-  %.037 = phi i32 [ -2, %bb.d ], [ -1, %bb.b ], [ 0, %.thread ], [ -1, %bb.h ], [ %spec.select, %bb.l ], [ -1, %bb.j ]
+idaLs_AccessLMem.exit.thread:                     ; preds = %bb.h, %bb.j, %bb.l, %11, %bb.d, %bb.b, %.thread
+  %.037 = phi i32 [ -2, %bb.d ], [ -1, %bb.b ], [ 0, %.thread ], [ -1, %bb.h ], [ 1, %11 ], [ -1, %bb.j ], [ -1, %bb.l ]
   ret i32 %.037
 }
 
