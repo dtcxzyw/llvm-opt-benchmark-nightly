@@ -204,15 +204,16 @@ bb.n:                                             ; preds = %bb.m
 
 ._crit_edge.i:                                    ; preds = %bb.m
   %i.ap = trunc nuw nsw i64 %indvars.iv.i to i32
-  %.123.i = add nuw nsw i32 %i.ap, 1
+  %.123.i = add nuw nsw i32 %i.ap, 1              ; 2 uses
   %i.aq = icmp slt i32 %.123.i, %.val32
   br i1 %i.aq, label %.lr.ph26.i, label %._crit_edge27.i
 
 .lr.ph26.i:                                       ; preds = %._crit_edge.i
-  %i.ar = shl nuw nsw i64 %indvars.iv.i, 2        ; 2 uses
+  %2 = zext i32 %.123.i to i64
+  %i.ar = shl nuw nsw i64 %indvars.iv.i, 2
   %scevgep = getelementptr nuw i8, ptr %i.al, i64 %i.ar
-  %2 = getelementptr nuw i8, ptr %i.al, i64 %i.ar
-  %scevgep59 = getelementptr nuw i8, ptr %2, i64 4
+  %3 = shl nuw nsw i64 %2, 2
+  %scevgep59 = getelementptr nuw i8, ptr %i.al, i64 %3
   %i.as = add nsw i32 %.val32, -2
   %i.at = trunc i64 %indvars.iv.i to i32
   %i.au = sub i32 %i.as, %i.at

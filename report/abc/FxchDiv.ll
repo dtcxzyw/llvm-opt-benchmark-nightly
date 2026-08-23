@@ -204,13 +204,13 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.q, label %.lr.ph.i, label %Vec_IntRemove1.exit
 
 .lr.ph.i:                                         ; preds = %bb.c
-  %i.r = load ptr, ptr %i.e, align 8, !tbaa !26   ; 2 uses
+  %i.r = load ptr, ptr %i.e, align 8, !tbaa !26   ; 3 uses
   %wide.trip.count.i = zext nneg i32 %i.p to i64
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.e, %.lr.ph.i
   %indvar.i = phi i64 [ 0, %.lr.ph.i ], [ %indvar.next.i, %bb.e ] ; 3 uses
-  %indvars.iv.i = phi i64 [ 1, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.e ] ; 3 uses
+  %indvars.iv.i = phi i64 [ 1, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.e ] ; 4 uses
   %i.s = getelementptr inbounds nuw [4 x i8], ptr %i.r, i64 %indvars.iv.i
   %i.t = load i32, ptr %i.s, align 4, !tbaa !27
   %i.u = icmp eq i32 %i.t, %i.n
@@ -223,17 +223,18 @@ bb.d:                                             ; preds = %bb.e, %.lr.ph.i
   br i1 %i.w, label %.lr.ph25.i, label %._crit_edge.i
 
 .lr.ph25.i:                                       ; preds = %.preheader.i
-  %i.x = shl nuw nsw i64 %indvar.i, 2
-  %i.y = getelementptr nuw i8, ptr %i.r, i64 %i.x ; 2 uses
-  %scevgep.i = getelementptr nuw i8, ptr %i.y, i64 4
-  %scevgep29.i = getelementptr nuw i8, ptr %i.y, i64 8
+  %i.x = shl nuw nsw i64 %indvars.iv.i, 2
+  %i.y = getelementptr nuw i8, ptr %i.r, i64 %i.x
+  %4 = shl nuw nsw i64 %indvar.i, 2
+  %scevgep.i = getelementptr nuw i8, ptr %i.r, i64 %4
+  %scevgep29.i = getelementptr nuw i8, ptr %scevgep.i, i64 8
   %i.z = add nsw i32 %i.p, -3
   %i.aa = trunc i64 %indvar.i to i32
   %i.ab = sub i32 %i.z, %i.aa
   %i.ac = zext i32 %i.ab to i64
   %i.ad = shl nuw nsw i64 %i.ac, 2
   %i.ae = add nuw nsw i64 %i.ad, 4
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep.i, ptr noundef nonnull align 4 dereferenceable(1) %scevgep29.i, i64 %i.ae, i1 false), !tbaa !27
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.y, ptr noundef nonnull align 4 dereferenceable(1) %scevgep29.i, i64 %i.ae, i1 false), !tbaa !27
   %.pre.i = load i32, ptr %i.d, align 4, !tbaa !19
   br label %._crit_edge.i
 
@@ -258,13 +259,13 @@ bb.f:                                             ; preds = %bb.b
   br i1 %i.q, label %.lr.ph.i105, label %Vec_IntRemove1.exit119
 
 .lr.ph.i105:                                      ; preds = %bb.f
-  %i.ai = load ptr, ptr %i.e, align 8, !tbaa !26  ; 2 uses
+  %i.ai = load ptr, ptr %i.e, align 8, !tbaa !26  ; 3 uses
   %wide.trip.count.i106 = zext nneg i32 %i.p to i64
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.h, %.lr.ph.i105
   %indvar.i107 = phi i64 [ 0, %.lr.ph.i105 ], [ %indvar.next.i111, %bb.h ] ; 3 uses
-  %indvars.iv.i108 = phi i64 [ 1, %.lr.ph.i105 ], [ %indvars.iv.next.i109, %bb.h ] ; 3 uses
+  %indvars.iv.i108 = phi i64 [ 1, %.lr.ph.i105 ], [ %indvars.iv.next.i109, %bb.h ] ; 4 uses
   %i.aj = getelementptr inbounds nuw [4 x i8], ptr %i.ai, i64 %indvars.iv.i108
   %i.ak = load i32, ptr %i.aj, align 4, !tbaa !27
   %i.al = icmp eq i32 %i.ak, %i.n
@@ -277,17 +278,18 @@ bb.g:                                             ; preds = %bb.h, %.lr.ph.i105
   br i1 %i.an, label %.lr.ph25.i115, label %._crit_edge.i114
 
 .lr.ph25.i115:                                    ; preds = %.preheader.i112
-  %i.ao = shl nuw nsw i64 %indvar.i107, 2
-  %i.ap = getelementptr nuw i8, ptr %i.ai, i64 %i.ao ; 2 uses
-  %scevgep.i116 = getelementptr nuw i8, ptr %i.ap, i64 4
-  %scevgep29.i117 = getelementptr nuw i8, ptr %i.ap, i64 8
+  %i.ao = shl nuw nsw i64 %indvars.iv.i108, 2
+  %i.ap = getelementptr nuw i8, ptr %i.ai, i64 %i.ao
+  %5 = shl nuw nsw i64 %indvar.i107, 2
+  %scevgep.i116 = getelementptr nuw i8, ptr %i.ai, i64 %5
+  %scevgep29.i117 = getelementptr nuw i8, ptr %scevgep.i116, i64 8
   %i.aq = add nsw i32 %i.p, -3
   %i.ar = trunc i64 %indvar.i107 to i32
   %i.as = sub i32 %i.aq, %i.ar
   %i.at = zext i32 %i.as to i64
   %i.au = shl nuw nsw i64 %i.at, 2
   %i.av = add nuw nsw i64 %i.au, 4
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep.i116, ptr noundef nonnull align 4 dereferenceable(1) %scevgep29.i117, i64 %i.av, i1 false), !tbaa !27
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.ap, ptr noundef nonnull align 4 dereferenceable(1) %scevgep29.i117, i64 %i.av, i1 false), !tbaa !27
   %.pre.i118 = load i32, ptr %i.d, align 4, !tbaa !19
   br label %._crit_edge.i114
 
@@ -329,13 +331,13 @@ bb.i:                                             ; preds = %Vec_IntRemove1.exit
   br i1 %i.bf, label %.lr.ph.i121, label %Vec_IntRemove1.exit135
 
 .lr.ph.i121:                                      ; preds = %.lr.ph230.split
-  %i.bg = load ptr, ptr %i.i, align 8, !tbaa !26  ; 2 uses
+  %i.bg = load ptr, ptr %i.i, align 8, !tbaa !26  ; 3 uses
   %wide.trip.count.i122 = zext nneg i32 %i.bb to i64
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.k, %.lr.ph.i121
   %indvar.i123 = phi i64 [ 0, %.lr.ph.i121 ], [ %indvar.next.i127, %bb.k ] ; 3 uses
-  %indvars.iv.i124 = phi i64 [ 1, %.lr.ph.i121 ], [ %indvars.iv.next.i125, %bb.k ] ; 3 uses
+  %indvars.iv.i124 = phi i64 [ 1, %.lr.ph.i121 ], [ %indvars.iv.next.i125, %bb.k ] ; 4 uses
   %i.bh = getelementptr inbounds nuw [4 x i8], ptr %i.bg, i64 %indvars.iv.i124
   %i.bi = load i32, ptr %i.bh, align 4, !tbaa !27
   %i.bj = icmp eq i32 %i.bi, %i.be
@@ -348,17 +350,18 @@ bb.j:                                             ; preds = %bb.k, %.lr.ph.i121
   br i1 %i.bl, label %.lr.ph25.i131, label %._crit_edge.i130
 
 .lr.ph25.i131:                                    ; preds = %.preheader.i128
-  %i.bm = shl nuw nsw i64 %indvar.i123, 2
-  %i.bn = getelementptr nuw i8, ptr %i.bg, i64 %i.bm ; 2 uses
-  %scevgep.i132 = getelementptr nuw i8, ptr %i.bn, i64 4
-  %scevgep29.i133 = getelementptr nuw i8, ptr %i.bn, i64 8
+  %i.bm = shl nuw nsw i64 %indvars.iv.i124, 2
+  %i.bn = getelementptr nuw i8, ptr %i.bg, i64 %i.bm
+  %6 = shl nuw nsw i64 %indvar.i123, 2
+  %scevgep.i132 = getelementptr nuw i8, ptr %i.bg, i64 %6
+  %scevgep29.i133 = getelementptr nuw i8, ptr %scevgep.i132, i64 8
   %i.bo = add nsw i32 %i.bb, -3
   %i.bp = trunc i64 %indvar.i123 to i32
   %i.bq = sub i32 %i.bo, %i.bp
   %i.br = zext i32 %i.bq to i64
   %i.bs = shl nuw nsw i64 %i.br, 2
   %i.bt = add nuw nsw i64 %i.bs, 4
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep.i132, ptr noundef nonnull align 4 dereferenceable(1) %scevgep29.i133, i64 %i.bt, i1 false), !tbaa !27
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.bn, ptr noundef nonnull align 4 dereferenceable(1) %scevgep29.i133, i64 %i.bt, i1 false), !tbaa !27
   %.pre.i134 = load i32, ptr %i.h, align 4, !tbaa !19
   br label %._crit_edge.i130
 
@@ -417,13 +420,13 @@ bb.l:                                             ; preds = %.lr.ph236, %Vec_Int
   br i1 %i.cm, label %.lr.ph.i137, label %Vec_IntRemove1.exit151
 
 .lr.ph.i137:                                      ; preds = %bb.l
-  %i.cn = load ptr, ptr %i.ce, align 8, !tbaa !26 ; 2 uses
+  %i.cn = load ptr, ptr %i.ce, align 8, !tbaa !26 ; 3 uses
   %wide.trip.count.i138 = zext nneg i32 %i.cl to i64
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.n, %.lr.ph.i137
   %indvar.i139 = phi i64 [ 0, %.lr.ph.i137 ], [ %indvar.next.i143, %bb.n ] ; 3 uses
-  %indvars.iv.i140 = phi i64 [ 1, %.lr.ph.i137 ], [ %indvars.iv.next.i141, %bb.n ] ; 3 uses
+  %indvars.iv.i140 = phi i64 [ 1, %.lr.ph.i137 ], [ %indvars.iv.next.i141, %bb.n ] ; 4 uses
   %i.co = getelementptr inbounds nuw [4 x i8], ptr %i.cn, i64 %indvars.iv.i140
   %i.cp = load i32, ptr %i.co, align 4, !tbaa !27
   %i.cq = icmp eq i32 %i.cp, %i.ck
@@ -436,17 +439,18 @@ bb.m:                                             ; preds = %bb.n, %.lr.ph.i137
   br i1 %i.cs, label %.lr.ph25.i147, label %._crit_edge.i146
 
 .lr.ph25.i147:                                    ; preds = %.preheader.i144
-  %i.ct = shl nuw nsw i64 %indvar.i139, 2
-  %i.cu = getelementptr nuw i8, ptr %i.cn, i64 %i.ct ; 2 uses
-  %scevgep.i148 = getelementptr nuw i8, ptr %i.cu, i64 4
-  %scevgep29.i149 = getelementptr nuw i8, ptr %i.cu, i64 8
+  %i.ct = shl nuw nsw i64 %indvars.iv.i140, 2
+  %i.cu = getelementptr nuw i8, ptr %i.cn, i64 %i.ct
+  %7 = shl nuw nsw i64 %indvar.i139, 2
+  %scevgep.i148 = getelementptr nuw i8, ptr %i.cn, i64 %7
+  %scevgep29.i149 = getelementptr nuw i8, ptr %scevgep.i148, i64 8
   %i.cv = add nsw i32 %i.cl, -3
   %i.cw = trunc i64 %indvar.i139 to i32
   %i.cx = sub i32 %i.cv, %i.cw
   %i.cy = zext i32 %i.cx to i64
   %i.cz = shl nuw nsw i64 %i.cy, 2
   %i.da = add nuw nsw i64 %i.cz, 4
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep.i148, ptr noundef nonnull align 4 dereferenceable(1) %scevgep29.i149, i64 %i.da, i1 false), !tbaa !27
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.cu, ptr noundef nonnull align 4 dereferenceable(1) %scevgep29.i149, i64 %i.da, i1 false), !tbaa !27
   %.pre.i150 = load i32, ptr %i.cd, align 4, !tbaa !19
   br label %._crit_edge.i146
 
@@ -468,13 +472,13 @@ Vec_IntRemove1.exit151:                           ; preds = %bb.n, %bb.l, %._cri
   br i1 %i.de, label %.lr.ph.i153, label %Vec_IntRemove1.exit167
 
 .lr.ph.i153:                                      ; preds = %Vec_IntRemove1.exit151
-  %i.df = load ptr, ptr %i.cg, align 8, !tbaa !26 ; 2 uses
+  %i.df = load ptr, ptr %i.cg, align 8, !tbaa !26 ; 3 uses
   %wide.trip.count.i154 = zext nneg i32 %i.dd to i64
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.p, %.lr.ph.i153
   %indvar.i155 = phi i64 [ 0, %.lr.ph.i153 ], [ %indvar.next.i159, %bb.p ] ; 3 uses
-  %indvars.iv.i156 = phi i64 [ 1, %.lr.ph.i153 ], [ %indvars.iv.next.i157, %bb.p ] ; 3 uses
+  %indvars.iv.i156 = phi i64 [ 1, %.lr.ph.i153 ], [ %indvars.iv.next.i157, %bb.p ] ; 4 uses
   %i.dg = getelementptr inbounds nuw [4 x i8], ptr %i.df, i64 %indvars.iv.i156
   %i.dh = load i32, ptr %i.dg, align 4, !tbaa !27
   %i.di = icmp eq i32 %i.dh, %i.ck
@@ -487,17 +491,18 @@ bb.o:                                             ; preds = %bb.p, %.lr.ph.i153
   br i1 %i.dk, label %.lr.ph25.i163, label %._crit_edge.i162
 
 .lr.ph25.i163:                                    ; preds = %.preheader.i160
-  %i.dl = shl nuw nsw i64 %indvar.i155, 2
-  %i.dm = getelementptr nuw i8, ptr %i.df, i64 %i.dl ; 2 uses
-  %scevgep.i164 = getelementptr nuw i8, ptr %i.dm, i64 4
-  %scevgep29.i165 = getelementptr nuw i8, ptr %i.dm, i64 8
+  %i.dl = shl nuw nsw i64 %indvars.iv.i156, 2
+  %i.dm = getelementptr nuw i8, ptr %i.df, i64 %i.dl
+  %8 = shl nuw nsw i64 %indvar.i155, 2
+  %scevgep.i164 = getelementptr nuw i8, ptr %i.df, i64 %8
+  %scevgep29.i165 = getelementptr nuw i8, ptr %scevgep.i164, i64 8
   %i.dn = add nsw i32 %i.dd, -3
   %i.do = trunc i64 %indvar.i155 to i32
   %i.dp = sub i32 %i.dn, %i.do
   %i.dq = zext i32 %i.dp to i64
   %i.dr = shl nuw nsw i64 %i.dq, 2
   %i.ds = add nuw nsw i64 %i.dr, 4
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep.i164, ptr noundef nonnull align 4 dereferenceable(1) %scevgep29.i165, i64 %i.ds, i1 false), !tbaa !27
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.dm, ptr noundef nonnull align 4 dereferenceable(1) %scevgep29.i165, i64 %i.ds, i1 false), !tbaa !27
   %.pre.i166 = load i32, ptr %i.cf, align 4, !tbaa !19
   br label %._crit_edge.i162
 
@@ -599,13 +604,13 @@ bb.u:                                             ; preds = %bb.t
   br i1 %i.ff, label %.lr.ph.i169, label %Vec_IntRemove1.exit183
 
 .lr.ph.i169:                                      ; preds = %.lr.ph241.split
-  %i.fg = load ptr, ptr %i.eq, align 8, !tbaa !26 ; 2 uses
+  %i.fg = load ptr, ptr %i.eq, align 8, !tbaa !26 ; 3 uses
   %wide.trip.count.i170 = zext nneg i32 %i.ey to i64
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.w, %.lr.ph.i169
   %indvar.i171 = phi i64 [ 0, %.lr.ph.i169 ], [ %indvar.next.i175, %bb.w ] ; 3 uses
-  %indvars.iv.i172 = phi i64 [ 1, %.lr.ph.i169 ], [ %indvars.iv.next.i173, %bb.w ] ; 3 uses
+  %indvars.iv.i172 = phi i64 [ 1, %.lr.ph.i169 ], [ %indvars.iv.next.i173, %bb.w ] ; 4 uses
   %i.fh = getelementptr inbounds nuw [4 x i8], ptr %i.fg, i64 %indvars.iv.i172
   %i.fi = load i32, ptr %i.fh, align 4, !tbaa !27
   %i.fj = icmp eq i32 %i.fi, %i.fe
@@ -618,17 +623,18 @@ bb.v:                                             ; preds = %bb.w, %.lr.ph.i169
   br i1 %i.fl, label %.lr.ph25.i179, label %._crit_edge.i178
 
 .lr.ph25.i179:                                    ; preds = %.preheader.i176
-  %i.fm = shl nuw nsw i64 %indvar.i171, 2
-  %i.fn = getelementptr nuw i8, ptr %i.fg, i64 %i.fm ; 2 uses
-  %scevgep.i180 = getelementptr nuw i8, ptr %i.fn, i64 4
-  %scevgep29.i181 = getelementptr nuw i8, ptr %i.fn, i64 8
+  %i.fm = shl nuw nsw i64 %indvars.iv.i172, 2
+  %i.fn = getelementptr nuw i8, ptr %i.fg, i64 %i.fm
+  %9 = shl nuw nsw i64 %indvar.i171, 2
+  %scevgep.i180 = getelementptr nuw i8, ptr %i.fg, i64 %9
+  %scevgep29.i181 = getelementptr nuw i8, ptr %scevgep.i180, i64 8
   %i.fo = add nsw i32 %i.ey, -3
   %i.fp = trunc i64 %indvar.i171 to i32
   %i.fq = sub i32 %i.fo, %i.fp
   %i.fr = zext i32 %i.fq to i64
   %i.fs = shl nuw nsw i64 %i.fr, 2
   %i.ft = add nuw nsw i64 %i.fs, 4
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep.i180, ptr noundef nonnull align 4 dereferenceable(1) %scevgep29.i181, i64 %i.ft, i1 false), !tbaa !27
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.fn, ptr noundef nonnull align 4 dereferenceable(1) %scevgep29.i181, i64 %i.ft, i1 false), !tbaa !27
   %.pre.i182 = load i32, ptr %i.ep, align 4, !tbaa !19
   br label %._crit_edge.i178
 
@@ -670,13 +676,13 @@ Vec_IntRemove1.exit183:                           ; preds = %bb.w, %.lr.ph241.sp
   br i1 %i.gh, label %.lr.ph.i185, label %Vec_IntRemove1.exit199
 
 .lr.ph.i185:                                      ; preds = %.lr.ph247.split
-  %i.gi = load ptr, ptr %i.ev, align 8, !tbaa !26 ; 2 uses
+  %i.gi = load ptr, ptr %i.ev, align 8, !tbaa !26 ; 3 uses
   %wide.trip.count.i186 = zext nneg i32 %i.ga to i64
   br label %bb.x
 
 bb.x:                                             ; preds = %bb.y, %.lr.ph.i185
   %indvar.i187 = phi i64 [ 0, %.lr.ph.i185 ], [ %indvar.next.i191, %bb.y ] ; 3 uses
-  %indvars.iv.i188 = phi i64 [ 1, %.lr.ph.i185 ], [ %indvars.iv.next.i189, %bb.y ] ; 3 uses
+  %indvars.iv.i188 = phi i64 [ 1, %.lr.ph.i185 ], [ %indvars.iv.next.i189, %bb.y ] ; 4 uses
   %i.gj = getelementptr inbounds nuw [4 x i8], ptr %i.gi, i64 %indvars.iv.i188
   %i.gk = load i32, ptr %i.gj, align 4, !tbaa !27
   %i.gl = icmp eq i32 %i.gk, %i.gg
@@ -689,17 +695,18 @@ bb.x:                                             ; preds = %bb.y, %.lr.ph.i185
   br i1 %i.gn, label %.lr.ph25.i195, label %._crit_edge.i194
 
 .lr.ph25.i195:                                    ; preds = %.preheader.i192
-  %i.go = shl nuw nsw i64 %indvar.i187, 2
-  %i.gp = getelementptr nuw i8, ptr %i.gi, i64 %i.go ; 2 uses
-  %scevgep.i196 = getelementptr nuw i8, ptr %i.gp, i64 4
-  %scevgep29.i197 = getelementptr nuw i8, ptr %i.gp, i64 8
+  %i.go = shl nuw nsw i64 %indvars.iv.i188, 2
+  %i.gp = getelementptr nuw i8, ptr %i.gi, i64 %i.go
+  %10 = shl nuw nsw i64 %indvar.i187, 2
+  %scevgep.i196 = getelementptr nuw i8, ptr %i.gi, i64 %10
+  %scevgep29.i197 = getelementptr nuw i8, ptr %scevgep.i196, i64 8
   %i.gq = add nsw i32 %i.ga, -3
   %i.gr = trunc i64 %indvar.i187 to i32
   %i.gs = sub i32 %i.gq, %i.gr
   %i.gt = zext i32 %i.gs to i64
   %i.gu = shl nuw nsw i64 %i.gt, 2
   %i.gv = add nuw nsw i64 %i.gu, 4
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep.i196, ptr noundef nonnull align 4 dereferenceable(1) %scevgep29.i197, i64 %i.gv, i1 false), !tbaa !27
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.gp, ptr noundef nonnull align 4 dereferenceable(1) %scevgep29.i197, i64 %i.gv, i1 false), !tbaa !27
   %.pre.i198 = load i32, ptr %i.eu, align 4, !tbaa !19
   br label %._crit_edge.i194
 
