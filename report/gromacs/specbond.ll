@@ -204,8 +204,8 @@ bb.a:
   %.sroa.0316.0.lcssa = phi ptr [ null, %.preheader359 ], [ %.sroa.0316.2, %._crit_edge.loopexit ] ; 8 uses
   %i.p = ptrtoint ptr %.sroa.0292.0.lcssa to i64  ; 2 uses
   %i.q = sub i64 %.sroa.22.0.lcssa, %i.p          ; 3 uses
-  %i.r = ashr exact i64 %i.q, 2                   ; 8 uses
-  %i.s = trunc i64 %i.r to i32                    ; 7 uses
+  %i.r = ashr exact i64 %i.q, 2                   ; 7 uses
+  %i.s = trunc i64 %i.r to i32                    ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #21
   %sext = shl i64 %i.q, 30                        ; 2 uses
   %i.t = ashr i64 %sext, 32                       ; 7 uses
@@ -608,7 +608,6 @@ bb.aj:                                            ; preds = %._crit_edge563
   %i.gx = getelementptr inbounds nuw i8, ptr %14, i64 16 ; 6 uses
   %i.gy = getelementptr inbounds nuw i8, ptr %14, i64 8 ; 5 uses
   %i.gz = getelementptr inbounds nuw i8, ptr %13, i64 8 ; 3 uses
-  %wide.trip.count653 = and i64 %i.r, 2147483647
   br label %bb.ak
 
 .loopexit355:                                     ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit184, %._crit_edge571
@@ -723,7 +722,7 @@ bb.am:                                            ; preds = %.lr.ph570
 
 .lr.ph578:                                        ; preds = %._crit_edge571, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit184
   %indvars.iv650 = phi i64 [ %indvars.iv.next651, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit184 ], [ %indvars.iv648, %._crit_edge571 ] ; 5 uses
-  %i.jb = trunc nuw nsw i64 %indvars.iv650 to i32 ; 2 uses
+  %i.jb = trunc nuw i64 %indvars.iv650 to i32     ; 2 uses
   %smin = call i32 @llvm.smin.i32(i32 %indvars.iv643, i32 %i.jb)
   %smin645 = call i32 @llvm.smin.i32(i32 %smin, i32 %i.s)
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #21
@@ -870,7 +869,8 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i18
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit184: ; preds = %._crit_edge574, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i182
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #21
   %indvars.iv.next651 = add nuw i64 %indvars.iv650, 1 ; 2 uses
-  %exitcond654.not = icmp eq i64 %indvars.iv.next651, %wide.trip.count653
+  %lftr.wideiv = trunc i64 %indvars.iv.next651 to i32
+  %exitcond654.not = icmp eq i32 %lftr.wideiv, %i.s
   br i1 %exitcond654.not, label %.loopexit355, label %.lr.ph578, !llvm.loop !113
 
 bb.au:                                            ; preds = %.lr.ph578
