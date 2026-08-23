@@ -204,9 +204,8 @@ _ZNK4absl18debugging_internal12_GLOBAL__N_115ComplexityGuard12IsTooComplexEv.exi
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc void @_ZN4absl18debugging_internalL18ParseDiscriminatorEPNS0_5StateE(ptr nofree noundef captures(none) %0) unnamed_addr #7 {
 bb.a:
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 8 uses
-  %i.b = load i32, ptr %i.a, align 4              ; 7 uses
-  %1 = add nsw i32 %i.b, 1
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 7 uses
+  %i.b = load i32, ptr %i.a, align 4              ; 6 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 9 uses
   %i.d = load i32, ptr %i.c, align 8              ; 15 uses
   %i.e = add nsw i32 %i.d, 1
@@ -249,7 +248,7 @@ bb.d:                                             ; preds = %bb.c
 .thread:                                          ; preds = %bb.d
   %i.t = add nuw nsw i32 %i.d, 4
   store i32 %i.t, ptr %i.c, align 8
-  br label %_ZN4absl18debugging_internalL17ParseOneCharTokenEPNS0_5StateEc.exit15.thread
+  br label %_ZN4absl18debugging_internalL11ParseNumberEPNS0_5StateEPi.exit.thread
 
 bb.e:                                             ; preds = %bb.d
   %i.u = sext i32 %i.q to i64
@@ -268,18 +267,14 @@ bb.f:                                             ; preds = %bb.e
   %i.y = add nsw i32 %i.d, 4
   store i32 %i.y, ptr %i.c, align 8
   %i.z = icmp eq i32 %i.d, 131069
-  br i1 %i.z, label %_ZN4absl18debugging_internalL17ParseOneCharTokenEPNS0_5StateEc.exit15.thread, label %bb.g
+  br i1 %i.z, label %_ZN4absl18debugging_internalL11ParseNumberEPNS0_5StateEPi.exit.thread, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
   %i.aa = sext i32 %i.q to i64
   %i.ab = getelementptr inbounds i8, ptr %.val5.i, i64 %i.aa
   %i.ac = load i8, ptr %i.ab, align 1
   %i.ad = icmp eq i8 %i.ac, 95
-  br i1 %i.ad, label %bb.h, label %_ZN4absl18debugging_internalL17ParseOneCharTokenEPNS0_5StateEc.exit15.thread
-
-_ZN4absl18debugging_internalL17ParseOneCharTokenEPNS0_5StateEc.exit15.thread: ; preds = %.thread, %bb.f, %bb.g
-  store i32 %1, ptr %i.a, align 4
-  br label %_ZN4absl18debugging_internalL11ParseNumberEPNS0_5StateEPi.exit.thread
+  br i1 %i.ad, label %bb.h, label %_ZN4absl18debugging_internalL11ParseNumberEPNS0_5StateEPi.exit.thread
 
 bb.h:                                             ; preds = %bb.g
   %i.ae = add nsw i32 %.val6.i, 2                 ; 4 uses
@@ -354,7 +349,7 @@ _ZN4absl18debugging_internalL17ParseOneCharTokenEPNS0_5StateEc.exit22: ; preds =
   store i32 %i.bk, ptr %i.h, align 4
   br label %_ZNK4absl18debugging_internal12_GLOBAL__N_115ComplexityGuard12IsTooComplexEv.exit.thread
 
-_ZN4absl18debugging_internalL11ParseNumberEPNS0_5StateEPi.exit.thread: ; preds = %bb.m, %bb.l, %_ZN4absl18debugging_internalL17ParseOneCharTokenEPNS0_5StateEc.exit.i, %bb.h, %_ZN4absl18debugging_internalL17ParseOneCharTokenEPNS0_5StateEc.exit15.thread
+_ZN4absl18debugging_internalL11ParseNumberEPNS0_5StateEPi.exit.thread: ; preds = %bb.m, %bb.l, %_ZN4absl18debugging_internalL17ParseOneCharTokenEPNS0_5StateEc.exit.i, %bb.h, %bb.g, %bb.f, %.thread
   store <4 x i32> %.sroa.0.0.copyload, ptr %i.h, align 4
   br label %_ZNK4absl18debugging_internal12_GLOBAL__N_115ComplexityGuard12IsTooComplexEv.exit.thread
 

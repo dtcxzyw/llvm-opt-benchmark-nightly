@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.e, %_ZNSt10_Hash
   %i.av = load i64, ptr %i.au, align 8, !tbaa !293 ; 2 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %i.a, i64 48
   store i64 %i.av, ptr %i.aw, align 8, !tbaa !293
-  %i.ax = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %i.ax = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
   %i.ay = load ptr, ptr %i.ax, align 8, !tbaa !299 ; 3 uses
   store ptr %i.ay, ptr %i.ah, align 8, !tbaa !299
   %i.az = getelementptr inbounds nuw i8, ptr %2, i64 24
@@ -229,6 +229,7 @@ _ZNSt13unordered_setIN6duckdb10MetricTypeENS0_22MetricTypeHashFunctionESt8equal_
   store i64 1, ptr %i.au, align 8, !tbaa !293
   store ptr null, ptr %i.aq, align 8, !tbaa !328
   store ptr %i.aq, ptr %2, align 8, !tbaa !294
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ax, i8 0, i64 16, i1 false)
   %i.bh = getelementptr inbounds nuw i8, ptr %2, i64 16
   br label %_ZNSt10_HashtableIN6duckdb10MetricTypeES1_SaIS1_ENSt8__detail9_IdentityESt8equal_toIS1_ENS0_22MetricTypeHashFunctionENS3_18_Mod_range_hashingENS3_20_Default_ranged_hashENS3_20_Prime_rehash_policyENS3_17_Hashtable_traitsILb1ELb1ELb1EEEE5clearEv.exit.i.i
 

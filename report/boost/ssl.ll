@@ -205,7 +205,7 @@ _ZN5boost6cobalt2ioneERKNS1_21const_buffer_sequence14const_iteratorES5_.exit.thr
   br label %.cont.us.i.i.i.i.i.i.i
 
 .cont.us.i.i.i.i.i.i.i:                           ; preds = %.else.us.i.i.i.i.i.i.i, %_ZN5boost6cobalt2ioneERKNS1_21const_buffer_sequence14const_iteratorES5_.exit.thread.us.i.i.i.i.i.i.i
-  %.sroa.3.0.copyload.us.i.i.i.i.i.i.i = phi i64 [ %.sroa.3.0.copyload.else.val.us.i.i.i.i.i.i.i, %.else.us.i.i.i.i.i.i.i ], [ %.sroa.22.0.copyload.i.i.i.i.i.i.i.i, %_ZN5boost6cobalt2ioneERKNS1_21const_buffer_sequence14const_iteratorES5_.exit.thread.us.i.i.i.i.i.i.i ]
+  %.sroa.3.0.copyload.us.i.i.i.i.i.i.i = phi i64 [ %.sroa.22.0.copyload.i.i.i.i.i.i.i.i, %_ZN5boost6cobalt2ioneERKNS1_21const_buffer_sequence14const_iteratorES5_.exit.thread.us.i.i.i.i.i.i.i ], [ %.sroa.3.0.copyload.else.val.us.i.i.i.i.i.i.i, %.else.us.i.i.i.i.i.i.i ]
   %i.m = add i64 %.sroa.3.0.copyload.us.i.i.i.i.i.i.i, %.0.us28.i.i.i.i.i.i.i
   %i.n = getelementptr [16 x i8], ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i, i64 %.sroa.11.0.us27.i.i.i.i.i.i.i
   %.sroa.gep2.us.i.i.i.i.i.i.i.1 = getelementptr i8, ptr %i.n, i64 24
@@ -236,7 +236,7 @@ _ZN5boost6cobalt2ioneERKNS1_21const_buffer_sequence14const_iteratorES5_.exit.thr
   br label %.cont.us.i.i.i.i.i.i.i.epil
 
 .cont.us.i.i.i.i.i.i.i.epil:                      ; preds = %.else.us.i.i.i.i.i.i.i.epil, %_ZN5boost6cobalt2ioneERKNS1_21const_buffer_sequence14const_iteratorES5_.exit.thread.us.i.i.i.i.i.i.i.epil.preheader
-  %.sroa.3.0.copyload.us.i.i.i.i.i.i.i.epil = phi i64 [ %.sroa.3.0.copyload.else.val.us.i.i.i.i.i.i.i.epil, %.else.us.i.i.i.i.i.i.i.epil ], [ %.sroa.22.0.copyload.i.i.i.i.i.i.i.i, %_ZN5boost6cobalt2ioneERKNS1_21const_buffer_sequence14const_iteratorES5_.exit.thread.us.i.i.i.i.i.i.i.epil.preheader ]
+  %.sroa.3.0.copyload.us.i.i.i.i.i.i.i.epil = phi i64 [ %.sroa.22.0.copyload.i.i.i.i.i.i.i.i, %_ZN5boost6cobalt2ioneERKNS1_21const_buffer_sequence14const_iteratorES5_.exit.thread.us.i.i.i.i.i.i.i.epil.preheader ], [ %.sroa.3.0.copyload.else.val.us.i.i.i.i.i.i.i.epil, %.else.us.i.i.i.i.i.i.i.epil ]
   %i.t = add i64 %.sroa.3.0.copyload.us.i.i.i.i.i.i.i.epil, %.0.us28.i.i.i.i.i.i.i.epil.init
   br label %_ZN5boost4asio3ssl6streamINS0_19basic_stream_socketINS_6cobalt2io13protocol_typeENS0_15any_io_executorEEEE15async_handshakeINS5_21const_buffer_sequenceETkNS0_20completion_token_forIFvNS_6system10error_codeEmEEENS4_18completion_handlerIJSE_mEEEEEDTcl14async_initiateIT0_SF_EclL_ZSt7declvalINS9_33initiate_async_buffered_handshakeEEDTcl9__declvalIT_ELi0EEEvEEfp1_fp_fp0_EENS1_11stream_base14handshake_typeERKSL_OSI_NS0_10constraintIXsr24is_const_buffer_sequenceISL_EE5valueEiE4typeE.exit
 

@@ -204,7 +204,7 @@ bb.a:
   %4 = alloca %"class.v8::internal::compiler::X64OperandGenerator", align 8 ; 8 uses
   %5 = alloca [8 x %"class.v8::internal::compiler::InstructionOperand"], align 16 ; 12 uses
   %i.a = alloca i64, align 8                      ; 8 uses
-  %6 = alloca [1 x %"class.v8::internal::compiler::InstructionOperand"], align 8 ; 4 uses
+  %6 = alloca [1 x %"class.v8::internal::compiler::InstructionOperand"], align 8 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #25
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.c = load ptr, ptr %i.b, align 8
@@ -258,6 +258,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(64) %5, i8 0, i64 64, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #25
+  store i64 0, ptr %6, align 8
   %i.ag = icmp eq i32 %.sroa.075.0, %.sroa.064.0
   br i1 %i.ag, label %bb.e, label %bb.f
 
@@ -660,7 +661,7 @@ bb.a:
   %4 = alloca %"class.v8::internal::compiler::X64OperandGenerator", align 8 ; 8 uses
   %5 = alloca [8 x %"class.v8::internal::compiler::InstructionOperand"], align 16 ; 10 uses
   %i.a = alloca i64, align 8                      ; 7 uses
-  %6 = alloca [1 x %"class.v8::internal::compiler::InstructionOperand"], align 8 ; 4 uses
+  %6 = alloca [1 x %"class.v8::internal::compiler::InstructionOperand"], align 8 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #25
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.c = load ptr, ptr %i.b, align 8
@@ -682,6 +683,7 @@ bb.a:
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(64) %5, i8 0, i64 64, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #25
+  store i64 0, ptr %6, align 8
   %i.n = icmp eq i32 %.sroa.0.0.copyload.i.i, %.sroa.0.0.copyload.i.i75
   br i1 %i.n, label %bb.b, label %bb.c
 

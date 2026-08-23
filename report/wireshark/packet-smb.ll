@@ -202,13 +202,13 @@ dissect_negprot_security_mode.exit214:            ; preds = %bb.o
   %i.cv = add i32 %i.m, 23
   %i.cw = load i32, ptr @hf_smb_system_time, align 4
   %i.cx = tail call ptr @dissect_nttime(ptr noundef %0, ptr noundef %2, i32 noundef %i.cv, i32 noundef %i.cw, i32 noundef -2147483648) ; 0 uses
-  %i.cy = add i32 %i.m, 31                        ; 2 uses
+  %i.cy = add i32 %i.m, 31                        ; 3 uses
+  store i32 %i.cy, ptr %i.a, align 4
   %i.cz = tail call zeroext i16 @tvb_get_letohs(ptr noundef %0, i32 noundef %i.cy)
   %i.da = load i32, ptr @hf_smb_server_timezone, align 4
   %i.db = sext i16 %i.cz to i32                   ; 2 uses
   %i.dc = tail call ptr (ptr, i32, ptr, i32, i32, i32, ptr, ...) @proto_tree_add_int_format_value(ptr noundef %2, i32 noundef %i.da, ptr noundef %0, i32 noundef %i.cy, i32 noundef 2, i32 noundef %i.db, ptr noundef nonnull @.str.2816, i32 noundef %i.db) ; 0 uses
-  %i.dd = add i32 %i.m, 33                        ; 3 uses
-  store i32 %i.dd, ptr %i.a, align 4
+  %i.dd = add i32 %i.m, 33                        ; 2 uses
   %i.de = tail call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef %i.dd) ; 2 uses
   %i.df = zext i8 %i.de to i16
   %i.dg = load i32, ptr @hf_smb_challenge_length, align 4

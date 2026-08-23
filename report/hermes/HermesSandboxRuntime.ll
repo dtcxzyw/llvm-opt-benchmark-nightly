@@ -204,7 +204,7 @@ bb.a:
   %2 = alloca %"class.facebook::jsi::Value", align 8 ; 5 uses
   %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 13 uses
-  %5 = alloca %"class.std::__cxx11::basic_string", align 8 ; 5 uses
+  %5 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
   switch i32 %1, label %bb.ab [
     i32 1, label %bb.b
     i32 0, label %bb.u
@@ -448,7 +448,8 @@ _ZN12_GLOBAL__N_124HermesSandboxRuntimeImpl18GrowableBufferImpl6createERS0_.exit
 
 _ZN12_GLOBAL__N_124HermesSandboxRuntimeImpl18GrowableBufferImpl7releaseEP10w2c_hermesNS_2sb3PtrIS1_EE.exit: ; preds = %.noexc43
   %i.bu = call ptr @__cxa_allocate_exception(i64 40) #31 ; 6 uses
-  %i.bv = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 8 uses
+  %i.bv = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 9 uses
+  store ptr %i.bv, ptr %5, align 8, !tbaa !20
   %i.bw = load ptr, ptr %4, align 8, !tbaa !25    ; 3 uses
   %i.bx = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 6 uses
   %i.by = icmp eq ptr %i.bw, %i.bx
@@ -851,7 +852,7 @@ declare i32 @strcmp(ptr noundef captures(none), ptr noundef captures(none)) loca
 define internal fastcc void @_ZN12_GLOBAL__N_122throwUnimplementedImplEPKc(ptr noundef %0) unnamed_addr #16 personality ptr @__gxx_personality_v0 {
 .noexc.i:
   %i.a = alloca i64, align 8                      ; 5 uses
-  %1 = alloca %"class.std::__cxx11::basic_string", align 8 ; 5 uses
+  %1 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
   %2 = alloca %"class.std::__cxx11::basic_string", align 8 ; 13 uses
   %i.b = tail call ptr @__cxa_allocate_exception(i64 40) #31 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #31
@@ -892,7 +893,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i: ; preds
           to label %.noexc10 unwind label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread ; 8 uses
 
 .noexc10:                                         ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i
-  %i.n = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 9 uses
+  %i.n = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 10 uses
+  store ptr %i.n, ptr %1, align 8, !tbaa !20, !alias.scope !712
   %i.o = load ptr, ptr %i.m, align 8, !tbaa !25   ; 3 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.m, i64 16 ; 7 uses
   %i.q = icmp eq ptr %i.o, %i.p

@@ -205,7 +205,7 @@ bb.a:
   %i.d = tail call noalias dereferenceable_or_null(8) ptr @malloc(i64 noundef 8) #28 ; 2 uses
   store i64 29107652263831885, ptr %i.d, align 1
   store ptr %i.d, ptr %i.c, align 8, !tbaa !16
-  %i.e = tail call noalias dereferenceable_or_null(16) ptr @malloc(i64 noundef 16) #28 ; 6 uses
+  %i.e = tail call noalias dereferenceable_or_null(16) ptr @malloc(i64 noundef 16) #28 ; 5 uses
   %i.f = add nsw i32 %i.b, -1
   %or.cond.i = icmp ult i32 %i.f, 15
   %spec.store.select.i = select i1 %or.cond.i, i32 16, i32 %i.b ; 4 uses
@@ -353,9 +353,8 @@ bb.n:                                             ; preds = %bb.l
 
 Vec_IntGrow.exit11.sink.split.i64:                ; preds = %bb.m, %bb.n, %bb.i, %bb.j
   %storemerge = phi ptr [ %i.az, %bb.j ], [ %i.ay, %bb.i ], [ %i.be, %bb.m ], [ %i.bf, %bb.n ] ; 2 uses
-  %spec.select.sink.i65 = phi i32 [ 16, %bb.j ], [ 16, %bb.i ], [ %spec.select.i61, %bb.m ], [ %spec.select.i61, %bb.n ] ; 2 uses
+  %spec.select.sink.i65 = phi i32 [ 16, %bb.j ], [ 16, %bb.i ], [ %spec.select.i61, %bb.m ], [ %spec.select.i61, %bb.n ]
   store ptr %storemerge, ptr %i.p, align 8, !tbaa !13
-  store i32 %spec.select.sink.i65, ptr %i.e, align 8, !tbaa !35
   br label %Vec_IntPush.exit68
 
 Vec_IntPush.exit68:                               ; preds = %.Vec_IntPush.exit68_crit_edge, %bb.k, %Vec_IntGrow.exit11.sink.split.i64

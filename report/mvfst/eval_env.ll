@@ -202,10 +202,10 @@ bb.e:                                             ; preds = %bb.b, %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1394)
   %.not.not.i = icmp eq i64 %2, 0
   %i.o = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 6 uses
-  store ptr %i.o, ptr %4, align 8, !tbaa !27, !alias.scope !1394
   br i1 %.not.not.i, label %_ZNK11StringPiece8AsStringB5cxx11Ev.exit.thread, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
+  store ptr %i.o, ptr %4, align 8, !tbaa !27, !alias.scope !1394
   %i.p = icmp eq ptr %1, null
   br i1 %i.p, label %bb.g, label %bb.h
 

@@ -205,8 +205,8 @@ bb.a:
   %i.i = alloca i8, align 1                       ; 3 uses
   %2 = alloca %class.rational, align 8            ; 23 uses
   %3 = alloca %class.rational, align 8            ; 11 uses
-  %i.j = alloca ptr, align 8                      ; 11 uses
-  %i.k = alloca ptr, align 8                      ; 9 uses
+  %i.j = alloca ptr, align 8                      ; 12 uses
+  %i.k = alloca ptr, align 8                      ; 10 uses
   %i.l = alloca ptr, align 8                      ; 7 uses
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !193
@@ -373,9 +373,11 @@ bb.l:                                             ; preds = %_ZNK17arith_recogni
 
 bb.m:                                             ; preds = %bb.l
   %i.cn = getelementptr inbounds nuw i8, ptr %i.aj, i64 32
-  %i.co = load ptr, ptr %i.cn, align 8, !tbaa !25 ; 2 uses
+  %i.co = load ptr, ptr %i.cn, align 8, !tbaa !25 ; 3 uses
+  store ptr %i.co, ptr %i.j, align 8, !tbaa !25
   %i.cp = getelementptr inbounds nuw i8, ptr %i.aj, i64 40
-  %i.cq = load ptr, ptr %i.cp, align 8, !tbaa !25 ; 2 uses
+  %i.cq = load ptr, ptr %i.cp, align 8, !tbaa !25 ; 3 uses
+  store ptr %i.cq, ptr %i.k, align 8, !tbaa !25
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #16
   %i.cr = invoke noundef zeroext i1 @_ZNK10arith_util10is_numeralEPK4exprR8rationalRb(ptr noundef nonnull align 8 dereferenceable(16) %i.bz, ptr noundef %i.co, ptr noundef nonnull align 8 dereferenceable(32) %2, ptr noundef nonnull align 1 dereferenceable(1) %i.h)
           to label %bb.n unwind label %bb.h

@@ -205,14 +205,14 @@ bb.ac:                                            ; preds = %bb.ab
   br i1 %or.cond.us.1, label %bb.ad, label %.loopexit145.us.1
 
 bb.ad:                                            ; preds = %.critedge.thread.us.1
-  %i.gg = getelementptr inbounds nuw [2 x i8], ptr %.0118, i64 %.0129189.us.1
+  %i.gg = getelementptr inbounds [2 x i8], ptr %.0118, i64 %.0129189.us.1
   %i.gh = load i16, ptr %i.gg, align 2, !tbaa !89 ; 2 uses
-  %i.gi = add nuw nsw i64 %.0129189.us.1, 1
+  %i.gi = add nsw i64 %.0129189.us.1, 1
   br label %bb.ae
 
 bb.ae:                                            ; preds = %bb.af, %bb.ad
   %.0127.us.1 = phi i64 [ %i.gi, %bb.ad ], [ %i.go, %bb.af ] ; 2 uses
-  %i.gj = getelementptr inbounds nuw [2 x i8], ptr %.0118, i64 %.0127.us.1
+  %i.gj = getelementptr inbounds [2 x i8], ptr %.0118, i64 %.0127.us.1
   %i.gk = load i16, ptr %i.gj, align 2, !tbaa !89
   %i.gl = xor i16 %i.gk, %i.gh
   %i.gm = and i16 %i.gl, 255
@@ -220,7 +220,7 @@ bb.ae:                                            ; preds = %bb.af, %bb.ad
   br i1 %i.gn, label %bb.af, label %.loopexit145.us.1
 
 bb.af:                                            ; preds = %bb.ae
-  %i.go = add nuw nsw i64 %.0127.us.1, 1          ; 2 uses
+  %i.go = add nsw i64 %.0127.us.1, 1              ; 2 uses
   %i.gp = icmp eq i64 %i.go, %.0150.us.1
   br i1 %i.gp, label %.loopexit145.us.1.thread, label %bb.ae
 
@@ -453,7 +453,7 @@ bb.ak:                                            ; preds = %bb.aj, %._crit_edge
   %.7.us.1 = phi i64 [ %i.jm, %bb.aj ], [ %.4116.lcssa.us.1, %._crit_edge.us.1 ] ; 2 uses
   %.5.us.1 = phi i32 [ %.4.us.1, %bb.aj ], [ 0, %._crit_edge.us.1 ] ; 2 uses
   %i.jn = zext nneg i32 %.5.us.1 to i64
-  %i.jo = add nuw nsw i64 %.2131.lcssa.us.1, %i.jn ; 2 uses
+  %i.jo = add nsw i64 %.2131.lcssa.us.1, %i.jn    ; 2 uses
   %i.jp = icmp slt i64 %i.jo, %i.f
   br i1 %i.jp, label %._crit_edge195.us, label %._crit_edge195.us.1
 

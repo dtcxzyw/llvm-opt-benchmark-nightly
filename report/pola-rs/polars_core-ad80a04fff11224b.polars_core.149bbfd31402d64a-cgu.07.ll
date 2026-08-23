@@ -205,7 +205,7 @@ _RNCINvYSTINtNtCscgRAwXFJnXP_4core6option6OptionhEIB8_ReEEINtNtCse67t6KqNqGQ_5ra
 
 .split._crit_edge.i:                              ; preds = %_RNCINvYSTINtNtCscgRAwXFJnXP_4core6option6OptionhEIB8_ReEEINtNtCse67t6KqNqGQ_5rayon5slice16ParallelSliceMutB6_E20par_sort_unstable_byNCNCINvNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops4sort23sort_unstable_by_branchB6_NCNvMNtB2d_11categoricalINtNtB2h_7logical7LogicalNtNtB2j_9datatypes16Categorical8TypeNtB4p_9UInt8TypeE9sort_with0E00E0B2j_.exit.thread.i86, %.split.i83, %.lr.ph.split.i81, %.outer.i
   %.sroa.01.0.lcssa.i = phi i64 [ %.sroa.01.0.ph.i, %.outer.i ], [ %.sroa.01.022.i, %.split.i83 ], [ %.sroa.09.0.ph.i, %_RNCINvYSTINtNtCscgRAwXFJnXP_4core6option6OptionhEIB8_ReEEINtNtCse67t6KqNqGQ_5rayon5slice16ParallelSliceMutB6_E20par_sort_unstable_byNCNCINvNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops4sort23sort_unstable_by_branchB6_NCNvMNtB2d_11categoricalINtNtB2h_7logical7LogicalNtNtB2j_9datatypes16Categorical8TypeNtB4p_9UInt8TypeE9sort_with0E00E0B2j_.exit.thread.i86 ], [ %.sroa.01.022.i, %.lr.ph.split.i81 ], !dbg !121258 ; 6 uses
-  %i.li = add nsw i64 %.sroa.09.0.ph.i, -1, !dbg !121259 ; 4 uses
+  %i.li = add i64 %.sroa.09.0.ph.i, -1, !dbg !121259 ; 4 uses
   %.not2128.i = icmp ult i64 %.sroa.01.0.lcssa.i, %i.li, !dbg !121260
   br i1 %.not2128.i, label %.lr.ph31.i, label %_RINvNtNtCse67t6KqNqGQ_5rayon5slice4sort15partition_equalTINtNtCscgRAwXFJnXP_4core6option6OptionhEIBU_ReEENCINvYSBS_INtB4_16ParallelSliceMutBS_E20par_sort_unstable_byNCNCINvNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops4sort23sort_unstable_by_branchBS_NCNvMNtB2K_11categoricalINtNtB2O_7logical7LogicalNtNtB2Q_9datatypes16Categorical8TypeNtB4W_9UInt8TypeE9sort_with0E00E0EB2Q_.exit, !dbg !121260
 
@@ -608,7 +608,7 @@ _RNCINvYSTINtNtCscgRAwXFJnXP_4core6option6OptionmEIB8_ReEEINtNtCse67t6KqNqGQ_5ra
 
 .split._crit_edge.i:                              ; preds = %_RNCINvYSTINtNtCscgRAwXFJnXP_4core6option6OptionmEIB8_ReEEINtNtCse67t6KqNqGQ_5rayon5slice16ParallelSliceMutB6_E20par_sort_unstable_byNCNCINvNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops4sort23sort_unstable_by_branchB6_NCNvMNtB2d_11categoricalINtNtB2h_7logical7LogicalNtNtB2j_9datatypes17Categorical32TypeNtB4p_10UInt32TypeE9sort_with0E00E0B2j_.exit.thread.i86, %.split.i83, %.lr.ph.split.i81, %.outer.i
   %.sroa.01.0.lcssa.i = phi i64 [ %.sroa.01.0.ph.i, %.outer.i ], [ %.sroa.01.022.i, %.split.i83 ], [ %.sroa.09.0.ph.i, %_RNCINvYSTINtNtCscgRAwXFJnXP_4core6option6OptionmEIB8_ReEEINtNtCse67t6KqNqGQ_5rayon5slice16ParallelSliceMutB6_E20par_sort_unstable_byNCNCINvNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops4sort23sort_unstable_by_branchB6_NCNvMNtB2d_11categoricalINtNtB2h_7logical7LogicalNtNtB2j_9datatypes17Categorical32TypeNtB4p_10UInt32TypeE9sort_with0E00E0B2j_.exit.thread.i86 ], [ %.sroa.01.022.i, %.lr.ph.split.i81 ], !dbg !122908 ; 6 uses
-  %i.li = add nsw i64 %.sroa.09.0.ph.i, -1, !dbg !122909 ; 4 uses
+  %i.li = add i64 %.sroa.09.0.ph.i, -1, !dbg !122909 ; 4 uses
   %.not2128.i = icmp ult i64 %.sroa.01.0.lcssa.i, %i.li, !dbg !122910
   br i1 %.not2128.i, label %.lr.ph31.i, label %_RINvNtNtCse67t6KqNqGQ_5rayon5slice4sort15partition_equalTINtNtCscgRAwXFJnXP_4core6option6OptionmEIBU_ReEENCINvYSBS_INtB4_16ParallelSliceMutBS_E20par_sort_unstable_byNCNCINvNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops4sort23sort_unstable_by_branchBS_NCNvMNtB2K_11categoricalINtNtB2O_7logical7LogicalNtNtB2Q_9datatypes17Categorical32TypeNtB4W_10UInt32TypeE9sort_with0E00E0EB2Q_.exit, !dbg !122910
 
@@ -1011,7 +1011,7 @@ _RNCINvYSTINtNtCscgRAwXFJnXP_4core6option6OptiontEIB8_ReEEINtNtCse67t6KqNqGQ_5ra
 
 .split._crit_edge.i:                              ; preds = %_RNCINvYSTINtNtCscgRAwXFJnXP_4core6option6OptiontEIB8_ReEEINtNtCse67t6KqNqGQ_5rayon5slice16ParallelSliceMutB6_E20par_sort_unstable_byNCNCINvNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops4sort23sort_unstable_by_branchB6_NCNvMNtB2d_11categoricalINtNtB2h_7logical7LogicalNtNtB2j_9datatypes17Categorical16TypeNtB4p_10UInt16TypeE9sort_with0E00E0B2j_.exit.thread.i86, %.split.i83, %.lr.ph.split.i81, %.outer.i
   %.sroa.01.0.lcssa.i = phi i64 [ %.sroa.01.0.ph.i, %.outer.i ], [ %.sroa.01.022.i, %.split.i83 ], [ %.sroa.09.0.ph.i, %_RNCINvYSTINtNtCscgRAwXFJnXP_4core6option6OptiontEIB8_ReEEINtNtCse67t6KqNqGQ_5rayon5slice16ParallelSliceMutB6_E20par_sort_unstable_byNCNCINvNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops4sort23sort_unstable_by_branchB6_NCNvMNtB2d_11categoricalINtNtB2h_7logical7LogicalNtNtB2j_9datatypes17Categorical16TypeNtB4p_10UInt16TypeE9sort_with0E00E0B2j_.exit.thread.i86 ], [ %.sroa.01.022.i, %.lr.ph.split.i81 ], !dbg !124557 ; 6 uses
-  %i.li = add nsw i64 %.sroa.09.0.ph.i, -1, !dbg !124558 ; 4 uses
+  %i.li = add i64 %.sroa.09.0.ph.i, -1, !dbg !124558 ; 4 uses
   %.not2128.i = icmp ult i64 %.sroa.01.0.lcssa.i, %i.li, !dbg !124559
   br i1 %.not2128.i, label %.lr.ph31.i, label %_RINvNtNtCse67t6KqNqGQ_5rayon5slice4sort15partition_equalTINtNtCscgRAwXFJnXP_4core6option6OptiontEIBU_ReEENCINvYSBS_INtB4_16ParallelSliceMutBS_E20par_sort_unstable_byNCNCINvNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops4sort23sort_unstable_by_branchBS_NCNvMNtB2K_11categoricalINtNtB2O_7logical7LogicalNtNtB2Q_9datatypes17Categorical16TypeNtB4W_10UInt16TypeE9sort_with0E00E0EB2Q_.exit, !dbg !124559
 

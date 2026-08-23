@@ -205,9 +205,9 @@ bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b
 define internal fastcc void @_loop_switch(ptr noalias nofree noundef readonly captures(none) %0, ptr noalias nofree noundef writeonly captures(none) %1, i64 noundef range(i64 -2147483648, 2147483648) %2, i64 noundef range(i64 -2147483648, 2147483648) %3, ptr nofree noundef nonnull readonly captures(none) %4, ptr nofree noundef nonnull readonly captures(none) %5, ptr nofree noundef readonly captures(none) %6, ptr nofree noundef readonly captures(none) %7, ptr nofree noundef readonly captures(none) %8, ptr nofree noundef readonly captures(none) %9, ptr nofree noundef readonly captures(none) %10, float noundef %11, float noundef %12, i32 noundef %13, i32 noundef %14, i32 noundef range(i32 0, 5) %15, i32 noundef %16) unnamed_addr #12 {
 bb.a:
   %i.a = alloca [4 x float], align 16             ; 19 uses
-  %i.b = alloca [4 x float], align 16             ; 18 uses
+  %i.b = alloca [4 x float], align 16             ; 19 uses
   %.sink11.i.sroa.gep = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 14 uses
-  %.sink11.i.sroa.gep116 = getelementptr inbounds nuw i8, ptr %i.a, i64 12 ; 7 uses
+  %.sink11.i.sroa.gep116 = getelementptr inbounds nuw i8, ptr %i.a, i64 12 ; 8 uses
   %i.c = load float, ptr %5, align 4, !tbaa !14   ; 6 uses
   switch i32 %15, label %bb.e [
     i32 2, label %bb.b
@@ -397,6 +397,12 @@ bb.d:                                             ; preds = %bb.a
   %i.ew = getelementptr inbounds nuw i8, ptr %5, i64 32
   %i.ex = load <3 x float>, ptr %i.ew, align 4, !tbaa !14
   %i.ey = shufflevector <3 x float> %i.ex, <3 x float> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 2>
+  %17 = getelementptr inbounds nuw i8, ptr %5, i64 48
+  %18 = load float, ptr %17, align 4, !tbaa !14
+  %19 = getelementptr inbounds nuw i8, ptr %5, i64 52
+  %20 = load float, ptr %19, align 4, !tbaa !14
+  %21 = getelementptr inbounds nuw i8, ptr %5, i64 56
+  %22 = load float, ptr %21, align 4, !tbaa !14
   %i.ez = getelementptr inbounds nuw i8, ptr %6, i64 40
   %i.fa = getelementptr inbounds nuw i8, ptr %6, i64 48
   %i.fb = getelementptr inbounds nuw i8, ptr %6, i64 52
@@ -457,6 +463,9 @@ bb.e:                                             ; preds = %bb.a
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d, %bb.c, %bb.b
+  %.sroa.51228.0 = phi nsz float [ 0.000000e+00, %bb.e ], [ 0.000000e+00, %bb.b ], [ 0.000000e+00, %bb.c ], [ %18, %bb.d ]
+  %.sroa.53229.0 = phi nsz float [ 0.000000e+00, %bb.e ], [ 0.000000e+00, %bb.b ], [ 0.000000e+00, %bb.c ], [ %20, %bb.d ]
+  %.sroa.55.0 = phi nsz float [ 0.000000e+00, %bb.e ], [ 0.000000e+00, %bb.b ], [ 0.000000e+00, %bb.c ], [ %22, %bb.d ]
   %.sroa.53220.0 = phi nsz float [ %i.gu, %bb.e ], [ %i.bs, %bb.b ], [ %i.em, %bb.c ], [ %i.fh, %bb.d ]
   %.sroa.63.0 = phi nsz float [ 0.000000e+00, %bb.e ], [ 0.000000e+00, %bb.b ], [ 0.000000e+00, %bb.c ], [ %i.fg, %bb.d ]
   %i.gw = phi <2 x float> [ zeroinitializer, %bb.e ], [ %i.al, %bb.b ], [ %i.df, %bb.c ], [ %i.fm, %bb.d ] ; 2 uses
@@ -586,7 +595,7 @@ bb.g:                                             ; preds = %.lr.ph, %bb.ar
   %i.kr = tail call reassoc nsz arcp contract afn <2 x float> @llvm.maxnum.v2f32(<2 x float> %i.kq, <2 x float> %i.jx) ; 17 uses
   %i.ks = getelementptr inbounds nuw i8, ptr %i.kp, i64 8
   %i.kt = load float, ptr %i.ks, align 4, !tbaa !14
-  %i.ku = tail call reassoc nsz arcp contract afn float @llvm.maxnum.f32(float %i.kt, float %i.hc) ; 11 uses
+  %i.ku = tail call reassoc nsz arcp contract afn float @llvm.maxnum.f32(float %i.kt, float %i.hc) ; 12 uses
   %i.kv = getelementptr inbounds nuw i8, ptr %i.kp, i64 12
   %i.kw = load float, ptr %i.kv, align 4, !tbaa !14
   switch i32 %15, label %.preheader.preheader [
@@ -704,13 +713,19 @@ bb.i:                                             ; preds = %bb.g
   br label %.loopexit
 
 bb.j:                                             ; preds = %bb.g
-  %i.nw = extractelement <2 x float> %i.kr, i64 0
-  %i.nx = extractelement <2 x float> %i.kr, i64 1
+  %i.nw = extractelement <2 x float> %i.kr, i64 0 ; 2 uses
+  %i.nx = extractelement <2 x float> %i.kr, i64 1 ; 2 uses
   %.reass264 = fmul reassoc nsz arcp contract afn float %i.nw, %factor.op.fmul263
   %.reass266 = fmul reassoc nsz arcp contract afn float %i.nx, %factor.op.fmul265
   %i.ny = fadd reassoc nsz arcp contract afn float %.reass266, %.reass264
   %.reass262 = fmul reassoc nsz arcp contract afn float %i.ku, %factor.op.fmul261
-  %i.nz = fadd reassoc nsz arcp contract afn float %i.ny, %.reass262
+  %23 = fadd reassoc nsz arcp contract afn float %i.ny, %.reass262
+  %24 = fmul reassoc nsz arcp contract afn float %i.nw, %.sroa.51228.0
+  %25 = fmul reassoc nsz arcp contract afn float %i.nx, %.sroa.53229.0
+  %26 = fadd reassoc nsz arcp contract afn float %25, %24
+  %27 = fmul reassoc nsz arcp contract afn float %i.ku, %.sroa.55.0
+  %i.nz = fadd reassoc nsz arcp contract afn float %26, %27
+  store float %i.nz, ptr %.sink11.i.sroa.gep116, align 4, !tbaa !14
   %i.oa = shufflevector <2 x float> %i.kr, <2 x float> poison, <2 x i32> <i32 1, i32 0>
   %i.ob = fmul reassoc nsz arcp contract afn <2 x float> %i.oa, %i.gy
   %i.oc = fmul reassoc nsz arcp contract afn <2 x float> %i.kr, %i.gx
@@ -722,9 +737,11 @@ bb.j:                                             ; preds = %bb.g
   store <2 x float> %i.oh, ptr %i.a, align 16, !tbaa !14
   %i.oi = fmul reassoc nsz arcp contract afn <2 x float> %i.oh, <float 9.945350e-01, float f0x3F8020AB>
   %i.oj = load <2 x float>, ptr %7, align 4, !tbaa !14
-  %i.ok = fdiv reassoc nsz arcp contract afn <2 x float> %i.oi, %i.oj
+  %i.ok = fdiv reassoc nsz arcp contract afn <2 x float> %i.oi, %i.oj ; 2 uses
+  %28 = extractelement <2 x float> %i.ok, i64 0
+  store float %28, ptr %i.b, align 16, !tbaa !14
   %i.ol = load float, ptr %i.iz, align 4, !tbaa !14
-  %i.om = fdiv reassoc nsz arcp contract afn float %i.nz, %i.ol
+  %i.om = fdiv reassoc nsz arcp contract afn float %23, %i.ol
   br label %.loopexit
 
 bb.k:                                             ; preds = %bb.g
@@ -753,8 +770,7 @@ bb.k:                                             ; preds = %bb.g
   %i.pe = fmul reassoc nsz arcp contract afn <2 x float> %i.pd, <float 9.642120e-01, float 1.000000e+00>
   %i.pf = load <2 x float>, ptr %7, align 4, !tbaa !14
   %i.pg = fdiv reassoc nsz arcp contract afn <2 x float> %i.pe, %i.pf ; 2 uses
-  %17 = extractelement <2 x float> %i.pg, i64 0
-  store float %17, ptr %i.b, align 16, !tbaa !14
+  store <2 x float> %i.pg, ptr %i.b, align 16, !tbaa !14
   %i.ph = load float, ptr %i.iz, align 4, !tbaa !14
   %i.pi = fdiv reassoc nsz arcp contract afn float %i.ow, %i.ph
   br label %.loopexit

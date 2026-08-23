@@ -126,7 +126,8 @@ bb.k:                                             ; preds = %bb.g
   br i1 %i.ah, label %.lr.ph163.split.us, label %.lr.ph163.split.preheader
 
 .lr.ph163.split.preheader:                        ; preds = %.lr.ph163
-  %8 = icmp ugt i32 %5, 65535
+  %8 = add nsw i32 %5, -65536
+  %or.cond15 = icmp ult i32 %8, 1048576
   br label %.lr.ph163.split
 
 .lr.ph163.split.us:                               ; preds = %.lr.ph163, %bb.q
@@ -236,7 +237,7 @@ bb.t:                                             ; preds = %bb.r
 .lr.ph144.split.split:                            ; preds = %.lr.ph144.split.split.preheader, %.lr.ph144.split.split
   %.1143.in = phi i32 [ %.1143, %.lr.ph144.split.split ], [ %.0162, %.lr.ph144.split.split.preheader ]
   %.1143 = add nsw i32 %.1143.in, 1               ; 2 uses
-  br i1 %8, label %.split, label %.lr.ph144.split.split, !llvm.loop !17
+  br i1 %or.cond15, label %.split, label %.lr.ph144.split.split, !llvm.loop !17
 
 .split:                                           ; preds = %.lr.ph144.split.split, %.lr.ph144.split.split.preheader, %.lr.ph144.split.split.us
   %.us-phi155 = phi i32 [ %i.be, %.lr.ph144.split.split.us ], [ %i.be, %.lr.ph144.split.split.preheader ], [ %5, %.lr.ph144.split.split ] ; 2 uses

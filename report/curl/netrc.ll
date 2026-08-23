@@ -202,7 +202,7 @@ define internal fastcc range(i32 0, 5) i32 @netrc_lexer_next(ptr noundef nonnull
 bb.a:
   %i.a = alloca i8, align 1                       ; 6 uses
   %i.b = alloca ptr, align 8                      ; 7 uses
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 5 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 60 ; 2 uses
   %i.e = load i8, ptr %i.d, align 4, !tbaa !101, !range !81, !noundef !98
   %i.f = trunc nuw i8 %i.e to i1
@@ -336,7 +336,8 @@ bb.p:                                             ; preds = %bb.n, %bb.l
 
 netrc_lexer_quoted.exit:                          ; preds = %bb.p, %bb.h, %.thread.i
   %.222.i = phi i32 [ %.121.ph.i, %.thread.i ], [ 2, %bb.h ], [ 2, %bb.p ]
-  %.219.i = phi ptr [ %.118.ph.i, %.thread.i ], [ %.01735.i, %bb.h ], [ %.017.i, %bb.p ]
+  %.219.i = phi ptr [ %.118.ph.i, %.thread.i ], [ %.01735.i, %bb.h ], [ %.017.i, %bb.p ] ; 2 uses
+  store ptr %.219.i, ptr %i.c, align 8, !tbaa !88
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 56
   store i32 1, ptr %i.aa, align 8, !tbaa !109
   br label %bb.ae

@@ -205,7 +205,7 @@ bb.t:                                             ; preds = %BIT_initDStream.exi
   br i1 %i.cy, label %FSE_decompress_usingDTable_generic.exit12.i, label %bb.u, !prof !25
 
 bb.u:                                             ; preds = %bb.t
-  %i.cz = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 8 uses
+  %i.cz = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 9 uses
   %i.da = load ptr, ptr %i.cz, align 8            ; 8 uses
   %i.db = load ptr, ptr %i.ap, align 8            ; 4 uses
   %.not.i28.i = icmp ult ptr %i.da, %i.db
@@ -259,7 +259,8 @@ BIT_reloadDStream.exit34.i:                       ; preds = %bb.w
   %.021.i30.i = select i1 %i.ds, i32 %i.dw, i32 %i.do ; 2 uses
   %i.dx = zext i32 %.021.i30.i to i64
   %i.dy = sub nsw i64 0, %i.dx
-  %i.dz = getelementptr i8, ptr %i.da, i64 %i.dy  ; 2 uses
+  %i.dz = getelementptr i8, ptr %i.da, i64 %i.dy  ; 3 uses
+  store ptr %i.dz, ptr %i.cz, align 8
   %i.ea = shl i32 %.021.i30.i, 3
   %i.eb = sub i32 %i.cx, %i.ea                    ; 3 uses
   %.val66.i = load i64, ptr %i.dz, align 1        ; 3 uses
@@ -662,7 +663,7 @@ bb.r:                                             ; preds = %BIT_initDStream.exi
   br i1 %i.cx, label %FSE_decompress_usingDTable_generic.exit12, label %bb.s, !prof !25
 
 bb.s:                                             ; preds = %bb.r
-  %i.cy = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 8 uses
+  %i.cy = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 9 uses
   %i.cz = load ptr, ptr %i.cy, align 8            ; 8 uses
   %i.da = load ptr, ptr %i.ao, align 8            ; 4 uses
   %.not.i28 = icmp ult ptr %i.cz, %i.da
@@ -702,7 +703,8 @@ bb.v:                                             ; preds = %bb.u
   %.021.i30 = select i1 %i.dm, i32 %i.dq, i32 %i.di ; 2 uses
   %i.dr = zext i32 %.021.i30 to i64
   %i.ds = sub nsw i64 0, %i.dr
-  %i.dt = getelementptr i8, ptr %i.cz, i64 %i.ds  ; 2 uses
+  %i.dt = getelementptr i8, ptr %i.cz, i64 %i.ds  ; 3 uses
+  store ptr %i.dt, ptr %i.cy, align 8
   %i.du = shl i32 %.021.i30, 3
   %i.dv = sub i32 %i.cw, %i.du
   %.val66 = load i64, ptr %i.dt, align 1          ; 2 uses

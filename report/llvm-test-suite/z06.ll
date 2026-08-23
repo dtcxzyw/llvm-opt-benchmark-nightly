@@ -200,7 +200,7 @@ bb.ch:                                            ; preds = %bb.cf
   br label %bb.ci
 
 bb.ci:                                            ; preds = %bb.cg, %bb.ch
-  %i.ru = phi ptr [ %i.rs, %bb.cg ], [ %i.rp, %bb.ch ] ; 17 uses
+  %i.ru = phi ptr [ %i.rs, %bb.cg ], [ %i.rp, %bb.ch ] ; 16 uses
   %i.rv = getelementptr inbounds nuw i8, ptr %i.ru, i64 32
   store i8 10, ptr %i.rv, align 8, !tbaa !8
   %i.rw = getelementptr inbounds nuw i8, ptr %i.ru, i64 16 ; 3 uses
@@ -344,11 +344,7 @@ bb.cq:                                            ; preds = %bb.co, %bb.cp
   %i.up = load ptr, ptr %i.uo, align 8, !tbaa !8  ; 4 uses
   store ptr %i.up, ptr @zz_hold, align 8, !tbaa !13
   %i.uq = icmp eq ptr %i.up, null
-  br i1 %i.uq, label %.thread, label %bb.cr
-
-.thread:                                          ; preds = %bb.cq
-  store ptr %i.ru, ptr @zz_hold, align 8, !tbaa !13
-  br label %bb.cs
+  br i1 %i.uq, label %bb.cs, label %bb.cr
 
 bb.cr:                                            ; preds = %bb.cq
   %i.ur = load ptr, ptr %i.up, align 8, !tbaa !8
@@ -370,8 +366,8 @@ bb.cr:                                            ; preds = %bb.cq
   %i.va = icmp eq ptr %.pre267, null
   br i1 %i.va, label %bb.ct, label %bb.cs
 
-bb.cs:                                            ; preds = %.thread, %bb.cr
-  %i.vb = phi ptr [ %i.uj, %.thread ], [ %.pre267, %bb.cr ] ; 2 uses
+bb.cs:                                            ; preds = %bb.cq, %bb.cr
+  %i.vb = phi ptr [ %.pre267, %bb.cr ], [ %i.uj, %bb.cq ] ; 2 uses
   %i.vc = load ptr, ptr %i.rw, align 8, !tbaa !8  ; 3 uses
   store ptr %i.vc, ptr @zz_tmp, align 8, !tbaa !13
   %i.vd = getelementptr inbounds nuw i8, ptr %i.vb, i64 16 ; 2 uses
