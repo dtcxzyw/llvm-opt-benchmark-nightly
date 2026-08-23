@@ -202,12 +202,11 @@ bb.c:                                             ; preds = %bb.b
   %i.z = getelementptr inbounds nuw i8, ptr %.val, i64 %i.y
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 4
   %i.ab = call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %i.aa, ptr noundef nonnull dereferenceable(1) %1) #9
-  %.fr = freeze i32 %i.ab
-  %.not30 = icmp eq i32 %.fr, 0
+  %.not30 = icmp eq i32 %i.ab, 0
   call void @ReleaseSysCache(ptr noundef nonnull %i.u) #7
   br i1 %.not30, label %.split._crit_edge, label %.backedge
 
-.backedge:                                        ; preds = %bb.b, %.lr.ph, %bb.c, %.split
+.backedge:                                        ; preds = %.split, %bb.c, %.lr.ph, %bb.b
   %i.ac = call ptr @systable_getnext(ptr noundef %i.e) #7 ; 2 uses
   %.not = icmp eq ptr %i.ac, null
   br i1 %.not, label %.split._crit_edge, label %.lr.ph

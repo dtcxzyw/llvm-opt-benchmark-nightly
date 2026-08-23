@@ -205,8 +205,7 @@ bb.e:                                             ; preds = %bb.c
 
 .thread:                                          ; preds = %bb.e
   %i.e = load i32, ptr %2, align 4, !tbaa !36
-  %.fr38 = freeze i32 %i.e
-  %i.f = icmp sgt i32 %.fr38, 1
+  %i.f = icmp sgt i32 %i.e, 1
   %spec.select = select i1 %i.f, i32 0, i32 3
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #20
   %i.g = select i1 %3, i32 1, i32 2

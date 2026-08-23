@@ -150,9 +150,8 @@ bb.f:                                             ; preds = %bb.e
 _ZL24ftypeHasPerturbedEntriesRK22InteractionDefinitions19InteractionFunction.exit.i: ; preds = %bb.f
   %i.ao = getelementptr inbounds nuw [4 x i8], ptr %i.j, i64 %indvars.iv158.i
   %i.ap = load i32, ptr %i.ao, align 4, !tbaa !12
-  %8 = icmp ne i32 %i.ap, %i.ag
-  %cond.fr.i = freeze i1 %8
-  br i1 %cond.fr.i, label %bb.g, label %.preheader131.i
+  %.not130.i = icmp eq i32 %i.ap, %i.ag
+  br i1 %.not130.i, label %.preheader131.i, label %bb.g
 
 bb.g:                                             ; preds = %_ZL24ftypeHasPerturbedEntriesRK22InteractionDefinitions19InteractionFunction.exit.i, %bb.e, %bb.d
   %.191.i = phi i64 [ %i.am, %_ZL24ftypeHasPerturbedEntriesRK22InteractionDefinitions19InteractionFunction.exit.i ], [ %.090143.i, %bb.d ], [ %.090143.i, %bb.e ] ; 6 uses

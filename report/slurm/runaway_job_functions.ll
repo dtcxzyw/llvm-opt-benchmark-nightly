@@ -202,7 +202,6 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %bb.l
   %indvars.iv = phi i64 [ %i.f, %.lr.ph ], [ %indvars.iv.next, %bb.l ] ; 2 uses
-  %.037 = phi i32 [ 0, %.lr.ph ], [ %.2, %bb.l ]  ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #10
   %i.g = getelementptr inbounds [8 x i8], ptr %2, i64 %indvars.iv ; 7 uses
   %i.h = load ptr, ptr %i.g, align 8
@@ -240,9 +239,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.u = load ptr, ptr %i.g, align 8
   %i.v = sext i32 %i.i to i64
   %i.w = getelementptr inbounds i8, ptr %i.u, i64 %i.v
-  %i.x = call i32 @slurm_addto_char_list(ptr noundef %i.t, ptr noundef %i.w) #10
-  %.not33 = icmp eq i32 %i.x, 0
-  %spec.select = select i1 %.not33, i32 %.037, i32 1
+  %i.x = call i32 @slurm_addto_char_list(ptr noundef %i.t, ptr noundef %i.w) #10 ; 0 uses
   br label %bb.l
 
 bb.h:                                             ; preds = %bb.d
@@ -272,7 +269,6 @@ bb.k:                                             ; preds = %bb.h
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.g, %bb.i, %bb.j, %bb.k, %bb.b
-  %.2 = phi i32 [ %.037, %bb.b ], [ %.037, %bb.k ], [ %.037, %bb.j ], [ %.037, %bb.i ], [ %spec.select, %bb.g ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #10
   %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
   %lftr.wideiv = trunc i64 %indvars.iv.next to i32

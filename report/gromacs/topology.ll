@@ -205,9 +205,8 @@ bb.b:                                             ; preds = %_ZNSt7__cxx1112basi
 bb.c:                                             ; preds = %bb.b
   %i.aa = getelementptr inbounds nuw i8, ptr %i.w, i64 28
   %i.ab = load i32, ptr %i.aa, align 4, !tbaa !206
-  %i.ac = and i32 %i.ab, 256                      ; 2 uses
+  %i.ac = and i32 %i.ab, 256
   %.not.not.i.i = icmp eq i32 %i.ac, 0
-  %.lobit.i.i = lshr exact i32 %i.ac, 8
   br i1 %.not.not.i.i, label %bb.d, label %.lr.ph.preheader.i.i
 
 bb.d:                                             ; preds = %bb.c
@@ -218,8 +217,7 @@ bb.d:                                             ; preds = %bb.c
 
 .lr.ph.preheader.i.i:                             ; preds = %bb.d, %bb.c, %bb.b
   %.02233.i.i = phi i32 [ %i.ae, %bb.d ], [ 2, %bb.b ], [ 1, %bb.c ]
-  %.02332.shrunk.i.i = phi i32 [ 0, %bb.d ], [ 0, %bb.b ], [ %.lobit.i.i, %bb.c ]
-  %.02332.i.i = zext nneg i32 %.02332.shrunk.i.i to i64
+  %.02332.i.i = phi i64 [ 0, %bb.d ], [ 0, %bb.b ], [ 1, %bb.c ]
   %i.ag = sext i32 %i.y to i64
   %i.ah = zext nneg i32 %.02233.i.i to i64
   %invariant.gep.i.i = getelementptr inbounds nuw [4 x i8], ptr %i.u, i64 %.02332.i.i

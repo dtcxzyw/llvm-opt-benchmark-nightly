@@ -204,15 +204,14 @@ cuddZddP.exit:                                    ; preds = %bb.e
   tail call void @st__free_table(ptr noundef nonnull %i.p) #14
   %i.s = load ptr, ptr %i.l, align 8, !tbaa !37
   %i.t = tail call i32 @fputc(i32 noundef 10, ptr noundef %i.s) ; 0 uses
-  %.fr = freeze i32 %i.r
-  %.not = icmp eq i32 %.fr, 0
+  %.not = icmp eq i32 %i.r, 0
   br i1 %.not, label %cuddZddP.exit.thread, label %bb.f
 
 cuddZddP.exit.thread:                             ; preds = %bb.e, %cuddZddP.exit
   br label %bb.f
 
-bb.f:                                             ; preds = %cuddZddP.exit.thread, %cuddZddP.exit, %bb.d
-  %.2.shrunk = phi i1 [ %narrow, %bb.d ], [ false, %cuddZddP.exit.thread ], [ %narrow, %cuddZddP.exit ]
+bb.f:                                             ; preds = %cuddZddP.exit, %cuddZddP.exit.thread, %bb.d
+  %.2.shrunk = phi i1 [ %narrow, %cuddZddP.exit ], [ false, %cuddZddP.exit.thread ], [ %narrow, %bb.d ]
   %.2 = zext i1 %.2.shrunk to i32                 ; 2 uses
   %i.u = icmp eq i32 %3, 2
   %i.v = icmp samesign ugt i32 %3, 3

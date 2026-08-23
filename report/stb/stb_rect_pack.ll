@@ -203,7 +203,7 @@ bb.c:                                             ; preds = %bb.b
   %.074131.us = phi ptr [ %i.az, %bb.n ], [ %i.m, %.lr.ph ] ; 2 uses
   %.077130.us = phi ptr [ %i.ay, %bb.n ], [ %i.l, %.lr.ph ] ; 2 uses
   %.080129.us = phi i32 [ %.181.us, %bb.n ], [ 1073741824, %.lr.ph ] ; 6 uses
-  %.088128.us = phi i32 [ %.189.us, %bb.n ], [ 1073741824, %.lr.ph ] ; 4 uses
+  %.088128.us = phi i32 [ %.189.us, %bb.n ], [ 1073741824, %.lr.ph ] ; 5 uses
   br label %.lr.ph.i.us
 
 .lr.ph.i.us:                                      ; preds = %.lr.ph.i.preheader.us, %bb.h
@@ -278,14 +278,15 @@ bb.l:                                             ; preds = %bb.k, %bb.j
 
 bb.m:                                             ; preds = %stbrp__skyline_find_min_y.exit.loopexit.us
   %i.ax = icmp slt i32 %.140.i.us, %.080129.us
-  %spec.select.us = tail call i32 @llvm.smin.i32(i32 %.140.i.us, i32 %.080129.us)
-  %spec.select104.us = select i1 %i.ax, ptr %.077130.us, ptr %.0132.us
+  br i1 %i.ax, label %3, label %bb.n
+
+3:                                                ; preds = %bb.m
   br label %bb.n
 
-bb.n:                                             ; preds = %bb.m, %bb.l, %bb.k, %bb.i
-  %.189.us = phi i32 [ %.088128.us, %bb.i ], [ %.088128.us, %bb.k ], [ %.1.i.us, %bb.l ], [ %.088128.us, %bb.m ] ; 2 uses
-  %.181.us = phi i32 [ %.080129.us, %bb.i ], [ %.080129.us, %bb.k ], [ %.140.i.us, %bb.l ], [ %spec.select.us, %bb.m ] ; 2 uses
-  %.1.us = phi ptr [ %.0132.us, %bb.i ], [ %.0132.us, %bb.k ], [ %.077130.us, %bb.l ], [ %spec.select104.us, %bb.m ] ; 2 uses
+bb.n:                                             ; preds = %3, %bb.m, %bb.l, %bb.k, %bb.i
+  %.189.us = phi i32 [ %.088128.us, %3 ], [ %.088128.us, %bb.m ], [ %.1.i.us, %bb.l ], [ %.088128.us, %bb.i ], [ %.088128.us, %bb.k ] ; 2 uses
+  %.181.us = phi i32 [ %.140.i.us, %3 ], [ %.080129.us, %bb.m ], [ %.140.i.us, %bb.l ], [ %.080129.us, %bb.i ], [ %.080129.us, %bb.k ] ; 2 uses
+  %.1.us = phi ptr [ %.077130.us, %3 ], [ %.0132.us, %bb.m ], [ %.077130.us, %bb.l ], [ %.0132.us, %bb.i ], [ %.0132.us, %bb.k ] ; 2 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %.074131.us, i64 8 ; 2 uses
   %i.az = load ptr, ptr %i.ay, align 8, !tbaa !16 ; 2 uses
   %i.ba = load i32, ptr %i.az, align 8, !tbaa !25 ; 2 uses
@@ -686,9 +687,6 @@ bb.u:                                             ; preds = %bb.t, %.thread.epil
 
 ; Function Attrs: nofree
 declare void @qsort(ptr noundef, i64 noundef, i64 noundef, ptr noundef captures(none)) local_unnamed_addr #7
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smin.i32(i32, i32) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare range(i32 -1, 2) i32 @llvm.scmp.i32.i32(i32, i32) #8

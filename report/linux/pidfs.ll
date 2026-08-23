@@ -202,14 +202,13 @@ bb.bd:                                            ; preds = %bb.bc
 
 __ns_ref_get.exit:                                ; preds = %bb.bd
   %i.ix = tail call fastcc zeroext i1 @refcount_inc_not_zero(ptr noundef %i.it) #21, !srcloc !89
-  %cond.fr = freeze i1 %i.ix
-  br i1 %cond.fr, label %__ns_ref_get.exit.thread, label %bb.be
+  br i1 %i.ix, label %__ns_ref_get.exit.thread, label %bb.be
 
 __ns_ref_get.exit.thread:                         ; preds = %bb.bd, %__ns_ref_get.exit
   br label %bb.be
 
-bb.be:                                            ; preds = %__ns_ref_get.exit.thread, %__ns_ref_get.exit, %bb.bc
-  %.025 = phi ptr [ null, %bb.bc ], [ %i.it, %__ns_ref_get.exit.thread ], [ null, %__ns_ref_get.exit ]
+bb.be:                                            ; preds = %bb.bc, %__ns_ref_get.exit.thread, %__ns_ref_get.exit
+  %.025 = phi ptr [ %i.it, %__ns_ref_get.exit.thread ], [ null, %__ns_ref_get.exit ], [ null, %bb.bc ]
   tail call void @__rcu_read_unlock() #18
   br label %__ns_ref_get.exit67.thread
 
