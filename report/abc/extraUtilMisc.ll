@@ -205,30 +205,21 @@ bb.a:
   %i.o = shl nuw nsw i64 %indvars.iv41, 9         ; 2 uses
   %scevgep50 = getelementptr i8, ptr %.val23, i64 %i.o
   %scevgep51 = getelementptr i8, ptr %i.l, i64 %i.o
-  %i.p = shl nuw nsw i64 %indvars.iv41, 6         ; 2 uses
-  %i.q = or disjoint i64 %i.p, 63                 ; 2 uses
+  %i.p = shl nuw nsw i64 %indvars.iv41, 6
+  %i.q = or disjoint i64 %i.p, 63                 ; 3 uses
   %invariant.gep = getelementptr [8 x i8], ptr %.val, i64 %indvars.iv41 ; 7 uses
   %bound0 = icmp ult ptr %invariant.gep, %scevgep51
   %bound1 = icmp ult ptr %scevgep50, %scevgep
   %found.conflict = and i1 %bound0, %bound1
-  %4 = or disjoint i64 %i.p, 62
-  %5 = mul nuw nsw i64 %4, %i.f
   br label %.preheader24
 
 .preheader24:                                     ; preds = %.preheader25, %Extra_Transpose64p.exit
   %indvars.iv37 = phi i64 [ 0, %.preheader25 ], [ %indvars.iv.next38, %Extra_Transpose64p.exit ] ; 3 uses
-  %i.r = shl nuw nsw i64 %indvars.iv37, 6         ; 2 uses
-  %i.s = or disjoint i64 %i.r, 63                 ; 5 uses
+  %i.r = shl nuw nsw i64 %indvars.iv37, 6
+  %i.s = or disjoint i64 %i.r, 63                 ; 6 uses
   %invariant.gep47 = getelementptr [8 x i8], ptr %.val23, i64 %indvars.iv37 ; 3 uses
   %brmerge = select i1 %i.m, i1 true, i1 %found.conflict
-  br i1 %brmerge, label %scalar.ph.preheader, label %vector.body.preheader
-
-scalar.ph.preheader:                              ; preds = %.preheader24
-  %6 = or disjoint i64 %i.r, 62
-  %7 = mul nuw nsw i64 %6, %i.g
-  %gep.1 = getelementptr [8 x i8], ptr %invariant.gep, i64 %7 ; 2 uses
-  %gep48.1 = getelementptr [8 x i8], ptr %invariant.gep47, i64 %5
-  br label %scalar.ph
+  br i1 %brmerge, label %scalar.ph, label %vector.body.preheader
 
 vector.body.preheader:                            ; preds = %.preheader24
   %i.t = getelementptr [8 x i8], ptr %invariant.gep, i64 %i.s
@@ -268,9 +259,9 @@ vector.body:                                      ; preds = %vector.body.prehead
   %i.ao = icmp eq i64 %index.next, 64
   br i1 %i.ao, label %.preheader.preheader, label %vector.body, !llvm.loop !199
 
-scalar.ph:                                        ; preds = %scalar.ph, %scalar.ph.preheader
-  %indvars.iv31 = phi i64 [ 0, %scalar.ph.preheader ], [ %indvars.iv.next32.1.a, %scalar.ph ] ; 3 uses
-  %indvars.iv = phi i64 [ 0, %scalar.ph.preheader ], [ -2, %scalar.ph ] ; 2 uses
+scalar.ph:                                        ; preds = %.preheader24, %scalar.ph
+  %indvars.iv31 = phi i64 [ %indvars.iv.next32.1, %scalar.ph ], [ 0, %.preheader24 ] ; 3 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next32.1.a, %scalar.ph ], [ 0, %.preheader24 ] ; 4 uses
   %i.ap = add nsw i64 %i.s, %indvars.iv
   %i.aq = mul nsw i64 %i.ap, %i.g
   %gep = getelementptr [8 x i8], ptr %invariant.gep, i64 %i.aq ; 2 uses
@@ -281,13 +272,21 @@ scalar.ph:                                        ; preds = %scalar.ph, %scalar.
   %gep48 = getelementptr [8 x i8], ptr %invariant.gep47, i64 %i.at
   %i.au = load i64, ptr %gep48, align 8, !tbaa !173
   store i64 %i.au, ptr %gep, align 8, !tbaa !173
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 2 uses
+  %4 = add nsw i64 %i.s, %indvars.iv.next
+  %5 = mul nsw i64 %4, %i.g
+  %gep.1 = getelementptr [8 x i8], ptr %invariant.gep, i64 %5 ; 2 uses
   %i.av = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv31
   %i.aw = getelementptr inbounds nuw i8, ptr %i.av, i64 8
   store ptr %gep.1, ptr %i.aw, align 8, !tbaa !189
+  %6 = add nsw i64 %i.q, %indvars.iv.next
+  %7 = mul nsw i64 %6, %i.f
+  %gep48.1 = getelementptr [8 x i8], ptr %invariant.gep47, i64 %7
   %i.ax = load i64, ptr %gep48.1, align 8, !tbaa !173
   store i64 %i.ax, ptr %gep.1, align 8, !tbaa !173
-  %indvars.iv.next32.1.a = add nuw nsw i64 %indvars.iv31, 2 ; 2 uses
-  %exitcond.not.1 = icmp eq i64 %indvars.iv.next32.1.a, 64
+  %indvars.iv.next32.1 = add nuw nsw i64 %indvars.iv31, 2 ; 2 uses
+  %indvars.iv.next32.1.a = add nsw i64 %indvars.iv, -2
+  %exitcond.not.1 = icmp eq i64 %indvars.iv.next32.1, 64
   br i1 %exitcond.not.1, label %.preheader.preheader, label %scalar.ph, !llvm.loop !200
 
 .preheader.preheader:                             ; preds = %vector.body, %scalar.ph
@@ -468,42 +467,44 @@ bb.a:
   %indvars.iv39 = phi i64 [ 0, %.preheader23.lr.ph.split ], [ %indvars.iv.next40, %._crit_edge ] ; 3 uses
   %invariant.gep = getelementptr [8 x i8], ptr %.val, i64 %indvars.iv39 ; 2 uses
   %.idx = shl i64 %indvars.iv39, 9
-  %4 = getelementptr i8, ptr %.val21, i64 %.idx   ; 2 uses
-  %i.g = getelementptr i8, ptr %4, i64 504
-  %i.h = getelementptr i8, ptr %4, i64 496
-  %5 = load ptr, ptr %i.h, align 8, !tbaa !26
+  %i.g = getelementptr i8, ptr %.val21, i64 %.idx
+  %i.h = getelementptr i8, ptr %i.g, i64 504      ; 2 uses
   br label %.preheader22
 
 .preheader22:                                     ; preds = %.preheader23, %Extra_Transpose64p.exit
   %indvars.iv35 = phi i64 [ 0, %.preheader23 ], [ %indvars.iv.next36, %Extra_Transpose64p.exit ] ; 4 uses
-  %i.i = shl nuw nsw i64 %indvars.iv35, 6         ; 2 uses
-  %6 = or disjoint i64 %i.i, 63
-  %i.j = or disjoint i64 %i.i, 62
-  %7 = mul nuw nsw i64 %i.j, %i.f
-  %gep.1 = getelementptr [8 x i8], ptr %invariant.gep, i64 %7 ; 2 uses
-  %8 = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %indvars.iv35
+  %i.i = shl nuw nsw i64 %indvars.iv35, 6
+  %i.j = or disjoint i64 %i.i, 63                 ; 2 uses
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.b, %.preheader22
-  %indvars.iv29 = phi i64 [ 0, %.preheader22 ], [ %indvars.iv.next30.1.a, %bb.b ] ; 3 uses
-  %indvars.iv = phi i64 [ 0, %.preheader22 ], [ -2, %bb.b ] ; 2 uses
-  %i.k = add nsw i64 %6, %indvars.iv
+  %indvars.iv29 = phi i64 [ 0, %.preheader22 ], [ %indvars.iv.next30.1, %bb.b ] ; 3 uses
+  %indvars.iv = phi i64 [ 0, %.preheader22 ], [ %indvars.iv.next30.1.a, %bb.b ] ; 4 uses
+  %i.k = add nsw i64 %i.j, %indvars.iv
   %i.l = mul nsw i64 %i.k, %i.f
   %gep = getelementptr [8 x i8], ptr %invariant.gep, i64 %i.l ; 2 uses
   %i.m = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv29
   store ptr %gep, ptr %i.m, align 16, !tbaa !189
-  %i.n = getelementptr [8 x i8], ptr %i.g, i64 %indvars.iv
+  %i.n = getelementptr [8 x i8], ptr %i.h, i64 %indvars.iv
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !26
   %i.p = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %indvars.iv35
   %i.q = load i64, ptr %i.p, align 8, !tbaa !173
   store i64 %i.q, ptr %gep, align 8, !tbaa !173
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 2 uses
+  %4 = add nsw i64 %i.j, %indvars.iv.next
+  %5 = mul nsw i64 %4, %i.f
+  %gep.1 = getelementptr [8 x i8], ptr %invariant.gep, i64 %5 ; 2 uses
   %i.r = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv29
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 8
   store ptr %gep.1, ptr %i.s, align 8, !tbaa !189
+  %6 = getelementptr [8 x i8], ptr %i.h, i64 %indvars.iv.next
+  %7 = load ptr, ptr %6, align 8, !tbaa !26
+  %8 = getelementptr inbounds nuw [8 x i8], ptr %7, i64 %indvars.iv35
   %i.t = load i64, ptr %8, align 8, !tbaa !173
   store i64 %i.t, ptr %gep.1, align 8, !tbaa !173
-  %indvars.iv.next30.1.a = add nuw nsw i64 %indvars.iv29, 2 ; 2 uses
-  %exitcond.not.1 = icmp eq i64 %indvars.iv.next30.1.a, 64
+  %indvars.iv.next30.1 = add nuw nsw i64 %indvars.iv29, 2 ; 2 uses
+  %indvars.iv.next30.1.a = add nsw i64 %indvars.iv, -2
+  %exitcond.not.1 = icmp eq i64 %indvars.iv.next30.1, 64
   br i1 %exitcond.not.1, label %.preheader, label %bb.b, !llvm.loop !205
 
 .preheader:                                       ; preds = %bb.b, %.preheader

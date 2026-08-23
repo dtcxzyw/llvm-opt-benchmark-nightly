@@ -202,23 +202,21 @@ bb.ah:                                            ; preds = %.lr.ph572, %.loopex
   %indvars.iv604 = phi i64 [ %i.cy, %.lr.ph572 ], [ %indvars.iv.next605, %.loopexit ] ; 4 uses
   %i.nn = sub nsw i64 %indvars.iv604, %i.cy
   %i.no = getelementptr inbounds [4 x i8], ptr %0, i64 %i.nn
-  %i.np = load i32, ptr %i.no, align 4, !tbaa !4  ; 6 uses
+  %i.np = load i32, ptr %i.no, align 4, !tbaa !4  ; 7 uses
   %i.nq = getelementptr inbounds [4 x i8], ptr %0, i64 %indvars.iv604 ; 2 uses
-  %i.nr = getelementptr inbounds i8, ptr %i.nq, i64 -4 ; 3 uses
+  %i.nr = getelementptr inbounds i8, ptr %i.nq, i64 -4 ; 4 uses
   br i1 %i.cw, label %.lr.ph568.preheader, label %._crit_edge569
 
 .lr.ph568.preheader:                              ; preds = %bb.ah
-  %.pre = load i32, ptr %i.nr, align 4, !tbaa !4
-  %.neg467 = sub i32 %.pre, %i.np                 ; 2 uses
   br i1 %min.iters.check678, label %.lr.ph568.preheader695, label %vector.ph679
 
 vector.ph679:                                     ; preds = %.lr.ph568.preheader
-  %broadcast.splatinsert681 = insertelement <4 x i32> poison, i32 %.neg467, i64 0
+  %broadcast.splatinsert681 = insertelement <4 x i32> poison, i32 %i.np, i64 0
   %broadcast.splat682 = shufflevector <4 x i32> %broadcast.splatinsert681, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
   br label %vector.body683
 
 vector.body683:                                   ; preds = %vector.body683, %vector.ph679
-  %index684 = phi i64 [ 0, %vector.ph679 ], [ %index.next688, %vector.body683 ] ; 2 uses
+  %index684 = phi i64 [ 0, %vector.ph679 ], [ %index.next688, %vector.body683 ] ; 3 uses
   %vec.phi = phi <4 x i32> [ zeroinitializer, %vector.ph679 ], [ %i.ny, %vector.body683 ]
   %vec.phi685 = phi <4 x i32> [ zeroinitializer, %vector.ph679 ], [ %i.nz, %vector.body683 ]
   %i.ns = getelementptr inbounds nuw [2 x i8], ptr %3, i64 %index684 ; 2 uses
@@ -227,8 +225,18 @@ vector.body683:                                   ; preds = %vector.body683, %ve
   %wide.load687.a = load <4 x i16>, ptr %i.nt, align 2, !tbaa !8
   %i.nu = sext <4 x i16> %wide.load686.a to <4 x i32>
   %i.nv = sext <4 x i16> %wide.load687.a to <4 x i32>
-  %i.nw = mul <4 x i32> %broadcast.splat682, %i.nu
-  %i.nx = mul <4 x i32> %broadcast.splat682, %i.nv
+  %7 = sub nsw i64 0, %index684
+  %8 = getelementptr inbounds [4 x i8], ptr %i.nr, i64 %7 ; 2 uses
+  %9 = getelementptr inbounds i8, ptr %8, i64 -12
+  %10 = getelementptr inbounds i8, ptr %8, i64 -28
+  %wide.load687 = load <4 x i32>, ptr %9, align 4, !tbaa !4
+  %wide.load688 = load <4 x i32>, ptr %10, align 4, !tbaa !4
+  %11 = sub <4 x i32> %wide.load687, %broadcast.splat682
+  %12 = sub <4 x i32> %wide.load688, %broadcast.splat682
+  %reverse = shufflevector <4 x i32> %11, <4 x i32> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
+  %reverse689 = shufflevector <4 x i32> %12, <4 x i32> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
+  %i.nw = mul <4 x i32> %reverse, %i.nu
+  %i.nx = mul <4 x i32> %reverse689, %i.nv
   %i.ny = add <4 x i32> %i.nw, %vec.phi           ; 2 uses
   %i.nz = add <4 x i32> %i.nx, %vec.phi685        ; 2 uses
   %index.next688 = add nuw i64 %index684, 8       ; 2 uses
@@ -246,11 +254,15 @@ middle.block689:                                  ; preds = %vector.body683
   br label %.lr.ph568
 
 .lr.ph568:                                        ; preds = %.lr.ph568.preheader695, %.lr.ph568
-  %indvars.iv591 = phi i64 [ %indvars.iv.next592, %.lr.ph568 ], [ %indvars.iv591.ph, %.lr.ph568.preheader695 ] ; 2 uses
+  %indvars.iv591 = phi i64 [ %indvars.iv.next592, %.lr.ph568 ], [ %indvars.iv591.ph, %.lr.ph568.preheader695 ] ; 3 uses
   %.0417566 = phi i32 [ %i.of, %.lr.ph568 ], [ %.0417566.ph, %.lr.ph568.preheader695 ]
   %i.oc = getelementptr inbounds nuw [2 x i8], ptr %3, i64 %indvars.iv591
   %i.od = load i16, ptr %i.oc, align 2, !tbaa !8
   %i.oe = sext i16 %i.od to i32
+  %13 = sub nsw i64 0, %indvars.iv591
+  %14 = getelementptr inbounds [4 x i8], ptr %i.nr, i64 %13
+  %15 = load i32, ptr %14, align 4, !tbaa !4
+  %.neg467 = sub i32 %15, %i.np
   %.neg468 = mul i32 %.neg467, %i.oe
   %i.of = add i32 %.neg468, %.0417566             ; 2 uses
   %indvars.iv.next592 = add nuw nsw i64 %indvars.iv591, 1 ; 2 uses

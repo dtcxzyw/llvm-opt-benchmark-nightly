@@ -205,78 +205,91 @@ bb.w:                                             ; preds = %.lr.ph143
   br label %bb.x
 
 bb.x:                                             ; preds = %._crit_edge166, %.loopexit
-  %storemerge170 = phi i64 [ %.1, %.loopexit ], [ %storemerge, %._crit_edge166 ] ; 4 uses
-  %.095 = phi i32 [ 0, %.loopexit ], [ %13, %._crit_edge166 ] ; 2 uses
+  %storemerge170 = phi i64 [ %.1, %.loopexit ], [ %storemerge213, %._crit_edge166 ] ; 5 uses
+  %.095 = phi i32 [ 0, %.loopexit ], [ %.398.lcssa, %._crit_edge166 ] ; 3 uses
   %.083 = phi ptr [ %i.gz, %.loopexit ], [ %.3.ptr, %._crit_edge166 ] ; 4 uses
   %i.ha = icmp samesign ugt i64 %storemerge170, 99999999
   br i1 %i.ha, label %bb.y, label %bb.z
 
 bb.y:                                             ; preds = %bb.x
-  %i.hb = urem i64 %storemerge170, 100000000
-  %i.hc = udiv i64 %storemerge170, 100000000
-  br label %bb.z
+  %i.hb = urem i64 %storemerge170, 100000000      ; 2 uses
+  %i.hc = udiv i64 %storemerge170, 100000000      ; 2 uses
+  %.not116152 = icmp eq i64 %i.hb, 0
+  br i1 %.not116152, label %._crit_edge158.loopexit, label %.lr.ph157.preheader
 
-bb.z:                                             ; preds = %bb.x, %bb.y
-  %storemerge = phi i64 [ %i.hc, %bb.y ], [ 0, %bb.x ] ; 2 uses
-  %.0.in = phi i64 [ %i.hb, %bb.y ], [ %storemerge170, %bb.x ] ; 2 uses
-  %.not116152.a = icmp eq i64 %.0.in, 0
+bb.z:                                             ; preds = %bb.x
+  %.not116152.a = icmp eq i64 %storemerge170, 0
   br i1 %.not116152.a, label %._crit_edge158.a, label %.lr.ph157.preheader
 
-.lr.ph157.preheader:                              ; preds = %bb.z
-  %.0 = trunc nuw nsw i64 %.0.in to i32
-  %.ptr118 = getelementptr inbounds i8, ptr %.083, i64 -2
+.lr.ph157.preheader:                              ; preds = %bb.z, %bb.y
+  %.0216.in = phi i64 [ %storemerge170, %bb.z ], [ %i.hb, %bb.y ]
+  %storemerge212 = phi i64 [ 0, %bb.z ], [ %i.hc, %bb.y ] ; 3 uses
+  %.0216 = trunc nuw i64 %.0216.in to i32
   br label %.lr.ph157
 
 .lr.ph157:                                        ; preds = %.lr.ph157.preheader, %.lr.ph157
-  %.1155 = phi i32 [ %i.hd, %.lr.ph157 ], [ %.0, %.lr.ph157.preheader ] ; 3 uses
+  %.1155 = phi i32 [ %i.hd, %.lr.ph157 ], [ %.0216, %.lr.ph157.preheader ] ; 3 uses
+  %.184.idx154 = phi i64 [ %.184.add, %.lr.ph157 ], [ 0, %.lr.ph157.preheader ]
   %.196153 = phi i32 [ %i.he, %.lr.ph157 ], [ %.095, %.lr.ph157.preheader ]
+  %.184.add = add nsw i64 %.184.idx154, -2        ; 5 uses
+  %.ptr118 = getelementptr inbounds i8, ptr %.083, i64 %.184.add
+  %6 = urem i32 %.1155, 100
+  %7 = shl nuw nsw i32 %6, 1
+  %8 = zext nneg i32 %7 to i64
+  %9 = getelementptr inbounds nuw i8, ptr getelementptr inbounds nuw (i8, ptr @_ZL16stbsp__digitpair, i64 2), i64 %8
+  %10 = load i16, ptr %9, align 2, !tbaa !42
+  store i16 %10, ptr %.ptr118, align 2, !tbaa !42
   %i.hd = udiv i32 %.1155, 100
-  %i.he = add nsw i32 %.196153, 2                 ; 2 uses
-  %.not116 = icmp samesign ult i32 %.1155, 100
-  br i1 %.not116, label %._crit_edge158.loopexit, label %.lr.ph157, !llvm.loop !72
+  %i.he = add nsw i32 %.196153, 2                 ; 4 uses
+  %.not116 = icmp ult i32 %.1155, 100
+  br i1 %.not116, label %._crit_edge158, label %.lr.ph157, !llvm.loop !72
 
-._crit_edge158.loopexit:                          ; preds = %.lr.ph157
-  %6 = shl nuw nsw i32 %.1155, 1
-  %7 = zext nneg i32 %6 to i64
-  %i.hf = getelementptr inbounds nuw i8, ptr getelementptr inbounds nuw (i8, ptr @_ZL16stbsp__digitpair, i64 2), i64 %7
-  %8 = load i16, ptr %i.hf, align 2, !tbaa !42
-  store i16 %8, ptr %.ptr118, align 2, !tbaa !42
-  br label %._crit_edge158.a
+._crit_edge158:                                   ; preds = %.lr.ph157
+  %11 = icmp eq i64 %storemerge212, 0
+  br i1 %11, label %._crit_edge158.a, label %.preheader
 
-._crit_edge158.a:                                 ; preds = %._crit_edge158.loopexit, %bb.z
-  %.184.idx.lcssa151 = phi i64 [ 0, %bb.z ], [ -2, %._crit_edge158.loopexit ] ; 3 uses
-  %.196.lcssa = phi i32 [ %.095, %bb.z ], [ %i.he, %._crit_edge158.loopexit ] ; 4 uses
-  %i.hg = icmp eq i64 %storemerge, 0
-  br i1 %i.hg, label %9, label %._crit_edge166
+.preheader:                                       ; preds = %._crit_edge158
+  %.not117162 = icmp eq i64 %.184.add, -8
+  br i1 %.not117162, label %._crit_edge166, label %._crit_edge158.loopexit
 
-9:                                                ; preds = %._crit_edge158.a
+._crit_edge158.loopexit:                          ; preds = %bb.y, %.preheader
+  %storemerge214 = phi i64 [ %storemerge212, %.preheader ], [ %i.hc, %bb.y ]
+  %.184.idx.lcssa151199207 = phi i64 [ %.184.add, %.preheader ], [ 0, %bb.y ] ; 2 uses
+  %.196.lcssa201206 = phi i32 [ %i.he, %.preheader ], [ %.095, %bb.y ]
+  %i.hf = getelementptr i8, ptr %.083, i64 -8
+  %12 = add nsw i64 %.184.idx.lcssa151199207, 8
+  tail call void @llvm.memset.p0.i64(ptr align 1 %i.hf, i8 48, i64 %12, i1 false), !tbaa !7
+  %13 = add i32 %.196.lcssa201206, 8
+  %14 = trunc i64 %.184.idx.lcssa151199207 to i32
+  %15 = add i32 %13, %14
+  br label %._crit_edge166
+
+._crit_edge158.a:                                 ; preds = %bb.z, %._crit_edge158
+  %.196.lcssa202 = phi i32 [ %.095, %bb.z ], [ %i.he, %._crit_edge158 ] ; 3 uses
+  %.184.idx.lcssa151 = phi i64 [ 0, %bb.z ], [ %.184.add, %._crit_edge158 ]
   %.184.ptr.le.le = getelementptr inbounds i8, ptr %.083, i64 %.184.idx.lcssa151 ; 4 uses
-  %.not119 = icmp eq i32 %.196.lcssa, 0
-  br i1 %.not119, label %bb.ac, label %bb.aa
+  %i.hg = icmp eq i32 %.196.lcssa202, 0
+  br i1 %i.hg, label %bb.ac, label %bb.aa
 
-bb.aa:                                            ; preds = %9
+bb.aa:                                            ; preds = %._crit_edge158.a
   %i.hh = load i8, ptr %.184.ptr.le.le, align 1, !tbaa !7
   %i.hi = icmp eq i8 %i.hh, 48
   br i1 %i.hi, label %bb.ab, label %bb.ac
 
 bb.ab:                                            ; preds = %bb.aa
   %i.hj = getelementptr inbounds nuw i8, ptr %.184.ptr.le.le, i64 1
-  %i.hk = add nsw i32 %.196.lcssa, -1
+  %i.hk = add nsw i32 %.196.lcssa202, -1
   br label %bb.ac
 
-._crit_edge166:                                   ; preds = %._crit_edge158.a
-  %scevgep = getelementptr i8, ptr %.083, i64 -8
-  %10 = add nsw i64 %.184.idx.lcssa151, 8
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep, i8 48, i64 %10, i1 false), !tbaa !7
-  %11 = add i32 %.196.lcssa, 8
-  %12 = trunc nsw i64 %.184.idx.lcssa151 to i32
-  %13 = add i32 %11, %12
+._crit_edge166:                                   ; preds = %._crit_edge158.loopexit, %.preheader
+  %storemerge213 = phi i64 [ %storemerge212, %.preheader ], [ %storemerge214, %._crit_edge158.loopexit ]
+  %.398.lcssa = phi i32 [ %i.he, %.preheader ], [ %15, %._crit_edge158.loopexit ]
   %.3.ptr = getelementptr inbounds i8, ptr %.083, i64 -8
   br label %bb.x
 
-bb.ac:                                            ; preds = %bb.ab, %bb.aa, %9
-  %.499.ph = phi i32 [ 0, %9 ], [ %.196.lcssa, %bb.aa ], [ %i.hk, %bb.ab ]
-  %.4.ph = phi ptr [ %.184.ptr.le.le, %9 ], [ %.184.ptr.le.le, %bb.aa ], [ %i.hj, %bb.ab ]
+bb.ac:                                            ; preds = %bb.ab, %bb.aa, %._crit_edge158.a
+  %.499.ph = phi i32 [ 0, %._crit_edge158.a ], [ %.196.lcssa202, %bb.aa ], [ %i.hk, %bb.ab ]
+  %.4.ph = phi ptr [ %.184.ptr.le.le, %._crit_edge158.a ], [ %.184.ptr.le.le, %bb.aa ], [ %i.hj, %bb.ab ]
   store i32 %.494, ptr %3, align 4, !tbaa !3
   store ptr %.4.ph, ptr %0, align 8, !tbaa !13
   br label %bb.ad

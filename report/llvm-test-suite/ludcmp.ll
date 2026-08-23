@@ -204,23 +204,29 @@ scalar.ph:                                        ; preds = %vector.memcheck, %s
   %i.ai = mul nuw nsw i64 %indvar, 16008
   %i.aj = getelementptr i8, ptr %0, i64 %i.ai
   %scevgep = getelementptr i8, ptr %i.aj, i64 8
-  %i.ak = shl nuw nsw i64 %indvar, 3
-  %i.al = sub nsw i64 15992, %i.ak
+  %i.ak = shl i64 %indvar, 3
+  %i.al = sub i64 15984, %i.ak
+  %4 = and i64 %i.al, 34359738360
+  %5 = add nuw nsw i64 %4, 8
   %i.am = getelementptr inbounds nuw [16000 x i8], ptr %0, i64 %indvar ; 3 uses
-  %min.iters.check = icmp samesign ult i64 %indvars.iv109, 4
+  %min.iters.check = icmp samesign ult i64 %indvars.iv109, 2
   br i1 %min.iters.check, label %scalar.ph4.preheader, label %vector.ph5
 
 vector.ph5:                                       ; preds = %.preheader87
-  %n.vec = and i64 %indvars.iv109, 9223372036854775804 ; 3 uses
+  %n.vec = and i64 %indvars.iv109, 9223372036854775806 ; 3 uses
   br label %vector.body6
 
 vector.body6:                                     ; preds = %vector.body6, %vector.ph5
   %index7 = phi i64 [ 0, %vector.ph5 ], [ %index.next8, %vector.body6 ] ; 2 uses
-  %4 = getelementptr inbounds nuw [8 x i8], ptr %i.am, i64 %index7 ; 2 uses
-  %5 = getelementptr inbounds nuw i8, ptr %4, i64 16
-  store <2 x double> splat (double 1.000000e+00), ptr %4, align 8, !tbaa !8
-  store <2 x double> splat (double 1.000000e+00), ptr %5, align 8, !tbaa !8
-  %index.next8 = add nuw i64 %index7, 4           ; 2 uses
+  %vec.ind8 = phi <2 x i32> [ <i32 0, i32 1>, %vector.ph5 ], [ %vec.ind.next10, %vector.body6 ] ; 2 uses
+  %6 = sub <2 x i32> zeroinitializer, %vec.ind8
+  %7 = sitofp <2 x i32> %6 to <2 x double>
+  %8 = fdiv <2 x double> %7, splat (double 2.000000e+03)
+  %9 = fadd <2 x double> %8, splat (double 1.000000e+00)
+  %10 = getelementptr inbounds nuw [8 x i8], ptr %i.am, i64 %index7
+  store <2 x double> %9, ptr %10, align 8, !tbaa !8
+  %index.next8 = add nuw i64 %index7, 2           ; 2 uses
+  %vec.ind.next10 = add <2 x i32> %vec.ind8, splat (i32 2)
   %i.an = icmp eq i64 %index.next8, %n.vec
   br i1 %i.an, label %middle.block9, label %vector.body6, !llvm.loop !45
 
@@ -233,9 +239,14 @@ scalar.ph4.preheader:                             ; preds = %.preheader87, %midd
   br label %scalar.ph4
 
 scalar.ph4:                                       ; preds = %scalar.ph4.preheader, %scalar.ph4
-  %indvars.iv103 = phi i64 [ %indvars.iv.next104, %scalar.ph4 ], [ %indvars.iv103.ph, %scalar.ph4.preheader ] ; 2 uses
+  %indvars.iv103 = phi i64 [ %indvars.iv.next104, %scalar.ph4 ], [ %indvars.iv103.ph, %scalar.ph4.preheader ] ; 3 uses
+  %11 = trunc i64 %indvars.iv103 to i32
+  %12 = sub i32 0, %11
+  %13 = sitofp i32 %12 to double
+  %14 = fdiv double %13, 2.000000e+03
+  %15 = fadd double %14, 1.000000e+00
   %i.ao = getelementptr inbounds nuw [8 x i8], ptr %i.am, i64 %indvars.iv103
-  store double 1.000000e+00, ptr %i.ao, align 8, !tbaa !8
+  store double %15, ptr %i.ao, align 8, !tbaa !8
   %indvars.iv.next104 = add nuw nsw i64 %indvars.iv103, 1 ; 2 uses
   %exitcond108.not = icmp eq i64 %indvars.iv.next104, %indvars.iv109
   br i1 %exitcond108.not, label %.loopexit34, label %scalar.ph4, !llvm.loop !46
@@ -246,7 +257,7 @@ scalar.ph4:                                       ; preds = %scalar.ph4.preheade
   br i1 %i.ap, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %.loopexit34
-  tail call void @llvm.memset.p0.i64(ptr align 8 %scevgep, i8 0, i64 %i.al, i1 false), !tbaa !8
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep, i8 0, i64 %5, i1 false), !tbaa !8
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.lr.ph, %.loopexit34

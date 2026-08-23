@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.c
   %i.ac = extractelement <2 x double> %foldExtExtBinop260, i64 1
   %i.ad = tail call double @llvm.ceil.f64(double %i.ac)
   %i.ae = fcmp ult double %i.ab, %i.ad
-  br i1 %i.ae, label %.lr.ph186.preheader.a, label %.preheader165
+  br i1 %i.ae, label %.lr.ph186.preheader, label %.preheader165
 
 .preheader165:                                    ; preds = %bb.d, %._crit_edge
   %.0127 = phi i32 [ %i.at, %._crit_edge ], [ 1, %bb.d ] ; 8 uses
@@ -274,71 +274,83 @@ bb.j:                                             ; preds = %.lr.ph183
   %i.at = add nuw nsw i32 %.0127, 1
   br label %.preheader165
 
-.lr.ph186.preheader.a:                            ; preds = %bb.d, %._crit_edge199
-  %.1.a = phi i32 [ %i.bf, %._crit_edge199 ], [ 1, %bb.d ] ; 9 uses
-  %7 = sub nsw i32 0, %.1.a                       ; 3 uses
-  %.not234 = icmp eq i32 %.1.a, 1
-  %i.au = tail call fastcc i32 @fits(i32 noundef %7, i32 noundef 0, ptr noundef nonnull %1, ptr noundef %2, ptr noundef %3, i32 noundef %4, ptr noundef nonnull %6)
+.lr.ph186.preheader:                              ; preds = %bb.d, %._crit_edge199
+  %.1 = phi i32 [ %i.bf, %._crit_edge199 ], [ 1, %bb.d ] ; 8 uses
+  %7 = sub nsw i32 0, %.1                         ; 4 uses
+  br label %.lr.ph186.preheader.a
+
+.lr.ph186.preheader.a:                            ; preds = %.lr.ph186.preheader, %bb.k
+  %.1.a = phi i32 [ %8, %bb.k ], [ 0, %.lr.ph186.preheader ] ; 3 uses
+  %i.au = tail call fastcc i32 @fits(i32 noundef %7, i32 noundef %.1.a, ptr noundef nonnull %1, ptr noundef %2, ptr noundef %3, i32 noundef %4, ptr noundef nonnull %6)
   %.not142.peel = icmp eq i32 %i.au, 0
   br i1 %.not142.peel, label %bb.k, label %.loopexit
 
 bb.k:                                             ; preds = %.lr.ph186.preheader.a
-  br i1 %.not234, label %.lr.ph189, label %.lr.ph186
+  %8 = add nsw i32 %.1.a, -1                      ; 5 uses
+  %9 = icmp samesign ugt i32 %8, %7
+  br i1 %9, label %.lr.ph186.preheader.a, label %.lr.ph189, !llvm.loop !183
 
-.lr.ph186:                                        ; preds = %.lr.ph186, %bb.k
-  %8 = tail call fastcc i32 @fits(i32 noundef %7, i32 noundef -1, ptr noundef nonnull %1, ptr noundef %2, ptr noundef %3, i32 noundef %4, ptr noundef nonnull %6)
-  %.not142 = icmp eq i32 %8, 0
-  br i1 %.not142, label %.lr.ph186, label %.loopexit, !llvm.loop !183
+.lr.ph186:                                        ; preds = %bb.l
+  %.not236 = icmp sgt i32 %.1.a, %.1
+  br i1 %.not236, label %.lr.ph195.preheader, label %.lr.ph192
 
 .lr.ph189:                                        ; preds = %bb.k, %bb.l
-  %.3133188 = phi i32 [ %i.aw, %bb.l ], [ -1, %bb.k ] ; 2 uses
-  %i.av = tail call fastcc i32 @fits(i32 noundef %.3133188, i32 noundef -1, ptr noundef nonnull %1, ptr noundef %2, ptr noundef %3, i32 noundef %4, ptr noundef nonnull %6)
+  %.3133188 = phi i32 [ %i.aw, %bb.l ], [ %7, %bb.k ] ; 2 uses
+  %i.av = tail call fastcc i32 @fits(i32 noundef %.3133188, i32 noundef %8, ptr noundef nonnull %1, ptr noundef %2, ptr noundef %3, i32 noundef %4, ptr noundef nonnull %6)
   %.not141 = icmp eq i32 %i.av, 0
   br i1 %.not141, label %bb.l, label %.loopexit
 
 bb.l:                                             ; preds = %.lr.ph189
   %i.aw = add i32 %.3133188, 1                    ; 2 uses
-  %exitcond220.not = icmp eq i32 %i.aw, %.1.a
-  br i1 %exitcond220.not, label %.lr.ph192, label %.lr.ph189, !llvm.loop !185
+  %exitcond220.not = icmp eq i32 %i.aw, %.1
+  br i1 %exitcond220.not, label %.lr.ph186, label %.lr.ph189, !llvm.loop !184
 
-.lr.ph192:                                        ; preds = %bb.l, %bb.m
-  %.3191 = phi i32 [ %i.ay, %bb.m ], [ -1, %bb.l ] ; 2 uses
-  %i.ax = tail call fastcc i32 @fits(i32 noundef %.1.a, i32 noundef %.3191, ptr noundef nonnull %1, ptr noundef %2, ptr noundef %3, i32 noundef %4, ptr noundef nonnull %6)
+.lr.ph195.preheader:                              ; preds = %bb.m, %.lr.ph186
+  %.3.lcssa = phi i32 [ %8, %.lr.ph186 ], [ %.1, %bb.m ] ; 3 uses
+  br label %.lr.ph195
+
+.lr.ph192:                                        ; preds = %.lr.ph186, %bb.m
+  %.3191 = phi i32 [ %i.ay, %bb.m ], [ %8, %.lr.ph186 ] ; 2 uses
+  %i.ax = tail call fastcc i32 @fits(i32 noundef %.1, i32 noundef %.3191, ptr noundef nonnull %1, ptr noundef %2, ptr noundef %3, i32 noundef %4, ptr noundef nonnull %6)
   %.not140 = icmp eq i32 %i.ax, 0
   br i1 %.not140, label %bb.m, label %.loopexit
 
 bb.m:                                             ; preds = %.lr.ph192
   %i.ay = add i32 %.3191, 1                       ; 2 uses
-  %exitcond221.not = icmp eq i32 %i.ay, %.1.a
-  br i1 %exitcond221.not, label %.lr.ph195, label %.lr.ph192, !llvm.loop !186
+  %exitcond221.not = icmp eq i32 %i.ay, %.1
+  br i1 %exitcond221.not, label %.lr.ph195.preheader, label %.lr.ph192, !llvm.loop !185
 
-.lr.ph195:                                        ; preds = %bb.m, %bb.n
-  %.4134194 = phi i32 [ %i.ba, %bb.n ], [ %.1.a, %bb.m ] ; 2 uses
-  %i.az = tail call fastcc i32 @fits(i32 noundef %.4134194, i32 noundef %.1.a, ptr noundef nonnull %1, ptr noundef %2, ptr noundef %3, i32 noundef %4, ptr noundef nonnull %6)
+.preheader:                                       ; preds = %bb.n
+  %10 = icmp sgt i32 %.3.lcssa, 0
+  br i1 %10, label %.lr.ph198, label %._crit_edge199
+
+.lr.ph195:                                        ; preds = %.lr.ph195.preheader, %bb.n
+  %.4134194 = phi i32 [ %i.ba, %bb.n ], [ %.1, %.lr.ph195.preheader ] ; 2 uses
+  %i.az = tail call fastcc i32 @fits(i32 noundef %.4134194, i32 noundef %.3.lcssa, ptr noundef nonnull %1, ptr noundef %2, ptr noundef %3, i32 noundef %4, ptr noundef nonnull %6)
   %.not139 = icmp eq i32 %i.az, 0
   br i1 %.not139, label %bb.n, label %.loopexit
 
 bb.n:                                             ; preds = %.lr.ph195
   %i.ba = add nsw i32 %.4134194, -1               ; 3 uses
   %i.bb = icmp sgt i32 %i.ba, %7
-  br i1 %i.bb, label %.lr.ph195, label %.lr.ph198, !llvm.loop !187
+  br i1 %i.bb, label %.lr.ph195, label %.preheader, !llvm.loop !186
 
 bb.o:                                             ; preds = %.lr.ph198
   %i.bc = add nsw i32 %.4197, -1
   %i.bd = icmp sgt i32 %.4197, 1
-  br i1 %i.bd, label %.lr.ph198, label %._crit_edge199, !llvm.loop !188
+  br i1 %i.bd, label %.lr.ph198, label %._crit_edge199, !llvm.loop !187
 
-.lr.ph198:                                        ; preds = %bb.n, %bb.o
-  %.4197 = phi i32 [ %i.bc, %bb.o ], [ %.1.a, %bb.n ] ; 3 uses
+.lr.ph198:                                        ; preds = %.preheader, %bb.o
+  %.4197 = phi i32 [ %i.bc, %bb.o ], [ %.3.lcssa, %.preheader ] ; 3 uses
   %i.be = tail call fastcc i32 @fits(i32 noundef %i.ba, i32 noundef %.4197, ptr noundef nonnull %1, ptr noundef %2, ptr noundef %3, i32 noundef %4, ptr noundef nonnull %6)
   %.not138 = icmp eq i32 %i.be, 0
   br i1 %.not138, label %bb.o, label %.loopexit
 
-._crit_edge199:                                   ; preds = %bb.o
-  %i.bf = add nuw nsw i32 %.1.a, 1
-  br label %.lr.ph186.preheader.a
+._crit_edge199:                                   ; preds = %bb.o, %.preheader
+  %i.bf = add nuw nsw i32 %.1, 1
+  br label %.lr.ph186.preheader
 
-.loopexit:                                        ; preds = %bb.e, %.lr.ph, %.lr.ph177, %.lr.ph180, %.lr.ph183, %.lr.ph186, %.lr.ph186.preheader.a, %.lr.ph189, %.lr.ph192, %.lr.ph195, %.lr.ph198, %bb.c, %bb.b
+.loopexit:                                        ; preds = %bb.e, %.lr.ph, %.lr.ph177, %.lr.ph180, %.lr.ph183, %.lr.ph186.preheader.a, %.lr.ph189, %.lr.ph192, %.lr.ph195, %.lr.ph198, %bb.c, %bb.b
   ret void
 }
 
@@ -604,7 +616,7 @@ fillLine.exit:                                    ; preds = %.lr.ph.i, %.lr.ph83
   %exitcond.not = icmp eq i64 %i.dt, %.sroa.7.0.copyload
   %i.du = extractelement <2 x double> %i.bw, i64 0
   %i.dv = extractelement <2 x double> %i.bw, i64 1
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !189
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !188
 
 ._crit_edge:                                      ; preds = %fillLine.exit, %bb.m
   %i.dw = phi <2 x double> [ %i.bi, %bb.m ], [ %i.bw, %fillLine.exit ] ; 2 uses
@@ -634,7 +646,7 @@ bb.q:                                             ; preds = %._crit_edge, %bb.p
   %i.em = getelementptr inbounds nuw i8, ptr %i.el, i64 8
   %i.en = load i64, ptr %i.em, align 8, !tbaa !156
   %i.eo = icmp ult i64 %i.ei, %i.en
-  br i1 %i.eo, label %bb.j, label %.loopexit, !llvm.loop !190
+  br i1 %i.eo, label %bb.j, label %.loopexit, !llvm.loop !189
 
 .loopexit:                                        ; preds = %bb.q, %.preheader, %bb.i
   ret void
@@ -767,7 +779,7 @@ bb.c:                                             ; preds = %bb.b
   %i.n = getelementptr inbounds nuw i8, ptr %.04250, i64 16
   %i.o = add nuw nsw i32 %.04649, 1               ; 2 uses
   %exitcond.not = icmp eq i32 %i.o, %i.c
-  br i1 %exitcond.not, label %._crit_edge, label %bb.b, !llvm.loop !191
+  br i1 %exitcond.not, label %._crit_edge, label %bb.b, !llvm.loop !190
 
 ._crit_edge:                                      ; preds = %bb.c, %bb.a
   %i.p = getelementptr inbounds nuw i8, ptr %2, i64 24
@@ -803,7 +815,7 @@ bb.d:                                             ; preds = %.lr.ph54, %bb.d
   %i.aj = getelementptr inbounds nuw i8, ptr %.24452, i64 16
   %i.ak = add nuw nsw i32 %.14751, 1              ; 2 uses
   %exitcond56.not = icmp eq i32 %i.ak, %i.c
-  br i1 %exitcond56.not, label %._crit_edge55, label %bb.d, !llvm.loop !192
+  br i1 %exitcond56.not, label %._crit_edge55, label %bb.d, !llvm.loop !191
 
 ._crit_edge55:                                    ; preds = %bb.d, %._crit_edge
   %i.al = load i8, ptr @Verbose, align 1, !tbaa !30
@@ -860,12 +872,12 @@ bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !70     ; 2 uses
   %i.b = load ptr, ptr %1, align 8, !tbaa !70     ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %i.d = load double, ptr %i.c, align 8, !tbaa !193
-  %i.e = load double, ptr %i.a, align 8, !tbaa !194
+  %i.d = load double, ptr %i.c, align 8, !tbaa !192
+  %i.e = load double, ptr %i.a, align 8, !tbaa !193
   %i.f = fadd double %i.d, %i.e                   ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %i.h = load double, ptr %i.g, align 8, !tbaa !193
-  %i.i = load double, ptr %i.b, align 8, !tbaa !194
+  %i.h = load double, ptr %i.g, align 8, !tbaa !192
+  %i.i = load double, ptr %i.b, align 8, !tbaa !193
   %i.j = fadd double %i.h, %i.i                   ; 2 uses
   %i.k = fcmp olt double %i.f, %i.j
   %i.l = fcmp ogt double %i.f, %i.j
@@ -1141,8 +1153,8 @@ attributes #25 = { cold noreturn nounwind }
 !180 = distinct !{!180, !54}
 !181 = distinct !{!181, !54}
 !182 = distinct !{!182, !54}
-!183 = distinct !{!183, !54, !184}
-!184 = !{!"llvm.loop.peeled.count", i32 1}
+!183 = distinct !{!183, !54}
+!184 = distinct !{!184, !54}
 !185 = distinct !{!185, !54}
 !186 = distinct !{!186, !54}
 !187 = distinct !{!187, !54}
@@ -1150,7 +1162,6 @@ attributes #25 = { cold noreturn nounwind }
 !189 = distinct !{!189, !54}
 !190 = distinct !{!190, !54}
 !191 = distinct !{!191, !54}
-!192 = distinct !{!192, !54}
-!193 = !{!119, !29, i64 8}
-!194 = !{!119, !29, i64 0}
+!192 = !{!119, !29, i64 8}
+!193 = !{!119, !29, i64 0}
 end_hunk_0

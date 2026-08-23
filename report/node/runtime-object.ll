@@ -202,7 +202,7 @@ _ZNK2v88internal9ArgumentsILNS0_13ArgumentsTypeE0EEixEi.exit3: ; preds = %_ZNK2v
   %i.o = add i64 %i.i, -16
   %i.p = inttoptr i64 %i.o to ptr
   %i.q = load i64, ptr %i.p, align 8
-  %i.r = inttoptr i64 %i.q to ptr                 ; 5 uses
+  %i.r = inttoptr i64 %i.q to ptr
   %i.s = load i64, ptr %1, align 8                ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %2, i64 664
   %i.u = load i64, ptr %i.t, align 8
@@ -294,9 +294,11 @@ _ZN2v88internal7Isolate15object_functionEv.exit:  ; preds = %._crit_edge, %bb.e
   br i1 %.not.i.i.i.i, label %_ZN2v88internalL65__RT_impl_Runtime_CopyDataPropertiesWithExcludedPropertiesOnStackENS0_9ArgumentsILNS0_13ArgumentsTypeE0EEEPNS0_7IsolateE.exit, label %bb.q
 
 bb.f:                                             ; preds = %.lr.ph, %.critedge.i
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %.critedge.i ] ; 2 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %.critedge.i ] ; 3 uses
+  %3 = sub nsw i64 0, %indvars.iv
+  %4 = getelementptr inbounds [8 x i8], ptr %i.r, i64 %3 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #19
-  %i.bh = load i64, ptr %i.r, align 8             ; 2 uses
+  %i.bh = load i64, ptr %4, align 8               ; 2 uses
   %i.bi = trunc i64 %i.bh to i1
   br i1 %i.bi, label %_ZN2v88internal8IsStringENS0_6TaggedINS0_6ObjectEEE.exit, label %.critedge.i
 
@@ -422,7 +424,7 @@ bb.p:                                             ; preds = %bb.m
   br label %.critedge.i
 
 .critedge.i:                                      ; preds = %bb.p, %_ZN2v88internal6HandleINS0_3SmiEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit.i, %bb.l, %bb.f, %_ZN2v88internal8IsStringENS0_6TaggedINS0_6ObjectEEE.exit, %_ZN2v88internal6String12AsArrayIndexEPj.exit
-  %.sroa.018.0 = phi ptr [ %i.r, %bb.l ], [ %i.r, %_ZN2v88internal6String12AsArrayIndexEPj.exit ], [ %i.r, %bb.f ], [ %i.r, %_ZN2v88internal8IsStringENS0_6TaggedINS0_6ObjectEEE.exit ], [ %.0.i.i.i5, %_ZN2v88internal6HandleINS0_3SmiEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit.i ], [ %i.dw, %bb.p ]
+  %.sroa.018.0 = phi ptr [ %4, %bb.l ], [ %4, %_ZN2v88internal6String12AsArrayIndexEPj.exit ], [ %4, %bb.f ], [ %4, %_ZN2v88internal8IsStringENS0_6TaggedINS0_6ObjectEEE.exit ], [ %.0.i.i.i5, %_ZN2v88internal6HandleINS0_3SmiEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit.i ], [ %i.dw, %bb.p ]
   %i.eb = getelementptr inbounds nuw [8 x i8], ptr %.sroa.020.0, i64 %indvars.iv
   %i.ec = ptrtoint ptr %.sroa.018.0 to i64
   store i64 %i.ec, ptr %i.eb, align 8

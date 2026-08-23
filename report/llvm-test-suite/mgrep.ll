@@ -204,23 +204,23 @@ bb.a:
   %i.m = trunc i32 %i.d to i8                     ; 3 uses
   %umax = tail call i32 @llvm.umax.i32(i32 %i.a, i32 1)
   %wide.trip.count = zext i32 %umax to i64        ; 2 uses
-  %xtraiter = and i64 %wide.trip.count, 7         ; 3 uses
-  %i.n = icmp ult i32 %i.a, 8
-  %unroll_iter = and i64 %wide.trip.count, 4294967288
+  %xtraiter = and i64 %wide.trip.count, 3         ; 3 uses
+  %i.n = icmp ult i32 %i.a, 4
+  %unroll_iter = and i64 %wide.trip.count, 4294967292
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   %lcmp.mod205 = icmp ne i64 %xtraiter, 0
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph161, %.loopexit134
   %.067159 = phi ptr [ %i.g, %.lr.ph161 ], [ %.572, %.loopexit134 ] ; 9 uses
-  %.086158 = phi ptr [ %i.j, %.lr.ph161 ], [ %i.dn, %.loopexit134 ] ; 11 uses
+  %.086158 = phi ptr [ %i.j, %.lr.ph161 ], [ %i.dn, %.loopexit134 ] ; 16 uses
   %.086158178 = ptrtoaddr ptr %.086158 to i64
   %.067159179 = ptrtoaddr ptr %.067159 to i64
   %i.o = load i8, ptr %.086158, align 1, !tbaa !8
   %i.p = zext i8 %i.o to i64
   %i.q = getelementptr inbounds nuw i8, ptr @tr1, i64 %i.p
   %i.r = load i8, ptr %i.q, align 1, !tbaa !8
-  %i.s = zext i8 %i.r to i32                      ; 10 uses
+  %i.s = zext i8 %i.r to i32
   %i.t = shl nuw nsw i32 %i.s, 4
   %i.u = getelementptr inbounds i8, ptr %.086158, i64 -1
   %i.v = load i8, ptr %i.u, align 1, !tbaa !8
@@ -251,31 +251,50 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   br i1 %i.am, label %.preheader137.preheader, label %.loopexit134
 
 .preheader137.preheader:                          ; preds = %bb.d
-  br i1 %i.n, label %.preheader137.epil.preheader, label %.preheader137.preheader.new
+  br i1 %i.n, label %.preheader137.epil.preheader, label %.preheader137
 
-.preheader137.preheader.new:                      ; preds = %.preheader137.preheader
-  %3 = shl nuw nsw i32 %i.s, 4
-  %invariant.op = add i32 %3, %i.s
-  %4 = shl nuw nsw i32 %i.s, 4
-  %invariant.op211 = add i32 %4, %i.s
-  %5 = shl nuw nsw i32 %i.s, 4
-  %invariant.op213 = add i32 %5, %i.s
-  %6 = shl nuw nsw i32 %i.s, 4
-  %invariant.op215 = add i32 %6, %i.s
-  br label %.preheader137
-
-.preheader137:                                    ; preds = %.preheader137, %.preheader137.preheader.new
-  %.185144 = phi i32 [ 0, %.preheader137.preheader.new ], [ %.reass216, %.preheader137 ]
-  %niter = phi i64 [ 0, %.preheader137.preheader.new ], [ %niter.next.7, %.preheader137 ]
-  %i.an = shl i32 %.185144, 8
-  %.reass = add i32 %i.an, %invariant.op
-  %7 = shl i32 %.reass, 8
-  %.reass212 = add i32 %7, %invariant.op211
-  %i.ao = shl i32 %.reass212, 8
-  %.reass214 = add i32 %i.ao, %invariant.op213
-  %8 = shl i32 %.reass214, 8
-  %.reass216 = add i32 %8, %invariant.op215       ; 3 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+.preheader137:                                    ; preds = %.preheader137.preheader, %.preheader137
+  %indvars.iv = phi i64 [ %indvars.iv.next.3, %.preheader137 ], [ 0, %.preheader137.preheader ] ; 5 uses
+  %.185144 = phi i32 [ %.reass216, %.preheader137 ], [ 0, %.preheader137.preheader ]
+  %niter = phi i64 [ %niter.next.7, %.preheader137 ], [ 0, %.preheader137.preheader ]
+  %3 = sub nsw i64 0, %indvars.iv
+  %4 = getelementptr inbounds i8, ptr %.086158, i64 %3
+  %5 = load i8, ptr %4, align 1, !tbaa !8
+  %6 = zext i8 %5 to i64
+  %7 = getelementptr inbounds nuw i8, ptr @tr1, i64 %6
+  %8 = load i8, ptr %7, align 1, !tbaa !8
+  %9 = zext i8 %8 to i32
+  %10 = shl i32 %.185144, 8
+  %i.an = shl nuw nsw i32 %9, 4
+  %.reass = add i32 %10, %i.an
+  %11 = xor i64 %indvars.iv, -1
+  %12 = getelementptr inbounds i8, ptr %.086158, i64 %11
+  %13 = load i8, ptr %12, align 1, !tbaa !8
+  %14 = zext i8 %13 to i64
+  %15 = getelementptr inbounds nuw i8, ptr @tr1, i64 %14
+  %16 = load i8, ptr %15, align 1, !tbaa !8
+  %17 = zext i8 %16 to i32
+  %.reass212 = add i32 %.reass, %17
+  %18 = sub nuw nsw i64 -2, %indvars.iv
+  %19 = getelementptr inbounds i8, ptr %.086158, i64 %18
+  %20 = load i8, ptr %19, align 1, !tbaa !8
+  %21 = zext i8 %20 to i64
+  %22 = getelementptr inbounds nuw i8, ptr @tr1, i64 %21
+  %23 = load i8, ptr %22, align 1, !tbaa !8
+  %24 = zext i8 %23 to i32
+  %25 = shl i32 %.reass212, 8
+  %i.ao = shl nuw nsw i32 %24, 4
+  %.reass214 = add i32 %25, %i.ao
+  %26 = sub nuw nsw i64 -3, %indvars.iv
+  %27 = getelementptr inbounds i8, ptr %.086158, i64 %26
+  %28 = load i8, ptr %27, align 1, !tbaa !8
+  %29 = zext i8 %28 to i64
+  %30 = getelementptr inbounds nuw i8, ptr @tr1, i64 %29
+  %31 = load i8, ptr %30, align 1, !tbaa !8
+  %32 = zext i8 %31 to i32
+  %.reass216 = add i32 %.reass214, %32            ; 3 uses
+  %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
+  %niter.next.7 = add i64 %niter, 4               ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %.unr-lcssa, label %.preheader137, !llvm.loop !46
 
@@ -283,15 +302,25 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   br i1 %lcmp.mod.not, label %.epilog-lcssa, label %.preheader137.epil.preheader
 
 .preheader137.epil.preheader:                     ; preds = %.unr-lcssa, %.preheader137.preheader
+  %indvars.iv.epil.init = phi i64 [ 0, %.preheader137.preheader ], [ %indvars.iv.next.3, %.unr-lcssa ]
   %.185144.epil.init = phi i32 [ 0, %.preheader137.preheader ], [ %.reass216, %.unr-lcssa ]
   tail call void @llvm.assume(i1 %lcmp.mod205)
   br label %.preheader137.epil
 
 .preheader137.epil:                               ; preds = %.preheader137.epil, %.preheader137.epil.preheader
+  %indvars.iv.epil = phi i64 [ %indvars.iv.next.epil, %.preheader137.epil ], [ %indvars.iv.epil.init, %.preheader137.epil.preheader ] ; 2 uses
   %.185144.epil = phi i32 [ %i.aq, %.preheader137.epil ], [ %.185144.epil.init, %.preheader137.epil.preheader ]
   %epil.iter = phi i64 [ %epil.iter.next, %.preheader137.epil ], [ 0, %.preheader137.epil.preheader ]
   %i.ap = shl i32 %.185144.epil, 4
-  %i.aq = add i32 %i.ap, %i.s                     ; 2 uses
+  %33 = sub nsw i64 0, %indvars.iv.epil
+  %34 = getelementptr inbounds i8, ptr %.086158, i64 %33
+  %35 = load i8, ptr %34, align 1, !tbaa !8
+  %36 = zext i8 %35 to i64
+  %37 = getelementptr inbounds nuw i8, ptr @tr1, i64 %36
+  %38 = load i8, ptr %37, align 1, !tbaa !8
+  %39 = zext i8 %38 to i32
+  %i.aq = add i32 %i.ap, %39                      ; 2 uses
+  %indvars.iv.next.epil = add nuw nsw i64 %indvars.iv.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
   br i1 %epil.iter.cmp.not, label %.epilog-lcssa, label %.preheader137.epil, !llvm.loop !47

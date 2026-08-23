@@ -205,9 +205,12 @@ bb.c:                                             ; preds = %bb.a
   br label %.lr.ph.epil
 
 .lr.ph.epil:                                      ; preds = %.lr.ph.epil, %.lr.ph.epil.preheader
-  %indvars.iv.epil = phi i64 [ %indvars.iv.epil.init, %.lr.ph.epil.preheader ], [ %indvars.iv.next.epil, %.lr.ph.epil ] ; 3 uses
+  %indvars.iv.epil = phi i64 [ %indvars.iv.epil.init, %.lr.ph.epil.preheader ], [ %indvars.iv.next.epil, %.lr.ph.epil ] ; 4 uses
   %epil.iter = phi i64 [ 0, %.lr.ph.epil.preheader ], [ %epil.iter.next, %.lr.ph.epil ]
-  store i32 0, ptr %i.a, align 4, !tbaa !14
+  %2 = sub nsw i64 0, %indvars.iv.epil            ; 2 uses
+  %3 = getelementptr inbounds [4 x i8], ptr %i.a, i64 %2
+  %4 = trunc nsw i64 %2 to i32
+  store i32 %4, ptr %3, align 4, !tbaa !14
   %i.d = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv.epil
   %i.e = trunc nuw nsw i64 %indvars.iv.epil to i32
   store i32 %i.e, ptr %i.d, align 4, !tbaa !14
@@ -221,24 +224,36 @@ bb.c:                                             ; preds = %bb.a
   br label %.lr.ph33
 
 .lr.ph:                                           ; preds = %.lr.ph, %.lr.ph.preheader.new
-  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader.new ], [ %indvars.iv.next.3, %.lr.ph ] ; 6 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader.new ], [ %indvars.iv.next.3, %.lr.ph ] ; 10 uses
   %niter = phi i64 [ 0, %.lr.ph.preheader.new ], [ %niter.next.3, %.lr.ph ]
-  store i32 0, ptr %i.a, align 4, !tbaa !14
+  %5 = sub nsw i64 0, %indvars.iv                 ; 2 uses
+  %6 = getelementptr inbounds [4 x i8], ptr %i.a, i64 %5
+  %7 = trunc nsw i64 %5 to i32
+  store i32 %7, ptr %6, align 4, !tbaa !14
   %i.g = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv
   %i.h = trunc nuw nsw i64 %indvars.iv to i32
   store i32 %i.h, ptr %i.g, align 4, !tbaa !14
   %indvars.iv.next = or disjoint i64 %indvars.iv, 1 ; 2 uses
-  store i32 0, ptr %i.a, align 4, !tbaa !14
+  %8 = xor i64 %indvars.iv, -1                    ; 2 uses
+  %9 = getelementptr inbounds [4 x i8], ptr %i.a, i64 %8
+  %10 = trunc nsw i64 %8 to i32
+  store i32 %10, ptr %9, align 4, !tbaa !14
   %i.i = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv.next
   %i.j = trunc nuw nsw i64 %indvars.iv.next to i32
   store i32 %i.j, ptr %i.i, align 4, !tbaa !14
   %indvars.iv.next.1 = or disjoint i64 %indvars.iv, 2 ; 2 uses
-  store i32 0, ptr %i.a, align 4, !tbaa !14
+  %11 = sub nuw nsw i64 -2, %indvars.iv           ; 2 uses
+  %12 = getelementptr inbounds [4 x i8], ptr %i.a, i64 %11
+  %13 = trunc nsw i64 %11 to i32
+  store i32 %13, ptr %12, align 4, !tbaa !14
   %i.k = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv.next.1
   %i.l = trunc nuw nsw i64 %indvars.iv.next.1 to i32
   store i32 %i.l, ptr %i.k, align 4, !tbaa !14
   %indvars.iv.next.2 = or disjoint i64 %indvars.iv, 3 ; 2 uses
-  store i32 0, ptr %i.a, align 4, !tbaa !14
+  %14 = sub nuw nsw i64 -3, %indvars.iv           ; 2 uses
+  %15 = getelementptr inbounds [4 x i8], ptr %i.a, i64 %14
+  %16 = trunc nsw i64 %14 to i32
+  store i32 %16, ptr %15, align 4, !tbaa !14
   %i.m = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv.next.2
   %i.n = trunc nuw nsw i64 %indvars.iv.next.2 to i32
   store i32 %i.n, ptr %i.m, align 4, !tbaa !14

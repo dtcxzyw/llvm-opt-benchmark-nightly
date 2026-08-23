@@ -204,7 +204,6 @@ bb.c:                                             ; preds = %bb.a
   %i.ay = add nsw i32 %i.av, -1
   %i.az = zext nneg i32 %i.ay to i64
   %i.ba = shl nuw nsw i64 %i.az, 3
-  %3 = icmp slt i64 %i.ax, 0
   %i.bb = zext nneg i32 %i.av to i64              ; 4 uses
   %min.iters.check = icmp ult i32 %i.av, 4        ; 2 uses
   %n.vec588 = and i64 %i.bb, 2147483644           ; 4 uses
@@ -219,7 +218,7 @@ bb.c:                                             ; preds = %bb.a
 
 .lr.ph.us:                                        ; preds = %._crit_edge.us, %.lr.ph280.split.us
   %i.bg = phi i64 [ %i.i, %.lr.ph280.split.us ], [ %i.eb, %._crit_edge.us ]
-  %.0200279.us = phi i64 [ 0, %.lr.ph280.split.us ], [ %i.ea, %._crit_edge.us ]
+  %.0200279.us = phi i64 [ 0, %.lr.ph280.split.us ], [ %i.ea, %._crit_edge.us ] ; 2 uses
   %.0201278.us = phi ptr [ %.fr430, %.lr.ph280.split.us ], [ %.us-phi273.us, %._crit_edge.us ] ; 8 uses
   %.0202277.us = phi ptr [ %i.af, %.lr.ph280.split.us ], [ %.us-phi272.us, %._crit_edge.us ] ; 6 uses
   %.0204276.us = phi ptr [ %i.ak, %.lr.ph280.split.us ], [ %.us-phi.us, %._crit_edge.us ] ; 8 uses
@@ -230,6 +229,8 @@ bb.c:                                             ; preds = %bb.a
   %.0204276.us576 = ptrtoaddr ptr %.0204276.us to i64 ; 2 uses
   %i.bh = load float, ptr %.4245274.us, align 4, !tbaa !76 ; 4 uses
   %i.bi = load float, ptr %.4275.us, align 4, !tbaa !76 ; 4 uses
+  %invariant.op.us = sub nsw i64 0, %.0200279.us
+  %3 = icmp slt i64 %i.ax, %invariant.op.us
   br i1 %3, label %.lr.ph.split.us.us.preheader, label %.lr.ph.split.us290.preheader
 
 .lr.ph.split.us290.preheader:                     ; preds = %.lr.ph.us
@@ -497,7 +498,6 @@ middle.block:                                     ; preds = %vector.body
   %i.fp = add nsw i32 %i.fm, -1
   %i.fq = zext nneg i32 %i.fp to i64
   %i.fr = shl nuw nsw i64 %i.fq, 2
-  %4 = icmp slt i64 %i.fo, 0
   %i.fs = zext nneg i32 %i.fm to i64              ; 4 uses
   %min.iters.check612 = icmp ult i32 %i.fm, 8     ; 2 uses
   %n.vec635 = and i64 %i.fs, 2147483640           ; 4 uses
@@ -512,7 +512,7 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph.us323:                                     ; preds = %._crit_edge.us329, %.lr.ph314.split.us
   %i.fx = phi i64 [ %i.i, %.lr.ph314.split.us ], [ %i.id, %._crit_edge.us329 ]
-  %.0207313.us = phi i64 [ 0, %.lr.ph314.split.us ], [ %i.ic, %._crit_edge.us329 ]
+  %.0207313.us = phi i64 [ 0, %.lr.ph314.split.us ], [ %i.ic, %._crit_edge.us329 ] ; 2 uses
   %.0208312.us = phi ptr [ %.fr430, %.lr.ph314.split.us ], [ %.us-phi307.us, %._crit_edge.us329 ] ; 8 uses
   %.0210311.us = phi ptr [ %i.af, %.lr.ph314.split.us ], [ %.us-phi306.us, %._crit_edge.us329 ] ; 6 uses
   %.0212310.us = phi ptr [ %i.ak, %.lr.ph314.split.us ], [ %.us-phi305.us, %._crit_edge.us329 ] ; 8 uses
@@ -523,6 +523,8 @@ middle.block:                                     ; preds = %vector.body
   %.0212310.us609 = ptrtoaddr ptr %.0212310.us to i64 ; 2 uses
   %i.fy = load float, ptr %.3244308.us, align 4, !tbaa !76 ; 4 uses
   %i.fz = load float, ptr %.3309.us, align 4, !tbaa !76 ; 4 uses
+  %invariant.op.us318 = sub nsw i64 0, %.0207313.us
+  %4 = icmp slt i64 %i.fo, %invariant.op.us318
   br i1 %4, label %.lr.ph.split.us.us330.preheader, label %.lr.ph.split.us328.preheader
 
 .lr.ph.split.us328.preheader:                     ; preds = %.lr.ph.us323
@@ -792,7 +794,6 @@ middle.block622:                                  ; preds = %vector.body615
   %i.jz = add nsw i32 %i.jw, -1
   %i.ka = zext nneg i32 %i.jz to i64
   %i.kb = shl nuw nsw i64 %i.ka, 1
-  %5 = icmp slt i64 %i.jy, 0
   %i.kc = zext nneg i32 %i.jw to i64              ; 7 uses
   %min.iters.check693 = icmp ult i32 %i.jw, 8
   %n.vec695 = and i64 %i.kc, 2147483640           ; 4 uses
@@ -815,7 +816,7 @@ middle.block622:                                  ; preds = %vector.body615
 
 .lr.ph374.us:                                     ; preds = %._crit_edge375.us, %.lr.ph388.split.us
   %i.kk = phi i64 [ %i.i, %.lr.ph388.split.us ], [ %i.nb, %._crit_edge375.us ]
-  %.0223387.us = phi i64 [ 0, %.lr.ph388.split.us ], [ %i.na, %._crit_edge375.us ]
+  %.0223387.us = phi i64 [ 0, %.lr.ph388.split.us ], [ %i.na, %._crit_edge375.us ] ; 2 uses
   %.0224386.us = phi ptr [ %.fr430, %.lr.ph388.split.us ], [ %.us-phi381.us, %._crit_edge375.us ] ; 10 uses
   %.0226385.us = phi ptr [ %i.af, %.lr.ph388.split.us ], [ %.us-phi380.us, %._crit_edge375.us ] ; 6 uses
   %.0228384.us = phi ptr [ %i.ak, %.lr.ph388.split.us ], [ %.us-phi379.us, %._crit_edge375.us ] ; 10 uses
@@ -826,6 +827,8 @@ middle.block622:                                  ; preds = %vector.body615
   %.0228384.us658 = ptrtoaddr ptr %.0228384.us to i64 ; 2 uses
   %i.kl = load float, ptr %.1242382.us, align 4, !tbaa !76 ; 4 uses
   %i.km = load float, ptr %.1240383.us, align 4, !tbaa !76 ; 4 uses
+  %invariant.op368.us = sub nsw i64 0, %.0223387.us
+  %5 = icmp slt i64 %i.jy, %invariant.op368.us
   br i1 %5, label %iter.check, label %.lr.ph374.split.us400.preheader
 
 .lr.ph374.split.us400.preheader:                  ; preds = %.lr.ph374.us
@@ -1105,7 +1108,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 bb.d:                                             ; preds = %.lr.ph428, %._crit_edge418
   %i.om = phi i64 [ %i.i, %.lr.ph428 ], [ %i.pj, %._crit_edge418 ]
   %i.on = phi i32 [ %.pre, %.lr.ph428 ], [ %i.ph, %._crit_edge418 ] ; 2 uses
-  %.0231427 = phi i64 [ 0, %.lr.ph428 ], [ %i.pi, %._crit_edge418 ]
+  %.0231427 = phi i64 [ 0, %.lr.ph428 ], [ %i.pi, %._crit_edge418 ] ; 2 uses
   %.0232426 = phi ptr [ %.fr430, %.lr.ph428 ], [ %.1233.lcssa, %._crit_edge418 ] ; 2 uses
   %.0234425 = phi ptr [ %i.af, %.lr.ph428 ], [ %.1235.lcssa, %._crit_edge418 ] ; 2 uses
   %.0236424 = phi ptr [ %i.ak, %.lr.ph428 ], [ %.1237.lcssa, %._crit_edge418 ] ; 2 uses
@@ -1113,6 +1116,7 @@ bb.d:                                             ; preds = %.lr.ph428, %._crit_
   %.0241422 = phi ptr [ %i.ao, %.lr.ph428 ], [ %i.pk, %._crit_edge418 ] ; 2 uses
   %i.oo = load float, ptr %.0241422, align 4, !tbaa !76
   %i.op = load float, ptr %.0239423, align 4, !tbaa !76
+  %invariant.op411 = sub nsw i64 0, %.0231427
   %i.oq = icmp sgt i32 %i.on, 0
   br i1 %i.oq, label %.lr.ph417, label %._crit_edge418
 
@@ -1123,7 +1127,7 @@ bb.d:                                             ; preds = %.lr.ph428, %._crit_
   %.1237412 = phi ptr [ %i.pb, %bb.f ], [ %.0236424, %bb.d ] ; 2 uses
   %i.or = load i8, ptr %.1237412, align 1, !tbaa !93 ; 2 uses
   %i.os = load i64, ptr %i.g, align 8, !tbaa !30
-  %i.ot = icmp slt i64 %i.os, 0
+  %i.ot = icmp slt i64 %i.os, %invariant.op411
   br i1 %i.ot, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %.lr.ph417
@@ -1169,7 +1173,7 @@ bb.f:                                             ; preds = %.lr.ph417, %bb.e
 .lr.ph358.split:                                  ; preds = %.lr.ph358, %._crit_edge
   %i.pp = phi i32 [ %i.qq, %._crit_edge ], [ %i.jo, %.lr.ph358 ] ; 2 uses
   %i.pq = phi i64 [ %i.qs, %._crit_edge ], [ %i.i, %.lr.ph358 ]
-  %.0215357 = phi i64 [ %i.qr, %._crit_edge ], [ 0, %.lr.ph358 ]
+  %.0215357 = phi i64 [ %i.qr, %._crit_edge ], [ 0, %.lr.ph358 ] ; 2 uses
   %.0216356 = phi ptr [ %.1217.lcssa, %._crit_edge ], [ %.fr430, %.lr.ph358 ] ; 3 uses
   %.0218355 = phi ptr [ %.1219.lcssa, %._crit_edge ], [ %i.af, %.lr.ph358 ] ; 3 uses
   %.0220354 = phi ptr [ %.1221.lcssa, %._crit_edge ], [ %i.ak, %.lr.ph358 ] ; 3 uses
@@ -1181,8 +1185,9 @@ bb.f:                                             ; preds = %.lr.ph417, %bb.e
   br i1 %i.pt, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %.lr.ph358.split
+  %invariant.op = sub nsw i64 0, %.0215357
   %i.pu = load i64, ptr %i.g, align 8, !tbaa !30
-  %i.pv = icmp slt i64 %i.pu, 0
+  %i.pv = icmp slt i64 %i.pu, %invariant.op
   br i1 %i.pv, label %.lr.ph.split.us, label %.lr.ph.split
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph, %.lr.ph.split.us

@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %.lr.ph224, %bb.aa
   %i.z = phi ptr [ null, %.lr.ph224 ], [ %i.hf, %bb.aa ] ; 13 uses
   %i.aa = phi ptr [ null, %.lr.ph224 ], [ %i.hg, %bb.aa ] ; 8 uses
   %indvars.iv260 = phi i64 [ 0, %.lr.ph224 ], [ %indvars.iv.next261, %bb.aa ] ; 11 uses
-  %indvars.iv257 = phi i32 [ 0, %.lr.ph224 ], [ -1, %bb.aa ]
+  %indvars.iv257 = phi i32 [ 0, %.lr.ph224 ], [ %indvars.iv.next258, %bb.aa ] ; 2 uses
   %i.ab = icmp eq i64 %indvars.iv260, 0
   br i1 %i.ab, label %bb.d, label %bb.c
 
@@ -608,6 +608,7 @@ bb.aa:                                            ; preds = %_ZN12MoleculeTypeD2
   %indvars.iv.next261 = add nuw nsw i64 %indvars.iv260, 1 ; 2 uses
   %i.hh = sext i32 %i.he to i64
   %i.hi = icmp slt i64 %indvars.iv.next261, %i.hh
+  %indvars.iv.next258 = add nsw i32 %indvars.iv257, -1
   br i1 %i.hi, label %bb.b, label %._crit_edge.loopexit, !llvm.loop !301
 
 ._crit_edge229:                                   ; preds = %.lr.ph228

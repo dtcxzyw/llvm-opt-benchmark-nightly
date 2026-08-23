@@ -202,24 +202,22 @@ bb.ag:                                            ; preds = %bb.w, %bb.af, %bb.x
 bb.ah:                                            ; preds = %.lr.ph564, %.loopexit
   %indvars.iv596 = phi i64 [ %i.aw, %.lr.ph564 ], [ %indvars.iv.next597, %.loopexit ] ; 4 uses
   %i.lh = getelementptr inbounds [4 x i8], ptr %1, i64 %indvars.iv596 ; 2 uses
-  %i.li = getelementptr inbounds i8, ptr %i.lh, i64 -4 ; 3 uses
+  %i.li = getelementptr inbounds i8, ptr %i.lh, i64 -4 ; 4 uses
   %i.lj = sub nsw i64 %indvars.iv596, %i.aw
   %i.lk = getelementptr inbounds [4 x i8], ptr %1, i64 %i.lj
-  %i.ll = load i32, ptr %i.lk, align 4, !tbaa !4  ; 6 uses
+  %i.ll = load i32, ptr %i.lk, align 4, !tbaa !4  ; 7 uses
   br i1 %i.au, label %.lr.ph560.preheader, label %._crit_edge561
 
 .lr.ph560.preheader:                              ; preds = %bb.ah
-  %.pre = load i32, ptr %i.li, align 4, !tbaa !4
-  %7 = sub nsw i32 %.pre, %i.ll                   ; 2 uses
   br i1 %min.iters.check, label %.lr.ph560.preheader651, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph560.preheader
-  %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %7, i64 0
+  %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %i.ll, i64 0
   %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
+  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %vec.phi = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %i.ls, %vector.body ]
   %vec.phi641 = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %i.lt, %vector.body ]
   %i.lm = getelementptr inbounds nuw [2 x i8], ptr %3, i64 %index ; 2 uses
@@ -228,8 +226,18 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %wide.load642.a = load <4 x i16>, ptr %i.ln, align 2, !tbaa !11
   %i.lo = sext <4 x i16> %wide.load to <4 x i32>
   %i.lp = sext <4 x i16> %wide.load642.a to <4 x i32>
-  %i.lq = mul nsw <4 x i32> %broadcast.splat, %i.lo
-  %i.lr = mul nsw <4 x i32> %broadcast.splat, %i.lp
+  %7 = sub nsw i64 0, %index
+  %8 = getelementptr inbounds [4 x i8], ptr %i.li, i64 %7 ; 2 uses
+  %9 = getelementptr inbounds i8, ptr %8, i64 -12
+  %10 = getelementptr inbounds i8, ptr %8, i64 -28
+  %wide.load642 = load <4 x i32>, ptr %9, align 4, !tbaa !4
+  %wide.load643 = load <4 x i32>, ptr %10, align 4, !tbaa !4
+  %11 = sub nsw <4 x i32> %wide.load642, %broadcast.splat
+  %12 = sub nsw <4 x i32> %wide.load643, %broadcast.splat
+  %reverse = shufflevector <4 x i32> %11, <4 x i32> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
+  %reverse644 = shufflevector <4 x i32> %12, <4 x i32> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
+  %i.lq = mul nsw <4 x i32> %reverse, %i.lo
+  %i.lr = mul nsw <4 x i32> %reverse644, %i.lp
   %i.ls = add <4 x i32> %i.lq, %vec.phi           ; 2 uses
   %i.lt = add <4 x i32> %i.lr, %vec.phi641        ; 2 uses
   %index.next = add nuw i64 %index, 8             ; 2 uses
@@ -247,12 +255,16 @@ middle.block:                                     ; preds = %vector.body
   br label %.lr.ph560
 
 .lr.ph560:                                        ; preds = %.lr.ph560.preheader651, %.lr.ph560
-  %indvars.iv583 = phi i64 [ %indvars.iv.next584, %.lr.ph560 ], [ %indvars.iv583.ph, %.lr.ph560.preheader651 ] ; 2 uses
+  %indvars.iv583 = phi i64 [ %indvars.iv.next584, %.lr.ph560 ], [ %indvars.iv583.ph, %.lr.ph560.preheader651 ] ; 3 uses
   %.0427558 = phi i32 [ %i.ma, %.lr.ph560 ], [ %.0427558.ph, %.lr.ph560.preheader651 ]
   %i.lw = getelementptr inbounds nuw [2 x i8], ptr %3, i64 %indvars.iv583
   %i.lx = load i16, ptr %i.lw, align 2, !tbaa !11
   %i.ly = sext i16 %i.lx to i32
-  %i.lz = mul nsw i32 %7, %i.ly
+  %13 = sub nsw i64 0, %indvars.iv583
+  %14 = getelementptr inbounds [4 x i8], ptr %i.li, i64 %13
+  %15 = load i32, ptr %14, align 4, !tbaa !4
+  %16 = sub nsw i32 %15, %i.ll
+  %i.lz = mul nsw i32 %16, %i.ly
   %i.ma = add nsw i32 %i.lz, %.0427558            ; 2 uses
   %indvars.iv.next584 = add nuw nsw i64 %indvars.iv583, 1 ; 2 uses
   %exitcond587.not = icmp eq i64 %indvars.iv.next584, %wide.trip.count586

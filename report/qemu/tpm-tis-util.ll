@@ -204,8 +204,9 @@ bb.z:                                             ; preds = %bb.x, %bb.y
   br label %.lr.ph158
 
 ._crit_edge:                                      ; preds = %bb.z
-  %indvars.iv.next178 = add nuw nsw i64 %indvars.iv177, 1 ; 2 uses
+  %indvars.iv.next178 = add nuw nsw i64 %indvars.iv177, 1 ; 3 uses
   %i.cg = icmp samesign ult i64 %indvars.iv177, 3
+  %1 = trunc nuw nsw i64 %indvars.iv.next178 to i32
   br i1 %i.cg, label %.lr.ph158, label %._crit_edge159
 
 .lr.ph158:                                        ; preds = %._crit_edge.thread, %._crit_edge
@@ -314,18 +315,22 @@ bb.ak:                                            ; preds = %bb.ai, %bb.aj
 ._crit_edge159:                                   ; preds = %bb.ak, %._crit_edge
   %indvars.iv.next178205 = phi i64 [ %indvars.iv.next178, %._crit_edge ], [ %indvars.iv.next178206, %bb.ak ] ; 2 uses
   %.0.lcssa203 = phi i8 [ 4, %._crit_edge ], [ %.0.lcssa204, %bb.ak ]
+  %.1125.lcssa = phi i32 [ %1, %._crit_edge ], [ 4, %bb.ak ]
   %i.ej = icmp samesign ult i64 %indvars.iv177, 2
   %spec.select = select i1 %i.ej, i8 0, i8 %.0.lcssa203 ; 2 uses
   %i.ek = load i64, ptr @tpm_tis_base_addr, align 8
-  %i.el = add i64 %i.ek, 12288
+  %2 = shl i32 %.1125.lcssa, 12
+  %3 = add nsw i32 %2, -4096
+  %4 = sext i32 %3 to i64                         ; 3 uses
+  %i.el = add i64 %i.ek, %4
   %i.em = load ptr, ptr @global_qtest, align 8
   %i.en = tail call zeroext i8 @qtest_readb(ptr noundef %i.em, i64 noundef %i.el) #4 ; 0 uses
   %i.eo = load i64, ptr @tpm_tis_base_addr, align 8
-  %i.ep = add i64 %i.eo, 12288
+  %i.ep = add i64 %i.eo, %4
   %i.eq = load ptr, ptr @global_qtest, align 8
   tail call void @qtest_writeb(ptr noundef %i.eq, i64 noundef %i.ep, i8 noundef zeroext 32) #4
   %i.er = load i64, ptr @tpm_tis_base_addr, align 8
-  %i.es = add i64 %i.er, 12288
+  %i.es = add i64 %i.er, %4
   %i.et = load ptr, ptr @global_qtest, align 8
   %i.eu = tail call zeroext i8 @qtest_readb(ptr noundef %i.et, i64 noundef %i.es) #4 ; 2 uses
   %i.ev = or disjoint i8 %spec.select, -127       ; 2 uses

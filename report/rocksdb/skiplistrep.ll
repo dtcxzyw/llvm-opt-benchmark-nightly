@@ -205,7 +205,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br label %.critedge108
 
 bb.o:                                             ; preds = %.lr.ph143, %.critedge106
-  %indvars.iv155 = phi i64 [ 0, %.lr.ph143 ], [ %indvars.iv.next156, %.critedge106 ] ; 8 uses
+  %indvars.iv155 = phi i64 [ 0, %.lr.ph143 ], [ %indvars.iv.next156, %.critedge106 ] ; 10 uses
   %.not100 = icmp slt i64 %indvars.iv155, %i.dq
   br i1 %.not100, label %bb.s, label %bb.p
 
@@ -213,7 +213,9 @@ bb.p:                                             ; preds = %bb.o
   %i.eb = load ptr, ptr %i.dn, align 8, !tbaa !87
   %i.ec = getelementptr inbounds nuw [8 x i8], ptr %i.eb, i64 %indvars.iv155
   %i.ed = load ptr, ptr %i.ec, align 8, !tbaa !159
-  %i.ee = load atomic ptr, ptr %i.ed acquire, align 8
+  %5 = sub nsw i64 0, %indvars.iv155              ; 3 uses
+  %6 = getelementptr inbounds [8 x i8], ptr %i.ed, i64 %5
+  %i.ee = load atomic ptr, ptr %6 acquire, align 8
   %i.ef = load ptr, ptr %i.do, align 8, !tbaa !88
   %i.eg = getelementptr inbounds nuw [8 x i8], ptr %i.ef, i64 %indvars.iv155 ; 2 uses
   %i.eh = load ptr, ptr %i.eg, align 8, !tbaa !159
@@ -228,12 +230,14 @@ bb.q:                                             ; preds = %bb.p
 
 bb.r:                                             ; preds = %.thread.i, %bb.q
   %.015.i = phi ptr [ %i.ek, %bb.q ], [ %i.el, %.thread.i ] ; 2 uses
-  %i.el = load atomic ptr, ptr %.015.i acquire, align 8 ; 5 uses
+  %7 = getelementptr inbounds [8 x i8], ptr %.015.i, i64 %5
+  %i.el = load atomic ptr, ptr %7 acquire, align 8 ; 5 uses
   %.not.i112 = icmp eq ptr %i.el, null
   br i1 %.not.i112, label %_ZNK7rocksdb14InlineSkipListIRKNS_11MemTableRep13KeyComparatorEE18FindSpliceForLevelILb0EEEvRKNS_5SliceEPNS5_4NodeESB_iPSB_SC_.exit, label %.thread.i
 
 .thread.i:                                        ; preds = %bb.r
-  %i.em = load atomic ptr, ptr %i.el acquire, align 8
+  %8 = getelementptr inbounds [8 x i8], ptr %i.el, i64 %5
+  %i.em = load atomic ptr, ptr %8 acquire, align 8
   call void @llvm.prefetch.p0(ptr %i.em, i32 0, i32 1, i32 1)
   %i.en = load ptr, ptr %i.b, align 8, !tbaa !124, !nonnull !125, !align !126 ; 2 uses
   %i.eo = getelementptr inbounds nuw i8, ptr %i.el, i64 8
@@ -290,11 +294,14 @@ bb.u:                                             ; preds = %bb.t
   %i.fo = load ptr, ptr %i.do, align 8, !tbaa !88
   %i.fp = getelementptr inbounds nuw [8 x i8], ptr %i.fo, i64 %indvars.iv155
   %i.fq = load ptr, ptr %i.fp, align 8, !tbaa !159
-  store atomic ptr %i.fq, ptr %i.a monotonic, align 8
+  %9 = sub nsw i64 0, %indvars.iv155              ; 2 uses
+  %10 = getelementptr inbounds [8 x i8], ptr %i.a, i64 %9
+  store atomic ptr %i.fq, ptr %10 monotonic, align 8
   %i.fr = load ptr, ptr %i.dn, align 8, !tbaa !87
   %i.fs = getelementptr inbounds nuw [8 x i8], ptr %i.fr, i64 %indvars.iv155
   %i.ft = load ptr, ptr %i.fs, align 8, !tbaa !159
-  store atomic ptr %i.a, ptr %i.ft release, align 8
+  %11 = getelementptr inbounds [8 x i8], ptr %i.ft, i64 %9
+  store atomic ptr %i.a, ptr %11 release, align 8
   %indvars.iv.next156 = add nuw nsw i64 %indvars.iv155, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next156, %wide.trip.count
   br i1 %exitcond.not, label %iter.check, label %bb.o, !llvm.loop !183
@@ -320,7 +327,7 @@ declare void @llvm.prefetch.p0(ptr readonly captures(none), i32 immarg range(i32
 define linkonce_odr noundef zeroext i1 @_ZN7rocksdb14InlineSkipListIRKNS_11MemTableRep13KeyComparatorEE6InsertILb1EEEbPKcPNS5_6SpliceEb(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef %1, ptr noundef %2, i1 noundef zeroext %3) local_unnamed_addr #3 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %4 = alloca %"class.rocksdb::Slice", align 8    ; 12 uses
-  %i.a = getelementptr inbounds i8, ptr %1, i64 -8 ; 10 uses
+  %i.a = getelementptr inbounds i8, ptr %1, i64 -8 ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #30
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 9 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !124, !nonnull !125, !align !126 ; 2 uses
@@ -589,9 +596,11 @@ _ZNK7rocksdb14InlineSkipListIRKNS_11MemTableRep13KeyComparatorEE21RecomputeSplic
   br label %.preheader122
 
 .preheader122:                                    ; preds = %.preheader122.lr.ph, %.split.us
-  %indvars.iv163 = phi i64 [ 0, %.preheader122.lr.ph ], [ %indvars.iv.next164, %.split.us ] ; 10 uses
+  %indvars.iv163 = phi i64 [ 0, %.preheader122.lr.ph ], [ %indvars.iv.next164, %.split.us ] ; 11 uses
   %.087146 = phi i1 [ true, %.preheader122.lr.ph ], [ %.us-phi142, %.split.us ] ; 2 uses
   %i.dq = icmp eq i64 %indvars.iv163, 0
+  %5 = sub nsw i64 0, %indvars.iv163              ; 8 uses
+  %6 = getelementptr inbounds [8 x i8], ptr %i.a, i64 %5 ; 3 uses
   br i1 %i.dq, label %.preheader122.split.us, label %.preheader122.split
 
 .preheader122.split.us:                           ; preds = %.preheader122, %_ZNK7rocksdb14InlineSkipListIRKNS_11MemTableRep13KeyComparatorEE18FindSpliceForLevelILb0EEEvRKNS_5SliceEPNS5_4NodeESB_iPSB_SC_.exit.us
@@ -630,12 +639,13 @@ bb.o:                                             ; preds = %.preheader122.split
 .critedge105.us:                                  ; preds = %.critedge104.us, %.critedge.us
   %i.ek = load ptr, ptr %i.dn, align 8, !tbaa !88
   %i.el = load ptr, ptr %i.ek, align 8, !tbaa !159
-  store atomic ptr %i.el, ptr %i.a monotonic, align 8
+  store atomic ptr %i.el, ptr %6 monotonic, align 8
   %i.em = load ptr, ptr %i.do, align 8, !tbaa !87
   %i.en = load ptr, ptr %i.em, align 8, !tbaa !159
   %i.eo = load ptr, ptr %i.dn, align 8, !tbaa !88
   %i.ep = load ptr, ptr %i.eo, align 8, !tbaa !159
-  %i.eq = cmpxchg ptr %i.en, ptr %i.ep, ptr %i.a acq_rel acquire, align 8
+  %7 = getelementptr inbounds nuw [8 x i8], ptr %i.en, i64 %5
+  %i.eq = cmpxchg ptr %7, ptr %i.ep, ptr %i.a acq_rel acquire, align 8
   %i.er = extractvalue { ptr, i1 } %i.eq, 1
   br i1 %i.er, label %.split.us, label %bb.p
 
@@ -647,12 +657,14 @@ bb.p:                                             ; preds = %.critedge105.us
 
 bb.q:                                             ; preds = %.thread.i.us, %bb.p
   %.015.i.us = phi ptr [ %i.et, %bb.p ], [ %i.ev, %.thread.i.us ] ; 2 uses
-  %i.ev = load atomic ptr, ptr %.015.i.us acquire, align 8 ; 5 uses
+  %8 = getelementptr inbounds nuw [8 x i8], ptr %.015.i.us, i64 %5
+  %i.ev = load atomic ptr, ptr %8 acquire, align 8 ; 5 uses
   %.not.i109.us = icmp eq ptr %i.ev, null
   br i1 %.not.i109.us, label %_ZNK7rocksdb14InlineSkipListIRKNS_11MemTableRep13KeyComparatorEE18FindSpliceForLevelILb0EEEvRKNS_5SliceEPNS5_4NodeESB_iPSB_SC_.exit.us, label %.thread.i.us
 
 .thread.i.us:                                     ; preds = %bb.q
-  %i.ew = load atomic ptr, ptr %i.ev acquire, align 8
+  %9 = getelementptr inbounds nuw [8 x i8], ptr %i.ev, i64 %5
+  %i.ew = load atomic ptr, ptr %9 acquire, align 8
   call void @llvm.prefetch.p0(ptr %i.ew, i32 0, i32 1, i32 1)
   %i.ex = load ptr, ptr %i.b, align 8, !tbaa !124, !nonnull !125, !align !126 ; 2 uses
   %i.ey = getelementptr inbounds nuw i8, ptr %i.ev, i64 8
@@ -672,14 +684,15 @@ _ZNK7rocksdb14InlineSkipListIRKNS_11MemTableRep13KeyComparatorEE18FindSpliceForL
   %i.fe = load ptr, ptr %i.dn, align 8, !tbaa !88
   %i.ff = getelementptr inbounds nuw [8 x i8], ptr %i.fe, i64 %indvars.iv163
   %i.fg = load ptr, ptr %i.ff, align 8, !tbaa !159
-  store atomic ptr %i.fg, ptr %i.a monotonic, align 8
+  store atomic ptr %i.fg, ptr %6 monotonic, align 8
   %i.fh = load ptr, ptr %i.do, align 8, !tbaa !87
   %i.fi = getelementptr inbounds nuw [8 x i8], ptr %i.fh, i64 %indvars.iv163
   %i.fj = load ptr, ptr %i.fi, align 8, !tbaa !159
   %i.fk = load ptr, ptr %i.dn, align 8, !tbaa !88
   %i.fl = getelementptr inbounds nuw [8 x i8], ptr %i.fk, i64 %indvars.iv163
   %i.fm = load ptr, ptr %i.fl, align 8, !tbaa !159
-  %i.fn = cmpxchg ptr %i.fj, ptr %i.fm, ptr %i.a acq_rel acquire, align 8
+  %10 = getelementptr inbounds [8 x i8], ptr %i.fj, i64 %5
+  %i.fn = cmpxchg ptr %10, ptr %i.fm, ptr %i.a acq_rel acquire, align 8
   %i.fo = extractvalue { ptr, i1 } %i.fn, 1
   br i1 %i.fo, label %.split.us, label %.lr.ph143
 
@@ -693,12 +706,14 @@ _ZNK7rocksdb14InlineSkipListIRKNS_11MemTableRep13KeyComparatorEE18FindSpliceForL
 
 bb.r:                                             ; preds = %.thread.i, %.lr.ph143
   %.015.i = phi ptr [ %i.fr, %.lr.ph143 ], [ %i.fu, %.thread.i ] ; 2 uses
-  %i.fu = load atomic ptr, ptr %.015.i acquire, align 8 ; 5 uses
+  %11 = getelementptr inbounds [8 x i8], ptr %.015.i, i64 %5
+  %i.fu = load atomic ptr, ptr %11 acquire, align 8 ; 5 uses
   %.not.i109 = icmp eq ptr %i.fu, null
   br i1 %.not.i109, label %_ZNK7rocksdb14InlineSkipListIRKNS_11MemTableRep13KeyComparatorEE18FindSpliceForLevelILb0EEEvRKNS_5SliceEPNS5_4NodeESB_iPSB_SC_.exit, label %.thread.i
 
 .thread.i:                                        ; preds = %bb.r
-  %i.fv = load atomic ptr, ptr %i.fu acquire, align 8
+  %12 = getelementptr inbounds [8 x i8], ptr %i.fu, i64 %5
+  %i.fv = load atomic ptr, ptr %12 acquire, align 8
   call void @llvm.prefetch.p0(ptr %i.fv, i32 0, i32 1, i32 1)
   %i.fw = load ptr, ptr %i.b, align 8, !tbaa !124, !nonnull !125, !align !126 ; 2 uses
   %i.fx = getelementptr inbounds nuw i8, ptr %i.fu, i64 8
@@ -715,14 +730,15 @@ _ZNK7rocksdb14InlineSkipListIRKNS_11MemTableRep13KeyComparatorEE18FindSpliceForL
   %i.gd = load ptr, ptr %i.dn, align 8, !tbaa !88
   %i.ge = getelementptr inbounds nuw [8 x i8], ptr %i.gd, i64 %indvars.iv163
   %i.gf = load ptr, ptr %i.ge, align 8, !tbaa !159
-  store atomic ptr %i.gf, ptr %i.a monotonic, align 8
+  store atomic ptr %i.gf, ptr %6 monotonic, align 8
   %i.gg = load ptr, ptr %i.do, align 8, !tbaa !87
   %i.gh = getelementptr inbounds nuw [8 x i8], ptr %i.gg, i64 %indvars.iv163
   %i.gi = load ptr, ptr %i.gh, align 8, !tbaa !159
   %i.gj = load ptr, ptr %i.dn, align 8, !tbaa !88
   %i.gk = getelementptr inbounds nuw [8 x i8], ptr %i.gj, i64 %indvars.iv163
   %i.gl = load ptr, ptr %i.gk, align 8, !tbaa !159
-  %i.gm = cmpxchg ptr %i.gi, ptr %i.gl, ptr %i.a acq_rel acquire, align 8
+  %13 = getelementptr inbounds [8 x i8], ptr %i.gi, i64 %5
+  %i.gm = cmpxchg ptr %13, ptr %i.gl, ptr %i.a acq_rel acquire, align 8
   %i.gn = extractvalue { ptr, i1 } %i.gm, 1
   br i1 %i.gn, label %.split.us, label %.lr.ph143, !llvm.loop !188
 

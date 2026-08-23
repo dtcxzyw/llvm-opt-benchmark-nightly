@@ -204,11 +204,12 @@ bb.bo:                                            ; preds = %.loopexit.i, %.noex
 
 .lr.ph341.split.i:                                ; preds = %.lr.ph341.i, %.lr.ph341.split.i
   %indvars.iv400.i = phi i64 [ %indvars.iv.next401.i, %.lr.ph341.split.i ], [ %indvars.iv398.i, %.lr.ph341.i ] ; 4 uses
-  %i.fe = sub nuw nsw i64 %indvars.iv398.i, %indvars.iv400.i
-  %i.ff = trunc nuw nsw i64 %i.fe to i32
-  %i.fg = sitofp i32 %i.ff to float               ; 2 uses
-  %i.fh = fneg float %i.fg
-  %i.fi = fmul nnan float %i.fg, %i.fh
+  %i.fe = sub nsw i64 %indvars.iv398.i, %indvars.iv400.i
+  %i.ff = trunc nsw i64 %i.fe to i32
+  %i.fg = sitofp i32 %i.ff to float
+  %60 = call noundef float @llvm.fabs.f32(float %i.fg) ; 2 uses
+  %i.fh = fneg float %60
+  %i.fi = fmul nnan float %60, %i.fh
   %i.fj = fmul float %i.dv, %i.fi
   %i.fk = call noundef float @expf(float noundef %i.fj) #16 ; 2 uses
   %i.fl = getelementptr inbounds nuw [8 x i8], ptr %i.df, i64 %indvars.iv400.i

@@ -205,13 +205,15 @@ vector.ph:
   br label %bb.a
 
 bb.a:                                             ; preds = %bb.a, %vector.ph
-  %indvars.iv30 = phi i64 [ 0, %vector.ph ], [ %indvars.iv.next31.1, %bb.a ] ; 7 uses
+  %indvars.iv30 = phi i64 [ 0, %vector.ph ], [ %indvars.iv.next31.1, %bb.a ] ; 8 uses
   %i.ef = mul nsw i64 %1, %indvars.iv30
   %i.eg = getelementptr inbounds i8, ptr %0, i64 %i.ef ; 2 uses
   %i.eh = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv30
   %i.ei = sub nuw nsw i64 31, %indvars.iv30
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.eg, ptr noundef nonnull align 2 dereferenceable(1) %i.eh, i64 %i.ei, i1 false)
-  %i.ej = getelementptr inbounds nuw i8, ptr %i.eg, i64 31
+  %4 = getelementptr inbounds nuw i8, ptr %i.eg, i64 31
+  %5 = sub nsw i64 0, %indvars.iv30
+  %i.ej = getelementptr inbounds i8, ptr %4, i64 %5
   %i.ek = load i8, ptr %i.dw, align 1, !tbaa !11
   %indvars.iv.next31 = or disjoint i64 %indvars.iv30, 1 ; 3 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.ej, i8 %i.ek, i64 %indvars.iv.next31, i1 false)
