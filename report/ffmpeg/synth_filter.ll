@@ -23,12 +23,7 @@ bb.a:
   tail call void %8(ptr noundef %0, ptr noundef %i.c, ptr noundef %6, i64 noundef 4) #3
   %i.d = load i32, ptr %2, align 4, !tbaa !11     ; 3 uses
   %i.e = icmp slt i32 %i.d, 512
-  br i1 %i.e, label %.lr.ph.us.preheader, label %.preheader.preheader
-
-.preheader.preheader:                             ; preds = %bb.a
-  %9 = getelementptr inbounds i8, ptr %i.c, i64 -1988
-  %10 = getelementptr inbounds i8, ptr %i.c, i64 -1924
-  br label %.preheader
+  br i1 %i.e, label %.lr.ph.us.preheader, label %.preheader
 
 .lr.ph.us.preheader:                              ; preds = %bb.a
   %i.f = sub nsw i32 512, %i.d
@@ -391,8 +386,8 @@ bb.b:                                             ; preds = %.lr.ph.us, %bb.b
   %i.ko = shufflevector <4 x float> %i.kk, <4 x float> poison, <2 x i32> <i32 2, i32 3>
   br i1 %i.kl, label %.lr.ph114.us.1, label %._crit_edge.us
 
-.preheader:                                       ; preds = %.preheader.preheader, %.preheader
-  %indvars.iv = phi i64 [ 0, %.preheader.preheader ], [ %indvars.iv.next, %.preheader ] ; 34 uses
+.preheader:                                       ; preds = %bb.a, %.preheader
+  %indvars.iv = phi i64 [ %indvars.iv.next, %.preheader ], [ 0, %bb.a ] ; 36 uses
   %i.kp = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %indvars.iv ; 2 uses
   %i.kq = load float, ptr %i.kp, align 4, !tbaa !12
   %i.kr = or disjoint i64 %indvars.iv, 16         ; 3 uses
@@ -400,7 +395,9 @@ bb.b:                                             ; preds = %.lr.ph.us, %bb.b
   %i.kt = load float, ptr %i.ks, align 4, !tbaa !12
   %i.ku = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %indvars.iv ; 4 uses
   %i.kv = load float, ptr %i.ku, align 4, !tbaa !12
-  %i.kw = load float, ptr %9, align 4, !tbaa !12
+  %9 = sub nuw i64 -497, %indvars.iv
+  %10 = getelementptr inbounds [4 x i8], ptr %i.c, i64 %9
+  %i.kw = load float, ptr %10, align 4, !tbaa !12
   %i.kx = fneg nsz float %i.kw
   %i.ky = getelementptr inbounds nuw i8, ptr %i.ku, i64 64
   %i.kz = load float, ptr %i.ky, align 4, !tbaa !12
@@ -414,7 +411,9 @@ bb.b:                                             ; preds = %.lr.ph.us, %bb.b
   %i.lh = load float, ptr %i.lg, align 4, !tbaa !12
   %i.li = getelementptr inbounds nuw i8, ptr %i.ku, i64 192
   %i.lj = load float, ptr %i.li, align 4, !tbaa !12
-  %i.lk = load float, ptr %10, align 4, !tbaa !12
+  %11 = sub nuw i64 -481, %indvars.iv
+  %12 = getelementptr inbounds [4 x i8], ptr %i.c, i64 %11
+  %i.lk = load float, ptr %12, align 4, !tbaa !12
   %i.ll = or disjoint i64 %indvars.iv, 64         ; 2 uses
   %i.lm = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %i.ll ; 4 uses
   %i.ln = load float, ptr %i.lm, align 4, !tbaa !12
@@ -683,12 +682,7 @@ bb.a:
   tail call void %8(ptr noundef %0, ptr noundef %i.c, ptr noundef %6, i64 noundef 4) #3
   %i.d = load i32, ptr %2, align 4, !tbaa !11     ; 3 uses
   %i.e = icmp slt i32 %i.d, 1024
-  br i1 %i.e, label %.lr.ph.us.preheader, label %.preheader.preheader
-
-.preheader.preheader:                             ; preds = %bb.a
-  %9 = getelementptr inbounds i8, ptr %i.c, i64 -3972
-  %10 = getelementptr inbounds i8, ptr %i.c, i64 -3844
-  br label %.preheader
+  br i1 %i.e, label %.lr.ph.us.preheader, label %.preheader
 
 .lr.ph.us.preheader:                              ; preds = %bb.a
   %i.f = sub nsw i32 1024, %i.d
@@ -1051,8 +1045,8 @@ bb.b:                                             ; preds = %.lr.ph.us, %bb.b
   %i.ko = shufflevector <4 x float> %i.kk, <4 x float> poison, <2 x i32> <i32 2, i32 3>
   br i1 %i.kl, label %.lr.ph114.us.1, label %._crit_edge.us
 
-.preheader:                                       ; preds = %.preheader.preheader, %.preheader
-  %indvars.iv = phi i64 [ 0, %.preheader.preheader ], [ %indvars.iv.next, %.preheader ] ; 34 uses
+.preheader:                                       ; preds = %bb.a, %.preheader
+  %indvars.iv = phi i64 [ %indvars.iv.next, %.preheader ], [ 0, %bb.a ] ; 36 uses
   %i.kp = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %indvars.iv ; 2 uses
   %i.kq = load float, ptr %i.kp, align 4, !tbaa !12
   %i.kr = or disjoint i64 %indvars.iv, 32         ; 3 uses
@@ -1060,7 +1054,9 @@ bb.b:                                             ; preds = %.lr.ph.us, %bb.b
   %i.kt = load float, ptr %i.ks, align 4, !tbaa !12
   %i.ku = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %indvars.iv ; 4 uses
   %i.kv = load float, ptr %i.ku, align 4, !tbaa !12
-  %i.kw = load float, ptr %9, align 4, !tbaa !12
+  %9 = sub nuw i64 -993, %indvars.iv
+  %10 = getelementptr inbounds [4 x i8], ptr %i.c, i64 %9
+  %i.kw = load float, ptr %10, align 4, !tbaa !12
   %i.kx = fneg nsz float %i.kw
   %i.ky = getelementptr inbounds nuw i8, ptr %i.ku, i64 128
   %i.kz = load float, ptr %i.ky, align 4, !tbaa !12
@@ -1074,7 +1070,9 @@ bb.b:                                             ; preds = %.lr.ph.us, %bb.b
   %i.lh = load float, ptr %i.lg, align 4, !tbaa !12
   %i.li = getelementptr inbounds nuw i8, ptr %i.ku, i64 384
   %i.lj = load float, ptr %i.li, align 4, !tbaa !12
-  %i.lk = load float, ptr %10, align 4, !tbaa !12
+  %11 = sub nuw i64 -961, %indvars.iv
+  %12 = getelementptr inbounds [4 x i8], ptr %i.c, i64 %11
+  %i.lk = load float, ptr %12, align 4, !tbaa !12
   %i.ll = or disjoint i64 %indvars.iv, 128        ; 2 uses
   %i.lm = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %i.ll ; 4 uses
   %i.ln = load float, ptr %i.lm, align 4, !tbaa !12

@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %.lr.ph15, %.loopexi
   %i.o = icmp samesign ugt i64 %i.n, 6
   %i.p = trunc i64 %i.n to i32
   %i.q = sub i32 6, %i.p                          ; 3 uses
-  %i.r = shl nuw nsw i32 1, %i.q                  ; 2 uses
+  %i.r = shl nuw i32 1, %i.q                      ; 2 uses
   %i.s = add nsw i64 %i.n, -6                     ; 2 uses
   %i.t = trunc nsw i64 %i.s to i32                ; 7 uses
   %i.u = shl nuw i32 1, %i.t                      ; 5 uses
@@ -456,7 +456,6 @@ _ZN5Ttopt17TruthTableRewrite8CopyFuncEiiib.exit.us: ; preds = %vector.body37, %_
   %i.cf = getelementptr inbounds nuw [8 x i8], ptr @_ZN5Ttopt10TruthTable4onesE, i64 %i.n
   %i.cg = load i64, ptr %i.cf, align 8, !tbaa !71 ; 3 uses
   %.pre = trunc nuw nsw i64 %i.n to i32
-  %1 = add nsw i32 %i.r, -1
   %i.ch = trunc nuw nsw i64 %i.n to i32           ; 2 uses
   br label %bb.e
 
@@ -473,8 +472,8 @@ bb.e:                                             ; preds = %.lr.ph.split, %._cr
 
 bb.f:                                             ; preds = %bb.e
   %i.cp = lshr i32 %i.cm, %i.q
-  %2 = and i32 %i.cm, %1
-  %i.cq = shl i32 %2, %i.ch
+  %1 = srem i32 %i.cm, %i.r
+  %i.cq = shl i32 %1, %i.ch
   %i.cr = zext nneg i32 %i.cp to i64
   %i.cs = load ptr, ptr %i.f, align 8, !tbaa !75
   %i.ct = getelementptr inbounds nuw [8 x i8], ptr %i.cs, i64 %i.cr
@@ -491,7 +490,7 @@ bb.f:                                             ; preds = %bb.e
   %.1.i = xor i64 %i.cy, %.0.i
   %i.cz = ashr i32 %i.ck, %i.q
   %i.da = srem i32 %i.ck, %i.r
-  %i.db = shl nsw i32 %i.da, %.pre-phi
+  %i.db = shl i32 %i.da, %.pre-phi
   %i.dc = zext i32 %i.db to i64                   ; 2 uses
   %i.dd = shl i64 %i.cg, %i.dc
   %i.de = xor i64 %i.dd, -1
