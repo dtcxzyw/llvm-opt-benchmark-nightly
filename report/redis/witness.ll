@@ -153,7 +153,7 @@ witness_print_witness.exit:                       ; preds = %bb.e, %bb.d, %bb.f
   %.not20 = icmp eq ptr %i.k, %i.l
   %.not31 = icmp eq ptr %i.k, null
   %.not = or i1 %.not20, %.not31
-  br i1 %.not, label %select.unfold._crit_edge, label %.lr.ph
+  br i1 %.not, label %select.unfold._crit_edge, label %.lr.ph, !llvm.loop !23
 
 select.unfold._crit_edge:                         ; preds = %witness_print_witness.exit
   %i.m = icmp eq i32 %.1, 1
@@ -213,4 +213,6 @@ attributes #7 = { noreturn nounwind }
 !20 = !{!21, !16, i64 0}
 !21 = !{!"", !16, i64 0}
 !22 = !{!12, !16, i64 32}
+!23 = distinct !{!23, !24}
+!24 = !{!"llvm.loop.mustprogress"}
 end_hunk_0

@@ -202,7 +202,7 @@ bb.a:
   %.sroa.05.0 = select i1 %i.b, i64 -1, i64 %i.c
   %i.d = sub i64 %.sroa.05.0, %1
   %i.e = icmp ugt i64 %2, %i.d
-  br i1 %i.e, label %bb.b, label %bb.f
+  br i1 %i.e, label %bb.b, label %5
 
 bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1616)
@@ -246,12 +246,14 @@ bb.e:                                             ; preds = %bb.d
   store i64 %.sroa.0.0.i14.i, ptr %0, align 8, !alias.scope !1616
   br label %bb.g
 
-bb.f:                                             ; preds = %bb.a
-  %spec.select = select i1 %i.b, i64 -1, i64 %i.c
+5:                                                ; preds = %bb.a
+  br i1 %i.b, label %bb.g, label %bb.f
+
+bb.f:                                             ; preds = %5
   br label %bb.g
 
-bb.g:                                             ; preds = %bb.f, %.thread
-  %.sroa.06.0 = phi i64 [ %spec.select, %bb.f ], [ %.sroa.0.0.i14.i, %.thread ]
+bb.g:                                             ; preds = %.thread, %5, %bb.f
+  %.sroa.06.0 = phi i64 [ -1, %5 ], [ %.sroa.0.0.i14.i, %.thread ], [ %i.c, %bb.f ]
   %i.t = sub i64 %.sroa.06.0, %1
   %i.u = icmp ule i64 %2, %i.t
   tail call void @llvm.assume(i1 %i.u)

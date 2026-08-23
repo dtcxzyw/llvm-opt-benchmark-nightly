@@ -125,10 +125,13 @@ bb.c:                                             ; preds = %bb.b
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.h = load i32, ptr %i.g, align 8, !tbaa !15
   %i.i = icmp slt i32 %i.f, %i.h
+  br i1 %i.i, label %_ZNK4geos5index9sweepline14SweepLineEvent9compareToEPKS2_.exit, label %3
+
+3:                                                ; preds = %bb.c
   br label %_ZNK4geos5index9sweepline14SweepLineEvent9compareToEPKS2_.exit
 
-_ZNK4geos5index9sweepline14SweepLineEvent9compareToEPKS2_.exit: ; preds = %bb.c, %bb.a, %bb.b
-  %.0.i = phi i1 [ %i.i, %bb.c ], [ true, %bb.a ], [ false, %bb.b ]
+_ZNK4geos5index9sweepline14SweepLineEvent9compareToEPKS2_.exit: ; preds = %bb.a, %bb.b, %bb.c, %3
+  %.0.i = phi i1 [ true, %bb.c ], [ true, %bb.a ], [ false, %bb.b ], [ false, %3 ]
   ret i1 %.0.i
 }
 

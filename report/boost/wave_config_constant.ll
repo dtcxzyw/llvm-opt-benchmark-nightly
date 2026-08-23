@@ -24,10 +24,13 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.d = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %2, ptr noundef nonnull dereferenceable(168) @.str.1) #2
   %.not9 = icmp eq i32 %i.d, 0
+  br i1 %.not9, label %3, label %bb.d
+
+3:                                                ; preds = %bb.c
   br label %bb.d
 
-bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a
-  %.0 = phi i1 [ false, %bb.b ], [ false, %bb.a ], [ %.not9, %bb.c ]
+bb.d:                                             ; preds = %bb.b, %bb.c, %bb.a, %3
+  %.0 = phi i1 [ true, %3 ], [ false, %bb.a ], [ false, %bb.c ], [ false, %bb.b ]
   ret i1 %.0
 }
 

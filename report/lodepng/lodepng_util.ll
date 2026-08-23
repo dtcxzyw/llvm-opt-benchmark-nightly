@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %.lr.ph, %_ZNSt7__cx
   %.081173 = phi ptr [ %i.f, %.lr.ph ], [ %i.aw, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit113 ] ; 2 uses
   %.083172 = phi i64 [ 0, %.lr.ph ], [ %.285, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit113 ] ; 5 uses
   %.086171 = phi i64 [ 0, %.lr.ph ], [ %.187, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit113 ] ; 4 uses
-  %.090170 = phi i64 [ 0, %.lr.ph ], [ %.191, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit113 ] ; 4 uses
+  %.090170 = phi i64 [ 0, %.lr.ph ], [ %.191, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit113 ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #28
   call void @_Z18lodepng_chunk_typePcPKh(ptr noundef nonnull %i.b, ptr noundef %.081173)
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #28
@@ -295,9 +295,11 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
 bb.i:                                             ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit108
   %i.ap = icmp eq i64 %.083172, 0
   %.reass.reass.reass = add i64 %i.o, %invariant.op238.a ; 2 uses
-  %.184 = select i1 %i.ap, i64 %.reass.reass.reass, i64 %.083172
+  %.184 = select i1 %i.ap, i64 %.reass.reass.reass, i64 %.083172 ; 2 uses
   %i.aq = icmp eq i64 %.086171, 0
-  %spec.select = select i1 %i.aq, i64 %.reass.reass.reass, i64 %.086171
+  br i1 %i.aq, label %4, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit110.thread
+
+4:                                                ; preds = %bb.i
   br label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit110.thread
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit110: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit108
@@ -311,10 +313,10 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
   %spec.select186 = select i1 %or.cond, i64 %.reass218.reass, i64 %.090170
   br label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit110.thread
 
-_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit110.thread: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit110, %bb.g, %bb.i
-  %.191 = phi i64 [ %.090170, %bb.i ], [ %.090170, %bb.g ], [ %spec.select186, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit110 ] ; 2 uses
-  %.187 = phi i64 [ %spec.select, %bb.i ], [ %.086171, %bb.g ], [ %.086171, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit110 ] ; 2 uses
-  %.285 = phi i64 [ %.184, %bb.i ], [ %spec.select185.a, %bb.g ], [ %.083172, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit110 ] ; 2 uses
+_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit110.thread: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit110, %bb.g, %4, %bb.i
+  %.191 = phi i64 [ %.090170, %bb.g ], [ %spec.select186, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit110 ], [ %.090170, %4 ], [ %.090170, %bb.i ] ; 2 uses
+  %.187 = phi i64 [ %.086171, %bb.g ], [ %.086171, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit110 ], [ %.reass.reass.reass, %4 ], [ %.086171, %bb.i ] ; 2 uses
+  %.285 = phi i64 [ %spec.select185.a, %bb.g ], [ %.083172, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit110 ], [ %.184, %4 ], [ %.184, %bb.i ] ; 2 uses
   %i.aw = invoke noundef ptr @_Z24lodepng_chunk_next_constPKhS0_(ptr noundef %.081173, ptr noundef nonnull %i.d)
           to label %bb.j unwind label %bb.h       ; 3 uses
 

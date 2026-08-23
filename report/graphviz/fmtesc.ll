@@ -40,10 +40,13 @@ bb.d:                                             ; preds = %bb.c
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 2
   %i.i = load i8, ptr %i.h, align 1, !tbaa !8
   %i.j = icmp eq i8 %i.i, 0
+  br i1 %i.j, label %4, label %bb.e
+
+4:                                                ; preds = %bb.d
   br label %bb.e
 
-bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b
-  %.051 = phi i1 [ false, %bb.b ], [ %i.j, %bb.d ], [ false, %bb.c ] ; 2 uses
+bb.e:                                             ; preds = %4, %bb.d, %bb.c, %bb.b
+  %.051 = phi i1 [ true, %4 ], [ false, %bb.d ], [ false, %bb.c ], [ false, %bb.b ] ; 2 uses
   %i.k = tail call i64 @strlen(ptr noundef nonnull readonly dereferenceable(1) %1) #14 ; 7 uses
   %i.l = icmp eq i64 %i.k, 0
   br i1 %i.l, label %agxbput.exit, label %agxblen.exit.i.i
@@ -340,7 +343,7 @@ bb.aj:                                            ; preds = %bb.ae, %bb.ad
 
 bb.ak:                                            ; preds = %bb.aj
   %cond = icmp ne i8 %i.ac, 32                    ; 2 uses
-  %brmerge.not = select i1 %cond, i1 %.1197, i1 false
+  %brmerge.not = and i1 %.1197, %cond
   %not.cond = xor i1 %cond, true
   %.mux = zext i1 %not.cond to i8
   br i1 %brmerge.not, label %bb.al, label %agxbputc.exit102

@@ -202,7 +202,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define hidden zeroext i1 @_RNCNvNtCskarGseaywcB_14diesel_derives12sql_function25add_variadic_doc_comments0B5_(ptr nofree readnone captures(none) %0, ptr align 8 %1) unnamed_addr #0 {
+define hidden noundef zeroext i1 @_RNCNvNtCskarGseaywcB_14diesel_derives12sql_function25add_variadic_doc_comments0B5_(ptr nofree readnone captures(none) %0, ptr align 8 %1) unnamed_addr #0 {
 bb.a:
   %i.a = load i64, ptr %1, align 8                ; 4 uses
   %i.b = icmp ult i64 %i.a, 42
@@ -219,10 +219,13 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 176
   %i.i = tail call zeroext i1 @_RINvMs_NtCshMFl0SviwmK_3syn4pathNtB5_4Path8is_identeEB7_(ptr nonnull align 8 %i.h, ptr nonnull @23, i64 3)
+  br i1 %i.i, label %2, label %bb.d
+
+2:                                                ; preds = %bb.c
   br label %bb.d
 
-bb.d:                                             ; preds = %bb.c, %bb.a, %bb.b
-  %.sroa.0.0 = phi i1 [ false, %bb.a ], [ %i.i, %bb.c ], [ false, %bb.b ]
+bb.d:                                             ; preds = %bb.a, %bb.b, %bb.c, %2
+  %.sroa.0.0 = phi i1 [ true, %2 ], [ false, %bb.c ], [ false, %bb.b ], [ false, %bb.a ]
   ret i1 %.sroa.0.0
 }
 

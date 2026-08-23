@@ -204,8 +204,8 @@ bb.h:                                             ; preds = %_RNCINvXsd_NtCs96xU
   %.not11 = icmp eq i8 %i.w, -1
   br i1 %.not11, label %bb.l, label %bb.i
 
-_RNCINvXsd_NtCs96xUavsWfLi_15icu_locale_core4dataNtB8_10DataLocaleNtCs8xIf8eOPprX_9writeable9Writeable8write_toNtNtCshzWfHUSfYae_4core3fmt9FormatterE0Cs1GZEXNOm2AR_12icu_provider.exit.thread.sink.split: ; preds = %bb.q, %bb.p
-  %.sroa.0.0.ph = phi i1 [ false, %bb.p ], [ %i.ar, %bb.q ]
+_RNCINvXsd_NtCs96xUavsWfLi_15icu_locale_core4dataNtB8_10DataLocaleNtCs8xIf8eOPprX_9writeable9Writeable8write_toNtNtCshzWfHUSfYae_4core3fmt9FormatterE0Cs1GZEXNOm2AR_12icu_provider.exit.thread.sink.split: ; preds = %bb.q, %bb.p, %2
+  %.sroa.0.0.ph = phi i1 [ false, %bb.p ], [ false, %2 ], [ true, %bb.q ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   br label %_RNCINvXsd_NtCs96xUavsWfLi_15icu_locale_core4dataNtB8_10DataLocaleNtCs8xIf8eOPprX_9writeable9Writeable8write_toNtNtCshzWfHUSfYae_4core3fmt9FormatterE0Cs1GZEXNOm2AR_12icu_provider.exit.thread
 
@@ -277,6 +277,9 @@ bb.q:                                             ; preds = %bb.p
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(136) %i.a, ptr noundef nonnull align 8 dereferenceable(136) %i.b, i64 136, i1 false)
   %i.ar = call noundef zeroext i1 @_RINvMs_NtCs96xUavsWfLi_15icu_locale_core10extensionsNtB5_10Extensions19for_each_subtag_strNtNtCshzWfHUSfYae_4core3fmt5ErrorNCINvXsd_NtB7_4dataNtB26_10DataLocaleNtCs8xIf8eOPprX_9writeable9Writeable8write_toNtB1s_9FormatterE0ECs1GZEXNOm2AR_12icu_provider(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(136) %i.a, ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %1)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
+  br i1 %i.ar, label %_RNCINvXsd_NtCs96xUavsWfLi_15icu_locale_core4dataNtB8_10DataLocaleNtCs8xIf8eOPprX_9writeable9Writeable8write_toNtNtCshzWfHUSfYae_4core3fmt9FormatterE0Cs1GZEXNOm2AR_12icu_provider.exit.thread.sink.split, label %2
+
+2:                                                ; preds = %bb.q
   br label %_RNCINvXsd_NtCs96xUavsWfLi_15icu_locale_core4dataNtB8_10DataLocaleNtCs8xIf8eOPprX_9writeable9Writeable8write_toNtNtCshzWfHUSfYae_4core3fmt9FormatterE0Cs1GZEXNOm2AR_12icu_provider.exit.thread.sink.split
 }
 

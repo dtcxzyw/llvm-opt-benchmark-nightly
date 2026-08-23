@@ -205,11 +205,13 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d
   %i.p = icmp eq i32 %i.o, 6
-  %spec.select = select i1 %i.p, i64 16, i64 56
+  br i1 %i.p, label %.invoke, label %4
+
+4:                                                ; preds = %bb.e
   br label %.invoke
 
-.invoke:                                          ; preds = %bb.e, %bb.c
-  %.sink14 = phi i64 [ 16, %bb.c ], [ %spec.select, %bb.e ]
+.invoke:                                          ; preds = %bb.c, %bb.e, %4
+  %.sink14 = phi i64 [ 56, %4 ], [ 16, %bb.e ], [ 16, %bb.c ]
   %i.q = load ptr, ptr %i.e, align 8, !tbaa !124
   %i.r = getelementptr inbounds nuw [8 x i8], ptr %i.q, i64 %indvars.iv
   %i.s = load ptr, ptr %i.r, align 8, !tbaa !231  ; 2 uses

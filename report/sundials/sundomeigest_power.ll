@@ -202,7 +202,9 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.l
   %i.ch = icmp slt i32 %i.cb, 0
-  %spec.select = select i1 %i.ch, i32 -9984, i32 1
+  br i1 %i.ch, label %.loopexit, label %3
+
+3:                                                ; preds = %bb.m
   br label %.loopexit
 
 .thread:                                          ; preds = %bb.l, %bb.j, %bb.h
@@ -212,8 +214,8 @@ bb.m:                                             ; preds = %bb.l
   tail call void @N_VLinearSum(double noundef %i.ci, ptr noundef %2, double noundef %i.cj, ptr noundef %i.q, ptr noundef %2) #13
   br label %.loopexit
 
-.loopexit:                                        ; preds = %bb.m, %bb.i, %bb.k, %bb.g, %.thread, %bb.b
-  %.2 = phi i32 [ 0, %bb.b ], [ -9984, %bb.g ], [ 0, %.thread ], [ -9984, %bb.i ], [ %spec.select, %bb.m ], [ -9984, %bb.k ]
+.loopexit:                                        ; preds = %bb.i, %bb.k, %bb.m, %3, %bb.g, %.thread, %bb.b
+  %.2 = phi i32 [ 0, %bb.b ], [ -9984, %bb.g ], [ 0, %.thread ], [ -9984, %bb.i ], [ 1, %3 ], [ -9984, %bb.k ], [ -9984, %bb.m ]
   ret i32 %.2
 }
 

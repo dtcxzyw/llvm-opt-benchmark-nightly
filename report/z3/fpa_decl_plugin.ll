@@ -205,10 +205,13 @@ _Z9is_app_ofPK4exprii.exit.i:                     ; preds = %bb.b
   %i.n = load i32, ptr %i.m, align 4
   %i.o = icmp ult i32 %i.n, 5
   %or.cond8 = select i1 %i.l, i1 %i.o, i1 false
+  br i1 %or.cond8, label %_Z9is_app_ofPK4exprii.exit19.thread.sink.split.i, label %_ZN15fpa_decl_plugin13is_rm_numeralEP4exprR17mpf_rounding_mode.exit
+
+_Z9is_app_ofPK4exprii.exit19.thread.sink.split.i: ; preds = %_Z9is_app_ofPK4exprii.exit.i
   br label %_ZN15fpa_decl_plugin13is_rm_numeralEP4exprR17mpf_rounding_mode.exit
 
-_ZN15fpa_decl_plugin13is_rm_numeralEP4exprR17mpf_rounding_mode.exit: ; preds = %_Z9is_app_ofPK4exprii.exit.i, %bb.a, %bb.b
-  %.0.i = phi i1 [ false, %bb.a ], [ false, %bb.b ], [ %or.cond8, %_Z9is_app_ofPK4exprii.exit.i ]
+_ZN15fpa_decl_plugin13is_rm_numeralEP4exprR17mpf_rounding_mode.exit: ; preds = %_Z9is_app_ofPK4exprii.exit.i, %bb.a, %bb.b, %_Z9is_app_ofPK4exprii.exit19.thread.sink.split.i
+  %.0.i = phi i1 [ false, %bb.a ], [ false, %bb.b ], [ false, %_Z9is_app_ofPK4exprii.exit.i ], [ true, %_Z9is_app_ofPK4exprii.exit19.thread.sink.split.i ]
   ret i1 %.0.i
 }
 

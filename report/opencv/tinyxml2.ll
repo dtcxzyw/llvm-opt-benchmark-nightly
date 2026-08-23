@@ -204,8 +204,7 @@ _ZN2cv8tinyxml27StrPair9ParseTextEPcPKci.exit30:  ; preds = %bb.g, %bb.h, %bb.i
   store i32 %i.ax, ptr %i.ak, align 8, !tbaa !8
   %i.ay = getelementptr inbounds nuw i8, ptr %.01620.i25, i64 1
   %i.az = load i8, ptr %i.ay, align 1, !tbaa !14
-  %.fr = freeze i8 %i.az
-  %.not18 = icmp eq i8 %.fr, 0
+  %.not18 = icmp eq i8 %i.az, 0
   br i1 %.not18, label %bb.k, label %bb.l
 
 .thread:                                          ; preds = %bb.j, %bb.f
@@ -220,8 +219,8 @@ _ZN2cv8tinyxml27StrPair9ParseTextEPcPKci.exit30:  ; preds = %bb.g, %bb.h, %bb.i
 bb.k:                                             ; preds = %.thread, %_ZN2cv8tinyxml27StrPair9ParseTextEPcPKci.exit30
   br label %bb.l
 
-bb.l:                                             ; preds = %_ZN2cv8tinyxml27StrPair9ParseTextEPcPKci.exit, %bb.k, %_ZN2cv8tinyxml27StrPair9ParseTextEPcPKci.exit30, %_ZN2cv8tinyxml27StrPair9ParseTextEPcPKci.exit.thread
-  %.1 = phi ptr [ null, %_ZN2cv8tinyxml27StrPair9ParseTextEPcPKci.exit.thread ], [ %i.v, %_ZN2cv8tinyxml27StrPair9ParseTextEPcPKci.exit ], [ null, %bb.k ], [ %.01620.i25, %_ZN2cv8tinyxml27StrPair9ParseTextEPcPKci.exit30 ]
+bb.l:                                             ; preds = %_ZN2cv8tinyxml27StrPair9ParseTextEPcPKci.exit, %_ZN2cv8tinyxml27StrPair9ParseTextEPcPKci.exit.thread, %_ZN2cv8tinyxml27StrPair9ParseTextEPcPKci.exit30, %bb.k
+  %.1 = phi ptr [ %.01620.i25, %_ZN2cv8tinyxml27StrPair9ParseTextEPcPKci.exit30 ], [ null, %bb.k ], [ null, %_ZN2cv8tinyxml27StrPair9ParseTextEPcPKci.exit.thread ], [ %i.v, %_ZN2cv8tinyxml27StrPair9ParseTextEPcPKci.exit ]
   ret ptr %.1
 }
 

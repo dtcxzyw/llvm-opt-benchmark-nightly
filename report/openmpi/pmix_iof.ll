@@ -203,10 +203,13 @@ bb.d:                                             ; preds = %bb.c
   %i.z = trunc i64 %i.y to i32
   %i.aa = load i32, ptr %i.r, align 8, !tbaa !267
   %i.ab = icmp sgt i32 %i.aa, %i.z
+  br i1 %i.ab, label %1, label %bb.e
+
+1:                                                ; preds = %bb.d
   br label %bb.e
 
-bb.e:                                             ; preds = %bb.d, %bb.b, %bb.c
-  %.1 = phi i1 [ true, %bb.b ], [ false, %bb.c ], [ %i.ab, %bb.d ]
+bb.e:                                             ; preds = %bb.b, %bb.c, %1, %bb.d
+  %.1 = phi i1 [ true, %bb.b ], [ true, %1 ], [ false, %bb.d ], [ false, %bb.c ]
   %i.ac = tail call i32 @pthread_mutex_lock(ptr noundef nonnull %i.k) #18
   %i.ad = icmp eq i32 %i.ac, 35
   br i1 %i.ad, label %bb.f, label %pmix_obj_update.exit

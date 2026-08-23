@@ -202,7 +202,9 @@ bb.b:                                             ; preds = %lv_subject_get_int.
 
 bb.c:                                             ; preds = %bb.b
   %i.y = icmp slt i32 %i.t, %i.o
-  %spec.select = select i1 %i.y, i32 %., i32 %i.t
+  br i1 %i.y, label %1, label %bb.e
+
+1:                                                ; preds = %bb.c
   br label %bb.e
 
 bb.d:                                             ; preds = %lv_subject_get_int.exit
@@ -210,8 +212,8 @@ bb.d:                                             ; preds = %lv_subject_get_int.
   %.39 = tail call i32 @llvm.smax.i32(i32 %i.o, i32 %i.z)
   br label %bb.e
 
-bb.e:                                             ; preds = %bb.d, %bb.b, %bb.c
-  %.0 = phi i32 [ %.39, %bb.d ], [ %i.o, %bb.b ], [ %spec.select, %bb.c ]
+bb.e:                                             ; preds = %bb.d, %bb.c, %1, %bb.b
+  %.0 = phi i32 [ %.39, %bb.d ], [ %., %1 ], [ %i.t, %bb.c ], [ %i.o, %bb.b ]
   %..i = tail call i32 @llvm.smin.i32(i32 %.0, i32 %i.j)
   %spec.select.i = tail call i32 @llvm.smax.i32(i32 %i.n, i32 %..i) ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %i.b, i64 32

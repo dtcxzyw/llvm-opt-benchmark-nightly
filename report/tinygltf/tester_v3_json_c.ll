@@ -205,7 +205,7 @@ bb.s:                                             ; preds = %bb.p
 
 .preheader107.i:                                  ; preds = %.lr.ph122.i, %.preheader108.i
   %.295.lcssa.i = phi x86_fp80 [ %.194.lcssa.i, %.preheader108.i ], [ %i.gu, %.lr.ph122.i ] ; 2 uses
-  %.291.lcssa.i = phi i32 [ %.190.lcssa.i, %.preheader108.i ], [ %i.gv, %.lr.ph122.i ] ; 17 uses
+  %.291.lcssa.i = phi i32 [ %.190.lcssa.i, %.preheader108.i ], [ %i.gv, %.lr.ph122.i ] ; 18 uses
   %i.cb = fptosi x86_fp80 %.295.lcssa.i to i32
   %spec.store.select.i = tail call i32 @llvm.smax.i32(i32 %i.cb, i32 0)
   %spec.store.select1.i = tail call i32 @llvm.umin.i32(i32 %spec.store.select.i, i32 9) ; 2 uses
@@ -497,15 +497,16 @@ bb.ai:                                            ; preds = %bb.ah
 
 bb.aj:                                            ; preds = %bb.ai
   %.pre = load i8, ptr %i.ck, align 1, !tbaa !26
-  %.pre.fr = freeze i8 %.pre
-  %5 = icmp ne i8 %.pre.fr, 48                    ; 2 uses
-  %spec.select = select i1 %5, i32 2, i32 1
+  %5 = icmp eq i8 %.pre, 48
+  br i1 %5, label %6, label %.critedge.i
+
+6:                                                ; preds = %bb.aj
   br label %.critedge.i
 
-.critedge.i:                                      ; preds = %bb.aj, %.thread, %bb.ai, %bb.ah, %bb.ag, %bb.af, %bb.ae, %bb.ad, %bb.ac, %bb.ab, %bb.aa, %bb.z, %bb.y, %bb.x, %bb.w, %bb.v, %bb.u
-  %.4152.i = phi i32 [ %.291.lcssa.i, %bb.ac ], [ %.291.lcssa.i, %bb.u ], [ %.291.lcssa.i, %bb.v ], [ %.291.lcssa.i, %bb.ag ], [ %.291.lcssa.i, %bb.w ], [ %.291.lcssa.i, %bb.ae ], [ %.291.lcssa.i, %bb.x ], [ %.291.lcssa.i, %bb.ai ], [ %.291.lcssa.i, %bb.y ], [ %.291.lcssa.i, %bb.ad ], [ %.291.lcssa.i, %bb.z ], [ %.291.lcssa.i, %bb.ah ], [ %.291.lcssa.i, %bb.aa ], [ %.291.lcssa.i, %bb.af ], [ %.291.lcssa.i, %bb.ab ], [ %i.hf, %.thread ], [ %.291.lcssa.i, %bb.aj ] ; 2 uses
-  %6 = phi i1 [ true, %bb.ac ], [ true, %bb.u ], [ true, %bb.v ], [ true, %bb.ag ], [ true, %bb.w ], [ true, %bb.ae ], [ true, %bb.x ], [ true, %bb.ai ], [ true, %bb.y ], [ true, %bb.ad ], [ true, %bb.z ], [ true, %bb.ah ], [ true, %bb.aa ], [ true, %bb.af ], [ true, %bb.ab ], [ false, %.thread ], [ %5, %bb.aj ]
-  %.088.lcssa.i = phi i32 [ 9, %bb.ac ], [ 17, %bb.u ], [ 16, %bb.v ], [ 5, %bb.ag ], [ 15, %bb.w ], [ 7, %bb.ae ], [ 14, %bb.x ], [ 3, %bb.ai ], [ 13, %bb.y ], [ 8, %bb.ad ], [ 12, %bb.z ], [ 4, %bb.ah ], [ 11, %bb.aa ], [ 6, %bb.af ], [ 10, %bb.ab ], [ 1, %.thread ], [ %spec.select, %bb.aj ] ; 3 uses
+.critedge.i:                                      ; preds = %.thread, %6, %bb.aj, %bb.ai, %bb.ah, %bb.ag, %bb.af, %bb.ae, %bb.ad, %bb.ac, %bb.ab, %bb.aa, %bb.z, %bb.y, %bb.x, %bb.w, %bb.v, %bb.u
+  %.4152.i = phi i32 [ %.291.lcssa.i, %bb.ac ], [ %.291.lcssa.i, %bb.u ], [ %.291.lcssa.i, %bb.v ], [ %.291.lcssa.i, %bb.aj ], [ %.291.lcssa.i, %bb.w ], [ %.291.lcssa.i, %bb.ae ], [ %.291.lcssa.i, %bb.x ], [ %.291.lcssa.i, %bb.ai ], [ %.291.lcssa.i, %bb.y ], [ %.291.lcssa.i, %bb.ad ], [ %.291.lcssa.i, %bb.z ], [ %.291.lcssa.i, %bb.ah ], [ %.291.lcssa.i, %bb.aa ], [ %.291.lcssa.i, %bb.af ], [ %.291.lcssa.i, %bb.ab ], [ %.291.lcssa.i, %bb.ag ], [ %i.hf, %.thread ], [ %.291.lcssa.i, %6 ] ; 2 uses
+  %7 = phi i1 [ true, %bb.ac ], [ true, %bb.u ], [ true, %bb.v ], [ true, %bb.aj ], [ true, %bb.w ], [ true, %bb.ae ], [ true, %bb.x ], [ true, %bb.ai ], [ true, %bb.y ], [ true, %bb.ad ], [ true, %bb.z ], [ true, %bb.ah ], [ true, %bb.aa ], [ true, %bb.af ], [ true, %bb.ab ], [ true, %bb.ag ], [ false, %.thread ], [ false, %6 ]
+  %.088.lcssa.i = phi i32 [ 9, %bb.ac ], [ 17, %bb.u ], [ 16, %bb.v ], [ 2, %bb.aj ], [ 15, %bb.w ], [ 7, %bb.ae ], [ 14, %bb.x ], [ 3, %bb.ai ], [ 13, %bb.y ], [ 8, %bb.ad ], [ 12, %bb.z ], [ 4, %bb.ah ], [ 11, %bb.aa ], [ 6, %bb.af ], [ 10, %bb.ab ], [ 5, %bb.ag ], [ 1, %.thread ], [ 1, %6 ] ; 3 uses
   %i.hw = add i32 %.4152.i, 1
   %i.hx = sub i32 %i.hw, %.088.lcssa.i
   %i.hy = call fastcc ptr @tg3json__format_decimal_digits(ptr noundef %i.b, ptr noundef %i.a, i32 noundef %.088.lcssa.i, i32 noundef %i.hx, i32 noundef %i.be) ; 2 uses
@@ -513,7 +514,7 @@ bb.aj:                                            ; preds = %bb.ai
   %i.hz = ptrtoint ptr %i.hy to i64
   %i.ia = ptrtoint ptr %i.b to i64
   %i.ib = sub i64 %i.hz, %i.ia                    ; 2 uses
-  br i1 %6, label %.lr.ph133.i, label %.loopexit.i
+  br i1 %7, label %.lr.ph133.i, label %.loopexit.i
 
 .lr.ph133.i:                                      ; preds = %.critedge.i
   %i.ic = ptrtoint ptr %i.c to i64
@@ -916,11 +917,13 @@ bb.am:                                            ; preds = %bb.al, %bb.ak
   store double %i.cp, ptr %2, align 8, !tbaa !76
   %i.cq = tail call double @llvm.fabs.f64(double %i.cp)
   %i.cr = fcmp une double %i.cq, +inf
-  %spec.select192 = zext i1 %i.cr to i32
+  br i1 %i.cr, label %3, label %bb.an
+
+3:                                                ; preds = %bb.am
   br label %bb.an
 
-bb.an:                                            ; preds = %bb.am, %bb.af, %bb.ac, %bb.z, %bb.aa, %bb.n, %bb.o, %bb.f, %bb.c, %bb.ah, %bb.ae
-  %.0113 = phi i32 [ 0, %bb.c ], [ 0, %bb.f ], [ 0, %bb.n ], [ 0, %bb.z ], [ 1, %bb.ae ], [ 0, %bb.ac ], [ 1, %bb.ah ], [ 0, %bb.af ], [ %spec.select192, %bb.am ], [ 0, %bb.o ], [ 0, %bb.aa ]
+bb.an:                                            ; preds = %bb.am, %bb.af, %bb.ac, %bb.z, %bb.aa, %bb.n, %bb.o, %bb.f, %bb.c, %3, %bb.ah, %bb.ae
+  %.0113 = phi i32 [ 0, %bb.c ], [ 0, %bb.f ], [ 0, %bb.n ], [ 0, %bb.z ], [ 1, %bb.ae ], [ 0, %bb.ac ], [ 1, %bb.ah ], [ 0, %bb.af ], [ 1, %3 ], [ 0, %bb.o ], [ 0, %bb.aa ], [ 0, %bb.am ]
   ret i32 %.0113
 }
 

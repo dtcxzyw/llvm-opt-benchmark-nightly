@@ -204,10 +204,13 @@ bb.ak:                                            ; preds = %bb.ai
     #dbg_value(i64 1, !6306, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !6706)
   %i.co = call noundef zeroext i1 %i.l(ptr noundef nonnull %i.h, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @30, i64 noundef 1) #19, !dbg !6707
     #dbg_value(i1 %i.co, !6363, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !6708)
-  br label %.loopexit, !dbg !6711
+  br i1 %i.co, label %.loopexit, label %2, !dbg !6711
 
-.loopexit:                                        ; preds = %_RNvMNtNtCsj6eKBz9Db1c_4core4char7methodsc16escape_debug_ext.exit, %bb.ag, %bb.l, %._crit_edge, %bb.ah, %bb.a
-  %.sroa.0.1 = phi i1 [ %i.co, %._crit_edge ], [ true, %bb.a ], [ true, %bb.ah ], [ true, %bb.l ], [ true, %bb.ag ], [ true, %_RNvMNtNtCsj6eKBz9Db1c_4core4char7methodsc16escape_debug_ext.exit ], !dbg !6291
+2:                                                ; preds = %._crit_edge
+  br label %.loopexit, !dbg !6712
+
+.loopexit:                                        ; preds = %_RNvMNtNtCsj6eKBz9Db1c_4core4char7methodsc16escape_debug_ext.exit, %bb.ag, %bb.l, %._crit_edge, %bb.ah, %bb.a, %2
+  %.sroa.0.1 = phi i1 [ false, %2 ], [ true, %bb.a ], [ true, %bb.ah ], [ true, %._crit_edge ], [ true, %bb.l ], [ true, %bb.ag ], [ true, %_RNvMNtNtCsj6eKBz9Db1c_4core4char7methodsc16escape_debug_ext.exit ], !dbg !6291
   ret i1 %.sroa.0.1, !dbg !6712
 }
 

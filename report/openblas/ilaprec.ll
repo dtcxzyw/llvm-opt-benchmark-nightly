@@ -34,11 +34,13 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.d
   %i.e = tail call i32 @lsame_(ptr noundef %0, ptr noundef nonnull @.str.4) #2
   %.not8 = icmp eq i32 %i.e, 0
-  %spec.select = select i1 %.not8, i32 -1, i32 214
+  br i1 %.not8, label %1, label %bb.f
+
+1:                                                ; preds = %bb.e
   br label %bb.f
 
-bb.f:                                             ; preds = %bb.e, %bb.d, %bb.c, %bb.b, %bb.a
-  %.0 = phi i32 [ 214, %bb.d ], [ 211, %bb.a ], [ 212, %bb.b ], [ 213, %bb.c ], [ %spec.select, %bb.e ]
+bb.f:                                             ; preds = %bb.d, %bb.e, %bb.c, %bb.b, %bb.a, %1
+  %.0 = phi i32 [ -1, %1 ], [ 211, %bb.a ], [ 212, %bb.b ], [ 213, %bb.c ], [ 214, %bb.e ], [ 214, %bb.d ]
   ret i32 %.0
 }
 

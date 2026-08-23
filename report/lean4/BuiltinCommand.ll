@@ -204,7 +204,9 @@ lean_nat_le.exit:                                 ; preds = %lean_dec.exit531
 
 lean_nat_le.exit.thread:                          ; preds = %lean_dec.exit531
   %.not = icmp ugt ptr %i.ag, %i.bf
-  %spec.select = select i1 %.not, ptr %i.bf, ptr %i.ag
+  br i1 %.not, label %.thread, label %lean_dec.exit529
+
+.thread:                                          ; preds = %lean_nat_le.exit.thread
   br label %lean_dec.exit529
 
 bb.z:                                             ; preds = %lean_nat_le.exit
@@ -607,8 +609,8 @@ lean_inc_ref.exit707:                             ; preds = %bb.gt, %bb.gu, %bb.
   %i.mh = tail call ptr @l_Lean_Parser_ParserFn_run(ptr noundef nonnull @l_Lean_reportVersoParseFailure___at___00Lean_Elab_Command_elabModuleDoc_spec__2___closed__4_value, ptr noundef nonnull %i.nf, ptr noundef nonnull %i.nz, ptr noundef nonnull %i.pa, ptr noundef %i.md) #8
   br label %lean_dec_ref.exit572
 
-lean_dec.exit529:                                 ; preds = %lean_nat_le.exit.thread, %bb.aa, %bb.ab, %bb.ac, %lean_nat_le.exit
-  %.0411 = phi ptr [ %spec.select, %lean_nat_le.exit.thread ], [ %i.ag, %lean_nat_le.exit ], [ %i.bf, %bb.ac ], [ %i.bf, %bb.ab ], [ %i.bf, %bb.aa ] ; 6 uses
+lean_dec.exit529:                                 ; preds = %.thread, %bb.aa, %bb.ab, %bb.ac, %lean_nat_le.exit.thread, %lean_nat_le.exit
+  %.0411 = phi ptr [ %i.ag, %lean_nat_le.exit.thread ], [ %i.ag, %lean_nat_le.exit ], [ %i.bf, %bb.ac ], [ %i.bf, %bb.ab ], [ %i.bf, %bb.aa ], [ %i.bf, %.thread ] ; 6 uses
   %i.mi = tail call ptr @lean_st_ref_get(ptr noundef %6) #8 ; 4 uses
   %i.mj = getelementptr inbounds nuw i8, ptr %i.mi, i64 8
   %i.mk = load ptr, ptr %i.mj, align 8, !tbaa !11 ; 5 uses

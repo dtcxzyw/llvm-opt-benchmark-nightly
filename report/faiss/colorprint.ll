@@ -204,10 +204,13 @@ bb.a:
 .lr.ph.14:                                        ; preds = %.lr.ph.13
   %i.af = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %i.a, ptr noundef nonnull dereferenceable(8) @.str.17) #15
   %i.ag = icmp eq i32 %i.af, 0
+  br i1 %i.ag, label %.split21.us, label %.lr.ph.15
+
+.lr.ph.15:                                        ; preds = %.lr.ph.14
   br label %.split21.us
 
-.split21.us:                                      ; preds = %.lr.ph.14, %.lr.ph.preheader, %.lr.ph.1, %.lr.ph.2, %.lr.ph.3, %.lr.ph.4, %.lr.ph.5, %.lr.ph.6, %.lr.ph.7, %.lr.ph.8, %.lr.ph.9, %.lr.ph.10, %.lr.ph.11, %.lr.ph.12, %.lr.ph.13, %bb.a, %.split
-  %.us-phi = phi i1 [ false, %bb.a ], [ true, %.split ], [ true, %.lr.ph.preheader ], [ true, %.lr.ph.11 ], [ true, %.lr.ph.7 ], [ true, %.lr.ph.1 ], [ %i.ag, %.lr.ph.14 ], [ true, %.lr.ph.2 ], [ true, %.lr.ph.8 ], [ true, %.lr.ph.3 ], [ true, %.lr.ph.13 ], [ true, %.lr.ph.4 ], [ true, %.lr.ph.10 ], [ true, %.lr.ph.5 ], [ true, %.lr.ph.12 ], [ true, %.lr.ph.6 ], [ true, %.lr.ph.9 ]
+.split21.us:                                      ; preds = %.lr.ph.preheader, %.lr.ph.1, %.lr.ph.2, %.lr.ph.3, %.lr.ph.4, %.lr.ph.5, %.lr.ph.6, %.lr.ph.7, %.lr.ph.8, %.lr.ph.9, %.lr.ph.10, %.lr.ph.11, %.lr.ph.12, %.lr.ph.13, %.lr.ph.14, %.lr.ph.15, %bb.a, %.split
+  %.us-phi = phi i1 [ false, %bb.a ], [ true, %.split ], [ true, %.lr.ph.preheader ], [ true, %.lr.ph.11 ], [ false, %.lr.ph.15 ], [ true, %.lr.ph.1 ], [ true, %.lr.ph.14 ], [ true, %.lr.ph.2 ], [ true, %.lr.ph.8 ], [ true, %.lr.ph.3 ], [ true, %.lr.ph.13 ], [ true, %.lr.ph.4 ], [ true, %.lr.ph.10 ], [ true, %.lr.ph.5 ], [ true, %.lr.ph.12 ], [ true, %.lr.ph.6 ], [ true, %.lr.ph.9 ], [ true, %.lr.ph.7 ]
   %i.ah = load ptr, ptr @stdout, align 8, !tbaa !22
   %i.ai = tail call i32 @fileno(ptr noundef %i.ah) #12
   %i.aj = tail call i32 @isatty(i32 noundef %i.ai) #12

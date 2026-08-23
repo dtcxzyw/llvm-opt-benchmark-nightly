@@ -202,11 +202,13 @@ _RNvXsw_NtCscgRAwXFJnXP_4core6resultINtB5_6ResultReRNtNtCsh8eZTKRCwoO_3std3env8V
   %i.r = icmp eq i8 %lhsc.i.i13.fr.i, 49, !dbg !3020
   call fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultNtNtCsgZ49sUHp3tW_5alloc6string6StringNtNtCsh8eZTKRCwoO_3std3env8VarErrorEECsgjwxzEoLG5s_12polars_error(ptr noalias noundef align 8 dereferenceable(32) %i.a), !dbg !2999
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !2999
-  %spec.select.i = select i1 %i.r, i8 1, i8 2, !dbg !3000
+  br i1 %i.r, label %0, label %_RNCNvCsgjwxzEoLG5s_12polars_error14ERROR_STRATEGY0B3_.exit, !dbg !3000
+
+0:                                                ; preds = %_RNvXsw_NtCscgRAwXFJnXP_4core6resultINtB5_6ResultReRNtNtCsh8eZTKRCwoO_3std3env8VarErrorENtNtB7_3cmp9PartialEq2eqCsgjwxzEoLG5s_12polars_error.exit14.i
   br label %_RNCNvCsgjwxzEoLG5s_12polars_error14ERROR_STRATEGY0B3_.exit, !dbg !3000
 
-_RNCNvCsgjwxzEoLG5s_12polars_error14ERROR_STRATEGY0B3_.exit: ; preds = %bb.b, %_RNvXsw_NtCscgRAwXFJnXP_4core6resultINtB5_6ResultReRNtNtCsh8eZTKRCwoO_3std3env8VarErrorENtNtB7_3cmp9PartialEq2eqCsgjwxzEoLG5s_12polars_error.exit14.thread.i, %_RNvXsw_NtCscgRAwXFJnXP_4core6resultINtB5_6ResultReRNtNtCsh8eZTKRCwoO_3std3env8VarErrorENtNtB7_3cmp9PartialEq2eqCsgjwxzEoLG5s_12polars_error.exit14.i
-  %.sroa.0.0.i = phi i8 [ 0, %bb.b ], [ 2, %_RNvXsw_NtCscgRAwXFJnXP_4core6resultINtB5_6ResultReRNtNtCsh8eZTKRCwoO_3std3env8VarErrorENtNtB7_3cmp9PartialEq2eqCsgjwxzEoLG5s_12polars_error.exit14.thread.i ], [ %spec.select.i, %_RNvXsw_NtCscgRAwXFJnXP_4core6resultINtB5_6ResultReRNtNtCsh8eZTKRCwoO_3std3env8VarErrorENtNtB7_3cmp9PartialEq2eqCsgjwxzEoLG5s_12polars_error.exit14.i ], !dbg !3028
+_RNCNvCsgjwxzEoLG5s_12polars_error14ERROR_STRATEGY0B3_.exit: ; preds = %bb.b, %_RNvXsw_NtCscgRAwXFJnXP_4core6resultINtB5_6ResultReRNtNtCsh8eZTKRCwoO_3std3env8VarErrorENtNtB7_3cmp9PartialEq2eqCsgjwxzEoLG5s_12polars_error.exit14.thread.i, %_RNvXsw_NtCscgRAwXFJnXP_4core6resultINtB5_6ResultReRNtNtCsh8eZTKRCwoO_3std3env8VarErrorENtNtB7_3cmp9PartialEq2eqCsgjwxzEoLG5s_12polars_error.exit14.i, %0
+  %.sroa.0.0.i = phi i8 [ 0, %bb.b ], [ 1, %0 ], [ 2, %_RNvXsw_NtCscgRAwXFJnXP_4core6resultINtB5_6ResultReRNtNtCsh8eZTKRCwoO_3std3env8VarErrorENtNtB7_3cmp9PartialEq2eqCsgjwxzEoLG5s_12polars_error.exit14.i ], [ 2, %_RNvXsw_NtCscgRAwXFJnXP_4core6resultINtB5_6ResultReRNtNtCsh8eZTKRCwoO_3std3env8VarErrorENtNtB7_3cmp9PartialEq2eqCsgjwxzEoLG5s_12polars_error.exit14.thread.i ], !dbg !3028
   ret i8 %.sroa.0.0.i, !dbg !3029
 }
 

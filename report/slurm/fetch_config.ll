@@ -202,10 +202,13 @@ bb.b:                                             ; preds = %bb.a
   %i.e = tail call ptr @__errno_location() #16
   %i.f = load i32, ptr %i.e, align 4
   %.not18 = icmp eq i32 %i.f, 22
+  br i1 %.not18, label %bb.c, label %3
+
+3:                                                ; preds = %bb.b
   br label %bb.c
 
-bb.c:                                             ; preds = %bb.b, %bb.a
-  %.0 = phi i1 [ true, %bb.a ], [ %.not18, %bb.b ] ; 2 uses
+bb.c:                                             ; preds = %3, %bb.b, %bb.a
+  %.0 = phi i1 [ true, %bb.a ], [ false, %3 ], [ true, %bb.b ] ; 2 uses
   %i.g = call ptr @slurm_xcalloc(i64 noundef 1, i64 noundef 40, i1 noundef zeroext true, i1 noundef zeroext false, ptr noundef nonnull @.str.2, i32 noundef 567, ptr noundef nonnull @__func__._load_conf2list) #13 ; 5 uses
   %i.h = zext i1 %.0 to i8
   store i8 %i.h, ptr %i.g, align 8

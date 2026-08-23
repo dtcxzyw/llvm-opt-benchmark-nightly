@@ -204,11 +204,12 @@ bb.g:                                             ; preds = %bb.f
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.f, %bb.g
+  %.1.ph = phi i32 [ 0, %bb.g ], [ %i.s, %bb.f ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #19
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.a, %bb.b
-  %.1 = phi i32 [ %i.j, %bb.b ], [ %1, %bb.a ], [ %i.s, %bb.h ]
+  %.1 = phi i32 [ %i.j, %bb.b ], [ %1, %bb.a ], [ %.1.ph, %bb.h ]
   ret i32 %.1
 }
 

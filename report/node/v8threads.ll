@@ -202,7 +202,7 @@ select.unfold:                                    ; preds = %.lr.ph, %select.unf
   %i.y = icmp eq ptr %i.t, %i.x
   %.not19 = icmp eq ptr %i.t, null
   %.not = or i1 %i.y, %.not19
-  br i1 %.not, label %select.unfold._crit_edge, label %select.unfold
+  br i1 %.not, label %select.unfold._crit_edge, label %select.unfold, !llvm.loop !10
 }
 
 declare noundef ptr @_ZN2v88internal22HandleScopeImplementer7IterateEPNS0_11RootVisitorEPc(ptr noundef, ptr noundef) local_unnamed_addr #2
@@ -254,7 +254,7 @@ select.unfold:                                    ; preds = %.lr.ph, %select.unf
   %i.w = icmp eq ptr %i.r, %i.v
   %.not12 = icmp eq ptr %i.r, null
   %.not = or i1 %i.w, %.not12
-  br i1 %.not, label %select.unfold._crit_edge, label %select.unfold
+  br i1 %.not, label %select.unfold._crit_edge, label %select.unfold, !llvm.loop !11
 }
 
 declare noundef i32 @_ZN2v88internal22HandleScopeImplementer21ArchiveSpacePerThreadEv() local_unnamed_addr #2
@@ -320,4 +320,6 @@ attributes #15 = { noreturn nounwind }
 !7 = !{!"branch_weights", !"expected", i32 1, i32 2000}
 !8 = distinct !{!8, !9}
 !9 = !{!"llvm.loop.mustprogress"}
+!10 = distinct !{!10, !9}
+!11 = distinct !{!11, !9}
 end_hunk_0

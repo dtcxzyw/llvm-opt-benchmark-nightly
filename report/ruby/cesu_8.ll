@@ -202,11 +202,13 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d
   %switch = icmp ugt i32 %0, -3
-  %spec.select = select i1 %switch, i32 1, i32 -401
+  br i1 %switch, label %bb.f, label %2
+
+2:                                                ; preds = %bb.e
   br label %bb.f
 
-bb.f:                                             ; preds = %bb.e, %bb.d, %bb.c, %bb.b, %bb.a
-  %.0 = phi i32 [ %spec.select, %bb.e ], [ 1, %bb.a ], [ 2, %bb.b ], [ 3, %bb.c ], [ 6, %bb.d ]
+bb.f:                                             ; preds = %bb.e, %bb.d, %bb.c, %bb.b, %bb.a, %2
+  %.0 = phi i32 [ -401, %2 ], [ 1, %bb.a ], [ 2, %bb.b ], [ 3, %bb.c ], [ 6, %bb.d ], [ 1, %bb.e ]
   ret i32 %.0
 }
 

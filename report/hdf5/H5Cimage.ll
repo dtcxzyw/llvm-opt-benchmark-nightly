@@ -205,11 +205,13 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d
   %i.r = icmp sgt i32 %i.n, %i.p
-  %spec.select = zext i1 %i.r to i32
+  br i1 %i.r, label %2, label %bb.f
+
+2:                                                ; preds = %bb.e
   br label %bb.f
 
-bb.f:                                             ; preds = %bb.e, %bb.d, %bb.c, %bb.b, %bb.a
-  %.0 = phi i32 [ 0, %bb.a ], [ -1, %bb.b ], [ 1, %bb.c ], [ -1, %bb.d ], [ %spec.select, %bb.e ]
+bb.f:                                             ; preds = %bb.d, %bb.c, %bb.b, %2, %bb.e, %bb.a
+  %.0 = phi i32 [ 0, %bb.a ], [ -1, %bb.b ], [ 1, %bb.c ], [ 1, %2 ], [ 0, %bb.e ], [ -1, %bb.d ]
   ret i32 %.0
 }
 

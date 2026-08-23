@@ -204,10 +204,13 @@ bb.r:                                             ; preds = %bb.q
   %.val99 = load ptr, ptr %i.af, align 8
   %i.ff = call fastcc noundef zeroext i1 @_ZN4core3fmt9Formatter9write_fmt17ha6161c9cef1c865fE(ptr %.val98, ptr %.val99, ptr noalias noundef align 8 captures(address) dereferenceable(48) %i.d)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
+  br i1 %i.ff, label %bb.s, label %2
+
+2:                                                ; preds = %bb.r
   br label %bb.s
 
-bb.s:                                             ; preds = %bb.q, %bb.p, %.loopexit212, %.split190, %.split, %bb.r, %bb.l, %.loopexit213, %.loopexit215, %.loopexit214
-  %.sroa.0.0 = phi i1 [ %i.ff, %bb.r ], [ true, %.loopexit215 ], [ true, %.split190 ], [ true, %.loopexit214 ], [ true, %.split ], [ true, %.loopexit213 ], [ true, %bb.l ], [ true, %.loopexit212 ], [ true, %bb.p ], [ true, %bb.q ]
+bb.s:                                             ; preds = %bb.q, %bb.p, %.loopexit212, %.split190, %.split, %bb.r, %bb.l, %.loopexit213, %.loopexit215, %.loopexit214, %2
+  %.sroa.0.0 = phi i1 [ false, %2 ], [ true, %.loopexit215 ], [ true, %.split190 ], [ true, %.loopexit214 ], [ true, %.split ], [ true, %.loopexit213 ], [ true, %bb.r ], [ true, %.loopexit212 ], [ true, %bb.p ], [ true, %bb.l ], [ true, %bb.q ]
   ret i1 %.sroa.0.0
 
 bb.t:                                             ; preds = %bb.o

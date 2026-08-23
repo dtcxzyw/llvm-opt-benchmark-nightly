@@ -110,7 +110,9 @@ bb.e:                                             ; preds = %.lr.ph
 .preheader.split._crit_edge:                      ; preds = %.preheader.split, %.preheader.split.preheader
   %.val80 = load i8, ptr %0, align 1
   %i.ab = icmp eq i8 %.val80, 47
-  %spec.select = select i1 %i.ab, ptr @2, ptr @3
+  br i1 %i.ab, label %_RINvXs2J_NtNtCs6JMX4GRUq9U_4core5slice4iterINtB7_4IterhENtNtNtNtBb_4iter6traits8iterator8Iterator3allNCNvCsjoDrDr40csK_10uu_dirname27dirname_string_manipulation0EB1F_.exit.thread, label %2
+
+2:                                                ; preds = %.preheader.split._crit_edge
   br label %_RINvXs2J_NtNtCs6JMX4GRUq9U_4core5slice4iterINtB7_4IterhENtNtNtNtBb_4iter6traits8iterator8Iterator3allNCNvCsjoDrDr40csK_10uu_dirname27dirname_string_manipulation0EB1F_.exit.thread
 
 bb.f:                                             ; preds = %.lr.ph145
@@ -137,7 +139,9 @@ bb.g:                                             ; preds = %bb.f
 
 ._crit_edge:                                      ; preds = %.preheader91
   %i.ah = icmp eq i64 %i.r, 0
-  %spec.select128 = select i1 %i.ah, ptr @2, ptr %0
+  br i1 %i.ah, label %3, label %_RINvXs2J_NtNtCs6JMX4GRUq9U_4core5slice4iterINtB7_4IterhENtNtNtNtBb_4iter6traits8iterator8Iterator3allNCNvCsjoDrDr40csK_10uu_dirname27dirname_string_manipulation0EB1F_.exit.thread
+
+3:                                                ; preds = %._crit_edge
   br label %_RINvXs2J_NtNtCs6JMX4GRUq9U_4core5slice4iterINtB7_4IterhENtNtNtNtBb_4iter6traits8iterator8Iterator3allNCNvCsjoDrDr40csK_10uu_dirname27dirname_string_manipulation0EB1F_.exit.thread
 
 bb.h:                                             ; preds = %.lr.ph101
@@ -145,9 +149,9 @@ bb.h:                                             ; preds = %.lr.ph101
   %i.aj = icmp ugt i64 %i.ai, 1
   br i1 %i.aj, label %.lr.ph101, label %_RINvXs2J_NtNtCs6JMX4GRUq9U_4core5slice4iterINtB7_4IterhENtNtNtNtBb_4iter6traits8iterator8Iterator3allNCNvCsjoDrDr40csK_10uu_dirname27dirname_string_manipulation0EB1F_.exit.thread
 
-_RINvXs2J_NtNtCs6JMX4GRUq9U_4core5slice4iterINtB7_4IterhENtNtNtNtBb_4iter6traits8iterator8Iterator3allNCNvCsjoDrDr40csK_10uu_dirname27dirname_string_manipulation0EB1F_.exit.thread: ; preds = %bb.b, %.lr.ph142, %bb.d, %.lr.ph101, %bb.h, %.loopexit, %._crit_edge, %.preheader.split._crit_edge, %bb.a
-  %.sroa.16.2 = phi i64 [ %.sroa.051.0141, %.lr.ph142 ], [ 1, %bb.a ], [ 1, %bb.h ], [ 1, %.loopexit ], [ 1, %.preheader.split._crit_edge ], [ 1, %._crit_edge ], [ 1, %bb.d ], [ %.sroa.16.0100, %.lr.ph101 ], [ 1, %bb.b ]
-  %.sroa.0.2 = phi ptr [ %0, %.lr.ph142 ], [ @3, %bb.a ], [ %0, %.lr.ph101 ], [ @3, %.loopexit ], [ %spec.select, %.preheader.split._crit_edge ], [ %spec.select128, %._crit_edge ], [ @3, %bb.d ], [ %0, %bb.h ], [ @2, %bb.b ]
+_RINvXs2J_NtNtCs6JMX4GRUq9U_4core5slice4iterINtB7_4IterhENtNtNtNtBb_4iter6traits8iterator8Iterator3allNCNvCsjoDrDr40csK_10uu_dirname27dirname_string_manipulation0EB1F_.exit.thread: ; preds = %bb.b, %.lr.ph142, %bb.d, %.lr.ph101, %bb.h, %.loopexit, %3, %._crit_edge, %bb.a, %2, %.preheader.split._crit_edge
+  %.sroa.16.2 = phi i64 [ %.sroa.051.0141, %.lr.ph142 ], [ 1, %bb.a ], [ 1, %.preheader.split._crit_edge ], [ 1, %2 ], [ 1, %bb.h ], [ 1, %.loopexit ], [ 1, %3 ], [ 1, %._crit_edge ], [ 1, %bb.d ], [ %.sroa.16.0100, %.lr.ph101 ], [ 1, %bb.b ]
+  %.sroa.0.2 = phi ptr [ %0, %.lr.ph142 ], [ @3, %bb.a ], [ @2, %.preheader.split._crit_edge ], [ @3, %2 ], [ %0, %.lr.ph101 ], [ @3, %.loopexit ], [ @2, %3 ], [ %0, %._crit_edge ], [ @3, %bb.d ], [ %0, %bb.h ], [ @2, %bb.b ]
   %i.ak = insertvalue { ptr, i64 } poison, ptr %.sroa.0.2, 0
   %i.al = insertvalue { ptr, i64 } %i.ak, i64 %.sroa.16.2, 1
   ret { ptr, i64 } %i.al

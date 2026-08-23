@@ -204,6 +204,9 @@ bb.e:                                             ; preds = %Py_DECREF.exit
   %i.h = load ptr, ptr @PyExc_RuntimeWarning, align 8, !tbaa !19
   %i.i = tail call i32 @PyErr_ExceptionMatches(ptr noundef %i.h) #7
   %.not15 = icmp eq i32 %i.i, 0
+  br i1 %.not15, label %.split, label %.split12.thread
+
+.split12.thread:                                  ; preds = %bb.e
   br label %.split
 
 .split12:                                         ; preds = %Py_DECREF.exit
@@ -221,8 +224,8 @@ bb.g:                                             ; preds = %bb.f
   tail call void @_Py_Dealloc(ptr noundef nonnull %i.d) #7
   br label %.split
 
-.split:                                           ; preds = %bb.e, %bb.g, %bb.f, %.split12, %bb.a
-  %.1 = phi i1 [ true, %bb.a ], [ %.not15, %bb.e ], [ false, %bb.g ], [ false, %.split12 ], [ false, %bb.f ]
+.split:                                           ; preds = %bb.g, %bb.f, %.split12, %.split12.thread, %bb.e, %bb.a
+  %.1 = phi i1 [ true, %bb.a ], [ true, %bb.e ], [ false, %.split12.thread ], [ false, %.split12 ], [ false, %bb.f ], [ false, %bb.g ]
   %i.m = tail call ptr @PyErr_Occurred() #7
   %.not16 = icmp eq ptr %i.m, null
   br i1 %.not16, label %bb.i, label %bb.h

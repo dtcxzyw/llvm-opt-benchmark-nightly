@@ -204,8 +204,8 @@ bb.b:                                             ; preds = %bb.a
   %i.d = icmp ult i64 %1, 6
   br i1 %i.d, label %bb.c, label %bb.d
 
-_RNvNtNtCshzWfHUSfYae_4core3str7pattern13simd_contains.exit.thread: ; preds = %_RNCINvNvNtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator3any5checkRShNCNvNtNtBe_3str7pattern13simd_containss_0E0CslkzCjlEuW1f_5xtask.exit.backedge.us.i.i, %.split.us.i.i, %bb.j, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %.lr.ph.split.us.i.i, %bb.d, %bb.a, %bb.o, %_RNvNtNtCshzWfHUSfYae_4core3str7pattern13simd_contains.exit
-  %.sroa.0.0 = phi i1 [ false, %bb.d ], [ true, %bb.g ], [ true, %bb.a ], [ %i.ao, %_RNvNtNtCshzWfHUSfYae_4core3str7pattern13simd_contains.exit ], [ %i.bc, %bb.o ], [ true, %bb.i ], [ true, %.lr.ph.split.us.i.i ], [ true, %bb.e ], [ true, %bb.h ], [ true, %bb.f ], [ %i.x, %bb.j ], [ %.not27.i.i.not.not, %.split.us.i.i ], [ %.not27.i.i.not.not, %_RNCINvNvNtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator3any5checkRShNCNvNtNtBe_3str7pattern13simd_containss_0E0CslkzCjlEuW1f_5xtask.exit.backedge.us.i.i ]
+_RNvNtNtCshzWfHUSfYae_4core3str7pattern13simd_contains.exit.thread: ; preds = %_RNCINvNvNtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator3any5checkRShNCNvNtNtBe_3str7pattern13simd_containss_0E0CslkzCjlEuW1f_5xtask.exit.backedge.us.i.i, %.split.us.i.i, %3, %bb.j, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %.lr.ph.split.us.i.i, %bb.d, %bb.a, %bb.o, %_RNvNtNtCshzWfHUSfYae_4core3str7pattern13simd_contains.exit
+  %.sroa.0.0 = phi i1 [ false, %bb.d ], [ true, %bb.i ], [ true, %bb.a ], [ %i.ao, %_RNvNtNtCshzWfHUSfYae_4core3str7pattern13simd_contains.exit ], [ %i.bc, %bb.o ], [ true, %bb.h ], [ true, %.lr.ph.split.us.i.i ], [ true, %bb.e ], [ false, %3 ], [ true, %bb.f ], [ true, %bb.j ], [ true, %bb.g ], [ %.not27.i.i.not.not, %.split.us.i.i ], [ %.not27.i.i.not.not, %_RNCINvNvNtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator3any5checkRShNCNvNtNtBe_3str7pattern13simd_containss_0E0CslkzCjlEuW1f_5xtask.exit.backedge.us.i.i ]
   ret i1 %.sroa.0.0
 
 bb.c:                                             ; preds = %bb.b
@@ -250,6 +250,9 @@ bb.j:                                             ; preds = %bb.i
   %i.v = getelementptr inbounds nuw i8, ptr %2, i64 5
   %i.w = load i8, ptr %i.v, align 1, !alias.scope !621, !noundef !5
   %i.x = icmp eq i8 %i.w, %i.g
+  br i1 %i.x, label %_RNvNtNtCshzWfHUSfYae_4core3str7pattern13simd_contains.exit.thread, label %3
+
+3:                                                ; preds = %bb.j
   br label %_RNvNtNtCshzWfHUSfYae_4core3str7pattern13simd_contains.exit.thread
 
 bb.k:                                             ; preds = %bb.c

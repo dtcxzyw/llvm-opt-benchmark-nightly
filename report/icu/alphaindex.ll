@@ -204,16 +204,15 @@ _ZN6icu_7812_GLOBAL__N_125hasMultiplePrimaryWeightsERKNS_17RuleBasedCollatorEjRK
 
 bb.ci:                                            ; preds = %bb.ch
   %i.jl = load i32, ptr %1, align 4, !tbaa !43
-  %.fr = freeze i32 %i.jl
-  %i.jm = icmp slt i32 %.fr, 1
+  %i.jm = icmp slt i32 %i.jl, 1
   br i1 %i.jm, label %.thread428, label %_ZN6icu_7812LocalPointerINS_7UVectorEED2Ev.exit
 
 .critedge:                                        ; preds = %bb.bp, %.preheader.i, %.noexc320, %_ZNK6icu_7813UnicodeString10startsWithENS_14ConstChar16PtrEi.exit318
   call void asm sideeffect "", "rm,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr nonnull @_ZN6icu_7812_GLOBAL__N_14BASEE) #16, !srcloc !64
   br label %.thread428
 
-.thread428:                                       ; preds = %_ZN6icu_7812_GLOBAL__N_19getBucketERKNS_7UVectorEi.exit, %bb.ci, %_ZNK6icu_7813UnicodeString6charAtEi.exit323.thread, %.critedge, %_ZNK6icu_7813UnicodeString6charAtEi.exit323
-  %.4201.ph = phi i8 [ 1, %bb.ci ], [ %.0197555, %_ZNK6icu_7813UnicodeString6charAtEi.exit323.thread ], [ %.0197555, %_ZNK6icu_7813UnicodeString6charAtEi.exit323 ], [ %.0197555, %.critedge ], [ %.0197555, %_ZN6icu_7812_GLOBAL__N_19getBucketERKNS_7UVectorEi.exit ] ; 2 uses
+.thread428:                                       ; preds = %_ZN6icu_7812_GLOBAL__N_19getBucketERKNS_7UVectorEi.exit, %bb.ci, %.critedge, %_ZNK6icu_7813UnicodeString6charAtEi.exit323, %_ZNK6icu_7813UnicodeString6charAtEi.exit323.thread
+  %.4201.ph = phi i8 [ 1, %bb.ci ], [ %.0197555, %.critedge ], [ %.0197555, %_ZNK6icu_7813UnicodeString6charAtEi.exit323.thread ], [ %.0197555, %_ZNK6icu_7813UnicodeString6charAtEi.exit323 ], [ %.0197555, %_ZN6icu_7812_GLOBAL__N_19getBucketERKNS_7UVectorEi.exit ] ; 2 uses
   %i.jn = add nuw nsw i32 %.0216553, 1            ; 2 uses
   %i.jo = load i32, ptr %i.ar, align 8, !tbaa !21
   %.not265 = icmp slt i32 %i.jn, %i.jo

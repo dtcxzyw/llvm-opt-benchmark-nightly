@@ -206,7 +206,7 @@ select.unfold:                                    ; preds = %bb.l, %bb.m, %bb.n
   %.254 = phi i8 [ 0, %bb.m ], [ 1, %bb.n ], [ 0, %bb.l ] ; 2 uses
   %.1 = phi i1 [ true, %bb.m ], [ true, %bb.n ], [ %.051108, %bb.l ] ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.j, i64 1
-  br i1 %.not80, label %.critedge2, label %select.unfold.preheader
+  br i1 %.not80, label %.critedge2, label %select.unfold.preheader, !llvm.loop !25
 
 bb.o:                                             ; preds = %.thread, %bb.g
   %.not7489 = phi i1 [ false, %.thread ], [ true, %bb.g ]
@@ -376,7 +376,7 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.d, %bb.c
   call void @SDL_free_REAL(ptr noundef nonnull %.011) #11
   %.not9 = icmp eq ptr %i.i, null
-  br i1 %.not9, label %.loopexit, label %bb.c, !llvm.loop !25
+  br i1 %.not9, label %.loopexit, label %bb.c, !llvm.loop !26
 
 .loopexit:                                        ; preds = %bb.e, %bb.b, %bb.a
   ret void
@@ -451,4 +451,5 @@ attributes #13 = { nounwind allocsize(0,1) }
 !23 = distinct !{!23, !4}
 !24 = distinct !{!24, !4}
 !25 = distinct !{!25, !4}
+!26 = distinct !{!26, !4}
 end_hunk_0

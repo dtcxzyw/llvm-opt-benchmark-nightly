@@ -202,14 +202,16 @@ bb.g:                                             ; preds = %.lr.ph
   br i1 %i.q, label %bb.i, label %"_ZN4core3num21_$LT$impl$u20$u32$GT$16from_ascii_radix17h5efa05185f941c9eE.exit"
 
 bb.h:                                             ; preds = %.lr.ph
-  %spec.select.i = select i1 %i.q, i64 513, i64 257
-  br label %"_ZN4core3num21_$LT$impl$u20$u32$GT$16from_ascii_radix17h5efa05185f941c9eE.exit"
+  br i1 %i.q, label %2, label %"_ZN4core3num21_$LT$impl$u20$u32$GT$16from_ascii_radix17h5efa05185f941c9eE.exit"
 
 bb.i:                                             ; preds = %bb.g
   %i.r = extractvalue { i32, i32 } %i.o, 1
   %i.s = add i32 %i.r, %i.k                       ; 3 uses
   %.not69.i = icmp ult i32 %i.s, %i.k
   br i1 %.not69.i, label %"_ZN4core3num21_$LT$impl$u20$u32$GT$16from_ascii_radix17h5efa05185f941c9eE.exit", label %bb.e
+
+2:                                                ; preds = %bb.h
+  br label %"_ZN4core3num21_$LT$impl$u20$u32$GT$16from_ascii_radix17h5efa05185f941c9eE.exit"
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %bb.j
   %.sroa.03.183.i = phi ptr [ %i.ab, %bb.j ], [ %.sroa.03.183.i.ph, %.lr.ph.i.preheader ] ; 2 uses
@@ -231,8 +233,8 @@ bb.j:                                             ; preds = %.lr.ph.i
   %.not70.i = icmp eq i64 %i.aa, 0
   br i1 %.not70.i, label %.loopexit.i, label %.lr.ph.i
 
-"_ZN4core3num21_$LT$impl$u20$u32$GT$16from_ascii_radix17h5efa05185f941c9eE.exit": ; preds = %bb.g, %bb.i, %.lr.ph.i, %bb.a, %bb.b, %bb.b, %.loopexit.i, %bb.h
-  %.sroa.8.0.insert.insert.i = phi i64 [ 257, %bb.b ], [ %i.g, %.loopexit.i ], [ %spec.select.i, %bb.h ], [ 257, %bb.b ], [ 257, %.lr.ph.i ], [ 1, %bb.a ], [ 257, %bb.g ], [ 513, %bb.i ]
+"_ZN4core3num21_$LT$impl$u20$u32$GT$16from_ascii_radix17h5efa05185f941c9eE.exit": ; preds = %bb.g, %bb.i, %.lr.ph.i, %bb.a, %bb.b, %bb.b, %.loopexit.i, %bb.h, %2
+  %.sroa.8.0.insert.insert.i = phi i64 [ 257, %bb.h ], [ %i.g, %.loopexit.i ], [ 513, %2 ], [ 257, %bb.b ], [ 257, %.lr.ph.i ], [ 1, %bb.a ], [ 257, %bb.b ], [ 257, %bb.g ], [ 513, %bb.i ]
   ret i64 %.sroa.8.0.insert.insert.i
 }
 

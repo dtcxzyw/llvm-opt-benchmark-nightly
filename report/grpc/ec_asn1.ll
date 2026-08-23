@@ -204,8 +204,7 @@ _ZL14integers_equalPK6cbs_stPK9bignum_st.exit108: ; preds = %.critedge.thread.i1
   %i.fs = call i32 @CBS_mem_equal(ptr noundef nonnull %1, ptr noundef nonnull %i.a, i64 noundef %i.fr) #4
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #4
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #4
-  %.fr = freeze i32 %i.fs
-  %.not60 = icmp eq i32 %.fr, 0
+  %.not60 = icmp eq i32 %i.fs, 0
   %i.ft = icmp eq ptr %.lcssa199, null
   %or.cond246 = or i1 %.not60, %i.ft
   br i1 %or.cond246, label %.thread157.thread, label %.thread161
@@ -383,7 +382,7 @@ _ZL14integers_equalPK6cbs_stPK9bignum_st.exit.thread118.3: ; preds = %.critedge.
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #4
   br label %.thread157.thread
 
-.thread157.thread:                                ; preds = %_ZL14integers_equalPK6cbs_stPK9bignum_st.exit99, %_ZL14integers_equalPK6cbs_stPK9bignum_st.exit72, %_ZL14integers_equalPK6cbs_stPK9bignum_st.exit81, %_ZL14integers_equalPK6cbs_stPK9bignum_st.exit90, %_ZL14integers_equalPK6cbs_stPK9bignum_st.exit.thread.3, %_ZL14integers_equalPK6cbs_stPK9bignum_st.exit.3, %_ZL14integers_equalPK6cbs_stPK9bignum_st.exit.thread118.3, %_ZL14integers_equalPK6cbs_stPK9bignum_st.exit108.thread, %_ZL14integers_equalPK6cbs_stPK9bignum_st.exit108.thread144, %_ZL14integers_equalPK6cbs_stPK9bignum_st.exit99.thread, %_ZL14integers_equalPK6cbs_stPK9bignum_st.exit99.thread138, %_ZL14integers_equalPK6cbs_stPK9bignum_st.exit72.thread, %_ZL14integers_equalPK6cbs_stPK9bignum_st.exit72.thread123, %_ZL14integers_equalPK6cbs_stPK9bignum_st.exit81.thread, %_ZL14integers_equalPK6cbs_stPK9bignum_st.exit81.thread128, %_ZL14integers_equalPK6cbs_stPK9bignum_st.exit90.thread, %_ZL14integers_equalPK6cbs_stPK9bignum_st.exit90.thread133, %_ZL14integers_equalPK6cbs_stPK9bignum_st.exit108
+.thread157.thread:                                ; preds = %_ZL14integers_equalPK6cbs_stPK9bignum_st.exit99, %_ZL14integers_equalPK6cbs_stPK9bignum_st.exit72, %_ZL14integers_equalPK6cbs_stPK9bignum_st.exit108, %_ZL14integers_equalPK6cbs_stPK9bignum_st.exit81, %_ZL14integers_equalPK6cbs_stPK9bignum_st.exit90, %_ZL14integers_equalPK6cbs_stPK9bignum_st.exit.thread.3, %_ZL14integers_equalPK6cbs_stPK9bignum_st.exit.3, %_ZL14integers_equalPK6cbs_stPK9bignum_st.exit.thread118.3, %_ZL14integers_equalPK6cbs_stPK9bignum_st.exit90.thread133, %_ZL14integers_equalPK6cbs_stPK9bignum_st.exit90.thread, %_ZL14integers_equalPK6cbs_stPK9bignum_st.exit81.thread128, %_ZL14integers_equalPK6cbs_stPK9bignum_st.exit81.thread, %_ZL14integers_equalPK6cbs_stPK9bignum_st.exit72.thread123, %_ZL14integers_equalPK6cbs_stPK9bignum_st.exit72.thread, %_ZL14integers_equalPK6cbs_stPK9bignum_st.exit108.thread144, %_ZL14integers_equalPK6cbs_stPK9bignum_st.exit108.thread, %_ZL14integers_equalPK6cbs_stPK9bignum_st.exit99.thread, %_ZL14integers_equalPK6cbs_stPK9bignum_st.exit99.thread138
   call void @ERR_put_error(i32 noundef 15, i32 noundef 0, i32 noundef 123, ptr noundef nonnull @.str, i32 noundef 385) #4
   br label %.thread161
 

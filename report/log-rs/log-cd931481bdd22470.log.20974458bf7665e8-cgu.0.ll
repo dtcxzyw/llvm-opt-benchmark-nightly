@@ -104,8 +104,8 @@ bb.a:
   %.not = icmp eq i64 %1, 5                       ; 3 uses
   br i1 %.not, label %bb.f, label %_RNvMNtNtCsj6eKBz9Db1c_4core5slice5asciiSh27eq_ignore_ascii_case_simple.exit
 
-.loopexit:                                        ; preds = %bb.v, %bb.q, %bb.m, %bb.i, %bb.e, %_RNvMNtNtCsj6eKBz9Db1c_4core5slice5asciiSh27eq_ignore_ascii_case_simple.exit.3, %bb.s, %bb.t, %bb.u, %_RNvMNtNtCsj6eKBz9Db1c_4core5slice5asciiSh27eq_ignore_ascii_case_simple.exit.2
-  %.sroa.0.0 = phi i64 [ %.mux, %bb.m ], [ 0, %_RNvMNtNtCsj6eKBz9Db1c_4core5slice5asciiSh27eq_ignore_ascii_case_simple.exit.2 ], [ 0, %bb.u ], [ 1, %bb.e ], [ 2, %bb.i ], [ 0, %_RNvMNtNtCsj6eKBz9Db1c_4core5slice5asciiSh27eq_ignore_ascii_case_simple.exit.3 ], [ 4, %bb.q ], [ 0, %bb.s ], [ %spec.select, %bb.v ], [ 0, %bb.t ]
+.loopexit:                                        ; preds = %bb.q, %bb.m, %bb.i, %bb.e, %_RNvMNtNtCsj6eKBz9Db1c_4core5slice5asciiSh27eq_ignore_ascii_case_simple.exit.3, %bb.s, %bb.t, %bb.u, %bb.v, %2, %_RNvMNtNtCsj6eKBz9Db1c_4core5slice5asciiSh27eq_ignore_ascii_case_simple.exit.2
+  %.sroa.0.0 = phi i64 [ %.mux, %bb.m ], [ 0, %_RNvMNtNtCsj6eKBz9Db1c_4core5slice5asciiSh27eq_ignore_ascii_case_simple.exit.2 ], [ 0, %bb.u ], [ 1, %bb.e ], [ 2, %bb.i ], [ 0, %_RNvMNtNtCsj6eKBz9Db1c_4core5slice5asciiSh27eq_ignore_ascii_case_simple.exit.3 ], [ 5, %2 ], [ 0, %bb.s ], [ 0, %bb.v ], [ 0, %bb.t ], [ 4, %bb.q ]
   ret i64 %.sroa.0.0
 
 bb.b:                                             ; preds = %bb.f
@@ -332,7 +332,9 @@ bb.v:                                             ; preds = %bb.u
   %i.dw = select i1 %i.dv, i8 32, i8 0
   %.sroa.013.0.i.4.4 = or i8 %i.dw, %i.dt
   %i.dx = icmp eq i8 %.sroa.013.0.i.4.4, 101
-  %spec.select = select i1 %i.dx, i64 5, i64 0
+  br i1 %i.dx, label %2, label %.loopexit
+
+2:                                                ; preds = %bb.v
   br label %.loopexit
 
 _RNvMNtNtCsj6eKBz9Db1c_4core5slice5asciiSh27eq_ignore_ascii_case_simple.exit.3: ; preds = %bb.r, %bb.n, %bb.o, %bb.p, %bb.q
@@ -408,8 +410,8 @@ bb.a:
   %.not = icmp eq i64 %1, 3
   br i1 %.not, label %bb.d, label %_RNvMNtNtCsj6eKBz9Db1c_4core5slice5asciiSh27eq_ignore_ascii_case_simple.exit
 
-_RNvMNtNtCsj6eKBz9Db1c_4core5slice5asciiSh27eq_ignore_ascii_case_simple.exit.thread: ; preds = %bb.y, %bb.t, %bb.p, %bb.l, %bb.h, %bb.c, %_RNvMNtNtCsj6eKBz9Db1c_4core5slice5asciiSh27eq_ignore_ascii_case_simple.exit.4, %bb.v, %bb.w, %bb.x, %_RNvMNtNtCsj6eKBz9Db1c_4core5slice5asciiSh27eq_ignore_ascii_case_simple.exit.3
-  %.sroa.0.0 = phi i64 [ 2, %bb.l ], [ -1, %_RNvMNtNtCsj6eKBz9Db1c_4core5slice5asciiSh27eq_ignore_ascii_case_simple.exit.3 ], [ %.mux, %bb.p ], [ -1, %bb.x ], [ 0, %bb.c ], [ 1, %bb.h ], [ -1, %_RNvMNtNtCsj6eKBz9Db1c_4core5slice5asciiSh27eq_ignore_ascii_case_simple.exit.4 ], [ 4, %bb.t ], [ -1, %bb.v ], [ %spec.select, %bb.y ], [ -1, %bb.w ]
+_RNvMNtNtCsj6eKBz9Db1c_4core5slice5asciiSh27eq_ignore_ascii_case_simple.exit.thread: ; preds = %bb.t, %bb.p, %bb.l, %bb.h, %bb.c, %_RNvMNtNtCsj6eKBz9Db1c_4core5slice5asciiSh27eq_ignore_ascii_case_simple.exit.4, %bb.v, %bb.w, %bb.x, %bb.y, %2, %_RNvMNtNtCsj6eKBz9Db1c_4core5slice5asciiSh27eq_ignore_ascii_case_simple.exit.3
+  %.sroa.0.0 = phi i64 [ 2, %bb.l ], [ -1, %_RNvMNtNtCsj6eKBz9Db1c_4core5slice5asciiSh27eq_ignore_ascii_case_simple.exit.3 ], [ %.mux, %bb.p ], [ -1, %bb.x ], [ 0, %bb.c ], [ 1, %bb.h ], [ -1, %_RNvMNtNtCsj6eKBz9Db1c_4core5slice5asciiSh27eq_ignore_ascii_case_simple.exit.4 ], [ 5, %2 ], [ -1, %bb.v ], [ -1, %bb.y ], [ -1, %bb.w ], [ 4, %bb.t ]
   ret i64 %.sroa.0.0
 
 bb.b:                                             ; preds = %bb.d
@@ -669,7 +671,9 @@ bb.y:                                             ; preds = %bb.x
   %i.en = select i1 %i.em, i8 32, i8 0
   %.sroa.013.0.i.5.4 = or i8 %i.en, %i.ek
   %i.eo = icmp eq i8 %.sroa.013.0.i.5.4, 101
-  %spec.select = select i1 %i.eo, i64 5, i64 -1
+  br i1 %i.eo, label %2, label %_RNvMNtNtCsj6eKBz9Db1c_4core5slice5asciiSh27eq_ignore_ascii_case_simple.exit.thread
+
+2:                                                ; preds = %bb.y
   br label %_RNvMNtNtCsj6eKBz9Db1c_4core5slice5asciiSh27eq_ignore_ascii_case_simple.exit.thread
 
 _RNvMNtNtCsj6eKBz9Db1c_4core5slice5asciiSh27eq_ignore_ascii_case_simple.exit.4: ; preds = %bb.u, %bb.q, %bb.r, %bb.s, %bb.t

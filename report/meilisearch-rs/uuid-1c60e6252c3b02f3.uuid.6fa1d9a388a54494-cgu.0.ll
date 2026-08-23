@@ -204,13 +204,15 @@ bb.b:                                             ; preds = %bb.a
   %i.d = icmp samesign ult i8 %i.b, -64
   br i1 %i.d, label %bb.c, label %bb.d
 
-bb.c:                                             ; preds = %bb.d, %bb.b, %bb.a
-  %.sroa.0.0 = phi i8 [ %spec.select, %bb.d ], [ 0, %bb.a ], [ 1, %bb.b ]
+bb.c:                                             ; preds = %1, %bb.d, %bb.b, %bb.a
+  %.sroa.0.0 = phi i8 [ 2, %bb.d ], [ 0, %bb.a ], [ 1, %bb.b ], [ 3, %1 ]
   ret i8 %.sroa.0.0
 
 bb.d:                                             ; preds = %bb.b
   %i.e = icmp samesign ult i8 %i.b, -32
-  %spec.select = select i1 %i.e, i8 2, i8 3
+  br i1 %i.e, label %bb.c, label %1
+
+1:                                                ; preds = %bb.d
   br label %bb.c
 }
 
@@ -236,8 +238,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %.sroa.0.0.copyload.i.i = load i128, ptr %0, align 1
   %i.d = icmp eq i128 %.sroa.0.0.copyload.i.i, 0
-  %spec.select = select i1 %i.d, i8 0, i8 16
-  br label %bb.e
+  br i1 %i.d, label %1, label %bb.e
 
 bb.c:                                             ; preds = %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a
   br label %bb.e
@@ -245,12 +246,17 @@ bb.c:                                             ; preds = %bb.a, %bb.a, %bb.a,
 bb.d:                                             ; preds = %bb.a
   %.sroa.0.0.copyload.i.i2 = load i128, ptr %0, align 1
   %i.e = icmp eq i128 %.sroa.0.0.copyload.i.i2, -1
-  %spec.select1 = select i1 %i.e, i8 15, i8 16
+  br i1 %i.e, label %2, label %bb.e
+
+1:                                                ; preds = %bb.b
   br label %bb.e
 
-bb.e:                                             ; preds = %bb.d, %bb.b, %bb.a, %bb.c
-  %.sroa.0.0 = phi i8 [ %spec.select, %bb.b ], [ 16, %bb.a ], [ %i.c, %bb.c ], [ %spec.select1, %bb.d ]
+bb.e:                                             ; preds = %bb.a, %bb.b, %bb.d, %2, %1, %bb.c
+  %.sroa.0.0 = phi i8 [ 15, %2 ], [ 0, %1 ], [ %i.c, %bb.c ], [ 16, %bb.a ], [ 16, %bb.b ], [ 16, %bb.d ]
   ret i8 %.sroa.0.0
+
+2:                                                ; preds = %bb.d
+  br label %bb.e
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable

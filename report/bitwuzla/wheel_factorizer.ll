@@ -202,7 +202,9 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.k = tail call noundef zeroext i1 @_ZNK4bzla9BitVector6is_oneEv(ptr noundef nonnull align 8 dereferenceable(24) %0)
-  %spec.select31 = select i1 %i.k, ptr null, ptr %0
+  br i1 %i.k, label %bb.y, label %5
+
+5:                                                ; preds = %bb.d
   br label %bb.y
 
 ._crit_edge:                                      ; preds = %bb.t
@@ -362,8 +364,8 @@ bb.x:                                             ; preds = %bb.g, %bb.w
   %.pn27.pn.pn = phi { ptr, i32 } [ %.pn27.pn, %bb.w ], [ %i.p, %bb.g ]
   resume { ptr, i32 } %.pn27.pn.pn
 
-bb.y:                                             ; preds = %._crit_edge, %.thread35, %.thread32, %bb.d, %.critedge.thread, %bb.c, %bb.a
-  %.323 = phi ptr [ null, %bb.c ], [ null, %bb.a ], [ %i.g, %.thread32 ], [ %spec.select31, %bb.d ], [ %0, %.critedge.thread ], [ null, %.thread35 ], [ null, %._crit_edge ]
+bb.y:                                             ; preds = %._crit_edge, %.thread35, %.thread32, %.critedge.thread, %bb.c, %bb.d, %bb.a, %5
+  %.323 = phi ptr [ null, %bb.c ], [ null, %bb.a ], [ %0, %5 ], [ null, %bb.d ], [ %i.g, %.thread32 ], [ %0, %.critedge.thread ], [ null, %.thread35 ], [ null, %._crit_edge ]
   ret ptr %.323
 }
 

@@ -97,11 +97,13 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.f = tail call i32 @g_strcmp0(ptr noundef %i.a, ptr noundef nonnull @.str.5) #7
   %i.g = icmp eq i32 %i.f, 0
-  %spec.select = select i1 %i.g, i32 10, i32 13
+  br i1 %i.g, label %1, label %bb.d
+
+1:                                                ; preds = %bb.c
   br label %bb.d
 
-bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a
-  %.0 = phi i32 [ %spec.select, %bb.c ], [ 0, %bb.a ], [ 3, %bb.b ]
+bb.d:                                             ; preds = %bb.b, %bb.a, %1, %bb.c
+  %.0 = phi i32 [ 13, %bb.c ], [ 0, %bb.a ], [ 10, %1 ], [ 3, %bb.b ]
   ret i32 %.0
 }
 

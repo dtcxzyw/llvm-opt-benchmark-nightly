@@ -204,7 +204,7 @@ bb.s:                                             ; preds = %_ZNKSt8functionIFvm
 declare { ptr, ptr } @_ZN4Luau7CodeGen12predecessorsERKNS0_7CfgInfoEj(ptr noundef nonnull align 8 dereferenceable(344), i32 noundef) local_unnamed_addr #6
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define dso_local range(i16 9, 268) i16 @_ZN4Luau7CodeGen22tryGetLuauTagForBcTypeEhb(i8 noundef zeroext %0, i1 noundef zeroext %1) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
+define dso_local range(i16 0, 268) i16 @_ZN4Luau7CodeGen22tryGetLuauTagForBcTypeEhb(i8 noundef zeroext %0, i1 noundef zeroext %1) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = and i8 %0, 127
   %spec.select = select i1 %1, i8 %i.a, i8 %0     ; 3 uses
@@ -214,7 +214,9 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.c = and i8 %spec.select, -32
   %or.cond = icmp eq i8 %i.c, 64
-  %2 = select i1 %or.cond, i16 265, i16 9
+  br i1 %or.cond, label %bb.c, label %2
+
+2:                                                ; preds = %bb.b
   br label %bb.c
 
 switch.lookup:                                    ; preds = %bb.a
@@ -223,8 +225,8 @@ switch.lookup:                                    ; preds = %bb.a
   %switch.load = load i16, ptr %switch.gep, align 2
   br label %bb.c
 
-bb.c:                                             ; preds = %switch.lookup, %bb.b
-  %.sroa.13.0 = phi i16 [ %switch.load, %switch.lookup ], [ %2, %bb.b ]
+bb.c:                                             ; preds = %switch.lookup, %bb.b, %2
+  %.sroa.13.0 = phi i16 [ %switch.load, %switch.lookup ], [ 0, %2 ], [ 265, %bb.b ]
   ret i16 %.sroa.13.0
 }
 

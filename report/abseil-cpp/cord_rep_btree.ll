@@ -205,11 +205,13 @@ bb.m:                                             ; preds = %bb.l
   %.014.ptr.12 = getelementptr inbounds nuw i8, ptr %i.a, i64 96
   %i.q = load ptr, ptr %.014.ptr.12, align 16, !tbaa !16
   %.not20.12 = icmp eq ptr %i.q, null
-  %spec.select34 = select i1 %.not20.12, ptr %i.p, ptr null
+  br i1 %.not20.12, label %bb.n, label %1
+
+1:                                                ; preds = %bb.m
   br label %bb.n
 
-bb.n:                                             ; preds = %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %bb.b, %bb.a
-  %spec.select = phi ptr [ %i.l, %bb.i ], [ %i.b, %bb.a ], [ %i.e, %bb.b ], [ %spec.select34, %bb.m ], [ %i.f, %bb.c ], [ %i.k, %bb.h ], [ %i.g, %bb.d ], [ %i.o, %bb.l ], [ %i.h, %bb.e ], [ %i.m, %bb.j ], [ %i.i, %bb.f ], [ %i.n, %bb.k ], [ %i.j, %bb.g ]
+bb.n:                                             ; preds = %1, %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %bb.b, %bb.a
+  %spec.select = phi ptr [ null, %1 ], [ %i.b, %bb.a ], [ %i.e, %bb.b ], [ %i.p, %bb.m ], [ %i.f, %bb.c ], [ %i.k, %bb.h ], [ %i.g, %bb.d ], [ %i.o, %bb.l ], [ %i.h, %bb.e ], [ %i.m, %bb.j ], [ %i.i, %bb.f ], [ %i.n, %bb.k ], [ %i.j, %bb.g ], [ %i.l, %bb.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #16
   ret ptr %spec.select
 }

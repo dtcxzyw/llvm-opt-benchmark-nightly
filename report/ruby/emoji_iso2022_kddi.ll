@@ -43,11 +43,13 @@ bb.b:                                             ; preds = %bb.a
   %i.c = load i8, ptr %1, align 1, !tbaa !10
   %i.d = add i8 %i.c, -33
   %or.cond = icmp ult i8 %i.d, 94
-  %spec.select = select i1 %or.cond, i64 64, i64 7
+  br i1 %or.cond, label %bb.c, label %3
+
+3:                                                ; preds = %bb.b
   br label %bb.c
 
-bb.c:                                             ; preds = %bb.b, %bb.a
-  %.0 = phi i64 [ %spec.select, %bb.b ], [ 1, %bb.a ]
+bb.c:                                             ; preds = %bb.b, %bb.a, %3
+  %.0 = phi i64 [ 7, %3 ], [ 1, %bb.a ], [ 64, %bb.b ]
   ret i64 %.0
 }
 

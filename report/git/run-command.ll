@@ -204,11 +204,13 @@ pump_io.exit:                                     ; preds = %bb.ae, %._crit_edge
   %i.do = getelementptr inbounds nuw i8, ptr %0, i64 24
   tail call void @strvec_clear(ptr noundef nonnull %i.do) #22
   tail call void @invalidate_lstat_cache() #22
-  %spec.select = select i1 %i.di, i32 -1, i32 %i.dn
+  br i1 %i.di, label %8, label %bb.ag
+
+8:                                                ; preds = %pump_io.exit
   br label %bb.ag
 
-bb.ag:                                            ; preds = %pump_io.exit, %bb.l, %bb.m, %bb.g
-  %.043 = phi i32 [ -1, %bb.l ], [ -1, %bb.g ], [ -1, %bb.m ], [ %spec.select, %pump_io.exit ]
+bb.ag:                                            ; preds = %8, %pump_io.exit, %bb.l, %bb.m, %bb.g
+  %.043 = phi i32 [ -1, %bb.l ], [ -1, %bb.g ], [ -1, %bb.m ], [ -1, %8 ], [ %i.dn, %pump_io.exit ]
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #22
   ret i32 %.043
 }

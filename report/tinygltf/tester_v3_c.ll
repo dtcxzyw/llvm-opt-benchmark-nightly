@@ -205,12 +205,16 @@ bb.a:
 
 .lr.ph:                                           ; preds = %.preheader
   %i.e = load ptr, ptr %1, align 8, !tbaa !19
-  %wide.trip.count = zext i32 %i.d to i64
+  %wide.trip.count = zext i32 %i.d to i64         ; 2 uses
+  br label %.outer
+
+.outer:                                           ; preds = %._crit_edge.a, %.lr.ph
+  %indvars.iv.ph = phi i64 [ %indvars.iv.next19, %._crit_edge.a ], [ 0, %.lr.ph ]
+  %3 = phi i1 [ false, %._crit_edge.a ], [ true, %.lr.ph ]
   br label %bb.b
 
-bb.b:                                             ; preds = %.lr.ph, %bb.d
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.d ] ; 2 uses
-  %.013 = phi i32 [ 0, %.lr.ph ], [ %.1, %bb.d ]  ; 2 uses
+bb.b:                                             ; preds = %.outer, %bb.d
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.d ], [ %indvars.iv.ph, %.outer ] ; 3 uses
   %i.f = getelementptr inbounds nuw [32 x i8], ptr %i.e, i64 %indvars.iv
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !25   ; 2 uses
@@ -220,26 +224,28 @@ bb.b:                                             ; preds = %.lr.ph, %bb.d
 bb.c:                                             ; preds = %bb.b
   %i.i = call ptr @strstr(ptr noundef nonnull dereferenceable(1) %i.h, ptr noundef nonnull dereferenceable(1) @.str.112) #22
   %.not11 = icmp eq ptr %i.i, null
-  %spec.select = select i1 %.not11, i32 %.013, i32 1
-  br label %bb.d
+  br i1 %.not11, label %bb.d, label %._crit_edge.a
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  %.1 = phi i32 [ %.013, %bb.b ], [ %spec.select, %bb.c ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge.a, label %bb.b, !llvm.loop !260
+  br i1 %exitcond.not, label %._crit_edge, label %bb.b, !llvm.loop !260
 
-._crit_edge.a:                                    ; preds = %bb.d
-  %i.j = icmp eq i32 %.1, 0
-  br i1 %i.j, label %._crit_edge.thread, label %bb.e
+._crit_edge.a:                                    ; preds = %bb.c
+  %indvars.iv.next19 = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %i.j = icmp eq i64 %indvars.iv.next19, %wide.trip.count
+  br i1 %i.j, label %bb.e, label %.outer, !llvm.loop !260
 
-._crit_edge.thread:                               ; preds = %.preheader, %._crit_edge.a
+._crit_edge:                                      ; preds = %bb.d
+  br i1 %3, label %._crit_edge.thread, label %bb.e
+
+._crit_edge.thread:                               ; preds = %.preheader, %._crit_edge
   %i.k = load ptr, ptr @stderr, align 8, !tbaa !14
   %i.l = call i64 @fwrite(ptr nonnull @.str.113, i64 59, i64 1, ptr %i.k) #23 ; 0 uses
   br label %bb.e
 
-bb.e:                                             ; preds = %._crit_edge.thread, %bb.a, %._crit_edge.a
-  %.08 = phi i32 [ 1, %._crit_edge.a ], [ 0, %bb.a ], [ 0, %._crit_edge.thread ]
+bb.e:                                             ; preds = %._crit_edge.a, %._crit_edge.thread, %bb.a, %._crit_edge
+  %.08 = phi i32 [ 1, %._crit_edge ], [ 0, %._crit_edge.thread ], [ 0, %bb.a ], [ 1, %._crit_edge.a ]
   call void @tg3_model_free(ptr noundef nonnull %0) #19
   call void @tg3_error_stack_free(ptr noundef nonnull %1) #19
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #19

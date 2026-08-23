@@ -202,12 +202,16 @@ bb.am:                                            ; preds = %bb.al
   store i64 5, ptr %i.ci, align 8
   %i.cj = getelementptr inbounds nuw i8, ptr %i.e, i64 64
   store i8 0, ptr %i.cj, align 8
-  %i.ck = call noundef ptr @_ZN9ninja_gen5build5Build10add_action17h022b37e710ad082bE(ptr noalias noundef nonnull align 8 dereferenceable(248) %0, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @78, i64 noundef 8, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(72) %i.e)
+  %i.ck = call noundef ptr @_ZN9ninja_gen5build5Build10add_action17h022b37e710ad082bE(ptr noalias noundef nonnull align 8 dereferenceable(248) %0, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @78, i64 noundef 8, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(72) %i.e) ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
+  %.not90 = icmp eq ptr %i.ck, null
+  br i1 %.not90, label %.sink.split, label %1
+
+1:                                                ; preds = %bb.am
   br label %.sink.split
 
-.sink.split:                                      ; preds = %bb.am, %bb.ao
-  %.sroa.0.1.ph = phi ptr [ %i.ck, %bb.am ], [ %i.cg, %bb.ao ]
+.sink.split:                                      ; preds = %bb.ao, %bb.am, %1
+  %.sroa.0.1.ph = phi ptr [ null, %bb.am ], [ %i.cg, %bb.ao ], [ %i.ck, %1 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k)
   br label %bb.an
 

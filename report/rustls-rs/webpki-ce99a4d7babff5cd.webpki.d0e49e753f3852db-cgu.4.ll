@@ -202,12 +202,14 @@ _RNvXNtCshVVPy9isBpn_6webpki14aws_lc_rs_algsNtB2_16AwsLcRsAlgorithmNtCseO5Jl7W60
   %.fr3 = freeze { ptr, i64 } %i.d
   %i.e = extractvalue { ptr, i64 } %.fr3, 0
   %i.f = icmp eq ptr %i.e, null
-  %spec.select = zext i1 %i.f to i64
+  br i1 %i.f, label %2, label %_RNvXNtCshVVPy9isBpn_6webpki14aws_lc_rs_algsNtB2_16AwsLcRsAlgorithmNtCseO5Jl7W60Eg_16rustls_pki_types30SignatureVerificationAlgorithm4fips.exit.thread
+
+2:                                                ; preds = %_RNvXNtCshVVPy9isBpn_6webpki14aws_lc_rs_algsNtB2_16AwsLcRsAlgorithmNtCseO5Jl7W60Eg_16rustls_pki_types30SignatureVerificationAlgorithm4fips.exit
   br label %_RNvXNtCshVVPy9isBpn_6webpki14aws_lc_rs_algsNtB2_16AwsLcRsAlgorithmNtCseO5Jl7W60Eg_16rustls_pki_types30SignatureVerificationAlgorithm4fips.exit.thread
 
-_RNvXNtCshVVPy9isBpn_6webpki14aws_lc_rs_algsNtB2_16AwsLcRsAlgorithmNtCseO5Jl7W60Eg_16rustls_pki_types30SignatureVerificationAlgorithm4fips.exit.thread: ; preds = %_RNvXNtCshVVPy9isBpn_6webpki14aws_lc_rs_algsNtB2_16AwsLcRsAlgorithmNtCseO5Jl7W60Eg_16rustls_pki_types30SignatureVerificationAlgorithm4fips.exit, %bb.a
-  %2 = phi i64 [ 0, %bb.a ], [ %spec.select, %_RNvXNtCshVVPy9isBpn_6webpki14aws_lc_rs_algsNtB2_16AwsLcRsAlgorithmNtCseO5Jl7W60Eg_16rustls_pki_types30SignatureVerificationAlgorithm4fips.exit ]
-  store i64 %2, ptr %0, align 8
+_RNvXNtCshVVPy9isBpn_6webpki14aws_lc_rs_algsNtB2_16AwsLcRsAlgorithmNtCseO5Jl7W60Eg_16rustls_pki_types30SignatureVerificationAlgorithm4fips.exit.thread: ; preds = %bb.a, %_RNvXNtCshVVPy9isBpn_6webpki14aws_lc_rs_algsNtB2_16AwsLcRsAlgorithmNtCseO5Jl7W60Eg_16rustls_pki_types30SignatureVerificationAlgorithm4fips.exit, %2
+  %3 = phi i64 [ 1, %2 ], [ 0, %_RNvXNtCshVVPy9isBpn_6webpki14aws_lc_rs_algsNtB2_16AwsLcRsAlgorithmNtCseO5Jl7W60Eg_16rustls_pki_types30SignatureVerificationAlgorithm4fips.exit ], [ 0, %bb.a ]
+  store i64 %3, ptr %0, align 8
   ret void
 }
 

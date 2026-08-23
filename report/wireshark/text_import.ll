@@ -205,10 +205,13 @@ bb.i:                                             ; preds = %bb.e, %bb.h, %bb.g
 bb.j:                                             ; preds = %bb.i
   %i.aa = tail call i32 @g_ascii_strcasecmp(ptr noundef nonnull %i.y, ptr noundef nonnull @.str.16)
   %.not = icmp eq i32 %i.aa, 0
+  br i1 %.not, label %1, label %bb.k
+
+1:                                                ; preds = %bb.j
   br label %bb.k
 
-bb.k:                                             ; preds = %bb.j, %bb.i
-  %storemerge = phi i1 [ false, %bb.i ], [ %.not, %bb.j ]
+bb.k:                                             ; preds = %bb.i, %bb.j, %1
+  %storemerge = phi i1 [ true, %1 ], [ false, %bb.j ], [ false, %bb.i ]
   store i1 %storemerge, ptr @ts_fmt_iso, align 1
   store i1 false, ptr @offset_warned, align 1
   store i1 false, ptr @timecode_warned, align 1

@@ -202,10 +202,10 @@ bb.u:                                             ; preds = %bb.t
   call fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtB4_2io5error5ErrorEECskaDheoimX9_18simple_0rtt_client(ptr null)
   br label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtB4_2io5error5ErrorEECskaDheoimX9_18simple_0rtt_client.exit125
 
-_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtB4_2io5error5ErrorEECskaDheoimX9_18simple_0rtt_client.exit163: ; preds = %.lr.ph2416, %bb.em, %.lr.ph954, %_RNvMs1_NtNtCsj6eKBz9Db1c_4core2io5errorNtB5_5Error4kind.exit153, %.lr.ph954.preheader, %.preheader, %bb.ew, %bb.ep
-  %.sroa.0198.2 = phi ptr [ null, %bb.ep ], [ null, %bb.ew ], [ null, %.preheader ], [ null, %.lr.ph954.preheader ], [ %.sroa.5.0.i284, %_RNvMs1_NtNtCsj6eKBz9Db1c_4core2io5errorNtB5_5Error4kind.exit153 ], [ null, %bb.em ], [ null, %.lr.ph2416 ], [ null, %.lr.ph954 ] ; 24 uses
-  %.sroa.033.1 = phi i64 [ %.sroa.033.0, %bb.ep ], [ %i.ol, %bb.ew ], [ %.sroa.033.0, %.preheader ], [ %.sroa.033.0, %.lr.ph954.preheader ], [ %.sroa.033.0, %_RNvMs1_NtNtCsj6eKBz9Db1c_4core2io5errorNtB5_5Error4kind.exit153 ], [ %.sroa.033.0, %.lr.ph954 ], [ %.sroa.033.0, %bb.em ], [ %.sroa.033.0, %.lr.ph2416 ] ; 6 uses
-  %.sroa.0.1 = phi i8 [ 1, %bb.ep ], [ %spec.select, %bb.ew ], [ 1, %.preheader ], [ 0, %.lr.ph954.preheader ], [ 0, %_RNvMs1_NtNtCsj6eKBz9Db1c_4core2io5errorNtB5_5Error4kind.exit153 ], [ 1, %bb.em ], [ 0, %.lr.ph2416 ], [ 0, %.lr.ph954 ] ; 2 uses
+_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtB4_2io5error5ErrorEECskaDheoimX9_18simple_0rtt_client.exit163: ; preds = %.lr.ph2416, %bb.em, %.lr.ph954, %_RNvMs1_NtNtCsj6eKBz9Db1c_4core2io5errorNtB5_5Error4kind.exit153, %.lr.ph954.preheader, %.preheader, %bb.ep, %3, %bb.ew
+  %.sroa.0198.2 = phi ptr [ null, %bb.ew ], [ null, %3 ], [ null, %bb.ep ], [ null, %.preheader ], [ null, %.lr.ph954.preheader ], [ %.sroa.5.0.i284, %_RNvMs1_NtNtCsj6eKBz9Db1c_4core2io5errorNtB5_5Error4kind.exit153 ], [ null, %.lr.ph2416 ], [ null, %.lr.ph954 ], [ null, %bb.em ] ; 24 uses
+  %.sroa.033.1 = phi i64 [ %i.ol, %bb.ew ], [ %i.ol, %3 ], [ %.sroa.033.0, %bb.ep ], [ %.sroa.033.0, %.preheader ], [ %.sroa.033.0, %.lr.ph954.preheader ], [ %.sroa.033.0, %_RNvMs1_NtNtCsj6eKBz9Db1c_4core2io5errorNtB5_5Error4kind.exit153 ], [ %.sroa.033.0, %.lr.ph954 ], [ %.sroa.033.0, %bb.em ], [ %.sroa.033.0, %.lr.ph2416 ] ; 6 uses
+  %.sroa.0.1 = phi i8 [ 0, %bb.ew ], [ 1, %3 ], [ 1, %bb.ep ], [ 1, %.preheader ], [ 0, %.lr.ph954.preheader ], [ 0, %_RNvMs1_NtNtCsj6eKBz9Db1c_4core2io5errorNtB5_5Error4kind.exit153 ], [ 0, %.lr.ph2416 ], [ 0, %.lr.ph954 ], [ 1, %bb.em ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.av)
   call void @llvm.experimental.noalias.scope.decl(metadata !22)
   call void @llvm.experimental.noalias.scope.decl(metadata !25)
@@ -608,8 +608,10 @@ bb.ev:                                            ; preds = %bb.er
 
 bb.ew:                                            ; preds = %bb.eq
   %i.ok = icmp eq ptr %i.nr, null
-  %i.ol = add i64 %.sroa.033.0, %i.nu
-  %spec.select = zext i1 %i.ok to i8
+  %i.ol = add i64 %.sroa.033.0, %i.nu             ; 2 uses
+  br i1 %i.ok, label %3, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtB4_2io5error5ErrorEECskaDheoimX9_18simple_0rtt_client.exit163
+
+3:                                                ; preds = %bb.ew
   br label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtB4_2io5error5ErrorEECskaDheoimX9_18simple_0rtt_client.exit163
 
 bb.ex:                                            ; preds = %bb.es, %.noexc151, %bb.ez, %.noexc157

@@ -204,7 +204,9 @@ lean_nat_le.exit.thread28:                        ; preds = %bb.b
 
 lean_nat_le.exit.thread:                          ; preds = %bb.b
   %.not30 = icmp ugt ptr %5, %i.a
-  %spec.select = select i1 %.not30, ptr %i.a, ptr %5
+  br i1 %.not30, label %lean_dec.exit22, label %.thread39
+
+.thread39:                                        ; preds = %lean_nat_le.exit.thread
   br label %lean_dec.exit22
 
 bb.c:                                             ; preds = %lean_nat_le.exit
@@ -249,8 +251,8 @@ bb.j:                                             ; preds = %bb.i
   tail call void @lean_dec_ref_cold(ptr noundef nonnull %i.a) #7
   br label %lean_dec.exit22
 
-lean_dec.exit22:                                  ; preds = %lean_nat_le.exit.thread, %lean_nat_le.exit.thread28, %bb.g, %bb.h, %bb.i, %bb.j, %bb.d, %bb.e, %bb.f
-  %.0 = phi ptr [ %spec.select, %lean_nat_le.exit.thread ], [ %i.a, %bb.f ], [ %i.a, %bb.e ], [ %i.a, %bb.d ], [ %5, %bb.g ], [ %5, %bb.j ], [ %5, %bb.i ], [ %5, %bb.h ], [ %i.a, %lean_nat_le.exit.thread28 ]
+lean_dec.exit22:                                  ; preds = %.thread39, %lean_nat_le.exit.thread28, %lean_nat_le.exit.thread, %bb.g, %bb.h, %bb.i, %bb.j, %bb.d, %bb.e, %bb.f
+  %.0 = phi ptr [ %i.a, %lean_nat_le.exit.thread ], [ %i.a, %bb.f ], [ %i.a, %bb.e ], [ %i.a, %bb.d ], [ %5, %bb.g ], [ %5, %bb.j ], [ %5, %bb.i ], [ %5, %bb.h ], [ %i.a, %lean_nat_le.exit.thread28 ], [ %5, %.thread39 ]
   %i.o = tail call ptr @lean_alloc_object(i64 noundef 56) #7 ; 10 uses
   store i32 1, ptr %i.o, align 4, !tbaa !12
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 4 ; 2 uses

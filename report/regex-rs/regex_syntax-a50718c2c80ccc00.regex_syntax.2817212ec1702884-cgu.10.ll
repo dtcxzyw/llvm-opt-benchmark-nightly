@@ -202,10 +202,19 @@ bb.b:                                             ; preds = %.lr.ph
     #dbg_value(ptr undef, !993, !DIExpression(), !997)
     #dbg_value(ptr undef, !996, !DIExpression(DW_OP_plus_uconst, 8, DW_OP_stack_value), !1042)
   %exitcond.peel.not = icmp eq i64 %i.i, %i.f, !dbg !1043
-  br label %._crit_edge, !dbg !998
+  br i1 %exitcond.peel.not, label %._crit_edge, label %._crit_edge.loopexit.loopexit, !dbg !998
 
-._crit_edge:                                      ; preds = %bb.b, %.lr.ph, %bb.a
-  %.lcssa = phi i1 [ true, %bb.a ], [ false, %.lr.ph ], [ %exitcond.peel.not, %bb.b ], !dbg !1043
+._crit_edge.loopexit.loopexit:                    ; preds = %bb.b
+    #dbg_value(i64 %i.i, !1002, !DIExpression(), !1047)
+    #dbg_value(i64 %i.i, !1016, !DIExpression(), !1017)
+    #dbg_value(i64 %i.i, !1022, !DIExpression(), !1023)
+    #dbg_value(i64 %i.i, !987, !DIExpression(DW_OP_plus_uconst, 1, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !1041)
+    #dbg_value(i64 %i.i, !989, !DIExpression(), !1048)
+    #dbg_value(i64 %i.i, !1049, !DIExpression(), !1053)
+  br label %._crit_edge, !dbg !1080
+
+._crit_edge:                                      ; preds = %.lr.ph, %bb.b, %._crit_edge.loopexit.loopexit, %bb.a
+  %.lcssa = phi i1 [ true, %bb.a ], [ false, %.lr.ph ], [ true, %bb.b ], [ false, %._crit_edge.loopexit.loopexit ], !dbg !1043
   ret i1 %.lcssa, !dbg !1080
 }
 

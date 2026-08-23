@@ -204,11 +204,13 @@ bb.q:                                             ; preds = %bb.p
 bb.r:                                             ; preds = %.loopexit
   %i.eq = load i8, ptr %.169, align 1, !tbaa !15
   %.not85 = icmp eq i8 %i.eq, 45
-  %spec.select = zext i1 %.not85 to i32
+  br i1 %.not85, label %bb.s, label %3
+
+3:                                                ; preds = %bb.r
   br label %bb.s
 
-bb.s:                                             ; preds = %bb.r, %.loopexit
-  %.071 = phi i32 [ 0, %.loopexit ], [ %spec.select, %bb.r ]
+bb.s:                                             ; preds = %3, %bb.r, %.loopexit
+  %.071 = phi i32 [ 0, %3 ], [ 1, %bb.r ], [ 0, %.loopexit ]
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #10
   store ptr %.169, ptr %2, align 8, !tbaa !107
   %i.er = getelementptr inbounds nuw i8, ptr %2, i64 8

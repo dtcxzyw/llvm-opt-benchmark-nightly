@@ -202,15 +202,17 @@ bb.l:                                             ; preds = %bb.k
   %i.ai = zext i32 %i.ad to i64
   %i.aj = call i32 @CRYPTO_memcmp(ptr noundef nonnull %i.a, ptr noundef %i.ah, i64 noundef %i.ai) #4
   %.not20 = icmp eq i32 %i.aj, 0
-  %spec.select = zext i1 %.not20 to i32
+  br i1 %.not20, label %3, label %bb.m
+
+3:                                                ; preds = %bb.l
   br label %bb.m
 
 .critedge:                                        ; preds = %bb.g, %bb.e
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #4
   br label %bb.m
 
-bb.m:                                             ; preds = %bb.l, %bb.k, %.critedge, %bb.j, %bb.b
-  %.1 = phi i32 [ 0, %bb.b ], [ 0, %bb.j ], [ 0, %bb.k ], [ 0, %.critedge ], [ %spec.select, %bb.l ]
+bb.m:                                             ; preds = %bb.k, %bb.l, %.critedge, %3, %bb.j, %bb.b
+  %.1 = phi i32 [ 0, %bb.b ], [ 0, %bb.j ], [ 1, %3 ], [ 0, %.critedge ], [ 0, %bb.l ], [ 0, %bb.k ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #4
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #4
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #4

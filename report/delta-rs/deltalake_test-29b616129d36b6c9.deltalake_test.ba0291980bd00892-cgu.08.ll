@@ -194,8 +194,8 @@ bb.c:                                             ; preds = %bb.a
   store i64 %i.o, ptr %i.g, align 8, !alias.scope !6
   br label %bb.d
 
-bb.d:                                             ; preds = %bb.t, %bb.q, %bb.o, %bb.j, %bb.c
-  %.sroa.0.0 = phi i1 [ false, %bb.o ], [ false, %bb.c ], [ %i.cf, %bb.q ], [ true, %bb.j ], [ %i.cp, %bb.t ]
+bb.d:                                             ; preds = %bb.q, %bb.o, %bb.t, %3, %bb.j, %bb.c
+  %.sroa.0.0 = phi i1 [ true, %3 ], [ false, %bb.c ], [ %i.cf, %bb.q ], [ true, %bb.j ], [ false, %bb.t ], [ false, %bb.o ]
   ret i1 %.sroa.0.0
 
 default.unreachable35:                            ; preds = %bb.b
@@ -375,7 +375,7 @@ bb.s:                                             ; preds = %bb.q, %bb.o
 
 bb.t:                                             ; preds = %bb.u, %bb.s
   %i.cp = tail call noundef zeroext i1 @_RINvNtNtCshmPyUV8PP35_6chrono6format10formatting14write_hundredsNtNtCs6Po7BT7Nknu_5alloc6string6StringECsfY7SmN0bPrO_14deltalake_test(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, i8 noundef %.sroa.017.0)
-  br label %bb.d
+  br i1 %i.cp, label %3, label %bb.d
 
 bb.u:                                             ; preds = %bb.s
   %i.cq = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 3 uses
@@ -393,6 +393,9 @@ bb.u:                                             ; preds = %bb.s
   %i.cy = add nuw i64 %i.cr, 1
   store i64 %i.cy, ptr %i.cq, align 8, !alias.scope !42
   br label %bb.t
+
+3:                                                ; preds = %bb.t
+  br label %bb.d
 }
 
 ; Function Attrs: nonlazybind uwtable

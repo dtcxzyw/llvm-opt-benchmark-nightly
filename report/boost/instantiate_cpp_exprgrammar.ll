@@ -203,10 +203,13 @@ _ZN5boost4wave4util11flex_stringIcSt11char_traitsIcESaIcENS1_9CowStringINS1_22Al
   %i.az = getelementptr i8, ptr %i.ay, i64 %i.au
   %i.ba = icmp ule ptr %1, %i.az
   %or.cond19 = select i1 %i.ax, i1 %i.ba, i1 false
+  br i1 %or.cond19, label %.thread.a, label %.thread
+
+.thread:                                          ; preds = %_ZN5boost4wave4util11flex_stringIcSt11char_traitsIcESaIcENS1_9CowStringINS1_22AllocatorStringStorageIcS5_EEPcEEE5beginEv.exit16
   br label %.thread.a
 
-.thread.a:                                        ; preds = %_ZN5boost4wave4util11flex_stringIcSt11char_traitsIcESaIcENS1_9CowStringINS1_22AllocatorStringStorageIcS5_EEPcEEE5beginEv.exit16, %bb.a
-  %.1 = phi i1 [ %or.cond19, %_ZN5boost4wave4util11flex_stringIcSt11char_traitsIcESaIcENS1_9CowStringINS1_22AllocatorStringStorageIcS5_EEPcEEE5beginEv.exit16 ], [ false, %bb.a ]
+.thread.a:                                        ; preds = %_ZN5boost4wave4util11flex_stringIcSt11char_traitsIcESaIcENS1_9CowStringINS1_22AllocatorStringStorageIcS5_EEPcEEE5beginEv.exit16, %bb.a, %.thread
+  %.1 = phi i1 [ true, %_ZN5boost4wave4util11flex_stringIcSt11char_traitsIcESaIcENS1_9CowStringINS1_22AllocatorStringStorageIcS5_EEPcEEE5beginEv.exit16 ], [ false, %.thread ], [ false, %bb.a ]
   ret i1 %.1
 }
 

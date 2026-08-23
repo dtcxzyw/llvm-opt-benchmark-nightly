@@ -204,11 +204,13 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e
   %.not.5 = icmp ult i64 %i.a, 64
-  %spec.select = select i1 %.not.5, i32 5, i32 6
+  br i1 %.not.5, label %bb.g, label %2
+
+2:                                                ; preds = %bb.f
   br label %bb.g
 
-bb.g:                                             ; preds = %bb.f, %bb.e, %bb.d, %bb.c, %bb.b, %bb.a
-  %.08 = phi i32 [ 3, %bb.d ], [ 0, %bb.a ], [ 1, %bb.b ], [ %spec.select, %bb.f ], [ 2, %bb.c ], [ 4, %bb.e ]
+bb.g:                                             ; preds = %2, %bb.f, %bb.e, %bb.d, %bb.c, %bb.b, %bb.a
+  %.08 = phi i32 [ 6, %2 ], [ 0, %bb.a ], [ 1, %bb.b ], [ 5, %bb.f ], [ 2, %bb.c ], [ 4, %bb.e ], [ 3, %bb.d ]
   ret i32 %.08
 }
 

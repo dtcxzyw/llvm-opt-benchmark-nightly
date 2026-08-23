@@ -204,7 +204,11 @@ bb.c:                                             ; preds = %.noexc.i
   br label %bb.ad
 
 bb.d:                                             ; preds = %.noexc.i
-  %i.u = call noundef align 8 ptr @_RNvXs6_NtNtCs5PtHgSLqj5O_10serde_json5value2deNtB5_19VariantDeserializerNtNtCsboAIIHEtPkY_10serde_core2de13VariantAccess12unit_variant(ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(32) %i.j), !noalias !114
+  %i.u = call noundef align 8 ptr @_RNvXs6_NtNtCs5PtHgSLqj5O_10serde_json5value2deNtB5_19VariantDeserializerNtNtCsboAIIHEtPkY_10serde_core2de13VariantAccess12unit_variant(ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(32) %i.j), !noalias !114 ; 2 uses
+  %.not.i.i = icmp eq ptr %i.u, null
+  br i1 %.not.i.i, label %1, label %bb.ad
+
+1:                                                ; preds = %bb.d
   br label %bb.ad
 
 bb.e:                                             ; preds = %bb.a
@@ -404,10 +408,17 @@ bb.y:                                             ; preds = %.noexc59.i.i
 
 bb.z:                                             ; preds = %.noexc59.i.i
   %i.aq = invoke noundef align 8 ptr @_RNvXs6_NtNtCs5PtHgSLqj5O_10serde_json5value2deNtB5_19VariantDeserializerNtNtCsboAIIHEtPkY_10serde_core2de13VariantAccess12unit_variant(ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(32) %i.a)
-          to label %bb.aa unwind label %bb.r, !noalias !123
+          to label %.noexc60.i.i unwind label %bb.r, !noalias !123 ; 2 uses
 
-bb.aa:                                            ; preds = %bb.z, %bb.y
-  %.sroa.0.1.i.i.i = phi ptr [ %i.ap, %bb.y ], [ %i.aq, %bb.z ]
+.noexc60.i.i:                                     ; preds = %bb.z
+  %.not.i.i.i = icmp eq ptr %i.aq, null
+  br i1 %.not.i.i.i, label %2, label %bb.aa
+
+2:                                                ; preds = %.noexc60.i.i
+  br label %bb.aa
+
+bb.aa:                                            ; preds = %2, %.noexc60.i.i, %bb.y
+  %.sroa.0.1.i.i.i = phi ptr [ %i.aq, %.noexc60.i.i ], [ %i.ap, %bb.y ], [ null, %2 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !123
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !123
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g), !noalias !123
@@ -430,8 +441,8 @@ bb.ac:                                            ; preds = %.body.thread.i.i, %
   invoke void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCscdodAO9FK5_5alloc6string6StringECs2JiOgHzbbc7_10tokenizers(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.h) #22
           to label %.body56.i.i unwind label %bb.ab, !noalias !123
 
-bb.ad:                                            ; preds = %bb.d, %bb.c
-  %.sroa.0.1.i.i = phi ptr [ %i.t, %bb.c ], [ %i.u, %bb.d ]
+bb.ad:                                            ; preds = %1, %bb.d, %bb.c
+  %.sroa.0.1.i.i = phi ptr [ %i.u, %bb.d ], [ %i.t, %bb.c ], [ null, %1 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j), !noalias !114
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m), !noalias !114
   br label %_RINvXs2_NtNtCs5PtHgSLqj5O_10serde_json5value2deNtB8_5ValueNtNtCsboAIIHEtPkY_10serde_core2de12Deserializer16deserialize_enumNtNvXNvNtNtCs2JiOgHzbbc7_10tokenizers14pre_tokenizers9delimiters1_1__NtB24_22CharDelimiterSplitTypeNtBW_11Deserialize11deserialize9___VisitorEB28_.exit
@@ -834,11 +845,15 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
-  %i.e = tail call noundef align 8 ptr @_RNvXsO_NtNtNtCsctIyQp3ax5j_5serde7private2de7contentINtB5_22VariantRefDeserializerNtNtCs5PtHgSLqj5O_10serde_json5error5ErrorENtNtCsboAIIHEtPkY_10serde_core2de13VariantAccess12unit_variantCs2JiOgHzbbc7_10tokenizers(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable_or_null(32) %i.c)
+  %i.e = tail call noundef align 8 ptr @_RNvXsO_NtNtNtCsctIyQp3ax5j_5serde7private2de7contentINtB5_22VariantRefDeserializerNtNtCs5PtHgSLqj5O_10serde_json5error5ErrorENtNtCsboAIIHEtPkY_10serde_core2de13VariantAccess12unit_variantCs2JiOgHzbbc7_10tokenizers(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable_or_null(32) %i.c) ; 2 uses
+  %.not = icmp eq ptr %i.e, null
+  br i1 %.not, label %2, label %bb.d
+
+2:                                                ; preds = %bb.c
   br label %bb.d
 
-bb.d:                                             ; preds = %bb.c, %bb.b
-  %.sroa.0.1 = phi ptr [ %i.e, %bb.c ], [ %i.c, %bb.b ]
+bb.d:                                             ; preds = %bb.b, %bb.c, %2
+  %.sroa.0.1 = phi ptr [ %i.e, %bb.c ], [ %i.c, %bb.b ], [ null, %2 ]
   ret ptr %.sroa.0.1
 }
 
@@ -1241,12 +1256,14 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %bb.i
   %i.ac = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.ad = load i8, ptr %i.ac, align 1, !alias.scope !2074, !noalias !2071, !noundef !3
-  %2 = icmp ne i8 %i.ad, 114
-  %spec.select.i = zext i1 %2 to i8
+  %2 = icmp eq i8 %i.ad, 114
+  br i1 %2, label %3, label %bb.k
+
+3:                                                ; preds = %bb.j
   br label %bb.k
 
-bb.k:                                             ; preds = %bb.j, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %bb.b, %bb.a
-  %.sink.i = phi i8 [ 1, %bb.a ], [ %spec.select.i, %bb.j ], [ 1, %bb.i ], [ 1, %bb.h ], [ 1, %bb.g ], [ 1, %bb.f ], [ 1, %bb.e ], [ 1, %bb.d ], [ 1, %bb.c ], [ 1, %bb.b ]
+bb.k:                                             ; preds = %3, %bb.j, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %bb.b, %bb.a
+  %.sink.i = phi i8 [ 0, %3 ], [ 1, %bb.j ], [ 1, %bb.i ], [ 1, %bb.h ], [ 1, %bb.g ], [ 1, %bb.f ], [ 1, %bb.e ], [ 1, %bb.d ], [ 1, %bb.c ], [ 1, %bb.b ], [ 1, %bb.a ]
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 1
   store i8 %.sink.i, ptr %i.ae, align 1, !alias.scope !2071, !noalias !2074
   store i8 0, ptr %0, align 8, !alias.scope !2071, !noalias !2074

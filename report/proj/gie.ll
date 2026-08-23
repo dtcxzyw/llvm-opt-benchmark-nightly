@@ -206,7 +206,7 @@ bb.ap:                                            ; preds = %bb.ao
   br label %bb.aq
 
 bb.aq:                                            ; preds = %bb.ap, %bb.ao, %bb.an
-  %.1.3 = phi double [ %i.en, %bb.ap ], [ %.02442.3, %bb.an ], [ %.02442.3, %bb.ao ] ; 3 uses
+  %.1.3 = phi double [ %i.en, %bb.ap ], [ %.02442.3, %bb.an ], [ %.02442.3, %bb.ao ] ; 4 uses
   %i.ev = fcmp oeq double %.1.3, %i.en
   %.pre63 = load ptr, ptr %i.a, align 8, !tbaa !18 ; 3 uses
   br i1 %i.ev, label %bb.ar, label %bb.as
@@ -214,13 +214,15 @@ bb.aq:                                            ; preds = %bb.ap, %bb.ao, %bb.
 bb.ar:                                            ; preds = %bb.aq
   %i.ew = load ptr, ptr %i.b, align 8, !tbaa !18  ; 2 uses
   %.not38.3 = icmp eq ptr %.pre63, %i.ew
-  %spec.select = select i1 %.not38.3, ptr %.pre63, ptr %i.ew
+  br i1 %.not38.3, label %bb.as, label %3
+
+3:                                                ; preds = %bb.ar
   br label %bb.as
 
-bb.as:                                            ; preds = %bb.ar, %bb.aq, %bb.am, %._crit_edge62, %bb.al
-  %3 = phi ptr [ %.pre64, %bb.al ], [ %i.ed, %bb.am ], [ %i.ed, %._crit_edge62 ], [ %.pre63, %bb.aq ], [ %spec.select, %bb.ar ]
-  %.2.3 = phi double [ %i.ea, %bb.al ], [ %.02442.3, %bb.am ], [ %.02442.3, %._crit_edge62 ], [ %.1.3, %bb.aq ], [ %.1.3, %bb.ar ]
-  %.not39.3 = icmp eq ptr %.126.lcssa.3, %3
+bb.as:                                            ; preds = %3, %bb.ar, %bb.aq, %bb.am, %._crit_edge62, %bb.al
+  %4 = phi ptr [ %.pre64, %bb.al ], [ %i.ed, %bb.am ], [ %i.ed, %._crit_edge62 ], [ %i.ew, %3 ], [ %.pre63, %bb.ar ], [ %.pre63, %bb.aq ]
+  %.2.3 = phi double [ %i.ea, %bb.al ], [ %.02442.3, %bb.am ], [ %.02442.3, %._crit_edge62 ], [ %.1.3, %3 ], [ %.1.3, %bb.ar ], [ %.1.3, %bb.aq ]
+  %.not39.3 = icmp eq ptr %.126.lcssa.3, %4
   br i1 %.not39.3, label %bb.l, label %bb.at
 
 bb.at:                                            ; preds = %bb.as

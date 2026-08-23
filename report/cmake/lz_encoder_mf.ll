@@ -202,8 +202,7 @@ bb.c:                                             ; preds = %.preheader.us
   %i.aj = trunc nuw nsw i64 %i.ai to i32
   %i.ak = lshr i32 %i.aj, 3
   %i.al = add i32 %i.ak, %.017.i85.us
-  %.fr.us = freeze i32 %i.al
-  %i.am = tail call i32 @llvm.umin.i32(i32 %.fr.us, i32 %0)
+  %i.am = tail call i32 @llvm.umin.i32(i32 %i.al, i32 %0)
   br label %lzma_memcmplen.exit.us
 
 lzma_memcmplen.exit.us:                           ; preds = %bb.c, %.thread.us
@@ -221,8 +220,8 @@ bb.d:                                             ; preds = %lzma_memcmplen.exit
   br i1 %.not83.us, label %._crit_edge, label %.thread64.us
 
 .thread64.us:                                     ; preds = %bb.d, %lzma_memcmplen.exit.us, %bb.b, %.lr.ph91.split.us
-  %.547.us = phi ptr [ %.04289.us, %lzma_memcmplen.exit.us ], [ %.04289.us, %.lr.ph91.split.us ], [ %.04289.us, %bb.b ], [ %i.aq, %bb.d ] ; 2 uses
-  %.5.us = phi i32 [ %.03990.us, %lzma_memcmplen.exit.us ], [ %.03990.us, %.lr.ph91.split.us ], [ %.03990.us, %bb.b ], [ %.2.i.us, %bb.d ]
+  %.547.us = phi ptr [ %.04289.us, %.lr.ph91.split.us ], [ %.04289.us, %lzma_memcmplen.exit.us ], [ %.04289.us, %bb.b ], [ %i.aq, %bb.d ] ; 2 uses
+  %.5.us = phi i32 [ %.03990.us, %.lr.ph91.split.us ], [ %.03990.us, %lzma_memcmplen.exit.us ], [ %.03990.us, %bb.b ], [ %.2.i.us, %bb.d ]
   %i.ar = sub i32 %1, %i.s                        ; 2 uses
   %i.as = add i32 %i.h, -1
   %i.at = icmp ne i32 %i.h, 0

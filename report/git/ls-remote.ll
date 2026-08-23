@@ -204,11 +204,13 @@ bb.s:                                             ; preds = %bb.r
 
 bb.t:                                             ; preds = %bb.s
   %.not.2.i = icmp eq ptr %i.fk, getelementptr inbounds nuw (i8, ptr @hash_algos, i64 224)
-  %spec.select.i = select i1 %.not.2.i, i32 2, i32 0
+  br i1 %.not.2.i, label %.split.loop.exit9.i, label %hash_algo_by_ptr.exit
+
+.split.loop.exit9.i:                              ; preds = %bb.t
   br label %hash_algo_by_ptr.exit
 
-hash_algo_by_ptr.exit:                            ; preds = %bb.r, %bb.s, %bb.t
-  %.2.i = phi i32 [ %spec.select.i, %bb.t ], [ 0, %bb.r ], [ 1, %bb.s ]
+hash_algo_by_ptr.exit:                            ; preds = %bb.r, %bb.s, %bb.t, %.split.loop.exit9.i
+  %.2.i = phi i32 [ 0, %bb.t ], [ 0, %bb.r ], [ 1, %bb.s ], [ 2, %.split.loop.exit9.i ]
   %i.fl = load ptr, ptr @the_repository, align 8, !tbaa !28
   call void @repo_set_hash_algo(ptr noundef %i.fl, i32 noundef %.2.i) #8
   br label %bb.u

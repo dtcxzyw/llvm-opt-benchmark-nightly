@@ -204,7 +204,9 @@ bb.e:                                             ; preds = %_ZNK4llvh9StringRef
 
 bb.f:                                             ; preds = %bb.e
   %i.bo = icmp eq i32 %.039, -1
-  %spec.select = select i1 %i.bo, i32 %.044, i32 %.039
+  br i1 %i.bo, label %3, label %_ZNK4llvh9StringRef6equalsES0_.exit.thread
+
+3:                                                ; preds = %bb.f
   br label %_ZNK4llvh9StringRef6equalsES0_.exit.thread
 
 bb.g:                                             ; preds = %bb.e
@@ -229,8 +231,8 @@ _ZNK4llvh9StringRef6equalsES0_.exit:              ; preds = %bb.i
   %i.bx = icmp eq i32 %bcmp, 0
   br i1 %i.bx, label %.thread, label %_ZNK4llvh9StringRef6equalsES0_.exit.thread
 
-_ZNK4llvh9StringRef6equalsES0_.exit.thread:       ; preds = %bb.h, %bb.g, %bb.f, %_ZNK4llvh9StringRef6equalsES0_.exit
-  %.140 = phi i32 [ %.039, %bb.g ], [ %spec.select, %bb.f ], [ %.039, %_ZNK4llvh9StringRef6equalsES0_.exit ], [ %.039, %bb.h ]
+_ZNK4llvh9StringRef6equalsES0_.exit.thread:       ; preds = %bb.h, %3, %bb.f, %bb.g, %_ZNK4llvh9StringRef6equalsES0_.exit
+  %.140 = phi i32 [ %.044, %3 ], [ %.039, %bb.f ], [ %.039, %bb.g ], [ %.039, %_ZNK4llvh9StringRef6equalsES0_.exit ], [ %.039, %bb.h ]
   %i.by = add i32 %.044, %.042
   %i.bz = add i32 %.042, 1
   br label %bb.e, !llvm.loop !26

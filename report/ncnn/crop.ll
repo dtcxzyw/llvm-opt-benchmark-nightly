@@ -204,8 +204,10 @@ _ZNK4ncnn3Mat5emptyEv.exit143.thread:             ; preds = %bb.cf, %bb.ce, %_ZN
 bb.cg:                                            ; preds = %_ZNK4ncnn3Mat5emptyEv.exit143.thread
   %i.ld = getelementptr inbounds nuw i8, ptr %0, i64 512
   %i.le = load i64, ptr %i.ld, align 8, !tbaa !57
-  %14 = icmp ne i64 %i.le, 0
-  %spec.select = select i1 %14, i1 true, i1 %i.kz
+  %14 = icmp eq i64 %i.le, 0
+  br i1 %14, label %bb.ed, label %15
+
+15:                                               ; preds = %bb.cg
   br label %bb.ed
 
 bb.ch:                                            ; preds = %bb.a
@@ -556,8 +558,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit193: ; preds = %bb
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #12
   br label %bb.es
 
-bb.ed:                                            ; preds = %bb.cg, %_ZNK4ncnn3Mat5emptyEv.exit143.thread
-  %.0 = phi i1 [ %i.kz, %_ZNK4ncnn3Mat5emptyEv.exit143.thread ], [ %spec.select, %bb.cg ]
+bb.ed:                                            ; preds = %15, %bb.cg, %_ZNK4ncnn3Mat5emptyEv.exit143.thread
+  %.0 = phi i1 [ %i.kz, %_ZNK4ncnn3Mat5emptyEv.exit143.thread ], [ %i.kz, %bb.cg ], [ true, %15 ]
   %i.or = load i32, ptr %i.j, align 8, !tbaa !42
   %i.os = icmp eq i32 %i.or, 0
   br i1 %i.os, label %bb.ee, label %bb.em

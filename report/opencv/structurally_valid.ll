@@ -204,11 +204,10 @@ bb.l:                                             ; preds = %.lr.ph225
   %i.et = or i8 %i.em, %i.ei
   %i.eu = or i8 %i.et, %i.eq
   %i.ev = or i8 %i.eu, %i.es
-  %.fr = freeze i8 %i.ev
-  %.not113 = icmp eq i8 %.fr, 0
+  %.not113 = icmp eq i8 %i.ev, 0
   br i1 %.not113, label %.preheader138.backedge, label %.critedge.thread.loopexit.split.loop.exit
 
-.preheader138.backedge:                           ; preds = %.lr.ph225, %.split
+.preheader138.backedge:                           ; preds = %.split, %.lr.ph225
   %i.ew = icmp ult ptr %i.cx, %i.i
   br i1 %i.ew, label %.lr.ph225, label %.critedge.thread
 

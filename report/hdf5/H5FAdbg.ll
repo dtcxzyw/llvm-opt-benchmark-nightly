@@ -202,11 +202,13 @@ bb.m:                                             ; preds = %bb.l
   %i.by = load i64, ptr %i.ap, align 8, !tbaa !48
   %i.bz = urem i64 %i.bx, %i.by                   ; 2 uses
   %.not139 = icmp eq i64 %i.bz, 0
-  %spec.select = select i1 %.not139, i64 %.0116170, i64 %i.bz
+  br i1 %.not139, label %bb.n, label %8
+
+8:                                                ; preds = %bb.m
   br label %bb.n
 
-bb.n:                                             ; preds = %bb.m, %bb.l
-  %.1117 = phi i64 [ %.0116170, %bb.l ], [ %spec.select, %bb.m ] ; 4 uses
+bb.n:                                             ; preds = %8, %bb.m, %bb.l
+  %.1117 = phi i64 [ %i.bz, %8 ], [ %.0116170, %bb.m ], [ %.0116170, %bb.l ] ; 4 uses
   %i.ca = tail call ptr @H5FA__dblk_page_protect(ptr noundef nonnull %i.n, i64 noundef %.0114171, i64 noundef %.1117, i32 noundef 128) #4 ; 3 uses
   %i.cb = icmp eq ptr %i.ca, null
   br i1 %i.cb, label %bb.o, label %bb.p

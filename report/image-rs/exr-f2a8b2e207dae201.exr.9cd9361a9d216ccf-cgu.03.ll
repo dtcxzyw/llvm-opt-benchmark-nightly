@@ -24,7 +24,7 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 32
   tail call void @llvm.experimental.noalias.scope.decl(metadata !4)
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 4 uses
-  %i.e = load i64, ptr %i.d, align 8, !alias.scope !4, !noalias !7, !noundef !9 ; 3 uses
+  %i.e = load i64, ptr %i.d, align 8, !alias.scope !4, !noalias !7, !noundef !9 ; 2 uses
   %i.f = add i64 %i.e, %1                         ; 3 uses
   %i.g = icmp ult i64 %i.f, %i.e
   br i1 %i.g, label %bb.c, label %bb.b, !prof !10
@@ -427,15 +427,16 @@ _RNvMsa_NtCs37Y8JGf013z_9hashbrown3rawNtB5_13RawTableInner15rehash_in_place.exit
   %i.gy = lshr i64 %.pre13.i, 3
   %i.gz = mul nuw i64 %i.gy, 7
   %i.ha = icmp ult i64 %.pre.i.fr, 8
-  %spec.select = select i1 %i.ha, i64 %.pre.i.fr, i64 %i.gz
-  %.pre = load i64, ptr %i.d, align 8, !alias.scope !44
+  br i1 %i.ha, label %4, label %bb.z
+
+4:                                                ; preds = %_RNvMsa_NtCs37Y8JGf013z_9hashbrown3rawNtB5_13RawTableInner15rehash_in_place.exit
   br label %bb.z
 
-bb.z:                                             ; preds = %_RNvMsa_NtCs37Y8JGf013z_9hashbrown3rawNtB5_13RawTableInner15rehash_in_place.exit, %_RNvMsa_NtCs37Y8JGf013z_9hashbrown3rawNtB5_13RawTableInner15rehash_in_place.exit.thread
-  %4 = phi i64 [ %i.e, %_RNvMsa_NtCs37Y8JGf013z_9hashbrown3rawNtB5_13RawTableInner15rehash_in_place.exit.thread ], [ %.pre, %_RNvMsa_NtCs37Y8JGf013z_9hashbrown3rawNtB5_13RawTableInner15rehash_in_place.exit ]
-  %5 = phi i64 [ 0, %_RNvMsa_NtCs37Y8JGf013z_9hashbrown3rawNtB5_13RawTableInner15rehash_in_place.exit.thread ], [ %spec.select, %_RNvMsa_NtCs37Y8JGf013z_9hashbrown3rawNtB5_13RawTableInner15rehash_in_place.exit ]
+bb.z:                                             ; preds = %_RNvMsa_NtCs37Y8JGf013z_9hashbrown3rawNtB5_13RawTableInner15rehash_in_place.exit.thread, %_RNvMsa_NtCs37Y8JGf013z_9hashbrown3rawNtB5_13RawTableInner15rehash_in_place.exit, %4
+  %5 = phi i64 [ %.pre.i.fr, %4 ], [ %i.gz, %_RNvMsa_NtCs37Y8JGf013z_9hashbrown3rawNtB5_13RawTableInner15rehash_in_place.exit ], [ 0, %_RNvMsa_NtCs37Y8JGf013z_9hashbrown3rawNtB5_13RawTableInner15rehash_in_place.exit.thread ]
+  %6 = load i64, ptr %i.d, align 8, !alias.scope !44, !noundef !9
   %i.hb = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.hc = sub i64 %5, %4
+  %i.hc = sub i64 %5, %6
   store i64 %i.hc, ptr %i.hb, align 8, !alias.scope !44
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !44
   br label %_RINvMsa_NtCs37Y8JGf013z_9hashbrown3rawNtB6_13RawTableInner20reserve_rehash_innerNtNtCs4wP2HXfJTCR_5alloc5alloc6GlobalECsdsTQD3x2eOp_3exr.exit
@@ -838,6 +839,9 @@ _RNCNCNvNtNtCsdsTQD3x2eOp_3exr11compression3dwa17classify_channelss_00B9_.exit.i
   %i.am = getelementptr inbounds nuw i8, ptr %i.al, i64 24
   %i.an = load i8, ptr %i.am, align 8, !range !228, !noalias !229, !noundef !9
   %i.ao = icmp eq i8 %i.an, 1
+  br i1 %i.ao, label %2, label %_RINvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB7_4IterjENtNtNtNtBb_4iter6traits8iterator8Iterator3allNCNCNvNtNtCsdsTQD3x2eOp_3exr11compression3dwa17classify_channelss_00EB1L_.exit.i.i.i.i.i
+
+2:                                                ; preds = %_RNCNCNvNtNtCsdsTQD3x2eOp_3exr11compression3dwa17classify_channelss_00B9_.exit.i.2.i.i.i.i.i
   br label %_RINvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB7_4IterjENtNtNtNtBb_4iter6traits8iterator8Iterator3allNCNCNvNtNtCsdsTQD3x2eOp_3exr11compression3dwa17classify_channelss_00EB1L_.exit.i.i.i.i.i
 
 .loopexit.i.i.i:                                  ; preds = %bb.o, %bb.n, %bb.k, %_RINvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB7_4IterjENtNtNtNtBb_4iter6traits8iterator8Iterator3allNCNCNvNtNtCsdsTQD3x2eOp_3exr11compression3dwa17classify_channelss_00EB1L_.exit.i.i.i.i.i
@@ -855,8 +859,8 @@ bb.j:                                             ; preds = %.loopexit.split-lp.
   invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueTNtNtCs4wP2HXfJTCR_5alloc6string6StringAINtNtB4_6option6OptionjEj3_EECsdsTQD3x2eOp_3exr(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %i.a) #24
           to label %bb.x unwind label %bb.v, !noalias !211
 
-_RINvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB7_4IterjENtNtNtNtBb_4iter6traits8iterator8Iterator3allNCNCNvNtNtCsdsTQD3x2eOp_3exr11compression3dwa17classify_channelss_00EB1L_.exit.i.i.i.i.i: ; preds = %_RNCNCNvNtNtCsdsTQD3x2eOp_3exr11compression3dwa17classify_channelss_00B9_.exit.i.2.i.i.i.i.i, %_RNCNCNvNtNtCsdsTQD3x2eOp_3exr11compression3dwa17classify_channelss_00B9_.exit.i.1.i.i.i.i.i, %_RNCNCNvNtNtCsdsTQD3x2eOp_3exr11compression3dwa17classify_channelss_00B9_.exit.i.i.i.i.i.i
-  %.lcssa.i.i.i.i.i = phi i1 [ false, %_RNCNCNvNtNtCsdsTQD3x2eOp_3exr11compression3dwa17classify_channelss_00B9_.exit.i.i.i.i.i.i ], [ %i.ao, %_RNCNCNvNtNtCsdsTQD3x2eOp_3exr11compression3dwa17classify_channelss_00B9_.exit.i.2.i.i.i.i.i ], [ false, %_RNCNCNvNtNtCsdsTQD3x2eOp_3exr11compression3dwa17classify_channelss_00B9_.exit.i.1.i.i.i.i.i ]
+_RINvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB7_4IterjENtNtNtNtBb_4iter6traits8iterator8Iterator3allNCNCNvNtNtCsdsTQD3x2eOp_3exr11compression3dwa17classify_channelss_00EB1L_.exit.i.i.i.i.i: ; preds = %2, %_RNCNCNvNtNtCsdsTQD3x2eOp_3exr11compression3dwa17classify_channelss_00B9_.exit.i.2.i.i.i.i.i, %_RNCNCNvNtNtCsdsTQD3x2eOp_3exr11compression3dwa17classify_channelss_00B9_.exit.i.1.i.i.i.i.i, %_RNCNCNvNtNtCsdsTQD3x2eOp_3exr11compression3dwa17classify_channelss_00B9_.exit.i.i.i.i.i.i
+  %.lcssa.i.i.i.i.i = phi i1 [ false, %_RNCNCNvNtNtCsdsTQD3x2eOp_3exr11compression3dwa17classify_channelss_00B9_.exit.i.i.i.i.i.i ], [ false, %_RNCNCNvNtNtCsdsTQD3x2eOp_3exr11compression3dwa17classify_channelss_00B9_.exit.i.2.i.i.i.i.i ], [ true, %2 ], [ false, %_RNCNCNvNtNtCsdsTQD3x2eOp_3exr11compression3dwa17classify_channelss_00B9_.exit.i.1.i.i.i.i.i ]
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val4.i.i.i.i) ]
   %i.ap = load ptr, ptr %.val4.i.i.i.i, align 8, !noalias !227, !nonnull !9, !align !62, !noundef !9
   %i.aq = invoke noundef nonnull align 8 ptr @_RNvXso_Cs8zlGlznUR0G_8smallvecINtB5_8SmallVecANtNtNtCsdsTQD3x2eOp_3exr4meta9attribute18ChannelDescriptionj5_EINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexBO_(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(336) %i.ap, i64 noundef %.sroa.5.0.copyload.i.i.i.i.i, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @3)

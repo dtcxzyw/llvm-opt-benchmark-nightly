@@ -204,7 +204,9 @@ bb.cb:                                            ; preds = %bb.ca, %bb.bz
   %spec.select.i = select i1 %.not103.i, ptr @.str.11, ptr %i.li
   %i.lj = call ptr (ptr, ptr, ...) @h5tools_str_append(ptr noundef %5, ptr noundef nonnull @.str.20, ptr noundef nonnull %spec.select.i) #12 ; 0 uses
   %i.lk = call zeroext i1 @h5tools_render_region_element(ptr noundef %i.fw, ptr noundef nonnull %3, ptr noundef nonnull %10, ptr noundef %5, ptr noundef nonnull %i.a, i64 noundef %7, ptr noundef nonnull %i.au, i64 noundef 0, i64 noundef %.081112.i) #12
-  %spec.select110.i = select i1 %i.lk, i64 %.081112.i, i64 0
+  br i1 %i.lk, label %bb.cg, label %12
+
+12:                                               ; preds = %bb.cb
   br label %bb.cg
 
 bb.cc:                                            ; preds = %.peel.next.i
@@ -233,8 +235,8 @@ bb.cf:                                            ; preds = %bb.cd
   %fputc.i = call i32 @fputc(i32 10, ptr %i.lw)   ; 0 uses
   br label %bb.cg
 
-bb.cg:                                            ; preds = %bb.cf, %bb.ce, %bb.cc, %bb.cb
-  %.182.i = phi i64 [ %.081112.i, %bb.cc ], [ %spec.select110.i, %bb.cb ], [ %.081112.i, %bb.ce ], [ %.081112.i, %bb.cf ]
+bb.cg:                                            ; preds = %bb.cf, %bb.ce, %bb.cc, %12, %bb.cb
+  %.182.i = phi i64 [ 0, %12 ], [ %.081112.i, %bb.cb ], [ %.081112.i, %bb.ce ], [ %.081112.i, %bb.cf ], [ %.081112.i, %bb.cc ]
   %i.lx = load i32, ptr %i.ie, align 8, !tbaa !37 ; 3 uses
   %i.ly = add i32 %i.lx, -1
   store i32 %i.ly, ptr %i.ie, align 8, !tbaa !37

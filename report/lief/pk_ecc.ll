@@ -193,11 +193,13 @@ bb.h:                                             ; preds = %bb.g
   %i.ae = load i32, ptr %i.a, align 4, !tbaa !23
   %i.af = call i32 @psa_destroy_key(i32 noundef %i.ae) #4
   %.not21 = icmp eq i32 %i.af, 0
-  %spec.select = select i1 %.not21, i32 0, i32 -15104
+  br i1 %.not21, label %5, label %bb.i
+
+5:                                                ; preds = %bb.h
   br label %bb.i
 
-bb.i:                                             ; preds = %bb.h, %bb.g
-  %.1 = phi i32 [ -15104, %bb.g ], [ %spec.select, %bb.h ]
+bb.i:                                             ; preds = %bb.g, %bb.h, %5
+  %.1 = phi i32 [ 0, %5 ], [ -15104, %bb.h ], [ -15104, %bb.g ]
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #4
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #4
   br label %bb.j

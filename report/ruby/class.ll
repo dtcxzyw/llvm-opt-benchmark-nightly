@@ -202,11 +202,13 @@ bb.p:                                             ; preds = %rbimpl_RB_TYPE_P_fa
   %i.cb = getelementptr i8, ptr %i.bx, i64 8
   %i.cc = load i64, ptr %i.cb, align 8, !tbaa !67
   %i.cd = icmp eq i64 %i.cc, %1
-  %spec.select = select i1 %i.cd, i32 0, i32 %.02092
+  br i1 %i.cd, label %2, label %rbimpl_RB_TYPE_P_fastpath.exit.thread
+
+2:                                                ; preds = %bb.p
   br label %rbimpl_RB_TYPE_P_fastpath.exit.thread
 
-rbimpl_RB_TYPE_P_fastpath.exit.thread:            ; preds = %.lr.ph, %bb.p, %rbimpl_RB_TYPE_P_fastpath.exit
-  %.1 = phi i32 [ %.02092, %rbimpl_RB_TYPE_P_fastpath.exit ], [ %spec.select, %bb.p ], [ %.02092, %.lr.ph ] ; 2 uses
+rbimpl_RB_TYPE_P_fastpath.exit.thread:            ; preds = %.lr.ph, %2, %bb.p, %rbimpl_RB_TYPE_P_fastpath.exit
+  %.1 = phi i32 [ %.02092, %rbimpl_RB_TYPE_P_fastpath.exit ], [ 0, %2 ], [ %.02092, %bb.p ], [ %.02092, %.lr.ph ] ; 2 uses
   %i.ce = load i64, ptr %i.bx, align 8, !tbaa !19
   %i.cf = and i64 %i.ce, 65536
   %.not.i.i48 = icmp eq i64 %i.cf, 0

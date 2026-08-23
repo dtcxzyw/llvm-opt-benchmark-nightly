@@ -205,11 +205,13 @@ bb.p:                                             ; preds = %bb.o
   %i.el = load i32, ptr %i.b, align 4
   %.not196.i = icmp sgt i32 %i.el, -1
   %or.cond200.i = select i1 %.not195.i, i1 true, i1 %.not196.i
-  %spec.select.i = select i1 %or.cond200.i, i32 %.0170320.i, i32 2
+  br i1 %or.cond200.i, label %bb.q, label %7
+
+7:                                                ; preds = %bb.p
   br label %bb.q
 
-bb.q:                                             ; preds = %bb.p, %bb.o
-  %.1171.i = phi i32 [ %spec.select.i, %bb.p ], [ %.0170320.i, %bb.o ]
+bb.q:                                             ; preds = %7, %bb.p, %bb.o
+  %.1171.i = phi i32 [ 2, %7 ], [ %.0170320.i, %bb.o ], [ %.0170320.i, %bb.p ]
   %i.em = icmp ne i32 %.0172319.i, %i.ch
   %i.en = and i32 %.0172319.i, 1
   %.not197.i = icmp eq i32 %i.en, 0

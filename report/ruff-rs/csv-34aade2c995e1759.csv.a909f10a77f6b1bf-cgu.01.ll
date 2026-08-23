@@ -202,10 +202,13 @@ bb.f:                                             ; preds = %_RNvMs5_NtCsevMXN6m
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 24
   %i.y = load ptr, ptr %i.x, align 8, !invariant.load !3, !nonnull !3
   %i.z = call noundef zeroext i1 %i.y(ptr noundef nonnull %i.v, ptr noalias noundef nonnull readonly captures(address, read_provenance) @7, i64 noundef 1)
+  br i1 %i.z, label %bb.g, label %2
+
+2:                                                ; preds = %bb.f
   br label %bb.g
 
-bb.g:                                             ; preds = %_RNvMs5_NtCsevMXN6mIFpb_3csv11byte_recordNtB5_10ByteRecord8as_slice.exit, %bb.f, %bb.a
-  %.sroa.0.0 = phi i1 [ %i.z, %bb.f ], [ true, %bb.a ], [ true, %_RNvMs5_NtCsevMXN6mIFpb_3csv11byte_recordNtB5_10ByteRecord8as_slice.exit ]
+bb.g:                                             ; preds = %_RNvMs5_NtCsevMXN6mIFpb_3csv11byte_recordNtB5_10ByteRecord8as_slice.exit, %bb.f, %bb.a, %2
+  %.sroa.0.0 = phi i1 [ false, %2 ], [ true, %bb.f ], [ true, %bb.a ], [ true, %_RNvMs5_NtCsevMXN6mIFpb_3csv11byte_recordNtB5_10ByteRecord8as_slice.exit ]
   ret i1 %.sroa.0.0
 }
 

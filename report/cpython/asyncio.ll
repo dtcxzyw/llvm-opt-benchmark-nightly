@@ -110,7 +110,7 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.93 = private unnamed_addr constant [32 x i8] c"Failed to clear coroutine chain\00", align 1
 
 ; Function Attrs: nounwind uwtable
-define hidden noundef i64 @_Py_RemoteDebug_GetAsyncioDebugAddress(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #0 {
+define hidden i64 @_Py_RemoteDebug_GetAsyncioDebugAddress(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #0 {
 bb.a:
   %1 = alloca %struct.stat, align 8               ; 5 uses
   %i.a = alloca [64 x i8], align 16               ; 11 uses
@@ -389,7 +389,6 @@ bb.aa:                                            ; preds = %.lr.ph.i.i
   %i.dq = sub i64 %i.bj, %i.dk
   %.neg.i.i = add i64 %i.dq, %i.dn
   %i.dr = add i64 %.neg.i.i, %i.dp
-  %2 = freeze i64 %i.dr
   br label %.thread2.i.i
 
 bb.ab:                                            ; preds = %bb.u
@@ -401,7 +400,7 @@ bb.ab:                                            ; preds = %bb.u
   br i1 %.not78.i.i, label %.thread10.i.i, label %.thread2.i.i
 
 .thread2.i.i:                                     ; preds = %bb.w, %bb.ab, %bb.aa, %.thread.i.i, %bb.t
-  %.0637.i.i = phi i64 [ 0, %bb.ab ], [ %2, %bb.aa ], [ 0, %.thread.i.i ], [ 0, %bb.t ], [ 0, %bb.w ]
+  %.0637.i.i = phi i64 [ 0, %bb.ab ], [ %i.dr, %bb.aa ], [ 0, %.thread.i.i ], [ 0, %bb.t ], [ 0, %bb.w ]
   %i.dw = call i32 @munmap(ptr noundef nonnull %i.bz, i64 noundef %i.by) #8 ; 0 uses
   br label %.thread10.i.i
 

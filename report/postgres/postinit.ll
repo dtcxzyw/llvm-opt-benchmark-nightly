@@ -202,7 +202,7 @@ select.unfold:                                    ; preds = %list_head.exit, %se
   %i.z = getelementptr inbounds nuw i8, ptr %..i, i64 8 ; 2 uses
   %.not27 = icmp ult ptr %i.z, %i.w
   tail call void @SetConfigOption(ptr noundef %i.q, ptr noundef %i.y, i32 noundef %i.b, i32 noundef 9) #12
-  br i1 %.not27, label %select.unfold, label %select.unfold._crit_edge
+  br i1 %.not27, label %select.unfold, label %select.unfold._crit_edge, !llvm.loop !10
 
 select.unfold._crit_edge:                         ; preds = %select.unfold, %bb.c, %list_head.exit
   ret void
@@ -489,4 +489,5 @@ attributes #15 = { nounwind willreturn memory(read) }
 !7 = !{i8 0, i8 2}
 !8 = !{}
 !9 = distinct !{null, null}
+!10 = distinct !{!10, !5}
 end_hunk_0

@@ -129,8 +129,7 @@ bb.f:                                             ; preds = %bb.e
 
 event_is_ready.exit:                              ; preds = %bb.c
   %.not38 = icmp ult i32 %.val.i, %.val5.i
-  %cond.fr = freeze i1 %.not38
-  br i1 %cond.fr, label %.thread35, label %.thread
+  br i1 %.not38, label %.thread35, label %.thread
 
 bb.g:                                             ; preds = %bb.b
   %.not23 = icmp eq ptr %i.d, null

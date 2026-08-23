@@ -202,10 +202,13 @@ bb.h:                                             ; preds = %.critedge36.i
   %i.ae = getelementptr inbounds nuw i8, ptr %i.s, i64 8
   %i.af = load i32, ptr %i.ae, align 8
   %i.ag = icmp eq i32 %i.af, 1
+  br i1 %i.ag, label %5, label %.critedge36.thread.i
+
+5:                                                ; preds = %bb.h
   br label %.critedge36.thread.i
 
-.critedge36.thread.i:                             ; preds = %.lr.ph.i.preheader, %bb.h, %.critedge36.i, %bb.g, %bb.f
-  %.1.i = phi i1 [ false, %bb.f ], [ false, %.critedge36.i ], [ %i.ag, %bb.h ], [ false, %bb.g ], [ false, %.lr.ph.i.preheader ] ; 2 uses
+.critedge36.thread.i:                             ; preds = %.lr.ph.i.preheader, %5, %bb.h, %.critedge36.i, %bb.g, %bb.f
+  %.1.i = phi i1 [ false, %bb.f ], [ true, %5 ], [ false, %bb.h ], [ false, %.critedge36.i ], [ false, %bb.g ], [ false, %.lr.ph.i.preheader ] ; 2 uses
   %i.ah = call noundef dereferenceable_or_null(16) ptr @g_memdup2(ptr noundef nonnull %2, i64 noundef 16) #17
   %i.ai = call ptr @g_slist_prepend(ptr noundef %i.r, ptr noundef %i.ah) #12 ; 2 uses
   store ptr %i.ai, ptr @divergence_log, align 8

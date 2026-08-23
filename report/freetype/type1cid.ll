@@ -204,11 +204,13 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.j
   %i.dh = icmp ugt i64 %.08.lcssa.i6079, %.08.lcssa.i71
-  %spec.select = select i1 %i.dh, i32 9, i32 0
+  br i1 %i.dh, label %5, label %bb.l
+
+5:                                                ; preds = %bb.k
   br label %bb.l
 
-bb.l:                                             ; preds = %bb.k, %bb.i, %bb.j
-  %.038.ph = phi i32 [ 9, %bb.j ], [ 9, %bb.i ], [ %spec.select, %bb.k ]
+bb.l:                                             ; preds = %bb.k, %bb.i, %5, %bb.j
+  %.038.ph = phi i32 [ 9, %bb.j ], [ 9, %5 ], [ 9, %bb.i ], [ 0, %bb.k ]
   tail call void @FT_Stream_ExitFrame(ptr noundef nonnull %i.b) #14
   br label %bb.m
 
@@ -611,8 +613,8 @@ bb.m:                                             ; preds = %bb.l
   %.not117 = icmp eq i32 %i.cc, 0
   br i1 %.not117, label %bb.n, label %.thread132
 
-.thread132:                                       ; preds = %bb.k, %bb.j, %bb.m, %bb.l
-  %.2107.ph = phi ptr [ %i.bx, %bb.l ], [ null, %bb.k ], [ null, %bb.j ], [ %i.bx, %bb.m ]
+.thread132:                                       ; preds = %bb.j, %bb.m, %bb.l, %bb.k
+  %.2107.ph = phi ptr [ %i.bx, %bb.m ], [ %i.bx, %bb.l ], [ null, %bb.k ], [ null, %bb.j ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #14
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #14
   br label %bb.aa

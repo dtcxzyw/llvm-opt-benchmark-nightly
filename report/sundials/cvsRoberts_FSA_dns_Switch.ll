@@ -204,11 +204,13 @@ bb.c:                                             ; preds = %bb.b, %switch.looku
   %i.aa = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.ab = load i32, ptr %i.aa, align 8, !tbaa !31
   %.not8.i = icmp eq i32 %i.ab, 0
-  %spec.select.i = select i1 %.not8.i, ptr @str.1, ptr @str.2
+  br i1 %.not8.i, label %3, label %PrintHeader.exit
+
+3:                                                ; preds = %bb.c
   br label %PrintHeader.exit
 
-PrintHeader.exit:                                 ; preds = %bb.a, %bb.c
-  %str.2.sink.i = phi ptr [ %spec.select.i, %bb.c ], [ @str, %bb.a ]
+PrintHeader.exit:                                 ; preds = %bb.a, %bb.c, %3
+  %str.2.sink.i = phi ptr [ @str.2, %bb.c ], [ @str.1, %3 ], [ @str, %bb.a ]
   %puts10.i = tail call i32 @puts(ptr nonnull dereferenceable(1) %str.2.sink.i) ; 0 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.ad = load double, ptr %i.ac, align 8, !tbaa !14

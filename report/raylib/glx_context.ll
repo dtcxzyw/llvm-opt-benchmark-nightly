@@ -204,11 +204,14 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.v = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %i.u, ptr noundef nonnull dereferenceable(9) @.str.47) #5
-  %2 = icmp ne i32 %i.v, 0
+  %2 = icmp eq i32 %i.v, 0
+  br i1 %2, label %3, label %bb.c
+
+3:                                                ; preds = %bb.b
   br label %bb.c
 
-bb.c:                                             ; preds = %bb.b, %bb.a
-  %3 = phi i1 [ true, %bb.a ], [ %2, %bb.b ]
+bb.c:                                             ; preds = %3, %bb.b, %bb.a
+  %4 = phi i1 [ false, %3 ], [ true, %bb.b ], [ true, %bb.a ]
   %i.w = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 139432), align 8
   %i.x = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 133888), align 8
   %i.y = load i32, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 133896), align 8
@@ -267,7 +270,7 @@ bb.g:                                             ; preds = %bb.f
   call void @llvm.lifetime.end.p0(ptr nonnull %i.p) #4
   %i.ay = and i32 %i.ax, 1
   %i.az = icmp eq i32 %i.ay, 0
-  %or.cond5 = and i1 %3, %i.az
+  %or.cond5 = and i1 %4, %i.az
   br i1 %or.cond5, label %bb.s, label %bb.h
 
 bb.h:                                             ; preds = %bb.g

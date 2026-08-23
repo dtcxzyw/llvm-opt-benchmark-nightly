@@ -202,8 +202,9 @@ arm_reg_or_xzr.exit:                              ; preds = %bb.a, %bb.b
   %i.v = load i64, ptr %i.u, align 8              ; 2 uses
   tail call fastcc void @check_mops_enabled(ptr noundef %0, i64 noundef %5)
   %i.w = icmp slt i64 %i.v, 0
-  %spec.select = select i1 %4, i64 9223372036854775792, i64 9223372036854775807
-  %.058 = select i1 %i.w, i64 %spec.select, i64 %i.v ; 5 uses
+  %brmerge.not = and i1 %4, %i.w
+  %.mux = tail call i64 @llvm.umin.i64(i64 %i.v, i64 9223372036854775807)
+  %.058 = select i1 %brmerge.not, i64 9223372036854775792, i64 %.mux ; 5 uses
   br i1 %4, label %bb.c, label %bb.e, !prof !9
 
 bb.c:                                             ; preds = %arm_reg_or_xzr.exit

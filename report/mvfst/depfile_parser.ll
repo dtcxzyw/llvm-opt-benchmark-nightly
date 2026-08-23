@@ -202,7 +202,7 @@ bb.az:                                            ; preds = %bb.ay
   %i.el = call ptr @_ZSt9__find_ifIN9__gnu_cxx17__normal_iteratorIP11StringPieceSt6vectorIS2_SaIS2_EEEENS0_5__ops16_Iter_equals_valIKS2_EEET_SC_SC_T0_St26random_access_iterator_tag(ptr %i.ej, ptr %i.ek, ptr nonnull align 8 dereferenceable(16) %3) ; 5 uses
   %i.em = load ptr, ptr %i.g, align 8, !tbaa !25  ; 2 uses
   %i.en = icmp eq ptr %i.el, %i.em
-  br i1 %i.en, label %bb.ba, label %bb.bn
+  br i1 %i.en, label %bb.ba, label %4
 
 bb.ba:                                            ; preds = %.thread266
   br i1 %.0203358, label %bb.bh, label %bb.bb
@@ -350,12 +350,14 @@ _ZNSt6vectorI11StringPieceSaIS0_EE17_M_realloc_insertIJRKS0_EEEvN9__gnu_cxx17__n
   store ptr %i.gg, ptr %i.j, align 8, !tbaa !27
   br label %_ZNSt6vectorI11StringPieceSaIS0_EE9push_backERKS0_.exit.thread
 
-bb.bn:                                            ; preds = %.thread266
-  %spec.select239 = select i1 %.0203358, i1 true, i1 %.0197359
+4:                                                ; preds = %.thread266
+  br i1 %.0203358, label %bb.bn, label %_ZNSt6vectorI11StringPieceSaIS0_EE9push_backERKS0_.exit.thread
+
+bb.bn:                                            ; preds = %4
   br label %_ZNSt6vectorI11StringPieceSaIS0_EE9push_backERKS0_.exit.thread
 
-_ZNSt6vectorI11StringPieceSaIS0_EE9push_backERKS0_.exit.thread: ; preds = %bb.bh, %bb.bn, %_ZNSt6vectorI11StringPieceSaIS0_EE17_M_realloc_insertIJRKS0_EEEvN9__gnu_cxx17__normal_iteratorIPS0_S2_EEDpOT_.exit.i, %bb.bd, %bb.bj, %_ZNSt6vectorI11StringPieceSaIS0_EE17_M_realloc_insertIJRKS0_EEEvN9__gnu_cxx17__normal_iteratorIPS0_S2_EEDpOT_.exit.i254
-  %.2199.ph = phi i1 [ %.0197359, %_ZNSt6vectorI11StringPieceSaIS0_EE17_M_realloc_insertIJRKS0_EEEvN9__gnu_cxx17__normal_iteratorIPS0_S2_EEDpOT_.exit.i254 ], [ %.0197359, %bb.bj ], [ false, %bb.bd ], [ %.0197359, %bb.bh ], [ false, %_ZNSt6vectorI11StringPieceSaIS0_EE17_M_realloc_insertIJRKS0_EEEvN9__gnu_cxx17__normal_iteratorIPS0_S2_EEDpOT_.exit.i ], [ %spec.select239, %bb.bn ]
+_ZNSt6vectorI11StringPieceSaIS0_EE9push_backERKS0_.exit.thread: ; preds = %4, %bb.bn, %bb.bh, %_ZNSt6vectorI11StringPieceSaIS0_EE17_M_realloc_insertIJRKS0_EEEvN9__gnu_cxx17__normal_iteratorIPS0_S2_EEDpOT_.exit.i, %bb.bd, %bb.bj, %_ZNSt6vectorI11StringPieceSaIS0_EE17_M_realloc_insertIJRKS0_EEEvN9__gnu_cxx17__normal_iteratorIPS0_S2_EEDpOT_.exit.i254
+  %.2199.ph = phi i1 [ %.0197359, %_ZNSt6vectorI11StringPieceSaIS0_EE17_M_realloc_insertIJRKS0_EEEvN9__gnu_cxx17__normal_iteratorIPS0_S2_EEDpOT_.exit.i254 ], [ %.0197359, %bb.bj ], [ false, %bb.bd ], [ %.0197359, %4 ], [ %.0197359, %bb.bh ], [ false, %_ZNSt6vectorI11StringPieceSaIS0_EE17_M_realloc_insertIJRKS0_EEEvN9__gnu_cxx17__normal_iteratorIPS0_S2_EEDpOT_.exit.i ], [ true, %bb.bn ]
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #11
   br label %.thread275
 

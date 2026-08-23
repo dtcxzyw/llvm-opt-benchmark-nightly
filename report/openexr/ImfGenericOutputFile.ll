@@ -89,11 +89,13 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b, %bb.a
   %i.i = call noundef zeroext i1 @_ZNK7Imf_3_46Header18hasTileDescriptionEv(ptr noundef nonnull align 8 dereferenceable(49) %2)
-  %spec.select = select i1 %i.i, i32 514, i32 2
+  br i1 %i.i, label %3, label %bb.d
+
+3:                                                ; preds = %bb.c
   br label %bb.d
 
-bb.d:                                             ; preds = %bb.c, %bb.b
-  %.0 = phi i32 [ %spec.select, %bb.c ], [ 2050, %bb.b ] ; 2 uses
+bb.d:                                             ; preds = %bb.b, %bb.c, %3
+  %.0 = phi i32 [ 2, %bb.c ], [ 514, %3 ], [ 2050, %bb.b ] ; 2 uses
   %i.j = call noundef zeroext i1 @_ZN7Imf_3_413usesLongNamesERKNS_6HeaderE(ptr noundef nonnull align 8 dereferenceable(49) %2)
   %i.k = or disjoint i32 %.0, 1024
   %spec.select9 = select i1 %i.j, i32 %i.k, i32 %.0
@@ -148,8 +150,7 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit:
   %i.m = load ptr, ptr @_ZN7Imf_3_4L10TILEDIMAGEB5cxx11E, align 8, !tbaa !17
   %i.n = load ptr, ptr %i.g, align 8, !tbaa !17
   %bcmp.i = call i32 @bcmp(ptr %i.n, ptr %i.m, i64 %i.i)
-  %bcmp.i.fr = freeze i32 %bcmp.i
-  %i.o = icmp eq i32 %bcmp.i.fr, 0
+  %i.o = icmp eq i32 %bcmp.i, 0
   br i1 %i.o, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread, label %.lr.ph.preheader
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread: ; preds = %bb.c, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit
@@ -159,7 +160,7 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.
   %i.p = icmp sgt i32 %3, 0
   br i1 %i.p, label %.lr.ph.preheader, label %._crit_edge
 
-.lr.ph.preheader:                                 ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread, %bb.b, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread21
+.lr.ph.preheader:                                 ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit, %bb.b, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread21
   %.01728 = phi i32 [ 4098, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread21 ], [ 2, %bb.b ], [ 2, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit ], [ 514, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread ]
   %wide.trip.count = zext nneg i32 %3 to i64
   br label %.lr.ph

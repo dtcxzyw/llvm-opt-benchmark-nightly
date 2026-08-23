@@ -203,8 +203,10 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.ae, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %.inv = icmp sgt i32 %i.ab, -1
-  %spec.select = select i1 %.inv, i32 1, i32 -1
+  %7 = icmp slt i32 %i.ab, 0
+  br i1 %7, label %.thread, label %8
+
+8:                                                ; preds = %bb.f
   br label %.thread
 
 bb.g:                                             ; preds = %bb.e, %bb.c, %bb.a
@@ -214,8 +216,8 @@ bb.g:                                             ; preds = %bb.e, %bb.c, %bb.a
   tail call void @N_VLinearSum(double noundef %i.af, ptr noundef %1, double noundef %i.ag, ptr noundef %4, ptr noundef %1) #5
   br label %.thread
 
-.thread:                                          ; preds = %bb.f, %bb.b, %bb.d, %bb.g
-  %.028 = phi i32 [ 0, %bb.g ], [ -1, %bb.b ], [ %spec.select, %bb.f ], [ -1, %bb.d ]
+.thread:                                          ; preds = %bb.b, %bb.d, %bb.f, %8, %bb.g
+  %.028 = phi i32 [ 0, %bb.g ], [ -1, %bb.b ], [ 1, %8 ], [ -1, %bb.d ], [ -1, %bb.f ]
   ret i32 %.028
 }
 

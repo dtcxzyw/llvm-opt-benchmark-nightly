@@ -204,10 +204,13 @@ bb.f:                                             ; preds = %.critedge
   %i.t = getelementptr inbounds i8, ptr %0, i64 %.0.lcssa
   %i.u = load i8, ptr %i.t, align 1, !tbaa !9196
   %i.v = icmp eq i8 %i.u, 0
+  br i1 %i.v, label %3, label %bb.g
+
+3:                                                ; preds = %bb.f
   br label %bb.g
 
-bb.g:                                             ; preds = %bb.f, %.critedge
-  %.025 = phi i1 [ false, %.critedge ], [ %i.v, %bb.f ]
+bb.g:                                             ; preds = %3, %bb.f, %.critedge
+  %.025 = phi i1 [ true, %3 ], [ false, %bb.f ], [ false, %.critedge ]
   ret i1 %.025
 }
 

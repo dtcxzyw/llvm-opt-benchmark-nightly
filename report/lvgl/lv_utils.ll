@@ -82,11 +82,13 @@ bb.d:                                             ; preds = %bb.c
   %i.l = load i32, ptr %i.a, align 4, !tbaa !17
   %i.m = load i32, ptr %i.i, align 4, !tbaa !16
   %.not12 = icmp eq i32 %i.l, %i.m
-  %spec.select = zext i1 %.not12 to i32
+  br i1 %.not12, label %3, label %bb.e
+
+3:                                                ; preds = %bb.d
   br label %bb.e
 
-bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b
-  %.0 = phi i32 [ %spec.select, %bb.d ], [ 0, %bb.b ], [ 0, %bb.c ]
+bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b, %3
+  %.0 = phi i32 [ 1, %3 ], [ 0, %bb.b ], [ 0, %bb.c ], [ 0, %bb.d ]
   %i.n = call i32 @lv_fs_close(ptr noundef nonnull %2) #3 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #3
   br label %bb.f

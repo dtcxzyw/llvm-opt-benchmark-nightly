@@ -204,14 +204,16 @@ bb.f:                                             ; preds = %.preheader56.i.preh
 bb.g:                                             ; preds = %.preheader56.i.preheader
   %i.t = add i8 %i.p, -48
   %i.u = icmp ult i8 %i.t, 10
-  %spec.select = select i1 %i.u, i8 2, i8 1
-  br label %.loopexit
+  br i1 %i.u, label %1, label %.loopexit
 
 bb.h:                                             ; preds = %bb.f
   %i.v = zext nneg i32 %i.r to i64
   %i.w = add i64 %i.n, %i.v                       ; 3 uses
   %i.x = icmp ult i64 %i.w, %i.n
   br i1 %i.x, label %.loopexit, label %.preheader56.i, !prof !6
+
+1:                                                ; preds = %bb.g
+  br label %.loopexit
 
 .lr.ph.i:                                         ; preds = %.preheader.i, %bb.i
   %.sroa.0.269.i = phi ptr [ %i.ae, %bb.i ], [ %.sroa.0.0.i, %.preheader.i ] ; 2 uses
@@ -238,8 +240,8 @@ bb.j:                                             ; preds = %.loopexit
   invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs6Po7BT7Nknu_5alloc6string6StringECsgO8S5jLFugx_23deltalake_catalog_unity(ptr noalias noundef align 8 dereferenceable(24) %i.b) #26
           to label %common.resume unwind label %bb.o
 
-.loopexit:                                        ; preds = %bb.f, %bb.h, %.lr.ph.i, %bb.g, %bb.d, %bb.d, %bb.c
-  %.sroa.4.016.ph = phi i8 [ 1, %bb.d ], [ %spec.select, %bb.g ], [ 1, %bb.d ], [ 0, %bb.c ], [ 1, %.lr.ph.i ], [ 1, %bb.f ], [ 2, %bb.h ]
+.loopexit:                                        ; preds = %bb.f, %bb.h, %.lr.ph.i, %1, %bb.d, %bb.d, %bb.c, %bb.g
+  %.sroa.4.016.ph = phi i8 [ 1, %bb.d ], [ 1, %bb.g ], [ 1, %bb.d ], [ 0, %bb.c ], [ 1, %.lr.ph.i ], [ 2, %1 ], [ 2, %bb.h ], [ 1, %bb.f ]
   %i.ai = invoke noundef nonnull align 8 ptr @_RINvXs6_NtCseqDwI8vvjGQ_10serde_json5errorNtB6_5ErrorNtNtCs1gOyXocuPRE_10serde_core2de5Error6customNtNtNtCsbvkFyIu7lgC_4core3num5error13ParseIntErrorECsgO8S5jLFugx_23deltalake_catalog_unity(i8 noundef %.sroa.4.016.ph)
           to label %bb.k unwind label %bb.j
 
@@ -642,7 +644,7 @@ bb.cw:                                            ; preds = %_RNvMNtCsbvkFyIu7lg
   call void @llvm.lifetime.end.p0(ptr nonnull %i.w)
   br label %.thread340
 
-_RNvMNtCsbvkFyIu7lgC_4core3stre20eq_ignore_ascii_case.exit.thread: ; preds = %bb.cr, %bb.cq, %bb.ct, %bb.cs, %bb.cp, %bb.co, %_RNvMNtCsbvkFyIu7lgC_4core3stre20eq_ignore_ascii_case.exit.a
+_RNvMNtCsbvkFyIu7lgC_4core3stre20eq_ignore_ascii_case.exit.thread: ; preds = %bb.co, %bb.cp, %bb.cs, %bb.cq, %_RNvMNtCsbvkFyIu7lgC_4core3stre20eq_ignore_ascii_case.exit.a, %bb.cr, %bb.ct
   call void @llvm.lifetime.start.p0(ptr nonnull %i.w)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.v)
   store ptr %.sroa.6224.0..sroa_idx, ptr %i.v, align 8

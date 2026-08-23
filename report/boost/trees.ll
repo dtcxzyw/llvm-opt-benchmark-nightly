@@ -205,11 +205,13 @@ bb.bs:                                            ; preds = %bb.br
   %i.gb = getelementptr inbounds nuw i8, ptr %0, i64 2750
   %i.gc = load i16, ptr %i.gb, align 2, !tbaa !28
   %.not.15.i = icmp eq i16 %i.gc, 0
-  %spec.select.i = select i1 %.not.15.i, i32 2, i32 3
+  br i1 %.not.15.i, label %4, label %build_bl_tree.exit
+
+4:                                                ; preds = %bb.bs
   br label %build_bl_tree.exit
 
-build_bl_tree.exit:                               ; preds = %scan_tree.exit36.i, %bb.be, %bb.bf, %bb.bg, %bb.bh, %bb.bi, %bb.bj, %bb.bk, %bb.bl, %bb.bm, %bb.bn, %bb.bo, %bb.bp, %bb.bq, %bb.br, %bb.bs
-  %.0.lcssa.i = phi i32 [ 18, %scan_tree.exit36.i ], [ 10, %bb.bl ], [ 17, %bb.be ], [ %spec.select.i, %bb.bs ], [ 16, %bb.bf ], [ 8, %bb.bn ], [ 15, %bb.bg ], [ 4, %bb.br ], [ 14, %bb.bh ], [ 9, %bb.bm ], [ 13, %bb.bi ], [ 5, %bb.bq ], [ 12, %bb.bj ], [ 7, %bb.bo ], [ 11, %bb.bk ], [ 6, %bb.bp ] ; 3 uses
+build_bl_tree.exit:                               ; preds = %scan_tree.exit36.i, %bb.be, %bb.bf, %bb.bg, %bb.bh, %bb.bi, %bb.bj, %bb.bk, %bb.bl, %bb.bm, %bb.bn, %bb.bo, %bb.bp, %bb.bq, %bb.br, %bb.bs, %4
+  %.0.lcssa.i = phi i32 [ 18, %scan_tree.exit36.i ], [ 2, %4 ], [ 17, %bb.be ], [ 3, %bb.bs ], [ 16, %bb.bf ], [ 8, %bb.bn ], [ 15, %bb.bg ], [ 4, %bb.br ], [ 14, %bb.bh ], [ 9, %bb.bm ], [ 13, %bb.bi ], [ 5, %bb.bq ], [ 12, %bb.bj ], [ 7, %bb.bo ], [ 11, %bb.bk ], [ 6, %bb.bp ], [ 10, %bb.bl ] ; 3 uses
   %narrow.i = mul nuw nsw i32 %.0.lcssa.i, 3
   %narrow42.i = add nuw nsw i32 %narrow.i, 17
   %i.gd = zext nneg i32 %narrow42.i to i64

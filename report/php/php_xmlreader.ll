@@ -202,11 +202,13 @@ bb.e:                                             ; preds = %bb.c
 bb.f:                                             ; preds = %.thread
   %i.m = tail call ptr @expand_filepath(ptr noundef %.02431, ptr noundef %1) #10
   %.not27 = icmp eq ptr %i.m, null
-  %spec.select32 = select i1 %.not27, ptr null, ptr %1
+  br i1 %.not27, label %.sink.split, label %3
+
+3:                                                ; preds = %bb.f
   br label %.sink.split
 
-.sink.split:                                      ; preds = %bb.f, %bb.e, %.thread
-  %.023.ph = phi ptr [ %spec.select32, %bb.f ], [ %spec.select, %bb.e ], [ %1, %.thread ]
+.sink.split:                                      ; preds = %bb.e, %.thread, %bb.f, %3
+  %.023.ph = phi ptr [ null, %bb.f ], [ %spec.select, %bb.e ], [ %1, %.thread ], [ %1, %3 ]
   tail call void @xmlFreeURI(ptr noundef nonnull %i.a) #10
   br label %bb.g
 

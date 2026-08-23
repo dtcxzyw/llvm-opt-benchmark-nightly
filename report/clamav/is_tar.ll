@@ -204,11 +204,13 @@ bb.r:                                             ; preds = %.critedge.i
   %i.da = load i16, ptr %i.cz, align 2, !tbaa !12
   %i.db = and i16 %i.da, 8192
   %.not20.i = icmp eq i16 %i.db, 0
-  %spec.select.i = select i1 %.not20.i, i32 -1, i32 %.030.i.lcssa
+  br i1 %.not20.i, label %vector.ph, label %.critedge21.i
+
+.critedge21.i:                                    ; preds = %bb.r
   br label %vector.ph
 
-vector.ph:                                        ; preds = %bb.j, %bb.k, %bb.l, %bb.m, %bb.n, %bb.o, %bb.p, %bb.q, %bb.r, %.critedge.i, %bb.i
-  %.016.i = phi i32 [ %spec.select.i, %bb.r ], [ -1, %bb.i ], [ %.030.i.lcssa, %.critedge.i ], [ %i.bh, %bb.j ], [ %i.bn, %bb.k ], [ %i.bt, %bb.l ], [ %i.bz, %bb.m ], [ %i.cf, %bb.n ], [ %i.cl, %bb.o ], [ %i.cr, %bb.p ], [ %i.cx, %bb.q ]
+vector.ph:                                        ; preds = %bb.j, %bb.k, %bb.l, %bb.m, %bb.n, %bb.o, %bb.p, %bb.q, %.critedge21.i, %bb.r, %.critedge.i, %bb.i
+  %.016.i = phi i32 [ -1, %bb.r ], [ %.030.i.lcssa, %.critedge21.i ], [ %.030.i.lcssa, %.critedge.i ], [ -1, %bb.i ], [ %i.bh, %bb.j ], [ %i.bn, %bb.k ], [ %i.bt, %bb.l ], [ %i.bz, %bb.m ], [ %i.cf, %bb.n ], [ %i.cl, %bb.o ], [ %i.cr, %bb.p ], [ %i.cx, %bb.q ]
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph

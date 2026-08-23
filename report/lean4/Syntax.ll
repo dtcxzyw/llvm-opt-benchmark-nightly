@@ -204,14 +204,13 @@ bb.d:                                             ; preds = %bb.b
   br label %lean_string_utf8_get_fast.exit
 
 lean_string_utf8_get_fast.exit:                   ; preds = %bb.c, %bb.d
-  %.0.i65 = phi i32 [ %i.m, %bb.c ], [ %i.n, %bb.d ]
-  %.0.i65.fr = freeze i32 %.0.i65                 ; 2 uses
-  %switch.tableidx = add i32 %.0.i65.fr, -9       ; 2 uses
+  %.0.i65 = phi i32 [ %i.m, %bb.c ], [ %i.n, %bb.d ] ; 2 uses
+  %switch.tableidx = add i32 %.0.i65, -9          ; 2 uses
   %i.o = icmp ult i32 %switch.tableidx, 24
   %switch.shifted = lshr i32 8388627, %switch.tableidx
   %switch.lobit = trunc i32 %switch.shifted to i1
   %or.cond = select i1 %i.o, i1 %switch.lobit, i1 false
-  %.046 = select i1 %or.cond, i32 95, i32 %.0.i65.fr ; 2 uses
+  %.046 = select i1 %or.cond, i32 95, i32 %.0.i65 ; 2 uses
   br i1 %.not.i62.a, label %bb.i, label %lean_inc.exit
 
 bb.e:                                             ; preds = %lean_nat_eq.exit

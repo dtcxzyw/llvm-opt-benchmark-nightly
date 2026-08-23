@@ -141,11 +141,13 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h
   %.not.2.i.i = icmp eq ptr %i.d, getelementptr inbounds nuw (i8, ptr @hash_algos, i64 224)
-  %spec.select.i.i = select i1 %.not.2.i.i, i32 2, i32 0
+  br i1 %.not.2.i.i, label %.split.loop.exit9.i.i, label %oidread.exit
+
+.split.loop.exit9.i.i:                            ; preds = %bb.i
   br label %oidread.exit
 
-oidread.exit:                                     ; preds = %bb.g, %bb.h, %bb.i
-  %.2.i.i = phi i32 [ %spec.select.i.i, %bb.i ], [ 0, %bb.g ], [ 1, %bb.h ]
+oidread.exit:                                     ; preds = %bb.g, %bb.h, %bb.i, %.split.loop.exit9.i.i
+  %.2.i.i = phi i32 [ 0, %bb.i ], [ 0, %bb.g ], [ 1, %bb.h ], [ 2, %.split.loop.exit9.i.i ]
   %i.u = getelementptr inbounds nuw i8, ptr %i.p, i64 32
   store i32 %.2.i.i, ptr %i.u, align 4, !tbaa !60
   %i.v = load i64, ptr %i.e, align 8, !tbaa !57   ; 3 uses

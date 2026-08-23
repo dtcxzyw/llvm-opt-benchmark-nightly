@@ -202,10 +202,13 @@ bb.f:                                             ; preds = %bb.e
     #dbg_value(i64 2, !11833, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !12057)
   %i.as = call noundef zeroext i1 %i.n(ptr noundef nonnull %i.j, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @75, i64 noundef 2) #25, !dbg !12058
     #dbg_value(i1 %i.as, !11875, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !12059)
-  br label %bb.g, !dbg !12061
+  br i1 %i.as, label %bb.g, label %2, !dbg !12061
 
-bb.g:                                             ; preds = %bb.e, %bb.f, %.loopexit, %bb.d, %bb.a, %bb.i, %bb.k
-  %.sroa.0.0 = phi i1 [ %i.as, %bb.f ], [ true, %bb.k ], [ true, %bb.a ], [ true, %bb.i ], [ true, %bb.d ], [ true, %.loopexit ], [ true, %bb.e ], !dbg !11802
+2:                                                ; preds = %bb.f
+  br label %bb.g, !dbg !12062
+
+bb.g:                                             ; preds = %bb.e, %bb.f, %.loopexit, %bb.d, %bb.a, %bb.i, %bb.k, %2
+  %.sroa.0.0 = phi i1 [ false, %2 ], [ true, %bb.k ], [ true, %bb.a ], [ true, %bb.i ], [ true, %bb.d ], [ true, %bb.f ], [ true, %.loopexit ], [ true, %bb.e ], !dbg !11802
   ret i1 %.sroa.0.0, !dbg !12062
 
 bb.h:                                             ; preds = %.preheader, %bb.j

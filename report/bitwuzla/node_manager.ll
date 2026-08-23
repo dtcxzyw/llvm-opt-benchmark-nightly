@@ -202,14 +202,18 @@ bb.a:
   ]
 
 bb.b:                                             ; preds = %bb.a, %bb.a
-  %i.c = getelementptr inbounds nuw i8, ptr %1, i64 40
+  %i.c = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 72
   %i.e = load i8, ptr %i.d, align 8, !tbaa !331, !range !64, !noundef !65
+  %2 = trunc nuw i8 %i.e to i1
+  br i1 %2, label %3, label %_ZNSt8optionalISt17reference_wrapperIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEC2IS6_TnNSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS8_T_EESt16is_constructibleIS8_JRKSE_EESt14is_convertibleISJ_S8_ESC_ISt5__or_IJSH_IS8_JRKS_ISE_EEESH_IS8_JRSO_EESH_IS8_JOSP_EESH_IS8_JOSO_EESL_ISQ_S8_ESL_ISS_S8_ESL_ISU_S8_ESL_ISW_S8_EEEEEEbE4typeELb1EEESQ_.exit
+
+3:                                                ; preds = %bb.b
   br label %_ZNSt8optionalISt17reference_wrapperIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEC2IS6_TnNSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS8_T_EESt16is_constructibleIS8_JRKSE_EESt14is_convertibleISJ_S8_ESC_ISt5__or_IJSH_IS8_JRKS_ISE_EEESH_IS8_JRSO_EESH_IS8_JOSP_EESH_IS8_JOSO_EESL_ISQ_S8_ESL_ISS_S8_ESL_ISU_S8_ESL_ISW_S8_EEEEEEbE4typeELb1EEESQ_.exit
 
-_ZNSt8optionalISt17reference_wrapperIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEC2IS6_TnNSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS8_T_EESt16is_constructibleIS8_JRKSE_EESt14is_convertibleISJ_S8_ESC_ISt5__or_IJSH_IS8_JRKS_ISE_EEESH_IS8_JRSO_EESH_IS8_JOSP_EESH_IS8_JOSO_EESL_ISQ_S8_ESL_ISS_S8_ESL_ISU_S8_ESL_ISW_S8_EEEEEEbE4typeELb1EEESQ_.exit: ; preds = %bb.b, %bb.a
-  %.sroa.2.0 = phi i8 [ 0, %bb.a ], [ %i.e, %bb.b ]
-  %.sroa.0.0 = phi ptr [ undef, %bb.a ], [ %i.c, %bb.b ]
+_ZNSt8optionalISt17reference_wrapperIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEC2IS6_TnNSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS8_T_EESt16is_constructibleIS8_JRKSE_EESt14is_convertibleISJ_S8_ESC_ISt5__or_IJSH_IS8_JRKS_ISE_EEESH_IS8_JRSO_EESH_IS8_JOSP_EESH_IS8_JOSO_EESL_ISQ_S8_ESL_ISS_S8_ESL_ISU_S8_ESL_ISW_S8_EEEEEEbE4typeELb1EEESQ_.exit: ; preds = %bb.a, %3, %bb.b
+  %.sroa.2.0 = phi i8 [ 0, %bb.a ], [ 1, %3 ], [ 0, %bb.b ]
+  %.sroa.0.0 = phi ptr [ undef, %bb.a ], [ %i.c, %3 ], [ %i.c, %bb.b ]
   %.fca.0.insert = insertvalue { ptr, i8 } poison, ptr %.sroa.0.0, 0
   %.fca.1.insert = insertvalue { ptr, i8 } %.fca.0.insert, i8 %.sroa.2.0, 1
   ret { ptr, i8 } %.fca.1.insert
