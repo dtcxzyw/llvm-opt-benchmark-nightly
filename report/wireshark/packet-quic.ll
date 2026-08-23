@@ -204,7 +204,7 @@ bb.a:
   %4 = alloca %struct.quic_cid, align 8           ; 7 uses
   %i.b = alloca i8, align 1                       ; 9 uses
   %5 = alloca %struct.quic_pp_cipher, align 8     ; 10 uses
-  %i.c = alloca ptr, align 8                      ; 8 uses
+  %i.c = alloca ptr, align 8                      ; 9 uses
   %i.d = alloca i32, align 4                      ; 5 uses
   %i.e = alloca i32, align 4                      ; 5 uses
   %i.f = alloca i32, align 4                      ; 6 uses
@@ -607,7 +607,7 @@ bb.gs:                                            ; preds = %bb.gr
   %i.acg = getelementptr i8, ptr %i.abc, i64 28   ; 3 uses
   %i.ach = getelementptr i8, ptr %i.abc, i64 20   ; 9 uses
   %i.aci = call zeroext i1 @tls_get_cipher_info(ptr noundef %1, i16 noundef zeroext 0, ptr noundef %i.acf, ptr noundef %i.acg, ptr noundef %i.ach)
-  br i1 %i.aci, label %bb.gt, label %quic_is_hp_cipher_initialized.exit.thread.thread.i
+  br i1 %i.aci, label %bb.gt, label %quic_is_hp_cipher_initialized.exit.thread.thread.sink.split.i
 
 bb.gt:                                            ; preds = %bb.gs
   %i.acj = load i32, ptr %i.ach, align 4
@@ -636,7 +636,7 @@ quic_get_traffic_secret.exit.i.i:                 ; preds = %bb.gu, %bb.gt
   %i.acx = load i16, ptr %i.abq, align 8
   %i.acy = or i16 %i.acx, 1
   store i16 %i.acy, ptr %i.abq, align 8
-  br label %quic_is_hp_cipher_initialized.exit.thread.thread.i
+  br label %quic_is_hp_cipher_initialized.exit.thread.thread.sink.split.i
 
 bb.gv:                                            ; preds = %bb.gu
   %i.acz = call ptr @wmem_file_scope()
@@ -813,8 +813,13 @@ quic_is_hp_cipher_initialized.exit.thread.i:      ; preds = %bb.hi, %bb.hh, %qui
   %.not140.i = icmp eq ptr %.pr.pr.i, null
   br i1 %.not140.i, label %quic_is_hp_cipher_initialized.exit.thread.thread195.i, label %quic_is_hp_cipher_initialized.exit.thread.thread.i
 
-quic_is_hp_cipher_initialized.exit.thread.thread.i: ; preds = %quic_is_hp_cipher_initialized.exit.thread.i, %quic_get_traffic_secret.exit.i.i, %bb.gs
-  %18 = phi ptr [ %.pr.pr.i, %quic_is_hp_cipher_initialized.exit.thread.i ], [ @.str.496, %quic_get_traffic_secret.exit.i.i ], [ @.str.606, %bb.gs ]
+quic_is_hp_cipher_initialized.exit.thread.thread.sink.split.i: ; preds = %quic_get_traffic_secret.exit.i.i, %bb.gs
+  %.str.496.sink.i = phi ptr [ @.str.496, %quic_get_traffic_secret.exit.i.i ], [ @.str.606, %bb.gs ] ; 2 uses
+  store ptr %.str.496.sink.i, ptr %i.c, align 8
+  br label %quic_is_hp_cipher_initialized.exit.thread.thread.i
+
+quic_is_hp_cipher_initialized.exit.thread.thread.i: ; preds = %quic_is_hp_cipher_initialized.exit.thread.thread.sink.split.i, %quic_is_hp_cipher_initialized.exit.thread.i
+  %18 = phi ptr [ %.pr.pr.i, %quic_is_hp_cipher_initialized.exit.thread.i ], [ %.str.496.sink.i, %quic_is_hp_cipher_initialized.exit.thread.thread.sink.split.i ]
   %i.agt = call ptr @wmem_file_scope()
   %i.agu = call noalias ptr @wmem_strdup(ptr noundef %i.agt, ptr noundef nonnull %18)
   %i.agv = getelementptr i8, ptr %.1115, i64 16

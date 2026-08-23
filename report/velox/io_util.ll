@@ -204,7 +204,7 @@ bb.a:
   %3 = alloca %"struct.arrow::internal::PlatformFilename::Impl", align 8 ; 8 uses
   %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 11 uses
   %5 = alloca %"struct.arrow::internal::PlatformFilename::Impl", align 8 ; 9 uses
-  %6 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
+  %6 = alloca %"class.std::__cxx11::basic_string", align 8 ; 7 uses
   %7 = alloca %"class.std::__cxx11::basic_string", align 8 ; 13 uses
   %i.b = load ptr, ptr %1, align 8, !tbaa !48     ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 8
@@ -436,7 +436,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendERKS4_.exit.i: ; pre
           to label %.noexc31 unwind label %bb.p   ; 8 uses
 
 .noexc31:                                         ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendERKS4_.exit.i
-  %i.cc = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 11 uses
+  %i.cc = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 12 uses
+  store ptr %i.cc, ptr %6, align 8, !tbaa !8, !alias.scope !157
   %i.cd = load ptr, ptr %i.cb, align 8, !tbaa !14 ; 3 uses
   %i.ce = getelementptr inbounds nuw i8, ptr %i.cb, i64 16 ; 7 uses
   %i.cf = icmp eq ptr %i.cd, %i.ce

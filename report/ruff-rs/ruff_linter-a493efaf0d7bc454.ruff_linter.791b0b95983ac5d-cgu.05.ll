@@ -205,7 +205,7 @@ bb.cd:                                            ; preds = %bb.cc
   br i1 %i.ge, label %bb.cf, label %_RNvXs5_NtNtCs4NRVxsYgnAr_4core3str6traitsINtNtNtB9_3ops5range5RangejEINtNtNtB9_5slice5index10SliceIndexeE3get.exit.thread.i79.invoke
 
 _RNvXs5_NtNtCs4NRVxsYgnAr_4core3str6traitsINtNtNtB9_3ops5range5RangejEINtNtNtB9_5slice5index10SliceIndexeE3get.exit.thread.i79.invoke.sink.split: ; preds = %.split3.i.i.i, %bb.cx, %.split3.i.i12.i, %bb.co
-  %.sroa.7.0.i1655.i.lcssa333.sink = phi ptr [ %.sroa.7.0.i1656.i, %.split3.i.i12.i ], [ %.sroa.7.0.i1656.i, %bb.co ], [ %.sroa.7.0.i1655.i, %bb.cx ], [ %.sroa.7.0.i1655.i, %.split3.i.i.i ]
+  %.sroa.7.0.i1655.i.lcssa333.sink = phi ptr [ %.sroa.7.0.i1656.i, %.split3.i.i12.i ], [ %.sroa.7.0.i1656.i, %bb.co ], [ %.sroa.07.0.copyload.i29.i.i, %bb.cx ], [ %.sroa.07.0.copyload.i29.i.i, %.split3.i.i.i ]
   %.ph = phi ptr [ %.sroa.7.0.i1656.i, %.split3.i.i12.i ], [ %.sroa.7.0.i1656.i, %bb.co ], [ %.sroa.7.0.i66.i, %bb.cx ], [ %.sroa.7.0.i66.i, %.split3.i.i.i ]
   %.ph356 = phi i64 [ %.sroa.9.0.i1576.i, %.split3.i.i12.i ], [ %.sroa.9.0.i1576.i, %bb.co ], [ %i.gw, %bb.cx ], [ %i.gw, %.split3.i.i.i ]
   %.ph357 = phi i64 [ %i.ho, %.split3.i.i12.i ], [ %i.ho, %bb.co ], [ %i.ir, %bb.cx ], [ %i.ir, %.split3.i.i.i ]
@@ -272,22 +272,22 @@ bb.cf:                                            ; preds = %bb.cd, %.split7.i.i
   %i.gs = getelementptr inbounds nuw i8, ptr %i.g, i64 16 ; 2 uses
   %i.gt = getelementptr inbounds nuw i8, ptr %i.g, i64 32 ; 3 uses
   %i.gu = getelementptr inbounds nuw i8, ptr %i.g, i64 40 ; 2 uses
-  %.promoted74.i = load i64, ptr %i.gr, align 8, !noalias !6519
-  %.promoted78.i = load i32, ptr %i.gs, align 8, !noalias !6519
-  %.promoted79.i = load i64, ptr %i.gt, align 8, !noalias !6519
-  %.promoted80.i = load i32, ptr %i.gu, align 8, !noalias !6519
-  %.sroa.6.0..sroa_idx112 = getelementptr inbounds nuw i8, ptr %i.c, i64 8
-  %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 16
-  %.sroa.13.i.i.sroa.5.0..sroa.67.8..sroa_idx.i.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 16
+  %.sroa.8.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.c, i64 8
+  %.sroa.9.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.c, i64 16
+  %.sroa.13.i.sroa.5.0..sroa.67.8..sroa_idx.i.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.d, i64 16
+  %.promoted72.i = load i64, ptr %i.gr, align 8, !noalias !6519
+  %.promoted75.i = load i32, ptr %i.gs, align 8, !noalias !6519
+  %.promoted76.i = load i64, ptr %i.gt, align 8, !noalias !6519
+  %.promoted77.i = load i32, ptr %i.gu, align 8, !noalias !6519
   br label %bb.cg
 
 bb.cg:                                            ; preds = %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator3all5checkINtNtCs6Wt4yPw39th_9itertools14either_or_both12EitherOrBothNtNtCs9BeaGo73rC4_16ruff_source_file8newlines4LineENCNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort5rules16organize_imports28matches_ignoring_indentation0E0B39_.exit.i.i, %.noexc86
-  %i.gv = phi i32 [ %.promoted80.i, %.noexc86 ], [ %11, %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator3all5checkINtNtCs6Wt4yPw39th_9itertools14either_or_both12EitherOrBothNtNtCs9BeaGo73rC4_16ruff_source_file8newlines4LineENCNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort5rules16organize_imports28matches_ignoring_indentation0E0B39_.exit.i.i ] ; 3 uses
-  %i.gw = phi i64 [ %.promoted79.i, %.noexc86 ], [ %12, %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator3all5checkINtNtCs6Wt4yPw39th_9itertools14either_or_both12EitherOrBothNtNtCs9BeaGo73rC4_16ruff_source_file8newlines4LineENCNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort5rules16organize_imports28matches_ignoring_indentation0E0B39_.exit.i.i ] ; 11 uses
-  %i.gx = phi i32 [ %.promoted78.i, %.noexc86 ], [ %i.ia, %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator3all5checkINtNtCs6Wt4yPw39th_9itertools14either_or_both12EitherOrBothNtNtCs9BeaGo73rC4_16ruff_source_file8newlines4LineENCNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort5rules16organize_imports28matches_ignoring_indentation0E0B39_.exit.i.i ] ; 6 uses
-  %.sroa.9.0.i1576.i = phi i64 [ %.promoted74.i, %.noexc86 ], [ %.sroa.9.0.i1575.i, %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator3all5checkINtNtCs6Wt4yPw39th_9itertools14either_or_both12EitherOrBothNtNtCs9BeaGo73rC4_16ruff_source_file8newlines4LineENCNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort5rules16organize_imports28matches_ignoring_indentation0E0B39_.exit.i.i ] ; 12 uses
-  %.sroa.7.0.i66.i = phi ptr [ %.promoted64.i, %.noexc86 ], [ %.sroa.7.0.i67.i, %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator3all5checkINtNtCs6Wt4yPw39th_9itertools14either_or_both12EitherOrBothNtNtCs9BeaGo73rC4_16ruff_source_file8newlines4LineENCNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort5rules16organize_imports28matches_ignoring_indentation0E0B39_.exit.i.i ] ; 13 uses
-  %.sroa.7.0.i1656.i = phi ptr [ %.promoted.i, %.noexc86 ], [ %.sroa.7.0.i1655.i, %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator3all5checkINtNtCs6Wt4yPw39th_9itertools14either_or_both12EitherOrBothNtNtCs9BeaGo73rC4_16ruff_source_file8newlines4LineENCNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort5rules16organize_imports28matches_ignoring_indentation0E0B39_.exit.i.i ] ; 16 uses
+  %i.gv = phi i32 [ %11, %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator3all5checkINtNtCs6Wt4yPw39th_9itertools14either_or_both12EitherOrBothNtNtCs9BeaGo73rC4_16ruff_source_file8newlines4LineENCNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort5rules16organize_imports28matches_ignoring_indentation0E0B39_.exit.i.i ], [ %.promoted77.i, %.noexc86 ] ; 5 uses
+  %i.gw = phi i64 [ %12, %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator3all5checkINtNtCs6Wt4yPw39th_9itertools14either_or_both12EitherOrBothNtNtCs9BeaGo73rC4_16ruff_source_file8newlines4LineENCNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort5rules16organize_imports28matches_ignoring_indentation0E0B39_.exit.i.i ], [ %.promoted76.i, %.noexc86 ] ; 11 uses
+  %i.gx = phi i32 [ %.sroa.9.0, %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator3all5checkINtNtCs6Wt4yPw39th_9itertools14either_or_both12EitherOrBothNtNtCs9BeaGo73rC4_16ruff_source_file8newlines4LineENCNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort5rules16organize_imports28matches_ignoring_indentation0E0B39_.exit.i.i ], [ %.promoted75.i, %.noexc86 ] ; 6 uses
+  %.sroa.9.0.i1576.i = phi i64 [ %.sroa.7114.0, %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator3all5checkINtNtCs6Wt4yPw39th_9itertools14either_or_both12EitherOrBothNtNtCs9BeaGo73rC4_16ruff_source_file8newlines4LineENCNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort5rules16organize_imports28matches_ignoring_indentation0E0B39_.exit.i.i ], [ %.promoted72.i, %.noexc86 ] ; 12 uses
+  %.sroa.7.0.i66.i = phi ptr [ %.sroa.7.0.i65.i, %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator3all5checkINtNtCs6Wt4yPw39th_9itertools14either_or_both12EitherOrBothNtNtCs9BeaGo73rC4_16ruff_source_file8newlines4LineENCNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort5rules16organize_imports28matches_ignoring_indentation0E0B39_.exit.i.i ], [ %.promoted64.i, %.noexc86 ] ; 15 uses
+  %.sroa.7.0.i1656.i = phi ptr [ %.sroa.07.0.copyload.i29.i.i, %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator3all5checkINtNtCs6Wt4yPw39th_9itertools14either_or_both12EitherOrBothNtNtCs9BeaGo73rC4_16ruff_source_file8newlines4LineENCNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort5rules16organize_imports28matches_ignoring_indentation0E0B39_.exit.i.i ], [ %.promoted.i, %.noexc86 ] ; 16 uses
   %.not.i.i.i.i = icmp eq ptr %.sroa.7.0.i1656.i, null
   br i1 %.not.i.i.i.i, label %_RNvXs9_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4fuseINtB5_4FuseNtNtCs9BeaGo73rC4_16ruff_source_file8newlines24UniversalNewlineIteratorEINtB5_8FuseImplBY_E4nextCsEhZmuQNqkz_11ruff_linter.exit.i.i.i, label %bb.ch
 
@@ -394,20 +394,20 @@ _RNvXs_NtCs2MoD74u7shA_14ruff_text_size6traitsReNtB4_7TextLen8text_len.exit.i18.
   store i32 %i.hz, ptr %i.gs, align 8, !alias.scope !6531, !noalias !6549
   br label %_RNvXs9_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4fuseINtB5_4FuseNtNtCs9BeaGo73rC4_16ruff_source_file8newlines24UniversalNewlineIteratorEINtB5_8FuseImplBY_E4nextCsEhZmuQNqkz_11ruff_linter.exit.i.i.i
 
-_RNvXs9_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4fuseINtB5_4FuseNtNtCs9BeaGo73rC4_16ruff_source_file8newlines24UniversalNewlineIteratorEINtB5_8FuseImplBY_E4nextCsEhZmuQNqkz_11ruff_linter.exit.i.i.i: ; preds = %bb.cg, %bb.cp, %_RNvXs_NtCs2MoD74u7shA_14ruff_text_size6traitsReNtB4_7TextLen8text_len.exit.i18.i, %bb.ch
-  %.sroa.9.0 = phi i32 [ %i.gx, %bb.cp ], [ undef, %bb.ch ], [ %i.gx, %_RNvXs_NtCs2MoD74u7shA_14ruff_text_size6traitsReNtB4_7TextLen8text_len.exit.i18.i ], [ undef, %bb.cg ]
-  %.sroa.7114.0 = phi i64 [ %.sroa.9.0.i1576.i, %bb.cp ], [ undef, %bb.ch ], [ %i.ho, %_RNvXs_NtCs2MoD74u7shA_14ruff_text_size6traitsReNtB4_7TextLen8text_len.exit.i18.i ], [ undef, %bb.cg ]
-  %.sroa.07.0.copyload.i29.i.i = phi ptr [ %.sroa.7.0.i1656.i, %bb.cp ], [ null, %bb.ch ], [ %.sroa.7.0.i1656.i, %_RNvXs_NtCs2MoD74u7shA_14ruff_text_size6traitsReNtB4_7TextLen8text_len.exit.i18.i ], [ null, %bb.cg ] ; 4 uses
-  %i.ia = phi i32 [ %i.gx, %bb.cp ], [ %i.gx, %bb.ch ], [ %i.hz, %_RNvXs_NtCs2MoD74u7shA_14ruff_text_size6traitsReNtB4_7TextLen8text_len.exit.i18.i ], [ %i.gx, %bb.cg ]
-  %.sroa.9.0.i1575.i = phi i64 [ 0, %bb.cp ], [ 0, %bb.ch ], [ %.sroa.9.0.i15.i, %_RNvXs_NtCs2MoD74u7shA_14ruff_text_size6traitsReNtB4_7TextLen8text_len.exit.i18.i ], [ %.sroa.9.0.i1576.i, %bb.cg ]
-  %.sroa.7.0.i1655.i = phi ptr [ inttoptr (i64 1 to ptr), %bb.cp ], [ %.sroa.7.0.i1656.i, %bb.ch ], [ %.sroa.7.0.i16.i, %_RNvXs_NtCs2MoD74u7shA_14ruff_text_size6traitsReNtB4_7TextLen8text_len.exit.i18.i ], [ null, %bb.cg ] ; 3 uses
+_RNvXs9_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4fuseINtB5_4FuseNtNtCs9BeaGo73rC4_16ruff_source_file8newlines24UniversalNewlineIteratorEINtB5_8FuseImplBY_E4nextCsEhZmuQNqkz_11ruff_linter.exit.i.i.i: ; preds = %_RNvXs_NtCs2MoD74u7shA_14ruff_text_size6traitsReNtB4_7TextLen8text_len.exit.i18.i, %bb.cp, %bb.ch, %bb.cg
+  %.sroa.9.0 = phi i32 [ %i.gx, %bb.cp ], [ %i.gx, %bb.ch ], [ %i.hz, %_RNvXs_NtCs2MoD74u7shA_14ruff_text_size6traitsReNtB4_7TextLen8text_len.exit.i18.i ], [ %i.gx, %bb.cg ]
+  %.sroa.7114.0 = phi i64 [ 0, %bb.cp ], [ 0, %bb.ch ], [ %.sroa.9.0.i15.i, %_RNvXs_NtCs2MoD74u7shA_14ruff_text_size6traitsReNtB4_7TextLen8text_len.exit.i18.i ], [ %.sroa.9.0.i1576.i, %bb.cg ]
+  %.sroa.07.0.copyload.i29.i.i = phi ptr [ inttoptr (i64 1 to ptr), %bb.cp ], [ %.sroa.7.0.i1656.i, %bb.ch ], [ %.sroa.7.0.i16.i, %_RNvXs_NtCs2MoD74u7shA_14ruff_text_size6traitsReNtB4_7TextLen8text_len.exit.i18.i ], [ null, %bb.cg ] ; 3 uses
+  %i.ia = phi i32 [ %i.gx, %bb.cp ], [ undef, %bb.ch ], [ %i.gx, %_RNvXs_NtCs2MoD74u7shA_14ruff_text_size6traitsReNtB4_7TextLen8text_len.exit.i18.i ], [ undef, %bb.cg ]
+  %.sroa.9.0.i1575.i = phi i64 [ %.sroa.9.0.i1576.i, %bb.cp ], [ undef, %bb.ch ], [ %i.ho, %_RNvXs_NtCs2MoD74u7shA_14ruff_text_size6traitsReNtB4_7TextLen8text_len.exit.i18.i ], [ undef, %bb.cg ]
+  %.sroa.7.0.i1655.i = phi ptr [ %.sroa.7.0.i1656.i, %bb.cp ], [ null, %bb.ch ], [ %.sroa.7.0.i1656.i, %_RNvXs_NtCs2MoD74u7shA_14ruff_text_size6traitsReNtB4_7TextLen8text_len.exit.i18.i ], [ null, %bb.cg ] ; 3 uses
   %.not.i20.i.i.i = icmp eq ptr %.sroa.7.0.i66.i, null
   br i1 %.not.i20.i.i.i, label %_RNvXs9_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4fuseINtB5_4FuseNtNtCs9BeaGo73rC4_16ruff_source_file8newlines24UniversalNewlineIteratorEINtB5_8FuseImplBY_E4nextCsEhZmuQNqkz_11ruff_linter.exit21.i.thread.i.i, label %_RNvXs9_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4fuseINtB5_4FuseNtNtCs9BeaGo73rC4_16ruff_source_file8newlines24UniversalNewlineIteratorEINtB5_8FuseImplBY_E4nextCsEhZmuQNqkz_11ruff_linter.exit21.i.i.i
 
 _RNvXs9_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4fuseINtB5_4FuseNtNtCs9BeaGo73rC4_16ruff_source_file8newlines24UniversalNewlineIteratorEINtB5_8FuseImplBY_E4nextCsEhZmuQNqkz_11ruff_linter.exit21.i.i.i: ; preds = %_RNvXs9_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4fuseINtB5_4FuseNtNtCs9BeaGo73rC4_16ruff_source_file8newlines24UniversalNewlineIteratorEINtB5_8FuseImplBY_E4nextCsEhZmuQNqkz_11ruff_linter.exit.i.i.i
   call void @llvm.experimental.noalias.scope.decl(metadata !6553)
   %i.ib = icmp eq i64 %i.gw, 0
-  br i1 %i.ib, label %_RNvXs0_NtCs9BeaGo73rC4_16ruff_source_file8newlinesNtB5_24UniversalNewlineIteratorNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4next.exit.i, label %bb.cr
+  br i1 %i.ib, label %_RNvXs0_NtCs9BeaGo73rC4_16ruff_source_file8newlinesNtB5_24UniversalNewlineIteratorNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4next.exit.thread.i, label %bb.cr
 
 bb.cr:                                            ; preds = %_RNvXs9_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4fuseINtB5_4FuseNtNtCs9BeaGo73rC4_16ruff_source_file8newlines24UniversalNewlineIteratorEINtB5_8FuseImplBY_E4nextCsEhZmuQNqkz_11ruff_linter.exit21.i.i.i
   call void @llvm.experimental.noalias.scope.decl(metadata !6556), !noalias !6537
@@ -498,31 +498,36 @@ _RNvXs_NtCs2MoD74u7shA_14ruff_text_size6traitsReNtB4_7TextLen8text_len.exit.i.i:
   store i32 %i.jc, ptr %i.gu, align 8, !alias.scope !6553, !noalias !6569
   br label %_RNvXs0_NtCs9BeaGo73rC4_16ruff_source_file8newlinesNtB5_24UniversalNewlineIteratorNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4next.exit.thread.i
 
-_RNvXs0_NtCs9BeaGo73rC4_16ruff_source_file8newlinesNtB5_24UniversalNewlineIteratorNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4next.exit.i: ; preds = %_RNvXs9_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4fuseINtB5_4FuseNtNtCs9BeaGo73rC4_16ruff_source_file8newlines24UniversalNewlineIteratorEINtB5_8FuseImplBY_E4nextCsEhZmuQNqkz_11ruff_linter.exit21.i.i.i
-  %.not.i.i.i = icmp eq ptr %.sroa.07.0.copyload.i29.i.i, null
-  br i1 %.not.i.i.i, label %bb.da, label %.loopexit134
-
-_RNvXs0_NtCs9BeaGo73rC4_16ruff_source_file8newlinesNtB5_24UniversalNewlineIteratorNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4next.exit.thread.i: ; preds = %_RNvXs_NtCs2MoD74u7shA_14ruff_text_size6traitsReNtB4_7TextLen8text_len.exit.i.i, %bb.cy
-  %11 = phi i32 [ %i.jc, %_RNvXs_NtCs2MoD74u7shA_14ruff_text_size6traitsReNtB4_7TextLen8text_len.exit.i.i ], [ %i.gv, %bb.cy ]
-  %12 = phi i64 [ %.sroa.9.0.i.i, %_RNvXs_NtCs2MoD74u7shA_14ruff_text_size6traitsReNtB4_7TextLen8text_len.exit.i.i ], [ 0, %bb.cy ]
-  %.sroa.7.0.i67.i = phi ptr [ %.sroa.7.0.i.i, %_RNvXs_NtCs2MoD74u7shA_14ruff_text_size6traitsReNtB4_7TextLen8text_len.exit.i.i ], [ inttoptr (i64 1 to ptr), %bb.cy ]
-  %.sroa.3.0.i.i = phi i64 [ %i.ir, %_RNvXs_NtCs2MoD74u7shA_14ruff_text_size6traitsReNtB4_7TextLen8text_len.exit.i.i ], [ %i.gw, %bb.cy ]
-  %.not.i.i140.i = icmp eq ptr %.sroa.07.0.copyload.i29.i.i, null
-  br i1 %.not.i.i140.i, label %.loopexit134, label %.thread.i
+_RNvXs0_NtCs9BeaGo73rC4_16ruff_source_file8newlinesNtB5_24UniversalNewlineIteratorNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4next.exit.thread.i: ; preds = %_RNvXs_NtCs2MoD74u7shA_14ruff_text_size6traitsReNtB4_7TextLen8text_len.exit.i.i, %bb.cy, %_RNvXs9_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4fuseINtB5_4FuseNtNtCs9BeaGo73rC4_16ruff_source_file8newlines24UniversalNewlineIteratorEINtB5_8FuseImplBY_E4nextCsEhZmuQNqkz_11ruff_linter.exit21.i.i.i
+  %11 = phi i32 [ %i.gv, %_RNvXs9_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4fuseINtB5_4FuseNtNtCs9BeaGo73rC4_16ruff_source_file8newlines24UniversalNewlineIteratorEINtB5_8FuseImplBY_E4nextCsEhZmuQNqkz_11ruff_linter.exit21.i.i.i ], [ %i.jc, %_RNvXs_NtCs2MoD74u7shA_14ruff_text_size6traitsReNtB4_7TextLen8text_len.exit.i.i ], [ %i.gv, %bb.cy ]
+  %12 = phi i64 [ 0, %_RNvXs9_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4fuseINtB5_4FuseNtNtCs9BeaGo73rC4_16ruff_source_file8newlines24UniversalNewlineIteratorEINtB5_8FuseImplBY_E4nextCsEhZmuQNqkz_11ruff_linter.exit21.i.i.i ], [ %.sroa.9.0.i.i, %_RNvXs_NtCs2MoD74u7shA_14ruff_text_size6traitsReNtB4_7TextLen8text_len.exit.i.i ], [ 0, %bb.cy ]
+  %.sroa.7.0.i65.i = phi ptr [ %.sroa.7.0.i66.i, %_RNvXs9_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4fuseINtB5_4FuseNtNtCs9BeaGo73rC4_16ruff_source_file8newlines24UniversalNewlineIteratorEINtB5_8FuseImplBY_E4nextCsEhZmuQNqkz_11ruff_linter.exit21.i.i.i ], [ %.sroa.7.0.i.i, %_RNvXs_NtCs2MoD74u7shA_14ruff_text_size6traitsReNtB4_7TextLen8text_len.exit.i.i ], [ inttoptr (i64 1 to ptr), %bb.cy ]
+  %.sroa.9.0.i = phi i32 [ undef, %_RNvXs9_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4fuseINtB5_4FuseNtNtCs9BeaGo73rC4_16ruff_source_file8newlines24UniversalNewlineIteratorEINtB5_8FuseImplBY_E4nextCsEhZmuQNqkz_11ruff_linter.exit21.i.i.i ], [ %i.gv, %_RNvXs_NtCs2MoD74u7shA_14ruff_text_size6traitsReNtB4_7TextLen8text_len.exit.i.i ], [ %i.gv, %bb.cy ]
+  %.sroa.8.0.i = phi i64 [ undef, %_RNvXs9_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4fuseINtB5_4FuseNtNtCs9BeaGo73rC4_16ruff_source_file8newlines24UniversalNewlineIteratorEINtB5_8FuseImplBY_E4nextCsEhZmuQNqkz_11ruff_linter.exit21.i.i.i ], [ %i.ir, %_RNvXs_NtCs2MoD74u7shA_14ruff_text_size6traitsReNtB4_7TextLen8text_len.exit.i.i ], [ %i.gw, %bb.cy ]
+  %.sroa.022.0.i = phi ptr [ null, %_RNvXs9_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4fuseINtB5_4FuseNtNtCs9BeaGo73rC4_16ruff_source_file8newlines24UniversalNewlineIteratorEINtB5_8FuseImplBY_E4nextCsEhZmuQNqkz_11ruff_linter.exit21.i.i.i ], [ %.sroa.7.0.i66.i, %_RNvXs_NtCs2MoD74u7shA_14ruff_text_size6traitsReNtB4_7TextLen8text_len.exit.i.i ], [ %.sroa.7.0.i66.i, %bb.cy ] ; 2 uses
+  %13 = icmp eq ptr %.sroa.022.0.i, null          ; 2 uses
+  %.not.i.i140.i = icmp eq ptr %.sroa.7.0.i1655.i, null
+  br i1 %.not.i.i140.i, label %15, label %14
 
 _RNvXs9_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4fuseINtB5_4FuseNtNtCs9BeaGo73rC4_16ruff_source_file8newlines24UniversalNewlineIteratorEINtB5_8FuseImplBY_E4nextCsEhZmuQNqkz_11ruff_linter.exit21.i.thread.i.i: ; preds = %_RNvXs9_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4fuseINtB5_4FuseNtNtCs9BeaGo73rC4_16ruff_source_file8newlines24UniversalNewlineIteratorEINtB5_8FuseImplBY_E4nextCsEhZmuQNqkz_11ruff_linter.exit.i.i.i
-  %.not.i30.i.i = icmp eq ptr %.sroa.07.0.copyload.i29.i.i, null
+  %.not.i30.i.i = icmp eq ptr %.sroa.7.0.i1655.i, null
   br i1 %.not.i30.i.i, label %bb.da, label %.loopexit134
 
-.thread.i:                                        ; preds = %_RNvXs0_NtCs9BeaGo73rC4_16ruff_source_file8newlinesNtB5_24UniversalNewlineIteratorNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4next.exit.thread.i
+14:                                               ; preds = %_RNvXs0_NtCs9BeaGo73rC4_16ruff_source_file8newlinesNtB5_24UniversalNewlineIteratorNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4next.exit.thread.i
+  br i1 %13, label %.loopexit134, label %.thread.i
+
+15:                                               ; preds = %_RNvXs0_NtCs9BeaGo73rC4_16ruff_source_file8newlinesNtB5_24UniversalNewlineIteratorNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4next.exit.thread.i
+  br i1 %13, label %bb.da, label %.loopexit134
+
+.thread.i:                                        ; preds = %14
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !6573
-  store ptr %.sroa.7.0.i66.i, ptr %i.c, align 8, !noalias !6580
-  store i64 %.sroa.3.0.i.i, ptr %.sroa.6.0..sroa_idx112, align 8, !noalias !6580
-  store i32 %i.gv, ptr %.sroa.7.0..sroa_idx, align 8, !noalias !6580
+  store ptr %.sroa.022.0.i, ptr %i.c, align 8, !noalias !6580
+  store i64 %.sroa.8.0.i, ptr %.sroa.8.0..sroa_idx.i, align 8, !noalias !6580
+  store i32 %.sroa.9.0.i, ptr %.sroa.9.0..sroa_idx.i, align 8, !noalias !6580
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !6573
-  store ptr %.sroa.07.0.copyload.i29.i.i, ptr %i.d, align 8, !noalias !6580
-  store i64 %.sroa.7114.0, ptr %.sroa.67.8..sroa_idx.i.i, align 8, !noalias !6580
-  store i32 %.sroa.9.0, ptr %.sroa.13.i.i.sroa.5.0..sroa.67.8..sroa_idx.i.i.sroa_idx, align 8, !noalias !6580
+  store ptr %.sroa.7.0.i1655.i, ptr %i.d, align 8, !noalias !6580
+  store i64 %.sroa.9.0.i1575.i, ptr %.sroa.67.8..sroa_idx.i.i, align 8, !noalias !6580
+  store i32 %i.ia, ptr %.sroa.13.i.sroa.5.0..sroa.67.8..sroa_idx.i.sroa_idx.i, align 8, !noalias !6580
   %i.jd = invoke { ptr, i64 } @_RNvXs7_NtCs9BeaGo73rC4_16ruff_source_file8newlinesNtB5_4LineNtNtNtCs4NRVxsYgnAr_4core3ops5deref5Deref5deref(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.d)
           to label %.noexc95 unwind label %.loopexit ; 2 uses
 
@@ -562,13 +567,13 @@ _RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator3all5checkINtN
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !6573
   br i1 %.not.i.i83, label %bb.cg, label %.loopexit134
 
-.loopexit134:                                     ; preds = %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator3all5checkINtNtCs6Wt4yPw39th_9itertools14either_or_both12EitherOrBothNtNtCs9BeaGo73rC4_16ruff_source_file8newlines4LineENCNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort5rules16organize_imports28matches_ignoring_indentation0E0B39_.exit.i.i, %_RNvXs0_NtCs9BeaGo73rC4_16ruff_source_file8newlinesNtB5_24UniversalNewlineIteratorNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4next.exit.thread.i, %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator3all5checkINtNtCs6Wt4yPw39th_9itertools14either_or_both12EitherOrBothNtNtCs9BeaGo73rC4_16ruff_source_file8newlines4LineENCNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort5rules16organize_imports28matches_ignoring_indentation0E0B39_.exit.thread17.i.i, %_RNvXs9_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4fuseINtB5_4FuseNtNtCs9BeaGo73rC4_16ruff_source_file8newlines24UniversalNewlineIteratorEINtB5_8FuseImplBY_E4nextCsEhZmuQNqkz_11ruff_linter.exit21.i.thread.i.i, %_RNvXs0_NtCs9BeaGo73rC4_16ruff_source_file8newlinesNtB5_24UniversalNewlineIteratorNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4next.exit.i
+.loopexit134:                                     ; preds = %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator3all5checkINtNtCs6Wt4yPw39th_9itertools14either_or_both12EitherOrBothNtNtCs9BeaGo73rC4_16ruff_source_file8newlines4LineENCNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort5rules16organize_imports28matches_ignoring_indentation0E0B39_.exit.i.i, %14, %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator3all5checkINtNtCs6Wt4yPw39th_9itertools14either_or_both12EitherOrBothNtNtCs9BeaGo73rC4_16ruff_source_file8newlines4LineENCNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort5rules16organize_imports28matches_ignoring_indentation0E0B39_.exit.thread17.i.i, %15, %_RNvXs9_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4fuseINtB5_4FuseNtNtCs9BeaGo73rC4_16ruff_source_file8newlines24UniversalNewlineIteratorEINtB5_8FuseImplBY_E4nextCsEhZmuQNqkz_11ruff_linter.exit21.i.thread.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g), !noalias !6519
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n)
   invoke void @_RINvMs8_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB6_11LintContext17report_diagnosticNtNtNtNtNtBa_5rules5isort5rules16organize_imports15UnsortedImportsEBa_(ptr noalias noundef nonnull sret([48 x i8]) align 8 captures(none) dereferenceable(48) %i.n, ptr noundef nonnull align 8 %10, i32 noundef %.sroa.0.0.i.i66, i32 noundef %.sroa.26.0.i7.i)
           to label %bb.dd unwind label %.loopexit.split-lp
 
-bb.da:                                            ; preds = %_RNvXs9_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4fuseINtB5_4FuseNtNtCs9BeaGo73rC4_16ruff_source_file8newlines24UniversalNewlineIteratorEINtB5_8FuseImplBY_E4nextCsEhZmuQNqkz_11ruff_linter.exit21.i.thread.i.i, %_RNvXs0_NtCs9BeaGo73rC4_16ruff_source_file8newlinesNtB5_24UniversalNewlineIteratorNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4next.exit.i
+bb.da:                                            ; preds = %15, %_RNvXs9_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4fuseINtB5_4FuseNtNtCs9BeaGo73rC4_16ruff_source_file8newlines24UniversalNewlineIteratorEINtB5_8FuseImplBY_E4nextCsEhZmuQNqkz_11ruff_linter.exit21.i.thread.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g), !noalias !6519
   invoke void @_RNvXso_NtCscdodAO9FK5_5alloc3vecINtB5_3VechENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCsEhZmuQNqkz_11ruff_linter(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.r)
           to label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VechEECsEhZmuQNqkz_11ruff_linter.exit.i unwind label %bb.db

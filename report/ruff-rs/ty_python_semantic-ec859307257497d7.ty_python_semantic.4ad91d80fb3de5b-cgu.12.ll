@@ -205,13 +205,13 @@ bb.a:
   %i.p = alloca [16 x i8], align 4                ; 5 uses
   %i.q = alloca [40 x i8], align 8                ; 11 uses
   %i.r = alloca [24 x i8], align 8                ; 11 uses
-  %i.s = alloca [24 x i8], align 8                ; 10 uses
+  %i.s = alloca [24 x i8], align 8                ; 11 uses
   %i.t = getelementptr i8, ptr %1, i64 208
   %.val24 = load ptr, ptr %i.t, align 8, !nonnull !6, !align !8, !noundef !6 ; 5 uses
   %i.u = getelementptr i8, ptr %1, i64 192        ; 4 uses
   %.val = load ptr, ptr %i.u, align 8, !nonnull !6, !noundef !6 ; 12 uses
   %i.v = getelementptr i8, ptr %1, i64 200
-  %.val23 = load ptr, ptr %i.v, align 8, !nonnull !6, !align !7, !noundef !6 ; 11 uses
+  %.val23 = load ptr, ptr %i.v, align 8, !nonnull !6, !align !7, !noundef !6 ; 12 uses
   %i.w = load i32, ptr %3, align 4, !range !569, !noundef !6 ; 2 uses
   %i.x = icmp ne i32 %i.w, 17
   tail call void @llvm.assume(i1 %i.x)
@@ -260,6 +260,8 @@ _RINvYINtNtNtCs4NRVxsYgnAr_4core5slice4iter4IterNtNtCskLngH8kgpZI_15ruff_python_
   store ptr %1, ptr %i.s, align 8
   %i.am = getelementptr inbounds nuw i8, ptr %i.s, i64 8
   store ptr %.val, ptr %i.am, align 8
+  %6 = getelementptr inbounds nuw i8, ptr %i.s, i64 16
+  store ptr %.val23, ptr %6, align 8
   br label %bb.ak
 
 .lr.ph.i:                                         ; preds = %.thread, %bb.e

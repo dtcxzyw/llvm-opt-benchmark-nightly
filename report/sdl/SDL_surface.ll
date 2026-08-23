@@ -204,9 +204,9 @@ bb.y:                                             ; preds = %bb.j, %bb.i, %SDL_B
 define hidden zeroext i1 @SDL_BlitSurfaceTiledWithScale_REAL(ptr noundef %0, ptr noundef %1, float noundef %2, i32 noundef %3, ptr noundef %4, ptr nofree noundef readonly captures(address_is_null) %5) local_unnamed_addr #2 {
 bb.a:
   %6 = alloca %struct.SDL_Rect, align 4           ; 9 uses
-  %7 = alloca %struct.SDL_Rect, align 8           ; 11 uses
+  %7 = alloca %struct.SDL_Rect, align 8           ; 12 uses
   %8 = alloca %struct.SDL_Rect, align 4           ; 11 uses
-  %9 = alloca %struct.SDL_Rect, align 4           ; 17 uses
+  %9 = alloca %struct.SDL_Rect, align 4           ; 18 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #10
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #10
   %.not.i = icmp eq ptr %0, null
@@ -436,6 +436,8 @@ bb.v:                                             ; preds = %.critedge.us107
 
 .lr.ph106.split.split:                            ; preds = %.lr.ph106.split
   %i.cj = add i32 %i.bk, %i.ay
+  %10 = load i32, ptr %7, align 8
+  store i32 %10, ptr %9, align 4
   store i32 %i.cj, ptr %i.bl, align 4
   br label %.critedge95
 
