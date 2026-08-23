@@ -1,0 +1,93 @@
+diff --git a/llvm/lib/Analysis/BasicAliasAnalysis.cpp b/llvm/lib/Analysis/BasicAliasAnalysis.cpp
+index 7df62577e04db..99d04993c12d4 100644
+--- a/llvm/lib/Analysis/BasicAliasAnalysis.cpp
++++ b/llvm/lib/Analysis/BasicAliasAnalysis.cpp
+@@ -2019,6 +2019,34 @@ bool BasicAAResult::constantOffsetHeuristic(const DecomposedGEP &GEP,
+       Var0.Val.V->getType() != Var1.Val.V->getType())
+     return false;
+ 
++  // If one index is a select, check whether both arms have a constant
++  // distance from the other index. This preserves correlations such as
++  // select(x + 1, x + 2) versus x + 3 that range analysis loses.
++  auto IsNoAlias = [&](const Value *V0, const Value *V1) {
++    LinearExpression E0 = GetLinearExpression(CastedValue(V0), DL, 0, AC, DT);
++    LinearExpression E1 = GetLinearExpression(CastedValue(V1), DL, 0, AC, DT);
++    if (E0.Scale != E1.Scale || !E0.Val.hasSameCastsAs(E1.Val) ||
++        !isValueEqualInPotentialCycles(E0.Val.V, E1.Val.V, AAQI))
++      return false;
++
++    APInt Scale = Var0.IsNegated ? -Var0.Scale : Var0.Scale;
++    APInt IndexDiff = (E0.Offset - E1.Offset).sextOrTrunc(Scale.getBitWidth());
++    APInt Diff = GEP.Offset + IndexDiff * Scale;
++    return Diff.isNegative() ? (-Diff).uge(V1Size) : Diff.uge(V2Size);
++  };
++
++  if (Var0.Val.ZExtBits == 0 && Var0.Val.SExtBits == 0 &&
++      Var1.Val.ZExtBits == 0 && Var1.Val.SExtBits == 0) {
++    if (const auto *SI = dyn_cast<SelectInst>(Var0.Val.V))
++      if (IsNoAlias(SI->getTrueValue(), Var1.Val.V) &&
++          IsNoAlias(SI->getFalseValue(), Var1.Val.V))
++        return true;
++    if (const auto *SI = dyn_cast<SelectInst>(Var1.Val.V))
++      if (IsNoAlias(Var0.Val.V, SI->getTrueValue()) &&
++          IsNoAlias(Var0.Val.V, SI->getFalseValue()))
++        return true;
++  }
++
+   // We'll strip off the Extensions of Var0 and Var1 and do another round
+   // of GetLinearExpression decomposition. In the example above, if Var0
+   // is zext(%x + 1) we should get V1 == %x and V1Offset == 1.
+diff --git a/llvm/test/Analysis/BasicAA/non-equal-select.ll b/llvm/test/Analysis/BasicAA/non-equal-select.ll
+index fe38a57eeb1b4..815dd30cdf2c1 100644
+--- a/llvm/test/Analysis/BasicAA/non-equal-select.ll
++++ b/llvm/test/Analysis/BasicAA/non-equal-select.ll
+@@ -17,9 +17,8 @@ entry:
+ 
+ define void @select_in_gep2(i1 %c, i64 %x) {
+ entry:
+-  ; TODO: should be "NoAlias" here as well.
+ ; CHECK-LABEL: Function: select_in_gep2
+-; CHECK: MayAlias:     i32* %arrayidx1, i32* %arrayidx2
++; CHECK: NoAlias: i32* %arrayidx1, i32* %arrayidx2
+   %add1_ = add nsw i64 %x, 1
+   %add2_ = add nsw i64 %x, 2
+   %add3_ = add nsw i64 %x, 3
+@@ -31,6 +30,38 @@ entry:
+   ret void
+ }
+ 
++define void @select_in_gep_rhs(i1 %c, i64 %x) {
++entry:
++; CHECK-LABEL: Function: select_in_gep_rhs
++; CHECK: NoAlias: i32* %arrayidx1, i32* %arrayidx2
++  %add1 = add nsw i64 %x, 1
++  %add2 = add nsw i64 %x, 2
++  %add3 = add nsw i64 %x, 3
++  %index = select i1 %c, i64 %add1, i64 %add2
++  %arrayidx1 = getelementptr inbounds [10 x i32], ptr @G, i64 0, i64 %add3
++  store i32 42, ptr %arrayidx1, align 4
++  %arrayidx2 = getelementptr inbounds [10 x i32], ptr @G, i64 0, i64 %index
++  store i32 43, ptr %arrayidx2, align 4
++  ret void
++}
++
++; One arm is only four bytes from arrayidx2, so the eight-byte accesses may
++; overlap.
++define void @select_in_gep_overlap(i1 %c, i64 %x) {
++entry:
++; CHECK-LABEL: Function: select_in_gep_overlap
++; CHECK: MayAlias: i64* %arrayidx1, i64* %arrayidx2
++  %add1 = add nsw i64 %x, 1
++  %add2 = add nsw i64 %x, 2
++  %add3 = add nsw i64 %x, 3
++  %index = select i1 %c, i64 %add1, i64 %add2
++  %arrayidx1 = getelementptr inbounds [10 x i32], ptr @G, i64 0, i64 %index
++  store i64 42, ptr %arrayidx1, align 4
++  %arrayidx2 = getelementptr inbounds [10 x i32], ptr @G, i64 0, i64 %add3
++  store i64 43, ptr %arrayidx2, align 4
++  ret void
++}
++
+ define void @two_selects_in_gep_same_cond(i1 %c, i64 %x) {
+ entry:
+ ; CHECK-LABEL: Function: two_selects_in_gep_same_cond
