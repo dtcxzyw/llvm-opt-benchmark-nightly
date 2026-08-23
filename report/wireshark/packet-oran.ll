@@ -205,7 +205,9 @@ bb.eq:                                            ; preds = %bb.ep
   br i1 %.not.i624.i, label %.loopexit.i617.i, label %.preheader.i625.i
 
 .preheader.i625.i:                                ; preds = %bb.eq
-  %4 = lshr exact i32 4096, %.043165.i
+  %narrow.i626.i = sub nsw i32 12, %.043165.i
+  %4 = and i32 %narrow.i626.i, 255
+  %5 = shl nuw nsw i32 1, %4
   %wide.trip.count.i627.i = zext i32 %i.aib to i64
   br label %bb.es
 
@@ -219,7 +221,7 @@ bb.es:                                            ; preds = %bb.er, %.preheader.
   %i.aic = getelementptr [8 x i8], ptr %i.ady, i64 %indvars.iv.i628.i
   %i.aid = load i16, ptr %i.aic, align 4
   %i.aie = zext i16 %i.aid to i32
-  %i.aif = and i32 %4, %i.aie
+  %i.aif = and i32 %5, %i.aie
   %.not56.i629.i = icmp eq i32 %i.aif, 0
   br i1 %.not56.i629.i, label %bb.er, label %bb.et
 
@@ -313,7 +315,9 @@ bb.ey:                                            ; preds = %bb.ex
   br i1 %.not.i609.i, label %.loopexit.i.i, label %.preheader.i610.i
 
 .preheader.i610.i:                                ; preds = %bb.ey
-  %5 = lshr exact i32 4096, %.043165.i
+  %narrow.i.i = sub nsw i32 12, %.043165.i
+  %6 = and i32 %narrow.i.i, 255
+  %7 = shl nuw nsw i32 1, %6
   %wide.trip.count.i611.i = zext i32 %i.aka to i64
   br label %bb.fa
 
@@ -327,7 +331,7 @@ bb.fa:                                            ; preds = %bb.ez, %.preheader.
   %i.akb = getelementptr [8 x i8], ptr %i.ady, i64 %indvars.iv.i612.i
   %i.akc = load i16, ptr %i.akb, align 4
   %i.akd = zext i16 %i.akc to i32
-  %i.ake = and i32 %5, %i.akd
+  %i.ake = and i32 %7, %i.akd
   %.not56.i.i = icmp eq i32 %i.ake, 0
   br i1 %.not56.i.i, label %bb.ez, label %bb.fb
 
@@ -459,7 +463,9 @@ bb.fj:                                            ; preds = %bb.fi
   br i1 %.not.i666.i, label %.loopexit.i659.i, label %.preheader.i667.i
 
 .preheader.i667.i:                                ; preds = %bb.fj
-  %6 = lshr exact i32 4096, %.043061.i
+  %narrow.i668.i = sub nsw i32 12, %.043061.i
+  %8 = and i32 %narrow.i668.i, 255
+  %9 = shl nuw nsw i32 1, %8
   %wide.trip.count.i669.i = zext i32 %i.amj to i64
   br label %bb.fl
 
@@ -473,7 +479,7 @@ bb.fl:                                            ; preds = %bb.fk, %.preheader.
   %i.amk = getelementptr [8 x i8], ptr %i.ady, i64 %indvars.iv.i670.i
   %i.aml = load i16, ptr %i.amk, align 4
   %i.amm = zext i16 %i.aml to i32
-  %i.amn = and i32 %6, %i.amm
+  %i.amn = and i32 %9, %i.amm
   %.not56.i671.i = icmp eq i32 %i.amn, 0
   br i1 %.not56.i671.i, label %bb.fk, label %bb.fm
 
@@ -567,7 +573,9 @@ bb.fr:                                            ; preds = %bb.fq
   br i1 %.not.i645.i, label %.loopexit.i638.i, label %.preheader.i646.i
 
 .preheader.i646.i:                                ; preds = %bb.fr
-  %7 = lshr exact i32 4096, %.043061.i
+  %narrow.i647.i = sub nsw i32 12, %.043061.i
+  %10 = and i32 %narrow.i647.i, 255
+  %11 = shl nuw nsw i32 1, %10
   %wide.trip.count.i648.i = zext i32 %i.aoi to i64
   br label %bb.ft
 
@@ -581,7 +589,7 @@ bb.ft:                                            ; preds = %bb.fs, %.preheader.
   %i.aoj = getelementptr [8 x i8], ptr %i.ady, i64 %indvars.iv.i649.i
   %i.aok = load i16, ptr %i.aoj, align 4
   %i.aol = zext i16 %i.aok to i32
-  %i.aom = and i32 %7, %i.aol
+  %i.aom = and i32 %11, %i.aol
   %.not56.i650.i = icmp eq i32 %i.aom, 0
   br i1 %.not56.i650.i, label %bb.fs, label %bb.fu
 

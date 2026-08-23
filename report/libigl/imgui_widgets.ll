@@ -205,27 +205,31 @@ bb.eu:                                            ; preds = %_ZN5ImStbL18stb_tex
 bb.ev:                                            ; preds = %bb.eu, %_ZN5ImStbL18stb_textedit_clampEP19ImGuiInputTextStatePNS_17STB_TexteditStateE.exit497.i
   %i.ue = phi i32 [ %i.ud, %bb.eu ], [ %i.ua, %_ZN5ImStbL18stb_textedit_clampEP19ImGuiInputTextStatePNS_17STB_TexteditStateE.exit497.i ]
   %i.uf = icmp sgt i32 %i.si, 1
-  br i1 %i.uf, label %.lr.ph305.a, label %._crit_edge307
+  br i1 %i.uf, label %.lr.ph305, label %._crit_edge307
+
+.lr.ph305:                                        ; preds = %bb.ev
+  %4 = zext nneg i32 %i.si to i64
+  br label %.lr.ph305.a
 
 bb.ew:                                            ; preds = %.lr.ph305.a
-  %i.ug = icmp sgt i32 %.0300.in.i303, 2
+  %i.ug = icmp sgt i64 %indvars.iv712.i303, 2
   br i1 %i.ug, label %.lr.ph305.a, label %._crit_edge307, !llvm.loop !423
 
-.lr.ph305.a:                                      ; preds = %bb.ev, %bb.ew
-  %.0300.in.i303 = phi i32 [ %.0300.i, %bb.ew ], [ %i.si, %bb.ev ] ; 3 uses
-  %.0300.i = add nsw i32 %.0300.in.i303, -1       ; 2 uses
-  %4 = zext nneg i32 %.0300.in.i303 to i64
-  %i.uh = getelementptr [2 x i8], ptr %.val387.i, i64 %4
+.lr.ph305.a:                                      ; preds = %.lr.ph305, %bb.ew
+  %indvars.iv712.i303 = phi i64 [ %4, %.lr.ph305 ], [ %indvars.iv.next713.i, %bb.ew ] ; 3 uses
+  %indvars.iv.next713.i = add nsw i64 %indvars.iv712.i303, -1 ; 2 uses
+  %i.uh = getelementptr [2 x i8], ptr %.val387.i, i64 %indvars.iv712.i303
   %i.ui = getelementptr i8, ptr %i.uh, i64 -4
   %i.uj = load i16, ptr %i.ui, align 2, !tbaa !258
   %.not341.i = icmp eq i16 %i.uj, 10
   br i1 %.not341.i, label %._crit_edge306, label %bb.ew, !llvm.loop !423
 
 ._crit_edge306:                                   ; preds = %.lr.ph305.a
-  br label %._crit_edge307, !llvm.loop !423
+  %5 = trunc nuw nsw i64 %indvars.iv.next713.i to i32
+  br label %._crit_edge307
 
-._crit_edge307:                                   ; preds = %bb.ew, %._crit_edge306, %bb.ev
-  %.0300.lcssa.i = phi i32 [ %.0300.i, %._crit_edge306 ], [ 0, %bb.ev ], [ 0, %bb.ew ]
+._crit_edge307:                                   ; preds = %bb.ew, %bb.ev, %._crit_edge306
+  %.0300.lcssa.i = phi i32 [ %5, %._crit_edge306 ], [ 0, %bb.ev ], [ 0, %bb.ew ]
   %i.uk = add nuw nsw i32 %.0301621.i, 1          ; 2 uses
   %exitcond712.not.i = icmp eq i32 %i.uk, %i.qx
   br i1 %exitcond712.not.i, label %.thread560.i, label %bb.eh, !llvm.loop !424

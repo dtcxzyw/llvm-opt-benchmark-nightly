@@ -204,27 +204,34 @@ bb.m:                                             ; preds = %bb.l
   store i32 %i.cb, ptr %i.bz, align 8
   %i.cc = getelementptr inbounds nuw i8, ptr %.4, i64 16 ; 2 uses
   %i.cd = icmp sgt i32 %i.ca, 0
-  br i1 %i.cd, label %.lr.ph104, label %.critedge
+  br i1 %i.cd, label %.lr.ph104.preheader, label %.critedge
 
-.lr.ph104:                                        ; preds = %bb.m, %bb.n
-  %.065103 = phi i32 [ %3, %bb.n ], [ %i.ca, %bb.m ] ; 4 uses
+.lr.ph104.preheader:                              ; preds = %bb.m
+  %2 = zext nneg i32 %i.ca to i64
+  br label %.lr.ph104
+
+.lr.ph104:                                        ; preds = %.lr.ph104.preheader, %bb.n
+  %indvars.iv112 = phi i64 [ %2, %.lr.ph104.preheader ], [ %indvars.iv.next113, %bb.n ] ; 4 uses
   %i.ce = load ptr, ptr %i.cc, align 8
-  %2 = zext nneg i32 %.065103 to i64
-  %i.cf = getelementptr [4 x i8], ptr %i.ce, i64 %2 ; 2 uses
+  %i.cf = getelementptr [4 x i8], ptr %i.ce, i64 %indvars.iv112 ; 2 uses
   %i.cg = getelementptr i8, ptr %i.cf, i64 -4
   %i.ch = load i32, ptr %i.cg, align 4            ; 2 uses
   %i.ci = load i32, ptr %i.u, align 4
   %i.cj = icmp sgt i32 %i.ch, %i.ci
-  br i1 %i.cj, label %bb.n, label %.critedge
+  br i1 %i.cj, label %bb.n, label %.critedge.loopexit.split.loop.exit125
 
 bb.n:                                             ; preds = %.lr.ph104
   store i32 %i.ch, ptr %i.cf, align 4
-  %3 = add nsw i32 %.065103, -1
-  %i.ck = icmp sgt i32 %.065103, 1
+  %indvars.iv.next113 = add nsw i64 %indvars.iv112, -1
+  %i.ck = icmp sgt i64 %indvars.iv112, 1
   br i1 %i.ck, label %.lr.ph104, label %.critedge, !llvm.loop !21
 
-.critedge:                                        ; preds = %.lr.ph104, %bb.n, %bb.m
-  %.065.lcssa = phi i32 [ %i.ca, %bb.m ], [ 0, %bb.n ], [ %.065103, %.lr.ph104 ]
+.critedge.loopexit.split.loop.exit125:            ; preds = %.lr.ph104
+  %3 = trunc nuw nsw i64 %indvars.iv112 to i32
+  br label %.critedge
+
+.critedge:                                        ; preds = %bb.n, %.critedge.loopexit.split.loop.exit125, %bb.m
+  %.065.lcssa = phi i32 [ %i.ca, %bb.m ], [ %3, %.critedge.loopexit.split.loop.exit125 ], [ 0, %bb.n ]
   %i.cl = load i32, ptr %i.u, align 4
   %i.cm = load ptr, ptr %i.cc, align 8
   %i.cn = sext i32 %.065.lcssa to i64
