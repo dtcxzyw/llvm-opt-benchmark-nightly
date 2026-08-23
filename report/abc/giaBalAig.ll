@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %.lr.ph444, %.crited
   %i.ag = phi ptr [ %i.m, %.lr.ph444 ], [ %i.ij, %.critedge2 ] ; 6 uses
   %i.ah = phi ptr [ %i.m, %.lr.ph444 ], [ %i.ik, %.critedge2 ] ; 6 uses
   %i.ai = phi ptr [ %i.m, %.lr.ph444 ], [ %i.il, %.critedge2 ] ; 8 uses
-  %indvars.iv478 = phi i64 [ 0, %.lr.ph444 ], [ %indvars.iv.next479, %.critedge2 ] ; 6 uses
+  %indvars.iv478 = phi i64 [ 0, %.lr.ph444 ], [ %indvars.iv.next479, %.critedge2 ] ; 7 uses
   %i.aj = phi ptr [ %i.t, %.lr.ph444 ], [ %i.im, %.critedge2 ] ; 2 uses
   %.0443 = phi i32 [ 0, %.lr.ph444 ], [ %.4, %.critedge2 ] ; 7 uses
   %.0186442 = phi i32 [ 0, %.lr.ph444 ], [ %.4190, %.critedge2 ] ; 7 uses
@@ -539,7 +539,9 @@ Vec_IntPush.exit279:                              ; preds = %bb.aa, %bb.af, %Vec
   store i32 %i.er, ptr %i.i, align 4, !tbaa !8
   %i.es = sext i32 %i.ec to i64
   %i.et = getelementptr inbounds [4 x i8], ptr %i.eq, i64 %i.es
-  store i32 0, ptr %i.et, align 4, !tbaa !13
+  %2 = trunc i64 %indvars.iv478 to i32
+  %3 = sub i32 0, %2
+  store i32 %3, ptr %i.et, align 4, !tbaa !13
   %.val232432 = load i32, ptr %i.z, align 4, !tbaa !8 ; 2 uses
   %i.eu = icmp sgt i32 %.val232432, 0
   br i1 %i.eu, label %.lr.ph436, label %.critedge2

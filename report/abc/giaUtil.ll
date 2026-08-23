@@ -205,37 +205,39 @@ bb.a:
   br label %.loopexit116
 
 .loopexit116:                                     ; preds = %.loopexit116.loopexit153, %.lr.ph.split.split.us, %.loopexit116.loopexit, %bb.b
-  %.1100.lcssa = phi i32 [ %.099128, %bb.b ], [ %indvars.iv.next159.2, %.lr.ph.split.split.us ], [ %i.p, %.loopexit116.loopexit ], [ %i.q, %.loopexit116.loopexit153 ]
+  %.1100.lcssa = phi i32 [ %.097129.a, %bb.b ], [ %indvars.iv.next159.2, %.lr.ph.split.split.us ], [ %i.p, %.loopexit116.loopexit ], [ %i.q, %.loopexit116.loopexit153 ]
   %exitcond166.not = icmp eq i32 %i.r, 7
-  %indvar.next = add i64 %indvar, 1
   br i1 %exitcond166.not, label %bb.c, label %bb.b, !llvm.loop !313
 
 bb.b:                                             ; preds = %.preheader117, %.loopexit116
-  %indvar = phi i64 [ 0, %.preheader117 ], [ %indvar.next, %.loopexit116 ] ; 3 uses
-  %.097129.a = phi i32 [ 0, %.preheader117 ], [ %i.r, %.loopexit116 ] ; 5 uses
-  %.099128 = phi i32 [ 0, %.preheader117 ], [ %.1100.lcssa, %.loopexit116 ] ; 4 uses
-  %0 = sub i64 6, %indvar                         ; 3 uses
-  %1 = sub i64 6, %indvar                         ; 3 uses
-  %i.r = add nuw nsw i32 %.097129.a, 1            ; 8 uses
-  %i.s = icmp samesign ult i32 %.097129.a, 6
+  %.097129 = phi i32 [ 0, %.preheader117 ], [ %i.r, %.loopexit116 ] ; 7 uses
+  %.097129.a = phi i32 [ 0, %.preheader117 ], [ %.1100.lcssa, %.loopexit116 ] ; 4 uses
+  %0 = sub nsw i32 5, %.097129                    ; 2 uses
+  %1 = zext i32 %0 to i64
+  %2 = add nuw nsw i64 %1, 1                      ; 2 uses
+  %3 = sub nsw i32 5, %.097129                    ; 2 uses
+  %4 = zext i32 %3 to i64
+  %5 = add nuw nsw i64 %4, 1                      ; 2 uses
+  %i.r = add nuw nsw i32 %.097129, 1              ; 8 uses
+  %i.s = icmp samesign ult i32 %.097129, 6
   br i1 %i.s, label %.lr.ph, label %.loopexit116
 
 .lr.ph:                                           ; preds = %bb.b
-  %i.t = icmp samesign ult i32 %.097129.a, 3
-  %i.u = lshr i32 %i.h, %.097129.a
+  %i.t = icmp samesign ult i32 %.097129, 3
+  %i.u = lshr i32 %i.h, %.097129
   %i.v = and i32 %i.u, 1                          ; 2 uses
   br i1 %i.t, label %Gia_GetMValue.exit.us.preheader, label %.lr.ph.split
 
 Gia_GetMValue.exit.us.preheader:                  ; preds = %.lr.ph
-  %i.w = sext i32 %.099128 to i64                 ; 3 uses
-  %min.iters.check = icmp ult i64 %1, 4
+  %i.w = sext i32 %.097129.a to i64               ; 3 uses
+  %min.iters.check = icmp ult i32 %3, 3
   br i1 %min.iters.check, label %Gia_GetMValue.exit.us.preheader462, label %vector.ph
 
 vector.ph:                                        ; preds = %Gia_GetMValue.exit.us.preheader
-  %n.vec = and i64 %1, -4                         ; 4 uses
-  %i.x = add i64 %n.vec, %i.w                     ; 2 uses
-  %i.y = trunc i64 %n.vec to i32
-  %i.z = add i32 %i.r, %i.y
+  %n.vec = and i64 %5, 12                         ; 4 uses
+  %i.x = add nsw i64 %n.vec, %i.w                 ; 2 uses
+  %i.y = trunc nuw nsw i64 %n.vec to i32
+  %i.z = add nuw nsw i32 %i.r, %i.y
   %broadcast.splatinsert435 = insertelement <4 x i32> poison, i32 %i.v, i64 0
   %broadcast.splat436 = shufflevector <4 x i32> %broadcast.splatinsert435, <4 x i32> poison, <4 x i32> zeroinitializer
   %broadcast.splatinsert437 = insertelement <4 x i32> poison, i32 %i.r, i64 0
@@ -263,7 +265,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.ai, label %middle.block, label %vector.body, !llvm.loop !314
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %1, %n.vec
+  %cmp.n = icmp eq i64 %5, %n.vec
   br i1 %cmp.n, label %.loopexit116.loopexit, label %Gia_GetMValue.exit.us.preheader462
 
 Gia_GetMValue.exit.us.preheader462:               ; preds = %Gia_GetMValue.exit.us.preheader, %middle.block
@@ -290,17 +292,17 @@ Gia_GetMValue.exit.us:                            ; preds = %Gia_GetMValue.exit.
   br i1 %exitcond165.not, label %.loopexit116.loopexit, label %Gia_GetMValue.exit.us, !llvm.loop !315
 
 .lr.ph.split:                                     ; preds = %.lr.ph
-  %i.ar = icmp eq i32 %.097129.a, 3
-  %i.as = sext i32 %.099128 to i64                ; 6 uses
+  %i.ar = icmp eq i32 %.097129, 3
+  %i.as = sext i32 %.097129.a to i64              ; 6 uses
   br i1 %i.ar, label %.lr.ph.split.split.us, label %Gia_GetMValue.exit.preheader
 
 Gia_GetMValue.exit.preheader:                     ; preds = %.lr.ph.split
-  %min.iters.check441 = icmp ult i64 %0, 4
+  %min.iters.check441 = icmp ult i32 %0, 3
   br i1 %min.iters.check441, label %Gia_GetMValue.exit.preheader463, label %vector.ph442
 
 vector.ph442:                                     ; preds = %Gia_GetMValue.exit.preheader
-  %n.vec443 = and i64 %0, -4                      ; 4 uses
-  %i.at = add i64 %n.vec443, %i.as                ; 2 uses
+  %n.vec443 = and i64 %2, 8589934588              ; 4 uses
+  %i.at = add nsw i64 %n.vec443, %i.as            ; 2 uses
   %i.au = trunc i64 %n.vec443 to i32
   %i.av = add i32 %i.r, %i.au
   %broadcast.splatinsert448 = insertelement <4 x i32> poison, i32 %i.r, i64 0
@@ -328,7 +330,7 @@ vector.body451:                                   ; preds = %vector.body451, %ve
   br i1 %i.be, label %middle.block456, label %vector.body451, !llvm.loop !316
 
 middle.block456:                                  ; preds = %vector.body451
-  %cmp.n457 = icmp eq i64 %0, %n.vec443
+  %cmp.n457 = icmp eq i64 %2, %n.vec443
   br i1 %cmp.n457, label %.loopexit116.loopexit153, label %Gia_GetMValue.exit.preheader463
 
 Gia_GetMValue.exit.preheader463:                  ; preds = %Gia_GetMValue.exit.preheader, %middle.block456
@@ -342,7 +344,7 @@ Gia_GetMValue.exit.preheader463:                  ; preds = %Gia_GetMValue.exit.
   %i.bg = getelementptr [4 x i8], ptr %i.l, i64 %i.as
   %i.bh = getelementptr i8, ptr %i.bg, i64 4
   store i32 %i.n, ptr %i.bh, align 4, !tbaa !8
-  %indvars.iv.next159.2 = add i32 %.099128, 3
+  %indvars.iv.next159.2 = add i32 %.097129.a, 3
   %i.bi = getelementptr [4 x i8], ptr %i.l, i64 %i.as
   %i.bj = getelementptr i8, ptr %i.bi, i64 8
   store i32 %i.o, ptr %i.bj, align 4, !tbaa !8

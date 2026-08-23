@@ -205,8 +205,8 @@ filter_bilin32.exit242:                           ; preds = %.lr.ph.i228, %bb.v
   %i.atn = getelementptr inbounds nuw i8, ptr %i.f, i64 %i.atm
   %i.ato = getelementptr inbounds nuw i8, ptr %i.atn, i64 31
   %i.atp = load i8, ptr %i.ato, align 1, !tbaa !44
-  %i.atq = sub nuw nsw i64 31, %indvars.iv372
-  %i.atr = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.atq
+  %i.atq = sub nsw i64 31, %indvars.iv372
+  %i.atr = getelementptr inbounds i8, ptr %i.e, i64 %i.atq
   store i8 %i.atp, ptr %i.atr, align 1, !tbaa !44
   %i.ats = add nuw nsw i32 %i.atk, %i.aio         ; 3 uses
   %i.att = lshr i32 %i.ats, 8
@@ -214,8 +214,8 @@ filter_bilin32.exit242:                           ; preds = %.lr.ph.i228, %bb.v
   %i.atv = getelementptr inbounds nuw i8, ptr %i.f, i64 %i.atu
   %i.atw = getelementptr inbounds nuw i8, ptr %i.atv, i64 31
   %i.atx = load i8, ptr %i.atw, align 1, !tbaa !44
-  %i.aty = sub nuw nsw i64 30, %indvars.iv372
-  %i.atz = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.aty
+  %i.aty = sub nsw i64 30, %indvars.iv372
+  %i.atz = getelementptr inbounds i8, ptr %i.e, i64 %i.aty
   store i8 %i.atx, ptr %i.atz, align 1, !tbaa !44
   %indvars.iv.next373.1 = add nuw nsw i64 %indvars.iv372, 2 ; 2 uses
   %niter933.next.1 = add nuw i64 %niter933, 2     ; 2 uses
@@ -237,8 +237,8 @@ filter_bilin32.exit242:                           ; preds = %.lr.ph.i228, %bb.v
   %i.aud = getelementptr inbounds nuw i8, ptr %i.f, i64 %i.auc
   %i.aue = getelementptr inbounds nuw i8, ptr %i.aud, i64 31
   %i.auf = load i8, ptr %i.aue, align 1, !tbaa !44
-  %i.aug = sub nuw nsw i64 31, %indvars.iv372.epil.init
-  %i.auh = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.aug
+  %i.aug = sub nsw i64 31, %indvars.iv372.epil.init
+  %i.auh = getelementptr inbounds i8, ptr %i.e, i64 %i.aug
   store i8 %i.auf, ptr %i.auh, align 1, !tbaa !44
   br label %.loopexit
 
@@ -641,8 +641,8 @@ filter_bilin32.exit286:                           ; preds = %.lr.ph.i272, %bb.y
   %i.bjd = getelementptr inbounds nuw i8, ptr %i.f, i64 %i.bjc
   %i.bje = getelementptr inbounds nuw i8, ptr %i.bjd, i64 31
   %i.bjf = load i8, ptr %i.bje, align 1, !tbaa !44
-  %i.bjg = sub nuw nsw i64 31, %indvars.iv367
-  %i.bjh = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.bjg
+  %i.bjg = sub nsw i64 31, %indvars.iv367
+  %i.bjh = getelementptr inbounds i8, ptr %i.e, i64 %i.bjg
   store i8 %i.bjf, ptr %i.bjh, align 1, !tbaa !44
   %i.bji = add nuw nsw i32 %i.bja, %i.aye         ; 3 uses
   %i.bjj = lshr i32 %i.bji, 8
@@ -650,8 +650,8 @@ filter_bilin32.exit286:                           ; preds = %.lr.ph.i272, %bb.y
   %i.bjl = getelementptr inbounds nuw i8, ptr %i.f, i64 %i.bjk
   %i.bjm = getelementptr inbounds nuw i8, ptr %i.bjl, i64 31
   %i.bjn = load i8, ptr %i.bjm, align 1, !tbaa !44
-  %i.bjo = sub nuw nsw i64 30, %indvars.iv367
-  %i.bjp = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.bjo
+  %i.bjo = sub nsw i64 30, %indvars.iv367
+  %i.bjp = getelementptr inbounds i8, ptr %i.e, i64 %i.bjo
   store i8 %i.bjn, ptr %i.bjp, align 1, !tbaa !44
   %indvars.iv.next368.1 = add nuw nsw i64 %indvars.iv367, 2 ; 2 uses
   %niter927.next.1 = add nuw i64 %niter927, 2     ; 2 uses
@@ -673,8 +673,8 @@ filter_bilin32.exit286:                           ; preds = %.lr.ph.i272, %bb.y
   %i.bjt = getelementptr inbounds nuw i8, ptr %i.f, i64 %i.bjs
   %i.bju = getelementptr inbounds nuw i8, ptr %i.bjt, i64 31
   %i.bjv = load i8, ptr %i.bju, align 1, !tbaa !44
-  %i.bjw = sub nuw nsw i64 31, %indvars.iv367.epil.init
-  %i.bjx = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.bjw
+  %i.bjw = sub nsw i64 31, %indvars.iv367.epil.init
+  %i.bjx = getelementptr inbounds i8, ptr %i.e, i64 %i.bjw
   store i8 %i.bjv, ptr %i.bjx, align 1, !tbaa !44
   br label %.loopexit333
 

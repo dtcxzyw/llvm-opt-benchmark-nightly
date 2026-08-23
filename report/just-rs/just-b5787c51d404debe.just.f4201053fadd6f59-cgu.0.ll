@@ -205,27 +205,36 @@ bb.h:                                             ; preds = %bb.g
   unreachable
 
 bb.i:                                             ; preds = %.lr.ph266, %_RNvXse_NtNtCsj6eKBz9Db1c_4core4iter5rangeINtNtNtB9_3ops5range14RangeInclusiveiENtNtNtB7_6traits12double_ended19DoubleEndedIterator8nth_backCskXtk6F4WjxZ_4just.exit148.thread
-  %.sroa.048.0265 = phi i64 [ 0, %.lr.ph266 ], [ %i.as, %_RNvXse_NtNtCsj6eKBz9Db1c_4core4iter5rangeINtNtNtB9_3ops5range14RangeInclusiveiENtNtNtB7_6traits12double_ended19DoubleEndedIterator8nth_backCskXtk6F4WjxZ_4just.exit148.thread ] ; 8 uses
+  %.sroa.048.0265 = phi i64 [ 0, %.lr.ph266 ], [ %i.as, %_RNvXse_NtNtCsj6eKBz9Db1c_4core4iter5rangeINtNtNtB9_3ops5range14RangeInclusiveiENtNtNtB7_6traits12double_ended19DoubleEndedIterator8nth_backCskXtk6F4WjxZ_4just.exit148.thread ] ; 9 uses
   %i.as = add nuw nsw i64 %.sroa.048.0265, 1
   %i.at = tail call noundef zeroext i1 @_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded(i64 %9, i32 noundef %10)
-  br i1 %i.at, label %._crit_edge, label %.lr.ph250
+  br i1 %i.at, label %._crit_edge, label %.lr.ph250.preheader
 
-.lr.ph250:                                        ; preds = %bb.i, %bb.bd
-  %.sroa.7.0249 = phi i64 [ %i.ay, %bb.bd ], [ %.sroa.048.0265, %bb.i ]
-  %not..sroa.11163.0248 = phi i64 [ 1, %bb.bd ], [ 0, %bb.i ]
+.lr.ph250.preheader:                              ; preds = %bb.i
+  %11 = sub nsw i64 0, %.sroa.048.0265            ; 6 uses
+  br label %.lr.ph250
+
+.lr.ph250:                                        ; preds = %.lr.ph250.preheader, %bb.bd
+  %.sroa.7.0249 = phi i64 [ %i.ay, %bb.bd ], [ %.sroa.048.0265, %.lr.ph250.preheader ]
+  %not..sroa.11163.0248 = phi i64 [ 1, %bb.bd ], [ 0, %.lr.ph250.preheader ]
   %i.au = tail call { i64, i1 } @llvm.ssub.with.overflow.i64(i64 %.sroa.7.0249, i64 %not..sroa.11163.0248) ; 2 uses
   %i.av = extractvalue { i64, i1 } %i.au, 1       ; 2 uses
   %i.aw = extractvalue { i64, i1 } %i.au, 0       ; 10 uses
   %i.ax = tail call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %i.aw, i64 -1) ; 2 uses
-  %i.ay = extractvalue { i64, i1 } %i.ax, 0
+  %i.ay = extractvalue { i64, i1 } %i.ax, 0       ; 2 uses
   %i.az = extractvalue { i64, i1 } %i.ax, 1
-  %.not3.i.not = icmp slt i64 %i.aw, 0
-  %or.cond188 = or i1 %i.av, %.not3.i.not
+  %12 = or i1 %i.av, %i.az
+  %.not3.i.not = icmp slt i64 %i.aw, %11
+  %or.cond188 = select i1 %i.av, i1 true, i1 %.not3.i.not
   br i1 %or.cond188, label %.lr.ph263.preheader, label %bb.j
 
 bb.j:                                             ; preds = %.lr.ph250
-  %i.ba = icmp eq i64 %i.aw, 0
-  br i1 %i.ba, label %._crit_edge312.a, label %bb.ak
+  %i.ba = icmp eq i64 %i.aw, %11
+  br i1 %i.ba, label %._crit_edge312, label %bb.ak
+
+._crit_edge312:                                   ; preds = %bb.j
+  %.pre317 = add i64 %i.i, %i.aw
+  br label %._crit_edge312.a
 
 .lr.ph263:                                        ; preds = %.lr.ph263.preheader, %bb.af
   %not..sroa.14172.0262 = phi i64 [ 1, %bb.af ], [ 0, %.lr.ph263.preheader ]
@@ -234,15 +243,20 @@ bb.j:                                             ; preds = %.lr.ph250
   %i.bc = extractvalue { i64, i1 } %i.bb, 1       ; 2 uses
   %i.bd = extractvalue { i64, i1 } %i.bb, 0       ; 10 uses
   %i.be = tail call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %i.bd, i64 -1) ; 2 uses
-  %i.bf = extractvalue { i64, i1 } %i.be, 0
+  %i.bf = extractvalue { i64, i1 } %i.be, 0       ; 2 uses
   %i.bg = extractvalue { i64, i1 } %i.be, 1
-  %.not3.i144.not = icmp slt i64 %i.bd, 0
-  %or.cond190 = or i1 %i.bc, %.not3.i144.not
+  %13 = or i1 %i.bc, %i.bg
+  %.not3.i144.not = icmp slt i64 %i.bd, %11
+  %or.cond190 = select i1 %i.bc, i1 true, i1 %.not3.i144.not
   br i1 %or.cond190, label %_RNvXse_NtNtCsj6eKBz9Db1c_4core4iter5rangeINtNtNtB9_3ops5range14RangeInclusiveiENtNtNtB7_6traits12double_ended19DoubleEndedIterator8nth_backCskXtk6F4WjxZ_4just.exit148.thread, label %bb.k
 
 bb.k:                                             ; preds = %.lr.ph263
-  %i.bh = icmp eq i64 %i.bd, 0
-  br i1 %i.bh, label %._crit_edge314.a, label %bb.l
+  %i.bh = icmp eq i64 %i.bd, %11
+  br i1 %i.bh, label %._crit_edge314, label %bb.l
+
+._crit_edge314:                                   ; preds = %bb.k
+  %.pre = add i64 %i.r, %i.bd
+  br label %._crit_edge314.a
 
 _RNvXse_NtNtCsj6eKBz9Db1c_4core4iter5rangeINtNtNtB9_3ops5range14RangeInclusiveiENtNtNtB7_6traits12double_ended19DoubleEndedIterator8nth_backCskXtk6F4WjxZ_4just.exit148.thread: ; preds = %bb.af, %.lr.ph263
   %exitcond310.not = icmp eq i64 %.sroa.048.0265, %.sroa.047.0
@@ -253,8 +267,8 @@ bb.l:                                             ; preds = %bb.k
   %.pre315 = add i64 %i.ap, %i.bd                 ; 6 uses
   br i1 %.not130, label %._crit_edge313, label %bb.m
 
-._crit_edge314.a:                                 ; preds = %bb.k, %bb.p
-  %.pre-phi = phi i64 [ %i.bl, %bb.p ], [ %i.r, %bb.k ] ; 3 uses
+._crit_edge314.a:                                 ; preds = %._crit_edge314, %bb.p
+  %.pre-phi = phi i64 [ %.pre, %._crit_edge314 ], [ %i.bl, %bb.p ] ; 3 uses
   %i.bi = icmp ult i64 %.pre-phi, %i.t
   br i1 %i.bi, label %bb.u, label %bb.v
 
@@ -302,7 +316,7 @@ bb.t:                                             ; preds = %bb.u, %bb.r
   %i.bv = sub i64 %.sroa.014.0, %i.bd             ; 4 uses
   %i.bw = icmp ult i64 %.sroa.014.0, %.sroa.025.0
   %i.bx = icmp ult i64 %i.bv, %.sroa.037.0
-  %or.cond = and i1 %i.bw, %i.bx
+  %or.cond = select i1 %i.bw, i1 %i.bx, i1 false
   br i1 %or.cond, label %bb.x, label %bb.w
 
 bb.u:                                             ; preds = %._crit_edge314.a
@@ -390,9 +404,8 @@ bb.ae:                                            ; preds = %bb.ac
   br i1 %.not131, label %bb.af, label %bb.ag
 
 bb.af:                                            ; preds = %bb.ae, %bb.ah, %bb.ac
-  %i.cr = icmp slt i64 %i.bd, 1
-  %11 = or i1 %i.bg, %i.cr
-  %or.cond189 = or i1 %11, %i.bc
+  %i.cr = icmp slt i64 %i.bf, %11
+  %or.cond189 = select i1 %13, i1 true, i1 %i.cr
   br i1 %or.cond189, label %_RNvXse_NtNtCsj6eKBz9Db1c_4core4iter5rangeINtNtNtB9_3ops5range14RangeInclusiveiENtNtNtB7_6traits12double_ended19DoubleEndedIterator8nth_backCskXtk6F4WjxZ_4just.exit148.thread, label %.lr.ph263
 
 bb.ag:                                            ; preds = %bb.ae
@@ -421,8 +434,8 @@ bb.ak:                                            ; preds = %bb.j
   %.pre319 = add i64 %i.ac, %i.aw                 ; 6 uses
   br i1 %.not133, label %._crit_edge311, label %bb.al
 
-._crit_edge312.a:                                 ; preds = %bb.j, %bb.ao
-  %.pre-phi318 = phi i64 [ %i.dc, %bb.ao ], [ %i.i, %bb.j ] ; 3 uses
+._crit_edge312.a:                                 ; preds = %._crit_edge312, %bb.ao
+  %.pre-phi318 = phi i64 [ %.pre317, %._crit_edge312 ], [ %i.dc, %bb.ao ] ; 3 uses
   %i.cz = icmp ult i64 %.pre-phi318, %i.k
   br i1 %i.cz, label %bb.at, label %bb.au
 
@@ -553,9 +566,8 @@ bb.bc:                                            ; preds = %bb.av
   unreachable
 
 bb.bd:                                            ; preds = %bb.be, %bb.bg, %bb.bb
-  %i.eg = icmp slt i64 %i.aw, 1
-  %12 = or i1 %i.az, %i.eg
-  %or.cond187 = or i1 %12, %i.av
+  %i.eg = icmp slt i64 %i.ay, %11
+  %or.cond187 = select i1 %12, i1 true, i1 %i.eg
   br i1 %or.cond187, label %.lr.ph263.preheader, label %.lr.ph250
 
 .lr.ph263.preheader:                              ; preds = %.lr.ph250, %bb.bd
@@ -691,27 +703,36 @@ bb.h:                                             ; preds = %bb.g
   unreachable
 
 bb.i:                                             ; preds = %.lr.ph266, %_RNvXse_NtNtCsj6eKBz9Db1c_4core4iter5rangeINtNtNtB9_3ops5range14RangeInclusiveiENtNtNtB7_6traits12double_ended19DoubleEndedIterator8nth_backCskXtk6F4WjxZ_4just.exit148.thread
-  %.sroa.048.0265 = phi i64 [ 0, %.lr.ph266 ], [ %i.as, %_RNvXse_NtNtCsj6eKBz9Db1c_4core4iter5rangeINtNtNtB9_3ops5range14RangeInclusiveiENtNtNtB7_6traits12double_ended19DoubleEndedIterator8nth_backCskXtk6F4WjxZ_4just.exit148.thread ] ; 8 uses
+  %.sroa.048.0265 = phi i64 [ 0, %.lr.ph266 ], [ %i.as, %_RNvXse_NtNtCsj6eKBz9Db1c_4core4iter5rangeINtNtNtB9_3ops5range14RangeInclusiveiENtNtNtB7_6traits12double_ended19DoubleEndedIterator8nth_backCskXtk6F4WjxZ_4just.exit148.thread ] ; 9 uses
   %i.as = add nuw nsw i64 %.sroa.048.0265, 1
   %i.at = tail call noundef zeroext i1 @_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded(i64 %9, i32 noundef %10)
-  br i1 %i.at, label %._crit_edge, label %.lr.ph250
+  br i1 %i.at, label %._crit_edge, label %.lr.ph250.preheader
 
-.lr.ph250:                                        ; preds = %bb.i, %bb.bd
-  %.sroa.7.0249 = phi i64 [ %i.ay, %bb.bd ], [ %.sroa.048.0265, %bb.i ]
-  %not..sroa.11163.0248 = phi i64 [ 1, %bb.bd ], [ 0, %bb.i ]
+.lr.ph250.preheader:                              ; preds = %bb.i
+  %11 = sub nsw i64 0, %.sroa.048.0265            ; 6 uses
+  br label %.lr.ph250
+
+.lr.ph250:                                        ; preds = %.lr.ph250.preheader, %bb.bd
+  %.sroa.7.0249 = phi i64 [ %i.ay, %bb.bd ], [ %.sroa.048.0265, %.lr.ph250.preheader ]
+  %not..sroa.11163.0248 = phi i64 [ 1, %bb.bd ], [ 0, %.lr.ph250.preheader ]
   %i.au = tail call { i64, i1 } @llvm.ssub.with.overflow.i64(i64 %.sroa.7.0249, i64 %not..sroa.11163.0248) ; 2 uses
   %i.av = extractvalue { i64, i1 } %i.au, 1       ; 2 uses
   %i.aw = extractvalue { i64, i1 } %i.au, 0       ; 10 uses
   %i.ax = tail call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %i.aw, i64 -1) ; 2 uses
-  %i.ay = extractvalue { i64, i1 } %i.ax, 0
+  %i.ay = extractvalue { i64, i1 } %i.ax, 0       ; 2 uses
   %i.az = extractvalue { i64, i1 } %i.ax, 1
-  %.not3.i.not = icmp slt i64 %i.aw, 0
-  %or.cond188 = or i1 %i.av, %.not3.i.not
+  %12 = or i1 %i.av, %i.az
+  %.not3.i.not = icmp slt i64 %i.aw, %11
+  %or.cond188 = select i1 %i.av, i1 true, i1 %.not3.i.not
   br i1 %or.cond188, label %.lr.ph263.preheader, label %bb.j
 
 bb.j:                                             ; preds = %.lr.ph250
-  %i.ba = icmp eq i64 %i.aw, 0
-  br i1 %i.ba, label %._crit_edge312.a, label %bb.ak
+  %i.ba = icmp eq i64 %i.aw, %11
+  br i1 %i.ba, label %._crit_edge312, label %bb.ak
+
+._crit_edge312:                                   ; preds = %bb.j
+  %.pre317 = add i64 %i.i, %i.aw
+  br label %._crit_edge312.a
 
 .lr.ph263:                                        ; preds = %.lr.ph263.preheader, %bb.af
   %not..sroa.14172.0262 = phi i64 [ 1, %bb.af ], [ 0, %.lr.ph263.preheader ]
@@ -720,15 +741,20 @@ bb.j:                                             ; preds = %.lr.ph250
   %i.bc = extractvalue { i64, i1 } %i.bb, 1       ; 2 uses
   %i.bd = extractvalue { i64, i1 } %i.bb, 0       ; 10 uses
   %i.be = tail call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %i.bd, i64 -1) ; 2 uses
-  %i.bf = extractvalue { i64, i1 } %i.be, 0
+  %i.bf = extractvalue { i64, i1 } %i.be, 0       ; 2 uses
   %i.bg = extractvalue { i64, i1 } %i.be, 1
-  %.not3.i144.not = icmp slt i64 %i.bd, 0
-  %or.cond190 = or i1 %i.bc, %.not3.i144.not
+  %13 = or i1 %i.bc, %i.bg
+  %.not3.i144.not = icmp slt i64 %i.bd, %11
+  %or.cond190 = select i1 %i.bc, i1 true, i1 %.not3.i144.not
   br i1 %or.cond190, label %_RNvXse_NtNtCsj6eKBz9Db1c_4core4iter5rangeINtNtNtB9_3ops5range14RangeInclusiveiENtNtNtB7_6traits12double_ended19DoubleEndedIterator8nth_backCskXtk6F4WjxZ_4just.exit148.thread, label %bb.k
 
 bb.k:                                             ; preds = %.lr.ph263
-  %i.bh = icmp eq i64 %i.bd, 0
-  br i1 %i.bh, label %._crit_edge314.a, label %bb.l
+  %i.bh = icmp eq i64 %i.bd, %11
+  br i1 %i.bh, label %._crit_edge314, label %bb.l
+
+._crit_edge314:                                   ; preds = %bb.k
+  %.pre = add i64 %i.r, %i.bd
+  br label %._crit_edge314.a
 
 _RNvXse_NtNtCsj6eKBz9Db1c_4core4iter5rangeINtNtNtB9_3ops5range14RangeInclusiveiENtNtNtB7_6traits12double_ended19DoubleEndedIterator8nth_backCskXtk6F4WjxZ_4just.exit148.thread: ; preds = %bb.af, %.lr.ph263
   %exitcond310.not = icmp eq i64 %.sroa.048.0265, %.sroa.047.0
@@ -739,8 +765,8 @@ bb.l:                                             ; preds = %bb.k
   %.pre315 = add i64 %i.ap, %i.bd                 ; 6 uses
   br i1 %.not130, label %._crit_edge313, label %bb.m
 
-._crit_edge314.a:                                 ; preds = %bb.k, %bb.p
-  %.pre-phi = phi i64 [ %i.bl, %bb.p ], [ %i.r, %bb.k ] ; 3 uses
+._crit_edge314.a:                                 ; preds = %._crit_edge314, %bb.p
+  %.pre-phi = phi i64 [ %.pre, %._crit_edge314 ], [ %i.bl, %bb.p ] ; 3 uses
   %i.bi = icmp ult i64 %.pre-phi, %i.t
   br i1 %i.bi, label %bb.u, label %bb.v
 
@@ -788,7 +814,7 @@ bb.t:                                             ; preds = %bb.u, %bb.r
   %i.bv = sub i64 %.sroa.014.0, %i.bd             ; 4 uses
   %i.bw = icmp ult i64 %.sroa.014.0, %.sroa.025.0
   %i.bx = icmp ult i64 %i.bv, %.sroa.037.0
-  %or.cond = and i1 %i.bw, %i.bx
+  %or.cond = select i1 %i.bw, i1 %i.bx, i1 false
   br i1 %or.cond, label %bb.x, label %bb.w
 
 bb.u:                                             ; preds = %._crit_edge314.a
@@ -876,9 +902,8 @@ bb.ae:                                            ; preds = %bb.ac
   br i1 %.not131, label %bb.af, label %bb.ag
 
 bb.af:                                            ; preds = %bb.ae, %bb.ah, %bb.ac
-  %i.cr = icmp slt i64 %i.bd, 1
-  %11 = or i1 %i.bg, %i.cr
-  %or.cond189 = or i1 %11, %i.bc
+  %i.cr = icmp slt i64 %i.bf, %11
+  %or.cond189 = select i1 %13, i1 true, i1 %i.cr
   br i1 %or.cond189, label %_RNvXse_NtNtCsj6eKBz9Db1c_4core4iter5rangeINtNtNtB9_3ops5range14RangeInclusiveiENtNtNtB7_6traits12double_ended19DoubleEndedIterator8nth_backCskXtk6F4WjxZ_4just.exit148.thread, label %.lr.ph263
 
 bb.ag:                                            ; preds = %bb.ae
@@ -907,8 +932,8 @@ bb.ak:                                            ; preds = %bb.j
   %.pre319 = add i64 %i.ac, %i.aw                 ; 6 uses
   br i1 %.not133, label %._crit_edge311, label %bb.al
 
-._crit_edge312.a:                                 ; preds = %bb.j, %bb.ao
-  %.pre-phi318 = phi i64 [ %i.dc, %bb.ao ], [ %i.i, %bb.j ] ; 3 uses
+._crit_edge312.a:                                 ; preds = %._crit_edge312, %bb.ao
+  %.pre-phi318 = phi i64 [ %.pre317, %._crit_edge312 ], [ %i.dc, %bb.ao ] ; 3 uses
   %i.cz = icmp ult i64 %.pre-phi318, %i.k
   br i1 %i.cz, label %bb.at, label %bb.au
 
@@ -1039,9 +1064,8 @@ bb.bc:                                            ; preds = %bb.av
   unreachable
 
 bb.bd:                                            ; preds = %bb.be, %bb.bg, %bb.bb
-  %i.eg = icmp slt i64 %i.aw, 1
-  %12 = or i1 %i.az, %i.eg
-  %or.cond187 = or i1 %12, %i.av
+  %i.eg = icmp slt i64 %i.ay, %11
+  %or.cond187 = select i1 %12, i1 true, i1 %i.eg
   br i1 %or.cond187, label %.lr.ph263.preheader, label %.lr.ph250
 
 .lr.ph263.preheader:                              ; preds = %.lr.ph250, %bb.bd
@@ -1178,27 +1202,36 @@ bb.h:                                             ; preds = %bb.g
   unreachable
 
 bb.i:                                             ; preds = %.lr.ph307, %_RNvXse_NtNtCsj6eKBz9Db1c_4core4iter5rangeINtNtNtB9_3ops5range14RangeInclusiveiENtNtNtB7_6traits12double_ended19DoubleEndedIterator8nth_backCskXtk6F4WjxZ_4just.exit142.thread
-  %.sroa.048.0306 = phi i64 [ 0, %.lr.ph307 ], [ %i.as, %_RNvXse_NtNtCsj6eKBz9Db1c_4core4iter5rangeINtNtNtB9_3ops5range14RangeInclusiveiENtNtNtB7_6traits12double_ended19DoubleEndedIterator8nth_backCskXtk6F4WjxZ_4just.exit142.thread ] ; 8 uses
+  %.sroa.048.0306 = phi i64 [ 0, %.lr.ph307 ], [ %i.as, %_RNvXse_NtNtCsj6eKBz9Db1c_4core4iter5rangeINtNtNtB9_3ops5range14RangeInclusiveiENtNtNtB7_6traits12double_ended19DoubleEndedIterator8nth_backCskXtk6F4WjxZ_4just.exit142.thread ] ; 9 uses
   %i.as = add nuw nsw i64 %.sroa.048.0306, 1
   %i.at = tail call noundef zeroext i1 @_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded(i64 %9, i32 noundef %10)
-  br i1 %i.at, label %._crit_edge, label %.lr.ph269
+  br i1 %i.at, label %._crit_edge, label %.lr.ph269.preheader
 
-.lr.ph269:                                        ; preds = %bb.i, %bb.bj
-  %.sroa.7.0268 = phi i64 [ %i.ay, %bb.bj ], [ %.sroa.048.0306, %bb.i ]
-  %not..sroa.11176.0267 = phi i64 [ 1, %bb.bj ], [ 0, %bb.i ]
+.lr.ph269.preheader:                              ; preds = %bb.i
+  %11 = sub nsw i64 0, %.sroa.048.0306            ; 6 uses
+  br label %.lr.ph269
+
+.lr.ph269:                                        ; preds = %.lr.ph269.preheader, %bb.bj
+  %.sroa.7.0268 = phi i64 [ %i.ay, %bb.bj ], [ %.sroa.048.0306, %.lr.ph269.preheader ]
+  %not..sroa.11176.0267 = phi i64 [ 1, %bb.bj ], [ 0, %.lr.ph269.preheader ]
   %i.au = tail call { i64, i1 } @llvm.ssub.with.overflow.i64(i64 %.sroa.7.0268, i64 %not..sroa.11176.0267) ; 2 uses
   %i.av = extractvalue { i64, i1 } %i.au, 1       ; 2 uses
   %i.aw = extractvalue { i64, i1 } %i.au, 0       ; 10 uses
   %i.ax = tail call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %i.aw, i64 -1) ; 2 uses
-  %i.ay = extractvalue { i64, i1 } %i.ax, 0
+  %i.ay = extractvalue { i64, i1 } %i.ax, 0       ; 2 uses
   %i.az = extractvalue { i64, i1 } %i.ax, 1
-  %.not3.i.not = icmp slt i64 %i.aw, 0
-  %or.cond203 = or i1 %i.av, %.not3.i.not
+  %12 = or i1 %i.av, %i.az
+  %.not3.i.not = icmp slt i64 %i.aw, %11
+  %or.cond203 = select i1 %i.av, i1 true, i1 %.not3.i.not
   br i1 %or.cond203, label %.lr.ph304.preheader, label %bb.j
 
 bb.j:                                             ; preds = %.lr.ph269
-  %i.ba = icmp eq i64 %i.aw, 0
-  br i1 %i.ba, label %._crit_edge378.a, label %bb.an
+  %i.ba = icmp eq i64 %i.aw, %11
+  br i1 %i.ba, label %._crit_edge378, label %bb.an
+
+._crit_edge378:                                   ; preds = %bb.j
+  %.pre383 = add i64 %i.i, %i.aw
+  br label %._crit_edge378.a
 
 .lr.ph304:                                        ; preds = %.lr.ph304.preheader, %bb.ai
   %not..sroa.14185.0303 = phi i64 [ 1, %bb.ai ], [ 0, %.lr.ph304.preheader ]
@@ -1207,15 +1240,20 @@ bb.j:                                             ; preds = %.lr.ph269
   %i.bc = extractvalue { i64, i1 } %i.bb, 1       ; 2 uses
   %i.bd = extractvalue { i64, i1 } %i.bb, 0       ; 10 uses
   %i.be = tail call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %i.bd, i64 -1) ; 2 uses
-  %i.bf = extractvalue { i64, i1 } %i.be, 0
+  %i.bf = extractvalue { i64, i1 } %i.be, 0       ; 2 uses
   %i.bg = extractvalue { i64, i1 } %i.be, 1
-  %.not3.i138.not = icmp slt i64 %i.bd, 0
-  %or.cond205 = or i1 %i.bc, %.not3.i138.not
+  %13 = or i1 %i.bc, %i.bg
+  %.not3.i138.not = icmp slt i64 %i.bd, %11
+  %or.cond205 = select i1 %i.bc, i1 true, i1 %.not3.i138.not
   br i1 %or.cond205, label %_RNvXse_NtNtCsj6eKBz9Db1c_4core4iter5rangeINtNtNtB9_3ops5range14RangeInclusiveiENtNtNtB7_6traits12double_ended19DoubleEndedIterator8nth_backCskXtk6F4WjxZ_4just.exit142.thread, label %bb.k
 
 bb.k:                                             ; preds = %.lr.ph304
-  %i.bh = icmp eq i64 %i.bd, 0
-  br i1 %i.bh, label %._crit_edge380.a, label %bb.l
+  %i.bh = icmp eq i64 %i.bd, %11
+  br i1 %i.bh, label %._crit_edge380, label %bb.l
+
+._crit_edge380:                                   ; preds = %bb.k
+  %.pre = add i64 %i.r, %i.bd
+  br label %._crit_edge380.a
 
 _RNvXse_NtNtCsj6eKBz9Db1c_4core4iter5rangeINtNtNtB9_3ops5range14RangeInclusiveiENtNtNtB7_6traits12double_ended19DoubleEndedIterator8nth_backCskXtk6F4WjxZ_4just.exit142.thread: ; preds = %bb.ai, %.lr.ph304
   %exitcond376.not = icmp eq i64 %.sroa.048.0306, %.sroa.047.0
@@ -1226,8 +1264,8 @@ bb.l:                                             ; preds = %bb.k
   %.pre381 = add i64 %i.ap, %i.bd                 ; 6 uses
   br i1 %.not130, label %._crit_edge379, label %bb.m
 
-._crit_edge380.a:                                 ; preds = %bb.k, %bb.p
-  %.pre-phi = phi i64 [ %i.bl, %bb.p ], [ %i.r, %bb.k ] ; 3 uses
+._crit_edge380.a:                                 ; preds = %._crit_edge380, %bb.p
+  %.pre-phi = phi i64 [ %.pre, %._crit_edge380 ], [ %i.bl, %bb.p ] ; 3 uses
   %i.bi = icmp ult i64 %.pre-phi, %i.t
   br i1 %i.bi, label %bb.u, label %bb.v
 
@@ -1275,7 +1313,7 @@ bb.t:                                             ; preds = %bb.u, %bb.r
   %i.bv = sub i64 %.sroa.014.0, %i.bd             ; 4 uses
   %i.bw = icmp ult i64 %.sroa.014.0, %.sroa.025.0
   %i.bx = icmp ult i64 %i.bv, %.sroa.037.0
-  %or.cond = and i1 %i.bw, %i.bx
+  %or.cond = select i1 %i.bw, i1 %i.bx, i1 false
   br i1 %or.cond, label %bb.x, label %bb.w
 
 bb.u:                                             ; preds = %._crit_edge380.a
@@ -1460,9 +1498,8 @@ bb.ah:                                            ; preds = %bb.af
   br i1 %.not131, label %bb.ai, label %bb.aj
 
 bb.ai:                                            ; preds = %bb.ah, %bb.ak, %bb.af
-  %i.dz = icmp slt i64 %i.bd, 1
-  %11 = or i1 %i.bg, %i.dz
-  %or.cond204 = or i1 %11, %i.bc
+  %i.dz = icmp slt i64 %i.bf, %11
+  %or.cond204 = select i1 %13, i1 true, i1 %i.dz
   br i1 %or.cond204, label %_RNvXse_NtNtCsj6eKBz9Db1c_4core4iter5rangeINtNtNtB9_3ops5range14RangeInclusiveiENtNtNtB7_6traits12double_ended19DoubleEndedIterator8nth_backCskXtk6F4WjxZ_4just.exit142.thread, label %.lr.ph304
 
 bb.aj:                                            ; preds = %bb.ah
@@ -1491,8 +1528,8 @@ bb.an:                                            ; preds = %bb.j
   %.pre385 = add i64 %i.ac, %i.aw                 ; 6 uses
   br i1 %.not133, label %._crit_edge377, label %bb.ao
 
-._crit_edge378.a:                                 ; preds = %bb.j, %bb.ar
-  %.pre-phi384 = phi i64 [ %i.ek, %bb.ar ], [ %i.i, %bb.j ] ; 3 uses
+._crit_edge378.a:                                 ; preds = %._crit_edge378, %bb.ar
+  %.pre-phi384 = phi i64 [ %.pre383, %._crit_edge378 ], [ %i.ek, %bb.ar ] ; 3 uses
   %i.eh = icmp ult i64 %.pre-phi384, %i.k
   br i1 %i.eh, label %bb.aw, label %bb.ax
 
@@ -1723,9 +1760,8 @@ bb.bi:                                            ; preds = %bb.ay
   unreachable
 
 bb.bj:                                            ; preds = %bb.bk, %bb.bm, %bb.bh
-  %i.gp = icmp slt i64 %i.aw, 1
-  %12 = or i1 %i.az, %i.gp
-  %or.cond202 = or i1 %12, %i.av
+  %i.gp = icmp slt i64 %i.ay, %11
+  %or.cond202 = select i1 %12, i1 true, i1 %i.gp
   br i1 %or.cond202, label %.lr.ph304.preheader, label %.lr.ph269
 
 .lr.ph304.preheader:                              ; preds = %.lr.ph269, %bb.bj
@@ -2128,46 +2164,54 @@ bb.hk:                                            ; preds = %bb.hj
   unreachable
 
 bb.hl:                                            ; preds = %_RNvXse_NtNtCsj6eKBz9Db1c_4core4iter5rangeINtNtNtB9_3ops5range14RangeInclusiveiENtNtNtB7_6traits12double_ended19DoubleEndedIterator8nth_backCskXtk6F4WjxZ_4just.exit156.thread.i, %.lr.ph133.i
-  %.sroa.048.0132.i = phi i64 [ 0, %.lr.ph133.i ], [ %i.afu, %_RNvXse_NtNtCsj6eKBz9Db1c_4core4iter5rangeINtNtNtB9_3ops5range14RangeInclusiveiENtNtNtB7_6traits12double_ended19DoubleEndedIterator8nth_backCskXtk6F4WjxZ_4just.exit156.thread.i ] ; 8 uses
+  %.sroa.048.0132.i = phi i64 [ 0, %.lr.ph133.i ], [ %i.afu, %_RNvXse_NtNtCsj6eKBz9Db1c_4core4iter5rangeINtNtNtB9_3ops5range14RangeInclusiveiENtNtNtB7_6traits12double_ended19DoubleEndedIterator8nth_backCskXtk6F4WjxZ_4just.exit156.thread.i ] ; 11 uses
   %i.afu = add nuw nsw i64 %.sroa.048.0132.i, 1
   %i.afv = tail call noundef zeroext i1 @_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded(i64 %9, i32 noundef range(i32 -1, 1000000000) %10), !noalias !19263
-  br i1 %i.afv, label %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5myers17find_middle_snakeINtNtCs4wP2HXfJTCR_5alloc3vec3VecINtNtB4_5utils10UniqueItemINtB1D_12OffsetLookupmEEEB13_ECskXtk6F4WjxZ_4just.exit, label %.lr.ph121.i
+  br i1 %i.afv, label %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5myers17find_middle_snakeINtNtCs4wP2HXfJTCR_5alloc3vec3VecINtNtB4_5utils10UniqueItemINtB1D_12OffsetLookupmEEEB13_ECskXtk6F4WjxZ_4just.exit, label %.lr.ph121.preheader.i
 
-.lr.ph121.i:                                      ; preds = %bb.hl, %bb.jk
-  %.sroa.7.0120.i = phi i64 [ %i.aga, %bb.jk ], [ %.sroa.048.0132.i, %bb.hl ]
-  %not..sroa.1118.0119.i = phi i64 [ 1, %bb.jk ], [ 0, %bb.hl ]
+.lr.ph121.preheader.i:                            ; preds = %bb.hl
+  %11 = sub nsw i64 0, %.sroa.048.0132.i          ; 6 uses
+  %.pre222.i = sub i64 %i.aew, %.sroa.048.0132.i
+  br label %.lr.ph121.i
+
+.lr.ph121.i:                                      ; preds = %bb.jk, %.lr.ph121.preheader.i
+  %.sroa.7.0120.i = phi i64 [ %i.aga, %bb.jk ], [ %.sroa.048.0132.i, %.lr.ph121.preheader.i ]
+  %not..sroa.1118.0119.i = phi i64 [ 1, %bb.jk ], [ 0, %.lr.ph121.preheader.i ]
   %i.afw = tail call { i64, i1 } @llvm.ssub.with.overflow.i64(i64 %.sroa.7.0120.i, i64 %not..sroa.1118.0119.i) ; 2 uses
-  %i.afx = extractvalue { i64, i1 } %i.afw, 1
-  %i.afy = extractvalue { i64, i1 } %i.afw, 0     ; 10 uses
+  %i.afx = extractvalue { i64, i1 } %i.afw, 1     ; 2 uses
+  %i.afy = extractvalue { i64, i1 } %i.afw, 0     ; 9 uses
   %i.afz = tail call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %i.afy, i64 -1) ; 2 uses
-  %i.aga = extractvalue { i64, i1 } %i.afz, 0
+  %i.aga = extractvalue { i64, i1 } %i.afz, 0     ; 2 uses
   %i.agb = extractvalue { i64, i1 } %i.afz, 1
-  %.not3.i.not.i = icmp slt i64 %i.afy, 0
-  %or.cond43.i = or i1 %i.afx, %.not3.i.not.i
-  br i1 %or.cond43.i, label %.lr.ph130.i.preheader, label %bb.hm
+  %12 = or i1 %i.afx, %i.agb
+  %.not3.i.not.i = icmp slt i64 %i.afy, %11
+  %or.cond43.i = select i1 %i.afx, i1 true, i1 %.not3.i.not.i
+  br i1 %or.cond43.i, label %bb.hm, label %.lr.ph130.i.preheader
 
-.lr.ph130.i.preheader:                            ; preds = %bb.jk, %.lr.ph121.i
+.lr.ph130.i.preheader:                            ; preds = %.lr.ph121.i
+  %13 = icmp eq i64 %i.afy, %11
+  br i1 %13, label %._crit_edge217.i, label %bb.ip
+
+bb.hm:                                            ; preds = %bb.jk, %.lr.ph121.i
+  %.pre.i303 = sub i64 %i.aff, %.sroa.048.0132.i
   br label %.lr.ph130.i
 
-bb.hm:                                            ; preds = %.lr.ph121.i
-  %11 = icmp eq i64 %i.afy, 0
-  br i1 %11, label %._crit_edge217.i, label %bb.ip
-
-.lr.ph130.i:                                      ; preds = %.lr.ph130.i.preheader, %bb.ik
-  %not..sroa.1427.0129.i = phi i64 [ 1, %bb.ik ], [ 0, %.lr.ph130.i.preheader ]
-  %.sroa.726.0128.i = phi i64 [ %i.agg, %bb.ik ], [ %.sroa.048.0132.i, %.lr.ph130.i.preheader ]
+.lr.ph130.i:                                      ; preds = %bb.ik, %bb.hm
+  %not..sroa.1427.0129.i = phi i64 [ 1, %bb.ik ], [ 0, %bb.hm ]
+  %.sroa.726.0128.i = phi i64 [ %i.agg, %bb.ik ], [ %.sroa.048.0132.i, %bb.hm ]
   %i.agc = tail call { i64, i1 } @llvm.ssub.with.overflow.i64(i64 %.sroa.726.0128.i, i64 %not..sroa.1427.0129.i) ; 2 uses
-  %i.agd = extractvalue { i64, i1 } %i.agc, 1
-  %i.age = extractvalue { i64, i1 } %i.agc, 0     ; 10 uses
+  %i.agd = extractvalue { i64, i1 } %i.agc, 1     ; 2 uses
+  %i.age = extractvalue { i64, i1 } %i.agc, 0     ; 9 uses
   %i.agf = tail call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %i.age, i64 -1) ; 2 uses
-  %i.agg = extractvalue { i64, i1 } %i.agf, 0
+  %i.agg = extractvalue { i64, i1 } %i.agf, 0     ; 2 uses
   %i.agh = extractvalue { i64, i1 } %i.agf, 1
-  %.not3.i152.not.i = icmp slt i64 %i.age, 0
-  %or.cond45.i = or i1 %i.agd, %.not3.i152.not.i
+  %14 = or i1 %i.agd, %i.agh
+  %.not3.i152.not.i = icmp slt i64 %i.age, %11
+  %or.cond45.i = select i1 %i.agd, i1 true, i1 %.not3.i152.not.i
   br i1 %or.cond45.i, label %_RNvXse_NtNtCsj6eKBz9Db1c_4core4iter5rangeINtNtNtB9_3ops5range14RangeInclusiveiENtNtNtB7_6traits12double_ended19DoubleEndedIterator8nth_backCskXtk6F4WjxZ_4just.exit156.thread.i, label %bb.hn
 
 bb.hn:                                            ; preds = %.lr.ph130.i
-  %i.agi = icmp eq i64 %i.age, 0
+  %i.agi = icmp eq i64 %i.age, %11
   br i1 %i.agi, label %._crit_edge219.i, label %bb.ho
 
 _RNvXse_NtNtCsj6eKBz9Db1c_4core4iter5rangeINtNtNtB9_3ops5range14RangeInclusiveiENtNtNtB7_6traits12double_ended19DoubleEndedIterator8nth_backCskXtk6F4WjxZ_4just.exit156.thread.i: ; preds = %bb.ik, %.lr.ph130.i
@@ -2179,8 +2223,8 @@ bb.ho:                                            ; preds = %bb.hn
   %.pre220.i = add i64 %i.afr, %i.age             ; 6 uses
   br i1 %.not130.i, label %._crit_edge218.i, label %bb.hp
 
-._crit_edge219.i:                                 ; preds = %bb.hs, %bb.hn
-  %.pre-phi.i = phi i64 [ %i.agm, %bb.hs ], [ %i.aff, %bb.hn ] ; 3 uses
+._crit_edge219.i:                                 ; preds = %bb.hn, %bb.hs
+  %.pre-phi.i = phi i64 [ %i.agm, %bb.hs ], [ %.pre.i303, %bb.hn ] ; 3 uses
   %i.agj = icmp ult i64 %.pre-phi.i, %i.afh
   br i1 %i.agj, label %bb.hx, label %bb.hy
 
@@ -2228,7 +2272,7 @@ bb.hw:                                            ; preds = %bb.hx, %bb.hu
   %i.agw = sub i64 %.sroa.014.0.i, %i.age         ; 4 uses
   %i.agx = icmp ult i64 %.sroa.014.0.i, %.sroa.025.0.i
   %i.agy = icmp ult i64 %i.agw, %.sroa.037.0.i
-  %or.cond.i300 = and i1 %i.agx, %i.agy
+  %or.cond.i300 = select i1 %i.agx, i1 %i.agy, i1 false
   br i1 %or.cond.i300, label %bb.ia, label %bb.hz
 
 bb.hx:                                            ; preds = %._crit_edge219.i
@@ -2358,9 +2402,9 @@ bb.ij:                                            ; preds = %bb.ih
   br i1 %.not131.i, label %bb.ik, label %bb.il
 
 bb.ik:                                            ; preds = %bb.im, %bb.ij, %bb.ih
-  %i.ais = icmp slt i64 %i.age, 1
-  %12 = or i1 %i.ais, %i.agh
-  br i1 %12, label %_RNvXse_NtNtCsj6eKBz9Db1c_4core4iter5rangeINtNtNtB9_3ops5range14RangeInclusiveiENtNtNtB7_6traits12double_ended19DoubleEndedIterator8nth_backCskXtk6F4WjxZ_4just.exit156.thread.i, label %.lr.ph130.i
+  %i.ais = icmp slt i64 %i.agg, %11
+  %or.cond44.i = select i1 %14, i1 true, i1 %i.ais
+  br i1 %or.cond44.i, label %_RNvXse_NtNtCsj6eKBz9Db1c_4core4iter5rangeINtNtNtB9_3ops5range14RangeInclusiveiENtNtNtB7_6traits12double_ended19DoubleEndedIterator8nth_backCskXtk6F4WjxZ_4just.exit156.thread.i, label %.lr.ph130.i
 
 bb.il:                                            ; preds = %bb.ij
   %i.ait = sub i64 %i.aev, %i.air                 ; 3 uses
@@ -2383,13 +2427,13 @@ bb.io:                                            ; preds = %bb.im
   %i.aiz = sub i64 %i.aft, %.sroa.020.0.i
   br label %bb.jq
 
-bb.ip:                                            ; preds = %bb.hm
+bb.ip:                                            ; preds = %.lr.ph130.i.preheader
   %.not133.i = icmp eq i64 %i.afy, %.sroa.048.0132.i
   %.pre224.i = add i64 %i.afq, %i.afy             ; 6 uses
   br i1 %.not133.i, label %._crit_edge216.i, label %bb.iq
 
-._crit_edge217.i:                                 ; preds = %bb.it, %bb.hm
-  %.pre-phi223.i = phi i64 [ %i.ajd, %bb.it ], [ %i.aew, %bb.hm ] ; 3 uses
+._crit_edge217.i:                                 ; preds = %.lr.ph130.i.preheader, %bb.it
+  %.pre-phi223.i = phi i64 [ %i.ajd, %bb.it ], [ %.pre222.i, %.lr.ph130.i.preheader ] ; 3 uses
   %i.aja = icmp ult i64 %.pre-phi223.i, %i.aey
   br i1 %i.aja, label %bb.iy, label %bb.iz
 
@@ -2561,9 +2605,9 @@ bb.jj:                                            ; preds = %bb.ja
   unreachable
 
 bb.jk:                                            ; preds = %bb.jn, %bb.jl, %bb.ji
-  %i.ale = icmp slt i64 %i.afy, 1
-  %13 = or i1 %i.ale, %i.agb
-  br i1 %13, label %.lr.ph130.i.preheader, label %.lr.ph121.i
+  %i.ale = icmp slt i64 %i.aga, %11
+  %or.cond42.i = select i1 %12, i1 true, i1 %i.ale
+  br i1 %or.cond42.i, label %bb.hm, label %.lr.ph121.i
 
 bb.jl:                                            ; preds = %bb.ji
   %i.alf = sub i64 %i.afy, %i.aes                 ; 2 uses
@@ -2966,46 +3010,54 @@ bb.ld:                                            ; preds = %bb.lc
   unreachable
 
 bb.le:                                            ; preds = %_RNvXse_NtNtCsj6eKBz9Db1c_4core4iter5rangeINtNtNtB9_3ops5range14RangeInclusiveiENtNtNtB7_6traits12double_ended19DoubleEndedIterator8nth_backCskXtk6F4WjxZ_4just.exit149.thread.i, %.lr.ph125.i
-  %.sroa.048.0124.i = phi i64 [ 0, %.lr.ph125.i ], [ %i.ama, %_RNvXse_NtNtCsj6eKBz9Db1c_4core4iter5rangeINtNtNtB9_3ops5range14RangeInclusiveiENtNtNtB7_6traits12double_ended19DoubleEndedIterator8nth_backCskXtk6F4WjxZ_4just.exit149.thread.i ] ; 8 uses
+  %.sroa.048.0124.i = phi i64 [ 0, %.lr.ph125.i ], [ %i.ama, %_RNvXse_NtNtCsj6eKBz9Db1c_4core4iter5rangeINtNtNtB9_3ops5range14RangeInclusiveiENtNtNtB7_6traits12double_ended19DoubleEndedIterator8nth_backCskXtk6F4WjxZ_4just.exit149.thread.i ] ; 11 uses
   %i.ama = add nuw nsw i64 %.sroa.048.0124.i, 1
   %i.amb = tail call noundef zeroext i1 @_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded(i64 %9, i32 noundef range(i32 -1, 1000000000) %10), !noalias !19925
-  br i1 %i.amb, label %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5myers17find_middle_snakeINtNtCs4wP2HXfJTCR_5alloc3vec3VecINtNtB4_5utils10UniqueItemINtNtB6_4text12TextDiffSideeEEEB13_ECskXtk6F4WjxZ_4just.exit, label %.lr.ph112.i
+  br i1 %i.amb, label %_RINvNtNtCsdftwklc2oBO_7similar10algorithms5myers17find_middle_snakeINtNtCs4wP2HXfJTCR_5alloc3vec3VecINtNtB4_5utils10UniqueItemINtNtB6_4text12TextDiffSideeEEEB13_ECskXtk6F4WjxZ_4just.exit, label %.lr.ph112.preheader.i
 
-.lr.ph112.i:                                      ; preds = %bb.le, %bb.nt
-  %.sroa.7.0111.i = phi i64 [ %i.amg, %bb.nt ], [ %.sroa.048.0124.i, %bb.le ]
-  %not..sroa.1118.0110.i = phi i64 [ 1, %bb.nt ], [ 0, %bb.le ]
+.lr.ph112.preheader.i:                            ; preds = %bb.le
+  %11 = sub nsw i64 0, %.sroa.048.0124.i          ; 6 uses
+  %.pre193.i = sub i64 %i.alc, %.sroa.048.0124.i
+  br label %.lr.ph112.i
+
+.lr.ph112.i:                                      ; preds = %bb.nt, %.lr.ph112.preheader.i
+  %.sroa.7.0111.i = phi i64 [ %i.amg, %bb.nt ], [ %.sroa.048.0124.i, %.lr.ph112.preheader.i ]
+  %not..sroa.1118.0110.i = phi i64 [ 1, %bb.nt ], [ 0, %.lr.ph112.preheader.i ]
   %i.amc = tail call { i64, i1 } @llvm.ssub.with.overflow.i64(i64 %.sroa.7.0111.i, i64 %not..sroa.1118.0110.i) ; 2 uses
-  %i.amd = extractvalue { i64, i1 } %i.amc, 1
-  %i.ame = extractvalue { i64, i1 } %i.amc, 0     ; 10 uses
+  %i.amd = extractvalue { i64, i1 } %i.amc, 1     ; 2 uses
+  %i.ame = extractvalue { i64, i1 } %i.amc, 0     ; 9 uses
   %i.amf = tail call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %i.ame, i64 -1) ; 2 uses
-  %i.amg = extractvalue { i64, i1 } %i.amf, 0
+  %i.amg = extractvalue { i64, i1 } %i.amf, 0     ; 2 uses
   %i.amh = extractvalue { i64, i1 } %i.amf, 1
-  %.not3.i.not.i = icmp slt i64 %i.ame, 0
-  %or.cond45.i = or i1 %i.amd, %.not3.i.not.i
-  br i1 %or.cond45.i, label %.lr.ph122.i.preheader, label %bb.lf
+  %12 = or i1 %i.amd, %i.amh
+  %.not3.i.not.i = icmp slt i64 %i.ame, %11
+  %or.cond45.i = select i1 %i.amd, i1 true, i1 %.not3.i.not.i
+  br i1 %or.cond45.i, label %bb.lf, label %.lr.ph122.i.preheader
 
-.lr.ph122.i.preheader:                            ; preds = %bb.nt, %.lr.ph112.i
+.lr.ph122.i.preheader:                            ; preds = %.lr.ph112.i
+  %13 = icmp eq i64 %i.ame, %11
+  br i1 %13, label %._crit_edge188.i, label %bb.mq
+
+bb.lf:                                            ; preds = %bb.nt, %.lr.ph112.i
+  %.pre.i = sub i64 %i.all, %.sroa.048.0124.i
   br label %.lr.ph122.i
 
-bb.lf:                                            ; preds = %.lr.ph112.i
-  %11 = icmp eq i64 %i.ame, 0
-  br i1 %11, label %._crit_edge188.i, label %bb.mq
-
-.lr.ph122.i:                                      ; preds = %.lr.ph122.i.preheader, %bb.ml
-  %not..sroa.1427.0121.i = phi i64 [ 1, %bb.ml ], [ 0, %.lr.ph122.i.preheader ]
-  %.sroa.726.0120.i = phi i64 [ %i.amm, %bb.ml ], [ %.sroa.048.0124.i, %.lr.ph122.i.preheader ]
+.lr.ph122.i:                                      ; preds = %bb.ml, %bb.lf
+  %not..sroa.1427.0121.i = phi i64 [ 1, %bb.ml ], [ 0, %bb.lf ]
+  %.sroa.726.0120.i = phi i64 [ %i.amm, %bb.ml ], [ %.sroa.048.0124.i, %bb.lf ]
   %i.ami = tail call { i64, i1 } @llvm.ssub.with.overflow.i64(i64 %.sroa.726.0120.i, i64 %not..sroa.1427.0121.i) ; 2 uses
-  %i.amj = extractvalue { i64, i1 } %i.ami, 1
-  %i.amk = extractvalue { i64, i1 } %i.ami, 0     ; 10 uses
+  %i.amj = extractvalue { i64, i1 } %i.ami, 1     ; 2 uses
+  %i.amk = extractvalue { i64, i1 } %i.ami, 0     ; 9 uses
   %i.aml = tail call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %i.amk, i64 -1) ; 2 uses
-  %i.amm = extractvalue { i64, i1 } %i.aml, 0
+  %i.amm = extractvalue { i64, i1 } %i.aml, 0     ; 2 uses
   %i.amn = extractvalue { i64, i1 } %i.aml, 1
-  %.not3.i145.not.i = icmp slt i64 %i.amk, 0
-  %or.cond47.i = or i1 %i.amj, %.not3.i145.not.i
+  %14 = or i1 %i.amj, %i.amn
+  %.not3.i145.not.i = icmp slt i64 %i.amk, %11
+  %or.cond47.i = select i1 %i.amj, i1 true, i1 %.not3.i145.not.i
   br i1 %or.cond47.i, label %_RNvXse_NtNtCsj6eKBz9Db1c_4core4iter5rangeINtNtNtB9_3ops5range14RangeInclusiveiENtNtNtB7_6traits12double_ended19DoubleEndedIterator8nth_backCskXtk6F4WjxZ_4just.exit149.thread.i, label %bb.lg
 
 bb.lg:                                            ; preds = %.lr.ph122.i
-  %i.amo = icmp eq i64 %i.amk, 0
+  %i.amo = icmp eq i64 %i.amk, %11
   br i1 %i.amo, label %._crit_edge190.i, label %bb.lh
 
 _RNvXse_NtNtCsj6eKBz9Db1c_4core4iter5rangeINtNtNtB9_3ops5range14RangeInclusiveiENtNtNtB7_6traits12double_ended19DoubleEndedIterator8nth_backCskXtk6F4WjxZ_4just.exit149.thread.i: ; preds = %bb.ml, %.lr.ph122.i
@@ -3017,8 +3069,8 @@ bb.lh:                                            ; preds = %bb.lg
   %.pre191.i = add i64 %i.alx, %i.amk             ; 6 uses
   br i1 %.not130.i, label %._crit_edge189.i, label %bb.li
 
-._crit_edge190.i:                                 ; preds = %bb.ll, %bb.lg
-  %.pre-phi.i = phi i64 [ %i.ams, %bb.ll ], [ %i.all, %bb.lg ] ; 3 uses
+._crit_edge190.i:                                 ; preds = %bb.lg, %bb.ll
+  %.pre-phi.i = phi i64 [ %i.ams, %bb.ll ], [ %.pre.i, %bb.lg ] ; 3 uses
   %i.amp = icmp ult i64 %.pre-phi.i, %i.aln
   br i1 %i.amp, label %bb.lq, label %bb.lr
 
@@ -3066,7 +3118,7 @@ bb.lp:                                            ; preds = %bb.lq, %bb.ln
   %i.anc = sub i64 %.sroa.014.0.i, %i.amk         ; 4 uses
   %i.and = icmp ult i64 %.sroa.014.0.i, %.sroa.025.0.i
   %i.ane = icmp ult i64 %i.anc, %.sroa.037.0.i
-  %or.cond.i359 = and i1 %i.and, %i.ane
+  %or.cond.i359 = select i1 %i.and, i1 %i.ane, i1 false
   br i1 %or.cond.i359, label %bb.lt, label %bb.ls
 
 bb.lq:                                            ; preds = %._crit_edge190.i
@@ -3243,9 +3295,9 @@ bb.mk:                                            ; preds = %bb.mi
   br i1 %.not131.i, label %bb.ml, label %bb.mm
 
 bb.ml:                                            ; preds = %bb.mn, %bb.mk, %bb.mi
-  %i.apj = icmp slt i64 %i.amk, 1
-  %12 = or i1 %i.apj, %i.amn
-  br i1 %12, label %_RNvXse_NtNtCsj6eKBz9Db1c_4core4iter5rangeINtNtNtB9_3ops5range14RangeInclusiveiENtNtNtB7_6traits12double_ended19DoubleEndedIterator8nth_backCskXtk6F4WjxZ_4just.exit149.thread.i, label %.lr.ph122.i
+  %i.apj = icmp slt i64 %i.amm, %11
+  %or.cond46.i = select i1 %14, i1 true, i1 %i.apj
+  br i1 %or.cond46.i, label %_RNvXse_NtNtCsj6eKBz9Db1c_4core4iter5rangeINtNtNtB9_3ops5range14RangeInclusiveiENtNtNtB7_6traits12double_ended19DoubleEndedIterator8nth_backCskXtk6F4WjxZ_4just.exit149.thread.i, label %.lr.ph122.i
 
 bb.mm:                                            ; preds = %bb.mk
   %i.apk = sub i64 %i.alb, %i.api                 ; 3 uses
@@ -3268,13 +3320,13 @@ bb.mp:                                            ; preds = %bb.mn
   %i.apq = sub i64 %i.alz, %.sroa.020.0.i
   br label %bb.nz
 
-bb.mq:                                            ; preds = %bb.lf
+bb.mq:                                            ; preds = %.lr.ph122.i.preheader
   %.not133.i = icmp eq i64 %i.ame, %.sroa.048.0124.i
   %.pre195.i = add i64 %i.alw, %i.ame             ; 6 uses
   br i1 %.not133.i, label %._crit_edge187.i, label %bb.mr
 
-._crit_edge188.i:                                 ; preds = %bb.mu, %bb.lf
-  %.pre-phi194.i = phi i64 [ %i.apu, %bb.mu ], [ %i.alc, %bb.lf ] ; 3 uses
+._crit_edge188.i:                                 ; preds = %.lr.ph122.i.preheader, %bb.mu
+  %.pre-phi194.i = phi i64 [ %i.apu, %bb.mu ], [ %.pre193.i, %.lr.ph122.i.preheader ] ; 3 uses
   %i.apr = icmp ult i64 %.pre-phi194.i, %i.ale
   br i1 %i.apr, label %bb.mz, label %bb.na
 
@@ -3493,9 +3545,9 @@ bb.ns:                                            ; preds = %bb.nb
   unreachable
 
 bb.nt:                                            ; preds = %bb.nw, %bb.nu, %bb.nr
-  %i.asg = icmp slt i64 %i.ame, 1
-  %13 = or i1 %i.asg, %i.amh
-  br i1 %13, label %.lr.ph122.i.preheader, label %.lr.ph112.i
+  %i.asg = icmp slt i64 %i.amg, %11
+  %or.cond44.i = select i1 %12, i1 true, i1 %i.asg
+  br i1 %or.cond44.i, label %bb.lf, label %.lr.ph112.i
 
 bb.nu:                                            ; preds = %bb.nr
   %i.ash = sub i64 %i.ame, %i.aky                 ; 2 uses

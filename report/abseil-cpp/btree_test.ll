@@ -205,22 +205,27 @@ bb.c:                                             ; preds = %.lr.ph, %_ZNSt7__cx
   br i1 %.not11.i.i, label %_ZN4absl12lts_2026052618container_internal14GenerateDigitsEPcjj.exit.i, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.c, %.lr.ph.i.i
-  %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i, %.lr.ph.i.i ], [ 14, %bb.c ] ; 2 uses
+  %.014.i.i = phi i32 [ %6, %.lr.ph.i.i ], [ 14, %bb.c ] ; 2 uses
   %.0913.i.i = phi i32 [ %i.s, %.lr.ph.i.i ], [ %2, %bb.c ]
   %.01012.i.i = phi i32 [ %i.r, %.lr.ph.i.i ], [ %i.m, %bb.c ] ; 2 uses
   %i.n = trunc i32 %.01012.i.i to i8
   %i.o = and i8 %i.n, 63
   %i.p = add nuw nsw i8 %i.o, 32
-  %indvars.iv.next.i.i = add nsw i64 %indvars.iv.i.i, -1 ; 2 uses
-  %i.q = getelementptr inbounds nuw i8, ptr %i.b, i64 %indvars.iv.i.i
+  %6 = add nsw i32 %.014.i.i, -1                  ; 2 uses
+  %7 = zext i32 %.014.i.i to i64
+  %i.q = getelementptr inbounds nuw i8, ptr %i.b, i64 %7
   store i8 %i.p, ptr %i.q, align 1, !tbaa !23, !noalias !820
   %i.r = lshr i32 %.01012.i.i, 6
   %i.s = lshr i32 %.0913.i.i, 6                   ; 2 uses
   %.not.i.i = icmp eq i32 %i.s, 0
-  br i1 %.not.i.i, label %_ZN4absl12lts_2026052618container_internal14GenerateDigitsEPcjj.exit.i, label %.lr.ph.i.i, !llvm.loop !823
+  br i1 %.not.i.i, label %._crit_edge.loopexit.i.i, label %.lr.ph.i.i, !llvm.loop !823
 
-_ZN4absl12lts_2026052618container_internal14GenerateDigitsEPcjj.exit.i: ; preds = %.lr.ph.i.i, %bb.c
-  %.0.lcssa.i.i = phi i64 [ 14, %bb.c ], [ %indvars.iv.next.i.i, %.lr.ph.i.i ]
+._crit_edge.loopexit.i.i:                         ; preds = %.lr.ph.i.i
+  %8 = zext i32 %6 to i64
+  br label %_ZN4absl12lts_2026052618container_internal14GenerateDigitsEPcjj.exit.i
+
+_ZN4absl12lts_2026052618container_internal14GenerateDigitsEPcjj.exit.i: ; preds = %._crit_edge.loopexit.i.i, %bb.c
+  %.0.lcssa.i.i = phi i64 [ 14, %bb.c ], [ %8, %._crit_edge.loopexit.i.i ]
   %i.t = getelementptr inbounds nuw i8, ptr %i.b, i64 %.0.lcssa.i.i
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 1 ; 3 uses
   store ptr %i.f, ptr %5, align 8, !tbaa !24, !alias.scope !820
@@ -623,22 +628,27 @@ bb.e:                                             ; preds = %.lr.ph, %_ZN4absl12
   br i1 %.not11.i.i, label %_ZN4absl12lts_2026052618container_internal14GenerateDigitsEPcjj.exit.i, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.e, %.lr.ph.i.i
-  %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i, %.lr.ph.i.i ], [ 14, %bb.e ] ; 2 uses
+  %.014.i.i = phi i32 [ %6, %.lr.ph.i.i ], [ 14, %bb.e ] ; 2 uses
   %.0913.i.i = phi i32 [ %i.u, %.lr.ph.i.i ], [ %2, %bb.e ]
   %.01012.i.i = phi i32 [ %i.t, %.lr.ph.i.i ], [ %i.o, %bb.e ] ; 2 uses
   %i.p = trunc i32 %.01012.i.i to i8
   %i.q = and i8 %i.p, 63
   %i.r = add nuw nsw i8 %i.q, 32
-  %indvars.iv.next.i.i = add nsw i64 %indvars.iv.i.i, -1 ; 2 uses
-  %i.s = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv.i.i
+  %6 = add nsw i32 %.014.i.i, -1                  ; 2 uses
+  %7 = zext i32 %.014.i.i to i64
+  %i.s = getelementptr inbounds nuw i8, ptr %i.a, i64 %7
   store i8 %i.r, ptr %i.s, align 1, !tbaa !23, !noalias !1377
   %i.t = lshr i32 %.01012.i.i, 6
   %i.u = lshr i32 %.0913.i.i, 6                   ; 2 uses
   %.not.i.i = icmp eq i32 %i.u, 0
-  br i1 %.not.i.i, label %_ZN4absl12lts_2026052618container_internal14GenerateDigitsEPcjj.exit.i, label %.lr.ph.i.i, !llvm.loop !823
+  br i1 %.not.i.i, label %._crit_edge.loopexit.i.i, label %.lr.ph.i.i, !llvm.loop !823
 
-_ZN4absl12lts_2026052618container_internal14GenerateDigitsEPcjj.exit.i: ; preds = %.lr.ph.i.i, %bb.e
-  %.0.lcssa.i.i = phi i64 [ 14, %bb.e ], [ %indvars.iv.next.i.i, %.lr.ph.i.i ]
+._crit_edge.loopexit.i.i:                         ; preds = %.lr.ph.i.i
+  %8 = zext i32 %6 to i64
+  br label %_ZN4absl12lts_2026052618container_internal14GenerateDigitsEPcjj.exit.i
+
+_ZN4absl12lts_2026052618container_internal14GenerateDigitsEPcjj.exit.i: ; preds = %._crit_edge.loopexit.i.i, %bb.e
+  %.0.lcssa.i.i = phi i64 [ 14, %bb.e ], [ %8, %._crit_edge.loopexit.i.i ]
   %i.v = getelementptr inbounds nuw i8, ptr %i.a, i64 %.0.lcssa.i.i
   %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 1 ; 2 uses
   %i.x = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.w) #37, !noalias !1377
@@ -1041,22 +1051,27 @@ bb.a:
   br i1 %.not11.i.i, label %_ZN4absl12lts_2026052618container_internal14GenerateDigitsEPcjj.exit.i, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.a, %.lr.ph.i.i
-  %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i, %.lr.ph.i.i ], [ 14, %bb.a ] ; 2 uses
+  %.014.i.i = phi i32 [ %6, %.lr.ph.i.i ], [ 14, %bb.a ] ; 2 uses
   %.0913.i.i = phi i32 [ %i.l, %.lr.ph.i.i ], [ %i.e, %bb.a ]
   %.01012.i.i = phi i32 [ %i.k, %.lr.ph.i.i ], [ %2, %bb.a ] ; 2 uses
   %i.g = trunc i32 %.01012.i.i to i8
   %i.h = and i8 %i.g, 63
   %i.i = add nuw nsw i8 %i.h, 32
-  %indvars.iv.next.i.i = add nsw i64 %indvars.iv.i.i, -1 ; 2 uses
-  %i.j = getelementptr inbounds nuw i8, ptr %i.d, i64 %indvars.iv.i.i
+  %6 = add nsw i32 %.014.i.i, -1                  ; 2 uses
+  %7 = zext i32 %.014.i.i to i64
+  %i.j = getelementptr inbounds nuw i8, ptr %i.d, i64 %7
   store i8 %i.i, ptr %i.j, align 1, !tbaa !23, !noalias !2568
   %i.k = lshr i32 %.01012.i.i, 6
   %i.l = lshr i32 %.0913.i.i, 6                   ; 2 uses
   %.not.i.i = icmp eq i32 %i.l, 0
-  br i1 %.not.i.i, label %_ZN4absl12lts_2026052618container_internal14GenerateDigitsEPcjj.exit.i, label %.lr.ph.i.i, !llvm.loop !823
+  br i1 %.not.i.i, label %._crit_edge.loopexit.i.i, label %.lr.ph.i.i, !llvm.loop !823
 
-_ZN4absl12lts_2026052618container_internal14GenerateDigitsEPcjj.exit.i: ; preds = %.lr.ph.i.i, %bb.a
-  %.0.lcssa.i.i = phi i64 [ 14, %bb.a ], [ %indvars.iv.next.i.i, %.lr.ph.i.i ]
+._crit_edge.loopexit.i.i:                         ; preds = %.lr.ph.i.i
+  %8 = zext i32 %6 to i64
+  br label %_ZN4absl12lts_2026052618container_internal14GenerateDigitsEPcjj.exit.i
+
+_ZN4absl12lts_2026052618container_internal14GenerateDigitsEPcjj.exit.i: ; preds = %._crit_edge.loopexit.i.i, %bb.a
+  %.0.lcssa.i.i = phi i64 [ 14, %bb.a ], [ %8, %._crit_edge.loopexit.i.i ]
   %i.m = getelementptr inbounds nuw i8, ptr %i.d, i64 %.0.lcssa.i.i
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 1 ; 3 uses
   %i.o = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 8 uses
@@ -1110,22 +1125,27 @@ _ZNK4absl12lts_2026052618container_internal9GeneratorINSt7__cxx1112basic_stringI
   br i1 %.not11.i.i6, label %_ZN4absl12lts_2026052618container_internal14GenerateDigitsEPcjj.exit.i13, label %.lr.ph.i.i7
 
 .lr.ph.i.i7:                                      ; preds = %_ZNK4absl12lts_2026052618container_internal9GeneratorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEi.exit, %.lr.ph.i.i7
-  %indvars.iv.i.i8 = phi i64 [ %indvars.iv.next.i.i11, %.lr.ph.i.i7 ], [ 14, %_ZNK4absl12lts_2026052618container_internal9GeneratorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEi.exit ] ; 2 uses
+  %.014.i.i8 = phi i32 [ %9, %.lr.ph.i.i7 ], [ 14, %_ZNK4absl12lts_2026052618container_internal9GeneratorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEi.exit ] ; 2 uses
   %.0913.i.i9 = phi i32 [ %i.ah, %.lr.ph.i.i7 ], [ %i.aa, %_ZNK4absl12lts_2026052618container_internal9GeneratorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEi.exit ]
   %.01012.i.i10 = phi i32 [ %i.ag, %.lr.ph.i.i7 ], [ %2, %_ZNK4absl12lts_2026052618container_internal9GeneratorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEi.exit ] ; 2 uses
   %i.ac = trunc i32 %.01012.i.i10 to i8
   %i.ad = and i8 %i.ac, 63
   %i.ae = add nuw nsw i8 %i.ad, 32
-  %indvars.iv.next.i.i11 = add nsw i64 %indvars.iv.i.i8, -1 ; 2 uses
-  %i.af = getelementptr inbounds nuw i8, ptr %i.b, i64 %indvars.iv.i.i8
+  %9 = add nsw i32 %.014.i.i8, -1                 ; 2 uses
+  %10 = zext i32 %.014.i.i8 to i64
+  %i.af = getelementptr inbounds nuw i8, ptr %i.b, i64 %10
   store i8 %i.ae, ptr %i.af, align 1, !tbaa !23, !noalias !2571
   %i.ag = lshr i32 %.01012.i.i10, 6
   %i.ah = lshr i32 %.0913.i.i9, 6                 ; 2 uses
   %.not.i.i12 = icmp eq i32 %i.ah, 0
-  br i1 %.not.i.i12, label %_ZN4absl12lts_2026052618container_internal14GenerateDigitsEPcjj.exit.i13, label %.lr.ph.i.i7, !llvm.loop !823
+  br i1 %.not.i.i12, label %._crit_edge.loopexit.i.i12, label %.lr.ph.i.i7, !llvm.loop !823
 
-_ZN4absl12lts_2026052618container_internal14GenerateDigitsEPcjj.exit.i13: ; preds = %.lr.ph.i.i7, %_ZNK4absl12lts_2026052618container_internal9GeneratorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEi.exit
-  %.0.lcssa.i.i14 = phi i64 [ 14, %_ZNK4absl12lts_2026052618container_internal9GeneratorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEi.exit ], [ %indvars.iv.next.i.i11, %.lr.ph.i.i7 ]
+._crit_edge.loopexit.i.i12:                       ; preds = %.lr.ph.i.i7
+  %11 = zext i32 %9 to i64
+  br label %_ZN4absl12lts_2026052618container_internal14GenerateDigitsEPcjj.exit.i13
+
+_ZN4absl12lts_2026052618container_internal14GenerateDigitsEPcjj.exit.i13: ; preds = %._crit_edge.loopexit.i.i12, %_ZNK4absl12lts_2026052618container_internal9GeneratorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEi.exit
+  %.0.lcssa.i.i14 = phi i64 [ 14, %_ZNK4absl12lts_2026052618container_internal9GeneratorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEi.exit ], [ %11, %._crit_edge.loopexit.i.i12 ]
   %i.ai = getelementptr inbounds nuw i8, ptr %i.b, i64 %.0.lcssa.i.i14
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ai, i64 1 ; 3 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 6 uses
@@ -1528,22 +1548,27 @@ bb.a:
   br i1 %.not11.i.i, label %_ZN4absl12lts_2026052618container_internal14GenerateDigitsEPcjj.exit.i, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.a, %.lr.ph.i.i
-  %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i, %.lr.ph.i.i ], [ 14, %bb.a ] ; 2 uses
+  %.014.i.i = phi i32 [ %5, %.lr.ph.i.i ], [ 14, %bb.a ] ; 2 uses
   %.0913.i.i = phi i32 [ %i.l, %.lr.ph.i.i ], [ %i.e, %bb.a ]
   %.01012.i.i = phi i32 [ %i.k, %.lr.ph.i.i ], [ %2, %bb.a ] ; 2 uses
   %i.g = trunc i32 %.01012.i.i to i8
   %i.h = and i8 %i.g, 63
   %i.i = add nuw nsw i8 %i.h, 32
-  %indvars.iv.next.i.i = add nsw i64 %indvars.iv.i.i, -1 ; 2 uses
-  %i.j = getelementptr inbounds nuw i8, ptr %i.d, i64 %indvars.iv.i.i
+  %5 = add nsw i32 %.014.i.i, -1                  ; 2 uses
+  %6 = zext i32 %.014.i.i to i64
+  %i.j = getelementptr inbounds nuw i8, ptr %i.d, i64 %6
   store i8 %i.i, ptr %i.j, align 1, !tbaa !23, !noalias !2653
   %i.k = lshr i32 %.01012.i.i, 6
   %i.l = lshr i32 %.0913.i.i, 6                   ; 2 uses
   %.not.i.i = icmp eq i32 %i.l, 0
-  br i1 %.not.i.i, label %_ZN4absl12lts_2026052618container_internal14GenerateDigitsEPcjj.exit.i, label %.lr.ph.i.i, !llvm.loop !823
+  br i1 %.not.i.i, label %._crit_edge.loopexit.i.i, label %.lr.ph.i.i, !llvm.loop !823
 
-_ZN4absl12lts_2026052618container_internal14GenerateDigitsEPcjj.exit.i: ; preds = %.lr.ph.i.i, %bb.a
-  %.0.lcssa.i.i = phi i64 [ 14, %bb.a ], [ %indvars.iv.next.i.i, %.lr.ph.i.i ]
+._crit_edge.loopexit.i.i:                         ; preds = %.lr.ph.i.i
+  %7 = zext i32 %5 to i64
+  br label %_ZN4absl12lts_2026052618container_internal14GenerateDigitsEPcjj.exit.i
+
+_ZN4absl12lts_2026052618container_internal14GenerateDigitsEPcjj.exit.i: ; preds = %._crit_edge.loopexit.i.i, %bb.a
+  %.0.lcssa.i.i = phi i64 [ 14, %bb.a ], [ %7, %._crit_edge.loopexit.i.i ]
   %i.m = getelementptr inbounds nuw i8, ptr %i.d, i64 %.0.lcssa.i.i
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 1 ; 3 uses
   %i.o = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 8 uses
@@ -1597,22 +1622,27 @@ _ZNK4absl12lts_2026052618container_internal9GeneratorINSt7__cxx1112basic_stringI
   br i1 %.not11.i.i6, label %_ZN4absl12lts_2026052618container_internal14GenerateDigitsEPcjj.exit.i13, label %.lr.ph.i.i7
 
 .lr.ph.i.i7:                                      ; preds = %_ZNK4absl12lts_2026052618container_internal9GeneratorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEi.exit, %.lr.ph.i.i7
-  %indvars.iv.i.i8 = phi i64 [ %indvars.iv.next.i.i11, %.lr.ph.i.i7 ], [ 14, %_ZNK4absl12lts_2026052618container_internal9GeneratorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEi.exit ] ; 2 uses
+  %.014.i.i8 = phi i32 [ %8, %.lr.ph.i.i7 ], [ 14, %_ZNK4absl12lts_2026052618container_internal9GeneratorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEi.exit ] ; 2 uses
   %.0913.i.i9 = phi i32 [ %i.ah, %.lr.ph.i.i7 ], [ %i.aa, %_ZNK4absl12lts_2026052618container_internal9GeneratorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEi.exit ]
   %.01012.i.i10 = phi i32 [ %i.ag, %.lr.ph.i.i7 ], [ %2, %_ZNK4absl12lts_2026052618container_internal9GeneratorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEi.exit ] ; 2 uses
   %i.ac = trunc i32 %.01012.i.i10 to i8
   %i.ad = and i8 %i.ac, 63
   %i.ae = add nuw nsw i8 %i.ad, 32
-  %indvars.iv.next.i.i11 = add nsw i64 %indvars.iv.i.i8, -1 ; 2 uses
-  %i.af = getelementptr inbounds nuw i8, ptr %i.b, i64 %indvars.iv.i.i8
+  %8 = add nsw i32 %.014.i.i8, -1                 ; 2 uses
+  %9 = zext i32 %.014.i.i8 to i64
+  %i.af = getelementptr inbounds nuw i8, ptr %i.b, i64 %9
   store i8 %i.ae, ptr %i.af, align 1, !tbaa !23, !noalias !2656
   %i.ag = lshr i32 %.01012.i.i10, 6
   %i.ah = lshr i32 %.0913.i.i9, 6                 ; 2 uses
   %.not.i.i12 = icmp eq i32 %i.ah, 0
-  br i1 %.not.i.i12, label %_ZN4absl12lts_2026052618container_internal14GenerateDigitsEPcjj.exit.i13, label %.lr.ph.i.i7, !llvm.loop !823
+  br i1 %.not.i.i12, label %._crit_edge.loopexit.i.i12, label %.lr.ph.i.i7, !llvm.loop !823
 
-_ZN4absl12lts_2026052618container_internal14GenerateDigitsEPcjj.exit.i13: ; preds = %.lr.ph.i.i7, %_ZNK4absl12lts_2026052618container_internal9GeneratorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEi.exit
-  %.0.lcssa.i.i14 = phi i64 [ 14, %_ZNK4absl12lts_2026052618container_internal9GeneratorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEi.exit ], [ %indvars.iv.next.i.i11, %.lr.ph.i.i7 ]
+._crit_edge.loopexit.i.i12:                       ; preds = %.lr.ph.i.i7
+  %10 = zext i32 %8 to i64
+  br label %_ZN4absl12lts_2026052618container_internal14GenerateDigitsEPcjj.exit.i13
+
+_ZN4absl12lts_2026052618container_internal14GenerateDigitsEPcjj.exit.i13: ; preds = %._crit_edge.loopexit.i.i12, %_ZNK4absl12lts_2026052618container_internal9GeneratorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEi.exit
+  %.0.lcssa.i.i14 = phi i64 [ 14, %_ZNK4absl12lts_2026052618container_internal9GeneratorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEi.exit ], [ %10, %._crit_edge.loopexit.i.i12 ]
   %i.ai = getelementptr inbounds nuw i8, ptr %i.b, i64 %.0.lcssa.i.i14
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ai, i64 1 ; 3 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 6 uses
@@ -2015,22 +2045,27 @@ bb.a:
   br i1 %.not11.i.i, label %_ZNK4absl12lts_2026052618container_internal9GeneratorINS0_4CordEEclEi.exit, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.a, %.lr.ph.i.i
-  %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i, %.lr.ph.i.i ], [ 14, %bb.a ] ; 2 uses
+  %.014.i.i = phi i32 [ %6, %.lr.ph.i.i ], [ 14, %bb.a ] ; 2 uses
   %.0913.i.i = phi i32 [ %i.j, %.lr.ph.i.i ], [ %i.c, %bb.a ]
   %.01012.i.i = phi i32 [ %i.i, %.lr.ph.i.i ], [ %2, %bb.a ] ; 2 uses
   %i.e = trunc i32 %.01012.i.i to i8
   %i.f = and i8 %i.e, 63
   %i.g = add nuw nsw i8 %i.f, 32
-  %indvars.iv.next.i.i = add nsw i64 %indvars.iv.i.i, -1 ; 2 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %i.b, i64 %indvars.iv.i.i
+  %6 = add nsw i32 %.014.i.i, -1                  ; 2 uses
+  %7 = zext i32 %.014.i.i to i64
+  %i.h = getelementptr inbounds nuw i8, ptr %i.b, i64 %7
   store i8 %i.g, ptr %i.h, align 1, !tbaa !23, !noalias !3166
   %i.i = lshr i32 %.01012.i.i, 6
   %i.j = lshr i32 %.0913.i.i, 6                   ; 2 uses
   %.not.i.i = icmp eq i32 %i.j, 0
-  br i1 %.not.i.i, label %_ZNK4absl12lts_2026052618container_internal9GeneratorINS0_4CordEEclEi.exit, label %.lr.ph.i.i, !llvm.loop !823
+  br i1 %.not.i.i, label %._crit_edge.loopexit.i.i, label %.lr.ph.i.i, !llvm.loop !823
 
-_ZNK4absl12lts_2026052618container_internal9GeneratorINS0_4CordEEclEi.exit: ; preds = %.lr.ph.i.i, %bb.a
-  %.0.lcssa.i.i = phi i64 [ 14, %bb.a ], [ %indvars.iv.next.i.i, %.lr.ph.i.i ]
+._crit_edge.loopexit.i.i:                         ; preds = %.lr.ph.i.i
+  %8 = zext i32 %6 to i64
+  br label %_ZNK4absl12lts_2026052618container_internal9GeneratorINS0_4CordEEclEi.exit
+
+_ZNK4absl12lts_2026052618container_internal9GeneratorINS0_4CordEEclEi.exit: ; preds = %bb.a, %._crit_edge.loopexit.i.i
+  %.0.lcssa.i.i = phi i64 [ 14, %bb.a ], [ %8, %._crit_edge.loopexit.i.i ]
   %i.k = getelementptr inbounds nuw i8, ptr %i.b, i64 %.0.lcssa.i.i
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 1 ; 2 uses
   %i.m = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.l) #37, !noalias !3166
@@ -2046,22 +2081,27 @@ _ZNK4absl12lts_2026052618container_internal9GeneratorINS0_4CordEEclEi.exit: ; pr
   br i1 %.not11.i.i6, label %_ZN4absl12lts_2026052618container_internal14GenerateDigitsEPcjj.exit.i, label %.lr.ph.i.i7
 
 .lr.ph.i.i7:                                      ; preds = %_ZNK4absl12lts_2026052618container_internal9GeneratorINS0_4CordEEclEi.exit, %.lr.ph.i.i7
-  %indvars.iv.i.i8 = phi i64 [ %indvars.iv.next.i.i11, %.lr.ph.i.i7 ], [ 14, %_ZNK4absl12lts_2026052618container_internal9GeneratorINS0_4CordEEclEi.exit ] ; 2 uses
+  %.014.i.i8 = phi i32 [ %9, %.lr.ph.i.i7 ], [ 14, %_ZNK4absl12lts_2026052618container_internal9GeneratorINS0_4CordEEclEi.exit ] ; 2 uses
   %.0913.i.i9 = phi i32 [ %i.v, %.lr.ph.i.i7 ], [ %i.o, %_ZNK4absl12lts_2026052618container_internal9GeneratorINS0_4CordEEclEi.exit ]
   %.01012.i.i10 = phi i32 [ %i.u, %.lr.ph.i.i7 ], [ %2, %_ZNK4absl12lts_2026052618container_internal9GeneratorINS0_4CordEEclEi.exit ] ; 2 uses
   %i.q = trunc i32 %.01012.i.i10 to i8
   %i.r = and i8 %i.q, 63
   %i.s = add nuw nsw i8 %i.r, 32
-  %indvars.iv.next.i.i11 = add nsw i64 %indvars.iv.i.i8, -1 ; 2 uses
-  %i.t = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv.i.i8
+  %9 = add nsw i32 %.014.i.i8, -1                 ; 2 uses
+  %10 = zext i32 %.014.i.i8 to i64
+  %i.t = getelementptr inbounds nuw i8, ptr %i.a, i64 %10
   store i8 %i.s, ptr %i.t, align 1, !tbaa !23, !noalias !3169
   %i.u = lshr i32 %.01012.i.i10, 6
   %i.v = lshr i32 %.0913.i.i9, 6                  ; 2 uses
   %.not.i.i12 = icmp eq i32 %i.v, 0
-  br i1 %.not.i.i12, label %_ZN4absl12lts_2026052618container_internal14GenerateDigitsEPcjj.exit.i, label %.lr.ph.i.i7, !llvm.loop !823
+  br i1 %.not.i.i12, label %._crit_edge.loopexit.i.i12, label %.lr.ph.i.i7, !llvm.loop !823
 
-_ZN4absl12lts_2026052618container_internal14GenerateDigitsEPcjj.exit.i: ; preds = %.lr.ph.i.i7, %_ZNK4absl12lts_2026052618container_internal9GeneratorINS0_4CordEEclEi.exit
-  %.0.lcssa.i.i13 = phi i64 [ 14, %_ZNK4absl12lts_2026052618container_internal9GeneratorINS0_4CordEEclEi.exit ], [ %indvars.iv.next.i.i11, %.lr.ph.i.i7 ]
+._crit_edge.loopexit.i.i12:                       ; preds = %.lr.ph.i.i7
+  %11 = zext i32 %9 to i64
+  br label %_ZN4absl12lts_2026052618container_internal14GenerateDigitsEPcjj.exit.i
+
+_ZN4absl12lts_2026052618container_internal14GenerateDigitsEPcjj.exit.i: ; preds = %._crit_edge.loopexit.i.i12, %_ZNK4absl12lts_2026052618container_internal9GeneratorINS0_4CordEEclEi.exit
+  %.0.lcssa.i.i13 = phi i64 [ 14, %_ZNK4absl12lts_2026052618container_internal9GeneratorINS0_4CordEEclEi.exit ], [ %11, %._crit_edge.loopexit.i.i12 ]
   %i.w = getelementptr inbounds nuw i8, ptr %i.a, i64 %.0.lcssa.i.i13
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 1 ; 2 uses
   %i.y = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.x) #37, !noalias !3169
@@ -2464,22 +2504,27 @@ bb.a:
   br i1 %.not11.i.i, label %_ZNK4absl12lts_2026052618container_internal9GeneratorINS0_4CordEEclEi.exit, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.a, %.lr.ph.i.i
-  %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i, %.lr.ph.i.i ], [ 14, %bb.a ] ; 2 uses
+  %.014.i.i = phi i32 [ %5, %.lr.ph.i.i ], [ 14, %bb.a ] ; 2 uses
   %.0913.i.i = phi i32 [ %i.j, %.lr.ph.i.i ], [ %i.c, %bb.a ]
   %.01012.i.i = phi i32 [ %i.i, %.lr.ph.i.i ], [ %2, %bb.a ] ; 2 uses
   %i.e = trunc i32 %.01012.i.i to i8
   %i.f = and i8 %i.e, 63
   %i.g = add nuw nsw i8 %i.f, 32
-  %indvars.iv.next.i.i = add nsw i64 %indvars.iv.i.i, -1 ; 2 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %i.b, i64 %indvars.iv.i.i
+  %5 = add nsw i32 %.014.i.i, -1                  ; 2 uses
+  %6 = zext i32 %.014.i.i to i64
+  %i.h = getelementptr inbounds nuw i8, ptr %i.b, i64 %6
   store i8 %i.g, ptr %i.h, align 1, !tbaa !23, !noalias !3246
   %i.i = lshr i32 %.01012.i.i, 6
   %i.j = lshr i32 %.0913.i.i, 6                   ; 2 uses
   %.not.i.i = icmp eq i32 %i.j, 0
-  br i1 %.not.i.i, label %_ZNK4absl12lts_2026052618container_internal9GeneratorINS0_4CordEEclEi.exit, label %.lr.ph.i.i, !llvm.loop !823
+  br i1 %.not.i.i, label %._crit_edge.loopexit.i.i, label %.lr.ph.i.i, !llvm.loop !823
 
-_ZNK4absl12lts_2026052618container_internal9GeneratorINS0_4CordEEclEi.exit: ; preds = %.lr.ph.i.i, %bb.a
-  %.0.lcssa.i.i = phi i64 [ 14, %bb.a ], [ %indvars.iv.next.i.i, %.lr.ph.i.i ]
+._crit_edge.loopexit.i.i:                         ; preds = %.lr.ph.i.i
+  %7 = zext i32 %5 to i64
+  br label %_ZNK4absl12lts_2026052618container_internal9GeneratorINS0_4CordEEclEi.exit
+
+_ZNK4absl12lts_2026052618container_internal9GeneratorINS0_4CordEEclEi.exit: ; preds = %bb.a, %._crit_edge.loopexit.i.i
+  %.0.lcssa.i.i = phi i64 [ 14, %bb.a ], [ %7, %._crit_edge.loopexit.i.i ]
   %i.k = getelementptr inbounds nuw i8, ptr %i.b, i64 %.0.lcssa.i.i
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 1 ; 2 uses
   %i.m = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.l) #37, !noalias !3246
@@ -2495,22 +2540,27 @@ _ZNK4absl12lts_2026052618container_internal9GeneratorINS0_4CordEEclEi.exit: ; pr
   br i1 %.not11.i.i6, label %_ZN4absl12lts_2026052618container_internal14GenerateDigitsEPcjj.exit.i, label %.lr.ph.i.i7
 
 .lr.ph.i.i7:                                      ; preds = %_ZNK4absl12lts_2026052618container_internal9GeneratorINS0_4CordEEclEi.exit, %.lr.ph.i.i7
-  %indvars.iv.i.i8 = phi i64 [ %indvars.iv.next.i.i11, %.lr.ph.i.i7 ], [ 14, %_ZNK4absl12lts_2026052618container_internal9GeneratorINS0_4CordEEclEi.exit ] ; 2 uses
+  %.014.i.i8 = phi i32 [ %8, %.lr.ph.i.i7 ], [ 14, %_ZNK4absl12lts_2026052618container_internal9GeneratorINS0_4CordEEclEi.exit ] ; 2 uses
   %.0913.i.i9 = phi i32 [ %i.v, %.lr.ph.i.i7 ], [ %i.o, %_ZNK4absl12lts_2026052618container_internal9GeneratorINS0_4CordEEclEi.exit ]
   %.01012.i.i10 = phi i32 [ %i.u, %.lr.ph.i.i7 ], [ %2, %_ZNK4absl12lts_2026052618container_internal9GeneratorINS0_4CordEEclEi.exit ] ; 2 uses
   %i.q = trunc i32 %.01012.i.i10 to i8
   %i.r = and i8 %i.q, 63
   %i.s = add nuw nsw i8 %i.r, 32
-  %indvars.iv.next.i.i11 = add nsw i64 %indvars.iv.i.i8, -1 ; 2 uses
-  %i.t = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv.i.i8
+  %8 = add nsw i32 %.014.i.i8, -1                 ; 2 uses
+  %9 = zext i32 %.014.i.i8 to i64
+  %i.t = getelementptr inbounds nuw i8, ptr %i.a, i64 %9
   store i8 %i.s, ptr %i.t, align 1, !tbaa !23, !noalias !3249
   %i.u = lshr i32 %.01012.i.i10, 6
   %i.v = lshr i32 %.0913.i.i9, 6                  ; 2 uses
   %.not.i.i12 = icmp eq i32 %i.v, 0
-  br i1 %.not.i.i12, label %_ZN4absl12lts_2026052618container_internal14GenerateDigitsEPcjj.exit.i, label %.lr.ph.i.i7, !llvm.loop !823
+  br i1 %.not.i.i12, label %._crit_edge.loopexit.i.i12, label %.lr.ph.i.i7, !llvm.loop !823
 
-_ZN4absl12lts_2026052618container_internal14GenerateDigitsEPcjj.exit.i: ; preds = %.lr.ph.i.i7, %_ZNK4absl12lts_2026052618container_internal9GeneratorINS0_4CordEEclEi.exit
-  %.0.lcssa.i.i13 = phi i64 [ 14, %_ZNK4absl12lts_2026052618container_internal9GeneratorINS0_4CordEEclEi.exit ], [ %indvars.iv.next.i.i11, %.lr.ph.i.i7 ]
+._crit_edge.loopexit.i.i12:                       ; preds = %.lr.ph.i.i7
+  %10 = zext i32 %8 to i64
+  br label %_ZN4absl12lts_2026052618container_internal14GenerateDigitsEPcjj.exit.i
+
+_ZN4absl12lts_2026052618container_internal14GenerateDigitsEPcjj.exit.i: ; preds = %._crit_edge.loopexit.i.i12, %_ZNK4absl12lts_2026052618container_internal9GeneratorINS0_4CordEEclEi.exit
+  %.0.lcssa.i.i13 = phi i64 [ 14, %_ZNK4absl12lts_2026052618container_internal9GeneratorINS0_4CordEEclEi.exit ], [ %10, %._crit_edge.loopexit.i.i12 ]
   %i.w = getelementptr inbounds nuw i8, ptr %i.a, i64 %.0.lcssa.i.i13
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 1 ; 2 uses
   %i.y = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.x) #37, !noalias !3249

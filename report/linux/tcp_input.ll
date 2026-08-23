@@ -205,13 +205,14 @@ bb.av:                                            ; preds = %bb.au
   br label %.lr.ph34.i
 
 .lr.ph34.i:                                       ; preds = %.outer.i, %.lr.ph34.lr.ph.i
-  %indvar = phi i64 [ %indvar.next, %.outer.i ], [ 0, %.lr.ph34.lr.ph.i ] ; 3 uses
+  %indvar = phi i64 [ %indvar.next, %.outer.i ], [ 0, %.lr.ph34.lr.ph.i ] ; 4 uses
   %.0.ph39.i = phi ptr [ %i.hh, %.outer.i ], [ %i.gr, %.lr.ph34.lr.ph.i ] ; 4 uses
   %.026.ph38.i = phi i32 [ %.02633.i, %.outer.i ], [ %i.gs, %.lr.ph34.lr.ph.i ] ; 2 uses
   %indvars191 = trunc i64 %indvar to i32          ; 2 uses
   %i.gt = shl i64 %indvar, 3
   %i.gu = getelementptr i8, ptr %0, i64 %i.gt
   %scevgep = getelementptr i8, ptr %i.gu, i64 2152
+  %2 = xor i64 %indvar, -1
   %i.gv = getelementptr i8, ptr %.0.ph39.i, i64 4
   %indvar.next = add nuw nsw i64 %indvar, 1       ; 2 uses
   %indvars = trunc i64 %indvar.next to i32        ; 2 uses
@@ -220,8 +221,8 @@ bb.av:                                            ; preds = %bb.au
 bb.aw:                                            ; preds = %._crit_edge.i, %.lr.ph34.i
   %.02633.i = phi i32 [ %.026.ph38.i, %.lr.ph34.i ], [ %i.hf, %._crit_edge.i ] ; 6 uses
   %i.gw = zext i32 %.02633.i to i64
-  %2 = shl nuw nsw i64 %i.gw, 3
-  %3 = add nsw i64 %2, -8
+  %3 = add nsw i64 %2, %i.gw
+  %4 = shl nuw i64 %3, 3
   %i.gx = load i32, ptr %i.am, align 8            ; 2 uses
   %i.gy = load i32, ptr %.0.ph39.i, align 4
   %i.gz = sub i32 %i.gx, %i.gy
@@ -245,7 +246,7 @@ bb.az:                                            ; preds = %bb.ay, %bb.ax
   br i1 %i.he, label %.lr.ph.preheader.i, label %._crit_edge.i
 
 .lr.ph.preheader.i:                               ; preds = %bb.az
-  call void @llvm.memmove.p0.p0.i64(ptr align 8 %.0.ph39.i, ptr align 8 %scevgep, i64 %3, i1 false)
+  call void @llvm.memmove.p0.p0.i64(ptr align 8 %.0.ph39.i, ptr align 8 %scevgep, i64 %4, i1 false)
   br label %._crit_edge.i
 
 ._crit_edge.i:                                    ; preds = %.lr.ph.preheader.i, %bb.az

@@ -205,7 +205,7 @@ _ZNK5Eigen31CompleteOrthogonalDecompositionINS_6MatrixIdLi4ELi4ELi0ELi4ELi4EEEE4
 
 .lr.ph.split.i.i:                                 ; preds = %.lr.ph.split.i.i, %.lr.ph.i.i18
   %.061.i.i = phi i64 [ %i.by, %.lr.ph.split.i.i ], [ 0, %.lr.ph.i.i18 ] ; 8 uses
-  %i.bw = sub nuw nsw i64 4, %.061.i.i
+  %i.bw = sub nsw i64 4, %.061.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #14
   %i.bx = getelementptr inbounds nuw [8 x i8], ptr %7, i64 %.061.i.i
   store ptr %i.bx, ptr %4, align 8, !tbaa !502, !alias.scope !504
@@ -217,7 +217,7 @@ _ZNK5Eigen31CompleteOrthogonalDecompositionINS_6MatrixIdLi4ELi4ELi0ELi4ELi4EEEE4
   store i64 4, ptr %i.bq, align 8, !tbaa !507, !alias.scope !504
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #14
   %i.by = add nuw i64 %.061.i.i, 1                ; 4 uses
-  %i.bz = sub nuw nsw i64 3, %.061.i.i
+  %i.bz = sub nsw i64 3, %.061.i.i
   %i.ca = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.by
   %.idx.i.i.i.i.i.i.i = shl nsw i64 %.061.i.i, 5
   %i.cb = getelementptr inbounds nuw i8, ptr %i.ca, i64 %.idx.i.i.i.i.i.i.i
@@ -620,7 +620,7 @@ _ZNK5Eigen31CompleteOrthogonalDecompositionINS_6MatrixIdLi3ELi3ELi0ELi3ELi3EEEE4
 
 .lr.ph.split.i.i:                                 ; preds = %.lr.ph.split.i.i, %.lr.ph.i.i18
   %.061.i.i = phi i64 [ %i.by, %.lr.ph.split.i.i ], [ 0, %.lr.ph.i.i18 ] ; 8 uses
-  %i.bw = sub nuw nsw i64 3, %.061.i.i
+  %i.bw = sub nsw i64 3, %.061.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #14
   %i.bx = getelementptr inbounds nuw [8 x i8], ptr %7, i64 %.061.i.i
   store ptr %i.bx, ptr %4, align 8, !tbaa !1026, !alias.scope !1028
@@ -632,7 +632,7 @@ _ZNK5Eigen31CompleteOrthogonalDecompositionINS_6MatrixIdLi3ELi3ELi0ELi3ELi3EEEE4
   store i64 3, ptr %i.bq, align 8, !tbaa !1031, !alias.scope !1028
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #14
   %i.by = add nuw i64 %.061.i.i, 1                ; 4 uses
-  %i.bz = sub nuw nsw i64 2, %.061.i.i
+  %i.bz = sub nsw i64 2, %.061.i.i
   %i.ca = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.by
   %.idx.i.i.i.i.i.i.i = mul nuw nsw i64 %.061.i.i, 24
   %i.cb = getelementptr inbounds nuw i8, ptr %i.ca, i64 %.idx.i.i.i.i.i.i.i
@@ -1035,7 +1035,7 @@ _ZNK5Eigen31CompleteOrthogonalDecompositionINS_6MatrixIdLi2ELi2ELi0ELi2ELi2EEEE4
 
 .lr.ph.split.i.i:                                 ; preds = %.lr.ph.split.i.i, %.lr.ph.i.i18
   %.061.i.i = phi i64 [ %i.bu, %.lr.ph.split.i.i ], [ 0, %.lr.ph.i.i18 ] ; 8 uses
-  %i.bs = sub nuw nsw i64 2, %.061.i.i
+  %i.bs = sub nsw i64 2, %.061.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #14
   %i.bt = getelementptr inbounds nuw [8 x i8], ptr %7, i64 %.061.i.i
   store ptr %i.bt, ptr %4, align 8, !tbaa !1307, !alias.scope !1309
@@ -1047,7 +1047,7 @@ _ZNK5Eigen31CompleteOrthogonalDecompositionINS_6MatrixIdLi2ELi2ELi0ELi2ELi2EEEE4
   store i64 2, ptr %i.bm, align 8, !tbaa !1312, !alias.scope !1309
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #14
   %i.bu = add nuw i64 %.061.i.i, 1                ; 4 uses
-  %i.bv = sub nuw nsw i64 1, %.061.i.i
+  %i.bv = sub nsw i64 1, %.061.i.i
   %i.bw = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.bu
   %.idx.i.i.i.i.i.i.i = shl nsw i64 %.061.i.i, 4
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bw, i64 %.idx.i.i.i.i.i.i.i

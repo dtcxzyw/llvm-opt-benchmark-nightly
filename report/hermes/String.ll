@@ -202,13 +202,15 @@ _ZN6hermes2vm15HandleRootOwner10makeHandleINS0_16ArrayStorageBaseINS0_13HermesVa
   br label %bb.k
 
 bb.k:                                             ; preds = %.lr.ph, %bb.o
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.o ] ; 3 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.o ] ; 4 uses
   %.sroa.062.083 = phi i64 [ %i.ak, %.lr.ph ], [ %i.cs, %bb.o ]
   %i.bv = load i32, ptr %i.al, align 8, !tbaa !26
   %i.bw = zext i32 %i.bv to i64
   %i.bx = icmp samesign ult i64 %indvars.iv, %i.bw
   %i.by = load ptr, ptr %2, align 8
-  %i.bz = getelementptr inbounds i8, ptr %i.by, i64 -8
+  %7 = sub nsw i64 0, %indvars.iv
+  %8 = getelementptr inbounds [8 x i8], ptr %i.by, i64 %7
+  %i.bz = getelementptr inbounds i8, ptr %8, i64 -8
   %.sroa.02.0.i = select i1 %i.bx, ptr %i.bz, ptr @_ZN6hermes2vm15HandleRootOwner15undefinedValue_E
   %i.ca = call ptr @_ZN6hermes2vm12toString_RJSERNS0_7RuntimeENS0_6HandleINS0_11HermesValueEEE(ptr noundef nonnull align 8 dereferenceable(9816) %1, ptr nonnull %.sroa.02.0.i) #13 ; 3 uses
   %.not78 = icmp eq ptr %i.ca, inttoptr (i64 -1 to ptr)
@@ -611,12 +613,14 @@ bb.d:                                             ; preds = %bb.a
   br i1 %.not31.not, label %.critedge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.preheader, %bb.e
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.e ], [ 0, %.preheader ] ; 2 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.e ], [ 0, %.preheader ] ; 3 uses
   %i.ab = load i32, ptr %i.l, align 8, !tbaa !26
   %i.ac = zext i32 %i.ab to i64
   %i.ad = icmp samesign ult i64 %indvars.iv, %i.ac
   %i.ae = load ptr, ptr %2, align 8
-  %i.af = getelementptr inbounds i8, ptr %i.ae, i64 -8
+  %5 = sub nsw i64 0, %indvars.iv
+  %6 = getelementptr inbounds [8 x i8], ptr %i.ae, i64 %5
+  %i.af = getelementptr inbounds i8, ptr %6, i64 -8
   %.sroa.02.0.i20 = select i1 %i.ad, ptr %i.af, ptr @_ZN6hermes2vm15HandleRootOwner15undefinedValue_E
   %i.ag = call { i32, i64 } @_ZN6hermes2vm8toUInt16ERNS0_7RuntimeENS0_6HandleINS0_11HermesValueEEE(ptr noundef nonnull align 8 dereferenceable(9816) %1, ptr nonnull %.sroa.02.0.i20) #13 ; 2 uses
   %i.ah = extractvalue { i32, i64 } %i.ag, 0
@@ -709,7 +713,7 @@ _ZN6hermes2vm13MutableHandleINS0_11HermesValueEEC2ERNS0_15HandleRootOwnerES2_.ex
 
 bb.a:                                             ; preds = %.lr.ph, %_ZN6hermes2vm13utf16EncodingEjRN4llvh15SmallVectorImplIDsEE.exit
   %i.u = phi ptr [ %i.h, %.lr.ph ], [ %i.cg, %_ZN6hermes2vm13utf16EncodingEjRN4llvh15SmallVectorImplIDsEE.exit ]
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %_ZN6hermes2vm13utf16EncodingEjRN4llvh15SmallVectorImplIDsEE.exit ] ; 2 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %_ZN6hermes2vm13utf16EncodingEjRN4llvh15SmallVectorImplIDsEE.exit ] ; 3 uses
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !101
   %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 128
   store i32 0, ptr %i.m, align 8, !tbaa !51
@@ -722,7 +726,9 @@ bb.a:                                             ; preds = %.lr.ph, %_ZN6hermes
 
 bb.b:                                             ; preds = %bb.a
   %i.aa = load ptr, ptr %2, align 8, !tbaa !32, !noalias !212
-  %i.ab = getelementptr inbounds i8, ptr %i.aa, i64 -8
+  %7 = sub nsw i64 0, %indvars.iv
+  %8 = getelementptr inbounds [8 x i8], ptr %i.aa, i64 %7
+  %i.ab = getelementptr inbounds i8, ptr %8, i64 -8
   %.sroa.0.0.copyload.i26 = load i64, ptr %i.ab, align 8, !tbaa !24
   br label %_ZNK6hermes2vm10NativeArgs6getArgEj.exit
 

@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.d, %..preheader_
 
 ..preheader_crit_edge:                            ; preds = %..preheader_crit_edge.preheader, %..preheader_crit_edge
   %indvars.iv.1 = phi i64 [ %indvars.iv.next.1, %..preheader_crit_edge ], [ %indvars.iv.1.ph, %..preheader_crit_edge.preheader ] ; 3 uses
-  %i.cy = add nuw nsw i64 %indvars.iv.1, 16       ; 2 uses
+  %i.cy = add nsw i64 %indvars.iv.1, 16           ; 2 uses
   %i.cz = trunc nsw i64 %i.cy to i32
   %i.da = sub i32 %i.cz, %spec.store.select
   %i.db = sext i32 %i.da to i64

@@ -93,8 +93,8 @@ bb.f:                                             ; preds = %bb.d, %bb.e
 
 bb.g:                                             ; preds = %bb.c, %bb.f
   %.2125 = phi i64 [ %spec.select, %bb.f ], [ %i.x, %bb.c ] ; 2 uses
-  %i.ag = sub nuw nsw i64 64, %.0139
-  %i.ah = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %i.ag
+  %i.ag = sub nsw i64 64, %.0139
+  %i.ah = getelementptr inbounds [8 x i8], ptr %i.b, i64 %i.ag
   %i.ai = load i64, ptr %i.ah, align 8, !tbaa !18
   %i.aj = sub nsw i64 %i.ai, %.2125
   %i.ak = sub nsw i64 63, %.0139

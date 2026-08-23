@@ -205,7 +205,7 @@ bb.m:                                             ; preds = %bb.l, %._crit_edge
 
 bb.n:                                             ; preds = %bb.l, %bb.m
   %.025.in.in = phi i32 [ %i.ch, %bb.m ], [ %i.cj, %bb.l ]
-  %.025.in = shl i32 %.025.in.in, 1
+  %.025.in = shl i32 %.025.in.in, 1               ; 2 uses
   %.025 = add i32 %.025.in, 2                     ; 2 uses
   %i.cp = sext i32 %.025 to i64
   %i.cq = tail call noalias ptr @calloc(i64 noundef %i.cp, i64 noundef 4) #22 ; 3 uses
@@ -227,76 +227,62 @@ bb.p:                                             ; preds = %bb.o, %bb.n
   %i.cv = ashr exact i32 %.025, 1                 ; 4 uses
   %i.cw = getelementptr inbounds nuw i8, ptr %i.cu, i64 5552
   %i.cx = sext i32 %i.cv to i64
-  %i.cy = getelementptr inbounds [4 x i8], ptr %i.ct, i64 %i.cx ; 11 uses
+  %i.cy = getelementptr inbounds [4 x i8], ptr %i.ct, i64 %i.cx ; 7 uses
   store ptr %i.cy, ptr %i.cw, align 8, !tbaa !130
   %i.cz = icmp sgt i32 %i.cv, 0
   br i1 %i.cz, label %.lr.ph34.preheader, label %._crit_edge35
 
 .lr.ph34.preheader:                               ; preds = %bb.p
   %wide.trip.count = zext nneg i32 %i.cv to i64   ; 2 uses
-  %xtraiter = and i64 %wide.trip.count, 3         ; 3 uses
-  %0 = icmp ult i32 %i.cv, 4
-  br i1 %0, label %.lr.ph34.epil.preheader, label %.lr.ph34.preheader.new
+  %xtraiter = and i64 %wide.trip.count, 1
+  %0 = icmp eq i32 %.025.in, 0
+  br i1 %0, label %.lr.ph34.epil, label %.lr.ph34.preheader.new
 
 .lr.ph34.preheader.new:                           ; preds = %.lr.ph34.preheader
-  %unroll_iter = and i64 %wide.trip.count, 2147483644
+  %unroll_iter = and i64 %wide.trip.count, 2147483646
   br label %.lr.ph34
 
 .lr.ph34:                                         ; preds = %.lr.ph34, %.lr.ph34.preheader.new
   %indvars.iv37 = phi i64 [ 0, %.lr.ph34.preheader.new ], [ %indvars.iv.next38.3, %.lr.ph34 ] ; 7 uses
   %niter = phi i64 [ 0, %.lr.ph34.preheader.new ], [ %niter.next.3, %.lr.ph34 ]
   %i.da = mul nuw nsw i64 %indvars.iv37, %indvars.iv37
-  %1 = trunc nsw i64 %i.da to i32                 ; 2 uses
-  store i32 %1, ptr %i.cy, align 4, !tbaa !4
-  %i.db = getelementptr inbounds nuw [4 x i8], ptr %i.cy, i64 %indvars.iv37
-  store i32 %1, ptr %i.db, align 4, !tbaa !4
-  %indvars.iv.next38 = or disjoint i64 %indvars.iv37, 1 ; 3 uses
-  %2 = mul nuw nsw i64 %indvars.iv.next38, %indvars.iv.next38
-  %i.dc = trunc nsw i64 %2 to i32                 ; 2 uses
-  store i32 %i.dc, ptr %i.cy, align 4, !tbaa !4
-  %i.dd = getelementptr inbounds nuw [4 x i8], ptr %i.cy, i64 %indvars.iv.next38
+  %1 = sub nsw i64 0, %indvars.iv37
+  %i.db = getelementptr inbounds [4 x i8], ptr %i.cy, i64 %1
+  %i.dc = trunc nsw i64 %i.da to i32              ; 2 uses
+  store i32 %i.dc, ptr %i.db, align 4, !tbaa !4
+  %i.dd = getelementptr inbounds nuw [4 x i8], ptr %i.cy, i64 %indvars.iv37
   store i32 %i.dc, ptr %i.dd, align 4, !tbaa !4
-  %indvars.iv.next38.1.a = or disjoint i64 %indvars.iv37, 2 ; 3 uses
+  %indvars.iv.next38.1.a = or disjoint i64 %indvars.iv37, 1 ; 3 uses
   %i.de = mul nuw nsw i64 %indvars.iv.next38.1.a, %indvars.iv.next38.1.a
-  %3 = trunc nsw i64 %i.de to i32                 ; 2 uses
-  store i32 %3, ptr %i.cy, align 4, !tbaa !4
-  %i.df = getelementptr inbounds nuw [4 x i8], ptr %i.cy, i64 %indvars.iv.next38.1.a
-  store i32 %3, ptr %i.df, align 4, !tbaa !4
-  %indvars.iv.next38.2 = or disjoint i64 %indvars.iv37, 3 ; 3 uses
-  %4 = mul nuw nsw i64 %indvars.iv.next38.2, %indvars.iv.next38.2
-  %i.dg = trunc nsw i64 %4 to i32                 ; 2 uses
-  store i32 %i.dg, ptr %i.cy, align 4, !tbaa !4
-  %i.dh = getelementptr inbounds nuw [4 x i8], ptr %i.cy, i64 %indvars.iv.next38.2
+  %2 = xor i64 %indvars.iv37, -1
+  %i.df = getelementptr inbounds [4 x i8], ptr %i.cy, i64 %2
+  %i.dg = trunc nsw i64 %i.de to i32              ; 2 uses
+  store i32 %i.dg, ptr %i.df, align 4, !tbaa !4
+  %i.dh = getelementptr inbounds nuw [4 x i8], ptr %i.cy, i64 %indvars.iv.next38.1.a
   store i32 %i.dg, ptr %i.dh, align 4, !tbaa !4
-  %indvars.iv.next38.3 = add nuw nsw i64 %indvars.iv37, 4 ; 2 uses
-  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
+  %indvars.iv.next38.3 = add nuw nsw i64 %indvars.iv37, 2 ; 2 uses
+  %niter.next.3 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %._crit_edge35.loopexit.unr-lcssa, label %.lr.ph34, !llvm.loop !131
 
 ._crit_edge35.loopexit.unr-lcssa:                 ; preds = %.lr.ph34
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge35, label %.lr.ph34.epil.preheader
+  br i1 %lcmp.mod.not, label %._crit_edge35, label %.lr.ph34.epil
 
-.lr.ph34.epil.preheader:                          ; preds = %._crit_edge35.loopexit.unr-lcssa, %.lr.ph34.preheader
-  %indvars.iv37.epil.init = phi i64 [ 0, %.lr.ph34.preheader ], [ %indvars.iv.next38.3, %._crit_edge35.loopexit.unr-lcssa ]
-  %lcmp.mod45 = icmp ne i64 %xtraiter, 0
+.lr.ph34.epil:                                    ; preds = %._crit_edge35.loopexit.unr-lcssa, %.lr.ph34.preheader
+  %indvars.iv37.epil = phi i64 [ 0, %.lr.ph34.preheader ], [ %indvars.iv.next38.3, %._crit_edge35.loopexit.unr-lcssa ] ; 4 uses
+  %lcmp.mod45 = trunc i32 %i.cv to i1
   tail call void @llvm.assume(i1 %lcmp.mod45)
-  br label %.lr.ph34.epil
+  %3 = mul nuw nsw i64 %indvars.iv37.epil, %indvars.iv37.epil
+  %4 = sub nsw i64 0, %indvars.iv37.epil
+  %i.di = getelementptr inbounds [4 x i8], ptr %i.cy, i64 %4
+  %5 = trunc nsw i64 %3 to i32                    ; 2 uses
+  store i32 %5, ptr %i.di, align 4, !tbaa !4
+  %6 = getelementptr inbounds nuw [4 x i8], ptr %i.cy, i64 %indvars.iv37.epil
+  store i32 %5, ptr %6, align 4, !tbaa !4
+  br label %._crit_edge35
 
-.lr.ph34.epil:                                    ; preds = %.lr.ph34.epil, %.lr.ph34.epil.preheader
-  %indvars.iv37.epil = phi i64 [ %indvars.iv37.epil.init, %.lr.ph34.epil.preheader ], [ %indvars.iv.next38.epil, %.lr.ph34.epil ] ; 4 uses
-  %epil.iter = phi i64 [ 0, %.lr.ph34.epil.preheader ], [ %epil.iter.next, %.lr.ph34.epil ]
-  %5 = mul nuw nsw i64 %indvars.iv37.epil, %indvars.iv37.epil
-  %6 = trunc nsw i64 %5 to i32                    ; 2 uses
-  store i32 %6, ptr %i.cy, align 4, !tbaa !4
-  %i.di = getelementptr inbounds nuw [4 x i8], ptr %i.cy, i64 %indvars.iv37.epil
-  store i32 %6, ptr %i.di, align 4, !tbaa !4
-  %indvars.iv.next38.epil = add nuw nsw i64 %indvars.iv37.epil, 1
-  %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
-  %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
-  br i1 %epil.iter.cmp.not, label %._crit_edge35, label %.lr.ph34.epil, !llvm.loop !132
-
-._crit_edge35:                                    ; preds = %._crit_edge35.loopexit.unr-lcssa, %.lr.ph34.epil, %bb.p
+._crit_edge35:                                    ; preds = %.lr.ph34.epil, %._crit_edge35.loopexit.unr-lcssa, %bb.p
   %i.dj = add nsw i32 %i.aj, %.026
   %i.dk = add nsw i32 %i.dj, %i.bg
   %i.dl = add nsw i32 %i.dk, %i.bj
@@ -340,13 +326,13 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b, %bb.a
   %i.c = load ptr, ptr @img, align 8, !tbaa !24   ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 5560
-  %i.e = load ptr, ptr %i.d, align 8, !tbaa !134
+  %i.e = load ptr, ptr %i.d, align 8, !tbaa !132
   %i.f = getelementptr inbounds nuw i8, ptr %i.c, i64 5844
   %i.g = load i32, ptr %i.f, align 4, !tbaa !54
   tail call void @free_mem3Dint(ptr noundef %i.e, i32 noundef %i.g) #20
   %i.h = load ptr, ptr @img, align 8, !tbaa !24
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 5568
-  %i.j = load ptr, ptr %i.i, align 8, !tbaa !135
+  %i.j = load ptr, ptr %i.i, align 8, !tbaa !133
   tail call void @free_mem2Dint(ptr noundef %i.j) #20
   %i.k = load ptr, ptr @img, align 8, !tbaa !24
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 5600
@@ -367,19 +353,19 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   tail call void @free(ptr noundef %i.q) #20
   %i.r = load ptr, ptr @img, align 8, !tbaa !24
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 5544
-  %i.t = load ptr, ptr %i.s, align 8, !tbaa !136
+  %i.t = load ptr, ptr %i.s, align 8, !tbaa !134
   tail call void @free_mem2D(ptr noundef %i.t) #20
   %i.u = load ptr, ptr @img, align 8, !tbaa !24
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 5768
-  %i.w = load ptr, ptr %i.v, align 8, !tbaa !137
+  %i.w = load ptr, ptr %i.v, align 8, !tbaa !135
   tail call void @free_mem3Dint(ptr noundef %i.w, i32 noundef 2) #20
   %i.x = load ptr, ptr @img, align 8, !tbaa !24
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 5776
-  %i.z = load ptr, ptr %i.y, align 8, !tbaa !138
+  %i.z = load ptr, ptr %i.y, align 8, !tbaa !136
   tail call void @free_mem3Dint(ptr noundef %i.z, i32 noundef 6) #20
   %i.aa = load ptr, ptr @img, align 8, !tbaa !24
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 5784
-  %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !139
+  %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !137
   tail call void @free_mem4Dint(ptr noundef %i.ac, i32 noundef 6, i32 noundef 32) #20
   %i.ad = load ptr, ptr @img, align 8, !tbaa !24  ; 3 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 5900
@@ -584,12 +570,10 @@ attributes #22 = { nounwind allocsize(0,1) }
 !129 = !{!27, !5, i64 5828}
 !130 = !{!27, !28, i64 5552}
 !131 = distinct !{!131, !22}
-!132 = distinct !{!132, !133}
-!133 = !{!"llvm.loop.unroll.disable"}
-!134 = !{!27, !31, i64 5560}
-!135 = !{!27, !33, i64 5568}
-!136 = !{!27, !29, i64 5544}
-!137 = !{!27, !31, i64 5768}
-!138 = !{!27, !31, i64 5776}
-!139 = !{!27, !36, i64 5784}
+!132 = !{!27, !31, i64 5560}
+!133 = !{!27, !33, i64 5568}
+!134 = !{!27, !29, i64 5544}
+!135 = !{!27, !31, i64 5768}
+!136 = !{!27, !31, i64 5776}
+!137 = !{!27, !36, i64 5784}
 end_hunk_0

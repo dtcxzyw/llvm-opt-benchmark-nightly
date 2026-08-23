@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm-test-suite/original/SearchGame?download=true
-inline.NumInlined: 33
+inline.NumInlined: 32
 loop-unroll.NumCompletelyUnrolled: 6
 loop-unroll.NumRuntimeUnrolled: 2
 loop-unroll.NumUnrolled: 10
@@ -204,34 +204,46 @@ bb.a:
 define dso_local void @inithistory() local_unnamed_addr #0 {
 .preheader26:
   store i32 3, ptr getelementptr inbounds nuw (i8, ptr @history, i64 20), align 4, !tbaa !4
-  store i32 5, ptr getelementptr inbounds nuw (i8, ptr @history, i64 12), align 4, !tbaa !4
+  store i32 3, ptr getelementptr inbounds nuw (i8, ptr @history, i64 188), align 4, !tbaa !4
+  store i32 4, ptr getelementptr inbounds nuw (i8, ptr @history, i64 16), align 16, !tbaa !4
+  store i32 4, ptr getelementptr inbounds nuw (i8, ptr @history, i64 184), align 8, !tbaa !4
   store <4 x i32> <i32 3, i32 4, i32 5, i32 5>, ptr getelementptr inbounds nuw (i8, ptr @history, i64 168), align 8, !tbaa !4
+  store <4 x i32> <i32 3, i32 4, i32 5, i32 5>, ptr @history, align 16, !tbaa !4
   store i32 4, ptr getelementptr inbounds nuw (i8, ptr @history, i64 48), align 16, !tbaa !4
   store i32 4, ptr getelementptr inbounds nuw (i8, ptr @history, i64 160), align 16, !tbaa !4
+  store i32 6, ptr getelementptr inbounds nuw (i8, ptr @history, i64 44), align 4, !tbaa !4
+  store i32 6, ptr getelementptr inbounds nuw (i8, ptr @history, i64 156), align 4, !tbaa !4
   store <4 x i32> <i32 4, i32 6, i32 8, i32 8>, ptr getelementptr inbounds nuw (i8, ptr @history, i64 140), align 4, !tbaa !4
   store <4 x i32> <i32 4, i32 6, i32 8, i32 8>, ptr getelementptr inbounds nuw (i8, ptr @history, i64 28), align 4, !tbaa !4
   store i32 5, ptr getelementptr inbounds nuw (i8, ptr @history, i64 76), align 4, !tbaa !4
   store i32 5, ptr getelementptr inbounds nuw (i8, ptr @history, i64 132), align 4, !tbaa !4
+  store i32 8, ptr getelementptr inbounds nuw (i8, ptr @history, i64 72), align 8, !tbaa !4
+  store i32 8, ptr getelementptr inbounds nuw (i8, ptr @history, i64 128), align 16, !tbaa !4
   store <4 x i32> <i32 5, i32 8, i32 11, i32 11>, ptr getelementptr inbounds nuw (i8, ptr @history, i64 112), align 16, !tbaa !4
   store <4 x i32> <i32 5, i32 8, i32 11, i32 11>, ptr getelementptr inbounds nuw (i8, ptr @history, i64 56), align 8, !tbaa !4
   store i32 7, ptr getelementptr inbounds nuw (i8, ptr @history, i64 104), align 8, !tbaa !4
-  store <4 x i32> <i32 10, i32 3, i32 4, i32 5>, ptr getelementptr inbounds nuw (i8, ptr @history, i64 -4), align 4, !tbaa !4
+  store i32 10, ptr getelementptr inbounds nuw (i8, ptr @history, i64 100), align 4, !tbaa !4
   store <4 x i32> <i32 7, i32 10, i32 13, i32 13>, ptr getelementptr inbounds nuw (i8, ptr @history, i64 84), align 4, !tbaa !4
   store i32 3, ptr getelementptr inbounds nuw (i8, ptr @history, i64 216), align 8, !tbaa !4
   store i32 3, ptr getelementptr inbounds nuw (i8, ptr @history, i64 384), align 16, !tbaa !4
-  store i32 5, ptr getelementptr inbounds nuw (i8, ptr @history, i64 208), align 16, !tbaa !4
+  store i32 4, ptr getelementptr inbounds nuw (i8, ptr @history, i64 212), align 4, !tbaa !4
+  store i32 4, ptr getelementptr inbounds nuw (i8, ptr @history, i64 380), align 4, !tbaa !4
   store <4 x i32> <i32 3, i32 4, i32 5, i32 5>, ptr getelementptr inbounds nuw (i8, ptr @history, i64 364), align 4, !tbaa !4
-  store i32 5, ptr getelementptr inbounds nuw (i8, ptr @history, i64 204), align 4, !tbaa !4
+  store <4 x i32> <i32 3, i32 4, i32 5, i32 5>, ptr getelementptr inbounds nuw (i8, ptr @history, i64 196), align 4, !tbaa !4
   store i32 4, ptr getelementptr inbounds nuw (i8, ptr @history, i64 244), align 4, !tbaa !4
   store i32 4, ptr getelementptr inbounds nuw (i8, ptr @history, i64 356), align 4, !tbaa !4
+  store i32 6, ptr getelementptr inbounds nuw (i8, ptr @history, i64 240), align 16, !tbaa !4
+  store i32 6, ptr getelementptr inbounds nuw (i8, ptr @history, i64 352), align 16, !tbaa !4
   store <4 x i32> <i32 4, i32 6, i32 8, i32 8>, ptr getelementptr inbounds nuw (i8, ptr @history, i64 336), align 16, !tbaa !4
   store <4 x i32> <i32 4, i32 6, i32 8, i32 8>, ptr getelementptr inbounds nuw (i8, ptr @history, i64 224), align 16, !tbaa !4
   store i32 5, ptr getelementptr inbounds nuw (i8, ptr @history, i64 272), align 16, !tbaa !4
   store i32 5, ptr getelementptr inbounds nuw (i8, ptr @history, i64 328), align 8, !tbaa !4
+  store i32 8, ptr getelementptr inbounds nuw (i8, ptr @history, i64 268), align 4, !tbaa !4
+  store i32 8, ptr getelementptr inbounds nuw (i8, ptr @history, i64 324), align 4, !tbaa !4
   store <4 x i32> <i32 5, i32 8, i32 11, i32 11>, ptr getelementptr inbounds nuw (i8, ptr @history, i64 308), align 4, !tbaa !4
   store <4 x i32> <i32 5, i32 8, i32 11, i32 11>, ptr getelementptr inbounds nuw (i8, ptr @history, i64 252), align 4, !tbaa !4
   store i32 7, ptr getelementptr inbounds nuw (i8, ptr @history, i64 300), align 4, !tbaa !4
-  store <4 x i32> <i32 3, i32 10, i32 3, i32 4>, ptr getelementptr inbounds nuw (i8, ptr @history, i64 188), align 4, !tbaa !4
+  store i32 10, ptr getelementptr inbounds nuw (i8, ptr @history, i64 296), align 8, !tbaa !4
   store <4 x i32> <i32 7, i32 10, i32 13, i32 13>, ptr getelementptr inbounds nuw (i8, ptr @history, i64 280), align 8, !tbaa !4
   ret void
 }
@@ -585,7 +597,7 @@ bb.aa:                                            ; preds = %.lr.ph173, %bb.af
   %indvar = phi i64 [ 0, %.lr.ph173 ], [ %indvar.next, %bb.af ] ; 3 uses
   %i.fa = phi i32 [ %i.d, %.lr.ph173 ], [ %i.ht, %bb.af ] ; 3 uses
   %indvars.iv214 = phi i32 [ 0, %.lr.ph173 ], [ %indvars.iv.next215, %bb.af ] ; 4 uses
-  %indvars.iv205 = phi i64 [ 0, %.lr.ph173 ], [ %indvars.iv.next206, %bb.af ] ; 5 uses
+  %indvars.iv205 = phi i64 [ 0, %.lr.ph173 ], [ %indvars.iv.next206, %bb.af ] ; 6 uses
   %indvars.iv193 = phi i64 [ 1, %.lr.ph173 ], [ %indvars.iv.next194, %bb.af ] ; 5 uses
   %.091172 = phi i32 [ 1, %.lr.ph173 ], [ %.293, %bb.af ] ; 2 uses
   %.1106170 = phi i32 [ %.0105, %.lr.ph173 ], [ %.2107, %bb.af ] ; 4 uses
@@ -674,7 +686,9 @@ bb.aa:                                            ; preds = %.lr.ph173, %bb.af
   br i1 %i.gs, label %.lr.ph167.preheader, label %._crit_edge168
 
 .lr.ph167.preheader:                              ; preds = %._crit_edge
-  %i.gt = add i32 %spec.select.lcssa, -1
+  %2 = trunc i64 %indvars.iv205 to i32
+  %3 = xor i32 %2, -1
+  %i.gt = add i32 %spec.select.lcssa, %3
   %i.gu = zext i32 %i.gt to i64                   ; 2 uses
   %i.gv = shl nuw nsw i64 %i.gu, 2
   %i.gw = sub nsw i64 %.phi.trans.insert, %i.gu
@@ -1077,36 +1091,7 @@ islegalhaswon.exit.6:                             ; preds = %bb.x
   br i1 %.not.6, label %islegalhaswon.exit.thread14.6, label %haswon.exit.thread
 
 islegalhaswon.exit.thread14.6:                    ; preds = %islegalhaswon.exit.6, %islegalhaswon.exit.thread14.5
-  store i32 3, ptr getelementptr inbounds nuw (i8, ptr @history, i64 20), align 4, !tbaa !4
-  store i32 5, ptr getelementptr inbounds nuw (i8, ptr @history, i64 12), align 4, !tbaa !4
-  store <4 x i32> <i32 3, i32 4, i32 5, i32 5>, ptr getelementptr inbounds nuw (i8, ptr @history, i64 168), align 8, !tbaa !4
-  store i32 4, ptr getelementptr inbounds nuw (i8, ptr @history, i64 48), align 16, !tbaa !4
-  store i32 4, ptr getelementptr inbounds nuw (i8, ptr @history, i64 160), align 16, !tbaa !4
-  store <4 x i32> <i32 4, i32 6, i32 8, i32 8>, ptr getelementptr inbounds nuw (i8, ptr @history, i64 140), align 4, !tbaa !4
-  store <4 x i32> <i32 4, i32 6, i32 8, i32 8>, ptr getelementptr inbounds nuw (i8, ptr @history, i64 28), align 4, !tbaa !4
-  store i32 5, ptr getelementptr inbounds nuw (i8, ptr @history, i64 76), align 4, !tbaa !4
-  store i32 5, ptr getelementptr inbounds nuw (i8, ptr @history, i64 132), align 4, !tbaa !4
-  store <4 x i32> <i32 5, i32 8, i32 11, i32 11>, ptr getelementptr inbounds nuw (i8, ptr @history, i64 112), align 16, !tbaa !4
-  store <4 x i32> <i32 5, i32 8, i32 11, i32 11>, ptr getelementptr inbounds nuw (i8, ptr @history, i64 56), align 8, !tbaa !4
-  store i32 7, ptr getelementptr inbounds nuw (i8, ptr @history, i64 104), align 8, !tbaa !4
-  store <4 x i32> <i32 10, i32 3, i32 4, i32 5>, ptr getelementptr inbounds nuw (i8, ptr @history, i64 -4), align 4, !tbaa !4
-  store <4 x i32> <i32 7, i32 10, i32 13, i32 13>, ptr getelementptr inbounds nuw (i8, ptr @history, i64 84), align 4, !tbaa !4
-  store i32 3, ptr getelementptr inbounds nuw (i8, ptr @history, i64 216), align 8, !tbaa !4
-  store i32 3, ptr getelementptr inbounds nuw (i8, ptr @history, i64 384), align 16, !tbaa !4
-  store i32 5, ptr getelementptr inbounds nuw (i8, ptr @history, i64 208), align 16, !tbaa !4
-  store <4 x i32> <i32 3, i32 4, i32 5, i32 5>, ptr getelementptr inbounds nuw (i8, ptr @history, i64 364), align 4, !tbaa !4
-  store i32 5, ptr getelementptr inbounds nuw (i8, ptr @history, i64 204), align 4, !tbaa !4
-  store i32 4, ptr getelementptr inbounds nuw (i8, ptr @history, i64 244), align 4, !tbaa !4
-  store i32 4, ptr getelementptr inbounds nuw (i8, ptr @history, i64 356), align 4, !tbaa !4
-  store <4 x i32> <i32 4, i32 6, i32 8, i32 8>, ptr getelementptr inbounds nuw (i8, ptr @history, i64 336), align 16, !tbaa !4
-  store <4 x i32> <i32 4, i32 6, i32 8, i32 8>, ptr getelementptr inbounds nuw (i8, ptr @history, i64 224), align 16, !tbaa !4
-  store i32 5, ptr getelementptr inbounds nuw (i8, ptr @history, i64 272), align 16, !tbaa !4
-  store i32 5, ptr getelementptr inbounds nuw (i8, ptr @history, i64 328), align 8, !tbaa !4
-  store <4 x i32> <i32 5, i32 8, i32 11, i32 11>, ptr getelementptr inbounds nuw (i8, ptr @history, i64 308), align 4, !tbaa !4
-  store <4 x i32> <i32 5, i32 8, i32 11, i32 11>, ptr getelementptr inbounds nuw (i8, ptr @history, i64 252), align 4, !tbaa !4
-  store i32 7, ptr getelementptr inbounds nuw (i8, ptr @history, i64 300), align 4, !tbaa !4
-  store <4 x i32> <i32 3, i32 10, i32 3, i32 4>, ptr getelementptr inbounds nuw (i8, ptr @history, i64 188), align 4, !tbaa !4
-  store <4 x i32> <i32 7, i32 10, i32 13, i32 13>, ptr getelementptr inbounds nuw (i8, ptr @history, i64 280), align 8, !tbaa !4
+  tail call void @inithistory()
   %i.fx = load i64, ptr @millisecs.Time, align 8, !tbaa !9 ; 2 uses
   %i.fy = add nsw i64 %i.fx, 1
   store i64 %i.fy, ptr @millisecs.Time, align 8, !tbaa !9

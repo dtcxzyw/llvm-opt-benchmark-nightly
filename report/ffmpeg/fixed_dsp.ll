@@ -202,44 +202,49 @@ middle.block:                                     ; preds = %vector.body
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define internal void @vector_fmul_reverse_c(ptr nofree noundef writeonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, i32 noundef %3) #2 {
 bb.a:
-  %i.a = sext i32 %3 to i64
+  %i.a = sext i32 %3 to i64                       ; 2 uses
   %i.b = getelementptr [4 x i8], ptr %2, i64 %i.a ; 2 uses
-  %i.c = getelementptr i8, ptr %i.b, i64 -4       ; 5 uses
+  %i.c = getelementptr i8, ptr %i.b, i64 -4       ; 4 uses
   %i.d = icmp sgt i32 %3, 0
   br i1 %i.d, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %wide.trip.count = zext nneg i32 %3 to i64      ; 6 uses
+  %wide.trip.count = zext nneg i32 %3 to i64      ; 7 uses
   %min.iters.check = icmp ult i32 %3, 12
   br i1 %min.iters.check, label %.lr.ph.preheader17, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader
   %i.e = shl nuw nsw i64 %wide.trip.count, 2      ; 2 uses
-  %scevgep.a = getelementptr i8, ptr %0, i64 %i.e ; 2 uses
-  %scevgep13 = getelementptr i8, ptr %1, i64 %i.e
-  %bound0 = icmp ult ptr %0, %scevgep13
-  %bound1 = icmp ult ptr %1, %scevgep.a
+  %scevgep = getelementptr i8, ptr %0, i64 %i.e   ; 2 uses
+  %scevgep.a = getelementptr i8, ptr %1, i64 %i.e
+  %4 = sub nsw i64 %i.a, %wide.trip.count
+  %5 = shl nsw i64 %4, 2
+  %scevgep13 = getelementptr i8, ptr %2, i64 %5
+  %bound0 = icmp ult ptr %0, %scevgep.a
+  %bound1 = icmp ult ptr %1, %scevgep
   %found.conflict = and i1 %bound0, %bound1
   %bound014 = icmp ult ptr %0, %i.b
-  %bound115 = icmp ult ptr %i.c, %scevgep.a
+  %bound115 = icmp ult ptr %scevgep13, %scevgep
   %found.conflict16 = and i1 %bound014, %bound115
   %conflict.rdx = or i1 %found.conflict, %found.conflict16
   br i1 %conflict.rdx, label %.lr.ph.preheader17, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = and i64 %wide.trip.count, 2147483644   ; 3 uses
-  %4 = load i32, ptr %i.c, align 4, !tbaa !18, !alias.scope !30
-  %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %4, i64 0
-  %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer
-  %5 = sext <4 x i32> %broadcast.splat to <4 x i64>
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %i.f = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %index
-  %wide.load.a = load <4 x i32>, ptr %i.f, align 4, !tbaa !18, !alias.scope !33
-  %i.g = sext <4 x i32> %wide.load.a to <4 x i64>
-  %i.h = mul nsw <4 x i64> %5, %i.g
+  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 4 uses
+  %6 = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %index
+  %wide.load = load <4 x i32>, ptr %6, align 4, !tbaa !18, !alias.scope !30
+  %7 = sext <4 x i32> %wide.load to <4 x i64>
+  %8 = sub nsw i64 0, %index
+  %i.f = getelementptr inbounds [4 x i8], ptr %i.c, i64 %8
+  %9 = getelementptr inbounds i8, ptr %i.f, i64 -12
+  %wide.load.a = load <4 x i32>, ptr %9, align 4, !tbaa !18, !alias.scope !33
+  %reverse = shufflevector <4 x i32> %wide.load.a, <4 x i32> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
+  %i.g = sext <4 x i32> %reverse to <4 x i64>
+  %i.h = mul nsw <4 x i64> %i.g, %7
   %i.i = add nsw <4 x i64> %i.h, splat (i64 1073741824)
   %i.j = lshr <4 x i64> %i.i, splat (i64 31)
   %i.k = trunc <4 x i64> %i.j to <4 x i32>
@@ -254,7 +259,7 @@ middle.block:                                     ; preds = %vector.body
   br i1 %cmp.n, label %._crit_edge, label %.lr.ph.preheader17
 
 .lr.ph.preheader17:                               ; preds = %vector.memcheck, %.lr.ph.preheader, %middle.block
-  %indvars.iv.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.preheader ], [ %n.vec, %middle.block ] ; 5 uses
+  %indvars.iv.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.preheader ], [ %n.vec, %middle.block ] ; 6 uses
   %xtraiter = and i64 %wide.trip.count, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.prol.loopexit, label %.lr.ph.prol
@@ -263,7 +268,9 @@ middle.block:                                     ; preds = %vector.body
   %i.n = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv.ph
   %i.o = load i32, ptr %i.n, align 4, !tbaa !18
   %i.p = sext i32 %i.o to i64
-  %i.q = load i32, ptr %i.c, align 4, !tbaa !18
+  %10 = sub nsw i64 0, %indvars.iv.ph
+  %11 = getelementptr inbounds [4 x i8], ptr %i.c, i64 %10
+  %i.q = load i32, ptr %11, align 4, !tbaa !18
   %i.r = sext i32 %i.q to i64
   %i.s = mul nsw i64 %i.r, %i.p
   %i.t = add nsw i64 %i.s, 1073741824
@@ -281,11 +288,13 @@ middle.block:                                     ; preds = %vector.body
   br i1 %i.y, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.prol.loopexit, %.lr.ph
-  %indvars.iv = phi i64 [ %indvars.iv.next.1, %.lr.ph ], [ %indvars.iv.unr, %.lr.ph.prol.loopexit ] ; 4 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next.1, %.lr.ph ], [ %indvars.iv.unr, %.lr.ph.prol.loopexit ] ; 6 uses
   %i.z = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv
   %i.aa = load i32, ptr %i.z, align 4, !tbaa !18
   %i.ab = sext i32 %i.aa to i64
-  %i.ac = load i32, ptr %i.c, align 4, !tbaa !18
+  %12 = sub nsw i64 0, %indvars.iv
+  %13 = getelementptr inbounds [4 x i8], ptr %i.c, i64 %12
+  %i.ac = load i32, ptr %13, align 4, !tbaa !18
   %i.ad = sext i32 %i.ac to i64
   %i.ae = mul nsw i64 %i.ad, %i.ab
   %i.af = add nsw i64 %i.ae, 1073741824
@@ -297,7 +306,9 @@ middle.block:                                     ; preds = %vector.body
   %i.aj = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv.next
   %i.ak = load i32, ptr %i.aj, align 4, !tbaa !18
   %i.al = sext i32 %i.ak to i64
-  %i.am = load i32, ptr %i.c, align 4, !tbaa !18
+  %14 = xor i64 %indvars.iv, -1
+  %15 = getelementptr inbounds [4 x i8], ptr %i.c, i64 %14
+  %i.am = load i32, ptr %15, align 4, !tbaa !18
   %i.an = sext i32 %i.am to i64
   %i.ao = mul nsw i64 %i.an, %i.al
   %i.ap = add nsw i64 %i.ao, 1073741824
@@ -526,7 +537,7 @@ attributes #5 = { nounwind }
 !34 = distinct !{!34, !32}
 !35 = !{!36}
 !36 = distinct !{!36, !32}
-!37 = !{!34, !31}
+!37 = !{!31, !34}
 !38 = distinct !{!38, !22, !25, !26}
 !39 = distinct !{!39, !22, !25}
 !40 = distinct !{!40, !22, !25, !26}

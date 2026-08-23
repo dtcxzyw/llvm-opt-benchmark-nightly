@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.a
 
 .lr.ph.split.i.i:                                 ; preds = %.lr.ph.split.i.i, %.lr.ph.i.i
   %.061.i.i = phi i64 [ %i.s, %.lr.ph.split.i.i ], [ 0, %.lr.ph.i.i ] ; 8 uses
-  %i.q = sub nuw nsw i64 4, %.061.i.i
+  %i.q = sub nsw i64 4, %.061.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #20
   %i.r = getelementptr inbounds nuw [8 x i8], ptr %6, i64 %.061.i.i
   store ptr %i.r, ptr %3, align 8, !tbaa !1714, !alias.scope !1716
@@ -217,7 +217,7 @@ bb.c:                                             ; preds = %bb.a
   store i64 4, ptr %i.k, align 8, !tbaa !1721, !alias.scope !1716
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #20
   %i.s = add nuw nsw i64 %.061.i.i, 1             ; 4 uses
-  %i.t = sub nuw nsw i64 3, %.061.i.i
+  %i.t = sub nsw i64 3, %.061.i.i
   %i.u = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.s
   %.idx.i.i.i.i.i.i.i = shl nsw i64 %.061.i.i, 5
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 %.idx.i.i.i.i.i.i.i
@@ -620,7 +620,7 @@ bb.g:                                             ; preds = %bb.f
   store i64 5, ptr %i.ck, align 8, !tbaa !2023, !alias.scope !2020
   %i.gj = getelementptr inbounds nuw [8 x i8], ptr %i.br, i64 %.073152 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #20
-  %i.gk = sub nuw nsw i64 4, %.073152             ; 7 uses
+  %i.gk = sub nsw i64 4, %.073152                 ; 7 uses
   %i.gl = getelementptr inbounds nuw i8, ptr %i.gi, i64 8
   store ptr %i.gl, ptr %1, align 8, !tbaa !2032
   store i64 %i.gk, ptr %i.cl, align 8, !tbaa !46
@@ -1023,7 +1023,7 @@ bb.c:                                             ; preds = %bb.a
 
 .lr.ph.split.i.i:                                 ; preds = %.lr.ph.split.i.i, %.lr.ph.i.i
   %.061.i.i = phi i64 [ %i.s, %.lr.ph.split.i.i ], [ 0, %.lr.ph.i.i ] ; 8 uses
-  %i.q = sub nuw nsw i64 5, %.061.i.i
+  %i.q = sub nsw i64 5, %.061.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #20
   %i.r = getelementptr inbounds nuw [8 x i8], ptr %6, i64 %.061.i.i
   store ptr %i.r, ptr %3, align 8, !tbaa !2163, !alias.scope !2165
@@ -1035,7 +1035,7 @@ bb.c:                                             ; preds = %bb.a
   store i64 5, ptr %i.k, align 8, !tbaa !2170, !alias.scope !2165
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #20
   %i.s = add nuw nsw i64 %.061.i.i, 1             ; 4 uses
-  %i.t = sub nuw nsw i64 4, %.061.i.i
+  %i.t = sub nsw i64 4, %.061.i.i
   %i.u = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.s
   %.idx.i.i.i.i.i.i.i = mul nuw nsw i64 %.061.i.i, 40
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 %.idx.i.i.i.i.i.i.i

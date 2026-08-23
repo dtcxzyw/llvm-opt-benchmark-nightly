@@ -205,7 +205,7 @@ silk_decode_excitation.exit:                      ; preds = %bb.cl, %.thread284
 .lr.ph333:                                        ; preds = %.preheader
   %i.adh = getelementptr inbounds nuw i8, ptr %i.m, i64 1392
   %i.adi = getelementptr inbounds nuw i8, ptr %0, i64 20
-  %i.adj = load i32, ptr %i.adi, align 4, !tbaa !13 ; 6 uses
+  %i.adj = load i32, ptr %i.adi, align 4, !tbaa !13 ; 7 uses
   %i.adk = getelementptr inbounds nuw i8, ptr %i.m, i64 3968
   %i.adl = icmp sgt i32 %i.adj, 0                 ; 2 uses
   %wide.trip.count392 = zext nneg i32 %i.adf to i64
@@ -237,7 +237,7 @@ silk_decode_excitation.exit:                      ; preds = %bb.cl, %.thread284
   br label %bb.cm
 
 bb.cm:                                            ; preds = %.lr.ph333, %._crit_edge331
-  %indvars.iv389 = phi i64 [ 0, %.lr.ph333 ], [ %indvars.iv.next390, %._crit_edge331 ] ; 6 uses
+  %indvars.iv389 = phi i64 [ 0, %.lr.ph333 ], [ %indvars.iv.next390, %._crit_edge331 ] ; 7 uses
   %i.adr = trunc i64 %indvars.iv389 to i32
   %i.ads = mul i32 %i.adj, %i.adr
   %i.adt = sext i32 %i.ads to i64                 ; 6 uses
@@ -255,20 +255,26 @@ bb.cm:                                            ; preds = %.lr.ph333, %._crit_
   br i1 %.not286, label %.loopexit, label %bb.cn
 
 bb.cn:                                            ; preds = %bb.cm
-  br i1 %i.adv, label %bb.cp, label %bb.co
+  br i1 %i.adv, label %9, label %bb.co
 
 bb.co:                                            ; preds = %bb.cn
   %i.aed = load i32, ptr %i.qi, align 4, !tbaa !81
   %i.aee = icmp eq i32 %i.aed, 4
-  br i1 %i.aee, label %bb.cp, label %bb.cq
+  br i1 %i.aee, label %9, label %bb.cp
 
-bb.cp:                                            ; preds = %bb.co, %bb.cn
-  %i.aef = sub i32 0, %i.ady
+9:                                                ; preds = %bb.co, %bb.cn
+  %10 = sub i32 0, %i.ady
   br label %bb.cq
 
-bb.cq:                                            ; preds = %bb.co, %bb.cp
-  %.0225 = phi i32 [ %i.aef, %bb.cp ], [ 0, %bb.co ] ; 6 uses
-  %.0 = phi nsz float [ %.0244, %bb.cp ], [ 1.000000e+00, %bb.co ]
+bb.cp:                                            ; preds = %bb.co
+  %11 = trunc i64 %indvars.iv389 to i32
+  %i.aef = sub i32 2, %11
+  %12 = mul i32 %i.aef, %i.adj
+  br label %bb.cq
+
+bb.cq:                                            ; preds = %bb.cp, %9
+  %.0225 = phi i32 [ %10, %9 ], [ %12, %bb.cp ]   ; 6 uses
+  %.0 = phi nsz float [ %.0244, %9 ], [ 1.000000e+00, %bb.cp ]
   %i.aeg = getelementptr inbounds nuw [28 x i8], ptr %8, i64 %indvars.iv389 ; 9 uses
   %i.aeh = getelementptr inbounds nuw i8, ptr %i.aeg, i64 4
   %i.aei = load i32, ptr %i.aeh, align 4, !tbaa !86 ; 17 uses

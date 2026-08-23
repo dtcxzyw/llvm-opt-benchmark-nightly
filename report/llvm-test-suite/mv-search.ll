@@ -205,7 +205,7 @@ middle.block:                                     ; preds = %vector.body
   %i.dy = shl nuw nsw i64 %indvar174, 3
   %i.dz = add nuw i64 %i.dy, 16
   %i.ea = sub nsw i32 0, %.0143                   ; 5 uses
-  %i.eb = sub nuw nsw i32 1, %.0143               ; 4 uses
+  %i.eb = sub nsw i32 1, %.0143                   ; 4 uses
   %i.ec = trunc i32 %i.ea to i16                  ; 3 uses
   %i.ed = shl i16 %i.ec, 1                        ; 2 uses
   %i.ee = trunc i32 %.0143 to i16                 ; 3 uses
@@ -265,15 +265,15 @@ vector.ph268:                                     ; preds = %vector.memcheck230
   %i.ej = shl nuw i64 %n.vec269, 1
   %i.ek = add i64 %.098142, %i.ej
   %i.el = trunc i64 %n.vec269 to i32
-  %0 = or disjoint i32 %i.eb, %i.el
+  %0 = add i32 %i.eb, %i.el
   %broadcast.splatinsert270 = insertelement <4 x i16> poison, i16 %i.ec, i64 0
   %broadcast.splatinsert272 = insertelement <4 x i16> poison, i16 %i.ed, i64 0
   %broadcast.splatinsert274 = insertelement <4 x i16> poison, i16 %i.ee, i64 0
   %broadcast.splatinsert276 = insertelement <4 x i16> poison, i16 %i.ef, i64 0
-  %i.em = trunc nuw i32 %i.eb to i16
+  %i.em = trunc i32 %i.eb to i16
   %broadcast.splatinsert278 = insertelement <4 x i16> poison, i16 %i.em, i64 0
   %broadcast.splat279 = shufflevector <4 x i16> %broadcast.splatinsert278, <4 x i16> poison, <4 x i32> zeroinitializer
-  %induction280 = add nuw nsw <4 x i16> %broadcast.splat279, <i16 0, i16 1, i16 2, i16 3>
+  %induction280 = add <4 x i16> %broadcast.splat279, <i16 0, i16 1, i16 2, i16 3>
   %interleaved.vec287 = shufflevector <4 x i16> %broadcast.splatinsert270, <4 x i16> %broadcast.splatinsert274, <8 x i32> <i32 0, i32 4, i32 0, i32 4, i32 0, i32 4, i32 0, i32 4> ; 2 uses
   %interleaved.vec291 = shufflevector <4 x i16> %broadcast.splatinsert272, <4 x i16> %broadcast.splatinsert276, <8 x i32> <i32 0, i32 4, i32 0, i32 4, i32 0, i32 4, i32 0, i32 4> ; 2 uses
   br label %vector.body281
@@ -441,7 +441,7 @@ scalar.ph266:                                     ; preds = %scalar.ph266.prehea
   %indvars.iv.next154 = add nsw i64 %indvars.iv153, 2 ; 5 uses
   %i.go = getelementptr inbounds [2 x i8], ptr %i.ds, i64 %i.gj
   store i16 %i.ef, ptr %i.go, align 2, !tbaa !47
-  %i.gp = add nuw nsw i32 %.3133, 1               ; 2 uses
+  %i.gp = add nsw i32 %.3133, 1                   ; 2 uses
   %exitcond.not = icmp eq i32 %i.gp, %.0143
   %indvar.next = add i64 %indvar, 1
   br i1 %exitcond.not, label %.lr.ph139.loopexit, label %scalar.ph266, !llvm.loop !87

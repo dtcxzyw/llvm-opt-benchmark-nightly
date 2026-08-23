@@ -205,15 +205,15 @@ begin_hunk_0_@Fra_ClausProcessClausesCut:bb.a
   br i1 %i.ky, label %._crit_edge51.6.epil.preheader, label %._crit_edge51.6
 
 ._crit_edge51.6:                                  ; preds = %._crit_edge51.6.preheader, %._crit_edge51.6
-  %indvars.iv65.7 = phi i64 [ %indvars.iv.next66.7.3, %._crit_edge51.6 ], [ 0, %._crit_edge51.6.preheader ] ; 8 uses
+  %indvars.iv65.7 = phi i64 [ %indvars.iv.next66.7.3, %._crit_edge51.6 ], [ 0, %._crit_edge51.6.preheader ] ; 9 uses
   %niter169 = phi i64 [ %niter169.next.3, %._crit_edge51.6 ], [ 0, %._crit_edge51.6.preheader ] ; 2 uses
   %i.kz = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %indvars.iv65.7
   %i.la = load ptr, ptr %i.kz, align 16, !tbaa !52
   %i.lb = getelementptr inbounds nuw [4 x i8], ptr %i.la, i64 %i.bj
   %i.lc = getelementptr inbounds nuw i8, ptr %i.lb, i64 28
   %i.ld = load i32, ptr %i.lc, align 4, !tbaa !41
-  %i.le = sub nuw nsw i64 3, %indvars.iv65.7
-  %i.lf = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.le
+  %i.le = sub nsw i64 3, %indvars.iv65.7
+  %i.lf = getelementptr inbounds [4 x i8], ptr %i.a, i64 %i.le
   store i32 %i.ld, ptr %i.lf, align 4, !tbaa !41
   %i.lg = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %indvars.iv65.7
   %i.lh = getelementptr inbounds nuw i8, ptr %i.lg, i64 8
@@ -221,8 +221,8 @@ begin_hunk_0_@Fra_ClausProcessClausesCut:bb.a
   %i.lj = getelementptr inbounds nuw [4 x i8], ptr %i.li, i64 %i.bj
   %i.lk = getelementptr inbounds nuw i8, ptr %i.lj, i64 28
   %i.ll = load i32, ptr %i.lk, align 4, !tbaa !41
-  %i.lm = sub nuw nsw i64 2, %indvars.iv65.7
-  %i.ln = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.lm
+  %i.lm = sub nsw i64 2, %indvars.iv65.7
+  %i.ln = getelementptr inbounds [4 x i8], ptr %i.a, i64 %i.lm
   store i32 %i.ll, ptr %i.ln, align 8, !tbaa !41
   %i.lo = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %indvars.iv65.7
   %i.lp = getelementptr inbounds nuw i8, ptr %i.lo, i64 16
@@ -230,8 +230,8 @@ begin_hunk_0_@Fra_ClausProcessClausesCut:bb.a
   %i.lr = getelementptr inbounds nuw [4 x i8], ptr %i.lq, i64 %i.bj
   %i.ls = getelementptr inbounds nuw i8, ptr %i.lr, i64 28
   %i.lt = load i32, ptr %i.ls, align 4, !tbaa !41
-  %i.lu = sub nuw nsw i64 1, %indvars.iv65.7
-  %i.lv = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.lu
+  %i.lu = sub nsw i64 1, %indvars.iv65.7
+  %i.lv = getelementptr inbounds [4 x i8], ptr %i.a, i64 %i.lu
   store i32 %i.lt, ptr %i.lv, align 4, !tbaa !41
   %i.lw = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %indvars.iv65.7
   %i.lx = getelementptr inbounds nuw i8, ptr %i.lw, i64 24
@@ -239,13 +239,15 @@ begin_hunk_0_@Fra_ClausProcessClausesCut:bb.a
   %i.lz = getelementptr inbounds nuw [4 x i8], ptr %i.ly, i64 %i.bj
   %i.ma = getelementptr inbounds nuw i8, ptr %i.lz, i64 28
   %i.mb = load i32, ptr %i.ma, align 4, !tbaa !41
+  %4 = sub nsw i64 0, %indvars.iv65.7
+  %5 = getelementptr inbounds [4 x i8], ptr %i.a, i64 %4
+  store i32 %i.mb, ptr %5, align 16, !tbaa !41
   %indvars.iv.next66.7.3 = add nuw nsw i64 %indvars.iv65.7, 4 ; 2 uses
   %niter169.next.3 = add i64 %niter169, 4
   %niter169.ncmp.3 = icmp eq i64 %niter169, 0
   br i1 %niter169.ncmp.3, label %.split53.loopexit.unr-lcssa, label %._crit_edge51.6, !llvm.loop !53
 
 .split53.loopexit.unr-lcssa:                      ; preds = %._crit_edge51.6
-  store i32 %i.mb, ptr %i.a, align 16, !tbaa !41
   %lcmp.mod166.not = icmp eq i64 %xtraiter164, 0
   br i1 %lcmp.mod166.not, label %.split53, label %._crit_edge51.6.epil.preheader
 
@@ -263,8 +265,8 @@ begin_hunk_0_@Fra_ClausProcessClausesCut:bb.a
   %i.me = getelementptr inbounds nuw [4 x i8], ptr %i.md, i64 %i.bj
   %i.mf = getelementptr inbounds nuw i8, ptr %i.me, i64 28
   %i.mg = load i32, ptr %i.mf, align 4, !tbaa !41
-  %i.mh = sub nuw nsw i64 3, %indvars.iv65.7.epil
-  %i.mi = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.mh
+  %i.mh = sub nsw i64 3, %indvars.iv65.7.epil
+  %i.mi = getelementptr inbounds [4 x i8], ptr %i.a, i64 %i.mh
   store i32 %i.mg, ptr %i.mi, align 4, !tbaa !41
   %indvars.iv.next66.7.epil = add nuw nsw i64 %indvars.iv65.7.epil, 1
   %epil.iter165.next = add i64 %epil.iter165, 1   ; 2 uses
@@ -667,32 +669,32 @@ bb.d:                                             ; preds = %._crit_edge
   %i.dn = load ptr, ptr %i.dm, align 16, !tbaa !52
   %i.do = getelementptr inbounds nuw [4 x i8], ptr %i.dn, i64 %i.dl
   %i.dp = load i32, ptr %i.do, align 4, !tbaa !41
-  %i.dq = sub nuw nsw i64 31, %indvars.iv109
-  %i.dr = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.dq
+  %i.dq = sub nsw i64 31, %indvars.iv109
+  %i.dr = getelementptr inbounds [4 x i8], ptr %i.a, i64 %i.dq
   store i32 %i.dp, ptr %i.dr, align 4, !tbaa !41
   %i.ds = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %indvars.iv109
   %i.dt = getelementptr inbounds nuw i8, ptr %i.ds, i64 8
   %i.du = load ptr, ptr %i.dt, align 8, !tbaa !52
   %i.dv = getelementptr inbounds nuw [4 x i8], ptr %i.du, i64 %i.dl
   %i.dw = load i32, ptr %i.dv, align 4, !tbaa !41
-  %i.dx = sub nuw nsw i64 30, %indvars.iv109
-  %i.dy = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.dx
+  %i.dx = sub nsw i64 30, %indvars.iv109
+  %i.dy = getelementptr inbounds [4 x i8], ptr %i.a, i64 %i.dx
   store i32 %i.dw, ptr %i.dy, align 8, !tbaa !41
   %i.dz = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %indvars.iv109
   %i.ea = getelementptr inbounds nuw i8, ptr %i.dz, i64 16
   %i.eb = load ptr, ptr %i.ea, align 16, !tbaa !52
   %i.ec = getelementptr inbounds nuw [4 x i8], ptr %i.eb, i64 %i.dl
   %i.ed = load i32, ptr %i.ec, align 4, !tbaa !41
-  %i.ee = sub nuw nsw i64 29, %indvars.iv109
-  %i.ef = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.ee
+  %i.ee = sub nsw i64 29, %indvars.iv109
+  %i.ef = getelementptr inbounds [4 x i8], ptr %i.a, i64 %i.ee
   store i32 %i.ed, ptr %i.ef, align 4, !tbaa !41
   %i.eg = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %indvars.iv109
   %i.eh = getelementptr inbounds nuw i8, ptr %i.eg, i64 24
   %i.ei = load ptr, ptr %i.eh, align 8, !tbaa !52
   %i.ej = getelementptr inbounds nuw [4 x i8], ptr %i.ei, i64 %i.dl
   %i.ek = load i32, ptr %i.ej, align 4, !tbaa !41
-  %i.el = sub nuw nsw i64 28, %indvars.iv109
-  %i.em = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.el
+  %i.el = sub nsw i64 28, %indvars.iv109
+  %i.em = getelementptr inbounds [4 x i8], ptr %i.a, i64 %i.el
   store i32 %i.ek, ptr %i.em, align 16, !tbaa !41
   %indvars.iv.next110.3157 = add nuw nsw i64 %indvars.iv109, 4 ; 2 uses
   %niter151.next.3 = add i64 %niter151, 4         ; 2 uses
@@ -714,8 +716,8 @@ bb.e:                                             ; preds = %bb.e, %.epil.prehea
   %i.eo = load ptr, ptr %i.en, align 8, !tbaa !52
   %i.ep = getelementptr inbounds nuw [4 x i8], ptr %i.eo, i64 %i.dl
   %i.eq = load i32, ptr %i.ep, align 4, !tbaa !41
-  %i.er = sub nuw nsw i64 31, %indvars.iv109.epil
-  %i.es = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.er
+  %i.er = sub nsw i64 31, %indvars.iv109.epil
+  %i.es = getelementptr inbounds [4 x i8], ptr %i.a, i64 %i.er
   store i32 %i.eq, ptr %i.es, align 4, !tbaa !41
   %indvars.iv.next110.epil = add nuw nsw i64 %indvars.iv109.epil, 1
   %epil.iter147.next = add i64 %epil.iter147, 1   ; 2 uses
@@ -800,8 +802,8 @@ bb.g:                                             ; preds = %bb.f
   %i.gr = getelementptr inbounds nuw [4 x i8], ptr %i.gq, i64 %i.dl
   %i.gs = getelementptr inbounds nuw i8, ptr %i.gr, i64 4
   %i.gt = load i32, ptr %i.gs, align 4, !tbaa !41
-  %i.gu = sub nuw nsw i64 27, %indvars.iv109.1
-  %i.gv = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.gu
+  %i.gu = sub nsw i64 27, %indvars.iv109.1
+  %i.gv = getelementptr inbounds [4 x i8], ptr %i.a, i64 %i.gu
   store i32 %i.gt, ptr %i.gv, align 4, !tbaa !41
   %i.gw = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %indvars.iv109.1
   %i.gx = getelementptr inbounds nuw i8, ptr %i.gw, i64 8
@@ -809,8 +811,8 @@ bb.g:                                             ; preds = %bb.f
   %i.gz = getelementptr inbounds nuw [4 x i8], ptr %i.gy, i64 %i.dl
   %i.ha = getelementptr inbounds nuw i8, ptr %i.gz, i64 4
   %i.hb = load i32, ptr %i.ha, align 4, !tbaa !41
-  %i.hc = sub nuw nsw i64 26, %indvars.iv109.1
-  %i.hd = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.hc
+  %i.hc = sub nsw i64 26, %indvars.iv109.1
+  %i.hd = getelementptr inbounds [4 x i8], ptr %i.a, i64 %i.hc
   store i32 %i.hb, ptr %i.hd, align 8, !tbaa !41
   %i.he = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %indvars.iv109.1
   %i.hf = getelementptr inbounds nuw i8, ptr %i.he, i64 16
@@ -818,8 +820,8 @@ bb.g:                                             ; preds = %bb.f
   %i.hh = getelementptr inbounds nuw [4 x i8], ptr %i.hg, i64 %i.dl
   %i.hi = getelementptr inbounds nuw i8, ptr %i.hh, i64 4
   %i.hj = load i32, ptr %i.hi, align 4, !tbaa !41
-  %i.hk = sub nuw nsw i64 25, %indvars.iv109.1
-  %i.hl = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.hk
+  %i.hk = sub nsw i64 25, %indvars.iv109.1
+  %i.hl = getelementptr inbounds [4 x i8], ptr %i.a, i64 %i.hk
   store i32 %i.hj, ptr %i.hl, align 4, !tbaa !41
   %i.hm = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %indvars.iv109.1
   %i.hn = getelementptr inbounds nuw i8, ptr %i.hm, i64 24
@@ -827,8 +829,8 @@ bb.g:                                             ; preds = %bb.f
   %i.hp = getelementptr inbounds nuw [4 x i8], ptr %i.ho, i64 %i.dl
   %i.hq = getelementptr inbounds nuw i8, ptr %i.hp, i64 4
   %i.hr = load i32, ptr %i.hq, align 4, !tbaa !41
-  %i.hs = sub nuw nsw i64 24, %indvars.iv109.1
-  %i.ht = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.hs
+  %i.hs = sub nsw i64 24, %indvars.iv109.1
+  %i.ht = getelementptr inbounds [4 x i8], ptr %i.a, i64 %i.hs
   store i32 %i.hr, ptr %i.ht, align 16, !tbaa !41
   %indvars.iv.next110.1.3 = add nuw nsw i64 %indvars.iv109.1, 4 ; 2 uses
   %niter163.next.3 = add i64 %niter163, 4         ; 2 uses
@@ -851,8 +853,8 @@ bb.g:                                             ; preds = %bb.f
   %i.hw = getelementptr inbounds nuw [4 x i8], ptr %i.hv, i64 %i.dl
   %i.hx = getelementptr inbounds nuw i8, ptr %i.hw, i64 4
   %i.hy = load i32, ptr %i.hx, align 4, !tbaa !41
-  %i.hz = sub nuw nsw i64 27, %indvars.iv109.1.epil
-  %i.ia = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.hz
+  %i.hz = sub nsw i64 27, %indvars.iv109.1.epil
+  %i.ia = getelementptr inbounds [4 x i8], ptr %i.a, i64 %i.hz
   store i32 %i.hy, ptr %i.ia, align 4, !tbaa !41
   %indvars.iv.next110.1.epil = add nuw nsw i64 %indvars.iv109.1.epil, 1
   %epil.iter159.next = add i64 %epil.iter159, 1   ; 2 uses
@@ -870,8 +872,8 @@ bb.g:                                             ; preds = %bb.f
   %i.id = getelementptr inbounds nuw [4 x i8], ptr %i.ic, i64 %i.dl
   %i.ie = getelementptr inbounds nuw i8, ptr %i.id, i64 8
   %i.if = load i32, ptr %i.ie, align 4, !tbaa !41
-  %i.ig = sub nuw nsw i64 23, %indvars.iv109.2
-  %i.ih = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.ig
+  %i.ig = sub nsw i64 23, %indvars.iv109.2
+  %i.ih = getelementptr inbounds [4 x i8], ptr %i.a, i64 %i.ig
   store i32 %i.if, ptr %i.ih, align 4, !tbaa !41
   %i.ii = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %indvars.iv109.2
   %i.ij = getelementptr inbounds nuw i8, ptr %i.ii, i64 8
@@ -879,8 +881,8 @@ bb.g:                                             ; preds = %bb.f
   %i.il = getelementptr inbounds nuw [4 x i8], ptr %i.ik, i64 %i.dl
   %i.im = getelementptr inbounds nuw i8, ptr %i.il, i64 8
   %i.in = load i32, ptr %i.im, align 4, !tbaa !41
-  %i.io = sub nuw nsw i64 22, %indvars.iv109.2
-  %i.ip = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.io
+  %i.io = sub nsw i64 22, %indvars.iv109.2
+  %i.ip = getelementptr inbounds [4 x i8], ptr %i.a, i64 %i.io
   store i32 %i.in, ptr %i.ip, align 8, !tbaa !41
   %i.iq = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %indvars.iv109.2
   %i.ir = getelementptr inbounds nuw i8, ptr %i.iq, i64 16
@@ -888,8 +890,8 @@ bb.g:                                             ; preds = %bb.f
   %i.it = getelementptr inbounds nuw [4 x i8], ptr %i.is, i64 %i.dl
   %i.iu = getelementptr inbounds nuw i8, ptr %i.it, i64 8
   %i.iv = load i32, ptr %i.iu, align 4, !tbaa !41
-  %i.iw = sub nuw nsw i64 21, %indvars.iv109.2
-  %i.ix = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.iw
+  %i.iw = sub nsw i64 21, %indvars.iv109.2
+  %i.ix = getelementptr inbounds [4 x i8], ptr %i.a, i64 %i.iw
   store i32 %i.iv, ptr %i.ix, align 4, !tbaa !41
   %i.iy = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %indvars.iv109.2
   %i.iz = getelementptr inbounds nuw i8, ptr %i.iy, i64 24
@@ -897,8 +899,8 @@ bb.g:                                             ; preds = %bb.f
   %i.jb = getelementptr inbounds nuw [4 x i8], ptr %i.ja, i64 %i.dl
   %i.jc = getelementptr inbounds nuw i8, ptr %i.jb, i64 8
   %i.jd = load i32, ptr %i.jc, align 4, !tbaa !41
-  %i.je = sub nuw nsw i64 20, %indvars.iv109.2
-  %i.jf = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.je
+  %i.je = sub nsw i64 20, %indvars.iv109.2
+  %i.jf = getelementptr inbounds [4 x i8], ptr %i.a, i64 %i.je
   store i32 %i.jd, ptr %i.jf, align 16, !tbaa !41
   %indvars.iv.next110.2.3 = add nuw nsw i64 %indvars.iv109.2, 4 ; 2 uses
   %niter172.next.3 = add i64 %niter172, 4         ; 2 uses
@@ -921,8 +923,8 @@ bb.g:                                             ; preds = %bb.f
   %i.ji = getelementptr inbounds nuw [4 x i8], ptr %i.jh, i64 %i.dl
   %i.jj = getelementptr inbounds nuw i8, ptr %i.ji, i64 8
   %i.jk = load i32, ptr %i.jj, align 4, !tbaa !41
-  %i.jl = sub nuw nsw i64 23, %indvars.iv109.2.epil
-  %i.jm = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.jl
+  %i.jl = sub nsw i64 23, %indvars.iv109.2.epil
+  %i.jm = getelementptr inbounds [4 x i8], ptr %i.a, i64 %i.jl
   store i32 %i.jk, ptr %i.jm, align 4, !tbaa !41
   %indvars.iv.next110.2.epil = add nuw nsw i64 %indvars.iv109.2.epil, 1
   %epil.iter168.next = add i64 %epil.iter168, 1   ; 2 uses
@@ -940,8 +942,8 @@ bb.g:                                             ; preds = %bb.f
   %i.jp = getelementptr inbounds nuw [4 x i8], ptr %i.jo, i64 %i.dl
   %i.jq = getelementptr inbounds nuw i8, ptr %i.jp, i64 12
   %i.jr = load i32, ptr %i.jq, align 4, !tbaa !41
-  %i.js = sub nuw nsw i64 19, %indvars.iv109.3
-  %i.jt = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.js
+  %i.js = sub nsw i64 19, %indvars.iv109.3
+  %i.jt = getelementptr inbounds [4 x i8], ptr %i.a, i64 %i.js
   store i32 %i.jr, ptr %i.jt, align 4, !tbaa !41
   %i.ju = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %indvars.iv109.3
   %i.jv = getelementptr inbounds nuw i8, ptr %i.ju, i64 8
@@ -949,8 +951,8 @@ bb.g:                                             ; preds = %bb.f
   %i.jx = getelementptr inbounds nuw [4 x i8], ptr %i.jw, i64 %i.dl
   %i.jy = getelementptr inbounds nuw i8, ptr %i.jx, i64 12
   %i.jz = load i32, ptr %i.jy, align 4, !tbaa !41
-  %i.ka = sub nuw nsw i64 18, %indvars.iv109.3
-  %i.kb = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.ka
+  %i.ka = sub nsw i64 18, %indvars.iv109.3
+  %i.kb = getelementptr inbounds [4 x i8], ptr %i.a, i64 %i.ka
   store i32 %i.jz, ptr %i.kb, align 8, !tbaa !41
   %i.kc = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %indvars.iv109.3
   %i.kd = getelementptr inbounds nuw i8, ptr %i.kc, i64 16
@@ -958,8 +960,8 @@ bb.g:                                             ; preds = %bb.f
   %i.kf = getelementptr inbounds nuw [4 x i8], ptr %i.ke, i64 %i.dl
   %i.kg = getelementptr inbounds nuw i8, ptr %i.kf, i64 12
   %i.kh = load i32, ptr %i.kg, align 4, !tbaa !41
-  %i.ki = sub nuw nsw i64 17, %indvars.iv109.3
-  %i.kj = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.ki
+  %i.ki = sub nsw i64 17, %indvars.iv109.3
+  %i.kj = getelementptr inbounds [4 x i8], ptr %i.a, i64 %i.ki
   store i32 %i.kh, ptr %i.kj, align 4, !tbaa !41
   %i.kk = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %indvars.iv109.3
   %i.kl = getelementptr inbounds nuw i8, ptr %i.kk, i64 24
@@ -967,8 +969,8 @@ bb.g:                                             ; preds = %bb.f
   %i.kn = getelementptr inbounds nuw [4 x i8], ptr %i.km, i64 %i.dl
   %i.ko = getelementptr inbounds nuw i8, ptr %i.kn, i64 12
   %i.kp = load i32, ptr %i.ko, align 4, !tbaa !41
-  %i.kq = sub nuw nsw i64 16, %indvars.iv109.3
-  %i.kr = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.kq
+  %i.kq = sub nsw i64 16, %indvars.iv109.3
+  %i.kr = getelementptr inbounds [4 x i8], ptr %i.a, i64 %i.kq
   store i32 %i.kp, ptr %i.kr, align 16, !tbaa !41
   %indvars.iv.next110.3.3 = add nuw nsw i64 %indvars.iv109.3, 4 ; 2 uses
   %niter178.next.3 = add i64 %niter178, 4         ; 2 uses
@@ -991,8 +993,8 @@ bb.g:                                             ; preds = %bb.f
   %i.ku = getelementptr inbounds nuw [4 x i8], ptr %i.kt, i64 %i.dl
   %i.kv = getelementptr inbounds nuw i8, ptr %i.ku, i64 12
   %i.kw = load i32, ptr %i.kv, align 4, !tbaa !41
-  %i.kx = sub nuw nsw i64 19, %indvars.iv109.3.epil
-  %i.ky = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.kx
+  %i.kx = sub nsw i64 19, %indvars.iv109.3.epil
+  %i.ky = getelementptr inbounds [4 x i8], ptr %i.a, i64 %i.kx
   store i32 %i.kw, ptr %i.ky, align 4, !tbaa !41
   %indvars.iv.next110.3.epil = add nuw nsw i64 %indvars.iv109.3.epil, 1
   %epil.iter174.next = add i64 %epil.iter174, 1   ; 2 uses
@@ -1010,8 +1012,8 @@ bb.g:                                             ; preds = %bb.f
   %i.lb = getelementptr inbounds nuw [4 x i8], ptr %i.la, i64 %i.dl
   %i.lc = getelementptr inbounds nuw i8, ptr %i.lb, i64 16
   %i.ld = load i32, ptr %i.lc, align 4, !tbaa !41
-  %i.le = sub nuw nsw i64 15, %indvars.iv109.4
-  %i.lf = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.le
+  %i.le = sub nsw i64 15, %indvars.iv109.4
+  %i.lf = getelementptr inbounds [4 x i8], ptr %i.a, i64 %i.le
   store i32 %i.ld, ptr %i.lf, align 4, !tbaa !41
   %i.lg = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %indvars.iv109.4
   %i.lh = getelementptr inbounds nuw i8, ptr %i.lg, i64 8
@@ -1019,8 +1021,8 @@ bb.g:                                             ; preds = %bb.f
   %i.lj = getelementptr inbounds nuw [4 x i8], ptr %i.li, i64 %i.dl
   %i.lk = getelementptr inbounds nuw i8, ptr %i.lj, i64 16
   %i.ll = load i32, ptr %i.lk, align 4, !tbaa !41
-  %i.lm = sub nuw nsw i64 14, %indvars.iv109.4
-  %i.ln = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.lm
+  %i.lm = sub nsw i64 14, %indvars.iv109.4
+  %i.ln = getelementptr inbounds [4 x i8], ptr %i.a, i64 %i.lm
   store i32 %i.ll, ptr %i.ln, align 8, !tbaa !41
   %i.lo = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %indvars.iv109.4
   %i.lp = getelementptr inbounds nuw i8, ptr %i.lo, i64 16
@@ -1028,8 +1030,8 @@ bb.g:                                             ; preds = %bb.f
   %i.lr = getelementptr inbounds nuw [4 x i8], ptr %i.lq, i64 %i.dl
   %i.ls = getelementptr inbounds nuw i8, ptr %i.lr, i64 16
   %i.lt = load i32, ptr %i.ls, align 4, !tbaa !41
-  %i.lu = sub nuw nsw i64 13, %indvars.iv109.4
-  %i.lv = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.lu
+  %i.lu = sub nsw i64 13, %indvars.iv109.4
+  %i.lv = getelementptr inbounds [4 x i8], ptr %i.a, i64 %i.lu
   store i32 %i.lt, ptr %i.lv, align 4, !tbaa !41
   %i.lw = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %indvars.iv109.4
   %i.lx = getelementptr inbounds nuw i8, ptr %i.lw, i64 24
@@ -1037,8 +1039,8 @@ bb.g:                                             ; preds = %bb.f
   %i.lz = getelementptr inbounds nuw [4 x i8], ptr %i.ly, i64 %i.dl
   %i.ma = getelementptr inbounds nuw i8, ptr %i.lz, i64 16
   %i.mb = load i32, ptr %i.ma, align 4, !tbaa !41
-  %i.mc = sub nuw nsw i64 12, %indvars.iv109.4
-  %i.md = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.mc
+  %i.mc = sub nsw i64 12, %indvars.iv109.4
+  %i.md = getelementptr inbounds [4 x i8], ptr %i.a, i64 %i.mc
   store i32 %i.mb, ptr %i.md, align 16, !tbaa !41
   %indvars.iv.next110.4.3 = add nuw nsw i64 %indvars.iv109.4, 4 ; 2 uses
   %niter184.next.3 = add i64 %niter184, 4         ; 2 uses
@@ -1061,8 +1063,8 @@ bb.g:                                             ; preds = %bb.f
   %i.mg = getelementptr inbounds nuw [4 x i8], ptr %i.mf, i64 %i.dl
   %i.mh = getelementptr inbounds nuw i8, ptr %i.mg, i64 16
   %i.mi = load i32, ptr %i.mh, align 4, !tbaa !41
-  %i.mj = sub nuw nsw i64 15, %indvars.iv109.4.epil
-  %i.mk = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.mj
+  %i.mj = sub nsw i64 15, %indvars.iv109.4.epil
+  %i.mk = getelementptr inbounds [4 x i8], ptr %i.a, i64 %i.mj
   store i32 %i.mi, ptr %i.mk, align 4, !tbaa !41
   %indvars.iv.next110.4.epil = add nuw nsw i64 %indvars.iv109.4.epil, 1
   %epil.iter180.next = add i64 %epil.iter180, 1   ; 2 uses
@@ -1080,8 +1082,8 @@ bb.g:                                             ; preds = %bb.f
   %i.mn = getelementptr inbounds nuw [4 x i8], ptr %i.mm, i64 %i.dl
   %i.mo = getelementptr inbounds nuw i8, ptr %i.mn, i64 20
   %i.mp = load i32, ptr %i.mo, align 4, !tbaa !41
-  %i.mq = sub nuw nsw i64 11, %indvars.iv109.5
-  %i.mr = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.mq
+  %i.mq = sub nsw i64 11, %indvars.iv109.5
+  %i.mr = getelementptr inbounds [4 x i8], ptr %i.a, i64 %i.mq
   store i32 %i.mp, ptr %i.mr, align 4, !tbaa !41
   %i.ms = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %indvars.iv109.5
   %i.mt = getelementptr inbounds nuw i8, ptr %i.ms, i64 8
@@ -1089,8 +1091,8 @@ bb.g:                                             ; preds = %bb.f
   %i.mv = getelementptr inbounds nuw [4 x i8], ptr %i.mu, i64 %i.dl
   %i.mw = getelementptr inbounds nuw i8, ptr %i.mv, i64 20
   %i.mx = load i32, ptr %i.mw, align 4, !tbaa !41
-  %i.my = sub nuw nsw i64 10, %indvars.iv109.5
-  %i.mz = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.my
+  %i.my = sub nsw i64 10, %indvars.iv109.5
+  %i.mz = getelementptr inbounds [4 x i8], ptr %i.a, i64 %i.my
   store i32 %i.mx, ptr %i.mz, align 8, !tbaa !41
   %i.na = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %indvars.iv109.5
   %i.nb = getelementptr inbounds nuw i8, ptr %i.na, i64 16
@@ -1098,8 +1100,8 @@ bb.g:                                             ; preds = %bb.f
   %i.nd = getelementptr inbounds nuw [4 x i8], ptr %i.nc, i64 %i.dl
   %i.ne = getelementptr inbounds nuw i8, ptr %i.nd, i64 20
   %i.nf = load i32, ptr %i.ne, align 4, !tbaa !41
-  %i.ng = sub nuw nsw i64 9, %indvars.iv109.5
-  %i.nh = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.ng
+  %i.ng = sub nsw i64 9, %indvars.iv109.5
+  %i.nh = getelementptr inbounds [4 x i8], ptr %i.a, i64 %i.ng
   store i32 %i.nf, ptr %i.nh, align 4, !tbaa !41
   %i.ni = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %indvars.iv109.5
   %i.nj = getelementptr inbounds nuw i8, ptr %i.ni, i64 24
@@ -1107,8 +1109,8 @@ bb.g:                                             ; preds = %bb.f
   %i.nl = getelementptr inbounds nuw [4 x i8], ptr %i.nk, i64 %i.dl
   %i.nm = getelementptr inbounds nuw i8, ptr %i.nl, i64 20
   %i.nn = load i32, ptr %i.nm, align 4, !tbaa !41
-  %i.no = sub nuw nsw i64 8, %indvars.iv109.5
-  %i.np = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.no
+  %i.no = sub nsw i64 8, %indvars.iv109.5
+  %i.np = getelementptr inbounds [4 x i8], ptr %i.a, i64 %i.no
   store i32 %i.nn, ptr %i.np, align 16, !tbaa !41
   %indvars.iv.next110.5.3 = add nuw nsw i64 %indvars.iv109.5, 4 ; 2 uses
   %niter190.next.3 = add i64 %niter190, 4         ; 2 uses
@@ -1131,8 +1133,8 @@ bb.g:                                             ; preds = %bb.f
   %i.ns = getelementptr inbounds nuw [4 x i8], ptr %i.nr, i64 %i.dl
   %i.nt = getelementptr inbounds nuw i8, ptr %i.ns, i64 20
   %i.nu = load i32, ptr %i.nt, align 4, !tbaa !41
-  %i.nv = sub nuw nsw i64 11, %indvars.iv109.5.epil
-  %i.nw = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.nv
+  %i.nv = sub nsw i64 11, %indvars.iv109.5.epil
+  %i.nw = getelementptr inbounds [4 x i8], ptr %i.a, i64 %i.nv
   store i32 %i.nu, ptr %i.nw, align 4, !tbaa !41
   %indvars.iv.next110.5.epil = add nuw nsw i64 %indvars.iv109.5.epil, 1
   %epil.iter186.next = add i64 %epil.iter186, 1   ; 2 uses
@@ -1150,8 +1152,8 @@ bb.g:                                             ; preds = %bb.f
   %i.nz = getelementptr inbounds nuw [4 x i8], ptr %i.ny, i64 %i.dl
   %i.oa = getelementptr inbounds nuw i8, ptr %i.nz, i64 24
   %i.ob = load i32, ptr %i.oa, align 4, !tbaa !41
-  %i.oc = sub nuw nsw i64 7, %indvars.iv109.6
-  %i.od = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.oc
+  %i.oc = sub nsw i64 7, %indvars.iv109.6
+  %i.od = getelementptr inbounds [4 x i8], ptr %i.a, i64 %i.oc
   store i32 %i.ob, ptr %i.od, align 4, !tbaa !41
   %i.oe = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %indvars.iv109.6
   %i.of = getelementptr inbounds nuw i8, ptr %i.oe, i64 8
@@ -1159,8 +1161,8 @@ bb.g:                                             ; preds = %bb.f
   %i.oh = getelementptr inbounds nuw [4 x i8], ptr %i.og, i64 %i.dl
   %i.oi = getelementptr inbounds nuw i8, ptr %i.oh, i64 24
   %i.oj = load i32, ptr %i.oi, align 4, !tbaa !41
-  %i.ok = sub nuw nsw i64 6, %indvars.iv109.6
-  %i.ol = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.ok
+  %i.ok = sub nsw i64 6, %indvars.iv109.6
+  %i.ol = getelementptr inbounds [4 x i8], ptr %i.a, i64 %i.ok
   store i32 %i.oj, ptr %i.ol, align 8, !tbaa !41
   %i.om = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %indvars.iv109.6
   %i.on = getelementptr inbounds nuw i8, ptr %i.om, i64 16
@@ -1168,8 +1170,8 @@ bb.g:                                             ; preds = %bb.f
   %i.op = getelementptr inbounds nuw [4 x i8], ptr %i.oo, i64 %i.dl
   %i.oq = getelementptr inbounds nuw i8, ptr %i.op, i64 24
   %i.or = load i32, ptr %i.oq, align 4, !tbaa !41
-  %i.os = sub nuw nsw i64 5, %indvars.iv109.6
-  %i.ot = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.os
+  %i.os = sub nsw i64 5, %indvars.iv109.6
+  %i.ot = getelementptr inbounds [4 x i8], ptr %i.a, i64 %i.os
   store i32 %i.or, ptr %i.ot, align 4, !tbaa !41
   %i.ou = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %indvars.iv109.6
   %i.ov = getelementptr inbounds nuw i8, ptr %i.ou, i64 24
@@ -1177,8 +1179,8 @@ bb.g:                                             ; preds = %bb.f
   %i.ox = getelementptr inbounds nuw [4 x i8], ptr %i.ow, i64 %i.dl
   %i.oy = getelementptr inbounds nuw i8, ptr %i.ox, i64 24
   %i.oz = load i32, ptr %i.oy, align 4, !tbaa !41
-  %i.pa = sub nuw nsw i64 4, %indvars.iv109.6
-  %i.pb = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.pa
+  %i.pa = sub nsw i64 4, %indvars.iv109.6
+  %i.pb = getelementptr inbounds [4 x i8], ptr %i.a, i64 %i.pa
   store i32 %i.oz, ptr %i.pb, align 16, !tbaa !41
   %indvars.iv.next110.6.3 = add nuw nsw i64 %indvars.iv109.6, 4 ; 2 uses
   %niter196.next.3 = add i64 %niter196, 4         ; 2 uses
@@ -1201,8 +1203,8 @@ bb.g:                                             ; preds = %bb.f
   %i.pe = getelementptr inbounds nuw [4 x i8], ptr %i.pd, i64 %i.dl
   %i.pf = getelementptr inbounds nuw i8, ptr %i.pe, i64 24
   %i.pg = load i32, ptr %i.pf, align 4, !tbaa !41
-  %i.ph = sub nuw nsw i64 7, %indvars.iv109.6.epil
-  %i.pi = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.ph
+  %i.ph = sub nsw i64 7, %indvars.iv109.6.epil
+  %i.pi = getelementptr inbounds [4 x i8], ptr %i.a, i64 %i.ph
   store i32 %i.pg, ptr %i.pi, align 4, !tbaa !41
   %indvars.iv.next110.6.epil = add nuw nsw i64 %indvars.iv109.6.epil, 1
   %epil.iter192.next = add i64 %epil.iter192, 1   ; 2 uses
@@ -1213,15 +1215,15 @@ bb.g:                                             ; preds = %bb.f
   br i1 %i.di, label %._crit_edge79.us.6.epil.preheader, label %._crit_edge79.us.6
 
 ._crit_edge79.us.6:                               ; preds = %._crit_edge79.us.6.preheader, %._crit_edge79.us.6
-  %indvars.iv109.7 = phi i64 [ %indvars.iv.next110.7.3, %._crit_edge79.us.6 ], [ 0, %._crit_edge79.us.6.preheader ] ; 8 uses
+  %indvars.iv109.7 = phi i64 [ %indvars.iv.next110.7.3, %._crit_edge79.us.6 ], [ 0, %._crit_edge79.us.6.preheader ] ; 9 uses
   %niter202 = phi i64 [ %niter202.next.3, %._crit_edge79.us.6 ], [ 0, %._crit_edge79.us.6.preheader ]
   %i.pj = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %indvars.iv109.7
   %i.pk = load ptr, ptr %i.pj, align 16, !tbaa !52
   %i.pl = getelementptr inbounds nuw [4 x i8], ptr %i.pk, i64 %i.dl
   %i.pm = getelementptr inbounds nuw i8, ptr %i.pl, i64 28
   %i.pn = load i32, ptr %i.pm, align 4, !tbaa !41
-  %i.po = sub nuw nsw i64 3, %indvars.iv109.7
-  %i.pp = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.po
+  %i.po = sub nsw i64 3, %indvars.iv109.7
+  %i.pp = getelementptr inbounds [4 x i8], ptr %i.a, i64 %i.po
   store i32 %i.pn, ptr %i.pp, align 4, !tbaa !41
   %i.pq = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %indvars.iv109.7
   %i.pr = getelementptr inbounds nuw i8, ptr %i.pq, i64 8
@@ -1229,8 +1231,8 @@ bb.g:                                             ; preds = %bb.f
   %i.pt = getelementptr inbounds nuw [4 x i8], ptr %i.ps, i64 %i.dl
   %i.pu = getelementptr inbounds nuw i8, ptr %i.pt, i64 28
   %i.pv = load i32, ptr %i.pu, align 4, !tbaa !41
-  %i.pw = sub nuw nsw i64 2, %indvars.iv109.7
-  %i.px = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.pw
+  %i.pw = sub nsw i64 2, %indvars.iv109.7
+  %i.px = getelementptr inbounds [4 x i8], ptr %i.a, i64 %i.pw
   store i32 %i.pv, ptr %i.px, align 8, !tbaa !41
   %i.py = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %indvars.iv109.7
   %i.pz = getelementptr inbounds nuw i8, ptr %i.py, i64 16
@@ -1238,8 +1240,8 @@ bb.g:                                             ; preds = %bb.f
   %i.qb = getelementptr inbounds nuw [4 x i8], ptr %i.qa, i64 %i.dl
   %i.qc = getelementptr inbounds nuw i8, ptr %i.qb, i64 28
   %i.qd = load i32, ptr %i.qc, align 4, !tbaa !41
-  %i.qe = sub nuw nsw i64 1, %indvars.iv109.7
-  %i.qf = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.qe
+  %i.qe = sub nsw i64 1, %indvars.iv109.7
+  %i.qf = getelementptr inbounds [4 x i8], ptr %i.a, i64 %i.qe
   store i32 %i.qd, ptr %i.qf, align 4, !tbaa !41
   %i.qg = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %indvars.iv109.7
   %i.qh = getelementptr inbounds nuw i8, ptr %i.qg, i64 24
@@ -1247,13 +1249,15 @@ bb.g:                                             ; preds = %bb.f
   %i.qj = getelementptr inbounds nuw [4 x i8], ptr %i.qi, i64 %i.dl
   %i.qk = getelementptr inbounds nuw i8, ptr %i.qj, i64 28
   %i.ql = load i32, ptr %i.qk, align 4, !tbaa !41
+  %4 = sub nsw i64 0, %indvars.iv109.7
+  %5 = getelementptr inbounds [4 x i8], ptr %i.a, i64 %4
+  store i32 %i.ql, ptr %5, align 16, !tbaa !41
   %indvars.iv.next110.7.3 = add nuw nsw i64 %indvars.iv109.7, 4 ; 2 uses
   %niter202.next.3 = add i64 %niter202, 4         ; 2 uses
   %niter202.ncmp.3 = icmp eq i64 %niter202.next.3, %unroll_iter201
   br i1 %niter202.ncmp.3, label %._crit_edge79.us.7.unr-lcssa, label %._crit_edge79.us.6, !llvm.loop !76
 
 ._crit_edge79.us.7.unr-lcssa:                     ; preds = %._crit_edge79.us.6
-  store i32 %i.ql, ptr %i.a, align 16, !tbaa !41
   br i1 %lcmp.mod199.not, label %._crit_edge79.us.7, label %._crit_edge79.us.6.epil.preheader
 
 ._crit_edge79.us.6.epil.preheader:                ; preds = %._crit_edge79.us.7.unr-lcssa, %._crit_edge79.us.6.preheader
@@ -1269,8 +1273,8 @@ bb.g:                                             ; preds = %bb.f
   %i.qo = getelementptr inbounds nuw [4 x i8], ptr %i.qn, i64 %i.dl
   %i.qp = getelementptr inbounds nuw i8, ptr %i.qo, i64 28
   %i.qq = load i32, ptr %i.qp, align 4, !tbaa !41
-  %i.qr = sub nuw nsw i64 3, %indvars.iv109.7.epil
-  %i.qs = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.qr
+  %i.qr = sub nsw i64 3, %indvars.iv109.7.epil
+  %i.qs = getelementptr inbounds [4 x i8], ptr %i.a, i64 %i.qr
   store i32 %i.qq, ptr %i.qs, align 4, !tbaa !41
   %indvars.iv.next110.7.epil = add nuw nsw i64 %indvars.iv109.7.epil, 1
   %epil.iter198.next = add i64 %epil.iter198, 1   ; 2 uses

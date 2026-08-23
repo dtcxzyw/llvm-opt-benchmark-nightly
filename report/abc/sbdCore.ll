@@ -205,16 +205,16 @@ bb.d:                                             ; preds = %.lr.ph, %bb.d
   %i.ay = sext i32 %i.ax to i64                   ; 3 uses
   %i.az = getelementptr inbounds [8 x i8], ptr %.val220.val, i64 %i.ay
   %i.ba = load i64, ptr %i.az, align 8, !tbaa !100
-  %i.bb = sub nuw nsw i64 63, %indvars.iv         ; 3 uses
-  %i.bc = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %i.bb
+  %i.bb = sub nsw i64 63, %indvars.iv             ; 3 uses
+  %i.bc = getelementptr inbounds [8 x i8], ptr %i.a, i64 %i.bb
   store i64 %i.ba, ptr %i.bc, align 8, !tbaa !100
   %i.bd = getelementptr inbounds [8 x i8], ptr %.val224.val, i64 %i.ay
   %i.be = load i64, ptr %i.bd, align 8, !tbaa !100
-  %i.bf = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %i.bb
+  %i.bf = getelementptr inbounds [8 x i8], ptr %i.b, i64 %i.bb
   store i64 %i.be, ptr %i.bf, align 8, !tbaa !100
   %i.bg = getelementptr inbounds [8 x i8], ptr %.val228.val, i64 %i.ay
   %i.bh = load i64, ptr %i.bg, align 8, !tbaa !100
-  %i.bi = getelementptr inbounds nuw [8 x i8], ptr %i.ar, i64 %i.bb
+  %i.bi = getelementptr inbounds [8 x i8], ptr %i.ar, i64 %i.bb
   store i64 %i.bh, ptr %i.bi, align 8, !tbaa !100
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count

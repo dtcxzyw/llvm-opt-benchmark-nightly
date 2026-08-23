@@ -205,14 +205,16 @@ begin_hunk_0_@diag_downleft_32x32_c:vector.ph
   br label %iter.check
 
 iter.check:                                       ; preds = %vector.ph, %memset_bpc.exit
-  %indvars.iv30 = phi i64 [ 0, %vector.ph ], [ %indvars.iv.next31, %memset_bpc.exit ] ; 7 uses
+  %indvars.iv30 = phi i64 [ 0, %vector.ph ], [ %indvars.iv.next31, %memset_bpc.exit ] ; 8 uses
   %i.ft = mul nuw nsw i64 %i.fg, %indvars.iv30
   %i.fu = getelementptr inbounds nuw [2 x i8], ptr %0, i64 %i.ft ; 2 uses
   %i.fv = getelementptr inbounds nuw [2 x i8], ptr %i.a, i64 %indvars.iv30
   %i.fw = shl nuw nsw i64 %indvars.iv30, 1
   %i.fx = sub nuw nsw i64 62, %i.fw
   call void @llvm.memcpy.p0.p0.i64(ptr align 2 %i.fu, ptr nonnull align 2 %i.fv, i64 %i.fx, i1 false)
-  %i.fy = getelementptr inbounds nuw i8, ptr %i.fu, i64 62 ; 3 uses
+  %i.fy = getelementptr inbounds nuw i8, ptr %i.fu, i64 62
+  %4 = sub nsw i64 0, %indvars.iv30
+  %5 = getelementptr inbounds [2 x i8], ptr %i.fy, i64 %4 ; 3 uses
   %i.fz = load i16, ptr %i.fk, align 2, !tbaa !12 ; 3 uses
   %indvars.iv.next31 = add nuw nsw i64 %indvars.iv30, 1 ; 7 uses
   %min.iters.check = icmp samesign ult i64 %indvars.iv30, 3
@@ -231,7 +233,7 @@ vector.ph39:                                      ; preds = %vector.main.loop.it
 
 vector.body40:                                    ; preds = %vector.body40, %vector.ph39
   %index41 = phi i64 [ 0, %vector.ph39 ], [ %index.next42, %vector.body40 ] ; 2 uses
-  %i.gb = getelementptr inbounds nuw [2 x i8], ptr %i.fy, i64 %index41 ; 2 uses
+  %i.gb = getelementptr inbounds nuw [2 x i8], ptr %5, i64 %index41 ; 2 uses
   %i.gc = getelementptr inbounds nuw i8, ptr %i.gb, i64 16
   store <8 x i16> %broadcast.splat, ptr %i.gb, align 2, !tbaa !12
   store <8 x i16> %broadcast.splat, ptr %i.gc, align 2, !tbaa !12
@@ -256,7 +258,7 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index47 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next48, %vec.epilog.vector.body ] ; 2 uses
-  %i.ge = getelementptr inbounds nuw [2 x i8], ptr %i.fy, i64 %index47
+  %i.ge = getelementptr inbounds nuw [2 x i8], ptr %5, i64 %index47
   store <4 x i16> %broadcast.splat46, ptr %i.ge, align 2, !tbaa !12
   %index.next48 = add nuw i64 %index47, 4         ; 2 uses
   %i.gf = icmp eq i64 %index.next48, %n.vec44
@@ -272,7 +274,7 @@ vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vec.ep
 
 vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.ph.preheader, %vec.epilog.scalar.ph
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %vec.epilog.scalar.ph ], [ %indvars.iv.i.ph, %vec.epilog.scalar.ph.preheader ] ; 3 uses
-  %i.gg = getelementptr inbounds nuw [2 x i8], ptr %i.fy, i64 %indvars.iv.i
+  %i.gg = getelementptr inbounds nuw [2 x i8], ptr %5, i64 %indvars.iv.i
   store i16 %i.fz, ptr %i.gg, align 2, !tbaa !12
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1
   %exitcond.not.i = icmp eq i64 %indvars.iv.i, %indvars.iv30
@@ -675,14 +677,16 @@ begin_hunk_1_@vert_left_32x32_c:vector.ph
   br label %bb.a
 
 bb.a:                                             ; preds = %vector.ph, %memset_bpc.exit49
-  %indvars.iv53 = phi i64 [ 0, %vector.ph ], [ %indvars.iv.next54, %memset_bpc.exit49 ] ; 8 uses
+  %indvars.iv53 = phi i64 [ 0, %vector.ph ], [ %indvars.iv.next54, %memset_bpc.exit49 ] ; 9 uses
   %i.ga = shl nuw nsw i64 %indvars.iv53, 1        ; 3 uses
   %i.gb = mul nuw nsw i64 %i.fi, %i.ga
   %i.gc = getelementptr inbounds nuw [2 x i8], ptr %0, i64 %i.gb ; 2 uses
   %i.gd = getelementptr inbounds nuw [2 x i8], ptr %i.a, i64 %indvars.iv53
   %i.ge = sub nuw nsw i64 62, %i.ga               ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr align 2 %i.gc, ptr nonnull align 2 %i.gd, i64 %i.ge, i1 false)
-  %i.gf = getelementptr i8, ptr %i.gc, i64 62     ; 2 uses
+  %4 = sub nsw i64 0, %indvars.iv53               ; 2 uses
+  %5 = getelementptr [2 x i8], ptr %i.gc, i64 %4
+  %i.gf = getelementptr i8, ptr %5, i64 62        ; 2 uses
   %i.gg = load i16, ptr %i.fm, align 2, !tbaa !12 ; 2 uses
   %indvars.iv.next54 = add nuw nsw i64 %indvars.iv53, 1 ; 6 uses
   %min.iters.check65 = icmp samesign ult i64 %indvars.iv53, 7
@@ -724,7 +728,8 @@ memset_bpc.exit:                                  ; preds = %scalar.ph64, %middl
   %i.gm = getelementptr inbounds nuw [2 x i8], ptr %0, i64 %i.gl ; 2 uses
   %i.gn = getelementptr inbounds nuw [2 x i8], ptr %i.b, i64 %indvars.iv53
   call void @llvm.memcpy.p0.p0.i64(ptr align 2 %i.gm, ptr nonnull align 2 %i.gn, i64 %i.ge, i1 false)
-  %i.go = getelementptr i8, ptr %i.gm, i64 62     ; 2 uses
+  %6 = getelementptr [2 x i8], ptr %i.gm, i64 %4
+  %i.go = getelementptr i8, ptr %6, i64 62        ; 2 uses
   %i.gp = load i16, ptr %i.fm, align 2, !tbaa !12 ; 2 uses
   %min.iters.check = icmp samesign ult i64 %indvars.iv53, 7
   br i1 %min.iters.check, label %scalar.ph58.preheader, label %vector.ph59

@@ -202,7 +202,7 @@ bb.q:                                             ; preds = %bb.p
   br label %bb.r
 
 bb.r:                                             ; preds = %._crit_edge501.i, %bb.q
-  %indvars.iv635.i = phi i32 [ -1, %._crit_edge501.i ], [ 0, %bb.q ]
+  %indvars.iv635.i = phi i32 [ %indvars.iv.next636.i, %._crit_edge501.i ], [ 0, %bb.q ] ; 2 uses
   %indvars.iv625.i = phi i32 [ %indvars.iv.next626.i, %._crit_edge501.i ], [ 1, %bb.q ] ; 2 uses
   %.sroa.23.0.i = phi ptr [ %.sroa.23.1.lcssa.i, %._crit_edge501.i ], [ null, %bb.q ] ; 5 uses
   %.sroa.13.0.i = phi ptr [ %.sroa.13.1.lcssa.i, %._crit_edge501.i ], [ null, %bb.q ] ; 2 uses
@@ -241,6 +241,7 @@ _ZNSt6vectorIiSaIiEE5clearEv.exit.preheader.i:    ; preds = %.preheader282.i
   %i.cc = add nsw i32 %.lcssa327.i, %.1111.i
   %i.cd = add nuw nsw i32 %.0130.i, 1
   %indvars.iv.next626.i = add nuw i32 %indvars.iv625.i, 1
+  %indvars.iv.next636.i = add nsw i32 %indvars.iv635.i, -1
   br label %bb.r, !llvm.loop !211
 
 bb.u:                                             ; preds = %bb.p
@@ -643,7 +644,7 @@ bb.bk:                                            ; preds = %bb.bj, %bb.bi
 
 .preheader.lr.ph.split.us.i:                      ; preds = %.preheader.lr.ph.i
   %smax.i = call i32 @llvm.smax.i32(i32 %i.kk, i32 %indvars.iv625.i)
-  %i.kq = add nsw i32 %smax.i, %indvars.iv635.i
+  %i.kq = add i32 %smax.i, %indvars.iv635.i
   %i.kr = mul i32 %i.kn, %i.kq
   %i.ks = add i32 %i.kr, %.1111.i
   br label %.loopexit289.i

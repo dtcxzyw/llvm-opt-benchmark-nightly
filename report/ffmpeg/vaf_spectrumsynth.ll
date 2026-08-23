@@ -205,7 +205,7 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 128
   %i.g = load float, ptr %i.f, align 8, !tbaa !82 ; 6 uses
   %i.h = getelementptr inbounds nuw i8, ptr %i.b, i64 92
-  %i.i = load i32, ptr %i.h, align 4, !tbaa !67   ; 11 uses
+  %i.i = load i32, ptr %i.h, align 4, !tbaa !67   ; 10 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.b, i64 88 ; 4 uses
   %i.k = load i32, ptr %i.j, align 8, !tbaa !68   ; 4 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.b, i64 12 ; 5 uses
@@ -229,16 +229,18 @@ bb.a:
 
 bb.b:                                             ; preds = %._crit_edge.i, %.lr.ph75.i
   %indvars.iv126.i = phi i64 [ 0, %.lr.ph75.i ], [ %indvars.iv.next127.i, %._crit_edge.i ] ; 8 uses
-  %indvars.iv102.i = phi i32 [ 0, %.lr.ph75.i ], [ -1, %._crit_edge.i ] ; 2 uses
-  %indvars.iv86.i = phi i32 [ -1, %.lr.ph75.i ], [ %indvars.iv.next87.i, %._crit_edge.i ] ; 5 uses
+  %indvars.iv102.i = phi i32 [ 0, %.lr.ph75.i ], [ %indvars.iv.next103.i, %._crit_edge.i ] ; 3 uses
+  %indvars.iv86.i = phi i32 [ -1, %.lr.ph75.i ], [ %indvars.iv.next87.i, %._crit_edge.i ] ; 3 uses
   %.val.i = load ptr, ptr %i.o, align 8, !tbaa !47
   %.val46.i = load ptr, ptr %i.a, align 8, !tbaa !9 ; 18 uses
   %.val.val.i = load ptr, ptr %.val.i, align 8, !tbaa !43 ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %.val46.i, i64 12
-  %i.z = load i32, ptr %i.y, align 4, !tbaa !28   ; 7 uses
+  %i.z = load i32, ptr %i.y, align 4, !tbaa !28   ; 5 uses
   %i.aa = trunc nuw nsw i64 %indvars.iv126.i to i32
-  %i.ab = sub nsw i32 %i.z, %i.aa
-  %i.ac = mul nsw i32 %i.ab, %i.i                 ; 2 uses
+  %i.ab = sub nsw i32 %i.z, %i.aa                 ; 2 uses
+  %2 = mul nsw i32 %i.ab, %i.i                    ; 2 uses
+  %3 = add nsw i32 %i.ab, -1
+  %i.ac = mul nsw i32 %3, %i.i                    ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %.val46.i, i64 32
   %i.ae = load i32, ptr %i.ad, align 8, !tbaa !66
   switch i32 %i.ae, label %read_fft_data.exit.i [
@@ -283,23 +285,18 @@ bb.d:                                             ; preds = %bb.c, %bb.c
   %i.aw = load ptr, ptr %i.av, align 8, !tbaa !71
   %i.ax = add i32 %i.z, %indvars.iv102.i
   %i.ay = mul i32 %i.ax, %i.i
-  %i.az = add i32 %i.ay, -1                       ; 2 uses
-  %i.ba = sext i32 %i.az to i64                   ; 2 uses
+  %i.az = add i32 %i.ay, -1
+  %4 = sext i32 %i.az to i64
+  %i.ba = sext i32 %i.ac to i64
   %i.bb = sext i32 %i.as to i64
   %i.bc = sext i32 %i.aq to i64
   %cond79.i = icmp eq i32 %i.ai, 0
   %invariant.gep139.i = getelementptr [2 x i8], ptr %i.ao, i64 %i.p
   %invariant.gep126 = getelementptr [2 x i8], ptr %i.al, i64 %i.p
-  %2 = add nsw i64 %i.ba, 1
-  %3 = add i32 %i.z, %indvars.iv86.i
-  %4 = mul i32 %i.i, %3
-  %5 = tail call i32 @llvm.smin.i32(i32 %4, i32 %i.az)
-  %smin157 = sext i32 %5 to i64
-  %6 = sub nsw i64 %2, %smin157
   br label %.lr.ph18.i.i
 
 .lr.ph18.i.i:                                     ; preds = %read16_fft_bin.exit63.i, %.lr.ph18.i.preheader.split.i
-  %indvars.iv111.i = phi i64 [ %i.ba, %.lr.ph18.i.preheader.split.i ], [ %indvars.iv.next112.i, %read16_fft_bin.exit63.i ] ; 3 uses
+  %indvars.iv111.i = phi i64 [ %4, %.lr.ph18.i.preheader.split.i ], [ %indvars.iv.next112.i, %read16_fft_bin.exit63.i ] ; 4 uses
   %indvars.iv109.i = phi i64 [ 0, %.lr.ph18.i.preheader.split.i ], [ %indvars.iv.next110.i, %read16_fft_bin.exit63.i ] ; 2 uses
   %i.bd = mul nsw i64 %indvars.iv111.i, %i.bb
   %gep127 = getelementptr i8, ptr %invariant.gep126, i64 %i.bd
@@ -350,9 +347,9 @@ read16_fft_bin.exit63.i:                          ; preds = %bb.f, %bb.e
   %i.cc = getelementptr inbounds nuw i8, ptr %i.bz, i64 4
   store float %i.cb, ptr %i.cc, align 4, !tbaa !128
   %indvars.iv.next112.i = add nsw i64 %indvars.iv111.i, -1
-  %indvars.iv.next110.i = add nuw nsw i64 %indvars.iv109.i, 1 ; 2 uses
-  %exitcond158.not = icmp eq i64 %indvars.iv.next110.i, %6
-  br i1 %exitcond158.not, label %read_fft_data.exit.i, label %.lr.ph18.i.i, !llvm.loop !129
+  %indvars.iv.next110.i = add nuw nsw i64 %indvars.iv109.i, 1
+  %.not55.not.i.i = icmp sgt i64 %indvars.iv111.i, %i.ba
+  br i1 %.not55.not.i.i, label %.lr.ph18.i.i, label %read_fft_data.exit.i, !llvm.loop !129
 
 bb.h:                                             ; preds = %bb.c, %bb.c, %bb.c
   br i1 %.not.not4.i.i, label %.lr.ph14.i.preheader.i, label %read_fft_data.exit.i
@@ -380,23 +377,18 @@ bb.h:                                             ; preds = %bb.c, %bb.c, %bb.c
   %i.cs = load ptr, ptr %i.cr, align 8, !tbaa !71
   %i.ct = add i32 %i.z, %indvars.iv102.i
   %i.cu = mul i32 %i.ct, %i.i
-  %i.cv = add i32 %i.cu, -1                       ; 2 uses
-  %i.cw = sext i32 %i.cv to i64                   ; 2 uses
+  %i.cv = add i32 %i.cu, -1
+  %5 = sext i32 %i.cv to i64
+  %i.cw = sext i32 %i.ac to i64
   %i.cx = sext i32 %i.co to i64
   %i.cy = sext i32 %i.cm to i64
   %cond78.i = icmp eq i32 %i.ce, 0
   %invariant.gep.i = getelementptr i8, ptr %i.ck, i64 %i.p
   %invariant.gep = getelementptr i8, ptr %i.ch, i64 %i.p
-  %7 = add nsw i64 %i.cw, 1
-  %8 = add i32 %i.z, %indvars.iv86.i
-  %9 = mul i32 %i.i, %8
-  %10 = tail call i32 @llvm.smin.i32(i32 %9, i32 %i.cv)
-  %smin = sext i32 %10 to i64
-  %11 = sub nsw i64 %7, %smin
   br label %.lr.ph14.i.i
 
 .lr.ph14.i.i:                                     ; preds = %read8_fft_bin.exit57.i, %.lr.ph14.i.preheader.split.i
-  %indvars.iv104.i = phi i64 [ %i.cw, %.lr.ph14.i.preheader.split.i ], [ %indvars.iv.next105.i, %read8_fft_bin.exit57.i ] ; 3 uses
+  %indvars.iv104.i = phi i64 [ %5, %.lr.ph14.i.preheader.split.i ], [ %indvars.iv.next105.i, %read8_fft_bin.exit57.i ] ; 4 uses
   %indvars.iv100.i = phi i64 [ 0, %.lr.ph14.i.preheader.split.i ], [ %indvars.iv.next101.i, %read8_fft_bin.exit57.i ] ; 2 uses
   %i.cz = mul nsw i64 %indvars.iv104.i, %i.cx
   %gep = getelementptr i8, ptr %invariant.gep, i64 %i.cz
@@ -447,9 +439,9 @@ read8_fft_bin.exit57.i:                           ; preds = %bb.j, %bb.i
   %i.dy = getelementptr inbounds nuw i8, ptr %i.dv, i64 4
   store float %i.dx, ptr %i.dy, align 4, !tbaa !128
   %indvars.iv.next105.i = add nsw i64 %indvars.iv104.i, -1
-  %indvars.iv.next101.i = add nuw nsw i64 %indvars.iv100.i, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next101.i, %11
-  br i1 %exitcond.not, label %read_fft_data.exit.i, label %.lr.ph14.i.i, !llvm.loop !131
+  %indvars.iv.next101.i = add nuw nsw i64 %indvars.iv100.i, 1
+  %.not.not19.i.i = icmp sgt i64 %indvars.iv104.i, %i.cw
+  br i1 %.not.not19.i.i, label %.lr.ph14.i.i, label %read_fft_data.exit.i, !llvm.loop !131
 
 bb.l:                                             ; preds = %bb.b
   %i.dz = getelementptr inbounds nuw i8, ptr %.val.val.i, i64 36
@@ -495,7 +487,7 @@ bb.m:                                             ; preds = %bb.l, %bb.l
   %i.ex = add i32 %i.z, %indvars.iv86.i
   %i.ey = mul i32 %i.ex, %i.i
   %i.ez = sext i32 %i.ey to i64
-  %i.fa = sext i32 %i.ac to i64
+  %i.fa = sext i32 %2 to i64
   %cond77.i = icmp eq i32 %i.ep, 0
   br label %.lr.ph10.i.i
 
@@ -586,7 +578,7 @@ bb.q:                                             ; preds = %bb.l, %bb.l, %bb.l
   %i.gx = add i32 %i.z, %indvars.iv86.i
   %i.gy = mul i32 %i.gx, %i.i
   %i.gz = sext i32 %i.gy to i64
-  %i.ha = sext i32 %i.ac to i64
+  %i.ha = sext i32 %2 to i64
   %cond.i = icmp eq i32 %i.gp, 0
   br label %.lr.ph.i.i
 
@@ -735,6 +727,7 @@ read_fft_data.exit.i:                             ; preds = %read8_fft_bin.exit.
   %i.jp = sext i32 %i.jo to i64
   %i.jq = icmp slt i64 %indvars.iv.next127.i, %i.jp
   %indvars.iv.next87.i = add nsw i32 %indvars.iv86.i, -1
+  %indvars.iv.next103.i = add nsw i32 %indvars.iv102.i, -1
   br i1 %i.jq, label %bb.b, label %synth_window.exit, !llvm.loop !138
 
 synth_window.exit:                                ; preds = %._crit_edge.i

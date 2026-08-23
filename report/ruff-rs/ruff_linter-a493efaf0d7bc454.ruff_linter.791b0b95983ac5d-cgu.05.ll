@@ -205,20 +205,24 @@ bb.h:                                             ; preds = %bb.g
   unreachable
 
 bb.i:                                             ; preds = %.lr.ph269, %._crit_edge265
-  %.sroa.048.0268 = phi i64 [ 0, %.lr.ph269 ], [ %i.as, %._crit_edge265 ] ; 8 uses
+  %.sroa.048.0268 = phi i64 [ 0, %.lr.ph269 ], [ %i.as, %._crit_edge265 ] ; 9 uses
   %i.as = add nuw nsw i64 %.sroa.048.0268, 1
   %i.at = tail call noundef zeroext i1 @_RNvNtCsiqiOkcJdymw_7similar16deadline_support17deadline_exceeded(i64 %9, i32 noundef %10)
-  br i1 %i.at, label %._crit_edge270, label %.lr.ph248
+  br i1 %i.at, label %._crit_edge270, label %.lr.ph248.preheader
 
-.lr.ph248:                                        ; preds = %bb.i, %bb.bj
-  %.sroa.7.0247 = phi i64 [ %.sroa.7.1, %bb.bj ], [ %.sroa.048.0268, %bb.i ] ; 2 uses
-  %not..sroa.14163.0246 = phi i64 [ 1, %bb.bj ], [ 0, %bb.i ]
-  %i.au = sub i64 %.sroa.7.0247, %not..sroa.14163.0246 ; 11 uses
+.lr.ph248.preheader:                              ; preds = %bb.i
+  %11 = sub nsw i64 0, %.sroa.048.0268            ; 6 uses
+  br label %.lr.ph248
+
+.lr.ph248:                                        ; preds = %.lr.ph248.preheader, %bb.bj
+  %.sroa.7.0247 = phi i64 [ %.sroa.7.1, %bb.bj ], [ %.sroa.048.0268, %.lr.ph248.preheader ] ; 2 uses
+  %not..sroa.14163.0246 = phi i64 [ 1, %bb.bj ], [ 0, %.lr.ph248.preheader ]
+  %i.au = sub i64 %.sroa.7.0247, %not..sroa.14163.0246 ; 12 uses
   %.not.i.not.i = icmp sgt i64 %i.au, %.sroa.7.0247
   br i1 %.not.i.not.i, label %.lr.ph264.preheader, label %bb.j
 
 bb.j:                                             ; preds = %.lr.ph248
-  %i.av = tail call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %i.au, i64 0)
+  %i.av = tail call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %i.au, i64 %11)
   switch i8 %i.av, label %bb.k [
     i8 -1, label %.lr.ph264.preheader
     i8 0, label %bb.m
@@ -235,18 +239,22 @@ bb.l:                                             ; preds = %bb.j
 bb.m:                                             ; preds = %bb.l, %bb.j
   %.sroa.11.1 = phi i1 [ true, %bb.j ], [ false, %bb.l ]
   %.sroa.7.1 = phi i64 [ %i.au, %bb.j ], [ %i.aw, %bb.l ] ; 2 uses
-  %i.ax = icmp eq i64 %i.au, 0
-  br i1 %i.ax, label %._crit_edge316.a, label %bb.aq
+  %i.ax = icmp eq i64 %i.au, %11
+  br i1 %i.ax, label %._crit_edge316, label %bb.aq
+
+._crit_edge316:                                   ; preds = %bb.m
+  %.pre321 = add i64 %i.i, %i.au
+  br label %._crit_edge316.a
 
 .lr.ph264:                                        ; preds = %.lr.ph264.preheader, %bb.al
   %not..sroa.17172.0262 = phi i64 [ 1, %bb.al ], [ 0, %.lr.ph264.preheader ]
   %.sroa.7171.0261 = phi i64 [ %.sroa.7171.1, %bb.al ], [ %.sroa.048.0268, %.lr.ph264.preheader ] ; 2 uses
-  %i.ay = sub i64 %.sroa.7171.0261, %not..sroa.17172.0262 ; 11 uses
+  %i.ay = sub i64 %.sroa.7171.0261, %not..sroa.17172.0262 ; 12 uses
   %.not.i.not.i144 = icmp sgt i64 %i.ay, %.sroa.7171.0261
   br i1 %.not.i.not.i144, label %._crit_edge265, label %bb.n
 
 bb.n:                                             ; preds = %.lr.ph264
-  %i.az = tail call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %i.ay, i64 0)
+  %i.az = tail call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %i.ay, i64 %11)
   switch i8 %i.az, label %bb.o [
     i8 -1, label %._crit_edge265
     i8 0, label %bb.q
@@ -263,8 +271,12 @@ bb.p:                                             ; preds = %bb.n
 bb.q:                                             ; preds = %bb.p, %bb.n
   %.sroa.7171.1 = phi i64 [ %i.ay, %bb.n ], [ %i.ba, %bb.p ] ; 2 uses
   %.sroa.12.1 = phi i1 [ true, %bb.n ], [ false, %bb.p ]
-  %i.bb = icmp eq i64 %i.ay, 0
-  br i1 %i.bb, label %._crit_edge318.a, label %bb.r
+  %i.bb = icmp eq i64 %i.ay, %11
+  br i1 %i.bb, label %._crit_edge318, label %bb.r
+
+._crit_edge318:                                   ; preds = %bb.q
+  %.pre = add i64 %i.r, %i.ay
+  br label %._crit_edge318.a
 
 ._crit_edge265:                                   ; preds = %bb.al, %bb.n, %.lr.ph264
   %exitcond314.not = icmp eq i64 %.sroa.048.0268, %.sroa.047.0
@@ -275,8 +287,8 @@ bb.r:                                             ; preds = %bb.q
   %.pre319 = add i64 %i.ap, %i.ay                 ; 6 uses
   br i1 %.not130, label %._crit_edge317, label %bb.s
 
-._crit_edge318.a:                                 ; preds = %bb.q, %bb.v
-  %.pre-phi = phi i64 [ %i.bf, %bb.v ], [ %i.r, %bb.q ] ; 3 uses
+._crit_edge318.a:                                 ; preds = %._crit_edge318, %bb.v
+  %.pre-phi = phi i64 [ %.pre, %._crit_edge318 ], [ %i.bf, %bb.v ] ; 3 uses
   %i.bc = icmp ult i64 %.pre-phi, %i.t
   br i1 %i.bc, label %bb.aa, label %bb.ab
 
@@ -412,8 +424,8 @@ bb.ak:                                            ; preds = %bb.ai
   br i1 %.not131, label %bb.al, label %bb.am
 
 bb.al:                                            ; preds = %bb.ak, %bb.an, %bb.ai
-  %.not.i143 = icmp slt i64 %.sroa.7171.1, 0
-  %or.cond188 = or i1 %.sroa.12.1, %.not.i143
+  %.not.i143 = icmp slt i64 %.sroa.7171.1, %11
+  %or.cond188 = select i1 %.sroa.12.1, i1 true, i1 %.not.i143
   br i1 %or.cond188, label %._crit_edge265, label %.lr.ph264
 
 bb.am:                                            ; preds = %bb.ak
@@ -442,8 +454,8 @@ bb.aq:                                            ; preds = %bb.m
   %.pre323 = add i64 %i.ac, %i.au                 ; 6 uses
   br i1 %.not133, label %._crit_edge315, label %bb.ar
 
-._crit_edge316.a:                                 ; preds = %bb.m, %bb.au
-  %.pre-phi322 = phi i64 [ %i.cv, %bb.au ], [ %i.i, %bb.m ] ; 3 uses
+._crit_edge316.a:                                 ; preds = %._crit_edge316, %bb.au
+  %.pre-phi322 = phi i64 [ %.pre321, %._crit_edge316 ], [ %i.cv, %bb.au ] ; 3 uses
   %i.cs = icmp ult i64 %.pre-phi322, %i.k
   br i1 %i.cs, label %bb.az, label %bb.ba
 
@@ -574,8 +586,8 @@ bb.bi:                                            ; preds = %bb.bb
   unreachable
 
 bb.bj:                                            ; preds = %bb.bk, %bb.bm, %bb.bh
-  %.not.i = icmp slt i64 %.sroa.7.1, 0
-  %or.cond187 = or i1 %.sroa.11.1, %.not.i
+  %.not.i = icmp slt i64 %.sroa.7.1, %11
+  %or.cond187 = select i1 %.sroa.11.1, i1 true, i1 %.not.i
   br i1 %or.cond187, label %.lr.ph264.preheader, label %.lr.ph248
 
 .lr.ph264.preheader:                              ; preds = %.lr.ph248, %bb.j, %bb.bj
@@ -711,20 +723,24 @@ bb.h:                                             ; preds = %bb.g
   unreachable
 
 bb.i:                                             ; preds = %.lr.ph269, %._crit_edge265
-  %.sroa.048.0268 = phi i64 [ 0, %.lr.ph269 ], [ %i.as, %._crit_edge265 ] ; 8 uses
+  %.sroa.048.0268 = phi i64 [ 0, %.lr.ph269 ], [ %i.as, %._crit_edge265 ] ; 9 uses
   %i.as = add nuw nsw i64 %.sroa.048.0268, 1
   %i.at = tail call noundef zeroext i1 @_RNvNtCsiqiOkcJdymw_7similar16deadline_support17deadline_exceeded(i64 %9, i32 noundef %10)
-  br i1 %i.at, label %._crit_edge270, label %.lr.ph248
+  br i1 %i.at, label %._crit_edge270, label %.lr.ph248.preheader
 
-.lr.ph248:                                        ; preds = %bb.i, %bb.bj
-  %.sroa.7.0247 = phi i64 [ %.sroa.7.1, %bb.bj ], [ %.sroa.048.0268, %bb.i ] ; 2 uses
-  %not..sroa.14163.0246 = phi i64 [ 1, %bb.bj ], [ 0, %bb.i ]
-  %i.au = sub i64 %.sroa.7.0247, %not..sroa.14163.0246 ; 11 uses
+.lr.ph248.preheader:                              ; preds = %bb.i
+  %11 = sub nsw i64 0, %.sroa.048.0268            ; 6 uses
+  br label %.lr.ph248
+
+.lr.ph248:                                        ; preds = %.lr.ph248.preheader, %bb.bj
+  %.sroa.7.0247 = phi i64 [ %.sroa.7.1, %bb.bj ], [ %.sroa.048.0268, %.lr.ph248.preheader ] ; 2 uses
+  %not..sroa.14163.0246 = phi i64 [ 1, %bb.bj ], [ 0, %.lr.ph248.preheader ]
+  %i.au = sub i64 %.sroa.7.0247, %not..sroa.14163.0246 ; 12 uses
   %.not.i.not.i = icmp sgt i64 %i.au, %.sroa.7.0247
   br i1 %.not.i.not.i, label %.lr.ph264.preheader, label %bb.j
 
 bb.j:                                             ; preds = %.lr.ph248
-  %i.av = tail call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %i.au, i64 0)
+  %i.av = tail call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %i.au, i64 %11)
   switch i8 %i.av, label %bb.k [
     i8 -1, label %.lr.ph264.preheader
     i8 0, label %bb.m
@@ -741,18 +757,22 @@ bb.l:                                             ; preds = %bb.j
 bb.m:                                             ; preds = %bb.l, %bb.j
   %.sroa.11.1 = phi i1 [ true, %bb.j ], [ false, %bb.l ]
   %.sroa.7.1 = phi i64 [ %i.au, %bb.j ], [ %i.aw, %bb.l ] ; 2 uses
-  %i.ax = icmp eq i64 %i.au, 0
-  br i1 %i.ax, label %._crit_edge316.a, label %bb.aq
+  %i.ax = icmp eq i64 %i.au, %11
+  br i1 %i.ax, label %._crit_edge316, label %bb.aq
+
+._crit_edge316:                                   ; preds = %bb.m
+  %.pre321 = add i64 %i.i, %i.au
+  br label %._crit_edge316.a
 
 .lr.ph264:                                        ; preds = %.lr.ph264.preheader, %bb.al
   %not..sroa.17172.0262 = phi i64 [ 1, %bb.al ], [ 0, %.lr.ph264.preheader ]
   %.sroa.7171.0261 = phi i64 [ %.sroa.7171.1, %bb.al ], [ %.sroa.048.0268, %.lr.ph264.preheader ] ; 2 uses
-  %i.ay = sub i64 %.sroa.7171.0261, %not..sroa.17172.0262 ; 11 uses
+  %i.ay = sub i64 %.sroa.7171.0261, %not..sroa.17172.0262 ; 12 uses
   %.not.i.not.i144 = icmp sgt i64 %i.ay, %.sroa.7171.0261
   br i1 %.not.i.not.i144, label %._crit_edge265, label %bb.n
 
 bb.n:                                             ; preds = %.lr.ph264
-  %i.az = tail call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %i.ay, i64 0)
+  %i.az = tail call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %i.ay, i64 %11)
   switch i8 %i.az, label %bb.o [
     i8 -1, label %._crit_edge265
     i8 0, label %bb.q
@@ -769,8 +789,12 @@ bb.p:                                             ; preds = %bb.n
 bb.q:                                             ; preds = %bb.p, %bb.n
   %.sroa.7171.1 = phi i64 [ %i.ay, %bb.n ], [ %i.ba, %bb.p ] ; 2 uses
   %.sroa.12.1 = phi i1 [ true, %bb.n ], [ false, %bb.p ]
-  %i.bb = icmp eq i64 %i.ay, 0
-  br i1 %i.bb, label %._crit_edge318.a, label %bb.r
+  %i.bb = icmp eq i64 %i.ay, %11
+  br i1 %i.bb, label %._crit_edge318, label %bb.r
+
+._crit_edge318:                                   ; preds = %bb.q
+  %.pre = add i64 %i.r, %i.ay
+  br label %._crit_edge318.a
 
 ._crit_edge265:                                   ; preds = %bb.al, %bb.n, %.lr.ph264
   %exitcond314.not = icmp eq i64 %.sroa.048.0268, %.sroa.047.0
@@ -781,8 +805,8 @@ bb.r:                                             ; preds = %bb.q
   %.pre319 = add i64 %i.ap, %i.ay                 ; 6 uses
   br i1 %.not130, label %._crit_edge317, label %bb.s
 
-._crit_edge318.a:                                 ; preds = %bb.q, %bb.v
-  %.pre-phi = phi i64 [ %i.bf, %bb.v ], [ %i.r, %bb.q ] ; 3 uses
+._crit_edge318.a:                                 ; preds = %._crit_edge318, %bb.v
+  %.pre-phi = phi i64 [ %.pre, %._crit_edge318 ], [ %i.bf, %bb.v ] ; 3 uses
   %i.bc = icmp ult i64 %.pre-phi, %i.t
   br i1 %i.bc, label %bb.aa, label %bb.ab
 
@@ -918,8 +942,8 @@ bb.ak:                                            ; preds = %bb.ai
   br i1 %.not131, label %bb.al, label %bb.am
 
 bb.al:                                            ; preds = %bb.ak, %bb.an, %bb.ai
-  %.not.i143 = icmp slt i64 %.sroa.7171.1, 0
-  %or.cond188 = or i1 %.sroa.12.1, %.not.i143
+  %.not.i143 = icmp slt i64 %.sroa.7171.1, %11
+  %or.cond188 = select i1 %.sroa.12.1, i1 true, i1 %.not.i143
   br i1 %or.cond188, label %._crit_edge265, label %.lr.ph264
 
 bb.am:                                            ; preds = %bb.ak
@@ -948,8 +972,8 @@ bb.aq:                                            ; preds = %bb.m
   %.pre323 = add i64 %i.ac, %i.au                 ; 6 uses
   br i1 %.not133, label %._crit_edge315, label %bb.ar
 
-._crit_edge316.a:                                 ; preds = %bb.m, %bb.au
-  %.pre-phi322 = phi i64 [ %i.cv, %bb.au ], [ %i.i, %bb.m ] ; 3 uses
+._crit_edge316.a:                                 ; preds = %._crit_edge316, %bb.au
+  %.pre-phi322 = phi i64 [ %.pre321, %._crit_edge316 ], [ %i.cv, %bb.au ] ; 3 uses
   %i.cs = icmp ult i64 %.pre-phi322, %i.k
   br i1 %i.cs, label %bb.az, label %bb.ba
 
@@ -1080,8 +1104,8 @@ bb.bi:                                            ; preds = %bb.bb
   unreachable
 
 bb.bj:                                            ; preds = %bb.bk, %bb.bm, %bb.bh
-  %.not.i = icmp slt i64 %.sroa.7.1, 0
-  %or.cond187 = or i1 %.sroa.11.1, %.not.i
+  %.not.i = icmp slt i64 %.sroa.7.1, %11
+  %or.cond187 = select i1 %.sroa.11.1, i1 true, i1 %.not.i
   br i1 %or.cond187, label %.lr.ph264.preheader, label %.lr.ph248
 
 .lr.ph264.preheader:                              ; preds = %.lr.ph248, %bb.j, %bb.bj
@@ -1205,20 +1229,24 @@ bb.h:                                             ; preds = %bb.g
   unreachable
 
 bb.i:                                             ; preds = %.lr.ph243, %._crit_edge239
-  %.sroa.048.0242 = phi i64 [ 0, %.lr.ph243 ], [ %i.ag, %._crit_edge239 ] ; 8 uses
+  %.sroa.048.0242 = phi i64 [ 0, %.lr.ph243 ], [ %i.ag, %._crit_edge239 ] ; 9 uses
   %i.ag = add nuw nsw i64 %.sroa.048.0242, 1
   %i.ah = tail call noundef zeroext i1 @_RNvNtCsiqiOkcJdymw_7similar16deadline_support17deadline_exceeded(i64 %9, i32 noundef %10)
-  br i1 %i.ah, label %._crit_edge244, label %.lr.ph224
+  br i1 %i.ah, label %._crit_edge244, label %.lr.ph224.preheader
 
-.lr.ph224:                                        ; preds = %bb.i, %bb.bd
-  %.sroa.7.0223 = phi i64 [ %.sroa.7.1, %bb.bd ], [ %.sroa.048.0242, %bb.i ] ; 2 uses
-  %not..sroa.14161.0222 = phi i64 [ 1, %bb.bd ], [ 0, %bb.i ]
-  %i.ai = sub i64 %.sroa.7.0223, %not..sroa.14161.0222 ; 11 uses
+.lr.ph224.preheader:                              ; preds = %bb.i
+  %11 = sub nsw i64 0, %.sroa.048.0242            ; 6 uses
+  br label %.lr.ph224
+
+.lr.ph224:                                        ; preds = %.lr.ph224.preheader, %bb.bd
+  %.sroa.7.0223 = phi i64 [ %.sroa.7.1, %bb.bd ], [ %.sroa.048.0242, %.lr.ph224.preheader ] ; 2 uses
+  %not..sroa.14161.0222 = phi i64 [ 1, %bb.bd ], [ 0, %.lr.ph224.preheader ]
+  %i.ai = sub i64 %.sroa.7.0223, %not..sroa.14161.0222 ; 12 uses
   %.not.i.not.i = icmp sgt i64 %i.ai, %.sroa.7.0223
   br i1 %.not.i.not.i, label %.lr.ph238.preheader, label %bb.j
 
 bb.j:                                             ; preds = %.lr.ph224
-  %i.aj = tail call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %i.ai, i64 0)
+  %i.aj = tail call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %i.ai, i64 %11)
   switch i8 %i.aj, label %bb.k [
     i8 -1, label %.lr.ph238.preheader
     i8 0, label %bb.m
@@ -1235,18 +1263,22 @@ bb.l:                                             ; preds = %bb.j
 bb.m:                                             ; preds = %bb.l, %bb.j
   %.sroa.11.1 = phi i1 [ true, %bb.j ], [ false, %bb.l ]
   %.sroa.7.1 = phi i64 [ %i.ai, %bb.j ], [ %i.ak, %bb.l ] ; 2 uses
-  %i.al = icmp eq i64 %i.ai, 0
-  br i1 %i.al, label %._crit_edge279.a, label %bb.an
+  %i.al = icmp eq i64 %i.ai, %11
+  br i1 %i.al, label %._crit_edge279, label %bb.an
+
+._crit_edge279:                                   ; preds = %bb.m
+  %.pre284 = add i64 %i.i, %i.ai
+  br label %._crit_edge279.a
 
 .lr.ph238:                                        ; preds = %.lr.ph238.preheader, %bb.ai
   %not..sroa.17170.0236 = phi i64 [ 1, %bb.ai ], [ 0, %.lr.ph238.preheader ]
   %.sroa.7169.0235 = phi i64 [ %.sroa.7169.1, %bb.ai ], [ %.sroa.048.0242, %.lr.ph238.preheader ] ; 2 uses
-  %i.am = sub i64 %.sroa.7169.0235, %not..sroa.17170.0236 ; 11 uses
+  %i.am = sub i64 %.sroa.7169.0235, %not..sroa.17170.0236 ; 12 uses
   %.not.i.not.i138 = icmp sgt i64 %i.am, %.sroa.7169.0235
   br i1 %.not.i.not.i138, label %._crit_edge239, label %bb.n
 
 bb.n:                                             ; preds = %.lr.ph238
-  %i.an = tail call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %i.am, i64 0)
+  %i.an = tail call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %i.am, i64 %11)
   switch i8 %i.an, label %bb.o [
     i8 -1, label %._crit_edge239
     i8 0, label %bb.q
@@ -1263,8 +1295,12 @@ bb.p:                                             ; preds = %bb.n
 bb.q:                                             ; preds = %bb.p, %bb.n
   %.sroa.7169.1 = phi i64 [ %i.am, %bb.n ], [ %i.ao, %bb.p ] ; 2 uses
   %.sroa.12.1 = phi i1 [ true, %bb.n ], [ false, %bb.p ]
-  %i.ap = icmp eq i64 %i.am, 0
-  br i1 %i.ap, label %._crit_edge281.a, label %bb.r
+  %i.ap = icmp eq i64 %i.am, %11
+  br i1 %i.ap, label %._crit_edge281, label %bb.r
+
+._crit_edge281:                                   ; preds = %bb.q
+  %.pre = add i64 %i.r, %i.am
+  br label %._crit_edge281.a
 
 ._crit_edge239:                                   ; preds = %bb.ai, %bb.n, %.lr.ph238
   %exitcond277.not = icmp eq i64 %.sroa.048.0242, %.sroa.047.0
@@ -1275,8 +1311,8 @@ bb.r:                                             ; preds = %bb.q
   %.pre282 = add i64 %i.ad, %i.am                 ; 6 uses
   br i1 %.not130, label %._crit_edge280, label %bb.s
 
-._crit_edge281.a:                                 ; preds = %bb.q, %bb.v
-  %.pre-phi = phi i64 [ %i.at, %bb.v ], [ %i.r, %bb.q ] ; 3 uses
+._crit_edge281.a:                                 ; preds = %._crit_edge281, %bb.v
+  %.pre-phi = phi i64 [ %.pre, %._crit_edge281 ], [ %i.at, %bb.v ] ; 3 uses
   %i.aq = icmp ult i64 %.pre-phi, %i.t
   br i1 %i.aq, label %bb.aa, label %bb.ab
 
@@ -1398,8 +1434,8 @@ bb.ah:                                            ; preds = %bb.af
   br i1 %.not131, label %bb.ai, label %bb.aj
 
 bb.ai:                                            ; preds = %bb.ah, %bb.ak, %bb.af
-  %.not.i137 = icmp slt i64 %.sroa.7169.1, 0
-  %or.cond188 = or i1 %.sroa.12.1, %.not.i137
+  %.not.i137 = icmp slt i64 %.sroa.7169.1, %11
+  %or.cond188 = select i1 %.sroa.12.1, i1 true, i1 %.not.i137
   br i1 %or.cond188, label %._crit_edge239, label %.lr.ph238
 
 bb.aj:                                            ; preds = %bb.ah
@@ -1428,8 +1464,8 @@ bb.an:                                            ; preds = %bb.m
   %.pre286 = add i64 %i.ac, %i.ai                 ; 6 uses
   br i1 %.not133, label %._crit_edge278, label %bb.ao
 
-._crit_edge279.a:                                 ; preds = %bb.m, %bb.ar
-  %.pre-phi285 = phi i64 [ %i.co, %bb.ar ], [ %i.i, %bb.m ] ; 3 uses
+._crit_edge279.a:                                 ; preds = %._crit_edge279, %bb.ar
+  %.pre-phi285 = phi i64 [ %.pre284, %._crit_edge279 ], [ %i.co, %bb.ar ] ; 3 uses
   %i.cl = icmp ult i64 %.pre-phi285, %i.k
   br i1 %i.cl, label %bb.aw, label %bb.ax
 
@@ -1544,8 +1580,8 @@ bb.bc:                                            ; preds = %bb.ay
   unreachable
 
 bb.bd:                                            ; preds = %bb.be, %bb.bg, %bb.bb
-  %.not.i = icmp slt i64 %.sroa.7.1, 0
-  %or.cond187 = or i1 %.sroa.11.1, %.not.i
+  %.not.i = icmp slt i64 %.sroa.7.1, %11
+  %or.cond187 = select i1 %.sroa.11.1, i1 true, i1 %.not.i
   br i1 %or.cond187, label %.lr.ph238.preheader, label %.lr.ph224
 
 .lr.ph238.preheader:                              ; preds = %.lr.ph224, %bb.j, %bb.bd
@@ -1948,25 +1984,27 @@ bb.hp:                                            ; preds = %bb.ho
   unreachable
 
 bb.hq:                                            ; preds = %._crit_edge132.i, %.lr.ph136.i
-  %.sroa.048.0135.i = phi i64 [ 0, %.lr.ph136.i ], [ %i.ahj, %._crit_edge132.i ] ; 8 uses
+  %.sroa.048.0135.i = phi i64 [ 0, %.lr.ph136.i ], [ %i.ahj, %._crit_edge132.i ] ; 11 uses
   %i.ahj = add nuw nsw i64 %.sroa.048.0135.i, 1
   %i.ahk = call noundef zeroext i1 @_RNvNtCsiqiOkcJdymw_7similar16deadline_support17deadline_exceeded(i64 %9, i32 noundef range(i32 -1, 1000000000) %10), !noalias !3881
-  br i1 %i.ahk, label %_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers17find_middle_snakeINtNtCscdodAO9FK5_5alloc3vec3VecINtNtB4_5utils10UniqueItemINtB1C_12OffsetLookupmEEEB13_ECsEhZmuQNqkz_11ruff_linter.exit, label %.lr.ph119.i
+  br i1 %i.ahk, label %_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers17find_middle_snakeINtNtCscdodAO9FK5_5alloc3vec3VecINtNtB4_5utils10UniqueItemINtB1C_12OffsetLookupmEEEB13_ECsEhZmuQNqkz_11ruff_linter.exit, label %.lr.ph119.preheader.i
 
-.lr.ph119.i:                                      ; preds = %bb.hq, %bb.jv
-  %.sroa.7.0118.i = phi i64 [ %.sroa.7.1.i, %bb.jv ], [ %.sroa.048.0135.i, %bb.hq ] ; 2 uses
-  %not..sroa.1418.0117.i = phi i64 [ 1, %bb.jv ], [ 0, %bb.hq ]
+.lr.ph119.preheader.i:                            ; preds = %bb.hq
+  %11 = sub nsw i64 0, %.sroa.048.0135.i          ; 6 uses
+  %.pre225.i = sub i64 %i.agl, %.sroa.048.0135.i
+  br label %.lr.ph119.i
+
+.lr.ph119.i:                                      ; preds = %bb.jv, %.lr.ph119.preheader.i
+  %.sroa.7.0118.i = phi i64 [ %.sroa.7.1.i, %bb.jv ], [ %.sroa.048.0135.i, %.lr.ph119.preheader.i ] ; 2 uses
+  %not..sroa.1418.0117.i = phi i64 [ 1, %bb.jv ], [ 0, %.lr.ph119.preheader.i ]
   %i.ahl = sub i64 %.sroa.7.0118.i, %not..sroa.1418.0117.i ; 11 uses
   %.not.i.not.i.i = icmp sgt i64 %i.ahl, %.sroa.7.0118.i
-  br i1 %.not.i.not.i.i, label %.lr.ph131.i.preheader, label %bb.hr
-
-.lr.ph131.i.preheader:                            ; preds = %bb.jv, %bb.hr, %.lr.ph119.i
-  br label %.lr.ph131.i
+  br i1 %.not.i.not.i.i, label %.lr.ph131.preheader.i, label %bb.hr
 
 bb.hr:                                            ; preds = %.lr.ph119.i
-  %i.ahm = call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %i.ahl, i64 0)
+  %i.ahm = call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %i.ahl, i64 %11)
   switch i8 %i.ahm, label %bb.hs [
-    i8 -1, label %.lr.ph131.i.preheader
+    i8 -1, label %.lr.ph131.preheader.i
     i8 0, label %bb.hu
     i8 1, label %bb.ht
   ]
@@ -1981,18 +2019,22 @@ bb.ht:                                            ; preds = %bb.hr
 bb.hu:                                            ; preds = %bb.ht, %bb.hr
   %.sroa.11.1.i = phi i1 [ true, %bb.hr ], [ false, %bb.ht ]
   %.sroa.7.1.i = phi i64 [ %i.ahl, %bb.hr ], [ %i.ahn, %bb.ht ] ; 2 uses
-  %i.aho = icmp eq i64 %i.ahl, 0
+  %i.aho = icmp eq i64 %i.ahl, %11
   br i1 %i.aho, label %._crit_edge220.i, label %bb.ja
 
-.lr.ph131.i:                                      ; preds = %.lr.ph131.i.preheader, %bb.iv
-  %not..sroa.1727.0129.i = phi i64 [ 1, %bb.iv ], [ 0, %.lr.ph131.i.preheader ]
-  %.sroa.726.0128.i = phi i64 [ %.sroa.726.1.i, %bb.iv ], [ %.sroa.048.0135.i, %.lr.ph131.i.preheader ] ; 2 uses
+.lr.ph131.preheader.i:                            ; preds = %bb.jv, %bb.hr, %.lr.ph119.i
+  %.pre.i292 = sub i64 %i.agu, %.sroa.048.0135.i
+  br label %.lr.ph131.i
+
+.lr.ph131.i:                                      ; preds = %bb.iv, %.lr.ph131.preheader.i
+  %not..sroa.1727.0129.i = phi i64 [ 1, %bb.iv ], [ 0, %.lr.ph131.preheader.i ]
+  %.sroa.726.0128.i = phi i64 [ %.sroa.726.1.i, %bb.iv ], [ %.sroa.048.0135.i, %.lr.ph131.preheader.i ] ; 2 uses
   %i.ahp = sub i64 %.sroa.726.0128.i, %not..sroa.1727.0129.i ; 11 uses
   %.not.i.not.i152.i = icmp sgt i64 %i.ahp, %.sroa.726.0128.i
   br i1 %.not.i.not.i152.i, label %._crit_edge132.i, label %bb.hv
 
 bb.hv:                                            ; preds = %.lr.ph131.i
-  %i.ahq = call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %i.ahp, i64 0)
+  %i.ahq = call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %i.ahp, i64 %11)
   switch i8 %i.ahq, label %bb.hw [
     i8 -1, label %._crit_edge132.i
     i8 0, label %bb.hy
@@ -2009,7 +2051,7 @@ bb.hx:                                            ; preds = %bb.hv
 bb.hy:                                            ; preds = %bb.hx, %bb.hv
   %.sroa.726.1.i = phi i64 [ %i.ahp, %bb.hv ], [ %i.ahr, %bb.hx ] ; 2 uses
   %.sroa.12.1.i289 = phi i1 [ true, %bb.hv ], [ false, %bb.hx ]
-  %i.ahs = icmp eq i64 %i.ahp, 0
+  %i.ahs = icmp eq i64 %i.ahp, %11
   br i1 %i.ahs, label %._crit_edge222.i, label %bb.hz
 
 ._crit_edge132.i:                                 ; preds = %bb.iv, %bb.hv, %.lr.ph131.i
@@ -2021,8 +2063,8 @@ bb.hz:                                            ; preds = %bb.hy
   %.pre223.i = add i64 %i.ahg, %i.ahp             ; 6 uses
   br i1 %.not130.i, label %._crit_edge221.i, label %bb.ia
 
-._crit_edge222.i:                                 ; preds = %bb.id, %bb.hy
-  %.pre-phi.i = phi i64 [ %i.ahw, %bb.id ], [ %i.agu, %bb.hy ] ; 3 uses
+._crit_edge222.i:                                 ; preds = %bb.hy, %bb.id
+  %.pre-phi.i = phi i64 [ %i.ahw, %bb.id ], [ %.pre.i292, %bb.hy ] ; 3 uses
   %i.aht = icmp ult i64 %.pre-phi.i, %i.agw
   br i1 %i.aht, label %bb.ii, label %bb.ij
 
@@ -2200,8 +2242,8 @@ bb.iu:                                            ; preds = %bb.is
   br i1 %.not131.i, label %bb.iv, label %bb.iw
 
 bb.iv:                                            ; preds = %bb.ix, %bb.iu, %bb.is
-  %.not.i151.i = icmp slt i64 %.sroa.726.1.i, 0
-  %or.cond43.i = or i1 %.sroa.12.1.i289, %.not.i151.i
+  %.not.i151.i = icmp slt i64 %.sroa.726.1.i, %11
+  %or.cond43.i = select i1 %.sroa.12.1.i289, i1 true, i1 %.not.i151.i
   br i1 %or.cond43.i, label %._crit_edge132.i, label %.lr.ph131.i
 
 bb.iw:                                            ; preds = %bb.iu
@@ -2230,8 +2272,8 @@ bb.ja:                                            ; preds = %bb.hu
   %.pre227.i = add i64 %i.ahf, %i.ahl             ; 6 uses
   br i1 %.not133.i, label %._crit_edge219.i, label %bb.jb
 
-._crit_edge220.i:                                 ; preds = %bb.je, %bb.hu
-  %.pre-phi226.i = phi i64 [ %i.akm, %bb.je ], [ %i.agl, %bb.hu ] ; 3 uses
+._crit_edge220.i:                                 ; preds = %bb.hu, %bb.je
+  %.pre-phi226.i = phi i64 [ %i.akm, %bb.je ], [ %.pre225.i, %bb.hu ] ; 3 uses
   %i.akj = icmp ult i64 %.pre-phi226.i, %i.agn
   br i1 %i.akj, label %bb.jj, label %bb.jk
 
@@ -2403,9 +2445,9 @@ bb.ju:                                            ; preds = %bb.jl
   unreachable
 
 bb.jv:                                            ; preds = %bb.jy, %bb.jw, %bb.jt
-  %.not.i.i = icmp slt i64 %.sroa.7.1.i, 0
-  %or.cond42.i = or i1 %.sroa.11.1.i, %.not.i.i
-  br i1 %or.cond42.i, label %.lr.ph131.i.preheader, label %.lr.ph119.i
+  %.not.i.i = icmp slt i64 %.sroa.7.1.i, %11
+  %or.cond42.i = select i1 %.sroa.11.1.i, i1 true, i1 %.not.i.i
+  br i1 %or.cond42.i, label %.lr.ph131.preheader.i, label %.lr.ph119.i
 
 bb.jw:                                            ; preds = %bb.jt
   %i.amn = sub i64 %i.ahl, %i.agh                 ; 2 uses
@@ -2808,25 +2850,27 @@ bb.gs:                                            ; preds = %bb.gr
   unreachable
 
 bb.gt:                                            ; preds = %._crit_edge108.i, %.lr.ph112.i
-  %.sroa.048.0111.i = phi i64 [ 0, %.lr.ph112.i ], [ %i.abz, %._crit_edge108.i ] ; 8 uses
+  %.sroa.048.0111.i = phi i64 [ 0, %.lr.ph112.i ], [ %i.abz, %._crit_edge108.i ] ; 11 uses
   %i.abz = add nuw nsw i64 %.sroa.048.0111.i, 1
   %i.aca = call noundef zeroext i1 @_RNvNtCsiqiOkcJdymw_7similar16deadline_support17deadline_exceeded(i64 %9, i32 noundef range(i32 -1, 1000000000) %10), !noalias !4247
-  br i1 %i.aca, label %_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers17find_middle_snakeINtNtCscdodAO9FK5_5alloc3vec3VecINtNtB4_5utils10UniqueItemINtNtB6_4text12TextDiffSideeEEEB13_ECsEhZmuQNqkz_11ruff_linter.exit, label %.lr.ph94.i
+  br i1 %i.aca, label %_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers17find_middle_snakeINtNtCscdodAO9FK5_5alloc3vec3VecINtNtB4_5utils10UniqueItemINtNtB6_4text12TextDiffSideeEEEB13_ECsEhZmuQNqkz_11ruff_linter.exit, label %.lr.ph94.preheader.i
 
-.lr.ph94.i:                                       ; preds = %bb.gt, %bb.iu
-  %.sroa.7.093.i = phi i64 [ %.sroa.7.1.i, %bb.iu ], [ %.sroa.048.0111.i, %bb.gt ] ; 2 uses
-  %not..sroa.1418.092.i = phi i64 [ 1, %bb.iu ], [ 0, %bb.gt ]
+.lr.ph94.preheader.i:                             ; preds = %bb.gt
+  %11 = sub nsw i64 0, %.sroa.048.0111.i          ; 6 uses
+  %.pre168.i = sub i64 %i.abb, %.sroa.048.0111.i
+  br label %.lr.ph94.i
+
+.lr.ph94.i:                                       ; preds = %bb.iu, %.lr.ph94.preheader.i
+  %.sroa.7.093.i = phi i64 [ %.sroa.7.1.i, %bb.iu ], [ %.sroa.048.0111.i, %.lr.ph94.preheader.i ] ; 2 uses
+  %not..sroa.1418.092.i = phi i64 [ 1, %bb.iu ], [ 0, %.lr.ph94.preheader.i ]
   %i.acb = sub i64 %.sroa.7.093.i, %not..sroa.1418.092.i ; 11 uses
   %.not.i.not.i.i = icmp sgt i64 %i.acb, %.sroa.7.093.i
-  br i1 %.not.i.not.i.i, label %.lr.ph107.i.preheader, label %bb.gu
-
-.lr.ph107.i.preheader:                            ; preds = %bb.iu, %bb.gu, %.lr.ph94.i
-  br label %.lr.ph107.i
+  br i1 %.not.i.not.i.i, label %.lr.ph107.preheader.i, label %bb.gu
 
 bb.gu:                                            ; preds = %.lr.ph94.i
-  %i.acc = call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %i.acb, i64 0)
+  %i.acc = call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %i.acb, i64 %11)
   switch i8 %i.acc, label %bb.gv [
-    i8 -1, label %.lr.ph107.i.preheader
+    i8 -1, label %.lr.ph107.preheader.i
     i8 0, label %bb.gx
     i8 1, label %bb.gw
   ]
@@ -2841,18 +2885,22 @@ bb.gw:                                            ; preds = %bb.gu
 bb.gx:                                            ; preds = %bb.gw, %bb.gu
   %.sroa.11.1.i = phi i1 [ true, %bb.gu ], [ false, %bb.gw ]
   %.sroa.7.1.i = phi i64 [ %i.acb, %bb.gu ], [ %i.acd, %bb.gw ] ; 2 uses
-  %i.ace = icmp eq i64 %i.acb, 0
+  %i.ace = icmp eq i64 %i.acb, %11
   br i1 %i.ace, label %._crit_edge163.i, label %bb.ib
 
-.lr.ph107.i:                                      ; preds = %.lr.ph107.i.preheader, %bb.hw
-  %not..sroa.1727.0105.i = phi i64 [ 1, %bb.hw ], [ 0, %.lr.ph107.i.preheader ]
-  %.sroa.726.0104.i = phi i64 [ %.sroa.726.1.i, %bb.hw ], [ %.sroa.048.0111.i, %.lr.ph107.i.preheader ] ; 2 uses
+.lr.ph107.preheader.i:                            ; preds = %bb.iu, %bb.gu, %.lr.ph94.i
+  %.pre.i297 = sub i64 %i.abk, %.sroa.048.0111.i
+  br label %.lr.ph107.i
+
+.lr.ph107.i:                                      ; preds = %bb.hw, %.lr.ph107.preheader.i
+  %not..sroa.1727.0105.i = phi i64 [ 1, %bb.hw ], [ 0, %.lr.ph107.preheader.i ]
+  %.sroa.726.0104.i = phi i64 [ %.sroa.726.1.i, %bb.hw ], [ %.sroa.048.0111.i, %.lr.ph107.preheader.i ] ; 2 uses
   %i.acf = sub i64 %.sroa.726.0104.i, %not..sroa.1727.0105.i ; 11 uses
   %.not.i.not.i145.i = icmp sgt i64 %i.acf, %.sroa.726.0104.i
   br i1 %.not.i.not.i145.i, label %._crit_edge108.i, label %bb.gy
 
 bb.gy:                                            ; preds = %.lr.ph107.i
-  %i.acg = call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %i.acf, i64 0)
+  %i.acg = call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %i.acf, i64 %11)
   switch i8 %i.acg, label %bb.gz [
     i8 -1, label %._crit_edge108.i
     i8 0, label %bb.hb
@@ -2869,7 +2917,7 @@ bb.ha:                                            ; preds = %bb.gy
 bb.hb:                                            ; preds = %bb.ha, %bb.gy
   %.sroa.726.1.i = phi i64 [ %i.acf, %bb.gy ], [ %i.ach, %bb.ha ] ; 2 uses
   %.sroa.12.1.i293 = phi i1 [ true, %bb.gy ], [ false, %bb.ha ]
-  %i.aci = icmp eq i64 %i.acf, 0
+  %i.aci = icmp eq i64 %i.acf, %11
   br i1 %i.aci, label %._crit_edge165.i, label %bb.hc
 
 ._crit_edge108.i:                                 ; preds = %bb.hw, %bb.gy, %.lr.ph107.i
@@ -2881,8 +2929,8 @@ bb.hc:                                            ; preds = %bb.hb
   %.pre166.i = add i64 %i.abw, %i.acf             ; 6 uses
   br i1 %.not130.i, label %._crit_edge164.i, label %bb.hd
 
-._crit_edge165.i:                                 ; preds = %bb.hg, %bb.hb
-  %.pre-phi.i = phi i64 [ %i.acm, %bb.hg ], [ %i.abk, %bb.hb ] ; 3 uses
+._crit_edge165.i:                                 ; preds = %bb.hb, %bb.hg
+  %.pre-phi.i = phi i64 [ %i.acm, %bb.hg ], [ %.pre.i297, %bb.hb ] ; 3 uses
   %i.acj = icmp ult i64 %.pre-phi.i, %i.abm
   br i1 %i.acj, label %bb.hl, label %bb.hm
 
@@ -3035,8 +3083,8 @@ bb.hv:                                            ; preds = %bb.ht
   br i1 %.not131.i, label %bb.hw, label %bb.hx
 
 bb.hw:                                            ; preds = %bb.hy, %bb.hv, %bb.ht
-  %.not.i144.i = icmp slt i64 %.sroa.726.1.i, 0
-  %or.cond45.i = or i1 %.sroa.12.1.i293, %.not.i144.i
+  %.not.i144.i = icmp slt i64 %.sroa.726.1.i, %11
+  %or.cond45.i = select i1 %.sroa.12.1.i293, i1 true, i1 %.not.i144.i
   br i1 %or.cond45.i, label %._crit_edge108.i, label %.lr.ph107.i
 
 bb.hx:                                            ; preds = %bb.hv
@@ -3065,8 +3113,8 @@ bb.ib:                                            ; preds = %bb.gx
   %.pre170.i = add i64 %i.abv, %i.acb             ; 6 uses
   br i1 %.not133.i, label %._crit_edge162.i, label %bb.ic
 
-._crit_edge163.i:                                 ; preds = %bb.if, %bb.gx
-  %.pre-phi169.i = phi i64 [ %i.aer, %bb.if ], [ %i.abb, %bb.gx ] ; 3 uses
+._crit_edge163.i:                                 ; preds = %bb.gx, %bb.if
+  %.pre-phi169.i = phi i64 [ %i.aer, %bb.if ], [ %.pre168.i, %bb.gx ] ; 3 uses
   %i.aeo = icmp ult i64 %.pre-phi169.i, %i.abd
   br i1 %i.aeo, label %bb.ik, label %bb.il
 
@@ -3211,9 +3259,9 @@ bb.it:                                            ; preds = %bb.im
   unreachable
 
 bb.iu:                                            ; preds = %bb.ix, %bb.iv, %bb.is
-  %.not.i.i = icmp slt i64 %.sroa.7.1.i, 0
-  %or.cond44.i = or i1 %.sroa.11.1.i, %.not.i.i
-  br i1 %or.cond44.i, label %.lr.ph107.i.preheader, label %.lr.ph94.i
+  %.not.i.i = icmp slt i64 %.sroa.7.1.i, %11
+  %or.cond44.i = select i1 %.sroa.11.1.i, i1 true, i1 %.not.i.i
+  br i1 %or.cond44.i, label %.lr.ph107.preheader.i, label %.lr.ph94.i
 
 bb.iv:                                            ; preds = %bb.is
   %i.agj = sub i64 %i.acb, %i.aax                 ; 2 uses

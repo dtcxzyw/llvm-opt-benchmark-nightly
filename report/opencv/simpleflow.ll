@@ -205,10 +205,12 @@ _ZN2cv3MataSERKNS_7MatExprE.exit:                 ; preds = %bb.a
   br label %.preheader139
 
 .preheader139:                                    ; preds = %.preheader139.lr.ph.split, %._crit_edge157
-  %indvars.iv168 = phi i64 [ 0, %.preheader139.lr.ph.split ], [ %indvars.iv.next169, %._crit_edge157 ] ; 6 uses
+  %indvars.iv168 = phi i64 [ 0, %.preheader139.lr.ph.split ], [ %indvars.iv.next169, %._crit_edge157 ] ; 7 uses
+  %8 = sub nsw i64 0, %indvars.iv168              ; 2 uses
   %i.af = trunc nuw nsw i64 %indvars.iv168 to i32 ; 3 uses
   %i.ag = xor i32 %i.af, -1
   %i.ah = add nsw i32 %i.b, %i.ag
+  %9 = trunc nsw i64 %8 to i32
   br label %bb.d
 
 ._crit_edge159.split:                             ; preds = %._crit_edge157, %.preheader139.lr.ph, %_ZN2cv3MataSERKNS_7MatExprE.exit
@@ -232,7 +234,7 @@ bb.c:                                             ; preds = %._crit_edge152
   br i1 %exitcond173.not, label %._crit_edge159.split, label %.preheader139, !llvm.loop !144
 
 bb.d:                                             ; preds = %.preheader139, %bb.c
-  %indvars.iv165 = phi i64 [ 0, %.preheader139 ], [ %indvars.iv.next166, %bb.c ] ; 6 uses
+  %indvars.iv165 = phi i64 [ 0, %.preheader139 ], [ %indvars.iv.next166, %bb.c ] ; 7 uses
   %i.aj = load i64, ptr %i.n, align 8
   %i.ak = mul i64 %i.aj, %indvars.iv168
   %.sink.idx.i = select i1 %i.aa, i64 0, i64 %i.ak
@@ -242,8 +244,10 @@ bb.d:                                             ; preds = %.preheader139, %bb.
   %i.an = getelementptr inbounds nuw i8, ptr %i.al, i64 4
   %i.ao = load float, ptr %i.an, align 4, !tbaa !111
   %i.ap = insertelement <4 x float> poison, float %i.am, i64 0
-  %i.aq = call noundef i32 @llvm.x86.sse.cvtss2si(<4 x float> %i.ap)
-  %spec.select = call i32 @llvm.smax.i32(i32 %i.aq, i32 0) ; 2 uses
+  %i.aq = call noundef i32 @llvm.x86.sse.cvtss2si(<4 x float> %i.ap) ; 2 uses
+  %10 = sext i32 %i.aq to i64
+  %11 = icmp slt i64 %10, %8
+  %spec.select = select i1 %11, i32 %9, i32 %i.aq ; 2 uses
   %i.ar = add nsw i32 %spec.select, %i.af
   %.not = icmp slt i32 %i.ar, %i.b
   %.182 = select i1 %.not, i32 %spec.select, i32 %i.ah
@@ -252,7 +256,9 @@ bb.d:                                             ; preds = %.preheader139, %bb.
   %i.au = trunc nuw nsw i64 %indvars.iv165 to i32 ; 4 uses
   %i.av = add nsw i32 %i.at, %i.au
   %i.aw = icmp slt i32 %i.av, 0
-  %.079 = select i1 %i.aw, i32 0, i32 %i.at       ; 2 uses
+  %12 = trunc i64 %indvars.iv165 to i32
+  %13 = sub i32 0, %12
+  %.079 = select i1 %i.aw, i32 %13, i32 %i.at     ; 2 uses
   %i.ax = add nsw i32 %.079, %i.au
   %.not93 = icmp slt i32 %i.ax, %i.d
   %i.ay = xor i32 %i.au, -1
@@ -655,7 +661,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph237, %bb.f
   %i.bb = phi ptr [ %i.aa, %.lr.ph237 ], [ %i.ik, %bb.f ]
-  %indvars.iv248 = phi i64 [ 0, %.lr.ph237 ], [ %indvars.iv.next249, %bb.f ] ; 10 uses
+  %indvars.iv248 = phi i64 [ 0, %.lr.ph237 ], [ %indvars.iv.next249, %bb.f ] ; 11 uses
   %i.bc = phi i32 [ %i.aq, %.lr.ph237 ], [ %i.im, %bb.f ] ; 3 uses
   %i.bd = phi ptr [ %i.ab, %.lr.ph237 ], [ %i.ik, %bb.f ] ; 4 uses
   %i.be = getelementptr inbounds nuw i8, ptr %i.ai, i64 %indvars.iv248
@@ -684,7 +690,9 @@ bb.c:                                             ; preds = %bb.b
   %i.bt = call noundef i32 @llvm.x86.sse.cvtss2si(<4 x float> %i.bs) ; 2 uses
   %i.bu = add nsw i32 %i.bt, %indvars279
   %i.bv = icmp slt i32 %i.bu, 0
-  %spec.select159 = select i1 %i.bv, i32 0, i32 %i.bt ; 2 uses
+  %3 = trunc i64 %indvars.iv248 to i32
+  %4 = sub i32 0, %3
+  %spec.select159 = select i1 %i.bv, i32 %4, i32 %i.bt ; 2 uses
   %i.bw = add nsw i32 %spec.select159, %indvars279
   %.not151 = icmp slt i32 %i.bw, %i.bc
   %i.bx = trunc i64 %indvars.iv248 to i32

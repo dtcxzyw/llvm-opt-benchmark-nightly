@@ -204,7 +204,7 @@ bb.h:                                             ; preds = %bb.g
   %i.r = getelementptr inbounds nuw i8, ptr %.04564, i64 %i.q
   %i.s = load i8, ptr %i.r, align 1
   %indvars.iv.next83 = add nuw nsw i64 %indvars.iv82, 1 ; 2 uses
-  %i.t = sub nuw nsw i64 63, %indvars.iv82
+  %i.t = sub nsw i64 63, %indvars.iv82
   %i.u = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.t
   store i8 %i.s, ptr %i.u, align 1
   %i.v = lshr i64 %.250, 4                        ; 2 uses
@@ -218,7 +218,7 @@ bb.h:                                             ; preds = %bb.g
   %i.x = getelementptr inbounds nuw i8, ptr %.04564, i64 %i.w
   %i.y = load i8, ptr %i.x, align 1
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %i.z = sub nuw nsw i64 63, %indvars.iv
+  %i.z = sub nsw i64 63, %indvars.iv
   %i.aa = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.z
   store i8 %i.y, ptr %i.aa, align 1
   %i.ab = lshr i64 %.351, 3                       ; 2 uses

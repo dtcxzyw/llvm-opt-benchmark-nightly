@@ -205,7 +205,8 @@ bb.ld:                                            ; preds = %.lr.ph3015, %._crit
   %i.fij = load ptr, ptr %i.fii, align 8, !tbaa !59 ; 2 uses
   %.not1791 = icmp ne i64 %indvars.iv3780, 0      ; 2 uses
   %spec.select2720.idx = zext i1 %.not1791 to i64 ; 2 uses
-  %i.fik = sub nuw nsw i64 3, %indvars.iv3780     ; 2 uses
+  %i.fik = sub nsw i64 3, %indvars.iv3780
+  %4 = and i64 %i.fik, 4294967295                 ; 2 uses
   %i.fil = getelementptr inbounds nuw [36 x i8], ptr %i.m, i64 %indvars.iv3780 ; 2 uses
   %i.fim = getelementptr inbounds nuw i8, ptr %i.fil, i64 16 ; 3 uses
   %i.fin = getelementptr inbounds nuw i8, ptr %i.fil, i64 20 ; 3 uses
@@ -223,7 +224,7 @@ bb.ld:                                            ; preds = %.lr.ph3015, %._crit
   %i.fio = getelementptr inbounds nuw i8, ptr %spec.select2720.us, i64 1
   %i.fip = load i8, ptr %spec.select2720.us, align 1, !tbaa !13
   %i.fiq = zext i8 %i.fip to i32                  ; 2 uses
-  %i.fir = getelementptr inbounds nuw i8, ptr %i.fio, i64 %i.fik
+  %i.fir = getelementptr inbounds nuw i8, ptr %i.fio, i64 %4
   %i.fis = lshr i32 %i.fiq, 4
   %i.fit = and i32 %i.fiq, 15
   br label %bb.le
@@ -314,7 +315,7 @@ bb.li:                                            ; preds = %bb.lh, %bb.lg, %bb.
   %i.fjv = getelementptr inbounds nuw i8, ptr %spec.select2720, i64 1
   %i.fjw = load i8, ptr %spec.select2720, align 1, !tbaa !13
   %i.fjx = zext i8 %i.fjw to i32                  ; 2 uses
-  %i.fjy = getelementptr inbounds nuw i8, ptr %i.fjv, i64 %i.fik
+  %i.fjy = getelementptr inbounds nuw i8, ptr %i.fjv, i64 %4
   %i.fjz = lshr i32 %i.fjx, 4
   %i.fka = and i32 %i.fjx, 15
   br label %bb.lj

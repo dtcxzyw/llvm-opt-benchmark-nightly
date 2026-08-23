@@ -205,7 +205,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %bb.d
   %.val1319 = phi i32 [ %.val1316, %.lr.ph ], [ %.val13, %bb.d ]
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.d ] ; 2 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.d ] ; 3 uses
   %i.f = getelementptr inbounds nuw [4 x i8], ptr %.val, i64 %indvars.iv
   %i.g = load i32, ptr %i.f, align 4, !tbaa !33
   %i.h = sext i32 %i.g to i64
@@ -215,7 +215,9 @@ bb.b:                                             ; preds = %.lr.ph, %bb.d
   br i1 %i.k, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  store i32 0, ptr %i.i, align 4, !tbaa !33
+  %3 = trunc i64 %indvars.iv to i32
+  %4 = sub i32 0, %3
+  store i32 %4, ptr %i.i, align 4, !tbaa !33
   %.val13.pre = load i32, ptr %i.a, align 4, !tbaa !38
   br label %bb.d
 
@@ -590,7 +592,7 @@ bb.ae:                                            ; preds = %Vec_IntFillExtra.ex
 
 bb.af:                                            ; preds = %bb.ah, %.lr.ph.i171
   %.val1319.i = phi i32 [ %.val1316.i, %.lr.ph.i171 ], [ %.val13.i, %bb.ah ]
-  %indvars.iv.i172 = phi i64 [ 0, %.lr.ph.i171 ], [ %indvars.iv.next.i173, %bb.ah ] ; 2 uses
+  %indvars.iv.i172 = phi i64 [ 0, %.lr.ph.i171 ], [ %indvars.iv.next.i173, %bb.ah ] ; 3 uses
   %i.cv = getelementptr inbounds nuw [4 x i8], ptr %.val.i, i64 %indvars.iv.i172
   %i.cw = load i32, ptr %i.cv, align 4, !tbaa !33
   %i.cx = sext i32 %i.cw to i64
@@ -600,7 +602,9 @@ bb.af:                                            ; preds = %bb.ah, %.lr.ph.i171
   br i1 %i.da, label %bb.ag, label %bb.ah
 
 bb.ag:                                            ; preds = %bb.af
-  store i32 0, ptr %i.cy, align 4, !tbaa !33
+  %3 = trunc i64 %indvars.iv.i172 to i32
+  %4 = sub i32 0, %3
+  store i32 %4, ptr %i.cy, align 4, !tbaa !33
   %.val13.pre.i = load i32, ptr %i.g, align 4, !tbaa !38
   br label %bb.ah
 
