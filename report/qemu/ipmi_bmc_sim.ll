@@ -204,15 +204,15 @@ bb.h:                                             ; preds = %ipmb_checksum.exit.
   br i1 %.not68, label %.lr.ph.i71, label %bb.m
 
 .lr.ph.i71:                                       ; preds = %bb.h
+  %4 = and i8 %i.ai, -4
   %i.ak = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 2 uses
   %i.al = load i8, ptr %i.ak, align 1             ; 2 uses
+  %5 = and i8 %i.al, 3
   %i.am = and i8 %i.al, -8                        ; 2 uses
   %i.an = tail call noalias dereferenceable_or_null(320) ptr @g_malloc(i64 noundef 320) #13 ; 14 uses
   %i.ao = or disjoint i8 %i.am, 6
   %i.ap = getelementptr inbounds nuw i8, ptr %i.an, i64 17 ; 5 uses
   store i8 %i.ao, ptr %i.ap, align 1
-  %4 = and i8 %i.ai, -4
-  %5 = and i8 %i.al, 3
   %i.aq = sub nuw nsw i8 -6, %i.am
   %i.ar = getelementptr inbounds nuw i8, ptr %i.an, i64 18
   store i8 %i.aq, ptr %i.ar, align 1

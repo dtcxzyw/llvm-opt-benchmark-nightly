@@ -75,16 +75,16 @@ bb.b:                                             ; preds = %.lr.ph.us, %bb.b
 
 .lr.ph:                                           ; preds = %._crit_edge.us, %._crit_edge49.thread
   %puts41 = tail call i32 @puts(ptr nonnull dereferenceable(1) @str.1) ; 0 uses
+  %2 = zext nneg i32 %1 to i64
+  %3 = getelementptr [8 x i8], ptr %i.b, i64 %2
+  %4 = getelementptr i8, ptr %3, i64 -8
+  %5 = load ptr, ptr %4, align 8, !tbaa !8
   %i.u = mul i32 %i.a, %1                         ; 2 uses
   %i.v = icmp sgt i32 %i.u, 0
   br i1 %i.v, label %.lr.ph.split.us.preheader, label %._crit_edge
 
 .lr.ph.split.us.preheader:                        ; preds = %.lr.ph
-  %2 = zext nneg i32 %1 to i64
-  %3 = getelementptr [8 x i8], ptr %i.b, i64 %2
-  %4 = getelementptr i8, ptr %3, i64 -8
   %i.w = zext nneg i32 %i.c to i64
-  %5 = load ptr, ptr %4, align 8, !tbaa !8
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph.split.us.preheader, %AddEdges.exit.us

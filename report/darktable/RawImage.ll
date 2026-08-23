@@ -205,8 +205,8 @@ bb.d:                                             ; preds = %bb.c
   %.not38.i.i.i.i = icmp eq i8 %.val.i.i.i.i, 0
   br i1 %.not38.i.i.i.i, label %"_ZSt6all_ofIPhZN8rawspeed12RawImageData18fixBadPixelsThreadEiiE3$_0EbT_S4_T0_.exit.thread", label %"_ZSt6all_ofIPhZN8rawspeed12RawImageData18fixBadPixelsThreadEiiE3$_0EbT_S4_T0_.exit"
 
-"_ZSt6all_ofIPhZN8rawspeed12RawImageData18fixBadPixelsThreadEiiE3$_0EbT_S4_T0_.exit": ; preds = %.lr.ph.preheader.i.i.i.i, %bb.d, %bb.c, %bb.b
-  %.028.i.i.i.i = phi ptr [ %i.ak, %bb.b ], [ %i.am, %bb.d ], [ %i.al, %bb.c ], [ %i.aj, %.lr.ph.preheader.i.i.i.i ]
+"_ZSt6all_ofIPhZN8rawspeed12RawImageData18fixBadPixelsThreadEiiE3$_0EbT_S4_T0_.exit": ; preds = %bb.d, %bb.c, %bb.b, %.lr.ph.preheader.i.i.i.i
+  %.028.i.i.i.i = phi ptr [ %i.ak, %bb.b ], [ %i.aj, %.lr.ph.preheader.i.i.i.i ], [ %i.al, %bb.c ], [ %i.am, %bb.d ]
   %i.an = icmp eq ptr %i.ai, %.028.i.i.i.i
   br i1 %i.an, label %"_ZSt6all_ofIPhZN8rawspeed12RawImageData18fixBadPixelsThreadEiiE3$_0EbT_S4_T0_.exit.thread", label %.preheader41
 

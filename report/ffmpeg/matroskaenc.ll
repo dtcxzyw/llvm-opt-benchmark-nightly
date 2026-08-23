@@ -205,8 +205,8 @@ bb.q:                                             ; preds = %bb.p
   br i1 %.not.i.i83.i, label %.lr.ph.i.i115.preheader.i, label %.lr.ph.i.i81.i, !llvm.loop !51
 
 .lr.ph.i.i115.preheader.i:                        ; preds = %.lr.ph.i.i81.i
-  tail call void @avio_w8(ptr noundef %i.cd, i32 noundef 144) #14
   %3 = getelementptr inbounds nuw i8, ptr %i.bt, i64 400
+  tail call void @avio_w8(ptr noundef %i.cd, i32 noundef 144) #14
   tail call void @avio_write(ptr noundef %i.cd, ptr noundef nonnull %3, i32 noundef 16) #14
   br label %bb.r
 
@@ -609,10 +609,10 @@ put_ebml_id.exit.i243:                            ; preds = %.lr.ph.i.i240
   br i1 %.not.i.i254, label %put_ebml_id.exit.i255, label %.lr.ph.i.i252, !llvm.loop !51
 
 put_ebml_id.exit.i255:                            ; preds = %.lr.ph.i.i252
-  call fastcc void @put_ebml_length(ptr noundef nonnull %i.lj, i64 noundef 1, i32 noundef 0)
-  call void @avio_w8(ptr noundef nonnull %i.lj, i32 noundef 4) #14
   %1 = extractvalue { i64, i32 } %i.mw, 0         ; 2 uses
   %2 = extractvalue { i64, i32 } %i.mw, 1         ; 2 uses
+  call fastcc void @put_ebml_length(ptr noundef nonnull %i.lj, i64 noundef 1, i32 noundef 0)
+  call void @avio_w8(ptr noundef nonnull %i.lj, i32 noundef 4) #14
   %i.nf = call i64 @avio_seek(ptr noundef nonnull %i.lj, i64 noundef 0, i32 noundef 1) #14 ; 2 uses
   %i.ng = sext i32 %2 to i64
   %i.nh = sub nsw i64 %1, %i.ng
@@ -726,9 +726,9 @@ put_ebml_string.exit:                             ; preds = %.lr.ph.i.i.i260
   br i1 %.not.i.i265, label %.lr.ph.i.i269.preheader, label %.lr.ph.i.i263, !llvm.loop !51
 
 .lr.ph.i.i269.preheader:                          ; preds = %.lr.ph.i.i263
-  call void @avio_w8(ptr noundef nonnull %i.nq, i32 noundef 147) #14
   %i.po = extractvalue { i64, i32 } %i.ou, 0      ; 2 uses
   %i.pp = extractvalue { i64, i32 } %i.ou, 1      ; 2 uses
+  call void @avio_w8(ptr noundef nonnull %i.nq, i32 noundef 147) #14
   call void @avio_write(ptr noundef nonnull %i.nq, ptr noundef nonnull %i.c, i32 noundef 19) #14
   %i.pq = call i64 @avio_seek(ptr noundef nonnull %i.nq, i64 noundef 0, i32 noundef 1) #14 ; 2 uses
   %i.pr = sext i32 %i.pp to i64
@@ -1131,9 +1131,9 @@ put_ebml_uint.exit369.i:                          ; preds = %.lr.ph.i.i170.prehe
   br i1 %.not.i.i378.i, label %put_ebml_id.exit.i379.i, label %.lr.ph.i.i376.i, !llvm.loop !51
 
 put_ebml_id.exit.i379.i:                          ; preds = %.lr.ph.i.i376.i
-  call void @avio_w8(ptr noundef %i.fy, i32 noundef 129) #14
   %i.kc = lshr i32 %i.jw, 2
   %.lobit.i = and i32 %i.kc, 1
+  call void @avio_w8(ptr noundef %i.fy, i32 noundef 129) #14
   call void @avio_w8(ptr noundef %i.fy, i32 noundef %.lobit.i) #14
   br label %put_ebml_uint.exit382.i
 
@@ -1536,9 +1536,9 @@ bb.gf:                                            ; preds = %bb.ge
   br i1 %.not.i.i.i.i.i, label %put_ebml_string.exit.i.i, label %.lr.ph.i.i.i.i.i, !llvm.loop !51
 
 put_ebml_string.exit.i.i:                         ; preds = %.lr.ph.i.i.i.i.i
-  call void @avio_w8(ptr noundef %i.fy, i32 noundef 154) #14
   %i.anl = icmp samesign ugt i8 %i.ane, 7
   %..i.i = select i1 %i.anl, i64 1685485123, i64 1685480259
+  call void @avio_w8(ptr noundef %i.fy, i32 noundef 154) #14
   call void @avio_write(ptr noundef %i.fy, ptr noundef nonnull @.str.82, i32 noundef 26) #14
   br label %.lr.ph.i.i61.i.i
 
@@ -1578,9 +1578,9 @@ bb.gg:                                            ; preds = %bb.gg, %put_ebml_id
   br i1 %.not.i.i71.i.i, label %.lr.ph.i.i107.preheader.i.i, label %.lr.ph.i.i69.i.i, !llvm.loop !51
 
 .lr.ph.i.i107.preheader.i.i:                      ; preds = %.lr.ph.i.i69.i.i
-  call void @avio_w8(ptr noundef %i.fy, i32 noundef 152) #14
   %i.anz = extractvalue { i64, i32 } %i.ang, 0    ; 2 uses
   %i.aoa = extractvalue { i64, i32 } %i.ang, 1    ; 2 uses
+  call void @avio_w8(ptr noundef %i.fy, i32 noundef 152) #14
   call void @avio_write(ptr noundef %i.fy, ptr noundef nonnull %i.a, i32 noundef 24) #14
   %i.aob = call i64 @avio_seek(ptr noundef %i.fy, i64 noundef 0, i32 noundef 1) #14 ; 2 uses
   %i.aoc = sext i32 %i.aoa to i64

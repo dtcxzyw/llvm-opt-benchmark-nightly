@@ -202,20 +202,17 @@ bb.f:                                             ; preds = %.critedge
   %i.an = load ptr, ptr %i.ac, align 8
   %spec.select.i10.i.i = select i1 %i.am, ptr %i.ac, ptr %i.an
   %i.ao = icmp sgt i32 %i.ai, 0                   ; 2 uses
-  br i1 %spec.select.i.i.i, label %.split.i.preheader, label %.split.us.i.a
-
-.split.i.preheader:                               ; preds = %bb.f
-  br i1 %i.ao, label %_ZNK12V3NumberData3numEv.exit.i.i, label %_ZN16V3DfgBreakCycles15IndependentBits15floodTowardsLsbER8V3Number.exit
+  br i1 %spec.select.i.i.i, label %.split.us.i.a, label %.split.i
 
 .split.us.i.a:                                    ; preds = %bb.f
-  br i1 %i.ao, label %_ZNK8V3Number6bitIs1Ei.exit.thread.i, label %_ZN16V3DfgBreakCycles15IndependentBits15floodTowardsLsbER8V3Number.exit
+  br i1 %i.ao, label %_ZNK12V3NumberData3numEv.exit.i.i, label %_ZN16V3DfgBreakCycles15IndependentBits15floodTowardsLsbER8V3Number.exit
 
 .split.i.a:                                       ; preds = %_ZNK8V3Number6bitIs1Ei.exit.i
   %i.ap = icmp sgt i32 %.0.in.i36, 1
   br i1 %i.ap, label %_ZNK12V3NumberData3numEv.exit.i.i, label %_ZN16V3DfgBreakCycles15IndependentBits15floodTowardsLsbER8V3Number.exit, !llvm.loop !571
 
-_ZNK12V3NumberData3numEv.exit.i.i:                ; preds = %.split.i.preheader, %.split.i.a
-  %.0.in.i36 = phi i32 [ %.0.i37, %.split.i.a ], [ %i.ai, %.split.i.preheader ] ; 4 uses
+_ZNK12V3NumberData3numEv.exit.i.i:                ; preds = %.split.us.i.a, %.split.i.a
+  %.0.in.i36 = phi i32 [ %.0.i37, %.split.i.a ], [ %i.ai, %.split.us.i.a ] ; 4 uses
   %.0.i37 = add nsw i32 %.0.in.i36, -1            ; 3 uses
   %i.aq = lshr i32 %.0.i37, 5
   %i.ar = zext nneg i32 %i.aq to i64
@@ -237,12 +234,15 @@ _ZNK8V3Number6bitIs1Ei.exit.i:                    ; preds = %_ZNK12V3NumberData3
   %.not8.i.i = icmp eq i64 %i.az, 0
   br i1 %.not8.i.i, label %.split.i.a, label %_ZNK8V3Number6bitIs1Ei.exit.thread.i, !llvm.loop !571
 
-_ZNK8V3Number6bitIs1Ei.exit.thread.i:             ; preds = %_ZNK8V3Number6bitIs1Ei.exit.i, %_ZNK12V3NumberData3numEv.exit.i.i, %.split.us.i.a
-  %.us-phi.i = phi i32 [ %i.ai, %.split.us.i.a ], [ %.0.in.i36, %_ZNK12V3NumberData3numEv.exit.i.i ], [ %.0.in.i36, %_ZNK8V3Number6bitIs1Ei.exit.i ]
+.split.i:                                         ; preds = %bb.f
+  br i1 %i.ao, label %_ZNK8V3Number6bitIs1Ei.exit.thread.i, label %_ZN16V3DfgBreakCycles15IndependentBits15floodTowardsLsbER8V3Number.exit
+
+_ZNK8V3Number6bitIs1Ei.exit.thread.i:             ; preds = %_ZNK8V3Number6bitIs1Ei.exit.i, %_ZNK12V3NumberData3numEv.exit.i.i, %.split.i
+  %.us-phi.i = phi i32 [ %i.ai, %.split.i ], [ %.0.in.i36, %_ZNK12V3NumberData3numEv.exit.i.i ], [ %.0.in.i36, %_ZNK8V3Number6bitIs1Ei.exit.i ]
   %i.ba = tail call noundef nonnull align 8 dereferenceable(56) ptr @_ZN8V3Number10opSetRangeEjjc(ptr noundef nonnull align 8 dereferenceable(56) %i.ac, i32 noundef 0, i32 noundef %.us-phi.i, i8 noundef signext 48) ; 0 uses
   br label %_ZN16V3DfgBreakCycles15IndependentBits15floodTowardsLsbER8V3Number.exit
 
-_ZN16V3DfgBreakCycles15IndependentBits15floodTowardsLsbER8V3Number.exit: ; preds = %.split.i.a, %.split.i.preheader, %_ZNK8V3Number6bitIs1Ei.exit.thread.i, %.split.us.i.a, %bb.e, %bb.d, %.critedge
+_ZN16V3DfgBreakCycles15IndependentBits15floodTowardsLsbER8V3Number.exit: ; preds = %.split.i.a, %.split.us.i.a, %_ZNK8V3Number6bitIs1Ei.exit.thread.i, %.split.i, %bb.e, %bb.d, %.critedge
   ret void
 }
 
@@ -385,20 +385,17 @@ bb.h:                                             ; preds = %.critedge
   %i.bx = load ptr, ptr %i.bm, align 8
   %spec.select.i10.i.i = select i1 %i.bw, ptr %i.bm, ptr %i.bx
   %i.by = icmp sgt i32 %i.bs, 0                   ; 2 uses
-  br i1 %spec.select.i.i.i, label %.split.i.preheader, label %.split.us.i.a
-
-.split.i.preheader:                               ; preds = %bb.h
-  br i1 %i.by, label %_ZNK12V3NumberData3numEv.exit.i.i, label %_ZN16V3DfgBreakCycles15IndependentBits15floodTowardsLsbER8V3Number.exit
+  br i1 %spec.select.i.i.i, label %.split.us.i.a, label %.split.i
 
 .split.us.i.a:                                    ; preds = %bb.h
-  br i1 %i.by, label %_ZNK8V3Number6bitIs1Ei.exit.thread.i, label %_ZN16V3DfgBreakCycles15IndependentBits15floodTowardsLsbER8V3Number.exit
+  br i1 %i.by, label %_ZNK12V3NumberData3numEv.exit.i.i, label %_ZN16V3DfgBreakCycles15IndependentBits15floodTowardsLsbER8V3Number.exit
 
 .split.i.a:                                       ; preds = %_ZNK8V3Number6bitIs1Ei.exit.i
   %i.bz = icmp sgt i32 %.0.in.i45, 1
   br i1 %i.bz, label %_ZNK12V3NumberData3numEv.exit.i.i, label %_ZN16V3DfgBreakCycles15IndependentBits15floodTowardsLsbER8V3Number.exit, !llvm.loop !571
 
-_ZNK12V3NumberData3numEv.exit.i.i:                ; preds = %.split.i.preheader, %.split.i.a
-  %.0.in.i45 = phi i32 [ %.0.i3146, %.split.i.a ], [ %i.bs, %.split.i.preheader ] ; 4 uses
+_ZNK12V3NumberData3numEv.exit.i.i:                ; preds = %.split.us.i.a, %.split.i.a
+  %.0.in.i45 = phi i32 [ %.0.i3146, %.split.i.a ], [ %i.bs, %.split.us.i.a ] ; 4 uses
   %.0.i3146 = add nsw i32 %.0.in.i45, -1          ; 3 uses
   %i.ca = lshr i32 %.0.i3146, 5
   %i.cb = zext nneg i32 %i.ca to i64
@@ -420,12 +417,15 @@ _ZNK8V3Number6bitIs1Ei.exit.i:                    ; preds = %_ZNK12V3NumberData3
   %.not8.i.i = icmp eq i64 %i.cj, 0
   br i1 %.not8.i.i, label %.split.i.a, label %_ZNK8V3Number6bitIs1Ei.exit.thread.i, !llvm.loop !571
 
-_ZNK8V3Number6bitIs1Ei.exit.thread.i:             ; preds = %_ZNK8V3Number6bitIs1Ei.exit.i, %_ZNK12V3NumberData3numEv.exit.i.i, %.split.us.i.a
-  %.us-phi.i = phi i32 [ %i.bs, %.split.us.i.a ], [ %.0.in.i45, %_ZNK12V3NumberData3numEv.exit.i.i ], [ %.0.in.i45, %_ZNK8V3Number6bitIs1Ei.exit.i ]
+.split.i:                                         ; preds = %bb.h
+  br i1 %i.by, label %_ZNK8V3Number6bitIs1Ei.exit.thread.i, label %_ZN16V3DfgBreakCycles15IndependentBits15floodTowardsLsbER8V3Number.exit
+
+_ZNK8V3Number6bitIs1Ei.exit.thread.i:             ; preds = %_ZNK8V3Number6bitIs1Ei.exit.i, %_ZNK12V3NumberData3numEv.exit.i.i, %.split.i
+  %.us-phi.i = phi i32 [ %i.bs, %.split.i ], [ %.0.in.i45, %_ZNK12V3NumberData3numEv.exit.i.i ], [ %.0.in.i45, %_ZNK8V3Number6bitIs1Ei.exit.i ]
   %i.ck = tail call noundef nonnull align 8 dereferenceable(56) ptr @_ZN8V3Number10opSetRangeEjjc(ptr noundef nonnull align 8 dereferenceable(56) %i.bm, i32 noundef 0, i32 noundef %.us-phi.i, i8 noundef signext 48) ; 0 uses
   br label %_ZN16V3DfgBreakCycles15IndependentBits15floodTowardsLsbER8V3Number.exit
 
-_ZN16V3DfgBreakCycles15IndependentBits15floodTowardsLsbER8V3Number.exit: ; preds = %.split.i.a, %.split.i.preheader, %_ZNK8V3Number6bitIs1Ei.exit.thread.i, %.split.us.i.a, %_ZNK8V3Number6bitIs0Ei.exit.thread, %_ZNK8V3Number6bitIs0Ei.exit.thread33, %bb.g, %.critedge
+_ZN16V3DfgBreakCycles15IndependentBits15floodTowardsLsbER8V3Number.exit: ; preds = %.split.i.a, %.split.us.i.a, %_ZNK8V3Number6bitIs1Ei.exit.thread.i, %.split.i, %_ZNK8V3Number6bitIs0Ei.exit.thread, %_ZNK8V3Number6bitIs0Ei.exit.thread33, %bb.g, %.critedge
   ret void
 }
 
