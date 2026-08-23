@@ -1,0 +1,542 @@
+diff --git a/llvm/lib/Transforms/Utils/SimplifyCFG.cpp b/llvm/lib/Transforms/Utils/SimplifyCFG.cpp
+index 2f9a4819f9984..6db188caa451e 100644
+--- a/llvm/lib/Transforms/Utils/SimplifyCFG.cpp
++++ b/llvm/lib/Transforms/Utils/SimplifyCFG.cpp
+@@ -3126,6 +3126,18 @@ static bool validateAndCostRequiredSelects(BasicBlock *BB, BasicBlock *ThenBB,
+                                            unsigned &SpeculatedInstructions,
+                                            InstructionCost &Cost,
+                                            const TargetTransformInfo &TTI) {
++  // If ThenBB is an empty BB, then the transformation's only goal
++  // is to simply phi nodes down the road. If the phi nodes cannot be
++  // simplified because they have other ancestors, then it is pointless
++  // to generate select instructions.
++  if (ThenBB->getFirstNonPHIOrDbgOrLifetime()->isTerminator()) {
++    for (BasicBlock *Pred : predecessors(EndBB)) {
++      if (Pred != BB && Pred != ThenBB) {
++        return false;
++      }
++    }
++  }
++
+   TargetTransformInfo::TargetCostKind CostKind =
+     BB->getParent()->hasMinSize()
+     ? TargetTransformInfo::TCK_CodeSize
+diff --git a/llvm/test/Transforms/LoopUnroll/ARM/upperbound.ll b/llvm/test/Transforms/LoopUnroll/ARM/upperbound.ll
+index 302cc96c9961e..32938ef276be1 100644
+--- a/llvm/test/Transforms/LoopUnroll/ARM/upperbound.ll
++++ b/llvm/test/Transforms/LoopUnroll/ARM/upperbound.ll
+@@ -74,10 +74,8 @@ define i32 @test2(i32 %l86) {
+ ; CHECK-LABEL: @test2(
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    [[L86_OFF:%.*]] = add i32 [[L86:%.*]], -1
+-; CHECK-NEXT:    [[SWITCH:%.*]] = icmp ult i32 [[L86_OFF]], 24
+-; CHECK-NEXT:    [[OR_COND23_NOT:%.*]] = icmp ne i32 [[L86]], 25
+-; CHECK-NEXT:    [[SPEC_SELECT:%.*]] = zext i1 [[OR_COND23_NOT]] to i32
+-; CHECK-NEXT:    [[COMMON_RET_OP:%.*]] = select i1 [[SWITCH]], i32 0, i32 [[SPEC_SELECT]]
++; CHECK-NEXT:    [[SWITCH:%.*]] = icmp ult i32 [[L86_OFF]], 25
++; CHECK-NEXT:    [[COMMON_RET_OP:%.*]] = select i1 [[SWITCH]], i32 0, i32 1
+ ; CHECK-NEXT:    ret i32 [[COMMON_RET_OP]]
+ ;
+ entry:
+diff --git a/llvm/test/Transforms/PhaseOrdering/X86/vector-reductions.ll b/llvm/test/Transforms/PhaseOrdering/X86/vector-reductions.ll
+index 78f68c420f6ab..e821789058050 100644
+--- a/llvm/test/Transforms/PhaseOrdering/X86/vector-reductions.ll
++++ b/llvm/test/Transforms/PhaseOrdering/X86/vector-reductions.ll
+@@ -277,13 +277,13 @@ define i1 @cmp_lt_gt(double %a, double %b, double %c) {
+ ; CHECK-NEXT:    [[TMP6:%.*]] = shufflevector <2 x double> [[TMP5]], <2 x double> poison, <2 x i32> zeroinitializer
+ ; CHECK-NEXT:    [[TMP7:%.*]] = fdiv <2 x double> [[TMP3]], [[TMP6]]
+ ; CHECK-NEXT:    [[TMP8:%.*]] = fcmp uge <2 x double> [[TMP7]], splat (double f0x3EB0C6F7A0B5ED8D)
+-; CHECK-NEXT:    [[SHIFT:%.*]] = shufflevector <2 x i1> [[TMP8]], <2 x i1> poison, <2 x i32> <i32 1, i32 poison>
+-; CHECK-NEXT:    [[FOLDEXTEXTBINOP:%.*]] = or <2 x i1> [[TMP8]], [[SHIFT]]
++; CHECK-NEXT:    [[TMP10:%.*]] = bitcast <2 x i1> [[TMP8]] to i2
++; CHECK-NEXT:    [[OR_COND:%.*]] = icmp eq i2 [[TMP10]], 0
+ ; CHECK-NEXT:    [[TMP9:%.*]] = fcmp ule <2 x double> [[TMP7]], splat (double 1.000000e+00)
+-; CHECK-NEXT:    [[SHIFT3:%.*]] = shufflevector <2 x i1> [[TMP9]], <2 x i1> poison, <2 x i32> <i32 1, i32 poison>
+-; CHECK-NEXT:    [[TMP10:%.*]] = or <2 x i1> [[TMP9]], [[SHIFT3]]
+-; CHECK-NEXT:    [[FOLDEXTEXTBINOP4:%.*]] = and <2 x i1> [[FOLDEXTEXTBINOP]], [[TMP10]]
+-; CHECK-NEXT:    [[RETVAL_0:%.*]] = extractelement <2 x i1> [[FOLDEXTEXTBINOP4]], i64 0
++; CHECK-NEXT:    [[TMP11:%.*]] = bitcast <2 x i1> [[TMP9]] to i2
++; CHECK-NEXT:    [[OR_COND1:%.*]] = icmp eq i2 [[TMP11]], 0
++; CHECK-NEXT:    [[OR_COND5:%.*]] = or i1 [[OR_COND]], [[OR_COND1]]
++; CHECK-NEXT:    [[RETVAL_0:%.*]] = select i1 [[OR_COND5]], i1 false, i1 true
+ ; CHECK-NEXT:    ret i1 [[RETVAL_0]]
+ ;
+ entry:
+diff --git a/llvm/test/Transforms/SimplifyCFG/ARM/select-costs.ll b/llvm/test/Transforms/SimplifyCFG/ARM/select-costs.ll
+index 21801b9c2f83d..855aed5273869 100644
+--- a/llvm/test/Transforms/SimplifyCFG/ARM/select-costs.ll
++++ b/llvm/test/Transforms/SimplifyCFG/ARM/select-costs.ll
+@@ -17,13 +17,13 @@ define i32 @multiple_spec_select_costs(ptr %a, ptr %idx, i8 %in) {
+ ; V8M:       sw.bb92:
+ ; V8M-NEXT:    [[C_OFF_I150:%.*]] = add i8 [[IN]], -48
+ ; V8M-NEXT:    [[UGT_9:%.*]] = icmp ugt i8 [[C_OFF_I150]], 9
+-; V8M-NEXT:    [[SPEC_SELECT:%.*]] = select i1 [[UGT_9]], i1 false, i1 true
+-; V8M-NEXT:    [[SPEC_SELECT1:%.*]] = select i1 [[UGT_9]], i32 1, i32 7
++; V8M-NEXT:    br i1 [[UGT_9]], label [[FOR_INC_PREHEADER]], label [[SELECT_UNFOLD198:%.*]]
++; V8M:       select.unfold198:
+ ; V8M-NEXT:    br label [[FOR_INC_PREHEADER]]
+ ; V8M:       for.inc.preheader:
+-; V8M-NEXT:    [[STR_PH_0:%.*]] = phi ptr [ [[GEP_A_2]], [[ENTRY:%.*]] ], [ [[INCDEC_PTR109_C4]], [[SW_BB92]] ]
+-; V8M-NEXT:    [[CMP:%.*]] = phi i1 [ false, [[ENTRY]] ], [ [[SPEC_SELECT]], [[SW_BB92]] ]
+-; V8M-NEXT:    [[PHI_RES:%.*]] = phi i32 [ 1, [[ENTRY]] ], [ [[SPEC_SELECT1]], [[SW_BB92]] ]
++; V8M-NEXT:    [[STR_PH_0:%.*]] = phi ptr [ [[INCDEC_PTR109_C4]], [[SELECT_UNFOLD198]] ], [ [[INCDEC_PTR109_C4]], [[SW_BB92]] ], [ [[GEP_A_2]], [[ENTRY:%.*]] ]
++; V8M-NEXT:    [[CMP:%.*]] = phi i1 [ true, [[SELECT_UNFOLD198]] ], [ false, [[SW_BB92]] ], [ false, [[ENTRY]] ]
++; V8M-NEXT:    [[PHI_RES:%.*]] = phi i32 [ 7, [[SELECT_UNFOLD198]] ], [ 1, [[SW_BB92]] ], [ 1, [[ENTRY]] ]
+ ; V8M-NEXT:    br label [[FOR_INC:%.*]]
+ ; V8M:       for.inc:
+ ; V8M-NEXT:    [[STR_PH_1:%.*]] = phi ptr [ [[INCDEC_PTR109:%.*]], [[FOR_BODY:%.*]] ], [ [[STR_PH_0]], [[FOR_INC_PREHEADER]] ]
+@@ -47,13 +47,13 @@ define i32 @multiple_spec_select_costs(ptr %a, ptr %idx, i8 %in) {
+ ; V8A:       sw.bb92:
+ ; V8A-NEXT:    [[C_OFF_I150:%.*]] = add i8 [[IN]], -48
+ ; V8A-NEXT:    [[UGT_9:%.*]] = icmp ugt i8 [[C_OFF_I150]], 9
+-; V8A-NEXT:    [[SPEC_SELECT:%.*]] = select i1 [[UGT_9]], i1 false, i1 true
+-; V8A-NEXT:    [[SPEC_SELECT1:%.*]] = select i1 [[UGT_9]], i32 1, i32 7
++; V8A-NEXT:    br i1 [[UGT_9]], label [[FOR_INC_PREHEADER]], label [[SELECT_UNFOLD198:%.*]]
++; V8A:       select.unfold198:
+ ; V8A-NEXT:    br label [[FOR_INC_PREHEADER]]
+ ; V8A:       for.inc.preheader:
+-; V8A-NEXT:    [[STR_PH_0:%.*]] = phi ptr [ [[GEP_A_2]], [[ENTRY:%.*]] ], [ [[INCDEC_PTR109_C4]], [[SW_BB92]] ]
+-; V8A-NEXT:    [[CMP:%.*]] = phi i1 [ false, [[ENTRY]] ], [ [[SPEC_SELECT]], [[SW_BB92]] ]
+-; V8A-NEXT:    [[PHI_RES:%.*]] = phi i32 [ 1, [[ENTRY]] ], [ [[SPEC_SELECT1]], [[SW_BB92]] ]
++; V8A-NEXT:    [[STR_PH_0:%.*]] = phi ptr [ [[INCDEC_PTR109_C4]], [[SELECT_UNFOLD198]] ], [ [[INCDEC_PTR109_C4]], [[SW_BB92]] ], [ [[GEP_A_2]], [[ENTRY:%.*]] ]
++; V8A-NEXT:    [[CMP:%.*]] = phi i1 [ true, [[SELECT_UNFOLD198]] ], [ false, [[SW_BB92]] ], [ false, [[ENTRY]] ]
++; V8A-NEXT:    [[PHI_RES:%.*]] = phi i32 [ 7, [[SELECT_UNFOLD198]] ], [ 1, [[SW_BB92]] ], [ 1, [[ENTRY]] ]
+ ; V8A-NEXT:    br label [[FOR_INC:%.*]]
+ ; V8A:       for.inc:
+ ; V8A-NEXT:    [[STR_PH_1:%.*]] = phi ptr [ [[INCDEC_PTR109:%.*]], [[FOR_BODY:%.*]] ], [ [[STR_PH_0]], [[FOR_INC_PREHEADER]] ]
+@@ -144,13 +144,13 @@ define i32 @multiple_spec_select_costs_minsize(ptr %a, ptr %idx, i8 %in) #0 {
+ ; V8A:       sw.bb92:
+ ; V8A-NEXT:    [[C_OFF_I150:%.*]] = add i8 [[IN]], -48
+ ; V8A-NEXT:    [[UGT_9:%.*]] = icmp ugt i8 [[C_OFF_I150]], 9
+-; V8A-NEXT:    [[SPEC_SELECT:%.*]] = select i1 [[UGT_9]], i1 false, i1 true
+-; V8A-NEXT:    [[SPEC_SELECT1:%.*]] = select i1 [[UGT_9]], i32 1, i32 7
++; V8A-NEXT:    br i1 [[UGT_9]], label [[FOR_INC_PREHEADER]], label [[SELECT_UNFOLD198:%.*]]
++; V8A:       select.unfold198:
+ ; V8A-NEXT:    br label [[FOR_INC_PREHEADER]]
+ ; V8A:       for.inc.preheader:
+-; V8A-NEXT:    [[STR_PH_0:%.*]] = phi ptr [ [[GEP_A_2]], [[ENTRY:%.*]] ], [ [[INCDEC_PTR109_C4]], [[SW_BB92]] ]
+-; V8A-NEXT:    [[CMP:%.*]] = phi i1 [ false, [[ENTRY]] ], [ [[SPEC_SELECT]], [[SW_BB92]] ]
+-; V8A-NEXT:    [[PHI_RES:%.*]] = phi i32 [ 1, [[ENTRY]] ], [ [[SPEC_SELECT1]], [[SW_BB92]] ]
++; V8A-NEXT:    [[STR_PH_0:%.*]] = phi ptr [ [[INCDEC_PTR109_C4]], [[SELECT_UNFOLD198]] ], [ [[INCDEC_PTR109_C4]], [[SW_BB92]] ], [ [[GEP_A_2]], [[ENTRY:%.*]] ]
++; V8A-NEXT:    [[CMP:%.*]] = phi i1 [ true, [[SELECT_UNFOLD198]] ], [ false, [[SW_BB92]] ], [ false, [[ENTRY]] ]
++; V8A-NEXT:    [[PHI_RES:%.*]] = phi i32 [ 7, [[SELECT_UNFOLD198]] ], [ 1, [[SW_BB92]] ], [ 1, [[ENTRY]] ]
+ ; V8A-NEXT:    br label [[FOR_INC:%.*]]
+ ; V8A:       for.inc:
+ ; V8A-NEXT:    [[STR_PH_1:%.*]] = phi ptr [ [[INCDEC_PTR109:%.*]], [[FOR_BODY:%.*]] ], [ [[STR_PH_0]], [[FOR_INC_PREHEADER]] ]
+diff --git a/llvm/test/Transforms/SimplifyCFG/PhiBlockMerge2.ll b/llvm/test/Transforms/SimplifyCFG/PhiBlockMerge2.ll
+index f7daf31c2e212..e07661d071a06 100644
+--- a/llvm/test/Transforms/SimplifyCFG/PhiBlockMerge2.ll
++++ b/llvm/test/Transforms/SimplifyCFG/PhiBlockMerge2.ll
+@@ -14,10 +14,11 @@ define i32 @test(i1 %a, i1 %b) {
+ ; CHECK-NEXT:    br i1 [[C]], label [[M:%.*]], label [[P:%.*]]
+ ; CHECK:       P:
+ ; CHECK-NEXT:    [[D:%.*]] = call i1 @foo()
+-; CHECK-NEXT:    [[SPEC_SELECT:%.*]] = select i1 [[D]], i32 2, i32 1
++; CHECK-NEXT:    br i1 [[D]], label [[M]], label [[Q:%.*]]
++; CHECK:       Q:
+ ; CHECK-NEXT:    br label [[M]]
+ ; CHECK:       M:
+-; CHECK-NEXT:    [[W:%.*]] = phi i32 [ 0, [[TMP0:%.*]] ], [ [[SPEC_SELECT]], [[P]] ]
++; CHECK-NEXT:    [[W:%.*]] = phi i32 [ 0, [[TMP0:%.*]] ], [ 1, [[Q]] ], [ 2, [[P]] ]
+ ; CHECK-NEXT:    [[R:%.*]] = add i32 [[W]], 1
+ ; CHECK-NEXT:    ret i32 [[R]]
+ ;
+@@ -37,4 +38,3 @@ M:
+   %R = add i32 %W, 1
+   ret i32 %R
+ }
+-
+diff --git a/llvm/test/Transforms/SimplifyCFG/PreferPhi.ll b/llvm/test/Transforms/SimplifyCFG/PreferPhi.ll
+new file mode 100644
+index 0000000000000..3203aae2f8e89
+--- /dev/null
++++ b/llvm/test/Transforms/SimplifyCFG/PreferPhi.ll
+@@ -0,0 +1,124 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 6
++; RUN: opt -passes=simplifycfg -simplifycfg-require-and-preserve-domtree=1 -S < %s | FileCheck %s
++
++declare i1 @cond()
++
++define ptr @a_or_null(ptr %a) {
++; CHECK-LABEL: define ptr @a_or_null(
++; CHECK-SAME: ptr [[A:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[C1:%.*]] = call i1 @cond()
++; CHECK-NEXT:    br i1 [[C1]], label %[[COMMON_RET:.*]], label %[[CONTINUE:.*]]
++; CHECK:       [[CONTINUE]]:
++; CHECK-NEXT:    [[C2:%.*]] = call i1 @cond()
++; CHECK-NEXT:    br i1 [[C2]], label %[[SUCCESS:.*]], label %[[COMMON_RET]]
++; CHECK:       [[COMMON_RET]]:
++; CHECK-NEXT:    [[COMMON_RET_OP:%.*]] = phi ptr [ [[A]], %[[SUCCESS]] ], [ null, %[[CONTINUE]] ], [ null, %[[ENTRY]] ]
++; CHECK-NEXT:    ret ptr [[COMMON_RET_OP]]
++; CHECK:       [[SUCCESS]]:
++; CHECK-NEXT:    br label %[[COMMON_RET]]
++;
++entry:
++  %c1 = call i1 @cond()
++  br i1 %c1, label %fail, label %continue
++
++continue:
++  %c2 = call i1 @cond()
++  br i1 %c2, label %success, label %fail
++
++fail:
++  ret ptr null
++
++success:
++  ret ptr %a
++}
++
++define ptr @a_or_null_select(ptr %a) {
++; CHECK-LABEL: define ptr @a_or_null_select(
++; CHECK-SAME: ptr [[A:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[C1:%.*]] = call i1 @cond()
++; CHECK-NEXT:    br i1 [[C1]], label %[[EXIT:.*]], label %[[CONTINUE:.*]]
++; CHECK:       [[CONTINUE]]:
++; CHECK-NEXT:    [[C2:%.*]] = call i1 @cond()
++; CHECK-NEXT:    [[SELECT:%.*]] = select i1 [[C2]], ptr [[A]], ptr null
++; CHECK-NEXT:    br label %[[EXIT]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    [[RET:%.*]] = phi ptr [ null, %[[ENTRY]] ], [ [[SELECT]], %[[CONTINUE]] ]
++; CHECK-NEXT:    ret ptr [[RET]]
++;
++entry:
++  %c1 = call i1 @cond()
++  br i1 %c1, label %exit, label %continue
++
++continue:
++  %c2 = call i1 @cond()
++  %select = select i1 %c2, ptr %a, ptr null
++  br label %exit
++
++exit:
++  %ret = phi ptr [ null, %entry ], [ %select, %continue ]
++  ret ptr %ret
++}
++
++define ptr @a_or_null_phi1(ptr %a) {
++; CHECK-LABEL: define ptr @a_or_null_phi1(
++; CHECK-SAME: ptr [[A:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[C1:%.*]] = call i1 @cond()
++; CHECK-NEXT:    br i1 [[C1]], label %[[EXIT:.*]], label %[[CONTINUE:.*]]
++; CHECK:       [[CONTINUE]]:
++; CHECK-NEXT:    [[C2:%.*]] = call i1 @cond()
++; CHECK-NEXT:    br i1 [[C2]], label %[[EXIT]], label %[[FAIL:.*]]
++; CHECK:       [[FAIL]]:
++; CHECK-NEXT:    br label %[[EXIT]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    [[RET:%.*]] = phi ptr [ null, %[[ENTRY]] ], [ null, %[[FAIL]] ], [ [[A]], %[[CONTINUE]] ]
++; CHECK-NEXT:    ret ptr [[RET]]
++;
++entry:
++  %c1 = call i1 @cond()
++  br i1 %c1, label %exit, label %continue
++
++continue:
++  %c2 = call i1 @cond()
++  br i1 %c2, label %exit, label %fail
++
++fail:
++  br label %exit
++
++exit:
++  %ret = phi ptr [ null, %entry ], [ null, %fail ], [ %a, %continue ]
++  ret ptr %ret
++}
++
++define ptr @a_or_null_phi2(ptr %a) {
++; CHECK-LABEL: define ptr @a_or_null_phi2(
++; CHECK-SAME: ptr [[A:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[C1:%.*]] = call i1 @cond()
++; CHECK-NEXT:    br i1 [[C1]], label %[[FAIL:.*]], label %[[CONTINUE:.*]]
++; CHECK:       [[CONTINUE]]:
++; CHECK-NEXT:    [[C2:%.*]] = call i1 @cond()
++; CHECK-NEXT:    br i1 [[C2]], label %[[EXIT:.*]], label %[[FAIL]]
++; CHECK:       [[FAIL]]:
++; CHECK-NEXT:    br label %[[EXIT]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    [[RET:%.*]] = phi ptr [ null, %[[FAIL]] ], [ [[A]], %[[CONTINUE]] ]
++; CHECK-NEXT:    ret ptr [[RET]]
++;
++entry:
++  %c1 = call i1 @cond()
++  br i1 %c1, label %fail, label %continue
++
++continue:
++  %c2 = call i1 @cond()
++  br i1 %c2, label %exit, label %fail
++
++fail:
++  br label %exit
++
++exit:
++  %ret = phi ptr [ null, %fail ], [ %a, %continue ]
++  ret ptr %ret
++}
+diff --git a/llvm/test/Transforms/SimplifyCFG/branch-fold-multiple.ll b/llvm/test/Transforms/SimplifyCFG/branch-fold-multiple.ll
+index fd400632a5916..7077b224abba7 100644
+--- a/llvm/test/Transforms/SimplifyCFG/branch-fold-multiple.ll
++++ b/llvm/test/Transforms/SimplifyCFG/branch-fold-multiple.ll
+@@ -114,10 +114,11 @@ define i1 @test3(i32 %0, i32 %1, i32 %2, i32 %3) {
+ ; CHECK-NEXT:    [[OR_COND:%.*]] = select i1 [[CMP2_1]], i1 true, i1 [[CMP2_2]]
+ ; CHECK-NEXT:    [[CMP2_3:%.*]] = icmp sgt i32 [[TMP3]], 0
+ ; CHECK-NEXT:    [[OR_COND1:%.*]] = select i1 [[OR_COND]], i1 true, i1 [[CMP2_3]]
+-; CHECK-NEXT:    [[SPEC_SELECT:%.*]] = select i1 [[OR_COND1]], i1 false, i1 true
++; CHECK-NEXT:    br i1 [[OR_COND1]], label [[CLEANUP]], label [[FOR_COND3:%.*]]
++; CHECK:       for.cond.3:
+ ; CHECK-NEXT:    br label [[CLEANUP]]
+ ; CHECK:       cleanup:
+-; CHECK-NEXT:    [[CMP:%.*]] = phi i1 [ false, [[ENTRY:%.*]] ], [ [[SPEC_SELECT]], [[FOR_COND]] ]
++; CHECK-NEXT:    [[CMP:%.*]] = phi i1 [ false, [[ENTRY:%.*]] ], [ false, [[FOR_COND]] ], [ true, [[FOR_COND3]] ]
+ ; CHECK-NEXT:    ret i1 [[CMP]]
+ ;
+ entry:
+diff --git a/llvm/test/Transforms/SimplifyCFG/branch-fold.ll b/llvm/test/Transforms/SimplifyCFG/branch-fold.ll
+index 58f5b9291673e..ce50acc3fca90 100644
+--- a/llvm/test/Transforms/SimplifyCFG/branch-fold.ll
++++ b/llvm/test/Transforms/SimplifyCFG/branch-fold.ll
+@@ -122,10 +122,11 @@ define i8 @common_pred(i8 noundef %arg, i1 %c1, i1 %c2) {
+ ; CHECK-NEXT:    br i1 [[C1:%.*]], label [[COMMONPRED:%.*]], label [[SUCC:%.*]]
+ ; CHECK:       CommonPred:
+ ; CHECK-NEXT:    call void @dummy()
+-; CHECK-NEXT:    [[SPEC_SELECT:%.*]] = select i1 [[C2:%.*]], i8 4, i8 1
++; CHECK-NEXT:    br i1 [[C2:%.*]], label [[SUCC]], label [[BB:%.*]]
++; CHECK:       BB:
+ ; CHECK-NEXT:    br label [[SUCC]]
+ ; CHECK:       Succ:
+-; CHECK-NEXT:    [[PHI2:%.*]] = phi i8 [ [[SPEC_SELECT]], [[COMMONPRED]] ], [ 0, [[PRED:%.*]] ]
++; CHECK-NEXT:    [[PHI2:%.*]] = phi i8 [ 4, [[COMMONPRED]] ], [ 0, [[PRED:%.*]] ], [ 1, [[BB]] ]
+ ; CHECK-NEXT:    ret i8 [[PHI2]]
+ ;
+ Pred:
+diff --git a/llvm/test/Transforms/SimplifyCFG/extract-cost.ll b/llvm/test/Transforms/SimplifyCFG/extract-cost.ll
+index 4290d9069e5bb..f1bd7f18c996c 100644
+--- a/llvm/test/Transforms/SimplifyCFG/extract-cost.ll
++++ b/llvm/test/Transforms/SimplifyCFG/extract-cost.ll
+@@ -37,8 +37,9 @@ define i1 @PR32078(<4 x i32> %a, <4 x i32> %b) {
+ ; CHECK-NEXT:    [[CMP0_NOT:%.*]] = xor i1 [[CMP0]], true
+ ; CHECK-NEXT:    [[CMP1_NOT:%.*]] = xor i1 [[CMP1]], true
+ ; CHECK-NEXT:    [[BRMERGE:%.*]] = select i1 [[CMP0_NOT]], i1 true, i1 [[CMP1_NOT]]
+-; CHECK-NEXT:    [[SPEC_SELECT:%.*]] = select i1 [[CMP2]], i1 [[CMP3]], i1 false
+-; CHECK-NEXT:    [[R:%.*]] = select i1 [[BRMERGE]], i1 false, i1 [[SPEC_SELECT]]
++; CHECK-NEXT:    [[CMP2_NOT:%.*]] = xor i1 [[CMP2]], true
++; CHECK-NEXT:    [[BRMERGE1:%.*]] = select i1 [[BRMERGE]], i1 true, i1 [[CMP2_NOT]]
++; CHECK-NEXT:    [[R:%.*]] = select i1 [[BRMERGE1]], i1 false, i1 [[CMP3]]
+ ; CHECK-NEXT:    ret i1 [[R]]
+ ;
+ entry:
+diff --git a/llvm/test/Transforms/SimplifyCFG/multiple-phis.ll b/llvm/test/Transforms/SimplifyCFG/multiple-phis.ll
+index 7b188ba787664..eb11bc8578b00 100644
+--- a/llvm/test/Transforms/SimplifyCFG/multiple-phis.ll
++++ b/llvm/test/Transforms/SimplifyCFG/multiple-phis.ll
+@@ -63,10 +63,16 @@ while.end:                                        ; preds = %while.cond
+ define i32 @merge0(i1 %c1, i1 %c2, i1 %c3) {
+ ; CHECK-LABEL: define i32 @merge0
+ ; CHECK-SAME: (i1 [[C1:%.*]], i1 [[C2:%.*]], i1 [[C3:%.*]]) {
+-; CHECK-NEXT:  j2:
+-; CHECK-NEXT:    [[SPEC_SELECT:%.*]] = select i1 [[C3]], i32 2, i32 3
++; CHECK-NEXT:    br i1 [[C1]], label [[IF1:%.*]], label [[ELSE1:%.*]]
++; CHECK:       if1:
+ ; CHECK-NEXT:    [[DOT:%.*]] = select i1 [[C2]], i32 0, i32 1
+-; CHECK-NEXT:    [[PHI2:%.*]] = select i1 [[C1]], i32 [[DOT]], i32 [[SPEC_SELECT]]
++; CHECK-NEXT:    br label [[J2:%.*]]
++; CHECK:       else1:
++; CHECK-NEXT:    br i1 [[C3]], label [[J1:%.*]], label [[J2]]
++; CHECK:       j1:
++; CHECK-NEXT:    br label [[J2]]
++; CHECK:       j2:
++; CHECK-NEXT:    [[PHI2:%.*]] = phi i32 [ 3, [[ELSE1]] ], [ [[DOT]], [[IF1]] ], [ 2, [[J1]] ]
+ ; CHECK-NEXT:    ret i32 [[PHI2]]
+ ;
+   br i1 %c1, label %if1, label %else1
+@@ -106,12 +112,13 @@ define i8 @merge1(i8 noundef %arg, i1 %c1, i1 %c2) {
+ ; CHECK-NEXT:    [[C2_NOT:%.*]] = xor i1 [[C2]], true
+ ; CHECK-NEXT:    [[BRMERGE:%.*]] = select i1 [[C1_NOT]], i1 true, i1 [[C2_NOT]]
+ ; CHECK-NEXT:    [[DOTMUX:%.*]] = select i1 [[C1_NOT]], i8 0, i8 3
+-; CHECK-NEXT:    [[SPEC_SELECT:%.*]] = select i1 [[BRMERGE]], i8 [[DOTMUX]], i8 4
+-; CHECK-NEXT:    br label [[SUCC]]
++; CHECK-NEXT:    br i1 [[BRMERGE]], label [[BB:%.*]], label [[SUCC]]
+ ; CHECK:       case2:
+ ; CHECK-NEXT:    br label [[SUCC]]
++; CHECK:       BB:
++; CHECK-NEXT:    br label [[SUCC]]
+ ; CHECK:       Succ:
+-; CHECK-NEXT:    [[PHI2:%.*]] = phi i8 [ [[SPEC_SELECT]], [[CASE0]] ], [ 1, [[ENTRY:%.*]] ], [ 2, [[CASE2]] ]
++; CHECK-NEXT:    [[PHI2:%.*]] = phi i8 [ 4, [[CASE0]] ], [ 1, [[ENTRY:%.*]] ], [ 2, [[CASE2]] ], [ [[DOTMUX]], [[BB]] ]
+ ; CHECK-NEXT:    ret i8 [[PHI2]]
+ ;
+ entry:
+@@ -162,12 +169,13 @@ define i8 @merge1_unfoldable_one_block(i8 noundef %arg, i1 %c1, i1 %c2) {
+ ; CHECK-NEXT:    [[C2_NOT:%.*]] = xor i1 [[C2]], true
+ ; CHECK-NEXT:    [[BRMERGE:%.*]] = select i1 [[C1_NOT]], i1 true, i1 [[C2_NOT]]
+ ; CHECK-NEXT:    [[DOTMUX:%.*]] = select i1 [[C1_NOT]], i8 0, i8 3
+-; CHECK-NEXT:    [[SPEC_SELECT:%.*]] = select i1 [[BRMERGE]], i8 [[DOTMUX]], i8 4
+-; CHECK-NEXT:    br label [[SUCC]]
++; CHECK-NEXT:    br i1 [[BRMERGE]], label [[BB:%.*]], label [[SUCC]]
+ ; CHECK:       case2:
+ ; CHECK-NEXT:    br label [[SUCC]]
++; CHECK:       BB:
++; CHECK-NEXT:    br label [[SUCC]]
+ ; CHECK:       Succ:
+-; CHECK-NEXT:    [[PHI2:%.*]] = phi i8 [ [[SPEC_SELECT]], [[CASE0]] ], [ 1, [[ENTRY:%.*]] ], [ 2, [[CASE2]] ]
++; CHECK-NEXT:    [[PHI2:%.*]] = phi i8 [ 4, [[CASE0]] ], [ 1, [[ENTRY:%.*]] ], [ 2, [[CASE2]] ], [ [[DOTMUX]], [[BB]] ]
+ ; CHECK-NEXT:    ret i8 [[PHI2]]
+ ;
+ entry:
+@@ -219,13 +227,14 @@ define i8 @merge1_unfoldable_two_block(i8 noundef %arg, i1 %c1, i1 %c2) {
+ ; CHECK-NEXT:    [[C2_NOT:%.*]] = xor i1 [[C2]], true
+ ; CHECK-NEXT:    [[BRMERGE:%.*]] = select i1 [[C1_NOT]], i1 true, i1 [[C2_NOT]]
+ ; CHECK-NEXT:    [[DOTMUX:%.*]] = select i1 [[C1_NOT]], i8 0, i8 3
+-; CHECK-NEXT:    [[SPEC_SELECT:%.*]] = select i1 [[BRMERGE]], i8 [[DOTMUX]], i8 4
+-; CHECK-NEXT:    br label [[SUCC]]
++; CHECK-NEXT:    br i1 [[BRMERGE]], label [[BB:%.*]], label [[SUCC]]
+ ; CHECK:       case1:
+ ; CHECK-NEXT:    call void @dummy()
+ ; CHECK-NEXT:    br label [[SUCC]]
++; CHECK:       BB:
++; CHECK-NEXT:    br label [[SUCC]]
+ ; CHECK:       Succ:
+-; CHECK-NEXT:    [[PHI2:%.*]] = phi i8 [ [[SPEC_SELECT]], [[CASE0]] ], [ 1, [[CASE1]] ], [ 2, [[ENTRY:%.*]] ]
++; CHECK-NEXT:    [[PHI2:%.*]] = phi i8 [ 4, [[CASE0]] ], [ 1, [[CASE1]] ], [ 2, [[ENTRY:%.*]] ], [ [[DOTMUX]], [[BB]] ]
+ ; CHECK-NEXT:    ret i8 [[PHI2]]
+ ;
+ entry:
+@@ -283,10 +292,11 @@ define i8 @merge1_unfoldable_all_block(i8 noundef %arg, i1 %c1, i1 %c2) {
+ ; CHECK-NEXT:    br label [[SUCC]]
+ ; CHECK:       CommonPred:
+ ; CHECK-NEXT:    call void @dummy()
+-; CHECK-NEXT:    [[SPEC_SELECT:%.*]] = select i1 [[C2]], i8 4, i8 3
++; CHECK-NEXT:    br i1 [[C2]], label [[SUCC]], label [[BB:%.*]]
++; CHECK:       BB:
+ ; CHECK-NEXT:    br label [[SUCC]]
+ ; CHECK:       Succ:
+-; CHECK-NEXT:    [[PHI2:%.*]] = phi i8 [ [[SPEC_SELECT]], [[COMMONPRED]] ], [ 0, [[CASE0]] ], [ 1, [[CASE1]] ], [ 2, [[CASE2]] ]
++; CHECK-NEXT:    [[PHI2:%.*]] = phi i8 [ 4, [[COMMONPRED]] ], [ 0, [[CASE0]] ], [ 1, [[CASE1]] ], [ 2, [[CASE2]] ], [ 3, [[BB]] ]
+ ; CHECK-NEXT:    ret i8 [[PHI2]]
+ ;
+ entry:
+diff --git a/llvm/test/Transforms/SimplifyCFG/pr48778-sdiv-speculation.ll b/llvm/test/Transforms/SimplifyCFG/pr48778-sdiv-speculation.ll
+index fe38dd80246e1..7fc0623091009 100644
+--- a/llvm/test/Transforms/SimplifyCFG/pr48778-sdiv-speculation.ll
++++ b/llvm/test/Transforms/SimplifyCFG/pr48778-sdiv-speculation.ll
+@@ -8,11 +8,12 @@ define i32 @test(i1 %cmp) {
+ ; CHECK:       if:
+ ; CHECK-NEXT:    [[DIV:%.*]] = sdiv i32 -2147483648, -1
+ ; CHECK-NEXT:    [[CMP2:%.*]] = icmp ne i32 [[DIV]], 0
+-; CHECK-NEXT:    [[SPEC_SELECT:%.*]] = select i1 [[CMP2]], i32 1, i32 0
+-; CHECK-NEXT:    br label [[COMMON_RET]]
++; CHECK-NEXT:    br i1 [[CMP2]], label [[END:%.*]], label [[COMMON_RET]]
+ ; CHECK:       common.ret:
+-; CHECK-NEXT:    [[COMMON_RET_OP:%.*]] = phi i32 [ 0, [[TMP0:%.*]] ], [ [[SPEC_SELECT]], [[IF]] ]
++; CHECK-NEXT:    [[COMMON_RET_OP:%.*]] = phi i32 [ 1, [[END]] ], [ 0, [[IF]] ], [ 0, [[TMP0:%.*]] ]
+ ; CHECK-NEXT:    ret i32 [[COMMON_RET_OP]]
++; CHECK:       end:
++; CHECK-NEXT:    br label [[COMMON_RET]]
+ ;
+   br i1 %cmp, label %if, label %else
+ 
+diff --git a/llvm/test/Transforms/SimplifyCFG/return-merge.ll b/llvm/test/Transforms/SimplifyCFG/return-merge.ll
+index 2269b62ef5909..f7ddf45886946 100644
+--- a/llvm/test/Transforms/SimplifyCFG/return-merge.ll
++++ b/llvm/test/Transforms/SimplifyCFG/return-merge.ll
+@@ -12,8 +12,8 @@ define i32 @test1(i1 %C) {
+ ; DBGINFO-LABEL: @test1(
+ ; DBGINFO-NEXT:  entry:
+ ; DBGINFO-NEXT:      #dbg_value(i32 0, [[META9:![0-9]+]], !DIExpression(), [[META11:![0-9]+]])
+-; DBGINFO-NEXT:    [[DOT:%.*]] = select i1 [[C:%.*]], i32 1, i32 0
+-; DBGINFO-NEXT:    ret i32 [[DOT]], !dbg [[DBG12:![0-9]+]]
++; DBGINFO-NEXT:    [[DOT:%.*]] = select i1 [[C:%.*]], i32 1, i32 0, !dbg [[DBG12:![0-9]+]]
++; DBGINFO-NEXT:    ret i32 [[DOT]], !dbg [[DBG12]]
+ ;
+ entry:
+   br i1 %C, label %T, label %F
+@@ -49,13 +49,14 @@ define i32 @test3(i1 %C0, i1 %C1, i32 %v0, i32 %v1, i32 %v2) {
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    call void @sideeffect0()
+ ; CHECK-NEXT:    br i1 [[C0:%.*]], label [[T:%.*]], label [[F:%.*]]
++; CHECK:       T.cont:
++; CHECK-NEXT:    br label [[END:%.*]]
+ ; CHECK:       end:
+-; CHECK-NEXT:    [[R:%.*]] = phi i32 [ [[V2:%.*]], [[F]] ], [ [[SPEC_SELECT:%.*]], [[T]] ]
++; CHECK-NEXT:    [[R:%.*]] = phi i32 [ [[V0:%.*]], [[TCONT:%.*]] ], [ [[V1:%.*]], [[T]] ], [ [[V2:%.*]], [[F]] ]
+ ; CHECK-NEXT:    ret i32 [[R]]
+ ; CHECK:       T:
+ ; CHECK-NEXT:    call void @sideeffect1()
+-; CHECK-NEXT:    [[SPEC_SELECT]] = select i1 [[C1:%.*]], i32 [[V0:%.*]], i32 [[V1:%.*]]
+-; CHECK-NEXT:    br label [[END:%.*]]
++; CHECK-NEXT:    br i1 [[C1:%.*]], label [[TCONT]], label [[END]]
+ ; CHECK:       F:
+ ; CHECK-NEXT:    call void @sideeffect2()
+ ; CHECK-NEXT:    br label [[END]]
+@@ -64,17 +65,18 @@ define i32 @test3(i1 %C0, i1 %C1, i32 %v0, i32 %v1, i32 %v2) {
+ ; DBGINFO-NEXT:  entry:
+ ; DBGINFO-NEXT:    call void @sideeffect0(), !dbg [[DBG21:![0-9]+]]
+ ; DBGINFO-NEXT:    br i1 [[C0:%.*]], label [[T:%.*]], label [[F:%.*]], !dbg [[DBG22:![0-9]+]]
++; DBGINFO:       T.cont:
++; DBGINFO-NEXT:    br label [[END:%.*]], !dbg [[DBG23:![0-9]+]]
+ ; DBGINFO:       end:
+-; DBGINFO-NEXT:    [[R:%.*]] = phi i32 [ [[V2:%.*]], [[F]] ], [ [[SPEC_SELECT:%.*]], [[T]] ], !dbg [[DBG23:![0-9]+]]
+-; DBGINFO-NEXT:      #dbg_value(i32 [[R]], [[META20:![0-9]+]], !DIExpression(), [[DBG23]])
+-; DBGINFO-NEXT:    ret i32 [[R]], !dbg [[DBG24:![0-9]+]]
++; DBGINFO-NEXT:    [[R:%.*]] = phi i32 [ [[V0:%.*]], [[T_CONT:%.*]] ], [ [[V1:%.*]], [[T]] ], [ [[V2:%.*]], [[F]] ], !dbg [[DBG24:![0-9]+]]
++; DBGINFO-NEXT:      #dbg_value(i32 [[R]], [[META20:![0-9]+]], !DIExpression(), [[DBG24]])
++; DBGINFO-NEXT:    ret i32 [[R]], !dbg [[DBG25:![0-9]+]]
+ ; DBGINFO:       T:
+-; DBGINFO-NEXT:    call void @sideeffect1(), !dbg [[DBG25:![0-9]+]]
+-; DBGINFO-NEXT:    [[SPEC_SELECT]] = select i1 [[C1:%.*]], i32 [[V0:%.*]], i32 [[V1:%.*]], !dbg [[DBG26:![0-9]+]]
+-; DBGINFO-NEXT:    br label [[END:%.*]], !dbg [[DBG26]]
++; DBGINFO-NEXT:    call void @sideeffect1(), !dbg [[DBG26:![0-9]+]]
++; DBGINFO-NEXT:    br i1 [[C1:%.*]], label [[T_CONT]], label [[END]], !dbg [[DBG27:![0-9]+]]
+ ; DBGINFO:       F:
+-; DBGINFO-NEXT:    call void @sideeffect2(), !dbg [[DBG27:![0-9]+]]
+-; DBGINFO-NEXT:    br label [[END]], !dbg [[DBG28:![0-9]+]]
++; DBGINFO-NEXT:    call void @sideeffect2(), !dbg [[DBG28:![0-9]+]]
++; DBGINFO-NEXT:    br label [[END]], !dbg [[DBG29:![0-9]+]]
+ ;
+ entry:
+   call void @sideeffect0()
+diff --git a/llvm/test/Transforms/SimplifyCFG/switch-on-const.ll b/llvm/test/Transforms/SimplifyCFG/switch-on-const.ll
+index 6e33a381fb463..254a0f1386d0f 100644
+--- a/llvm/test/Transforms/SimplifyCFG/switch-on-const.ll
++++ b/llvm/test/Transforms/SimplifyCFG/switch-on-const.ll
+@@ -128,10 +128,15 @@ define i32 @xyzzy(i64 %x, i64 %y) {
+ ; CHECK-LABEL: @xyzzy(
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    [[EQ:%.*]] = icmp eq i64 [[X:%.*]], [[Y:%.*]]
++; CHECK-NEXT:    br i1 [[EQ]], label [[COMMON_RET:%.*]], label [[CONT:%.*]]
++; CHECK:       cont:
+ ; CHECK-NEXT:    [[LT:%.*]] = icmp slt i64 [[X]], [[Y]]
+-; CHECK-NEXT:    [[SPEC_SELECT:%.*]] = select i1 [[LT]], i32 -1, i32 1
+-; CHECK-NEXT:    [[COMMON_RET_OP:%.*]] = select i1 [[EQ]], i32 0, i32 [[SPEC_SELECT]]
++; CHECK-NEXT:    br i1 [[LT]], label [[A:%.*]], label [[COMMON_RET]]
++; CHECK:       common.ret:
++; CHECK-NEXT:    [[COMMON_RET_OP:%.*]] = phi i32 [ -1, [[A]] ], [ 0, [[ENTRY:%.*]] ], [ 1, [[CONT]] ]
+ ; CHECK-NEXT:    ret i32 [[COMMON_RET_OP]]
++; CHECK:       a:
++; CHECK-NEXT:    br label [[COMMON_RET]]
+ ;
+ entry:
+   %eq = icmp eq i64 %x, %y
+diff --git a/llvm/test/Transforms/SimplifyCFG/switch-simplify-crash2.ll b/llvm/test/Transforms/SimplifyCFG/switch-simplify-crash2.ll
+index 526dae9d0396b..6a10fc32424b3 100644
+--- a/llvm/test/Transforms/SimplifyCFG/switch-simplify-crash2.ll
++++ b/llvm/test/Transforms/SimplifyCFG/switch-simplify-crash2.ll
+@@ -5,11 +5,12 @@ define i8 @test() {
+ ; CHECK-LABEL: @test(
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    br label [[LOOP2:%.*]]
++; CHECK:       loop:
++; CHECK-NEXT:    br label [[LOOP2]]
+ ; CHECK:       loop2:
+-; CHECK-NEXT:    [[PHI2:%.*]] = phi i8 [ [[SPEC_SELECT:%.*]], [[LOOP2]] ], [ 0, [[ENTRY:%.*]] ]
++; CHECK-NEXT:    [[PHI2:%.*]] = phi i8 [ 0, [[LOOP2]] ], [ 0, [[ENTRY:%.*]] ], [ [[PHI2]], [[LOOP:%.*]] ]
+ ; CHECK-NEXT:    [[COND:%.*]] = icmp eq i8 [[PHI2]], 0
+-; CHECK-NEXT:    [[SPEC_SELECT]] = select i1 [[COND]], i8 0, i8 [[PHI2]]
+-; CHECK-NEXT:    br label [[LOOP2]]
++; CHECK-NEXT:    br i1 [[COND]], label [[LOOP2]], label [[LOOP]]
+ ;
+ entry:
+   br label %loop
