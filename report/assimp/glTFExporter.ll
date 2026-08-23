@@ -205,23 +205,24 @@ bb.i:                                             ; preds = %._crit_edge
 
 .lr.ph121.preheader:                              ; preds = %bb.i
   %i.aw = add nuw nsw i32 %3, 1
+  %4 = zext nneg i32 %i.aw to i64
   br label %.lr.ph121
 
 bb.j:                                             ; preds = %.lr.ph121
-  %4 = add nsw i32 %.0119, -1
-  %i.ax = icmp slt i32 %.0119, 4
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
+  %5 = trunc nuw i64 %indvars.iv to i32
+  %i.ax = icmp slt i32 %5, 4
   br i1 %i.ax, label %.loopexit142, label %.lr.ph121, !llvm.loop !225
 
 .lr.ph121:                                        ; preds = %.lr.ph121.preheader, %bb.j
-  %.0119 = phi i32 [ %4, %bb.j ], [ %i.aw, %.lr.ph121.preheader ] ; 3 uses
-  %5 = zext nneg i32 %.0119 to i64                ; 2 uses
-  %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 %5
+  %indvars.iv = phi i64 [ %4, %.lr.ph121.preheader ], [ %indvars.iv.next, %bb.j ] ; 4 uses
+  %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 %indvars.iv
   %i.az = load i8, ptr %i.ay, align 1
   %.not = icmp eq i8 %i.az, 48
   br i1 %.not, label %bb.j, label %.loopexit
 
 .loopexit:                                        ; preds = %.lr.ph121
-  %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 %5
+  %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 %indvars.iv
   %i.bb = getelementptr inbounds nuw i8, ptr %i.ba, i64 1
   br label %_ZN9rapidjson8internal13WriteExponentEiPc.exit
 

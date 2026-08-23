@@ -45,7 +45,7 @@ bb.c:                                             ; preds = %bb.b
   br label %.backedge.backedge
 
 .backedge.backedge:                               ; preds = %bb.c, %.critedge
-  %.021.be = phi i32 [ %i.g, %bb.c ], [ %.126, %.critedge ]
+  %.021.be = phi i32 [ %i.g, %bb.c ], [ %5, %.critedge ]
   %.0.be = phi i32 [ %i.m, %bb.c ], [ %i.u, %.critedge ]
   br label %.backedge, !llvm.loop !11
 
@@ -57,23 +57,27 @@ bb.d:                                             ; preds = %.backedge
   %i.r = getelementptr inbounds i8, ptr %2, i64 %i.q
   store i8 %i.n, ptr %i.r, align 1, !tbaa !13
   %i.s = icmp sgt i32 %.021, -1
-  br i1 %i.s, label %.lr.ph, label %.critedge.thread
+  br i1 %i.s, label %.lr.ph.preheader, label %.critedge.thread
 
-.lr.ph:                                           ; preds = %bb.d, %bb.e
-  %.126 = phi i32 [ %5, %bb.e ], [ %.021, %bb.d ] ; 4 uses
-  %4 = zext nneg i32 %.126 to i64                 ; 2 uses
-  %i.t = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %4
+.lr.ph.preheader:                                 ; preds = %bb.d
+  %4 = zext nneg i32 %.021 to i64
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.e
+  %indvars.iv = phi i64 [ %4, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.e ] ; 5 uses
+  %i.t = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv
   %i.u = load i32, ptr %i.t, align 4, !tbaa !3    ; 2 uses
   %i.v = icmp eq i32 %i.u, -1
   br i1 %i.v, label %bb.e, label %.critedge
 
 bb.e:                                             ; preds = %.lr.ph
-  %5 = add nsw i32 %.126, -1
-  %i.w = icmp sgt i32 %.126, 0
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
+  %i.w = icmp sgt i64 %indvars.iv, 0
   br i1 %i.w, label %.lr.ph, label %.critedge.thread, !llvm.loop !14
 
 .critedge:                                        ; preds = %.lr.ph
-  %i.x = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %4
+  %i.x = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv
+  %5 = trunc nuw nsw i64 %indvars.iv to i32
   store i32 -1, ptr %i.x, align 4, !tbaa !3
   br label %.backedge.backedge
 
@@ -401,28 +405,32 @@ bb.r:                                             ; preds = %.backedge.i
   %i.dh = getelementptr inbounds i8, ptr %4, i64 %i.dg
   store i8 %i.dd, ptr %i.dh, align 1, !tbaa !13
   %i.di = icmp sgt i32 %.021.i, -1
-  br i1 %i.di, label %.lr.ph.i, label %_ZN13duckdb_brotli14BrotliSetDepthEiPNS_11HuffmanTreeEPhi.exit.thread
+  br i1 %i.di, label %.lr.ph.preheader.i, label %_ZN13duckdb_brotli14BrotliSetDepthEiPNS_11HuffmanTreeEPhi.exit.thread
 
-.lr.ph.i:                                         ; preds = %bb.r, %bb.s
-  %.126.i = phi i32 [ %6, %bb.s ], [ %.021.i, %bb.r ] ; 4 uses
-  %5 = zext nneg i32 %.126.i to i64               ; 2 uses
-  %i.dj = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %5
+.lr.ph.preheader.i:                               ; preds = %bb.r
+  %5 = zext nneg i32 %.021.i to i64
+  br label %.lr.ph.i
+
+.lr.ph.i:                                         ; preds = %bb.s, %.lr.ph.preheader.i
+  %indvars.iv.i = phi i64 [ %5, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %bb.s ] ; 5 uses
+  %i.dj = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv.i
   %i.dk = load i32, ptr %i.dj, align 4, !tbaa !3  ; 2 uses
   %i.dl = icmp eq i32 %i.dk, -1
   br i1 %i.dl, label %bb.s, label %.critedge.i85
 
 bb.s:                                             ; preds = %.lr.ph.i
-  %6 = add nsw i32 %.126.i, -1
-  %i.dm = icmp sgt i32 %.126.i, 0
+  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1
+  %i.dm = icmp sgt i64 %indvars.iv.i, 0
   br i1 %i.dm, label %.lr.ph.i, label %_ZN13duckdb_brotli14BrotliSetDepthEiPNS_11HuffmanTreeEPhi.exit.thread, !llvm.loop !14
 
 .critedge.i85:                                    ; preds = %.lr.ph.i
-  %i.dn = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %5
+  %i.dn = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv.i
+  %6 = trunc nuw nsw i64 %indvars.iv.i to i32
   store i32 -1, ptr %i.dn, align 4, !tbaa !3
   br label %.backedge.i.backedge
 
 .backedge.i.backedge:                             ; preds = %.critedge.i85, %bb.q
-  %.021.i.be = phi i32 [ %i.cw, %bb.q ], [ %.126.i, %.critedge.i85 ]
+  %.021.i.be = phi i32 [ %i.cw, %bb.q ], [ %6, %.critedge.i85 ]
   %.0.i84.be = phi i32 [ %i.dc, %bb.q ], [ %i.dk, %.critedge.i85 ]
   br label %.backedge.i, !llvm.loop !11
 

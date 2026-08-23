@@ -201,21 +201,25 @@ bb.a:
 .lr.ph.split.split.us:                            ; preds = %.lr.ph
   %.promoted = load i32, ptr %i.k, align 4, !tbaa !24 ; 2 uses
   %i.m = icmp sgt i32 %.promoted, 0
-  br i1 %i.m, label %.lr.ph41, label %.loopexit
+  br i1 %i.m, label %.lr.ph41.preheader, label %.loopexit
 
-.lr.ph41:                                         ; preds = %.lr.ph.split.split.us, %bb.b
-  %storemerge36.us40 = phi i32 [ %storemerge.us, %bb.b ], [ %.promoted, %.lr.ph.split.split.us ] ; 3 uses
-  %1 = zext nneg i32 %storemerge36.us40 to i64
-  %i.n = getelementptr [8 x i8], ptr %i.l, i64 %1
+.lr.ph41.preheader:                               ; preds = %.lr.ph.split.split.us
+  %1 = zext nneg i32 %.promoted to i64
+  br label %.lr.ph41
+
+.lr.ph41:                                         ; preds = %.lr.ph41.preheader, %bb.b
+  %indvars.iv = phi i64 [ %1, %.lr.ph41.preheader ], [ %indvars.iv.next, %bb.b ] ; 3 uses
+  %i.n = getelementptr [8 x i8], ptr %i.l, i64 %indvars.iv
   %i.o = getelementptr i8, ptr %i.n, i64 -8
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !37   ; 4 uses
   %.not25.us = icmp eq ptr %i.p, null
   br i1 %.not25.us, label %bb.b, label %.thread
 
 bb.b:                                             ; preds = %.lr.ph41
-  %storemerge.us = add nsw i32 %storemerge36.us40, -1 ; 2 uses
-  store i32 %storemerge.us, ptr %i.k, align 4, !tbaa !24
-  %i.q = icmp sgt i32 %storemerge36.us40, 1
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 2 uses
+  %2 = trunc nuw nsw i64 %indvars.iv.next to i32
+  store i32 %2, ptr %i.k, align 4, !tbaa !24
+  %i.q = icmp sgt i64 %indvars.iv, 1
   br i1 %i.q, label %.lr.ph41, label %.loopexit
 
 .thread:                                          ; preds = %.lr.ph41

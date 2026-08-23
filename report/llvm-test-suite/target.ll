@@ -202,23 +202,24 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 
 .lr.ph:                                           ; preds = %.lr.ph40
   %i.n = load ptr, ptr @num_blocks, align 8, !tbaa !25
+  %0 = zext nneg i32 %i.l to i64
   br label %bb.e
 
 bb.e:                                             ; preds = %.lr.ph, %bb.g
-  %.02531 = phi i32 [ %i.l, %.lr.ph ], [ %1, %bb.g ] ; 4 uses
-  %0 = zext nneg i32 %.02531 to i64
-  %i.o = getelementptr inbounds nuw [4 x i8], ptr %i.n, i64 %0
+  %indvars.iv = phi i64 [ %0, %.lr.ph ], [ %indvars.iv.next, %bb.g ] ; 4 uses
+  %i.o = getelementptr inbounds nuw [4 x i8], ptr %i.n, i64 %indvars.iv
   %i.p = load i32, ptr %i.o, align 4, !tbaa !4
   %.not29 = icmp eq i32 %i.p, 0
   br i1 %.not29, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  store i32 %.02531, ptr @cur_max_level, align 4, !tbaa !4
+  %1 = trunc nuw nsw i64 %indvars.iv to i32
+  store i32 %1, ptr @cur_max_level, align 4, !tbaa !4
   br label %.loopexit
 
 bb.g:                                             ; preds = %bb.e
-  %1 = add nsw i32 %.02531, -1
-  %i.q = icmp sgt i32 %.02531, 0
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
+  %i.q = icmp sgt i64 %indvars.iv, 0
   br i1 %i.q, label %bb.e, label %.loopexit, !llvm.loop !32
 
 .loopexit:                                        ; preds = %bb.g, %.lr.ph40, %bb.f

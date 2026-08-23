@@ -204,8 +204,9 @@ _ZN8MapBlock14getNodeNoCheckEsss.exit:            ; preds = %bb.d, %_ZN8MapBlock
   %i.p = load i8, ptr %i.b, align 4, !tbaa !70, !range !71, !noundef !72
   %i.q = trunc nuw i8 %i.p to i1
   %i.r = shl nuw nsw i64 %indvars.iv, 4
-  %i.s = add nuw nsw i64 %i.n, %i.r               ; 2 uses
-  %i.t = select i1 %i.q, i64 0, i64 %i.s
+  %i.s = add nuw nsw i64 %i.n, %i.r
+  %3 = and i64 %i.s, 4294967295                   ; 2 uses
+  %i.t = select i1 %i.q, i64 0, i64 %3
   %i.u = getelementptr inbounds nuw [4 x i8], ptr %i.o, i64 %i.t
   %.sroa.0.0.copyload.i = load i32, ptr %i.u, align 4 ; 3 uses
   %i.v = and i32 %.sroa.0.0.copyload.i, 65535     ; 2 uses
@@ -231,7 +232,7 @@ _ZN7MapNode8setLightE9LightBankh20ContentLightingFlags.exit32: ; preds = %_ZN8Ma
   %.sroa.0.0.insert.insert = or disjoint i32 %.sroa.6.0.insert.ext, %i.af
   tail call void @_ZN8MapBlock19expandNodesIfNeededEv(ptr noundef nonnull align 8 dereferenceable(328) %0)
   %i.ag = load ptr, ptr %i.a, align 8, !tbaa !27
-  %i.ah = getelementptr inbounds nuw [4 x i8], ptr %i.ag, i64 %i.s
+  %i.ah = getelementptr inbounds nuw [4 x i8], ptr %i.ag, i64 %3
   store i32 %.sroa.0.0.insert.insert, ptr %i.ah, align 4
   %i.ai = load i16, ptr %i.d, align 2, !tbaa !74  ; 2 uses
   %i.aj = icmp ult i16 %i.ai, 4

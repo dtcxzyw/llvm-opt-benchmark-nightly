@@ -200,15 +200,16 @@ begin_hunk_0_@des_encrypt:bb.a
   br i1 %i.id, label %.preheader220, label %.loopexit, !llvm.loop !10
 
 .preheader:                                       ; preds = %bb.a, %.preheader
-  %indvars.iv233 = phi i64 [ %indvars.iv.next234, %.preheader ], [ 30, %bb.a ] ; 3 uses
-  %.1227 = phi i64 [ %i.nu, %.preheader ], [ %i.ao, %bb.a ]
-  %.1216226 = phi i64 [ %i.pr, %.preheader ], [ %i.ak, %bb.a ] ; 3 uses
-  %i.ie = getelementptr [8 x i8], ptr %1, i64 %indvars.iv233 ; 8 uses
+  %indvars.iv233 = phi i64 [ %i.nu, %.preheader ], [ %i.ao, %bb.a ]
+  %.1227 = phi i64 [ %i.pr, %.preheader ], [ %i.ak, %bb.a ] ; 3 uses
+  %.1219225 = phi i32 [ %4, %.preheader ], [ 30, %bb.a ] ; 3 uses
+  %3 = zext nneg i32 %.1219225 to i64
+  %i.ie = getelementptr [8 x i8], ptr %1, i64 %3  ; 8 uses
   %i.if = load i64, ptr %i.ie, align 8, !tbaa !8
-  %i.ig = xor i64 %i.if, %.1216226                ; 4 uses
+  %i.ig = xor i64 %i.if, %.1227                   ; 4 uses
   %i.ih = getelementptr inbounds nuw i8, ptr %i.ie, i64 8
   %i.ii = load i64, ptr %i.ih, align 8, !tbaa !8
-  %i.ij = xor i64 %i.ii, %.1216226                ; 5 uses
+  %i.ij = xor i64 %i.ii, %.1227                   ; 5 uses
   %i.ik = lshr i64 %i.ij, 4
   %i.il = shl i64 %i.ij, 28
   %i.im = add i64 %i.ik, %i.il
@@ -244,7 +245,7 @@ begin_hunk_0_@des_encrypt:bb.a
   %i.jq = and i64 %i.jp, 63
   %i.jr = getelementptr inbounds nuw [8 x i8], ptr getelementptr inbounds nuw (i8, ptr @des_SPtrans, i64 3584), i64 %i.jq
   %i.js = load i64, ptr %i.jr, align 8, !tbaa !8
-  %i.jt = xor i64 %i.iq, %.1227
+  %i.jt = xor i64 %i.iq, %indvars.iv233
   %i.ju = xor i64 %i.jt, %i.iu
   %i.jv = xor i64 %i.ju, %i.iy
   %i.jw = xor i64 %i.jv, %i.jc
@@ -300,7 +301,7 @@ begin_hunk_0_@des_encrypt:bb.a
   %i.lu = xor i64 %i.lt, %i.lh
   %i.lv = xor i64 %i.lu, %i.ll
   %i.lw = xor i64 %i.lv, %i.lp
-  %i.lx = xor i64 %i.lw, %.1216226                ; 3 uses
+  %i.lx = xor i64 %i.lw, %.1227                   ; 3 uses
   %i.ly = getelementptr i8, ptr %i.ie, i64 -32
   %i.lz = load i64, ptr %i.ly, align 8, !tbaa !8
   %i.ma = xor i64 %i.lx, %i.lz                    ; 4 uses
@@ -399,8 +400,8 @@ begin_hunk_0_@des_encrypt:bb.a
   %i.pp = xor i64 %i.po, %i.pf
   %i.pq = xor i64 %i.pp, %i.pj
   %i.pr = xor i64 %i.pq, %i.lx                    ; 2 uses
-  %indvars.iv.next234 = add nsw i64 %indvars.iv233, -8
-  %i.ps = icmp samesign ugt i64 %indvars.iv233, 8
+  %4 = add nsw i32 %.1219225, -8
+  %i.ps = icmp samesign ugt i32 %.1219225, 8
   br i1 %i.ps, label %.preheader, label %.loopexit, !llvm.loop !12
 
 .loopexit:                                        ; preds = %.preheader220, %.preheader
@@ -671,15 +672,16 @@ bb.a:
   br i1 %i.gz, label %.preheader158, label %.loopexit, !llvm.loop !13
 
 .preheader:                                       ; preds = %bb.a, %.preheader
-  %indvars.iv171 = phi i64 [ %indvars.iv.next172, %.preheader ], [ 30, %bb.a ] ; 3 uses
-  %.1154164 = phi i64 [ %i.on, %.preheader ], [ %i.g, %bb.a ] ; 3 uses
-  %.1156163 = phi i64 [ %i.mq, %.preheader ], [ %i.k, %bb.a ]
-  %i.ha = getelementptr [8 x i8], ptr %1, i64 %indvars.iv171 ; 8 uses
+  %.1165 = phi i32 [ %4, %.preheader ], [ 30, %bb.a ] ; 3 uses
+  %indvars.iv171 = phi i64 [ %i.on, %.preheader ], [ %i.g, %bb.a ] ; 3 uses
+  %.1154164 = phi i64 [ %i.mq, %.preheader ], [ %i.k, %bb.a ]
+  %3 = zext nneg i32 %.1165 to i64
+  %i.ha = getelementptr [8 x i8], ptr %1, i64 %3  ; 8 uses
   %i.hb = load i64, ptr %i.ha, align 8, !tbaa !8
-  %i.hc = xor i64 %i.hb, %.1154164                ; 4 uses
+  %i.hc = xor i64 %i.hb, %indvars.iv171           ; 4 uses
   %i.hd = getelementptr inbounds nuw i8, ptr %i.ha, i64 8
   %i.he = load i64, ptr %i.hd, align 8, !tbaa !8
-  %i.hf = xor i64 %i.he, %.1154164                ; 5 uses
+  %i.hf = xor i64 %i.he, %indvars.iv171           ; 5 uses
   %i.hg = lshr i64 %i.hf, 4
   %i.hh = shl i64 %i.hf, 28
   %i.hi = add i64 %i.hg, %i.hh
@@ -715,7 +717,7 @@ bb.a:
   %i.im = and i64 %i.il, 63
   %i.in = getelementptr inbounds nuw [8 x i8], ptr getelementptr inbounds nuw (i8, ptr @des_SPtrans, i64 3584), i64 %i.im
   %i.io = load i64, ptr %i.in, align 8, !tbaa !8
-  %i.ip = xor i64 %i.hm, %.1156163
+  %i.ip = xor i64 %i.hm, %.1154164
   %i.iq = xor i64 %i.ip, %i.hq
   %i.ir = xor i64 %i.iq, %i.hu
   %i.is = xor i64 %i.ir, %i.hy
@@ -771,7 +773,7 @@ bb.a:
   %i.kq = xor i64 %i.kp, %i.kd
   %i.kr = xor i64 %i.kq, %i.kh
   %i.ks = xor i64 %i.kr, %i.kl
-  %i.kt = xor i64 %i.ks, %.1154164                ; 3 uses
+  %i.kt = xor i64 %i.ks, %indvars.iv171           ; 3 uses
   %i.ku = getelementptr i8, ptr %i.ha, i64 -32
   %i.kv = load i64, ptr %i.ku, align 8, !tbaa !8
   %i.kw = xor i64 %i.kt, %i.kv                    ; 4 uses
@@ -870,8 +872,8 @@ bb.a:
   %i.ol = xor i64 %i.ok, %i.ob
   %i.om = xor i64 %i.ol, %i.of
   %i.on = xor i64 %i.om, %i.kt                    ; 2 uses
-  %indvars.iv.next172 = add nsw i64 %indvars.iv171, -8
-  %i.oo = icmp samesign ugt i64 %indvars.iv171, 8
+  %4 = add nsw i32 %.1165, -8
+  %i.oo = icmp samesign ugt i32 %.1165, 8
   br i1 %i.oo, label %.preheader, label %.loopexit, !llvm.loop !14
 
 .loopexit:                                        ; preds = %.preheader158, %.preheader
