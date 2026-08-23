@@ -205,8 +205,7 @@ zend_jit_check_exception.exit346:                 ; preds = %jit_EG_exception.ex
 bb.bb:                                            ; preds = %zend_jit_check_exception.exit346, %bb.ax
   %i.fh = call i32 @_ir_END(ptr noundef %0) #34
   %i.fi = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 3 uses
-  %i.fj = add nuw nsw i32 %i.dw, 1                ; 3 uses
-  store i32 %i.fj, ptr %i.a, align 16, !tbaa !65
+  %i.fj = add nuw nsw i32 %i.dw, 1                ; 2 uses
   %i.fk = zext nneg i32 %i.dw to i64
   %i.fl = getelementptr inbounds nuw [4 x i8], ptr %i.fi, i64 %i.fk
   store i32 %i.fh, ptr %i.fl, align 4, !tbaa !65
@@ -327,7 +326,8 @@ zend_jit_check_exception.exit355:                 ; preds = %jit_EG_exception.ex
 
 bb.bm:                                            ; preds = %zend_jit_check_exception.exit355, %bb.bi
   %i.hd = call i32 @_ir_END(ptr noundef nonnull %0) #34
-  %i.he = or disjoint i32 %i.dw, 2
+  %i.he = or disjoint i32 %i.dw, 2                ; 2 uses
+  store i32 %i.he, ptr %i.a, align 16, !tbaa !65
   %i.hf = zext nneg i32 %i.fj to i64
   %i.hg = getelementptr inbounds nuw [4 x i8], ptr %i.fi, i64 %i.hf
   store i32 %i.hd, ptr %i.hg, align 4, !tbaa !65

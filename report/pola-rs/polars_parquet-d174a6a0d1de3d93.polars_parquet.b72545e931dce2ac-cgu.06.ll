@@ -205,7 +205,7 @@ _RINvNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet18handwritten_thrift20file_meta
   call void @llvm.lifetime.end.p0(ptr nonnull %i.t), !dbg !30971, !noalias !30910
   br label %.loopexit8763, !dbg !30972
 
-_RNvYNvNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet18handwritten_thrift20file_metadata_thrift17read_column_orderINtNtNtCscgRAwXFJnXP_4core3ops8function5FnMutTQNtNtB6_14parquet_thrift24ThriftSliceInputProtocolEE8call_mutBa_.exit.thread.i: ; preds = %bb.tw, %_RNvYNvNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet18handwritten_thrift20file_metadata_thrift17read_column_orderINtNtNtCscgRAwXFJnXP_4core3ops8function5FnMutTQNtNtB6_14parquet_thrift24ThriftSliceInputProtocolEE8call_mutBa_.exit.i
+_RNvYNvNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet18handwritten_thrift20file_metadata_thrift17read_column_orderINtNtNtCscgRAwXFJnXP_4core3ops8function5FnMutTQNtNtB6_14parquet_thrift24ThriftSliceInputProtocolEE8call_mutBa_.exit.thread.i: ; preds = %_RNvYNvNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet18handwritten_thrift20file_metadata_thrift17read_column_orderINtNtNtCscgRAwXFJnXP_4core3ops8function5FnMutTQNtNtB6_14parquet_thrift24ThriftSliceInputProtocolEE8call_mutBa_.exit.i, %bb.tw
   %i.alx = phi i8 [ %.pre.i, %_RNvYNvNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet18handwritten_thrift20file_metadata_thrift17read_column_orderINtNtNtCscgRAwXFJnXP_4core3ops8function5FnMutTQNtNtB6_14parquet_thrift24ThriftSliceInputProtocolEE8call_mutBa_.exit.i ], [ %.sroa.0.053.i.i.i, %bb.tw ], !dbg !31083
   call void @llvm.lifetime.end.p0(ptr nonnull %i.s), !dbg !31133, !noalias !30910
   %i.aly = load i64, ptr %i.mm, align 8, !dbg !31147, !alias.scope !31152, !noalias !30910, !noundef !14 ; 3 uses
