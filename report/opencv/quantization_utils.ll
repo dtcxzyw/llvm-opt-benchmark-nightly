@@ -204,14 +204,14 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit116: ; preds = %bb
   %i.ec = load ptr, ptr %i.dj, align 8, !tbaa !169
   %i.ed = getelementptr inbounds nuw i8, ptr %i.ec, i64 %.047130
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.eb, ptr align 1 %i.ed, i64 %i.dk, i1 false)
-  %i.ee = add i64 %.047130, %i.dk                 ; 2 uses
+  %i.ee = add nsw i64 %.047130, %i.dk             ; 2 uses
   %i.ef = add i64 %.046131, %i.dm                 ; 2 uses
   %i.eg = load ptr, ptr %i.di, align 8, !tbaa !169
   %i.eh = getelementptr inbounds nuw i8, ptr %i.eg, i64 %i.ef
   %i.ei = load ptr, ptr %i.dj, align 8, !tbaa !169
   %i.ej = getelementptr inbounds nuw i8, ptr %i.ei, i64 %i.ee
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.eh, ptr align 1 %i.ej, i64 %i.dk, i1 false)
-  %i.ek = add i64 %i.ee, %i.dk                    ; 2 uses
+  %i.ek = add nsw i64 %i.ee, %i.dk                ; 2 uses
   %i.el = add i64 %i.ef, %i.dm                    ; 2 uses
   %niter.next.1 = add nuw nsw i32 %niter, 2       ; 2 uses
   %niter.ncmp.1 = icmp eq i32 %niter.next.1, %unroll_iter

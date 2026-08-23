@@ -203,8 +203,8 @@ bb.bi:                                            ; preds = %bb.br, %.lr.ph.i.i
   %.0281.i.i = phi i32 [ 0, %.lr.ph.i.i ], [ %i.jd, %bb.br ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #5
   store i8 %i.dw, ptr %i.b, align 1
-  %i.ie = mul i32 %.0281.i.i, %.1252.i.i
-  %i.if = add i32 %i.ie, %.1259.i.i               ; 2 uses
+  %i.ie = mul nsw i32 %.0281.i.i, %.1252.i.i
+  %i.if = add nsw i32 %i.ie, %.1259.i.i           ; 2 uses
   %i.ig = call ptr @tvb_memcpy(ptr noundef %0, ptr noundef %i.hx, i32 noundef %i.if, i64 noundef %i.hy) ; 0 uses
   switch i8 %.0.i35, label %default.unreachable [
     i8 0, label %bb.bj
