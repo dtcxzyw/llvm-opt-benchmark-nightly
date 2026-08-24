@@ -205,7 +205,7 @@ bb.af:                                            ; preds = %.loopexit2079
   br i1 %i.et, label %.preheader2076.preheader, label %.loopexit2077
 
 .preheader2076.preheader:                         ; preds = %bb.af
-  %i.eu = mul i32 %i.eo, 9
+  %i.eu = mul nsw i32 %i.eo, 9
   %i.ev = add i32 %i.ea, %i.eu
   %i.ew = add i32 %i.ev, -9208
   %i.ex = add i32 %i.ao, %.neg1916

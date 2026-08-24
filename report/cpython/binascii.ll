@@ -205,7 +205,7 @@ bb.p:                                             ; preds = %bb.o
 
 .lr.ph.i.i:                                       ; preds = %bb.p, %bb.q
   %.03.i.i = phi i64 [ %i.ck, %bb.q ], [ 0, %bb.p ] ; 3 uses
-  %i.ba = shl i64 %.03.i.i, 2                     ; 2 uses
+  %i.ba = shl nuw nsw i64 %.03.i.i, 2             ; 2 uses
   %i.bb = getelementptr i8, ptr %.0116.i, i64 %i.ba ; 4 uses
   %i.bc = load i8, ptr %i.bb, align 1, !tbaa !16
   %i.bd = zext i8 %i.bc to i64

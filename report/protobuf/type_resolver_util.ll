@@ -202,7 +202,7 @@ bb.o:                                             ; preds = %bb.n, %bb.m
   %i.be = ptrtoint ptr %.pre.i to i64
   %i.bf = ptrtoint ptr %.pre4.i to i64
   %i.bg = sub i64 %i.be, %i.bf
-  %i.bh = sdiv exact i64 %i.bg, 72
+  %i.bh = sdiv i64 %i.bg, 72
   br label %._crit_edge.i
 
 ._crit_edge.i:                                    ; preds = %._crit_edge.loopexit.i, %.noexc
@@ -605,7 +605,7 @@ bb.o:                                             ; preds = %bb.n, %bb.m
   %i.ay = ptrtoint ptr %.pre.i to i64
   %i.az = ptrtoint ptr %.pre4.i to i64
   %i.ba = sub i64 %i.ay, %i.az
-  %i.bb = sdiv exact i64 %i.ba, 72
+  %i.bb = sdiv i64 %i.ba, 72
   br label %._crit_edge.i
 
 ._crit_edge.i:                                    ; preds = %._crit_edge.loopexit.i, %.noexc

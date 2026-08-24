@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.b
   unreachable
 
 bb.d:                                             ; preds = %bb.b
-  %i.au = add i32 %i.at, %.063104                 ; 4 uses
+  %i.au = add i32 %i.at, %.063104                 ; 3 uses
   %i.av = icmp slt i32 %.062105, %i.au
   br i1 %i.av, label %.lr.ph100, label %._crit_edge101
 
@@ -264,9 +264,9 @@ bb.j:                                             ; preds = %bb.h, %bb.i
 
 ._crit_edge94:                                    ; preds = %._crit_edge94.loopexit, %bb.g
   %.167.lcssa = phi i32 [ %.06696, %bb.g ], [ %i.bm, %._crit_edge94.loopexit ]
-  %i.bn = add nsw i32 %.198, 1                    ; 2 uses
-  %exitcond.not = icmp eq i32 %i.bn, %i.au
-  br i1 %exitcond.not, label %._crit_edge101.loopexit, label %bb.e, !llvm.loop !157
+  %i.bn = add nsw i32 %.198, 1                    ; 3 uses
+  %2 = icmp slt i32 %i.bn, %i.au
+  br i1 %2, label %bb.e, label %._crit_edge101.loopexit, !llvm.loop !157
 
 ._crit_edge101.loopexit:                          ; preds = %._crit_edge94
   %.pre = load i32, ptr %i.b, align 8
@@ -274,7 +274,7 @@ bb.j:                                             ; preds = %bb.h, %bb.i
 
 ._crit_edge101:                                   ; preds = %._crit_edge101.loopexit, %bb.d
   %i.bo = phi i32 [ %i.ap, %bb.d ], [ %.pre, %._crit_edge101.loopexit ] ; 2 uses
-  %.1.lcssa = phi i32 [ %.062105, %bb.d ], [ %i.au, %._crit_edge101.loopexit ]
+  %.1.lcssa = phi i32 [ %.062105, %bb.d ], [ %i.bn, %._crit_edge101.loopexit ]
   %indvars.iv.next113 = add nuw nsw i64 %indvars.iv112, 1 ; 2 uses
   %i.bp = sext i32 %i.bo to i64
   %i.bq = icmp slt i64 %indvars.iv.next113, %i.bp
