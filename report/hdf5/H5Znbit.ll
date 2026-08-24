@@ -202,7 +202,7 @@ bb.a:
   %7 = alloca %struct.parms_atomic, align 4       ; 7 uses
   %i.f = alloca i32, align 4                      ; 9 uses
   %i.g = load i8, ptr @H5Z_init_g, align 1, !tbaa !8, !range !10, !noundef !11
-  %i.h = trunc nuw i8 %i.g to i1                  ; 2 uses
+  %i.h = trunc nuw i8 %i.g to i1
   %i.i = load i8, ptr @H5_libterm_g, align 1, !range !10
   %i.j = trunc nuw i8 %i.i to i1
   %i.k = xor i1 %i.j, true
@@ -242,7 +242,7 @@ bb.f:                                             ; preds = %bb.e
   %i.aa = mul nuw i64 %i.z, %i.w                  ; 2 uses
   %i.ab = tail call noalias ptr @malloc(i64 noundef %i.aa) #10 ; 7 uses
   %i.ac = icmp eq ptr %i.ab, null
-  br i1 %i.ac, label %bb.g, label %8
+  br i1 %i.ac, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
   %i.ad = load i64, ptr @H5E_RESOURCE_g, align 8, !tbaa !13
@@ -250,19 +250,12 @@ bb.g:                                             ; preds = %bb.f
   %i.af = tail call i32 (ptr, ptr, i32, i64, i64, ptr, ...) @H5E_printf_stack(ptr noundef nonnull @.str.1, ptr noundef nonnull @__func__.H5Z__filter_nbit, i32 noundef 953, i64 noundef %i.ad, i64 noundef %i.ae, ptr noundef nonnull @.str.30) #9 ; 0 uses
   br label %bb.z
 
-8:                                                ; preds = %bb.f
-  %9 = load ptr, ptr %5, align 8, !tbaa !16       ; 3 uses
+bb.h:                                             ; preds = %bb.f
+  %8 = load ptr, ptr %5, align 8, !tbaa !16       ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #9
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #9
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #9
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #9
-  %10 = load i8, ptr @H5_libterm_g, align 1, !range !10
-  %11 = trunc nuw i8 %10 to i1
-  %12 = xor i1 %11, true
-  %13 = select i1 %i.h, i1 true, i1 %12
-  br i1 %13, label %bb.h, label %H5Z__nbit_decompress.exit.thread, !prof !12
-
-bb.h:                                             ; preds = %8
   %i.ag = load i32, ptr %i.x, align 4, !tbaa !15  ; 3 uses
   %i.ah = zext i32 %i.ag to i64                   ; 4 uses
   %i.ai = mul nuw i64 %i.ah, %i.w
@@ -309,7 +302,7 @@ bb.j:                                             ; preds = %bb.i
 .lr.ph45.i:                                       ; preds = %.preheader.i, %.lr.ph45.i
   %indvars.iv56.i = phi i64 [ %indvars.iv.next57.i, %.lr.ph45.i ], [ 0, %.preheader.i ] ; 2 uses
   %i.ba = mul nuw i64 %indvars.iv56.i, %i.ah
-  call fastcc void @H5Z__nbit_decompress_one_atomic(ptr noundef nonnull %i.ab, i64 noundef %i.ba, ptr noundef readonly %9, ptr noundef %i.d, ptr noundef %i.e, ptr noundef %7)
+  call fastcc void @H5Z__nbit_decompress_one_atomic(ptr noundef nonnull %i.ab, i64 noundef %i.ba, ptr noundef readonly %8, ptr noundef %i.d, ptr noundef %i.e, ptr noundef %7)
   %indvars.iv.next57.i = add nuw nsw i64 %indvars.iv56.i, 1 ; 2 uses
   %exitcond60.not.i = icmp eq i64 %indvars.iv.next57.i, %i.w
   br i1 %exitcond60.not.i, label %H5Z__nbit_decompress.exit.thread, label %.lr.ph45.i, !llvm.loop !21
@@ -322,7 +315,7 @@ bb.k:                                             ; preds = %bb.h
 .lr.ph43.i:                                       ; preds = %bb.k, %bb.m
   %indvars.iv51.i = phi i64 [ %indvars.iv.next52.i, %bb.m ], [ 0, %bb.k ] ; 2 uses
   %i.bb = mul nuw i64 %indvars.iv51.i, %i.ah
-  %i.bc = call fastcc i32 @H5Z__nbit_decompress_one_array(ptr noundef nonnull %i.ab, i64 noundef %i.bb, ptr noundef readonly %9, ptr noundef %i.d, ptr noundef %i.e, ptr noundef nonnull readonly %2, ptr noundef %i.f)
+  %i.bc = call fastcc i32 @H5Z__nbit_decompress_one_array(ptr noundef nonnull %i.ab, i64 noundef %i.bb, ptr noundef readonly %8, ptr noundef %i.d, ptr noundef %i.e, ptr noundef nonnull readonly %2, ptr noundef %i.f)
   %i.bd = icmp slt i32 %i.bc, 0
   br i1 %i.bd, label %bb.l, label %bb.m
 
@@ -346,7 +339,7 @@ bb.n:                                             ; preds = %bb.h
 .lr.ph.i:                                         ; preds = %bb.n, %bb.p
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.p ], [ 0, %bb.n ] ; 2 uses
   %i.bh = mul nuw i64 %indvars.iv.i, %i.ah
-  %i.bi = call fastcc i32 @H5Z__nbit_decompress_one_compound(ptr noundef nonnull %i.ab, i64 noundef %i.bh, ptr noundef readonly %9, ptr noundef %i.d, ptr noundef %i.e, ptr noundef nonnull readonly %2, ptr noundef %i.f)
+  %i.bi = call fastcc i32 @H5Z__nbit_decompress_one_compound(ptr noundef nonnull %i.ab, i64 noundef %i.bh, ptr noundef readonly %8, ptr noundef %i.d, ptr noundef %i.e, ptr noundef nonnull readonly %2, ptr noundef %i.f)
   %i.bj = icmp slt i32 %i.bi, 0
   br i1 %i.bj, label %bb.o, label %bb.p
 
@@ -362,7 +355,7 @@ bb.p:                                             ; preds = %.lr.ph.i
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %i.w
   br i1 %exitcond.not.i, label %H5Z__nbit_decompress.exit.thread, label %.lr.ph.i, !llvm.loop !24
 
-H5Z__nbit_decompress.exit.thread:                 ; preds = %bb.p, %bb.m, %.lr.ph45.i, %bb.h, %8, %bb.k, %.preheader.i, %bb.n
+H5Z__nbit_decompress.exit.thread:                 ; preds = %bb.p, %bb.m, %.lr.ph45.i, %bb.h, %bb.k, %.preheader.i, %bb.n
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #9
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #9
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #9

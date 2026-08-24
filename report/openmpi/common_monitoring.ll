@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
-  %i.f = phi i32 [ %ompi_mpi_comm_world.val.val, %bb.d ], [ %i.d, %bb.c ]
+  %i.f = phi i32 [ %ompi_mpi_comm_world.val.val, %bb.d ], [ %i.d, %bb.c ] ; 2 uses
   %i.g = load ptr, ptr @pml_data, align 8, !tbaa !38
   %i.h = icmp eq ptr %i.g, null
   br i1 %i.h, label %bb.f, label %bb.g
@@ -214,8 +214,7 @@ bb.f:                                             ; preds = %bb.e
   %i.j = sext i32 %i.i to i64
   %i.k = tail call noalias ptr @calloc(i64 noundef %i.j, i64 noundef 8) #23 ; 2 uses
   store ptr %i.k, ptr @pml_data, align 8, !tbaa !38
-  %2 = load i32, ptr @nprocs_world, align 4, !tbaa !8
-  %i.l = sext i32 %2 to i64                       ; 10 uses
+  %i.l = sext i32 %i.f to i64                     ; 10 uses
   %i.m = getelementptr inbounds [8 x i8], ptr %i.k, i64 %i.l ; 2 uses
   store ptr %i.m, ptr @pml_count, align 8, !tbaa !38
   %i.n = getelementptr inbounds [8 x i8], ptr %i.m, i64 %i.l ; 2 uses
@@ -360,7 +359,6 @@ bb.c:                                             ; preds = %bb.b
   %i.e = mul nsw i32 %0, 66
   %i.f = sext i32 %i.e to i64
   %i.g = getelementptr inbounds [8 x i8], ptr %i.d, i64 %i.f
-  %3 = atomicrmw volatile add ptr %i.g, i64 1 monotonic, align 8 ; 0 uses
   br label %.sink.split
 
 bb.d:                                             ; preds = %bb.b
@@ -376,25 +374,24 @@ bb.d:                                             ; preds = %bb.b
   %i.p = sext i32 %i.o to i64
   %i.q = getelementptr [8 x i8], ptr %i.m, i64 %i.p
   %i.r = getelementptr i8, ptr %i.q, i64 8
-  %4 = atomicrmw volatile add ptr %i.r, i64 1 monotonic, align 8 ; 0 uses
-  %.pre = load i32, ptr @mca_common_monitoring_current_state, align 4
   br label %.sink.split
 
 .sink.split:                                      ; preds = %bb.d, %bb.c
-  %5 = phi i32 [ %.pre, %bb.d ], [ %i.a, %bb.c ]
+  %.sink = phi ptr [ %i.r, %bb.d ], [ %i.g, %bb.c ]
+  %3 = atomicrmw volatile add ptr %.sink, i64 1 monotonic, align 8 ; 0 uses
   %i.s = icmp sgt i32 %2, -1
-  %i.t = icmp slt i32 %5, 2
-  %or.cond = select i1 %i.s, i1 true, i1 %i.t     ; 2 uses
-  %6 = sext i32 %0 to i64                         ; 2 uses
+  %i.t = icmp slt i32 %i.a, 2
+  %or.cond = or i1 %i.s, %i.t                     ; 2 uses
   %pml_data.val = load ptr, ptr @pml_data, align 8
   %filtered_pml_data.val = load ptr, ptr @filtered_pml_data, align 8
   %i.u = select i1 %or.cond, ptr %pml_data.val, ptr %filtered_pml_data.val
-  %i.v = getelementptr inbounds [8 x i8], ptr %i.u, i64 %6
+  %4 = sext i32 %0 to i64                         ; 2 uses
+  %i.v = getelementptr inbounds [8 x i8], ptr %i.u, i64 %4
   %i.w = atomicrmw volatile add ptr %i.v, i64 %1 monotonic, align 8 ; 0 uses
   %pml_count.val = load ptr, ptr @pml_count, align 8
   %filtered_pml_count.val = load ptr, ptr @filtered_pml_count, align 8
   %i.x = select i1 %or.cond, ptr %pml_count.val, ptr %filtered_pml_count.val
-  %i.y = getelementptr inbounds [8 x i8], ptr %i.x, i64 %6
+  %i.y = getelementptr inbounds [8 x i8], ptr %i.x, i64 %4
   %i.z = atomicrmw volatile add ptr %i.y, i64 1 monotonic, align 8 ; 0 uses
   br label %bb.e
 

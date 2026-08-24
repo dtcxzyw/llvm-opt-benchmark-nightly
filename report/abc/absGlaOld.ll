@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %.lr.ph508, %.crited
   %.val257 = load ptr, ptr %i.x, align 8, !tbaa !91
   %i.ad = trunc nuw nsw i64 %indvars.iv528 to i32 ; 17 uses
   %i.ae = tail call fastcc ptr @Gla_ObjRef(ptr %.val237, ptr %.val257, ptr noundef %.val237, i32 noundef %i.ad)
-  %i.af = load i32, ptr @Gla_ManRefinement2.Sign, align 4, !tbaa !24
+  %i.af = load i32, ptr @Gla_ManRefinement2.Sign, align 4, !tbaa !24 ; 3 uses
   %i.ag = shl i32 %i.af, 19
   %i.ah = and i32 %i.ag, 2146959360
   store i32 %i.ah, ptr %i.ae, align 4
@@ -221,6 +221,7 @@ bb.b:                                             ; preds = %.lr.ph508, %.crited
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph, %Gla_ObjSatValue.exit
+  %1 = phi i32 [ %i.af, %.lr.ph ], [ %2, %Gla_ObjSatValue.exit ] ; 2 uses
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %Gla_ObjSatValue.exit ] ; 2 uses
   %i.am = load ptr, ptr %i.w, align 8, !tbaa !38
   %i.an = getelementptr i8, ptr %i.am, i64 32
@@ -468,15 +469,16 @@ bb.aa:                                            ; preds = %Gla_ManCheckVar.exi
   %i.dy = load i32, ptr %i.dx, align 4, !tbaa !24
   %i.dz = icmp eq i32 %i.dy, 1
   %i.ea = zext i1 %i.dz to i32
+  %.pre535 = load i32, ptr @Gla_ManRefinement2.Sign, align 4, !tbaa !24
   br label %Gla_ObjSatValue.exit
 
 Gla_ObjSatValue.exit:                             ; preds = %Gla_ManCheckVar.exit451, %bb.aa
+  %2 = phi i32 [ %.pre535, %bb.aa ], [ %1, %Gla_ManCheckVar.exit451 ] ; 3 uses
   %i.eb = phi i32 [ %i.ea, %bb.aa ], [ 0, %Gla_ManCheckVar.exit451 ]
   %i.ec = load i32, ptr %i.by, align 4
   %i.ed = and i32 %i.ec, -2147483642
   %i.ee = or disjoint i32 %i.ed, %i.eb
-  %1 = load i32, ptr @Gla_ManRefinement2.Sign, align 4, !tbaa !24
-  %i.ef = shl i32 %1, 19
+  %i.ef = shl i32 %2, 19
   %i.eg = and i32 %i.ef, 2146959360
   %i.eh = or disjoint i32 %i.eg, %i.ee
   store i32 %i.eh, ptr %i.by, align 4
@@ -485,6 +487,7 @@ Gla_ObjSatValue.exit:                             ; preds = %Gla_ManCheckVar.exi
   br i1 %exitcond.not, label %.critedge, label %bb.c, !llvm.loop !120
 
 .critedge:                                        ; preds = %bb.c, %Gla_ObjSatValue.exit, %bb.b
+  %3 = phi i32 [ %i.af, %bb.b ], [ %1, %bb.c ], [ %2, %Gla_ObjSatValue.exit ] ; 2 uses
   %.val213 = load i32, ptr %i.l, align 4, !tbaa !8 ; 2 uses
   %i.ei = icmp sgt i32 %.val213, 0
   br i1 %i.ei, label %.lr.ph497, label %.critedge2
@@ -497,6 +500,7 @@ Gla_ObjSatValue.exit:                             ; preds = %Gla_ManCheckVar.exi
   br label %bb.ab
 
 bb.ab:                                            ; preds = %.lr.ph497, %Gla_ObjSatValue.exit285
+  %4 = phi i32 [ %3, %.lr.ph497 ], [ %5, %Gla_ObjSatValue.exit285 ] ; 2 uses
   %indvars.iv515 = phi i64 [ 0, %.lr.ph497 ], [ %indvars.iv.next516, %Gla_ObjSatValue.exit285 ] ; 2 uses
   %i.em = load ptr, ptr %i.w, align 8, !tbaa !38
   %i.en = getelementptr i8, ptr %i.em, i64 32
@@ -744,9 +748,11 @@ bb.az:                                            ; preds = %Gla_ManCheckVar.exi
   %i.hy = load i32, ptr %i.hx, align 4, !tbaa !24
   %i.hz = icmp eq i32 %i.hy, 1
   %i.ia = zext i1 %i.hz to i32
+  %.pre539 = load i32, ptr @Gla_ManRefinement2.Sign, align 4, !tbaa !24
   br label %Gla_ObjSatValue.exit285
 
 Gla_ObjSatValue.exit285:                          ; preds = %Gla_ManCheckVar.exit469, %bb.az
+  %5 = phi i32 [ %.pre539, %bb.az ], [ %4, %Gla_ManCheckVar.exit469 ] ; 3 uses
   %i.ib = phi i32 [ %i.ia, %bb.az ], [ 0, %Gla_ManCheckVar.exit469 ]
   %i.ic = load i32, ptr %i.fy, align 4
   %i.id = and i32 %i.ic, -2147483646
@@ -756,8 +762,7 @@ Gla_ObjSatValue.exit285:                          ; preds = %Gla_ManCheckVar.exi
   %i.ig = and i32 %i.if, 524280
   %i.ih = or disjoint i32 %i.ig, %i.ib
   %i.ii = or disjoint i32 %i.ih, %i.id
-  %2 = load i32, ptr @Gla_ManRefinement2.Sign, align 4, !tbaa !24
-  %i.ij = shl i32 %2, 19
+  %i.ij = shl i32 %5, 19
   %i.ik = and i32 %i.ij, 2146959360
   %i.il = or disjoint i32 %i.ii, %i.ik
   %i.im = or disjoint i32 %i.il, 4
@@ -766,6 +771,7 @@ Gla_ObjSatValue.exit285:                          ; preds = %Gla_ManCheckVar.exi
   br i1 %exitcond519.not, label %.critedge2, label %bb.ab, !llvm.loop !121
 
 .critedge2:                                       ; preds = %bb.ab, %Gla_ObjSatValue.exit285, %.critedge
+  %6 = phi i32 [ %3, %.critedge ], [ %4, %bb.ab ], [ %5, %Gla_ObjSatValue.exit285 ] ; 3 uses
   %.val212499 = load i32, ptr %i.p, align 4, !tbaa !8
   %i.in = icmp sgt i32 %.val212499, 0
   br i1 %i.in, label %.lr.ph501, label %.critedge4
@@ -781,6 +787,8 @@ Gla_ObjSatValue.exit285:                          ; preds = %Gla_ManCheckVar.exi
   br label %bb.ba
 
 bb.ba:                                            ; preds = %.lr.ph501, %bb.ef
+  %7 = phi i32 [ %6, %.lr.ph501 ], [ %9, %bb.ef ] ; 5 uses
+  %8 = phi i32 [ %6, %.lr.ph501 ], [ %10, %bb.ef ] ; 2 uses
   %indvars.iv520 = phi i64 [ 0, %.lr.ph501 ], [ %indvars.iv.next521, %bb.ef ] ; 2 uses
   %i.iv = load ptr, ptr %i.w, align 8, !tbaa !38  ; 2 uses
   %.val217 = load ptr, ptr %i.r, align 8, !tbaa !13
@@ -921,8 +929,7 @@ bb.bn:                                            ; preds = %Gia_ObjIsRo.exit
   br i1 %i.iq, label %bb.bo, label %bb.bp
 
 bb.bo:                                            ; preds = %bb.bn
-  %3 = load i32, ptr @Gla_ManRefinement2.Sign, align 4, !tbaa !24
-  %i.kr = shl i32 %3, 19
+  %i.kr = shl i32 %7, 19
   %i.ks = and i32 %i.kr, 2146959360
   br label %bb.ef
 
@@ -1051,8 +1058,7 @@ Gla_ObjRef.exit322:                               ; preds = %bb.bp, %._crit_edge
   %i.mo = and i32 %i.mn, 524280
   %i.mp = and i32 %i.mm, -2147483641
   %i.mq = or disjoint i32 %i.mp, %i.mo
-  %4 = load i32, ptr @Gla_ManRefinement2.Sign, align 4, !tbaa !24
-  %i.mr = shl i32 %4, 19
+  %i.mr = shl i32 %8, 19
   %i.ms = and i32 %i.mr, 2146959360
   %i.mt = or disjoint i32 %i.ms, %i.mq
   br label %bb.ef
@@ -1455,7 +1461,7 @@ bb.ee:                                            ; preds = %bb.eb, %bb.ed, %bb.
   %.sink = phi i32 [ %i.vk, %bb.eb ], [ %i.vm, %bb.ed ], [ %i.vl, %bb.ec ], [ %i.ut, %bb.dy ]
   %i.vn = and i32 %i.uk, %.sink631
   %i.vo = or disjoint i32 %.sink, %i.vn
-  %i.vp = load i32, ptr @Gla_ManRefinement2.Sign, align 4, !tbaa !24
+  %i.vp = load i32, ptr @Gla_ManRefinement2.Sign, align 4, !tbaa !24 ; 3 uses
   %i.vq = shl i32 %i.vp, 19
   %i.vr = and i32 %i.vq, 2146959360
   %i.vs = and i32 %i.vo, -2146959361
@@ -1464,6 +1470,8 @@ bb.ee:                                            ; preds = %bb.eb, %bb.ed, %bb.
 
 bb.ef:                                            ; preds = %bb.bo, %Gla_ObjRef.exit322, %bb.ee
   %.sink632 = phi i32 [ %i.ks, %bb.bo ], [ %i.mt, %Gla_ObjRef.exit322 ], [ %i.vt, %bb.ee ]
+  %9 = phi i32 [ %7, %bb.bo ], [ %7, %Gla_ObjRef.exit322 ], [ %i.vp, %bb.ee ] ; 2 uses
+  %10 = phi i32 [ %7, %bb.bo ], [ %8, %Gla_ObjRef.exit322 ], [ %i.vp, %bb.ee ]
   store i32 %.sink632, ptr %i.ki, align 4
   %indvars.iv.next521 = add nuw nsw i64 %indvars.iv520, 1 ; 2 uses
   %.val212 = load i32, ptr %i.p, align 4, !tbaa !8
@@ -1472,6 +1480,7 @@ bb.ef:                                            ; preds = %bb.bo, %Gla_ObjRef.
   br i1 %i.vv, label %bb.ba, label %.critedge4, !llvm.loop !122
 
 .critedge4:                                       ; preds = %bb.ba, %bb.ef, %.critedge2
+  %11 = phi i32 [ %6, %.critedge2 ], [ %7, %bb.ba ], [ %9, %bb.ef ]
   %.val211 = load i32, ptr %i.d, align 4, !tbaa !8 ; 2 uses
   %i.vw = icmp sgt i32 %.val211, 0
   br i1 %i.vw, label %.lr.ph504, label %.critedge4..critedge6_crit_edge
@@ -1484,6 +1493,8 @@ bb.ef:                                            ; preds = %bb.bo, %Gla_ObjRef.
   %.val216 = load ptr, ptr %i.f, align 8, !tbaa !13
   %i.vx = add nuw nsw i64 %indvars.iv528, 1       ; 4 uses
   %i.vy = shl nuw nsw i64 %i.vx, 2                ; 4 uses
+  %12 = shl i32 %11, 19
+  %13 = and i32 %12, 2146959360
   %wide.trip.count526 = zext nneg i32 %.val211 to i64
   %i.vz = trunc nsw i64 %i.vx to i32              ; 4 uses
   br label %bb.eg
@@ -1732,10 +1743,7 @@ Gla_ObjRef.exit413:                               ; preds = %Gla_ObjRef.exit395,
   %i.zj = and i32 %i.zi, 524280
   %i.zk = and i32 %i.zh, -2147483641
   %i.zl = or disjoint i32 %i.zk, %i.zj
-  %5 = load i32, ptr @Gla_ManRefinement2.Sign, align 4, !tbaa !24
-  %6 = shl i32 %5, 19
-  %7 = and i32 %6, 2146959360
-  %i.zm = or disjoint i32 %i.zl, %7
+  %i.zm = or disjoint i32 %i.zl, %13
   store i32 %i.zm, ptr %i.xl, align 4
   %indvars.iv.next524 = add nuw nsw i64 %indvars.iv523, 1 ; 2 uses
   %exitcond527.not = icmp eq i64 %indvars.iv.next524, %wide.trip.count526

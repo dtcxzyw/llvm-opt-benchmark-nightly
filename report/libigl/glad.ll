@@ -204,7 +204,7 @@ bb.anf:                                           ; preds = %load_GL_VERSION_4_1
   store i32 0, ptr @num_exts_i, align 4, !tbaa !16
   %i.dqx = load ptr, ptr @glad_glGetIntegerv, align 8, !tbaa !8
   call void %i.dqx(i32 noundef 33309, ptr noundef nonnull @num_exts_i) #7, !inline_history !31
-  %i.dqy = load i32, ptr @num_exts_i, align 4, !tbaa !16 ; 2 uses
+  %i.dqy = load i32, ptr @num_exts_i, align 4, !tbaa !16 ; 3 uses
   %i.dqz = icmp sgt i32 %i.dqy, 0
   br i1 %i.dqz, label %bb.ang, label %thread-pre-split.i.i.i
 
@@ -225,8 +225,7 @@ bb.anh:                                           ; preds = %thread-pre-split.i.
   br i1 %i.dre, label %gladLoadGLLoader.exit, label %.preheader.i.i.i
 
 .preheader.i.i.i:                                 ; preds = %bb.anh
-  %0 = load i32, ptr @num_exts_i, align 4, !tbaa !16
-  %.not17.i.i.i = icmp eq i32 %0, 0
+  %.not17.i.i.i = icmp eq i32 %i.dqy, 0
   br i1 %.not17.i.i.i, label %._crit_edge.i.i.i, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %.preheader.i.i.i, %bb.anj
@@ -284,7 +283,7 @@ bb.anj:                                           ; preds = %bb.ani, %.lr.ph.i.i
   br i1 %i.drz, label %.lr.ph.i3.i.i, label %._crit_edge.i.i.i, !llvm.loop !39
 
 ._crit_edge.i.i.i:                                ; preds = %.lr.ph.i3.i.i, %.preheader.i2.i.i, %.preheader.i.i.i
-  %i.dsa = phi ptr [ %i.drt, %.preheader.i2.i.i ], [ %i.drd, %.preheader.i.i.i ], [ %i.drt, %.lr.ph.i3.i.i ]
+  %i.dsa = phi ptr [ %i.drd, %.preheader.i.i.i ], [ %i.drt, %.preheader.i2.i.i ], [ %i.drt, %.lr.ph.i3.i.i ]
   call void @free(ptr noundef nonnull %i.dsa) #7
   store ptr null, ptr @exts_i, align 8, !tbaa !32
   br label %bb.ank
@@ -687,7 +686,7 @@ bb.s:                                             ; preds = %load_GL_VERSION_4_1
   store i32 0, ptr @num_exts_i, align 4, !tbaa !16
   %i.vq = load ptr, ptr @glad_glGetIntegerv, align 8, !tbaa !8
   call void %i.vq(i32 noundef 33309, ptr noundef nonnull @num_exts_i) #7, !inline_history !55
-  %i.vr = load i32, ptr @num_exts_i, align 4, !tbaa !16 ; 2 uses
+  %i.vr = load i32, ptr @num_exts_i, align 4, !tbaa !16 ; 3 uses
   %i.vs = icmp sgt i32 %i.vr, 0
   br i1 %i.vs, label %bb.t, label %thread-pre-split.i.i
 
@@ -708,8 +707,7 @@ bb.u:                                             ; preds = %thread-pre-split.i.
   br i1 %i.vx, label %find_extensionsGL.exit, label %.preheader.i.i
 
 .preheader.i.i:                                   ; preds = %bb.u
-  %1 = load i32, ptr @num_exts_i, align 4, !tbaa !16
-  %.not17.i.i = icmp eq i32 %1, 0
+  %.not17.i.i = icmp eq i32 %i.vr, 0
   br i1 %.not17.i.i, label %._crit_edge.i.i, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %.preheader.i.i, %bb.w
@@ -766,8 +764,8 @@ bb.w:                                             ; preds = %bb.v, %.lr.ph.i.i
   %i.ws = icmp slt i64 %indvars.iv.next.i5.i, %i.wr
   br i1 %i.ws, label %.lr.ph.i3.i, label %._crit_edge.i.i, !llvm.loop !39
 
-._crit_edge.i.i:                                  ; preds = %.lr.ph.i3.i, %.preheader.i2.i, %.preheader.i.i
-  %i.wt = phi ptr [ %i.wm, %.preheader.i2.i ], [ %i.vw, %.preheader.i.i ], [ %i.wm, %.lr.ph.i3.i ]
+._crit_edge.i.i:                                  ; preds = %.lr.ph.i3.i, %.preheader.i.i, %.preheader.i2.i
+  %i.wt = phi ptr [ %i.vw, %.preheader.i.i ], [ %i.wm, %.preheader.i2.i ], [ %i.wm, %.lr.ph.i3.i ]
   call void @free(ptr noundef nonnull %i.wt) #7
   store ptr null, ptr @exts_i, align 8, !tbaa !32
   br label %bb.x

@@ -202,7 +202,7 @@ bb.h:                                             ; preds = %bb.g
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g
-  %i.ai = load i32, ptr @cube, align 8, !tbaa !32
+  %i.ai = load i32, ptr @cube, align 8, !tbaa !32 ; 3 uses
   %i.aj = sext i32 %i.ai to i64
   %i.ak = shl nsw i64 %i.aj, 3
   %i.al = tail call noalias ptr @malloc(i64 noundef %i.ak) #11 ; 7 uses
@@ -247,8 +247,7 @@ bb.j:                                             ; preds = %bb.j, %.epil.prehea
   br i1 %epil.iter.cmp.not, label %.preheader, label %bb.j, !llvm.loop !35
 
 .preheader:                                       ; preds = %.preheader.loopexit.unr-lcssa, %bb.j, %bb.i
-  %2 = load i32, ptr @cube, align 8, !tbaa !32    ; 2 uses
-  %i.aw = icmp slt i32 %.0.lcssa96, %2
+  %i.aw = icmp slt i32 %.0.lcssa96, %i.ai
   br i1 %i.aw, label %.lr.ph71.preheader, label %._crit_edge72
 
 .lr.ph71.preheader:                               ; preds = %.preheader
@@ -256,7 +255,7 @@ bb.j:                                             ; preds = %bb.j, %.epil.prehea
   %i.ay = shl nsw i64 %i.ax, 3
   %scevgep = getelementptr i8, ptr %i.al, i64 %i.ay
   %i.az = xor i32 %.0.lcssa96, -1
-  %i.ba = add i32 %2, %i.az
+  %i.ba = add i32 %i.ai, %i.az
   %i.bb = zext i32 %i.ba to i64
   %i.bc = shl nuw nsw i64 %i.bb, 3
   %i.bd = add nuw nsw i64 %i.bc, 8

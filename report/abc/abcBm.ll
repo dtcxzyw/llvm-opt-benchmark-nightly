@@ -204,9 +204,7 @@ Vec_IntPush.exit:                                 ; preds = %Vec_PtrPush.exit, %
   %i.ci = getelementptr i8, ptr %i.ch, i64 4
   %.val259326 = load i32, ptr %i.ci, align 4, !tbaa !34
   %i.cj = icmp slt i32 %.val259326, 1
-  %.b234327 = load i1, ptr @matchNonSingletonOutputs.MATCH_FOUND, align 4 ; 2 uses
-  %.not236328 = select i1 %i.cj, i1 true, i1 %.b234327
-  br i1 %.not236328, label %._crit_edge331, label %.lr.ph330
+  br i1 %i.cj, label %.thread, label %.lr.ph330
 
 .lr.ph330:                                        ; preds = %Vec_IntPush.exit
   %i.ck = getelementptr i8, ptr %21, i64 48
@@ -609,10 +607,7 @@ bb.bs:                                            ; preds = %bb.br, %bb.y, %bb.z
   %.not405 = icmp slt i64 %indvars.iv.next349, %i.kq
   br i1 %.not405, label %bb.y, label %.thread, !llvm.loop !166
 
-._crit_edge331:                                   ; preds = %Vec_IntPush.exit
-  br i1 %.b234327, label %._crit_edge331.thread, label %.thread
-
-.thread:                                          ; preds = %bb.bs, %._crit_edge331
+.thread:                                          ; preds = %bb.bs, %Vec_IntPush.exit
   %i.kr = load i32, ptr %i.ae, align 4, !tbaa !26
   %i.ks = add nsw i32 %i.kr, -1
   store i32 %i.ks, ptr %i.ae, align 4, !tbaa !26
@@ -621,7 +616,7 @@ bb.bs:                                            ; preds = %bb.br, %bb.y, %bb.z
   store i32 %i.ku, ptr %i.bh, align 4, !tbaa !34
   br label %bb.bu
 
-._crit_edge331.thread:                            ; preds = %bb.bq, %._crit_edge331
+._crit_edge331.thread:                            ; preds = %bb.bq
   %i.kv = load i32, ptr @matchNonSingletonOutputs.counter, align 4
   %.not305 = icmp eq i32 %i.kv, 0
   br i1 %.not305, label %bb.bu, label %bb.bt

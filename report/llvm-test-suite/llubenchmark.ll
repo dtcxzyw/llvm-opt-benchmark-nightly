@@ -179,9 +179,9 @@ bb.k:                                             ; preds = %bb.d, %bb.d, %bb.i,
 
 ._crit_edge:                                      ; preds = %bb.k, %bb.a
   %.0111.lcssa = phi i32 [ 1000, %bb.a ], [ %.1112, %bb.k ] ; 2 uses
-  %.0107.lcssa = phi i32 [ 196, %bb.a ], [ %.1108, %bb.k ] ; 9 uses
-  %.0103.lcssa = phi i32 [ 1, %bb.a ], [ %.1104, %bb.k ] ; 2 uses
-  %.0101.lcssa = phi float [ 3.330000e-01, %bb.a ], [ %.1102, %bb.k ] ; 2 uses
+  %.0107.lcssa = phi i32 [ 196, %bb.a ], [ %.1108, %bb.k ] ; 11 uses
+  %.0103.lcssa = phi i32 [ 1, %bb.a ], [ %.1104, %bb.k ] ; 3 uses
+  %.0101.lcssa = phi float [ 3.330000e-01, %bb.a ], [ %.1102, %bb.k ]
   %i.aw = sext i32 %.0107.lcssa to i64
   %i.ax = shl nsw i64 %i.aw, 3
   %i.ay = tail call noalias ptr @malloc(i64 noundef %i.ax) #8 ; 6 uses
@@ -192,6 +192,7 @@ bb.k:                                             ; preds = %bb.d, %bb.d, %bb.i,
   %i.ba = zext nneg i32 %.0107.lcssa to i64
   %i.bb = shl nuw nsw i64 %i.ba, 3
   tail call void @llvm.memset.p0.i64(ptr align 8 %i.ay, i8 0, i64 %i.bb, i1 false), !tbaa !16
+  %num_allocated.promoted152 = load i32, ptr @num_allocated, align 4
   %i.bc = icmp sgt i32 %.0103.lcssa, 0
   br i1 %i.bc, label %.preheader125.preheader, label %.preheader124
 
@@ -203,7 +204,13 @@ bb.k:                                             ; preds = %bb.d, %bb.d, %bb.i,
   %.199151 = phi i32 [ %i.bk, %._crit_edge150 ], [ 0, %.preheader125.preheader ]
   br label %bb.l
 
-.preheader124:                                    ; preds = %._crit_edge150, %._crit_edge, %.preheader126
+..preheader124_crit_edge:                         ; preds = %._crit_edge150
+  %2 = mul i32 %.0103.lcssa, %.0107.lcssa
+  %3 = add i32 %num_allocated.promoted152, %2
+  store i32 %3, ptr @num_allocated, align 4, !tbaa !4
+  br label %.preheader124
+
+.preheader124:                                    ; preds = %._crit_edge, %..preheader124_crit_edge, %.preheader126
   %i.bd = icmp sgt i32 %.0111.lcssa, 0
   br i1 %i.bd, label %.lr.ph174, label %._crit_edge175
 
@@ -220,9 +227,6 @@ bb.k:                                             ; preds = %bb.d, %bb.d, %bb.i,
 
 bb.l:                                             ; preds = %.preheader125, %bb.l
   %indvars.iv = phi i64 [ 0, %.preheader125 ], [ %indvars.iv.next, %bb.l ] ; 2 uses
-  %2 = load i32, ptr @num_allocated, align 4, !tbaa !4
-  %3 = add nsw i32 %2, 1
-  store i32 %3, ptr @num_allocated, align 4, !tbaa !4
   %i.bg = tail call noalias noundef dereferenceable_or_null(16) ptr @malloc(i64 noundef 16) #8 ; 3 uses
   %i.bh = getelementptr inbounds nuw [8 x i8], ptr %i.ay, i64 %indvars.iv ; 2 uses
   %i.bi = load ptr, ptr %i.bh, align 8, !tbaa !16
@@ -237,11 +241,11 @@ bb.l:                                             ; preds = %.preheader125, %bb.
 ._crit_edge150:                                   ; preds = %bb.l
   %i.bk = add nuw nsw i32 %.199151, 1             ; 2 uses
   %exitcond186.not = icmp eq i32 %i.bk, %.0103.lcssa
-  br i1 %exitcond186.not, label %.preheader124, label %.preheader125, !llvm.loop !22
+  br i1 %exitcond186.not, label %..preheader124_crit_edge, label %.preheader125, !llvm.loop !22
 
 bb.m:                                             ; preds = %.lr.ph174, %._crit_edge170.split
-  %.091173 = phi float [ 0.000000e+00, %.lr.ph174 ], [ %10, %._crit_edge170.split ] ; 2 uses
-  %.092172 = phi i32 [ 0, %.lr.ph174 ], [ %.193.lcssa208, %._crit_edge170.split ] ; 3 uses
+  %.091173 = phi float [ 0.000000e+00, %.lr.ph174 ], [ %i.ch, %._crit_edge170.split ]
+  %.092172 = phi i32 [ 0, %.lr.ph174 ], [ %.193.lcssa, %._crit_edge170.split ] ; 3 uses
   %.2100171 = phi i32 [ 0, %.lr.ph174 ], [ %i.cs, %._crit_edge170.split ] ; 3 uses
   %i.bl = urem i32 %.2100171, 1000
   %i.bm = icmp eq i32 %i.bl, 0
@@ -252,17 +256,10 @@ bb.n:                                             ; preds = %bb.m
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %bb.m
-  br i1 %i.az, label %.lr.ph163.preheader, label %._crit_edge164.thread
+  br i1 %i.az, label %.lr.ph163.preheader, label %._crit_edge164
 
 .lr.ph163.preheader:                              ; preds = %bb.o
   br i1 %i.bf, label %.lr.ph163.epil.preheader, label %.lr.ph163
-
-._crit_edge164.thread:                            ; preds = %bb.o
-  %4 = fadd float %.0101.lcssa, %.091173          ; 2 uses
-  %5 = fptosi float %4 to i32
-  %6 = sitofp i32 %5 to float
-  %7 = fsub float %4, %6
-  br label %._crit_edge170.split
 
 .lr.ph163:                                        ; preds = %.lr.ph163.preheader, %._crit_edge158.1
   %indvars.iv187 = phi i64 [ %indvars.iv.next188.1, %._crit_edge158.1 ], [ 0, %.lr.ph163.preheader ] ; 3 uses
@@ -336,12 +333,13 @@ bb.o:                                             ; preds = %bb.n, %bb.m
   %.not114.epil = icmp eq ptr %.088.epil, null
   br i1 %.not114.epil, label %._crit_edge164, label %.lr.ph157.epil, !llvm.loop !23
 
-._crit_edge164:                                   ; preds = %.lr.ph163.epil.preheader, %.lr.ph157.epil, %._crit_edge164.unr-lcssa
-  %.2.lcssa.lcssa = phi i32 [ %.2.lcssa.1, %._crit_edge164.unr-lcssa ], [ %.193161.epil.init, %.lr.ph163.epil.preheader ], [ %i.cc, %.lr.ph157.epil ] ; 2 uses
+._crit_edge164:                                   ; preds = %._crit_edge164.unr-lcssa, %.lr.ph157.epil, %.lr.ph163.epil.preheader, %bb.o
+  %.193.lcssa = phi i32 [ %.092172, %bb.o ], [ %.2.lcssa.1, %._crit_edge164.unr-lcssa ], [ %.193161.epil.init, %.lr.ph163.epil.preheader ], [ %i.cc, %.lr.ph157.epil ] ; 2 uses
   %i.ce = fadd float %.0101.lcssa, %.091173       ; 2 uses
-  %i.cf = fptosi float %i.ce to i32               ; 3 uses
+  %i.cf = fptosi float %i.ce to i32               ; 4 uses
   %i.cg = sitofp i32 %i.cf to float
-  %i.ch = fsub float %i.ce, %i.cg                 ; 2 uses
+  %i.ch = fsub float %i.ce, %i.cg
+  %num_allocated.promoted175 = load i32, ptr @num_allocated, align 4
   %i.ci = icmp slt i32 %i.cf, 1
   %brmerge = or i1 %i.ci, %i.be
   br i1 %brmerge, label %._crit_edge170.split, label %.preheader.preheader
@@ -356,9 +354,6 @@ bb.o:                                             ; preds = %bb.n, %bb.m
 
 bb.p:                                             ; preds = %.preheader, %bb.r
   %indvars.iv192 = phi i64 [ 0, %.preheader ], [ %indvars.iv.next193, %bb.r ] ; 3 uses
-  %8 = load i32, ptr @num_allocated, align 4, !tbaa !4
-  %9 = add nsw i32 %8, 1
-  store i32 %9, ptr @num_allocated, align 4, !tbaa !4
   %i.ck = tail call noalias noundef dereferenceable_or_null(16) ptr @malloc(i64 noundef 16) #8 ; 3 uses
   %i.cl = add nuw nsw i64 %indvars.iv192, %indvars.iv197
   %i.cm = getelementptr inbounds nuw i8, ptr %i.ck, i64 8
@@ -384,17 +379,21 @@ bb.r:                                             ; preds = %bb.q
 ._crit_edge168:                                   ; preds = %bb.r
   %indvars.iv.next198 = add nsw i64 %indvars.iv197, -1
   %i.cr = icmp sgt i64 %indvars.iv197, 1
-  br i1 %i.cr, label %.preheader, label %._crit_edge170.split, !llvm.loop !27
+  br i1 %i.cr, label %.preheader, label %._crit_edge180, !llvm.loop !27
 
-._crit_edge170.split:                             ; preds = %._crit_edge168, %._crit_edge164.thread, %._crit_edge164
-  %10 = phi float [ %7, %._crit_edge164.thread ], [ %i.ch, %._crit_edge164 ], [ %i.ch, %._crit_edge168 ]
-  %.193.lcssa208 = phi i32 [ %.092172, %._crit_edge164.thread ], [ %.2.lcssa.lcssa, %._crit_edge164 ], [ %.2.lcssa.lcssa, %._crit_edge168 ] ; 2 uses
+._crit_edge180:                                   ; preds = %._crit_edge168
+  %4 = mul i32 %.0107.lcssa, %i.cf
+  %5 = add i32 %num_allocated.promoted175, %4
+  store i32 %5, ptr @num_allocated, align 4, !tbaa !4
+  br label %._crit_edge170.split
+
+._crit_edge170.split:                             ; preds = %._crit_edge164, %._crit_edge180
   %i.cs = add nuw nsw i32 %.2100171, 1            ; 2 uses
   %exitcond200.not = icmp eq i32 %i.cs, %.0111.lcssa
   br i1 %exitcond200.not, label %._crit_edge175, label %bb.m, !llvm.loop !28
 
 ._crit_edge175:                                   ; preds = %._crit_edge170.split, %.preheader124
-  %.092.lcssa = phi i32 [ 0, %.preheader124 ], [ %.193.lcssa208, %._crit_edge170.split ]
+  %.092.lcssa = phi i32 [ 0, %.preheader124 ], [ %.193.lcssa, %._crit_edge170.split ]
   %i.ct = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.12, i32 noundef %.092.lcssa) ; 0 uses
   %i.cu = load i32, ptr @num_allocated, align 4, !tbaa !4
   %i.cv = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.13, i32 noundef %i.cu) ; 0 uses

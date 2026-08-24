@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.e, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
-  %i.y = load i32, ptr @DISTRIB, align 4, !tbaa !4
+  %i.y = load i32, ptr @DISTRIB, align 4, !tbaa !4 ; 3 uses
   %i.z = icmp sgt i32 %i.y, 0
   br i1 %i.z, label %.lr.ph, label %.thread
 
@@ -299,19 +299,19 @@ DistribVector.exit:                               ; preds = %.lr.ph, %DistribVec
   %i.cs = zext i1 %or.cond to i32
   %spec.select = add nuw nsw i32 %.086, %i.cs     ; 2 uses
   %i.ct = add nuw nsw i32 %.06385, 1              ; 2 uses
-  %13 = load i32, ptr @DISTRIB, align 4, !tbaa !4
-  %14 = icmp slt i32 %i.ct, %13
-  br i1 %14, label %DistribVector.exit, label %select.unfold, !llvm.loop !28
+  %exitcond.not = icmp eq i32 %i.ct, %i.y
+  br i1 %exitcond.not, label %select.unfold, label %DistribVector.exit, !llvm.loop !28
 
 bb.f:                                             ; preds = %bb.d
   %i.cu = call fastcc double @IntersectObjs(ptr noundef nonnull %4, ptr noundef %6, ptr noundef %11, ptr noundef %12, ptr noundef %i.b) ; 2 uses
   %i.cv = fcmp olt double %i.cu, 1.000000e-05
   %i.cw = fcmp ogt double %i.cu, 1.000000e+00
   %or.cond3 = or i1 %i.cv, %i.cw
-  %i.cx = load i32, ptr @DISTRIB, align 4
+  %i.cx = load i32, ptr @DISTRIB, align 4         ; 2 uses
   br i1 %or.cond3, label %select.unfold, label %.thread
 
 select.unfold:                                    ; preds = %DistribVector.exit, %bb.f
+  %13 = phi i32 [ %i.cx, %bb.f ], [ %i.y, %DistribVector.exit ]
   %.2 = phi i32 [ %i.cx, %bb.f ], [ %spec.select, %DistribVector.exit ] ; 2 uses
   %i.cy = icmp sgt i32 %.2, 0
   br i1 %i.cy, label %bb.g, label %.thread
@@ -335,8 +335,7 @@ bb.g:                                             ; preds = %select.unfold
   %i.dm = fmul double %i.di, %i.dl
   %i.dn = uitofp nneg i32 %.2 to double
   %i.do = fmul double %i.dm, %i.dn
-  %15 = load i32, ptr @DISTRIB, align 4, !tbaa !4
-  %i.dp = sitofp i32 %15 to double
+  %i.dp = sitofp i32 %13 to double
   %i.dq = fdiv double %i.do, %i.dp
   br label %.thread
 

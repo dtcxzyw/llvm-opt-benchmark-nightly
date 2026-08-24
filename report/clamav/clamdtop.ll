@@ -204,7 +204,7 @@ bb.a:
   %i.a = load ptr, ptr @stdscr, align 8, !tbaa !37
   %i.b = tail call i32 @getmaxy(ptr noundef %i.a) #26 ; 3 uses
   %i.c = load ptr, ptr @stdscr, align 8, !tbaa !37
-  %i.d = tail call i32 @getmaxx(ptr noundef %i.c) #26 ; 4 uses
+  %i.d = tail call i32 @getmaxx(ptr noundef %i.c) #26 ; 5 uses
   %i.e = icmp eq i32 %i.b, -1
   %i.f = icmp eq i32 %i.d, -1
   %or.cond = select i1 %i.e, i1 true, i1 %i.f
@@ -231,7 +231,7 @@ bb.d:                                             ; preds = %bb.c
   %i.n = load ptr, ptr @clamd_header, align 8, !tbaa !21
   tail call void @free(ptr noundef %i.n) #26
   %i.o = add nuw i32 %i.d, 1
-  %i.p = zext i32 %i.o to i64
+  %i.p = zext i32 %i.o to i64                     ; 3 uses
   %i.q = tail call noalias ptr @malloc(i64 noundef %i.p) #36 ; 7 uses
   %i.r = ptrtoaddr ptr %i.q to i64                ; 3 uses
   store ptr %i.q, ptr @queue_header, align 8, !tbaa !21
@@ -243,10 +243,7 @@ bb.e:                                             ; preds = %bb.d
   unreachable
 
 bb.f:                                             ; preds = %bb.d
-  %0 = load i32, ptr @maxx, align 4, !tbaa !41
-  %1 = add nuw i32 %0, 1
-  %2 = zext i32 %1 to i64
-  %i.s = tail call noalias ptr @malloc(i64 noundef %2) #36 ; 7 uses
+  %i.s = tail call noalias ptr @malloc(i64 noundef %i.p) #36 ; 7 uses
   %i.t = ptrtoaddr ptr %i.s to i64                ; 3 uses
   store ptr %i.s, ptr @clamd_header, align 8, !tbaa !21
   %.not18 = icmp eq ptr %i.s, null
@@ -257,8 +254,7 @@ bb.g:                                             ; preds = %bb.f
   unreachable
 
 bb.h:                                             ; preds = %bb.f
-  %3 = load i32, ptr @maxx, align 4, !tbaa !41    ; 2 uses
-  %i.u = zext i32 %3 to i64                       ; 8 uses
+  %i.u = zext i32 %i.d to i64                     ; 12 uses
   %i.v = tail call ptr @strncpy(ptr noundef nonnull %i.q, ptr noundef nonnull dereferenceable(35) @.str.120, i64 noundef %i.u) #26 ; 0 uses
   %i.w = tail call ptr @strncpy(ptr noundef nonnull %i.s, ptr noundef nonnull dereferenceable(71) @.str.121, i64 noundef %i.u) #26 ; 0 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.q, i64 %i.u
@@ -273,7 +269,7 @@ bb.h:                                             ; preds = %bb.f
   %i.ab = getelementptr i8, ptr %i.q, i64 %i.z
   %i.ac = add i64 %i.z, %i.r
   %i.ad = add i64 %i.ac, 1
-  %i.ae = add nuw i64 %i.r, %i.u
+  %i.ae = add i64 %i.r, %i.u
   %umax = tail call i64 @llvm.umax.i64(i64 %i.ad, i64 %i.ae)
   %i.af = add i64 %i.z, %i.r
   %i.ag = sub i64 %umax, %i.af
@@ -289,7 +285,7 @@ bb.h:                                             ; preds = %bb.f
   %i.aj = getelementptr i8, ptr %i.s, i64 %i.ah
   %i.ak = add i64 %i.ah, %i.t
   %i.al = add i64 %i.ak, 1
-  %i.am = add nuw i64 %i.t, %i.u
+  %i.am = add i64 %i.t, %i.u
   %umax31 = tail call i64 @llvm.umax.i64(i64 %i.al, i64 %i.am)
   %i.an = add i64 %i.ah, %i.t
   %i.ao = sub i64 %umax31, %i.an
@@ -304,9 +300,7 @@ bb.h:                                             ; preds = %bb.f
 bb.i:                                             ; preds = %._crit_edge27
   %i.ar = load ptr, ptr @multi_queue_header, align 8, !tbaa !21
   tail call void @free(ptr noundef %i.ar) #26
-  %4 = add nuw i32 %3, 1
-  %5 = zext i32 %4 to i64
-  %i.as = tail call noalias ptr @malloc(i64 noundef %5) #36 ; 7 uses
+  %i.as = tail call noalias ptr @malloc(i64 noundef %i.p) #36 ; 7 uses
   %i.at = ptrtoaddr ptr %i.as to i64              ; 3 uses
   store ptr %i.as, ptr @multi_queue_header, align 8, !tbaa !21
   %.not20 = icmp eq ptr %i.as, null
@@ -317,20 +311,18 @@ bb.j:                                             ; preds = %bb.i
   unreachable
 
 bb.k:                                             ; preds = %bb.i
-  %6 = load i32, ptr @maxx, align 4, !tbaa !41
-  %7 = zext i32 %6 to i64                         ; 4 uses
-  %i.au = tail call ptr @strncpy(ptr noundef nonnull %i.as, ptr noundef nonnull dereferenceable(35) @.str.123, i64 noundef %7) #26 ; 0 uses
-  %i.av = getelementptr inbounds nuw i8, ptr %i.as, i64 %7
+  %i.au = tail call ptr @strncpy(ptr noundef nonnull %i.as, ptr noundef nonnull dereferenceable(35) @.str.123, i64 noundef %i.u) #26 ; 0 uses
+  %i.av = getelementptr inbounds nuw i8, ptr %i.as, i64 %i.u
   store i8 0, ptr %i.av, align 1, !tbaa !9
   %i.aw = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.as) #27 ; 4 uses
-  %i.ax = icmp samesign ult i64 %i.aw, %7
+  %i.ax = icmp samesign ult i64 %i.aw, %i.u
   br i1 %i.ax, label %.lr.ph30.preheader, label %.loopexit
 
 .lr.ph30.preheader:                               ; preds = %bb.k
   %i.ay = getelementptr i8, ptr %i.as, i64 %i.aw
   %i.az = add i64 %i.aw, %i.at
   %i.ba = add i64 %i.az, 1
-  %i.bb = add nuw i64 %i.at, %7
+  %i.bb = add i64 %i.at, %i.u
   %umax32 = tail call i64 @llvm.umax.i64(i64 %i.ba, i64 %i.bb)
   %i.bc = add i64 %i.aw, %i.at
   %i.bd = sub i64 %umax32, %i.bc
@@ -733,7 +725,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.b = load i32, ptr @maxx, align 4, !tbaa !41
   %i.c = add nuw i32 %i.b, 1
-  %i.d = zext i32 %i.c to i64
+  %i.d = zext i32 %i.c to i64                     ; 3 uses
   %i.e = call noalias ptr @malloc(i64 noundef %i.d) #36 ; 9 uses
   %.not14 = icmp eq ptr %i.e, null
   br i1 %.not14, label %bb.c, label %bb.d
@@ -743,11 +735,8 @@ bb.c:                                             ; preds = %bb.b
   unreachable
 
 bb.d:                                             ; preds = %bb.b
-  %3 = load i32, ptr @maxx, align 4, !tbaa !41
-  %4 = add nuw i32 %3, 1
-  %5 = zext i32 %4 to i64                         ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.e, i8 32, i64 %5, i1 false)
-  %i.f = call i32 @vsnprintf(ptr noundef nonnull %i.e, i64 noundef %5, ptr noundef %1, ptr noundef nonnull %2) #26 ; 0 uses
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.e, i8 32, i64 %i.d, i1 false)
+  %i.f = call i32 @vsnprintf(ptr noundef nonnull %i.e, i64 noundef %i.d, ptr noundef %1, ptr noundef nonnull %2) #26 ; 0 uses
   %i.g = call ptr @strrchr(ptr noundef nonnull dereferenceable(1) %i.e, i32 noundef 10) #27 ; 2 uses
   %.not15 = icmp eq ptr %i.g, null
   br i1 %.not15, label %bb.f, label %bb.e

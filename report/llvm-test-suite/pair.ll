@@ -56,16 +56,15 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  %i.e = load i32, ptr getelementptr inbounds nuw (i8, ptr @cube, i64 8), align 8, !tbaa !18
+  %i.e = load i32, ptr getelementptr inbounds nuw (i8, ptr @cube, i64 8), align 8, !tbaa !18 ; 3 uses
   %i.f = sext i32 %i.e to i64
   %i.g = shl nsw i64 %i.f, 2
   %i.h = tail call noalias ptr @malloc(i64 noundef %i.g) #15 ; 11 uses
-  %2 = load i32, ptr getelementptr inbounds nuw (i8, ptr @cube, i64 8), align 8, !tbaa !18 ; 2 uses
-  %i.i = icmp sgt i32 %2, 0
+  %i.i = icmp sgt i32 %i.e, 0
   br i1 %i.i, label %.lr.ph.preheader, label %.preheader212
 
 .lr.ph.preheader:                                 ; preds = %bb.c
-  %i.j = zext nneg i32 %2 to i64
+  %i.j = zext nneg i32 %i.e to i64
   %i.k = shl nuw nsw i64 %i.j, 2
   tail call void @llvm.memset.p0.i64(ptr align 4 %i.h, i8 0, i64 %i.k, i1 false), !tbaa !4
   br label %.preheader212
@@ -468,35 +467,30 @@ declare void @print_trace(...) local_unnamed_addr #2
 ; Function Attrs: nounwind uwtable
 define dso_local noalias noundef ptr @find_pairing_cost(ptr noundef %0, i32 noundef %1) local_unnamed_addr #0 {
 bb.a:
-  %i.a = load i32, ptr getelementptr inbounds nuw (i8, ptr @cube, i64 8), align 8, !tbaa !18
-  %i.b = sext i32 %i.a to i64
+  %i.a = load i32, ptr getelementptr inbounds nuw (i8, ptr @cube, i64 8), align 8, !tbaa !18 ; 5 uses
+  %i.b = sext i32 %i.a to i64                     ; 2 uses
   %i.c = shl nsw i64 %i.b, 3
   %i.d = tail call noalias ptr @malloc(i64 noundef %i.c) #15 ; 4 uses
-  %2 = load i32, ptr getelementptr inbounds nuw (i8, ptr @cube, i64 8), align 8, !tbaa !18 ; 2 uses
-  %i.e = icmp sgt i32 %2, 0
-  br i1 %i.e, label %.lr.ph, label %._crit_edge125
+  %i.e = icmp sgt i32 %i.a, 0
+  br i1 %i.e, label %.preheader120, label %._crit_edge125
 
-.preheader120:                                    ; preds = %.lr.ph
-  %3 = icmp sgt i32 %7, 0
-  br i1 %3, label %.preheader, label %._crit_edge125
+.preheader120:                                    ; preds = %bb.a
+  %2 = shl nuw nsw i64 %i.b, 2
+  %wide.trip.count = zext nneg i32 %i.a to i64
+  br label %.lr.ph
 
-.lr.ph:                                           ; preds = %bb.a, %.lr.ph
-  %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph ], [ 0, %bb.a ] ; 2 uses
-  %4 = phi i32 [ %7, %.lr.ph ], [ %2, %bb.a ]
-  %5 = sext i32 %4 to i64
-  %6 = shl nsw i64 %5, 2
-  %i.f = tail call noalias ptr @malloc(i64 noundef %6) #15
+.lr.ph:                                           ; preds = %.preheader120, %.lr.ph
+  %indvars.iv = phi i64 [ 0, %.preheader120 ], [ %indvars.iv.next, %.lr.ph ] ; 2 uses
+  %i.f = tail call noalias ptr @malloc(i64 noundef %2) #15
   %i.g = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %indvars.iv
   store ptr %i.f, ptr %i.g, align 8, !tbaa !58
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %7 = load i32, ptr getelementptr inbounds nuw (i8, ptr @cube, i64 8), align 8, !tbaa !18 ; 4 uses
-  %8 = sext i32 %7 to i64
-  %9 = icmp slt i64 %indvars.iv.next, %8
-  br i1 %9, label %.lr.ph, label %.preheader120
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  br i1 %exitcond.not, label %.preheader, label %.lr.ph
 
-.preheader:                                       ; preds = %.preheader120, %._crit_edge
-  %i.h = phi i32 [ %i.p, %._crit_edge ], [ %7, %.preheader120 ] ; 3 uses
-  %indvars.iv163 = phi i64 [ %indvars.iv.next164, %._crit_edge ], [ 0, %.preheader120 ] ; 2 uses
+.preheader:                                       ; preds = %.lr.ph, %._crit_edge
+  %i.h = phi i32 [ %i.p, %._crit_edge ], [ %i.a, %.lr.ph ] ; 3 uses
+  %indvars.iv163 = phi i64 [ %indvars.iv.next164, %._crit_edge ], [ 0, %.lr.ph ] ; 2 uses
   %i.i = icmp sgt i32 %i.h, 0
   br i1 %i.i, label %.lr.ph123, label %.preheader.._crit_edge_crit_edge
 
@@ -521,12 +515,13 @@ bb.b:                                             ; preds = %.lr.ph123, %bb.b
 
 ._crit_edge:                                      ; preds = %bb.b, %.preheader.._crit_edge_crit_edge
   %.pre-phi = phi i64 [ %.pre178, %.preheader.._crit_edge_crit_edge ], [ %i.n, %bb.b ]
-  %i.p = phi i32 [ %i.h, %.preheader.._crit_edge_crit_edge ], [ %i.m, %bb.b ]
+  %i.p = phi i32 [ %i.h, %.preheader.._crit_edge_crit_edge ], [ %i.m, %bb.b ] ; 2 uses
   %indvars.iv.next164 = add nuw nsw i64 %indvars.iv163, 1 ; 2 uses
   %i.q = icmp slt i64 %indvars.iv.next164, %.pre-phi
   br i1 %i.q, label %.preheader, label %._crit_edge125, !llvm.loop !59
 
-._crit_edge125:                                   ; preds = %._crit_edge, %bb.a, %.preheader120
+._crit_edge125:                                   ; preds = %._crit_edge, %bb.a
+  %3 = phi i32 [ %i.a, %bb.a ], [ %i.p, %._crit_edge ] ; 2 uses
   %i.r = tail call noalias dereferenceable_or_null(24) ptr @malloc(i64 noundef 24) #15 ; 5 uses
   %i.s = tail call noalias dereferenceable_or_null(4) ptr @malloc(i64 noundef 4) #15 ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.r, i64 8
@@ -537,8 +532,7 @@ bb.b:                                             ; preds = %.lr.ph123, %bb.b
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 4 uses
   store ptr %i.r, ptr %i.w, align 8, !tbaa !8
   store i32 1, ptr %i.r, align 8, !tbaa !21
-  %10 = load i32, ptr getelementptr inbounds nuw (i8, ptr @cube, i64 8), align 8, !tbaa !18 ; 2 uses
-  %i.x = icmp sgt i32 %10, 1
+  %i.x = icmp sgt i32 %3, 1
   br i1 %i.x, label %.lr.ph156, label %._crit_edge157
 
 .lr.ph156:                                        ; preds = %._crit_edge125
@@ -562,7 +556,7 @@ bb.b:                                             ; preds = %.lr.ph123, %bb.b
   br i1 %i.af, label %bb.c, label %._crit_edge157.loopexit
 
 bb.c:                                             ; preds = %.lr.ph156, %.loopexit
-  %i.ag = phi i32 [ %10, %.lr.ph156 ], [ %i.ab, %.loopexit ] ; 2 uses
+  %i.ag = phi i32 [ %3, %.lr.ph156 ], [ %i.ab, %.loopexit ] ; 2 uses
   %indvars.iv174 = phi i64 [ 0, %.lr.ph156 ], [ %indvars.iv.next175, %.loopexit ] ; 3 uses
   %indvars.iv169 = phi i64 [ 1, %.lr.ph156 ], [ %indvars.iv.next170, %.loopexit ] ; 2 uses
   %.0154 = phi ptr [ undef, %.lr.ph156 ], [ %.1.lcssa, %.loopexit ] ; 2 uses
@@ -599,19 +593,18 @@ bb.e:                                             ; preds = %bb.d
   %i.ar = load ptr, ptr %i.aa, align 8, !tbaa !28
   %i.as = tail call ptr (ptr, ...) @sf_save(ptr noundef %i.ar) #14
   %i.at = load <2 x i32>, ptr getelementptr inbounds nuw (i8, ptr @cube, i64 4), align 4, !tbaa !4
-  %i.au = load i32, ptr getelementptr inbounds nuw (i8, ptr @cube, i64 4), align 4, !tbaa !31
+  %i.au = load i32, ptr getelementptr inbounds nuw (i8, ptr @cube, i64 4), align 4, !tbaa !31 ; 4 uses
   %i.av = sext i32 %i.au to i64
   %i.aw = shl nsw i64 %i.av, 2
   %i.ax = tail call noalias ptr @malloc(i64 noundef %i.aw) #15 ; 8 uses
-  %11 = load i32, ptr getelementptr inbounds nuw (i8, ptr @cube, i64 4), align 4, !tbaa !31 ; 3 uses
-  %i.ay = icmp sgt i32 %11, 0
+  %i.ay = icmp sgt i32 %i.au, 0
   br i1 %i.ay, label %.lr.ph128, label %._crit_edge129
 
 .lr.ph128:                                        ; preds = %bb.e
   %i.az = ptrtoaddr ptr %i.ax to i64
   %i.ba = load ptr, ptr getelementptr inbounds nuw (i8, ptr @cube, i64 32), align 8, !tbaa !26 ; 7 uses
-  %wide.trip.count.a = zext nneg i32 %11 to i64   ; 5 uses
-  %min.iters.check = icmp ult i32 %11, 8
+  %wide.trip.count.a = zext nneg i32 %i.au to i64 ; 5 uses
+  %min.iters.check = icmp ult i32 %i.au, 8
   %i.bb = ptrtoaddr ptr %i.ba to i64
   %i.bc = sub i64 %i.bb, %i.az
   %diff.check = icmp ugt i64 %i.bc, -32
@@ -742,7 +735,7 @@ bb.i:                                             ; preds = %bb.f
   br label %.thread
 
 bb.j:                                             ; preds = %bb.f
-  %i.cw = load i32, ptr @cube, align 8, !tbaa !30 ; 2 uses
+  %i.cw = load i32, ptr @cube, align 8, !tbaa !30 ; 3 uses
   %i.cx = icmp slt i32 %i.cw, 33
   %i.cy = add nsw i32 %i.cw, -1
   %i.cz = lshr i32 %i.cy, 3
@@ -751,8 +744,7 @@ bb.j:                                             ; preds = %bb.f
   %narrow = select i1 %i.cx, i32 8, i32 %i.db
   %i.dc = zext nneg i32 %narrow to i64
   %i.dd = tail call noalias ptr @malloc(i64 noundef %i.dc) #15
-  %12 = load i32, ptr @cube, align 8, !tbaa !30
-  %i.de = tail call ptr (ptr, i32, ...) @set_clear(ptr noundef %i.dd, i32 noundef %12) #14 ; 4 uses
+  %i.de = tail call ptr (ptr, i32, ...) @set_clear(ptr noundef %i.dd, i32 noundef %i.cw) #14 ; 4 uses
   %i.df = load ptr, ptr getelementptr inbounds nuw (i8, ptr @cube, i64 72), align 8, !tbaa !63 ; 2 uses
   %i.dg = getelementptr inbounds nuw [8 x i8], ptr %i.df, i64 %indvars.iv174
   %i.dh = load ptr, ptr %i.dg, align 8, !tbaa !58
@@ -923,7 +915,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
 ; Function Attrs: nounwind uwtable
 define dso_local i32 @greedy_best_cost(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef writeonly captures(none) %1) local_unnamed_addr #0 {
 bb.a:
-  %i.a = load i32, ptr getelementptr inbounds nuw (i8, ptr @cube, i64 8), align 8, !tbaa !18
+  %i.a = load i32, ptr getelementptr inbounds nuw (i8, ptr @cube, i64 8), align 8, !tbaa !18 ; 4 uses
   %i.b = tail call noalias dereferenceable_or_null(24) ptr @malloc(i64 noundef 24) #15 ; 5 uses
   store i32 0, ptr %i.b, align 8, !tbaa !21
   %i.c = sext i32 %i.a to i64
@@ -934,17 +926,15 @@ bb.a:
   %i.g = tail call noalias ptr @malloc(i64 noundef %i.d) #15 ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   store ptr %i.g, ptr %i.h, align 8, !tbaa !24
-  %2 = load i32, ptr getelementptr inbounds nuw (i8, ptr @cube, i64 8), align 8, !tbaa !18 ; 2 uses
-  %i.i = icmp slt i32 %2, 33
-  %i.j = add nsw i32 %2, -1
+  %i.i = icmp slt i32 %i.a, 33
+  %i.j = add nsw i32 %i.a, -1
   %i.k = lshr i32 %i.j, 3
   %i.l = and i32 %i.k, 536870908
   %i.m = add nuw nsw i32 %i.l, 8
   %narrow = select i1 %i.i, i32 8, i32 %i.m
   %i.n = zext nneg i32 %narrow to i64
   %i.o = tail call noalias ptr @malloc(i64 noundef %i.n) #15
-  %3 = load i32, ptr getelementptr inbounds nuw (i8, ptr @cube, i64 8), align 8, !tbaa !18
-  %i.p = tail call ptr (ptr, i32, ...) @set_fill(ptr noundef %i.o, i32 noundef %3) #14 ; 8 uses
+  %i.p = tail call ptr (ptr, i32, ...) @set_fill(ptr noundef %i.o, i32 noundef %i.a) #14 ; 8 uses
   %i.q = tail call i32 (ptr, ...) @set_ord(ptr noundef %i.p) #14
   %i.r = icmp sgt i32 %i.q, 1
   br i1 %i.r, label %.preheader57, label %._crit_edge77
@@ -1094,7 +1084,7 @@ bb.a:
   store i32 -1, ptr @best_cost, align 4, !tbaa !4
   store ptr null, ptr @best_pair, align 8, !tbaa !64
   store ptr %0, ptr @cost_array, align 8, !tbaa !65
-  %i.a = load i32, ptr getelementptr inbounds nuw (i8, ptr @cube, i64 8), align 8, !tbaa !18
+  %i.a = load i32, ptr getelementptr inbounds nuw (i8, ptr @cube, i64 8), align 8, !tbaa !18 ; 4 uses
   %i.b = tail call noalias dereferenceable_or_null(24) ptr @malloc(i64 noundef 24) #15 ; 5 uses
   store i32 0, ptr %i.b, align 8, !tbaa !21
   %i.c = sext i32 %i.a to i64
@@ -1105,17 +1095,15 @@ bb.a:
   %i.g = tail call noalias ptr @malloc(i64 noundef %i.d) #15
   %i.h = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 2 uses
   store ptr %i.g, ptr %i.h, align 8, !tbaa !24
-  %1 = load i32, ptr getelementptr inbounds nuw (i8, ptr @cube, i64 8), align 8, !tbaa !18 ; 2 uses
-  %i.i = icmp slt i32 %1, 33
-  %i.j = add nsw i32 %1, -1
+  %i.i = icmp slt i32 %i.a, 33
+  %i.j = add nsw i32 %i.a, -1
   %i.k = lshr i32 %i.j, 3
   %i.l = and i32 %i.k, 536870908
   %i.m = add nuw nsw i32 %i.l, 8
   %narrow = select i1 %i.i, i32 8, i32 %i.m
   %i.n = zext nneg i32 %narrow to i64
   %i.o = tail call noalias ptr @malloc(i64 noundef %i.n) #15
-  %2 = load i32, ptr getelementptr inbounds nuw (i8, ptr @cube, i64 8), align 8, !tbaa !18
-  %i.p = tail call ptr (ptr, i32, ...) @set_fill(ptr noundef %i.o, i32 noundef %2) #14 ; 3 uses
+  %i.p = tail call ptr (ptr, i32, ...) @set_fill(ptr noundef %i.o, i32 noundef %i.a) #14 ; 3 uses
   %i.q = load i32, ptr getelementptr inbounds nuw (i8, ptr @cube, i64 8), align 8, !tbaa !18
   %i.r = tail call i32 @generate_all_pairs(ptr noundef nonnull %i.b, i32 noundef %i.q, ptr noundef %i.p, ptr noundef nonnull @find_best_cost) ; 0 uses
   %i.s = load ptr, ptr %i.f, align 8, !tbaa !23   ; 2 uses
@@ -1461,7 +1449,7 @@ bb.a:
   store ptr null, ptr @best_R, align 8, !tbaa !70
   store ptr null, ptr @best_D, align 8, !tbaa !70
   store ptr null, ptr @best_F, align 8, !tbaa !70
-  %i.e = load i32, ptr getelementptr inbounds nuw (i8, ptr @cube, i64 8), align 8, !tbaa !18
+  %i.e = load i32, ptr getelementptr inbounds nuw (i8, ptr @cube, i64 8), align 8, !tbaa !18 ; 4 uses
   %i.f = tail call noalias dereferenceable_or_null(24) ptr @malloc(i64 noundef 24) #15 ; 5 uses
   store i32 0, ptr %i.f, align 8, !tbaa !21
   %i.g = sext i32 %i.e to i64
@@ -1472,17 +1460,15 @@ bb.a:
   %i.k = tail call noalias ptr @malloc(i64 noundef %i.h) #15
   %i.l = getelementptr inbounds nuw i8, ptr %i.f, i64 16 ; 2 uses
   store ptr %i.k, ptr %i.l, align 8, !tbaa !24
-  %2 = load i32, ptr getelementptr inbounds nuw (i8, ptr @cube, i64 8), align 8, !tbaa !18 ; 2 uses
-  %i.m = icmp slt i32 %2, 33
-  %i.n = add nsw i32 %2, -1
+  %i.m = icmp slt i32 %i.e, 33
+  %i.n = add nsw i32 %i.e, -1
   %i.o = lshr i32 %i.n, 3
   %i.p = and i32 %i.o, 536870908
   %i.q = add nuw nsw i32 %i.p, 8
   %narrow = select i1 %i.m, i32 8, i32 %i.q
   %i.r = zext nneg i32 %narrow to i64
   %i.s = tail call noalias ptr @malloc(i64 noundef %i.r) #15
-  %3 = load i32, ptr getelementptr inbounds nuw (i8, ptr @cube, i64 8), align 8, !tbaa !18
-  %i.t = tail call ptr (ptr, i32, ...) @set_clear(ptr noundef %i.s, i32 noundef %3) #14
+  %i.t = tail call ptr (ptr, i32, ...) @set_clear(ptr noundef %i.s, i32 noundef %i.e) #14
   %i.u = load i32, ptr getelementptr inbounds nuw (i8, ptr @cube, i64 8), align 8, !tbaa !18
   %i.v = tail call ptr (ptr, i32, ...) @set_fill(ptr noundef %i.t, i32 noundef %i.u) #14 ; 3 uses
   %i.w = load i32, ptr getelementptr inbounds nuw (i8, ptr @cube, i64 8), align 8, !tbaa !18
@@ -1583,19 +1569,18 @@ bb.a:
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !28
   %i.k = tail call ptr (ptr, ...) @sf_save(ptr noundef %i.j) #14
   %i.l = load <2 x i32>, ptr getelementptr inbounds nuw (i8, ptr @cube, i64 4), align 4, !tbaa !4
-  %i.m = load i32, ptr getelementptr inbounds nuw (i8, ptr @cube, i64 4), align 4, !tbaa !31
+  %i.m = load i32, ptr getelementptr inbounds nuw (i8, ptr @cube, i64 4), align 4, !tbaa !31 ; 4 uses
   %i.n = sext i32 %i.m to i64
   %i.o = shl nsw i64 %i.n, 2
   %i.p = tail call noalias ptr @malloc(i64 noundef %i.o) #15 ; 8 uses
-  %1 = load i32, ptr getelementptr inbounds nuw (i8, ptr @cube, i64 4), align 4, !tbaa !31 ; 3 uses
-  %i.q = icmp sgt i32 %1, 0
+  %i.q = icmp sgt i32 %i.m, 0
   br i1 %i.q, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.a
   %i.r = ptrtoaddr ptr %i.p to i64
   %i.s = load ptr, ptr getelementptr inbounds nuw (i8, ptr @cube, i64 32), align 8, !tbaa !26 ; 7 uses
-  %wide.trip.count = zext nneg i32 %1 to i64      ; 5 uses
-  %min.iters.check = icmp ult i32 %1, 8
+  %wide.trip.count = zext nneg i32 %i.m to i64    ; 5 uses
+  %min.iters.check = icmp ult i32 %i.m, 8
   %i.t = ptrtoaddr ptr %i.s to i64
   %i.u = sub i64 %i.t, %i.r
   %diff.check = icmp ugt i64 %i.u, -32

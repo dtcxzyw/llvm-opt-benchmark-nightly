@@ -204,18 +204,17 @@ bb.bg:                                            ; preds = %bb.h, %bb.g, %bb.n,
 define internal fastcc void @options_data_expand(ptr noundef %0) unnamed_addr #0 {
 bb.a:
   %i.a = load i32, ptr @parse_options_idx, align 4, !tbaa !9 ; 2 uses
-  %i.b = add nsw i32 %i.a, 1
+  %i.b = add nsw i32 %i.a, 1                      ; 3 uses
   store i32 %i.b, ptr @parse_options_idx, align 4, !tbaa !9
   %i.c = load ptr, ptr @options_data, align 8, !tbaa !20
   %i.d = add nsw i32 %i.a, 2
   %i.e = sext i32 %i.d to i64
   %i.f = mul nsw i64 %i.e, 160
-  %i.g = tail call ptr @realloc(ptr noundef %i.c, i64 noundef %i.f) #22 ; 3 uses
+  %i.g = tail call ptr @realloc(ptr noundef %i.c, i64 noundef %i.f) #22 ; 2 uses
   store ptr %i.g, ptr @options_data, align 8, !tbaa !20
-  %1 = load i32, ptr @parse_options_idx, align 4, !tbaa !9
-  %i.h = sext i32 %1 to i64
-  %i.i = getelementptr inbounds [160 x i8], ptr %i.g, i64 %i.h ; 10 uses
-  %i.j = tail call noalias dereferenceable_or_null(8) ptr @malloc(i64 noundef 8) #20 ; 2 uses
+  %i.h = sext i32 %i.b to i64
+  %i.i = getelementptr inbounds [160 x i8], ptr %i.g, i64 %i.h ; 11 uses
+  %i.j = tail call noalias dereferenceable_or_null(8) ptr @malloc(i64 noundef 8) #20 ; 3 uses
   store ptr %i.j, ptr %i.i, align 8, !tbaa !22
   store ptr null, ptr %i.j, align 8, !tbaa !16
   %i.k = getelementptr inbounds nuw i8, ptr %i.i, i64 8
@@ -271,13 +270,9 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.e
 
 bb.d:                                             ; preds = %bb.b, %bb.a
-  %2 = load i32, ptr @parse_options_idx, align 4, !tbaa !9 ; 2 uses
-  %3 = sext i32 %2 to i64
-  %4 = getelementptr inbounds [160 x i8], ptr %i.g, i64 %3 ; 2 uses
-  %5 = load ptr, ptr %4, align 8, !tbaa !22
-  tail call void @free(ptr noundef %5) #16
-  store ptr null, ptr %4, align 8, !tbaa !22
-  store i32 %2, ptr @default_data_idx, align 4, !tbaa !9
+  tail call void @free(ptr noundef nonnull %i.j) #16
+  store ptr null, ptr %i.i, align 8, !tbaa !22
+  store i32 %i.b, ptr @default_data_idx, align 4, !tbaa !9
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c

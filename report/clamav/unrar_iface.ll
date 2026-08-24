@@ -95,8 +95,7 @@ bb.d:                                             ; preds = %bb.a
   br i1 %i.i, label %bb.e, label %bb.g
 
 bb.e:                                             ; preds = %bb.d
-  %5 = load i8, ptr @unrar_debug, align 1, !tbaa !8
-  %.not89 = icmp eq i8 %5, 0
+  %.not89 = icmp eq i8 %4, 0
   br i1 %.not89, label %.thread126, label %bb.f, !prof !9
 
 bb.f:                                             ; preds = %bb.e
@@ -116,8 +115,7 @@ bb.g:                                             ; preds = %bb.d
   br i1 %i.n, label %bb.h, label %bb.j
 
 bb.h:                                             ; preds = %bb.g
-  %6 = load i8, ptr @unrar_debug, align 1, !tbaa !8
-  %.not88 = icmp eq i8 %6, 0
+  %.not88 = icmp eq i8 %4, 0
   br i1 %.not88, label %.thread133.thread, label %bb.i, !prof !9
 
 bb.i:                                             ; preds = %bb.h

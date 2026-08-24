@@ -204,28 +204,23 @@ bb.j:                                             ; preds = %.split.us.split.i.p
 
 get_clock.exit7:                                  ; preds = %bb.i, %bb.j
   %.0.i6.neg16 = phi i64 [ %.neg12, %bb.i ], [ %.neg15, %bb.j ]
-  %i.bg = bitcast i32 %spec.select.i to float     ; 8 uses
+  %i.bg = bitcast i32 %spec.select.i to float
+  %8 = call float @sqrtf(float noundef %i.bg) #13 ; 10 uses
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.k, %get_clock.exit7
   %.0.i11 = phi i32 [ 0, %get_clock.exit7 ], [ %i.bh, %bb.k ]
-  %8 = call float @sqrtf(float noundef %i.bg) #13
   store volatile float %8, ptr @res, align 8
-  %9 = call float @sqrtf(float noundef %i.bg) #13
-  store volatile float %9, ptr @res, align 8
-  %10 = call float @sqrtf(float noundef %i.bg) #13
-  store volatile float %10, ptr @res, align 8
-  %11 = call float @sqrtf(float noundef %i.bg) #13
-  store volatile float %11, ptr @res, align 8
-  %12 = call float @sqrtf(float noundef %i.bg) #13
-  store volatile float %12, ptr @res, align 8
-  %13 = call float @sqrtf(float noundef %i.bg) #13
-  store volatile float %13, ptr @res, align 8
-  %14 = call float @sqrtf(float noundef %i.bg) #13
-  store volatile float %14, ptr @res, align 8
-  %15 = call float @sqrtf(float noundef %i.bg) #13
-  store volatile float %15, ptr @res, align 8
-  %i.bh = add nuw nsw i32 %.0.i11, 8              ; 2 uses
+  store volatile float %8, ptr @res, align 8
+  store volatile float %8, ptr @res, align 8
+  store volatile float %8, ptr @res, align 8
+  store volatile float %8, ptr @res, align 8
+  store volatile float %8, ptr @res, align 8
+  store volatile float %8, ptr @res, align 8
+  store volatile float %8, ptr @res, align 8
+  store volatile float %8, ptr @res, align 8
+  store volatile float %8, ptr @res, align 8
+  %i.bh = add nuw nsw i32 %.0.i11, 10             ; 2 uses
   %exitcond.not.7 = icmp eq i32 %i.bh, 50000
   br i1 %exitcond.not.7, label %bb.l, label %bb.k, !llvm.loop !13
 

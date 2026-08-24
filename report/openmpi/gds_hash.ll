@@ -204,14 +204,14 @@ bb.cx:                                            ; preds = %bb.cw
   %i.rx = load ptr, ptr %i.br, align 8, !tbaa !86
   %i.ry = call ptr @pmix_gds_hash_check_nodename(ptr noundef nonnull %i.bt, ptr noundef %i.rx) #15 ; 2 uses
   %i.rz = icmp eq ptr %i.ry, null
+  %.pre813 = load i32, ptr @pmix_class_init_epoch, align 4, !tbaa !8 ; 2 uses
   br i1 %i.rz, label %bb.cy, label %bb.dc
 
 bb.cy:                                            ; preds = %bb.cx
   %i.sa = load i64, ptr getelementptr inbounds nuw (i8, ptr @pmix_nodeinfo_t_class, i64 56), align 8, !tbaa !179
   %i.sb = call noalias noundef ptr @malloc(i64 noundef %i.sa) #20 ; 13 uses
-  %8 = load i32, ptr @pmix_class_init_epoch, align 4, !tbaa !8
   %i.sc = load i32, ptr getelementptr inbounds nuw (i8, ptr @pmix_nodeinfo_t_class, i64 32), align 8, !tbaa !9
-  %.not.i457 = icmp eq i32 %8, %i.sc
+  %.not.i457 = icmp eq i32 %.pre813, %i.sc
   br i1 %.not.i457, label %bb.da, label %bb.cz
 
 bb.cz:                                            ; preds = %bb.cy
@@ -262,15 +262,16 @@ pmix_obj_new_tma.exit:                            ; preds = %.lr.ph.i.i, %bb.da,
   %i.su = load volatile i64, ptr %i.bw, align 8, !tbaa !25
   %i.sv = add i64 %i.su, 1
   store volatile i64 %i.sv, ptr %i.bw, align 8, !tbaa !25
+  %.pre812 = load i32, ptr @pmix_class_init_epoch, align 4, !tbaa !8
   br label %bb.dc
 
 bb.dc:                                            ; preds = %pmix_obj_new_tma.exit, %bb.cx
+  %8 = phi i32 [ %.pre812, %pmix_obj_new_tma.exit ], [ %.pre813, %bb.cx ]
   %.0268 = phi ptr [ %i.sb, %pmix_obj_new_tma.exit ], [ %i.ry, %bb.cx ] ; 5 uses
   %i.sw = load i64, ptr getelementptr inbounds nuw (i8, ptr @pmix_kval_t_class, i64 56), align 8, !tbaa !179
   %i.sx = call noalias noundef ptr @malloc(i64 noundef %i.sw) #20 ; 20 uses
-  %9 = load i32, ptr @pmix_class_init_epoch, align 4, !tbaa !8
   %i.sy = load i32, ptr getelementptr inbounds nuw (i8, ptr @pmix_kval_t_class, i64 32), align 8, !tbaa !9
-  %.not.i458 = icmp eq i32 %9, %i.sy
+  %.not.i458 = icmp eq i32 %8, %i.sy
   br i1 %.not.i458, label %bb.de, label %bb.dd
 
 bb.dd:                                            ; preds = %bb.dc

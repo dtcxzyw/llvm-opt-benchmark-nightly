@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.d, %.epil.prehea
 ._crit_edge50:                                    ; preds = %._crit_edge50.loopexit.unr-lcssa, %bb.d, %._crit_edge, %.preheader39
   %.034.lcssa = phi double [ 0.000000e+00, %.preheader39 ], [ 0.000000e+00, %._crit_edge ], [ %i.ay, %._crit_edge50.loopexit.unr-lcssa ], [ %i.bb, %bb.d ]
   %i.bc = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.6, ptr noundef %0, double noundef %.034.lcssa) ; 0 uses
-  %i.bd = load i32, ptr @current_test, align 4, !tbaa !4
+  %i.bd = load i32, ptr @current_test, align 4, !tbaa !4 ; 3 uses
   %i.be = icmp sgt i32 %i.bd, 1
   %i.bf = icmp ne i32 %4, 0
   %or.cond = and i1 %i.bf, %i.be
@@ -213,6 +213,7 @@ bb.d:                                             ; preds = %bb.d, %.epil.prehea
 .lr.ph54:                                         ; preds = %._crit_edge50
   %i.bg = load ptr, ptr @results, align 8, !tbaa !8 ; 2 uses
   %i.bh = load double, ptr %i.bg, align 8, !tbaa !11
+  %wide.trip.count68 = zext nneg i32 %i.bd to i64
   br label %bb.e
 
 bb.e:                                             ; preds = %.lr.ph54, %bb.e
@@ -224,15 +225,13 @@ bb.e:                                             ; preds = %.lr.ph54, %bb.e
   %i.bl = tail call double @log(double noundef %i.bk) #16, !tbaa !4
   %i.bm = fadd double %.03353, %i.bl              ; 2 uses
   %indvars.iv.next72 = add nuw nsw i64 %indvars.iv71, 1 ; 2 uses
-  %5 = load i32, ptr @current_test, align 4, !tbaa !4 ; 2 uses
-  %6 = sext i32 %5 to i64
-  %7 = icmp slt i64 %indvars.iv.next72, %6
-  br i1 %7, label %bb.e, label %._crit_edge55, !llvm.loop !22
+  %exitcond69.not = icmp eq i64 %indvars.iv.next72, %wide.trip.count68
+  br i1 %exitcond69.not, label %._crit_edge55, label %bb.e, !llvm.loop !22
 
 ._crit_edge55:                                    ; preds = %bb.e
-  %i.bn = add nsw i32 %5, -1
-  %8 = sitofp i32 %i.bn to double
-  %i.bo = fdiv double %i.bm, %8
+  %i.bn = add nsw i32 %i.bd, -1
+  %5 = uitofp nneg i32 %i.bn to double
+  %i.bo = fdiv double %i.bm, %5
   %i.bp = tail call double @exp(double noundef %i.bo) #16, !tbaa !4
   %i.bq = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.7, ptr noundef %0, double noundef %i.bp) ; 0 uses
   br label %bb.f

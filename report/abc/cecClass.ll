@@ -205,6 +205,7 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 5 uses
   %i.c = getelementptr i8, ptr %0, i64 24         ; 2 uses
   %i.d = getelementptr i8, ptr %0, i64 32         ; 2 uses
+  %s_Count.promoted = load i32, ptr @s_Count, align 4, !tbaa !8
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 104
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 112
@@ -213,11 +214,10 @@ bb.a:
 
 tailrecurse:                                      ; preds = %bb.au, %bb.a
   %i.h = phi ptr [ %.pre, %bb.a ], [ %i.hy, %bb.au ]
-  %accumulator.tr.a = phi i32 [ 0, %bb.a ], [ %i.if, %bb.au ] ; 2 uses
-  %.tr88.a = phi i32 [ %1, %bb.a ], [ %i.ie, %bb.au ] ; 2 uses
-  %2 = load i32, ptr @s_Count, align 4, !tbaa !8
-  %i.i = add nsw i32 %2, 1
-  store i32 %i.i, ptr @s_Count, align 4, !tbaa !8
+  %accumulator.tr.a = phi i32 [ %s_Count.promoted, %bb.a ], [ %i.i, %bb.au ]
+  %.tr88.a = phi i32 [ 0, %bb.a ], [ %i.if, %bb.au ] ; 2 uses
+  %.tr88 = phi i32 [ %1, %bb.a ], [ %i.ie, %bb.au ] ; 2 uses
+  %i.i = add nsw i32 %accumulator.tr.a, 1         ; 2 uses
   %i.j = load ptr, ptr %i.a, align 8, !tbaa !57   ; 6 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 4 ; 4 uses
   store i32 0, ptr %i.k, align 4, !tbaa !26
@@ -293,10 +293,10 @@ Vec_IntPush.exit:                                 ; preds = %tailrecurse, %bb.f,
   store i32 %i.ah, ptr %i.k, align 4, !tbaa !26
   %i.ai = sext i32 %i.ae to i64
   %i.aj = getelementptr inbounds [4 x i8], ptr %i.ag, i64 %i.ai
-  store i32 %.tr88.a, ptr %i.aj, align 4, !tbaa !8
+  store i32 %.tr88, ptr %i.aj, align 4, !tbaa !8
   %.val39 = load ptr, ptr %i.c, align 8, !tbaa !59
   %.val40 = load ptr, ptr %i.d, align 8, !tbaa !60
-  %i.ak = sext i32 %.tr88.a to i64                ; 2 uses
+  %i.ak = sext i32 %.tr88 to i64                  ; 2 uses
   %i.al = getelementptr inbounds [4 x i8], ptr %.val39, i64 %i.ak
   %i.am = load i32, ptr %i.al, align 4, !tbaa !8
   %i.an = sext i32 %i.am to i64
@@ -699,12 +699,13 @@ bb.au:                                            ; preds = %Cec_ManSimClassCrea
   %i.id = getelementptr i8, ptr %i.hy, i64 8
   %.val36 = load ptr, ptr %i.id, align 8, !tbaa !30
   %i.ie = load i32, ptr %.val36, align 4, !tbaa !8
-  %i.if = add i32 %accumulator.tr.a, 1
+  %i.if = add i32 %.tr88.a, 1
   br label %tailrecurse
 
 bb.av:                                            ; preds = %Cec_ManSimClassCreate.exit85, %._crit_edge
   %.033 = phi i32 [ 0, %._crit_edge ], [ 1, %Cec_ManSimClassCreate.exit85 ]
-  %accumulator.ret.tr = add i32 %.033, %accumulator.tr.a
+  store i32 %i.i, ptr @s_Count, align 4, !tbaa !8
+  %accumulator.ret.tr = add i32 %.033, %.tr88.a
   ret i32 %accumulator.ret.tr
 }
 

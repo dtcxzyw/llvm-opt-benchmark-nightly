@@ -101,7 +101,7 @@ bb.j:                                             ; preds = %bb.i
 bb.k:                                             ; preds = %bb.i
   %i.aa = call ptr @seed48(ptr noundef nonnull %i.b) #15 ; 0 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %2, i8 0, i64 16, i1 false)
-  %i.ab = load i32, ptr @reg_len, align 4, !tbaa !4
+  %i.ab = load i32, ptr @reg_len, align 4, !tbaa !4 ; 2 uses
   %.not10.i = icmp slt i32 %i.ab, 0
   br i1 %.not10.i, label %create_link_list.exit, label %.lr.ph.i
 
@@ -116,10 +116,9 @@ bb.k:                                             ; preds = %bb.i
   store ptr null, ptr %i.ae, align 8, !tbaa !18
   %i.af = getelementptr inbounds nuw i8, ptr %.012.i, i64 8
   store ptr %i.ac, ptr %i.af, align 8, !tbaa !18
-  %i.ag = add nuw nsw i32 %.0911.i, 1
-  %3 = load i32, ptr @reg_len, align 4, !tbaa !4
-  %.not.not.i = icmp slt i32 %.0911.i, %3
-  br i1 %.not.not.i, label %.lr.ph.i, label %create_link_list.exit, !llvm.loop !19
+  %i.ag = add nuw i32 %.0911.i, 1
+  %exitcond.not.i = icmp eq i32 %.0911.i, %i.ab
+  br i1 %exitcond.not.i, label %create_link_list.exit, label %.lr.ph.i, !llvm.loop !19
 
 create_link_list.exit:                            ; preds = %.lr.ph.i, %bb.k
   %i.ah = getelementptr inbounds nuw i8, ptr %2, i64 8
@@ -197,7 +196,7 @@ declare ptr @seed48(ptr noundef) local_unnamed_addr #5
 define dso_local void @create_link_list(ptr nofree noundef writeonly captures(none) initializes((0, 16)) %0) local_unnamed_addr #6 {
 bb.a:
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, i8 0, i64 16, i1 false)
-  %i.a = load i32, ptr @reg_len, align 4, !tbaa !4
+  %i.a = load i32, ptr @reg_len, align 4, !tbaa !4 ; 2 uses
   %.not10 = icmp slt i32 %i.a, 0
   br i1 %.not10, label %._crit_edge, label %.lr.ph
 
@@ -212,10 +211,9 @@ bb.a:
   store ptr null, ptr %i.d, align 8, !tbaa !18
   %i.e = getelementptr inbounds nuw i8, ptr %.012, i64 8
   store ptr %i.b, ptr %i.e, align 8, !tbaa !18
-  %i.f = add nuw nsw i32 %.0911, 1
-  %1 = load i32, ptr @reg_len, align 4, !tbaa !4
-  %.not.not = icmp slt i32 %.0911, %1
-  br i1 %.not.not, label %.lr.ph, label %._crit_edge, !llvm.loop !19
+  %i.f = add nuw i32 %.0911, 1
+  %exitcond.not = icmp eq i32 %.0911, %i.a
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !19
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.a
   ret void

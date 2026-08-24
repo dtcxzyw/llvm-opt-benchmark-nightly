@@ -204,14 +204,14 @@ bb.bi:                                            ; preds = %._crit_edge.i
   br label %tokenise.exit
 
 tokenise.exit:                                    ; preds = %._crit_edge.i, %bb.bi
-  %i.hn = phi i32 [ %.0180.lcssa.i, %._crit_edge.i ], [ %.pre, %bb.bi ]
+  %i.hn = phi i32 [ %.0180.lcssa.i, %._crit_edge.i ], [ %.pre, %bb.bi ] ; 2 uses
   %i.ho = add i32 %i.hn, -1                       ; 4 uses
   %.not42.i = icmp eq i32 %i.ho, 0
   br i1 %.not42.i, label %._crit_edge.thread.i, label %.lr.ph.i55
 
 .lr.ph.i55:                                       ; preds = %tokenise.exit
   %i.hp = load ptr, ptr @token_list, align 8, !tbaa !21 ; 9 uses
-  %wide.trip.count.i = zext i32 %i.ho to i64      ; 2 uses
+  %wide.trip.count.i = zext i32 %i.ho to i64      ; 3 uses
   %xtraiter = and i64 %wide.trip.count.i, 1
   %i.hq = icmp eq i32 %i.ho, 1
   br i1 %i.hq, label %.epil.preheader, label %.lr.ph.i55.new
@@ -304,7 +304,7 @@ bb.bn:                                            ; preds = %._crit_edge.i57
   store i32 %.130.i.lcssa, ptr @nr_types, align 4, !tbaa !40
   %i.iy = add i32 %.130.i.lcssa, 1
   %i.iz = zext i32 %i.iy to i64
-  %i.ja = tail call noalias ptr @calloc(i64 noundef %i.iz, i64 noundef 32) #28 ; 6 uses
+  %i.ja = tail call noalias ptr @calloc(i64 noundef %i.iz, i64 noundef 32) #28 ; 5 uses
   store ptr %i.ja, ptr @type_list, align 8, !tbaa !42
   %.not.i58 = icmp eq ptr %i.ja, null
   br i1 %.not.i58, label %bb.bo, label %bb.bp
@@ -329,18 +329,11 @@ bb.bq:                                            ; preds = %bb.bp
 bb.br:                                            ; preds = %bb.bp
   %i.jd = getelementptr inbounds nuw i8, ptr %i.ja, i64 28
   store i32 2, ptr %i.jd, align 4, !tbaa !46
-  %3 = load i32, ptr @nr_tokens, align 4, !tbaa !40 ; 2 uses
-  %4 = add i32 %3, -1                             ; 2 uses
-  %.not43.i = icmp eq i32 %4, 0
-  br i1 %.not43.i, label %._crit_edge39.i, label %.lr.ph38.i
-
-.lr.ph38.i:                                       ; preds = %bb.br
-  %wide.trip.count48.i = zext i32 %4 to i64
   br label %bb.bs
 
-bb.bs:                                            ; preds = %._crit_edge54.i, %.lr.ph38.i
-  %indvars.iv45.i = phi i64 [ 0, %.lr.ph38.i ], [ %i.ji, %._crit_edge54.i ] ; 2 uses
-  %.02735.i = phi i32 [ 0, %.lr.ph38.i ], [ %.128.i, %._crit_edge54.i ] ; 4 uses
+bb.bs:                                            ; preds = %._crit_edge54.i, %bb.br
+  %indvars.iv45.i = phi i64 [ 0, %bb.br ], [ %i.ji, %._crit_edge54.i ] ; 2 uses
+  %.02735.i = phi i32 [ 0, %bb.br ], [ %.128.i, %._crit_edge54.i ] ; 4 uses
   %i.je = getelementptr inbounds nuw [32 x i8], ptr %i.hp, i64 %indvars.iv45.i ; 2 uses
   %i.jf = getelementptr inbounds nuw i8, ptr %i.je, i64 2
   %i.jg = load i8, ptr %i.jf, align 2
@@ -366,27 +359,19 @@ bb.bu:                                            ; preds = %bb.bt
 
 ._crit_edge54.i:                                  ; preds = %bb.bu, %bb.bt, %bb.bs
   %.128.i = phi i32 [ %i.jq, %bb.bu ], [ %.02735.i, %bb.bt ], [ %.02735.i, %bb.bs ] ; 2 uses
-  %exitcond49.not.i = icmp eq i64 %i.ji, %wide.trip.count48.i
-  br i1 %exitcond49.not.i, label %._crit_edge39.loopexit.i, label %bb.bs, !llvm.loop !50
+  %exitcond49.not.i = icmp eq i64 %i.ji, %wide.trip.count.i
+  br i1 %exitcond49.not.i, label %._crit_edge39.i, label %bb.bs, !llvm.loop !50
 
-._crit_edge39.loopexit.i:                         ; preds = %._crit_edge54.i
-  %.phi.trans.insert.i = zext i32 %.128.i to i64  ; 2 uses
-  %.phi.trans.insert50.i = getelementptr inbounds nuw [32 x i8], ptr %i.ja, i64 %.phi.trans.insert.i
-  %.phi.trans.insert51.i = getelementptr inbounds nuw i8, ptr %.phi.trans.insert50.i, i64 28
-  %.pre52.i = load i32, ptr %.phi.trans.insert51.i, align 4, !tbaa !46
-  %5 = zext i32 %3 to i64
-  %6 = or i32 %.pre52.i, 1
-  br label %._crit_edge39.i
-
-._crit_edge39.i:                                  ; preds = %._crit_edge39.loopexit.i, %bb.br
-  %7 = phi i32 [ %6, %._crit_edge39.loopexit.i ], [ 3, %bb.br ]
-  %.027.lcssa.i = phi i64 [ %.phi.trans.insert.i, %._crit_edge39.loopexit.i ], [ 0, %bb.br ]
-  %.1.lcssa.i = phi i64 [ %5, %._crit_edge39.loopexit.i ], [ 1, %bb.br ]
-  %8 = getelementptr inbounds nuw [32 x i8], ptr %i.hp, i64 %.1.lcssa.i
-  %9 = getelementptr inbounds nuw [32 x i8], ptr %i.ja, i64 %.027.lcssa.i ; 2 uses
-  store ptr %8, ptr %9, align 8, !tbaa !49
-  %10 = getelementptr inbounds nuw i8, ptr %9, i64 28
-  store i32 %7, ptr %10, align 4, !tbaa !46
+._crit_edge39.i:                                  ; preds = %._crit_edge54.i
+  %.phi.trans.insert.i = zext i32 %.128.i to i64
+  %.phi.trans.insert51.i = getelementptr inbounds nuw [32 x i8], ptr %i.ja, i64 %.phi.trans.insert.i ; 2 uses
+  %.phi.trans.insert52.i = getelementptr inbounds nuw i8, ptr %.phi.trans.insert51.i, i64 28 ; 2 uses
+  %.pre53.i = load i32, ptr %.phi.trans.insert52.i, align 4, !tbaa !46
+  %3 = zext i32 %i.hn to i64
+  %4 = or i32 %.pre53.i, 1
+  %5 = getelementptr inbounds nuw [32 x i8], ptr %i.hp, i64 %3
+  store ptr %5, ptr %.phi.trans.insert51.i, align 8, !tbaa !49
+  store i32 %4, ptr %.phi.trans.insert52.i, align 4, !tbaa !46
   tail call void @qsort(ptr noundef nonnull %i.jc, i64 noundef %i.jb, i64 noundef 8, ptr noundef nonnull @type_index_compare) #22
   %.b.i60 = load i1, ptr @verbose_opt, align 1
   br i1 %.b.i60, label %bb.bv, label %build_type_list.exit

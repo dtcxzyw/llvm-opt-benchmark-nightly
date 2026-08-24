@@ -205,18 +205,16 @@ bb.b:                                             ; preds = %bb.a
   %i.i = icmp samesign ult i64 %indvars.iv.next, %i.h
   br i1 %i.i, label %.lr.ph, label %._crit_edge
 
-bb.c:                                             ; preds = %._crit_edge, %bb.b
+bb.c:                                             ; preds = %bb.b, %._crit_edge
   store i32 %1, ptr getelementptr inbounds nuw (i8, ptr @CORE, i64 176), align 8
   %i.j = zext nneg i32 %1 to i64
   %i.k = tail call noalias ptr @calloc(i64 noundef %i.j, i64 noundef 8) #60 ; 2 uses
   store ptr %i.k, ptr getelementptr inbounds nuw (i8, ptr @CORE, i64 168), align 8
-  %3 = load i32, ptr getelementptr inbounds nuw (i8, ptr @CORE, i64 176), align 8
-  %.not17 = icmp eq i32 %3, 0
-  br i1 %.not17, label %.loopexit, label %.lr.ph15
+  br label %.lr.ph15
 
 .lr.ph15:                                         ; preds = %bb.c, %.lr.ph15
-  %i.l = phi ptr [ %i.o, %.lr.ph15 ], [ %i.k, %bb.c ]
-  %indvars.iv19 = phi i64 [ %indvars.iv.next20, %.lr.ph15 ], [ 0, %bb.c ] ; 4 uses
+  %i.l = phi ptr [ %i.k, %bb.c ], [ %i.o, %.lr.ph15 ]
+  %indvars.iv19 = phi i64 [ 0, %bb.c ], [ %indvars.iv.next20, %.lr.ph15 ] ; 4 uses
   %i.m = tail call noalias dereferenceable_or_null(4096) ptr @calloc(i64 noundef 4096, i64 noundef 1) #60
   %i.n = getelementptr inbounds nuw [8 x i8], ptr %i.l, i64 %indvars.iv19
   store ptr %i.m, ptr %i.n, align 8
@@ -232,7 +230,7 @@ bb.c:                                             ; preds = %._crit_edge, %bb.b
   %i.w = icmp samesign ult i64 %indvars.iv.next20, %i.v
   br i1 %i.w, label %.lr.ph15, label %.loopexit
 
-.loopexit:                                        ; preds = %.lr.ph15, %bb.c, %bb.a
+.loopexit:                                        ; preds = %.lr.ph15, %bb.a
   ret void
 }
 
@@ -635,14 +633,7 @@ bb.a:
   %i.l = getelementptr inbounds i8, ptr %i.g, i64 %i.k
   store i32 %i.j, ptr %i.l, align 1
   %i.m = icmp sgt i32 %1, -72
-  br i1 %i.m, label %.lr.ph.preheader, label %bb.b
-
-.lr.ph.preheader:                                 ; preds = %bb.a
-  %.promoted72 = load i32, ptr getelementptr inbounds nuw (i8, ptr @ComputeMD5.hash, i64 12), align 4
-  %.promoted71 = load i32, ptr getelementptr inbounds nuw (i8, ptr @ComputeMD5.hash, i64 8), align 8
-  %.promoted = load i32, ptr getelementptr inbounds nuw (i8, ptr @ComputeMD5.hash, i64 4), align 4
-  %ComputeMD5.hash.promoted = load i32, ptr @ComputeMD5.hash, align 16
-  br label %.lr.ph
+  br i1 %i.m, label %.lr.ph, label %bb.b
 
 ._crit_edge:                                      ; preds = %bb.c
   store i32 %i.s, ptr @ComputeMD5.hash, align 16
@@ -655,12 +646,12 @@ bb.b:                                             ; preds = %._crit_edge, %bb.a
   tail call void @free(ptr noundef nonnull %i.g) #56
   ret ptr @ComputeMD5.hash
 
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.c
-  %indvars.iv82 = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next83, %bb.c ] ; 2 uses
-  %i.n = phi i32 [ %ComputeMD5.hash.promoted, %.lr.ph.preheader ], [ %i.s, %bb.c ] ; 2 uses
-  %i.o = phi i32 [ %.promoted, %.lr.ph.preheader ], [ %i.t, %bb.c ] ; 2 uses
-  %i.p = phi i32 [ %.promoted71, %.lr.ph.preheader ], [ %i.u, %bb.c ] ; 2 uses
-  %i.q = phi i32 [ %.promoted72, %.lr.ph.preheader ], [ %i.v, %bb.c ] ; 2 uses
+.lr.ph:                                           ; preds = %bb.a, %bb.c
+  %indvars.iv82 = phi i64 [ %indvars.iv.next83, %bb.c ], [ 0, %bb.a ] ; 2 uses
+  %i.n = phi i32 [ %i.s, %bb.c ], [ 1732584193, %bb.a ] ; 2 uses
+  %i.o = phi i32 [ %i.t, %bb.c ], [ -271733879, %bb.a ] ; 2 uses
+  %i.p = phi i32 [ %i.u, %bb.c ], [ -1732584194, %bb.a ] ; 2 uses
+  %i.q = phi i32 [ %i.v, %bb.c ], [ 271733878, %bb.a ] ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %i.g, i64 %indvars.iv82
   br label %bb.d
 
@@ -799,11 +790,6 @@ bb.a:
   br i1 %i.aj, label %.lr.ph.preheader, label %bb.b
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %.promoted119 = load i32, ptr getelementptr inbounds nuw (i8, ptr @ComputeSHA1.hash, i64 16), align 16
-  %.promoted118 = load i32, ptr getelementptr inbounds nuw (i8, ptr @ComputeSHA1.hash, i64 12), align 4
-  %.promoted117 = load i32, ptr getelementptr inbounds nuw (i8, ptr @ComputeSHA1.hash, i64 8), align 8
-  %.promoted = load i32, ptr getelementptr inbounds nuw (i8, ptr @ComputeSHA1.hash, i64 4), align 4
-  %ComputeSHA1.hash.promoted = load i32, ptr @ComputeSHA1.hash, align 16
   %i.ak = getelementptr inbounds nuw i8, ptr %i.a, i64 64
   %i.al = getelementptr inbounds nuw i8, ptr %i.a, i64 32
   br label %.lr.ph
@@ -822,11 +808,11 @@ bb.b:                                             ; preds = %._crit_edge, %bb.a
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.c
   %indvars.iv138 = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next139, %bb.c ] ; 3 uses
-  %i.am = phi i32 [ %ComputeSHA1.hash.promoted, %.lr.ph.preheader ], [ %i.cz, %bb.c ] ; 2 uses
-  %i.an = phi i32 [ %.promoted, %.lr.ph.preheader ], [ %i.da, %bb.c ] ; 2 uses
-  %i.ao = phi i32 [ %.promoted117, %.lr.ph.preheader ], [ %i.db, %bb.c ] ; 2 uses
-  %i.ap = phi i32 [ %.promoted118, %.lr.ph.preheader ], [ %i.dc, %bb.c ] ; 2 uses
-  %i.aq = phi i32 [ %.promoted119, %.lr.ph.preheader ], [ %i.dd, %bb.c ] ; 2 uses
+  %i.am = phi i32 [ 1732584193, %.lr.ph.preheader ], [ %i.cz, %bb.c ] ; 2 uses
+  %i.an = phi i32 [ -271733879, %.lr.ph.preheader ], [ %i.da, %bb.c ] ; 2 uses
+  %i.ao = phi i32 [ -1732584194, %.lr.ph.preheader ], [ %i.db, %bb.c ] ; 2 uses
+  %i.ap = phi i32 [ 271733878, %.lr.ph.preheader ], [ %i.dc, %bb.c ] ; 2 uses
+  %i.aq = phi i32 [ -1009589776, %.lr.ph.preheader ], [ %i.dd, %bb.c ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #56
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(256) %i.ak, i8 0, i64 256, i1 false)
   %i.ar = getelementptr inbounds nuw i8, ptr %i.g, i64 %indvars.iv138
@@ -1023,14 +1009,6 @@ define noundef nonnull ptr @ComputeSHA256(ptr nofree noundef readonly captures(n
   br i1 %.not, label %bb.a, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %.preheader111
-  %.promoted129 = load i32, ptr getelementptr inbounds nuw (i8, ptr @ComputeSHA256.hash, i64 28), align 4
-  %.promoted128 = load i32, ptr getelementptr inbounds nuw (i8, ptr @ComputeSHA256.hash, i64 24), align 8
-  %.promoted127 = load i32, ptr getelementptr inbounds nuw (i8, ptr @ComputeSHA256.hash, i64 20), align 4
-  %.promoted126 = load i32, ptr getelementptr inbounds nuw (i8, ptr @ComputeSHA256.hash, i64 16), align 16
-  %.promoted125 = load i32, ptr getelementptr inbounds nuw (i8, ptr @ComputeSHA256.hash, i64 12), align 4
-  %.promoted124 = load i32, ptr getelementptr inbounds nuw (i8, ptr @ComputeSHA256.hash, i64 8), align 8
-  %.promoted = load i32, ptr getelementptr inbounds nuw (i8, ptr @ComputeSHA256.hash, i64 4), align 4
-  %ComputeSHA256.hash.promoted = load i32, ptr @ComputeSHA256.hash, align 16
   %i.ai = getelementptr inbounds nuw i8, ptr %i.a, i64 64
   %i.aj = getelementptr inbounds nuw i8, ptr %i.a, i64 32
   br label %.lr.ph
@@ -1052,14 +1030,14 @@ bb.a:                                             ; preds = %._crit_edge, %.preh
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.b
   %.097130 = phi i64 [ %i.dd, %bb.b ], [ 0, %.lr.ph.preheader ] ; 2 uses
-  %i.ak = phi i32 [ %i.cv, %bb.b ], [ %ComputeSHA256.hash.promoted, %.lr.ph.preheader ] ; 2 uses
-  %i.al = phi i32 [ %i.cw, %bb.b ], [ %.promoted, %.lr.ph.preheader ] ; 2 uses
-  %i.am = phi i32 [ %i.cx, %bb.b ], [ %.promoted124, %.lr.ph.preheader ] ; 2 uses
-  %i.an = phi i32 [ %i.cy, %bb.b ], [ %.promoted125, %.lr.ph.preheader ] ; 2 uses
-  %i.ao = phi i32 [ %i.cz, %bb.b ], [ %.promoted126, %.lr.ph.preheader ] ; 2 uses
-  %i.ap = phi i32 [ %i.da, %bb.b ], [ %.promoted127, %.lr.ph.preheader ] ; 2 uses
-  %i.aq = phi i32 [ %i.db, %bb.b ], [ %.promoted128, %.lr.ph.preheader ] ; 2 uses
-  %i.ar = phi i32 [ %i.dc, %bb.b ], [ %.promoted129, %.lr.ph.preheader ] ; 2 uses
+  %i.ak = phi i32 [ %i.cv, %bb.b ], [ 1779033703, %.lr.ph.preheader ] ; 2 uses
+  %i.al = phi i32 [ %i.cw, %bb.b ], [ -1150833019, %.lr.ph.preheader ] ; 2 uses
+  %i.am = phi i32 [ %i.cx, %bb.b ], [ 1013904242, %.lr.ph.preheader ] ; 2 uses
+  %i.an = phi i32 [ %i.cy, %bb.b ], [ -1521486534, %.lr.ph.preheader ] ; 2 uses
+  %i.ao = phi i32 [ %i.cz, %bb.b ], [ 1359893119, %.lr.ph.preheader ] ; 2 uses
+  %i.ap = phi i32 [ %i.da, %bb.b ], [ -1694144372, %.lr.ph.preheader ] ; 2 uses
+  %i.aq = phi i32 [ %i.db, %bb.b ], [ 528734635, %.lr.ph.preheader ] ; 2 uses
+  %i.ar = phi i32 [ %i.dc, %bb.b ], [ 1541459225, %.lr.ph.preheader ] ; 2 uses
   %i.as = shl nuw i64 %.097130, 6
   %i.at = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.as ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #56

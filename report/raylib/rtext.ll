@@ -205,16 +205,13 @@ bb.i:                                             ; preds = %bb.c
   br label %bb.m
 
 bb.j:                                             ; preds = %bb.c
-  %i.n = load i32, ptr getelementptr inbounds nuw (i8, ptr @defaultFont, i64 4), align 4
-  %i.o = sext i32 %i.n to i64
+  %i.n = load i32, ptr getelementptr inbounds nuw (i8, ptr @defaultFont, i64 4), align 4 ; 2 uses
+  %i.o = sext i32 %i.n to i64                     ; 2 uses
   %i.p = call noalias ptr @calloc(i64 noundef %i.o, i64 noundef 40) #40
   store ptr %i.p, ptr getelementptr inbounds nuw (i8, ptr @defaultFont, i64 40), align 8
-  %3 = load i32, ptr getelementptr inbounds nuw (i8, ptr @defaultFont, i64 4), align 4
-  %4 = sext i32 %3 to i64
-  %i.q = call noalias ptr @calloc(i64 noundef %4, i64 noundef 16) #40
+  %i.q = call noalias ptr @calloc(i64 noundef %i.o, i64 noundef 16) #40
   store ptr %i.q, ptr getelementptr inbounds nuw (i8, ptr @defaultFont, i64 32), align 8
-  %5 = load i32, ptr getelementptr inbounds nuw (i8, ptr @defaultFont, i64 4), align 4
-  %i.r = icmp sgt i32 %5, 0
+  %i.r = icmp sgt i32 %i.n, 0
   br i1 %i.r, label %.lr.ph, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.l, %bb.j

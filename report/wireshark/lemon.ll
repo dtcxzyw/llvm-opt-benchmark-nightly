@@ -205,6 +205,8 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   br i1 %i.o, label %.lr.ph84, label %.preheader74
 
 .lr.ph84:                                         ; preds = %._crit_edge
+  %1 = load i32, ptr @size, align 4
+  %2 = sext i32 %1 to i64
   %i.p = getelementptr i8, ptr %0, i64 72
   %i.q = sext i32 %i.n to i64
   br label %bb.c
@@ -217,8 +219,6 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
 
 bb.c:                                             ; preds = %.lr.ph84, %SetNew.exit
   %indvars.iv128 = phi i64 [ %i.q, %.lr.ph84 ], [ %indvars.iv.next129, %SetNew.exit ] ; 2 uses
-  %1 = load i32, ptr @size, align 4
-  %2 = sext i32 %1 to i64
   %i.u = tail call noalias ptr @calloc(i64 noundef %2, i64 noundef 1) #40 ; 2 uses
   %i.v = icmp eq ptr %i.u, null
   br i1 %i.v, label %bb.d, label %SetNew.exit
@@ -621,7 +621,7 @@ lemon_strcpy.exit:                                ; preds = %.preheader
 ; Function Attrs: null_pointer_is_valid sspstrong uwtable
 define internal void @handle_D_option(ptr nofree noundef readonly captures(none) %0) #0 {
 bb.a:
-  %i.a = load i32, ptr @nDefine, align 4
+  %i.a = load i32, ptr @nDefine, align 4          ; 2 uses
   %i.b = add i32 %i.a, 1                          ; 2 uses
   store i32 %i.b, ptr @nDefine, align 4
   %i.c = load ptr, ptr @azDefine, align 8
@@ -639,9 +639,7 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 bb.c:                                             ; preds = %bb.a
-  %1 = load i32, ptr @nDefine, align 4
-  %2 = add i32 %1, -1
-  %i.j = sext i32 %2 to i64
+  %i.j = sext i32 %i.a to i64
   %i.k = getelementptr [8 x i8], ptr %i.f, i64 %i.j
   %i.l = tail call i64 @strlen(ptr noundef %0) #44
   %i.m = shl i64 %i.l, 32
@@ -1044,7 +1042,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f
 bb.i:                                             ; preds = %bb.h, %bb.e
   %.021 = phi i32 [ %i.l, %bb.h ], [ %1, %bb.e ]  ; 3 uses
   %i.m = add i32 %.021, 80
-  %i.n = load i32, ptr @append_str.used, align 4
+  %i.n = load i32, ptr @append_str.used, align 4  ; 2 uses
   %i.o = add i32 %i.m, %i.n                       ; 2 uses
   %i.p = load i32, ptr @append_str.alloced, align 4
   %.not = icmp sgt i32 %i.p, %i.o
@@ -1132,18 +1130,22 @@ bb.p:                                             ; preds = %bb.o, %lemon_strcpy
   %.2 = phi i32 [ %i.aq, %lemon_strcpy.exit ], [ %i.y, %bb.o ] ; 2 uses
   %.1 = phi i32 [ %3, %lemon_strcpy.exit ], [ %.02032, %bb.o ]
   %i.aw = icmp sgt i32 %.2, 0
-  br i1 %i.aw, label %.lr.ph, label %._crit_edge, !llvm.loop !293
+  br i1 %i.aw, label %.lr.ph, label %._crit_edge.loopexit, !llvm.loop !293
 
-._crit_edge:                                      ; preds = %bb.p, %.preheader
-  %4 = phi ptr [ %i.u, %.preheader ], [ %i.av, %bb.p ] ; 2 uses
-  %5 = load i32, ptr @append_str.used, align 4
-  %i.ax = sext i32 %5 to i64
-  %i.ay = getelementptr i8, ptr %4, i64 %i.ax
+._crit_edge.loopexit:                             ; preds = %bb.p
+  %.pre = load i32, ptr @append_str.used, align 4
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %.preheader
+  %4 = phi i32 [ %.pre, %._crit_edge.loopexit ], [ %i.n, %.preheader ]
+  %5 = phi ptr [ %i.av, %._crit_edge.loopexit ], [ %i.u, %.preheader ] ; 2 uses
+  %i.ax = sext i32 %4 to i64
+  %i.ay = getelementptr i8, ptr %5, i64 %i.ax
   store i8 0, ptr %i.ay, align 1
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.k, %._crit_edge, %bb.d
-  %.0 = phi ptr [ %i.e, %bb.d ], [ %4, %._crit_edge ], [ @append_str.empty, %bb.k ]
+  %.0 = phi ptr [ %i.e, %bb.d ], [ %5, %._crit_edge ], [ @append_str.empty, %bb.k ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #42
   ret ptr %.0
 }

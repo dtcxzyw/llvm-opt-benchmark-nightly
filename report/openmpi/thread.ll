@@ -144,21 +144,19 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.f = load ptr, ptr @pmix_tsd_key_values, align 8, !tbaa !30
-  %i.g = load i32, ptr @pmix_tsd_key_values_count, align 4, !tbaa !20
-  %i.h = add nsw i32 %i.g, 1
+  %i.g = load i32, ptr @pmix_tsd_key_values_count, align 4, !tbaa !20 ; 2 uses
+  %i.h = add nsw i32 %i.g, 1                      ; 2 uses
   %i.i = sext i32 %i.h to i64
   %i.j = shl nsw i64 %i.i, 4
   %i.k = tail call ptr @realloc(ptr noundef %i.f, i64 noundef %i.j) #14 ; 2 uses
   store ptr %i.k, ptr @pmix_tsd_key_values, align 8, !tbaa !30
   %i.l = load i32, ptr %0, align 4, !tbaa !20
-  %2 = load i32, ptr @pmix_tsd_key_values_count, align 4, !tbaa !20 ; 2 uses
-  %i.m = sext i32 %2 to i64
+  %i.m = sext i32 %i.g to i64
   %i.n = getelementptr inbounds [16 x i8], ptr %i.k, i64 %i.m ; 2 uses
   store i32 %i.l, ptr %i.n, align 8, !tbaa !32
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 8
   store ptr %1, ptr %i.o, align 8, !tbaa !34
-  %3 = add nsw i32 %2, 1
-  store i32 %3, ptr @pmix_tsd_key_values_count, align 4, !tbaa !20
+  store i32 %i.h, ptr @pmix_tsd_key_values_count, align 4, !tbaa !20
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a

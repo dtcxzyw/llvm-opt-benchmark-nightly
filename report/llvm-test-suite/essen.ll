@@ -157,7 +157,7 @@ bb.a:
   %i.c = shl nsw i32 %i.b, 1
   %i.d = load i32, ptr @cube, align 8, !tbaa !11
   %i.e = tail call ptr (i32, i32, ...) @sf_new(i32 noundef %i.c, i32 noundef %i.d) #5 ; 2 uses
-  %i.f = load i32, ptr @cube, align 8, !tbaa !11  ; 2 uses
+  %i.f = load i32, ptr @cube, align 8, !tbaa !11  ; 3 uses
   %i.g = icmp slt i32 %i.f, 33
   %i.h = add nsw i32 %i.f, -1
   %i.i = lshr i32 %i.h, 3
@@ -166,8 +166,7 @@ bb.a:
   %narrow = select i1 %i.g, i32 8, i32 %i.k
   %i.l = zext nneg i32 %narrow to i64
   %i.m = tail call noalias ptr @malloc(i64 noundef %i.l) #6
-  %2 = load i32, ptr @cube, align 8, !tbaa !11
-  %i.n = tail call ptr (ptr, i32, ...) @set_clear(ptr noundef %i.m, i32 noundef %2) #5 ; 4 uses
+  %i.n = tail call ptr (ptr, i32, ...) @set_clear(ptr noundef %i.m, i32 noundef %i.f) #5 ; 4 uses
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !16   ; 2 uses
   %i.q = load i32, ptr %i.a, align 4, !tbaa !18
@@ -247,7 +246,7 @@ bb.a:
   br i1 %.not, label %bb.b, label %bb.h
 
 bb.b:                                             ; preds = %bb.a
-  %i.j = load i32, ptr @cube, align 8, !tbaa !11  ; 2 uses
+  %i.j = load i32, ptr @cube, align 8, !tbaa !11  ; 3 uses
   %i.k = icmp slt i32 %i.j, 33
   %i.l = add nsw i32 %i.j, -1
   %i.m = lshr i32 %i.l, 3
@@ -256,8 +255,7 @@ bb.b:                                             ; preds = %bb.a
   %narrow = select i1 %i.k, i32 8, i32 %i.o
   %i.p = zext nneg i32 %narrow to i64
   %i.q = tail call noalias ptr @malloc(i64 noundef %i.p) #6
-  %3 = load i32, ptr @cube, align 8, !tbaa !11
-  %i.r = tail call ptr (ptr, i32, ...) @set_clear(ptr noundef %i.q, i32 noundef %3) #5 ; 13 uses
+  %i.r = tail call ptr (ptr, i32, ...) @set_clear(ptr noundef %i.q, i32 noundef %i.j) #5 ; 13 uses
   %i.s = ptrtoaddr ptr %i.r to i64                ; 5 uses
   %i.t = load i32, ptr %1, align 4, !tbaa !4      ; 2 uses
   %i.u = and i32 %i.t, 1023

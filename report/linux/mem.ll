@@ -202,41 +202,41 @@ bb.e:                                             ; preds = %bb.c, %bb.d, %bb.a
 define hidden i64 @efi_low_alloc_above(i64 noundef %0, i64 noundef %1, ptr nofree noundef writeonly captures(none) %2, i64 noundef %3) local_unnamed_addr #0 {
 bb.a:
   %i.a = alloca [3 x i64], align 16               ; 3 uses
-  %i.b = alloca ptr, align 8                      ; 5 uses
-  %i.c = alloca i64, align 8                      ; 7 uses
+  %i.b = alloca ptr, align 8                      ; 7 uses
+  %i.c = alloca i64, align 8                      ; 8 uses
   %i.d = alloca [3 x i64], align 16               ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #4
   store ptr null, ptr %i.b, align 8
   %i.e = call i64 @efi_get_memory_map(ptr noundef nonnull %i.b, i1 noundef zeroext false) #6 ; 3 uses
   %.not = icmp eq i64 %i.e, 0
-  %.pre55 = load ptr, ptr %i.b, align 8           ; 8 uses
+  %.pre55 = load ptr, ptr %i.b, align 8           ; 6 uses
   br i1 %.not, label %bb.b, label %bb.m
 
 bb.b:                                             ; preds = %bb.a
   %i.f = add i64 %0, 4095                         ; 2 uses
   %i.g = and i64 %i.f, -4096
   %i.h = lshr i64 %i.f, 12                        ; 3 uses
-  %4 = getelementptr inbounds nuw i8, ptr %.pre55, i64 8 ; 3 uses
-  %5 = load i64, ptr %.pre55, align 8             ; 3 uses
-  %i.i = load i64, ptr %4, align 8                ; 3 uses
-  %.not48 = icmp ugt i64 %i.i, %5
+  %4 = load i64, ptr %.pre55, align 8             ; 2 uses
+  %5 = getelementptr inbounds nuw i8, ptr %.pre55, i64 8
+  %i.i = load i64, ptr %5, align 8                ; 3 uses
+  %.not48 = icmp ugt i64 %i.i, %4
   br i1 %.not48, label %.thread, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.b
   %spec.store.select = tail call i64 @llvm.umax.i64(i64 %1, i64 4096)
-  %6 = getelementptr inbounds nuw i8, ptr %.pre55, i64 40
   %i.j = add i64 %spec.store.select, -1
   %i.k = load i8, ptr @efi_is64, align 1, !range !4
   %i.l = trunc nuw i8 %i.k to i1
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph, %bb.l
-  %i.m = phi i64 [ %i.i, %.lr.ph ], [ %7, %bb.l ] ; 5 uses
-  %i.n = phi i64 [ %5, %.lr.ph ], [ %8, %bb.l ]   ; 4 uses
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.l ] ; 3 uses
+  %6 = phi ptr [ %.pre55, %.lr.ph ], [ %9, %bb.l ] ; 5 uses
+  %i.m = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.l ] ; 3 uses
+  %i.n = phi i64 [ %i.i, %.lr.ph ], [ %12, %bb.l ]
+  %7 = getelementptr inbounds nuw i8, ptr %6, i64 40
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #4
-  %i.o = mul i64 %i.m, %indvars.iv
-  %i.p = getelementptr inbounds nuw i8, ptr %6, i64 %i.o ; 4 uses
+  %i.o = mul i64 %i.n, %i.m
+  %i.p = getelementptr inbounds nuw i8, ptr %7, i64 %i.o ; 4 uses
   %i.q = load i32, ptr %i.p, align 8
   %.not34 = icmp eq i32 %i.q, 7
   br i1 %.not34, label %bb.d, label %bb.l
@@ -249,17 +249,19 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not35, label %bb.e, label %bb.l
 
 bb.e:                                             ; preds = %bb.d
-  %i.u = getelementptr inbounds nuw i8, ptr %i.p, i64 24
-  %i.v = load i64, ptr %i.u, align 8              ; 2 uses
+  %i.u = getelementptr inbounds nuw i8, ptr %i.p, i64 24 ; 2 uses
+  %i.v = load i64, ptr %i.u, align 8
   %i.w = icmp ult i64 %i.v, %i.h
   br i1 %i.w, label %bb.l, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.x = getelementptr inbounds nuw i8, ptr %i.p, i64 8
-  %i.y = load i64, ptr %i.x, align 8              ; 2 uses
-  %i.z = shl i64 %i.v, 12
-  %i.aa = add i64 %i.z, %i.y
-  %spec.store.select36 = call i64 @llvm.umax.i64(i64 %i.y, i64 %3)
+  %8 = load i64, ptr %i.x, align 8                ; 3 uses
+  store i64 %8, ptr %i.c, align 8
+  %i.y = load i64, ptr %i.u, align 8
+  %i.z = shl i64 %i.y, 12
+  %i.aa = add i64 %i.z, %8
+  %spec.store.select36 = call i64 @llvm.umax.i64(i64 %8, i64 %3)
   %i.ab = add i64 %spec.store.select36, -1
   %i.ac = or i64 %i.ab, %i.j
   %i.ad = add i64 %i.ac, 1                        ; 2 uses
@@ -303,31 +305,35 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   br i1 %i.az, label %bb.k, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.j
-  %.pre = load i64, ptr %.pre55, align 8
-  %.pre52 = load i64, ptr %4, align 8
+  %.pre = load ptr, ptr %i.b, align 8
   br label %bb.l
 
 bb.k:                                             ; preds = %bb.j
   %i.ba = load i64, ptr %i.c, align 8
   store i64 %i.ba, ptr %2, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #4
-  %.pre53 = load i64, ptr %.pre55, align 8
-  %.pre54 = load i64, ptr %4, align 8
+  %.pre44 = load ptr, ptr %i.b, align 8           ; 3 uses
+  %.pre53 = load i64, ptr %.pre44, align 8
+  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.pre44, i64 8
+  %.pre54 = load i64, ptr %.phi.trans.insert, align 8
   br label %.thread
 
 bb.l:                                             ; preds = %._crit_edge, %bb.c, %bb.f, %bb.d, %bb.e
-  %7 = phi i64 [ %.pre52, %._crit_edge ], [ %i.m, %bb.c ], [ %i.m, %bb.f ], [ %i.m, %bb.d ], [ %i.m, %bb.e ] ; 3 uses
-  %8 = phi i64 [ %.pre, %._crit_edge ], [ %i.n, %bb.c ], [ %i.n, %bb.f ], [ %i.n, %bb.d ], [ %i.n, %bb.e ] ; 3 uses
+  %9 = phi ptr [ %.pre, %._crit_edge ], [ %6, %bb.c ], [ %6, %bb.f ], [ %6, %bb.d ], [ %6, %bb.e ] ; 4 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #4
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 3 uses
-  %i.bb = udiv i64 %8, %7
+  %indvars.iv.next = add nuw nsw i64 %i.m, 1      ; 3 uses
+  %10 = load i64, ptr %9, align 8                 ; 2 uses
+  %11 = getelementptr inbounds nuw i8, ptr %9, i64 8
+  %12 = load i64, ptr %11, align 8                ; 3 uses
+  %i.bb = udiv i64 %10, %12
   %i.bc = icmp ugt i64 %i.bb, %indvars.iv.next
   br i1 %i.bc, label %bb.c, label %.thread, !llvm.loop !7
 
 .thread:                                          ; preds = %bb.l, %bb.k, %bb.b
-  %i.bd = phi i64 [ %.pre54, %bb.k ], [ %i.i, %bb.b ], [ %7, %bb.l ]
-  %i.be = phi i64 [ %.pre53, %bb.k ], [ %5, %bb.b ], [ %8, %bb.l ]
-  %i.bf = phi i64 [ %indvars.iv, %bb.k ], [ 0, %bb.b ], [ %indvars.iv.next, %bb.l ]
+  %i.bd = phi i64 [ %.pre54, %bb.k ], [ %i.i, %bb.b ], [ %12, %bb.l ]
+  %i.be = phi i64 [ %.pre53, %bb.k ], [ %4, %bb.b ], [ %10, %bb.l ]
+  %13 = phi ptr [ %.pre44, %bb.k ], [ %.pre55, %bb.b ], [ %9, %bb.l ]
+  %i.bf = phi i64 [ %i.m, %bb.k ], [ 0, %bb.b ], [ %indvars.iv.next, %bb.l ]
   %i.bg = udiv i64 %i.be, %i.bd
   %i.bh = icmp eq i64 %i.bg, %i.bf
   %. = select i1 %i.bh, i64 -9223372036854775794, i64 0
@@ -339,6 +345,7 @@ bb.m:                                             ; preds = %bb.a
 
 bb.n:                                             ; preds = %.thread, %bb.m
   %.064 = phi i64 [ %., %.thread ], [ %i.e, %bb.m ] ; 2 uses
+  %14 = phi ptr [ %13, %.thread ], [ %.pre55, %bb.m ] ; 2 uses
   %i.bi = load i8, ptr @efi_is64, align 1, !range !4, !noundef !5
   %i.bj = trunc nuw i8 %i.bi to i1
   br i1 %i.bj, label %bb.o, label %bb.p
@@ -349,7 +356,7 @@ bb.o:                                             ; preds = %bb.n
   %i.bm = load ptr, ptr %i.bl, align 8
   %i.bn = getelementptr inbounds nuw i8, ptr %i.bm, i64 72
   %i.bo = load ptr, ptr %i.bn, align 8
-  %i.bp = call win64cc i64 %i.bo(ptr noundef nonnull %.pre55) #5, !inline_history !6 ; 0 uses
+  %i.bp = call win64cc i64 %i.bo(ptr noundef nonnull %14) #5, !inline_history !6 ; 0 uses
   br label %__free_efi_pool.exit
 
 bb.p:                                             ; preds = %bb.n
@@ -361,7 +368,7 @@ bb.p:                                             ; preds = %bb.n
   %i.bu = inttoptr i64 %i.bt to ptr
   %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 48
   %i.bw = load i32, ptr %i.bv, align 8
-  %i.bx = call i64 (i32, ...) @__efi64_thunk(i32 noundef %i.bw, ptr noundef nonnull %.pre55, ptr noundef nonnull %i.a) #5 ; 0 uses
+  %i.bx = call i64 (i32, ...) @__efi64_thunk(i32 noundef %i.bw, ptr noundef nonnull %14, ptr noundef nonnull %i.a) #5 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #4
   br label %__free_efi_pool.exit
 

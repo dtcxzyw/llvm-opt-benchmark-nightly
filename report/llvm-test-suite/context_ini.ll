@@ -204,7 +204,7 @@ bb.j:                                             ; preds = %bb.i
 bb.k:                                             ; preds = %bb.j, %bb.i
   %i.ab = load i32, ptr @number_of_slices, align 4, !tbaa !4
   %i.ac = sext i32 %i.ab to i64
-  %i.ad = shl nsw i64 %i.ac, 2
+  %i.ad = shl nsw i64 %i.ac, 2                    ; 2 uses
   %i.ae = tail call noalias ptr @malloc(i64 noundef %i.ad) #11 ; 2 uses
   %i.af = load ptr, ptr @initialized, align 8, !tbaa !33
   %i.ag = getelementptr inbounds nuw [8 x i8], ptr %i.af, i64 %indvars.iv
@@ -215,13 +215,14 @@ bb.k:                                             ; preds = %bb.j, %bb.i
 
 bb.l:                                             ; preds = %bb.k
   tail call void @no_mem_exit(ptr noundef nonnull @.str) #12
+  %.pre = load i32, ptr @number_of_slices, align 4, !tbaa !4
+  %.pre78 = sext i32 %.pre to i64
+  %.pre79 = shl nsw i64 %.pre78, 2
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %bb.k
-  %0 = load i32, ptr @number_of_slices, align 4, !tbaa !4
-  %1 = sext i32 %0 to i64
-  %2 = shl nsw i64 %1, 2
-  %i.aj = tail call noalias ptr @malloc(i64 noundef %2) #11 ; 2 uses
+  %.pre-phi80 = phi i64 [ %.pre79, %bb.l ], [ %i.ad, %bb.k ] ; 2 uses
+  %i.aj = tail call noalias ptr @malloc(i64 noundef %.pre-phi80) #11 ; 2 uses
   %i.ak = load ptr, ptr @model_number, align 8, !tbaa !33
   %i.al = getelementptr inbounds nuw [8 x i8], ptr %i.ak, i64 %indvars.iv
   %i.am = load ptr, ptr %i.al, align 8, !tbaa !34
@@ -231,13 +232,14 @@ bb.m:                                             ; preds = %bb.l, %bb.k
 
 bb.n:                                             ; preds = %bb.m
   tail call void @no_mem_exit(ptr noundef nonnull @.str.1) #12
+  %.pre70 = load i32, ptr @number_of_slices, align 4, !tbaa !4
+  %.pre81 = sext i32 %.pre70 to i64
+  %.pre83 = shl nsw i64 %.pre81, 2
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.m, %bb.n
-  %3 = load i32, ptr @number_of_slices, align 4, !tbaa !4
-  %4 = sext i32 %3 to i64
-  %5 = shl nsw i64 %4, 2
-  %i.ao = tail call noalias ptr @malloc(i64 noundef %5) #11 ; 2 uses
+  %.pre-phi84 = phi i64 [ %.pre-phi80, %bb.m ], [ %.pre83, %bb.n ] ; 2 uses
+  %i.ao = tail call noalias ptr @malloc(i64 noundef %.pre-phi84) #11 ; 2 uses
   %i.ap = load ptr, ptr @initialized, align 8, !tbaa !33
   %i.aq = getelementptr inbounds nuw [8 x i8], ptr %i.ap, i64 %indvars.iv
   %i.ar = load ptr, ptr %i.aq, align 8, !tbaa !34
@@ -248,13 +250,14 @@ bb.o:                                             ; preds = %bb.m, %bb.n
 
 bb.p:                                             ; preds = %bb.o
   tail call void @no_mem_exit(ptr noundef nonnull @.str) #12
+  %.pre71 = load i32, ptr @number_of_slices, align 4, !tbaa !4
+  %.pre85 = sext i32 %.pre71 to i64
+  %.pre87 = shl nsw i64 %.pre85, 2
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.p, %bb.o
-  %6 = load i32, ptr @number_of_slices, align 4, !tbaa !4
-  %7 = sext i32 %6 to i64
-  %8 = shl nsw i64 %7, 2
-  %i.au = tail call noalias ptr @malloc(i64 noundef %8) #11 ; 2 uses
+  %.pre-phi88 = phi i64 [ %.pre87, %bb.p ], [ %.pre-phi84, %bb.o ] ; 2 uses
+  %i.au = tail call noalias ptr @malloc(i64 noundef %.pre-phi88) #11 ; 2 uses
   %i.av = load ptr, ptr @model_number, align 8, !tbaa !33
   %i.aw = getelementptr inbounds nuw [8 x i8], ptr %i.av, i64 %indvars.iv
   %i.ax = load ptr, ptr %i.aw, align 8, !tbaa !34
@@ -265,13 +268,14 @@ bb.q:                                             ; preds = %bb.p, %bb.o
 
 bb.r:                                             ; preds = %bb.q
   tail call void @no_mem_exit(ptr noundef nonnull @.str.1) #12
+  %.pre72 = load i32, ptr @number_of_slices, align 4, !tbaa !4
+  %.pre89 = sext i32 %.pre72 to i64
+  %.pre91 = shl nsw i64 %.pre89, 2
   br label %bb.s
 
 bb.s:                                             ; preds = %bb.r, %bb.q
-  %9 = load i32, ptr @number_of_slices, align 4, !tbaa !4
-  %10 = sext i32 %9 to i64
-  %11 = shl nsw i64 %10, 2
-  %i.ba = tail call noalias ptr @malloc(i64 noundef %11) #11 ; 2 uses
+  %.pre-phi92 = phi i64 [ %.pre91, %bb.r ], [ %.pre-phi88, %bb.q ] ; 2 uses
+  %i.ba = tail call noalias ptr @malloc(i64 noundef %.pre-phi92) #11 ; 2 uses
   %i.bb = load ptr, ptr @initialized, align 8, !tbaa !33
   %i.bc = getelementptr inbounds nuw [8 x i8], ptr %i.bb, i64 %indvars.iv
   %i.bd = load ptr, ptr %i.bc, align 8, !tbaa !34
@@ -282,13 +286,14 @@ bb.s:                                             ; preds = %bb.r, %bb.q
 
 bb.t:                                             ; preds = %bb.s
   tail call void @no_mem_exit(ptr noundef nonnull @.str) #12
+  %.pre73 = load i32, ptr @number_of_slices, align 4, !tbaa !4
+  %.pre93 = sext i32 %.pre73 to i64
+  %.pre95 = shl nsw i64 %.pre93, 2
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.t, %bb.s
-  %12 = load i32, ptr @number_of_slices, align 4, !tbaa !4
-  %13 = sext i32 %12 to i64
-  %14 = shl nsw i64 %13, 2
-  %i.bg = tail call noalias ptr @malloc(i64 noundef %14) #11 ; 2 uses
+  %.pre-phi96 = phi i64 [ %.pre95, %bb.t ], [ %.pre-phi92, %bb.s ] ; 2 uses
+  %i.bg = tail call noalias ptr @malloc(i64 noundef %.pre-phi96) #11 ; 2 uses
   %i.bh = load ptr, ptr @model_number, align 8, !tbaa !33
   %i.bi = getelementptr inbounds nuw [8 x i8], ptr %i.bh, i64 %indvars.iv
   %i.bj = load ptr, ptr %i.bi, align 8, !tbaa !34
@@ -299,13 +304,14 @@ bb.u:                                             ; preds = %bb.t, %bb.s
 
 bb.v:                                             ; preds = %bb.u
   tail call void @no_mem_exit(ptr noundef nonnull @.str.1) #12
+  %.pre74 = load i32, ptr @number_of_slices, align 4, !tbaa !4
+  %.pre97 = sext i32 %.pre74 to i64
+  %.pre99 = shl nsw i64 %.pre97, 2
   br label %bb.w
 
 bb.w:                                             ; preds = %bb.v, %bb.u
-  %15 = load i32, ptr @number_of_slices, align 4, !tbaa !4
-  %16 = sext i32 %15 to i64
-  %17 = shl nsw i64 %16, 2
-  %i.bm = tail call noalias ptr @malloc(i64 noundef %17) #11 ; 2 uses
+  %.pre-phi100 = phi i64 [ %.pre99, %bb.v ], [ %.pre-phi96, %bb.u ] ; 2 uses
+  %i.bm = tail call noalias ptr @malloc(i64 noundef %.pre-phi100) #11 ; 2 uses
   %i.bn = load ptr, ptr @initialized, align 8, !tbaa !33
   %i.bo = getelementptr inbounds nuw [8 x i8], ptr %i.bn, i64 %indvars.iv
   %i.bp = load ptr, ptr %i.bo, align 8, !tbaa !34
@@ -316,13 +322,14 @@ bb.w:                                             ; preds = %bb.v, %bb.u
 
 bb.x:                                             ; preds = %bb.w
   tail call void @no_mem_exit(ptr noundef nonnull @.str) #12
+  %.pre75 = load i32, ptr @number_of_slices, align 4, !tbaa !4
+  %.pre101 = sext i32 %.pre75 to i64
+  %.pre103 = shl nsw i64 %.pre101, 2
   br label %bb.y
 
 bb.y:                                             ; preds = %bb.x, %bb.w
-  %18 = load i32, ptr @number_of_slices, align 4, !tbaa !4
-  %19 = sext i32 %18 to i64
-  %20 = shl nsw i64 %19, 2
-  %i.bs = tail call noalias ptr @malloc(i64 noundef %20) #11 ; 2 uses
+  %.pre-phi104 = phi i64 [ %.pre103, %bb.x ], [ %.pre-phi100, %bb.w ]
+  %i.bs = tail call noalias ptr @malloc(i64 noundef %.pre-phi104) #11 ; 2 uses
   %i.bt = load ptr, ptr @model_number, align 8, !tbaa !33
   %i.bu = getelementptr inbounds nuw [8 x i8], ptr %i.bt, i64 %indvars.iv
   %i.bv = load ptr, ptr %i.bu, align 8, !tbaa !34

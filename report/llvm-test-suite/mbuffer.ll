@@ -205,12 +205,12 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
-  %i.g = phi i32 [ %.pre, %bb.d ], [ %i.b, %bb.c ]
+  %i.g = phi i32 [ %.pre, %bb.d ], [ %i.b, %bb.c ] ; 2 uses
   store i32 0, ptr getelementptr inbounds nuw (i8, ptr @dpb, i64 28), align 4, !tbaa !48
   store ptr null, ptr getelementptr inbounds nuw (i8, ptr @dpb, i64 56), align 8, !tbaa !49
   store i32 0, ptr getelementptr inbounds nuw (i8, ptr @dpb, i64 32), align 8, !tbaa !24
   store i32 0, ptr getelementptr inbounds nuw (i8, ptr @dpb, i64 36), align 4, !tbaa !19
-  %i.h = zext i32 %i.g to i64
+  %i.h = zext i32 %i.g to i64                     ; 2 uses
   %i.i = tail call noalias ptr @calloc(i64 noundef %i.h, i64 noundef 8) #17 ; 2 uses
   store ptr %i.i, ptr @dpb, align 8, !tbaa !50
   %i.j = icmp eq ptr %i.i, null
@@ -218,35 +218,40 @@ bb.e:                                             ; preds = %bb.d, %bb.c
 
 bb.f:                                             ; preds = %bb.e
   tail call void @no_mem_exit(ptr noundef nonnull @.str.3) #16
+  %.pre34 = load i32, ptr getelementptr inbounds nuw (i8, ptr @dpb, i64 24), align 8, !tbaa !44 ; 2 uses
+  %.pre39 = zext i32 %.pre34 to i64
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
-  %0 = load i32, ptr getelementptr inbounds nuw (i8, ptr @dpb, i64 24), align 8, !tbaa !44
-  %1 = zext i32 %0 to i64
-  %i.k = tail call noalias ptr @calloc(i64 noundef %1, i64 noundef 8) #17 ; 2 uses
+  %.pre-phi = phi i64 [ %.pre39, %bb.f ], [ %i.h, %bb.e ] ; 2 uses
+  %0 = phi i32 [ %.pre34, %bb.f ], [ %i.g, %bb.e ]
+  %i.k = tail call noalias ptr @calloc(i64 noundef %.pre-phi, i64 noundef 8) #17 ; 2 uses
   store ptr %i.k, ptr getelementptr inbounds nuw (i8, ptr @dpb, i64 8), align 8, !tbaa !51
   %i.l = icmp eq ptr %i.k, null
   br i1 %i.l, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g
   tail call void @no_mem_exit(ptr noundef nonnull @.str.4) #16
+  %.pre35 = load i32, ptr getelementptr inbounds nuw (i8, ptr @dpb, i64 24), align 8, !tbaa !44 ; 2 uses
+  %.pre40 = zext i32 %.pre35 to i64
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g
-  %2 = load i32, ptr getelementptr inbounds nuw (i8, ptr @dpb, i64 24), align 8, !tbaa !44
-  %3 = zext i32 %2 to i64
-  %i.m = tail call noalias ptr @calloc(i64 noundef %3, i64 noundef 8) #17 ; 2 uses
+  %.pre-phi41 = phi i64 [ %.pre40, %bb.h ], [ %.pre-phi, %bb.g ]
+  %1 = phi i32 [ %.pre35, %bb.h ], [ %0, %bb.g ]
+  %i.m = tail call noalias ptr @calloc(i64 noundef %.pre-phi41, i64 noundef 8) #17 ; 2 uses
   store ptr %i.m, ptr getelementptr inbounds nuw (i8, ptr @dpb, i64 16), align 8, !tbaa !52
   %i.n = icmp eq ptr %i.m, null
   br i1 %i.n, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %bb.i
   tail call void @no_mem_exit(ptr noundef nonnull @.str.5) #16
+  %.pre36 = load i32, ptr getelementptr inbounds nuw (i8, ptr @dpb, i64 24), align 8, !tbaa !44
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.i
-  %4 = load i32, ptr getelementptr inbounds nuw (i8, ptr @dpb, i64 24), align 8, !tbaa !44
-  %.not23 = icmp eq i32 %4, 0
+  %2 = phi i32 [ %.pre36, %bb.j ], [ %1, %bb.i ]  ; 2 uses
+  %.not23 = icmp eq i32 %2, 0
   br i1 %.not23, label %.preheader18, label %.lr.ph
 
 .preheader18:                                     ; preds = %alloc_frame_store.exit, %bb.k
@@ -256,6 +261,7 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   br i1 %i.p, label %bb.m, label %bb.n
 
 .lr.ph:                                           ; preds = %bb.k, %alloc_frame_store.exit
+  %3 = phi i32 [ %4, %alloc_frame_store.exit ], [ %2, %bb.k ]
   %indvars.iv = phi i64 [ %indvars.iv.next, %alloc_frame_store.exit ], [ 0, %bb.k ] ; 4 uses
   %i.q = tail call noalias dereferenceable_or_null(64) ptr @calloc(i64 noundef 1, i64 noundef 64) #17 ; 2 uses
   %i.r = icmp eq ptr %i.q, null
@@ -263,9 +269,11 @@ bb.k:                                             ; preds = %bb.j, %bb.i
 
 bb.l:                                             ; preds = %.lr.ph
   tail call void @no_mem_exit(ptr noundef nonnull @.str.7) #16
+  %.pre37 = load i32, ptr getelementptr inbounds nuw (i8, ptr @dpb, i64 24), align 8, !tbaa !44
   br label %alloc_frame_store.exit
 
 alloc_frame_store.exit:                           ; preds = %.lr.ph, %bb.l
+  %4 = phi i32 [ %3, %.lr.ph ], [ %.pre37, %bb.l ] ; 2 uses
   %i.s = load ptr, ptr @dpb, align 8, !tbaa !50
   %i.t = getelementptr inbounds nuw [8 x i8], ptr %i.s, i64 %indvars.iv
   store ptr %i.q, ptr %i.t, align 8, !tbaa !55
@@ -276,8 +284,7 @@ alloc_frame_store.exit:                           ; preds = %.lr.ph, %bb.l
   %i.x = getelementptr inbounds nuw [8 x i8], ptr %i.w, i64 %indvars.iv
   store ptr null, ptr %i.x, align 8, !tbaa !55
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %5 = load i32, ptr getelementptr inbounds nuw (i8, ptr @dpb, i64 24), align 8, !tbaa !44
-  %i.y = zext i32 %5 to i64
+  %i.y = zext i32 %4 to i64
   %i.z = icmp samesign ult i64 %indvars.iv.next, %i.y
   br i1 %i.z, label %.lr.ph, label %.preheader18, !llvm.loop !56
 
@@ -680,19 +687,20 @@ bb.al:                                            ; preds = %bb.ai, %bb.ak, %bb.
 
 bb.am:                                            ; preds = %bb.ac
   %i.ep = load i32, ptr getelementptr inbounds nuw (i8, ptr @dpb, i64 24), align 8, !tbaa !44
-  %i.eq = zext i32 %i.ep to i64
+  %i.eq = zext i32 %i.ep to i64                   ; 2 uses
   %i.er = tail call noalias ptr @calloc(i64 noundef %i.eq, i64 noundef 8) #17 ; 10 uses
   %i.es = icmp eq ptr %i.er, null
   br i1 %i.es, label %bb.an, label %bb.ao
 
 bb.an:                                            ; preds = %bb.am
   tail call void @no_mem_exit(ptr noundef nonnull @.str.10) #16
+  %.pre = load i32, ptr getelementptr inbounds nuw (i8, ptr @dpb, i64 24), align 8, !tbaa !44
+  %.pre976 = zext i32 %.pre to i64
   br label %bb.ao
 
 bb.ao:                                            ; preds = %bb.an, %bb.am
-  %2 = load i32, ptr getelementptr inbounds nuw (i8, ptr @dpb, i64 24), align 8, !tbaa !44
-  %3 = zext i32 %2 to i64
-  %i.et = tail call noalias ptr @calloc(i64 noundef %3, i64 noundef 8) #17 ; 15 uses
+  %.pre-phi977 = phi i64 [ %.pre976, %bb.an ], [ %i.eq, %bb.am ]
+  %i.et = tail call noalias ptr @calloc(i64 noundef %.pre-phi977, i64 noundef 8) #17 ; 15 uses
   %i.eu = ptrtoaddr ptr %i.et to i64
   %i.ev = icmp eq ptr %i.et, null
   br i1 %i.ev, label %bb.ap, label %bb.aq
@@ -1095,30 +1103,32 @@ bb.cd:                                            ; preds = %bb.ca, %bb.cc, %bb.
 
 bb.ce:                                            ; preds = %bb.bn
   %i.sx = load i32, ptr getelementptr inbounds nuw (i8, ptr @dpb, i64 24), align 8, !tbaa !44
-  %i.sy = zext i32 %i.sx to i64
+  %i.sy = zext i32 %i.sx to i64                   ; 2 uses
   %i.sz = tail call noalias ptr @calloc(i64 noundef %i.sy, i64 noundef 8) #17 ; 13 uses
   %i.ta = icmp eq ptr %i.sz, null
   br i1 %i.ta, label %bb.cf, label %bb.cg
 
 bb.cf:                                            ; preds = %bb.ce
   tail call void @no_mem_exit(ptr noundef nonnull @.str.10) #16
+  %.pre963 = load i32, ptr getelementptr inbounds nuw (i8, ptr @dpb, i64 24), align 8, !tbaa !44
+  %.pre973 = zext i32 %.pre963 to i64
   br label %bb.cg
 
 bb.cg:                                            ; preds = %bb.cf, %bb.ce
-  %4 = load i32, ptr getelementptr inbounds nuw (i8, ptr @dpb, i64 24), align 8, !tbaa !44
-  %5 = zext i32 %4 to i64
-  %i.tb = tail call noalias ptr @calloc(i64 noundef %5, i64 noundef 8) #17 ; 8 uses
+  %.pre-phi = phi i64 [ %.pre973, %bb.cf ], [ %i.sy, %bb.ce ] ; 2 uses
+  %i.tb = tail call noalias ptr @calloc(i64 noundef %.pre-phi, i64 noundef 8) #17 ; 8 uses
   %i.tc = icmp eq ptr %i.tb, null
   br i1 %i.tc, label %bb.ch, label %bb.ci
 
 bb.ch:                                            ; preds = %bb.cg
   tail call void @no_mem_exit(ptr noundef nonnull @.str.12) #16
+  %.pre964 = load i32, ptr getelementptr inbounds nuw (i8, ptr @dpb, i64 24), align 8, !tbaa !44
+  %.pre974 = zext i32 %.pre964 to i64
   br label %bb.ci
 
 bb.ci:                                            ; preds = %bb.ch, %bb.cg
-  %6 = load i32, ptr getelementptr inbounds nuw (i8, ptr @dpb, i64 24), align 8, !tbaa !44
-  %7 = zext i32 %6 to i64
-  %i.td = tail call noalias ptr @calloc(i64 noundef %7, i64 noundef 8) #17 ; 19 uses
+  %.pre-phi975 = phi i64 [ %.pre974, %bb.ch ], [ %.pre-phi, %bb.cg ]
+  %i.td = tail call noalias ptr @calloc(i64 noundef %.pre-phi975, i64 noundef 8) #17 ; 19 uses
   %i.te = ptrtoaddr ptr %i.td to i64
   %i.tf = icmp eq ptr %i.td, null
   br i1 %i.tf, label %bb.cj, label %bb.ck

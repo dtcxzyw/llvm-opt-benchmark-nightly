@@ -202,7 +202,7 @@ bb.dv:                                            ; preds = %.critedge414
   br label %bb.dw
 
 bb.dw:                                            ; preds = %bb.dv, %.critedge414
-  %i.lv = load ptr, ptr %i.b, align 8             ; 9 uses
+  %i.lv = load ptr, ptr %i.b, align 8             ; 8 uses
   br i1 %.not394, label %bb.dy, label %bb.dx
 
 bb.dx:                                            ; preds = %bb.dw
@@ -215,7 +215,7 @@ bb.dy:                                            ; preds = %bb.dw
   br i1 %or.cond17, label %bb.dz, label %.loopexit
 
 bb.dz:                                            ; preds = %bb.dy
-  %i.lx = load i32, ptr @optind, align 4, !tbaa !43 ; 2 uses
+  %i.lx = load i32, ptr @optind, align 4, !tbaa !43 ; 3 uses
   %i.ly = icmp slt i32 %i.lx, %1
   br i1 %i.ly, label %bb.ea, label %.loopexit
 
@@ -227,37 +227,30 @@ bb.ea:                                            ; preds = %bb.dz
   %i.md = getelementptr inbounds nuw i8, ptr %i.lv, i64 64
   store ptr %i.mc, ptr %i.md, align 8, !tbaa !18
   %.not395 = icmp eq ptr %i.mc, null
-  br i1 %.not395, label %bb.eb, label %11
+  br i1 %.not395, label %.lr.ph550.preheader, label %bb.eb
 
 bb.eb:                                            ; preds = %bb.ea
-  %9 = load ptr, ptr @stderr, align 8, !tbaa !41
-  %10 = call i64 @fwrite(ptr nonnull @.str.770, i64 31, i64 1, ptr %9) #21 ; 0 uses
+  %9 = sext i32 %i.lx to i64                      ; 2 uses
+  %wide.trip.count635 = sext i32 %1 to i64
+  br label %.lr.ph550
+
+.lr.ph550.preheader:                              ; preds = %bb.ea
+  %10 = load ptr, ptr @stderr, align 8, !tbaa !41
+  %11 = call i64 @fwrite(ptr nonnull @.str.770, i64 31, i64 1, ptr %10) #21 ; 0 uses
   call void @optfree(ptr noundef nonnull %i.lv)
   br label %.loopexit
 
-11:                                               ; preds = %bb.ea
-  %12 = load i32, ptr @optind, align 4, !tbaa !43 ; 2 uses
-  %13 = icmp slt i32 %12, %1
-  br i1 %13, label %.lr.ph550.preheader, label %.loopexit
-
-.lr.ph550.preheader:                              ; preds = %11
-  %14 = sext i32 %12 to i64
-  %wide.trip.count634 = sext i32 %1 to i64
-  br label %.lr.ph550
-
 bb.ec:                                            ; preds = %.lr.ph550
   %indvars.iv.next632 = add nsw i64 %indvars.iv631, 1 ; 2 uses
-  %exitcond635.not = icmp eq i64 %indvars.iv.next632, %wide.trip.count634
+  %exitcond635.not = icmp eq i64 %indvars.iv.next632, %wide.trip.count635
   br i1 %exitcond635.not, label %.loopexit, label %.lr.ph550
 
-.lr.ph550:                                        ; preds = %.lr.ph550.preheader, %bb.ec
-  %indvars.iv631 = phi i64 [ %14, %.lr.ph550.preheader ], [ %indvars.iv.next632, %bb.ec ] ; 3 uses
+.lr.ph550:                                        ; preds = %bb.eb, %bb.ec
+  %indvars.iv631 = phi i64 [ %9, %bb.eb ], [ %indvars.iv.next632, %bb.ec ] ; 3 uses
   %i.me = getelementptr inbounds [8 x i8], ptr %2, i64 %indvars.iv631
   %i.mf = load ptr, ptr %i.me, align 8, !tbaa !19
   %i.mg = call noalias ptr @strdup(ptr noundef %i.mf) #20 ; 2 uses
-  %15 = load i32, ptr @optind, align 4, !tbaa !43
-  %16 = sext i32 %15 to i64
-  %i.mh = sub nsw i64 %indvars.iv631, %16
+  %i.mh = sub nsw i64 %indvars.iv631, %9
   %i.mi = getelementptr inbounds [8 x i8], ptr %i.mc, i64 %i.mh
   store ptr %i.mg, ptr %i.mi, align 8, !tbaa !19
   %.not396 = icmp eq ptr %i.mg, null
@@ -269,8 +262,8 @@ bb.ed:                                            ; preds = %.lr.ph550
   call void @optfree(ptr noundef nonnull %i.lv)
   br label %.loopexit
 
-.loopexit:                                        ; preds = %bb.ec, %11, %bb.dy, %bb.dz, %bb.ed, %bb.eb, %bb.dx, %bb.ag, %bb.ae, %.split520.us, %.split518.us, %.split516.us
-  %.0304 = phi ptr [ null, %.split518.us ], [ null, %.split520.us ], [ null, %.split516.us ], [ null, %bb.ae ], [ null, %bb.dx ], [ null, %bb.ed ], [ null, %bb.ag ], [ null, %bb.eb ], [ %i.lv, %bb.dy ], [ %i.lv, %bb.dz ], [ %i.lv, %11 ], [ %i.lv, %bb.ec ]
+.loopexit:                                        ; preds = %bb.ec, %bb.dy, %bb.dz, %bb.ed, %.lr.ph550.preheader, %bb.dx, %bb.ag, %bb.ae, %.split520.us, %.split518.us, %.split516.us
+  %.0304 = phi ptr [ null, %.split518.us ], [ null, %.split520.us ], [ null, %.split516.us ], [ null, %bb.ae ], [ null, %bb.dx ], [ null, %bb.ed ], [ null, %bb.ag ], [ null, %.lr.ph550.preheader ], [ %i.lv, %bb.dy ], [ %i.lv, %bb.dz ], [ %i.lv, %bb.ec ]
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #20
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #20
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #20

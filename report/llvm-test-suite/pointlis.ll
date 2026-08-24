@@ -39,7 +39,7 @@ declare void @exit(i32 noundef) local_unnamed_addr #2
 define dso_local void @point_list_insert(ptr nofree noundef captures(none) %0, i64 %1) local_unnamed_addr #0 {
 bb.a:
   %i.a = load i32, ptr @CHno, align 4, !tbaa !4
-  %i.b = add nsw i32 %i.a, 1
+  %i.b = add nsw i32 %i.a, 1                      ; 2 uses
   store i32 %i.b, ptr @CHno, align 4, !tbaa !4
   %i.c = tail call noalias dereferenceable_or_null(32) ptr @malloc(i64 noundef 32) #11 ; 11 uses
   %.not.i = icmp eq ptr %i.c, null
@@ -55,8 +55,7 @@ create_point.exit:                                ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %i.c, i64 4
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.d, i8 0, i64 16, i1 false)
   store i64 %1, ptr %i.e, align 4
-  %2 = load i32, ptr @CHno, align 4, !tbaa !4
-  store i32 %2, ptr %i.c, align 8, !tbaa !8
+  store i32 %i.b, ptr %i.c, align 8, !tbaa !8
   %i.f = load ptr, ptr %0, align 8, !tbaa !13     ; 3 uses
   %i.g = icmp eq ptr %i.f, null
   br i1 %i.g, label %bb.c, label %bb.d

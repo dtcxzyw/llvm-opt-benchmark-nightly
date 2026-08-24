@@ -204,10 +204,17 @@ middle.block:                                     ; preds = %vector.body
   %i.en = udiv i64 %i.cu, %.040.lcssa.i
   %i.eo = uitofp i64 %i.en to double
   %i.ep = fsub double 1.000000e+00, %i.em
+  %7 = load i32, ptr @effective_cache_size, align 4
+  %8 = sdiv i32 %7, 4
+  %9 = sitofp i32 %8 to double
+  %10 = load i32, ptr @maintenance_work_mem, align 4
+  %11 = sitofp i32 %10 to double
+  %12 = fmul nnan double %11, 1.024000e+03
+  %13 = fmul nnan double %12, f0x3F20000000000000
   br label %bb.n
 
-bb.n:                                             ; preds = %11, %._crit_edge.i
-  %.038.i = phi i32 [ 1, %._crit_edge.i ], [ %i.eq, %11 ] ; 3 uses
+bb.n:                                             ; preds = %bb.n, %._crit_edge.i
+  %.038.i = phi i32 [ 1, %._crit_edge.i ], [ %i.eq, %bb.n ] ; 3 uses
   %i.eq = add i32 %.038.i, 1                      ; 2 uses
   %i.er = sitofp i32 %i.eq to double
   %i.es = call double @pow(double noundef %i.em, double noundef %i.er) #7
@@ -215,21 +222,12 @@ bb.n:                                             ; preds = %11, %._crit_edge.i
   %i.eu = fdiv double %i.et, %i.ep
   %i.ev = sitofp i32 %.038.i to double
   %i.ew = call double @pow(double noundef %i.eo, double noundef %i.ev) #7
-  %7 = load i32, ptr @effective_cache_size, align 4
-  %8 = sdiv i32 %7, 4
-  %9 = sitofp i32 %8 to double
-  %10 = fcmp ogt double %i.eu, %9
-  br i1 %10, label %select.unfold.i, label %11
+  %14 = fcmp ogt double %i.eu, %9
+  %15 = fcmp ogt double %i.ew, %13
+  %or.cond.i = select i1 %14, i1 true, i1 %15
+  br i1 %or.cond.i, label %select.unfold.i, label %bb.n
 
-11:                                               ; preds = %bb.n
-  %12 = load i32, ptr @maintenance_work_mem, align 4
-  %13 = sitofp i32 %12 to double
-  %14 = fmul nnan double %13, 1.024000e+03
-  %15 = fmul nnan double %14, f0x3F20000000000000
-  %16 = fcmp ogt double %i.ew, %15
-  br i1 %16, label %select.unfold.i, label %bb.n
-
-select.unfold.i:                                  ; preds = %11, %bb.n
+select.unfold.i:                                  ; preds = %bb.n
   %i.ex = add i32 %.038.i, -1                     ; 4 uses
   %i.ey = icmp slt i32 %i.ex, 1
   br i1 %i.ey, label %bb.o, label %bb.r

@@ -203,14 +203,11 @@ define dso_local void @make_tables(ptr nofree noundef writeonly captures(none) %
 bb.a:
   %i.a = mul nsw i32 %1, 793
   tail call void @init_random(i32 noundef %i.a) #12
-  %i.b = load i32, ptr @n_nodes, align 4, !tbaa !4
+  %i.b = load i32, ptr @n_nodes, align 4, !tbaa !4 ; 3 uses
   %i.c = sext i32 %i.b to i64
-  %i.d = shl nsw i64 %i.c, 3
+  %i.d = shl nsw i64 %i.c, 3                      ; 2 uses
   %i.e = tail call noalias ptr @malloc(i64 noundef %i.d) #10 ; 3 uses
-  %2 = load i32, ptr @n_nodes, align 4, !tbaa !4
-  %3 = sext i32 %2 to i64
-  %4 = shl nsw i64 %3, 3
-  %i.f = tail call noalias ptr @malloc(i64 noundef %4) #10 ; 4 uses
+  %i.f = tail call noalias ptr @malloc(i64 noundef %i.d) #10 ; 4 uses
   %.not.i = icmp eq ptr %i.f, null
   br i1 %.not.i, label %bb.b, label %make_table.exit
 
@@ -220,7 +217,6 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 make_table.exit:                                  ; preds = %bb.a
-  %5 = load i32, ptr @n_nodes, align 4, !tbaa !4  ; 2 uses
   %i.g = tail call noalias dereferenceable_or_null(48) ptr @malloc(i64 noundef 48) #10 ; 4 uses
   store ptr %i.g, ptr %i.f, align 8, !tbaa !8
   %i.h = tail call double @gen_uniform_double() #12
@@ -228,9 +224,9 @@ make_table.exit:                                  ; preds = %bb.a
   store ptr %i.e, ptr %i.g, align 8, !tbaa !13
   %i.i = getelementptr inbounds nuw i8, ptr %i.g, i64 40
   store i32 0, ptr %i.i, align 8, !tbaa !19
-  %i.j = icmp sgt i32 %5, 1
+  %i.j = icmp sgt i32 %i.b, 1
   tail call void @llvm.assume(i1 %i.j)
-  %wide.trip.count.i = zext nneg i32 %5 to i64
+  %wide.trip.count.i = zext nneg i32 %i.b to i64
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i, %make_table.exit
@@ -255,14 +251,11 @@ make_table.exit:                                  ; preds = %bb.a
 fill_table.exit:                                  ; preds = %.lr.ph.i
   %i.p = getelementptr inbounds nuw i8, ptr %i.k, i64 8
   store ptr null, ptr %i.p, align 8, !tbaa !20
-  %i.q = load i32, ptr @n_nodes, align 4, !tbaa !4
+  %i.q = load i32, ptr @n_nodes, align 4, !tbaa !4 ; 3 uses
   %i.r = sext i32 %i.q to i64
-  %i.s = shl nsw i64 %i.r, 3
+  %i.s = shl nsw i64 %i.r, 3                      ; 2 uses
   %i.t = tail call noalias ptr @malloc(i64 noundef %i.s) #10 ; 3 uses
-  %6 = load i32, ptr @n_nodes, align 4, !tbaa !4
-  %7 = sext i32 %6 to i64
-  %8 = shl nsw i64 %7, 3
-  %i.u = tail call noalias ptr @malloc(i64 noundef %8) #10 ; 4 uses
+  %i.u = tail call noalias ptr @malloc(i64 noundef %i.s) #10 ; 4 uses
   %.not.i14 = icmp eq ptr %i.u, null
   br i1 %.not.i14, label %bb.c, label %make_table.exit16
 
@@ -272,7 +265,6 @@ bb.c:                                             ; preds = %fill_table.exit
   unreachable
 
 make_table.exit16:                                ; preds = %fill_table.exit
-  %9 = load i32, ptr @n_nodes, align 4, !tbaa !4  ; 2 uses
   %i.v = tail call noalias dereferenceable_or_null(48) ptr @malloc(i64 noundef 48) #10 ; 4 uses
   store ptr %i.v, ptr %i.u, align 8, !tbaa !8
   %i.w = tail call double @gen_uniform_double() #12
@@ -280,9 +272,9 @@ make_table.exit16:                                ; preds = %fill_table.exit
   store ptr %i.t, ptr %i.v, align 8, !tbaa !13
   %i.x = getelementptr inbounds nuw i8, ptr %i.v, i64 40
   store i32 0, ptr %i.x, align 8, !tbaa !19
-  %i.y = icmp sgt i32 %9, 1
+  %i.y = icmp sgt i32 %i.q, 1
   tail call void @llvm.assume(i1 %i.y)
-  %wide.trip.count.i17 = zext nneg i32 %9 to i64
+  %wide.trip.count.i17 = zext nneg i32 %i.q to i64
   br label %.lr.ph.i18
 
 .lr.ph.i18:                                       ; preds = %.lr.ph.i18, %make_table.exit16

@@ -201,14 +201,12 @@ declare void @exit(i32 noundef) local_unnamed_addr #7
 define dso_local void @add_infinit_points_to_K(ptr noundef %0) local_unnamed_addr #2 {
 bb.a:
   %i.a = load i32, ptr @CHno, align 4, !tbaa !4
-  %i.b = shl nsw i32 %i.a, 1
+  %i.b = shl nsw i32 %i.a, 1                      ; 2 uses
   %i.c = add nsw i32 %i.b, -1
   %i.d = sext i32 %i.c to i64
   %i.e = tail call noalias ptr @calloc(i64 noundef %i.d, i64 noundef 20) #15
   store ptr %i.e, ptr @K, align 8, !tbaa !8
-  %1 = load i32, ptr @CHno, align 4, !tbaa !4
-  %2 = shl nsw i32 %1, 1
-  %i.f = add nsw i32 %2, -2
+  %i.f = add nsw i32 %i.b, -2
   %i.g = sext i32 %i.f to i64
   %i.h = tail call noalias ptr @calloc(i64 noundef %i.g, i64 noundef 32) #15
   store ptr %i.h, ptr @E, align 8, !tbaa !11

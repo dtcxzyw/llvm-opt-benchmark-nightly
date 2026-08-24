@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/verilator/original/V3PreProc?download=true
-inline.NumInlined: 6860
+inline.NumInlined: 6861
 inline.NumDeleted: 1064
 loop-unroll.NumCompletelyUnrolled: 3
 loop-unroll.NumRuntimeUnrolled: 1
@@ -205,8 +205,8 @@ bb.agi:                                           ; preds = %bb.agh
 
 bb.agj:                                           ; preds = %bb.agh
   %i.izg = xor i64 %i.iza, -1
-  %i.izh = add i64 %i.izg, %i.iyz                 ; 7 uses
-  %i.izi = trunc i64 %i.izh to i32                ; 12 uses
+  %i.izh = add i64 %i.izg, %i.iyz                 ; 8 uses
+  %i.izi = trunc i64 %i.izh to i32                ; 9 uses
   %i.izj = icmp sgt i32 %i.izi, 0
   br i1 %i.izj, label %iter.check, label %._crit_edge.i638
 
@@ -405,7 +405,7 @@ bb.ago:                                           ; preds = %._crit_edge63.i
   %i.jca = sub i64 %i.jby, %i.jbz
   %i.jcb = trunc i64 %i.jca to i32
   %i.jcc = add nsw i32 %i.jcb, -1                 ; 2 uses
-  %i.jcd = add nsw i32 %i.jbm, %i.izi             ; 3 uses
+  %i.jcd = add nsw i32 %i.jbm, %i.izi             ; 4 uses
   %i.jce = getelementptr inbounds nuw [8 x i8], ptr %i.jbn, i64 %i.jbo ; 3 uses
   %i.jcf = getelementptr inbounds nuw i8, ptr %i.jbq, i64 24
   %i.jcg = load i32, ptr %i.jcf, align 8, !tbaa !22
@@ -431,7 +431,7 @@ bb.agq:                                           ; preds = %bb.agn
   %.pre69.i = load i64, ptr @_ZL19yy_buffer_stack_top, align 8, !tbaa !18 ; 2 uses
   %.phi.trans.insert.i = getelementptr inbounds nuw [8 x i8], ptr %.pre68.i, i64 %.pre69.i
   %.pre70.i = load ptr, ptr %.phi.trans.insert.i, align 8, !tbaa !20 ; 3 uses
-  %i.jcq = add nsw i32 %.pre67.i, %i.izi          ; 3 uses
+  %i.jcq = add nsw i32 %.pre67.i, %i.izi          ; 4 uses
   %i.jcr = getelementptr inbounds nuw [8 x i8], ptr %.pre68.i, i64 %.pre69.i ; 3 uses
   %i.jcs = getelementptr inbounds nuw i8, ptr %.pre70.i, i64 24
   %i.jct = load i32, ptr %i.jcs, align 8, !tbaa !22
@@ -492,31 +492,24 @@ bb.agu:                                           ; preds = %bb.agr
   %i.jdp = add nsw i32 %i.jcw, -2
   %i.jdq = getelementptr inbounds nuw i8, ptr %i.jdb, i64 24
   store i32 %i.jdp, ptr %i.jdq, align 8, !tbaa !22
-  %.pre71.i.jt0 = load i32, ptr @_ZL10yy_n_chars, align 4, !tbaa !12
-  %.pre75.i.jt0 = add nsw i32 %.pre71.i.jt0, %i.izi
   br label %_ZL18yy_get_next_bufferv.exit.jt0
 
 bb.agv:                                           ; preds = %bb.ags
   %i.jdr = add nsw i32 %i.izi, -2
   %i.jds = getelementptr inbounds nuw i8, ptr %i.jdf, i64 24
   store i32 %i.jdr, ptr %i.jds, align 8, !tbaa !22
-  %.pre71.i.jt2 = load i32, ptr @_ZL10yy_n_chars, align 4, !tbaa !12
-  %.pre75.i.jt2 = add nsw i32 %.pre71.i.jt2, %i.izi
   br label %_ZL18yy_get_next_bufferv.exit.jt2
 
 bb.agw:                                           ; preds = %bb.agt
   %i.jdt = add nsw i32 %i.jdi, -2
   %i.jdu = getelementptr inbounds nuw i8, ptr %i.jdn, i64 24
   store i32 %i.jdt, ptr %i.jdu, align 8, !tbaa !22
-  %.pre71.i.jt1 = load i32, ptr @_ZL10yy_n_chars, align 4, !tbaa !12
-  %.pre75.i.jt1 = add nsw i32 %.pre71.i.jt1, %i.izi
   br label %_ZL18yy_get_next_bufferv.exit.jt1
 
 _ZL18yy_get_next_bufferv.exit.jt0:                ; preds = %._crit_edge72.i.jt0, %bb.agu
-  %.pre-phi.i.jt0 = phi i32 [ %.pre75.i.jt0, %bb.agu ], [ %i.jcd, %._crit_edge72.i.jt0 ] ; 2 uses
   %i.jdv = phi ptr [ %i.jda, %bb.agu ], [ %.pre74.i.jt0, %._crit_edge72.i.jt0 ]
-  store i32 %.pre-phi.i.jt0, ptr @_ZL10yy_n_chars, align 4, !tbaa !12
-  %i.jdw = sext i32 %.pre-phi.i.jt0 to i64        ; 2 uses
+  store i32 %i.jcd, ptr @_ZL10yy_n_chars, align 4, !tbaa !12
+  %i.jdw = sext i32 %i.jcd to i64                 ; 2 uses
   %i.jdx = getelementptr inbounds i8, ptr %i.jdv, i64 %i.jdw
   store i8 0, ptr %i.jdx, align 1, !tbaa !29
   %i.jdy = load ptr, ptr %i.jce, align 8, !tbaa !20
@@ -553,10 +546,10 @@ _ZL18yy_get_next_bufferv.exit.jt0:                ; preds = %._crit_edge72.i.jt0
   br label %.loopexit688
 
 _ZL18yy_get_next_bufferv.exit.jt2:                ; preds = %bb.agp, %bb.agv
-  %.pre-phi.i.jt2 = phi i32 [ %.pre75.i.jt2, %bb.agv ], [ %i.izi, %bb.agp ] ; 2 uses
   %i.jeu = phi ptr [ %i.jde, %bb.agv ], [ %i.jco, %bb.agp ]
-  store i32 %.pre-phi.i.jt2, ptr @_ZL10yy_n_chars, align 4, !tbaa !12
-  %23 = sext i32 %.pre-phi.i.jt2 to i64           ; 2 uses
+  store i32 %i.izi, ptr @_ZL10yy_n_chars, align 4, !tbaa !12
+  %sext2482 = shl i64 %i.izh, 32
+  %23 = ashr exact i64 %sext2482, 32              ; 2 uses
   %i.jev = getelementptr inbounds i8, ptr %i.jeu, i64 %23
   store i8 0, ptr %i.jev, align 1, !tbaa !29
   %i.jew = load ptr, ptr %i.jcj, align 8, !tbaa !20
@@ -582,10 +575,9 @@ _ZL18yy_get_next_bufferv.exit.jt2:                ; preds = %bb.agp, %bb.agv
   br label %_ZL18yy_get_next_bufferv.exit.thread681
 
 _ZL18yy_get_next_bufferv.exit.jt1:                ; preds = %._crit_edge72.i.jt1, %bb.agw
-  %.pre-phi.i.jt1 = phi i32 [ %.pre75.i.jt1, %bb.agw ], [ %i.jcq, %._crit_edge72.i.jt1 ] ; 2 uses
   %i.jfe = phi ptr [ %i.jdm, %bb.agw ], [ %.pre74.i.jt1, %._crit_edge72.i.jt1 ]
-  store i32 %.pre-phi.i.jt1, ptr @_ZL10yy_n_chars, align 4, !tbaa !12
-  %i.jff = sext i32 %.pre-phi.i.jt1 to i64        ; 2 uses
+  store i32 %i.jcq, ptr @_ZL10yy_n_chars, align 4, !tbaa !12
+  %i.jff = sext i32 %i.jcq to i64                 ; 2 uses
   %i.jfg = getelementptr inbounds i8, ptr %i.jfe, i64 %i.jff
   store i8 0, ptr %i.jfg, align 1, !tbaa !29
   %i.jfh = load ptr, ptr %i.jcr, align 8, !tbaa !20
@@ -957,7 +949,7 @@ _ZN8V3PreLex12curFilelinepEv.exit2:               ; preds = %_ZN8V3PreLex12curFi
 ; Function Attrs: mustprogress nounwind uwtable
 define internal fastcc void @_ZL13yy_push_statei(i32 noundef range(i32 1, 21) %0) unnamed_addr #4 {
 bb.a:
-  %i.a = load i32, ptr @_ZL18yy_start_stack_ptr, align 4, !tbaa !12 ; 2 uses
+  %i.a = load i32, ptr @_ZL18yy_start_stack_ptr, align 4, !tbaa !12 ; 3 uses
   %i.b = load i32, ptr @_ZL20yy_start_stack_depth, align 4, !tbaa !12 ; 2 uses
   %.not = icmp slt i32 %i.a, %i.b
   %.pre = load ptr, ptr @_ZL14yy_start_stack, align 8, !tbaa !729 ; 3 uses
@@ -983,25 +975,20 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %storemerge = phi ptr [ %i.f, %bb.c ], [ %i.g, %bb.d ] ; 3 uses
   store ptr %storemerge, ptr @_ZL14yy_start_stack, align 8, !tbaa !729
   %.not5 = icmp eq ptr %storemerge, null
-  br i1 %.not5, label %bb.f, label %._crit_edge
-
-._crit_edge:                                      ; preds = %bb.e
-  %.pre6 = load i32, ptr @_ZL18yy_start_stack_ptr, align 4, !tbaa !12
-  br label %bb.g
+  br i1 %.not5, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
   tail call fastcc void @_ZL14yy_fatal_errorPKc(ptr noundef nonnull @.str.242) #42
   unreachable
 
-bb.g:                                             ; preds = %._crit_edge, %bb.a
-  %1 = phi i32 [ %.pre6, %._crit_edge ], [ %i.a, %bb.a ] ; 2 uses
-  %i.h = phi ptr [ %storemerge, %._crit_edge ], [ %.pre, %bb.a ]
+bb.g:                                             ; preds = %bb.e, %bb.a
+  %i.h = phi ptr [ %storemerge, %bb.e ], [ %.pre, %bb.a ]
   %i.i = load i32, ptr @_ZL8yy_start, align 4, !tbaa !12
   %i.j = add nsw i32 %i.i, -1
   %i.k = sdiv i32 %i.j, 2
-  %i.l = add nsw i32 %1, 1
+  %i.l = add nsw i32 %i.a, 1
   store i32 %i.l, ptr @_ZL18yy_start_stack_ptr, align 4, !tbaa !12
-  %i.m = sext i32 %1 to i64
+  %i.m = sext i32 %i.a to i64
   %i.n = getelementptr inbounds [4 x i8], ptr %i.h, i64 %i.m
   store i32 %i.k, ptr %i.n, align 4, !tbaa !12
   %i.o = shl nuw nsw i32 %0, 1
@@ -1404,7 +1391,7 @@ declare void @free(ptr allocptr noundef captures(none)) local_unnamed_addr #22
 ; Function Attrs: mustprogress uwtable
 define dso_local void @_ZN8V3PreLex15pushStateDefArgEi(ptr noundef nonnull align 8 dereferenceable(264) %0, i32 noundef %1) local_unnamed_addr #2 align 2 {
 bb.a:
-  %i.a = load i32, ptr @_ZL18yy_start_stack_ptr, align 4, !tbaa !12 ; 2 uses
+  %i.a = load i32, ptr @_ZL18yy_start_stack_ptr, align 4, !tbaa !12 ; 3 uses
   %i.b = load i32, ptr @_ZL20yy_start_stack_depth, align 4, !tbaa !12 ; 2 uses
   %.not.i = icmp slt i32 %i.a, %i.b
   %.pre.i = load ptr, ptr @_ZL14yy_start_stack, align 8, !tbaa !729 ; 3 uses
@@ -1430,25 +1417,20 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %storemerge.i = phi ptr [ %i.f, %bb.c ], [ %i.g, %bb.d ] ; 3 uses
   store ptr %storemerge.i, ptr @_ZL14yy_start_stack, align 8, !tbaa !729
   %.not5.i = icmp eq ptr %storemerge.i, null
-  br i1 %.not5.i, label %bb.f, label %._crit_edge.i
-
-._crit_edge.i:                                    ; preds = %bb.e
-  %.pre6.i = load i32, ptr @_ZL18yy_start_stack_ptr, align 4, !tbaa !12
-  br label %_ZL13yy_push_statei.exit
+  br i1 %.not5.i, label %bb.f, label %_ZL13yy_push_statei.exit
 
 bb.f:                                             ; preds = %bb.e
   tail call fastcc void @_ZL14yy_fatal_errorPKc(ptr noundef nonnull @.str.242) #42
   unreachable
 
-_ZL13yy_push_statei.exit:                         ; preds = %bb.a, %._crit_edge.i
-  %2 = phi i32 [ %.pre6.i, %._crit_edge.i ], [ %i.a, %bb.a ] ; 2 uses
-  %i.h = phi ptr [ %storemerge.i, %._crit_edge.i ], [ %.pre.i, %bb.a ]
+_ZL13yy_push_statei.exit:                         ; preds = %bb.a, %bb.e
+  %i.h = phi ptr [ %storemerge.i, %bb.e ], [ %.pre.i, %bb.a ]
   %i.i = load i32, ptr @_ZL8yy_start, align 4, !tbaa !12
   %i.j = add nsw i32 %i.i, -1
   %i.k = sdiv i32 %i.j, 2
-  %i.l = add nsw i32 %2, 1
+  %i.l = add nsw i32 %i.a, 1
   store i32 %i.l, ptr @_ZL18yy_start_stack_ptr, align 4, !tbaa !12
-  %i.m = sext i32 %2 to i64
+  %i.m = sext i32 %i.a to i64
   %i.n = getelementptr inbounds [4 x i8], ptr %i.h, i64 %i.m
   store i32 %i.k, ptr %i.n, align 4, !tbaa !12
   store i32 3, ptr @_ZL8yy_start, align 4, !tbaa !12
@@ -1467,7 +1449,7 @@ declare noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_st
 ; Function Attrs: mustprogress uwtable
 define dso_local void @_ZN8V3PreLex16pushStateDefFormEv(ptr noundef nonnull align 8 dereferenceable(264) %0) local_unnamed_addr #2 align 2 {
 bb.a:
-  %i.a = load i32, ptr @_ZL18yy_start_stack_ptr, align 4, !tbaa !12 ; 2 uses
+  %i.a = load i32, ptr @_ZL18yy_start_stack_ptr, align 4, !tbaa !12 ; 3 uses
   %i.b = load i32, ptr @_ZL20yy_start_stack_depth, align 4, !tbaa !12 ; 2 uses
   %.not.i = icmp slt i32 %i.a, %i.b
   %.pre.i = load ptr, ptr @_ZL14yy_start_stack, align 8, !tbaa !729 ; 3 uses
@@ -1493,25 +1475,20 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %storemerge.i = phi ptr [ %i.f, %bb.c ], [ %i.g, %bb.d ] ; 3 uses
   store ptr %storemerge.i, ptr @_ZL14yy_start_stack, align 8, !tbaa !729
   %.not5.i = icmp eq ptr %storemerge.i, null
-  br i1 %.not5.i, label %bb.f, label %._crit_edge.i
-
-._crit_edge.i:                                    ; preds = %bb.e
-  %.pre6.i = load i32, ptr @_ZL18yy_start_stack_ptr, align 4, !tbaa !12
-  br label %_ZL13yy_push_statei.exit
+  br i1 %.not5.i, label %bb.f, label %_ZL13yy_push_statei.exit
 
 bb.f:                                             ; preds = %bb.e
   tail call fastcc void @_ZL14yy_fatal_errorPKc(ptr noundef nonnull @.str.242) #42
   unreachable
 
-_ZL13yy_push_statei.exit:                         ; preds = %bb.a, %._crit_edge.i
-  %1 = phi i32 [ %.pre6.i, %._crit_edge.i ], [ %i.a, %bb.a ] ; 2 uses
-  %i.h = phi ptr [ %storemerge.i, %._crit_edge.i ], [ %.pre.i, %bb.a ]
+_ZL13yy_push_statei.exit:                         ; preds = %bb.a, %bb.e
+  %i.h = phi ptr [ %storemerge.i, %bb.e ], [ %.pre.i, %bb.a ]
   %i.i = load i32, ptr @_ZL8yy_start, align 4, !tbaa !12
   %i.j = add nsw i32 %i.i, -1
   %i.k = sdiv i32 %i.j, 2
-  %i.l = add nsw i32 %1, 1
+  %i.l = add nsw i32 %i.a, 1
   store i32 %i.l, ptr @_ZL18yy_start_stack_ptr, align 4, !tbaa !12
-  %i.m = sext i32 %1 to i64
+  %i.m = sext i32 %i.a to i64
   %i.n = getelementptr inbounds [4 x i8], ptr %i.h, i64 %i.m
   store i32 %i.k, ptr %i.n, align 4, !tbaa !12
   store i32 13, ptr @_ZL8yy_start, align 4, !tbaa !12
@@ -1527,7 +1504,7 @@ _ZL13yy_push_statei.exit:                         ; preds = %bb.a, %._crit_edge.
 ; Function Attrs: mustprogress uwtable
 define dso_local void @_ZN8V3PreLex17pushStateDefValueEv(ptr noundef nonnull align 8 dereferenceable(264) %0) local_unnamed_addr #2 align 2 {
 bb.a:
-  %i.a = load i32, ptr @_ZL18yy_start_stack_ptr, align 4, !tbaa !12 ; 2 uses
+  %i.a = load i32, ptr @_ZL18yy_start_stack_ptr, align 4, !tbaa !12 ; 3 uses
   %i.b = load i32, ptr @_ZL20yy_start_stack_depth, align 4, !tbaa !12 ; 2 uses
   %.not.i = icmp slt i32 %i.a, %i.b
   %.pre.i = load ptr, ptr @_ZL14yy_start_stack, align 8, !tbaa !729 ; 3 uses
@@ -1553,25 +1530,20 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %storemerge.i = phi ptr [ %i.f, %bb.c ], [ %i.g, %bb.d ] ; 3 uses
   store ptr %storemerge.i, ptr @_ZL14yy_start_stack, align 8, !tbaa !729
   %.not5.i = icmp eq ptr %storemerge.i, null
-  br i1 %.not5.i, label %bb.f, label %._crit_edge.i
-
-._crit_edge.i:                                    ; preds = %bb.e
-  %.pre6.i = load i32, ptr @_ZL18yy_start_stack_ptr, align 4, !tbaa !12
-  br label %_ZL13yy_push_statei.exit
+  br i1 %.not5.i, label %bb.f, label %_ZL13yy_push_statei.exit
 
 bb.f:                                             ; preds = %bb.e
   tail call fastcc void @_ZL14yy_fatal_errorPKc(ptr noundef nonnull @.str.242) #42
   unreachable
 
-_ZL13yy_push_statei.exit:                         ; preds = %bb.a, %._crit_edge.i
-  %1 = phi i32 [ %.pre6.i, %._crit_edge.i ], [ %i.a, %bb.a ] ; 2 uses
-  %i.h = phi ptr [ %storemerge.i, %._crit_edge.i ], [ %.pre.i, %bb.a ]
+_ZL13yy_push_statei.exit:                         ; preds = %bb.a, %bb.e
+  %i.h = phi ptr [ %storemerge.i, %bb.e ], [ %.pre.i, %bb.a ]
   %i.i = load i32, ptr @_ZL8yy_start, align 4, !tbaa !12
   %i.j = add nsw i32 %i.i, -1
   %i.k = sdiv i32 %i.j, 2
-  %i.l = add nsw i32 %1, 1
+  %i.l = add nsw i32 %i.a, 1
   store i32 %i.l, ptr @_ZL18yy_start_stack_ptr, align 4, !tbaa !12
-  %i.m = sext i32 %1 to i64
+  %i.m = sext i32 %i.a to i64
   %i.n = getelementptr inbounds [4 x i8], ptr %i.h, i64 %i.m
   store i32 %i.k, ptr %i.n, align 4, !tbaa !12
   store i32 15, ptr @_ZL8yy_start, align 4, !tbaa !12
@@ -1587,7 +1559,7 @@ _ZL13yy_push_statei.exit:                         ; preds = %bb.a, %._crit_edge.
 ; Function Attrs: mustprogress nounwind uwtable
 define dso_local void @_ZN8V3PreLex13pushStateExprEv(ptr nofree noundef nonnull readnone align 8 captures(none) dereferenceable(264) %0) local_unnamed_addr #4 align 2 {
 bb.a:
-  %i.a = load i32, ptr @_ZL18yy_start_stack_ptr, align 4, !tbaa !12 ; 2 uses
+  %i.a = load i32, ptr @_ZL18yy_start_stack_ptr, align 4, !tbaa !12 ; 3 uses
   %i.b = load i32, ptr @_ZL20yy_start_stack_depth, align 4, !tbaa !12 ; 2 uses
   %.not.i = icmp slt i32 %i.a, %i.b
   %.pre.i = load ptr, ptr @_ZL14yy_start_stack, align 8, !tbaa !729 ; 3 uses
@@ -1613,25 +1585,20 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %storemerge.i = phi ptr [ %i.f, %bb.c ], [ %i.g, %bb.d ] ; 3 uses
   store ptr %storemerge.i, ptr @_ZL14yy_start_stack, align 8, !tbaa !729
   %.not5.i = icmp eq ptr %storemerge.i, null
-  br i1 %.not5.i, label %bb.f, label %._crit_edge.i
-
-._crit_edge.i:                                    ; preds = %bb.e
-  %.pre6.i = load i32, ptr @_ZL18yy_start_stack_ptr, align 4, !tbaa !12
-  br label %_ZL13yy_push_statei.exit
+  br i1 %.not5.i, label %bb.f, label %_ZL13yy_push_statei.exit
 
 bb.f:                                             ; preds = %bb.e
   tail call fastcc void @_ZL14yy_fatal_errorPKc(ptr noundef nonnull @.str.242) #42
   unreachable
 
-_ZL13yy_push_statei.exit:                         ; preds = %bb.a, %._crit_edge.i
-  %1 = phi i32 [ %.pre6.i, %._crit_edge.i ], [ %i.a, %bb.a ] ; 2 uses
-  %i.h = phi ptr [ %storemerge.i, %._crit_edge.i ], [ %.pre.i, %bb.a ]
+_ZL13yy_push_statei.exit:                         ; preds = %bb.a, %bb.e
+  %i.h = phi ptr [ %storemerge.i, %bb.e ], [ %.pre.i, %bb.a ]
   %i.i = load i32, ptr @_ZL8yy_start, align 4, !tbaa !12
   %i.j = add nsw i32 %i.i, -1
   %i.k = sdiv i32 %i.j, 2
-  %i.l = add nsw i32 %1, 1
+  %i.l = add nsw i32 %i.a, 1
   store i32 %i.l, ptr @_ZL18yy_start_stack_ptr, align 4, !tbaa !12
-  %i.m = sext i32 %1 to i64
+  %i.m = sext i32 %i.a to i64
   %i.n = getelementptr inbounds [4 x i8], ptr %i.h, i64 %i.m
   store i32 %i.k, ptr %i.n, align 4, !tbaa !12
   store i32 19, ptr @_ZL8yy_start, align 4, !tbaa !12
@@ -1641,7 +1608,7 @@ _ZL13yy_push_statei.exit:                         ; preds = %bb.a, %._crit_edge.
 ; Function Attrs: mustprogress nounwind uwtable
 define dso_local void @_ZN8V3PreLex20pushStateIncFilenameEv(ptr nofree nonnull readnone align 8 captures(none) %0) local_unnamed_addr #4 align 2 {
 bb.a:
-  %i.a = load i32, ptr @_ZL18yy_start_stack_ptr, align 4, !tbaa !12 ; 2 uses
+  %i.a = load i32, ptr @_ZL18yy_start_stack_ptr, align 4, !tbaa !12 ; 3 uses
   %i.b = load i32, ptr @_ZL20yy_start_stack_depth, align 4, !tbaa !12 ; 2 uses
   %.not.i = icmp slt i32 %i.a, %i.b
   %.pre.i = load ptr, ptr @_ZL14yy_start_stack, align 8, !tbaa !729 ; 3 uses
@@ -1667,25 +1634,20 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %storemerge.i = phi ptr [ %i.f, %bb.c ], [ %i.g, %bb.d ] ; 3 uses
   store ptr %storemerge.i, ptr @_ZL14yy_start_stack, align 8, !tbaa !729
   %.not5.i = icmp eq ptr %storemerge.i, null
-  br i1 %.not5.i, label %bb.f, label %._crit_edge.i
-
-._crit_edge.i:                                    ; preds = %bb.e
-  %.pre6.i = load i32, ptr @_ZL18yy_start_stack_ptr, align 4, !tbaa !12
-  br label %_ZL13yy_push_statei.exit
+  br i1 %.not5.i, label %bb.f, label %_ZL13yy_push_statei.exit
 
 bb.f:                                             ; preds = %bb.e
   tail call fastcc void @_ZL14yy_fatal_errorPKc(ptr noundef nonnull @.str.242) #42
   unreachable
 
-_ZL13yy_push_statei.exit:                         ; preds = %bb.a, %._crit_edge.i
-  %1 = phi i32 [ %.pre6.i, %._crit_edge.i ], [ %i.a, %bb.a ] ; 2 uses
-  %i.h = phi ptr [ %storemerge.i, %._crit_edge.i ], [ %.pre.i, %bb.a ]
+_ZL13yy_push_statei.exit:                         ; preds = %bb.a, %bb.e
+  %i.h = phi ptr [ %storemerge.i, %bb.e ], [ %.pre.i, %bb.a ]
   %i.i = load i32, ptr @_ZL8yy_start, align 4, !tbaa !12
   %i.j = add nsw i32 %i.i, -1
   %i.k = sdiv i32 %i.j, 2
-  %i.l = add nsw i32 %1, 1
+  %i.l = add nsw i32 %i.a, 1
   store i32 %i.l, ptr @_ZL18yy_start_stack_ptr, align 4, !tbaa !12
-  %i.m = sext i32 %1 to i64
+  %i.m = sext i32 %i.a to i64
   %i.n = getelementptr inbounds [4 x i8], ptr %i.h, i64 %i.m
   store i32 %i.k, ptr %i.n, align 4, !tbaa !12
   store i32 21, ptr @_ZL8yy_start, align 4, !tbaa !12
@@ -1696,7 +1658,7 @@ _ZL13yy_push_statei.exit:                         ; preds = %bb.a, %._crit_edge.
 ; Function Attrs: mustprogress nounwind uwtable
 define dso_local void @_ZN8V3PreLex17pushStatePassthruEv(ptr nofree noundef nonnull readnone align 8 captures(none) dereferenceable(264) %0) local_unnamed_addr #4 align 2 {
 bb.a:
-  %i.a = load i32, ptr @_ZL18yy_start_stack_ptr, align 4, !tbaa !12 ; 2 uses
+  %i.a = load i32, ptr @_ZL18yy_start_stack_ptr, align 4, !tbaa !12 ; 3 uses
   %i.b = load i32, ptr @_ZL20yy_start_stack_depth, align 4, !tbaa !12 ; 2 uses
   %.not.i = icmp slt i32 %i.a, %i.b
   %.pre.i = load ptr, ptr @_ZL14yy_start_stack, align 8, !tbaa !729 ; 3 uses
@@ -1722,25 +1684,20 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %storemerge.i = phi ptr [ %i.f, %bb.c ], [ %i.g, %bb.d ] ; 3 uses
   store ptr %storemerge.i, ptr @_ZL14yy_start_stack, align 8, !tbaa !729
   %.not5.i = icmp eq ptr %storemerge.i, null
-  br i1 %.not5.i, label %bb.f, label %._crit_edge.i
-
-._crit_edge.i:                                    ; preds = %bb.e
-  %.pre6.i = load i32, ptr @_ZL18yy_start_stack_ptr, align 4, !tbaa !12
-  br label %_ZL13yy_push_statei.exit
+  br i1 %.not5.i, label %bb.f, label %_ZL13yy_push_statei.exit
 
 bb.f:                                             ; preds = %bb.e
   tail call fastcc void @_ZL14yy_fatal_errorPKc(ptr noundef nonnull @.str.242) #42
   unreachable
 
-_ZL13yy_push_statei.exit:                         ; preds = %bb.a, %._crit_edge.i
-  %1 = phi i32 [ %.pre6.i, %._crit_edge.i ], [ %i.a, %bb.a ] ; 2 uses
-  %i.h = phi ptr [ %storemerge.i, %._crit_edge.i ], [ %.pre.i, %bb.a ]
+_ZL13yy_push_statei.exit:                         ; preds = %bb.a, %bb.e
+  %i.h = phi ptr [ %storemerge.i, %bb.e ], [ %.pre.i, %bb.a ]
   %i.i = load i32, ptr @_ZL8yy_start, align 4, !tbaa !12
   %i.j = add nsw i32 %i.i, -1
   %i.k = sdiv i32 %i.j, 2
-  %i.l = add nsw i32 %1, 1
+  %i.l = add nsw i32 %i.a, 1
   store i32 %i.l, ptr @_ZL18yy_start_stack_ptr, align 4, !tbaa !12
-  %i.m = sext i32 %1 to i64
+  %i.m = sext i32 %i.a to i64
   %i.n = getelementptr inbounds [4 x i8], ptr %i.h, i64 %i.m
   store i32 %i.k, ptr %i.n, align 4, !tbaa !12
   store i32 23, ptr @_ZL8yy_start, align 4, !tbaa !12
@@ -1781,7 +1738,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.j, label %bb.c, label %bb.j
 
 bb.c:                                             ; preds = %bb.b
-  %i.k = load i32, ptr @_ZL18yy_start_stack_ptr, align 4, !tbaa !12 ; 2 uses
+  %i.k = load i32, ptr @_ZL18yy_start_stack_ptr, align 4, !tbaa !12 ; 3 uses
   %i.l = load i32, ptr @_ZL20yy_start_stack_depth, align 4, !tbaa !12 ; 2 uses
   %.not.i.i = icmp slt i32 %i.k, %i.l
   %.pre.i.i = load ptr, ptr @_ZL14yy_start_stack, align 8, !tbaa !729 ; 3 uses
@@ -1807,25 +1764,20 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %storemerge.i.i = phi ptr [ %i.p, %bb.e ], [ %i.q, %bb.f ] ; 3 uses
   store ptr %storemerge.i.i, ptr @_ZL14yy_start_stack, align 8, !tbaa !729
   %.not5.i.i = icmp eq ptr %storemerge.i.i, null
-  br i1 %.not5.i.i, label %bb.h, label %._crit_edge.i.i
-
-._crit_edge.i.i:                                  ; preds = %bb.g
-  %.pre6.i.i = load i32, ptr @_ZL18yy_start_stack_ptr, align 4, !tbaa !12
-  br label %_ZN8V3PreLex17pushStatePassthruEv.exit
+  br i1 %.not5.i.i, label %bb.h, label %_ZN8V3PreLex17pushStatePassthruEv.exit
 
 bb.h:                                             ; preds = %bb.g
   tail call fastcc void @_ZL14yy_fatal_errorPKc(ptr noundef nonnull @.str.242) #42
   unreachable
 
-_ZN8V3PreLex17pushStatePassthruEv.exit:           ; preds = %bb.c, %._crit_edge.i.i
-  %3 = phi i32 [ %.pre6.i.i, %._crit_edge.i.i ], [ %i.k, %bb.c ] ; 2 uses
-  %i.r = phi ptr [ %storemerge.i.i, %._crit_edge.i.i ], [ %.pre.i.i, %bb.c ]
+_ZN8V3PreLex17pushStatePassthruEv.exit:           ; preds = %bb.c, %bb.g
+  %i.r = phi ptr [ %storemerge.i.i, %bb.g ], [ %.pre.i.i, %bb.c ]
   %i.s = load i32, ptr @_ZL8yy_start, align 4, !tbaa !12
   %i.t = add nsw i32 %i.s, -1
   %i.u = sdiv i32 %i.t, 2
-  %i.v = add nsw i32 %3, 1
+  %i.v = add nsw i32 %i.k, 1
   store i32 %i.v, ptr @_ZL18yy_start_stack_ptr, align 4, !tbaa !12
-  %i.w = sext i32 %3 to i64
+  %i.w = sext i32 %i.k to i64
   %i.x = getelementptr inbounds [4 x i8], ptr %i.r, i64 %i.w
   store i32 %i.u, ptr %i.x, align 4, !tbaa !12
   store i32 23, ptr @_ZL8yy_start, align 4, !tbaa !12
@@ -2228,7 +2180,7 @@ bb.r:                                             ; preds = %_ZNSt7__cxx1112basi
   %.not4992 = icmp eq i32 %i.qv, 0
   br i1 %.not4992, label %_ZN12V3PreProcImp8statePopEv.exit.backedge, label %.lr.ph
 
-_ZN12V3PreProcImp8statePopEv.exit.backedge:       ; preds = %_ZN12V3PreProcImp8statePopEv.exit.loopexit.unr-lcssa, %bb.b, %.epil.preheader, %bb.r, %bb.ja, %_ZN12V3PreProcImp9statePushENS_9ProcStateE.exit1742, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit1731, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit1753, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit1703, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit1616, %bb.nc, %bb.in, %bb.aoq, %_ZNSt5stackI11VPreIfEntrySt5dequeIS0_SaIS0_EEE3topEv.exit2232, %bb.agp, %bb.afp, %bb.afq, %_ZNSt5stackIN12V3PreProcImp9ProcStateESt5dequeIS1_SaIS1_EEE3popEv.exit.i1883, %_ZNSt5stackIN12V3PreProcImp9ProcStateESt5dequeIS1_SaIS1_EEE3popEv.exit.i1852, %_ZNSt5stackIN12V3PreProcImp9ProcStateESt5dequeIS1_SaIS1_EEE3popEv.exit.i1534, %_ZNSt5stackIN12V3PreProcImp9ProcStateESt5dequeIS1_SaIS1_EEE3popEv.exit.i1039, %_ZNSt5stackIN12V3PreProcImp9ProcStateESt5dequeIS1_SaIS1_EEE3popEv.exit.i, %bb.anv, %bb.aom, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit2228, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit2160, %bb.adx, %_ZN12V3PreProcImp9statePushENS_9ProcStateE.exit2147, %_ZN12V3PreProcImp9defExistsERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit1168.thread, %bb.jv, %bb.jz, %bb.lw, %bb.lx, %bb.ly, %bb.lz, %bb.ma, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit1326, %bb.lv, %_ZNK12V3PreProcImp5stateEv.exit1237, %bb.kt, %bb.ij, %bb.ik, %bb.il, %bb.cq, %_ZN12V3PreProcImp9statePushENS_9ProcStateE.exit2507, %_ZN12V3PreProcImp9statePushENS_9ProcStateE.exit2470, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit2465, %_ZN12V3PreProcImp9statePushENS_9ProcStateE.exit2157, %_ZN12V3PreProcImp9statePushENS_9ProcStateE.exit2155, %_ZN12V3PreProcImp9statePushENS_9ProcStateE.exit2153, %_ZN12V3PreProcImp9statePushENS_9ProcStateE.exit2151, %_ZN12V3PreProcImp9statePushENS_9ProcStateE.exit2149, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit2145, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit2119, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit2065, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit2026, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit1829, %bb.xc, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5eraseEmm.exit, %bb.qi, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit1382, %bb.nb, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit1129, %bb.hh, %bb.hg, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit925, %bb.x
+_ZN12V3PreProcImp8statePopEv.exit.backedge:       ; preds = %_ZN12V3PreProcImp8statePopEv.exit.loopexit.unr-lcssa, %bb.b, %.epil.preheader, %bb.r, %bb.ja, %_ZN12V3PreProcImp9statePushENS_9ProcStateE.exit1742, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit1731, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit1753, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit1703, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit1616, %bb.nc, %bb.in, %bb.aoq, %_ZNSt5stackI11VPreIfEntrySt5dequeIS0_SaIS0_EEE3topEv.exit2232, %bb.agp, %bb.afp, %bb.afq, %_ZNSt5stackIN12V3PreProcImp9ProcStateESt5dequeIS1_SaIS1_EEE3popEv.exit.i1883, %_ZNSt5stackIN12V3PreProcImp9ProcStateESt5dequeIS1_SaIS1_EEE3popEv.exit.i1852, %_ZNSt5stackIN12V3PreProcImp9ProcStateESt5dequeIS1_SaIS1_EEE3popEv.exit.i1534, %_ZNSt5stackIN12V3PreProcImp9ProcStateESt5dequeIS1_SaIS1_EEE3popEv.exit.i1039, %_ZNSt5stackIN12V3PreProcImp9ProcStateESt5dequeIS1_SaIS1_EEE3popEv.exit.i, %bb.anv, %bb.aom, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit2228, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit2160, %bb.adx, %_ZN12V3PreProcImp9statePushENS_9ProcStateE.exit2147, %_ZN12V3PreProcImp9defExistsERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit1168.thread, %bb.jv, %bb.jz, %bb.lw, %bb.lx, %bb.ly, %bb.lz, %bb.ma, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit1326, %bb.lv, %_ZNK12V3PreProcImp5stateEv.exit1237, %bb.kt, %bb.ij, %bb.ik, %bb.il, %bb.cq, %_ZN12V3PreProcImp9statePushENS_9ProcStateE.exit2507, %_ZN12V3PreProcImp9statePushENS_9ProcStateE.exit2470, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit2465, %_ZN12V3PreProcImp9statePushENS_9ProcStateE.exit2157, %_ZN12V3PreProcImp9statePushENS_9ProcStateE.exit2155, %_ZN12V3PreProcImp9statePushENS_9ProcStateE.exit2153, %_ZN12V3PreProcImp9statePushENS_9ProcStateE.exit2151, %_ZN12V3PreProcImp9statePushENS_9ProcStateE.exit2149, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit2145, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit2119, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit2065, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit2026, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit1829, %bb.xc, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5eraseEmm.exit, %bb.qi, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit1382, %_ZN8V3PreLex17pushStateDefValueEv.exit, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit1129, %bb.hh, %bb.hg, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit925, %bb.x
   br label %_ZN12V3PreProcImp8statePopEv.exit
 
 .lr.ph:                                           ; preds = %bb.r
@@ -2631,7 +2583,7 @@ bb.ib:                                            ; preds = %_ZNSt7__cxx1112basi
   br label %common.resume
 
 bb.ic:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit1103, %bb.hm
-  %i.asm = load i32, ptr @_ZL18yy_start_stack_ptr, align 4, !tbaa !12 ; 2 uses
+  %i.asm = load i32, ptr @_ZL18yy_start_stack_ptr, align 4, !tbaa !12 ; 3 uses
   %i.asn = load i32, ptr @_ZL20yy_start_stack_depth, align 4, !tbaa !12 ; 2 uses
   %.not.i.i1107 = icmp slt i32 %i.asm, %i.asn
   %.pre.i.i1108 = load ptr, ptr @_ZL14yy_start_stack, align 8, !tbaa !729 ; 3 uses
@@ -2657,25 +2609,20 @@ bb.ig:                                            ; preds = %bb.if, %bb.ie
   %storemerge.i.i = phi ptr [ %i.asr, %bb.ie ], [ %i.ass, %bb.if ] ; 3 uses
   store ptr %storemerge.i.i, ptr @_ZL14yy_start_stack, align 8, !tbaa !729
   %.not5.i.i = icmp eq ptr %storemerge.i.i, null
-  br i1 %.not5.i.i, label %bb.ih, label %._crit_edge.i.i1109
-
-._crit_edge.i.i1109:                              ; preds = %bb.ig
-  %.pre6.i.i = load i32, ptr @_ZL18yy_start_stack_ptr, align 4, !tbaa !12
-  br label %_ZN8V3PreLex13pushStateExprEv.exit
+  br i1 %.not5.i.i, label %bb.ih, label %_ZN8V3PreLex13pushStateExprEv.exit
 
 bb.ih:                                            ; preds = %bb.ig
   call fastcc void @_ZL14yy_fatal_errorPKc(ptr noundef nonnull @.str.242) #42
   unreachable
 
-_ZN8V3PreLex13pushStateExprEv.exit:               ; preds = %bb.ic, %._crit_edge.i.i1109
-  %241 = phi i32 [ %.pre6.i.i, %._crit_edge.i.i1109 ], [ %i.asm, %bb.ic ] ; 2 uses
-  %i.ast = phi ptr [ %storemerge.i.i, %._crit_edge.i.i1109 ], [ %.pre.i.i1108, %bb.ic ]
+_ZN8V3PreLex13pushStateExprEv.exit:               ; preds = %bb.ic, %bb.ig
+  %i.ast = phi ptr [ %storemerge.i.i, %bb.ig ], [ %.pre.i.i1108, %bb.ic ]
   %i.asu = load i32, ptr @_ZL8yy_start, align 4, !tbaa !12
   %i.asv = add nsw i32 %i.asu, -1
   %i.asw = sdiv i32 %i.asv, 2
-  %i.asx = add nsw i32 %241, 1
+  %i.asx = add nsw i32 %i.asm, 1
   store i32 %i.asx, ptr @_ZL18yy_start_stack_ptr, align 4, !tbaa !12
-  %i.asy = sext i32 %241 to i64
+  %i.asy = sext i32 %i.asm to i64
   %i.asz = getelementptr inbounds [4 x i8], ptr %i.ast, i64 %i.asy
   store i32 %i.asw, ptr %i.asz, align 4, !tbaa !12
   store i32 19, ptr @_ZL8yy_start, align 4, !tbaa !12
@@ -3078,8 +3025,56 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit1348: ; preds = %b
 
 bb.nb:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit1345, %bb.my
   call void @_ZN12V3PreProcImp11stateChangeENS_9ProcStateE(ptr noundef nonnull align 8 dereferenceable(1032) %0, i8 noundef zeroext 9)
-  %i.blk = load ptr, ptr %i.af, align 8, !tbaa !970
-  call void @_ZN8V3PreLex17pushStateDefValueEv(ptr noundef nonnull align 8 dereferenceable(264) %i.blk)
+  %i.blk = load ptr, ptr %i.af, align 8, !tbaa !970 ; 3 uses
+  %241 = load i32, ptr @_ZL18yy_start_stack_ptr, align 4, !tbaa !12 ; 3 uses
+  %242 = load i32, ptr @_ZL20yy_start_stack_depth, align 4, !tbaa !12 ; 2 uses
+  %.not.i.i1348 = icmp slt i32 %241, %242
+  %.pre.i.i1349 = load ptr, ptr @_ZL14yy_start_stack, align 8, !tbaa !729 ; 3 uses
+  br i1 %.not.i.i1348, label %_ZN8V3PreLex17pushStateDefValueEv.exit, label %243
+
+243:                                              ; preds = %bb.nb
+  %244 = add nsw i32 %242, 25                     ; 2 uses
+  store i32 %244, ptr @_ZL20yy_start_stack_depth, align 4, !tbaa !12
+  %245 = sext i32 %244 to i64
+  %246 = shl nsw i64 %245, 2                      ; 2 uses
+  %.not4.i.i1350 = icmp eq ptr %.pre.i.i1349, null
+  br i1 %.not4.i.i1350, label %247, label %249
+
+247:                                              ; preds = %243
+  %248 = call noalias noundef ptr @malloc(i64 noundef %246) #41
+  br label %251
+
+249:                                              ; preds = %243
+  %250 = call noalias noundef ptr @realloc(ptr noundef nonnull %.pre.i.i1349, i64 noundef %246) #43
+  br label %251
+
+251:                                              ; preds = %249, %247
+  %storemerge.i.i1351 = phi ptr [ %248, %247 ], [ %250, %249 ] ; 3 uses
+  store ptr %storemerge.i.i1351, ptr @_ZL14yy_start_stack, align 8, !tbaa !729
+  %.not5.i.i1352 = icmp eq ptr %storemerge.i.i1351, null
+  br i1 %.not5.i.i1352, label %252, label %_ZN8V3PreLex17pushStateDefValueEv.exit
+
+252:                                              ; preds = %251
+  call fastcc void @_ZL14yy_fatal_errorPKc(ptr noundef nonnull @.str.242) #42
+  unreachable
+
+_ZN8V3PreLex17pushStateDefValueEv.exit:           ; preds = %bb.nb, %251
+  %253 = phi ptr [ %storemerge.i.i1351, %251 ], [ %.pre.i.i1349, %bb.nb ]
+  %254 = load i32, ptr @_ZL8yy_start, align 4, !tbaa !12
+  %255 = add nsw i32 %254, -1
+  %256 = sdiv i32 %255, 2
+  %257 = add nsw i32 %241, 1
+  store i32 %257, ptr @_ZL18yy_start_stack_ptr, align 4, !tbaa !12
+  %258 = sext i32 %241 to i64
+  %259 = getelementptr inbounds [4 x i8], ptr %253, i64 %258
+  store i32 %256, ptr %259, align 4, !tbaa !12
+  store i32 15, ptr @_ZL8yy_start, align 4, !tbaa !12
+  %260 = getelementptr inbounds nuw i8, ptr %i.blk, i64 208
+  store i32 0, ptr %260, align 8, !tbaa !286
+  %261 = getelementptr inbounds nuw i8, ptr %i.blk, i64 216
+  %262 = getelementptr inbounds nuw i8, ptr %i.blk, i64 224
+  %263 = load i64, ptr %262, align 8, !tbaa !264
+  %264 = call noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %261, i64 noundef 0, i64 noundef %263, ptr noundef nonnull @.str.2, i64 noundef 0) ; 0 uses
   br label %_ZN12V3PreProcImp8statePopEv.exit.backedge
 
 bb.nc:                                            ; preds = %bb.mx

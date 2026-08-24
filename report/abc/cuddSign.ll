@@ -24,7 +24,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not61, label %.thread, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.f = load i32, ptr @size, align 4, !tbaa !27
+  %i.f = load i32, ptr @size, align 4, !tbaa !27  ; 12 uses
   %i.g = add nsw i32 %i.f, 1
   %i.h = sext i32 %i.g to i64
   %i.i = shl nsw i64 %i.h, 3
@@ -41,8 +41,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.o, label %bb.e, label %.thread84
 
 bb.e:                                             ; preds = %bb.d
-  %2 = load i32, ptr @size, align 4, !tbaa !27    ; 7 uses
-  %i.p = icmp sgt i32 %2, 0
+  %i.p = icmp sgt i32 %i.f, 0
   br i1 %i.p, label %.lr.ph.split.us, label %.._crit_edge_crit_edge
 
 .thread84:                                        ; preds = %bb.d
@@ -50,28 +49,26 @@ bb.e:                                             ; preds = %bb.d
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !29
   %i.s = zext i32 %i.n to i64
   %i.t = getelementptr inbounds nuw [4 x i8], ptr %i.r, i64 %i.s
-  %3 = load i32, ptr %i.t, align 4, !tbaa !27     ; 3 uses
-  %i.u = load i32, ptr @size, align 4, !tbaa !27  ; 8 uses
-  %i.v = icmp sgt i32 %i.u, 0
+  %i.u = load i32, ptr %i.t, align 4, !tbaa !27   ; 3 uses
+  %i.v = icmp sgt i32 %i.f, 0
   br i1 %i.v, label %.lr.ph.split, label %.._crit_edge_crit_edge
 
 .._crit_edge_crit_edge:                           ; preds = %.thread84, %bb.e
-  %4 = phi i32 [ %i.u, %.thread84 ], [ %2, %bb.e ] ; 2 uses
-  %.087 = phi i32 [ %3, %.thread84 ], [ 1, %bb.e ]
-  %.pre74 = sub nsw i32 %4, %.087
+  %.087 = phi i32 [ %i.u, %.thread84 ], [ 1, %bb.e ]
+  %.pre74 = sub nsw i32 %i.f, %.087
   %.pre76 = sext i32 %.pre74 to i64
   br label %._crit_edge
 
 .lr.ph.split.us:                                  ; preds = %bb.e
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 336
-  %i.x = add nsw i32 %2, -1
+  %i.x = add nsw i32 %i.f, -1
   %i.y = zext nneg i32 %i.x to i64                ; 3 uses
   %i.z = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %i.y
   %i.aa = load double, ptr %i.z, align 8, !tbaa !30 ; 5 uses
   %i.ab = load ptr, ptr %i.w, align 8, !tbaa !31  ; 5 uses
-  %wide.trip.count68 = zext nneg i32 %2 to i64    ; 2 uses
+  %wide.trip.count68 = zext nneg i32 %i.f to i64  ; 2 uses
   %xtraiter103 = and i64 %wide.trip.count68, 3    ; 3 uses
-  %i.ac = icmp ult i32 %2, 4
+  %i.ac = icmp ult i32 %i.f, 4
   br i1 %i.ac, label %.critedge.us.epil.preheader, label %.lr.ph.split.us.new
 
 .lr.ph.split.us.new:                              ; preds = %.lr.ph.split.us
@@ -111,7 +108,7 @@ bb.e:                                             ; preds = %bb.d
 
 .lr.ph.split:                                     ; preds = %.thread84
   %i.aw = getelementptr inbounds nuw i8, ptr %0, i64 336 ; 2 uses
-  %i.ax = sub nsw i32 %i.u, %3
+  %i.ax = sub nsw i32 %i.f, %i.u
   %i.ay = sext i32 %i.ax to i64                   ; 5 uses
   %i.az = zext i32 %i.n to i64
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 320
@@ -119,10 +116,10 @@ bb.e:                                             ; preds = %bb.d
   %i.bc = getelementptr inbounds nuw [4 x i8], ptr %i.bb, i64 %i.az
   %i.bd = load i32, ptr %i.bc, align 4, !tbaa !27
   %i.be = sext i32 %i.bd to i64                   ; 3 uses
-  %i.bf = sext i32 %3 to i64                      ; 3 uses
-  %wide.trip.count = zext nneg i32 %i.u to i64    ; 2 uses
+  %i.bf = sext i32 %i.u to i64                    ; 3 uses
+  %wide.trip.count = zext nneg i32 %i.f to i64    ; 2 uses
   %xtraiter = and i64 %wide.trip.count, 1
-  %i.bg = icmp eq i32 %i.u, 1
+  %i.bg = icmp eq i32 %i.f, 1
   br i1 %i.bg, label %.critedge.epil.preheader, label %.lr.ph.split.new
 
 .lr.ph.split.new:                                 ; preds = %.lr.ph.split
@@ -188,7 +185,7 @@ bb.e:                                             ; preds = %bb.d
 
 .critedge.epil.preheader:                         ; preds = %._crit_edge.loopexit101.unr-lcssa, %.lr.ph.split
   %indvars.iv.epil.init = phi i64 [ 0, %.lr.ph.split ], [ %indvars.iv.next.1, %._crit_edge.loopexit101.unr-lcssa ] ; 3 uses
-  %lcmp.mod102 = trunc i32 %i.u to i1
+  %lcmp.mod102 = trunc i32 %i.f to i1
   tail call void @llvm.assume(i1 %lcmp.mod102)
   %i.by = icmp slt i64 %indvars.iv.epil.init, %i.be
   %i.bz = sub nsw i64 %indvars.iv.epil.init, %i.bf
@@ -204,11 +201,10 @@ bb.e:                                             ; preds = %bb.d
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.critedge.epil.preheader, %._crit_edge.loopexit101.unr-lcssa, %._crit_edge.loopexit.unr-lcssa, %.critedge.us.epil, %.._crit_edge_crit_edge
-  %5 = phi i32 [ %4, %.._crit_edge_crit_edge ], [ %2, %._crit_edge.loopexit.unr-lcssa ], [ %2, %.critedge.us.epil ], [ %i.u, %._crit_edge.loopexit101.unr-lcssa ], [ %i.u, %.critedge.epil.preheader ]
   %.pre-phi77 = phi i64 [ %.pre76, %.._crit_edge_crit_edge ], [ %i.y, %._crit_edge.loopexit.unr-lcssa ], [ %i.y, %.critedge.us.epil ], [ %i.ay, %._crit_edge.loopexit101.unr-lcssa ], [ %i.ay, %.critedge.epil.preheader ]
   %i.cf = getelementptr inbounds [8 x i8], ptr %i.e, i64 %.pre-phi77
   %i.cg = load double, ptr %i.cf, align 8, !tbaa !30
-  %i.ch = sext i32 %5 to i64
+  %i.ch = sext i32 %i.f to i64
   %i.ci = getelementptr inbounds [8 x i8], ptr %i.j, i64 %i.ch
   store double %i.cg, ptr %i.ci, align 8, !tbaa !30
   br label %bb.g

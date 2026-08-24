@@ -204,6 +204,8 @@ declare hidden i32 @boot_kstrtoul(ptr noundef, i32 noundef, ptr noundef) local_u
 ; Function Attrs: noredzone nounwind
 define internal fastcc noundef zeroext i1 @process_mem_region(i64 %.0.val, i64 %.8.val, i64 noundef range(i64 0, -2097151) %0, i64 noundef %1) unnamed_addr #0 {
 bb.a:
+  %2 = alloca %struct.mem_vector, align 8         ; 8 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #10
   %i.a = add i64 %.8.val, %.0.val
   %i.b = load i64, ptr @mem_limit, align 8
   %i.c = tail call i64 @llvm.umin.i64(i64 %i.a, i64 %i.b) ; 13 uses
@@ -213,6 +215,7 @@ bb.a:
 
 .lr.ph.preheader.i:                               ; preds = %bb.a
   %i.f = tail call i64 @llvm.umax.i64(i64 %.0.val, i64 range(i64 0, -2097151) %0)
+  %3 = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   %i.g = load i64, ptr @mem_avoid, align 16       ; 4 uses
   %.not.i.i.i = icmp ugt i64 %i.c, %i.g
   %i.h = load i64, ptr getelementptr inbounds nuw (i8, ptr @mem_avoid, i64 8), align 8 ; 2 uses
@@ -248,19 +251,21 @@ bb.a:
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.s, %.lr.ph.preheader.i
-  %i.ae = phi i32 [ %i.bm, %bb.s ], [ %i.d, %.lr.ph.preheader.i ]
-  %.sroa.0.052.i = phi i64 [ %.sroa.0.12.i, %bb.s ], [ undef, %.lr.ph.preheader.i ]
-  %.sroa.22.051.i = phi i64 [ %.sroa.22.12.i, %bb.s ], [ undef, %.lr.ph.preheader.i ]
-  %.sroa.024.050.i = phi i64 [ %i.bn, %bb.s ], [ %i.f, %.lr.ph.preheader.i ]
-  %i.af = add i64 %.sroa.024.050.i, 2097151
-  %i.ag = and i64 %i.af, -2097152                 ; 16 uses
+  %i.ae = phi i32 [ %i.d, %.lr.ph.preheader.i ], [ %i.bm, %bb.s ]
+  %.sroa.0.052.i = phi i64 [ %i.f, %.lr.ph.preheader.i ], [ %i.bn, %bb.s ]
+  %.sroa.22.051.i = phi i64 [ undef, %.lr.ph.preheader.i ], [ %.sroa.0.12.i, %bb.s ]
+  %.sroa.024.050.i = phi i64 [ undef, %.lr.ph.preheader.i ], [ %.sroa.22.12.i, %bb.s ]
+  %i.af = add i64 %.sroa.0.052.i, 2097151
+  %i.ag = and i64 %i.af, -2097152                 ; 15 uses
+  store i64 %i.ag, ptr %2, align 8
   %i.ah = icmp ugt i64 %i.ag, %i.c
-  br i1 %i.ah, label %__process_mem_region.exit.thread.a, label %bb.b
+  br i1 %i.ah, label %__process_mem_region.exit.thread, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph.i
   %i.ai = sub nuw i64 %i.c, %i.ag                 ; 2 uses
+  store i64 %i.ai, ptr %3, align 8
   %i.aj = icmp ult i64 %i.ai, %1
-  br i1 %i.aj, label %__process_mem_region.exit.thread.a, label %bb.c
+  br i1 %i.aj, label %__process_mem_region.exit.thread, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %.not8.i.i.i = icmp ult i64 %i.ag, %i.i
@@ -271,8 +276,8 @@ bb.d:                                             ; preds = %bb.c
   br label %mem_overlaps.exit.thread.i.i
 
 mem_overlaps.exit.thread.i.i:                     ; preds = %bb.d, %bb.c
-  %.sroa.22.1.i = phi i64 [ %i.h, %bb.d ], [ %.sroa.22.051.i, %bb.c ] ; 2 uses
-  %.sroa.0.1.i = phi i64 [ %i.g, %bb.d ], [ %.sroa.0.052.i, %bb.c ] ; 2 uses
+  %.sroa.22.1.i = phi i64 [ %i.h, %bb.d ], [ %.sroa.024.050.i, %bb.c ] ; 2 uses
+  %.sroa.0.1.i = phi i64 [ %i.g, %bb.d ], [ %.sroa.22.051.i, %bb.c ] ; 2 uses
   %.128.i.i = phi i64 [ %i.g, %bb.d ], [ %i.c, %bb.c ] ; 3 uses
   %.1.i.i = phi i1 [ true, %bb.d ], [ false, %bb.c ] ; 2 uses
   br i1 %.not.i.1.i.i, label %mem_overlaps.exit.1.i.i, label %mem_overlaps.exit.thread.1.i.i
@@ -467,7 +472,7 @@ mem_avoid_overlap.exit.i:                         ; preds = %mem_overlaps.exit50
   br i1 %.2.lcssa.i.i, label %bb.q, label %bb.p
 
 bb.p:                                             ; preds = %mem_avoid_overlap.exit.i
-  tail call fastcc void @process_gb_huge_pages(i64 %i.ag, i64 %i.ai, i64 noundef %1) #13
+  call fastcc void @process_gb_huge_pages(ptr noundef %2, i64 noundef %1) #13
   %.pr.pre = load i32, ptr @slot_area_index, align 4
   br label %__process_mem_region.exit
 
@@ -478,18 +483,25 @@ bb.q:                                             ; preds = %mem_avoid_overlap.e
 
 bb.r:                                             ; preds = %bb.q
   %i.bl = sub i64 %.sroa.0.12.i, %i.ag
-  tail call fastcc void @process_gb_huge_pages(i64 %i.ag, i64 %i.bl, i64 noundef %1) #13
+  store i64 %i.bl, ptr %3, align 8
+  call fastcc void @process_gb_huge_pages(ptr noundef %2, i64 noundef %1) #13
   %.pre.i = load i32, ptr @slot_area_index, align 4
   br label %bb.s
 
 bb.s:                                             ; preds = %bb.r, %bb.q
   %i.bm = phi i32 [ %.pre.i, %bb.r ], [ %i.ae, %bb.q ] ; 3 uses
-  %i.bn = add i64 %.sroa.0.12.i, %.sroa.22.12.i
+  %i.bn = add i64 %.sroa.0.12.i, %.sroa.22.12.i   ; 2 uses
+  store i64 %i.bn, ptr %2, align 8
   %i.bo = icmp ult i32 %i.bm, 100
   br i1 %i.bo, label %.lr.ph.i, label %__process_mem_region.exit, !llvm.loop !27
 
+__process_mem_region.exit.thread:                 ; preds = %.lr.ph.i, %bb.b
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #10
+  br label %__process_mem_region.exit.thread.a
+
 __process_mem_region.exit:                        ; preds = %bb.s, %bb.p, %bb.a
   %i.bp = phi i32 [ %i.d, %bb.a ], [ %.pr.pre, %bb.p ], [ %i.bm, %bb.s ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #10
   %i.bq = icmp eq i32 %i.bp, 100
   br i1 %i.bq, label %bb.t, label %__process_mem_region.exit.thread.a
 
@@ -497,13 +509,13 @@ bb.t:                                             ; preds = %__process_mem_regio
   tail call void @__putstr(ptr noundef nonnull @.str.23) #9
   br label %__process_mem_region.exit.thread.a
 
-__process_mem_region.exit.thread.a:               ; preds = %bb.b, %.lr.ph.i, %__process_mem_region.exit, %bb.t
-  %2 = phi i1 [ true, %bb.t ], [ false, %__process_mem_region.exit ], [ false, %.lr.ph.i ], [ false, %bb.b ]
-  ret i1 %2
+__process_mem_region.exit.thread.a:               ; preds = %__process_mem_region.exit.thread, %__process_mem_region.exit, %bb.t
+  %4 = phi i1 [ false, %__process_mem_region.exit.thread ], [ false, %__process_mem_region.exit ], [ true, %bb.t ]
+  ret i1 %4
 }
 
-; Function Attrs: mustprogress nofree norecurse noredzone nosync nounwind willreturn memory(readwrite, argmem: none, inaccessiblemem: none, target_mem: none)
-define internal fastcc void @process_gb_huge_pages(i64 %.0.val, i64 %.8.val, i64 noundef %0) unnamed_addr #7 {
+; Function Attrs: mustprogress nofree norecurse noredzone nosync nounwind willreturn memory(readwrite, argmem: read, inaccessiblemem: none, target_mem: none)
+define internal fastcc void @process_gb_huge_pages(ptr nofree noundef nonnull readonly captures(none) %0, i64 noundef %1) unnamed_addr #7 {
 bb.a:
   %i.a = load i64, ptr @max_gb_huge_pages, align 8 ; 4 uses
   %.not = icmp eq i64 %i.a, 0
@@ -515,13 +527,19 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.c, label %store_slot_info.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.d = sub i64 %.8.val, %0
+  %2 = load i64, ptr %0, align 8
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %4 = load i64, ptr %3, align 8
+  %i.d = sub i64 %4, %1
   br label %store_slot_info.exit.sink.split
 
 bb.d:                                             ; preds = %bb.a
-  %i.e = add i64 %.0.val, 1073741823
+  %5 = load i64, ptr %0, align 8                  ; 5 uses
+  %i.e = add i64 %5, 1073741823
   %i.f = and i64 %i.e, -1073741824                ; 5 uses
-  %i.g = add i64 %.8.val, %.0.val                 ; 4 uses
+  %6 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %7 = load i64, ptr %6, align 8                  ; 3 uses
+  %i.g = add i64 %7, %5                           ; 2 uses
   %i.h = and i64 %i.g, -1073741824                ; 2 uses
   %.not33 = icmp ult i64 %i.f, %i.h
   br i1 %.not33, label %bb.g, label %bb.e
@@ -532,11 +550,11 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.j, label %store_slot_info.exit, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.k = sub i64 %.8.val, %0
+  %i.k = sub i64 %7, %1
   br label %store_slot_info.exit.sink.split
 
 bb.g:                                             ; preds = %bb.d
-  %i.l = add i64 %0, %.0.val                      ; 2 uses
+  %i.l = add i64 %5, %1                           ; 2 uses
   %.not34 = icmp ult i64 %i.f, %i.l
   br i1 %.not34, label %store_slot_info.exit39, label %bb.h
 
@@ -553,7 +571,7 @@ bb.i:                                             ; preds = %bb.h
   store i32 %i.r, ptr @slot_area_index, align 4
   %i.s = zext i32 %i.m to i64
   %i.t = getelementptr inbounds nuw [16 x i8], ptr @slot_areas, i64 %i.s ; 2 uses
-  store i64 %.0.val, ptr %i.t, align 16
+  store i64 %5, ptr %i.t, align 16
   %.sroa.4.0..sroa_idx.i38 = getelementptr inbounds nuw i8, ptr %i.t, i64 8
   store i64 %i.q, ptr %.sroa.4.0..sroa_idx.i38, align 8
   %i.u = load i64, ptr @slot_max, align 8
@@ -566,12 +584,14 @@ store_slot_info.exit39:                           ; preds = %bb.i, %bb.h, %bb.g
   %i.x = lshr i64 %i.w, 30                        ; 2 uses
   %i.y = icmp ugt i64 %i.x, %i.a
   %i.z = shl nuw i64 %i.a, 30
-  %i.aa = add i64 %i.z, %i.f
+  %i.aa = add i64 %i.f, %i.z
   %storemerge = tail call i64 @llvm.usub.sat.i64(i64 %i.a, i64 %i.x)
   %.0 = select i1 %i.y, i64 %i.aa, i64 %i.h       ; 2 uses
   store i64 %storemerge, ptr @max_gb_huge_pages, align 8
-  %i.ab = add i64 %.0, %0                         ; 2 uses
-  %.not35 = icmp ult i64 %i.g, %i.ab
+  %8 = load i64, ptr %0, align 8
+  %9 = add i64 %8, %7                             ; 2 uses
+  %i.ab = add i64 %.0, %1                         ; 2 uses
+  %.not35 = icmp ult i64 %9, %i.ab
   br i1 %.not35, label %store_slot_info.exit, label %bb.j
 
 bb.j:                                             ; preds = %store_slot_info.exit39
@@ -580,13 +600,13 @@ bb.j:                                             ; preds = %store_slot_info.exi
   br i1 %i.ad, label %store_slot_info.exit, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %i.ae = sub i64 %i.g, %i.ab
+  %i.ae = sub i64 %9, %i.ab
   br label %store_slot_info.exit.sink.split
 
 store_slot_info.exit.sink.split:                  ; preds = %bb.c, %bb.f, %bb.k
   %.sink = phi i64 [ %i.ae, %bb.k ], [ %i.k, %bb.f ], [ %i.d, %bb.c ]
   %.sink22 = phi i32 [ %i.ac, %bb.k ], [ %i.i, %bb.f ], [ %i.b, %bb.c ] ; 2 uses
-  %.0.sink = phi i64 [ %.0, %bb.k ], [ %.0.val, %bb.f ], [ %.0.val, %bb.c ]
+  %.0.sink = phi i64 [ %.0, %bb.k ], [ %5, %bb.f ], [ %2, %bb.c ]
   %i.af = lshr i64 %.sink, 21
   %i.ag = add nuw nsw i64 %i.af, 1                ; 2 uses
   %i.ah = add i32 %.sink22, 1
@@ -624,7 +644,7 @@ attributes #3 = { nofree norecurse noredzone nosync nounwind memory(argmem: read
 attributes #4 = { nofree norecurse noredzone nosync nounwind memory(argmem: readwrite) "min-legal-vector-width"="0" "no-builtins" "no-jump-tables"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+x87,-aes,-amx-avx512,-avx,-avx10.1,-avx10.2,-avx2,-avx512bf16,-avx512bitalg,-avx512bmm,-avx512bw,-avx512cd,-avx512dq,-avx512f,-avx512fp16,-avx512ifma,-avx512vbmi,-avx512vbmi2,-avx512vl,-avx512vnni,-avx512vp2intersect,-avx512vpopcntdq,-avxifma,-avxneconvert,-avxvnni,-avxvnniint16,-avxvnniint8,-f16c,-fma,-fma4,-gfni,-kl,-mmx,-pclmul,-sha,-sha512,-sm3,-sm4,-sse,-sse2,-sse3,-sse4.1,-sse4.2,-sse4a,-ssse3,-vaes,-vpclmulqdq,-widekl,-xop" "tune-cpu"="generic" }
 attributes #5 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
 attributes #6 = { noredzone noreturn "no-builtins" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+x87,-aes,-amx-avx512,-avx,-avx10.1,-avx10.2,-avx2,-avx512bf16,-avx512bitalg,-avx512bmm,-avx512bw,-avx512cd,-avx512dq,-avx512f,-avx512fp16,-avx512ifma,-avx512vbmi,-avx512vbmi2,-avx512vl,-avx512vnni,-avx512vp2intersect,-avx512vpopcntdq,-avxifma,-avxneconvert,-avxvnni,-avxvnniint16,-avxvnniint8,-f16c,-fma,-fma4,-gfni,-kl,-mmx,-pclmul,-sha,-sha512,-sm3,-sm4,-sse,-sse2,-sse3,-sse4.1,-sse4.2,-sse4a,-ssse3,-vaes,-vpclmulqdq,-widekl,-xop" "tune-cpu"="generic" }
-attributes #7 = { mustprogress nofree norecurse noredzone nosync nounwind willreturn memory(readwrite, argmem: none, inaccessiblemem: none, target_mem: none) "min-legal-vector-width"="0" "no-builtins" "no-jump-tables"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+x87,-aes,-amx-avx512,-avx,-avx10.1,-avx10.2,-avx2,-avx512bf16,-avx512bitalg,-avx512bmm,-avx512bw,-avx512cd,-avx512dq,-avx512f,-avx512fp16,-avx512ifma,-avx512vbmi,-avx512vbmi2,-avx512vl,-avx512vnni,-avx512vp2intersect,-avx512vpopcntdq,-avxifma,-avxneconvert,-avxvnni,-avxvnniint16,-avxvnniint8,-f16c,-fma,-fma4,-gfni,-kl,-mmx,-pclmul,-sha,-sha512,-sm3,-sm4,-sse,-sse2,-sse3,-sse4.1,-sse4.2,-sse4a,-ssse3,-vaes,-vpclmulqdq,-widekl,-xop" "tune-cpu"="generic" }
+attributes #7 = { mustprogress nofree norecurse noredzone nosync nounwind willreturn memory(readwrite, argmem: read, inaccessiblemem: none, target_mem: none) "min-legal-vector-width"="0" "no-builtins" "no-jump-tables"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+x87,-aes,-amx-avx512,-avx,-avx10.1,-avx10.2,-avx2,-avx512bf16,-avx512bitalg,-avx512bmm,-avx512bw,-avx512cd,-avx512dq,-avx512f,-avx512fp16,-avx512ifma,-avx512vbmi,-avx512vbmi2,-avx512vl,-avx512vnni,-avx512vp2intersect,-avx512vpopcntdq,-avxifma,-avxneconvert,-avxvnni,-avxvnniint16,-avxvnniint8,-f16c,-fma,-fma4,-gfni,-kl,-mmx,-pclmul,-sha,-sha512,-sm3,-sm4,-sse,-sse2,-sse3,-sse4.1,-sse4.2,-sse4a,-ssse3,-vaes,-vpclmulqdq,-widekl,-xop" "tune-cpu"="generic" }
 attributes #8 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #9 = { nobuiltin noredzone nounwind "no-builtins" }
 attributes #10 = { nounwind }

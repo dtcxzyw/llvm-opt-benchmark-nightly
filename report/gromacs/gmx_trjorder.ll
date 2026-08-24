@@ -205,38 +205,39 @@ bb.cw:                                            ; preds = %bb.cw, %.lr.ph396.e
   br i1 %brmerge407, label %.loopexit321, label %.preheader.lr.ph
 
 .preheader.lr.ph:                                 ; preds = %._crit_edge399
+  %17 = load i32, ptr @_ZZ12gmx_trjorderiPPcE2na, align 4, !tbaa !9 ; 4 uses
+  %18 = icmp sgt i32 %17, 0
   %i.yc = load ptr, ptr @_ZL5order, align 8
   %i.yd = load ptr, ptr %i.ie, align 8
-  %.pre512 = load i32, ptr @_ZZ12gmx_trjorderiPPcE2na, align 4, !tbaa !9
-  br label %.preheader
+  br i1 %18, label %.preheader, label %.loopexit321
 
-.preheader:                                       ; preds = %.preheader.lr.ph, %._crit_edge402
-  %17 = phi i32 [ %.pre512, %.preheader.lr.ph ], [ %21, %._crit_edge402 ] ; 2 uses
-  %indvars.iv507 = phi i64 [ 0, %.preheader.lr.ph ], [ %indvars.iv.next508, %._crit_edge402 ] ; 2 uses
-  %18 = icmp sgt i32 %17, 0
-  br i1 %18, label %iter.check677, label %._crit_edge402
+.preheader:                                       ; preds = %.preheader.lr.ph
+  %wide.trip.count505 = zext nneg i32 %17 to i64  ; 6 uses
+  %min.iters.check651 = icmp ult i32 %17, 4
+  %min.iters.check653 = icmp ult i32 %17, 32
+  %19 = and i64 %wide.trip.count505, 28
+  %n.vec655 = and i64 %wide.trip.count505, 2147483616 ; 4 uses
+  %cmp.n674 = icmp eq i64 %n.vec655, %wide.trip.count505
+  %min.epilog.iters.check679 = icmp eq i64 %19, 0
+  %n.vec681 = and i64 %wide.trip.count505, 2147483644 ; 3 uses
+  %cmp.n695 = icmp eq i64 %n.vec681, %wide.trip.count505
+  br label %iter.check677
 
-iter.check677:                                    ; preds = %.preheader
+iter.check677:                                    ; preds = %.preheader, %._crit_edge402
+  %indvars.iv507 = phi i64 [ 0, %.preheader ], [ %indvars.iv.next508, %._crit_edge402 ] ; 2 uses
   %i.ye = getelementptr inbounds nuw [8 x i8], ptr %i.yc, i64 %indvars.iv507 ; 2 uses
   %i.yf = getelementptr inbounds nuw i8, ptr %i.ye, i64 4
   %i.yg = load float, ptr %i.yf, align 4, !tbaa !89
   %i.yh = call noundef float @sqrtf(float noundef %i.yg) #17 ; 3 uses
-  %19 = load i32, ptr %i.ye, align 4, !tbaa !87
-  %i.yi = load i32, ptr @_ZZ12gmx_trjorderiPPcE2na, align 4, !tbaa !9 ; 6 uses
-  %i.yj = sext i32 %19 to i64
-  %smax = call i32 @llvm.smax.i32(i32 %i.yi, i32 1)
-  %wide.trip.count505 = zext nneg i32 %smax to i64 ; 6 uses
+  %i.yi = load i32, ptr %i.ye, align 4, !tbaa !87
+  %i.yj = sext i32 %i.yi to i64
   %invariant.gep631 = getelementptr [52 x i8], ptr %i.yd, i64 %i.yj ; 6 uses
-  %min.iters.check652 = icmp slt i32 %i.yi, 4
-  br i1 %min.iters.check652, label %vec.epilog.scalar.ph678.preheader, label %vector.main.loop.iter.check653
+  br i1 %min.iters.check651, label %vec.epilog.scalar.ph678.preheader, label %vector.main.loop.iter.check653
 
 vector.main.loop.iter.check653:                   ; preds = %iter.check677
-  %min.iters.check654 = icmp slt i32 %i.yi, 32
-  br i1 %min.iters.check654, label %vec.epilog.ph681, label %vector.ph655
+  br i1 %min.iters.check653, label %vec.epilog.ph681, label %vector.ph655
 
 vector.ph655:                                     ; preds = %vector.main.loop.iter.check653
-  %20 = and i64 %wide.trip.count505, 28
-  %n.vec656 = and i64 %wide.trip.count505, 2147483616 ; 4 uses
   %broadcast.splatinsert657 = insertelement <8 x float> poison, float %i.yh, i64 0
   %broadcast.splat658 = shufflevector <8 x float> %broadcast.splatinsert657, <8 x float> poison, <8 x i32> zeroinitializer ; 4 uses
   br label %vector.body659
@@ -261,20 +262,17 @@ vector.body659:                                   ; preds = %vector.body659, %ve
   call void @llvm.masked.scatter.v8f32.v8p0(<8 x float> %broadcast.splat658, <8 x ptr> align 4 %wide.gep671, <8 x i1> splat (i1 true)), !tbaa !102
   %index.next672 = add nuw i64 %index660, 32      ; 2 uses
   %vec.ind.next673 = add nuw <8 x i64> %vec.ind661, splat (i64 32)
-  %i.yk = icmp eq i64 %index.next672, %n.vec656
+  %i.yk = icmp eq i64 %index.next672, %n.vec655
   br i1 %i.yk, label %middle.block674, label %vector.body659, !llvm.loop !105
 
 middle.block674:                                  ; preds = %vector.body659
-  %cmp.n675 = icmp eq i64 %n.vec656, %wide.trip.count505
-  br i1 %cmp.n675, label %._crit_edge402, label %vec.epilog.iter.check679
+  br i1 %cmp.n674, label %._crit_edge402, label %vec.epilog.iter.check679
 
 vec.epilog.iter.check679:                         ; preds = %middle.block674
-  %min.epilog.iters.check680 = icmp eq i64 %20, 0
-  br i1 %min.epilog.iters.check680, label %vec.epilog.scalar.ph678.preheader, label %vec.epilog.ph681, !prof !70
+  br i1 %min.epilog.iters.check679, label %vec.epilog.scalar.ph678.preheader, label %vec.epilog.ph681, !prof !70
 
 vec.epilog.ph681:                                 ; preds = %vector.main.loop.iter.check653, %vec.epilog.iter.check679
-  %vec.epilog.resume.val676 = phi i64 [ %n.vec656, %vec.epilog.iter.check679 ], [ 0, %vector.main.loop.iter.check653 ] ; 2 uses
-  %n.vec682 = and i64 %wide.trip.count505, 2147483644 ; 3 uses
+  %vec.epilog.resume.val676 = phi i64 [ %n.vec655, %vec.epilog.iter.check679 ], [ 0, %vector.main.loop.iter.check653 ] ; 2 uses
   %broadcast.splatinsert683 = insertelement <4 x float> poison, float %i.yh, i64 0
   %broadcast.splat684 = shufflevector <4 x float> %broadcast.splatinsert683, <4 x float> poison, <4 x i32> zeroinitializer
   %broadcast.splatinsert685 = insertelement <4 x i64> poison, i64 %vec.epilog.resume.val676, i64 0
@@ -290,15 +288,14 @@ vec.epilog.vector.body688:                        ; preds = %vec.epilog.vector.b
   call void @llvm.masked.scatter.v4f32.v4p0(<4 x float> %broadcast.splat684, <4 x ptr> align 4 %wide.gep692, <4 x i1> splat (i1 true)), !tbaa !102
   %index.next693 = add nuw i64 %index689, 4       ; 2 uses
   %vec.ind.next694 = add nuw nsw <4 x i64> %vec.ind690, splat (i64 4)
-  %i.yl = icmp eq i64 %index.next693, %n.vec682
+  %i.yl = icmp eq i64 %index.next693, %n.vec681
   br i1 %i.yl, label %vec.epilog.middle.block695, label %vec.epilog.vector.body688, !llvm.loop !106
 
 vec.epilog.middle.block695:                       ; preds = %vec.epilog.vector.body688
-  %cmp.n696 = icmp eq i64 %n.vec682, %wide.trip.count505
-  br i1 %cmp.n696, label %._crit_edge402, label %vec.epilog.scalar.ph678.preheader
+  br i1 %cmp.n695, label %._crit_edge402, label %vec.epilog.scalar.ph678.preheader
 
 vec.epilog.scalar.ph678.preheader:                ; preds = %iter.check677, %vec.epilog.iter.check679, %vec.epilog.middle.block695
-  %indvars.iv502.ph = phi i64 [ 0, %iter.check677 ], [ %n.vec656, %vec.epilog.iter.check679 ], [ %n.vec682, %vec.epilog.middle.block695 ]
+  %indvars.iv502.ph = phi i64 [ 0, %iter.check677 ], [ %n.vec655, %vec.epilog.iter.check679 ], [ %n.vec681, %vec.epilog.middle.block695 ]
   br label %vec.epilog.scalar.ph678
 
 vec.epilog.scalar.ph678:                          ; preds = %vec.epilog.scalar.ph678.preheader, %vec.epilog.scalar.ph678
@@ -310,13 +307,12 @@ vec.epilog.scalar.ph678:                          ; preds = %vec.epilog.scalar.p
   %exitcond506.not = icmp eq i64 %indvars.iv.next503, %wide.trip.count505
   br i1 %exitcond506.not, label %._crit_edge402, label %vec.epilog.scalar.ph678, !llvm.loop !107
 
-._crit_edge402:                                   ; preds = %vec.epilog.scalar.ph678, %middle.block674, %vec.epilog.middle.block695, %.preheader
-  %21 = phi i32 [ %17, %.preheader ], [ %i.yi, %middle.block674 ], [ %i.yi, %vec.epilog.middle.block695 ], [ %i.yi, %vec.epilog.scalar.ph678 ]
+._crit_edge402:                                   ; preds = %vec.epilog.scalar.ph678, %vec.epilog.middle.block695, %middle.block674
   %indvars.iv.next508 = add nuw nsw i64 %indvars.iv507, 1 ; 2 uses
   %exitcond511.not = icmp eq i64 %indvars.iv.next508, %wide.trip.count510
-  br i1 %exitcond511.not, label %.loopexit321, label %.preheader, !llvm.loop !108
+  br i1 %exitcond511.not, label %.loopexit321, label %iter.check677, !llvm.loop !108
 
-.loopexit321:                                     ; preds = %._crit_edge402, %.preheader322, %._crit_edge399
+.loopexit321:                                     ; preds = %._crit_edge402, %.preheader322, %._crit_edge399, %.preheader.lr.ph
   %i.yn = load float, ptr %i.i, align 4, !tbaa !73
   %i.yo = load ptr, ptr %i.e, align 8, !tbaa !30
   %i.yp = invoke noundef i32 @_Z9write_trxP11t_trxstatusiPKiPK7t_atomsifPA3_fS7_S7_P12gmx_conect_t(ptr noundef nonnull %.0212, i32 noundef %i.br, ptr noundef %i.er, ptr noundef nonnull %i.bc, i32 noundef 0, float noundef %i.yn, ptr noundef nonnull %i.h, ptr noundef %i.yo, ptr noundef null, ptr noundef null)
@@ -718,9 +714,6 @@ declare void @llvm.assume(i1 noundef) #14
 
 ; Function Attrs: nofree nounwind
 declare noundef i64 @fwrite(ptr noundef readonly captures(none), i64 noundef, i64 noundef, ptr noundef captures(none)) local_unnamed_addr #15
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #7
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(write)
 declare void @llvm.masked.scatter.v8f32.v8p0(<8 x float>, <8 x ptr>, <8 x i1>) #16

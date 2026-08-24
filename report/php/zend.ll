@@ -202,7 +202,7 @@ bb.a:
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !157  ; 2 uses
   %i.n = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.m) #34
   %i.o = add i64 %i.k, %i.n                       ; 3 uses
-  %i.p = trunc i64 %i.o to i32                    ; 2 uses
+  %i.p = trunc i64 %i.o to i32
   %i.q = add i64 %i.o, 1
   %i.r = and i64 %i.q, 4294967295
   %i.s = tail call noalias ptr @malloc(i64 noundef %i.r) #33 ; 3 uses
@@ -210,15 +210,13 @@ bb.a:
   %i.u = tail call i32 (ptr, i64, ptr, ...) @ap_php_snprintf(ptr noundef %i.s, i64 noundef %i.t, ptr noundef nonnull @.str.7, ptr noundef nonnull %i.a, ptr noundef nonnull %i.e, ptr noundef nonnull %i.i, ptr noundef nonnull %i.m) #31 ; 0 uses
   %i.v = load ptr, ptr @zend_version_info, align 8, !tbaa !20
   %i.w = load i32, ptr @zend_version_info_length, align 4, !tbaa !68
-  %i.x = add i32 %i.p, 1
-  %i.y = add i32 %i.x, %i.w
+  %i.x = add i32 %i.w, %i.p                       ; 2 uses
+  %i.y = add i32 %i.x, 1
   %i.z = zext i32 %i.y to i64
   %i.aa = tail call ptr @realloc(ptr noundef %i.v, i64 noundef %i.z) #32 ; 2 uses
   store ptr %i.aa, ptr @zend_version_info, align 8, !tbaa !20
   %i.ab = tail call ptr @strncat(ptr noundef nonnull dereferenceable(1) %i.aa, ptr noundef %i.s, i64 noundef %i.t) #31 ; 0 uses
-  %1 = load i32, ptr @zend_version_info_length, align 4, !tbaa !68
-  %2 = add i32 %1, %i.p
-  store i32 %2, ptr @zend_version_info_length, align 4, !tbaa !68
+  store i32 %i.x, ptr @zend_version_info_length, align 4, !tbaa !68
   tail call void @free(ptr noundef %i.s) #31
   ret void
 }

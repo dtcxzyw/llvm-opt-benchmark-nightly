@@ -202,7 +202,7 @@ bb.a:
   %i.a = alloca i64, align 8                      ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #14
   %i.b = load i8, ptr @H5R_init_g, align 1, !tbaa !8, !range !10, !noundef !11
-  %i.c = trunc nuw i8 %i.b to i1                  ; 2 uses
+  %i.c = trunc nuw i8 %i.b to i1
   %i.d = load i8, ptr @H5_libterm_g, align 1, !range !10
   %i.e = trunc nuw i8 %i.d to i1
   %i.f = xor i1 %i.e, true
@@ -241,31 +241,21 @@ bb.f:                                             ; preds = %bb.d
   store i64 -1, ptr %i.u, align 8, !tbaa !14
   %i.v = getelementptr inbounds nuw i8, ptr %3, i64 44
   store i8 4, ptr %i.v, align 4, !tbaa !17
-  %4 = load i8, ptr @H5_libterm_g, align 1, !range !10
-  %5 = trunc nuw i8 %4 to i1
-  %6 = xor i1 %5, true
-  %7 = select i1 %i.c, i1 true, i1 %6
-  br i1 %7, label %8, label %H5R__set_obj_token.exit, !prof !12
-
-8:                                                ; preds = %bb.f
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %3, ptr readonly align 1 %0, i64 %1, i1 false)
-  %9 = trunc i64 %1 to i8
-  %10 = getelementptr inbounds nuw i8, ptr %3, i64 45
-  store i8 %9, ptr %10, align 1, !tbaa !18
-  br label %H5R__set_obj_token.exit
+  %4 = trunc i64 %1 to i8
+  %5 = getelementptr inbounds nuw i8, ptr %3, i64 45
+  store i8 %4, ptr %5, align 1, !tbaa !18
+  %6 = call i32 @H5R__encode(ptr noundef null, ptr noundef nonnull %3, ptr noundef null, ptr noundef nonnull %i.a, i32 noundef 0)
+  %7 = icmp slt i32 %6, 0
+  br i1 %7, label %bb.g, label %bb.h
 
-H5R__set_obj_token.exit:                          ; preds = %bb.f, %8
-  %11 = call i32 @H5R__encode(ptr noundef null, ptr noundef nonnull %3, ptr noundef null, ptr noundef nonnull %i.a, i32 noundef 0)
-  %12 = icmp slt i32 %11, 0
-  br i1 %12, label %bb.g, label %bb.h
-
-bb.g:                                             ; preds = %H5R__set_obj_token.exit
+bb.g:                                             ; preds = %bb.f
   %i.w = load i64, ptr @H5E_REFERENCE_g, align 8, !tbaa !19
   %i.x = load i64, ptr @H5E_CANTENCODE_g, align 8, !tbaa !19
   %i.y = tail call i32 (ptr, ptr, i32, i64, i64, ptr, ...) @H5E_printf_stack(ptr noundef nonnull @.str, ptr noundef nonnull @__func__.H5R__create_attr, i32 noundef 295, i64 noundef %i.w, i64 noundef %i.x, ptr noundef nonnull @.str.2) #14 ; 0 uses
   br label %.critedge
 
-bb.h:                                             ; preds = %H5R__set_obj_token.exit
+bb.h:                                             ; preds = %bb.f
   %i.z = load i64, ptr %i.a, align 8, !tbaa !19
   %i.aa = trunc i64 %i.z to i32
   %i.ab = getelementptr inbounds nuw i8, ptr %3, i64 40

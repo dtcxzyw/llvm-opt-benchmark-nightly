@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %.critedge2
   %i.t = load i32, ptr %i.s, align 4, !tbaa !22
   %i.u = sext i32 %i.t to i64
   %i.v = getelementptr inbounds [4 x i8], ptr %.val112.val, i64 %i.u
-  %i.w = load i32, ptr %i.v, align 4, !tbaa !22   ; 2 uses
+  %i.w = load i32, ptr %i.v, align 4, !tbaa !22   ; 3 uses
   store i32 %i.w, ptr @Ga2_ObjLeaves.v.0, align 4, !tbaa !17
   %i.x = load i32, ptr %i.s, align 4, !tbaa !22
   %i.y = sext i32 %i.x to i64
@@ -214,8 +214,7 @@ bb.b:                                             ; preds = %.critedge2
   br i1 %i.ab, label %.lr.ph.preheader, label %.critedge2
 
 .lr.ph.preheader:                                 ; preds = %.lr.ph208
-  %Ga2_ObjLeaves.v.val94 = load i32, ptr @Ga2_ObjLeaves.v.0, align 4
-  %i.ac = sext i32 %Ga2_ObjLeaves.v.val94 to i64
+  %i.ac = sext i32 %i.w to i64
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %Rnm_ObjAddToCount.exit.thread

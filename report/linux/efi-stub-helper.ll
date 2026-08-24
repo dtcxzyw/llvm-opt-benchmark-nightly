@@ -202,7 +202,7 @@ declare hidden i32 @efi_printk(ptr noundef, ...) local_unnamed_addr #3
 ; Function Attrs: noredzone nounwind optsize
 define hidden ptr @efi_convert_cmdline(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #1 {
 bb.a:
-  %i.a = alloca ptr, align 8                      ; 5 uses
+  %i.a = alloca ptr, align 8                      ; 6 uses
   %i.b = alloca i32, align 4                      ; 5 uses
   %i.c = alloca i64, align 8                      ; 8 uses
   %i.d = alloca [3 x i64], align 16               ; 3 uses
@@ -244,7 +244,7 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e, %bb.d
   call void @efi_apply_loadoptions_quirk(ptr noundef nonnull %i.a, ptr noundef nonnull %i.b) #7
-  %i.r = load ptr, ptr %i.a, align 8              ; 3 uses
+  %i.r = load ptr, ptr %i.a, align 8              ; 2 uses
   %.not59 = icmp eq ptr %i.r, null
   br i1 %.not59, label %.critedge.thread, label %bb.g
 
@@ -382,7 +382,8 @@ bb.x:                                             ; preds = %bb.w
   %i.bo = load i64, ptr %i.c, align 8
   %i.bp = inttoptr i64 %i.bo to ptr
   %i.bq = sext i32 %i.as to i64
-  %i.br = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef %i.bp, i64 noundef %i.bq, ptr noundef nonnull @.str.20, i32 noundef %.4, ptr noundef %i.r) #6 ; 0 uses
+  %1 = load ptr, ptr %i.a, align 8
+  %i.br = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef %i.bp, i64 noundef %i.bq, ptr noundef nonnull @.str.20, i32 noundef %.4, ptr noundef %1) #6 ; 0 uses
   %i.bs = load i64, ptr %i.c, align 8
   %i.bt = inttoptr i64 %i.bs to ptr
   br label %bb.y

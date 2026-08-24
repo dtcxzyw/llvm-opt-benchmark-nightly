@@ -115,14 +115,11 @@ bb.g:                                             ; preds = %bb.f
   store i32 %i.m, ptr @lang_tabsize, align 4, !tbaa !4
   %i.n = load ptr, ptr @hyph_tab, align 8, !tbaa !12
   %i.o = sext i32 %i.m to i64
-  %i.p = shl nsw i64 %i.o, 3
+  %i.p = shl nsw i64 %i.o, 3                      ; 2 uses
   %i.q = tail call ptr @realloc(ptr noundef %i.n, i64 noundef %i.p) #10
   store ptr %i.q, ptr @hyph_tab, align 8, !tbaa !12
   %i.r = load ptr, ptr @canonical_tab, align 8, !tbaa !12
-  %2 = load i32, ptr @lang_tabsize, align 4, !tbaa !4
-  %3 = sext i32 %2 to i64
-  %4 = shl nsw i64 %3, 3
-  %i.s = tail call ptr @realloc(ptr noundef %i.r, i64 noundef %4) #10
+  %i.s = tail call ptr @realloc(ptr noundef %i.r, i64 noundef %i.p) #10
   store ptr %i.s, ptr @canonical_tab, align 8, !tbaa !12
   br label %bb.h
 

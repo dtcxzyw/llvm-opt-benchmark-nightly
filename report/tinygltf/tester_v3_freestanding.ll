@@ -205,7 +205,7 @@ tg3json__strlen_fallback.exit.i:
   %i.g = alloca [4096 x i8], align 16             ; 16 uses
   %i.h = ptrtoaddr ptr %i.g to i64                ; 2 uses
   %6 = alloca %struct.tg3__data_uri_result, align 8 ; 6 uses
-  %i.i = alloca i64, align 8                      ; 5 uses
+  %i.i = alloca i64, align 8                      ; 6 uses
   %i.j = alloca [64 x i8], align 16               ; 13 uses
   %i.k = alloca ptr, align 8                      ; 8 uses
   %i.l = alloca i64, align 8                      ; 11 uses
@@ -608,7 +608,7 @@ bb.v:                                             ; preds = %tg3__json_is_object
   call fastcc void @tg3__parse_string(ptr noundef nonnull %0, ptr noundef nonnull readonly %i.hf, ptr noundef nonnull @.str.64, ptr noundef nonnull %i.hk, i32 noundef 0, ptr noundef nonnull @.str.65) #20
   call fastcc void @tg3__parse_string(ptr noundef nonnull %0, ptr noundef nonnull readonly %i.hf, ptr noundef nonnull @.str.66, ptr noundef %i.ho, i32 noundef 0, ptr noundef nonnull @.str.65) #20
   call fastcc void @tg3__parse_uint64(ptr noundef nonnull %0, ptr noundef nonnull readonly %i.hf, ptr noundef nonnull @.str.67, ptr noundef %i.i, i32 noundef 1, ptr noundef nonnull @.str.65) #20
-  %i.hu = load i64, ptr %i.i, align 8, !tbaa !21  ; 19 uses
+  %i.hu = load i64, ptr %i.i, align 8, !tbaa !21  ; 18 uses
   store i64 %i.hu, ptr %i.hl, align 8, !tbaa !252
   %i.hv = load i32, ptr %i.gm, align 8, !tbaa !255
   %i.hw = icmp ne i32 %i.hv, 0
@@ -1011,7 +1011,8 @@ tg3__decode_data_uri.exit.i:                      ; preds = %bb.bb, %bb.bt, %.pr
   %.015.i.i = phi ptr [ %i.uw, %.preheader.i.i.i ], [ %i.uw, %bb.bt ], [ null, %tg3__memcpy.exit.i.i.i ], [ null, %tg3__memcmp.exit.thread.i.i.i ], [ null, %.preheader.preheader.i.i.i ], [ null, %tg3__memset.exit108.i ], [ null, %.preheader.6.i.i.i ], [ null, %.preheader.5.i.i.i ], [ null, %.preheader.4.i.i.i ], [ null, %.preheader.3.i.i.i ], [ null, %.preheader.2.i.i.i ], [ null, %.preheader.1.i.i.i ], [ null, %.preheader53.4.i.i.i ], [ null, %.preheader53.3.i.i.i ], [ null, %.preheader53.2.i.i.i ], [ null, %.preheader53.1.i.i.i ], [ null, %tg3__arena_alloc.exit.i.i.i ], [ null, %tg3__memcpy.exit.i.i ], [ null, %bb.bl ], [ null, %bb.bj ], [ null, %bb.bk ], [ null, %.critedge.i.i.i ], [ null, %bb.bg ], [ null, %bb.bb ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #19
   %i.vq = icmp ne ptr %.015.i.i, null
-  %i.vr = icmp eq i64 %i.hu, 0
+  %7 = load i64, ptr %i.i, align 8
+  %i.vr = icmp eq i64 %7, 0
   %or.cond8.not.i = select i1 %i.vq, i1 true, i1 %i.vr
   br i1 %or.cond8.not.i, label %tg3__error_push.exit129.i, label %bb.bu
 
@@ -1414,7 +1415,7 @@ bb.yb:                                            ; preds = %bb.ya
 ; Function Attrs: nounwind
 define dso_local range(i32 0, 71) i32 @tg3_parse_glb(ptr noundef %0, ptr noundef %1, ptr noundef %2, i64 noundef %3, ptr noundef %4, i32 noundef %5, ptr nofree noundef readonly captures(address_is_null) %6) local_unnamed_addr #9 {
 bb.a:
-  %i.a = alloca ptr, align 8                      ; 5 uses
+  %i.a = alloca ptr, align 8                      ; 6 uses
   %i.b = alloca i64, align 8                      ; 5 uses
   %i.c = alloca ptr, align 8                      ; 5 uses
   %i.d = alloca i64, align 8                      ; 5 uses
@@ -1817,7 +1818,7 @@ tg3__error_push.exit105.i:                        ; preds = %tg3__error_push.exi
   br i1 %.not52.i, label %._crit_edge.i, label %.lr.ph.i, !llvm.loop !571
 
 ._crit_edge.i:                                    ; preds = %tg3__error_push.exit105.i
-  %.0..0..0.80.pre = load ptr, ptr %i.a, align 8, !tbaa !9 ; 3 uses
+  %.0..0..0.80.pre = load ptr, ptr %i.a, align 8, !tbaa !9 ; 2 uses
   %.not53.i = icmp eq ptr %.0..0..0.80.pre, null
   br i1 %.not53.i, label %._crit_edge.i.thread, label %tg3__parse_glb_header.exit
 
@@ -2161,8 +2162,9 @@ vector.body174:                                   ; preds = %bb.ar
 bb.as:                                            ; preds = %bb.ar
   %i.mc = load ptr, ptr %i.e, align 8, !tbaa !9   ; 2 uses
   %.not38 = icmp eq ptr %i.mc, null
+  %.0..0..0.79 = load ptr, ptr %i.a, align 8
   %i.md = ptrtoint ptr %i.mc to i64
-  %i.me = ptrtoint ptr %.0..0..0.80.pre to i64
+  %i.me = ptrtoint ptr %.0..0..0.79 to i64
   %i.mf = sub i64 %i.md, %i.me
   %i.mg = select i1 %.not38, i64 -1, i64 %i.mf
   %.not.i50 = icmp eq ptr %1, null
@@ -2565,7 +2567,7 @@ tg3__json_set_take.exit:                          ; preds = %tg3json_object_set_
 ; Function Attrs: nofree nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none)
 define internal fastcc range(i32 0, 2) i32 @tg3__serialize_string_array(ptr nofree noundef nonnull captures(address_is_null) %0, ptr noundef %1, ptr nofree noundef readonly captures(address_is_null) %2, i32 noundef %3) unnamed_addr #0 {
 bb.a:
-  %4 = alloca %struct.tg3json_value, align 8      ; 12 uses
+  %4 = alloca %struct.tg3json_value, align 8      ; 14 uses
   %5 = alloca %struct.tg3json_value, align 8      ; 11 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #19
   %i.a = icmp eq ptr %2, null
@@ -2582,9 +2584,11 @@ bb.b:                                             ; preds = %bb.a
   store <4 x i8> zeroinitializer, ptr %i.f, align 4, !tbaa !12
   store i32 5, ptr %5, align 8, !tbaa !13
   %test_heap_used.promoted.i = load i64, ptr @test_heap_used, align 8
-  %i.g = getelementptr inbounds nuw i8, ptr %4, i64 4 ; 2 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %4, i64 8
-  %i.i = getelementptr inbounds nuw i8, ptr %4, i64 16
+  %6 = getelementptr inbounds nuw i8, ptr %4, i64 4 ; 2 uses
+  %7 = getelementptr inbounds nuw i8, ptr %4, i64 8
+  %i.g = getelementptr inbounds nuw i8, ptr %4, i64 10
+  %i.h = getelementptr inbounds nuw i8, ptr %4, i64 11
+  %i.i = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %4, i64 20
   %i.k = getelementptr inbounds nuw i8, ptr %4, i64 21
   %i.l = getelementptr inbounds nuw i8, ptr %4, i64 22
@@ -2605,7 +2609,10 @@ bb.d:                                             ; preds = %bb.c
   %i.q = getelementptr inbounds nuw i8, ptr %i.n, i64 8
   %i.r = load i32, ptr %i.q, align 8, !tbaa !344  ; 4 uses
   %i.s = zext i32 %i.r to i64                     ; 13 uses
-  store <4 x i8> zeroinitializer, ptr %i.g, align 4, !tbaa !12
+  store <4 x i8> zeroinitializer, ptr %6, align 4, !tbaa !12
+  store i8 0, ptr %i.g, align 2, !tbaa !12
+  store i8 0, ptr %i.h, align 1, !tbaa !12
+  store i8 0, ptr %i.i, align 8, !tbaa !12
   store i32 4, ptr %4, align 8, !tbaa !13
   %i.t = and i64 %i.s, 4294967288                 ; 2 uses
   %i.u = add i64 %i.m, 16
@@ -2761,7 +2768,7 @@ vec.epilog.middle.block62:                        ; preds = %vec.epilog.vector.b
 .loopexit.i:                                      ; preds = %.lr.ph.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i, %middle.block44, %vec.epilog.middle.block62, %bb.e
   %i.bs = getelementptr inbounds nuw i8, ptr %i.z, i64 %i.s
   store i8 0, ptr %i.bs, align 1, !tbaa !12
-  store ptr %i.z, ptr %i.h, align 8, !tbaa !12
+  store ptr %i.z, ptr %7, align 8, !tbaa !12
   store i64 %i.s, ptr %i.i, align 8, !tbaa !12
   %i.bt = load i32, ptr %5, align 8, !tbaa !13
   %i.bu = icmp eq i32 %i.bt, 5
@@ -2953,7 +2960,7 @@ tg3__json_push_take.exit.i:                       ; preds = %.loopexit.i.i.i, %.
   store i64 %i.bw, ptr %i.e, align 8, !tbaa !12
   %i.dz = getelementptr inbounds nuw [24 x i8], ptr %i.dy, i64 %i.bv
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.dz, ptr noundef nonnull align 8 dereferenceable(24) %4, i64 24, i1 false), !tbaa.struct !42
-  store <16 x i8> zeroinitializer, ptr %i.g, align 4, !tbaa !12
+  store <16 x i8> zeroinitializer, ptr %6, align 4, !tbaa !12
   store i8 0, ptr %i.j, align 4, !tbaa !12
   store i8 0, ptr %i.k, align 1, !tbaa !12
   store i8 0, ptr %i.l, align 2, !tbaa !12

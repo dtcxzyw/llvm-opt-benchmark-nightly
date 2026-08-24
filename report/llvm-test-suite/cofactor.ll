@@ -30,7 +30,7 @@ bb.a:
   %i.i = ashr exact i64 %sext, 29
   %i.j = and i64 %i.i, -8
   %i.k = tail call noalias ptr @malloc(i64 noundef %i.j) #9 ; 4 uses
-  %i.l = load i32, ptr @cube, align 8, !tbaa !15  ; 2 uses
+  %i.l = load i32, ptr @cube, align 8, !tbaa !15  ; 3 uses
   %i.m = icmp slt i32 %i.l, 33
   %i.n = add nsw i32 %i.l, -1
   %i.o = lshr i32 %i.n, 3
@@ -39,8 +39,7 @@ bb.a:
   %narrow = select i1 %i.m, i32 8, i32 %i.q
   %i.r = zext nneg i32 %narrow to i64
   %i.s = tail call noalias ptr @malloc(i64 noundef %i.r) #9
-  %2 = load i32, ptr @cube, align 8, !tbaa !15
-  %i.t = tail call ptr (ptr, i32, ...) @set_clear(ptr noundef %i.s, i32 noundef %2) #10
+  %i.t = tail call ptr (ptr, i32, ...) @set_clear(ptr noundef %i.s, i32 noundef %i.l) #10
   %i.u = load ptr, ptr %0, align 8, !tbaa !14
   %i.v = load ptr, ptr getelementptr inbounds nuw (i8, ptr @cube, i64 88), align 8, !tbaa !16
   %i.w = tail call ptr (ptr, ptr, ptr, ...) @set_diff(ptr noundef %i.b, ptr noundef %i.v, ptr noundef %1) #10
@@ -324,7 +323,7 @@ bb.a:
   %i.q = ashr exact i64 %sext, 29
   %i.r = and i64 %i.q, -8
   %i.s = tail call noalias ptr @malloc(i64 noundef %i.r) #9 ; 4 uses
-  %i.t = load i32, ptr @cube, align 8, !tbaa !15  ; 2 uses
+  %i.t = load i32, ptr @cube, align 8, !tbaa !15  ; 3 uses
   %i.u = icmp slt i32 %i.t, 33
   %i.v = add nsw i32 %i.t, -1
   %i.w = lshr i32 %i.v, 3
@@ -333,8 +332,7 @@ bb.a:
   %narrow = select i1 %i.u, i32 8, i32 %i.y
   %i.z = zext nneg i32 %narrow to i64
   %i.aa = tail call noalias ptr @malloc(i64 noundef %i.z) #9
-  %3 = load i32, ptr @cube, align 8, !tbaa !15
-  %i.ab = tail call ptr (ptr, i32, ...) @set_clear(ptr noundef %i.aa, i32 noundef %3) #10
+  %i.ab = tail call ptr (ptr, i32, ...) @set_clear(ptr noundef %i.aa, i32 noundef %i.t) #10
   %i.ac = load ptr, ptr %0, align 8, !tbaa !14
   %i.ad = load ptr, ptr getelementptr inbounds nuw (i8, ptr @cube, i64 88), align 8, !tbaa !16
   %i.ae = tail call ptr (ptr, ptr, ptr, ...) @set_diff(ptr noundef %i.c, ptr noundef %i.ad, ptr noundef %1) #10
@@ -737,7 +735,7 @@ bb.a:
   %i.d = sext i32 %i.c to i64
   %i.e = shl nsw i64 %i.d, 3
   %i.f = tail call noalias ptr @malloc(i64 noundef %i.e) #9 ; 4 uses
-  %i.g = load i32, ptr @cube, align 8, !tbaa !15  ; 2 uses
+  %i.g = load i32, ptr @cube, align 8, !tbaa !15  ; 3 uses
   %i.h = icmp slt i32 %i.g, 33
   %i.i = add nsw i32 %i.g, -1
   %i.j = lshr i32 %i.i, 3
@@ -746,8 +744,7 @@ bb.a:
   %narrow = select i1 %i.h, i32 8, i32 %i.l
   %i.m = zext nneg i32 %narrow to i64
   %i.n = tail call noalias ptr @malloc(i64 noundef %i.m) #9
-  %1 = load i32, ptr @cube, align 8, !tbaa !15
-  %i.o = tail call ptr (ptr, i32, ...) @set_clear(ptr noundef %i.n, i32 noundef %1) #10
+  %i.o = tail call ptr (ptr, i32, ...) @set_clear(ptr noundef %i.n, i32 noundef %i.g) #10
   store ptr %i.o, ptr %i.f, align 8, !tbaa !14
   %i.p = getelementptr inbounds nuw i8, ptr %i.f, i64 16 ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 24
@@ -795,7 +792,7 @@ bb.a:
   %i.g = sext i32 %i.f to i64
   %i.h = shl nsw i64 %i.g, 3
   %i.i = tail call noalias ptr @malloc(i64 noundef %i.h) #9 ; 4 uses
-  %i.j = load i32, ptr @cube, align 8, !tbaa !15  ; 2 uses
+  %i.j = load i32, ptr @cube, align 8, !tbaa !15  ; 3 uses
   %i.k = icmp slt i32 %i.j, 33
   %i.l = add nsw i32 %i.j, -1
   %i.m = lshr i32 %i.l, 3
@@ -804,8 +801,7 @@ bb.a:
   %narrow = select i1 %i.k, i32 8, i32 %i.o
   %i.p = zext nneg i32 %narrow to i64
   %i.q = tail call noalias ptr @malloc(i64 noundef %i.p) #9
-  %2 = load i32, ptr @cube, align 8, !tbaa !15
-  %i.r = tail call ptr (ptr, i32, ...) @set_clear(ptr noundef %i.q, i32 noundef %2) #10
+  %i.r = tail call ptr (ptr, i32, ...) @set_clear(ptr noundef %i.q, i32 noundef %i.j) #10
   store ptr %i.r, ptr %i.i, align 8, !tbaa !14
   %i.s = getelementptr inbounds nuw i8, ptr %i.i, i64 16 ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 24
@@ -882,7 +878,7 @@ bb.a:
   %i.j = sext i32 %i.i to i64
   %i.k = shl nsw i64 %i.j, 3
   %i.l = tail call noalias ptr @malloc(i64 noundef %i.k) #9 ; 4 uses
-  %i.m = load i32, ptr @cube, align 8, !tbaa !15  ; 2 uses
+  %i.m = load i32, ptr @cube, align 8, !tbaa !15  ; 3 uses
   %i.n = icmp slt i32 %i.m, 33
   %i.o = add nsw i32 %i.m, -1
   %i.p = lshr i32 %i.o, 3
@@ -891,8 +887,7 @@ bb.a:
   %narrow = select i1 %i.n, i32 8, i32 %i.r
   %i.s = zext nneg i32 %narrow to i64
   %i.t = tail call noalias ptr @malloc(i64 noundef %i.s) #9
-  %3 = load i32, ptr @cube, align 8, !tbaa !15
-  %i.u = tail call ptr (ptr, i32, ...) @set_clear(ptr noundef %i.t, i32 noundef %3) #10
+  %i.u = tail call ptr (ptr, i32, ...) @set_clear(ptr noundef %i.t, i32 noundef %i.m) #10
   store ptr %i.u, ptr %i.l, align 8, !tbaa !14
   %i.v = getelementptr inbounds nuw i8, ptr %i.l, i64 16 ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 24

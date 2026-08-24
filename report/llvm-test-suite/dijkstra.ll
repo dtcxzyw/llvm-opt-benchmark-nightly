@@ -203,12 +203,14 @@ enqueue.exit:                                     ; preds = %bb.e, %bb.f
   br i1 %i.r, label %.lr.ph, label %._crit_edge
 
 thread-pre-split:                                 ; preds = %bb.n
+  store i32 100, ptr @i, align 4, !tbaa !4
+  store i32 %i.ag, ptr @iCost, align 4, !tbaa !4
   %i.s = icmp sgt i32 %.pr, 0
   br i1 %i.s, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %enqueue.exit, %thread-pre-split
   %.pr34 = phi i32 [ %.pr, %thread-pre-split ], [ %i.q, %enqueue.exit ]
-  %qHead.promoted26 = phi ptr [ %qHead.promoted27, %thread-pre-split ], [ %i.o, %enqueue.exit ]
+  %qHead.promoted26 = phi ptr [ %qHead.promoted38, %thread-pre-split ], [ %i.o, %enqueue.exit ]
   %i.t = phi ptr [ %i.ay, %thread-pre-split ], [ %i.o, %enqueue.exit ] ; 6 uses
   %.not.i14 = icmp eq ptr %i.t, null
   br i1 %.not.i14, label %dequeue.exit, label %bb.g
@@ -233,33 +235,30 @@ bb.g:                                             ; preds = %.lr.ph
   br label %dequeue.exit
 
 dequeue.exit:                                     ; preds = %.lr.ph, %bb.g
-  %.pr33 = phi i32 [ %.pr34, %.lr.ph ], [ %i.ac, %bb.g ]
+  %.pr33 = phi i32 [ %.pr34, %.lr.ph ], [ %i.ac, %bb.g ] ; 2 uses
   %qHead.promoted = phi ptr [ %qHead.promoted26, %.lr.ph ], [ %qHead.promoted.pre, %bb.g ] ; 2 uses
-  store i32 0, ptr @i, align 4, !tbaa !4
-  %.pre30 = load i32, ptr @iNode, align 4, !tbaa !4
+  %2 = load i32, ptr @iNode, align 4, !tbaa !4    ; 3 uses
+  %3 = sext i32 %2 to i64
+  %4 = getelementptr inbounds [400 x i8], ptr @AdjMatrix, i64 %3
+  %.pre30 = load i32, ptr @iDist, align 4
   br label %bb.h
 
 bb.h:                                             ; preds = %dequeue.exit, %bb.n
-  %.pr35 = phi i32 [ %.pr33, %dequeue.exit ], [ %.pr, %bb.n ] ; 2 uses
-  %i.ad = phi i32 [ %.pre30, %dequeue.exit ], [ %i.ax, %bb.n ] ; 5 uses
-  %qHead.promoted28 = phi ptr [ %qHead.promoted, %dequeue.exit ], [ %qHead.promoted27, %bb.n ] ; 3 uses
-  %storemerge1323 = phi i32 [ 0, %dequeue.exit ], [ %7, %bb.n ] ; 4 uses
+  %i.ad = phi i32 [ %.pr33, %dequeue.exit ], [ %.pr, %bb.n ] ; 2 uses
+  %qHead.promoted28 = phi ptr [ %qHead.promoted, %dequeue.exit ], [ %qHead.promoted38, %bb.n ] ; 3 uses
+  %indvars.iv32 = phi i64 [ 0, %dequeue.exit ], [ %indvars.iv.next33, %bb.n ] ; 4 uses
   %i.ae = phi ptr [ %qHead.promoted, %dequeue.exit ], [ %i.ay, %bb.n ] ; 5 uses
-  %2 = sext i32 %i.ad to i64
-  %3 = getelementptr inbounds [400 x i8], ptr @AdjMatrix, i64 %2
-  %4 = sext i32 %storemerge1323 to i64            ; 2 uses
-  %i.af = getelementptr inbounds [4 x i8], ptr %3, i64 %4
-  %i.ag = load i32, ptr %i.af, align 4, !tbaa !4  ; 3 uses
-  store i32 %i.ag, ptr @iCost, align 4, !tbaa !4
+  %5 = phi i32 [ %.pr33, %dequeue.exit ], [ %i.ax, %bb.n ] ; 3 uses
+  %i.af = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %indvars.iv32
+  %i.ag = load i32, ptr %i.af, align 4, !tbaa !4  ; 4 uses
   %.not = icmp eq i32 %i.ag, 9999
   br i1 %.not, label %bb.n, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %i.ah = getelementptr inbounds [8 x i8], ptr @rgnNodes, i64 %4 ; 3 uses
+  %i.ah = getelementptr inbounds nuw [8 x i8], ptr @rgnNodes, i64 %indvars.iv32 ; 3 uses
   %i.ai = load i32, ptr %i.ah, align 8, !tbaa !22 ; 2 uses
   %i.aj = icmp eq i32 %i.ai, 9999
-  %.pre31 = load i32, ptr @iDist, align 4, !tbaa !4
-  %.pre38 = add nsw i32 %.pre31, %i.ag            ; 3 uses
+  %.pre38 = add nsw i32 %.pre30, %i.ag            ; 3 uses
   %i.ak = icmp sgt i32 %i.ai, %.pre38
   %or.cond = select i1 %i.aj, i1 true, i1 %i.ak
   br i1 %or.cond, label %._crit_edge37, label %bb.n
@@ -267,24 +266,26 @@ bb.i:                                             ; preds = %bb.h
 ._crit_edge37:                                    ; preds = %bb.i
   store i32 %.pre38, ptr %i.ah, align 8, !tbaa !22
   %i.al = getelementptr inbounds nuw i8, ptr %i.ah, i64 4
-  store i32 %i.ad, ptr %i.al, align 4, !tbaa !8
+  store i32 %2, ptr %i.al, align 4, !tbaa !8
   %i.am = tail call noalias dereferenceable_or_null(24) ptr @malloc(i64 noundef 24) #12 ; 9 uses
   %.not.i15 = icmp eq ptr %i.am, null
-  %.pre = load i32, ptr @iNode, align 4, !tbaa !4
+  %6 = trunc nuw nsw i64 %indvars.iv32 to i32     ; 2 uses
   br i1 %.not.i15, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %._crit_edge37
+  store i32 %6, ptr @i, align 4, !tbaa !4
+  store i32 %i.ag, ptr @iCost, align 4, !tbaa !4
   %i.an = load ptr, ptr @stderr, align 8, !tbaa !10
   %i.ao = tail call i64 @fwrite(ptr nonnull @.str.1, i64 15, i64 1, ptr %i.an) #13 ; 0 uses
   tail call void @exit(i32 noundef 1) #14
   unreachable
 
 bb.k:                                             ; preds = %._crit_edge37
-  store i32 %storemerge1323, ptr %i.am, align 8, !tbaa !15
+  store i32 %6, ptr %i.am, align 8, !tbaa !15
   %i.ap = getelementptr inbounds nuw i8, ptr %i.am, i64 4
   store i32 %.pre38, ptr %i.ap, align 4, !tbaa !17
   %i.aq = getelementptr inbounds nuw i8, ptr %i.am, i64 8
-  store i32 %i.ad, ptr %i.aq, align 8, !tbaa !18
+  store i32 %2, ptr %i.aq, align 8, !tbaa !18
   %i.ar = getelementptr inbounds nuw i8, ptr %i.am, i64 16
   store ptr null, ptr %i.ar, align 8, !tbaa !19
   %.not16.i16 = icmp eq ptr %i.ae, null
@@ -309,22 +310,18 @@ bb.m:                                             ; preds = %.preheader.i17
 enqueue.exit20:                                   ; preds = %bb.l, %bb.m
   %qHead.promoted25 = phi ptr [ %i.am, %bb.l ], [ %qHead.promoted28, %bb.m ]
   %i.av = phi ptr [ %i.am, %bb.l ], [ %i.ae, %bb.m ]
-  %5 = load i32, ptr @g_qCount, align 4, !tbaa !4
-  %i.aw = add nsw i32 %5, 1                       ; 2 uses
+  %i.aw = add nsw i32 %5, 1                       ; 3 uses
   store i32 %i.aw, ptr @g_qCount, align 4, !tbaa !4
-  %.pre32 = load i32, ptr @i, align 4, !tbaa !4
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.i, %bb.h, %enqueue.exit20
-  %.pr = phi i32 [ %.pr35, %bb.h ], [ %i.aw, %enqueue.exit20 ], [ %.pr35, %bb.i ] ; 3 uses
-  %6 = phi i32 [ %storemerge1323, %bb.h ], [ %.pre32, %enqueue.exit20 ], [ %storemerge1323, %bb.i ] ; 2 uses
-  %i.ax = phi i32 [ %i.ad, %bb.h ], [ %.pre, %enqueue.exit20 ], [ %i.ad, %bb.i ]
-  %qHead.promoted27 = phi ptr [ %qHead.promoted28, %bb.h ], [ %qHead.promoted25, %enqueue.exit20 ], [ %qHead.promoted28, %bb.i ] ; 2 uses
+  %.pr = phi i32 [ %i.ad, %bb.h ], [ %i.aw, %enqueue.exit20 ], [ %i.ad, %bb.i ] ; 3 uses
+  %qHead.promoted38 = phi ptr [ %qHead.promoted28, %bb.h ], [ %qHead.promoted25, %enqueue.exit20 ], [ %qHead.promoted28, %bb.i ] ; 2 uses
+  %i.ax = phi i32 [ %5, %bb.h ], [ %i.aw, %enqueue.exit20 ], [ %5, %bb.i ]
   %i.ay = phi ptr [ %i.ae, %bb.h ], [ %i.av, %enqueue.exit20 ], [ %i.ae, %bb.i ] ; 2 uses
-  %7 = add nsw i32 %6, 1                          ; 2 uses
-  store i32 %7, ptr @i, align 4, !tbaa !4
-  %8 = icmp slt i32 %6, 99
-  br i1 %8, label %bb.h, label %thread-pre-split, !llvm.loop !23
+  %indvars.iv.next33 = add nuw nsw i64 %indvars.iv32, 1 ; 2 uses
+  %exitcond35.not = icmp eq i64 %indvars.iv.next33, 100
+  br i1 %exitcond35.not, label %thread-pre-split, label %bb.h, !llvm.loop !23
 
 ._crit_edge:                                      ; preds = %thread-pre-split, %enqueue.exit
   %i.az = sext i32 %1 to i64

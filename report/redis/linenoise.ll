@@ -202,7 +202,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 ; Function Attrs: nounwind optsize uwtable
 define dso_local void @linenoiseEditHistoryNext(ptr nofree noundef captures(none) %0, i32 noundef %1) local_unnamed_addr #9 {
 bb.a:
-  %i.a = load i32, ptr @history_len, align 4, !tbaa !7 ; 2 uses
+  %i.a = load i32, ptr @history_len, align 4, !tbaa !7 ; 6 uses
   %i.b = icmp sgt i32 %i.a, 1
   br i1 %i.b, label %bb.b, label %bb.g
 
@@ -219,10 +219,9 @@ bb.b:                                             ; preds = %bb.a
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !24
   %i.m = tail call noalias ptr @strdup(ptr noundef %i.l) #24
-  %2 = load i32, ptr @history_len, align 4, !tbaa !7 ; 4 uses
   %i.n = load i32, ptr %i.d, align 8, !tbaa !45   ; 2 uses
   %i.o = xor i32 %i.n, -1
-  %i.p = add i32 %2, %i.o
+  %i.p = add i32 %i.a, %i.o
   %i.q = sext i32 %i.p to i64
   %i.r = getelementptr inbounds [8 x i8], ptr %i.c, i64 %i.q
   store ptr %i.m, ptr %i.r, align 8, !tbaa !19
@@ -238,18 +237,18 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.g
 
 bb.d:                                             ; preds = %bb.b
-  %.not = icmp slt i32 %i.u, %2
+  %.not = icmp samesign ult i32 %i.u, %i.a
   br i1 %.not, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.w = add nsw i32 %2, -1
+  %i.w = add nsw i32 %i.a, -1
   store i32 %i.w, ptr %i.d, align 8, !tbaa !45
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.d
   %i.x = load ptr, ptr %i.k, align 8, !tbaa !24
   %i.y = xor i32 %i.u, -1
-  %i.z = add nsw i32 %2, %i.y
+  %i.z = add nsw i32 %i.a, %i.y
   %i.aa = sext i32 %i.z to i64
   %i.ab = getelementptr inbounds [8 x i8], ptr %i.c, i64 %i.aa
   %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !19
@@ -652,26 +651,24 @@ bb.a:
 ; Function Attrs: mustprogress nounwind optsize willreturn memory(readwrite, target_mem: none) uwtable
 define dso_local range(i32 0, 2) i32 @linenoiseHistoryAdd(ptr nofree noundef readonly captures(none) %0, i32 noundef %1) local_unnamed_addr #3 {
 bb.a:
+  %2 = load i32, ptr @history_max_len, align 4, !tbaa !7 ; 3 uses
   %i.a = load ptr, ptr @history, align 8, !tbaa !44 ; 2 uses
   %i.b = icmp eq ptr %i.a, null
   br i1 %i.b, label %bb.b, label %bb.f
 
 bb.b:                                             ; preds = %bb.a
-  %2 = load i32, ptr @history_max_len, align 4, !tbaa !7
-  %i.c = zext nneg i32 %2 to i64
-  %i.d = shl nuw nsw i64 %i.c, 3
+  %i.c = zext nneg i32 %2 to i64                  ; 2 uses
+  %i.d = shl nuw nsw i64 %i.c, 3                  ; 2 uses
   %i.e = tail call noalias ptr @malloc(i64 noundef %i.d) #26 ; 5 uses
   store ptr %i.e, ptr @history, align 8, !tbaa !44
   %i.f = icmp eq ptr %i.e, null
   br i1 %i.f, label %bb.l, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %3 = load i32, ptr @history_max_len, align 4, !tbaa !7
-  %4 = zext nneg i32 %3 to i64
-  %i.g = shl nuw nsw i64 %4, 2
-  %5 = tail call noalias ptr @malloc(i64 noundef %i.g) #26 ; 3 uses
-  store ptr %5, ptr @history_sensitive, align 8, !tbaa !63
-  %i.h = icmp eq ptr %5, null
+  %i.g = shl nuw nsw i64 %i.c, 2
+  %calloc = tail call ptr @calloc(i64 1, i64 %i.g) ; 2 uses
+  store ptr %calloc, ptr @history_sensitive, align 8, !tbaa !63
+  %i.h = icmp eq ptr %calloc, null
   br i1 %i.h, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
@@ -680,17 +677,12 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.l
 
 bb.e:                                             ; preds = %bb.c
-  %6 = load i32, ptr @history_max_len, align 4, !tbaa !7
-  %7 = zext nneg i32 %6 to i64                    ; 2 uses
-  %8 = shl nuw nsw i64 %7, 3
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.e, i8 0, i64 %8, i1 false)
-  %9 = shl nuw nsw i64 %7, 2
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %5, i8 0, i64 %9, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.e, i8 0, i64 %i.d, i1 false)
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.a
   %i.i = phi ptr [ %i.e, %bb.e ], [ %i.a, %bb.a ] ; 5 uses
-  %i.j = load i32, ptr @history_len, align 4, !tbaa !7 ; 2 uses
+  %i.j = load i32, ptr @history_len, align 4, !tbaa !7 ; 4 uses
   %.not = icmp eq i32 %i.j, 0
   br i1 %.not, label %bb.h, label %bb.g
 
@@ -709,9 +701,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   br i1 %.not9, label %bb.l, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %10 = load i32, ptr @history_len, align 4, !tbaa !7 ; 3 uses
-  %11 = load i32, ptr @history_max_len, align 4, !tbaa !7
-  %i.q = icmp eq i32 %10, %11
+  %i.q = icmp eq i32 %i.j, %2
   %.pre = load ptr, ptr @history_sensitive, align 8, !tbaa !63 ; 3 uses
   br i1 %i.q, label %bb.j, label %bb.k
 
@@ -719,7 +709,7 @@ bb.j:                                             ; preds = %bb.i
   %i.r = load ptr, ptr %i.i, align 8, !tbaa !19
   tail call void @free(ptr noundef %i.r) #24
   %i.s = getelementptr inbounds nuw i8, ptr %i.i, i64 8
-  %i.t = add nsw i32 %10, -1                      ; 2 uses
+  %i.t = add nsw i32 %2, -1                       ; 2 uses
   %i.u = zext nneg i32 %i.t to i64                ; 2 uses
   %i.v = shl nuw nsw i64 %i.u, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.i, ptr nonnull align 8 %i.s, i64 %i.v, i1 false)
@@ -729,7 +719,7 @@ bb.j:                                             ; preds = %bb.i
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.i
-  %i.y = phi i32 [ %i.t, %bb.j ], [ %10, %bb.i ]  ; 2 uses
+  %i.y = phi i32 [ %i.t, %bb.j ], [ %i.j, %bb.i ] ; 2 uses
   %i.z = sext i32 %i.y to i64                     ; 2 uses
   %i.aa = getelementptr inbounds [8 x i8], ptr %i.i, i64 %i.z
   store ptr %i.p, ptr %i.aa, align 8, !tbaa !19
@@ -781,7 +771,7 @@ bb.f:                                             ; preds = %bb.d
   br i1 %i.j, label %.preheader, label %.critedge
 
 .preheader:                                       ; preds = %bb.f
-  %i.k = sub nsw i32 %.pre, %0                    ; 2 uses
+  %i.k = sub nsw i32 %.pre, %0                    ; 4 uses
   %i.l = icmp sgt i32 %i.k, 0
   br i1 %i.l, label %.lr.ph.preheader, label %.critedge
 
@@ -798,19 +788,18 @@ bb.f:                                             ; preds = %bb.d
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %.critedge, label %.lr.ph, !llvm.loop !65
 
-.critedge:                                        ; preds = %.lr.ph, %.preheader, %bb.f
-  %.028 = phi i32 [ %.pre, %bb.f ], [ %0, %.preheader ], [ %0, %.lr.ph ] ; 2 uses
+.critedge:                                        ; preds = %.lr.ph, %bb.f, %.preheader
+  %.pre-phi = phi i32 [ %i.k, %.preheader ], [ 0, %bb.f ], [ %i.k, %.lr.ph ]
+  %.028 = phi i32 [ %0, %.preheader ], [ %.pre, %bb.f ], [ %0, %.lr.ph ]
   tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.e, i8 0, i64 %i.d, i1 false)
   tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.h, i8 0, i64 %i.g, i1 false)
-  %1 = load i32, ptr @history_len, align 4, !tbaa !7 ; 2 uses
-  %2 = sub nsw i32 %1, %.028
-  %3 = sext i32 %2 to i64                         ; 2 uses
-  %i.o = getelementptr inbounds [8 x i8], ptr %i.b, i64 %3
+  %1 = zext nneg i32 %.pre-phi to i64             ; 2 uses
+  %i.o = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %1
   %i.p = sext i32 %.028 to i64                    ; 2 uses
   %i.q = shl nsw i64 %i.p, 3
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.e, ptr nonnull align 8 %i.o, i64 %i.q, i1 false)
   %i.r = load ptr, ptr @history_sensitive, align 8, !tbaa !63 ; 2 uses
-  %i.s = getelementptr inbounds [4 x i8], ptr %i.r, i64 %3
+  %i.s = getelementptr inbounds nuw [4 x i8], ptr %i.r, i64 %1
   %i.t = shl nsw i64 %i.p, 2
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.h, ptr align 4 %i.s, i64 %i.t, i1 false)
   tail call void @free(ptr noundef nonnull %i.b) #24
@@ -820,9 +809,8 @@ bb.f:                                             ; preds = %bb.d
   br label %bb.g
 
 bb.g:                                             ; preds = %.critedge, %bb.b
-  %4 = phi i32 [ %1, %.critedge ], [ %.pre, %bb.b ]
   store i32 %0, ptr @history_max_len, align 4, !tbaa !7
-  %i.u = icmp sgt i32 %4, %0
+  %i.u = icmp sgt i32 %.pre, %0
   br i1 %i.u, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g

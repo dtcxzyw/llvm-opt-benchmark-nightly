@@ -202,7 +202,7 @@ bb.ds:                                            ; preds = %bb.dr
 bb.dt:                                            ; preds = %bb.dr
   %i.gv = xor i64 %i.gs, -1
   %i.gw = add i64 %i.gv, %i.gr                    ; 6 uses
-  %i.gx = trunc i64 %i.gw to i32                  ; 7 uses
+  %i.gx = trunc i64 %i.gw to i32                  ; 6 uses
   %i.gy = icmp sgt i32 %i.gx, 0
   br i1 %i.gy, label %iter.check, label %._crit_edge.i75
 
@@ -401,7 +401,7 @@ bb.dy:                                            ; preds = %bb.dw
 bb.dz:                                            ; preds = %bb.dy, %bb.dx, %._crit_edge57.i
   %i.jj = phi i32 [ %.pre60.i, %bb.dx ], [ 0, %bb.dy ], [ %i.jb, %._crit_edge57.i ] ; 2 uses
   %.032.i = phi i32 [ 1, %bb.dx ], [ 2, %bb.dy ], [ 0, %._crit_edge57.i ]
-  %i.jk = add nsw i32 %i.jj, %i.gx                ; 3 uses
+  %i.jk = add nsw i32 %i.jj, %i.gx                ; 4 uses
   %i.jl = load ptr, ptr @yy_buffer_stack, align 8, !tbaa !13
   %i.jm = load i64, ptr @yy_buffer_stack_top, align 8, !tbaa !16
   %i.jn = getelementptr inbounds nuw [8 x i8], ptr %i.jl, i64 %i.jm ; 4 uses
@@ -437,15 +437,12 @@ bb.ec:                                            ; preds = %bb.ea
   %i.ka = add nsw i32 %i.jt, -2
   %i.kb = getelementptr inbounds nuw i8, ptr %i.jy, i64 24
   store i32 %i.ka, ptr %i.kb, align 8, !tbaa !20
-  %.pre61.i = load i32, ptr @yy_n_chars, align 4, !tbaa !25
-  %.pre64.i = add nsw i32 %.pre61.i, %i.gx
   br label %yy_get_next_buffer.exit
 
 yy_get_next_buffer.exit:                          ; preds = %._crit_edge62.i, %bb.ec
-  %.pre-phi.i = phi i32 [ %i.jk, %._crit_edge62.i ], [ %.pre64.i, %bb.ec ] ; 2 uses
-  %i.kc = phi ptr [ %.pre63.i, %._crit_edge62.i ], [ %i.jx, %bb.ec ]
-  store i32 %.pre-phi.i, ptr @yy_n_chars, align 4, !tbaa !25
-  %i.kd = sext i32 %.pre-phi.i to i64             ; 3 uses
+  %i.kc = phi ptr [ %i.jx, %bb.ec ], [ %.pre63.i, %._crit_edge62.i ]
+  store i32 %i.jk, ptr @yy_n_chars, align 4, !tbaa !25
+  %i.kd = sext i32 %i.jk to i64                   ; 3 uses
   %i.ke = getelementptr inbounds i8, ptr %i.kc, i64 %i.kd
   store i8 0, ptr %i.ke, align 1, !tbaa !28
   %i.kf = load ptr, ptr %i.jn, align 8, !tbaa !18

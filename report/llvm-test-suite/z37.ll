@@ -204,9 +204,9 @@ bb.jm:                                            ; preds = %bb.jk, %bb.jl
   %i.art = sdiv i32 %i.arr, %i.ars
   %i.aru = getelementptr inbounds nuw i8, ptr %i.apd, i64 56 ; 2 uses
   store i32 %i.art, ptr %i.aru, align 8, !tbaa !8
-  %i.arv = load ptr, ptr @finfo, align 8, !tbaa !13 ; 5 uses
-  %i.arw = zext i32 %i.aqk to i64
-  %i.arx = getelementptr inbounds nuw [96 x i8], ptr %i.arv, i64 %i.arw ; 4 uses
+  %i.arv = load ptr, ptr @finfo, align 8, !tbaa !13 ; 4 uses
+  %i.arw = zext i32 %i.aqk to i64                 ; 2 uses
+  %i.arx = getelementptr inbounds nuw [96 x i8], ptr %i.arv, i64 %i.arw ; 5 uses
   %i.ary = getelementptr inbounds nuw i8, ptr %i.arx, i64 40
   store ptr %i.apd, ptr %i.ary, align 8, !tbaa !23
   %i.arz = getelementptr inbounds nuw i8, ptr %i.arx, i64 48
@@ -241,10 +241,7 @@ bb.jm:                                            ; preds = %bb.jk, %bb.jl
   %i.ata = getelementptr inbounds nuw i8, ptr %i.arx, i64 58
   store i16 %i.asz, ptr %i.ata, align 2, !tbaa !71
   %i.atb = call noalias dereferenceable_or_null(2560) ptr @malloc(i64 noundef 2560) #15 ; 2 uses
-  %3 = load i32, ptr @font_count, align 4, !tbaa !4
-  %4 = zext i32 %3 to i64                         ; 2 uses
-  %5 = getelementptr inbounds nuw [96 x i8], ptr %i.arv, i64 %4
-  store ptr %i.atb, ptr %5, align 8, !tbaa !72
+  store ptr %i.atb, ptr %i.arx, align 8, !tbaa !72
   %i.atc = icmp eq ptr %i.atb, null
   br i1 %i.atc, label %bb.jn, label %bb.jo
 
@@ -256,7 +253,7 @@ bb.jn:                                            ; preds = %bb.jm
   br label %bb.jo
 
 bb.jo:                                            ; preds = %bb.jn, %bb.jm
-  %.pre-phi589 = phi i64 [ %.pre588, %bb.jn ], [ %4, %bb.jm ]
+  %.pre-phi589 = phi i64 [ %.pre588, %bb.jn ], [ %i.arw, %bb.jm ]
   %i.ate = phi ptr [ %.pre581, %bb.jn ], [ %i.arv, %bb.jm ] ; 7 uses
   %i.atf = load i16, ptr %i.asa, align 8
   %i.atg = and i16 %i.atf, 4095
@@ -421,10 +418,10 @@ bb.jw:                                            ; preds = %.lr.ph514, %bb.jv
   br i1 %exitcond569.not, label %._crit_edge515, label %.lr.ph514, !llvm.loop !92
 
 ._crit_edge515:                                   ; preds = %bb.jw, %bb.ju
-  %i.axl = load ptr, ptr @finfo, align 8, !tbaa !13 ; 6 uses
+  %i.axl = load ptr, ptr @finfo, align 8, !tbaa !13 ; 5 uses
   %i.axm = load i32, ptr @font_count, align 4, !tbaa !4
   %i.axn = zext i32 %i.axm to i64
-  %i.axo = getelementptr inbounds nuw [96 x i8], ptr %i.axl, i64 %i.axn ; 5 uses
+  %i.axo = getelementptr inbounds nuw [96 x i8], ptr %i.axl, i64 %i.axn ; 6 uses
   %i.axp = getelementptr inbounds nuw i8, ptr %i.axo, i64 24
   store ptr %i.awo, ptr %i.axp, align 8, !tbaa !75
   %i.axq = load i16, ptr %i.asa, align 8
@@ -466,10 +463,7 @@ bb.jx:                                            ; preds = %._crit_edge515
   %i.ays = sext i16 %i.ayr to i64
   %i.ayt = shl nsw i64 %i.ays, 1
   %i.ayu = call noalias ptr @malloc(i64 noundef %i.ayt) #15 ; 6 uses
-  %6 = load i32, ptr @font_count, align 4, !tbaa !4
-  %7 = zext i32 %6 to i64
-  %8 = getelementptr inbounds nuw [96 x i8], ptr %i.axl, i64 %7
-  %i.ayv = getelementptr inbounds nuw i8, ptr %8, i64 88
+  %i.ayv = getelementptr inbounds nuw i8, ptr %i.axo, i64 88
   store ptr %i.ayu, ptr %i.ayv, align 8, !tbaa !80
   %i.ayw = icmp eq ptr %i.ayu, null
   br i1 %i.ayw, label %bb.jy, label %bb.jz

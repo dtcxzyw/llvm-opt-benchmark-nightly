@@ -204,8 +204,8 @@ bb.j:                                             ; preds = %bb.i
 
 .preheader237.i:                                  ; preds = %bb.j
   %i.an = load float, ptr @LogK1, align 4
-  %i.ao = fpext float %i.an to double
-  %i.ap = load float, ptr @LogK2, align 4
+  %i.ao = fpext float %i.an to double             ; 3 uses
+  %i.ap = load float, ptr @LogK2, align 4         ; 3 uses
   br label %bb.cg
 
 bb.k:                                             ; preds = %bb.j
@@ -608,9 +608,6 @@ bb.cl:                                            ; preds = %bb.ck, %bb.cj, %bb.
   %.2213262.i = phi i32 [ %.2213259.i, %.preheader.lr.ph.i ], [ %.2213.i, %.loopexit.i ]
   %.3261.i = phi ptr [ %i.mg, %.preheader.lr.ph.i ], [ %i.ny, %.loopexit.i ]
   %.3209260.i = phi ptr [ %i.mf, %.preheader.lr.ph.i ], [ %i.nx, %.loopexit.i ]
-  %4 = load float, ptr @LogK1, align 4
-  %5 = fpext float %4 to double                   ; 2 uses
-  %6 = load float, ptr @LogK2, align 4            ; 2 uses
   br label %bb.cm
 
 bb.cm:                                            ; preds = %bb.cw, %.preheader.i
@@ -640,10 +637,10 @@ bb.cp:                                            ; preds = %bb.cn
   br i1 %i.mw, label %bb.cr, label %bb.cq
 
 bb.cq:                                            ; preds = %bb.cp
-  %i.mx = fmul float %6, %i.mn
+  %i.mx = fmul float %i.ap, %i.mn
   %i.my = fpext float %i.mx to double
   %i.mz = tail call double @log(double noundef %i.my) #7, !tbaa !3
-  %i.na = tail call double @llvm.fmuladd.f64(double %5, double %i.mz, double 5.000000e-01)
+  %i.na = tail call double @llvm.fmuladd.f64(double %i.ao, double %i.mz, double 5.000000e-01)
   br label %bb.cr
 
 bb.cr:                                            ; preds = %bb.cq, %bb.cp, %bb.co, %bb.cm
@@ -672,10 +669,10 @@ bb.cu:                                            ; preds = %bb.cs
   br i1 %i.nn, label %bb.cw, label %bb.cv
 
 bb.cv:                                            ; preds = %bb.cu
-  %i.no = fmul float %6, %i.ne
+  %i.no = fmul float %i.ap, %i.ne
   %i.np = fpext float %i.no to double
   %i.nq = tail call double @log(double noundef %i.np) #7, !tbaa !3
-  %i.nr = tail call double @llvm.fmuladd.f64(double %5, double %i.nq, double 5.000000e-01)
+  %i.nr = tail call double @llvm.fmuladd.f64(double %i.ao, double %i.nq, double 5.000000e-01)
   br label %bb.cw
 
 bb.cw:                                            ; preds = %bb.cv, %bb.cu, %bb.ct, %bb.cr

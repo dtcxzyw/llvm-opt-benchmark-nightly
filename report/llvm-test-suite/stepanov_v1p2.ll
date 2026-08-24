@@ -104,6 +104,7 @@ bb.a:
 
 .lr.ph34:                                         ; preds = %.preheader
   %i.h = load double, ptr @result_times, align 16, !tbaa !8
+  %wide.trip.count = zext nneg i32 %i.s to i64
   br label %bb.b
 
 .lr.ph:                                           ; preds = %bb.a, %.lr.ph
@@ -119,7 +120,7 @@ bb.a:
   %i.q = trunc nuw nsw i64 %indvars.iv to i32
   %i.r = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.2, i32 noundef %i.q, double noundef %i.k, double noundef %i.m, double noundef %i.p) ; 0 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %i.s = load i32, ptr @current_test, align 4, !tbaa !4 ; 3 uses
+  %i.s = load i32, ptr @current_test, align 4, !tbaa !4 ; 5 uses
   %i.t = sext i32 %i.s to i64
   %i.u = icmp slt i64 %indvars.iv.next, %i.t
   br i1 %i.u, label %.lr.ph, label %.preheader, !llvm.loop !10
@@ -140,10 +141,8 @@ bb.b:                                             ; preds = %.lr.ph34, %bb.b
   %i.ag = insertelement <4 x double> %i.af, double %i.y, i64 3
   %i.ah = fadd <4 x double> %i.v, %i.ag           ; 5 uses
   %indvars.iv.next46 = add nuw nsw i64 %indvars.iv45, 1 ; 2 uses
-  %0 = load i32, ptr @current_test, align 4, !tbaa !4 ; 2 uses
-  %1 = sext i32 %0 to i64
-  %2 = icmp slt i64 %indvars.iv.next46, %1
-  br i1 %2, label %bb.b, label %._crit_edge.loopexit, !llvm.loop !12
+  %exitcond.not = icmp eq i64 %indvars.iv.next46, %wide.trip.count
+  br i1 %exitcond.not, label %._crit_edge.loopexit, label %bb.b, !llvm.loop !12
 
 ._crit_edge.loopexit:                             ; preds = %bb.b
   %i.ai = extractelement <4 x double> %i.ah, i64 2
@@ -154,23 +153,19 @@ bb.b:                                             ; preds = %.lr.ph34, %bb.b
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.a, %._crit_edge.loopexit, %.preheader
+  %.lcssa49 = phi i32 [ %i.s, %.preheader ], [ %i.s, %._crit_edge.loopexit ], [ %i.e, %bb.a ]
   %.024.lcssa = phi double [ 0.000000e+00, %.preheader ], [ %i.am, %._crit_edge.loopexit ], [ 0.000000e+00, %bb.a ]
   %.023.lcssa = phi double [ 0.000000e+00, %.preheader ], [ %i.aj, %._crit_edge.loopexit ], [ 0.000000e+00, %bb.a ]
   %.022.lcssa = phi double [ 0.000000e+00, %.preheader ], [ %i.al, %._crit_edge.loopexit ], [ 0.000000e+00, %bb.a ]
   %.0.lcssa = phi double [ 0.000000e+00, %.preheader ], [ %i.ak, %._crit_edge.loopexit ], [ 0.000000e+00, %bb.a ] ; 2 uses
-  %.lcssa = phi i32 [ %i.s, %.preheader ], [ %0, %._crit_edge.loopexit ], [ %i.e, %bb.a ]
-  %i.an = sitofp i32 %.lcssa to double
+  %i.an = sitofp i32 %.lcssa49 to double          ; 3 uses
   %i.ao = fdiv double %.024.lcssa, %i.an
   %i.ap = tail call double @exp(double noundef %i.ao) #9, !tbaa !4
   %i.aq = fmul double %i.ap, f0x3E7AD7F29ABCAF48
-  %3 = load i32, ptr @current_test, align 4, !tbaa !4
-  %4 = sitofp i32 %3 to double
-  %i.ar = fdiv double %.022.lcssa, %4
+  %i.ar = fdiv double %.022.lcssa, %i.an
   %i.as = tail call double @exp(double noundef %i.ar) #9, !tbaa !4
   %i.at = fmul double %i.as, f0x3E7AD7F29ABCAF48
-  %5 = load i32, ptr @current_test, align 4, !tbaa !4
-  %6 = sitofp i32 %5 to double
-  %i.au = fdiv double %.0.lcssa, %6
+  %i.au = fdiv double %.0.lcssa, %i.an
   %i.av = tail call double @exp(double noundef %i.au) #9, !tbaa !4
   %i.aw = fmul double %i.av, f0x3E7AD7F29ABCAF48
   %i.ax = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.3, double noundef %i.aq, double noundef %i.at, double noundef %i.aw) ; 0 uses

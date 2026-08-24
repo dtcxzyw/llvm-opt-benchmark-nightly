@@ -202,21 +202,16 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.h
   store volatile i32 0, ptr @accelerator_event_dtoh_num_used, align 4, !tbaa !13
-  %i.ae = load i32, ptr @mca_pml_ob1_accelerator_events_max, align 4, !tbaa !13
-  %i.af = sext i32 %i.ae to i64
+  %i.ae = load i32, ptr @mca_pml_ob1_accelerator_events_max, align 4, !tbaa !13 ; 2 uses
+  %i.af = sext i32 %i.ae to i64                   ; 2 uses
   %i.ag = tail call noalias ptr @calloc(i64 noundef %i.af, i64 noundef 8) #12 ; 2 uses
   store ptr %i.ag, ptr @accelerator_event_dtoh_array, align 8, !tbaa !17
   %i.ah = icmp eq ptr %i.ag, null
   br i1 %i.ah, label %bb.k, label %.preheader52
 
 .preheader52:                                     ; preds = %bb.j
-  %0 = load i32, ptr @mca_pml_ob1_accelerator_events_max, align 4, !tbaa !13 ; 2 uses
-  %i.ai = icmp sgt i32 %0, 0
-  br i1 %i.ai, label %.lr.ph, label %.preheader52.._crit_edge_crit_edge
-
-.preheader52.._crit_edge_crit_edge:               ; preds = %.preheader52
-  %.pre = sext i32 %0 to i64
-  br label %._crit_edge
+  %i.ai = icmp sgt i32 %i.ae, 0
+  br i1 %i.ai, label %.lr.ph, label %._crit_edge
 
 bb.k:                                             ; preds = %bb.j
   %i.aj = load i32, ptr @mca_pml_ob1_output, align 4, !tbaa !13
@@ -225,10 +220,10 @@ bb.k:                                             ; preds = %bb.j
 
 bb.l:                                             ; preds = %.lr.ph
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %i.al = load i32, ptr @mca_pml_ob1_accelerator_events_max, align 4, !tbaa !13
+  %i.al = load i32, ptr @mca_pml_ob1_accelerator_events_max, align 4, !tbaa !13 ; 2 uses
   %i.am = sext i32 %i.al to i64                   ; 2 uses
   %i.an = icmp slt i64 %indvars.iv.next, %i.am
-  br i1 %i.an, label %.lr.ph, label %._crit_edge, !llvm.loop !44
+  br i1 %i.an, label %.lr.ph, label %._crit_edge.loopexit, !llvm.loop !44
 
 .lr.ph:                                           ; preds = %.preheader52, %bb.l
   %indvars.iv = phi i64 [ %indvars.iv.next, %bb.l ], [ 0, %.preheader52 ] ; 2 uses
@@ -244,9 +239,14 @@ bb.m:                                             ; preds = %.lr.ph
   %i.at = tail call zeroext i1 @opal_output_check_verbosity(i32 noundef 1, i32 noundef %i.as) #11
   br i1 %i.at, label %.sink.split, label %bb.t
 
-._crit_edge:                                      ; preds = %bb.l, %.preheader52.._crit_edge_crit_edge
-  %.pre-phi = phi i64 [ %.pre, %.preheader52.._crit_edge_crit_edge ], [ %i.am, %bb.l ]
-  %i.au = shl nsw i64 %.pre-phi, 3
+._crit_edge.loopexit:                             ; preds = %bb.l
+  %0 = icmp sgt i32 %i.al, 0
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %.preheader52
+  %.pre-phi = phi i64 [ %i.am, %._crit_edge.loopexit ], [ %i.af, %.preheader52 ] ; 2 uses
+  %1 = phi i1 [ %0, %._crit_edge.loopexit ], [ false, %.preheader52 ]
+  %i.au = shl nsw i64 %.pre-phi, 3                ; 2 uses
   %i.av = tail call noalias ptr @malloc(i64 noundef %i.au) #13 ; 2 uses
   store ptr %i.av, ptr @accelerator_event_dtoh_frag_array, align 8, !tbaa !25
   %i.aw = icmp eq ptr %i.av, null
@@ -261,21 +261,13 @@ bb.o:                                             ; preds = %._crit_edge
   store volatile i32 0, ptr @accelerator_event_htod_num_used, align 4, !tbaa !13
   store i32 0, ptr @accelerator_event_htod_first_avail, align 4, !tbaa !13
   store i32 0, ptr @accelerator_event_htod_first_used, align 4, !tbaa !13
-  %1 = load i32, ptr @mca_pml_ob1_accelerator_events_max, align 4, !tbaa !13
-  %2 = sext i32 %1 to i64
-  %i.az = tail call noalias ptr @calloc(i64 noundef %2, i64 noundef 8) #12 ; 2 uses
+  %i.az = tail call noalias ptr @calloc(i64 noundef %.pre-phi, i64 noundef 8) #12 ; 2 uses
   store ptr %i.az, ptr @accelerator_event_htod_array, align 8, !tbaa !17
   %i.ba = icmp eq ptr %i.az, null
   br i1 %i.ba, label %bb.p, label %.preheader
 
 .preheader:                                       ; preds = %bb.o
-  %3 = load i32, ptr @mca_pml_ob1_accelerator_events_max, align 4, !tbaa !13 ; 2 uses
-  %4 = icmp sgt i32 %3, 0
-  br i1 %4, label %.lr.ph58, label %.preheader.._crit_edge59_crit_edge
-
-.preheader.._crit_edge59_crit_edge:               ; preds = %.preheader
-  %.pre67 = sext i32 %3 to i64
-  br label %._crit_edge59
+  br i1 %1, label %.lr.ph58, label %._crit_edge59
 
 bb.p:                                             ; preds = %bb.o
   %i.bb = load i32, ptr @mca_pml_ob1_output, align 4, !tbaa !13
@@ -287,7 +279,7 @@ bb.q:                                             ; preds = %.lr.ph58
   %i.bd = load i32, ptr @mca_pml_ob1_accelerator_events_max, align 4, !tbaa !13
   %i.be = sext i32 %i.bd to i64                   ; 2 uses
   %i.bf = icmp slt i64 %indvars.iv.next65, %i.be
-  br i1 %i.bf, label %.lr.ph58, label %._crit_edge59, !llvm.loop !46
+  br i1 %i.bf, label %.lr.ph58, label %._crit_edge59.loopexit, !llvm.loop !46
 
 .lr.ph58:                                         ; preds = %.preheader, %bb.q
   %indvars.iv64 = phi i64 [ %indvars.iv.next65, %bb.q ], [ 0, %.preheader ] ; 2 uses
@@ -303,10 +295,13 @@ bb.r:                                             ; preds = %.lr.ph58
   %i.bl = tail call zeroext i1 @opal_output_check_verbosity(i32 noundef 1, i32 noundef %i.bk) #11
   br i1 %i.bl, label %.sink.split, label %bb.t
 
-._crit_edge59:                                    ; preds = %bb.q, %.preheader.._crit_edge59_crit_edge
-  %.pre-phi68 = phi i64 [ %.pre67, %.preheader.._crit_edge59_crit_edge ], [ %i.be, %bb.q ]
-  %5 = shl nsw i64 %.pre-phi68, 3
-  %i.bm = tail call noalias ptr @malloc(i64 noundef %5) #13 ; 2 uses
+._crit_edge59.loopexit:                           ; preds = %bb.q
+  %.pre = shl nsw i64 %i.be, 3
+  br label %._crit_edge59
+
+._crit_edge59:                                    ; preds = %._crit_edge59.loopexit, %.preheader
+  %.pre-phi68 = phi i64 [ %.pre, %._crit_edge59.loopexit ], [ %i.au, %.preheader ]
+  %i.bm = tail call noalias ptr @malloc(i64 noundef %.pre-phi68) #13 ; 2 uses
   store ptr %i.bm, ptr @accelerator_event_htod_frag_array, align 8, !tbaa !25
   %i.bn = icmp eq ptr %i.bm, null
   br i1 %i.bn, label %bb.s, label %opal_obj_run_destructors.exit48
