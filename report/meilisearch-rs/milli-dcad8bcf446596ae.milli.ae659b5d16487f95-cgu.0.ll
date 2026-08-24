@@ -206,7 +206,7 @@ bb.de:                                            ; preds = %bb.dd
 
 bb.df:                                            ; preds = %bb.dd
   %.sroa.521.sroa.5.0..sroa.521.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.o, i64 16
-  %.sroa.521.sroa.5.0.copyload = load i64, ptr %.sroa.521.sroa.5.0..sroa.521.0..sroa_idx.sroa_idx, align 8 ; 5 uses
+  %.sroa.521.sroa.5.0.copyload = load i64, ptr %.sroa.521.sroa.5.0..sroa.521.0..sroa_idx.sroa_idx, align 8 ; 4 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.o)
   %i.vs = getelementptr inbounds nuw i8, ptr %1, i64 64
   %i.vt = load i64, ptr %i.vs, align 8, !noundef !10 ; 3 uses
@@ -221,23 +221,19 @@ bb.dg:                                            ; preds = %bb.df
 
 .lr.ph.i:                                         ; preds = %bb.dg
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.vq) ]
-  br label %6
+  br label %bb.dh
 
-6:                                                ; preds = %.backedge.i55, %.lr.ph.i
-  %.sroa.4.032.i = phi i64 [ %i.vt, %.lr.ph.i ], [ %7, %.backedge.i55 ] ; 4 uses
-  %7 = add nsw i64 %.sroa.4.032.i, -1             ; 2 uses
-  %.not10.i = icmp ult i64 %.sroa.4.032.i, %.sroa.521.sroa.5.0.copyload
-  br i1 %.not10.i, label %bb.dh, label %.backedge.i55
-
-bb.dh:                                            ; preds = %6
+bb.dh:                                            ; preds = %.backedge.i55, %.lr.ph.i
+  %.sroa.4.032.i = phi i64 [ %i.vt, %.lr.ph.i ], [ %6, %.backedge.i55 ] ; 3 uses
   %i.vv = getelementptr inbounds nuw i8, ptr %i.vq, i64 %.sroa.4.032.i
   %i.vw = load i8, ptr %i.vv, align 1, !noalias !212164, !noundef !10
   %i.vx = icmp sgt i8 %i.vw, -65
   br i1 %i.vx, label %_ZN5milli6prompt8truncate17h982bb0acbc2e5e52E.exit, label %.backedge.i55
 
-.backedge.i55:                                    ; preds = %6, %bb.dh
-  %.not26.i = icmp eq i64 %7, 0
-  br i1 %.not26.i, label %_ZN5milli6prompt8truncate17h982bb0acbc2e5e52E.exit, label %6
+.backedge.i55:                                    ; preds = %bb.dh
+  %6 = add nsw i64 %.sroa.4.032.i, -1             ; 2 uses
+  %.not26.i = icmp eq i64 %6, 0
+  br i1 %.not26.i, label %_ZN5milli6prompt8truncate17h982bb0acbc2e5e52E.exit, label %bb.dh
 
 _ZN5milli6prompt8truncate17h982bb0acbc2e5e52E.exit: ; preds = %.backedge.i55, %bb.dh, %bb.dg, %bb.df
   %.sroa.9.0 = phi i64 [ %.sroa.521.sroa.5.0.copyload, %bb.df ], [ %.sroa.521.sroa.5.0.copyload, %bb.dg ], [ %.sroa.4.032.i, %bb.dh ], [ 0, %.backedge.i55 ]
