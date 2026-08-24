@@ -202,10 +202,10 @@ bb.a:
   ret void
 
 bb.b:                                             ; preds = %.lr.ph56, %_ZNSt6vectorISt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS3_EESaIS6_EE9push_backEOS6_.exit34
-  %.sroa.039.054 = phi ptr [ %i.a, %.lr.ph56 ], [ %i.dq, %_ZNSt6vectorISt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS3_EESaIS6_EE9push_backEOS6_.exit34 ] ; 4 uses
+  %.sroa.039.054 = phi ptr [ %i.a, %.lr.ph56 ], [ %i.dq, %_ZNSt6vectorISt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS3_EESaIS6_EE9push_backEOS6_.exit34 ] ; 5 uses
   %i.g = load ptr, ptr %.sroa.039.054, align 8    ; 3 uses
   %i.h = icmp eq ptr %i.g, null
-  %i.i = ptrtoint ptr %i.g to i64                 ; 2 uses
+  %i.i = ptrtoint ptr %i.g to i64
   br i1 %i.h, label %.thread, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
@@ -526,7 +526,8 @@ _ZNKSt6vectorISt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS3_EESaIS6_
 
 .noexc33:                                         ; preds = %_ZNKSt6vectorISt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS3_EESaIS6_EE12_M_check_lenEmPKc.exit.i.i.i20
   %i.cj = getelementptr inbounds nuw i8, ptr %i.ci, i64 %i.ca
-  store i64 %i.i, ptr %i.cj, align 8, !tbaa !13
+  %3 = load i64, ptr %.sroa.039.054, align 8, !tbaa !13
+  store i64 %3, ptr %i.cj, align 8, !tbaa !13
   store ptr null, ptr %.sroa.039.054, align 8, !tbaa !13
   %.not10.i.i.i.i.i.i.i23 = icmp eq ptr %i.bx, %i.bu
   br i1 %.not10.i.i.i.i.i.i.i23, label %_ZNSt6vectorISt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit22.i.i.i28, label %iter.check

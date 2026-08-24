@@ -202,7 +202,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i80
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit82: ; preds = %bb.x, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i80
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #15
   %i.fh = invoke noalias noundef nonnull dereferenceable(616) ptr @_Znwm(i64 noundef 616) #19
-          to label %bb.y unwind label %bb.m       ; 4 uses
+          to label %bb.y unwind label %bb.m       ; 3 uses
 
 bb.y:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit82
   invoke void @_ZN4MeshC1EPK9InputFile(ptr noundef nonnull align 8 dereferenceable(616) %i.fh, ptr noundef nonnull %1)
@@ -214,7 +214,8 @@ bb.z:                                             ; preds = %bb.y
           to label %bb.aa unwind label %bb.m      ; 3 uses
 
 bb.aa:                                            ; preds = %bb.z
-  invoke void @_ZN5HydroC1EPK9InputFileP4Mesh(ptr noundef nonnull align 8 dereferenceable(408) %i.fi, ptr noundef nonnull %1, ptr noundef nonnull %i.fh)
+  %9 = load ptr, ptr %0, align 8, !tbaa !54
+  invoke void @_ZN5HydroC1EPK9InputFileP4Mesh(ptr noundef nonnull align 8 dereferenceable(408) %i.fi, ptr noundef nonnull %1, ptr noundef %9)
           to label %bb.ab unwind label %bb.ah
 
 bb.ab:                                            ; preds = %bb.aa

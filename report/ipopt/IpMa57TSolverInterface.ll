@@ -202,7 +202,7 @@ _ZN5Ipopt9TimedTask5StartEv.exit:                 ; preds = %bb.c, %bb.b, %bb.a
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 616 ; 5 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 624 ; 7 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 632 ; 5 uses
-  %i.af = getelementptr inbounds nuw i8, ptr %0, i64 640 ; 6 uses
+  %i.af = getelementptr inbounds nuw i8, ptr %0, i64 640 ; 7 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 592 ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 600 ; 3 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 608
@@ -287,17 +287,18 @@ bb.g:                                             ; preds = %.critedge
   %i.bz = load double, ptr %i.ap, align 8, !tbaa !84
   %i.ca = fmul double %i.bz, %i.by
   call void @_ZN5Ipopt18ComputeMemIncreaseIiEEvRT_dS1_PKc(ptr noundef nonnull align 4 dereferenceable(4) %i.af, double noundef %i.ca, i32 noundef 0, ptr noundef nonnull @.str.70)
-  %i.cb = load i32, ptr %i.af, align 8, !tbaa !86 ; 3 uses
+  %i.cb = load i32, ptr %i.af, align 8, !tbaa !86 ; 2 uses
   %i.cc = sext i32 %i.cb to i64
   %i.cd = icmp slt i32 %i.cb, 0
   %i.ce = shl nsw i64 %i.cc, 2
   %i.cf = select i1 %i.cd, i64 -1, i64 %i.ce
   %i.cg = call noalias noundef nonnull ptr @_Znam(i64 noundef %i.cf) #22 ; 2 uses
   %i.ch = load ptr, ptr %i.aq, align 8, !tbaa !46 ; 2 uses
+  %5 = load i32, ptr %i.af, align 8, !tbaa !86
   %i.ci = load ptr, ptr %i.ch, align 8, !tbaa !10
   %i.cj = getelementptr inbounds nuw i8, ptr %i.ci, i64 16
   %i.ck = load ptr, ptr %i.cj, align 8
-  call void (ptr, i32, i32, ptr, ...) %i.ck(ptr noundef nonnull align 8 dereferenceable(40) %i.ch, i32 noundef 6, i32 noundef 7, ptr noundef nonnull @.str.74, i32 noundef %i.cb)
+  call void (ptr, i32, i32, ptr, ...) %i.ck(ptr noundef nonnull align 8 dereferenceable(40) %i.ch, i32 noundef 6, i32 noundef 7, ptr noundef nonnull @.str.74, i32 noundef %5)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #20
   %i.cl = load ptr, ptr %i.ar, align 8, !tbaa !64
   %i.cm = load ptr, ptr %i.ah, align 8, !tbaa !38
@@ -700,11 +701,11 @@ _ZN5Ipopt9TimedTask5StartEv.exit:                 ; preds = %bb.c, %bb.b, %bb.a
   %i.s = load i32, ptr %i.r, align 4, !tbaa !75   ; 3 uses
   store i32 %i.s, ptr %i.b, align 4, !tbaa !68
   %i.t = mul nsw i32 %i.q, 5                      ; 2 uses
-  %3 = add nsw i32 %i.s, %i.t
-  %4 = tail call i32 @llvm.smax.i32(i32 %i.q, i32 %i.s)
-  %i.u = add nsw i32 %3, %4                       ; 3 uses
-  %i.v = add nsw i32 %i.u, 42                     ; 3 uses
-  %i.w = getelementptr inbounds nuw i8, ptr %0, i64 592 ; 2 uses
+  %3 = tail call i32 @llvm.smax.i32(i32 %i.q, i32 %i.s)
+  %4 = add i32 %i.t, 42
+  %i.u = add i32 %4, %i.s
+  %i.v = add i32 %i.u, %3
+  %i.w = getelementptr inbounds nuw i8, ptr %0, i64 592 ; 4 uses
   store i32 %i.v, ptr %i.w, align 8, !tbaa !91
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 120
   %i.y = load double, ptr %i.x, align 8, !tbaa !67
@@ -714,32 +715,35 @@ _ZN5Ipopt9TimedTask5StartEv.exit:                 ; preds = %bb.c, %bb.b, %bb.a
   %i.ab = icmp slt i32 %i.q, 0
   %i.ac = shl nsw i64 %i.aa, 2
   %i.ad = select i1 %i.ab, i64 -1, i64 %i.ac
-  %i.ae = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.ad) #22 ; 2 uses
-  %i.af = getelementptr inbounds nuw i8, ptr %0, i64 608
+  %i.ae = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.ad) #22
+  %i.af = getelementptr inbounds nuw i8, ptr %0, i64 608 ; 2 uses
   store ptr %i.ae, ptr %i.af, align 8, !tbaa !37
-  %i.ag = sext i32 %i.v to i64
-  %i.ah = icmp slt i32 %i.u, -42
+  %5 = load i32, ptr %i.w, align 8, !tbaa !91     ; 2 uses
+  %i.ag = sext i32 %5 to i64
+  %i.ah = icmp slt i32 %5, 0
   %i.ai = shl nsw i64 %i.ag, 2
   %i.aj = select i1 %i.ah, i64 -1, i64 %i.ai
   %i.ak = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.aj) #22 ; 3 uses
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 600
   store ptr %i.ak, ptr %i.al, align 8, !tbaa !38
-  %i.am = icmp sgt i32 %i.u, -42
+  %6 = load i32, ptr %i.w, align 8, !tbaa !91     ; 2 uses
+  %i.am = icmp sgt i32 %6, 0
   br i1 %i.am, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %_ZN5Ipopt9TimedTask5StartEv.exit
-  %i.an = zext nneg i32 %i.v to i64
+  %i.an = zext nneg i32 %6 to i64
   %i.ao = shl nuw nsw i64 %i.an, 2
   tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ak, i8 0, i64 %i.ao, i1 false), !tbaa !68
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.lr.ph.preheader, %_ZN5Ipopt9TimedTask5StartEv.exit
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 64
-  %i.aq = load ptr, ptr %i.ap, align 8, !tbaa !61
+  %7 = load ptr, ptr %i.ap, align 8, !tbaa !61
+  %i.aq = load ptr, ptr %i.af, align 8, !tbaa !37
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 192
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 272 ; 2 uses
   %i.at = getelementptr inbounds nuw i8, ptr %0, i64 432
-  call void %i.aq(ptr noundef nonnull %i.a, ptr noundef nonnull %i.b, ptr noundef %1, ptr noundef %2, ptr noundef nonnull %i.w, ptr noundef nonnull %i.ak, ptr noundef nonnull %i.ae, ptr noundef nonnull %i.ar, ptr noundef nonnull %i.as, ptr noundef nonnull %i.at)
+  call void %7(ptr noundef nonnull %i.a, ptr noundef nonnull %i.b, ptr noundef %1, ptr noundef %2, ptr noundef nonnull %i.w, ptr noundef nonnull %i.ak, ptr noundef %i.aq, ptr noundef nonnull %i.ar, ptr noundef nonnull %i.as, ptr noundef nonnull %i.at)
   %i.au = load i32, ptr %i.as, align 8, !tbaa !68 ; 2 uses
   %i.av = icmp slt i32 %i.au, 0
   br i1 %i.av, label %bb.d, label %bb.e
@@ -754,7 +758,7 @@ bb.d:                                             ; preds = %._crit_edge
   br label %_ZN5Ipopt9TimedTask3EndEv.exit
 
 bb.e:                                             ; preds = %._crit_edge
-  %i.bb = getelementptr inbounds nuw i8, ptr %0, i64 624 ; 3 uses
+  %i.bb = getelementptr inbounds nuw i8, ptr %0, i64 624 ; 4 uses
   store i32 0, ptr %i.bb, align 8, !tbaa !85
   %i.bc = getelementptr inbounds nuw i8, ptr %0, i64 640 ; 4 uses
   store i32 0, ptr %i.bc, align 8, !tbaa !86
@@ -793,7 +797,7 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h, %bb.g
   store ptr null, ptr %i.br, align 8, !tbaa !34
-  %i.bu = load i32, ptr %i.bb, align 8, !tbaa !85 ; 3 uses
+  %i.bu = load i32, ptr %i.bb, align 8, !tbaa !85 ; 2 uses
   %i.bv = sext i32 %i.bu to i64
   %i.bw = icmp slt i32 %i.bu, 0
   %i.bx = shl nsw i64 %i.bv, 3
@@ -810,10 +814,11 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   %i.cg = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.ch = load ptr, ptr %i.cg, align 8, !tbaa !46 ; 2 uses
   %i.ci = load double, ptr %i.bg, align 8, !tbaa !84
+  %8 = load i32, ptr %i.bb, align 8, !tbaa !85
   %i.cj = load ptr, ptr %i.ch, align 8, !tbaa !10
   %i.ck = getelementptr inbounds nuw i8, ptr %i.cj, i64 16
   %i.cl = load ptr, ptr %i.ck, align 8
-  call void (ptr, i32, i32, ptr, ...) %i.cl(ptr noundef nonnull align 8 dereferenceable(40) %i.ch, i32 noundef 6, i32 noundef 7, ptr noundef nonnull @.str.71, double noundef %i.ci, i32 noundef %i.bu)
+  call void (ptr, i32, i32, ptr, ...) %i.cl(ptr noundef nonnull align 8 dereferenceable(40) %i.ch, i32 noundef 6, i32 noundef 7, ptr noundef nonnull @.str.71, double noundef %i.ci, i32 noundef %8)
   %i.cm = load ptr, ptr %i.cg, align 8, !tbaa !46 ; 2 uses
   %i.cn = load double, ptr %i.bg, align 8, !tbaa !84
   %i.co = load i32, ptr %i.bc, align 8, !tbaa !86

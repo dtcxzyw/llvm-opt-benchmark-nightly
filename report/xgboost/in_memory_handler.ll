@@ -204,9 +204,9 @@ bb.b:                                             ; preds = %bb.a
   %i.e = ptrtoint ptr %i.c to i64                 ; 2 uses
   %i.f = sub i64 %i.d, %i.e                       ; 4 uses
   %i.g = ashr exact i64 %i.f, 5                   ; 4 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !133
-  %i.j = ptrtoint ptr %i.i to i64                 ; 2 uses
+  %i.j = ptrtoint ptr %i.i to i64
   %i.k = sub i64 %i.j, %i.d
   %i.l = ashr exact i64 %i.k, 5                   ; 2 uses
   %i.m = icmp ult i64 %i.g, 288230376151711744
@@ -337,7 +337,9 @@ _ZNSt6vectorI11max_align_tSaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit: ; preds = %
   br i1 %.not.i37, label %_ZNSt12_Vector_baseI11max_align_tSaIS0_EE13_M_deallocateEPS0_m.exit38, label %bb.i
 
 bb.i:                                             ; preds = %_ZNSt6vectorI11max_align_tSaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit
-  %i.aw = sub i64 %i.j, %i.e
+  %2 = load ptr, ptr %i.h, align 8, !tbaa !133
+  %3 = ptrtoint ptr %2 to i64
+  %i.aw = sub i64 %3, %i.e
   tail call void @_ZdlPvm(ptr noundef nonnull %i.c, i64 noundef %i.aw) #27
   br label %_ZNSt12_Vector_baseI11max_align_tSaIS0_EE13_M_deallocateEPS0_m.exit38
 
@@ -635,7 +637,7 @@ bb.i:                                             ; preds = %_ZNSt3mapImSt17basi
 define linkonce_odr { ptr, i8 } @_ZNSt3mapImSt17basic_string_viewIcSt11char_traitsIcEESt4lessImESaISt4pairIKmS3_EEE7emplaceIJRKiS3_EEES6_ISt17_Rb_tree_iteratorIS8_EbEDpOT_(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef nonnull align 4 dereferenceable(4) %1, ptr noundef nonnull align 8 dereferenceable(16) %2) local_unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = load i32, ptr %1, align 4, !tbaa !120
-  %i.b = sext i32 %i.a to i64                     ; 3 uses
+  %i.b = sext i32 %i.a to i64                     ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !155  ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 5 uses
@@ -669,7 +671,9 @@ bb.b:                                             ; preds = %_ZNSt3mapImSt17basi
   %.08.lcssa.i.i.i22 = phi ptr [ %.19.i.i.i, %bb.b ], [ %.19.i.i.i, %_ZNSt3mapImSt17basic_string_viewIcSt11char_traitsIcEESt4lessImESaISt4pairIKmS3_EEE11lower_boundERS7_.exit ], [ %i.e, %bb.a ]
   %i.m = tail call noalias noundef nonnull dereferenceable(56) ptr @_Znwm(i64 noundef 56) #28 ; 6 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 32 ; 3 uses
-  store i64 %i.b, ptr %i.n, align 8, !tbaa !159
+  %3 = load i32, ptr %1, align 4, !tbaa !120
+  %4 = sext i32 %3 to i64
+  store i64 %4, ptr %i.n, align 8, !tbaa !159
   %i.o = getelementptr inbounds nuw i8, ptr %i.m, i64 40
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.o, ptr noundef nonnull align 8 dereferenceable(16) %2, i64 16, i1 false), !tbaa.struct !161
   %i.p = invoke { ptr, ptr } @_ZNSt8_Rb_treeImSt4pairIKmSt17basic_string_viewIcSt11char_traitsIcEEESt10_Select1stIS6_ESt4lessImESaIS6_EE29_M_get_insert_hint_unique_posESt23_Rb_tree_const_iteratorIS6_ERS1_(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr %.08.lcssa.i.i.i22, ptr noundef nonnull align 8 dereferenceable(8) %i.n)

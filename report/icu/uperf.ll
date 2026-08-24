@@ -202,13 +202,13 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #4
 ; Function Attrs: mustprogress uwtable
 define noundef ptr @_ZN9UPerfTest8getLinesER10UErrorCode(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(160) %0, ptr noundef nonnull align 4 dereferenceable(4) %1) local_unnamed_addr #3 align 2 {
 bb.a:
-  %i.a = alloca i32, align 4                      ; 7 uses
+  %i.a = alloca i32, align 4                      ; 8 uses
   %i.b = load i32, ptr %1, align 4, !tbaa !36
   %i.c = icmp slt i32 %i.b, 1
   br i1 %i.c, label %bb.b, label %bb.g
 
 bb.b:                                             ; preds = %bb.a
-  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 5 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 6 uses
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !27   ; 2 uses
   %.not21 = icmp eq ptr %i.e, null
   br i1 %.not21, label %bb.c, label %bb.g
@@ -216,7 +216,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.f = tail call noalias noundef nonnull dereferenceable(640000) ptr @_Znam(i64 noundef 640000) #24
   store ptr %i.f, ptr %i.d, align 8, !tbaa !27
-  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 3 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 4 uses
   store i32 0, ptr %i.g, align 8, !tbaa !28
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #22
   store i32 0, ptr %i.a, align 4, !tbaa !44
@@ -234,23 +234,24 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.n, label %bb.d, label %._crit_edge
 
 bb.d:                                             ; preds = %.lr.ph
-  %i.o = load i32, ptr %i.a, align 4, !tbaa !44   ; 4 uses
+  %i.o = load i32, ptr %i.a, align 4, !tbaa !44   ; 2 uses
   %i.p = sext i32 %i.o to i64
   %i.q = icmp slt i32 %i.o, 0
   %i.r = shl nsw i64 %i.p, 1
   %i.s = select i1 %i.q, i64 -1, i64 %i.r
   %i.t = call noalias noundef nonnull ptr @_Znam(i64 noundef %i.s) #24 ; 2 uses
-  %i.u = load ptr, ptr %i.d, align 8, !tbaa !27   ; 3 uses
+  %i.u = load ptr, ptr %i.d, align 8, !tbaa !27
   %i.v = load i32, ptr %i.g, align 8, !tbaa !28   ; 2 uses
   %i.w = sext i32 %i.v to i64
   %i.x = getelementptr inbounds [16 x i8], ptr %i.u, i64 %i.w ; 2 uses
   store ptr %i.t, ptr %i.x, align 8, !tbaa !45
+  %2 = load i32, ptr %i.a, align 4, !tbaa !44     ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 8
-  store i32 %i.o, ptr %i.y, align 8, !tbaa !47
-  %i.z = shl nsw i32 %i.o, 1
+  store i32 %2, ptr %i.y, align 8, !tbaa !47
+  %i.z = shl nsw i32 %2, 1
   %i.aa = sext i32 %i.z to i64
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 2 %i.t, ptr nonnull align 2 %i.l, i64 %i.aa, i1 false)
-  %i.ab = add nsw i32 %i.v, 1                     ; 3 uses
+  %i.ab = add nsw i32 %i.v, 1                     ; 2 uses
   store i32 %i.ab, ptr %i.g, align 8, !tbaa !28
   store i32 0, ptr %i.a, align 4, !tbaa !44
   %.not23 = icmp slt i32 %i.ab, %.01424
@@ -263,15 +264,24 @@ bb.e:                                             ; preds = %bb.d
   %i.af = shl nsw i64 %i.ad, 4
   %i.ag = select i1 %i.ae, i64 -1, i64 %i.af
   %i.ah = call noalias noundef nonnull ptr @_Znam(i64 noundef %i.ag) #24 ; 2 uses
-  %i.ai = sext i32 %i.ab to i64
+  %3 = load ptr, ptr %i.d, align 8, !tbaa !27     ; 3 uses
+  %4 = load i32, ptr %i.g, align 8, !tbaa !28
+  %i.ai = sext i32 %4 to i64
   %i.aj = shl nsw i64 %i.ai, 4
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ah, ptr nonnull align 8 %i.u, i64 %i.aj, i1 false)
-  call void @_ZdaPv(ptr noundef nonnull %i.u) #25
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ah, ptr align 8 %3, i64 %i.aj, i1 false)
+  %5 = icmp eq ptr %3, null
+  br i1 %5, label %7, label %6
+
+6:                                                ; preds = %bb.e
+  call void @_ZdaPv(ptr noundef nonnull %3) #25
+  br label %7
+
+7:                                                ; preds = %6, %bb.e
   store ptr %i.ah, ptr %i.d, align 8, !tbaa !27
   br label %bb.f
 
-bb.f:                                             ; preds = %bb.e, %bb.d
-  %.1 = phi i32 [ %i.ac, %bb.e ], [ %.01424, %bb.d ]
+bb.f:                                             ; preds = %7, %bb.d
+  %.1 = phi i32 [ %i.ac, %7 ], [ %.01424, %bb.d ]
   %i.ak = load ptr, ptr %i.h, align 8, !tbaa !22
   %i.al = call ptr @ucbuf_readline(ptr noundef %i.ak, ptr noundef nonnull %i.a, ptr noundef nonnull %1) ; 2 uses
   %i.am = icmp eq ptr %i.al, null

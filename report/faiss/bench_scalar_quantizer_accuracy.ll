@@ -202,8 +202,8 @@ define internal void @_ZL26bench_reconstruction_errorRN9benchmark5StateEN5faiss1
 bb.a:
   %4 = alloca %"struct.faiss::ScalarQuantizer", align 8 ; 17 uses
   %5 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
-  %6 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
-  %7 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
+  %6 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
+  %7 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %8 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %i.a = mul nsw i32 %3, %2                       ; 3 uses
   %i.b = sext i32 %i.a to i64                     ; 8 uses
@@ -358,7 +358,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit.i.i88: 
   %i.am = fdiv float %i.ak, %i.al
   %i.an = fpext float %i.am to double
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #18
-  %i.ao = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 5 uses
+  %i.ao = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 6 uses
+  store ptr %i.ao, ptr %6, align 8, !tbaa !25
   %i.ap = invoke noalias noundef nonnull dereferenceable(18) ptr @_Znwm(i64 noundef 18) #20
           to label %.noexc93 unwind label %bb.v   ; 3 uses
 
@@ -471,7 +472,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit.i.i106.
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit.i.i106: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit.i.i106.loopexit, %.preheader
   %.030.lcssa = phi double [ 0.000000e+00, %.preheader ], [ %i.br, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit.i.i106.loopexit ]
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #18
-  %i.bs = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 5 uses
+  %i.bs = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 6 uses
+  store ptr %i.bs, ptr %7, align 8, !tbaa !25
   %i.bt = invoke noalias noundef nonnull dereferenceable(22) ptr @_Znwm(i64 noundef 22) #20
           to label %.noexc111 unwind label %bb.ai ; 3 uses
 

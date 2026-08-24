@@ -205,9 +205,9 @@ bb.k:                                             ; preds = %bb.a
 
 bb.l:                                             ; preds = %_ZN6Unpack13InitFilters30Eb.exit, %bb.j, %bb.k
   %.089 = phi i32 [ 0, %_ZN6Unpack13InitFilters30Eb.exit ], [ %i.ai, %bb.j ], [ %i.ak, %bb.k ] ; 4 uses
-  %i.al = zext i32 %.089 to i64                   ; 10 uses
+  %i.al = zext i32 %.089 to i64                   ; 7 uses
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 59568 ; 4 uses
-  %i.an = getelementptr inbounds nuw i8, ptr %0, i64 59576 ; 4 uses
+  %i.an = getelementptr inbounds nuw i8, ptr %0, i64 59576 ; 5 uses
   %i.ao = load i64, ptr %i.an, align 8, !tbaa !174 ; 2 uses
   %i.ap = icmp ult i64 %i.ao, %i.al
   br i1 %i.ap, label %.critedge112, label %bb.m
@@ -239,18 +239,20 @@ bb.p:                                             ; preds = %bb.o
   br label %.critedge112
 
 bb.q:                                             ; preds = %bb.o
-  %i.ba = add nuw nsw i64 %i.al, 1                ; 2 uses
+  %5 = load i64, ptr %i.an, align 8, !tbaa !174
+  %i.ba = add i64 %5, 1                           ; 4 uses
   store i64 %i.ba, ptr %i.an, align 8, !tbaa !174
   %i.bb = getelementptr inbounds nuw i8, ptr %0, i64 59584 ; 3 uses
   %i.bc = load i64, ptr %i.bb, align 8, !tbaa !262 ; 2 uses
-  %.not128.a = icmp ugt i64 %i.bc, %i.al
-  br i1 %.not128.a, label %bb.w, label %bb.r
+  %.not128.a = icmp ugt i64 %i.ba, %i.bc
+  br i1 %.not128.a, label %bb.r, label %bb.w
 
 bb.r:                                             ; preds = %bb.q
   %i.bd = getelementptr inbounds nuw i8, ptr %0, i64 59592
-  %i.be = load i64, ptr %i.bd, align 8, !tbaa !263 ; 2 uses
-  %5 = add i64 %i.be, -1
-  %or.cond.i = icmp ult i64 %5, %i.al
+  %i.be = load i64, ptr %i.bd, align 8, !tbaa !263 ; 3 uses
+  %.not.i114 = icmp ne i64 %i.be, 0
+  %6 = icmp ugt i64 %i.ba, %i.be
+  %or.cond.i = and i1 %.not.i114, %6
   br i1 %or.cond.i, label %bb.s, label %bb.t
 
 bb.s:                                             ; preds = %bb.r

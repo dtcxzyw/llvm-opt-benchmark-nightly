@@ -47,10 +47,10 @@ bb.a:
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !10   ; 4 uses
   %i.c = load ptr, ptr %0, align 8, !tbaa !14     ; 4 uses
   %i.d = ptrtoint ptr %i.b to i64
-  %i.e = ptrtoint ptr %i.c to i64
-  %i.f = sub i64 %i.d, %i.e                       ; 6 uses
+  %i.e = ptrtoint ptr %i.c to i64                 ; 2 uses
+  %i.f = sub i64 %i.d, %i.e                       ; 5 uses
   %i.g = ashr exact i64 %i.f, 2                   ; 4 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !15
   %.not.i = icmp eq ptr %i.b, %i.i
   br i1 %.not.i, label %bb.c, label %bb.b
@@ -94,7 +94,10 @@ _ZNSt6vectorIjSaIjEE11_S_relocateEPjS2_S2_RS0_.exit16.i.i: ; preds = %bb.e, %_ZN
   br i1 %.not.i17.i.i, label %_ZNSt6vectorIjSaIjEE17_M_realloc_insertIJRKjEEEvN9__gnu_cxx17__normal_iteratorIPjS1_EEDpOT_.exit.i, label %bb.f
 
 bb.f:                                             ; preds = %_ZNSt6vectorIjSaIjEE11_S_relocateEPjS2_S2_RS0_.exit16.i.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.c, i64 noundef %i.f) #10
+  %2 = load ptr, ptr %i.h, align 8, !tbaa !15
+  %3 = ptrtoint ptr %2 to i64
+  %4 = sub i64 %3, %i.e
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.c, i64 noundef %4) #10
   br label %_ZNSt6vectorIjSaIjEE17_M_realloc_insertIJRKjEEEvN9__gnu_cxx17__normal_iteratorIPjS1_EEDpOT_.exit.i
 
 _ZNSt6vectorIjSaIjEE17_M_realloc_insertIJRKjEEEvN9__gnu_cxx17__normal_iteratorIPjS1_EEDpOT_.exit.i: ; preds = %bb.f, %_ZNSt6vectorIjSaIjEE11_S_relocateEPjS2_S2_RS0_.exit16.i.i
@@ -497,11 +500,11 @@ bb.a:
   br i1 %.not, label %_ZSt4fillIPjjEvT_S1_RKT0_.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !15
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 7 uses
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !10   ; 15 uses
-  %i.e = ptrtoint ptr %i.b to i64                 ; 2 uses
+  %i.e = ptrtoint ptr %i.b to i64
   %i.f = ptrtoint ptr %i.d to i64                 ; 5 uses
   %i.g = sub i64 %i.e, %i.f
   %i.h = ashr exact i64 %i.g, 2
@@ -842,7 +845,9 @@ _ZSt34__uninitialized_move_if_noexcept_aIPjS0_SaIjEET0_T_S3_S2_RT1_.exit62: ; pr
   br i1 %.not.i63, label %_ZNSt12_Vector_baseIjSaIjEE13_M_deallocateEPjm.exit, label %bb.z
 
 bb.z:                                             ; preds = %_ZSt34__uninitialized_move_if_noexcept_aIPjS0_SaIjEET0_T_S3_S2_RT1_.exit62
-  %i.da = sub i64 %i.e, %i.br
+  %4 = load ptr, ptr %i.a, align 8, !tbaa !15
+  %5 = ptrtoint ptr %4 to i64
+  %i.da = sub i64 %5, %i.br
   tail call void @_ZdlPvm(ptr noundef nonnull %i.bq, i64 noundef %i.da) #10
   br label %_ZNSt12_Vector_baseIjSaIjEE13_M_deallocateEPjm.exit
 

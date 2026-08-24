@@ -204,18 +204,19 @@ declare void @_ZN9grpc_core28PermissivePercentDecodeSliceENS_5SliceE(ptr dead_on
 ; Function Attrs: mustprogress uwtable
 define noundef i64 @_ZN9grpc_core8internal18StatusAllocHeapPtrEN4absl12lts_202505126StatusE(ptr nofree noundef readonly align 8 captures(none) %0) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = load i64, ptr %0, align 8, !tbaa !11     ; 4 uses
+  %i.a = load i64, ptr %0, align 8, !tbaa !11
   %i.b = icmp eq i64 %i.a, 1
   br i1 %i.b, label %bb.d, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.c = tail call noalias noundef nonnull dereferenceable(8) ptr @_Znwm(i64 noundef 8) #25 ; 2 uses
-  store i64 %i.a, ptr %i.c, align 8, !tbaa !11
-  %i.d = trunc i64 %i.a to i1
+  %1 = load i64, ptr %0, align 8, !tbaa !11       ; 3 uses
+  store i64 %1, ptr %i.c, align 8, !tbaa !11
+  %i.d = trunc i64 %1 to i1
   br i1 %i.d, label %_ZN4absl12lts_202505126StatusC2ERKS1_.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.e = inttoptr i64 %i.a to ptr
+  %i.e = inttoptr i64 %1 to ptr
   %i.f = atomicrmw add ptr %i.e, i32 1 monotonic, align 4 ; 0 uses
   br label %_ZN4absl12lts_202505126StatusC2ERKS1_.exit
 

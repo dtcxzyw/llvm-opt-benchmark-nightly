@@ -204,8 +204,8 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #18
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !15
-  %i.c = tail call noundef nonnull align 8 dereferenceable(24) ptr @_ZNK26cmRuntimeDependencyArchive20GetSearchDirectoriesB5cxx11Ev(ptr noundef nonnull align 8 dereferenceable(440) %i.b) ; 2 uses
-  %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 8
+  %i.c = tail call noundef nonnull align 8 dereferenceable(24) ptr @_ZNK26cmRuntimeDependencyArchive20GetSearchDirectoriesB5cxx11Ev(ptr noundef nonnull align 8 dereferenceable(440) %i.b) ; 3 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 2 uses
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !30   ; 3 uses
   %i.f = load ptr, ptr %i.c, align 8, !tbaa !27   ; 3 uses
   %i.g = ptrtoint ptr %i.e to i64
@@ -226,16 +226,20 @@ bb.b:                                             ; preds = %bb.a
 
 _ZNSt15__new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8allocateEmPKv.exit.i.i.i.i: ; preds = %bb.b
   %i.l = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.i) #20
+  %.pre = load ptr, ptr %i.c, align 8, !tbaa !61
+  %.pre35 = load ptr, ptr %i.d, align 8, !tbaa !61
   br label %bb.c
 
 bb.c:                                             ; preds = %_ZNSt15__new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8allocateEmPKv.exit.i.i.i.i, %bb.a
+  %9 = phi ptr [ %i.e, %bb.a ], [ %.pre35, %_ZNSt15__new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8allocateEmPKv.exit.i.i.i.i ]
+  %10 = phi ptr [ %i.f, %bb.a ], [ %.pre, %_ZNSt15__new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8allocateEmPKv.exit.i.i.i.i ]
   %i.m = phi ptr [ null, %bb.a ], [ %i.l, %_ZNSt15__new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8allocateEmPKv.exit.i.i.i.i ] ; 3 uses
   store ptr %i.m, ptr %7, align 8, !tbaa !27
   %i.n = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 3 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.m, i64 %i.i
   %i.p = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 3 uses
   store ptr %i.o, ptr %i.p, align 8, !tbaa !33
-  %i.q = invoke noundef ptr @_ZSt16__do_uninit_copyIN9__gnu_cxx17__normal_iteratorIPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt6vectorIS7_SaIS7_EEEEPS7_ET0_T_SG_SF_(ptr %i.f, ptr %i.e, ptr noundef %i.m)
+  %i.q = invoke noundef ptr @_ZSt16__do_uninit_copyIN9__gnu_cxx17__normal_iteratorIPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt6vectorIS7_SaIS7_EEEEPS7_ET0_T_SG_SF_(ptr %10, ptr %9, ptr noundef %i.m)
           to label %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EEC2ERKS7_.exit unwind label %bb.d
 
 bb.d:                                             ; preds = %bb.c

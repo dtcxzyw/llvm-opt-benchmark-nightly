@@ -204,9 +204,9 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 3 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !317
-  %i.d = load ptr, ptr %0, align 8, !tbaa !198    ; 3 uses
+  %i.d = load ptr, ptr %0, align 8, !tbaa !198
   %i.e = ptrtoint ptr %i.c to i64
-  %i.f = ptrtoint ptr %i.d to i64                 ; 3 uses
+  %i.f = ptrtoint ptr %i.d to i64                 ; 2 uses
   %i.g = sub i64 %i.e, %i.f
   %i.h = shl nsw i64 %i.g, 3
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 5 uses
@@ -421,13 +421,15 @@ _ZNKSt6vectorIbSaIbEE12_M_check_lenEmPKc.exit:    ; preds = %bb.r
   %i.cw = lshr i64 %i.cv, 3
   %i.cx = and i64 %i.cw, 1152921504606846968
   %i.cy = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.cx) #27 ; 5 uses
+  %5 = load ptr, ptr %0, align 8, !tbaa !198      ; 3 uses
   %i.cz = ptrtoint ptr %1 to i64                  ; 2 uses
-  %i.da = sub i64 %i.cz, %i.f                     ; 4 uses
+  %6 = ptrtoint ptr %5 to i64
+  %i.da = sub i64 %i.cz, %6                       ; 4 uses
   %i.db = icmp sgt i64 %i.da, 8
   br i1 %i.db, label %bb.t, label %bb.u, !prof !321
 
 bb.t:                                             ; preds = %_ZNKSt6vectorIbSaIbEE12_M_check_lenEmPKc.exit
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.cy, ptr align 8 %i.d, i64 %i.da, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.cy, ptr align 8 %5, i64 %i.da, i1 false)
   br label %_ZSt4copyIPmS0_ET0_T_S2_S1_.exit.i
 
 bb.u:                                             ; preds = %_ZNKSt6vectorIbSaIbEE12_M_check_lenEmPKc.exit
@@ -435,7 +437,7 @@ bb.u:                                             ; preds = %_ZNKSt6vectorIbSaIb
   br i1 %i.dc, label %bb.v, label %_ZSt4copyIPmS0_ET0_T_S2_S1_.exit.i
 
 bb.v:                                             ; preds = %bb.u
-  %i.dd = load i64, ptr %i.d, align 8, !tbaa !43
+  %i.dd = load i64, ptr %5, align 8, !tbaa !43
   store i64 %i.dd, ptr %i.cy, align 8, !tbaa !43
   br label %_ZSt4copyIPmS0_ET0_T_S2_S1_.exit.i
 

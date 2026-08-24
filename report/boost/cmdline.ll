@@ -202,7 +202,7 @@ bb.a:
   %14 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
   %15 = alloca %"class.std::allocator", align 1   ; 3 uses
   %16 = alloca %"class.std::vector.20", align 8   ; 8 uses
-  %17 = alloca %"class.std::vector", align 8      ; 11 uses
+  %17 = alloca %"class.std::vector", align 8      ; 12 uses
   %18 = alloca %"class.std::vector.20", align 8   ; 10 uses
   %19 = alloca %"class.boost::program_options::invalid_command_line_syntax", align 8 ; 6 uses
   %20 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
@@ -605,6 +605,7 @@ bb.ay:                                            ; preds = %.lr.ph371, %bb.ax
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #25
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %16, i8 0, i64 24, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %17) #25
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %17, i8 0, i64 24, i1 false)
   %i.ek = invoke noalias noundef nonnull dereferenceable(32) ptr @_Znwm(i64 noundef 32) #29
           to label %.noexc unwind label %bb.bb    ; 4 uses
 

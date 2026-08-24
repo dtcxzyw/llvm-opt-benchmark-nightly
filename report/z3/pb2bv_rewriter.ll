@@ -205,7 +205,7 @@ bb.a:
   %9 = alloca %"class.std::allocator", align 1    ; 4 uses
   %10 = alloca %"class.std::__cxx11::basic_string", align 8 ; 11 uses
   %11 = alloca %"class.std::allocator", align 1   ; 4 uses
-  %12 = alloca %"class.std::__cxx11::basic_string", align 8 ; 7 uses
+  %12 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   %13 = alloca %struct._key_data, align 4         ; 5 uses
   %14 = alloca %"class.uint_set::iterator", align 8 ; 6 uses
   %15 = alloca %"class.uint_set::iterator", align 8 ; 7 uses
@@ -429,13 +429,14 @@ bb.q:                                             ; preds = %_ZNK6vectorIjLb0EjE
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit.i.i: ; preds = %bb.q, %_ZNK6vectorIjLb0EjE8capacityEv.exit.thread.i.i
   %i.bw = tail call ptr @__cxa_allocate_exception(i64 40) #22 ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #22
-  %i.bx = getelementptr inbounds nuw i8, ptr %12, i64 16 ; 4 uses
+  %i.bx = getelementptr inbounds nuw i8, ptr %12, i64 16 ; 5 uses
+  store ptr %i.bx, ptr %12, align 8, !tbaa !229
   %i.by = invoke noalias noundef nonnull dereferenceable(43) ptr @_Znwm(i64 noundef 43) #28
           to label %_ZN17default_exceptionC2EONSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.i unwind label %bb.s ; 3 uses
 
 _ZN17default_exceptionC2EONSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.i: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit.i.i
   store i64 0, ptr %i.bx, align 8, !tbaa !234
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(42) %i.by, ptr noundef nonnull align 1 dereferenceable(42) @.str.24, i64 42, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(42) %i.by, ptr noundef nonnull align 1 dereferenceable(42) @.str.24, i64 42, i1 false)
   %i.bz = getelementptr inbounds nuw i8, ptr %12, i64 8
   %i.ca = getelementptr inbounds nuw i8, ptr %i.by, i64 42
   store i8 0, ptr %i.ca, align 1, !tbaa !234
@@ -472,7 +473,7 @@ bb.s:                                             ; preds = %_ZNSt7__cxx1112basi
   %i.cj = landingpad { ptr, i32 }
           cleanup
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #22
-  tail call void @__cxa_free_exception(ptr %i.bw) #22
+  call void @__cxa_free_exception(ptr %i.bw) #22
   br label %.body
 
 bb.t:                                             ; preds = %bb.q

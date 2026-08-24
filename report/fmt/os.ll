@@ -205,15 +205,16 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.c = load i32, ptr %2, align 8, !tbaa !54
   tail call void @_ZN3fmt3v124fileC2ENS0_18basic_cstring_viewIcEEi(ptr noundef nonnull align 4 dereferenceable(4) %i.b, ptr %1, i32 noundef %i.c)
-  %i.d = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.e = load i64, ptr %i.d, align 8, !tbaa !56   ; 2 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
+  %i.e = load i64, ptr %i.d, align 8, !tbaa !56
   %i.f = invoke noalias noundef nonnull ptr @_Znam(i64 noundef %i.e) #36
           to label %bb.b unwind label %bb.c
 
 bb.b:                                             ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %3 = load i64, ptr %i.d, align 8, !tbaa !56
   store ptr %i.f, ptr %0, align 8, !tbaa !19
-  store i64 %i.e, ptr %i.g, align 8, !tbaa !20
+  store i64 %3, ptr %i.g, align 8, !tbaa !20
   ret void
 
 bb.c:                                             ; preds = %bb.a

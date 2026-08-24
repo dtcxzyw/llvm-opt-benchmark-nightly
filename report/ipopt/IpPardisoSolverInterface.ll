@@ -197,10 +197,10 @@ bb.a:
   store i32 0, ptr %i.i, align 8, !tbaa !37
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 140
   store i32 -1, ptr %i.j, align 4, !tbaa !38
-  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 152 ; 2 uses
+  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 152 ; 3 uses
   store ptr null, ptr %i.k, align 8, !tbaa !39
-  %i.l = load ptr, ptr %1, align 8, !tbaa !39     ; 6 uses
-  %.not.i.i.i = icmp eq ptr %i.l, null            ; 2 uses
+  %i.l = load ptr, ptr %1, align 8, !tbaa !39     ; 3 uses
+  %.not.i.i.i = icmp eq ptr %i.l, null
   br i1 %.not.i.i.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -237,10 +237,12 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.e, %bb.d, %bb.c
   %i.w = landingpad { ptr, i32 }
           cleanup
-  br i1 %.not.i.i.i, label %_ZN5Ipopt8SmartPtrINS_13LibraryLoaderEED2Ev.exit, label %bb.h
+  %2 = load ptr, ptr %i.k, align 8, !tbaa !39     ; 4 uses
+  %.not.i.i = icmp eq ptr %2, null
+  br i1 %.not.i.i, label %_ZN5Ipopt8SmartPtrINS_13LibraryLoaderEED2Ev.exit, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %i.x = getelementptr inbounds nuw i8, ptr %i.l, i64 8 ; 2 uses
+  %i.x = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   %i.y = load i32, ptr %i.x, align 8, !tbaa !8
   %i.z = add nsw i32 %i.y, -1                     ; 2 uses
   store i32 %i.z, ptr %i.x, align 8, !tbaa !8
@@ -248,10 +250,10 @@ bb.h:                                             ; preds = %bb.g
   br i1 %i.aa, label %bb.i, label %_ZN5Ipopt8SmartPtrINS_13LibraryLoaderEED2Ev.exit
 
 bb.i:                                             ; preds = %bb.h
-  %i.ab = load ptr, ptr %i.l, align 8, !tbaa !10
+  %i.ab = load ptr, ptr %2, align 8, !tbaa !10
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 8
   %i.ad = load ptr, ptr %i.ac, align 8
-  tail call void %i.ad(ptr noundef nonnull align 8 dereferenceable(56) %i.l) #20, !inline_history !43
+  tail call void %i.ad(ptr noundef nonnull align 8 dereferenceable(56) %2) #20, !inline_history !43
   br label %_ZN5Ipopt8SmartPtrINS_13LibraryLoaderEED2Ev.exit
 
 _ZN5Ipopt8SmartPtrINS_13LibraryLoaderEED2Ev.exit: ; preds = %bb.i, %bb.h, %bb.g
@@ -654,7 +656,7 @@ _ZN5Ipopt9TimedTask5StartEv.exit:                 ; preds = %bb.c, %bb.b, %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #20
   store i32 33, ptr %i.f, align 4, !tbaa !46
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #20
-  %i.x = getelementptr inbounds nuw i8, ptr %0, i64 52
+  %i.x = getelementptr inbounds nuw i8, ptr %0, i64 52 ; 2 uses
   %i.y = load i32, ptr %i.x, align 4, !tbaa !47   ; 10 uses
   store i32 %i.y, ptr %i.g, align 4, !tbaa !46
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #20
@@ -664,9 +666,15 @@ _ZN5Ipopt9TimedTask5StartEv.exit:                 ; preds = %bb.c, %bb.b, %bb.a
   %i.aa = sext i32 %i.z to i64
   %i.ab = icmp slt i32 %i.z, 0
   %i.ac = shl nsw i64 %i.aa, 3
-  %i.ad = select i1 %i.ab, i64 -1, i64 %i.ac      ; 2 uses
+  %i.ad = select i1 %i.ab, i64 -1, i64 %i.ac
   %i.ae = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.ad) #19 ; 3 uses
-  %i.af = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.ad) #19 ; 3 uses
+  %8 = load i32, ptr %i.x, align 4, !tbaa !47
+  %9 = mul nsw i32 %8, %3                         ; 2 uses
+  %10 = sext i32 %9 to i64
+  %11 = icmp slt i32 %9, 0
+  %12 = shl nsw i64 %10, 3
+  %13 = select i1 %11, i64 -1, i64 %12
+  %i.af = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %13) #19 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j) #20
   %i.ag = icmp sgt i32 %i.y, 0                    ; 3 uses
   br i1 %i.ag, label %.lr.ph.preheader, label %._crit_edge

@@ -204,7 +204,7 @@ bb.a:
   %i.d = load i32, ptr %i.c, align 8, !tbaa !117  ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %3, i64 4
   %i.f = load i32, ptr %i.e, align 4, !tbaa !114
-  %i.g = load i32, ptr %3, align 4, !tbaa !112    ; 2 uses
+  %i.g = load i32, ptr %3, align 4, !tbaa !112
   %i.h = sub nsw i32 %i.f, %i.g                   ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #22
   %i.i = mul nsw i32 %i.h, %2                     ; 4 uses
@@ -324,10 +324,11 @@ scalar.ph.preheader.new:                          ; preds = %scalar.ph.prol.loop
   %wide.trip.count337 = zext nneg i32 %i.d to i64
   %.pre.pre = load ptr, ptr %i.as, align 8, !tbaa !121
   %.pre365.pre = load i64, ptr %i.ar, align 8, !tbaa !12
+  %.pre366.pre = load i32, ptr %3, align 4, !tbaa !112
   %.pre366.pre.a = load ptr, ptr %i.aq, align 8, !tbaa !121
   %.pre367.pre = load i64, ptr %i.ap, align 8, !tbaa !12
   %wide.trip.count332 = zext nneg i32 %i.h to i64
-  %i.ay = sext i32 %i.g to i64
+  %i.ay = sext i32 %.pre366.pre to i64
   %i.az = shl nsw i64 %i.t, 2
   %i.ba = add nsw i64 %i.aw, 1
   %diff.check395 = icmp ugt i64 %i.az, -36

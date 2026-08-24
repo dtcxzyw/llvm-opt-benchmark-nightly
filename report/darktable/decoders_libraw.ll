@@ -1,6 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/darktable/original/decoders_libraw?download=true
 inline.NumInlined: 308
-inline.NumDeleted: 133
+inline.NumDeleted: 132
 loop-unroll.NumCompletelyUnrolled: 9
 loop-unroll.NumRuntimeUnrolled: 1
 loop-unroll.NumUnrolled: 10
@@ -205,8 +205,8 @@ _ZN15iiq_bitstream_t3getEc.exit102.1:             ; preds = %_ZN15iiq_bitstream_
 define void @_ZN6LibRaw20phase_one_load_raw_sEv(ptr noundef nonnull align 8 dereferenceable(768512) %0) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 381592 ; 3 uses
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 381752
-  %i.c = load i64, ptr %i.b, align 8, !tbaa !188  ; 2 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 381752 ; 2 uses
+  %i.c = load i64, ptr %i.b, align 8, !tbaa !188
   %.not = icmp eq i64 %i.c, 0
   br i1 %.not, label %bb.d, label %bb.b
 
@@ -326,10 +326,11 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 _ZNSt6vectorI13p1_row_info_tSaIS0_EEC2EmRKS1_.exit: ; preds = %.lr.ph.i.i.i.i.i, %vec.epilog.middle.block, %middle.block
   %.lcssa93 = phi ptr [ %i.u, %vec.epilog.middle.block ], [ %i.q, %middle.block ], [ %i.z, %.lr.ph.i.i.i.i.i ] ; 3 uses
   %i.aa = load ptr, ptr %i.a, align 8, !tbaa !79  ; 2 uses
+  %1 = load i64, ptr %i.b, align 8, !tbaa !188
   %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !80
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 32
   %i.ad = load ptr, ptr %i.ac, align 8
-  %i.ae = invoke noundef i32 %i.ad(ptr noundef nonnull align 8 dereferenceable(8) %i.aa, i64 noundef %i.c, i32 noundef 0)
+  %i.ae = invoke noundef i32 %i.ad(ptr noundef nonnull align 8 dereferenceable(8) %i.aa, i64 noundef %1, i32 noundef 0)
           to label %.preheader unwind label %bb.e, !call_target !82 ; 0 uses
 
 .preheader:                                       ; preds = %_ZNSt6vectorI13p1_row_info_tSaIS0_EEC2EmRKS1_.exit

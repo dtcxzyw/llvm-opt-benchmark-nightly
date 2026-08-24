@@ -205,8 +205,8 @@ bb.ag:                                            ; preds = %bb.af
 
 bb.ah:                                            ; preds = %.sink.split, %bb.af
   %not. = phi i32 [ -1, %bb.af ], [ %not..ph, %.sink.split ]
-  %i.fq = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.fr = load ptr, ptr %i.fq, align 8, !tbaa !42 ; 2 uses
+  %i.fq = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
+  %i.fr = load ptr, ptr %i.fq, align 8, !tbaa !42
   %.not37 = icmp eq ptr %i.fr, null
   br i1 %.not37, label %.thread66, label %bb.ai
 
@@ -219,20 +219,21 @@ bb.aj:                                            ; preds = %bb.ai
   br i1 %i.dd, label %bb.ak, label %.loopexit
 
 bb.ak:                                            ; preds = %bb.aj
-  %i.fu = getelementptr inbounds nuw i8, ptr %0, i64 736
-  %i.fv = load i32, ptr %i.fu, align 8, !tbaa !105 ; 5 uses
+  %i.fu = getelementptr inbounds nuw i8, ptr %0, i64 736 ; 2 uses
+  %i.fv = load i32, ptr %i.fu, align 8, !tbaa !105 ; 2 uses
   %i.fw = sext i32 %i.fv to i64
   %i.fx = icmp slt i32 %i.fv, 0
   %i.fy = shl nsw i64 %i.fw, 2
   %i.fz = select i1 %i.fx, i64 -1, i64 %i.fy
   %i.ga = call noalias noundef nonnull ptr @_Znam(i64 noundef %i.fz) #36 ; 5 uses
-  %i.gb = icmp sgt i32 %i.fv, 0
+  %4 = load i32, ptr %i.fu, align 8, !tbaa !105   ; 3 uses
+  %i.gb = icmp sgt i32 %4, 0
   br i1 %i.gb, label %.lr.ph71, label %.loopexit
 
 .lr.ph71:                                         ; preds = %bb.ak
   %i.gc = load ptr, ptr %i.f, align 8, !tbaa !106 ; 2 uses
-  %wide.trip.count = zext nneg i32 %i.fv to i64   ; 3 uses
-  %min.iters.check = icmp ult i32 %i.fv, 8
+  %wide.trip.count = zext nneg i32 %4 to i64      ; 3 uses
+  %min.iters.check = icmp ult i32 %4, 8
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph71
@@ -280,9 +281,10 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
 .loopexit:                                        ; preds = %scalar.ph, %middle.block, %bb.ak, %bb.aj
   %i.gr = phi i32 [ %not., %bb.aj ], [ 1, %bb.ak ], [ 1, %middle.block ], [ 1, %scalar.ph ]
   %.017 = phi ptr [ null, %bb.aj ], [ %i.ga, %bb.ak ], [ %i.ga, %middle.block ], [ %i.ga, %scalar.ph ]
+  %5 = load ptr, ptr %i.fq, align 8, !tbaa !42
   %i.gs = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.gt = load ptr, ptr %i.gs, align 8, !tbaa !264
-  %i.gu = call noundef i32 %i.fr(ptr noundef %i.gt, i32 noundef %i.gr, ptr noundef %.017) #32 ; 0 uses
+  %i.gu = call noundef i32 %5(ptr noundef %i.gt, i32 noundef %i.gr, ptr noundef %.017) #32 ; 0 uses
   br label %.thread66
 
 bb.al:                                            ; preds = %bb.ai

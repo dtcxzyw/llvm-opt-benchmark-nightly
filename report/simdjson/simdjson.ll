@@ -204,14 +204,14 @@ bb.a:
   %i.d = alloca double, align 8                   ; 4 uses
   %i.e = alloca double, align 8                   ; 4 uses
   %i.f = alloca double, align 8                   ; 4 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 14 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 15 uses
   store ptr %1, ptr %i.g, align 8, !tbaa !117
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !88   ; 16 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %i.k = load ptr, ptr %i.j, align 8, !tbaa !108  ; 6 uses
+  %i.k = load ptr, ptr %i.j, align 8, !tbaa !108  ; 7 uses
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.m = load ptr, ptr %i.l, align 8, !tbaa !20   ; 6 uses
+  %i.m = load ptr, ptr %i.l, align 8, !tbaa !20   ; 7 uses
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.o = load i32, ptr %i.n, align 8, !tbaa !73   ; 3 uses
   %i.p = icmp eq i32 %i.o, 0
@@ -227,7 +227,7 @@ bb.b:                                             ; preds = %bb.a
   %i.u = getelementptr inbounds nuw i8, ptr %i.q, i64 8 ; 15 uses
   %i.v = getelementptr inbounds nuw i8, ptr %i.k, i64 4 ; 10 uses
   %i.w = load i32, ptr %i.k, align 4, !tbaa !10
-  %i.x = zext i32 %i.w to i64                     ; 6 uses
+  %i.x = zext i32 %i.w to i64                     ; 5 uses
   %i.y = getelementptr inbounds nuw i8, ptr %i.i, i64 %i.x ; 12 uses
   %i.z = load i8, ptr %i.y, align 1, !tbaa !9
   switch i8 %i.z, label %_ZN8simdjson7haswell12_GLOBAL__N_16stage213json_iterator13walk_documentILb0ENS2_12tape_builderEEENS_10error_codeERT0_.exit [
@@ -630,8 +630,8 @@ bb.af:                                            ; preds = %.noexc81, %_ZN8simd
   br label %.thread1011
 
 bb.ag:                                            ; preds = %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b
-  %i.im = getelementptr inbounds nuw i8, ptr %0, i64 80
-  %i.in = load i64, ptr %i.im, align 8, !tbaa !105 ; 2 uses
+  %i.im = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 2 uses
+  %i.in = load i64, ptr %i.im, align 8, !tbaa !105
   %i.io = add i64 %i.in, 64
   %i.ip = sub i64 %i.io, %i.x
   %i.iq = tail call noalias noundef ptr @_ZnamRKSt9nothrow_t(i64 noundef %i.ip, ptr noundef nonnull align 1 dereferenceable(1) @_ZSt7nothrow) #44 ; 12 uses
@@ -639,7 +639,10 @@ bb.ag:                                            ; preds = %bb.b, %bb.b, %bb.b,
   br i1 %i.ir, label %_ZN8simdjson7haswell12_GLOBAL__N_16stage213json_iterator13walk_documentILb0ENS2_12tape_builderEEENS_10error_codeERT0_.exit, label %bb.ah
 
 bb.ah:                                            ; preds = %bb.ag
-  %i.is = sub i64 %i.in, %i.x                     ; 2 uses
+  %2 = load i64, ptr %i.im, align 8, !tbaa !105
+  %3 = load i32, ptr %i.k, align 4, !tbaa !10
+  %4 = zext i32 %3 to i64
+  %i.is = sub i64 %2, %4                          ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.iq, ptr nonnull align 1 %i.y, i64 %i.is, i1 false)
   %i.it = getelementptr inbounds nuw i8, ptr %i.iq, i64 %i.is
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(64) %i.it, i8 32, i64 64, i1 false)
@@ -1042,13 +1045,20 @@ bb.bt:                                            ; preds = %.preheader1827
 bb.bu:                                            ; preds = %bb.bt
   %i.rh = ptrtoint ptr %.122.i to i64
   %i.ri = ptrtoint ptr %i.iq to i64
-  %i.rj = sub i64 %i.rh, %i.ri                    ; 3 uses
-  store i64 6485183463413514240, ptr %i.u, align 8, !tbaa !13
+  %5 = sub i64 %i.rh, %i.ri                       ; 3 uses
+  %6 = load ptr, ptr %i.g, align 8, !tbaa !117
+  %7 = getelementptr inbounds nuw i8, ptr %6, i64 8
+  %8 = load ptr, ptr %7, align 8, !tbaa !20
+  %9 = ptrtoint ptr %i.m to i64
+  %10 = ptrtoint ptr %8 to i64
+  %i.rj = sub i64 %9, %10
+  %11 = or i64 %i.rj, 6485183463413514240
+  store i64 %11, ptr %i.u, align 8, !tbaa !13
   %i.rk = getelementptr inbounds nuw i8, ptr %i.q, i64 16
   %i.rl = getelementptr inbounds nuw i8, ptr %i.m, i64 4 ; 2 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.rl, ptr nonnull align 1 %i.iq, i64 %i.rj, i1 false)
-  %i.rm = getelementptr inbounds nuw i8, ptr %i.rl, i64 %i.rj
-  %i.rn = trunc i64 %i.rj to i32
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.rl, ptr nonnull align 1 %i.iq, i64 %5, i1 false)
+  %i.rm = getelementptr inbounds nuw i8, ptr %i.rl, i64 %5
+  %i.rn = trunc i64 %5 to i32
   store i32 %i.rn, ptr %i.m, align 1
   store i8 0, ptr %i.rm, align 1, !tbaa !9
   br label %_ZNKSt14default_deleteIA_hEclIhEENSt9enable_ifIXsr14is_convertibleIPA_T_PS0_EE5valueEvE4typeEPS4_.exit.i.thread1709
@@ -1451,7 +1461,7 @@ bb.a:
   %i.d = alloca double, align 8                   ; 4 uses
   %i.e = alloca double, align 8                   ; 4 uses
   %i.f = alloca double, align 8                   ; 4 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 14 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 15 uses
   store ptr %1, ptr %i.g, align 8, !tbaa !117
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.i = load i32, ptr %i.h, align 8, !tbaa !83   ; 2 uses
@@ -1459,7 +1469,7 @@ bb.a:
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !88   ; 14 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.n = load ptr, ptr %i.m, align 8, !tbaa !20   ; 6 uses
+  %i.n = load ptr, ptr %i.m, align 8, !tbaa !20   ; 7 uses
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.p = load i32, ptr %i.o, align 8, !tbaa !73
   %i.q = icmp eq i32 %i.i, %i.p
@@ -1862,8 +1872,8 @@ bb.af:                                            ; preds = %.split720, %_ZN8sim
   br label %.thread777
 
 bb.ag:                                            ; preds = %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b
-  %i.ic = getelementptr inbounds nuw i8, ptr %0, i64 80
-  %i.id = load i64, ptr %i.ic, align 8, !tbaa !105 ; 3 uses
+  %i.ic = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 2 uses
+  %i.id = load i64, ptr %i.ic, align 8, !tbaa !105
   %i.ie = add i64 %i.id, 64
   %i.if = sub i64 %i.ie, %i.ab
   %i.ig = tail call noalias noundef ptr @_ZnamRKSt9nothrow_t(i64 noundef %i.if, ptr noundef nonnull align 1 dereferenceable(1) @_ZSt7nothrow) #44 ; 12 uses
@@ -1871,13 +1881,14 @@ bb.ag:                                            ; preds = %bb.b, %bb.b, %bb.b,
   br i1 %i.ih, label %_ZN8simdjson7haswell12_GLOBAL__N_16stage213json_iterator13walk_documentILb1ENS2_12tape_builderEEENS_10error_codeERT0_.exit, label %bb.ah
 
 bb.ah:                                            ; preds = %bb.ag
+  %2 = load i64, ptr %i.ic, align 8, !tbaa !105   ; 2 uses
   %i.ii = load i32, ptr %i.t, align 4, !tbaa !10
   %i.ij = zext i32 %i.ii to i64
-  %i.ik = sub i64 %i.id, %i.ij
+  %i.ik = sub i64 %2, %i.ij
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.ig, ptr nonnull align 1 %i.ac, i64 %i.ik, i1 false)
   %i.il = load i32, ptr %i.t, align 4, !tbaa !10
   %i.im = zext i32 %i.il to i64
-  %i.in = sub i64 %i.id, %i.im
+  %i.in = sub i64 %2, %i.im
   %i.io = getelementptr inbounds nuw i8, ptr %i.ig, i64 %i.in
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(64) %i.io, i8 32, i64 64, i1 false)
   %i.ip = load i8, ptr %i.ig, align 1, !tbaa !9   ; 2 uses
@@ -2280,13 +2291,20 @@ bb.bv:                                            ; preds = %.preheader1593
 bb.bw:                                            ; preds = %bb.bv
   %i.rc = ptrtoint ptr %.122.i.i to i64
   %i.rd = ptrtoint ptr %i.ig to i64
-  %i.re = sub i64 %i.rc, %i.rd                    ; 3 uses
-  store i64 6485183463413514240, ptr %i.y, align 8, !tbaa !13
+  %3 = sub i64 %i.rc, %i.rd                       ; 3 uses
+  %4 = load ptr, ptr %i.g, align 8, !tbaa !117
+  %5 = getelementptr inbounds nuw i8, ptr %4, i64 8
+  %6 = load ptr, ptr %5, align 8, !tbaa !20
+  %7 = ptrtoint ptr %i.n to i64
+  %8 = ptrtoint ptr %6 to i64
+  %i.re = sub i64 %7, %8
+  %9 = or i64 %i.re, 6485183463413514240
+  store i64 %9, ptr %i.y, align 8, !tbaa !13
   %i.rf = getelementptr inbounds nuw i8, ptr %i.u, i64 16
   %i.rg = getelementptr inbounds nuw i8, ptr %i.n, i64 4 ; 2 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.rg, ptr nonnull align 1 %i.ig, i64 %i.re, i1 false)
-  %i.rh = getelementptr inbounds nuw i8, ptr %i.rg, i64 %i.re
-  %i.ri = trunc i64 %i.re to i32
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.rg, ptr nonnull align 1 %i.ig, i64 %3, i1 false)
+  %i.rh = getelementptr inbounds nuw i8, ptr %i.rg, i64 %3
+  %i.ri = trunc i64 %3 to i32
   store i32 %i.ri, ptr %i.n, align 1
   store i8 0, ptr %i.rh, align 1, !tbaa !9
   br label %_ZNKSt14default_deleteIA_hEclIhEENSt9enable_ifIXsr14is_convertibleIPA_T_PS0_EE5valueEvE4typeEPS4_.exit.i.thread1474
@@ -2689,14 +2707,14 @@ bb.a:
   %i.d = alloca double, align 8                   ; 4 uses
   %i.e = alloca double, align 8                   ; 4 uses
   %i.f = alloca double, align 8                   ; 4 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 14 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 15 uses
   store ptr %1, ptr %i.g, align 8, !tbaa !151
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !138  ; 16 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %i.k = load ptr, ptr %i.j, align 8, !tbaa !108  ; 6 uses
+  %i.k = load ptr, ptr %i.j, align 8, !tbaa !108  ; 7 uses
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.m = load ptr, ptr %i.l, align 8, !tbaa !20   ; 6 uses
+  %i.m = load ptr, ptr %i.l, align 8, !tbaa !20   ; 7 uses
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.o = load i32, ptr %i.n, align 8, !tbaa !73   ; 3 uses
   %i.p = icmp eq i32 %i.o, 0
@@ -2712,7 +2730,7 @@ bb.b:                                             ; preds = %bb.a
   %i.u = getelementptr inbounds nuw i8, ptr %i.q, i64 8 ; 15 uses
   %i.v = getelementptr inbounds nuw i8, ptr %i.k, i64 4 ; 10 uses
   %i.w = load i32, ptr %i.k, align 4, !tbaa !10
-  %i.x = zext i32 %i.w to i64                     ; 6 uses
+  %i.x = zext i32 %i.w to i64                     ; 5 uses
   %i.y = getelementptr inbounds nuw i8, ptr %i.i, i64 %i.x ; 12 uses
   %i.z = load i8, ptr %i.y, align 1, !tbaa !9
   switch i8 %i.z, label %_ZN8simdjson7icelake12_GLOBAL__N_16stage213json_iterator13walk_documentILb0ENS2_12tape_builderEEENS_10error_codeERT0_.exit [
@@ -3115,8 +3133,8 @@ bb.af:                                            ; preds = %.noexc77, %_ZN8simd
   br label %.thread979
 
 bb.ag:                                            ; preds = %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b
-  %i.ij = getelementptr inbounds nuw i8, ptr %0, i64 80
-  %i.ik = load i64, ptr %i.ij, align 8, !tbaa !147 ; 2 uses
+  %i.ij = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 2 uses
+  %i.ik = load i64, ptr %i.ij, align 8, !tbaa !147
   %i.il = add i64 %i.ik, 64
   %i.im = sub i64 %i.il, %i.x
   %i.in = tail call noalias noundef ptr @_ZnamRKSt9nothrow_t(i64 noundef %i.im, ptr noundef nonnull align 1 dereferenceable(1) @_ZSt7nothrow) #44 ; 12 uses
@@ -3124,7 +3142,10 @@ bb.ag:                                            ; preds = %bb.b, %bb.b, %bb.b,
   br i1 %i.io, label %_ZN8simdjson7icelake12_GLOBAL__N_16stage213json_iterator13walk_documentILb0ENS2_12tape_builderEEENS_10error_codeERT0_.exit, label %bb.ah
 
 bb.ah:                                            ; preds = %bb.ag
-  %i.ip = sub i64 %i.ik, %i.x                     ; 2 uses
+  %2 = load i64, ptr %i.ij, align 8, !tbaa !147
+  %3 = load i32, ptr %i.k, align 4, !tbaa !10
+  %4 = zext i32 %3 to i64
+  %i.ip = sub i64 %2, %4                          ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.in, ptr nonnull align 1 %i.y, i64 %i.ip, i1 false)
   %i.iq = getelementptr inbounds nuw i8, ptr %i.in, i64 %i.ip
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(64) %i.iq, i8 32, i64 64, i1 false)
@@ -3527,13 +3548,20 @@ bb.bu:                                            ; preds = %.preheader1794
 bb.bv:                                            ; preds = %bb.bu
   %i.re = ptrtoint ptr %.122.i to i64
   %i.rf = ptrtoint ptr %i.in to i64
-  %i.rg = sub i64 %i.re, %i.rf                    ; 3 uses
-  store i64 6485183463413514240, ptr %i.u, align 8, !tbaa !13
+  %5 = sub i64 %i.re, %i.rf                       ; 3 uses
+  %6 = load ptr, ptr %i.g, align 8, !tbaa !151
+  %7 = getelementptr inbounds nuw i8, ptr %6, i64 8
+  %8 = load ptr, ptr %7, align 8, !tbaa !20
+  %9 = ptrtoint ptr %i.m to i64
+  %10 = ptrtoint ptr %8 to i64
+  %i.rg = sub i64 %9, %10
+  %11 = or i64 %i.rg, 6485183463413514240
+  store i64 %11, ptr %i.u, align 8, !tbaa !13
   %i.rh = getelementptr inbounds nuw i8, ptr %i.q, i64 16
   %i.ri = getelementptr inbounds nuw i8, ptr %i.m, i64 4 ; 2 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.ri, ptr nonnull align 1 %i.in, i64 %i.rg, i1 false)
-  %i.rj = getelementptr inbounds nuw i8, ptr %i.ri, i64 %i.rg
-  %i.rk = trunc i64 %i.rg to i32
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.ri, ptr nonnull align 1 %i.in, i64 %5, i1 false)
+  %i.rj = getelementptr inbounds nuw i8, ptr %i.ri, i64 %5
+  %i.rk = trunc i64 %5 to i32
   store i32 %i.rk, ptr %i.m, align 1
   store i8 0, ptr %i.rj, align 1, !tbaa !9
   br label %_ZNKSt14default_deleteIA_hEclIhEENSt9enable_ifIXsr14is_convertibleIPA_T_PS0_EE5valueEvE4typeEPS4_.exit.i.thread1677
@@ -3936,7 +3964,7 @@ bb.a:
   %i.d = alloca double, align 8                   ; 4 uses
   %i.e = alloca double, align 8                   ; 4 uses
   %i.f = alloca double, align 8                   ; 4 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 14 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 15 uses
   store ptr %1, ptr %i.g, align 8, !tbaa !151
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.i = load i32, ptr %i.h, align 8, !tbaa !83   ; 2 uses
@@ -3944,7 +3972,7 @@ bb.a:
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !138  ; 14 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.n = load ptr, ptr %i.m, align 8, !tbaa !20   ; 6 uses
+  %i.n = load ptr, ptr %i.m, align 8, !tbaa !20   ; 7 uses
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.p = load i32, ptr %i.o, align 8, !tbaa !73
   %i.q = icmp eq i32 %i.i, %i.p
@@ -4347,8 +4375,8 @@ bb.af:                                            ; preds = %.split695, %_ZN8sim
   br label %.thread752
 
 bb.ag:                                            ; preds = %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b
-  %i.hz = getelementptr inbounds nuw i8, ptr %0, i64 80
-  %i.ia = load i64, ptr %i.hz, align 8, !tbaa !147 ; 3 uses
+  %i.hz = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 2 uses
+  %i.ia = load i64, ptr %i.hz, align 8, !tbaa !147
   %i.ib = add i64 %i.ia, 64
   %i.ic = sub i64 %i.ib, %i.ab
   %i.id = tail call noalias noundef ptr @_ZnamRKSt9nothrow_t(i64 noundef %i.ic, ptr noundef nonnull align 1 dereferenceable(1) @_ZSt7nothrow) #44 ; 12 uses
@@ -4356,13 +4384,14 @@ bb.ag:                                            ; preds = %bb.b, %bb.b, %bb.b,
   br i1 %i.ie, label %_ZN8simdjson7icelake12_GLOBAL__N_16stage213json_iterator13walk_documentILb1ENS2_12tape_builderEEENS_10error_codeERT0_.exit, label %bb.ah
 
 bb.ah:                                            ; preds = %bb.ag
+  %2 = load i64, ptr %i.hz, align 8, !tbaa !147   ; 2 uses
   %i.if = load i32, ptr %i.t, align 4, !tbaa !10
   %i.ig = zext i32 %i.if to i64
-  %i.ih = sub i64 %i.ia, %i.ig
+  %i.ih = sub i64 %2, %i.ig
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.id, ptr nonnull align 1 %i.ac, i64 %i.ih, i1 false)
   %i.ii = load i32, ptr %i.t, align 4, !tbaa !10
   %i.ij = zext i32 %i.ii to i64
-  %i.ik = sub i64 %i.ia, %i.ij
+  %i.ik = sub i64 %2, %i.ij
   %i.il = getelementptr inbounds nuw i8, ptr %i.id, i64 %i.ik
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(64) %i.il, i8 32, i64 64, i1 false)
   %i.im = load i8, ptr %i.id, align 1, !tbaa !9   ; 2 uses
@@ -4765,13 +4794,20 @@ bb.bv:                                            ; preds = %.preheader1567
 bb.bw:                                            ; preds = %bb.bv
   %i.qz = ptrtoint ptr %.122.i.i to i64
   %i.ra = ptrtoint ptr %i.id to i64
-  %i.rb = sub i64 %i.qz, %i.ra                    ; 3 uses
-  store i64 6485183463413514240, ptr %i.y, align 8, !tbaa !13
+  %3 = sub i64 %i.qz, %i.ra                       ; 3 uses
+  %4 = load ptr, ptr %i.g, align 8, !tbaa !151
+  %5 = getelementptr inbounds nuw i8, ptr %4, i64 8
+  %6 = load ptr, ptr %5, align 8, !tbaa !20
+  %7 = ptrtoint ptr %i.n to i64
+  %8 = ptrtoint ptr %6 to i64
+  %i.rb = sub i64 %7, %8
+  %9 = or i64 %i.rb, 6485183463413514240
+  store i64 %9, ptr %i.y, align 8, !tbaa !13
   %i.rc = getelementptr inbounds nuw i8, ptr %i.u, i64 16
   %i.rd = getelementptr inbounds nuw i8, ptr %i.n, i64 4 ; 2 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.rd, ptr nonnull align 1 %i.id, i64 %i.rb, i1 false)
-  %i.re = getelementptr inbounds nuw i8, ptr %i.rd, i64 %i.rb
-  %i.rf = trunc i64 %i.rb to i32
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.rd, ptr nonnull align 1 %i.id, i64 %3, i1 false)
+  %i.re = getelementptr inbounds nuw i8, ptr %i.rd, i64 %3
+  %i.rf = trunc i64 %3 to i32
   store i32 %i.rf, ptr %i.n, align 1
   store i8 0, ptr %i.re, align 1, !tbaa !9
   br label %_ZNKSt14default_deleteIA_hEclIhEENSt9enable_ifIXsr14is_convertibleIPA_T_PS0_EE5valueEvE4typeEPS4_.exit.i.thread1449
@@ -5174,14 +5210,14 @@ bb.a:
   %i.d = alloca double, align 8                   ; 4 uses
   %i.e = alloca double, align 8                   ; 4 uses
   %i.f = alloca double, align 8                   ; 4 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 14 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 15 uses
   store ptr %1, ptr %i.g, align 8, !tbaa !177
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !163  ; 16 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %i.k = load ptr, ptr %i.j, align 8, !tbaa !108  ; 6 uses
+  %i.k = load ptr, ptr %i.j, align 8, !tbaa !108  ; 7 uses
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.m = load ptr, ptr %i.l, align 8, !tbaa !20   ; 6 uses
+  %i.m = load ptr, ptr %i.l, align 8, !tbaa !20   ; 7 uses
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.o = load i32, ptr %i.n, align 8, !tbaa !73   ; 3 uses
   %i.p = icmp eq i32 %i.o, 0
@@ -5197,7 +5233,7 @@ bb.b:                                             ; preds = %bb.a
   %i.u = getelementptr inbounds nuw i8, ptr %i.q, i64 8 ; 15 uses
   %i.v = getelementptr inbounds nuw i8, ptr %i.k, i64 4 ; 10 uses
   %i.w = load i32, ptr %i.k, align 4, !tbaa !10
-  %i.x = zext i32 %i.w to i64                     ; 6 uses
+  %i.x = zext i32 %i.w to i64                     ; 5 uses
   %i.y = getelementptr inbounds nuw i8, ptr %i.i, i64 %i.x ; 12 uses
   %i.z = load i8, ptr %i.y, align 1, !tbaa !9
   switch i8 %i.z, label %_ZN8simdjson8westmere12_GLOBAL__N_16stage213json_iterator13walk_documentILb0ENS2_12tape_builderEEENS_10error_codeERT0_.exit [
@@ -5600,8 +5636,8 @@ bb.ag:                                            ; preds = %.noexc77, %_ZN8simd
   br label %.thread1075
 
 bb.ah:                                            ; preds = %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b
-  %i.il = getelementptr inbounds nuw i8, ptr %0, i64 80
-  %i.im = load i64, ptr %i.il, align 8, !tbaa !172 ; 2 uses
+  %i.il = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 2 uses
+  %i.im = load i64, ptr %i.il, align 8, !tbaa !172
   %i.in = add i64 %i.im, 64
   %i.io = sub i64 %i.in, %i.x
   %i.ip = tail call noalias noundef ptr @_ZnamRKSt9nothrow_t(i64 noundef %i.io, ptr noundef nonnull align 1 dereferenceable(1) @_ZSt7nothrow) #44 ; 12 uses
@@ -5609,7 +5645,10 @@ bb.ah:                                            ; preds = %bb.b, %bb.b, %bb.b,
   br i1 %i.iq, label %_ZN8simdjson8westmere12_GLOBAL__N_16stage213json_iterator13walk_documentILb0ENS2_12tape_builderEEENS_10error_codeERT0_.exit, label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ah
-  %i.ir = sub i64 %i.im, %i.x                     ; 2 uses
+  %2 = load i64, ptr %i.il, align 8, !tbaa !172
+  %3 = load i32, ptr %i.k, align 4, !tbaa !10
+  %4 = zext i32 %3 to i64
+  %i.ir = sub i64 %2, %4                          ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.ip, ptr nonnull align 1 %i.y, i64 %i.ir, i1 false)
   %i.is = getelementptr inbounds nuw i8, ptr %i.ip, i64 %i.ir
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(64) %i.is, i8 32, i64 64, i1 false)
@@ -6012,13 +6051,20 @@ bb.bv:                                            ; preds = %.preheader1865
 bb.bw:                                            ; preds = %bb.bv
   %i.rg = ptrtoint ptr %.122.i to i64
   %i.rh = ptrtoint ptr %i.ip to i64
-  %i.ri = sub i64 %i.rg, %i.rh                    ; 3 uses
-  store i64 6485183463413514240, ptr %i.u, align 8, !tbaa !13
+  %5 = sub i64 %i.rg, %i.rh                       ; 3 uses
+  %6 = load ptr, ptr %i.g, align 8, !tbaa !177
+  %7 = getelementptr inbounds nuw i8, ptr %6, i64 8
+  %8 = load ptr, ptr %7, align 8, !tbaa !20
+  %9 = ptrtoint ptr %i.m to i64
+  %10 = ptrtoint ptr %8 to i64
+  %i.ri = sub i64 %9, %10
+  %11 = or i64 %i.ri, 6485183463413514240
+  store i64 %11, ptr %i.u, align 8, !tbaa !13
   %i.rj = getelementptr inbounds nuw i8, ptr %i.q, i64 16
   %i.rk = getelementptr inbounds nuw i8, ptr %i.m, i64 4 ; 2 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.rk, ptr nonnull align 1 %i.ip, i64 %i.ri, i1 false)
-  %i.rl = getelementptr inbounds nuw i8, ptr %i.rk, i64 %i.ri
-  %i.rm = trunc i64 %i.ri to i32
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.rk, ptr nonnull align 1 %i.ip, i64 %5, i1 false)
+  %i.rl = getelementptr inbounds nuw i8, ptr %i.rk, i64 %5
+  %i.rm = trunc i64 %5 to i32
   store i32 %i.rm, ptr %i.m, align 1
   store i8 0, ptr %i.rl, align 1, !tbaa !9
   br label %_ZNKSt14default_deleteIA_hEclIhEENSt9enable_ifIXsr14is_convertibleIPA_T_PS0_EE5valueEvE4typeEPS4_.exit.i.thread1742
@@ -6421,7 +6467,7 @@ bb.a:
   %i.d = alloca double, align 8                   ; 4 uses
   %i.e = alloca double, align 8                   ; 4 uses
   %i.f = alloca double, align 8                   ; 4 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 14 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 15 uses
   store ptr %1, ptr %i.g, align 8, !tbaa !177
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.i = load i32, ptr %i.h, align 8, !tbaa !83   ; 2 uses
@@ -6429,7 +6475,7 @@ bb.a:
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !163  ; 14 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.n = load ptr, ptr %i.m, align 8, !tbaa !20   ; 6 uses
+  %i.n = load ptr, ptr %i.m, align 8, !tbaa !20   ; 7 uses
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.p = load i32, ptr %i.o, align 8, !tbaa !73
   %i.q = icmp eq i32 %i.i, %i.p
@@ -6832,8 +6878,8 @@ bb.ag:                                            ; preds = %.split793, %_ZN8sim
   br label %.thread850
 
 bb.ah:                                            ; preds = %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b
-  %i.ib = getelementptr inbounds nuw i8, ptr %0, i64 80
-  %i.ic = load i64, ptr %i.ib, align 8, !tbaa !172 ; 3 uses
+  %i.ib = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 2 uses
+  %i.ic = load i64, ptr %i.ib, align 8, !tbaa !172
   %i.id = add i64 %i.ic, 64
   %i.ie = sub i64 %i.id, %i.ab
   %i.if = tail call noalias noundef ptr @_ZnamRKSt9nothrow_t(i64 noundef %i.ie, ptr noundef nonnull align 1 dereferenceable(1) @_ZSt7nothrow) #44 ; 12 uses
@@ -6841,13 +6887,14 @@ bb.ah:                                            ; preds = %bb.b, %bb.b, %bb.b,
   br i1 %i.ig, label %_ZN8simdjson8westmere12_GLOBAL__N_16stage213json_iterator13walk_documentILb1ENS2_12tape_builderEEENS_10error_codeERT0_.exit, label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ah
+  %2 = load i64, ptr %i.ib, align 8, !tbaa !172   ; 2 uses
   %i.ih = load i32, ptr %i.t, align 4, !tbaa !10
   %i.ii = zext i32 %i.ih to i64
-  %i.ij = sub i64 %i.ic, %i.ii
+  %i.ij = sub i64 %2, %i.ii
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.if, ptr nonnull align 1 %i.ac, i64 %i.ij, i1 false)
   %i.ik = load i32, ptr %i.t, align 4, !tbaa !10
   %i.il = zext i32 %i.ik to i64
-  %i.im = sub i64 %i.ic, %i.il
+  %i.im = sub i64 %2, %i.il
   %i.in = getelementptr inbounds nuw i8, ptr %i.if, i64 %i.im
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(64) %i.in, i8 32, i64 64, i1 false)
   %i.io = load i8, ptr %i.if, align 1, !tbaa !9   ; 2 uses
@@ -7250,13 +7297,20 @@ bb.bw:                                            ; preds = %.preheader1640
 bb.bx:                                            ; preds = %bb.bw
   %i.rb = ptrtoint ptr %.122.i.i to i64
   %i.rc = ptrtoint ptr %i.if to i64
-  %i.rd = sub i64 %i.rb, %i.rc                    ; 3 uses
-  store i64 6485183463413514240, ptr %i.y, align 8, !tbaa !13
+  %3 = sub i64 %i.rb, %i.rc                       ; 3 uses
+  %4 = load ptr, ptr %i.g, align 8, !tbaa !177
+  %5 = getelementptr inbounds nuw i8, ptr %4, i64 8
+  %6 = load ptr, ptr %5, align 8, !tbaa !20
+  %7 = ptrtoint ptr %i.n to i64
+  %8 = ptrtoint ptr %6 to i64
+  %i.rd = sub i64 %7, %8
+  %9 = or i64 %i.rd, 6485183463413514240
+  store i64 %9, ptr %i.y, align 8, !tbaa !13
   %i.re = getelementptr inbounds nuw i8, ptr %i.u, i64 16
   %i.rf = getelementptr inbounds nuw i8, ptr %i.n, i64 4 ; 2 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.rf, ptr nonnull align 1 %i.if, i64 %i.rd, i1 false)
-  %i.rg = getelementptr inbounds nuw i8, ptr %i.rf, i64 %i.rd
-  %i.rh = trunc i64 %i.rd to i32
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.rf, ptr nonnull align 1 %i.if, i64 %3, i1 false)
+  %i.rg = getelementptr inbounds nuw i8, ptr %i.rf, i64 %3
+  %i.rh = trunc i64 %3 to i32
   store i32 %i.rh, ptr %i.n, align 1
   store i8 0, ptr %i.rg, align 1, !tbaa !9
   br label %_ZNKSt14default_deleteIA_hEclIhEENSt9enable_ifIXsr14is_convertibleIPA_T_PS0_EE5valueEvE4typeEPS4_.exit.i.thread1516
@@ -7659,14 +7713,14 @@ bb.a:
   %i.d = alloca double, align 8                   ; 4 uses
   %i.e = alloca double, align 8                   ; 4 uses
   %i.f = alloca double, align 8                   ; 4 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 14 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 15 uses
   store ptr %1, ptr %i.g, align 8, !tbaa !207
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !188  ; 16 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %i.k = load ptr, ptr %i.j, align 8, !tbaa !108  ; 6 uses
+  %i.k = load ptr, ptr %i.j, align 8, !tbaa !108  ; 7 uses
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.m = load ptr, ptr %i.l, align 8, !tbaa !20   ; 6 uses
+  %i.m = load ptr, ptr %i.l, align 8, !tbaa !20   ; 7 uses
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.o = load i32, ptr %i.n, align 8, !tbaa !73   ; 3 uses
   %i.p = icmp eq i32 %i.o, 0
@@ -7682,7 +7736,7 @@ bb.b:                                             ; preds = %bb.a
   %i.u = getelementptr inbounds nuw i8, ptr %i.q, i64 8 ; 15 uses
   %i.v = getelementptr inbounds nuw i8, ptr %i.k, i64 4 ; 10 uses
   %i.w = load i32, ptr %i.k, align 4, !tbaa !10
-  %i.x = zext i32 %i.w to i64                     ; 6 uses
+  %i.x = zext i32 %i.w to i64                     ; 5 uses
   %i.y = getelementptr inbounds nuw i8, ptr %i.i, i64 %i.x ; 12 uses
   %i.z = load i8, ptr %i.y, align 1, !tbaa !9
   switch i8 %i.z, label %_ZN8simdjson8fallback12_GLOBAL__N_16stage213json_iterator13walk_documentILb0ENS2_12tape_builderEEENS_10error_codeERT0_.exit [
@@ -8069,8 +8123,8 @@ bb.af:                                            ; preds = %.noexc69, %_ZN8simd
   br label %.thread903
 
 bb.ag:                                            ; preds = %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b
-  %i.hn = getelementptr inbounds nuw i8, ptr %0, i64 80
-  %i.ho = load i64, ptr %i.hn, align 8, !tbaa !197 ; 2 uses
+  %i.hn = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 2 uses
+  %i.ho = load i64, ptr %i.hn, align 8, !tbaa !197
   %i.hp = add i64 %i.ho, 64
   %i.hq = sub i64 %i.hp, %i.x
   %i.hr = tail call noalias noundef ptr @_ZnamRKSt9nothrow_t(i64 noundef %i.hq, ptr noundef nonnull align 1 dereferenceable(1) @_ZSt7nothrow) #44 ; 12 uses
@@ -8078,7 +8132,10 @@ bb.ag:                                            ; preds = %bb.b, %bb.b, %bb.b,
   br i1 %i.hs, label %_ZN8simdjson8fallback12_GLOBAL__N_16stage213json_iterator13walk_documentILb0ENS2_12tape_builderEEENS_10error_codeERT0_.exit, label %bb.ah
 
 bb.ah:                                            ; preds = %bb.ag
-  %i.ht = sub i64 %i.ho, %i.x                     ; 2 uses
+  %2 = load i64, ptr %i.hn, align 8, !tbaa !197
+  %3 = load i32, ptr %i.k, align 4, !tbaa !10
+  %4 = zext i32 %3 to i64
+  %i.ht = sub i64 %2, %4                          ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.hr, ptr nonnull align 1 %i.y, i64 %i.ht, i1 false)
   %i.hu = getelementptr inbounds nuw i8, ptr %i.hr, i64 %i.ht
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(64) %i.hu, i8 32, i64 64, i1 false)
@@ -8481,13 +8538,20 @@ bb.bv:                                            ; preds = %.preheader1667
 bb.bw:                                            ; preds = %bb.bv
   %i.qi = ptrtoint ptr %.122.i to i64
   %i.qj = ptrtoint ptr %i.hr to i64
-  %i.qk = sub i64 %i.qi, %i.qj                    ; 3 uses
-  store i64 6485183463413514240, ptr %i.u, align 8, !tbaa !13
+  %5 = sub i64 %i.qi, %i.qj                       ; 3 uses
+  %6 = load ptr, ptr %i.g, align 8, !tbaa !207
+  %7 = getelementptr inbounds nuw i8, ptr %6, i64 8
+  %8 = load ptr, ptr %7, align 8, !tbaa !20
+  %9 = ptrtoint ptr %i.m to i64
+  %10 = ptrtoint ptr %8 to i64
+  %i.qk = sub i64 %9, %10
+  %11 = or i64 %i.qk, 6485183463413514240
+  store i64 %11, ptr %i.u, align 8, !tbaa !13
   %i.ql = getelementptr inbounds nuw i8, ptr %i.q, i64 16
   %i.qm = getelementptr inbounds nuw i8, ptr %i.m, i64 4 ; 2 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.qm, ptr nonnull align 1 %i.hr, i64 %i.qk, i1 false)
-  %i.qn = getelementptr inbounds nuw i8, ptr %i.qm, i64 %i.qk
-  %i.qo = trunc i64 %i.qk to i32
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.qm, ptr nonnull align 1 %i.hr, i64 %5, i1 false)
+  %i.qn = getelementptr inbounds nuw i8, ptr %i.qm, i64 %5
+  %i.qo = trunc i64 %5 to i32
   store i32 %i.qo, ptr %i.m, align 1
   store i8 0, ptr %i.qn, align 1, !tbaa !9
   br label %_ZNKSt14default_deleteIA_hEclIhEENSt9enable_ifIXsr14is_convertibleIPA_T_PS0_EE5valueEvE4typeEPS4_.exit.i.thread1550
@@ -8890,7 +8954,7 @@ bb.a:
   %i.d = alloca double, align 8                   ; 4 uses
   %i.e = alloca double, align 8                   ; 4 uses
   %i.f = alloca double, align 8                   ; 4 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 14 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 15 uses
   store ptr %1, ptr %i.g, align 8, !tbaa !207
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.i = load i32, ptr %i.h, align 8, !tbaa !83   ; 2 uses
@@ -8898,7 +8962,7 @@ bb.a:
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !188  ; 14 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.n = load ptr, ptr %i.m, align 8, !tbaa !20   ; 6 uses
+  %i.n = load ptr, ptr %i.m, align 8, !tbaa !20   ; 7 uses
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.p = load i32, ptr %i.o, align 8, !tbaa !73
   %i.q = icmp eq i32 %i.i, %i.p
@@ -9282,8 +9346,8 @@ bb.af:                                            ; preds = %.split631, %_ZN8sim
   br label %.thread688
 
 bb.ag:                                            ; preds = %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b
-  %i.hd = getelementptr inbounds nuw i8, ptr %0, i64 80
-  %i.he = load i64, ptr %i.hd, align 8, !tbaa !197 ; 3 uses
+  %i.hd = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 2 uses
+  %i.he = load i64, ptr %i.hd, align 8, !tbaa !197
   %i.hf = add i64 %i.he, 64
   %i.hg = sub i64 %i.hf, %i.ab
   %i.hh = tail call noalias noundef ptr @_ZnamRKSt9nothrow_t(i64 noundef %i.hg, ptr noundef nonnull align 1 dereferenceable(1) @_ZSt7nothrow) #44 ; 12 uses
@@ -9291,13 +9355,14 @@ bb.ag:                                            ; preds = %bb.b, %bb.b, %bb.b,
   br i1 %i.hi, label %_ZN8simdjson8fallback12_GLOBAL__N_16stage213json_iterator13walk_documentILb1ENS2_12tape_builderEEENS_10error_codeERT0_.exit, label %bb.ah
 
 bb.ah:                                            ; preds = %bb.ag
+  %2 = load i64, ptr %i.hd, align 8, !tbaa !197   ; 2 uses
   %i.hj = load i32, ptr %i.t, align 4, !tbaa !10
   %i.hk = zext i32 %i.hj to i64
-  %i.hl = sub i64 %i.he, %i.hk
+  %i.hl = sub i64 %2, %i.hk
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.hh, ptr nonnull align 1 %i.ac, i64 %i.hl, i1 false)
   %i.hm = load i32, ptr %i.t, align 4, !tbaa !10
   %i.hn = zext i32 %i.hm to i64
-  %i.ho = sub i64 %i.he, %i.hn
+  %i.ho = sub i64 %2, %i.hn
   %i.hp = getelementptr inbounds nuw i8, ptr %i.hh, i64 %i.ho
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(64) %i.hp, i8 32, i64 64, i1 false)
   %i.hq = load i8, ptr %i.hh, align 1, !tbaa !9   ; 2 uses
@@ -9700,13 +9765,20 @@ bb.bw:                                            ; preds = %.preheader1452
 bb.bx:                                            ; preds = %bb.bw
   %i.qd = ptrtoint ptr %.122.i.i to i64
   %i.qe = ptrtoint ptr %i.hh to i64
-  %i.qf = sub i64 %i.qd, %i.qe                    ; 3 uses
-  store i64 6485183463413514240, ptr %i.y, align 8, !tbaa !13
+  %3 = sub i64 %i.qd, %i.qe                       ; 3 uses
+  %4 = load ptr, ptr %i.g, align 8, !tbaa !207
+  %5 = getelementptr inbounds nuw i8, ptr %4, i64 8
+  %6 = load ptr, ptr %5, align 8, !tbaa !20
+  %7 = ptrtoint ptr %i.n to i64
+  %8 = ptrtoint ptr %6 to i64
+  %i.qf = sub i64 %7, %8
+  %9 = or i64 %i.qf, 6485183463413514240
+  store i64 %9, ptr %i.y, align 8, !tbaa !13
   %i.qg = getelementptr inbounds nuw i8, ptr %i.u, i64 16
   %i.qh = getelementptr inbounds nuw i8, ptr %i.n, i64 4 ; 2 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.qh, ptr nonnull align 1 %i.hh, i64 %i.qf, i1 false)
-  %i.qi = getelementptr inbounds nuw i8, ptr %i.qh, i64 %i.qf
-  %i.qj = trunc i64 %i.qf to i32
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.qh, ptr nonnull align 1 %i.hh, i64 %3, i1 false)
+  %i.qi = getelementptr inbounds nuw i8, ptr %i.qh, i64 %3
+  %i.qj = trunc i64 %3 to i32
   store i32 %i.qj, ptr %i.n, align 1
   store i8 0, ptr %i.qi, align 1, !tbaa !9
   br label %_ZNKSt14default_deleteIA_hEclIhEENSt9enable_ifIXsr14is_convertibleIPA_T_PS0_EE5valueEvE4typeEPS4_.exit.i.thread1334

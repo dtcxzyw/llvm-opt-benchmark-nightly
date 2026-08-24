@@ -202,14 +202,34 @@ declare noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertIdEERSoT_
 
 ; Function Attrs: uwtable
 define internal void @_GLOBAL__sub_I_csv_reporter.cc() #14 section ".text.startup" personality ptr @__gxx_personality_v0 {
-bb.a:
-  %0 = tail call noundef i32 @_ZN9benchmark8internal17InitializeStreamsEv() ; 0 uses
+  %1 = tail call noundef i32 @_ZN9benchmark8internal17InitializeStreamsEv() ; 0 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) @_ZN9benchmark12_GLOBAL__N_18elementsE, i8 0, i64 24, i1 false)
-  %1 = tail call noalias noundef nonnull dereferenceable(80) ptr @_Znwm(i64 noundef 80) #22 ; 3 uses
-  store ptr %1, ptr @_ZN9benchmark12_GLOBAL__N_18elementsE, align 8, !tbaa !8
-  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 80 ; 2 uses
+  %2 = invoke noalias noundef nonnull dereferenceable(80) ptr @_Znwm(i64 noundef 80) #22
+          to label %bb.a unwind label %3          ; 3 uses
+
+3:                                                ; preds = %0
+  %4 = landingpad { ptr, i32 }
+          cleanup
+  %5 = load ptr, ptr @_ZN9benchmark12_GLOBAL__N_18elementsE, align 8, !tbaa !8 ; 3 uses
+  %.not.i.i4.i.i = icmp eq ptr %5, null
+  br i1 %.not.i.i4.i.i, label %.body.i, label %6
+
+6:                                                ; preds = %3
+  %7 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZN9benchmark12_GLOBAL__N_18elementsE, i64 16), align 8, !tbaa !13
+  %8 = ptrtoint ptr %7 to i64
+  %9 = ptrtoint ptr %5 to i64
+  %10 = sub i64 %8, %9
+  tail call void @_ZdlPvm(ptr noundef nonnull %5, i64 noundef %10) #19
+  br label %.body.i
+
+.body.i:                                          ; preds = %6, %3
+  resume { ptr, i32 } %4
+
+bb.a:                                             ; preds = %0
+  store ptr %2, ptr @_ZN9benchmark12_GLOBAL__N_18elementsE, align 8, !tbaa !8
+  %i.a = getelementptr inbounds nuw i8, ptr %2, i64 80 ; 2 uses
   store ptr %i.a, ptr getelementptr inbounds nuw (i8, ptr @_ZN9benchmark12_GLOBAL__N_18elementsE, i64 16), align 8, !tbaa !13
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %1, ptr noundef nonnull align 8 dereferenceable(80) @constinit, i64 80, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %2, ptr noundef nonnull align 8 dereferenceable(80) @constinit, i64 80, i1 false)
   store ptr %i.a, ptr getelementptr inbounds nuw (i8, ptr @_ZN9benchmark12_GLOBAL__N_18elementsE, i64 8), align 8, !tbaa !80
   %i.b = tail call i32 @__cxa_atexit(ptr nonnull @_ZNSt6vectorIPKcSaIS1_EED2Ev, ptr nonnull @_ZN9benchmark12_GLOBAL__N_18elementsE, ptr nonnull @__dso_handle) #20 ; 0 uses
   ret void

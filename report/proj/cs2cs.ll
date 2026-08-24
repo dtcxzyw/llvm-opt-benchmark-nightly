@@ -202,7 +202,7 @@ define linkonce_odr dso_local void @_ZNSt6vectorIPKcSaIS1_EE9push_backEOS1_(ptr 
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !146  ; 4 uses
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !130
   %.not.i = icmp eq ptr %i.b, %i.d
   br i1 %.not.i, label %bb.c, label %bb.b
@@ -217,8 +217,8 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %i.g = load ptr, ptr %0, align 8, !tbaa !122    ; 4 uses
   %i.h = ptrtoint ptr %i.b to i64
-  %i.i = ptrtoint ptr %i.g to i64
-  %i.j = sub i64 %i.h, %i.i                       ; 6 uses
+  %i.i = ptrtoint ptr %i.g to i64                 ; 2 uses
+  %i.j = sub i64 %i.h, %i.i                       ; 5 uses
   %i.k = icmp eq i64 %i.j, 9223372036854775800
   br i1 %i.k, label %bb.d, label %_ZNKSt6vectorIPKcSaIS1_EE12_M_check_lenEmS1_.exit.i.i
 
@@ -253,7 +253,10 @@ _ZNSt6vectorIPKcSaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit16.i.i: ; preds = %bb.e
   br i1 %.not.i17.i.i, label %_ZNSt6vectorIPKcSaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i, label %bb.f
 
 bb.f:                                             ; preds = %_ZNSt6vectorIPKcSaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit16.i.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.g, i64 noundef %i.j) #33
+  %2 = load ptr, ptr %i.c, align 8, !tbaa !130
+  %3 = ptrtoint ptr %2 to i64
+  %4 = sub i64 %3, %i.i
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.g, i64 noundef %4) #33
   br label %_ZNSt6vectorIPKcSaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i
 
 _ZNSt6vectorIPKcSaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i: ; preds = %bb.f, %_ZNSt6vectorIPKcSaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit16.i.i

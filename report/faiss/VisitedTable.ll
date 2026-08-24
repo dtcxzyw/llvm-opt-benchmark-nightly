@@ -202,11 +202,12 @@ bb.h:                                             ; preds = %.lr.ph.i.i
 
 .critedge:                                        ; preds = %.lr.ph.i.i, %bb.e, %..loopexit_crit_edge21.i.i, %.thread35
   %i.ab = phi i64 [ %i.r, %bb.e ], [ %i.f, %.thread35 ], [ %i.f, %..loopexit_crit_edge21.i.i ], [ %i.f, %.lr.ph.i.i ]
-  %i.ac = phi i64 [ %i.k, %bb.e ], [ %i.c, %.thread35 ], [ %i.c, %..loopexit_crit_edge21.i.i ], [ %i.c, %.lr.ph.i.i ] ; 2 uses
+  %i.ac = phi i64 [ %i.k, %bb.e ], [ %i.c, %.thread35 ], [ %i.c, %..loopexit_crit_edge21.i.i ], [ %i.c, %.lr.ph.i.i ]
   %i.ad = tail call noalias noundef nonnull dereferenceable(16) ptr @_Znwm(i64 noundef 16) #17 ; 4 uses
   store ptr null, ptr %i.ad, align 8, !tbaa !46
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 8
-  store i64 %i.ac, ptr %i.ae, align 8, !tbaa !22
+  %4 = load i64, ptr %1, align 8, !tbaa !22
+  store i64 %4, ptr %i.ae, align 8, !tbaa !22
   %i.af = invoke ptr @_ZNSt10_HashtableImmSaImENSt8__detail9_IdentityESt8equal_toImESt4hashImENS1_18_Mod_range_hashingENS1_20_Default_ranged_hashENS1_20_Prime_rehash_policyENS1_17_Hashtable_traitsILb0ELb1ELb1EEEE21_M_insert_unique_nodeEmmPNS1_10_Hash_nodeImLb0EEEm(ptr noundef nonnull align 8 dereferenceable(56) %0, i64 noundef %i.ab, i64 noundef %i.ac, ptr noundef nonnull %i.ad, i64 noundef 1)
           to label %_ZNKSt10_HashtableImmSaImENSt8__detail9_IdentityESt8equal_toImESt4hashImENS1_18_Mod_range_hashingENS1_20_Default_ranged_hashENS1_20_Prime_rehash_policyENS1_17_Hashtable_traitsILb0ELb1ELb1EEEE15_M_find_node_trImEEPNS1_10_Hash_nodeImLb0EEEmRKT_m.exit unwind label %_ZNSt10_HashtableImmSaImENSt8__detail9_IdentityESt8equal_toImESt4hashImENS1_18_Mod_range_hashingENS1_20_Default_ranged_hashENS1_20_Prime_rehash_policyENS1_17_Hashtable_traitsILb0ELb1ELb1EEEE12_Scoped_nodeD2Ev.exit20
 
@@ -609,11 +610,11 @@ bb.a:
   br i1 %.not, label %_ZSt4fillIPhhEvT_S1_RKT0_.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !13
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 7 uses
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !21   ; 10 uses
-  %i.e = ptrtoint ptr %i.b to i64                 ; 2 uses
+  %i.e = ptrtoint ptr %i.b to i64
   %i.f = ptrtoint ptr %i.d to i64                 ; 4 uses
   %i.g = sub i64 %i.e, %i.f
   %.not65 = icmp ult i64 %i.g, %2
@@ -787,7 +788,9 @@ bb.ab:                                            ; preds = %bb.aa, %bb.z, %bb.y
   br i1 %.not.i75, label %_ZNSt12_Vector_baseIhSaIhEE13_M_deallocateEPhm.exit, label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab
-  %i.bg = sub i64 %i.e, %i.aj
+  %4 = load ptr, ptr %i.a, align 8, !tbaa !13
+  %5 = ptrtoint ptr %4 to i64
+  %i.bg = sub i64 %5, %i.aj
   tail call void @_ZdlPvm(ptr noundef nonnull %i.ai, i64 noundef %i.bg) #16
   br label %_ZNSt12_Vector_baseIhSaIhEE13_M_deallocateEPhm.exit
 

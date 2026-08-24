@@ -183,7 +183,7 @@ bb.j:                                             ; preds = %.lr.ph158
   %i.cj = load i32, ptr %i.be, align 8, !tbaa !178 ; 2 uses
   %i.ck = getelementptr inbounds nuw i8, ptr %i.ci, i64 8 ; 3 uses
   %i.cl = load ptr, ptr %i.ck, align 8, !tbaa !186 ; 8 uses
-  %i.cm = getelementptr inbounds nuw i8, ptr %i.ci, i64 16 ; 2 uses
+  %i.cm = getelementptr inbounds nuw i8, ptr %i.ci, i64 16 ; 3 uses
   %i.cn = load ptr, ptr %i.cm, align 8, !tbaa !188
   %.not.i.i.i = icmp eq ptr %i.cl, %i.cn
   br i1 %.not.i.i.i, label %bb.l, label %bb.k
@@ -201,8 +201,8 @@ bb.k:                                             ; preds = %.critedge2
 bb.l:                                             ; preds = %.critedge2
   %i.cp = load ptr, ptr %i.ci, align 8, !tbaa !189 ; 5 uses
   %i.cq = ptrtoint ptr %i.cl to i64
-  %i.cr = ptrtoint ptr %i.cp to i64
-  %i.cs = sub i64 %i.cq, %i.cr                    ; 4 uses
+  %i.cr = ptrtoint ptr %i.cp to i64               ; 2 uses
+  %i.cs = sub i64 %i.cq, %i.cr                    ; 3 uses
   %i.ct = icmp eq i64 %i.cs, 9223372036854775792
   br i1 %i.ct, label %bb.m, label %_ZNKSt6vectorIN7CaDiCaL5WatchESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i.i
 
@@ -246,7 +246,10 @@ _ZNSt6vectorIN7CaDiCaL5WatchESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit22.i.i.i.i
   br i1 %.not.i23.i.i.i.i, label %_ZNSt6vectorIN7CaDiCaL5WatchESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i.i, label %bb.n
 
 bb.n:                                             ; preds = %_ZNSt6vectorIN7CaDiCaL5WatchESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit22.i.i.i.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.cp, i64 noundef %i.cs) #12
+  %2 = load ptr, ptr %i.cm, align 8, !tbaa !188
+  %3 = ptrtoint ptr %2 to i64
+  %4 = sub i64 %3, %i.cr
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.cp, i64 noundef %4) #12
   br label %_ZNSt6vectorIN7CaDiCaL5WatchESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i.i
 
 _ZNSt6vectorIN7CaDiCaL5WatchESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i.i: ; preds = %bb.n, %_ZNSt6vectorIN7CaDiCaL5WatchESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit22.i.i.i.i
@@ -364,9 +367,9 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.i = sub nuw i64 %1, %i.g                     ; 5 uses
-  %i.j = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  %i.j = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !188
-  %i.l = ptrtoint ptr %i.k to i64                 ; 2 uses
+  %i.l = ptrtoint ptr %i.k to i64
   %i.m = sub i64 %i.l, %i.d
   %i.n = ashr exact i64 %i.m, 4                   ; 2 uses
   %i.o = icmp ult i64 %i.g, 576460752303423488
@@ -415,7 +418,9 @@ _ZNSt6vectorIN7CaDiCaL5WatchESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit.i: ; pred
   br i1 %.not.i25.i, label %_ZNSt12_Vector_baseIN7CaDiCaL5WatchESaIS1_EE13_M_deallocateEPS1_m.exit.i, label %bb.f
 
 bb.f:                                             ; preds = %_ZNSt6vectorIN7CaDiCaL5WatchESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit.i
-  %i.aa = sub i64 %i.l, %i.e
+  %2 = load ptr, ptr %i.j, align 8, !tbaa !188
+  %3 = ptrtoint ptr %2 to i64
+  %i.aa = sub i64 %3, %i.e
   tail call void @_ZdlPvm(ptr noundef nonnull %i.c, i64 noundef %i.aa) #12
   br label %_ZNSt12_Vector_baseIN7CaDiCaL5WatchESaIS1_EE13_M_deallocateEPS1_m.exit.i
 

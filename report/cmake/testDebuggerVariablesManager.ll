@@ -202,7 +202,7 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !16)
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   %i.d = tail call noalias noundef nonnull dereferenceable(72) ptr @_Znwm(i64 noundef 72) #19, !noalias !16 ; 11 uses
-  %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 3 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 4 uses
   store i32 1, ptr %i.e, align 8, !tbaa !19, !noalias !16
   %i.f = getelementptr inbounds nuw i8, ptr %i.d, i64 12
   store i32 1, ptr %i.f, align 4, !tbaa !21, !noalias !16
@@ -245,7 +245,9 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not.i.i.i.i.i.i.i.i.i.i, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  store i32 2, ptr %i.e, align 8, !tbaa !49, !noalias !40
+  %8 = load i32, ptr %i.e, align 8, !tbaa !49, !noalias !40
+  %9 = add nsw i32 %8, 1
+  store i32 %9, ptr %i.e, align 8, !tbaa !49, !noalias !40
   br label %_ZNSt10shared_ptrIN10cmDebugger26cmDebuggerVariablesManagerEEC2ERKS2_.exit.i.i.i.i.i.i
 
 bb.d:                                             ; preds = %bb.b

@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   store i8 1, ptr %i.ar, align 8, !tbaa !58
   %i.as = getelementptr inbounds nuw i8, ptr %i.ab, i64 356
   store i32 0, ptr %i.as, align 4, !tbaa !61
-  %i.at = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 10 uses
+  %i.at = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 15 uses
   store ptr %i.ab, ptr %i.at, align 8, !tbaa !62
   store ptr %1, ptr %i.ab, align 16, !tbaa !63
   %i.au = getelementptr inbounds nuw i8, ptr %i.ab, i64 8
@@ -219,16 +219,17 @@ bb.c:                                             ; preds = %bb.b
           to label %bb.d unwind label %bb.l
 
 bb.d:                                             ; preds = %bb.c
-  %i.ax = load ptr, ptr %i.at, align 8, !tbaa !62 ; 9 uses
+  %i.ax = load ptr, ptr %i.at, align 8, !tbaa !62
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ax, i64 24
   store ptr %i.aw, ptr %i.ay, align 8, !tbaa !76
   %i.az = invoke noalias noundef nonnull dereferenceable(56) ptr @_Znwm(i64 noundef 56) #22
           to label %bb.e unwind label %bb.k       ; 7 uses
 
 bb.e:                                             ; preds = %bb.d
-  %i.ba = load ptr, ptr %i.ax, align 8, !tbaa !63 ; 6 uses
-  %i.bb = getelementptr inbounds nuw i8, ptr %i.ax, i64 16
-  %i.bc = load ptr, ptr %i.bb, align 8, !tbaa !75 ; 5 uses
+  %5 = load ptr, ptr %i.at, align 8, !tbaa !62    ; 3 uses
+  %i.ba = load ptr, ptr %5, align 8, !tbaa !63
+  %i.bb = getelementptr inbounds nuw i8, ptr %5, i64 16
+  %i.bc = load ptr, ptr %i.bb, align 8, !tbaa !75
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTV13b3OpenCLArrayIjE, i64 16), ptr %i.az, align 8, !tbaa !10
   %i.bd = getelementptr inbounds nuw i8, ptr %i.az, i64 8
   %i.be = getelementptr inbounds nuw i8, ptr %i.az, i64 32
@@ -240,81 +241,97 @@ bb.e:                                             ; preds = %bb.d
   store i8 1, ptr %i.bg, align 8, !tbaa !82
   %i.bh = getelementptr inbounds nuw i8, ptr %i.az, i64 49
   store i8 1, ptr %i.bh, align 1, !tbaa !83
-  %i.bi = getelementptr inbounds nuw i8, ptr %i.ax, i64 88
+  %i.bi = getelementptr inbounds nuw i8, ptr %5, i64 88
   store ptr %i.az, ptr %i.bi, align 8, !tbaa !84
   %i.bj = invoke noalias noundef nonnull dereferenceable(56) ptr @_Znwm(i64 noundef 56) #22
           to label %bb.f unwind label %bb.k       ; 7 uses
 
 bb.f:                                             ; preds = %bb.e
+  %6 = load ptr, ptr %i.at, align 8, !tbaa !62    ; 3 uses
+  %7 = load ptr, ptr %6, align 8, !tbaa !63
+  %8 = getelementptr inbounds nuw i8, ptr %6, i64 16
+  %9 = load ptr, ptr %8, align 8, !tbaa !75
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTV13b3OpenCLArrayI15b3GpuSolverBodyE, i64 16), ptr %i.bj, align 8, !tbaa !10
   %i.bk = getelementptr inbounds nuw i8, ptr %i.bj, i64 8
   %i.bl = getelementptr inbounds nuw i8, ptr %i.bj, i64 32
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.bk, i8 0, i64 24, i1 false)
-  store ptr %i.ba, ptr %i.bl, align 8, !tbaa !85
+  store ptr %7, ptr %i.bl, align 8, !tbaa !85
   %i.bm = getelementptr inbounds nuw i8, ptr %i.bj, i64 40
-  store ptr %i.bc, ptr %i.bm, align 8, !tbaa !87
+  store ptr %9, ptr %i.bm, align 8, !tbaa !87
   %i.bn = getelementptr inbounds nuw i8, ptr %i.bj, i64 48
   store i8 1, ptr %i.bn, align 8, !tbaa !88
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bj, i64 49
   store i8 1, ptr %i.bo, align 1, !tbaa !89
-  %i.bp = getelementptr inbounds nuw i8, ptr %i.ax, i64 96
+  %i.bp = getelementptr inbounds nuw i8, ptr %6, i64 96
   store ptr %i.bj, ptr %i.bp, align 8, !tbaa !90
   %i.bq = invoke noalias noundef nonnull dereferenceable(56) ptr @_Znwm(i64 noundef 56) #22
           to label %bb.g unwind label %bb.k       ; 7 uses
 
 bb.g:                                             ; preds = %bb.f
+  %10 = load ptr, ptr %i.at, align 8, !tbaa !62   ; 3 uses
+  %11 = load ptr, ptr %10, align 8, !tbaa !63
+  %12 = getelementptr inbounds nuw i8, ptr %10, i64 16
+  %13 = load ptr, ptr %12, align 8, !tbaa !75
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTV13b3OpenCLArrayI17b3BatchConstraintE, i64 16), ptr %i.bq, align 8, !tbaa !10
   %i.br = getelementptr inbounds nuw i8, ptr %i.bq, i64 8
   %i.bs = getelementptr inbounds nuw i8, ptr %i.bq, i64 32
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.br, i8 0, i64 24, i1 false)
-  store ptr %i.ba, ptr %i.bs, align 8, !tbaa !91
+  store ptr %11, ptr %i.bs, align 8, !tbaa !91
   %i.bt = getelementptr inbounds nuw i8, ptr %i.bq, i64 40
-  store ptr %i.bc, ptr %i.bt, align 8, !tbaa !93
+  store ptr %13, ptr %i.bt, align 8, !tbaa !93
   %i.bu = getelementptr inbounds nuw i8, ptr %i.bq, i64 48
   store i8 1, ptr %i.bu, align 8, !tbaa !94
   %i.bv = getelementptr inbounds nuw i8, ptr %i.bq, i64 49
   store i8 1, ptr %i.bv, align 1, !tbaa !95
-  %i.bw = getelementptr inbounds nuw i8, ptr %i.ax, i64 104
+  %i.bw = getelementptr inbounds nuw i8, ptr %10, i64 104
   store ptr %i.bq, ptr %i.bw, align 8, !tbaa !96
   %i.bx = invoke noalias noundef nonnull dereferenceable(56) ptr @_Znwm(i64 noundef 56) #22
           to label %bb.h unwind label %bb.k       ; 7 uses
 
 bb.h:                                             ; preds = %bb.g
+  %14 = load ptr, ptr %i.at, align 8, !tbaa !62   ; 3 uses
+  %15 = load ptr, ptr %14, align 8, !tbaa !63
+  %16 = getelementptr inbounds nuw i8, ptr %14, i64 16
+  %17 = load ptr, ptr %16, align 8, !tbaa !75
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTV13b3OpenCLArrayI21b3GpuSolverConstraintE, i64 16), ptr %i.bx, align 8, !tbaa !10
   %i.by = getelementptr inbounds nuw i8, ptr %i.bx, i64 8
   %i.bz = getelementptr inbounds nuw i8, ptr %i.bx, i64 32
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.by, i8 0, i64 24, i1 false)
-  store ptr %i.ba, ptr %i.bz, align 8, !tbaa !97
+  store ptr %15, ptr %i.bz, align 8, !tbaa !97
   %i.ca = getelementptr inbounds nuw i8, ptr %i.bx, i64 40
-  store ptr %i.bc, ptr %i.ca, align 8, !tbaa !99
+  store ptr %17, ptr %i.ca, align 8, !tbaa !99
   %i.cb = getelementptr inbounds nuw i8, ptr %i.bx, i64 48
   store i8 1, ptr %i.cb, align 8, !tbaa !100
   %i.cc = getelementptr inbounds nuw i8, ptr %i.bx, i64 49
   store i8 1, ptr %i.cc, align 1, !tbaa !101
-  %i.cd = getelementptr inbounds nuw i8, ptr %i.ax, i64 112
+  %i.cd = getelementptr inbounds nuw i8, ptr %14, i64 112
   store ptr %i.bx, ptr %i.cd, align 8, !tbaa !102
   %i.ce = invoke noalias noundef nonnull dereferenceable(56) ptr @_Znwm(i64 noundef 56) #22
           to label %bb.i unwind label %bb.k       ; 7 uses
 
 bb.i:                                             ; preds = %bb.h
+  %18 = load ptr, ptr %i.at, align 8, !tbaa !62   ; 4 uses
+  %19 = load ptr, ptr %18, align 8, !tbaa !63     ; 2 uses
+  %20 = getelementptr inbounds nuw i8, ptr %18, i64 16
+  %21 = load ptr, ptr %20, align 8, !tbaa !75
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTV13b3OpenCLArrayIjE, i64 16), ptr %i.ce, align 8, !tbaa !10
   %i.cf = getelementptr inbounds nuw i8, ptr %i.ce, i64 8
   %i.cg = getelementptr inbounds nuw i8, ptr %i.ce, i64 32
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.cf, i8 0, i64 24, i1 false)
-  store ptr %i.ba, ptr %i.cg, align 8, !tbaa !77
+  store ptr %19, ptr %i.cg, align 8, !tbaa !77
   %i.ch = getelementptr inbounds nuw i8, ptr %i.ce, i64 40
-  store ptr %i.bc, ptr %i.ch, align 8, !tbaa !81
+  store ptr %21, ptr %i.ch, align 8, !tbaa !81
   %i.ci = getelementptr inbounds nuw i8, ptr %i.ce, i64 48
   store i8 1, ptr %i.ci, align 8, !tbaa !82
   %i.cj = getelementptr inbounds nuw i8, ptr %i.ce, i64 49
   store i8 1, ptr %i.cj, align 1, !tbaa !83
-  %i.ck = getelementptr inbounds nuw i8, ptr %i.ax, i64 120
+  %i.ck = getelementptr inbounds nuw i8, ptr %18, i64 120
   store ptr %i.ce, ptr %i.ck, align 8, !tbaa !103
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #23
   store i32 0, ptr %i.a, align 4, !tbaa !104
-  %i.cl = getelementptr inbounds nuw i8, ptr %i.ax, i64 8
+  %i.cl = getelementptr inbounds nuw i8, ptr %18, i64 8
   %i.cm = load ptr, ptr %i.cl, align 8, !tbaa !74
-  %i.cn = invoke noundef ptr @b3OpenCLUtils_compileCLProgramFromString(ptr noundef %i.ba, ptr noundef %i.cm, ptr noundef nonnull @.str.30, ptr noundef nonnull %i.a, ptr noundef nonnull @.str, ptr noundef nonnull @.str.1, i1 noundef zeroext false)
+  %i.cn = invoke noundef ptr @b3OpenCLUtils_compileCLProgramFromString(ptr noundef %19, ptr noundef %i.cm, ptr noundef nonnull @.str.30, ptr noundef nonnull %i.a, ptr noundef nonnull @.str, ptr noundef nonnull @.str.1, i1 noundef zeroext false)
           to label %_ZN13b3OpenCLUtils26compileCLProgramFromStringEP11_cl_contextP13_cl_device_idPKcPiS5_S5_b.exit unwind label %bb.m ; 8 uses
 
 _ZN13b3OpenCLUtils26compileCLProgramFromStringEP11_cl_contextP13_cl_device_idPKcPiS5_S5_b.exit: ; preds = %bb.i

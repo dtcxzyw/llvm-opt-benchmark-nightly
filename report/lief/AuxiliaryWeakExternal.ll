@@ -205,7 +205,7 @@ bb.a:
   %i.h = ptrtoint ptr %i.g to i64
   %i.i = ptrtoint ptr %i.e to i64
   %i.j = sub i64 %i.h, %i.i                       ; 2 uses
-  %i.k = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 5 uses
+  %i.k = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 7 uses
   %i.l = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 2 uses
   store i8 0, ptr %i.l, align 8, !tbaa !13
   %i.m = getelementptr inbounds nuw i8, ptr %5, i64 20
@@ -309,6 +309,9 @@ _ZNK4LIEF12BinaryStream4readIjEENS_6resultIT_EEv.exit6: ; preds = %bb.b, %bb.c
   br i1 %.not.i, label %bb.d, label %.thread
 
 .thread:                                          ; preds = %_ZNK4LIEF12BinaryStream4readIjEENS_6resultIT_EEv.exit6
+  %7 = load i64, ptr %i.k, align 8, !tbaa !41
+  %8 = add i64 %7, 10
+  store i64 %8, ptr %i.k, align 8, !tbaa !41
   %i.ar = call noalias noundef nonnull dereferenceable(72) ptr @_Znwm(i64 noundef 72) #25, !noalias !49 ; 8 uses
   %i.as = getelementptr inbounds nuw i8, ptr %6, i64 16
   %i.at = load ptr, ptr %i.as, align 16, !tbaa !52, !noalias !49

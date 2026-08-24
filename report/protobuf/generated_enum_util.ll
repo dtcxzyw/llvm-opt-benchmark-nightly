@@ -202,7 +202,7 @@ bb.a:
   %.0309 = phi ptr [ %i.df, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit ], [ %1, %bb.a ] ; 2 uses
   %.sroa.0162.0308 = phi ptr [ %.sroa.0162.1, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit ], [ null, %bb.a ] ; 15 uses
   %.sroa.13.0307 = phi ptr [ %.sroa.13.1, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit ], [ null, %bb.a ] ; 12 uses
-  %.sroa.27.0306 = phi ptr [ %.sroa.27.2, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit ], [ null, %bb.a ] ; 12 uses
+  %.sroa.27.0306 = phi ptr [ %.sroa.27.2, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit ], [ null, %bb.a ] ; 13 uses
   %.sroa.16.0305 = phi ptr [ %.sroa.16.2, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit ], [ null, %bb.a ] ; 12 uses
   %.sroa.0142.0304 = phi ptr [ %.sroa.0142.2, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit ], [ null, %bb.a ] ; 18 uses
   %.sroa.20.0303 = phi ptr [ %.sroa.20.1, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit ], [ null, %bb.a ] ; 10 uses
@@ -330,8 +330,8 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.k
   %i.av = ptrtoint ptr %.sroa.16.0305 to i64
-  %i.aw = ptrtoint ptr %.sroa.0142.0304 to i64
-  %i.ax = sub i64 %i.av, %i.aw                    ; 6 uses
+  %i.aw = ptrtoint ptr %.sroa.0142.0304 to i64    ; 2 uses
+  %i.ax = sub i64 %i.av, %i.aw                    ; 5 uses
   %i.ay = ashr exact i64 %i.ax, 2                 ; 4 uses
   %i.az = add nsw i64 %i.al, 1
   %i.ba = add nsw i64 %i.az, %i.ay
@@ -515,7 +515,9 @@ _ZNSt6vectorIiSaIiEE11_S_relocateEPiS2_S2_RS0_.exit16.i.i67: ; preds = %bb.y, %.
   br i1 %.not.i17.i.i68, label %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJRKiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i69, label %bb.z
 
 bb.z:                                             ; preds = %_ZNSt6vectorIiSaIiEE11_S_relocateEPiS2_S2_RS0_.exit16.i.i67
-  tail call void @_ZdlPvm(ptr noundef nonnull %.sroa.0142.0304, i64 noundef %i.ax) #16
+  %4 = ptrtoint ptr %.sroa.27.0306 to i64
+  %5 = sub i64 %4, %i.aw
+  tail call void @_ZdlPvm(ptr noundef nonnull %.sroa.0142.0304, i64 noundef %5) #16
   br label %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJRKiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i69
 
 _ZNSt6vectorIiSaIiEE17_M_realloc_insertIJRKiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i69: ; preds = %bb.z, %_ZNSt6vectorIiSaIiEE11_S_relocateEPiS2_S2_RS0_.exit16.i.i67

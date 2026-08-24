@@ -205,7 +205,7 @@ bb.a:
   %i.d = ashr exact i64 %i.c, 4                   ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !66
-  %i.g = load ptr, ptr %0, align 8, !tbaa !63     ; 7 uses
+  %i.g = load ptr, ptr %0, align 8, !tbaa !63     ; 4 uses
   %i.h = ptrtoint ptr %i.f to i64
   %i.i = ptrtoint ptr %i.g to i64                 ; 2 uses
   %i.j = sub i64 %i.h, %i.i
@@ -247,13 +247,14 @@ _ZSt10_ConstructIN6Rewire5MiaigEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i: ; preds = %bb
   br i1 %.not.i.i.i.i.i, label %_ZNSt6vectorIN6Rewire5MiaigESaIS1_EE20_M_allocate_and_copyIPKS1_EEPS1_mT_S8_.exit, label %.lr.ph.i.i.i.i.i, !llvm.loop !544
 
 _ZNSt6vectorIN6Rewire5MiaigESaIS1_EE20_M_allocate_and_copyIPKS1_EEPS1_mT_S8_.exit: ; preds = %_ZSt10_ConstructIN6Rewire5MiaigEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i, %_ZNSt12_Vector_baseIN6Rewire5MiaigESaIS1_EE11_M_allocateEm.exit.i
+  %3 = load ptr, ptr %0, align 8, !tbaa !63       ; 3 uses
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.u = load ptr, ptr %i.t, align 8, !tbaa !69   ; 2 uses
-  %.not4.i.i = icmp eq ptr %i.g, %i.u
+  %.not4.i.i = icmp eq ptr %3, %i.u
   br i1 %.not4.i.i, label %_ZSt8_DestroyIPN6Rewire5MiaigEEvT_S3_.exit, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %_ZNSt6vectorIN6Rewire5MiaigESaIS1_EE20_M_allocate_and_copyIPKS1_EEPS1_mT_S8_.exit, %.lr.ph.i.i
-  %.05.i.i = phi ptr [ %i.v, %.lr.ph.i.i ], [ %i.g, %_ZNSt6vectorIN6Rewire5MiaigESaIS1_EE20_M_allocate_and_copyIPKS1_EEPS1_mT_S8_.exit ] ; 2 uses
+  %.05.i.i = phi ptr [ %i.v, %.lr.ph.i.i ], [ %3, %_ZNSt6vectorIN6Rewire5MiaigESaIS1_EE20_M_allocate_and_copyIPKS1_EEPS1_mT_S8_.exit ] ; 2 uses
   tail call void @_ZN6Rewire5Miaig7releaseEv(ptr noundef nonnull align 8 dereferenceable(16) %.05.i.i)
   %i.v = getelementptr inbounds nuw i8, ptr %.05.i.i, i64 16 ; 2 uses
   %.not.i.i16 = icmp eq ptr %i.v, %i.u
@@ -264,7 +265,7 @@ _ZSt8_DestroyIPN6Rewire5MiaigEEvT_S3_.exit.loopexit: ; preds = %.lr.ph.i.i
   br label %_ZSt8_DestroyIPN6Rewire5MiaigEEvT_S3_.exit
 
 _ZSt8_DestroyIPN6Rewire5MiaigEEvT_S3_.exit:       ; preds = %_ZSt8_DestroyIPN6Rewire5MiaigEEvT_S3_.exit.loopexit, %_ZNSt6vectorIN6Rewire5MiaigESaIS1_EE20_M_allocate_and_copyIPKS1_EEPS1_mT_S8_.exit
-  %i.w = phi ptr [ %.pre33, %_ZSt8_DestroyIPN6Rewire5MiaigEEvT_S3_.exit.loopexit ], [ %i.g, %_ZNSt6vectorIN6Rewire5MiaigESaIS1_EE20_M_allocate_and_copyIPKS1_EEPS1_mT_S8_.exit ] ; 3 uses
+  %i.w = phi ptr [ %.pre33, %_ZSt8_DestroyIPN6Rewire5MiaigEEvT_S3_.exit.loopexit ], [ %3, %_ZNSt6vectorIN6Rewire5MiaigESaIS1_EE20_M_allocate_and_copyIPKS1_EEPS1_mT_S8_.exit ] ; 3 uses
   %.not.i = icmp eq ptr %i.w, null
   br i1 %.not.i, label %_ZNSt12_Vector_baseIN6Rewire5MiaigESaIS1_EE13_M_deallocateEPS1_m.exit, label %bb.e
 

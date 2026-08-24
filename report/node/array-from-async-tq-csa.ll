@@ -202,7 +202,8 @@ begin_hunk_0_@_ZN2v88internal39CreateArrayFromIterableAsynchronously_0EPNS0_8com
   call void @llvm.lifetime.start.p0(ptr nonnull %404) #10
   %i.yj = load ptr, ptr %315, align 8
   store ptr %i.yj, ptr %404, align 8
-  %i.yk = getelementptr inbounds nuw i8, ptr %404, i64 8 ; 3 uses
+  %i.yk = getelementptr inbounds nuw i8, ptr %404, i64 8 ; 4 uses
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.yk, i8 0, i64 24, i1 false)
   %i.yl = call noalias noundef nonnull dereferenceable(48) ptr @_Znwm(i64 noundef 48) #12 ; 3 uses
   store ptr %i.yl, ptr %i.yk, align 8
   %i.ym = getelementptr inbounds nuw i8, ptr %i.yl, i64 48 ; 2 uses
@@ -605,7 +606,8 @@ begin_hunk_1_@_ZN2v88internal40CreateArrayFromArrayLikeAsynchronously_0EPNS0_8co
   call void @llvm.lifetime.start.p0(ptr nonnull %308) #10
   %i.rx = load ptr, ptr %240, align 8
   store ptr %i.rx, ptr %308, align 8
-  %i.ry = getelementptr inbounds nuw i8, ptr %308, i64 8 ; 3 uses
+  %i.ry = getelementptr inbounds nuw i8, ptr %308, i64 8 ; 4 uses
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ry, i8 0, i64 24, i1 false)
   %i.rz = call noalias noundef nonnull dereferenceable(48) ptr @_Znwm(i64 noundef 48) #12 ; 3 uses
   store ptr %i.rz, ptr %i.ry, align 8
   %i.sa = getelementptr inbounds nuw i8, ptr %i.rz, i64 48 ; 2 uses

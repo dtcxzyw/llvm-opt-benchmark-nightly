@@ -66,7 +66,7 @@ bb.a:
   store ptr getelementptr inbounds nuw inrange(-16, 424) (i8, ptr @_ZTV24LuaDebuggerGoToLineFrame, i64 16), ptr %0, align 8
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 16
   store ptr getelementptr inbounds nuw inrange(-16, 64) (i8, ptr @_ZTV24LuaDebuggerGoToLineFrame, i64 456), ptr %i.g, align 8
-  %i.h = getelementptr i8, ptr %0, i64 56         ; 9 uses
+  %i.h = getelementptr i8, ptr %0, i64 56         ; 10 uses
   %i.i = invoke noalias noundef dereferenceable_or_null(48) ptr @_Znwm(i64 noundef 48) #11
           to label %bb.b unwind label %bb.q       ; 2 uses
 
@@ -91,12 +91,15 @@ bb.e:                                             ; preds = %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #12
   %i.k = load ptr, ptr %i.h, align 8
   %i.l = getelementptr i8, ptr %i.k, i64 24
-  %i.m = load ptr, ptr %i.l, align 8              ; 2 uses
+  %i.m = load ptr, ptr %i.l, align 8
   %i.n = invoke noalias noundef dereferenceable_or_null(24) ptr @_Znwm(i64 noundef 24) #11
           to label %bb.f unwind label %bb.r       ; 3 uses
 
 bb.f:                                             ; preds = %bb.e
-  invoke void @_ZN13QIntValidatorC1EiiP7QObject(ptr noundef align 8 dereferenceable_or_null(24) %i.n, i32 noundef 1, i32 noundef 999999999, ptr noundef %i.m)
+  %6 = load ptr, ptr %i.h, align 8
+  %7 = getelementptr i8, ptr %6, i64 24
+  %8 = load ptr, ptr %7, align 8
+  invoke void @_ZN13QIntValidatorC1EiiP7QObject(ptr noundef align 8 dereferenceable_or_null(24) %i.n, i32 noundef 1, i32 noundef 999999999, ptr noundef %8)
           to label %bb.g unwind label %bb.v
 
 bb.g:                                             ; preds = %bb.f

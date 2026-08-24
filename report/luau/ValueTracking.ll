@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %.lr.ph50
   br i1 %i.v, label %bb.b, label %..critedge_crit_edge51, !llvm.loop !69
 
 ._crit_edge:                                      ; preds = %bb.c, %bb.a, %.critedge
-  %.pre36 = phi i64 [ 0, %bb.a ], [ %.pre37, %.critedge ], [ %i.ad, %bb.c ] ; 3 uses
+  %.pre36 = phi i64 [ 0, %bb.a ], [ %.pre37, %.critedge ], [ %i.ad, %bb.c ] ; 2 uses
   %i.w = load i8, ptr @_ZN5FFlag23LuauOptimizeExportTableE, align 8, !tbaa !73, !range !76, !noundef !50
   %i.x = trunc nuw i8 %i.w to i1
   br i1 %i.x, label %bb.d, label %.loopexit
@@ -230,7 +230,6 @@ bb.d:                                             ; preds = %._crit_edge
   br i1 %or.cond, label %.loopexit, label %.lr.ph30
 
 .lr.ph30:                                         ; preds = %bb.d, %_ZNSt6vectorIPN4Luau8AstLocalESaIS2_EE9push_backERKS2_.exit
-  %.pre33 = phi i64 [ %.pre34, %_ZNSt6vectorIPN4Luau8AstLocalESaIS2_EE9push_backERKS2_.exit ], [ %.pre36, %bb.d ] ; 3 uses
   %i.ah = phi i64 [ %i.bk, %_ZNSt6vectorIPN4Luau8AstLocalESaIS2_EE9push_backERKS2_.exit ], [ %.pre36, %bb.d ] ; 2 uses
   %.029 = phi i64 [ %i.bl, %_ZNSt6vectorIPN4Luau8AstLocalESaIS2_EE9push_backERKS2_.exit ], [ 0, %bb.d ] ; 2 uses
   %i.ai = load ptr, ptr %i.b, align 8, !tbaa !72
@@ -245,7 +244,7 @@ bb.e:                                             ; preds = %.lr.ph30
   %i.ao = load ptr, ptr %i.af, align 8, !tbaa !41 ; 4 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ao, i64 8 ; 3 uses
   %i.aq = load ptr, ptr %i.ap, align 8, !tbaa !81 ; 4 uses
-  %i.ar = getelementptr inbounds nuw i8, ptr %i.ao, i64 16 ; 2 uses
+  %i.ar = getelementptr inbounds nuw i8, ptr %i.ao, i64 16 ; 3 uses
   %i.as = load ptr, ptr %i.ar, align 8, !tbaa !83
   %.not.i = icmp eq ptr %i.aq, %i.as
   br i1 %.not.i, label %bb.g, label %bb.f
@@ -259,8 +258,8 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.e
   %i.au = load ptr, ptr %i.ao, align 8, !tbaa !84 ; 4 uses
   %i.av = ptrtoint ptr %i.aq to i64
-  %i.aw = ptrtoint ptr %i.au to i64
-  %i.ax = sub i64 %i.av, %i.aw                    ; 6 uses
+  %i.aw = ptrtoint ptr %i.au to i64               ; 2 uses
+  %i.ax = sub i64 %i.av, %i.aw                    ; 5 uses
   %i.ay = icmp eq i64 %i.ax, 9223372036854775800
   br i1 %i.ay, label %bb.h, label %_ZNKSt6vectorIPN4Luau8AstLocalESaIS2_EE12_M_check_lenEmPKc.exit.i.i
 
@@ -294,20 +293,21 @@ _ZNSt6vectorIPN4Luau8AstLocalESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i: ;
   br i1 %.not.i17.i.i, label %_ZNSt6vectorIPN4Luau8AstLocalESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i, label %bb.j
 
 bb.j:                                             ; preds = %_ZNSt6vectorIPN4Luau8AstLocalESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.au, i64 noundef %i.ax) #13
-  %.pre.pre = load i64, ptr %i.c, align 8, !tbaa !56
+  %2 = load ptr, ptr %i.ar, align 8, !tbaa !83
+  %3 = ptrtoint ptr %2 to i64
+  %4 = sub i64 %3, %i.aw
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.au, i64 noundef %4) #13
   br label %_ZNSt6vectorIPN4Luau8AstLocalESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i
 
 _ZNSt6vectorIPN4Luau8AstLocalESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i: ; preds = %bb.j, %_ZNSt6vectorIPN4Luau8AstLocalESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i
-  %.pre = phi i64 [ %.pre.pre, %bb.j ], [ %.pre33, %_ZNSt6vectorIPN4Luau8AstLocalESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i ] ; 2 uses
   store ptr %i.bf, ptr %i.ao, align 8, !tbaa !84
   store ptr %i.bi, ptr %i.ap, align 8, !tbaa !81
   %i.bj = getelementptr inbounds nuw [8 x i8], ptr %i.bf, i64 %i.bd
   store ptr %i.bj, ptr %i.ar, align 8, !tbaa !83
+  %.pre = load i64, ptr %i.c, align 8, !tbaa !56
   br label %_ZNSt6vectorIPN4Luau8AstLocalESaIS2_EE9push_backERKS2_.exit
 
 _ZNSt6vectorIPN4Luau8AstLocalESaIS2_EE9push_backERKS2_.exit: ; preds = %_ZNSt6vectorIPN4Luau8AstLocalESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i, %bb.f, %.lr.ph30
-  %.pre34 = phi i64 [ %.pre, %_ZNSt6vectorIPN4Luau8AstLocalESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i ], [ %.pre33, %bb.f ], [ %.pre33, %.lr.ph30 ]
   %i.bk = phi i64 [ %.pre, %_ZNSt6vectorIPN4Luau8AstLocalESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i ], [ %i.ah, %bb.f ], [ %i.ah, %.lr.ph30 ] ; 2 uses
   %i.bl = add nuw i64 %.029, 1                    ; 2 uses
   %i.bm = icmp ult i64 %i.bl, %i.bk
@@ -559,7 +559,7 @@ bb.d:                                             ; preds = %bb.c
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !41   ; 4 uses
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 8 ; 3 uses
   %i.s = load ptr, ptr %i.r, align 8, !tbaa !81   ; 4 uses
-  %i.t = getelementptr inbounds nuw i8, ptr %i.q, i64 16 ; 2 uses
+  %i.t = getelementptr inbounds nuw i8, ptr %i.q, i64 16 ; 3 uses
   %i.u = load ptr, ptr %i.t, align 8, !tbaa !83
   %.not.i = icmp eq ptr %i.s, %i.u
   br i1 %.not.i, label %bb.f, label %bb.e
@@ -574,8 +574,8 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.d
   %i.x = load ptr, ptr %i.q, align 8, !tbaa !84   ; 4 uses
   %i.y = ptrtoint ptr %i.s to i64
-  %i.z = ptrtoint ptr %i.x to i64
-  %i.aa = sub i64 %i.y, %i.z                      ; 6 uses
+  %i.z = ptrtoint ptr %i.x to i64                 ; 2 uses
+  %i.aa = sub i64 %i.y, %i.z                      ; 5 uses
   %i.ab = icmp eq i64 %i.aa, 9223372036854775800
   br i1 %i.ab, label %bb.g, label %_ZNKSt6vectorIPN4Luau8AstLocalESaIS2_EE12_M_check_lenEmPKc.exit.i.i
 
@@ -610,7 +610,10 @@ _ZNSt6vectorIPN4Luau8AstLocalESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i: ;
   br i1 %.not.i17.i.i, label %_ZNSt6vectorIPN4Luau8AstLocalESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i, label %bb.i
 
 bb.i:                                             ; preds = %_ZNSt6vectorIPN4Luau8AstLocalESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.x, i64 noundef %i.aa) #13
+  %2 = load ptr, ptr %i.t, align 8, !tbaa !83
+  %3 = ptrtoint ptr %2 to i64
+  %4 = sub i64 %3, %i.z
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.x, i64 noundef %4) #13
   br label %_ZNSt6vectorIPN4Luau8AstLocalESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i
 
 _ZNSt6vectorIPN4Luau8AstLocalESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i: ; preds = %bb.i, %_ZNSt6vectorIPN4Luau8AstLocalESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i

@@ -204,8 +204,8 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_ZN5Eigen8internal17CompressedStorageIdiE7reserveEl(ptr noundef nonnull align 8 dereferenceable(32) %0, i64 noundef %1) local_unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.b = load i64, ptr %i.a, align 8, !tbaa !65   ; 2 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  %i.b = load i64, ptr %i.a, align 8, !tbaa !65
   %i.c = add nsw i64 %i.b, %1                     ; 7 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.e = load i64, ptr %i.d, align 8, !tbaa !66
@@ -224,7 +224,8 @@ bb.b:                                             ; preds = %bb.a
           to label %_ZN5Eigen8internal12scoped_arrayIiEC2El.exit.i unwind label %_ZN5Eigen8internal12scoped_arrayIdED2Ev.exit9.i ; 2 uses
 
 _ZN5Eigen8internal12scoped_arrayIiEC2El.exit.i:   ; preds = %bb.b
-  %.sroa.speculated.i = tail call i64 @llvm.smin.i64(i64 %i.b, i64 %i.c) ; 3 uses
+  %2 = load i64, ptr %i.a, align 8, !tbaa !28
+  %.sroa.speculated.i = tail call i64 @llvm.smin.i64(i64 %2, i64 %i.c) ; 3 uses
   %i.o = icmp sgt i64 %.sroa.speculated.i, 0
   %.pre.i = load ptr, ptr %0, align 8, !tbaa !114 ; 3 uses
   br i1 %i.o, label %_ZN5Eigen8internal10smart_copyIdEEvPKT_S4_PS2_.exit.i, label %_ZN5Eigen8internal12scoped_arrayIiEC2El.exit._ZN5Eigen8internal10smart_copyIiEEvPKT_S4_PS2_.exit_crit_edge.i

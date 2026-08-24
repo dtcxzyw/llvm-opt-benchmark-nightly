@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(49) %i.f, i8 0, i64 49, i1 false)
   store i32 -1, ptr %i.i, align 8
-  %i.j = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 2 uses
+  %i.j = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 3 uses
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 144
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.j, i8 0, i64 16, i1 false)
   invoke void @_ZN16Ui_ProgressFrame7setupUiEP6QFrame(ptr noundef align 8 dereferenceable_or_null(32) %i.e, ptr noundef %0)
@@ -520,7 +520,7 @@ bb.aa:                                            ; preds = %_ZN17QArrayDataPoin
 _ZN7QStringD2Ev.exit80:                           ; preds = %bb.z, %_ZN17QArrayDataPointerIDsE5derefEv.exit.i.i78, %bb.aa
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #11
   %i.cg = invoke noalias noundef dereferenceable_or_null(16) ptr @_Znwm(i64 noundef 16) #12
-          to label %bb.ab unwind label %bb.aj     ; 4 uses
+          to label %bb.ab unwind label %bb.aj     ; 3 uses
 
 bb.ab:                                            ; preds = %_ZN7QStringD2Ev.exit80
   invoke void @_ZN22QGraphicsOpacityEffectC1EP7QObject(ptr noundef align 8 dereferenceable_or_null(16) %i.cg, ptr noundef %0)
@@ -532,12 +532,13 @@ bb.ac:                                            ; preds = %bb.ab
           to label %bb.ad unwind label %bb.aj     ; 3 uses
 
 bb.ad:                                            ; preds = %bb.ac
+  %17 = load ptr, ptr %i.j, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #11
   invoke void @_ZN10QByteArrayC1EPKcx(ptr noundef nonnull align 8 dereferenceable_or_null(24) %15, ptr noundef nonnull @.str.11, i64 noundef -1)
           to label %bb.ae unwind label %bb.bn
 
 bb.ae:                                            ; preds = %bb.ad
-  invoke void @_ZN18QPropertyAnimationC1EP7QObjectRK10QByteArrayS1_(ptr noundef align 8 dereferenceable_or_null(16) %i.ch, ptr noundef %i.cg, ptr noundef nonnull align 8 dereferenceable(24) %15, ptr noundef %0)
+  invoke void @_ZN18QPropertyAnimationC1EP7QObjectRK10QByteArrayS1_(ptr noundef align 8 dereferenceable_or_null(16) %i.ch, ptr noundef %17, ptr noundef nonnull align 8 dereferenceable(24) %15, ptr noundef %0)
           to label %bb.af unwind label %bb.bo
 
 bb.af:                                            ; preds = %bb.ae

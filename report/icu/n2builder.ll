@@ -204,7 +204,7 @@ bb.be:                                            ; preds = %bb.bd
           to label %bb.bf unwind label %bb.bk
 
 bb.bf:                                            ; preds = %bb.be
-  %i.jz = getelementptr inbounds nuw i8, ptr %1, i64 536 ; 3 uses
+  %i.jz = getelementptr inbounds nuw i8, ptr %1, i64 536 ; 4 uses
   store i32 %i.jy, ptr %i.jz, align 8, !tbaa !34
   %i.ka = load i32, ptr %i.hv, align 8, !tbaa !74
   %.not108 = icmp eq i32 %i.ka, 15
@@ -243,7 +243,7 @@ bb.bm:                                            ; preds = %bb.bl
           to label %bb.bn unwind label %bb.bk     ; 0 uses
 
 bb.bn:                                            ; preds = %bb.bm
-  %i.ki = load i32, ptr %i.jz, align 8, !tbaa !34 ; 2 uses
+  %i.ki = load i32, ptr %i.jz, align 8, !tbaa !34
   %i.kj = sext i32 %i.ki to i64
   %i.kk = invoke noalias noundef nonnull ptr @_Znam(i64 noundef %i.kj) #23
           to label %bb.bo unwind label %bb.bk     ; 2 uses
@@ -251,7 +251,8 @@ bb.bn:                                            ; preds = %bb.bm
 bb.bo:                                            ; preds = %bb.bn
   %i.kl = getelementptr inbounds nuw i8, ptr %1, i64 528
   store ptr %i.kk, ptr %i.kl, align 8, !tbaa !33
-  %i.km = invoke i32 @ucptrie_toBinary_78(ptr noundef %i.jx, ptr noundef nonnull %i.kk, i32 noundef %i.ki, ptr noundef nonnull %i.hv)
+  %7 = load i32, ptr %i.jz, align 8, !tbaa !34
+  %i.km = invoke i32 @ucptrie_toBinary_78(ptr noundef %i.jx, ptr noundef nonnull %i.kk, i32 noundef %7, ptr noundef nonnull %i.hv)
           to label %bb.bp unwind label %bb.bk     ; 0 uses
 
 bb.bp:                                            ; preds = %bb.bo

@@ -204,7 +204,7 @@ _ZNSt6vectorImSaImEE7reserveEm.exit.i:            ; preds = %_ZNSt12_Vector_base
 
 .lr.ph.i.i.i134.i:                                ; preds = %.lr.ph306.i, %_ZNSt20back_insert_iteratorISt6vectorImSaImEEEaSERKm.exit.i.i.i.i
   %.sroa.0181.3.i = phi ptr [ %.sroa.0181.4.i, %_ZNSt20back_insert_iteratorISt6vectorImSaImEEEaSERKm.exit.i.i.i.i ], [ %.sroa.0181.0302.i, %.lr.ph306.i ] ; 7 uses
-  %.sroa.19.3.i = phi ptr [ %.sroa.19.4.i, %_ZNSt20back_insert_iteratorISt6vectorImSaImEEEaSERKm.exit.i.i.i.i ], [ %.sroa.19.0304.i, %.lr.ph306.i ] ; 3 uses
+  %.sroa.19.3.i = phi ptr [ %.sroa.19.4.i, %_ZNSt20back_insert_iteratorISt6vectorImSaImEEEaSERKm.exit.i.i.i.i ], [ %.sroa.19.0304.i, %.lr.ph306.i ] ; 4 uses
   %i.ik = phi ptr [ %i.ja, %_ZNSt20back_insert_iteratorISt6vectorImSaImEEEaSERKm.exit.i.i.i.i ], [ %.sroa.19.0304.i, %.lr.ph306.i ] ; 3 uses
   %i.il = phi ptr [ %.sroa.12.2.i, %_ZNSt20back_insert_iteratorISt6vectorImSaImEEEaSERKm.exit.i.i.i.i ], [ %.sroa.12.0303.i, %.lr.ph306.i ] ; 3 uses
   %.03.i.i.i.i = phi i32 [ %i.jb, %_ZNSt20back_insert_iteratorISt6vectorImSaImEEEaSERKm.exit.i.i.i.i ], [ %i.ii, %.lr.ph306.i ] ; 2 uses
@@ -217,8 +217,8 @@ bb.bs:                                            ; preds = %.lr.ph.i.i.i134.i
 
 bb.bt:                                            ; preds = %.lr.ph.i.i.i134.i
   %i.im = ptrtoint ptr %i.ik to i64
-  %i.in = ptrtoint ptr %.sroa.0181.3.i to i64
-  %i.io = sub i64 %i.im, %i.in                    ; 6 uses
+  %i.in = ptrtoint ptr %.sroa.0181.3.i to i64     ; 2 uses
+  %i.io = sub i64 %i.im, %i.in                    ; 5 uses
   %i.ip = icmp eq i64 %i.io, 9223372036854775800
   br i1 %i.ip, label %bb.bu, label %_ZNKSt6vectorImSaImEE12_M_check_lenEmPKc.exit.i.i.i.i.i.i.i
 
@@ -257,7 +257,9 @@ _ZNSt6vectorImSaImEE11_S_relocateEPmS2_S2_RS0_.exit16.i.i.i.i.i.i.i: ; preds = %
   br i1 %.not.i17.i.i.i.i.i.i.i, label %_ZNSt6vectorImSaImEE17_M_realloc_insertIJRKmEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i.i.i.i.i.i, label %bb.bw
 
 bb.bw:                                            ; preds = %_ZNSt6vectorImSaImEE11_S_relocateEPmS2_S2_RS0_.exit16.i.i.i.i.i.i.i
-  call void @_ZdlPvm(ptr noundef nonnull %.sroa.0181.3.i, i64 noundef %i.io) #36
+  %20 = ptrtoint ptr %.sroa.19.3.i to i64
+  %21 = sub i64 %20, %i.in
+  call void @_ZdlPvm(ptr noundef nonnull %.sroa.0181.3.i, i64 noundef %21) #36
   br label %_ZNSt6vectorImSaImEE17_M_realloc_insertIJRKmEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i.i.i.i.i.i
 
 _ZNSt6vectorImSaImEE17_M_realloc_insertIJRKmEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i.i.i.i.i.i: ; preds = %bb.bw, %_ZNSt6vectorImSaImEE11_S_relocateEPmS2_S2_RS0_.exit16.i.i.i.i.i.i.i
@@ -660,7 +662,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !200
-  %i.d = load ptr, ptr %0, align 8, !tbaa !221    ; 4 uses
+  %i.d = load ptr, ptr %0, align 8, !tbaa !221
   %i.e = ptrtoint ptr %i.c to i64
   %i.f = ptrtoint ptr %i.d to i64                 ; 2 uses
   %i.g = sub i64 %i.e, %i.f
@@ -669,18 +671,20 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.i, label %_ZNSt12_Vector_baseIN9benchmark8internal15BenchmarkRunnerESaIS2_EE11_M_allocateEm.exit, label %bb.e
 
 _ZNSt12_Vector_baseIN9benchmark8internal15BenchmarkRunnerESaIS2_EE11_M_allocateEm.exit: ; preds = %bb.c
-  %i.j = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.k = load ptr, ptr %i.j, align 8, !tbaa !197  ; 3 uses
+  %i.j = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
+  %i.k = load ptr, ptr %i.j, align 8, !tbaa !197
   %i.l = ptrtoint ptr %i.k to i64
   %i.m = sub i64 %i.l, %i.f
   %i.n = mul nuw nsw i64 %1, 144
   %i.o = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.n) #35 ; 4 uses
-  %.not10.i.i.i = icmp eq ptr %i.d, %i.k
+  %2 = load ptr, ptr %0, align 8, !tbaa !221      ; 3 uses
+  %3 = load ptr, ptr %i.j, align 8, !tbaa !197    ; 2 uses
+  %.not10.i.i.i = icmp eq ptr %2, %3
   br i1 %.not10.i.i.i, label %_ZNSt6vectorIN9benchmark8internal15BenchmarkRunnerESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit, label %_ZSt19__relocate_object_aIN9benchmark8internal15BenchmarkRunnerES2_SaIS2_EEvPT_PT0_RT1_.exit.i.i.i
 
 _ZSt19__relocate_object_aIN9benchmark8internal15BenchmarkRunnerES2_SaIS2_EEvPT_PT0_RT1_.exit.i.i.i: ; preds = %_ZNSt12_Vector_baseIN9benchmark8internal15BenchmarkRunnerESaIS2_EE11_M_allocateEm.exit, %_ZSt19__relocate_object_aIN9benchmark8internal15BenchmarkRunnerES2_SaIS2_EEvPT_PT0_RT1_.exit.i.i.i
   %.012.i.i.i = phi ptr [ %i.ak, %_ZSt19__relocate_object_aIN9benchmark8internal15BenchmarkRunnerES2_SaIS2_EEvPT_PT0_RT1_.exit.i.i.i ], [ %i.o, %_ZNSt12_Vector_baseIN9benchmark8internal15BenchmarkRunnerESaIS2_EE11_M_allocateEm.exit ] ; 9 uses
-  %.0911.i.i.i = phi ptr [ %i.aj, %_ZSt19__relocate_object_aIN9benchmark8internal15BenchmarkRunnerES2_SaIS2_EEvPT_PT0_RT1_.exit.i.i.i ], [ %i.d, %_ZNSt12_Vector_baseIN9benchmark8internal15BenchmarkRunnerESaIS2_EE11_M_allocateEm.exit ] ; 10 uses
+  %.0911.i.i.i = phi ptr [ %i.aj, %_ZSt19__relocate_object_aIN9benchmark8internal15BenchmarkRunnerES2_SaIS2_EEvPT_PT0_RT1_.exit.i.i.i ], [ %2, %_ZNSt12_Vector_baseIN9benchmark8internal15BenchmarkRunnerESaIS2_EE11_M_allocateEm.exit ] ; 10 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !287)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !290)
   %i.p = load <2 x ptr>, ptr %.0911.i.i.i, align 8, !tbaa !230, !alias.scope !290, !noalias !287
@@ -716,7 +720,7 @@ _ZSt19__relocate_object_aIN9benchmark8internal15BenchmarkRunnerES2_SaIS2_EEvPT_P
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ah, ptr noundef nonnull align 8 dereferenceable(16) %i.ai, i64 16, i1 false), !alias.scope !292
   %i.aj = getelementptr inbounds nuw i8, ptr %.0911.i.i.i, i64 144 ; 2 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %.012.i.i.i, i64 144
-  %.not.i.i.i = icmp eq ptr %i.aj, %i.k
+  %.not.i.i.i = icmp eq ptr %i.aj, %3
   br i1 %.not.i.i.i, label %_ZNSt6vectorIN9benchmark8internal15BenchmarkRunnerESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit.loopexit, label %_ZSt19__relocate_object_aIN9benchmark8internal15BenchmarkRunnerES2_SaIS2_EEvPT_PT0_RT1_.exit.i.i.i, !llvm.loop !294
 
 _ZNSt6vectorIN9benchmark8internal15BenchmarkRunnerESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit.loopexit: ; preds = %_ZSt19__relocate_object_aIN9benchmark8internal15BenchmarkRunnerES2_SaIS2_EEvPT_PT0_RT1_.exit.i.i.i
@@ -724,7 +728,7 @@ _ZNSt6vectorIN9benchmark8internal15BenchmarkRunnerESaIS2_EE11_S_relocateEPS2_S5_
   br label %_ZNSt6vectorIN9benchmark8internal15BenchmarkRunnerESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit
 
 _ZNSt6vectorIN9benchmark8internal15BenchmarkRunnerESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit: ; preds = %_ZNSt6vectorIN9benchmark8internal15BenchmarkRunnerESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit.loopexit, %_ZNSt12_Vector_baseIN9benchmark8internal15BenchmarkRunnerESaIS2_EE11_M_allocateEm.exit
-  %i.al = phi ptr [ %.pre, %_ZNSt6vectorIN9benchmark8internal15BenchmarkRunnerESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit.loopexit ], [ %i.d, %_ZNSt12_Vector_baseIN9benchmark8internal15BenchmarkRunnerESaIS2_EE11_M_allocateEm.exit ] ; 3 uses
+  %i.al = phi ptr [ %.pre, %_ZNSt6vectorIN9benchmark8internal15BenchmarkRunnerESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit.loopexit ], [ %2, %_ZNSt12_Vector_baseIN9benchmark8internal15BenchmarkRunnerESaIS2_EE11_M_allocateEm.exit ] ; 3 uses
   %.not.i8 = icmp eq ptr %i.al, null
   br i1 %.not.i8, label %_ZNSt12_Vector_baseIN9benchmark8internal15BenchmarkRunnerESaIS2_EE13_M_deallocateEPS2_m.exit, label %bb.d
 

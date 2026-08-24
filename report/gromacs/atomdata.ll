@@ -205,7 +205,7 @@ bb.cj:                                            ; preds = %bb.cj, %.epil.prehe
   br i1 %epil.iter.cmp.not, label %_ZN3gmxL21set_lj_parameter_dataEPNS_16nbnxn_atomdata_t6ParamsEb.exit.i, label %bb.cj, !llvm.loop !209
 
 _ZN3gmxL21set_lj_parameter_dataEPNS_16nbnxn_atomdata_t6ParamsEb.exit.i: ; preds = %bb.cc, %_ZN3gmxL21set_lj_parameter_dataEPNS_16nbnxn_atomdata_t6ParamsEb.exit.i.loopexit.unr-lcssa, %bb.cj, %.preheader.i.i, %.preheader87.i.i, %_ZNSt6vectorIfN3gmx9AllocatorIfNS0_20HostAllocationPolicyEEEE6resizeEm.exit.i.i
-  %i.ut = getelementptr inbounds nuw i8, ptr %0, i64 392 ; 3 uses
+  %i.ut = getelementptr inbounds nuw i8, ptr %0, i64 392 ; 4 uses
   store i32 %8, ptr %i.ut, align 8, !tbaa !159
   br i1 %i.kl, label %bb.cl, label %bb.ck
 
@@ -257,7 +257,8 @@ _ZN3gmxL15sc_iClusterSizeENS_15NbnxmKernelTypeE.exit.i: ; preds = %bb.cq, %switc
           to label %.noexc56 unwind label %.loopexit.split-lp ; 3 uses
 
 .noexc56:                                         ; preds = %_ZN3gmxL15sc_iClusterSizeENS_15NbnxmKernelTypeE.exit.i
-  invoke void @_ZN3gmx22EnergyGroupsPerClusterC1Eii(ptr noundef nonnull align 8 dereferenceable(40) %i.va, i32 noundef %8, i32 noundef %.0.i.i)
+  %23 = load i32, ptr %i.ut, align 8, !tbaa !109, !noalias !210
+  invoke void @_ZN3gmx22EnergyGroupsPerClusterC1Eii(ptr noundef nonnull align 8 dereferenceable(40) %i.va, i32 noundef %23, i32 noundef %.0.i.i)
           to label %_ZSt11make_uniqueIN3gmx22EnergyGroupsPerClusterEJRiiEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_.exit.i unwind label %bb.cr, !noalias !210
 
 bb.cr:                                            ; preds = %.noexc56

@@ -204,18 +204,18 @@ declare void @_ZSt20__throw_length_errorPKc(ptr noundef) local_unnamed_addr #10
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZNSt5dequeIN5folly8FunctionIFvvEEESaIS3_EE17_M_reallocate_mapEmb(ptr noundef nonnull align 8 dereferenceable(80) %0, i64 noundef %1, i1 noundef zeroext %2) local_unnamed_addr #3 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 2 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !1541 ; 3 uses
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !1540 ; 8 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 3 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !1541 ; 2 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 3 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !1540 ; 6 uses
   %i.e = ptrtoint ptr %i.b to i64
-  %i.f = ptrtoint ptr %i.d to i64                 ; 4 uses
+  %i.f = ptrtoint ptr %i.d to i64                 ; 3 uses
   %i.g = sub i64 %i.e, %i.f
   %i.h = ashr exact i64 %i.g, 3
   %i.i = add nsw i64 %i.h, 1                      ; 3 uses
   %i.j = add i64 %i.i, %1                         ; 3 uses
-  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.l = load i64, ptr %i.k, align 8, !tbaa !1543 ; 5 uses
+  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
+  %i.l = load i64, ptr %i.k, align 8, !tbaa !1543 ; 4 uses
   %i.m = shl i64 %i.j, 1
   %i.n = icmp ugt i64 %i.l, %i.m
   br i1 %i.n, label %bb.b, label %bb.k
@@ -301,14 +301,17 @@ _ZNSt11_Deque_baseIN5folly8FunctionIFvvEEESaIS3_EE15_M_allocate_mapEm.exit: ; pr
   %i.at = getelementptr inbounds nuw [8 x i8], ptr %i.aq, i64 %i.as
   %i.au = select i1 %2, i64 %1, i64 0
   %i.av = getelementptr inbounds nuw [8 x i8], ptr %i.at, i64 %i.au ; 3 uses
-  %i.aw = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %i.ax = ptrtoint ptr %i.aw to i64
-  %i.ay = sub i64 %i.ax, %i.f                     ; 3 uses
+  %3 = load ptr, ptr %i.c, align 8, !tbaa !1540   ; 3 uses
+  %4 = load ptr, ptr %i.a, align 8, !tbaa !1541
+  %i.aw = getelementptr inbounds nuw i8, ptr %4, i64 8
+  %5 = ptrtoint ptr %i.aw to i64
+  %i.ax = ptrtoint ptr %3 to i64
+  %i.ay = sub i64 %5, %i.ax                       ; 3 uses
   %i.az = icmp sgt i64 %i.ay, 8
   br i1 %i.az, label %bb.o, label %bb.p, !prof !1559
 
 bb.o:                                             ; preds = %_ZNSt11_Deque_baseIN5folly8FunctionIFvvEEESaIS3_EE15_M_allocate_mapEm.exit
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.av, ptr align 8 %i.d, i64 %i.ay, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.av, ptr align 8 %3, i64 %i.ay, i1 false)
   br label %_ZSt4copyIPPN5folly8FunctionIFvvEEES5_ET0_T_S7_S6_.exit24
 
 bb.p:                                             ; preds = %_ZNSt11_Deque_baseIN5folly8FunctionIFvvEEESaIS3_EE15_M_allocate_mapEm.exit
@@ -316,13 +319,14 @@ bb.p:                                             ; preds = %_ZNSt11_Deque_baseI
   br i1 %i.ba, label %bb.q, label %_ZSt4copyIPPN5folly8FunctionIFvvEEES5_ET0_T_S7_S6_.exit24
 
 bb.q:                                             ; preds = %bb.p
-  %i.bb = load ptr, ptr %i.d, align 8, !tbaa !1532
+  %i.bb = load ptr, ptr %3, align 8, !tbaa !1532
   store ptr %i.bb, ptr %i.av, align 8, !tbaa !1532
   br label %_ZSt4copyIPPN5folly8FunctionIFvvEEES5_ET0_T_S7_S6_.exit24
 
 _ZSt4copyIPPN5folly8FunctionIFvvEEES5_ET0_T_S7_S6_.exit24: ; preds = %bb.o, %bb.p, %bb.q
   %i.bc = load ptr, ptr %0, align 8, !tbaa !1539
-  %i.bd = shl i64 %i.l, 3
+  %6 = load i64, ptr %i.k, align 8, !tbaa !1543
+  %i.bd = shl i64 %6, 3
   tail call void @_ZdlPvm(ptr noundef %i.bc, i64 noundef %i.bd) #25
   store ptr %i.aq, ptr %0, align 8, !tbaa !1539
   store i64 %i.am, ptr %i.k, align 8, !tbaa !1543

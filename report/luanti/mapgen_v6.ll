@@ -204,7 +204,7 @@ bb.a:
   store <2 x float> <float 6.000000e-01, float 2.000000e+00>, ptr %i.ak, align 4, !tbaa !11
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 372 ; 2 uses
   store i32 1, ptr %i.al, align 4, !tbaa !18
-  %i.am = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 9 uses
+  %i.am = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 10 uses
   %i.an = load i16, ptr %i.am, align 8, !tbaa !19 ; 3 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 82 ; 9 uses
   %i.ap = load i16, ptr %i.ao, align 2, !tbaa !45
@@ -366,7 +366,7 @@ _ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i: ; preds = %.noexc343, %bb.
 
 _ZN11StreamProxylsEPFRSoS0_E.exit:                ; preds = %bb.k, %.noexc345, %bb.h
   %i.ch = load i16, ptr %i.am, align 8, !tbaa !19 ; 2 uses
-  %i.ci = sext i16 %i.ch to i32                   ; 2 uses
+  %i.ci = sext i16 %i.ch to i32
   %i.cj = getelementptr inbounds nuw i8, ptr %0, i64 200
   store i32 %i.ci, ptr %i.cj, align 8, !tbaa !89
   %i.ck = sext i16 %i.ch to i64
@@ -415,9 +415,11 @@ bb.s:                                             ; preds = %bb.r
   %i.dg = getelementptr inbounds nuw i8, ptr %1, i64 68
   %i.dh = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 8 uses
   %i.di = load i32, ptr %i.dh, align 8, !tbaa !105
+  %22 = load i16, ptr %i.am, align 8, !tbaa !19
+  %23 = sext i16 %22 to i32
   %i.dj = load i16, ptr %i.ao, align 2, !tbaa !45
   %i.dk = sext i16 %i.dj to i32
-  invoke void @_ZN5NoiseC1EPK11NoiseParamsijjj(ptr noundef nonnull align 8 dereferenceable(88) %i.df, ptr noundef nonnull %i.dg, i32 noundef %i.di, i32 noundef %i.ci, i32 noundef %i.dk, i32 noundef 1)
+  invoke void @_ZN5NoiseC1EPK11NoiseParamsijjj(ptr noundef nonnull align 8 dereferenceable(88) %i.df, ptr noundef nonnull %i.dg, i32 noundef %i.di, i32 noundef %23, i32 noundef %i.dk, i32 noundef 1)
           to label %bb.t unwind label %bb.av
 
 bb.t:                                             ; preds = %bb.s

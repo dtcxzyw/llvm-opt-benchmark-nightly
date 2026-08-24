@@ -205,10 +205,10 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 define void @_ZNK4LIEF8Function10flags_listEv(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.std::vector.38") align 8 captures(none) initializes((0, 24)) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(60) %1) local_unnamed_addr #2 align 2 {
 _ZNSt20back_insert_iteratorISt6vectorIN4LIEF8Function5FLAGSESaIS3_EEEaSERKS3_.exit.i:
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, i8 0, i64 24, i1 false)
-  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 4 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 5 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %.val.val.i.1 = load i32, ptr %i.a, align 8, !tbaa !8 ; 4 uses
+  %.val.val.i.1 = load i32, ptr %i.a, align 8, !tbaa !8 ; 2 uses
   %i.d = and i32 %.val.val.i.1, 1
   %.not6.i.1 = icmp eq i32 %i.d, 0
   br i1 %.not6.i.1, label %_ZNSt20back_insert_iteratorISt6vectorIN4LIEF8Function5FLAGSESaIS3_EEEaSERKS3_.exit.i.1, label %_ZNSt6vectorIN4LIEF8Function5FLAGSESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i.i.1
@@ -227,12 +227,14 @@ _ZNSt6vectorIN4LIEF8Function5FLAGSESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu
   %i.e = tail call noalias noundef nonnull dereferenceable(4) ptr @_Znwm(i64 noundef 4) #25 ; 3 uses
   store i32 1, ptr %i.e, align 4, !tbaa !18
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 4
+  %.val.val.i.2.pre.pre = load i32, ptr %i.a, align 8, !tbaa !8
   br label %_ZNSt20back_insert_iteratorISt6vectorIN4LIEF8Function5FLAGSESaIS3_EEEaSERKS3_.exit.i.1
 
 _ZNSt20back_insert_iteratorISt6vectorIN4LIEF8Function5FLAGSESaIS3_EEEaSERKS3_.exit.i.1: ; preds = %_ZNSt6vectorIN4LIEF8Function5FLAGSESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i.i.1, %_ZNSt20back_insert_iteratorISt6vectorIN4LIEF8Function5FLAGSESaIS3_EEEaSERKS3_.exit.i
+  %.val.val.i.2 = phi i32 [ %.val.val.i.2.pre.pre, %_ZNSt6vectorIN4LIEF8Function5FLAGSESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i.i.1 ], [ %.val.val.i.1, %_ZNSt20back_insert_iteratorISt6vectorIN4LIEF8Function5FLAGSESaIS3_EEEaSERKS3_.exit.i ] ; 2 uses
   %i.g = phi ptr [ %i.e, %_ZNSt6vectorIN4LIEF8Function5FLAGSESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i.i.1 ], [ null, %_ZNSt20back_insert_iteratorISt6vectorIN4LIEF8Function5FLAGSESaIS3_EEEaSERKS3_.exit.i ] ; 6 uses
   %i.h = phi ptr [ %i.f, %_ZNSt6vectorIN4LIEF8Function5FLAGSESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i.i.1 ], [ null, %_ZNSt20back_insert_iteratorISt6vectorIN4LIEF8Function5FLAGSESaIS3_EEEaSERKS3_.exit.i ] ; 5 uses
-  %i.i = and i32 %.val.val.i.1, 2
+  %i.i = and i32 %.val.val.i.2, 2
   %.not6.i.2 = icmp eq i32 %i.i, 0
   br i1 %.not6.i.2, label %_ZNSt20back_insert_iteratorISt6vectorIN4LIEF8Function5FLAGSESaIS3_EEEaSERKS3_.exit.i.2, label %bb.b
 
@@ -270,16 +272,15 @@ _ZNSt6vectorIN4LIEF8Function5FLAGSESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i
 
 bb.d:                                             ; preds = %_ZNSt6vectorIN4LIEF8Function5FLAGSESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i.i.i.2
   tail call void @_ZdlPvm(ptr noundef nonnull %i.g, i64 noundef %i.l) #26
-  %.val.val.i.3.pre.pre = load i32, ptr %i.a, align 8, !tbaa !8
   br label %_ZNSt6vectorIN4LIEF8Function5FLAGSESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i.i.2
 
 _ZNSt6vectorIN4LIEF8Function5FLAGSESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i.i.2: ; preds = %bb.d, %_ZNSt6vectorIN4LIEF8Function5FLAGSESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i.i.i.2
-  %.val.val.i.3.pre = phi i32 [ %.val.val.i.3.pre.pre, %bb.d ], [ %.val.val.i.1, %_ZNSt6vectorIN4LIEF8Function5FLAGSESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i.i.i.2 ]
   %2 = getelementptr inbounds nuw [4 x i8], ptr %i.t, i64 %i.r
+  %.val.val.i.3.pre = load i32, ptr %i.a, align 8, !tbaa !8
   br label %_ZNSt20back_insert_iteratorISt6vectorIN4LIEF8Function5FLAGSESaIS3_EEEaSERKS3_.exit.i.2
 
 _ZNSt20back_insert_iteratorISt6vectorIN4LIEF8Function5FLAGSESaIS3_EEEaSERKS3_.exit.i.2: ; preds = %_ZNSt6vectorIN4LIEF8Function5FLAGSESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i.i.2, %_ZNSt20back_insert_iteratorISt6vectorIN4LIEF8Function5FLAGSESaIS3_EEEaSERKS3_.exit.i.1
-  %.val.val.i.3 = phi i32 [ %.val.val.i.3.pre, %_ZNSt6vectorIN4LIEF8Function5FLAGSESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i.i.2 ], [ %.val.val.i.1, %_ZNSt20back_insert_iteratorISt6vectorIN4LIEF8Function5FLAGSESaIS3_EEEaSERKS3_.exit.i.1 ]
+  %.val.val.i.3 = phi i32 [ %.val.val.i.3.pre, %_ZNSt6vectorIN4LIEF8Function5FLAGSESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i.i.2 ], [ %.val.val.i.2, %_ZNSt20back_insert_iteratorISt6vectorIN4LIEF8Function5FLAGSESaIS3_EEEaSERKS3_.exit.i.1 ]
   %i.x = phi ptr [ %i.t, %_ZNSt6vectorIN4LIEF8Function5FLAGSESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i.i.2 ], [ %i.g, %_ZNSt20back_insert_iteratorISt6vectorIN4LIEF8Function5FLAGSESaIS3_EEEaSERKS3_.exit.i.1 ] ; 7 uses
   %i.y = phi ptr [ %2, %_ZNSt6vectorIN4LIEF8Function5FLAGSESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i.i.2 ], [ %i.h, %_ZNSt20back_insert_iteratorISt6vectorIN4LIEF8Function5FLAGSESaIS3_EEEaSERKS3_.exit.i.1 ] ; 5 uses
   %i.z = phi ptr [ %i.w, %_ZNSt6vectorIN4LIEF8Function5FLAGSESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i.i.2 ], [ %i.h, %_ZNSt20back_insert_iteratorISt6vectorIN4LIEF8Function5FLAGSESaIS3_EEEaSERKS3_.exit.i.1 ] ; 5 uses

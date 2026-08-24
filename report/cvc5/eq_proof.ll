@@ -204,7 +204,7 @@ bb.a:
   %193 = alloca [2 x %"class.cvc5::internal::NodeTemplate.8"], align 8 ; 6 uses
   %194 = alloca %"class.cvc5::internal::NodeTemplate", align 8 ; 8 uses
   %195 = alloca %"class.cvc5::internal::NodeTemplate", align 8 ; 8 uses
-  %196 = alloca %"class.std::vector.9", align 8   ; 17 uses
+  %196 = alloca %"class.std::vector.9", align 8   ; 19 uses
   %197 = alloca %"class.cvc5::internal::NodeTemplate", align 8 ; 22 uses
   %198 = alloca %"class.cvc5::internal::NodeTemplate", align 8 ; 8 uses
   %199 = alloca %"class.cvc5::internal::NodeTemplate", align 8 ; 7 uses
@@ -607,6 +607,7 @@ bb.aog:                                           ; preds = %_ZN4cvc58internal12
 
 .critedge807.thread:                              ; preds = %bb.aog
   call void @llvm.lifetime.start.p0(ptr nonnull %196) #20
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %196, i8 0, i64 24, i1 false)
   br label %_ZNSt15__new_allocatorIN4cvc58internal12NodeTemplateILb1EEEE8allocateEmPKv.exit.i.i.i.i
 
 .lr.ph2598:                                       ; preds = %bb.aog
@@ -1009,6 +1010,7 @@ bb.asc:                                           ; preds = %bb.apy, %bb.asb
   %.3 = phi i32 [ %.1, %_ZN4cvc58internal12NodeTemplateILb1EEC2ERKS2_.exit1991 ], [ %i.esx, %bb.apx ], [ %.1, %._crit_edge2599 ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %196) #20
   %i.euh = zext i32 %.pre-phi to i64
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %196, i8 0, i64 24, i1 false)
   %.not.i.i.i.i2051 = icmp eq i32 %.pre-phi, 0
   br i1 %.not.i.i.i.i2051, label %_ZNSt12_Vector_baseIN4cvc58internal12NodeTemplateILb1EEESaIS3_EEC2EmRKS4_.exit.i, label %_ZNSt15__new_allocatorIN4cvc58internal12NodeTemplateILb1EEEE8allocateEmPKv.exit.i.i.i.i
 

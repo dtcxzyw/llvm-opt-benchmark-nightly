@@ -205,8 +205,8 @@ _ZNK5Eigen9DenseBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE8maxCoeffEv.exit: ; 
           to label %bb.g unwind label %bb.j
 
 bb.g:                                             ; preds = %_ZNK5Eigen9DenseBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE8maxCoeffEv.exit
-  %i.bi = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
-  %i.bj = load i64, ptr %i.bi, align 8, !tbaa !14 ; 5 uses
+  %i.bi = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 3 uses
+  %i.bj = load i64, ptr %i.bi, align 8, !tbaa !14 ; 3 uses
   %i.bk = shl nsw i64 %i.bj, 2                    ; 2 uses
   %i.bl = icmp ugt i64 %i.bk, 576460752303423487
   br i1 %i.bl, label %bb.h, label %bb.i
@@ -229,7 +229,8 @@ _ZNSt12_Vector_baseIN5Eigen7TripletIdiEESaIS2_EE11_M_allocateEm.exit.i: ; preds 
 
 _ZNSt6vectorIN5Eigen7TripletIdiEESaIS2_EE7reserveEm.exit: ; preds = %_ZNSt12_Vector_baseIN5Eigen7TripletIdiEESaIS2_EE11_M_allocateEm.exit.i
   %i.bo = getelementptr inbounds nuw [16 x i8], ptr %i.bn, i64 %i.bk ; 2 uses
-  %i.bp = icmp sgt i64 %i.bj, 0
+  %.pre = load i64, ptr %i.bi, align 8, !tbaa !14 ; 2 uses
+  %i.bp = icmp sgt i64 %.pre, 0
   br i1 %i.bp, label %.lr.ph, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %_ZNSt6vectorIN5Eigen7TripletIdiEESaIS2_EE9push_backEOS2_.exit78, %bb.i, %_ZNSt6vectorIN5Eigen7TripletIdiEESaIS2_EE7reserveEm.exit
@@ -255,7 +256,7 @@ bb.k:                                             ; preds = %_ZNSt12_Vector_base
 
 .lr.ph:                                           ; preds = %_ZNSt6vectorIN5Eigen7TripletIdiEESaIS2_EE7reserveEm.exit, %_ZNSt6vectorIN5Eigen7TripletIdiEESaIS2_EE9push_backEOS2_.exit78
   %indvars.iv = phi i64 [ %indvars.iv.next, %_ZNSt6vectorIN5Eigen7TripletIdiEESaIS2_EE9push_backEOS2_.exit78 ], [ 0, %_ZNSt6vectorIN5Eigen7TripletIdiEESaIS2_EE7reserveEm.exit ] ; 2 uses
-  %i.bu = phi i64 [ %i.fm, %_ZNSt6vectorIN5Eigen7TripletIdiEESaIS2_EE9push_backEOS2_.exit78 ], [ %i.bj, %_ZNSt6vectorIN5Eigen7TripletIdiEESaIS2_EE7reserveEm.exit ]
+  %i.bu = phi i64 [ %i.fm, %_ZNSt6vectorIN5Eigen7TripletIdiEESaIS2_EE9push_backEOS2_.exit78 ], [ %.pre, %_ZNSt6vectorIN5Eigen7TripletIdiEESaIS2_EE7reserveEm.exit ]
   %.sroa.36.0223 = phi ptr [ %.sroa.36.8, %_ZNSt6vectorIN5Eigen7TripletIdiEESaIS2_EE9push_backEOS2_.exit78 ], [ %i.bo, %_ZNSt6vectorIN5Eigen7TripletIdiEESaIS2_EE7reserveEm.exit ] ; 7 uses
   %.sroa.17.0222 = phi ptr [ %.sroa.17.5, %_ZNSt6vectorIN5Eigen7TripletIdiEESaIS2_EE9push_backEOS2_.exit78 ], [ %i.bn, %_ZNSt6vectorIN5Eigen7TripletIdiEESaIS2_EE7reserveEm.exit ] ; 5 uses
   %.sroa.0125.0221 = phi ptr [ %.sroa.0125.8, %_ZNSt6vectorIN5Eigen7TripletIdiEESaIS2_EE9push_backEOS2_.exit78 ], [ %i.bn, %_ZNSt6vectorIN5Eigen7TripletIdiEESaIS2_EE7reserveEm.exit ] ; 8 uses
@@ -658,8 +659,8 @@ bb.k:                                             ; preds = %._crit_edge102, %._
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_ZN5Eigen8internal17CompressedStorageIdiE7reserveEl(ptr noundef nonnull align 8 dereferenceable(32) %0, i64 noundef %1) local_unnamed_addr #3 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.b = load i64, ptr %i.a, align 8, !tbaa !57   ; 2 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  %i.b = load i64, ptr %i.a, align 8, !tbaa !57
   %i.c = add nsw i64 %i.b, %1                     ; 7 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.e = load i64, ptr %i.d, align 8, !tbaa !99
@@ -678,7 +679,8 @@ bb.b:                                             ; preds = %bb.a
           to label %_ZN5Eigen8internal12scoped_arrayIiEC2El.exit.i unwind label %_ZN5Eigen8internal12scoped_arrayIdED2Ev.exit9.i ; 2 uses
 
 _ZN5Eigen8internal12scoped_arrayIiEC2El.exit.i:   ; preds = %bb.b
-  %.sroa.speculated.i = tail call i64 @llvm.smin.i64(i64 %i.b, i64 %i.c) ; 3 uses
+  %2 = load i64, ptr %i.a, align 8, !tbaa !90
+  %.sroa.speculated.i = tail call i64 @llvm.smin.i64(i64 %2, i64 %i.c) ; 3 uses
   %i.o = icmp sgt i64 %.sroa.speculated.i, 0
   %.pre.i = load ptr, ptr %0, align 8, !tbaa !91  ; 3 uses
   br i1 %i.o, label %_ZN5Eigen8internal10smart_copyIdEEvPKT_S4_PS2_.exit.i, label %_ZN5Eigen8internal12scoped_arrayIiEC2El.exit._ZN5Eigen8internal10smart_copyIiEEvPKT_S4_PS2_.exit_crit_edge.i

@@ -118,7 +118,7 @@ bb.a:
   store ptr getelementptr inbounds nuw inrange(-16, 424) (i8, ptr @_ZTV11WelcomePage, i64 16), ptr %0, align 8
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16
   store ptr getelementptr inbounds nuw inrange(-16, 64) (i8, ptr @_ZTV11WelcomePage, i64 456), ptr %i.h, align 8
-  %i.i = getelementptr i8, ptr %0, i64 40         ; 15 uses
+  %i.i = getelementptr i8, ptr %0, i64 40         ; 16 uses
   %i.j = invoke noalias noundef dereferenceable_or_null(112) ptr @_Znwm(i64 noundef 112) #13
           to label %bb.b unwind label %bb.ag
 
@@ -290,13 +290,15 @@ bb.t:                                             ; preds = %bb.s
 
 bb.u:                                             ; preds = %bb.t
   %i.aw = load ptr, ptr %i.i, align 8
-  %i.ax = getelementptr i8, ptr %i.aw, i64 56     ; 2 uses
+  %i.ax = getelementptr i8, ptr %i.aw, i64 56
   %i.ay = load ptr, ptr %i.ax, align 8
   %i.az = invoke noalias noundef dereferenceable_or_null(16) ptr @_Znwm(i64 noundef 16) #13
           to label %bb.v unwind label %bb.au      ; 3 uses
 
 bb.v:                                             ; preds = %bb.u
-  %i.ba = load ptr, ptr %i.ax, align 8
+  %15 = load ptr, ptr %i.i, align 8
+  %16 = getelementptr i8, ptr %15, i64 56
+  %i.ba = load ptr, ptr %16, align 8
   invoke void @_ZN26RecentCaptureFilesDelegateC1EP7QObject(ptr noundef align 8 dereferenceable_or_null(16) %i.az, ptr noundef %i.ba)
           to label %bb.w unwind label %bb.aw
 

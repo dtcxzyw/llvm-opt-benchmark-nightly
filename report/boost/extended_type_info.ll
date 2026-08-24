@@ -202,18 +202,18 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   %.079.i = load ptr, ptr %i.a, align 8, !tbaa !26 ; 2 uses
   %.not10.i = icmp eq ptr %.079.i, null
-  %.pre.i11 = load ptr, ptr %1, align 8, !tbaa !23 ; 3 uses
   br i1 %.not10.i, label %_ZNSt8_Rb_treeIPKN5boost13serialization18extended_type_infoES4_St9_IdentityIS4_ENS1_6detail11key_compareESaIS4_EE10_M_insert_IS4_NSA_11_Alloc_nodeEEESt17_Rb_tree_iteratorIS4_EPSt18_Rb_tree_node_baseSG_OT_RT0_.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.a
-  %i.c = getelementptr inbounds nuw i8, ptr %.pre.i11, i64 16 ; 2 uses
+  %2 = load ptr, ptr %1, align 8, !tbaa !23       ; 2 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.d, %.lr.ph.i
   %.0711.i = phi ptr [ %.079.i, %.lr.ph.i ], [ %.07.i, %bb.d ] ; 6 uses
   %i.d = getelementptr inbounds nuw i8, ptr %.0711.i, i64 32
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !23   ; 3 uses
-  %i.f = icmp eq ptr %.pre.i11, %i.e              ; 2 uses
+  %i.f = icmp eq ptr %2, %i.e                     ; 2 uses
   br i1 %i.f, label %_ZNK5boost13serialization6detail11key_compareclEPKNS0_18extended_type_infoES5_.exit.thread.i, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
@@ -260,7 +260,8 @@ _ZNSt8_Rb_treeIPKN5boost13serialization18extended_type_infoES4_St9_IdentityIS4_E
   %i.u = phi i1 [ false, %bb.e ], [ %i.n, %_ZNSt8_Rb_treeIPKN5boost13serialization18extended_type_infoES4_St9_IdentityIS4_ENS1_6detail11key_compareESaIS4_EE23_M_get_insert_equal_posERKS4_.exit ], [ true, %bb.a ], [ %i.t, %bb.f ]
   %i.v = tail call noalias noundef nonnull dereferenceable(40) ptr @_Znwm(i64 noundef 40) #20 ; 3 uses
   %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 32
-  store ptr %.pre.i11, ptr %i.w, align 8, !tbaa !23
+  %3 = load ptr, ptr %1, align 8, !tbaa !23
+  store ptr %3, ptr %i.w, align 8, !tbaa !23
   tail call void @_ZSt29_Rb_tree_insert_and_rebalancebPSt18_Rb_tree_node_baseS0_RS_(i1 noundef zeroext %i.u, ptr noundef nonnull %i.v, ptr noundef nonnull %.0.lcssa.i12, ptr noundef nonnull align 8 dereferenceable(32) %i.b) #16
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   %i.y = load i64, ptr %i.x, align 8, !tbaa !22

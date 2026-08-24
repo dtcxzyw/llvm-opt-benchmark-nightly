@@ -202,8 +202,8 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   %i.e = load i64, ptr %i.d, align 8, !tbaa !829
-  %i.f = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.g = load i64, ptr %i.f, align 8, !tbaa !42   ; 6 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
+  %i.g = load i64, ptr %i.f, align 8, !tbaa !42   ; 5 uses
   %.not = icmp eq i64 %i.b, %i.g
   %i.h = load ptr, ptr %0, align 8, !tbaa !33     ; 2 uses
   br i1 %.not, label %bb.f, label %bb.b
@@ -237,12 +237,14 @@ _ZNSt8__detail16_Hashtable_allocISaINS_10_Hash_nodeISt4pairIKNSt7__cxx1112basic_
   %i.m = shl nuw nsw i64 %i.g, 3                  ; 2 uses
   %i.n = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.m) #28 ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.n, i8 0, i64 %i.m, i1 false)
+  %.pre = load i64, ptr %i.f, align 8, !tbaa !42
   br label %_ZNSt10_HashtableINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_N4Luau7TypeFunEESaISA_ENSt8__detail10_Select1stESt8equal_toIS5_ESt4hashIS5_ENSC_18_Mod_range_hashingENSC_20_Default_ranged_hashENSC_20_Prime_rehash_policyENSC_17_Hashtable_traitsILb1ELb0ELb1EEEE19_M_allocate_bucketsEm.exit
 
 _ZNSt10_HashtableINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_N4Luau7TypeFunEESaISA_ENSt8__detail10_Select1stESt8equal_toIS5_ESt4hashIS5_ENSC_18_Mod_range_hashingENSC_20_Default_ranged_hashENSC_20_Prime_rehash_policyENSC_17_Hashtable_traitsILb1ELb0ELb1EEEE19_M_allocate_bucketsEm.exit: ; preds = %bb.c, %_ZNSt8__detail16_Hashtable_allocISaINS_10_Hash_nodeISt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN4Luau7TypeFunEELb1EEEEE19_M_allocate_bucketsEm.exit.i
+  %3 = phi i64 [ 1, %bb.c ], [ %.pre, %_ZNSt8__detail16_Hashtable_allocISaINS_10_Hash_nodeISt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN4Luau7TypeFunEELb1EEEEE19_M_allocate_bucketsEm.exit.i ]
   %.0.i = phi ptr [ %i.j, %bb.c ], [ %i.n, %_ZNSt8__detail16_Hashtable_allocISaINS_10_Hash_nodeISt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN4Luau7TypeFunEELb1EEEEE19_M_allocate_bucketsEm.exit.i ]
   store ptr %.0.i, ptr %0, align 8, !tbaa !33
-  store i64 %i.g, ptr %i.a, align 8, !tbaa !42
+  store i64 %3, ptr %i.a, align 8, !tbaa !42
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.a

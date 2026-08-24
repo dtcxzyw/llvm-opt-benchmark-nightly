@@ -75,7 +75,7 @@ bb.a:
   %i.c = alloca i32, align 4                      ; 5 uses
   %i.d = alloca i8, align 1                       ; 5 uses
   %i.e = alloca i8, align 1                       ; 5 uses
-  %i.f = alloca i32, align 4                      ; 6 uses
+  %i.f = alloca i32, align 4                      ; 7 uses
   %i.g = alloca double, align 8                   ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #5
   store i32 %1, ptr %i.a, align 4, !tbaa !8
@@ -92,19 +92,20 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #5
   call void @dsyev_(ptr noundef nonnull %i.d, ptr noundef nonnull %i.e, ptr noundef nonnull %i.a, ptr noundef %2, ptr noundef nonnull %i.b, ptr noundef %4, ptr noundef nonnull %i.g, ptr noundef nonnull %i.f, ptr noundef nonnull %i.c, i32 noundef 1, i32 noundef 1)
   %i.h = load double, ptr %i.g, align 8, !tbaa !10
-  %i.i = fptosi double %i.h to i32                ; 6 uses
+  %i.i = fptosi double %i.h to i32                ; 3 uses
   store i32 %i.i, ptr %i.f, align 4, !tbaa !8
   %i.j = sext i32 %i.i to i64
   %i.k = icmp slt i32 %i.i, 0
   %i.l = shl nsw i64 %i.j, 3
   %i.m = select i1 %i.k, i64 -1, i64 %i.l
   %i.n = call noalias noundef nonnull ptr @_Znam(i64 noundef %i.m) #6 ; 4 uses
-  %i.o = icmp sgt i32 %i.i, 0
+  %6 = load i32, ptr %i.f, align 4, !tbaa !8      ; 3 uses
+  %i.o = icmp sgt i32 %6, 0
   br i1 %i.o, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %wide.trip.count = zext nneg i32 %i.i to i64    ; 3 uses
-  %min.iters.check = icmp ult i32 %i.i, 4
+  %wide.trip.count = zext nneg i32 %6 to i64      ; 3 uses
+  %min.iters.check = icmp ult i32 %6, 4
   br i1 %min.iters.check, label %.lr.ph.preheader16, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader

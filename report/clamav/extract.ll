@@ -104,7 +104,7 @@ bb.a:
   store i64 0, ptr %i.a, align 8, !tbaa !8
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 3 uses
   invoke void @_ZN11ComprDataIOC1Ev(ptr noundef nonnull align 8 dereferenceable(266) %i.b)
-          to label %bb.b unwind label %bb.f
+          to label %bb.b unwind label %2
 
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16768 ; 2 uses
@@ -122,7 +122,7 @@ bb.b:                                             ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 40
   store i8 0, ptr %i.i, align 8, !tbaa !37
   %i.j = invoke noalias noundef nonnull dereferenceable(16400) ptr @_Znwm(i64 noundef 16400) #19
-          to label %bb.c unwind label %.thread    ; 2 uses
+          to label %bb.c unwind label %bb.f       ; 2 uses
 
 bb.c:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 32
@@ -133,31 +133,35 @@ bb.c:                                             ; preds = %bb.b
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 16765
   store i8 1, ptr %i.m, align 1, !tbaa !40
   %i.n = invoke noalias noundef nonnull dereferenceable(59688) ptr @_Znwm(i64 noundef 59688) #19
-          to label %bb.d unwind label %.thread    ; 3 uses
+          to label %bb.d unwind label %bb.f       ; 3 uses
 
 bb.d:                                             ; preds = %bb.c
   invoke void @_ZN6UnpackC1EP11ComprDataIO(ptr noundef nonnull align 8 dereferenceable(59688) %i.n, ptr noundef nonnull %i.b)
-          to label %bb.e unwind label %bb.g
+          to label %bb.e unwind label %.thread
 
 bb.e:                                             ; preds = %bb.d
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 336
   store ptr %i.n, ptr %i.o, align 8, !tbaa !41
   ret void
 
-bb.f:                                             ; preds = %bb.a
-  %i.p = landingpad { ptr, i32 }
+2:                                                ; preds = %bb.a
+  %3 = landingpad { ptr, i32 }
           cleanup
   br label %bb.h
 
-.thread:                                          ; preds = %bb.b, %bb.c
+bb.f:                                             ; preds = %bb.c, %bb.b
+  %i.p = landingpad { ptr, i32 }
+          cleanup
+  br label %bb.g
+
+.thread:                                          ; preds = %bb.d
   %i.q = landingpad { ptr, i32 }
           cleanup
-  br label %_ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEED2Ev.exit
-
-bb.g:                                             ; preds = %bb.d
-  %2 = landingpad { ptr, i32 }
-          cleanup                                 ; 2 uses
   tail call void @_ZdlPv(ptr noundef nonnull %i.n) #20
+  br label %bb.g
+
+bb.g:                                             ; preds = %.thread, %bb.f
+  %.pn = phi { ptr, i32 } [ %i.q, %.thread ], [ %i.p, %bb.f ]
   %.pre = load ptr, ptr %i.c, align 8, !tbaa !42  ; 2 uses
   %i.r = icmp eq ptr %.pre, %i.d
   br i1 %i.r, label %_ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEED2Ev.exit, label %_ZNKSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE11_M_is_localEv.exit.i.i
@@ -166,13 +170,12 @@ _ZNKSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE11_M_is_localEv.exit.i.i: 
   tail call void @_ZdlPv(ptr noundef %.pre) #20
   br label %_ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEED2Ev.exit
 
-_ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEED2Ev.exit: ; preds = %bb.g, %.thread, %_ZNKSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE11_M_is_localEv.exit.i.i
-  %.pn9 = phi { ptr, i32 } [ %2, %_ZNKSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE11_M_is_localEv.exit.i.i ], [ %i.q, %.thread ], [ %2, %bb.g ]
+_ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEED2Ev.exit: ; preds = %bb.g, %_ZNKSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE11_M_is_localEv.exit.i.i
   tail call void @_ZN11ComprDataIOD1Ev(ptr noundef nonnull align 8 dead_on_return(266) dereferenceable(266) %i.b) #21
   br label %bb.h
 
-bb.h:                                             ; preds = %_ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEED2Ev.exit, %bb.f
-  %.pn.pn = phi { ptr, i32 } [ %.pn9, %_ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEED2Ev.exit ], [ %i.p, %bb.f ]
+bb.h:                                             ; preds = %_ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEED2Ev.exit, %2
+  %.pn.pn = phi { ptr, i32 } [ %.pn, %_ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEED2Ev.exit ], [ %3, %2 ]
   %i.s = load ptr, ptr %0, align 8, !tbaa !43     ; 2 uses
   %.not.i = icmp eq ptr %i.s, null
   br i1 %.not.i, label %_ZN5ArrayIN10CmdExtract10ExtractRefEED2Ev.exit, label %bb.i

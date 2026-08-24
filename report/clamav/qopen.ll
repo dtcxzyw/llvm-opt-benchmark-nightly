@@ -27,7 +27,7 @@ define void @_ZN9QuickOpenC2Ev(ptr noundef nonnull align 8 dereferenceable(2673)
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
   tail call void @_ZN9CryptDataC1Ev(ptr noundef nonnull align 8 dereferenceable(2516) %i.a)
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 2624
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 2624 ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.b, i8 0, i64 32, i1 false)
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16
   store ptr null, ptr %0, align 8, !tbaa !8
@@ -49,6 +49,15 @@ bb.b:                                             ; preds = %bb.a
 _ZN5ArrayIhED2Ev.exit.a:                          ; preds = %bb.a
   %i.i = landingpad { ptr, i32 }
           cleanup
+  %1 = load ptr, ptr %i.b, align 8, !tbaa !24     ; 2 uses
+  %.not.i = icmp eq ptr %1, null
+  br i1 %.not.i, label %_ZN5ArrayIhED2Ev.exit, label %2
+
+2:                                                ; preds = %_ZN5ArrayIhED2Ev.exit.a
+  tail call void @free(ptr noundef nonnull %1) #17
+  br label %_ZN5ArrayIhED2Ev.exit
+
+_ZN5ArrayIhED2Ev.exit:                            ; preds = %2, %_ZN5ArrayIhED2Ev.exit.a
   tail call void @_ZN9CryptDataD2Ev(ptr noundef nonnull align 8 dead_on_return(2516) dereferenceable(2516) %i.a) #17
   resume { ptr, i32 } %i.i
 }
@@ -71,8 +80,8 @@ bb.a:
 .lr.ph.i:                                         ; preds = %bb.a, %bb.c
   %.08.i = phi ptr [ %i.e, %bb.c ], [ %i.c, %bb.a ] ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %.08.i, i64 24
-  %i.e = load ptr, ptr %i.d, align 8, !tbaa !24   ; 2 uses
-  %i.f = load ptr, ptr %.08.i, align 8, !tbaa !26 ; 2 uses
+  %i.e = load ptr, ptr %i.d, align 8, !tbaa !25   ; 2 uses
+  %i.f = load ptr, ptr %.08.i, align 8, !tbaa !27 ; 2 uses
   %i.g = icmp eq ptr %i.f, null
   br i1 %i.g, label %bb.c, label %bb.b
 
@@ -83,7 +92,7 @@ bb.b:                                             ; preds = %.lr.ph.i
 bb.c:                                             ; preds = %bb.b, %.lr.ph.i
   tail call void @_ZdlPv(ptr noundef nonnull %.08.i) #18
   %.not.i = icmp eq ptr %i.e, null
-  br i1 %.not.i, label %_ZN9QuickOpen5CloseEv.exit, label %.lr.ph.i, !llvm.loop !27
+  br i1 %.not.i, label %_ZN9QuickOpen5CloseEv.exit, label %.lr.ph.i, !llvm.loop !28
 
 _ZN9QuickOpen5CloseEv.exit:                       ; preds = %bb.c, %bb.a
   store ptr %1, ptr %0, align 8, !tbaa !8
@@ -327,15 +336,15 @@ _ZN9CryptData13KDF3CacheItemD2Ev.exit.3:          ; preds = %.noexc2.i5.3
 define void @_ZN9QuickOpenD2Ev(ptr noundef nonnull align 8 dead_on_return(2673) dereferenceable(2673) %0) unnamed_addr #3 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !29   ; 2 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !30   ; 2 uses
   %.not7.i = icmp eq ptr %i.b, null
   br i1 %.not7.i, label %_ZN9QuickOpen5CloseEv.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.a, %bb.c
   %.08.i = phi ptr [ %i.d, %bb.c ], [ %i.b, %bb.a ] ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %.08.i, i64 24
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !24   ; 2 uses
-  %i.e = load ptr, ptr %.08.i, align 8, !tbaa !26 ; 2 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !25   ; 2 uses
+  %i.e = load ptr, ptr %.08.i, align 8, !tbaa !27 ; 2 uses
   %i.f = icmp eq ptr %i.e, null
   br i1 %i.f, label %bb.c, label %bb.b
 
@@ -346,7 +355,7 @@ bb.b:                                             ; preds = %.lr.ph.i
 bb.c:                                             ; preds = %bb.b, %.lr.ph.i
   tail call void @_ZdlPv(ptr noundef nonnull %.08.i) #18
   %.not.i = icmp eq ptr %i.d, null
-  br i1 %.not.i, label %_ZN9QuickOpen5CloseEv.exit, label %.lr.ph.i, !llvm.loop !27
+  br i1 %.not.i, label %_ZN9QuickOpen5CloseEv.exit, label %.lr.ph.i, !llvm.loop !28
 
 _ZN9QuickOpen5CloseEv.exit:                       ; preds = %bb.c, %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 32
@@ -360,7 +369,7 @@ bb.d:                                             ; preds = %_ZN9QuickOpen5Close
 
 bb.e:                                             ; preds = %bb.d, %_ZN9QuickOpen5CloseEv.exit
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 2624
-  %i.k = load ptr, ptr %i.j, align 8, !tbaa !30   ; 2 uses
+  %i.k = load ptr, ptr %i.j, align 8, !tbaa !24   ; 2 uses
   %.not.i1 = icmp eq ptr %i.k, null
   br i1 %.not.i1, label %_ZN5ArrayIhED2Ev.exit, label %bb.f
 
@@ -378,15 +387,15 @@ _ZN5ArrayIhED2Ev.exit:                            ; preds = %bb.e, %bb.f
 define void @_ZN9QuickOpen5CloseEv(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(2673) %0) local_unnamed_addr #3 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !29   ; 2 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !30   ; 2 uses
   %.not7 = icmp eq ptr %i.b, null
   br i1 %.not7, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a, %bb.c
   %.08 = phi ptr [ %i.d, %bb.c ], [ %i.b, %bb.a ] ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %.08, i64 24
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !24   ; 2 uses
-  %i.e = load ptr, ptr %.08, align 8, !tbaa !26   ; 2 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !25   ; 2 uses
+  %i.e = load ptr, ptr %.08, align 8, !tbaa !27   ; 2 uses
   %i.f = icmp eq ptr %i.e, null
   br i1 %i.f, label %bb.c, label %bb.b
 
@@ -397,7 +406,7 @@ bb.b:                                             ; preds = %.lr.ph
 bb.c:                                             ; preds = %.lr.ph, %bb.b
   tail call void @_ZdlPv(ptr noundef nonnull %.08) #18
   %.not = icmp eq ptr %i.d, null
-  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !27
+  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !28
 
 ._crit_edge:                                      ; preds = %bb.c, %bb.a
   ret void
@@ -541,13 +550,13 @@ bb.i:                                             ; preds = %.thread9, %bb.f
   %i.bj = getelementptr inbounds nuw i8, ptr %0, i64 2600
   %i.bk = getelementptr inbounds nuw i8, ptr %0, i64 2624 ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.bj, i8 0, i64 24, i1 false)
-  %i.bl = load ptr, ptr %i.bk, align 8, !tbaa !30 ; 2 uses
+  %i.bl = load ptr, ptr %i.bk, align 8, !tbaa !24 ; 2 uses
   %.not.i = icmp eq ptr %i.bl, null
   br i1 %.not.i, label %_ZN5ArrayIhE5ResetEv.exit, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
   tail call void @free(ptr noundef nonnull %i.bl) #17
-  store ptr null, ptr %i.bk, align 8, !tbaa !30
+  store ptr null, ptr %i.bk, align 8, !tbaa !24
   br label %_ZN5ArrayIhE5ResetEv.exit
 
 _ZN5ArrayIhE5ResetEv.exit:                        ; preds = %bb.i, %bb.j
@@ -703,7 +712,7 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h
   %i.y = sub i64 %i.t, %i.u
-  %i.z = load ptr, ptr %i.l, align 8, !tbaa !30
+  %i.z = load ptr, ptr %i.l, align 8, !tbaa !24
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 %i.y
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %1, ptr align 1 %i.aa, i64 %2, i1 false)
   store i64 %2, ptr %3, align 8, !tbaa !94
@@ -807,7 +816,7 @@ bb.k:                                             ; preds = %bb.g
   br i1 %i.m, label %bb.l, label %._ZN5ArrayIhE5AllocEm.exit_crit_edge
 
 ._ZN5ArrayIhE5AllocEm.exit_crit_edge:             ; preds = %bb.k
-  %.pre = load ptr, ptr %i.j, align 8, !tbaa !30
+  %.pre = load ptr, ptr %i.j, align 8, !tbaa !24
   br label %_ZN5ArrayIhE5AllocEm.exit
 
 bb.l:                                             ; preds = %bb.k
@@ -838,7 +847,7 @@ bb.n:                                             ; preds = %.noexc16, %bb.l
   %i.u = add i64 %i.s, 32
   %i.v = add i64 %i.u, %i.t
   %..i.i = call i64 @llvm.umax.i64(i64 %i.r, i64 %i.v) ; 2 uses
-  %i.w = load ptr, ptr %i.j, align 8, !tbaa !30
+  %i.w = load ptr, ptr %i.j, align 8, !tbaa !24
   %i.x = call ptr @realloc(ptr noundef %i.w, i64 noundef %..i.i) #21 ; 3 uses
   %i.y = icmp eq ptr %i.x, null
   br i1 %i.y, label %bb.o, label %_ZN5ArrayIhE3AddEm.exit.i
@@ -848,7 +857,7 @@ bb.o:                                             ; preds = %bb.n
           to label %_ZN5ArrayIhE3AddEm.exit.i unwind label %bb.j
 
 _ZN5ArrayIhE3AddEm.exit.i:                        ; preds = %bb.o, %bb.n
-  store ptr %i.x, ptr %i.j, align 8, !tbaa !30
+  store ptr %i.x, ptr %i.j, align 8, !tbaa !24
   store i64 %..i.i, ptr %i.k, align 8, !tbaa !97
   br label %_ZN5ArrayIhE5AllocEm.exit
 
@@ -867,7 +876,7 @@ bb.p:                                             ; preds = %_ZN5ArrayIhE5AllocE
 
 bb.q:                                             ; preds = %bb.p, %bb.g, %bb.b
   %.111 = phi i1 [ false, %bb.b ], [ false, %bb.g ], [ true, %bb.p ]
-  %i.af = load ptr, ptr %1, align 8, !tbaa !30    ; 2 uses
+  %i.af = load ptr, ptr %1, align 8, !tbaa !24    ; 2 uses
   %.not.i.i18 = icmp eq ptr %i.af, null
   br i1 %.not.i.i18, label %_ZN7RawReadD2Ev.exit, label %bb.r
 
@@ -881,7 +890,7 @@ _ZN7RawReadD2Ev.exit:                             ; preds = %bb.q, %bb.r
 
 bb.s:                                             ; preds = %bb.h, %bb.j, %bb.i, %bb.c
   %.pn.pn.pn = phi { ptr, i32 } [ %i.b, %bb.c ], [ %i.g, %bb.h ], [ %i.i, %bb.j ], [ %i.h, %bb.i ]
-  %i.ag = load ptr, ptr %1, align 8, !tbaa !30    ; 2 uses
+  %i.ag = load ptr, ptr %1, align 8, !tbaa !24    ; 2 uses
   %.not.i.i19 = icmp eq ptr %i.ag, null
   br i1 %.not.i.i19, label %_ZN7RawReadD2Ev.exit20, label %bb.t
 
@@ -1174,13 +1183,13 @@ attributes #21 = { nounwind allocsize(1) }
 !21 = !{!9, !14, i64 32}
 !22 = !{!9, !15, i64 40}
 !23 = !{!9, !12, i64 2568}
-!24 = !{!25, !13, i64 24}
-!25 = !{!"_ZTS13QuickOpenItem", !14, i64 0, !15, i64 8, !15, i64 16, !13, i64 24}
-!26 = !{!25, !14, i64 0}
-!27 = distinct !{!27, !28}
-!28 = !{!"llvm.loop.mustprogress"}
-!29 = !{!9, !13, i64 16}
-!30 = !{!19, !14, i64 0}
+!24 = !{!19, !14, i64 0}
+!25 = !{!26, !13, i64 24}
+!26 = !{!"_ZTS13QuickOpenItem", !14, i64 0, !15, i64 8, !15, i64 16, !13, i64 24}
+!27 = !{!26, !14, i64 0}
+!28 = distinct !{!28, !29}
+!29 = !{!"llvm.loop.mustprogress"}
+!30 = !{!9, !13, i64 16}
 !31 = !{i8 0, i8 2}
 !32 = !{}
 !33 = !{!34, !34, i64 0}
@@ -1246,9 +1255,9 @@ attributes #21 = { nounwind allocsize(1) }
 !93 = !{!9, !15, i64 2608}
 !94 = !{!15, !15, i64 0}
 !95 = !{!19, !15, i64 8}
-!96 = distinct !{!96, !28}
+!96 = distinct !{!96, !29}
 !97 = !{!19, !15, i64 16}
 !98 = !{!19, !15, i64 24}
 !99 = !{!9, !15, i64 2616}
-!100 = distinct !{!100, !28}
+!100 = distinct !{!100, !29}
 end_hunk_0

@@ -205,7 +205,7 @@ bb.a:
   store i32 0, ptr %i.b, align 8, !tbaa !250
   %calloc.i.i = tail call dereferenceable_or_null(4096) ptr @calloc(i64 1, i64 4096)
   store ptr %calloc.i.i, ptr %i.a, align 8, !tbaa !251
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 381592 ; 4 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 381592 ; 5 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 384216 ; 2 uses
   %i.e = load i32, ptr %i.d, align 8, !tbaa !344  ; 2 uses
   %or.cond = icmp ugt i32 %i.e, 15
@@ -249,7 +249,7 @@ bb.f:                                             ; preds = %bb.e
   br label %_ZNSt6vectorIhSaIhEED2Ev.exit
 
 bb.g:                                             ; preds = %bb.e, %bb.d
-  %i.r = load ptr, ptr %i.c, align 8, !tbaa !401  ; 3 uses
+  %i.r = load ptr, ptr %i.c, align 8, !tbaa !401
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 80
   store ptr %i.r, ptr %i.s, align 8, !tbaa !257
   %i.t = getelementptr inbounds nuw i8, ptr %2, i64 24
@@ -305,10 +305,11 @@ bb.l:                                             ; preds = %.noexc11
 _ZNSt6vectorIhSaIhEEC2EmRKS0_.exit:               ; preds = %bb.l, %.noexc11, %_ZNSt6vectorIhSaIhEE17_S_check_init_lenEmRKS0_.exit.i
   %.sroa.11.0 = phi ptr [ %i.ag, %bb.l ], [ %i.ag, %.noexc11 ], [ null, %_ZNSt6vectorIhSaIhEE17_S_check_init_lenEmRKS0_.exit.i ] ; 2 uses
   %.sroa.015.0 = phi ptr [ %i.af, %bb.l ], [ %i.af, %.noexc11 ], [ null, %_ZNSt6vectorIhSaIhEE17_S_check_init_lenEmRKS0_.exit.i ] ; 8 uses
-  %i.ak = load ptr, ptr %i.r, align 8, !tbaa !30
+  %3 = load ptr, ptr %i.c, align 8, !tbaa !401    ; 2 uses
+  %i.ak = load ptr, ptr %3, align 8, !tbaa !30
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 120
   %i.am = load ptr, ptr %i.al, align 8
-  %i.an = invoke noundef i32 %i.am(ptr noundef nonnull align 8 dereferenceable(8) %i.r)
+  %i.an = invoke noundef i32 %i.am(ptr noundef nonnull align 8 dereferenceable(8) %3)
           to label %bb.m unwind label %bb.s, !call_target !32 ; 0 uses
 
 bb.m:                                             ; preds = %_ZNSt6vectorIhSaIhEEC2EmRKS0_.exit

@@ -1,6 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/boost/original/collate?download=true
 inline.NumInlined: 311
-inline.NumDeleted: 157
+inline.NumDeleted: 156
 loop-unroll.NumRuntimeUnrolled: 1
 loop-unroll.NumUnrolled: 2
 begin_hunk_0_@_ZNK5boost6locale10impl_posix8collatorIcE10do_compareEPKcS5_S5_S5_:bb.a
@@ -204,8 +204,8 @@ _ZNSt12_Vector_baseIcSaIcEE13_M_deallocateEPcm.exit34.i.i: ; preds = %bb.n, %_ZS
   br label %_ZNSt6vectorIcSaIcEE6resizeEm.exit
 
 _ZNSt6vectorIcSaIcEE6resizeEm.exit:               ; preds = %_ZNSt12_Vector_baseIcSaIcEE13_M_deallocateEPcm.exit34.i.i, %bb.j, %bb.i
-  %.sroa.21.2 = phi ptr [ %i.ay, %_ZNSt12_Vector_baseIcSaIcEE13_M_deallocateEPcm.exit34.i.i ], [ %i.v, %bb.i ], [ %i.v, %bb.j ]
-  %.sroa.036.2 = phi ptr [ %i.at, %_ZNSt12_Vector_baseIcSaIcEE13_M_deallocateEPcm.exit34.i.i ], [ %i.u, %bb.i ], [ %i.u, %bb.j ] ; 2 uses
+  %.sroa.21.2 = phi ptr [ %i.v, %bb.i ], [ %i.v, %bb.j ], [ %i.ay, %_ZNSt12_Vector_baseIcSaIcEE13_M_deallocateEPcm.exit34.i.i ]
+  %.sroa.036.2 = phi ptr [ %i.u, %bb.i ], [ %i.u, %bb.j ], [ %i.at, %_ZNSt12_Vector_baseIcSaIcEE13_M_deallocateEPcm.exit34.i.i ] ; 2 uses
   %i.az = load ptr, ptr %4, align 8, !tbaa !49
   %i.ba = load ptr, ptr %i.ac, align 8, !tbaa !8
   %i.bb = load ptr, ptr %i.ba, align 8, !tbaa !52
@@ -608,7 +608,7 @@ define linkonce_odr hidden void @_ZNK5boost6locale10impl_posix8collatorIwE12do_t
 bb.a:
   %i.a = alloca i64, align 8                      ; 7 uses
   %i.b = alloca i64, align 8                      ; 6 uses
-  %4 = alloca %"class.std::__cxx11::basic_string.2", align 8 ; 12 uses
+  %4 = alloca %"class.std::__cxx11::basic_string.2", align 8 ; 13 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #17
   %i.c = ptrtoint ptr %3 to i64
   %i.d = ptrtoint ptr %2 to i64
@@ -658,7 +658,7 @@ bb.d:                                             ; preds = %._crit_edge.i.i
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c, %._crit_edge.i.i
-  %i.q = phi ptr [ %i.n, %._crit_edge.i.i ], [ %i.n, %bb.c ], [ %.pre7.i.i, %bb.d ] ; 2 uses
+  %i.q = phi ptr [ %i.n, %._crit_edge.i.i ], [ %i.n, %bb.c ], [ %.pre7.i.i, %bb.d ]
   %i.r = phi i64 [ %i.m, %._crit_edge.i.i ], [ %i.m, %bb.c ], [ %.pre6.i.i, %bb.d ] ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %4, i64 8
   store i64 %i.r, ptr %i.s, align 8, !tbaa !64
@@ -703,6 +703,7 @@ _ZNSt6vectorIwSaIwEEC2EmRKS0_.exit:               ; preds = %_ZSt6fill_nIPwmwET_
   %.sroa.24.2 = phi ptr [ %i.z, %_ZSt6fill_nIPwmwET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i ], [ %i.z, %.noexc20 ], [ null, %_ZNSt6vectorIwSaIwEE17_S_check_init_lenEmRKS0_.exit.i ] ; 5 uses
   %.sroa.038.2 = phi ptr [ %i.y, %_ZSt6fill_nIPwmwET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i ], [ %i.y, %.noexc20 ], [ null, %_ZNSt6vectorIwSaIwEE17_S_check_init_lenEmRKS0_.exit.i ] ; 9 uses
   %.0.i.i.i.i.i = phi ptr [ %i.ac, %_ZSt6fill_nIPwmwET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i ], [ %i.aa, %.noexc20 ], [ null, %_ZNSt6vectorIwSaIwEE17_S_check_init_lenEmRKS0_.exit.i ] ; 3 uses
+  %5 = load ptr, ptr %4, align 8, !tbaa !60
   %i.ad = ptrtoint ptr %.0.i.i.i.i.i to i64       ; 2 uses
   %i.ae = ptrtoint ptr %.sroa.038.2 to i64        ; 2 uses
   %i.af = sub i64 %i.ad, %i.ae                    ; 4 uses
@@ -710,7 +711,7 @@ _ZNSt6vectorIwSaIwEEC2EmRKS0_.exit:               ; preds = %_ZSt6fill_nIPwmwET_
   %i.ah = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
   %i.ai = load ptr, ptr %i.ah, align 8, !tbaa !8
   %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !52
-  %i.ak = call noundef i64 @wcsxfrm_l(ptr noundef %.sroa.038.2, ptr noundef nonnull %i.q, i64 noundef %i.ag, ptr noundef %i.aj) #17 ; 9 uses
+  %i.ak = call noundef i64 @wcsxfrm_l(ptr noundef %.sroa.038.2, ptr noundef %5, i64 noundef %i.ag, ptr noundef %i.aj) #17 ; 9 uses
   %i.al = icmp ugt i64 %i.ak, %i.ag
   br i1 %i.al, label %bb.h, label %bb.p
 

@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !127
-  %i.d = load ptr, ptr %0, align 8, !tbaa !92     ; 4 uses
+  %i.d = load ptr, ptr %0, align 8, !tbaa !92
   %i.e = ptrtoint ptr %i.c to i64
   %i.f = ptrtoint ptr %i.d to i64                 ; 2 uses
   %i.g = sub i64 %i.e, %i.f
@@ -211,25 +211,30 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.i, label %_ZNSt12_Vector_baseIP4NodeSaIS1_EE11_M_allocateEm.exit, label %bb.f
 
 _ZNSt12_Vector_baseIP4NodeSaIS1_EE11_M_allocateEm.exit: ; preds = %bb.c
-  %i.j = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  %i.j = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !128
   %i.l = ptrtoint ptr %i.k to i64
-  %i.m = sub i64 %i.l, %i.f                       ; 3 uses
+  %i.m = sub i64 %i.l, %i.f
   %i.n = shl nuw nsw i64 %1, 3
   %i.o = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.n) #19 ; 4 uses
-  %i.p = icmp sgt i64 %i.m, 0
+  %2 = load ptr, ptr %0, align 8, !tbaa !92       ; 4 uses
+  %3 = load ptr, ptr %i.j, align 8, !tbaa !128
+  %4 = ptrtoint ptr %3 to i64
+  %5 = ptrtoint ptr %2 to i64
+  %6 = sub i64 %4, %5                             ; 2 uses
+  %i.p = icmp sgt i64 %6, 0
   br i1 %i.p, label %bb.d, label %_ZNSt6vectorIP4NodeSaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit
 
 bb.d:                                             ; preds = %_ZNSt12_Vector_baseIP4NodeSaIS1_EE11_M_allocateEm.exit
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.o, ptr align 8 %i.d, i64 %i.m, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.o, ptr align 8 %2, i64 %6, i1 false)
   br label %_ZNSt6vectorIP4NodeSaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit
 
 _ZNSt6vectorIP4NodeSaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit: ; preds = %_ZNSt12_Vector_baseIP4NodeSaIS1_EE11_M_allocateEm.exit, %bb.d
-  %.not.i8 = icmp eq ptr %i.d, null
+  %.not.i8 = icmp eq ptr %2, null
   br i1 %.not.i8, label %_ZNSt12_Vector_baseIP4NodeSaIS1_EE13_M_deallocateEPS1_m.exit, label %bb.e
 
 bb.e:                                             ; preds = %_ZNSt6vectorIP4NodeSaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit
-  tail call void @_ZdlPv(ptr noundef nonnull %i.d) #17
+  tail call void @_ZdlPv(ptr noundef nonnull %2) #17
   br label %_ZNSt12_Vector_baseIP4NodeSaIS1_EE13_M_deallocateEPS1_m.exit
 
 _ZNSt12_Vector_baseIP4NodeSaIS1_EE13_M_deallocateEPS1_m.exit: ; preds = %_ZNSt6vectorIP4NodeSaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit, %bb.e
@@ -408,14 +413,17 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   %.02022.i = load ptr, ptr %i.a, align 8, !tbaa !129 ; 2 uses
   %.not23.i = icmp eq ptr %.02022.i, null
-  %.pre.i.pre.pre = load ptr, ptr %1, align 8, !tbaa !130 ; 4 uses
-  br i1 %.not23.i, label %._crit_edge.thread.i, label %.lr.ph.i.a
+  br i1 %.not23.i, label %._crit_edge.thread.i, label %.lr.ph.i
 
-.lr.ph.i.a:                                       ; preds = %bb.a, %.lr.ph.i.a
-  %.02024.i = phi ptr [ %.020.i, %.lr.ph.i.a ], [ %.02022.i, %bb.a ] ; 5 uses
+.lr.ph.i:                                         ; preds = %bb.a
+  %2 = load ptr, ptr %1, align 8, !tbaa !130      ; 2 uses
+  br label %.lr.ph.i.a
+
+.lr.ph.i.a:                                       ; preds = %.lr.ph.i.a, %.lr.ph.i
+  %.02024.i = phi ptr [ %.02022.i, %.lr.ph.i ], [ %.020.i, %.lr.ph.i.a ] ; 5 uses
   %i.c = getelementptr inbounds nuw i8, ptr %.02024.i, i64 32
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !130  ; 2 uses
-  %i.e = icmp ult ptr %.pre.i.pre.pre, %i.d       ; 2 uses
+  %i.e = icmp ult ptr %2, %i.d                    ; 2 uses
   %.in.v.i = select i1 %i.e, i64 16, i64 24
   %.in.i = getelementptr inbounds nuw i8, ptr %.02024.i, i64 %.in.v.i
   %.020.i = load ptr, ptr %.in.i, align 8, !tbaa !129 ; 2 uses
@@ -435,14 +443,16 @@ bb.a:
 bb.b:                                             ; preds = %._crit_edge.thread.i
   %i.i = tail call noundef ptr @_ZSt18_Rb_tree_decrementPSt18_Rb_tree_node_base(ptr noundef nonnull %.019.lcssa29.i) #20 ; 2 uses
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.i, i64 32
-  %.pre.a = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !130
+  %.pre = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !130
+  %.pre.a = load ptr, ptr %1, align 8, !tbaa !130
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %._crit_edge.i
-  %i.j = phi ptr [ %.pre.a, %bb.b ], [ %i.d, %._crit_edge.i ]
+  %3 = phi ptr [ %.pre.a, %bb.b ], [ %2, %._crit_edge.i ]
+  %i.j = phi ptr [ %.pre, %bb.b ], [ %i.d, %._crit_edge.i ]
   %.019.lcssa28.i = phi ptr [ %.019.lcssa29.i, %bb.b ], [ %.02024.i, %._crit_edge.i ]
   %.sroa.05.0.i = phi ptr [ %i.i, %bb.b ], [ %.02024.i, %._crit_edge.i ]
-  %i.k = icmp ult ptr %i.j, %.pre.i.pre.pre
+  %i.k = icmp ult ptr %i.j, %3
   br i1 %i.k, label %select.unfold, label %bb.e
 
 select.unfold:                                    ; preds = %bb.c, %._crit_edge.thread.i
@@ -451,16 +461,18 @@ select.unfold:                                    ; preds = %bb.c, %._crit_edge.
   br i1 %i.l, label %_ZNSt8_Rb_treeIP4EdgeSt4pairIKS1_7DyndepsESt10_Select1stIS5_ESt4lessIS1_ESaIS5_EE10_M_insert_IS5_NSB_11_Alloc_nodeEEESt17_Rb_tree_iteratorIS5_EPSt18_Rb_tree_node_baseSH_OT_RT0_.exit, label %bb.d
 
 bb.d:                                             ; preds = %select.unfold
+  %4 = load ptr, ptr %1, align 8, !tbaa !130
   %i.m = getelementptr inbounds nuw i8, ptr %.sroa.4.0.i.ph, i64 32
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !130
-  %i.o = icmp ult ptr %.pre.i.pre.pre, %i.n
+  %i.o = icmp ult ptr %4, %i.n
   br label %_ZNSt8_Rb_treeIP4EdgeSt4pairIKS1_7DyndepsESt10_Select1stIS5_ESt4lessIS1_ESaIS5_EE10_M_insert_IS5_NSB_11_Alloc_nodeEEESt17_Rb_tree_iteratorIS5_EPSt18_Rb_tree_node_baseSH_OT_RT0_.exit
 
 _ZNSt8_Rb_treeIP4EdgeSt4pairIKS1_7DyndepsESt10_Select1stIS5_ESt4lessIS1_ESaIS5_EE10_M_insert_IS5_NSB_11_Alloc_nodeEEESt17_Rb_tree_iteratorIS5_EPSt18_Rb_tree_node_baseSH_OT_RT0_.exit: ; preds = %select.unfold, %bb.d
   %i.p = phi i1 [ %i.o, %bb.d ], [ true, %select.unfold ]
   %i.q = tail call noalias noundef nonnull dereferenceable(96) ptr @_Znwm(i64 noundef 96) #19 ; 8 uses
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 32
-  store ptr %.pre.i.pre.pre, ptr %i.r, align 8, !tbaa !84
+  %5 = load ptr, ptr %1, align 8, !tbaa !84
+  store ptr %5, ptr %i.r, align 8, !tbaa !84
   %i.s = getelementptr inbounds nuw i8, ptr %i.q, i64 40
   %i.t = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.u = load i16, ptr %i.t, align 8

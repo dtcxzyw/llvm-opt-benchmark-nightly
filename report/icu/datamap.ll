@@ -204,13 +204,18 @@ bb.b:                                             ; preds = %bb.a
   store ptr getelementptr inbounds nuw inrange(-16, 88) (i8, ptr @_ZTVN6icu_7813UnicodeStringE, i64 16), ptr %4, align 8, !tbaa !8
   %i.m = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 3 uses
   store i16 2, ptr %i.m, align 8, !tbaa !10
-  %6 = getelementptr inbounds nuw i8, ptr %4, i64 10
-  %7 = getelementptr inbounds nuw i8, ptr %4, i64 24
-  %8 = getelementptr inbounds nuw i8, ptr %4, i64 12
+  %6 = load i32, ptr %1, align 4, !tbaa !28
+  %7 = icmp sgt i32 %6, 0
+  br i1 %7, label %.lr.ph, label %._crit_edge
+
+.lr.ph:                                           ; preds = %.lr.ph.a
+  %8 = getelementptr inbounds nuw i8, ptr %4, i64 10
+  %9 = getelementptr inbounds nuw i8, ptr %4, i64 24
+  %10 = getelementptr inbounds nuw i8, ptr %4, i64 12
   br label %bb.c
 
-bb.c:                                             ; preds = %.lr.ph.a, %bb.d
-  %indvars.iv = phi i64 [ 0, %.lr.ph.a ], [ %indvars.iv.next, %bb.d ] ; 3 uses
+bb.c:                                             ; preds = %.lr.ph, %bb.d
+  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.d ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #15
   %i.n = trunc nuw nsw i64 %indvars.iv to i32
   invoke void @_ZNK6icu_7814ResourceBundle11getStringExEiR10UErrorCode(ptr dead_on_unwind nonnull writable sret(%"class.icu_78::UnicodeString") align 8 %5, ptr noundef nonnull align 8 dereferenceable(24) %i.e, i32 noundef %i.n, ptr noundef nonnull align 4 dereferenceable(4) %3)
@@ -226,15 +231,15 @@ _ZNK6icu_7813UnicodeString9getBufferEv.exit.i:    ; preds = %bb.c
   %.not.i.i = icmp eq i16 %i.q, 0
   %i.r = and i16 %i.p, 2
   %.not2.i.i = icmp eq i16 %i.r, 0
-  %i.s = load ptr, ptr %7, align 8
-  %spec.select = select i1 %.not2.i.i, ptr %i.s, ptr %6
+  %i.s = load ptr, ptr %9, align 8
+  %spec.select = select i1 %.not2.i.i, ptr %i.s, ptr %8
   %.0.i.i = select i1 %.not.i.i, ptr %spec.select, ptr null ; 2 uses
   call void asm sideeffect "", "rm,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr %.0.i.i) #15, !srcloc !11
   %i.t = load i16, ptr %i.m, align 8, !tbaa !10   ; 2 uses
   %i.u = icmp slt i16 %i.t, 0
   %i.v = ashr i16 %i.t, 5
   %i.w = sext i16 %i.v to i32
-  %i.x = load i32, ptr %8, align 4
+  %i.x = load i32, ptr %10, align 4
   %i.y = select i1 %i.u, i32 %i.x, i32 %i.w       ; 2 uses
   invoke void @u_UCharsToChars_78(ptr noundef %.0.i.i, ptr noundef nonnull %i.a, i32 noundef %i.y)
           to label %bb.d unwind label %bb.f
@@ -265,7 +270,7 @@ bb.f:                                             ; preds = %_ZNK6icu_7813Unicod
           cleanup
   br label %bb.g
 
-._crit_edge:                                      ; preds = %bb.d
+._crit_edge:                                      ; preds = %bb.d, %.lr.ph.a
   call void @_ZN6icu_7813UnicodeStringD1Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %4) #15
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #15
   br label %bb.h

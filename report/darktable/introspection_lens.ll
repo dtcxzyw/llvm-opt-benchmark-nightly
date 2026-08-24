@@ -205,8 +205,8 @@ bb.a:
   ]
 
 bb.b:                                             ; preds = %bb.a
-  %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 2 uses
-  %i.e = load ptr, ptr %i.d, align 8, !tbaa !176  ; 3 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 3 uses
+  %i.e = load ptr, ptr %i.d, align 8, !tbaa !176  ; 2 uses
   %.not.i = icmp eq ptr %i.e, null
   br i1 %.not.i, label %_ZL17_modify_roi_in_lfP15dt_iop_module_tP22dt_dev_pixelpipe_iop_tPK12dt_iop_roi_tPS3_.exit, label %bb.c
 
@@ -216,8 +216,8 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not224.i, label %_ZL17_modify_roi_in_lfP15dt_iop_module_tP22dt_dev_pixelpipe_iop_tPK12dt_iop_roi_tPS3_.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 24
-  %i.h = load float, ptr %i.g, align 8, !tbaa !186 ; 2 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 24 ; 2 uses
+  %i.h = load float, ptr %i.g, align 8, !tbaa !186
   %i.i = fcmp reassoc nsz arcp contract afn ugt float %i.h, 0.000000e+00
   br i1 %i.i, label %bb.e, label %_ZL17_modify_roi_in_lfP15dt_iop_module_tP22dt_dev_pixelpipe_iop_tPK12dt_iop_roi_tPS3_.exit
 
@@ -237,7 +237,9 @@ bb.e:                                             ; preds = %bb.d
   %i.v = getelementptr inbounds nuw i8, ptr %i.b, i64 4
   %i.w = load i32, ptr %i.v, align 4, !tbaa !197  ; 2 uses
   %i.x = tail call noalias noundef nonnull dereferenceable(96) ptr @_Znwm(i64 noundef 96) #34 ; 9 uses
-  invoke void @_ZN10lfModifierC1EPK6lfLensfii(ptr noundef nonnull align 8 dereferenceable(96) %i.x, ptr noundef nonnull %i.e, float noundef %i.h, i32 noundef %i.s, i32 noundef %i.u)
+  %4 = load ptr, ptr %i.d, align 8, !tbaa !176
+  %5 = load float, ptr %i.g, align 8, !tbaa !186
+  invoke void @_ZN10lfModifierC1EPK6lfLensfii(ptr noundef nonnull align 8 dereferenceable(96) %i.x, ptr noundef %4, float noundef %5, i32 noundef %i.s, i32 noundef %i.u)
           to label %_ZL13_get_modifierPiiiPK18dt_iop_lens_data_tii.exit.i unwind label %bb.f
 
 bb.f:                                             ; preds = %bb.e

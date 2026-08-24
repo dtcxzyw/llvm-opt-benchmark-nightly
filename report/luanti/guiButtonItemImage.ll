@@ -204,7 +204,10 @@ bb.b:                                             ; preds = %bb.a
   store i32 %i.e, ptr %i.h, align 4, !tbaa !15
   %i.i = getelementptr inbounds nuw i8, ptr %11, i64 12
   store i32 %i.f, ptr %i.i, align 4, !tbaa !17
-  %i.j = invoke noundef ptr @_ZNK9GUIButton13getActiveFontEv(ptr noundef nonnull align 8 dereferenceable(7452) %0)
+  %12 = load ptr, ptr %0, align 8, !tbaa !9
+  %13 = getelementptr inbounds nuw i8, ptr %12, i64 296
+  %14 = load ptr, ptr %13, align 8
+  %i.j = invoke noundef ptr %14(ptr noundef nonnull align 8 dereferenceable(7452) %0)
           to label %bb.c unwind label %bb.i
 
 bb.c:                                             ; preds = %bb.b

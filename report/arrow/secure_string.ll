@@ -202,9 +202,9 @@ bb.a:
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit: ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.b = load i64, ptr %i.a, align 8, !tbaa !14   ; 9 uses
-  %i.c = load ptr, ptr %0, align 8, !tbaa !7      ; 4 uses
-  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
-  %i.e = icmp eq ptr %i.c, %i.d                   ; 2 uses
+  %i.c = load ptr, ptr %0, align 8, !tbaa !7      ; 3 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 5 uses
+  %i.e = icmp eq ptr %i.c, %i.d
   %i.f = load i64, ptr %i.d, align 8
   %i.g = select i1 %i.e, i64 15, i64 %i.f         ; 2 uses
   %i.h = icmp ugt i64 %i.b, %i.g
@@ -233,12 +233,14 @@ bb.e:                                             ; preds = %bb.d
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit: ; preds = %bb.d
   %i.n = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.l) #21 ; 2 uses
-  br i1 %i.e, label %.thread, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i17
+  %2 = load ptr, ptr %0, align 8, !tbaa !7        ; 2 uses
+  %3 = icmp eq ptr %2, %i.d
+  br i1 %3, label %.thread, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i17
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i17: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit
   %i.o = load i64, ptr %i.d, align 8, !tbaa !13
   %i.p = add i64 %i.o, 1
-  tail call void @_ZdlPvm(ptr noundef %i.c, i64 noundef %i.p) #22
+  tail call void @_ZdlPvm(ptr noundef %2, i64 noundef %i.p) #22
   br label %.thread
 
 .thread:                                          ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i17
