@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.c, %bb.a
   %i.l = lshr i64 %store_forwarded, 30
   %i.m = xor i64 %i.l, %store_forwarded
   %i.n = mul nuw nsw i64 %i.m, 1812433253
-  %i.o = add nuw i64 %i.n, %.011.i.i              ; 2 uses
+  %i.o = add nuw nsw i64 %i.n, %.011.i.i          ; 2 uses
   %i.p = and i64 %i.o, 4294967295                 ; 2 uses
   store i64 %i.p, ptr %i.k, align 8, !tbaa !67
   %i.q = add nuw nsw i64 %.011.i.i, 1             ; 3 uses
@@ -608,7 +608,7 @@ bb.c:                                             ; preds = %bb.d, %bb.b
   %i.af = lshr i64 %store_forwarded, 30
   %i.ag = xor i64 %i.af, %store_forwarded
   %i.ah = mul nuw nsw i64 %i.ag, 1812433253
-  %i.ai = add nuw i64 %i.ah, %.011.i.i            ; 2 uses
+  %i.ai = add nuw nsw i64 %i.ah, %.011.i.i        ; 2 uses
   %i.aj = and i64 %i.ai, 4294967295               ; 2 uses
   store i64 %i.aj, ptr %i.ae, align 8, !tbaa !67
   %i.ak = add nuw nsw i64 %.011.i.i, 1            ; 3 uses
@@ -1011,7 +1011,7 @@ bb.e:                                             ; preds = %bb.f, %_ZNSt6vector
   %i.ag = lshr i64 %store_forwarded, 30
   %i.ah = xor i64 %i.ag, %store_forwarded
   %i.ai = mul nuw nsw i64 %i.ah, 1812433253
-  %i.aj = add nuw i64 %i.ai, %.011.i.i            ; 2 uses
+  %i.aj = add nuw nsw i64 %i.ai, %.011.i.i        ; 2 uses
   %i.ak = and i64 %i.aj, 4294967295               ; 2 uses
   store i64 %i.ak, ptr %i.af, align 8, !tbaa !67
   %i.al = add nuw nsw i64 %.011.i.i, 1            ; 3 uses
@@ -1186,7 +1186,7 @@ bb.b:                                             ; preds = %bb.c, %bb.a
   %i.l = lshr i64 %store_forwarded, 30
   %i.m = xor i64 %i.l, %store_forwarded
   %i.n = mul nuw nsw i64 %i.m, 1812433253
-  %i.o = add nuw i64 %i.n, %.011.i.i              ; 2 uses
+  %i.o = add nuw nsw i64 %i.n, %.011.i.i          ; 2 uses
   %i.p = and i64 %i.o, 4294967295                 ; 2 uses
   store i64 %i.p, ptr %i.k, align 8, !tbaa !67
   %i.q = add nuw nsw i64 %.011.i.i, 1             ; 3 uses
@@ -1589,7 +1589,7 @@ bb.m:                                             ; preds = %bb.n, %_ZNSt6vector
   %i.ap = lshr i64 %store_forwarded, 30
   %i.aq = xor i64 %i.ap, %store_forwarded
   %i.ar = mul nuw nsw i64 %i.aq, 1812433253
-  %i.as = add nuw i64 %i.ar, %.011.i.i            ; 2 uses
+  %i.as = add nuw nsw i64 %i.ar, %.011.i.i        ; 2 uses
   %i.at = and i64 %i.as, 4294967295               ; 2 uses
   store i64 %i.at, ptr %i.ao, align 8, !tbaa !67
   %i.au = add nuw nsw i64 %.011.i.i, 1            ; 3 uses

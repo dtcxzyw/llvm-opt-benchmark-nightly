@@ -203,9 +203,9 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
 
 ._crit_edge.us408:                                ; preds = %scalar.ph, %middle.block
   %spec.select363.us.lcssa = phi i32 [ %i.fb, %middle.block ], [ %spec.select363.us, %scalar.ph ] ; 2 uses
-  %i.fe = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 3 uses
-  %i.ff = getelementptr inbounds nuw i8, ptr %i.b, i64 32
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %i.ff, ptr nonnull align 16 %i.fe, i64 %i.ev, i1 false), !tbaa !19
+  %i.fe = getelementptr inbounds nuw i8, ptr %i.b, i64 32
+  %i.ff = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 3 uses
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %i.fe, ptr nonnull align 16 %i.ff, i64 %i.ev, i1 false), !tbaa !19
   %min.iters.check641 = icmp ult i8 %i.d, 8
   br i1 %min.iters.check641, label %scalar.ph640.preheader, label %vector.ph642
 
@@ -219,7 +219,7 @@ vector.body644:                                   ; preds = %vector.body644, %ve
   %index645 = phi i64 [ 0, %vector.ph642 ], [ %index.next650, %vector.body644 ] ; 2 uses
   %vec.phi646 = phi <4 x i32> [ %broadcast.splat, %vector.ph642 ], [ %i.fi, %vector.body644 ]
   %vec.phi647 = phi <4 x i32> [ %broadcast.splat, %vector.ph642 ], [ %i.fj, %vector.body644 ]
-  %i.fg = getelementptr inbounds nuw [4 x i8], ptr %i.fe, i64 %index645 ; 2 uses
+  %i.fg = getelementptr inbounds nuw [4 x i8], ptr %i.ff, i64 %index645 ; 2 uses
   %i.fh = getelementptr inbounds nuw i8, ptr %i.fg, i64 16
   %wide.load648 = load <4 x i32>, ptr %i.fg, align 4, !tbaa !19
   %wide.load649 = load <4 x i32>, ptr %i.fh, align 4, !tbaa !19
@@ -243,7 +243,7 @@ scalar.ph640.preheader:                           ; preds = %._crit_edge.us408, 
 scalar.ph640:                                     ; preds = %scalar.ph640.preheader, %scalar.ph640
   %indvars.iv514.1 = phi i64 [ %indvars.iv.next515.1, %scalar.ph640 ], [ %indvars.iv514.1.ph, %scalar.ph640.preheader ] ; 2 uses
   %.1298404.us.1 = phi i32 [ %spec.select363.us.1, %scalar.ph640 ], [ %.1298404.us.1.ph, %scalar.ph640.preheader ]
-  %i.fm = getelementptr inbounds nuw [4 x i8], ptr %i.fe, i64 %indvars.iv514.1
+  %i.fm = getelementptr inbounds nuw [4 x i8], ptr %i.ff, i64 %indvars.iv514.1
   %i.fn = load i32, ptr %i.fm, align 4, !tbaa !19
   %spec.select363.us.1 = tail call i32 @llvm.smax.i32(i32 %i.fn, i32 %.1298404.us.1) ; 2 uses
   %indvars.iv.next515.1 = add nuw nsw i64 %indvars.iv514.1, 1 ; 2 uses

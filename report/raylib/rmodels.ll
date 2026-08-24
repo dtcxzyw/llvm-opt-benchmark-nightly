@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %_m3dstbi__get8.exit
 _m3dstbi__get16be.exit.i.i.i.i:                   ; preds = %bb.c, %_m3dstbi__get8.exit.i.i.i.i.i
   %i.bl = phi ptr [ %i.bh, %bb.c ], [ %i.be, %_m3dstbi__get8.exit.i.i.i.i.i ]
   %i.bm = phi ptr [ %i.bh, %bb.c ], [ %i.bf, %_m3dstbi__get8.exit.i.i.i.i.i ] ; 4 uses
-  %.0.i2.i.i.i.i.i = phi i32 [ %i.bk, %bb.c ], [ %.0.i.i.i.i.i.i, %_m3dstbi__get8.exit.i.i.i.i.i ]
+  %.0.i2.i.i.i.i.i = phi i32 [ %i.bk, %bb.c ], [ %.0.i.i.i.i.i.i, %_m3dstbi__get8.exit.i.i.i.i.i ] ; 2 uses
   %i.bn = icmp ult ptr %i.bm, %i.ax
   br i1 %i.bn, label %bb.d, label %_m3dstbi__get8.exit.i2.i.i.i.i
 
@@ -235,7 +235,7 @@ bb.e:                                             ; preds = %_m3dstbi__get8.exit
 _m3dstbi__get32be.exit.i.i.i:                     ; preds = %bb.e, %_m3dstbi__get8.exit.i2.i.i.i.i
   %i.bz = phi ptr [ %i.bv, %bb.e ], [ %i.bs, %_m3dstbi__get8.exit.i2.i.i.i.i ]
   %i.ca = phi ptr [ %i.bv, %bb.e ], [ %i.bt, %_m3dstbi__get8.exit.i2.i.i.i.i ] ; 4 uses
-  %.0.i2.i4.i.i.i.i = phi i32 [ %i.by, %bb.e ], [ %.0.i.i3.i.i.i.i, %_m3dstbi__get8.exit.i2.i.i.i.i ] ; 4 uses
+  %.0.i2.i4.i.i.i.i = phi i32 [ %i.by, %bb.e ], [ %.0.i.i3.i.i.i.i, %_m3dstbi__get8.exit.i2.i.i.i.i ] ; 5 uses
   %i.cb = icmp ult ptr %i.ca, %i.ax
   br i1 %i.cb, label %bb.f, label %_m3dstbi__get8.exit.i.i2.i.i.i
 
@@ -297,7 +297,7 @@ _m3dstbi__get_chunk_header.exit.i.i:              ; preds = %bb.i, %_m3dstbi__ge
   %i.dc = phi ptr [ %i.cx, %bb.i ], [ %i.cv, %_m3dstbi__get8.exit.i2.i6.i.i.i ] ; 23 uses
   %.0.i2.i4.i8.i.i.i = phi i32 [ %i.da, %bb.i ], [ %.0.i.i3.i7.i.i.i, %_m3dstbi__get8.exit.i2.i6.i.i.i ]
   %i.dd = shl nuw i32 %.0.i2.i.i.i.i.i, 16
-  %i.de = add i32 %.0.i2.i4.i.i.i.i, %i.dd        ; 15 uses
+  %i.de = add nuw nsw i32 %.0.i2.i4.i.i.i.i, %i.dd ; 14 uses
   %i.df = shl nuw i32 %.0.i2.i.i5.i.i.i, 16
   %i.dg = add nuw nsw i32 %.0.i2.i4.i8.i.i.i, %i.df ; 2 uses
   switch i32 %i.dg, label %bb.cw [
@@ -685,8 +685,13 @@ bb.an:                                            ; preds = %bb.am
 
 .lr.ph.i.i:                                       ; preds = %.preheader395.i.i
   %wide.trip.count.i.i = zext i32 %i.de to i64    ; 2 uses
+  %6 = zext nneg i32 %.0.i2.i.i.i.i.i to i64
+  %7 = shl nuw nsw i64 %6, 16
+  %8 = add nsw i64 %7, -1
+  %9 = zext nneg i32 %.0.i2.i4.i.i.i.i to i64
   %xtraiter = and i64 %wide.trip.count.i.i, 1
-  %i.iq = icmp eq i32 %i.de, 1
+  %10 = sub nsw i64 0, %9
+  %i.iq = icmp eq i64 %8, %10
   br i1 %i.iq, label %.epil.preheader, label %.lr.ph.i.i.new
 
 .lr.ph.i.i.new:                                   ; preds = %.lr.ph.i.i

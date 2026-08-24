@@ -205,7 +205,7 @@ bb.k:                                             ; preds = %bb.l, %_ZNSt13rando
   %i.bo = lshr i64 %store_forwarded, 30
   %i.bp = xor i64 %i.bo, %store_forwarded
   %i.bq = mul nuw nsw i64 %i.bp, 1812433253
-  %i.br = add nuw i64 %i.bq, %.011.i.i            ; 2 uses
+  %i.br = add nuw nsw i64 %i.bq, %.011.i.i        ; 2 uses
   %i.bs = and i64 %i.br, 4294967295               ; 2 uses
   store i64 %i.bs, ptr %i.bn, align 8, !tbaa !78
   %i.bt = add nuw nsw i64 %.011.i.i, 1            ; 3 uses
@@ -608,7 +608,7 @@ bb.c:                                             ; preds = %bb.d, %_ZNSt13rando
   %i.f = lshr i64 %store_forwarded, 30
   %i.g = xor i64 %i.f, %store_forwarded
   %i.h = mul nuw nsw i64 %i.g, 1812433253
-  %i.i = add nuw i64 %i.h, %.011.i.i              ; 2 uses
+  %i.i = add nuw nsw i64 %i.h, %.011.i.i          ; 2 uses
   %i.j = and i64 %i.i, 4294967295                 ; 2 uses
   store i64 %i.j, ptr %i.e, align 8, !tbaa !78
   %i.k = add nuw nsw i64 %.011.i.i, 1             ; 3 uses

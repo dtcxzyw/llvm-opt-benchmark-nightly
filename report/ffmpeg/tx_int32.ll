@@ -204,7 +204,7 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 define range(i32 -12, 1) i32 @ff_tx_mdct_gen_exp_int32(ptr nofree noundef captures(none) initializes((16, 24)) %0, ptr nofree noundef readonly captures(address_is_null) %1) local_unnamed_addr #3 {
 bb.a:
   %i.a = load i32, ptr %0, align 8, !tbaa !19     ; 2 uses
-  %i.b = ashr i32 %i.a, 1                         ; 10 uses
+  %i.b = ashr i32 %i.a, 1                         ; 11 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 144
   %i.d = load double, ptr %i.c, align 8, !tbaa !28 ; 2 uses
   %i.e = fcmp nsz olt double %i.d, 0.000000e+00
@@ -230,7 +230,7 @@ bb.b:                                             ; preds = %bb.a
 .lr.ph.preheader:                                 ; preds = %bb.b
   %i.q = zext nneg i32 %i.b to i64
   %i.r = select i1 %.not.not, i64 0, i64 %i.q
-  %wide.trip.count = zext nneg i32 %i.b to i64    ; 3 uses
+  %wide.trip.count = zext nneg i32 %i.b to i64
   %invariant.gep = getelementptr inbounds nuw [8 x i8], ptr %i.l, i64 %i.r
   br label %.lr.ph
 
@@ -238,12 +238,13 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not.not, label %.loopexit, label %.lr.ph45.preheader
 
 .lr.ph45.preheader:                               ; preds = %._crit_edge
-  %xtraiter = and i64 %wide.trip.count, 1
+  %wide.trip.count50 = zext nneg i32 %i.b to i64  ; 2 uses
+  %xtraiter = and i64 %wide.trip.count50, 1
   %i.s = icmp eq i32 %i.b, 1
   br i1 %i.s, label %.lr.ph45.epil.preheader, label %.lr.ph45.preheader.new
 
 .lr.ph45.preheader.new:                           ; preds = %.lr.ph45.preheader
-  %unroll_iter = and i64 %wide.trip.count, 2147483646
+  %unroll_iter = and i64 %wide.trip.count50, 2147483646
   br label %.lr.ph45
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph

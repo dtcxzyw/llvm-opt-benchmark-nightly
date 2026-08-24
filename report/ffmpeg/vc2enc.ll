@@ -205,9 +205,10 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph.i.i
 
 .preheader70.i.i:                                 ; preds = %.preheader70.i.i, %.preheader70.lr.ph.i.i
   %indvars.iv.i.i = phi i64 [ 0, %.preheader70.lr.ph.i.i ], [ %indvars.iv.next.i.i, %.preheader70.i.i ] ; 3 uses
-  %6 = getelementptr inbounds nuw [4 x i8], ptr @vc2_qm_col_tab, i64 %indvars.iv.i.i
+  %6 = shl nuw nsw i64 %indvars.iv.i.i, 2
+  %scevgep.i.i = getelementptr nuw i8, ptr @vc2_qm_col_tab, i64 %6
   %i.em = getelementptr inbounds nuw [4 x i8], ptr %i.ci, i64 %indvars.iv.i.i
-  %i.en = load i32, ptr %6, align 4, !tbaa !59
+  %i.en = load i32, ptr %scevgep.i.i, align 4, !tbaa !59
   store i32 %i.en, ptr %i.em, align 1, !tbaa !59
   %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1 ; 2 uses
   %i.eo = load i32, ptr %i.au, align 4, !tbaa !70

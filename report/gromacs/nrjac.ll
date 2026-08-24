@@ -205,13 +205,13 @@ bb.g:                                             ; preds = %bb.e
   %i.o = getelementptr inbounds nuw i8, ptr %4, i64 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.o, i8 0, i64 16, i1 false), !tbaa !12
   store double 1.000000e+00, ptr %4, align 8, !tbaa !12
-  %i.p = getelementptr inbounds nuw i8, ptr %4, i64 24 ; 4 uses
+  %i.p = getelementptr nuw i8, ptr %4, i64 24     ; 4 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.p, i8 0, i64 24, i1 false), !tbaa !12
-  %i.q = getelementptr inbounds nuw i8, ptr %4, i64 32
+  %i.q = getelementptr nuw i8, ptr %4, i64 32
   store double 1.000000e+00, ptr %i.q, align 8, !tbaa !12
-  %i.r = getelementptr inbounds nuw i8, ptr %4, i64 48 ; 4 uses
+  %i.r = getelementptr nuw i8, ptr %4, i64 48     ; 4 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.r, i8 0, i64 16, i1 false), !tbaa !12
-  %i.s = getelementptr inbounds nuw i8, ptr %4, i64 64
+  %i.s = getelementptr nuw i8, ptr %4, i64 64
   store double 1.000000e+00, ptr %i.s, align 8, !tbaa !12
   %i.t = load double, ptr %0, align 8, !tbaa !12  ; 2 uses
   store double %i.t, ptr %2, align 8, !tbaa !12

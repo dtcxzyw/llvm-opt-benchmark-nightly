@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.e, %_ZNSt13rando
   %i.p = lshr i64 %store_forwarded, 30
   %i.q = xor i64 %i.p, %store_forwarded
   %i.r = mul nuw nsw i64 %i.q, 1812433253
-  %i.s = add nuw i64 %i.r, %.011.i.i.i            ; 2 uses
+  %i.s = add nuw nsw i64 %i.r, %.011.i.i.i        ; 2 uses
   %i.t = and i64 %i.s, 4294967295                 ; 2 uses
   store i64 %i.t, ptr %i.o, align 8, !tbaa !48
   %i.u = add nuw nsw i64 %.011.i.i.i, 1           ; 2 uses

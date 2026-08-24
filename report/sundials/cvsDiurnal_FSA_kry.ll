@@ -204,7 +204,7 @@ declare i32 @CVodeInit(ptr noundef, ptr noundef, double noundef, ptr noundef) lo
 ; Function Attrs: nounwind uwtable
 define internal noundef i32 @f(double noundef %0, ptr noundef %1, ptr noundef %2, ptr nofree noundef captures(none) initializes((5408, 5416)) %3) #0 {
 bb.a:
-  %i.a = tail call ptr @N_VGetArrayPointer(ptr noundef %1) #11 ; 15 uses
+  %i.a = tail call ptr @N_VGetArrayPointer(ptr noundef %1) #11 ; 14 uses
   %i.b = tail call ptr @N_VGetArrayPointer(ptr noundef %2) #11 ; 6 uses
   %i.c = load ptr, ptr %3, align 8, !tbaa !18     ; 4 uses
   %i.d = load double, ptr %i.c, align 8, !tbaa !22 ; 3 uses
@@ -251,7 +251,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   br label %.peel.next
 
 .peel.next:                                       ; preds = %.loopexit.peel.begin, %bb.c
-  %indvars.iv139 = phi i64 [ 0, %bb.c ], [ %indvars.iv.next140, %.loopexit.peel.begin ] ; 9 uses
+  %indvars.iv139 = phi i64 [ 0, %bb.c ], [ %indvars.iv.next140, %.loopexit.peel.begin ] ; 8 uses
   %i.aj = trunc nuw nsw i64 %indvars.iv139 to i32
   %i.ak = uitofp nneg i32 %i.aj to double
   %i.al = fadd double %i.ak, -5.000000e-01
@@ -304,35 +304,28 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   %i.ce = shufflevector <2 x double> %i.cd, <2 x double> poison, <2 x i32> zeroinitializer
   %i.cf = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ce, <2 x double> %i.bx, <2 x double> %i.cc) ; 2 uses
   %i.cg = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %i.ay
-  %4 = getelementptr inbounds nuw i8, ptr %i.cg, i64 16
-  %5 = load double, ptr %4, align 8, !tbaa !22    ; 4 uses
-  %6 = trunc nuw nsw i64 %i.bb to i32
-  %7 = mul i64 %indvars.iv139, 128849018880
-  %sext144 = add i64 %7, 12884901888
-  %8 = ashr exact i64 %sext144, 29
-  %i.ch = getelementptr inbounds i8, ptr %i.a, i64 %8
-  %9 = load double, ptr %i.ch, align 8, !tbaa !22 ; 4 uses
-  %10 = insertelement <2 x double> poison, double %5, i64 0
-  %11 = insertelement <2 x double> %10, double %9, i64 1
-  %12 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.bh, <2 x double> splat (double -2.000000e+00), <2 x double> %11) ; 2 uses
-  %i.ci = extractelement <2 x double> %12, i64 0
-  %13 = fadd double %5, %i.ci
-  %14 = fmul double %i.ad, %13
-  %i.cj = extractelement <2 x double> %12, i64 1
-  %15 = fadd double %9, %i.cj
-  %16 = fmul double %i.ad, %15
-  %17 = fsub double %5, %5
-  %i.ck = fmul double %i.af, %17
-  %18 = fsub double %9, %9
-  %i.cl = fmul double %i.af, %18
+  %i.ch = getelementptr inbounds nuw i8, ptr %i.cg, i64 16
+  %4 = load <2 x double>, ptr %i.ch, align 8, !tbaa !22 ; 5 uses
+  %5 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.bh, <2 x double> splat (double -2.000000e+00), <2 x double> %4) ; 2 uses
+  %foldExtExtBinop = fadd <2 x double> %4, %5
+  %i.ci = extractelement <2 x double> %foldExtExtBinop, i64 0
+  %6 = fmul double %i.ad, %i.ci
+  %foldExtExtBinop151 = fadd <2 x double> %4, %5
+  %i.cj = extractelement <2 x double> %foldExtExtBinop151, i64 1
+  %7 = fmul double %i.ad, %i.cj
+  %8 = fsub <2 x double> %4, %4                   ; 2 uses
+  %9 = extractelement <2 x double> %8, i64 0
+  %i.ck = fmul double %i.af, %9
+  %10 = extractelement <2 x double> %8, i64 1
+  %i.cl = fmul double %i.af, %10
   %i.cm = extractelement <2 x double> %i.cf, i64 0
-  %i.cn = fadd double %i.cm, %14
+  %i.cn = fadd double %i.cm, %6
   %i.co = fadd double %i.ck, %i.cn
   %i.cp = fadd double %i.bs, %i.co
   %i.cq = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %i.ay
   store double %i.cp, ptr %i.cq, align 8, !tbaa !22
   %i.cr = extractelement <2 x double> %i.cf, i64 1
-  %i.cs = fadd double %i.cr, %16
+  %i.cs = fadd double %i.cr, %7
   %i.ct = fadd double %i.cl, %i.cs
   %i.cu = fadd double %i.bu, %i.ct
   %i.cv = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %i.ay
@@ -344,6 +337,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   %i.cx = getelementptr [8 x i8], ptr %i.a, i64 %i.ay ; 2 uses
   %i.cy = getelementptr [8 x i8], ptr %i.a, i64 %i.bb ; 2 uses
   %i.cz = getelementptr [8 x i8], ptr %i.a, i64 %i.ay ; 2 uses
+  %11 = trunc nuw nsw i64 %i.bb to i32
   %i.da = insertelement <2 x double> %i.ah, double %i.at, i64 1 ; 2 uses
   %invariant.gep153 = getelementptr inbounds [8 x i8], ptr %i.b, i64 %i.ay
   br label %bb.d
@@ -398,7 +392,7 @@ bb.d:                                             ; preds = %.peel.next, %bb.d
   %i.er = sext i32 %i.eq to i64
   %i.es = getelementptr [8 x i8], ptr %i.cz, i64 %i.er
   %i.et = load double, ptr %i.es, align 8, !tbaa !22 ; 2 uses
-  %i.eu = add nuw nsw i32 %i.eq, %6
+  %i.eu = add nuw nsw i32 %i.eq, %11
   %i.ev = sext i32 %i.eu to i64
   %i.ew = getelementptr inbounds [8 x i8], ptr %i.a, i64 %i.ev
   %i.ex = load double, ptr %i.ew, align 8, !tbaa !22 ; 2 uses

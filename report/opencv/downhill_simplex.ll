@@ -204,7 +204,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #17
-  %i.c = add i32 %i.b, 1                          ; 8 uses
+  %i.c = add i32 %i.b, 1                          ; 7 uses
   invoke void @_ZN2cv3MatC1Eiii(ptr noundef nonnull align 8 dereferenceable(208) %16, i32 noundef 1, i32 noundef %i.c, i32 noundef 6)
           to label %bb.c unwind label %bb.i
 
@@ -481,10 +481,9 @@ _ZN2cv18DownhillSolverImpl14updateCoordSumERKNS_3MatERS1_.exit: ; preds = %._cri
   %wide.trip.count399 = zext i32 %i.c to i64
   %wide.trip.count404 = zext i32 %i.c to i64
   %wide.trip.count415 = zext i32 %i.b to i64      ; 8 uses
-  %wide.trip.count409 = zext i32 %i.c to i64
-  %wide.trip.count430 = zext i32 %i.c to i64
+  %wide.trip.count430 = zext i32 %i.c to i64      ; 2 uses
   %wide.trip.count425 = zext nneg i32 %i.b to i64
-  %i.cv = add nsw i64 %wide.trip.count409, -1     ; 3 uses
+  %i.cv = add nsw i64 %wide.trip.count430, -1     ; 3 uses
   %i.cw = add nsw i64 %wide.trip.count415, -1     ; 2 uses
   %xtraiter592 = and i64 %i.cv, 1
   %i.cx = icmp eq i32 %i.c, 2

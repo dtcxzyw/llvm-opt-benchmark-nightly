@@ -205,17 +205,19 @@ bb.a:
 .preheader:                                       ; preds = %.preheader, %.preheader.preheader.new
   %indvars.iv582 = phi i64 [ 0, %.preheader.preheader.new ], [ %indvars.iv.next583.1, %.preheader ] ; 5 uses
   %niter = phi i64 [ 0, %.preheader.preheader.new ], [ %niter.next.1, %.preheader ]
-  %2 = getelementptr inbounds nuw [80 x i8], ptr %i.h, i64 %indvars.iv582
+  %2 = mul nuw nsw i64 %indvars.iv582, 80
+  %scevgep = getelementptr nuw i8, ptr %i.h, i64 %2
   %i.ak = getelementptr inbounds nuw [80 x i8], ptr %i.g, i64 %indvars.iv582
   %i.al = getelementptr inbounds nuw [80 x i8], ptr %i.f, i64 %indvars.iv582
-  call void @llvm.memset.p0.i64(ptr nonnull align 16 %2, i8 -1, i64 %i.af, i1 false), !tbaa !8
+  call void @llvm.memset.p0.i64(ptr nonnull align 16 %scevgep, i8 -1, i64 %i.af, i1 false), !tbaa !8
   call void @llvm.memset.p0.i64(ptr nonnull align 16 %i.ak, i8 -1, i64 %i.af, i1 false), !tbaa !8
   call void @llvm.memset.p0.i64(ptr nonnull align 16 %i.al, i8 -1, i64 %i.af, i1 false), !tbaa !8
   %indvars.iv.next583 = or disjoint i64 %indvars.iv582, 1 ; 3 uses
-  %3 = getelementptr inbounds nuw [80 x i8], ptr %i.h, i64 %indvars.iv.next583
+  %3 = mul nuw nsw i64 %indvars.iv.next583, 80
+  %scevgep.1 = getelementptr nuw i8, ptr %i.h, i64 %3
   %i.am = getelementptr inbounds nuw [80 x i8], ptr %i.g, i64 %indvars.iv.next583
   %i.an = getelementptr inbounds nuw [80 x i8], ptr %i.f, i64 %indvars.iv.next583
-  call void @llvm.memset.p0.i64(ptr nonnull align 16 %3, i8 -1, i64 %i.af, i1 false), !tbaa !8
+  call void @llvm.memset.p0.i64(ptr nonnull align 16 %scevgep.1, i8 -1, i64 %i.af, i1 false), !tbaa !8
   call void @llvm.memset.p0.i64(ptr nonnull align 16 %i.am, i8 -1, i64 %i.af, i1 false), !tbaa !8
   call void @llvm.memset.p0.i64(ptr nonnull align 16 %i.an, i8 -1, i64 %i.af, i1 false), !tbaa !8
   %indvars.iv.next583.1 = add nuw nsw i64 %indvars.iv582, 2 ; 2 uses
@@ -231,10 +233,11 @@ bb.a:
   %indvars.iv582.epil.init = phi i64 [ 0, %.preheader.preheader ], [ %indvars.iv.next583.1, %.lr.ph525.unr-lcssa ] ; 3 uses
   %lcmp.mod1307 = trunc i32 %1 to i1
   tail call void @llvm.assume(i1 %lcmp.mod1307)
-  %4 = getelementptr inbounds nuw [80 x i8], ptr %i.h, i64 %indvars.iv582.epil.init
+  %4 = mul nuw nsw i64 %indvars.iv582.epil.init, 80
+  %scevgep.epil = getelementptr nuw i8, ptr %i.h, i64 %4
   %i.ao = getelementptr inbounds nuw [80 x i8], ptr %i.g, i64 %indvars.iv582.epil.init
   %i.ap = getelementptr inbounds nuw [80 x i8], ptr %i.f, i64 %indvars.iv582.epil.init
-  call void @llvm.memset.p0.i64(ptr nonnull align 16 %4, i8 -1, i64 %i.af, i1 false), !tbaa !8
+  call void @llvm.memset.p0.i64(ptr nonnull align 16 %scevgep.epil, i8 -1, i64 %i.af, i1 false), !tbaa !8
   call void @llvm.memset.p0.i64(ptr nonnull align 16 %i.ao, i8 -1, i64 %i.af, i1 false), !tbaa !8
   call void @llvm.memset.p0.i64(ptr nonnull align 16 %i.ap, i8 -1, i64 %i.af, i1 false), !tbaa !8
   br label %.lr.ph525

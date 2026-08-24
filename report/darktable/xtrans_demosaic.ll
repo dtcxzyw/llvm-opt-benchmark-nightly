@@ -203,10 +203,15 @@ bb.cm:                                            ; preds = %.lr.ph1355, %._crit
   br i1 %i.alr, label %bb.cm, label %._crit_edge1356, !llvm.loop !90
 
 bb.cn:                                            ; preds = %.lr.ph1352, %._crit_edge1347.split
+  %indvar = phi i64 [ 0, %.lr.ph1352 ], [ %indvar.next, %._crit_edge1347.split ] ; 3 uses
   %indvars.iv1482 = phi i64 [ 6, %.lr.ph1352 ], [ %indvars.iv.next1483, %._crit_edge1347.split ] ; 2 uses
   %indvars.iv1455 = phi i64 [ 5, %.lr.ph1352 ], [ %indvars.iv.next1456, %._crit_edge1347.split ] ; 3 uses
   %indvars.iv1424 = phi i64 [ 3, %.lr.ph1352 ], [ %indvars.iv.next1425, %._crit_edge1347.split ] ; 17 uses
   %i.als = phi i32 [ %i.akt, %.lr.ph1352 ], [ %i.cve, %._crit_edge1347.split ]
+  %2 = mul nuw nsw i64 %indvar, 496
+  %3 = add nuw i64 %2, 515
+  %4 = mul nsw i64 %indvar, -496
+  %5 = add i64 %4, -9
   %umin = tail call i64 @llvm.umin.i64(i64 %indvars.iv1424, i64 8)
   %i.alt = load i16, ptr %i.i, align 4, !tbaa !74
   %i.alu = zext i16 %i.alt to i32
@@ -218,7 +223,7 @@ bb.cn:                                            ; preds = %.lr.ph1352, %._crit
   %i.alz = tail call i32 @llvm.smin.i32(i32 %i.aly, i32 %i.alw) ; 5 uses
   %i.ama = sext i32 %i.alv to i64
   %i.amb = icmp slt i64 %indvars.iv1429, %i.ama
-  %i.amc = sext i32 %i.alw to i64
+  %i.amc = sext i32 %i.alw to i64                 ; 2 uses
   %i.amd = icmp slt i64 %indvars.iv1424, %i.amc
   %or.cond1357 = select i1 %i.amb, i1 %i.amd, i1 false
   br i1 %or.cond1357, label %.preheader1137.preheader, label %.preheader1139.thread
@@ -563,8 +568,8 @@ bb.cp:                                            ; preds = %.preheader1136, %.l
 
 ._crit_edge1293:                                  ; preds = %._crit_edge1289, %.preheader1138
   %i.avo = sub nsw i32 %., %i.alc                 ; 7 uses
-  %i.avp = trunc i64 %indvars.iv1424 to i32       ; 3 uses
-  %i.avq = sub i32 %i.alz, %i.avp                 ; 8 uses
+  %i.avp = trunc nuw nsw i64 %indvars.iv1424 to i32 ; 3 uses
+  %i.avq = sub nsw i32 %i.alz, %i.avp             ; 7 uses
   %i.avr = add nsw i32 %i.avo, -2
   %i.avs = icmp sgt i32 %i.avo, 4
   %i.avt = add nsw i32 %i.avq, -2
@@ -575,11 +580,11 @@ bb.cp:                                            ; preds = %.preheader1136, %.l
   %i.avy = icmp sgt i32 %i.avq, 6
   %i.avz = sext i32 %i.avt to i64
   %i.awa = sext i32 %i.avr to i64
-  %i.awb = sext i32 %i.avx to i64                 ; 2 uses
+  %i.awb = sext i32 %i.avx to i64
   %i.awc = sext i32 %i.avv to i64
-  %i.awd = tail call i64 @llvm.smax.i64(i64 %i.awb, i64 4)
-  %i.awe = add nsw i64 %i.awd, -3                 ; 2 uses
-  %min.iters.check = icmp slt i32 %i.avq, 14
+  %i.awd = tail call i64 @llvm.smin.i64(i64 %3, i64 %i.amc)
+  %i.awe = add nsw i64 %i.awd, %5                 ; 3 uses
+  %min.iters.check = icmp ult i64 %i.awe, 8
   %n.vec1801 = and i64 %i.awe, -8                 ; 3 uses
   %i.awf = or disjoint i64 %n.vec1801, 3
   %cmp.n = icmp eq i64 %i.awe, %n.vec1801
@@ -982,6 +987,7 @@ bb.ek:                                            ; preds = %bb.ej, %bb.ei
   %i.cvh = icmp slt i64 %indvars.iv.next1425, %i.cvg
   %indvars.iv.next1456 = add nuw nsw i64 %indvars.iv1455, 496
   %indvars.iv.next1483 = add nuw nsw i64 %indvars.iv1482, 496
+  %indvar.next = add i64 %indvar, 1
   br i1 %i.cvh, label %bb.cn, label %._crit_edge1353.loopexit, !llvm.loop !119
 
 .lr.ph1342:                                       ; preds = %.lr.ph1346.split, %._crit_edge1343
@@ -1303,7 +1309,7 @@ declare <4 x i32> @llvm.masked.load.v4i32.p0(ptr captures(none), <4 x i1>, <4 x 
 declare void @llvm.masked.store.v4i32.p0(<4 x i32>, ptr captures(none), <4 x i1>) #2
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.smax.i64(i64, i64) #5
+declare i64 @llvm.smin.i64(i64, i64) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #5

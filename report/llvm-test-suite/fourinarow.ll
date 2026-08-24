@@ -95,31 +95,31 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 define dso_local void @init_board(ptr nofree noundef writeonly captures(none) initializes((0, 49)) %0) local_unnamed_addr #2 {
 .preheader11:
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(6) %0, i8 46, i64 6, i1 false), !tbaa !10
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 7
+  %i.a = getelementptr nuw i8, ptr %0, i64 7
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(6) %i.a, i8 46, i64 6, i1 false), !tbaa !10
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 14
+  %i.b = getelementptr nuw i8, ptr %0, i64 14
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(6) %i.b, i8 46, i64 6, i1 false), !tbaa !10
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 21
+  %i.c = getelementptr nuw i8, ptr %0, i64 21
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(6) %i.c, i8 46, i64 6, i1 false), !tbaa !10
-  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 28
+  %i.d = getelementptr nuw i8, ptr %0, i64 28
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(6) %i.d, i8 46, i64 6, i1 false), !tbaa !10
-  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 35
+  %i.e = getelementptr nuw i8, ptr %0, i64 35
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(6) %i.e, i8 46, i64 6, i1 false), !tbaa !10
-  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 42
+  %i.f = getelementptr nuw i8, ptr %0, i64 42
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(6) %i.f, i8 46, i64 6, i1 false), !tbaa !10
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 6
   store i8 0, ptr %i.g, align 1, !tbaa !10
-  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 13
+  %i.h = getelementptr nuw i8, ptr %0, i64 13
   store i8 0, ptr %i.h, align 1, !tbaa !10
-  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 20
+  %i.i = getelementptr nuw i8, ptr %0, i64 20
   store i8 0, ptr %i.i, align 1, !tbaa !10
-  %i.j = getelementptr inbounds nuw i8, ptr %0, i64 27
+  %i.j = getelementptr nuw i8, ptr %0, i64 27
   store i8 0, ptr %i.j, align 1, !tbaa !10
-  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 34
+  %i.k = getelementptr nuw i8, ptr %0, i64 34
   store i8 0, ptr %i.k, align 1, !tbaa !10
-  %i.l = getelementptr inbounds nuw i8, ptr %0, i64 41
+  %i.l = getelementptr nuw i8, ptr %0, i64 41
   store i8 0, ptr %i.l, align 1, !tbaa !10
-  %i.m = getelementptr inbounds nuw i8, ptr %0, i64 48
+  %i.m = getelementptr nuw i8, ptr %0, i64 48
   store i8 0, ptr %i.m, align 1, !tbaa !10
   ret void
 }

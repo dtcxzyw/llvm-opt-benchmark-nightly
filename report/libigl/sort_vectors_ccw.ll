@@ -205,7 +205,8 @@ _ZN5Eigen8internal13first_alignedILi16EdlEET1_PKT0_S2_.exit.i.i.i.i.i.i.i.i.i.i.
   ret void
 
 _ZN5Eigen8internal13first_alignedILi16EdlEET1_PKT0_S2_.exit.i.i.i.i.i.i.i.i.i.i: ; preds = %_ZN5Eigen8internal13first_alignedILi16EdlEET1_PKT0_S2_.exit.i.i.i.i.i.i.i.i.i.i.preheader, %_ZN5Eigen5BlockINS_6MatrixIdLi1ELin1ELi1ELi1ELin1EEELi1ELin1ELb0EEaSINS0_IKS2_Li1ELin1ELb0EEEEERS3_RKNS_9DenseBaseIT_EE.exit
-  %indvars.iv = phi i64 [ 0, %_ZN5Eigen8internal13first_alignedILi16EdlEET1_PKT0_S2_.exit.i.i.i.i.i.i.i.i.i.i.preheader ], [ %indvars.iv.next, %_ZN5Eigen5BlockINS_6MatrixIdLi1ELin1ELi1ELi1ELin1EEELi1ELin1ELb0EEaSINS0_IKS2_Li1ELin1ELb0EEEEERS3_RKNS_9DenseBaseIT_EE.exit ] ; 3 uses
+  %indvars.iv = phi i64 [ 0, %_ZN5Eigen8internal13first_alignedILi16EdlEET1_PKT0_S2_.exit.i.i.i.i.i.i.i.i.i.i.preheader ], [ %indvars.iv.next, %_ZN5Eigen5BlockINS_6MatrixIdLi1ELin1ELi1ELi1ELin1EEELi1ELin1ELb0EEaSINS0_IKS2_Li1ELin1ELb0EEEEERS3_RKNS_9DenseBaseIT_EE.exit ] ; 4 uses
+  %4 = mul i64 %indvars.iv, 24
   %i.g = load ptr, ptr %2, align 8, !tbaa !54
   %i.h = getelementptr inbounds nuw [4 x i8], ptr %i.g, i64 %indvars.iv
   %i.i = load i32, ptr %i.h, align 4, !tbaa !57
@@ -216,7 +217,7 @@ _ZN5Eigen8internal13first_alignedILi16EdlEET1_PKT0_S2_.exit.i.i.i.i.i.i.i.i.i.i:
   %i.n = getelementptr inbounds [8 x i8], ptr %i.l, i64 %i.k ; 10 uses
   %i.o = load ptr, ptr %3, align 8, !tbaa !17, !noalias !107 ; 2 uses
   %i.p = ptrtoaddr ptr %i.o to i64
-  %.idx = mul nuw nsw i64 %indvars.iv, 24         ; 2 uses
+  %.idx = mul nuw nsw i64 %indvars.iv, 24
   %i.q = getelementptr inbounds nuw i8, ptr %i.o, i64 %.idx ; 11 uses
   %i.r = ptrtoint ptr %i.q to i64                 ; 2 uses
   %i.s = and i64 %i.r, 7
@@ -262,7 +263,7 @@ _ZN5Eigen8internal31unaligned_dense_assignment_loopILb0EE3runINS0_31generic_dens
   br i1 %min.iters.check, label %.lr.ph.i17.i.i.i.i.i.i.i.i.i.i.preheader27, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i17.i.i.i.i.i.i.i.i.i.i.preheader
-  %i.aj = add i64 %.idx, %i.p
+  %i.aj = add i64 %4, %i.p
   %i.ak = shl nsw i64 %i.k, 3
   %i.al = add i64 %i.ak, %i.m
   %i.am = sub i64 %i.al, %i.aj
@@ -665,7 +666,7 @@ _ZNK5Eigen9DenseBaseINS_5BlockINS_6MatrixIdLi1ELi3ELi1ELi1ELi3EEELi1ELin1ELb0EEE
 _ZNK5Eigen9DenseBaseINS_5BlockINS_6MatrixIdLi1ELi3ELi1ELi1ELi3EEELi1ELin1ELb0EEEE8maxCoeffIlEEdPT_.exit: ; preds = %.preheader.i.i.i.i.epil.preheader, %_ZNK5Eigen9DenseBaseINS_5BlockINS_6MatrixIdLi1ELi3ELi1ELi1ELi3EEELi1ELin1ELb0EEEE8maxCoeffIlEEdPT_.exit.loopexit.unr-lcssa, %bb.c
   %.sroa.7.2.i.i = phi double [ %i.cl, %bb.c ], [ %.sroa.7.1.i.i.1, %_ZNK5Eigen9DenseBaseINS_5BlockINS_6MatrixIdLi1ELi3ELi1ELi1ELi3EEELi1ELin1ELb0EEEE8maxCoeffIlEEdPT_.exit.loopexit.unr-lcssa ], [ %.sroa.7.1.i.i.epil, %.preheader.i.i.i.i.epil.preheader ] ; 2 uses
   %.sroa.5.2.i.i = phi i64 [ 0, %bb.c ], [ %.sroa.5.1.i.i.1, %_ZNK5Eigen9DenseBaseINS_5BlockINS_6MatrixIdLi1ELi3ELi1ELi1ELi3EEELi1ELin1ELb0EEEE8maxCoeffIlEEdPT_.exit.loopexit.unr-lcssa ], [ %.sroa.5.1.i.i.epil, %.preheader.i.i.i.i.epil.preheader ] ; 2 uses
-  %i.cy = add nsw i64 %.sroa.5.2.i.i, %.073150    ; 4 uses
+  %i.cy = add nuw nsw i64 %.sroa.5.2.i.i, %.073150 ; 4 uses
   %i.cz = load i64, ptr %i.ao, align 8, !tbaa !129
   %i.da = icmp eq i64 %i.cz, 3
   br i1 %i.da, label %bb.d, label %bb.f

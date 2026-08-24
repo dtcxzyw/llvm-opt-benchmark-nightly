@@ -204,35 +204,35 @@ bb.p:                                             ; preds = %bb.j
   br i1 %i.ad, label %bb.r, label %bb.q, !dbg !1735
 
 bb.q:                                             ; preds = %bb.p
-  %.sroa.0.0.i.i = tail call noundef range(i32 0, 7) i32 @llvm.umin.i32(i32 %.sroa.0.037, i32 6), !dbg !1736 ; 2 uses
-  %2 = mul nuw nsw i32 %.sroa.0.0.i.i, %.sroa.0.0.i.i, !dbg !1742 ; 2 uses
-  %.not.i23 = icmp eq i32 %.sroa.0.037, 0, !dbg !1745
-  br i1 %.not.i23, label %.backedge, label %.lr.ph.i24.preheader, !dbg !1754
+  %.not.i23 = icmp eq i32 %.sroa.0.037, 0, !dbg !1736
+  br i1 %.not.i23, label %.backedge, label %.lr.ph.i24.preheader, !dbg !1748
 
 .lr.ph.i24.preheader:                             ; preds = %bb.q
-  %xtraiter = and i32 %2, 5, !dbg !1754           ; 3 uses
-  %i.ae = icmp ult i32 %.sroa.0.037, 3, !dbg !1754
-  br i1 %i.ae, label %.lr.ph.i24.epil.preheader, label %.lr.ph.i24.preheader.new, !dbg !1754
+  %.sroa.0.0.i.i = tail call noundef range(i32 0, 7) i32 @llvm.umin.i32(i32 %.sroa.0.037, i32 6), !dbg !1749 ; 2 uses
+  %2 = mul nuw nsw i32 %.sroa.0.0.i.i, %.sroa.0.0.i.i, !dbg !1753 ; 2 uses
+  %xtraiter = and i32 %2, 5, !dbg !1748           ; 3 uses
+  %i.ae = icmp ult i32 %.sroa.0.037, 3, !dbg !1748
+  br i1 %i.ae, label %.lr.ph.i24.epil.preheader, label %.lr.ph.i24.preheader.new, !dbg !1748
 
 .lr.ph.i24.preheader.new:                         ; preds = %.lr.ph.i24.preheader
-  %unroll_iter = and i32 %2, 56, !dbg !1754
-  br label %.lr.ph.i24, !dbg !1754
+  %unroll_iter = and i32 %2, 56, !dbg !1748
+  br label %.lr.ph.i24, !dbg !1748
 
 ._crit_edge.loopexit.i.unr-lcssa:                 ; preds = %.lr.ph.i24
-  %lcmp.mod.not = icmp eq i32 %xtraiter, 0, !dbg !1754
-  br i1 %lcmp.mod.not, label %._crit_edge.loopexit.i, label %.lr.ph.i24.epil.preheader, !dbg !1754
+  %lcmp.mod.not = icmp eq i32 %xtraiter, 0, !dbg !1748
+  br i1 %lcmp.mod.not, label %._crit_edge.loopexit.i, label %.lr.ph.i24.epil.preheader, !dbg !1748
 
 .lr.ph.i24.epil.preheader:                        ; preds = %._crit_edge.loopexit.i.unr-lcssa, %.lr.ph.i24.preheader
-  %lcmp.mod60 = icmp ne i32 %xtraiter, 0, !dbg !1754
-  tail call void @llvm.assume(i1 %lcmp.mod60), !dbg !1754
-  br label %.lr.ph.i24.epil, !dbg !1754
+  %lcmp.mod60 = icmp ne i32 %xtraiter, 0, !dbg !1748
+  tail call void @llvm.assume(i1 %lcmp.mod60), !dbg !1748
+  br label %.lr.ph.i24.epil, !dbg !1748
 
 .lr.ph.i24.epil:                                  ; preds = %.lr.ph.i24.epil, %.lr.ph.i24.epil.preheader
   %epil.iter = phi i32 [ 0, %.lr.ph.i24.epil.preheader ], [ %epil.iter.next, %.lr.ph.i24.epil ]
   tail call void @llvm.x86.sse2.pause(), !dbg !1755
-  %epil.iter.next = add i32 %epil.iter, 1, !dbg !1754 ; 2 uses
-  %epil.iter.cmp.not = icmp eq i32 %epil.iter.next, %xtraiter, !dbg !1754
-  br i1 %epil.iter.cmp.not, label %._crit_edge.loopexit.i, label %.lr.ph.i24.epil, !dbg !1754, !llvm.loop !1760
+  %epil.iter.next = add i32 %epil.iter, 1, !dbg !1748 ; 2 uses
+  %epil.iter.cmp.not = icmp eq i32 %epil.iter.next, %xtraiter, !dbg !1748
+  br i1 %epil.iter.cmp.not, label %._crit_edge.loopexit.i, label %.lr.ph.i24.epil, !dbg !1748, !llvm.loop !1760
 
 ._crit_edge.loopexit.i:                           ; preds = %.lr.ph.i24.epil, %._crit_edge.loopexit.i.unr-lcssa
   %i.af = add i32 %.sroa.0.037, 1, !dbg !1761
@@ -248,9 +248,9 @@ bb.q:                                             ; preds = %bb.p
   tail call void @llvm.x86.sse2.pause(), !dbg !1755
   tail call void @llvm.x86.sse2.pause(), !dbg !1755
   tail call void @llvm.x86.sse2.pause(), !dbg !1755
-  %niter.next.7 = add i32 %niter, 8, !dbg !1754   ; 2 uses
-  %niter.ncmp.7 = icmp eq i32 %niter.next.7, %unroll_iter, !dbg !1754
-  br i1 %niter.ncmp.7, label %._crit_edge.loopexit.i.unr-lcssa, label %.lr.ph.i24, !dbg !1754
+  %niter.next.7 = add i32 %niter, 8, !dbg !1748   ; 2 uses
+  %niter.ncmp.7 = icmp eq i32 %niter.next.7, %unroll_iter, !dbg !1748
+  br i1 %niter.ncmp.7, label %._crit_edge.loopexit.i.unr-lcssa, label %.lr.ph.i24, !dbg !1748
 
 bb.r:                                             ; preds = %bb.p
   %i.ag = icmp eq i64 %i.f, 30, !dbg !1766
@@ -653,35 +653,35 @@ bb.k:                                             ; preds = %bb.h, %_RINvNtCscgR
   br i1 %i.ah, label %bb.m, label %bb.l, !dbg !2679
 
 bb.l:                                             ; preds = %bb.k
-  %.sroa.0.0.i.i.i = tail call noundef range(i32 0, 7) i32 @llvm.umin.i32(i32 %.sroa.0.073.i.lcssa, i32 6), !dbg !2680 ; 2 uses
-  %5 = mul nuw nsw i32 %.sroa.0.0.i.i.i, %.sroa.0.0.i.i.i, !dbg !2683 ; 2 uses
-  %.not.i26.i = icmp eq i32 %.sroa.0.073.i.lcssa, 0, !dbg !2685
-  br i1 %.not.i26.i, label %.outer.backedge.i, label %.lr.ph.i27.i.preheader, !dbg !2689
+  %.not.i26.i = icmp eq i32 %.sroa.0.073.i.lcssa, 0, !dbg !2680
+  br i1 %.not.i26.i, label %.outer.backedge.i, label %.lr.ph.i27.i.preheader, !dbg !2685
 
 .lr.ph.i27.i.preheader:                           ; preds = %bb.l
-  %xtraiter186 = and i32 %5, 5, !dbg !2689        ; 3 uses
-  %i.ai = icmp ult i32 %.sroa.0.073.i.lcssa, 3, !dbg !2689
-  br i1 %i.ai, label %.lr.ph.i27.i.epil.preheader, label %.lr.ph.i27.i.preheader.new, !dbg !2689
+  %.sroa.0.0.i.i.i = tail call noundef range(i32 0, 7) i32 @llvm.umin.i32(i32 %.sroa.0.073.i.lcssa, i32 6), !dbg !2686 ; 2 uses
+  %5 = mul nuw nsw i32 %.sroa.0.0.i.i.i, %.sroa.0.0.i.i.i, !dbg !2688 ; 2 uses
+  %xtraiter186 = and i32 %5, 5, !dbg !2685        ; 3 uses
+  %i.ai = icmp ult i32 %.sroa.0.073.i.lcssa, 3, !dbg !2685
+  br i1 %i.ai, label %.lr.ph.i27.i.epil.preheader, label %.lr.ph.i27.i.preheader.new, !dbg !2685
 
 .lr.ph.i27.i.preheader.new:                       ; preds = %.lr.ph.i27.i.preheader
-  %unroll_iter190 = and i32 %5, 56, !dbg !2689
-  br label %.lr.ph.i27.i, !dbg !2689
+  %unroll_iter190 = and i32 %5, 56, !dbg !2685
+  br label %.lr.ph.i27.i, !dbg !2685
 
 ._crit_edge.loopexit.i.i.unr-lcssa:               ; preds = %.lr.ph.i27.i
-  %lcmp.mod188.not = icmp eq i32 %xtraiter186, 0, !dbg !2689
-  br i1 %lcmp.mod188.not, label %._crit_edge.loopexit.i.i, label %.lr.ph.i27.i.epil.preheader, !dbg !2689
+  %lcmp.mod188.not = icmp eq i32 %xtraiter186, 0, !dbg !2685
+  br i1 %lcmp.mod188.not, label %._crit_edge.loopexit.i.i, label %.lr.ph.i27.i.epil.preheader, !dbg !2685
 
 .lr.ph.i27.i.epil.preheader:                      ; preds = %._crit_edge.loopexit.i.i.unr-lcssa, %.lr.ph.i27.i.preheader
-  %lcmp.mod189 = icmp ne i32 %xtraiter186, 0, !dbg !2689
-  tail call void @llvm.assume(i1 %lcmp.mod189), !dbg !2689
-  br label %.lr.ph.i27.i.epil, !dbg !2689
+  %lcmp.mod189 = icmp ne i32 %xtraiter186, 0, !dbg !2685
+  tail call void @llvm.assume(i1 %lcmp.mod189), !dbg !2685
+  br label %.lr.ph.i27.i.epil, !dbg !2685
 
 .lr.ph.i27.i.epil:                                ; preds = %.lr.ph.i27.i.epil, %.lr.ph.i27.i.epil.preheader
   %epil.iter187 = phi i32 [ 0, %.lr.ph.i27.i.epil.preheader ], [ %epil.iter187.next, %.lr.ph.i27.i.epil ]
   tail call void @llvm.x86.sse2.pause(), !dbg !2690, !noalias !2592
-  %epil.iter187.next = add i32 %epil.iter187, 1, !dbg !2689 ; 2 uses
-  %epil.iter187.cmp.not = icmp eq i32 %epil.iter187.next, %xtraiter186, !dbg !2689
-  br i1 %epil.iter187.cmp.not, label %._crit_edge.loopexit.i.i, label %.lr.ph.i27.i.epil, !dbg !2689, !llvm.loop !2693
+  %epil.iter187.next = add i32 %epil.iter187, 1, !dbg !2685 ; 2 uses
+  %epil.iter187.cmp.not = icmp eq i32 %epil.iter187.next, %xtraiter186, !dbg !2685
+  br i1 %epil.iter187.cmp.not, label %._crit_edge.loopexit.i.i, label %.lr.ph.i27.i.epil, !dbg !2685, !llvm.loop !2693
 
 ._crit_edge.loopexit.i.i:                         ; preds = %.lr.ph.i27.i.epil, %._crit_edge.loopexit.i.i.unr-lcssa
   %i.aj = add i32 %.sroa.0.073.i.lcssa, 1, !dbg !2694
@@ -697,9 +697,9 @@ bb.l:                                             ; preds = %bb.k
   tail call void @llvm.x86.sse2.pause(), !dbg !2690, !noalias !2592
   tail call void @llvm.x86.sse2.pause(), !dbg !2690, !noalias !2592
   tail call void @llvm.x86.sse2.pause(), !dbg !2690, !noalias !2592
-  %niter191.next.7 = add i32 %niter191, 8, !dbg !2689 ; 2 uses
-  %niter191.ncmp.7 = icmp eq i32 %niter191.next.7, %unroll_iter190, !dbg !2689
-  br i1 %niter191.ncmp.7, label %._crit_edge.loopexit.i.i.unr-lcssa, label %.lr.ph.i27.i, !dbg !2689
+  %niter191.next.7 = add i32 %niter191, 8, !dbg !2685 ; 2 uses
+  %niter191.ncmp.7 = icmp eq i32 %niter191.next.7, %unroll_iter190, !dbg !2685
+  br i1 %niter191.ncmp.7, label %._crit_edge.loopexit.i.i.unr-lcssa, label %.lr.ph.i27.i, !dbg !2685
 
 bb.m:                                             ; preds = %bb.k
   br i1 %i.u, label %bb.n, label %.outer._crit_edge.i, !dbg !2697
@@ -1102,36 +1102,36 @@ begin_hunk_2_@llvm.memset.p0.i64
 !1733 = distinct !DISubprogram(name: "compare_exchange_weak", linkageName: "_RNvMs1k_NtNtCscgRAwXFJnXP_4core4sync6atomicINtB6_6AtomicjE21compare_exchange_weak", scope: !147, file: !142, line: 3123, type: !11, scopeLine: 3123, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !12)
 !1734 = !DILocation(line: 336, column: 35, scope: !1699)
 !1735 = !DILocation(line: 336, column: 13, scope: !1699)
-!1736 = !DILocation(line: 1077, column: 12, scope: !1737, inlinedAt: !1739)
-!1737 = distinct !DISubprogram(name: "min<u32>", linkageName: "_RNvYmNtNtCscgRAwXFJnXP_4core3cmp3Ord3minCs7Ga9Brpi21q_11polars_lazy", scope: !1738, file: !1207, line: 1073, type: !11, scopeLine: 1073, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !12)
-!1738 = !DINamespace(name: "Ord", scope: !1209)
-!1739 = distinct !DILocation(line: 114, column: 36, scope: !1740, inlinedAt: !1741)
-!1740 = distinct !DISubprogram(name: "spin_light", linkageName: "_RNvMs1_NtNtNtCsh8eZTKRCwoO_3std4sync4mpmc5utilsNtB5_7Backoff10spin_light", scope: !1648, file: !1647, line: 113, type: !11, scopeLine: 113, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !12)
-!1741 = distinct !DILocation(line: 360, column: 29, scope: !1699)
-!1742 = !DILocation(line: 3558, column: 28, scope: !1669, inlinedAt: !1743)
-!1743 = distinct !DILocation(line: 115, column: 26, scope: !1744, inlinedAt: !1741)
-!1744 = distinct !DILexicalBlock(scope: !1740, file: !1647, line: 114, column: 9)
-!1745 = !DILocation(line: 1917, column: 50, scope: !1746, inlinedAt: !1747)
-!1746 = distinct !DISubprogram(name: "lt", linkageName: "_RNvXs10_NtNtCscgRAwXFJnXP_4core3cmp5implsmNtB8_10PartialOrd2lt", scope: !1654, file: !1207, line: 1917, type: !11, scopeLine: 1917, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !12)
-!1747 = distinct !DILocation(line: 781, column: 12, scope: !1748, inlinedAt: !1749)
-!1748 = distinct !DISubprogram(name: "spec_next<u32>", linkageName: "_RNvXs3_NtNtCscgRAwXFJnXP_4core4iter5rangeINtNtNtB9_3ops5range5RangemENtB5_17RangeIteratorImpl9spec_nextCs7Ga9Brpi21q_11polars_lazy", scope: !1659, file: !1658, line: 780, type: !11, scopeLine: 780, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !12)
-!1749 = distinct !DILocation(line: 866, column: 14, scope: !1750, inlinedAt: !1751)
-!1750 = distinct !DISubprogram(name: "next<u32>", linkageName: "_RNvXs4_NtNtCscgRAwXFJnXP_4core4iter5rangeINtNtNtB9_3ops5range5RangemENtNtNtB7_6traits8iterator8Iterator4nextCs7Ga9Brpi21q_11polars_lazy", scope: !1663, file: !1658, line: 865, type: !11, scopeLine: 865, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !12)
-!1751 = distinct !DILocation(line: 115, column: 18, scope: !1752, inlinedAt: !1741)
-!1752 = !DILexicalBlockFile(scope: !1753, file: !1647, discriminator: 2)
-!1753 = distinct !DILexicalBlock(scope: !1744, file: !1647, line: 115, column: 9)
-!1754 = !DILocation(line: 781, column: 12, scope: !1748, inlinedAt: !1749)
+!1736 = !DILocation(line: 1917, column: 50, scope: !1737, inlinedAt: !1738)
+!1737 = distinct !DISubprogram(name: "lt", linkageName: "_RNvXs10_NtNtCscgRAwXFJnXP_4core3cmp5implsmNtB8_10PartialOrd2lt", scope: !1654, file: !1207, line: 1917, type: !11, scopeLine: 1917, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !12)
+!1738 = distinct !DILocation(line: 781, column: 12, scope: !1739, inlinedAt: !1740)
+!1739 = distinct !DISubprogram(name: "spec_next<u32>", linkageName: "_RNvXs3_NtNtCscgRAwXFJnXP_4core4iter5rangeINtNtNtB9_3ops5range5RangemENtB5_17RangeIteratorImpl9spec_nextCs7Ga9Brpi21q_11polars_lazy", scope: !1659, file: !1658, line: 780, type: !11, scopeLine: 780, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !12)
+!1740 = distinct !DILocation(line: 866, column: 14, scope: !1741, inlinedAt: !1742)
+!1741 = distinct !DISubprogram(name: "next<u32>", linkageName: "_RNvXs4_NtNtCscgRAwXFJnXP_4core4iter5rangeINtNtNtB9_3ops5range5RangemENtNtNtB7_6traits8iterator8Iterator4nextCs7Ga9Brpi21q_11polars_lazy", scope: !1663, file: !1658, line: 865, type: !11, scopeLine: 865, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !12)
+!1742 = distinct !DILocation(line: 115, column: 18, scope: !1743, inlinedAt: !1747)
+!1743 = !DILexicalBlockFile(scope: !1744, file: !1647, discriminator: 2)
+!1744 = distinct !DILexicalBlock(scope: !1745, file: !1647, line: 115, column: 9)
+!1745 = distinct !DILexicalBlock(scope: !1746, file: !1647, line: 114, column: 9)
+!1746 = distinct !DISubprogram(name: "spin_light", linkageName: "_RNvMs1_NtNtNtCsh8eZTKRCwoO_3std4sync4mpmc5utilsNtB5_7Backoff10spin_light", scope: !1648, file: !1647, line: 113, type: !11, scopeLine: 113, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !12)
+!1747 = distinct !DILocation(line: 360, column: 29, scope: !1699)
+!1748 = !DILocation(line: 781, column: 12, scope: !1739, inlinedAt: !1740)
+!1749 = !DILocation(line: 1077, column: 12, scope: !1750, inlinedAt: !1752)
+!1750 = distinct !DISubprogram(name: "min<u32>", linkageName: "_RNvYmNtNtCscgRAwXFJnXP_4core3cmp3Ord3minCs7Ga9Brpi21q_11polars_lazy", scope: !1751, file: !1207, line: 1073, type: !11, scopeLine: 1073, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !12)
+!1751 = !DINamespace(name: "Ord", scope: !1209)
+!1752 = distinct !DILocation(line: 114, column: 36, scope: !1746, inlinedAt: !1747)
+!1753 = !DILocation(line: 3558, column: 28, scope: !1669, inlinedAt: !1754)
+!1754 = distinct !DILocation(line: 115, column: 26, scope: !1745, inlinedAt: !1747)
 !1755 = !DILocation(line: 25, column: 14, scope: !1756, inlinedAt: !1757)
 !1756 = distinct !DISubprogram(name: "_mm_pause", linkageName: "_RNvNtNtNtCscgRAwXFJnXP_4core9core_arch3x864sse29__mm_pause", scope: !1679, file: !1678, line: 22, type: !11, scopeLine: 22, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !12)
 !1757 = distinct !DILocation(line: 287, column: 13, scope: !1758, inlinedAt: !1759)
 !1758 = distinct !DISubprogram(name: "spin_loop", linkageName: "_RNvNtCscgRAwXFJnXP_4core4hint9spin_loop", scope: !1685, file: !1684, line: 270, type: !11, scopeLine: 270, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !12)
-!1759 = distinct !DILocation(line: 116, column: 13, scope: !1753, inlinedAt: !1741)
+!1759 = distinct !DILocation(line: 116, column: 13, scope: !1744, inlinedAt: !1747)
 !1760 = distinct !{!1760, !1688}
-!1761 = !DILocation(line: 119, column: 23, scope: !1744, inlinedAt: !1741)
+!1761 = !DILocation(line: 119, column: 23, scope: !1745, inlinedAt: !1747)
 !1762 = !DILocation(line: 555, column: 18, scope: !1763, inlinedAt: !1765)
 !1763 = distinct !DISubprogram(name: "get<u32>", linkageName: "_RNvMs8_NtCscgRAwXFJnXP_4core4cellINtB5_4CellmE3getCs7Ga9Brpi21q_11polars_lazy", scope: !1764, file: !1001, line: 552, type: !11, scopeLine: 552, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !12)
 !1764 = !DINamespace(name: "Cell", scope: !1003)
-!1765 = distinct !DILocation(line: 119, column: 33, scope: !1744, inlinedAt: !1741)
+!1765 = distinct !DILocation(line: 119, column: 33, scope: !1745, inlinedAt: !1747)
 !1766 = !DILocation(line: 344, column: 24, scope: !1699)
 !1767 = !DILocation(line: 3905, column: 24, scope: !1633, inlinedAt: !1768)
 !1768 = distinct !DILocation(line: 1732, column: 18, scope: !1769, inlinedAt: !1770)
@@ -1534,23 +1534,23 @@ begin_hunk_3_@llvm.memset.p0.i64
 !2677 = distinct !DILocation(line: 234, column: 35, scope: !2678, inlinedAt: !2588)
 !2678 = distinct !DILexicalBlock(scope: !2615, file: !939, line: 231, column: 13)
 !2679 = !DILocation(line: 234, column: 13, scope: !2678, inlinedAt: !2588)
-!2680 = !DILocation(line: 1077, column: 12, scope: !1737, inlinedAt: !2681)
-!2681 = distinct !DILocation(line: 114, column: 36, scope: !1740, inlinedAt: !2682)
-!2682 = distinct !DILocation(line: 254, column: 29, scope: !2678, inlinedAt: !2588)
-!2683 = !DILocation(line: 3558, column: 28, scope: !1669, inlinedAt: !2684)
-!2684 = distinct !DILocation(line: 115, column: 26, scope: !1744, inlinedAt: !2682)
-!2685 = !DILocation(line: 1917, column: 50, scope: !1746, inlinedAt: !2686)
-!2686 = distinct !DILocation(line: 781, column: 12, scope: !1748, inlinedAt: !2687)
-!2687 = distinct !DILocation(line: 866, column: 14, scope: !1750, inlinedAt: !2688)
-!2688 = distinct !DILocation(line: 115, column: 18, scope: !1752, inlinedAt: !2682)
-!2689 = !DILocation(line: 781, column: 12, scope: !1748, inlinedAt: !2687)
+!2680 = !DILocation(line: 1917, column: 50, scope: !1737, inlinedAt: !2681)
+!2681 = distinct !DILocation(line: 781, column: 12, scope: !1739, inlinedAt: !2682)
+!2682 = distinct !DILocation(line: 866, column: 14, scope: !1741, inlinedAt: !2683)
+!2683 = distinct !DILocation(line: 115, column: 18, scope: !1743, inlinedAt: !2684)
+!2684 = distinct !DILocation(line: 254, column: 29, scope: !2678, inlinedAt: !2588)
+!2685 = !DILocation(line: 781, column: 12, scope: !1739, inlinedAt: !2682)
+!2686 = !DILocation(line: 1077, column: 12, scope: !1750, inlinedAt: !2687)
+!2687 = distinct !DILocation(line: 114, column: 36, scope: !1746, inlinedAt: !2684)
+!2688 = !DILocation(line: 3558, column: 28, scope: !1669, inlinedAt: !2689)
+!2689 = distinct !DILocation(line: 115, column: 26, scope: !1745, inlinedAt: !2684)
 !2690 = !DILocation(line: 25, column: 14, scope: !1756, inlinedAt: !2691)
 !2691 = distinct !DILocation(line: 287, column: 13, scope: !1758, inlinedAt: !2692)
-!2692 = distinct !DILocation(line: 116, column: 13, scope: !1753, inlinedAt: !2682)
+!2692 = distinct !DILocation(line: 116, column: 13, scope: !1744, inlinedAt: !2684)
 !2693 = distinct !{!2693, !1688}
-!2694 = !DILocation(line: 119, column: 23, scope: !1744, inlinedAt: !2682)
+!2694 = !DILocation(line: 119, column: 23, scope: !1745, inlinedAt: !2684)
 !2695 = !DILocation(line: 555, column: 18, scope: !1763, inlinedAt: !2696)
-!2696 = distinct !DILocation(line: 119, column: 33, scope: !1744, inlinedAt: !2682)
+!2696 = distinct !DILocation(line: 119, column: 33, scope: !1745, inlinedAt: !2684)
 !2697 = !DILocation(line: 242, column: 24, scope: !2678, inlinedAt: !2588)
 !2698 = !DILocation(line: 1014, column: 15, scope: !2699, inlinedAt: !2700)
 !2699 = distinct !DISubprogram(name: "unwrap<alloc::boxed::Box<std::sync::mpmc::list::Block<core::result::Result<polars_core::frame::dataframe::DataFrame, polars_error::PolarsError>>, alloc::alloc::Global>>", linkageName: "_RNvMNtCscgRAwXFJnXP_4core6optionINtB2_6OptionINtNtCsgZ49sUHp3tW_5alloc5boxed3BoxINtNtNtNtCsh8eZTKRCwoO_3std4sync4mpmc4list5BlockINtNtB4_6result6ResultNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameNtCsgjwxzEoLG5s_12polars_error11PolarsErrorEEEE6unwrapCs7Ga9Brpi21q_11polars_lazy", scope: !864, file: !863, line: 1013, type: !11, scopeLine: 1013, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !12)

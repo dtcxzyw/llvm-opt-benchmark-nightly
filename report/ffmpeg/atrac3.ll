@@ -205,7 +205,7 @@ begin_hunk_0_@atrac3_decode_frame:bb.a
   br i1 %i.nm, label %.lr.ph95.i.i.preheader, label %.loopexit.i.i
 
 .lr.ph95.i.i.preheader:                           ; preds = %.preheader87.i.i
-  %i.nn = sub i64 %indvars.iv123.i.i, %.1.i.i     ; 3 uses
+  %i.nn = sub nsw i64 %indvars.iv123.i.i, %.1.i.i ; 3 uses
   %min.iters.check153 = icmp ult i64 %i.nn, 4
   br i1 %min.iters.check153, label %.lr.ph95.i.i.preheader186, label %vector.memcheck144
 
@@ -271,7 +271,7 @@ middle.block161:                                  ; preds = %vector.body156
   br i1 %i.nm, label %.lr.ph97.i.i.preheader, label %.loopexit.i.i
 
 .lr.ph97.i.i.preheader:                           ; preds = %.preheader.i.i
-  %i.of = sub i64 %indvars.iv123.i.i, %.1.i.i     ; 3 uses
+  %i.of = sub nsw i64 %indvars.iv123.i.i, %.1.i.i ; 3 uses
   %min.iters.check133 = icmp ult i64 %i.of, 4
   br i1 %min.iters.check133, label %.lr.ph97.i.i.preheader185, label %vector.memcheck124
 
@@ -387,7 +387,7 @@ bb.r:                                             ; preds = %.loopexit90.i.i, %.
   br i1 %i.nm, label %.lr.ph93.i.i.preheader, label %.loopexit.i.i
 
 .lr.ph93.i.i.preheader:                           ; preds = %bb.r
-  %i.pz = sub i64 %indvars.iv123.i.i, %.1.i.i     ; 3 uses
+  %i.pz = sub nsw i64 %indvars.iv123.i.i, %.1.i.i ; 3 uses
   %min.iters.check173 = icmp ult i64 %i.pz, 4
   br i1 %min.iters.check173, label %.lr.ph93.i.i.preheader188, label %vector.memcheck164
 

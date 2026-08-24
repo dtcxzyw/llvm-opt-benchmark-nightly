@@ -53,16 +53,17 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.a, %._crit_edge39
-  %.03041 = phi i32 [ 256, %bb.a ], [ %i.a, %._crit_edge39 ] ; 2 uses
+  %.03041 = phi i32 [ 256, %bb.a ], [ %i.a, %._crit_edge39 ] ; 3 uses
   %.03140 = phi i32 [ 1, %bb.a ], [ %i.ax, %._crit_edge39 ] ; 3 uses
-  %i.a = lshr i32 %.03041, 1                      ; 3 uses
+  %i.a = lshr i32 %.03041, 1                      ; 4 uses
   %i.b = icmp sgt i32 %.03140, 0
   br i1 %i.b, label %.lr.ph38, label %._crit_edge39
 
 .lr.ph38:                                         ; preds = %bb.b
   %i.c = and i32 %.03041, 510
   %i.d = zext nneg i32 %i.c to i64
-  %i.e = zext nneg i32 %i.a to i64                ; 2 uses
+  %i.e = zext nneg i32 %i.a to i64
+  %1 = and i32 %.03041, 510
   %i.f = zext nneg i32 %.03140 to i64             ; 2 uses
   %.not = icmp eq i32 %i.a, 0
   %invariant.gep47 = getelementptr inbounds nuw [4 x i8], ptr @zetas_montgomery, i64 %i.f
@@ -70,9 +71,9 @@ bb.b:                                             ; preds = %bb.a, %._crit_edge3
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph38, %._crit_edge
-  %indvars.iv44.a = phi i64 [ 0, %.lr.ph38 ], [ %indvars.iv.next45.a, %._crit_edge ] ; 2 uses
-  %indvars.iv = phi i64 [ 0, %.lr.ph38 ], [ %indvars.iv.next.a, %._crit_edge ] ; 3 uses
-  %1 = add nuw nsw i64 %indvars.iv, %i.e
+  %indvars.iv44.a = phi i64 [ 0, %.lr.ph38 ], [ %indvars.iv.next.a, %._crit_edge ] ; 2 uses
+  %indvars.iv44 = phi i32 [ %i.a, %.lr.ph38 ], [ %indvars.iv.next45, %._crit_edge ] ; 2 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph38 ], [ %indvars.iv.next45.a, %._crit_edge ] ; 2 uses
   br i1 %.not, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.c
@@ -131,13 +132,15 @@ bb.d:                                             ; preds = %.lr.ph, %bb.d
   %i.aw = or i32 %i.av, %i.as
   store i32 %i.aw, ptr %gep, align 4, !tbaa !10
   %indvars.iv.next43 = add nuw nsw i64 %indvars.iv42, 1 ; 2 uses
-  %2 = icmp samesign ult i64 %indvars.iv.next43, %1
-  br i1 %2, label %bb.d, label %._crit_edge, !llvm.loop !14
+  %lftr.wideiv = trunc i64 %indvars.iv.next43 to i32
+  %exitcond.not = icmp eq i32 %indvars.iv44, %lftr.wideiv
+  br i1 %exitcond.not, label %._crit_edge, label %bb.d, !llvm.loop !14
 
 ._crit_edge:                                      ; preds = %bb.d, %bb.c
-  %indvars.iv.next.a = add nuw nsw i64 %indvars.iv, %i.d
-  %indvars.iv.next45.a = add nuw nsw i64 %indvars.iv44.a, 1 ; 2 uses
-  %exitcond.not.a = icmp eq i64 %indvars.iv.next45.a, %i.f
+  %indvars.iv.next.a = add nuw nsw i64 %indvars.iv44.a, 1 ; 2 uses
+  %indvars.iv.next45.a = add nuw nsw i64 %indvars.iv, %i.d
+  %indvars.iv.next45 = add i32 %indvars.iv44, %1
+  %exitcond.not.a = icmp eq i64 %indvars.iv.next.a, %i.f
   br i1 %exitcond.not.a, label %._crit_edge39, label %bb.c, !llvm.loop !15
 
 ._crit_edge39:                                    ; preds = %._crit_edge, %bb.b

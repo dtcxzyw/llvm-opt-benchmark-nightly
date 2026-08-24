@@ -205,11 +205,13 @@ bb.a:
   br i1 %lcmp.mod.not, label %._crit_edge, label %.lr.ph.epil.preheader
 
 .lr.ph.epil.preheader:                            ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph.preheader
-  %indvars.iv.epil.init = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next.1, %._crit_edge.loopexit.unr-lcssa ]
+  %indvars.iv.epil.init = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next.1, %._crit_edge.loopexit.unr-lcssa ] ; 2 uses
   %lcmp.mod55 = trunc i32 %1 to i1
   tail call void @llvm.assume(i1 %lcmp.mod55)
+  %3 = mul nuw nsw i64 %indvars.iv.epil.init, 12
+  %scevgep.epil = getelementptr nuw i8, ptr %0, i64 %3
   %.idx.epil = mul nuw nsw i64 %indvars.iv.epil.init, 12
-  %i.m = getelementptr inbounds nuw i8, ptr %0, i64 %.idx.epil ; 3 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %0, i64 %.idx.epil ; 2 uses
   %i.n = load float, ptr %i.m, align 4, !tbaa !14
   %i.o = fpext reassoc nsz arcp contract afn float %i.n to double
   %i.p = getelementptr inbounds nuw i8, ptr %i.m, i64 4
@@ -229,17 +231,19 @@ bb.a:
   %i.ad = fpext <4 x float> %i.aa to <4 x double>
   %i.ae = fadd reassoc nsz arcp contract afn <4 x double> %i.ac, %i.ad
   %i.af = fptrunc <4 x double> %i.ae to <4 x float>
-  store <4 x float> %i.af, ptr %i.m, align 4, !tbaa !14
+  store <4 x float> %i.af, ptr %scevgep.epil, align 4, !tbaa !14
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.lr.ph.epil.preheader, %._crit_edge.loopexit.unr-lcssa, %bb.a
   ret void
 
 .lr.ph:                                           ; preds = %.lr.ph, %.lr.ph.preheader.new
-  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader.new ], [ %indvars.iv.next.1, %.lr.ph ] ; 3 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader.new ], [ %indvars.iv.next.1, %.lr.ph ] ; 4 uses
   %niter = phi i64 [ 0, %.lr.ph.preheader.new ], [ %niter.next.1, %.lr.ph ]
+  %4 = mul nuw nsw i64 %indvars.iv, 12
+  %scevgep = getelementptr nuw i8, ptr %0, i64 %4
   %.idx = mul nuw nsw i64 %indvars.iv, 12
-  %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 %.idx ; 3 uses
+  %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 %.idx ; 2 uses
   %i.ah = load float, ptr %i.ag, align 4, !tbaa !14
   %i.ai = fpext reassoc nsz arcp contract afn float %i.ah to double
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ag, i64 4
@@ -259,13 +263,15 @@ bb.a:
   %i.ax = fpext <4 x float> %i.au to <4 x double>
   %i.ay = fadd reassoc nsz arcp contract afn <4 x double> %i.aw, %i.ax
   %i.az = fptrunc <4 x double> %i.ay to <4 x float>
-  store <4 x float> %i.az, ptr %i.ag, align 4, !tbaa !14
-  %i.ba = mul nuw i64 %indvars.iv, 12
-  %i.bb = getelementptr inbounds nuw i8, ptr %0, i64 %i.ba ; 2 uses
-  %i.bc = getelementptr inbounds nuw i8, ptr %i.bb, i64 12 ; 2 uses
+  store <4 x float> %i.az, ptr %scevgep, align 4, !tbaa !14
+  %indvar.next = or disjoint i64 %indvars.iv, 1   ; 2 uses
+  %i.ba = mul nuw nsw i64 %indvar.next, 12
+  %i.bb = getelementptr nuw i8, ptr %0, i64 %i.ba
+  %.idx.1 = mul nuw nsw i64 %indvar.next, 12
+  %i.bc = getelementptr inbounds nuw i8, ptr %0, i64 %.idx.1 ; 2 uses
   %i.bd = load float, ptr %i.bc, align 4, !tbaa !14
   %i.be = fpext reassoc nsz arcp contract afn float %i.bd to double
-  %i.bf = getelementptr inbounds nuw i8, ptr %i.bb, i64 16
+  %i.bf = getelementptr inbounds nuw i8, ptr %i.bc, i64 4
   %i.bg = load <2 x float>, ptr %i.bf, align 4, !tbaa !14
   %i.bh = fpext <2 x float> %i.bg to <2 x double> ; 2 uses
   %i.bi = insertelement <4 x double> poison, double %i.be, i64 0
@@ -282,7 +288,7 @@ bb.a:
   %i.bt = fpext <4 x float> %i.bq to <4 x double>
   %i.bu = fadd reassoc nsz arcp contract afn <4 x double> %i.bs, %i.bt
   %i.bv = fptrunc <4 x double> %i.bu to <4 x float>
-  store <4 x float> %i.bv, ptr %i.bc, align 4, !tbaa !14
+  store <4 x float> %i.bv, ptr %i.bb, align 4, !tbaa !14
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter

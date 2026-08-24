@@ -205,8 +205,8 @@ bb.al:                                            ; preds = %.preheader202, %._c
   %indvars361 = trunc i64 %indvars.iv359 to i32   ; 2 uses
   %i.lp = zext nneg i16 %i.lo to i32
   %i.lq = lshr i32 4, %i.lp                       ; 3 uses
-  %i.lr = mul i32 %i.lq, %indvars366              ; 2 uses
-  %i.ls = mul i32 %i.lq, %i.ll
+  %i.lr = mul nuw nsw i32 %i.lq, %indvars366      ; 2 uses
+  %i.ls = mul nuw nsw i32 %i.lq, %i.ll
   %i.lt = icmp ult i32 %i.lr, %i.ls
   br i1 %i.lt, label %.lr.ph269, label %._crit_edge270
 
@@ -221,10 +221,10 @@ bb.am:                                            ; preds = %.lr.ph269, %._crit_
   %i.lw = phi i16 [ %i.lo, %.lr.ph269 ], [ %i.ni, %._crit_edge266 ] ; 2 uses
   %i.lx = phi i32 [ %i.lq, %.lr.ph269 ], [ %i.nl, %._crit_edge266 ]
   %.1161267 = phi i32 [ %i.lr, %.lr.ph269 ], [ %i.nj, %._crit_edge266 ] ; 2 uses
-  %i.ly = mul i32 %i.lx, %indvars361              ; 2 uses
+  %i.ly = mul nuw nsw i32 %i.lx, %indvars361      ; 2 uses
   %i.lz = zext nneg i16 %i.lw to i32
   %i.ma = lshr i32 4, %i.lz
-  %i.mb = mul i32 %i.ma, %i.lu
+  %i.mb = mul nuw nsw i32 %i.ma, %i.lu
   %i.mc = icmp ult i32 %i.ly, %i.mb
   br i1 %i.mc, label %.lr.ph265, label %._crit_edge266
 
@@ -275,7 +275,7 @@ bb.aq:                                            ; preds = %bb.an, %bb.ap, %bb.
   %i.nd = add nuw nsw i32 %.1159263, 1            ; 2 uses
   %i.ne = zext nneg i16 %i.nc to i32
   %i.nf = lshr i32 4, %i.ne
-  %i.ng = mul i32 %i.nf, %i.lu
+  %i.ng = mul nuw nsw i32 %i.nf, %i.lu
   %i.nh = icmp samesign ult i32 %i.nd, %i.ng
   br i1 %i.nh, label %bb.an, label %._crit_edge266, !llvm.loop !274
 
@@ -285,7 +285,7 @@ bb.aq:                                            ; preds = %bb.an, %bb.ap, %bb.
   %i.nj = add nuw nsw i32 %.1161267, 1            ; 2 uses
   %i.nk = zext nneg i16 %i.ni to i32
   %i.nl = lshr i32 4, %i.nk                       ; 2 uses
-  %i.nm = mul i32 %i.nl, %i.ll
+  %i.nm = mul nuw nsw i32 %i.nl, %i.ll
   %i.nn = icmp samesign ult i32 %i.nj, %i.nm
   br i1 %i.nn, label %bb.am, label %._crit_edge270, !llvm.loop !275
 

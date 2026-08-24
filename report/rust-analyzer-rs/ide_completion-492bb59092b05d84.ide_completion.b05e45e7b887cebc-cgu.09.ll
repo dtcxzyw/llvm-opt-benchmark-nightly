@@ -204,12 +204,12 @@ bb.o:                                             ; preds = %bb.l, %_RINvNtCshzW
   br i1 %.sroa.18.0.in.i.i.i, label %bb.p, label %_RNvMs6_NtCshzWfHUSfYae_4core3numm15overflowing_pow.exit.i27.i.i
 
 _RNvMs6_NtCshzWfHUSfYae_4core3numm15overflowing_pow.exit.i27.i.i: ; preds = %bb.o
-  %..i.i.i.i = tail call noundef range(i32 0, 7) i32 @llvm.umin.i32(i32 %.sroa.0.077.i.i, i32 6) ; 2 uses
-  %2 = mul nuw nsw i32 %..i.i.i.i, %..i.i.i.i     ; 2 uses
   %.not.i28.i.i = icmp eq i32 %.sroa.0.077.i.i, 0
   br i1 %.not.i28.i.i, label %.loopexit63.i.i, label %.lr.ph.i31.i.i.preheader
 
 .lr.ph.i31.i.i.preheader:                         ; preds = %_RNvMs6_NtCshzWfHUSfYae_4core3numm15overflowing_pow.exit.i27.i.i
+  %..i.i.i.i = tail call noundef range(i32 0, 7) i32 @llvm.umin.i32(i32 %.sroa.0.077.i.i, i32 6) ; 2 uses
+  %2 = mul nuw nsw i32 %..i.i.i.i, %..i.i.i.i     ; 2 uses
   %xtraiter = and i32 %2, 5                       ; 3 uses
   %i.ak = icmp ult i32 %.sroa.0.077.i.i, 3
   br i1 %i.ak, label %.lr.ph.i31.i.i.epil.preheader, label %.lr.ph.i31.i.i.preheader.new
