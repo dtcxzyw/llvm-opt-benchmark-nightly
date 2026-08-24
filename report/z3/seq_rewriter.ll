@@ -205,11 +205,11 @@ bb.a:
   br label %tailrecurse
 
 tailrecurse:                                      ; preds = %tailrecurse, %bb.a
-  %i.a = phi i32 [ %.pre, %bb.a ], [ %i.c, %tailrecurse ] ; 10 uses
+  %i.a = phi i32 [ %.pre, %bb.a ], [ %i.c, %tailrecurse ] ; 11 uses
   %.tr71 = phi ptr [ %1, %bb.a ], [ %.tr72, %tailrecurse ] ; 4 uses
   %.tr72 = phi ptr [ %2, %bb.a ], [ %.tr71, %tailrecurse ] ; 5 uses
   %i.b = getelementptr inbounds nuw i8, ptr %.tr72, i64 8
-  %i.c = load i32, ptr %i.b, align 8, !tbaa !214  ; 7 uses
+  %i.c = load i32, ptr %i.b, align 8, !tbaa !214  ; 6 uses
   %i.d = icmp ugt i32 %i.a, %i.c
   br i1 %i.d, label %tailrecurse, label %.preheader
 
@@ -225,11 +225,7 @@ tailrecurse:                                      ; preds = %tailrecurse, %bb.a
 
 .critedge.preheader:                              ; preds = %"_ZZNK12seq_rewriter11non_overlapERK7zstringS2_ENK3$_0clEjjj.exit", %.preheader
   %.not4181 = icmp ult i32 %i.a, %i.c
-  br i1 %.not4181, label %.lr.ph, label %.critedge.preheader..critedge44_crit_edge
-
-.critedge.preheader..critedge44_crit_edge:        ; preds = %.critedge.preheader
-  %.pre103 = sub i32 %i.c, %i.a
-  br label %.critedge44
+  br i1 %.not4181, label %.lr.ph, label %.critedge44
 
 .lr.ph:                                           ; preds = %.critedge.preheader
   %.not4.i50.not = icmp eq i32 %i.a, 0
@@ -238,7 +234,7 @@ tailrecurse:                                      ; preds = %tailrecurse, %bb.a
 .lr.ph.split:                                     ; preds = %.lr.ph
   %i.g = load ptr, ptr %.tr71, align 8, !tbaa !212
   %i.h = load ptr, ptr %.tr72, align 8, !tbaa !212
-  %i.i = sub i32 %i.c, %i.a                       ; 2 uses
+  %i.i = sub i32 %i.c, %i.a
   %zext = zext i32 %i.a to i64
   br label %.lr.ph.i52
 
@@ -292,19 +288,19 @@ bb.e:                                             ; preds = %bb.d, %.lr.ph.i52
   %exitcond95.not = icmp eq i32 %i.v, %i.i
   br i1 %exitcond95.not, label %.critedge44, label %.lr.ph.i52, !llvm.loop !659
 
-.critedge44:                                      ; preds = %"_ZZNK12seq_rewriter11non_overlapERK7zstringS2_ENK3$_0clEjjj.exit58", %.critedge.preheader..critedge44_crit_edge
-  %.pre-phi = phi i32 [ %.pre103, %.critedge.preheader..critedge44_crit_edge ], [ %i.i, %"_ZZNK12seq_rewriter11non_overlapERK7zstringS2_ENK3$_0clEjjj.exit58" ] ; 2 uses
-  %.not4283.not = icmp ult i32 %.pre-phi, %i.c
-  br i1 %.not4283.not, label %.lr.ph.i61.lr.ph, label %"_ZZNK12seq_rewriter11non_overlapERK7zstringS2_ENK3$_0clEjjj.exit67.thread"
+.critedge44:                                      ; preds = %"_ZZNK12seq_rewriter11non_overlapERK7zstringS2_ENK3$_0clEjjj.exit58", %.critedge.preheader
+  %.not4283 = icmp eq i32 %i.a, 0
+  br i1 %.not4283, label %"_ZZNK12seq_rewriter11non_overlapERK7zstringS2_ENK3$_0clEjjj.exit67.thread", label %.lr.ph.i61.lr.ph
 
 .lr.ph.i61.lr.ph:                                 ; preds = %.critedge44
+  %3 = sub nuw i32 %i.c, %i.a
   %i.w = load ptr, ptr %.tr71, align 8, !tbaa !212
   %i.x = load ptr, ptr %.tr72, align 8, !tbaa !212
   br label %.lr.ph.i61
 
 .lr.ph.i61:                                       ; preds = %.lr.ph.i61.lr.ph, %"_ZZNK12seq_rewriter11non_overlapERK7zstringS2_ENK3$_0clEjjj.exit67"
   %indvars.iv97 = phi i32 [ %i.a, %.lr.ph.i61.lr.ph ], [ %indvars.iv.next98, %"_ZZNK12seq_rewriter11non_overlapERK7zstringS2_ENK3$_0clEjjj.exit67" ] ; 2 uses
-  %.084 = phi i32 [ %.pre-phi, %.lr.ph.i61.lr.ph ], [ %i.af, %"_ZZNK12seq_rewriter11non_overlapERK7zstringS2_ENK3$_0clEjjj.exit67" ] ; 2 uses
+  %.084 = phi i32 [ %3, %.lr.ph.i61.lr.ph ], [ %i.af, %"_ZZNK12seq_rewriter11non_overlapERK7zstringS2_ENK3$_0clEjjj.exit67" ] ; 2 uses
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.g
@@ -326,10 +322,10 @@ bb.g:                                             ; preds = %bb.f, %.lr.ph.i61
   br i1 %.not.i63, label %bb.f, label %"_ZZNK12seq_rewriter11non_overlapERK7zstringS2_ENK3$_0clEjjj.exit67"
 
 "_ZZNK12seq_rewriter11non_overlapERK7zstringS2_ENK3$_0clEjjj.exit67": ; preds = %bb.g
-  %i.af = add nuw i32 %.084, 1                    ; 2 uses
+  %i.af = add i32 %.084, 1                        ; 2 uses
+  %.not42.not = icmp ult i32 %i.af, %i.c
   %indvars.iv.next98 = add i32 %indvars.iv97, -1
-  %exitcond102.not = icmp eq i32 %i.af, %i.c
-  br i1 %exitcond102.not, label %"_ZZNK12seq_rewriter11non_overlapERK7zstringS2_ENK3$_0clEjjj.exit67.thread", label %.lr.ph.i61, !llvm.loop !660
+  br i1 %.not42.not, label %.lr.ph.i61, label %"_ZZNK12seq_rewriter11non_overlapERK7zstringS2_ENK3$_0clEjjj.exit67.thread", !llvm.loop !660
 
 "_ZZNK12seq_rewriter11non_overlapERK7zstringS2_ENK3$_0clEjjj.exit67.thread": ; preds = %bb.b, %bb.d, %"_ZZNK12seq_rewriter11non_overlapERK7zstringS2_ENK3$_0clEjjj.exit67", %bb.f, %.lr.ph, %.critedge44
   %.4 = phi i1 [ true, %"_ZZNK12seq_rewriter11non_overlapERK7zstringS2_ENK3$_0clEjjj.exit67" ], [ false, %bb.f ], [ false, %bb.d ], [ false, %.lr.ph ], [ true, %.critedge44 ], [ false, %bb.b ]
@@ -421,11 +417,11 @@ bb.j:                                             ; preds = %bb.i
   br label %tailrecurse.i
 
 tailrecurse.i:                                    ; preds = %tailrecurse.i, %bb.j
-  %i.aa = phi i32 [ %.pre.i, %bb.j ], [ %i.ac, %tailrecurse.i ] ; 10 uses
+  %i.aa = phi i32 [ %.pre.i, %bb.j ], [ %i.ac, %tailrecurse.i ] ; 11 uses
   %.tr71.i = phi ptr [ %3, %bb.j ], [ %.tr72.i, %tailrecurse.i ] ; 4 uses
   %.tr72.i = phi ptr [ %4, %bb.j ], [ %.tr71.i, %tailrecurse.i ] ; 5 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %.tr72.i, i64 8
-  %i.ac = load i32, ptr %i.ab, align 8, !tbaa !214 ; 7 uses
+  %i.ac = load i32, ptr %i.ab, align 8, !tbaa !214 ; 6 uses
   %i.ad = icmp ugt i32 %i.aa, %i.ac
   br i1 %i.ad, label %tailrecurse.i, label %.preheader.i
 
@@ -441,11 +437,7 @@ tailrecurse.i:                                    ; preds = %tailrecurse.i, %bb.
 
 .critedge.preheader.i:                            ; preds = %"_ZZNK12seq_rewriter11non_overlapERK7zstringS2_ENK3$_0clEjjj.exit.i", %.preheader.i
   %.not4181.i = icmp ult i32 %i.aa, %i.ac
-  br i1 %.not4181.i, label %.lr.ph.i, label %.critedge.preheader..critedge44_crit_edge.i
-
-.critedge.preheader..critedge44_crit_edge.i:      ; preds = %.critedge.preheader.i
-  %.pre103.i = sub i32 %i.ac, %i.aa
-  br label %.critedge44.i
+  br i1 %.not4181.i, label %.lr.ph.i, label %.critedge44.i
 
 .lr.ph.i:                                         ; preds = %.critedge.preheader.i
   %.not4.i50.not.i = icmp eq i32 %i.aa, 0
@@ -454,7 +446,7 @@ tailrecurse.i:                                    ; preds = %tailrecurse.i, %bb.
 .lr.ph.split.i:                                   ; preds = %.lr.ph.i
   %i.ag = load ptr, ptr %.tr71.i, align 8, !tbaa !212
   %i.ah = load ptr, ptr %.tr72.i, align 8, !tbaa !212
-  %i.ai = sub i32 %i.ac, %i.aa                    ; 2 uses
+  %i.ai = sub nuw i32 %i.ac, %i.aa
   %zext.i = zext i32 %i.aa to i64
   br label %.lr.ph.i52.i
 
@@ -508,19 +500,19 @@ bb.n:                                             ; preds = %bb.m, %.lr.ph.i52.i
   %exitcond95.not.i = icmp eq i32 %i.av, %i.ai
   br i1 %exitcond95.not.i, label %.critedge44.i, label %.lr.ph.i52.i, !llvm.loop !659
 
-.critedge44.i:                                    ; preds = %"_ZZNK12seq_rewriter11non_overlapERK7zstringS2_ENK3$_0clEjjj.exit58.i", %.critedge.preheader..critedge44_crit_edge.i
-  %.pre-phi.i = phi i32 [ %.pre103.i, %.critedge.preheader..critedge44_crit_edge.i ], [ %i.ai, %"_ZZNK12seq_rewriter11non_overlapERK7zstringS2_ENK3$_0clEjjj.exit58.i" ] ; 2 uses
-  %.not4283.not.i = icmp ult i32 %.pre-phi.i, %i.ac
-  br i1 %.not4283.not.i, label %.lr.ph.i61.lr.ph.i, label %_ZNK12seq_rewriter11non_overlapERK7zstringS2_.exit
+.critedge44.i:                                    ; preds = %"_ZZNK12seq_rewriter11non_overlapERK7zstringS2_ENK3$_0clEjjj.exit58.i", %.critedge.preheader.i
+  %.not4283.i = icmp eq i32 %i.aa, 0
+  br i1 %.not4283.i, label %_ZNK12seq_rewriter11non_overlapERK7zstringS2_.exit, label %.lr.ph.i61.lr.ph.i
 
 .lr.ph.i61.lr.ph.i:                               ; preds = %.critedge44.i
+  %5 = sub nuw i32 %i.ac, %i.aa
   %i.aw = load ptr, ptr %.tr71.i, align 8, !tbaa !212
   %i.ax = load ptr, ptr %.tr72.i, align 8, !tbaa !212
   br label %.lr.ph.i61.i
 
 .lr.ph.i61.i:                                     ; preds = %"_ZZNK12seq_rewriter11non_overlapERK7zstringS2_ENK3$_0clEjjj.exit67.i", %.lr.ph.i61.lr.ph.i
   %indvars.iv97.i = phi i32 [ %i.aa, %.lr.ph.i61.lr.ph.i ], [ %indvars.iv.next98.i, %"_ZZNK12seq_rewriter11non_overlapERK7zstringS2_ENK3$_0clEjjj.exit67.i" ] ; 2 uses
-  %.084.i = phi i32 [ %.pre-phi.i, %.lr.ph.i61.lr.ph.i ], [ %i.bf, %"_ZZNK12seq_rewriter11non_overlapERK7zstringS2_ENK3$_0clEjjj.exit67.i" ] ; 2 uses
+  %.084.i = phi i32 [ %5, %.lr.ph.i61.lr.ph.i ], [ %i.bf, %"_ZZNK12seq_rewriter11non_overlapERK7zstringS2_ENK3$_0clEjjj.exit67.i" ] ; 2 uses
   br label %bb.p
 
 bb.o:                                             ; preds = %bb.p
@@ -542,10 +534,10 @@ bb.p:                                             ; preds = %bb.o, %.lr.ph.i61.i
   br i1 %.not.i63.i, label %bb.o, label %"_ZZNK12seq_rewriter11non_overlapERK7zstringS2_ENK3$_0clEjjj.exit67.i"
 
 "_ZZNK12seq_rewriter11non_overlapERK7zstringS2_ENK3$_0clEjjj.exit67.i": ; preds = %bb.p
-  %i.bf = add nuw i32 %.084.i, 1                  ; 2 uses
+  %i.bf = add i32 %.084.i, 1                      ; 2 uses
+  %.not42.not.i = icmp ult i32 %i.bf, %i.ac
   %indvars.iv.next98.i = add i32 %indvars.iv97.i, -1
-  %exitcond102.not.i = icmp eq i32 %i.bf, %i.ac
-  br i1 %exitcond102.not.i, label %_ZNK12seq_rewriter11non_overlapERK7zstringS2_.exit, label %.lr.ph.i61.i, !llvm.loop !660
+  br i1 %.not42.not.i, label %.lr.ph.i61.i, label %_ZNK12seq_rewriter11non_overlapERK7zstringS2_.exit, !llvm.loop !660
 
 bb.q:                                             ; preds = %bb.h, %bb.f
   %i.bg = landingpad { ptr, i32 }
@@ -663,7 +655,7 @@ _ZNK8seq_util3str7is_unitEPK4expr.exit118:        ; preds = %bb.x
 
 .critedge110.preheader:                           ; preds = %.critedge108, %.critedge108.preheader
   %.not101198 = icmp ult i32 %.0.i.i, %.0.i.i113
-  %i.df = sub i32 %.0.i.i113, %.0.i.i             ; 2 uses
+  %i.df = sub nuw i32 %.0.i.i113, %.0.i.i         ; 2 uses
   br i1 %.not101198, label %.lr.ph200, label %.lr.ph203.preheader
 
 .lr.ph.i119:                                      ; preds = %.lr.ph.i119.preheader, %.critedge108
@@ -1066,7 +1058,7 @@ bb.bk:                                            ; preds = %._crit_edge
 
 bb.bl:                                            ; preds = %._crit_edge
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #25
-  %i.he = sub i32 %i.gv, %.sroa.speculated
+  %i.he = sub nuw i32 %i.gv, %.sroa.speculated
   invoke void @_ZNK7zstring7extractEjj(ptr dead_on_unwind nonnull writable sret(%class.zstring) align 8 %9, ptr noundef nonnull align 8 dereferenceable(80) %5, i32 noundef %.sroa.speculated, i32 noundef %i.he)
           to label %bb.bm unwind label %bb.bu
 

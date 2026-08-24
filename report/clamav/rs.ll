@@ -205,15 +205,13 @@ bb.i:                                             ; preds = %._crit_edge133, %._
   %i.fw = shl nuw nsw i64 %i.fv, 2
   call void @llvm.memset.p0.i64(ptr nonnull align 16 %i.b, i8 0, i64 %i.fw, i1 false), !tbaa !12
   %i.fx = getelementptr inbounds nuw i8, ptr %0, i64 2048 ; 2 uses
-  %5 = zext nneg i32 %i.fs to i64
   br label %bb.j
 
 bb.j:                                             ; preds = %.loopexit.i, %.lr.ph.i.preheader
-  %indvars.iv31.i = phi i64 [ 0, %.lr.ph.i.preheader ], [ %indvars.iv.next32.i, %.loopexit.i ] ; 4 uses
-  %sext = shl i64 %indvars.iv31.i, 32
-  %6 = ashr exact i64 %sext, 32
-  %7 = sub nsw i64 %5, %6
-  %smax = tail call i64 @llvm.smax.i64(i64 %7, i64 1)
+  %indvars.iv179 = phi i32 [ %indvars.iv.next180, %.loopexit.i ], [ %i.fs, %.lr.ph.i.preheader ] ; 2 uses
+  %indvars.iv31.i = phi i64 [ %indvars.iv.next32.i, %.loopexit.i ], [ 0, %.lr.ph.i.preheader ] ; 3 uses
+  %5 = tail call i32 @llvm.umax.i32(i32 %indvars.iv179, i32 1)
+  %umax = zext i32 %5 to i64
   %i.fy = getelementptr inbounds nuw [4 x i8], ptr %i.ft, i64 %indvars.iv31.i
   %i.fz = load i32, ptr %i.fy, align 4, !tbaa !12 ; 2 uses
   %.not.i.not = icmp eq i32 %i.fz, 0
@@ -250,11 +248,12 @@ _ZN7RSCoder6gfMultEii.exit.i:                     ; preds = %bb.k, %.lr.ph23.i
   %i.gp = xor i32 %i.go, %i.gn
   store i32 %i.gp, ptr %gep.i, align 4, !tbaa !12
   %indvars.iv.next29.i = add nuw nsw i64 %indvars.iv28.i, 1 ; 2 uses
-  %exitcond181.not = icmp eq i64 %indvars.iv.next29.i, %smax
+  %exitcond181.not = icmp eq i64 %indvars.iv.next29.i, %umax
   br i1 %exitcond181.not, label %.loopexit.i, label %.lr.ph23.i, !llvm.loop !15
 
 .loopexit.i:                                      ; preds = %_ZN7RSCoder6gfMultEii.exit.i, %bb.j
   %indvars.iv.next32.i = add nuw nsw i64 %indvars.iv31.i, 1 ; 2 uses
+  %indvars.iv.next180 = add i32 %indvars.iv179, -1
   %exitcond183.not = icmp eq i64 %indvars.iv.next32.i, %i.fv
   br i1 %exitcond183.not, label %_ZN7RSCoder6pnMultEPiS0_S0_.exit, label %bb.j, !llvm.loop !16
 
@@ -402,7 +401,7 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 declare void @llvm.memmove.p0.p0.i64(ptr writeonly captures(none), ptr readonly captures(none), i64, i1 immarg) #1
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.smax.i64(i64, i64) #3
+declare i32 @llvm.umax.i32(i32, i32) #3
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #4

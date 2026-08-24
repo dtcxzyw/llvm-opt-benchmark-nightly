@@ -203,13 +203,13 @@ bb.a:
   br i1 %i.a, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = lshr i32 %0, 1                           ; 3 uses
+  %i.b = lshr i32 %0, 1                           ; 2 uses
   %i.c = uitofp nneg i32 %i.b to double           ; 2 uses
   %i.d = fdiv double f0x3FE921FB54442D18, %i.c    ; 2 uses
   store <2 x double> <double 1.000000e+00, double 0.000000e+00>, ptr %2, align 8, !tbaa !8
   %i.e = fmul double %i.d, %i.c
   %i.f = tail call double @cos(double noundef %i.e) #15, !tbaa !4 ; 2 uses
-  %i.g = zext nneg i32 %i.b to i64
+  %i.g = zext nneg i32 %i.b to i64                ; 2 uses
   %i.h = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %i.g ; 2 uses
   store double %i.f, ptr %i.h, align 8, !tbaa !8
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 8
@@ -219,7 +219,6 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph.preheader:                                 ; preds = %bb.b
   %i.k = zext nneg i32 %0 to i64
-  %3 = zext nneg i32 %i.b to i64
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
@@ -233,13 +232,13 @@ bb.b:                                             ; preds = %bb.a
   store double %i.o, ptr %i.q, align 8, !tbaa !8
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 8
   store double %i.p, ptr %i.r, align 8, !tbaa !8
-  %i.s = sub nsw i64 %i.k, %indvars.iv
-  %i.t = getelementptr inbounds [8 x i8], ptr %2, i64 %i.s ; 2 uses
+  %i.s = sub nuw nsw i64 %i.k, %indvars.iv
+  %i.t = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %i.s ; 2 uses
   store double %i.p, ptr %i.t, align 8, !tbaa !8
   %i.u = getelementptr i8, ptr %i.t, i64 8
   store double %i.o, ptr %i.u, align 8, !tbaa !8
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %i.v = icmp samesign ult i64 %indvars.iv.next, %3
+  %i.v = icmp samesign ult i64 %indvars.iv.next, %i.g
   br i1 %i.v, label %.lr.ph, label %._crit_edge, !llvm.loop !23
 
 ._crit_edge:                                      ; preds = %.lr.ph

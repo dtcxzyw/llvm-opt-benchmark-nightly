@@ -15,7 +15,7 @@ define void @dspr_(ptr nofree noundef readonly captures(none) %0, ptr nofree nou
 bb.a:
   %i.a = alloca i32, align 4                      ; 4 uses
   %i.b = load i8, ptr %0, align 1, !tbaa !8       ; 3 uses
-  %i.c = load i32, ptr %1, align 4, !tbaa !9      ; 11 uses
+  %i.c = load i32, ptr %1, align 4, !tbaa !9      ; 10 uses
   %i.d = load double, ptr %2, align 8, !tbaa !10  ; 5 uses
   %i.e = load i32, ptr %4, align 4, !tbaa !9      ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #3
@@ -61,8 +61,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.s, label %.lr.ph.preheader, label %.loopexit
 
 .lr.ph.preheader:                                 ; preds = %.preheader88
-  %6 = zext nneg i32 %i.c to i64
-  %wide.trip.count = zext nneg i32 %i.c to i64
+  %wide.trip.count = zext nneg i32 %i.c to i64    ; 2 uses
   br label %.lr.ph
 
 .preheader:                                       ; preds = %bb.e
@@ -97,7 +96,7 @@ bb.f:                                             ; preds = %.lr.ph94
   %i.aa = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %indvars.iv ; 2 uses
   %i.ab = load double, ptr %i.aa, align 8, !tbaa !10 ; 2 uses
   %i.ac = fcmp une double %i.ab, 0.000000e+00
-  %i.ad = sub nsw i64 %6, %indvars.iv             ; 2 uses
+  %i.ad = sub nuw nsw i64 %wide.trip.count, %indvars.iv ; 2 uses
   br i1 %i.ac, label %bb.g, label %.lr.ph._crit_edge
 
 bb.g:                                             ; preds = %.lr.ph
@@ -106,7 +105,7 @@ bb.g:                                             ; preds = %.lr.ph
   br label %.lr.ph._crit_edge
 
 .lr.ph._crit_edge:                                ; preds = %.lr.ph, %bb.g
-  %i.ag = getelementptr inbounds [8 x i8], ptr %.17990, i64 %i.ad
+  %i.ag = getelementptr inbounds nuw [8 x i8], ptr %.17990, i64 %i.ad
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %.loopexit, label %.lr.ph, !llvm.loop !14

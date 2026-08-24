@@ -204,7 +204,7 @@ bb.q:                                             ; preds = %_ZN5ArrayIcEC2Em.ex
   %i.bg = getelementptr inbounds nuw i8, ptr %i.bf, i64 32
   %i.bh = load ptr, ptr %i.bg, align 8
   %i.bi = invoke noundef i32 %i.bh(ptr noundef nonnull align 8 dereferenceable(57108) %0, ptr noundef nonnull %malloc.i, i64 noundef 2097136)
-          to label %.preheader unwind label %bb.am ; 5 uses
+          to label %.preheader unwind label %bb.am ; 3 uses
 
 .preheader:                                       ; preds = %bb.q
   %i.bj = icmp sgt i32 %i.bi, 0
@@ -220,7 +220,7 @@ bb.q:                                             ; preds = %_ZN5ArrayIcEC2Em.ex
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bo, i64 1
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bo, i64 2
   %i.br = getelementptr inbounds nuw i8, ptr %i.bo, i64 3
-  %wide.trip.count138 = zext nneg i32 %i.bi to i64 ; 2 uses
+  %wide.trip.count138 = zext nneg i32 %i.bi to i64 ; 4 uses
   br i1 %invariant.op, label %.lr.ph.split.preheader, label %.lr.ph.split.us
 
 .lr.ph.split.preheader:                           ; preds = %.lr.ph
@@ -298,9 +298,8 @@ bb.aa:                                            ; preds = %bb.z
   br i1 %i.ct, label %bb.ab, label %_ZN7Archive11IsSignatureEPKhm.exit85.thread.us
 
 bb.ab:                                            ; preds = %.lr.ph.split.us
-  %4 = trunc i64 %indvars.iv to i32
-  %5 = sub i32 %i.bi, %4                          ; 2 uses
-  %i.cu = icmp ult i32 %5, 4
+  %4 = sub nuw nsw i64 %wide.trip.count138, %indvars.iv ; 2 uses
+  %i.cu = icmp samesign ult i64 %4, 4
   br i1 %i.cu, label %_ZN7Archive11IsSignatureEPKhm.exit85.thread.us, label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab
@@ -310,7 +309,7 @@ bb.ac:                                            ; preds = %bb.ab
   br i1 %i.cx, label %bb.ak, label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ac
-  %i.cy = icmp ugt i32 %5, 6
+  %i.cy = icmp samesign ugt i64 %4, 6
   %i.cz = icmp eq i8 %i.cw, 97
   %or.cond19.i.us = and i1 %i.cy, %i.cz
   br i1 %or.cond19.i.us, label %bb.ae, label %_ZN7Archive11IsSignatureEPKhm.exit85.thread.us
@@ -381,9 +380,8 @@ bb.am:                                            ; preds = %bb.q
   br i1 %i.dy, label %bb.an, label %_ZN7Archive11IsSignatureEPKhm.exit85.thread
 
 bb.an:                                            ; preds = %.lr.ph.split
-  %6 = trunc i64 %indvars.iv135 to i32
-  %7 = sub i32 %i.bi, %6                          ; 2 uses
-  %i.dz = icmp ult i32 %7, 4
+  %5 = sub nuw nsw i64 %wide.trip.count138, %indvars.iv135 ; 2 uses
+  %i.dz = icmp samesign ult i64 %5, 4
   br i1 %i.dz, label %_ZN7Archive11IsSignatureEPKhm.exit85.thread, label %bb.ao
 
 bb.ao:                                            ; preds = %bb.an
@@ -405,7 +403,7 @@ bb.aq:                                            ; preds = %bb.ap
   br i1 %i.ei, label %bb.ay, label %_ZN7Archive11IsSignatureEPKhm.exit85.thread
 
 bb.ar:                                            ; preds = %bb.ao
-  %i.ej = icmp ugt i32 %7, 6
+  %i.ej = icmp samesign ugt i64 %5, 6
   %i.ek = icmp eq i8 %i.eb, 97
   %or.cond19.i = and i1 %i.ej, %i.ek
   br i1 %or.cond19.i, label %bb.as, label %_ZN7Archive11IsSignatureEPKhm.exit85.thread

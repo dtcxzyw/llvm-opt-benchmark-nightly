@@ -206,13 +206,13 @@ bb.ij:                                            ; preds = %bb.ii
   %i.ahc = zext nneg i32 %i.agy to i64            ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.16, ptr align 1 %i.ahb, i64 %i.ahc, i1 false)
   %i.ahd = getelementptr inbounds nuw i8, ptr %.16, i64 %i.ahc
-  %i.ahe = sub nsw i32 %.8807, %i.agy
+  %i.ahe = sub nuw nsw i32 %.8807, %i.agy
   br label %bb.ik
 
 bb.ik:                                            ; preds = %bb.ij, %bb.ii
   %.17 = phi ptr [ %i.ahd, %bb.ij ], [ %.16, %bb.ii ] ; 3 uses
   %.9808 = phi i32 [ %i.ahe, %bb.ij ], [ %.8807, %bb.ii ] ; 2 uses
-  %4 = icmp slt i32 %.9808, 1
+  %4 = icmp eq i32 %.9808, 0
   %i.ahf = icmp ne i8 %.0711, 0
   %or.cond19 = select i1 %4, i1 true, i1 %i.ahf
   br i1 %or.cond19, label %bb.il, label %.thread1212
@@ -615,7 +615,7 @@ bb.c:                                             ; preds = %.preheader45, %bb.c
   %.027.lcssa = phi i64 [ 0, %.preheader ], [ %i.t, %._crit_edge.loopexit ]
   %.025.lcssa = phi i32 [ %i.h, %.preheader ], [ %i.aa, %._crit_edge.loopexit ]
   store i64 %.027.lcssa, ptr %1, align 8
-  %i.ab = sub nsw i32 %.025.lcssa, %i.h
+  %i.ab = sub nuw nsw i32 %.025.lcssa, %i.h
   %i.ac = icmp sgt i32 %i.ab, 16
   br i1 %i.ac, label %bb.f, label %bb.d
 
@@ -1018,7 +1018,7 @@ seekAndWrite.exit:                                ; preds = %bb.c
   br i1 %i.p, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %seekAndWrite.exit
-  %i.q = sub nsw i32 %.018, %i.g
+  %i.q = sub nuw nsw i32 %.018, %i.g
   %i.r = and i64 %i.f, 2147483647                 ; 2 uses
   %i.s = add nsw i64 %i.r, %.0
   %i.t = getelementptr inbounds nuw i8, ptr %.019, i64 %i.r
@@ -1421,7 +1421,7 @@ bb.af:                                            ; preds = %bb.ad
 
 bb.ag:                                            ; preds = %bb.af, %bb.ae
   %.2157 = phi i32 [ 0, %bb.ae ], [ %i.ej, %bb.af ]
-  %i.ek = sub i32 %.2132242, %i.bn
+  %i.ek = sub nuw i32 %.2132242, %i.bn
   br label %bb.bj
 
 bb.ah:                                            ; preds = %bb.ac
@@ -1824,7 +1824,7 @@ bb.ahr:                                           ; preds = %.loopexit193.i.i.i,
   %.037107.i.i.i = phi i32 [ 0, %.lr.ph.i.i.i ], [ %i.eya, %.loopexit193.i.i.i ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k) #58
   store ptr null, ptr %i.k, align 8, !tbaa !2126
-  %i.epx = sub nsw i32 %i.epw, %.037107.i.i.i
+  %i.epx = sub nuw nsw i32 %i.epw, %.037107.i.i.i
   %spec.select56.i.i.i = call i32 @llvm.smin.i32(i32 %i.epx, i32 16)
   %i.epy = call fastcc i32 @vdbeMergeEngineLevel0(ptr noundef nonnull %i.epa, i32 noundef %spec.select56.i.i.i, ptr noundef %i.j, ptr noundef %i.k), !inline_history !2374 ; 2 uses
   %i.epz = icmp eq i32 %i.epy, 0
@@ -2227,8 +2227,8 @@ sqlite3PagerWrite.exit:                           ; preds = %bb.e, %bb.h, %bb.i
   br i1 %.not62, label %.critedge63, label %.critedge65
 
 .critedge63:                                      ; preds = %bb.d, %sqlite3PagerWrite.exit
-  %i.ai = sub nsw i32 %4, %i.j
-  %5 = sext i32 %i.ai to i64
+  %i.ai = sub nuw nsw i32 %4, %i.j
+  %5 = zext nneg i32 %i.ai to i64
   tail call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.i, i8 0, i64 %5, i1 false)
   br label %.critedge65
 
@@ -2239,7 +2239,7 @@ bb.j:                                             ; preds = %bb.a
 bb.k:                                             ; preds = %bb.j
   %i.ak = zext nneg i32 %i.c to i64
   %i.al = getelementptr inbounds nuw i8, ptr %1, i64 %i.ak
-  %i.am = sub nsw i32 %4, %i.c
+  %i.am = sub nuw nsw i32 %4, %i.c
   %i.an = tail call fastcc i32 @btreeOverwriteContent(ptr noundef %0, ptr noundef nonnull %i.al, ptr noundef %2, i32 noundef %i.b, i32 noundef %i.am) ; 2 uses
   %.not = icmp eq i32 %i.an, 0
   br i1 %.not, label %bb.l, label %.critedge65
@@ -2642,8 +2642,8 @@ bb.p:                                             ; preds = %bb.n
   %i.cf = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.ce
   %i.cg = zext nneg i32 %i.bp to i64
   %i.ch = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.cg
-  %i.ci = sub nsw i32 %i.an, %i.bp
-  %2 = sext i32 %i.ci to i64
+  %i.ci = sub nuw nsw i32 %i.an, %i.bp
+  %2 = zext nneg i32 %i.ci to i64
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.cf, ptr nonnull align 1 %i.ch, i64 %2, i1 false)
   %i.cj = add nuw nsw i32 %i.ca, %i.bg
   br label %bb.s
@@ -2664,8 +2664,8 @@ bb.s:                                             ; preds = %bb.q, %bb.p
   %i.cn = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.cm
   %i.co = zext nneg i32 %i.bo to i64
   %i.cp = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.co
-  %i.cq = sub nsw i32 %i.ac, %i.bo
-  %3 = sext i32 %i.cq to i64
+  %i.cq = sub nuw nsw i32 %i.ac, %i.bo
+  %3 = zext nneg i32 %i.cq to i64
   tail call void @llvm.memmove.p0.p0.i64(ptr align 1 %i.cn, ptr align 1 %i.cp, i64 %3, i1 false)
   %i.cr = zext i16 %i.g to i64                    ; 2 uses
   %i.cs = icmp samesign ult i64 %i.cr, %i.ax
@@ -3068,7 +3068,7 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.l
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bv, i64 2
-  %i.by = sub nsw i32 %.5155, %i.bp
+  %i.by = sub nuw nsw i32 %.5155, %i.bp
   %i.bz = shl nuw nsw i32 %i.by, 1
   %i.ca = zext nneg i32 %i.bz to i64
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.bx, ptr align 1 %i.bv, i64 %i.ca, i1 false)
@@ -3471,10 +3471,10 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.t, label %.loopexit, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.u = sub nsw i32 %i.n, %i.m
+  %i.u = sub nuw nsw i32 %i.n, %i.m
   %i.v = add nuw nsw i32 %.036, 1
-  %2 = sext i32 %i.u to i64
-  %i.w = getelementptr inbounds [4 x i8], ptr %i.a, i64 %2
+  %2 = zext nneg i32 %i.u to i64
+  %i.w = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %2
   store i32 %i.v, ptr %i.w, align 4, !tbaa !27
   br label %bb.g
 
@@ -3877,7 +3877,7 @@ sqlite3_column_value.exit:                        ; preds = %bb.i, %sqlite3ApiEx
 
 bb.m:                                             ; preds = %bb.a
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.an = sub nsw i32 %2, %i.d
+  %i.an = sub nuw nsw i32 %2, %i.d
   %i.ao = zext nneg i32 %i.an to i64
   %i.ap = getelementptr inbounds nuw [8 x i8], ptr %i.am, i64 %i.ao
   %i.aq = load ptr, ptr %i.ap, align 8, !tbaa !259
@@ -4280,7 +4280,7 @@ bb.bs:                                            ; preds = %bb.bp
 bb.bt:                                            ; preds = %bb.bs
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #58
   store i32 0, ptr %i.b, align 4, !tbaa !27
-  %i.ez = sub i32 %2, %.10343
+  %i.ez = sub nuw i32 %2, %.10343
   %i.fa = call fastcc i32 @jsonUnescapeOneChar(ptr noundef nonnull %i.ef, i32 noundef %i.ez, ptr noundef %i.b)
   %i.fb = load i32, ptr %i.b, align 4, !tbaa !27
   %.not279 = icmp eq i32 %i.fb, 629145
@@ -4683,7 +4683,7 @@ sqlite3DbMallocRaw.exit:                          ; preds = %bb.an, %bb.ao
 
 bb.ap:                                            ; preds = %.lr.ph
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #58
-  %i.cw = sub i32 %i.cj, %.0109167
+  %i.cw = sub nuw i32 %i.cj, %.0109167
   %i.cx = call fastcc i32 @jsonUnescapeOneChar(ptr noundef nonnull %i.ct, i32 noundef %i.cw, ptr noundef %i.d)
   %i.cy = load i32, ptr %i.d, align 4, !tbaa !27  ; 14 uses
   %i.cz = icmp ult i32 %i.cy, 128
@@ -5086,7 +5086,7 @@ bb.m:                                             ; preds = %bb.l
   %i.bl = add i64 %i.bk, %i.bj
   store i64 %i.bl, ptr %i.c, align 8, !tbaa !3097
   %i.bm = getelementptr inbounds nuw i8, ptr %.0, i64 %i.bj
-  %i.bn = sub i32 %.079, %.2
+  %i.bn = sub nuw i32 %.079, %.2
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %bb.l
@@ -5489,7 +5489,7 @@ bb.o:                                             ; preds = %bb.n
   %i.aj = load i32, ptr %i.ai, align 8, !tbaa !3597 ; 2 uses
   %i.ak = add nsw i32 %i.aj, %i.t
   store i32 %i.ak, ptr %i.ai, align 8, !tbaa !3597
-  %i.al = sub nsw i32 %i.ah, %i.t
+  %i.al = sub nuw nsw i32 %i.ah, %i.t
   store i32 %i.al, ptr %i.ag, align 4, !tbaa !3540
   br label %sqlite3GetTempRange.exit
 
@@ -5892,11 +5892,10 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.h = zext nneg i32 %2 to i64                  ; 2 uses
+  %i.h = zext nneg i32 %2 to i64                  ; 3 uses
   %i.i = getelementptr inbounds nuw [24 x i8], ptr %i.g, i64 %i.h
   %i.j = getelementptr inbounds nuw i8, ptr %i.e, i64 32
   %i.k = getelementptr inbounds nuw i8, ptr %i.e, i64 24
-  %4 = zext nneg i32 %2 to i64
   %wide.trip.count = zext nneg i32 %i.b to i64
   br label %bb.b
 
@@ -5916,7 +5915,7 @@ bb.c:                                             ; preds = %bb.b
 
 sqlite3ExprNNCollSeq.exit:                        ; preds = %bb.b, %bb.c
   %.0.i = phi ptr [ %i.q, %bb.c ], [ %i.m, %bb.b ]
-  %i.r = sub nuw nsw i64 %indvars.iv, %4          ; 2 uses
+  %i.r = sub nuw nsw i64 %indvars.iv, %i.h        ; 2 uses
   %i.s = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %i.r
   store ptr %.0.i, ptr %i.s, align 8, !tbaa !2309
   %i.t = getelementptr inbounds nuw i8, ptr %.02325, i64 16
@@ -6319,7 +6318,7 @@ sqlite3LogEst.exit.i:                             ; preds = %.loopexit.i.i, %bb.
   br i1 %.not.i362, label %bb.bk, label %bb.bi
 
 bb.bi:                                            ; preds = %sqlite3LogEst.exit.i
-  %i.iz = sub nsw i32 %.0298, %i.hs
+  %i.iz = sub nuw nsw i32 %.0298, %i.hs
   %i.ja = mul nsw i32 %i.iz, 100
   %i.jb = sdiv i32 %i.ja, %.0298                  ; 4 uses
   %i.jc = sext i32 %i.jb to i64                   ; 3 uses
@@ -6722,7 +6721,7 @@ bb.ct:                                            ; preds = %bb.cs
   %i.vo = load i32, ptr %i.vn, align 8, !tbaa !3597 ; 2 uses
   %i.vp = add nsw i32 %i.vo, %i.vk
   store i32 %i.vp, ptr %i.vn, align 8, !tbaa !3597
-  %i.vq = sub nsw i32 %i.vm, %i.vk
+  %i.vq = sub nuw nsw i32 %i.vm, %i.vk
   store i32 %i.vq, ptr %i.vl, align 4, !tbaa !3540
   br label %sqlite3GetTempRange.exit
 
@@ -7125,7 +7124,7 @@ bb.ai:                                            ; preds = %bb.ah
   %i.gk = load i32, ptr %i.ae, align 8, !tbaa !3597 ; 2 uses
   %i.gl = add nsw i32 %i.gk, %i.fz
   store i32 %i.gl, ptr %i.ae, align 8, !tbaa !3597
-  %i.gm = sub nsw i32 %i.gj, %i.fz
+  %i.gm = sub nuw nsw i32 %i.gj, %i.fz
   store i32 %i.gm, ptr %i.ad, align 4, !tbaa !3540
   br label %sqlite3GetTempRange.exit
 
@@ -7528,7 +7527,7 @@ bb.ml:                                            ; preds = %bb.mk
   %i.bgt = load i32, ptr %i.bgs, align 8, !tbaa !3597 ; 2 uses
   %i.bgu = add nsw i32 %i.bgt, %i.bgd
   store i32 %i.bgu, ptr %i.bgs, align 8, !tbaa !3597
-  %i.bgv = sub nsw i32 %i.bgr, %i.bgd
+  %i.bgv = sub nuw nsw i32 %i.bgr, %i.bgd
   store i32 %i.bgv, ptr %i.bgq, align 4, !tbaa !3540
   br label %.lr.ph1529
 
@@ -7931,7 +7930,7 @@ bb.t:                                             ; preds = %._crit_edge
 
 bb.u:                                             ; preds = %bb.w
   %i.ch = getelementptr inbounds nuw i8, ptr %.0112, i64 %i.cn ; 2 uses
-  %i.ci = sub i32 %.0105, %i.ck                   ; 2 uses
+  %i.ci = sub nuw i32 %.0105, %i.ck               ; 2 uses
   %.old1.not = icmp eq i32 %i.ci, 0
   br i1 %.old1.not, label %.thread157, label %.preheader170
 
@@ -8334,7 +8333,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not66, label %bb.e, label %.backedge
 
 bb.e:                                             ; preds = %.critedge5
-  %i.as = sub nsw i32 %.lcssa497, %i.ae           ; 14 uses
+  %i.as = sub nsw i32 %.lcssa497, %i.ae           ; 12 uses
   %i.at = load i32, ptr %i.h, align 8, !tbaa !5502
   %i.au = icmp sgt i32 %i.as, %i.at
   %.pre = load ptr, ptr %i.i, align 8, !tbaa !5501 ; 2 uses
@@ -8723,32 +8722,25 @@ middle.block:                                     ; preds = %vector.body
 
 iter.check:                                       ; preds = %._crit_edge.loopexit.i119.i
   %i.fy = sub nsw i32 %i.as, %i.fv
-  %i.fz = zext nneg i32 %i.fv to i64              ; 9 uses
-  %6 = sext i32 %i.fy to i64                      ; 6 uses
-  %7 = zext nneg i32 %i.as to i64                 ; 2 uses
-  %reass.sub = sub nsw i64 %7, %i.fz
-  %8 = add nsw i64 %reass.sub, 1
-  %smax = tail call i64 @llvm.smax.i64(i64 %8, i64 %wide.trip.count.i.i)
-  %9 = add nuw i64 %smax, %i.fz
-  %10 = sub i64 %9, %7                            ; 7 uses
-  %min.iters.check963 = icmp ult i64 %10, 8
-  br i1 %min.iters.check963, label %.lr.ph50.i103.i.preheader, label %vector.memcheck960
+  %i.fz = zext nneg i32 %i.fv to i64              ; 6 uses
+  %6 = zext i32 %i.fy to i64                      ; 8 uses
+  %7 = add nuw nsw i64 %6, 1
+  %umax = tail call i64 @llvm.umax.i64(i64 %7, i64 %wide.trip.count.i.i)
+  %8 = sub nsw i64 %umax, %6                      ; 7 uses
+  %min.iters.check963 = icmp ult i64 %8, 8
+  %9 = sub nsw i64 %6, %i.fz
+  %diff.check961 = icmp ugt i64 %9, -32
+  %or.cond1038 = select i1 %min.iters.check963, i1 true, i1 %diff.check961
+  br i1 %or.cond1038, label %.lr.ph50.i103.i.preheader, label %vector.main.loop.iter.check
 
-vector.memcheck960:                               ; preds = %iter.check
-  %11 = shl nuw nsw i64 %i.fz, 1
-  %12 = zext nneg i32 %i.as to i64
-  %13 = sub nsw i64 %12, %11
-  %diff.check961 = icmp ugt i64 %13, -32
-  br i1 %diff.check961, label %.lr.ph50.i103.i.preheader, label %vector.main.loop.iter.check
-
-vector.main.loop.iter.check:                      ; preds = %vector.memcheck960
-  %min.iters.check964 = icmp ult i64 %10, 32
+vector.main.loop.iter.check:                      ; preds = %iter.check
+  %min.iters.check964 = icmp ult i64 %8, 32
   br i1 %min.iters.check964, label %vec.epilog.ph, label %vector.ph965
 
 vector.ph965:                                     ; preds = %vector.main.loop.iter.check
-  %i.ga = and i64 %10, 24
-  %n.vec966 = and i64 %10, -32                    ; 5 uses
-  %i.gb = add i64 %n.vec966, %6
+  %i.ga = and i64 %8, 24
+  %n.vec966 = and i64 %8, -32                     ; 5 uses
+  %i.gb = add nsw i64 %n.vec966, %6
   %i.gc = or disjoint i64 %n.vec966, %i.fz        ; 2 uses
   %invariant.gep = getelementptr i8, ptr %i.az, i64 %6
   %invariant.gep1139 = getelementptr i8, ptr %i.az, i64 %i.fz
@@ -8769,7 +8761,7 @@ vector.body967:                                   ; preds = %vector.body967, %ve
   br i1 %i.gf, label %middle.block972, label %vector.body967, !llvm.loop !5512
 
 middle.block972:                                  ; preds = %vector.body967
-  %cmp.n973 = icmp eq i64 %10, %n.vec966
+  %cmp.n973 = icmp eq i64 %8, %n.vec966
   br i1 %cmp.n973, label %.loopexit.loopexit.i108.i, label %vec.epilog.iter.check
 
 vec.epilog.iter.check:                            ; preds = %middle.block972
@@ -8778,9 +8770,9 @@ vec.epilog.iter.check:                            ; preds = %middle.block972
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec966, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %n.vec976 = and i64 %10, -8                     ; 4 uses
-  %i.gg = add i64 %n.vec976, %6
-  %i.gh = add i64 %n.vec976, %i.fz                ; 2 uses
+  %n.vec976 = and i64 %8, -8                      ; 4 uses
+  %i.gg = add nsw i64 %n.vec976, %6
+  %i.gh = add nsw i64 %n.vec976, %i.fz            ; 2 uses
   %invariant.gep1141 = getelementptr i8, ptr %i.az, i64 %6
   %invariant.gep1143 = getelementptr i8, ptr %i.az, i64 %i.fz
   br label %vec.epilog.vector.body
@@ -8796,25 +8788,25 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   br i1 %i.gi, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !5513
 
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
-  %cmp.n980 = icmp eq i64 %10, %n.vec976
+  %cmp.n980 = icmp eq i64 %8, %n.vec976
   br i1 %cmp.n980, label %.loopexit.loopexit.i108.i, label %.lr.ph50.i103.i.preheader
 
-.lr.ph50.i103.i.preheader:                        ; preds = %vector.memcheck960, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
-  %indvars.iv57.i104.i.ph = phi i64 [ %6, %iter.check ], [ %6, %vector.memcheck960 ], [ %i.gb, %vec.epilog.iter.check ], [ %i.gg, %vec.epilog.middle.block ]
-  %indvars.iv55.i105.i.ph = phi i64 [ %i.fz, %iter.check ], [ %i.fz, %vector.memcheck960 ], [ %i.gc, %vec.epilog.iter.check ], [ %i.gh, %vec.epilog.middle.block ]
+.lr.ph50.i103.i.preheader:                        ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
+  %indvars.iv57.i104.i.ph = phi i64 [ %6, %iter.check ], [ %i.gb, %vec.epilog.iter.check ], [ %i.gg, %vec.epilog.middle.block ]
+  %indvars.iv55.i105.i.ph = phi i64 [ %i.fz, %iter.check ], [ %i.gc, %vec.epilog.iter.check ], [ %i.gh, %vec.epilog.middle.block ]
   br label %.lr.ph50.i103.i
 
 .lr.ph50.i103.i:                                  ; preds = %.lr.ph50.i103.i.preheader, %.lr.ph50.i103.i
   %indvars.iv57.i104.i = phi i64 [ %indvars.iv.next58.i106.i, %.lr.ph50.i103.i ], [ %indvars.iv57.i104.i.ph, %.lr.ph50.i103.i.preheader ] ; 2 uses
   %indvars.iv55.i105.i = phi i64 [ %indvars.iv.next56.i107.i, %.lr.ph50.i103.i ], [ %indvars.iv55.i105.i.ph, %.lr.ph50.i103.i.preheader ] ; 2 uses
-  %i.gj = getelementptr inbounds i8, ptr %i.az, i64 %indvars.iv57.i104.i
+  %i.gj = getelementptr inbounds nuw i8, ptr %i.az, i64 %indvars.iv57.i104.i
   %i.gk = load i8, ptr %i.gj, align 1, !tbaa !231
   %i.gl = getelementptr inbounds nuw i8, ptr %i.az, i64 %indvars.iv55.i105.i
   store i8 %i.gk, ptr %i.gl, align 1, !tbaa !231
-  %indvars.iv.next58.i106.i = add nsw i64 %indvars.iv57.i104.i, 1 ; 2 uses
+  %indvars.iv.next58.i106.i = add nuw nsw i64 %indvars.iv57.i104.i, 1 ; 2 uses
   %indvars.iv.next56.i107.i = add nuw nsw i64 %indvars.iv55.i105.i, 1 ; 2 uses
-  %14 = icmp slt i64 %indvars.iv.next58.i106.i, %wide.trip.count.i.i
-  br i1 %14, label %.lr.ph50.i103.i, label %.loopexit.loopexit.i108.i, !llvm.loop !5514
+  %10 = icmp samesign ult i64 %indvars.iv.next58.i106.i, %wide.trip.count.i.i
+  br i1 %10, label %.lr.ph50.i103.i, label %.loopexit.loopexit.i108.i, !llvm.loop !5514
 
 .loopexit.loopexit.i108.i:                        ; preds = %.lr.ph50.i103.i, %vec.epilog.middle.block, %middle.block972
   %indvars.iv.next56.i107.i.lcssa = phi i64 [ %i.gh, %vec.epilog.middle.block ], [ %i.gc, %middle.block972 ], [ %indvars.iv.next56.i107.i, %.lr.ph50.i103.i ]
@@ -9217,7 +9209,7 @@ bb.p:                                             ; preds = %bb.j
   br i1 %i.av, label %bb.q, label %bb.r
 
 bb.q:                                             ; preds = %bb.p
-  %i.ay = sub nsw i32 %2, %i.ac
+  %i.ay = sub nuw nsw i32 %2, %i.ac
   br label %bb.s
 
 bb.r:                                             ; preds = %bb.p
@@ -9620,7 +9612,7 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %bb.h
   %i.bf = zext nneg i32 %i.bb to i64
   %i.bg = getelementptr inbounds nuw i8, ptr %i.aw, i64 %i.bf
-  %i.bh = sub nsw i32 %i.be, %i.bb
+  %i.bh = sub nuw nsw i32 %i.be, %i.bb
   %i.bi = zext nneg i32 %i.bh to i64
   tail call void @llvm.memset.p0.i64(ptr align 1 %i.bg, i8 0, i64 %i.bi, i1 false)
   store i32 %i.bb, ptr %i.bd, align 8, !tbaa !5791
@@ -10023,7 +10015,7 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a
   %i.b = lshr i32 %2, 1                           ; 7 uses
-  %i.c = sub nsw i32 %2, %i.b                     ; 5 uses
+  %i.c = sub nuw nsw i32 %2, %i.b                 ; 5 uses
   %i.d = zext nneg i32 %i.b to i64                ; 2 uses
   %i.e = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.d ; 3 uses
   tail call fastcc void @SortByDimension(ptr noundef %0, ptr noundef %1, i32 noundef %i.b, i32 noundef %3, ptr noundef %4, ptr noundef %5)

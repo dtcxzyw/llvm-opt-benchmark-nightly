@@ -204,8 +204,7 @@ inet_net_pton_ipv4.exit:                          ; preds = %bb.aw, %.loopexit.s
 ; Function Attrs: nofree nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc range(i32 -2147483648, 129) i32 @inet_cidr_pton_ipv6(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef writeonly captures(none) %1, i64 noundef range(i64 0, -1) %2) unnamed_addr #1 {
 bb.a:
-  %i.a = alloca [16 x i8], align 16               ; 11 uses
-  %3 = ptrtoaddr ptr %i.a to i64                  ; 2 uses
+  %i.a = alloca [16 x i8], align 16               ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
   %i.b = icmp ult i64 %2, 16
   br i1 %i.b, label %bb.ad, label %bb.b
@@ -486,7 +485,7 @@ getv4.exit.thread135.thread:                      ; preds = %bb.s, %bb.aa, %getv
   br label %getv4.exit.thread135.thread.thread
 
 getv4.exit.thread135.thread.thread:               ; preds = %getv4.exit.thread135.thread, %bb.u
-  %.3.idx292 = phi i64 [ %.3.idx, %getv4.exit.thread135.thread ], [ %.078.add, %bb.u ] ; 5 uses
+  %.3.idx292 = phi i64 [ %.3.idx, %getv4.exit.thread135.thread ], [ %.078.add, %bb.u ] ; 3 uses
   %.075199290 = phi ptr [ %.075199, %getv4.exit.thread135.thread ], [ %.075209, %bb.u ] ; 9 uses
   %i.cd = phi i32 [ %spec.select, %getv4.exit.thread135.thread ], [ 128, %bb.u ]
   %.not101 = icmp eq ptr %.075199290, null
@@ -495,8 +494,8 @@ getv4.exit.thread135.thread.thread:               ; preds = %getv4.exit.thread13
 bb.ab:                                            ; preds = %getv4.exit.thread135.thread.thread
   %.3.ptr.ptr = getelementptr i8, ptr %i.a, i64 %.3.idx292
   %i.ce = ptrtoint ptr %.3.ptr.ptr to i64
-  %i.cf = ptrtoint ptr %.075199290 to i64         ; 3 uses
-  %i.cg = sub i64 %i.ce, %i.cf                    ; 6 uses
+  %i.cf = ptrtoint ptr %.075199290 to i64
+  %i.cg = sub i64 %i.ce, %i.cf                    ; 2 uses
   %i.ch = trunc i64 %i.cg to i32                  ; 2 uses
   %i.ci = icmp eq i64 %.3.idx292, 16
   br i1 %i.ci, label %getv4.exit.thread125, label %.preheader
@@ -506,41 +505,23 @@ bb.ab:                                            ; preds = %getv4.exit.thread13
   br i1 %.not102218, label %.thread147, label %iter.check
 
 iter.check:                                       ; preds = %.preheader
+  %3 = and i64 %i.cg, 2147483647                  ; 7 uses
   %i.cj = add nuw i32 %i.ch, 1                    ; 3 uses
   %smax = call i32 @llvm.smax.i32(i32 %i.cj, i32 2)
-  %wide.trip.count = zext nneg i32 %smax to i64   ; 7 uses
+  %wide.trip.count = zext nneg i32 %smax to i64   ; 6 uses
   %i.ck = add nsw i64 %wide.trip.count, -1        ; 5 uses
   %min.iters.check = icmp slt i32 %i.cj, 9
-  br i1 %min.iters.check, label %.lr.ph220.preheader, label %vector.scevcheck
+  br i1 %min.iters.check, label %.lr.ph220.preheader, label %vector.memcheck
 
-vector.scevcheck:                                 ; preds = %iter.check
-  %4 = add nsw i64 %wide.trip.count, -2           ; 2 uses
-  %5 = add i64 %.3.idx292, %3
-  %6 = xor i64 %i.cf, -1
-  %7 = add i64 %5, %6
-  %8 = trunc i64 %7 to i32                        ; 2 uses
-  %9 = trunc i64 %4 to i32
-  %10 = sub i32 %8, %9
-  %11 = icmp sgt i32 %10, %8
-  %12 = icmp ugt i64 %4, 4294967295
-  %13 = or i1 %11, %12
-  br i1 %13, label %.lr.ph220.preheader, label %vector.memcheck
-
-vector.memcheck:                                  ; preds = %vector.scevcheck
+vector.memcheck:                                  ; preds = %iter.check
   %i.cl = sub nsw i64 17, %wide.trip.count
   %scevgep = getelementptr i8, ptr %i.a, i64 %i.cl
-  %14 = add i64 %.3.idx292, %3
-  %15 = xor i64 %i.cf, -1
-  %16 = add i64 %14, %15
-  %sext395 = shl i64 %16, 32
-  %17 = ashr exact i64 %sext395, 32               ; 2 uses
-  %i.cm = add nsw i64 %17, 2
+  %i.cm = add nuw nsw i64 %3, 1
   %i.cn = sub nsw i64 %i.cm, %wide.trip.count
-  %scevgep385 = getelementptr i8, ptr %.075199290, i64 %i.cn
-  %i.co = getelementptr i8, ptr %.075199290, i64 %17
-  %scevgep386 = getelementptr i8, ptr %i.co, i64 1
+  %i.co = getelementptr i8, ptr %.075199290, i64 %i.cn
+  %scevgep386 = getelementptr i8, ptr %.075199290, i64 %3
   %bound0 = icmp ult ptr %scevgep, %scevgep386
-  %bound1 = icmp ult ptr %scevgep385, %.ptr
+  %bound1 = icmp ult ptr %i.co, %.ptr
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %.lr.ph220.preheader, label %vector.main.loop.iter.check
 
@@ -552,15 +533,13 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.cp = and i64 %i.ck, 24
   %n.vec = and i64 %i.ck, -32                     ; 4 uses
   %i.cq = or disjoint i64 %n.vec, 1
+  %4 = getelementptr i8, ptr %.075199290, i64 %3
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %.neg = xor i64 %index, -1
-  %18 = add i64 %i.cg, %.neg
-  %19 = shl i64 %18, 32
-  %20 = ashr exact i64 %19, 32
-  %i.cr = getelementptr inbounds i8, ptr %.075199290, i64 %20 ; 2 uses
+  %i.cr = getelementptr i8, ptr %4, i64 %.neg     ; 2 uses
   %i.cs = getelementptr inbounds i8, ptr %i.cr, i64 -15 ; 2 uses
   %i.ct = getelementptr inbounds i8, ptr %i.cr, i64 -31 ; 2 uses
   %wide.load = load <16 x i8>, ptr %i.cs, align 1, !alias.scope !16
@@ -589,15 +568,13 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %n.vec389 = and i64 %i.ck, -8                   ; 3 uses
   %i.cz = or disjoint i64 %n.vec389, 1
+  %5 = getelementptr i8, ptr %.075199290, i64 %3
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index390 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next392, %vec.epilog.vector.body ] ; 3 uses
   %.neg396 = xor i64 %index390, -1
-  %21 = add i64 %i.cg, %.neg396
-  %22 = shl i64 %21, 32
-  %23 = ashr exact i64 %22, 32
-  %i.da = getelementptr inbounds i8, ptr %.075199290, i64 %23
+  %i.da = getelementptr i8, ptr %5, i64 %.neg396
   %i.db = getelementptr inbounds i8, ptr %i.da, i64 -7 ; 2 uses
   %wide.load391 = load <8 x i8>, ptr %i.db, align 1, !alias.scope !16
   %i.dc = xor i64 %index390, -1
@@ -613,17 +590,15 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %cmp.n393 = icmp eq i64 %i.ck, %n.vec389
   br i1 %cmp.n393, label %.thread147, label %.lr.ph220.preheader
 
-.lr.ph220.preheader:                              ; preds = %vector.memcheck, %vector.scevcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
-  %indvars.iv.ph = phi i64 [ 1, %iter.check ], [ 1, %vector.scevcheck ], [ 1, %vector.memcheck ], [ %i.cq, %vec.epilog.iter.check ], [ %i.cz, %vec.epilog.middle.block ] ; 5 uses
+.lr.ph220.preheader:                              ; preds = %vector.memcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
+  %indvars.iv.ph = phi i64 [ 1, %iter.check ], [ 1, %vector.memcheck ], [ %i.cq, %vec.epilog.iter.check ], [ %i.cz, %vec.epilog.middle.block ] ; 5 uses
   %i.dg = and i64 %wide.trip.count, 1
   %lcmp.mod.not.not = icmp eq i64 %i.dg, 0
   br i1 %lcmp.mod.not.not, label %.lr.ph220.prol, label %.lr.ph220.prol.loopexit
 
 .lr.ph220.prol:                                   ; preds = %.lr.ph220.preheader
-  %i.dh = sub i64 %i.cg, %indvars.iv.ph
-  %sext.prol = shl i64 %i.dh, 32
-  %24 = ashr exact i64 %sext.prol, 32
-  %i.di = getelementptr inbounds i8, ptr %.075199290, i64 %24 ; 2 uses
+  %i.dh = sub nuw nsw i64 %3, %indvars.iv.ph
+  %i.di = getelementptr inbounds nuw i8, ptr %.075199290, i64 %i.dh ; 2 uses
   %i.dj = load i8, ptr %i.di, align 1
   %i.dk = sub nsw i64 0, %indvars.iv.ph
   %i.dl = getelementptr inbounds i8, ptr %.ptr, i64 %i.dk
@@ -636,24 +611,23 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %indvars.iv.unr = phi i64 [ %indvars.iv.ph, %.lr.ph220.preheader ], [ %indvars.iv.next.prol, %.lr.ph220.prol ]
   %i.dm = add nsw i64 %wide.trip.count, -1
   %i.dn = icmp eq i64 %indvars.iv.ph, %i.dm
-  br i1 %i.dn, label %.thread147, label %.lr.ph220
+  br i1 %i.dn, label %.thread147, label %.lr.ph220.preheader.new
 
-.lr.ph220:                                        ; preds = %.lr.ph220.prol.loopexit, %.lr.ph220
-  %indvars.iv = phi i64 [ %indvars.iv.next.1, %.lr.ph220 ], [ %indvars.iv.unr, %.lr.ph220.prol.loopexit ] ; 5 uses
-  %i.do = sub i64 %i.cg, %indvars.iv
-  %sext = shl i64 %i.do, 32
-  %25 = ashr exact i64 %sext, 32
-  %i.dp = getelementptr inbounds i8, ptr %.075199290, i64 %25 ; 2 uses
+.lr.ph220.preheader.new:                          ; preds = %.lr.ph220.prol.loopexit
+  %6 = getelementptr i8, ptr %.075199290, i64 %3
+  br label %.lr.ph220
+
+.lr.ph220:                                        ; preds = %.lr.ph220, %.lr.ph220.preheader.new
+  %indvars.iv = phi i64 [ %indvars.iv.unr, %.lr.ph220.preheader.new ], [ %indvars.iv.next.1, %.lr.ph220 ] ; 5 uses
+  %i.do = sub nuw nsw i64 %3, %indvars.iv
+  %i.dp = getelementptr inbounds nuw i8, ptr %.075199290, i64 %i.do ; 2 uses
   %i.dq = load i8, ptr %i.dp, align 1
   %i.dr = sub nsw i64 0, %indvars.iv
   %i.ds = getelementptr inbounds i8, ptr %.ptr, i64 %i.dr
   store i8 %i.dq, ptr %i.ds, align 1
   store i8 0, ptr %i.dp, align 1
   %indvars.iv.next.neg = xor i64 %indvars.iv, -1
-  %26 = add i64 %i.cg, %indvars.iv.next.neg
-  %sext.1 = shl i64 %26, 32
-  %27 = ashr exact i64 %sext.1, 32
-  %i.dt = getelementptr inbounds i8, ptr %.075199290, i64 %27 ; 2 uses
+  %i.dt = getelementptr i8, ptr %6, i64 %indvars.iv.next.neg ; 2 uses
   %i.du = load i8, ptr %i.dt, align 1
   %i.dv = xor i64 %indvars.iv, -1
   %i.dw = getelementptr inbounds i8, ptr %.ptr, i64 %i.dv

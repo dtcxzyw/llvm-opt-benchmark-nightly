@@ -205,7 +205,7 @@ bb.m:                                             ; preds = %_ZN5boost14multipre
   br i1 %i.bf, label %bb.n, label %bb.q
 
 bb.n:                                             ; preds = %bb.m
-  %i.bg = sub i64 %i.aj, %i.ai
+  %i.bg = sub nuw i64 %i.aj, %i.ai
   store i64 %i.bg, ptr %i.ab, align 8, !tbaa !118
   %i.bh = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.bi = load i8, ptr %i.bh, align 8, !tbaa !126, !range !13, !noundef !14 ; 2 uses
@@ -608,7 +608,7 @@ bb.a:
   %i.c = trunc i128 %1 to i64
   %i.d = and i64 %i.c, 63                         ; 9 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 7 uses
-  %i.f = load i64, ptr %i.e, align 16, !tbaa !117 ; 8 uses
+  %i.f = load i64, ptr %i.e, align 16, !tbaa !117 ; 7 uses
   %i.g = icmp eq i64 %i.f, 1
   br i1 %i.g, label %bb.b, label %bb.c
 
@@ -707,7 +707,7 @@ _ZN5boost14multiprecision8backends12cpp_int_baseILm0ELm18446744073709551615ELNS0
   %i.as = phi i8 [ %.pre113, %bb.h ], [ %.pre, %bb.i ]
   %i.at = trunc nuw i8 %i.as to i1                ; 2 uses
   %i.au = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.av = select i1 %i.at, ptr %0, ptr %.pre117   ; 20 uses
+  %i.av = select i1 %i.at, ptr %0, ptr %.pre117   ; 19 uses
   %i.aw = icmp ult i64 %i.x, %i.b
   br i1 %i.aw, label %bb.j, label %bb.q
 
@@ -775,14 +775,14 @@ _ZN5boost14multiprecision8backends15cpp_int_backendILm0ELm0ELNS0_16cpp_integer_t
 
 bb.q:                                             ; preds = %_ZN5boost14multiprecision8backends12cpp_int_baseILm0ELm18446744073709551615ELNS0_16cpp_integer_typeE1ELNS0_18cpp_int_check_typeE0ESaIyELb0EE6resizeEmm.exit
   %.not95 = icmp ult i64 %i.x, 288230376151711745
-  %i.bo = sub i64 %i.x, %spec.select.i            ; 3 uses
+  %i.bo = sub i64 %i.x, %spec.select.i            ; 2 uses
   br i1 %.not95, label %bb.r, label %bb.v
 
 bb.r:                                             ; preds = %bb.q
   %i.bp = add i64 %i.f, %i.b
   %i.bq = icmp ugt i64 %i.x, %i.bp
   %i.br = xor i64 %i.bo, -1                       ; 3 uses
-  %i.bs = getelementptr [8 x i8], ptr %i.av, i64 %i.f
+  %i.bs = getelementptr [8 x i8], ptr %i.av, i64 %i.f ; 2 uses
   %i.bt = getelementptr [8 x i8], ptr %i.bs, i64 %i.br
   %i.bu = load i64, ptr %i.bt, align 8, !tbaa !118 ; 2 uses
   br i1 %i.bq, label %bb.s, label %bb.t
@@ -805,10 +805,8 @@ bb.t:                                             ; preds = %bb.r
   br i1 %i.cd, label %bb.u, label %bb.v
 
 bb.u:                                             ; preds = %bb.t
-  %2 = add i64 %i.f, -2
-  %3 = sub i64 %2, %i.bo
-  %4 = getelementptr inbounds nuw [8 x i8], ptr %i.av, i64 %3
-  %i.ce = load i64, ptr %4, align 8, !tbaa !118
+  %2 = getelementptr i8, ptr %i.bs, i64 -16
+  %i.ce = load i64, ptr %2, align 8, !tbaa !118
   %i.cf = sub nuw nsw i64 64, %i.d
   %i.cg = lshr i64 %i.ce, %i.cf
   %i.ch = or disjoint i64 %i.cg, %i.ca

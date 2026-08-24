@@ -205,7 +205,7 @@ bb.a:
   %i.a = ptrtoaddr ptr %1 to i64
   %i.b = ptrtoaddr ptr %0 to i64
   %i.c = add i32 %2, 28                           ; 2 uses
-  %i.d = lshr i32 %2, 2                           ; 10 uses
+  %i.d = lshr i32 %2, 2                           ; 9 uses
   %i.e = lshr i32 %2, 3
   %i.f = add nuw nsw i32 %i.e, 3
   store i32 %i.f, ptr %0, align 4, !tbaa !4
@@ -282,13 +282,14 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph44:                                         ; preds = %.preheader
   %i.w = icmp ugt i32 %2, 27
+  %3 = zext nneg i32 %i.d to i64                  ; 2 uses
   %i.x = zext nneg i32 %i.d to i64                ; 2 uses
   %wide.trip.count55 = zext i32 %i.c to i64       ; 2 uses
   br i1 %i.w, label %.lr.ph44.split, label %.lr.ph44.split.us
 
 .lr.ph44.split.us:                                ; preds = %.lr.ph44, %bb.c
-  %indvars.iv47 = phi i64 [ %indvars.iv.next48, %bb.c ], [ %i.x, %.lr.ph44 ] ; 4 uses
-  %i.y = trunc nuw i64 %indvars.iv47 to i32       ; 3 uses
+  %indvars.iv47 = phi i64 [ %indvars.iv.next48, %bb.c ], [ %3, %.lr.ph44 ] ; 5 uses
+  %i.y = trunc nuw i64 %indvars.iv47 to i32       ; 2 uses
   %i.z = add nuw i64 %indvars.iv47, 4294967295
   %i.aa = and i64 %i.z, 4294967295
   %i.ab = getelementptr inbounds nuw [4 x i8], ptr %i.g, i64 %i.aa
@@ -335,8 +336,7 @@ bb.b:                                             ; preds = %.lr.ph44.split.us
 
 bb.c:                                             ; preds = %.lr.ph44.split.us, %bb.b
   %.0.us = phi i32 [ %i.bl, %bb.b ], [ %i.ac, %.lr.ph44.split.us ]
-  %3 = sub i32 %i.y, %i.d
-  %4 = zext i32 %3 to i64
+  %4 = sub nuw nsw i64 %indvars.iv47, %i.x
   %i.bm = getelementptr inbounds nuw [4 x i8], ptr %i.g, i64 %4
   %i.bn = load i32, ptr %i.bm, align 4, !tbaa !4
   %i.bo = xor i32 %i.bn, %.0.us
@@ -373,8 +373,8 @@ bb.c:                                             ; preds = %.lr.ph44.split.us, 
   br i1 %exitcond.not.3, label %.preheader, label %.lr.ph, !llvm.loop !23
 
 .lr.ph44.split:                                   ; preds = %.lr.ph44, %bb.f
-  %indvars.iv52 = phi i64 [ %indvars.iv.next53, %bb.f ], [ %i.x, %.lr.ph44 ] ; 4 uses
-  %i.cf = trunc nuw i64 %indvars.iv52 to i32      ; 3 uses
+  %indvars.iv52 = phi i64 [ %indvars.iv.next53, %bb.f ], [ %3, %.lr.ph44 ] ; 5 uses
+  %i.cf = trunc nuw i64 %indvars.iv52 to i32      ; 2 uses
   %i.cg = add nuw i64 %indvars.iv52, 4294967295
   %i.ch = and i64 %i.cg, 4294967295
   %i.ci = getelementptr inbounds nuw [4 x i8], ptr %i.g, i64 %i.ch
@@ -453,9 +453,8 @@ bb.e:                                             ; preds = %.lr.ph44.split
 
 bb.f:                                             ; preds = %.sink.split, %.lr.ph44.split
   %.0 = phi i32 [ %i.cj, %.lr.ph44.split ], [ %i.en, %.sink.split ]
-  %5 = sub i32 %i.cf, %i.d
-  %6 = zext i32 %5 to i64
-  %i.eo = getelementptr inbounds nuw [4 x i8], ptr %i.g, i64 %6
+  %5 = sub nuw nsw i64 %indvars.iv52, %i.x
+  %i.eo = getelementptr inbounds nuw [4 x i8], ptr %i.g, i64 %5
   %i.ep = load i32, ptr %i.eo, align 4, !tbaa !4
   %i.eq = xor i32 %i.ep, %.0
   %i.er = getelementptr inbounds nuw [4 x i8], ptr %i.g, i64 %indvars.iv52

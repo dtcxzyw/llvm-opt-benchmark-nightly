@@ -205,16 +205,16 @@ bb.af:                                            ; preds = %str_skip_until_fit.
 bb.ag:                                            ; preds = %bb.af
   %i.fi = add nuw nsw i64 %.0.lcssa.i.i.i, %i.dt
   %i.fj = icmp sgt i64 %i.fi, %i.dv
-  %i.fk = sub nsw i64 %i.dv, %i.dt
+  %i.fk = sub nuw nsw i64 %i.dv, %i.dt
   %spec.select.i.i.i = select i1 %i.fj, i64 %i.fk, i64 %.0.lcssa.i.i.i ; 3 uses
-  %i.fl = add i64 %i.dt, %spec.select.i.i.i
+  %i.fl = add nuw i64 %i.dt, %spec.select.i.i.i
   %i.fm = sub i64 %i.dv, %i.fl                    ; 2 uses
   %i.fn = icmp slt i64 %i.fm, 1
   br i1 %i.fn, label %ic_memmove.exit.i.i.i, label %bb.ah
 
 bb.ah:                                            ; preds = %bb.ag
   %i.fo = getelementptr inbounds nuw i8, ptr %i.dx, i64 %i.dt ; 2 uses
-  %i.fp = getelementptr inbounds i8, ptr %i.fo, i64 %spec.select.i.i.i
+  %i.fp = getelementptr inbounds nuw i8, ptr %i.fo, i64 %spec.select.i.i.i
   call void @llvm.memmove.p0.p0.i64(ptr align 1 %i.fo, ptr readonly align 1 %i.fp, i64 %i.fm, i1 false)
   %.pre.i.i38.i = load i64, ptr %i.t, align 8, !tbaa !46
   %.pre.i.i = load ptr, ptr %2, align 8, !tbaa !49
@@ -240,13 +240,13 @@ bb.ai:                                            ; preds = %sbuf_delete_at.exit
 bb.aj:                                            ; preds = %bb.ai
   %i.fw = add nuw nsw i64 %.0.lcssa.i.i.i, %i.dt
   %i.fx = icmp sgt i64 %i.fw, %i.fu
-  %i.fy = sub nsw i64 %i.fu, %i.dt
+  %i.fy = sub nuw nsw i64 %i.fu, %i.dt
   %spec.select.i94.i.i = select i1 %i.fx, i64 %i.fy, i64 %.0.lcssa.i.i.i ; 4 uses
   %i.fz = icmp eq i64 %spec.select.i94.i.i, 0
   br i1 %i.fz, label %attrbuf_delete_at.exit.i.i, label %bb.ak
 
 bb.ak:                                            ; preds = %bb.aj
-  %i.ga = add i64 %i.dt, %spec.select.i94.i.i
+  %i.ga = add nuw i64 %i.dt, %spec.select.i94.i.i
   %i.gb = sub i64 %i.fu, %i.ga                    ; 2 uses
   %i.gc = icmp slt i64 %i.gb, 1
   br i1 %i.gc, label %ic_memmove.exit.i96.i.i, label %bb.al
@@ -254,7 +254,7 @@ bb.ak:                                            ; preds = %bb.aj
 bb.al:                                            ; preds = %bb.ak
   %i.gd = load ptr, ptr %3, align 8, !tbaa !41
   %i.ge = getelementptr inbounds nuw [8 x i8], ptr %i.gd, i64 %i.dt ; 2 uses
-  %i.gf = getelementptr inbounds [8 x i8], ptr %i.ge, i64 %spec.select.i94.i.i
+  %i.gf = getelementptr inbounds nuw [8 x i8], ptr %i.ge, i64 %spec.select.i94.i.i
   call void @llvm.memmove.p0.p0.i64(ptr align 1 %i.ge, ptr nonnull readonly align 1 %i.gf, i64 %i.gb, i1 false)
   %.pre.i95.i.i = load i64, ptr %i.v, align 8, !tbaa !47
   br label %ic_memmove.exit.i96.i.i
@@ -600,7 +600,7 @@ ic_strlen.exit.split:                             ; preds = %ic_strlen.exit.spli
 
 .lr.ph:                                           ; preds = %.preheader.i.preheader, %.preheader.i
   %.021.i36 = phi i64 [ %i.f, %.preheader.i ], [ 1, %.preheader.i.preheader ] ; 3 uses
-  %i.g = sub nsw i64 %.028, %.021.i36
+  %i.g = sub nuw nsw i64 %.028, %.021.i36
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 %i.g
   %i.i = load i8, ptr %i.h, align 1, !tbaa !9
   %or.cond4.i = icmp sgt i8 %i.i, -65
@@ -816,7 +816,7 @@ bb.n:                                             ; preds = %bb.m
 
 .lr.ph208:                                        ; preds = %.preheader.i.preheader, %.preheader.i
   %.021.i207 = phi i64 [ %i.al, %.preheader.i ], [ 1, %.preheader.i.preheader ] ; 3 uses
-  %i.am = sub nsw i64 %.6175, %.021.i207
+  %i.am = sub nuw nsw i64 %.6175, %.021.i207
   %i.an = getelementptr inbounds nuw i8, ptr %1, i64 %i.am
   %i.ao = load i8, ptr %i.an, align 1, !tbaa !9
   %or.cond4.i = icmp sgt i8 %i.ao, -65
@@ -1219,7 +1219,7 @@ bb.c:                                             ; preds = %ic_strlen.exit
 
 .lr.ph:                                           ; preds = %.preheader.i.preheader, %.preheader.i
   %.021.i16 = phi i64 [ %i.h, %.preheader.i ], [ 1, %.preheader.i.preheader ] ; 3 uses
-  %i.i = sub nsw i64 %1, %.021.i16
+  %i.i = sub nuw nsw i64 %1, %.021.i16
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 %i.i
   %i.k = load i8, ptr %i.j, align 1, !tbaa !9
   %or.cond4.i = icmp sgt i8 %i.k, -65
@@ -1622,7 +1622,7 @@ bb.d:                                             ; preds = %bb.c
   %scevgep.i = getelementptr i8, ptr %i.u, i64 %i.v ; 2 uses
   %scevgep19.i = getelementptr i8, ptr %scevgep.i, i64 8
   %i.w = add nsw i64 %i.s, -1                     ; 2 uses
-  %i.x = sub nsw i64 %i.w, %indvars.iv
+  %i.x = sub nuw nsw i64 %i.w, %indvars.iv
   %i.y = shl nuw i64 %i.x, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %scevgep.i, ptr align 8 %scevgep19.i, i64 %i.y, i1 false), !tbaa !61
   br label %history_delete_at.exit
@@ -2025,7 +2025,7 @@ bb.w:                                             ; preds = %.preheader.i.i
   %i.dc = sub nsw i64 %i.cs, %.01825.i.i
   %i.dd = getelementptr inbounds i8, ptr %i.x, i64 %i.dc
   %i.de = load i8, ptr %i.dd, align 1, !tbaa !9
-  %i.df = sub nsw i64 %i.cy, %.01825.i.i
+  %i.df = sub nuw nsw i64 %i.cy, %.01825.i.i
   %i.dg = getelementptr inbounds nuw i8, ptr %i.cx, i64 %i.df
   %i.dh = load i8, ptr %i.dg, align 1, !tbaa !9
   %.not24.i.i = icmp eq i8 %i.de, %i.dh
@@ -2428,7 +2428,7 @@ editor_start_modify.exit:                         ; preds = %bb.aq, %editor_undo
   store ptr null, ptr %i.am, align 8, !tbaa !342
   store i8 1, ptr %i.ah, align 8, !tbaa !328
   %i.ib = load ptr, ptr %6, align 8, !tbaa !320   ; 5 uses
-  %i.ic = load i64, ptr %i.ae, align 8, !tbaa !325 ; 6 uses
+  %i.ic = load i64, ptr %i.ae, align 8, !tbaa !325 ; 8 uses
   %i.id = icmp slt i64 %i.ic, 1
   br i1 %i.id, label %sbuf_delete_at.exit.i, label %bb.ar
 
@@ -2439,20 +2439,20 @@ bb.ar:                                            ; preds = %editor_start_modify
   br i1 %.not.i.not.i, label %sbuf_delete_at.exit.i, label %bb.as
 
 bb.as:                                            ; preds = %bb.ar
-  %7 = sub nsw i64 %i.if, %i.ic                   ; 2 uses
-  %8 = icmp slt i64 %7, 1
-  br i1 %8, label %ic_memmove.exit.i.i167, label %bb.at
+  %7 = icmp eq i64 %i.if, %i.ic
+  br i1 %7, label %ic_memmove.exit.i.i167, label %bb.at
 
 bb.at:                                            ; preds = %bb.as
+  %8 = sub nuw nsw i64 %i.if, %i.ic
   %i.ig = load ptr, ptr %i.ib, align 8, !tbaa !49
   %i.ih = getelementptr i8, ptr %i.ig, i64 %i.ic  ; 2 uses
   %i.ii = getelementptr i8, ptr %i.ih, i64 -1
-  call void @llvm.memmove.p0.p0.i64(ptr align 1 %i.ii, ptr readonly align 1 %i.ih, i64 %7, i1 false)
+  call void @llvm.memmove.p0.p0.i64(ptr align 1 %i.ii, ptr readonly align 1 %i.ih, i64 %8, i1 false)
   %.pre.i.i166 = load i64, ptr %i.ie, align 8, !tbaa !46
   br label %ic_memmove.exit.i.i167
 
 ic_memmove.exit.i.i167:                           ; preds = %bb.at, %bb.as
-  %i.ij = phi i64 [ %i.if, %bb.as ], [ %.pre.i.i166, %bb.at ]
+  %i.ij = phi i64 [ %i.ic, %bb.as ], [ %.pre.i.i166, %bb.at ]
   %i.ik = add nsw i64 %i.ij, -1                   ; 2 uses
   store i64 %i.ik, ptr %i.ie, align 8, !tbaa !46
   %i.il = load ptr, ptr %i.ib, align 8, !tbaa !49
@@ -2608,7 +2608,7 @@ editor_start_modify.exit450:                      ; preds = %bb.bd, %editor_undo
 bb.be:                                            ; preds = %editor_start_modify.exit450
   %i.kj = add nuw nsw i64 %i.kg, %i.ke
   %i.kk = icmp samesign ugt i64 %i.kj, %.val5.i.i
-  %i.kl = sub nsw i64 %.val5.i.i, %i.ke
+  %i.kl = sub nuw nsw i64 %.val5.i.i, %i.ke
   %spec.select.i.i.i175 = select i1 %i.kk, i64 %i.kl, i64 %i.kg ; 3 uses
   %i.km = add nuw i64 %i.ke, %spec.select.i.i.i175
   %i.kn = sub i64 %.val5.i.i, %i.km               ; 2 uses
@@ -3011,7 +3011,7 @@ bb.em:                                            ; preds = %hsearch_pop.exit.i.
 
 .lr.ph1134:                                       ; preds = %.preheader.i.i.i.i.i.i.preheader, %.preheader.i.i.i.i.i.i
   %.021.i.i.i.i.i.i1133 = phi i64 [ %i.zo, %.preheader.i.i.i.i.i.i ], [ 1, %.preheader.i.i.i.i.i.i.preheader ] ; 3 uses
-  %i.zp = sub nsw i64 %i.zl, %.021.i.i.i.i.i.i1133
+  %i.zp = sub nuw nsw i64 %i.zl, %.021.i.i.i.i.i.i1133
   %i.zq = getelementptr inbounds nuw i8, ptr %.val.i.i232.i.i, i64 %i.zp
   %i.zr = load i8, ptr %i.zq, align 1, !tbaa !9
   %or.cond4.i.i.i.i.i.i = icmp sgt i8 %i.zr, -65
@@ -3035,7 +3035,7 @@ bb.eo:                                            ; preds = %bb.en
 
 bb.ep:                                            ; preds = %bb.eo
   %i.zx = icmp sgt i64 %i.zl, %i.zw
-  %i.zy = sub nsw i64 %i.zw, %i.zt
+  %i.zy = sub nuw nsw i64 %i.zw, %i.zt
   %spec.select.i.i.i235.i.i = select i1 %i.zx, i64 %i.zy, i64 %.2.i.i.i.i.i.i ; 3 uses
   %i.zz = add nuw i64 %i.zt, %spec.select.i.i.i235.i.i
   %i.aaa = sub i64 %i.zw, %i.zz                   ; 2 uses
@@ -3044,7 +3044,7 @@ bb.ep:                                            ; preds = %bb.eo
 
 bb.eq:                                            ; preds = %bb.ep
   %i.aac = getelementptr inbounds nuw i8, ptr %.val.i.i232.i.i, i64 %i.zt ; 2 uses
-  %i.aad = getelementptr inbounds i8, ptr %i.aac, i64 %spec.select.i.i.i235.i.i
+  %i.aad = getelementptr inbounds nuw i8, ptr %i.aac, i64 %spec.select.i.i.i235.i.i
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.aac, ptr nonnull readonly align 1 %i.aad, i64 %i.aaa, i1 false)
   %.pre.i.i.i236.i.i = load i64, ptr %i.zv, align 8, !tbaa !46
   %.pre.i.i237.i.i = load ptr, ptr %i.zk, align 8, !tbaa !49
@@ -3447,21 +3447,19 @@ edit_multiline_eol.exit.backedge:                 ; preds = %bb.fy, %bb.kx, %bb.
 
 .lr.ph1127:                                       ; preds = %.preheader.i.i.i.i.preheader, %.preheader.i.i.i.i
   %.021.i.i.i.i1126 = phi i64 [ %i.afu, %.preheader.i.i.i.i ], [ 1, %.preheader.i.i.i.i.preheader ] ; 3 uses
-  %i.afv = sub nsw i64 %i.afr, %.021.i.i.i.i1126  ; 2 uses
+  %i.afv = sub nuw nsw i64 %i.afr, %.021.i.i.i.i1126 ; 2 uses
   %i.afw = getelementptr inbounds nuw i8, ptr %.val.i209, i64 %i.afv
   %i.afx = load i8, ptr %i.afw, align 1, !tbaa !9
   %or.cond4.i.i.i.i = icmp sgt i8 %i.afx, -65
   br i1 %or.cond4.i.i.i.i, label %sbuf_prev.exit.i, label %.preheader.i.i.i.i
 
 sbuf_prev.exit.i:                                 ; preds = %.preheader.i.i.i.i, %.lr.ph1127, %.preheader.i.i.i.i.preheader
-  %.pre-phi.i211 = phi i64 [ 0, %.preheader.i.i.i.i.preheader ], [ 0, %.preheader.i.i.i.i ], [ %i.afv, %.lr.ph1127 ] ; 3 uses
+  %.pre-phi.i211 = phi i64 [ 0, %.preheader.i.i.i.i.preheader ], [ 0, %.preheader.i.i.i.i ], [ %i.afv, %.lr.ph1127 ] ; 2 uses
   %.2.i.i.i.i = phi i64 [ %i.afr, %.preheader.i.i.i.i.preheader ], [ %i.afr, %.preheader.i.i.i.i ], [ %.021.i.i.i.i1126, %.lr.ph1127 ] ; 2 uses
-  %i.afy = getelementptr inbounds i8, ptr %.val.i209, i64 %.pre-phi.i211
+  %i.afy = getelementptr inbounds nuw i8, ptr %.val.i209, i64 %.pre-phi.i211
   %i.afz = call fastcc i64 @char_column_width(ptr noundef nonnull readonly %i.afy, i64 noundef %.2.i.i.i.i) ; 0 uses
-  %9 = icmp slt i64 %.2.i.i.i.i, 1
-  %i.aga = icmp slt i64 %.pre-phi.i211, 0
-  %or.cond.i = or i1 %i.aga, %9
-  br i1 %or.cond.i, label %edit_multiline_eol.exit.backedge, label %bb.fz
+  %i.aga = icmp slt i64 %.2.i.i.i.i, 1
+  br i1 %i.aga, label %edit_multiline_eol.exit.backedge, label %bb.fz
 
 bb.fz:                                            ; preds = %sbuf_prev.exit.i
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #28
@@ -3637,7 +3635,7 @@ bb.gk:                                            ; preds = %bb.bh, %bb.bh
 
 .lr.ph1122:                                       ; preds = %.thread.split.i.i.i.i, %.preheader.i45.i.i.i.i
   %.021.i46.i.i.i.i1121 = phi i64 [ %i.ait, %.preheader.i45.i.i.i.i ], [ 1, %.thread.split.i.i.i.i ] ; 3 uses
-  %i.aiu = sub nsw i64 %.3.i.i.i.i, %.021.i46.i.i.i.i1121
+  %i.aiu = sub nuw nsw i64 %.3.i.i.i.i, %.021.i46.i.i.i.i1121
   %i.aiv = getelementptr inbounds nuw i8, ptr %.val.i224, i64 %i.aiu
   %i.aiw = load i8, ptr %i.aiv, align 1, !tbaa !9
   %or.cond4.i48.i.i.i.i = icmp sgt i8 %i.aiw, -65
@@ -3924,7 +3922,7 @@ editor_start_modify.exit497:                      ; preds = %bb.hk, %editor_undo
 
 .lr.ph1117:                                       ; preds = %.preheader.i.i.i.i250.preheader, %.preheader.i.i.i.i250
   %.021.i.i.i.i2511116 = phi i64 [ %i.amc, %.preheader.i.i.i.i250 ], [ 1, %.preheader.i.i.i.i250.preheader ] ; 3 uses
-  %i.amd = sub nsw i64 %i.alz, %.021.i.i.i.i2511116
+  %i.amd = sub nuw nsw i64 %i.alz, %.021.i.i.i.i2511116
   %i.ame = getelementptr inbounds nuw i8, ptr %.val.i.i247, i64 %i.amd
   %i.amf = load i8, ptr %i.ame, align 1, !tbaa !9
   %or.cond4.i.i.i.i253 = icmp sgt i8 %i.amf, -65
@@ -3948,7 +3946,7 @@ bb.hm:                                            ; preds = %bb.hl
 
 bb.hn:                                            ; preds = %bb.hm
   %i.aml = icmp sgt i64 %i.alz, %i.amk
-  %i.amm = sub nsw i64 %i.amk, %i.amh
+  %i.amm = sub nuw nsw i64 %i.amk, %i.amh
   %spec.select.i.i.i256 = select i1 %i.aml, i64 %i.amm, i64 %.2.i.i.i.i254 ; 3 uses
   %i.amn = add nuw i64 %i.amh, %spec.select.i.i.i256
   %i.amo = sub i64 %i.amk, %i.amn                 ; 2 uses
@@ -3957,7 +3955,7 @@ bb.hn:                                            ; preds = %bb.hm
 
 bb.ho:                                            ; preds = %bb.hn
   %i.amq = getelementptr inbounds nuw i8, ptr %.val.i.i247, i64 %i.amh ; 2 uses
-  %i.amr = getelementptr inbounds i8, ptr %i.amq, i64 %spec.select.i.i.i256
+  %i.amr = getelementptr inbounds nuw i8, ptr %i.amq, i64 %spec.select.i.i.i256
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.amq, ptr nonnull readonly align 1 %i.amr, i64 %i.amo, i1 false)
   %.pre.i.i.i257 = load i64, ptr %i.amj, align 8, !tbaa !46
   %.pre.i.i258 = load ptr, ptr %i.aly, align 8, !tbaa !49
@@ -4095,7 +4093,7 @@ editor_start_modify.exit513:                      ; preds = %bb.hx, %editor_undo
 bb.hy:                                            ; preds = %editor_start_modify.exit513
   %i.aoj = add nuw nsw i64 %i.aog, %i.aoe
   %i.aok = icmp samesign ugt i64 %i.aoj, %.val5.i.i264
-  %i.aol = sub nsw i64 %.val5.i.i264, %i.aoe
+  %i.aol = sub nuw nsw i64 %.val5.i.i264, %i.aoe
   %spec.select.i.i.i269 = select i1 %i.aok, i64 %i.aol, i64 %i.aog ; 3 uses
   %i.aom = add nuw i64 %i.aoe, %spec.select.i.i.i269
   %i.aon = sub i64 %.val5.i.i264, %i.aom          ; 2 uses
@@ -4129,7 +4127,7 @@ bb.ia:                                            ; preds = %bb.bh
   %.val.i274 = load ptr, ptr %i.aov, align 8, !tbaa !49
   %i.aox = getelementptr i8, ptr %i.aov, i64 16
   %.val8.i = load i64, ptr %i.aox, align 8, !tbaa !46
-  %i.aoy = call fastcc i64 @sbuf_find_word_end(ptr %.val.i274, i64 %.val8.i, i64 noundef %i.aow) ; 3 uses
+  %i.aoy = call fastcc i64 @sbuf_find_word_end(ptr %.val.i274, i64 %.val8.i, i64 noundef %i.aow) ; 4 uses
   %i.aoz = icmp slt i64 %i.aoy, 0
   br i1 %i.aoz, label %edit_multiline_eol.exit.backedge, label %bb.ib
 
@@ -4227,28 +4225,28 @@ editor_start_modify.exit529:                      ; preds = %bb.ih, %editor_undo
 
 bb.ii:                                            ; preds = %editor_start_modify.exit529
   %i.aqg = getelementptr inbounds nuw i8, ptr %i.aqe, i64 16 ; 3 uses
-  %i.aqh = load i64, ptr %i.aqg, align 8, !tbaa !46 ; 4 uses
+  %i.aqh = load i64, ptr %i.aqg, align 8, !tbaa !46 ; 5 uses
   %.not.i.i.i275 = icmp slt i64 %i.aqf, %i.aqh
   br i1 %.not.i.i.i275, label %bb.ij, label %sbuf_delete_from_to.exit.i
 
 bb.ij:                                            ; preds = %bb.ii
   %i.aqi = call i64 @llvm.umin.i64(i64 %i.aoy, i64 %i.aqh) ; 3 uses
-  %spec.select.i.neg.i.i = sub nsw i64 %i.aqf, %i.aqi
-  %i.aqj = sub nsw i64 %i.aqh, %i.aqi             ; 2 uses
-  %10 = icmp slt i64 %i.aqj, 1
-  br i1 %10, label %ic_memmove.exit.i.i.i277, label %bb.ik
+  %i.aqj = sub nsw i64 %i.aqf, %i.aqi
+  %.not.i276 = icmp samesign ugt i64 %i.aqh, %i.aoy
+  br i1 %.not.i276, label %bb.ik, label %ic_memmove.exit.i.i.i277
 
 bb.ik:                                            ; preds = %bb.ij
+  %9 = sub nuw nsw i64 %i.aqh, %i.aqi
   %i.aqk = load ptr, ptr %i.aqe, align 8, !tbaa !49 ; 2 uses
   %i.aql = getelementptr inbounds nuw i8, ptr %i.aqk, i64 %i.aqf
   %i.aqm = getelementptr inbounds nuw i8, ptr %i.aqk, i64 %i.aqi
-  call void @llvm.memmove.p0.p0.i64(ptr align 1 %i.aql, ptr readonly align 1 %i.aqm, i64 %i.aqj, i1 false)
+  call void @llvm.memmove.p0.p0.i64(ptr align 1 %i.aql, ptr nonnull readonly align 1 %i.aqm, i64 %9, i1 false)
   %.pre.i.i.i276 = load i64, ptr %i.aqg, align 8, !tbaa !46
   br label %ic_memmove.exit.i.i.i277
 
 ic_memmove.exit.i.i.i277:                         ; preds = %bb.ik, %bb.ij
   %i.aqn = phi i64 [ %i.aqh, %bb.ij ], [ %.pre.i.i.i276, %bb.ik ]
-  %i.aqo = add i64 %i.aqn, %spec.select.i.neg.i.i ; 2 uses
+  %i.aqo = add i64 %i.aqn, %i.aqj                 ; 2 uses
   store i64 %i.aqo, ptr %i.aqg, align 8, !tbaa !46
   %i.aqp = load ptr, ptr %i.aqe, align 8, !tbaa !49
   %i.aqq = getelementptr inbounds i8, ptr %i.aqp, i64 %i.aqo
@@ -4289,7 +4287,7 @@ bb.il:                                            ; preds = %bb.bh
 
 .lr.ph1107:                                       ; preds = %.preheader.split.i.i.i.i, %.preheader.i.i.i.i.i
   %.021.i.i.i.i.i1106 = phi i64 [ %i.aqw, %.preheader.i.i.i.i.i ], [ 1, %.preheader.split.i.i.i.i ] ; 3 uses
-  %i.aqx = sub nsw i64 %.031.i.i.i.i, %.021.i.i.i.i.i1106
+  %i.aqx = sub nuw nsw i64 %.031.i.i.i.i, %.021.i.i.i.i.i1106
   %i.aqy = getelementptr inbounds nuw i8, ptr %.val.i278, i64 %i.aqx
   %i.aqz = load i8, ptr %i.aqy, align 1, !tbaa !9
   %or.cond4.i.i.i.i.i = icmp sgt i8 %i.aqz, -65
@@ -4335,7 +4333,7 @@ ic_char_is_white.exit7.i.i.i:                     ; preds = %.critedge, %.crited
 
 .lr.ph1112:                                       ; preds = %.preheader.i45.i.i.i.i290.preheader, %.preheader.i45.i.i.i.i290
   %.021.i46.i.i.i.i2911111 = phi i64 [ %i.arg, %.preheader.i45.i.i.i.i290 ], [ 1, %.preheader.i45.i.i.i.i290.preheader ] ; 3 uses
-  %i.arh = sub nsw i64 %.3.i.i.i.i284, %.021.i46.i.i.i.i2911111
+  %i.arh = sub nuw nsw i64 %.3.i.i.i.i284, %.021.i46.i.i.i.i2911111
   %i.ari = getelementptr inbounds nuw i8, ptr %.val.i278, i64 %i.arh
   %i.arj = load i8, ptr %i.ari, align 1, !tbaa !9
   %or.cond4.i48.i.i.i.i293 = icmp sgt i8 %i.arj, -65
@@ -4457,7 +4455,7 @@ bb.it:                                            ; preds = %editor_start_modify
 bb.iu:                                            ; preds = %bb.it
   %i.asv = call i64 @llvm.umin.i64(i64 %i.ass, i64 %i.asu) ; 3 uses
   %spec.select.i.neg.i.i287 = sub nsw i64 %.235.split.i.i.i13.i, %i.asv
-  %i.asw = sub nsw i64 %i.asu, %i.asv             ; 2 uses
+  %i.asw = sub nuw nsw i64 %i.asu, %i.asv         ; 2 uses
   %i.asx = icmp slt i64 %i.asw, 1
   br i1 %i.asx, label %ic_memmove.exit.i.i.i289, label %bb.iv
 
@@ -4564,34 +4562,34 @@ editor_start_modify.exit561:                      ; preds = %bb.ja, %editor_undo
   store ptr null, ptr %i.am, align 8, !tbaa !342
   store i8 1, ptr %i.ah, align 8, !tbaa !328
   %i.aui = load ptr, ptr %6, align 8, !tbaa !320  ; 3 uses
-  %i.auj = load i64, ptr %i.ae, align 8, !tbaa !325 ; 2 uses
+  %i.auj = load i64, ptr %i.ae, align 8, !tbaa !325 ; 3 uses
   %.not.i.not.i298 = icmp sgt i64 %i.auj, %i.ati
   br i1 %.not.i.not.i298, label %bb.jb, label %edit_delete_to_start_of_word.exit
 
 bb.jb:                                            ; preds = %editor_start_modify.exit561
   %i.auk = getelementptr inbounds nuw i8, ptr %i.aui, i64 16 ; 3 uses
-  %i.aul = load i64, ptr %i.auk, align 8, !tbaa !46 ; 4 uses
+  %i.aul = load i64, ptr %i.auk, align 8, !tbaa !46 ; 5 uses
   %.not.i.i.i299 = icmp slt i64 %i.ati, %i.aul
   br i1 %.not.i.i.i299, label %bb.jc, label %edit_delete_to_start_of_word.exit
 
 bb.jc:                                            ; preds = %bb.jb
   %i.aum = call i64 @llvm.umin.i64(i64 %i.auj, i64 %i.aul) ; 3 uses
-  %spec.select.i.neg.i.i300 = sub nsw i64 %i.ati, %i.aum
-  %i.aun = sub nsw i64 %i.aul, %i.aum             ; 2 uses
-  %11 = icmp slt i64 %i.aun, 1
-  br i1 %11, label %ic_memmove.exit.i.i.i302, label %bb.jd
+  %i.aun = sub nsw i64 %i.ati, %i.aum
+  %.not.i302 = icmp samesign ugt i64 %i.aul, %i.auj
+  br i1 %.not.i302, label %bb.jd, label %ic_memmove.exit.i.i.i302
 
 bb.jd:                                            ; preds = %bb.jc
+  %10 = sub nuw nsw i64 %i.aul, %i.aum
   %i.auo = load ptr, ptr %i.aui, align 8, !tbaa !49 ; 2 uses
   %i.aup = getelementptr inbounds nuw i8, ptr %i.auo, i64 %i.ati
   %i.auq = getelementptr inbounds nuw i8, ptr %i.auo, i64 %i.aum
-  call void @llvm.memmove.p0.p0.i64(ptr align 1 %i.aup, ptr readonly align 1 %i.auq, i64 %i.aun, i1 false)
+  call void @llvm.memmove.p0.p0.i64(ptr align 1 %i.aup, ptr readonly align 1 %i.auq, i64 %10, i1 false)
   %.pre.i.i.i301 = load i64, ptr %i.auk, align 8, !tbaa !46
   br label %ic_memmove.exit.i.i.i302
 
 ic_memmove.exit.i.i.i302:                         ; preds = %bb.jd, %bb.jc
   %i.aur = phi i64 [ %i.aul, %bb.jc ], [ %.pre.i.i.i301, %bb.jd ]
-  %i.aus = add i64 %i.aur, %spec.select.i.neg.i.i300 ; 2 uses
+  %i.aus = add i64 %i.aur, %i.aun                 ; 2 uses
   store i64 %i.aus, ptr %i.auk, align 8, !tbaa !46
   %i.aut = load ptr, ptr %i.aui, align 8, !tbaa !49
   %i.auu = getelementptr inbounds i8, ptr %i.aut, i64 %i.aus
@@ -4631,7 +4629,7 @@ bb.je:                                            ; preds = %bb.bh
 
 .lr.ph1102:                                       ; preds = %.thread.split.i.i.i.i307, %.preheader.i45.i.i.i.i310
   %.021.i46.i.i.i.i3111101 = phi i64 [ %i.auy, %.preheader.i45.i.i.i.i310 ], [ 1, %.thread.split.i.i.i.i307 ] ; 3 uses
-  %i.auz = sub nsw i64 %.3.i.i.i.i308, %.021.i46.i.i.i.i3111101
+  %i.auz = sub nuw nsw i64 %.3.i.i.i.i308, %.021.i46.i.i.i.i3111101
   %i.ava = getelementptr inbounds nuw i8, ptr %.val26.i, i64 %i.auz
   %i.avb = load i8, ptr %i.ava, align 1, !tbaa !9
   %or.cond4.i48.i.i.i.i313 = icmp sgt i8 %i.avb, -65
@@ -4780,7 +4778,7 @@ bb.jl:                                            ; preds = %editor_start_modify
 
 bb.jm:                                            ; preds = %bb.jl
   %i.aws = getelementptr inbounds nuw i8, ptr %.pre52.i, i64 16 ; 3 uses
-  %i.awt = load i64, ptr %i.aws, align 8, !tbaa !46 ; 5 uses
+  %i.awt = load i64, ptr %i.aws, align 8, !tbaa !46 ; 6 uses
   %i.awu = icmp slt i64 %i.awt, %i.awp
   br i1 %i.awu, label %sbuf_char_at.exit.thread.i, label %sbuf_char_at.exit.i
 
@@ -4793,7 +4791,7 @@ sbuf_char_at.exit.i:                              ; preds = %bb.jm
   br i1 %or.cond.i321, label %.critedge.i, label %sbuf_char_at.exit.thread.i
 
 .critedge.i:                                      ; preds = %sbuf_char_at.exit.i
-  %i.awz = load i64, ptr %i.ae, align 8, !tbaa !325 ; 2 uses
+  %i.awz = load i64, ptr %i.ae, align 8, !tbaa !325 ; 3 uses
   %.not.i.i322 = icmp slt i64 %i.awz, %.235.split.i.i.i.i317
   %.not.i.i33.not.i = icmp sgt i64 %.235.split.i.i.i.i317, %i.awt
   %or.cond67.i = or i1 %.not.i.i33.not.i, %.not.i.i322
@@ -4801,14 +4799,14 @@ sbuf_char_at.exit.i:                              ; preds = %bb.jm
 
 bb.jn:                                            ; preds = %.critedge.i
   %i.axa = call i64 @llvm.umin.i64(i64 %i.awz, i64 %i.awt) ; 3 uses
-  %spec.select.i.neg.i.i323 = sub nsw i64 %i.awp, %i.axa
-  %i.axb = sub nsw i64 %i.awt, %i.axa             ; 2 uses
-  %12 = icmp slt i64 %i.axb, 1
-  br i1 %12, label %ic_memmove.exit.i.i.i326, label %bb.jo
+  %i.axb = sub nsw i64 %i.awp, %i.axa
+  %.not68.i = icmp ugt i64 %i.awt, %i.awz
+  br i1 %.not68.i, label %bb.jo, label %ic_memmove.exit.i.i.i326
 
 bb.jo:                                            ; preds = %bb.jn
+  %11 = sub nuw nsw i64 %i.awt, %i.axa
   %i.axc = getelementptr inbounds nuw i8, ptr %i.awq, i64 %i.axa
-  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.awv, ptr nonnull readonly align 1 %i.axc, i64 %i.axb, i1 false)
+  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.awv, ptr nonnull readonly align 1 %i.axc, i64 %11, i1 false)
   %.pre.i.i.i324 = load i64, ptr %i.aws, align 8, !tbaa !46
   %.pre.i325 = load ptr, ptr %.pre52.i, align 8, !tbaa !49
   br label %ic_memmove.exit.i.i.i326
@@ -4816,7 +4814,7 @@ bb.jo:                                            ; preds = %bb.jn
 ic_memmove.exit.i.i.i326:                         ; preds = %bb.jo, %bb.jn
   %i.axd = phi ptr [ %i.awq, %bb.jn ], [ %.pre.i325, %bb.jo ]
   %i.axe = phi i64 [ %i.awt, %bb.jn ], [ %.pre.i.i.i324, %bb.jo ]
-  %i.axf = add i64 %i.axe, %spec.select.i.neg.i.i323 ; 2 uses
+  %i.axf = add i64 %i.axe, %i.axb                 ; 2 uses
   store i64 %i.axf, ptr %i.aws, align 8, !tbaa !46
   %i.axg = getelementptr inbounds i8, ptr %i.axd, i64 %i.axf
   store i8 0, ptr %i.axg, align 1, !tbaa !9
@@ -4901,7 +4899,7 @@ bb.jt:                                            ; preds = %bb.bh
 
 .lr.ph1097:                                       ; preds = %.thread.split.i.i.i.i336, %.preheader.i45.i.i.i.i339
   %.021.i46.i.i.i.i3401096 = phi i64 [ %i.axw, %.preheader.i45.i.i.i.i339 ], [ 1, %.thread.split.i.i.i.i336 ] ; 3 uses
-  %i.axx = sub nsw i64 %.3.i.i.i.i337, %.021.i46.i.i.i.i3401096
+  %i.axx = sub nuw nsw i64 %.3.i.i.i.i337, %.021.i46.i.i.i.i3401096
   %i.axy = getelementptr inbounds nuw i8, ptr %.val24.i330, i64 %i.axx
   %i.axz = load i8, ptr %i.axy, align 1, !tbaa !9
   %or.cond4.i48.i.i.i.i342 = icmp sgt i8 %i.axz, -65
@@ -5085,7 +5083,7 @@ bb.kf:                                            ; preds = %sbuf_char_at.exit32
   br label %.critedge.i351
 
 .critedge.i351:                                   ; preds = %bb.kf, %sbuf_char_at.exit32.i, %bb.ke, %sbuf_char_at.exit.thread.i360, %bb.kd, %bb.kb, %editor_start_modify.exit593
-  %.0.i352 = phi i64 [ %i.azz, %bb.kd ], [ %.235.split.i.i.i37.i, %bb.kf ], [ %.235.split.i.i.i37.i, %sbuf_char_at.exit32.i ], [ %i.ayp, %editor_start_modify.exit593 ], [ %.235.split.i.i.i37.i, %bb.ke ], [ 0, %sbuf_char_at.exit.thread.i360 ], [ %.235.split.i.i.i37.i, %bb.kb ] ; 2 uses
+  %.0.i352 = phi i64 [ %i.azz, %bb.kd ], [ %.235.split.i.i.i37.i, %bb.kf ], [ %.235.split.i.i.i37.i, %sbuf_char_at.exit32.i ], [ %i.ayp, %editor_start_modify.exit593 ], [ %.235.split.i.i.i37.i, %bb.ke ], [ 0, %sbuf_char_at.exit.thread.i360 ], [ %.235.split.i.i.i37.i, %bb.kb ] ; 3 uses
   %i.bai = load i64, ptr %i.ae, align 8, !tbaa !325 ; 5 uses
   %.not.i.i353 = icmp sle i64 %.0.i352, %i.bai
   %i.baj = icmp slt i64 %i.bai, 0
@@ -5094,22 +5092,22 @@ bb.kf:                                            ; preds = %sbuf_char_at.exit32
 
 bb.kg:                                            ; preds = %.critedge.i351
   %i.bak = getelementptr inbounds nuw i8, ptr %.pre.i350, i64 16 ; 3 uses
-  %i.bal = load i64, ptr %i.bak, align 8, !tbaa !46 ; 4 uses
+  %i.bal = load i64, ptr %i.bak, align 8, !tbaa !46 ; 5 uses
   %.not.i.i34.i = icmp slt i64 %i.bai, %i.bal
   br i1 %.not.i.i34.i, label %bb.kh, label %sbuf_delete_from_to.exit.i354
 
 bb.kh:                                            ; preds = %bb.kg
   %i.bam = call i64 @llvm.umin.i64(i64 %.0.i352, i64 %i.bal) ; 3 uses
-  %spec.select.i.neg.i.i356 = sub nsw i64 %i.bai, %i.bam
-  %i.ban = sub nsw i64 %i.bal, %i.bam             ; 2 uses
-  %13 = icmp slt i64 %i.ban, 1
+  %i.ban = sub nsw i64 %i.bai, %i.bam
+  %.not.i359 = icmp samesign ugt i64 %i.bal, %.0.i352
   %.pre42.i = load ptr, ptr %.pre.i350, align 8, !tbaa !49 ; 3 uses
-  br i1 %13, label %ic_memmove.exit.i.i.i358, label %bb.ki
+  br i1 %.not.i359, label %bb.ki, label %ic_memmove.exit.i.i.i358
 
 bb.ki:                                            ; preds = %bb.kh
+  %12 = sub nuw nsw i64 %i.bal, %i.bam
   %i.bao = getelementptr inbounds nuw i8, ptr %.pre42.i, i64 %i.bai
   %i.bap = getelementptr inbounds nuw i8, ptr %.pre42.i, i64 %i.bam
-  call void @llvm.memmove.p0.p0.i64(ptr align 1 %i.bao, ptr readonly align 1 %i.bap, i64 %i.ban, i1 false)
+  call void @llvm.memmove.p0.p0.i64(ptr align 1 %i.bao, ptr readonly align 1 %i.bap, i64 %12, i1 false)
   %.pre.i.i.i357 = load i64, ptr %i.bak, align 8, !tbaa !46
   %.pre41.i = load ptr, ptr %.pre.i350, align 8, !tbaa !49
   br label %ic_memmove.exit.i.i.i358
@@ -5117,7 +5115,7 @@ bb.ki:                                            ; preds = %bb.kh
 ic_memmove.exit.i.i.i358:                         ; preds = %bb.ki, %bb.kh
   %i.baq = phi ptr [ %.pre42.i, %bb.kh ], [ %.pre41.i, %bb.ki ]
   %i.bar = phi i64 [ %i.bal, %bb.kh ], [ %.pre.i.i.i357, %bb.ki ]
-  %i.bas = add i64 %i.bar, %spec.select.i.neg.i.i356 ; 2 uses
+  %i.bas = add i64 %i.bar, %i.ban                 ; 2 uses
   store i64 %i.bas, ptr %i.bak, align 8, !tbaa !46
   %i.bat = getelementptr inbounds i8, ptr %i.baq, i64 %i.bas
   store i8 0, ptr %i.bat, align 1, !tbaa !9
@@ -5254,7 +5252,7 @@ bb.kr:                                            ; preds = %editor_start_modify
 
 .lr.ph:                                           ; preds = %.preheader.i.i.i.i365.preheader, %.preheader.i.i.i.i365
   %.021.i.i.i.i3661093 = phi i64 [ %i.bck, %.preheader.i.i.i.i365 ], [ 1, %.preheader.i.i.i.i365.preheader ] ; 3 uses
-  %i.bcl = sub nsw i64 %i.bce, %.021.i.i.i.i3661093
+  %i.bcl = sub nuw nsw i64 %i.bce, %.021.i.i.i.i3661093
   %i.bcm = getelementptr inbounds nuw i8, ptr %.val.i.i363, i64 %i.bcl
   %i.bcn = load i8, ptr %i.bcm, align 1, !tbaa !9
   %or.cond4.i.i.i.i368 = icmp sgt i8 %i.bcn, -65
@@ -5657,7 +5655,7 @@ bb.ba:                                            ; preds = %sbuf_len.exit184
 bb.bb:                                            ; preds = %bb.ba
   %i.mf = add nsw i64 %.0.i183, %i.lx
   %i.mg = icmp sgt i64 %i.mf, %i.me
-  %i.mh = sub nsw i64 %i.me, %i.lx
+  %i.mh = sub nuw nsw i64 %i.me, %i.lx
   %spec.select.i186 = select i1 %i.mg, i64 %i.mh, i64 %.0.i183 ; 3 uses
   %i.mi = add i64 %i.lx, %spec.select.i186
   %i.mj = sub i64 %i.me, %i.mi                    ; 2 uses
@@ -6004,7 +6002,7 @@ bb.k:                                             ; preds = %sbuf_len.exit65
 bb.l:                                             ; preds = %bb.k
   %i.dp = add nsw i64 %.0.i64, %i.dh
   %i.dq = icmp sgt i64 %i.dp, %i.do
-  %i.dr = sub nsw i64 %i.do, %i.dh
+  %i.dr = sub nuw nsw i64 %i.do, %i.dh
   %spec.select.i = select i1 %i.dq, i64 %i.dr, i64 %.0.i64 ; 3 uses
   %i.ds = add i64 %i.dh, %spec.select.i
   %i.dt = sub i64 %i.do, %i.ds                    ; 2 uses
@@ -6407,7 +6405,7 @@ bb.g:                                             ; preds = %sbuf_string.exit.i
 bb.h:                                             ; preds = %bb.g
   %i.al = add nuw nsw i64 %i.ai, %i.ae
   %i.am = icmp samesign ugt i64 %i.al, %i.aa
-  %i.an = sub nsw i64 %i.aa, %i.ae
+  %i.an = sub nuw nsw i64 %i.aa, %i.ae
   %spec.select.i.i26.i = select i1 %i.am, i64 %i.an, i64 %i.ai ; 3 uses
   %i.ao = add nuw i64 %i.ae, %spec.select.i.i26.i
   %i.ap = sub i64 %i.aa, %i.ao                    ; 2 uses
@@ -6478,7 +6476,7 @@ bb.n:                                             ; preds = %sbuf_char_at.exit.i
 bb.o:                                             ; preds = %bb.n
   %i.bn = add nuw nsw i64 %i.bk, %i.az
   %i.bo = icmp samesign ugt i64 %i.bn, %.val5.i28.i
-  %i.bp = sub nsw i64 %.val5.i28.i, %i.az
+  %i.bp = sub nuw nsw i64 %.val5.i28.i, %i.az
   %spec.select.i.i32.i = select i1 %i.bo, i64 %i.bp, i64 %i.bk ; 3 uses
   %i.bq = add nuw i64 %i.az, %spec.select.i.i32.i
   %i.br = sub i64 %.val5.i28.i, %i.bq             ; 2 uses
@@ -6881,28 +6879,28 @@ sbuf_string_at.exit:                              ; preds = %bb.d, %bb.e
   br i1 %i.u, label %bb.k, label %bb.f
 
 bb.f:                                             ; preds = %sbuf_string_at.exit, %ic_strlen.exit
-  %i.v = add nsw i64 %i.g, %2                     ; 2 uses
+  %i.v = add nsw i64 %i.g, %2                     ; 3 uses
   %.not.i.not = icmp sgt i64 %i.v, %spec.store.select
   br i1 %.not.i.not, label %bb.g, label %sbuf_delete_from_to.exit
 
 bb.g:                                             ; preds = %bb.f
   %i.w = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 3 uses
-  %i.x = load i64, ptr %i.w, align 8, !tbaa !46   ; 4 uses
+  %i.x = load i64, ptr %i.w, align 8, !tbaa !46   ; 5 uses
   %.not.i.i = icmp slt i64 %spec.store.select, %i.x
   br i1 %.not.i.i, label %bb.h, label %sbuf_delete_from_to.exit
 
 bb.h:                                             ; preds = %bb.g
   %i.y = tail call i64 @llvm.umin.i64(i64 %i.v, i64 %i.x) ; 3 uses
-  %spec.select.i.neg.i = sub nsw i64 %spec.store.select, %i.y
-  %i.z = sub nsw i64 %i.x, %i.y                   ; 2 uses
-  %3 = icmp slt i64 %i.z, 1
+  %i.z = sub nsw i64 %spec.store.select, %i.y
+  %.not = icmp ugt i64 %i.x, %i.v
   %.pre24 = load ptr, ptr %1, align 8, !tbaa !49  ; 3 uses
-  br i1 %3, label %ic_memmove.exit.i.i, label %bb.i
+  br i1 %.not, label %bb.i, label %ic_memmove.exit.i.i
 
 bb.i:                                             ; preds = %bb.h
+  %3 = sub nuw nsw i64 %i.x, %i.y
   %i.aa = getelementptr inbounds nuw i8, ptr %.pre24, i64 %spec.store.select
   %i.ab = getelementptr inbounds nuw i8, ptr %.pre24, i64 %i.y
-  tail call void @llvm.memmove.p0.p0.i64(ptr align 1 %i.aa, ptr readonly align 1 %i.ab, i64 %i.z, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr align 1 %i.aa, ptr readonly align 1 %i.ab, i64 %3, i1 false)
   %.pre.i.i = load i64, ptr %i.w, align 8, !tbaa !46
   %.pre = load ptr, ptr %1, align 8, !tbaa !49
   br label %ic_memmove.exit.i.i
@@ -6910,7 +6908,7 @@ bb.i:                                             ; preds = %bb.h
 ic_memmove.exit.i.i:                              ; preds = %bb.i, %bb.h
   %i.ac = phi ptr [ %.pre24, %bb.h ], [ %.pre, %bb.i ]
   %i.ad = phi i64 [ %i.x, %bb.h ], [ %.pre.i.i, %bb.i ]
-  %i.ae = add i64 %i.ad, %spec.select.i.neg.i     ; 2 uses
+  %i.ae = add i64 %i.ad, %i.z                     ; 2 uses
   store i64 %i.ae, ptr %i.w, align 8, !tbaa !46
   %i.af = getelementptr inbounds i8, ptr %i.ac, i64 %i.ae
   store i8 0, ptr %i.af, align 1, !tbaa !9
@@ -7313,7 +7311,7 @@ bb.a:
 
 .lr.ph:                                           ; preds = %.preheader.split.i.i, %.preheader.i.i.i
   %.021.i.i.i3 = phi i64 [ %i.a, %.preheader.i.i.i ], [ 1, %.preheader.split.i.i ] ; 3 uses
-  %i.b = sub nsw i64 %.031.i.i, %.021.i.i.i3
+  %i.b = sub nuw nsw i64 %.031.i.i, %.021.i.i.i3
   %i.c = getelementptr inbounds nuw i8, ptr %.0.val, i64 %i.b
   %i.d = load i8, ptr %i.c, align 1, !tbaa !9
   %or.cond4.i.i.i = icmp sgt i8 %i.d, -65
@@ -7377,7 +7375,7 @@ ic_char_is_idletter.exit15.thread.i:              ; preds = %ic_char_is_idletter
 
 .lr.ph7:                                          ; preds = %.preheader.i45.i.i.preheader, %.preheader.i45.i.i
   %.021.i46.i.i6 = phi i64 [ %i.s, %.preheader.i45.i.i ], [ 1, %.preheader.i45.i.i.preheader ] ; 3 uses
-  %i.t = sub nsw i64 %.3.i.i, %.021.i46.i.i6
+  %i.t = sub nuw nsw i64 %.3.i.i, %.021.i46.i.i6
   %i.u = getelementptr inbounds nuw i8, ptr %.0.val, i64 %i.t
   %i.v = load i8, ptr %i.u, align 1, !tbaa !9
   %or.cond4.i48.i.i = icmp sgt i8 %i.v, -65

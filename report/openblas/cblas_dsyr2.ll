@@ -95,8 +95,7 @@ bb.f:                                             ; preds = %bb.e
 
 .lr.ph:                                           ; preds = %.preheader129
   %i.z = sext i32 %9 to i64
-  %10 = zext nneg i32 %2 to i64
-  %wide.trip.count = zext nneg i32 %2 to i64
+  %wide.trip.count = zext nneg i32 %2 to i64      ; 2 uses
   br label %bb.h
 
 .preheader:                                       ; preds = %bb.f
@@ -126,7 +125,7 @@ bb.g:                                             ; preds = %.lr.ph135, %bb.g
 bb.h:                                             ; preds = %.lr.ph, %bb.h
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.h ] ; 4 uses
   %.1117131 = phi ptr [ %8, %.lr.ph ], [ %i.au, %bb.h ] ; 3 uses
-  %i.ak = sub nsw i64 %10, %indvars.iv            ; 2 uses
+  %i.ak = sub nuw nsw i64 %wide.trip.count, %indvars.iv ; 2 uses
   %i.al = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %indvars.iv ; 2 uses
   %i.am = load double, ptr %i.al, align 8, !tbaa !9
   %i.an = fmul double %3, %i.am

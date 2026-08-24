@@ -205,13 +205,12 @@ vector.body90:                                    ; preds = %vector.body90, %vec
   %vec.ind93 = phi <4 x i32> [ <i32 1, i32 2, i32 3, i32 4>, %vector.ph84 ], [ %vec.ind.next97, %vector.body90 ] ; 2 uses
   %vec.ind94 = phi <4 x i32> [ <i32 1, i32 2, i32 3, i32 4>, %vector.ph84 ], [ %vec.ind.next98, %vector.body90 ] ; 2 uses
   %i.be = icmp samesign ult <4 x i64> %vec.ind92, %broadcast.splat87
-  %4 = uitofp nneg <4 x i32> %vec.ind93 to <4 x float>
   %i.bf = sub <4 x i32> %broadcast.splat89, %vec.ind94
-  %5 = sitofp <4 x i32> %i.bf to <4 x float>
-  %6 = select <4 x i1> %i.be, <4 x float> %4, <4 x float> %5
+  %4 = select <4 x i1> %i.be, <4 x i32> %vec.ind93, <4 x i32> %i.bf
+  %5 = uitofp <4 x i32> %4 to <4 x float>
   %i.bg = getelementptr inbounds nuw [4 x i8], ptr %i.ay, i64 %index91
   %i.bh = getelementptr inbounds nuw i8, ptr %i.bg, i64 4
-  store <4 x float> %6, ptr %i.bh, align 4, !tbaa !33
+  store <4 x float> %5, ptr %i.bh, align 4, !tbaa !33
   %index.next95 = add nuw i64 %index91, 4         ; 2 uses
   %vec.ind.next96 = add nuw nsw <4 x i64> %vec.ind92, splat (i64 4)
   %vec.ind.next97 = add <4 x i32> %vec.ind93, splat (i32 4)
@@ -231,13 +230,12 @@ _ZN2cv3Mat2atIfEERT_i.exit33.us:                  ; preds = %_ZN2cv3Mat2atIfEERT
   %indvars.iv62 = phi i64 [ %indvars.iv.next63, %_ZN2cv3Mat2atIfEERT_i.exit33.us ], [ %indvars.iv62.ph, %_ZN2cv3Mat2atIfEERT_i.exit33.us.preheader102 ] ; 5 uses
   %i.bj = icmp samesign ult i64 %indvars.iv62, %i.bb
   %i.bk = trunc nuw nsw i64 %indvars.iv62 to i32
-  %7 = uitofp nneg i32 %i.bk to float
   %i.bl = trunc i64 %indvars.iv62 to i32
   %i.bm = sub i32 %i.i, %i.bl
-  %8 = sitofp i32 %i.bm to float
-  %9 = select i1 %i.bj, float %7, float %8
+  %.v72 = select i1 %i.bj, i32 %i.bk, i32 %i.bm
+  %6 = uitofp i32 %.v72 to float
   %i.bn = getelementptr inbounds nuw [4 x i8], ptr %i.ay, i64 %indvars.iv62
-  store float %9, ptr %i.bn, align 4, !tbaa !33
+  store float %6, ptr %i.bn, align 4, !tbaa !33
   %indvars.iv.next63 = add nuw nsw i64 %indvars.iv62, 1 ; 2 uses
   %exitcond67.not = icmp eq i64 %indvars.iv.next63, %wide.trip.count66
   br i1 %exitcond67.not, label %._crit_edge, label %_ZN2cv3Mat2atIfEERT_i.exit33.us, !llvm.loop !39
@@ -271,13 +269,12 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %vec.ind78 = phi <4 x i32> [ <i32 1, i32 2, i32 3, i32 4>, %vector.ph ], [ %vec.ind.next80, %vector.body ] ; 2 uses
   %vec.ind79 = phi <4 x i32> [ <i32 1, i32 2, i32 3, i32 4>, %vector.ph ], [ %vec.ind.next81, %vector.body ] ; 2 uses
   %i.bt = icmp samesign ult <4 x i64> %vec.ind, %broadcast.splat
-  %10 = uitofp nneg <4 x i32> %vec.ind78 to <4 x float>
   %i.bu = sub <4 x i32> %broadcast.splat77, %vec.ind79
-  %11 = sitofp <4 x i32> %i.bu to <4 x float>
-  %12 = select <4 x i1> %i.bt, <4 x float> %10, <4 x float> %11
+  %7 = select <4 x i1> %i.bt, <4 x i32> %vec.ind78, <4 x i32> %i.bu
+  %8 = uitofp <4 x i32> %7 to <4 x float>
   %i.bv = getelementptr inbounds nuw [4 x i8], ptr %i.ay, i64 %index
   %i.bw = getelementptr inbounds nuw i8, ptr %i.bv, i64 4
-  store <4 x float> %12, ptr %i.bw, align 4, !tbaa !33
+  store <4 x float> %8, ptr %i.bw, align 4, !tbaa !33
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %vec.ind.next = add nuw nsw <4 x i64> %vec.ind, splat (i64 4)
   %vec.ind.next80 = add <4 x i32> %vec.ind78, splat (i32 4)
@@ -297,13 +294,12 @@ _ZN2cv3Mat2atIfEERT_i.exit33.us37:                ; preds = %_ZN2cv3Mat2atIfEERT
   %indvars.iv = phi i64 [ %indvars.iv.next, %_ZN2cv3Mat2atIfEERT_i.exit33.us37 ], [ %indvars.iv.ph, %_ZN2cv3Mat2atIfEERT_i.exit33.us37.preheader105 ] ; 5 uses
   %i.by = icmp samesign ult i64 %indvars.iv, %i.bq
   %i.bz = trunc nuw nsw i64 %indvars.iv to i32
-  %13 = uitofp nneg i32 %i.bz to float
   %i.ca = trunc i64 %indvars.iv to i32
   %i.cb = sub i32 %i.i, %i.ca
-  %14 = sitofp i32 %i.cb to float
-  %15 = select i1 %i.by, float %13, float %14
+  %.v = select i1 %i.by, i32 %i.bz, i32 %i.cb
+  %9 = uitofp i32 %.v to float
   %i.cc = getelementptr inbounds nuw [4 x i8], ptr %i.ay, i64 %indvars.iv
-  store float %15, ptr %i.cc, align 4, !tbaa !33
+  store float %9, ptr %i.cc, align 4, !tbaa !33
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count60
   br i1 %exitcond.not, label %._crit_edge, label %_ZN2cv3Mat2atIfEERT_i.exit33.us37, !llvm.loop !41
@@ -326,33 +322,31 @@ _ZN2cv3Mat2atIfEERT_i.exit33.us37:                ; preds = %_ZN2cv3Mat2atIfEERT
   %niter = phi i64 [ 0, %.lr.ph.split.split.split.us.preheader.new ], [ %niter.next.1, %.lr.ph.split.split.split.us ]
   %i.cf = icmp samesign ult i64 %indvars.iv56, %i.bq
   %i.cg = trunc nuw nsw i64 %indvars.iv56 to i32
-  %16 = uitofp nneg i32 %i.cg to float
   %i.ch = trunc i64 %indvars.iv56 to i32
   %i.ci = sub i32 %i.i, %i.ch
-  %17 = sitofp i32 %i.ci to float
-  %18 = select i1 %i.cf, float %16, float %17
+  %.v71 = select i1 %i.cf, i32 %i.cg, i32 %i.ci
+  %10 = uitofp i32 %.v71 to float
   %i.cj = load i32, ptr %i.ar, align 4
   %i.ck = icmp eq i32 %i.cj, 1
   %i.cl = mul i64 %i.ba, %indvars.iv56
   %i.cm = getelementptr inbounds nuw i8, ptr %i.ay, i64 %i.cl
   %i.cn = getelementptr inbounds nuw [4 x i8], ptr %i.ay, i64 %indvars.iv56
   %.0.i32.us41 = select i1 %i.ck, ptr %i.cn, ptr %i.cm
-  store float %18, ptr %.0.i32.us41, align 4, !tbaa !33
+  store float %10, ptr %.0.i32.us41, align 4, !tbaa !33
   %indvars.iv.next57 = add nuw nsw i64 %indvars.iv56, 1 ; 5 uses
   %i.co = icmp samesign ult i64 %indvars.iv.next57, %i.bq
   %i.cp = trunc nuw nsw i64 %indvars.iv.next57 to i32
-  %19 = uitofp nneg i32 %i.cp to float
   %i.cq = trunc i64 %indvars.iv.next57 to i32
   %i.cr = sub i32 %i.i, %i.cq
-  %20 = sitofp i32 %i.cr to float
-  %21 = select i1 %i.co, float %19, float %20
+  %.v71.1 = select i1 %i.co, i32 %i.cp, i32 %i.cr
+  %11 = uitofp i32 %.v71.1 to float
   %i.cs = load i32, ptr %i.ar, align 4
   %i.ct = icmp eq i32 %i.cs, 1
   %i.cu = mul i64 %i.ba, %indvars.iv.next57
   %i.cv = getelementptr inbounds nuw i8, ptr %i.ay, i64 %i.cu
   %i.cw = getelementptr inbounds nuw [4 x i8], ptr %i.ay, i64 %indvars.iv.next57
   %.0.i32.us41.1 = select i1 %i.ct, ptr %i.cw, ptr %i.cv
-  store float %21, ptr %.0.i32.us41.1, align 4, !tbaa !33
+  store float %11, ptr %.0.i32.us41.1, align 4, !tbaa !33
   %indvars.iv.next57.1 = add nuw nsw i64 %indvars.iv56, 2 ; 2 uses
   %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
@@ -362,11 +356,10 @@ _ZN2cv3Mat2atIfEERT_i.exit33.us37:                ; preds = %_ZN2cv3Mat2atIfEERT
   %indvars.iv50 = phi i64 [ %indvars.iv.next51, %_ZN2cv3Mat2atIfEERT_i.exit33 ], [ 1, %.lr.ph.split.split ] ; 5 uses
   %i.cx = icmp samesign ult i64 %indvars.iv50, %i.bq
   %i.cy = trunc nuw nsw i64 %indvars.iv50 to i32  ; 3 uses
-  %22 = uitofp nneg i32 %i.cy to float
   %i.cz = trunc i64 %indvars.iv50 to i32
   %i.da = sub i32 %i.i, %i.cz
-  %23 = sitofp i32 %i.da to float
-  %24 = select i1 %i.cx, float %22, float %23
+  %.v70 = select i1 %i.cx, i32 %i.cy, i32 %i.da
+  %12 = uitofp i32 %.v70 to float
   %i.db = load i32, ptr %i.ar, align 4
   %i.dc = icmp eq i32 %i.db, 1
   br i1 %i.dc, label %bb.l, label %bb.m
@@ -388,7 +381,7 @@ bb.m:                                             ; preds = %.lr.ph.split.split.
 
 _ZN2cv3Mat2atIfEERT_i.exit33:                     ; preds = %bb.m, %bb.l
   %.0.i32 = phi ptr [ %i.dk, %bb.m ], [ %i.dd, %bb.l ]
-  store float %24, ptr %.0.i32, align 4, !tbaa !33
+  store float %12, ptr %.0.i32, align 4, !tbaa !33
   %indvars.iv.next51 = add nuw nsw i64 %indvars.iv50, 1 ; 2 uses
   %exitcond55.not = icmp eq i64 %indvars.iv.next51, %wide.trip.count60
   br i1 %exitcond55.not, label %._crit_edge, label %.lr.ph.split.split.split, !llvm.loop !42
@@ -403,18 +396,17 @@ _ZN2cv3Mat2atIfEERT_i.exit33:                     ; preds = %bb.m, %bb.l
   tail call void @llvm.assume(i1 %lcmp.mod107)
   %i.dl = icmp samesign ult i64 %indvars.iv56.epil.init, %i.bq
   %i.dm = trunc nuw nsw i64 %indvars.iv56.epil.init to i32
-  %25 = uitofp nneg i32 %i.dm to float
   %i.dn = trunc i64 %indvars.iv56.epil.init to i32
   %i.do = sub i32 %i.i, %i.dn
-  %26 = sitofp i32 %i.do to float
-  %27 = select i1 %i.dl, float %25, float %26
+  %.v71.epil = select i1 %i.dl, i32 %i.dm, i32 %i.do
+  %13 = uitofp i32 %.v71.epil to float
   %i.dp = load i32, ptr %i.ar, align 4
   %i.dq = icmp eq i32 %i.dp, 1
   %i.dr = mul i64 %i.ba, %indvars.iv56.epil.init
   %i.ds = getelementptr inbounds nuw i8, ptr %i.ay, i64 %i.dr
   %i.dt = getelementptr inbounds nuw [4 x i8], ptr %i.ay, i64 %indvars.iv56.epil.init
   %.0.i32.us41.epil = select i1 %i.dq, ptr %i.dt, ptr %i.ds
-  store float %27, ptr %.0.i32.us41.epil, align 4, !tbaa !33
+  store float %13, ptr %.0.i32.us41.epil, align 4, !tbaa !33
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %_ZN2cv3Mat2atIfEERT_i.exit33.us37, %_ZN2cv3Mat2atIfEERT_i.exit33, %.lr.ph.split.split.split.us.epil.preheader, %._crit_edge.loopexit103.unr-lcssa, %_ZN2cv3Mat2atIfEERT_i.exit33.us, %middle.block, %middle.block99, %_ZN2cv3Mat2atIfEERT_i.exit30

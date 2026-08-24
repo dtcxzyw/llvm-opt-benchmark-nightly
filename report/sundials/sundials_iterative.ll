@@ -147,13 +147,13 @@ define noundef i32 @SUNClassicalGS(ptr noundef %0, ptr nofree noundef readonly c
 bb.a:
   %i.a = add nsw i32 %2, -1                       ; 2 uses
   %i.b = sub nsw i32 %2, %3
-  %i.c = tail call i32 @llvm.smax.i32(i32 %i.b, i32 0) ; 3 uses
+  %i.c = tail call i32 @llvm.smax.i32(i32 %i.b, i32 0) ; 2 uses
   %i.d = tail call i32 @llvm.smin.i32(i32 %2, i32 %3) ; 5 uses
   %i.e = add nsw i32 %i.d, 1                      ; 2 uses
   %i.f = sext i32 %2 to i64
   %i.g = getelementptr inbounds [8 x i8], ptr %0, i64 %i.f ; 9 uses
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !8
-  %i.i = zext nneg i32 %i.c to i64                ; 2 uses
+  %i.i = zext nneg i32 %i.c to i64                ; 3 uses
   %i.j = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.i ; 2 uses
   %i.k = tail call i32 @N_VDotProdMulti(i32 noundef %i.e, ptr noundef %i.h, ptr noundef %i.j, ptr noundef %5) #7 ; 0 uses
   %i.l = sext i32 %i.d to i64
@@ -230,13 +230,12 @@ bb.g:                                             ; preds = %bb.f
 
 .lr.ph108:                                        ; preds = %bb.g
   %i.av = zext nneg i32 %i.a to i64
-  %7 = zext nneg i32 %i.c to i64
   %wide.trip.count = zext nneg i32 %2 to i64
   br label %bb.h
 
 bb.h:                                             ; preds = %.lr.ph108, %bb.h
   %indvars.iv111 = phi i64 [ %i.i, %.lr.ph108 ], [ %indvars.iv.next112, %bb.h ] ; 3 uses
-  %i.aw = sub nuw nsw i64 %indvars.iv111, %7      ; 2 uses
+  %i.aw = sub nuw nsw i64 %indvars.iv111, %i.i    ; 2 uses
   %i.ax = add nuw nsw i64 %i.aw, 1                ; 2 uses
   %i.ay = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %i.ax ; 3 uses
   %i.az = load double, ptr %i.ay, align 8, !tbaa !13
