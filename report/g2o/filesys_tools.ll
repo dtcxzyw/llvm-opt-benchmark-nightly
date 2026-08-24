@@ -205,14 +205,15 @@ _ZNSt8__detail9_ExecutorIN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_st
 .lr.ph.preheader:                                 ; preds = %.preheader
   %i.ag = ptrtoint ptr %i.ae to i64
   %i.ah = ptrtoint ptr %i.af to i64
-  %i.ai = sub i64 %i.ag, %i.ah                    ; 2 uses
-  %i.aj = sdiv exact i64 %i.ai, 24                ; 3 uses
-  %xtraiter = and i64 %i.aj, 1
-  %4 = icmp eq i64 %i.ai, 24
+  %i.ai = sub i64 %i.ag, %i.ah
+  %i.aj = sdiv i64 %i.ai, 24                      ; 2 uses
+  %umax = call i64 @llvm.umax.i64(i64 %i.aj, i64 1) ; 3 uses
+  %xtraiter = and i64 %umax, 1
+  %4 = icmp ult i64 %i.aj, 2
   br i1 %4, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
 
 .lr.ph.preheader.new:                             ; preds = %.lr.ph.preheader
-  %unroll_iter = and i64 %i.aj, -2
+  %unroll_iter = and i64 %umax, -2
   br label %.lr.ph
 
 bb.e:                                             ; preds = %_ZNSt6vectorINSt7__cxx119sub_matchIN9__gnu_cxx17__normal_iteratorIPKcNS0_12basic_stringIcSt11char_traitsIcESaIcEEEEEEESaISC_EEC2ERKSE_.exit
@@ -281,7 +282,7 @@ bb.i:                                             ; preds = %bb.h, %.lr.ph.1
 
 .lr.ph.epil.preheader:                            ; preds = %.loopexit.loopexit.unr-lcssa, %.lr.ph.preheader
   %.021.epil.init = phi i64 [ 0, %.lr.ph.preheader ], [ %i.bj, %.loopexit.loopexit.unr-lcssa ] ; 2 uses
-  %lcmp.mod35 = trunc i64 %i.aj to i1
+  %lcmp.mod35 = trunc i64 %umax to i1
   call void @llvm.assume(i1 %lcmp.mod35)
   %i.bk = getelementptr inbounds nuw [24 x i8], ptr %i.af, i64 %.021.epil.init ; 3 uses
   %i.bl = getelementptr inbounds nuw i8, ptr %i.bk, i64 16
@@ -684,14 +685,15 @@ bb.f:                                             ; preds = %.noexc
 .lr.ph.preheader:                                 ; preds = %.preheader
   %i.cf = ptrtoint ptr %i.cd to i64
   %i.cg = ptrtoint ptr %i.ce to i64
-  %i.ch = sub i64 %i.cf, %i.cg                    ; 2 uses
-  %i.ci = sdiv exact i64 %i.ch, 24                ; 3 uses
-  %xtraiter37 = and i64 %i.ci, 1
-  %4 = icmp eq i64 %i.ch, 24
+  %i.ch = sub i64 %i.cf, %i.cg
+  %i.ci = sdiv i64 %i.ch, 24                      ; 2 uses
+  %umax = call i64 @llvm.umax.i64(i64 %i.ci, i64 1) ; 3 uses
+  %xtraiter37 = and i64 %umax, 1
+  %4 = icmp ult i64 %i.ci, 2
   br i1 %4, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
 
 .lr.ph.preheader.new:                             ; preds = %.lr.ph.preheader
-  %unroll_iter = and i64 %i.ci, -2
+  %unroll_iter = and i64 %umax, -2
   br label %.lr.ph
 
 bb.g:                                             ; preds = %.noexc, %.loopexit.i
@@ -755,7 +757,7 @@ bb.j:                                             ; preds = %bb.i, %.lr.ph.1
 
 .lr.ph.epil.preheader:                            ; preds = %.loopexit.loopexit.unr-lcssa, %.lr.ph.preheader
   %.024.epil.init = phi i64 [ 0, %.lr.ph.preheader ], [ %i.dh, %.loopexit.loopexit.unr-lcssa ] ; 2 uses
-  %lcmp.mod39 = trunc i64 %i.ci to i1
+  %lcmp.mod39 = trunc i64 %umax to i1
   call void @llvm.assume(i1 %lcmp.mod39)
   %i.di = getelementptr inbounds nuw [24 x i8], ptr %i.ce, i64 %.024.epil.init ; 3 uses
   %i.dj = getelementptr inbounds nuw i8, ptr %i.di, i64 16

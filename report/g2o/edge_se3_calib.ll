@@ -205,7 +205,7 @@ bb.l:                                             ; preds = %bb.k
 
 _ZN5Eigen8internal13first_alignedILi16EdlEET1_PKT0_S2_.exit.i.i.i.i.i.i.i.i.i.i: ; preds = %bb.l, %bb.k
   %.0.i.i.i.i.i.i.i.i.i.i.i = phi i64 [ %i.cc, %bb.l ], [ %i.bv, %bb.k ] ; 9 uses
-  %i.cd = sub nsw i64 %i.bv, %.0.i.i.i.i.i.i.i.i.i.i.i ; 2 uses
+  %i.cd = sub i64 %i.bv, %.0.i.i.i.i.i.i.i.i.i.i.i ; 2 uses
   %i.ce = sdiv i64 %i.cd, 2
   %i.cf = shl nsw i64 %i.ce, 1                    ; 2 uses
   %i.cg = add nsw i64 %i.cf, %.0.i.i.i.i.i.i.i.i.i.i.i ; 5 uses
@@ -608,7 +608,7 @@ bb.e:                                             ; preds = %.lr.ph.i.i.i.i.i69
 
 _ZN5Eigen8internal13first_alignedILi16EdlEET1_PKT0_S2_.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i: ; preds = %bb.e, %.lr.ph.i.i.i.i.i69
   %.0.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = phi i64 [ %i.au, %bb.e ], [ %i.ap, %.lr.ph.i.i.i.i.i69 ] ; 11 uses
-  %i.av = sub nsw i64 %i.ap, %.0.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i ; 2 uses
+  %i.av = sub i64 %i.ap, %.0.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i ; 2 uses
   %i.aw = sdiv i64 %i.av, 2
   %i.ax = shl nsw i64 %i.aw, 1                    ; 2 uses
   %i.ay = add nsw i64 %i.ax, %.0.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i ; 5 uses
@@ -825,7 +825,7 @@ bb.f:                                             ; preds = %.lr.ph.i.i.i
 
 _ZN5Eigen8internal13first_alignedILi16EdlEET1_PKT0_S2_.exit.i.i.i.i.i.i.i.i.i.i.i.i: ; preds = %bb.f, %.lr.ph.i.i.i
   %.0.i.i.i.i.i.i.i.i.i.i.i.i.i = phi i64 [ %i.ed, %bb.f ], [ %i.dy, %.lr.ph.i.i.i ] ; 11 uses
-  %i.ee = sub nsw i64 %i.dy, %.0.i.i.i.i.i.i.i.i.i.i.i.i.i ; 2 uses
+  %i.ee = sub i64 %i.dy, %.0.i.i.i.i.i.i.i.i.i.i.i.i.i ; 2 uses
   %i.ef = sdiv i64 %i.ee, 2
   %i.eg = shl nsw i64 %i.ef, 1                    ; 2 uses
   %i.eh = add nsw i64 %i.eg, %.0.i.i.i.i.i.i.i.i.i.i.i.i.i ; 5 uses
@@ -1117,7 +1117,7 @@ bb.h:                                             ; preds = %.lr.ph.i.i.i78
 
 _ZN5Eigen8internal13first_alignedILi16EdlEET1_PKT0_S2_.exit.i.i.i.i.i.i.i.i.i.i.i.i81: ; preds = %bb.h, %.lr.ph.i.i.i78
   %.0.i.i.i.i.i.i.i.i.i.i.i.i.i82 = phi i64 [ %i.ia, %bb.h ], [ %i.hv, %.lr.ph.i.i.i78 ] ; 11 uses
-  %i.ib = sub nsw i64 %i.hv, %.0.i.i.i.i.i.i.i.i.i.i.i.i.i82 ; 2 uses
+  %i.ib = sub i64 %i.hv, %.0.i.i.i.i.i.i.i.i.i.i.i.i.i82 ; 2 uses
   %i.ic = sdiv i64 %i.ib, 2
   %i.id = shl nsw i64 %i.ic, 1                    ; 2 uses
   %i.ie = add nsw i64 %i.id, %.0.i.i.i.i.i.i.i.i.i.i.i.i.i82 ; 5 uses
@@ -1520,7 +1520,7 @@ bb.a:
   tail call void asm sideeffect "#EIGEN PRODUCT PACK LHS", "~{dirflag},~{fpsr},~{flags}"() #25, !srcloc !380
   %i.b = sdiv i64 %4, 4
   %i.c = shl nsw i64 %i.b, 2                      ; 4 uses
-  %i.d = sub nsw i64 %4, %i.c
+  %i.d = sub i64 %4, %i.c
   %i.e = sdiv i64 %i.d, 2
   %i.f = shl nsw i64 %i.e, 1
   %i.g = add i64 %i.f, %i.c                       ; 3 uses
@@ -1530,7 +1530,7 @@ bb.a:
 .preheader64.lr.ph:                               ; preds = %bb.a
   %i.i = icmp sgt i64 %3, 0
   %i.j = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 3 uses
-  br i1 %i.i, label %.preheader64.us.preheader, label %.preheader64.preheader
+  br i1 %i.i, label %.preheader64.us.preheader, label %.preheader63
 
 .preheader64.us.preheader:                        ; preds = %.preheader64.lr.ph
   %xtraiter = and i64 %3, 1
@@ -1539,10 +1539,6 @@ bb.a:
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   %lcmp.mod123 = trunc i64 %3 to i1
   br label %.preheader64.us
-
-.preheader64.preheader:                           ; preds = %.preheader64.lr.ph
-  %smax = tail call i64 @llvm.smax.i64(i64 %i.c, i64 4)
-  br label %.preheader63
 
 .preheader64.us:                                  ; preds = %.preheader64.us.preheader, %._crit_edge.us
   %.05568.us = phi i64 [ %i.ax, %._crit_edge.us ], [ 0, %.preheader64.us.preheader ] ; 4 uses
@@ -1616,9 +1612,9 @@ bb.a:
   %i.ay = icmp slt i64 %i.ax, %i.c
   br i1 %i.ay, label %.preheader64.us, label %.preheader63, !llvm.loop !382
 
-.preheader63:                                     ; preds = %._crit_edge.us, %.preheader64.preheader, %bb.a
-  %.056.lcssa = phi i64 [ 0, %bb.a ], [ 0, %.preheader64.preheader ], [ %.lcssa120, %._crit_edge.us ] ; 3 uses
-  %.055.lcssa = phi i64 [ 0, %bb.a ], [ %smax, %.preheader64.preheader ], [ %i.ax, %._crit_edge.us ] ; 6 uses
+.preheader63:                                     ; preds = %._crit_edge.us, %.preheader64.lr.ph, %bb.a
+  %.056.lcssa = phi i64 [ 0, %bb.a ], [ 0, %.preheader64.lr.ph ], [ %.lcssa120, %._crit_edge.us ] ; 3 uses
+  %.055.lcssa = phi i64 [ 0, %bb.a ], [ %i.c, %.preheader64.lr.ph ], [ %i.ax, %._crit_edge.us ] ; 6 uses
   %i.az = icmp slt i64 %.055.lcssa, %i.g
   br i1 %i.az, label %.preheader62.lr.ph, label %.preheader61
 
@@ -1863,8 +1859,7 @@ bb.a:
   %scevgep86 = getelementptr i8, ptr %1, i64 %i.j
   %i.k = mul i64 %i.g, 24
   %scevgep88 = getelementptr i8, ptr %i.e, i64 %i.k
-  %smax = tail call i64 @llvm.smax.i64(i64 %i.c, i64 4)
-  %i.l = add nsw i64 %smax, -4                    ; 2 uses
+  %i.l = add nsw i64 %i.c, -4                     ; 2 uses
   %i.m = lshr exact i64 %i.l, 2
   %i.n = shl i64 %i.l, 3                          ; 3 uses
   %i.o = or disjoint i64 %i.n, 24
@@ -2267,8 +2262,8 @@ define linkonce_odr void @_ZN5Eigen8internal13gemm_pack_rhsIdlNS0_22const_blas_d
 bb.a:
   %i.a = ptrtoaddr ptr %1 to i64
   tail call void asm sideeffect "#EIGEN PRODUCT PACK RHS ROWMAJOR", "~{dirflag},~{fpsr},~{flags}"() #25, !srcloc !569
-  %i.b = sdiv i64 %4, 4                           ; 2 uses
-  %i.c = shl nsw i64 %i.b, 2                      ; 4 uses
+  %i.b = sdiv i64 %4, 4                           ; 3 uses
+  %i.c = shl nsw i64 %i.b, 2                      ; 3 uses
   %i.d = icmp sgt i64 %4, 3
   %i.e = icmp sgt i64 %3, 0
   %or.cond = and i1 %i.d, %i.e
@@ -2284,10 +2279,10 @@ bb.a:
   %scevgep68 = getelementptr i8, ptr %1, i64 24
   %i.j = shl i64 %3, 5
   %scevgep71 = getelementptr i8, ptr %1, i64 %i.j
-  %smax = tail call i64 @llvm.smax.i64(i64 %i.c, i64 4)
-  %7 = add nuw i64 %smax, %3
-  %8 = shl i64 %7, 3
-  %i.k = getelementptr i8, ptr %i.g, i64 %8
+  %7 = shl i64 %i.b, 5
+  %8 = shl i64 %3, 3
+  %9 = getelementptr i8, ptr %i.g, i64 %7
+  %i.k = getelementptr i8, ptr %9, i64 %8
   %scevgep73 = getelementptr i8, ptr %i.k, i64 -8
   %min.iters.check = icmp ult i64 %3, 44
   %ident.check = icmp ne i64 %i.h, 1

@@ -205,11 +205,13 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %bb.h, %bb.g, %bb.f
   %i.ve = phi float [ 1.000000e+00, %bb.f ], [ %i.vd, %bb.h ], [ 0.000000e+00, %bb.g ]
   %i.vf = shl nuw i32 1, %.0151230                ; 5 uses
-  %i.vg = sdiv i32 %i.vf, 2                       ; 5 uses
+  %i.vg = sdiv i32 %i.vf, 2                       ; 7 uses
   %i.vh = icmp slt i32 %i.vg, %i.f                ; 2 uses
   %i.vi = icmp slt i32 %i.vg, %i.h
-  %i.vj = sext i32 %i.vg to i64                   ; 4 uses
-  %i.vk = sext i32 %i.vf to i64                   ; 6 uses
+  %6 = sext i32 %i.vf to i64                      ; 6 uses
+  %7 = sext i32 %i.vg to i64
+  %i.vj = sext i32 %i.vg to i64
+  %i.vk = sext i32 %i.vg to i64                   ; 2 uses
   br label %bb.k
 
 bb.j:                                             ; preds = %._crit_edge225
@@ -429,18 +431,18 @@ dt_draw_curve_calc_value.exit:                    ; preds = %._crit_edge.i169, %
   br label %bb.m
 
 bb.m:                                             ; preds = %.lr.ph207.us, %bb.m
-  %indvars.iv248 = phi i64 [ %i.vj, %.lr.ph207.us ], [ %indvars.iv.next249, %bb.m ] ; 2 uses
+  %indvars.iv248 = phi i64 [ %7, %.lr.ph207.us ], [ %indvars.iv.next249, %bb.m ] ; 2 uses
   %i.ye = mul nsw i64 %indvars.iv248, %i.m
   %gep.us = getelementptr [4 x i8], ptr %gep213.us, i64 %i.ye ; 2 uses
   %i.yf = load float, ptr %gep.us, align 4, !tbaa !36
   %i.yg = fmul reassoc nsz arcp contract afn float %i.yf, %i.yc
   store float %i.yg, ptr %gep.us, align 4, !tbaa !36
-  %indvars.iv.next249 = add nsw i64 %indvars.iv248, %i.vk ; 2 uses
+  %indvars.iv.next249 = add nsw i64 %indvars.iv248, %6 ; 2 uses
   %i.yh = icmp slt i64 %indvars.iv.next249, %i.k
   br i1 %i.yh, label %bb.m, label %._crit_edge208.us
 
 ._crit_edge208.us:                                ; preds = %bb.m
-  %indvars.iv.next252 = add nsw i64 %indvars.iv251, %i.vk ; 2 uses
+  %indvars.iv.next252 = add nsw i64 %indvars.iv251, %6 ; 2 uses
   %i.yi = icmp slt i64 %indvars.iv.next252, %i.l
   br i1 %i.yi, label %.lr.ph207.us, label %._crit_edge211
 
@@ -464,12 +466,12 @@ bb.n:                                             ; preds = %.preheader185.us, %
   %i.yl = load float, ptr %gep.us220, align 4, !tbaa !36
   %i.ym = fmul reassoc nsz arcp contract afn float %i.yl, %i.yc
   store float %i.ym, ptr %gep.us220, align 4, !tbaa !36
-  %indvars.iv.next255 = add nsw i64 %indvars.iv254, %i.vk ; 2 uses
+  %indvars.iv.next255 = add nsw i64 %indvars.iv254, %6 ; 2 uses
   %i.yn = icmp slt i64 %indvars.iv.next255, %i.k
   br i1 %i.yn, label %bb.n, label %._crit_edge216.us
 
 ._crit_edge216.us:                                ; preds = %bb.n
-  %indvars.iv.next258 = add nsw i64 %indvars.iv257, %i.vk ; 2 uses
+  %indvars.iv.next258 = add nsw i64 %indvars.iv257, %6 ; 2 uses
   %i.yo = icmp slt i64 %indvars.iv.next258, %i.l
   br i1 %i.yo, label %.preheader185.us, label %.preheader184.lr.ph
 
@@ -485,24 +487,24 @@ bb.n:                                             ; preds = %.preheader185.us, %
   br i1 %i.vh, label %.preheader184.us, label %.preheader184
 
 .preheader184.us:                                 ; preds = %.preheader184.lr.ph, %._crit_edge223.us
-  %indvars.iv263 = phi i64 [ %indvars.iv.next264, %._crit_edge223.us ], [ %i.vj, %.preheader184.lr.ph ] ; 2 uses
+  %indvars.iv263 = phi i64 [ %indvars.iv.next264, %._crit_edge223.us ], [ %i.vk, %.preheader184.lr.ph ] ; 2 uses
   %i.ys = mul i64 %i.n, %indvars.iv263
   %gep227.us = getelementptr [4 x i8], ptr %invariant.gep226, i64 %i.ys
   br label %bb.o
 
 bb.o:                                             ; preds = %.preheader184.us, %bb.o
-  %indvars.iv260 = phi i64 [ %i.vj, %.preheader184.us ], [ %indvars.iv.next261, %bb.o ] ; 2 uses
+  %indvars.iv260 = phi i64 [ %i.vk, %.preheader184.us ], [ %indvars.iv.next261, %bb.o ] ; 2 uses
   %i.yt = mul nsw i64 %indvars.iv260, %i.m
   %gep.us228 = getelementptr [4 x i8], ptr %gep227.us, i64 %i.yt ; 2 uses
   %i.yu = load float, ptr %gep.us228, align 4, !tbaa !36
   %i.yv = fmul reassoc nsz arcp contract afn float %i.yr, %i.yu
   store float %i.yv, ptr %gep.us228, align 4, !tbaa !36
-  %indvars.iv.next261 = add nsw i64 %indvars.iv260, %i.vk ; 2 uses
+  %indvars.iv.next261 = add nsw i64 %indvars.iv260, %6 ; 2 uses
   %i.yw = icmp slt i64 %indvars.iv.next261, %i.k
   br i1 %i.yw, label %bb.o, label %._crit_edge223.us
 
 ._crit_edge223.us:                                ; preds = %bb.o
-  %indvars.iv.next264 = add nsw i64 %indvars.iv263, %i.vk ; 2 uses
+  %indvars.iv.next264 = add nsw i64 %indvars.iv263, %6 ; 2 uses
   %i.yx = icmp slt i64 %indvars.iv.next264, %i.l
   br i1 %i.yx, label %.preheader184.us, label %._crit_edge225
 

@@ -206,7 +206,7 @@ bb.u:                                             ; preds = %sqlite3_malloc64.ex
   %i.fg = add nuw nsw i64 %i.ff, 17592186040353
   %i.fh = lshr i64 %i.fg, 12
   %i.fi = trunc i64 %i.fh to i32
-  %i.fj = and i64 %i.fd, 4294967295               ; 2 uses
+  %i.fj = and i64 %i.fd, 4294967295
   %i.fk = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 3 uses
   %i.fl = getelementptr inbounds nuw i8, ptr %0, i64 88
   %i.fm = getelementptr inbounds nuw i8, ptr %0, i64 92
@@ -217,14 +217,13 @@ bb.u:                                             ; preds = %sqlite3_malloc64.ex
   br label %bb.v
 
 bb.v:                                             ; preds = %._crit_edge.i, %bb.u
-  %indvars.iv258.i = phi i32 [ 0, %bb.u ], [ %indvars.iv.next259.i, %._crit_edge.i ] ; 2 uses
   %.0124237.i = phi i32 [ 0, %bb.u ], [ %i.hh, %._crit_edge.i ] ; 5 uses
   %i.fr = phi <2 x i32> [ zeroinitializer, %bb.u ], [ %i.hb, %._crit_edge.i ] ; 3 uses
-  %2 = or disjoint i32 %indvars.iv258.i, 4062
-  %3 = zext i32 %2 to i64
-  %umin.i = call i64 @llvm.umin.i64(i64 %3, i64 %i.fj)
-  %4 = add nuw nsw i64 %umin.i, 1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #58
+  %2 = shl i32 %.0124237.i, 12                    ; 2 uses
+  %3 = or disjoint i32 %2, 4062
+  %4 = zext i32 %3 to i64
+  %5 = call i64 @llvm.umin.i64(i64 %i.fj, i64 %4) ; 2 uses
   %i.fs = icmp eq i32 %.0124237.i, 0              ; 3 uses
   %i.ft = call fastcc i32 @walIndexPage(ptr noundef nonnull %0, i32 noundef %.0124237.i, ptr noundef %i.c), !inline_history !1861 ; 2 uses
   %i.fu = load ptr, ptr %i.c, align 8, !tbaa !350 ; 5 uses
@@ -232,12 +231,8 @@ bb.v:                                             ; preds = %._crit_edge.i, %bb.
   br i1 %i.fv, label %.thread178.i, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
-  %5 = shl i32 %.0124237.i, 12                    ; 2 uses
-  %6 = or disjoint i32 %5, 4062
-  %7 = zext i32 %6 to i64
-  %8 = call i64 @llvm.umin.i64(i64 %i.fj, i64 %7)
-  %i.fw = trunc nuw i64 %8 to i32
-  %i.fx = add i32 %5, -33
+  %i.fw = trunc nuw i64 %5 to i32
+  %i.fx = add i32 %2, -33
   %i.fy = select i1 %i.fs, i32 1, i32 %i.fx       ; 2 uses
   %i.fz = load ptr, ptr %i.fk, align 8, !tbaa !1582 ; 2 uses
   %i.ga = zext i32 %.0124237.i to i64             ; 3 uses
@@ -248,11 +243,10 @@ bb.w:                                             ; preds = %bb.v
 
 .lr.ph.preheader.i:                               ; preds = %bb.w
   %i.gc = zext i32 %i.fy to i64
-  %wide.trip.count.i = and i64 %4, 4294967295
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.ab, %.lr.ph.preheader.i
-  %indvars.iv.i = phi i64 [ %i.gc, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %bb.ab ] ; 3 uses
+  %indvars.iv.i = phi i64 [ %i.gc, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %bb.ab ] ; 4 uses
   %i.gd = phi <2 x i32> [ %i.fr, %.lr.ph.preheader.i ], [ %i.gs, %bb.ab ] ; 2 uses
   %i.ge = add nsw i64 %indvars.iv.i, -1
   %i.gf = mul nuw nsw i64 %i.ge, %i.eu
@@ -295,9 +289,9 @@ bb.ab:                                            ; preds = %bb.aa, %bb.z
   %i.gs = phi <2 x i32> [ %i.gd, %bb.z ], [ %i.gr, %bb.aa ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #58
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #58
-  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
-  %exitcond.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
-  br i1 %exitcond.i, label %._crit_edge.loopexit.i, label %.lr.ph.i, !llvm.loop !1864
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1
+  %.not152.not.i = icmp samesign ult i64 %indvars.iv.i, %5
+  br i1 %.not152.not.i, label %.lr.ph.i, label %._crit_edge.loopexit.i, !llvm.loop !1864
 
 bb.ac:                                            ; preds = %bb.y, %bb.x, %.lr.ph.i
   %.2128.ph.i = phi i32 [ %i.gp, %bb.y ], [ 0, %bb.x ], [ %i.gl, %.lr.ph.i ]
@@ -337,7 +331,6 @@ bb.ac:                                            ; preds = %bb.y, %bb.x, %.lr.p
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #58
   %i.hh = add i32 %.0124237.i, 1                  ; 2 uses
   %.not151.i = icmp ugt i32 %i.hh, %i.fi
-  %indvars.iv.next259.i = add i32 %indvars.iv258.i, 4096
   br i1 %.not151.i, label %.loopexit210.i, label %bb.v, !llvm.loop !1865
 
 sqlite3_malloc64.exit.thread.i:                   ; preds = %sqlite3_malloc64.exit.i, %bb.t, %bb.n
@@ -740,7 +733,7 @@ bb.s:                                             ; preds = %sqlite3_malloc64.ex
 
 .lr.ph228.i:                                      ; preds = %.preheader.i
   %i.kh = load i32, ptr %i.q, align 8, !tbaa !6499
-  %i.ki = add nsw i32 %i.kh, -4
+  %i.ki = add i32 %i.kh, -4
   %i.kj = load i8, ptr %i.t, align 1, !tbaa !6444
   %i.kk = zext i8 %i.kj to i32
   %i.kl = sdiv i32 %i.ki, %i.kk                   ; 2 uses
@@ -779,8 +772,8 @@ bb.s:                                             ; preds = %sqlite3_malloc64.ex
   %i.ln = icmp eq i8 %i.lm, 0                     ; 3 uses
   %i.lo = zext i8 %i.ll to i64                    ; 12 uses
   %.not.i165.i = icmp eq i8 %i.ll, 0              ; 2 uses
-  %i.lp = sext i32 %i.km to i64                   ; 2 uses
-  %8 = add nsw i32 %i.kn, 1
+  %i.lp = sext i32 %i.kn to i64
+  %8 = sext i32 %i.km to i64                      ; 2 uses
   %i.lq = tail call i64 @llvm.umax.i64(i64 %i.lo, i64 2)
   %i.lr = add nsw i64 %i.lq, -1
   %i.ls = lshr i64 %i.lr, 1                       ; 2 uses
@@ -875,7 +868,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
 
 bb.t:                                             ; preds = %bb.au, %.lr.ph220.i
   %i.nb = phi i8 [ %i.mr, %.lr.ph220.i ], [ %i.qc, %bb.au ] ; 2 uses
-  %indvars.iv257.i = phi i64 [ %i.lp, %.lr.ph220.i ], [ %indvars.iv.next258.i, %bb.au ] ; 4 uses
+  %indvars.iv257.i = phi i64 [ %8, %.lr.ph220.i ], [ %indvars.iv.next258.i, %bb.au ] ; 5 uses
   %.0123217.i = phi i32 [ 0, %.lr.ph220.i ], [ %.1.i43, %bb.au ]
   %.0124216.i = phi double [ 0.000000e+00, %.lr.ph220.i ], [ %.1125.i, %bb.au ] ; 2 uses
   %.0126215.i = phi double [ 0.000000e+00, %.lr.ph220.i ], [ %.1127.i, %bb.au ] ; 3 uses
@@ -1278,7 +1271,7 @@ cellArea.exit180.i:                               ; preds = %bb.ar, %bb.al
   %.8.i195.i = phi double [ %i.uo, %bb.al ], [ %i.vt, %bb.ar ]
   %.8.i173.i = phi double [ %i.vm, %bb.al ], [ %i.xb, %bb.ar ]
   %i.xd = fadd double %.8.i195.i, %.8.i173.i      ; 2 uses
-  %i.xe = icmp eq i64 %indvars.iv257.i, %i.lp
+  %i.xe = icmp eq i64 %indvars.iv257.i, %8
   %i.xf = fcmp olt double %.us-phi.i169291.i, %.0126215.i
   %or.cond.i42 = select i1 %i.xe, i1 true, i1 %i.xf
   br i1 %or.cond.i42, label %bb.at, label %bb.as
@@ -1299,10 +1292,9 @@ bb.au:                                            ; preds = %bb.at, %bb.as
   %.1.i43 = phi i32 [ %i.xi, %bb.at ], [ %.0123217.i, %bb.as ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #58
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #58
-  %indvars.iv.next258.i = add nsw i64 %indvars.iv257.i, 1 ; 2 uses
-  %lftr.wideiv.i = trunc i64 %indvars.iv.next258.i to i32
-  %exitcond260.not.i = icmp eq i32 %8, %lftr.wideiv.i
-  br i1 %exitcond260.not.i, label %._crit_edge221.i, label %bb.t, !llvm.loop !6602
+  %indvars.iv.next258.i = add nsw i64 %indvars.iv257.i, 1
+  %.not141.not.i = icmp slt i64 %indvars.iv257.i, %i.lp
+  br i1 %.not141.not.i, label %bb.t, label %._crit_edge221.i, !llvm.loop !6602
 
 ._crit_edge221.i:                                 ; preds = %bb.au
   %i.xj = icmp eq i64 %indvars.iv261.i, 0

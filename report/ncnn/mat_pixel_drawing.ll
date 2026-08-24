@@ -84,9 +84,9 @@ bb.f:                                             ; preds = %bb.e, %bb.c
   br i1 %i.r, label %.lr.ph202.split.us, label %.loopexit152, !llvm.loop !12
 
 bb.g:                                             ; preds = %bb.a
-  %i.s = sdiv i32 %9, 2                           ; 7 uses
+  %i.s = sdiv i32 %9, 2                           ; 6 uses
   %i.t = sub nsw i32 %9, %i.s                     ; 6 uses
-  %i.u = sub nsw i32 %5, %i.s
+  %i.u = sub nsw i32 %5, %i.s                     ; 2 uses
   %i.v = add nsw i32 %i.t, %5                     ; 6 uses
   %i.w = icmp slt i32 %i.u, %i.v
   br i1 %i.w, label %.lr.ph163, label %._crit_edge
@@ -100,16 +100,13 @@ bb.g:                                             ; preds = %bb.a
   br i1 %.fr, label %.lr.ph163.split.us.preheader, label %._crit_edge
 
 .lr.ph163.split.us.preheader:                     ; preds = %.lr.ph163
-  %10 = sext i32 %5 to i64
-  %11 = sub nsw i32 0, %i.s
-  %i.ab = sext i32 %11 to i64
-  %12 = add nsw i64 %10, %i.ab
+  %i.ab = sext i32 %i.u to i64
   %i.ac = sext i32 %2 to i64
   %i.ad = sext i32 %3 to i64
   br label %.lr.ph163.split.us
 
 .lr.ph163.split.us:                               ; preds = %.lr.ph163.split.us.preheader, %.loopexit159.us
-  %indvars.iv = phi i64 [ %12, %.lr.ph163.split.us.preheader ], [ %indvars.iv.next, %.loopexit159.us ] ; 4 uses
+  %indvars.iv = phi i64 [ %i.ab, %.lr.ph163.split.us.preheader ], [ %indvars.iv.next, %.loopexit159.us ] ; 4 uses
   %i.ae = icmp slt i64 %indvars.iv, 0
   br i1 %i.ae, label %.loopexit159.us, label %bb.h
 
@@ -400,9 +397,9 @@ bb.f:                                             ; preds = %bb.e, %bb.c
   br i1 %i.t, label %.lr.ph221.split.us, label %.loopexit171, !llvm.loop !22
 
 bb.g:                                             ; preds = %bb.a
-  %i.u = sdiv i32 %9, 2                           ; 7 uses
+  %i.u = sdiv i32 %9, 2                           ; 6 uses
   %i.v = sub nsw i32 %9, %i.u                     ; 6 uses
-  %i.w = sub nsw i32 %5, %i.u
+  %i.w = sub nsw i32 %5, %i.u                     ; 2 uses
   %i.x = add nsw i32 %i.v, %5                     ; 6 uses
   %i.y = icmp slt i32 %i.w, %i.x
   br i1 %i.y, label %.lr.ph182, label %._crit_edge
@@ -417,16 +414,13 @@ bb.g:                                             ; preds = %bb.a
   br i1 %.fr, label %.lr.ph182.split.us.preheader, label %._crit_edge
 
 .lr.ph182.split.us.preheader:                     ; preds = %.lr.ph182
-  %10 = sext i32 %5 to i64
-  %11 = sub nsw i32 0, %i.u
-  %i.ae = sext i32 %11 to i64
-  %12 = add nsw i64 %10, %i.ae
+  %i.ae = sext i32 %i.w to i64
   %i.af = sext i32 %2 to i64
   %i.ag = sext i32 %3 to i64
   br label %.lr.ph182.split.us
 
 .lr.ph182.split.us:                               ; preds = %.lr.ph182.split.us.preheader, %.loopexit178.us
-  %indvars.iv = phi i64 [ %12, %.lr.ph182.split.us.preheader ], [ %indvars.iv.next, %.loopexit178.us ] ; 4 uses
+  %indvars.iv = phi i64 [ %i.ae, %.lr.ph182.split.us.preheader ], [ %indvars.iv.next, %.loopexit178.us ] ; 4 uses
   %i.ah = icmp slt i64 %indvars.iv, 0
   br i1 %i.ah, label %.loopexit178.us, label %bb.h
 
@@ -732,9 +726,9 @@ bb.f:                                             ; preds = %bb.e, %bb.c
   br i1 %i.u, label %.lr.ph240.split.us, label %.loopexit190, !llvm.loop !32
 
 bb.g:                                             ; preds = %bb.a
-  %i.v = sdiv i32 %9, 2                           ; 7 uses
+  %i.v = sdiv i32 %9, 2                           ; 6 uses
   %i.w = sub nsw i32 %9, %i.v                     ; 6 uses
-  %i.x = sub nsw i32 %5, %i.v
+  %i.x = sub nsw i32 %5, %i.v                     ; 2 uses
   %i.y = add nsw i32 %i.w, %5                     ; 6 uses
   %i.z = icmp slt i32 %i.x, %i.y
   br i1 %i.z, label %.lr.ph201, label %._crit_edge
@@ -748,16 +742,13 @@ bb.g:                                             ; preds = %bb.a
   br i1 %.fr, label %.lr.ph201.split.us.preheader, label %._crit_edge
 
 .lr.ph201.split.us.preheader:                     ; preds = %.lr.ph201
-  %10 = sext i32 %5 to i64
-  %11 = sub nsw i32 0, %i.v
-  %i.ae = sext i32 %11 to i64
-  %12 = add nsw i64 %10, %i.ae
+  %i.ae = sext i32 %i.x to i64
   %i.af = sext i32 %2 to i64
   %i.ag = sext i32 %3 to i64
   br label %.lr.ph201.split.us
 
 .lr.ph201.split.us:                               ; preds = %.lr.ph201.split.us.preheader, %.loopexit197.us
-  %indvars.iv = phi i64 [ %12, %.lr.ph201.split.us.preheader ], [ %indvars.iv.next, %.loopexit197.us ] ; 4 uses
+  %indvars.iv = phi i64 [ %i.ae, %.lr.ph201.split.us.preheader ], [ %indvars.iv.next, %.loopexit197.us ] ; 4 uses
   %i.ah = icmp slt i64 %indvars.iv, 0
   br i1 %i.ah, label %.loopexit197.us, label %bb.h
 
@@ -1067,9 +1058,9 @@ bb.f:                                             ; preds = %bb.e, %bb.c
   br i1 %i.s, label %.lr.ph259.split.us, label %.loopexit209, !llvm.loop !42
 
 bb.g:                                             ; preds = %bb.a
-  %i.t = sdiv i32 %9, 2                           ; 7 uses
+  %i.t = sdiv i32 %9, 2                           ; 6 uses
   %i.u = sub nsw i32 %9, %i.t                     ; 6 uses
-  %i.v = sub nsw i32 %5, %i.t
+  %i.v = sub nsw i32 %5, %i.t                     ; 2 uses
   %i.w = add nsw i32 %i.u, %5                     ; 6 uses
   %i.x = icmp slt i32 %i.v, %i.w
   br i1 %i.x, label %.lr.ph220, label %._crit_edge
@@ -1083,16 +1074,13 @@ bb.g:                                             ; preds = %bb.a
   br i1 %.fr, label %.lr.ph220.split.us.preheader, label %._crit_edge
 
 .lr.ph220.split.us.preheader:                     ; preds = %.lr.ph220
-  %10 = sext i32 %5 to i64
-  %11 = sub nsw i32 0, %i.t
-  %i.ac = sext i32 %11 to i64
-  %12 = add nsw i64 %10, %i.ac
+  %i.ac = sext i32 %i.v to i64
   %i.ad = sext i32 %2 to i64
   %i.ae = sext i32 %3 to i64
   br label %.lr.ph220.split.us
 
 .lr.ph220.split.us:                               ; preds = %.lr.ph220.split.us.preheader, %.loopexit216.us
-  %indvars.iv = phi i64 [ %12, %.lr.ph220.split.us.preheader ], [ %indvars.iv.next, %.loopexit216.us ] ; 4 uses
+  %indvars.iv = phi i64 [ %i.ac, %.lr.ph220.split.us.preheader ], [ %indvars.iv.next, %.loopexit216.us ] ; 4 uses
   %i.af = icmp slt i64 %indvars.iv, 0
   br i1 %i.af, label %.loopexit216.us, label %bb.h
 

@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %.not8.i, label %ReadValue.exit, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %bb.c
-  %i.d = add nuw nsw i32 %3, 7
+  %i.d = add i32 %3, 7
   %i.e = sdiv i32 %i.d, 8                         ; 3 uses
   %i.f = sext i32 %i.a to i64
   %i.g = getelementptr inbounds i8, ptr %0, i64 %i.f ; 2 uses

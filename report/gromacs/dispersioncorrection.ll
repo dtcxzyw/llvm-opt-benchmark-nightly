@@ -204,7 +204,7 @@ bb.ah:                                            ; preds = %bb.l
   %i.mc = ptrtoint ptr %i.lq to i64
   %i.md = ptrtoint ptr %i.mb to i64
   %i.me = sub i64 %i.mc, %i.md
-  %i.mf = sdiv exact i64 %i.me, 56                ; 2 uses
+  %i.mf = sdiv i64 %i.me, 56                      ; 2 uses
   %i.mg = add nsw i64 %i.mf, -1
   %i.mh = icmp sgt i32 %.fr409, 0
   %i.mi = getelementptr inbounds nuw i8, ptr %i.lv, i64 16 ; 2 uses
@@ -212,6 +212,7 @@ bb.ah:                                            ; preds = %bb.l
   %i.mk = add i32 %.fr409, -1
   %i.ml = zext i32 %i.mk to i64
   %i.mm = add nuw nsw i64 %i.ml, 1
+  %umax = call i64 @llvm.umax.i64(i64 %i.mf, i64 1)
   %wide.trip.count463 = zext i32 %.fr409 to i64   ; 4 uses
   %xtraiter588 = and i64 %wide.trip.count463, 3   ; 3 uses
   %i.mn = icmp ult i32 %.fr409, 4
@@ -514,7 +515,7 @@ bb.ak:                                            ; preds = %bb.ak, %.epil.prehe
   %i.ri = phi <2 x double> [ %i.mp, %bb.ai ], [ %i.rh, %._crit_edge367.loopexit ], [ %i.mp, %.lr.ph366.split ], [ %.lcssa575, %._crit_edge353.split.us380 ] ; 3 uses
   %i.rj = extractelement <2 x double> %i.ri, i64 0
   %i.rk = add nuw i64 %.0176394, 1                ; 2 uses
-  %exitcond480.not = icmp eq i64 %i.rk, %i.mf
+  %exitcond480.not = icmp eq i64 %i.rk, %umax
   br i1 %exitcond480.not, label %_ZNSt6vectorIiSaIiEED2Ev.exit, label %bb.ai, !llvm.loop !220
 
 .split385.us:                                     ; preds = %.lr.ph366.split, %.lr.ph366.split.us.split, %.lr.ph366.split.us.split.us
@@ -916,6 +917,9 @@ declare float @llvm.fmuladd.f32(float, float, float) #10
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #14
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umax.i64(i64, i64) #10
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(write)
 declare void @llvm.masked.scatter.v4f32.v4p0(<4 x float>, <4 x ptr>, <4 x i1>) #15

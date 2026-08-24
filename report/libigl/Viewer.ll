@@ -205,7 +205,8 @@ bb.w:                                             ; preds = %bb.u
   %i.gi = ptrtoint ptr %i.gh to i64
   %i.gj = ptrtoint ptr %.pre.i57 to i64
   %i.gk = sub i64 %i.gi, %i.gj
-  %i.gl = sdiv exact i64 %i.gk, 544
+  %i.gl = sdiv i64 %i.gk, 544
+  %umax.i.i = call i64 @llvm.umax.i64(i64 %i.gl, i64 1)
   br label %.lr.ph.i.i54
 
 .lr.ph.i.i54:                                     ; preds = %bb.x, %.lr.ph.preheader.i.i
@@ -217,7 +218,7 @@ bb.w:                                             ; preds = %bb.u
 
 bb.x:                                             ; preds = %.lr.ph.i.i54
   %i.gp = add nuw i64 %.0710.i.i, 1               ; 2 uses
-  %exitcond.not.i.i = icmp eq i64 %i.gp, %i.gl
+  %exitcond.not.i.i = icmp eq i64 %i.gp, %umax.i.i
   br i1 %exitcond.not.i.i, label %_ZN3igl6opengl4glfw6Viewer4coreEj.exit, label %.lr.ph.i.i54, !llvm.loop !126
 
 _ZN3igl6opengl4glfw6Viewer4coreEj.exit:           ; preds = %.lr.ph.i.i54, %bb.x, %bb.v, %bb.w
@@ -469,7 +470,8 @@ bb.c:                                             ; preds = %bb.a
   %i.h = ptrtoint ptr %i.f to i64
   %i.i = ptrtoint ptr %i.g to i64
   %i.j = sub i64 %i.h, %i.i
-  %i.k = sdiv exact i64 %i.j, 544
+  %i.k = sdiv i64 %i.j, 544
+  %umax.i = tail call i64 @llvm.umax.i64(i64 %i.k, i64 1)
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.d, %.lr.ph.preheader.i
@@ -481,7 +483,7 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %.lr.ph.i
   %i.o = add nuw i64 %.0710.i, 1                  ; 2 uses
-  %exitcond.not.i = icmp eq i64 %i.o, %i.k
+  %exitcond.not.i = icmp eq i64 %i.o, %umax.i
   br i1 %exitcond.not.i, label %_ZNK3igl6opengl4glfw6Viewer10core_indexEi.exit, label %.lr.ph.i, !llvm.loop !126
 
 _ZNK3igl6opengl4glfw6Viewer10core_indexEi.exit:   ; preds = %bb.d, %.lr.ph.i, %bb.c, %bb.b
@@ -884,7 +886,8 @@ bb.c:                                             ; preds = %bb.a
   %i.h = ptrtoint ptr %i.f to i64
   %i.i = ptrtoint ptr %i.g to i64
   %i.j = sub i64 %i.h, %i.i
-  %i.k = sdiv exact i64 %i.j, 1488
+  %i.k = sdiv i64 %i.j, 1488
+  %umax.i = tail call i64 @llvm.umax.i64(i64 %i.k, i64 1)
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.d, %.lr.ph.preheader.i
@@ -897,7 +900,7 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %.lr.ph.i
   %i.p = add nuw i64 %.0710.i, 1                  ; 2 uses
-  %exitcond.not.i = icmp eq i64 %i.p, %i.k
+  %exitcond.not.i = icmp eq i64 %i.p, %umax.i
   br i1 %exitcond.not.i, label %_ZNK3igl6opengl4glfw6Viewer10mesh_indexEi.exit, label %.lr.ph.i, !llvm.loop !199
 
 _ZNK3igl6opengl4glfw6Viewer10mesh_indexEi.exit:   ; preds = %bb.d, %.lr.ph.i, %bb.c, %bb.b
@@ -1300,12 +1303,13 @@ bb.a:
   %i.i = ptrtoint ptr %i.g to i64
   %i.j = ptrtoint ptr %i.h to i64
   %i.k = sub i64 %i.i, %i.j
-  %i.l = sdiv exact i64 %i.k, 544
+  %i.l = sdiv i64 %i.k, 544
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 144
   %i.n = load i32, ptr %i.m, align 16, !tbaa !228
   %i.o = sitofp i32 %i.n to float                 ; 2 uses
   %i.p = load i32, ptr %i.b, align 4
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 148
+  %umax = call i64 @llvm.umax.i64(i64 %i.l, i64 1)
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.d
@@ -1342,7 +1346,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.b, %bb.c
   %indvars.iv.next = add nuw i64 %indvars.iv, 1   ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.l
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %umax
   br i1 %exitcond.not, label %.loopexit, label %bb.b, !llvm.loop !230
 
 .loopexit:                                        ; preds = %bb.d, %bb.a, %.critedge
@@ -1435,10 +1439,11 @@ bb.c:                                             ; preds = %_ZNKSt8functionIFbR
   %i.aq = ptrtoint ptr %i.ao to i64
   %i.ar = ptrtoint ptr %i.ap to i64
   %i.as = sub i64 %i.aq, %i.ar
-  %i.at = sdiv exact i64 %i.as, 544
+  %i.at = sdiv i64 %i.as, 544
   %i.au = load i32, ptr %i.e, align 16, !tbaa !228
   %i.av = sitofp i32 %i.au to float               ; 2 uses
   %i.aw = load i32, ptr %i.b, align 4
+  %umax.i = call i64 @llvm.umax.i64(i64 %i.at, i64 1)
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.f, %.lr.ph.i
@@ -1475,7 +1480,7 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e, %bb.d
   %indvars.iv.next.i = add nuw i64 %indvars.iv.i, 1 ; 2 uses
-  %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %i.at
+  %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %umax.i
   br i1 %exitcond.not.i, label %_ZN3igl6opengl4glfw6Viewer19select_hovered_coreEv.exit, label %bb.d, !llvm.loop !230
 
 _ZN3igl6opengl4glfw6Viewer19select_hovered_coreEv.exit: ; preds = %bb.f, %bb.c, %.critedge.i
@@ -1878,12 +1883,13 @@ bb.b:                                             ; preds = %bb.a
   %i.m = ptrtoint ptr %i.k to i64
   %i.n = ptrtoint ptr %i.l to i64
   %i.o = sub i64 %i.m, %i.n
-  %i.p = sdiv exact i64 %i.o, 544
+  %i.p = sdiv i64 %i.o, 544
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 144
   %i.r = load i32, ptr %i.q, align 16, !tbaa !228
   %i.s = sitofp i32 %i.r to float                 ; 2 uses
   %i.t = load i32, ptr %i.c, align 4
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 148
+  %umax.i = call i64 @llvm.umax.i64(i64 %i.p, i64 1)
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.e, %.lr.ph.i
@@ -1920,7 +1926,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d, %bb.c
   %indvars.iv.next.i = add nuw i64 %indvars.iv.i, 1 ; 2 uses
-  %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %i.p
+  %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %umax.i
   br i1 %exitcond.not.i, label %_ZN3igl6opengl4glfw6Viewer19select_hovered_coreEv.exit, label %bb.c, !llvm.loop !230
 
 _ZN3igl6opengl4glfw6Viewer19select_hovered_coreEv.exit: ; preds = %bb.e, %bb.b, %.critedge.i
@@ -2323,7 +2329,8 @@ bb.a:
   %i.e = ptrtoint ptr %i.c to i64
   %i.f = ptrtoint ptr %i.d to i64
   %i.g = sub i64 %i.e, %i.f
-  %i.h = sdiv exact i64 %i.g, 1488
+  %i.h = sdiv i64 %i.g, 1488
+  %umax = tail call i64 @llvm.umax.i64(i64 %i.h, i64 1)
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.b
@@ -2336,7 +2343,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph
   %i.m = add nuw i64 %.0710, 1                    ; 2 uses
-  %exitcond.not = icmp eq i64 %i.m, %i.h
+  %exitcond.not = icmp eq i64 %i.m, %umax
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !199
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.b, %bb.a
@@ -2369,7 +2376,8 @@ bb.c:                                             ; preds = %bb.a
   %i.h = ptrtoint ptr %i.f to i64
   %i.i = ptrtoint ptr %i.g to i64
   %i.j = sub i64 %i.h, %i.i
-  %i.k = sdiv exact i64 %i.j, 1488
+  %i.k = sdiv i64 %i.j, 1488
+  %umax.i = tail call i64 @llvm.umax.i64(i64 %i.k, i64 1)
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.d, %.lr.ph.preheader.i
@@ -2382,7 +2390,7 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %.lr.ph.i
   %i.p = add nuw i64 %.0710.i, 1                  ; 2 uses
-  %exitcond.not.i = icmp eq i64 %i.p, %i.k
+  %exitcond.not.i = icmp eq i64 %i.p, %umax.i
   br i1 %exitcond.not.i, label %_ZNK3igl6opengl4glfw6Viewer10mesh_indexEi.exit, label %.lr.ph.i, !llvm.loop !199
 
 _ZNK3igl6opengl4glfw6Viewer10mesh_indexEi.exit:   ; preds = %bb.d, %.lr.ph.i, %bb.c, %bb.b
@@ -2481,7 +2489,8 @@ bb.a:
   %i.e = ptrtoint ptr %i.c to i64
   %i.f = ptrtoint ptr %i.d to i64
   %i.g = sub i64 %i.e, %i.f
-  %i.h = sdiv exact i64 %i.g, 544
+  %i.h = sdiv i64 %i.g, 544
+  %umax = tail call i64 @llvm.umax.i64(i64 %i.h, i64 1)
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.b
@@ -2493,7 +2502,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph
   %i.l = add nuw i64 %.0710, 1                    ; 2 uses
-  %exitcond.not = icmp eq i64 %i.l, %i.h
+  %exitcond.not = icmp eq i64 %i.l, %umax
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !126
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.b, %bb.a
@@ -2526,7 +2535,8 @@ bb.c:                                             ; preds = %bb.a
   %i.h = ptrtoint ptr %i.f to i64
   %i.i = ptrtoint ptr %i.g to i64
   %i.j = sub i64 %i.h, %i.i
-  %i.k = sdiv exact i64 %i.j, 544
+  %i.k = sdiv i64 %i.j, 544
+  %umax.i = tail call i64 @llvm.umax.i64(i64 %i.k, i64 1)
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.d, %.lr.ph.preheader.i
@@ -2538,7 +2548,7 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %.lr.ph.i
   %i.o = add nuw i64 %.0710.i, 1                  ; 2 uses
-  %exitcond.not.i = icmp eq i64 %i.o, %i.k
+  %exitcond.not.i = icmp eq i64 %i.o, %umax.i
   br i1 %exitcond.not.i, label %_ZNK3igl6opengl4glfw6Viewer10core_indexEi.exit, label %.lr.ph.i, !llvm.loop !126
 
 _ZNK3igl6opengl4glfw6Viewer10core_indexEi.exit:   ; preds = %bb.d, %.lr.ph.i, %bb.c, %bb.b

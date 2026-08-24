@@ -205,12 +205,11 @@ bb.as:                                            ; preds = %.thread.i140
   br i1 %i.mf, label %.lr.ph200.preheader.i, label %clean_mean.exit
 
 .lr.ph200.preheader.i:                            ; preds = %bb.as
-  %i.mg = sext i32 %i.md to i64                   ; 4 uses
+  %i.mg = sext i32 %i.md to i64                   ; 3 uses
   %wide.trip.count.i142 = sext i32 %i.me to i64
   %i.mh = sext i32 %.1112.lcssa to i64            ; 2 uses
-  %i.mi = shl nsw i64 %i.mg, 1
+  %i.mi = shl nsw i64 %i.mg, 1                    ; 2 uses
   %i.mj = sub nsw i64 %i.mh, %i.mi
-  %7 = shl nsw i64 %i.mg, 1
   %xtraiter = and i64 %i.mj, 7                    ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph200.i.prol.loopexit, label %.lr.ph200.i.prol
@@ -231,7 +230,7 @@ bb.as:                                            ; preds = %.thread.i140
   %.lcssa.unr = phi double [ poison, %.lr.ph200.preheader.i ], [ %i.mm, %.lr.ph200.i.prol ]
   %indvars.iv210.i.unr = phi i64 [ %i.mg, %.lr.ph200.preheader.i ], [ %indvars.iv.next211.i.prol, %.lr.ph200.i.prol ]
   %.0198.i.unr = phi double [ 0.000000e+00, %.lr.ph200.preheader.i ], [ %i.mm, %.lr.ph200.i.prol ]
-  %i.mn = sub nsw i64 %7, %i.mh
+  %i.mn = sub nsw i64 %i.mi, %i.mh
   %i.mo = icmp ugt i64 %i.mn, -8
   br i1 %i.mo, label %clean_mean.exit, label %.lr.ph200.i
 

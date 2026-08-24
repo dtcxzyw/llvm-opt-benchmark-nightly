@@ -205,7 +205,8 @@ iter.check102:                                    ; preds = %.preheader
   %i.ax = ptrtoint ptr %i.av to i64
   %i.ay = ptrtoint ptr %i.aw to i64
   %i.az = sub i64 %i.ax, %i.ay
-  %i.ba = sdiv exact i64 %i.az, 56                ; 7 uses
+  %i.ba = sdiv i64 %i.az, 56                      ; 3 uses
+  %umax = tail call i64 @llvm.umax.i64(i64 %i.ba, i64 1) ; 5 uses
   %min.iters.check59 = icmp ult i64 %i.ba, 5
   br i1 %min.iters.check59, label %.lr.ph20.preheader, label %vector.main.loop.iter.check60
 
@@ -214,10 +215,10 @@ vector.main.loop.iter.check60:                    ; preds = %iter.check102
   br i1 %min.iters.check61, label %vec.epilog.ph106, label %vector.ph62
 
 vector.ph62:                                      ; preds = %vector.main.loop.iter.check60
-  %i.bb = and i64 %i.ba, 15                       ; 2 uses
+  %i.bb = and i64 %umax, 15                       ; 2 uses
   %i.bc = icmp eq i64 %i.bb, 0
   %i.bd = select i1 %i.bc, i64 16, i64 %i.bb      ; 2 uses
-  %n.vec63 = sub nsw i64 %i.ba, %i.bd             ; 3 uses
+  %n.vec63 = sub i64 %umax, %i.bd                 ; 3 uses
   br label %vector.body64
 
 vector.body64:                                    ; preds = %vector.body64, %vector.ph62
@@ -286,10 +287,10 @@ vec.epilog.iter.check104:                         ; preds = %vector.body64
 vec.epilog.ph106:                                 ; preds = %vector.main.loop.iter.check60, %vec.epilog.iter.check104
   %vec.epilog.resume.val100 = phi i64 [ %n.vec63, %vec.epilog.iter.check104 ], [ 0, %vector.main.loop.iter.check60 ] ; 2 uses
   %bc.merge.rdx101 = phi i64 [ %i.bz, %vec.epilog.iter.check104 ], [ 0, %vector.main.loop.iter.check60 ]
-  %i.ca = and i64 %i.ba, 3                        ; 2 uses
+  %i.ca = and i64 %umax, 3                        ; 2 uses
   %i.cb = icmp eq i64 %i.ca, 0
   %i.cc = select i1 %i.cb, i64 4, i64 %i.ca
-  %n.vec107 = sub nsw i64 %i.ba, %i.cc            ; 2 uses
+  %n.vec107 = sub i64 %umax, %i.cc                ; 2 uses
   %i.cd = insertelement <4 x i64> <i64 poison, i64 0, i64 0, i64 0>, i64 %bc.merge.rdx101, i64 0
   %broadcast.splatinsert108 = insertelement <4 x i64> poison, i64 %vec.epilog.resume.val100, i64 0
   %broadcast.splat109 = shufflevector <4 x i64> %broadcast.splatinsert108, <4 x i64> poison, <4 x i32> zeroinitializer
@@ -360,7 +361,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.dd = ashr exact i64 %i.dc, 3
   %i.de = add i64 %i.dd, %.01518                  ; 2 uses
   %i.df = add nuw i64 %.019, 1                    ; 2 uses
-  %exitcond24.not = icmp eq i64 %i.df, %i.ba
+  %exitcond24.not = icmp eq i64 %i.df, %umax
   br i1 %exitcond24.not, label %._crit_edge, label %.lr.ph20, !llvm.loop !466
 }
 
@@ -763,7 +764,8 @@ iter.check240:                                    ; preds = %.preheader.i
   %i.gb = ptrtoint ptr %i.fz to i64
   %i.gc = ptrtoint ptr %i.ga to i64
   %i.gd = sub i64 %i.gb, %i.gc
-  %i.ge = sdiv exact i64 %i.gd, 56                ; 7 uses
+  %i.ge = sdiv i64 %i.gd, 56                      ; 3 uses
+  %umax.i = call i64 @llvm.umax.i64(i64 %i.ge, i64 1) ; 5 uses
   %min.iters.check197 = icmp ult i64 %i.ge, 5
   br i1 %min.iters.check197, label %.lr.ph20.i.preheader, label %vector.main.loop.iter.check198
 
@@ -772,10 +774,10 @@ vector.main.loop.iter.check198:                   ; preds = %iter.check240
   br i1 %min.iters.check199, label %vec.epilog.ph244, label %vector.ph200
 
 vector.ph200:                                     ; preds = %vector.main.loop.iter.check198
-  %i.gf = and i64 %i.ge, 15                       ; 2 uses
+  %i.gf = and i64 %umax.i, 15                     ; 2 uses
   %i.gg = icmp eq i64 %i.gf, 0
   %i.gh = select i1 %i.gg, i64 16, i64 %i.gf      ; 2 uses
-  %n.vec201 = sub nsw i64 %i.ge, %i.gh            ; 3 uses
+  %n.vec201 = sub i64 %umax.i, %i.gh              ; 3 uses
   br label %vector.body202
 
 vector.body202:                                   ; preds = %vector.body202, %vector.ph200
@@ -844,10 +846,10 @@ vec.epilog.iter.check242:                         ; preds = %vector.body202
 vec.epilog.ph244:                                 ; preds = %vector.main.loop.iter.check198, %vec.epilog.iter.check242
   %vec.epilog.resume.val238 = phi i64 [ %n.vec201, %vec.epilog.iter.check242 ], [ 0, %vector.main.loop.iter.check198 ] ; 2 uses
   %bc.merge.rdx239 = phi i64 [ %i.hd, %vec.epilog.iter.check242 ], [ 0, %vector.main.loop.iter.check198 ]
-  %i.he = and i64 %i.ge, 3                        ; 2 uses
+  %i.he = and i64 %umax.i, 3                      ; 2 uses
   %i.hf = icmp eq i64 %i.he, 0
   %i.hg = select i1 %i.hf, i64 4, i64 %i.he
-  %n.vec245 = sub nsw i64 %i.ge, %i.hg            ; 2 uses
+  %n.vec245 = sub i64 %umax.i, %i.hg              ; 2 uses
   %i.hh = insertelement <4 x i64> <i64 poison, i64 0, i64 0, i64 0>, i64 %bc.merge.rdx239, i64 0
   %broadcast.splatinsert246 = insertelement <4 x i64> poison, i64 %vec.epilog.resume.val238, i64 0
   %broadcast.splat247 = shufflevector <4 x i64> %broadcast.splatinsert246, <4 x i64> poison, <4 x i32> zeroinitializer
@@ -913,7 +915,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.ig = ashr exact i64 %i.if, 3
   %i.ih = add i64 %i.ig, %.01518.i                ; 2 uses
   %i.ii = add nuw i64 %.019.i, 1                  ; 2 uses
-  %exitcond24.not.i = icmp eq i64 %i.ii, %i.ge
+  %exitcond24.not.i = icmp eq i64 %i.ii, %umax.i
   br i1 %exitcond24.not.i, label %.loopexit99, label %.lr.ph20.i, !llvm.loop !555
 
 .loopexit99:                                      ; preds = %.lr.ph20.i, %.preheader.i
@@ -1136,7 +1138,8 @@ _ZN7rocksdb10Compaction21EvaluateProximalLevelEPKNS_18VersionStorageInfoERKNS_16
   %i.lm = ptrtoint ptr %i.lk to i64
   %i.ln = ptrtoint ptr %i.ll to i64
   %i.lo = sub i64 %i.lm, %i.ln
-  %i.lp = sdiv exact i64 %i.lo, 56
+  %i.lp = sdiv i64 %i.lo, 56
+  %umax13.i = call i64 @llvm.umax.i64(i64 %i.lp, i64 1)
   br label %.preheader.i80
 
 .preheader.i80:                                   ; preds = %._crit_edge.i, %.preheader.preheader.i
@@ -1277,7 +1280,7 @@ vec.epilog.middle.block286:                       ; preds = %vec.epilog.vector.b
 
 ._crit_edge.i:                                    ; preds = %.lr.ph.i81, %middle.block274, %vec.epilog.middle.block286, %.preheader.i80
   %i.oe = add nuw i64 %.0810.i, 1                 ; 2 uses
-  %exitcond14.not.i = icmp eq i64 %i.oe, %i.lp
+  %exitcond14.not.i = icmp eq i64 %i.oe, %umax13.i
   br i1 %exitcond14.not.i, label %_ZNK7rocksdb10Compaction23MarkFilesBeingCompactedEb.exit, label %.preheader.i80, !llvm.loop !579
 
 .lr.ph.i81:                                       ; preds = %.lr.ph.i81.preheader, %.lr.ph.i81
@@ -1680,7 +1683,8 @@ bb.a:
   %i.f = ptrtoint ptr %i.d to i64
   %i.g = ptrtoint ptr %i.e to i64
   %i.h = sub i64 %i.f, %i.g
-  %i.i = sdiv exact i64 %i.h, 56
+  %i.i = sdiv i64 %i.h, 56
+  %umax13 = tail call i64 @llvm.umax.i64(i64 %i.i, i64 1)
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.preheader, %._crit_edge
@@ -1824,7 +1828,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 ._crit_edge:                                      ; preds = %.lr.ph, %middle.block, %vec.epilog.middle.block, %.preheader
   %i.bx = add nuw i64 %.0810, 1                   ; 2 uses
-  %exitcond14.not = icmp eq i64 %i.bx, %i.i
+  %exitcond14.not = icmp eq i64 %i.bx, %umax13
   br i1 %exitcond14.not, label %._crit_edge11, label %.preheader, !llvm.loop !579
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
@@ -1855,8 +1859,8 @@ bb.a:
   %i.g = load ptr, ptr %i.d, align 8, !tbaa !416  ; 5 uses
   %i.h = ptrtoint ptr %i.f to i64
   %i.i = ptrtoint ptr %i.g to i64
-  %i.j = sub i64 %i.h, %i.i                       ; 4 uses
-  %i.k = sdiv exact i64 %i.j, 56                  ; 5 uses
+  %i.j = sub i64 %i.h, %i.i                       ; 3 uses
+  %i.k = sdiv exact i64 %i.j, 56                  ; 6 uses
   %i.l = load i32, ptr %i.g, align 8, !tbaa !419
   %i.m = icmp eq i32 %i.l, 0
   br i1 %i.m, label %bb.b, label %bb.c
@@ -1916,8 +1920,8 @@ bb.g:                                             ; preds = %_ZNRSt8optionalImE5
   %i.ao = load ptr, ptr %i.d, align 8, !tbaa !416
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ao, i64 8
   tail call void @_ZN7rocksdb25DoGenerateLevelFilesBriefEPNS_15LevelFilesBriefERKSt6vectorIPNS_12FileMetaDataESaIS4_EEPNS_5ArenaE(ptr noundef nonnull %i.an, ptr noundef nonnull align 8 dereferenceable(24) %i.ap, ptr noundef nonnull %i.am)
-  %exitcond.peel.not = icmp eq i64 %i.j, 56
-  br i1 %exitcond.peel.not, label %.loopexit95, label %.peel.next
+  %6 = icmp ugt i64 %i.k, 1
+  br i1 %6, label %.peel.next, label %.loopexit95
 
 .peel.next:                                       ; preds = %.lr.ph
   %i.aq = load ptr, ptr %i.ak, align 8
@@ -1938,8 +1942,8 @@ bb.g:                                             ; preds = %_ZNRSt8optionalImE5
   %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 8
   tail call void @_ZN7rocksdb25DoGenerateLevelFilesBriefEPNS_15LevelFilesBriefERKSt6vectorIPNS_12FileMetaDataESaIS4_EEPNS_5ArenaE(ptr noundef nonnull %i.aw, ptr noundef nonnull align 8 dereferenceable(24) %i.az, ptr noundef nonnull %i.am)
   %i.ba = add nuw i64 %.03596, 1                  ; 2 uses
-  %exitcond.not = icmp eq i64 %i.ba, %i.k
-  br i1 %exitcond.not, label %.loopexit95, label %.peel.next105, !llvm.loop !624
+  %7 = icmp ult i64 %i.ba, %i.k
+  br i1 %7, label %.peel.next105, label %.loopexit95, !llvm.loop !624
 
 bb.h:                                             ; preds = %_ZNRSt8optionalImE5valueEv.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #35
@@ -2147,8 +2151,8 @@ _ZNSt6vectorIS_IbSaIbEESaIS1_EE12emplace_backIJEEERS1_DpOT_.exit: ; preds = %bb.
 
 ._crit_edge:                                      ; preds = %_ZNSt6vectorIPN7rocksdb12FileMetaDataESaIS2_EE9push_backERKS2_.exit, %_ZNSt6vectorIS_IbSaIbEESaIS1_EE12emplace_backIJEEERS1_DpOT_.exit
   %i.dz = add nuw i64 %.02999, 1                  ; 2 uses
-  %exitcond109.not = icmp eq i64 %i.dz, %i.k
-  br i1 %exitcond109.not, label %._crit_edge101, label %bb.o, !llvm.loop !636
+  %8 = icmp ult i64 %i.dz, %i.k
+  br i1 %8, label %bb.o, label %._crit_edge101, !llvm.loop !636
 
 bb.t:                                             ; preds = %bb.s, %bb.q
   %i.ea = landingpad { ptr, i32 }
@@ -2490,8 +2494,8 @@ _ZNSt6vectorIS_IPN7rocksdb12FileMetaDataESaIS2_EESaIS4_EED2Ev.exit: ; preds = %_
 
 bb.ao:                                            ; preds = %.lr.ph103
   %i.is = add nuw i64 %.0102, 1                   ; 2 uses
-  %exitcond110.not = icmp eq i64 %i.is, %i.k
-  br i1 %exitcond110.not, label %._crit_edge104, label %.lr.ph103, !llvm.loop !646
+  %9 = icmp ult i64 %i.is, %i.k
+  br i1 %9, label %.lr.ph103, label %._crit_edge104, !llvm.loop !646
 
 .loopexit112:                                     ; preds = %.lr.ph103
   %lpad.loopexit114 = landingpad { ptr, i32 }
@@ -2894,7 +2898,8 @@ bb.a:
   %i.e = ptrtoint ptr %i.c to i64
   %i.f = ptrtoint ptr %i.d to i64
   %i.g = sub i64 %i.e, %i.f
-  %i.h = sdiv exact i64 %i.g, 56
+  %i.h = sdiv i64 %i.g, 56
+  %umax13.i = tail call i64 @llvm.umax.i64(i64 %i.h, i64 1)
   br label %.preheader.i
 
 .preheader.i:                                     ; preds = %._crit_edge.i, %.preheader.preheader.i
@@ -3035,7 +3040,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 ._crit_edge.i:                                    ; preds = %.lr.ph.i, %middle.block, %vec.epilog.middle.block, %.preheader.i
   %i.bw = add nuw i64 %.0810.i, 1                 ; 2 uses
-  %exitcond14.not.i = icmp eq i64 %i.bw, %i.h
+  %exitcond14.not.i = icmp eq i64 %i.bw, %umax13.i
   br i1 %exitcond14.not.i, label %_ZNK7rocksdb10Compaction23MarkFilesBeingCompactedEb.exit, label %.preheader.i, !llvm.loop !579
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %.lr.ph.i
@@ -3438,7 +3443,8 @@ bb.a:
   %i.l = ptrtoint ptr %i.j to i64
   %i.m = ptrtoint ptr %i.k to i64
   %i.n = sub i64 %i.l, %i.m
-  %i.o = sdiv exact i64 %i.n, 56
+  %i.o = sdiv i64 %i.n, 56
+  %umax = tail call i64 @llvm.umax.i64(i64 %i.o, i64 1)
   br label %.lr.ph25
 
 .lr.ph25:                                         ; preds = %.lr.ph25.preheader, %.critedge
@@ -3466,7 +3472,7 @@ bb.b:                                             ; preds = %.lr.ph
 
 .critedge:                                        ; preds = %bb.b, %.lr.ph25
   %i.aa = add nuw i64 %.024, 1                    ; 2 uses
-  %exitcond.not = icmp eq i64 %i.aa, %i.o
+  %exitcond.not = icmp eq i64 %i.aa, %umax
   br i1 %exitcond.not, label %.loopexit, label %.lr.ph25, !llvm.loop !726
 
 .loopexit:                                        ; preds = %.critedge, %.lr.ph, %.preheader, %bb.a

@@ -204,7 +204,7 @@ bb.ab:                                            ; preds = %_ZNK4ncnn3Mat5empty
   %i.fp = ptrtoint ptr %i.fn to i64
   %i.fq = ptrtoint ptr %i.fo to i64
   %i.fr = sub i64 %i.fp, %i.fq
-  %i.fs = sdiv exact i64 %i.fr, 72                ; 10 uses
+  %i.fs = sdiv i64 %i.fr, 72                      ; 7 uses
   %.not1273 = icmp ult i64 %i.fm, %i.fs
   br i1 %.not1273, label %bb.q, label %.critedge1330, !llvm.loop !54
 
@@ -215,6 +215,7 @@ bb.ab:                                            ; preds = %_ZNK4ncnn3Mat5empty
   br i1 %i.ft, label %._crit_edge, label %iter.check
 
 iter.check:                                       ; preds = %.critedge1330
+  %umax = tail call i64 @llvm.umax.i64(i64 %i.fs, i64 1) ; 4 uses
   %min.iters.check = icmp ult i64 %i.fs, 8
   br i1 %min.iters.check, label %.lr.ph2602.preheader, label %vector.main.loop.iter.check
 
@@ -223,8 +224,8 @@ vector.main.loop.iter.check:                      ; preds = %iter.check
   br i1 %min.iters.check3211, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %i.fw = and i64 %i.fs, 56
-  %n.vec = and i64 %i.fs, -64                     ; 4 uses
+  %i.fw = and i64 %umax, 56
+  %n.vec = and i64 %umax, -64                     ; 4 uses
   %broadcast.splatinsert = insertelement <16 x i32> poison, i32 %i.fv, i64 0
   %broadcast.splat = shufflevector <16 x i32> %broadcast.splatinsert, <16 x i32> poison, <16 x i32> zeroinitializer ; 4 uses
   br label %vector.body
@@ -275,7 +276,7 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ] ; 2 uses
   %bc.merge.rdx = phi i32 [ %i.gc, %vec.epilog.iter.check ], [ %i.fv, %vector.main.loop.iter.check ]
-  %n.vec3227 = and i64 %i.fs, -8                  ; 3 uses
+  %n.vec3227 = and i64 %umax, -8                  ; 3 uses
   %broadcast.splatinsert3228 = insertelement <8 x i32> poison, i32 %bc.merge.rdx, i64 0
   %broadcast.splat3229 = shufflevector <8 x i32> %broadcast.splatinsert3228, <8 x i32> poison, <8 x i32> zeroinitializer
   %broadcast.splatinsert3230 = insertelement <8 x i64> poison, i64 %vec.epilog.resume.val, i64 0
@@ -356,7 +357,7 @@ _ZN4ncnn3Mat6addrefEv.exit:                       ; preds = %._crit_edge, %bb.ac
   %i.he = load i32, ptr %i.hd, align 4, !tbaa !28
   %.sroa.speculated2512 = tail call i32 @llvm.smin.i32(i32 %i.he, i32 %.025272599) ; 2 uses
   %i.hf = add nuw i64 %.012412601, 1              ; 2 uses
-  %exitcond.not = icmp eq i64 %i.hf, %i.fs
+  %exitcond.not = icmp eq i64 %i.hf, %umax
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph2602, !llvm.loop !61
 
 bb.ad:                                            ; preds = %_ZN4ncnn3Mat6addrefEv.exit
@@ -759,7 +760,7 @@ bb.bz:                                            ; preds = %_ZNK4ncnn3Mat5empty
   %i.ash = ptrtoint ptr %i.asf to i64
   %i.asi = ptrtoint ptr %i.asg to i64
   %i.asj = sub i64 %i.ash, %i.asi
-  %i.ask = sdiv exact i64 %i.asj, 72              ; 10 uses
+  %i.ask = sdiv i64 %i.asj, 72                    ; 7 uses
   %.not1277 = icmp ult i64 %i.ase, %i.ask
   br i1 %.not1277, label %bb.bo, label %.critedge1341, !llvm.loop !178
 
@@ -770,6 +771,7 @@ bb.bz:                                            ; preds = %_ZNK4ncnn3Mat5empty
   br i1 %i.asl, label %._crit_edge2723, label %iter.check3952
 
 iter.check3952:                                   ; preds = %.critedge1341
+  %umax2965 = call i64 @llvm.umax.i64(i64 %i.ask, i64 1) ; 4 uses
   %min.iters.check3914 = icmp ult i64 %i.ask, 8
   br i1 %min.iters.check3914, label %.lr.ph2722.preheader, label %vector.main.loop.iter.check3915
 
@@ -778,8 +780,8 @@ vector.main.loop.iter.check3915:                  ; preds = %iter.check3952
   br i1 %min.iters.check3916, label %vec.epilog.ph3956, label %vector.ph3917
 
 vector.ph3917:                                    ; preds = %vector.main.loop.iter.check3915
-  %i.aso = and i64 %i.ask, 56
-  %n.vec3918 = and i64 %i.ask, -64                ; 4 uses
+  %i.aso = and i64 %umax2965, 56
+  %n.vec3918 = and i64 %umax2965, -64             ; 4 uses
   %broadcast.splatinsert3919 = insertelement <16 x i32> poison, i32 %i.asn, i64 0
   %broadcast.splat3920 = shufflevector <16 x i32> %broadcast.splatinsert3919, <16 x i32> poison, <16 x i32> zeroinitializer ; 4 uses
   br label %vector.body3921
@@ -830,7 +832,7 @@ vec.epilog.iter.check3954:                        ; preds = %middle.block3945
 vec.epilog.ph3956:                                ; preds = %vector.main.loop.iter.check3915, %vec.epilog.iter.check3954
   %vec.epilog.resume.val3950 = phi i64 [ %n.vec3918, %vec.epilog.iter.check3954 ], [ 0, %vector.main.loop.iter.check3915 ] ; 2 uses
   %bc.merge.rdx3951 = phi i32 [ %i.asu, %vec.epilog.iter.check3954 ], [ %i.asn, %vector.main.loop.iter.check3915 ]
-  %n.vec3957 = and i64 %i.ask, -8                 ; 3 uses
+  %n.vec3957 = and i64 %umax2965, -8              ; 3 uses
   %broadcast.splatinsert3958 = insertelement <8 x i32> poison, i32 %bc.merge.rdx3951, i64 0
   %broadcast.splat3959 = shufflevector <8 x i32> %broadcast.splatinsert3958, <8 x i32> poison, <8 x i32> zeroinitializer
   %broadcast.splatinsert3960 = insertelement <8 x i64> poison, i64 %vec.epilog.resume.val3950, i64 0
@@ -909,7 +911,7 @@ _ZN4ncnn3Mat6addrefEv.exit1801:                   ; preds = %._crit_edge2723, %b
   %i.atv = load i32, ptr %i.atu, align 4, !tbaa !28
   %.sroa.speculated = call i32 @llvm.smin.i32(i32 %i.atv, i32 %.025292719) ; 2 uses
   %i.atw = add nuw i64 %.010862721, 1             ; 2 uses
-  %exitcond2966.not = icmp eq i64 %i.atw, %i.ask
+  %exitcond2966.not = icmp eq i64 %i.atw, %umax2965
   br i1 %exitcond2966.not, label %._crit_edge2723, label %.lr.ph2722, !llvm.loop !181
 
 bb.cb:                                            ; preds = %_ZN4ncnn3Mat6addrefEv.exit1801
@@ -1312,7 +1314,7 @@ bb.aa:                                            ; preds = %_ZNK4ncnn3Mat5empty
   %i.fl = ptrtoint ptr %i.fj to i64
   %i.fm = ptrtoint ptr %i.fk to i64
   %i.fn = sub i64 %i.fl, %i.fm
-  %i.fo = sdiv exact i64 %i.fn, 72                ; 10 uses
+  %i.fo = sdiv i64 %i.fn, 72                      ; 7 uses
   %.not1269 = icmp ult i64 %i.fi, %i.fo
   br i1 %.not1269, label %bb.p, label %.critedge1326, !llvm.loop !337
 
@@ -1323,6 +1325,7 @@ bb.aa:                                            ; preds = %_ZNK4ncnn3Mat5empty
   br i1 %i.fp, label %._crit_edge, label %iter.check
 
 iter.check:                                       ; preds = %.critedge1326
+  %umax = tail call i64 @llvm.umax.i64(i64 %i.fo, i64 1) ; 4 uses
   %min.iters.check = icmp ult i64 %i.fo, 8
   br i1 %min.iters.check, label %.lr.ph2597.preheader, label %vector.main.loop.iter.check
 
@@ -1331,8 +1334,8 @@ vector.main.loop.iter.check:                      ; preds = %iter.check
   br i1 %min.iters.check3205, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %i.fs = and i64 %i.fo, 56
-  %n.vec = and i64 %i.fo, -64                     ; 4 uses
+  %i.fs = and i64 %umax, 56
+  %n.vec = and i64 %umax, -64                     ; 4 uses
   %broadcast.splatinsert = insertelement <16 x i32> poison, i32 %i.fr, i64 0
   %broadcast.splat = shufflevector <16 x i32> %broadcast.splatinsert, <16 x i32> poison, <16 x i32> zeroinitializer ; 4 uses
   br label %vector.body
@@ -1383,7 +1386,7 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ] ; 2 uses
   %bc.merge.rdx = phi i32 [ %i.fy, %vec.epilog.iter.check ], [ %i.fr, %vector.main.loop.iter.check ]
-  %n.vec3221 = and i64 %i.fo, -8                  ; 3 uses
+  %n.vec3221 = and i64 %umax, -8                  ; 3 uses
   %broadcast.splatinsert3222 = insertelement <8 x i32> poison, i32 %bc.merge.rdx, i64 0
   %broadcast.splat3223 = shufflevector <8 x i32> %broadcast.splatinsert3222, <8 x i32> poison, <8 x i32> zeroinitializer
   %broadcast.splatinsert3224 = insertelement <8 x i64> poison, i64 %vec.epilog.resume.val, i64 0
@@ -1464,7 +1467,7 @@ _ZN4ncnn3Mat6addrefEv.exit:                       ; preds = %._crit_edge, %bb.ab
   %i.ha = load i32, ptr %i.gz, align 4, !tbaa !28
   %.sroa.speculated2507 = tail call i32 @llvm.smin.i32(i32 %i.ha, i32 %.025222594) ; 2 uses
   %i.hb = add nuw i64 %.012372596, 1              ; 2 uses
-  %exitcond.not = icmp eq i64 %i.hb, %i.fo
+  %exitcond.not = icmp eq i64 %i.hb, %umax
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph2597, !llvm.loop !340
 
 bb.ac:                                            ; preds = %_ZN4ncnn3Mat6addrefEv.exit
@@ -1867,7 +1870,7 @@ bb.ca:                                            ; preds = %_ZNK4ncnn3Mat5empty
   %i.ale = ptrtoint ptr %i.alc to i64
   %i.alf = ptrtoint ptr %i.ald to i64
   %i.alg = sub i64 %i.ale, %i.alf
-  %i.alh = sdiv exact i64 %i.alg, 72              ; 10 uses
+  %i.alh = sdiv i64 %i.alg, 72                    ; 7 uses
   %.not1273 = icmp ult i64 %i.alb, %i.alh
   br i1 %.not1273, label %bb.bp, label %.critedge1337, !llvm.loop !404
 
@@ -1878,6 +1881,7 @@ bb.ca:                                            ; preds = %_ZNK4ncnn3Mat5empty
   br i1 %i.ali, label %._crit_edge2718, label %iter.check3582
 
 iter.check3582:                                   ; preds = %.critedge1337
+  %umax2960 = call i64 @llvm.umax.i64(i64 %i.alh, i64 1) ; 4 uses
   %min.iters.check3544 = icmp ult i64 %i.alh, 8
   br i1 %min.iters.check3544, label %.lr.ph2717.preheader, label %vector.main.loop.iter.check3545
 
@@ -1886,8 +1890,8 @@ vector.main.loop.iter.check3545:                  ; preds = %iter.check3582
   br i1 %min.iters.check3546, label %vec.epilog.ph3586, label %vector.ph3547
 
 vector.ph3547:                                    ; preds = %vector.main.loop.iter.check3545
-  %i.all = and i64 %i.alh, 56
-  %n.vec3548 = and i64 %i.alh, -64                ; 4 uses
+  %i.all = and i64 %umax2960, 56
+  %n.vec3548 = and i64 %umax2960, -64             ; 4 uses
   %broadcast.splatinsert3549 = insertelement <16 x i32> poison, i32 %i.alk, i64 0
   %broadcast.splat3550 = shufflevector <16 x i32> %broadcast.splatinsert3549, <16 x i32> poison, <16 x i32> zeroinitializer ; 4 uses
   br label %vector.body3551
@@ -1938,7 +1942,7 @@ vec.epilog.iter.check3584:                        ; preds = %middle.block3575
 vec.epilog.ph3586:                                ; preds = %vector.main.loop.iter.check3545, %vec.epilog.iter.check3584
   %vec.epilog.resume.val3580 = phi i64 [ %n.vec3548, %vec.epilog.iter.check3584 ], [ 0, %vector.main.loop.iter.check3545 ] ; 2 uses
   %bc.merge.rdx3581 = phi i32 [ %i.alr, %vec.epilog.iter.check3584 ], [ %i.alk, %vector.main.loop.iter.check3545 ]
-  %n.vec3587 = and i64 %i.alh, -8                 ; 3 uses
+  %n.vec3587 = and i64 %umax2960, -8              ; 3 uses
   %broadcast.splatinsert3588 = insertelement <8 x i32> poison, i32 %bc.merge.rdx3581, i64 0
   %broadcast.splat3589 = shufflevector <8 x i32> %broadcast.splatinsert3588, <8 x i32> poison, <8 x i32> zeroinitializer
   %broadcast.splatinsert3590 = insertelement <8 x i64> poison, i64 %vec.epilog.resume.val3580, i64 0
@@ -2017,7 +2021,7 @@ _ZN4ncnn3Mat6addrefEv.exit1796:                   ; preds = %._crit_edge2718, %b
   %i.ams = load i32, ptr %i.amr, align 4, !tbaa !28
   %.sroa.speculated = call i32 @llvm.smin.i32(i32 %i.ams, i32 %.025242714) ; 2 uses
   %i.amt = add nuw i64 %.010602716, 1             ; 2 uses
-  %exitcond2961.not = icmp eq i64 %i.amt, %i.alh
+  %exitcond2961.not = icmp eq i64 %i.amt, %umax2960
   br i1 %exitcond2961.not, label %._crit_edge2718, label %.lr.ph2717, !llvm.loop !407
 
 bb.cc:                                            ; preds = %_ZN4ncnn3Mat6addrefEv.exit1796
@@ -2419,6 +2423,9 @@ declare i32 @llvm.smin.i32(i32, i32) #11
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #12
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umax.i64(i64, i64) #11
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(read)
 declare <16 x i32> @llvm.masked.gather.v16i32.v16p0(<16 x ptr>, <16 x i1>, <16 x i32>) #13

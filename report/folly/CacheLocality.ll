@@ -204,8 +204,8 @@ bb.v:                                             ; preds = %.invoke.i
 bb.w:                                             ; preds = %._crit_edge.i
   %i.du = ptrtoint ptr %.sroa.17.1 to i64
   %i.dv = ptrtoint ptr %.sroa.064.1 to i64        ; 3 uses
-  %i.dw = sub i64 %i.du, %i.dv                    ; 5 uses
-  %i.dx = sdiv exact i64 %i.dw, 24                ; 3 uses
+  %i.dw = sub i64 %i.du, %i.dv                    ; 4 uses
+  %i.dx = sdiv exact i64 %i.dw, 24                ; 4 uses
   %i.dy = add nsw i64 %i.dx, -1
   %.not.i = icmp eq i64 %.2.i, %i.dy
   br i1 %.not.i, label %bb.z, label %bb.x
@@ -410,8 +410,8 @@ _ZNSt12_Vector_baseImSaImEE13_M_deallocateEPmm.exit.i.peel: ; preds = %bb.ar, %.
 
 _ZNSt6vectorImSaImEEaSESt16initializer_listImE.exit.peel: ; preds = %_ZNSt12_Vector_baseImSaImEE13_M_deallocateEPmm.exit.i.peel, %_ZSt22__uninitialized_copy_aIPKmPmmET0_T_S4_S3_RSaIT1_E.exit.i.peel, %_ZSt8_DestroyIPmmEvT_S1_RSaIT0_E.exit.i.i.peel, %bb.ak
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #34
-  %exitcond.peel.not = icmp eq i64 %i.dw, 24
-  br i1 %exitcond.peel.not, label %._crit_edge, label %.peel.next
+  %5 = icmp samesign ugt i64 %i.dx, 1
+  br i1 %5, label %.peel.next, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %_ZNSt6vectorImSaImEEaSESt16initializer_listImE.exit, %_ZNSt6vectorImSaImEEaSESt16initializer_listImE.exit.peel
   store ptr %i.ek, ptr %4, align 8, !tbaa !62
@@ -563,8 +563,8 @@ _ZSt22__uninitialized_copy_aIPKmPmmET0_T_S4_S3_RSaIT1_E.exit.i: ; preds = %bb.be
 _ZNSt6vectorImSaImEEaSESt16initializer_listImE.exit: ; preds = %_ZNSt12_Vector_baseImSaImEE13_M_deallocateEPmm.exit.i, %bb.az, %_ZSt8_DestroyIPmmEvT_S1_RSaIT0_E.exit.i.i, %_ZSt22__uninitialized_copy_aIPKmPmmET0_T_S4_S3_RSaIT1_E.exit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #34
   %i.gv = add nuw i64 %.024120, 1                 ; 2 uses
-  %exitcond.not = icmp eq i64 %i.gv, %i.dx
-  br i1 %exitcond.not, label %._crit_edge, label %.peel.next, !llvm.loop !197
+  %6 = icmp ult i64 %i.gv, %i.dx
+  br i1 %6, label %.peel.next, label %._crit_edge, !llvm.loop !197
 
 .loopexit143:                                     ; preds = %bb.aw
   %lpad.loopexit145 = landingpad { ptr, i32 }

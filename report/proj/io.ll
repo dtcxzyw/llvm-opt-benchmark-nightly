@@ -206,8 +206,8 @@ bb.rz:                                            ; preds = %_ZStneIcSt11char_tr
   br i1 %.not3525, label %_ZNK5osgeo4proj2io4Step8KeyValueneERKS3_.exit.backedge, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit2210.thread3380.threadthread-pre-split
 
 _ZNK5osgeo4proj2io4Step8KeyValueneERKS3_.exit.backedge: ; preds = %.split, %bb.rz
-  %exitcond.not = icmp eq i64 %i.fen, %.sroa.speculated
-  br i1 %exitcond.not, label %.critedge1170, label %bb.rx, !llvm.loop !1769
+  %.not1137 = icmp ult i64 %i.fen, %.sroa.speculated
+  br i1 %.not1137, label %bb.rx, label %.critedge1170, !llvm.loop !1769
 
 .critedge1170:                                    ; preds = %_ZNK5osgeo4proj2io4Step8KeyValueneERKS3_.exit.backedge, %_ZNK5osgeo4proj2io4Step8KeyValue6equalsEPKcS5_.exit2215.thread3381
   %i.ffh = load ptr, ptr %4, align 8, !tbaa !1758 ; 3 uses
@@ -531,8 +531,8 @@ _ZNK5osgeo4proj2io4Step8KeyValueneERKS3_.exit2278: ; preds = %bb.sm
 
 _ZNK5osgeo4proj2io4Step8KeyValueneERKS3_.exit2278.thread3385: ; preds = %bb.sm, %_ZNK5osgeo4proj2io4Step8KeyValueneERKS3_.exit2278
   %i.fjm = add nuw i64 %.010143909, 1             ; 2 uses
-  %exitcond3986.not = icmp eq i64 %i.fjm, %i.aef
-  br i1 %exitcond3986.not, label %.critedge1172, label %bb.sk, !llvm.loop !1770
+  %.not1142 = icmp ult i64 %i.fjm, %i.aef
+  br i1 %.not1142, label %bb.sk, label %.critedge1172, !llvm.loop !1770
 
 .critedge1172:                                    ; preds = %_ZNK5osgeo4proj2io4Step8KeyValueneERKS3_.exit2278.thread3385, %.preheader3577
   %i.fjn = load ptr, ptr %5, align 8, !tbaa !1758 ; 2 uses
@@ -935,8 +935,8 @@ _ZNK5osgeo4proj2io4Step8KeyValueneERKS3_.exit2632: ; preds = %bb.vf
 
 _ZNK5osgeo4proj2io4Step8KeyValueneERKS3_.exit2632.thread3485: ; preds = %bb.vf, %_ZNK5osgeo4proj2io4Step8KeyValueneERKS3_.exit2632
   %i.hgd = add nuw i64 %.03920, 1                 ; 2 uses
-  %exitcond3988.not = icmp eq i64 %i.hgd, %i.hbi
-  br i1 %exitcond3988.not, label %.critedge1187, label %.lr.ph3921, !llvm.loop !1772
+  %.not1150 = icmp ult i64 %i.hgd, %i.hbi
+  br i1 %.not1150, label %.lr.ph3921, label %.critedge1187, !llvm.loop !1772
 
 .critedge1187:                                    ; preds = %_ZNK5osgeo4proj2io4Step8KeyValueneERKS3_.exit2632.thread3485, %.preheader
   %i.hge = load ptr, ptr %.sroa.0.13923, align 8, !tbaa !202 ; 5 uses

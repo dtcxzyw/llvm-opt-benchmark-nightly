@@ -204,7 +204,6 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   %i.bw = getelementptr inbounds nuw i8, ptr %0, i64 672 ; 3 uses
   %i.bx = getelementptr inbounds nuw i8, ptr %i.b, i64 40 ; 2 uses
   %i.by = getelementptr inbounds nuw i8, ptr %0, i64 656
-  %smax = tail call i32 @llvm.smax.i32(i32 %i.bt, i32 2)
   br label %bb.n
 
 bb.n:                                             ; preds = %.lr.ph, %bb.v
@@ -272,8 +271,8 @@ bb.u:                                             ; preds = %bb.t
 
 bb.v:                                             ; preds = %bb.t, %bb.u
   %i.da = add nuw nsw i32 %.0229328, 1
-  %exitcond.not = icmp eq i32 %.0229328, %smax
-  br i1 %exitcond.not, label %._crit_edge, label %bb.n
+  %.not258.not = icmp slt i32 %.0229328, %i.bt
+  br i1 %.not258.not, label %bb.n, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.v, %bb.m
   %i.db = load ptr, ptr %i.bb, align 8, !tbaa !91
@@ -297,7 +296,7 @@ bb.v:                                             ; preds = %bb.t, %bb.u
 
 bb.w:                                             ; preds = %.lr.ph334, %bb.ae
   %.0228332.in = phi i32 [ %i.bt, %.lr.ph334 ], [ %.0228332, %bb.ae ]
-  %.0228332 = add i32 %.0228332.in, 1             ; 4 uses
+  %.0228332 = add nsw i32 %.0228332.in, 1         ; 4 uses
   %i.dn = load ptr, ptr %i.di, align 8, !tbaa !63 ; 2 uses
   %.not266 = icmp eq ptr %i.dn, null
   br i1 %.not266, label %bb.y, label %bb.x
@@ -360,8 +359,8 @@ bb.ad:                                            ; preds = %bb.ac
   br i1 %.not271, label %bb.ae, label %.thread
 
 bb.ae:                                            ; preds = %bb.ac, %bb.ad
-  %exitcond347.not = icmp eq i32 %.0228332, %i.dh
-  br i1 %exitcond347.not, label %._crit_edge335, label %bb.w
+  %.not265.not.not = icmp slt i32 %.0228332, %i.dh
+  br i1 %.not265.not.not, label %bb.w, label %._crit_edge335
 
 ._crit_edge335:                                   ; preds = %bb.ae, %._crit_edge
   %i.eo = getelementptr inbounds nuw i8, ptr %0, i64 1072 ; 2 uses

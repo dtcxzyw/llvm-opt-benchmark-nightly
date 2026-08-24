@@ -202,8 +202,8 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.l
   %indvars.iv.next69.i = add nuw nsw i64 %indvars.iv68.i, 1 ; 2 uses
-  %exitcond72.not.i = icmp eq i64 %indvars.iv.next69.i, %i.aa
-  br i1 %exitcond72.not.i, label %..loopexit_crit_edge.us.i, label %bb.l, !llvm.loop !141
+  %3 = icmp samesign ult i64 %indvars.iv.next69.i, %i.aa
+  br i1 %3, label %bb.l, label %..loopexit_crit_edge.us.i, !llvm.loop !141
 
 bb.l:                                             ; preds = %bb.k, %.preheader.us.i
   %indvars.iv68.i = phi i64 [ 0, %.preheader.us.i ], [ %indvars.iv.next69.i, %bb.k ] ; 2 uses
@@ -250,8 +250,8 @@ bb.o:                                             ; preds = %.preheader42.us.i, 
   %i.aj = add nuw nsw i64 %indvars.iv58.i, %i.ak
   tail call void @bit_set(ptr noundef %i.u, i64 noundef %i.aj) #26
   %indvars.iv.next59.i = add nuw nsw i64 %indvars.iv58.i, 1 ; 2 uses
-  %exitcond62.not.i = icmp eq i64 %indvars.iv.next59.i, %i.ah
-  br i1 %exitcond62.not.i, label %..loopexit43_crit_edge.us.i, label %bb.o, !llvm.loop !143
+  %4 = icmp samesign ult i64 %indvars.iv.next59.i, %i.ah
+  br i1 %4, label %bb.o, label %..loopexit43_crit_edge.us.i, !llvm.loop !143
 
 ..loopexit43_crit_edge.us.i:                      ; preds = %bb.o, %.lr.ph48.split.us.i
   %indvars.iv.next64.i = add nuw nsw i64 %indvars.iv63.i, 1 ; 2 uses

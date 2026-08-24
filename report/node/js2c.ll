@@ -205,21 +205,22 @@ bb.a:
   %i.f = ptrtoint ptr %i.d to i64
   %i.g = ptrtoint ptr %i.e to i64
   %i.h = sub i64 %i.f, %i.g
-  %i.i = sdiv exact i64 %i.h, 24                  ; 6 uses
+  %i.i = sdiv i64 %i.h, 24                        ; 4 uses
   %i.j = add nsw i64 %i.i, -1
   %i.k = mul i64 %i.j, %i.b                       ; 3 uses
   %.not37 = icmp eq ptr %i.d, %i.e                ; 2 uses
   br i1 %.not37, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
+  %umax = tail call i64 @llvm.umax.i64(i64 %i.i, i64 1) ; 3 uses
   %min.iters.check = icmp ult i64 %i.i, 5
   br i1 %min.iters.check, label %.lr.ph.preheader50, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
-  %i.l = and i64 %i.i, 3                          ; 2 uses
+  %i.l = and i64 %umax, 3                         ; 2 uses
   %i.m = icmp eq i64 %i.l, 0
   %i.n = select i1 %i.m, i64 4, i64 %i.l
-  %n.vec = sub nsw i64 %i.i, %i.n                 ; 2 uses
+  %n.vec = sub i64 %umax, %i.n                    ; 2 uses
   %i.o = insertelement <2 x i64> <i64 poison, i64 0>, i64 %i.k, i64 0
   br label %vector.body
 
@@ -332,7 +333,7 @@ _ZNSt6vectorIcSaIcEEC2EmRKcRKS0_.exit:            ; preds = %_ZNSt12_Vector_base
   %i.bq = add i64 %.02830, %i.bo
   %i.br = sub i64 %i.bq, %i.bp                    ; 2 uses
   %i.bs = add nuw i64 %.02731, 1                  ; 2 uses
-  %exitcond.not = icmp eq i64 %i.bs, %i.i
+  %exitcond.not = icmp eq i64 %i.bs, %umax
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !26
 
 ._crit_edge35:                                    ; preds = %.lr.ph34.peel.next, %.lr.ph34.preheader._crit_edge, %_ZNSt6vectorIcSaIcEEC2EmRKcRKS0_.exit

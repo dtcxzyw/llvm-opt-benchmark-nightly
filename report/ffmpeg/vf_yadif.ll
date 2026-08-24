@@ -204,8 +204,8 @@ bb.a:
   %i.z = add nsw i32 %2, 1
   %i.aa = sext i32 %i.z to i64
   %i.ab = mul nsw i64 %i.t, %i.aa
-  %i.ac = sdiv i64 %i.ab, %i.w
-  %i.ad = trunc i64 %i.ac to i32                  ; 2 uses
+  %i.ac = sdiv i64 %i.ab, %i.w                    ; 2 uses
+  %i.ad = trunc i64 %i.ac to i32
   %i.ae = icmp slt i32 %i.y, %i.ad
   br i1 %i.ae, label %.lr.ph, label %._crit_edge
 
@@ -225,6 +225,8 @@ bb.a:
   %sext = shl i64 %i.x, 32
   %i.ar = ashr exact i64 %sext, 32
   %i.as = sext i32 %i.j to i64                    ; 2 uses
+  %sext94 = shl i64 %i.ac, 32
+  %4 = ashr exact i64 %sext94, 32
   %invariant.op = sub i32 -2, %i.af
   br label %bb.b
 
@@ -328,9 +330,8 @@ bb.f:                                             ; preds = %bb.b
 
 bb.g:                                             ; preds = %bb.e, %bb.f
   %indvars.iv.next.pre-phi = phi i64 [ %i.ch, %bb.e ], [ %.pre92, %bb.f ] ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next.pre-phi to i32
-  %exitcond.not = icmp eq i32 %lftr.wideiv, %i.ad
-  br i1 %exitcond.not, label %._crit_edge, label %bb.b, !llvm.loop !75
+  %5 = icmp slt i64 %indvars.iv.next.pre-phi, %4
+  br i1 %5, label %bb.b, label %._crit_edge, !llvm.loop !75
 
 ._crit_edge:                                      ; preds = %bb.g, %bb.a
   ret i32 0

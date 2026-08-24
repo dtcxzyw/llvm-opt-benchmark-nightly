@@ -204,13 +204,14 @@ bb.am:                                            ; preds = %.loopexit358
   br i1 %i.dc, label %.lr.ph446, label %._crit_edge447
 
 .lr.ph446:                                        ; preds = %bb.am
-  %i.dd = udiv exact i64 %i.db, 104
+  %i.dd = udiv i64 %i.db, 104
   %i.de = getelementptr inbounds nuw i8, ptr %2, i64 600
   %i.df = getelementptr inbounds nuw i8, ptr %14, i64 8 ; 3 uses
   %i.dg = getelementptr inbounds nuw i8, ptr %14, i64 16 ; 4 uses
   %i.dh = getelementptr inbounds nuw i8, ptr %2, i64 88
   %i.di = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   %i.dj = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %26 = tail call i64 @llvm.umax.i64(i64 %i.dd, i64 1)
   br label %bb.aq
 
 ._crit_edge447.loopexit:                          ; preds = %_ZNSt6vectorIiSaIiEED2Ev.exit
@@ -613,7 +614,7 @@ bb.cn:                                            ; preds = %_ZNSt6vectorIN3gmx9
 _ZNSt6vectorIiSaIiEED2Ev.exit:                    ; preds = %_ZNSt6vectorIN3gmx9DimParamsESaIS1_EED2Ev.exit, %bb.cn
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #26
   %indvars.iv.next515 = add nuw nsw i64 %indvars.iv514, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next515, %i.dd
+  %exitcond.not = icmp eq i64 %indvars.iv.next515, %26
   br i1 %exitcond.not, label %._crit_edge447.loopexit, label %bb.aq, !llvm.loop !365
 
 bb.co:                                            ; preds = %_ZNSt6vectorIN3gmx19BiasCoupledToSystemESaIS1_EE12emplace_backIJNS0_4BiasERS_IiSaIiEEEEERS1_DpOT_.exit

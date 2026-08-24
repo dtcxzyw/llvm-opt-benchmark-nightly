@@ -204,12 +204,13 @@ bb.bq:                                            ; preds = %.noexc195, %.noexc1
   %i.lj = ptrtoint ptr %i.lh to i64
   %i.lk = ptrtoint ptr %i.li to i64
   %i.ll = sub i64 %i.lj, %i.lk
-  %i.lm = sdiv exact i64 %i.ll, 12                ; 4 uses
+  %i.lm = sdiv i64 %i.ll, 12                      ; 3 uses
+  %umax.i = call i64 @llvm.umax.i64(i64 %i.lm, i64 1) ; 2 uses
   %min.iters.check = icmp ult i64 %i.lm, 8
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i
-  %n.vec = and i64 %i.lm, -8                      ; 3 uses
+  %n.vec = and i64 %umax.i, -8                    ; 3 uses
   %broadcast.splatinsert = insertelement <8 x float> poison, float %.sroa.05.0, i64 0
   %broadcast.splat = shufflevector <8 x float> %broadcast.splatinsert, <8 x float> poison, <8 x i32> zeroinitializer
   %broadcast.splat82 = shufflevector <2 x float> %i.jx, <2 x float> poison, <8 x i32> zeroinitializer
@@ -255,7 +256,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   store <2 x float> %i.md, ptr %i.ly, align 4, !tbaa !102
   store float %i.mb, ptr %i.lz, align 4, !tbaa !102
   %i.me = add nuw i64 %.060.i, 1                  ; 2 uses
-  %exitcond.not.i = icmp eq i64 %i.me, %i.lm
+  %exitcond.not.i = icmp eq i64 %i.me, %umax.i
   br i1 %exitcond.not.i, label %.loopexit, label %scalar.ph, !llvm.loop !337
 
 bb.br:                                            ; preds = %bb.bn

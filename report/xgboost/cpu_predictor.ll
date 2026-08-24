@@ -205,7 +205,7 @@ _ZNK7xgboost9predictor13DataToFeatVecINS0_20GHistIndexMatrixViewINS_11CatAccesso
   %i.cd = ptrtoint ptr %.val13.i to i64
   %i.ce = ptrtoint ptr %.val12.i to i64
   %i.cf = sub i64 %i.cd, %i.ce
-  %i.cg = sdiv exact i64 %i.cf, 200
+  %i.cg = sdiv i64 %i.cf, 200
   %i.ch = getelementptr inbounds nuw i8, ptr %.8.val, i64 40
   %i.ci = zext nneg i32 %i.bv to i64              ; 2 uses
   %i.cj = mul i64 %i.g, %i.ci
@@ -608,7 +608,7 @@ _ZN7xgboost9predictor12_GLOBAL__N_19ThreadTmpILm1EE12ThreadBufferEm.exit.i: ; pr
   %i.aj = ptrtoint ptr %.val13.i to i64
   %i.ak = ptrtoint ptr %.val12.i to i64
   %i.al = sub i64 %i.aj, %i.ak
-  %i.am = sdiv exact i64 %i.al, 200
+  %i.am = sdiv i64 %i.al, 200
   %i.an = getelementptr inbounds nuw i8, ptr %.8.val, i64 40
   %i.ao = zext nneg i32 %i.ab to i64              ; 2 uses
   %i.ap = mul i64 %i.g, %i.ao
@@ -1011,7 +1011,7 @@ _ZNK7xgboost9predictor13DataToFeatVecINS0_20GHistIndexMatrixViewINS_12NoOpAccess
   %i.cd = ptrtoint ptr %.val13.i to i64
   %i.ce = ptrtoint ptr %.val12.i to i64
   %i.cf = sub i64 %i.cd, %i.ce
-  %i.cg = sdiv exact i64 %i.cf, 200
+  %i.cg = sdiv i64 %i.cf, 200
   %i.ch = getelementptr inbounds nuw i8, ptr %.8.val, i64 40
   %i.ci = zext nneg i32 %i.bv to i64              ; 2 uses
   %i.cj = mul i64 %i.g, %i.ci
@@ -1414,7 +1414,7 @@ _ZNK7xgboost9predictor13DataToFeatVecINS0_14SparsePageViewINS_12NoOpAccessorEEEE
   %i.dy = ptrtoint ptr %.val13.i to i64
   %i.dz = ptrtoint ptr %.val12.i to i64
   %i.ea = sub i64 %i.dy, %i.dz
-  %i.eb = sdiv exact i64 %i.ea, 200
+  %i.eb = sdiv i64 %i.ea, 200
   %i.ec = getelementptr inbounds nuw i8, ptr %.8.val, i64 40
   %i.ed = zext nneg i32 %i.dq to i64              ; 2 uses
   %i.ee = mul i64 %i.g, %i.ed
@@ -1817,7 +1817,7 @@ _ZNK7xgboost9predictor13DataToFeatVecINS0_20GHistIndexMatrixViewINS_11CatAccesso
   %i.cd = ptrtoint ptr %.val13.i to i64
   %i.ce = ptrtoint ptr %.val12.i to i64
   %i.cf = sub i64 %i.cd, %i.ce
-  %i.cg = sdiv exact i64 %i.cf, 200
+  %i.cg = sdiv i64 %i.cf, 200
   %i.ch = getelementptr inbounds nuw i8, ptr %.8.val, i64 40
   %i.ci = zext nneg i32 %i.bv to i64              ; 2 uses
   %i.cj = mul i64 %i.g, %i.ci
@@ -2220,7 +2220,7 @@ _ZN7xgboost9predictor12_GLOBAL__N_19ThreadTmpILm1EE12ThreadBufferEm.exit.i: ; pr
   %i.aj = ptrtoint ptr %.val13.i to i64
   %i.ak = ptrtoint ptr %.val12.i to i64
   %i.al = sub i64 %i.aj, %i.ak
-  %i.am = sdiv exact i64 %i.al, 200
+  %i.am = sdiv i64 %i.al, 200
   %i.an = getelementptr inbounds nuw i8, ptr %.8.val, i64 40
   %i.ao = zext nneg i32 %i.ab to i64              ; 2 uses
   %i.ap = mul i64 %i.g, %i.ao
@@ -2623,7 +2623,7 @@ _ZNK7xgboost9predictor13DataToFeatVecINS0_20GHistIndexMatrixViewINS_12NoOpAccess
   %i.cd = ptrtoint ptr %.val13.i to i64
   %i.ce = ptrtoint ptr %.val12.i to i64
   %i.cf = sub i64 %i.cd, %i.ce
-  %i.cg = sdiv exact i64 %i.cf, 200
+  %i.cg = sdiv i64 %i.cf, 200
   %i.ch = getelementptr inbounds nuw i8, ptr %.8.val, i64 40
   %i.ci = zext nneg i32 %i.bv to i64              ; 2 uses
   %i.cj = mul i64 %i.g, %i.ci
@@ -3026,7 +3026,7 @@ _ZNK7xgboost9predictor13DataToFeatVecINS0_14SparsePageViewINS_12NoOpAccessorEEEE
   %i.dy = ptrtoint ptr %.val13.i to i64
   %i.dz = ptrtoint ptr %.val12.i to i64
   %i.ea = sub i64 %i.dy, %i.dz
-  %i.eb = sdiv exact i64 %i.ea, 200
+  %i.eb = sdiv i64 %i.ea, 200
   %i.ec = getelementptr inbounds nuw i8, ptr %.8.val, i64 40
   %i.ed = zext nneg i32 %i.dq to i64              ; 2 uses
   %i.ee = mul i64 %i.g, %i.ed
