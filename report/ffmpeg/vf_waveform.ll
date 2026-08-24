@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 250
 inline.NumDeleted: 7
 loop-unroll.NumCompletelyUnrolled: 13
-loop-unroll.NumRuntimeUnrolled: 20
-loop-unroll.NumUnrolled: 37
+loop-unroll.NumRuntimeUnrolled: 24
+loop-unroll.NumUnrolled: 41
 begin_hunk_0_@yflat16_row:bb.a
   %i.ap = mul nsw i64 %i.an, %i.ao
   %i.aq = sext i32 %3 to i64                      ; 2 uses
@@ -205,26 +205,58 @@ bb.a:
   br i1 %i.a, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.a
-  %i.b = sitofp nsz i32 %5 to float
+  %i.b = sitofp nsz i32 %5 to float               ; 3 uses
   %i.c = mul nsw i32 %6, %2
-  %i.d = sext i32 %i.c to i64
+  %i.d = sext i32 %i.c to i64                     ; 2 uses
+  %7 = add nsw i32 %1, -1                         ; 2 uses
+  %8 = udiv i32 %7, %6                            ; 2 uses
+  %9 = add i32 %8, 1                              ; 2 uses
+  %10 = icmp ugt i32 %6, %7
+  br i1 %10, label %.epil.preheader, label %.lr.ph.new
+
+.lr.ph.new:                                       ; preds = %.lr.ph
+  %unroll_iter = and i32 %9, -2
   br label %bb.b
 
-bb.b:                                             ; preds = %.lr.ph, %bb.b
-  %.013 = phi i32 [ 0, %.lr.ph ], [ %i.k, %bb.b ]
-  %.01112 = phi ptr [ %0, %.lr.ph ], [ %i.j, %bb.b ] ; 3 uses
-  %i.e = load i8, ptr %.01112, align 1, !tbaa !62
+bb.b:                                             ; preds = %bb.b, %.lr.ph.new
+  %.01112 = phi ptr [ %0, %.lr.ph.new ], [ %i.j, %bb.b ] ; 3 uses
+  %.013 = phi i32 [ 0, %.lr.ph.new ], [ %i.k, %bb.b ]
+  %11 = load i8, ptr %.01112, align 1, !tbaa !62
+  %12 = uitofp i8 %11 to float
+  %13 = fmul nsz float %4, %12
+  %14 = tail call nsz float @llvm.fmuladd.f32(float %i.b, float %3, float %13)
+  %15 = fptoui float %14 to i8
+  store i8 %15, ptr %.01112, align 1, !tbaa !62
+  %16 = getelementptr inbounds i8, ptr %.01112, i64 %i.d ; 3 uses
+  %i.e = load i8, ptr %16, align 1, !tbaa !62
   %i.f = uitofp i8 %i.e to float
   %i.g = fmul nsz float %4, %i.f
   %i.h = tail call nsz float @llvm.fmuladd.f32(float %i.b, float %3, float %i.g)
   %i.i = fptoui float %i.h to i8
-  store i8 %i.i, ptr %.01112, align 1, !tbaa !62
-  %i.j = getelementptr inbounds i8, ptr %.01112, i64 %i.d
-  %i.k = add nsw i32 %.013, %6                    ; 2 uses
-  %7 = icmp slt i32 %i.k, %1
-  br i1 %7, label %bb.b, label %._crit_edge, !llvm.loop !262
+  store i8 %i.i, ptr %16, align 1, !tbaa !62
+  %i.j = getelementptr inbounds i8, ptr %16, i64 %i.d ; 2 uses
+  %i.k = add i32 %.013, 2                         ; 2 uses
+  %niter.ncmp.1.not = icmp eq i32 %i.k, %unroll_iter
+  br i1 %niter.ncmp.1.not, label %._crit_edge.loopexit.unr-lcssa, label %bb.b, !llvm.loop !262
 
-._crit_edge:                                      ; preds = %bb.b, %bb.a
+._crit_edge.loopexit.unr-lcssa:                   ; preds = %bb.b
+  %17 = and i32 %8, 1
+  %lcmp.mod.not.not = icmp eq i32 %17, 0
+  br i1 %lcmp.mod.not.not, label %.epil.preheader, label %._crit_edge
+
+.epil.preheader:                                  ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph
+  %.01112.epil.init = phi ptr [ %0, %.lr.ph ], [ %i.j, %._crit_edge.loopexit.unr-lcssa ] ; 2 uses
+  %lcmp.mod14 = trunc i32 %9 to i1
+  tail call void @llvm.assume(i1 %lcmp.mod14)
+  %18 = load i8, ptr %.01112.epil.init, align 1, !tbaa !62
+  %19 = uitofp i8 %18 to float
+  %20 = fmul nsz float %4, %19
+  %21 = tail call nsz float @llvm.fmuladd.f32(float %i.b, float %3, float %20)
+  %22 = fptoui float %21 to i8
+  store i8 %22, ptr %.01112.epil.init, align 1, !tbaa !62
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %.epil.preheader, %._crit_edge.loopexit.unr-lcssa, %bb.a
   ret void
 }
 
@@ -235,27 +267,59 @@ bb.a:
   br i1 %i.a, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.a
-  %i.b = sitofp nsz i32 %5 to float
+  %i.b = sitofp nsz i32 %5 to float               ; 3 uses
   %i.c = sdiv i32 %2, 2
   %i.d = mul nsw i32 %6, %i.c
-  %i.e = sext i32 %i.d to i64
+  %i.e = sext i32 %i.d to i64                     ; 2 uses
+  %7 = add nsw i32 %1, -1                         ; 2 uses
+  %8 = udiv i32 %7, %6                            ; 2 uses
+  %9 = add i32 %8, 1                              ; 2 uses
+  %10 = icmp ugt i32 %6, %7
+  br i1 %10, label %.epil.preheader, label %.lr.ph.new
+
+.lr.ph.new:                                       ; preds = %.lr.ph
+  %unroll_iter = and i32 %9, -2
   br label %bb.b
 
-bb.b:                                             ; preds = %.lr.ph, %bb.b
-  %.014 = phi i32 [ 0, %.lr.ph ], [ %i.l, %bb.b ]
-  %.01213 = phi ptr [ %0, %.lr.ph ], [ %i.k, %bb.b ] ; 3 uses
-  %i.f = load i16, ptr %.01213, align 2, !tbaa !72
+bb.b:                                             ; preds = %bb.b, %.lr.ph.new
+  %.01213 = phi ptr [ %0, %.lr.ph.new ], [ %i.k, %bb.b ] ; 3 uses
+  %.014 = phi i32 [ 0, %.lr.ph.new ], [ %i.l, %bb.b ]
+  %11 = load i16, ptr %.01213, align 2, !tbaa !72
+  %12 = uitofp i16 %11 to float
+  %13 = fmul nsz float %4, %12
+  %14 = tail call nsz float @llvm.fmuladd.f32(float %i.b, float %3, float %13)
+  %15 = fptoui float %14 to i16
+  store i16 %15, ptr %.01213, align 2, !tbaa !72
+  %16 = getelementptr inbounds [2 x i8], ptr %.01213, i64 %i.e ; 3 uses
+  %i.f = load i16, ptr %16, align 2, !tbaa !72
   %i.g = uitofp i16 %i.f to float
   %i.h = fmul nsz float %4, %i.g
   %i.i = tail call nsz float @llvm.fmuladd.f32(float %i.b, float %3, float %i.h)
   %i.j = fptoui float %i.i to i16
-  store i16 %i.j, ptr %.01213, align 2, !tbaa !72
-  %i.k = getelementptr inbounds [2 x i8], ptr %.01213, i64 %i.e
-  %i.l = add nsw i32 %.014, %6                    ; 2 uses
-  %7 = icmp slt i32 %i.l, %1
-  br i1 %7, label %bb.b, label %._crit_edge, !llvm.loop !263
+  store i16 %i.j, ptr %16, align 2, !tbaa !72
+  %i.k = getelementptr inbounds [2 x i8], ptr %16, i64 %i.e ; 2 uses
+  %i.l = add i32 %.014, 2                         ; 2 uses
+  %niter.ncmp.1.not = icmp eq i32 %i.l, %unroll_iter
+  br i1 %niter.ncmp.1.not, label %._crit_edge.loopexit.unr-lcssa, label %bb.b, !llvm.loop !263
 
-._crit_edge:                                      ; preds = %bb.b, %bb.a
+._crit_edge.loopexit.unr-lcssa:                   ; preds = %bb.b
+  %17 = and i32 %8, 1
+  %lcmp.mod.not.not = icmp eq i32 %17, 0
+  br i1 %lcmp.mod.not.not, label %.epil.preheader, label %._crit_edge
+
+.epil.preheader:                                  ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph
+  %.01213.epil.init = phi ptr [ %0, %.lr.ph ], [ %i.k, %._crit_edge.loopexit.unr-lcssa ] ; 2 uses
+  %lcmp.mod15 = trunc i32 %9 to i1
+  tail call void @llvm.assume(i1 %lcmp.mod15)
+  %18 = load i16, ptr %.01213.epil.init, align 2, !tbaa !72
+  %19 = uitofp i16 %18 to float
+  %20 = fmul nsz float %4, %19
+  %21 = tail call nsz float @llvm.fmuladd.f32(float %i.b, float %3, float %20)
+  %22 = fptoui float %21 to i16
+  store i16 %22, ptr %.01213.epil.init, align 2, !tbaa !72
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %.epil.preheader, %._crit_edge.loopexit.unr-lcssa, %bb.a
   ret void
 }
 
@@ -658,13 +722,31 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a
   %i.b = mul nsw i32 %6, %2
-  %i.c = sext i32 %i.b to i64
+  %i.c = sext i32 %i.b to i64                     ; 2 uses
+  %7 = add nsw i32 %1, -1                         ; 2 uses
+  %8 = udiv i32 %7, %6                            ; 2 uses
+  %9 = add i32 %8, 1                              ; 2 uses
+  %10 = icmp ugt i32 %6, %7
+  br i1 %10, label %.epil.preheader, label %.lr.ph.new
+
+.lr.ph.new:                                       ; preds = %.lr.ph
+  %unroll_iter = and i32 %9, -2
   br label %bb.b
 
-bb.b:                                             ; preds = %.lr.ph, %bb.b
-  %.014 = phi i32 [ 0, %.lr.ph ], [ %i.m, %bb.b ]
-  %.01213 = phi ptr [ %0, %.lr.ph ], [ %i.l, %bb.b ] ; 3 uses
-  %i.d = load i8, ptr %.01213, align 1, !tbaa !62 ; 2 uses
+bb.b:                                             ; preds = %bb.b, %.lr.ph.new
+  %.01213 = phi ptr [ %0, %.lr.ph.new ], [ %i.l, %bb.b ] ; 3 uses
+  %.014 = phi i32 [ 0, %.lr.ph.new ], [ %i.m, %bb.b ]
+  %11 = load i8, ptr %.01213, align 1, !tbaa !62  ; 2 uses
+  %12 = zext i8 %11 to i32
+  %13 = sub nsw i32 %5, %12
+  %14 = sitofp nsz i32 %13 to float
+  %15 = uitofp i8 %11 to float
+  %16 = fmul nsz float %4, %15
+  %17 = tail call nsz float @llvm.fmuladd.f32(float %14, float %3, float %16)
+  %18 = fptoui float %17 to i8
+  store i8 %18, ptr %.01213, align 1, !tbaa !62
+  %19 = getelementptr inbounds i8, ptr %.01213, i64 %i.c ; 3 uses
+  %i.d = load i8, ptr %19, align 1, !tbaa !62     ; 2 uses
   %i.e = zext i8 %i.d to i32
   %i.f = sub nsw i32 %5, %i.e
   %i.g = sitofp nsz i32 %i.f to float
@@ -672,13 +754,33 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.i = fmul nsz float %4, %i.h
   %i.j = tail call nsz float @llvm.fmuladd.f32(float %i.g, float %3, float %i.i)
   %i.k = fptoui float %i.j to i8
-  store i8 %i.k, ptr %.01213, align 1, !tbaa !62
-  %i.l = getelementptr inbounds i8, ptr %.01213, i64 %i.c
-  %i.m = add nsw i32 %.014, %6                    ; 2 uses
-  %7 = icmp slt i32 %i.m, %1
-  br i1 %7, label %bb.b, label %._crit_edge, !llvm.loop !281
+  store i8 %i.k, ptr %19, align 1, !tbaa !62
+  %i.l = getelementptr inbounds i8, ptr %19, i64 %i.c ; 2 uses
+  %i.m = add i32 %.014, 2                         ; 2 uses
+  %niter.ncmp.1.not = icmp eq i32 %i.m, %unroll_iter
+  br i1 %niter.ncmp.1.not, label %._crit_edge.loopexit.unr-lcssa, label %bb.b, !llvm.loop !281
 
-._crit_edge:                                      ; preds = %bb.b, %bb.a
+._crit_edge.loopexit.unr-lcssa:                   ; preds = %bb.b
+  %20 = and i32 %8, 1
+  %lcmp.mod.not.not = icmp eq i32 %20, 0
+  br i1 %lcmp.mod.not.not, label %.epil.preheader, label %._crit_edge
+
+.epil.preheader:                                  ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph
+  %.01213.epil.init = phi ptr [ %0, %.lr.ph ], [ %i.l, %._crit_edge.loopexit.unr-lcssa ] ; 2 uses
+  %lcmp.mod15 = trunc i32 %9 to i1
+  tail call void @llvm.assume(i1 %lcmp.mod15)
+  %21 = load i8, ptr %.01213.epil.init, align 1, !tbaa !62 ; 2 uses
+  %22 = zext i8 %21 to i32
+  %23 = sub nsw i32 %5, %22
+  %24 = sitofp nsz i32 %23 to float
+  %25 = uitofp i8 %21 to float
+  %26 = fmul nsz float %4, %25
+  %27 = tail call nsz float @llvm.fmuladd.f32(float %24, float %3, float %26)
+  %28 = fptoui float %27 to i8
+  store i8 %28, ptr %.01213.epil.init, align 1, !tbaa !62
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %.epil.preheader, %._crit_edge.loopexit.unr-lcssa, %bb.a
   ret void
 }
 
@@ -691,13 +793,31 @@ bb.a:
 .lr.ph:                                           ; preds = %bb.a
   %i.b = sdiv i32 %2, 2
   %i.c = mul nsw i32 %6, %i.b
-  %i.d = sext i32 %i.c to i64
+  %i.d = sext i32 %i.c to i64                     ; 2 uses
+  %7 = add nsw i32 %1, -1                         ; 2 uses
+  %8 = udiv i32 %7, %6                            ; 2 uses
+  %9 = add i32 %8, 1                              ; 2 uses
+  %10 = icmp ugt i32 %6, %7
+  br i1 %10, label %.epil.preheader, label %.lr.ph.new
+
+.lr.ph.new:                                       ; preds = %.lr.ph
+  %unroll_iter = and i32 %9, -2
   br label %bb.b
 
-bb.b:                                             ; preds = %.lr.ph, %bb.b
-  %.015 = phi i32 [ 0, %.lr.ph ], [ %i.n, %bb.b ]
-  %.01314 = phi ptr [ %0, %.lr.ph ], [ %i.m, %bb.b ] ; 3 uses
-  %i.e = load i16, ptr %.01314, align 2, !tbaa !72 ; 2 uses
+bb.b:                                             ; preds = %bb.b, %.lr.ph.new
+  %.01314 = phi ptr [ %0, %.lr.ph.new ], [ %i.m, %bb.b ] ; 3 uses
+  %.015 = phi i32 [ 0, %.lr.ph.new ], [ %i.n, %bb.b ]
+  %11 = load i16, ptr %.01314, align 2, !tbaa !72 ; 2 uses
+  %12 = zext i16 %11 to i32
+  %13 = sub nsw i32 %5, %12
+  %14 = sitofp nsz i32 %13 to float
+  %15 = uitofp i16 %11 to float
+  %16 = fmul nsz float %4, %15
+  %17 = tail call nsz float @llvm.fmuladd.f32(float %14, float %3, float %16)
+  %18 = fptoui float %17 to i16
+  store i16 %18, ptr %.01314, align 2, !tbaa !72
+  %19 = getelementptr inbounds [2 x i8], ptr %.01314, i64 %i.d ; 3 uses
+  %i.e = load i16, ptr %19, align 2, !tbaa !72    ; 2 uses
   %i.f = zext i16 %i.e to i32
   %i.g = sub nsw i32 %5, %i.f
   %i.h = sitofp nsz i32 %i.g to float
@@ -705,13 +825,33 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.j = fmul nsz float %4, %i.i
   %i.k = tail call nsz float @llvm.fmuladd.f32(float %i.h, float %3, float %i.j)
   %i.l = fptoui float %i.k to i16
-  store i16 %i.l, ptr %.01314, align 2, !tbaa !72
-  %i.m = getelementptr inbounds [2 x i8], ptr %.01314, i64 %i.d
-  %i.n = add nsw i32 %.015, %6                    ; 2 uses
-  %7 = icmp slt i32 %i.n, %1
-  br i1 %7, label %bb.b, label %._crit_edge, !llvm.loop !282
+  store i16 %i.l, ptr %19, align 2, !tbaa !72
+  %i.m = getelementptr inbounds [2 x i8], ptr %19, i64 %i.d ; 2 uses
+  %i.n = add i32 %.015, 2                         ; 2 uses
+  %niter.ncmp.1.not = icmp eq i32 %i.n, %unroll_iter
+  br i1 %niter.ncmp.1.not, label %._crit_edge.loopexit.unr-lcssa, label %bb.b, !llvm.loop !282
 
-._crit_edge:                                      ; preds = %bb.b, %bb.a
+._crit_edge.loopexit.unr-lcssa:                   ; preds = %bb.b
+  %20 = and i32 %8, 1
+  %lcmp.mod.not.not = icmp eq i32 %20, 0
+  br i1 %lcmp.mod.not.not, label %.epil.preheader, label %._crit_edge
+
+.epil.preheader:                                  ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph
+  %.01314.epil.init = phi ptr [ %0, %.lr.ph ], [ %i.m, %._crit_edge.loopexit.unr-lcssa ] ; 2 uses
+  %lcmp.mod16 = trunc i32 %9 to i1
+  tail call void @llvm.assume(i1 %lcmp.mod16)
+  %21 = load i16, ptr %.01314.epil.init, align 2, !tbaa !72 ; 2 uses
+  %22 = zext i16 %21 to i32
+  %23 = sub nsw i32 %5, %22
+  %24 = sitofp nsz i32 %23 to float
+  %25 = uitofp i16 %21 to float
+  %26 = fmul nsz float %4, %25
+  %27 = tail call nsz float @llvm.fmuladd.f32(float %24, float %3, float %26)
+  %28 = fptoui float %27 to i16
+  store i16 %28, ptr %.01314.epil.init, align 2, !tbaa !72
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %.epil.preheader, %._crit_edge.loopexit.unr-lcssa, %bb.a
   ret void
 }
 

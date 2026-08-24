@@ -205,15 +205,17 @@ bb.s:                                             ; preds = %bb.r
   br label %.critedge.i
 
 .critedge.i:                                      ; preds = %bb.s, %bb.r, %bb.q, %bb.p, %bb.o, %bb.n, %bb.m, %bb.l, %bb.k, %bb.j, %bb.i
-  %.0120.lcssa.i = phi i32 [ %spec.select.9.i, %bb.s ], [ 0, %bb.i ], [ %i.aw, %bb.j ], [ %spec.select.8.i, %bb.r ], [ %spec.select.1.i, %bb.k ], [ %spec.select.6.i, %bb.p ], [ %spec.select.2.i, %bb.l ], [ %spec.select.7.i, %bb.q ], [ %spec.select.3.i, %bb.m ], [ %spec.select.5.i, %bb.o ], [ %spec.select.4.i, %bb.n ] ; 2 uses
+  %.0120.lcssa.i = phi i32 [ %spec.select.9.i, %bb.s ], [ 0, %bb.i ], [ %i.aw, %bb.j ], [ %spec.select.8.i, %bb.r ], [ %spec.select.1.i, %bb.k ], [ %spec.select.6.i, %bb.p ], [ %spec.select.2.i, %bb.l ], [ %spec.select.7.i, %bb.q ], [ %spec.select.3.i, %bb.m ], [ %spec.select.5.i, %bb.o ], [ %spec.select.4.i, %bb.n ] ; 3 uses
   %.0116.lcssa.i = phi i32 [ 10, %bb.s ], [ 0, %bb.i ], [ 1, %bb.j ], [ 9, %bb.r ], [ 2, %bb.k ], [ 7, %bb.p ], [ 3, %bb.l ], [ 8, %bb.q ], [ 4, %bb.m ], [ 6, %bb.o ], [ 5, %bb.n ] ; 3 uses
-  %i.ch = add i32 %.0116.lcssa.i, %i.am           ; 2 uses
+  %i.ch = add i32 %.0116.lcssa.i, %i.am           ; 3 uses
   %i.ci = icmp ult i32 %i.ch, %i.ao
   br i1 %i.ci, label %.lr.ph.i, label %.critedge2.i
 
 .lr.ph.i:                                         ; preds = %.critedge.i
   %i.cj = load ptr, ptr %i.ap, align 8, !tbaa !39
-  %i.ck = sub i32 %i.ao, %i.am
+  %4 = add i32 %.0120.lcssa.i, %i.ao
+  %5 = sub i32 %4, %i.ch
+  %i.ck = sub i32 %i.ao, %i.am                    ; 2 uses
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.u, %.lr.ph.i
@@ -227,14 +229,14 @@ bb.t:                                             ; preds = %bb.u, %.lr.ph.i
   br i1 %i.cp, label %bb.u, label %.critedge2.i
 
 bb.u:                                             ; preds = %bb.t
-  %i.cq = add i32 %.1117149.i, 1                  ; 2 uses
-  %i.cr = add i32 %.2122148.i, 1                  ; 2 uses
-  %i.cs = add i32 %i.cq, %i.am                    ; 2 uses
-  %4 = icmp ult i32 %i.cs, %i.ao
-  br i1 %4, label %bb.t, label %.critedge2.i, !llvm.loop !90
+  %i.cq = add i32 %.1117149.i, 1                  ; 3 uses
+  %i.cr = add i32 %.2122148.i, 1
+  %i.cs = add i32 %i.cq, %i.am
+  %exitcond190.not.i = icmp eq i32 %i.cq, %i.ck
+  br i1 %exitcond190.not.i, label %.critedge2.i, label %bb.t, !llvm.loop !90
 
 .critedge2.i:                                     ; preds = %bb.u, %bb.t, %.critedge.i
-  %.2122.lcssa.i = phi i32 [ %.0120.lcssa.i, %.critedge.i ], [ %.2122148.i, %bb.t ], [ %i.cr, %bb.u ]
+  %.2122.lcssa.i = phi i32 [ %.0120.lcssa.i, %.critedge.i ], [ %.2122148.i, %bb.t ], [ %5, %bb.u ]
   %.1117.lcssa.i = phi i32 [ %.0116.lcssa.i, %.critedge.i ], [ %.1117149.i, %bb.t ], [ %i.ck, %bb.u ] ; 4 uses
   %i.ct = getelementptr inbounds nuw i8, ptr %2, i64 4148
   %i.cu = load i32, ptr %i.ct, align 4, !tbaa !40

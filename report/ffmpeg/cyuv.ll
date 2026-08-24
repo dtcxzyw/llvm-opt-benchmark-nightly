@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ffmpeg/original/cyuv?download=true
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -30,7 +32,7 @@ bb.a:
 define internal i32 @cyuv_decode_frame(ptr noundef %0, ptr noundef %1, ptr nofree noundef writeonly captures(none) %2, ptr nofree noundef readonly captures(none) %3) #1 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %3, i64 24
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !29   ; 7 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !29   ; 9 uses
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 32
   %i.d = load i32, ptr %i.c, align 8, !tbaa !31   ; 7 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 32
@@ -60,14 +62,14 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.v, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  tail call void (ptr, i32, ptr, ...) @av_log(ptr noundef nonnull %0, i32 noundef 16, ptr noundef nonnull @.str.4, i32 noundef %i.d, i32 noundef %i.t) #4
+  tail call void (ptr, i32, ptr, ...) @av_log(ptr noundef nonnull %0, i32 noundef 16, ptr noundef nonnull @.str.4, i32 noundef %i.d, i32 noundef %i.t) #5
   br label %bb.i
 
 bb.d:                                             ; preds = %bb.b, %bb.a
   %.sink = phi i32 [ 7, %bb.a ], [ 15, %bb.b ]
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 136
   store i32 %.sink, ptr %i.w, align 8, !tbaa !34
-  %i.x = tail call i32 @ff_get_buffer(ptr noundef nonnull %0, ptr noundef %1, i32 noundef 0) #4 ; 2 uses
+  %i.x = tail call i32 @ff_get_buffer(ptr noundef nonnull %0, ptr noundef %1, i32 noundef 0) #5 ; 2 uses
   %i.y = icmp slt i32 %i.x, 0
   br i1 %i.y, label %bb.i, label %bb.e
 
@@ -78,7 +80,7 @@ bb.e:                                             ; preds = %bb.d
   %i.ac = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !35 ; 2 uses
   %i.ae = icmp eq i32 %i.d, %i.m
-  %i.af = getelementptr inbounds nuw i8, ptr %1, i64 64 ; 4 uses
+  %i.af = getelementptr inbounds nuw i8, ptr %1, i64 64 ; 6 uses
   br i1 %i.ae, label %bb.f, label %.preheader
 
 .preheader:                                       ; preds = %bb.e
@@ -107,23 +109,40 @@ bb.f:                                             ; preds = %bb.e
   %i.at = load i32, ptr %i.af, align 8, !tbaa !36
   %i.au = mul nsw i32 %i.as, %i.at
   %i.av = sext i32 %i.au to i64
-  %i.aw = getelementptr inbounds i8, ptr %i.z, i64 %i.av
-  %i.ax = sext i32 %i.ar to i64                   ; 2 uses
+  %i.aw = getelementptr inbounds i8, ptr %i.z, i64 %i.av ; 2 uses
+  %i.ax = sext i32 %i.ar to i64                   ; 7 uses
   %i.ay = zext nneg i32 %i.d to i64
+  %4 = add nsw i64 %i.ay, -1                      ; 2 uses
+  %5 = udiv i64 %4, %i.ax                         ; 2 uses
+  %6 = add nuw nsw i64 %5, 1                      ; 2 uses
+  %7 = icmp ult i64 %4, %i.ax
+  br i1 %7, label %.epil.preheader, label %.lr.ph182.new
+
+.lr.ph182.new:                                    ; preds = %.lr.ph182
+  %unroll_iter = and i64 %6, 9223372036854775806
   br label %bb.g
 
-bb.g:                                             ; preds = %.lr.ph182, %bb.g
-  %indvars.iv194 = phi i64 [ 0, %.lr.ph182 ], [ %indvars.iv.next195.a, %bb.g ] ; 2 uses
-  %.0146179 = phi ptr [ %i.aw, %.lr.ph182 ], [ %i.bc, %bb.g ]
+bb.g:                                             ; preds = %bb.g, %.lr.ph182.new
+  %indvars.iv194 = phi i64 [ 0, %.lr.ph182.new ], [ %indvars.iv.next195.1, %bb.g ] ; 2 uses
+  %.0146179 = phi ptr [ %i.aw, %.lr.ph182.new ], [ %i.bc, %bb.g ]
+  %niter = phi i64 [ 0, %.lr.ph182.new ], [ %indvars.iv.next195.a, %bb.g ]
+  %8 = load i32, ptr %i.af, align 8, !tbaa !36
+  %9 = sext i32 %8 to i64
+  %10 = sub nsw i64 0, %9
+  %11 = getelementptr inbounds i8, ptr %.0146179, i64 %10 ; 2 uses
+  %12 = getelementptr inbounds i8, ptr %i.b, i64 %indvars.iv194
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %11, ptr align 1 %12, i64 %i.ax, i1 false)
+  %indvars.iv.next195 = add nsw i64 %indvars.iv194, %i.ax ; 2 uses
   %i.az = load i32, ptr %i.af, align 8, !tbaa !36
   %i.ba = sext i32 %i.az to i64
   %i.bb = sub nsw i64 0, %i.ba
-  %i.bc = getelementptr inbounds i8, ptr %.0146179, i64 %i.bb ; 2 uses
-  %i.bd = getelementptr inbounds i8, ptr %i.b, i64 %indvars.iv194
+  %i.bc = getelementptr inbounds i8, ptr %11, i64 %i.bb ; 3 uses
+  %i.bd = getelementptr inbounds i8, ptr %i.b, i64 %indvars.iv.next195
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.bc, ptr align 1 %i.bd, i64 %i.ax, i1 false)
-  %indvars.iv.next195.a = add nsw i64 %indvars.iv194, %i.ax ; 2 uses
-  %4 = icmp slt i64 %indvars.iv.next195.a, %i.ay
-  br i1 %4, label %bb.g, label %.loopexit, !llvm.loop !37
+  %indvars.iv.next195.1 = add nsw i64 %indvars.iv.next195, %i.ax ; 2 uses
+  %indvars.iv.next195.a = add i64 %niter, 2       ; 2 uses
+  %niter.ncmp.1.not = icmp eq i64 %indvars.iv.next195.a, %unroll_iter
+  br i1 %niter.ncmp.1.not, label %.loopexit.loopexit.unr-lcssa, label %bb.g, !llvm.loop !37
 
 bb.h:                                             ; preds = %.lr.ph178, %._crit_edge
   %.1177 = phi i32 [ 48, %.lr.ph178 ], [ %.2.lcssa, %._crit_edge ] ; 3 uses
@@ -291,7 +310,25 @@ bb.h:                                             ; preds = %.lr.ph178, %._crit_
   %i.fg = icmp slt i32 %i.ex, %i.ff
   br i1 %i.fg, label %bb.h, label %.loopexit, !llvm.loop !41
 
-.loopexit:                                        ; preds = %._crit_edge, %bb.g, %.preheader, %bb.f
+.loopexit.loopexit.unr-lcssa:                     ; preds = %bb.g
+  %13 = and i64 %5, 1
+  %lcmp.mod.not.not = icmp eq i64 %13, 0
+  br i1 %lcmp.mod.not.not, label %.epil.preheader, label %.loopexit
+
+.epil.preheader:                                  ; preds = %.loopexit.loopexit.unr-lcssa, %.lr.ph182
+  %indvars.iv194.epil.init = phi i64 [ 0, %.lr.ph182 ], [ %indvars.iv.next195.1, %.loopexit.loopexit.unr-lcssa ]
+  %.0146179.epil.init = phi ptr [ %i.aw, %.lr.ph182 ], [ %i.bc, %.loopexit.loopexit.unr-lcssa ]
+  %lcmp.mod205 = trunc i64 %6 to i1
+  tail call void @llvm.assume(i1 %lcmp.mod205)
+  %14 = load i32, ptr %i.af, align 8, !tbaa !36
+  %15 = sext i32 %14 to i64
+  %16 = sub nsw i64 0, %15
+  %17 = getelementptr inbounds i8, ptr %.0146179.epil.init, i64 %16
+  %18 = getelementptr inbounds i8, ptr %i.b, i64 %indvars.iv194.epil.init
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %17, ptr align 1 %18, i64 %i.ax, i1 false)
+  br label %.loopexit
+
+.loopexit:                                        ; preds = %._crit_edge, %.epil.preheader, %.loopexit.loopexit.unr-lcssa, %.preheader, %bb.f
   store i32 1, ptr %2, align 4, !tbaa !36
   br label %bb.i
 
@@ -307,11 +344,15 @@ declare i32 @ff_get_buffer(ptr noundef, ptr noundef, i32 noundef) local_unnamed_
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #3
 
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
+declare void @llvm.assume(i1 noundef) #4
+
 attributes #0 = { cold mustprogress nofree norecurse nosync nounwind optsize willreturn memory(argmem: read) uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nounwind uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #3 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
-attributes #4 = { nounwind }
+attributes #4 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #5 = { nounwind }
 
 !llvm.module.flags = !{!0, !1, !2}
 !llvm.ident = !{!3}

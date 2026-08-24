@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/cpython/original/unicode_writer?download=true
 inline.NumInlined: 41
 inline.NumDeleted: 21
-loop-unroll.NumRuntimeUnrolled: 2
-loop-unroll.NumUnrolled: 2
+loop-unroll.NumRuntimeUnrolled: 4
+loop-unroll.NumUnrolled: 4
 begin_hunk_0_@PyUnicodeWriter_WriteStr:bb.a
   br label %Py_DECREF.exit
 
@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  %.089 = phi i64 [ %i.c, %bb.b ], [ %2, %bb.a ]  ; 14 uses
+  %.089 = phi i64 [ %i.c, %bb.b ], [ %2, %bb.a ]  ; 16 uses
   %i.d = load ptr, ptr %0, align 8, !tbaa !26
   %i.e = icmp eq ptr %i.d, null
   br i1 %i.e, label %bb.d, label %bb.j
@@ -320,21 +320,60 @@ bb.m:                                             ; preds = %.critedge
   br label %.loopexit
 
 bb.n:                                             ; preds = %.critedge
-  %i.ar = getelementptr [2 x i8], ptr %i.an, i64 %i.ap ; 2 uses
+  %i.ar = getelementptr [2 x i8], ptr %i.an, i64 %i.ap ; 7 uses
   %i.as = getelementptr i8, ptr %1, i64 %.089
   %i.at = and i64 %.089, -4
   %i.au = getelementptr i8, ptr %1, i64 %i.at     ; 2 uses
   %i.av = icmp ult ptr %1, %i.au
-  br i1 %i.av, label %.lr.ph103, label %.preheader
+  br i1 %i.av, label %.lr.ph103.preheader, label %.preheader
 
-.preheader.loopexit:                              ; preds = %.lr.ph103
-  %.pre117 = ptrtoaddr ptr %i.cf to i64
+.lr.ph103.preheader:                              ; preds = %bb.n
+  %3 = add i64 %.089, -4                          ; 2 uses
+  %4 = and i64 %3, 4
+  %lcmp.mod173.not.not = icmp eq i64 %4, 0
+  br i1 %lcmp.mod173.not.not, label %.lr.ph103.prol, label %.lr.ph103.prol.loopexit
+
+.lr.ph103.prol:                                   ; preds = %.lr.ph103.preheader
+  %5 = load i8, ptr %1, align 1, !tbaa !23
+  %6 = zext i8 %5 to i16
+  store i16 %6, ptr %i.ar, align 2, !tbaa !38
+  %7 = getelementptr i8, ptr %1, i64 1
+  %8 = load i8, ptr %7, align 1, !tbaa !23
+  %9 = zext i8 %8 to i16
+  %10 = getelementptr i8, ptr %i.ar, i64 2
+  store i16 %9, ptr %10, align 2, !tbaa !38
+  %11 = getelementptr i8, ptr %1, i64 2
+  %12 = load i8, ptr %11, align 1, !tbaa !23
+  %13 = zext i8 %12 to i16
+  %14 = getelementptr i8, ptr %i.ar, i64 4
+  store i16 %13, ptr %14, align 2, !tbaa !38
+  %15 = getelementptr i8, ptr %1, i64 3
+  %16 = load i8, ptr %15, align 1, !tbaa !23
+  %17 = zext i8 %16 to i16
+  %18 = getelementptr i8, ptr %i.ar, i64 6
+  store i16 %17, ptr %18, align 2, !tbaa !38
+  %19 = getelementptr i8, ptr %1, i64 4           ; 2 uses
+  %20 = getelementptr i8, ptr %i.ar, i64 8        ; 2 uses
+  br label %.lr.ph103.prol.loopexit
+
+.lr.ph103.prol.loopexit:                          ; preds = %.lr.ph103.prol, %.lr.ph103.preheader
+  %.083102.unr = phi ptr [ %1, %.lr.ph103.preheader ], [ %19, %.lr.ph103.prol ]
+  %.085101.unr = phi ptr [ %i.ar, %.lr.ph103.preheader ], [ %20, %.lr.ph103.prol ]
+  %.lcssa167.unr = phi ptr [ poison, %.lr.ph103.preheader ], [ %19, %.lr.ph103.prol ]
+  %.lcssa.unr = phi ptr [ poison, %.lr.ph103.preheader ], [ %20, %.lr.ph103.prol ]
+  %21 = icmp ult i64 %3, 4
+  br i1 %21, label %.preheader.loopexit, label %.lr.ph103
+
+.preheader.loopexit:                              ; preds = %.lr.ph103, %.lr.ph103.prol.loopexit
+  %.lcssa167 = phi ptr [ %.lcssa167.unr, %.lr.ph103.prol.loopexit ], [ %i.cf, %.lr.ph103 ] ; 2 uses
+  %.lcssa = phi ptr [ %.lcssa.unr, %.lr.ph103.prol.loopexit ], [ %i.cg, %.lr.ph103 ]
+  %.pre117 = ptrtoaddr ptr %.lcssa167 to i64
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.loopexit, %bb.n
   %.083.lcssa114.pre-phi = phi i64 [ %.pre117, %.preheader.loopexit ], [ %i.a, %bb.n ] ; 2 uses
-  %.085.lcssa = phi ptr [ %i.cg, %.preheader.loopexit ], [ %i.ar, %bb.n ] ; 8 uses
-  %.083.lcssa = phi ptr [ %i.cf, %.preheader.loopexit ], [ %1, %bb.n ] ; 9 uses
+  %.085.lcssa = phi ptr [ %.lcssa, %.preheader.loopexit ], [ %i.ar, %bb.n ] ; 8 uses
+  %.083.lcssa = phi ptr [ %.lcssa167, %.preheader.loopexit ], [ %1, %bb.n ] ; 9 uses
   %i.aw = icmp ult ptr %.083.lcssa, %i.as
   br i1 %i.aw, label %iter.check, label %.loopexit
 
@@ -420,29 +459,49 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %.186106.ph = phi ptr [ %.085.lcssa, %iter.check ], [ %.085.lcssa, %vector.memcheck137 ], [ %i.be, %vec.epilog.iter.check ], [ %i.bn, %vec.epilog.middle.block ]
   br label %.lr.ph108
 
-.lr.ph103:                                        ; preds = %bb.n, %.lr.ph103
-  %.083102 = phi ptr [ %i.cf, %.lr.ph103 ], [ %1, %bb.n ] ; 5 uses
-  %.085101 = phi ptr [ %i.cg, %.lr.ph103 ], [ %i.ar, %bb.n ] ; 5 uses
-  %i.br = load i8, ptr %.083102, align 1, !tbaa !23
+.lr.ph103:                                        ; preds = %.lr.ph103.prol.loopexit, %.lr.ph103
+  %.083102 = phi ptr [ %i.cf, %.lr.ph103 ], [ %.083102.unr, %.lr.ph103.prol.loopexit ] ; 9 uses
+  %.085101 = phi ptr [ %i.cg, %.lr.ph103 ], [ %.085101.unr, %.lr.ph103.prol.loopexit ] ; 9 uses
+  %22 = load i8, ptr %.083102, align 1, !tbaa !23
+  %23 = zext i8 %22 to i16
+  store i16 %23, ptr %.085101, align 2, !tbaa !38
+  %24 = getelementptr i8, ptr %.083102, i64 1
+  %25 = load i8, ptr %24, align 1, !tbaa !23
+  %26 = zext i8 %25 to i16
+  %27 = getelementptr i8, ptr %.085101, i64 2
+  store i16 %26, ptr %27, align 2, !tbaa !38
+  %28 = getelementptr i8, ptr %.083102, i64 2
+  %29 = load i8, ptr %28, align 1, !tbaa !23
+  %30 = zext i8 %29 to i16
+  %31 = getelementptr i8, ptr %.085101, i64 4
+  store i16 %30, ptr %31, align 2, !tbaa !38
+  %32 = getelementptr i8, ptr %.083102, i64 3
+  %33 = load i8, ptr %32, align 1, !tbaa !23
+  %34 = zext i8 %33 to i16
+  %35 = getelementptr i8, ptr %.085101, i64 6
+  store i16 %34, ptr %35, align 2, !tbaa !38
+  %36 = getelementptr i8, ptr %.083102, i64 4
+  %37 = getelementptr i8, ptr %.085101, i64 8
+  %i.br = load i8, ptr %36, align 1, !tbaa !23
   %i.bs = zext i8 %i.br to i16
-  store i16 %i.bs, ptr %.085101, align 2, !tbaa !38
-  %i.bt = getelementptr i8, ptr %.083102, i64 1
+  store i16 %i.bs, ptr %37, align 2, !tbaa !38
+  %i.bt = getelementptr i8, ptr %.083102, i64 5
   %i.bu = load i8, ptr %i.bt, align 1, !tbaa !23
   %i.bv = zext i8 %i.bu to i16
-  %i.bw = getelementptr i8, ptr %.085101, i64 2
+  %i.bw = getelementptr i8, ptr %.085101, i64 10
   store i16 %i.bv, ptr %i.bw, align 2, !tbaa !38
-  %i.bx = getelementptr i8, ptr %.083102, i64 2
+  %i.bx = getelementptr i8, ptr %.083102, i64 6
   %i.by = load i8, ptr %i.bx, align 1, !tbaa !23
   %i.bz = zext i8 %i.by to i16
-  %i.ca = getelementptr i8, ptr %.085101, i64 4
+  %i.ca = getelementptr i8, ptr %.085101, i64 12
   store i16 %i.bz, ptr %i.ca, align 2, !tbaa !38
-  %i.cb = getelementptr i8, ptr %.083102, i64 3
+  %i.cb = getelementptr i8, ptr %.083102, i64 7
   %i.cc = load i8, ptr %i.cb, align 1, !tbaa !23
   %i.cd = zext i8 %i.cc to i16
-  %i.ce = getelementptr i8, ptr %.085101, i64 6
+  %i.ce = getelementptr i8, ptr %.085101, i64 14
   store i16 %i.cd, ptr %i.ce, align 2, !tbaa !38
-  %i.cf = getelementptr i8, ptr %.083102, i64 4   ; 4 uses
-  %i.cg = getelementptr i8, ptr %.085101, i64 8   ; 2 uses
+  %i.cf = getelementptr i8, ptr %.083102, i64 8   ; 3 uses
+  %i.cg = getelementptr i8, ptr %.085101, i64 16  ; 2 uses
   %i.ch = icmp ult ptr %i.cf, %i.au
   br i1 %i.ch, label %.lr.ph103, label %.preheader.loopexit, !llvm.loop !59
 
@@ -458,21 +517,60 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br i1 %exitcond116.not, label %.loopexit, label %.lr.ph108, !llvm.loop !60
 
 bb.o:                                             ; preds = %.critedge
-  %i.cm = getelementptr [4 x i8], ptr %i.an, i64 %i.ap ; 2 uses
+  %i.cm = getelementptr [4 x i8], ptr %i.an, i64 %i.ap ; 7 uses
   %i.cn = getelementptr i8, ptr %1, i64 %.089
   %i.co = and i64 %.089, -4
   %i.cp = getelementptr i8, ptr %1, i64 %i.co     ; 2 uses
   %i.cq = icmp ult ptr %1, %i.cp
-  br i1 %i.cq, label %.lr.ph, label %.preheader93
+  br i1 %i.cq, label %.lr.ph.preheader, label %.preheader93
 
-.preheader93.loopexit:                            ; preds = %.lr.ph
-  %.pre118 = ptrtoaddr ptr %i.dt to i64
+.lr.ph.preheader:                                 ; preds = %bb.o
+  %38 = add i64 %.089, -4                         ; 2 uses
+  %39 = and i64 %38, 4
+  %lcmp.mod.not.not = icmp eq i64 %39, 0
+  br i1 %lcmp.mod.not.not, label %.lr.ph.prol, label %.lr.ph.prol.loopexit
+
+.lr.ph.prol:                                      ; preds = %.lr.ph.preheader
+  %40 = load i8, ptr %1, align 1, !tbaa !23
+  %41 = zext i8 %40 to i32
+  store i32 %41, ptr %i.cm, align 4, !tbaa !7
+  %42 = getelementptr i8, ptr %1, i64 1
+  %43 = load i8, ptr %42, align 1, !tbaa !23
+  %44 = zext i8 %43 to i32
+  %45 = getelementptr i8, ptr %i.cm, i64 4
+  store i32 %44, ptr %45, align 4, !tbaa !7
+  %46 = getelementptr i8, ptr %1, i64 2
+  %47 = load i8, ptr %46, align 1, !tbaa !23
+  %48 = zext i8 %47 to i32
+  %49 = getelementptr i8, ptr %i.cm, i64 8
+  store i32 %48, ptr %49, align 4, !tbaa !7
+  %50 = getelementptr i8, ptr %1, i64 3
+  %51 = load i8, ptr %50, align 1, !tbaa !23
+  %52 = zext i8 %51 to i32
+  %53 = getelementptr i8, ptr %i.cm, i64 12
+  store i32 %52, ptr %53, align 4, !tbaa !7
+  %54 = getelementptr i8, ptr %1, i64 4           ; 2 uses
+  %55 = getelementptr i8, ptr %i.cm, i64 16       ; 2 uses
+  br label %.lr.ph.prol.loopexit
+
+.lr.ph.prol.loopexit:                             ; preds = %.lr.ph.prol, %.lr.ph.preheader
+  %.096.unr = phi ptr [ %1, %.lr.ph.preheader ], [ %54, %.lr.ph.prol ]
+  %.08195.unr = phi ptr [ %i.cm, %.lr.ph.preheader ], [ %55, %.lr.ph.prol ]
+  %.lcssa171.unr = phi ptr [ poison, %.lr.ph.preheader ], [ %54, %.lr.ph.prol ]
+  %.lcssa170.unr = phi ptr [ poison, %.lr.ph.preheader ], [ %55, %.lr.ph.prol ]
+  %56 = icmp ult i64 %38, 4
+  br i1 %56, label %.preheader93.loopexit, label %.lr.ph
+
+.preheader93.loopexit:                            ; preds = %.lr.ph, %.lr.ph.prol.loopexit
+  %.lcssa171 = phi ptr [ %.lcssa171.unr, %.lr.ph.prol.loopexit ], [ %i.dt, %.lr.ph ] ; 2 uses
+  %.lcssa170 = phi ptr [ %.lcssa170.unr, %.lr.ph.prol.loopexit ], [ %i.du, %.lr.ph ]
+  %.pre118 = ptrtoaddr ptr %.lcssa171 to i64
   br label %.preheader93
 
 .preheader93:                                     ; preds = %.preheader93.loopexit, %bb.o
   %.0.lcssa113.pre-phi = phi i64 [ %.pre118, %.preheader93.loopexit ], [ %i.a, %bb.o ] ; 2 uses
-  %.081.lcssa = phi ptr [ %i.du, %.preheader93.loopexit ], [ %i.cm, %bb.o ] ; 6 uses
-  %.0.lcssa = phi ptr [ %i.dt, %.preheader93.loopexit ], [ %1, %bb.o ] ; 7 uses
+  %.081.lcssa = phi ptr [ %.lcssa170, %.preheader93.loopexit ], [ %i.cm, %bb.o ] ; 6 uses
+  %.0.lcssa = phi ptr [ %.lcssa171, %.preheader93.loopexit ], [ %1, %bb.o ] ; 7 uses
   %i.cr = icmp ult ptr %.0.lcssa, %i.cn
   br i1 %i.cr, label %.lr.ph100.preheader, label %.loopexit
 
@@ -525,29 +623,49 @@ middle.block:                                     ; preds = %vector.body
   %.18298.ph = phi ptr [ %.081.lcssa, %vector.memcheck ], [ %.081.lcssa, %.lr.ph100.preheader ], [ %i.cy, %middle.block ]
   br label %.lr.ph100
 
-.lr.ph:                                           ; preds = %bb.o, %.lr.ph
-  %.096 = phi ptr [ %i.dt, %.lr.ph ], [ %1, %bb.o ] ; 5 uses
-  %.08195 = phi ptr [ %i.du, %.lr.ph ], [ %i.cm, %bb.o ] ; 5 uses
-  %i.df = load i8, ptr %.096, align 1, !tbaa !23
+.lr.ph:                                           ; preds = %.lr.ph.prol.loopexit, %.lr.ph
+  %.096 = phi ptr [ %i.dt, %.lr.ph ], [ %.096.unr, %.lr.ph.prol.loopexit ] ; 9 uses
+  %.08195 = phi ptr [ %i.du, %.lr.ph ], [ %.08195.unr, %.lr.ph.prol.loopexit ] ; 9 uses
+  %57 = load i8, ptr %.096, align 1, !tbaa !23
+  %58 = zext i8 %57 to i32
+  store i32 %58, ptr %.08195, align 4, !tbaa !7
+  %59 = getelementptr i8, ptr %.096, i64 1
+  %60 = load i8, ptr %59, align 1, !tbaa !23
+  %61 = zext i8 %60 to i32
+  %62 = getelementptr i8, ptr %.08195, i64 4
+  store i32 %61, ptr %62, align 4, !tbaa !7
+  %63 = getelementptr i8, ptr %.096, i64 2
+  %64 = load i8, ptr %63, align 1, !tbaa !23
+  %65 = zext i8 %64 to i32
+  %66 = getelementptr i8, ptr %.08195, i64 8
+  store i32 %65, ptr %66, align 4, !tbaa !7
+  %67 = getelementptr i8, ptr %.096, i64 3
+  %68 = load i8, ptr %67, align 1, !tbaa !23
+  %69 = zext i8 %68 to i32
+  %70 = getelementptr i8, ptr %.08195, i64 12
+  store i32 %69, ptr %70, align 4, !tbaa !7
+  %71 = getelementptr i8, ptr %.096, i64 4
+  %72 = getelementptr i8, ptr %.08195, i64 16
+  %i.df = load i8, ptr %71, align 1, !tbaa !23
   %i.dg = zext i8 %i.df to i32
-  store i32 %i.dg, ptr %.08195, align 4, !tbaa !7
-  %i.dh = getelementptr i8, ptr %.096, i64 1
+  store i32 %i.dg, ptr %72, align 4, !tbaa !7
+  %i.dh = getelementptr i8, ptr %.096, i64 5
   %i.di = load i8, ptr %i.dh, align 1, !tbaa !23
   %i.dj = zext i8 %i.di to i32
-  %i.dk = getelementptr i8, ptr %.08195, i64 4
+  %i.dk = getelementptr i8, ptr %.08195, i64 20
   store i32 %i.dj, ptr %i.dk, align 4, !tbaa !7
-  %i.dl = getelementptr i8, ptr %.096, i64 2
+  %i.dl = getelementptr i8, ptr %.096, i64 6
   %i.dm = load i8, ptr %i.dl, align 1, !tbaa !23
   %i.dn = zext i8 %i.dm to i32
-  %i.do = getelementptr i8, ptr %.08195, i64 8
+  %i.do = getelementptr i8, ptr %.08195, i64 24
   store i32 %i.dn, ptr %i.do, align 4, !tbaa !7
-  %i.dp = getelementptr i8, ptr %.096, i64 3
+  %i.dp = getelementptr i8, ptr %.096, i64 7
   %i.dq = load i8, ptr %i.dp, align 1, !tbaa !23
   %i.dr = zext i8 %i.dq to i32
-  %i.ds = getelementptr i8, ptr %.08195, i64 12
+  %i.ds = getelementptr i8, ptr %.08195, i64 28
   store i32 %i.dr, ptr %i.ds, align 4, !tbaa !7
-  %i.dt = getelementptr i8, ptr %.096, i64 4      ; 4 uses
-  %i.du = getelementptr i8, ptr %.08195, i64 16   ; 2 uses
+  %i.dt = getelementptr i8, ptr %.096, i64 8      ; 3 uses
+  %i.du = getelementptr i8, ptr %.08195, i64 32   ; 2 uses
   %i.dv = icmp ult ptr %i.dt, %i.cp
   br i1 %i.dv, label %.lr.ph, label %.preheader93.loopexit, !llvm.loop !67
 

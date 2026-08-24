@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/lvgl/original/lv_draw_sw_blend_to_rgb888?download=true
 inline.NumInlined: 83
 inline.NumDeleted: 12
-loop-unroll.NumRuntimeUnrolled: 4
-loop-unroll.NumUnrolled: 4
+loop-unroll.NumRuntimeUnrolled: 5
+loop-unroll.NumUnrolled: 5
 begin_hunk_0_@lv_draw_sw_blend_image_to_rgb888:bb.a
   %i.cap = load i8, ptr %i.cao, align 1, !tbaa !21 ; 2 uses
   %i.caq = zext i8 %i.cap to i32
@@ -204,23 +204,47 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.aj, label %.preheader206.us.preheader, label %.loopexit
 
 .preheader206.us.preheader:                       ; preds = %.preheader206.lr.ph
-  %i.am = zext i8 %1 to i64
+  %i.am = zext i8 %1 to i64                       ; 4 uses
   %i.an = zext nneg i32 %i.d to i64
+  %3 = add nsw i64 %i.an, -1                      ; 2 uses
+  %4 = udiv i64 %3, %i.am                         ; 2 uses
+  %5 = add i64 %4, 1                              ; 2 uses
+  %6 = icmp ult i64 %3, %i.am
+  %unroll_iter = and i64 %5, -2
+  %7 = and i64 %4, 1
+  %lcmp.mod.not.not = icmp eq i64 %7, 0
+  %lcmp.mod383 = trunc i64 %5 to i1
   br label %.preheader206.us
 
 .preheader206.us:                                 ; preds = %.preheader206.us.preheader, %._crit_edge220.us
   %.1223.us = phi i32 [ %i.bb, %._crit_edge220.us ], [ 0, %.preheader206.us.preheader ]
-  %.1177222.us = phi ptr [ %i.ba, %._crit_edge220.us ], [ %i.m, %.preheader206.us.preheader ] ; 2 uses
-  %.1183221.us = phi ptr [ %i.az, %._crit_edge220.us ], [ %i.i, %.preheader206.us.preheader ] ; 2 uses
-  br label %bb.d
+  %.1177222.us = phi ptr [ %i.ba, %._crit_edge220.us ], [ %i.m, %.preheader206.us.preheader ] ; 4 uses
+  %.1183221.us = phi ptr [ %i.az, %._crit_edge220.us ], [ %i.i, %.preheader206.us.preheader ] ; 4 uses
+  br i1 %6, label %.epil.preheader, label %bb.d
 
 bb.d:                                             ; preds = %.preheader206.us, %bb.d
-  %indvars.iv296 = phi i64 [ 0, %.preheader206.us ], [ %indvars.iv.next297.a, %bb.d ] ; 2 uses
-  %.0161219.us = phi i32 [ 0, %.preheader206.us ], [ %i.ay, %bb.d ] ; 2 uses
-  %i.ao = sext i32 %.0161219.us to i64
+  %indvars.iv296 = phi i64 [ %indvars.iv.next297.a, %bb.d ], [ 0, %.preheader206.us ] ; 2 uses
+  %.0161219.us = phi i32 [ %i.ay, %bb.d ], [ 0, %.preheader206.us ] ; 2 uses
+  %niter = phi i64 [ %niter.next.1, %bb.d ], [ 0, %.preheader206.us ]
+  %8 = sext i32 %.0161219.us to i64
+  %9 = getelementptr inbounds i8, ptr %.1177222.us, i64 %8 ; 3 uses
+  %10 = load i8, ptr %9, align 1, !tbaa !21
+  %11 = getelementptr inbounds nuw i8, ptr %.1183221.us, i64 %indvars.iv296 ; 3 uses
+  store i8 %10, ptr %11, align 1, !tbaa !21
+  %12 = getelementptr i8, ptr %9, i64 1
+  %13 = load i8, ptr %12, align 1, !tbaa !21
+  %14 = getelementptr inbounds nuw i8, ptr %11, i64 1
+  store i8 %13, ptr %14, align 1, !tbaa !21
+  %15 = getelementptr i8, ptr %9, i64 2
+  %16 = load i8, ptr %15, align 1, !tbaa !21
+  %17 = getelementptr inbounds nuw i8, ptr %11, i64 2
+  store i8 %16, ptr %17, align 1, !tbaa !21
+  %indvars.iv.next297 = add nuw nsw i64 %indvars.iv296, %i.am ; 2 uses
+  %18 = add i32 %.0161219.us, %2                  ; 2 uses
+  %i.ao = sext i32 %18 to i64
   %i.ap = getelementptr inbounds i8, ptr %.1177222.us, i64 %i.ao ; 3 uses
   %i.aq = load i8, ptr %i.ap, align 1, !tbaa !21
-  %i.ar = getelementptr inbounds nuw i8, ptr %.1183221.us, i64 %indvars.iv296 ; 3 uses
+  %i.ar = getelementptr inbounds nuw i8, ptr %.1183221.us, i64 %indvars.iv.next297 ; 3 uses
   store i8 %i.aq, ptr %i.ar, align 1, !tbaa !21
   %i.as = getelementptr i8, ptr %i.ap, i64 1
   %i.at = load i8, ptr %i.as, align 1, !tbaa !21
@@ -230,12 +254,35 @@ bb.d:                                             ; preds = %.preheader206.us, %
   %i.aw = load i8, ptr %i.av, align 1, !tbaa !21
   %i.ax = getelementptr inbounds nuw i8, ptr %i.ar, i64 2
   store i8 %i.aw, ptr %i.ax, align 1, !tbaa !21
-  %indvars.iv.next297.a = add nuw nsw i64 %indvars.iv296, %i.am ; 2 uses
-  %i.ay = add i32 %.0161219.us, %2
-  %3 = icmp samesign ult i64 %indvars.iv.next297.a, %i.an
-  br i1 %3, label %bb.d, label %._crit_edge220.us, !llvm.loop !134
+  %indvars.iv.next297.a = add nuw nsw i64 %indvars.iv.next297, %i.am ; 2 uses
+  %i.ay = add i32 %18, %2                         ; 2 uses
+  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.ncmp.1.not = icmp eq i64 %niter.next.1, %unroll_iter
+  br i1 %niter.ncmp.1.not, label %._crit_edge220.us.unr-lcssa, label %bb.d, !llvm.loop !134
 
-._crit_edge220.us:                                ; preds = %bb.d
+._crit_edge220.us.unr-lcssa:                      ; preds = %bb.d
+  br i1 %lcmp.mod.not.not, label %.epil.preheader, label %._crit_edge220.us
+
+.epil.preheader:                                  ; preds = %._crit_edge220.us.unr-lcssa, %.preheader206.us
+  %indvars.iv296.epil.init = phi i64 [ 0, %.preheader206.us ], [ %indvars.iv.next297.a, %._crit_edge220.us.unr-lcssa ]
+  %.0161219.us.epil.init = phi i32 [ 0, %.preheader206.us ], [ %i.ay, %._crit_edge220.us.unr-lcssa ]
+  tail call void @llvm.assume(i1 %lcmp.mod383)
+  %19 = sext i32 %.0161219.us.epil.init to i64
+  %20 = getelementptr inbounds i8, ptr %.1177222.us, i64 %19 ; 3 uses
+  %21 = load i8, ptr %20, align 1, !tbaa !21
+  %22 = getelementptr inbounds nuw i8, ptr %.1183221.us, i64 %indvars.iv296.epil.init ; 3 uses
+  store i8 %21, ptr %22, align 1, !tbaa !21
+  %23 = getelementptr i8, ptr %20, i64 1
+  %24 = load i8, ptr %23, align 1, !tbaa !21
+  %25 = getelementptr inbounds nuw i8, ptr %22, i64 1
+  store i8 %24, ptr %25, align 1, !tbaa !21
+  %26 = getelementptr i8, ptr %20, i64 2
+  %27 = load i8, ptr %26, align 1, !tbaa !21
+  %28 = getelementptr inbounds nuw i8, ptr %22, i64 2
+  store i8 %27, ptr %28, align 1, !tbaa !21
+  br label %._crit_edge220.us
+
+._crit_edge220.us:                                ; preds = %._crit_edge220.us.unr-lcssa, %.epil.preheader
   %i.az = getelementptr inbounds i8, ptr %.1183221.us, i64 %i.ak ; 2 uses
   %i.ba = getelementptr inbounds i8, ptr %.1177222.us, i64 %i.al ; 2 uses
   %i.bb = add nuw nsw i32 %.1223.us, 1            ; 2 uses
