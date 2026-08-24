@@ -204,7 +204,7 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
   %i.d = load i32, ptr %i.c, align 4, !tbaa !64   ; 7 uses
   %i.e = icmp sgt i32 %i.d, 0
-  %i.f = add nsw i32 %i.d, -1                     ; 5 uses
+  %i.f = add nsw i32 %i.d, -1                     ; 6 uses
   br i1 %i.e, label %.lr.ph, label %.loopexit42
 
 .lr.ph:                                           ; preds = %bb.a
@@ -212,8 +212,7 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.e
-  %indvars.iv55 = phi i32 [ 1, %.lr.ph ], [ %indvars.iv.next56, %bb.e ] ; 2 uses
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.e ] ; 5 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.e ] ; 6 uses
   %.03946 = phi i32 [ -1, %.lr.ph ], [ %spec.select, %bb.e ]
   %i.g = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %indvars.iv
   %i.h = load i32, ptr %i.g, align 4, !tbaa !83   ; 2 uses
@@ -238,30 +237,28 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.u, label %.preheader.preheader, label %.loopexit
 
 .preheader.preheader:                             ; preds = %bb.c
-  %i.v = zext nneg i32 %i.d to i64                ; 2 uses
-  %smax = tail call i32 @llvm.smax.i32(i32 %i.d, i32 %indvars.iv55) ; 2 uses
-  %indvars.iv.next5477 = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %3 = icmp samesign ult i64 %indvars.iv.next5477, %i.v
-  br i1 %3, label %.lr.ph79, label %.loopexit
+  %i.v = zext nneg i32 %i.f to i64                ; 2 uses
+  %exitcond57.not73 = icmp eq i64 %indvars.iv, %i.v
+  br i1 %exitcond57.not73, label %.loopexit, label %.lr.ph79
 
 .preheader:                                       ; preds = %.lr.ph79
-  %indvars.iv.next54 = add nuw nsw i64 %indvars.iv.next5478, 1 ; 2 uses
-  %4 = icmp samesign ult i64 %indvars.iv.next54, %i.v
-  br i1 %4, label %.lr.ph79, label %.loopexit, !llvm.loop !155
+  %exitcond57.not = icmp eq i64 %indvars.iv.next54, %i.v
+  br i1 %exitcond57.not, label %.loopexit, label %.lr.ph79, !llvm.loop !155
 
 .lr.ph79:                                         ; preds = %.preheader.preheader, %.preheader
-  %indvars.iv.next5478 = phi i64 [ %indvars.iv.next54, %.preheader ], [ %indvars.iv.next5477, %.preheader.preheader ] ; 3 uses
-  %i.w = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %indvars.iv.next5478
+  %indvars.iv.next5478 = phi i64 [ %indvars.iv.next54, %.preheader ], [ %indvars.iv, %.preheader.preheader ]
+  %indvars.iv.next54 = add nuw nsw i64 %indvars.iv.next5478, 1 ; 4 uses
+  %i.w = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %indvars.iv.next54
   %i.x = load i32, ptr %i.w, align 4, !tbaa !83
   %i.y = icmp eq i32 %i.x, %i.f
   br i1 %i.y, label %.loopexit.loopexit.split.loop.exit, label %.preheader, !llvm.loop !155
 
 .loopexit.loopexit.split.loop.exit:               ; preds = %.lr.ph79
-  %i.z = trunc nuw nsw i64 %indvars.iv.next5478 to i32
+  %i.z = trunc nuw nsw i64 %indvars.iv.next54 to i32
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.preheader, %.preheader.preheader, %.loopexit.loopexit.split.loop.exit, %bb.c
-  %.1 = phi i32 [ %spec.select, %bb.c ], [ %i.z, %.loopexit.loopexit.split.loop.exit ], [ %smax, %.preheader.preheader ], [ %smax, %.preheader ]
+  %.1 = phi i32 [ %spec.select, %bb.c ], [ %i.z, %.loopexit.loopexit.split.loop.exit ], [ %i.d, %.preheader.preheader ], [ %i.d, %.preheader ]
   %i.aa = load i32, ptr %i.l, align 4, !tbaa !83
   %i.ab = sext i32 %.1 to i64
   %i.ac = getelementptr inbounds [4 x i8], ptr %i.b, i64 %i.ab
@@ -281,7 +278,6 @@ bb.d:                                             ; preds = %.loopexit
 bb.e:                                             ; preds = %bb.b
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  %indvars.iv.next56 = add nuw i32 %indvars.iv55, 1
   br i1 %exitcond.not, label %.loopexit42, label %bb.b, !llvm.loop !156
 
 .loopexit42:                                      ; preds = %bb.e, %bb.a, %.loopexit, %bb.d
@@ -682,9 +678,6 @@ declare void @_Z21btAlignedFreeInternalPv(ptr noundef) local_unnamed_addr #6
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #7
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #2
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x float> @llvm.fmuladd.v4f32(<4 x float>, <4 x float>, <4 x float>) #2
