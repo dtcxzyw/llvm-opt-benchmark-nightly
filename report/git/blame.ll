@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.k, %.lr.ph.i
   %.05984.i = phi i32 [ 0, %.lr.ph.i ], [ %.160.i, %bb.k ] ; 2 uses
   %.06183.i = phi i32 [ 0, %.lr.ph.i ], [ %.162.i, %bb.k ] ; 2 uses
   %.06382.i = phi i32 [ 0, %.lr.ph.i ], [ %.164.i, %bb.k ] ; 3 uses
-  %i.ah = trunc i64 %indvars.iv.i to i32          ; 3 uses
+  %i.ah = trunc nuw nsw i64 %indvars.iv.i to i32  ; 3 uses
   %i.ai = sub i32 %i.ah, %i.x
   %i.aj = call i32 @llvm.abs.i32(i32 %i.ai, i1 true) ; 2 uses
   %.not.i.i = icmp samesign ugt i32 %i.aj, %10
@@ -276,8 +276,8 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   %.160.i = phi i32 [ %.05984.i, %bb.j ], [ %i.ah, %bb.i ] ; 2 uses
   %.1.i = phi i32 [ %spec.select74.i, %bb.j ], [ %.05984.i, %bb.i ] ; 2 uses
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
-  %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
-  br i1 %exitcond.not.i, label %._crit_edge.i, label %bb.d, !llvm.loop !331
+  %15 = icmp samesign ult i64 %indvars.iv.next.i, %wide.trip.count.i
+  br i1 %15, label %bb.d, label %._crit_edge.i, !llvm.loop !331
 
 ._crit_edge.i:                                    ; preds = %bb.k
   %i.ba = icmp eq i32 %.164.i, 0

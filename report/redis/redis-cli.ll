@@ -205,8 +205,8 @@ bb.ad:                                            ; preds = %.lr.ph552, %._crit_
   store i32 1, ptr %i.fq, align 8, !tbaa !111
   %i.fr = add nuw nsw i64 %.1263, 1
   %indvars.iv.next665 = add nuw nsw i64 %indvars.iv664, 1 ; 2 uses
-  %exitcond668.not = icmp eq i64 %indvars.iv.next665, %wide.trip.count667
-  br i1 %exitcond668.not, label %._crit_edge553, label %bb.ad, !llvm.loop !112
+  %5 = icmp samesign ult i64 %indvars.iv.next665, %wide.trip.count667
+  br i1 %5, label %bb.ad, label %._crit_edge553, !llvm.loop !112
 
 ._crit_edge553:                                   ; preds = %._crit_edge547
   %i.fs = load ptr, ptr %i.ec, align 8, !tbaa !99
@@ -223,7 +223,7 @@ bb.ad:                                            ; preds = %.lr.ph552, %._crit_
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.ec, ptr align 8 %scevgep, i64 %i.fy, i1 false), !tbaa !99
   br label %._crit_edge557
 
-._crit_edge557:                                   ; preds = %.lr.ph556.preheader, %._crit_edge553
+._crit_edge557:                                   ; preds = %._crit_edge553, %.lr.ph556.preheader
   %i.fz = sext i32 %i.ft to i64
   %i.ga = getelementptr inbounds [8 x i8], ptr %i.ec, i64 %i.fz
   store ptr %i.fs, ptr %i.ga, align 8, !tbaa !99
@@ -348,8 +348,8 @@ bb.al:                                            ; preds = %bb.ak, %bb.aj
   %.4273 = phi ptr [ %.2271, %bb.ae ], [ %i.hb, %bb.ai ], [ %.3272423, %bb.al ], [ %.2271, %._crit_edge563 ] ; 2 uses
   %.4260 = phi i32 [ %.2258, %bb.ae ], [ %.2258, %bb.ai ], [ %i.hd, %bb.al ], [ %.2258, %._crit_edge563 ] ; 3 uses
   %indvars.iv.next678 = add nuw nsw i64 %indvars.iv677, 1 ; 2 uses
-  %exitcond682.not = icmp eq i64 %indvars.iv.next678, %wide.trip.count681.a
-  br i1 %exitcond682.not, label %._crit_edge571, label %.lr.ph570, !llvm.loop !116
+  %6 = icmp samesign ult i64 %indvars.iv.next678, %wide.trip.count681.a
+  br i1 %6, label %.lr.ph570, label %._crit_edge571, !llvm.loop !116
 
 ._crit_edge571:                                   ; preds = %.thread426
   %i.hq = icmp sgt i32 %.4260, 0

@@ -204,7 +204,7 @@ bb.n:                                             ; preds = %bb.m
   br label %SDL_ConvertPixels_YUV_to_YUV_Copy.exit
 
 bb.o:                                             ; preds = %bb.m
-  %i.fn = add nsw i32 %0, 1
+  %i.fn = add i32 %0, 1
   %i.fo = sdiv i32 %i.fn, 2                       ; 7 uses
   %i.fp = add nsw i32 %1, 1
   %i.fq = sdiv i32 %i.fp, 2                       ; 3 uses
@@ -456,7 +456,7 @@ vec.epilog.scalar.ph758:                          ; preds = %vec.epilog.scalar.p
   br label %SDL_ConvertPixels_YUV_to_YUV_Copy.exit
 
 bb.s:                                             ; preds = %bb.m
-  %i.jc = add nsw i32 %0, 1
+  %i.jc = add i32 %0, 1
   %i.jd = sdiv i32 %i.jc, 2                       ; 7 uses
   %i.je = add nsw i32 %1, 1
   %i.jf = sdiv i32 %i.je, 2                       ; 3 uses
@@ -719,7 +719,7 @@ bb.x:                                             ; preds = %bb.w
   br label %SDL_ConvertPixels_YUV_to_YUV_Copy.exit
 
 bb.y:                                             ; preds = %bb.w
-  %i.ms = add nsw i32 %0, 1
+  %i.ms = add i32 %0, 1
   %i.mt = sdiv i32 %i.ms, 2                       ; 7 uses
   %i.mu = add nsw i32 %1, 1
   %i.mv = sdiv i32 %i.mu, 2                       ; 3 uses
@@ -971,7 +971,7 @@ vec.epilog.scalar.ph646:                          ; preds = %vec.epilog.scalar.p
   br label %SDL_ConvertPixels_YUV_to_YUV_Copy.exit
 
 bb.ac:                                            ; preds = %bb.w
-  %i.qh = add nsw i32 %0, 1
+  %i.qh = add i32 %0, 1
   %i.qi = sdiv i32 %i.qh, 2                       ; 7 uses
   %i.qj = add nsw i32 %1, 1
   %i.qk = sdiv i32 %i.qj, 2                       ; 3 uses
@@ -1230,7 +1230,7 @@ bb.ag:                                            ; preds = %.loopexit.i
   ]
 
 bb.ah:                                            ; preds = %bb.ag
-  %i.tw = add nsw i32 %0, 1
+  %i.tw = add i32 %0, 1
   %i.tx = sdiv i32 %i.tw, 2                       ; 6 uses
   %i.ty = add nsw i32 %1, 1
   %i.tz = sdiv i32 %i.ty, 2                       ; 3 uses
@@ -1380,7 +1380,7 @@ bb.ak:                                            ; preds = %bb.aj, %bb.ah
   br label %SDL_ConvertPixels_YUV_to_YUV_Copy.exit
 
 bb.al:                                            ; preds = %bb.ag
-  %i.wk = add nsw i32 %0, 1
+  %i.wk = add i32 %0, 1
   %i.wl = sdiv i32 %i.wk, 2                       ; 6 uses
   %i.wm = add nsw i32 %1, 1
   %i.wn = sdiv i32 %i.wm, 2                       ; 3 uses
@@ -1530,7 +1530,7 @@ bb.ao:                                            ; preds = %bb.an, %bb.al
   br label %SDL_ConvertPixels_YUV_to_YUV_Copy.exit
 
 bb.ap:                                            ; preds = %bb.ag
-  %i.yy = add nsw i32 %0, 1
+  %i.yy = add i32 %0, 1
   %i.yz = sdiv i32 %i.yy, 2                       ; 10 uses
   %i.za = add nsw i32 %1, 1
   %i.zb = sdiv i32 %i.za, 2                       ; 2 uses
@@ -1832,7 +1832,7 @@ bb.as:                                            ; preds = %.loopexit.i
   ]
 
 bb.at:                                            ; preds = %bb.as
-  %i.adp = add nsw i32 %0, 1
+  %i.adp = add i32 %0, 1
   %i.adq = sdiv i32 %i.adp, 2                     ; 6 uses
   %i.adr = add nsw i32 %1, 1
   %i.ads = sdiv i32 %i.adr, 2                     ; 3 uses
@@ -1982,7 +1982,7 @@ bb.aw:                                            ; preds = %bb.av, %bb.at
   br label %SDL_ConvertPixels_YUV_to_YUV_Copy.exit
 
 bb.ax:                                            ; preds = %bb.as
-  %i.agd = add nsw i32 %0, 1
+  %i.agd = add i32 %0, 1
   %i.age = sdiv i32 %i.agd, 2                     ; 6 uses
   %i.agf = add nsw i32 %1, 1
   %i.agg = sdiv i32 %i.agf, 2                     ; 3 uses
@@ -2132,7 +2132,7 @@ bb.ba:                                            ; preds = %bb.az, %bb.ax
   br label %SDL_ConvertPixels_YUV_to_YUV_Copy.exit
 
 bb.bb:                                            ; preds = %bb.as
-  %i.air = add nsw i32 %0, 1
+  %i.air = add i32 %0, 1
   %i.ais = sdiv i32 %i.air, 2                     ; 10 uses
   %i.ait = add nsw i32 %1, 1
   %i.aiu = sdiv i32 %i.ait, 2                     ; 2 uses
@@ -2464,7 +2464,7 @@ bb.bh:                                            ; preds = %bb.bg
   ]
 
 bb.bi:                                            ; preds = %bb.bh
-  %i.anl = add nsw i32 %0, 1
+  %i.anl = add i32 %0, 1
   %i.anm = sdiv i32 %i.anl, 2                     ; 5 uses
   %.not38.i.i.i = icmp eq i32 %1, 0
   br i1 %.not38.i.i.i, label %SDL_ConvertPixels_YUV_to_YUV_Copy.exit, label %.preheader.lr.ph.i.i.i64
@@ -2553,7 +2553,7 @@ bb.bi:                                            ; preds = %bb.bh
   br i1 %.not.i.i.i69, label %SDL_ConvertPixels_YUV_to_YUV_Copy.exit, label %.preheader.i.i.i66, !llvm.loop !215
 
 bb.bj:                                            ; preds = %bb.bh
-  %i.aot = add nsw i32 %0, 1
+  %i.aot = add i32 %0, 1
   %i.aou = sdiv i32 %i.aot, 2                     ; 5 uses
   %.not38.i.i42.i = icmp eq i32 %1, 0
   br i1 %.not38.i.i42.i, label %SDL_ConvertPixels_YUV_to_YUV_Copy.exit, label %.preheader.lr.ph.i.i43.i
@@ -2648,7 +2648,7 @@ bb.bk:                                            ; preds = %bb.bg
   ]
 
 bb.bl:                                            ; preds = %bb.bk
-  %i.aqb = add nsw i32 %0, 1
+  %i.aqb = add i32 %0, 1
   %i.aqc = sdiv i32 %i.aqb, 2                     ; 5 uses
   %.not38.i.i56.i = icmp eq i32 %1, 0
   br i1 %.not38.i.i56.i, label %SDL_ConvertPixels_YUV_to_YUV_Copy.exit, label %.preheader.lr.ph.i.i57.i
@@ -2737,7 +2737,7 @@ bb.bl:                                            ; preds = %bb.bk
   br i1 %.not.i.i69.i, label %SDL_ConvertPixels_YUV_to_YUV_Copy.exit, label %.preheader.i.i60.i, !llvm.loop !221
 
 bb.bm:                                            ; preds = %bb.bk
-  %i.arj = add nsw i32 %0, 1
+  %i.arj = add i32 %0, 1
   %i.ark = sdiv i32 %i.arj, 2                     ; 5 uses
   %.not38.i.i70.i = icmp eq i32 %1, 0
   br i1 %.not38.i.i70.i, label %SDL_ConvertPixels_YUV_to_YUV_Copy.exit, label %.preheader.lr.ph.i.i71.i
@@ -2832,7 +2832,7 @@ bb.bn:                                            ; preds = %bb.bg
   ]
 
 bb.bo:                                            ; preds = %bb.bn
-  %i.asr = add nsw i32 %0, 1
+  %i.asr = add i32 %0, 1
   %i.ass = sdiv i32 %i.asr, 2                     ; 5 uses
   %.not38.i.i84.i = icmp eq i32 %1, 0
   br i1 %.not38.i.i84.i, label %SDL_ConvertPixels_YUV_to_YUV_Copy.exit, label %.preheader.lr.ph.i.i85.i
@@ -2921,7 +2921,7 @@ bb.bo:                                            ; preds = %bb.bn
   br i1 %.not.i.i97.i, label %SDL_ConvertPixels_YUV_to_YUV_Copy.exit, label %.preheader.i.i88.i, !llvm.loop !227
 
 bb.bp:                                            ; preds = %bb.bn
-  %i.atz = add nsw i32 %0, 1
+  %i.atz = add i32 %0, 1
   %i.aua = sdiv i32 %i.atz, 2                     ; 5 uses
   %.not38.i.i98.i = icmp eq i32 %1, 0
   br i1 %.not38.i.i98.i, label %SDL_ConvertPixels_YUV_to_YUV_Copy.exit, label %.preheader.lr.ph.i.i99.i
@@ -3324,7 +3324,7 @@ define internal fastcc noundef zeroext i1 @SDL_ConvertPixels_SwapUVPlanes(i32 no
 bb.a:
   %i.a = add nsw i32 %0, 1
   %i.b = sdiv i32 %i.a, 2                         ; 3 uses
-  %i.c = add nsw i32 %1, 1
+  %i.c = add i32 %1, 1                            ; 4 uses
   %i.d = sdiv i32 %i.c, 2                         ; 4 uses
   %i.e = mul nsw i32 %3, %1
   %i.f = sext i32 %i.e to i64
@@ -3354,7 +3354,7 @@ bb.c:                                             ; preds = %bb.b
   %i.t = sext i32 %i.m to i64                     ; 4 uses
   %smax89 = tail call i32 @llvm.smax.i32(i32 %i.d, i32 1) ; 3 uses
   %xtraiter105 = and i32 %smax89, 1
-  %i.u = icmp slt i32 %1, 3
+  %i.u = icmp slt i32 %i.c, 4
   br i1 %i.u, label %.epil.preheader104, label %.lr.ph86.new
 
 .lr.ph86.new:                                     ; preds = %.lr.ph86
@@ -3414,7 +3414,7 @@ bb.e:                                             ; preds = %bb.a
   %i.aj = sext i32 %i.ac to i64                   ; 5 uses
   %smax = tail call i32 @llvm.smax.i32(i32 %i.d, i32 1) ; 4 uses
   %xtraiter = and i32 %smax, 3                    ; 3 uses
-  %i.ak = icmp slt i32 %1, 7
+  %i.ak = icmp slt i32 %i.c, 8
   br i1 %i.ak, label %.epil.preheader, label %.lr.ph.new
 
 .lr.ph.new:                                       ; preds = %.lr.ph
@@ -3449,7 +3449,7 @@ bb.f:                                             ; preds = %bb.f, %.epil.prehea
   %i.ao = sext i32 %i.aa to i64                   ; 5 uses
   %i.ap = sext i32 %i.ac to i64                   ; 5 uses
   %xtraiter98 = and i32 %smax, 3                  ; 3 uses
-  %i.aq = icmp slt i32 %1, 7
+  %i.aq = icmp slt i32 %i.c, 8
   br i1 %i.aq, label %.epil.preheader97, label %.lr.ph82.new
 
 .lr.ph82.new:                                     ; preds = %.lr.ph82
