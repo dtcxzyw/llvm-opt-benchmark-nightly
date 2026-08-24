@@ -205,15 +205,13 @@ bb.dh:                                            ; preds = %bb.dh, %.lr.ph906.n
   br label %.preheader853
 
 .preheader853:                                    ; preds = %.preheader853.preheader, %._crit_edge911.2
-  %.0392913 = phi i64 [ %i.agd, %._crit_edge911.2 ], [ 0, %.preheader853.preheader ] ; 30 uses
+  %.0392913 = phi i64 [ %i.agd, %._crit_edge911.2 ], [ 0, %.preheader853.preheader ] ; 31 uses
   %i.aby = add nuw i64 %.0392913, 1
-  %smax1357 = call i64 @llvm.smax.i64(i64 %i.aby, i64 %i.xx)
-  %42 = sub i64 %smax1357, %.0392913              ; 6 uses
   %i.abz = mul i64 %i.ww, %.0392913               ; 2 uses
   %scevgep1348.a = getelementptr i8, ptr %i.wy, i64 %i.abz
   %scevgep1349 = getelementptr i8, ptr %i.xa, i64 %i.abz
   %i.aca = add nuw i64 %.0392913, 1
-  %smax1350 = call i64 @llvm.smax.i64(i64 %i.aca, i64 %i.xx)
+  %smax1350 = call i64 @llvm.smax.i64(i64 %i.aca, i64 %i.xx) ; 2 uses
   %i.acb = xor i64 %.0392913, -1
   %i.acc = add i64 %smax1350, %i.acb
   %i.acd = mul i64 %i.acc, 12                     ; 2 uses
@@ -223,8 +221,6 @@ bb.dh:                                            ; preds = %bb.dh, %.lr.ph906.n
   %scevgep1352.a = getelementptr i8, ptr %i.acf, i64 12
   %scevgep1353 = getelementptr i8, ptr %scevgep1352.a, i64 %i.acd ; 2 uses
   %i.acg = add nuw i64 %.0392913, 1
-  %smax1331 = call i64 @llvm.smax.i64(i64 %i.acg, i64 %i.xx)
-  %43 = sub i64 %smax1331, %.0392913              ; 3 uses
   %i.ach = mul i64 %i.ww, %.0392913               ; 2 uses
   %scevgep = getelementptr i8, ptr %i.xb, i64 %i.ach
   %scevgep1327 = getelementptr i8, ptr %i.xd, i64 %i.ach
@@ -243,6 +239,7 @@ bb.dh:                                            ; preds = %bb.dh, %.lr.ph906.n
   %i.acq = mul nsw i64 %i.aco, %i.pc
   %i.acr = load float, ptr %i.acp, align 4, !tbaa !52 ; 4 uses
   %i.acs = getelementptr [4 x i8], ptr %i.ph, i64 %i.acq ; 2 uses
+  %42 = sub i64 %smax1350, %.0392913              ; 3 uses
   %min.iters.check1388 = icmp ult i64 %42, 8
   br i1 %min.iters.check1388, label %.preheader852.preheader, label %vector.memcheck1379
 
@@ -322,7 +319,9 @@ middle.block1405:                                 ; preds = %vector.body1393
   %i.adz = getelementptr inbounds nuw i8, ptr %i.acp, i64 4
   %i.aea = load float, ptr %i.adz, align 4, !tbaa !52 ; 4 uses
   %i.aeb = getelementptr [4 x i8], ptr %i.ph, i64 %i.ady ; 2 uses
-  %min.iters.check1359 = icmp ult i64 %42, 8
+  %43 = call i64 @llvm.smax.i64(i64 %i.aby, i64 %i.xx)
+  %44 = sub i64 %43, %.0392913                    ; 3 uses
+  %min.iters.check1359 = icmp ult i64 %44, 8
   br i1 %min.iters.check1359, label %.preheader852.1.preheader, label %vector.memcheck1347
 
 vector.memcheck1347:                              ; preds = %._crit_edge911
@@ -332,7 +331,7 @@ vector.memcheck1347:                              ; preds = %._crit_edge911
   br i1 %found.conflict1356, label %.preheader852.1.preheader, label %vector.ph1360
 
 vector.ph1360:                                    ; preds = %vector.memcheck1347
-  %n.vec1361 = and i64 %42, -8                    ; 3 uses
+  %n.vec1361 = and i64 %44, -8                    ; 3 uses
   %i.aec = add i64 %.0392913, %n.vec1361
   %broadcast.splatinsert1362 = insertelement <8 x float> poison, float %i.aea, i64 0
   %i.aed = shufflevector <8 x float> %broadcast.splatinsert1362, <8 x float> poison, <24 x i32> zeroinitializer
@@ -353,7 +352,7 @@ vector.body1364:                                  ; preds = %vector.body1364, %v
   br i1 %i.aei, label %middle.block1376, label %vector.body1364, !llvm.loop !97
 
 middle.block1376:                                 ; preds = %vector.body1364
-  %cmp.n1377 = icmp eq i64 %42, %n.vec1361
+  %cmp.n1377 = icmp eq i64 %44, %n.vec1361
   br i1 %cmp.n1377, label %._crit_edge911.1, label %.preheader852.1.preheader
 
 .preheader852.1.preheader:                        ; preds = %vector.memcheck1347, %._crit_edge911, %middle.block1376
@@ -391,7 +390,9 @@ middle.block1376:                                 ; preds = %vector.body1364
   %i.afc = getelementptr inbounds nuw i8, ptr %i.acp, i64 8
   %i.afd = load float, ptr %i.afc, align 4, !tbaa !52 ; 4 uses
   %i.afe = getelementptr [4 x i8], ptr %i.ph, i64 %i.afb ; 2 uses
-  %min.iters.check1332 = icmp ult i64 %43, 8
+  %45 = call i64 @llvm.smax.i64(i64 %i.acg, i64 %i.xx)
+  %46 = sub i64 %45, %.0392913                    ; 3 uses
+  %min.iters.check1332 = icmp ult i64 %46, 8
   br i1 %min.iters.check1332, label %.preheader852.2.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %._crit_edge911.1
@@ -401,7 +402,7 @@ vector.memcheck:                                  ; preds = %._crit_edge911.1
   br i1 %found.conflict, label %.preheader852.2.preheader, label %vector.ph1333
 
 vector.ph1333:                                    ; preds = %vector.memcheck
-  %n.vec1334 = and i64 %43, -8                    ; 3 uses
+  %n.vec1334 = and i64 %46, -8                    ; 3 uses
   %i.aff = add i64 %.0392913, %n.vec1334
   %broadcast.splatinsert = insertelement <8 x float> poison, float %i.afd, i64 0
   %i.afg = shufflevector <8 x float> %broadcast.splatinsert, <8 x float> poison, <24 x i32> zeroinitializer
@@ -422,7 +423,7 @@ vector.body1335:                                  ; preds = %vector.body1335, %v
   br i1 %i.afl, label %middle.block1344, label %vector.body1335, !llvm.loop !104
 
 middle.block1344:                                 ; preds = %vector.body1335
-  %cmp.n1345 = icmp eq i64 %43, %n.vec1334
+  %cmp.n1345 = icmp eq i64 %46, %n.vec1334
   br i1 %cmp.n1345, label %._crit_edge911.2, label %.preheader852.2.preheader
 
 .preheader852.2.preheader:                        ; preds = %vector.memcheck, %._crit_edge911.1, %middle.block1344
@@ -649,15 +650,13 @@ _ZL13gmx_snew_implIA3_fEvPKcS2_iRPT_m.exit574.epil: ; preds = %_ZL13gmx_snew_imp
   br label %.preheader850
 
 .preheader850:                                    ; preds = %.preheader850.preheader, %._crit_edge920.2
-  %.1393923 = phi i64 [ %i.aqd, %._crit_edge920.2 ], [ 0, %.preheader850.preheader ] ; 30 uses
+  %.1393923 = phi i64 [ %i.aqd, %._crit_edge920.2 ], [ 0, %.preheader850.preheader ] ; 31 uses
   %i.ajx = add nuw i64 %.1393923, 1
-  %smax1463 = call i64 @llvm.smax.i64(i64 %.pre-phi10541249, i64 %i.ajx)
-  %44 = sub i64 %smax1463, %.1393923              ; 6 uses
   %i.ajy = mul i64 %i.ww, %.1393923               ; 2 uses
   %scevgep1450.a = getelementptr i8, ptr %i.ajr, i64 %i.ajy ; 2 uses
   %scevgep1451.a = getelementptr i8, ptr %i.ajt, i64 %i.ajy
   %i.ajz = add nuw i64 %.1393923, 1
-  %smax1452 = call i64 @llvm.smax.i64(i64 %.pre-phi10541249, i64 %i.ajz)
+  %smax1452 = call i64 @llvm.smax.i64(i64 %.pre-phi10541249, i64 %i.ajz) ; 2 uses
   %i.aka = xor i64 %.1393923, -1
   %i.akb = add i64 %smax1452, %i.aka              ; 2 uses
   %i.akc = mul i64 %i.akb, 12
@@ -668,8 +667,6 @@ _ZL13gmx_snew_implIA3_fEvPKcS2_iRPT_m.exit574.epil: ; preds = %_ZL13gmx_snew_imp
   %i.akf = shl i64 %i.akb, 2
   %scevgep1455 = getelementptr i8, ptr %scevgep1454, i64 %i.akf ; 2 uses
   %i.akg = add nuw i64 %.1393923, 1
-  %smax1422 = call i64 @llvm.smax.i64(i64 %.pre-phi10541249, i64 %i.akg)
-  %45 = sub i64 %smax1422, %.1393923              ; 3 uses
   %i.akh = mul i64 %i.ww, %.1393923               ; 2 uses
   %scevgep1409 = getelementptr i8, ptr %i.aju, i64 %i.akh ; 2 uses
   %scevgep1410.a = getelementptr i8, ptr %i.ajw, i64 %i.akh
@@ -688,7 +685,8 @@ _ZL13gmx_snew_implIA3_fEvPKcS2_iRPT_m.exit574.epil: ; preds = %_ZL13gmx_snew_imp
   %i.akq = getelementptr inbounds nuw [4 x i8], ptr %i.ih, i64 %.1393923 ; 15 uses
   %i.akr = mul nsw i64 %i.akp, %i.pc
   %i.aks = getelementptr [4 x i8], ptr %i.ph, i64 %i.akr ; 2 uses
-  %min.iters.check1503 = icmp ult i64 %44, 8
+  %47 = sub i64 %smax1452, %.1393923              ; 3 uses
+  %min.iters.check1503 = icmp ult i64 %47, 8
   br i1 %min.iters.check1503, label %scalar.ph1502.preheader, label %vector.memcheck1490
 
 vector.memcheck1490:                              ; preds = %.preheader850
@@ -712,7 +710,7 @@ vector.memcheck1490:                              ; preds = %.preheader850
   br i1 %conflict.rdx1501, label %scalar.ph1502.preheader, label %vector.ph1504
 
 vector.ph1504:                                    ; preds = %vector.memcheck1490
-  %n.vec1505 = and i64 %44, -8                    ; 3 uses
+  %n.vec1505 = and i64 %47, -8                    ; 3 uses
   %i.akz = add i64 %.1393923, %n.vec1505
   %i.ala = load float, ptr %i.akq, align 4, !tbaa !52, !alias.scope !110 ; 3 uses
   %broadcast.splatinsert1515 = insertelement <8 x float> poison, float %i.ala, i64 0
@@ -750,7 +748,7 @@ vector.body1508:                                  ; preds = %vector.body1508, %v
   br i1 %i.alq, label %middle.block1525, label %vector.body1508, !llvm.loop !118
 
 middle.block1525:                                 ; preds = %vector.body1508
-  %cmp.n1526 = icmp eq i64 %44, %n.vec1505
+  %cmp.n1526 = icmp eq i64 %47, %n.vec1505
   br i1 %cmp.n1526, label %._crit_edge920, label %scalar.ph1502.preheader
 
 scalar.ph1502.preheader:                          ; preds = %vector.memcheck1490, %.preheader850, %middle.block1525
@@ -807,7 +805,9 @@ scalar.ph1502:                                    ; preds = %scalar.ph1502.prehe
   %i.amr = add nuw nsw i64 %i.akp, 1
   %i.ams = mul nsw i64 %i.amr, %i.pc
   %i.amt = getelementptr [4 x i8], ptr %i.ph, i64 %i.ams ; 2 uses
-  %min.iters.check1465 = icmp ult i64 %44, 8
+  %48 = call i64 @llvm.smax.i64(i64 %.pre-phi10541249, i64 %i.ajx)
+  %49 = sub i64 %48, %.1393923                    ; 3 uses
+  %min.iters.check1465 = icmp ult i64 %49, 8
   br i1 %min.iters.check1465, label %scalar.ph1464.preheader, label %vector.memcheck1449
 
 vector.memcheck1449:                              ; preds = %._crit_edge920
@@ -821,7 +821,7 @@ vector.memcheck1449:                              ; preds = %._crit_edge920
   br i1 %conflict.rdx1462, label %scalar.ph1464.preheader, label %vector.ph1466
 
 vector.ph1466:                                    ; preds = %vector.memcheck1449
-  %n.vec1467 = and i64 %44, -8                    ; 3 uses
+  %n.vec1467 = and i64 %49, -8                    ; 3 uses
   %i.amu = add i64 %.1393923, %n.vec1467
   %i.amv = load float, ptr %i.akq, align 4, !tbaa !52, !alias.scope !120 ; 3 uses
   %broadcast.splatinsert1477 = insertelement <8 x float> poison, float %i.amv, i64 0
@@ -859,7 +859,7 @@ vector.body1470:                                  ; preds = %vector.body1470, %v
   br i1 %i.anl, label %middle.block1487, label %vector.body1470, !llvm.loop !128
 
 middle.block1487:                                 ; preds = %vector.body1470
-  %cmp.n1488 = icmp eq i64 %44, %n.vec1467
+  %cmp.n1488 = icmp eq i64 %49, %n.vec1467
   br i1 %cmp.n1488, label %._crit_edge920.1, label %scalar.ph1464.preheader
 
 scalar.ph1464.preheader:                          ; preds = %vector.memcheck1449, %._crit_edge920, %middle.block1487
@@ -902,7 +902,9 @@ scalar.ph1464:                                    ; preds = %scalar.ph1464.prehe
   %i.aok = add nuw nsw i64 %i.akp, 2
   %i.aol = mul nsw i64 %i.aok, %i.pc
   %i.aom = getelementptr [4 x i8], ptr %i.ph, i64 %i.aol ; 2 uses
-  %min.iters.check1424 = icmp ult i64 %45, 8
+  %50 = call i64 @llvm.smax.i64(i64 %.pre-phi10541249, i64 %i.akg)
+  %51 = sub i64 %50, %.1393923                    ; 3 uses
+  %min.iters.check1424 = icmp ult i64 %51, 8
   br i1 %min.iters.check1424, label %scalar.ph1423.preheader, label %vector.memcheck1408
 
 vector.memcheck1408:                              ; preds = %._crit_edge920.1
@@ -916,7 +918,7 @@ vector.memcheck1408:                              ; preds = %._crit_edge920.1
   br i1 %conflict.rdx, label %scalar.ph1423.preheader, label %vector.ph1425
 
 vector.ph1425:                                    ; preds = %vector.memcheck1408
-  %n.vec1426 = and i64 %45, -8                    ; 3 uses
+  %n.vec1426 = and i64 %51, -8                    ; 3 uses
   %i.aon = add i64 %.1393923, %n.vec1426
   %i.aoo = load float, ptr %i.akq, align 4, !tbaa !52, !alias.scope !130 ; 3 uses
   %broadcast.splatinsert1436.a = insertelement <8 x float> poison, float %i.aoo, i64 0
@@ -954,7 +956,7 @@ vector.body1429:                                  ; preds = %vector.body1429, %v
   br i1 %i.ape, label %middle.block1446, label %vector.body1429, !llvm.loop !138
 
 middle.block1446:                                 ; preds = %vector.body1429
-  %cmp.n1447 = icmp eq i64 %45, %n.vec1426
+  %cmp.n1447 = icmp eq i64 %51, %n.vec1426
   br i1 %cmp.n1447, label %._crit_edge920.2, label %scalar.ph1423.preheader
 
 scalar.ph1423.preheader:                          ; preds = %vector.memcheck1408, %._crit_edge920.1, %middle.block1446
