@@ -1,0 +1,101 @@
+diff --git a/llvm/lib/Analysis/BasicAliasAnalysis.cpp b/llvm/lib/Analysis/BasicAliasAnalysis.cpp
+index e33fde77cf365..061403d332ce0 100644
+--- a/llvm/lib/Analysis/BasicAliasAnalysis.cpp
++++ b/llvm/lib/Analysis/BasicAliasAnalysis.cpp
+@@ -362,6 +362,18 @@ struct CastedValue {
+     return N;
+   }
+ 
++  KnownBits evaluateWith(KnownBits K) const {
++    assert(K.getBitWidth() == V->getType()->getPrimitiveSizeInBits() &&
++           "Incompatible bit width");
++    if (TruncBits)
++      K = K.trunc(K.getBitWidth() - TruncBits);
++    if (SExtBits)
++      K = K.sext(K.getBitWidth() + SExtBits);
++    if (ZExtBits)
++      K = K.zext(K.getBitWidth() + ZExtBits);
++    return K;
++  }
++
+   bool canDistributeOver(bool NUW, bool NSW) const {
+     // zext(x op<nuw> y) == zext(x) op<nuw> zext(y)
+     // sext(x op<nsw> y) == sext(x) op<nsw> sext(y)
+@@ -1298,12 +1310,15 @@ AliasResult BasicAAResult::aliasGEP(
+ 
+   APInt GCD;
+   ConstantRange OffsetRange = ConstantRange(DecompGEP1.Offset);
++  SmallVector<KnownBits, 4> VarIndexKnownBits;
++  VarIndexKnownBits.reserve(DecompGEP1.VarIndices.size());
+   for (unsigned i = 0, e = DecompGEP1.VarIndices.size(); i != e; ++i) {
+     const VariableGEPIndex &Index = DecompGEP1.VarIndices[i];
+     const APInt &Scale = Index.Scale;
+ 
+     SimplifyQuery SQ(DL, DT, &AC, Index.CxtI, /*UseInstrInfo=*/true);
+     KnownBits Known = computeKnownBits(Index.Val.V, SQ);
++    VarIndexKnownBits.emplace_back(Known);
+ 
+     APInt ScaleForGCD = Scale;
+     if (!Index.IsNSW)
+@@ -1386,7 +1401,8 @@ AliasResult BasicAAResult::aliasGEP(
+   };
+ 
+   // Try to determine the range of values for VarIndex such that
+-  // VarIndex <= -MinAbsVarIndex || MinAbsVarIndex <= VarIndex.
++  // VarIndex <= -MinAbsVarIndex || MinAbsVarIndex <= VarIndex, thus
++  // establishing a minimum absolute value of the variable offset.
+   std::optional<APInt> MinAbsVarIndex;
+   if (DecompGEP1.VarIndices.size() == 1) {
+     // VarIndex = Scale*V.
+@@ -1407,14 +1423,48 @@ AliasResult BasicAAResult::aliasGEP(
+     // inequality of values across loop iterations.
+     const VariableGEPIndex &Var0 = DecompGEP1.VarIndices[0];
+     const VariableGEPIndex &Var1 = DecompGEP1.VarIndices[1];
+-    if (Var0.hasNegatedScaleOf(Var1) && Var0.Val.TruncBits == 0 &&
+-        Var0.Val.hasSameCastsAs(Var1.Val) && !AAQI.MayBeCrossIteration &&
+-        MultiplyByScaleNoWrap(Var0) && MultiplyByScaleNoWrap(Var1) &&
++    bool Preconditions =
++        Var0.Val.TruncBits == 0 && Var0.Val.hasSameCastsAs(Var1.Val) &&
++        !AAQI.MayBeCrossIteration && MultiplyByScaleNoWrap(Var0) &&
++        MultiplyByScaleNoWrap(Var1);
++    if (Var0.hasNegatedScaleOf(Var1) && Preconditions &&
+         isKnownNonEqual(Var0.Val.V, Var1.Val.V,
+                         SimplifyQuery(DL, DT, &AC, /*CxtI=*/Var0.CxtI
+                                                        ? Var0.CxtI
+                                                        : Var1.CxtI)))
+       MinAbsVarIndex = Var0.Scale.abs();
++
++    // On the chance we have not found a min abs, fallback to the generalization
++    // of the two variables case being handled to different scales:
++    // VarIndex = Scale0*V0 + (-Scale1)*V1 = ScaleGCD*(C0*V0 - C1*V1)
++    // where C0 = abs(Scale0)/ScaleGCD, C1 = abs(Scale1)/ScaleGCD.
++    // If C0*V0 != C1*V1, then abs(VarIndex) >= ScaleGCD, leading to the min
++    // absolute value being ScaleGCD.
++    if (!MinAbsVarIndex && Preconditions) {
++      // Ensure scales, after subtraction, have opposite signs.
++      bool EffectiveNeg0 = Var0.IsNegated ^ Var0.Scale.isNegative();
++      bool EffectiveNeg1 = Var1.IsNegated ^ Var1.Scale.isNegative();
++      if (EffectiveNeg0 != EffectiveNeg1) {
++        APInt AbsScale0 = Var0.Scale.abs();
++        APInt AbsScale1 = Var1.Scale.abs();
++        APInt ScaleGCD = APIntOps::GreatestCommonDivisor(AbsScale0, AbsScale1);
++        APInt C0 = AbsScale0.udiv(ScaleGCD);
++        APInt C1 = AbsScale1.udiv(ScaleGCD);
++
++        // Try to check whether C0*V0 and C1*V1 are provably distinct (i.e., one
++        // is guaranteed even while the other is guaranteed odd).
++        auto Known0 =
++            KnownBits::mul(Var0.Val.evaluateWith(VarIndexKnownBits[0]),
++                           KnownBits::makeConstant(C0));
++
++        auto Known1 =
++            KnownBits::mul(Var1.Val.evaluateWith(VarIndexKnownBits[1]),
++                           KnownBits::makeConstant(C1));
++
++        if (auto Res = KnownBits::ne(Known0, Known1); Res && *Res)
++          MinAbsVarIndex = ScaleGCD;
++      }
++    }
+   }
+ 
+   if (MinAbsVarIndex) {
