@@ -205,7 +205,7 @@ Extra_ThreshWeightedSum.exit.loopexit.us.us.us.us: ; preds = %.lr.ph.i.us.us.us.
 define range(i32 0, 10001) i32 @Extra_ThreshSelectWeights6(ptr nofree noundef readonly captures(none) %0, i32 noundef %1, ptr nofree noundef captures(none) initializes((20, 24)) %2) local_unnamed_addr #3 {
 bb.a:
   %i.a = shl nuw i32 1, %1
-  %i.b = add i32 %1, 3                            ; 21 uses
+  %i.b = add i32 %1, 3                            ; 18 uses
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 20 ; 5 uses
   store i32 1, ptr %i.c, align 4, !tbaa !8
   %.not302 = icmp slt i32 %1, -2
@@ -226,7 +226,7 @@ bb.a:
   br i1 %i.h, label %.split248.us.us.us.us.preheader, label %.split248.us.us.preheader
 
 .split248.us.us.preheader:                        ; preds = %.lr.ph.split.us
-  %i.i = add nsw i32 %1, 3                        ; 2 uses
+  %i.i = add nsw i32 %1, 4                        ; 6 uses
   br label %.split199.us.us.us305
 
 .split248.us.us.us.us.preheader:                  ; preds = %.lr.ph.split.us
@@ -466,7 +466,7 @@ Extra_ThreshWeightedSum.exit.loopexit.us.us.us.us.us.us.us.us.us.us.us.us.us.us.
   br i1 %exitcond352.not, label %.thread, label %.split248.us.us.us.us, !llvm.loop !66
 
 .split199.us.us.us305:                            ; preds = %.split248.us.us.preheader, %.split217.us.split.split.us252.us
-  %storemerge59246.us.us306 = phi i32 [ 1, %.split248.us.us.preheader ], [ %i.ca, %.split217.us.split.split.us252.us ] ; 4 uses
+  %storemerge59246.us.us306 = phi i32 [ 1, %.split248.us.us.preheader ], [ %i.ca, %.split217.us.split.split.us252.us ] ; 3 uses
   br label %.split158.us.us.us249.us
 
 .split158.us.us.us249.us:                         ; preds = %.split174.us.split.split.us203.us.us, %.split199.us.us.us305
@@ -527,18 +527,18 @@ bb.n:                                             ; preds = %.preheader.us127.us
 
 .split217.us.split.split.us252.us:                ; preds = %.split174.us.split.split.us203.us.us
   store i32 %i.by, ptr %i.f, align 4, !tbaa !8
-  %i.ca = add nuw nsw i32 %storemerge59246.us.us306, 1 ; 2 uses
-  %.not60.us.us307.not = icmp slt i32 %storemerge59246.us.us306, %i.b
-  br i1 %.not60.us.us307.not, label %.split199.us.us.us305, label %.split268.us.split.split.us308, !llvm.loop !65
+  %i.ca = add nuw i32 %storemerge59246.us.us306, 1 ; 2 uses
+  %exitcond348.not = icmp eq i32 %i.ca, %i.i
+  br i1 %exitcond348.not, label %.split268.us.split.split.us308, label %.split199.us.us.us305, !llvm.loop !65
 
 .split268.us.split.split.us308:                   ; preds = %.split217.us.split.split.us252.us
   store i32 %i.bz, ptr %i.e, align 4, !tbaa !8
   store i32 2, ptr %i.c, align 4, !tbaa !8
-  %exitcond348.not.a = icmp eq i32 %i.i, 1
+  %exitcond348.not.a = icmp eq i32 %i.i, 2
   br i1 %exitcond348.not.a, label %..thread.loopexit84_crit_edge.split.us.split.split, label %.split199.us.us.us305.1
 
 .split199.us.us.us305.1:                          ; preds = %.split268.us.split.split.us308, %.split217.us.split.split.us252.us.1
-  %storemerge59246.us.us306.1 = phi i32 [ %i.cn, %.split217.us.split.split.us252.us.1 ], [ 2, %.split268.us.split.split.us308 ] ; 4 uses
+  %storemerge59246.us.us306.1 = phi i32 [ %i.cn, %.split217.us.split.split.us252.us.1 ], [ 2, %.split268.us.split.split.us308 ] ; 3 uses
   br label %.split158.us.us.us249.us.1
 
 .split158.us.us.us249.us.1:                       ; preds = %.split174.us.split.split.us203.us.us.1, %.split199.us.us.us305.1
@@ -594,14 +594,14 @@ bb.o:                                             ; preds = %bb.p, %.preheader.u
 
 .split217.us.split.split.us252.us.1:              ; preds = %.split174.us.split.split.us203.us.us.1
   store i32 %i.cl, ptr %i.f, align 4, !tbaa !8
-  %i.cn = add nuw nsw i32 %storemerge59246.us.us306.1, 1 ; 2 uses
-  %.not60.us.us307.not.1 = icmp slt i32 %storemerge59246.us.us306.1, %i.b
-  br i1 %.not60.us.us307.not.1, label %.split199.us.us.us305.1, label %.split268.us.split.split.us308.1, !llvm.loop !65
+  %i.cn = add nuw i32 %storemerge59246.us.us306.1, 1 ; 2 uses
+  %exitcond348.not.1 = icmp eq i32 %i.cn, %i.i
+  br i1 %exitcond348.not.1, label %.split268.us.split.split.us308.1, label %.split199.us.us.us305.1, !llvm.loop !65
 
 .split268.us.split.split.us308.1:                 ; preds = %.split217.us.split.split.us252.us.1
   store i32 %i.cm, ptr %i.e, align 4, !tbaa !8
   store i32 3, ptr %i.c, align 4, !tbaa !8
-  %exitcond348.not.1.a = icmp eq i32 %i.i, 2
+  %exitcond348.not.1.a = icmp eq i32 %i.i, 3
   br i1 %exitcond348.not.1.a, label %..thread.loopexit84_crit_edge.split.us.split.split, label %.split199.us.us.us305.2
 
 bb.p:                                             ; preds = %bb.o
@@ -610,7 +610,7 @@ bb.p:                                             ; preds = %bb.o
   br i1 %exitcond.not.1, label %..thread.loopexit_crit_edge.split.split.split.us.split.us.split.us.split.us.split.us, label %bb.o, !llvm.loop !60
 
 .split199.us.us.us305.2:                          ; preds = %.split268.us.split.split.us308.1, %.split217.us.split.split.us252.us.2
-  %storemerge59246.us.us306.2 = phi i32 [ %i.db, %.split217.us.split.split.us252.us.2 ], [ 3, %.split268.us.split.split.us308.1 ] ; 4 uses
+  %storemerge59246.us.us306.2 = phi i32 [ %i.db, %.split217.us.split.split.us252.us.2 ], [ 3, %.split268.us.split.split.us308.1 ] ; 3 uses
   br label %.split158.us.us.us249.us.2
 
 .split158.us.us.us249.us.2:                       ; preds = %.split174.us.split.split.us203.us.us.2, %.split199.us.us.us305.2
@@ -666,9 +666,9 @@ bb.q:                                             ; preds = %bb.r, %.preheader.u
 
 .split217.us.split.split.us252.us.2:              ; preds = %.split174.us.split.split.us203.us.us.2
   store i32 %i.cz, ptr %i.f, align 4, !tbaa !8
-  %i.db = add nuw nsw i32 %storemerge59246.us.us306.2, 1 ; 2 uses
-  %.not60.us.us307.not.2 = icmp slt i32 %storemerge59246.us.us306.2, %i.b
-  br i1 %.not60.us.us307.not.2, label %.split199.us.us.us305.2, label %.split268.us.split.split.us308.2, !llvm.loop !65
+  %i.db = add nuw i32 %storemerge59246.us.us306.2, 1 ; 2 uses
+  %exitcond348.not.2 = icmp eq i32 %i.db, %i.i
+  br i1 %exitcond348.not.2, label %.split268.us.split.split.us308.2, label %.split199.us.us.us305.2, !llvm.loop !65
 
 .split268.us.split.split.us308.2:                 ; preds = %.split217.us.split.split.us252.us.2
   store i32 %i.da, ptr %i.e, align 4, !tbaa !8
@@ -694,8 +694,7 @@ bb.r:                                             ; preds = %bb.q
   br label %.thread
 
 ..thread.loopexit84_crit_edge.split.us.split.split: ; preds = %.split268.us.split.split.us308.2, %.split268.us.split.split.us308.1, %.split268.us.split.split.us308
-  %.lcssa390.lcssa = phi i32 [ %i.ca, %.split268.us.split.split.us308 ], [ %i.cn, %.split268.us.split.split.us308.1 ], [ %i.db, %.split268.us.split.split.us308.2 ]
-  store i32 %.lcssa390.lcssa, ptr %i.d, align 4, !tbaa !8
+  store i32 %i.i, ptr %i.d, align 4, !tbaa !8
   br label %.thread
 
 .lr.ph.split:                                     ; preds = %.lr.ph
@@ -712,7 +711,7 @@ bb.r:                                             ; preds = %bb.q
 define range(i32 0, 10001) i32 @Extra_ThreshSelectWeights7(ptr nofree noundef readonly captures(none) %0, i32 noundef %1, ptr nofree noundef captures(none) initializes((24, 28)) %2) local_unnamed_addr #3 {
 bb.a:
   %i.a = shl nuw i32 1, %1
-  %i.b = add i32 %1, 6                            ; 43 uses
+  %i.b = add i32 %1, 6                            ; 37 uses
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 8 uses
   store i32 1, ptr %i.c, align 4, !tbaa !8
   %.not373 = icmp slt i32 %1, -5
@@ -734,7 +733,7 @@ bb.a:
   br i1 %i.i, label %.split312.us.us.us.us.preheader, label %.split312.us.us.preheader
 
 .split312.us.us.preheader:                        ; preds = %.lr.ph.split.us
-  %i.j = add nsw i32 %1, 6                        ; 5 uses
+  %i.j = add nsw i32 %1, 7                        ; 12 uses
   br label %.split256.us.us.us376
 
 .split312.us.us.us.us.preheader:                  ; preds = %.lr.ph.split.us
@@ -985,7 +984,7 @@ Extra_ThreshWeightedSum.exit.loopexit.us.us.us.us.us.us.us.us.us.us.us.us.us.us.
   br i1 %exitcond427.not, label %.thread, label %.split312.us.us.us.us, !llvm.loop !74
 
 .split256.us.us.us376:                            ; preds = %.split312.us.us.preheader, %.split276.us.split.split.us316.us
-  %storemerge65310.us.us377 = phi i32 [ 1, %.split312.us.us.preheader ], [ %i.cd, %.split276.us.split.split.us316.us ] ; 4 uses
+  %storemerge65310.us.us377 = phi i32 [ 1, %.split312.us.us.preheader ], [ %i.cd, %.split276.us.split.split.us316.us ] ; 3 uses
   br label %.split207.us.us.us313.us
 
 .split207.us.us.us313.us:                         ; preds = %.split225.us.split.split.us260.us.us, %.split256.us.us.us376
@@ -1056,18 +1055,18 @@ bb.n:                                             ; preds = %.preheader.us135.us
 
 .split276.us.split.split.us316.us:                ; preds = %.split225.us.split.split.us260.us.us
   store i32 %i.cb, ptr %i.f, align 4, !tbaa !8
-  %i.cd = add nuw nsw i32 %storemerge65310.us.us377, 1 ; 2 uses
-  %.not66.us.us378.not = icmp slt i32 %storemerge65310.us.us377, %i.b
-  br i1 %.not66.us.us378.not, label %.split256.us.us.us376, label %.split334.us.split.split.us379, !llvm.loop !73
+  %i.cd = add nuw i32 %storemerge65310.us.us377, 1 ; 2 uses
+  %exitcond423.not = icmp eq i32 %i.cd, %i.j
+  br i1 %exitcond423.not, label %.split334.us.split.split.us379, label %.split256.us.us.us376, !llvm.loop !73
 
 .split334.us.split.split.us379:                   ; preds = %.split276.us.split.split.us316.us
   store i32 %i.cc, ptr %i.e, align 4, !tbaa !8
   store i32 2, ptr %i.c, align 4, !tbaa !8
-  %exitcond423.not.a = icmp eq i32 %i.j, 1
+  %exitcond423.not.a = icmp eq i32 %i.j, 2
   br i1 %exitcond423.not.a, label %..thread.loopexit92_crit_edge.split.us.split.split, label %.split256.us.us.us376.1
 
 .split256.us.us.us376.1:                          ; preds = %.split334.us.split.split.us379, %.split276.us.split.split.us316.us.1
-  %storemerge65310.us.us377.1 = phi i32 [ %i.cr, %.split276.us.split.split.us316.us.1 ], [ 2, %.split334.us.split.split.us379 ] ; 4 uses
+  %storemerge65310.us.us377.1 = phi i32 [ %i.cr, %.split276.us.split.split.us316.us.1 ], [ 2, %.split334.us.split.split.us379 ] ; 3 uses
   br label %.split207.us.us.us313.us.1
 
 .split207.us.us.us313.us.1:                       ; preds = %.split225.us.split.split.us260.us.us.1, %.split256.us.us.us376.1
@@ -1133,14 +1132,14 @@ bb.o:                                             ; preds = %bb.p, %.preheader.u
 
 .split276.us.split.split.us316.us.1:              ; preds = %.split225.us.split.split.us260.us.us.1
   store i32 %i.cp, ptr %i.f, align 4, !tbaa !8
-  %i.cr = add nuw nsw i32 %storemerge65310.us.us377.1, 1 ; 2 uses
-  %.not66.us.us378.not.1 = icmp slt i32 %storemerge65310.us.us377.1, %i.b
-  br i1 %.not66.us.us378.not.1, label %.split256.us.us.us376.1, label %.split334.us.split.split.us379.1, !llvm.loop !73
+  %i.cr = add nuw i32 %storemerge65310.us.us377.1, 1 ; 2 uses
+  %exitcond423.not.1 = icmp eq i32 %i.cr, %i.j
+  br i1 %exitcond423.not.1, label %.split334.us.split.split.us379.1, label %.split256.us.us.us376.1, !llvm.loop !73
 
 .split334.us.split.split.us379.1:                 ; preds = %.split276.us.split.split.us316.us.1
   store i32 %i.cq, ptr %i.e, align 4, !tbaa !8
   store i32 3, ptr %i.c, align 4, !tbaa !8
-  %exitcond423.not.1.a = icmp eq i32 %i.j, 2
+  %exitcond423.not.1.a = icmp eq i32 %i.j, 3
   br i1 %exitcond423.not.1.a, label %..thread.loopexit92_crit_edge.split.us.split.split, label %.split256.us.us.us376.2
 
 bb.p:                                             ; preds = %bb.o
@@ -1149,7 +1148,7 @@ bb.p:                                             ; preds = %bb.o
   br i1 %exitcond.not.1, label %..thread.loopexit_crit_edge.split.split.split.us.split.us.split.us.split.us.split.us.split.us, label %bb.o, !llvm.loop !67
 
 .split256.us.us.us376.2:                          ; preds = %.split334.us.split.split.us379.1, %.split276.us.split.split.us316.us.2
-  %storemerge65310.us.us377.2 = phi i32 [ %i.dg, %.split276.us.split.split.us316.us.2 ], [ 3, %.split334.us.split.split.us379.1 ] ; 4 uses
+  %storemerge65310.us.us377.2 = phi i32 [ %i.dg, %.split276.us.split.split.us316.us.2 ], [ 3, %.split334.us.split.split.us379.1 ] ; 3 uses
   br label %.split207.us.us.us313.us.2
 
 .split207.us.us.us313.us.2:                       ; preds = %.split225.us.split.split.us260.us.us.2, %.split256.us.us.us376.2
@@ -1215,14 +1214,14 @@ bb.q:                                             ; preds = %bb.r, %.preheader.u
 
 .split276.us.split.split.us316.us.2:              ; preds = %.split225.us.split.split.us260.us.us.2
   store i32 %i.de, ptr %i.f, align 4, !tbaa !8
-  %i.dg = add nuw nsw i32 %storemerge65310.us.us377.2, 1 ; 2 uses
-  %.not66.us.us378.not.2 = icmp slt i32 %storemerge65310.us.us377.2, %i.b
-  br i1 %.not66.us.us378.not.2, label %.split256.us.us.us376.2, label %.split334.us.split.split.us379.2, !llvm.loop !73
+  %i.dg = add nuw i32 %storemerge65310.us.us377.2, 1 ; 2 uses
+  %exitcond423.not.2 = icmp eq i32 %i.dg, %i.j
+  br i1 %exitcond423.not.2, label %.split334.us.split.split.us379.2, label %.split256.us.us.us376.2, !llvm.loop !73
 
 .split334.us.split.split.us379.2:                 ; preds = %.split276.us.split.split.us316.us.2
   store i32 %i.df, ptr %i.e, align 4, !tbaa !8
   store i32 4, ptr %i.c, align 4, !tbaa !8
-  %exitcond423.not.2.a = icmp eq i32 %i.j, 3
+  %exitcond423.not.2.a = icmp eq i32 %i.j, 4
   br i1 %exitcond423.not.2.a, label %..thread.loopexit92_crit_edge.split.us.split.split, label %.split256.us.us.us376.3
 
 bb.r:                                             ; preds = %bb.q
@@ -1231,7 +1230,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %exitcond.not.2, label %..thread.loopexit_crit_edge.split.split.split.us.split.us.split.us.split.us.split.us.split.us, label %bb.q, !llvm.loop !67
 
 .split256.us.us.us376.3:                          ; preds = %.split334.us.split.split.us379.2, %.split276.us.split.split.us316.us.3
-  %storemerge65310.us.us377.3 = phi i32 [ %i.dv, %.split276.us.split.split.us316.us.3 ], [ 4, %.split334.us.split.split.us379.2 ] ; 4 uses
+  %storemerge65310.us.us377.3 = phi i32 [ %i.dv, %.split276.us.split.split.us316.us.3 ], [ 4, %.split334.us.split.split.us379.2 ] ; 3 uses
   br label %.split207.us.us.us313.us.3
 
 .split207.us.us.us313.us.3:                       ; preds = %.split225.us.split.split.us260.us.us.3, %.split256.us.us.us376.3
@@ -1297,14 +1296,14 @@ bb.s:                                             ; preds = %bb.t, %.preheader.u
 
 .split276.us.split.split.us316.us.3:              ; preds = %.split225.us.split.split.us260.us.us.3
   store i32 %i.dt, ptr %i.f, align 4, !tbaa !8
-  %i.dv = add nuw nsw i32 %storemerge65310.us.us377.3, 1 ; 2 uses
-  %.not66.us.us378.not.3 = icmp slt i32 %storemerge65310.us.us377.3, %i.b
-  br i1 %.not66.us.us378.not.3, label %.split256.us.us.us376.3, label %.split334.us.split.split.us379.3, !llvm.loop !73
+  %i.dv = add nuw i32 %storemerge65310.us.us377.3, 1 ; 2 uses
+  %exitcond423.not.3 = icmp eq i32 %i.dv, %i.j
+  br i1 %exitcond423.not.3, label %.split334.us.split.split.us379.3, label %.split256.us.us.us376.3, !llvm.loop !73
 
 .split334.us.split.split.us379.3:                 ; preds = %.split276.us.split.split.us316.us.3
   store i32 %i.du, ptr %i.e, align 4, !tbaa !8
   store i32 5, ptr %i.c, align 4, !tbaa !8
-  %exitcond423.not.3.a = icmp eq i32 %i.j, 4
+  %exitcond423.not.3.a = icmp eq i32 %i.j, 5
   br i1 %exitcond423.not.3.a, label %..thread.loopexit92_crit_edge.split.us.split.split, label %.split256.us.us.us376.4
 
 bb.t:                                             ; preds = %bb.s
@@ -1313,7 +1312,7 @@ bb.t:                                             ; preds = %bb.s
   br i1 %exitcond.not.3, label %..thread.loopexit_crit_edge.split.split.split.us.split.us.split.us.split.us.split.us.split.us, label %bb.s, !llvm.loop !67
 
 .split256.us.us.us376.4:                          ; preds = %.split334.us.split.split.us379.3, %.split276.us.split.split.us316.us.4
-  %storemerge65310.us.us377.4 = phi i32 [ %i.ek, %.split276.us.split.split.us316.us.4 ], [ 5, %.split334.us.split.split.us379.3 ] ; 4 uses
+  %storemerge65310.us.us377.4 = phi i32 [ %i.ek, %.split276.us.split.split.us316.us.4 ], [ 5, %.split334.us.split.split.us379.3 ] ; 3 uses
   br label %.split207.us.us.us313.us.4
 
 .split207.us.us.us313.us.4:                       ; preds = %.split225.us.split.split.us260.us.us.4, %.split256.us.us.us376.4
@@ -1379,14 +1378,14 @@ bb.u:                                             ; preds = %bb.v, %.preheader.u
 
 .split276.us.split.split.us316.us.4:              ; preds = %.split225.us.split.split.us260.us.us.4
   store i32 %i.ei, ptr %i.f, align 4, !tbaa !8
-  %i.ek = add nuw nsw i32 %storemerge65310.us.us377.4, 1 ; 2 uses
-  %.not66.us.us378.not.4 = icmp slt i32 %storemerge65310.us.us377.4, %i.b
-  br i1 %.not66.us.us378.not.4, label %.split256.us.us.us376.4, label %.split334.us.split.split.us379.4, !llvm.loop !73
+  %i.ek = add nuw i32 %storemerge65310.us.us377.4, 1 ; 2 uses
+  %exitcond423.not.4 = icmp eq i32 %i.ek, %i.j
+  br i1 %exitcond423.not.4, label %.split334.us.split.split.us379.4, label %.split256.us.us.us376.4, !llvm.loop !73
 
 .split334.us.split.split.us379.4:                 ; preds = %.split276.us.split.split.us316.us.4
   store i32 %i.ej, ptr %i.e, align 4, !tbaa !8
   store i32 6, ptr %i.c, align 4, !tbaa !8
-  %exitcond423.not.4.a = icmp eq i32 %i.j, 5
+  %exitcond423.not.4.a = icmp eq i32 %i.j, 6
   br i1 %exitcond423.not.4.a, label %..thread.loopexit92_crit_edge.split.us.split.split, label %.split256.us.us.us376.5
 
 bb.v:                                             ; preds = %bb.u
@@ -1395,7 +1394,7 @@ bb.v:                                             ; preds = %bb.u
   br i1 %exitcond.not.4, label %..thread.loopexit_crit_edge.split.split.split.us.split.us.split.us.split.us.split.us.split.us, label %bb.u, !llvm.loop !67
 
 .split256.us.us.us376.5:                          ; preds = %.split334.us.split.split.us379.4, %.split276.us.split.split.us316.us.5
-  %storemerge65310.us.us377.5 = phi i32 [ %i.ez, %.split276.us.split.split.us316.us.5 ], [ 6, %.split334.us.split.split.us379.4 ] ; 4 uses
+  %storemerge65310.us.us377.5 = phi i32 [ %i.ez, %.split276.us.split.split.us316.us.5 ], [ 6, %.split334.us.split.split.us379.4 ] ; 3 uses
   br label %.split207.us.us.us313.us.5
 
 .split207.us.us.us313.us.5:                       ; preds = %.split225.us.split.split.us260.us.us.5, %.split256.us.us.us376.5
@@ -1461,9 +1460,9 @@ bb.w:                                             ; preds = %bb.x, %.preheader.u
 
 .split276.us.split.split.us316.us.5:              ; preds = %.split225.us.split.split.us260.us.us.5
   store i32 %i.ex, ptr %i.f, align 4, !tbaa !8
-  %i.ez = add nuw nsw i32 %storemerge65310.us.us377.5, 1 ; 2 uses
-  %.not66.us.us378.not.5 = icmp slt i32 %storemerge65310.us.us377.5, %i.b
-  br i1 %.not66.us.us378.not.5, label %.split256.us.us.us376.5, label %.split334.us.split.split.us379.5, !llvm.loop !73
+  %i.ez = add nuw i32 %storemerge65310.us.us377.5, 1 ; 2 uses
+  %exitcond423.not.5 = icmp eq i32 %i.ez, %i.j
+  br i1 %exitcond423.not.5, label %.split334.us.split.split.us379.5, label %.split256.us.us.us376.5, !llvm.loop !73
 
 .split334.us.split.split.us379.5:                 ; preds = %.split276.us.split.split.us316.us.5
   store i32 %i.ey, ptr %i.e, align 4, !tbaa !8
@@ -1491,8 +1490,7 @@ bb.x:                                             ; preds = %bb.w
   br label %.thread
 
 ..thread.loopexit92_crit_edge.split.us.split.split: ; preds = %.split334.us.split.split.us379.5, %.split334.us.split.split.us379.4, %.split334.us.split.split.us379.3, %.split334.us.split.split.us379.2, %.split334.us.split.split.us379.1, %.split334.us.split.split.us379
-  %.lcssa471.lcssa = phi i32 [ %i.cd, %.split334.us.split.split.us379 ], [ %i.cr, %.split334.us.split.split.us379.1 ], [ %i.dg, %.split334.us.split.split.us379.2 ], [ %i.dv, %.split334.us.split.split.us379.3 ], [ %i.ek, %.split334.us.split.split.us379.4 ], [ %i.ez, %.split334.us.split.split.us379.5 ]
-  store i32 %.lcssa471.lcssa, ptr %i.d, align 4, !tbaa !8
+  store i32 %i.j, ptr %i.d, align 4, !tbaa !8
   br label %.thread
 
 .lr.ph.split:                                     ; preds = %.lr.ph
@@ -1530,7 +1528,7 @@ bb.a:
 
 .split383.us.us.us.us.preheader:                  ; preds = %.lr.ph
   %smax = tail call i32 @llvm.smax.i32(i32 %i.a, i32 1)
-  %i.i = add nuw nsw i32 %1, 1
+  %i.i = add nuw i32 %1, 2                        ; 2 uses
   %i.j = add nsw i64 %wide.trip.count.i, -1       ; 2 uses
   %xtraiter = and i64 %wide.trip.count.i, 1
   %i.k = icmp eq i64 %i.j, 0
@@ -1545,12 +1543,12 @@ bb.a:
   br label %.split383.us.us.us.us
 
 .split383.us.us.us.us:                            ; preds = %.split383.us.us.us.us.preheader, %.split407.us.split.us.split.us.us.us.us
-  %storemerge452.us.us.us = phi i32 [ %i.bo, %.split407.us.split.us.split.us.us.us.us ], [ 1, %.split383.us.us.us.us.preheader ] ; 4 uses
+  %storemerge452.us.us.us = phi i32 [ %i.bo, %.split407.us.split.us.split.us.us.us.us ], [ 1, %.split383.us.us.us.us.preheader ] ; 3 uses
   store i32 %storemerge452.us.us.us, ptr %i.c, align 4, !tbaa !8
   br label %.split320.us.us.us.us.us.us.us
 
 .split320.us.us.us.us.us.us.us:                   ; preds = %.split342.us.split.us.split.us.us.us.us.us.us.us, %.split383.us.us.us.us
-  %storemerge71381.us.us.us.us.us.us = phi i32 [ %storemerge452.us.us.us, %.split383.us.us.us.us ], [ %i.bn, %.split342.us.split.us.split.us.us.us.us.us.us.us ] ; 4 uses
+  %storemerge71381.us.us.us.us.us.us = phi i32 [ %storemerge452.us.us.us, %.split383.us.us.us.us ], [ %i.bn, %.split342.us.split.us.split.us.us.us.us.us.us.us ] ; 3 uses
   store i32 %storemerge71381.us.us.us.us.us.us, ptr %i.d, align 4, !tbaa !8
   br label %.split264.us.us.us.us.us.us.us.us.us.us
 
@@ -1776,15 +1774,15 @@ Extra_ThreshWeightedSum.exit.loopexit.us.us.us.us.us.us.us.us.us.us.us.us.us.us.
   br i1 %.not74.us.us.us.us.us.us.us.us.us, label %.split342.us.split.us.split.us.us.us.us.us.us.us, label %.split264.us.us.us.us.us.us.us.us.us.us, !llvm.loop !81
 
 .split342.us.split.us.split.us.us.us.us.us.us.us: ; preds = %.split284.us.split.us.split.us.us.us.us.us.us.us.us.us.us
-  %i.bn = add nuw nsw i32 %storemerge71381.us.us.us.us.us.us, 1 ; 2 uses
+  %i.bn = add nuw i32 %storemerge71381.us.us.us.us.us.us, 1 ; 3 uses
   store i32 %i.bn, ptr %i.c, align 4, !tbaa !8
-  %.not72.us.us.us.us.us.us = icmp sgt i32 %storemerge71381.us.us.us.us.us.us, %1
-  br i1 %.not72.us.us.us.us.us.us, label %.split407.us.split.us.split.us.us.us.us, label %.split320.us.us.us.us.us.us.us, !llvm.loop !82
+  %exitcond506 = icmp eq i32 %i.bn, %i.i
+  br i1 %exitcond506, label %.split407.us.split.us.split.us.us.us.us, label %.split320.us.us.us.us.us.us.us, !llvm.loop !82
 
 .split407.us.split.us.split.us.us.us.us:          ; preds = %.split342.us.split.us.split.us.us.us.us.us.us.us
-  %i.bo = add nuw i32 %storemerge452.us.us.us, 1  ; 2 uses
+  %i.bo = add nuw i32 %storemerge452.us.us.us, 1  ; 3 uses
   store i32 %i.bo, ptr %i.b, align 4, !tbaa !8
-  %exitcond506.a = icmp eq i32 %storemerge452.us.us.us, %i.i
+  %exitcond506.a = icmp eq i32 %i.bo, %i.i
   br i1 %exitcond506.a, label %.thread, label %.split383.us.us.us.us, !llvm.loop !83
 
 bb.m:                                             ; preds = %.preheader.us143.us.us.us.us.us.us
@@ -1830,7 +1828,7 @@ bb.m:                                             ; preds = %.preheader.us143.us
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
-define range(i32 -2147483647, 10001) i32 @Extra_ThreshSelectWeights(ptr nofree noundef readonly captures(none) %0, i32 noundef %1, ptr nofree noundef captures(none) %2) local_unnamed_addr #3 {
+define range(i32 -2147483647, -2147483648) i32 @Extra_ThreshSelectWeights(ptr nofree noundef readonly captures(none) %0, i32 noundef %1, ptr nofree noundef captures(none) %2) local_unnamed_addr #3 {
 bb.a:
   %i.a = icmp slt i32 %1, 3
   br i1 %i.a, label %bb.b, label %bb.c
@@ -1864,7 +1862,7 @@ bb.d:                                             ; preds = %bb.c
   %i.i = and i64 %.pre.pre.pre, 2
   %.not44.us.us.i.1 = icmp eq i64 %i.i, 0         ; 6 uses
   %i.j = and i64 %.pre.pre.pre, 4
-  %.not44.us.us.i.2 = icmp eq i64 %i.j, 0         ; 4 uses
+  %.not44.us.us.i.2 = icmp eq i64 %i.j, 0         ; 3 uses
   %i.k = and i64 %.pre.pre.pre, 8
   %.not44.us.us.i.3 = icmp eq i64 %i.k, 0         ; 3 uses
   %i.l = and i64 %.pre.pre.pre, 16
@@ -1875,69 +1873,78 @@ bb.d:                                             ; preds = %bb.c
   %.not44.us.us.i.6 = icmp eq i64 %i.n, 0         ; 3 uses
   %i.o = and i64 %.pre.pre.pre, 128
   %.not44.us.us.i.7 = icmp eq i64 %i.o, 0         ; 3 uses
-  br label %.split.us.us.i
-
-.split.us.us.i:                                   ; preds = %.split68.us.us.i, %bb.d
-  %3 = phi i32 [ %i.bm, %.split68.us.us.i ], [ 1, %bb.d ] ; 22 uses
   br label %.preheader58.us.us.i
 
-.preheader58.us.us.i:                             ; preds = %bb.am, %.split.us.us.i
-  %i.p = phi i32 [ %3, %.split.us.us.i ], [ %16, %bb.am ] ; 35 uses
-  %invariant.op = add nuw nsw i32 %i.p, %3        ; 3 uses
-  br i1 %.not44.us.us.i, label %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.1, label %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.a
+.preheader58.us.us.i:                             ; preds = %.split68.us.us.i, %bb.d
+  %i.p = phi i32 [ %i.bm, %.split68.us.us.i ], [ 1, %bb.d ] ; 33 uses
+  %invariant.op = shl nuw nsw i32 %i.p, 1
+  %3 = shl nuw nsw i32 %i.p, 1
+  %4 = shl nuw nsw i32 %i.p, 1
+  %reass.add = shl nuw i32 %i.p, 1
+  br label %bb.am
 
-Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.1: ; preds = %.preheader58.us.us.i
-  %i.q = tail call i32 @llvm.smin.i32(i32 %i.p, i32 10000)
+Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.1: ; preds = %bb.am
+  %i.q = tail call i32 @llvm.smin.i32(i32 %21, i32 10000)
   %.134.us.us.i.1 = select i1 %.not44.us.us.i.1, i32 10000, i32 %i.q ; 3 uses
-  %.1.us.us.i.1 = select i1 %.not44.us.us.i.1, i32 %i.p, i32 0 ; 2 uses
+  %.1.us.us.i.1 = select i1 %.not44.us.us.i.1, i32 %21, i32 0 ; 3 uses
   %.not45.us.us.i.1 = icmp samesign ult i32 %.1.us.us.i.1, %.134.us.us.i.1
-  br i1 %.not45.us.us.i.1, label %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.2.a, label %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.a
+  br i1 %.not45.us.us.i.1, label %5, label %Extra_ThreshWeightedSum.exit.loopexit.us.us.i
 
-Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.2.a: ; preds = %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.1
-  %4 = tail call i32 @llvm.smin.i32(i32 %.134.us.us.i.1, i32 %i.p)
-  %.134.us.us.i.2 = select i1 %.not44.us.us.i.2, i32 %.134.us.us.i.1, i32 %4 ; 3 uses
-  %.1.us.us.i.2 = select i1 %.not44.us.us.i.2, i32 %i.p, i32 %.1.us.us.i.1 ; 3 uses
+5:                                                ; preds = %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.1
+  br i1 %.not44.us.us.i.2, label %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.2, label %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.2
+
+Extra_ThreshWeightedSum.exit.loopexit.us.us.i.2:  ; preds = %5
+  %6 = tail call noundef i32 @llvm.smin.i32(i32 %.134.us.us.i.1, i32 %i.p)
+  br label %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.2.a
+
+Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.2: ; preds = %5
+  %7 = tail call noundef i32 @llvm.smax.i32(i32 %.1.us.us.i.1, i32 %i.p)
+  br label %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.2.a
+
+Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.2.a: ; preds = %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.2, %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.2
+  %.134.us.us.i.2 = phi i32 [ %6, %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.2 ], [ %.134.us.us.i.1, %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.2 ] ; 3 uses
+  %.1.us.us.i.2 = phi i32 [ %.1.us.us.i.1, %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.2 ], [ %7, %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.2 ] ; 3 uses
   %.not45.us.us.i.2 = icmp slt i32 %.1.us.us.i.2, %.134.us.us.i.2
-  br i1 %.not45.us.us.i.2, label %bb.e, label %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.a
+  br i1 %.not45.us.us.i.2, label %bb.e, label %Extra_ThreshWeightedSum.exit.loopexit.us.us.i
 
 bb.e:                                             ; preds = %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.2.a
   br i1 %.not44.us.us.i.3, label %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.3, label %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.3
 
 Extra_ThreshWeightedSum.exit.loopexit.us.us.i.3:  ; preds = %bb.e
-  %5 = shl nuw nsw i32 %i.p, 1
-  %i.r = tail call noundef i32 @llvm.smin.i32(i32 %.134.us.us.i.2, i32 %5)
+  %8 = add nuw nsw i32 %i.p, %21
+  %i.r = tail call noundef i32 @llvm.smin.i32(i32 %.134.us.us.i.2, i32 %8)
   br label %bb.f
 
 Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.3: ; preds = %bb.e
-  %6 = shl nuw nsw i32 %i.p, 1
-  %i.s = tail call noundef i32 @llvm.smax.i32(i32 %.1.us.us.i.2, i32 %6)
+  %9 = add nuw nsw i32 %i.p, %21
+  %i.s = tail call noundef i32 @llvm.smax.i32(i32 %.1.us.us.i.2, i32 %9)
   br label %bb.f
 
 bb.f:                                             ; preds = %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.3, %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.3
   %.134.us.us.i.3 = phi i32 [ %i.r, %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.3 ], [ %.134.us.us.i.2, %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.3 ] ; 3 uses
   %.1.us.us.i.3 = phi i32 [ %.1.us.us.i.2, %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.3 ], [ %i.s, %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.3 ] ; 3 uses
   %.not45.us.us.i.3 = icmp slt i32 %.1.us.us.i.3, %.134.us.us.i.3
-  br i1 %.not45.us.us.i.3, label %bb.g, label %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.a
+  br i1 %.not45.us.us.i.3, label %bb.g, label %Extra_ThreshWeightedSum.exit.loopexit.us.us.i
 
 bb.g:                                             ; preds = %bb.f
   br i1 %.not44.us.us.i.4, label %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.4, label %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.4
 
 Extra_ThreshWeightedSum.exit.loopexit.us.us.i.4:  ; preds = %bb.g
-  %i.t = tail call noundef i32 @llvm.smin.i32(i32 %.134.us.us.i.3, i32 %3)
+  %i.t = tail call noundef i32 @llvm.smin.i32(i32 %.134.us.us.i.3, i32 %i.p)
   br label %bb.h
 
 Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.4: ; preds = %bb.g
-  %i.u = tail call noundef i32 @llvm.smax.i32(i32 %.1.us.us.i.3, i32 %3)
+  %i.u = tail call noundef i32 @llvm.smax.i32(i32 %.1.us.us.i.3, i32 %i.p)
   br label %bb.h
 
 bb.h:                                             ; preds = %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.4, %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.4
   %.134.us.us.i.4 = phi i32 [ %i.t, %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.4 ], [ %.134.us.us.i.3, %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.4 ] ; 3 uses
   %.1.us.us.i.4 = phi i32 [ %.1.us.us.i.3, %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.4 ], [ %i.u, %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.4 ] ; 3 uses
   %.not45.us.us.i.4 = icmp slt i32 %.1.us.us.i.4, %.134.us.us.i.4
-  br i1 %.not45.us.us.i.4, label %bb.i, label %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.a
+  br i1 %.not45.us.us.i.4, label %bb.i, label %Extra_ThreshWeightedSum.exit.loopexit.us.us.i
 
 bb.i:                                             ; preds = %bb.h
-  %i.v = add nuw nsw i32 %3, %i.p                 ; 2 uses
+  %i.v = add nuw nsw i32 %i.p, %21                ; 2 uses
   br i1 %.not44.us.us.i.5, label %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.5, label %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.5
 
 Extra_ThreshWeightedSum.exit.loopexit.us.us.i.5:  ; preds = %bb.i
@@ -1952,38 +1959,35 @@ bb.j:                                             ; preds = %Extra_ThreshWeighte
   %.134.us.us.i.5 = phi i32 [ %i.w, %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.5 ], [ %.134.us.us.i.4, %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.5 ] ; 3 uses
   %.1.us.us.i.5 = phi i32 [ %.1.us.us.i.4, %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.5 ], [ %i.x, %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.5 ] ; 3 uses
   %.not45.us.us.i.5 = icmp slt i32 %.1.us.us.i.5, %.134.us.us.i.5
-  br i1 %.not45.us.us.i.5, label %bb.k, label %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.a
+  br i1 %.not45.us.us.i.5, label %bb.k, label %Extra_ThreshWeightedSum.exit.loopexit.us.us.i
 
 bb.k:                                             ; preds = %bb.j
   br i1 %.not44.us.us.i.6, label %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.6, label %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.6
 
 Extra_ThreshWeightedSum.exit.loopexit.us.us.i.6:  ; preds = %bb.k
-  %7 = add nuw nsw i32 %3, %i.p
-  %i.y = tail call noundef i32 @llvm.smin.i32(i32 %.134.us.us.i.5, i32 %7)
+  %i.y = tail call noundef i32 @llvm.smin.i32(i32 %.134.us.us.i.5, i32 %3)
   br label %bb.l
 
 Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.6: ; preds = %bb.k
-  %8 = add nuw nsw i32 %3, %i.p
-  %i.z = tail call noundef i32 @llvm.smax.i32(i32 %.1.us.us.i.5, i32 %8)
+  %i.z = tail call noundef i32 @llvm.smax.i32(i32 %.1.us.us.i.5, i32 %4)
   br label %bb.l
 
 bb.l:                                             ; preds = %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.6, %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.6
   %.134.us.us.i.6 = phi i32 [ %i.y, %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.6 ], [ %.134.us.us.i.5, %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.6 ] ; 3 uses
   %.1.us.us.i.6 = phi i32 [ %.1.us.us.i.5, %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.6 ], [ %i.z, %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.6 ] ; 3 uses
   %.not45.us.us.i.6 = icmp slt i32 %.1.us.us.i.6, %.134.us.us.i.6
-  br i1 %.not45.us.us.i.6, label %bb.m, label %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.a
+  br i1 %.not45.us.us.i.6, label %bb.m, label %Extra_ThreshWeightedSum.exit.loopexit.us.us.i
 
 bb.m:                                             ; preds = %bb.l
   br i1 %.not44.us.us.i.7, label %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.7, label %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.7
 
 Extra_ThreshWeightedSum.exit.loopexit.us.us.i.7:  ; preds = %bb.m
-  %9 = shl nuw nsw i32 %i.p, 1
-  %i.aa = add nuw nsw i32 %3, %9
+  %i.aa = add i32 %21, %reass.add
   %i.ab = tail call noundef i32 @llvm.smin.i32(i32 %.134.us.us.i.6, i32 %i.aa)
   br label %bb.n
 
 Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.7: ; preds = %bb.m
-  %.reass = add nuw nsw i32 %i.p, %invariant.op
+  %.reass = add nuw nsw i32 %21, %invariant.op
   %i.ac = tail call noundef i32 @llvm.smax.i32(i32 %.1.us.us.i.6, i32 %.reass)
   br label %bb.n
 
@@ -1991,49 +1995,63 @@ bb.n:                                             ; preds = %Extra_ThreshWeighte
   %.134.us.us.i.7 = phi i32 [ %i.ab, %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.7 ], [ %.134.us.us.i.6, %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.7 ] ; 2 uses
   %.1.us.us.i.7 = phi i32 [ %.1.us.us.i.6, %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.7 ], [ %i.ac, %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.7 ]
   %.not45.us.us.i.7 = icmp slt i32 %.1.us.us.i.7, %.134.us.us.i.7
-  br i1 %.not45.us.us.i.7, label %Extra_ThreshSelectWeights3.exit.loopexit, label %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.a
+  br i1 %.not45.us.us.i.7, label %Extra_ThreshSelectWeights3.exit.loopexit, label %Extra_ThreshWeightedSum.exit.loopexit.us.us.i
 
-Extra_ThreshWeightedSum.exit.loopexit.us.us.i.a:  ; preds = %.preheader58.us.us.i, %bb.n, %bb.l, %bb.j, %bb.h, %bb.f, %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.2.a, %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.1
-  %i.ad = add nuw nsw i32 %i.p, 1                 ; 9 uses
-  %.not43.us.us.not.i = icmp samesign ult i32 %i.p, 3
-  br i1 %.not43.us.us.not.i, label %.preheader.us.us.i.1, label %bb.am
+Extra_ThreshWeightedSum.exit.loopexit.us.us.i:    ; preds = %bb.am, %bb.n, %bb.l, %bb.j, %bb.h, %bb.f, %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.2.a, %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.1
+  %10 = add nuw nsw i32 %21, 1                    ; 3 uses
+  %exitcond67.not = icmp eq i32 %10, 4
+  br i1 %exitcond67.not, label %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.a, label %bb.am, !llvm.loop !46
 
-.preheader.us.us.i.1:                             ; preds = %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.a
-  br i1 %.not44.us.us.i, label %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.1.1, label %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.1.a
+Extra_ThreshWeightedSum.exit.loopexit.us.us.i.a:  ; preds = %Extra_ThreshWeightedSum.exit.loopexit.us.us.i
+  %i.ad = add nuw nsw i32 %i.p, 1                 ; 12 uses
+  %exitcond75.not.i = icmp eq i32 %i.p, 3
+  br i1 %exitcond75.not.i, label %.split68.us.us.i, label %.preheader58.us.us.i.1
+
+.preheader58.us.us.i.1:                           ; preds = %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.a
+  %invariant.op.1 = add nuw nsw i32 %i.ad, %i.p
+  %11 = add nuw nsw i32 %i.p, %i.ad
+  %12 = add nuw nsw i32 %i.p, %i.ad
+  %invariant.op302 = add nuw nsw i32 %i.ad, %i.p
+  br label %.preheader.us.us.i.1
+
+.preheader.us.us.i.1:                             ; preds = %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.1, %.preheader58.us.us.i.1
+  %13 = phi i32 [ %i.ad, %.preheader58.us.us.i.1 ], [ %15, %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.1 ] ; 9 uses
+  br i1 %.not44.us.us.i, label %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.1.1, label %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.1
 
 Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.1.1: ; preds = %.preheader.us.us.i.1
-  %.134.us.us.i.1.1 = select i1 %.not44.us.us.i.1, i32 10000, i32 %i.ad ; 3 uses
-  %.1.us.us.i.1.1 = select i1 %.not44.us.us.i.1, i32 %i.ad, i32 0 ; 3 uses
+  %14 = tail call i32 @llvm.smin.i32(i32 %13, i32 10000)
+  %.134.us.us.i.1.1 = select i1 %.not44.us.us.i.1, i32 10000, i32 %14 ; 3 uses
+  %.1.us.us.i.1.1 = select i1 %.not44.us.us.i.1, i32 %13, i32 0 ; 3 uses
   %.not45.us.us.i.1.1 = icmp samesign ult i32 %.1.us.us.i.1.1, %.134.us.us.i.1.1
-  br i1 %.not45.us.us.i.1.1, label %bb.o, label %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.1.a
+  br i1 %.not45.us.us.i.1.1, label %bb.o, label %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.1
 
 bb.o:                                             ; preds = %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.1.1
   br i1 %.not44.us.us.i.2, label %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.2.1, label %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.2.1
 
 Extra_ThreshWeightedSum.exit.loopexit.us.us.i.2.1: ; preds = %bb.o
-  %i.ae = tail call noundef i32 @llvm.smin.i32(i32 %.134.us.us.i.1.1, i32 %i.p)
+  %i.ae = tail call noundef i32 @llvm.smin.i32(i32 %.134.us.us.i.1.1, i32 %i.ad)
   br label %bb.p
 
 Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.2.1: ; preds = %bb.o
-  %i.af = tail call noundef i32 @llvm.smax.i32(i32 %.1.us.us.i.1.1, i32 %i.p)
+  %i.af = tail call noundef i32 @llvm.smax.i32(i32 %.1.us.us.i.1.1, i32 %i.ad)
   br label %bb.p
 
 bb.p:                                             ; preds = %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.2.1, %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.2.1
   %.134.us.us.i.2.1 = phi i32 [ %i.ae, %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.2.1 ], [ %.134.us.us.i.1.1, %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.2.1 ] ; 3 uses
   %.1.us.us.i.2.1 = phi i32 [ %.1.us.us.i.1.1, %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.2.1 ], [ %i.af, %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.2.1 ] ; 3 uses
   %.not45.us.us.i.2.1 = icmp slt i32 %.1.us.us.i.2.1, %.134.us.us.i.2.1
-  br i1 %.not45.us.us.i.2.1, label %bb.q, label %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.1.a
+  br i1 %.not45.us.us.i.2.1, label %bb.q, label %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.1
 
 bb.q:                                             ; preds = %bb.p
   br i1 %.not44.us.us.i.3, label %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.3.1, label %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.3.1
 
 Extra_ThreshWeightedSum.exit.loopexit.us.us.i.3.1: ; preds = %bb.q
-  %i.ag = add nuw nsw i32 %i.p, %i.ad
+  %i.ag = add nuw nsw i32 %i.ad, %13
   %i.ah = tail call noundef i32 @llvm.smin.i32(i32 %.134.us.us.i.2.1, i32 %i.ag)
   br label %bb.r
 
 Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.3.1: ; preds = %bb.q
-  %i.ai = add nuw nsw i32 %i.p, %i.ad
+  %i.ai = add nuw nsw i32 %i.ad, %13
   %i.aj = tail call noundef i32 @llvm.smax.i32(i32 %.1.us.us.i.2.1, i32 %i.ai)
   br label %bb.r
 
@@ -2041,27 +2059,27 @@ bb.r:                                             ; preds = %Extra_ThreshWeighte
   %.134.us.us.i.3.1 = phi i32 [ %i.ah, %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.3.1 ], [ %.134.us.us.i.2.1, %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.3.1 ] ; 3 uses
   %.1.us.us.i.3.1 = phi i32 [ %.1.us.us.i.2.1, %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.3.1 ], [ %i.aj, %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.3.1 ] ; 3 uses
   %.not45.us.us.i.3.1 = icmp slt i32 %.1.us.us.i.3.1, %.134.us.us.i.3.1
-  br i1 %.not45.us.us.i.3.1, label %bb.s, label %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.1.a
+  br i1 %.not45.us.us.i.3.1, label %bb.s, label %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.1
 
 bb.s:                                             ; preds = %bb.r
   br i1 %.not44.us.us.i.4, label %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.4.1, label %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.4.1
 
 Extra_ThreshWeightedSum.exit.loopexit.us.us.i.4.1: ; preds = %bb.s
-  %i.ak = tail call noundef i32 @llvm.smin.i32(i32 %.134.us.us.i.3.1, i32 %3)
+  %i.ak = tail call noundef i32 @llvm.smin.i32(i32 %.134.us.us.i.3.1, i32 %i.p)
   br label %bb.t
 
 Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.4.1: ; preds = %bb.s
-  %i.al = tail call noundef i32 @llvm.smax.i32(i32 %.1.us.us.i.3.1, i32 %3)
+  %i.al = tail call noundef i32 @llvm.smax.i32(i32 %.1.us.us.i.3.1, i32 %i.p)
   br label %bb.t
 
 bb.t:                                             ; preds = %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.4.1, %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.4.1
   %.134.us.us.i.4.1 = phi i32 [ %i.ak, %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.4.1 ], [ %.134.us.us.i.3.1, %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.4.1 ] ; 3 uses
   %.1.us.us.i.4.1 = phi i32 [ %.1.us.us.i.3.1, %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.4.1 ], [ %i.al, %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.4.1 ] ; 3 uses
   %.not45.us.us.i.4.1 = icmp slt i32 %.1.us.us.i.4.1, %.134.us.us.i.4.1
-  br i1 %.not45.us.us.i.4.1, label %bb.u, label %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.1.a
+  br i1 %.not45.us.us.i.4.1, label %bb.u, label %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.1
 
 bb.u:                                             ; preds = %bb.t
-  %i.am = add nuw nsw i32 %3, %i.ad               ; 2 uses
+  %i.am = add nuw nsw i32 %i.p, %13               ; 2 uses
   br i1 %.not44.us.us.i.5, label %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.5.1, label %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.5.1
 
 Extra_ThreshWeightedSum.exit.loopexit.us.us.i.5.1: ; preds = %bb.u
@@ -2076,38 +2094,35 @@ bb.v:                                             ; preds = %Extra_ThreshWeighte
   %.134.us.us.i.5.1 = phi i32 [ %i.an, %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.5.1 ], [ %.134.us.us.i.4.1, %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.5.1 ] ; 3 uses
   %.1.us.us.i.5.1 = phi i32 [ %.1.us.us.i.4.1, %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.5.1 ], [ %i.ao, %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.5.1 ] ; 3 uses
   %.not45.us.us.i.5.1 = icmp slt i32 %.1.us.us.i.5.1, %.134.us.us.i.5.1
-  br i1 %.not45.us.us.i.5.1, label %bb.w, label %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.1.a
+  br i1 %.not45.us.us.i.5.1, label %bb.w, label %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.1
 
 bb.w:                                             ; preds = %bb.v
   br i1 %.not44.us.us.i.6, label %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.6.1, label %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.6.1
 
 Extra_ThreshWeightedSum.exit.loopexit.us.us.i.6.1: ; preds = %bb.w
-  %10 = add nuw nsw i32 %3, %i.p
-  %i.ap = tail call noundef i32 @llvm.smin.i32(i32 %.134.us.us.i.5.1, i32 %10)
+  %i.ap = tail call noundef i32 @llvm.smin.i32(i32 %.134.us.us.i.5.1, i32 %11)
   br label %bb.x
 
 Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.6.1: ; preds = %bb.w
-  %11 = add nuw nsw i32 %3, %i.p
-  %i.aq = tail call noundef i32 @llvm.smax.i32(i32 %.1.us.us.i.5.1, i32 %11)
+  %i.aq = tail call noundef i32 @llvm.smax.i32(i32 %.1.us.us.i.5.1, i32 %12)
   br label %bb.x
 
 bb.x:                                             ; preds = %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.6.1, %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.6.1
   %.134.us.us.i.6.1 = phi i32 [ %i.ap, %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.6.1 ], [ %.134.us.us.i.5.1, %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.6.1 ] ; 3 uses
   %.1.us.us.i.6.1 = phi i32 [ %.1.us.us.i.5.1, %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.6.1 ], [ %i.aq, %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.6.1 ] ; 3 uses
   %.not45.us.us.i.6.1 = icmp slt i32 %.1.us.us.i.6.1, %.134.us.us.i.6.1
-  br i1 %.not45.us.us.i.6.1, label %bb.y, label %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.1.a
+  br i1 %.not45.us.us.i.6.1, label %bb.y, label %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.1
 
 bb.y:                                             ; preds = %bb.x
   br i1 %.not44.us.us.i.7, label %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.7.1, label %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.7.1
 
 Extra_ThreshWeightedSum.exit.loopexit.us.us.i.7.1: ; preds = %bb.y
-  %12 = add nuw nsw i32 %i.p, %i.ad
-  %i.ar = add nuw nsw i32 %3, %12
+  %i.ar = add nuw nsw i32 %13, %invariant.op302
   %i.as = tail call noundef i32 @llvm.smin.i32(i32 %.134.us.us.i.6.1, i32 %i.ar)
   br label %bb.z
 
 Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.7.1: ; preds = %bb.y
-  %.reass.1 = add nuw nsw i32 %i.ad, %invariant.op
+  %.reass.1 = add nuw nsw i32 %13, %invariant.op.1
   %i.at = tail call noundef i32 @llvm.smax.i32(i32 %.1.us.us.i.6.1, i32 %.reass.1)
   br label %bb.z
 
@@ -2115,49 +2130,63 @@ bb.z:                                             ; preds = %Extra_ThreshWeighte
   %.134.us.us.i.7.1 = phi i32 [ %i.as, %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.7.1 ], [ %.134.us.us.i.6.1, %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.7.1 ] ; 2 uses
   %.1.us.us.i.7.1 = phi i32 [ %.1.us.us.i.6.1, %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.7.1 ], [ %i.at, %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.7.1 ]
   %.not45.us.us.i.7.1 = icmp slt i32 %.1.us.us.i.7.1, %.134.us.us.i.7.1
-  br i1 %.not45.us.us.i.7.1, label %Extra_ThreshSelectWeights3.exit.loopexit, label %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.1.a
+  br i1 %.not45.us.us.i.7.1, label %Extra_ThreshSelectWeights3.exit.loopexit, label %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.1
 
-Extra_ThreshWeightedSum.exit.loopexit.us.us.i.1.a: ; preds = %bb.z, %bb.x, %bb.v, %bb.t, %bb.r, %bb.p, %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.1.1, %.preheader.us.us.i.1
-  %i.au = add nuw nsw i32 %i.p, 2                 ; 9 uses
-  %.not43.us.us.not.i.1.not = icmp eq i32 %i.p, 2
-  br i1 %.not43.us.us.not.i.1.not, label %bb.am, label %.preheader.us.us.i.2
+Extra_ThreshWeightedSum.exit.loopexit.us.us.i.1:  ; preds = %bb.z, %bb.x, %bb.v, %bb.t, %bb.r, %bb.p, %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.1.1, %.preheader.us.us.i.1
+  %15 = add nuw nsw i32 %13, 1                    ; 3 uses
+  %exitcond67.not.1 = icmp eq i32 %15, 4
+  br i1 %exitcond67.not.1, label %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.1.a, label %.preheader.us.us.i.1, !llvm.loop !46
 
-.preheader.us.us.i.2:                             ; preds = %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.1.a
-  br i1 %.not44.us.us.i, label %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.1.2, label %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.2212
+Extra_ThreshWeightedSum.exit.loopexit.us.us.i.1.a: ; preds = %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.1
+  %i.au = add nuw nsw i32 %i.p, 2                 ; 11 uses
+  %.not43.us.us.not.i.1.not = icmp eq i32 %i.ad, 3
+  br i1 %.not43.us.us.not.i.1.not, label %.split68.us.us.i, label %.preheader58.us.us.i.2
+
+.preheader58.us.us.i.2:                           ; preds = %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.1.a
+  %invariant.op.2 = add nuw nsw i32 %i.au, %i.p
+  %16 = add nuw nsw i32 %i.p, %i.au
+  %17 = add nuw nsw i32 %i.p, %i.au
+  %invariant.op300 = add nuw nsw i32 %i.au, %i.p
+  br label %.preheader.us.us.i.2
+
+.preheader.us.us.i.2:                             ; preds = %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.2217, %.preheader58.us.us.i.2
+  %18 = phi i32 [ %i.au, %.preheader58.us.us.i.2 ], [ %20, %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.2217 ] ; 9 uses
+  br i1 %.not44.us.us.i, label %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.1.2, label %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.2217
 
 Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.1.2: ; preds = %.preheader.us.us.i.2
-  %.134.us.us.i.1.2 = select i1 %.not44.us.us.i.1, i32 10000, i32 %i.au ; 3 uses
-  %.1.us.us.i.1.2 = select i1 %.not44.us.us.i.1, i32 %i.au, i32 0 ; 3 uses
+  %19 = tail call i32 @llvm.smin.i32(i32 %18, i32 10000)
+  %.134.us.us.i.1.2 = select i1 %.not44.us.us.i.1, i32 10000, i32 %19 ; 3 uses
+  %.1.us.us.i.1.2 = select i1 %.not44.us.us.i.1, i32 %18, i32 0 ; 3 uses
   %.not45.us.us.i.1.2 = icmp samesign ult i32 %.1.us.us.i.1.2, %.134.us.us.i.1.2
-  br i1 %.not45.us.us.i.1.2, label %bb.aa, label %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.2212
+  br i1 %.not45.us.us.i.1.2, label %bb.aa, label %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.2217
 
 bb.aa:                                            ; preds = %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.1.2
   br i1 %.not44.us.us.i.2, label %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.2.2, label %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.2.2
 
 Extra_ThreshWeightedSum.exit.loopexit.us.us.i.2.2: ; preds = %bb.aa
-  %i.av = tail call noundef i32 @llvm.smin.i32(i32 %.134.us.us.i.1.2, i32 %i.p)
+  %i.av = tail call noundef i32 @llvm.smin.i32(i32 %.134.us.us.i.1.2, i32 %i.au)
   br label %bb.ab
 
 Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.2.2: ; preds = %bb.aa
-  %i.aw = tail call noundef i32 @llvm.smax.i32(i32 %.1.us.us.i.1.2, i32 %i.p)
+  %i.aw = tail call noundef i32 @llvm.smax.i32(i32 %.1.us.us.i.1.2, i32 %i.au)
   br label %bb.ab
 
 bb.ab:                                            ; preds = %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.2.2, %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.2.2
   %.134.us.us.i.2.2 = phi i32 [ %i.av, %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.2.2 ], [ %.134.us.us.i.1.2, %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.2.2 ] ; 3 uses
   %.1.us.us.i.2.2 = phi i32 [ %.1.us.us.i.1.2, %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.2.2 ], [ %i.aw, %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.2.2 ] ; 3 uses
   %.not45.us.us.i.2.2 = icmp slt i32 %.1.us.us.i.2.2, %.134.us.us.i.2.2
-  br i1 %.not45.us.us.i.2.2, label %bb.ac, label %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.2212
+  br i1 %.not45.us.us.i.2.2, label %bb.ac, label %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.2217
 
 bb.ac:                                            ; preds = %bb.ab
   br i1 %.not44.us.us.i.3, label %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.3.2, label %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.3.2
 
 Extra_ThreshWeightedSum.exit.loopexit.us.us.i.3.2: ; preds = %bb.ac
-  %i.ax = add nuw nsw i32 %i.p, %i.au
+  %i.ax = add nuw nsw i32 %i.au, %18
   %i.ay = tail call noundef i32 @llvm.smin.i32(i32 %.134.us.us.i.2.2, i32 %i.ax)
   br label %bb.ad
 
 Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.3.2: ; preds = %bb.ac
-  %i.az = add nuw nsw i32 %i.p, %i.au
+  %i.az = add nuw nsw i32 %i.au, %18
   %i.ba = tail call noundef i32 @llvm.smax.i32(i32 %.1.us.us.i.2.2, i32 %i.az)
   br label %bb.ad
 
@@ -2165,27 +2194,27 @@ bb.ad:                                            ; preds = %Extra_ThreshWeighte
   %.134.us.us.i.3.2 = phi i32 [ %i.ay, %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.3.2 ], [ %.134.us.us.i.2.2, %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.3.2 ] ; 3 uses
   %.1.us.us.i.3.2 = phi i32 [ %.1.us.us.i.2.2, %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.3.2 ], [ %i.ba, %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.3.2 ] ; 3 uses
   %.not45.us.us.i.3.2 = icmp slt i32 %.1.us.us.i.3.2, %.134.us.us.i.3.2
-  br i1 %.not45.us.us.i.3.2, label %bb.ae, label %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.2212
+  br i1 %.not45.us.us.i.3.2, label %bb.ae, label %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.2217
 
 bb.ae:                                            ; preds = %bb.ad
   br i1 %.not44.us.us.i.4, label %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.4.2, label %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.4.2
 
 Extra_ThreshWeightedSum.exit.loopexit.us.us.i.4.2: ; preds = %bb.ae
-  %i.bb = tail call noundef i32 @llvm.smin.i32(i32 %.134.us.us.i.3.2, i32 %3)
+  %i.bb = tail call noundef i32 @llvm.smin.i32(i32 %.134.us.us.i.3.2, i32 %i.p)
   br label %bb.af
 
 Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.4.2: ; preds = %bb.ae
-  %i.bc = tail call noundef i32 @llvm.smax.i32(i32 %.1.us.us.i.3.2, i32 %3)
+  %i.bc = tail call noundef i32 @llvm.smax.i32(i32 %.1.us.us.i.3.2, i32 %i.p)
   br label %bb.af
 
 bb.af:                                            ; preds = %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.4.2, %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.4.2
   %.134.us.us.i.4.2 = phi i32 [ %i.bb, %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.4.2 ], [ %.134.us.us.i.3.2, %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.4.2 ] ; 3 uses
   %.1.us.us.i.4.2 = phi i32 [ %.1.us.us.i.3.2, %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.4.2 ], [ %i.bc, %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.4.2 ] ; 3 uses
   %.not45.us.us.i.4.2 = icmp slt i32 %.1.us.us.i.4.2, %.134.us.us.i.4.2
-  br i1 %.not45.us.us.i.4.2, label %bb.ag, label %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.2212
+  br i1 %.not45.us.us.i.4.2, label %bb.ag, label %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.2217
 
 bb.ag:                                            ; preds = %bb.af
-  %i.bd = add nuw nsw i32 %3, %i.au               ; 2 uses
+  %i.bd = add nuw nsw i32 %i.p, %18               ; 2 uses
   br i1 %.not44.us.us.i.5, label %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.5.2, label %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.5.2
 
 Extra_ThreshWeightedSum.exit.loopexit.us.us.i.5.2: ; preds = %bb.ag
@@ -2200,38 +2229,35 @@ bb.ah:                                            ; preds = %Extra_ThreshWeighte
   %.134.us.us.i.5.2 = phi i32 [ %i.be, %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.5.2 ], [ %.134.us.us.i.4.2, %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.5.2 ] ; 3 uses
   %.1.us.us.i.5.2 = phi i32 [ %.1.us.us.i.4.2, %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.5.2 ], [ %i.bf, %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.5.2 ] ; 3 uses
   %.not45.us.us.i.5.2 = icmp slt i32 %.1.us.us.i.5.2, %.134.us.us.i.5.2
-  br i1 %.not45.us.us.i.5.2, label %bb.ai, label %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.2212
+  br i1 %.not45.us.us.i.5.2, label %bb.ai, label %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.2217
 
 bb.ai:                                            ; preds = %bb.ah
   br i1 %.not44.us.us.i.6, label %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.6.2, label %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.6.2
 
 Extra_ThreshWeightedSum.exit.loopexit.us.us.i.6.2: ; preds = %bb.ai
-  %13 = add nuw nsw i32 %3, %i.p
-  %i.bg = tail call noundef i32 @llvm.smin.i32(i32 %.134.us.us.i.5.2, i32 %13)
+  %i.bg = tail call noundef i32 @llvm.smin.i32(i32 %.134.us.us.i.5.2, i32 %16)
   br label %bb.aj
 
 Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.6.2: ; preds = %bb.ai
-  %14 = add nuw nsw i32 %3, %i.p
-  %i.bh = tail call noundef i32 @llvm.smax.i32(i32 %.1.us.us.i.5.2, i32 %14)
+  %i.bh = tail call noundef i32 @llvm.smax.i32(i32 %.1.us.us.i.5.2, i32 %17)
   br label %bb.aj
 
 bb.aj:                                            ; preds = %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.6.2, %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.6.2
   %.134.us.us.i.6.2 = phi i32 [ %i.bg, %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.6.2 ], [ %.134.us.us.i.5.2, %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.6.2 ] ; 3 uses
   %.1.us.us.i.6.2 = phi i32 [ %.1.us.us.i.5.2, %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.6.2 ], [ %i.bh, %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.6.2 ] ; 3 uses
   %.not45.us.us.i.6.2 = icmp slt i32 %.1.us.us.i.6.2, %.134.us.us.i.6.2
-  br i1 %.not45.us.us.i.6.2, label %bb.ak, label %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.2212
+  br i1 %.not45.us.us.i.6.2, label %bb.ak, label %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.2217
 
 bb.ak:                                            ; preds = %bb.aj
   br i1 %.not44.us.us.i.7, label %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.7.2, label %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.7.2
 
 Extra_ThreshWeightedSum.exit.loopexit.us.us.i.7.2: ; preds = %bb.ak
-  %15 = add nuw nsw i32 %i.p, %i.au
-  %i.bi = add nuw nsw i32 %3, %15
+  %i.bi = add nuw nsw i32 %18, %invariant.op300
   %i.bj = tail call noundef i32 @llvm.smin.i32(i32 %.134.us.us.i.6.2, i32 %i.bi)
   br label %bb.al
 
 Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.7.2: ; preds = %bb.ak
-  %.reass.2 = add nuw nsw i32 %i.au, %invariant.op
+  %.reass.2 = add nuw nsw i32 %18, %invariant.op.2
   %i.bk = tail call noundef i32 @llvm.smax.i32(i32 %.1.us.us.i.6.2, i32 %.reass.2)
   br label %bb.al
 
@@ -2239,24 +2265,29 @@ bb.al:                                            ; preds = %Extra_ThreshWeighte
   %.134.us.us.i.7.2 = phi i32 [ %i.bj, %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.7.2 ], [ %.134.us.us.i.6.2, %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.7.2 ] ; 2 uses
   %.1.us.us.i.7.2 = phi i32 [ %.1.us.us.i.6.2, %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.7.2 ], [ %i.bk, %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.7.2 ]
   %.not45.us.us.i.7.2 = icmp slt i32 %.1.us.us.i.7.2, %.134.us.us.i.7.2
-  br i1 %.not45.us.us.i.7.2, label %Extra_ThreshSelectWeights3.exit.loopexit, label %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.2212
+  br i1 %.not45.us.us.i.7.2, label %Extra_ThreshSelectWeights3.exit.loopexit, label %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.2217
 
-Extra_ThreshWeightedSum.exit.loopexit.us.us.i.2212: ; preds = %bb.al, %bb.aj, %bb.ah, %bb.af, %bb.ad, %bb.ab, %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.1.2, %.preheader.us.us.i.2
+Extra_ThreshWeightedSum.exit.loopexit.us.us.i.2217: ; preds = %bb.al, %bb.aj, %bb.ah, %bb.af, %bb.ad, %bb.ab, %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.1.2, %.preheader.us.us.i.2
+  %20 = add nuw nsw i32 %18, 1                    ; 3 uses
+  %exitcond67.not.2 = icmp eq i32 %20, 4
+  br i1 %exitcond67.not.2, label %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.2212, label %.preheader.us.us.i.2, !llvm.loop !46
+
+Extra_ThreshWeightedSum.exit.loopexit.us.us.i.2212: ; preds = %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.2217
   %i.bl = add nuw nsw i32 %i.p, 3
-  br label %bb.am
+  br label %.split68.us.us.i
 
-bb.am:                                            ; preds = %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.2212, %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.1.a, %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.a
-  %.lcssa157 = phi i32 [ %i.ad, %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.a ], [ %i.au, %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.1.a ], [ %i.bl, %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.2212 ]
-  %16 = add nuw nsw i32 %i.p, 1                   ; 2 uses
-  %exitcond75.not.i = icmp eq i32 %i.p, 3
-  br i1 %exitcond75.not.i, label %.split68.us.us.i, label %.preheader58.us.us.i, !llvm.loop !47
+bb.am:                                            ; preds = %Extra_ThreshWeightedSum.exit.loopexit.us.us.i, %.preheader58.us.us.i
+  %21 = phi i32 [ %i.p, %.preheader58.us.us.i ], [ %10, %Extra_ThreshWeightedSum.exit.loopexit.us.us.i ] ; 9 uses
+  br i1 %.not44.us.us.i, label %Extra_ThreshWeightedSum.exit56.loopexit.us.us.i.1, label %Extra_ThreshWeightedSum.exit.loopexit.us.us.i
 
-.split68.us.us.i:                                 ; preds = %bb.am
-  store i32 %.lcssa157, ptr %2, align 4, !tbaa !8
-  %i.bm = add nuw nsw i32 %3, 1                   ; 2 uses
+.split68.us.us.i:                                 ; preds = %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.2212, %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.1.a, %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.a
+  %.lcssa165 = phi i32 [ %i.ad, %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.a ], [ %i.au, %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.1.a ], [ %i.bl, %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.2212 ]
+  %.lcssa162.lcssa = phi i32 [ %10, %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.a ], [ %15, %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.1.a ], [ %20, %Extra_ThreshWeightedSum.exit.loopexit.us.us.i.2212 ]
+  store i32 %.lcssa162.lcssa, ptr %2, align 4, !tbaa !8
+  %i.bm = add nuw nsw i32 %i.p, 1                 ; 2 uses
   store i32 %i.bm, ptr %i.f, align 4, !tbaa !8
-  %exitcond76.not.i = icmp eq i32 %3, 3
-  br i1 %exitcond76.not.i, label %Extra_ThreshSelectWeights3.exit.loopexit69, label %.split.us.us.i, !llvm.loop !48
+  %exitcond76.not.i = icmp eq i32 %i.p, 3
+  br i1 %exitcond76.not.i, label %Extra_ThreshSelectWeights3.exit.loopexit69, label %.preheader58.us.us.i, !llvm.loop !48
 
 bb.an:                                            ; preds = %bb.c
   %i.bn = getelementptr inbounds nuw i8, ptr %2, i64 12 ; 2 uses
@@ -2275,7 +2306,7 @@ bb.an:                                            ; preds = %bb.c
 
 .preheader66.us.us.us.i:                          ; preds = %bb.bb, %.split.us.us.us.i
   %i.bs = phi i32 [ %i.br, %.split.us.us.us.i ], [ %.lcssa164.lcssa, %bb.bb ]
-  %i.bt = phi i32 [ %i.br, %.split.us.us.us.i ], [ %i.go, %bb.bb ] ; 23 uses
+  %i.bt = phi i32 [ %i.br, %.split.us.us.us.i ], [ %i.go, %bb.bb ] ; 22 uses
   br label %bb.ap
 
 bb.ao:                                            ; preds = %bb.aq
@@ -2580,9 +2611,9 @@ bb.ba:                                            ; preds = %bb.ay
 bb.bb:                                            ; preds = %bb.az, %bb.aw, %bb.at, %bb.ar
   %.lcssa168 = phi i32 [ %i.cy, %bb.ar ], [ %i.ed, %bb.at ], [ %i.fi, %bb.aw ], [ %i.gn, %bb.az ]
   %.lcssa164.lcssa = phi i32 [ %i.cv, %bb.ar ], [ %i.ea, %bb.at ], [ %i.ff, %bb.aw ], [ %i.gk, %bb.az ]
-  %i.go = add nuw nsw i32 %i.bt, 1                ; 2 uses
-  %.not49.us.us.us.not.i = icmp samesign ult i32 %i.bt, 4
-  br i1 %.not49.us.us.us.not.i, label %.preheader66.us.us.us.i, label %.split76.us.us.us.i, !llvm.loop !51
+  %i.go = add nuw nsw i32 %i.bt, 1                ; 3 uses
+  %exitcond51.not = icmp eq i32 %i.go, 5
+  br i1 %exitcond51.not, label %.split76.us.us.us.i, label %.preheader66.us.us.us.i, !llvm.loop !51
 
 .split76.us.us.us.i:                              ; preds = %bb.bb
   store i32 %.lcssa168, ptr %2, align 4, !tbaa !8
@@ -2618,7 +2649,7 @@ bb.bc:                                            ; preds = %bb.c
 
 .split.us.us.us.us.i:                             ; preds = %.split85.us.us.us.us.i, %.split89.us.us.us.i
   %i.ha = phi i32 [ %i.gy, %.split89.us.us.us.i ], [ %i.iq, %.split85.us.us.us.us.i ]
-  %i.hb = phi i32 [ %i.gy, %.split89.us.us.us.i ], [ %i.ja, %.split85.us.us.us.us.i ] ; 7 uses
+  %i.hb = phi i32 [ %i.gy, %.split89.us.us.us.i ], [ %i.ja, %.split85.us.us.us.us.i ] ; 6 uses
   %i.hc = insertelement <4 x i32> %i.gz, i32 %i.hb, i64 1
   br label %.preheader75.us.us.us.us.i
 
@@ -2717,9 +2748,9 @@ bb.bh:                                            ; preds = %bb.bg
 
 .split85.us.us.us.us.i:                           ; preds = %bb.bh
   store i32 %i.iu, ptr %2, align 4, !tbaa !8
-  %i.ja = add nuw nsw i32 %i.hb, 1                ; 2 uses
-  %.not56.us.us.us.not.i = icmp samesign ult i32 %i.hb, 5
-  br i1 %.not56.us.us.us.not.i, label %.split.us.us.us.us.i, label %.split91.us.us.us.i, !llvm.loop !57
+  %i.ja = add nuw nsw i32 %i.hb, 1                ; 3 uses
+  %exitcond.not = icmp eq i32 %i.ja, 6
+  br i1 %exitcond.not, label %.split91.us.us.us.i, label %.split.us.us.us.us.i, !llvm.loop !57
 
 .split91.us.us.us.i:                              ; preds = %.split85.us.us.us.us.i
   store i32 %i.iv, ptr %i.gu, align 4, !tbaa !8
@@ -2748,13 +2779,14 @@ bb.bk:                                            ; preds = %bb.c
 
 Extra_ThreshSelectWeights3.exit.loopexit:         ; preds = %bb.al, %bb.z, %bb.n
   %.lcssa.a = phi i32 [ %i.p, %bb.n ], [ %i.ad, %bb.z ], [ %i.au, %bb.al ]
+  %.lcssa = phi i32 [ %21, %bb.n ], [ %13, %bb.z ], [ %18, %bb.al ]
   %.134.us.us.i.7.lcssa = phi i32 [ %.134.us.us.i.7, %bb.n ], [ %.134.us.us.i.7.1, %bb.z ], [ %.134.us.us.i.7.2, %bb.al ]
-  store i32 %i.p, ptr %i.g, align 4, !tbaa !8
-  store i32 %.lcssa.a, ptr %2, align 4, !tbaa !8
+  store i32 %.lcssa.a, ptr %i.g, align 4, !tbaa !8
+  store i32 %.lcssa, ptr %2, align 4, !tbaa !8
   br label %Extra_ThreshSelectWeights3.exit
 
 Extra_ThreshSelectWeights3.exit.loopexit69:       ; preds = %.split68.us.us.i
-  store i32 %16, ptr %i.g, align 4, !tbaa !8
+  store i32 %.lcssa165, ptr %i.g, align 4, !tbaa !8
   br label %Extra_ThreshSelectWeights3.exit
 
 Extra_ThreshSelectWeights3.exit.loopexit70:       ; preds = %bb.ba, %bb.ax, %bb.au, %bb.ao
@@ -3157,7 +3189,7 @@ bb.d:                                             ; preds = %._crit_edge, %bb.b
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
-define range(i32 -2147483647, 10001) i32 @Extra_ThreshCheck(ptr nofree noundef captures(address) %0, i32 noundef %1, ptr nofree noundef captures(none) %2) local_unnamed_addr #3 {
+define range(i32 -2147483647, -2147483648) i32 @Extra_ThreshCheck(ptr nofree noundef captures(address) %0, i32 noundef %1, ptr nofree noundef captures(none) %2) local_unnamed_addr #3 {
 bb.a:
   %i.a = alloca [16 x i32], align 16              ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #17
