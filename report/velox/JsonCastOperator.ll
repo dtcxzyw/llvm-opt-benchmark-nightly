@@ -205,14 +205,14 @@ bb.o:                                             ; preds = %.lr.ph58, %._crit_e
   %indvars.iv88 = phi i64 [ %i.bi, %.lr.ph58 ], [ %indvars.iv.next89, %._crit_edge ] ; 3 uses
   %indvars.iv78 = phi i32 [ 1, %.lr.ph58 ], [ %indvars.iv.next79, %._crit_edge ] ; 2 uses
   %.256 = phi i128 [ %.037.lcssa, %.lr.ph58 ], [ %i.dm, %._crit_edge ] ; 3 uses
-  %2 = sub i32 %i.bk, %indvar                     ; 2 uses
-  %3 = zext i32 %2 to i64
-  %4 = add nuw nsw i64 %3, 1                      ; 2 uses
   %i.co = icmp slt i64 %indvars.iv88, %invariant.op
   br i1 %i.co, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.o
+  %2 = sub i32 %i.bk, %indvar                     ; 2 uses
   %i.cp = sext i32 %indvars.iv78 to i64           ; 3 uses
+  %3 = zext i32 %2 to i64
+  %4 = add nuw nsw i64 %3, 1                      ; 2 uses
   %min.iters.check153 = icmp ult i32 %2, 3
   br i1 %min.iters.check153, label %.lr.ph.preheader174, label %vector.ph154
 

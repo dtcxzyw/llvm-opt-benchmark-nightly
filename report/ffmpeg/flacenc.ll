@@ -205,12 +205,12 @@ middle.block:                                     ; preds = %vector.body
   br i1 %i.ci, label %.lr.ph47.us.us.i.i.preheader, label %._crit_edge48.us.us.i.i
 
 .lr.ph47.us.us.i.i.preheader:                     ; preds = %.preheader.us.us.i.i
-  %.03753.us.us.i.i90 = ptrtoaddr ptr %.03753.us.us.i.i to i64 ; 2 uses
   %i.cj = mul i64 %i.ch, %indvars.iv77.i.i
   %i.ck = add i64 %i.cg, %i.cj
-  %i.cl = add i64 %.03753.us.us.i.i90, 4
+  %4 = ptrtoaddr ptr %.03753.us.us.i.i to i64     ; 2 uses
+  %i.cl = add i64 %4, 4
   %umax = tail call i64 @llvm.umax.i64(i64 %i.ck, i64 %i.cl)
-  %i.cm = xor i64 %.03753.us.us.i.i90, -1
+  %i.cm = xor i64 %4, -1
   %i.cn = add i64 %umax, %i.cm                    ; 2 uses
   %i.co = lshr i64 %i.cn, 2
   %i.cp = add nuw nsw i64 %i.co, 1                ; 2 uses

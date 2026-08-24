@@ -205,28 +205,28 @@ bb.rg:                                            ; preds = %bb.rg, %.preheader1
   %reass.sub = sub nsw i32 %i.oun, %i.maw
   %.reass1171.i = add nsw i32 %reass.sub, 4
   %i.ous = add i32 %.neg951.i, %i.may             ; 2 uses
-  %i.out = add i32 %i.ous, %i.mas
+  %i.out = add i32 %i.ous, %i.mar
   %i.ouu = sub i32 %i.out, %i.oum                 ; 2 uses
   %i.ouv = zext i32 %i.ouu to i64
   %i.ouw = add nuw nsw i64 %i.ouv, 1              ; 2 uses
-  %6 = add i32 %i.ous, %i.mar
-  %7 = sub i32 %6, %i.oum                         ; 2 uses
-  %8 = zext i32 %7 to i64
-  %9 = add nuw nsw i64 %8, 1                      ; 2 uses
-  %min.iters.check3703 = icmp ult i32 %7, 7
-  %n.vec3705 = and i64 %9, 8589934584             ; 5 uses
-  %10 = trunc i64 %n.vec3705 to i32
-  %i.oux = add i32 %i.oun, %10
-  %11 = shl nuw nsw i64 %n.vec3705, 2             ; 3 uses
-  %12 = shl nuw nsw i64 %n.vec3705, 4
-  %cmp.n3738 = icmp eq i64 %9, %n.vec3705
-  %min.iters.check3680 = icmp ult i32 %i.ouu, 7
-  %n.vec3682 = and i64 %i.ouw, 8589934584         ; 5 uses
+  %min.iters.check3703 = icmp ult i32 %i.ouu, 7
+  %n.vec3705 = and i64 %i.ouw, 8589934584         ; 5 uses
+  %6 = trunc i64 %n.vec3705 to i32
+  %7 = add i32 %i.oun, %6
+  %8 = shl nuw nsw i64 %n.vec3705, 2              ; 3 uses
+  %9 = shl nuw nsw i64 %n.vec3705, 4
+  %cmp.n3738 = icmp eq i64 %i.ouw, %n.vec3705
+  %i.oux = add i32 %i.ous, %i.mas
+  %10 = sub i32 %i.oux, %i.oum                    ; 2 uses
+  %11 = zext i32 %10 to i64
+  %12 = add nuw nsw i64 %11, 1                    ; 2 uses
+  %min.iters.check3680 = icmp ult i32 %10, 7
+  %n.vec3682 = and i64 %12, 8589934584            ; 5 uses
   %i.ouy = trunc i64 %n.vec3682 to i32
   %i.ouz = add i32 %i.oun, %i.ouy
   %i.ova = shl nuw nsw i64 %n.vec3682, 2          ; 3 uses
   %i.ovb = shl nuw nsw i64 %n.vec3682, 4
-  %cmp.n3696 = icmp eq i64 %i.ouw, %n.vec3682
+  %cmp.n3696 = icmp eq i64 %12, %n.vec3682
   br label %.lr.ph1168.i
 
 .lr.ph1143.i.preheader:                           ; preds = %.lr.ph1143.i.preheader.preheader, %._crit_edge1158.i.loopexit
@@ -629,10 +629,10 @@ scalar.ph3763:                                    ; preds = %scalar.ph3763.prehe
   br i1 %min.iters.check3703, label %.lr.ph1168.split.i.preheader4646, label %vector.ph3704
 
 vector.ph3704:                                    ; preds = %.lr.ph1168.split.i.preheader
-  %i.psq = getelementptr i8, ptr %i.psp, i64 %11
-  %i.psr = getelementptr i8, ptr %i.pso, i64 %11
-  %i.pss = getelementptr i8, ptr %i.psn, i64 %11
-  %i.pst = getelementptr i8, ptr %i.psj, i64 %12
+  %i.psq = getelementptr i8, ptr %i.psp, i64 %8
+  %i.psr = getelementptr i8, ptr %i.pso, i64 %8
+  %i.pss = getelementptr i8, ptr %i.psn, i64 %8
+  %i.pst = getelementptr i8, ptr %i.psj, i64 %9
   br label %vector.body3708
 
 vector.body3708:                                  ; preds = %vector.body3708, %vector.ph3704
@@ -714,7 +714,7 @@ middle.block3737:                                 ; preds = %vector.body3708
   br i1 %cmp.n3738, label %._crit_edge1169.i, label %.lr.ph1168.split.i.preheader4646
 
 .lr.ph1168.split.i.preheader4646:                 ; preds = %.lr.ph1168.split.i.preheader, %middle.block3737
-  %.01166.i.ph = phi i32 [ %i.oun, %.lr.ph1168.split.i.preheader ], [ %i.oux, %middle.block3737 ]
+  %.01166.i.ph = phi i32 [ %i.oun, %.lr.ph1168.split.i.preheader ], [ %7, %middle.block3737 ]
   %.08731165.i.ph = phi ptr [ %i.psp, %.lr.ph1168.split.i.preheader ], [ %i.psq, %middle.block3737 ]
   %.08741164.i.ph = phi ptr [ %i.pso, %.lr.ph1168.split.i.preheader ], [ %i.psr, %middle.block3737 ]
   %.08751163.i.ph = phi ptr [ %i.psn, %.lr.ph1168.split.i.preheader ], [ %i.pss, %middle.block3737 ]

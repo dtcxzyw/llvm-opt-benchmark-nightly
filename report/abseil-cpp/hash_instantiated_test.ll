@@ -205,8 +205,6 @@ bb.f:                                             ; preds = %.critedge.i, %.lr.p
   %i.an = shl i64 %indvar, 2
   %i.ao = add i64 %i.an, %i.af
   %i.ap = sub i64 %i.r, %i.ao                     ; 2 uses
-  %65 = lshr i64 %i.ap, 2
-  %66 = add nuw nsw i64 %65, 1                    ; 2 uses
   %i.aq = ptrtoint ptr %.sroa.033.068.i to i64    ; 2 uses
   %i.ar = sub i64 %i.aq, %i.af                    ; 3 uses
   %i.as = ashr i64 %i.ar, 4                       ; 2 uses
@@ -374,6 +372,8 @@ _ZSt10__count_ifIN9__gnu_cxx17__normal_iteratorIPKiSt6vectorIiSaIiEEEENS0_5__ops
   br i1 %i.co, label %_ZSt5visitIN4absl12lts_2026052613hash_internal9EqVisitorINS2_13DefaultEqualsEEEJRKSt7variantIJPKN12_GLOBAL__N_117UnorderedSequenceIiEEEESE_EENSt13invoke_resultIT_JDpNSt13__conditionalIX21is_lvalue_reference_vIT0_EEE4typeIRNSt19variant_alternativeILm0ENSt16remove_referenceIDTclsr9__variantE4__asclsr3stdE7declvalISI_EEEEE4typeEE4typeEOSR_EEEE4typeEOSG_DpOSI_.exit, label %.lr.ph.i26.i.preheader
 
 .lr.ph.i26.i.preheader:                           ; preds = %_ZSt10__count_ifIN9__gnu_cxx17__normal_iteratorIPKiSt6vectorIiSaIiEEEENS0_5__ops17_Iter_equals_iterIS7_EEENSt15iterator_traitsIT_E15difference_typeESC_SC_T0_.exit.i
+  %65 = lshr i64 %i.ap, 2
+  %66 = add nuw nsw i64 %65, 1                    ; 2 uses
   %min.iters.check = icmp ult i64 %i.ap, 12
   br i1 %min.iters.check, label %.lr.ph.i26.i.preheader427, label %vector.ph
 
@@ -776,8 +776,6 @@ bb.c:                                             ; preds = %.lr.ph70, %.critedg
   %i.r = shl i64 %indvar, 2
   %i.s = add i64 %i.r, %i.h
   %i.t = sub i64 %i.k, %i.s                       ; 2 uses
-  %3 = lshr i64 %i.t, 2
-  %4 = add nuw nsw i64 %3, 1                      ; 2 uses
   %i.u = ptrtoint ptr %.sroa.033.068 to i64       ; 2 uses
   %i.v = sub i64 %i.u, %i.h                       ; 3 uses
   %i.w = ashr i64 %i.v, 4                         ; 2 uses
@@ -945,6 +943,8 @@ _ZSt10__count_ifIN9__gnu_cxx17__normal_iteratorIPKiSt6vectorIiSaIiEEEENS0_5__ops
   br i1 %i.bs, label %.critedge24, label %.lr.ph.i26.preheader
 
 .lr.ph.i26.preheader:                             ; preds = %_ZSt10__count_ifIN9__gnu_cxx17__normal_iteratorIPKiSt6vectorIiSaIiEEEENS0_5__ops17_Iter_equals_iterIS7_EEENSt15iterator_traitsIT_E15difference_typeESC_SC_T0_.exit
+  %3 = lshr i64 %i.t, 2
+  %4 = add nuw nsw i64 %3, 1                      ; 2 uses
   %min.iters.check = icmp ult i64 %i.t, 12
   br i1 %min.iters.check, label %.lr.ph.i26.preheader122, label %vector.ph
 
@@ -1347,8 +1347,6 @@ bb.f:                                             ; preds = %.critedge.i, %.lr.p
   %i.an = shl i64 %indvar, 2
   %i.ao = add i64 %i.an, %i.af
   %i.ap = sub i64 %i.r, %i.ao                     ; 2 uses
-  %65 = lshr i64 %i.ap, 2
-  %66 = add nuw nsw i64 %65, 1                    ; 2 uses
   %i.aq = ptrtoint ptr %.sroa.033.068.i to i64    ; 2 uses
   %i.ar = sub i64 %i.aq, %i.af                    ; 3 uses
   %i.as = ashr i64 %i.ar, 4                       ; 2 uses
@@ -1516,6 +1514,8 @@ _ZSt10__count_ifIN9__gnu_cxx17__normal_iteratorIPKiSt6vectorIiSaIiEEEENS0_5__ops
   br i1 %i.co, label %_ZSt5visitIN4absl12lts_2026052613hash_internal9EqVisitorINS2_13DefaultEqualsEEEJRKSt7variantIJPKNS1_18hash_test_internal19TypeErasedContainerIN12_GLOBAL__N_117UnorderedSequenceIiEEEEEESH_EENSt13invoke_resultIT_JDpNSt13__conditionalIX21is_lvalue_reference_vIT0_EEE4typeIRNSt19variant_alternativeILm0ENSt16remove_referenceIDTclsr9__variantE4__asclsr3stdE7declvalISL_EEEEE4typeEE4typeEOSU_EEEE4typeEOSJ_DpOSL_.exit, label %.lr.ph.i26.i.preheader
 
 .lr.ph.i26.i.preheader:                           ; preds = %_ZSt10__count_ifIN9__gnu_cxx17__normal_iteratorIPKiSt6vectorIiSaIiEEEENS0_5__ops17_Iter_equals_iterIS7_EEENSt15iterator_traitsIT_E15difference_typeESC_SC_T0_.exit.i
+  %65 = lshr i64 %i.ap, 2
+  %66 = add nuw nsw i64 %65, 1                    ; 2 uses
   %min.iters.check = icmp ult i64 %i.ap, 12
   br i1 %min.iters.check, label %.lr.ph.i26.i.preheader427, label %vector.ph
 
@@ -1918,8 +1918,6 @@ bb.d:                                             ; preds = %.critedge.i, %.lr.p
   %i.bd = shl i64 %indvar, 2
   %i.be = add i64 %i.bd, %i.at
   %i.bf = sub i64 %i.aw, %i.be                    ; 2 uses
-  %65 = lshr i64 %i.bf, 2
-  %66 = add nuw nsw i64 %65, 1                    ; 2 uses
   %i.bg = ptrtoint ptr %.sroa.033.068.i to i64    ; 2 uses
   %i.bh = sub i64 %i.bg, %i.at                    ; 3 uses
   %i.bi = ashr i64 %i.bh, 4                       ; 2 uses
@@ -2087,6 +2085,8 @@ _ZSt10__count_ifIN9__gnu_cxx17__normal_iteratorIPKiSt6vectorIiSaIiEEEENS0_5__ops
   br i1 %i.de, label %_ZSt5visitIN4absl12lts_2026052613hash_internal9EqVisitorINS2_13DefaultEqualsEEEJRKSt7variantIJPKSt6vectorIN12_GLOBAL__N_117UnorderedSequenceIiEESaISA_EEEESH_EENSt13invoke_resultIT_JDpNSt13__conditionalIX21is_lvalue_reference_vIT0_EEE4typeIRNSt19variant_alternativeILm0ENSt16remove_referenceIDTclsr9__variantE4__asclsr3stdE7declvalISL_EEEEE4typeEE4typeEOSU_EEEE4typeEOSJ_DpOSL_.exit, label %.lr.ph.i26.i.preheader
 
 .lr.ph.i26.i.preheader:                           ; preds = %_ZSt10__count_ifIN9__gnu_cxx17__normal_iteratorIPKiSt6vectorIiSaIiEEEENS0_5__ops17_Iter_equals_iterIS7_EEENSt15iterator_traitsIT_E15difference_typeESC_SC_T0_.exit.i
+  %65 = lshr i64 %i.bf, 2
+  %66 = add nuw nsw i64 %65, 1                    ; 2 uses
   %min.iters.check = icmp ult i64 %i.bf, 12
   br i1 %min.iters.check, label %.lr.ph.i26.i.preheader439, label %vector.ph
 
@@ -2489,8 +2489,6 @@ bb.d:                                             ; preds = %.critedge.i, %.lr.p
   %i.bd = shl i64 %indvar, 2
   %i.be = add i64 %i.bd, %i.at
   %i.bf = sub i64 %i.aw, %i.be                    ; 2 uses
-  %65 = lshr i64 %i.bf, 2
-  %66 = add nuw nsw i64 %65, 1                    ; 2 uses
   %i.bg = ptrtoint ptr %.sroa.033.068.i to i64    ; 2 uses
   %i.bh = sub i64 %i.bg, %i.at                    ; 3 uses
   %i.bi = ashr i64 %i.bh, 4                       ; 2 uses
@@ -2658,6 +2656,8 @@ _ZSt10__count_ifIN9__gnu_cxx17__normal_iteratorIPKiSt6vectorIiSaIiEEEENS0_5__ops
   br i1 %i.de, label %_ZSt5visitIN4absl12lts_2026052613hash_internal9EqVisitorINS2_13DefaultEqualsEEEJRKSt7variantIJPKSt6vectorINS1_18hash_test_internal19TypeErasedContainerIN12_GLOBAL__N_117UnorderedSequenceIiEEEESaISD_EEEESK_EENSt13invoke_resultIT_JDpNSt13__conditionalIX21is_lvalue_reference_vIT0_EEE4typeIRNSt19variant_alternativeILm0ENSt16remove_referenceIDTclsr9__variantE4__asclsr3stdE7declvalISO_EEEEE4typeEE4typeEOSX_EEEE4typeEOSM_DpOSO_.exit, label %.lr.ph.i26.i.preheader
 
 .lr.ph.i26.i.preheader:                           ; preds = %_ZSt10__count_ifIN9__gnu_cxx17__normal_iteratorIPKiSt6vectorIiSaIiEEEENS0_5__ops17_Iter_equals_iterIS7_EEENSt15iterator_traitsIT_E15difference_typeESC_SC_T0_.exit.i
+  %65 = lshr i64 %i.bf, 2
+  %66 = add nuw nsw i64 %65, 1                    ; 2 uses
   %min.iters.check = icmp ult i64 %i.bf, 12
   br i1 %min.iters.check, label %.lr.ph.i26.i.preheader439, label %vector.ph
 

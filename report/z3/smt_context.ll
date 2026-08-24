@@ -205,8 +205,8 @@ bb.h:                                             ; preds = %bb.g, %.lr.ph
 
 _ZN3smt10watch_list10end_clauseEv.exit:           ; preds = %.critedge101
   %i.cb = getelementptr inbounds i8, ptr %i.ca, i64 -12
-  %i.cc = load i32, ptr %i.cb, align 4, !tbaa !593 ; 3 uses
-  %i.cd = zext i32 %i.cc to i64
+  %i.cc = load i32, ptr %i.cb, align 4, !tbaa !593 ; 2 uses
+  %i.cd = zext i32 %i.cc to i64                   ; 2 uses
   %i.ce = getelementptr inbounds nuw i8, ptr %i.ca, i64 %i.cd ; 3 uses
   %.not97141 = icmp eq i32 %i.cc, 0
   br i1 %.not97141, label %._crit_edge145.thread182, label %.lr.ph144
@@ -322,16 +322,15 @@ bb.p:                                             ; preds = %.lr.ph140
   br i1 %i.du, label %.lr.ph148.preheader, label %._crit_edge149
 
 .lr.ph148.preheader:                              ; preds = %.preheader
-  %1 = add i64 %i.dt, 8
+  %1 = xor i64 %i.dt, -1
   %i.dv = shl i64 %indvar, 3
-  %2 = add i64 %i.dv, %1
-  %3 = zext i32 %i.cc to i64
-  %i.dw = add i64 %i.dt, %3
-  %umax = tail call i64 @llvm.umax.i64(i64 %2, i64 %i.dw)
-  %4 = xor i64 %i.dt, -1
-  %5 = shl i64 %indvar, 3
-  %6 = sub i64 %4, %5
-  %i.dx = add i64 %umax, %6                       ; 2 uses
+  %2 = sub i64 %1, %i.dv
+  %i.dw = add i64 %i.dt, 8
+  %3 = shl i64 %indvar, 3
+  %4 = add i64 %3, %i.dw
+  %5 = add i64 %i.dt, %i.cd
+  %6 = tail call i64 @llvm.umax.i64(i64 %4, i64 %5)
+  %i.dx = add i64 %6, %2                          ; 2 uses
   %i.dy = lshr i64 %i.dx, 3
   %i.dz = add nuw nsw i64 %i.dy, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.dx, 216

@@ -22,7 +22,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
-  %i.g = phi i32 [ %i.f, %bb.b ], [ 512, %bb.a ]  ; 5 uses
+  %i.g = phi i32 [ %i.f, %bb.b ], [ 512, %bb.a ]  ; 4 uses
   %i.h = fmul reassoc nsz arcp contract afn float %7, %7 ; 3 uses
   %i.i = icmp sgt i32 %4, 0
   br i1 %i.i, label %.preheader.lr.ph, label %._crit_edge57
@@ -91,15 +91,9 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   br label %bb.d
 
 bb.d:                                             ; preds = %.preheader.us, %_guided_filter_tiling.exit.us
-  %indvar77 = phi i64 [ 0, %.preheader.us ], [ %indvar.next78, %_guided_filter_tiling.exit.us ] ; 6 uses
+  %indvar77 = phi i64 [ 0, %.preheader.us ], [ %indvar.next78, %_guided_filter_tiling.exit.us ] ; 5 uses
   %indvars.iv = phi i64 [ 0, %.preheader.us ], [ %indvars.iv.next, %_guided_filter_tiling.exit.us ] ; 7 uses
-  %11 = trunc i64 %indvar77 to i32
-  %12 = add i32 %11, 1
-  %13 = mul i32 %12, %i.g
-  %14 = tail call i32 @llvm.smin.i32(i32 %3, i32 %13)
-  %smin92 = sext i32 %14 to i64                   ; 3 uses
   %i.at = mul i64 %indvar77, %i.m
-  %15 = sub i64 %smin92, %i.at                    ; 3 uses
   %i.au = mul i64 %i.q, %indvar77                 ; 3 uses
   %i.av = add i64 %i.z, %i.au                     ; 2 uses
   %scevgep = getelementptr i8, ptr %2, i64 %i.av  ; 2 uses
@@ -502,7 +496,7 @@ bb.f:                                             ; preds = %bb.e, %.lr.ph.i.us
 .lr.ph335.i.us:                                   ; preds = %._crit_edge.i.us
   %i.nm = tail call i32 @llvm.smin.i32(i32 %i.bj, i32 %i.bi)
   %i.nn = sext i32 %i.nm to i64                   ; 2 uses
-  %i.no = sext i32 %i.bg to i64                   ; 2 uses
+  %i.no = sext i32 %i.bg to i64                   ; 5 uses
   %i.np = icmp slt i64 %indvars.iv, %i.no
   br i1 %i.np, label %.lr.ph331.preheader.i.us, label %_guided_filter_tiling.exit.us
 
@@ -525,7 +519,8 @@ bb.f:                                             ; preds = %bb.e, %.lr.ph.i.us
   %i.oc = getelementptr i8, ptr %i.ob, i64 %i.oa
   %i.od = getelementptr i8, ptr %i.oc, i64 %i.nu
   %scevgep85 = getelementptr i8, ptr %i.od, i64 %i.be
-  %min.iters.check = icmp ugt i64 %15, 7
+  %11 = sub i64 %i.no, %i.at                      ; 3 uses
+  %min.iters.check = icmp ugt i64 %11, 7
   %or.cond212 = and i1 %min.iters.check, %ident.check.not
   %bound0 = icmp ult ptr %scevgep, %scevgep85
   %bound1 = icmp ult ptr %scevgep82, %scevgep81
@@ -536,10 +531,10 @@ bb.f:                                             ; preds = %bb.e, %.lr.ph.i.us
   %bound190 = icmp ult ptr %scevgep86, %scevgep81
   %found.conflict91 = and i1 %bound089, %bound190
   %conflict.rdx = or i1 %i.oe, %found.conflict91
-  %n.vec = and i64 %15, -8                        ; 5 uses
+  %n.vec = and i64 %11, -8                        ; 5 uses
   %i.of = add i64 %indvars.iv, %n.vec
-  %cmp.n = icmp eq i64 %15, %n.vec
-  %i.og = add nsw i64 %smin92, -1
+  %cmp.n = icmp eq i64 %11, %n.vec
+  %i.og = add nsw i64 %i.no, -1
   br label %.lr.ph331.i.us
 
 .lr.ph331.i.us:                                   ; preds = %._crit_edge332.i.us, %.lr.ph331.preheader.i.us
@@ -601,7 +596,7 @@ scalar.ph.preheader:                              ; preds = %.lr.ph331.i.us, %mi
   %indvars.iv350.i.us.ph = phi i64 [ %i.of, %middle.block ], [ %indvars.iv, %.lr.ph331.i.us ] ; 5 uses
   %.0266328.i.us.ph = phi i64 [ %i.on, %middle.block ], [ %i.ol, %.lr.ph331.i.us ] ; 3 uses
   %.0267327.i.us.ph = phi i64 [ %i.oo, %middle.block ], [ %i.oi, %.lr.ph331.i.us ] ; 3 uses
-  %i.pk = sub i64 %smin92, %indvars.iv350.i.us.ph
+  %i.pk = sub i64 %i.no, %indvars.iv350.i.us.ph
   %xtraiter = and i64 %i.pk, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol

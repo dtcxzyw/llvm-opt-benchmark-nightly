@@ -205,10 +205,10 @@ bb.ce:                                            ; preds = %bb.cd, %bb.cc
   %i.qd = sext i32 %i.pr to i64                   ; 4 uses
   %brmerge = or i1 %.not, %i.ps
   %wide.trip.count801 = zext nneg i32 %.0313.lcssa1065 to i64
-  %21 = add nsw i64 %i.qd, -1
-  %22 = lshr i64 %21, 1
-  %23 = insertelement <2 x double> poison, double %i.pv, i64 0
-  %24 = shufflevector <2 x double> %23, <2 x double> poison, <2 x i32> zeroinitializer ; 3 uses
+  %21 = insertelement <2 x double> poison, double %i.pv, i64 0
+  %22 = shufflevector <2 x double> %21, <2 x double> poison, <2 x i32> zeroinitializer ; 3 uses
+  %23 = add nsw i64 %i.qd, -1
+  %24 = lshr i64 %23, 1
   br label %bb.cf
 
 bb.cf:                                            ; preds = %.preheader647, %bb.cy
@@ -611,8 +611,8 @@ _ZL10gyro_eigenPPdS_S0_Pi.exit:                   ; preds = %.thread39.i, %.thre
   br i1 %brmerge725, label %.loopexit, label %.preheader632.preheader
 
 .preheader632.preheader:                          ; preds = %.preheader636
-  %25 = add nsw i64 %i.qt, 2
-  %26 = xor i64 %i.qt, -1
+  %25 = xor i64 %i.qt, -1
+  %26 = add nsw i64 %i.qt, 2
   br label %.preheader632
 
 bb.cm:                                            ; preds = %.lr.ph689, %bb.cm
@@ -655,35 +655,35 @@ bb.cm:                                            ; preds = %.lr.ph689, %bb.cm
 .preheader632:                                    ; preds = %.preheader632.preheader, %..critedge_crit_edge
   %indvar = phi i64 [ 0, %.preheader632.preheader ], [ %indvar.next, %..critedge_crit_edge ] ; 3 uses
   %indvars.iv793 = phi i64 [ %i.qt, %.preheader632.preheader ], [ %indvars.iv.next794, %..critedge_crit_edge ] ; 3 uses
-  %27 = add i64 %25, %indvar
-  %smax = call i64 @llvm.smax.i64(i64 %27, i64 %i.qz)
-  %i.acf = sub i64 %26, %indvar
-  %28 = add i64 %smax, %i.acf
-  %29 = lshr i64 %28, 1
-  %umin = call i64 @llvm.umin.i64(i64 %22, i64 %29) ; 2 uses
-  %30 = sub nsw i64 %indvars.iv793, %i.qt         ; 2 uses
-  %31 = getelementptr inbounds [12 x i8], ptr %.0625, i64 %30 ; 3 uses
-  %i.acg = load float, ptr %31, align 4, !tbaa !79 ; 2 uses
-  %32 = getelementptr inbounds nuw i8, ptr %31, i64 4
-  %33 = load float, ptr %32, align 4, !tbaa !79   ; 2 uses
-  %34 = getelementptr inbounds nuw i8, ptr %31, i64 8
-  %35 = load float, ptr %34, align 4, !tbaa !79   ; 2 uses
-  %invariant.gep = getelementptr [12 x i8], ptr %.0625, i64 %30 ; 2 uses
-  %min.iters.check1125 = icmp samesign ult i64 %umin, 4
+  %27 = sub i64 %25, %indvar
+  %28 = add i64 %26, %indvar
+  %i.acf = sub nsw i64 %indvars.iv793, %i.qt      ; 2 uses
+  %29 = getelementptr inbounds [12 x i8], ptr %.0625, i64 %i.acf ; 3 uses
+  %30 = load float, ptr %29, align 4, !tbaa !79   ; 2 uses
+  %31 = getelementptr inbounds nuw i8, ptr %29, i64 4
+  %32 = load float, ptr %31, align 4, !tbaa !79   ; 2 uses
+  %33 = getelementptr inbounds nuw i8, ptr %29, i64 8
+  %i.acg = load float, ptr %33, align 4, !tbaa !79 ; 2 uses
+  %invariant.gep = getelementptr [12 x i8], ptr %.0625, i64 %i.acf ; 2 uses
+  %34 = call i64 @llvm.smax.i64(i64 %28, i64 %i.qz)
+  %35 = add i64 %34, %27
+  %36 = lshr i64 %35, 1
+  %37 = call i64 @llvm.umin.i64(i64 %24, i64 %36) ; 2 uses
+  %min.iters.check1125 = icmp samesign ult i64 %37, 4
   br i1 %min.iters.check1125, label %scalar.ph1124.preheader, label %vector.ph1126
 
 vector.ph1126:                                    ; preds = %.preheader632
-  %i.ach = add nuw i64 %umin, 1                   ; 2 uses
+  %i.ach = add nuw i64 %37, 1                     ; 2 uses
   %i.aci = and i64 %i.ach, 3                      ; 2 uses
   %i.acj = icmp eq i64 %i.aci, 0
   %i.ack = select i1 %i.acj, i64 4, i64 %i.aci
   %n.vec1127 = sub i64 %i.ach, %i.ack             ; 2 uses
   %i.acl = shl i64 %n.vec1127, 1
-  %broadcast.splatinsert1128 = insertelement <4 x float> poison, float %i.acg, i64 0
+  %broadcast.splatinsert1128 = insertelement <4 x float> poison, float %30, i64 0
   %broadcast.splat1129 = shufflevector <4 x float> %broadcast.splatinsert1128, <4 x float> poison, <4 x i32> zeroinitializer
-  %broadcast.splatinsert1130 = insertelement <4 x float> poison, float %33, i64 0
+  %broadcast.splatinsert1130 = insertelement <4 x float> poison, float %32, i64 0
   %broadcast.splat1131 = shufflevector <4 x float> %broadcast.splatinsert1130, <4 x float> poison, <4 x i32> zeroinitializer
-  %broadcast.splatinsert1132 = insertelement <4 x float> poison, float %35, i64 0
+  %broadcast.splatinsert1132 = insertelement <4 x float> poison, float %i.acg, i64 0
   %broadcast.splat1133 = shufflevector <4 x float> %broadcast.splatinsert1132, <4 x float> poison, <4 x i32> zeroinitializer
   br label %vector.body1134
 
@@ -727,11 +727,11 @@ scalar.ph1124:                                    ; preds = %scalar.ph1124.prehe
   %i.acw = load float, ptr %gep, align 4, !tbaa !79
   %i.acx = getelementptr inbounds nuw i8, ptr %gep, i64 4
   %i.acy = load float, ptr %i.acx, align 4, !tbaa !79
-  %i.acz = fmul float %33, %i.acy
-  %i.ada = call float @llvm.fmuladd.f32(float %i.acg, float %i.acw, float %i.acz)
+  %i.acz = fmul float %32, %i.acy
+  %i.ada = call float @llvm.fmuladd.f32(float %30, float %i.acw, float %i.acz)
   %i.adb = getelementptr inbounds nuw i8, ptr %gep, i64 8
   %i.adc = load float, ptr %i.adb, align 4, !tbaa !79
-  %i.add = call noundef float @llvm.fmuladd.f32(float %35, float %i.adc, float %i.ada)
+  %i.add = call noundef float @llvm.fmuladd.f32(float %i.acg, float %i.adc, float %i.ada)
   %i.ade = fpext float %i.add to double
   %i.adf = getelementptr inbounds nuw [8 x i8], ptr %.0627, i64 %indvars.iv790 ; 2 uses
   %i.adg = load double, ptr %i.adf, align 8, !tbaa !76
@@ -766,7 +766,7 @@ scalar.ph1124:                                    ; preds = %scalar.ph1124.prehe
   %.0280.lcssa = phi double [ 0.000000e+00, %.loopexit645 ], [ %i.rr, %.loopexit ]
   %i.ado = load ptr, ptr %i.ov, align 8, !tbaa !72 ; 3 uses
   %i.adp = load <2 x double>, ptr %i.ado, align 8, !tbaa !76
-  %i.adq = fdiv <2 x double> %i.adp, %24          ; 2 uses
+  %i.adq = fdiv <2 x double> %i.adp, %22          ; 2 uses
   store <2 x double> %i.adq, ptr %i.ado, align 8, !tbaa !76
   %i.adr = getelementptr inbounds nuw i8, ptr %i.ado, i64 16 ; 2 uses
   %i.ads = load double, ptr %i.adr, align 8, !tbaa !76
@@ -776,7 +776,7 @@ scalar.ph1124:                                    ; preds = %scalar.ph1124.prehe
   %i.adv = fadd double %i.adu, 0.000000e+00
   %i.adw = load ptr, ptr %i.pd, align 8, !tbaa !72 ; 3 uses
   %i.adx = load <2 x double>, ptr %i.adw, align 8, !tbaa !76
-  %i.ady = fdiv <2 x double> %i.adx, %24          ; 2 uses
+  %i.ady = fdiv <2 x double> %i.adx, %22          ; 2 uses
   store <2 x double> %i.ady, ptr %i.adw, align 8, !tbaa !76
   %i.adz = getelementptr inbounds nuw i8, ptr %i.adw, i64 16 ; 2 uses
   %i.aea = load double, ptr %i.adz, align 8, !tbaa !76
@@ -786,7 +786,7 @@ scalar.ph1124:                                    ; preds = %scalar.ph1124.prehe
   %i.aed = fadd double %i.adv, %i.aec
   %i.aee = load ptr, ptr %i.pj, align 8, !tbaa !72 ; 3 uses
   %i.aef = load <2 x double>, ptr %i.aee, align 8, !tbaa !76
-  %i.aeg = fdiv <2 x double> %i.aef, %24
+  %i.aeg = fdiv <2 x double> %i.aef, %22
   store <2 x double> %i.aeg, ptr %i.aee, align 8, !tbaa !76
   %i.aeh = getelementptr inbounds nuw i8, ptr %i.aee, i64 16 ; 2 uses
   %i.aei = load double, ptr %i.aeh, align 8, !tbaa !76

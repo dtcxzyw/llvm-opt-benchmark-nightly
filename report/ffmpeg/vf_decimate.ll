@@ -204,8 +204,8 @@ bb.r:                                             ; preds = %bb.p
 
 bb.s:                                             ; preds = %bb.q, %bb.r
   %i.en = phi i32 [ %i.ea, %bb.q ], [ %i.ei, %bb.r ] ; 3 uses
-  %i.eo = phi i32 [ %i.dv, %bb.q ], [ %i.eh, %bb.r ] ; 6 uses
-  %.0134.i = phi i32 [ %i.ef, %bb.q ], [ %i.ek, %bb.r ] ; 3 uses
+  %i.eo = phi i32 [ %i.dv, %bb.q ], [ %i.eh, %bb.r ] ; 5 uses
+  %.0134.i = phi i32 [ %i.ef, %bb.q ], [ %i.ek, %bb.r ] ; 2 uses
   %.0133.i = phi i32 [ %i.eg, %bb.q ], [ %i.em, %bb.r ] ; 2 uses
   %i.ep = icmp sgt i32 %i.en, 0
   br i1 %i.ep, label %.lr.ph180.i, label %._crit_edge181.i
@@ -290,7 +290,6 @@ bb.t:                                             ; preds = %._crit_edge169.us.i
 .lr.ph180.split.split.i:                          ; preds = %.lr.ph180.split.i
   %i.fu = load i32, ptr %i.bs, align 8, !tbaa !69
   %i.fv = sext i32 %.0134.i to i64                ; 2 uses
-  %1 = zext nneg i32 %i.eo to i64
   br label %.preheader158.i
 
 .preheader158.i:                                  ; preds = %..loopexit159_crit_edge.i, %.lr.ph180.split.split.i
@@ -304,17 +303,8 @@ bb.t:                                             ; preds = %._crit_edge169.us.i
   br label %bb.u
 
 bb.u:                                             ; preds = %._crit_edge.i, %.preheader158.i
-  %indvars.iv202.i = phi i64 [ 0, %.preheader158.i ], [ %indvars.iv.next203.i, %._crit_edge.i ] ; 4 uses
+  %indvars.iv202.i = phi i64 [ 0, %.preheader158.i ], [ %indvars.iv.next203.i, %._crit_edge.i ] ; 3 uses
   %indvars.iv.i = phi i64 [ 0, %.preheader158.i ], [ %indvars.iv.next.i, %._crit_edge.i ] ; 6 uses
-  %2 = trunc i64 %indvars.iv202.i to i32
-  %3 = add i32 %2, 1
-  %4 = mul i32 %3, %.0134.i
-  %5 = sext i32 %4 to i64
-  %smin = tail call i64 @llvm.smin.i64(i64 %1, i64 %5)
-  %6 = add i64 %indvars.iv.i, 1
-  %smax = tail call i64 @llvm.smax.i64(i64 %smin, i64 %6)
-  %7 = mul i64 %indvars.iv202.i, %i.fv
-  %8 = sub i64 %smax, %7                          ; 3 uses
   %indvars206.i = trunc i64 %indvars.iv.i to i32
   %indvars.iv.next.i = add nsw i64 %indvars.iv.i, %i.fv ; 2 uses
   %indvars205.i = trunc i64 %indvars.iv.next.i to i32 ; 2 uses
@@ -323,12 +313,16 @@ bb.u:                                             ; preds = %._crit_edge.i, %.pr
   br i1 %i.ga, label %.lr.ph.preheader.i, label %._crit_edge.i
 
 .lr.ph.preheader.i:                               ; preds = %bb.u
-  %i.gb = sext i32 %i.fz to i64
-  %min.iters.check = icmp ult i64 %8, 4
+  %1 = add i64 %indvars.iv.i, 1
+  %2 = mul i64 %indvars.iv202.i, %i.fv
+  %i.gb = sext i32 %i.fz to i64                   ; 2 uses
+  %3 = tail call i64 @llvm.smax.i64(i64 %i.gb, i64 %1)
+  %4 = sub i64 %3, %2                             ; 3 uses
+  %min.iters.check = icmp ult i64 %4, 4
   br i1 %min.iters.check, label %.lr.ph.i.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader.i
-  %n.vec = and i64 %8, -4                         ; 3 uses
+  %n.vec = and i64 %4, -4                         ; 3 uses
   %i.gc = add i64 %indvars.iv.i, %n.vec
   br label %vector.body
 
@@ -364,7 +358,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
 middle.block:                                     ; preds = %vector.body
   %bin.rdx = add <2 x i64> %i.gt, %i.gs
   %i.gv = tail call i64 @llvm.vector.reduce.add.v2i64(<2 x i64> %bin.rdx) ; 2 uses
-  %cmp.n = icmp eq i64 %8, %n.vec
+  %cmp.n = icmp eq i64 %4, %n.vec
   br i1 %cmp.n, label %._crit_edge.i, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %.lr.ph.preheader.i, %middle.block

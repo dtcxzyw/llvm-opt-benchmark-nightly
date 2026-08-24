@@ -204,11 +204,11 @@ bb.c:                                             ; preds = %bb.b
   %i.y = sext i32 %i.x to i64
   %i.z = getelementptr inbounds [16 x i8], ptr %.val126, i64 %i.y ; 2 uses
   %i.aa = getelementptr i8, ptr %i.z, i64 8       ; 2 uses
-  %.val124 = load ptr, ptr %i.aa, align 8, !tbaa !31 ; 5 uses
+  %.val124 = load ptr, ptr %i.aa, align 8, !tbaa !31 ; 6 uses
   %i.ab = getelementptr i8, ptr %i.z, i64 4       ; 2 uses
   %.val127 = load i32, ptr %i.ab, align 4, !tbaa !37 ; 2 uses
   %i.ac = sext i32 %.val127 to i64
-  %.idx = shl nsw i64 %i.ac, 2                    ; 2 uses
+  %.idx = shl nsw i64 %i.ac, 2                    ; 3 uses
   %i.ad = getelementptr inbounds i8, ptr %.val124, i64 %.idx ; 6 uses
   %i.ae = load i64, ptr %i.e, align 8, !tbaa !60
   %i.af = add nsw i64 %i.ae, 1
@@ -217,11 +217,13 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.ag, label %.lr.ph.lr.ph, label %.outer._crit_edge
 
 .lr.ph.lr.ph:                                     ; preds = %bb.c
-  %.val124249 = ptrtoaddr ptr %.val124 to i64
   %i.ah = shl nsw i32 %i.x, 1
   %i.ai = or disjoint i32 %i.ah, 1
   %i.aj = xor i32 %i.x, 1                         ; 4 uses
-  %i.ak = add i64 %.idx, %.val124249              ; 2 uses
+  %1 = ptrtoaddr ptr %.val124 to i64
+  %2 = add i64 %.idx, %1
+  %3 = ptrtoaddr ptr %.val124 to i64
+  %i.ak = add i64 %.idx, %3
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.lr.ph, %.thread
@@ -318,14 +320,14 @@ bb.i:                                             ; preds = %sat_solver3_enqueue
   br i1 %i.by, label %.lr.ph165.preheader, label %.thread
 
 .lr.ph165.preheader:                              ; preds = %bb.i
-  %1 = add i64 %.092.ph181248, 8
-  %2 = shl i64 %indvar, 2
-  %i.bz = add i64 %2, %1
-  %umax255 = tail call i64 @llvm.umax.i64(i64 %i.bz, i64 %i.ak)
-  %3 = mul i64 %indvar, -4
-  %reass.sub = sub i64 %3, %.092.ph181248
-  %4 = add i64 %reass.sub, -5
-  %i.ca = add i64 %umax255, %4                    ; 2 uses
+  %4 = mul i64 %indvar, -4
+  %reass.sub = sub i64 %4, %.092.ph181248
+  %i.bz = add i64 %reass.sub, -5
+  %5 = add i64 %.092.ph181248, 8
+  %6 = shl i64 %indvar, 2
+  %7 = add i64 %6, %5
+  %8 = tail call i64 @llvm.umax.i64(i64 %7, i64 %2)
+  %i.ca = add i64 %8, %i.bz                       ; 2 uses
   %i.cb = lshr i64 %i.ca, 2
   %i.cc = add nuw nsw i64 %i.cb, 1                ; 2 uses
   %min.iters.check257 = icmp ult i64 %i.ca, 28
@@ -683,14 +685,14 @@ bb.ab:                                            ; preds = %sat_solver3_enqueue
   br i1 %i.hz, label %.lr.ph177.preheader, label %.thread
 
 .lr.ph177.preheader:                              ; preds = %bb.ab
-  %5 = add i64 %.092.ph181248, 8
-  %6 = shl i64 %indvar, 2
-  %i.ia = add i64 %6, %5
-  %umax = tail call i64 @llvm.umax.i64(i64 %i.ia, i64 %i.ak)
-  %7 = mul i64 %indvar, -4
-  %reass.sub273 = sub i64 %7, %.092.ph181248
-  %8 = add i64 %reass.sub273, -5
-  %i.ib = add i64 %umax, %8                       ; 2 uses
+  %9 = mul i64 %indvar, -4
+  %reass.sub271 = sub i64 %9, %.092.ph181248
+  %i.ia = add i64 %reass.sub271, -5
+  %10 = add i64 %.092.ph181248, 8
+  %11 = shl i64 %indvar, 2
+  %12 = add i64 %11, %10
+  %13 = tail call i64 @llvm.umax.i64(i64 %12, i64 %i.ak)
+  %i.ib = add i64 %13, %i.ia                      ; 2 uses
   %i.ic = lshr i64 %i.ib, 2
   %i.id = add nuw nsw i64 %i.ic, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.ib, 28

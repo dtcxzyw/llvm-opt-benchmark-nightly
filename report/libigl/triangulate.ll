@@ -205,10 +205,10 @@ bb.t:                                             ; preds = %bb.s
   br i1 %.not1.i, label %_ZN5boost20adl_move_swap_rangesINS_7movelib16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEEEES1N_EESJ_T_S1O_SJ_.exit, label %.lr.ph.i28.preheader
 
 .lr.ph.i28.preheader:                             ; preds = %bb.t
-  %12 = add i64 %i.h, %.sroa.073.0317
   %i.cg = shl i64 %.018.lcssa.i, 3
   %.neg327 = add i64 %i.cg, 8
   %.neg328 = mul i64 %.neg327, %7
+  %12 = add i64 %i.h, %.sroa.073.0317
   %i.ch = add i64 %.neg328, %12                   ; 2 uses
   %i.ci = lshr i64 %i.ch, 3
   %i.cj = add nuw nsw i64 %i.ci, 1                ; 2 uses
@@ -611,10 +611,10 @@ bb.t:                                             ; preds = %bb.s
   br i1 %.not1.i, label %_ZN5boost20adl_move_swap_rangesINS_7movelib16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEEEES1N_EESJ_T_S1O_SJ_.exit, label %.lr.ph.i28.preheader
 
 .lr.ph.i28.preheader:                             ; preds = %bb.t
-  %12 = add i64 %i.h, %.sroa.073.0317
   %i.cg = shl i64 %.018.lcssa.i, 3
   %.neg327 = add i64 %i.cg, 8
   %.neg328 = mul i64 %.neg327, %7
+  %12 = add i64 %i.h, %.sroa.073.0317
   %i.ch = add i64 %.neg328, %12                   ; 2 uses
   %i.ci = lshr i64 %i.ch, 3
   %i.cj = add nuw nsw i64 %i.ci, 1                ; 2 uses

@@ -205,7 +205,7 @@ bb.fp:                                            ; preds = %_RINvNtNtCsk4ZPsEfL
 
 bb.fq:                                            ; preds = %bb.fp
   %i.ahc = add nsw i64 %.sroa.0.0462.i, 7, !dbg !7926
-  %i.ahd = lshr i64 %i.ahc, 3, !dbg !7930         ; 9 uses
+  %i.ahd = lshr i64 %i.ahc, 3, !dbg !7930         ; 8 uses
   %i.ahe = icmp eq i64 %.sroa.0.0462.i, 1, !dbg !7931
   br i1 %i.ahe, label %.preheader.i171.i.preheader, label %bb.fr, !dbg !7931
 
@@ -300,8 +300,6 @@ bb.fu:                                            ; preds = %._crit_edge.i168.i
 
 .lr.ph377.split.preheader.i.i:                    ; preds = %.lr.ph377.i.i
   %i.ahx = icmp eq i64 %i.ahv, 0
-  %14 = add i64 %.idx395.i.i, -32, !dbg !8057
-  %15 = lshr exact i64 %14, 5, !dbg !8057
   %i.ahy = lshr exact i64 %i.ahu, 3               ; 3 uses
   %i.ahz = icmp samesign ult i64 %i.ahy, %i.lt
   %i.aia = getelementptr inbounds nuw [32 x i8], ptr %i.ls, i64 %i.ahy ; 2 uses
@@ -348,6 +346,8 @@ bb.fu:                                            ; preds = %._crit_edge.i168.i
   %i.ajp = getelementptr inbounds nuw i8, ptr %i.ajo, i64 24 ; 2 uses
   %i.ajq = trunc i64 %i.ahu to i8
   %i.ajr = or disjoint i8 %i.ajq, 6
+  %14 = add i64 %.idx395.i.i, -32
+  %15 = lshr exact i64 %14, 5
   br label %.lr.ph377.split.i.i, !dbg !8057
 
 .lr.ph377.split.us.i.i:                           ; preds = %.lr.ph377.i.i
@@ -367,13 +367,8 @@ _RNvNtNtCsk4ZPsEfLtLH_6brotli3enc14block_splitter22update_cost_and_signal.exit.l
 
 .lr.ph377.split.i.i:                              ; preds = %_RNvNtNtCsk4ZPsEfLtLH_6brotli3enc14block_splitter22update_cost_and_signal.exit.loopexit.i.i, %.lr.ph377.split.preheader.i.i
   %.sroa.0.0289375.i.i = phi ptr [ %i.ajx, %_RNvNtNtCsk4ZPsEfLtLH_6brotli3enc14block_splitter22update_cost_and_signal.exit.loopexit.i.i ], [ %i.fx, %.lr.ph377.split.preheader.i.i ] ; 2 uses
-  %.sroa.7.0374.i.i = phi i64 [ %i.ajy, %_RNvNtNtCsk4ZPsEfLtLH_6brotli3enc14block_splitter22update_cost_and_signal.exit.loopexit.i.i ], [ 0, %.lr.ph377.split.preheader.i.i ] ; 8 uses
-  %16 = mul i64 %i.ahd, %.sroa.7.0374.i.i, !dbg !8095
-  %umax = call i64 @llvm.umax.i64(i64 %i.mh, i64 %16), !dbg !8095
+  %.sroa.7.0374.i.i = phi i64 [ %i.ajy, %_RNvNtNtCsk4ZPsEfLtLH_6brotli3enc14block_splitter22update_cost_and_signal.exit.loopexit.i.i ], [ 0, %.lr.ph377.split.preheader.i.i ] ; 7 uses
   %i.ajw = mul i64 %i.ahd, %.sroa.7.0374.i.i, !dbg !8095
-  %17 = sub i64 %umax, %i.ajw, !dbg !8095
-  %umin = call i64 @llvm.umin.i64(i64 %15, i64 %17), !dbg !8095 ; 2 uses
-  %18 = add nuw nsw i64 %umin, 1, !dbg !8095      ; 2 uses
   %i.ajx = getelementptr inbounds nuw i8, ptr %.sroa.0.0289375.i.i, i64 1, !dbg !8095 ; 2 uses
   %i.ajy = add nuw i64 %.sroa.7.0374.i.i, 1, !dbg !8098
   %exitcond425.not.i.i = icmp eq i64 %.sroa.7.0374.i.i, %i.kz, !dbg !8057
@@ -427,7 +422,7 @@ bb.fy:                                            ; preds = %bb.fx, %bb.fw
 
 bb.fz:                                            ; preds = %.lr.ph377.split.i.i
   %i.akr = getelementptr inbounds nuw i8, ptr %i.ky, i64 %.sroa.7.0374.i.i, !dbg !8124 ; 15 uses
-  %i.aks = mul i64 %.sroa.7.0374.i.i, %i.ahd, !dbg !8125 ; 2 uses
+  %i.aks = mul i64 %.sroa.7.0374.i.i, %i.ahd, !dbg !8125 ; 3 uses
   %i.akt = load i8, ptr %.sroa.0.0289375.i.i, align 1, !dbg !8060, !alias.scope !8064, !noalias !8067, !noundef !14
   %i.aku = zext i8 %i.akt to i64, !dbg !8068
   %i.akv = mul nuw nsw i64 %.sroa.0.0462.i, %i.aku, !dbg !8070 ; 4 uses
@@ -615,14 +610,18 @@ bb.gu:                                            ; preds = %bb.gw, %._crit_edge
   br i1 %.not.i.i169.i, label %.invoke1322.i, label %.lr.ph373.i.i.preheader, !dbg !8199, !prof !751
 
 .lr.ph373.i.i.preheader:                          ; preds = %bb.gu
-  %min.iters.check4533 = icmp samesign ult i64 %umin, 4, !dbg !8213
+  %16 = call i64 @llvm.umax.i64(i64 %i.mh, i64 %i.aks), !dbg !8213
+  %17 = sub i64 %16, %i.ajw, !dbg !8213
+  %18 = call i64 @llvm.umin.i64(i64 %15, i64 %17), !dbg !8213 ; 2 uses
+  %min.iters.check4533 = icmp samesign ult i64 %18, 4, !dbg !8213
   br i1 %min.iters.check4533, label %.lr.ph373.i.i.preheader5454, label %vector.ph4534, !dbg !8213
 
 vector.ph4534:                                    ; preds = %.lr.ph373.i.i.preheader
-  %i.amn = and i64 %18, 3                         ; 2 uses
+  %19 = add nuw nsw i64 %18, 1, !dbg !8213        ; 2 uses
+  %i.amn = and i64 %19, 3                         ; 2 uses
   %i.amo = icmp eq i64 %i.amn, 0
   %i.amp = select i1 %i.amo, i64 4, i64 %i.amn
-  %n.vec4535 = sub nsw i64 %18, %i.amp            ; 3 uses
+  %n.vec4535 = sub nsw i64 %19, %i.amp            ; 3 uses
   %i.amq = shl i64 %n.vec4535, 5
   %i.amr = getelementptr i8, ptr %i.ls, i64 %i.amq
   %broadcast.splatinsert = insertelement <4 x float> poison, float %.sroa.049.1.lcssa.i.i, i64 0
@@ -1025,7 +1024,7 @@ bb.qb:                                            ; preds = %_RINvNtNtCsk4ZPsEfL
 
 bb.qc:                                            ; preds = %bb.qb
   %i.cey = add nsw i64 %.sroa.0.0494.i, 7, !dbg !10860
-  %i.cez = lshr i64 %i.cey, 3, !dbg !10864        ; 9 uses
+  %i.cez = lshr i64 %i.cey, 3, !dbg !10864        ; 8 uses
   %i.cfa = icmp eq i64 %.sroa.0.0494.i, 1, !dbg !10865
   br i1 %i.cfa, label %.preheader.i174.i.preheader, label %bb.qd, !dbg !10865
 
@@ -1120,8 +1119,6 @@ bb.qg:                                            ; preds = %._crit_edge.i171.i
 
 .lr.ph377.split.preheader.i.i121:                 ; preds = %.lr.ph377.i.i117
   %i.cft = icmp eq i64 %i.cfr, 0
-  %19 = add i64 %.idx396.i.i120, -32, !dbg !10991
-  %20 = lshr exact i64 %19, 5, !dbg !10991
   %i.cfu = lshr exact i64 %i.cfq, 3               ; 3 uses
   %i.cfv = icmp samesign ult i64 %i.cfu, %i.bjm
   %i.cfw = getelementptr inbounds nuw [32 x i8], ptr %i.bjl, i64 %i.cfu ; 2 uses
@@ -1168,6 +1165,8 @@ bb.qg:                                            ; preds = %._crit_edge.i171.i
   %i.chl = getelementptr inbounds nuw i8, ptr %i.chk, i64 24 ; 2 uses
   %i.chm = trunc i64 %i.cfq to i8
   %i.chn = or disjoint i8 %i.chm, 6
+  %20 = add i64 %.idx396.i.i120, -32
+  %21 = lshr exact i64 %20, 5
   br label %.lr.ph377.split.i.i122, !dbg !10991
 
 .lr.ph377.split.us.i.i331:                        ; preds = %.lr.ph377.i.i117
@@ -1187,13 +1186,8 @@ _RNvNtNtCsk4ZPsEfLtLH_6brotli3enc14block_splitter22update_cost_and_signal.exit.l
 
 .lr.ph377.split.i.i122:                           ; preds = %_RNvNtNtCsk4ZPsEfLtLH_6brotli3enc14block_splitter22update_cost_and_signal.exit.loopexit.i.i186, %.lr.ph377.split.preheader.i.i121
   %.sroa.0.0289375.i.i123 = phi ptr [ %i.cht, %_RNvNtNtCsk4ZPsEfLtLH_6brotli3enc14block_splitter22update_cost_and_signal.exit.loopexit.i.i186 ], [ %i.bbr, %.lr.ph377.split.preheader.i.i121 ] ; 2 uses
-  %.sroa.7.0374.i.i124 = phi i64 [ %i.chu, %_RNvNtNtCsk4ZPsEfLtLH_6brotli3enc14block_splitter22update_cost_and_signal.exit.loopexit.i.i186 ], [ 0, %.lr.ph377.split.preheader.i.i121 ] ; 8 uses
-  %21 = mul i64 %i.cez, %.sroa.7.0374.i.i124, !dbg !11023
-  %umax4618 = call i64 @llvm.umax.i64(i64 %i.bka, i64 %21), !dbg !11023
+  %.sroa.7.0374.i.i124 = phi i64 [ %i.chu, %_RNvNtNtCsk4ZPsEfLtLH_6brotli3enc14block_splitter22update_cost_and_signal.exit.loopexit.i.i186 ], [ 0, %.lr.ph377.split.preheader.i.i121 ] ; 7 uses
   %i.chs = mul i64 %i.cez, %.sroa.7.0374.i.i124, !dbg !11023
-  %22 = sub i64 %umax4618, %i.chs, !dbg !11023
-  %umin4619 = call i64 @llvm.umin.i64(i64 %20, i64 %22), !dbg !11023 ; 2 uses
-  %23 = add nuw nsw i64 %umin4619, 1, !dbg !11023 ; 2 uses
   %i.cht = getelementptr inbounds nuw i8, ptr %.sroa.0.0289375.i.i123, i64 2, !dbg !11023 ; 2 uses
   %i.chu = add nuw i64 %.sroa.7.0374.i.i124, 1, !dbg !11026
   %exitcond430.not.i.i = icmp eq i64 %.sroa.7.0374.i.i124, %i.bis, !dbg !10991
@@ -1247,7 +1241,7 @@ bb.qk:                                            ; preds = %bb.qj, %bb.qi
 
 bb.ql:                                            ; preds = %.lr.ph377.split.i.i122
   %i.cin = getelementptr inbounds nuw i8, ptr %i.bir, i64 %.sroa.7.0374.i.i124, !dbg !11052 ; 15 uses
-  %i.cio = mul i64 %.sroa.7.0374.i.i124, %i.cez, !dbg !11053 ; 2 uses
+  %i.cio = mul i64 %.sroa.7.0374.i.i124, %i.cez, !dbg !11053 ; 3 uses
   %i.cip = load i16, ptr %.sroa.0.0289375.i.i123, align 2, !dbg !10994, !alias.scope !10998, !noalias !11001, !noundef !14
   %i.ciq = zext i16 %i.cip to i64, !dbg !11002
   %i.cir = mul nuw nsw i64 %.sroa.0.0494.i, %i.ciq, !dbg !11004 ; 4 uses
@@ -1435,14 +1429,18 @@ bb.rg:                                            ; preds = %bb.ri, %._crit_edge
   br i1 %.not.i.i172.i, label %.invoke1415.i, label %.lr.ph373.i.i159.preheader, !dbg !11116, !prof !751
 
 .lr.ph373.i.i159.preheader:                       ; preds = %bb.rg
-  %min.iters.check4621 = icmp samesign ult i64 %umin4619, 4, !dbg !11122
+  %22 = call i64 @llvm.umax.i64(i64 %i.bka, i64 %i.cio), !dbg !11122
+  %23 = sub i64 %22, %i.chs, !dbg !11122
+  %24 = call i64 @llvm.umin.i64(i64 %21, i64 %23), !dbg !11122 ; 2 uses
+  %min.iters.check4621 = icmp samesign ult i64 %24, 4, !dbg !11122
   br i1 %min.iters.check4621, label %.lr.ph373.i.i159.preheader5219, label %vector.ph4622, !dbg !11122
 
 vector.ph4622:                                    ; preds = %.lr.ph373.i.i159.preheader
-  %i.ckj = and i64 %23, 3                         ; 2 uses
+  %25 = add nuw nsw i64 %24, 1, !dbg !11122       ; 2 uses
+  %i.ckj = and i64 %25, 3                         ; 2 uses
   %i.ckk = icmp eq i64 %i.ckj, 0
   %i.ckl = select i1 %i.ckk, i64 4, i64 %i.ckj
-  %n.vec4623 = sub nsw i64 %23, %i.ckl            ; 3 uses
+  %n.vec4623 = sub nsw i64 %25, %i.ckl            ; 3 uses
   %i.ckm = shl i64 %n.vec4623, 5
   %i.ckn = getelementptr i8, ptr %i.bjl, i64 %i.ckm
   %broadcast.splatinsert4624 = insertelement <4 x float> poison, float %.sroa.049.1.lcssa.i.i157, i64 0
@@ -1845,7 +1843,7 @@ bb.aan:                                           ; preds = %_RINvNtNtCsk4ZPsEfL
 
 bb.aao:                                           ; preds = %bb.aan
   %i.ebf = add nsw i64 %.sroa.0.0494.i426, 7, !dbg !13723
-  %i.ebg = lshr i64 %i.ebf, 3, !dbg !13727        ; 9 uses
+  %i.ebg = lshr i64 %i.ebf, 3, !dbg !13727        ; 8 uses
   %i.ebh = icmp eq i64 %.sroa.0.0494.i426, 1, !dbg !13728
   br i1 %i.ebh, label %.preheader.i174.i868.preheader, label %bb.aap, !dbg !13728
 
@@ -1940,8 +1938,6 @@ bb.aas:                                           ; preds = %._crit_edge.i171.i4
 
 .lr.ph377.split.preheader.i.i465:                 ; preds = %.lr.ph377.i.i460
   %i.eca = icmp eq i64 %i.eby, 0
-  %24 = add i64 %.idx396.i.i464, -32, !dbg !13854
-  %25 = lshr exact i64 %24, 5, !dbg !13854
   %i.ecb = lshr exact i64 %i.ebx, 3               ; 3 uses
   %i.ecc = icmp samesign ult i64 %i.ecb, %i.dft
   %i.ecd = getelementptr inbounds nuw [32 x i8], ptr %i.dfs, i64 %i.ecb ; 2 uses
@@ -1988,6 +1984,8 @@ bb.aas:                                           ; preds = %._crit_edge.i171.i4
   %i.eds = getelementptr inbounds nuw i8, ptr %i.edr, i64 24 ; 2 uses
   %i.edt = trunc i64 %i.ebx to i8
   %i.edu = or disjoint i8 %i.edt, 6
+  %26 = add i64 %.idx396.i.i464, -32
+  %27 = lshr exact i64 %26, 5
   br label %.lr.ph377.split.i.i467, !dbg !13854
 
 .lr.ph377.split.us.i.i865:                        ; preds = %.lr.ph377.i.i460
@@ -2007,13 +2005,8 @@ _RNvNtNtCsk4ZPsEfLtLH_6brotli3enc14block_splitter22update_cost_and_signal.exit.l
 
 .lr.ph377.split.i.i467:                           ; preds = %_RNvNtNtCsk4ZPsEfLtLH_6brotli3enc14block_splitter22update_cost_and_signal.exit.loopexit.i.i533, %.lr.ph377.split.preheader.i.i465
   %.sroa.0.0289375.i.i468 = phi ptr [ %i.eea, %_RNvNtNtCsk4ZPsEfLtLH_6brotli3enc14block_splitter22update_cost_and_signal.exit.loopexit.i.i533 ], [ %i.czp, %.lr.ph377.split.preheader.i.i465 ] ; 2 uses
-  %.sroa.7.0374.i.i469 = phi i64 [ %i.eeb, %_RNvNtNtCsk4ZPsEfLtLH_6brotli3enc14block_splitter22update_cost_and_signal.exit.loopexit.i.i533 ], [ 0, %.lr.ph377.split.preheader.i.i465 ] ; 8 uses
-  %26 = mul i64 %i.ebg, %.sroa.7.0374.i.i469, !dbg !13881
-  %umax4702 = call i64 @llvm.umax.i64(i64 %i.dgh, i64 %26), !dbg !13881
+  %.sroa.7.0374.i.i469 = phi i64 [ %i.eeb, %_RNvNtNtCsk4ZPsEfLtLH_6brotli3enc14block_splitter22update_cost_and_signal.exit.loopexit.i.i533 ], [ 0, %.lr.ph377.split.preheader.i.i465 ] ; 7 uses
   %i.edz = mul i64 %i.ebg, %.sroa.7.0374.i.i469, !dbg !13881
-  %27 = sub i64 %umax4702, %i.edz, !dbg !13881
-  %umin4703 = call i64 @llvm.umin.i64(i64 %25, i64 %27), !dbg !13881 ; 2 uses
-  %28 = add nuw nsw i64 %umin4703, 1, !dbg !13881 ; 2 uses
   %i.eea = getelementptr inbounds nuw i8, ptr %.sroa.0.0289375.i.i468, i64 2, !dbg !13881 ; 2 uses
   %i.eeb = add nuw i64 %.sroa.7.0374.i.i469, 1, !dbg !13883
   %exitcond430.not.i.i470 = icmp eq i64 %.sroa.7.0374.i.i469, %i.dez, !dbg !13854
@@ -2067,7 +2060,7 @@ bb.aaw:                                           ; preds = %bb.aav, %bb.aau
 
 bb.aax:                                           ; preds = %.lr.ph377.split.i.i467
   %i.eeu = getelementptr inbounds nuw i8, ptr %i.dey, i64 %.sroa.7.0374.i.i469, !dbg !13907 ; 15 uses
-  %i.eev = mul i64 %.sroa.7.0374.i.i469, %i.ebg, !dbg !13908 ; 2 uses
+  %i.eev = mul i64 %.sroa.7.0374.i.i469, %i.ebg, !dbg !13908 ; 3 uses
   %i.eew = load i16, ptr %.sroa.0.0289375.i.i468, align 2, !dbg !13857, !alias.scope !13861, !noalias !13864, !noundef !14
   %i.eex = zext i16 %i.eew to i64, !dbg !13865
   %i.eey = mul nuw nsw i64 %.sroa.0.0494.i426, %i.eex, !dbg !13867 ; 4 uses
@@ -2255,14 +2248,18 @@ bb.abs:                                           ; preds = %bb.abu, %._crit_edg
   br i1 %.not.i.i172.i463, label %.invoke1415.i860, label %.lr.ph373.i.i506.preheader, !dbg !13971, !prof !751
 
 .lr.ph373.i.i506.preheader:                       ; preds = %bb.abs
-  %min.iters.check4705 = icmp samesign ult i64 %umin4703, 4, !dbg !13977
+  %28 = call i64 @llvm.umax.i64(i64 %i.dgh, i64 %i.eev), !dbg !13977
+  %29 = sub i64 %28, %i.edz, !dbg !13977
+  %30 = call i64 @llvm.umin.i64(i64 %27, i64 %29), !dbg !13977 ; 2 uses
+  %min.iters.check4705 = icmp samesign ult i64 %30, 4, !dbg !13977
   br i1 %min.iters.check4705, label %.lr.ph373.i.i506.preheader4969, label %vector.ph4706, !dbg !13977
 
 vector.ph4706:                                    ; preds = %.lr.ph373.i.i506.preheader
-  %i.egq = and i64 %28, 3                         ; 2 uses
+  %31 = add nuw nsw i64 %30, 1, !dbg !13977       ; 2 uses
+  %i.egq = and i64 %31, 3                         ; 2 uses
   %i.egr = icmp eq i64 %i.egq, 0
   %i.egs = select i1 %i.egr, i64 4, i64 %i.egq
-  %n.vec4707 = sub nsw i64 %28, %i.egs            ; 3 uses
+  %n.vec4707 = sub nsw i64 %31, %i.egs            ; 3 uses
   %i.egt = shl i64 %n.vec4707, 5
   %i.egu = getelementptr i8, ptr %i.dfs, i64 %i.egt
   %broadcast.splatinsert4708 = insertelement <4 x float> poison, float %.sroa.049.1.lcssa.i.i504, i64 0
@@ -2665,10 +2662,10 @@ bb.o:                                             ; preds = %bb.l
 .lr.ph144:                                        ; preds = %bb.o
   %i.dj = add nuw nsw i64 %.sroa.014.0142, 1      ; 3 uses
   %invariant.gep = getelementptr inbounds nuw [4 x i8], ptr %6, i64 %.sroa.014.0142, !dbg !27920 ; 2 uses
+  %15 = xor i64 %.sroa.014.0142, -1, !dbg !27920
   %i.dk = add i64 %indvar, %.sroa.014.0142, !dbg !27920
   %i.dl = sub i64 %i.u, %i.dk, !dbg !27920
   %umax = tail call i64 @llvm.umax.i64(i64 %7, i64 %i.dj), !dbg !27920
-  %15 = xor i64 %.sroa.014.0142, -1, !dbg !27920
   %i.dm = add nsw i64 %umax, %15, !dbg !27920
   %umin = tail call i64 @llvm.umin.i64(i64 %i.dl, i64 %i.dm), !dbg !27920
   %i.dn = add i64 %umin, 1, !dbg !27920           ; 3 uses
@@ -3071,10 +3068,10 @@ bb.o:                                             ; preds = %bb.l
 .lr.ph144:                                        ; preds = %bb.o
   %i.dj = add nuw nsw i64 %.sroa.014.0142, 1      ; 3 uses
   %invariant.gep = getelementptr inbounds nuw [4 x i8], ptr %6, i64 %.sroa.014.0142, !dbg !28149 ; 2 uses
+  %15 = xor i64 %.sroa.014.0142, -1, !dbg !28149
   %i.dk = add i64 %indvar, %.sroa.014.0142, !dbg !28149
   %i.dl = sub i64 %i.u, %i.dk, !dbg !28149
   %umax = tail call i64 @llvm.umax.i64(i64 %7, i64 %i.dj), !dbg !28149
-  %15 = xor i64 %.sroa.014.0142, -1, !dbg !28149
   %i.dm = add nsw i64 %umax, %15, !dbg !28149
   %umin = tail call i64 @llvm.umin.i64(i64 %i.dl, i64 %i.dm), !dbg !28149
   %i.dn = add i64 %umin, 1, !dbg !28149           ; 3 uses
@@ -3477,10 +3474,10 @@ bb.o:                                             ; preds = %bb.l
 .lr.ph144:                                        ; preds = %bb.o
   %i.dj = add nuw nsw i64 %.sroa.014.0142, 1      ; 3 uses
   %invariant.gep = getelementptr inbounds nuw [4 x i8], ptr %6, i64 %.sroa.014.0142, !dbg !28378 ; 2 uses
+  %15 = xor i64 %.sroa.014.0142, -1, !dbg !28378
   %i.dk = add i64 %indvar, %.sroa.014.0142, !dbg !28378
   %i.dl = sub i64 %i.u, %i.dk, !dbg !28378
   %umax = tail call i64 @llvm.umax.i64(i64 %7, i64 %i.dj), !dbg !28378
-  %15 = xor i64 %.sroa.014.0142, -1, !dbg !28378
   %i.dm = add nsw i64 %umax, %15, !dbg !28378
   %umin = tail call i64 @llvm.umin.i64(i64 %i.dl, i64 %i.dm), !dbg !28378
   %i.dn = add i64 %umin, 1, !dbg !28378           ; 3 uses
@@ -3883,35 +3880,34 @@ _RNvXNtCsbA1n9drshSs_12alloc_stdlib9std_allocNtB2_13StandardAllocINtNtCs2FBUFPee
   br i1 %.not.i117, label %_RINvNtNtCsk4ZPsEfLtLH_6brotli3enc9metablock17MapStaticContextsNtNtCsbA1n9drshSs_12alloc_stdlib9std_alloc13StandardAllocECsfISxE4fmY1Y_14polars_parquet.exit, label %.lr.ph.i, !dbg !33441
 
 .loopexit.i:                                      ; preds = %bb.df
-  %exitcond9.not.i = icmp eq i64 %18, %i.kg, !dbg !33432
+  %exitcond9.not.i = icmp eq i64 %15, %i.kg, !dbg !33432
   br i1 %exitcond9.not.i, label %_RINvNtNtCsk4ZPsEfLtLH_6brotli3enc9metablock17MapStaticContextsNtNtCsbA1n9drshSs_12alloc_stdlib9std_alloc13StandardAllocECsfISxE4fmY1Y_14polars_parquet.exit, label %.lr.ph.i, !dbg !33441
 
 .lr.ph.i:                                         ; preds = %_RNvXNtCsbA1n9drshSs_12alloc_stdlib9std_allocNtB2_13StandardAllocINtNtCs2FBUFPee3ib_15alloc_no_stdlib15stack_allocator9AllocatormE9free_cellCsfISxE4fmY1Y_14polars_parquet.exit.i116, %.loopexit.i
-  %.sroa.03.04.i = phi i64 [ %18, %.loopexit.i ], [ 0, %_RNvXNtCsbA1n9drshSs_12alloc_stdlib9std_allocNtB2_13StandardAllocINtNtCs2FBUFPee3ib_15alloc_no_stdlib15stack_allocator9AllocatormE9free_cellCsfISxE4fmY1Y_14polars_parquet.exit.i116 ] ; 5 uses
-  %15 = shl i64 %.sroa.03.04.i, 6, !dbg !33442
-  %umax = call i64 @llvm.umax.i64(i64 %i.ku, i64 %15), !dbg !33442
-  %16 = shl i64 %.sroa.03.04.i, 6, !dbg !33442
-  %17 = sub i64 %umax, %16, !dbg !33442
-  %.fr = freeze i64 %17, !dbg !33442
-  %umin = call i64 @llvm.umin.i64(i64 %.fr, i64 %10), !dbg !33442 ; 2 uses
-  %18 = add nuw i64 %.sroa.03.04.i, 1, !dbg !33442 ; 2 uses
-  %19 = mul i64 %.sroa.03.04.i, %8, !dbg !33448
-  %20 = trunc i64 %19 to i32, !dbg !33452         ; 2 uses
-  %21 = shl i64 %.sroa.03.04.i, 6                 ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %umin, 8, !dbg !33453
+  %.sroa.03.04.i = phi i64 [ %15, %.loopexit.i ], [ 0, %_RNvXNtCsbA1n9drshSs_12alloc_stdlib9std_allocNtB2_13StandardAllocINtNtCs2FBUFPee3ib_15alloc_no_stdlib15stack_allocator9AllocatormE9free_cellCsfISxE4fmY1Y_14polars_parquet.exit.i116 ] ; 4 uses
+  %15 = add nuw i64 %.sroa.03.04.i, 1, !dbg !33442 ; 2 uses
+  %16 = mul i64 %.sroa.03.04.i, %8, !dbg !33448
+  %17 = trunc i64 %16 to i32, !dbg !33452         ; 2 uses
+  %18 = shl i64 %.sroa.03.04.i, 6                 ; 3 uses
+  %umin = call i64 @llvm.umax.i64(i64 %i.ku, i64 %18), !dbg !33453
+  %19 = shl i64 %.sroa.03.04.i, 6, !dbg !33453
+  %20 = sub i64 %umin, %19, !dbg !33453
+  %.fr = freeze i64 %20, !dbg !33453
+  %21 = call i64 @llvm.umin.i64(i64 %.fr, i64 %10), !dbg !33453 ; 2 uses
+  %min.iters.check = icmp samesign ult i64 %21, 8, !dbg !33453
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph, !dbg !33453
 
 vector.ph:                                        ; preds = %.lr.ph.i
-  %umin542 = call i64 @llvm.umin.i64(i64 %umin, i64 63), !dbg !33442
-  %i.lb = add nuw nsw i64 %umin542, 1, !dbg !33442 ; 2 uses
+  %umin542 = call i64 @llvm.umin.i64(i64 %21, i64 63), !dbg !33453
+  %i.lb = add nuw nsw i64 %umin542, 1, !dbg !33453 ; 2 uses
   %i.lc = and i64 %i.lb, 7                        ; 2 uses
   %i.ld = icmp eq i64 %i.lc, 0
   %i.le = select i1 %i.ld, i64 8, i64 %i.lc
   %n.vec = sub nsw i64 %i.lb, %i.le               ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.kt) ]
-  %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %20, i64 0
+  %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %17, i64 0
   %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
-  %invariant.gep = getelementptr [4 x i8], ptr %i.kt, i64 %21, !dbg !33453
+  %invariant.gep = getelementptr [4 x i8], ptr %i.kt, i64 %18, !dbg !33453
   br label %vector.body, !dbg !33453
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -3942,7 +3938,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
 
 bb.dd:                                            ; preds = %scalar.ph
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.kt) ]
-  %i.lm = add nuw nsw i64 %.sroa.05.03.i, %21, !dbg !33473 ; 3 uses
+  %i.lm = add nuw nsw i64 %.sroa.05.03.i, %18, !dbg !33473 ; 3 uses
   %i.ln = icmp ult i64 %i.lm, %i.ku, !dbg !33471
   br i1 %i.ln, label %bb.df, label %bb.dg, !dbg !33471
 
@@ -3953,7 +3949,7 @@ bb.de:                                            ; preds = %scalar.ph
 bb.df:                                            ; preds = %bb.dd
   %i.lo = getelementptr inbounds nuw [4 x i8], ptr %9, i64 %.sroa.05.03.i, !dbg !33466
   %i.lp = load i32, ptr %i.lo, align 4, !dbg !33466, !alias.scope !33375, !noalias !33379, !noundef !14
-  %i.lq = add i32 %i.lp, %20, !dbg !33468
+  %i.lq = add i32 %i.lp, %17, !dbg !33468
   %i.lr = getelementptr inbounds nuw [4 x i8], ptr %i.kt, i64 %i.lm, !dbg !33471
   store i32 %i.lq, ptr %i.lr, align 4, !dbg !33471, !noalias !33389
   %exitcond8.not.i = icmp eq i64 %i.ll, 64, !dbg !33476
