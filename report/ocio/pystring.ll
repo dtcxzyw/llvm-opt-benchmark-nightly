@@ -205,7 +205,7 @@ bb.y:                                             ; preds = %.lr.ph, %.critedge.
 bb.z:                                             ; preds = %bb.y
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #24
   %i.ev = sub nsw i32 %.044114, %i.ed             ; 3 uses
-  %9 = sext i32 %i.ev to i64                      ; 4 uses
+  %9 = zext nneg i32 %i.ev to i64                 ; 4 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !57)
   %i.ew = load i64, ptr %i.s, align 8, !tbaa !21, !noalias !57 ; 3 uses
   %i.ex = icmp ult i64 %i.ew, %9
@@ -608,7 +608,7 @@ bb.d:                                             ; preds = %.lr.ph.split.us
   %i.w = sub nsw i32 %2, %i.v                     ; 3 uses
   %i.x = add nsw i32 %i.w, %.03067.us
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #24
-  %4 = sext i32 %i.w to i64
+  %4 = zext nneg i32 %i.w to i64
   store ptr %i.q, ptr %3, align 8, !tbaa !27
   invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_M_constructEmc(ptr noundef nonnull align 8 dereferenceable(32) %3, i64 noundef %4, i8 noundef signext 32)
           to label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEmcRKS3_.exit.us unwind label %.split.us

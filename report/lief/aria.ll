@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   %indvars.iv47 = phi i64 [ 0, %.preheader40.lr.ph ], [ %indvars.iv.next48, %.preheader40 ] ; 2 uses
   %indvars.iv = phi i64 [ %i.d, %.preheader40.lr.ph ], [ %indvars.iv.next, %.preheader40 ] ; 2 uses
   %i.e = getelementptr inbounds nuw [16 x i8], ptr %i.c, i64 %indvars.iv47 ; 2 uses
-  %i.f = getelementptr inbounds [16 x i8], ptr %i.c, i64 %indvars.iv ; 2 uses
+  %i.f = getelementptr inbounds nuw [16 x i8], ptr %i.c, i64 %indvars.iv ; 2 uses
   %i.g = load <4 x i32>, ptr %i.e, align 4, !tbaa !8
   %i.h = load <4 x i32>, ptr %i.f, align 4, !tbaa !8
   store <4 x i32> %i.h, ptr %i.e, align 4, !tbaa !8
