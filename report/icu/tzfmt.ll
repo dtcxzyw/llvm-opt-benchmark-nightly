@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
 
 bb.g:                                             ; preds = %bb.e, %bb.c
   %.not60 = icmp eq i8 %4, 0                      ; 2 uses
-  %i.w = zext i1 %.not60 to i32                   ; 3 uses
+  %i.w = zext i1 %.not60 to i32                   ; 2 uses
   %.not62 = icmp eq i8 %2, 0
   %i.x = icmp samesign ugt i32 %i.j, 86399999
   br i1 %i.x, label %bb.h, label %bb.i
@@ -238,25 +238,17 @@ bb.i:                                             ; preds = %bb.g
   %i.ai = getelementptr inbounds nuw [4 x i8], ptr %i.f, i64 %i.ah
   %i.aj = load i32, ptr %i.ai, align 4, !tbaa !40
   %.not63.peel = icmp eq i32 %i.aj, 0
-  br i1 %.not63.peel, label %8, label %._crit_edge.loopexit
-
-8:                                                ; preds = %.lr.ph.peel
-  %.not101.peel = or i1 %.not60, %.not61
-  br i1 %.not101.peel, label %._crit_edge.loopexit, label %.lr.ph.preheader.peel.newph
-
-.lr.ph.preheader.peel.newph:                      ; preds = %8
+  %.not105.peel = or i1 %.not60, %.not61
   %.not63 = icmp samesign ult i32 %i.aa, 60000
-  %.053.lcssa.ph.ph = select i1 %.not63, i32 %i.w, i32 1
-  br label %._crit_edge.loopexit
-
-._crit_edge.loopexit:                             ; preds = %.lr.ph.preheader.peel.newph, %8, %.lr.ph.peel
-  %.053.lcssa.ph = phi i32 [ %i.y, %.lr.ph.peel ], [ %i.w, %8 ], [ %.053.lcssa.ph.ph, %.lr.ph.preheader.peel.newph ]
-  %9 = add nuw nsw i32 %.053.lcssa.ph, 1
-  %10 = zext nneg i32 %9 to i64
+  %or.cond111 = select i1 %.not105.peel, i1 true, i1 %.not63
+  %spec.select = select i1 %or.cond111, i32 %i.w, i32 1
+  %.053.lcssa.ph = select i1 %.not63.peel, i32 %spec.select, i32 %i.y
+  %8 = add nuw nsw i32 %.053.lcssa.ph, 1
+  %9 = zext nneg i32 %8 to i64
   br label %._crit_edge
 
-._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.i
-  %.053.lcssa = phi i64 [ 2, %bb.i ], [ %10, %._crit_edge.loopexit ] ; 4 uses
+._crit_edge:                                      ; preds = %.lr.ph.peel, %bb.i
+  %.053.lcssa = phi i64 [ 2, %bb.i ], [ %9, %.lr.ph.peel ] ; 4 uses
   br i1 %i.i, label %.lr.ph79, label %.lr.ph72
 
 bb.j:                                             ; preds = %.lr.ph72

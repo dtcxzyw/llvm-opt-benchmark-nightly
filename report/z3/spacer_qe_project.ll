@@ -205,22 +205,20 @@ _ZN11ast_manager7inc_refEP3ast.exit.i87:          ; preds = %bb.ac
 
 bb.ad:                                            ; preds = %.lr.ph120, %bb.ae
   %indvars.iv135 = phi i64 [ %indvars.iv133, %.lr.ph120 ], [ %indvars.iv.next136, %bb.ae ] ; 5 uses
-  %indvars.iv.next136 = add nsw i64 %indvars.iv135, -1 ; 3 uses
-  %6 = and i64 %indvars.iv.next136, 4294967295    ; 2 uses
-  %i.dy = getelementptr inbounds nuw [4 x i8], ptr %i.y, i64 %6
+  %indvars.iv.next136 = add nsw i64 %indvars.iv135, -1 ; 4 uses
+  %i.dy = getelementptr inbounds nuw [4 x i8], ptr %i.y, i64 %indvars.iv.next136
   %i.dz = load i32, ptr %i.dy, align 4, !tbaa !42 ; 2 uses
   %i.ea = icmp ugt i32 %i.dz, %i.dx
   br i1 %i.ea, label %bb.ae, label %.critedge
 
 bb.ae:                                            ; preds = %bb.ad
-  %i.eb = getelementptr inbounds nuw [8 x i8], ptr %i.dq, i64 %6
+  %i.eb = getelementptr inbounds nuw [8 x i8], ptr %i.dq, i64 %indvars.iv.next136
   %i.ec = load ptr, ptr %i.eb, align 8, !tbaa !141
   %i.ed = getelementptr inbounds nuw [8 x i8], ptr %i.dq, i64 %indvars.iv135
   store ptr %i.ec, ptr %i.ed, align 8, !tbaa !141
   %i.ee = getelementptr inbounds nuw [4 x i8], ptr %i.y, i64 %indvars.iv135
   store i32 %i.dz, ptr %i.ee, align 4, !tbaa !42
-  %7 = and i64 %indvars.iv.next136, 4294967295
-  %.not = icmp eq i64 %7, 0
+  %.not = icmp eq i64 %indvars.iv.next136, 0
   br i1 %.not, label %.critedge.thread, label %bb.ad, !llvm.loop !402
 
 .critedge:                                        ; preds = %bb.ad

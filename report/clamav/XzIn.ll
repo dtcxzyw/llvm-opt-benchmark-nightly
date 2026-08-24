@@ -205,38 +205,33 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %.lr.ph.i
   %i.al = call i32 @LookInStream_Read2(ptr noundef nonnull %1, ptr noundef nonnull %i.b, i64 noundef %spec.select.i, i32 noundef 17) #8 ; 2 uses
   %.not136.i = icmp eq i32 %i.al, 0
-  br i1 %.not136.i, label %7, label %.loopexit.i
+  br i1 %.not136.i, label %bb.h, label %.loopexit.i
 
-7:                                                ; preds = %bb.g
-  %8 = trunc nuw nsw i64 %spec.select.i to i32
-  br label %bb.h
-
-bb.h:                                             ; preds = %bb.i, %7
-  %.0176.i = phi i32 [ %8, %7 ], [ %10, %bb.i ]   ; 5 uses
-  %9 = zext nneg i32 %.0176.i to i64              ; 2 uses
-  %i.am = getelementptr i8, ptr %i.b, i64 %9
+bb.h:                                             ; preds = %bb.g, %bb.i
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.i ], [ %spec.select.i, %bb.g ] ; 6 uses
+  %i.am = getelementptr i8, ptr %i.b, i64 %indvars.iv.i
   %i.an = getelementptr i8, ptr %i.am, i64 -1
   %i.ao = load i8, ptr %i.an, align 1, !tbaa !9
   %.not137.i = icmp eq i8 %i.ao, 0
   br i1 %.not137.i, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %bb.h
-  %10 = add nsw i32 %.0176.i, -1
-  %i.ap = icmp sgt i32 %.0176.i, 0
+  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1
+  %i.ap = icmp sgt i64 %indvars.iv.i, 0
   br i1 %i.ap, label %bb.h, label %.loopexit.i
 
 bb.j:                                             ; preds = %bb.h
-  %.not138.i = icmp eq i32 %.0176.i, 0
+  %.not138.i = icmp eq i64 %indvars.iv.i, 0
   br i1 %.not138.i, label %bb.o, label %.thread.i
 
 .thread.i:                                        ; preds = %bb.j
-  %11 = and i32 %.0176.i, 3
-  %.not139.i = icmp eq i32 %11, 0
+  %7 = and i64 %indvars.iv.i, 3
+  %.not139.i = icmp eq i64 %7, 0
   br i1 %.not139.i, label %bb.k, label %.loopexit.i
 
 bb.k:                                             ; preds = %.thread.i
   %i.aq = load i64, ptr %2, align 8, !tbaa !27
-  %i.ar = add nsw i64 %i.aq, %9                   ; 3 uses
+  %i.ar = add nsw i64 %i.aq, %indvars.iv.i        ; 3 uses
   store i64 %i.ar, ptr %2, align 8, !tbaa !27
   %i.as = icmp slt i64 %i.ar, 12
   br i1 %i.as, label %.loopexit.i, label %bb.l

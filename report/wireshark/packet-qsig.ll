@@ -203,22 +203,20 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.i
 
 bb.g:                                             ; preds = %bb.i
-  %4 = add nsw i32 %.06.i, -1                     ; 2 uses
-  %5 = zext nneg i32 %4 to i64                    ; 2 uses
-  %i.j = getelementptr [24 x i8], ptr @qsig_op_tab, i64 %5 ; 2 uses
+  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1 ; 3 uses
+  %i.j = getelementptr [24 x i8], ptr @qsig_op_tab, i64 %indvars.iv.next.i ; 2 uses
   %i.k = load i32, ptr %i.j, align 8
   %i.l = icmp eq i32 %i.k, %i.i
   br i1 %i.l, label %get_op.exit, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %6 = add nsw i32 %.06.i, -2
-  %.not.i.1 = icmp eq i32 %4, 0
+  %indvars.iv.next.i.1 = add nsw i64 %indvars.iv.i, -2
+  %.not.i.1 = icmp eq i64 %indvars.iv.next.i, 0
   br i1 %.not.i.1, label %get_op.exit.thread, label %bb.i, !llvm.loop !6
 
 bb.i:                                             ; preds = %bb.h, %bb.f
-  %.06.i = phi i32 [ 121, %bb.f ], [ %6, %bb.h ]  ; 3 uses
-  %7 = zext nneg i32 %.06.i to i64                ; 2 uses
-  %i.m = getelementptr [24 x i8], ptr @qsig_op_tab, i64 %7 ; 2 uses
+  %indvars.iv.i = phi i64 [ 121, %bb.f ], [ %indvars.iv.next.i.1, %bb.h ] ; 4 uses
+  %i.m = getelementptr [24 x i8], ptr @qsig_op_tab, i64 %indvars.iv.i ; 2 uses
   %i.n = load i32, ptr %i.m, align 8
   %i.o = icmp eq i32 %i.n, %i.i
   br i1 %i.o, label %get_op.exit, label %bb.g
@@ -240,34 +238,32 @@ bb.l:                                             ; preds = %bb.k
   br label %bb.o
 
 bb.m:                                             ; preds = %bb.o
-  %8 = add nsw i32 %.06.i76, -1                   ; 2 uses
-  %9 = zext nneg i32 %8 to i64                    ; 2 uses
-  %i.v = getelementptr [24 x i8], ptr @qsig_op_tab, i64 %9 ; 2 uses
+  %indvars.iv.next.i77 = add nsw i64 %indvars.iv.i76, -1 ; 3 uses
+  %i.v = getelementptr [24 x i8], ptr @qsig_op_tab, i64 %indvars.iv.next.i77 ; 2 uses
   %i.w = load i32, ptr %i.v, align 8
   %i.x = icmp eq i32 %i.w, %i.u
   br i1 %i.x, label %get_op.exit79, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  %10 = add nsw i32 %.06.i76, -2
-  %.not.i77.1 = icmp eq i32 %8, 0
+  %indvars.iv.next.i77.1 = add nsw i64 %indvars.iv.i76, -2
+  %.not.i77.1 = icmp eq i64 %indvars.iv.next.i77, 0
   br i1 %.not.i77.1, label %get_op.exit.thread, label %bb.o, !llvm.loop !6
 
 bb.o:                                             ; preds = %bb.n, %bb.l
-  %.06.i76 = phi i32 [ 121, %bb.l ], [ %10, %bb.n ] ; 3 uses
-  %11 = zext nneg i32 %.06.i76 to i64             ; 2 uses
-  %i.y = getelementptr [24 x i8], ptr @qsig_op_tab, i64 %11 ; 2 uses
+  %indvars.iv.i76 = phi i64 [ 121, %bb.l ], [ %indvars.iv.next.i77.1, %bb.n ] ; 4 uses
+  %i.y = getelementptr [24 x i8], ptr @qsig_op_tab, i64 %indvars.iv.i76 ; 2 uses
   %i.z = load i32, ptr %i.y, align 8
   %i.aa = icmp eq i32 %i.z, %i.u
   br i1 %i.aa, label %get_op.exit79, label %bb.m
 
 get_op.exit79:                                    ; preds = %bb.m, %bb.o
-  %.lcssa135 = phi i64 [ %11, %bb.o ], [ %9, %bb.m ]
+  %.lcssa135 = phi i64 [ %indvars.iv.i76, %bb.o ], [ %indvars.iv.next.i77, %bb.m ]
   %.lcssa133 = phi ptr [ %i.y, %bb.o ], [ %i.v, %bb.m ]
   %.not70 = icmp eq ptr %.lcssa133, null
   br i1 %.not70, label %get_op.exit.thread, label %get_op.exit.thread85
 
 get_op.exit:                                      ; preds = %bb.g, %bb.i
-  %.lcssa130 = phi i64 [ %7, %bb.i ], [ %5, %bb.g ]
+  %.lcssa130 = phi i64 [ %indvars.iv.i, %bb.i ], [ %indvars.iv.next.i, %bb.g ]
   %.lcssa = phi ptr [ %i.m, %bb.i ], [ %i.j, %bb.g ]
   %.not71 = icmp eq ptr %.lcssa, null
   br i1 %.not71, label %get_op.exit.thread, label %get_op.exit.thread85
@@ -371,22 +367,20 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.i
 
 bb.g:                                             ; preds = %bb.i
-  %4 = add nsw i32 %.06.i, -1                     ; 2 uses
-  %5 = zext nneg i32 %4 to i64
-  %i.i = getelementptr [24 x i8], ptr @qsig_op_tab, i64 %5 ; 2 uses
+  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1 ; 2 uses
+  %i.i = getelementptr [24 x i8], ptr @qsig_op_tab, i64 %indvars.iv.next.i ; 2 uses
   %i.j = load i32, ptr %i.i, align 8
   %i.k = icmp eq i32 %i.j, %i.h
   br i1 %i.k, label %get_op.exit, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %6 = add nsw i32 %.06.i, -2
-  %.not.i.1 = icmp eq i32 %4, 0
+  %indvars.iv.next.i.1 = add nsw i64 %indvars.iv.i, -2
+  %.not.i.1 = icmp eq i64 %indvars.iv.next.i, 0
   br i1 %.not.i.1, label %get_op.exit.thread, label %bb.i, !llvm.loop !6
 
 bb.i:                                             ; preds = %bb.h, %bb.f
-  %.06.i = phi i32 [ 121, %bb.f ], [ %6, %bb.h ]  ; 3 uses
-  %7 = zext nneg i32 %.06.i to i64
-  %i.l = getelementptr [24 x i8], ptr @qsig_op_tab, i64 %7 ; 2 uses
+  %indvars.iv.i = phi i64 [ 121, %bb.f ], [ %indvars.iv.next.i.1, %bb.h ] ; 3 uses
+  %i.l = getelementptr [24 x i8], ptr @qsig_op_tab, i64 %indvars.iv.i ; 2 uses
   %i.m = load i32, ptr %i.l, align 8
   %i.n = icmp eq i32 %i.m, %i.h
   br i1 %i.n, label %get_op.exit, label %bb.g
@@ -505,41 +499,37 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.l
 
 bb.g:                                             ; preds = %bb.l
-  %4 = sext i32 %.06.i to i64
-  %i.i = getelementptr [16 x i8], ptr @qsig_err_tab, i64 %4 ; 2 uses
+  %i.i = getelementptr [16 x i8], ptr @qsig_err_tab, i64 %indvars.iv.i ; 2 uses
   %i.j = getelementptr i8, ptr %i.i, i64 -16
   %i.k = load i32, ptr %i.j, align 16
   %i.l = icmp eq i32 %i.k, %i.h
   br i1 %i.l, label %get_err.exit.split.loop.exit70, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %5 = add nsw i32 %.06.i, -2                     ; 2 uses
-  %6 = zext nneg i32 %5 to i64
-  %i.m = getelementptr [16 x i8], ptr @qsig_err_tab, i64 %6 ; 2 uses
+  %indvars.iv.next.i.1 = add nsw i64 %indvars.iv.i, -2 ; 2 uses
+  %i.m = getelementptr [16 x i8], ptr @qsig_err_tab, i64 %indvars.iv.next.i.1 ; 2 uses
   %i.n = load i32, ptr %i.m, align 16
   %i.o = icmp eq i32 %i.n, %i.h
   br i1 %i.o, label %get_err.exit, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %.not.i.2 = icmp eq i32 %5, 0
+  %.not.i.2 = icmp eq i64 %indvars.iv.next.i.1, 0
   br i1 %.not.i.2, label %get_err.exit.thread, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %7 = sext i32 %.06.i to i64
-  %i.p = getelementptr [16 x i8], ptr @qsig_err_tab, i64 %7 ; 2 uses
+  %i.p = getelementptr [16 x i8], ptr @qsig_err_tab, i64 %indvars.iv.i ; 2 uses
   %i.q = getelementptr i8, ptr %i.p, i64 -48
   %i.r = load i32, ptr %i.q, align 16
   %i.s = icmp eq i32 %i.r, %i.h
   br i1 %i.s, label %get_err.exit.split.loop.exit, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %8 = add nsw i32 %.06.i, -4
+  %indvars.iv.next.i.3 = add nsw i64 %indvars.iv.i, -4
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.f
-  %.06.i = phi i32 [ 90, %bb.f ], [ %8, %bb.k ]   ; 5 uses
-  %9 = zext nneg i32 %.06.i to i64
-  %i.t = getelementptr [16 x i8], ptr @qsig_err_tab, i64 %9 ; 2 uses
+  %indvars.iv.i = phi i64 [ 90, %bb.f ], [ %indvars.iv.next.i.3, %bb.k ] ; 5 uses
+  %i.t = getelementptr [16 x i8], ptr @qsig_err_tab, i64 %indvars.iv.i ; 2 uses
   %i.u = load i32, ptr %i.t, align 16
   %i.v = icmp eq i32 %i.u, %i.h
   br i1 %i.v, label %get_err.exit, label %bb.g
