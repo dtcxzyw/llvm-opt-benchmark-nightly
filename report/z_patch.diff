@@ -1,0 +1,450 @@
+diff --git a/llvm/lib/Transforms/Vectorize/VPlanConstruction.cpp b/llvm/lib/Transforms/Vectorize/VPlanConstruction.cpp
+index ad963fe9ff158..83c9e1f8c66e7 100644
+--- a/llvm/lib/Transforms/Vectorize/VPlanConstruction.cpp
++++ b/llvm/lib/Transforms/Vectorize/VPlanConstruction.cpp
+@@ -1507,12 +1507,8 @@ void VPlanTransforms::addMinimumIterationCheck(
+                                     TripCount, Step)) {
+       // Generate the minimum iteration check only if we cannot prove the
+       // check is known to be true, or known to be false.
+-      // Try to expand Step into VPInstructions in CheckBlock; otherwise fall
+-      // back to a VPExpandSCEV recipe in the plan's entry block.
+       VPValue *MinTripCountVPV =
+-          VPSCEVExpander(Builder, *PSE.getSE(), DL).tryToExpand(Step);
+-      if (!MinTripCountVPV)
+-        MinTripCountVPV = VPBuilder(Plan.getEntry()).createExpandSCEV(Step);
++          VPSCEVExpander(Builder, *PSE.getSE(), DL).expand(Step);
+       TripCountCheck = Builder.createICmp(
+           CmpPred, TripCountVPV, MinTripCountVPV, DL, "min.iters.check");
+     } // else step known to be < trip count, use TripCountCheck preset to false.
+diff --git a/llvm/lib/Transforms/Vectorize/VPlanLowering.cpp b/llvm/lib/Transforms/Vectorize/VPlanLowering.cpp
+index 36a1129f5cefe..a99fbbe50da2f 100644
+--- a/llvm/lib/Transforms/Vectorize/VPlanLowering.cpp
++++ b/llvm/lib/Transforms/Vectorize/VPlanLowering.cpp
+@@ -1089,17 +1089,13 @@ void VPlanTransforms::expandSCEVsToVPInstructions(VPlan &Plan,
+                     ->getDebugLoc();
+   VPSCEVExpander Expander(Builder, SE, DL);
+ 
+-  // Expand VPExpandSCEVRecipes to VPInstructions using VPSCEVExpander. During
+-  // the transition, unsupported VPExpandSCEVRecipes are skipped and left for
+-  // late expansion.
++  // Expand VPExpandSCEVRecipes to VPInstructions using VPSCEVExpander.
+   for (VPRecipeBase &R : make_early_inc_range(*Entry)) {
+     auto *ExpSCEV = dyn_cast<VPExpandSCEVRecipe>(&R);
+     if (!ExpSCEV || ExpSCEV->user_empty())
+       continue;
+     Builder.setInsertPoint(ExpSCEV);
+-    VPValue *Expanded = Expander.tryToExpand(ExpSCEV->getSCEV());
+-    if (!Expanded)
+-      continue;
++    VPValue *Expanded = Expander.expand(ExpSCEV->getSCEV());
+     ExpSCEV->replaceAllUsesWith(Expanded);
+     // TripCount should not be used after expansion to VPInstructions. Reset to
+     // poison to avoid dangling references.
+diff --git a/llvm/lib/Transforms/Vectorize/VPlanTransforms.cpp b/llvm/lib/Transforms/Vectorize/VPlanTransforms.cpp
+index 9027846fa54f9..a09d97ce5f0ef 100644
+--- a/llvm/lib/Transforms/Vectorize/VPlanTransforms.cpp
++++ b/llvm/lib/Transforms/Vectorize/VPlanTransforms.cpp
+@@ -1031,10 +1031,8 @@ static VPValue *optimizeLatchExitIVUserViaSCEV(VPlan &Plan, VPValue *Op,
+   DebugLoc DL = ExtractR->getDebugLoc();
+   VPBuilder Builder(ExtractR);
+   VPSCEVExpander Expander(Builder, *PSE.getSE(), DL);
+-  VPValue *StartVPV = Expander.tryToExpand(Start);
+-  VPValue *StepVPV = Expander.tryToExpand(Step);
+-  if (!StartVPV || !StepVPV)
+-    return nullptr;
++  VPValue *StartVPV = Expander.expand(Start);
++  VPValue *StepVPV = Expander.expand(Step);
+ 
+   Type *StartTy = StartVPV->getScalarType();
+   assert(StartTy->isIntOrPtrTy() && "The type must be SCEVable");
+@@ -5817,10 +5815,8 @@ void VPlanTransforms::convertToStridedAccesses(VPlan &Plan,
+       // Create the base pointer of strided access.
+       // TODO: reuse VPDerivedIVRecipe for base pointer computation when it
+       // supports a general VPValue as the start value.
+-      VPValue *StartVPV = VPSCEVExpander(Builder, *PSE.getSE(), R.getDebugLoc())
+-                              .tryToExpand(Start);
+-      if (!StartVPV)
+-        StartVPV = VPBuilder(Plan.getEntry()).createExpandSCEV(Start);
++      VPValue *StartVPV =
++          VPSCEVExpander(Builder, *PSE.getSE(), R.getDebugLoc()).expand(Start);
+       VPValue *StrideInBytes = Plan.getOrAddLiveIn(Step->getValue());
+       Type *IndexTy = Plan.getDataLayout().getIndexType(Ptr->getScalarType());
+       assert(IndexTy == StrideInBytes->getScalarType() &&
+diff --git a/llvm/lib/Transforms/Vectorize/VPlanTransforms.h b/llvm/lib/Transforms/Vectorize/VPlanTransforms.h
+index c3dd00acfe839..a3922a858a3f5 100644
+--- a/llvm/lib/Transforms/Vectorize/VPlanTransforms.h
++++ b/llvm/lib/Transforms/Vectorize/VPlanTransforms.h
+@@ -504,9 +504,8 @@ struct VPlanTransforms {
+   static void materializeAliasMaskCheckBlock(
+       VPlan &Plan, ArrayRef<PointerDiffInfo> DiffChecks, bool HasBranchWeights);
+ 
+-  /// Try to expand VPExpandSCEVRecipes in \p Plan's entry block to
+-  /// VPInstructions. Recipes that cannot be expanded (like casts, min/max) are
+-  /// kept for later IR-level expansion.
++  /// Expand VPExpandSCEVRecipes in \p Plan's entry block to VPInstructions.
++  /// Recipes wrapping a SCEVAddRecExpr are kept for later IR-level expansion.
+   static void expandSCEVsToVPInstructions(VPlan &Plan, ScalarEvolution &SE);
+ 
+   /// Expand remaining VPExpandSCEVRecipes in \p Plan's entry block using
+diff --git a/llvm/lib/Transforms/Vectorize/VPlanUtils.cpp b/llvm/lib/Transforms/Vectorize/VPlanUtils.cpp
+index e6b267493d987..9c98586e9a03d 100644
+--- a/llvm/lib/Transforms/Vectorize/VPlanUtils.cpp
++++ b/llvm/lib/Transforms/Vectorize/VPlanUtils.cpp
+@@ -15,6 +15,7 @@
+ #include "llvm/ADT/SetVector.h"
+ #include "llvm/ADT/TypeSwitch.h"
+ #include "llvm/Analysis/InstSimplifyFolder.h"
++#include "llvm/Analysis/LoopInfo.h"
+ #include "llvm/Analysis/MemoryLocation.h"
+ #include "llvm/Analysis/ScalarEvolutionExpressions.h"
+ #include "llvm/Analysis/ScalarEvolutionPatternMatch.h"
+@@ -853,7 +854,7 @@ VPValue *VPSCEVExpander::tryToReuseIRValue(const SCEV *S) {
+   return nullptr;
+ }
+ 
+-VPValue *VPSCEVExpander::tryToExpand(const SCEV *S) {
++VPValue *VPSCEVExpander::expand(const SCEV *S) {
+   if (VPValue *V = tryToReuseIRValue(S))
+     return V;
+ 
+@@ -869,15 +870,11 @@ VPValue *VPSCEVExpander::tryToExpand(const SCEV *S) {
+     VPIRFlags::WrapFlagsTy WrapFlags(AddE->hasNoUnsignedWrap(),
+                                      AddE->hasNoSignedWrap());
+ 
+-    // Expanded poiner SCEVAddExpr as a ptradd of the pointer base and the
++    // Expand pointer SCEVAddExpr as a ptradd of the pointer base and the
+     // integer offset, matching SCEVExpander.
+     if (S->getType()->isPointerTy()) {
+-      VPValue *Base = tryToExpand(SE.getPointerBase(S));
+-      if (!Base)
+-        return nullptr;
+-      VPValue *Offset = tryToExpand(SE.removePointerBase(S));
+-      if (!Offset)
+-        return nullptr;
++      VPValue *Base = expand(SE.getPointerBase(S));
++      VPValue *Offset = expand(SE.removePointerBase(S));
+       GEPNoWrapFlags GEPFlags = WrapFlags.HasNUW
+                                     ? GEPNoWrapFlags::noUnsignedWrap()
+                                     : GEPNoWrapFlags::none();
+@@ -900,10 +897,7 @@ VPValue *VPSCEVExpander::tryToExpand(const SCEV *S) {
+     for (const SCEV *Op : SCEVOps) {
+       // The first operand starts the result, so it is never subtracted.
+       bool Negate = !Ops.empty() && UseSubtract(Op);
+-      VPValue *OpV = tryToExpand(Negate ? SE.getNegativeSCEV(Op) : Op);
+-      if (!OpV)
+-        return nullptr;
+-      Ops.push_back(OpV);
++      Ops.push_back(expand(Negate ? SE.getNegativeSCEV(Op) : Op));
+     }
+     VPValue *Result = Ops.front();
+     for (auto [Op, OpV] : drop_begin(zip_equal(SCEVOps, Ops))) {
+@@ -927,12 +921,8 @@ VPValue *VPSCEVExpander::tryToExpand(const SCEV *S) {
+     VPIRFlags::WrapFlagsTy WrapFlags(MulE->hasNoUnsignedWrap(),
+                                      MulE->hasNoSignedWrap());
+     SmallVector<VPValue *, 2> Ops;
+-    for (const SCEV *Op : reverse(MulE->operands())) {
+-      VPValue *OpV = tryToExpand(Op);
+-      if (!OpV)
+-        return nullptr;
+-      Ops.push_back(OpV);
+-    }
++    for (const SCEV *Op : reverse(MulE->operands()))
++      Ops.push_back(expand(Op));
+     VPValue *Result = Ops.front();
+     for (VPValue *OpV : drop_begin(Ops)) {
+       Result = Builder.createOverflowingOp(Instruction::Mul, {Result, OpV},
+@@ -942,13 +932,9 @@ VPValue *VPSCEVExpander::tryToExpand(const SCEV *S) {
+   }
+   case scUDivExpr: {
+     auto *UDiv = cast<SCEVUDivExpr>(S);
+-    VPValue *LHS = tryToExpand(UDiv->getLHS());
+-    if (!LHS)
+-      return nullptr;
++    VPValue *LHS = expand(UDiv->getLHS());
+     const SCEV *RHSExpr = UDiv->getRHS();
+-    VPValue *RHS = tryToExpand(RHSExpr);
+-    if (!RHS)
+-      return nullptr;
++    VPValue *RHS = expand(RHSExpr);
+     if (SafeUDivMode) {
+       // Make sure the UDiv's divisor is guaranteed to not be zero/poison, to
+       // avoid UB.
+@@ -971,9 +957,7 @@ VPValue *VPSCEVExpander::tryToExpand(const SCEV *S) {
+   case scSignExtend:
+   case scPtrToAddr: {
+     auto *Cast = cast<SCEVCastExpr>(S);
+-    VPValue *Op = tryToExpand(Cast->getOperand());
+-    if (!Op)
+-      return nullptr;
++    VPValue *Op = expand(Cast->getOperand());
+     Instruction::CastOps Opcode;
+     switch (S->getSCEVType()) {
+     case scTruncate:
+@@ -1045,10 +1029,8 @@ VPValue *VPSCEVExpander::tryToExpand(const SCEV *S) {
+       bool MayShortCircuit =
+           IsSequential && Ops.size() != MinMax->getNumOperands() - 1;
+       SafeUDivMode = MayShortCircuit || PrevSafeMode;
+-      VPValue *OpV = tryToExpand(SCEVOp);
++      VPValue *OpV = expand(SCEVOp);
+       SafeUDivMode = PrevSafeMode;
+-      if (!OpV)
+-        return nullptr;
+       if (MayShortCircuit)
+         OpV = Builder.createScalarFreeze(OpV, DL);
+       Ops.push_back(OpV);
+@@ -1059,9 +1041,19 @@ VPValue *VPSCEVExpander::tryToExpand(const SCEV *S) {
+                                              ResultTy, DL);
+     return Result;
+   }
+-  default:
+-    return nullptr;
++  case scAddRecExpr: {
++    [[maybe_unused]] BasicBlock *PH =
++        cast<VPIRBasicBlock>(Builder.getPlan().getEntry())->getIRBasicBlock();
++    assert(
++        SE.DT.dominates(cast<SCEVAddRecExpr>(S)->getLoop()->getHeader(), PH) &&
++        "can only expand AddRecs for loops outside VPlan's scope");
++    // AddRecs outside VPlan's scope must be expanded via VPExpandSCEV.
++    return vputils::getOrCreateVPValueForSCEVExpr(Builder.getPlan(), S);
++  }
++  case scCouldNotCompute:
++    llvm_unreachable("Attempt to expand a SCEVCouldNotCompute");
+   }
++  llvm_unreachable("Unknown SCEV kind!");
+ }
+ 
+ bool vputils::isDeadRecipe(VPRecipeBase &R) {
+diff --git a/llvm/lib/Transforms/Vectorize/VPlanUtils.h b/llvm/lib/Transforms/Vectorize/VPlanUtils.h
+index 60a9a8013de66..f53fd2cb18a84 100644
+--- a/llvm/lib/Transforms/Vectorize/VPlanUtils.h
++++ b/llvm/lib/Transforms/Vectorize/VPlanUtils.h
+@@ -245,8 +245,8 @@ void pullOutPermutations(VPlan &Plan, Match_t Perm, Builder Build) {
+ } // namespace vputils
+ 
+ /// Lightweight SCEV-to-VPlan expander. Converts SCEV expressions into
+-/// VPInstructions where possible, and returning nullptr for unsupported
+-/// expressions (like adds, casts, min/max).
++/// VPInstructions and live-ins. SCEVAddRecExprs are wrapped in a
++/// VPExpandSCEVRecipe to be expanded to IR later.
+ class VPSCEVExpander {
+   VPBuilder &Builder;
+   ScalarEvolution &SE;
+@@ -265,9 +265,8 @@ class VPSCEVExpander {
+   VPSCEVExpander(VPBuilder &Builder, ScalarEvolution &SE, DebugLoc DL)
+       : Builder(Builder), SE(SE), DL(DL) {}
+ 
+-  /// Try to expand \p S into recipes and live-ins using the builder. Returns
+-  /// nullptr if \p S cannot be expanded yet.
+-  VPValue *tryToExpand(const SCEV *S);
++  /// Expand \p S into recipes and live-ins using the builder.
++  VPValue *expand(const SCEV *S);
+ };
+ //===----------------------------------------------------------------------===//
+ // Utilities for modifying predecessors and successors of VPlan blocks.
+diff --git a/llvm/test/Transforms/LoopVectorize/VPlan/expand-scev.ll b/llvm/test/Transforms/LoopVectorize/VPlan/expand-scev.ll
+index 79c3f709f0342..be441dbbd2820 100644
+--- a/llvm/test/Transforms/LoopVectorize/VPlan/expand-scev.ll
++++ b/llvm/test/Transforms/LoopVectorize/VPlan/expand-scev.ll
+@@ -320,14 +320,13 @@ exit:
+ define void @scev_addrec_expanded(ptr %dst) {
+ ; CHECK-LABEL: VPlan for loop in 'scev_addrec_expanded'
+ ; CHECK:  VPlan 'Final VPlan for VF={4},UF={1}' {
+-; CHECK-NEXT:  Live-in ir<%2> = original trip-count
+ ; CHECK-EMPTY:
+ ; CHECK-NEXT:  ir-bb<outer>:
+ ; CHECK-NEXT:    IR   %outer.iv = phi i64 [ 0, %entry ], [ %outer.iv.next, %outer.latch ]
+ ; CHECK-NEXT:    IR   %0 = add i64 %outer.iv, 4
+-; CHECK-NEXT:    IR   %1 = udiv i64 %0, 3
+-; CHECK-NEXT:    IR   %2 = add nuw nsw i64 %1, 1
+-; CHECK-NEXT:    EMIT vp<%min.iters.check> = icmp ult ir<%2>, ir<4>
++; CHECK-NEXT:    EMIT vp<[[VP2:%[0-9]+]]> = udiv ir<%0>, ir<3>
++; CHECK-NEXT:    EMIT vp<[[VP3:%[0-9]+]]> = add nuw nsw vp<[[VP2]]>, ir<1>
++; CHECK-NEXT:    EMIT vp<%min.iters.check> = icmp ult vp<[[VP3]]>, ir<4>
+ ; CHECK-NEXT:    EMIT branch-on-cond vp<%min.iters.check>
+ ; CHECK-NEXT:  Successor(s): ir-bb<scalar.ph>, vector.ph
+ ;
+@@ -359,7 +358,6 @@ exit:
+ define void @addrec_outer_iv_narrow(ptr %dst) {
+ ; CHECK-LABEL: VPlan for loop in 'addrec_outer_iv_narrow'
+ ; CHECK:  VPlan 'Final VPlan for VF={4},UF={1}' {
+-; CHECK-NEXT:  Live-in ir<%0> = original trip-count
+ ; CHECK-EMPTY:
+ ; CHECK-NEXT:  ir-bb<outer>:
+ ; CHECK-NEXT:    IR   %indvar = phi i64 [ %indvar.next, %outer.latch ], [ 0, %entry ]
+@@ -399,15 +397,14 @@ exit:
+ define void @addrec_non_unit_outer_stride(ptr %dst) {
+ ; CHECK-LABEL: VPlan for loop in 'addrec_non_unit_outer_stride'
+ ; CHECK:  VPlan 'Final VPlan for VF={4},UF={1}' {
+-; CHECK-NEXT:  Live-in ir<%2> = original trip-count
+ ; CHECK-EMPTY:
+ ; CHECK-NEXT:  ir-bb<outer>:
+ ; CHECK-NEXT:    IR   %outer.iv = phi i64 [ 0, %entry ], [ %outer.iv.next, %outer.latch ]
+ ; CHECK-NEXT:    IR   %0 = add i64 %outer.iv, 6
+-; CHECK-NEXT:    IR   %1 = udiv i64 %0, 3
+-; CHECK-NEXT:    IR   %2 = add nuw nsw i64 %1, 1
+ ; CHECK-NEXT:    IR   %outer.iv.next = add nuw i64 %outer.iv, 2
+-; CHECK-NEXT:    EMIT vp<%min.iters.check> = icmp ult ir<%2>, ir<4>
++; CHECK-NEXT:    EMIT vp<[[VP2:%[0-9]+]]> = udiv ir<%0>, ir<3>
++; CHECK-NEXT:    EMIT vp<[[VP3:%[0-9]+]]> = add nuw nsw vp<[[VP2]]>, ir<1>
++; CHECK-NEXT:    EMIT vp<%min.iters.check> = icmp ult vp<[[VP3]]>, ir<4>
+ ; CHECK-NEXT:    EMIT branch-on-cond vp<%min.iters.check>
+ ; CHECK-NEXT:  Successor(s): ir-bb<scalar.ph>, vector.ph
+ ;
+@@ -440,11 +437,12 @@ exit:
+ define void @addrec_over_grandparent_loop(ptr %dst) {
+ ; CHECK-LABEL: VPlan for loop in 'addrec_over_grandparent_loop'
+ ; CHECK:  VPlan 'Final VPlan for VF={4},UF={1}' {
+-; CHECK-NEXT:  Live-in ir<%2> = original trip-count
+ ; CHECK-EMPTY:
+ ; CHECK-NEXT:  ir-bb<middle>:
+ ; CHECK-NEXT:    IR   %mid = phi i64 [ 0, %outermost ], [ %mid.next, %mid.latch ]
+-; CHECK-NEXT:    EMIT vp<%min.iters.check> = icmp ult ir<%2>, ir<4>
++; CHECK-NEXT:    EMIT vp<[[VP2:%[0-9]+]]> = udiv ir<%0>, ir<3>
++; CHECK-NEXT:    EMIT vp<[[VP3:%[0-9]+]]> = add nuw nsw vp<[[VP2]]>, ir<1>
++; CHECK-NEXT:    EMIT vp<%min.iters.check> = icmp ult vp<[[VP3]]>, ir<4>
+ ; CHECK-NEXT:    EMIT branch-on-cond vp<%min.iters.check>
+ ; CHECK-NEXT:  Successor(s): ir-bb<scalar.ph>, vector.ph
+ ;
+@@ -485,10 +483,11 @@ exit:
+ define void @addrec_phi_not_in_inner_preheader(ptr %dst) {
+ ; CHECK-LABEL: VPlan for loop in 'addrec_phi_not_in_inner_preheader'
+ ; CHECK:  VPlan 'Final VPlan for VF={4},UF={1}' {
+-; CHECK-NEXT:  Live-in ir<%2> = original trip-count
+ ; CHECK-EMPTY:
+ ; CHECK-NEXT:  ir-bb<inner.ph>:
+-; CHECK-NEXT:    EMIT vp<%min.iters.check> = icmp ult ir<%2>, ir<4>
++; CHECK-NEXT:    EMIT vp<[[VP2:%[0-9]+]]> = udiv ir<%0>, ir<3>
++; CHECK-NEXT:    EMIT vp<[[VP3:%[0-9]+]]> = add nuw nsw vp<[[VP2]]>, ir<1>
++; CHECK-NEXT:    EMIT vp<%min.iters.check> = icmp ult vp<[[VP3]]>, ir<4>
+ ; CHECK-NEXT:    EMIT branch-on-cond vp<%min.iters.check>
+ ; CHECK-NEXT:  Successor(s): ir-bb<scalar.ph>, vector.ph
+ ;
+@@ -524,17 +523,16 @@ exit:
+ define void @addrec_nuw_flags(ptr %dst) {
+ ; CHECK-LABEL: VPlan for loop in 'addrec_nuw_flags'
+ ; CHECK:  VPlan 'Final VPlan for VF={4},UF={1}' {
+-; CHECK-NEXT:  Live-in ir<%3> = original trip-count
+ ; CHECK-EMPTY:
+ ; CHECK-NEXT:  ir-bb<outer>:
+ ; CHECK-NEXT:    IR   %outer.iv = phi i64 [ 0, %entry ], [ %outer.iv.next, %outer.latch ]
+ ; CHECK-NEXT:    IR   %0 = shl nuw nsw i64 %outer.iv, 2
+ ; CHECK-NEXT:    IR   %1 = add i64 %0, 4
+-; CHECK-NEXT:    IR   %2 = udiv i64 %1, 3
+-; CHECK-NEXT:    IR   %3 = add nuw nsw i64 %2, 1
+ ; CHECK-NEXT:    IR   %m = mul nuw i64 %outer.iv, 4
+ ; CHECK-NEXT:    IR   %bound = add nuw i64 %m, 5
+-; CHECK-NEXT:    EMIT vp<%min.iters.check> = icmp ult ir<%3>, ir<4>
++; CHECK-NEXT:    EMIT vp<[[VP2:%[0-9]+]]> = udiv ir<%1>, ir<3>
++; CHECK-NEXT:    EMIT vp<[[VP3:%[0-9]+]]> = add nuw nsw vp<[[VP2]]>, ir<1>
++; CHECK-NEXT:    EMIT vp<%min.iters.check> = icmp ult vp<[[VP3]]>, ir<4>
+ ; CHECK-NEXT:    EMIT branch-on-cond vp<%min.iters.check>
+ ; CHECK-NEXT:  Successor(s): ir-bb<scalar.ph>, vector.ph
+ ;
+@@ -569,17 +567,16 @@ exit:
+ define void @addrec_non_affine_outer_recurrence_no_canonical_iv(ptr %dst) {
+ ; CHECK-LABEL: VPlan for loop in 'addrec_non_affine_outer_recurrence_no_canonical_iv'
+ ; CHECK:  VPlan 'Final VPlan for VF={4},UF={1}' {
+-; CHECK-NEXT:  Live-in ir<%2> = original trip-count
+ ; CHECK-EMPTY:
+ ; CHECK-NEXT:  ir-bb<outer>:
+ ; CHECK-NEXT:    IR   %induction.iv = phi i64 [ %induction.iv.next, %outer.latch ], [ 9, %entry ]
+ ; CHECK-NEXT:    IR   %outer.iv = phi i64 [ 5, %entry ], [ %outer.iv.next, %outer.latch ]
+ ; CHECK-NEXT:    IR   %ar = phi i64 [ 4, %entry ], [ %ar.next, %outer.latch ]
+-; CHECK-NEXT:    IR   %umax = call i64 @llvm.umax.i64(i64 %induction.iv, i64 3)
+-; CHECK-NEXT:    IR   %0 = add i64 %umax, -1
+-; CHECK-NEXT:    IR   %1 = udiv i64 %0, 3
+-; CHECK-NEXT:    IR   %2 = add nuw nsw i64 %1, 1
+-; CHECK-NEXT:    EMIT vp<%min.iters.check> = icmp ult ir<%2>, ir<4>
++; CHECK-NEXT:    EMIT-SCALAR vp<[[VP2:%[0-9]+]]> = call i64 @llvm.umax(ir<%induction.iv>, ir<3>)
++; CHECK-NEXT:    EMIT vp<[[VP3:%[0-9]+]]> = add vp<[[VP2]]>, ir<-1>
++; CHECK-NEXT:    EMIT vp<[[VP4:%[0-9]+]]> = udiv vp<[[VP3]]>, ir<3>
++; CHECK-NEXT:    EMIT vp<[[VP5:%[0-9]+]]> = add nuw nsw vp<[[VP4]]>, ir<1>
++; CHECK-NEXT:    EMIT vp<%min.iters.check> = icmp ult vp<[[VP5]]>, ir<4>
+ ; CHECK-NEXT:    EMIT branch-on-cond vp<%min.iters.check>
+ ; CHECK-NEXT:  Successor(s): ir-bb<scalar.ph>, vector.ph
+ ;
+@@ -615,17 +612,16 @@ exit:
+ define void @addrec_non_affine_outer_recurrence_with_canonical_iv(ptr %dst) {
+ ; CHECK-LABEL: VPlan for loop in 'addrec_non_affine_outer_recurrence_with_canonical_iv'
+ ; CHECK:  VPlan 'Final VPlan for VF={4},UF={1}' {
+-; CHECK-NEXT:  Live-in ir<%2> = original trip-count
+ ; CHECK-EMPTY:
+ ; CHECK-NEXT:  ir-bb<outer>:
+ ; CHECK-NEXT:    IR   %induction.iv = phi i64 [ %induction.iv.next, %outer.latch ], [ 9, %entry ]
+ ; CHECK-NEXT:    IR   %outer.iv = phi i64 [ 0, %entry ], [ %outer.iv.next, %outer.latch ]
+ ; CHECK-NEXT:    IR   %ar = phi i64 [ 4, %entry ], [ %ar.next, %outer.latch ]
+-; CHECK-NEXT:    IR   %umax = call i64 @llvm.umax.i64(i64 %induction.iv, i64 3)
+-; CHECK-NEXT:    IR   %0 = add i64 %umax, -1
+-; CHECK-NEXT:    IR   %1 = udiv i64 %0, 3
+-; CHECK-NEXT:    IR   %2 = add nuw nsw i64 %1, 1
+-; CHECK-NEXT:    EMIT vp<%min.iters.check> = icmp ult ir<%2>, ir<4>
++; CHECK-NEXT:    EMIT-SCALAR vp<[[VP2:%[0-9]+]]> = call i64 @llvm.umax(ir<%induction.iv>, ir<3>)
++; CHECK-NEXT:    EMIT vp<[[VP3:%[0-9]+]]> = add vp<[[VP2]]>, ir<-1>
++; CHECK-NEXT:    EMIT vp<[[VP4:%[0-9]+]]> = udiv vp<[[VP3]]>, ir<3>
++; CHECK-NEXT:    EMIT vp<[[VP5:%[0-9]+]]> = add nuw nsw vp<[[VP4]]>, ir<1>
++; CHECK-NEXT:    EMIT vp<%min.iters.check> = icmp ult vp<[[VP5]]>, ir<4>
+ ; CHECK-NEXT:    EMIT branch-on-cond vp<%min.iters.check>
+ ; CHECK-NEXT:  Successor(s): ir-bb<scalar.ph>, vector.ph
+ ;
+diff --git a/llvm/test/Transforms/LoopVectorize/nested-loops-scev-expansion.ll b/llvm/test/Transforms/LoopVectorize/nested-loops-scev-expansion.ll
+index 9014cc606ad78..ca4f4842e65e1 100644
+--- a/llvm/test/Transforms/LoopVectorize/nested-loops-scev-expansion.ll
++++ b/llvm/test/Transforms/LoopVectorize/nested-loops-scev-expansion.ll
+@@ -410,9 +410,9 @@ define void @test_expand_new_canonical_iv_non_zero_start(ptr %dst) {
+ ; CHECK-NEXT:    [[INDVAR:%.*]] = phi i64 [ [[INDVAR_NEXT:%.*]], %[[OUTER_LATCH:.*]] ], [ 0, %[[ENTRY]] ]
+ ; CHECK-NEXT:    [[O:%.*]] = phi i64 [ 10, %[[ENTRY]] ], [ [[O_NEXT:%.*]], %[[OUTER_LATCH]] ]
+ ; CHECK-NEXT:    [[TMP0:%.*]] = add i64 [[INDVAR]], 17
++; CHECK-NEXT:    [[BOUND:%.*]] = add i64 [[O]], 8
+ ; CHECK-NEXT:    [[TMP1:%.*]] = udiv i64 [[TMP0]], 3
+ ; CHECK-NEXT:    [[TMP2:%.*]] = add nuw nsw i64 [[TMP1]], 1
+-; CHECK-NEXT:    [[BOUND:%.*]] = add i64 [[O]], 8
+ ; CHECK-NEXT:    br label %[[VECTOR_PH:.*]]
+ ; CHECK:       [[VECTOR_PH]]:
+ ; CHECK-NEXT:    [[N_MOD_VF:%.*]] = and i64 [[TMP2]], 3
+diff --git a/llvm/test/Transforms/LoopVectorize/pr55100-expand-scev-predicate-used.ll b/llvm/test/Transforms/LoopVectorize/pr55100-expand-scev-predicate-used.ll
+index d84ba89d7071c..6d2c7db9043c7 100644
+--- a/llvm/test/Transforms/LoopVectorize/pr55100-expand-scev-predicate-used.ll
++++ b/llvm/test/Transforms/LoopVectorize/pr55100-expand-scev-predicate-used.ll
+@@ -10,11 +10,11 @@ define void @test_pr55100(i32 %N) {
+ ; CHECK-NEXT:    [[IV_1:%.*]] = phi i32 [ 0, [[ENTRY:%.*]] ], [ [[IV_1_NEXT:%.*]], [[LOOP_1_LATCH:%.*]] ]
+ ; CHECK-NEXT:    [[TMP1:%.*]] = mul nuw nsw i32 [[IV_1]], -1
+ ; CHECK-NEXT:    [[TMP2:%.*]] = add i32 [[TMP0]], [[TMP1]]
+-; CHECK-NEXT:    [[UMIN:%.*]] = call i32 @llvm.umin.i32(i32 [[TMP2]], i32 18)
+-; CHECK-NEXT:    [[TMP3:%.*]] = add nuw nsw i32 [[UMIN]], 1
+ ; CHECK-NEXT:    [[C_2:%.*]] = icmp ugt i32 [[IV_1]], 10
+ ; CHECK-NEXT:    br i1 [[C_2]], label [[LOOP_2_HEADER_PREHEADER:%.*]], label [[EXIT_LOOPEXIT1:%.*]]
+ ; CHECK:       loop.2.header.preheader:
++; CHECK-NEXT:    [[TMP7:%.*]] = call i32 @llvm.umin.i32(i32 [[TMP2]], i32 18)
++; CHECK-NEXT:    [[TMP3:%.*]] = add nuw nsw i32 [[TMP7]], 1
+ ; CHECK-NEXT:    [[MIN_ITERS_CHECK:%.*]] = icmp ule i32 [[TMP3]], 2
+ ; CHECK-NEXT:    br i1 [[MIN_ITERS_CHECK]], label [[SCALAR_PH:%.*]], label [[VECTOR_PH:%.*]]
+ ; CHECK:       vector.ph:
+@@ -27,8 +27,8 @@ define void @test_pr55100(i32 %N) {
+ ; CHECK:       vector.body:
+ ; CHECK-NEXT:    [[INDEX:%.*]] = phi i32 [ 0, [[VECTOR_PH]] ], [ [[INDEX_NEXT:%.*]], [[VECTOR_BODY]] ]
+ ; CHECK-NEXT:    [[INDEX_NEXT]] = add nuw i32 [[INDEX]], 2
+-; CHECK-NEXT:    [[TMP7:%.*]] = icmp eq i32 [[INDEX_NEXT]], [[N_VEC]]
+-; CHECK-NEXT:    br i1 [[TMP7]], label [[MIDDLE_BLOCK:%.*]], label [[VECTOR_BODY]], !llvm.loop [[LOOP0:![0-9]+]]
++; CHECK-NEXT:    [[TMP9:%.*]] = icmp eq i32 [[INDEX_NEXT]], [[N_VEC]]
++; CHECK-NEXT:    br i1 [[TMP9]], label [[MIDDLE_BLOCK:%.*]], label [[VECTOR_BODY]], !llvm.loop [[LOOP0:![0-9]+]]
+ ; CHECK:       middle.block:
+ ; CHECK-NEXT:    br label [[SCALAR_PH]]
+ ; CHECK:       scalar.ph:
+diff --git a/llvm/test/Transforms/LoopVectorize/reuse-lcssa-phi-scev-expansion.ll b/llvm/test/Transforms/LoopVectorize/reuse-lcssa-phi-scev-expansion.ll
+index 5d96a5c509130..21c121232dc7e 100644
+--- a/llvm/test/Transforms/LoopVectorize/reuse-lcssa-phi-scev-expansion.ll
++++ b/llvm/test/Transforms/LoopVectorize/reuse-lcssa-phi-scev-expansion.ll
+@@ -206,11 +206,11 @@ define void @expand_diff_scev_unknown(ptr %dst, i1 %invar.c, i32 %step) mustprog
+ ; CHECK-NEXT:    br i1 [[INVAR_C]], label %[[LOOP_2_PREHEADER:.*]], label %[[LOOP_1]]
+ ; CHECK:       [[LOOP_2_PREHEADER]]:
+ ; CHECK-NEXT:    [[IV_1_LCSSA:%.*]] = phi i32 [ [[IV_1]], %[[LOOP_1]] ]
++; CHECK-NEXT:    [[TMP2:%.*]] = mul i32 [[INDVAR]], -1
++; CHECK-NEXT:    [[TMP3:%.*]] = add i32 [[TMP2]], -1
+ ; CHECK-NEXT:    [[TMP0:%.*]] = sub i32 2, [[STEP]]
+ ; CHECK-NEXT:    [[TMP1:%.*]] = add i32 [[IV_1_LCSSA]], [[TMP0]]
+ ; CHECK-NEXT:    [[SMAX:%.*]] = call i32 @llvm.smax.i32(i32 [[TMP1]], i32 0)
+-; CHECK-NEXT:    [[TMP2:%.*]] = mul i32 [[INDVAR]], -1
+-; CHECK-NEXT:    [[TMP3:%.*]] = add i32 [[TMP2]], -1
+ ; CHECK-NEXT:    [[TMP4:%.*]] = add i32 [[SMAX]], [[TMP3]]
+ ; CHECK-NEXT:    [[MIN_ITERS_CHECK:%.*]] = icmp ult i32 [[TMP4]], 2
+ ; CHECK-NEXT:    br i1 [[MIN_ITERS_CHECK]], label %[[SCALAR_PH:.*]], label %[[VECTOR_SCEVCHECK:.*]]
