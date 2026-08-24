@@ -202,7 +202,7 @@ bb.aa:                                            ; preds = %bb.aa, %.epil.prehe
 
 ._crit_edge1446:                                  ; preds = %._crit_edge1446.loopexit.unr-lcssa, %bb.aa, %bb.y
   %.lcssa14561459 = phi double [ 0.000000e+00, %bb.y ], [ %i.ey, %._crit_edge1446.loopexit.unr-lcssa ], [ %i.fh, %bb.aa ] ; 2 uses
-  %.5799.lcssa = phi i32 [ 0, %bb.y ], [ %indvars.iv1842, %bb.aa ], [ %indvars.iv1842, %._crit_edge1446.loopexit.unr-lcssa ] ; 4 uses
+  %.5799.lcssa = phi i32 [ 0, %bb.y ], [ %indvars.iv1842, %bb.aa ], [ %indvars.iv1842, %._crit_edge1446.loopexit.unr-lcssa ] ; 3 uses
   %i.fl = sext i32 %.5799.lcssa to i64
   %i.fm = getelementptr [8 x i8], ptr %4, i64 %i.ds
   %i.fn = getelementptr [8 x i8], ptr %i.fm, i64 %i.fl
@@ -217,10 +217,10 @@ bb.aa:                                            ; preds = %bb.aa, %.epil.prehe
   br i1 %i.fu, label %._crit_edge1468, label %bb.ab
 
 bb.ab:                                            ; preds = %._crit_edge1446
-  %6 = getelementptr [8 x i8], ptr %4, i64 %i.ds
-  %i.fv = sext i32 %.5799.lcssa to i64
-  %i.fw = getelementptr [8 x i8], ptr %6, i64 %i.fv
-  %7 = getelementptr i8, ptr %i.fw, i64 8
+  %6 = add nuw nsw i32 %.5799.lcssa, 1
+  %i.fv = sext i32 %6 to i64                      ; 3 uses
+  %i.fw = getelementptr [8 x i8], ptr %4, i64 %i.ds
+  %7 = getelementptr [8 x i8], ptr %i.fw, i64 %i.fv
   %i.fx = load double, ptr %7, align 8, !tbaa !9  ; 3 uses
   %i.fy = fcmp oge double %i.fx, 0.000000e+00
   %i.fz = fneg double %i.fx
@@ -233,15 +233,13 @@ bb.ab:                                            ; preds = %._crit_edge1446
   br i1 %.not970.not1450, label %.lr.ph1454.preheader, label %._crit_edge1455
 
 .lr.ph1454.preheader:                             ; preds = %bb.ab
-  %8 = zext nneg i32 %.5799.lcssa to i64
-  %9 = add nuw nsw i64 %8, 1                      ; 2 uses
   %invariant.gep2204 = getelementptr [8 x i8], ptr %4, i64 %i.ds ; 5 uses
   %xtraiter2466 = and i64 %i.dq, 3                ; 2 uses
   %lcmp.mod2467.not = icmp eq i64 %xtraiter2466, 0
   br i1 %lcmp.mod2467.not, label %.lr.ph1454.prol.loopexit, label %.lr.ph1454.prol
 
 .lr.ph1454.prol:                                  ; preds = %.lr.ph1454.preheader, %.lr.ph1454.prol
-  %indvars.iv1850.prol = phi i64 [ %indvars.iv.next1851.prol, %.lr.ph1454.prol ], [ %9, %.lr.ph1454.preheader ]
+  %indvars.iv1850.prol = phi i64 [ %indvars.iv.next1851.prol, %.lr.ph1454.prol ], [ %i.fv, %.lr.ph1454.preheader ]
   %indvars.iv1848.prol = phi i64 [ %indvars.iv.next1849.prol, %.lr.ph1454.prol ], [ %indvars.iv1846, %.lr.ph1454.preheader ]
   %i.ge = phi double [ %i.gj, %.lr.ph1454.prol ], [ 0.000000e+00, %.lr.ph1454.preheader ]
   %prol.iter2468 = phi i64 [ %prol.iter2468.next, %.lr.ph1454.prol ], [ 0, %.lr.ph1454.preheader ]
@@ -263,7 +261,7 @@ bb.ab:                                            ; preds = %._crit_edge1446
 
 .lr.ph1454.prol.loopexit:                         ; preds = %.lr.ph1454.prol, %.lr.ph1454.preheader
   %.lcssa2289.unr = phi double [ poison, %.lr.ph1454.preheader ], [ %i.gj, %.lr.ph1454.prol ]
-  %indvars.iv1850.unr = phi i64 [ %9, %.lr.ph1454.preheader ], [ %indvars.iv.next1851.prol, %.lr.ph1454.prol ]
+  %indvars.iv1850.unr = phi i64 [ %i.fv, %.lr.ph1454.preheader ], [ %indvars.iv.next1851.prol, %.lr.ph1454.prol ]
   %indvars.iv1848.unr = phi i64 [ %indvars.iv1846, %.lr.ph1454.preheader ], [ %indvars.iv.next1849.prol, %.lr.ph1454.prol ]
   %.unr2469 = phi double [ 0.000000e+00, %.lr.ph1454.preheader ], [ %i.gj, %.lr.ph1454.prol ]
   %i.gn = sub nsw i64 %indvars.iv1846, %wide.trip.count1855
