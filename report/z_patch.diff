@@ -1,0 +1,389 @@
+diff --git a/llvm/include/llvm/Analysis/ScalarEvolution.h b/llvm/include/llvm/Analysis/ScalarEvolution.h
+index d17c21ea3401e..36d85411cc797 100644
+--- a/llvm/include/llvm/Analysis/ScalarEvolution.h
++++ b/llvm/include/llvm/Analysis/ScalarEvolution.h
+@@ -2374,6 +2374,15 @@ class ScalarEvolution {
+   bool isKnownPredicateViaNoOverflow(CmpPredicate Pred, SCEVUse LHS,
+                                      SCEVUse RHS);
+ 
++  /// Try to prove the condition described by "LHS Pred RHS" where LHS is the
++  /// induction variable of some loop, using that loop's own maximum
++  /// backedge-taken count to bound the values LHS can take. Only relational
++  /// predicates are handled. This is aimed at exit counts of loops whose
++  /// counting IV starts at the IV of another loop, where no condition
++  /// dominating the loop bounds that start value.
++  bool isKnownPredicateViaOuterIVRange(CmpPredicate Pred, const SCEV *LHS,
++                                       const SCEV *RHS);
++
+   /// Try to split Pred LHS RHS into logical conjunctions (and's) and try to
+   /// prove them individually.
+   bool isKnownPredicateViaSplitting(CmpPredicate Pred, SCEVUse LHS,
+diff --git a/llvm/lib/Analysis/ScalarEvolution.cpp b/llvm/lib/Analysis/ScalarEvolution.cpp
+index 2be8495c164fc..6975fe4f821ac 100644
+--- a/llvm/lib/Analysis/ScalarEvolution.cpp
++++ b/llvm/lib/Analysis/ScalarEvolution.cpp
+@@ -11739,6 +11739,85 @@ bool ScalarEvolution::isKnownPredicateViaConstantRanges(CmpPredicate Pred,
+   return CheckRange(CmpInst::isSigned(Pred));
+ }
+ 
++bool ScalarEvolution::isKnownPredicateViaOuterIVRange(CmpPredicate Pred,
++                                                      const SCEV *LHS,
++                                                      const SCEV *RHS) {
++  if (!ICmpInst::isRelational(Pred) || LHS->getType()->isPointerTy())
++    return false;
++
++  // LHS must be the IV of a loop, whose maximum backedge-taken count then
++  // bounds the values it can take.
++  const auto *AR = dyn_cast<SCEVAddRecExpr>(LHS);
++  if (!AR || !AR->isAffine())
++    return false;
++
++  // Establish that AR is monotonic, so that its last iteration produces the
++  // extreme value.
++  const SCEV *Step = AR->getStepRecurrence(*this);
++  if (!AR->hasNoSelfWrap())
++    return false;
++  bool Decreasing = isKnownNegative(Step);
++  if (!Decreasing && !isKnownPositive(Step))
++    return false;
++
++  // Only the side the last iteration lands on is bounded: a decreasing AddRec
++  // gets a lower bound, an increasing one an upper bound.
++  bool WantLowerBound = ICmpInst::isGE(Pred) || ICmpInst::isGT(Pred);
++  if (WantLowerBound != Decreasing)
++    return false;
++
++  const SCEV *MaxBTC = getSymbolicMaxBackedgeTakenCount(AR->getLoop());
++  if (isa<SCEVCouldNotCompute>(MaxBTC) ||
++      getTypeSizeInBits(MaxBTC->getType()) > getTypeSizeInBits(AR->getType()))
++    return false;
++  MaxBTC = getNoopOrZeroExtend(MaxBTC, AR->getType());
++
++  // MaxBTC only bounds the backedge-taken count from above, and the no-wrap
++  // flags may have been inferred from an exit whose count is not known, so AR
++  // is not guaranteed to be wrap-free that far out. Check separately that it
++  // cannot wrap within MaxBTC iterations. Use range queries rather than
++  // isKnownPredicate here: we are called from backedge-taken count computation
++  // and must not recurse back into it.
++  const SCEV *StepAbs = getUMinExpr(Step, getNegativeSCEV(Step));
++  const SCEV *MaxItersWithoutWrap =
++      getUDivExpr(getMinusOne(AR->getType()), StepAbs);
++  if (getUnsignedRangeMax(MaxBTC).ugt(getUnsignedRangeMin(MaxItersWithoutWrap)))
++    return false;
++
++  const SCEV *Extreme = AR->evaluateAtIteration(MaxBTC, *this);
++
++  // MaxBTC bounds the backedge-taken count from above only, so Extreme may be
++  // a value AR never actually takes, in which case it is no bound at all. Rule
++  // that out by requiring Extreme to be on the side of the start value that the
++  // step direction puts it on, which also establishes that [Extreme, Start]
++  // does not wrap. Without this an AddRec {0,+,-1} whose loop reports a maximum
++  // backedge-taken count of 9 would get the "bound" 0 - 9, above its start.
++  // Both ends need the loop guards applied: the start carries the sharper range
++  // for a decreasing AddRec, Extreme does for an increasing one.
++  const SCEV *Start = applyLoopGuards(AR->getStart(), AR->getLoop());
++  const SCEV *GuardedExtreme = applyLoopGuards(Extreme, AR->getLoop());
++  if (!isKnownPredicateViaConstantRanges(Decreasing ? ICmpInst::ICMP_UGE
++                                                    : ICmpInst::ICMP_ULE,
++                                        Start, GuardedExtreme))
++    return false;
++
++  // Monotonicity has to hold in the predicate's own domain.
++  if (ICmpInst::isSigned(Pred)) {
++    if (!AR->hasNoSignedWrap())
++      return false;
++  } else if (!AR->hasNoUnsignedWrap()) {
++    // A signed-monotonic AddRec is monotonic unsigned too as long as it stays
++    // non-negative, which follows from the lower end of its range being
++    // non-negative. Note that the upper end then needs no check: it is one of
++    // the values the AddRec takes, so monotonicity puts it above the lower end.
++    const SCEV *Low = Decreasing ? GuardedExtreme : Start;
++    if (!AR->hasNoSignedWrap() || !getSignedRangeMin(Low).isNonNegative())
++      return false;
++  }
++
++  return isKnownPredicate(Pred, Extreme, RHS);
++}
++
+ bool ScalarEvolution::isKnownPredicateViaNoOverflow(CmpPredicate Pred,
+                                                     SCEVUse LHS, SCEVUse RHS) {
+   // Match X to (A + C1)<ExpectedFlags> and Y to (A + C2)<ExpectedFlags>, where
+@@ -13652,6 +13731,12 @@ ScalarEvolution::howManyLessThans(const SCEV *LHS, const SCEV *RHS,
+             isKnownPredicate(CondGE, GuardedRHS, GuardedStart))
+           return true;
+ 
++        // OrigStart may be the IV of another loop, in which case that loop's
++        // own trip count bounds it from above.
++        auto CondLE = IsSigned ? ICmpInst::ICMP_SLE : ICmpInst::ICMP_ULE;
++        if (isKnownPredicateViaOuterIVRange(CondLE, OrigStart, OrigRHS))
++          return true;
++
+         // (RHS > Start - 1) implies RHS >= Start.
+         // * "RHS >= Start" is trivially equivalent to "RHS > Start - 1" if
+         //   "Start - 1" doesn't overflow.
+@@ -13843,8 +13928,10 @@ ScalarEvolution::ExitLimit ScalarEvolution::howManyGreaterThans(
+   if (!isLoopEntryGuardedByCond(L, Cond, getAddExpr(Start, Stride), RHS)) {
+     // If we know that Start >= RHS in the context of loop, then we know that
+     // min(RHS, Start) = RHS at this point.
+-    if (isLoopEntryGuardedByCond(
+-            L, IsSigned ? ICmpInst::ICMP_SGE : ICmpInst::ICMP_UGE, Start, RHS))
++    ICmpInst::Predicate GEPred =
++        IsSigned ? ICmpInst::ICMP_SGE : ICmpInst::ICMP_UGE;
++    if (isLoopEntryGuardedByCond(L, GEPred, Start, RHS) ||
++        isKnownPredicateViaOuterIVRange(GEPred, Start, RHS))
+       End = RHS;
+     else
+       End = IsSigned ? getSMinExpr(RHS, Start) : getUMinExpr(RHS, Start);
+diff --git a/llvm/test/Analysis/ScalarEvolution/exit-count-start-is-outer-decreasing-iv.ll b/llvm/test/Analysis/ScalarEvolution/exit-count-start-is-outer-decreasing-iv.ll
+new file mode 100644
+index 0000000000000..ad7f4b3366487
+--- /dev/null
++++ b/llvm/test/Analysis/ScalarEvolution/exit-count-start-is-outer-decreasing-iv.ll
+@@ -0,0 +1,247 @@
++; NOTE: Assertions have been autogenerated by utils/update_analyze_test_checks.py
++; RUN: opt < %s -disable-output "-passes=print<scalar-evolution>" -scalar-evolution-classify-expressions=0 2>&1 | FileCheck %s
++
++; Tests for computing the exit count of a loop whose counting IV starts at the
++; value of a decreasing IV of another loop. That start value is bounded from
++; below by the other loop's own maximum trip count, so the exit count needs no
++; umin/smin clamp guarding against a zero-trip entry.
++
++; %loop2 starts at %loop1's IV, which is in [1, %n] because %loop1 steps by -1
++; at most %n - 1 times. So %loop2 is entered with a value above the bound 1 and
++; its backedge-taken count is exact.
++define void @exit_count_start_is_outer_decreasing_iv(ptr %p, i32 %n) {
++; CHECK-LABEL: 'exit_count_start_is_outer_decreasing_iv'
++; CHECK-NEXT:  Determining loop execution counts for: @exit_count_start_is_outer_decreasing_iv
++; CHECK-NEXT:  Loop %loop2: backedge-taken count is {(-1 + %n),+,-1}<nw><%loop1>
++; CHECK-NEXT:  Loop %loop2: constant max backedge-taken count is i32 -2
++; CHECK-NEXT:  Loop %loop2: symbolic max backedge-taken count is {(-1 + %n),+,-1}<nw><%loop1>
++; CHECK-NEXT:  Loop %loop2: Trip multiple is 1
++; CHECK-NEXT:  Loop %loop1: <multiple exits> Unpredictable backedge-taken count.
++; CHECK-NEXT:    exit count for loop1: ***COULDNOTCOMPUTE***
++; CHECK-NEXT:    exit count for loop1.latch: (-1 + %n)
++; CHECK-NEXT:  Loop %loop1: constant max backedge-taken count is i32 -2
++; CHECK-NEXT:  Loop %loop1: symbolic max backedge-taken count is (-1 + %n)
++; CHECK-NEXT:    symbolic max exit count for loop1: ***COULDNOTCOMPUTE***
++; CHECK-NEXT:    symbolic max exit count for loop1.latch: (-1 + %n)
++;
++entry:
++  %n.nz = icmp eq i32 %n, 0
++  br i1 %n.nz, label %exit, label %loop1
++
++loop1:
++  %i = phi i32 [ %n, %entry ], [ %i.dec, %loop1.latch ]
++  %c = load i8, ptr %p, align 1
++  %c.z = icmp eq i8 %c, 0
++  br i1 %c.z, label %loop1.latch, label %loop2
++
++loop1.latch:
++  %i.dec = add nsw i32 %i, -1
++  %done = icmp eq i32 %i.dec, 0
++  br i1 %done, label %exit, label %loop1
++
++loop2:
++  %j = phi i32 [ %i, %loop1 ], [ %j.dec, %loop2 ]
++  %j.dec = add nsw i32 %j, -1
++  %cont = icmp ugt i32 %j, 1
++  br i1 %cont, label %loop2, label %exit
++
++exit:
++  ret void
++}
++
++; Negative test: %loop1 steps by -1 but may wrap, so its IV is not bounded
++; below by 1 and the clamp must be kept.
++define void @exit_count_start_is_outer_decreasing_iv_may_wrap(ptr %p, i32 %n) {
++; CHECK-LABEL: 'exit_count_start_is_outer_decreasing_iv_may_wrap'
++; CHECK-NEXT:  Determining loop execution counts for: @exit_count_start_is_outer_decreasing_iv_may_wrap
++; CHECK-NEXT:  Loop %loop2: backedge-taken count is ((-1 * (1 umin {%n,+,-1}<%loop1>))<nuw><nsw> + {%n,+,-1}<%loop1>)
++; CHECK-NEXT:  Loop %loop2: constant max backedge-taken count is i32 -2
++; CHECK-NEXT:  Loop %loop2: symbolic max backedge-taken count is ((-1 * (1 umin {%n,+,-1}<%loop1>))<nuw><nsw> + {%n,+,-1}<%loop1>)
++; CHECK-NEXT:  Loop %loop2: Trip multiple is 1
++; CHECK-NEXT:  Loop %loop1: <multiple exits> Unpredictable backedge-taken count.
++; CHECK-NEXT:    exit count for loop1: ***COULDNOTCOMPUTE***
++; CHECK-NEXT:    exit count for loop1.latch: (99 + %n)
++; CHECK-NEXT:  Loop %loop1: constant max backedge-taken count is i32 -1
++; CHECK-NEXT:  Loop %loop1: symbolic max backedge-taken count is (99 + %n)
++; CHECK-NEXT:    symbolic max exit count for loop1: ***COULDNOTCOMPUTE***
++; CHECK-NEXT:    symbolic max exit count for loop1.latch: (99 + %n)
++;
++entry:
++  br label %loop1
++
++loop1:
++  %i = phi i32 [ %n, %entry ], [ %i.dec, %loop1.latch ]
++  %c = load i8, ptr %p, align 1
++  %c.z = icmp eq i8 %c, 0
++  br i1 %c.z, label %loop1.latch, label %loop2
++
++loop1.latch:
++  %i.dec = add i32 %i, -1
++  %done = icmp eq i32 %i.dec, -100
++  br i1 %done, label %exit, label %loop1
++
++loop2:
++  %j = phi i32 [ %i, %loop1 ], [ %j.dec, %loop2 ]
++  %j.dec = add nsw i32 %j, -1
++  %cont = icmp ugt i32 %j, 1
++  br i1 %cont, label %loop2, label %exit
++
++exit:
++  ret void
++}
++
++; Mirror image, for the umax clamp in howManyLessThans: %loop1 counts up, so its
++; IV is bounded from above by %n, and %loop2's exit count needs no clamp either.
++define void @exit_count_start_is_outer_increasing_iv(ptr %p, i32 %n) {
++; CHECK-LABEL: 'exit_count_start_is_outer_increasing_iv'
++; CHECK-NEXT:  Determining loop execution counts for: @exit_count_start_is_outer_increasing_iv
++; CHECK-NEXT:  Loop %loop2: backedge-taken count is {(-1 + %n),+,-1}<nw><%loop1>
++; CHECK-NEXT:  Loop %loop2: constant max backedge-taken count is i32 -2
++; CHECK-NEXT:  Loop %loop2: symbolic max backedge-taken count is {(-1 + %n),+,-1}<nw><%loop1>
++; CHECK-NEXT:  Loop %loop2: Trip multiple is 1
++; CHECK-NEXT:  Loop %loop1: <multiple exits> Unpredictable backedge-taken count.
++; CHECK-NEXT:    exit count for loop1: ***COULDNOTCOMPUTE***
++; CHECK-NEXT:    exit count for loop1.latch: (-1 + %n)
++; CHECK-NEXT:  Loop %loop1: constant max backedge-taken count is i32 -2
++; CHECK-NEXT:  Loop %loop1: symbolic max backedge-taken count is (-1 + %n)
++; CHECK-NEXT:    symbolic max exit count for loop1: ***COULDNOTCOMPUTE***
++; CHECK-NEXT:    symbolic max exit count for loop1.latch: (-1 + %n)
++;
++entry:
++  %nz = icmp eq i32 %n, 0
++  br i1 %nz, label %exit, label %loop1
++
++loop1:
++  %i = phi i32 [ 0, %entry ], [ %i.inc, %loop1.latch ]
++  %c = load i8, ptr %p, align 1
++  %cz = icmp eq i8 %c, 0
++  br i1 %cz, label %loop1.latch, label %loop2
++
++loop1.latch:
++  %i.inc = add nsw i32 %i, 1
++  %done = icmp eq i32 %i.inc, %n
++  br i1 %done, label %exit, label %loop1
++
++loop2:
++  %j = phi i32 [ %i, %loop1 ], [ %j.inc, %loop2 ]
++  %j.inc = add nsw i32 %j, 1
++  %cont = icmp ult i32 %j.inc, %n
++  br i1 %cont, label %loop2, label %exit
++
++exit:
++  ret void
++}
++
++; Same, with %loop2 nested inside %loop1 rather than in one of its exit blocks.
++define void @nested_decreasing(ptr %p, i32 %n) {
++; CHECK-LABEL: 'nested_decreasing'
++; CHECK-NEXT:  Determining loop execution counts for: @nested_decreasing
++; CHECK-NEXT:  Loop %loop2: backedge-taken count is {(-1 + %n),+,-1}<nsw><%loop1>
++; CHECK-NEXT:  Loop %loop2: constant max backedge-taken count is i32 -2
++; CHECK-NEXT:  Loop %loop2: symbolic max backedge-taken count is {(-1 + %n),+,-1}<nsw><%loop1>
++; CHECK-NEXT:  Loop %loop2: Trip multiple is 1
++; CHECK-NEXT:  Loop %loop1: backedge-taken count is (-1 + %n)
++; CHECK-NEXT:  Loop %loop1: constant max backedge-taken count is i32 -2
++; CHECK-NEXT:  Loop %loop1: symbolic max backedge-taken count is (-1 + %n)
++; CHECK-NEXT:  Loop %loop1: Trip multiple is 1
++;
++entry:
++  %nz = icmp eq i32 %n, 0
++  br i1 %nz, label %exit, label %loop1
++
++loop1:
++  %i = phi i32 [ %n, %entry ], [ %i.dec, %loop1.latch ]
++  br label %loop2
++
++loop2:
++  %j = phi i32 [ %i, %loop1 ], [ %j.dec, %loop2 ]
++  %j.dec = add nsw i32 %j, -1
++  store i8 0, ptr %p, align 1
++  %cont = icmp ugt i32 %j, 1
++  br i1 %cont, label %loop2, label %loop1.latch
++
++loop1.latch:
++  %i.dec = add nsw i32 %i, -1
++  %done = icmp eq i32 %i.dec, 0
++  br i1 %done, label %exit, label %loop1
++
++exit:
++  ret void
++}
++
++define void @nested_increasing(ptr %p, i32 %n) {
++; CHECK-LABEL: 'nested_increasing'
++; CHECK-NEXT:  Determining loop execution counts for: @nested_increasing
++; CHECK-NEXT:  Loop %loop2: backedge-taken count is {(-1 + %n),+,-1}<nw><%loop1>
++; CHECK-NEXT:  Loop %loop2: constant max backedge-taken count is i32 -2
++; CHECK-NEXT:  Loop %loop2: symbolic max backedge-taken count is {(-1 + %n),+,-1}<nw><%loop1>
++; CHECK-NEXT:  Loop %loop2: Trip multiple is 1
++; CHECK-NEXT:  Loop %loop1: backedge-taken count is (-1 + %n)
++; CHECK-NEXT:  Loop %loop1: constant max backedge-taken count is i32 -2
++; CHECK-NEXT:  Loop %loop1: symbolic max backedge-taken count is (-1 + %n)
++; CHECK-NEXT:  Loop %loop1: Trip multiple is 1
++;
++entry:
++  %nz = icmp eq i32 %n, 0
++  br i1 %nz, label %exit, label %loop1
++
++loop1:
++  %i = phi i32 [ 0, %entry ], [ %i.inc, %loop1.latch ]
++  br label %loop2
++
++loop2:
++  %j = phi i32 [ %i, %loop1 ], [ %j.inc, %loop2 ]
++  %j.inc = add nsw i32 %j, 1
++  store i8 0, ptr %p, align 1
++  %cont = icmp ult i32 %j.inc, %n
++  br i1 %cont, label %loop2, label %loop1.latch
++
++loop1.latch:
++  %i.inc = add nsw i32 %i, 1
++  %done = icmp eq i32 %i.inc, %n
++  br i1 %done, label %exit, label %loop1
++
++exit:
++  ret void
++}
++
++; Negative test: %loop1's maximum backedge-taken count comes from %c, which is
++; unrelated to %i, so it can exceed the number of steps %i takes and %i's value
++; at that iteration count is not a value %i ever holds. The clamp must be kept.
++define void @outer_max_btc_exceeds_iv_trajectory(ptr %p, i32 %s, i32 %k) {
++; CHECK-LABEL: 'outer_max_btc_exceeds_iv_trajectory'
++; CHECK-NEXT:  Determining loop execution counts for: @outer_max_btc_exceeds_iv_trajectory
++; CHECK-NEXT:  Loop %loop2: backedge-taken count is ((-1 * (1 umin {%s,+,-1}<nsw><%loop1>))<nuw><nsw> + {%s,+,-1}<nsw><%loop1>)
++; CHECK-NEXT:  Loop %loop2: constant max backedge-taken count is i32 -2
++; CHECK-NEXT:  Loop %loop2: symbolic max backedge-taken count is ((-1 * (1 umin {%s,+,-1}<nsw><%loop1>))<nuw><nsw> + {%s,+,-1}<nsw><%loop1>)
++; CHECK-NEXT:  Loop %loop2: Trip multiple is 1
++; CHECK-NEXT:  Loop %loop1: backedge-taken count is (-1 + %k)
++; CHECK-NEXT:  Loop %loop1: constant max backedge-taken count is i32 -2
++; CHECK-NEXT:  Loop %loop1: symbolic max backedge-taken count is (-1 + %k)
++; CHECK-NEXT:  Loop %loop1: Trip multiple is 1
++;
++entry:
++  %kz = icmp eq i32 %k, 0
++  br i1 %kz, label %exit, label %loop1
++
++loop1:
++  %i = phi i32 [ %s, %entry ], [ %i.dec, %loop1.latch ]
++  %c = phi i32 [ 0, %entry ], [ %c.inc, %loop1.latch ]
++  br label %loop2
++
++loop2:
++  %j = phi i32 [ %i, %loop1 ], [ %j.dec, %loop2 ]
++  %j.dec = add nsw i32 %j, -1
++  store i8 0, ptr %p, align 1
++  %cont = icmp ugt i32 %j, 1
++  br i1 %cont, label %loop2, label %loop1.latch
++
++loop1.latch:
++  %i.dec = add nsw i32 %i, -1
++  %c.inc = add nsw i32 %c, 1
++  %done = icmp eq i32 %c.inc, %k
++  br i1 %done, label %exit, label %loop1
++
++exit:
++  ret void
++}
