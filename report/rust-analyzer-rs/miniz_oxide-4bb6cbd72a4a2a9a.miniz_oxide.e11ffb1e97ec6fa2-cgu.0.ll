@@ -205,58 +205,60 @@ bb.m:                                             ; preds = %_RNvMsb_NtNtCsjkkKz
 ._crit_edge85.i:                                  ; preds = %._crit_edge85.i.loopexit, %._crit_edge.thread.i
   %i.ef = phi i32 [ 0, %._crit_edge.thread.i ], [ %i.ee, %._crit_edge85.i.loopexit ]
   %i.eg = trunc nuw nsw i64 %i.dx to i32
-  %5 = trunc nuw nsw i64 %.sroa.04.2 to i32
   br label %.preheader.i
 
 .preheader.i:                                     ; preds = %._crit_edge98.i, %._crit_edge85.i
   %.sroa.020.0103.i = phi i32 [ 1, %._crit_edge85.i ], [ %i.en, %._crit_edge98.i ] ; 2 uses
   %.sroa.026.0102.i = phi i16 [ 0, %._crit_edge85.i ], [ %i.eo, %._crit_edge98.i ] ; 3 uses
-  %.sroa.029.0101.i = phi i32 [ %i.ef, %._crit_edge85.i ], [ %.sroa.029.1.lcssa.i, %._crit_edge98.i ] ; 7 uses
+  %.sroa.029.0101.i = phi i32 [ %i.ef, %._crit_edge85.i ], [ %.sroa.029.1.lcssa.i, %._crit_edge98.i ] ; 4 uses
   %.sroa.032.0100.i = phi i32 [ %i.eg, %._crit_edge85.i ], [ %.sroa.032.1.lcssa.i, %._crit_edge98.i ] ; 2 uses
   %i.eh = icmp sgt i32 %.sroa.029.0101.i, -1
-  br i1 %i.eh, label %.lr.ph88.preheader.i, label %._crit_edge89.i
+  br i1 %i.eh, label %.lr.ph88.preheader.i, label %bb.n
 
 .lr.ph88.preheader.i:                             ; preds = %.preheader.i
+  %5 = zext nneg i32 %.sroa.029.0101.i to i64     ; 3 uses
   %i.ei = add nuw i32 %.sroa.029.0101.i, 1
-  %.first_iter133.i = icmp ult i32 %.sroa.029.0101.i, %5
-  br i1 %.first_iter133.i, label %.lr.ph88.i.us, label %.lr.ph88.i
+  %.first_iter134.i = icmp samesign ugt i64 %.sroa.04.2, %5
+  br i1 %.first_iter134.i, label %.lr.ph88.i.us, label %.lr.ph88.i
 
-.lr.ph88.i.us:                                    ; preds = %.lr.ph88.preheader.i, %bb.n
-  %.sroa.023.187.i.us = phi i32 [ %7, %bb.n ], [ 0, %.lr.ph88.preheader.i ] ; 3 uses
-  %.sroa.029.186.i.us = phi i32 [ %8, %bb.n ], [ %.sroa.029.0101.i, %.lr.ph88.preheader.i ] ; 3 uses
-  %6 = zext nneg i32 %.sroa.029.186.i.us to i64
-  %i.ej = getelementptr inbounds nuw [4 x i8], ptr %.sroa.04.0.lcssa.i, i64 %6
+.lr.ph88.i.us:                                    ; preds = %.lr.ph88.preheader.i, %._crit_edge89.i
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %._crit_edge89.i ], [ %5, %.lr.ph88.preheader.i ] ; 4 uses
+  %.sroa.029.186.i.us = phi i32 [ %8, %._crit_edge89.i ], [ 0, %.lr.ph88.preheader.i ] ; 2 uses
+  %i.ej = getelementptr inbounds nuw [4 x i8], ptr %.sroa.04.0.lcssa.i, i64 %indvars.iv.i
   %i.ek = load i16, ptr %i.ej, align 2, !alias.scope !53, !noundef !4
   %i.el = icmp eq i16 %i.ek, %.sroa.026.0102.i
-  br i1 %i.el, label %bb.n, label %._crit_edge89.i
+  br i1 %i.el, label %._crit_edge89.i, label %._crit_edge89.loopexit.split.loop.exit.i
 
-bb.n:                                             ; preds = %.lr.ph88.i.us
-  %7 = add nuw i32 %.sroa.023.187.i.us, 1
-  %8 = add nsw i32 %.sroa.029.186.i.us, -1
-  %exitcond134.not.i.us = icmp eq i32 %.sroa.023.187.i.us, %.sroa.029.0101.i
-  br i1 %exitcond134.not.i.us, label %._crit_edge89.i, label %.lr.ph88.i.us
+._crit_edge89.loopexit.split.loop.exit.i:         ; preds = %.lr.ph88.i.us
+  %6 = trunc nuw nsw i64 %indvars.iv.i to i32
+  br label %bb.n
+
+bb.n:                                             ; preds = %._crit_edge89.i, %._crit_edge89.loopexit.split.loop.exit.i, %.preheader.i
+  %.sroa.029.1.lcssa.i = phi i32 [ %.sroa.029.0101.i, %.preheader.i ], [ %6, %._crit_edge89.loopexit.split.loop.exit.i ], [ -1, %._crit_edge89.i ]
+  %.sroa.023.1.lcssa.i = phi i32 [ 0, %.preheader.i ], [ %.sroa.029.186.i.us, %._crit_edge89.loopexit.split.loop.exit.i ], [ %i.ei, %._crit_edge89.i ] ; 3 uses
+  %7 = icmp sgt i32 %.sroa.020.0103.i, %.sroa.023.1.lcssa.i
+  br i1 %7, label %.lr.ph97.i, label %._crit_edge98.i
 
 .lr.ph88.i:                                       ; preds = %.lr.ph88.preheader.i
-  %9 = zext nneg i32 %.sroa.029.0101.i to i64
-  call void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %9, i64 noundef range(i64 0, 289) %.sroa.04.2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @34) #22, !noalias !53
+  call void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %5, i64 noundef range(i64 0, 289) %.sroa.04.2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @34) #22, !noalias !53
   unreachable
 
-._crit_edge89.i:                                  ; preds = %.lr.ph88.i.us, %bb.n, %.preheader.i
-  %.sroa.029.1.lcssa.i = phi i32 [ %.sroa.029.0101.i, %.preheader.i ], [ -1, %bb.n ], [ %.sroa.029.186.i.us, %.lr.ph88.i.us ]
-  %.sroa.023.1.lcssa.i = phi i32 [ 0, %.preheader.i ], [ %i.ei, %bb.n ], [ %.sroa.023.187.i.us, %.lr.ph88.i.us ] ; 3 uses
-  %i.em = icmp sgt i32 %.sroa.020.0103.i, %.sroa.023.1.lcssa.i
-  br i1 %i.em, label %.lr.ph97.i, label %._crit_edge98.i
+._crit_edge89.i:                                  ; preds = %.lr.ph88.i.us
+  %8 = add nuw i32 %.sroa.029.186.i.us, 1
+  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1
+  %i.em = icmp sgt i64 %indvars.iv.i, 0
+  br i1 %i.em, label %.lr.ph88.i.us, label %bb.n
 
-._crit_edge98.i:                                  ; preds = %bb.o, %._crit_edge89.i
-  %.sroa.032.1.lcssa.i = phi i32 [ %.sroa.032.0100.i, %._crit_edge89.i ], [ %i.et, %bb.o ]
+._crit_edge98.i:                                  ; preds = %bb.o, %bb.n
+  %.sroa.032.1.lcssa.i = phi i32 [ %.sroa.032.0100.i, %bb.n ], [ %i.et, %bb.o ]
   %i.en = shl i32 %.sroa.023.1.lcssa.i, 1         ; 2 uses
   %i.eo = add i16 %.sroa.026.0102.i, 1
   %i.ep = icmp sgt i32 %i.en, 0
   br i1 %i.ep, label %.preheader.i, label %_RNvMsb_NtNtCsjkkKzr5dxZe_11miniz_oxide7deflate4coreNtB5_12HuffmanOxide28calculate_minimum_redundancy.exit
 
-.lr.ph97.i:                                       ; preds = %._crit_edge89.i, %bb.o
-  %.sroa.020.195.i = phi i32 [ %i.eu, %bb.o ], [ %.sroa.020.0103.i, %._crit_edge89.i ]
-  %.sroa.032.194.i = phi i32 [ %i.et, %bb.o ], [ %.sroa.032.0100.i, %._crit_edge89.i ] ; 2 uses
+.lr.ph97.i:                                       ; preds = %bb.n, %bb.o
+  %.sroa.020.195.i = phi i32 [ %i.eu, %bb.o ], [ %.sroa.020.0103.i, %bb.n ]
+  %.sroa.032.194.i = phi i32 [ %i.et, %bb.o ], [ %.sroa.032.0100.i, %bb.n ] ; 2 uses
   %i.eq = sext i32 %.sroa.032.194.i to i64        ; 3 uses
   %i.er = icmp ugt i64 %.sroa.04.2, %i.eq
   br i1 %i.er, label %bb.o, label %bb.p

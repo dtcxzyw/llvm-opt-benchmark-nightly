@@ -204,32 +204,39 @@ bb.i:                                             ; preds = %bb.h, %_ZN6icu_7810
   br i1 %i.s, label %.preheader83, label %bb.j, !llvm.loop !45
 
 bb.j:                                             ; preds = %.preheader83
-  %i.u = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %.060) #27
-  %i.v = trunc i64 %i.u to i32                    ; 4 uses
+  %i.u = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %.060) #27 ; 2 uses
+  %i.v = trunc i64 %i.u to i32                    ; 3 uses
   %or.cond9 = icmp ugt i32 %i.v, 357913941
   br i1 %or.cond9, label %bb.ab, label %.preheader
 
 .preheader:                                       ; preds = %bb.j
   %i.w = icmp samesign ugt i32 %i.v, 1
-  br i1 %i.w, label %.lr.ph, label %.critedge
+  br i1 %i.w, label %.lr.ph.preheader, label %.critedge
 
-.lr.ph:                                           ; preds = %.preheader, %bb.k
-  %.05384 = phi i32 [ %9, %bb.k ], [ %i.v, %.preheader ] ; 4 uses
-  %8 = zext nneg i32 %.05384 to i64
-  %i.x = getelementptr i8, ptr %.060, i64 %8
+.lr.ph.preheader:                                 ; preds = %.preheader
+  %8 = and i64 %i.u, 536870911
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.k
+  %indvars.iv = phi i64 [ %8, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.k ] ; 4 uses
+  %i.x = getelementptr i8, ptr %.060, i64 %indvars.iv
   %i.y = getelementptr i8, ptr %i.x, i64 -1
   %i.z = load i8, ptr %i.y, align 1, !tbaa !19
   %i.aa = icmp eq i8 %i.z, 95
-  br i1 %i.aa, label %bb.k, label %.critedge
+  br i1 %i.aa, label %bb.k, label %.critedge.loopexit.split.loop.exit
 
 bb.k:                                             ; preds = %.lr.ph
-  %9 = add nsw i32 %.05384, -1
-  %i.ab = icmp sgt i32 %.05384, 2
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
+  %i.ab = icmp sgt i64 %indvars.iv, 2
   br i1 %i.ab, label %.lr.ph, label %.critedge, !llvm.loop !47
 
-.critedge:                                        ; preds = %bb.k, %.lr.ph, %.preheader, %bb.i
-  %.161 = phi ptr [ null, %bb.i ], [ %.060, %.preheader ], [ %.060, %.lr.ph ], [ %.060, %bb.k ]
-  %.1 = phi i32 [ 0, %bb.i ], [ %i.v, %.preheader ], [ 1, %bb.k ], [ %.05384, %.lr.ph ] ; 3 uses
+.critedge.loopexit.split.loop.exit:               ; preds = %.lr.ph
+  %9 = trunc nuw nsw i64 %indvars.iv to i32
+  br label %.critedge
+
+.critedge:                                        ; preds = %bb.k, %.critedge.loopexit.split.loop.exit, %.preheader, %bb.i
+  %.161 = phi ptr [ null, %bb.i ], [ %.060, %.preheader ], [ %.060, %.critedge.loopexit.split.loop.exit ], [ %.060, %bb.k ]
+  %.1 = phi i32 [ 0, %bb.i ], [ %i.v, %.preheader ], [ %9, %.critedge.loopexit.split.loop.exit ], [ 1, %bb.k ] ; 3 uses
   %.not73 = icmp eq ptr %4, null
   br i1 %.not73, label %bb.m, label %bb.l
 

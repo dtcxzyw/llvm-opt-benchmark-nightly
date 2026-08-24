@@ -204,26 +204,29 @@ bb.a:
   %i.c = load i32, ptr %i.b, align 8              ; 3 uses
   %i.d = getelementptr i8, ptr %0, i64 20
   %i.e = load i8, ptr %i.d, align 4
-  %2 = zext i8 %i.e to i32
-  %3 = add nuw nsw i32 %2, 1
-  %4 = getelementptr i8, ptr %1, i64 88
+  %2 = getelementptr i8, ptr %1, i64 88
+  %3 = zext i8 %i.e to i64
+  %4 = add nuw nsw i64 %3, 1
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.a, %bb.c
-  %.032 = phi i32 [ %3, %bb.a ], [ %6, %bb.c ]    ; 4 uses
-  %5 = zext nneg i32 %.032 to i64
-  %i.f = getelementptr [4 x i8], ptr %4, i64 %5
+  %indvars.iv = phi i64 [ %4, %bb.a ], [ %indvars.iv.next, %bb.c ] ; 4 uses
+  %i.f = getelementptr [4 x i8], ptr %2, i64 %indvars.iv
   %i.g = load i32, ptr %i.f, align 4
   %i.h = icmp sgt i32 %i.g, 0                     ; 2 uses
-  br i1 %i.h, label %bb.d, label %bb.c
+  br i1 %i.h, label %.split.loop.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %6 = add nsw i32 %.032, -1
-  %i.i = icmp sgt i32 %.032, 0
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
+  %i.i = icmp sgt i64 %indvars.iv, 0
   br i1 %i.i, label %bb.b, label %bb.d, !llvm.loop !288
 
-bb.d:                                             ; preds = %bb.b, %bb.c
-  %.0.lcssa = phi i32 [ %.032, %bb.b ], [ -1, %bb.c ] ; 3 uses
+.split.loop.exit:                                 ; preds = %bb.b
+  %5 = trunc nuw nsw i64 %indvars.iv to i32
+  br label %bb.d
+
+bb.d:                                             ; preds = %bb.c, %.split.loop.exit
+  %.0.lcssa = phi i32 [ %5, %.split.loop.exit ], [ -1, %bb.c ] ; 3 uses
   %i.j = icmp eq i32 %.0.lcssa, %i.c
   br i1 %i.j, label %bb.l, label %bb.e
 

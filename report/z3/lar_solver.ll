@@ -205,7 +205,11 @@ _ZNK6vectorIPN2lp19lar_base_constraintELb1EjE4sizeEv.exit: ; preds = %_ZN13stack
   %i.bc = load i32, ptr %i.bb, align 4, !tbaa !214 ; 2 uses
   %i.bd = load i32, ptr %i.ak, align 8, !tbaa !214 ; 2 uses
   %i.be = icmp ugt i32 %i.bc, %i.bd
-  br i1 %i.be, label %.lr.ph25, label %_ZN6vectorIPN2lp19lar_base_constraintELb1EjE3endEv.exit.i
+  br i1 %i.be, label %.lr.ph25.preheader, label %_ZN6vectorIPN2lp19lar_base_constraintELb1EjE3endEv.exit.i
+
+.lr.ph25.preheader:                               ; preds = %_ZNK6vectorIPN2lp19lar_base_constraintELb1EjE4sizeEv.exit
+  %2 = zext i32 %i.bc to i64
+  br label %.lr.ph25
 
 .lr.ph.new:                                       ; preds = %.prol.loopexit, %.lr.ph.new
   %indvars.iv = phi i64 [ %i.ca, %.lr.ph.new ], [ %indvars.iv.unr, %.prol.loopexit ] ; 4 uses
@@ -269,11 +273,10 @@ _ZN6vectorIPN2lp19lar_base_constraintELb1EjE6shrinkEj.exit: ; preds = %_ZN13stac
 _ZN6region9pop_scopeEj.exit:                      ; preds = %.lr.ph.i21, %_ZN6vectorIPN2lp19lar_base_constraintELb1EjE6shrinkEj.exit
   ret void
 
-.lr.ph25:                                         ; preds = %_ZNK6vectorIPN2lp19lar_base_constraintELb1EjE4sizeEv.exit, %.lr.ph25
-  %.024 = phi i32 [ %2, %.lr.ph25 ], [ %i.bc, %_ZNK6vectorIPN2lp19lar_base_constraintELb1EjE4sizeEv.exit ]
-  %2 = add i32 %.024, -1                          ; 3 uses
+.lr.ph25:                                         ; preds = %.lr.ph25.preheader, %.lr.ph25
+  %indvars.iv30 = phi i64 [ %2, %.lr.ph25.preheader ], [ %3, %.lr.ph25 ]
+  %3 = add i64 %indvars.iv30, -1                  ; 3 uses
   %i.ck = load ptr, ptr %i.ay, align 8, !tbaa !196
-  %3 = zext i32 %2 to i64
   %i.cl = getelementptr inbounds nuw [8 x i8], ptr %i.ck, i64 %3
   %i.cm = load ptr, ptr %i.cl, align 8, !tbaa !294 ; 2 uses
   %i.cn = load ptr, ptr %i.cm, align 8, !tbaa !80
@@ -281,7 +284,8 @@ _ZN6region9pop_scopeEj.exit:                      ; preds = %.lr.ph.i21, %_ZN6ve
   %i.cp = load ptr, ptr %i.co, align 8
   tail call void %i.cp(ptr noundef nonnull align 8 dead_on_return(96) dereferenceable(96) %i.cm) #28
   %i.cq = load i32, ptr %i.ak, align 8, !tbaa !214 ; 2 uses
-  %i.cr = icmp ugt i32 %2, %i.cq
+  %4 = zext i32 %i.cq to i64
+  %i.cr = icmp ugt i64 %3, %4
   br i1 %i.cr, label %.lr.ph25, label %._crit_edge26, !llvm.loop !435
 }
 

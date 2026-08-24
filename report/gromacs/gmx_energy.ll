@@ -205,15 +205,18 @@ bb.n:                                             ; preds = %bb.m, %._crit_edge1
   br i1 %.not98, label %.critedge, label %bb.o
 
 bb.o:                                             ; preds = %.critedge185
-  %i.bl = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.b) #29
-  %i.bm = trunc i64 %i.bl to i32                  ; 2 uses
+  %i.bl = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.b) #29 ; 2 uses
+  %i.bm = trunc i64 %i.bl to i32
   %i.bn = icmp sgt i32 %i.bm, 0
-  br i1 %i.bn, label %.lr.ph.i, label %_ZL5chompPc.exit
+  br i1 %i.bn, label %.lr.ph.preheader.i, label %_ZL5chompPc.exit
 
-.lr.ph.i:                                         ; preds = %bb.o, %bb.p
-  %.06.i = phi i32 [ %5, %bb.p ], [ %i.bm, %bb.o ] ; 3 uses
-  %4 = zext nneg i32 %.06.i to i64
-  %i.bo = getelementptr i8, ptr %i.b, i64 %4
+.lr.ph.preheader.i:                               ; preds = %bb.o
+  %4 = and i64 %i.bl, 2147483647
+  br label %.lr.ph.i
+
+.lr.ph.i:                                         ; preds = %bb.p, %.lr.ph.preheader.i
+  %indvars.iv.i = phi i64 [ %4, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %bb.p ] ; 3 uses
+  %i.bo = getelementptr i8, ptr %i.b, i64 %indvars.iv.i
   %i.bp = getelementptr i8, ptr %i.bo, i64 -1     ; 2 uses
   %i.bq = load i8, ptr %i.bp, align 1, !tbaa !30
   %i.br = icmp eq i8 %i.bq, 10
@@ -221,8 +224,8 @@ bb.o:                                             ; preds = %.critedge185
 
 bb.p:                                             ; preds = %.lr.ph.i
   store i8 0, ptr %i.bp, align 1, !tbaa !30
-  %5 = add nsw i32 %.06.i, -1
-  %i.bs = icmp sgt i32 %.06.i, 1
+  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1
+  %i.bs = icmp sgt i64 %indvars.iv.i, 1
   br i1 %i.bs, label %.lr.ph.i, label %_ZL5chompPc.exit, !llvm.loop !334
 
 _ZL5chompPc.exit:                                 ; preds = %.lr.ph.i, %bb.p, %bb.o

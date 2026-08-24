@@ -202,25 +202,27 @@ bb.m:                                             ; preds = %bb.l
   %i.br = select i1 %.not104, i64 -12, i64 -4
   %i.bs = getelementptr inbounds i8, ptr %i.bp, i64 %i.br
   %i.bt = getelementptr inbounds nuw i8, ptr %i.ao, i64 4 ; 2 uses
+  %.0119 = add nsw i32 %i.az, -1
+  %2 = zext nneg i32 %.0119 to i64
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %bb.o
-  %.0121.in = phi i32 [ %i.az, %bb.m ], [ %.0121, %bb.o ] ; 2 uses
+  %indvars.iv = phi i64 [ %2, %bb.m ], [ %indvars.iv.next, %bb.o ] ; 4 uses
   %.060120 = phi ptr [ %i.bs, %bb.m ], [ %i.bx, %bb.o ] ; 2 uses
-  %.0121 = add nsw i32 %.0121.in, -1              ; 2 uses
-  %2 = zext nneg i32 %.0121 to i64                ; 2 uses
-  %i.bu = getelementptr inbounds nuw i8, ptr %i.bt, i64 %2
-  %i.bv = load i8, ptr %i.bu, align 1, !tbaa !21  ; 2 uses
+  %i.bu = getelementptr inbounds nuw i8, ptr %i.bt, i64 %indvars.iv
+  %i.bv = load i8, ptr %i.bu, align 1, !tbaa !21
   %i.bw = icmp ult i8 %i.bv, %i.ap
   br i1 %i.bw, label %.thread90, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
   %i.bx = getelementptr inbounds i8, ptr %.060120, i64 -8
-  %3 = icmp samesign ugt i32 %.0121.in, 1
-  br i1 %3, label %bb.n, label %.loopexit, !llvm.loop !53
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
+  %3 = trunc nuw i64 %indvars.iv to i32
+  %4 = icmp sgt i32 %3, 0
+  br i1 %4, label %bb.n, label %.loopexit, !llvm.loop !53
 
 .thread90:                                        ; preds = %bb.n
-  %i.by = getelementptr inbounds nuw i8, ptr %i.bt, i64 %2
+  %i.by = getelementptr inbounds nuw i8, ptr %i.bt, i64 %indvars.iv
   %i.bz = load i64, ptr %i.o, align 8, !tbaa !46
   %i.ca = add i64 %i.aw, 1                        ; 2 uses
   %i.cb = icmp ult i64 %i.bz, %i.ca
@@ -249,7 +251,6 @@ bb.r:                                             ; preds = %bb.q
   %.pre = phi ptr [ %.pre.pre, %bb.r ], [ %i.ce, %bb.q ]
   store i64 %i.cd, ptr %i.o, align 8, !tbaa !46
   %.pre.i = load i64, ptr %i.e, align 8, !tbaa !44
-  %.pre131 = load i8, ptr %i.by, align 1
   br label %bb.s
 
 raxIteratorAddChars.exit.thread:                  ; preds = %bb.p
@@ -260,11 +261,11 @@ raxIteratorAddChars.exit.thread:                  ; preds = %bb.p
   br label %.thread100
 
 bb.s:                                             ; preds = %.thread.i, %.thread90
-  %4 = phi i8 [ %.pre131, %.thread.i ], [ %i.bv, %.thread90 ]
   %i.cj = phi ptr [ %.pre, %.thread.i ], [ %i.ar, %.thread90 ]
   %i.ck = phi i64 [ %.pre.i, %.thread.i ], [ %i.aw, %.thread90 ]
   %i.cl = getelementptr inbounds nuw i8, ptr %i.cj, i64 %i.ck
-  store i8 %4, ptr %i.cl, align 1
+  %5 = load i8, ptr %i.by, align 1
+  store i8 %5, ptr %i.cl, align 1
   %i.cm = load i64, ptr %i.e, align 8, !tbaa !44
   %i.cn = add i64 %i.cm, 1
   store i64 %i.cn, ptr %i.e, align 8, !tbaa !44

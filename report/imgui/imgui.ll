@@ -205,20 +205,21 @@ bb.bm:                                            ; preds = %bb.bl
 
 .lr.ph.preheader.i78:                             ; preds = %bb.bm
   %i.ke = add nsw i32 %i.ju, -2
+  %2 = zext nneg i32 %i.ke to i64
   br label %.lr.ph.i79
 
 .lr.ph.i79:                                       ; preds = %bb.bo, %.lr.ph.preheader.i78
-  %.023.i = phi i32 [ %3, %bb.bo ], [ %i.ke, %.lr.ph.preheader.i78 ] ; 4 uses
-  %2 = zext nneg i32 %.023.i to i64               ; 2 uses
-  %i.kf = getelementptr inbounds nuw [8 x i8], ptr %i.jt, i64 %2
+  %indvars.iv.i80 = phi i64 [ %2, %.lr.ph.preheader.i78 ], [ %indvars.iv.next.i81, %bb.bo ] ; 5 uses
+  %i.kf = getelementptr inbounds nuw [8 x i8], ptr %i.jt, i64 %indvars.iv.i80
   %i.kg = load ptr, ptr %i.kf, align 8, !tbaa !705
   %i.kh = icmp eq ptr %i.kg, %i.hn
   br i1 %i.kh, label %bb.bn, label %bb.bo
 
 bb.bn:                                            ; preds = %.lr.ph.i79
-  %i.ki = getelementptr inbounds nuw [8 x i8], ptr %i.jt, i64 %2 ; 2 uses
+  %i.ki = getelementptr inbounds nuw [8 x i8], ptr %i.jt, i64 %indvars.iv.i80 ; 2 uses
+  %3 = trunc nuw nsw i64 %indvars.iv.i80 to i32
   %i.kj = getelementptr inbounds nuw i8, ptr %i.ki, i64 8
-  %i.kk = xor i32 %.023.i, -1
+  %i.kk = xor i32 %3, -1
   %i.kl = add i32 %i.ju, %i.kk
   %i.km = sext i32 %i.kl to i64
   %i.kn = shl nsw i64 %i.km, 3
@@ -232,8 +233,8 @@ bb.bn:                                            ; preds = %.lr.ph.i79
   br label %_ZN5ImGui25BringWindowToDisplayFrontEP11ImGuiWindow.exit
 
 bb.bo:                                            ; preds = %.lr.ph.i79
-  %3 = add nsw i32 %.023.i, -1
-  %i.kt = icmp sgt i32 %.023.i, 0
+  %indvars.iv.next.i81 = add nsw i64 %indvars.iv.i80, -1
+  %i.kt = icmp sgt i64 %indvars.iv.i80, 0
   br i1 %i.kt, label %.lr.ph.i79, label %_ZN5ImGui25BringWindowToDisplayFrontEP11ImGuiWindow.exit, !llvm.loop !902
 
 _ZN5ImGui25BringWindowToDisplayFrontEP11ImGuiWindow.exit: ; preds = %select.unfold.i, %bb.bo, %bb.ai, %_ZN5ImGui26IsWindowWithinBeginStackOfEP11ImGuiWindowS1_.exit.i, %_ZN5ImGui20GetTopMostPopupModalEv.exit, %bb.bn, %bb.bm, %bb.bl, %bb.bi, %_ZN5ImGui23BringWindowToFocusFrontEP11ImGuiWindow.exit
@@ -636,20 +637,21 @@ bb.p:                                             ; preds = %bb.o
 
 .lr.ph.preheader.i:                               ; preds = %bb.p
   %i.df = add nsw i32 %i.cv, -2
+  %1 = zext nneg i32 %i.df to i64
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.r, %.lr.ph.preheader.i
-  %.023.i = phi i32 [ %2, %bb.r ], [ %i.df, %.lr.ph.preheader.i ] ; 4 uses
-  %1 = zext nneg i32 %.023.i to i64               ; 2 uses
-  %i.dg = getelementptr inbounds nuw [8 x i8], ptr %i.cu, i64 %1
+  %indvars.iv.i = phi i64 [ %1, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %bb.r ] ; 5 uses
+  %i.dg = getelementptr inbounds nuw [8 x i8], ptr %i.cu, i64 %indvars.iv.i
   %i.dh = load ptr, ptr %i.dg, align 8, !tbaa !705
   %i.di = icmp eq ptr %i.dh, %i.cq
   br i1 %i.di, label %bb.q, label %bb.r
 
 bb.q:                                             ; preds = %.lr.ph.i
-  %i.dj = getelementptr inbounds nuw [8 x i8], ptr %i.cu, i64 %1 ; 2 uses
+  %i.dj = getelementptr inbounds nuw [8 x i8], ptr %i.cu, i64 %indvars.iv.i ; 2 uses
+  %2 = trunc nuw nsw i64 %indvars.iv.i to i32
   %i.dk = getelementptr inbounds nuw i8, ptr %i.dj, i64 8
-  %i.dl = xor i32 %.023.i, -1
+  %i.dl = xor i32 %2, -1
   %i.dm = add i32 %i.cv, %i.dl
   %i.dn = sext i32 %i.dm to i64
   %i.do = shl nsw i64 %i.dn, 3
@@ -665,8 +667,8 @@ bb.q:                                             ; preds = %.lr.ph.i
   br label %_ZN5ImGui25BringWindowToDisplayFrontEP11ImGuiWindow.exit
 
 bb.r:                                             ; preds = %.lr.ph.i
-  %2 = add nsw i32 %.023.i, -1
-  %i.du = icmp sgt i32 %.023.i, 0
+  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1
+  %i.du = icmp sgt i64 %indvars.iv.i, 0
   br i1 %i.du, label %.lr.ph.i, label %_ZN5ImGui25BringWindowToDisplayFrontEP11ImGuiWindow.exit, !llvm.loop !902
 
 _ZN5ImGui25BringWindowToDisplayFrontEP11ImGuiWindow.exit: ; preds = %bb.r, %bb.o, %bb.p, %bb.q
@@ -895,20 +897,21 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph.preheader:                                 ; preds = %bb.b
   %i.o = add nsw i32 %i.e, -2
+  %1 = zext nneg i32 %i.o to i64
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.d
-  %.023 = phi i32 [ %2, %bb.d ], [ %i.o, %.lr.ph.preheader ] ; 4 uses
-  %1 = zext nneg i32 %.023 to i64                 ; 2 uses
-  %i.p = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %1
+  %indvars.iv = phi i64 [ %1, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.d ] ; 5 uses
+  %i.p = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %indvars.iv
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !705
   %i.r = icmp eq ptr %i.q, %0
   br i1 %i.r, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %.lr.ph
-  %i.s = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %1 ; 2 uses
+  %i.s = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %indvars.iv ; 2 uses
+  %2 = trunc nuw nsw i64 %indvars.iv to i32
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 8
-  %i.u = xor i32 %.023, -1
+  %i.u = xor i32 %2, -1
   %i.v = add i32 %i.e, %i.u
   %i.w = sext i32 %i.v to i64
   %i.x = shl nsw i64 %i.w, 3
@@ -922,8 +925,8 @@ bb.c:                                             ; preds = %.lr.ph
   br label %.loopexit
 
 bb.d:                                             ; preds = %.lr.ph
-  %2 = add nsw i32 %.023, -1
-  %i.ad = icmp sgt i32 %.023, 0
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
+  %i.ad = icmp sgt i64 %indvars.iv, 0
   br i1 %i.ad, label %.lr.ph, label %.loopexit, !llvm.loop !902
 
 .loopexit:                                        ; preds = %bb.d, %bb.c, %bb.a, %bb.b
