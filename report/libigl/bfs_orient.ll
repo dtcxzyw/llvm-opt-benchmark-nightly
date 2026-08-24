@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 739
 inline.NumDeleted: 457
 loop-unroll.NumCompletelyUnrolled: 3
-loop-unroll.NumRuntimeUnrolled: 7
-loop-unroll.NumUnrolled: 10
+loop-unroll.NumRuntimeUnrolled: 8
+loop-unroll.NumUnrolled: 11
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -145,10 +145,10 @@ _ZN5Eigen12SparseMatrixIiLi0EiEC2Ev.exit:         ; preds = %bb.a
 bb.d:                                             ; preds = %_ZN5Eigen12SparseMatrixIiLi0EiEC2Ev.exit
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.k = load i64, ptr %i.j, align 8, !tbaa !22
-  %i.l = load ptr, ptr %2, align 8, !tbaa !24     ; 10 uses
+  %i.l = load ptr, ptr %2, align 8, !tbaa !24     ; 14 uses
   %i.m = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.n = load i64, ptr %i.m, align 8, !tbaa !26   ; 12 uses
-  %i.o = sdiv i64 %i.n, 8
+  %i.o = sdiv i64 %i.n, 8                         ; 2 uses
   %i.p = shl nsw i64 %i.o, 3                      ; 3 uses
   %i.q = sdiv i64 %i.n, 4
   %i.r = shl nsw i64 %i.q, 2                      ; 6 uses
@@ -157,38 +157,80 @@ bb.d:                                             ; preds = %_ZN5Eigen12SparseMa
   br i1 %.not.i.i.i.i, label %bb.i, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.s = load <4 x i32>, ptr %i.l, align 16, !tbaa !27 ; 3 uses
+  %i.s = load <4 x i32>, ptr %i.l, align 16, !tbaa !27 ; 4 uses
   %i.t = icmp sgt i64 %i.n, 7
   br i1 %i.t, label %bb.f, label %bb.h
 
 bb.f:                                             ; preds = %bb.e
   %i.u = getelementptr inbounds nuw i8, ptr %i.l, i64 16
-  %i.v = load <4 x i32>, ptr %i.u, align 16, !tbaa !27 ; 2 uses
+  %i.v = load <4 x i32>, ptr %i.u, align 16, !tbaa !27 ; 3 uses
   %i.w = icmp samesign ugt i64 %i.n, 15
-  br i1 %i.w, label %.lr.ph.i.i.i.i, label %._crit_edge.i.i.i.i
+  br i1 %i.w, label %.lr.ph.i.i.i.i.preheader, label %._crit_edge.i.i.i.i
 
-._crit_edge.i.i.i.i:                              ; preds = %.lr.ph.i.i.i.i, %bb.f
-  %.lcssa.i.i.i.i = phi <4 x i32> [ %i.v, %bb.f ], [ %i.ag, %.lr.ph.i.i.i.i ]
-  %.sroa.064.0.lcssa.i.i.i.i = phi <4 x i32> [ %i.s, %bb.f ], [ %i.ac, %.lr.ph.i.i.i.i ]
+.lr.ph.i.i.i.i.preheader:                         ; preds = %bb.f
+  %8 = add nsw i64 %i.p, -16                      ; 2 uses
+  %9 = lshr exact i64 %8, 3
+  %10 = add nuw nsw i64 %9, 1                     ; 2 uses
+  %11 = icmp eq i64 %8, 0
+  br i1 %11, label %.lr.ph.i.i.i.i.epil.preheader, label %.lr.ph.i.i.i.i.preheader.new
+
+.lr.ph.i.i.i.i.preheader.new:                     ; preds = %.lr.ph.i.i.i.i.preheader
+  %unroll_iter = and i64 %10, 4611686018427387902
+  br label %.lr.ph.i.i.i.i
+
+._crit_edge.i.i.i.i.loopexit.unr-lcssa:           ; preds = %.lr.ph.i.i.i.i
+  %12 = and i64 %i.o, 1
+  %lcmp.mod.not.not = icmp eq i64 %12, 0
+  br i1 %lcmp.mod.not.not, label %.lr.ph.i.i.i.i.epil.preheader, label %._crit_edge.i.i.i.i
+
+.lr.ph.i.i.i.i.epil.preheader:                    ; preds = %._crit_edge.i.i.i.i.loopexit.unr-lcssa, %.lr.ph.i.i.i.i.preheader
+  %.05779.i.i.i.i.epil.init = phi i64 [ 8, %.lr.ph.i.i.i.i.preheader ], [ %.057.i.i.i.i.1, %._crit_edge.i.i.i.i.loopexit.unr-lcssa ]
+  %.057.in78.i.i.i.i.epil.init = phi i64 [ 0, %.lr.ph.i.i.i.i.preheader ], [ %.057.i.i.i.i, %._crit_edge.i.i.i.i.loopexit.unr-lcssa ]
+  %.sroa.064.077.i.i.i.i.epil.init = phi <4 x i32> [ %i.s, %.lr.ph.i.i.i.i.preheader ], [ %i.ac, %._crit_edge.i.i.i.i.loopexit.unr-lcssa ]
+  %.epil.init = phi <4 x i32> [ %i.v, %.lr.ph.i.i.i.i.preheader ], [ %i.ag, %._crit_edge.i.i.i.i.loopexit.unr-lcssa ]
+  %lcmp.mod83 = trunc i64 %10 to i1
+  call void @llvm.assume(i1 %lcmp.mod83)
+  %13 = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %.05779.i.i.i.i.epil.init
+  %14 = load <4 x i32>, ptr %13, align 16, !tbaa !27
+  %15 = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %.sroa.064.077.i.i.i.i.epil.init, <4 x i32> %14)
+  %16 = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %.057.in78.i.i.i.i.epil.init
+  %17 = getelementptr inbounds nuw i8, ptr %16, i64 48
+  %18 = load <4 x i32>, ptr %17, align 16, !tbaa !27
+  %19 = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %.epil.init, <4 x i32> %18)
+  br label %._crit_edge.i.i.i.i
+
+._crit_edge.i.i.i.i:                              ; preds = %.lr.ph.i.i.i.i.epil.preheader, %._crit_edge.i.i.i.i.loopexit.unr-lcssa, %bb.f
+  %.lcssa.i.i.i.i = phi <4 x i32> [ %i.v, %bb.f ], [ %i.ag, %._crit_edge.i.i.i.i.loopexit.unr-lcssa ], [ %19, %.lr.ph.i.i.i.i.epil.preheader ]
+  %.sroa.064.0.lcssa.i.i.i.i = phi <4 x i32> [ %i.s, %bb.f ], [ %i.ac, %._crit_edge.i.i.i.i.loopexit.unr-lcssa ], [ %15, %.lr.ph.i.i.i.i.epil.preheader ]
   %i.x = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %.sroa.064.0.lcssa.i.i.i.i, <4 x i32> %.lcssa.i.i.i.i) ; 2 uses
   %i.y = icmp sgt i64 %i.r, %i.p
   br i1 %i.y, label %bb.g, label %bb.h
 
-.lr.ph.i.i.i.i:                                   ; preds = %bb.f, %.lr.ph.i.i.i.i
-  %.05779.i.i.i.i = phi i64 [ %.057.i.i.i.i.a, %.lr.ph.i.i.i.i ], [ 8, %bb.f ] ; 3 uses
-  %.057.in78.i.i.i.i = phi i64 [ %.05779.i.i.i.i, %.lr.ph.i.i.i.i ], [ 0, %bb.f ]
-  %.sroa.064.077.i.i.i.i = phi <4 x i32> [ %i.ac, %.lr.ph.i.i.i.i ], [ %i.s, %bb.f ]
-  %i.z = phi <4 x i32> [ %i.ag, %.lr.ph.i.i.i.i ], [ %i.v, %bb.f ]
-  %i.aa = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %.05779.i.i.i.i
+.lr.ph.i.i.i.i:                                   ; preds = %.lr.ph.i.i.i.i, %.lr.ph.i.i.i.i.preheader.new
+  %.05779.i.i.i.i = phi i64 [ 8, %.lr.ph.i.i.i.i.preheader.new ], [ %.057.i.i.i.i.1, %.lr.ph.i.i.i.i ] ; 4 uses
+  %.057.in78.i.i.i.i = phi i64 [ 0, %.lr.ph.i.i.i.i.preheader.new ], [ %.057.i.i.i.i, %.lr.ph.i.i.i.i ]
+  %.sroa.064.077.i.i.i.i = phi <4 x i32> [ %i.s, %.lr.ph.i.i.i.i.preheader.new ], [ %i.ac, %.lr.ph.i.i.i.i ]
+  %i.z = phi <4 x i32> [ %i.v, %.lr.ph.i.i.i.i.preheader.new ], [ %i.ag, %.lr.ph.i.i.i.i ]
+  %niter = phi i64 [ 0, %.lr.ph.i.i.i.i.preheader.new ], [ %.057.i.i.i.i.a, %.lr.ph.i.i.i.i ]
+  %20 = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %.05779.i.i.i.i
+  %21 = load <4 x i32>, ptr %20, align 16, !tbaa !27
+  %22 = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %.sroa.064.077.i.i.i.i, <4 x i32> %21)
+  %23 = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %.057.in78.i.i.i.i
+  %24 = getelementptr inbounds nuw i8, ptr %23, i64 48
+  %25 = load <4 x i32>, ptr %24, align 16, !tbaa !27
+  %26 = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.z, <4 x i32> %25)
+  %.057.i.i.i.i = add nuw nsw i64 %.05779.i.i.i.i, 8 ; 3 uses
+  %i.aa = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %.057.i.i.i.i
   %i.ab = load <4 x i32>, ptr %i.aa, align 16, !tbaa !27
-  %i.ac = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %.sroa.064.077.i.i.i.i, <4 x i32> %i.ab) ; 2 uses
-  %i.ad = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %.057.in78.i.i.i.i
+  %i.ac = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %22, <4 x i32> %i.ab) ; 3 uses
+  %i.ad = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %.05779.i.i.i.i
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 48
   %i.af = load <4 x i32>, ptr %i.ae, align 16, !tbaa !27
-  %i.ag = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.z, <4 x i32> %i.af) ; 2 uses
-  %.057.i.i.i.i.a = add nuw nsw i64 %.05779.i.i.i.i, 8 ; 2 uses
-  %8 = icmp slt i64 %.057.i.i.i.i.a, %i.p
-  br i1 %8, label %.lr.ph.i.i.i.i, label %._crit_edge.i.i.i.i, !llvm.loop !28
+  %i.ag = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %26, <4 x i32> %i.af) ; 3 uses
+  %.057.i.i.i.i.1 = add nuw nsw i64 %.05779.i.i.i.i, 16 ; 2 uses
+  %.057.i.i.i.i.a = add i64 %niter, 2             ; 2 uses
+  %niter.ncmp.1.not = icmp eq i64 %.057.i.i.i.i.a, %unroll_iter
+  br i1 %niter.ncmp.1.not, label %._crit_edge.i.i.i.i.loopexit.unr-lcssa, label %.lr.ph.i.i.i.i, !llvm.loop !28
 
 bb.g:                                             ; preds = %._crit_edge.i.i.i.i
   %i.ah = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %i.p

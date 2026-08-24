@@ -205,7 +205,7 @@ bb.q:                                             ; preds = %bb.ac, %bb.k
   %i.br = ptrtoint ptr %i.bh to i64
   %i.bs = ptrtoint ptr %i.bf to i64
   %i.bt = sub i64 %i.br, %i.bs
-  %i.bu = sdiv exact i64 %i.bt, 24
+  %i.bu = sdiv i64 %i.bt, 24
   %i.bv = getelementptr inbounds nuw i8, ptr %0, i64 4280
   %i.bw = getelementptr inbounds nuw i8, ptr %0, i64 4272
   %i.bx = getelementptr inbounds nuw i8, ptr %0, i64 4312 ; 2 uses
@@ -213,6 +213,7 @@ bb.q:                                             ; preds = %bb.ac, %bb.k
   %i.bz = getelementptr inbounds nuw i8, ptr %0, i64 4328 ; 2 uses
   %i.ca = getelementptr inbounds nuw i8, ptr %0, i64 4336 ; 2 uses
   %i.cb = getelementptr inbounds nuw i8, ptr %0, i64 112
+  %umax263 = call i64 @llvm.umax.i64(i64 %i.bu, i64 1)
   br label %bb.r
 
 ._crit_edge:                                      ; preds = %_ZN4cvc58internal6theory5arith6linear18TheoryArithPrivate13raiseConflictEPKNS3_10ConstraintENS1_11InferenceIdE.exit
@@ -380,7 +381,7 @@ _ZN4cvc58internal6theory5arith6linear18TheoryArithPrivate13raiseConflictEPKNS3_1
 _ZN4cvc58internal6theory5arith6linear18TheoryArithPrivate13raiseConflictEPKNS3_10ConstraintENS1_11InferenceIdE.exit: ; preds = %_ZN4cvc58internal6theory5arith6linear18TheoryArithPrivate13raiseConflictEPKNS3_10ConstraintENS1_11InferenceIdE.exit.thread, %bb.r, %.noexc159
   %.3 = phi i32 [ %i.ct, %.noexc159 ], [ %.026256, %bb.r ], [ %.026256, %_ZN4cvc58internal6theory5arith6linear18TheoryArithPrivate13raiseConflictEPKNS3_10ConstraintENS1_11InferenceIdE.exit.thread ] ; 2 uses
   %i.eg = add nuw i64 %.025257, 1                 ; 2 uses
-  %exitcond264.not = icmp eq i64 %i.eg, %i.bu
+  %exitcond264.not = icmp eq i64 %i.eg, %umax263
   br i1 %exitcond264.not, label %._crit_edge, label %bb.r, !llvm.loop !1564
 
 bb.z:                                             ; preds = %._crit_edge
@@ -783,8 +784,9 @@ _ZNSt6vectorIS_IPKN4cvc58internal6theory5arith6linear10ConstraintESaIS7_EESaIS9_
   %i.iu = ptrtoint ptr %i.it to i64
   %i.iv = ptrtoint ptr %i.iq to i64
   %i.iw = sub i64 %i.iu, %i.iv
-  %i.ix = sdiv exact i64 %i.iw, 24
+  %i.ix = sdiv i64 %i.iw, 24
   %i.iy = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %umax934 = call i64 @llvm.umax.i64(i64 %i.ix, i64 1)
   br label %bb.do
 
 bb.di:                                            ; preds = %bb.cy
@@ -998,7 +1000,7 @@ _ZNSt6vectorImSaImEE9push_backERKm.exit:          ; preds = %_ZNSt6vectorIPKN4cv
   %.sroa.10733.1 = phi ptr [ %i.jq, %bb.dq ], [ %i.ke, %_ZNSt6vectorImSaImEE17_M_realloc_insertIJRKmEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i ], [ %.sroa.10733.0886, %bb.ea ], [ %.sroa.10733.0886, %_ZNSt6vectorIPKN4cvc58internal6theory5arith6linear10ConstraintESaIS7_EEC2ERKS9_.exit.i ] ; 2 uses
   %.sroa.0728.1 = phi ptr [ %.sroa.0728.0887, %bb.dq ], [ %i.kb, %_ZNSt6vectorImSaImEE17_M_realloc_insertIJRKmEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i ], [ %.sroa.0728.0887, %bb.ea ], [ %.sroa.0728.0887, %_ZNSt6vectorIPKN4cvc58internal6theory5arith6linear10ConstraintESaIS7_EEC2ERKS9_.exit.i ] ; 2 uses
   %i.lb = add nuw i64 %.0766883, 1                ; 2 uses
-  %exitcond935.not = icmp eq i64 %i.lb, %i.ix
+  %exitcond935.not = icmp eq i64 %i.lb, %umax934
   br i1 %exitcond935.not, label %.loopexit822, label %bb.do, !llvm.loop !1588
 
 _ZN4cvc58internal11Cvc5ostreamlsEPFRSoS2_E.exit324: ; preds = %bb.dg
@@ -1130,8 +1132,9 @@ _ZNSt6vectorIS_IPKN4cvc58internal6theory5arith6linear10ConstraintESaIS7_EESaIS9_
   %i.mr = ptrtoint ptr %i.ls to i64
   %i.ms = ptrtoint ptr %i.lo to i64
   %i.mt = sub i64 %i.mr, %i.ms
-  %i.mu = sdiv exact i64 %i.mt, 24
+  %i.mu = sdiv i64 %i.mt, 24
   %i.mv = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %umax936 = call i64 @llvm.umax.i64(i64 %i.mu, i64 1)
   br label %bb.ej
 
 bb.ei:                                            ; preds = %bb.ec
@@ -1320,7 +1323,7 @@ _ZNSt6vectorImSaImEE9push_backERKm.exit363:       ; preds = %_ZNSt6vectorIPKN4cv
   %.sroa.10.1 = phi ptr [ %i.ni, %bb.el ], [ %i.nw, %_ZNSt6vectorImSaImEE17_M_realloc_insertIJRKmEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i360 ], [ %.sroa.10.0895, %bb.ev ], [ %.sroa.10.0895, %_ZNSt6vectorIPKN4cvc58internal6theory5arith6linear10ConstraintESaIS7_EEC2ERKS9_.exit.i367 ] ; 2 uses
   %.sroa.0720.2 = phi ptr [ %.sroa.0720.1896, %bb.el ], [ %i.nt, %_ZNSt6vectorImSaImEE17_M_realloc_insertIJRKmEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i360 ], [ %.sroa.0720.1896, %bb.ev ], [ %.sroa.0720.1896, %_ZNSt6vectorIPKN4cvc58internal6theory5arith6linear10ConstraintESaIS7_EEC2ERKS9_.exit.i367 ] ; 2 uses
   %i.ot = add nuw i64 %.0765893, 1                ; 2 uses
-  %exitcond937.not = icmp eq i64 %i.ot, %i.mu
+  %exitcond937.not = icmp eq i64 %i.ot, %umax936
   br i1 %exitcond937.not, label %.loopexit815, label %bb.ej, !llvm.loop !1589
 
 _ZN4cvc58internal11Cvc5ostreamlsEPFRSoS2_E.exit387: ; preds = %.loopexit822
@@ -1723,7 +1726,8 @@ _ZN4cvc58internal11Cvc5ostreamlsEPFRSoS2_E.exit489: ; preds = %._crit_edge.invok
   %i.vi = ptrtoint ptr %i.vg to i64
   %i.vj = ptrtoint ptr %i.vh to i64
   %i.vk = sub i64 %i.vi, %i.vj
-  %i.vl = sdiv exact i64 %i.vk, 24
+  %i.vl = sdiv i64 %i.vk, 24
+  %umax.i = call i64 @llvm.umax.i64(i64 %i.vl, i64 1)
   br label %.lr.ph.i507
 
 .lr.ph.i507:                                      ; preds = %.noexc510, %.lr.ph.preheader.i506
@@ -1735,7 +1739,7 @@ _ZN4cvc58internal11Cvc5ostreamlsEPFRSoS2_E.exit489: ; preds = %._crit_edge.invok
 
 .noexc510:                                        ; preds = %.lr.ph.i507
   %i.vo = add nuw i64 %.066.i, 1                  ; 2 uses
-  %exitcond.not.i508 = icmp eq i64 %i.vo, %i.vl
+  %exitcond.not.i508 = icmp eq i64 %i.vo, %umax.i
   br i1 %exitcond.not.i508, label %_ZNK4cvc58internal6theory5arith6linear18TheoryArithPrivate20resolveOutPropagatedERSt6vectorIS5_IPKNS3_10ConstraintESaIS8_EESaISA_EE.exit, label %.lr.ph.i507, !llvm.loop !1594
 
 _ZNK4cvc58internal6theory5arith6linear18TheoryArithPrivate20resolveOutPropagatedERSt6vectorIS5_IPKNS3_10ConstraintESaIS8_EESaISA_EE.exit: ; preds = %.noexc510, %_ZN4cvc58internal11Cvc5ostreamlsEPFRSoS2_E.exit489
@@ -2138,9 +2142,10 @@ _ZN4cvc58internal11Cvc5ostreamlsEPFRSoS2_E.exit122: ; preds = %.critedge72
   %i.dd = ptrtoint ptr %i.db to i64
   %i.de = ptrtoint ptr %i.dc to i64
   %i.df = sub i64 %i.dd, %i.de
-  %i.dg = sdiv exact i64 %i.df, 24
+  %i.dg = sdiv i64 %i.df, 24
   %.sroa.2.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.dh = getelementptr inbounds nuw i8, ptr %0, i64 112
+  %umax215 = call i64 @llvm.umax.i64(i64 %i.dg, i64 1)
   br label %bb.ao
 
 bb.am:                                            ; preds = %bb.ae, %_ZNSt6vectorIPKN4cvc58internal6theory5arith6linear10ConstraintESaIS7_EED2Ev.exit93, %bb.ac, %bb.v
@@ -2326,7 +2331,7 @@ _ZN4cvc58internal6theory5arith6linearL4dropERSt6vectorIPKNS3_10ConstraintESaIS7_
 
 _ZN4cvc58internal6theory5arith6linear18TheoryArithPrivate13raiseConflictEPKNS3_10ConstraintENS1_11InferenceIdE.exit: ; preds = %_ZN4cvc58internal6theory5arith6linearL4dropERSt6vectorIPKNS3_10ConstraintESaIS7_EEPS5_.exit, %.noexc140, %bb.at
   %i.fb = add nuw i64 %.0211, 1                   ; 2 uses
-  %exitcond216.not = icmp eq i64 %i.fb, %i.dg
+  %exitcond216.not = icmp eq i64 %i.fb, %umax215
   br i1 %exitcond216.not, label %.loopexit, label %bb.ao, !llvm.loop !1632
 
 .loopexit:                                        ; preds = %_ZN4cvc58internal6theory5arith6linear18TheoryArithPrivate13raiseConflictEPKNS3_10ConstraintENS1_11InferenceIdE.exit, %_ZN4cvc58internal11Cvc5ostreamlsEPFRSoS2_E.exit122, %_ZN4cvc58internal6theory5arith6linear18TheoryArithPrivate19replayGetConstraintERKNS3_7CutInfoE.exit
@@ -2729,7 +2734,8 @@ bb.a:
   %i.d = ptrtoint ptr %i.b to i64
   %i.e = ptrtoint ptr %i.c to i64
   %i.f = sub i64 %i.d, %i.e
-  %i.g = sdiv exact i64 %i.f, 24
+  %i.g = sdiv i64 %i.f, 24
+  %umax = tail call i64 @llvm.umax.i64(i64 %i.g, i64 1)
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
@@ -2738,7 +2744,7 @@ bb.a:
   %i.i = getelementptr inbounds nuw [24 x i8], ptr %i.h, i64 %.066
   tail call void @_ZN4cvc58internal6theory5arith6linear10Constraint15assertionFringeERSt6vectorIPKS4_SaIS7_EE(ptr noundef nonnull align 8 dereferenceable(24) %i.i)
   %i.j = add nuw i64 %.066, 1                     ; 2 uses
-  %exitcond.not = icmp eq i64 %i.j, %i.g
+  %exitcond.not = icmp eq i64 %i.j, %umax
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !1594
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.a
@@ -2758,7 +2764,8 @@ bb.a:
   %i.d = ptrtoint ptr %i.b to i64
   %i.e = ptrtoint ptr %i.c to i64
   %i.f = sub i64 %i.d, %i.e
-  %i.g = sdiv exact i64 %i.f, 24
+  %i.g = sdiv i64 %i.f, 24
+  %umax = tail call i64 @llvm.umax.i64(i64 %i.g, i64 1)
   br label %.lr.ph
 
 ._crit_edge.loopexit:                             ; preds = %_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPPKN4cvc58internal6theory5arith6linear10ConstraintESt6vectorIS9_SaIS9_EEEEEvT_SF_.exit
@@ -2816,7 +2823,7 @@ bb.c:                                             ; preds = %.lr.ph
 
 _ZSt4sortIN9__gnu_cxx17__normal_iteratorIPPKN4cvc58internal6theory5arith6linear10ConstraintESt6vectorIS9_SaIS9_EEEEEvT_SF_.exit: ; preds = %.lr.ph, %bb.c
   %i.ae = add nuw i64 %.057, 1                    ; 2 uses
-  %exitcond.not = icmp eq i64 %i.ae, %i.g
+  %exitcond.not = icmp eq i64 %i.ae, %umax
   br i1 %exitcond.not, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !1636
 
 .loopexit:                                        ; preds = %bb.g

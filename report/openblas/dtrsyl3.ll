@@ -117,14 +117,14 @@ bb.a:
   %i.bt = load i32, ptr %3, align 4, !tbaa !8
   %i.bu = add nsw i32 %i.bs, -1                   ; 2 uses
   %i.bv = add i32 %i.bu, %i.bt
-  %i.bw = sdiv i32 %i.bv, %i.bs                   ; 3 uses
-  %i.bx = tail call i32 @llvm.smax.i32(i32 %i.bw, i32 1) ; 12 uses
+  %i.bw = sdiv i32 %i.bv, %i.bs                   ; 4 uses
+  %i.bx = tail call i32 @llvm.smax.i32(i32 %i.bw, i32 1) ; 9 uses
   store i32 1, ptr %i.ao, align 4, !tbaa !8
   %i.by = load i32, ptr %4, align 4, !tbaa !8
   %i.bz = add i32 %i.bu, %i.by
-  %i.ca = sdiv i32 %i.bz, %i.bs                   ; 5 uses
+  %i.ca = sdiv i32 %i.bz, %i.bs                   ; 6 uses
   store i32 %i.ca, ptr %i.ap, align 4, !tbaa !8
-  %i.cb = tail call i32 @llvm.smax.i32(i32 %i.ca, i32 1) ; 12 uses
+  %i.cb = tail call i32 @llvm.smax.i32(i32 %i.ca, i32 1) ; 10 uses
   store i32 0, ptr %16, align 4, !tbaa !8
   %i.cc = load i32, ptr %13, align 4, !tbaa !8
   %i.cd = icmp eq i32 %i.cc, -1
@@ -275,9 +275,8 @@ bb.v:                                             ; preds = %bb.u, %bb.t, %bb.s
 
 iter.check:                                       ; preds = %bb.u
   %i.ea = tail call double @dlamch_(ptr noundef nonnull @.str.6) #9 ; 2 uses
-  %17 = add nuw nsw i32 %i.bx, 1                  ; 2 uses
-  %wide.trip.count = zext nneg i32 %17 to i64     ; 2 uses
-  %18 = zext nneg i32 %i.bx to i64                ; 5 uses
+  %17 = sext i32 %i.bw to i64                     ; 3 uses
+  %smax = tail call i64 @llvm.smax.i64(i64 %17, i64 1) ; 5 uses
   %min.iters.check = icmp slt i32 %i.bw, 8
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
@@ -286,8 +285,8 @@ vector.main.loop.iter.check:                      ; preds = %iter.check
   br i1 %min.iters.check3673, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %i.eb = and i64 %18, 24
-  %n.vec = and i64 %18, 2147483616                ; 4 uses
+  %i.eb = and i64 %smax, 24
+  %n.vec = and i64 %smax, 2147483616              ; 4 uses
   %i.ec = or disjoint i64 %n.vec, 1               ; 2 uses
   %broadcast.splatinsert = insertelement <8 x i32> poison, i32 %i.bs, i64 0
   %broadcast.splat = shufflevector <8 x i32> %broadcast.splatinsert, <8 x i32> poison, <8 x i32> zeroinitializer ; 4 uses
@@ -322,7 +321,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.et, label %middle.block, label %vector.body, !llvm.loop !11
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %n.vec, %18
+  %cmp.n = icmp eq i64 %smax, %n.vec
   br i1 %cmp.n, label %.loopexit3748, label %vec.epilog.iter.check
 
 vec.epilog.iter.check:                            ; preds = %middle.block
@@ -332,7 +331,7 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %bc.resume.val = phi i64 [ %i.ec, %vec.epilog.iter.check ], [ 1, %vector.main.loop.iter.check ]
-  %n.vec3674 = and i64 %18, 2147483640            ; 3 uses
+  %n.vec3674 = and i64 %smax, 2147483640          ; 3 uses
   %i.eu = or disjoint i64 %n.vec3674, 1
   %broadcast.splatinsert3675 = insertelement <8 x i32> poison, i32 %i.bs, i64 0
   %broadcast.splat3676 = shufflevector <8 x i32> %broadcast.splatinsert3675, <8 x i32> poison, <8 x i32> zeroinitializer
@@ -356,7 +355,7 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   br i1 %i.fa, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !16
 
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
-  %cmp.n3683 = icmp eq i64 %n.vec3674, %18
+  %cmp.n3683 = icmp eq i64 %smax, %n.vec3674
   br i1 %cmp.n3683, label %.loopexit3748, label %vec.epilog.scalar.ph.preheader
 
 vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
@@ -364,16 +363,16 @@ vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vec.ep
   br label %vec.epilog.scalar.ph
 
 vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.ph.preheader, %vec.epilog.scalar.ph
-  %indvars.iv = phi i64 [ %indvars.iv.next, %vec.epilog.scalar.ph ], [ %indvars.iv.ph, %vec.epilog.scalar.ph.preheader ] ; 3 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %vec.epilog.scalar.ph ], [ %indvars.iv.ph, %vec.epilog.scalar.ph.preheader ] ; 4 uses
   %i.fb = getelementptr inbounds nuw [4 x i8], ptr %i.bl, i64 %indvars.iv
   %i.fc = trunc i64 %indvars.iv to i32
   %i.fd = add i32 %i.fc, -1
   %i.fe = mul i32 %i.fd, %i.bs
   %i.ff = add i32 %i.fe, 1
   store i32 %i.ff, ptr %i.fb, align 4, !tbaa !8
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %.loopexit3748, label %vec.epilog.scalar.ph, !llvm.loop !17
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
+  %.not1908.not = icmp slt i64 %indvars.iv, %17
+  br i1 %.not1908.not, label %vec.epilog.scalar.ph, label %.loopexit3748, !llvm.loop !17
 
 .loopexit3748:                                    ; preds = %vec.epilog.scalar.ph, %vec.epilog.middle.block, %middle.block
   %i.fg = load i32, ptr %3, align 4, !tbaa !8
@@ -389,14 +388,14 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
 .loopexit2620:                                    ; preds = %.lr.ph.prol.loopexit, %bb.am, %bb.w
   %i.fm = phi i32 [ %i.fp, %bb.w ], [ %.lcssa3769.unr, %.lr.ph.prol.loopexit ], [ %i.ib, %bb.am ]
   %.11874.lcssa = phi i32 [ %.018732625, %bb.w ], [ %.21875.lcssa.unr, %.lr.ph.prol.loopexit ], [ %.21875.1, %bb.am ]
-  %exitcond3027.not = icmp eq i64 %indvars.iv.next3024, %wide.trip.count
-  br i1 %exitcond3027.not, label %bb.an, label %bb.w, !llvm.loop !18
+  %.not1909.not = icmp slt i64 %indvars.iv3023, %17
+  br i1 %.not1909.not, label %bb.w, label %bb.an, !llvm.loop !18
 
 bb.w:                                             ; preds = %.loopexit3748, %.loopexit2620
   %i.fn = phi i32 [ %.pre, %.loopexit3748 ], [ %i.fm, %.loopexit2620 ] ; 4 uses
-  %indvars.iv3023 = phi i64 [ 1, %.loopexit3748 ], [ %indvars.iv.next3024, %.loopexit2620 ] ; 2 uses
+  %indvars.iv3023 = phi i64 [ 1, %.loopexit3748 ], [ %indvars.iv.next3024, %.loopexit2620 ] ; 3 uses
   %.018732625 = phi i32 [ 0, %.loopexit3748 ], [ %.11874.lcssa, %.loopexit2620 ] ; 3 uses
-  %indvars.iv.next3024 = add nuw nsw i64 %indvars.iv3023, 1 ; 2 uses
+  %indvars.iv.next3024 = add nuw nsw i64 %indvars.iv3023, 1
   %i.fo = getelementptr [4 x i8], ptr %12, i64 %indvars.iv3023 ; 4 uses
   %i.fp = load i32, ptr %i.fo, align 4, !tbaa !8  ; 11 uses
   %.not1988.not2622 = icmp slt i32 %i.fn, %i.fp
@@ -574,14 +573,13 @@ bb.ao:                                            ; preds = %bb.an
   br label %iter.check3704
 
 iter.check3704:                                   ; preds = %bb.ao, %bb.an
-  %.pre-phi.a = phi i32 [ %i.bx, %bb.ao ], [ %17, %bb.an ] ; 18 uses
-  %.01789 = phi i32 [ %i.ig, %bb.ao ], [ %i.bx, %bb.an ] ; 32 uses
+  %.pre-phi.a = phi i32 [ %i.ig, %bb.ao ], [ %i.bx, %bb.an ] ; 36 uses
+  %18 = add nuw nsw i32 %.pre-phi.a, 1            ; 16 uses
   store i32 %i.cb, ptr %i.ao, align 4, !tbaa !8
-  %i.ih = zext i32 %.pre-phi.a to i64             ; 15 uses
-  %19 = add nuw nsw i32 %i.cb, 1
-  %wide.trip.count3031 = zext nneg i32 %19 to i64 ; 2 uses
+  %i.ih = zext nneg i32 %18 to i64                ; 14 uses
+  %19 = sext i32 %i.ca to i64                     ; 3 uses
   %invariant.gep = getelementptr inbounds nuw [4 x i8], ptr %i.bl, i64 %i.ih ; 3 uses
-  %20 = zext nneg i32 %i.cb to i64                ; 5 uses
+  %smax3677 = tail call i64 @llvm.smax.i64(i64 %19, i64 1) ; 5 uses
   %min.iters.check3685 = icmp slt i32 %i.ca, 8
   br i1 %min.iters.check3685, label %vec.epilog.scalar.ph3705.preheader, label %vector.main.loop.iter.check3686
 
@@ -590,8 +588,8 @@ vector.main.loop.iter.check3686:                  ; preds = %iter.check3704
   br i1 %min.iters.check3687, label %vec.epilog.ph3708, label %vector.ph3688
 
 vector.ph3688:                                    ; preds = %vector.main.loop.iter.check3686
-  %i.ii = and i64 %20, 24
-  %n.vec3689 = and i64 %20, 2147483616            ; 4 uses
+  %i.ii = and i64 %smax3677, 24
+  %n.vec3689 = and i64 %smax3677, 2147483616      ; 4 uses
   %i.ij = or disjoint i64 %n.vec3689, 1           ; 2 uses
   %broadcast.splatinsert3690 = insertelement <8 x i32> poison, i32 %i.bs, i64 0
   %broadcast.splat3691 = shufflevector <8 x i32> %broadcast.splatinsert3690, <8 x i32> poison, <8 x i32> zeroinitializer ; 4 uses
@@ -627,7 +625,7 @@ vector.body3692:                                  ; preds = %vector.body3692, %v
   br i1 %i.jb, label %middle.block3700, label %vector.body3692, !llvm.loop !20
 
 middle.block3700:                                 ; preds = %vector.body3692
-  %cmp.n3701 = icmp eq i64 %n.vec3689, %20
+  %cmp.n3701 = icmp eq i64 %smax3677, %n.vec3689
   br i1 %cmp.n3701, label %.loopexit3747, label %vec.epilog.iter.check3706
 
 vec.epilog.iter.check3706:                        ; preds = %middle.block3700
@@ -637,7 +635,7 @@ vec.epilog.iter.check3706:                        ; preds = %middle.block3700
 vec.epilog.ph3708:                                ; preds = %vector.main.loop.iter.check3686, %vec.epilog.iter.check3706
   %vec.epilog.resume.val3702 = phi i64 [ %n.vec3689, %vec.epilog.iter.check3706 ], [ 0, %vector.main.loop.iter.check3686 ]
   %bc.resume.val3703 = phi i64 [ %i.ij, %vec.epilog.iter.check3706 ], [ 1, %vector.main.loop.iter.check3686 ]
-  %n.vec3709 = and i64 %20, 2147483640            ; 3 uses
+  %n.vec3709 = and i64 %smax3677, 2147483640      ; 3 uses
   %i.jc = or disjoint i64 %n.vec3709, 1
   %broadcast.splatinsert3710 = insertelement <8 x i32> poison, i32 %i.bs, i64 0
   %broadcast.splat3711 = shufflevector <8 x i32> %broadcast.splatinsert3710, <8 x i32> poison, <8 x i32> zeroinitializer
@@ -662,7 +660,7 @@ vec.epilog.vector.body3715:                       ; preds = %vec.epilog.vector.b
   br i1 %i.jj, label %vec.epilog.middle.block3720, label %vec.epilog.vector.body3715, !llvm.loop !21
 
 vec.epilog.middle.block3720:                      ; preds = %vec.epilog.vector.body3715
-  %cmp.n3721 = icmp eq i64 %n.vec3709, %20
+  %cmp.n3721 = icmp eq i64 %smax3677, %n.vec3709
   br i1 %cmp.n3721, label %.loopexit3747, label %vec.epilog.scalar.ph3705.preheader
 
 vec.epilog.scalar.ph3705.preheader:               ; preds = %iter.check3704, %vec.epilog.iter.check3706, %vec.epilog.middle.block3720
@@ -670,21 +668,21 @@ vec.epilog.scalar.ph3705.preheader:               ; preds = %iter.check3704, %ve
   br label %vec.epilog.scalar.ph3705
 
 vec.epilog.scalar.ph3705:                         ; preds = %vec.epilog.scalar.ph3705.preheader, %vec.epilog.scalar.ph3705
-  %indvars.iv3028 = phi i64 [ %indvars.iv.next3029, %vec.epilog.scalar.ph3705 ], [ %indvars.iv3028.ph, %vec.epilog.scalar.ph3705.preheader ] ; 3 uses
+  %indvars.iv3028 = phi i64 [ %indvars.iv.next3029, %vec.epilog.scalar.ph3705 ], [ %indvars.iv3028.ph, %vec.epilog.scalar.ph3705.preheader ] ; 4 uses
   %gep = getelementptr inbounds nuw [4 x i8], ptr %invariant.gep, i64 %indvars.iv3028
   %i.jk = trunc i64 %indvars.iv3028 to i32
   %i.jl = add i32 %i.jk, -1
   %i.jm = mul i32 %i.jl, %i.bs
   %i.jn = add i32 %i.jm, 1
   store i32 %i.jn, ptr %gep, align 4, !tbaa !8
-  %indvars.iv.next3029 = add nuw nsw i64 %indvars.iv3028, 1 ; 2 uses
-  %exitcond3032.not = icmp eq i64 %indvars.iv.next3029, %wide.trip.count3031
-  br i1 %exitcond3032.not, label %.loopexit3747, label %vec.epilog.scalar.ph3705, !llvm.loop !22
+  %indvars.iv.next3029 = add nuw nsw i64 %indvars.iv3028, 1
+  %.not1911.not = icmp slt i64 %indvars.iv3028, %19
+  br i1 %.not1911.not, label %vec.epilog.scalar.ph3705, label %.loopexit3747, !llvm.loop !22
 
 .loopexit3747:                                    ; preds = %vec.epilog.scalar.ph3705, %vec.epilog.middle.block3720, %middle.block3700
   %i.jo = load i32, ptr %4, align 4, !tbaa !8
   %i.jp = add nsw i32 %i.jo, 1
-  %i.jq = add nuw nsw i32 %.pre-phi.a, %i.cb
+  %i.jq = add nuw nsw i32 %18, %i.cb
   %i.jr = zext nneg i32 %i.jq to i64
   %i.js = getelementptr [4 x i8], ptr %i.bl, i64 %i.jr ; 3 uses
   %i.jt = getelementptr i8, ptr %i.js, i64 4      ; 2 uses
@@ -694,7 +692,7 @@ vec.epilog.scalar.ph3705:                         ; preds = %vec.epilog.scalar.p
   br label %bb.ap
 
 bb.ap:                                            ; preds = %.loopexit3747, %._crit_edge
-  %indvars.iv3038 = phi i64 [ 1, %.loopexit3747 ], [ %indvars.iv.next3039, %._crit_edge ] ; 2 uses
+  %indvars.iv3038 = phi i64 [ 1, %.loopexit3747 ], [ %indvars.iv.next3039, %._crit_edge ] ; 3 uses
   %.318762634 = phi i32 [ 0, %.loopexit3747 ], [ %.41877.lcssa, %._crit_edge ] ; 3 uses
   %gep3512.a = getelementptr inbounds nuw [4 x i8], ptr %invariant.gep3511.a, i64 %indvars.iv3038 ; 2 uses
   %i.jv = load i32, ptr %gep3512.a, align 4, !tbaa !8 ; 4 uses
@@ -858,9 +856,9 @@ bb.bf:                                            ; preds = %bb.be, %bb.bd, %bb.
 
 ._crit_edge:                                      ; preds = %.lr.ph2632.prol.loopexit, %bb.bf, %bb.ap
   %.41877.lcssa = phi i32 [ %.318762634, %bb.ap ], [ %.51878.lcssa.unr, %.lr.ph2632.prol.loopexit ], [ %.51878.1, %bb.bf ]
-  %indvars.iv.next3039 = add nuw nsw i64 %indvars.iv3038, 1 ; 2 uses
-  %exitcond3042.not = icmp eq i64 %indvars.iv.next3039, %wide.trip.count3031
-  br i1 %exitcond3042.not, label %bb.bg, label %bb.ap, !llvm.loop !24
+  %indvars.iv.next3039 = add nuw nsw i64 %indvars.iv3038, 1
+  %.not1912.not = icmp slt i64 %indvars.iv3038, %19
+  br i1 %.not1912.not, label %bb.ap, label %bb.bg, !llvm.loop !24
 
 bb.bg:                                            ; preds = %._crit_edge
   %i.mh = add nsw i32 %i.jx, -1
@@ -880,12 +878,12 @@ bb.bh:                                            ; preds = %bb.bg
 
 .lr.ph2645:                                       ; preds = %bb.bg, %bb.bh
   %.017883464 = phi i32 [ %i.ml, %bb.bh ], [ %i.cb, %bb.bg ] ; 5 uses
-  store i32 %.01789, ptr %i.ap, align 4, !tbaa !8
-  %.not19842637 = icmp slt i32 %.01789, 1
+  store i32 %.pre-phi.a, ptr %i.ap, align 4, !tbaa !8
+  %.not19842637 = icmp slt i32 %.pre-phi.a, 1
   br i1 %.not19842637, label %._crit_edge2655.thread, label %.lr.ph2640.preheader
 
 ._crit_edge2655.thread:                           ; preds = %.lr.ph2645
-  %i.mm = add nuw nsw i32 %.017883464, %.01789
+  %i.mm = add nuw nsw i32 %.017883464, %.pre-phi.a
   store i32 %.017883464, ptr %i.ao, align 4, !tbaa !8
   br label %.lr.ph2665
 
@@ -893,18 +891,18 @@ bb.bh:                                            ; preds = %bb.bg
   %i.mn = sext i32 %i.bm to i64
   %i.mo = add nuw nsw i32 %.017883464, 1
   %wide.trip.count3051 = zext nneg i32 %i.mo to i64
-  %wide.trip.count3046 = zext nneg i32 %.pre-phi.a to i64
-  %21 = add nsw i64 %i.ih, -1                     ; 5 uses
-  %min.iters.check3723 = icmp ult i32 %.pre-phi.a, 5
-  %min.iters.check3725 = icmp ult i32 %.pre-phi.a, 17
-  %i.mp = and i64 %21, 12
-  %n.vec3727 = and i64 %21, -16                   ; 4 uses
+  %wide.trip.count3046 = zext nneg i32 %18 to i64
+  %20 = zext nneg i32 %.pre-phi.a to i64          ; 5 uses
+  %min.iters.check3723 = icmp ult i32 %.pre-phi.a, 4
+  %min.iters.check3725 = icmp ult i32 %.pre-phi.a, 16
+  %i.mp = and i64 %20, 12
+  %n.vec3727 = and i64 %20, 2147483632            ; 4 uses
   %i.mq = or disjoint i64 %n.vec3727, 1
-  %cmp.n3732 = icmp eq i64 %21, %n.vec3727
+  %cmp.n3732 = icmp eq i64 %n.vec3727, %20
   %min.epilog.iters.check3738 = icmp eq i64 %i.mp, 0
-  %n.vec3740 = and i64 %21, -4                    ; 3 uses
+  %n.vec3740 = and i64 %20, 2147483644            ; 3 uses
   %i.mr = or disjoint i64 %n.vec3740, 1
-  %cmp.n3745 = icmp eq i64 %21, %n.vec3740
+  %cmp.n3745 = icmp eq i64 %n.vec3740, %20
   br label %iter.check3735
 
 iter.check3735:                                   ; preds = %.lr.ph2640.preheader, %._crit_edge2641
@@ -973,14 +971,14 @@ vec.epilog.scalar.ph3736:                         ; preds = %vec.epilog.scalar.p
 ._crit_edge2646.split:                            ; preds = %._crit_edge2641, %bb.bh
   %.not191426423467 = phi i1 [ true, %bb.bh ], [ false, %._crit_edge2641 ]
   %.017883465 = phi i32 [ %i.ml, %bb.bh ], [ %.017883464, %._crit_edge2641 ] ; 5 uses
-  store i32 %.01789, ptr %i.ao, align 4, !tbaa !8
-  %.not19152651 = icmp slt i32 %.01789, 1         ; 3 uses
+  store i32 %.pre-phi.a, ptr %i.ao, align 4, !tbaa !8
+  %.not19152651 = icmp slt i32 %.pre-phi.a, 1     ; 3 uses
   br i1 %.not19152651, label %._crit_edge2655, label %.lr.ph2654.preheader
 
 .lr.ph2654.preheader:                             ; preds = %._crit_edge2646.split
   %i.nc = zext nneg i32 %.017883465 to i64        ; 2 uses
   %i.nd = sext i32 %i.bm to i64                   ; 2 uses
-  %i.ne = zext nneg i32 %.01789 to i64
+  %i.ne = zext nneg i32 %.pre-phi.a to i64
   br label %.lr.ph2654
 
 .loopexit2619:                                    ; preds = %.lr.ph2650.split, %.lr.ph2650.split.us, %.lr.ph2654
@@ -996,7 +994,7 @@ vec.epilog.scalar.ph3736:                         ; preds = %vec.epilog.scalar.p
   %indvars.iv.next3054 = add nuw nsw i64 %indvars.iv3053, 1
   %i.nj = getelementptr [4 x i8], ptr %12, i64 %indvars.iv3053
   %i.nk = load i32, ptr %i.nj, align 4, !tbaa !8
-  store i32 %.01789, ptr %i.ap, align 4, !tbaa !8
+  store i32 %.pre-phi.a, ptr %i.ap, align 4, !tbaa !8
   %.not19832647 = icmp samesign ugt i64 %indvars.iv3053, %i.ne
   br i1 %.not19832647, label %.loopexit2619, label %.lr.ph2650
 
@@ -1061,7 +1059,7 @@ vec.epilog.scalar.ph3736:                         ; preds = %vec.epilog.scalar.p
   br i1 %.not1983.not, label %.lr.ph2650.split, label %.loopexit2619, !llvm.loop !31
 
 ._crit_edge2655:                                  ; preds = %.loopexit2619, %._crit_edge2646.split
-  %i.oo = add nuw nsw i32 %.017883465, %.01789    ; 2 uses
+  %i.oo = add nuw nsw i32 %.017883465, %.pre-phi.a ; 2 uses
   store i32 %.017883465, ptr %i.ao, align 4, !tbaa !8
   br i1 %.not191426423467, label %._crit_edge2666, label %.lr.ph2665
 
@@ -1166,7 +1164,7 @@ bb.bi:                                            ; preds = %.lr.ph2665, %._crit
   br i1 %or.cond, label %.preheader, label %bb.ck
 
 .preheader:                                       ; preds = %._crit_edge2666
-  %i.qd = icmp sgt i32 %.01789, 0
+  %i.qd = icmp sgt i32 %.pre-phi.a, 0
   br i1 %i.qd, label %.lr.ph2946, label %.loopexit2594
 
 .lr.ph2946:                                       ; preds = %.preheader
@@ -1175,17 +1173,17 @@ bb.bi:                                            ; preds = %.lr.ph2665, %._crit
   %i.qg = sext i32 %i.bm to i64                   ; 7 uses
   %i.qh = add nuw nsw i32 %.01788346534723480, 1  ; 3 uses
   %i.qi = sext i32 %i.bi to i64                   ; 4 uses
-  %i.qj = zext nneg i32 %.01789 to i64
+  %i.qj = zext nneg i32 %.pre-phi.a to i64
   %i.qk = zext nneg i32 %i.pz to i64
   %i.ql = zext nneg i32 %.01788346534723480 to i64 ; 2 uses
   %invariant.gep3637.a = getelementptr inbounds nuw [4 x i8], ptr %i.bl, i64 %i.ih
   %wide.trip.count3247 = zext nneg i32 %i.qh to i64
-  %wide.trip.count3242 = zext nneg i32 %.pre-phi.a to i64
+  %wide.trip.count3242 = zext nneg i32 %18 to i64
   %wide.trip.count3257 = zext nneg i32 %i.qh to i64
-  %wide.trip.count3252 = zext nneg i32 %.pre-phi.a to i64
+  %wide.trip.count3252 = zext nneg i32 %18 to i64
   %invariant.gep3631.a = getelementptr [4 x i8], ptr %i.bl, i64 %i.ih
   %wide.trip.count3278 = zext nneg i32 %i.qh to i64
-  %wide.trip.count3273 = zext nneg i32 %.pre-phi.a to i64
+  %wide.trip.count3273 = zext nneg i32 %18 to i64
   br label %bb.bj
 
 bb.bj:                                            ; preds = %.lr.ph2946, %._crit_edge2942
@@ -1464,7 +1462,7 @@ bb.bs:                                            ; preds = %bb.br
   %.2.i2065 = phi double [ 1.000000e+00, %bb.br ], [ %spec.select2022.i2057, %bb.bs ], [ %spec.select20.i2063, %.lr.ph.i2059 ]
   %i.un = fmul double %.42907, %.2.i2065
   store i32 %.01788346534723480, ptr %i.ap, align 4, !tbaa !8
-  store i32 %.01789, ptr %i.aq, align 4, !tbaa !8
+  store i32 %.pre-phi.a, ptr %i.aq, align 4, !tbaa !8
   store double %i.ic, ptr %i.au, align 8, !tbaa !9
   br label %.lr.ph2890
 
@@ -1783,7 +1781,7 @@ bb.cc:                                            ; preds = %bb.cb
   %.2.i2121 = phi double [ 1.000000e+00, %bb.cb ], [ %spec.select2022.i2113, %bb.cc ], [ %spec.select20.i2119, %.lr.ph.i2115 ]
   %i.yv = fmul double %.62933, %.2.i2121
   store i32 %.01788346534723480, ptr %i.aq, align 4, !tbaa !8
-  store i32 %.01789, ptr %i.ar, align 4, !tbaa !8
+  store i32 %.pre-phi.a, ptr %i.ar, align 4, !tbaa !8
   store double %i.ic, ptr %i.au, align 8, !tbaa !9
   br label %.lr.ph2916
 
@@ -2023,7 +2021,7 @@ bb.ck:                                            ; preds = %._crit_edge2666
   br i1 %or.cond3, label %bb.cl, label %bb.dn
 
 bb.cl:                                            ; preds = %bb.ck
-  store i32 %.01789, ptr %i.ao, align 4, !tbaa !8
+  store i32 %.pre-phi.a, ptr %i.ao, align 4, !tbaa !8
   br i1 %.not1915265134733478, label %.loopexit2594, label %.lr.ph2875
 
 .lr.ph2875:                                       ; preds = %bb.cl
@@ -2035,15 +2033,15 @@ bb.cl:                                            ; preds = %bb.ck
   %i.abv = sext i32 %i.bi to i64                  ; 4 uses
   %i.abw = zext nneg i32 %i.pz to i64
   %i.abx = zext nneg i32 %.01788346534723480 to i64 ; 2 uses
-  %i.aby = zext nneg i32 %.01789 to i64
+  %i.aby = zext nneg i32 %.pre-phi.a to i64
   %invariant.gep3609 = getelementptr inbounds nuw [4 x i8], ptr %i.bl, i64 %i.ih
   %wide.trip.count3189 = zext nneg i32 %i.abu to i64
-  %wide.trip.count3184 = zext nneg i32 %.pre-phi.a to i64
+  %wide.trip.count3184 = zext nneg i32 %18 to i64
   %wide.trip.count3199 = zext nneg i32 %i.abu to i64
-  %wide.trip.count3194 = zext nneg i32 %.pre-phi.a to i64
+  %wide.trip.count3194 = zext nneg i32 %18 to i64
   %invariant.gep3603.a = getelementptr [4 x i8], ptr %i.bl, i64 %i.ih
   %wide.trip.count3220 = zext nneg i32 %i.abu to i64
-  %wide.trip.count3215 = zext nneg i32 %.pre-phi.a to i64
+  %wide.trip.count3215 = zext nneg i32 %18 to i64
   br label %bb.cm
 
 .loopexit2601.loopexit:                           ; preds = %.loopexit2599
@@ -2059,7 +2057,7 @@ bb.cl:                                            ; preds = %bb.ck
   br i1 %.not1944.not, label %bb.cm, label %.loopexit2594, !llvm.loop !48
 
 bb.cm:                                            ; preds = %.lr.ph2875, %.loopexit2601
-  %i.acb = phi i32 [ %.01789, %.lr.ph2875 ], [ %i.abz, %.loopexit2601 ]
+  %i.acb = phi i32 [ %.pre-phi.a, %.lr.ph2875 ], [ %i.abz, %.loopexit2601 ]
   %indvars.iv3236 = phi i64 [ 1, %.lr.ph2875 ], [ %indvars.iv.next3237, %.loopexit2601 ] ; 8 uses
   %indvars.iv3207 = phi i64 [ 2, %.lr.ph2875 ], [ %indvars.iv.next3208, %.loopexit2601 ] ; 2 uses
   %.82873 = phi double [ 1.000000e+00, %.lr.ph2875 ], [ %.9.lcssa, %.loopexit2601 ] ; 2 uses
@@ -2246,7 +2244,7 @@ dpow_ui.exit2192:                                 ; preds = %.lr.ph.i2185, %bb.c
   store i32 %i.act, ptr %i.ar, align 4, !tbaa !8
   %i.ael = call double @dlange_(ptr noundef nonnull @.str.7, ptr noundef nonnull %i.aq, ptr noundef nonnull %i.ar, ptr noundef %i.ada, ptr noundef nonnull %10, ptr noundef %i.dr) #9
   store double %i.ael, ptr %i.az, align 8, !tbaa !9
-  store i32 %.01789, ptr %i.aq, align 4, !tbaa !8
+  store i32 %.pre-phi.a, ptr %i.aq, align 4, !tbaa !8
   br i1 %.not19482834.not, label %.lr.ph2838, label %._crit_edge2839
 
 .lr.ph2838:                                       ; preds = %.loopexit2600
@@ -2337,7 +2335,7 @@ bb.cv:                                            ; preds = %bb.cu
   %.2.i2205 = phi double [ 1.000000e+00, %bb.cu ], [ %spec.select2022.i2197, %bb.cv ], [ %spec.select20.i2203, %.lr.ph.i2199 ]
   %i.agb = fmul double %.122836, %.2.i2205
   store i32 %.01788346534723480, ptr %i.ar, align 4, !tbaa !8
-  store i32 %.01789, ptr %i.as, align 4, !tbaa !8
+  store i32 %.pre-phi.a, ptr %i.as, align 4, !tbaa !8
   store double %i.ic, ptr %i.au, align 8, !tbaa !9
   br label %.lr.ph2819
 
@@ -2659,7 +2657,7 @@ bb.df:                                            ; preds = %bb.de
   %.2.i2261 = phi double [ 1.000000e+00, %bb.de ], [ %spec.select2022.i2253, %bb.df ], [ %spec.select20.i2259, %.lr.ph.i2255 ]
   %i.akl = fmul double %.142861, %.2.i2261
   store i32 %.01788346534723480, ptr %i.ar, align 4, !tbaa !8
-  store i32 %.01789, ptr %i.as, align 4, !tbaa !8
+  store i32 %.pre-phi.a, ptr %i.as, align 4, !tbaa !8
   store double %i.ic, ptr %i.au, align 8, !tbaa !9
   br label %.lr.ph2844
 
@@ -2892,7 +2890,7 @@ bb.dn:                                            ; preds = %bb.ck
   br i1 %or.cond5, label %bb.ep, label %bb.do
 
 bb.do:                                            ; preds = %bb.dn
-  store i32 %.01789, ptr %i.ao, align 4, !tbaa !8
+  store i32 %.pre-phi.a, ptr %i.ao, align 4, !tbaa !8
   br i1 %.not1915265134733478, label %.loopexit2594, label %.lr.ph2734
 
 .lr.ph2734:                                       ; preds = %bb.do
@@ -2908,15 +2906,15 @@ bb.do:                                            ; preds = %bb.dn
   %i.ank = zext nneg i32 %i.pz to i64
   %i.anl = zext nneg i32 %.01788346534723480 to i64
   %i.anm = zext nneg i32 %.01788346534723480 to i64
-  %i.ann = zext nneg i32 %.01789 to i64
+  %i.ann = zext nneg i32 %.pre-phi.a to i64
   %invariant.gep3553.a = getelementptr [4 x i8], ptr %i.bl, i64 %i.ih
   %wide.trip.count3079 = zext nneg i32 %i.ani to i64
-  %wide.trip.count3074 = zext nneg i32 %.pre-phi.a to i64
+  %wide.trip.count3074 = zext nneg i32 %18 to i64
   %wide.trip.count3089 = zext nneg i32 %i.ani to i64
-  %wide.trip.count3084 = zext nneg i32 %.pre-phi.a to i64
+  %wide.trip.count3084 = zext nneg i32 %18 to i64
   %invariant.gep3547.a = getelementptr inbounds nuw [4 x i8], ptr %i.bl, i64 %i.ih
   %wide.trip.count3110 = zext nneg i32 %i.ani to i64
-  %wide.trip.count3105 = zext nneg i32 %.pre-phi.a to i64
+  %wide.trip.count3105 = zext nneg i32 %18 to i64
   br label %.lr.ph2728.us
 
 .lr.ph2728.us:                                    ; preds = %.lr.ph2728.us.preheader, %..loopexit2617_crit_edge.us
@@ -3077,7 +3075,7 @@ dpow_ui.exit2332.us:                              ; preds = %.lr.ph.i2325.us, %b
   store i32 %i.aoc, ptr %i.aq, align 4, !tbaa !8
   %i.apw = call double @dlange_(ptr noundef nonnull @.str.7, ptr noundef nonnull %i.ap, ptr noundef nonnull %i.aq, ptr noundef %i.aok, ptr noundef nonnull %10, ptr noundef %i.dr) #9
   store double %i.apw, ptr %i.az, align 8, !tbaa !9
-  store i32 %.01789, ptr %i.ap, align 4, !tbaa !8
+  store i32 %.pre-phi.a, ptr %i.ap, align 4, !tbaa !8
   br i1 %.not19202694.us.not, label %.lr.ph2698.us, label %._crit_edge2699.us
 
 bb.dv:                                            ; preds = %.lr.ph2698.us, %.loopexit2613.us
@@ -3480,7 +3478,7 @@ bb.eo:                                            ; preds = %.loopexit2612.us
   %.2.i2345.us = phi double [ 1.000000e+00, %bb.dw ], [ %spec.select2022.i2337.us, %bb.dx ], [ %spec.select20.i2343.us, %.lr.ph.i2339.us ]
   %i.ayf = fmul double %.202696.us, %.2.i2345.us
   store i32 %.01788346534723480, ptr %i.aq, align 4, !tbaa !8
-  store i32 %.01789, ptr %i.ar, align 4, !tbaa !8
+  store i32 %.pre-phi.a, ptr %i.ar, align 4, !tbaa !8
   store double %i.ic, ptr %i.au, align 8, !tbaa !9
   br label %.lr.ph2679.us
 
@@ -3510,7 +3508,7 @@ bb.eo:                                            ; preds = %.loopexit2612.us
   %.2.i2401.us = phi double [ 1.000000e+00, %bb.eg ], [ %spec.select2022.i2393.us, %bb.eh ], [ %spec.select20.i2399.us, %.lr.ph.i2395.us ]
   %i.ayk = fmul double %.222721.us, %.2.i2401.us
   store i32 %.01788346534723480, ptr %i.aq, align 4, !tbaa !8
-  store i32 %.01789, ptr %i.ar, align 4, !tbaa !8
+  store i32 %.pre-phi.a, ptr %i.ar, align 4, !tbaa !8
   store double %i.ic, ptr %i.au, align 8, !tbaa !9
   br label %.lr.ph2704.us
 
@@ -3553,16 +3551,16 @@ bb.ep:                                            ; preds = %bb.dn
   %i.ayv = sext i32 %i.bi to i64                  ; 4 uses
   %i.ayw = zext nneg i32 %i.pz to i64
   %i.ayx = zext nneg i32 %.01788346534723480 to i64
-  %i.ayy = zext nneg i32 %.01789 to i64
+  %i.ayy = zext nneg i32 %.pre-phi.a to i64
   %i.ayz = zext nneg i32 %.01788346534723480 to i64
   %invariant.gep3581 = getelementptr [4 x i8], ptr %i.bl, i64 %i.ih
   %wide.trip.count3135 = zext nneg i32 %i.ayu to i64
-  %wide.trip.count3130 = zext nneg i32 %.pre-phi.a to i64
+  %wide.trip.count3130 = zext nneg i32 %18 to i64
   %wide.trip.count3145 = zext nneg i32 %i.ayu to i64
-  %wide.trip.count3140 = zext nneg i32 %.pre-phi.a to i64
+  %wide.trip.count3140 = zext nneg i32 %18 to i64
   %invariant.gep3575.a = getelementptr inbounds nuw [4 x i8], ptr %i.bl, i64 %i.ih
   %wide.trip.count3164 = zext nneg i32 %i.ayu to i64
-  %wide.trip.count3159 = zext nneg i32 %.pre-phi.a to i64
+  %wide.trip.count3159 = zext nneg i32 %18 to i64
   br label %.lr.ph2797.us
 
 .lr.ph2797.us:                                    ; preds = %.lr.ph2797.us.preheader, %._crit_edge2798.us
@@ -3965,7 +3963,7 @@ bb.fp:                                            ; preds = %.loopexit2604.us
   %.2.i2485.us = phi double [ 1.000000e+00, %bb.ex ], [ %spec.select2022.i2477.us, %bb.ey ], [ %spec.select20.i2483.us, %.lr.ph.i2479.us ]
   %i.bjr = fmul double %.282765.us, %.2.i2485.us
   store i32 %.01788346534723480, ptr %i.ap, align 4, !tbaa !8
-  store i32 %.01789, ptr %i.aq, align 4, !tbaa !8
+  store i32 %.pre-phi.a, ptr %i.aq, align 4, !tbaa !8
   store double %i.ic, ptr %i.au, align 8, !tbaa !9
   br label %.lr.ph2748.us
 
@@ -3995,7 +3993,7 @@ bb.fp:                                            ; preds = %.loopexit2604.us
   %.2.i2541.us = phi double [ 1.000000e+00, %bb.fh ], [ %spec.select2022.i2533.us, %bb.fi ], [ %spec.select20.i2539.us, %.lr.ph.i2535.us ]
   %i.bjw = fmul double %.302790.us, %.2.i2541.us
   store i32 %.01788346534723480, ptr %i.ap, align 4, !tbaa !8
-  store i32 %.01789, ptr %i.aq, align 4, !tbaa !8
+  store i32 %.pre-phi.a, ptr %i.aq, align 4, !tbaa !8
   store double %i.ic, ptr %i.au, align 8, !tbaa !9
   br label %.lr.ph2773.us
 
@@ -4032,7 +4030,7 @@ bb.fp:                                            ; preds = %.loopexit2604.us
 
 .lr.ph2957.split:                                 ; preds = %.lr.ph2957
   %i.bkd = sext i32 %i.bm to i64                  ; 9 uses
-  %wide.trip.count3303 = zext nneg i32 %.pre-phi.a to i64
+  %wide.trip.count3303 = zext nneg i32 %18 to i64
   %i.bke = zext i32 %.01788346534723480 to i64    ; 2 uses
   %i.bkf = sext i32 %.01788346534723480 to i64
   %i.bkg = add nsw i64 %i.bkf, -1
@@ -4160,11 +4158,11 @@ bb.fq:                                            ; preds = %bb.fq, %.epil.prehe
 bb.fr:                                            ; preds = %._crit_edge2958.split.thread3488, %._crit_edge2958.split.thread, %._crit_edge2958.split
   %i.blx = add nuw nsw i32 %i.pz, 2
   store i32 %i.blx, ptr %12, align 4, !tbaa !8
-  %i.bly = call i32 @llvm.smax.i32(i32 %.01789, i32 %.01788346534723480)
+  %i.bly = call i32 @llvm.smax.i32(i32 %.pre-phi.a, i32 %.01788346534723480)
   %i.blz = uitofp nneg i32 %i.bly to double
   store double %i.blz, ptr %14, align 8, !tbaa !9
   %i.bma = shl nuw nsw i32 %.01788346534723480, 1
-  %i.bmb = add nuw nsw i32 %i.bma, %.01789
+  %i.bmb = add nuw nsw i32 %i.bma, %.pre-phi.a
   %i.bmc = uitofp nneg i32 %i.bmb to double
   %i.bmd = sext i32 %i.bm to i64
   %i.bme = getelementptr [8 x i8], ptr %i.bo, i64 %i.bmd
@@ -4173,7 +4171,7 @@ bb.fr:                                            ; preds = %._crit_edge2958.spl
   br label %bb.fz
 
 .lr.ph2973.preheader:                             ; preds = %._crit_edge2958.split, %._crit_edge2958.split.thread
-  store i32 %.01789, ptr %i.ao, align 4, !tbaa !8
+  store i32 %.pre-phi.a, ptr %i.ao, align 4, !tbaa !8
   %i.bmg = sext i32 %i.bi to i64
   %i.bmh = sext i32 %i.bm to i64
   %invariant.gep3645 = getelementptr inbounds nuw [4 x i8], ptr %i.bl, i64 %i.ih
@@ -4190,7 +4188,7 @@ bb.fr:                                            ; preds = %._crit_edge2958.spl
   br i1 %.not1960.not, label %.lr.ph2973, label %._crit_edge2974, !llvm.loop !94
 
 .lr.ph2973:                                       ; preds = %.lr.ph2973.preheader, %.loopexit2587
-  %i.bmk = phi i32 [ %.01789, %.lr.ph2973.preheader ], [ %i.bmi, %.loopexit2587 ]
+  %i.bmk = phi i32 [ %.pre-phi.a, %.lr.ph2973.preheader ], [ %i.bmi, %.loopexit2587 ]
   %indvars.iv3311.a = phi i64 [ 1, %.lr.ph2973.preheader ], [ %indvars.iv.next3312.a, %.loopexit2587 ] ; 5 uses
   %i.bml = getelementptr inbounds nuw [4 x i8], ptr %i.bl, i64 %indvars.iv3311.a
   %i.bmm = load i32, ptr %i.bml, align 4, !tbaa !8 ; 2 uses
@@ -4411,11 +4409,11 @@ bb.fy:                                            ; preds = %._crit_edge2990.spl
   store double %i.bpr, ptr %11, align 8, !tbaa !9
   %i.bps = add nuw nsw i32 %i.pz, 2
   store i32 %i.bps, ptr %12, align 4, !tbaa !8
-  %i.bpt = call i32 @llvm.smax.i32(i32 %.01789, i32 %.01788346534723480)
+  %i.bpt = call i32 @llvm.smax.i32(i32 %.pre-phi.a, i32 %.01788346534723480)
   %i.bpu = uitofp nneg i32 %i.bpt to double
   store double %i.bpu, ptr %14, align 8, !tbaa !9
   %i.bpv = shl nuw nsw i32 %.01788346534723480, 1
-  %i.bpw = add nuw nsw i32 %i.bpv, %.01789
+  %i.bpw = add nuw nsw i32 %i.bpv, %.pre-phi.a
   %i.bpx = uitofp nneg i32 %i.bpw to double
   %i.bpy = sext i32 %i.bm to i64
   %i.bpz = getelementptr [8 x i8], ptr %i.bo, i64 %i.bpy
@@ -4487,6 +4485,9 @@ declare i32 @llvm.umin.i32(i32, i32) #6
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.abs.i32(i32, i1 immarg) #7
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.smax.i64(i64, i64) #6
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #8

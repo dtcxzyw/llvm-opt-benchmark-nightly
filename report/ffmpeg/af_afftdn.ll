@@ -205,8 +205,8 @@ bb.a:
   %i.k = add nsw i32 %2, 1
   %i.l = sext i32 %i.k to i64
   %i.m = mul nsw i64 %i.e, %i.l
-  %i.n = sdiv i64 %i.m, %i.h
-  %i.o = trunc i64 %i.n to i32                    ; 2 uses
+  %i.n = sdiv i64 %i.m, %i.h                      ; 2 uses
+  %i.o = trunc i64 %i.n to i32
   %i.p = getelementptr inbounds nuw i8, ptr %i.b, i64 128
   %i.q = load i32, ptr %i.p, align 8, !tbaa !58   ; 13 uses
   %i.r = getelementptr inbounds nuw i8, ptr %i.b, i64 208 ; 3 uses
@@ -239,7 +239,9 @@ bb.a:
   %i.ap = xor i32 %i.q, -1
   %i.aq = shl nsw i64 %i.an, 2
   %sext = shl i64 %i.i, 32
-  %i.ar = ashr exact i64 %sext, 32
+  %4 = ashr exact i64 %sext, 32
+  %sext171 = shl i64 %i.n, 32
+  %i.ar = ashr exact i64 %sext171, 32
   %.pre = load i32, ptr %i.x, align 8, !tbaa !81
   %wide.trip.count = zext i32 %i.q to i64         ; 18 uses
   %wide.trip.count131 = zext nneg i32 %i.q to i64
@@ -277,7 +279,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph118, %.loopexit
   %i.ax = phi i32 [ %.pre, %.lr.ph118 ], [ %i.tq, %.loopexit ]
-  %indvars.iv147 = phi i64 [ %i.ar, %.lr.ph118 ], [ %indvars.iv.next148, %.loopexit ] ; 3 uses
+  %indvars.iv147 = phi i64 [ %4, %.lr.ph118 ], [ %indvars.iv.next148, %.loopexit ] ; 3 uses
   %i.ay = load ptr, ptr %i.v, align 8, !tbaa !20
   %i.az = getelementptr inbounds [1072 x i8], ptr %i.ay, i64 %indvars.iv147 ; 23 uses
   %i.ba = load ptr, ptr %i.w, align 8, !tbaa !62
@@ -680,9 +682,8 @@ scalar.ph202:                                     ; preds = %scalar.ph202.prol.l
 
 .loopexit:                                        ; preds = %scalar.ph202.prol.loopexit, %scalar.ph202, %scalar.ph.prol.loopexit, %scalar.ph, %middle.block215, %middle.block, %.preheader95, %.preheader, %process_frame.exit
   %indvars.iv.next148 = add nsw i64 %indvars.iv147, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next148 to i32
-  %exitcond150.not = icmp eq i32 %lftr.wideiv, %i.o
-  br i1 %exitcond150.not, label %._crit_edge, label %bb.b, !llvm.loop !272
+  %5 = icmp slt i64 %indvars.iv.next148, %i.ar
+  br i1 %5, label %bb.b, label %._crit_edge, !llvm.loop !272
 }
 
 ; Function Attrs: mustprogress nofree nounwind willreturn memory(read)

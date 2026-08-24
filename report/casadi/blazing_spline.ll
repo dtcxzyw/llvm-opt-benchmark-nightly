@@ -205,13 +205,13 @@ bb.a:
   %i.h = ptrtoint ptr %i.e to i64
   %i.i = ptrtoint ptr %i.c to i64
   %i.j = sub i64 %i.h, %i.i
-  %i.k = sdiv exact i64 %i.j, 24                  ; 10 uses
-  %1 = add nsw i64 %i.k, -1                       ; 2 uses
-  %xtraiter = and i64 %i.k, 1
-  %2 = icmp eq i64 %1, 0
-  %unroll_iter = and i64 %i.k, -2
+  %i.k = sdiv i64 %i.j, 24                        ; 4 uses
+  %umax = tail call i64 @llvm.umax.i64(i64 %i.k, i64 1) ; 4 uses
+  %xtraiter = and i64 %umax, 1
+  %1 = icmp ult i64 %i.k, 2
+  %unroll_iter = and i64 %umax, -2
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  %lcmp.mod98 = trunc i64 %i.k to i1
+  %lcmp.mod98 = trunc i64 %umax to i1
   br label %.preheader56
 
 .lr.ph:                                           ; preds = %bb.a, %.lr.ph
@@ -233,17 +233,18 @@ bb.a:
 .preheader56:                                     ; preds = %.preheader56.lr.ph, %bb.c
   %i.w = phi i64 [ 0, %.preheader56.lr.ph ], [ %i.ak, %bb.c ]
   %.062 = phi i64 [ 0, %.preheader56.lr.ph ], [ %i.al, %bb.c ] ; 4 uses
-  br i1 %2, label %.epil.preheader, label %.preheader56.new
+  br i1 %1, label %.epil.preheader, label %.preheader56.new
 
 bb.b:                                             ; preds = %bb.c
   store i64 %i.ak, ptr %i.g, align 8, !tbaa !93
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 1408 ; 2 uses
   store i64 0, ptr %i.x, align 8, !tbaa !94
-  %xtraiter101 = and i64 %i.k, 1
-  %3 = icmp eq i64 %1, 0
-  %unroll_iter106 = and i64 %i.k, -2
+  %umax76 = tail call i64 @llvm.umax.i64(i64 %i.k, i64 1) ; 5 uses
+  %xtraiter101 = and i64 %umax76, 1
+  %2 = icmp ult i64 %i.k, 2
+  %unroll_iter106 = and i64 %umax76, -2
   %lcmp.mod102.not = icmp eq i64 %xtraiter101, 0
-  %lcmp.mod105 = trunc i64 %i.k to i1
+  %lcmp.mod105 = trunc i64 %umax76 to i1
   br label %.preheader55
 
 .unr-lcssa:                                       ; preds = %.preheader56.new
@@ -271,7 +272,7 @@ bb.c:                                             ; preds = %.unr-lcssa, %.epil.
   %.lcssa94 = phi i64 [ %i.bk, %.unr-lcssa ], [ %i.aj, %.epil.preheader ]
   %i.ak = add nsw i64 %i.w, %.lcssa94             ; 2 uses
   %i.al = add nuw nsw i64 %.062, 1                ; 2 uses
-  %exitcond75.not = icmp eq i64 %i.al, %i.k
+  %exitcond75.not = icmp eq i64 %i.al, %umax
   br i1 %exitcond75.not, label %bb.b, label %.preheader56, !llvm.loop !140
 
 .preheader56.new:                                 ; preds = %.preheader56, %.preheader56.new
@@ -322,11 +323,11 @@ _ZNSt6vectorIxSaIxEED2Ev.exit:                    ; preds = %bb.d, %.thread84
 .preheader:                                       ; preds = %.preheader55, %bb.g
   %i.bp = phi i64 [ %i.bm, %.preheader55 ], [ %i.dk, %bb.g ] ; 2 uses
   %.03168 = phi i64 [ 0, %.preheader55 ], [ %i.dl, %bb.g ] ; 5 uses
-  br i1 %3, label %.epil.preheader100, label %.preheader.new
+  br i1 %2, label %.epil.preheader100, label %.preheader.new
 
 bb.d:                                             ; preds = %bb.g
   %i.bq = add nuw nsw i64 %.03269, 1              ; 2 uses
-  %exitcond79.not = icmp eq i64 %i.bq, %i.k
+  %exitcond79.not = icmp eq i64 %i.bq, %umax76
   br i1 %exitcond79.not, label %_ZNSt6vectorIxSaIxEED2Ev.exit, label %.preheader55, !llvm.loop !142
 
 .unr-lcssa99:                                     ; preds = %.preheader.new
@@ -406,7 +407,7 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.f, %bb.e
   %i.dk = phi i64 [ %i.dj, %bb.f ], [ %i.bp, %bb.e ] ; 2 uses
   %i.dl = add nuw nsw i64 %.03168, 1              ; 2 uses
-  %exitcond78.not = icmp eq i64 %i.dl, %i.k
+  %exitcond78.not = icmp eq i64 %i.dl, %umax76
   br i1 %exitcond78.not, label %bb.d, label %.preheader, !llvm.loop !144
 }
 
@@ -809,8 +810,8 @@ define void @_ZNK6casadi21BlazingSplineFunction12get_jacobianERKNSt7__cxx1112bas
   %i.f = load ptr, ptr %i.c, align 8, !tbaa !91   ; 3 uses
   %i.g = ptrtoint ptr %i.e to i64
   %i.h = ptrtoint ptr %i.f to i64
-  %i.i = sub i64 %i.g, %i.h                       ; 8 uses
-  %i.j = sdiv exact i64 %i.i, 24                  ; 14 uses
+  %i.i = sub i64 %i.g, %i.h                       ; 7 uses
+  %i.j = sdiv i64 %i.i, 24                        ; 13 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #26
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #26
   %i.k = getelementptr inbounds nuw i8, ptr %11, i64 16 ; 6 uses
@@ -976,12 +977,13 @@ bb.j:                                             ; preds = %_ZSt6fill_nIPxmxET_
 
 .lr.ph:                                           ; preds = %bb.j
   %i.au = load ptr, ptr %i.c, align 8, !tbaa !91  ; 3 uses
-  %xtraiter = and i64 %i.j, 1
-  %83 = icmp eq i64 %i.i, 24
+  %umax = call i64 @llvm.umax.i64(i64 %i.j, i64 1) ; 3 uses
+  %xtraiter = and i64 %umax, 1
+  %83 = icmp ult i64 %i.j, 2
   br i1 %83, label %.epil.preheader, label %.lr.ph.new
 
 .lr.ph.new:                                       ; preds = %.lr.ph
-  %unroll_iter = and i64 %i.j, -2
+  %unroll_iter = and i64 %umax, -2
   br label %bb.o
 
 .unr-lcssa:                                       ; preds = %bb.o
@@ -990,7 +992,7 @@ bb.j:                                             ; preds = %_ZSt6fill_nIPxmxET_
 
 .epil.preheader:                                  ; preds = %.unr-lcssa, %.lr.ph
   %.0180719.epil.init = phi i64 [ 0, %.lr.ph ], [ %i.dd, %.unr-lcssa ] ; 2 uses
-  %lcmp.mod872 = trunc i64 %i.j to i1
+  %lcmp.mod872 = trunc i64 %umax to i1
   call void @llvm.assume(i1 %lcmp.mod872)
   %i.av = getelementptr inbounds nuw [24 x i8], ptr %i.au, i64 %.0180719.epil.init ; 2 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %i.av, i64 8
@@ -1259,8 +1261,8 @@ _ZNSt6vectorIN6casadi2MXESaIS1_EE9push_backEOS1_.exit: ; preds = %.noexc332, %bb
   call void @_ZN6casadi2MXD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %19) #26
   call void @llvm.lifetime.end.p0(ptr nonnull %19) #26
   %i.en = add nuw i64 %.0181720, 1                ; 2 uses
-  %exitcond732.not = icmp eq i64 %i.en, %i.j
-  br i1 %exitcond732.not, label %._crit_edge723, label %bb.t, !llvm.loop !300
+  %84 = icmp ult i64 %i.en, %i.j
+  br i1 %84, label %bb.t, label %._crit_edge723, !llvm.loop !300
 
 bb.x:                                             ; preds = %bb.t
   %i.eo = landingpad { ptr, i32 }

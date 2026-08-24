@@ -205,12 +205,13 @@ bb.l:                                             ; preds = %._crit_edge
   %i.cp = ptrtoint ptr %i.cn to i64
   %i.cq = ptrtoint ptr %i.co to i64
   %i.cr = sub i64 %i.cp, %i.cq
-  %i.cs = sdiv exact i64 %i.cr, 24                ; 2 uses
+  %i.cs = sdiv i64 %i.cr, 24                      ; 2 uses
   %.not94 = icmp eq ptr %i.cn, %i.co
   br i1 %.not94, label %.preheader, label %.lr.ph91
 
 .lr.ph91:                                         ; preds = %bb.l
   %i.ct = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
+  %umax = call i64 @llvm.umax.i64(i64 %i.cs, i64 1)
   br label %bb.m
 
 .preheader:                                       ; preds = %_ZN6duckdb6vectorINS_6VectorELb1ESaIS1_EEixEm.exit41, %bb.l
@@ -381,7 +382,7 @@ _ZN6duckdb6vectorINS_6VectorELb1ESaIS1_EEixEm.exit41: ; preds = %_ZN6duckdb6vect
   %i.eh = getelementptr inbounds nuw [104 x i8], ptr %i.ds, i64 %.02989
   call void @_ZN6duckdb14ConstantVector7SetNullERNS_6VectorEb(ptr noundef nonnull align 8 dereferenceable(104) %i.eh, i1 noundef zeroext true)
   %i.ei = add nuw i64 %.02989, 1                  ; 2 uses
-  %exitcond96.not = icmp eq i64 %i.ei, %i.cs
+  %exitcond96.not = icmp eq i64 %i.ei, %umax
   br i1 %exitcond96.not, label %.preheader, label %bb.m, !llvm.loop !854
 
 .thread:                                          ; preds = %_ZN6duckdb6vectorINS_6VectorELb1ESaIS1_EEixEm.exit64, %.preheader
@@ -784,8 +785,8 @@ bb.i:                                             ; preds = %bb.g, %bb.h
   %i.bn = tail call noundef nonnull align 8 dereferenceable(104) ptr @_ZN6duckdb6vectorINS_6VectorELb1ESaIS1_EEixEm(ptr noundef nonnull align 8 dereferenceable(24) %i.ai, i64 noundef %.02831)
   tail call void @_ZN6duckdb6Vector9ReferenceERKS0_(ptr noundef nonnull align 8 dereferenceable(104) %i.bm, ptr noundef nonnull align 8 dereferenceable(104) %i.bn)
   %i.bo = add nuw i64 %.02831, 1                  ; 2 uses
-  %exitcond.not = icmp eq i64 %i.bo, %i.ap
-  br i1 %exitcond.not, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !906
+  %3 = icmp ult i64 %i.bo, %i.ap
+  br i1 %3, label %.lr.ph, label %._crit_edge.loopexit, !llvm.loop !906
 
 bb.j:                                             ; preds = %._crit_edge
   %i.bp = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -815,8 +816,8 @@ bb.l:                                             ; preds = %.lr.ph34, %bb.l
   %i.cc = load i64, ptr %i.bx, align 8, !tbaa !41
   tail call void @_ZN6duckdb14ConstantVector9ReferenceERNS_6VectorES2_mm(ptr noundef nonnull align 8 dereferenceable(104) %i.bz, ptr noundef nonnull align 8 dereferenceable(104) %i.ca, i64 noundef %i.cb, i64 noundef %i.cc)
   %i.cd = add nuw i64 %.032, 1                    ; 2 uses
-  %exitcond37.not = icmp eq i64 %i.cd, %i.bk
-  br i1 %exitcond37.not, label %.loopexit, label %bb.l, !llvm.loop !907
+  %4 = icmp ult i64 %i.cd, %i.bk
+  br i1 %4, label %bb.l, label %.loopexit, !llvm.loop !907
 
 .loopexit:                                        ; preds = %bb.l, %bb.k, %bb.a, %_ZN6duckdb20CrossProductExecutor9NextValueERNS_9DataChunkES2_.exit
   %.029 = phi i8 [ 0, %_ZN6duckdb20CrossProductExecutor9NextValueERNS_9DataChunkES2_.exit ], [ 2, %bb.a ], [ 1, %bb.k ], [ 1, %bb.l ]
@@ -1219,12 +1220,13 @@ bb.l:                                             ; preds = %.epilog-lcssa
   %i.cc = ptrtoint ptr %i.ca to i64
   %i.cd = ptrtoint ptr %i.cb to i64
   %i.ce = sub i64 %i.cc, %i.cd
-  %i.cf = sdiv exact i64 %i.ce, 24                ; 2 uses
+  %i.cf = sdiv i64 %i.ce, 24                      ; 2 uses
   %.not114 = icmp eq ptr %i.ca, %i.cb
   br i1 %.not114, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.l
   %i.cg = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
+  %umax = tail call i64 @llvm.umax.i64(i64 %i.cf, i64 1)
   br label %bb.m
 
 ._crit_edge:                                      ; preds = %_ZN6duckdb6vectorINS_6VectorELb1ESaIS1_EEixEm.exit63, %bb.l
@@ -1241,9 +1243,10 @@ bb.l:                                             ; preds = %.epilog-lcssa
   %i.cn = ptrtoint ptr %i.cl to i64
   %i.co = ptrtoint ptr %i.cm to i64
   %i.cp = sub i64 %i.cn, %i.co
-  %i.cq = sdiv exact i64 %i.cp, 24
+  %i.cq = sdiv i64 %i.cp, 24
   %i.cr = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.cs = getelementptr inbounds nuw i8, ptr %i.x, i64 576
+  %umax120 = tail call i64 @llvm.umax.i64(i64 %i.cq, i64 1)
   br label %bb.v
 
 bb.m:                                             ; preds = %.lr.ph, %_ZN6duckdb6vectorINS_6VectorELb1ESaIS1_EEixEm.exit63
@@ -1401,7 +1404,7 @@ _ZN6duckdb6vectorINS_6VectorELb1ESaIS1_EEixEm.exit63: ; preds = %_ZN6duckdb6vect
   %i.ea = getelementptr inbounds nuw [104 x i8], ptr %i.dl, i64 %.045109
   tail call void @_ZN6duckdb14ConstantVector7SetNullERNS_6VectorEb(ptr noundef nonnull align 8 dereferenceable(104) %i.ea, i1 noundef zeroext true)
   %i.eb = add nuw i64 %.045109, 1                 ; 2 uses
-  %exitcond119.not = icmp eq i64 %i.eb, %i.cf
+  %exitcond119.not = icmp eq i64 %i.eb, %umax
   br i1 %exitcond119.not, label %._crit_edge, label %bb.m, !llvm.loop !2215
 
 bb.v:                                             ; preds = %.lr.ph112, %_ZN6duckdb6vectorINS_6VectorELb1ESaIS1_EEixEm.exit79
@@ -1559,7 +1562,7 @@ _ZN6duckdb6vectorINS_6VectorELb1ESaIS1_EEixEm.exit79: ; preds = %_ZN6duckdb6vect
   %i.fk = getelementptr inbounds nuw [104 x i8], ptr %i.eu, i64 %.0110
   tail call void @_ZN6duckdb6Vector5SliceERKS0_RKNS_15SelectionVectorEm(ptr noundef nonnull align 8 dereferenceable(104) %i.fj, ptr noundef nonnull align 8 dereferenceable(104) %i.fk, ptr noundef nonnull align 8 dereferenceable(24) %i.z, i64 noundef %.1.lcssa)
   %i.fl = add nuw i64 %.0110, 1                   ; 2 uses
-  %exitcond121.not = icmp eq i64 %i.fl, %i.cq
+  %exitcond121.not = icmp eq i64 %i.fl, %umax120
   br i1 %exitcond121.not, label %._crit_edge113, label %bb.v, !llvm.loop !2216
 
 ._crit_edge113:                                   ; preds = %_ZN6duckdb6vectorINS_6VectorELb1ESaIS1_EEixEm.exit79, %._crit_edge
@@ -1962,9 +1965,13 @@ _ZNSt10lock_guardISt5mutexEC2ERS0_.exit:          ; preds = %bb.a
   %i.f = ptrtoint ptr %i.d to i64
   %i.g = ptrtoint ptr %i.e to i64
   %i.h = sub i64 %i.f, %i.g
-  %i.i = sdiv exact i64 %i.h, 104                 ; 2 uses
+  %i.i = sdiv i64 %i.h, 104                       ; 2 uses
   %.not = icmp eq ptr %i.d, %i.e
-  br i1 %.not, label %._crit_edge, label %.lr.ph
+  br i1 %.not, label %._crit_edge, label %.lr.ph.preheader
+
+.lr.ph.preheader:                                 ; preds = %_ZNSt10lock_guardISt5mutexEC2ERS0_.exit
+  %umax = tail call i64 @llvm.umax.i64(i64 %i.i, i64 1)
+  br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %bb.f, %_ZNSt10lock_guardISt5mutexEC2ERS0_.exit
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -1986,8 +1993,8 @@ bb.c:                                             ; preds = %._crit_edge
   invoke void @_ZNK6duckdb20ColumnDataCollection14InitializeScanERNS_19ColumnDataScanStateENS_24ColumnDataScanPropertiesE(ptr noundef nonnull align 8 dereferenceable(112) %i.o, ptr noundef nonnull align 8 dereferenceable(144) %i.q, i8 noundef zeroext 1)
           to label %_ZN6duckdb25PositionalJoinGlobalState14InitializeScanEv.exit unwind label %bb.j
 
-.lr.ph:                                           ; preds = %_ZNSt10lock_guardISt5mutexEC2ERS0_.exit, %bb.f
-  %.022 = phi i64 [ %i.t, %bb.f ], [ 0, %_ZNSt10lock_guardISt5mutexEC2ERS0_.exit ] ; 3 uses
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.f
+  %.022 = phi i64 [ %i.t, %bb.f ], [ 0, %.lr.ph.preheader ] ; 3 uses
   %i.r = invoke noundef nonnull align 8 dereferenceable(104) ptr @_ZN6duckdb6vectorINS_6VectorELb1ESaIS1_EEixEm(ptr noundef nonnull align 8 dereferenceable(24) %2, i64 noundef %.022)
           to label %bb.d unwind label %bb.g
 
@@ -2001,7 +2008,7 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e
   %i.t = add nuw i64 %.022, 1                     ; 2 uses
-  %exitcond.not = icmp eq i64 %i.t, %i.i
+  %exitcond.not = icmp eq i64 %i.t, %umax
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !2235
 
 bb.g:                                             ; preds = %bb.e, %bb.d, %.lr.ph

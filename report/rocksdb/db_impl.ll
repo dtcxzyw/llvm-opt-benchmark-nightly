@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.a
   %i.g = ptrtoint ptr %i.e to i64
   %i.h = ptrtoint ptr %i.f to i64
   %i.i = sub i64 %i.g, %i.h
-  %i.j = sdiv exact i64 %i.i, 80                  ; 14 uses
+  %i.j = sdiv i64 %i.i, 80                        ; 14 uses
   %i.k = getelementptr inbounds nuw i8, ptr %2, i64 176
   %i.l = load i8, ptr %i.k, align 8, !tbaa !1488
   switch i8 %i.l, label %_ZN7rocksdb6Status15InvalidArgumentERKNS_5SliceES3_.exit [
@@ -320,8 +320,8 @@ _ZNSt10unique_ptrIA_KcSt14default_deleteIS1_EED2Ev.exit.i.i: ; preds = %_ZNKSt14
 
 _ZN7rocksdb22PinnableAttributeGroup9SetStatusERKNS_6StatusE.exit: ; preds = %_ZNSt10unique_ptrIA_KcSt14default_deleteIS1_EED2Ev.exit.i.i, %bb.d
   %i.aj = add nuw i64 %.047272, 1                 ; 2 uses
-  %exitcond312.not = icmp eq i64 %i.aj, %i.j
-  br i1 %exitcond312.not, label %.loopexit, label %bb.d, !llvm.loop !1966
+  %26 = icmp ult i64 %i.aj, %i.j
+  br i1 %26, label %bb.d, label %.loopexit, !llvm.loop !1966
 
 .thread375:                                       ; preds = %bb.f
   %i.ak = landingpad { ptr, i32 }
@@ -715,8 +715,8 @@ _ZNSt6vectorIPN7rocksdb18ColumnFamilyHandleESaIS2_EE12emplace_backIJS2_EEERS2_Dp
   %.sroa.12.1 = phi ptr [ %i.dw, %_ZNSt6vectorIPN7rocksdb18ColumnFamilyHandleESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i ], [ %.sroa.12.0261, %bb.ad ] ; 2 uses
   %.sroa.9.1 = getelementptr inbounds nuw i8, ptr %.pn195, i64 8
   %i.dx = add nuw i64 %.046264, 1                 ; 2 uses
-  %exitcond.not = icmp eq i64 %i.dx, %i.j
-  br i1 %exitcond.not, label %.loopexit198, label %.lr.ph, !llvm.loop !1983
+  %27 = icmp ult i64 %i.dx, %i.j
+  br i1 %27, label %.lr.ph, label %.loopexit198, !llvm.loop !1983
 
 .loopexit200:                                     ; preds = %_ZNKSt6vectorIPN7rocksdb18ColumnFamilyHandleESaIS2_EE12_M_check_lenEmPKc.exit.i.i
   %lpad.loopexit202 = landingpad { ptr, i32 }
@@ -854,8 +854,8 @@ _ZN7rocksdb6StatusD2Ev.exit138:                   ; preds = %_ZNKSt14default_del
 
 bb.ap:                                            ; preds = %bb.ai, %_ZN7rocksdb6StatusD2Ev.exit135
   %i.ex = add nuw i64 %.045268, 1                 ; 2 uses
-  %exitcond308.not = icmp eq i64 %i.ex, %i.j
-  br i1 %exitcond308.not, label %.loopexit197, label %bb.ai, !llvm.loop !1984
+  %28 = icmp ult i64 %i.ex, %i.j
+  br i1 %28, label %bb.ai, label %.loopexit197, !llvm.loop !1984
 
 bb.aq:                                            ; preds = %.loopexit198
   call void @llvm.lifetime.start.p0(ptr nonnull %24) #44
@@ -893,6 +893,7 @@ _ZNSt12_Vector_baseIN7rocksdb6StatusESaIS1_EEC2EmRKS2_.exit.i: ; preds = %.lr.ph
   %i.fg = getelementptr inbounds nuw [16 x i8], ptr %i.ff, i64 %i.j
   %i.fh = getelementptr inbounds nuw i8, ptr %25, i64 16 ; 2 uses
   store ptr %i.fg, ptr %i.fh, align 8, !tbaa !1992
+  %29 = add nsw i64 %i.j, -1
   %xtraiter = and i64 %i.j, 7                     ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.i.i.i.i.i143.prol.loopexit, label %.lr.ph.i.i.i.i.i143.prol
@@ -914,7 +915,7 @@ _ZNSt12_Vector_baseIN7rocksdb6StatusESaIS1_EEC2EmRKS2_.exit.i: ; preds = %.lr.ph
   %.lcssa.unr = phi ptr [ poison, %.noexc147 ], [ %i.fk, %.lr.ph.i.i.i.i.i143.prol ]
   %.013.i.i.i.i.i.unr = phi ptr [ %i.ff, %.noexc147 ], [ %i.fk, %.lr.ph.i.i.i.i.i143.prol ]
   %.01012.i.i.i.i.i.unr = phi i64 [ %i.j, %.noexc147 ], [ %i.fj, %.lr.ph.i.i.i.i.i143.prol ]
-  %i.fl = icmp ult i64 %i.j, 8
+  %i.fl = icmp ult i64 %29, 7
   br i1 %i.fl, label %.unr-lcssa, label %.lr.ph.i.i.i.i.i143
 
 .lr.ph.i.i.i.i.i143:                              ; preds = %.lr.ph.i.i.i.i.i143.prol.loopexit, %.lr.ph.i.i.i.i.i143
@@ -1176,8 +1177,8 @@ _ZN7rocksdb22PinnableAttributeGroup9SetStatusERKNS_6StatusE.exit166: ; preds = %
   %i.io = getelementptr inbounds nuw i8, ptr %i.il, i64 24
   %i.ip = call noundef nonnull align 8 dereferenceable(56) ptr @_ZN7rocksdb19PinnableWideColumnsaSEOS0_(ptr noundef nonnull align 8 dereferenceable(56) %i.io, ptr noundef nonnull align 8 dereferenceable(56) %i.in) #44 ; 0 uses
   %i.iq = add nuw i64 %.0270, 1                   ; 2 uses
-  %exitcond310.not = icmp eq i64 %i.iq, %i.j
-  br i1 %exitcond310.not, label %._crit_edge, label %.lr.ph271, !llvm.loop !1998
+  %30 = icmp ult i64 %i.iq, %i.j
+  br i1 %30, label %.lr.ph271, label %._crit_edge, !llvm.loop !1998
 
 bb.ba:                                            ; preds = %bb.ay
   %i.ir = landingpad { ptr, i32 }

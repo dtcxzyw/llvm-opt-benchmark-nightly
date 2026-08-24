@@ -205,18 +205,19 @@ bb.a:
   %i.e = load ptr, ptr %i.b, align 8, !tbaa !117  ; 8 uses
   %i.f = ptrtoint ptr %i.d to i64
   %i.g = ptrtoint ptr %i.e to i64
-  %i.h = sub i64 %i.f, %i.g                       ; 2 uses
-  %i.i = sdiv exact i64 %i.h, 24                  ; 6 uses
+  %i.h = sub i64 %i.f, %i.g
+  %i.i = sdiv i64 %i.h, 24                        ; 5 uses
   %.not = icmp eq ptr %i.d, %i.e
   br i1 %.not, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %xtraiter = and i64 %i.i, 1
-  %1 = icmp eq i64 %i.h, 24
+  %umax = tail call i64 @llvm.umax.i64(i64 %i.i, i64 1) ; 3 uses
+  %xtraiter = and i64 %umax, 1
+  %1 = icmp ult i64 %i.i, 2
   br i1 %1, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
 
 .lr.ph.preheader.new:                             ; preds = %.lr.ph.preheader
-  %unroll_iter = and i64 %i.i, -2
+  %unroll_iter = and i64 %umax, -2
   br label %.lr.ph
 
 ._crit_edge.loopexit.unr-lcssa:                   ; preds = %.lr.ph
@@ -226,7 +227,7 @@ bb.a:
 .lr.ph.epil.preheader:                            ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph.preheader
   %.02530.epil.init = phi i64 [ 0, %.lr.ph.preheader ], [ %i.ar, %._crit_edge.loopexit.unr-lcssa ]
   %.02629.epil.init = phi i64 [ 0, %.lr.ph.preheader ], [ %i.aq, %._crit_edge.loopexit.unr-lcssa ]
-  %lcmp.mod78 = trunc i64 %i.i to i1
+  %lcmp.mod78 = trunc i64 %umax to i1
   tail call void @llvm.assume(i1 %lcmp.mod78)
   %i.j = getelementptr inbounds nuw [24 x i8], ptr %i.e, i64 %.02530.epil.init ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 8
@@ -309,7 +310,7 @@ bb.d:                                             ; preds = %bb.c
   %.pre53 = ptrtoint ptr %.pre51 to i64
   %.pre54 = ptrtoint ptr %.pre52 to i64
   %.pre56 = sub i64 %.pre53, %.pre54
-  %.pre58 = sdiv exact i64 %.pre56, 24
+  %.pre58 = sdiv i64 %.pre56, 24
   br label %_ZNSt6vectorImSaImEE6resizeEmRKm.exit
 
 bb.e:                                             ; preds = %bb.c

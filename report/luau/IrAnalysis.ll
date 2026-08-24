@@ -205,20 +205,21 @@ _ZNSt6vectorIjSaIjEE6resizeEm.exit:               ; preds = %_ZNSt6vectorIjSaIjE
   %i.q = phi ptr [ %.pre, %bb.b ], [ %i.j, %_ZNSt6vectorIjSaIjEE5clearEv.exit53 ] ; 5 uses
   %i.r = ptrtoint ptr %i.q to i64
   %i.s = ptrtoint ptr %i.p to i64
-  %i.t = sub i64 %i.r, %i.s                       ; 2 uses
-  %i.u = sdiv exact i64 %i.t, 36                  ; 9 uses
+  %i.t = sub i64 %i.r, %i.s
+  %i.u = sdiv i64 %i.t, 36                        ; 6 uses
   %.not75 = icmp eq ptr %i.q, %i.p
   br i1 %.not75, label %._crit_edge.thread, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZNSt6vectorIjSaIjEE6resizeEm.exit
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 632
   %i.w = load ptr, ptr %i.v, align 8, !tbaa !35   ; 3 uses
-  %xtraiter = and i64 %i.u, 1
-  %1 = icmp eq i64 %i.t, 36
+  %umax = tail call i64 @llvm.umax.i64(i64 %i.u, i64 1) ; 5 uses
+  %xtraiter = and i64 %umax, 1
+  %1 = icmp ult i64 %i.u, 2
   br i1 %1, label %.epil.preheader, label %.lr.ph.new
 
 .lr.ph.new:                                       ; preds = %.lr.ph
-  %unroll_iter = and i64 %i.u, -2
+  %unroll_iter = and i64 %umax, -2
   br label %bb.d
 
 .lr.ph63.unr-lcssa:                               ; preds = %bb.h
@@ -227,7 +228,7 @@ _ZNSt6vectorIjSaIjEE6resizeEm.exit:               ; preds = %_ZNSt6vectorIjSaIjE
 
 .epil.preheader:                                  ; preds = %.lr.ph63.unr-lcssa, %.lr.ph
   %.04560.epil.init = phi i64 [ 0, %.lr.ph ], [ %i.av, %.lr.ph63.unr-lcssa ]
-  %lcmp.mod115 = trunc i64 %i.u to i1
+  %lcmp.mod115 = trunc i64 %umax to i1
   tail call void @llvm.assume(i1 %lcmp.mod115)
   %i.x = getelementptr inbounds nuw [4 x i8], ptr %i.w, i64 %.04560.epil.init
   %i.y = load i32, ptr %i.x, align 4, !tbaa !36   ; 2 uses
@@ -245,12 +246,12 @@ bb.c:                                             ; preds = %.epil.preheader
 
 .lr.ph63:                                         ; preds = %.epil.preheader, %bb.c, %.lr.ph63.unr-lcssa
   %i.ae = load ptr, ptr %i.e, align 8, !tbaa !35  ; 5 uses
-  %xtraiter117 = and i64 %i.u, 3                  ; 3 uses
+  %xtraiter117 = and i64 %umax, 3                 ; 3 uses
   %i.af = icmp ult i64 %i.u, 4
   br i1 %i.af, label %.epil.preheader116, label %.lr.ph63.new
 
 .lr.ph63.new:                                     ; preds = %.lr.ph63
-  %unroll_iter121 = and i64 %i.u, -4
+  %unroll_iter121 = and i64 %umax, -4
   br label %bb.m
 
 bb.d:                                             ; preds = %bb.h, %.lr.ph.new
@@ -345,7 +346,7 @@ bb.j:                                             ; preds = %._crit_edge
   %.pre91 = ptrtoint ptr %.pre88 to i64
   %.pre92 = ptrtoint ptr %.pre89 to i64
   %.pre94 = sub i64 %.pre91, %.pre92
-  %.pre96 = sdiv exact i64 %.pre94, 36
+  %.pre96 = sdiv i64 %.pre94, 36
   br label %_ZNSt6vectorIjSaIjEE6resizeEm.exit58
 
 bb.k:                                             ; preds = %._crit_edge.thread, %._crit_edge
@@ -748,12 +749,13 @@ bb.ir:                                            ; preds = %_ZNSt6vectorIjSaIjE
   %i.bgn = ptrtoint ptr %i.bgl to i64
   %i.bgo = ptrtoint ptr %i.bgk to i64
   %i.bgp = sub i64 %i.bgn, %i.bgo
-  %i.bgq = sdiv exact i64 %i.bgp, 36
+  %i.bgq = sdiv i64 %i.bgp, 36
   %i.bgr = getelementptr inbounds nuw i8, ptr %0, i64 848
   %i.bgs = getelementptr inbounds nuw i8, ptr %0, i64 856
   %i.bgt = getelementptr inbounds nuw i8, ptr %0, i64 864
   %i.bgu = getelementptr inbounds nuw i8, ptr %0, i64 872 ; 2 uses
   %i.bgv = getelementptr inbounds nuw i8, ptr %0, i64 873 ; 2 uses
+  %umax = call i64 @llvm.umax.i64(i64 %i.bgq, i64 1)
   br label %bb.is
 
 bb.is:                                            ; preds = %.lr.ph487, %bb.ix
@@ -816,7 +818,7 @@ bb.ix:                                            ; preds = %bb.it, %bb.iw, %bb.
   %i.bib = phi i64 [ %i.bhj, %bb.it ], [ %i.bhj, %bb.iw ], [ %i.bgy, %bb.is ]
   %i.bic = phi i64 [ %i.bhg, %bb.it ], [ %i.bhg, %bb.iw ], [ %i.bgz, %bb.is ]
   %i.bid = add nuw i64 %.0103485, 1               ; 2 uses
-  %exitcond.not = icmp eq i64 %i.bid, %i.bgq
+  %exitcond.not = icmp eq i64 %i.bid, %umax
   br i1 %exitcond.not, label %.loopexit, label %bb.is, !llvm.loop !262
 
 .loopexit:                                        ; preds = %bb.ix, %._crit_edge482, %._crit_edge482.thread

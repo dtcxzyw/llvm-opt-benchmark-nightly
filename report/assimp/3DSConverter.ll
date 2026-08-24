@@ -205,8 +205,7 @@ bb.c:                                             ; preds = %.lr.ph214, %_ZNSt10
   %i.af = ptrtoint ptr %i.ad to i64
   %i.ag = ptrtoint ptr %i.ae to i64
   %i.ah = sub i64 %i.af, %i.ag
-  %.fr273 = freeze i64 %i.ah
-  %i.ai = sdiv i64 %.fr273, 696                   ; 3 uses
+  %i.ai = sdiv exact i64 %i.ah, 696               ; 3 uses
   %i.aj = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.ai, i64 24) ; 2 uses
   %i.ak = extractvalue { i64, i1 } %i.aj, 1
   %i.al = extractvalue { i64, i1 } %i.aj, 0
@@ -220,18 +219,20 @@ bb.c:                                             ; preds = %.lr.ph214, %_ZNSt10
 
 bb.d:                                             ; preds = %bb.c
   store i64 %i.ai, ptr %i.ar, align 16
-  %i.as = getelementptr i8, ptr %i.ar, i64 8      ; 2 uses
+  %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 8 ; 3 uses
   %i.at = icmp eq ptr %i.ad, %i.ae
-  br i1 %i.at, label %.loopexit151, label %.loopexit151.loopexit
+  br i1 %i.at, label %.loopexit151, label %4
 
-.loopexit151.loopexit:                            ; preds = %bb.d
-  %4 = mul nsw i64 %i.ai, 24
-  %5 = add nsw i64 %4, -24                        ; 2 uses
-  %6 = urem i64 %5, 24
-  %7 = sub nuw nsw i64 %5, %6
-  %8 = add nsw i64 %7, 24
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.as, i8 0, i64 %8, i1 false)
-  br label %.loopexit151
+4:                                                ; preds = %bb.d
+  %5 = getelementptr inbounds [24 x i8], ptr %i.as, i64 %i.ai
+  br label %.loopexit151.loopexit
+
+.loopexit151.loopexit:                            ; preds = %.loopexit151.loopexit, %4
+  %6 = phi ptr [ %i.as, %4 ], [ %7, %.loopexit151.loopexit ] ; 2 uses
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %6, i8 0, i64 24, i1 false)
+  %7 = getelementptr inbounds nuw i8, ptr %6, i64 24 ; 2 uses
+  %8 = icmp eq ptr %7, %5
+  br i1 %8, label %.loopexit151, label %.loopexit151.loopexit
 
 .loopexit151:                                     ; preds = %.loopexit151.loopexit, %bb.d
   store ptr %i.as, ptr %3, align 8

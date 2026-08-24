@@ -204,8 +204,8 @@ bb.a:
   %i.c = load ptr, ptr %0, align 8, !tbaa !11     ; 3 uses
   %i.d = ptrtoint ptr %i.b to i64
   %i.e = ptrtoint ptr %i.c to i64
-  %i.f = sub i64 %i.d, %i.e                       ; 4 uses
-  %i.g = sdiv exact i64 %i.f, 12                  ; 41 uses
+  %i.f = sub i64 %i.d, %i.e                       ; 2 uses
+  %i.g = sdiv i64 %i.f, 12                        ; 43 uses
   %i.h = icmp eq i64 %i.f, 12
   br i1 %i.h, label %bb.b, label %bb.c
 
@@ -608,7 +608,8 @@ _ZN8interpol19smooth_cubic_splineIfE6matrixclEmm.exit143.preheader: ; preds = %.
 vector.memcheck:                                  ; preds = %_ZN8interpol19smooth_cubic_splineIfE6matrixclEmm.exit143.preheader
   %i.em = getelementptr i8, ptr %i.dx, i64 %.idx.i
   %scevgep = getelementptr i8, ptr %i.em, i64 4   ; 5 uses
-  %i.en = getelementptr i8, ptr %i.dx, i64 %i.f
+  %3 = mul nuw nsw i64 %i.g, 12
+  %i.en = getelementptr i8, ptr %i.dx, i64 %3
   %scevgep431 = getelementptr i8, ptr %i.en, i64 -4 ; 5 uses
   %i.eo = shl nuw nsw i64 %i.g, 2                 ; 2 uses
   %i.ep = getelementptr i8, ptr %i.dx, i64 %i.eo
@@ -1011,7 +1012,8 @@ _ZN8interpol19smooth_cubic_splineIfE11gauss_solveERNS1_6matrixERSt6vectorIfSaIfE
 
 vector.memcheck537:                               ; preds = %.lr.ph320
   %scevgep538 = getelementptr nuw i8, ptr %i.ns, i64 8 ; 3 uses
-  %i.nt = getelementptr i8, ptr %i.ns, i64 %i.f
+  %4 = mul nuw nsw i64 %i.g, 12
+  %i.nt = getelementptr i8, ptr %i.ns, i64 %4
   %scevgep539 = getelementptr i8, ptr %i.nt, i64 -12 ; 3 uses
   %i.nu = shl nuw nsw i64 %i.g, 2                 ; 2 uses
   %i.nv = add nsw i64 %i.nu, -4                   ; 2 uses
@@ -1414,7 +1416,7 @@ bb.a:
   %i.d = ptrtoint ptr %i.b to i64
   %i.e = ptrtoint ptr %i.c to i64
   %i.f = sub i64 %i.d, %i.e                       ; 4 uses
-  %i.g = sdiv exact i64 %i.f, 12                  ; 4 uses
+  %i.g = sdiv i64 %i.f, 12                        ; 4 uses
   %i.h = icmp eq i64 %i.f, 12
   br i1 %i.h, label %bb.e, label %bb.b
 
@@ -1619,8 +1621,8 @@ bb.a:
   %i.c = load ptr, ptr %0, align 8, !tbaa !11     ; 4 uses
   %i.d = ptrtoint ptr %i.b to i64
   %i.e = ptrtoint ptr %i.c to i64
-  %i.f = sub i64 %i.d, %i.e                       ; 4 uses
-  %i.g = sdiv exact i64 %i.f, 12                  ; 20 uses
+  %i.f = sub i64 %i.d, %i.e                       ; 2 uses
+  %i.g = sdiv i64 %i.f, 12                        ; 22 uses
   %i.h = icmp eq i64 %i.f, 12
   br i1 %i.h, label %bb.b, label %bb.c
 
@@ -1853,7 +1855,8 @@ _ZNSt6vectorIfSaIfEE9push_backEOf.exit:           ; preds = %_ZNSt6vectorIfSaIfE
 
 vector.memcheck346:                               ; preds = %.lr.ph256.preheader
   %scevgep347 = getelementptr i8, ptr %i.bw, i64 20
-  %scevgep348 = getelementptr i8, ptr %i.bw, i64 %i.f
+  %1 = mul nuw nsw i64 %i.g, 12
+  %scevgep348 = getelementptr i8, ptr %i.bw, i64 %1
   %i.ca = shl nuw nsw i64 %i.g, 2
   %scevgep349 = getelementptr i8, ptr %.sroa.0171.3, i64 %i.ca
   %bound0350 = icmp ult ptr %scevgep347, %scevgep349
@@ -1929,7 +1932,11 @@ bb.p:                                             ; preds = %_ZNKSt6vectorIfSaIf
   br label %bb.u
 
 .preheader:                                       ; preds = %.lr.ph256.prol.loopexit, %.lr.ph256, %middle.block366, %_ZNSt6vectorIfSaIfEE9push_backEOf.exit
-  br i1 %.not206, label %_ZNSt6vectorIfSaIfEED2Ev.exit, label %.lr.ph258
+  br i1 %.not206, label %_ZNSt6vectorIfSaIfEED2Ev.exit, label %.lr.ph258.preheader
+
+.lr.ph258.preheader:                              ; preds = %.preheader
+  %umax = tail call i64 @llvm.umax.i64(i64 %i.g, i64 1)
+  br label %.lr.ph258
 
 .lr.ph256:                                        ; preds = %.lr.ph256.prol.loopexit, %.lr.ph256
   %.096254 = phi i64 [ %i.eq, %.lr.ph256 ], [ %.096254.unr, %.lr.ph256.prol.loopexit ] ; 6 uses
@@ -1995,8 +2002,8 @@ _ZNSt6vectorIfSaIfEED2Ev.exit:                    ; preds = %bb.t, %.preheader
   tail call void @_ZdlPvm(ptr noundef nonnull %.sroa.0171.3, i64 noundef %i.et) #19
   br label %bb.ai
 
-.lr.ph258:                                        ; preds = %.preheader, %bb.t
-  %.095257 = phi i64 [ %i.eu, %bb.t ], [ 0, %.preheader ] ; 4 uses
+.lr.ph258:                                        ; preds = %.lr.ph258.preheader, %bb.t
+  %.095257 = phi i64 [ %i.eu, %bb.t ], [ 0, %.lr.ph258.preheader ] ; 4 uses
   %i.eu = add nuw i64 %.095257, 1                 ; 4 uses
   %i.ev = icmp ult i64 %i.eu, %i.g
   %i.ew = select i1 %i.ev, i64 %i.eu, i64 0       ; 2 uses
@@ -2044,7 +2051,7 @@ bb.s:                                             ; preds = %bb.r
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.r, %bb.s, %bb.q
-  %exitcond277.not = icmp eq i64 %i.eu, %i.g
+  %exitcond277.not = icmp eq i64 %i.eu, %umax
   br i1 %exitcond277.not, label %_ZNSt6vectorIfSaIfEED2Ev.exit, label %.lr.ph258, !llvm.loop !199
 
 bb.u:                                             ; preds = %.loopexit, %.loopexit.split-lp, %bb.p
@@ -2093,7 +2100,8 @@ bb.w:                                             ; preds = %bb.c
 
 vector.memcheck:                                  ; preds = %.lr.ph239.preheader
   %scevgep = getelementptr i8, ptr %.pre, i64 20
-  %i.gl = getelementptr i8, ptr %.pre, i64 %i.f
+  %2 = mul nuw nsw i64 %i.g, 12
+  %i.gl = getelementptr i8, ptr %.pre, i64 %2
   %scevgep342 = getelementptr i8, ptr %i.gl, i64 -12
   %i.gm = shl nuw nsw i64 %i.g, 2
   %i.gn = getelementptr i8, ptr %.sroa.0.3, i64 %i.gm
@@ -2496,8 +2504,8 @@ bb.a:
   %i.c = load ptr, ptr %0, align 8, !tbaa !11     ; 4 uses
   %i.d = ptrtoint ptr %i.b to i64
   %i.e = ptrtoint ptr %i.c to i64
-  %i.f = sub i64 %i.d, %i.e                       ; 4 uses
-  %i.g = sdiv exact i64 %i.f, 12                  ; 19 uses
+  %i.f = sub i64 %i.d, %i.e                       ; 2 uses
+  %i.g = sdiv i64 %i.f, 12                        ; 21 uses
   %i.h = icmp eq i64 %i.f, 12
   br i1 %i.h, label %bb.b, label %bb.c
 
@@ -2900,7 +2908,8 @@ _ZN8interpol31monotone_hermite_spline_variantIfE1GEffff.exit: ; preds = %_ZNSt6v
 
 vector.memcheck595:                               ; preds = %.lr.ph379.preheader
   %scevgep596 = getelementptr i8, ptr %i.ec, i64 20 ; 2 uses
-  %scevgep597 = getelementptr i8, ptr %i.ec, i64 %i.f ; 2 uses
+  %1 = mul nuw nsw i64 %i.g, 12
+  %scevgep597 = getelementptr i8, ptr %i.ec, i64 %1 ; 2 uses
   %i.eg = shl nuw nsw i64 %i.g, 2                 ; 2 uses
   %scevgep598 = getelementptr i8, ptr %.sroa.0192.4, i64 %i.eg
   %scevgep599 = getelementptr i8, ptr %.sroa.0207.4, i64 %i.eg
@@ -3153,7 +3162,8 @@ _ZNSt12_Vector_baseIfSaIfEE11_M_allocateEm.exit.i123: ; preds = %_ZNSt12_Vector_
 
 vector.memcheck:                                  ; preds = %.lr.ph360.preheader
   %scevgep = getelementptr i8, ptr %.pre429, i64 20 ; 2 uses
-  %i.im = getelementptr i8, ptr %.pre429, i64 %i.f
+  %2 = mul nuw nsw i64 %i.g, 12
+  %i.im = getelementptr i8, ptr %.pre429, i64 %2
   %scevgep586 = getelementptr i8, ptr %i.im, i64 -12 ; 2 uses
   %i.in = shl nuw nsw i64 %i.g, 2
   %i.io = add nsw i64 %i.in, -4                   ; 2 uses
@@ -3556,7 +3566,7 @@ attributes #21 = { noreturn }
 !137 = distinct !{!137, !33}
 !138 = distinct !{!138, !139}
 !139 = !{!"llvm.loop.unroll.disable"}
-!140 = distinct !{!140, !33, !57}
+!140 = distinct !{!140, !33}
 !141 = distinct !{!141, !33}
 !142 = !{!143}
 !143 = distinct !{!143, !144}
