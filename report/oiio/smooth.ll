@@ -204,11 +204,9 @@ bb.d:                                             ; preds = %bb.c
 
 .lr.ph.preheader:                                 ; preds = %bb.d
   %i.af = ptrtoaddr ptr %i.g to i64
-  %i.ag = ptrtoaddr ptr %i.b to i64               ; 2 uses
-  %5 = add i64 %i.ag, 16
-  %6 = call i64 @llvm.umax.i64(i64 %i.af, i64 %5)
+  %i.ag = ptrtoaddr ptr %i.b to i64
   %i.ah = xor i64 %i.ag, -1
-  %i.ai = add i64 %6, %i.ah                       ; 2 uses
+  %i.ai = add i64 %i.ah, %i.af                    ; 2 uses
   %i.aj = lshr i64 %i.ai, 4
   %i.ak = add nuw nsw i64 %i.aj, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.ai, 48

@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.b
   %i.r = load i32, ptr %i.d, align 8, !dbg !5346, !noundef !12 ; 2 uses
-  %i.s = load i32, ptr %i.e, align 8, !dbg !5349, !noundef !12 ; 7 uses
+  %i.s = load i32, ptr %i.e, align 8, !dbg !5349, !noundef !12 ; 6 uses
   %i.t = sub i32 64, %i.s, !dbg !5352
   %i.u = lshr i32 %i.t, 3, !dbg !5353
   %i.v = add i32 %i.u, %i.r, !dbg !5346
@@ -236,10 +236,7 @@ bb.e:                                             ; preds = %bb.d
 
 .lr.ph.i:                                         ; preds = %bb.e
   %i.ai = load i64, ptr %i.c, align 8, !alias.scope !5378, !noalias !5386 ; 2 uses
-  %8 = add i32 %i.s, -57, !dbg !5382
-  %9 = tail call i32 @llvm.umax.i32(i32 %8, i32 -8), !dbg !5382
-  %10 = add nsw i32 %9, 64, !dbg !5382
-  %i.aj = sub i32 %10, %i.s, !dbg !5382
+  %i.aj = sub i32 56, %i.s, !dbg !5382
   %i.ak = lshr i32 %i.aj, 3, !dbg !5382
   %i.al = zext nneg i32 %i.ak to i64, !dbg !5382
   %i.am = tail call i32 @llvm.smin.i32(i32 %i.z, i32 %i.y), !dbg !5382
@@ -641,9 +638,6 @@ declare i64 @llvm.usub.sat.i64(i64, i64) #12
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.ctlz.i32(i32, i1 immarg) #16
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umax.i32(i32, i32) #12
 
 attributes #0 = { nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #1 = { nounwind nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }

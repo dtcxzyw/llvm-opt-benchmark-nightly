@@ -129,7 +129,8 @@ bb.c:                                             ; preds = %bb.b
 clause2_read.exit.lr.ph:                          ; preds = %bb.c
   %i.ak = xor i32 %i.aa, 1                        ; 3 uses
   %i.al = ptrtoaddr ptr %.val117 to i64
-  %i.am = add i64 %.idx, %i.al
+  %1 = add i64 %.idx, %i.al
+  %i.am = add i64 %1, -5
   br label %clause2_read.exit
 
 clause2_read.exit:                                ; preds = %clause2_read.exit.lr.ph, %.loopexit
@@ -137,7 +138,7 @@ clause2_read.exit:                                ; preds = %clause2_read.exit.l
   %.099150 = phi ptr [ %.val117, %clause2_read.exit.lr.ph ], [ %i.hy, %.loopexit ] ; 12 uses
   %.1104149 = phi ptr [ null, %clause2_read.exit.lr.ph ], [ %.2105, %.loopexit ] ; 4 uses
   %.098151181 = ptrtoaddr ptr %.098151 to i64
-  %.099150182 = ptrtoaddr ptr %.099150 to i64     ; 3 uses
+  %.099150182 = ptrtoaddr ptr %.099150 to i64     ; 2 uses
   %i.an = load i32, ptr %.099150, align 4, !tbaa !30 ; 3 uses
   %.not.i.i = icmp ne i32 %i.an, 0
   call void @llvm.assume(i1 %.not.i.i)
@@ -527,10 +528,7 @@ clause2_read.exit134:                             ; preds = %bb.y, %bb.z
   br i1 %i.hj, label %.lr.ph147.preheader, label %.loopexit
 
 .lr.ph147.preheader:                              ; preds = %clause2_read.exit134
-  %1 = add i64 %.099150182, 8
-  %2 = call i64 @llvm.umax.i64(i64 %i.am, i64 %1)
-  %3 = add i64 %2, -5
-  %i.hk = sub i64 %3, %.099150182                 ; 2 uses
+  %i.hk = sub i64 %i.am, %.099150182              ; 2 uses
   %i.hl = lshr i64 %i.hk, 2
   %i.hm = add nuw nsw i64 %i.hl, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.hk, 28
@@ -932,9 +930,6 @@ declare double @ldexp(double, i32) local_unnamed_addr #24
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #20
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #20
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

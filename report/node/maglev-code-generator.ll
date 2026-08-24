@@ -205,14 +205,12 @@ _ZN2v88internal10ZoneVectorIPNS0_6maglev10BasicBlockEE14EnsureCapacityEm.exit.i.
   br i1 %i.sr, label %.lr.ph.preheader.i66.i.i.i.i, label %_ZN2v88internal6maglev18NodeMultiProcessorIJNS1_12_GLOBAL__N_125SafepointingNodeProcessorENS3_33MaglevCodeGeneratingNodeProcessorEEE15PreProcessGraphEPNS1_5GraphE.exit.i
 
 .lr.ph.preheader.i66.i.i.i.i:                     ; preds = %_ZN2v88internal10ZoneVectorIPNS0_6maglev10BasicBlockEE14EnsureCapacityEm.exit.i.i.i.i.i
-  %i.ss = ptrtoaddr ptr %i.so to i64              ; 2 uses
+  %i.ss = ptrtoaddr ptr %i.so to i64
   %i.st = ptrtoaddr ptr %i.sp to i64
   %i.su = shl nuw nsw i64 %.045.lcssa254.i.i.i.i, 3
-  %16 = add nuw i64 %i.su, %i.st
-  %i.sv = add i64 %i.ss, 8
-  %umax.i.i.i.i.i = call i64 @llvm.umax.i64(i64 %16, i64 %i.sv)
-  %17 = xor i64 %i.ss, -1
-  %i.sw = add i64 %umax.i.i.i.i.i, %17
+  %16 = xor i64 %i.ss, -1
+  %i.sv = add i64 %i.su, %16
+  %i.sw = add i64 %i.sv, %i.st
   %i.sx = and i64 %i.sw, -8
   %i.sy = add i64 %i.sx, 8
   call void @llvm.memset.p0.i64(ptr align 8 %i.so, i8 0, i64 %i.sy, i1 false)

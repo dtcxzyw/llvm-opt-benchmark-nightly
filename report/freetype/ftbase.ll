@@ -205,7 +205,6 @@ ft_mem_alloc.exit:                                ; preds = %ft_mem_qalloc.exit.
 ; Function Attrs: nounwind uwtable
 define range(i32 0, 35) i32 @FT_Remove_Module(ptr nofree noundef captures(address) %0, ptr noundef %1) local_unnamed_addr #0 {
 bb.a:
-  %2 = ptrtoaddr ptr %0 to i64                    ; 3 uses
   %.not = icmp eq ptr %0, null
   br i1 %.not, label %.thread, label %bb.b
 
@@ -238,20 +237,13 @@ bb.d:                                             ; preds = %.lr.ph
   br i1 %i.j, label %.lr.ph32.preheader, label %._crit_edge
 
 .lr.ph32.preheader:                               ; preds = %bb.d
-  %i.k = shl i64 %indvar, 3                       ; 2 uses
+  %i.k = shl i64 %indvar, 3
   %i.l = getelementptr i8, ptr %0, i64 %i.k
   %scevgep = getelementptr i8, ptr %i.l, i64 32
-  %3 = add i64 %2, 32
-  %4 = add i64 %i.k, %3
-  %5 = add i64 %.idx, %2
-  %i.m = add i64 %5, 16
-  %umax = tail call i64 @llvm.umax.i64(i64 %4, i64 %i.m)
-  %6 = mul i64 %indvar, -8
-  %reass.sub = sub i64 %6, %2
-  %7 = add i64 %reass.sub, -25
-  %8 = add i64 %umax, %7
-  %9 = and i64 %8, -8
-  %i.n = add i64 %9, 8
+  %i.m = add nsw i64 %.idx, -16
+  %2 = shl i64 %indvar, 3
+  %reass.sub = sub i64 %i.m, %2
+  %i.n = add i64 %reass.sub, 8
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %.02030, ptr align 8 %scevgep, i64 %i.n, i1 false), !tbaa !211
   br label %._crit_edge
 
@@ -654,11 +646,11 @@ declare void @llvm.assume(i1 noundef) #29
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #28
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #28
-
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.abs.i32(i32, i1 immarg) #18
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umax.i64(i64, i64) #28
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.bswap.i32(i32) #28

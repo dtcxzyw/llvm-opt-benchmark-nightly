@@ -205,14 +205,12 @@ _ZN2v88internal10ZoneVectorIPNS0_6maglev4NodeEE14EnsureCapacityEm.exit.i: ; pred
   br i1 %i.bh, label %.lr.ph.preheader.i14, label %_ZN2v88internal10ZoneVectorIPNS0_6maglev4NodeEE6resizeEm.exit
 
 .lr.ph.preheader.i14:                             ; preds = %_ZN2v88internal10ZoneVectorIPNS0_6maglev4NodeEE14EnsureCapacityEm.exit.i
-  %i.bi = ptrtoaddr ptr %i.bg to i64              ; 2 uses
+  %i.bi = ptrtoaddr ptr %i.bg to i64
   %i.bj = ptrtoaddr ptr %i.be to i64
   %i.bk = shl nuw nsw i64 %.013.lcssa3740, 3
-  %4 = add nuw i64 %i.bk, %i.bj
-  %i.bl = add i64 %i.bi, 8
-  %umax.i = tail call i64 @llvm.umax.i64(i64 %4, i64 %i.bl)
+  %i.bl = add i64 %i.bk, %i.bj
   %i.bm = xor i64 %i.bi, -1
-  %i.bn = add i64 %umax.i, %i.bm
+  %i.bn = add i64 %i.bl, %i.bm
   %i.bo = and i64 %i.bn, -8
   %i.bp = add i64 %i.bo, 8
   tail call void @llvm.memset.p0.i64(ptr align 8 %i.bg, i8 0, i64 %i.bp, i1 false)
@@ -452,13 +450,11 @@ _ZN2v88internal10ZoneVectorIPNS0_6maglev10BasicBlockEE14EnsureCapacityEm.exit.i:
   br i1 %i.bq, label %.lr.ph.preheader.i, label %_ZN2v88internal10ZoneVectorIPNS0_6maglev10BasicBlockEE6resizeEm.exit
 
 .lr.ph.preheader.i:                               ; preds = %_ZN2v88internal10ZoneVectorIPNS0_6maglev10BasicBlockEE14EnsureCapacityEm.exit.i
-  %i.br = ptrtoaddr ptr %i.bp to i64              ; 2 uses
+  %i.br = ptrtoaddr ptr %i.bp to i64
   %i.bs = ptrtoaddr ptr %i.bm to i64
-  %3 = add nuw i64 %i.am, %i.bs
-  %i.bt = add i64 %i.br, 8
-  %umax.i = tail call i64 @llvm.umax.i64(i64 %3, i64 %i.bt)
+  %i.bt = add i64 %i.am, %i.bs
   %i.bu = xor i64 %i.br, -1
-  %i.bv = add i64 %umax.i, %i.bu
+  %i.bv = add i64 %i.bt, %i.bu
   %i.bw = and i64 %i.bv, -8
   %i.bx = add i64 %i.bw, 8
   tail call void @llvm.memset.p0.i64(ptr align 8 %i.bp, i8 0, i64 %i.bx, i1 false)

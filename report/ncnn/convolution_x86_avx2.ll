@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.a
   store i32 %i.ab, ptr %i.e, align 4, !tbaa !92
   %i.ac = getelementptr inbounds nuw i8, ptr %1, i64 56
   %i.ad = load i32, ptr %i.ac, align 8, !tbaa !95
-  %i.ae = mul nsw i32 %i.ad, %i.ab                ; 5 uses
+  %i.ae = mul i32 %i.ad, %i.ab                    ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #8
   %i.af = mul nsw i32 %4, %3                      ; 4 uses
   store i32 %i.af, ptr %i.f, align 4, !tbaa !92
@@ -608,7 +608,7 @@ bb.p:                                             ; preds = %bb.p, %_ZN4ncnn3Mat
   %.lcssa4363.i = phi <8 x i32> [ zeroinitializer, %_ZN4ncnn3MatD2Ev.exit1972.i ], [ %i.aiw, %._crit_edge4614.loopexit.i ], [ %i.akk, %._crit_edge4614.loopexit5339.i ], [ zeroinitializer, %_ZN4ncnn3MatD2Ev.exit1971.preheader.i ]
   %.lcssa4362.i = phi <8 x i32> [ zeroinitializer, %_ZN4ncnn3MatD2Ev.exit1972.i ], [ %i.aja, %._crit_edge4614.loopexit.i ], [ %i.ako, %._crit_edge4614.loopexit5339.i ], [ zeroinitializer, %_ZN4ncnn3MatD2Ev.exit1971.preheader.i ]
   %.01696.lcssa.i = phi ptr [ %i.agy, %_ZN4ncnn3MatD2Ev.exit1972.i ], [ %scevgep5590.i, %._crit_edge4614.loopexit.i ], [ %scevgep5583.i, %._crit_edge4614.loopexit5339.i ], [ %i.agy, %_ZN4ncnn3MatD2Ev.exit1971.preheader.i ] ; 3 uses
-  %.01693.lcssa.i = phi i32 [ 0, %_ZN4ncnn3MatD2Ev.exit1972.i ], [ %i.akt, %._crit_edge4614.loopexit.i ], [ %i.aku, %._crit_edge4614.loopexit5339.i ], [ %i.ahs, %_ZN4ncnn3MatD2Ev.exit1971.preheader.i ] ; 6 uses
+  %.01693.lcssa.i = phi i32 [ 0, %_ZN4ncnn3MatD2Ev.exit1972.i ], [ %i.akt, %._crit_edge4614.loopexit.i ], [ %i.aku, %._crit_edge4614.loopexit5339.i ], [ %i.ahs, %_ZN4ncnn3MatD2Ev.exit1971.preheader.i ] ; 5 uses
   %i.akv = add <8 x i32> %.lcssa4362.i, %.lcssa4363.i ; 2 uses
   %i.akw = shufflevector <8 x i32> %i.akv, <8 x i32> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   %i.akx = shufflevector <8 x i32> %i.akv, <8 x i32> poison, <4 x i32> <i32 4, i32 5, i32 6, i32 7>
@@ -641,12 +641,10 @@ _ZN4ncnn3MatD2Ev.exit1970.lr.ph.i:                ; preds = %._crit_edge4614.i
 
 _ZN4ncnn3MatD2Ev.exit1970.preheader.i:            ; preds = %_ZN4ncnn3MatD2Ev.exit1970.lr.ph.i
   %i.alr = or disjoint i32 %.01693.lcssa.i, 2
-  %10 = or disjoint i32 %.01693.lcssa.i, 3
-  %11 = call i32 @llvm.umax.i32(i32 %i.agq, i32 %10)
-  %reass.sub = sub nsw i32 %11, %.01693.lcssa.i
+  %10 = add nsw i32 %i.agq, -2
+  %reass.sub = sub nsw i32 %10, %.01693.lcssa.i
   %i.als = and i32 %reass.sub, -2
-  %12 = add i32 %i.als, -2
-  %i.alt = add i32 %i.alr, %12
+  %i.alt = add i32 %i.alr, %i.als
   br label %.preheader4307.i
 
 _ZN4ncnn3MatD2Ev.exit1970.us.preheader.i:         ; preds = %_ZN4ncnn3MatD2Ev.exit1970.lr.ph.i
@@ -1049,7 +1047,7 @@ bb.u:                                             ; preds = %bb.u, %_ZN4ncnn3Mat
 ._crit_edge4945.i:                                ; preds = %._crit_edge4945.loopexit5330.i, %._crit_edge4945.loopexit.i, %_ZN4ncnn3MatD2Ev.exit1945.preheader.i, %_ZN4ncnn3MatD2Ev.exit1946.i
   %i.clg = phi <8 x i32> [ zeroinitializer, %_ZN4ncnn3MatD2Ev.exit1946.i ], [ %.lcssa1078, %._crit_edge4945.loopexit.i ], [ %i.ckz, %._crit_edge4945.loopexit5330.i ], [ zeroinitializer, %_ZN4ncnn3MatD2Ev.exit1945.preheader.i ] ; 2 uses
   %.01606.lcssa.i = phi ptr [ %i.bhp, %_ZN4ncnn3MatD2Ev.exit1946.i ], [ %scevgep5693.i, %._crit_edge4945.loopexit.i ], [ %scevgep5686.i, %._crit_edge4945.loopexit5330.i ], [ %i.bhp, %_ZN4ncnn3MatD2Ev.exit1945.preheader.i ] ; 3 uses
-  %.01603.lcssa.i = phi i32 [ 0, %_ZN4ncnn3MatD2Ev.exit1946.i ], [ %i.cle, %._crit_edge4945.loopexit.i ], [ %i.clf, %._crit_edge4945.loopexit5330.i ], [ %i.cik, %_ZN4ncnn3MatD2Ev.exit1945.preheader.i ] ; 6 uses
+  %.01603.lcssa.i = phi i32 [ 0, %_ZN4ncnn3MatD2Ev.exit1946.i ], [ %i.cle, %._crit_edge4945.loopexit.i ], [ %i.clf, %._crit_edge4945.loopexit5330.i ], [ %i.cik, %_ZN4ncnn3MatD2Ev.exit1945.preheader.i ] ; 5 uses
   %i.clh = shufflevector <8 x i32> %i.clg, <8 x i32> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   %i.cli = call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.clh) ; 3 uses
   %i.clj = shufflevector <8 x i32> %i.clg, <8 x i32> poison, <4 x i32> <i32 4, i32 5, i32 6, i32 7>
@@ -1082,12 +1080,10 @@ _ZN4ncnn3MatD2Ev.exit1944.lr.ph.i:                ; preds = %._crit_edge4945.i
 
 _ZN4ncnn3MatD2Ev.exit1944.preheader.i:            ; preds = %_ZN4ncnn3MatD2Ev.exit1944.lr.ph.i
   %i.cmd = or disjoint i32 %.01603.lcssa.i, 2
-  %13 = or disjoint i32 %.01603.lcssa.i, 3
-  %14 = call i32 @llvm.umax.i32(i32 %i.chq, i32 %13)
-  %reass.sub160 = sub nsw i32 %14, %.01603.lcssa.i
+  %11 = add nsw i32 %i.chq, -2
+  %reass.sub160 = sub nsw i32 %11, %.01603.lcssa.i
   %i.cme = and i32 %reass.sub160, -2
-  %15 = add i32 %i.cme, -2
-  %i.cmf = add i32 %i.cmd, %15
+  %i.cmf = add i32 %i.cmd, %i.cme
   br label %.preheader4302.i
 
 _ZN4ncnn3MatD2Ev.exit1944.us.preheader.i:         ; preds = %_ZN4ncnn3MatD2Ev.exit1944.lr.ph.i
@@ -1490,7 +1486,7 @@ _ZN4ncnn3MatD2Ev.exit1920.us.i.new:               ; preds = %_ZN4ncnn3MatD2Ev.ex
 ._crit_edge5250.i:                                ; preds = %._crit_edge5250.loopexit5320.i, %._crit_edge5250.loopexit.i, %_ZN4ncnn3MatD2Ev.exit1920.preheader.i, %_ZN4ncnn3MatD2Ev.exit1921.i
   %i.fim = phi <4 x i32> [ zeroinitializer, %_ZN4ncnn3MatD2Ev.exit1921.i ], [ %.lcssa1016, %._crit_edge5250.loopexit.i ], [ %.lcssa1015, %._crit_edge5250.loopexit5320.i ], [ zeroinitializer, %_ZN4ncnn3MatD2Ev.exit1920.preheader.i ]
   %.01389.lcssa.i = phi ptr [ %i.dub, %_ZN4ncnn3MatD2Ev.exit1921.i ], [ %scevgep5797.i, %._crit_edge5250.loopexit.i ], [ %scevgep5790.i, %._crit_edge5250.loopexit5320.i ], [ %i.dub, %_ZN4ncnn3MatD2Ev.exit1920.preheader.i ] ; 3 uses
-  %.01388.lcssa.i = phi i32 [ 0, %_ZN4ncnn3MatD2Ev.exit1921.i ], [ %i.fik, %._crit_edge5250.loopexit.i ], [ %i.fil, %._crit_edge5250.loopexit5320.i ], [ %i.fej, %_ZN4ncnn3MatD2Ev.exit1920.preheader.i ] ; 6 uses
+  %.01388.lcssa.i = phi i32 [ 0, %_ZN4ncnn3MatD2Ev.exit1921.i ], [ %i.fik, %._crit_edge5250.loopexit.i ], [ %i.fil, %._crit_edge5250.loopexit5320.i ], [ %i.fej, %_ZN4ncnn3MatD2Ev.exit1920.preheader.i ] ; 5 uses
   %i.fin = call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.fim) ; 3 uses
   %i.fio = or disjoint i32 %.01388.lcssa.i, 1
   %i.fip = icmp slt i32 %i.fio, %i.fdp
@@ -1520,12 +1516,10 @@ _ZN4ncnn3MatD2Ev.exit1919.lr.ph.i:                ; preds = %._crit_edge5250.i
 
 _ZN4ncnn3MatD2Ev.exit1919.preheader.i:            ; preds = %_ZN4ncnn3MatD2Ev.exit1919.lr.ph.i
   %i.fjg = or disjoint i32 %.01388.lcssa.i, 2
-  %16 = or disjoint i32 %.01388.lcssa.i, 3
-  %17 = call i32 @llvm.umax.i32(i32 %i.fdp, i32 %16)
-  %reass.sub161 = sub nsw i32 %17, %.01388.lcssa.i
+  %12 = add nsw i32 %i.fdp, -2
+  %reass.sub161 = sub nsw i32 %12, %.01388.lcssa.i
   %i.fjh = and i32 %reass.sub161, -2
-  %18 = add i32 %i.fjh, -2
-  %i.fji = add i32 %i.fjg, %18
+  %i.fji = add i32 %i.fjg, %i.fjh
   br label %.preheader.i
 
 _ZN4ncnn3MatD2Ev.exit1919.us.preheader.i:         ; preds = %_ZN4ncnn3MatD2Ev.exit1919.lr.ph.i
@@ -1928,8 +1922,8 @@ vec.epilog.scalar.ph826:                          ; preds = %vec.epilog.scalar.p
 
 ._crit_edge5313.i:                                ; preds = %._crit_edge5303.i, %.preheader4300.i
   %indvars.iv.next5824.i = add nsw i64 %indvars.iv5823.i, 1 ; 2 uses
-  %19 = icmp slt i64 %indvars.iv.next5824.i, %i.arz
-  br i1 %19, label %.noexc.i, label %._crit_edge5315.i, !llvm.loop !304
+  %exitcond.not = icmp eq i64 %indvars.iv.next5824.i, %i.arz
+  br i1 %exitcond.not, label %._crit_edge5315.i, label %.noexc.i, !llvm.loop !304
 
 _ZN4ncnnL23convolution_packed_int8ERKNS_3MatERS0_S2_iiiiiiRKNS_6OptionE.exit: ; preds = %bb.b, %_ZNSt6vectorIiSaIiEED2Ev.exit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
@@ -2332,7 +2326,7 @@ bb.x:                                             ; preds = %_ZN4ncnn3MatD2Ev.ex
   %.lcssa1577 = phi <8 x i32> [ zeroinitializer, %_ZN4ncnn3MatD2Ev.exit646 ], [ %i.aio, %._crit_edge1825.loopexit ], [ %i.akq, %._crit_edge1825.loopexit1906 ], [ zeroinitializer, %_ZN4ncnn3MatD2Ev.exit645.preheader ]
   %.lcssa1576 = phi <8 x i32> [ zeroinitializer, %_ZN4ncnn3MatD2Ev.exit646 ], [ %i.air, %._crit_edge1825.loopexit ], [ %i.akt, %._crit_edge1825.loopexit1906 ], [ zeroinitializer, %_ZN4ncnn3MatD2Ev.exit645.preheader ]
   %.0601.lcssa = phi ptr [ %i.agb, %_ZN4ncnn3MatD2Ev.exit646 ], [ %scevgep2045, %._crit_edge1825.loopexit ], [ %scevgep2038, %._crit_edge1825.loopexit1906 ], [ %i.agb, %_ZN4ncnn3MatD2Ev.exit645.preheader ] ; 3 uses
-  %.0600.lcssa = phi i32 [ 0, %_ZN4ncnn3MatD2Ev.exit646 ], [ %i.aky, %._crit_edge1825.loopexit ], [ %i.akz, %._crit_edge1825.loopexit1906 ], [ %i.agv, %_ZN4ncnn3MatD2Ev.exit645.preheader ] ; 6 uses
+  %.0600.lcssa = phi i32 [ 0, %_ZN4ncnn3MatD2Ev.exit646 ], [ %i.aky, %._crit_edge1825.loopexit ], [ %i.akz, %._crit_edge1825.loopexit1906 ], [ %i.agv, %_ZN4ncnn3MatD2Ev.exit645.preheader ] ; 5 uses
   %i.ala = add <8 x i32> %.lcssa1578, %.lcssa1579
   %i.alb = add <8 x i32> %i.ala, %.lcssa1577
   %i.alc = add <8 x i32> %i.alb, %.lcssa1576      ; 3 uses
@@ -2363,9 +2357,7 @@ _ZN4ncnn3MatD2Ev.exit644.lr.ph:                   ; preds = %._crit_edge1825
 
 _ZN4ncnn3MatD2Ev.exit644.preheader:               ; preds = %_ZN4ncnn3MatD2Ev.exit644.lr.ph
   %i.alu = or disjoint i32 %.0600.lcssa, 2
-  %14 = or disjoint i32 %.0600.lcssa, 3
-  %15 = call i32 @llvm.umax.i32(i32 %i.agc, i32 %14)
-  %i.alv = add nsw i32 %15, -2
+  %i.alv = add nsw i32 %i.agc, -2
   %i.alw = sub nsw i32 %i.alv, %.0600.lcssa
   %i.alx = and i32 %i.alw, -2
   %i.aly = add i32 %i.alu, %i.alx
@@ -2768,8 +2760,10 @@ bb.c:                                             ; preds = %.lr.ph155, %_ZN4ncn
   %i.bh = icmp sgt i32 %.sroa.speculated119, 7
   %i.bi = and i32 %.sroa.speculated119, 2147483640
   %i.bj = zext nneg i32 %.sroa.speculated119 to i64
+  %15 = add i32 %.sroa.speculated119, -4
   %i.bk = sext i32 %.sroa.speculated119 to i64    ; 3 uses
   %invariant.op.i = add nsw i64 %i.bk, -3
+  %16 = add i32 %.sroa.speculated119, -2
   %i.bl = sext i32 %i.at to i64                   ; 2 uses
   %invariant.op736.i = add nsw i64 %i.bk, -1
   %.pre = load i32, ptr %7, align 4, !tbaa !92
@@ -3132,7 +3126,7 @@ bb.u:                                             ; preds = %bb.t, %bb.s, %bb.r,
   br label %.preheader567.i
 
 .preheader567.i:                                  ; preds = %.lr.ph579.i, %.preheader567.loopexit.i, %._crit_edge
-  %.0433.lcssa.i = phi i32 [ 0, %._crit_edge ], [ %i.hy, %.preheader567.loopexit.i ], [ %i.bi, %.lr.ph579.i ] ; 6 uses
+  %.0433.lcssa.i = phi i32 [ 0, %._crit_edge ], [ %i.hy, %.preheader567.loopexit.i ], [ %i.bi, %.lr.ph579.i ] ; 5 uses
   %i.hz = or disjoint i32 %.0433.lcssa.i, 3
   %i.ia = icmp slt i32 %i.hz, %.sroa.speculated119
   br i1 %i.ia, label %.lr.ph590.i, label %.preheader566.i
@@ -3153,11 +3147,10 @@ bb.u:                                             ; preds = %bb.t, %bb.s, %bb.r,
   br i1 %i.ib, label %.lr.ph.us593.preheader.i, label %.lr.ph590.split.preheader.i
 
 .lr.ph590.split.preheader.i:                      ; preds = %.lr.ph590.i
-  %15 = add i32 %.0433.lcssa.i, 7
-  %smax.i = call i32 @llvm.smax.i32(i32 %.sroa.speculated119, i32 %15)
-  %reass.sub = sub i32 %smax.i, %.0433.lcssa.i
-  %16 = and i32 %reass.sub, -4
-  %i.il = add i32 %.0433.lcssa.i, %16
+  %17 = sub i32 %15, %.0433.lcssa.i
+  %18 = and i32 %17, -4
+  %19 = add i32 %.0433.lcssa.i, 4
+  %i.il = add i32 %19, %18
   br label %.preheader566.i
 
 .lr.ph.us593.preheader.i:                         ; preds = %.lr.ph590.i
@@ -3378,7 +3371,7 @@ bb.ah:                                            ; preds = %bb.ag, %bb.af, %bb.
   br label %.preheader566.i
 
 .preheader566.i:                                  ; preds = %.preheader566.loopexit.i, %.lr.ph590.split.preheader.i, %.preheader567.i
-  %.1434.lcssa.i = phi i32 [ %.0433.lcssa.i, %.preheader567.i ], [ %i.mr, %.preheader566.loopexit.i ], [ %i.il, %.lr.ph590.split.preheader.i ] ; 6 uses
+  %.1434.lcssa.i = phi i32 [ %.0433.lcssa.i, %.preheader567.i ], [ %i.mr, %.preheader566.loopexit.i ], [ %i.il, %.lr.ph590.split.preheader.i ] ; 5 uses
   %i.ms = or disjoint i32 %.1434.lcssa.i, 1
   %i.mt = icmp slt i32 %i.ms, %.sroa.speculated119
   br i1 %i.mt, label %.lr.ph606.i, label %.preheader.i
@@ -3397,11 +3390,10 @@ bb.ah:                                            ; preds = %bb.ag, %bb.af, %bb.
   br i1 %i.mu, label %.lr.ph606.split.us.i, label %.lr.ph606.split.preheader.i
 
 .lr.ph606.split.preheader.i:                      ; preds = %.lr.ph606.i
-  %17 = add i32 %.1434.lcssa.i, 3
-  %smax667.i = call i32 @llvm.smax.i32(i32 %.sroa.speculated119, i32 %17)
-  %reass.sub157 = sub i32 %smax667.i, %.1434.lcssa.i
-  %18 = and i32 %reass.sub157, -2
-  %i.ne = add i32 %.1434.lcssa.i, %18
+  %20 = sub i32 %16, %.1434.lcssa.i
+  %21 = and i32 %20, -2
+  %22 = add i32 %.1434.lcssa.i, 2
+  %i.ne = add i32 %22, %21
   br label %.preheader.i
 
 .lr.ph606.split.us.i:                             ; preds = %.lr.ph606.i
@@ -3804,8 +3796,10 @@ bb.c:                                             ; preds = %.lr.ph134, %_ZN4ncn
   %i.ey = icmp sgt i32 %.sroa.speculated120, 7
   %i.ez = and i32 %.sroa.speculated120, 2147483640
   %i.fa = zext nneg i32 %.sroa.speculated120 to i64
+  %15 = add i32 %.sroa.speculated120, -4
   %i.fb = sext i32 %.sroa.speculated120 to i64    ; 3 uses
   %invariant.op.i = add nsw i64 %i.fb, -3
+  %16 = add i32 %.sroa.speculated120, -2
   %i.fc = sext i32 %i.ek to i64                   ; 2 uses
   %invariant.op425.i = add nsw i64 %i.fb, -1
   %.pre = load i32, ptr %7, align 4, !tbaa !92
@@ -4208,7 +4202,7 @@ bb.aa:                                            ; preds = %bb.z
   br label %.preheader79.i
 
 .preheader79.i:                                   ; preds = %.lr.ph103.i, %.preheader79.loopexit.i, %._crit_edge
-  %.0949.lcssa.i = phi i32 [ 0, %._crit_edge ], [ %i.ri, %.preheader79.loopexit.i ], [ %i.ez, %.lr.ph103.i ] ; 6 uses
+  %.0949.lcssa.i = phi i32 [ 0, %._crit_edge ], [ %i.ri, %.preheader79.loopexit.i ], [ %i.ez, %.lr.ph103.i ] ; 5 uses
   %i.rj = or disjoint i32 %.0949.lcssa.i, 3
   %i.rk = icmp slt i32 %i.rj, %.sroa.speculated120
   br i1 %i.rk, label %.lr.ph150.i, label %.preheader77.i
@@ -4234,11 +4228,10 @@ bb.aa:                                            ; preds = %bb.z
   br i1 %i.rl, label %.lr.ph.us153.preheader.i, label %.lr.ph150.split.preheader.i
 
 .lr.ph150.split.preheader.i:                      ; preds = %.lr.ph150.i
-  %15 = add i32 %.0949.lcssa.i, 7
-  %smax.i = call i32 @llvm.smax.i32(i32 %.sroa.speculated120, i32 %15)
-  %reass.sub = sub i32 %smax.i, %.0949.lcssa.i
-  %16 = and i32 %reass.sub, -4
-  %i.sa = add i32 %.0949.lcssa.i, %16
+  %17 = sub i32 %15, %.0949.lcssa.i
+  %18 = and i32 %17, -4
+  %19 = add i32 %.0949.lcssa.i, 4
+  %i.sa = add i32 %19, %18
   br label %.preheader77.i
 
 .lr.ph.us153.preheader.i:                         ; preds = %.lr.ph150.i
@@ -4641,7 +4634,7 @@ bb.ar:                                            ; preds = %bb.aq
   br label %.preheader77.i
 
 .preheader77.i:                                   ; preds = %.preheader77.loopexit.i, %.lr.ph150.split.preheader.i, %.preheader79.i
-  %.1950.lcssa.i = phi i32 [ %.0949.lcssa.i, %.preheader79.i ], [ %i.abt, %.preheader77.loopexit.i ], [ %i.sa, %.lr.ph150.split.preheader.i ] ; 6 uses
+  %.1950.lcssa.i = phi i32 [ %.0949.lcssa.i, %.preheader79.i ], [ %i.abt, %.preheader77.loopexit.i ], [ %i.sa, %.lr.ph150.split.preheader.i ] ; 5 uses
   %i.abu = or disjoint i32 %.1950.lcssa.i, 1
   %i.abv = icmp slt i32 %i.abu, %.sroa.speculated120
   br i1 %i.abv, label %.lr.ph206.i, label %.preheader75.i
@@ -4664,11 +4657,10 @@ bb.ar:                                            ; preds = %bb.aq
   br i1 %i.abw, label %.lr.ph206.split.us.i, label %.lr.ph206.split.preheader.i
 
 .lr.ph206.split.preheader.i:                      ; preds = %.lr.ph206.i
-  %17 = add i32 %.1950.lcssa.i, 3
-  %smax383.i = call i32 @llvm.smax.i32(i32 %.sroa.speculated120, i32 %17)
-  %reass.sub136 = sub i32 %smax383.i, %.1950.lcssa.i
-  %18 = and i32 %reass.sub136, -2
-  %i.ack = add i32 %.1950.lcssa.i, %18
+  %20 = sub i32 %16, %.1950.lcssa.i
+  %21 = and i32 %20, -2
+  %22 = add i32 %.1950.lcssa.i, 2
+  %i.ack = add i32 %22, %21
   br label %.preheader75.i
 
 .lr.ph206.split.us.i:                             ; preds = %.lr.ph206.i
@@ -5071,16 +5063,13 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #20
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #21
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #18
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umax.i32(i32, i32) #18
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #18
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smax.i64(i64, i64) #18
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #18
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #18

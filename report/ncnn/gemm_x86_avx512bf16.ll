@@ -204,7 +204,7 @@ bb.h:                                             ; preds = %bb.f
   br label %.preheader6.i
 
 .preheader6.i:                                    ; preds = %.preheader6.loopexit.i, %.preheader11.i
-  %.2370.lcssa.i = phi i32 [ %.1369.lcssa.i, %.preheader11.i ], [ %i.ael, %.preheader6.loopexit.i ] ; 7 uses
+  %.2370.lcssa.i = phi i32 [ %.1369.lcssa.i, %.preheader11.i ], [ %i.ael, %.preheader6.loopexit.i ] ; 6 uses
   %.23.lcssa.i = phi ptr [ %.13.lcssa.i, %.preheader11.i ], [ %.us-phi54, %.preheader6.loopexit.i ] ; 11 uses
   %i.aem = or disjoint i32 %.2370.lcssa.i, 1
   %i.aen = icmp slt i32 %i.aem, %3
@@ -607,11 +607,11 @@ vec.epilog.middle.block583:                       ; preds = %vec.epilog.vector.b
   br i1 %i.akn, label %.preheader5.us201.preheader.i, label %.preheader5.preheader.i
 
 .preheader5.preheader.i:                          ; preds = %.lr.ph197.split.i
-  %i.ako = add i32 %.2370.lcssa.i, 3
-  %smax.i = tail call i32 @llvm.smax.i32(i32 %3, i32 %i.ako)
-  %reass.sub = sub i32 %smax.i, %.2370.lcssa.i
-  %6 = and i32 %reass.sub, -2
-  %i.akp = add i32 %.2370.lcssa.i, %6
+  %i.ako = add i32 %3, -2
+  %6 = sub i32 %i.ako, %.2370.lcssa.i
+  %7 = and i32 %6, -2
+  %8 = add i32 %.2370.lcssa.i, 2
+  %i.akp = add i32 %8, %7
   br label %.preheader4.i
 
 .preheader5.us201.preheader.i:                    ; preds = %.lr.ph197.split.i
@@ -1014,7 +1014,7 @@ bb.h:                                             ; preds = %bb.f
   br label %.preheader6.i
 
 .preheader6.i:                                    ; preds = %.preheader6.loopexit.i, %.preheader11.i
-  %.2370.lcssa.i = phi i32 [ %.1369.lcssa.i, %.preheader11.i ], [ %i.ael, %.preheader6.loopexit.i ] ; 7 uses
+  %.2370.lcssa.i = phi i32 [ %.1369.lcssa.i, %.preheader11.i ], [ %i.ael, %.preheader6.loopexit.i ] ; 6 uses
   %.23.lcssa.i = phi ptr [ %.13.lcssa.i, %.preheader11.i ], [ %.us-phi54, %.preheader6.loopexit.i ] ; 11 uses
   %i.aem = or disjoint i32 %.2370.lcssa.i, 1
   %i.aen = icmp slt i32 %i.aem, %3
@@ -1417,11 +1417,11 @@ vec.epilog.middle.block583:                       ; preds = %vec.epilog.vector.b
   br i1 %i.akn, label %.preheader5.us201.preheader.i, label %.preheader5.preheader.i
 
 .preheader5.preheader.i:                          ; preds = %.lr.ph197.split.i
-  %i.ako = add i32 %.2370.lcssa.i, 3
-  %smax.i = tail call i32 @llvm.smax.i32(i32 %3, i32 %i.ako)
-  %reass.sub = sub i32 %smax.i, %.2370.lcssa.i
-  %6 = and i32 %reass.sub, -2
-  %i.akp = add i32 %.2370.lcssa.i, %6
+  %i.ako = add i32 %3, -2
+  %6 = sub i32 %i.ako, %.2370.lcssa.i
+  %7 = and i32 %6, -2
+  %8 = add i32 %.2370.lcssa.i, 2
+  %i.akp = add i32 %8, %7
   br label %.preheader4.i
 
 .preheader5.us201.preheader.i:                    ; preds = %.lr.ph197.split.i
@@ -1824,7 +1824,9 @@ begin_hunk_4_@_ZN4ncnn40gemm_transB_packed_tile_bf16s_avx512bf16ERKNS_3MatES2_RS
   %i.bjs = getelementptr i8, ptr %.3.lcssa.i, i64 %i.bjo
   %scevgep632 = getelementptr i8, ptr %i.bjs, i64 4
   %i.bjt = shl nsw i64 %i.bje, 1
+  %9 = add i32 %8, -4
   %i.bju = add nuw nsw i64 %i.bjk, 1              ; 10 uses
+  %10 = add i32 %8, -4
   %i.bjv = add i32 %8, -2                         ; 4 uses
   %i.bjw = lshr i32 %i.bjv, 1
   %i.bjx = add nuw i32 %i.bjw, 1                  ; 6 uses
@@ -2227,16 +2229,13 @@ vec.epilog.middle.block2041:                      ; preds = %vec.epilog.vector.b
 .preheader373.i:                                  ; preds = %.preheader373.loopexit.i, %bb.aw
   %.131555.lcssa.i = phi ptr [ %.1215541359.i, %bb.aw ], [ %scevgep1827.i, %.preheader373.loopexit.i ] ; 6 uses
   %.01457.lcssa.i = phi ptr [ %.41409.i, %bb.aw ], [ %.lcssa1003, %.preheader373.loopexit.i ] ; 6 uses
-  %.01454.lcssa.i = phi i32 [ 0, %bb.aw ], [ %i.bjh, %.preheader373.loopexit.i ] ; 7 uses
+  %.01454.lcssa.i = phi i32 [ 0, %bb.aw ], [ %i.bjh, %.preheader373.loopexit.i ] ; 6 uses
   %i.drc = phi <2 x float> [ %i.dkr, %bb.aw ], [ %i.dra, %.preheader373.loopexit.i ] ; 2 uses
   %i.drd = add nuw nsw i32 %.01454.lcssa.i, 3
   %i.dre = icmp slt i32 %i.drd, %8
   br i1 %i.dre, label %iter.check1905, label %._crit_edge1336.i
 
 iter.check1905:                                   ; preds = %.preheader373.i
-  %9 = add i32 %.01454.lcssa.i, 7
-  %smax1859 = tail call i32 @llvm.smax.i32(i32 %8, i32 %9)
-  %10 = add i32 %smax1859, -4
   %i.drf = sub i32 %10, %.01454.lcssa.i           ; 3 uses
   %i.drg = lshr i32 %i.drf, 2
   %narrow = add nuw nsw i32 %i.drg, 1
@@ -2639,16 +2638,13 @@ vec.epilog.middle.block1779:                      ; preds = %vec.epilog.vector.b
   %.171559.lcssa.i = phi ptr [ %.1615581401.i, %bb.ay ], [ %scevgep1829.i, %.preheader.loopexit.i ] ; 7 uses
   %.01397.lcssa.i = phi ptr [ %.41409.i, %bb.ay ], [ %indvars.iv633, %.preheader.loopexit.i ] ; 7 uses
   %.11395.lcssa.i = phi float [ %.01394.i, %bb.ay ], [ %.lcssa1022, %.preheader.loopexit.i ] ; 2 uses
-  %.01391.lcssa.i = phi i32 [ 0, %bb.ay ], [ %i.bjh, %.preheader.loopexit.i ] ; 7 uses
+  %.01391.lcssa.i = phi i32 [ 0, %bb.ay ], [ %i.bjh, %.preheader.loopexit.i ] ; 6 uses
   %i.ekc = add nuw nsw i32 %.01391.lcssa.i, 3
   %i.ekd = icmp slt i32 %i.ekc, %8
   br i1 %i.ekd, label %iter.check1674, label %._crit_edge1384.i
 
 iter.check1674:                                   ; preds = %.preheader.i
-  %11 = add i32 %.01391.lcssa.i, 7
-  %smax = tail call i32 @llvm.smax.i32(i32 %8, i32 %11)
-  %12 = add i32 %smax, -4
-  %i.eke = sub i32 %12, %.01391.lcssa.i           ; 3 uses
+  %i.eke = sub i32 %9, %.01391.lcssa.i            ; 3 uses
   %i.ekf = lshr i32 %i.eke, 2
   %narrow2048 = add nuw nsw i32 %i.ekf, 1
   %i.ekg = zext nneg i32 %narrow2048 to i64       ; 5 uses
@@ -3049,9 +3045,6 @@ declare <4 x float> @llvm.x86.avx512bf16.dpbf16ps.128(<4 x float>, <8 x bfloat>,
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x float> @llvm.fma.v4f32(<4 x float>, <4 x float>, <4 x float>) #4
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.ctpop.i32(i32) #4
