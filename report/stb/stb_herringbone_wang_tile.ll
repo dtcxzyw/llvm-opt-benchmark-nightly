@@ -204,7 +204,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 28
   %i.b = load i32, ptr %i.a, align 4, !tbaa !83   ; 20 uses
   %i.c = sdiv i32 %4, %i.b                        ; 5 uses
-  %i.d = add i32 %i.c, 6
+  %i.d = add nsw i32 %i.c, 6
   %i.e = sdiv i32 %5, %i.b                        ; 5 uses
   %i.f = add nsw i32 %i.e, 6
   %i.g = icmp sgt i32 %i.c, 100
@@ -232,8 +232,8 @@ bb.d:                                             ; preds = %bb.c
 
 .preheader455.lr.ph.split:                        ; preds = %.preheader455.lr.ph
   %i.m = icmp eq ptr %1, null
-  %wide.trip.count510 = zext nneg i32 %i.f to i64 ; 2 uses
-  %wide.trip.count505 = zext i32 %i.d to i64      ; 2 uses
+  %wide.trip.count510 = zext nneg i32 %i.d to i64 ; 2 uses
+  %wide.trip.count505 = zext nneg i32 %i.f to i64 ; 2 uses
   br i1 %i.m, label %.preheader455.us, label %.preheader455
 
 .preheader455.us:                                 ; preds = %.preheader455.lr.ph.split, %._crit_edge.split.us.us
@@ -255,13 +255,13 @@ bb.e:                                             ; preds = %bb.e, %.preheader45
   %i.v = getelementptr inbounds nuw i8, ptr %i.n, i64 %indvars.iv501
   store i8 %i.u, ptr %i.v, align 1, !tbaa !62
   %indvars.iv.next502 = add nuw nsw i64 %indvars.iv501, 1 ; 2 uses
-  %exitcond506.not = icmp eq i64 %indvars.iv.next502, %wide.trip.count505
-  br i1 %exitcond506.not, label %._crit_edge.split.us.us, label %bb.e, !llvm.loop !87
+  %6 = icmp samesign ult i64 %indvars.iv.next502, %wide.trip.count510
+  br i1 %6, label %bb.e, label %._crit_edge.split.us.us, !llvm.loop !87
 
 ._crit_edge.split.us.us:                          ; preds = %bb.e
   %indvars.iv.next508 = add nuw nsw i64 %indvars.iv507, 1 ; 2 uses
-  %exitcond511.not = icmp eq i64 %indvars.iv.next508, %wide.trip.count510
-  br i1 %exitcond511.not, label %.preheader454, label %.preheader455.us, !llvm.loop !88
+  %7 = icmp samesign ult i64 %indvars.iv.next508, %wide.trip.count505
+  br i1 %7, label %.preheader455.us, label %.preheader454, !llvm.loop !88
 
 .preheader455:                                    ; preds = %.preheader455.lr.ph.split, %._crit_edge.split
   %indvars.iv496 = phi i64 [ %indvars.iv.next497, %._crit_edge.split ], [ 0, %.preheader455.lr.ph.split ] ; 3 uses
@@ -279,10 +279,10 @@ bb.e:                                             ; preds = %bb.e, %.preheader45
   br i1 %i.y, label %.preheader.preheader, label %._crit_edge465.split
 
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
-  %i.z = add nsw i32 %i.c, 3
-  %6 = add nsw i32 %i.e, 3
-  %wide.trip.count522 = zext nneg i32 %6 to i64
-  %wide.trip.count516 = zext nneg i32 %i.z to i64
+  %i.z = add nsw i32 %i.e, 2
+  %8 = zext nneg i32 %i.z to i64
+  %9 = add nsw i32 %i.c, 2
+  %wide.trip.count516 = zext nneg i32 %9 to i64
   br label %.preheader
 
 bb.f:                                             ; preds = %.preheader455, %stbhw__weighted.exit
@@ -391,25 +391,25 @@ stbhw__weighted.exit:                             ; preds = %bb.j, %._crit_edge2
   %i.bg = getelementptr inbounds nuw i8, ptr %i.w, i64 %indvars.iv
   store i8 %i.bf, ptr %i.bg, align 1, !tbaa !62
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count505
-  br i1 %exitcond.not, label %._crit_edge.split, label %bb.f, !llvm.loop !87
+  %10 = icmp samesign ult i64 %indvars.iv.next, %wide.trip.count510
+  br i1 %10, label %bb.f, label %._crit_edge.split, !llvm.loop !87
 
 ._crit_edge.split:                                ; preds = %stbhw__weighted.exit
   %indvars.iv.next497 = add nuw nsw i64 %indvars.iv496, 1 ; 2 uses
-  %exitcond500.not = icmp eq i64 %indvars.iv.next497, %wide.trip.count510
-  br i1 %exitcond500.not, label %.preheader454, label %.preheader455, !llvm.loop !88
+  %11 = icmp samesign ult i64 %indvars.iv.next497, %wide.trip.count505
+  br i1 %11, label %.preheader455, label %.preheader454, !llvm.loop !88
 
 .preheader:                                       ; preds = %.preheader.preheader, %._crit_edge
-  %indvars.iv518.a = phi i64 [ 0, %.preheader.preheader ], [ %indvars.iv.next519.a, %._crit_edge ] ; 4 uses
+  %indvars.iv518.a = phi i64 [ 0, %.preheader.preheader ], [ %indvars.iv.next519.a, %._crit_edge ] ; 5 uses
   %i.bh = getelementptr inbounds nuw [106 x i8], ptr @c_color, i64 %indvars.iv518.a ; 5 uses
-  %indvars.iv.next519.a = add nuw nsw i64 %indvars.iv518.a, 1 ; 3 uses
+  %indvars.iv.next519.a = add nuw nsw i64 %indvars.iv518.a, 1 ; 2 uses
   %i.bi = getelementptr inbounds nuw [106 x i8], ptr @c_color, i64 %indvars.iv.next519.a ; 5 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %i.bh, i64 212 ; 2 uses
   %invariant.op641 = sub i64 1, %indvars.iv518.a
   br label %bb.k
 
 bb.k:                                             ; preds = %.preheader, %bb.as
-  %indvars.iv512 = phi i64 [ 0, %.preheader ], [ %indvars.iv.next513.pre-phi, %bb.as ] ; 9 uses
+  %indvars.iv512 = phi i64 [ 0, %.preheader ], [ %indvars.iv.next513.pre-phi, %bb.as ] ; 10 uses
   %i.bk = getelementptr inbounds nuw i8, ptr %i.bh, i64 %indvars.iv512 ; 3 uses
   %i.bl = load i8, ptr %i.bk, align 1, !tbaa !62  ; 9 uses
   %i.bm = getelementptr i8, ptr %i.bk, i64 107
@@ -812,13 +812,13 @@ stbhw__change_color.exit361:                      ; preds = %bb.ar, %.thread418,
   br label %bb.as
 
 bb.as:                                            ; preds = %._crit_edge544, %bb.ag, %stbhw__change_color.exit361, %.thread587, %bb.ac, %bb.ad, %bb.ae, %bb.af
-  %indvars.iv.next513.pre-phi = phi i64 [ %.pre545, %._crit_edge544 ], [ %i.dx, %bb.ag ], [ %i.dx, %stbhw__change_color.exit361 ], [ %i.dx, %.thread587 ], [ %i.dx, %bb.ac ], [ %i.dx, %bb.ad ], [ %i.dx, %bb.ae ], [ %i.dx, %bb.af ] ; 2 uses
-  %exitcond517.not = icmp eq i64 %indvars.iv.next513.pre-phi, %wide.trip.count516
-  br i1 %exitcond517.not, label %._crit_edge, label %bb.k, !llvm.loop !93
+  %indvars.iv.next513.pre-phi = phi i64 [ %.pre545, %._crit_edge544 ], [ %i.dx, %bb.ag ], [ %i.dx, %stbhw__change_color.exit361 ], [ %i.dx, %.thread587 ], [ %i.dx, %bb.ac ], [ %i.dx, %bb.ad ], [ %i.dx, %bb.ae ], [ %i.dx, %bb.af ]
+  %12 = icmp slt i64 %indvars.iv512, %wide.trip.count516
+  br i1 %12, label %bb.k, label %._crit_edge, !llvm.loop !93
 
 ._crit_edge:                                      ; preds = %bb.as
-  %exitcond523.not = icmp eq i64 %indvars.iv.next519.a, %wide.trip.count522
-  br i1 %exitcond523.not, label %._crit_edge465.split, label %.preheader, !llvm.loop !94
+  %13 = icmp samesign ult i64 %indvars.iv518.a, %8
+  br i1 %13, label %.preheader, label %._crit_edge465.split, !llvm.loop !94
 
 ._crit_edge465.split:                             ; preds = %._crit_edge, %bb.d, %.preheader.lr.ph, %.preheader454
   %i.gg = sub nsw i32 0, %i.b                     ; 2 uses

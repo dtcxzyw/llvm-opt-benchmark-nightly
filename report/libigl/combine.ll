@@ -204,8 +204,8 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELi1ELi0ELin1ELi1EEEE6resizeEl.exit64
   %i.af = load ptr, ptr %0, align 8, !tbaa !17    ; 6 uses
   %i.ag = ptrtoint ptr %i.ae to i64
   %i.ah = ptrtoint ptr %i.af to i64
-  %i.ai = sub i64 %i.ag, %i.ah                    ; 2 uses
-  %i.aj = sdiv exact i64 %i.ai, 24                ; 3 uses
+  %i.ai = sub i64 %i.ag, %i.ah
+  %i.aj = sdiv i64 %i.ai, 24                      ; 2 uses
   %.not = icmp eq ptr %i.ae, %i.af                ; 2 uses
   br i1 %.not, label %bb.g, label %bb.f
 
@@ -237,12 +237,13 @@ bb.i:                                             ; preds = %bb.g, %bb.h
 .lr.ph:                                           ; preds = %bb.i
   %i.au = load ptr, ptr %4, align 8, !tbaa !9     ; 3 uses
   %i.av = load ptr, ptr %5, align 8, !tbaa !9     ; 3 uses
-  %xtraiter = and i64 %i.aj, 1
-  %16 = icmp eq i64 %i.ai, 24
+  %umax = tail call i64 @llvm.umax.i64(i64 %i.aj, i64 1) ; 3 uses
+  %xtraiter = and i64 %umax, 1
+  %16 = icmp ult i64 %i.aj, 2
   br i1 %16, label %.epil.preheader, label %.lr.ph.new
 
 .lr.ph.new:                                       ; preds = %.lr.ph
-  %unroll_iter = and i64 %i.aj, -2
+  %unroll_iter = and i64 %umax, -2
   br label %bb.n
 
 ._crit_edge.unr-lcssa:                            ; preds = %bb.n
@@ -253,7 +254,7 @@ bb.i:                                             ; preds = %bb.g, %bb.h
   %indvars.iv.epil.init = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next.1, %._crit_edge.unr-lcssa ] ; 4 uses
   %.05574.epil.init = phi i32 [ 0, %.lr.ph ], [ %i.dw, %._crit_edge.unr-lcssa ]
   %.05673.epil.init = phi i32 [ 0, %.lr.ph ], [ %i.dr, %._crit_edge.unr-lcssa ]
-  %lcmp.mod106 = trunc i64 %i.aj to i1
+  %lcmp.mod106 = trunc i64 %umax to i1
   tail call void @llvm.assume(i1 %lcmp.mod106)
   %i.aw = getelementptr inbounds nuw [24 x i8], ptr %i.af, i64 %indvars.iv.epil.init
   %i.ax = getelementptr inbounds nuw [24 x i8], ptr %i.ap, i64 %indvars.iv.epil.init
@@ -606,8 +607,8 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixImLin1ELi1ELi0ELin1ELi1EEEE6resizeEl.exit64
   %i.af = load ptr, ptr %0, align 8, !tbaa !90    ; 6 uses
   %i.ag = ptrtoint ptr %i.ae to i64
   %i.ah = ptrtoint ptr %i.af to i64
-  %i.ai = sub i64 %i.ag, %i.ah                    ; 2 uses
-  %i.aj = sdiv exact i64 %i.ai, 24                ; 3 uses
+  %i.ai = sub i64 %i.ag, %i.ah
+  %i.aj = sdiv i64 %i.ai, 24                      ; 2 uses
   %.not = icmp eq ptr %i.ae, %i.af                ; 2 uses
   br i1 %.not, label %bb.g, label %bb.f
 
@@ -639,12 +640,13 @@ bb.i:                                             ; preds = %bb.g, %bb.h
 .lr.ph:                                           ; preds = %bb.i
   %i.au = load ptr, ptr %4, align 8, !tbaa !94    ; 3 uses
   %i.av = load ptr, ptr %5, align 8, !tbaa !94    ; 3 uses
-  %xtraiter = and i64 %i.aj, 1
-  %16 = icmp eq i64 %i.ai, 24
+  %umax = tail call i64 @llvm.umax.i64(i64 %i.aj, i64 1) ; 3 uses
+  %xtraiter = and i64 %umax, 1
+  %16 = icmp ult i64 %i.aj, 2
   br i1 %16, label %.epil.preheader, label %.lr.ph.new
 
 .lr.ph.new:                                       ; preds = %.lr.ph
-  %unroll_iter = and i64 %i.aj, -2
+  %unroll_iter = and i64 %umax, -2
   br label %bb.n
 
 ._crit_edge.unr-lcssa:                            ; preds = %bb.n
@@ -655,7 +657,7 @@ bb.i:                                             ; preds = %bb.g, %bb.h
   %indvars.iv.epil.init = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next.1, %._crit_edge.unr-lcssa ] ; 4 uses
   %.05574.epil.init = phi i32 [ 0, %.lr.ph ], [ %i.dw, %._crit_edge.unr-lcssa ]
   %.05673.epil.init = phi i32 [ 0, %.lr.ph ], [ %i.dr, %._crit_edge.unr-lcssa ]
-  %lcmp.mod106 = trunc i64 %i.aj to i1
+  %lcmp.mod106 = trunc i64 %umax to i1
   tail call void @llvm.assume(i1 %lcmp.mod106)
   %i.aw = getelementptr inbounds nuw [24 x i8], ptr %i.af, i64 %indvars.iv.epil.init
   %i.ax = getelementptr inbounds nuw [24 x i8], ptr %i.ap, i64 %indvars.iv.epil.init
@@ -1058,8 +1060,8 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELi1ELi0ELin1ELi1EEEE6resizeEl.exit64
   %i.af = load ptr, ptr %0, align 8, !tbaa !90    ; 6 uses
   %i.ag = ptrtoint ptr %i.ae to i64
   %i.ah = ptrtoint ptr %i.af to i64
-  %i.ai = sub i64 %i.ag, %i.ah                    ; 2 uses
-  %i.aj = sdiv exact i64 %i.ai, 24                ; 3 uses
+  %i.ai = sub i64 %i.ag, %i.ah
+  %i.aj = sdiv i64 %i.ai, 24                      ; 2 uses
   %.not = icmp eq ptr %i.ae, %i.af                ; 2 uses
   br i1 %.not, label %bb.g, label %bb.f
 
@@ -1091,12 +1093,13 @@ bb.i:                                             ; preds = %bb.g, %bb.h
 .lr.ph:                                           ; preds = %bb.i
   %i.au = load ptr, ptr %4, align 8, !tbaa !9     ; 3 uses
   %i.av = load ptr, ptr %5, align 8, !tbaa !9     ; 3 uses
-  %xtraiter = and i64 %i.aj, 1
-  %16 = icmp eq i64 %i.ai, 24
+  %umax = tail call i64 @llvm.umax.i64(i64 %i.aj, i64 1) ; 3 uses
+  %xtraiter = and i64 %umax, 1
+  %16 = icmp ult i64 %i.aj, 2
   br i1 %16, label %.epil.preheader, label %.lr.ph.new
 
 .lr.ph.new:                                       ; preds = %.lr.ph
-  %unroll_iter = and i64 %i.aj, -2
+  %unroll_iter = and i64 %umax, -2
   br label %bb.n
 
 ._crit_edge.unr-lcssa:                            ; preds = %bb.n
@@ -1107,7 +1110,7 @@ bb.i:                                             ; preds = %bb.g, %bb.h
   %indvars.iv.epil.init = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next.1, %._crit_edge.unr-lcssa ] ; 4 uses
   %.05574.epil.init = phi i32 [ 0, %.lr.ph ], [ %i.dw, %._crit_edge.unr-lcssa ]
   %.05673.epil.init = phi i32 [ 0, %.lr.ph ], [ %i.dr, %._crit_edge.unr-lcssa ]
-  %lcmp.mod106 = trunc i64 %i.aj to i1
+  %lcmp.mod106 = trunc i64 %umax to i1
   tail call void @llvm.assume(i1 %lcmp.mod106)
   %i.aw = getelementptr inbounds nuw [24 x i8], ptr %i.af, i64 %indvars.iv.epil.init
   %i.ax = getelementptr inbounds nuw [24 x i8], ptr %i.ap, i64 %indvars.iv.epil.init
@@ -1509,6 +1512,9 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #11
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umax.i64(i64, i64) #9
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #12

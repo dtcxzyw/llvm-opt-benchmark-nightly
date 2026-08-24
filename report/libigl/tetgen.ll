@@ -205,7 +205,8 @@ bb.ay:                                            ; preds = %.lr.ph153, %bb.ay
   br i1 %i.tz, label %.lr.ph157.preheader, label %._crit_edge158
 
 .lr.ph157.preheader:                              ; preds = %._crit_edge
-  %wide.trip.count183 = zext nneg i32 %i.sm to i64
+  %smax = call i32 @llvm.smax.i32(i32 %i.sm, i32 1)
+  %wide.trip.count183 = zext nneg i32 %smax to i64
   br label %.lr.ph157
 
 .lr.ph157:                                        ; preds = %.lr.ph157.preheader, %.lr.ph157
@@ -608,8 +609,8 @@ bb.v:                                             ; preds = %bb.u, %bb.t, %bb.s
   %.us-phi = phi double [ %.3.us, %bb.p ], [ %.3, %bb.v ]
   %i.fs = add nuw nsw i64 %.077108, 1             ; 2 uses
   %.079 = load ptr, ptr %.079110, align 8, !tbaa !125
-  %exitcond.not = icmp eq i64 %i.fs, %spec.store.select
-  br i1 %exitcond.not, label %._crit_edge113.split, label %.lr.ph104, !llvm.loop !575
+  %3 = icmp slt i64 %i.fs, %spec.store.select
+  br i1 %3, label %.lr.ph104, label %._crit_edge113.split, !llvm.loop !575
 
 ._crit_edge113.split:                             ; preds = %._crit_edge105, %.lr.ph112, %bb.j
   ret void
@@ -1012,8 +1013,8 @@ bb.ce:                                            ; preds = %bb.cd, %.thread292
   %i.zn = load i32, ptr %i.zm, align 4, !tbaa !33
   %i.zo = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.zc, ptr noundef nonnull @.str.723, i32 noundef %i.zh, i32 noundef %i.zj, i32 noundef %i.zl, i32 noundef %i.zn) #40 ; 0 uses
   %indvars.iv.next357 = add nuw nsw i64 %indvars.iv356, 1 ; 2 uses
-  %exitcond359.not = icmp eq i64 %indvars.iv.next357, %i.oe
-  br i1 %exitcond359.not, label %.thread444, label %.lr.ph, !llvm.loop !1438
+  %2 = icmp sgt i64 %i.oe, %indvars.iv.next357
+  br i1 %2, label %.lr.ph, label %.thread444, !llvm.loop !1438
 
 .thread444:                                       ; preds = %.lr.ph, %bb.ce
   %i.zp = call i32 @fclose(ptr noundef %i.zc)     ; 0 uses

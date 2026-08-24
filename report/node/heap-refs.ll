@@ -204,7 +204,7 @@ bb.a:
   %.fr13 = freeze i64 %i.t
   %i.u = lshr i64 %.fr13, 32
   %i.v = trunc nuw i64 %i.u to i32                ; 4 uses
-  %i.w = sdiv i32 %i.v, 2                         ; 3 uses
+  %i.w = sdiv i32 %i.v, 2                         ; 2 uses
   %i.x = sext i32 %i.w to i64
   store ptr %i.p, ptr %0, align 8, !alias.scope !39
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
@@ -255,14 +255,14 @@ bb.e:                                             ; preds = %bb.d
   %i.ar = add i64 %i.aq, 8
   tail call void @llvm.memset.p0.i64(ptr align 8 %i.ak, i8 0, i64 %i.ar, i1 false), !noalias !39
   %i.as = getelementptr inbounds nuw i8, ptr %i.r, i64 16 ; 3 uses
-  %wide.trip.count.i = zext i32 %i.w to i64       ; 2 uses
+  %smax.i = tail call i32 @llvm.smax.i32(i32 %i.w, i32 1) ; 2 uses
+  %wide.trip.count.i = zext nneg i32 %smax.i to i64 ; 2 uses
   %xtraiter = and i64 %wide.trip.count.i, 1
-  %3 = and i32 %i.v, -2
-  %4 = icmp eq i32 %3, 2
-  br i1 %4, label %.epil.preheader, label %.lr.ph.i.new
+  %3 = icmp slt i32 %i.v, 4
+  br i1 %3, label %.epil.preheader, label %.lr.ph.i.new
 
 .lr.ph.i.new:                                     ; preds = %.lr.ph.i
-  %unroll_iter = and i64 %wide.trip.count.i, 4294967294
+  %unroll_iter = and i64 %wide.trip.count.i, 1073741822
   br label %bb.f
 
 bb.f:                                             ; preds = %_ZN2v87ToCDataILNS_8internal18ExternalPointerTagE35EEEmPNS1_7IsolateENS1_6TaggedINS1_6ObjectEEE.exit.i.1, %.lr.ph.i.new
@@ -312,7 +312,7 @@ _ZN2v88internal8compiler12_GLOBAL__N_113GetCFunctionsENS0_6TaggedINS0_10FixedArr
 
 .epil.preheader:                                  ; preds = %_ZN2v88internal8compiler12_GLOBAL__N_113GetCFunctionsENS0_6TaggedINS0_10FixedArrayEEEPNS0_7IsolateEPNS0_4ZoneE.exit.loopexit.unr-lcssa, %.lr.ph.i
   %indvars.iv.i.epil.init = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i.1, %_ZN2v88internal8compiler12_GLOBAL__N_113GetCFunctionsENS0_6TaggedINS0_10FixedArrayEEEPNS0_7IsolateEPNS0_4ZoneE.exit.loopexit.unr-lcssa ] ; 2 uses
-  %lcmp.mod11 = trunc i32 %i.w to i1
+  %lcmp.mod11 = trunc i32 %smax.i to i1
   tail call void @llvm.assume(i1 %lcmp.mod11)
   %.idx.i.epil = shl nuw nsw i64 %indvars.iv.i.epil.init, 4
   %i.bh = getelementptr inbounds nuw i8, ptr %i.as, i64 %.idx.i.epil
@@ -366,7 +366,7 @@ bb.a:
   %.fr13 = freeze i64 %i.t
   %i.u = lshr i64 %.fr13, 32
   %i.v = trunc nuw i64 %i.u to i32                ; 4 uses
-  %i.w = sdiv i32 %i.v, 2                         ; 3 uses
+  %i.w = sdiv i32 %i.v, 2                         ; 2 uses
   %i.x = sext i32 %i.w to i64
   store ptr %i.p, ptr %0, align 8, !alias.scope !43
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
@@ -416,14 +416,14 @@ bb.e:                                             ; preds = %bb.d
   %i.aq = and i64 %i.ap, -8
   %i.ar = add i64 %i.aq, 8
   tail call void @llvm.memset.p0.i64(ptr align 8 %i.ak, i8 0, i64 %i.ar, i1 false), !noalias !43
-  %wide.trip.count.i = zext i32 %i.w to i64       ; 2 uses
+  %smax.i = tail call i32 @llvm.smax.i32(i32 %i.w, i32 1) ; 2 uses
+  %wide.trip.count.i = zext nneg i32 %smax.i to i64 ; 2 uses
   %xtraiter = and i64 %wide.trip.count.i, 1
-  %3 = and i32 %i.v, -2
-  %4 = icmp eq i32 %3, 2
-  br i1 %4, label %.lr.ph.i.epil.preheader, label %.lr.ph.preheader.i.new
+  %3 = icmp slt i32 %i.v, 4
+  br i1 %3, label %.lr.ph.i.epil.preheader, label %.lr.ph.preheader.i.new
 
 .lr.ph.preheader.i.new:                           ; preds = %.lr.ph.preheader.i
-  %unroll_iter = and i64 %wide.trip.count.i, 4294967294
+  %unroll_iter = and i64 %wide.trip.count.i, 1073741822
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %_ZN2v87ToCDataIPKNS_13CFunctionInfoELNS_8internal18ExternalPointerTagE36EEET_PNS4_7IsolateENS4_6TaggedINS4_6ObjectEEE.exit.i.1, %.lr.ph.preheader.i.new
@@ -477,7 +477,7 @@ _ZN2v88internal8compiler12_GLOBAL__N_114GetCSignaturesENS0_6TaggedINS0_10FixedAr
 
 .lr.ph.i.epil.preheader:                          ; preds = %_ZN2v88internal8compiler12_GLOBAL__N_114GetCSignaturesENS0_6TaggedINS0_10FixedArrayEEEPNS0_7IsolateEPNS0_4ZoneE.exit.loopexit.unr-lcssa, %.lr.ph.preheader.i
   %indvars.iv.i.epil.init = phi i64 [ 0, %.lr.ph.preheader.i ], [ %indvars.iv.next.i.1, %_ZN2v88internal8compiler12_GLOBAL__N_114GetCSignaturesENS0_6TaggedINS0_10FixedArrayEEEPNS0_7IsolateEPNS0_4ZoneE.exit.loopexit.unr-lcssa ] ; 2 uses
-  %lcmp.mod11 = trunc i32 %i.w to i1
+  %lcmp.mod11 = trunc i32 %smax.i to i1
   tail call void @llvm.assume(i1 %lcmp.mod11)
   %.idx.i.epil = shl nuw nsw i64 %indvars.iv.i.epil.init, 4
   %i.bk = getelementptr inbounds nuw i8, ptr %i.r, i64 %.idx.i.epil
@@ -878,6 +878,9 @@ declare i32 @llvm.smin.i32(i32, i32) #22
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #23
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #22
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i16 @llvm.usub.sat.i16(i16, i16) #22

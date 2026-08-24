@@ -204,12 +204,12 @@ bb.r:                                             ; preds = %bb.r, %.lr.ph144.ne
   br i1 %or.cond3171, label %.lr.ph148.preheader, label %bb.s
 
 .lr.ph148.preheader:                              ; preds = %._crit_edge.thread
-  %i.co = call i64 @llvm.umin.i64(i64 %.0112, i64 %i.bi) ; 6 uses
+  %i.co = call i64 @llvm.umin.i64(i64 %.0112, i64 %i.bi) ; 4 uses
   %min.iters.check = icmp ult i64 %i.co, 8
   br i1 %min.iters.check, label %.lr.ph148.preheader180, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph148.preheader
-  %n.vec = and i64 %i.co, -8                      ; 3 uses
+  %n.vec = and i64 %i.co, -8                      ; 4 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -264,17 +264,17 @@ middle.block:                                     ; preds = %vector.body
   %spec.select174 = select i1 %i.dh, i32 %.0146, i32 1 ; 2 uses
   %i.di = getelementptr inbounds nuw i8, ptr %i.c, i64 %.2110145
   store i8 %spec.select173, ptr %i.di, align 1, !tbaa !11
-  %i.dj = add nuw i64 %.2110145, 1                ; 2 uses
-  %exitcond167.not = icmp eq i64 %i.dj, %i.co
-  br i1 %exitcond167.not, label %._crit_edge149.loopexit.loopexit, label %.lr.ph148, !llvm.loop !22
+  %i.dj = add nuw i64 %.2110145, 1                ; 3 uses
+  %11 = icmp ult i64 %i.dj, %i.co
+  br i1 %11, label %.lr.ph148, label %._crit_edge149.loopexit.loopexit, !llvm.loop !22
 
 ._crit_edge149.loopexit.loopexit:                 ; preds = %.lr.ph148
   %i.dk = icmp ne i32 %spec.select174, 0
   br label %._crit_edge149
 
 ._crit_edge149:                                   ; preds = %middle.block, %._crit_edge149.loopexit.loopexit, %._crit_edge
-  %.2110.lcssa = phi i64 [ 0, %._crit_edge ], [ %i.co, %._crit_edge149.loopexit.loopexit ], [ %i.co, %middle.block ]
-  %.0.lcssa = phi i1 [ false, %._crit_edge ], [ %i.dk, %._crit_edge149.loopexit.loopexit ], [ %.not179, %middle.block ]
+  %.2110.lcssa = phi i64 [ 0, %._crit_edge ], [ %n.vec, %middle.block ], [ %i.dj, %._crit_edge149.loopexit.loopexit ]
+  %.0.lcssa = phi i1 [ false, %._crit_edge ], [ %.not179, %middle.block ], [ %i.dk, %._crit_edge149.loopexit.loopexit ]
   %i.dl = getelementptr inbounds nuw i8, ptr %i.c, i64 %.2110.lcssa
   store i8 0, ptr %i.dl, align 1, !tbaa !11
   br label %bb.s

@@ -205,7 +205,10 @@ bb.a:
   %i.ao = ptrtoint ptr %i.am to i64
   %i.ap = ptrtoint ptr %i.an to i64
   %i.aq = sub i64 %i.ao, %i.ap
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.an, i8 0, i64 %i.aq, i1 false), !tbaa !138
+  %4 = sdiv i64 %i.aq, 24
+  %umax = tail call i64 @llvm.umax.i64(i64 %4, i64 1)
+  %5 = mul nuw i64 %umax, 24
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.an, i8 0, i64 %5, i1 false), !tbaa !138
   br label %.preheader
 
 .preheader:                                       ; preds = %.lr.ph.preheader, %.preheader90

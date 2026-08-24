@@ -55,9 +55,8 @@ bb.a:
   br i1 %i.b, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %2 = tail call i32 @llvm.smax.i32(i32 %i.a, i32 2)
-  %smax = add nsw i32 %2, -1
-  %wide.trip.count = zext nneg i32 %smax to i64
+  %smax = add nsw i32 %i.a, -1
+  %wide.trip.count = zext i32 %smax to i64
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.d
@@ -146,8 +145,7 @@ bb.d:                                             ; preds = %int_log2.exit
   br i1 %i.d, label %.lr.ph.preheader.i, label %FFT_bitreverse.exit
 
 .lr.ph.preheader.i:                               ; preds = %bb.d
-  %3 = tail call i32 @llvm.umax.i32(i32 %i.a, i32 2)
-  %smax.i = add nsw i32 %3, -1
+  %smax.i = add nsw i32 %i.a, -1
   %wide.trip.count.i = zext nneg i32 %smax.i to i64
   br label %.lr.ph.i102
 
@@ -408,12 +406,6 @@ declare void @exit(i32 noundef) local_unnamed_addr #4
 
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
 declare double @sin(double noundef) local_unnamed_addr #5
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #1
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umax.i32(i32, i32) #1
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #1

@@ -205,11 +205,12 @@ bb.aq:                                            ; preds = %.loopexit314, %.loo
   %i.mv = ptrtoint ptr %i.mt to i64
   %i.mw = ptrtoint ptr %i.mu to i64
   %i.mx = sub i64 %i.mv, %i.mw
-  %i.my = sdiv exact i64 %i.mx, 144               ; 5 uses
+  %i.my = sdiv i64 %i.mx, 144                     ; 4 uses
   %.not423 = icmp eq ptr %i.mt, %i.mu
   br i1 %.not423, label %.loopexit312, label %.lr.ph405.preheader
 
 .lr.ph405.preheader:                              ; preds = %.preheader313
+  %1 = tail call i64 @llvm.umax.i64(i64 %i.my, i64 1) ; 2 uses
   %min.iters.check = icmp ult i64 %i.my, 9
   br i1 %min.iters.check, label %.lr.ph405.preheader632, label %vector.scevcheck
 
@@ -222,10 +223,10 @@ vector.scevcheck:                                 ; preds = %.lr.ph405.preheader
   br i1 %i.nd, label %.lr.ph405.preheader632, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.scevcheck
-  %i.ne = and i64 %i.my, 3                        ; 2 uses
+  %i.ne = and i64 %1, 3                           ; 2 uses
   %i.nf = icmp eq i64 %i.ne, 0
   %i.ng = select i1 %i.nf, i64 4, i64 %i.ne
-  %n.vec = sub nsw i64 %i.my, %i.ng               ; 2 uses
+  %n.vec = sub nsw i64 %1, %i.ng                  ; 2 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph

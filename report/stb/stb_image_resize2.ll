@@ -205,10 +205,10 @@ bb.b:                                             ; preds = %.lr.ph76.split
 bb.c:                                             ; preds = %.lr.ph
   %i.an = icmp slt i32 %i.al, %i.aj
   %spec.select64 = select i1 %i.an, i32 %.05367, i32 %.05268 ; 2 uses
-  %i.ao = add nuw i32 %.05367, 1
-  %exitcond.not = icmp eq i32 %.05367, %spec.select
+  %i.ao = add nuw nsw i32 %.05367, 1
+  %.not.not = icmp slt i32 %.05367, %spec.select
   %i.ap = tail call i32 @llvm.smin.i32(i32 %i.al, i32 %i.aj)
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !986
+  br i1 %.not.not, label %.lr.ph, label %._crit_edge, !llvm.loop !986
 
 ._crit_edge:                                      ; preds = %bb.c, %.lr.ph, %bb.b
   %.052.lcssa = phi i32 [ 0, %bb.b ], [ %.05268, %.lr.ph ], [ %spec.select64, %bb.c ] ; 2 uses
@@ -611,10 +611,10 @@ bb.bi:                                            ; preds = %.lr.ph76.split.i
 bb.bj:                                            ; preds = %.lr.ph.i345
   %i.rc = icmp slt i32 %i.ra, %i.qy
   %spec.select64.i = select i1 %i.rc, i32 %.05367.i, i32 %.05268.i ; 2 uses
-  %i.rd = add nuw i32 %.05367.i, 1
-  %exitcond.not.i346 = icmp eq i32 %.05367.i, %spec.select.i344
+  %i.rd = add nuw nsw i32 %.05367.i, 1
+  %.not.not.i = icmp slt i32 %.05367.i, %spec.select.i344
   %i.re = tail call i32 @llvm.smin.i32(i32 %i.ra, i32 %i.qy)
-  br i1 %exitcond.not.i346, label %._crit_edge.i, label %.lr.ph.i345, !llvm.loop !986
+  br i1 %.not.not.i, label %.lr.ph.i345, label %._crit_edge.i, !llvm.loop !986
 
 ._crit_edge.i:                                    ; preds = %bb.bj, %.lr.ph.i345, %bb.bi
   %.052.lcssa.i = phi i32 [ 0, %bb.bi ], [ %spec.select64.i, %bb.bj ], [ %.05268.i, %.lr.ph.i345 ] ; 2 uses

@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 3 uses
   %i.i = load i32, ptr %i.h, align 8, !tbaa !28
   %.fr90 = freeze i32 %i.i                        ; 2 uses
-  %i.j = add nsw i32 %.fr90, 31
+  %i.j = add i32 %.fr90, 31
   %i.k = sdiv i32 %i.j, 32                        ; 3 uses
   %i.l = icmp sgt i32 %.fr90, 0                   ; 2 uses
   br i1 %i.l, label %.lr.ph.preheader, label %.critedge75
@@ -608,19 +608,19 @@ bb.i:                                             ; preds = %bb.f
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.f, ptr noundef nonnull align 8 dereferenceable(56) @_ZL16defaultEncodings, i64 56, i1 false)
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.i = load i32, ptr %i.h, align 8, !tbaa !28   ; 3 uses
-  %i.j = add nsw i32 %i.i, 31
+  %i.j = add i32 %i.i, 31
   %i.k = sdiv i32 %i.j, 32                        ; 3 uses
   %i.l = icmp sgt i32 %i.i, 0
   br i1 %i.l, label %.lr.ph17.preheader.i, label %_ZL9countOnesPji.exit.thread
 
 .lr.ph17.preheader.i:                             ; preds = %bb.i
-  %wide.trip.count.i = zext nneg i32 %i.k to i64  ; 2 uses
+  %wide.trip.count.i = zext i32 %i.k to i64       ; 2 uses
   %xtraiter = and i64 %wide.trip.count.i, 1
   %i.m = icmp ult i32 %i.i, 33
   br i1 %i.m, label %.lr.ph17.i.epil.preheader, label %.lr.ph17.preheader.i.new
 
 .lr.ph17.preheader.i.new:                         ; preds = %.lr.ph17.preheader.i
-  %unroll_iter = and i64 %wide.trip.count.i, 67108862
+  %unroll_iter = and i64 %wide.trip.count.i, 4294967294
   br label %.lr.ph17.i
 
 .lr.ph17.i:                                       ; preds = %._crit_edge.i.1, %.lr.ph17.preheader.i.new

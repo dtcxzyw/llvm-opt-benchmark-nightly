@@ -205,9 +205,9 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit1451: ; preds = %b
   br label %bb.afo
 
 bb.hg:                                            ; preds = %bb.hd, %bb.hc
-  %i.ayp = add i64 %.03832632, 1                  ; 2 uses
-  %exitcond.not = icmp eq i64 %i.ayp, %i.l
-  br i1 %exitcond.not, label %.critedge855, label %bb.hc, !llvm.loop !863
+  %i.ayp = add nuw i64 %.03832632, 1              ; 2 uses
+  %.not637 = icmp ult i64 %i.ayp, %i.l
+  br i1 %.not637, label %bb.hc, label %.critedge855, !llvm.loop !863
 
 .critedge855:                                     ; preds = %bb.hg, %_ZNSt6vectorIN8bitwuzla4TermESaIS1_EE6resizeEm.exit
   switch i32 %i.a, label %.critedge857 [
@@ -610,8 +610,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit1506: ; preds = %_
 bb.ir:                                            ; preds = %bb.hu
   %i.ben = add nuw i64 %.03822661, 1              ; 2 uses
   %i.beo = add i64 %.03812662, 1
-  %exitcond2824.not = icmp eq i64 %i.ben, %i.r
-  br i1 %exitcond2824.not, label %.critedge857, label %.lr.ph2664, !llvm.loop !864
+  %.not788 = icmp ult i64 %i.ben, %i.r
+  br i1 %.not788, label %.lr.ph2664, label %.critedge857, !llvm.loop !864
 
 bb.is:                                            ; preds = %.critedge855, %.critedge855, %.critedge855, %.critedge855, %.critedge855
   %.not7752655.not = icmp eq i64 %i.r, 0
@@ -990,8 +990,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit1555: ; preds = %_
 bb.jt:                                            ; preds = %bb.je
   %i.bix = add nuw i64 %.03802656, 1              ; 2 uses
   %i.biy = add i64 %.03792657, 1
-  %exitcond2823.not = icmp eq i64 %i.bix, %i.r
-  br i1 %exitcond2823.not, label %.critedge857, label %.lr.ph2659, !llvm.loop !865
+  %.not775 = icmp ult i64 %i.bix, %i.r
+  br i1 %.not775, label %.lr.ph2659, label %.critedge857, !llvm.loop !865
 
 bb.ju:                                            ; preds = %.critedge855
   %i.biz = tail call noundef nonnull align 8 dereferenceable(16) ptr @_ZNK4bzla6parser4smt26Parser13peek_term_argEm(ptr noundef nonnull align 8 dereferenceable(2056) %0, i64 noundef %i.axc)
@@ -1394,8 +1394,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit1800: ; preds = %_
 bb.qd:                                            ; preds = %bb.pe, %bb.ph
   %i.cic = add nuw i64 %.03782651, 1              ; 2 uses
   %i.cid = add i64 %.03772652, 1
-  %exitcond2803.not = icmp eq i64 %i.cic, %i.r
-  br i1 %exitcond2803.not, label %.critedge857, label %bb.no, !llvm.loop !881
+  %.not738 = icmp ult i64 %i.cic, %i.r
+  br i1 %.not738, label %bb.no, label %.critedge857, !llvm.loop !881
 
 bb.qe:                                            ; preds = %.critedge855
   %i.cie = tail call noundef nonnull align 8 dereferenceable(16) ptr @_ZNK4bzla6parser4smt26Parser13peek_term_argEm(ptr noundef nonnull align 8 dereferenceable(2056) %0, i64 noundef %i.axc)
@@ -1798,8 +1798,8 @@ bb.sz:                                            ; preds = %bb.sy
 
 bb.ta:                                            ; preds = %bb.sz, %bb.sw
   %i.cqv = add i64 %i.p, 3
-  %exitcond2782.not.peel = icmp eq i64 %i.r, 2
-  br i1 %exitcond2782.not.peel, label %.critedge857, label %.lr.ph2649
+  %.not704.peel = icmp ugt i64 %i.r, 2
+  br i1 %.not704.peel, label %.lr.ph2649, label %.critedge857
 
 .lr.ph2649:                                       ; preds = %bb.ta, %bb.vd
   %.03712647 = phi i64 [ %i.daw, %bb.vd ], [ %i.cqv, %bb.ta ] ; 4 uses
@@ -2202,8 +2202,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit1975: ; preds = %_
 bb.vd:                                            ; preds = %bb.ui
   %i.dav = add nuw i64 %.03722646, 1              ; 2 uses
   %i.daw = add i64 %.03712647, 1
-  %exitcond2782.not = icmp eq i64 %i.dav, %i.r
-  br i1 %exitcond2782.not, label %.critedge857, label %.lr.ph2649, !llvm.loop !882
+  %.not704 = icmp ult i64 %i.dav, %i.r
+  br i1 %.not704, label %.lr.ph2649, label %.critedge857, !llvm.loop !882
 
 bb.ve:                                            ; preds = %.critedge855, %.critedge855
   %i.dax = tail call noundef nonnull align 8 dereferenceable(16) ptr @_ZNK4bzla6parser4smt26Parser13peek_term_argEm(ptr noundef nonnull align 8 dereferenceable(2056) %0, i64 noundef %i.axc)
@@ -2606,8 +2606,8 @@ _ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE10_M_releaseEv.exit.i.i.i.
 _ZN8bitwuzla4TermaSERKS0_.exit2043:               ; preds = %_ZNK4bzla6parser4smt26Parser13peek_term_argEm.exit2032, %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE10_M_releaseEv.exit.i.i.i.i2041
   %i.dia = add nuw i64 %.03682638, 1              ; 2 uses
   %i.dib = add i64 %.03672639, 1
-  %exitcond2780.not = icmp eq i64 %i.dia, %i.r
-  br i1 %exitcond2780.not, label %._crit_edge, label %.lr.ph2640, !llvm.loop !884
+  %274 = icmp ult i64 %i.dia, %i.r
+  br i1 %274, label %.lr.ph2640, label %._crit_edge, !llvm.loop !884
 
 bb.xb:                                            ; preds = %._crit_edge
   call void @_ZN8bitwuzla4SortD1Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %188) #30
@@ -3010,8 +3010,8 @@ bb.aan:                                           ; preds = %_ZNSt7__cxx1112basi
   %.1 = phi i64 [ %i.dsy, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit2161 ], [ %i.duz, %bb.aam ], [ %.03632636, %bb.aab ]
   %i.dva = add nuw i64 %.03652634, 1              ; 2 uses
   %i.dvb = add i64 %.03642635, 1
-  %exitcond2779.not = icmp eq i64 %i.dva, %i.r
-  br i1 %exitcond2779.not, label %.critedge874, label %bb.ze, !llvm.loop !886
+  %.not644 = icmp ult i64 %i.dva, %i.r
+  br i1 %.not644, label %bb.ze, label %.critedge874, !llvm.loop !886
 
 .critedge874:                                     ; preds = %bb.aan, %bb.zd
   %i.dvc = load ptr, ptr %i.axd, align 8, !tbaa !305

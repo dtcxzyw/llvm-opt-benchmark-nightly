@@ -204,7 +204,7 @@ bb.a:
   %i.e = ptrtoint ptr %i.c to i64
   %i.f = ptrtoint ptr %i.d to i64
   %i.g = sub i64 %i.e, %i.f
-  %i.h = sdiv exact i64 %i.g, 24                  ; 3 uses
+  %i.h = sdiv i64 %i.g, 24                        ; 3 uses
   %.not62 = icmp eq ptr %i.c, %i.d
   br i1 %.not62, label %._crit_edge45.thread, label %.preheader38
 
@@ -218,11 +218,12 @@ bb.a:
   %i.m = ptrtoint ptr %i.k to i64
   %i.n = ptrtoint ptr %i.l to i64
   %i.o = sub i64 %i.m, %i.n
-  %i.p = sdiv exact i64 %i.o, 24                  ; 5 uses
+  %i.p = sdiv i64 %i.o, 24                        ; 4 uses
   %.not63 = icmp eq ptr %i.k, %i.l
   br i1 %.not63, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %.preheader38
+  %3 = tail call i64 @llvm.umax.i64(i64 %i.p, i64 1) ; 2 uses
   %min.iters.check = icmp ult i64 %i.p, 9
   br i1 %min.iters.check, label %.lr.ph.preheader111, label %vector.scevcheck
 
@@ -235,10 +236,10 @@ vector.scevcheck:                                 ; preds = %.lr.ph.preheader
   br i1 %i.u, label %.lr.ph.preheader111, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.scevcheck
-  %i.v = and i64 %i.p, 3                          ; 2 uses
+  %i.v = and i64 %3, 3                            ; 2 uses
   %i.w = icmp eq i64 %i.v, 0
   %i.x = select i1 %i.w, i64 4, i64 %i.v
-  %n.vec = sub nsw i64 %i.p, %i.x                 ; 2 uses
+  %n.vec = sub nsw i64 %3, %i.x                   ; 2 uses
   %i.y = insertelement <2 x i64> <i64 poison, i64 0>, i64 %.02944, i64 0
   br label %vector.body
 
@@ -306,7 +307,7 @@ middle.block:                                     ; preds = %vector.body
   %i.br = sub i64 %i.bp, %i.bq
   %i.bs = ashr exact i64 %i.br, 3
   %.not = icmp eq i64 %i.bs, %.130.lcssa
-  br i1 %.not, label %.preheader36, label %bb.b
+  br i1 %.not, label %.preheader36.preheader, label %bb.b
 
 ._crit_edge45.thread:                             ; preds = %bb.a
   %i.bt = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -314,6 +315,10 @@ middle.block:                                     ; preds = %vector.body
   %i.bv = load ptr, ptr %1, align 8, !tbaa !26
   %.not93 = icmp eq ptr %i.bu, %i.bv
   br i1 %.not93, label %_ZNK7Imf_3_411TileOffsets20anyOffsetsAreInvalidEv.exit, label %bb.b
+
+.preheader36.preheader:                           ; preds = %._crit_edge45
+  %umax80 = tail call i64 @llvm.umax.i64(i64 %i.h, i64 1)
+  br label %.preheader36
 
 ._crit_edge:                                      ; preds = %.lr.ph, %.preheader38
   %.130.lcssa = phi i64 [ %.02944, %.preheader38 ], [ %i.cg, %.lr.ph ] ; 2 uses
@@ -354,9 +359,9 @@ bb.d:                                             ; preds = %bb.b
   tail call void @__cxa_free_exception(ptr nonnull %i.cj) #20
   resume { ptr, i32 } %i.ck
 
-.preheader36:                                     ; preds = %._crit_edge45, %._crit_edge57
-  %.02760 = phi i64 [ %i.ev, %._crit_edge57 ], [ 0, %._crit_edge45 ] ; 2 uses
-  %.02859 = phi i32 [ %.1.lcssa, %._crit_edge57 ], [ 0, %._crit_edge45 ] ; 2 uses
+.preheader36:                                     ; preds = %.preheader36.preheader, %._crit_edge57
+  %.02760 = phi i64 [ %i.ev, %._crit_edge57 ], [ 0, %.preheader36.preheader ] ; 2 uses
+  %.02859 = phi i32 [ %.1.lcssa, %._crit_edge57 ], [ 0, %.preheader36.preheader ] ; 2 uses
   %i.cl = getelementptr inbounds nuw [24 x i8], ptr %i.d, i64 %.02760 ; 2 uses
   %i.cm = getelementptr inbounds nuw i8, ptr %i.cl, i64 8
   %i.cn = load ptr, ptr %i.cm, align 8, !tbaa !22 ; 2 uses
@@ -368,7 +373,8 @@ bb.d:                                             ; preds = %bb.b
   %i.cp = ptrtoint ptr %i.cn to i64
   %i.cq = ptrtoint ptr %i.co to i64
   %i.cr = sub i64 %i.cp, %i.cq
-  %i.cs = sdiv exact i64 %i.cr, 24
+  %i.cs = sdiv i64 %i.cr, 24
+  %umax78 = tail call i64 @llvm.umax.i64(i64 %i.cs, i64 1)
   br label %.preheader
 
 .preheader32.i:                                   ; preds = %._crit_edge57, %._crit_edge38.i
@@ -512,7 +518,7 @@ middle.block105:                                  ; preds = %vector.body101
 ._crit_edge57:                                    ; preds = %._crit_edge53, %.preheader36
   %.1.lcssa = phi i32 [ %.02859, %.preheader36 ], [ %.2.lcssa, %._crit_edge53 ]
   %i.ev = add nuw i64 %.02760, 1                  ; 2 uses
-  %exitcond81.not = icmp eq i64 %i.ev, %i.h
+  %exitcond81.not = icmp eq i64 %i.ev, %umax80
   br i1 %exitcond81.not, label %.preheader32.i, label %.preheader36, !llvm.loop !77
 
 ._crit_edge53.loopexit:                           ; preds = %.lr.ph52.prol.loopexit, %.lr.ph52, %middle.block105
@@ -523,7 +529,7 @@ middle.block105:                                  ; preds = %vector.body101
 ._crit_edge53:                                    ; preds = %._crit_edge53.loopexit, %.preheader
   %.2.lcssa = phi i32 [ %.155, %.preheader ], [ %i.ew, %._crit_edge53.loopexit ] ; 2 uses
   %i.ex = add nuw i64 %.02656, 1                  ; 2 uses
-  %exitcond79.not = icmp eq i64 %i.ex, %i.cs
+  %exitcond79.not = icmp eq i64 %i.ex, %umax78
   br i1 %exitcond79.not, label %._crit_edge57, label %.preheader, !llvm.loop !78
 
 .lr.ph52:                                         ; preds = %.lr.ph52.prol.loopexit, %.lr.ph52
@@ -750,11 +756,12 @@ bb.a:
   %i.m = ptrtoint ptr %i.k to i64
   %i.n = ptrtoint ptr %i.l to i64
   %i.o = sub i64 %i.m, %i.n
-  %i.p = sdiv exact i64 %i.o, 24                  ; 5 uses
+  %i.p = sdiv i64 %i.o, 24                        ; 4 uses
   %.not146 = icmp eq ptr %i.k, %i.l
   br i1 %.not146, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %.preheader115
+  %7 = tail call i64 @llvm.umax.i64(i64 %i.p, i64 1) ; 2 uses
   %min.iters.check = icmp ult i64 %i.p, 9
   br i1 %min.iters.check, label %.lr.ph.preheader250, label %vector.scevcheck
 
@@ -767,10 +774,10 @@ vector.scevcheck:                                 ; preds = %.lr.ph.preheader
   br i1 %i.u, label %.lr.ph.preheader250, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.scevcheck
-  %i.v = and i64 %i.p, 3                          ; 2 uses
+  %i.v = and i64 %7, 3                            ; 2 uses
   %i.w = icmp eq i64 %i.v, 0
   %i.x = select i1 %i.w, i64 4, i64 %i.v
-  %n.vec = sub nsw i64 %i.p, %i.x                 ; 2 uses
+  %n.vec = sub nsw i64 %7, %i.x                   ; 2 uses
   %i.y = insertelement <2 x i64> <i64 poison, i64 0>, i64 %.069120, i64 0
   br label %vector.body
 

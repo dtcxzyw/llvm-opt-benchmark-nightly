@@ -205,7 +205,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   br label %bb.s
 
 bb.i:                                             ; preds = %.lr.ph136, %pqdownheap.exit
-  %indvars.iv142 = phi i64 [ %i.az, %.lr.ph136 ], [ %indvars.iv.next143, %pqdownheap.exit ] ; 6 uses
+  %indvars.iv142 = phi i64 [ %i.az, %.lr.ph136 ], [ %indvars.iv.next143, %pqdownheap.exit ] ; 4 uses
   %i.bd = getelementptr [4 x i8], ptr %i.ax, i64 %indvars.iv142
   %i.be = load i32, ptr %i.bd, align 4            ; 2 uses
   %i.bf = sext i32 %i.be to i64                   ; 2 uses
@@ -214,10 +214,10 @@ bb.i:                                             ; preds = %.lr.ph136, %pqdownh
   %indvars.iv142.tr = trunc i64 %indvars.iv142 to i32
   %i.bi = shl i32 %indvars.iv142.tr, 1            ; 2 uses
   %.not58.i = icmp sgt i32 %i.bi, %i.bh
+  %2 = trunc nuw i64 %indvars.iv142 to i32        ; 3 uses
   br i1 %.not58.i, label %pqdownheap.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.i
-  %2 = trunc nuw nsw i64 %indvars.iv142 to i32
   %i.bj = getelementptr [4 x i8], ptr %i.a, i64 %i.bf
   br label %bb.j
 
@@ -274,7 +274,7 @@ bb.o:                                             ; preds = %bb.n, %bb.m, %bb.l,
   %i.cj = getelementptr [4 x i8], ptr %i.a, i64 %i.ci
   %i.ck = load i16, ptr %i.cj, align 2            ; 2 uses
   %i.cl = icmp ult i16 %i.cf, %i.ck
-  br i1 %i.cl, label %pqdownheap.exit.loopexit, label %bb.p
+  br i1 %i.cl, label %pqdownheap.exit, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
   %i.cm = icmp eq i16 %i.cf, %i.ck
@@ -285,7 +285,7 @@ bb.q:                                             ; preds = %bb.p
   %i.co = getelementptr i8, ptr %i.ay, i64 %i.ci
   %i.cp = load i8, ptr %i.co, align 1
   %.not56.i = icmp ugt i8 %i.cn, %i.cp
-  br i1 %.not56.i, label %bb.r, label %pqdownheap.exit.loopexit
+  br i1 %.not56.i, label %bb.r, label %pqdownheap.exit
 
 bb.r:                                             ; preds = %bb.q, %bb.p
   %i.cq = sext i32 %.04959.i to i64
@@ -294,19 +294,15 @@ bb.r:                                             ; preds = %bb.q, %bb.p
   %.0.i = shl i32 %.1.i, 1                        ; 2 uses
   %i.cs = load i32, ptr %i.g, align 4             ; 2 uses
   %.not.i = icmp sgt i32 %.0.i, %i.cs
-  br i1 %.not.i, label %pqdownheap.exit.loopexit, label %bb.j, !llvm.loop !31
+  br i1 %.not.i, label %pqdownheap.exit, label %bb.j, !llvm.loop !31
 
-pqdownheap.exit.loopexit:                         ; preds = %bb.r, %bb.q, %bb.o
-  %.049.lcssa.i.ph = phi i32 [ %.04959.i, %bb.o ], [ %.04959.i, %bb.q ], [ %.1.i, %bb.r ]
-  %3 = sext i32 %.049.lcssa.i.ph to i64
-  br label %pqdownheap.exit
-
-pqdownheap.exit:                                  ; preds = %pqdownheap.exit.loopexit, %bb.i
-  %.049.lcssa.i = phi i64 [ %indvars.iv142, %bb.i ], [ %3, %pqdownheap.exit.loopexit ]
-  %i.ct = getelementptr [4 x i8], ptr %i.ax, i64 %.049.lcssa.i
+pqdownheap.exit:                                  ; preds = %bb.o, %bb.q, %bb.r, %bb.i
+  %.049.lcssa.i = phi i32 [ %2, %bb.i ], [ %.1.i, %bb.r ], [ %.04959.i, %bb.q ], [ %.04959.i, %bb.o ]
+  %3 = sext i32 %.049.lcssa.i to i64
+  %i.ct = getelementptr [4 x i8], ptr %i.ax, i64 %3
   store i32 %i.be, ptr %i.ct, align 4
   %indvars.iv.next143 = add nsw i64 %indvars.iv142, -1
-  %i.cu = icmp sgt i64 %indvars.iv142, 1
+  %i.cu = icmp sgt i32 %2, 1
   br i1 %i.cu, label %bb.i, label %.preheader.loopexit, !llvm.loop !32
 
 bb.s:                                             ; preds = %.preheader, %pqdownheap.exit120

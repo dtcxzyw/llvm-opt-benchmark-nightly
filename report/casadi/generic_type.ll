@@ -204,7 +204,7 @@ bb.ab:                                            ; preds = %bb.aa
   %i.ge = ptrtoint ptr %i.gc to i64
   %i.gf = ptrtoint ptr %i.gd to i64               ; 2 uses
   %i.gg = sub i64 %i.ge, %i.gf                    ; 2 uses
-  %i.gh = sdiv exact i64 %i.gg, 24
+  %i.gh = sdiv i64 %i.gg, 24
   %i.gi = getelementptr inbounds nuw i8, ptr %9, i64 8
   %i.gj = load ptr, ptr %i.gi, align 8, !tbaa !33 ; 3 uses
   %i.gk = load ptr, ptr %9, align 8, !tbaa !30    ; 6 uses
@@ -216,7 +216,11 @@ bb.ab:                                            ; preds = %bb.aa
 
 .preheader209:                                    ; preds = %bb.ab
   %.not105223.not = icmp eq ptr %i.gc, %i.gd
-  br i1 %.not105223.not, label %.loopexit208, label %.lr.ph225
+  br i1 %.not105223.not, label %.loopexit208, label %.lr.ph225.preheader
+
+.lr.ph225.preheader:                              ; preds = %.preheader209
+  %umax244 = tail call i64 @llvm.umax.i64(i64 %i.gh, i64 1)
+  br label %.lr.ph225
 
 bb.ac:                                            ; preds = %bb.aa
   %i.go = landingpad { ptr, i32 }
@@ -225,8 +229,8 @@ bb.ac:                                            ; preds = %bb.aa
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #20
   br label %bb.ar
 
-.lr.ph225:                                        ; preds = %.preheader209, %.critedge
-  %.086224 = phi i64 [ %i.hj, %.critedge ], [ 0, %.preheader209 ] ; 3 uses
+.lr.ph225:                                        ; preds = %.lr.ph225.preheader, %.critedge
+  %.086224 = phi i64 [ %i.hj, %.critedge ], [ 0, %.lr.ph225.preheader ] ; 3 uses
   %i.gp = getelementptr inbounds nuw [24 x i8], ptr %i.gd, i64 %.086224 ; 2 uses
   %i.gq = getelementptr inbounds nuw i8, ptr %i.gp, i64 8
   %i.gr = load ptr, ptr %i.gq, align 8, !tbaa !142 ; 2 uses
@@ -265,7 +269,7 @@ bb.ad:                                            ; preds = %.lr.ph222
 
 .critedge:                                        ; preds = %bb.ad, %.preheader207
   %i.hj = add nuw i64 %.086224, 1                 ; 2 uses
-  %exitcond245.not = icmp eq i64 %i.hj, %i.gh
+  %exitcond245.not = icmp eq i64 %i.hj, %umax244
   br i1 %exitcond245.not, label %.loopexit208, label %.lr.ph225, !llvm.loop !343
 
 .loopexit208:                                     ; preds = %.lr.ph225, %.critedge, %.lr.ph222, %.preheader209, %bb.ab
@@ -386,7 +390,7 @@ bb.ak:                                            ; preds = %bb.aj
   %i.ix = ptrtoint ptr %i.iv to i64
   %i.iy = ptrtoint ptr %i.iw to i64
   %i.iz = sub i64 %i.ix, %i.iy                    ; 2 uses
-  %i.ja = sdiv exact i64 %i.iz, 24
+  %i.ja = sdiv i64 %i.iz, 24
   %i.jb = getelementptr inbounds nuw i8, ptr %11, i64 8
   %i.jc = load ptr, ptr %i.jb, align 8, !tbaa !50 ; 3 uses
   %i.jd = load ptr, ptr %11, align 8, !tbaa !47   ; 5 uses
@@ -398,7 +402,11 @@ bb.ak:                                            ; preds = %bb.aj
 
 .preheader205:                                    ; preds = %bb.ak
   %.not100231.not = icmp eq ptr %i.iv, %i.iw
-  br i1 %.not100231.not, label %.loopexit, label %.lr.ph233
+  br i1 %.not100231.not, label %.loopexit, label %.lr.ph233.preheader
+
+.lr.ph233.preheader:                              ; preds = %.preheader205
+  %umax248 = call i64 @llvm.umax.i64(i64 %i.ja, i64 1)
+  br label %.lr.ph233
 
 bb.al:                                            ; preds = %bb.aj
   %i.jh = landingpad { ptr, i32 }
@@ -407,8 +415,8 @@ bb.al:                                            ; preds = %bb.aj
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #20
   br label %bb.ar
 
-.lr.ph233:                                        ; preds = %.preheader205, %.critedge115
-  %.084232 = phi i64 [ %i.kd, %.critedge115 ], [ 0, %.preheader205 ] ; 3 uses
+.lr.ph233:                                        ; preds = %.lr.ph233.preheader, %.critedge115
+  %.084232 = phi i64 [ %i.kd, %.critedge115 ], [ 0, %.lr.ph233.preheader ] ; 3 uses
   %i.ji = getelementptr inbounds nuw [24 x i8], ptr %i.iw, i64 %.084232 ; 2 uses
   %i.jj = getelementptr inbounds nuw i8, ptr %i.ji, i64 8
   %i.jk = load ptr, ptr %i.jj, align 8, !tbaa !154 ; 2 uses
@@ -447,7 +455,7 @@ bb.am:                                            ; preds = %.lr.ph230
 
 .critedge115:                                     ; preds = %bb.am, %.preheader
   %i.kd = add nuw i64 %.084232, 1                 ; 2 uses
-  %exitcond249.not = icmp eq i64 %i.kd, %i.ja
+  %exitcond249.not = icmp eq i64 %i.kd, %umax248
   br i1 %exitcond249.not, label %.loopexit, label %.lr.ph233, !llvm.loop !345
 
 .loopexit:                                        ; preds = %.lr.ph233, %.critedge115, %.lr.ph230, %.preheader205, %bb.ak

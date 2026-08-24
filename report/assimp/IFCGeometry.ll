@@ -204,8 +204,8 @@ _ZNSt6vectorI10aiVector3tIdESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__n
   br label %_ZNSt6vectorI10aiVector3tIdESaIS1_EE9push_backEOS1_.exit170.us
 
 _ZNSt6vectorI10aiVector3tIdESaIS1_EE9push_backEOS1_.exit170.us: ; preds = %_ZNSt6vectorI10aiVector3tIdESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i167.us, %bb.aj
-  %exitcond457.not = icmp eq i64 %i.ic, %i.ac
-  br i1 %exitcond457.not, label %._crit_edge.us, label %bb.w, !llvm.loop !62
+  %7 = icmp ult i64 %i.ic, %i.ac
+  br i1 %7, label %bb.w, label %._crit_edge.us, !llvm.loop !62
 
 ._crit_edge.us:                                   ; preds = %_ZNSt6vectorI10aiVector3tIdESaIS1_EE9push_backEOS1_.exit170.us
   %i.nl = add i64 %.096428.us, %i.ia              ; 3 uses
@@ -253,8 +253,8 @@ bb.an:                                            ; preds = %.lr.ph, %bb.ao
 
 bb.ao:                                            ; preds = %bb.an
   %i.nw = add nuw i64 %.095425, 1                 ; 2 uses
-  %exitcond.not = icmp eq i64 %i.nw, %i.ac
-  br i1 %exitcond.not, label %.preheader410, label %bb.an, !llvm.loop !64
+  %8 = icmp ult i64 %i.nw, %i.ac
+  br i1 %8, label %bb.an, label %.preheader410, !llvm.loop !64
 
 bb.ap:                                            ; preds = %bb.an
   %i.nx = landingpad { ptr, i32 }
@@ -349,9 +349,9 @@ _ZSt8_DestroyIP10aiVector3tIdES1_EvT_S3_RSaIT0_E.exit.i.i.i: ; preds = %_ZSt4mov
   br label %bb.bx
 
 _ZNSt6vectorI10aiVector3tIdESaIS1_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS1_S3_EES8_.exit: ; preds = %.preheader410.thread, %_ZSt8_DestroyIP10aiVector3tIdES1_EvT_S3_RSaIT0_E.exit.i.i.i, %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIP10aiVector3tIdESt6vectorIS3_SaIS3_EEEES8_ET0_T_SA_S9_.exit.i.i
-  %.us-phi443523 = phi i64 [ 0, %.preheader410.thread ], [ %i.nl, %_ZSt8_DestroyIP10aiVector3tIdES1_EvT_S3_RSaIT0_E.exit.i.i.i ], [ %i.nl, %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIP10aiVector3tIdESt6vectorIS3_SaIS3_EEEES8_ET0_T_SA_S9_.exit.i.i ]
-  %i.ok = phi ptr [ %i.hv, %.preheader410.thread ], [ %i.hy, %_ZSt8_DestroyIP10aiVector3tIdES1_EvT_S3_RSaIT0_E.exit.i.i.i ], [ %i.hy, %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIP10aiVector3tIdESt6vectorIS3_SaIS3_EEEES8_ET0_T_SA_S9_.exit.i.i ] ; 7 uses
-  %i.ol = phi ptr [ %i.hw, %.preheader410.thread ], [ %i.hz, %_ZSt8_DestroyIP10aiVector3tIdES1_EvT_S3_RSaIT0_E.exit.i.i.i ], [ %i.hz, %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIP10aiVector3tIdESt6vectorIS3_SaIS3_EEEES8_ET0_T_SA_S9_.exit.i.i ] ; 7 uses
+  %.us-phi443523 = phi i64 [ %i.nl, %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIP10aiVector3tIdESt6vectorIS3_SaIS3_EEEES8_ET0_T_SA_S9_.exit.i.i ], [ %i.nl, %_ZSt8_DestroyIP10aiVector3tIdES1_EvT_S3_RSaIT0_E.exit.i.i.i ], [ 0, %.preheader410.thread ]
+  %i.ok = phi ptr [ %i.hy, %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIP10aiVector3tIdESt6vectorIS3_SaIS3_EEEES8_ET0_T_SA_S9_.exit.i.i ], [ %i.hy, %_ZSt8_DestroyIP10aiVector3tIdES1_EvT_S3_RSaIT0_E.exit.i.i.i ], [ %i.hv, %.preheader410.thread ] ; 7 uses
+  %i.ol = phi ptr [ %i.hz, %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIP10aiVector3tIdESt6vectorIS3_SaIS3_EEEES8_ET0_T_SA_S9_.exit.i.i ], [ %i.hz, %_ZSt8_DestroyIP10aiVector3tIdES1_EvT_S3_RSaIT0_E.exit.i.i.i ], [ %i.hw, %.preheader410.thread ] ; 7 uses
   br i1 %i.bp, label %bb.au, label %_ZNSt6vectorIjSaIjEE9push_backEOj.exit222
 
 bb.au:                                            ; preds = %_ZNSt6vectorI10aiVector3tIdESaIS1_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS1_S3_EES8_.exit
@@ -588,8 +588,8 @@ _ZNSt6vectorI10aiVector3tIdESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17_
 _ZNSt6vectorI10aiVector3tIdESaIS1_EE9push_backERKS1_.exit212: ; preds = %_ZNSt6vectorI10aiVector3tIdESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i209, %bb.bf
   %i.rf = phi ptr [ %i.rd, %_ZNSt6vectorI10aiVector3tIdESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i209 ], [ %i.qo, %bb.bf ]
   %i.rg = add nuw i64 %.0445, 1                   ; 2 uses
-  %exitcond459.not = icmp eq i64 %i.rg, %i.ac
-  br i1 %exitcond459.not, label %bb.az, label %.preheader, !llvm.loop !74
+  %9 = icmp ult i64 %i.rg, %i.ac
+  br i1 %9, label %.preheader, label %bb.az, !llvm.loop !74
 
 .loopexit:                                        ; preds = %_ZNKSt6vectorI10aiVector3tIdESaIS1_EE12_M_check_lenEmPKc.exit.i.i198
   %lpad.loopexit = landingpad { ptr, i32 }
@@ -992,8 +992,8 @@ bb.bz:                                            ; preds = %.critedge
 
 bb.ca:                                            ; preds = %bb.bz, %_ZNSt6vectorI10aiVector3tIdESaIS1_EE9push_backEOS1_.exit306
   %.2127 = phi i64 [ %.1126, %bb.bz ], [ %.0125805, %_ZNSt6vectorI10aiVector3tIdESaIS1_EE9push_backEOS1_.exit306 ] ; 2 uses
-  %exitcond.not = icmp eq i64 %i.re, %i.ew
-  br i1 %exitcond.not, label %._crit_edge808, label %bb.az, !llvm.loop !192
+  %22 = icmp ult i64 %i.re, %i.ew
+  br i1 %22, label %bb.az, label %._crit_edge808, !llvm.loop !192
 
 bb.cb:                                            ; preds = %._crit_edge808
   %i.ws = load ptr, ptr %i.gu, align 8            ; 2 uses
@@ -1221,7 +1221,6 @@ _ZNSt6vectorI10aiVector3tIdESaIS1_EE5clearEv.exit: ; preds = %bb.cc, %_ZNKSt7__c
   %i.zp = getelementptr inbounds nuw i8, ptr %.sroa.phi, i64 16 ; 2 uses
   %i.zq = icmp ugt i64 %i.ew, 2
   %or.cond666 = and i1 %i.zq, %i.ra
-  %umax861 = call i64 @llvm.umax.i64(i64 %i.ew, i64 1)
   br label %bb.cp
 
 bb.cp:                                            ; preds = %.preheader680, %bb.dh
@@ -1333,8 +1332,8 @@ _ZNSt6vectorI10aiVector3tIdESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__n
 _ZNSt6vectorI10aiVector3tIdESaIS1_EE9push_backEOS1_.exit349: ; preds = %_ZNSt6vectorI10aiVector3tIdESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i346, %bb.cq
   %i.aaw = phi ptr [ %i.aau, %_ZNSt6vectorI10aiVector3tIdESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i346 ], [ %i.aae, %bb.cq ]
   %i.aax = add nuw i64 %.0118817, 1               ; 2 uses
-  %exitcond862.not = icmp eq i64 %i.aax, %umax861
-  br i1 %exitcond862.not, label %.loopexit, label %.lr.ph818, !llvm.loop !207
+  %23 = icmp ult i64 %i.aax, %i.ew
+  br i1 %23, label %.lr.ph818, label %.loopexit, !llvm.loop !207
 
 .loopexit672:                                     ; preds = %_ZNKSt6vectorI10aiVector3tIdESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i335
   %lpad.loopexit = landingpad { ptr, i32 }

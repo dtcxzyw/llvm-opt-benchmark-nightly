@@ -205,8 +205,7 @@ Vec_MemHashAlloc.exit:                            ; preds = %Abc_PrimeCudd.exit.
 
 .lr.ph.preheader:                                 ; preds = %Vec_MemHashAlloc.exit
   %i.ap = shl nuw nsw i32 %i.p, 1
-  %smax = tail call i32 @llvm.smax.i32(i32 %i.ap, i32 1)
-  %wide.trip.count = zext nneg i32 %smax to i64
+  %wide.trip.count = zext nneg i32 %i.ap to i64
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
@@ -214,8 +213,8 @@ Vec_MemHashAlloc.exit:                            ; preds = %Abc_PrimeCudd.exit.
   %i.aq = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %indvars.iv
   %i.ar = call fastcc i32 @Vec_MemHashInsert(ptr noundef nonnull %i.q, ptr noundef nonnull %i.aq) ; 0 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !130
+  %2 = icmp samesign ult i64 %indvars.iv.next, %wide.trip.count
+  br i1 %2, label %.lr.ph, label %._crit_edge, !llvm.loop !130
 
 ._crit_edge:                                      ; preds = %.lr.ph, %Vec_MemHashAlloc.exit
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 856 ; 7 uses

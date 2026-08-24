@@ -204,15 +204,14 @@ bb.ac:                                            ; preds = %_ZNK9VoxelArea8cont
   %i.ft = getelementptr inbounds [4 x i8], ptr %i.ez, i64 %i.fs
   store i32 %.sroa.0389.0.insert.ext399, ptr %i.ft, align 4
   %i.fu = load i32, ptr %8, align 4, !tbaa !78
-  %.fr = freeze i32 %i.fu
-  %i.fv = mul i32 %.fr, 1103515245
+  %i.fv = mul i32 %i.fu, 1103515245
   %i.fw = add i32 %i.fv, 12345                    ; 2 uses
   store i32 %i.fw, ptr %8, align 4, !tbaa !78
   %i.fx = sdiv i32 %i.fw, 65536
   %i.fy = trunc nsw i32 %i.fx to i16
   %.lhs.trunc.i = and i16 %i.fy, 32767
   %i.fz = urem i16 %.lhs.trunc.i, 5
-  %9 = add nuw nsw i16 %i.fz, 7
+  %9 = or disjoint i16 %i.fz, 8
   br label %bb.as
 
 bb.ad:                                            ; preds = %.preheader463
@@ -493,7 +492,7 @@ _ZN6BufferIhEC2Em.exit:                           ; preds = %_ZNK9VoxelArea8cont
   br label %.preheader459
 
 bb.as:                                            ; preds = %bb.ac, %_ZNK9VoxelArea8containsEN4core8vector3dIsEE.exit259.thread
-  %.0158467 = phi i16 [ 0, %bb.ac ], [ %i.li, %_ZNK9VoxelArea8containsEN4core8vector3dIsEE.exit259.thread ] ; 2 uses
+  %.0158467 = phi i16 [ 0, %bb.ac ], [ %i.li, %_ZNK9VoxelArea8containsEN4core8vector3dIsEE.exit259.thread ]
   %.sroa.8367.0466 = phi i16 [ %.sroa.5439.0.extract.trunc, %bb.ac ], [ %i.lh, %_ZNK9VoxelArea8containsEN4core8vector3dIsEE.exit259.thread ] ; 5 uses
   %i.kk = load i16, ptr %i.dz, align 8, !tbaa !80 ; 2 uses
   %.not.i251 = icmp sgt i16 %i.kk, %.sroa.0437.0.extract.trunc
@@ -541,9 +540,9 @@ bb.au:                                            ; preds = %_ZNK9VoxelArea8cont
 
 _ZNK9VoxelArea8containsEN4core8vector3dIsEE.exit259.thread: ; preds = %bb.as, %bb.at, %bb.au, %_ZNK9VoxelArea8containsEN4core8vector3dIsEE.exit259
   %i.lh = add i16 %.sroa.8367.0466, 1
-  %i.li = add nuw nsw i16 %.0158467, 1
-  %exitcond483.not = icmp eq i16 %.0158467, %9
-  br i1 %exitcond483.not, label %_ZN6BufferIhEC2Em.exit, label %bb.as, !llvm.loop !195
+  %i.li = add nuw nsw i16 %.0158467, 1            ; 2 uses
+  %10 = icmp samesign ugt i16 %9, %i.li
+  br i1 %10, label %bb.as, label %_ZN6BufferIhEC2Em.exit, !llvm.loop !195
 
 .preheader456:                                    ; preds = %.preheader458
   %i.lj = add i16 %.sroa.0437.0.extract.trunc, -3 ; 3 uses

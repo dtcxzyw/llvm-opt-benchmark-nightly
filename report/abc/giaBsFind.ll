@@ -204,7 +204,8 @@ bb.a:
   %i.w = icmp sgt i32 %1, 0
   %.not.i = icmp eq i32 %1, 1
   %i.x = sext i32 %1 to i64                       ; 4 uses
-  %wide.trip.count240 = zext nneg i32 %i.c to i64 ; 2 uses
+  %smax240 = tail call i32 @llvm.smax.i32(i32 %i.c, i32 1)
+  %wide.trip.count240 = zext nneg i32 %smax240 to i64 ; 2 uses
   br i1 %i.w, label %.lr.ph.i.preheader.us.preheader, label %generate_random_subset.exit.preheader
 
 generate_random_subset.exit.preheader:            ; preds = %.lr.ph

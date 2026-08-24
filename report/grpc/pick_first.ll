@@ -202,7 +202,7 @@ bb.ak:                                            ; preds = %._crit_edge
   %i.bu = ptrtoint ptr %i.eq to i64
   %i.bv = ptrtoint ptr %i.er to i64               ; 2 uses
   %i.bw = sub i64 %i.bu, %i.bv                    ; 2 uses
-  %i.bx = sdiv exact i64 %i.bw, 40                ; 2 uses
+  %i.bx = sdiv i64 %i.bw, 40                      ; 2 uses
   %i.by = call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.bx, i1 true)
   %i.bz = shl nuw nsw i64 %i.by, 1
   %i.ca = xor i64 %i.bz, 126
@@ -215,9 +215,6 @@ bb.al:                                            ; preds = %bb.ak
   call fastcc void @"_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPZN9grpc_core12_GLOBAL__N_19PickFirst12UpdateLockedENS2_19LoadBalancingPolicy10UpdateArgsEE16WeightedEndpointSt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_comp_iterIZNS4_12UpdateLockedES6_E3$_1EEEvT_SH_T0_"(ptr %i.er, ptr nonnull %i.cc)
   %.not6.i.i.i.i = icmp eq ptr %i.cc, %i.eq
   br i1 %.not6.i.i.i.i, label %.lr.ph339.preheader, label %.lr.ph.i.i.i.i116
-
-.lr.ph339.preheader:                              ; preds = %.lr.ph.i.i.i.i116, %bb.am, %bb.al
-  br label %.lr.ph339
 
 .lr.ph.i.i.i.i116:                                ; preds = %bb.al, %.lr.ph.i.i.i.i116
   %.sroa.0.07.i.i.i.i = phi ptr [ %i.cd, %.lr.ph.i.i.i.i116 ], [ %i.cc, %bb.al ] ; 2 uses
@@ -234,6 +231,10 @@ bb.am:                                            ; preds = %bb.ak
   %.lcssa330508 = phi ptr [ %.promoted329, %._crit_edge.thread ], [ %i.er, %._crit_edge ] ; 2 uses
   %.pre416 = ptrtoint ptr %.lcssa330508 to i64
   br label %_ZSt8_DestroyIPZN9grpc_core12_GLOBAL__N_19PickFirst12UpdateLockedENS0_19LoadBalancingPolicy10UpdateArgsEE16WeightedEndpointS5_EvT_S7_RSaIT0_E.exit.i
+
+.lr.ph339.preheader:                              ; preds = %.lr.ph.i.i.i.i116, %bb.am, %bb.al
+  %umax = call i64 @llvm.umax.i64(i64 %i.bx, i64 1)
+  br label %.lr.ph339
 
 bb.an:                                            ; preds = %bb.ag
   %i.ce = landingpad { ptr, i32 }
@@ -507,7 +508,7 @@ _ZNSt6vectorIZN9grpc_core12_GLOBAL__N_19PickFirst12UpdateLockedENS0_19LoadBalanc
   %i.fn = getelementptr inbounds nuw [32 x i8], ptr %i.fm, i64 %.059338
   %i.fo = call noundef nonnull align 8 dereferenceable(32) ptr @_ZN9grpc_core17EndpointAddressesaSEOS0_(ptr noundef nonnull align 8 dereferenceable(32) %i.fn, ptr noundef nonnull align 8 dereferenceable(32) %i.fl) #37 ; 0 uses
   %i.fp = add nuw i64 %.059338, 1                 ; 2 uses
-  %exitcond.not = icmp eq i64 %i.fp, %i.bx
+  %exitcond.not = icmp eq i64 %i.fp, %umax
   br i1 %exitcond.not, label %.lr.ph.i.i.i, label %.lr.ph339, !llvm.loop !207
 
 bb.bh:                                            ; preds = %bb.bd, %bb.be, %bb.bc, %bb.ao

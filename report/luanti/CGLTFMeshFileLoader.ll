@@ -205,21 +205,18 @@ _ZNSt6vectorItSaItEEaSEOS1_.exit:                 ; preds = %bb.h
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !230  ; 4 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %9, i8 0, i64 24, i1 false)
   %.not45.i = icmp eq ptr %i.r, %i.t
-  br i1 %.not45.i, label %_ZN5sceneL12checkIndicesERKSt6vectorItSaItEEm.exit, label %.lr.ph.i.preheader
-
-.lr.ph.i.preheader:                               ; preds = %_ZNSt6vectorItSaItEEaSEOS1_.exit
-  %12 = trunc nuw i64 %i.k to i16
-  br label %.lr.ph.i
+  br i1 %.not45.i, label %_ZN5sceneL12checkIndicesERKSt6vectorItSaItEEm.exit, label %.lr.ph.i
 
 bb.i:                                             ; preds = %.lr.ph.i
   %i.w = getelementptr inbounds nuw i8, ptr %.sroa.01.06.i, i64 2 ; 2 uses
   %.not4.i = icmp eq ptr %i.w, %i.t
   br i1 %.not4.i, label %_ZN5sceneL12checkIndicesERKSt6vectorItSaItEEm.exit, label %.lr.ph.i
 
-.lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %bb.i
-  %.sroa.01.06.i = phi ptr [ %i.w, %bb.i ], [ %i.r, %.lr.ph.i.preheader ] ; 2 uses
+.lr.ph.i:                                         ; preds = %_ZNSt6vectorItSaItEEaSEOS1_.exit, %bb.i
+  %.sroa.01.06.i = phi ptr [ %i.w, %bb.i ], [ %i.r, %_ZNSt6vectorItSaItEEaSEOS1_.exit ] ; 2 uses
   %i.x = load i16, ptr %.sroa.01.06.i, align 2, !tbaa !231
-  %.not.i = icmp ult i16 %i.x, %12
+  %12 = zext i16 %i.x to i64
+  %.not.i = icmp ugt i64 %i.k, %12
   br i1 %.not.i, label %bb.i, label %bb.j
 
 bb.j:                                             ; preds = %.lr.ph.i

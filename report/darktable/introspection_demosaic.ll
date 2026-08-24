@@ -205,10 +205,9 @@ bb.hx:                                            ; preds = %bb.hw, %bb.hv
   %i.ape = getelementptr inbounds nuw i8, ptr %i.b, i64 32
   %i.apf = getelementptr inbounds nuw i8, ptr %i.b, i64 40
   %i.apg = add nsw i32 %i.bo, -17
-  %i.aph = sdiv i32 %i.apg, 112                   ; 2 uses
+  %i.aph = sdiv i32 %i.apg, 112
   %invariant.op.i551 = fmul reassoc nnan nsz arcp contract afn float %i.aor, 6.553500e+04 ; 3 uses
   %i.api = mul i32 %i.bo, 112
-  %smax.i552 = tail call i32 @llvm.smax.i32(i32 %i.aph, i32 0)
   %i.apj = icmp slt i32 %i.bo, 20
   %i.apk = add nsw i32 %i.bo, -21
   %i.apl = sdiv i32 %i.apk, 92
@@ -611,32 +610,31 @@ scalar.ph3344:                                    ; preds = %scalar.ph3344.prehe
   br i1 %exitcond.not.i542, label %._crit_edge895.i, label %scalar.ph3344, !llvm.loop !342
 
 bb.pg:                                            ; preds = %._crit_edge904.i, %.lr.ph906.i
-  %indvar3268 = phi i32 [ %indvar.next3269, %._crit_edge904.i ], [ 0, %.lr.ph906.i ] ; 2 uses
-  %indvars.iv1027.i.a = phi i32 [ %indvars.iv.next1028.i.a, %._crit_edge904.i ], [ 452, %.lr.ph906.i ] ; 2 uses
+  %indvar3266 = phi i32 [ %indvar.next3269, %._crit_edge904.i ], [ 0, %.lr.ph906.i ] ; 2 uses
+  %indvar3268 = phi i32 [ %indvars.iv.next1030.i, %._crit_edge904.i ], [ 452, %.lr.ph906.i ] ; 2 uses
+  %indvars.iv1027.i.a = phi i32 [ %indvars.iv.next1028.i.a, %._crit_edge904.i ], [ 339, %.lr.ph906.i ] ; 2 uses
   %indvars.iv1021.i = phi i32 [ %indvars.iv.next1022.i, %._crit_edge904.i ], [ 563, %.lr.ph906.i ] ; 2 uses
-  %.0763905.i = phi i32 [ %i.kvf, %._crit_edge904.i ], [ 4, %.lr.ph906.i ] ; 3 uses
-  %i.ktb = mul i32 %indvar3268, 112
+  %.0763905.i = phi i32 [ %i.kvf, %._crit_edge904.i ], [ 4, %.lr.ph906.i ] ; 2 uses
+  %i.ktb = mul i32 %indvar3266, 112
   %i.ktc = add i32 %i.ktb, 448
   %i.ktd = zext i32 %i.ktc to i64
   %i.kte = shl nuw nsw i64 %i.ktd, 1
   %i.ktf = shl i32 %.0763905.i, 2
   %i.ktg = and i32 %i.ktf, 28
   %i.kth = lshr i32 %.fr1043, %i.ktg
-  %i.kti = and i32 %i.kth, 1                      ; 3 uses
-  %i.ktj = or disjoint i32 %i.kti, 4              ; 5 uses
+  %i.kti = and i32 %i.kth, 1                      ; 4 uses
+  %i.ktj = or disjoint i32 %i.kti, 4              ; 4 uses
   %i.ktk = icmp slt i32 %i.ktj, %i.knw
   br i1 %i.ktk, label %.lr.ph903.preheader.i, label %._crit_edge904.i
 
 .lr.ph903.preheader.i:                            ; preds = %bb.pg
-  %6 = mul nuw nsw i32 %.0763905.i, 112
-  %i.ktl = add nsw i32 %6, -113
-  %7 = add nsw i32 %i.ktl, %i.ktj
-  %8 = sdiv i32 %7, 2
-  %i.ktm = add i32 %i.kti, %indvars.iv1021.i
-  %9 = lshr i32 %i.ktm, 1
-  %10 = zext nneg i32 %9 to i64                   ; 5 uses
+  %i.ktl = add i32 %i.kti, %indvars.iv1021.i
+  %6 = lshr i32 %i.ktl, 1
+  %7 = zext nneg i32 %6 to i64                    ; 5 uses
+  %i.ktm = add i32 %i.kti, %indvars.iv1027.i.a
+  %8 = sdiv i32 %i.ktm, 2
   %i.ktn = sext i32 %8 to i64                     ; 5 uses
-  %i.kto = lshr exact i32 %indvars.iv1027.i.a, 1
+  %i.kto = lshr exact i32 %indvar3268, 1
   %i.ktp = zext nneg i32 %i.kto to i64            ; 4 uses
   %i.ktq = sub i32 %i.knx, %i.kti                 ; 2 uses
   %i.ktr = lshr i32 %i.ktq, 1
@@ -646,7 +644,7 @@ bb.pg:                                            ; preds = %._crit_edge904.i, %
   br i1 %min.iters.check3282, label %.lr.ph903.i.preheader, label %vector.memcheck3267
 
 vector.memcheck3267:                              ; preds = %.lr.ph903.preheader.i
-  %i.ktt = insertelement <2 x i64> poison, i64 %10, i64 0
+  %i.ktt = insertelement <2 x i64> poison, i64 %7, i64 0
   %i.ktu = insertelement <2 x i64> %i.ktt, i64 %i.ktn, i64 1
   %i.ktv = shl nsw <2 x i64> %i.ktu, splat (i64 2)
   %i.ktw = shufflevector <2 x i64> %i.ktv, <2 x i64> poison, <4 x i32> <i32 0, i32 0, i32 1, i32 1>
@@ -664,7 +662,7 @@ vector.ph3283:                                    ; preds = %vector.memcheck3267
   %n.vec3284 = and i64 %i.kts, 4294967288         ; 6 uses
   %i.kue = add nuw nsw i64 %n.vec3284, %i.ktp
   %i.kuf = add nsw i64 %n.vec3284, %i.ktn
-  %i.kug = add nuw nsw i64 %n.vec3284, %10
+  %i.kug = add nuw nsw i64 %n.vec3284, %7
   %i.kuh = trunc nuw i64 %n.vec3284 to i32
   %i.kui = shl i32 %i.kuh, 1
   %i.kuj = or disjoint i32 %i.ktj, %i.kui
@@ -674,7 +672,7 @@ vector.body3285:                                  ; preds = %vector.body3285, %v
   %index3286 = phi i64 [ 0, %vector.ph3283 ], [ %index.next3293, %vector.body3285 ] ; 4 uses
   %i.kuk = add nuw i64 %index3286, %i.ktp         ; 3 uses
   %i.kul = add i64 %index3286, %i.ktn             ; 2 uses
-  %i.kum = add nuw i64 %index3286, %10            ; 2 uses
+  %i.kum = add nuw i64 %index3286, %7             ; 2 uses
   %i.kun = getelementptr inbounds [4 x i8], ptr %i.jho, i64 %i.kul
   %wide.load3287.a = load <8 x float>, ptr %i.kun, align 4, !tbaa !22, !noalias !277
   %i.kuo = getelementptr inbounds nuw [4 x i8], ptr %i.jho, i64 %i.kuk
@@ -710,7 +708,7 @@ middle.block3294:                                 ; preds = %vector.body3285
 .lr.ph903.i.preheader:                            ; preds = %vector.memcheck3267, %.lr.ph903.preheader.i, %middle.block3294
   %indvars.iv1029.i.ph = phi i64 [ %i.ktp, %vector.memcheck3267 ], [ %i.ktp, %.lr.ph903.preheader.i ], [ %i.kue, %middle.block3294 ]
   %indvars.iv1025.i.ph = phi i64 [ %i.ktn, %vector.memcheck3267 ], [ %i.ktn, %.lr.ph903.preheader.i ], [ %i.kuf, %middle.block3294 ]
-  %indvars.iv1023.i.ph = phi i64 [ %10, %vector.memcheck3267 ], [ %10, %.lr.ph903.preheader.i ], [ %i.kug, %middle.block3294 ]
+  %indvars.iv1023.i.ph = phi i64 [ %7, %vector.memcheck3267 ], [ %7, %.lr.ph903.preheader.i ], [ %i.kug, %middle.block3294 ]
   %.0762898.i.ph = phi i32 [ %i.ktj, %vector.memcheck3267 ], [ %i.ktj, %.lr.ph903.preheader.i ], [ %i.kuj, %middle.block3294 ]
   br label %.lr.ph903.i
 
@@ -719,7 +717,8 @@ middle.block3294:                                 ; preds = %vector.body3285
   %i.kvg = icmp slt i32 %i.kvf, %i.jik
   %indvars.iv.next1022.i = add i32 %indvars.iv1021.i, 112
   %indvars.iv.next1028.i.a = add i32 %indvars.iv1027.i.a, 112
-  %indvar.next3269 = add i32 %indvar3268, 1
+  %indvars.iv.next1030.i = add i32 %indvar3268, 112
+  %indvar.next3269 = add i32 %indvar3266, 1
   br i1 %i.kvg, label %bb.pg, label %.preheader828.i.preheader
 
 .preheader828.i.preheader:                        ; preds = %._crit_edge904.i
@@ -762,11 +761,12 @@ middle.block3294:                                 ; preds = %vector.body3285
   br i1 %i.kwf, label %.lr.ph903.i, label %._crit_edge904.i, !llvm.loop !344
 
 .preheader828.i:                                  ; preds = %.preheader828.i.preheader, %._crit_edge914.i
-  %indvar3057 = phi i32 [ 0, %.preheader828.i.preheader ], [ %indvar.next3058, %._crit_edge914.i ] ; 2 uses
-  %indvars.iv1038.i = phi i32 [ 452, %.preheader828.i.preheader ], [ %indvars.iv.next1039.i, %._crit_edge914.i ] ; 4 uses
+  %indvar3055 = phi i32 [ 0, %.preheader828.i.preheader ], [ %indvar.next3058, %._crit_edge914.i ] ; 2 uses
+  %indvar3057 = phi i32 [ 452, %.preheader828.i.preheader ], [ %indvars.iv.next1043.i, %._crit_edge914.i ] ; 4 uses
+  %indvars.iv1038.i = phi i32 [ 339, %.preheader828.i.preheader ], [ %indvars.iv.next1039.i, %._crit_edge914.i ] ; 2 uses
   %indvars.iv1032.i = phi i32 [ 563, %.preheader828.i.preheader ], [ %indvars.iv.next1033.i, %._crit_edge914.i ] ; 2 uses
-  %.0755915.i = phi i32 [ 4, %.preheader828.i.preheader ], [ %i.lce, %._crit_edge914.i ] ; 3 uses
-  %i.kwg = mul i32 %indvar3057, 112
+  %.0755915.i = phi i32 [ 4, %.preheader828.i.preheader ], [ %i.lce, %._crit_edge914.i ] ; 2 uses
+  %i.kwg = mul i32 %indvar3055, 112
   %i.kwh = add i32 %i.kwg, 448
   %i.kwi = zext i32 %i.kwh to i64
   %i.kwj = shl nuw nsw i64 %i.kwi, 1              ; 2 uses
@@ -775,16 +775,12 @@ middle.block3294:                                 ; preds = %vector.body3285
   %i.kwl = and i32 %i.kwk, 14                     ; 2 uses
   %i.kwm = shl nuw nsw i32 %i.kwl, 1
   %i.kwn = lshr i32 %.fr1043, %i.kwm
-  %i.kwo = and i32 %i.kwn, 1                      ; 7 uses
-  %i.kwp = or disjoint i32 %i.kwo, 4              ; 5 uses
+  %i.kwo = and i32 %i.kwn, 1                      ; 8 uses
+  %i.kwp = or disjoint i32 %i.kwo, 4              ; 4 uses
   %i.kwq = icmp slt i32 %i.kwp, %i.knw
   br i1 %i.kwq, label %.lr.ph913.i, label %._crit_edge914.i
 
 .lr.ph913.i:                                      ; preds = %.preheader828.i
-  %11 = mul nuw nsw i32 %.0755915.i, 112
-  %12 = add nsw i32 %11, -113
-  %13 = add nsw i32 %12, %i.kwp
-  %14 = sdiv i32 %13, 2
   %i.kwr = or disjoint i32 %i.kwo, %i.kwl
   %i.kws = shl nuw nsw i32 %i.kwr, 1
   %i.kwt = lshr i32 %.fr1043, %i.kws              ; 2 uses
@@ -795,9 +791,11 @@ middle.block3294:                                 ; preds = %vector.body3285
   %i.kwy = add i32 %i.kwo, %indvars.iv1032.i
   %i.kwz = lshr i32 %i.kwy, 1
   %i.kxa = zext nneg i32 %i.kwz to i64            ; 5 uses
-  %i.kxb = sext i32 %14 to i64                    ; 5 uses
-  %i.kxc = or disjoint i32 %i.kwo, %indvars.iv1038.i
-  %i.kxd = lshr exact i32 %indvars.iv1038.i, 1
+  %9 = add i32 %i.kwo, %indvars.iv1038.i
+  %10 = sdiv i32 %9, 2
+  %i.kxb = sext i32 %10 to i64                    ; 5 uses
+  %i.kxc = or disjoint i32 %i.kwo, %indvar3057
+  %i.kxd = lshr exact i32 %indvar3057, 1
   %i.kxe = zext nneg i32 %i.kxd to i64            ; 4 uses
   %i.kxf = sext i32 %i.kxc to i64                 ; 5 uses
   %i.kxg = sub i32 %i.kvi, %i.kwo                 ; 2 uses
@@ -816,7 +814,7 @@ scalar.ph3209.preheader:                          ; preds = %vector.body3216, %v
   br label %scalar.ph3209
 
 vector.memcheck3045:                              ; preds = %.lr.ph913.i
-  %i.kxj = or disjoint i32 %indvars.iv1038.i, %i.kwo
+  %i.kxj = or disjoint i32 %indvar3057, %i.kwo
   %i.kxk = sext i32 %i.kxj to i64
   %i.kxl = shl nsw i64 %i.kxk, 2                  ; 12 uses
   %i.kxm = and i32 %i.kwt, 3
@@ -1126,7 +1124,8 @@ vector.body3216:                                  ; preds = %vector.body3216, %v
   %i.lcf = icmp slt i32 %i.lce, %i.jik
   %indvars.iv.next1033.i = add i32 %indvars.iv1032.i, 112
   %indvars.iv.next1039.i = add i32 %indvars.iv1038.i, 112
-  %indvar.next3058 = add i32 %indvar3057, 1
+  %indvars.iv.next1043.i = add i32 %indvar3057, 112
+  %indvar.next3058 = add i32 %indvar3055, 1
   br i1 %i.lcf, label %.preheader828.i, label %.preheader.i541.preheader
 
 .preheader.i541.preheader:                        ; preds = %._crit_edge914.i
@@ -1529,11 +1528,10 @@ bb.pq:                                            ; preds = %bb.pp, %bb.po
   %i.lxa = select i1 %i.lwz, i32 %i.lvn, i32 3    ; 2 uses
   %i.lxb = tail call i32 @llvm.usub.sat.i32(i32 %i.lvn, i32 2) ; 2 uses
   %i.lxc = add nsw i32 %i.ayd, -17
-  %i.lxd = sdiv i32 %i.lxc, 112                   ; 2 uses
+  %i.lxd = sdiv i32 %i.lxc, 112
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 64 dereferenceable(443904) %i.lws, i8 0, i64 443904, i1 false), !noalias !402
   %.not1186.i = icmp eq i32 %i.lxa, 0
   %i.lxe = icmp sgt i32 %i.lxb, 0
-  %15 = tail call i32 @llvm.smax.i32(i32 %i.lxd, i32 0)
   %scevgep3947.a = getelementptr i8, ptr %i.lws, i64 295400
   %scevgep4016.a = getelementptr i8, ptr %i.lws, i64 295400
   %i.lxf = add i64 %i.lwt, 372112
@@ -1551,7 +1549,7 @@ bb.pq:                                            ; preds = %bb.pp, %bb.po
   %indvars.iv = phi i32 [ %indvars.iv.next, %._crit_edge1180.i ], [ 128, %.preheader1020.preheader.i ] ; 2 uses
   %indvars.iv1304.i = phi i32 [ %indvars.iv.next1305.i, %._crit_edge1180.i ], [ 0, %.preheader1020.preheader.i ] ; 2 uses
   %indvars.iv.i553 = phi i32 [ %indvars.iv.next.i558, %._crit_edge1180.i ], [ 0, %.preheader1020.preheader.i ] ; 2 uses
-  %.08821182.i = phi i32 [ %i.lzs, %._crit_edge1180.i ], [ 0, %.preheader1020.preheader.i ] ; 5 uses
+  %.08821182.i = phi i32 [ %i.lzs, %._crit_edge1180.i ], [ 0, %.preheader1020.preheader.i ] ; 4 uses
   %smin1133 = call i32 @llvm.smin.i32(i32 %i.ayd, i32 %indvars.iv) ; 5 uses
   %i.lxj = add i32 %smin1133, %indvars.iv1084
   %i.lxk = call i32 @llvm.smax.i32(i32 %i.lxj, i32 5)
@@ -1565,19 +1563,19 @@ bb.pq:                                            ; preds = %bb.pp, %bb.po
   %i.lxp = add i32 %smin1133, %indvars.iv1087
   %i.lxq = call i32 @llvm.umax.i32(i32 %i.lxp, i32 2)
   %umax = zext i32 %i.lxq to i64
-  %i.lxr = mul nuw i32 %.08821182.i, 112          ; 4 uses
+  %i.lxr = mul nuw nsw i32 %.08821182.i, 112      ; 4 uses
   %i.lxs = add nuw nsw i32 %i.lxr, 128
   %i.lxt = tail call i32 @llvm.smin.i32(i32 %i.lxs, i32 %i.ayd) ; 2 uses
   %i.lxu = sub nsw i32 %i.lxt, %i.lxr             ; 6 uses
   %i.lxv = add nsw i32 %i.lxu, 8
   %i.lxw = icmp sgt i32 %i.lxu, 0                 ; 3 uses
   %i.lxx = icmp sgt i32 %i.lxu, -4
-  %i.lxy = add i32 %i.lxr, -4
+  %i.lxy = add nsw i32 %i.lxr, -4
   %i.lxz = icmp sgt i32 %i.lxu, -8
   %i.lya = icmp sgt i32 %i.lxu, -6
   %i.lyb = icmp eq i32 %.08821182.i, 0            ; 2 uses
   %i.lyc = select i1 %i.lyb, i32 6, i32 0         ; 3 uses
-  %i.lyd = icmp eq i32 %.08821182.i, %i.lxd       ; 2 uses
+  %i.lyd = icmp eq i32 %.08821182.i, %i.lxd       ; 3 uses
   %.neg949.i = select i1 %i.lyd, i32 -6, i32 0    ; 2 uses
   %i.lye = add nsw i32 %i.lxv, %.neg949.i         ; 2 uses
   %i.lyf = icmp slt i32 %i.lxu, -5
@@ -1595,7 +1593,8 @@ bb.pq:                                            ; preds = %bb.pp, %bb.po
   %i.lyq = add nuw nsw i64 %i.lyp, 2              ; 3 uses
   %narrow.i = add nuw nsw i32 %i.lyl, 4
   %i.lyr = or disjoint i32 %i.lyl, %indvars.iv1304.i
-  %i.lys = zext i32 %i.lyr to i64
+  %11 = zext nneg i32 %i.lyr to i64
+  %i.lys = zext nneg i32 %i.lyn to i64
   %i.lyt = add i32 %.neg949.i, %smin1133          ; 2 uses
   %i.lyu = add i32 %i.lyt, %indvars.iv1109
   %i.lyv = sext i32 %i.lyu to i64                 ; 2 uses
@@ -1637,20 +1636,19 @@ bb.pq:                                            ; preds = %bb.pp, %bb.po
   %i.lzs = add nuw nsw i32 %.08821182.i, 1
   %indvars.iv.next.i558 = add i32 %indvars.iv.i553, %i.api
   %indvars.iv.next1305.i = add nuw i32 %indvars.iv1304.i, 112
-  %exitcond1313.i = icmp eq i32 %.08821182.i, %15
-  %indvars.iv.next = add nuw i32 %indvars.iv, 112
+  %indvars.iv.next = add i32 %indvars.iv, 112
   %indvars.iv.next1085 = add i32 %indvars.iv1084, -112
   %indvars.iv.next1088 = add i32 %indvars.iv1087, -112
   %indvars.iv.next1105 = add i32 %indvars.iv1104, -112
   %indvars.iv.next1110 = add i32 %indvars.iv1109, -112
   %indvars.iv.next1129 = add i32 %indvars.iv1128, -112
-  br i1 %exitcond1313.i, label %._crit_edge1183.split.i, label %.preheader1020.i
+  br i1 %i.lyd, label %._crit_edge1183.split.i, label %.preheader1020.i
 
 bb.pr:                                            ; preds = %._crit_edge1176.split.i, %.preheader1020.i
   %indvars.iv1093 = phi i32 [ %indvars.iv.next1094, %._crit_edge1176.split.i ], [ 0, %.preheader1020.i ] ; 8 uses
   %indvars.iv1090 = phi i32 [ %indvars.iv.next1091, %._crit_edge1176.split.i ], [ 128, %.preheader1020.i ] ; 6 uses
   %indvars.iv1207.i = phi i32 [ %indvars.iv.next1208.i, %._crit_edge1176.split.i ], [ %indvars.iv.i553, %.preheader1020.i ] ; 2 uses
-  %.08871178.i = phi i32 [ %i.psa, %._crit_edge1176.split.i ], [ 0, %.preheader1020.i ] ; 7 uses
+  %.08871178.i = phi i32 [ %i.psa, %._crit_edge1176.split.i ], [ 0, %.preheader1020.i ] ; 6 uses
   %smin4756 = call i32 @llvm.smin.i32(i32 %i.bo, i32 %indvars.iv1090)
   %i.lzt = add i32 %smin4756, %indvars.iv1093
   %smin4757 = call i32 @llvm.smin.i32(i32 %i.lzt, i32 128) ; 2 uses
@@ -1661,7 +1659,7 @@ bb.pr:                                            ; preds = %._crit_edge1176.spl
   %i.lzx = add i32 %smin4747, %indvars.iv1093
   %smin4739 = call i32 @llvm.smin.i32(i32 %i.bo, i32 %indvars.iv1090)
   %i.lzy = add i32 %smin4739, %indvars.iv1093
-  %i.lzz = mul nuw i32 %.08871178.i, 112
+  %i.lzz = mul i32 %.08871178.i, 112
   %i.maa = add i32 %i.lzz, 128
   %smin4731 = call i32 @llvm.smin.i32(i32 %i.bo, i32 %i.maa)
   %i.mab = mul i32 %.08871178.i, -112
@@ -1679,8 +1677,8 @@ bb.pr:                                            ; preds = %._crit_edge1176.spl
   %smin1122 = call i32 @llvm.smin.i32(i32 %i.maj, i32 128)
   %i.mak = add nsw i32 %smin1122, 3
   %i.mal = zext i32 %i.mak to i64                 ; 2 uses
-  %i.mam = mul nuw i32 %.08871178.i, 112          ; 5 uses
-  %i.man = add nuw i32 %i.mam, 128
+  %i.mam = mul i32 %.08871178.i, 112              ; 5 uses
+  %i.man = add i32 %i.mam, 128
   %i.mao = tail call i32 @llvm.smin.i32(i32 %i.man, i32 %i.bo) ; 3 uses
   %i.map = sub i32 %i.mao, %i.mam                 ; 7 uses
   %i.maq = tail call i32 @llvm.smin.i32(i32 %i.map, i32 128) ; 24 uses
@@ -2083,7 +2081,7 @@ scalar.ph4204:                                    ; preds = %scalar.ph4204.prehe
 ._crit_edge1078.i:                                ; preds = %._crit_edge1075.i, %.preheader1016.i, %._crit_edge1053.i
   %i.nph = icmp eq i32 %.08871178.i, 0            ; 2 uses
   %i.npi = select i1 %i.nph, i32 6, i32 0         ; 21 uses
-  %i.npj = icmp eq i32 %.08871178.i, %i.aph       ; 2 uses
+  %i.npj = icmp eq i32 %.08871178.i, %i.aph       ; 3 uses
   %.neg.i554 = select i1 %i.npj, i32 -6, i32 0    ; 10 uses
   %i.npk = add nsw i32 %i.mar, %.neg.i554         ; 4 uses
   br i1 %.not1186.i, label %.preheader1014.i, label %.preheader1011.lr.ph.i
@@ -2486,15 +2484,14 @@ scalar.ph3763:                                    ; preds = %scalar.ph3763.prehe
   br i1 %i.prz, label %scalar.ph3763, label %._crit_edge1155.i, !llvm.loop !494
 
 ._crit_edge1176.split.i:                          ; preds = %._crit_edge1169.i, %.lr.ph1175.i, %._crit_edge1161.i
-  %i.psa = add nuw nsw i32 %.08871178.i, 1
+  %i.psa = add i32 %.08871178.i, 1
   %indvars.iv.next1208.i = add i32 %indvars.iv1207.i, 112
-  %exitcond1311.not.i = icmp eq i32 %.08871178.i, %smax.i552
-  %indvars.iv.next1091 = add nuw i32 %indvars.iv1090, 112
+  %indvars.iv.next1091 = add i32 %indvars.iv1090, 112
   %indvars.iv.next1094 = add i32 %indvars.iv1093, -112
-  br i1 %exitcond1311.not.i, label %._crit_edge1180.i, label %bb.pr
+  br i1 %i.npj, label %._crit_edge1180.i, label %bb.pr
 
 .lr.ph1168.i:                                     ; preds = %.lr.ph1168.i.preheader, %._crit_edge1169.i
-  %indvars.iv1306.i = phi i64 [ %indvars.iv.next1307.i, %._crit_edge1169.i ], [ %i.lys, %.lr.ph1168.i.preheader ] ; 2 uses
+  %indvars.iv1306.i = phi i64 [ %indvars.iv.next1307.i, %._crit_edge1169.i ], [ %11, %.lr.ph1168.i.preheader ] ; 2 uses
   %indvars.iv1302.i = phi i32 [ %indvars.iv.next1303.i, %._crit_edge1169.i ], [ %narrow.i, %.lr.ph1168.i.preheader ] ; 2 uses
   %i.psb = trunc i64 %indvars.iv1306.i to i32
   %i.psc = mul i32 %i.bo, %i.psb
@@ -2681,9 +2678,8 @@ _calc_gamma.exit975.us.i:                         ; preds = %_calc_gamma.exit975
 ._crit_edge1169.i:                                ; preds = %_calc_gamma.exit977.i, %_calc_gamma.exit975.us.i, %middle.block3737, %middle.block3695
   %indvars.iv.next1307.i = add nuw nsw i64 %indvars.iv1306.i, 1 ; 2 uses
   %indvars.iv.next1303.i = add i32 %indvars.iv1302.i, 1
-  %16 = trunc nuw i64 %indvars.iv.next1307.i to i32
-  %17 = icmp sgt i32 %i.lyn, %16
-  br i1 %17, label %.lr.ph1168.i, label %._crit_edge1176.split.i
+  %12 = icmp samesign ult i64 %indvars.iv.next1307.i, %i.lys
+  br i1 %12, label %.lr.ph1168.i, label %._crit_edge1176.split.i
 
 .lr.ph1168.split.i:                               ; preds = %.lr.ph1168.split.i.preheader4646, %_calc_gamma.exit977.i
   %.01166.i = phi i32 [ %i.pxo, %_calc_gamma.exit977.i ], [ %.01166.i.ph, %.lr.ph1168.split.i.preheader4646 ]

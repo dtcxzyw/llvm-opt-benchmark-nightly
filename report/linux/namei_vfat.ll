@@ -205,6 +205,7 @@ bb.cq:                                            ; preds = %bb.cp, %.thread.i
 .lr.ph.i:                                         ; preds = %.lr.ph.i, %.lr.ph.preheader.i
   %indvars.iv.i = phi i64 [ %i.mf, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %.lr.ph.i ] ; 4 uses
   %.069153.i = phi ptr [ %i.s, %.lr.ph.preheader.i ], [ %i.mv, %.lr.ph.i ] ; 9 uses
+  %10 = trunc nuw i64 %indvars.iv.i to i32
   %i.mg = trunc i64 %indvars.iv.i to i8
   store i8 %i.mg, ptr %.069153.i, align 2
   %i.mh = getelementptr i8, ptr %.069153.i, i64 11
@@ -230,8 +231,8 @@ bb.cq:                                            ; preds = %bb.cp, %.thread.i
   store i32 %i.mu, ptr %i.ms, align 2
   %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1
   %i.mv = getelementptr i8, ptr %.069153.i, i64 32 ; 2 uses
-  %10 = icmp samesign ugt i64 %indvars.iv.i, 1
-  br i1 %10, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !33
+  %11 = icmp sgt i32 %10, 1
+  br i1 %11, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !33
 
 ._crit_edge.i:                                    ; preds = %.lr.ph.i, %bb.cq
   %.069.lcssa.i = phi ptr [ %i.s, %bb.cq ], [ %i.mv, %.lr.ph.i ]

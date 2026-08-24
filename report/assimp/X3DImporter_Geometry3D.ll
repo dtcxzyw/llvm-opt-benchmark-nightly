@@ -204,7 +204,7 @@ _ZN6AssimpL38GeometryHelper_Extrusion_CurveIsClosedI10aiVector3tIfEEEvRSt6vector
   %.pre1134 = ptrtoint ptr %.pre1081 to i64
   %.pre1136 = ptrtoint ptr %.pre1082 to i64
   %.pre1138 = sub i64 %.pre1134, %.pre1136
-  %.pre1140 = sdiv exact i64 %.pre1138, 12
+  %.pre1140 = sdiv i64 %.pre1138, 12
   %i.oy = call i64 @llvm.umax.i64(i64 %.pre1140, i64 1)
   br label %_ZNSt6vectorI12aiMatrix3x3tIfESaIS1_EE6resizeEm.exit
 
@@ -607,7 +607,8 @@ _ZNSt6vectorIS_I10aiVector3tIfESaIS1_EESaIS3_EE6resizeEm.exit: ; preds = %_ZSt8_
   %i.afs = ptrtoint ptr %i.afq to i64
   %i.aft = ptrtoint ptr %i.afr to i64
   %i.afu = sub i64 %i.afs, %i.aft
-  %i.afv = sdiv exact i64 %i.afu, 12
+  %i.afv = sdiv i64 %i.afu, 12
+  %umax1059 = call i64 @llvm.umax.i64(i64 %i.afv, i64 1)
   br label %.lr.ph1012
 
 ._crit_edge1013:                                  ; preds = %bb.dl, %_ZNSt6vectorIS_I10aiVector3tIfESaIS1_EESaIS3_EE6resizeEm.exit
@@ -741,7 +742,7 @@ bb.dk:                                            ; preds = %._crit_edge1010
 
 bb.dl:                                            ; preds = %._crit_edge1010
   %i.ajc = add nuw i64 %.02301011, 1              ; 2 uses
-  %exitcond1060.not = icmp eq i64 %i.ajc, %i.afv
+  %exitcond1060.not = icmp eq i64 %i.ajc, %umax1059
   br i1 %exitcond1060.not, label %._crit_edge1013, label %.lr.ph1012, !llvm.loop !51
 
 bb.dm:                                            ; preds = %_ZNSt6vectorI10aiVector3tIfESaIS1_EED2Ev.exit
@@ -1144,7 +1145,8 @@ _ZNSt6vectorIiSaIiEE9push_backEOi.exit530:        ; preds = %bb.ih, %_ZNSt6vecto
   %i.bdj = ptrtoint ptr %i.bdh to i64
   %i.bdk = ptrtoint ptr %i.bdi to i64
   %i.bdl = sub i64 %i.bdj, %i.bdk
-  %i.bdm = sdiv exact i64 %i.bdl, 12
+  %i.bdm = sdiv i64 %i.bdl, 12
+  %umax1068 = call i64 @llvm.umax.i64(i64 %i.bdm, i64 1)
   br label %bb.im
 
 ._crit_edge1034:                                  ; preds = %._crit_edge1031, %.critedge
@@ -1169,7 +1171,7 @@ bb.im:                                            ; preds = %.lr.ph1033, %._crit
 
 ._crit_edge1031:                                  ; preds = %bb.in, %bb.im
   %i.bdv = add nuw i64 %.02051032, 1              ; 2 uses
-  %exitcond1069.not = icmp eq i64 %i.bdv, %i.bdm
+  %exitcond1069.not = icmp eq i64 %i.bdv, %umax1068
   br i1 %exitcond1069.not, label %._crit_edge1034, label %bb.im, !llvm.loop !56
 
 .lr.ph1030:                                       ; preds = %.lr.ph1030.preheader, %bb.in

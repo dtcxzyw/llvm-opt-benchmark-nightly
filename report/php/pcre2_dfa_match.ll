@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.aa = and i32 %5, 131070                      ; 5 uses
-  %i.ab = add nsw i32 %7, -2
+  %i.ab = add i32 %7, -2                          ; 2 uses
   %i.ac = sdiv i32 %i.ab, 6                       ; 115 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !58 ; 4 uses
@@ -417,7 +417,7 @@ switch.lookup:                                    ; preds = %bb.p
 switch.edge:                                      ; preds = %bb.p, %switch.lookup
   %i.dw = phi i64 [ %switch.ext, %switch.lookup ], [ 3, %bb.p ]
   %i.dx = ptrtoint ptr %i.k to i64                ; 2 uses
-  %exitcond.peel.not = icmp slt i32 %7, 8
+  %exitcond.peel.not = icmp slt i32 %i.ab, 6
   br i1 %exitcond.peel.not, label %.critedge3469, label %bb.q
 
 bb.q:                                             ; preds = %switch.edge
@@ -442,7 +442,7 @@ bb.q:                                             ; preds = %switch.edge
   br i1 %i.en, label %.peel.next.preheader, label %.thread3582
 
 .peel.next.preheader:                             ; preds = %bb.q
-  %.off4655 = add nsw i32 %7, -8
+  %.off4655 = add i32 %7, -8
   %exitcond.not4595 = icmp ult i32 %.off4655, 6
   br i1 %exitcond.not4595, label %.critedge3469, label %.lr.ph4599
 

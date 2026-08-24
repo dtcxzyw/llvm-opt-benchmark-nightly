@@ -26,18 +26,15 @@ bb.a:
   %i.g = load i64, ptr %i.f, align 8, !tbaa !28   ; 3 uses
   %i.h = icmp slt i64 %i.g, %1
   %i.i = tail call i64 @llvm.smin.i64(i64 %i.g, i64 %1) ; 3 uses
+  %4 = add nsw i64 %i.i, 16777215
+  %5 = sdiv i64 %4, 16777216
   %i.j = tail call ptr @ADIOI_Malloc_fn(i64 noundef 16777216, i32 noundef 43, ptr noundef nonnull @.str) #5 ; 5 uses
   %i.k = icmp sgt i64 %i.i, 0
-  br i1 %i.k, label %.lr.ph.preheader, label %._crit_edge
+  br i1 %i.k, label %.lr.ph, label %._crit_edge
 
-.lr.ph.preheader:                                 ; preds = %bb.a
-  %4 = add nuw nsw i64 %i.i, 16777215
-  %5 = lshr i64 %4, 24
-  br label %.lr.ph
-
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.d
-  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.d ]
-  %.05969 = phi i64 [ 0, %.lr.ph.preheader ], [ %i.x, %bb.d ] ; 4 uses
+.lr.ph:                                           ; preds = %bb.a, %bb.d
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.d ], [ 0, %bb.a ]
+  %.05969 = phi i64 [ %i.x, %bb.d ], [ 0, %bb.a ] ; 4 uses
   %i.l = sub nsw i64 %i.i, %.05969
   %i.m = call i64 @llvm.smin.i64(i64 %i.l, i64 16777216) ; 2 uses
   %i.n = load ptr, ptr %i.b, align 8, !tbaa !8
@@ -65,8 +62,8 @@ bb.c:                                             ; preds = %.lr.ph
 bb.d:                                             ; preds = %bb.c
   %i.x = add nsw i64 %i.m, %.05969                ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %5
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !33
+  %6 = icmp sgt i64 %5, %indvars.iv.next
+  br i1 %6, label %.lr.ph, label %._crit_edge, !llvm.loop !33
 
 ._crit_edge:                                      ; preds = %bb.d, %bb.a
   %.059.lcssa = phi i64 [ 0, %bb.a ], [ %i.x, %bb.d ]

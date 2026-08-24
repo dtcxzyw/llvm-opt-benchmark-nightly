@@ -202,15 +202,15 @@ bb.a:
 
 .lr.ph57:                                         ; preds = %bb.a
   %i.q = icmp sgt i32 %i.e, 0
-  %wide.trip.count68 = zext nneg i32 %0 to i64    ; 4 uses
   br i1 %i.q, label %.lr.ph.us.preheader, label %.loopexit.preheader
 
 .loopexit.preheader:                              ; preds = %.lr.ph57
+  %wide.trip.count = zext nneg i32 %0 to i64      ; 3 uses
   %min.iters.check = icmp ult i32 %0, 8
   br i1 %min.iters.check, label %.loopexit.preheader89, label %vector.ph
 
 vector.ph:                                        ; preds = %.loopexit.preheader
-  %n.vec = and i64 %wide.trip.count68, 2147483640 ; 4 uses
+  %n.vec = and i64 %wide.trip.count, 2147483640   ; 4 uses
   %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %i.e, i64 0
   %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer ; 4 uses
   %i.r = trunc nuw nsw i64 %n.vec to i32
@@ -237,7 +237,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.z, label %middle.block, label %vector.body, !llvm.loop !10
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %n.vec, %wide.trip.count68
+  %cmp.n = icmp eq i64 %n.vec, %wide.trip.count
   br i1 %cmp.n, label %.preheader, label %.loopexit.preheader89
 
 .loopexit.preheader89:                            ; preds = %.loopexit.preheader, %middle.block
@@ -247,6 +247,7 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph.us.preheader:                              ; preds = %.lr.ph57
   %wide.trip.count63 = zext nneg i32 %i.e to i64  ; 3 uses
+  %wide.trip.count66 = zext nneg i32 %0 to i64
   %min.iters.check75 = icmp ult i32 %i.e, 8
   %n.vec77 = and i64 %wide.trip.count63, 2147483640 ; 3 uses
   %cmp.n87 = icmp eq i64 %n.vec77, %wide.trip.count63
@@ -300,11 +301,11 @@ scalar.ph74:                                      ; preds = %scalar.ph74.prehead
   %i.am = mul i32 %spec.store.select.us, %i.al
   store i32 %i.am, ptr %gep, align 4, !tbaa !4
   %indvars.iv.next61 = add nuw nsw i64 %indvars.iv60, 1 ; 2 uses
-  %exitcond64.not = icmp eq i64 %indvars.iv.next61, %wide.trip.count63
-  br i1 %exitcond64.not, label %..loopexit_crit_edge.us, label %scalar.ph74, !llvm.loop !14
+  %4 = icmp samesign ult i64 %indvars.iv.next61, %wide.trip.count63
+  br i1 %4, label %scalar.ph74, label %..loopexit_crit_edge.us, !llvm.loop !14
 
 ..loopexit_crit_edge.us:                          ; preds = %scalar.ph74, %middle.block86
-  %exitcond69.not = icmp eq i64 %indvars.iv.next66, %wide.trip.count68
+  %exitcond69.not = icmp eq i64 %indvars.iv.next66, %wide.trip.count66
   br i1 %exitcond69.not, label %.preheader, label %.lr.ph.us, !llvm.loop !15
 
 .preheader:                                       ; preds = %.loopexit, %..loopexit_crit_edge.us, %middle.block, %bb.a
@@ -369,7 +370,7 @@ scalar.ph74:                                      ; preds = %scalar.ph74.prehead
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 3 uses
   %i.at = getelementptr inbounds nuw [4 x i8], ptr %i.n, i64 %indvars.iv.next
   store i32 %i.as, ptr %i.at, align 4, !tbaa !4
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count68
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %.preheader, label %.loopexit, !llvm.loop !16
 }
 

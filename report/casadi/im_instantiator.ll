@@ -205,7 +205,7 @@ bb.a:
   %i.i = ptrtoint ptr %i.g to i64
   %i.j = ptrtoint ptr %i.h to i64
   %i.k = sub i64 %i.i, %i.j                       ; 2 uses
-  %i.l = sdiv exact i64 %i.k, 24                  ; 3 uses
+  %i.l = sdiv i64 %i.k, 24                        ; 3 uses
   store i64 %i.l, ptr %i.a, align 8, !tbaa !8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #28
   %i.m = icmp eq ptr %i.h, %i.g
@@ -225,7 +225,11 @@ bb.b:                                             ; preds = %bb.a
   %i.t = ashr exact i64 %i.s, 3                   ; 3 uses
   store i64 %i.t, ptr %i.b, align 8, !tbaa !8
   %i.u = icmp sgt i64 %i.k, 0
-  br i1 %i.u, label %.lr.ph, label %._crit_edge
+  br i1 %i.u, label %.lr.ph.preheader, label %._crit_edge
+
+.lr.ph.preheader:                                 ; preds = %bb.b
+  %smax = tail call i64 @llvm.smax.i64(i64 %i.l, i64 1)
+  br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %bb.ai, %.thread, %bb.b
   %i.v = phi i64 [ 1, %.thread ], [ %i.t, %bb.b ], [ %i.t, %bb.ai ]
@@ -233,8 +237,8 @@ bb.b:                                             ; preds = %bb.a
   invoke void @_ZN6casadi8Sparsity5denseExx(ptr dead_on_unwind nonnull writable sret(%"class.casadi::Sparsity") align 8 %19, i64 noundef %i.l, i64 noundef %i.v)
           to label %bb.aj unwind label %bb.ao
 
-.lr.ph:                                           ; preds = %bb.b, %bb.ai
-  %.054133 = phi i64 [ %i.eg, %bb.ai ], [ 0, %bb.b ] ; 3 uses
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.ai
+  %.054133 = phi i64 [ %i.eg, %bb.ai ], [ 0, %.lr.ph.preheader ] ; 3 uses
   %i.w = getelementptr inbounds nuw [24 x i8], ptr %i.h, i64 %.054133 ; 2 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 8
   %i.y = load ptr, ptr %i.x, align 8, !tbaa !70
@@ -637,7 +641,7 @@ bb.ah:                                            ; preds = %.sink.split, %_ZNKS
 
 bb.ai:                                            ; preds = %.lr.ph
   %i.eg = add nuw nsw i64 %.054133, 1             ; 2 uses
-  %exitcond.not = icmp eq i64 %i.eg, %i.l
+  %exitcond.not = icmp eq i64 %i.eg, %smax
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !77
 
 bb.aj:                                            ; preds = %._crit_edge
@@ -1040,8 +1044,8 @@ bb.f:                                             ; preds = %bb.f, %.preheader17
 
 ._crit_edge196.split197.us.us.us:                 ; preds = %._crit_edge188.us.us.us, %..preheader170_crit_edge.us.us.us
   %i.cx = add nuw nsw i64 %.0125198.us.us.us, 1   ; 2 uses
-  %exitcond214.not = icmp eq i64 %i.cx, %i.av
-  br i1 %exitcond214.not, label %.loopexit, label %.preheader171.us.us.us, !llvm.loop !909
+  %8 = icmp slt i64 %i.cx, %i.av
+  br i1 %8, label %.preheader171.us.us.us, label %.loopexit, !llvm.loop !909
 
 .preheader171.lr.ph.split.us.split:               ; preds = %.preheader171.lr.ph.split.us
   %brmerge = or i1 %i.ay, %i.az
@@ -1134,8 +1138,8 @@ bb.f:                                             ; preds = %bb.f, %.preheader17
 
 ._crit_edge196.us:                                ; preds = %._crit_edge188.us
   %i.ec = add nuw nsw i64 %.0125198.us, 1         ; 2 uses
-  %exitcond209.not = icmp eq i64 %i.ec, %i.av
-  br i1 %exitcond209.not, label %.loopexit, label %.preheader171.us, !llvm.loop !909
+  %9 = icmp slt i64 %i.ec, %i.av
+  br i1 %9, label %.preheader171.us, label %.loopexit, !llvm.loop !909
 
 .loopexit:                                        ; preds = %._crit_edge196.us, %._crit_edge196.split197.us.us.us, %.preheader171.lr.ph, %.preheader171.lr.ph.split.us.split.us, %.preheader171.lr.ph.split.us.split, %.thread151, %bb.a
   ret void

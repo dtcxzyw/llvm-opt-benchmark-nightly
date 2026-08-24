@@ -204,8 +204,8 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.k, %bb.l
   %i.ba = add nuw i64 %.021, 1                    ; 2 uses
-  %exitcond.not = icmp eq i64 %i.ba, %i.i
-  br i1 %exitcond.not, label %._crit_edge, label %bb.k, !llvm.loop !88
+  %2 = icmp ult i64 %i.ba, %i.i
+  br i1 %2, label %bb.k, label %._crit_edge, !llvm.loop !88
 }
 
 ; Function Attrs: mustprogress uwtable
@@ -344,9 +344,10 @@ bb.a:
   %i.e = ptrtoint ptr %i.c to i64
   %i.f = ptrtoint ptr %i.d to i64
   %i.g = sub i64 %i.e, %i.f
-  %i.h = sdiv exact i64 %i.g, 24
+  %i.h = sdiv i64 %i.g, 24
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %umax = tail call i64 @llvm.umax.i64(i64 %i.h, i64 1)
   br label %bb.b
 
 ._crit_edge32:                                    ; preds = %._crit_edge, %bb.a
@@ -368,7 +369,7 @@ bb.b:                                             ; preds = %.lr.ph31, %._crit_e
 
 ._crit_edge:                                      ; preds = %_ZNSt6vectorI11cmGraphEdgeSaIS0_EE12emplace_backIJRmbbRK19cmListFileBacktraceEEERS0_DpOT_.exit, %bb.b
   %i.t = add nuw i64 %.029, 1                     ; 2 uses
-  %exitcond.not = icmp eq i64 %i.t, %i.h
+  %exitcond.not = icmp eq i64 %i.t, %umax
   br i1 %exitcond.not, label %._crit_edge32, label %bb.b, !llvm.loop !91
 
 .lr.ph:                                           ; preds = %bb.b, %_ZNSt6vectorI11cmGraphEdgeSaIS0_EE12emplace_backIJRmbbRK19cmListFileBacktraceEEERS0_DpOT_.exit

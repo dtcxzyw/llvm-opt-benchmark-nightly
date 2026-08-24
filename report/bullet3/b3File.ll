@@ -205,12 +205,13 @@ bb.o:                                             ; preds = %_ZN6bParse5bFile14f
 .lr.ph96:                                         ; preds = %bb.o
   %i.er = sext i32 %i.cz to i64
   %i.es = sext i32 %i.cx to i64
-  %wide.trip.count112 = zext nneg i32 %i.ej to i64
   br label %bb.p
 
 bb.p:                                             ; preds = %.lr.ph96, %_ZN6bParse5bFile14findLibPointerEPv.exit75
   %indvars.iv109 = phi i64 [ 0, %.lr.ph96 ], [ %indvars.iv.next110, %_ZN6bParse5bFile14findLibPointerEPv.exit75 ] ; 2 uses
   %.03994 = phi ptr [ %i.ei, %.lr.ph96 ], [ %i.hb, %_ZN6bParse5bFile14findLibPointerEPv.exit75 ] ; 7 uses
+  %.04093 = phi i32 [ %i.ej, %.lr.ph96 ], [ %1, %_ZN6bParse5bFile14findLibPointerEPv.exit75 ] ; 2 uses
+  %1 = add nsw i32 %.04093, -1
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
   store ptr null, ptr %.sroa.0, align 8
   %i.et = load ptr, ptr %i.y, align 8, !tbaa !74
@@ -384,10 +385,10 @@ _ZN6bParse5bFile14findLibPointerEPv.exit75:       ; preds = %bb.ae, %_ZN6bParse5
   %.0.i66 = phi ptr [ %i.ha, %bb.af ], [ null, %_ZN9b3HashMapI9b3HashPtrPN6bParse13bStructHandleEE4findERKS0_.exit.i73 ], [ null, %_ZN6bParse5bFile11safeSwapPtrEPcPKc.exit ], [ null, %bb.ac ], [ null, %bb.ae ]
   store ptr %.0.i66, ptr %i.fu, align 8, !tbaa !169
   %i.hb = getelementptr inbounds i8, ptr %.03994, i64 %i.er
-  %indvars.iv.next110 = add nuw nsw i64 %indvars.iv109, 1 ; 2 uses
+  %indvars.iv.next110 = add nuw nsw i64 %indvars.iv109, 1
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
-  %exitcond113.not = icmp eq i64 %indvars.iv.next110, %wide.trip.count112
-  br i1 %exitcond113.not, label %._crit_edge, label %bb.p, !llvm.loop !172
+  %2 = icmp sgt i32 %.04093, 1
+  br i1 %2, label %bb.p, label %._crit_edge, !llvm.loop !172
 
 ._crit_edge:                                      ; preds = %_ZN6bParse5bFile14findLibPointerEPv.exit75, %bb.o
   store ptr %i.em, ptr %i.bp, align 8, !tbaa !169

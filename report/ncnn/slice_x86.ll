@@ -204,7 +204,7 @@ bb.t:                                             ; preds = %_ZNK4ncnn3Mat5empty
   %i.fh = ptrtoint ptr %i.ff to i64
   %i.fi = ptrtoint ptr %i.fg to i64
   %i.fj = sub i64 %i.fh, %i.fi
-  %i.fk = sdiv exact i64 %i.fj, 72                ; 5 uses
+  %i.fk = sdiv i64 %i.fj, 72                      ; 4 uses
   %.not598 = icmp ult i64 %i.fe, %i.fk
   br i1 %.not598, label %bb.m, label %.critedge618, !llvm.loop !54
 
@@ -215,12 +215,13 @@ bb.t:                                             ; preds = %_ZNK4ncnn3Mat5empty
   br i1 %i.fl, label %._crit_edge, label %.lr.ph902.preheader
 
 .lr.ph902.preheader:                              ; preds = %.critedge618
-  %xtraiter = and i64 %i.fk, 3                    ; 3 uses
+  %umax = tail call i64 @llvm.umax.i64(i64 %i.fk, i64 1) ; 2 uses
+  %xtraiter = and i64 %umax, 3                    ; 3 uses
   %i.fo = icmp ult i64 %i.fk, 4
   br i1 %i.fo, label %.lr.ph902.epil.preheader, label %.lr.ph902.preheader.new
 
 .lr.ph902.preheader.new:                          ; preds = %.lr.ph902.preheader
-  %unroll_iter = and i64 %i.fk, -4
+  %unroll_iter = and i64 %umax, -4
   br label %.lr.ph902
 
 ._crit_edge.loopexit.unr-lcssa:                   ; preds = %.lr.ph902
@@ -623,7 +624,7 @@ bb.bh:                                            ; preds = %_ZNK4ncnn3Mat5empty
   %i.sx = ptrtoint ptr %i.sv to i64
   %i.sy = ptrtoint ptr %i.sw to i64
   %i.sz = sub i64 %i.sx, %i.sy
-  %i.ta = sdiv exact i64 %i.sz, 72                ; 5 uses
+  %i.ta = sdiv i64 %i.sz, 72                      ; 4 uses
   %.not602 = icmp ult i64 %i.su, %i.ta
   br i1 %.not602, label %bb.ba, label %.critedge629, !llvm.loop !82
 
@@ -634,12 +635,13 @@ bb.bh:                                            ; preds = %_ZNK4ncnn3Mat5empty
   br i1 %i.tb, label %._crit_edge935, label %.lr.ph934.preheader
 
 .lr.ph934.preheader:                              ; preds = %.critedge629
-  %xtraiter1246 = and i64 %i.ta, 3                ; 3 uses
+  %umax993 = call i64 @llvm.umax.i64(i64 %i.ta, i64 1) ; 2 uses
+  %xtraiter1246 = and i64 %umax993, 3             ; 3 uses
   %i.te = icmp ult i64 %i.ta, 4
   br i1 %i.te, label %.lr.ph934.epil.preheader, label %.lr.ph934.preheader.new
 
 .lr.ph934.preheader.new:                          ; preds = %.lr.ph934.preheader
-  %unroll_iter1251 = and i64 %i.ta, -4
+  %unroll_iter1251 = and i64 %umax993, -4
   br label %.lr.ph934
 
 ._crit_edge935.loopexit.unr-lcssa:                ; preds = %.lr.ph934
@@ -1042,7 +1044,7 @@ bb.s:                                             ; preds = %_ZNK4ncnn3Mat5empty
   %i.fd = ptrtoint ptr %i.fb to i64
   %i.fe = ptrtoint ptr %i.fc to i64
   %i.ff = sub i64 %i.fd, %i.fe
-  %i.fg = sdiv exact i64 %i.ff, 72                ; 5 uses
+  %i.fg = sdiv i64 %i.ff, 72                      ; 4 uses
   %.not594 = icmp ult i64 %i.fa, %i.fg
   br i1 %.not594, label %bb.l, label %.critedge614, !llvm.loop !117
 
@@ -1053,12 +1055,13 @@ bb.s:                                             ; preds = %_ZNK4ncnn3Mat5empty
   br i1 %i.fh, label %._crit_edge, label %.lr.ph897.preheader
 
 .lr.ph897.preheader:                              ; preds = %.critedge614
-  %xtraiter = and i64 %i.fg, 3                    ; 3 uses
+  %umax = tail call i64 @llvm.umax.i64(i64 %i.fg, i64 1) ; 2 uses
+  %xtraiter = and i64 %umax, 3                    ; 3 uses
   %i.fk = icmp ult i64 %i.fg, 4
   br i1 %i.fk, label %.lr.ph897.epil.preheader, label %.lr.ph897.preheader.new
 
 .lr.ph897.preheader.new:                          ; preds = %.lr.ph897.preheader
-  %unroll_iter = and i64 %i.fg, -4
+  %unroll_iter = and i64 %umax, -4
   br label %.lr.ph897
 
 ._crit_edge.loopexit.unr-lcssa:                   ; preds = %.lr.ph897
@@ -1461,7 +1464,7 @@ bb.bg:                                            ; preds = %_ZNK4ncnn3Mat5empty
   %i.st = ptrtoint ptr %i.sr to i64
   %i.su = ptrtoint ptr %i.ss to i64
   %i.sv = sub i64 %i.st, %i.su
-  %i.sw = sdiv exact i64 %i.sv, 72                ; 5 uses
+  %i.sw = sdiv i64 %i.sv, 72                      ; 4 uses
   %.not598 = icmp ult i64 %i.sq, %i.sw
   br i1 %.not598, label %bb.az, label %.critedge625, !llvm.loop !139
 
@@ -1472,12 +1475,13 @@ bb.bg:                                            ; preds = %_ZNK4ncnn3Mat5empty
   br i1 %i.sx, label %._crit_edge930, label %.lr.ph929.preheader
 
 .lr.ph929.preheader:                              ; preds = %.critedge625
-  %xtraiter1240 = and i64 %i.sw, 3                ; 3 uses
+  %umax988 = call i64 @llvm.umax.i64(i64 %i.sw, i64 1) ; 2 uses
+  %xtraiter1240 = and i64 %umax988, 3             ; 3 uses
   %i.ta = icmp ult i64 %i.sw, 4
   br i1 %i.ta, label %.lr.ph929.epil.preheader, label %.lr.ph929.preheader.new
 
 .lr.ph929.preheader.new:                          ; preds = %.lr.ph929.preheader
-  %unroll_iter1245 = and i64 %i.sw, -4
+  %unroll_iter1245 = and i64 %umax988, -4
   br label %.lr.ph929
 
 ._crit_edge930.loopexit.unr-lcssa:                ; preds = %.lr.ph929
@@ -1879,6 +1883,9 @@ declare i32 @llvm.smin.i32(i32, i32) #11
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #12
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umax.i64(i64, i64) #11
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #13
