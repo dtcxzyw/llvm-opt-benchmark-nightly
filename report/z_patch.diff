@@ -1,0 +1,298 @@
+diff --git a/llvm/include/llvm/Analysis/Loads.h b/llvm/include/llvm/Analysis/Loads.h
+index 9190e47707215..14cdd18671e0b 100644
+--- a/llvm/include/llvm/Analysis/Loads.h
++++ b/llvm/include/llvm/Analysis/Loads.h
+@@ -69,16 +69,15 @@ LLVM_ABI bool isDereferenceablePointer(const Value *V, const APInt &Size,
+ 
+ /// Return true if we know that executing a load from this value cannot trap.
+ ///
+-/// If ScanFrom is specified this method performs context-sensitive analysis
+-/// and returns true if it is safe to load immediately before ScanFrom.
++/// If SQ.CxtI is specified this method performs context-sensitive analysis
++/// and returns true if it is safe to load immediately before SQ.CxtI.
+ ///
+ /// If it is not obviously safe to load from the specified pointer, we do a
+-/// quick local scan of the basic block containing ScanFrom, to determine if
++/// quick local scan of the basic block containing SQ.CxtI, to determine if
+ /// the address is already accessed.
+-LLVM_ABI bool isSafeToLoadUnconditionally(
+-    Value *V, Align Alignment, const APInt &Size, const DataLayout &DL,
+-    Instruction *ScanFrom, AssumptionCache *AC = nullptr,
+-    const DominatorTree *DT = nullptr, const TargetLibraryInfo *TLI = nullptr);
++LLVM_ABI bool isSafeToLoadUnconditionally(Value *V, Align Alignment,
++                                          const APInt &Size,
++                                          const SimplifyQuery &SQ);
+ 
+ /// Return true if we can prove that the given load (which is assumed to be
+ /// within the specified loop) would access only dereferenceable memory, and
+@@ -109,16 +108,14 @@ isReadOnlyLoop(Loop *L, ScalarEvolution *SE, DominatorTree *DT,
+ 
+ /// Return true if we know that executing a load from this value cannot trap.
+ ///
+-/// If DT and ScanFrom are specified this method performs context-sensitive
+-/// analysis and returns true if it is safe to load immediately before ScanFrom.
++/// If SQ.CxtI are specified this method performs context-sensitive analysis
++/// and returns true if it is safe to load immediately before SQ.CxtI.
+ ///
+ /// If it is not obviously safe to load from the specified pointer, we do a
+-/// quick local scan of the basic block containing ScanFrom, to determine if
++/// quick local scan of the basic block containing SQ.CxtI, to determine if
+ /// the address is already accessed.
+-LLVM_ABI bool isSafeToLoadUnconditionally(
+-    Value *V, Type *Ty, Align Alignment, const DataLayout &DL,
+-    Instruction *ScanFrom, AssumptionCache *AC = nullptr,
+-    const DominatorTree *DT = nullptr, const TargetLibraryInfo *TLI = nullptr);
++LLVM_ABI bool isSafeToLoadUnconditionally(Value *V, Type *Ty, Align Alignment,
++                                          const SimplifyQuery &SQ);
+ 
+ /// Return true if speculation of the given load must be suppressed to avoid
+ /// ordering or interfering with an active sanitizer.  If not suppressed,
+diff --git a/llvm/lib/Analysis/Loads.cpp b/llvm/lib/Analysis/Loads.cpp
+index e2c04157f14bc..de9022c540d42 100644
+--- a/llvm/lib/Analysis/Loads.cpp
++++ b/llvm/lib/Analysis/Loads.cpp
+@@ -453,21 +453,17 @@ bool llvm::mustSuppressSpeculation(const LoadInst &LI) {
+   return !LI.isUnordered() || suppressSpeculativeLoadForSanitizers(LI);
+ }
+ 
+-bool llvm::isSafeToLoadUnconditionally(Value *V, Align Alignment, const APInt &Size,
+-                                       const DataLayout &DL,
+-                                       Instruction *ScanFrom,
+-                                       AssumptionCache *AC,
+-                                       const DominatorTree *DT,
+-                                       const TargetLibraryInfo *TLI) {
+-  if (isDereferenceableAndAlignedPointer(
+-          V, Alignment, Size, SimplifyQuery(DL, TLI, DT, AC, ScanFrom))) {
++bool llvm::isSafeToLoadUnconditionally(Value *V, Align Alignment,
++                                       const APInt &Size,
++                                       const SimplifyQuery &SQ) {
++  if (isDereferenceableAndAlignedPointer(V, Alignment, Size, SQ)) {
+     // With sanitizers `Dereferenceable` is not always enough for unconditional
+     // load.
+-    if (!ScanFrom || !suppressSpeculativeLoadForSanitizers(*ScanFrom))
++    if (!SQ.CxtI || !suppressSpeculativeLoadForSanitizers(*SQ.CxtI))
+       return true;
+   }
+ 
+-  if (!ScanFrom)
++  if (!SQ.CxtI)
+     return false;
+ 
+   if (Size.getBitWidth() > 64)
+@@ -479,8 +475,7 @@ bool llvm::isSafeToLoadUnconditionally(Value *V, Align Alignment, const APInt &S
+   // from/to.  If so, the previous load or store would have already trapped,
+   // so there is no harm doing an extra load (also, CSE will later eliminate
+   // the load entirely).
+-  BasicBlock::iterator BBI = ScanFrom->getIterator(),
+-                       E = ScanFrom->getParent()->begin();
++  auto BBI = SQ.CxtI->getIterator(), E = SQ.CxtI->getParent()->begin();
+ 
+   // We can at least always strip pointer casts even though we can't use the
+   // base here.
+@@ -495,10 +490,10 @@ bool llvm::isSafeToLoadUnconditionally(Value *V, Align Alignment, const APInt &S
+         !isa<LifetimeIntrinsic>(BBI))
+       return false;
+ 
+-    Value *AccessedPtr;
++    const Value *AccessedPtr;
+     Type *AccessedTy;
+     Align AccessedAlign;
+-    if (LoadInst *LI = dyn_cast<LoadInst>(BBI)) {
++    if (const auto *LI = dyn_cast<LoadInst>(BBI)) {
+       // Ignore volatile loads. The execution of a volatile load cannot
+       // be used to prove an address is backed by regular memory; it can,
+       // for example, point to an MMIO register.
+@@ -507,7 +502,7 @@ bool llvm::isSafeToLoadUnconditionally(Value *V, Align Alignment, const APInt &S
+       AccessedPtr = LI->getPointerOperand();
+       AccessedTy = LI->getType();
+       AccessedAlign = LI->getAlign();
+-    } else if (StoreInst *SI = dyn_cast<StoreInst>(BBI)) {
++    } else if (const auto *SI = dyn_cast<StoreInst>(BBI)) {
+       // Ignore volatile stores (see comment for loads).
+       if (SI->isVolatile())
+         continue;
+@@ -522,28 +517,24 @@ bool llvm::isSafeToLoadUnconditionally(Value *V, Align Alignment, const APInt &S
+ 
+     // Handle trivial cases.
+     if (AccessedPtr == V &&
+-        TypeSize::isKnownLE(LoadSize, DL.getTypeStoreSize(AccessedTy)))
++        TypeSize::isKnownLE(LoadSize, SQ.DL.getTypeStoreSize(AccessedTy)))
+       return true;
+ 
+     if (AreEquivalentAddressValues(AccessedPtr->stripPointerCasts(), V) &&
+-        TypeSize::isKnownLE(LoadSize, DL.getTypeStoreSize(AccessedTy)))
++        TypeSize::isKnownLE(LoadSize, SQ.DL.getTypeStoreSize(AccessedTy)))
+       return true;
+   }
+   return false;
+ }
+ 
+ bool llvm::isSafeToLoadUnconditionally(Value *V, Type *Ty, Align Alignment,
+-                                       const DataLayout &DL,
+-                                       Instruction *ScanFrom,
+-                                       AssumptionCache *AC,
+-                                       const DominatorTree *DT,
+-                                       const TargetLibraryInfo *TLI) {
+-  TypeSize TySize = DL.getTypeStoreSize(Ty);
++                                       const SimplifyQuery &SQ) {
++  TypeSize TySize = SQ.DL.getTypeStoreSize(Ty);
+   if (TySize.isScalable())
+     return false;
+-  APInt Size(DL.getIndexTypeSizeInBits(V->getType()), TySize.getFixedValue());
+-  return isSafeToLoadUnconditionally(V, Alignment, Size, DL, ScanFrom, AC, DT,
+-                                     TLI);
++  APInt Size(SQ.DL.getIndexTypeSizeInBits(V->getType()),
++             TySize.getFixedValue());
++  return isSafeToLoadUnconditionally(V, Alignment, Size, SQ);
+ }
+ 
+ /// DefMaxInstsToScan - the default number of maximum instructions
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineLoadStoreAlloca.cpp b/llvm/lib/Transforms/InstCombine/InstCombineLoadStoreAlloca.cpp
+index 839fabb1a7e1c..6cb211295bc9e 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineLoadStoreAlloca.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineLoadStoreAlloca.cpp
+@@ -1161,9 +1161,9 @@ Instruction *InstCombinerImpl::visitLoadInst(LoadInst &LI) {
+       //  select(Cond, load (addrspacecast(&V1)), load (addrspacecast(&V2))).
+       Align Alignment = LI.getAlign();
+       if (isSafeToLoadUnconditionally(SI->getOperand(1), LI.getType(),
+-                                      Alignment, DL, SI) &&
++                                      Alignment, SQ.getWithInstruction(SI)) &&
+           isSafeToLoadUnconditionally(SI->getOperand(2), LI.getType(),
+-                                      Alignment, DL, SI)) {
++                                      Alignment, SQ.getWithInstruction(SI))) {
+ 
+         auto MaybeCastedLoadOperand = [&](Value *Op) {
+           if (ASC)
+diff --git a/llvm/lib/Transforms/Scalar/SROA.cpp b/llvm/lib/Transforms/Scalar/SROA.cpp
+index e4770154e2998..19ff1d1a6baef 100644
+--- a/llvm/lib/Transforms/Scalar/SROA.cpp
++++ b/llvm/lib/Transforms/Scalar/SROA.cpp
+@@ -1612,7 +1612,8 @@ static bool isSafePHIToSpeculate(PHINode &PN) {
+     // If this pointer is always safe to load, or if we can prove that there
+     // is already a load in the block, then we can move the load to the pred
+     // block.
+-    if (isSafeToLoadUnconditionally(InVal, MaxAlign, LoadSize, DL, TI))
++    if (isSafeToLoadUnconditionally(InVal, MaxAlign, LoadSize,
++                                    SimplifyQuery(DL, TI)))
+       continue;
+ 
+     return false;
+@@ -1708,8 +1709,8 @@ isSafeLoadOfSelectToSpeculate(LoadInst &LI, SelectInst &SI, bool PreserveCFG) {
+ 
+   const DataLayout &DL = SI.getDataLayout();
+   for (Value *Value : {SI.getTrueValue(), SI.getFalseValue()})
+-    if (isSafeToLoadUnconditionally(Value, LI.getType(), LI.getAlign(), DL,
+-                                    &LI))
++    if (isSafeToLoadUnconditionally(Value, LI.getType(), LI.getAlign(),
++                                    SimplifyQuery(DL, &LI)))
+       Spec.setAsSpeculatable(/*isTrueVal=*/Value == SI.getTrueValue());
+     else if (PreserveCFG)
+       return Spec;
+diff --git a/llvm/lib/Transforms/Scalar/TailRecursionElimination.cpp b/llvm/lib/Transforms/Scalar/TailRecursionElimination.cpp
+index b3df27433a9f5..880b0bda90d70 100644
+--- a/llvm/lib/Transforms/Scalar/TailRecursionElimination.cpp
++++ b/llvm/lib/Transforms/Scalar/TailRecursionElimination.cpp
+@@ -411,7 +411,7 @@ static bool canMoveAboveCall(Instruction *I, CallInst *CI, AliasAnalysis *AA) {
+       const DataLayout &DL = L->getDataLayout();
+       if (isModSet(AA->getModRefInfo(CI, MemoryLocation::get(L))) ||
+           !isSafeToLoadUnconditionally(L->getPointerOperand(), L->getType(),
+-                                       L->getAlign(), DL, L))
++                                       L->getAlign(), SimplifyQuery(DL, L)))
+         return false;
+     }
+   }
+diff --git a/llvm/lib/Transforms/Vectorize/SLPVectorizer.cpp b/llvm/lib/Transforms/Vectorize/SLPVectorizer.cpp
+index 9e6d1e43f017a..dca5da197b5d8 100644
+--- a/llvm/lib/Transforms/Vectorize/SLPVectorizer.cpp
++++ b/llvm/lib/Transforms/Vectorize/SLPVectorizer.cpp
+@@ -6346,10 +6346,10 @@ static bool isMaskedLoadCompress(
+   LoadVecTy = cast<FixedVectorType>(getWidenedType(ScalarTy, *Diff + 1));
+   auto *LI = cast<LoadInst>(Order.empty() ? VL.front() : VL[Order.front()]);
+   Align CommonAlignment = LI->getAlign();
+-  IsMasked = !isSafeToLoadUnconditionally(
+-      Ptr0, LoadVecTy, CommonAlignment, DL,
+-      cast<LoadInst>(Order.empty() ? VL.back() : VL[Order.back()]), &AC, &DT,
+-      &TLI);
++  SimplifyQuery SQ(
++      DL, &TLI, &DT, &AC,
++      cast<LoadInst>(Order.empty() ? VL.back() : VL[Order.back()]));
++  IsMasked = !isSafeToLoadUnconditionally(Ptr0, LoadVecTy, CommonAlignment, SQ);
+   if (IsMasked && !TTI.isLegalMaskedLoad(LoadVecTy, CommonAlignment,
+                                          LI->getPointerAddressSpace()))
+     return false;
+@@ -6394,9 +6394,9 @@ static bool isMaskedLoadCompress(
+     // Check for potential segmented(interleaved) loads.
+     VectorType *AlignedLoadVecTy = cast<VectorType>(getWidenedType(
+         ScalarTy, getFullVectorNumberOfElements(TTI, ScalarTy, *Diff + 1)));
++    SimplifyQuery SQ(DL, &TLI, &DT, &AC, cast<LoadInst>(VL.back()));
+     if (!isSafeToLoadUnconditionally(Ptr0, AlignedLoadVecTy, CommonAlignment,
+-                                     DL, cast<LoadInst>(VL.back()), &AC, &DT,
+-                                     &TLI))
++                                     SQ))
+       AlignedLoadVecTy = LoadVecTy;
+     if (TTI.isLegalInterleavedAccessType(AlignedLoadVecTy, CompressMask[1],
+                                          CommonAlignment,
+diff --git a/llvm/lib/Transforms/Vectorize/VectorCombine.cpp b/llvm/lib/Transforms/Vectorize/VectorCombine.cpp
+index 6b9d8791ba35e..7bf08d5c1e835 100644
+--- a/llvm/lib/Transforms/Vectorize/VectorCombine.cpp
++++ b/llvm/lib/Transforms/Vectorize/VectorCombine.cpp
+@@ -281,8 +281,8 @@ bool VectorCombine::vectorizeLoadInsert(Instruction &I) {
+   auto *MinVecTy = VectorType::get(ScalarTy, MinVecNumElts, false);
+   unsigned OffsetEltIndex = 0;
+   Align Alignment = Load->getAlign();
+-  if (!isSafeToLoadUnconditionally(SrcPtr, MinVecTy, Align(1), *DL, Load, SQ.AC,
+-                                   SQ.DT)) {
++  if (!isSafeToLoadUnconditionally(SrcPtr, MinVecTy, Align(1),
++                                   SQ.getWithInstruction(Load))) {
+     // It is not safe to load directly from the pointer, but we can still peek
+     // through gep offsets and check if it safe to load from a base address with
+     // updated alignment. If it is, we can shuffle the element(s) into place
+@@ -308,8 +308,8 @@ bool VectorCombine::vectorizeLoadInsert(Instruction &I) {
+       return false;
+     OffsetEltIndex = OffsetEltIndexAP.getZExtValue();
+ 
+-    if (!isSafeToLoadUnconditionally(SrcPtr, MinVecTy, Align(1), *DL, Load,
+-                                     SQ.AC, SQ.DT))
++    if (!isSafeToLoadUnconditionally(SrcPtr, MinVecTy, Align(1),
++                                     SQ.getWithInstruction(Load)))
+       return false;
+ 
+     // Update alignment with offset value. Note that the offset could be negated
+@@ -394,8 +394,8 @@ bool VectorCombine::widenSubvectorLoad(Instruction &I) {
+   Value *SrcPtr = Load->getPointerOperand()->stripPointerCasts();
+   assert(isa<PointerType>(SrcPtr->getType()) && "Expected a pointer type");
+   Align Alignment = Load->getAlign();
+-  if (!isSafeToLoadUnconditionally(SrcPtr, Ty, Align(1), *DL, Load, SQ.AC,
+-                                   SQ.DT))
++  if (!isSafeToLoadUnconditionally(SrcPtr, Ty, Align(1),
++                                   SQ.getWithInstruction(Load)))
+     return false;
+ 
+   Alignment = std::max(SrcPtr->getPointerAlignment(*DL), Alignment);
+diff --git a/polly/lib/Analysis/ScopBuilder.cpp b/polly/lib/Analysis/ScopBuilder.cpp
+index 762a930dfea6f..b793681e1651f 100644
+--- a/polly/lib/Analysis/ScopBuilder.cpp
++++ b/polly/lib/Analysis/ScopBuilder.cpp
+@@ -2979,7 +2979,7 @@ isl::set ScopBuilder::getNonHoistableCtx(MemoryAccess *Access,
+ 
+   auto &DL = scop->getFunction().getDataLayout();
+   if (isSafeToLoadUnconditionally(LI->getPointerOperand(), LI->getType(),
+-                                  LI->getAlign(), DL, nullptr)) {
++                                  LI->getAlign(), DL)) {
+     SafeToLoad = isl::set::universe(AccessRelation.get_space().range());
+   } else if (BB != LI->getParent()) {
+     // Skip accesses in non-affine subregions as they might not be executed
+diff --git a/polly/lib/Analysis/ScopDetection.cpp b/polly/lib/Analysis/ScopDetection.cpp
+index dc628eeb8bf50..12cbee3a95a49 100644
+--- a/polly/lib/Analysis/ScopDetection.cpp
++++ b/polly/lib/Analysis/ScopDetection.cpp
+@@ -486,8 +486,7 @@ bool ScopDetection::onlyValidRequiredInvariantLoads(
+ 
+     for (auto NonAffineRegion : Context.NonAffineSubRegionSet) {
+       if (isSafeToLoadUnconditionally(Load->getPointerOperand(),
+-                                      Load->getType(), Load->getAlign(), DL,
+-                                      nullptr))
++                                      Load->getType(), Load->getAlign(), DL))
+         continue;
+ 
+       if (NonAffineRegion->contains(Load) &&
