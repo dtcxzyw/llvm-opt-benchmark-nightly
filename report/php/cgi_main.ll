@@ -202,7 +202,7 @@ bb.gi:                                            ; preds = %bb.gh
   %i.mq = load ptr, ptr getelementptr inbounds nuw (i8, ptr @core_globals, i64 216), align 8, !tbaa !141
   %i.mr = getelementptr inbounds nuw i8, ptr %i.mq, i64 16
   %i.ms = load i64, ptr %i.mr, align 8, !tbaa !145
-  %i.mt = sext i32 %i.mn to i64
+  %i.mt = sext i32 %i.mn to i64                   ; 2 uses
   br label %bb.gj
 
 bb.gj:                                            ; preds = %bb.gi, %bb.gj
@@ -223,16 +223,10 @@ bb.gk:                                            ; preds = %bb.gj
   %i.mz = add i64 %.1273, 2                       ; 3 uses
   %i.na = call noalias ptr @malloc(i64 noundef %i.mz) #29 ; 4 uses
   store i8 0, ptr %i.na, align 1, !tbaa !12
-  %11 = load i32, ptr @php_optind, align 4, !tbaa !49 ; 2 uses
-  %12 = icmp slt i32 %11, %0
-  br i1 %12, label %.lr.ph466.preheader, label %._crit_edge
-
-.lr.ph466.preheader:                              ; preds = %bb.gk
-  %13 = sext i32 %11 to i64
   br label %.lr.ph466
 
-.lr.ph466:                                        ; preds = %.lr.ph466.preheader, %bb.gm
-  %indvars.iv484 = phi i64 [ %13, %.lr.ph466.preheader ], [ %indvars.iv.next485, %bb.gm ] ; 3 uses
+.lr.ph466:                                        ; preds = %bb.gk, %bb.gm
+  %indvars.iv484 = phi i64 [ %i.mt, %bb.gk ], [ %indvars.iv.next485, %bb.gm ] ; 3 uses
   %i.nb = getelementptr inbounds [8 x i8], ptr %1, i64 %indvars.iv484
   %i.nc = load ptr, ptr %i.nb, align 8, !tbaa !41
   %i.nd = call i64 @strlcat(ptr noundef nonnull %i.na, ptr noundef %i.nc, i64 noundef %i.mz) #27 ; 0 uses
@@ -251,7 +245,7 @@ bb.gm:                                            ; preds = %.lr.ph466, %bb.gl
   %exitcond487.not = icmp eq i32 %0, %lftr.wideiv
   br i1 %exitcond487.not, label %._crit_edge, label %.lr.ph466, !llvm.loop !148
 
-._crit_edge:                                      ; preds = %bb.gm, %bb.gk
+._crit_edge:                                      ; preds = %bb.gm
   store ptr %i.na, ptr getelementptr inbounds nuw (i8, ptr @sapi_globals, i64 16), align 8, !tbaa !112
   br label %bb.gn
 

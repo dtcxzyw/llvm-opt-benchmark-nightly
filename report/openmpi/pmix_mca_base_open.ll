@@ -76,7 +76,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #9
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #9
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(65) %i.c, i8 0, i64 65, i1 false)
-  %i.d = load i32, ptr @pmix_mca_base_opened, align 4, !tbaa !12 ; 2 uses
+  %i.d = load i32, ptr @pmix_mca_base_opened, align 4, !tbaa !12 ; 4 uses
   %i.e = icmp sgt i32 %i.d, 0
   br i1 %i.e, label %bb.b, label %bb.g
 
@@ -91,22 +91,20 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.h = tail call noalias ptr @strdup(ptr noundef nonnull %0) #9
-  br label %.sink.split
+  store ptr %i.h, ptr @pmix_mca_base_component_path, align 8, !tbaa !13
+  br label %bb.f
 
 bb.e:                                             ; preds = %bb.c
   %i.i = call i32 (ptr, ptr, ...) @pmix_asprintf(ptr noundef nonnull %i.b, ptr noundef nonnull @.str, ptr noundef nonnull %0, ptr noundef nonnull %i.f) #9 ; 0 uses
   %i.j = load ptr, ptr @pmix_mca_base_component_path, align 8, !tbaa !13
   call void @free(ptr noundef %i.j) #9
   %i.k = load ptr, ptr %i.b, align 8, !tbaa !13
-  br label %.sink.split
-
-.sink.split:                                      ; preds = %bb.e, %bb.d
-  %.sink = phi ptr [ %i.h, %bb.d ], [ %i.k, %bb.e ]
-  store ptr %.sink, ptr @pmix_mca_base_component_path, align 8, !tbaa !13
+  store ptr %i.k, ptr @pmix_mca_base_component_path, align 8, !tbaa !13
+  %.pre = load i32, ptr @pmix_mca_base_opened, align 4, !tbaa !12
   br label %bb.f
 
-bb.f:                                             ; preds = %.sink.split, %bb.b
-  %2 = load i32, ptr @pmix_mca_base_opened, align 4, !tbaa !12
+bb.f:                                             ; preds = %bb.d, %bb.e, %bb.b
+  %2 = phi i32 [ %i.d, %bb.d ], [ %.pre, %bb.e ], [ %i.d, %bb.b ]
   %i.l = add nsw i32 %2, 1
   store i32 %i.l, ptr @pmix_mca_base_opened, align 4, !tbaa !12
   br label %bb.as

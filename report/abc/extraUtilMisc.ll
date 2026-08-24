@@ -205,7 +205,7 @@ Extra_Factorial.exit.thread:                      ; preds = %bb.b
   br i1 %exitcond.not.i, label %Extra_Factorial.exit, label %.lr.ph.i, !llvm.loop !53
 
 Extra_Factorial.exit:                             ; preds = %.lr.ph.i, %middle.block117
-  %.lcssa64 = phi i32 [ %i.i, %middle.block117 ], [ %i.j, %.lr.ph.i ]
+  %.lcssa64 = phi i32 [ %i.i, %middle.block117 ], [ %i.j, %.lr.ph.i ] ; 3 uses
   store i32 %.lcssa64, ptr @Extra_TruthCanonP.nPerms, align 4, !tbaa !17
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #37
   %min.iters.check123 = icmp ult i32 %1, 8
@@ -249,6 +249,7 @@ middle.block134:                                  ; preds = %vector.body126
   br i1 %exitcond.not.i.i, label %Extra_Factorial.exit.i, label %.lr.ph.i.i, !llvm.loop !55
 
 Extra_Factorial.exit.i:                           ; preds = %.lr.ph.i.i, %middle.block134, %Extra_Factorial.exit.thread
+  %2 = phi i32 [ 1, %Extra_Factorial.exit.thread ], [ %.lcssa64, %middle.block134 ], [ %.lcssa64, %.lr.ph.i.i ]
   %.0.lcssa.i.i = phi i32 [ 1, %Extra_Factorial.exit.thread ], [ %i.p, %middle.block134 ], [ %i.q, %.lr.ph.i.i ] ; 5 uses
   %i.s = sext i32 %.0.lcssa.i.i to i64            ; 2 uses
   %i.t = sext i32 %1 to i64
@@ -410,12 +411,18 @@ vec.epilog.middle.block168:                       ; preds = %vec.epilog.vector.b
 Extra_Permutations.exit:                          ; preds = %.lr.ph.i20, %middle.block151, %vec.epilog.middle.block168, %Extra_ArrayAlloc.exit.i
   call fastcc void @Extra_Permutations_rec(ptr noundef nonnull %i.w, i32 noundef %.0.lcssa.i.i, i32 noundef %1, ptr noundef %i.b)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #37
-  br label %.sink.split
+  store ptr %i.w, ptr @Extra_TruthCanonP.pPerms, align 8, !tbaa !49
+  store i32 %1, ptr @Extra_TruthCanonP.nVarsOld, align 4, !tbaa !17
+  br label %bb.i
 
 bb.e:                                             ; preds = %bb.a
   %i.bm = load i32, ptr @Extra_TruthCanonP.nVarsOld, align 4, !tbaa !17
   %.not = icmp eq i32 %i.bm, %1
-  br i1 %.not, label %bb.i, label %bb.f
+  br i1 %.not, label %._crit_edge60, label %bb.f
+
+._crit_edge60:                                    ; preds = %bb.e
+  %.pre = load i32, ptr @Extra_TruthCanonP.nPerms, align 4, !tbaa !17
+  br label %bb.i
 
 bb.f:                                             ; preds = %bb.e
   tail call void @free(ptr noundef nonnull %i.c) #37
@@ -469,7 +476,7 @@ Extra_Factorial.exit28.thread:                    ; preds = %bb.f
   br i1 %exitcond.not.i26, label %Extra_Factorial.exit28, label %.lr.ph.i23, !llvm.loop !61
 
 Extra_Factorial.exit28:                           ; preds = %.lr.ph.i23, %middle.block
-  %.lcssa66 = phi i32 [ %i.br, %middle.block ], [ %i.bs, %.lr.ph.i23 ]
+  %.lcssa66 = phi i32 [ %i.br, %middle.block ], [ %i.bs, %.lr.ph.i23 ] ; 3 uses
   store i32 %.lcssa66, ptr @Extra_TruthCanonP.nPerms, align 4, !tbaa !17
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #37
   %min.iters.check69 = icmp ult i32 %1, 8
@@ -513,6 +520,7 @@ middle.block80:                                   ; preds = %vector.body72
   br i1 %exitcond.not.i.i33, label %Extra_Factorial.exit.i34, label %.lr.ph.i.i30, !llvm.loop !63
 
 Extra_Factorial.exit.i34:                         ; preds = %.lr.ph.i.i30, %middle.block80, %Extra_Factorial.exit28.thread
+  %3 = phi i32 [ 1, %Extra_Factorial.exit28.thread ], [ %.lcssa66, %middle.block80 ], [ %.lcssa66, %.lr.ph.i.i30 ]
   %.0.lcssa.i.i35 = phi i32 [ 1, %Extra_Factorial.exit28.thread ], [ %i.by, %middle.block80 ], [ %i.bz, %.lr.ph.i.i30 ] ; 5 uses
   %i.cb = sext i32 %.0.lcssa.i.i35 to i64         ; 2 uses
   %i.cc = sext i32 %1 to i64
@@ -598,7 +606,7 @@ bb.h:                                             ; preds = %bb.h, %.epil.prehea
 
 Extra_ArrayAlloc.exit.i36:                        ; preds = %Extra_ArrayAlloc.exit.i36.loopexit.unr-lcssa, %bb.h, %Extra_Factorial.exit.i34
   %i.dl = icmp sgt i32 %1, 0
-  br i1 %i.dl, label %iter.check, label %Extra_Permutations.exit48
+  br i1 %i.dl, label %iter.check, label %.sink.split
 
 iter.check:                                       ; preds = %Extra_ArrayAlloc.exit.i36
   %wide.trip.count.i38 = zext nneg i32 %1 to i64  ; 6 uses
@@ -629,7 +637,7 @@ vector.body90:                                    ; preds = %vector.body90, %vec
 
 middle.block96:                                   ; preds = %vector.body90
   %cmp.n97 = icmp eq i64 %n.vec89, %wide.trip.count.i38
-  br i1 %cmp.n97, label %Extra_Permutations.exit48, label %vec.epilog.iter.check
+  br i1 %cmp.n97, label %.sink.split, label %vec.epilog.iter.check
 
 vec.epilog.iter.check:                            ; preds = %middle.block96
   %min.epilog.iters.check = icmp eq i64 %i.dm, 0
@@ -656,7 +664,7 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
 
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
   %cmp.n103 = icmp eq i64 %n.vec98, %wide.trip.count.i38
-  br i1 %cmp.n103, label %Extra_Permutations.exit48, label %.lr.ph.i39.preheader
+  br i1 %cmp.n103, label %.sink.split, label %.lr.ph.i39.preheader
 
 .lr.ph.i39.preheader:                             ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
   %indvars.iv.i40.ph = phi i64 [ 0, %iter.check ], [ %n.vec89, %vec.epilog.iter.check ], [ %n.vec98, %vec.epilog.middle.block ]
@@ -669,22 +677,18 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   store i8 %i.dt, ptr %i.du, align 1, !tbaa !19
   %indvars.iv.next.i41 = add nuw nsw i64 %indvars.iv.i40, 1 ; 2 uses
   %exitcond.not.i42 = icmp eq i64 %indvars.iv.next.i41, %wide.trip.count.i38
-  br i1 %exitcond.not.i42, label %Extra_Permutations.exit48, label %.lr.ph.i39, !llvm.loop !67
+  br i1 %exitcond.not.i42, label %.sink.split, label %.lr.ph.i39, !llvm.loop !67
 
-Extra_Permutations.exit48:                        ; preds = %.lr.ph.i39, %middle.block96, %vec.epilog.middle.block, %Extra_ArrayAlloc.exit.i36
+.sink.split:                                      ; preds = %.lr.ph.i39, %middle.block96, %vec.epilog.middle.block, %Extra_ArrayAlloc.exit.i36
   call fastcc void @Extra_Permutations_rec(ptr noundef nonnull %i.cf, i32 noundef %.0.lcssa.i.i35, i32 noundef %1, ptr noundef %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #37
-  br label %.sink.split
-
-.sink.split:                                      ; preds = %Extra_Permutations.exit, %Extra_Permutations.exit48
-  %.sink = phi ptr [ %i.cf, %Extra_Permutations.exit48 ], [ %i.w, %Extra_Permutations.exit ]
-  store ptr %.sink, ptr @Extra_TruthCanonP.pPerms, align 8, !tbaa !49
+  store ptr %i.cf, ptr @Extra_TruthCanonP.pPerms, align 8, !tbaa !49
   store i32 %1, ptr @Extra_TruthCanonP.nVarsOld, align 4, !tbaa !17
   br label %bb.i
 
-bb.i:                                             ; preds = %.sink.split, %bb.e
-  %2 = load i32, ptr @Extra_TruthCanonP.nPerms, align 4, !tbaa !17
-  %i.dv = icmp sgt i32 %2, 0
+bb.i:                                             ; preds = %._crit_edge60, %.sink.split, %Extra_Permutations.exit
+  %4 = phi i32 [ %.pre, %._crit_edge60 ], [ %3, %.sink.split ], [ %2, %Extra_Permutations.exit ]
+  %i.dv = icmp sgt i32 %4, 0
   br i1 %i.dv, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.i, %.lr.ph
@@ -1087,9 +1091,12 @@ bb.i:                                             ; preds = %.sink.split, %bb.e
   %i.dw = shl nuw nsw i32 1, %1                   ; 3 uses
   %i.dx = icmp sgt i32 %1, 0                      ; 2 uses
   %wide.trip.count.i58 = zext i32 %1 to i64       ; 5 uses
+  %2 = load i32, ptr @Extra_TruthCanonNP.nPerms, align 4, !tbaa !17 ; 2 uses
+  %3 = icmp sgt i32 %2, 0
   %i.dy = zext nneg i32 %i.dw to i64
   %i.dz = shl nuw nsw i64 %i.dy, 2                ; 3 uses
-  %wide.trip.count.i64.a = zext nneg i32 %i.dw to i64 ; 5 uses
+  %wide.trip.count.i64 = zext nneg i32 %i.dw to i64 ; 5 uses
+  %wide.trip.count.i64.a = zext nneg i32 %2 to i64
   %i.ea = add nsw i64 %wide.trip.count.i58, -1    ; 2 uses
   %xtraiter240 = and i64 %wide.trip.count.i58, 1
   %i.eb = icmp eq i64 %i.ea, 0
@@ -1097,15 +1104,15 @@ bb.i:                                             ; preds = %.sink.split, %bb.e
   %lcmp.mod242.not = icmp eq i64 %xtraiter240, 0
   %lcmp.mod244 = trunc i32 %1 to i1
   %min.iters.check206 = icmp ult i32 %1, 3
-  %n.vec208 = and i64 %wide.trip.count.i64.a, 2147483640
+  %n.vec208 = and i64 %wide.trip.count.i64, 2147483640
   %xtraiter248 = and i64 %wide.trip.count.i58, 1
   %i.ec = icmp eq i64 %i.ea, 0
   %unroll_iter252 = and i64 %wide.trip.count.i58, 2147483646
   %lcmp.mod250.not = icmp eq i64 %xtraiter248, 0
   %lcmp.mod251 = trunc i32 %1 to i1
-  %xtraiter254 = and i64 %wide.trip.count.i64.a, 1
+  %xtraiter254 = and i64 %wide.trip.count.i64, 1
   %i.ed = icmp eq i32 %1, 0
-  %unroll_iter259 = and i64 %wide.trip.count.i64.a, 2147483646
+  %unroll_iter259 = and i64 %wide.trip.count.i64, 2147483646
   %lcmp.mod256.not = icmp eq i64 %xtraiter254, 0
   %lcmp.mod258 = icmp eq i32 %1, 0
   br label %bb.j
@@ -1192,8 +1199,6 @@ bb.n:                                             ; preds = %.lr.ph.i59.epil.pre
 
 Extra_TruthPolarize.exit:                         ; preds = %Extra_TruthPolarize.exit.loopexit.unr-lcssa, %bb.n, %.lr.ph.i59.epil.preheader, %bb.j
   %.019.lcssa.i = phi i32 [ %0, %bb.j ], [ %.1.i.1, %Extra_TruthPolarize.exit.loopexit.unr-lcssa ], [ %i.fk, %bb.n ], [ %.01920.i.epil.init, %.lr.ph.i59.epil.preheader ] ; 3 uses
-  %2 = load i32, ptr @Extra_TruthCanonNP.nPerms, align 4, !tbaa !17
-  %3 = icmp sgt i32 %2, 0
   br i1 %3, label %.lr.ph.preheader.i63, label %._crit_edge
 
 .lr.ph.preheader.i63:                             ; preds = %Extra_TruthPolarize.exit, %Extra_TruthPermute.exit
@@ -1224,7 +1229,7 @@ vector.body209:                                   ; preds = %.lr.ph.preheader.i6
   %i.ft = trunc nuw nsw i64 %indvars.iv.i66 to i32
   store i32 %i.ft, ptr %i.fs, align 4, !tbaa !17
   %indvars.iv.next.i67 = add nuw nsw i64 %indvars.iv.i66, 1 ; 2 uses
-  %exitcond.not.i68 = icmp eq i64 %indvars.iv.next.i67, %wide.trip.count.i64.a
+  %exitcond.not.i68 = icmp eq i64 %indvars.iv.next.i67, %wide.trip.count.i64
   br i1 %exitcond.not.i68, label %._crit_edge.i, label %.lr.ph.i65, !llvm.loop !86
 
 ._crit_edge.i:                                    ; preds = %vector.body209, %.lr.ph.i65
@@ -1305,7 +1310,7 @@ bb.s:                                             ; preds = %.epil.preheader247
 
 ._crit_edge.i.i:                                  ; preds = %.epil.preheader247, %bb.s, %._crit_edge.i.i.unr-lcssa
   %indvars.iv.next20.i.i = add nuw nsw i64 %indvars.iv19.i.i, 1 ; 2 uses
-  %exitcond23.not.i.i = icmp eq i64 %indvars.iv.next20.i.i, %wide.trip.count.i64.a
+  %exitcond23.not.i.i = icmp eq i64 %indvars.iv.next20.i.i, %wide.trip.count.i64
   br i1 %exitcond23.not.i.i, label %.lr.ph53.i.preheader, label %.preheader.i.i, !llvm.loop !41
 
 .lr.ph53.i.preheader:                             ; preds = %._crit_edge.i.i, %._crit_edge.i
@@ -1384,10 +1389,8 @@ Extra_TruthPermute.exit:                          ; preds = %.loopexit.i.loopexi
   tail call void @free(ptr noundef nonnull %i.fo) #37
   %spec.select = tail call i32 @llvm.umin.i32(i32 %.178, i32 %.3.i.lcssa) ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %4 = load i32, ptr @Extra_TruthCanonNP.nPerms, align 4, !tbaa !17
-  %5 = sext i32 %4 to i64
-  %6 = icmp slt i64 %indvars.iv.next, %5
-  br i1 %6, label %.lr.ph.preheader.i63, label %._crit_edge, !llvm.loop !87
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count.i64.a
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph.preheader.i63, !llvm.loop !87
 
 ._crit_edge:                                      ; preds = %Extra_TruthPermute.exit, %Extra_TruthPolarize.exit
   %.1.lcssa = phi i32 [ %.02480, %Extra_TruthPolarize.exit ], [ %spec.select, %Extra_TruthPermute.exit ] ; 2 uses
@@ -1790,10 +1793,14 @@ bb.i:                                             ; preds = %.sink.split, %bb.e
 .lr.ph153:                                        ; preds = %bb.i
   %i.eb = icmp sgt i32 %1, 0                      ; 4 uses
   %wide.trip.count.i74 = zext i32 %1 to i64       ; 9 uses
+  %2 = load i32, ptr @Extra_TruthCanonNPN.nPerms, align 4, !tbaa !17 ; 3 uses
+  %3 = icmp sgt i32 %2, 0                         ; 2 uses
   %i.ec = sext i32 %i.dw to i64
   %i.ed = shl nsw i64 %i.ec, 2                    ; 6 uses
   %wide.trip.count.i80 = zext i32 %i.dw to i64    ; 11 uses
   %smax = tail call i32 @llvm.smax.i32(i32 %i.dw, i32 1)
+  %wide.trip.count = zext nneg i32 %2 to i64
+  %wide.trip.count166 = zext nneg i32 %2 to i64
   %i.ee = add nsw i64 %wide.trip.count.i74, -1    ; 4 uses
   %i.ef = add nsw i64 %wide.trip.count.i80, -1    ; 2 uses
   %xtraiter333 = and i64 %wide.trip.count.i74, 1
@@ -1914,8 +1921,6 @@ bb.n:                                             ; preds = %.lr.ph.i75.epil.pre
 
 Extra_TruthPolarize.exit:                         ; preds = %Extra_TruthPolarize.exit.loopexit.unr-lcssa, %bb.n, %.lr.ph.i75.epil.preheader, %bb.j
   %.019.lcssa.i = phi i32 [ %0, %bb.j ], [ %.1.i.1, %Extra_TruthPolarize.exit.loopexit.unr-lcssa ], [ %i.fs, %bb.n ], [ %.01920.i.epil.init, %.lr.ph.i75.epil.preheader ] ; 3 uses
-  %2 = load i32, ptr @Extra_TruthCanonNPN.nPerms, align 4, !tbaa !17
-  %3 = icmp sgt i32 %2, 0
   br i1 %3, label %.lr.ph.i81.preheader, label %._crit_edge
 
 .lr.ph.i81.preheader:                             ; preds = %Extra_TruthPolarize.exit, %Extra_TruthPermute.exit
@@ -2106,18 +2111,11 @@ Extra_TruthPermute.exit:                          ; preds = %.loopexit.i, %bb.x
   tail call void @free(ptr noundef nonnull %i.fw) #37
   %spec.select = tail call i32 @llvm.umin.i32(i32 %.138143, i32 %.3.i.lcssa) ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %4 = load i32, ptr @Extra_TruthCanonNPN.nPerms, align 4, !tbaa !17 ; 2 uses
-  %5 = sext i32 %4 to i64
-  %6 = icmp slt i64 %indvars.iv.next, %5
-  br i1 %6, label %.lr.ph.i81.preheader, label %._crit_edge.loopexit, !llvm.loop !107
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph.i81.preheader, !llvm.loop !107
 
-._crit_edge.loopexit:                             ; preds = %Extra_TruthPermute.exit
-  %7 = icmp sgt i32 %4, 0
-  br label %._crit_edge
-
-._crit_edge:                                      ; preds = %._crit_edge.loopexit, %Extra_TruthPolarize.exit
-  %8 = phi i1 [ false, %Extra_TruthPolarize.exit ], [ %7, %._crit_edge.loopexit ]
-  %.138.lcssa = phi i32 [ %.037150, %Extra_TruthPolarize.exit ], [ %spec.select, %._crit_edge.loopexit ] ; 2 uses
+._crit_edge:                                      ; preds = %Extra_TruthPermute.exit, %Extra_TruthPolarize.exit
+  %.138.lcssa = phi i32 [ %.037150, %Extra_TruthPolarize.exit ], [ %spec.select, %Extra_TruthPermute.exit ] ; 2 uses
   br i1 %i.eb, label %.lr.ph.i93.preheader, label %Extra_TruthPolarize.exit100
 
 .lr.ph.i93.preheader:                             ; preds = %._crit_edge
@@ -2197,7 +2195,7 @@ bb.ab:                                            ; preds = %.lr.ph.i93.epil.pre
 
 Extra_TruthPolarize.exit100:                      ; preds = %Extra_TruthPolarize.exit100.loopexit.unr-lcssa, %bb.ab, %.lr.ph.i93.epil.preheader, %._crit_edge
   %.019.lcssa.i90 = phi i32 [ %i.ea, %._crit_edge ], [ %.1.i97.1, %Extra_TruthPolarize.exit100.loopexit.unr-lcssa ], [ %i.jh, %bb.ab ], [ %.01920.i95.epil.init, %.lr.ph.i93.epil.preheader ] ; 3 uses
-  br i1 %8, label %.lr.ph.i105.preheader, label %._crit_edge148
+  br i1 %3, label %.lr.ph.i105.preheader, label %._crit_edge148
 
 .lr.ph.i105.preheader:                            ; preds = %Extra_TruthPolarize.exit100, %Extra_TruthPermute.exit137
   %indvars.iv161 = phi i64 [ %indvars.iv.next162, %Extra_TruthPermute.exit137 ], [ 0, %Extra_TruthPolarize.exit100 ] ; 2 uses
@@ -2387,10 +2385,8 @@ Extra_TruthPermute.exit137:                       ; preds = %.loopexit.i121, %bb
   tail call void @free(ptr noundef nonnull %i.jl) #37
   %spec.select43 = tail call i32 @llvm.umin.i32(i32 %.3145, i32 %.3.i118.lcssa) ; 2 uses
   %indvars.iv.next162 = add nuw nsw i64 %indvars.iv161, 1 ; 2 uses
-  %9 = load i32, ptr @Extra_TruthCanonNPN.nPerms, align 4, !tbaa !17
-  %10 = sext i32 %9 to i64
-  %11 = icmp slt i64 %indvars.iv.next162, %10
-  br i1 %11, label %.lr.ph.i105.preheader, label %._crit_edge148, !llvm.loop !110
+  %exitcond167.not = icmp eq i64 %indvars.iv.next162, %wide.trip.count166
+  br i1 %exitcond167.not, label %._crit_edge148, label %.lr.ph.i105.preheader, !llvm.loop !110
 
 ._crit_edge148:                                   ; preds = %Extra_TruthPermute.exit137, %Extra_TruthPolarize.exit100
   %.3.lcssa = phi i32 [ %.138.lcssa, %Extra_TruthPolarize.exit100 ], [ %spec.select43, %Extra_TruthPermute.exit137 ] ; 2 uses

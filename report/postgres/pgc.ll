@@ -205,9 +205,9 @@ bb.bd:                                            ; preds = %.loopexit593.a
 
 bb.be:                                            ; preds = %.loopexit593.a, %.loopexit593.a
   %i.hf = load ptr, ptr @base_yytext, align 8
-  %i.hg = load i32, ptr @base_yyleng, align 4     ; 3 uses
+  %i.hg = load i32, ptr @base_yyleng, align 4     ; 2 uses
   %i.hh = load i32, ptr @literallen, align 4      ; 2 uses
-  %i.hi = add i32 %i.hh, %i.hg                    ; 3 uses
+  %i.hi = add i32 %i.hh, %i.hg                    ; 4 uses
   %i.hj = load i32, ptr @literalalloc, align 4    ; 2 uses
   %.not.i506 = icmp slt i32 %i.hi, %i.hj
   br i1 %.not.i506, label %._crit_edge.i, label %.preheader.i
@@ -228,20 +228,16 @@ bb.bf:                                            ; preds = %.preheader.i
   %i.hn = sext i32 %i.hl to i64
   %i.ho = tail call ptr @realloc(ptr noundef %i.hm, i64 noundef %i.hn) #27 ; 2 uses
   store ptr %i.ho, ptr @literalbuf, align 8
-  %.pre6.i = load i32, ptr @literallen, align 4   ; 2 uses
-  %.pre7.i = add i32 %.pre6.i, %i.hg
   br label %addlit.exit
 
 addlit.exit:                                      ; preds = %._crit_edge.i, %bb.bf
-  %.pre-phi.i = phi i32 [ %i.hi, %._crit_edge.i ], [ %.pre7.i, %bb.bf ] ; 2 uses
-  %0 = phi i32 [ %i.hh, %._crit_edge.i ], [ %.pre6.i, %bb.bf ]
   %i.hp = phi ptr [ %.pre.i, %._crit_edge.i ], [ %i.ho, %bb.bf ] ; 2 uses
-  %i.hq = sext i32 %0 to i64
+  %i.hq = sext i32 %i.hh to i64
   %i.hr = getelementptr inbounds i8, ptr %i.hp, i64 %i.hq
   %i.hs = sext i32 %i.hg to i64
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.hr, ptr readonly align 1 %i.hf, i64 %i.hs, i1 false)
-  store i32 %.pre-phi.i, ptr @literallen, align 4
-  %i.ht = sext i32 %.pre-phi.i to i64
+  store i32 %i.hi, ptr @literallen, align 4
+  %i.ht = sext i32 %i.hi to i64
   %i.hu = getelementptr inbounds i8, ptr %i.hp, i64 %i.ht
   store i8 0, ptr %i.hu, align 1
   br label %.loopexit.backedge
@@ -644,7 +640,7 @@ bb.om:                                            ; preds = %bb.ol
 bb.on:                                            ; preds = %bb.ol
   %i.aqv = xor i64 %i.aqs, -1
   %i.aqw = add i64 %i.aqv, %i.aqr                 ; 7 uses
-  %i.aqx = trunc i64 %i.aqw to i32                ; 6 uses
+  %i.aqx = trunc i64 %i.aqw to i32                ; 5 uses
   %i.aqy = icmp sgt i32 %i.aqx, 0
   br i1 %i.aqy, label %iter.check, label %._crit_edge.i515
 
@@ -1001,7 +997,7 @@ bb.pe:                                            ; preds = %bb.pd, %bb.pc, %.lo
   %i.avy = phi ptr [ %.pre103.i, %bb.pc ], [ %i.avr, %bb.pd ], [ %i.avj, %.loopexit.i ], [ %i.ave, %.loopexit.thread.i ], [ %i.atj, %.loopexit.thread117.i ]
   %i.avz = phi i32 [ %.pre102.i, %bb.pc ], [ 0, %bb.pd ], [ %.0.lcssa.i, %.loopexit.i ], [ %.pr.ph.i, %.loopexit.thread.i ], [ %i.atq, %.loopexit.thread117.i ] ; 2 uses
   %.051.i = phi i32 [ 1, %bb.pc ], [ 2, %bb.pd ], [ 0, %.loopexit.i ], [ 0, %.loopexit.thread.i ], [ 0, %.loopexit.thread117.i ]
-  %i.awa = add i32 %i.avz, %i.aqx                 ; 3 uses
+  %i.awa = add i32 %i.avz, %i.aqx                 ; 5 uses
   %i.awb = getelementptr inbounds nuw [8 x i8], ptr %i.avy, i64 %i.avx ; 6 uses
   %i.awc = load ptr, ptr %i.awb, align 8          ; 3 uses
   %i.awd = getelementptr inbounds nuw i8, ptr %i.awc, i64 24
@@ -1033,24 +1029,21 @@ bb.ph:                                            ; preds = %bb.pf
   %i.awr = add i32 %i.awh, -2
   %i.aws = getelementptr inbounds nuw i8, ptr %i.awo, i64 24
   store i32 %i.awr, ptr %i.aws, align 8
-  %.pre105.i = load i32, ptr @yy_n_chars, align 4
   %.pre106.i = load ptr, ptr %i.awb, align 8
-  %.pre107.i = add i32 %.pre105.i, %i.aqx
   br label %yy_get_next_buffer.exit
 
 yy_get_next_buffer.exit:                          ; preds = %bb.pe, %bb.ph
-  %.pre-phi.i519 = phi i32 [ %.pre107.i, %bb.ph ], [ %i.awa, %bb.pe ] ; 3 uses
   %i.awt = phi ptr [ %.pre106.i, %bb.ph ], [ %i.awc, %bb.pe ]
-  store i32 %.pre-phi.i519, ptr @yy_n_chars, align 4
+  store i32 %i.awa, ptr @yy_n_chars, align 4
   %i.awu = getelementptr inbounds nuw i8, ptr %i.awt, i64 8
   %i.awv = load ptr, ptr %i.awu, align 8
-  %i.aww = sext i32 %.pre-phi.i519 to i64
+  %i.aww = sext i32 %i.awa to i64
   %i.awx = getelementptr inbounds i8, ptr %i.awv, i64 %i.aww
   store i8 0, ptr %i.awx, align 1
   %i.awy = load ptr, ptr %i.awb, align 8
   %i.awz = getelementptr inbounds nuw i8, ptr %i.awy, i64 8
   %i.axa = load ptr, ptr %i.awz, align 8
-  %i.axb = add i32 %.pre-phi.i519, 1
+  %i.axb = add i32 %i.awa, 1
   %i.axc = sext i32 %i.axb to i64
   %i.axd = getelementptr inbounds i8, ptr %i.axa, i64 %i.axc
   store i8 0, ptr %i.axd, align 1
@@ -1400,7 +1393,7 @@ declare void @mmfatal(i32 noundef, ptr noundef, ...) local_unnamed_addr #3
 define internal fastcc void @addlit(ptr nofree noundef readonly captures(none) %0, i32 noundef %1) unnamed_addr #4 {
 bb.a:
   %i.a = load i32, ptr @literallen, align 4       ; 2 uses
-  %i.b = add i32 %i.a, %1                         ; 3 uses
+  %i.b = add i32 %i.a, %1                         ; 4 uses
   %i.c = load i32, ptr @literalalloc, align 4     ; 2 uses
   %.not = icmp slt i32 %i.b, %i.c
   br i1 %.not, label %._crit_edge, label %.preheader
@@ -1421,20 +1414,16 @@ bb.b:                                             ; preds = %.preheader
   %i.g = sext i32 %i.e to i64
   %i.h = tail call ptr @realloc(ptr noundef %i.f, i64 noundef %i.g) #27 ; 2 uses
   store ptr %i.h, ptr @literalbuf, align 8
-  %.pre6 = load i32, ptr @literallen, align 4     ; 2 uses
-  %.pre7 = add i32 %.pre6, %1
   br label %bb.c
 
 bb.c:                                             ; preds = %._crit_edge, %bb.b
-  %.pre-phi = phi i32 [ %i.b, %._crit_edge ], [ %.pre7, %bb.b ] ; 2 uses
-  %2 = phi i32 [ %i.a, %._crit_edge ], [ %.pre6, %bb.b ]
   %i.i = phi ptr [ %.pre, %._crit_edge ], [ %i.h, %bb.b ] ; 2 uses
-  %i.j = sext i32 %2 to i64
+  %i.j = sext i32 %i.a to i64
   %i.k = getelementptr inbounds i8, ptr %i.i, i64 %i.j
   %i.l = sext i32 %1 to i64
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.k, ptr align 1 %0, i64 %i.l, i1 false)
-  store i32 %.pre-phi, ptr @literallen, align 4
-  %i.m = sext i32 %.pre-phi to i64
+  store i32 %i.b, ptr @literallen, align 4
+  %i.m = sext i32 %i.b to i64
   %i.n = getelementptr inbounds i8, ptr %i.i, i64 %i.m
   store i8 0, ptr %i.n, align 1
   ret void
@@ -1451,7 +1440,7 @@ declare ptr @make3_str(ptr noundef, ptr noundef, ptr noundef) local_unnamed_addr
 define internal fastcc void @addlitchar(i8 noundef zeroext %0) unnamed_addr #7 {
 bb.a:
   %i.a = load i32, ptr @literallen, align 4       ; 2 uses
-  %i.b = add i32 %i.a, 1                          ; 2 uses
+  %i.b = add i32 %i.a, 1                          ; 3 uses
   %i.c = load i32, ptr @literalalloc, align 4     ; 2 uses
   %.not = icmp slt i32 %i.b, %i.c
   %.pre = load ptr, ptr @literalbuf, align 8      ; 2 uses
@@ -1463,19 +1452,15 @@ bb.b:                                             ; preds = %bb.a
   %i.e = sext i32 %i.d to i64
   %i.f = tail call ptr @realloc(ptr noundef %.pre, i64 noundef %i.e) #27 ; 2 uses
   store ptr %i.f, ptr @literalbuf, align 8
-  %.pre1 = load i32, ptr @literallen, align 4     ; 2 uses
-  %.pre2 = add i32 %.pre1, 1
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  %.pre-phi = phi i32 [ %.pre2, %bb.b ], [ %i.b, %bb.a ] ; 2 uses
-  %1 = phi i32 [ %.pre1, %bb.b ], [ %i.a, %bb.a ]
   %i.g = phi ptr [ %i.f, %bb.b ], [ %.pre, %bb.a ] ; 2 uses
-  %i.h = sext i32 %1 to i64
+  %i.h = sext i32 %i.a to i64
   %i.i = getelementptr inbounds i8, ptr %i.g, i64 %i.h
   store i8 %0, ptr %i.i, align 1
-  store i32 %.pre-phi, ptr @literallen, align 4
-  %i.j = sext i32 %.pre-phi to i64
+  store i32 %i.b, ptr @literallen, align 4
+  %i.j = sext i32 %i.b to i64
   %i.k = getelementptr inbounds i8, ptr %i.g, i64 %i.j
   store i8 0, ptr %i.k, align 1
   ret void

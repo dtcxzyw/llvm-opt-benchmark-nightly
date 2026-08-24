@@ -204,7 +204,7 @@ bb.u:                                             ; preds = %bb.t
 
 bb.v:                                             ; preds = %bb.u, %bb.t
   %i.di = phi i32 [ %.1.i.i, %bb.u ], [ %i.dd, %bb.t ]
-  %i.dj = zext nneg i32 %i.di to i64
+  %i.dj = zext nneg i32 %i.di to i64              ; 2 uses
   %i.dk = call noalias ptr @malloc(i64 noundef %i.dj) #25 ; 2 uses
   %.not2.i = icmp eq ptr %i.dk, null
   br i1 %.not2.i, label %bb.w, label %rb_allocate_sigaltstack.exit
@@ -216,10 +216,8 @@ bb.w:                                             ; preds = %bb.v
 rb_allocate_sigaltstack.exit:                     ; preds = %bb.v
   call void @llvm.lifetime.start.p0(ptr nonnull %17) #16
   call void @llvm.lifetime.start.p0(ptr nonnull %18) #16
-  %52 = load i32, ptr @rb_sigaltstack_size_value, align 4, !tbaa !7
-  %53 = zext nneg i32 %52 to i64
   %i.dl = getelementptr inbounds nuw i8, ptr %17, i64 16
-  store i64 %53, ptr %i.dl, align 8, !tbaa !67
+  store i64 %i.dj, ptr %i.dl, align 8, !tbaa !67
   store ptr %i.dk, ptr %17, align 8, !tbaa !69
   %i.dm = getelementptr inbounds nuw i8, ptr %17, i64 8
   store i32 0, ptr %i.dm, align 8, !tbaa !70

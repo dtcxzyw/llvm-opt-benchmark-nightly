@@ -205,12 +205,16 @@ bb.g:                                             ; preds = %_ZL17stbi__malloc_m
   %.not.i = icmp eq i32 %i.t, 0                   ; 2 uses
   %i.u = sext i1 %.not.i to i32
   %.0.i = add i32 %i.e, %i.u                      ; 5 uses
-  %i.v = icmp sgt i32 %i.i, 0                     ; 2 uses
-  %5 = icmp sgt i32 %.0.i, 0
-  %or.cond.i = and i1 %i.v, %5
-  br i1 %or.cond.i, label %.preheader48.preheader.i, label %._crit_edge51.split.i
+  %i.v = icmp sgt i32 %i.i, 0
+  br i1 %i.v, label %.preheader48.lr.ph.i, label %.loopexit.i
 
-.preheader48.preheader.i:                         ; preds = %bb.g
+.preheader48.lr.ph.i:                             ; preds = %bb.g
+  %5 = icmp sgt i32 %.0.i, 0
+  %6 = load float, ptr @_ZL15stbi__l2h_gamma, align 4 ; 3 uses
+  %7 = load float, ptr @_ZL15stbi__l2h_scale, align 4 ; 3 uses
+  br i1 %5, label %.preheader48.preheader.i, label %._crit_edge51.split.i
+
+.preheader48.preheader.i:                         ; preds = %.preheader48.lr.ph.i
   %i.w = sext i32 %i.e to i64
   %wide.trip.count58.i = zext nneg i32 %i.i to i64
   %wide.trip.count.i = zext nneg i32 %.0.i to i64 ; 2 uses
@@ -234,10 +238,8 @@ bb.g:                                             ; preds = %_ZL17stbi__malloc_m
   %i.ab = load i8, ptr %i.aa, align 1
   %i.ac = uitofp i8 %i.ab to float
   %i.ad = fdiv float %i.ac, 2.550000e+02
-  %6 = load float, ptr @_ZL15stbi__l2h_gamma, align 4
   %i.ae = tail call noundef float @powf(float noundef %i.ad, float noundef %6) #47
-  %7 = load float, ptr @_ZL15stbi__l2h_scale, align 4
-  %i.af = fmul float %i.ae, %7
+  %i.af = fmul float %7, %i.ae
   %i.ag = getelementptr inbounds [4 x i8], ptr %i.q, i64 %i.z
   store float %i.af, ptr %i.ag, align 4
   %indvars.iv.next.i = or disjoint i64 %indvars.iv.i, 1
@@ -246,10 +248,8 @@ bb.g:                                             ; preds = %_ZL17stbi__malloc_m
   %i.aj = load i8, ptr %i.ai, align 1
   %i.ak = uitofp i8 %i.aj to float
   %i.al = fdiv float %i.ak, 2.550000e+02
-  %8 = load float, ptr @_ZL15stbi__l2h_gamma, align 4
-  %i.am = tail call noundef float @powf(float noundef %i.al, float noundef %8) #47
-  %9 = load float, ptr @_ZL15stbi__l2h_scale, align 4
-  %i.an = fmul float %i.am, %9
+  %i.am = tail call noundef float @powf(float noundef %i.al, float noundef %6) #47
+  %i.an = fmul float %7, %i.am
   %i.ao = getelementptr inbounds [4 x i8], ptr %i.q, i64 %i.ah
   store float %i.an, ptr %i.ao, align 4
   %indvars.iv.next.i.1 = add nuw nsw i64 %indvars.iv.i, 2 ; 2 uses
@@ -268,10 +268,8 @@ bb.g:                                             ; preds = %_ZL17stbi__malloc_m
   %i.ar = load i8, ptr %i.aq, align 1
   %i.as = uitofp i8 %i.ar to float
   %i.at = fdiv float %i.as, 2.550000e+02
-  %10 = load float, ptr @_ZL15stbi__l2h_gamma, align 4
-  %i.au = tail call noundef float @powf(float noundef %i.at, float noundef %10) #47
-  %11 = load float, ptr @_ZL15stbi__l2h_scale, align 4
-  %i.av = fmul float %i.au, %11
+  %i.au = tail call noundef float @powf(float noundef %i.at, float noundef %6) #47
+  %i.av = fmul float %7, %i.au
   %i.aw = getelementptr inbounds [4 x i8], ptr %i.q, i64 %i.ap
   store float %i.av, ptr %i.aw, align 4
   br label %._crit_edge.i
@@ -281,9 +279,8 @@ bb.g:                                             ; preds = %_ZL17stbi__malloc_m
   %exitcond59.not.i = icmp eq i64 %indvars.iv.next56.i, %wide.trip.count58.i
   br i1 %exitcond59.not.i, label %._crit_edge51.split.i, label %.preheader48.i, !llvm.loop !41
 
-._crit_edge51.split.i:                            ; preds = %._crit_edge.i, %bb.g
-  %or.cond53.i = and i1 %i.v, %.not.i
-  br i1 %or.cond53.i, label %.lr.ph.preheader.i, label %.loopexit.i
+._crit_edge51.split.i:                            ; preds = %._crit_edge.i, %.preheader48.lr.ph.i
+  br i1 %.not.i, label %.lr.ph.preheader.i, label %.loopexit.i
 
 .lr.ph.preheader.i:                               ; preds = %._crit_edge51.split.i
   %i.ax = sext i32 %i.e to i64                    ; 3 uses
@@ -340,7 +337,7 @@ bb.g:                                             ; preds = %_ZL17stbi__malloc_m
   store float %i.bt, ptr %i.bu, align 4
   br label %.loopexit.i
 
-.loopexit.i:                                      ; preds = %.lr.ph.i.epil.preheader, %.loopexit.i.loopexit.unr-lcssa, %._crit_edge51.split.i
+.loopexit.i:                                      ; preds = %.lr.ph.i.epil.preheader, %.loopexit.i.loopexit.unr-lcssa, %._crit_edge51.split.i, %bb.g
   tail call void @free(ptr noundef nonnull %i.a) #47
   br label %_ZL16stbi__ldr_to_hdrPhiii.exit
 

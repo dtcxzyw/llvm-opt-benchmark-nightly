@@ -204,10 +204,10 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 bb.c:                                             ; preds = %bb.a
-  %i.c = add nuw nsw i32 %i.a, 1
+  %i.c = add nuw nsw i32 %i.a, 1                  ; 2 uses
   store i32 %i.c, ptr @cpwCand, align 4, !tbaa !4
   %i.d = zext nneg i32 %i.a to i64
-  %i.e = getelementptr inbounds nuw [8 x i8], ptr @apwCand, i64 %i.d
+  %i.e = getelementptr inbounds nuw [8 x i8], ptr @apwCand, i64 %i.d ; 2 uses
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !36   ; 2 uses
   %.not = icmp eq ptr %i.f, null
   br i1 %.not, label %bb.d, label %bb.f
@@ -215,18 +215,14 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.c
   %i.g = tail call noalias dereferenceable_or_null(32) ptr @malloc(i64 noundef 32) #19 ; 3 uses
   %i.h = icmp eq ptr %i.g, null
-  %0 = load i32, ptr @cpwCand, align 4, !tbaa !4  ; 2 uses
   br i1 %i.h, label %bb.e, label %NewWord.exit
 
 bb.e:                                             ; preds = %bb.d
-  tail call void @Fatal(ptr noundef nonnull @.str.8, i32 noundef %0)
+  tail call void @Fatal(ptr noundef nonnull @.str.8, i32 noundef %i.c)
   unreachable
 
 NewWord.exit:                                     ; preds = %bb.d
-  %1 = add i32 %0, -1
-  %2 = zext i32 %1 to i64
-  %3 = getelementptr inbounds nuw [8 x i8], ptr @apwCand, i64 %2
-  store ptr %i.g, ptr %3, align 8, !tbaa !36
+  store ptr %i.g, ptr %i.e, align 8, !tbaa !36
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.c, %NewWord.exit
@@ -378,10 +374,10 @@ bb.e:                                             ; preds = %.preheader
   unreachable
 
 bb.f:                                             ; preds = %.preheader
-  %i.ck = add nuw nsw i32 %i.bq, 1
+  %i.ck = add nuw nsw i32 %i.bq, 1                ; 2 uses
   store i32 %i.ck, ptr @cpwCand, align 4, !tbaa !4
   %i.cl = zext nneg i32 %i.bq to i64
-  %i.cm = getelementptr inbounds nuw [8 x i8], ptr @apwCand, i64 %i.cl
+  %i.cm = getelementptr inbounds nuw [8 x i8], ptr @apwCand, i64 %i.cl ; 2 uses
   %i.cn = load ptr, ptr %i.cm, align 8, !tbaa !36 ; 2 uses
   %.not.i = icmp eq ptr %i.cn, null
   br i1 %.not.i, label %bb.g, label %NextWord.exit
@@ -389,18 +385,14 @@ bb.f:                                             ; preds = %.preheader
 bb.g:                                             ; preds = %bb.f
   %i.co = tail call noalias dereferenceable_or_null(32) ptr @malloc(i64 noundef 32) #19 ; 3 uses
   %i.cp = icmp eq ptr %i.co, null
-  %1 = load i32, ptr @cpwCand, align 4, !tbaa !4  ; 2 uses
   br i1 %i.cp, label %bb.h, label %NewWord.exit.i
 
 bb.h:                                             ; preds = %bb.g
-  tail call void @Fatal(ptr noundef nonnull @.str.8, i32 noundef %1)
+  tail call void @Fatal(ptr noundef nonnull @.str.8, i32 noundef %i.ck)
   unreachable
 
 NewWord.exit.i:                                   ; preds = %bb.g
-  %2 = add i32 %1, -1
-  %3 = zext i32 %2 to i64
-  %4 = getelementptr inbounds nuw [8 x i8], ptr @apwCand, i64 %3
-  store ptr %i.co, ptr %4, align 8, !tbaa !36
+  store ptr %i.co, ptr %i.cm, align 8, !tbaa !36
   br label %NextWord.exit
 
 NextWord.exit:                                    ; preds = %bb.f, %NewWord.exit.i

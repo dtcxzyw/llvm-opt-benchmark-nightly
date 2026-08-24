@@ -62,14 +62,14 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.h, label %.thread, label %bb.t
 
 .thread:                                          ; preds = %bb.e, %bb.d
-  %.pr68.pr = load i32, ptr @ordering, align 4, !tbaa !4
+  %.pr68.pr = load i32, ptr @ordering, align 4, !tbaa !4 ; 2 uses
   %i.i = icmp eq i32 %.pr68.pr, 1
   br i1 %i.i, label %bb.f, label %bb.k
 
 bb.f:                                             ; preds = %.thread.thread, %.thread
-  %i.j = phi i32 [ 1, %.thread.thread ], [ %i.a, %.thread ] ; 4 uses
-  %i.k = load i32, ptr @first_nonopt, align 4, !tbaa !4 ; 2 uses
-  %i.l = load i32, ptr @last_nonopt, align 4, !tbaa !4 ; 3 uses
+  %i.j = phi i32 [ 1, %.thread.thread ], [ %i.a, %.thread ] ; 5 uses
+  %i.k = load i32, ptr @first_nonopt, align 4, !tbaa !4 ; 4 uses
+  %i.l = load i32, ptr @last_nonopt, align 4, !tbaa !4 ; 6 uses
   %.not51 = icmp eq i32 %i.k, %i.l
   %.not52 = icmp eq i32 %i.l, %i.j                ; 2 uses
   %or.cond65 = or i1 %.not51, %.not52
@@ -80,20 +80,17 @@ bb.g:                                             ; preds = %bb.f
   %i.n = shl i32 %i.m, 3
   %i.o = sext i32 %i.n to i64                     ; 3 uses
   %i.p = tail call noalias ptr @malloc(i64 noundef %i.o) #7 ; 2 uses
-  %3 = load i32, ptr @first_nonopt, align 4, !tbaa !4 ; 2 uses
-  %i.q = sext i32 %3 to i64
+  %i.q = sext i32 %i.k to i64
   %i.r = getelementptr inbounds [8 x i8], ptr %1, i64 %i.q ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 8 %i.p, ptr align 8 %i.r, i64 %i.o, i1 false)
-  %4 = load i32, ptr @last_nonopt, align 4, !tbaa !4 ; 3 uses
-  %i.s = sext i32 %4 to i64
+  %i.s = sext i32 %i.l to i64
   %i.t = getelementptr inbounds [8 x i8], ptr %1, i64 %i.s
-  %5 = load i32, ptr @optind, align 4, !tbaa !4
-  %i.u = sub nsw i32 %5, %4
+  %i.u = sub nsw i32 %i.j, %i.l
   %i.v = sext i32 %i.u to i64
   %i.w = shl nsw i64 %i.v, 3
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 8 %i.r, ptr align 8 %i.t, i64 %i.w, i1 false)
   %i.x = load i32, ptr @optind, align 4, !tbaa !4
-  %i.y = sub i32 %3, %4                           ; 2 uses
+  %i.y = sub i32 %i.k, %i.l                       ; 2 uses
   %i.z = add i32 %i.x, %i.y
   %i.aa = sext i32 %i.z to i64
   %i.ab = getelementptr inbounds [8 x i8], ptr %1, i64 %i.aa
@@ -154,6 +151,7 @@ bb.j:                                             ; preds = %.lr.ph
 
 bb.k:                                             ; preds = %.thread.thread98, %.thread69, %.critedge, %.thread
   %i.aq = phi i32 [ 1, %.thread69 ], [ %i.ap, %.critedge ], [ %i.a, %.thread ], [ 1, %.thread.thread98 ] ; 6 uses
+  %3 = phi i32 [ 2, %.thread69 ], [ 2, %.critedge ], [ %.pr68.pr, %.thread ], [ 0, %.thread.thread98 ]
   %.not55 = icmp eq i32 %i.aq, %0
   br i1 %.not55, label %.thread96, label %sub_0
 
@@ -178,10 +176,10 @@ sub_1:                                            ; preds = %sub_0
   br i1 %i.az, label %bb.l, label %.tail.thread
 
 bb.l:                                             ; preds = %.tail
-  %i.ba = add nsw i32 %i.aq, 1                    ; 3 uses
+  %i.ba = add nsw i32 %i.aq, 1                    ; 4 uses
   store i32 %i.ba, ptr @optind, align 4, !tbaa !4
-  %i.bb = load i32, ptr @first_nonopt, align 4, !tbaa !4 ; 2 uses
-  %i.bc = load i32, ptr @last_nonopt, align 4, !tbaa !4 ; 3 uses
+  %i.bb = load i32, ptr @first_nonopt, align 4, !tbaa !4 ; 4 uses
+  %i.bc = load i32, ptr @last_nonopt, align 4, !tbaa !4 ; 6 uses
   %.not57 = icmp eq i32 %i.bb, %i.bc              ; 2 uses
   %.not58 = icmp eq i32 %i.bc, %i.ba
   %or.cond66 = select i1 %.not57, i1 true, i1 %.not58
@@ -192,20 +190,17 @@ bb.m:                                             ; preds = %bb.l
   %i.be = shl i32 %i.bd, 3
   %i.bf = sext i32 %i.be to i64                   ; 3 uses
   %i.bg = tail call noalias ptr @malloc(i64 noundef %i.bf) #7 ; 2 uses
-  %6 = load i32, ptr @first_nonopt, align 4, !tbaa !4 ; 2 uses
-  %i.bh = sext i32 %6 to i64
+  %i.bh = sext i32 %i.bb to i64
   %i.bi = getelementptr inbounds [8 x i8], ptr %1, i64 %i.bh ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 8 %i.bg, ptr align 8 %i.bi, i64 %i.bf, i1 false)
-  %7 = load i32, ptr @last_nonopt, align 4, !tbaa !4 ; 3 uses
-  %i.bj = sext i32 %7 to i64
+  %i.bj = sext i32 %i.bc to i64
   %i.bk = getelementptr inbounds [8 x i8], ptr %1, i64 %i.bj
-  %8 = load i32, ptr @optind, align 4, !tbaa !4
-  %i.bl = sub nsw i32 %8, %7
+  %i.bl = sub nsw i32 %i.ba, %i.bc
   %i.bm = sext i32 %i.bl to i64
   %i.bn = shl nsw i64 %i.bm, 3
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 8 %i.bi, ptr align 8 %i.bk, i64 %i.bn, i1 false)
   %i.bo = load i32, ptr @optind, align 4, !tbaa !4
-  %i.bp = sub i32 %6, %7                          ; 2 uses
+  %i.bp = sub i32 %i.bb, %i.bc                    ; 2 uses
   %i.bq = add i32 %i.bo, %i.bp
   %i.br = sext i32 %i.bq to i64
   %i.bs = getelementptr inbounds [8 x i8], ptr %1, i64 %i.br
@@ -252,8 +247,7 @@ bb.q:                                             ; preds = %.tail.thread
   br i1 %i.cd, label %bb.r, label %bb.t
 
 bb.r:                                             ; preds = %bb.q, %.tail.thread
-  %9 = load i32, ptr @ordering, align 4, !tbaa !4
-  %i.ce = icmp eq i32 %9, 0
+  %i.ce = icmp eq i32 %3, 0
   br i1 %i.ce, label %bb.an, label %bb.s
 
 bb.s:                                             ; preds = %bb.r

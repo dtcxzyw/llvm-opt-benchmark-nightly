@@ -202,18 +202,16 @@ bb.fu:                                            ; preds = %bb.ft, %bb.fs
   %i.nh = shl nuw nsw i64 %i.ng, 2
   br label %bb.fv
 
-bb.fv:                                            ; preds = %._crit_edge691, %.preheader466
+bb.fv:                                            ; preds = %.preheader466, %._crit_edge691
   %storemerge.lcssa = phi i64 [ %i.nh, %._crit_edge691 ], [ 4, %.preheader466 ]
   %i.ni = call noalias ptr @malloc(i64 noundef %storemerge.lcssa) #29 ; 2 uses
   store ptr %i.ni, ptr @hierdepth, align 8, !tbaa !49
-  %6 = load i32, ptr @hiernblevels, align 4, !tbaa !23
-  %7 = icmp sgt i32 %6, 0
-  br i1 %7, label %.lr.ph697, label %.loopexit
+  br label %.lr.ph697
 
 .lr.ph697:                                        ; preds = %bb.fv, %bb.ga
-  %i.nj = phi ptr [ %i.np, %bb.ga ], [ %i.ni, %bb.fv ]
-  %indvars.iv744 = phi i64 [ %indvars.iv.next745, %bb.ga ], [ 0, %bb.fv ] ; 3 uses
-  %.1220695 = phi ptr [ %i.nv, %bb.ga ], [ %.1248, %bb.fv ] ; 3 uses
+  %i.nj = phi ptr [ %i.ni, %bb.fv ], [ %i.np, %bb.ga ]
+  %indvars.iv744 = phi i64 [ 0, %bb.fv ], [ %indvars.iv.next745, %bb.ga ] ; 3 uses
+  %.1220695 = phi ptr [ %.1248, %bb.fv ], [ %i.nv, %bb.ga ] ; 3 uses
   %i.nk = call ptr @strchr(ptr noundef nonnull dereferenceable(1) %.1220695, i32 noundef 46) #26 ; 3 uses
   %.not307 = icmp eq ptr %i.nk, null
   br i1 %.not307, label %bb.fx, label %bb.fw
@@ -249,7 +247,7 @@ bb.ga:                                            ; preds = %bb.fy
   %i.ny = icmp slt i64 %indvars.iv.next745, %i.nx
   br i1 %i.ny, label %.lr.ph697, label %.loopexit, !llvm.loop !51
 
-.loopexit:                                        ; preds = %bb.ga, %bb.fv, %bb.fu
+.loopexit:                                        ; preds = %bb.ga, %bb.fu
   %.not308 = icmp eq ptr %.1246, null
   br i1 %.not308, label %bb.gf, label %bb.gb
 

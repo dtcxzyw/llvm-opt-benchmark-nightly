@@ -14,7 +14,7 @@ target triple = "x86_64-unknown-linux-gnu"
 ; Function Attrs: noredzone nounwind optsize
 define hidden i32 @vsnprintf(ptr nofree noundef captures(none) %0, i64 noundef %1, ptr noundef %2, ptr noundef %3) local_unnamed_addr #0 {
 bb.a:
-  %i.a = alloca ptr, align 8                      ; 11 uses
+  %i.a = alloca ptr, align 8                      ; 13 uses
   %i.b = alloca [22 x i8], align 16               ; 14 uses
   %4 = alloca [1 x %struct.__va_list_tag], align 16 ; 26 uses
   store ptr %2, ptr %i.a, align 8
@@ -30,10 +30,11 @@ bb.a:
   %i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 6
   %i.j = ptrtoint ptr %i.c to i64
   %i.k = getelementptr inbounds nuw i8, ptr %i.b, i64 2
+  %.pre = load ptr, ptr %i.a, align 8
   br label %bb.b
 
 bb.b:                                             ; preds = %.loopexit, %bb.a
-  %i.l = phi ptr [ %2, %bb.a ], [ %i.pu, %.loopexit ] ; 3 uses
+  %i.l = phi ptr [ %.pre, %bb.a ], [ %i.pu, %.loopexit ] ; 2 uses
   %.0181 = phi i64 [ 0, %bb.a ], [ %.11, %.loopexit ] ; 8 uses
   %i.m = load i8, ptr %i.l, align 1               ; 2 uses
   switch i8 %i.m, label %bb.d [
@@ -42,14 +43,13 @@ bb.b:                                             ; preds = %.loopexit, %bb.a
   ]
 
 bb.c:                                             ; preds = %bb.b
-  %i.n = getelementptr inbounds nuw i8, ptr %i.l, i64 1 ; 4 uses
+  %i.n = getelementptr inbounds nuw i8, ptr %i.l, i64 1 ; 3 uses
   store ptr %i.n, ptr %i.a, align 8
   %i.o = load i8, ptr %i.n, align 1               ; 2 uses
   %i.p = icmp eq i8 %i.o, 37
   br i1 %i.p, label %bb.d, label %.preheader296
 
 bb.d:                                             ; preds = %bb.b, %bb.c
-  %5 = phi ptr [ %i.l, %bb.b ], [ %i.n, %bb.c ]
   %i.q = icmp ult i64 %.0181, %1
   br i1 %i.q, label %bb.e, label %bb.f
 
@@ -121,7 +121,7 @@ bb.l:                                             ; preds = %get_flags.exit
 
 bb.m:                                             ; preds = %bb.l, %get_flags.exit
   %i.ai = phi i8 [ %i.ad, %get_flags.exit ], [ %.pre352, %bb.l ] ; 4 uses
-  %i.aj = phi ptr [ %i.ac, %get_flags.exit ], [ %.pre.a, %bb.l ] ; 3 uses
+  %i.aj = phi ptr [ %i.ac, %get_flags.exit ], [ %.pre.a, %bb.l ] ; 2 uses
   %.2173 = phi i32 [ %.1172, %get_flags.exit ], [ %spec.select, %bb.l ] ; 7 uses
   %.0159 = phi i32 [ -1, %get_flags.exit ], [ %i.ag, %bb.l ] ; 9 uses
   switch i8 %i.ai, label %bb.p [
@@ -131,7 +131,7 @@ bb.m:                                             ; preds = %bb.l, %get_flags.ex
 
 bb.n:                                             ; preds = %bb.m, %bb.m
   %i.ak = zext nneg i8 %i.ai to i32               ; 2 uses
-  %i.al = getelementptr inbounds nuw i8, ptr %i.aj, i64 1 ; 3 uses
+  %i.al = getelementptr inbounds nuw i8, ptr %i.aj, i64 1 ; 2 uses
   store ptr %i.al, ptr %i.a, align 8
   %i.am = load i8, ptr %i.al, align 1             ; 2 uses
   %i.an = icmp eq i8 %i.ai, %i.am
@@ -139,14 +139,13 @@ bb.n:                                             ; preds = %bb.m, %bb.m
 
 bb.o:                                             ; preds = %bb.n
   %i.ao = add nsw i32 %i.ak, -32
-  %i.ap = getelementptr inbounds nuw i8, ptr %i.aj, i64 2 ; 3 uses
+  %i.ap = getelementptr inbounds nuw i8, ptr %i.aj, i64 2 ; 2 uses
   store ptr %i.ap, ptr %i.a, align 8
   %.pre353 = load i8, ptr %i.ap, align 1
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.m, %bb.n, %bb.o
   %i.aq = phi i8 [ %.pre353, %bb.o ], [ %i.am, %bb.n ], [ %i.ai, %bb.m ] ; 2 uses
-  %6 = phi ptr [ %i.ap, %bb.o ], [ %i.al, %bb.n ], [ %i.aj, %bb.m ] ; 2 uses
   %.0158 = phi i32 [ %i.ao, %bb.o ], [ %i.ak, %bb.n ], [ -1, %bb.m ] ; 4 uses
   switch i8 %i.aq, label %bb.ei [
     i8 99, label %bb.q
@@ -549,9 +548,9 @@ bb.eh:                                            ; preds = %bb.eg, %.lr.ph328
   br i1 %i.pt, label %.lr.ph328, label %.loopexit, !llvm.loop !15
 
 .loopexit:                                        ; preds = %bb.eh, %.loopexit289, %bb.f
-  %7 = phi ptr [ %5, %bb.f ], [ %6, %.loopexit289 ], [ %6, %bb.eh ]
   %.11 = phi i64 [ %i.s, %bb.f ], [ %.9190, %.loopexit289 ], [ %i.ps, %bb.eh ]
-  %i.pu = getelementptr inbounds nuw i8, ptr %7, i64 1 ; 2 uses
+  %5 = load ptr, ptr %i.a, align 8
+  %i.pu = getelementptr inbounds nuw i8, ptr %5, i64 1 ; 2 uses
   store ptr %i.pu, ptr %i.a, align 8
   br label %bb.b, !llvm.loop !16
 

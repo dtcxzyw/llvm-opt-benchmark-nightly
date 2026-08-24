@@ -200,7 +200,7 @@ define range(i32 -128, 128) i32 @H5_get_option(i32 noundef %0, ptr nofree nounde
 bb.a:
   %i.a = load i32, ptr @H5_get_option.sp, align 4, !tbaa !28 ; 4 uses
   %i.b = icmp eq i32 %i.a, 1
-  %.pre = load i32, ptr @H5_optind, align 4, !tbaa !28 ; 10 uses
+  %.pre = load i32, ptr @H5_optind, align 4, !tbaa !28 ; 12 uses
   br i1 %i.b, label %bb.b, label %._crit_edge119
 
 ._crit_edge119:                                   ; preds = %bb.a
@@ -215,7 +215,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.c = sext i32 %.pre to i64
-  %i.d = getelementptr inbounds [8 x i8], ptr %1, i64 %i.c
+  %i.d = getelementptr inbounds [8 x i8], ptr %1, i64 %i.c ; 2 uses
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !23   ; 5 uses
   %i.f = load i8, ptr %i.e, align 1, !tbaa !24
   %.not78 = icmp eq i8 %i.f, 45
@@ -241,16 +241,11 @@ bb.e:                                             ; preds = %.tail
   br label %bb.an
 
 bb.f:                                             ; preds = %.tail
-  %i.m = getelementptr inbounds nuw i8, ptr %i.e, i64 2
+  %i.m = getelementptr inbounds nuw i8, ptr %i.e, i64 2 ; 2 uses
   %i.n = tail call noalias ptr @strdup(ptr noundef nonnull %i.m) #15 ; 5 uses
-  %4 = load i32, ptr @H5_optind, align 4, !tbaa !28 ; 3 uses
-  %5 = sext i32 %4 to i64
-  %6 = getelementptr inbounds [8 x i8], ptr %1, i64 %5 ; 2 uses
-  %7 = load ptr, ptr %6, align 8, !tbaa !23
-  %8 = getelementptr inbounds nuw i8, ptr %7, i64 2
-  %i.o = tail call ptr @strchr(ptr noundef nonnull dereferenceable(1) %8, i32 noundef 61) #17 ; 4 uses
+  %i.o = tail call ptr @strchr(ptr noundef nonnull dereferenceable(1) %i.m, i32 noundef 61) #17 ; 4 uses
   store ptr %i.o, ptr @H5_optarg, align 8, !tbaa !23
-  %i.p = load ptr, ptr %6, align 8, !tbaa !23
+  %i.p = load ptr, ptr %i.d, align 8, !tbaa !23
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 2
   %i.r = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.q) #17 ; 2 uses
   %.not84 = icmp eq ptr %i.o, null                ; 3 uses
@@ -296,12 +291,12 @@ bb.i:                                             ; preds = %.split
   %.not90 = icmp ne i32 %i.af, 2
   %or.cond.not102 = and i1 %.not90, %.not84
   %i.ag = add nsw i32 %0, -1
-  %i.ah = icmp slt i32 %4, %i.ag
+  %i.ah = icmp slt i32 %.pre, %i.ag
   %or.cond100 = select i1 %or.cond.not102, i1 %i.ah, i1 false
   br i1 %or.cond100, label %bb.j, label %.loopexit
 
 bb.j:                                             ; preds = %bb.i
-  %i.ai = add nsw i32 %4, 1                       ; 2 uses
+  %i.ai = add nsw i32 %.pre, 1                    ; 2 uses
   %i.aj = sext i32 %i.ai to i64
   %i.ak = getelementptr inbounds [8 x i8], ptr %1, i64 %i.aj
   %i.al = load ptr, ptr %i.ak, align 8, !tbaa !23 ; 2 uses

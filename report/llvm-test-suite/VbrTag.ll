@@ -36,12 +36,11 @@ bb.b:                                             ; preds = %bb.a
   store i32 100, ptr @nVbrFrameBufferSize, align 4, !tbaa !4
   %i.e = tail call noalias dereferenceable_or_null(400) ptr @malloc(i64 noundef 400) #15 ; 2 uses
   store ptr %i.e, ptr @pVbrFrames, align 8, !tbaa !8
-  %.pre = load i32, ptr @nVbrFrameBufferSize, align 4, !tbaa !4
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
   %i.f = phi ptr [ %i.a, %bb.a ], [ %i.e, %bb.b ] ; 2 uses
-  %i.g = phi i32 [ %i.c, %bb.a ], [ %.pre, %bb.b ] ; 2 uses
+  %i.g = phi i32 [ %i.c, %bb.a ], [ 100, %bb.b ]  ; 2 uses
   %i.h = load i32, ptr @nVbrNumFrames, align 4, !tbaa !4 ; 2 uses
   %i.i = icmp eq i32 %i.h, %i.g
   br i1 %i.i, label %bb.d, label %bb.e

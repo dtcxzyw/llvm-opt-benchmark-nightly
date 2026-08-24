@@ -205,7 +205,7 @@ bb.bt:                                            ; preds = %.lr.ph629, %bb.ch
   %i.rj = load i32, ptr @_ZZ11gmx_vanhoveiPPcE5fmmax, align 4, !tbaa !9
   %i.rk = trunc nuw i64 %i.ri to i32              ; 6 uses
   %.not325 = icmp slt i32 %i.rj, %i.rk
-  %i.rl = load i32, ptr @_ZZ11gmx_vanhoveiPPcE5ftmax, align 4
+  %i.rl = load i32, ptr @_ZZ11gmx_vanhoveiPPcE5ftmax, align 4 ; 2 uses
   %.not326 = icmp slt i32 %i.rl, %i.rk
   %or.cond334 = select i1 %.not325, i1 %.not326, i1 false
   br i1 %or.cond334, label %bb.ch, label %bb.bu
@@ -239,16 +239,12 @@ bb.bw:                                            ; preds = %bb.bu, %bb.bv
   %i.sb = getelementptr inbounds [8 x i8], ptr %.0549, i64 %i.sa
   %i.sc = getelementptr inbounds nuw [4 x i8], ptr %.0548, i64 %i.ri ; 4 uses
   %.fr = freeze i1 %i.rz
-  br i1 %.fr, label %.lr.ph624.split, label %.lr.ph624.split.us.preheader
+  br i1 %.fr, label %.lr.ph624.split, label %.lr.ph624.split.us
 
-.lr.ph624.split.us.preheader:                     ; preds = %.lr.ph624
-  %.pre816 = load i32, ptr @_ZZ11gmx_vanhoveiPPcE5ftmax, align 4, !tbaa !9
-  br label %.lr.ph624.split.us
-
-.lr.ph624.split.us:                               ; preds = %.lr.ph624.split.us.preheader, %bb.by
-  %i.sd = phi i32 [ %i.ru, %.lr.ph624.split.us.preheader ], [ %i.sw, %bb.by ]
-  %i.se = phi i32 [ %.pre816, %.lr.ph624.split.us.preheader ], [ %i.sx, %bb.by ] ; 2 uses
-  %indvars.iv728 = phi i64 [ 0, %.lr.ph624.split.us.preheader ], [ %indvars.iv.next729, %bb.by ] ; 3 uses
+.lr.ph624.split.us:                               ; preds = %.lr.ph624, %bb.by
+  %i.sd = phi i32 [ %i.sw, %bb.by ], [ %i.ru, %.lr.ph624 ]
+  %i.se = phi i32 [ %i.sx, %bb.by ], [ %i.rl, %.lr.ph624 ] ; 2 uses
+  %indvars.iv728 = phi i64 [ %indvars.iv.next729, %bb.by ], [ 0, %.lr.ph624 ] ; 3 uses
   %i.sf = getelementptr inbounds nuw [12 x i8], ptr %i.rw, i64 %indvars.iv728 ; 2 uses
   %i.sg = getelementptr inbounds nuw [12 x i8], ptr %i.ry, i64 %indvars.iv728 ; 2 uses
   %i.sh = load <2 x float>, ptr %i.sg, align 4, !tbaa !34

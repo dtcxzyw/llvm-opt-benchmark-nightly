@@ -204,8 +204,8 @@ bb.e:                                             ; preds = %.sink.split, %tailr
   br label %.thread303
 
 bb.f:                                             ; preds = %.lr.ph405, %tailrecurse.backedge
-  %ret.known.tr403 = phi i1 [ false, %.lr.ph405 ], [ true, %tailrecurse.backedge ] ; 7 uses
-  %ret.tr402 = phi i32 [ poison, %.lr.ph405 ], [ %current.ret.tr, %tailrecurse.backedge ] ; 7 uses
+  %ret.known.tr403 = phi i1 [ false, %.lr.ph405 ], [ true, %tailrecurse.backedge ] ; 6 uses
+  %ret.tr402 = phi i32 [ poison, %.lr.ph405 ], [ %current.ret.tr, %tailrecurse.backedge ] ; 6 uses
   %.tr315401 = phi i32 [ %4, %.lr.ph405 ], [ %.tr315.be, %tailrecurse.backedge ] ; 4 uses
   %.tr314400 = phi i32 [ %3, %.lr.ph405 ], [ %.tr314.be, %tailrecurse.backedge ] ; 24 uses
   %.tr313399 = phi i32 [ %2, %.lr.ph405 ], [ %.tr313.be, %tailrecurse.backedge ] ; 6 uses
@@ -324,7 +324,7 @@ bb.o:                                             ; preds = %bb.m
 
 .thread:                                          ; preds = %bb.n, %bb.o
   %.1239 = phi i32 [ %spec.select294, %bb.o ], [ %.0238410, %bb.n ] ; 7 uses
-  %.1229 = phi i32 [ %spec.select295, %bb.o ], [ %.0228411, %bb.n ] ; 6 uses
+  %.1229 = phi i32 [ %spec.select295, %bb.o ], [ %.0228411, %bb.n ] ; 5 uses
   %indvars.iv.next465 = add nuw nsw i64 %indvars.iv464, 1 ; 2 uses
   %exitcond472.not = icmp eq i64 %indvars.iv.next465, %wide.trip.count471
   br i1 %exitcond472.not, label %bb.p, label %bb.l, !llvm.loop !77
@@ -409,12 +409,12 @@ bb.w:                                             ; preds = %bb.u
 
 bb.x:                                             ; preds = %._crit_edge477, %bb.v, %bb.w
   %i.dc = phi i32 [ %.pre479, %._crit_edge477 ], [ %i.cv, %bb.v ], [ %i.cv, %bb.w ]
-  %i.dd = phi ptr [ %.pre478, %._crit_edge477 ], [ %i.da, %bb.v ], [ %i.db, %bb.w ] ; 5 uses
-  %i.de = getelementptr inbounds nuw i8, ptr %i.dd, i64 4 ; 3 uses
+  %i.dd = phi ptr [ %.pre478, %._crit_edge477 ], [ %i.da, %bb.v ], [ %i.db, %bb.w ] ; 3 uses
+  %i.de = getelementptr inbounds nuw i8, ptr %i.dd, i64 4 ; 2 uses
   store ptr %i.de, ptr @sapp, align 8, !tbaa !21
   store i32 0, ptr %i.dd, align 4, !tbaa !4
   store i32 0, ptr @last, align 4, !tbaa !4
-  %i.df = add nsw i32 %i.dc, 1
+  %i.df = add nsw i32 %i.dc, 1                    ; 2 uses
   store i32 %i.df, ptr @al_len, align 4, !tbaa !4
   %i.dg = load i8, ptr %i.an, align 1, !tbaa !14
   %i.dh = sext i32 %.1239 to i64
@@ -426,18 +426,16 @@ bb.x:                                             ; preds = %._crit_edge477, %bb
   %i.dm = add nsw i32 %i.dl, 1
   store i32 %i.dm, ptr %no_mat.no_mis, align 4, !tbaa !4
   %i.dn = load i32, ptr @I, align 4, !tbaa !4
-  %i.do = add nsw i32 %i.dn, 1
+  %i.do = add nsw i32 %i.dn, 1                    ; 2 uses
   store i32 %i.do, ptr @I, align 4, !tbaa !4
   %i.dp = load i32, ptr @J, align 4, !tbaa !4
-  %i.dq = add nsw i32 %i.dp, 1
+  %i.dq = add nsw i32 %i.dp, 1                    ; 3 uses
   store i32 %i.dq, ptr @J, align 4, !tbaa !4
   %i.dr = tail call noalias dereferenceable_or_null(16) ptr @malloc(i64 noundef 16) #20 ; 4 uses
   store ptr %i.dr, ptr @z, align 8, !tbaa !26
-  %6 = load i32, ptr @J, align 4, !tbaa !4        ; 2 uses
-  store i32 %6, ptr %i.dr, align 8, !tbaa !28
+  store i32 %i.dq, ptr %i.dr, align 8, !tbaa !28
   %i.ds = load ptr, ptr @row, align 8, !tbaa !23
-  %7 = load i32, ptr @I, align 4, !tbaa !4
-  %i.dt = sext i32 %7 to i64
+  %i.dt = sext i32 %i.do to i64
   %i.du = getelementptr inbounds [8 x i8], ptr %i.ds, i64 %i.dt ; 2 uses
   %i.dv = load ptr, ptr %i.du, align 8, !tbaa !26
   %i.dw = getelementptr inbounds nuw i8, ptr %i.dr, i64 8
@@ -447,26 +445,13 @@ bb.x:                                             ; preds = %._crit_edge477, %bb
   br i1 %i.dx, label %bb.y, label %.thread303
 
 bb.y:                                             ; preds = %bb.x
-  %i.dy = sub nsw i32 %.tr314400, %.1239          ; 5 uses
-  %i.dz = add nsw i32 %6, %i.dy
+  %i.dy = sub nsw i32 %.tr314400, %.1239          ; 4 uses
+  %i.dz = add nsw i32 %i.dq, %i.dy
   store i32 %i.dz, ptr @J, align 4, !tbaa !4
-  %8 = load i32, ptr @al_len, align 4, !tbaa !4
-  %9 = add nsw i32 %8, %i.dy
-  store i32 %9, ptr @al_len, align 4, !tbaa !4
-  %10 = load i32, ptr @last, align 4, !tbaa !4    ; 2 uses
-  %11 = icmp slt i32 %10, 0
-  br i1 %11, label %12, label %14
-
-12:                                               ; preds = %bb.y
-  store i32 %i.dy, ptr %i.dd, align 4, !tbaa !4
-  %13 = getelementptr inbounds nuw i8, ptr %i.dd, i64 8
-  store ptr %13, ptr @sapp, align 8, !tbaa !21
-  store i32 %10, ptr %i.de, align 4, !tbaa !4
-  br label %.thread303
-
-14:                                               ; preds = %bb.y
-  %15 = getelementptr inbounds nuw i8, ptr %i.dd, i64 8
-  store ptr %15, ptr @sapp, align 8, !tbaa !21
+  %6 = add nsw i32 %i.df, %i.dy
+  store i32 %6, ptr @al_len, align 4, !tbaa !4
+  %7 = getelementptr inbounds nuw i8, ptr %i.dd, i64 8
+  store ptr %7, ptr @sapp, align 8, !tbaa !21
   store i32 %i.dy, ptr %i.de, align 4, !tbaa !4
   store i32 %i.dy, ptr @last, align 4, !tbaa !4
   br label %.thread303
@@ -869,10 +854,10 @@ bb.ap:                                            ; preds = %bb.ao, %bb.an
   %i.lj = add nsw i32 %.tr313399, %i.li
   br label %tailrecurse.backedge
 
-.thread303:                                       ; preds = %bb.s, %bb.r, %12, %14, %bb.x, %bb.k, %bb.e
-  %ret.tr324 = phi i32 [ %ret.tr.lcssa, %bb.e ], [ %ret.tr402, %bb.k ], [ %ret.tr402, %bb.s ], [ %ret.tr402, %bb.r ], [ %ret.tr402, %12 ], [ %ret.tr402, %14 ], [ %ret.tr402, %bb.x ]
-  %ret.known.tr322 = phi i1 [ %i.a, %bb.e ], [ %ret.known.tr403, %bb.k ], [ %ret.known.tr403, %bb.s ], [ %ret.known.tr403, %bb.r ], [ %ret.known.tr403, %12 ], [ %ret.known.tr403, %14 ], [ %ret.known.tr403, %bb.x ]
-  %.1247 = phi i32 [ %i.v, %bb.e ], [ %i.aj, %bb.k ], [ %.1229, %bb.s ], [ %.1229, %bb.r ], [ %.1229, %12 ], [ %.1229, %14 ], [ %.1229, %bb.x ]
+.thread303:                                       ; preds = %bb.r, %bb.s, %bb.y, %bb.x, %bb.k, %bb.e
+  %ret.tr324 = phi i32 [ %ret.tr.lcssa, %bb.e ], [ %ret.tr402, %bb.k ], [ %ret.tr402, %bb.r ], [ %ret.tr402, %bb.s ], [ %ret.tr402, %bb.y ], [ %ret.tr402, %bb.x ]
+  %ret.known.tr322 = phi i1 [ %i.a, %bb.e ], [ %ret.known.tr403, %bb.k ], [ %ret.known.tr403, %bb.r ], [ %ret.known.tr403, %bb.s ], [ %ret.known.tr403, %bb.y ], [ %ret.known.tr403, %bb.x ]
+  %.1247 = phi i32 [ %i.v, %bb.e ], [ %i.aj, %bb.k ], [ %.1229, %bb.r ], [ %.1229, %bb.s ], [ %.1229, %bb.y ], [ %.1229, %bb.x ]
   %current.ret.tr318 = select i1 %ret.known.tr322, i32 %ret.tr324, i32 %.1247
   ret i32 %current.ret.tr318
 }

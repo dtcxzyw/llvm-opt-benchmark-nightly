@@ -205,13 +205,12 @@ bb.d:                                             ; preds = %bb.c
   %i.f = load i32, ptr @njob, align 4, !tbaa !4
   %i.g = tail call ptr @AllocateIntVec(i32 noundef %i.f) #33
   store ptr %i.g, ptr @loadtree.hist, align 8, !tbaa !89
-  %i.h = load i32, ptr @njob, align 4, !tbaa !4
+  %i.h = load i32, ptr @njob, align 4, !tbaa !4   ; 2 uses
   %i.i = sext i32 %i.h to i64
   %i.j = mul nsw i64 %i.i, 24
   %i.k = tail call noalias ptr @malloc(i64 noundef %i.j) #34
   store ptr %i.k, ptr @loadtree.ac, align 8, !tbaa !98
-  %5 = load i32, ptr @njob, align 4, !tbaa !4
-  %i.l = tail call ptr @AllocateIntVec(i32 noundef %5) #33
+  %i.l = tail call ptr @AllocateIntVec(i32 noundef %i.h) #33
   store ptr %i.l, ptr @loadtree.nmemar, align 8, !tbaa !89
   %i.m = load i32, ptr @njob, align 4, !tbaa !4
   %i.n = tail call ptr @AllocateFloatVec(i32 noundef %i.m) #33
@@ -614,13 +613,12 @@ bb.h:                                             ; preds = %bb.g
   %i.r = load i32, ptr @njob, align 4, !tbaa !4
   %i.s = tail call ptr @AllocateFloatVec(i32 noundef %i.r) #33
   store ptr %i.s, ptr @loadtop.tmptmplen, align 8, !tbaa !19
-  %i.t = load i32, ptr @njob, align 4, !tbaa !4
+  %i.t = load i32, ptr @njob, align 4, !tbaa !4   ; 2 uses
   %i.u = sext i32 %i.t to i64
   %i.v = mul nsw i64 %i.u, 24
   %i.w = tail call noalias ptr @malloc(i64 noundef %i.v) #34
   store ptr %i.w, ptr @loadtop.ac, align 8, !tbaa !98
-  %4 = load i32, ptr @njob, align 4, !tbaa !4
-  %i.x = tail call ptr @AllocateIntVec(i32 noundef %4) #33
+  %i.x = tail call ptr @AllocateIntVec(i32 noundef %i.t) #33
   store ptr %i.x, ptr @loadtop.nmemar, align 8, !tbaa !89
   br label %bb.i
 
@@ -1023,13 +1021,12 @@ bb.f:                                             ; preds = %bb.e
   %i.g = load i32, ptr @njob, align 4, !tbaa !4
   %i.h = tail call ptr @AllocateFloatVec(i32 noundef %i.g) #33
   store ptr %i.h, ptr @fixed_musclesupg_float_realloc_nobk_halfmtx_treeout.tmptmplen, align 8, !tbaa !19
-  %i.i = load i32, ptr @njob, align 4, !tbaa !4
+  %i.i = load i32, ptr @njob, align 4, !tbaa !4   ; 2 uses
   %i.j = sext i32 %i.i to i64
   %i.k = mul nsw i64 %i.j, 24
   %i.l = tail call noalias ptr @malloc(i64 noundef %i.k) #34
   store ptr %i.l, ptr @fixed_musclesupg_float_realloc_nobk_halfmtx_treeout.ac, align 8, !tbaa !98
-  %6 = load i32, ptr @njob, align 4, !tbaa !4
-  %i.m = tail call ptr @AllocateIntVec(i32 noundef %6) #33
+  %i.m = tail call ptr @AllocateIntVec(i32 noundef %i.i) #33
   store ptr %i.m, ptr @fixed_musclesupg_float_realloc_nobk_halfmtx_treeout.nmemar, align 8, !tbaa !89
   %i.n = load i32, ptr @njob, align 4, !tbaa !4
   %i.o = tail call ptr @AllocateFloatVec(i32 noundef %i.n) #33
@@ -1432,13 +1429,12 @@ bb.f:                                             ; preds = %bb.e
   %i.g = load i32, ptr @njob, align 4, !tbaa !4
   %i.h = tail call ptr @AllocateFloatVec(i32 noundef %i.g) #33
   store ptr %i.h, ptr @fixed_musclesupg_float_realloc_nobk_halfmtx.tmptmplen, align 8, !tbaa !19
-  %i.i = load i32, ptr @njob, align 4, !tbaa !4
+  %i.i = load i32, ptr @njob, align 4, !tbaa !4   ; 2 uses
   %i.j = sext i32 %i.i to i64
   %i.k = mul nsw i64 %i.j, 24
   %i.l = tail call noalias ptr @malloc(i64 noundef %i.k) #34
   store ptr %i.l, ptr @fixed_musclesupg_float_realloc_nobk_halfmtx.ac, align 8, !tbaa !98
-  %4 = load i32, ptr @njob, align 4, !tbaa !4
-  %i.m = tail call ptr @AllocateIntVec(i32 noundef %4) #33
+  %i.m = tail call ptr @AllocateIntVec(i32 noundef %i.i) #33
   store ptr %i.m, ptr @fixed_musclesupg_float_realloc_nobk_halfmtx.nmemar, align 8, !tbaa !89
   %i.n = load i32, ptr @njob, align 4, !tbaa !4
   %i.o = tail call ptr @AllocateFloatVec(i32 noundef %i.n) #33
@@ -1841,13 +1837,10 @@ bb.d:                                             ; preds = %bb.c
   store ptr %i.n, ptr @veryfastsupg_double_loadtop.hist, align 8, !tbaa !89
   %i.o = load i32, ptr @njob, align 4, !tbaa !4
   %i.p = sext i32 %i.o to i64
-  %i.q = shl nsw i64 %i.p, 3
+  %i.q = shl nsw i64 %i.p, 3                      ; 2 uses
   %i.r = tail call noalias ptr @malloc(i64 noundef %i.q) #34
   store ptr %i.r, ptr @veryfastsupg_double_loadtop.tmptmplen, align 8, !tbaa !52
-  %4 = load i32, ptr @njob, align 4, !tbaa !4
-  %5 = sext i32 %4 to i64
-  %6 = shl nsw i64 %5, 3
-  %i.s = tail call noalias ptr @malloc(i64 noundef %6) #34
+  %i.s = tail call noalias ptr @malloc(i64 noundef %i.q) #34
   store ptr %i.s, ptr @veryfastsupg_double_loadtop.ac, align 8, !tbaa !164
   br label %bb.e
 
@@ -2250,13 +2243,10 @@ bb.d:                                             ; preds = %bb.c
   store ptr %i.n, ptr @veryfastsupg_double_loadtree.hist, align 8, !tbaa !89
   %i.o = load i32, ptr @njob, align 4, !tbaa !4
   %i.p = sext i32 %i.o to i64
-  %i.q = shl nsw i64 %i.p, 3
+  %i.q = shl nsw i64 %i.p, 3                      ; 2 uses
   %i.r = tail call noalias ptr @malloc(i64 noundef %i.q) #34
   store ptr %i.r, ptr @veryfastsupg_double_loadtree.tmptmplen, align 8, !tbaa !52
-  %4 = load i32, ptr @njob, align 4, !tbaa !4
-  %5 = sext i32 %4 to i64
-  %6 = shl nsw i64 %5, 3
-  %i.s = tail call noalias ptr @malloc(i64 noundef %6) #34
+  %i.s = tail call noalias ptr @malloc(i64 noundef %i.q) #34
   store ptr %i.s, ptr @veryfastsupg_double_loadtree.ac, align 8, !tbaa !164
   br label %bb.e
 
@@ -2659,13 +2649,10 @@ bb.f:                                             ; preds = %bb.e
   store ptr %i.l, ptr @veryfastsupg_double_outtree.hist, align 8, !tbaa !89
   %i.m = load i32, ptr @njob, align 4, !tbaa !4
   %i.n = sext i32 %i.m to i64
-  %i.o = shl nsw i64 %i.n, 3
+  %i.o = shl nsw i64 %i.n, 3                      ; 2 uses
   %i.p = tail call noalias ptr @malloc(i64 noundef %i.o) #34
   store ptr %i.p, ptr @veryfastsupg_double_outtree.tmptmplen, align 8, !tbaa !52
-  %5 = load i32, ptr @njob, align 4, !tbaa !4
-  %6 = sext i32 %5 to i64
-  %7 = shl nsw i64 %6, 3
-  %i.q = tail call noalias ptr @malloc(i64 noundef %7) #34
+  %i.q = tail call noalias ptr @malloc(i64 noundef %i.o) #34
   store ptr %i.q, ptr @veryfastsupg_double_outtree.ac, align 8, !tbaa !164
   %i.r = tail call ptr @AllocateCharVec(i32 noundef 30) #33
   store ptr %i.r, ptr @veryfastsupg_double_outtree.nametmp, align 8, !tbaa !12
@@ -3068,13 +3055,10 @@ bb.b:                                             ; preds = %bb.a
   store ptr %i.e, ptr @veryfastsupg.hist, align 8, !tbaa !89
   %i.f = load i32, ptr @njob, align 4, !tbaa !4
   %i.g = sext i32 %i.f to i64
-  %i.h = shl nsw i64 %i.g, 3
+  %i.h = shl nsw i64 %i.g, 3                      ; 2 uses
   %i.i = tail call noalias ptr @malloc(i64 noundef %i.h) #34
   store ptr %i.i, ptr @veryfastsupg.tmptmplen, align 8, !tbaa !52
-  %4 = load i32, ptr @njob, align 4, !tbaa !4
-  %5 = sext i32 %4 to i64
-  %6 = shl nsw i64 %5, 3
-  %i.j = tail call noalias ptr @malloc(i64 noundef %6) #34
+  %i.j = tail call noalias ptr @malloc(i64 noundef %i.h) #34
   store ptr %i.j, ptr @veryfastsupg.ac, align 8, !tbaa !164
   br label %bb.c
 

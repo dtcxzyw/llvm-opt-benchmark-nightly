@@ -202,7 +202,7 @@ bb.bo:                                            ; preds = %bb.bn
 bb.bp:                                            ; preds = %bb.bn
   %i.jb = xor i64 %i.iy, -1
   %i.jc = add i64 %i.jb, %i.ix                    ; 7 uses
-  %i.jd = trunc i64 %i.jc to i32                  ; 6 uses
+  %i.jd = trunc i64 %i.jc to i32                  ; 5 uses
   %i.je = icmp sgt i32 %i.jd, 0
   br i1 %i.je, label %iter.check, label %._crit_edge.i80
 
@@ -559,7 +559,7 @@ bb.cg:                                            ; preds = %bb.cf, %bb.ce, %.lo
   %i.oe = phi ptr [ %.pre103.i, %bb.ce ], [ %i.nx, %bb.cf ], [ %i.np, %.loopexit.i ], [ %i.nk, %.loopexit.thread.i ], [ %i.lp, %.loopexit.thread117.i ]
   %i.of = phi i32 [ %.pre102.i, %bb.ce ], [ 0, %bb.cf ], [ %.0.lcssa.i, %.loopexit.i ], [ %.pr.ph.i, %.loopexit.thread.i ], [ %i.lw, %.loopexit.thread117.i ] ; 2 uses
   %.051.i = phi i32 [ 1, %bb.ce ], [ 2, %bb.cf ], [ 0, %.loopexit.i ], [ 0, %.loopexit.thread.i ], [ 0, %.loopexit.thread117.i ]
-  %i.og = add i32 %i.of, %i.jd                    ; 3 uses
+  %i.og = add i32 %i.of, %i.jd                    ; 5 uses
   %i.oh = getelementptr inbounds nuw [8 x i8], ptr %i.oe, i64 %i.od ; 6 uses
   %i.oi = load ptr, ptr %i.oh, align 8            ; 3 uses
   %i.oj = getelementptr inbounds nuw i8, ptr %i.oi, i64 24
@@ -591,24 +591,21 @@ bb.cj:                                            ; preds = %bb.ch
   %i.ox = add i32 %i.on, -2
   %i.oy = getelementptr inbounds nuw i8, ptr %i.ou, i64 24
   store i32 %i.ox, ptr %i.oy, align 8
-  %.pre105.i = load i32, ptr @yy_n_chars, align 4
   %.pre106.i = load ptr, ptr %i.oh, align 8
-  %.pre107.i = add i32 %.pre105.i, %i.jd
   br label %yy_get_next_buffer.exit
 
 yy_get_next_buffer.exit:                          ; preds = %bb.cg, %bb.cj
-  %.pre-phi.i = phi i32 [ %.pre107.i, %bb.cj ], [ %i.og, %bb.cg ] ; 3 uses
   %i.oz = phi ptr [ %.pre106.i, %bb.cj ], [ %i.oi, %bb.cg ]
-  store i32 %.pre-phi.i, ptr @yy_n_chars, align 4
+  store i32 %i.og, ptr @yy_n_chars, align 4
   %i.pa = getelementptr inbounds nuw i8, ptr %i.oz, i64 8
   %i.pb = load ptr, ptr %i.pa, align 8
-  %i.pc = sext i32 %.pre-phi.i to i64
+  %i.pc = sext i32 %i.og to i64
   %i.pd = getelementptr inbounds i8, ptr %i.pb, i64 %i.pc
   store i8 0, ptr %i.pd, align 1
   %i.pe = load ptr, ptr %i.oh, align 8
   %i.pf = getelementptr inbounds nuw i8, ptr %i.pe, i64 8
   %i.pg = load ptr, ptr %i.pf, align 8
-  %i.ph = add i32 %.pre-phi.i, 1
+  %i.ph = add i32 %i.og, 1
   %i.pi = sext i32 %i.ph to i64
   %i.pj = getelementptr inbounds i8, ptr %i.pg, i64 %i.pi
   store i8 0, ptr %i.pj, align 1

@@ -6,8 +6,6 @@ target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:
 target triple = "x86_64-pc-linux-gnu"
 
 @.str = private unnamed_addr constant [11 x i8] c"mm/dd/yyyy\00", align 1
-@value.2 = internal unnamed_addr global i32 0, align 4
-@value.4 = internal unnamed_addr global i8 0, align 4
 @value.5 = internal unnamed_addr global ptr null, align 8
 @sqlca_init = internal unnamed_addr constant { [8 x i8], i64, i64, { i32, [150 x i8], [2 x i8] }, [8 x i8], [4 x i8], [6 x i64], [8 x i8], [5 x i8], [3 x i8] } { [8 x i8] c"SQLCA   ", i64 256, i64 0, { i32, [150 x i8], [2 x i8] } zeroinitializer, [8 x i8] c"NOT SET ", [4 x i8] zeroinitializer, [6 x i64] zeroinitializer, [8 x i8] zeroinitializer, [5 x i8] c"00000", [3 x i8] zeroinitializer }, align 8
 @switch.table.rdefmtdate = private unnamed_addr constant [5 x i32] [i32 -1212, i32 -1209, i32 -1212, i32 -1206, i32 -1205], align 4
@@ -410,10 +408,9 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.bj
 
 bb.c:                                             ; preds = %bb.a
-  %i.f = icmp sgt i64 %0, -1
+  %i.f = icmp sgt i64 %0, -1                      ; 4 uses
   %i.g = tail call i64 @llvm.abs.i64(i64 %0, i1 false) ; 2 uses
   %i.h = select i1 %i.f, i8 43, i8 45
-  store i8 %i.h, ptr @value.4, align 4
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.d, %bb.c
@@ -439,9 +436,8 @@ bb.g:                                             ; preds = %bb.e
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f
-  %.sink.i = phi i32 [ %i.i, %bb.f ], [ %i.p, %bb.g ] ; 2 uses
+  %.sink.i = phi i32 [ %i.i, %bb.f ], [ %i.p, %bb.g ] ; 5 uses
   %.1.i = phi i64 [ %i.o, %bb.f ], [ %i.j, %bb.g ]
-  store i32 %.sink.i, ptr @value.2, align 4
   %i.q = add i32 %.sink.i, 1
   %i.r = sext i32 %i.q to i64
   %i.s = tail call noalias ptr @malloc(i64 noundef %i.r) #19 ; 13 uses
@@ -450,12 +446,11 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   br i1 %i.t, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %3 = load i32, ptr @value.2, align 4            ; 4 uses
-  %i.u = icmp sgt i32 %3, 0
+  %i.u = icmp sgt i32 %.sink.i, 0
   br i1 %i.u, label %.lr.ph.preheader.i, label %.loopexit174
 
 .lr.ph.preheader.i:                               ; preds = %bb.i
-  %wide.trip.count.i = zext nneg i32 %3 to i64
+  %wide.trip.count.i = zext nneg i32 %.sink.i to i64
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i, %.lr.ph.preheader.i
@@ -480,7 +475,7 @@ bb.j:                                             ; preds = %bb.h
   br label %bb.bj
 
 .loopexit174:                                     ; preds = %.lr.ph.i, %bb.i
-  %i.ac = sext i32 %3 to i64
+  %i.ac = sext i32 %.sink.i to i64
   %i.ad = getelementptr inbounds i8, ptr %i.s, i64 %i.ac
   store i8 0, ptr %i.ad, align 1
   %i.ae = tail call ptr @strchr(ptr noundef nonnull dereferenceable(1) %1, i32 noundef 60) #18
@@ -495,7 +490,7 @@ bb.k:                                             ; preds = %.loopexit174
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %.loopexit174
-  %i.ah = phi i1 [ false, %.loopexit174 ], [ %.not142, %bb.k ] ; 2 uses
+  %i.ah = phi i1 [ false, %.loopexit174 ], [ %.not142, %bb.k ]
   %i.ai = tail call i64 @strlen(ptr noundef nonnull readonly dereferenceable(1) %1) #18
   %i.aj = trunc i64 %i.ai to i32                  ; 3 uses
   %.0912.i = add i32 %i.aj, -1                    ; 2 uses
@@ -532,12 +527,10 @@ getRightMostDot.exit:                             ; preds = %bb.n, %bb.l, %bb.m
   br i1 %i.au, label %.lr.ph, label %.loopexit
 
 .lr.ph:                                           ; preds = %getRightMostDot.exit
-  %i.av = add i32 %3, -1
-  %4 = load i8, ptr @value.4, align 4             ; 3 uses
-  %5 = icmp eq i8 %4, 45                          ; 3 uses
-  %i.aw = select i1 %5, i8 41, i8 32
-  %or.cond26 = select i1 %i.ah, i1 %5, i1 false
-  %6 = icmp ne i8 %4, 45
+  %i.av = add i32 %.sink.i, -1
+  %i.aw = select i1 %i.f, i8 32, i8 41
+  %not.175 = xor i1 %i.f, true
+  %or.cond26 = and i1 %i.ah, %not.175             ; 2 uses
   %i.ax = zext nneg i32 %.0135179 to i64
   br label %bb.o
 
@@ -693,7 +686,7 @@ bb.ah:                                            ; preds = %bb.af
 
 bb.ai:                                            ; preds = %bb.x
   %not. = xor i1 %i.bn, true
-  %or.cond14 = select i1 %not., i1 true, i1 %6
+  %or.cond14 = or i1 %i.f, %not.
   %or.cond16 = select i1 %or.cond14, i1 true, i1 %i.bo
   br i1 %or.cond16, label %bb.ak, label %bb.aj
 
@@ -721,7 +714,7 @@ bb.an:                                            ; preds = %bb.x
   br i1 %or.cond18, label %bb.ap, label %bb.ao
 
 bb.ao:                                            ; preds = %bb.an
-  store i8 %4, ptr %i.a, align 2
+  store i8 %i.h, ptr %i.a, align 2
   br label %bb.bh
 
 bb.ap:                                            ; preds = %bb.an
@@ -739,9 +732,8 @@ bb.ar:                                            ; preds = %bb.ap
   br label %bb.bh
 
 bb.as:                                            ; preds = %bb.x
-  %or.cond20 = and i1 %i.ah, %i.bn
-  %or.cond23 = select i1 %or.cond20, i1 %5, i1 false
-  br i1 %or.cond23, label %bb.at, label %bb.au
+  %or.cond20 = and i1 %or.cond26, %i.bn
+  br i1 %or.cond20, label %bb.at, label %bb.au
 
 bb.at:                                            ; preds = %bb.as
   store i8 40, ptr %i.a, align 2

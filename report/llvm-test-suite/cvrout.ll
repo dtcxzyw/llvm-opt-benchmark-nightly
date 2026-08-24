@@ -203,7 +203,7 @@ bb.a:
   %i.f = lshr exact i64 %i.e, 3
   %i.g = trunc i64 %i.f to i32
   %i.h = add i32 %i.g, -3
-  %i.i = load i32, ptr @cube, align 8, !tbaa !42  ; 2 uses
+  %i.i = load i32, ptr @cube, align 8, !tbaa !42  ; 3 uses
   %i.j = icmp slt i32 %i.i, 33
   %i.k = add nsw i32 %i.i, -1
   %i.l = lshr i32 %i.k, 3
@@ -212,8 +212,7 @@ bb.a:
   %narrow = select i1 %i.j, i32 8, i32 %i.n
   %i.o = zext nneg i32 %narrow to i64
   %i.p = tail call noalias ptr @malloc(i64 noundef %i.o) #12
-  %3 = load i32, ptr @cube, align 8, !tbaa !42
-  %i.q = tail call ptr (ptr, i32, ...) @set_clear(ptr noundef %i.p, i32 noundef %3) #10 ; 3 uses
+  %i.q = tail call ptr (ptr, i32, ...) @set_clear(ptr noundef %i.p, i32 noundef %i.i) #10 ; 3 uses
   %i.r = load i32, ptr @verbose_debug, align 4, !tbaa !4
   %i.s = icmp ne i32 %i.r, 0
   %i.t = icmp eq i32 %2, 0

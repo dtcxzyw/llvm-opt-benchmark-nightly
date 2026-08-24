@@ -170,19 +170,18 @@ bb.a:
   %i.e = load i32, ptr %i.a, align 4, !tbaa !13
   %i.f = getelementptr inbounds nuw i8, ptr %i.d, i64 12
   store i32 %i.e, ptr %i.f, align 4, !tbaa !13
-  %i.g = load i32, ptr getelementptr inbounds nuw (i8, ptr @cube, i64 4), align 4, !tbaa !24
+  %i.g = load i32, ptr getelementptr inbounds nuw (i8, ptr @cube, i64 4), align 4, !tbaa !24 ; 5 uses
   %i.h = sext i32 %i.g to i64
   %i.i = shl nsw i64 %i.h, 2
   %i.j = tail call noalias ptr @malloc(i64 noundef %i.i) #11 ; 6 uses
-  %1 = load i32, ptr getelementptr inbounds nuw (i8, ptr @cube, i64 4), align 4, !tbaa !24 ; 4 uses
-  %i.k = icmp sgt i32 %1, 0
+  %i.k = icmp sgt i32 %i.g, 0
   br i1 %i.k, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.a
   %i.l = load ptr, ptr getelementptr inbounds nuw (i8, ptr @cdata, i64 24), align 8, !tbaa !25 ; 3 uses
-  %wide.trip.count = zext nneg i32 %1 to i64      ; 2 uses
+  %wide.trip.count = zext nneg i32 %i.g to i64    ; 2 uses
   %xtraiter = and i64 %wide.trip.count, 1
-  %i.m = icmp eq i32 %1, 1
+  %i.m = icmp eq i32 %i.g, 1
   br i1 %i.m, label %.epil.preheader, label %.lr.ph.new
 
 .lr.ph.new:                                       ; preds = %.lr.ph
@@ -236,7 +235,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
 .epil.preheader:                                  ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph
   %indvars.iv.epil.init = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next.1, %._crit_edge.loopexit.unr-lcssa ] ; 2 uses
   %.04759.epil.init = phi i32 [ 0, %.lr.ph ], [ %.1.1, %._crit_edge.loopexit.unr-lcssa ] ; 3 uses
-  %lcmp.mod104 = trunc i32 %1 to i1
+  %lcmp.mod104 = trunc i32 %i.g to i1
   tail call void @llvm.assume(i1 %lcmp.mod104)
   %i.z = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %indvars.iv.epil.init
   %i.aa = load i32, ptr %i.z, align 4, !tbaa !4

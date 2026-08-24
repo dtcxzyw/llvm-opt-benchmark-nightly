@@ -205,7 +205,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #15
   store ptr null, ptr %i.a, align 8, !tbaa !191
   %i.f = load i8, ptr @H5D_init_g, align 1, !tbaa !8, !range !10, !noundef !11
-  %i.g = trunc nuw i8 %i.f to i1                  ; 2 uses
+  %i.g = trunc nuw i8 %i.f to i1
   %i.h = load i8, ptr @H5_libterm_g, align 1, !range !10
   %i.i = trunc nuw i8 %i.h to i1
   %i.j = xor i1 %i.i, true
@@ -313,13 +313,8 @@ bb.l:                                             ; preds = %H5D__chunk_mem_allo
   %i.bh = getelementptr inbounds nuw i8, ptr %i.z, i64 312 ; 2 uses
   %i.bi = load ptr, ptr %i.bh, align 8, !tbaa !254 ; 3 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.bc, ptr align 1 %i.bi, i64 %i.s, i1 false)
-  %6 = load i8, ptr @H5_libterm_g, align 1, !range !10
-  %7 = trunc nuw i8 %6 to i1
-  %8 = xor i1 %7, true
-  %9 = select i1 %i.g, i1 true, i1 %8
-  %10 = icmp ne ptr %i.bi, null
-  %or.cond.i267 = and i1 %10, %9
-  br i1 %or.cond.i267, label %bb.m, label %H5D__chunk_mem_xfree.exit268, !prof !269
+  %.not149 = icmp eq ptr %i.bi, null
+  br i1 %.not149, label %H5D__chunk_mem_xfree.exit268, label %bb.m, !prof !208
 
 bb.m:                                             ; preds = %bb.l
   %i.bj = tail call ptr @H5FL_blk_free(ptr noundef nonnull @H5_chunk_blk_free_list, ptr noundef nonnull %i.bi) #15 ; 0 uses

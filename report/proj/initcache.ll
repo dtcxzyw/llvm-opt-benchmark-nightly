@@ -133,10 +133,10 @@ bb.a:
 .lr.ph:                                           ; preds = %bb.a
   %i.c = load ptr, ptr @_ZL9cache_key, align 8, !tbaa !18
   %i.d = load ptr, ptr @_ZL14cache_paralist, align 8
+  %1 = zext nneg i32 %i.a to i64
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %_Z17pj_clone_paralistPK8ARG_list.exit
-  %1 = phi i32 [ %i.a, %.lr.ph ], [ %2, %_Z17pj_clone_paralistPK8ARG_list.exit ] ; 2 uses
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %_Z17pj_clone_paralistPK8ARG_list.exit ] ; 3 uses
   %i.e = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %indvars.iv
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !20
@@ -174,20 +174,14 @@ bb.e:                                             ; preds = %bb.d, %.lr.ph.i
   %.1.i = phi ptr [ %.01318.i, %bb.d ], [ %i.n, %.lr.ph.i ] ; 2 uses
   %i.r = load ptr, ptr %.01417.i, align 8, !tbaa !9 ; 2 uses
   %.not.i = icmp eq ptr %i.r, null
-  br i1 %.not.i, label %_Z17pj_clone_paralistPK8ARG_list.exit.loopexit, label %.lr.ph.i, !llvm.loop !12
+  br i1 %.not.i, label %_Z17pj_clone_paralistPK8ARG_list.exit, label %.lr.ph.i, !llvm.loop !12
 
-_Z17pj_clone_paralistPK8ARG_list.exit.loopexit:   ; preds = %bb.e
-  %.pre = load i32, ptr @_ZL11cache_count, align 4
-  br label %_Z17pj_clone_paralistPK8ARG_list.exit
-
-_Z17pj_clone_paralistPK8ARG_list.exit:            ; preds = %_Z17pj_clone_paralistPK8ARG_list.exit.loopexit, %bb.c, %bb.b
-  %2 = phi i32 [ %1, %bb.b ], [ %1, %bb.c ], [ %.pre, %_Z17pj_clone_paralistPK8ARG_list.exit.loopexit ] ; 2 uses
-  %.1 = phi ptr [ null, %bb.b ], [ null, %bb.c ], [ %.1.i, %_Z17pj_clone_paralistPK8ARG_list.exit.loopexit ] ; 2 uses
+_Z17pj_clone_paralistPK8ARG_list.exit:            ; preds = %bb.e, %bb.c, %bb.b
+  %.1 = phi ptr [ null, %bb.b ], [ null, %bb.c ], [ %.1.i, %bb.e ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.s = icmp eq ptr %.1, null
-  %3 = sext i32 %2 to i64
-  %4 = icmp slt i64 %indvars.iv.next, %3
-  %i.t = select i1 %i.s, i1 %4, i1 false
+  %2 = icmp samesign ult i64 %indvars.iv.next, %1
+  %i.t = select i1 %i.s, i1 %2, i1 false
   br i1 %i.t, label %bb.b, label %._crit_edge, !llvm.loop !24
 
 ._crit_edge:                                      ; preds = %_Z17pj_clone_paralistPK8ARG_list.exit, %bb.a
@@ -203,7 +197,7 @@ declare i32 @strcmp(ptr noundef captures(none), ptr noundef captures(none)) loca
 define hidden void @_Z19pj_insert_initcachePKcPK8ARG_list(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(address_is_null) %1) local_unnamed_addr #4 {
 bb.a:
   tail call void @_Z15pj_acquire_lockv()
-  %i.a = load i32, ptr @_ZL11cache_count, align 4, !tbaa !14 ; 2 uses
+  %i.a = load i32, ptr @_ZL11cache_count, align 4, !tbaa !14 ; 7 uses
   %i.b = load i32, ptr @_ZL11cache_alloc, align 4, !tbaa !14
   %i.c = icmp eq i32 %i.a, %i.b
   %.pre = load ptr, ptr @_ZL9cache_key, align 8, !tbaa !18 ; 4 uses
@@ -214,16 +208,15 @@ bb.b:                                             ; preds = %bb.a
   %i.e = add nsw i32 %i.d, 15                     ; 2 uses
   store i32 %i.e, ptr @_ZL11cache_alloc, align 4, !tbaa !14
   %i.f = sext i32 %i.e to i64
-  %i.g = shl nsw i64 %i.f, 3
+  %i.g = shl nsw i64 %i.f, 3                      ; 2 uses
   %i.h = tail call noalias ptr @malloc(i64 noundef %i.g) #9 ; 3 uses
   %i.i = icmp ne ptr %.pre, null
-  %2 = load i32, ptr @_ZL11cache_count, align 4   ; 2 uses
-  %i.j = icmp ne i32 %2, 0
-  %or.cond = select i1 %i.i, i1 %i.j, i1 false
+  %i.j = icmp ne i32 %i.a, 0                      ; 2 uses
+  %or.cond = and i1 %i.j, %i.i
   br i1 %or.cond, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  %i.k = sext i32 %2 to i64
+  %i.k = sext i32 %i.a to i64
   %i.l = shl nsw i64 %i.k, 3
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 8 %i.h, ptr nonnull align 8 %.pre, i64 %i.l, i1 false)
   br label %bb.d
@@ -231,19 +224,14 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c, %bb.b
   tail call void @free(ptr noundef %.pre) #10
   store ptr %i.h, ptr @_ZL9cache_key, align 8, !tbaa !18
-  %3 = load i32, ptr @_ZL11cache_alloc, align 4, !tbaa !14
-  %4 = sext i32 %3 to i64
-  %5 = shl nsw i64 %4, 3
-  %i.m = tail call noalias ptr @malloc(i64 noundef %5) #9 ; 2 uses
+  %i.m = tail call noalias ptr @malloc(i64 noundef %i.g) #9 ; 2 uses
   %i.n = load ptr, ptr @_ZL14cache_paralist, align 8, !tbaa !15 ; 3 uses
-  %6 = icmp ne ptr %i.n, null
-  %7 = load i32, ptr @_ZL11cache_count, align 4   ; 2 uses
-  %i.o = icmp ne i32 %7, 0
-  %or.cond3 = select i1 %6, i1 %i.o, i1 false
+  %i.o = icmp ne ptr %i.n, null
+  %or.cond3 = and i1 %i.j, %i.o
   br i1 %or.cond3, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
-  %i.p = sext i32 %7 to i64
+  %i.p = sext i32 %i.a to i64
   %i.q = shl nsw i64 %i.p, 3
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 8 %i.m, ptr nonnull align 8 %i.n, i64 %i.q, i1 false)
   br label %bb.f
@@ -258,8 +246,7 @@ bb.g:                                             ; preds = %bb.f, %bb.a
   %i.s = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %0) #8
   %i.t = add i64 %i.s, 1
   %i.u = tail call noalias ptr @malloc(i64 noundef %i.t) #9 ; 2 uses
-  %8 = load i32, ptr @_ZL11cache_count, align 4, !tbaa !14 ; 2 uses
-  %i.v = sext i32 %8 to i64                       ; 2 uses
+  %i.v = sext i32 %i.a to i64                     ; 2 uses
   %i.w = getelementptr inbounds [8 x i8], ptr %i.r, i64 %i.v
   store ptr %i.u, ptr %i.w, align 8, !tbaa !20
   %i.x = tail call ptr @strcpy(ptr noundef nonnull dereferenceable(1) %i.u, ptr noundef nonnull dereferenceable(1) %0) #10 ; 0 uses
@@ -290,21 +277,14 @@ bb.i:                                             ; preds = %bb.h, %.lr.ph.i
   %.1.i = phi ptr [ %.01318.i, %bb.h ], [ %i.ab, %.lr.ph.i ] ; 2 uses
   %i.af = load ptr, ptr %.01417.i, align 8, !tbaa !9 ; 2 uses
   %.not.i = icmp eq ptr %i.af, null
-  br i1 %.not.i, label %_Z17pj_clone_paralistPK8ARG_list.exit.loopexit, label %.lr.ph.i, !llvm.loop !12
+  br i1 %.not.i, label %_Z17pj_clone_paralistPK8ARG_list.exit, label %.lr.ph.i, !llvm.loop !12
 
-_Z17pj_clone_paralistPK8ARG_list.exit.loopexit:   ; preds = %bb.i
-  %.pre14 = load i32, ptr @_ZL11cache_count, align 4, !tbaa !14 ; 2 uses
-  %.pre15 = sext i32 %.pre14 to i64
-  br label %_Z17pj_clone_paralistPK8ARG_list.exit
-
-_Z17pj_clone_paralistPK8ARG_list.exit:            ; preds = %_Z17pj_clone_paralistPK8ARG_list.exit.loopexit, %bb.g
-  %.pre-phi = phi i64 [ %.pre15, %_Z17pj_clone_paralistPK8ARG_list.exit.loopexit ], [ %i.v, %bb.g ]
-  %9 = phi i32 [ %.pre14, %_Z17pj_clone_paralistPK8ARG_list.exit.loopexit ], [ %8, %bb.g ]
-  %.013.lcssa.i = phi ptr [ %.1.i, %_Z17pj_clone_paralistPK8ARG_list.exit.loopexit ], [ null, %bb.g ]
+_Z17pj_clone_paralistPK8ARG_list.exit:            ; preds = %bb.i, %bb.g
+  %.013.lcssa.i = phi ptr [ null, %bb.g ], [ %.1.i, %bb.i ]
   %i.ag = load ptr, ptr @_ZL14cache_paralist, align 8, !tbaa !15
-  %i.ah = getelementptr inbounds [8 x i8], ptr %i.ag, i64 %.pre-phi
+  %i.ah = getelementptr inbounds [8 x i8], ptr %i.ag, i64 %i.v
   store ptr %.013.lcssa.i, ptr %i.ah, align 8, !tbaa !9
-  %i.ai = add nsw i32 %9, 1
+  %i.ai = add nsw i32 %i.a, 1
   store i32 %i.ai, ptr @_ZL11cache_count, align 4, !tbaa !14
   tail call void @_Z15pj_release_lockv()
   ret void

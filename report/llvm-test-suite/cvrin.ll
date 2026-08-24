@@ -202,17 +202,16 @@ bb.r:                                             ; preds = %bb.q
 
 bb.s:                                             ; preds = %bb.r, %bb.q
   call void (...) @cube_setup() #17
-  %i.bv = load i32, ptr @cube, align 8, !tbaa !20
+  %i.bv = load i32, ptr @cube, align 8, !tbaa !20 ; 3 uses
   %i.bw = sext i32 %i.bv to i64
   %i.bx = shl nsw i64 %i.bw, 3
   %i.by = call noalias ptr @malloc(i64 noundef %i.bx) #22 ; 2 uses
   store ptr %i.by, ptr %i.h, align 8, !tbaa !29
-  %2 = load i32, ptr @cube, align 8, !tbaa !20    ; 2 uses
-  %i.bz = icmp sgt i32 %2, 0
+  %i.bz = icmp sgt i32 %i.bv, 0
   br i1 %i.bz, label %.lr.ph.preheader.i, label %PLA_labels.exit.backedge
 
 .lr.ph.preheader.i:                               ; preds = %bb.s
-  %i.ca = zext nneg i32 %2 to i64
+  %i.ca = zext nneg i32 %i.bv to i64
   %i.cb = shl nuw nsw i64 %i.ca, 3
   call void @llvm.memset.p0.i64(ptr align 8 %i.by, i8 0, i64 %i.cb, i1 false), !tbaa !36
   br label %PLA_labels.exit.backedge
@@ -281,30 +280,30 @@ bb.ab:                                            ; preds = %bb.aa
   br label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab, %bb.aa
-  %i.cv = phi i32 [ %.pre368, %bb.ab ], [ %i.ct, %bb.aa ]
+  %i.cv = phi i32 [ %.pre368, %bb.ab ], [ %i.ct, %bb.aa ] ; 2 uses
   %i.cw = load i32, ptr getelementptr inbounds nuw (i8, ptr @cube, i64 4), align 4, !tbaa !22 ; 2 uses
   %i.cx = icmp slt i32 %i.cw, %i.cv
   br i1 %i.cx, label %bb.ad, label %bb.ae
 
 bb.ad:                                            ; preds = %bb.ac
   call void (ptr, ...) @fatal(ptr noundef nonnull @.str.22) #17
-  %.pre369.a = load i32, ptr getelementptr inbounds nuw (i8, ptr @cube, i64 4), align 4, !tbaa !22
+  %.pre369 = load i32, ptr getelementptr inbounds nuw (i8, ptr @cube, i64 4), align 4, !tbaa !22
+  %.pre369.a = load i32, ptr getelementptr inbounds nuw (i8, ptr @cube, i64 8), align 8, !tbaa !21
   br label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad, %bb.ac
-  %i.cy = phi i32 [ %.pre369.a, %bb.ad ], [ %i.cw, %bb.ac ]
+  %2 = phi i32 [ %.pre369.a, %bb.ad ], [ %i.cv, %bb.ac ] ; 3 uses
+  %i.cy = phi i32 [ %.pre369, %bb.ad ], [ %i.cw, %bb.ac ] ; 2 uses
   %i.cz = sext i32 %i.cy to i64
   %i.da = shl nsw i64 %i.cz, 2
   %i.db = call noalias ptr @malloc(i64 noundef %i.da) #22
   store ptr %i.db, ptr getelementptr inbounds nuw (i8, ptr @cube, i64 32), align 8, !tbaa !25
-  %3 = load i32, ptr getelementptr inbounds nuw (i8, ptr @cube, i64 8), align 8, !tbaa !21 ; 3 uses
-  store i32 %3, ptr %i.a, align 4, !tbaa !4
-  %4 = load i32, ptr getelementptr inbounds nuw (i8, ptr @cube, i64 4), align 4, !tbaa !22
-  %i.dc = icmp slt i32 %3, %4
+  store i32 %2, ptr %i.a, align 4, !tbaa !4
+  %i.dc = icmp slt i32 %2, %i.cy
   br i1 %i.dc, label %.lr.ph340, label %._crit_edge341
 
 .lr.ph340:                                        ; preds = %bb.ae, %bb.ag
-  %storemerge160338 = phi i32 [ %i.di, %bb.ag ], [ %3, %bb.ae ]
+  %storemerge160338 = phi i32 [ %i.di, %bb.ag ], [ %2, %bb.ae ]
   %i.dd = load ptr, ptr getelementptr inbounds nuw (i8, ptr @cube, i64 32), align 8, !tbaa !25
   %i.de = sext i32 %storemerge160338 to i64
   %i.df = getelementptr inbounds [4 x i8], ptr %i.dd, i64 %i.de
@@ -326,17 +325,16 @@ bb.ag:                                            ; preds = %.lr.ph340, %bb.af
 
 ._crit_edge341:                                   ; preds = %bb.ag, %bb.ae
   call void (...) @cube_setup() #17
-  %i.dl = load i32, ptr @cube, align 8, !tbaa !20
+  %i.dl = load i32, ptr @cube, align 8, !tbaa !20 ; 3 uses
   %i.dm = sext i32 %i.dl to i64
   %i.dn = shl nsw i64 %i.dm, 3
   %i.do = call noalias ptr @malloc(i64 noundef %i.dn) #22 ; 2 uses
   store ptr %i.do, ptr %i.h, align 8, !tbaa !29
-  %5 = load i32, ptr @cube, align 8, !tbaa !20    ; 2 uses
-  %i.dp = icmp sgt i32 %5, 0
+  %i.dp = icmp sgt i32 %i.dl, 0
   br i1 %i.dp, label %.lr.ph.preheader.i173, label %PLA_labels.exit.backedge
 
 .lr.ph.preheader.i173:                            ; preds = %._crit_edge341
-  %i.dq = zext nneg i32 %5 to i64
+  %i.dq = zext nneg i32 %i.dl to i64
   %i.dr = shl nuw nsw i64 %i.dq, 3
   call void @llvm.memset.p0.i64(ptr align 8 %i.do, i8 0, i64 %i.dr, i1 false), !tbaa !36
   br label %PLA_labels.exit.backedge
@@ -488,17 +486,16 @@ bb.av:                                            ; preds = %bb.au, %bb.at
   br i1 %i.ft, label %bb.aw, label %PLA_labels.exit189
 
 bb.aw:                                            ; preds = %bb.av
-  %i.fu = load i32, ptr @cube, align 8, !tbaa !20
+  %i.fu = load i32, ptr @cube, align 8, !tbaa !20 ; 3 uses
   %i.fv = sext i32 %i.fu to i64
   %i.fw = shl nsw i64 %i.fv, 3
   %i.fx = call noalias ptr @malloc(i64 noundef %i.fw) #22 ; 2 uses
   store ptr %i.fx, ptr %i.h, align 8, !tbaa !29
-  %6 = load i32, ptr @cube, align 8, !tbaa !20    ; 2 uses
-  %i.fy = icmp sgt i32 %6, 0
+  %i.fy = icmp sgt i32 %i.fu, 0
   br i1 %i.fy, label %.lr.ph.preheader.i188, label %PLA_labels.exit189
 
 .lr.ph.preheader.i188:                            ; preds = %bb.aw
-  %i.fz = zext nneg i32 %6 to i64
+  %i.fz = zext nneg i32 %i.fu to i64
   %i.ga = shl nuw nsw i64 %i.fz, 3
   call void @llvm.memset.p0.i64(ptr align 8 %i.fx, i8 0, i64 %i.ga, i1 false), !tbaa !36
   br label %PLA_labels.exit189
@@ -617,17 +614,16 @@ bb.bd:                                            ; preds = %bb.bc, %bb.bb
   br i1 %i.ic, label %bb.be, label %PLA_labels.exit204
 
 bb.be:                                            ; preds = %bb.bd
-  %i.id = load i32, ptr @cube, align 8, !tbaa !20
+  %i.id = load i32, ptr @cube, align 8, !tbaa !20 ; 3 uses
   %i.ie = sext i32 %i.id to i64
   %i.if = shl nsw i64 %i.ie, 3
   %i.ig = call noalias ptr @malloc(i64 noundef %i.if) #22 ; 2 uses
   store ptr %i.ig, ptr %i.h, align 8, !tbaa !29
-  %7 = load i32, ptr @cube, align 8, !tbaa !20    ; 2 uses
-  %i.ih = icmp sgt i32 %7, 0
+  %i.ih = icmp sgt i32 %i.id, 0
   br i1 %i.ih, label %.lr.ph.preheader.i203, label %PLA_labels.exit204
 
 .lr.ph.preheader.i203:                            ; preds = %bb.be
-  %i.ii = zext nneg i32 %7 to i64
+  %i.ii = zext nneg i32 %i.id to i64
   %i.ij = shl nuw nsw i64 %i.ii, 3
   call void @llvm.memset.p0.i64(ptr align 8 %i.ig, i8 0, i64 %i.ij, i1 false), !tbaa !36
   br label %PLA_labels.exit204
@@ -751,17 +747,16 @@ bb.bm:                                            ; preds = %bb.bl, %bb.bk
   br i1 %i.kl, label %bb.bn, label %PLA_labels.exit219
 
 bb.bn:                                            ; preds = %bb.bm
-  %i.km = load i32, ptr @cube, align 8, !tbaa !20
+  %i.km = load i32, ptr @cube, align 8, !tbaa !20 ; 3 uses
   %i.kn = sext i32 %i.km to i64
   %i.ko = shl nsw i64 %i.kn, 3
   %i.kp = call noalias ptr @malloc(i64 noundef %i.ko) #22 ; 2 uses
   store ptr %i.kp, ptr %i.h, align 8, !tbaa !29
-  %8 = load i32, ptr @cube, align 8, !tbaa !20    ; 2 uses
-  %i.kq = icmp sgt i32 %8, 0
+  %i.kq = icmp sgt i32 %i.km, 0
   br i1 %i.kq, label %.lr.ph.preheader.i218, label %PLA_labels.exit219
 
 .lr.ph.preheader.i218:                            ; preds = %bb.bn
-  %i.kr = zext nneg i32 %8 to i64
+  %i.kr = zext nneg i32 %i.km to i64
   %i.ks = shl nuw nsw i64 %i.kr, 3
   call void @llvm.memset.p0.i64(ptr align 8 %i.kp, i8 0, i64 %i.ks, i1 false), !tbaa !36
   br label %PLA_labels.exit219
@@ -1164,7 +1159,7 @@ bb.r:                                             ; preds = %bb.q
   %i.cx = load ptr, ptr %i.cw, align 8, !tbaa !40
   store ptr %i.cx, ptr %i.a, align 8, !tbaa !38
   store ptr %i.cv, ptr %i.cw, align 8, !tbaa !40
-  %i.cy = load i32, ptr @cube, align 8, !tbaa !20 ; 2 uses
+  %i.cy = load i32, ptr @cube, align 8, !tbaa !20 ; 3 uses
   %i.cz = icmp slt i32 %i.cy, 33
   %i.da = add nsw i32 %i.cy, -1
   %i.db = lshr i32 %i.da, 3
@@ -1173,8 +1168,7 @@ bb.r:                                             ; preds = %bb.q
   %narrow = select i1 %i.cz, i32 8, i32 %i.dd
   %i.de = zext nneg i32 %narrow to i64
   %i.df = call noalias ptr @malloc(i64 noundef %i.de) #22
-  %6 = load i32, ptr @cube, align 8, !tbaa !20
-  %i.dg = call ptr (ptr, i32, ...) @set_clear(ptr noundef %i.df, i32 noundef %6) #17 ; 2 uses
+  %i.dg = call ptr (ptr, i32, ...) @set_clear(ptr noundef %i.df, i32 noundef %i.cy) #17 ; 2 uses
   store ptr %i.dg, ptr %i.b, align 8, !tbaa !52
   %i.dh = load ptr, ptr getelementptr inbounds nuw (i8, ptr @cube, i64 88), align 8, !tbaa !41
   %i.di = load ptr, ptr getelementptr inbounds nuw (i8, ptr @cube, i64 72), align 8, !tbaa !26
@@ -1495,18 +1489,17 @@ bb.a:
 ; Function Attrs: mustprogress nofree nounwind willreturn memory(readwrite, argmem: write, target_mem: none) uwtable
 define dso_local i32 @PLA_labels(ptr nofree noundef writeonly captures(none) initializes((56, 64)) %0) local_unnamed_addr #11 {
 bb.a:
-  %i.a = load i32, ptr @cube, align 8, !tbaa !20
+  %i.a = load i32, ptr @cube, align 8, !tbaa !20  ; 3 uses
   %i.b = sext i32 %i.a to i64
   %i.c = shl nsw i64 %i.b, 3
   %i.d = tail call noalias ptr @malloc(i64 noundef %i.c) #22 ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 56
   store ptr %i.d, ptr %i.e, align 8, !tbaa !29
-  %1 = load i32, ptr @cube, align 8, !tbaa !20    ; 2 uses
-  %i.f = icmp sgt i32 %1, 0
+  %i.f = icmp sgt i32 %i.a, 0
   br i1 %i.f, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %i.g = zext nneg i32 %1 to i64
+  %i.g = zext nneg i32 %i.a to i64
   %i.h = shl nuw nsw i64 %i.g, 3
   tail call void @llvm.memset.p0.i64(ptr align 8 %i.d, i8 0, i64 %i.h, i1 false), !tbaa !36
   br label %._crit_edge

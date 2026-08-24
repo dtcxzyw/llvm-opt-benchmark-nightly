@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.c
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 4 uses
   %i.g = load i32, ptr %i.f, align 8, !tbaa !17   ; 2 uses
   %i.h = icmp eq i32 %i.g, 0
-  %i.i = load i32, ptr @WriteConnectedComponentsToPGM.index, align 4
+  %i.i = load i32, ptr @WriteConnectedComponentsToPGM.index, align 4 ; 3 uses
   %i.j = icmp sgt i32 %i.i, 99
   %or.cond = select i1 %i.h, i1 true, i1 %i.j
   br i1 %or.cond, label %bb.i, label %bb.e
@@ -253,10 +253,9 @@ bb.h:                                             ; preds = %._crit_edge
   %i.ab = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.aa) #16
   %i.ac = add i64 %i.ab, 12
   %i.ad = tail call noalias ptr @malloc(i64 noundef %i.ac) #13 ; 2 uses
-  %2 = load i32, ptr @WriteConnectedComponentsToPGM.index, align 4, !tbaa !4 ; 2 uses
-  %i.ae = add nsw i32 %2, 1
+  %i.ae = add nsw i32 %i.i, 1
   store i32 %i.ae, ptr @WriteConnectedComponentsToPGM.index, align 4, !tbaa !4
-  %i.af = tail call i32 (ptr, ptr, ...) @sprintf(ptr noundef nonnull dereferenceable(1) %i.ad, ptr noundef nonnull dereferenceable(1) @.str.13, ptr noundef nonnull %i.aa, i32 noundef %2) #15 ; 0 uses
+  %i.af = tail call i32 (ptr, ptr, ...) @sprintf(ptr noundef nonnull dereferenceable(1) %i.ad, ptr noundef nonnull dereferenceable(1) @.str.13, ptr noundef nonnull %i.aa, i32 noundef %i.i) #15 ; 0 uses
   %i.ag = load ptr, ptr @stdout, align 8, !tbaa !85 ; 4 uses
   %i.ah = tail call i64 @fwrite(ptr nonnull @.str.14, i64 3, i64 1, ptr %i.ag) ; 0 uses
   %i.ai = load i32, ptr %i.c, align 4, !tbaa !8

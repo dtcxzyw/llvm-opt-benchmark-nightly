@@ -21,7 +21,7 @@ bb.a:
   %i.b = alloca ptr, align 8                      ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #11
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #11
-  %i.c = load i8, ptr @locale_decimal_point, align 1, !tbaa !8
+  %i.c = load i8, ptr @locale_decimal_point, align 1, !tbaa !8 ; 2 uses
   %i.d = icmp eq i8 %i.c, 46
   br i1 %i.d, label %bb.b, label %.preheader
 
@@ -94,8 +94,7 @@ bb.h:                                             ; preds = %bb.e, %bb.f
   br i1 %.not29, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %2 = load i8, ptr @locale_decimal_point, align 1, !tbaa !8
-  store i8 %2, ptr %i.w, align 1, !tbaa !8
+  store i8 %i.c, ptr %i.w, align 1, !tbaa !8
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h

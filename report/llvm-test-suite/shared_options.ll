@@ -89,7 +89,7 @@ define dso_local noundef ptr @opt_parse(i32 noundef %0, ptr noundef %1, ptr noun
 bb.a:
   %i.a = alloca i32, align 4                      ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
-  %i.b = tail call noalias dereferenceable_or_null(16) ptr @calloc(i64 noundef 1, i64 noundef 16) #10 ; 18 uses
+  %i.b = tail call noalias dereferenceable_or_null(16) ptr @calloc(i64 noundef 1, i64 noundef 16) #10 ; 17 uses
   %.not = icmp eq ptr %i.b, null
   br i1 %.not, label %bb.b, label %.preheader88.a
 
@@ -288,7 +288,7 @@ bb.z:                                             ; preds = %.preheader88.a
   br i1 %i.at, label %.preheader.preheader, label %.loopexit
 
 .preheader.preheader:                             ; preds = %bb.z
-  %i.au = sext i32 %i.as to i64
+  %i.au = sext i32 %i.as to i64                   ; 2 uses
   %wide.trip.count = sext i32 %0 to i64           ; 2 uses
   br label %.preheader
 
@@ -313,7 +313,12 @@ bb.aa:                                            ; preds = %.preheader
   %i.bf = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store ptr %i.be, ptr %i.bf, align 8, !tbaa !19
   %.not56 = icmp eq ptr %i.be, null
-  br i1 %.not56, label %bb.ab, label %5
+  br i1 %.not56, label %bb.ab, label %.lr.ph
+
+.lr.ph:                                           ; preds = %bb.aa
+  %5 = add nsw i32 %0, -1
+  %sext = sext i32 %5 to i64
+  br label %bb.ag
 
 bb.ab:                                            ; preds = %bb.aa
   call void (ptr, ...) @mprintf(ptr noundef nonnull @.str) #9
@@ -353,19 +358,8 @@ opt_free.exit87:                                  ; preds = %bb.af, %bb.ab
   call void @free(ptr noundef nonnull %i.b) #9
   br label %.loopexit
 
-5:                                                ; preds = %bb.aa
-  %6 = load i32, ptr @optind, align 4, !tbaa !4   ; 2 uses
-  %7 = icmp slt i32 %6, %0
-  br i1 %7, label %.lr.ph, label %.loopexit
-
-.lr.ph:                                           ; preds = %5
-  %8 = add nsw i32 %0, -1
-  %9 = sext i32 %6 to i64
-  %sext = sext i32 %8 to i64
-  br label %bb.ag
-
 bb.ag:                                            ; preds = %.lr.ph, %bb.ai
-  %indvars.iv93 = phi i64 [ %9, %.lr.ph ], [ %indvars.iv.next94, %bb.ai ] ; 3 uses
+  %indvars.iv93 = phi i64 [ %i.au, %.lr.ph ], [ %indvars.iv.next94, %bb.ai ] ; 3 uses
   %i.bn = getelementptr inbounds [8 x i8], ptr %1, i64 %indvars.iv93
   %i.bo = load ptr, ptr %i.bn, align 8, !tbaa !23 ; 2 uses
   %i.bp = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.bo) #11
@@ -384,8 +378,8 @@ bb.ai:                                            ; preds = %bb.ag, %bb.ah
   %exitcond97.not = icmp eq i64 %indvars.iv.next94, %wide.trip.count
   br i1 %exitcond97.not, label %.loopexit, label %bb.ag, !llvm.loop !25
 
-.loopexit:                                        ; preds = %bb.ai, %5, %bb.z, %opt_free.exit87, %opt_free.exit77, %opt_free.exit67, %opt_free.exit, %bb.b
-  %.049 = phi ptr [ null, %bb.b ], [ null, %opt_free.exit87 ], [ null, %opt_free.exit ], [ null, %opt_free.exit67 ], [ null, %opt_free.exit77 ], [ %i.b, %bb.z ], [ %i.b, %5 ], [ %i.b, %bb.ai ]
+.loopexit:                                        ; preds = %bb.ai, %bb.z, %opt_free.exit87, %opt_free.exit77, %opt_free.exit67, %opt_free.exit, %bb.b
+  %.049 = phi ptr [ null, %bb.b ], [ null, %opt_free.exit87 ], [ null, %opt_free.exit ], [ null, %opt_free.exit67 ], [ null, %opt_free.exit77 ], [ %i.b, %bb.z ], [ %i.b, %bb.ai ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
   ret ptr %.049
 }

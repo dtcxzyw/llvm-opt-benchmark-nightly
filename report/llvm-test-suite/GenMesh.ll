@@ -202,7 +202,7 @@ bb.a:
   %i.g = fcmp ogt double %i.e, %i.f               ; 3 uses
   %.037.i = select i1 %i.g, double %i.e, double %i.f ; 2 uses
   %.036.i = select i1 %i.g, double %i.f, double %i.e ; 2 uses
-  %i.h = load i32, ptr @_ZN8Parallel5numpeE, align 4, !tbaa !4
+  %i.h = load i32, ptr @_ZN8Parallel5numpeE, align 4, !tbaa !4 ; 6 uses
   %i.i = sitofp i32 %i.h to double
   %i.j = fmul nnan double %.036.i, %i.i
   %i.k = fdiv double %i.j, %.037.i
@@ -211,13 +211,12 @@ bb.a:
   %i.n = tail call double @llvm.floor.f64(double %i.m)
   %i.o = fptosi double %i.n to i32
   %.sroa.speculated20.i = tail call i32 @llvm.smax.i32(i32 %i.o, i32 1)
-  %11 = load i32, ptr @_ZN8Parallel5numpeE, align 4, !tbaa !4 ; 5 uses
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.b, %bb.a
   %.038.i = phi i32 [ %.sroa.speculated20.i, %bb.a ], [ %i.r, %bb.b ] ; 5 uses
-  %i.p = srem i32 %11, %.038.i
-  %i.q = sdiv i32 %11, %.038.i
+  %i.p = srem i32 %i.h, %.038.i
+  %i.q = sdiv i32 %i.h, %.038.i
   %.not.i = icmp eq i32 %i.p, 0
   %i.r = add nsw i32 %.038.i, -1
   br i1 %.not.i, label %bb.c, label %bb.b, !llvm.loop !30
@@ -230,8 +229,8 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.d, %bb.c
   %.0.i = phi i32 [ %i.u, %bb.c ], [ %i.x, %bb.d ] ; 5 uses
-  %i.v = srem i32 %11, %.0.i
-  %i.w = sdiv i32 %11, %.0.i
+  %i.v = srem i32 %i.h, %.0.i
+  %i.w = sdiv i32 %i.h, %.0.i
   %.not11.i = icmp eq i32 %i.v, 0
   %i.x = add nsw i32 %.0.i, 1
   br i1 %.not11.i, label %bb.e, label %bb.d, !llvm.loop !32
@@ -257,7 +256,7 @@ bb.e:                                             ; preds = %bb.d
   %i.ap = select i1 %i.ao, i32 %.038.i, i32 %.0.i ; 5 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
   store i32 %i.ap, ptr %i.aq, align 8, !tbaa !33
-  %i.ar = sdiv i32 %11, %i.ap                     ; 4 uses
+  %i.ar = sdiv i32 %i.h, %i.ap                    ; 4 uses
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 60 ; 2 uses
   store i32 %i.ar, ptr %i.as, align 4, !tbaa !34
   br i1 %i.g, label %bb.f, label %_ZN7GenMesh9calcNumPEEv.exit
@@ -358,7 +357,7 @@ bb.a:
   %i.f = fcmp ogt double %i.d, %i.e               ; 3 uses
   %.037 = select i1 %i.f, double %i.d, double %i.e ; 2 uses
   %.036 = select i1 %i.f, double %i.e, double %i.d ; 2 uses
-  %i.g = load i32, ptr @_ZN8Parallel5numpeE, align 4, !tbaa !4
+  %i.g = load i32, ptr @_ZN8Parallel5numpeE, align 4, !tbaa !4 ; 6 uses
   %i.h = sitofp i32 %i.g to double
   %i.i = fmul nnan double %.036, %i.h
   %i.j = fdiv double %i.i, %.037
@@ -367,13 +366,12 @@ bb.a:
   %i.m = tail call double @llvm.floor.f64(double %i.l)
   %i.n = fptosi double %i.m to i32
   %.sroa.speculated20 = tail call i32 @llvm.smax.i32(i32 %i.n, i32 1)
-  %1 = load i32, ptr @_ZN8Parallel5numpeE, align 4, !tbaa !4 ; 5 uses
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.b, %bb.a
   %.038 = phi i32 [ %.sroa.speculated20, %bb.a ], [ %i.q, %bb.b ] ; 5 uses
-  %i.o = srem i32 %1, %.038
-  %i.p = sdiv i32 %1, %.038
+  %i.o = srem i32 %i.g, %.038
+  %i.p = sdiv i32 %i.g, %.038
   %.not = icmp eq i32 %i.o, 0
   %i.q = add nsw i32 %.038, -1
   br i1 %.not, label %bb.c, label %bb.b, !llvm.loop !30
@@ -386,8 +384,8 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.d, %bb.c
   %.0 = phi i32 [ %i.t, %bb.c ], [ %i.w, %bb.d ]  ; 5 uses
-  %i.u = srem i32 %1, %.0
-  %i.v = sdiv i32 %1, %.0
+  %i.u = srem i32 %i.g, %.0
+  %i.v = sdiv i32 %i.g, %.0
   %.not11 = icmp eq i32 %i.u, 0
   %i.w = add nsw i32 %.0, 1
   br i1 %.not11, label %bb.e, label %bb.d, !llvm.loop !32
@@ -413,7 +411,7 @@ bb.e:                                             ; preds = %bb.d
   %i.ao = select i1 %i.an, i32 %.038, i32 %.0     ; 4 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
   store i32 %i.ao, ptr %i.ap, align 8, !tbaa !33
-  %i.aq = sdiv i32 %1, %i.ao                      ; 3 uses
+  %i.aq = sdiv i32 %i.g, %i.ao                    ; 3 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 60 ; 2 uses
   store i32 %i.aq, ptr %i.ar, align 4, !tbaa !34
   br i1 %i.f, label %bb.f, label %bb.g

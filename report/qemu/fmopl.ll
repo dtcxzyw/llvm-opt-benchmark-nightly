@@ -204,7 +204,7 @@ OPL_CALC_RH.exit:                                 ; preds = %._crit_edge.OPL_CAL
 ; Function Attrs: nounwind sspstrong uwtable
 define dso_local noundef ptr @OPLCreate(i32 noundef %0, i32 noundef %1) local_unnamed_addr #0 {
 bb.a:
-  %i.a = load i32, ptr @num_lock, align 4
+  %i.a = load i32, ptr @num_lock, align 4         ; 2 uses
   %i.b = add i32 %i.a, 1                          ; 2 uses
   store i32 %i.b, ptr @num_lock, align 4
   %i.c = icmp sgt i32 %i.b, 1
@@ -472,9 +472,7 @@ bb.r:                                             ; preds = %bb.r, %.preheader.i
   br label %OPL_LockTable.exit
 
 OPL_LockTable.exit:                               ; preds = %bb.b, %.loopexit.sink.split.i.i
-  %2 = load i32, ptr @num_lock, align 4
-  %3 = add i32 %2, -1
-  store i32 %3, ptr @num_lock, align 4
+  store i32 %i.a, ptr @num_lock, align 4
   br label %OPLResetChip.exit
 
 .loopexit:                                        ; preds = %bb.r, %bb.a

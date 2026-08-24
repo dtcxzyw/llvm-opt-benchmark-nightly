@@ -204,7 +204,7 @@ alloc_string.exit102:                             ; preds = %bb.bl
 
 bb.bn:                                            ; preds = %.preheader482.i
   %i.cl = load ptr, ptr @yytext, align 8, !tbaa !30
-  %i.cm = load i32, ptr @yyleng, align 4, !tbaa !19 ; 5 uses
+  %i.cm = load i32, ptr @yyleng, align 4, !tbaa !19 ; 4 uses
   %i.cn = sext i32 %i.cm to i64                   ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #31
   %i.co = call noalias dereferenceable_or_null(16) ptr @malloc(i64 noundef 16) #25 ; 5 uses
@@ -238,28 +238,20 @@ bb.bq:                                            ; preds = %bb.bp
 xrealloc.exit.i.i75:                              ; preds = %bb.bp
   store ptr %i.cs, ptr @text, align 8, !tbaa !30
   store i32 %i.cq, ptr @text_asize, align 4, !tbaa !19
-  %.pre8.i.i76 = load i32, ptr @text_size, align 4, !tbaa !19 ; 2 uses
-  %.pre9.i.i77 = add nsw i32 %.pre8.i.i76, %i.cm  ; 2 uses
-  %0 = sext i32 %.pre8.i.i76 to i64
-  %.pre733 = sext i32 %.pre9.i.i77 to i64
   br label %append_string.exit.i78
 
 append_string.exit.i78:                           ; preds = %xrealloc.exit.i.i75, %new_string.exit.i
-  %.pre-phi = phi i64 [ %.pre733, %xrealloc.exit.i.i75 ], [ %i.cn, %new_string.exit.i ]
-  %.pre-phi.i.i79 = phi i32 [ %.pre9.i.i77, %xrealloc.exit.i.i75 ], [ %i.cm, %new_string.exit.i ]
-  %1 = phi i64 [ %0, %xrealloc.exit.i.i75 ], [ 0, %new_string.exit.i ]
   %i.ct = phi ptr [ %i.cs, %xrealloc.exit.i.i75 ], [ %i.co, %new_string.exit.i ] ; 2 uses
-  %2 = getelementptr inbounds i8, ptr %i.ct, i64 %1
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %2, ptr readonly align 1 %i.cl, i64 range(i64 -2147483648, 2147483648) %i.cn, i1 false)
-  store i32 %.pre-phi.i.i79, ptr @text_size, align 4, !tbaa !19
-  %i.cu = getelementptr inbounds i8, ptr %i.ct, i64 %.pre-phi
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.ct, ptr readonly align 1 %i.cl, i64 range(i64 -2147483648, 2147483648) %i.cn, i1 false)
+  store i32 %i.cm, ptr @text_size, align 4, !tbaa !19
+  %i.cu = getelementptr inbounds i8, ptr %i.ct, i64 %i.cn
   store i8 0, ptr %i.cu, align 1, !tbaa !24
   %.pre71.i = load i8, ptr @yy_hold_char, align 1, !tbaa !24
   br label %bb.br
 
 bb.br:                                            ; preds = %append_string.exit19.i, %append_string.exit.i78
   %i.cv = phi ptr [ %i.dv, %append_string.exit19.i ], [ %.pre72.i, %append_string.exit.i78 ] ; 6 uses
-  %i.cw = phi i8 [ %3, %append_string.exit19.i ], [ %.pre71.i, %append_string.exit.i78 ] ; 3 uses
+  %i.cw = phi i8 [ %i.dw, %append_string.exit19.i ], [ %.pre71.i, %append_string.exit.i78 ] ; 3 uses
   store i8 %i.cw, ptr %i.cv, align 1, !tbaa !24
   %i.cx = icmp eq i8 %i.cw, 0
   br i1 %i.cx, label %bb.bs, label %bb.bv
@@ -420,7 +412,7 @@ yyunput.exit.i86:                                 ; preds = %bb.by, %input.exit.
 
 bb.bz:                                            ; preds = %bb.bv
   %i.fn = load i32, ptr @text_size, align 4, !tbaa !19 ; 2 uses
-  %i.fo = add nsw i32 %i.fn, 1                    ; 3 uses
+  %i.fo = add nsw i32 %i.fn, 1                    ; 4 uses
   %i.fp = load i32, ptr @text_asize, align 4, !tbaa !19
   %.not.i12.i = icmp slt i32 %i.fo, %i.fp
   %.pre.i13.i = load ptr, ptr @text, align 8, !tbaa !30 ; 2 uses
@@ -439,23 +431,17 @@ bb.cb:                                            ; preds = %bb.ca
   unreachable
 
 xrealloc.exit.i15.i:                              ; preds = %bb.ca
-  %.pre.i99 = load i8, ptr @yy_hold_char, align 1, !tbaa !24
   store ptr %i.ft, ptr @text, align 8, !tbaa !30
   store i32 %i.fr, ptr @text_asize, align 4, !tbaa !19
-  %.pre8.i16.i = load i32, ptr @text_size, align 4, !tbaa !19 ; 2 uses
-  %.pre9.i17.i = add nsw i32 %.pre8.i16.i, 1
   br label %append_string.exit19.i
 
 append_string.exit19.i:                           ; preds = %xrealloc.exit.i15.i, %bb.bz
-  %3 = phi i8 [ %.pre.i99, %xrealloc.exit.i15.i ], [ %i.dw, %bb.bz ]
-  %.pre-phi.i18.i = phi i32 [ %.pre9.i17.i, %xrealloc.exit.i15.i ], [ %i.fo, %bb.bz ] ; 2 uses
-  %4 = phi i32 [ %.pre8.i16.i, %xrealloc.exit.i15.i ], [ %i.fn, %bb.bz ]
   %i.fu = phi ptr [ %i.ft, %xrealloc.exit.i15.i ], [ %.pre.i13.i, %bb.bz ] ; 2 uses
-  %i.fv = sext i32 %4 to i64
+  %i.fv = sext i32 %i.fn to i64
   %i.fw = getelementptr inbounds i8, ptr %i.fu, i64 %i.fv
   store i8 %i.dt, ptr %i.fw, align 1
-  store i32 %.pre-phi.i18.i, ptr @text_size, align 4, !tbaa !19
-  %i.fx = sext i32 %.pre-phi.i18.i to i64
+  store i32 %i.fo, ptr @text_size, align 4, !tbaa !19
+  %i.fx = sext i32 %i.fo to i64
   %i.fy = getelementptr inbounds i8, ptr %i.fu, i64 %i.fx
   store i8 0, ptr %i.fy, align 1, !tbaa !24
   br label %bb.br, !llvm.loop !42
@@ -747,9 +733,9 @@ yyunput.exit.i:                                   ; preds = %bb.ct, %bb.cs
 
 ._crit_edge.i62:                                  ; preds = %yyunput.exit.i, %bb.cn
   %i.kr = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.ir) #32 ; 2 uses
-  %i.ks = trunc i64 %i.kr to i32                  ; 2 uses
+  %i.ks = trunc i64 %i.kr to i32
   %i.kt = load i32, ptr @text_size, align 4, !tbaa !19 ; 2 uses
-  %i.ku = add nsw i32 %i.kt, %i.ks                ; 3 uses
+  %i.ku = add nsw i32 %i.kt, %i.ks                ; 4 uses
   %i.kv = load i32, ptr @text_asize, align 4, !tbaa !19
   %.not.i.i63 = icmp slt i32 %i.ku, %i.kv
   %.pre.i5.i = load ptr, ptr @text, align 8, !tbaa !30 ; 2 uses
@@ -770,21 +756,17 @@ bb.cv:                                            ; preds = %bb.cu
 xrealloc.exit.i.i65:                              ; preds = %bb.cu
   store ptr %i.kz, ptr @text, align 8, !tbaa !30
   store i32 %i.kx, ptr @text_asize, align 4, !tbaa !19
-  %.pre8.i.i66 = load i32, ptr @text_size, align 4, !tbaa !19 ; 2 uses
-  %.pre9.i.i67 = add nsw i32 %.pre8.i.i66, %i.ks
   br label %append_expanded_string.exit
 
 append_expanded_string.exit:                      ; preds = %._crit_edge.i62, %xrealloc.exit.i.i65
-  %.pre-phi.i.i69 = phi i32 [ %.pre9.i.i67, %xrealloc.exit.i.i65 ], [ %i.ku, %._crit_edge.i62 ] ; 2 uses
-  %5 = phi i32 [ %.pre8.i.i66, %xrealloc.exit.i.i65 ], [ %i.kt, %._crit_edge.i62 ]
   %i.la = phi ptr [ %i.kz, %xrealloc.exit.i.i65 ], [ %.pre.i5.i, %._crit_edge.i62 ] ; 2 uses
-  %i.lb = sext i32 %5 to i64
+  %i.lb = sext i32 %i.kt to i64
   %i.lc = getelementptr inbounds i8, ptr %i.la, i64 %i.lb
   %sext.i70 = shl i64 %i.kr, 32
   %i.ld = ashr exact i64 %sext.i70, 32
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.lc, ptr nonnull readonly align 1 %i.ir, i64 %i.ld, i1 false)
-  store i32 %.pre-phi.i.i69, ptr @text_size, align 4, !tbaa !19
-  %i.le = sext i32 %.pre-phi.i.i69 to i64
+  store i32 %i.ku, ptr @text_size, align 4, !tbaa !19
+  %i.le = sext i32 %i.ku to i64
   %i.lf = getelementptr inbounds i8, ptr %i.la, i64 %i.le
   store i8 0, ptr %i.lf, align 1, !tbaa !24
   call void @free(ptr noundef nonnull %i.ir) #31
@@ -793,9 +775,9 @@ append_expanded_string.exit:                      ; preds = %._crit_edge.i62, %x
 
 bb.cw:                                            ; preds = %.preheader482.i
   %i.lg = load ptr, ptr @yytext, align 8, !tbaa !30
-  %i.lh = load i32, ptr @yyleng, align 4, !tbaa !19 ; 3 uses
+  %i.lh = load i32, ptr @yyleng, align 4, !tbaa !19 ; 2 uses
   %i.li = load i32, ptr @text_size, align 4, !tbaa !19 ; 2 uses
-  %i.lj = add nsw i32 %i.li, %i.lh                ; 3 uses
+  %i.lj = add nsw i32 %i.li, %i.lh                ; 4 uses
   %i.lk = load i32, ptr @text_asize, align 4, !tbaa !19
   %.not.i51 = icmp slt i32 %i.lj, %i.lk
   %.pre.i52 = load ptr, ptr @text, align 8, !tbaa !30 ; 2 uses
@@ -816,20 +798,16 @@ bb.cy:                                            ; preds = %bb.cx
 xrealloc.exit.i54:                                ; preds = %bb.cx
   store ptr %i.lo, ptr @text, align 8, !tbaa !30
   store i32 %i.lm, ptr @text_asize, align 4, !tbaa !19
-  %.pre8.i55 = load i32, ptr @text_size, align 4, !tbaa !19 ; 2 uses
-  %.pre9.i56 = add nsw i32 %.pre8.i55, %i.lh
   br label %append_string.exit58
 
 append_string.exit58:                             ; preds = %bb.cw, %xrealloc.exit.i54
-  %.pre-phi.i57 = phi i32 [ %.pre9.i56, %xrealloc.exit.i54 ], [ %i.lj, %bb.cw ] ; 2 uses
-  %6 = phi i32 [ %.pre8.i55, %xrealloc.exit.i54 ], [ %i.li, %bb.cw ]
   %i.lp = phi ptr [ %i.lo, %xrealloc.exit.i54 ], [ %.pre.i52, %bb.cw ] ; 2 uses
-  %i.lq = sext i32 %6 to i64
+  %i.lq = sext i32 %i.li to i64
   %i.lr = getelementptr inbounds i8, ptr %i.lp, i64 %i.lq
   %i.ls = sext i32 %i.lh to i64
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.lr, ptr readonly align 1 %i.lg, i64 %i.ls, i1 false)
-  store i32 %.pre-phi.i57, ptr @text_size, align 4, !tbaa !19
-  %i.lt = sext i32 %.pre-phi.i57 to i64
+  store i32 %i.lj, ptr @text_size, align 4, !tbaa !19
+  %i.lt = sext i32 %i.lj to i64
   %i.lu = getelementptr inbounds i8, ptr %i.lp, i64 %i.lt
   store i8 0, ptr %i.lu, align 1, !tbaa !24
   br label %.loopexit.i.backedge
@@ -838,9 +816,9 @@ bb.cz:                                            ; preds = %.preheader482.i
   %i.lv = load ptr, ptr @yytext, align 8, !tbaa !30
   %i.lw = getelementptr inbounds nuw i8, ptr %i.lv, i64 1
   %i.lx = load i32, ptr @yyleng, align 4, !tbaa !19
-  %i.ly = add nsw i32 %i.lx, -1                   ; 3 uses
+  %i.ly = add nsw i32 %i.lx, -1                   ; 2 uses
   %i.lz = load i32, ptr @text_size, align 4, !tbaa !19 ; 2 uses
-  %i.ma = add nsw i32 %i.lz, %i.ly                ; 3 uses
+  %i.ma = add nsw i32 %i.lz, %i.ly                ; 4 uses
   %i.mb = load i32, ptr @text_asize, align 4, !tbaa !19
   %.not.i43 = icmp slt i32 %i.ma, %i.mb
   %.pre.i44 = load ptr, ptr @text, align 8, !tbaa !30 ; 2 uses
@@ -861,20 +839,16 @@ bb.db:                                            ; preds = %bb.da
 xrealloc.exit.i46:                                ; preds = %bb.da
   store ptr %i.mf, ptr @text, align 8, !tbaa !30
   store i32 %i.md, ptr @text_asize, align 4, !tbaa !19
-  %.pre8.i47 = load i32, ptr @text_size, align 4, !tbaa !19 ; 2 uses
-  %.pre9.i48 = add nsw i32 %.pre8.i47, %i.ly
   br label %append_string.exit50
 
 append_string.exit50:                             ; preds = %bb.cz, %xrealloc.exit.i46
-  %.pre-phi.i49 = phi i32 [ %.pre9.i48, %xrealloc.exit.i46 ], [ %i.ma, %bb.cz ] ; 2 uses
-  %7 = phi i32 [ %.pre8.i47, %xrealloc.exit.i46 ], [ %i.lz, %bb.cz ]
   %i.mg = phi ptr [ %i.mf, %xrealloc.exit.i46 ], [ %.pre.i44, %bb.cz ] ; 2 uses
-  %i.mh = sext i32 %7 to i64
+  %i.mh = sext i32 %i.lz to i64
   %i.mi = getelementptr inbounds i8, ptr %i.mg, i64 %i.mh
   %i.mj = sext i32 %i.ly to i64
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.mi, ptr nonnull readonly align 1 %i.lw, i64 %i.mj, i1 false)
-  store i32 %.pre-phi.i49, ptr @text_size, align 4, !tbaa !19
-  %i.mk = sext i32 %.pre-phi.i49 to i64
+  store i32 %i.ma, ptr @text_size, align 4, !tbaa !19
+  %i.mk = sext i32 %i.ma to i64
   %i.ml = getelementptr inbounds i8, ptr %i.mg, i64 %i.mk
   store i8 0, ptr %i.ml, align 1, !tbaa !24
   br label %.loopexit.i.backedge
@@ -893,7 +867,7 @@ bb.dd:                                            ; preds = %bb.dc
 
 bb.de:                                            ; preds = %bb.dc
   %i.mq = load i32, ptr @text_size, align 4, !tbaa !19 ; 2 uses
-  %i.mr = add nsw i32 %i.mq, 1                    ; 3 uses
+  %i.mr = add nsw i32 %i.mq, 1                    ; 4 uses
   %i.ms = load i32, ptr @text_asize, align 4, !tbaa !19
   %.not.i35 = icmp slt i32 %i.mr, %i.ms
   %.pre.i36 = load ptr, ptr @text, align 8, !tbaa !30 ; 2 uses
@@ -914,21 +888,17 @@ bb.dg:                                            ; preds = %bb.df
 xrealloc.exit.i38:                                ; preds = %bb.df
   store ptr %i.mw, ptr @text, align 8, !tbaa !30
   store i32 %i.mu, ptr @text_asize, align 4, !tbaa !19
-  %.pre8.i39 = load i32, ptr @text_size, align 4, !tbaa !19 ; 2 uses
-  %.pre9.i40 = add nsw i32 %.pre8.i39, 1
   %.pre731 = load i8, ptr %i.mm, align 1
   br label %append_string.exit42
 
 append_string.exit42:                             ; preds = %bb.de, %xrealloc.exit.i38
   %i.mx = phi i8 [ %.pre731, %xrealloc.exit.i38 ], [ %i.mn, %bb.de ]
-  %.pre-phi.i41 = phi i32 [ %.pre9.i40, %xrealloc.exit.i38 ], [ %i.mr, %bb.de ] ; 2 uses
-  %8 = phi i32 [ %.pre8.i39, %xrealloc.exit.i38 ], [ %i.mq, %bb.de ]
   %i.my = phi ptr [ %i.mw, %xrealloc.exit.i38 ], [ %.pre.i36, %bb.de ] ; 2 uses
-  %i.mz = sext i32 %8 to i64
+  %i.mz = sext i32 %i.mq to i64
   %i.na = getelementptr inbounds i8, ptr %i.my, i64 %i.mz
   store i8 %i.mx, ptr %i.na, align 1
-  store i32 %.pre-phi.i41, ptr @text_size, align 4, !tbaa !19
-  %i.nb = sext i32 %.pre-phi.i41 to i64
+  store i32 %i.mr, ptr @text_size, align 4, !tbaa !19
+  %i.nb = sext i32 %i.mr to i64
   %i.nc = getelementptr inbounds i8, ptr %i.my, i64 %i.nb
   store i8 0, ptr %i.nc, align 1, !tbaa !24
   br label %.loopexit.i.backedge
@@ -1111,22 +1081,33 @@ bb.dn:                                            ; preds = %._crit_edge285.i
 bb.do:                                            ; preds = %bb.dn
   %i.pz = sub nsw i32 %.055.lcssa.i, %i.pw        ; 3 uses
   %i.qa = icmp samesign ugt i32 %i.pz, 8
-  %.pre = load i32, ptr @text_size, align 4, !tbaa !19 ; 2 uses
-  %.pre729 = load i32, ptr @text_asize, align 4, !tbaa !19 ; 2 uses
-  %text.promoted.i = load ptr, ptr @text, align 8 ; 2 uses
-  br i1 %i.qa, label %.lr.ph289.i, label %._crit_edge290.i
+  %.pre729 = load i32, ptr @text_asize, align 4   ; 2 uses
+  br i1 %i.qa, label %.lr.ph289.preheader.i, label %.._crit_edge290.i_crit_edge
 
-.lr.ph289.i:                                      ; preds = %bb.do, %append_string.exit.i
-  %9 = phi i32 [ %11, %append_string.exit.i ], [ %.pre729, %bb.do ] ; 2 uses
-  %i.qb = phi i32 [ %.pre-phi.i.i, %append_string.exit.i ], [ %.pre, %bb.do ] ; 2 uses
-  %.2287.i = phi i32 [ %i.ql, %append_string.exit.i ], [ %i.pz, %bb.do ] ; 2 uses
-  %i.qc = phi ptr [ %i.qh, %append_string.exit.i ], [ %text.promoted.i, %bb.do ] ; 2 uses
-  %10 = add nsw i32 %i.qb, 8                      ; 3 uses
-  %.not.i107.i = icmp slt i32 %10, %9
+.._crit_edge290.i_crit_edge:                      ; preds = %bb.do
+  %.pre = load i32, ptr @text_size, align 4, !tbaa !19
+  %.pre.i21.pre = load ptr, ptr @text, align 8, !tbaa !30
+  br label %._crit_edge290.i
+
+.lr.ph289.preheader.i:                            ; preds = %bb.do
+  %text.promoted.i = load ptr, ptr @text, align 8
+  %text_size.promoted.i = load i32, ptr @text_size, align 4
+  %0 = sext i32 %text_size.promoted.i to i64
+  br label %.lr.ph289.i
+
+.lr.ph289.i:                                      ; preds = %append_string.exit.i, %.lr.ph289.preheader.i
+  %indvars.iv449.i = phi i64 [ %0, %.lr.ph289.preheader.i ], [ %indvars.iv.next450.i, %append_string.exit.i ] ; 2 uses
+  %i.qb = phi i32 [ %i.pz, %.lr.ph289.preheader.i ], [ %i.ql, %append_string.exit.i ] ; 2 uses
+  %.2287.i = phi i32 [ %.pre729, %.lr.ph289.preheader.i ], [ %i.qi, %append_string.exit.i ] ; 2 uses
+  %i.qc = phi ptr [ %text.promoted.i, %.lr.ph289.preheader.i ], [ %i.qh, %append_string.exit.i ] ; 2 uses
+  %indvars.iv.next450.i = add nsw i64 %indvars.iv449.i, 8 ; 4 uses
+  %1 = sext i32 %.2287.i to i64
+  %.not.i107.i = icmp slt i64 %indvars.iv.next450.i, %1
+  %.pre455.i = trunc nsw i64 %indvars.iv.next450.i to i32 ; 3 uses
   br i1 %.not.i107.i, label %append_string.exit.i, label %bb.dp
 
 bb.dp:                                            ; preds = %.lr.ph289.i
-  %i.qd = and i32 %10, -16
+  %i.qd = and i32 %.pre455.i, -16
   %i.qe = add nsw i32 %i.qd, 16                   ; 3 uses
   %i.qf = zext nneg i32 %i.qe to i64
   %i.qg = call ptr @realloc(ptr noundef %i.qc, i64 noundef range(i64 16, 2147483633) %i.qf) #27 ; 3 uses
@@ -1140,32 +1121,26 @@ bb.dq:                                            ; preds = %bb.dp
 xrealloc.exit.i.i:                                ; preds = %bb.dp
   store ptr %i.qg, ptr @text, align 8, !tbaa !30
   store i32 %i.qe, ptr @text_asize, align 4, !tbaa !19
-  %.pre8.i.i = load i32, ptr @text_size, align 4, !tbaa !19 ; 2 uses
-  %.pre9.i.i = add nsw i32 %.pre8.i.i, 8
   br label %append_string.exit.i
 
 append_string.exit.i:                             ; preds = %xrealloc.exit.i.i, %.lr.ph289.i
-  %11 = phi i32 [ %i.qe, %xrealloc.exit.i.i ], [ %9, %.lr.ph289.i ] ; 2 uses
   %i.qh = phi ptr [ %i.qg, %xrealloc.exit.i.i ], [ %i.qc, %.lr.ph289.i ] ; 4 uses
-  %.pre-phi.i.i = phi i32 [ %.pre9.i.i, %xrealloc.exit.i.i ], [ %10, %.lr.ph289.i ] ; 4 uses
-  %i.qi = phi i32 [ %.pre8.i.i, %xrealloc.exit.i.i ], [ %i.qb, %.lr.ph289.i ]
-  %12 = sext i32 %i.qi to i64
-  %i.qj = getelementptr inbounds i8, ptr %i.qh, i64 %12
+  %i.qi = phi i32 [ %i.qe, %xrealloc.exit.i.i ], [ %.2287.i, %.lr.ph289.i ] ; 2 uses
+  %i.qj = getelementptr inbounds i8, ptr %i.qh, i64 %indvars.iv449.i
   store i64 2314885530818453536, ptr %i.qj, align 1
-  store i32 %.pre-phi.i.i, ptr @text_size, align 4, !tbaa !19
-  %13 = sext i32 %.pre-phi.i.i to i64
-  %i.qk = getelementptr inbounds i8, ptr %i.qh, i64 %13
+  store i32 %.pre455.i, ptr @text_size, align 4, !tbaa !19
+  %i.qk = getelementptr inbounds i8, ptr %i.qh, i64 %indvars.iv.next450.i
   store i8 0, ptr %i.qk, align 1, !tbaa !24
-  %i.ql = add nsw i32 %.2287.i, -8                ; 2 uses
-  %i.qm = icmp sgt i32 %.2287.i, 16
+  %i.ql = add nsw i32 %i.qb, -8                   ; 2 uses
+  %i.qm = icmp sgt i32 %i.qb, 16
   br i1 %i.qm, label %.lr.ph289.i, label %._crit_edge290.i, !llvm.loop !46
 
-._crit_edge290.i:                                 ; preds = %append_string.exit.i, %bb.do
-  %.pre.i24 = phi ptr [ %text.promoted.i, %bb.do ], [ %i.qh, %append_string.exit.i ] ; 2 uses
-  %i.qn = phi i32 [ %.pre729, %bb.do ], [ %11, %append_string.exit.i ]
-  %i.qo = phi i32 [ %.pre, %bb.do ], [ %.pre-phi.i.i, %append_string.exit.i ] ; 2 uses
-  %.2.lcssa.i = phi i32 [ %i.pz, %bb.do ], [ %i.ql, %append_string.exit.i ] ; 3 uses
-  %i.qp = add nsw i32 %i.qo, %.2.lcssa.i          ; 3 uses
+._crit_edge290.i:                                 ; preds = %append_string.exit.i, %.._crit_edge290.i_crit_edge
+  %.pre.i24 = phi ptr [ %.pre.i21.pre, %.._crit_edge290.i_crit_edge ], [ %i.qh, %append_string.exit.i ] ; 2 uses
+  %i.qn = phi i32 [ %.pre729, %.._crit_edge290.i_crit_edge ], [ %i.qi, %append_string.exit.i ]
+  %i.qo = phi i32 [ %.pre, %.._crit_edge290.i_crit_edge ], [ %.pre455.i, %append_string.exit.i ] ; 2 uses
+  %.2.lcssa.i = phi i32 [ %i.pz, %.._crit_edge290.i_crit_edge ], [ %i.ql, %append_string.exit.i ] ; 2 uses
+  %i.qp = add nsw i32 %i.qo, %.2.lcssa.i          ; 4 uses
   %.not.i23 = icmp slt i32 %i.qp, %i.qn
   br i1 %.not.i23, label %append_string.exit30, label %bb.dr
 
@@ -1184,20 +1159,16 @@ bb.ds:                                            ; preds = %bb.dr
 xrealloc.exit.i26:                                ; preds = %bb.dr
   store ptr %i.qt, ptr @text, align 8, !tbaa !30
   store i32 %i.qr, ptr @text_asize, align 4, !tbaa !19
-  %.pre8.i27 = load i32, ptr @text_size, align 4, !tbaa !19 ; 2 uses
-  %.pre9.i28 = add nsw i32 %.pre8.i27, %.2.lcssa.i
   br label %append_string.exit30
 
 append_string.exit30:                             ; preds = %._crit_edge290.i, %xrealloc.exit.i26
-  %.pre-phi.i29 = phi i32 [ %.pre9.i28, %xrealloc.exit.i26 ], [ %i.qp, %._crit_edge290.i ] ; 2 uses
-  %14 = phi i32 [ %.pre8.i27, %xrealloc.exit.i26 ], [ %i.qo, %._crit_edge290.i ]
   %i.qu = phi ptr [ %i.qt, %xrealloc.exit.i26 ], [ %.pre.i24, %._crit_edge290.i ] ; 2 uses
-  %i.qv = sext i32 %14 to i64
+  %i.qv = sext i32 %i.qo to i64
   %i.qw = getelementptr inbounds i8, ptr %i.qu, i64 %i.qv
   %i.qx = sext i32 %.2.lcssa.i to i64
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.qw, ptr nonnull align 1 @.str.14, i64 %i.qx, i1 false)
-  store i32 %.pre-phi.i29, ptr @text_size, align 4, !tbaa !19
-  %i.qy = sext i32 %.pre-phi.i29 to i64
+  store i32 %i.qp, ptr @text_size, align 4, !tbaa !19
+  %i.qy = sext i32 %i.qp to i64
   %i.qz = getelementptr inbounds i8, ptr %i.qu, i64 %i.qy
   store i8 0, ptr %i.qz, align 1, !tbaa !24
   br label %.loopexit.i.backedge
@@ -1234,7 +1205,7 @@ bb.dv:                                            ; preds = %bb.du, %bb.dt
 
 bb.dw:                                            ; preds = %.preheader482.i
   %i.rj = load i32, ptr @text_size, align 4, !tbaa !19 ; 2 uses
-  %i.rk = add nsw i32 %i.rj, 1                    ; 3 uses
+  %i.rk = add nsw i32 %i.rj, 1                    ; 4 uses
   %i.rl = load i32, ptr @text_asize, align 4, !tbaa !19
   %.not.i15 = icmp slt i32 %i.rk, %i.rl
   %.pre.i16 = load ptr, ptr @text, align 8, !tbaa !30 ; 2 uses
@@ -1255,19 +1226,15 @@ bb.dy:                                            ; preds = %bb.dx
 xrealloc.exit.i18:                                ; preds = %bb.dx
   store ptr %i.rp, ptr @text, align 8, !tbaa !30
   store i32 %i.rn, ptr @text_asize, align 4, !tbaa !19
-  %.pre8.i19 = load i32, ptr @text_size, align 4, !tbaa !19 ; 2 uses
-  %.pre9.i20 = add nsw i32 %.pre8.i19, 1
   br label %append_string.exit22
 
 append_string.exit22:                             ; preds = %bb.dw, %xrealloc.exit.i18
-  %.pre-phi.i21 = phi i32 [ %.pre9.i20, %xrealloc.exit.i18 ], [ %i.rk, %bb.dw ] ; 2 uses
-  %15 = phi i32 [ %.pre8.i19, %xrealloc.exit.i18 ], [ %i.rj, %bb.dw ]
   %i.rq = phi ptr [ %i.rp, %xrealloc.exit.i18 ], [ %.pre.i16, %bb.dw ] ; 2 uses
-  %i.rr = sext i32 %15 to i64
+  %i.rr = sext i32 %i.rj to i64
   %i.rs = getelementptr inbounds i8, ptr %i.rq, i64 %i.rr
   store i8 10, ptr %i.rs, align 1
-  store i32 %.pre-phi.i21, ptr @text_size, align 4, !tbaa !19
-  %i.rt = sext i32 %.pre-phi.i21 to i64
+  store i32 %i.rk, ptr @text_size, align 4, !tbaa !19
+  %i.rt = sext i32 %i.rk to i64
   %i.ru = getelementptr inbounds i8, ptr %i.rq, i64 %i.rt
   store i8 0, ptr %i.ru, align 1, !tbaa !24
   br label %.loopexit.i.backedge
@@ -1304,9 +1271,9 @@ bb.ea:                                            ; preds = %bb.dz, %bb.dz
   br label %._crit_edge.i
 
 ._crit_edge.i:                                    ; preds = %bb.ea, %._crit_edge.loopexit.split.loop.exit.i, %thread-pre-split.i
-  %.lcssa275.i = phi i32 [ 0, %thread-pre-split.i ], [ %i.sa, %._crit_edge.loopexit.split.loop.exit.i ], [ 0, %bb.ea ] ; 3 uses
+  %.lcssa275.i = phi i32 [ 0, %thread-pre-split.i ], [ %i.sa, %._crit_edge.loopexit.split.loop.exit.i ], [ 0, %bb.ea ] ; 2 uses
   %i.sb = load i32, ptr @text_size, align 4, !tbaa !19 ; 2 uses
-  %i.sc = add nsw i32 %i.sb, %.lcssa275.i         ; 3 uses
+  %i.sc = add nsw i32 %i.sb, %.lcssa275.i         ; 4 uses
   %i.sd = load i32, ptr @text_asize, align 4, !tbaa !19
   %.not.i13 = icmp slt i32 %i.sc, %i.sd
   %.pre.i14 = load ptr, ptr @text, align 8, !tbaa !30 ; 2 uses
@@ -1327,20 +1294,16 @@ bb.ec:                                            ; preds = %bb.eb
 xrealloc.exit.i:                                  ; preds = %bb.eb
   store ptr %i.sh, ptr @text, align 8, !tbaa !30
   store i32 %i.sf, ptr @text_asize, align 4, !tbaa !19
-  %.pre8.i = load i32, ptr @text_size, align 4, !tbaa !19 ; 2 uses
-  %.pre9.i = add nsw i32 %.pre8.i, %.lcssa275.i
   br label %append_string.exit
 
 append_string.exit:                               ; preds = %._crit_edge.i, %xrealloc.exit.i
-  %.pre-phi.i = phi i32 [ %.pre9.i, %xrealloc.exit.i ], [ %i.sc, %._crit_edge.i ] ; 2 uses
-  %16 = phi i32 [ %.pre8.i, %xrealloc.exit.i ], [ %i.sb, %._crit_edge.i ]
   %i.si = phi ptr [ %i.sh, %xrealloc.exit.i ], [ %.pre.i14, %._crit_edge.i ] ; 2 uses
-  %i.sj = sext i32 %16 to i64
+  %i.sj = sext i32 %i.sb to i64
   %i.sk = getelementptr inbounds i8, ptr %i.si, i64 %i.sj
   %i.sl = sext i32 %.lcssa275.i to i64
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.sk, ptr readonly align 1 %.pre451.i, i64 %i.sl, i1 false)
-  store i32 %.pre-phi.i, ptr @text_size, align 4, !tbaa !19
-  %i.sm = sext i32 %.pre-phi.i to i64
+  store i32 %i.sc, ptr @text_size, align 4, !tbaa !19
+  %i.sm = sext i32 %i.sc to i64
   %i.sn = getelementptr inbounds i8, ptr %i.si, i64 %i.sm
   store i8 0, ptr %i.sn, align 1, !tbaa !24
   %i.so = load i32, ptr @first_ts, align 4, !tbaa !19
@@ -1743,7 +1706,7 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.c
   %i.v = xor i64 %i.s, -1
   %i.w = add i64 %i.r, %i.v                       ; 6 uses
-  %i.x = trunc i64 %i.w to i32                    ; 6 uses
+  %i.x = trunc i64 %i.w to i32                    ; 5 uses
   %i.y = icmp sgt i32 %i.x, 0
   br i1 %i.y, label %iter.check, label %._crit_edge
 
@@ -1994,7 +1957,7 @@ bb.n:                                             ; preds = %._crit_edge68, %bb.
   %i.dl = phi ptr [ %.pre76, %bb.l ], [ %i.df, %bb.m ], [ %i.cx, %._crit_edge68 ]
   %i.dm = phi i32 [ %.pre75, %bb.l ], [ 0, %bb.m ], [ %.pr, %._crit_edge68 ] ; 2 uses
   %.032 = phi i32 [ 1, %bb.l ], [ 2, %bb.m ], [ 0, %._crit_edge68 ]
-  %i.dn = add nsw i32 %i.dm, %i.x                 ; 3 uses
+  %i.dn = add nsw i32 %i.dm, %i.x                 ; 4 uses
   %i.do = getelementptr inbounds nuw [8 x i8], ptr %i.dl, i64 %i.dk ; 3 uses
   %i.dp = getelementptr inbounds nuw i8, ptr %i.dj, i64 24
   %i.dq = load i32, ptr %i.dp, align 8, !tbaa !34
@@ -2027,15 +1990,12 @@ bb.q:                                             ; preds = %bb.o
   %i.ea = add nsw i32 %i.dt, -2
   %i.eb = getelementptr inbounds nuw i8, ptr %i.dy, i64 24
   store i32 %i.ea, ptr %i.eb, align 8, !tbaa !34
-  %.pre79 = load i32, ptr @yy_n_chars, align 4, !tbaa !19
-  %.pre83 = add nsw i32 %.pre79, %i.x
   br label %bb.r
 
 bb.r:                                             ; preds = %._crit_edge80, %bb.q
-  %.pre-phi = phi i32 [ %i.dn, %._crit_edge80 ], [ %.pre83, %bb.q ] ; 2 uses
-  %i.ec = phi ptr [ %.pre82, %._crit_edge80 ], [ %i.dx, %bb.q ]
-  store i32 %.pre-phi, ptr @yy_n_chars, align 4, !tbaa !19
-  %i.ed = sext i32 %.pre-phi to i64               ; 2 uses
+  %i.ec = phi ptr [ %i.dx, %bb.q ], [ %.pre82, %._crit_edge80 ]
+  store i32 %i.dn, ptr @yy_n_chars, align 4, !tbaa !19
+  %i.ed = sext i32 %i.dn to i64                   ; 2 uses
   %i.ee = getelementptr inbounds i8, ptr %i.ec, i64 %i.ed
   store i8 0, ptr %i.ee, align 1, !tbaa !24
   %i.ef = load ptr, ptr %i.do, align 8, !tbaa !15

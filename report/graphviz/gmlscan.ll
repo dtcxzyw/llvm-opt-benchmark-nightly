@@ -202,8 +202,8 @@ bb.ep:                                            ; preds = %bb.eo
 
 bb.eq:                                            ; preds = %bb.eo
   %i.adt = xor i64 %i.adq, -1
-  %i.adu = add i64 %i.adt, %i.adp                 ; 7 uses
-  %i.adv = trunc i64 %i.adu to i32                ; 10 uses
+  %i.adu = add i64 %i.adt, %i.adp                 ; 8 uses
+  %i.adv = trunc i64 %i.adu to i32                ; 8 uses
   %i.adw = icmp sgt i32 %i.adv, 0
   br i1 %i.adw, label %iter.check, label %._crit_edge.i116
 
@@ -408,7 +408,7 @@ bb.ex:                                            ; preds = %bb.ev
   %i.agm = ptrtoint ptr %i.zu to i64
   %i.agn = sub i64 %i.agl, %i.agm                 ; 2 uses
   %i.ago = trunc i64 %i.agn to i32
-  %i.agp = add nsw i32 %i.afz, %i.adv             ; 3 uses
+  %i.agp = add nsw i32 %i.afz, %i.adv             ; 4 uses
   %i.agq = getelementptr inbounds nuw [8 x i8], ptr %i.agb, i64 %i.agc ; 3 uses
   %i.agr = getelementptr inbounds nuw i8, ptr %i.age, i64 24
   %i.ags = load i32, ptr %i.agr, align 8, !tbaa !20
@@ -429,7 +429,7 @@ bb.ey:                                            ; preds = %bb.ew
 bb.ez:                                            ; preds = %bb.ew
   %i.ahb = load ptr, ptr @gmlin, align 8, !tbaa !9
   tail call void @gmlrestart(ptr noundef %i.ahb)
-  %.pre66.i = load i32, ptr @yy_n_chars, align 4, !tbaa !12 ; 4 uses
+  %.pre66.i = load i32, ptr @yy_n_chars, align 4, !tbaa !12 ; 5 uses
   %.pre67.i = load ptr, ptr @yy_buffer_stack, align 8, !tbaa !13 ; 2 uses
   %.pre68.i = load i64, ptr @yy_buffer_stack_top, align 8, !tbaa !16 ; 2 uses
   %.phi.trans.insert.i = getelementptr inbounds nuw [8 x i8], ptr %.pre67.i, i64 %.pre68.i
@@ -494,30 +494,24 @@ bb.fd:                                            ; preds = %bb.fa
   %i.aia = add nsw i32 %i.ahh, -2
   %i.aib = getelementptr inbounds nuw i8, ptr %i.ahm, i64 24
   store i32 %i.aia, ptr %i.aib, align 8, !tbaa !20
-  %.pre70.i.jt0 = load i32, ptr @yy_n_chars, align 4, !tbaa !12
-  %.pre74.i.jt0 = add nsw i32 %.pre70.i.jt0, %i.adv
   br label %yy_get_next_buffer.exit.jt0
 
 bb.fe:                                            ; preds = %bb.fb
   %i.aic = add nsw i32 %i.adv, -2
   %i.aid = getelementptr inbounds nuw i8, ptr %i.ahq, i64 24
   store i32 %i.aic, ptr %i.aid, align 8, !tbaa !20
-  %.pre70.i.jt2 = load i32, ptr @yy_n_chars, align 4, !tbaa !12
-  %.pre74.i.jt2 = add nsw i32 %.pre70.i.jt2, %i.adv
   br label %yy_get_next_buffer.exit.jt2
 
 bb.ff:                                            ; preds = %bb.fc
   %i.aie = add nsw i32 %i.aht, -2
   %i.aif = getelementptr inbounds nuw i8, ptr %i.ahy, i64 24
   store i32 %i.aie, ptr %i.aif, align 8, !tbaa !20
-  %.pre70.i.jt1 = load i32, ptr @yy_n_chars, align 4, !tbaa !12
   br label %yy_get_next_buffer.exit.jt1
 
 yy_get_next_buffer.exit.jt0:                      ; preds = %._crit_edge71.i.jt0, %bb.fd
-  %.pre-phi.i.jt0 = phi i32 [ %.pre74.i.jt0, %bb.fd ], [ %i.agp, %._crit_edge71.i.jt0 ] ; 2 uses
   %i.aig = phi ptr [ %i.ahl, %bb.fd ], [ %.pre73.i.jt0, %._crit_edge71.i.jt0 ]
-  store i32 %.pre-phi.i.jt0, ptr @yy_n_chars, align 4, !tbaa !12
-  %i.aih = sext i32 %.pre-phi.i.jt0 to i64        ; 2 uses
+  store i32 %i.agp, ptr @yy_n_chars, align 4, !tbaa !12
+  %i.aih = sext i32 %i.agp to i64                 ; 2 uses
   %i.aii = getelementptr inbounds i8, ptr %i.aig, i64 %i.aih
   store i8 0, ptr %i.aii, align 1, !tbaa !29
   %i.aij = load ptr, ptr %i.agq, align 8, !tbaa !18
@@ -547,10 +541,10 @@ yy_get_next_buffer.exit.jt0:                      ; preds = %._crit_edge71.i.jt0
   br i1 %i.ajc, label %.lr.ph26.i121, label %.loopexit155.backedge
 
 yy_get_next_buffer.exit.jt2:                      ; preds = %bb.ey, %bb.fe
-  %.pre-phi.i.jt2 = phi i32 [ %.pre74.i.jt2, %bb.fe ], [ %i.adv, %bb.ey ] ; 2 uses
   %i.ajd = phi ptr [ %i.ahp, %bb.fe ], [ %i.aha, %bb.ey ]
-  store i32 %.pre-phi.i.jt2, ptr @yy_n_chars, align 4, !tbaa !12
-  %0 = sext i32 %.pre-phi.i.jt2 to i64            ; 2 uses
+  store i32 %i.adv, ptr @yy_n_chars, align 4, !tbaa !12
+  %sext610 = shl i64 %i.adu, 32
+  %0 = ashr exact i64 %sext610, 32                ; 2 uses
   %i.aje = getelementptr inbounds i8, ptr %i.ajd, i64 %0
   store i8 0, ptr %i.aje, align 1, !tbaa !29
   %i.ajf = load ptr, ptr %i.agv, align 8, !tbaa !18
@@ -574,10 +568,9 @@ yy_get_next_buffer.exit.jt2:                      ; preds = %bb.ey, %bb.fe
   br label %yy_get_next_buffer.exit.thread151
 
 yy_get_next_buffer.exit.jt1:                      ; preds = %._crit_edge71.i.jt1, %bb.ff
-  %.pre-phi.i.jt1 = phi i32 [ %.pre70.i.jt1, %bb.ff ], [ %.pre66.i, %._crit_edge71.i.jt1 ] ; 2 uses
   %i.ajn = phi ptr [ %i.ahx, %bb.ff ], [ %.pre73.i.jt1, %._crit_edge71.i.jt1 ]
-  store i32 %.pre-phi.i.jt1, ptr @yy_n_chars, align 4, !tbaa !12
-  %i.ajo = sext i32 %.pre-phi.i.jt1 to i64        ; 2 uses
+  store i32 %.pre66.i, ptr @yy_n_chars, align 4, !tbaa !12
+  %i.ajo = sext i32 %.pre66.i to i64              ; 2 uses
   %i.ajp = getelementptr inbounds i8, ptr %i.ajn, i64 %i.ajo
   store i8 0, ptr %i.ajp, align 1, !tbaa !29
   %i.ajq = load ptr, ptr %i.ahc, align 8, !tbaa !18

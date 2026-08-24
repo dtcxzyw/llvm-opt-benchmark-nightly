@@ -202,7 +202,7 @@ bb.t:                                             ; preds = %._crit_edge.i, %bb.
   %.lcssa.i = phi i32 [ %i.ag, %._crit_edge.i ], [ 0, %bb.e ]
   store i32 %.lcssa.i, ptr %3, align 8
   store i32 %.lcssa5.i, ptr %2, align 8
-  %i.ai = load i32, ptr @H5_optind, align 4, !tbaa !28 ; 2 uses
+  %i.ai = load i32, ptr @H5_optind, align 4, !tbaa !28 ; 3 uses
   %.not34.i = icmp sgt i32 %0, %i.ai
   br i1 %.not34.i, label %bb.v, label %bb.u
 
@@ -219,8 +219,7 @@ bb.v:                                             ; preds = %bb.t
   %i.am = load ptr, ptr %i.al, align 8, !tbaa !21
   %i.an = tail call noalias ptr @strdup(ptr noundef %i.am) #12
   store ptr %i.an, ptr @params_g, align 8, !tbaa !29
-  %4 = load i32, ptr @H5_optind, align 4, !tbaa !28
-  %i.ao = add nsw i32 %4, 1                       ; 3 uses
+  %i.ao = add nsw i32 %i.ai, 1                    ; 4 uses
   store i32 %i.ao, ptr @H5_optind, align 4, !tbaa !28
   %.not35.i = icmp sgt i32 %0, %i.ao
   br i1 %.not35.i, label %bb.x, label %bb.w
@@ -233,33 +232,32 @@ bb.w:                                             ; preds = %bb.v
   unreachable
 
 bb.x:                                             ; preds = %bb.v
-  %i.aq = sub nsw i32 %0, %i.ao
-  %5 = zext nneg i32 %i.aq to i64                 ; 2 uses
-  store i64 %5, ptr getelementptr inbounds nuw (i8, ptr @params_g, i64 16), align 8, !tbaa !30
-  %i.ar = shl nuw nsw i64 %5, 3
+  %i.aq = sub i32 %0, %i.ao                       ; 2 uses
+  %4 = sext i32 %i.aq to i64                      ; 2 uses
+  store i64 %4, ptr getelementptr inbounds nuw (i8, ptr @params_g, i64 16), align 8, !tbaa !30
+  %i.ar = shl nsw i64 %4, 3
   %i.as = tail call noalias ptr @malloc(i64 noundef %i.ar) #13 ; 2 uses
   store ptr %i.as, ptr getelementptr inbounds nuw (i8, ptr @params_g, i64 24), align 8, !tbaa !31
-  %6 = load i32, ptr @H5_optind, align 4, !tbaa !28 ; 2 uses
-  %7 = icmp slt i32 %6, %0
-  br i1 %7, label %.lr.ph23.i, label %._crit_edge24.i
+  %5 = sext i32 %i.ao to i64
+  br label %.lr.ph23.i
 
-.lr.ph23.i:                                       ; preds = %bb.x, %.lr.ph23.i
-  %8 = phi i32 [ %11, %.lr.ph23.i ], [ %6, %bb.x ]
-  %.021.i.a = phi i64 [ %i.ax, %.lr.ph23.i ], [ 0, %bb.x ] ; 2 uses
-  %9 = sext i32 %8 to i64
-  %i.at = getelementptr inbounds [8 x i8], ptr %1, i64 %9
+.lr.ph23.i:                                       ; preds = %.lr.ph23.i, %bb.x
+  %.021.i.a = phi i64 [ %5, %bb.x ], [ %indvars.iv.next.i, %.lr.ph23.i ] ; 2 uses
+  %.021.i = phi i64 [ 0, %bb.x ], [ %i.ax, %.lr.ph23.i ] ; 2 uses
+  %i.at = getelementptr inbounds [8 x i8], ptr %1, i64 %.021.i.a
   %i.au = load ptr, ptr %i.at, align 8, !tbaa !21
   %i.av = tail call noalias ptr @strdup(ptr noundef %i.au) #12
-  %i.aw = getelementptr inbounds nuw [8 x i8], ptr %i.as, i64 %.021.i.a
+  %i.aw = getelementptr inbounds nuw [8 x i8], ptr %i.as, i64 %.021.i
   store ptr %i.av, ptr %i.aw, align 8, !tbaa !21
-  %i.ax = add i64 %.021.i.a, 1
-  %10 = load i32, ptr @H5_optind, align 4, !tbaa !28
-  %11 = add nsw i32 %10, 1                        ; 3 uses
-  store i32 %11, ptr @H5_optind, align 4, !tbaa !28
-  %12 = icmp slt i32 %11, %0
-  br i1 %12, label %.lr.ph23.i, label %._crit_edge24.i, !llvm.loop !32
+  %i.ax = add nuw nsw i64 %.021.i, 1              ; 2 uses
+  %indvars.iv.next.i = add nsw i64 %.021.i.a, 1   ; 2 uses
+  %6 = trunc nsw i64 %indvars.iv.next.i to i32
+  store i32 %6, ptr @H5_optind, align 4, !tbaa !28
+  %lftr.wideiv = trunc i64 %i.ax to i32
+  %exitcond = icmp eq i32 %i.aq, %lftr.wideiv
+  br i1 %exitcond, label %._crit_edge24.i, label %.lr.ph23.i, !llvm.loop !32
 
-._crit_edge24.i:                                  ; preds = %.lr.ph23.i, %bb.x
+._crit_edge24.i:                                  ; preds = %.lr.ph23.i
   %i.ay = load i8, ptr getelementptr inbounds nuw (i8, ptr @params_g, i64 40), align 8, !tbaa !24, !range !33, !noundef !34
   %i.az = trunc nuw i8 %i.ay to i1
   %i.ba = load i8, ptr getelementptr inbounds nuw (i8, ptr @params_g, i64 41), align 1, !range !33

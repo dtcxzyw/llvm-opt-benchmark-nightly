@@ -47,7 +47,7 @@ bb.c:                                             ; preds = %.preheader.i
   br i1 %i.j, label %opal_atomic_lock.exit, label %.preheader.i.backedge
 
 opal_atomic_lock.exit:                            ; preds = %bb.c, %bb.b
-  %i.k = load i32, ptr @opal_class_init_epoch, align 4, !tbaa !8
+  %i.k = load i32, ptr @opal_class_init_epoch, align 4, !tbaa !8 ; 2 uses
   %i.l = load i32, ptr %i.b, align 8, !tbaa !9
   %i.m = icmp eq i32 %i.k, %i.l
   br i1 %i.m, label %.sink.split, label %.lr.ph
@@ -201,16 +201,15 @@ bb.q:                                             ; preds = %bb.p
 ._crit_edge64:                                    ; preds = %bb.p, %bb.q, %._crit_edge64.unr-lcssa
   %.141.lcssa = phi ptr [ %.141.1, %._crit_edge64.unr-lcssa ], [ %i.bj, %bb.q ], [ %.04060.epil.init, %bb.p ]
   store ptr null, ptr %.141.lcssa, align 8, !tbaa !18
-  %1 = load i32, ptr @opal_class_init_epoch, align 4, !tbaa !8
-  store i32 %1, ptr %i.b, align 8, !tbaa !9
-  %i.bk = load i32, ptr @num_classes, align 4, !tbaa !8 ; 2 uses
-  %i.bl = load i32, ptr @max_classes, align 4, !tbaa !8 ; 2 uses
+  store i32 %i.k, ptr %i.b, align 8, !tbaa !9
+  %i.bk = load i32, ptr @num_classes, align 4, !tbaa !8 ; 6 uses
+  %i.bl = load i32, ptr @max_classes, align 4, !tbaa !8 ; 3 uses
   %.not.i = icmp slt i32 %i.bk, %i.bl
   %.pre.i = load ptr, ptr @classes, align 8, !tbaa !27 ; 2 uses
   br i1 %.not.i, label %save_class.exit, label %bb.r
 
 bb.r:                                             ; preds = %._crit_edge64
-  %i.bm = add nsw i32 %i.bl, 10                   ; 2 uses
+  %i.bm = add nsw i32 %i.bl, 10                   ; 3 uses
   store i32 %i.bm, ptr @max_classes, align 4, !tbaa !8
   %i.bn = sext i32 %i.bm to i64
   %i.bo = shl nsw i64 %i.bn, 3
@@ -225,17 +224,15 @@ bb.s:                                             ; preds = %bb.r
   unreachable
 
 bb.t:                                             ; preds = %bb.r
-  %2 = load i32, ptr @num_classes, align 4, !tbaa !8 ; 5 uses
-  %3 = load i32, ptr @max_classes, align 4, !tbaa !8 ; 2 uses
-  %i.br = icmp slt i32 %2, %3
+  %i.br = icmp slt i32 %i.bk, %i.bm
   br i1 %i.br, label %.lr.ph.preheader.i.i, label %save_class.exit
 
 .lr.ph.preheader.i.i:                             ; preds = %bb.t
-  %i.bs = sext i32 %2 to i64
+  %i.bs = sext i32 %i.bk to i64
   %i.bt = shl nsw i64 %i.bs, 3
   %scevgep.i.i = getelementptr i8, ptr %i.bp, i64 %i.bt
-  %4 = xor i32 %2, -1
-  %i.bu = add i32 %3, %4
+  %reass.sub = sub i32 %i.bl, %i.bk
+  %i.bu = add i32 %reass.sub, 9
   %i.bv = zext i32 %i.bu to i64
   %i.bw = shl nuw nsw i64 %i.bv, 3
   %i.bx = add nuw nsw i64 %i.bw, 8
@@ -243,13 +240,12 @@ bb.t:                                             ; preds = %bb.r
   br label %save_class.exit
 
 save_class.exit:                                  ; preds = %._crit_edge64, %bb.t, %.lr.ph.preheader.i.i
-  %5 = phi i32 [ %2, %.lr.ph.preheader.i.i ], [ %2, %bb.t ], [ %i.bk, %._crit_edge64 ] ; 2 uses
   %i.by = phi ptr [ %i.bp, %.lr.ph.preheader.i.i ], [ %i.bp, %bb.t ], [ %.pre.i, %._crit_edge64 ]
   %i.bz = load ptr, ptr %i.af, align 8, !tbaa !22
-  %i.ca = sext i32 %5 to i64
+  %i.ca = sext i32 %i.bk to i64
   %i.cb = getelementptr inbounds [8 x i8], ptr %i.by, i64 %i.ca
   store ptr %i.bz, ptr %i.cb, align 8, !tbaa !18
-  %i.cc = add nsw i32 %5, 1
+  %i.cc = add nsw i32 %i.bk, 1
   store i32 %i.cc, ptr @num_classes, align 4, !tbaa !8
   br label %.sink.split
 

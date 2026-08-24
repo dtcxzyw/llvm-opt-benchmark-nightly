@@ -204,7 +204,7 @@ middle.block:                                     ; preds = %vector.body
 ; Function Attrs: nounwind uwtable
 define dso_local void @resolve_sr_conflict(i32 noundef %0, i32 noundef %1) local_unnamed_addr #0 {
 bb.a:
-  %i.a = load i32, ptr @ntokens, align 4, !tbaa !4
+  %i.a = load i32, ptr @ntokens, align 4, !tbaa !4 ; 2 uses
   %i.b = sext i32 %i.a to i64
   %i.c = shl nsw i64 %i.b, 1
   %i.d = add nsw i64 %i.c, 4
@@ -218,8 +218,7 @@ bb.a:
   %i.l = sext i16 %i.k to i64
   %i.m = getelementptr inbounds [2 x i8], ptr %i.g, i64 %i.l
   %i.n = load i16, ptr %i.m, align 2, !tbaa !29   ; 2 uses
-  %2 = load i32, ptr @ntokens, align 4, !tbaa !4
-  %i.o = icmp sgt i32 %2, 0
+  %i.o = icmp sgt i32 %i.a, 0
   br i1 %i.o, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.a

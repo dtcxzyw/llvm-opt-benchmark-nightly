@@ -201,7 +201,7 @@ bb.a:
   br i1 %.not, label %bb.j, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.i = load i32, ptr @cube, align 8, !tbaa !8   ; 2 uses
+  %i.i = load i32, ptr @cube, align 8, !tbaa !8   ; 3 uses
   %i.j = icmp slt i32 %i.i, 33
   %i.k = add nsw i32 %i.i, -1
   %i.l = lshr i32 %i.k, 3
@@ -210,10 +210,9 @@ bb.b:                                             ; preds = %bb.a
   %narrow = select i1 %i.j, i32 8, i32 %i.n
   %i.o = zext nneg i32 %narrow to i64
   %i.p = tail call noalias ptr @malloc(i64 noundef %i.o) #6
-  %2 = load i32, ptr @cube, align 8, !tbaa !8
-  %i.q = tail call ptr (ptr, i32, ...) @set_clear(ptr noundef %i.p, i32 noundef %2) #5
+  %i.q = tail call ptr (ptr, i32, ...) @set_clear(ptr noundef %i.p, i32 noundef %i.i) #5
   %i.r = tail call ptr (ptr, ptr, ptr, ...) @set_diff(ptr noundef %i.q, ptr noundef %0, ptr noundef %1) #5 ; 4 uses
-  %i.s = load i32, ptr @cube, align 8, !tbaa !8   ; 2 uses
+  %i.s = load i32, ptr @cube, align 8, !tbaa !8   ; 3 uses
   %i.t = icmp slt i32 %i.s, 33
   %i.u = add nsw i32 %i.s, -1
   %i.v = lshr i32 %i.u, 3
@@ -222,10 +221,9 @@ bb.b:                                             ; preds = %bb.a
   %narrow86 = select i1 %i.t, i32 8, i32 %i.x
   %i.y = zext nneg i32 %narrow86 to i64
   %i.z = tail call noalias ptr @malloc(i64 noundef %i.y) #6
-  %3 = load i32, ptr @cube, align 8, !tbaa !8
-  %i.aa = tail call ptr (ptr, i32, ...) @set_clear(ptr noundef %i.z, i32 noundef %3) #5
+  %i.aa = tail call ptr (ptr, i32, ...) @set_clear(ptr noundef %i.z, i32 noundef %i.s) #5
   %i.ab = tail call ptr (ptr, ptr, ptr, ...) @set_and(ptr noundef %i.aa, ptr noundef %0, ptr noundef %1) #5 ; 6 uses
-  %i.ac = load i32, ptr @cube, align 8, !tbaa !8  ; 2 uses
+  %i.ac = load i32, ptr @cube, align 8, !tbaa !8  ; 3 uses
   %i.ad = icmp slt i32 %i.ac, 33
   %i.ae = add nsw i32 %i.ac, -1
   %i.af = lshr i32 %i.ae, 3
@@ -234,8 +232,7 @@ bb.b:                                             ; preds = %bb.a
   %narrow87 = select i1 %i.ad, i32 8, i32 %i.ah
   %i.ai = zext nneg i32 %narrow87 to i64
   %i.aj = tail call noalias ptr @malloc(i64 noundef %i.ai) #6
-  %4 = load i32, ptr @cube, align 8, !tbaa !8
-  %i.ak = tail call ptr (ptr, i32, ...) @set_clear(ptr noundef %i.aj, i32 noundef %4) #5 ; 9 uses
+  %i.ak = tail call ptr (ptr, i32, ...) @set_clear(ptr noundef %i.aj, i32 noundef %i.ac) #5 ; 9 uses
   %i.al = load i32, ptr getelementptr inbounds nuw (i8, ptr @cube, i64 4), align 4, !tbaa !23
   %i.am = icmp sgt i32 %i.al, 0
   br i1 %i.am, label %.lr.ph, label %._crit_edge

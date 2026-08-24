@@ -143,16 +143,15 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d
-  %i.m = load i32, ptr @PicSizeInMapUnits, align 4, !tbaa !4
-  %i.n = zext i32 %i.m to i64
+  %i.m = load i32, ptr @PicSizeInMapUnits, align 4, !tbaa !4 ; 14 uses
+  %i.n = zext i32 %i.m to i64                     ; 2 uses
   %i.o = tail call noalias ptr @malloc(i64 noundef %i.n) #15 ; 3 uses
   store ptr %i.o, ptr @MapUnitToSliceGroupMap, align 8, !tbaa !33
   %i.p = icmp eq ptr %i.o, null
   br i1 %i.p, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
-  %3 = load i32, ptr @PicSizeInMapUnits, align 4, !tbaa !4
-  %i.q = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.1, i32 noundef %3) ; 0 uses
+  %i.q = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.1, i32 noundef %i.m) ; 0 uses
   tail call void @exit(i32 noundef -1) #16
   unreachable
 
@@ -163,9 +162,7 @@ bb.h:                                             ; preds = %bb.f
   br i1 %i.t, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %bb.h
-  %4 = load i32, ptr @PicSizeInMapUnits, align 4, !tbaa !4
-  %5 = zext i32 %4 to i64
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.o, i8 0, i64 %5, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.o, i8 0, i64 %i.n, i1 false)
   br label %FmoGenerateMapUnitToSliceGroupMap.exit
 
 bb.j:                                             ; preds = %bb.h
@@ -182,12 +179,11 @@ bb.j:                                             ; preds = %bb.h
 
 bb.k:                                             ; preds = %bb.j
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 68
-  %.pre.i.i = load i32, ptr @PicSizeInMapUnits, align 4 ; 2 uses
-  %i.w = icmp ne i32 %.pre.i.i, 0
+  %i.w = icmp ne i32 %i.m, 0
   br label %bb.l
 
 bb.l:                                             ; preds = %._crit_edge.i.i, %bb.k
-  %i.x = phi i32 [ %.pre.i.i, %bb.k ], [ %i.ap, %._crit_edge.i.i ]
+  %i.x = phi i32 [ %i.m, %bb.k ], [ %i.ap, %._crit_edge.i.i ]
   %i.y = phi i1 [ %i.w, %bb.k ], [ true, %._crit_edge.i.i ]
   %.0.i.i = phi i32 [ 0, %bb.k ], [ %i.as, %._crit_edge.i.i ]
   br i1 %i.y, label %.preheader.i.i, label %FmoGenerateMapUnitToSliceGroupMap.exit
@@ -243,8 +239,7 @@ bb.m:                                             ; preds = %.lr.ph.i
   br i1 %i.av, label %bb.l, label %FmoGenerateMapUnitToSliceGroupMap.exit, !llvm.loop !39
 
 bb.n:                                             ; preds = %bb.j
-  %6 = load i32, ptr @PicSizeInMapUnits, align 4, !tbaa !4
-  %.not.i.i = icmp eq i32 %6, 0
+  %.not.i.i = icmp eq i32 %i.m, 0
   br i1 %.not.i.i, label %FmoGenerateMapUnitToSliceGroupMap.exit, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.n, %.lr.ph.i.i
@@ -270,8 +265,7 @@ bb.n:                                             ; preds = %bb.j
   br i1 %i.bm, label %.lr.ph.i.i, label %FmoGenerateMapUnitToSliceGroupMap.exit, !llvm.loop !40
 
 bb.o:                                             ; preds = %bb.j
-  %7 = load i32, ptr @PicSizeInMapUnits, align 4, !tbaa !4
-  %.not46.i.i = icmp eq i32 %7, 0
+  %.not46.i.i = icmp eq i32 %i.m, 0
   br i1 %.not46.i.i, label %._crit_edge.i29.i, label %.lr.ph.i26.i
 
 .lr.ph.i26.i:                                     ; preds = %bb.o, %.lr.ph.i26.i
@@ -356,9 +350,8 @@ bb.r:                                             ; preds = %bb.j
   %i.cv = getelementptr inbounds nuw i8, ptr %0, i64 15436
   %i.cw = load i32, ptr %i.cv, align 4, !tbaa !46
   %i.cx = mul i32 %i.cu, %i.cw
-  %8 = load i32, ptr @PicSizeInMapUnits, align 4, !tbaa !4 ; 2 uses
-  %i.cy = tail call noundef i32 @llvm.smin.i32(i32 %i.cx, i32 %8)
-  %.not.i32.i = icmp eq i32 %8, 0
+  %i.cy = tail call noundef i32 @llvm.smin.i32(i32 %i.cx, i32 %i.m)
+  %.not.i32.i = icmp eq i32 %i.m, 0
   br i1 %.not.i32.i, label %FmoGenerateMapUnitToSliceGroupMap.exit, label %.lr.ph.i33.i
 
 .lr.ph.i33.i:                                     ; preds = %bb.r, %.lr.ph.i33.i
@@ -498,9 +491,8 @@ bb.ac:                                            ; preds = %bb.ab, %bb.aa, %bb.
   br i1 %i.fk, label %.lr.ph86.i.i, label %FmoGenerateMapUnitToSliceGroupMap.exit, !llvm.loop !49
 
 bb.ad:                                            ; preds = %bb.j
-  %9 = load i32, ptr @PicSizeInMapUnits, align 4, !tbaa !4 ; 3 uses
   %i.fl = getelementptr inbounds nuw i8, ptr %1, i64 164 ; 2 uses
-  %.not2.i.i = icmp eq i32 %9, 0
+  %.not2.i.i = icmp eq i32 %i.m, 0
   br i1 %.not2.i.i, label %FmoGenerateMapUnitToSliceGroupMap.exit, label %.lr.ph.preheader.i.i
 
 .lr.ph.preheader.i.i:                             ; preds = %bb.ad
@@ -512,8 +504,8 @@ bb.ad:                                            ; preds = %bb.j
   %i.fp = load i32, ptr %i.fo, align 8, !tbaa !45
   %i.fq = add i32 %i.fp, 1
   %i.fr = mul i32 %i.fq, %.val.i
-  %i.fs = tail call noundef i32 @llvm.smin.i32(i32 %i.fr, i32 %9) ; 2 uses
-  %i.ft = sub i32 %9, %i.fs
+  %i.fs = tail call noundef i32 @llvm.smin.i32(i32 %i.fr, i32 %i.m) ; 2 uses
+  %i.ft = sub i32 %i.m, %i.fs
   %i.fu = select i1 %.not.i38.i, i32 %i.fs, i32 %i.ft
   %i.fv = zext i32 %i.fu to i64
   br label %.lr.ph.i39.i
@@ -541,12 +533,11 @@ bb.ae:                                            ; preds = %bb.j
   %i.gi = getelementptr inbounds nuw i8, ptr %0, i64 15436
   %i.gj = load i32, ptr %i.gi, align 4, !tbaa !46
   %i.gk = mul i32 %i.gh, %i.gj
-  %10 = load i32, ptr @PicSizeInMapUnits, align 4, !tbaa !4 ; 2 uses
-  %i.gl = tail call noundef i32 @llvm.smin.i32(i32 %i.gk, i32 %10) ; 2 uses
+  %i.gl = tail call noundef i32 @llvm.smin.i32(i32 %i.gk, i32 %i.m) ; 2 uses
   %i.gm = getelementptr inbounds nuw i8, ptr %1, i64 164 ; 2 uses
   %i.gn = load i32, ptr %i.gm, align 4, !tbaa !48
   %.not.i43.i = icmp eq i32 %i.gn, 0
-  %i.go = sub i32 %10, %i.gl
+  %i.go = sub i32 %i.m, %i.gl
   %i.gp = select i1 %.not.i43.i, i32 %i.gl, i32 %i.go
   %i.gq = load i32, ptr %i.c, align 8, !tbaa !28  ; 2 uses
   %.not27.i.i = icmp eq i32 %i.gq, 0
@@ -599,8 +590,7 @@ bb.ae:                                            ; preds = %bb.j
   br i1 %i.hl, label %.preheader.i45.i, label %FmoGenerateMapUnitToSliceGroupMap.exit, !llvm.loop !52
 
 bb.af:                                            ; preds = %bb.j
-  %11 = load i32, ptr @PicSizeInMapUnits, align 4, !tbaa !4
-  %.not.i50.i = icmp eq i32 %11, 0
+  %.not.i50.i = icmp eq i32 %i.m, 0
   br i1 %.not.i50.i, label %FmoGenerateMapUnitToSliceGroupMap.exit, label %.lr.ph.i51.i
 
 .lr.ph.i51.i:                                     ; preds = %bb.af

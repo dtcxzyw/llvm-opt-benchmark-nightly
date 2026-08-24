@@ -204,12 +204,10 @@ setup_num_workers.exit:                           ; preds = %bb.d, %bb.e, %bb.f
   %i.r = load ptr, ptr @workers, align 8, !tbaa !53
   tail call void @free(ptr noundef %i.r) #18
   %i.s = load i32, ptr @num_workers, align 4, !tbaa !9
-  %i.t = zext nneg i32 %i.s to i64
+  %i.t = zext nneg i32 %i.s to i64                ; 2 uses
   %i.u = tail call noalias ptr @calloc(i64 noundef %i.t, i64 noundef 8) #19 ; 2 uses
   store ptr %i.u, ptr @worker_exits, align 8, !tbaa !51
-  %2 = load i32, ptr @num_workers, align 4, !tbaa !9
-  %3 = zext nneg i32 %2 to i64
-  %i.v = tail call noalias ptr @calloc(i64 noundef %3, i64 noundef 8) #19 ; 2 uses
+  %i.v = tail call noalias ptr @calloc(i64 noundef %i.t, i64 noundef 8) #19 ; 2 uses
   store ptr %i.v, ptr @workers, align 8, !tbaa !53
   %i.w = icmp ne ptr %i.u, null
   %i.x = icmp ne ptr %i.v, null

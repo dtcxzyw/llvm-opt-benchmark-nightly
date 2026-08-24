@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
 
 _ZN4CGAL18get_default_randomEv.exit.i:            ; preds = %bb.b, %bb.a
   %i.w = call noundef nonnull align 8 dereferenceable(24) ptr @llvm.threadlocal.address.p0(ptr align 8 @_ZZN4CGAL18get_default_randomEvE14default_random)
-  %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 16 ; 8 uses
+  %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 16 ; 7 uses
   %.promoted.i.i.i.i.i = load i64, ptr %i.x, align 8, !tbaa !420
   br label %bb.c
 
@@ -241,27 +241,12 @@ _ZN4CGAL25Random_points_on_sphere_3INS_7Point_3INS_5EpickEEENS_17Creator_uniform
   %i.at = fneg double %i.as
   %i.au = call double @llvm.fmuladd.f64(double %i.at, double %i.as, double 1.000000e+00)
   %i.av = call double @sqrt(double noundef %i.au) #38
-  %48 = fmul double %i.t, %i.av                   ; 2 uses
   %i.aw = call double @cos(double noundef %i.ar) #38
-  %49 = fmul double %48, %i.aw
   %i.ax = call double @sin(double noundef %i.ar) #38
-  %50 = fmul double %48, %i.ax
-  %51 = load i8, ptr @_ZGVZN4CGAL18get_default_randomEvE14default_random, align 8
-  %52 = icmp eq i8 %51, 0
-  br i1 %52, label %53, label %_ZN4CGAL18get_default_randomEv.exit18.i.preheader, !prof !1031
-
-53:                                               ; preds = %_ZN4CGAL25Random_points_on_sphere_3INS_7Point_3INS_5EpickEEENS_17Creator_uniform_3IdS3_EEEC2EdRNS_6RandomE.exit.i
-  call void @_ZN4CGAL6RandomC2Ev(ptr noundef nonnull align 8 dereferenceable(24) @_ZZN4CGAL18get_default_randomEvE14default_random)
-  store i8 1, ptr @_ZGVZN4CGAL18get_default_randomEvE14default_random, align 8
-  %.promoted.i.i.i.i19.pre.i = load i64, ptr %i.x, align 8, !tbaa !420
-  br label %_ZN4CGAL18get_default_randomEv.exit18.i.preheader
-
-_ZN4CGAL18get_default_randomEv.exit18.i.preheader: ; preds = %53, %_ZN4CGAL25Random_points_on_sphere_3INS_7Point_3INS_5EpickEEENS_17Creator_uniform_3IdS3_EEEC2EdRNS_6RandomE.exit.i
-  %.ph = phi i64 [ %.promoted.i.i.i.i19.pre.i, %53 ], [ %i.ak, %_ZN4CGAL25Random_points_on_sphere_3INS_7Point_3INS_5EpickEEENS_17Creator_uniform_3IdS3_EEEC2EdRNS_6RandomE.exit.i ]
   br label %_ZN4CGAL18get_default_randomEv.exit18.i
 
-_ZN4CGAL18get_default_randomEv.exit18.i:          ; preds = %_ZN4CGAL18get_default_randomEv.exit18.i.preheader, %_ZN4CGAL18get_default_randomEv.exit18.i
-  %i.ay = phi i64 [ %i.bb, %_ZN4CGAL18get_default_randomEv.exit18.i ], [ %.ph, %_ZN4CGAL18get_default_randomEv.exit18.i.preheader ]
+_ZN4CGAL18get_default_randomEv.exit18.i:          ; preds = %_ZN4CGAL18get_default_randomEv.exit18.i, %_ZN4CGAL25Random_points_on_sphere_3INS_7Point_3INS_5EpickEEENS_17Creator_uniform_3IdS3_EEEC2EdRNS_6RandomE.exit.i
+  %i.ay = phi i64 [ %i.bb, %_ZN4CGAL18get_default_randomEv.exit18.i ], [ %i.ak, %_ZN4CGAL25Random_points_on_sphere_3INS_7Point_3INS_5EpickEEENS_17Creator_uniform_3IdS3_EEEC2EdRNS_6RandomE.exit.i ]
   %i.az = mul i64 %i.ay, 25214903917
   %i.ba = add i64 %i.az, 11
   %i.bb = and i64 %i.ba, 281474976710655          ; 3 uses
@@ -314,6 +299,9 @@ _ZN4CGAL25Random_points_in_sphere_3INS_7Point_3INS_5EpickEEENS_17Creator_uniform
   br i1 %i.ci, label %.lr.ph.i, label %.loopexit46
 
 .lr.ph.i:                                         ; preds = %_ZN4CGAL25Random_points_in_sphere_3INS_7Point_3INS_5EpickEEENS_17Creator_uniform_3IdS3_EEEC2EdRNS_6RandomE.exit.i
+  %48 = fmul double %i.t, %i.av                   ; 2 uses
+  %49 = fmul double %48, %i.ax
+  %50 = fmul double %48, %i.aw
   %i.cj = fmul double %i.bt, %i.cf
   %i.ck = fmul double %i.t, %i.cj                 ; 2 uses
   %i.cl = insertelement <2 x double> poison, double %i.ck, i64 0
@@ -332,8 +320,8 @@ bb.e:                                             ; preds = %_ZN4CGAL6ObjectD2Ev
   %.01277.i = phi i32 [ %4, %.lr.ph.i ], [ %.113.i, %_ZN4CGAL6ObjectD2Ev.exit.i ] ; 2 uses
   %.sroa.017.076.i = phi double [ %.sroa.042.0.copyload.i, %.lr.ph.i ], [ %.sroa.017.1.i, %_ZN4CGAL6ObjectD2Ev.exit.i ] ; 2 uses
   %.sroa.029.073.i = phi double [ %i.cq, %.lr.ph.i ], [ %.sroa.029.1.i, %_ZN4CGAL6ObjectD2Ev.exit.i ] ; 2 uses
-  %.sroa.031.070.i = phi double [ %49, %.lr.ph.i ], [ %i.du, %_ZN4CGAL6ObjectD2Ev.exit.i ]
-  %.sroa.632.069.i = phi double [ %50, %.lr.ph.i ], [ %i.dw, %_ZN4CGAL6ObjectD2Ev.exit.i ]
+  %.sroa.031.070.i = phi double [ %50, %.lr.ph.i ], [ %i.du, %_ZN4CGAL6ObjectD2Ev.exit.i ]
+  %.sroa.632.069.i = phi double [ %49, %.lr.ph.i ], [ %i.dw, %_ZN4CGAL6ObjectD2Ev.exit.i ]
   %.pn.i = phi double [ %i.as, %.lr.ph.i ], [ %i.do, %_ZN4CGAL6ObjectD2Ev.exit.i ]
   %i.cs = phi <2 x double> [ %i.cp, %.lr.ph.i ], [ %i.gs, %_ZN4CGAL6ObjectD2Ev.exit.i ] ; 2 uses
   %i.ct = phi <2 x double> [ %i.r, %.lr.ph.i ], [ %i.gr, %_ZN4CGAL6ObjectD2Ev.exit.i ] ; 2 uses

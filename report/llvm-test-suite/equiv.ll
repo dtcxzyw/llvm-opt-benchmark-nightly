@@ -17,25 +17,19 @@ target triple = "x86_64-pc-linux-gnu"
 define dso_local i32 @find_equiv_outputs(ptr noundef %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call i32 (ptr, ...) @makeup_labels(ptr noundef %0) #6 ; 0 uses
-  %i.b = load ptr, ptr getelementptr inbounds nuw (i8, ptr @cube, i64 32), align 8, !tbaa !8 ; 3 uses
+  %i.b = load ptr, ptr getelementptr inbounds nuw (i8, ptr @cube, i64 32), align 8, !tbaa !8
   %i.c = load i32, ptr getelementptr inbounds nuw (i8, ptr @cube, i64 124), align 4, !tbaa !14
-  %i.d = sext i32 %i.c to i64
-  %i.e = getelementptr inbounds [4 x i8], ptr %i.b, i64 %i.d
+  %i.d = sext i32 %i.c to i64                     ; 2 uses
+  %i.e = getelementptr inbounds [4 x i8], ptr %i.b, i64 %i.d ; 3 uses
   %i.f = load i32, ptr %i.e, align 4, !tbaa !4
   %i.g = sext i32 %i.f to i64
   %i.h = shl nsw i64 %i.g, 3
   %i.i = tail call noalias ptr @malloc(i64 noundef %i.h) #7 ; 6 uses
-  %1 = load i32, ptr getelementptr inbounds nuw (i8, ptr @cube, i64 124), align 4, !tbaa !14
-  %2 = sext i32 %1 to i64
-  %3 = getelementptr inbounds [4 x i8], ptr %i.b, i64 %2
-  %i.j = load i32, ptr %3, align 4, !tbaa !4
+  %i.j = load i32, ptr %i.e, align 4, !tbaa !4
   %i.k = sext i32 %i.j to i64
   %i.l = shl nsw i64 %i.k, 3
   %i.m = tail call noalias ptr @malloc(i64 noundef %i.l) #7 ; 6 uses
-  %4 = load i32, ptr getelementptr inbounds nuw (i8, ptr @cube, i64 124), align 4, !tbaa !14
-  %5 = sext i32 %4 to i64                         ; 2 uses
-  %6 = getelementptr inbounds [4 x i8], ptr %i.b, i64 %5
-  %i.n = load i32, ptr %6, align 4, !tbaa !4
+  %i.n = load i32, ptr %i.e, align 4, !tbaa !4
   %i.o = icmp sgt i32 %i.n, 0
   br i1 %i.o, label %.lr.ph, label %._crit_edge.thread
 
@@ -53,7 +47,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %bb.b
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.b ] ; 4 uses
-  %i.s = phi i64 [ %5, %.lr.ph ], [ %i.ag, %bb.b ]
+  %i.s = phi i64 [ %i.d, %.lr.ph ], [ %i.ag, %bb.b ]
   %i.t = load ptr, ptr getelementptr inbounds nuw (i8, ptr @cube, i64 16), align 8, !tbaa !15
   %i.u = getelementptr inbounds [4 x i8], ptr %i.t, i64 %i.s
   %i.v = load i32, ptr %i.u, align 4, !tbaa !4
