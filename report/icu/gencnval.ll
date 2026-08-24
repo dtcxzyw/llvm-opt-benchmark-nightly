@@ -202,7 +202,7 @@ createOneAliasList.exit.us.i:                     ; preds = %bb.ct, %..loopexit_
 
 bb.cu:                                            ; preds = %.lr.ph.split.i
   %i.tj = zext i16 %.in.i to i64
-  %i.tk = mul nuw i64 %indvars.iv106.i, %i.tj
+  %i.tk = mul nuw nsw i64 %indvars.iv106.i, %i.tj
   %i.tl = getelementptr inbounds nuw [2 x i8], ptr %i.lj, i64 %i.tk
   %i.tm = getelementptr inbounds nuw [2 x i8], ptr %i.tl, i64 %indvars.iv.i
   store i16 0, ptr %i.tm, align 2, !tbaa !21
@@ -215,7 +215,7 @@ bb.cu:                                            ; preds = %.lr.ph.split.i
   %i.tp = getelementptr inbounds nuw [2 x i8], ptr @aliasLists, i64 %i.to
   store i16 %i.th, ptr %i.tp, align 2, !tbaa !21
   %i.tq = zext i16 %.in.i to i64
-  %i.tr = mul nuw i64 %indvars.iv106.i, %i.tq
+  %i.tr = mul nuw nsw i64 %indvars.iv106.i, %i.tq
   %i.ts = getelementptr inbounds nuw [2 x i8], ptr %i.lj, i64 %i.tr
   %i.tt = getelementptr inbounds nuw [2 x i8], ptr %i.ts, i64 %indvars.iv.i
   store i16 %i.tn, ptr %i.tt, align 2, !tbaa !21

@@ -123,12 +123,12 @@ bb.a:
   %smin204 = tail call i64 @llvm.smin.i64(i64 %indvars.iv, i64 %i.ag)
   %i.al = add nuw i64 %.0120177, 1
   %smax205 = tail call i64 @llvm.smax.i64(i64 %smin204, i64 %i.al)
-  %i.am = sub i64 %smax205, %.0120177             ; 3 uses
+  %i.am = sub nsw i64 %smax205, %.0120177         ; 3 uses
   %smin = tail call i64 @llvm.smin.i64(i64 %indvars.iv, i64 %i.ag)
   %i.an = add nuw i64 %.0120177, 1
   %smax = tail call i64 @llvm.smax.i64(i64 %smin, i64 %i.an)
   %i.ao = xor i64 %.0120177, -1
-  %i.ap = add i64 %smax, %i.ao
+  %i.ap = add nsw i64 %smax, %i.ao
   %i.aq = shl i64 %i.ap, 3                        ; 2 uses
   %i.ar = add i64 %i.aj, %i.aq
   %smin190 = tail call i64 @llvm.smin.i64(i64 %indvars.iv188, i64 %i.ag)

@@ -205,10 +205,10 @@ _ZN5Eigen8internal13first_alignedILi16EdlEET1_PKT0_S2_.exit.i.i.i.i.i.i.i.i.i.i:
 
 .lr.ph.i17.i.i.i.i.i.i.i.i.i.i.preheader:         ; preds = %._crit_edge.i.i.i.i.i.i.i.i.i.i
   %i.w = shl nuw nsw i64 %i.t, 3                  ; 3 uses
-  %scevgep27 = getelementptr i8, ptr %13, i64 %i.w
-  %scevgep28 = getelementptr i8, ptr %10, i64 %i.w
+  %scevgep27 = getelementptr nuw i8, ptr %13, i64 %i.w
+  %scevgep28 = getelementptr nuw i8, ptr %10, i64 %i.w
   %i.x = sub nuw nsw i64 16, %i.w
-  call void @llvm.memcpy.p0.p0.i64(ptr align 8 %scevgep27, ptr align 8 %scevgep28, i64 %i.x, i1 false), !tbaa !38
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %scevgep27, ptr nonnull align 8 %scevgep28, i64 %i.x, i1 false), !tbaa !38
   br label %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLi3ELi1ELi0ELi3ELi1EEEEaSINS_5SolveINS_20FullPivHouseholderQRINS1_IdLi3ELi3ELi0ELi3ELi3EEEEES2_EEEERS2_RKNS_9EigenBaseIT_EE.exit
 
 _ZN5Eigen15PlainObjectBaseINS_6MatrixIdLi3ELi1ELi0ELi3ELi1EEEEaSINS_5SolveINS_20FullPivHouseholderQRINS1_IdLi3ELi3ELi0ELi3ELi3EEEEES2_EEEERS2_RKNS_9EigenBaseIT_EE.exit: ; preds = %.lr.ph.i17.i.i.i.i.i.i.i.i.i.i.preheader, %._crit_edge.i.i.i.i.i.i.i.i.i.i

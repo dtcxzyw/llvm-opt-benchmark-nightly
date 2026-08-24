@@ -205,9 +205,9 @@ bb.b:                                             ; preds = %.lr.ph63, %bb.d
   %i.al = fdiv double %i.ak, 1.000000e+06
   %i.am = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %0, ptr noundef nonnull @.str.28, double noundef %i.al) #32 ; 0 uses
   %i.an = sub nuw nsw i64 %indvars.iv82, %indvars.iv87
-  %i.ao = trunc nsw i64 %i.an to i32
-  %4 = srem i32 %i.ao, 12
-  %i.ap = icmp eq i32 %4, 0
+  %i.ao = trunc nuw nsw i64 %i.an to i32
+  %.urem = urem i32 %i.ao, 12
+  %i.ap = icmp eq i32 %.urem, 0
   %i.aq = icmp eq i64 %indvars.iv82, %i.ab
   %or.cond = or i1 %i.aq, %i.ap
   br i1 %or.cond, label %bb.c, label %bb.d
@@ -356,9 +356,9 @@ bb.b:                                             ; preds = %.lr.ph62, %bb.d
   %i.an = load double, ptr %i.am, align 8, !tbaa !107
   %i.ao = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %0, ptr noundef nonnull @.str.28, double noundef %i.an) #32 ; 0 uses
   %i.ap = sub nuw nsw i64 %indvars.iv81, %indvars.iv86
-  %i.aq = trunc nsw i64 %i.ap to i32
-  %4 = srem i32 %i.aq, 12
-  %i.ar = icmp eq i32 %4, 0
+  %i.aq = trunc nuw nsw i64 %i.ap to i32
+  %.urem = urem i32 %i.aq, 12
+  %i.ar = icmp eq i32 %.urem, 0
   %i.as = icmp eq i64 %indvars.iv81, %i.ag
   %or.cond = or i1 %i.as, %i.ar
   br i1 %or.cond, label %bb.c, label %bb.d

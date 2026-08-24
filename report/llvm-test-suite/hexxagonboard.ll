@@ -202,7 +202,7 @@ _Z16getHexxagonIndexii.exit:                      ; preds = %bb.f, %bb.g
   br i1 %or.cond150, label %bb.h, label %_Z16getHexxagonIndexii.exit67
 
 bb.h:                                             ; preds = %_Z16getHexxagonIndexii.exit
-  %spec.select.i58 = add i32 %i.r, %.042142       ; 2 uses
+  %spec.select.i58 = add nsw i32 %i.r, %.042142   ; 2 uses
   %i.az = add nsw i32 %spec.select.i58, -3
   %.1.i59 = select i1 %i.s, i32 %i.az, i32 %spec.select.i58 ; 2 uses
   %i.ba = add nsw i32 %.1.i59, -2
@@ -259,7 +259,7 @@ _Z16getHexxagonIndexii.exit84:                    ; preds = %_Z16getHexxagonInde
   br i1 %or.cond152, label %bb.j, label %_Z16getHexxagonIndexii.exit101
 
 bb.j:                                             ; preds = %_Z16getHexxagonIndexii.exit84
-  %spec.select.i92 = add i32 %i.aa, %i.bn         ; 2 uses
+  %spec.select.i92 = add nsw i32 %i.aa, %i.bn     ; 2 uses
   %i.bp = add nsw i32 %spec.select.i92, -3
   %.1.i93 = select i1 %i.q, i32 %i.bp, i32 %spec.select.i92 ; 2 uses
   %i.bq = add nsw i32 %.1.i93, -2
@@ -287,7 +287,7 @@ _Z16getHexxagonIndexii.exit101:                   ; preds = %_Z16getHexxagonInde
   br i1 %or.cond155, label %bb.k, label %_Z16getHexxagonIndexii.exit118
 
 bb.k:                                             ; preds = %_Z16getHexxagonIndexii.exit101
-  %.1.i110 = add i32 %i.aj, %.042142              ; 2 uses
+  %.1.i110 = add nsw i32 %i.aj, %.042142          ; 2 uses
   %i.bx = add nsw i32 %.1.i110, -2
   %.2.i111 = select i1 %i.q, i32 %i.bx, i32 %.1.i110
   %.4.i114 = add nsw i32 %.3.i113, %.2.i111       ; 2 uses
@@ -314,7 +314,7 @@ _Z16getHexxagonIndexii.exit118:                   ; preds = %_Z16getHexxagonInde
   br i1 %or.cond157, label %bb.l, label %_Z16getHexxagonIndexii.exit135
 
 bb.l:                                             ; preds = %_Z16getHexxagonIndexii.exit118
-  %.1.i127 = add i32 %i.aj, %i.bn                 ; 2 uses
+  %.1.i127 = add nsw i32 %i.aj, %i.bn             ; 2 uses
   %i.ce = add nsw i32 %.1.i127, -2
   %.2.i128 = select i1 %i.q, i32 %i.ce, i32 %.1.i127
   %.4.i131 = add nsw i32 %.3.i113, %.2.i128       ; 2 uses
@@ -480,7 +480,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %or.cond266, label %bb.g, label %_Z16getHexxagonIndexii.exit
 
 bb.g:                                             ; preds = %bb.f
-  %spec.select.i = add i32 %i.s, %i.bh            ; 2 uses
+  %spec.select.i = add nsw i32 %i.s, %i.bh        ; 2 uses
   %i.bk = add nsw i32 %spec.select.i, -3
   %.1.i = select i1 %i.t, i32 %i.bk, i32 %spec.select.i ; 2 uses
   %i.bl = add nsw i32 %.1.i, -2
@@ -531,7 +531,7 @@ _Z16getHexxagonIndexii.exit85:                    ; preds = %_Z16getHexxagonInde
   br i1 %or.cond271, label %bb.i, label %_Z16getHexxagonIndexii.exit102
 
 bb.i:                                             ; preds = %_Z16getHexxagonIndexii.exit85
-  %spec.select.i93 = add i32 %i.s, %.060262       ; 2 uses
+  %spec.select.i93 = add nsw i32 %i.s, %.060262   ; 2 uses
   %i.bx = add nsw i32 %spec.select.i93, -3
   %.1.i94 = select i1 %i.t, i32 %i.bx, i32 %spec.select.i93 ; 2 uses
   %i.by = add nsw i32 %.1.i94, -2
@@ -556,7 +556,7 @@ _Z16getHexxagonIndexii.exit102:                   ; preds = %_Z16getHexxagonInde
   br i1 %or.cond273, label %bb.j, label %_Z16getHexxagonIndexii.exit119
 
 bb.j:                                             ; preds = %_Z16getHexxagonIndexii.exit102
-  %spec.select.i110 = add i32 %i.ae, %i.bh        ; 2 uses
+  %spec.select.i110 = add nsw i32 %i.ae, %i.bh    ; 2 uses
   %i.cd = add nsw i32 %spec.select.i110, -3
   %.1.i111 = select i1 %i.r, i32 %i.cd, i32 %spec.select.i110 ; 2 uses
   %i.ce = add nsw i32 %.1.i111, -2
@@ -585,7 +585,7 @@ _Z16getHexxagonIndexii.exit119:                   ; preds = %_Z16getHexxagonInde
   br i1 %or.cond275, label %bb.k, label %_Z16getHexxagonIndexii.exit136
 
 bb.k:                                             ; preds = %_Z16getHexxagonIndexii.exit119
-  %spec.select.i127 = add i32 %i.ae, %i.cj        ; 2 uses
+  %spec.select.i127 = add nsw i32 %i.ae, %i.cj    ; 2 uses
   %i.cl = add nsw i32 %spec.select.i127, -3
   %.1.i128 = select i1 %i.r, i32 %i.cl, i32 %spec.select.i127 ; 2 uses
   %i.cm = add nsw i32 %.1.i128, -2
@@ -611,7 +611,7 @@ _Z16getHexxagonIndexii.exit136:                   ; preds = %_Z16getHexxagonInde
   br i1 %or.cond276, label %bb.l, label %_Z16getHexxagonIndexii.exit153
 
 bb.l:                                             ; preds = %_Z16getHexxagonIndexii.exit136
-  %spec.select.i144 = add i32 %i.al, %i.bh        ; 2 uses
+  %spec.select.i144 = add nsw i32 %i.al, %i.bh    ; 2 uses
   %i.cs = add nsw i32 %spec.select.i144, -3
   %.1.i145 = select i1 %i.ad, i32 %i.cs, i32 %spec.select.i144 ; 2 uses
   %i.ct = add nsw i32 %.1.i145, -2
@@ -641,7 +641,7 @@ _Z16getHexxagonIndexii.exit153:                   ; preds = %_Z16getHexxagonInde
   br i1 %or.cond277, label %bb.m, label %_Z16getHexxagonIndexii.exit170
 
 bb.m:                                             ; preds = %_Z16getHexxagonIndexii.exit153
-  %spec.select.i161 = add i32 %i.al, %i.cz        ; 2 uses
+  %spec.select.i161 = add nsw i32 %i.al, %i.cz    ; 2 uses
   %i.db = add nsw i32 %spec.select.i161, -3
   %.1.i162 = select i1 %i.ad, i32 %i.db, i32 %spec.select.i161 ; 2 uses
   %i.dc = add nsw i32 %.1.i162, -2
@@ -1044,7 +1044,7 @@ bb.g:                                             ; preds = %.loopexit, %bb.l
   br i1 %or.cond, label %_Z16getHexxagonIndexii.exit, label %_Z16getHexxagonIndexii.exit.thread
 
 _Z16getHexxagonIndexii.exit:                      ; preds = %bb.g
-  %spec.select.i = add i32 %i.q, %.0130           ; 2 uses
+  %spec.select.i = add nsw i32 %i.q, %.0130       ; 2 uses
   %i.ab = add nsw i32 %spec.select.i, -3
   %.1.i = select i1 %i.r, i32 %i.ab, i32 %spec.select.i ; 2 uses
   %i.ac = add nsw i32 %.1.i, -2

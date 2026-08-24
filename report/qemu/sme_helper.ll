@@ -205,7 +205,7 @@ vector.body361:                                   ; preds = %vector.body361, %ve
 
 .lr.ph191.preheader:                              ; preds = %.lr.ph193, %.preheader186
   %.0.lcssa291 = phi i64 [ %indvars.iv.next, %.preheader186 ], [ 0, %.lr.ph193 ] ; 4 uses
-  %i.il = sub i64 %i.ep, %.0.lcssa291             ; 3 uses
+  %i.il = sub nsw i64 %i.ep, %.0.lcssa291         ; 3 uses
   %min.iters.check330 = icmp ult i64 %i.il, 8
   %or.cond437 = or i1 %min.iters.check330, %diff.check328
   br i1 %or.cond437, label %.lr.ph191.preheader443, label %vector.ph331

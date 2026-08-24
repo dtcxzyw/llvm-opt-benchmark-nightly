@@ -205,7 +205,7 @@ bb.al:                                            ; preds = %bb.ak
 
 .preheader:                                       ; preds = %bb.al
   %i.gr = shl i64 %storemerge205, 3
-  %scevgep = getelementptr i8, ptr %1, i64 %i.gr
+  %scevgep = getelementptr nuw i8, ptr %1, i64 %i.gr
   %i.gs = load ptr, ptr %i.a, align 8, !tbaa !152 ; 2 uses
   %.not.i104 = icmp eq ptr %i.gs, null
   br i1 %.not.i104, label %_ZN7testing19MatchResultListenerlsIA3_cEERS0_RKT_.exit, label %bb.am

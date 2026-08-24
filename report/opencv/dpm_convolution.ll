@@ -204,35 +204,35 @@ bb.b:                                             ; preds = %bb.b, %.epil.prehea
   %indvars.iv64 = phi i64 [ 0, %.preheader.lr.ph.us.us.preheader.new ], [ %indvars.iv.next65.7, %.preheader.lr.ph.us.us ] ; 9 uses
   %niter104 = phi i64 [ 0, %.preheader.lr.ph.us.us.preheader.new ], [ %niter104.next.7, %.preheader.lr.ph.us.us ]
   %i.bn = mul i64 %i.g, %indvars.iv64
-  %i.bo = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.bn
+  %i.bo = getelementptr i8, ptr %i.e, i64 %i.bn
   tail call void @llvm.memset.p0.i64(ptr align 8 %i.bo, i8 0, i64 %i.ac, i1 false), !tbaa !21
   %indvars.iv.next65 = or disjoint i64 %indvars.iv64, 1
   %i.bp = mul i64 %i.g, %indvars.iv.next65
-  %i.bq = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.bp
+  %i.bq = getelementptr i8, ptr %i.e, i64 %i.bp
   tail call void @llvm.memset.p0.i64(ptr align 8 %i.bq, i8 0, i64 %i.ac, i1 false), !tbaa !21
   %indvars.iv.next65.1 = or disjoint i64 %indvars.iv64, 2
   %i.br = mul i64 %i.g, %indvars.iv.next65.1
-  %i.bs = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.br
+  %i.bs = getelementptr i8, ptr %i.e, i64 %i.br
   tail call void @llvm.memset.p0.i64(ptr align 8 %i.bs, i8 0, i64 %i.ac, i1 false), !tbaa !21
   %indvars.iv.next65.2 = or disjoint i64 %indvars.iv64, 3
   %i.bt = mul i64 %i.g, %indvars.iv.next65.2
-  %i.bu = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.bt
+  %i.bu = getelementptr i8, ptr %i.e, i64 %i.bt
   tail call void @llvm.memset.p0.i64(ptr align 8 %i.bu, i8 0, i64 %i.ac, i1 false), !tbaa !21
   %indvars.iv.next65.3 = or disjoint i64 %indvars.iv64, 4
   %i.bv = mul i64 %i.g, %indvars.iv.next65.3
-  %i.bw = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.bv
+  %i.bw = getelementptr i8, ptr %i.e, i64 %i.bv
   tail call void @llvm.memset.p0.i64(ptr align 8 %i.bw, i8 0, i64 %i.ac, i1 false), !tbaa !21
   %indvars.iv.next65.4 = or disjoint i64 %indvars.iv64, 5
   %i.bx = mul i64 %i.g, %indvars.iv.next65.4
-  %i.by = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.bx
+  %i.by = getelementptr i8, ptr %i.e, i64 %i.bx
   tail call void @llvm.memset.p0.i64(ptr align 8 %i.by, i8 0, i64 %i.ac, i1 false), !tbaa !21
   %indvars.iv.next65.5 = or disjoint i64 %indvars.iv64, 6
   %i.bz = mul i64 %i.g, %indvars.iv.next65.5
-  %i.ca = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.bz
+  %i.ca = getelementptr i8, ptr %i.e, i64 %i.bz
   tail call void @llvm.memset.p0.i64(ptr align 8 %i.ca, i8 0, i64 %i.ac, i1 false), !tbaa !21
   %indvars.iv.next65.6 = or disjoint i64 %indvars.iv64, 7
   %i.cb = mul i64 %i.g, %indvars.iv.next65.6
-  %i.cc = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.cb
+  %i.cc = getelementptr i8, ptr %i.e, i64 %i.cb
   tail call void @llvm.memset.p0.i64(ptr align 8 %i.cc, i8 0, i64 %i.ac, i1 false), !tbaa !21
   %indvars.iv.next65.7 = add nuw nsw i64 %indvars.iv64, 8 ; 2 uses
   %niter104.next.7 = add i64 %niter104, 8         ; 2 uses
@@ -243,35 +243,35 @@ bb.b:                                             ; preds = %bb.b, %.epil.prehea
   %indvars.iv = phi i64 [ 0, %.preheader.lr.ph.us.preheader.new ], [ %indvars.iv.next.7, %.preheader.lr.ph.us ] ; 9 uses
   %niter = phi i64 [ 0, %.preheader.lr.ph.us.preheader.new ], [ %niter.next.7, %.preheader.lr.ph.us ]
   %i.cd = mul i64 %i.g, %indvars.iv
-  %i.ce = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.cd
+  %i.ce = getelementptr i8, ptr %i.e, i64 %i.cd
   tail call void @llvm.memset.p0.i64(ptr align 8 %i.ce, i8 0, i64 %i.z, i1 false), !tbaa !21
   %indvars.iv.next = or disjoint i64 %indvars.iv, 1
   %i.cf = mul i64 %i.g, %indvars.iv.next
-  %i.cg = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.cf
+  %i.cg = getelementptr i8, ptr %i.e, i64 %i.cf
   tail call void @llvm.memset.p0.i64(ptr align 8 %i.cg, i8 0, i64 %i.z, i1 false), !tbaa !21
   %indvars.iv.next.1 = or disjoint i64 %indvars.iv, 2
   %i.ch = mul i64 %i.g, %indvars.iv.next.1
-  %i.ci = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.ch
+  %i.ci = getelementptr i8, ptr %i.e, i64 %i.ch
   tail call void @llvm.memset.p0.i64(ptr align 8 %i.ci, i8 0, i64 %i.z, i1 false), !tbaa !21
   %indvars.iv.next.2 = or disjoint i64 %indvars.iv, 3
   %i.cj = mul i64 %i.g, %indvars.iv.next.2
-  %i.ck = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.cj
+  %i.ck = getelementptr i8, ptr %i.e, i64 %i.cj
   tail call void @llvm.memset.p0.i64(ptr align 8 %i.ck, i8 0, i64 %i.z, i1 false), !tbaa !21
   %indvars.iv.next.3 = or disjoint i64 %indvars.iv, 4
   %i.cl = mul i64 %i.g, %indvars.iv.next.3
-  %i.cm = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.cl
+  %i.cm = getelementptr i8, ptr %i.e, i64 %i.cl
   tail call void @llvm.memset.p0.i64(ptr align 8 %i.cm, i8 0, i64 %i.z, i1 false), !tbaa !21
   %indvars.iv.next.4 = or disjoint i64 %indvars.iv, 5
   %i.cn = mul i64 %i.g, %indvars.iv.next.4
-  %i.co = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.cn
+  %i.co = getelementptr i8, ptr %i.e, i64 %i.cn
   tail call void @llvm.memset.p0.i64(ptr align 8 %i.co, i8 0, i64 %i.z, i1 false), !tbaa !21
   %indvars.iv.next.5 = or disjoint i64 %indvars.iv, 6
   %i.cp = mul i64 %i.g, %indvars.iv.next.5
-  %i.cq = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.cp
+  %i.cq = getelementptr i8, ptr %i.e, i64 %i.cp
   tail call void @llvm.memset.p0.i64(ptr align 8 %i.cq, i8 0, i64 %i.z, i1 false), !tbaa !21
   %indvars.iv.next.6 = or disjoint i64 %indvars.iv, 7
   %i.cr = mul i64 %i.g, %indvars.iv.next.6
-  %i.cs = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.cr
+  %i.cs = getelementptr i8, ptr %i.e, i64 %i.cr
   tail call void @llvm.memset.p0.i64(ptr align 8 %i.cs, i8 0, i64 %i.z, i1 false), !tbaa !21
   %indvars.iv.next.7 = add nuw nsw i64 %indvars.iv, 8 ; 2 uses
   %niter.next.7 = add i64 %niter, 8               ; 2 uses
@@ -292,7 +292,7 @@ bb.b:                                             ; preds = %bb.b, %.epil.prehea
   %indvars.iv64.epil = phi i64 [ %indvars.iv64.epil.init, %.preheader.lr.ph.us.us.epil.preheader ], [ %indvars.iv.next65.epil, %.preheader.lr.ph.us.us.epil ] ; 2 uses
   %epil.iter100 = phi i64 [ 0, %.preheader.lr.ph.us.us.epil.preheader ], [ %epil.iter100.next, %.preheader.lr.ph.us.us.epil ]
   %i.ct = mul i64 %i.g, %indvars.iv64.epil
-  %i.cu = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.ct
+  %i.cu = getelementptr i8, ptr %i.e, i64 %i.ct
   tail call void @llvm.memset.p0.i64(ptr align 8 %i.cu, i8 0, i64 %i.ac, i1 false), !tbaa !21
   %indvars.iv.next65.epil = add nuw nsw i64 %indvars.iv64.epil, 1
   %epil.iter100.next = add i64 %epil.iter100, 1   ; 2 uses
@@ -313,7 +313,7 @@ bb.b:                                             ; preds = %bb.b, %.epil.prehea
   %indvars.iv.epil = phi i64 [ %indvars.iv.epil.init, %.preheader.lr.ph.us.epil.preheader ], [ %indvars.iv.next.epil, %.preheader.lr.ph.us.epil ] ; 2 uses
   %epil.iter = phi i64 [ 0, %.preheader.lr.ph.us.epil.preheader ], [ %epil.iter.next, %.preheader.lr.ph.us.epil ]
   %i.cv = mul i64 %i.g, %indvars.iv.epil
-  %i.cw = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.cv
+  %i.cw = getelementptr i8, ptr %i.e, i64 %i.cv
   tail call void @llvm.memset.p0.i64(ptr align 8 %i.cw, i8 0, i64 %i.z, i1 false), !tbaa !21
   %indvars.iv.next.epil = add nuw nsw i64 %indvars.iv.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses

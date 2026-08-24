@@ -205,16 +205,16 @@ bb.a:
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef nonnull align 16 dereferenceable(24) %i.c, i64 24, i1 false), !tbaa !8
   %i.bm = load double, ptr %i.d, align 16, !tbaa !8
   store double %i.bm, ptr %2, align 8, !tbaa !8
-  %i.bn = getelementptr inbounds nuw i8, ptr %i.c, i64 24
-  %i.bo = getelementptr inbounds nuw i8, ptr %1, i64 24
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.bo, ptr noundef nonnull align 8 dereferenceable(24) %i.bn, i64 24, i1 false), !tbaa !8
+  %i.bn = getelementptr nuw i8, ptr %1, i64 24
+  %i.bo = getelementptr inbounds nuw i8, ptr %i.c, i64 24
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.bn, ptr noundef nonnull align 8 dereferenceable(24) %i.bo, i64 24, i1 false), !tbaa !8
   %i.bp = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %i.bq = load double, ptr %i.bp, align 8, !tbaa !8
   %i.br = getelementptr inbounds nuw i8, ptr %2, i64 8
   store double %i.bq, ptr %i.br, align 8, !tbaa !8
-  %i.bs = getelementptr inbounds nuw i8, ptr %i.c, i64 48
-  %i.bt = getelementptr inbounds nuw i8, ptr %1, i64 48
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.bt, ptr noundef nonnull align 16 dereferenceable(24) %i.bs, i64 24, i1 false), !tbaa !8
+  %i.bs = getelementptr nuw i8, ptr %1, i64 48
+  %i.bt = getelementptr inbounds nuw i8, ptr %i.c, i64 48
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.bs, ptr noundef nonnull align 16 dereferenceable(24) %i.bt, i64 24, i1 false), !tbaa !8
   %i.bu = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   %i.bv = load double, ptr %i.bu, align 16, !tbaa !8
   %i.bw = getelementptr inbounds nuw i8, ptr %2, i64 16

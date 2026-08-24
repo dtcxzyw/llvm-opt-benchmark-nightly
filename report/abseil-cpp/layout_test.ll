@@ -205,7 +205,7 @@ bb.al:                                            ; preds = %bb.ak
 
 .preheader:                                       ; preds = %bb.al
   %i.gr = shl i64 %storemerge194, 3
-  %scevgep = getelementptr i8, ptr %1, i64 %i.gr
+  %scevgep = getelementptr nuw i8, ptr %1, i64 %i.gr
   %i.gs = load ptr, ptr %i.a, align 8, !tbaa !103 ; 2 uses
   %.not.i106 = icmp eq ptr %i.gs, null
   br i1 %.not.i106, label %_ZN7testing19MatchResultListenerlsIA3_cEERS0_RKT_.exit, label %bb.am
@@ -608,7 +608,7 @@ bb.al:                                            ; preds = %bb.ak
 
 .preheader:                                       ; preds = %bb.al
   %i.gr = shl i64 %storemerge194, 3
-  %scevgep = getelementptr i8, ptr %1, i64 %i.gr
+  %scevgep = getelementptr nuw i8, ptr %1, i64 %i.gr
   %i.gs = load ptr, ptr %i.a, align 8, !tbaa !103 ; 2 uses
   %.not.i106 = icmp eq ptr %i.gs, null
   br i1 %.not.i106, label %_ZN7testing19MatchResultListenerlsIA3_cEERS0_RKT_.exit, label %bb.am

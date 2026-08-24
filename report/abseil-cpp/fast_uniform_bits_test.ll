@@ -204,7 +204,7 @@ bb.y:                                             ; preds = %bb.z, %_ZNSt13rando
   %i.bl = lshr i64 %store_forwarded, 30
   %i.bm = xor i64 %i.bl, %store_forwarded
   %i.bn = mul nuw nsw i64 %i.bm, 1812433253
-  %i.bo = add nuw i64 %i.bn, %.011.i.i            ; 2 uses
+  %i.bo = add nuw nsw i64 %i.bn, %.011.i.i        ; 2 uses
   %i.bp = and i64 %i.bo, 4294967295               ; 2 uses
   store i64 %i.bp, ptr %i.bk, align 8, !tbaa !13
   %i.bq = add nuw nsw i64 %.011.i.i, 1            ; 3 uses
@@ -607,7 +607,7 @@ bb.y:                                             ; preds = %bb.z, %_ZNSt13rando
   %i.bl = lshr i64 %store_forwarded, 30
   %i.bm = xor i64 %i.bl, %store_forwarded
   %i.bn = mul nuw nsw i64 %i.bm, 1812433253
-  %i.bo = add nuw i64 %i.bn, %.011.i.i            ; 2 uses
+  %i.bo = add nuw nsw i64 %i.bn, %.011.i.i        ; 2 uses
   %i.bp = and i64 %i.bo, 4294967295               ; 2 uses
   store i64 %i.bp, ptr %i.bk, align 8, !tbaa !13
   %i.bq = add nuw nsw i64 %.011.i.i, 1            ; 3 uses
@@ -1010,7 +1010,7 @@ bb.y:                                             ; preds = %bb.z, %_ZNSt13rando
   %i.bl = lshr i64 %store_forwarded, 30
   %i.bm = xor i64 %i.bl, %store_forwarded
   %i.bn = mul nuw nsw i64 %i.bm, 1812433253
-  %i.bo = add nuw i64 %i.bn, %.011.i.i            ; 2 uses
+  %i.bo = add nuw nsw i64 %i.bn, %.011.i.i        ; 2 uses
   %i.bp = and i64 %i.bo, 4294967295               ; 2 uses
   store i64 %i.bp, ptr %i.bk, align 8, !tbaa !13
   %i.bq = add nuw nsw i64 %.011.i.i, 1            ; 3 uses
@@ -1413,7 +1413,7 @@ bb.y:                                             ; preds = %bb.z, %_ZNSt13rando
   %i.bl = lshr i64 %store_forwarded, 30
   %i.bm = xor i64 %i.bl, %store_forwarded
   %i.bn = mul nuw nsw i64 %i.bm, 1812433253
-  %i.bo = add nuw i64 %i.bn, %.011.i.i            ; 2 uses
+  %i.bo = add nuw nsw i64 %i.bn, %.011.i.i        ; 2 uses
   %i.bp = and i64 %i.bo, 4294967295               ; 2 uses
   store i64 %i.bp, ptr %i.bk, align 8, !tbaa !13
   %i.bq = add nuw nsw i64 %.011.i.i, 1            ; 3 uses

@@ -15,17 +15,17 @@ define noundef range(i32 0, 2) i32 @_ZN9NR_Jacobi6jacobiEPA4_dPdS1_Pi(ptr nofree
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.b, i8 0, i64 24, i1 false), !tbaa !9
   store double 1.000000e+00, ptr %2, align 8, !tbaa !9
-  %i.c = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 3 uses
+  %i.c = getelementptr nuw i8, ptr %2, i64 32     ; 3 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.c, i8 0, i64 32, i1 false), !tbaa !9
-  %i.d = getelementptr inbounds nuw i8, ptr %2, i64 40
+  %i.d = getelementptr nuw i8, ptr %2, i64 40
   store double 1.000000e+00, ptr %i.d, align 8, !tbaa !9
-  %i.e = getelementptr inbounds nuw i8, ptr %2, i64 64 ; 3 uses
+  %i.e = getelementptr nuw i8, ptr %2, i64 64     ; 3 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.e, i8 0, i64 32, i1 false), !tbaa !9
-  %i.f = getelementptr inbounds nuw i8, ptr %2, i64 80
+  %i.f = getelementptr nuw i8, ptr %2, i64 80
   store double 1.000000e+00, ptr %i.f, align 8, !tbaa !9
-  %i.g = getelementptr inbounds nuw i8, ptr %2, i64 96 ; 3 uses
+  %i.g = getelementptr nuw i8, ptr %2, i64 96     ; 3 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.g, i8 0, i64 24, i1 false), !tbaa !9
-  %i.h = getelementptr inbounds nuw i8, ptr %2, i64 120
+  %i.h = getelementptr nuw i8, ptr %2, i64 120
   store double 1.000000e+00, ptr %i.h, align 8, !tbaa !9
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.a, i8 0, i64 32, i1 false), !tbaa !9
   %i.i = load double, ptr %0, align 8, !tbaa !9   ; 2 uses

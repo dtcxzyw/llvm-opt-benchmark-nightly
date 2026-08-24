@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.d, %_ZNSt8functi
   %i.as = lshr i64 %store_forwarded, 30
   %i.at = xor i64 %i.as, %store_forwarded
   %i.au = mul nuw nsw i64 %i.at, 1812433253
-  %i.av = add nuw i64 %i.au, %.011.i.i.i          ; 2 uses
+  %i.av = add nuw nsw i64 %i.au, %.011.i.i.i      ; 2 uses
   %i.aw = and i64 %i.av, 4294967295               ; 2 uses
   store i64 %i.aw, ptr %i.ar, align 8, !tbaa !184
   %i.ax = add nuw nsw i64 %.011.i.i.i, 1          ; 3 uses
@@ -608,7 +608,7 @@ bb.e:                                             ; preds = %bb.f, %bb.d
   %i.ax = lshr i64 %store_forwarded, 30
   %i.ay = xor i64 %i.ax, %store_forwarded
   %i.az = mul nuw nsw i64 %i.ay, 1812433253
-  %i.ba = add nuw i64 %i.az, %.011.i.i            ; 2 uses
+  %i.ba = add nuw nsw i64 %i.az, %.011.i.i        ; 2 uses
   %i.bb = and i64 %i.ba, 4294967295               ; 2 uses
   store i64 %i.bb, ptr %i.aw, align 8, !tbaa !184
   %i.bc = add nuw nsw i64 %.011.i.i, 1            ; 3 uses
@@ -1011,7 +1011,7 @@ bb.v:                                             ; preds = %bb.w, %bb.u
   %i.iy = lshr i64 %store_forwarded536, 30
   %i.iz = xor i64 %i.iy, %store_forwarded536
   %i.ja = mul nuw nsw i64 %i.iz, 1812433253
-  %i.jb = add nuw i64 %i.ja, %.011.i.i102         ; 2 uses
+  %i.jb = add nuw nsw i64 %i.ja, %.011.i.i102     ; 2 uses
   %i.jc = and i64 %i.jb, 4294967295               ; 2 uses
   store i64 %i.jc, ptr %i.ix, align 8, !tbaa !184
   %i.jd = add nuw nsw i64 %.011.i.i102, 1         ; 3 uses
@@ -1414,7 +1414,7 @@ bb.b:                                             ; preds = %bb.c, %bb.a
   %i.h = lshr i64 %store_forwarded, 30
   %i.i = xor i64 %i.h, %store_forwarded
   %i.j = mul nuw nsw i64 %i.i, 1812433253
-  %i.k = add nuw i64 %i.j, %.011.i                ; 2 uses
+  %i.k = add nuw nsw i64 %i.j, %.011.i            ; 2 uses
   %i.l = and i64 %i.k, 4294967295                 ; 2 uses
   store i64 %i.l, ptr %i.g, align 8, !tbaa !184
   %i.m = add nuw nsw i64 %.011.i, 1               ; 3 uses
@@ -1817,7 +1817,7 @@ bb.d:                                             ; preds = %bb.e, %_ZNSt6vector
   %i.y = lshr i64 %store_forwarded, 30
   %i.z = xor i64 %i.y, %store_forwarded
   %i.aa = mul nuw nsw i64 %i.z, 1812433253
-  %i.ab = add nuw i64 %i.aa, %.011.i.i            ; 2 uses
+  %i.ab = add nuw nsw i64 %i.aa, %.011.i.i        ; 2 uses
   %i.ac = and i64 %i.ab, 4294967295               ; 2 uses
   store i64 %i.ac, ptr %i.x, align 8, !tbaa !184
   %i.ad = add nuw nsw i64 %.011.i.i, 1            ; 3 uses
@@ -2220,7 +2220,7 @@ bb.c:                                             ; preds = %bb.d, %_ZNSt8functi
   %i.at = lshr i64 %store_forwarded, 30
   %i.au = xor i64 %i.at, %store_forwarded
   %i.av = mul nuw nsw i64 %i.au, 1812433253
-  %i.aw = add nuw i64 %i.av, %.011.i.i.i          ; 2 uses
+  %i.aw = add nuw nsw i64 %i.av, %.011.i.i.i      ; 2 uses
   %i.ax = and i64 %i.aw, 4294967295               ; 2 uses
   store i64 %i.ax, ptr %i.as, align 8, !tbaa !184
   %i.ay = add nuw nsw i64 %.011.i.i.i, 1          ; 3 uses
@@ -2623,7 +2623,7 @@ bb.e:                                             ; preds = %bb.f, %bb.d
   %i.ax = lshr i64 %store_forwarded, 30
   %i.ay = xor i64 %i.ax, %store_forwarded
   %i.az = mul nuw nsw i64 %i.ay, 1812433253
-  %i.ba = add nuw i64 %i.az, %.011.i.i            ; 2 uses
+  %i.ba = add nuw nsw i64 %i.az, %.011.i.i        ; 2 uses
   %i.bb = and i64 %i.ba, 4294967295               ; 2 uses
   store i64 %i.bb, ptr %i.aw, align 8, !tbaa !184
   %i.bc = add nuw nsw i64 %.011.i.i, 1            ; 3 uses
@@ -3026,7 +3026,7 @@ bb.v:                                             ; preds = %bb.w, %bb.u
   %i.iy = lshr i64 %store_forwarded536, 30
   %i.iz = xor i64 %i.iy, %store_forwarded536
   %i.ja = mul nuw nsw i64 %i.iz, 1812433253
-  %i.jb = add nuw i64 %i.ja, %.011.i.i102         ; 2 uses
+  %i.jb = add nuw nsw i64 %i.ja, %.011.i.i102     ; 2 uses
   %i.jc = and i64 %i.jb, 4294967295               ; 2 uses
   store i64 %i.jc, ptr %i.ix, align 8, !tbaa !184
   %i.jd = add nuw nsw i64 %.011.i.i102, 1         ; 3 uses
@@ -3429,7 +3429,7 @@ bb.b:                                             ; preds = %bb.c, %bb.a
   %i.h = lshr i64 %store_forwarded, 30
   %i.i = xor i64 %i.h, %store_forwarded
   %i.j = mul nuw nsw i64 %i.i, 1812433253
-  %i.k = add nuw i64 %i.j, %.011.i                ; 2 uses
+  %i.k = add nuw nsw i64 %i.j, %.011.i            ; 2 uses
   %i.l = and i64 %i.k, 4294967295                 ; 2 uses
   store i64 %i.l, ptr %i.g, align 8, !tbaa !184
   %i.m = add nuw nsw i64 %.011.i, 1               ; 3 uses
@@ -3832,7 +3832,7 @@ bb.c:                                             ; preds = %bb.d, %_ZNSt8functi
   %i.at = lshr i64 %store_forwarded, 30
   %i.au = xor i64 %i.at, %store_forwarded
   %i.av = mul nuw nsw i64 %i.au, 1812433253
-  %i.aw = add nuw i64 %i.av, %.011.i.i.i          ; 2 uses
+  %i.aw = add nuw nsw i64 %i.av, %.011.i.i.i      ; 2 uses
   %i.ax = and i64 %i.aw, 4294967295               ; 2 uses
   store i64 %i.ax, ptr %i.as, align 8, !tbaa !184
   %i.ay = add nuw nsw i64 %.011.i.i.i, 1          ; 3 uses
@@ -4235,7 +4235,7 @@ bb.e:                                             ; preds = %bb.f, %bb.d
   %i.ax = lshr i64 %store_forwarded, 30
   %i.ay = xor i64 %i.ax, %store_forwarded
   %i.az = mul nuw nsw i64 %i.ay, 1812433253
-  %i.ba = add nuw i64 %i.az, %.011.i.i            ; 2 uses
+  %i.ba = add nuw nsw i64 %i.az, %.011.i.i        ; 2 uses
   %i.bb = and i64 %i.ba, 4294967295               ; 2 uses
   store i64 %i.bb, ptr %i.aw, align 8, !tbaa !184
   %i.bc = add nuw nsw i64 %.011.i.i, 1            ; 3 uses
@@ -4638,7 +4638,7 @@ bb.v:                                             ; preds = %bb.w, %bb.u
   %i.iy = lshr i64 %store_forwarded544, 30
   %i.iz = xor i64 %i.iy, %store_forwarded544
   %i.ja = mul nuw nsw i64 %i.iz, 1812433253
-  %i.jb = add nuw i64 %i.ja, %.011.i.i102         ; 2 uses
+  %i.jb = add nuw nsw i64 %i.ja, %.011.i.i102     ; 2 uses
   %i.jc = and i64 %i.jb, 4294967295               ; 2 uses
   store i64 %i.jc, ptr %i.ix, align 8, !tbaa !184
   %i.jd = add nuw nsw i64 %.011.i.i102, 1         ; 3 uses
@@ -5041,7 +5041,7 @@ bb.b:                                             ; preds = %bb.c, %bb.a
   %i.h = lshr i64 %store_forwarded, 30
   %i.i = xor i64 %i.h, %store_forwarded
   %i.j = mul nuw nsw i64 %i.i, 1812433253
-  %i.k = add nuw i64 %i.j, %.011.i                ; 2 uses
+  %i.k = add nuw nsw i64 %i.j, %.011.i            ; 2 uses
   %i.l = and i64 %i.k, 4294967295                 ; 2 uses
   store i64 %i.l, ptr %i.g, align 8, !tbaa !184
   %i.m = add nuw nsw i64 %.011.i, 1               ; 3 uses
@@ -5444,7 +5444,7 @@ bb.e:                                             ; preds = %bb.f, %bb.d
   %i.ax = lshr i64 %store_forwarded, 30
   %i.ay = xor i64 %i.ax, %store_forwarded
   %i.az = mul nuw nsw i64 %i.ay, 1812433253
-  %i.ba = add nuw i64 %i.az, %.011.i.i            ; 2 uses
+  %i.ba = add nuw nsw i64 %i.az, %.011.i.i        ; 2 uses
   %i.bb = and i64 %i.ba, 4294967295               ; 2 uses
   store i64 %i.bb, ptr %i.aw, align 8, !tbaa !184
   %i.bc = add nuw nsw i64 %.011.i.i, 1            ; 3 uses
@@ -5847,7 +5847,7 @@ bb.v:                                             ; preds = %bb.w, %bb.u
   %i.iy = lshr i64 %store_forwarded536, 30
   %i.iz = xor i64 %i.iy, %store_forwarded536
   %i.ja = mul nuw nsw i64 %i.iz, 1812433253
-  %i.jb = add nuw i64 %i.ja, %.011.i.i102         ; 2 uses
+  %i.jb = add nuw nsw i64 %i.ja, %.011.i.i102     ; 2 uses
   %i.jc = and i64 %i.jb, 4294967295               ; 2 uses
   store i64 %i.jc, ptr %i.ix, align 8, !tbaa !184
   %i.jd = add nuw nsw i64 %.011.i.i102, 1         ; 3 uses
@@ -6250,7 +6250,7 @@ bb.g:                                             ; preds = %bb.h, %bb.f
   %i.av = lshr i64 %store_forwarded, 30
   %i.aw = xor i64 %i.av, %store_forwarded
   %i.ax = mul nuw nsw i64 %i.aw, 1812433253
-  %i.ay = add nuw i64 %i.ax, %.011.i.i            ; 2 uses
+  %i.ay = add nuw nsw i64 %i.ax, %.011.i.i        ; 2 uses
   %i.az = and i64 %i.ay, 4294967295               ; 2 uses
   store i64 %i.az, ptr %i.au, align 8, !tbaa !184
   %i.ba = add nuw nsw i64 %.011.i.i, 1            ; 3 uses
@@ -6653,7 +6653,7 @@ bb.e:                                             ; preds = %bb.f, %bb.d
   %i.ax = lshr i64 %store_forwarded, 30
   %i.ay = xor i64 %i.ax, %store_forwarded
   %i.az = mul nuw nsw i64 %i.ay, 1812433253
-  %i.ba = add nuw i64 %i.az, %.011.i.i            ; 2 uses
+  %i.ba = add nuw nsw i64 %i.az, %.011.i.i        ; 2 uses
   %i.bb = and i64 %i.ba, 4294967295               ; 2 uses
   store i64 %i.bb, ptr %i.aw, align 8, !tbaa !184
   %i.bc = add nuw nsw i64 %.011.i.i, 1            ; 3 uses
@@ -7056,7 +7056,7 @@ bb.v:                                             ; preds = %bb.w, %bb.u
   %i.iy = lshr i64 %store_forwarded536, 30
   %i.iz = xor i64 %i.iy, %store_forwarded536
   %i.ja = mul nuw nsw i64 %i.iz, 1812433253
-  %i.jb = add nuw i64 %i.ja, %.011.i.i102         ; 2 uses
+  %i.jb = add nuw nsw i64 %i.ja, %.011.i.i102     ; 2 uses
   %i.jc = and i64 %i.jb, 4294967295               ; 2 uses
   store i64 %i.jc, ptr %i.ix, align 8, !tbaa !184
   %i.jd = add nuw nsw i64 %.011.i.i102, 1         ; 3 uses
@@ -7459,7 +7459,7 @@ bb.e:                                             ; preds = %bb.f, %bb.d
   %i.ax = lshr i64 %store_forwarded, 30
   %i.ay = xor i64 %i.ax, %store_forwarded
   %i.az = mul nuw nsw i64 %i.ay, 1812433253
-  %i.ba = add nuw i64 %i.az, %.011.i.i            ; 2 uses
+  %i.ba = add nuw nsw i64 %i.az, %.011.i.i        ; 2 uses
   %i.bb = and i64 %i.ba, 4294967295               ; 2 uses
   store i64 %i.bb, ptr %i.aw, align 8, !tbaa !184
   %i.bc = add nuw nsw i64 %.011.i.i, 1            ; 3 uses
@@ -7862,7 +7862,7 @@ bb.v:                                             ; preds = %bb.w, %bb.u
   %i.iy = lshr i64 %store_forwarded544, 30
   %i.iz = xor i64 %i.iy, %store_forwarded544
   %i.ja = mul nuw nsw i64 %i.iz, 1812433253
-  %i.jb = add nuw i64 %i.ja, %.011.i.i102         ; 2 uses
+  %i.jb = add nuw nsw i64 %i.ja, %.011.i.i102     ; 2 uses
   %i.jc = and i64 %i.jb, 4294967295               ; 2 uses
   store i64 %i.jc, ptr %i.ix, align 8, !tbaa !184
   %i.jd = add nuw nsw i64 %.011.i.i102, 1         ; 3 uses

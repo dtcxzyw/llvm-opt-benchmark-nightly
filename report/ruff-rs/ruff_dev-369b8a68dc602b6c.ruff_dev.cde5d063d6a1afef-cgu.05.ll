@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.a, %_RINvNtNtNtN
   br i1 %.not9, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.e = sub nuw i64 %i.d, %1
+  %i.e = sub nuw nsw i64 %i.d, %1
   br label %bb.f
 
 bb.e:                                             ; preds = %bb.c
@@ -307,7 +307,7 @@ bb.c:                                             ; preds = %bb.a, %_RINvNtNtNtN
   br i1 %.not9, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.e = sub nuw i64 %i.d, %1
+  %i.e = sub nuw nsw i64 %i.d, %1
   br label %bb.f
 
 bb.e:                                             ; preds = %bb.c
@@ -409,7 +409,7 @@ bb.c:                                             ; preds = %bb.a, %_RINvNtNtNtN
   br i1 %.not9, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.e = sub nuw i64 %i.d, %1
+  %i.e = sub nuw nsw i64 %i.d, %1
   br label %bb.f
 
 bb.e:                                             ; preds = %bb.c
@@ -511,7 +511,7 @@ bb.c:                                             ; preds = %bb.a, %_RINvNtNtNtN
   br i1 %.not9, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.e = sub nuw i64 %i.d, %1
+  %i.e = sub nuw nsw i64 %i.d, %1
   br label %bb.f
 
 bb.e:                                             ; preds = %bb.c

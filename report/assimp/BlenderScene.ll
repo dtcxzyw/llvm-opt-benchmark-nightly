@@ -205,9 +205,9 @@ bb.j:                                             ; preds = %bb.h
 .lr.ph64.preheader:                               ; preds = %_ZN6Assimp12StreamReaderILb1ELb1EE6IncPtrEl.exit.preheader, %.preheader58
   %.037.lcssa76 = phi i64 [ %i.bl, %.preheader58 ], [ 0, %_ZN6Assimp12StreamReaderILb1ELb1EE6IncPtrEl.exit.preheader ]
   %i.aq = shl nuw nsw i64 %.037.lcssa76, 3        ; 2 uses
-  %scevgep = getelementptr i8, ptr %4, i64 %i.aq
+  %scevgep = getelementptr nuw i8, ptr %4, i64 %i.aq
   %i.ar = sub nuw nsw i64 144, %i.aq
-  call void @llvm.memset.p0.i64(ptr align 8 %scevgep, i8 0, i64 %i.ar, i1 false)
+  call void @llvm.memset.p0.i64(ptr nonnull align 8 %scevgep, i8 0, i64 %i.ar, i1 false)
   br label %.preheader
 
 .lr.ph:                                           ; preds = %_ZN6Assimp12StreamReaderILb1ELb1EE6IncPtrEl.exit.preheader, %_ZN6Assimp12StreamReaderILb1ELb1EE6IncPtrEl.exit
