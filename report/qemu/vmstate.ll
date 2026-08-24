@@ -202,17 +202,18 @@ bb.au:                                            ; preds = %bb.as, %trace_vmsta
   br label %bb.av
 
 bb.av:                                            ; preds = %.lr.ph, %vmstate_save_field_with_vmdesc.exit191.thread
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %vmstate_save_field_with_vmdesc.exit191.thread ] ; 4 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %vmstate_save_field_with_vmdesc.exit191.thread ] ; 5 uses
   %.0134240 = phi i1 [ false, %.lr.ph ], [ %.1135, %vmstate_save_field_with_vmdesc.exit191.thread ] ; 3 uses
   %.0136239 = phi ptr [ %3, %.lr.ph ], [ %spec.store.select, %vmstate_save_field_with_vmdesc.exit191.thread ] ; 2 uses
-  %i.dp = trunc nuw nsw i64 %indvars.iv to i32    ; 5 uses
+  %i.dp = trunc nuw nsw i64 %indvars.iv to i32    ; 4 uses
   %i.dq = mul i32 %.0.i187, %i.dp
   %i.dr = sext i32 %i.dq to i64
   %i.ds = getelementptr inbounds i8, ptr %.0140, i64 %i.dr ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #11
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %7, i8 0, i64 96, i1 false), !annotation !16
   %i.dt = call fastcc zeroext i1 @vmsd_can_compress(ptr noundef nonnull %.0144242)
-  %i.du = sub i32 %.0.i, %i.dp                    ; 4 uses
+  %8 = trunc i64 %indvars.iv to i32
+  %i.du = sub i32 %.0.i, %8                       ; 4 uses
   %i.dv = select i1 %i.dt, i32 %i.du, i32 1       ; 2 uses
   %i.dw = load i32, ptr %i.ay, align 8
   %i.dx = and i32 %i.dw, 64                       ; 2 uses

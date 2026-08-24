@@ -205,7 +205,7 @@ bb.p:                                             ; preds = %.lr.ph, %bb.p
   br i1 %exitcond248.not, label %.loopexit203, label %bb.o, !llvm.loop !97
 
 .loopexit203:                                     ; preds = %._crit_edge, %._crit_edge216
-  %.0157307314 = phi i32 [ %i.cp, %._crit_edge216 ], [ %i.cj, %._crit_edge ] ; 7 uses
+  %.0157307314 = phi i32 [ %i.cp, %._crit_edge216 ], [ %i.cj, %._crit_edge ] ; 6 uses
   %.not170224 = icmp slt i32 %.0157307314, 1
   br i1 %.not170224, label %.loopexit201, label %.preheader200.lr.ph
 
@@ -215,6 +215,8 @@ bb.p:                                             ; preds = %.lr.ph, %bb.p
   %i.eu = icmp sgt i32 %.fr238, 0
   %i.ev = getelementptr inbounds nuw i8, ptr %i.b, i64 272 ; 2 uses
   %i.ew = zext nneg i32 %.0157307314 to i64       ; 2 uses
+  %4 = add nuw i32 %.0157307314, 1
+  %wide.trip.count282 = zext i32 %4 to i64        ; 2 uses
   br i1 %i.eu, label %.preheader200.us.preheader, label %.preheader200
 
 .preheader200.us.preheader:                       ; preds = %.preheader200.lr.ph
@@ -222,17 +224,15 @@ bb.p:                                             ; preds = %.lr.ph, %bb.p
   br label %.preheader200.us
 
 .preheader200.us:                                 ; preds = %.preheader200.us.preheader, %.split.us.us
-  %.0155225.us = phi i32 [ %7, %.split.us.us ], [ 1, %.preheader200.us.preheader ] ; 4 uses
+  %indvars.iv278 = phi i64 [ 1, %.preheader200.us.preheader ], [ %indvars.iv.next279, %.split.us.us ] ; 3 uses
   br label %.lr.ph222.us.us
 
 .lr.ph222.us.us:                                  ; preds = %..loopexit199_crit_edge.us.us, %.preheader200.us
-  %indvars.iv269 = phi i64 [ %indvars.iv.next270, %..loopexit199_crit_edge.us.us ], [ %i.ew, %.preheader200.us ] ; 5 uses
+  %indvars.iv269 = phi i64 [ %indvars.iv.next270, %..loopexit199_crit_edge.us.us ], [ %i.ew, %.preheader200.us ] ; 6 uses
   %i.ex = getelementptr inbounds nuw [8 x i8], ptr %i.es, i64 %indvars.iv269
   %i.ey = load double, ptr %i.ex, align 8, !tbaa !93
-  %4 = trunc nuw i64 %indvars.iv269 to i32        ; 2 uses
-  %5 = sub nsw i32 %4, %.0155225.us
-  %6 = zext nneg i32 %5 to i64
-  %i.ez = getelementptr inbounds nuw [8 x i8], ptr %i.es, i64 %6
+  %5 = sub nuw nsw i64 %indvars.iv269, %indvars.iv278
+  %i.ez = getelementptr inbounds nuw [8 x i8], ptr %i.es, i64 %5
   %i.fa = load double, ptr %i.ez, align 8, !tbaa !93
   %i.fb = fsub double %i.ey, %i.fa
   %i.fc = fdiv double %i.bz, %i.fb                ; 3 uses
@@ -262,26 +262,26 @@ bb.q:                                             ; preds = %bb.q, %.lr.ph222.us
   br i1 %exitcond268.not, label %..loopexit199_crit_edge.us.us, label %bb.q, !llvm.loop !98
 
 ..loopexit199_crit_edge.us.us:                    ; preds = %bb.q
-  %.not171.us.us.not = icmp slt i32 %.0155225.us, %4
+  %sext312 = shl i64 %indvars.iv269, 32
+  %6 = ashr exact i64 %sext312, 32
+  %.not171.us.us.not = icmp sgt i64 %6, %indvars.iv278
   br i1 %.not171.us.us.not, label %.lr.ph222.us.us, label %.split.us.us, !llvm.loop !99
 
 .split.us.us:                                     ; preds = %..loopexit199_crit_edge.us.us
-  %7 = add nuw i32 %.0155225.us, 1
-  %exitcond273.not = icmp eq i32 %.0155225.us, %.0157307314
+  %indvars.iv.next279 = add nuw nsw i64 %indvars.iv278, 1 ; 2 uses
+  %exitcond273.not = icmp eq i64 %indvars.iv.next279, %wide.trip.count282
   br i1 %exitcond273.not, label %.loopexit201, label %.preheader200.us, !llvm.loop !100
 
 .preheader200:                                    ; preds = %.preheader200.lr.ph, %.split
-  %.0155225 = phi i32 [ %11, %.split ], [ 1, %.preheader200.lr.ph ] ; 4 uses
+  %indvars.iv262 = phi i64 [ %indvars.iv.next263, %.split ], [ 1, %.preheader200.lr.ph ] ; 3 uses
   br label %.loopexit199
 
 .loopexit199:                                     ; preds = %.preheader200, %.loopexit199
-  %indvars.iv259 = phi i64 [ %i.ew, %.preheader200 ], [ %indvars.iv.next260, %.loopexit199 ] ; 4 uses
+  %indvars.iv259 = phi i64 [ %i.ew, %.preheader200 ], [ %indvars.iv.next260, %.loopexit199 ] ; 5 uses
   %i.fr = getelementptr inbounds nuw [8 x i8], ptr %i.es, i64 %indvars.iv259
   %i.fs = load double, ptr %i.fr, align 8, !tbaa !93
-  %8 = trunc nuw i64 %indvars.iv259 to i32        ; 2 uses
-  %9 = sub nsw i32 %8, %.0155225
-  %10 = zext nneg i32 %9 to i64
-  %i.ft = getelementptr inbounds nuw [8 x i8], ptr %i.es, i64 %10
+  %7 = sub nuw nsw i64 %indvars.iv259, %indvars.iv262
+  %i.ft = getelementptr inbounds nuw [8 x i8], ptr %i.es, i64 %7
   %i.fu = load double, ptr %i.ft, align 8, !tbaa !93
   %i.fv = fsub double %i.fs, %i.fu
   %i.fw = fdiv double %i.bz, %i.fv                ; 2 uses
@@ -293,12 +293,14 @@ bb.q:                                             ; preds = %bb.q, %.lr.ph222.us
   %i.gb = getelementptr inbounds nuw [8 x i8], ptr %i.et, i64 %i.ga
   %i.gc = load ptr, ptr %i.gb, align 8, !tbaa !72
   tail call void @N_VLinearSum(double noundef %i.fw, ptr noundef %i.fy, double noundef %i.fz, ptr noundef %i.gc, ptr noundef %i.fy) #7
-  %.not171.not = icmp slt i32 %.0155225, %8
+  %sext = shl i64 %indvars.iv259, 32
+  %8 = ashr exact i64 %sext, 32
+  %.not171.not = icmp sgt i64 %8, %indvars.iv262
   br i1 %.not171.not, label %.loopexit199, label %.split, !llvm.loop !99
 
 .split:                                           ; preds = %.loopexit199
-  %11 = add nuw i32 %.0155225, 1
-  %exitcond262.not = icmp eq i32 %.0155225, %.0157307314
+  %indvars.iv.next263 = add nuw nsw i64 %indvars.iv262, 1 ; 2 uses
+  %exitcond262.not = icmp eq i64 %indvars.iv.next263, %wide.trip.count282
   br i1 %exitcond262.not, label %.loopexit201, label %.preheader200, !llvm.loop !100
 
 .loopexit201:                                     ; preds = %.split, %.split.us.us, %.thread304, %.loopexit203, %bb.l

@@ -205,9 +205,10 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.l
   %i.bl = add nuw nsw i32 %i.bi, 2
-  %i.bm = sub nsw i32 %i.bd, %i.bk
-  %.neg.lhs.trunc = trunc nsw i32 %i.bm to i8
-  %.neg120 = sdiv i8 %.neg.lhs.trunc, -2
+  %i.bm = sub nuw nsw i32 %i.bd, %i.bk
+  %.neg.lhs.trunc = trunc nuw nsw i32 %i.bm to i8
+  %.neg120132 = lshr i8 %.neg.lhs.trunc, 1
+  %.neg120 = sub nsw i8 0, %.neg120132
   %.neg.sext = sext i8 %.neg120 to i32
   %i.bn = add nsw i32 %i.bd, %.neg.sext
   br label %bb.n
@@ -610,9 +611,9 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e
   %i.ai = getelementptr inbounds nuw i8, ptr %i.b, i64 10
-  %i.aj = sub nsw i32 %0, %i.z
-  %i.ak = shl nsw i32 %i.aj, 1
-  %i.al = zext i32 %i.ak to i64
+  %i.aj = sub nuw nsw i32 %0, %i.z
+  %i.ak = shl nuw nsw i32 %i.aj, 1
+  %i.al = zext nneg i32 %i.ak to i64
   %i.am = getelementptr inbounds nuw i8, ptr %i.ai, i64 %i.al ; 2 uses
   %.val165 = load i8, ptr %i.am, align 1, !tbaa !31
   %i.an = getelementptr i8, ptr %i.am, i64 1
@@ -822,8 +823,8 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %bb.h
   %i.fn = zext i16 %i.fa to i64
   %i.fo = getelementptr inbounds nuw i8, ptr %.8.val, i64 %i.fn
-  %i.fp = sub nsw i32 %0, %i.ei
-  %i.fq = shl nsw i32 %i.fp, 1
+  %i.fp = sub nuw nsw i32 %0, %i.ei
+  %i.fq = shl nuw nsw i32 %i.fp, 1
   %i.fr = zext nneg i32 %i.fq to i64
   %i.fs = getelementptr inbounds nuw i8, ptr %i.fo, i64 %i.fr
   %i.ft = getelementptr inbounds nuw i8, ptr %i.fs, i64 %i.a

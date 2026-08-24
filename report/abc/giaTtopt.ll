@@ -205,11 +205,10 @@ bb.b:                                             ; preds = %.lr.ph15, %.loopexi
   br i1 %.not11, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.b
-  %i.o = sub nsw i64 %i.i, %indvars.iv.next       ; 6 uses
+  %i.o = sub nsw i64 %i.i, %indvars.iv.next       ; 5 uses
   %i.p = icmp samesign ugt i64 %i.o, 6
-  %i.q = trunc i64 %i.o to i32
-  %1 = sub i32 6, %i.q                            ; 3 uses
-  %2 = shl nuw i32 1, %1                          ; 2 uses
+  %i.q = trunc nuw nsw i64 %i.o to i32            ; 3 uses
+  %1 = lshr exact i32 64, %i.q                    ; 2 uses
   %i.r = trunc i64 %i.o to i32
   %i.s = add i32 %i.r, -6                         ; 8 uses
   %i.t = shl nuw i32 1, %i.s                      ; 5 uses
@@ -457,10 +456,12 @@ _ZN5Ttopt17TruthTableRewrite8CopyFuncEiiib.exit.us: ; preds = %vector.body39, %_
   br i1 %.not.us, label %.loopexit, label %.lr.ph.split.us, !llvm.loop !383
 
 .lr.ph.split:                                     ; preds = %.lr.ph
+  %2 = sub nuw nsw i64 6, %i.o                    ; 2 uses
   %i.cd = getelementptr inbounds nuw [8 x i8], ptr @_ZN5Ttopt10TruthTable4onesE, i64 %i.o
   %i.ce = load i64, ptr %i.cd, align 8, !tbaa !71 ; 3 uses
-  %.pre = trunc nuw nsw i64 %i.o to i32
-  %i.cf = trunc nuw nsw i64 %i.o to i32           ; 2 uses
+  %.pre = trunc nuw nsw i64 %2 to i32
+  %i.cf = trunc nuw nsw i64 %2 to i32             ; 2 uses
+  %3 = add nsw i32 %1, -1
   br label %bb.e
 
 bb.e:                                             ; preds = %.lr.ph.split, %._crit_edge.i
@@ -475,9 +476,9 @@ bb.e:                                             ; preds = %.lr.ph.split, %._cr
   br i1 %i.cm, label %bb.f, label %._crit_edge.i
 
 bb.f:                                             ; preds = %bb.e
-  %i.cn = lshr i32 %i.ck, %1
-  %3 = srem i32 %i.ck, %2
-  %i.co = shl i32 %3, %i.cf
+  %i.cn = lshr i32 %i.ck, %i.cf
+  %4 = and i32 %i.ck, %3
+  %i.co = shl i32 %4, %i.q
   %i.cp = zext nneg i32 %i.cn to i64
   %i.cq = load ptr, ptr %i.f, align 8, !tbaa !75
   %i.cr = getelementptr inbounds nuw [8 x i8], ptr %i.cq, i64 %i.cp
@@ -492,9 +493,9 @@ bb.f:                                             ; preds = %bb.e
   %.0.i = phi i64 [ %i.cv, %bb.f ], [ 0, %bb.e ]
   %i.cw = select i1 %i.cl, i64 %i.ce, i64 0
   %.1.i = xor i64 %i.cw, %.0.i
-  %i.cx = ashr i32 %i.ci, %1
-  %i.cy = srem i32 %i.ci, %2
-  %i.cz = shl i32 %i.cy, %.pre-phi
+  %i.cx = ashr i32 %i.ci, %.pre-phi
+  %i.cy = srem i32 %i.ci, %1
+  %i.cz = shl i32 %i.cy, %i.q
   %i.da = zext i32 %i.cz to i64                   ; 2 uses
   %i.db = shl i64 %i.ce, %i.da
   %i.dc = xor i64 %i.db, -1
