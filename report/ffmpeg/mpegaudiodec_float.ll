@@ -205,11 +205,11 @@ begin_hunk_0_@compute_imdct:bb.a
   %i.ks = select i1 %.not125, i64 69, i64 1
   %i.kt = getelementptr inbounds nuw [4 x i8], ptr %.0111137, i64 %i.ks ; 2 uses
   %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %.preheader, label %bb.e, !llvm.loop !288
+  %4 = icmp slt i64 %indvars.iv.next, %wide.trip.count
+  br i1 %4, label %bb.e, label %.preheader, !llvm.loop !288
 
 .lr.ph143:                                        ; preds = %.lr.ph143.preheader, %.lr.ph143
-  %indvars.iv156 = phi i64 [ %i.ar, %.lr.ph143.preheader ], [ %indvars.iv.next157, %.lr.ph143 ] ; 3 uses
+  %indvars.iv156 = phi i64 [ %i.ar, %.lr.ph143.preheader ], [ %indvars.iv.next157, %.lr.ph143 ] ; 4 uses
   %.1112141 = phi ptr [ %.0111.lcssa, %.lr.ph143.preheader ], [ %i.mx, %.lr.ph143 ] ; 20 uses
   %i.ku = getelementptr inbounds [4 x i8], ptr %2, i64 %indvars.iv156 ; 18 uses
   %i.kv = load float, ptr %.1112141, align 4, !tbaa !90
@@ -304,10 +304,9 @@ begin_hunk_0_@compute_imdct:bb.a
   %.not124 = icmp eq i64 %i.mv, 3
   %i.mw = select i1 %.not124, i64 69, i64 1
   %i.mx = getelementptr inbounds nuw [4 x i8], ptr %.1112141, i64 %i.mw
-  %indvars.iv.next157 = add nsw i64 %indvars.iv156, 1 ; 2 uses
-  %4 = and i64 %indvars.iv.next157, 4294967295
-  %exitcond159.not = icmp eq i64 %4, 32
-  br i1 %exitcond159.not, label %._crit_edge, label %.lr.ph143, !llvm.loop !289
+  %indvars.iv.next157 = add nsw i64 %indvars.iv156, 1
+  %5 = icmp slt i64 %indvars.iv156, 31
+  br i1 %5, label %.lr.ph143, label %._crit_edge, !llvm.loop !289
 
 ._crit_edge:                                      ; preds = %.lr.ph143, %.preheader
   ret void

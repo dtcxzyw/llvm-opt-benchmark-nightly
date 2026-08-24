@@ -204,8 +204,7 @@ Vec_IntStartFull.exit:                            ; preds = %Vec_IntAlloc.exit.t
   %i.lr = getelementptr i8, ptr %.val256, i64 8   ; 2 uses
   %i.ls = getelementptr inbounds nuw i8, ptr %0, i64 96
   %i.lt = getelementptr i8, ptr %i.li, i64 8
-  %smax = tail call i32 @llvm.smax.i32(i32 %i.lg, i32 2)
-  %wide.trip.count = zext nneg i32 %smax to i64
+  %wide.trip.count = zext nneg i32 %i.lg to i64
   br label %bb.bh
 
 bb.bh:                                            ; preds = %.lr.ph458, %bb.cv
@@ -608,8 +607,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.aa = getelementptr i8, ptr %.pre89, i64 4
   %i.ab = getelementptr i8, ptr %.pre89, i64 8
   %.val15.i = load ptr, ptr %i.ab, align 8, !tbaa !12
-  %smax = tail call i32 @llvm.smax.i32(i32 %i.d, i32 2)
-  %wide.trip.count = zext nneg i32 %smax to i64
+  %wide.trip.count = zext nneg i32 %i.d to i64
   br label %bb.h
 
 bb.h:                                             ; preds = %.lr.ph, %Hash_Int2ManLookup.exit
@@ -1012,8 +1010,8 @@ Vec_IntGrow.exit.i147:                            ; preds = %Vec_IntGrow.exit.si
 
 bb.bi:                                            ; preds = %bb.am, %._crit_edge.i148
   %indvars.iv.next185 = add nsw i64 %indvars.iv184, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next185, %wide.trip.count
-  br i1 %exitcond.not, label %.preheader, label %bb.am, !llvm.loop !155
+  %.not106.not = icmp slt i64 %indvars.iv.next185, %wide.trip.count
+  br i1 %.not106.not, label %bb.am, label %.preheader, !llvm.loop !155
 
 .critedge.preheader:                              ; preds = %bb.bm, %.preheader
   %i.oi = load ptr, ptr %i.hp, align 8, !tbaa !118

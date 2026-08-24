@@ -205,7 +205,6 @@ bb.a:
 .lr.ph:                                           ; preds = %bb.a
   %i.o = sitofp reassoc nsz arcp contract afn i32 %3 to double
   %i.p = fmul reassoc nsz arcp contract afn double %i.b, 2.000000e+00
-  %6 = add nsw i32 %i.m, 1
   %i.q = fdiv reassoc nsz arcp contract afn double 1.000000e+00, %i.o
   br label %bb.b
 
@@ -222,9 +221,9 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.v = fadd reassoc nsz arcp contract afn double %i.i, %i.t
   tail call void @cairo_line_to(ptr noundef %0, double noundef %i.v, double noundef %i.j) #28
   tail call void @cairo_stroke(ptr noundef %0) #28
-  %i.w = add i32 %.031, 1
-  %exitcond = icmp eq i32 %.031, %6
-  br i1 %exitcond, label %._crit_edge, label %bb.b
+  %i.w = add nsw i32 %.031, 1
+  %.not = icmp sgt i32 %.031, %i.m
+  br i1 %.not, label %._crit_edge, label %bb.b
 }
 
 declare void @cairo_set_line_width(ptr noundef, double noundef) local_unnamed_addr #6

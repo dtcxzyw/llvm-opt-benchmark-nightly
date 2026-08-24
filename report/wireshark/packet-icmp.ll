@@ -202,24 +202,22 @@ bb.c:                                             ; preds = %._crit_edge
   %i.z = load i32, ptr @ett_icmp_mip_flags, align 4
   %i.aa = call ptr @proto_tree_add_bitmask(ptr noundef %i.k, ptr noundef %0, i32 noundef %i.x, i32 noundef %i.y, i32 noundef %i.z, ptr noundef nonnull @dissect_mip_extensions.flags, i32 noundef 0) ; 0 uses
   %i.ab = add i32 %.06481, 8                      ; 2 uses
+  %4 = zext i8 %i.e to i16
+  %.lhs.trunc = add nsw i16 %4, -6
+  %5 = sdiv i16 %.lhs.trunc, 4
+  %.sext = sext i16 %5 to i32
   %i.ac = icmp ugt i8 %i.e, 9
-  br i1 %i.ac, label %.lr.ph78.preheader, label %.thread
+  br i1 %i.ac, label %.lr.ph78, label %.thread
 
-.lr.ph78.preheader:                               ; preds = %bb.c
-  %.lhs.trunc = add i8 %i.e, -6
-  %4 = lshr i8 %.lhs.trunc, 2
-  %smax = zext nneg i8 %4 to i32
-  br label %.lr.ph78
-
-.lr.ph78:                                         ; preds = %.lr.ph78.preheader, %.lr.ph78
-  %.077 = phi i32 [ %i.ag, %.lr.ph78 ], [ 0, %.lr.ph78.preheader ]
-  %.276 = phi i32 [ %i.af, %.lr.ph78 ], [ %i.ab, %.lr.ph78.preheader ] ; 2 uses
+.lr.ph78:                                         ; preds = %bb.c, %.lr.ph78
+  %.077 = phi i32 [ %i.ag, %.lr.ph78 ], [ 0, %bb.c ]
+  %.276 = phi i32 [ %i.af, %.lr.ph78 ], [ %i.ab, %bb.c ] ; 2 uses
   %i.ad = load i32, ptr @hf_icmp_mip_coa, align 4
   %i.ae = call ptr @proto_tree_add_item(ptr noundef %i.k, i32 noundef %i.ad, ptr noundef %0, i32 noundef %.276, i32 noundef 4, i32 noundef 0) ; 0 uses
   %i.af = add i32 %.276, 4                        ; 2 uses
   %i.ag = add nuw nsw i32 %.077, 1                ; 2 uses
-  %exitcond86.not = icmp eq i32 %i.ag, %smax
-  br i1 %exitcond86.not, label %.thread, label %.lr.ph78, !llvm.loop !13
+  %6 = icmp slt i32 %i.ag, %.sext
+  br i1 %6, label %.lr.ph78, label %.thread, !llvm.loop !13
 
 .lr.ph:                                           ; preds = %.preheader, %.lr.ph
   %.175 = phi i32 [ %i.ak, %.lr.ph ], [ 0, %.preheader ]

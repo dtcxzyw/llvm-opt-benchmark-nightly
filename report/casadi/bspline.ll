@@ -204,8 +204,8 @@ _ZNSt6vectorIN6casadi2MXESaIS1_EED2Ev.exit:       ; preds = %_ZSt8_DestroyIPN6ca
   call void @_ZN6casadi2MXD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %11) #23
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #23
   %i.be = add nuw nsw i64 %.044249, 1             ; 2 uses
-  %exitcond.not = icmp eq i64 %i.be, %i.j
-  br i1 %exitcond.not, label %._crit_edge, label %bb.f, !llvm.loop !189
+  %43 = icmp slt i64 %i.be, %i.j
+  br i1 %43, label %bb.f, label %._crit_edge, !llvm.loop !189
 
 bb.m:                                             ; preds = %bb.f
   %i.bf = landingpad { ptr, i32 }
@@ -263,13 +263,9 @@ bb.v:                                             ; preds = %._crit_edge
   store i64 %4, ptr %i.v, align 8, !tbaa !68
   %i.bm = getelementptr inbounds nuw i8, ptr %15, i64 8 ; 3 uses
   store ptr %i.bk, ptr %i.bm, align 8, !tbaa !62
+  %44 = add nsw i64 %i.j, -1
   %i.bn = icmp sgt i64 %i.i, 24
-  br i1 %i.bn, label %.lr.ph252.preheader, label %._crit_edge253
-
-.lr.ph252.preheader:                              ; preds = %bb.v
-  %43 = call i64 @llvm.smax.i64(i64 %i.j, i64 2)
-  %44 = add nsw i64 %43, -2
-  br label %.lr.ph252
+  br i1 %i.bn, label %.lr.ph252, label %._crit_edge253
 
 ._crit_edge253:                                   ; preds = %_ZNSt6vectorIxSaIxEE9push_backEOx.exit, %bb.v
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #23
@@ -284,11 +280,11 @@ bb.w:                                             ; preds = %._crit_edge
           cleanup
   br label %_ZNSt6vectorIxSaIxEED2Ev.exit245
 
-.lr.ph252:                                        ; preds = %.lr.ph252.preheader, %_ZNSt6vectorIxSaIxEE9push_backEOx.exit
-  %i.bp = phi ptr [ %i.cz, %_ZNSt6vectorIxSaIxEE9push_backEOx.exit ], [ %i.v, %.lr.ph252.preheader ] ; 4 uses
-  %i.bq = phi ptr [ %i.da, %_ZNSt6vectorIxSaIxEE9push_backEOx.exit ], [ %i.bk, %.lr.ph252.preheader ] ; 3 uses
-  %i.br = phi ptr [ %i.db, %_ZNSt6vectorIxSaIxEE9push_backEOx.exit ], [ %i.bk, %.lr.ph252.preheader ] ; 4 uses
-  %.043250 = phi i64 [ %i.dc, %_ZNSt6vectorIxSaIxEE9push_backEOx.exit ], [ 0, %.lr.ph252.preheader ] ; 4 uses
+.lr.ph252:                                        ; preds = %bb.v, %_ZNSt6vectorIxSaIxEE9push_backEOx.exit
+  %i.bp = phi ptr [ %i.cz, %_ZNSt6vectorIxSaIxEE9push_backEOx.exit ], [ %i.v, %bb.v ] ; 4 uses
+  %i.bq = phi ptr [ %i.da, %_ZNSt6vectorIxSaIxEE9push_backEOx.exit ], [ %i.bk, %bb.v ] ; 3 uses
+  %i.br = phi ptr [ %i.db, %_ZNSt6vectorIxSaIxEE9push_backEOx.exit ], [ %i.bk, %bb.v ] ; 4 uses
+  %.043250 = phi i64 [ %i.dc, %_ZNSt6vectorIxSaIxEE9push_backEOx.exit ], [ 0, %bb.v ] ; 3 uses
   %i.bs = getelementptr inbounds i8, ptr %i.br, i64 -8
   %i.bt = load i64, ptr %i.bs, align 8, !tbaa !68
   %i.bu = load ptr, ptr %2, align 8, !tbaa !183
@@ -365,9 +361,9 @@ _ZNSt6vectorIxSaIxEE9push_backEOx.exit:           ; preds = %_ZNSt6vectorIxSaIxE
   %i.cz = phi ptr [ %i.cu, %_ZNSt6vectorIxSaIxEE17_M_realloc_insertIJxEEEvN9__gnu_cxx17__normal_iteratorIPxS1_EEDpOT_.exit.i.i ], [ %i.bp, %bb.x ]
   %i.da = phi ptr [ %i.cy, %_ZNSt6vectorIxSaIxEE17_M_realloc_insertIJxEEEvN9__gnu_cxx17__normal_iteratorIPxS1_EEDpOT_.exit.i.i ], [ %i.bq, %bb.x ]
   %i.db = phi ptr [ %i.cx, %_ZNSt6vectorIxSaIxEE17_M_realloc_insertIJxEEEvN9__gnu_cxx17__normal_iteratorIPxS1_EEDpOT_.exit.i.i ], [ %i.cj, %bb.x ]
-  %i.dc = add nuw nsw i64 %.043250, 1
-  %exitcond266.not = icmp eq i64 %.043250, %44
-  br i1 %exitcond266.not, label %._crit_edge253, label %.lr.ph252, !llvm.loop !190
+  %i.dc = add nuw nsw i64 %.043250, 1             ; 2 uses
+  %45 = icmp slt i64 %i.dc, %44
+  br i1 %45, label %.lr.ph252, label %._crit_edge253, !llvm.loop !190
 
 .loopexit:                                        ; preds = %_ZNKSt6vectorIxSaIxEE12_M_check_lenEmPKc.exit.i.i.i
   %lpad.loopexit = landingpad { ptr, i32 }
@@ -523,7 +519,6 @@ _ZNSt6vectorIxSaIxEED2Ev.exit:                    ; preds = %bb.aj, %bb.ak
 .lr.ph261:                                        ; preds = %._crit_edge256
   %i.fd = getelementptr inbounds nuw i8, ptr %32, i64 8 ; 3 uses
   %i.fe = getelementptr inbounds nuw i8, ptr %32, i64 16
-  %smax269 = call i64 @llvm.smax.i64(i64 %i.j, i64 1)
   br label %bb.cp
 
 bb.al:                                            ; preds = %._crit_edge253
@@ -907,8 +902,8 @@ _ZN6casadi6MatrixIdED2Ev.exit184:                 ; preds = %_ZNSt6vectorIdSaIdE
   call void @llvm.lifetime.end.p0(ptr nonnull %24) #23
   call void @llvm.lifetime.end.p0(ptr nonnull %23) #23
   %i.ir = add nuw nsw i64 %.042254, 1             ; 2 uses
-  %exitcond268.not = icmp eq i64 %i.ir, %i.j
-  br i1 %exitcond268.not, label %._crit_edge256, label %bb.ax, !llvm.loop !191
+  %46 = icmp slt i64 %i.ir, %i.j
+  br i1 %46, label %bb.ax, label %._crit_edge256, !llvm.loop !191
 
 bb.bw:                                            ; preds = %bb.ax
   %i.is = landingpad { ptr, i32 }
@@ -1202,8 +1197,8 @@ _ZN6casadi2MXaSERKS0_.exit:                       ; preds = %_ZN6casadi3vecERKNS
   call void @llvm.lifetime.end.p0(ptr nonnull %40) #23
   call void @llvm.lifetime.end.p0(ptr nonnull %39) #23
   %i.jz = add nuw nsw i64 %.0257, 1               ; 2 uses
-  %exitcond270.not = icmp eq i64 %i.jz, %smax269
-  br i1 %exitcond270.not, label %._crit_edge259, label %.lr.ph258, !llvm.loop !199
+  %47 = icmp slt i64 %i.jz, %i.j
+  br i1 %47, label %.lr.ph258, label %._crit_edge259, !llvm.loop !199
 
 bb.de:                                            ; preds = %.lr.ph258
   %i.ka = landingpad { ptr, i32 }

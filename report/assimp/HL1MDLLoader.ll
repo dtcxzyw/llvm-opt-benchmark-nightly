@@ -205,26 +205,20 @@ _ZNSt6vectorI10aiVector3tIfESaIS1_EE6resizeEm.exit457: ; preds = %bb.cp, %_ZSt27
   %.sroa.18.3 = phi ptr [ %.sroa.18.12373, %bb.co ], [ %.sroa.18.12373, %bb.cp ], [ %.sroa.18.12373, %_ZSt27__uninitialized_default_n_aIP10aiVector3tIfEmS1_ET_S3_T0_RSaIT1_E.exit.i643 ], [ %i.aap, %_ZNSt12_Vector_baseI10aiVector3tIfESaIS1_EE13_M_deallocateEPS1_m.exit37.i654 ] ; 26 uses
   %.sroa.12760.2 = phi ptr [ %.sroa.12760.12374, %bb.co ], [ %spec.select794, %bb.cp ], [ %scevgep.i.i.i.i644, %_ZSt27__uninitialized_default_n_aIP10aiVector3tIfEmS1_ET_S3_T0_RSaIT1_E.exit.i643 ], [ %i.aao, %_ZNSt12_Vector_baseI10aiVector3tIfESaIS1_EE13_M_deallocateEPS1_m.exit37.i654 ] ; 4 uses
   %.sroa.0753.3 = phi ptr [ %.sroa.0753.12375, %bb.co ], [ %.sroa.0753.12375, %bb.cp ], [ %.sroa.0753.12375, %_ZSt27__uninitialized_default_n_aIP10aiVector3tIfEmS1_ET_S3_T0_RSaIT1_E.exit.i643 ], [ %i.aai, %_ZNSt12_Vector_baseI10aiVector3tIfESaIS1_EE13_M_deallocateEPS1_m.exit37.i654 ] ; 30 uses
-  %.not2425 = icmp eq ptr %.sroa.12772.2, %.sroa.0765.4
-  br i1 %.not2425, label %.preheader841, label %.lr.ph2299.preheader
-
-.lr.ph2299.preheader:                             ; preds = %_ZNSt6vectorI10aiVector3tIfESaIS1_EE6resizeEm.exit457
   %32 = ptrtoint ptr %.sroa.12772.2 to i64
   %33 = ptrtoint ptr %.sroa.0765.4 to i64
   %34 = sub i64 %32, %33
   %35 = sdiv exact i64 %34, 12
-  br label %.lr.ph2299
+  %.not2425 = icmp eq ptr %.sroa.12772.2, %.sroa.0765.4
+  br i1 %.not2425, label %.lr.ph2301.preheader, label %.lr.ph2299
 
-.preheader841:                                    ; preds = %.lr.ph2299, %_ZNSt6vectorI10aiVector3tIfESaIS1_EE6resizeEm.exit457
-  %.not2426 = icmp eq ptr %.sroa.12760.2, %.sroa.0753.3
-  br i1 %.not2426, label %._crit_edge2302, label %.lr.ph2301.preheader
-
-.lr.ph2301.preheader:                             ; preds = %.preheader841
+.lr.ph2301.preheader:                             ; preds = %.lr.ph2299, %_ZNSt6vectorI10aiVector3tIfESaIS1_EE6resizeEm.exit457
   %i.aas = ptrtoint ptr %.sroa.12760.2 to i64
   %i.aat = ptrtoint ptr %.sroa.0753.3 to i64
   %i.aau = sub i64 %i.aas, %i.aat
   %i.aav = sdiv exact i64 %i.aau, 12
-  br label %.lr.ph2301
+  %.not2426 = icmp eq ptr %.sroa.12760.2, %.sroa.0753.3
+  br i1 %.not2426, label %._crit_edge2302, label %.lr.ph2301
 
 bb.cq:                                            ; preds = %.lr.ph2386
   %i.aaw = landingpad { ptr, i32 }
@@ -260,8 +254,8 @@ bb.ct:                                            ; preds = %_ZN6Assimp3MDL8Half
           cleanup
   br label %.body661
 
-.lr.ph2299:                                       ; preds = %.lr.ph2299.preheader, %.lr.ph2299
-  %.02942298 = phi i64 [ %i.aco, %.lr.ph2299 ], [ 0, %.lr.ph2299.preheader ] ; 4 uses
+.lr.ph2299:                                       ; preds = %_ZNSt6vectorI10aiVector3tIfESaIS1_EE6resizeEm.exit457, %.lr.ph2299
+  %.02942298 = phi i64 [ %i.aco, %.lr.ph2299 ], [ 0, %_ZNSt6vectorI10aiVector3tIfESaIS1_EE6resizeEm.exit457 ] ; 4 uses
   %i.aba = getelementptr inbounds nuw [12 x i8], ptr %i.yh, i64 %.02942298 ; 3 uses
   %i.abb = getelementptr inbounds nuw i8, ptr %i.xy, i64 %.02942298
   %i.abc = load i8, ptr %i.abb, align 1
@@ -306,10 +300,10 @@ bb.ct:                                            ; preds = %_ZN6Assimp3MDL8Half
   %.sroa.4128.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.acn, i64 8
   store float %i.acm, ptr %.sroa.4128.0..sroa_idx, align 4
   %i.aco = add nuw i64 %.02942298, 1              ; 2 uses
-  %exitcond.not = icmp eq i64 %i.aco, %35
-  br i1 %exitcond.not, label %.preheader841, label %.lr.ph2299, !llvm.loop !203
+  %36 = icmp ult i64 %i.aco, %35
+  br i1 %36, label %.lr.ph2299, label %.lr.ph2301.preheader, !llvm.loop !203
 
-._crit_edge2302:                                  ; preds = %bb.cu, %.preheader841
+._crit_edge2302:                                  ; preds = %bb.cu, %.lr.ph2301.preheader
   %i.acp = invoke noalias noundef nonnull dereferenceable(1144) ptr @_Znwm(i64 noundef 1144) #26
           to label %bb.cw unwind label %bb.cz     ; 6 uses
 
@@ -395,8 +389,8 @@ bb.cu:                                            ; preds = %.lr.ph2301
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.aet, i64 8
   store float %i.aes, ptr %.sroa.4.0..sroa_idx, align 4
   %i.aeu = add nuw i64 %.02562300, 1              ; 2 uses
-  %exitcond3390.not = icmp eq i64 %i.aeu, %i.aav
-  br i1 %exitcond3390.not, label %._crit_edge2302, label %.lr.ph2301, !llvm.loop !204
+  %37 = icmp ult i64 %i.aeu, %i.aav
+  br i1 %37, label %.lr.ph2301, label %._crit_edge2302, !llvm.loop !204
 
 bb.cv:                                            ; preds = %.lr.ph2301
   %i.aev = landingpad { ptr, i32 }
