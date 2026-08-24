@@ -202,18 +202,16 @@ bb.ah:                                            ; preds = %.split, %bb.ag
   br label %bb.ai
 
 bb.ai:                                            ; preds = %.lr.ph1165, %.loopexit1039
-  %indvar1680 = phi i64 [ 0, %.lr.ph1165 ], [ %indvar.next1681, %.loopexit1039 ] ; 14 uses
+  %indvar1680 = phi i64 [ 0, %.lr.ph1165 ], [ %indvar.next1681, %.loopexit1039 ] ; 13 uses
   %i.hc = phi i32 [ %i.fy, %.lr.ph1165 ], [ %i.agn, %.loopexit1039 ]
   %indvars.iv1392 = phi i64 [ %i.ge, %.lr.ph1165 ], [ %indvars.iv.next1393, %.loopexit1039 ] ; 21 uses
   %indvars.iv1329 = phi i32 [ %i.gd, %.lr.ph1165 ], [ %indvars.iv.next1330, %.loopexit1039 ] ; 2 uses
   %indvars.iv1309 = phi i32 [ %i.gc, %.lr.ph1165 ], [ %indvars.iv.next1310, %.loopexit1039 ] ; 3 uses
   %i.hd = add i64 %indvar1680, %i.ge
-  %16 = trunc i64 %indvar1680 to i32
   %i.he = trunc i64 %indvar1680 to i32
   %i.hf = trunc i64 %indvar1680 to i32
-  %17 = add i32 %i.hf, 2147483647
   %i.hg = trunc i64 %indvar1680 to i32
-  %i.hh = add i32 %i.hg, 2
+  %i.hh = add i32 %i.hg, 2147483647
   %i.hi = trunc i64 %indvar1680 to i32
   %i.hj = add i32 %i.hi, 2147483647
   %i.hk = trunc i64 %indvar1680 to i32
@@ -267,8 +265,8 @@ bb.aj:                                            ; preds = %.lr.ph1054, %bb.aj
 
 ._crit_edge1055:                                  ; preds = %._crit_edge1055.loopexit, %bb.ai
   %i.if = phi i32 [ %.pre1439, %._crit_edge1055.loopexit ], [ %i.hw, %bb.ai ] ; 3 uses
-  %i.ig = phi i32 [ %.pre, %._crit_edge1055.loopexit ], [ %i.hc, %bb.ai ] ; 20 uses
-  %i.ih = load i32, ptr %i.r, align 4, !tbaa !8   ; 8 uses
+  %i.ig = phi i32 [ %.pre, %._crit_edge1055.loopexit ], [ %i.hc, %bb.ai ] ; 19 uses
+  %i.ih = load i32, ptr %i.r, align 4, !tbaa !8   ; 7 uses
   %i.ii = sub nsw i32 %i.hv, %i.ey                ; 3 uses
   store i32 %i.ii, ptr %i.w, align 4, !tbaa !8
   %i.ij = mul nsw i32 %i.ig, %i.fi                ; 2 uses
@@ -297,27 +295,18 @@ bb.aj:                                            ; preds = %.lr.ph1054, %bb.aj
   %invariant.gep1503 = getelementptr [8 x i8], ptr %i.ak, i64 %i.iv ; 2 uses
   %i.iz = shl nsw i64 %i.iv, 3
   %scevgep1966 = getelementptr i8, ptr %scevgep1965, i64 %i.iz
-  %reass.sub2003 = sub i32 %i.iq, %i.he
+  %reass.sub2003 = sub i32 %i.iq, %i.hf
   %i.ja = add i32 %reass.sub2003, 1
-  %i.jb = add i32 %i.iq, 3                        ; 2 uses
-  %reass.sub2004 = sub i32 %i.iq, %16
+  %i.jb = add i32 %i.iq, 3
+  %reass.sub2004 = sub i32 %i.iq, %i.he
   %i.jc = add i32 %reass.sub2004, 1
   br label %bb.ak
 
 bb.ak:                                            ; preds = %.lr.ph1065, %bb.al
-  %indvar1967 = phi i32 [ 0, %.lr.ph1065 ], [ %indvar.next1968, %bb.al ] ; 5 uses
+  %indvar1967 = phi i32 [ 0, %.lr.ph1065 ], [ %indvar.next1968, %bb.al ] ; 4 uses
   %indvars.iv1301 = phi i64 [ %i.iy, %.lr.ph1065 ], [ %indvars.iv.next1302, %bb.al ] ; 3 uses
   %indvars.iv1299 = phi i64 [ %i.iw, %.lr.ph1065 ], [ %indvars.iv.next1300, %bb.al ] ; 4 uses
   %.01063 = phi i32 [ %i.ir, %.lr.ph1065 ], [ %i.kv, %bb.al ] ; 3 uses
-  %18 = mul i32 %indvar1967, %i.iu
-  %19 = add i32 %i.jc, %18
-  %20 = sext i32 %19 to i64                       ; 2 uses
-  %21 = add nsw i64 %20, 1
-  %22 = mul i32 %i.ih, %indvar1967
-  %23 = sub i32 %i.jb, %22
-  %24 = sext i32 %23 to i64
-  %smax1980 = call i64 @llvm.smax.i64(i64 %21, i64 %24)
-  %25 = sub i64 %smax1980, %20                    ; 3 uses
   %i.jd = mul i32 %indvar1967, %i.iu
   %i.je = add i32 %i.ja, %i.jd
   %i.jf = sext i32 %i.je to i64                   ; 2 uses
@@ -342,11 +331,18 @@ bb.ak:                                            ; preds = %.lr.ph1065, %bb.al
   br i1 %.not1014.not1056, label %.lr.ph1059.preheader, label %bb.al
 
 .lr.ph1059.preheader:                             ; preds = %bb.ak
+  %16 = mul i32 %indvar1967, %i.iu
+  %17 = add i32 %i.jc, %16                        ; 2 uses
   %i.jq = trunc nsw i64 %indvars.iv1301 to i32
   %i.jr = add nsw i32 %.01063, %i.jq
   %i.js = sext i32 %.01063 to i64                 ; 4 uses
-  %i.jt = sext i32 %i.jr to i64
-  %min.iters.check1982 = icmp ult i64 %25, 8
+  %18 = sext i32 %i.jr to i64                     ; 2 uses
+  %19 = sext i32 %17 to i64
+  %20 = add nsw i64 %19, 1
+  %21 = call i64 @llvm.smax.i64(i64 %20, i64 %18)
+  %i.jt = sext i32 %17 to i64
+  %22 = sub i64 %21, %i.jt                        ; 3 uses
+  %min.iters.check1982 = icmp ult i64 %22, 8
   br i1 %min.iters.check1982, label %.lr.ph1059.preheader2018, label %vector.memcheck1964
 
 vector.memcheck1964:                              ; preds = %.lr.ph1059.preheader
@@ -356,7 +352,7 @@ vector.memcheck1964:                              ; preds = %.lr.ph1059.preheade
   br i1 %found.conflict1979, label %.lr.ph1059.preheader2018, label %vector.ph1983
 
 vector.ph1983:                                    ; preds = %vector.memcheck1964
-  %n.vec1984 = and i64 %25, -8                    ; 3 uses
+  %n.vec1984 = and i64 %22, -8                    ; 3 uses
   %i.ju = add i64 %n.vec1984, %i.js
   %broadcast.splatinsert1985 = insertelement <4 x double> poison, double %i.jp, i64 0
   %broadcast.splat1986 = shufflevector <4 x double> %broadcast.splatinsert1985, <4 x double> poison, <4 x i32> zeroinitializer ; 4 uses
@@ -397,7 +393,7 @@ vector.body1989:                                  ; preds = %vector.body1989, %v
 
 middle.block1998:                                 ; preds = %vector.body1989
   %i.kl = extractelement <4 x double> %wide.load1992.a, i64 3
-  %cmp.n1999 = icmp eq i64 %25, %n.vec1984
+  %cmp.n1999 = icmp eq i64 %22, %n.vec1984
   br i1 %cmp.n1999, label %._crit_edge1060, label %.lr.ph1059.preheader2018
 
 .lr.ph1059.preheader2018:                         ; preds = %vector.memcheck1964, %.lr.ph1059.preheader, %middle.block1998
@@ -419,7 +415,7 @@ middle.block1998:                                 ; preds = %vector.body1989
   %i.ku = call double @llvm.fmuladd.f64(double %i.jp, double %i.km, double %i.kt)
   store double %i.ku, ptr %i.kn, align 8, !tbaa !9
   %indvars.iv.next1297 = add nsw i64 %indvars.iv1296, 1 ; 2 uses
-  %.not1014.not = icmp slt i64 %indvars.iv.next1297, %i.jt
+  %.not1014.not = icmp slt i64 %indvars.iv.next1297, %18
   br i1 %.not1014.not, label %.lr.ph1059, label %._crit_edge1060, !llvm.loop !23
 
 ._crit_edge1060:                                  ; preds = %.lr.ph1059, %middle.block1998
@@ -454,7 +450,7 @@ bb.am:                                            ; preds = %._crit_edge1066, %.
 
 .lr.ph1096:                                       ; preds = %bb.am
   %factor.op.mul = mul i32 %i.ig, %i.ig
-  %i.lb = mul i32 %i.ih, %i.ih                    ; 5 uses
+  %i.lb = mul i32 %i.ih, %i.ih                    ; 4 uses
   %i.lc = add i32 %i.ig, %i.lb
   %i.ld = shl i32 %i.ig, 1                        ; 3 uses
   %i.le = add i32 %i.ik, %i.gf
@@ -484,16 +480,13 @@ bb.am:                                            ; preds = %._crit_edge1066, %.
   %i.lx = add i32 %i.hl, %i.lb
   %i.ly = add i32 %i.lx, %i.lt
   %i.lz = mul i32 %i.ig, -2
-  %i.ma = add i32 %i.ig, %17
+  %i.ma = add i32 %i.ig, %i.hh
   %i.mb = shl i32 %i.ma, 1
   %i.mc = or disjoint i32 %i.mb, 1
-  %i.md = mul i32 %i.ig, %i.mc                    ; 2 uses
+  %i.md = mul i32 %i.ig, %i.mc
   %i.me = add i32 %i.lb, %i.md
   %i.mf = mul i32 %i.ig, %i.ig
   %i.mg = shl i32 %i.mf, 2
-  %26 = add i32 %i.hh, %i.lb
-  %27 = add i32 %26, %i.md
-  %28 = mul i32 %i.ig, -2
   br label %bb.an
 
 bb.an:                                            ; preds = %.lr.ph1096, %bb.ap
@@ -501,9 +494,8 @@ bb.an:                                            ; preds = %.lr.ph1096, %bb.ap
   %indvars.iv1311 = phi i32 [ %i.lm, %.lr.ph1096 ], [ %indvars.iv.next1312, %bb.ap ] ; 3 uses
   %.09581094 = phi i32 [ %.09581090, %.lr.ph1096 ], [ %.0958, %bb.ap ] ; 4 uses
   %.09441093 = phi i32 [ %i.lh, %.lr.ph1096 ], [ %i.oj, %bb.ap ] ; 2 uses
-  %i.mh = mul i32 %i.mg, %indvar1928              ; 2 uses
-  %29 = add i32 %i.me, %i.mh
-  %i.mi = add i32 %27, %i.mh
+  %i.mh = mul i32 %i.mg, %indvar1928
+  %i.mi = add i32 %i.me, %i.mh
   %i.mj = mul i32 %i.lw, %indvar1928              ; 2 uses
   %i.mk = add i32 %i.lu, %i.mj
   %i.ml = add i32 %i.ly, %i.mj
@@ -516,19 +508,10 @@ bb.an:                                            ; preds = %.lr.ph1096, %bb.ap
   br label %.lr.ph1083
 
 .lr.ph1083:                                       ; preds = %.lr.ph1083.preheader, %bb.ao
-  %indvar1930 = phi i32 [ 0, %.lr.ph1083.preheader ], [ %indvar.next1931, %bb.ao ] ; 5 uses
+  %indvar1930 = phi i32 [ 0, %.lr.ph1083.preheader ], [ %indvar.next1931, %bb.ao ] ; 4 uses
   %indvars.iv1315 = phi i64 [ %i.lo, %.lr.ph1083.preheader ], [ %indvars.iv.next1316, %bb.ao ] ; 3 uses
   %indvars.iv1313 = phi i64 [ %i.mm, %.lr.ph1083.preheader ], [ %indvars.iv.next1314, %bb.ao ]
   %.11080 = phi i32 [ %.09441093, %.lr.ph1083.preheader ], [ %i.og, %bb.ao ] ; 3 uses
-  %30 = mul i32 %indvar1930, %i.lk
-  %31 = add i32 %29, %30
-  %32 = sext i32 %31 to i64                       ; 2 uses
-  %33 = add nsw i64 %32, 1
-  %34 = mul i32 %28, %indvar1930
-  %35 = add i32 %i.mi, %34
-  %36 = sext i32 %35 to i64
-  %smax1943 = call i64 @llvm.smax.i64(i64 %33, i64 %36)
-  %37 = sub i64 %smax1943, %32                    ; 3 uses
   %i.mo = mul i32 %indvar1930, %i.lk
   %i.mp = add i32 %i.mk, %i.mo
   %i.mq = sext i32 %i.mp to i64                   ; 2 uses
@@ -556,9 +539,16 @@ bb.an:                                            ; preds = %.lr.ph1096, %bb.ap
   br i1 %.not1013.not1071, label %.lr.ph1074.preheader, label %bb.ao
 
 .lr.ph1074.preheader:                             ; preds = %.lr.ph1083
+  %23 = mul i32 %indvar1930, %i.lk
+  %24 = add i32 %i.mi, %23                        ; 2 uses
   %i.nd = sext i32 %.11080 to i64                 ; 4 uses
-  %i.ne = sext i32 %i.nc to i64
-  %min.iters.check1945 = icmp ult i64 %37, 8
+  %i.ne = sext i32 %i.nc to i64                   ; 2 uses
+  %25 = sext i32 %24 to i64
+  %26 = add nsw i64 %25, 1
+  %27 = call i64 @llvm.smax.i64(i64 %26, i64 %i.ne)
+  %28 = sext i32 %24 to i64
+  %29 = sub i64 %27, %28                          ; 3 uses
+  %min.iters.check1945 = icmp ult i64 %29, 8
   br i1 %min.iters.check1945, label %.lr.ph1074.preheader2016, label %vector.memcheck1925
 
 vector.memcheck1925:                              ; preds = %.lr.ph1074.preheader
@@ -568,7 +558,7 @@ vector.memcheck1925:                              ; preds = %.lr.ph1074.preheade
   br i1 %found.conflict1942, label %.lr.ph1074.preheader2016, label %vector.ph1946
 
 vector.ph1946:                                    ; preds = %vector.memcheck1925
-  %n.vec1947 = and i64 %37, -8                    ; 3 uses
+  %n.vec1947 = and i64 %29, -8                    ; 3 uses
   %i.nf = add i64 %n.vec1947, %i.nd
   %broadcast.splatinsert1948.a = insertelement <4 x double> poison, double %i.na, i64 0
   %broadcast.splat1949.a = shufflevector <4 x double> %broadcast.splatinsert1948.a, <4 x double> poison, <4 x i32> zeroinitializer ; 4 uses
@@ -609,7 +599,7 @@ vector.body1952:                                  ; preds = %vector.body1952, %v
 
 middle.block1961:                                 ; preds = %vector.body1952
   %i.nw = extractelement <4 x double> %wide.load1955.a, i64 3
-  %cmp.n1962 = icmp eq i64 %37, %n.vec1947
+  %cmp.n1962 = icmp eq i64 %29, %n.vec1947
   br i1 %cmp.n1962, label %._crit_edge1075, label %.lr.ph1074.preheader2016
 
 .lr.ph1074.preheader2016:                         ; preds = %vector.memcheck1925, %.lr.ph1074.preheader, %middle.block1961
@@ -1012,13 +1002,6 @@ bb.bp:                                            ; preds = %.lr.ph1197, %bb.bq
   %indvars.iv1404 = phi i64 [ %i.anf, %.lr.ph1197 ], [ %indvars.iv.next1405, %bb.bq ] ; 5 uses
   %indvars.iv1400 = phi i64 [ %i.amj, %.lr.ph1197 ], [ %indvars.iv.next1401, %bb.bq ] ; 4 uses
   %.71195 = phi i32 [ %.reass1238, %.lr.ph1197 ], [ %i.apc, %bb.bq ] ; 2 uses
-  %38 = mul i32 %indvar1645, %i.amd
-  %39 = add i32 %i.anb, %38
-  %40 = sext i32 %39 to i64                       ; 3 uses
-  %41 = add i64 %indvars.iv1404, %40
-  %42 = add nsw i64 %40, 1
-  %smax1658 = call i64 @llvm.smax.i64(i64 %41, i64 %42)
-  %43 = sub i64 %smax1658, %40                    ; 3 uses
   %i.ano = mul i32 %indvar1645, %i.amd
   %i.anp = add i32 %i.anc, %i.ano
   %i.anq = sext i32 %i.anp to i64                 ; 3 uses
@@ -1045,7 +1028,16 @@ bb.bp:                                            ; preds = %.lr.ph1197, %bb.bq
   br i1 %.not996.not1186, label %.lr.ph1189.preheader, label %bb.bq
 
 .lr.ph1189.preheader:                             ; preds = %bb.bp
-  %min.iters.check1660 = icmp ult i64 %43, 8
+  %30 = mul i32 %indvar1645, %i.amd
+  %31 = add i32 %i.anb, %30                       ; 3 uses
+  %32 = sext i32 %31 to i64
+  %33 = add i64 %indvars.iv1404, %32
+  %34 = sext i32 %31 to i64
+  %35 = add nsw i64 %34, 1
+  %36 = call i64 @llvm.smax.i64(i64 %33, i64 %35)
+  %37 = sext i32 %31 to i64
+  %38 = sub i64 %36, %37                          ; 3 uses
+  %min.iters.check1660 = icmp ult i64 %38, 8
   br i1 %min.iters.check1660, label %.lr.ph1189.preheader2017, label %vector.memcheck1642
 
 vector.memcheck1642:                              ; preds = %.lr.ph1189.preheader
@@ -1055,7 +1047,7 @@ vector.memcheck1642:                              ; preds = %.lr.ph1189.preheade
   br i1 %found.conflict1657, label %.lr.ph1189.preheader2017, label %vector.ph1661
 
 vector.ph1661:                                    ; preds = %vector.memcheck1642
-  %n.vec1662 = and i64 %43, -8                    ; 3 uses
+  %n.vec1662 = and i64 %38, -8                    ; 3 uses
   %i.aob = add i64 %n.vec1662, %i.anx
   %broadcast.splatinsert1663 = insertelement <4 x double> poison, double %i.anz, i64 0
   %broadcast.splat1664 = shufflevector <4 x double> %broadcast.splatinsert1663, <4 x double> poison, <4 x i32> zeroinitializer ; 4 uses
@@ -1096,7 +1088,7 @@ vector.body1667:                                  ; preds = %vector.body1667, %v
 
 middle.block1676:                                 ; preds = %vector.body1667
   %i.aos = extractelement <4 x double> %wide.load1670.a, i64 3
-  %cmp.n1677 = icmp eq i64 %43, %n.vec1662
+  %cmp.n1677 = icmp eq i64 %38, %n.vec1662
   br i1 %cmp.n1677, label %._crit_edge1190, label %.lr.ph1189.preheader2017
 
 .lr.ph1189.preheader2017:                         ; preds = %vector.memcheck1642, %.lr.ph1189.preheader, %middle.block1676

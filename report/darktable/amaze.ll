@@ -49,7 +49,7 @@ bb.a:
   %i.ad = icmp sgt i32 %2, -16
   %i.ae = getelementptr inbounds nuw i8, ptr %i.i, i64 1384688
   %i.af = add i32 %3, 16                          ; 3 uses
-  %i.ag = add i32 %2, 16                          ; 4 uses
+  %i.ag = add i32 %2, 16                          ; 2 uses
   %i.ah = add nsw i32 %3, -2                      ; 3 uses
   %i.ai = add i32 %2, -2                          ; 3 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %i.i, i64 820544
@@ -406,27 +406,17 @@ bb.a:
 bb.b:                                             ; preds = %.preheader3891, %._crit_edge4099.split
   %indvar = phi i64 [ 0, %.preheader3891 ], [ %indvar.next, %._crit_edge4099.split ] ; 9 uses
   %indvars.iv4344 = phi i64 [ -16, %.preheader3891 ], [ %indvars.iv.next4345, %._crit_edge4099.split ] ; 9 uses
-  %indvars.iv4321 = phi i64 [ 0, %.preheader3891 ], [ %indvars.iv.next4322, %._crit_edge4099.split ] ; 7 uses
-  %6 = trunc i64 %indvars.iv4321 to i32
-  %7 = add i32 %i.ha, %6
+  %indvars.iv4321 = phi i64 [ 0, %.preheader3891 ], [ %indvars.iv.next4322, %._crit_edge4099.split ] ; 5 uses
   %i.hc = trunc i64 %indvars.iv4321 to i32
-  %i.hd = add i32 %i.gv, %i.hc
+  %i.hd = add i32 %i.ha, %i.hc
   %i.he = trunc i64 %indvars.iv4321 to i32
-  %i.hf = add i32 %i.he, 144
-  %smin5043 = tail call i32 @llvm.smin.i32(i32 %i.hf, i32 %i.ag)
+  %i.hf = add i32 %i.gv, %i.he
   %i.hg = trunc i64 %indvar to i32
   %i.hh = mul i32 %i.hg, -128
   %i.hi = or disjoint i32 %i.hh, 12
-  %8 = add i32 %smin5043, %i.hi                   ; 2 uses
-  %9 = zext i32 %8 to i64                         ; 2 uses
-  %10 = trunc i64 %indvars.iv4321 to i32
-  %11 = add i32 %10, 144
-  %smin4994 = tail call i32 @llvm.smin.i32(i32 %11, i32 %i.ag)
   %i.hj = trunc i64 %indvar to i32
   %i.hk = mul i32 %i.hj, -128
   %i.hl = or disjoint i32 %i.hk, 8
-  %12 = add i32 %smin4994, %i.hl                  ; 2 uses
-  %13 = zext i32 %12 to i64                       ; 2 uses
   %i.hm = trunc i64 %indvar to i32
   %i.hn = mul i32 %i.hm, -128
   %i.ho = or disjoint i32 %i.hn, 3
@@ -451,7 +441,7 @@ bb.b:                                             ; preds = %.preheader3891, %._
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(12320) %i.ae, i8 0, i64 12320, i1 false)
   %i.ib = add nsw i64 %indvars.iv4344, 160        ; 2 uses
   %i.ic = trunc i64 %i.ib to i32
-  %i.id = tail call i32 @llvm.smin.i32(i32 %i.ic, i32 %i.ag) ; 7 uses
+  %i.id = tail call i32 @llvm.smin.i32(i32 %i.ic, i32 %i.ag) ; 9 uses
   %i.ie = trunc i64 %indvars.iv4344 to i32        ; 35 uses
   %i.if = sub i32 %i.id, %i.ie                    ; 22 uses
   %i.ig = icmp slt i64 %indvars.iv4344, 0         ; 3 uses
@@ -854,12 +844,12 @@ vec.epilog.scalar.ph7210:                         ; preds = %vec.epilog.scalar.p
   %wide.trip.count4136 = zext i32 %i.il to i64    ; 8 uses
   %i.blg = xor i64 %i.blf, -1
   %i.blh = add nsw i64 %i.blg, %wide.trip.count4136 ; 2 uses
-  %i.bli = add i32 %i.ih, %i.hd
+  %i.bli = add i32 %i.ih, %i.hf
   %i.blj = shl nuw nsw i64 %i.blf, 2
   %scevgep6527 = getelementptr i8, ptr %scevgep6526, i64 %i.blj
   %i.blk = shl nuw nsw i64 %wide.trip.count4136, 2
   %scevgep6530.a = getelementptr i8, ptr %scevgep6529.a, i64 %i.blk
-  %i.bll = add i32 %i.ih, %7
+  %i.bll = add i32 %i.ih, %i.hd
   %i.blm = mul nsw i64 %i.blf, -4
   %scevgep6532 = getelementptr i8, ptr %0, i64 %i.blm
   %i.bln = sub nsw i64 %wide.trip.count4136, %i.blf ; 6 uses
@@ -1262,11 +1252,13 @@ begin_hunk_2_@amaze_demosaic:bb.a
   br i1 %i.eus, label %.lr.ph3926.preheader, label %.preheader3874
 
 .lr.ph3926.preheader:                             ; preds = %.lr.ph3930
-  %min.iters.check5045 = icmp ult i32 %8, 8
-  %n.vec5047 = and i64 %9, 4294967288             ; 4 uses
+  %6 = add i32 %i.id, %i.hi                       ; 2 uses
+  %7 = zext i32 %6 to i64                         ; 2 uses
+  %min.iters.check5045 = icmp ult i32 %6, 8
+  %n.vec5047 = and i64 %7, 4294967288             ; 4 uses
   %i.eut = trunc nuw i64 %n.vec5047 to i32
   %i.euu = or disjoint i32 %i.eut, 2
-  %cmp.n5063 = icmp eq i64 %n.vec5047, %9
+  %cmp.n5063 = icmp eq i64 %n.vec5047, %7
   br label %.lr.ph3926
 
 .preheader3874:                                   ; preds = %._crit_edge3927, %.lr.ph3930
@@ -1278,11 +1270,13 @@ begin_hunk_2_@amaze_demosaic:bb.a
   br i1 %i.euw, label %.lr.ph3935.preheader, label %.preheader3872
 
 .lr.ph3935.preheader:                             ; preds = %.lr.ph3938
-  %min.iters.check4996 = icmp ult i32 %12, 8
-  %n.vec4998 = and i64 %13, 4294967288            ; 4 uses
+  %8 = add i32 %i.id, %i.hl                       ; 2 uses
+  %9 = zext i32 %8 to i64                         ; 2 uses
+  %min.iters.check4996 = icmp ult i32 %8, 8
+  %n.vec4998 = and i64 %9, 4294967288             ; 4 uses
   %i.eux = trunc nuw i64 %n.vec4998 to i32
   %i.euy = or disjoint i32 %i.eux, 4
-  %cmp.n5038 = icmp eq i64 %n.vec4998, %13
+  %cmp.n5038 = icmp eq i64 %n.vec4998, %9
   br label %.lr.ph3935
 
 .lr.ph3926:                                       ; preds = %.lr.ph3926.preheader, %._crit_edge3927

@@ -204,16 +204,15 @@ bb.a:                                             ; preds = %._crit_edge48.i.1.i
 
 .lr.ph.preheader.i.1.i:                           ; preds = %._crit_edge.i.1.i, %.lr.ph47.i.1.i
   %indvars.iv57.i.1.i = phi i64 [ 0, %.lr.ph47.i.1.i ], [ %indvars.iv.next58.i.1.i, %._crit_edge.i.1.i ] ; 5 uses
-  %indvars.iv55.i.1.i = phi i32 [ %.03649.i.1.i, %.lr.ph47.i.1.i ], [ %indvars.iv.next56.i.1.i, %._crit_edge.i.1.i ] ; 4 uses
+  %indvars.iv55.i.1.i = phi i32 [ %.03649.i.1.i, %.lr.ph47.i.1.i ], [ %indvars.iv.next56.i.1.i, %._crit_edge.i.1.i ] ; 3 uses
   %indvars.iv.i.1.i18 = phi i64 [ 0, %.lr.ph47.i.1.i ], [ %indvars.iv.next.i.1.i23, %._crit_edge.i.1.i ] ; 5 uses
   %i.my = mul i64 %indvars.iv57.i.1.i, %i.mp
-  %11 = zext nneg i32 %indvars.iv55.i.1.i to i64
-  %12 = sub i64 %11, %i.my                        ; 3 uses
   %gep69.i.1.i = getelementptr inbounds nuw [2 x i8], ptr %invariant.gep68.i.1.i, i64 %indvars.iv57.i.1.i
   %i.mz = load i16, ptr %gep69.i.1.i, align 2, !tbaa !12
   %i.na = zext i16 %i.mz to i32                   ; 2 uses
-  %wide.trip.count.i.1.i = zext i32 %indvars.iv55.i.1.i to i64
-  %min.iters.check183 = icmp ult i64 %12, 8
+  %wide.trip.count.i.1.i = zext i32 %indvars.iv55.i.1.i to i64 ; 2 uses
+  %11 = sub i64 %wide.trip.count.i.1.i, %i.my     ; 3 uses
+  %min.iters.check183 = icmp ult i64 %11, 8
   br i1 %min.iters.check183, label %.lr.ph.i.1.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader.i.1.i
@@ -237,7 +236,7 @@ vector.memcheck:                                  ; preds = %.lr.ph.preheader.i.
   br i1 %found.conflict, label %.lr.ph.i.1.i.preheader, label %vector.ph184
 
 vector.ph184:                                     ; preds = %vector.memcheck
-  %n.vec185 = and i64 %12, -8                     ; 3 uses
+  %n.vec185 = and i64 %11, -8                     ; 3 uses
   %i.nj = add i64 %indvars.iv.i.1.i18, %n.vec185
   %broadcast.splatinsert186 = insertelement <8 x i32> poison, i32 %i.na, i64 0
   %broadcast.splat187 = shufflevector <8 x i32> %broadcast.splatinsert186, <8 x i32> poison, <8 x i32> zeroinitializer
@@ -280,7 +279,7 @@ vector.body188:                                   ; preds = %vector.body188, %ve
   br i1 %i.ok, label %middle.block193, label %vector.body188, !llvm.loop !63
 
 middle.block193:                                  ; preds = %vector.body188
-  %cmp.n194 = icmp eq i64 %12, %n.vec185
+  %cmp.n194 = icmp eq i64 %11, %n.vec185
   br i1 %cmp.n194, label %._crit_edge.i.1.i, label %.lr.ph.i.1.i.preheader
 
 .lr.ph.i.1.i.preheader:                           ; preds = %vector.memcheck, %.lr.ph.preheader.i.1.i, %middle.block193
@@ -384,16 +383,15 @@ bb.b:                                             ; preds = %._crit_edge48.i.2.i
 
 .lr.ph.preheader.i.2.i:                           ; preds = %._crit_edge.i.2.i, %.lr.ph47.i.2.i
   %indvars.iv57.i.2.i = phi i64 [ 0, %.lr.ph47.i.2.i ], [ %indvars.iv.next58.i.2.i, %._crit_edge.i.2.i ] ; 5 uses
-  %indvars.iv55.i.2.i = phi i32 [ %.03649.i.2.i, %.lr.ph47.i.2.i ], [ %indvars.iv.next56.i.2.i, %._crit_edge.i.2.i ] ; 4 uses
+  %indvars.iv55.i.2.i = phi i32 [ %.03649.i.2.i, %.lr.ph47.i.2.i ], [ %indvars.iv.next56.i.2.i, %._crit_edge.i.2.i ] ; 3 uses
   %indvars.iv.i.2.i24 = phi i64 [ 0, %.lr.ph47.i.2.i ], [ %indvars.iv.next.i.2.i29, %._crit_edge.i.2.i ] ; 5 uses
   %i.qj = mul i64 %indvars.iv57.i.2.i, %i.qa
-  %13 = zext nneg i32 %indvars.iv55.i.2.i to i64
-  %14 = sub i64 %13, %i.qj                        ; 3 uses
   %gep69.i.2.i = getelementptr inbounds nuw [2 x i8], ptr %invariant.gep68.i.2.i, i64 %indvars.iv57.i.2.i
   %i.qk = load i16, ptr %gep69.i.2.i, align 2, !tbaa !12
   %i.ql = zext i16 %i.qk to i32                   ; 2 uses
-  %wide.trip.count.i.2.i = zext i32 %indvars.iv55.i.2.i to i64
-  %min.iters.check214 = icmp ult i64 %14, 8
+  %wide.trip.count.i.2.i = zext i32 %indvars.iv55.i.2.i to i64 ; 2 uses
+  %12 = sub i64 %wide.trip.count.i.2.i, %i.qj     ; 3 uses
+  %min.iters.check214 = icmp ult i64 %12, 8
   br i1 %min.iters.check214, label %.lr.ph.i.2.i.preheader, label %vector.memcheck203
 
 vector.memcheck203:                               ; preds = %.lr.ph.preheader.i.2.i
@@ -417,7 +415,7 @@ vector.memcheck203:                               ; preds = %.lr.ph.preheader.i.
   br i1 %found.conflict212, label %.lr.ph.i.2.i.preheader, label %vector.ph215
 
 vector.ph215:                                     ; preds = %vector.memcheck203
-  %n.vec216 = and i64 %14, -8                     ; 3 uses
+  %n.vec216 = and i64 %12, -8                     ; 3 uses
   %i.qu = add i64 %indvars.iv.i.2.i24, %n.vec216
   %broadcast.splatinsert217 = insertelement <8 x i32> poison, i32 %i.ql, i64 0
   %broadcast.splat218 = shufflevector <8 x i32> %broadcast.splatinsert217, <8 x i32> poison, <8 x i32> zeroinitializer
@@ -460,7 +458,7 @@ vector.body219:                                   ; preds = %vector.body219, %ve
   br i1 %i.rv, label %middle.block224, label %vector.body219, !llvm.loop !71
 
 middle.block224:                                  ; preds = %vector.body219
-  %cmp.n225 = icmp eq i64 %14, %n.vec216
+  %cmp.n225 = icmp eq i64 %12, %n.vec216
   br i1 %cmp.n225, label %._crit_edge.i.2.i, label %.lr.ph.i.2.i.preheader
 
 .lr.ph.i.2.i.preheader:                           ; preds = %vector.memcheck203, %.lr.ph.preheader.i.2.i, %middle.block224
@@ -683,16 +681,15 @@ vector.body290:                                   ; preds = %._crit_edge48.i, %v
 
 .lr.ph.preheader.i:                               ; preds = %._crit_edge.i, %.lr.ph47.i
   %indvars.iv57.i = phi i64 [ 0, %.lr.ph47.i ], [ %indvars.iv.next58.i, %._crit_edge.i ] ; 5 uses
-  %indvars.iv55.i = phi i32 [ %.03649.i, %.lr.ph47.i ], [ %indvars.iv.next56.i, %._crit_edge.i ] ; 4 uses
+  %indvars.iv55.i = phi i32 [ %.03649.i, %.lr.ph47.i ], [ %indvars.iv.next56.i, %._crit_edge.i ] ; 3 uses
   %indvars.iv.i45 = phi i64 [ 0, %.lr.ph47.i ], [ %indvars.iv.next.i49, %._crit_edge.i ] ; 5 uses
   %i.wk = mul i64 %indvars.iv57.i, %i.vl
-  %15 = zext nneg i32 %indvars.iv55.i to i64
-  %16 = sub i64 %15, %i.wk                        ; 3 uses
   %gep69.i = getelementptr inbounds nuw [2 x i8], ptr %invariant.gep68.i, i64 %indvars.iv57.i
   %i.wl = load i16, ptr %gep69.i, align 2, !tbaa !12
   %i.wm = zext i16 %i.wl to i32                   ; 2 uses
-  %wide.trip.count.i = zext i32 %indvars.iv55.i to i64
-  %min.iters.check275 = icmp ult i64 %16, 8
+  %wide.trip.count.i = zext i32 %indvars.iv55.i to i64 ; 2 uses
+  %13 = sub i64 %wide.trip.count.i, %i.wk         ; 3 uses
+  %min.iters.check275 = icmp ult i64 %13, 8
   br i1 %min.iters.check275, label %.lr.ph.i.preheader, label %vector.memcheck264
 
 vector.memcheck264:                               ; preds = %.lr.ph.preheader.i
@@ -715,7 +712,7 @@ vector.memcheck264:                               ; preds = %.lr.ph.preheader.i
   br i1 %found.conflict273, label %.lr.ph.i.preheader, label %vector.ph276
 
 vector.ph276:                                     ; preds = %vector.memcheck264
-  %n.vec277 = and i64 %16, -8                     ; 3 uses
+  %n.vec277 = and i64 %13, -8                     ; 3 uses
   %i.wu = add i64 %indvars.iv.i45, %n.vec277
   %broadcast.splatinsert278 = insertelement <8 x i32> poison, i32 %i.wm, i64 0
   %broadcast.splat279 = shufflevector <8 x i32> %broadcast.splatinsert278, <8 x i32> poison, <8 x i32> zeroinitializer
@@ -758,7 +755,7 @@ vector.body280:                                   ; preds = %vector.body280, %ve
   br i1 %i.xv, label %middle.block285, label %vector.body280, !llvm.loop !83
 
 middle.block285:                                  ; preds = %vector.body280
-  %cmp.n286 = icmp eq i64 %16, %n.vec277
+  %cmp.n286 = icmp eq i64 %13, %n.vec277
   br i1 %cmp.n286, label %._crit_edge.i, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %vector.memcheck264, %.lr.ph.preheader.i, %middle.block285
@@ -1161,16 +1158,15 @@ vector.body58:                                    ; preds = %._crit_edge48.i.i, 
 
 .lr.ph.preheader.i.i:                             ; preds = %._crit_edge.i.i, %.lr.ph47.i.i
   %indvars.iv57.i.i = phi i64 [ 0, %.lr.ph47.i.i ], [ %indvars.iv.next58.i.i, %._crit_edge.i.i ] ; 5 uses
-  %indvars.iv55.i.i = phi i32 [ %.03649.i.i, %.lr.ph47.i.i ], [ %indvars.iv.next56.i.i, %._crit_edge.i.i ] ; 4 uses
+  %indvars.iv55.i.i = phi i32 [ %.03649.i.i, %.lr.ph47.i.i ], [ %indvars.iv.next56.i.i, %._crit_edge.i.i ] ; 3 uses
   %indvars.iv.i7.i = phi i64 [ 0, %.lr.ph47.i.i ], [ %indvars.iv.next.i9.i, %._crit_edge.i.i ] ; 5 uses
   %i.cq = mul i64 %indvars.iv57.i.i, %i.br
-  %6 = zext nneg i32 %indvars.iv55.i.i to i64
-  %7 = sub i64 %6, %i.cq                          ; 3 uses
   %gep69.i.i = getelementptr inbounds nuw [2 x i8], ptr %invariant.gep68.i.i, i64 %indvars.iv57.i.i
   %i.cr = load i16, ptr %gep69.i.i, align 2, !tbaa !12
   %i.cs = zext i16 %i.cr to i32                   ; 2 uses
-  %wide.trip.count.i.i = zext i32 %indvars.iv55.i.i to i64
-  %min.iters.check = icmp ult i64 %7, 8
+  %wide.trip.count.i.i = zext i32 %indvars.iv55.i.i to i64 ; 2 uses
+  %6 = sub i64 %wide.trip.count.i.i, %i.cq        ; 3 uses
+  %min.iters.check = icmp ult i64 %6, 8
   br i1 %min.iters.check, label %.lr.ph.i.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader.i.i
@@ -1193,7 +1189,7 @@ vector.memcheck:                                  ; preds = %.lr.ph.preheader.i.
   br i1 %found.conflict, label %.lr.ph.i.i.preheader, label %vector.ph49
 
 vector.ph49:                                      ; preds = %vector.memcheck
-  %n.vec = and i64 %7, -8                         ; 3 uses
+  %n.vec = and i64 %6, -8                         ; 3 uses
   %i.da = add i64 %indvars.iv.i7.i, %n.vec
   %broadcast.splatinsert = insertelement <8 x i32> poison, i32 %i.cs, i64 0
   %broadcast.splat = shufflevector <8 x i32> %broadcast.splatinsert, <8 x i32> poison, <8 x i32> zeroinitializer
@@ -1236,7 +1232,7 @@ vector.body50:                                    ; preds = %vector.body50, %vec
   br i1 %i.eb, label %middle.block55, label %vector.body50, !llvm.loop !108
 
 middle.block55:                                   ; preds = %vector.body50
-  %cmp.n = icmp eq i64 %7, %n.vec
+  %cmp.n = icmp eq i64 %6, %n.vec
   br i1 %cmp.n, label %._crit_edge.i.i, label %.lr.ph.i.i.preheader
 
 .lr.ph.i.i.preheader:                             ; preds = %vector.memcheck, %.lr.ph.preheader.i.i, %middle.block55

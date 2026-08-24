@@ -204,7 +204,7 @@ bb.p:                                             ; preds = %_ZNKSt6vectorIiSaIi
   %i.bp = ptrtoint ptr %i.bn to i64
   %i.bq = ptrtoint ptr %i.bo to i64
   %i.br = sub i64 %i.bp, %i.bq
-  %i.bs = ashr exact i64 %i.br, 2                 ; 8 uses
+  %i.bs = ashr exact i64 %i.br, 2                 ; 6 uses
   %.not.i89 = icmp eq ptr %i.bn, %i.bo            ; 2 uses
   br i1 %i.bm, label %bb.q, label %.preheader146
 
@@ -216,12 +216,9 @@ bb.q:                                             ; preds = %bb.p
 
 .lr.ph23.i:                                       ; preds = %bb.q, %.critedge.i90
   %indvar207 = phi i64 [ %indvar.next208, %.critedge.i90 ], [ 0, %bb.q ] ; 2 uses
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %.critedge.i90 ], [ %i.bb, %bb.q ] ; 3 uses
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %.critedge.i90 ], [ %i.bb, %bb.q ] ; 2 uses
   %.01422.i = phi i64 [ %i.bv, %.critedge.i90 ], [ 0, %bb.q ] ; 7 uses
-  %umin206 = tail call i64 @llvm.umin.i64(i64 %i.bs, i64 %indvars.iv.i)
-  %2 = mul i64 %indvar207, %i.bb
-  %3 = sub i64 %umin206, %2                       ; 3 uses
-  %umin.i = tail call i64 @llvm.umin.i64(i64 %i.bs, i64 %indvars.iv.i)
+  %umin.i = tail call i64 @llvm.umin.i64(i64 %i.bs, i64 %indvars.iv.i) ; 2 uses
   %i.bt = getelementptr inbounds nuw [4 x i8], ptr %i.bo, i64 %.01422.i
   %i.bu = load i32, ptr %i.bt, align 4, !tbaa !25 ; 3 uses
   %i.bv = add i64 %.01422.i, %i.bb                ; 3 uses
@@ -230,6 +227,8 @@ bb.q:                                             ; preds = %bb.p
   br i1 %or.cond19.i, label %.lr.ph.i91.preheader, label %.critedge.i90
 
 .lr.ph.i91.preheader:                             ; preds = %.lr.ph23.i
+  %2 = mul i64 %indvar207, %i.bb
+  %3 = sub i64 %umin.i, %2                        ; 3 uses
   %min.iters.check210 = icmp ult i64 %3, 8
   br i1 %min.iters.check210, label %.lr.ph.i91.preheader227, label %vector.ph211
 
@@ -288,12 +287,9 @@ middle.block222:                                  ; preds = %vector.body215
 
 .lr.ph163:                                        ; preds = %.preheader146, %.critedge2
   %indvar = phi i64 [ %indvar.next, %.critedge2 ], [ 0, %.preheader146 ] ; 2 uses
-  %indvars.iv = phi i64 [ %indvars.iv.next, %.critedge2 ], [ %i.bb, %.preheader146 ] ; 3 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %.critedge2 ], [ %i.bb, %.preheader146 ] ; 2 uses
   %.069162 = phi i64 [ %i.cm, %.critedge2 ], [ 0, %.preheader146 ] ; 7 uses
-  %umin203 = tail call i64 @llvm.umin.i64(i64 %i.bs, i64 %indvars.iv)
-  %4 = mul i64 %indvar, %i.bb
-  %5 = sub i64 %umin203, %4                       ; 3 uses
-  %umin = tail call i64 @llvm.umin.i64(i64 %i.bs, i64 %indvars.iv)
+  %umin = tail call i64 @llvm.umin.i64(i64 %i.bs, i64 %indvars.iv) ; 2 uses
   %i.ck = getelementptr inbounds nuw [4 x i8], ptr %i.bo, i64 %.069162
   %i.cl = load i32, ptr %i.ck, align 4, !tbaa !25 ; 3 uses
   %i.cm = add i64 %.069162, %i.bb                 ; 3 uses
@@ -302,6 +298,8 @@ middle.block222:                                  ; preds = %vector.body215
   br i1 %or.cond156, label %.lr.ph159.preheader, label %.critedge2
 
 .lr.ph159.preheader:                              ; preds = %.lr.ph163
+  %4 = mul i64 %indvar, %i.bb
+  %5 = sub i64 %umin, %4                          ; 3 uses
   %min.iters.check = icmp ult i64 %5, 8
   br i1 %min.iters.check, label %.lr.ph159.preheader229, label %vector.ph
 
@@ -619,7 +617,7 @@ bb.a:
   %i.e = ptrtoint ptr %i.c to i64
   %i.f = ptrtoint ptr %i.d to i64
   %i.g = sub i64 %i.e, %i.f
-  %i.h = ashr exact i64 %i.g, 2                   ; 4 uses
+  %i.h = ashr exact i64 %i.g, 2                   ; 3 uses
   %.not = icmp eq ptr %i.c, %i.d
   br i1 %.not, label %._crit_edge, label %.lr.ph23
 
@@ -632,12 +630,9 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph23, %.critedge
   %indvar = phi i64 [ 0, %.lr.ph23 ], [ %indvar.next, %.critedge ] ; 2 uses
-  %indvars.iv = phi i64 [ %i.i, %.lr.ph23 ], [ %indvars.iv.next, %.critedge ] ; 3 uses
+  %indvars.iv = phi i64 [ %i.i, %.lr.ph23 ], [ %indvars.iv.next, %.critedge ] ; 2 uses
   %.01422 = phi i64 [ 0, %.lr.ph23 ], [ %i.l, %.critedge ] ; 7 uses
-  %umin25 = tail call i64 @llvm.umin.i64(i64 %i.h, i64 %indvars.iv)
-  %4 = mul i64 %indvar, %i.i
-  %5 = sub i64 %umin25, %4                        ; 3 uses
-  %umin = tail call i64 @llvm.umin.i64(i64 %i.h, i64 %indvars.iv)
+  %umin = tail call i64 @llvm.umin.i64(i64 %i.h, i64 %indvars.iv) ; 2 uses
   %i.j = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %.01422
   %i.k = load i32, ptr %i.j, align 4, !tbaa !25   ; 3 uses
   %i.l = add i64 %.01422, %i.i                    ; 3 uses
@@ -646,6 +641,8 @@ bb.b:                                             ; preds = %.lr.ph23, %.critedg
   br i1 %or.cond19, label %.lr.ph.preheader, label %.critedge
 
 .lr.ph.preheader:                                 ; preds = %bb.b
+  %4 = mul i64 %indvar, %i.i
+  %5 = sub i64 %umin, %4                          ; 3 uses
   %min.iters.check = icmp ult i64 %5, 8
   br i1 %min.iters.check, label %.lr.ph.preheader28, label %vector.ph
 
