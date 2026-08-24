@@ -202,7 +202,7 @@ bb.a:
   %5 = alloca %"class.std::length_error", align 8 ; 5 uses
   %6 = alloca %"struct.boost::source_location", align 8 ; 7 uses
   %7 = alloca %"class.boost::intrusive::list_impl", align 8 ; 19 uses
-  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 3 uses
   %i.b = load i64, ptr %i.a, align 8, !tbaa !116  ; 6 uses
   %i.c = load i64, ptr %1, align 8, !tbaa !99     ; 3 uses
   %i.d = icmp ugt i64 %i.b, %i.c
@@ -388,7 +388,7 @@ _ZN5boost5beast18basic_multi_bufferISaIcEE7destroyERNS_9intrusive9list_implINS4_
 
 _ZN5boost5beast18basic_multi_bufferISaIcEE7destroyERNS_9intrusive9list_implINS4_8bhtraitsINS3_7elementENS4_16list_node_traitsIPvEELNS4_14link_mode_typeE0ENS4_7dft_tagELj1EEEmLb0EvEE.exit.thread90: ; preds = %_ZN5boost5beast18basic_multi_bufferISaIcEE7destroyERNS_9intrusive9list_implINS4_8bhtraitsINS3_7elementENS4_16list_node_traitsIPvEELNS4_14link_mode_typeE0ENS4_7dft_tagELj1EEEmLb0EvEE.exit._ZN5boost5beast18basic_multi_bufferISaIcEE7destroyERNS_9intrusive9list_implINS4_8bhtraitsINS3_7elementENS4_16list_node_traitsIPvEELNS4_14link_mode_typeE0ENS4_7dft_tagELj1EEEmLb0EvEE.exit.thread90_crit_edge, %.critedge.thread
   %i.be = phi i64 [ %i.c, %.critedge.thread ], [ %.pre111, %_ZN5boost5beast18basic_multi_bufferISaIcEE7destroyERNS_9intrusive9list_implINS4_8bhtraitsINS3_7elementENS4_16list_node_traitsIPvEELNS4_14link_mode_typeE0ENS4_7dft_tagELj1EEEmLb0EvEE.exit._ZN5boost5beast18basic_multi_bufferISaIcEE7destroyERNS_9intrusive9list_implINS4_8bhtraitsINS3_7elementENS4_16list_node_traitsIPvEELNS4_14link_mode_typeE0ENS4_7dft_tagELj1EEEmLb0EvEE.exit.thread90_crit_edge ]
-  %i.bf = phi i64 [ %i.b, %.critedge.thread ], [ %.pre112.a, %_ZN5boost5beast18basic_multi_bufferISaIcEE7destroyERNS_9intrusive9list_implINS4_8bhtraitsINS3_7elementENS4_16list_node_traitsIPvEELNS4_14link_mode_typeE0ENS4_7dft_tagELj1EEEmLb0EvEE.exit._ZN5boost5beast18basic_multi_bufferISaIcEE7destroyERNS_9intrusive9list_implINS4_8bhtraitsINS3_7elementENS4_16list_node_traitsIPvEELNS4_14link_mode_typeE0ENS4_7dft_tagELj1EEEmLb0EvEE.exit.thread90_crit_edge ] ; 3 uses
+  %i.bf = phi i64 [ %i.b, %.critedge.thread ], [ %.pre112.a, %_ZN5boost5beast18basic_multi_bufferISaIcEE7destroyERNS_9intrusive9list_implINS4_8bhtraitsINS3_7elementENS4_16list_node_traitsIPvEELNS4_14link_mode_typeE0ENS4_7dft_tagELj1EEEmLb0EvEE.exit._ZN5boost5beast18basic_multi_bufferISaIcEE7destroyERNS_9intrusive9list_implINS4_8bhtraitsINS3_7elementENS4_16list_node_traitsIPvEELNS4_14link_mode_typeE0ENS4_7dft_tagELj1EEEmLb0EvEE.exit.thread90_crit_edge ] ; 2 uses
   %.185100 = phi i64 [ %.185102, %.critedge.thread ], [ %.18599, %_ZN5boost5beast18basic_multi_bufferISaIcEE7destroyERNS_9intrusive9list_implINS4_8bhtraitsINS3_7elementENS4_16list_node_traitsIPvEELNS4_14link_mode_typeE0ENS4_7dft_tagELj1EEEmLb0EvEE.exit._ZN5boost5beast18basic_multi_bufferISaIcEE7destroyERNS_9intrusive9list_implINS4_8bhtraitsINS3_7elementENS4_16list_node_traitsIPvEELNS4_14link_mode_typeE0ENS4_7dft_tagELj1EEEmLb0EvEE.exit.thread90_crit_edge ] ; 2 uses
   %.197 = phi i64 [ %.1103, %.critedge.thread ], [ %.196, %_ZN5boost5beast18basic_multi_bufferISaIcEE7destroyERNS_9intrusive9list_implINS4_8bhtraitsINS3_7elementENS4_16list_node_traitsIPvEELNS4_14link_mode_typeE0ENS4_7dft_tagELj1EEEmLb0EvEE.exit._ZN5boost5beast18basic_multi_bufferISaIcEE7destroyERNS_9intrusive9list_implINS4_8bhtraitsINS3_7elementENS4_16list_node_traitsIPvEELNS4_14link_mode_typeE0ENS4_7dft_tagELj1EEEmLb0EvEE.exit.thread90_crit_edge ]
   %i.bg = shl nuw i64 %i.bf, 1
@@ -461,10 +461,11 @@ bb.s:                                             ; preds = %_ZNSt16allocator_tr
 bb.t:                                             ; preds = %bb.r, %bb.q
   %i.bz = getelementptr inbounds nuw i8, ptr %1, i64 56
   store i64 %.185100, ptr %i.bz, align 8, !tbaa !131
+  %.pre112 = load i64, ptr %i.a, align 8, !tbaa !116
   br label %_ZN5boost5beast18basic_multi_bufferISaIcEE7destroyERNS_9intrusive9list_implINS4_8bhtraitsINS3_7elementENS4_16list_node_traitsIPvEELNS4_14link_mode_typeE0ENS4_7dft_tagELj1EEEmLb0EvEE.exit.thread
 
 _ZN5boost5beast18basic_multi_bufferISaIcEE7destroyERNS_9intrusive9list_implINS4_8bhtraitsINS3_7elementENS4_16list_node_traitsIPvEELNS4_14link_mode_typeE0ENS4_7dft_tagELj1EEEmLb0EvEE.exit.thread: ; preds = %.critedge, %_ZN5boost5beast18basic_multi_bufferISaIcEE7destroyERNS_9intrusive9list_implINS4_8bhtraitsINS3_7elementENS4_16list_node_traitsIPvEELNS4_14link_mode_typeE0ENS4_7dft_tagELj1EEEmLb0EvEE.exit, %bb.t
-  %i.ca = phi i64 [ %i.b, %.critedge ], [ %.pre112.a, %_ZN5boost5beast18basic_multi_bufferISaIcEE7destroyERNS_9intrusive9list_implINS4_8bhtraitsINS3_7elementENS4_16list_node_traitsIPvEELNS4_14link_mode_typeE0ENS4_7dft_tagELj1EEEmLb0EvEE.exit ], [ %i.bf, %bb.t ]
+  %i.ca = phi i64 [ %i.b, %.critedge ], [ %.pre112.a, %_ZN5boost5beast18basic_multi_bufferISaIcEE7destroyERNS_9intrusive9list_implINS4_8bhtraitsINS3_7elementENS4_16list_node_traitsIPvEELNS4_14link_mode_typeE0ENS4_7dft_tagELj1EEEmLb0EvEE.exit ], [ %.pre112, %bb.t ]
   call void @_ZN5boost5beast18basic_multi_bufferISaIcEE8subrangeILb1EEC2ERKS3_mm(ptr noundef nonnull align 8 dereferenceable(40) %0, ptr noundef nonnull align 8 dereferenceable(64) %1, i64 noundef %i.ca, i64 noundef %2) #27
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #27
   ret void

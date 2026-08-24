@@ -204,13 +204,13 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 72
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !123, !noalias !355
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 32
-  %i.h = load ptr, ptr %i.g, align 8, !tbaa !224, !noalias !358 ; 10 uses
+  %i.h = load ptr, ptr %i.g, align 8, !tbaa !224, !noalias !358 ; 9 uses
   %.not.i.i.i.i.i = icmp eq ptr %i.h, null        ; 3 uses
   br i1 %.not.i.i.i.i.i, label %bb.g, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 8 ; 2 uses
-  %i.j = load i32, ptr %i.i, align 8, !tbaa !44, !noalias !358 ; 2 uses
+  %i.j = load i32, ptr %i.i, align 8, !tbaa !44, !noalias !358
   %i.k = add nsw i32 %i.j, 1
   store i32 %i.k, ptr %i.i, align 8, !tbaa !44, !noalias !358
   %i.l = getelementptr inbounds nuw i8, ptr %i.h, i64 56
@@ -571,18 +571,13 @@ _ZN5Ipopt8SmartPtrIKNS_6VectorEED2Ev.exit.sink.split: ; preds = %bb.j, %.split
 
 _ZN5Ipopt8SmartPtrIKNS_6VectorEED2Ev.exit:        ; preds = %_ZN5Ipopt8SmartPtrIKNS_6VectorEED2Ev.exit.sink.split, %bb.j, %.split
   %.pn55.pn.pn.pn = phi { ptr, i32 } [ %i.dz, %bb.j ], [ %.us-phi106, %.split ], [ %.pn55.pn.pn.pn.ph, %_ZN5Ipopt8SmartPtrIKNS_6VectorEED2Ev.exit.sink.split ] ; 2 uses
-  br i1 %.not.i.i.i.i.i, label %_ZN5Ipopt8SmartPtrIKNS_15ExpansionMatrixEED2Ev.exit70, label %_ZN5Ipopt8SmartPtrIKNS_6VectorEED2Ev.exit._crit_edge
+  br i1 %.not.i.i.i.i.i, label %_ZN5Ipopt8SmartPtrIKNS_15ExpansionMatrixEED2Ev.exit70, label %bb.n
 
-_ZN5Ipopt8SmartPtrIKNS_6VectorEED2Ev.exit._crit_edge: ; preds = %_ZN5Ipopt8SmartPtrIKNS_6VectorEED2Ev.exit
-  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.h, i64 8
-  %.pre = load i32, ptr %.phi.trans.insert, align 8, !tbaa !44
-  %3 = add nsw i32 %.pre, -1
-  br label %bb.n
-
-bb.n:                                             ; preds = %_ZN5Ipopt8SmartPtrIKNS_6VectorEED2Ev.exit._crit_edge, %_ZN5Ipopt8SmartPtrIKNS_6VectorEED2Ev.exit.thread
-  %4 = phi i32 [ %i.j, %_ZN5Ipopt8SmartPtrIKNS_6VectorEED2Ev.exit.thread ], [ %3, %_ZN5Ipopt8SmartPtrIKNS_6VectorEED2Ev.exit._crit_edge ] ; 2 uses
-  %.pn55.pn.pn.pn89 = phi { ptr, i32 } [ %i.cl, %_ZN5Ipopt8SmartPtrIKNS_6VectorEED2Ev.exit.thread ], [ %.pn55.pn.pn.pn, %_ZN5Ipopt8SmartPtrIKNS_6VectorEED2Ev.exit._crit_edge ] ; 2 uses
-  %i.eq = getelementptr inbounds nuw i8, ptr %i.h, i64 8
+bb.n:                                             ; preds = %_ZN5Ipopt8SmartPtrIKNS_6VectorEED2Ev.exit.thread, %_ZN5Ipopt8SmartPtrIKNS_6VectorEED2Ev.exit
+  %.pn55.pn.pn.pn89 = phi { ptr, i32 } [ %i.cl, %_ZN5Ipopt8SmartPtrIKNS_6VectorEED2Ev.exit.thread ], [ %.pn55.pn.pn.pn, %_ZN5Ipopt8SmartPtrIKNS_6VectorEED2Ev.exit ] ; 2 uses
+  %i.eq = getelementptr inbounds nuw i8, ptr %i.h, i64 8 ; 2 uses
+  %3 = load i32, ptr %i.eq, align 8, !tbaa !44
+  %4 = add nsw i32 %3, -1                         ; 2 uses
   store i32 %4, ptr %i.eq, align 8, !tbaa !44
   %i.er = icmp eq i32 %4, 0
   br i1 %i.er, label %bb.o, label %_ZN5Ipopt8SmartPtrIKNS_15ExpansionMatrixEED2Ev.exit70

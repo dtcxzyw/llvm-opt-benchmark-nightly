@@ -94,15 +94,17 @@ _ZNSt10unique_ptrIA_cSt14default_deleteIS0_EED2Ev.exit:
   %i.k = add nsw i32 %i.j, 1
   %i.l = sext i32 %i.k to i64                     ; 2 uses
   call void @llvm.va_end.p0(ptr nonnull %5)
-  %i.m = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %i.m = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.n = load i64, ptr %i.m, align 8, !tbaa !22
-  %i.o = add i64 %i.n, 50                         ; 2 uses
+  %i.o = add i64 %i.n, 50
   %i.p = add i64 %i.o, %i.l
   %i.q = call noalias noundef nonnull ptr @_Znam(i64 noundef %i.p) #13 ; 4 uses
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.s = load ptr, ptr %i.r, align 8, !tbaa !11   ; 2 uses
   %i.t = icmp eq ptr %i.s, null
   %spec.select = select i1 %i.t, ptr @.str.1, ptr %i.s
+  %6 = load i64, ptr %i.m, align 8, !tbaa !22
+  %7 = add i64 %6, 50
   %i.u = getelementptr inbounds nuw i8, ptr %4, i64 20
   %i.v = load i32, ptr %i.u, align 4, !tbaa !23
   %i.w = add nsw i32 %i.v, 1900
@@ -119,7 +121,7 @@ _ZNSt10unique_ptrIA_cSt14default_deleteIS0_EED2Ev.exit:
   %i.ah = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.ai = load i64, ptr %i.ah, align 8, !tbaa !30
   %i.aj = trunc i64 %i.ai to i32
-  %i.ak = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull %i.q, i64 noundef %i.o, ptr noundef nonnull @.str, i32 noundef %i.w, i32 noundef %i.z, i32 noundef %i.ab, i32 noundef %i.ad, i32 noundef %i.af, i32 noundef %i.ag, i32 noundef %i.aj, i64 noundef %i.f, ptr noundef nonnull %spec.select) #11
+  %i.ak = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull %i.q, i64 noundef %7, ptr noundef nonnull @.str, i32 noundef %i.w, i32 noundef %i.z, i32 noundef %i.ab, i32 noundef %i.ad, i32 noundef %i.af, i32 noundef %i.ag, i32 noundef %i.aj, i64 noundef %i.f, ptr noundef nonnull %spec.select) #11
   %i.al = sext i32 %i.ak to i64
   %i.am = getelementptr inbounds i8, ptr %i.q, i64 %i.al
   %i.an = call i32 @vsnprintf(ptr noundef nonnull %i.am, i64 noundef %i.l, ptr noundef %1, ptr noundef %2) #11 ; 0 uses

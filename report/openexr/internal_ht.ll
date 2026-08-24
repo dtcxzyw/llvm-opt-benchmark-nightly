@@ -204,8 +204,8 @@ bb.a:
   %7 = alloca %class.staticmem_outfile, align 8   ; 10 uses
   %i.a = alloca i32, align 4                      ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #12
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 8 uses
-  %i.c = load i16, ptr %i.b, align 8, !tbaa !65   ; 4 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 9 uses
+  %i.c = load i16, ptr %i.b, align 8, !tbaa !65   ; 3 uses
   %i.d = sext i16 %i.c to i64                     ; 5 uses
   %i.e = icmp slt i16 %i.c, 0
   br i1 %i.e, label %.noexc.i, label %_ZNSt6vectorI21CodestreamChannelInfoSaIS0_EE17_S_check_init_lenEmRKS1_.exit.i.i
@@ -282,10 +282,11 @@ bb.b:                                             ; preds = %.noexc2
   %.0.i.i.i.i.i.i = phi ptr [ null, %_ZNSt12_Vector_baseI21CodestreamChannelInfoSaIS0_EEC2EmRKS1_.exit.thread.i.i ], [ %i.j, %.noexc2 ], [ %i.m, %.lr.ph.i.i.i.i.i.i.i.i.i.i ], [ %i.m, %.lr.ph.i.i.i.i.i.i.i.i.i.i.prol.loopexit ]
   %i.w = getelementptr inbounds nuw i8, ptr %1, i64 8
   store ptr %.0.i.i.i.i.i.i, ptr %i.w, align 8, !tbaa !27
-  %8 = zext nneg i16 %i.c to i32
+  %8 = load i16, ptr %i.b, align 8, !tbaa !65
+  %9 = sext i16 %8 to i32
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 7 uses
   %i.y = load ptr, ptr %i.x, align 8, !tbaa !68
-  %i.z = invoke noundef zeroext i1 @_Z16make_channel_mapiP25exr_coding_channel_info_tRSt6vectorI21CodestreamChannelInfoSaIS2_EE(i32 noundef %8, ptr noundef %i.y, ptr noundef nonnull align 8 dereferenceable(24) %1)
+  %i.z = invoke noundef zeroext i1 @_Z16make_channel_mapiP25exr_coding_channel_info_tRSt6vectorI21CodestreamChannelInfoSaIS2_EE(i32 noundef %9, ptr noundef %i.y, ptr noundef nonnull align 8 dereferenceable(24) %1)
           to label %bb.c unwind label %bb.g
 
 bb.c:                                             ; preds = %.loopexit204.i

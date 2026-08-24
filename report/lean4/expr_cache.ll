@@ -78,8 +78,8 @@ bb.a:
   %i.j = load i32, ptr %0, align 8, !tbaa !13
   %i.k = urem i32 %i.i, %i.j                      ; 3 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
-  %i.m = zext i32 %i.k to i64                     ; 7 uses
-  %i.n = load ptr, ptr %i.l, align 8, !tbaa !25   ; 4 uses
+  %i.m = zext i32 %i.k to i64                     ; 6 uses
+  %i.n = load ptr, ptr %i.l, align 8, !tbaa !25   ; 3 uses
   %i.o = getelementptr inbounds nuw [24 x i8], ptr %i.n, i64 %i.m
   %i.p = load i8, ptr %i.o, align 8, !tbaa !26, !range !29, !noundef !30
   %i.q = trunc nuw i8 %i.p to i1
@@ -90,8 +90,8 @@ _ZNSt6vectorIjSaIjEE9push_backERKj.exit.thread:   ; preds = %bb.a
   br label %bb.f
 
 bb.b:                                             ; preds = %bb.a
-  %i.s = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 3 uses
-  %i.t = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 4 uses
+  %i.s = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
+  %i.t = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 3 uses
   %i.u = load ptr, ptr %i.t, align 8, !tbaa !31   ; 4 uses
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 3 uses
   %i.w = load ptr, ptr %i.v, align 8, !tbaa !32
@@ -108,8 +108,8 @@ _ZNSt6vectorIjSaIjEE9push_backERKj.exit.thread19: ; preds = %bb.b
 bb.c:                                             ; preds = %bb.b
   %i.z = load ptr, ptr %i.s, align 8, !tbaa !34   ; 4 uses
   %i.aa = ptrtoint ptr %i.u to i64
-  %i.ab = ptrtoint ptr %i.z to i64
-  %i.ac = sub i64 %i.aa, %i.ab                    ; 6 uses
+  %i.ab = ptrtoint ptr %i.z to i64                ; 2 uses
+  %i.ac = sub i64 %i.aa, %i.ab                    ; 5 uses
   %i.ad = icmp eq i64 %i.ac, 9223372036854775804
   br i1 %i.ad, label %bb.d, label %_ZNKSt6vectorIjSaIjEE12_M_check_lenEmPKc.exit.i.i
 
@@ -123,11 +123,11 @@ _ZNKSt6vectorIjSaIjEE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb.c
   %i.af = add nsw i64 %.sroa.speculated.i.i.i, %i.ae ; 2 uses
   %i.ag = icmp ult i64 %i.af, %i.ae
   %i.ah = tail call i64 @llvm.umin.i64(i64 %i.af, i64 2305843009213693951)
-  %i.ai = select i1 %i.ag, i64 2305843009213693951, i64 %i.ah ; 4 uses
+  %i.ai = select i1 %i.ag, i64 2305843009213693951, i64 %i.ah ; 3 uses
   %.not.i.i.i = icmp ne i64 %i.ai, 0
   tail call void @llvm.assume(i1 %.not.i.i.i)
   %i.aj = shl nuw nsw i64 %i.ai, 2
-  %i.ak = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.aj) #11 ; 6 uses
+  %i.ak = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.aj) #11 ; 4 uses
   %i.al = getelementptr inbounds i8, ptr %i.ak, i64 %i.ac ; 2 uses
   store i32 %i.k, ptr %i.al, align 4, !tbaa !33
   %i.am = icmp sgt i64 %i.ac, 0
@@ -138,30 +138,28 @@ bb.e:                                             ; preds = %_ZNKSt6vectorIjSaIj
   br label %_ZNSt6vectorIjSaIjEE11_S_relocateEPjS2_S2_RS0_.exit16.i.i
 
 _ZNSt6vectorIjSaIjEE11_S_relocateEPjS2_S2_RS0_.exit16.i.i: ; preds = %bb.e, %_ZNKSt6vectorIjSaIjEE12_M_check_lenEmPKc.exit.i.i
-  %i.an = getelementptr inbounds nuw i8, ptr %i.al, i64 4 ; 2 uses
+  %i.an = getelementptr inbounds nuw i8, ptr %i.al, i64 4
   %.not.i17.i.i = icmp eq ptr %i.z, null
-  br i1 %.not.i17.i.i, label %_ZNSt6vectorIjSaIjEE9push_backERKj.exit.thread20, label %_ZNSt6vectorIjSaIjEE9push_backERKj.exit
+  br i1 %.not.i17.i.i, label %_ZNSt6vectorIjSaIjEE9push_backERKj.exit, label %_ZNSt6vectorIjSaIjEE9push_backERKj.exit.thread20
 
 _ZNSt6vectorIjSaIjEE9push_backERKj.exit.thread20: ; preds = %_ZNSt6vectorIjSaIjEE11_S_relocateEPjS2_S2_RS0_.exit16.i.i
-  store ptr %i.ak, ptr %i.s, align 8, !tbaa !34
-  store ptr %i.an, ptr %i.t, align 8, !tbaa !31
-  %3 = getelementptr inbounds nuw [4 x i8], ptr %i.ak, i64 %i.ai
-  store ptr %3, ptr %i.v, align 8, !tbaa !32
-  %4 = getelementptr inbounds nuw [24 x i8], ptr %i.n, i64 %i.m
-  br label %_ZN4lean10object_refD2Ev.exit.i
+  %3 = load ptr, ptr %i.v, align 8, !tbaa !32
+  %4 = ptrtoint ptr %3 to i64
+  %5 = sub i64 %4, %i.ab
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.z, i64 noundef %5) #12
+  br label %_ZNSt6vectorIjSaIjEE9push_backERKj.exit
 
-_ZNSt6vectorIjSaIjEE9push_backERKj.exit:          ; preds = %_ZNSt6vectorIjSaIjEE11_S_relocateEPjS2_S2_RS0_.exit16.i.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.z, i64 noundef %i.ac) #12
-  %.pre.pre = load ptr, ptr %i.l, align 8, !tbaa !25 ; 2 uses
-  %.phi.trans.insert.phi.trans.insert = getelementptr inbounds nuw [24 x i8], ptr %.pre.pre, i64 %i.m
-  %.pre10.pre = load i8, ptr %.phi.trans.insert.phi.trans.insert, align 8, !tbaa !26, !range !29
-  %5 = trunc nuw i8 %.pre10.pre to i1
+_ZNSt6vectorIjSaIjEE9push_backERKj.exit:          ; preds = %_ZNSt6vectorIjSaIjEE11_S_relocateEPjS2_S2_RS0_.exit16.i.i, %_ZNSt6vectorIjSaIjEE9push_backERKj.exit.thread20
   store ptr %i.ak, ptr %i.s, align 8, !tbaa !34
   store ptr %i.an, ptr %i.t, align 8, !tbaa !31
   %6 = getelementptr inbounds nuw [4 x i8], ptr %i.ak, i64 %i.ai
   store ptr %6, ptr %i.v, align 8, !tbaa !32
-  %i.ao = getelementptr inbounds nuw [24 x i8], ptr %.pre.pre, i64 %i.m ; 2 uses
-  br i1 %5, label %bb.f, label %_ZN4lean10object_refD2Ev.exit.i
+  %.pre = load ptr, ptr %i.l, align 8, !tbaa !25  ; 2 uses
+  %.phi.trans.insert = getelementptr inbounds nuw [24 x i8], ptr %.pre, i64 %i.m
+  %.pre10 = load i8, ptr %.phi.trans.insert, align 8, !tbaa !26, !range !29
+  %7 = trunc nuw i8 %.pre10 to i1
+  %i.ao = getelementptr inbounds nuw [24 x i8], ptr %.pre, i64 %i.m ; 2 uses
+  br i1 %7, label %bb.f, label %_ZN4lean10object_refD2Ev.exit.i
 
 bb.f:                                             ; preds = %_ZNSt6vectorIjSaIjEE9push_backERKj.exit.thread, %_ZNSt6vectorIjSaIjEE9push_backERKj.exit
   %i.ap = phi ptr [ %i.r, %_ZNSt6vectorIjSaIjEE9push_backERKj.exit.thread ], [ %i.ao, %_ZNSt6vectorIjSaIjEE9push_backERKj.exit ] ; 5 uses
@@ -197,10 +195,10 @@ bb.k:                                             ; preds = %bb.j
   tail call void @__clang_call_terminate(ptr %i.ay) #13
   unreachable
 
-_ZN4lean10object_refD2Ev.exit.i:                  ; preds = %_ZNSt6vectorIjSaIjEE9push_backERKj.exit.thread20, %_ZNSt6vectorIjSaIjEE9push_backERKj.exit.thread19, %bb.j, %bb.i, %bb.h, %bb.f, %_ZNSt6vectorIjSaIjEE9push_backERKj.exit
-  %7 = phi ptr [ %i.ap, %bb.j ], [ %i.ap, %bb.i ], [ %i.ap, %bb.h ], [ %i.ap, %bb.f ], [ %i.ao, %_ZNSt6vectorIjSaIjEE9push_backERKj.exit ], [ %i.y, %_ZNSt6vectorIjSaIjEE9push_backERKj.exit.thread19 ], [ %4, %_ZNSt6vectorIjSaIjEE9push_backERKj.exit.thread20 ] ; 2 uses
-  store i8 1, ptr %7, align 8, !tbaa !26
-  %i.az = getelementptr inbounds nuw i8, ptr %7, i64 8
+_ZN4lean10object_refD2Ev.exit.i:                  ; preds = %_ZNSt6vectorIjSaIjEE9push_backERKj.exit.thread19, %bb.j, %bb.i, %bb.h, %bb.f, %_ZNSt6vectorIjSaIjEE9push_backERKj.exit
+  %8 = phi ptr [ %i.ap, %bb.j ], [ %i.ap, %bb.i ], [ %i.ap, %bb.h ], [ %i.ap, %bb.f ], [ %i.ao, %_ZNSt6vectorIjSaIjEE9push_backERKj.exit ], [ %i.y, %_ZNSt6vectorIjSaIjEE9push_backERKj.exit.thread19 ] ; 2 uses
+  store i8 1, ptr %8, align 8, !tbaa !26
+  %i.az = getelementptr inbounds nuw i8, ptr %8, i64 8
   %i.ba = load ptr, ptr %1, align 8, !tbaa !8     ; 5 uses
   store ptr %i.ba, ptr %i.az, align 8, !tbaa !8
   %i.bb = ptrtoint ptr %i.ba to i64

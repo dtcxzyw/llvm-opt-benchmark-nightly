@@ -202,7 +202,7 @@ bb.a:
   %25 = alloca %"class.std::allocator", align 1   ; 5 uses
   %26 = alloca %"class.std::__cxx11::basic_string", align 8 ; 7 uses
   %27 = alloca %"class.std::allocator", align 1   ; 4 uses
-  %i.a = alloca i32, align 4                      ; 5 uses
+  %i.a = alloca i32, align 4                      ; 7 uses
   %i.b = alloca i32, align 4                      ; 5 uses
   %i.c = load ptr, ptr %1, align 8, !tbaa !39     ; 2 uses
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !37
@@ -605,7 +605,7 @@ bb.ar:                                            ; preds = %bb.aq
   %i.fp = load i32, ptr %i.fo, align 8, !tbaa !43
   %i.fq = add nsw i32 %i.fp, 1
   store i32 %i.fq, ptr %i.fo, align 8, !tbaa !43
-  %i.fr = getelementptr inbounds nuw i8, ptr %i.fl, i64 16 ; 2 uses
+  %i.fr = getelementptr inbounds nuw i8, ptr %i.fl, i64 16 ; 3 uses
   %i.fs = getelementptr inbounds nuw i8, ptr %i.fl, i64 24
   %i.ft = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.fu = icmp sgt i32 %i.eo, 0                   ; 2 uses
@@ -696,7 +696,7 @@ bb.ba:                                            ; preds = %bb.aq
 
 bb.bb:                                            ; preds = %.preheader405, %_ZN5Ipopt8SmartPtrINS_6VectorEED2Ev.exit306
   %.1196413 = phi i32 [ %.0195425, %.preheader405 ], [ %.2197, %_ZN5Ipopt8SmartPtrINS_6VectorEED2Ev.exit306 ] ; 2 uses
-  %i.gi = load ptr, ptr %i.fr, align 8, !tbaa !44, !noalias !54 ; 2 uses
+  %i.gi = load ptr, ptr %i.fr, align 8, !tbaa !44, !noalias !54
   %i.gj = getelementptr inbounds nuw i8, ptr %i.gi, i64 56
   %i.gk = load ptr, ptr %i.gj, align 8, !tbaa !39, !noalias !54
   %i.gl = getelementptr inbounds nuw i8, ptr %i.gk, i64 12
@@ -709,7 +709,8 @@ bb.bb:                                            ; preds = %.preheader405, %_ZN
           to label %.noexc unwind label %.loopexit.split-lp ; 4 uses
 
 .noexc:                                           ; preds = %bb.bb
-  invoke void @_ZN5Ipopt13TripletHelper20FillValuesFromVectorEiRKNS_6VectorEPd(i32 noundef %i.gm, ptr noundef nonnull align 8 dereferenceable(205) %i.gi, ptr noundef nonnull %i.gr)
+  %28 = load ptr, ptr %i.fr, align 8, !tbaa !44, !noalias !54
+  invoke void @_ZN5Ipopt13TripletHelper20FillValuesFromVectorEiRKNS_6VectorEPd(i32 noundef %i.gm, ptr noundef nonnull align 8 dereferenceable(205) %28, ptr noundef nonnull %i.gr)
           to label %.noexc294 unwind label %.loopexit.split-lp
 
 .noexc294:                                        ; preds = %.noexc
@@ -1112,12 +1113,12 @@ bb.cg:                                            ; preds = %bb.cf
 ._crit_edge432:                                   ; preds = %bb.cl, %.preheader392
   %.0183.lcssa = phi i32 [ 0, %.preheader392 ], [ %.1, %bb.cl ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #15
-  %.sroa.speculated.i309 = call noundef i32 @llvm.smax.i32(i32 %i.no, i32 %i.ey) ; 4 uses
+  %.sroa.speculated.i309 = call noundef i32 @llvm.smax.i32(i32 %i.no, i32 %i.ey) ; 3 uses
   store i32 %.sroa.speculated.i309, ptr %i.a, align 4, !tbaa !81
   %i.np = zext nneg i32 %.sroa.speculated.i309 to i64
-  %i.nq = icmp slt i32 %.sroa.speculated.i309, 0  ; 2 uses
+  %i.nq = icmp slt i32 %.sroa.speculated.i309, 0
   %i.nr = shl nuw nsw i64 %i.np, 2
-  %i.ns = select i1 %i.nq, i64 -1, i64 %i.nr      ; 2 uses
+  %i.ns = select i1 %i.nq, i64 -1, i64 %i.nr
   %i.nt = invoke noalias noundef nonnull ptr @_Znam(i64 noundef %i.ns) #18
           to label %bb.cm unwind label %bb.cr     ; 3 uses
 
@@ -1164,14 +1165,21 @@ bb.cl:                                            ; preds = %._crit_edge493, %bb
   br i1 %exitcond482.not, label %._crit_edge432, label %bb.cj, !llvm.loop !82
 
 bb.cm:                                            ; preds = %._crit_edge432
-  %i.og = invoke noalias noundef nonnull ptr @_Znam(i64 noundef %i.ns) #18
+  %29 = load i32, ptr %i.a, align 4, !tbaa !81    ; 2 uses
+  %30 = sext i32 %29 to i64
+  %31 = icmp slt i32 %29, 0
+  %32 = shl nsw i64 %30, 2
+  %33 = select i1 %31, i64 -1, i64 %32
+  %i.og = invoke noalias noundef nonnull ptr @_Znam(i64 noundef %33) #18
           to label %bb.cn unwind label %bb.cs     ; 3 uses
 
 bb.cn:                                            ; preds = %bb.cm
-  %i.oh = mul nsw i32 %.sroa.speculated.i309, 5
+  %34 = load i32, ptr %i.a, align 4, !tbaa !81    ; 2 uses
+  %i.oh = mul nsw i32 %34, 5
   %i.oi = sext i32 %i.oh to i64
+  %35 = icmp slt i32 %34, 0
   %i.oj = shl nsw i64 %i.oi, 2
-  %i.ok = select i1 %i.nq, i64 -1, i64 %i.oj
+  %i.ok = select i1 %35, i64 -1, i64 %i.oj
   %i.ol = invoke noalias noundef nonnull ptr @_Znam(i64 noundef %i.ok) #18
           to label %bb.co unwind label %bb.ct     ; 2 uses
 
@@ -1574,8 +1582,8 @@ declare void @_ZdlPvm(ptr noundef, i64 noundef) local_unnamed_addr #7
 ; Function Attrs: mustprogress uwtable
 define void @_ZNK5Ipopt14PointPerturber21MakeNewPerturbedPointEv(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.Ipopt::SmartPtr.0") align 8 captures(none) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %1) local_unnamed_addr #1 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !44   ; 2 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 3 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !44
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 56
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !39
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 12
@@ -1585,7 +1593,8 @@ bb.a:
   %i.i = shl nsw i64 %i.g, 3
   %i.j = select i1 %i.h, i64 -1, i64 %i.i         ; 2 uses
   %i.k = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.j) #18 ; 4 uses
-  tail call void @_ZN5Ipopt13TripletHelper20FillValuesFromVectorEiRKNS_6VectorEPd(i32 noundef %i.f, ptr noundef nonnull align 8 dereferenceable(205) %i.b, ptr noundef nonnull %i.k)
+  %2 = load ptr, ptr %i.a, align 8, !tbaa !44
+  tail call void @_ZN5Ipopt13TripletHelper20FillValuesFromVectorEiRKNS_6VectorEPd(i32 noundef %i.f, ptr noundef nonnull align 8 dereferenceable(205) %2, ptr noundef nonnull %i.k)
   %i.l = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.j) #18 ; 3 uses
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !44

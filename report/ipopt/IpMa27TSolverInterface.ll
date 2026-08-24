@@ -204,8 +204,8 @@ bb.e:                                             ; preds = %bb.d, %_ZN5Ipopt9Ti
   %i.ab = load i32, ptr %i.aa, align 4, !tbaa !74
   %i.ac = shl nsw i32 %i.ab, 1
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 4 uses
-  %i.ae = load i32, ptr %i.ad, align 8, !tbaa !73 ; 2 uses
-  %i.af = mul nsw i32 %i.ae, 3                    ; 2 uses
+  %i.ae = load i32, ptr %i.ad, align 8, !tbaa !73
+  %i.af = mul nsw i32 %i.ae, 3
   %i.ag = or disjoint i32 %i.ac, 1
   %i.ah = add i32 %i.ag, %i.af
   %i.ai = shl i32 %i.ah, 1                        ; 3 uses
@@ -256,15 +256,13 @@ bb.j:                                             ; preds = %bb.i, %bb.h
 
 bb.k:                                             ; preds = %bb.f
   tail call void @_ZdaPv(ptr noundef nonnull %i.aq) #22
-  %.pre = load i32, ptr %i.ad, align 8, !tbaa !73 ; 2 uses
-  %.pre45 = mul nsw i32 %.pre, 3
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.f
-  %.pre-phi = phi i32 [ %.pre45, %bb.k ], [ %i.af, %bb.f ]
-  %3 = phi i32 [ %.pre, %bb.k ], [ %i.ae, %bb.f ]
   store ptr null, ptr %i.ap, align 8, !tbaa !40
-  %i.bd = sext i32 %.pre-phi to i64
+  %3 = load i32, ptr %i.ad, align 8, !tbaa !73    ; 2 uses
+  %4 = mul nsw i32 %3, 3
+  %i.bd = sext i32 %4 to i64
   %i.be = icmp slt i32 %3, 0
   %i.bf = shl nsw i64 %i.bd, 2
   %i.bg = select i1 %i.be, i64 -1, i64 %i.bf

@@ -120,7 +120,7 @@ _ZN7CaDiCaLL8fitcbvalEd.exit:                     ; preds = %bb.b, %.critedge2.i
 bb.c:                                             ; preds = %bb.a, %_ZN7CaDiCaLL8fitcbvalEd.exit
   %i.al = phi double [ %i.ak, %_ZN7CaDiCaLL8fitcbvalEd.exit ], [ 2.000000e+00, %bb.a ] ; 2 uses
   %i.am = fdiv double 1.000000e+00, %i.al         ; 2 uses
-  %i.an = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 3 uses
+  %i.an = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 4 uses
   store double 1.000000e+00, ptr %i.an, align 8, !tbaa !164
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 2 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 80
@@ -130,7 +130,7 @@ bb.d:                                             ; preds = %bb.c, %_ZNSt6vector
   %i.aq = phi ptr [ null, %bb.c ], [ %i.bj, %_ZNSt6vectorIdSaIdEE9push_backERKd.exit ] ; 5 uses
   %i.ar = phi ptr [ null, %bb.c ], [ %i.bk, %_ZNSt6vectorIdSaIdEE9push_backERKd.exit ] ; 3 uses
   %i.as = phi ptr [ null, %bb.c ], [ %i.bl, %_ZNSt6vectorIdSaIdEE9push_backERKd.exit ] ; 3 uses
-  %.023 = phi double [ 1.000000e+00, %bb.c ], [ %i.bn, %_ZNSt6vectorIdSaIdEE9push_backERKd.exit ] ; 3 uses
+  %.023 = phi double [ 1.000000e+00, %bb.c ], [ %i.bn, %_ZNSt6vectorIdSaIdEE9push_backERKd.exit ] ; 2 uses
   store double %.023, ptr %i.an, align 8, !tbaa !164
   %.not.i = icmp eq ptr %i.as, %i.ar
   br i1 %.not.i, label %bb.f, label %bb.e
@@ -170,7 +170,8 @@ _ZNKSt6vectorIdSaIdEE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb.f
 
 .noexc18:                                         ; preds = %_ZNKSt6vectorIdSaIdEE12_M_check_lenEmPKc.exit.i.i
   %i.bf = getelementptr inbounds i8, ptr %i.be, i64 %i.aw ; 2 uses
-  store double %.023, ptr %i.bf, align 8, !tbaa !163
+  %4 = load double, ptr %i.an, align 8, !tbaa !163
+  store double %4, ptr %i.bf, align 8, !tbaa !163
   %i.bg = icmp sgt i64 %i.aw, 0
   br i1 %i.bg, label %bb.h, label %_ZNSt6vectorIdSaIdEE11_S_relocateEPdS2_S2_RS0_.exit16.i.i
 

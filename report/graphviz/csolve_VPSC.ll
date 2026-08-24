@@ -202,7 +202,7 @@ bb.a:
 .lr.ph:                                           ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 3 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %1, i64 64 ; 2 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %1, i64 64 ; 3 uses
   %.pre = load ptr, ptr %i.f, align 8, !tbaa !49
   %.pre13 = load ptr, ptr %i.g, align 8, !tbaa !35
   br label %bb.b
@@ -243,8 +243,8 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.b
   %i.q = load ptr, ptr %i.e, align 8, !tbaa !34   ; 4 uses
   %i.r = ptrtoint ptr %i.i to i64
-  %i.s = ptrtoint ptr %i.q to i64
-  %i.t = sub i64 %i.r, %i.s                       ; 6 uses
+  %i.s = ptrtoint ptr %i.q to i64                 ; 2 uses
+  %i.t = sub i64 %i.r, %i.s                       ; 5 uses
   %i.u = icmp eq i64 %i.t, 9223372036854775800
   br i1 %i.u, label %bb.e, label %_ZNKSt6vectorIP10ConstraintSaIS1_EE12_M_check_lenEmPKc.exit.i.i
 
@@ -278,7 +278,10 @@ _ZNSt6vectorIP10ConstraintSaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit16.i.i: ; pre
   br i1 %.not.i17.i.i, label %_ZNSt6vectorIP10ConstraintSaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i, label %bb.g
 
 bb.g:                                             ; preds = %_ZNSt6vectorIP10ConstraintSaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit16.i.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.q, i64 noundef %i.t) #19
+  %3 = load ptr, ptr %i.g, align 8, !tbaa !35
+  %4 = ptrtoint ptr %3 to i64
+  %5 = sub i64 %4, %i.s
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.q, i64 noundef %5) #19
   br label %_ZNSt6vectorIP10ConstraintSaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i
 
 _ZNSt6vectorIP10ConstraintSaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i: ; preds = %bb.g, %_ZNSt6vectorIP10ConstraintSaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit16.i.i
@@ -309,7 +312,7 @@ bb.a:
 .lr.ph:                                           ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 72 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 80 ; 3 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %1, i64 88 ; 2 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %1, i64 88 ; 3 uses
   %.pre = load ptr, ptr %i.f, align 8, !tbaa !49
   %.pre13 = load ptr, ptr %i.g, align 8, !tbaa !35
   br label %bb.b
@@ -349,8 +352,8 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.b
   %i.p = load ptr, ptr %i.e, align 8, !tbaa !34   ; 4 uses
   %i.q = ptrtoint ptr %i.i to i64
-  %i.r = ptrtoint ptr %i.p to i64
-  %i.s = sub i64 %i.q, %i.r                       ; 6 uses
+  %i.r = ptrtoint ptr %i.p to i64                 ; 2 uses
+  %i.s = sub i64 %i.q, %i.r                       ; 5 uses
   %i.t = icmp eq i64 %i.s, 9223372036854775800
   br i1 %i.t, label %bb.e, label %_ZNKSt6vectorIP10ConstraintSaIS1_EE12_M_check_lenEmPKc.exit.i.i
 
@@ -384,7 +387,10 @@ _ZNSt6vectorIP10ConstraintSaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit16.i.i: ; pre
   br i1 %.not.i17.i.i, label %_ZNSt6vectorIP10ConstraintSaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i, label %bb.g
 
 bb.g:                                             ; preds = %_ZNSt6vectorIP10ConstraintSaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit16.i.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.p, i64 noundef %i.s) #19
+  %3 = load ptr, ptr %i.g, align 8, !tbaa !35
+  %4 = ptrtoint ptr %3 to i64
+  %5 = sub i64 %4, %i.r
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.p, i64 noundef %5) #19
   br label %_ZNSt6vectorIP10ConstraintSaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i
 
 _ZNSt6vectorIP10ConstraintSaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i: ; preds = %bb.g, %_ZNSt6vectorIP10ConstraintSaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit16.i.i

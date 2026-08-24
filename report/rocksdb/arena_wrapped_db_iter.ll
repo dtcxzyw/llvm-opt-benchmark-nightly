@@ -205,7 +205,7 @@ bb.a:
   %4 = alloca %"class.std::unique_ptr", align 8   ; 4 uses
   %5 = alloca %"class.std::__cxx11::basic_string", align 8 ; 17 uses
   %6 = alloca %"class.rocksdb::Status", align 8   ; 6 uses
-  %7 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
+  %7 = alloca %"class.std::__cxx11::basic_string", align 8 ; 7 uses
   %8 = alloca %"class.std::__cxx11::basic_string", align 8 ; 17 uses
   %9 = alloca %"class.rocksdb::Status", align 8   ; 5 uses
   %10 = alloca %"class.std::__cxx11::basic_string", align 8 ; 7 uses
@@ -467,11 +467,12 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit: ; preds = %b
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #21
   %i.cp = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.cq = load ptr, ptr %i.cp, align 8, !tbaa !90
-  %i.cr = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 5 uses
-  %11 = tail call noalias noundef nonnull dereferenceable(38) ptr @_Znwm(i64 noundef 38) #22 ; 3 uses
+  %i.cr = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 6 uses
+  store ptr %i.cr, ptr %7, align 8, !tbaa !80
+  %11 = call noalias noundef nonnull dereferenceable(38) ptr @_Znwm(i64 noundef 38) #22 ; 3 uses
   store ptr %11, ptr %7, align 8, !tbaa !9
   store i64 37, ptr %i.cr, align 8, !tbaa !15
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(37) %11, ptr noundef nonnull align 1 dereferenceable(37) %i.d, i64 37, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(37) %11, ptr noundef nonnull align 1 dereferenceable(37) %i.d, i64 37, i1 false)
   %i.cs = getelementptr inbounds nuw i8, ptr %7, i64 8
   store i64 37, ptr %i.cs, align 8, !tbaa !16
   %i.ct = getelementptr inbounds nuw i8, ptr %11, i64 37

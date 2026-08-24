@@ -202,7 +202,7 @@ bb.a:
   %25 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %26 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %27 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
-  %28 = alloca %"class.std::vector.49", align 8   ; 13 uses
+  %28 = alloca %"class.std::vector.49", align 8   ; 14 uses
   %i.d = alloca [16 x i8], align 16               ; 7 uses
   %29 = alloca %"class.std::__cxx11::basic_string", align 8 ; 12 uses
   %30 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
@@ -605,8 +605,12 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i16
 _ZNSt6vectorIN5Ipopt8SmartPtrINS0_6VectorEEESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit161, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i162
   call void @llvm.lifetime.end.p0(ptr nonnull %26) #14
   call void @llvm.lifetime.start.p0(ptr nonnull %28) #14
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %28, i8 0, i64 24, i1 false)
+  br i1 %.not.i.i.i.i, label %_ZNSt12_Vector_baseIN5Ipopt8SmartPtrINS0_6VectorEEESaIS3_EEC2EmRKS4_.exit.thread.i, label %.lr.ph.preheader.i.i.i.i.i166
+
+_ZNSt12_Vector_baseIN5Ipopt8SmartPtrINS0_6VectorEEESaIS3_EEC2EmRKS4_.exit.thread.i: ; preds = %_ZNSt6vectorIN5Ipopt8SmartPtrINS0_6VectorEEESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i
   store i64 0, ptr %28, align 8
-  br i1 %.not.i.i.i.i, label %_ZNSt12_Vector_baseIN5Ipopt8SmartPtrINS0_6VectorEEESaIS3_EEC2EmRKS4_.exit.thread.i.a, label %.lr.ph.preheader.i.i.i.i.i166
+  br label %_ZNSt12_Vector_baseIN5Ipopt8SmartPtrINS0_6VectorEEESaIS3_EEC2EmRKS4_.exit.thread.i.a
 
 .lr.ph.preheader.i.i.i.i.i166:                    ; preds = %_ZNSt6vectorIN5Ipopt8SmartPtrINS0_6VectorEEESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i
   %i.hh = ashr exact i64 %sext, 29                ; 3 uses
@@ -620,9 +624,9 @@ _ZNSt6vectorIN5Ipopt8SmartPtrINS0_6VectorEEESaIS3_EE17_S_check_init_lenEmRKS4_.e
   %scevgep.i.i.i.i.i167 = getelementptr i8, ptr %i.hi, i64 %i.hh
   br label %_ZNSt12_Vector_baseIN5Ipopt8SmartPtrINS0_6VectorEEESaIS3_EEC2EmRKS4_.exit.thread.i.a
 
-_ZNSt12_Vector_baseIN5Ipopt8SmartPtrINS0_6VectorEEESaIS3_EEC2EmRKS4_.exit.thread.i.a: ; preds = %_ZNSt6vectorIN5Ipopt8SmartPtrINS0_6VectorEEESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i, %.noexc171
-  %.sink.i168 = phi ptr [ %i.hj, %.noexc171 ], [ null, %_ZNSt6vectorIN5Ipopt8SmartPtrINS0_6VectorEEESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i ]
-  %.0.lcssa.i.i.i.i.i169 = phi ptr [ %scevgep.i.i.i.i.i167, %.noexc171 ], [ null, %_ZNSt6vectorIN5Ipopt8SmartPtrINS0_6VectorEEESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i ]
+_ZNSt12_Vector_baseIN5Ipopt8SmartPtrINS0_6VectorEEESaIS3_EEC2EmRKS4_.exit.thread.i.a: ; preds = %.noexc171, %_ZNSt12_Vector_baseIN5Ipopt8SmartPtrINS0_6VectorEEESaIS3_EEC2EmRKS4_.exit.thread.i
+  %.sink.i168 = phi ptr [ null, %_ZNSt12_Vector_baseIN5Ipopt8SmartPtrINS0_6VectorEEESaIS3_EEC2EmRKS4_.exit.thread.i ], [ %i.hj, %.noexc171 ]
+  %.0.lcssa.i.i.i.i.i169 = phi ptr [ null, %_ZNSt12_Vector_baseIN5Ipopt8SmartPtrINS0_6VectorEEESaIS3_EEC2EmRKS4_.exit.thread.i ], [ %scevgep.i.i.i.i.i167, %.noexc171 ]
   %i.hk = getelementptr inbounds nuw i8, ptr %28, i64 8 ; 2 uses
   %i.hl = getelementptr inbounds nuw i8, ptr %28, i64 16 ; 2 uses
   store ptr %.sink.i168, ptr %i.hl, align 8, !tbaa !130

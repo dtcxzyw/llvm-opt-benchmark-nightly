@@ -202,7 +202,7 @@ bb.a:
   br i1 %or.cond, label %bb.j, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.f = load i64, ptr %0, align 8, !tbaa !130    ; 5 uses
+  %i.f = load i64, ptr %0, align 8, !tbaa !130    ; 3 uses
   %i.g = add i64 %1, -1
   %i.h = add i64 %i.g, %i.f                       ; 2 uses
   %i.i = urem i64 %i.h, %i.f
@@ -210,9 +210,10 @@ bb.b:                                             ; preds = %bb.a
   %i.k = add i64 %i.j, %i.f
   %i.l = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.k) #19 ; 2 uses
   %i.m = ptrtoint ptr %i.l to i64
-  %i.n = add i64 %i.f, -1
+  %6 = load i64, ptr %0, align 8, !tbaa !130      ; 2 uses
+  %i.n = add i64 %6, -1
   %i.o = add i64 %i.n, %i.m
-  %i.p = sub i64 0, %i.f
+  %i.p = sub i64 0, %6
   %i.q = and i64 %i.o, %i.p
   %i.r = inttoptr i64 %i.q to ptr                 ; 2 uses
   br i1 %2, label %bb.c, label %_ZNSt10unique_ptrIvSt8functionIFvPvEEEC2IS3_vEES1_NSt9enable_ifIXntsr19is_lvalue_referenceIT_EE5valueEOS7_E4typeE.exit

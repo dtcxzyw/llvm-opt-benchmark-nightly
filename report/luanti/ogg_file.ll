@@ -202,16 +202,17 @@ bb.m:                                             ; preds = %bb.b, %bb.a
   %.057 = phi i64 [ %i.m, %bb.a ], [ %i.n, %bb.b ]
   %i.bf = sub i32 %4, %3
   %i.bg = zext i32 %i.bf to i64
-  %i.bh = getelementptr inbounds nuw i8, ptr %2, i64 40 ; 3 uses
-  %i.bi = load i64, ptr %i.bh, align 8, !tbaa !71 ; 2 uses
+  %i.bh = getelementptr inbounds nuw i8, ptr %2, i64 40 ; 4 uses
+  %i.bi = load i64, ptr %i.bh, align 8, !tbaa !71
   %i.bj = mul i64 %i.bi, %i.bg                    ; 5 uses
   %i.bk = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.bj) #19 ; 4 uses
+  %5 = load i64, ptr %i.bh, align 8, !tbaa !71
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k) #17
   %.not232 = icmp eq i64 %i.bj, 0
   br i1 %.not232, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.m
-  %i.bl = mul i64 %i.bi, %.057
+  %i.bl = mul i64 %5, %.057
   %.not.i97 = icmp eq ptr @_ZTH10infostream, null
   %i.bm = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @infostream) ; 2 uses
   %i.bn = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 3 uses

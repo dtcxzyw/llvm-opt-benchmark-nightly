@@ -202,15 +202,15 @@ bb.i:                                             ; preds = %bb.h
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #11, !noalias !246
   %i.t = getelementptr inbounds nuw i8, ptr %4, i64 24 ; 4 uses
   store ptr %i.t, ptr %4, align 8, !tbaa !247, !noalias !246
-  %i.u = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 3 uses
+  %i.u = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 4 uses
   store i64 0, ptr %i.u, align 8, !tbaa !249, !noalias !246
-  %i.v = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 4 uses
+  %i.v = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 5 uses
   store i64 16, ptr %i.v, align 8, !tbaa !250, !noalias !246
   br label %bb.j
 
 bb.j:                                             ; preds = %_ZN4lean6bufferIP11lean_objectLm16EE9push_backERKS2_.exit.i.i.i.i.i, %.lr.ph.i.i.i.i.i
-  %i.w = phi i64 [ 16, %.lr.ph.i.i.i.i.i ], [ %i.ag, %_ZN4lean6bufferIP11lean_objectLm16EE9push_backERKS2_.exit.i.i.i.i.i ] ; 5 uses
-  %i.x = phi i64 [ 0, %.lr.ph.i.i.i.i.i ], [ %i.ak, %_ZN4lean6bufferIP11lean_objectLm16EE9push_backERKS2_.exit.i.i.i.i.i ] ; 6 uses
+  %i.w = phi i64 [ 16, %.lr.ph.i.i.i.i.i ], [ %i.ag, %_ZN4lean6bufferIP11lean_objectLm16EE9push_backERKS2_.exit.i.i.i.i.i ] ; 4 uses
+  %i.x = phi i64 [ 0, %.lr.ph.i.i.i.i.i ], [ %i.ak, %_ZN4lean6bufferIP11lean_objectLm16EE9push_backERKS2_.exit.i.i.i.i.i ] ; 2 uses
   %storemerge4.i.i.i.i.i = phi ptr [ %i.q, %.lr.ph.i.i.i.i.i ], [ %storemerge.i.i.i.i.i, %_ZN4lean6bufferIP11lean_objectLm16EE9push_backERKS2_.exit.i.i.i.i.i ] ; 2 uses
   %.not.i.i.i.i.i.i = icmp ult i64 %i.x, %i.w
   br i1 %.not.i.i.i.i.i.i, label %._crit_edge.i.i.i.i.i.i, label %bb.k
@@ -226,16 +226,17 @@ bb.k:                                             ; preds = %bb.j
 
 .noexc.i.i.i.i:                                   ; preds = %bb.k
   %i.aa = load ptr, ptr %4, align 8, !tbaa !247, !noalias !246 ; 4 uses
-  %i.ab = icmp ugt i64 %i.x, 1
+  %12 = load i64, ptr %i.u, align 8, !tbaa !249, !noalias !246 ; 4 uses
+  %i.ab = icmp ugt i64 %12, 1
   br i1 %i.ab, label %bb.l, label %bb.m, !prof !13
 
 bb.l:                                             ; preds = %.noexc.i.i.i.i
-  %.idx.i.i.i.i.i.i.i.i = shl nuw nsw i64 %i.x, 3
+  %.idx.i.i.i.i.i.i.i.i = shl nuw nsw i64 %12, 3
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.z, ptr align 8 %i.aa, i64 %.idx.i.i.i.i.i.i.i.i, i1 false), !noalias !246
   br label %_ZSt18uninitialized_copyIPP11lean_objectS2_ET0_T_S4_S3_.exit.i.i.i.i.i.i.i.i
 
 bb.m:                                             ; preds = %.noexc.i.i.i.i
-  %i.ac = icmp eq i64 %i.x, 1
+  %i.ac = icmp eq i64 %12, 1
   br i1 %i.ac, label %bb.n, label %_ZSt18uninitialized_copyIPP11lean_objectS2_ET0_T_S4_S3_.exit.i.i.i.i.i.i.i.i
 
 bb.n:                                             ; preds = %bb.m
@@ -248,13 +249,14 @@ _ZSt18uninitialized_copyIPP11lean_objectS2_ET0_T_S4_S3_.exit.i.i.i.i.i.i.i.i: ; 
   br i1 %.not.i.i.i.i.i.i.i18.i.i.i, label %_ZN4lean6bufferIP11lean_objectLm16EE6expandEv.exit.i.i.i.i.i.i, label %bb.o
 
 bb.o:                                             ; preds = %_ZSt18uninitialized_copyIPP11lean_objectS2_ET0_T_S4_S3_.exit.i.i.i.i.i.i.i.i
-  %i.ae = shl i64 %i.w, 3
+  %13 = load i64, ptr %i.v, align 8, !tbaa !250, !noalias !246
+  %i.ae = shl i64 %13, 3
   call void @_ZdaPvm(ptr noundef %i.aa, i64 noundef %i.ae) #11, !noalias !246
   %.pre2.pre.i.i.i.i.i.i = load i64, ptr %i.u, align 8, !tbaa !249, !noalias !246
   br label %_ZN4lean6bufferIP11lean_objectLm16EE6expandEv.exit.i.i.i.i.i.i
 
 _ZN4lean6bufferIP11lean_objectLm16EE6expandEv.exit.i.i.i.i.i.i: ; preds = %bb.o, %_ZSt18uninitialized_copyIPP11lean_objectS2_ET0_T_S4_S3_.exit.i.i.i.i.i.i.i.i
-  %.pre2.i.i.i.i.i.i = phi i64 [ %i.x, %_ZSt18uninitialized_copyIPP11lean_objectS2_ET0_T_S4_S3_.exit.i.i.i.i.i.i.i.i ], [ %.pre2.pre.i.i.i.i.i.i, %bb.o ]
+  %.pre2.i.i.i.i.i.i = phi i64 [ %12, %_ZSt18uninitialized_copyIPP11lean_objectS2_ET0_T_S4_S3_.exit.i.i.i.i.i.i.i.i ], [ %.pre2.pre.i.i.i.i.i.i, %bb.o ]
   %i.af = shl i64 %i.w, 1                         ; 2 uses
   store ptr %i.z, ptr %4, align 8, !tbaa !247, !noalias !246
   store i64 %i.af, ptr %i.v, align 8, !tbaa !250, !noalias !246

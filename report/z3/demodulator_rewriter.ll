@@ -205,7 +205,7 @@ declare noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIc
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden void @_Z18for_each_expr_coreI12var_set_proc8obj_markI4expr10bit_vector14default_t2uintIS2_EELb0ELb0EEvRT_RT0_PS2_(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef %2) local_unnamed_addr #0 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
-  %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 7 uses
+  %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 11 uses
   %5 = alloca %"class.std::allocator.80", align 1 ; 4 uses
   %6 = alloca %class.sbuffer, align 8             ; 20 uses
@@ -608,7 +608,8 @@ bb.x:                                             ; preds = %_ZNK6vectorIjLb0EjE
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit.i.i: ; preds = %bb.x, %_ZNK6vectorIjLb0EjE8capacityEv.exit.thread.i.i.i72
   %i.ex = call ptr @__cxa_allocate_exception(i64 40) #19 ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #19
-  %i.ey = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 4 uses
+  %i.ey = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 5 uses
+  store ptr %i.ey, ptr %3, align 8, !tbaa !178
   %i.ez = invoke noalias noundef nonnull dereferenceable(43) ptr @_Znwm(i64 noundef 43) #23
           to label %_ZN17default_exceptionC2EONSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.i150 unwind label %bb.z ; 3 uses
 

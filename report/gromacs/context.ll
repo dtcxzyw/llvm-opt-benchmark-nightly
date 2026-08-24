@@ -204,7 +204,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit93: ; preds = %_ZN
   br label %bb.h
 
 bb.h:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit93, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
-  %i.at = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 13 uses
+  %i.at = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 14 uses
   %i.au = load ptr, ptr %i.at, align 8, !tbaa !138 ; 4 uses
   %i.av = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 25 uses
   %i.aw = load ptr, ptr %i.av, align 8, !tbaa !138 ; 8 uses
@@ -607,7 +607,7 @@ bb.ai:                                            ; preds = %_ZNSt6vectorINSt7__
 
 _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12emplace_backIJRA9_KcEEERS5_DpOT_.exit: ; preds = %._ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12emplace_backIJRA9_KcEEERS5_DpOT_.exit_crit_edge, %._crit_edge.i.i.i211, %.loopexit
   %i.mz = phi ptr [ %.pre358, %._ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12emplace_backIJRA9_KcEEERS5_DpOT_.exit_crit_edge ], [ %i.my, %._crit_edge.i.i.i211 ], [ %i.kb, %.loopexit ]
-  %i.na = load ptr, ptr %i.at, align 8, !tbaa !32 ; 2 uses
+  %i.na = load ptr, ptr %i.at, align 8, !tbaa !32
   %i.nb = ptrtoint ptr %i.mz to i64
   %i.nc = ptrtoint ptr %i.na to i64
   %i.nd = sub i64 %i.nb, %i.nc
@@ -680,7 +680,8 @@ bb.ao:                                            ; preds = %_ZNSt6vectorIPcSaIS
 
 .lr.ph:                                           ; preds = %bb.al, %bb.ap
   %.052331 = phi i64 [ %i.ob, %bb.ap ], [ 1, %bb.al ] ; 4 uses
-  %i.ns = getelementptr [32 x i8], ptr %i.na, i64 %.052331 ; 2 uses
+  %19 = load ptr, ptr %i.at, align 8, !tbaa !32
+  %i.ns = getelementptr [32 x i8], ptr %19, i64 %.052331 ; 2 uses
   %i.nt = getelementptr i8, ptr %i.ns, i64 -24
   %i.nu = load i64, ptr %i.nt, align 8, !tbaa !23
   %i.nv = add i64 %i.nu, 1                        ; 2 uses

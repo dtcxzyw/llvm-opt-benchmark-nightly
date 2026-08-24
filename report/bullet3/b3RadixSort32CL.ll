@@ -113,7 +113,7 @@ bb.a:
   %i.g = lshr i8 %i.f, 1
   %i.h = and i8 %i.g, 1
   store i8 %i.h, ptr %i.e, align 8, !tbaa !24
-  %i.i = call noalias noundef nonnull dereferenceable(56) ptr @_Znwm(i64 noundef 56) #16 ; 8 uses
+  %i.i = call noalias noundef nonnull dereferenceable(56) ptr @_Znwm(i64 noundef 56) #16 ; 7 uses
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTV13b3OpenCLArrayIjE, i64 16), ptr %i.i, align 8, !tbaa !9
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 8
   %i.k = getelementptr inbounds nuw i8, ptr %i.i, i64 32
@@ -125,7 +125,7 @@ bb.a:
   store i8 1, ptr %i.m, align 8, !tbaa !30
   %i.n = getelementptr inbounds nuw i8, ptr %i.i, i64 49
   store i8 1, ptr %i.n, align 1, !tbaa !31
-  %i.o = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %i.o = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   store ptr %i.i, ptr %i.o, align 8, !tbaa !32
   %i.p = call noalias noundef nonnull dereferenceable(56) ptr @_Znwm(i64 noundef 56) #16 ; 7 uses
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTV13b3OpenCLArrayIjE, i64 16), ptr %i.p, align 8, !tbaa !9
@@ -201,8 +201,9 @@ bb.a:
   br i1 %i.ay, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
+  %6 = load ptr, ptr %i.o, align 8, !tbaa !32
   %i.az = zext nneg i32 %4 to i64                 ; 5 uses
-  %i.ba = call noundef zeroext i1 @_ZN13b3OpenCLArrayIjE6resizeEmb(ptr noundef nonnull align 8 dereferenceable(50) %i.i, i64 noundef %i.az, i1 noundef zeroext true) ; 0 uses
+  %i.ba = call noundef zeroext i1 @_ZN13b3OpenCLArrayIjE6resizeEmb(ptr noundef nonnull align 8 dereferenceable(50) %6, i64 noundef %i.az, i1 noundef zeroext true) ; 0 uses
   %i.bb = load ptr, ptr %i.ac, align 8, !tbaa !39
   %i.bc = call noundef zeroext i1 @_ZN13b3OpenCLArrayI10b3SortDataE6resizeEmb(ptr noundef nonnull align 8 dereferenceable(50) %i.bb, i64 noundef %i.az, i1 noundef zeroext true) ; 0 uses
   %i.bd = load ptr, ptr %i.aj, align 8, !tbaa !40

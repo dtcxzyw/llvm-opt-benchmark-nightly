@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 define void @_ZNK4LIEF3ELF15NoteGnuProperty10propertiesEv(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.std::vector.38") align 8 captures(none) initializes((0, 24)) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(112) %1) local_unnamed_addr #2 align 2 {
 bb.a:
   %2 = alloca %"class.LIEF::result", align 8      ; 11 uses
-  %3 = alloca %"class.std::unique_ptr.49", align 8 ; 8 uses
+  %3 = alloca %"class.std::unique_ptr.49", align 8 ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #24
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 48
   tail call void @llvm.experimental.noalias.scope.decl(metadata !8)
@@ -256,7 +256,7 @@ bb.c:                                             ; preds = %.lr.ph, %_ZNSt10uni
   call void @_ZN4LIEF3ELF14parse_propertyENS0_4ARCHERNS_10SpanStreamE(ptr dead_on_unwind nonnull writable sret(%"class.std::unique_ptr.49") align 8 %3, i32 noundef %i.s, ptr noundef nonnull align 8 dereferenceable(40) %2)
   %i.t = load ptr, ptr %3, align 8                ; 2 uses
   %.not = icmp eq ptr %i.t, null
-  %i.u = ptrtoint ptr %i.t to i64                 ; 2 uses
+  %i.u = ptrtoint ptr %i.t to i64
   br i1 %.not, label %_ZNSt10unique_ptrIN4LIEF3ELF15NoteGnuProperty8PropertyESt14default_deleteIS3_EED2Ev.exit.thread, label %bb.d
 
 _ZNSt10unique_ptrIN4LIEF3ELF15NoteGnuProperty8PropertyESt14default_deleteIS3_EED2Ev.exit.thread: ; preds = %bb.c
@@ -299,7 +299,8 @@ _ZNKSt6vectorISt10unique_ptrIN4LIEF3ELF15NoteGnuProperty8PropertyESt14default_de
   %i.af = shl nuw nsw i64 %i.ae, 3
   %i.ag = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.af) #26 ; 10 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 %i.y
-  store i64 %i.u, ptr %i.ah, align 8, !tbaa !36
+  %4 = load i64, ptr %3, align 8, !tbaa !36
+  store i64 %4, ptr %i.ah, align 8, !tbaa !36
   store ptr null, ptr %3, align 8, !tbaa !36
   %.not10.i.i.i.i = icmp eq ptr %i.r, %i.p
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN4LIEF3ELF15NoteGnuProperty8PropertyESt14default_deleteIS4_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i, label %.lr.ph.i.i.i.i.preheader

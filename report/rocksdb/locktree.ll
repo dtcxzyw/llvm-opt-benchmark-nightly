@@ -202,13 +202,13 @@ bb.h:                                             ; preds = %bb.g
   br i1 %.not76, label %._crit_edge.thread.i.i.i, label %bb.j
 
 ._crit_edge.thread.i.i.i:                         ; preds = %.critedge
-  %.pre.i.pre.pre.i.i = load i64, ptr %i.ax, align 8, !tbaa !40
   %i.cb = invoke noalias noundef nonnull dereferenceable(40) ptr @_Znwm(i64 noundef 40) #23
           to label %.noexc unwind label %bb.i     ; 2 uses
 
 .noexc:                                           ; preds = %._crit_edge.thread.i.i.i
   %i.cc = getelementptr inbounds nuw i8, ptr %i.cb, i64 32
-  store i64 %.pre.i.pre.pre.i.i, ptr %i.cc, align 8, !tbaa !40
+  %12 = load i64, ptr %i.ax, align 8, !tbaa !40
+  store i64 %12, ptr %i.cc, align 8, !tbaa !40
   call void @_ZSt29_Rb_tree_insert_and_rebalancebPSt18_Rb_tree_node_baseS0_RS_(i1 noundef zeroext true, ptr noundef nonnull %i.cb, ptr noundef nonnull %i.aa, ptr noundef nonnull align 8 dereferenceable(32) %i.aa) #21
   %i.cd = load i64, ptr %i.ad, align 8, !tbaa !165
   %i.ce = add i64 %i.cd, 1
@@ -611,13 +611,12 @@ bb.bi:                                            ; preds = %bb.bg, %bb.bf
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #21
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #21
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #21
-  %.pre248 = load ptr, ptr %i.ab, align 8, !tbaa !149
   br label %bb.bj
 
 bb.bj:                                            ; preds = %bb.bi, %bb.i
-  %12 = phi ptr [ %.pre248, %bb.bi ], [ null, %bb.i ]
   %.pn.pn = phi { ptr, i32 } [ %.pn, %bb.bi ], [ %i.cf, %bb.i ]
-  invoke void @_ZNSt8_Rb_treeImmSt9_IdentityImESt4lessImESaImEE8_M_eraseEPSt13_Rb_tree_nodeImE(ptr noundef nonnull align 8 dereferenceable(48) %7, ptr noundef %12)
+  %13 = load ptr, ptr %i.ab, align 8, !tbaa !149
+  invoke void @_ZNSt8_Rb_treeImmSt9_IdentityImESt4lessImESaImEE8_M_eraseEPSt13_Rb_tree_nodeImE(ptr noundef nonnull align 8 dereferenceable(48) %7, ptr noundef %13)
           to label %_ZNSt3setImSt4lessImESaImEED2Ev.exit91 unwind label %bb.bk
 
 bb.bk:                                            ; preds = %bb.bj

@@ -205,8 +205,8 @@ bb.a:
   %i.g = zext i16 %i.f to i32
   %i.h = add nuw nsw i32 %i.g, 63
   %i.i = lshr i32 %i.h, 5                         ; 2 uses
-  %i.j = getelementptr inbounds nuw i8, ptr %0, i64 18 ; 4 uses
-  %i.k = load i16, ptr %i.j, align 2, !tbaa !74   ; 2 uses
+  %i.j = getelementptr inbounds nuw i8, ptr %0, i64 18 ; 5 uses
+  %i.k = load i16, ptr %i.j, align 2, !tbaa !74
   %i.l = zext i16 %i.k to i32
   %i.m = shl nuw nsw i32 %i.l, 5
   %i.n = shl nuw nsw i32 %i.i, 2
@@ -217,7 +217,8 @@ bb.a:
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 1
   %i.s = add nsw i64 %i.p, -1
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.r, i8 0, i64 %i.s, i1 false)
-  %i.t = zext i16 %i.k to i64
+  %1 = load i16, ptr %i.j, align 2, !tbaa !74
+  %i.t = zext i16 %1 to i64
   %i.u = shl nuw nsw i64 %i.t, 5
   %i.v = getelementptr inbounds nuw i8, ptr %i.q, i64 %i.u ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 381592

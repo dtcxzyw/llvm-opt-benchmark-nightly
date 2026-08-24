@@ -204,7 +204,7 @@ bb.m:                                             ; preds = %bb.a
 
 bb.n:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #19
-  %i.am = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
+  %i.am = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 3 uses
   %i.an = load ptr, ptr %i.am, align 8, !tbaa !12 ; 3 uses
   %i.ao = load ptr, ptr %2, align 8, !tbaa !8     ; 3 uses
   %i.ap = ptrtoint ptr %i.an to i64
@@ -223,16 +223,20 @@ bb.o:                                             ; preds = %bb.n
 
 _ZNSt15__new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8allocateEmPKv.exit.i.i.i.i26: ; preds = %bb.o
   %i.at = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ar) #16
+  %.pre = load ptr, ptr %2, align 8, !tbaa !23
+  %.pre45 = load ptr, ptr %i.am, align 8, !tbaa !23
   br label %bb.p
 
 bb.p:                                             ; preds = %_ZNSt15__new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8allocateEmPKv.exit.i.i.i.i26, %bb.n
+  %6 = phi ptr [ %i.an, %bb.n ], [ %.pre45, %_ZNSt15__new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8allocateEmPKv.exit.i.i.i.i26 ]
+  %7 = phi ptr [ %i.ao, %bb.n ], [ %.pre, %_ZNSt15__new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8allocateEmPKv.exit.i.i.i.i26 ]
   %i.au = phi ptr [ null, %bb.n ], [ %i.at, %_ZNSt15__new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8allocateEmPKv.exit.i.i.i.i26 ] ; 5 uses
   store ptr %i.au, ptr %4, align 16, !tbaa !8
   %i.av = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %i.au, i64 %i.ar
   %i.ax = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 3 uses
   store ptr %i.aw, ptr %i.ax, align 16, !tbaa !21
-  %i.ay = invoke noundef ptr @_ZSt16__do_uninit_copyIN9__gnu_cxx17__normal_iteratorIPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt6vectorIS7_SaIS7_EEEEPS7_ET0_T_SG_SF_(ptr %i.ao, ptr %i.an, ptr noundef %i.au)
+  %i.ay = invoke noundef ptr @_ZSt16__do_uninit_copyIN9__gnu_cxx17__normal_iteratorIPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt6vectorIS7_SaIS7_EEEEPS7_ET0_T_SG_SF_(ptr %7, ptr %6, ptr noundef %i.au)
           to label %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EEC2ERKS7_.exit30 unwind label %bb.q
 
 bb.q:                                             ; preds = %bb.p

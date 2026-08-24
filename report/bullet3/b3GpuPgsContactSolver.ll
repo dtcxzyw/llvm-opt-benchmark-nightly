@@ -204,7 +204,7 @@ bb.a:
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTV21b3GpuPgsContactSolver, i64 16), ptr %0, align 8, !tbaa !9
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i32 0, ptr %i.b, align 8, !tbaa !11
-  %i.c = tail call noalias noundef nonnull dereferenceable(392) ptr @_Znwm(i64 noundef 392) #21 ; 28 uses
+  %i.c = tail call noalias noundef nonnull dereferenceable(392) ptr @_Znwm(i64 noundef 392) #21 ; 22 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 280
   store i8 1, ptr %i.d, align 8, !tbaa !15
   %i.e = getelementptr inbounds nuw i8, ptr %i.c, i64 272
@@ -237,7 +237,7 @@ bb.a:
   store i32 0, ptr %i.r, align 4, !tbaa !41
   %i.s = getelementptr inbounds nuw i8, ptr %i.c, i64 360
   store i32 0, ptr %i.s, align 8, !tbaa !42
-  %i.t = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 23 uses
+  %i.t = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 36 uses
   store ptr %i.c, ptr %i.t, align 8, !tbaa !43
   store ptr %1, ptr %i.c, align 8, !tbaa !44
   %i.u = getelementptr inbounds nuw i8, ptr %i.c, i64 8
@@ -260,7 +260,8 @@ bb.a:
   store i8 1, ptr %i.ac, align 8, !tbaa !70
   %i.ad = getelementptr inbounds nuw i8, ptr %i.y, i64 49
   store i8 1, ptr %i.ad, align 1, !tbaa !71
-  %i.ae = getelementptr inbounds nuw i8, ptr %i.c, i64 384
+  %5 = load ptr, ptr %i.t, align 8, !tbaa !43
+  %i.ae = getelementptr inbounds nuw i8, ptr %5, i64 384
   store ptr %i.y, ptr %i.ae, align 8, !tbaa !72
   %i.af = tail call noalias noundef nonnull dereferenceable(56) ptr @_Znwm(i64 noundef 56) #21 ; 7 uses
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTV13b3OpenCLArrayI15b3RigidBodyDataE, i64 16), ptr %i.af, align 8, !tbaa !9
@@ -274,7 +275,8 @@ bb.a:
   store i8 1, ptr %i.aj, align 8, !tbaa !76
   %i.ak = getelementptr inbounds nuw i8, ptr %i.af, i64 49
   store i8 1, ptr %i.ak, align 1, !tbaa !77
-  %i.al = getelementptr inbounds nuw i8, ptr %i.c, i64 216
+  %6 = load ptr, ptr %i.t, align 8, !tbaa !43
+  %i.al = getelementptr inbounds nuw i8, ptr %6, i64 216
   store ptr %i.af, ptr %i.al, align 8, !tbaa !78
   %i.am = tail call noalias noundef nonnull dereferenceable(56) ptr @_Znwm(i64 noundef 56) #21 ; 7 uses
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTV13b3OpenCLArrayI13b3InertiaDataE, i64 16), ptr %i.am, align 8, !tbaa !9
@@ -288,7 +290,8 @@ bb.a:
   store i8 1, ptr %i.aq, align 8, !tbaa !82
   %i.ar = getelementptr inbounds nuw i8, ptr %i.am, i64 49
   store i8 1, ptr %i.ar, align 1, !tbaa !83
-  %i.as = getelementptr inbounds nuw i8, ptr %i.c, i64 224
+  %7 = load ptr, ptr %i.t, align 8, !tbaa !43
+  %i.as = getelementptr inbounds nuw i8, ptr %7, i64 224
   store ptr %i.am, ptr %i.as, align 8, !tbaa !84
   %i.at = tail call noalias noundef nonnull dereferenceable(56) ptr @_Znwm(i64 noundef 56) #21 ; 7 uses
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTV13b3OpenCLArrayI10b3Contact4E, i64 16), ptr %i.at, align 8, !tbaa !9
@@ -302,7 +305,8 @@ bb.a:
   store i8 1, ptr %i.ax, align 8, !tbaa !88
   %i.ay = getelementptr inbounds nuw i8, ptr %i.at, i64 49
   store i8 1, ptr %i.ay, align 1, !tbaa !89
-  %i.az = getelementptr inbounds nuw i8, ptr %i.c, i64 232
+  %8 = load ptr, ptr %i.t, align 8, !tbaa !43
+  %i.az = getelementptr inbounds nuw i8, ptr %8, i64 232
   store ptr %i.at, ptr %i.az, align 8, !tbaa !90
   %i.ba = tail call noalias noundef nonnull dereferenceable(56) ptr @_Znwm(i64 noundef 56) #21 ; 7 uses
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTV13b3OpenCLArrayI10b3Contact4E, i64 16), ptr %i.ba, align 8, !tbaa !9
@@ -316,7 +320,8 @@ bb.a:
   store i8 1, ptr %i.be, align 8, !tbaa !88
   %i.bf = getelementptr inbounds nuw i8, ptr %i.ba, i64 49
   store i8 1, ptr %i.bf, align 1, !tbaa !89
-  %i.bg = getelementptr inbounds nuw i8, ptr %i.c, i64 240
+  %9 = load ptr, ptr %i.t, align 8, !tbaa !43
+  %i.bg = getelementptr inbounds nuw i8, ptr %9, i64 240
   store ptr %i.ba, ptr %i.bg, align 8, !tbaa !91
   %i.bh = tail call noalias noundef nonnull dereferenceable(56) ptr @_Znwm(i64 noundef 56) #21 ; 7 uses
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTV13b3OpenCLArrayI10b3SortDataE, i64 16), ptr %i.bh, align 8, !tbaa !9
@@ -330,44 +335,48 @@ bb.a:
   store i8 1, ptr %i.bl, align 8, !tbaa !95
   %i.bm = getelementptr inbounds nuw i8, ptr %i.bh, i64 49
   store i8 1, ptr %i.bm, align 1, !tbaa !96
-  %i.bn = getelementptr inbounds nuw i8, ptr %i.c, i64 248
+  %10 = load ptr, ptr %i.t, align 8, !tbaa !43
+  %i.bn = getelementptr inbounds nuw i8, ptr %10, i64 248
   store ptr %i.bh, ptr %i.bn, align 8, !tbaa !97
   %i.bo = tail call noalias noundef nonnull dereferenceable(216) ptr @_Znwm(i64 noundef 216) #21 ; 3 uses
   invoke void @_ZN8b3SolverC1EP11_cl_contextP13_cl_device_idP17_cl_command_queuei(ptr noundef nonnull align 8 dereferenceable(216) %i.bo, ptr noundef %1, ptr noundef %2, ptr noundef %3, i32 noundef 524288)
           to label %bb.b unwind label %bb.j
 
 bb.b:                                             ; preds = %bb.a
-  %i.bp = load ptr, ptr %i.t, align 8, !tbaa !43  ; 2 uses
+  %i.bp = load ptr, ptr %i.t, align 8, !tbaa !43
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bp, i64 56
   store ptr %i.bo, ptr %i.bq, align 8, !tbaa !98
   %i.br = tail call noalias noundef nonnull dereferenceable(128) ptr @_Znwm(i64 noundef 128) #21 ; 3 uses
-  %i.bs = getelementptr inbounds nuw i8, ptr %i.bp, i64 16
+  %11 = load ptr, ptr %i.t, align 8, !tbaa !43
+  %i.bs = getelementptr inbounds nuw i8, ptr %11, i64 16
   %i.bt = load ptr, ptr %i.bs, align 8, !tbaa !62
   invoke void @_ZN15b3RadixSort32CLC1EP11_cl_contextP13_cl_device_idP17_cl_command_queuei(ptr noundef nonnull align 8 dereferenceable(128) %i.br, ptr noundef %1, ptr noundef %2, ptr noundef %i.bt, i32 noundef 0)
           to label %bb.c unwind label %bb.k
 
 bb.c:                                             ; preds = %bb.b
-  %i.bu = load ptr, ptr %i.t, align 8, !tbaa !43  ; 2 uses
+  %i.bu = load ptr, ptr %i.t, align 8, !tbaa !43
   %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 176
   store ptr %i.br, ptr %i.bv, align 8, !tbaa !99
   %i.bw = tail call noalias noundef nonnull dereferenceable(48) ptr @_Znwm(i64 noundef 48) #21 ; 3 uses
-  %i.bx = getelementptr inbounds nuw i8, ptr %i.bu, i64 16
+  %12 = load ptr, ptr %i.t, align 8, !tbaa !43
+  %i.bx = getelementptr inbounds nuw i8, ptr %12, i64 16
   %i.by = load ptr, ptr %i.bx, align 8, !tbaa !62
   invoke void @_ZN14b3PrefixScanCLC1EP11_cl_contextP13_cl_device_idP17_cl_command_queuei(ptr noundef nonnull align 8 dereferenceable(48) %i.bw, ptr noundef %1, ptr noundef %2, ptr noundef %i.by, i32 noundef 256)
           to label %bb.d unwind label %bb.l
 
 bb.d:                                             ; preds = %bb.c
-  %i.bz = load ptr, ptr %i.t, align 8, !tbaa !43  ; 2 uses
+  %i.bz = load ptr, ptr %i.t, align 8, !tbaa !43
   %i.ca = getelementptr inbounds nuw i8, ptr %i.bz, i64 192
   store ptr %i.bw, ptr %i.ca, align 8, !tbaa !100
   %i.cb = tail call noalias noundef nonnull dereferenceable(88) ptr @_Znwm(i64 noundef 88) #21 ; 3 uses
-  %i.cc = getelementptr inbounds nuw i8, ptr %i.bz, i64 16
+  %13 = load ptr, ptr %i.t, align 8, !tbaa !43
+  %i.cc = getelementptr inbounds nuw i8, ptr %13, i64 16
   %i.cd = load ptr, ptr %i.cc, align 8, !tbaa !62
   invoke void @_ZN15b3BoundSearchCLC1EP11_cl_contextP13_cl_device_idP17_cl_command_queuei(ptr noundef nonnull align 8 dereferenceable(88) %i.cb, ptr noundef %1, ptr noundef %2, ptr noundef %i.cd, i32 noundef 256)
           to label %bb.e unwind label %bb.m
 
 bb.e:                                             ; preds = %bb.d
-  %i.ce = load ptr, ptr %i.t, align 8, !tbaa !43  ; 2 uses
+  %i.ce = load ptr, ptr %i.t, align 8, !tbaa !43
   %i.cf = getelementptr inbounds nuw i8, ptr %i.ce, i64 184
   store ptr %i.cb, ptr %i.cf, align 8, !tbaa !101
   %i.cg = sdiv i32 %4, 512
@@ -377,19 +386,21 @@ bb.e:                                             ; preds = %bb.d
   %i.ck = add nsw i32 %i.cg, %i.cj
   %i.cl = shl nsw i32 %i.ck, 9
   %i.cm = tail call noalias noundef nonnull dereferenceable(56) ptr @_Znwm(i64 noundef 56) #21 ; 3 uses
-  %i.cn = getelementptr inbounds nuw i8, ptr %i.ce, i64 16
+  %14 = load ptr, ptr %i.t, align 8, !tbaa !43
+  %i.cn = getelementptr inbounds nuw i8, ptr %14, i64 16
   %i.co = load ptr, ptr %i.cn, align 8, !tbaa !62
   %i.cp = sext i32 %i.cl to i64
   invoke void @_ZN13b3OpenCLArrayI10b3SortDataEC2EP11_cl_contextP17_cl_command_queuemb(ptr noundef nonnull align 8 dereferenceable(50) %i.cm, ptr noundef %1, ptr noundef %i.co, i64 noundef %i.cp, i1 noundef zeroext true)
           to label %bb.f unwind label %bb.n
 
 bb.f:                                             ; preds = %bb.e
-  %i.cq = load ptr, ptr %i.t, align 8, !tbaa !43  ; 3 uses
+  %i.cq = load ptr, ptr %i.t, align 8, !tbaa !43
   %i.cr = getelementptr inbounds nuw i8, ptr %i.cq, i64 200
   store ptr %i.cm, ptr %i.cr, align 8, !tbaa !102
   %i.cs = tail call noalias noundef nonnull dereferenceable(56) ptr @_Znwm(i64 noundef 56) #21 ; 7 uses
-  %i.ct = getelementptr inbounds nuw i8, ptr %i.cq, i64 16
-  %i.cu = load ptr, ptr %i.ct, align 8, !tbaa !62 ; 2 uses
+  %15 = load ptr, ptr %i.t, align 8, !tbaa !43    ; 2 uses
+  %i.ct = getelementptr inbounds nuw i8, ptr %15, i64 16
+  %i.cu = load ptr, ptr %i.ct, align 8, !tbaa !62
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTV13b3OpenCLArrayI10b3Contact4E, i64 16), ptr %i.cs, align 8, !tbaa !9
   %i.cv = getelementptr inbounds nuw i8, ptr %i.cs, i64 8
   %i.cw = getelementptr inbounds nuw i8, ptr %i.cs, i64 32
@@ -401,10 +412,13 @@ bb.f:                                             ; preds = %bb.e
   store i8 1, ptr %i.cy, align 8, !tbaa !88
   %i.cz = getelementptr inbounds nuw i8, ptr %i.cs, i64 49
   store i8 1, ptr %i.cz, align 1, !tbaa !89
-  %i.da = getelementptr inbounds nuw i8, ptr %i.cq, i64 208
+  %i.da = getelementptr inbounds nuw i8, ptr %15, i64 208
   store ptr %i.cs, ptr %i.da, align 8, !tbaa !103
   %i.db = tail call noalias noundef nonnull dereferenceable(56) ptr @_Znwm(i64 noundef 56) #21 ; 4 uses
-  invoke void @_ZN13b3OpenCLArrayIjEC2EP11_cl_contextP17_cl_command_queuemb(ptr noundef nonnull align 8 dereferenceable(50) %i.db, ptr noundef %1, ptr noundef %i.cu, i64 noundef 256, i1 noundef zeroext true)
+  %16 = load ptr, ptr %i.t, align 8, !tbaa !43
+  %17 = getelementptr inbounds nuw i8, ptr %16, i64 16
+  %18 = load ptr, ptr %17, align 8, !tbaa !62
+  invoke void @_ZN13b3OpenCLArrayIjEC2EP11_cl_contextP17_cl_command_queuemb(ptr noundef nonnull align 8 dereferenceable(50) %i.db, ptr noundef %1, ptr noundef %18, i64 noundef 256, i1 noundef zeroext true)
           to label %bb.g unwind label %bb.o
 
 bb.g:                                             ; preds = %bb.f
@@ -418,11 +432,12 @@ bb.g:                                             ; preds = %bb.f
           to label %bb.h unwind label %bb.p
 
 bb.h:                                             ; preds = %bb.g
-  %i.dh = load ptr, ptr %i.t, align 8, !tbaa !43  ; 2 uses
+  %i.dh = load ptr, ptr %i.t, align 8, !tbaa !43
   %i.di = getelementptr inbounds nuw i8, ptr %i.dh, i64 32
   store ptr %i.df, ptr %i.di, align 8, !tbaa !105
   %i.dj = tail call noalias noundef nonnull dereferenceable(56) ptr @_Znwm(i64 noundef 56) #21 ; 4 uses
-  %i.dk = getelementptr inbounds nuw i8, ptr %i.dh, i64 16
+  %19 = load ptr, ptr %i.t, align 8, !tbaa !43
+  %i.dk = getelementptr inbounds nuw i8, ptr %19, i64 16
   %i.dl = load ptr, ptr %i.dk, align 8, !tbaa !62
   invoke void @_ZN13b3OpenCLArrayIjEC2EP11_cl_contextP17_cl_command_queuemb(ptr noundef nonnull align 8 dereferenceable(50) %i.dj, ptr noundef %1, ptr noundef %i.dl, i64 noundef 256, i1 noundef zeroext true)
           to label %bb.i unwind label %bb.q
@@ -825,7 +840,7 @@ bb.a:
   %36 = alloca %class.b3AlignedObjectArray, align 8 ; 9 uses
   store i32 %4, ptr %i.q, align 4, !tbaa !123
   tail call void @b3EnterProfileZone(ptr noundef nonnull @.str.28)
-  %i.r = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 68 uses
+  %i.r = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 69 uses
   %i.s = load ptr, ptr %i.r, align 8, !tbaa !43   ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 216
   %i.u = load ptr, ptr %i.t, align 8, !tbaa !78   ; 5 uses
@@ -1228,7 +1243,7 @@ bb.df:                                            ; preds = %bb.de
   unreachable
 
 _ZN13b3ProfileZoneD2Ev.exit323:                   ; preds = %_ZN20b3AlignedObjectArrayI10b3Contact4ED2Ev.exit, %_ZN13b3ProfileZoneD2Ev.exit, %bb.g
-  %i.xr = load ptr, ptr %i.r, align 8, !tbaa !43  ; 6 uses
+  %i.xr = load ptr, ptr %i.r, align 8, !tbaa !43  ; 5 uses
   %i.xs = getelementptr inbounds nuw i8, ptr %i.xr, i64 232
   %i.xt = load ptr, ptr %i.xs, align 8, !tbaa !90
   %i.xu = getelementptr inbounds nuw i8, ptr %i.xt, i64 8
@@ -1274,7 +1289,7 @@ bb.di:                                            ; preds = %bb.dl, %.thread, %b
   br label %_ZN13b3ProfileZoneD2Ev.exit526
 
 bb.dj:                                            ; preds = %bb.dh
-  %.pre1003 = load ptr, ptr %i.r, align 8, !tbaa !43 ; 2 uses
+  %.pre1003 = load ptr, ptr %i.r, align 8, !tbaa !43
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.pre1003, i64 56
   %.pre1004 = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !98
   %.phi.trans.insert1005 = getelementptr inbounds nuw i8, ptr %.pre1004, i64 208
@@ -1283,11 +1298,11 @@ bb.dj:                                            ; preds = %bb.dh
   br i1 %i.yq, label %.thread, label %bb.dn
 
 .thread:                                          ; preds = %bb.dg, %bb.dj
-  %37 = phi ptr [ %.pre1003, %bb.dj ], [ %i.xr, %bb.dg ] ; 2 uses
   %i.yr = invoke noalias noundef nonnull dereferenceable(56) ptr @_Znwm(i64 noundef 56) #21
           to label %bb.dk unwind label %bb.di     ; 4 uses
 
 bb.dk:                                            ; preds = %.thread
+  %37 = load ptr, ptr %i.r, align 8, !tbaa !43    ; 2 uses
   %i.ys = load ptr, ptr %37, align 8, !tbaa !44
   %i.yt = getelementptr inbounds nuw i8, ptr %37, i64 16
   %i.yu = load ptr, ptr %i.yt, align 8, !tbaa !62

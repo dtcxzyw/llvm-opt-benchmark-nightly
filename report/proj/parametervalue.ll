@@ -202,30 +202,32 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden void @_ZN5osgeo4proj9operation14ParameterValue7PrivateC2ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS2_4TypeE(ptr noundef nonnull align 8 dereferenceable(29) %0, ptr noundef nonnull align 8 dereferenceable(32) %1, i32 noundef %2) unnamed_addr #4 comdat align 2 personality ptr @__gxx_personality_v0 {
-.noexc:
-  %3 = alloca i64, align 8                        ; 6 uses
+  %4 = alloca i64, align 8                        ; 6 uses
   store i32 %2, ptr %0, align 8, !tbaa !27
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  store ptr null, ptr %4, align 8, !tbaa !88
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  store ptr null, ptr %5, align 8, !tbaa !88
   tail call void @llvm.experimental.noalias.scope.decl(metadata !89)
-  %5 = tail call noalias noundef nonnull dereferenceable(32) ptr @_Znwm(i64 noundef 32) #24 ; 8 uses
-  %i.a = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 3 uses
-  store ptr %i.a, ptr %5, align 8, !tbaa !70, !noalias !89
+  %6 = invoke noalias noundef nonnull dereferenceable(32) ptr @_Znwm(i64 noundef 32) #24
+          to label %.noexc unwind label %9        ; 8 uses
+
+.noexc:                                           ; preds = %3
+  %i.a = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 3 uses
+  store ptr %i.a, ptr %6, align 8, !tbaa !70, !noalias !89
   %i.b = load ptr, ptr %1, align 8, !tbaa !13, !noalias !89 ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.d = load i64, ptr %i.c, align 8, !tbaa !72, !noalias !89 ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #23, !noalias !89
-  store i64 %i.d, ptr %3, align 8, !tbaa !71, !noalias !89
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #23, !noalias !89
+  store i64 %i.d, ptr %4, align 8, !tbaa !71, !noalias !89
   %i.e = icmp ugt i64 %i.d, 15
   br i1 %i.e, label %.noexc.i.i, label %._crit_edge.i.i.i
 
 .noexc.i.i:                                       ; preds = %.noexc
-  %i.f = invoke noundef ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm(ptr noundef nonnull align 8 dereferenceable(32) %5, ptr noundef nonnull align 8 dereferenceable(8) %3, i64 noundef 0)
-          to label %.noexc.i unwind label %.body, !noalias !89 ; 2 uses
+  %i.f = invoke noundef ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm(ptr noundef nonnull align 8 dereferenceable(32) %6, ptr noundef nonnull align 8 dereferenceable(8) %4, i64 noundef 0)
+          to label %.noexc.i unwind label %7, !noalias !89 ; 2 uses
 
 .noexc.i:                                         ; preds = %.noexc.i.i
-  store ptr %i.f, ptr %5, align 8, !tbaa !13, !noalias !89
-  %i.g = load i64, ptr %3, align 8, !tbaa !71, !noalias !89
+  store ptr %i.f, ptr %6, align 8, !tbaa !13, !noalias !89
+  %i.g = load i64, ptr %4, align 8, !tbaa !71, !noalias !89
   store i64 %i.g, ptr %i.a, align 8, !tbaa !18, !noalias !89
   br label %._crit_edge.i.i.i
 
@@ -245,27 +247,36 @@ bb.b:                                             ; preds = %._crit_edge.i.i.i
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.h, ptr align 1 %i.b, i64 %i.d, i1 false), !noalias !89
   br label %bb.c
 
+7:                                                ; preds = %.noexc.i.i
+  %8 = landingpad { ptr, i32 }
+          cleanup
+  call void @_ZdlPvm(ptr noundef nonnull %6, i64 noundef 32) #22, !noalias !89
+  br label %.body
+
 bb.c:                                             ; preds = %bb.b, %bb.a, %._crit_edge.i.i.i
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.k = load i64, ptr %3, align 8, !tbaa !71, !noalias !89 ; 2 uses
-  %i.l = getelementptr inbounds nuw i8, ptr %5, i64 8
+  %i.k = load i64, ptr %4, align 8, !tbaa !71, !noalias !89 ; 2 uses
+  %i.l = getelementptr inbounds nuw i8, ptr %6, i64 8
   store i64 %i.k, ptr %i.l, align 8, !tbaa !72, !noalias !89
-  %i.m = load ptr, ptr %5, align 8, !tbaa !13, !noalias !89
+  %i.m = load ptr, ptr %6, align 8, !tbaa !13, !noalias !89
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 %i.k
   store i8 0, ptr %i.n, align 1, !tbaa !18, !noalias !89
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #23, !noalias !89
-  store ptr %5, ptr %i.j, align 8, !tbaa !11, !alias.scope !89
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #23, !noalias !89
+  store ptr %6, ptr %i.j, align 8, !tbaa !11, !alias.scope !89
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i32 0, ptr %i.o, align 8, !tbaa !48
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 28
   store i8 0, ptr %i.p, align 4, !tbaa !49
   ret void
 
-.body:                                            ; preds = %.noexc.i.i
-  %6 = landingpad { ptr, i32 }
+9:                                                ; preds = %3
+  %10 = landingpad { ptr, i32 }
           cleanup
-  call void @_ZdlPvm(ptr noundef nonnull %5, i64 noundef 32) #22, !noalias !89
-  %.pr = load ptr, ptr %4, align 8, !tbaa !19     ; 3 uses
+  br label %.body
+
+.body:                                            ; preds = %7, %9
+  %eh.lpad-body = phi { ptr, i32 } [ %10, %9 ], [ %8, %7 ]
+  %.pr = load ptr, ptr %5, align 8, !tbaa !19     ; 3 uses
   %.not.i = icmp eq ptr %.pr, null
   br i1 %.not.i, label %_ZNSt10unique_ptrIN5osgeo4proj6common7MeasureESt14default_deleteIS3_EED2Ev.exit, label %_ZNKSt14default_deleteIN5osgeo4proj6common7MeasureEEclEPS3_.exit.i
 
@@ -277,7 +288,7 @@ _ZNKSt14default_deleteIN5osgeo4proj6common7MeasureEEclEPS3_.exit.i: ; preds = %.
   br label %_ZNSt10unique_ptrIN5osgeo4proj6common7MeasureESt14default_deleteIS3_EED2Ev.exit
 
 _ZNSt10unique_ptrIN5osgeo4proj6common7MeasureESt14default_deleteIS3_EED2Ev.exit: ; preds = %.body, %_ZNKSt14default_deleteIN5osgeo4proj6common7MeasureEEclEPS3_.exit.i
-  resume { ptr, i32 } %6
+  resume { ptr, i32 } %eh.lpad-body
 }
 
 declare noundef ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm(ptr noundef nonnull align 8 dereferenceable(32), ptr noundef nonnull align 8 dereferenceable(8), i64 noundef) local_unnamed_addr #5

@@ -202,15 +202,16 @@ _ZN14QAnyStringViewC2IA15_cTnNSt9enable_ifIXsr3stdE13disjunction_vIN9QtPrivate36
   %i.x = getelementptr i8, ptr %0, i64 48         ; 6 uses
   store ptr %i.w, ptr %i.x, align 8
   call void @_ZN7QObject13setObjectNameE14QAnyStringView(ptr noundef align 8 dereferenceable_or_null(16) %i.w, ptr nonnull @.str.26, i64 4611686018427387918)
-  %i.y = call noalias noundef dereferenceable_or_null(40) ptr @_Znwm(i64 noundef 40) #21 ; 4 uses
+  %i.y = call noalias noundef dereferenceable_or_null(40) ptr @_Znwm(i64 noundef 40) #21 ; 3 uses
   invoke void @_ZN11QTreeWidgetC1EP7QWidget(ptr noundef align 8 dereferenceable_or_null(40) %i.y, ptr noundef %1)
           to label %bb.d unwind label %bb.ai
 
 bb.d:                                             ; preds = %_ZN14QAnyStringViewC2IA15_cTnNSt9enable_ifIXsr3stdE13disjunction_vIN9QtPrivate36IsContainerCompatibleWithQStringViewIT_vEENS3_40IsContainerCompatibleWithQUtf8StringViewIS5_vEEEEbE4typeELb1EEERKS5_.exit86
-  %i.z = getelementptr i8, ptr %0, i64 56         ; 35 uses
+  %i.z = getelementptr i8, ptr %0, i64 56         ; 36 uses
   store ptr %i.y, ptr %i.z, align 8
   %i.aa = call noalias noundef dereferenceable_or_null(96) ptr @_Znwm(i64 noundef 96) #21 ; 2 uses
-  invoke void @_ZN15QTreeWidgetItemC1EP11QTreeWidgeti(ptr noundef align 8 dereferenceable_or_null(92) %i.aa, ptr noundef %i.y, i32 noundef 0)
+  %14 = load ptr, ptr %i.z, align 8
+  invoke void @_ZN15QTreeWidgetItemC1EP11QTreeWidgeti(ptr noundef align 8 dereferenceable_or_null(92) %i.aa, ptr noundef %14, i32 noundef 0)
           to label %bb.e unwind label %bb.aj
 
 bb.e:                                             ; preds = %bb.d

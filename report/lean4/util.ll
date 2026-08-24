@@ -204,8 +204,8 @@ _ZN4lean10object_refD2Ev.exit64:                  ; preds = %_ZN4lean10object_re
   %i.be = getelementptr inbounds nuw i8, ptr %16, i64 24 ; 2 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %16, i64 8 ; 2 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %16, i64 16 ; 2 uses
-  %i.bh = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 6 uses
-  %i.bi = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 4 uses
+  %i.bh = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 8 uses
+  %i.bi = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 6 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 2 uses
   br label %bb.bu
 
@@ -567,8 +567,8 @@ bb.cg:                                            ; preds = %bb.cf
   br i1 %i.ej, label %bb.ch, label %bb.ct
 
 bb.ch:                                            ; preds = %bb.cg
-  %i.ek = load i64, ptr %i.bh, align 8, !tbaa !130 ; 6 uses
-  %i.el = load i64, ptr %i.bi, align 8, !tbaa !133 ; 3 uses
+  %i.ek = load i64, ptr %i.bh, align 8, !tbaa !130 ; 2 uses
+  %i.el = load i64, ptr %i.bi, align 8, !tbaa !133 ; 2 uses
   %.not.i = icmp ult i64 %i.ek, %i.el
   br i1 %.not.i, label %._crit_edge.i, label %bb.ci
 
@@ -583,15 +583,16 @@ bb.ci:                                            ; preds = %bb.ch
 
 .noexc88:                                         ; preds = %bb.ci
   %i.eo = load ptr, ptr %2, align 8, !tbaa !134   ; 4 uses
-  %i.ep = icmp sgt i64 %i.ek, 1
+  %21 = load i64, ptr %i.bh, align 8, !tbaa !130  ; 4 uses
+  %i.ep = icmp sgt i64 %21, 1
   br i1 %i.ep, label %bb.cj, label %bb.ck, !prof !13
 
 bb.cj:                                            ; preds = %.noexc88
-  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.en, ptr align 1 %i.eo, i64 %i.ek, i1 false)
+  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.en, ptr align 1 %i.eo, i64 %21, i1 false)
   br label %_ZSt18uninitialized_copyIPbS0_ET0_T_S2_S1_.exit.i.i.i
 
 bb.ck:                                            ; preds = %.noexc88
-  %i.eq = icmp eq i64 %i.ek, 1
+  %i.eq = icmp eq i64 %21, 1
   br i1 %i.eq, label %bb.cl, label %_ZSt18uninitialized_copyIPbS0_ET0_T_S2_S1_.exit.i.i.i
 
 bb.cl:                                            ; preds = %bb.ck
@@ -604,12 +605,13 @@ _ZSt18uninitialized_copyIPbS0_ET0_T_S2_S1_.exit.i.i.i: ; preds = %bb.cl, %bb.ck,
   br i1 %.not.i.i.i.i.i86, label %_ZN4lean6bufferIbLm16EE6expandEv.exit.i, label %bb.cm
 
 bb.cm:                                            ; preds = %_ZSt18uninitialized_copyIPbS0_ET0_T_S2_S1_.exit.i.i.i
-  call void @_ZdaPvm(ptr noundef %i.eo, i64 noundef %i.el) #19
+  %22 = load i64, ptr %i.bi, align 8, !tbaa !133
+  call void @_ZdaPvm(ptr noundef %i.eo, i64 noundef %22) #19
   %.pre2.pre.i = load i64, ptr %i.bh, align 8, !tbaa !130
   br label %_ZN4lean6bufferIbLm16EE6expandEv.exit.i
 
 _ZN4lean6bufferIbLm16EE6expandEv.exit.i:          ; preds = %bb.cm, %_ZSt18uninitialized_copyIPbS0_ET0_T_S2_S1_.exit.i.i.i
-  %.pre2.i = phi i64 [ %i.ek, %_ZSt18uninitialized_copyIPbS0_ET0_T_S2_S1_.exit.i.i.i ], [ %.pre2.pre.i, %bb.cm ]
+  %.pre2.i = phi i64 [ %21, %_ZSt18uninitialized_copyIPbS0_ET0_T_S2_S1_.exit.i.i.i ], [ %.pre2.pre.i, %bb.cm ]
   store ptr %i.en, ptr %2, align 8, !tbaa !134
   store i64 %i.em, ptr %i.bi, align 8, !tbaa !133
   br label %bb.cn
@@ -748,8 +750,8 @@ bb.dh:                                            ; preds = %bb.dg
 
 bb.di:                                            ; preds = %bb.dh, %bb.de
   %i.fu = phi i8 [ 0, %bb.de ], [ %i.ft, %bb.dh ]
-  %i.fv = load i64, ptr %i.bh, align 8, !tbaa !130 ; 6 uses
-  %i.fw = load i64, ptr %i.bi, align 8, !tbaa !133 ; 3 uses
+  %i.fv = load i64, ptr %i.bh, align 8, !tbaa !130 ; 2 uses
+  %i.fw = load i64, ptr %i.bi, align 8, !tbaa !133 ; 2 uses
   %.not.i96 = icmp ult i64 %i.fv, %i.fw
   br i1 %.not.i96, label %._crit_edge.i102, label %bb.dj
 
@@ -764,15 +766,16 @@ bb.dj:                                            ; preds = %bb.di
 
 .noexc104:                                        ; preds = %bb.dj
   %i.fz = load ptr, ptr %2, align 8, !tbaa !134   ; 4 uses
-  %i.ga = icmp sgt i64 %i.fv, 1
+  %23 = load i64, ptr %i.bh, align 8, !tbaa !130  ; 4 uses
+  %i.ga = icmp sgt i64 %23, 1
   br i1 %i.ga, label %bb.dk, label %bb.dl, !prof !13
 
 bb.dk:                                            ; preds = %.noexc104
-  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.fy, ptr align 1 %i.fz, i64 %i.fv, i1 false)
+  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.fy, ptr align 1 %i.fz, i64 %23, i1 false)
   br label %_ZSt18uninitialized_copyIPbS0_ET0_T_S2_S1_.exit.i.i.i97
 
 bb.dl:                                            ; preds = %.noexc104
-  %i.gb = icmp eq i64 %i.fv, 1
+  %i.gb = icmp eq i64 %23, 1
   br i1 %i.gb, label %bb.dm, label %_ZSt18uninitialized_copyIPbS0_ET0_T_S2_S1_.exit.i.i.i97
 
 bb.dm:                                            ; preds = %bb.dl
@@ -785,12 +788,13 @@ _ZSt18uninitialized_copyIPbS0_ET0_T_S2_S1_.exit.i.i.i97: ; preds = %bb.dm, %bb.d
   br i1 %.not.i.i.i.i.i98, label %_ZN4lean6bufferIbLm16EE6expandEv.exit.i100, label %bb.dn
 
 bb.dn:                                            ; preds = %_ZSt18uninitialized_copyIPbS0_ET0_T_S2_S1_.exit.i.i.i97
-  call void @_ZdaPvm(ptr noundef %i.fz, i64 noundef %i.fw) #19
+  %24 = load i64, ptr %i.bi, align 8, !tbaa !133
+  call void @_ZdaPvm(ptr noundef %i.fz, i64 noundef %24) #19
   %.pre2.pre.i99 = load i64, ptr %i.bh, align 8, !tbaa !130
   br label %_ZN4lean6bufferIbLm16EE6expandEv.exit.i100
 
 _ZN4lean6bufferIbLm16EE6expandEv.exit.i100:       ; preds = %bb.dn, %_ZSt18uninitialized_copyIPbS0_ET0_T_S2_S1_.exit.i.i.i97
-  %.pre2.i101 = phi i64 [ %i.fv, %_ZSt18uninitialized_copyIPbS0_ET0_T_S2_S1_.exit.i.i.i97 ], [ %.pre2.pre.i99, %bb.dn ]
+  %.pre2.i101 = phi i64 [ %23, %_ZSt18uninitialized_copyIPbS0_ET0_T_S2_S1_.exit.i.i.i97 ], [ %.pre2.pre.i99, %bb.dn ]
   store ptr %i.fy, ptr %2, align 8, !tbaa !134
   store i64 %i.fx, ptr %i.bi, align 8, !tbaa !133
   br label %bb.do

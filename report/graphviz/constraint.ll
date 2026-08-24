@@ -36,7 +36,7 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 72 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 80 ; 3 uses
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !20   ; 4 uses
-  %i.i = getelementptr inbounds nuw i8, ptr %1, i64 88 ; 2 uses
+  %i.i = getelementptr inbounds nuw i8, ptr %1, i64 88 ; 3 uses
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !24
   %.not.i.i = icmp eq ptr %i.h, %i.j
   br i1 %.not.i.i, label %bb.c, label %bb.b
@@ -50,8 +50,8 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %i.l = load ptr, ptr %i.f, align 8, !tbaa !27   ; 4 uses
   %i.m = ptrtoint ptr %i.h to i64
-  %i.n = ptrtoint ptr %i.l to i64
-  %i.o = sub i64 %i.m, %i.n                       ; 6 uses
+  %i.n = ptrtoint ptr %i.l to i64                 ; 2 uses
+  %i.o = sub i64 %i.m, %i.n                       ; 5 uses
   %i.p = icmp eq i64 %i.o, 9223372036854775800
   br i1 %i.p, label %bb.d, label %_ZNKSt6vectorIP10ConstraintSaIS1_EE12_M_check_lenEmPKc.exit.i.i.i
 
@@ -85,16 +85,18 @@ _ZNSt6vectorIP10ConstraintSaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit16.i.i.i: ; p
   br i1 %.not.i17.i.i.i, label %_ZNSt6vectorIP10ConstraintSaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i, label %bb.f
 
 bb.f:                                             ; preds = %_ZNSt6vectorIP10ConstraintSaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit16.i.i.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.l, i64 noundef %i.o) #11
-  %.pre.pre = load ptr, ptr %i.a, align 8, !tbaa !15
+  %4 = load ptr, ptr %i.i, align 8, !tbaa !24
+  %5 = ptrtoint ptr %4 to i64
+  %6 = sub i64 %5, %i.n
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.l, i64 noundef %6) #11
   br label %_ZNSt6vectorIP10ConstraintSaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i
 
 _ZNSt6vectorIP10ConstraintSaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i: ; preds = %bb.f, %_ZNSt6vectorIP10ConstraintSaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit16.i.i.i
-  %.pre = phi ptr [ %.pre.pre, %bb.f ], [ %2, %_ZNSt6vectorIP10ConstraintSaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit16.i.i.i ]
   store ptr %i.w, ptr %i.f, align 8, !tbaa !27
   store ptr %i.z, ptr %i.g, align 8, !tbaa !20
   %i.aa = getelementptr inbounds nuw [8 x i8], ptr %i.w, i64 %i.u
   store ptr %i.aa, ptr %i.i, align 8, !tbaa !24
+  %.pre = load ptr, ptr %i.a, align 8, !tbaa !15
   br label %_ZNSt6vectorIP10ConstraintSaIS1_EE9push_backEOS1_.exit
 
 _ZNSt6vectorIP10ConstraintSaIS1_EE9push_backEOS1_.exit: ; preds = %bb.b, %_ZNSt6vectorIP10ConstraintSaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i
@@ -102,7 +104,7 @@ _ZNSt6vectorIP10ConstraintSaIS1_EE9push_backEOS1_.exit: ; preds = %bb.b, %_ZNSt6
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 48 ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ab, i64 56 ; 3 uses
   %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !20 ; 4 uses
-  %i.af = getelementptr inbounds nuw i8, ptr %i.ab, i64 64 ; 2 uses
+  %i.af = getelementptr inbounds nuw i8, ptr %i.ab, i64 64 ; 3 uses
   %i.ag = load ptr, ptr %i.af, align 8, !tbaa !24
   %.not.i.i4 = icmp eq ptr %i.ae, %i.ag
   br i1 %.not.i.i4, label %bb.h, label %bb.g
@@ -116,8 +118,8 @@ bb.g:                                             ; preds = %_ZNSt6vectorIP10Con
 bb.h:                                             ; preds = %_ZNSt6vectorIP10ConstraintSaIS1_EE9push_backEOS1_.exit
   %i.ai = load ptr, ptr %i.ac, align 8, !tbaa !27 ; 4 uses
   %i.aj = ptrtoint ptr %i.ae to i64
-  %i.ak = ptrtoint ptr %i.ai to i64
-  %i.al = sub i64 %i.aj, %i.ak                    ; 6 uses
+  %i.ak = ptrtoint ptr %i.ai to i64               ; 2 uses
+  %i.al = sub i64 %i.aj, %i.ak                    ; 5 uses
   %i.am = icmp eq i64 %i.al, 9223372036854775800
   br i1 %i.am, label %bb.i, label %_ZNKSt6vectorIP10ConstraintSaIS1_EE12_M_check_lenEmPKc.exit.i.i.i5
 
@@ -151,7 +153,10 @@ _ZNSt6vectorIP10ConstraintSaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit16.i.i.i8: ; 
   br i1 %.not.i17.i.i.i9, label %_ZNSt6vectorIP10ConstraintSaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i10, label %bb.k
 
 bb.k:                                             ; preds = %_ZNSt6vectorIP10ConstraintSaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit16.i.i.i8
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.ai, i64 noundef %i.al) #11
+  %7 = load ptr, ptr %i.af, align 8, !tbaa !24
+  %8 = ptrtoint ptr %7 to i64
+  %9 = sub i64 %8, %i.ak
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.ai, i64 noundef %9) #11
   br label %_ZNSt6vectorIP10ConstraintSaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i10
 
 _ZNSt6vectorIP10ConstraintSaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i10: ; preds = %bb.k, %_ZNSt6vectorIP10ConstraintSaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit16.i.i.i8

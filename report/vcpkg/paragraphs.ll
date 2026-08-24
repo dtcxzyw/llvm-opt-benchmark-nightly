@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.c
   %i.q = getelementptr inbounds nuw i8, ptr %11, i64 216 ; 4 uses
   store i64 0, ptr %i.q, align 8, !tbaa !29
   store i8 0, ptr %i.p, align 8, !tbaa !34
-  %i.r = getelementptr inbounds nuw i8, ptr %11, i64 240 ; 9 uses
+  %i.r = getelementptr inbounds nuw i8, ptr %11, i64 240 ; 10 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.r, i8 0, i64 24, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #22
   %i.s = call { ptr, i64 } @_ZNK5vcpkg4PathcvNS_10StringViewEEv(ptr noundef nonnull align 8 dereferenceable(32) %9) #22 ; 2 uses
@@ -331,7 +331,7 @@ bb.p:                                             ; preds = %bb.o
 bb.q:                                             ; preds = %bb.o
   %i.be = getelementptr inbounds nuw i8, ptr %11, i64 256 ; 5 uses
   %i.bf = load ptr, ptr %i.be, align 8, !tbaa !294
-  %i.bg = load ptr, ptr %i.r, align 8, !tbaa !297 ; 4 uses
+  %i.bg = load ptr, ptr %i.r, align 8, !tbaa !297
   %i.bh = ptrtoint ptr %i.bf to i64
   %i.bi = ptrtoint ptr %i.bg to i64               ; 2 uses
   %i.bj = sub i64 %i.bh, %i.bi
@@ -340,8 +340,8 @@ bb.q:                                             ; preds = %bb.o
   br i1 %i.bl, label %_ZNSt12_Vector_baseIN5vcpkg15BinaryParagraphESaIS1_EE11_M_allocateEm.exit.i, label %_ZNSt6vectorIN5vcpkg15BinaryParagraphESaIS1_EE7reserveEm.exit
 
 _ZNSt12_Vector_baseIN5vcpkg15BinaryParagraphESaIS1_EE11_M_allocateEm.exit.i: ; preds = %bb.q
-  %i.bm = getelementptr inbounds nuw i8, ptr %11, i64 248 ; 2 uses
-  %i.bn = load ptr, ptr %i.bm, align 8, !tbaa !298 ; 3 uses
+  %i.bm = getelementptr inbounds nuw i8, ptr %11, i64 248 ; 3 uses
+  %i.bn = load ptr, ptr %i.bm, align 8, !tbaa !298
   %i.bo = ptrtoint ptr %i.bn to i64
   %i.bp = sub i64 %i.bo, %i.bi
   %i.bq = mul nuw nsw i64 %i.bc, 240
@@ -349,17 +349,19 @@ _ZNSt12_Vector_baseIN5vcpkg15BinaryParagraphESaIS1_EE11_M_allocateEm.exit.i: ; p
           to label %.noexc40 unwind label %bb.m   ; 4 uses
 
 .noexc40:                                         ; preds = %_ZNSt12_Vector_baseIN5vcpkg15BinaryParagraphESaIS1_EE11_M_allocateEm.exit.i
-  %.not10.i.i.i.i = icmp eq ptr %i.bg, %i.bn
+  %15 = load ptr, ptr %i.r, align 8, !tbaa !297   ; 3 uses
+  %16 = load ptr, ptr %i.bm, align 8, !tbaa !298  ; 2 uses
+  %.not10.i.i.i.i = icmp eq ptr %15, %16
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorIN5vcpkg15BinaryParagraphESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit.i, label %.lr.ph.i.i.i.i
 
 .lr.ph.i.i.i.i:                                   ; preds = %.noexc40, %.lr.ph.i.i.i.i
   %.012.i.i.i.i = phi ptr [ %i.bt, %.lr.ph.i.i.i.i ], [ %i.br, %.noexc40 ] ; 2 uses
-  %.0911.i.i.i.i = phi ptr [ %i.bs, %.lr.ph.i.i.i.i ], [ %i.bg, %.noexc40 ] ; 3 uses
+  %.0911.i.i.i.i = phi ptr [ %i.bs, %.lr.ph.i.i.i.i ], [ %15, %.noexc40 ] ; 3 uses
   call void @_ZN5vcpkg15BinaryParagraphC2EOS0_(ptr noundef nonnull align 8 dereferenceable(240) %.012.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(240) %.0911.i.i.i.i) #22
   call void @_ZN5vcpkg15BinaryParagraphD2Ev(ptr noundef nonnull align 8 dead_on_return(240) dereferenceable(240) %.0911.i.i.i.i) #22
   %i.bs = getelementptr inbounds nuw i8, ptr %.0911.i.i.i.i, i64 240 ; 2 uses
   %i.bt = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i, i64 240
-  %.not.i.i.i.i = icmp eq ptr %i.bs, %i.bn
+  %.not.i.i.i.i = icmp eq ptr %i.bs, %16
   br i1 %.not.i.i.i.i, label %_ZNSt6vectorIN5vcpkg15BinaryParagraphESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit.loopexit.i, label %.lr.ph.i.i.i.i, !llvm.loop !299
 
 _ZNSt6vectorIN5vcpkg15BinaryParagraphESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit.loopexit.i: ; preds = %.lr.ph.i.i.i.i
@@ -367,7 +369,7 @@ _ZNSt6vectorIN5vcpkg15BinaryParagraphESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit.
   br label %_ZNSt6vectorIN5vcpkg15BinaryParagraphESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit.i
 
 _ZNSt6vectorIN5vcpkg15BinaryParagraphESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit.i: ; preds = %_ZNSt6vectorIN5vcpkg15BinaryParagraphESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit.loopexit.i, %.noexc40
-  %i.bu = phi ptr [ %.pre.i, %_ZNSt6vectorIN5vcpkg15BinaryParagraphESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit.loopexit.i ], [ %i.bg, %.noexc40 ] ; 3 uses
+  %i.bu = phi ptr [ %.pre.i, %_ZNSt6vectorIN5vcpkg15BinaryParagraphESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit.loopexit.i ], [ %15, %.noexc40 ] ; 3 uses
   %.not.i8.i = icmp eq ptr %i.bu, null
   br i1 %.not.i8.i, label %_ZNSt12_Vector_baseIN5vcpkg15BinaryParagraphESaIS1_EE13_M_deallocateEPS1_m.exit.i, label %bb.r
 

@@ -204,6 +204,7 @@ bb.m:                                             ; preds = %bb.l, %bb.f
 bb.n:                                             ; preds = %bb.m
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #19
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #19
+  %9 = getelementptr inbounds nuw i8, ptr %8, i64 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %8, i8 0, i64 16, i1 false)
   %strlen.i.i = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %.0.i)
   %i.ah = trunc i64 %strlen.i.i to i32            ; 2 uses
@@ -229,7 +230,6 @@ _ZN11CStringBaseIcE11SetCapacityEi.exit.i:        ; preds = %bb.n, %_ZN11CString
   br i1 %.not.i.i, label %_ZN11CStringBaseIcEC2EPKc.exit, label %_ZN11CStringBaseIcE11SetCapacityEi.exit.i, !llvm.loop !22
 
 _ZN11CStringBaseIcEC2EPKc.exit:                   ; preds = %_ZN11CStringBaseIcE11SetCapacityEi.exit.i
-  %9 = getelementptr inbounds nuw i8, ptr %8, i64 8
   store i32 %i.ah, ptr %9, align 8, !tbaa !24
   invoke void @_Z24MultiByteToUnicodeStringRK11CStringBaseIcEj(ptr dead_on_unwind nonnull writable sret(%class.CStringBase.0) align 8 %7, ptr noundef nonnull align 8 dereferenceable(16) %8, i32 noundef 0)
           to label %bb.o unwind label %bb.q
@@ -521,8 +521,8 @@ bb.ae:                                            ; preds = %_ZN11CStringBaseIwE
   %strlen.i.i56 = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %.0.i)
   %i.do = trunc i64 %strlen.i.i56 to i32          ; 2 uses
   %i.dp = add nsw i32 %i.do, 1                    ; 3 uses
-  %i.dq = getelementptr inbounds nuw i8, ptr %0, i64 28 ; 2 uses
-  %i.dr = load i32, ptr %i.dq, align 4, !tbaa !21 ; 2 uses
+  %i.dq = getelementptr inbounds nuw i8, ptr %0, i64 28 ; 3 uses
+  %i.dr = load i32, ptr %i.dq, align 4, !tbaa !21
   %i.ds = icmp eq i32 %i.dp, %i.dr
   br i1 %i.ds, label %._ZN11CStringBaseIcE11SetCapacityEi.exit_crit_edge.i, label %bb.af
 
@@ -534,7 +534,8 @@ bb.af:                                            ; preds = %.thread94
   %i.dt = sext i32 %i.dp to i64
   %i.du = call noalias noundef nonnull ptr @_Znam(i64 noundef %i.dt) #20 ; 11 uses
   %i.dv = ptrtoaddr ptr %i.du to i64
-  %i.dw = icmp sgt i32 %i.dr, 0
+  %10 = load i32, ptr %i.dq, align 4, !tbaa !21
+  %i.dw = icmp sgt i32 %10, 0
   %.pre4.i = load i32, ptr %i.dm, align 8, !tbaa !24 ; 6 uses
   br i1 %i.dw, label %.preheader.i.i, label %bb.ag
 
@@ -723,6 +724,7 @@ bb.a:
   %i.d = tail call noundef zeroext i1 %i.c(ptr noundef nonnull align 8 dereferenceable(1084) %0) ; 0 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #19
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #19
+  %9 = getelementptr inbounds nuw i8, ptr %8, i64 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %8, i8 0, i64 16, i1 false)
   %wcslen.i.i = tail call i64 @wcslen(ptr %1)
   %i.e = trunc i64 %wcslen.i.i to i32             ; 3 uses
@@ -751,7 +753,6 @@ _ZN11CStringBaseIwE11SetCapacityEi.exit.i:        ; preds = %bb.a, %_ZN11CString
   br i1 %.not.i.i, label %_ZN11CStringBaseIwEC2EPKw.exit, label %_ZN11CStringBaseIwE11SetCapacityEi.exit.i, !llvm.loop !45
 
 _ZN11CStringBaseIwEC2EPKw.exit:                   ; preds = %_ZN11CStringBaseIwE11SetCapacityEi.exit.i
-  %9 = getelementptr inbounds nuw i8, ptr %8, i64 8
   store i32 %i.e, ptr %9, align 8, !tbaa !25
   invoke void @_Z24UnicodeStringToMultiByteRK11CStringBaseIwEj(ptr dead_on_unwind nonnull writable sret(%class.CStringBase) align 8 %7, ptr noundef nonnull align 8 dereferenceable(16) %8, i32 noundef 0)
           to label %bb.b unwind label %bb.f

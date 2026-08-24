@@ -205,7 +205,7 @@ _ZNSt6vectorI11epoll_eventSaIS0_EE17_S_check_init_lenEmRKS1_.exit.i.i.i: ; preds
 bb.k:                                             ; preds = %_ZNSt6vectorI11epoll_eventSaIS0_EE17_S_check_init_lenEmRKS1_.exit.i.i.i
   %i.bk = mul nuw nsw i64 %i.bg, 12
   %i.bl = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.bk) #35
-          to label %.noexc5.i.i unwind label %bb.t, !noalias !42 ; 7 uses
+          to label %.noexc5.i.i unwind label %bb.t, !noalias !42 ; 5 uses
 
 .noexc5.i.i:                                      ; preds = %bb.k
   store ptr %i.bl, ptr %i.bi, align 8, !tbaa !108, !noalias !42
@@ -231,7 +231,6 @@ bb.l:                                             ; preds = %.noexc5.i.i
   br i1 %.not.i.i.i.i.i.i.i.i.i.i.i, label %.loopexit.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i, !llvm.loop !111
 
 .loopexit.i.i:                                    ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.i, %.noexc5.i.i, %_ZNSt6vectorI11epoll_eventSaIS0_EE17_S_check_init_lenEmRKS1_.exit.i.i.i
-  %7 = phi ptr [ null, %_ZNSt6vectorI11epoll_eventSaIS0_EE17_S_check_init_lenEmRKS1_.exit.i.i.i ], [ %i.bl, %.noexc5.i.i ], [ %i.bl, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i ]
   %.0.i.i.i.i.i.i.i = phi ptr [ null, %_ZNSt6vectorI11epoll_eventSaIS0_EE17_S_check_init_lenEmRKS1_.exit.i.i.i ], [ %i.bo, %.noexc5.i.i ], [ %i.br, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i ]
   %i.bt = getelementptr inbounds nuw i8, ptr %i.q, i64 272
   store ptr %.0.i.i.i.i.i.i.i, ptr %i.bt, align 8, !tbaa !113, !noalias !42
@@ -291,7 +290,6 @@ bb.o:                                             ; preds = %.noexc7.i.i
   %eh.lpad-body.i.i.i.i = phi { ptr, i32 } [ %i.cg, %bb.o ], [ %i.cb, %_ZNKSt14default_deleteINSt6thread6_StateEEclEPS1_.exit.i6.i.i.i.i.i ], [ %i.cb, %bb.n ]
   call void @_ZdlPvm(ptr noundef nonnull %i.bu, i64 noundef 8) #36, !noalias !114
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #25, !noalias !42
-  %.pre.i.i = load ptr, ptr %i.bi, align 8, !tbaa !108, !noalias !42
   br label %.body.i.i
 
 bb.p:                                             ; preds = %_ZNKSt14default_deleteINSt6thread6_StateEEclEPS1_.exit.i.i.i.i.i.i, %bb.m
@@ -341,18 +339,18 @@ bb.u:                                             ; preds = %.loopexit.i.i
   br label %.body.i.i
 
 .body.i.i:                                        ; preds = %bb.u, %.body.i.i.i.i
-  %8 = phi ptr [ %7, %bb.u ], [ %.pre.i.i, %.body.i.i.i.i ] ; 3 uses
   %eh.lpad-body.i.i = phi { ptr, i32 } [ %i.cm, %bb.u ], [ %eh.lpad-body.i.i.i.i, %.body.i.i.i.i ] ; 2 uses
-  %.not.i.i.i.i.i = icmp eq ptr %8, null
+  %7 = load ptr, ptr %i.bi, align 8, !tbaa !108, !noalias !42 ; 3 uses
+  %.not.i.i.i.i.i = icmp eq ptr %7, null
   br i1 %.not.i.i.i.i.i, label %_ZNSt6vectorI11epoll_eventSaIS0_EED2Ev.exit.i.i, label %bb.v
 
 bb.v:                                             ; preds = %.body.i.i
   %i.cn = getelementptr inbounds nuw i8, ptr %i.q, i64 280
   %i.co = load ptr, ptr %i.cn, align 8, !tbaa !109, !noalias !42
   %i.cp = ptrtoint ptr %i.co to i64
-  %i.cq = ptrtoint ptr %8 to i64
+  %i.cq = ptrtoint ptr %7 to i64
   %i.cr = sub i64 %i.cp, %i.cq
-  call void @_ZdlPvm(ptr noundef nonnull %8, i64 noundef %i.cr) #36, !noalias !42
+  call void @_ZdlPvm(ptr noundef nonnull %7, i64 noundef %i.cr) #36, !noalias !42
   br label %_ZNSt6vectorI11epoll_eventSaIS0_EED2Ev.exit.i.i
 
 _ZNSt6vectorI11epoll_eventSaIS0_EED2Ev.exit.i.i:  ; preds = %bb.v, %.body.i.i, %bb.t
@@ -755,7 +753,7 @@ bb.g:                                             ; preds = %bb.f
   %.01033 = phi i32 [ %i.ad, %.critedge ], [ %i.k, %bb.b ]
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 3 uses
-  %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 2 uses
+  %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 3 uses
   %wide.trip.count = zext nneg i32 %.01033 to i64
   br label %bb.h
 
@@ -806,8 +804,8 @@ bb.l:                                             ; preds = %_ZN6google12CheckNo
 bb.m:                                             ; preds = %_ZN6google12CheckNotNullIPN5folly6detail12_GLOBAL__N_119EventBasePollerImpl5EventEEET_PKciS9_OS7_.exit
   %.val19.i.i.i = load ptr, ptr %i.af, align 8, !tbaa !3765 ; 5 uses
   %i.as = ptrtoint ptr %i.ap to i64
-  %i.at = ptrtoint ptr %.val19.i.i.i to i64
-  %i.au = sub i64 %i.as, %i.at                    ; 6 uses
+  %i.at = ptrtoint ptr %.val19.i.i.i to i64       ; 2 uses
+  %i.au = sub i64 %i.as, %i.at                    ; 5 uses
   %i.av = icmp eq i64 %i.au, 9223372036854775800
   br i1 %i.av, label %bb.n, label %_ZNKSt6vectorIPN5folly6detail12_GLOBAL__N_119EventBasePollerImpl5EventESaIS5_EE12_M_check_lenEmPKc.exit.i.i.i
 
@@ -842,7 +840,10 @@ _ZNSt6vectorIPN5folly6detail12_GLOBAL__N_119EventBasePollerImpl5EventESaIS5_EE11
   br i1 %.not.i22.i.i.i, label %_ZNSt6vectorIPN5folly6detail12_GLOBAL__N_119EventBasePollerImpl5EventESaIS5_EE17_M_realloc_insertIJS5_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_.exit.i.i, label %bb.p
 
 bb.p:                                             ; preds = %_ZNSt6vectorIPN5folly6detail12_GLOBAL__N_119EventBasePollerImpl5EventESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit21.i.i.i
-  call void @_ZdlPvm(ptr noundef nonnull %.val19.i.i.i, i64 noundef %i.au) #36
+  %6 = load ptr, ptr %i.ah, align 8, !tbaa !3763
+  %7 = ptrtoint ptr %6 to i64
+  %8 = sub i64 %7, %i.at
+  call void @_ZdlPvm(ptr noundef nonnull %.val19.i.i.i, i64 noundef %8) #36
   br label %_ZNSt6vectorIPN5folly6detail12_GLOBAL__N_119EventBasePollerImpl5EventESaIS5_EE17_M_realloc_insertIJS5_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_.exit.i.i
 
 _ZNSt6vectorIPN5folly6detail12_GLOBAL__N_119EventBasePollerImpl5EventESaIS5_EE17_M_realloc_insertIJS5_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_.exit.i.i: ; preds = %bb.p, %_ZNSt6vectorIPN5folly6detail12_GLOBAL__N_119EventBasePollerImpl5EventESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit21.i.i.i
@@ -1245,7 +1246,7 @@ _ZN5folly5BatonILb1ESt6atomicE4postEv.exit.i.i.i.i.i.i: ; preds = %bb.h, %bb.g, 
   %i.bf = getelementptr inbounds nuw i8, ptr %.val, i64 104 ; 5 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %.val, i64 208 ; 6 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %.val, i64 216 ; 7 uses
-  %i.bi = getelementptr inbounds nuw i8, ptr %.val, i64 224 ; 2 uses
+  %i.bi = getelementptr inbounds nuw i8, ptr %.val, i64 224 ; 3 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %.val, i64 80 ; 5 uses
   %i.bk = getelementptr inbounds nuw i8, ptr %.val, i64 8 ; 2 uses
   %i.bl = getelementptr inbounds nuw i8, ptr %.val, i64 12 ; 2 uses
@@ -1648,8 +1649,8 @@ bb.as:                                            ; preds = %bb.ar
 bb.at:                                            ; preds = %bb.ar
   %i.hl = load ptr, ptr %i.bg, align 8, !tbaa !98 ; 4 uses
   %i.hm = ptrtoint ptr %i.hg to i64
-  %i.hn = ptrtoint ptr %i.hl to i64
-  %i.ho = sub i64 %i.hm, %i.hn                    ; 6 uses
+  %i.hn = ptrtoint ptr %i.hl to i64               ; 2 uses
+  %i.ho = sub i64 %i.hm, %i.hn                    ; 5 uses
   %i.hp = icmp eq i64 %i.ho, 9223372036854775800
   br i1 %i.hp, label %bb.au, label %_ZNKSt6vectorIPN5folly6detail15EventBasePoller6HandleESaIS4_EE12_M_check_lenEmPKc.exit.i.i.i.i.i.i.i.i.i.i
 
@@ -1683,7 +1684,10 @@ _ZNSt6vectorIPN5folly6detail15EventBasePoller6HandleESaIS4_EE11_S_relocateEPS4_S
   br i1 %.not.i17.i.i.i.i.i.i.i.i.i.i, label %_ZNSt6vectorIPN5folly6detail15EventBasePoller6HandleESaIS4_EE17_M_realloc_insertIJS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i.i.i.i.i.i.i.i.i, label %bb.aw
 
 bb.aw:                                            ; preds = %_ZNSt6vectorIPN5folly6detail15EventBasePoller6HandleESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit16.i.i.i.i.i.i.i.i.i.i
-  call void @_ZdlPvm(ptr noundef nonnull %i.hl, i64 noundef %i.ho) #36
+  %7 = load ptr, ptr %i.bi, align 8, !tbaa !99
+  %8 = ptrtoint ptr %7 to i64
+  %9 = sub i64 %8, %i.hn
+  call void @_ZdlPvm(ptr noundef nonnull %i.hl, i64 noundef %9) #36
   br label %_ZNSt6vectorIPN5folly6detail15EventBasePoller6HandleESaIS4_EE17_M_realloc_insertIJS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i.i.i.i.i.i.i.i.i
 
 _ZNSt6vectorIPN5folly6detail15EventBasePoller6HandleESaIS4_EE17_M_realloc_insertIJS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i.i.i.i.i.i.i.i.i: ; preds = %bb.aw, %_ZNSt6vectorIPN5folly6detail15EventBasePoller6HandleESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit16.i.i.i.i.i.i.i.i.i.i

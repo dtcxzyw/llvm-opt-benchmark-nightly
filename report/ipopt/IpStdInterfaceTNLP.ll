@@ -177,9 +177,9 @@ bb.a:
   store ptr getelementptr inbounds nuw inrange(-16, 160) (i8, ptr @_ZTVN5Ipopt16StdInterfaceTNLPE, i64 16), ptr %0, align 8, !tbaa !10
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   store ptr null, ptr %i.b, align 8, !tbaa !12
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   store i32 %1, ptr %i.c, align 8, !tbaa !16
-  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 28 ; 2 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 28 ; 3 uses
   store i32 %4, ptr %i.d, align 4, !tbaa !23
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 32
   store ptr %2, ptr %i.e, align 8, !tbaa !24
@@ -582,7 +582,8 @@ bb.fz:                                            ; preds = %bb.fy
           to label %bb.ga unwind label %bb.gc     ; 2 uses
 
 bb.ga:                                            ; preds = %bb.fz
-  invoke void @_ZN5Ipopt10IpBlasCopyEiPKdiPdi(i32 noundef %1, ptr noundef nonnull %28, i32 noundef 1, ptr noundef nonnull %i.ki, i32 noundef 1)
+  %90 = load i32, ptr %i.c, align 8, !tbaa !16
+  invoke void @_ZN5Ipopt10IpBlasCopyEiPKdiPdi(i32 noundef %90, ptr noundef nonnull %28, i32 noundef 1, ptr noundef nonnull %i.ki, i32 noundef 1)
           to label %bb.gb unwind label %bb.gc
 
 bb.gb:                                            ; preds = %bb.ga
@@ -599,7 +600,7 @@ bb.gd:                                            ; preds = %bb.gb, %bb.fy
   br i1 %.not201, label %bb.gi, label %bb.ge
 
 bb.ge:                                            ; preds = %bb.gd
-  %i.kk = load i32, ptr %i.d, align 4, !tbaa !23  ; 3 uses
+  %i.kk = load i32, ptr %i.d, align 4, !tbaa !23  ; 2 uses
   %i.kl = sext i32 %i.kk to i64
   %i.km = icmp slt i32 %i.kk, 0
   %i.kn = shl nsw i64 %i.kl, 3
@@ -608,7 +609,8 @@ bb.ge:                                            ; preds = %bb.gd
           to label %bb.gf unwind label %bb.gh     ; 2 uses
 
 bb.gf:                                            ; preds = %bb.ge
-  invoke void @_ZN5Ipopt10IpBlasCopyEiPKdiPdi(i32 noundef %i.kk, ptr noundef nonnull %29, i32 noundef 1, ptr noundef nonnull %i.kp, i32 noundef 1)
+  %91 = load i32, ptr %i.d, align 4, !tbaa !23
+  invoke void @_ZN5Ipopt10IpBlasCopyEiPKdiPdi(i32 noundef %91, ptr noundef nonnull %29, i32 noundef 1, ptr noundef nonnull %i.kp, i32 noundef 1)
           to label %bb.gg unwind label %bb.gh
 
 bb.gg:                                            ; preds = %bb.gf

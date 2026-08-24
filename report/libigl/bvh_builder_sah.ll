@@ -205,8 +205,8 @@ bb.a:
 ; Function Attrs: mustprogress uwtable
 define hidden noalias noundef nonnull ptr @_ZN6embree4sse226BVH4VirtualSceneBuilderSAHEPvPNS_5SceneEm(ptr noundef %0, ptr noundef %1, i64 noundef %2) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 392
-  %i.b = load ptr, ptr %i.a, align 8              ; 4 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 392 ; 2 uses
+  %i.b = load ptr, ptr %i.a, align 8              ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 848
   %i.d = load i32, ptr %i.c, align 8
   %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 852
@@ -223,8 +223,9 @@ bb.a:
   %i.l = getelementptr inbounds nuw i8, ptr %i.g, i64 32
   store ptr null, ptr %i.l, align 8
   %i.m = getelementptr inbounds nuw i8, ptr %i.g, i64 40
-  %i.n = icmp eq ptr %i.b, null
-  %i.o = getelementptr inbounds nuw i8, ptr %i.b, i64 1360
+  %3 = load ptr, ptr %i.a, align 8                ; 2 uses
+  %i.n = icmp eq ptr %3, null
+  %i.o = getelementptr inbounds nuw i8, ptr %3, i64 1360
   %spec.select.i.i = select i1 %i.n, ptr null, ptr %i.o
   store ptr %spec.select.i.i, ptr %i.m, align 8
   %i.p = getelementptr inbounds nuw i8, ptr %i.g, i64 48

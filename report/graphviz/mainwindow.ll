@@ -205,7 +205,7 @@ bb.a:
   %2 = alloca %class.QPoint, align 4              ; 5 uses
   %3 = alloca %class.QSize, align 4               ; 5 uses
   %i.a = alloca { i64, i64 }, align 8             ; 5 uses
-  %i.b = alloca { i64, i64 }, align 8             ; 5 uses
+  %i.b = alloca { i64, i64 }, align 16            ; 6 uses
   %4 = alloca %class.QString, align 8             ; 8 uses
   %5 = alloca %class.QString, align 8             ; 8 uses
   %6 = alloca %class.QString, align 8             ; 8 uses
@@ -409,20 +409,19 @@ bb.t:                                             ; preds = %bb.s
   store i64 ptrtoint (ptr @_ZN8QMdiArea18subWindowActivatedEP13QMdiSubWindow to i64), ptr %i.a, align 8, !tbaa !29, !noalias !90
   %.fca.1.gep14.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store i64 0, ptr %.fca.1.gep14.i, align 8, !tbaa !29, !noalias !90
-  store i64 ptrtoint (ptr @_ZN11CMainWindow16slotRefreshMenusEv to i64), ptr %i.b, align 8, !tbaa !29, !noalias !90
+  store i64 ptrtoint (ptr @_ZN11CMainWindow16slotRefreshMenusEv to i64), ptr %i.b, align 16, !tbaa !29, !noalias !90
   %.fca.1.gep.i = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store i64 0, ptr %.fca.1.gep.i, align 8, !tbaa !29, !noalias !90
   %i.ac = invoke noalias noundef nonnull dereferenceable(32) ptr @_Znwm(i64 noundef 32) #19
-          to label %.noexc unwind label %bb.at    ; 5 uses
+          to label %.noexc unwind label %bb.at    ; 4 uses
 
 .noexc:                                           ; preds = %bb.t
   store i32 1, ptr %i.ac, align 4, !tbaa !33, !noalias !90
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 8
   store ptr @_ZN9QtPrivate11QSlotObjectIM11CMainWindowFvvENS_4ListIJEEEvE4implEiPNS_15QSlotObjectBaseEP7QObjectPPvPb, ptr %i.ad, align 8, !tbaa !35, !noalias !90
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ac, i64 16
-  store i64 ptrtoint (ptr @_ZN11CMainWindow16slotRefreshMenusEv to i64), ptr %i.ae, align 8, !tbaa !41, !noalias !90
-  %.repack7.i.i = getelementptr inbounds nuw i8, ptr %i.ac, i64 24
-  store i64 0, ptr %.repack7.i.i, align 8, !tbaa !41, !noalias !90
+  %16 = load <2 x i64>, ptr %i.b, align 16, !tbaa !29, !noalias !90
+  store <2 x i64> %16, ptr %i.ae, align 8, !tbaa !41, !noalias !90
   invoke void @_ZN7QObject11connectImplEPKS_PPvS1_S3_PN9QtPrivate15QSlotObjectBaseEN2Qt14ConnectionTypeEPKiPK11QMetaObject(ptr dead_on_unwind nonnull writable sret(%"class.QMetaObject::Connection") align 8 %8, ptr noundef %i.ab, ptr noundef nonnull %i.a, ptr noundef nonnull %0, ptr noundef nonnull %i.b, ptr noundef nonnull %i.ac, i32 noundef 0, ptr noundef null, ptr noundef nonnull @_ZN8QMdiArea16staticMetaObjectE)
           to label %bb.u unwind label %bb.at
 

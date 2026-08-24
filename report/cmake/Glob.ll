@@ -73,7 +73,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 4 uses
   store ptr %i.b, ptr %i.a, align 8, !tbaa !9
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   store i64 0, ptr %i.c, align 8, !tbaa !13
   store i8 0, ptr %i.b, align 8, !tbaa !16
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
@@ -86,7 +86,8 @@ bb.b:                                             ; preds = %bb.a
   store ptr %i.e, ptr %0, align 8, !tbaa !17
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i8 0, ptr %i.f, align 8, !tbaa !26
-  %i.g = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %i.a, i64 noundef 0, i64 noundef 0, ptr noundef nonnull @.str, i64 noundef 0)
+  %1 = load i64, ptr %i.c, align 8, !tbaa !13
+  %i.g = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %i.a, i64 noundef 0, i64 noundef %1, ptr noundef nonnull @.str, i64 noundef 0)
           to label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEPKc.exit unwind label %bb.c ; 0 uses
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEPKc.exit: ; preds = %bb.b

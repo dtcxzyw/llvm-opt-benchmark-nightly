@@ -204,7 +204,7 @@ declare i64 @EVP_EncodeBlock(ptr noundef, ptr noundef, i64 noundef) local_unname
 ; Function Attrs: mustprogress uwtable
 define noundef zeroext i1 @_ZN4bssl11string_util12Base64DecodeERKSt17basic_string_viewIcSt11char_traitsIcEEPNSt7__cxx1112basic_stringIcS3_SaIcEEE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %0, ptr noundef %1) local_unnamed_addr #2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = alloca i64, align 8                      ; 7 uses
+  %i.a = alloca i64, align 8                      ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #15
   %i.b = load i64, ptr %0, align 8, !tbaa !81
   %i.c = call i32 @EVP_DecodedLength(ptr noundef nonnull %i.a, i64 noundef %i.b)
@@ -212,7 +212,7 @@ bb.a:
   br i1 %.not, label %_ZNSt6vectorIcSaIcEED2Ev.exit13, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.d = load i64, ptr %i.a, align 8, !tbaa !21   ; 6 uses
+  %i.d = load i64, ptr %i.a, align 8, !tbaa !21   ; 5 uses
   %i.e = icmp slt i64 %i.d, 0
   br i1 %i.e, label %.noexc, label %_ZNSt6vectorIcSaIcEE17_S_check_init_lenEmRKS0_.exit.i
 
@@ -240,10 +240,11 @@ bb.c:                                             ; preds = %.noexc10
 _ZNSt6vectorIcSaIcEEC2EmRKS0_.exit:               ; preds = %bb.c, %.noexc10, %_ZNSt6vectorIcSaIcEE17_S_check_init_lenEmRKS0_.exit.i
   %.sroa.11.0 = phi ptr [ %i.g, %bb.c ], [ %i.g, %.noexc10 ], [ null, %_ZNSt6vectorIcSaIcEE17_S_check_init_lenEmRKS0_.exit.i ] ; 2 uses
   %.sroa.014.0 = phi ptr [ %i.f, %bb.c ], [ %i.f, %.noexc10 ], [ null, %_ZNSt6vectorIcSaIcEE17_S_check_init_lenEmRKS0_.exit.i ] ; 8 uses
+  %2 = load i64, ptr %i.a, align 8, !tbaa !21
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !83
   %i.m = load i64, ptr %0, align 8, !tbaa !81
-  %i.n = invoke i32 @EVP_DecodeBase64(ptr noundef %.sroa.014.0, ptr noundef nonnull %i.a, i64 noundef %i.d, ptr noundef %i.l, i64 noundef %i.m)
+  %i.n = invoke i32 @EVP_DecodeBase64(ptr noundef %.sroa.014.0, ptr noundef nonnull %i.a, i64 noundef %2, ptr noundef %i.l, i64 noundef %i.m)
           to label %bb.d unwind label %bb.e
 
 bb.d:                                             ; preds = %_ZNSt6vectorIcSaIcEEC2EmRKS0_.exit

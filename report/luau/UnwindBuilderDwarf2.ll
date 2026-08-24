@@ -111,7 +111,7 @@ _ZL13alignPositionPhS_.exit:                      ; preds = %_ZL27defineSavedReg
 define dso_local void @_ZN4Luau7CodeGen19UnwindBuilderDwarf213startFunctionEv(ptr noundef nonnull align 8 dereferenceable(1080) %0) unnamed_addr #3 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 1064 ; 3 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !20   ; 3 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !20   ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.d = ptrtoint ptr %i.b to i64
   %i.e = ptrtoint ptr %i.c to i64                 ; 2 uses
@@ -120,7 +120,7 @@ bb.a:
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !24   ; 6 uses
-  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
+  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 3 uses
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !25
   %.not.i = icmp eq ptr %i.j, %i.l
   br i1 %.not.i, label %bb.c, label %bb.b
@@ -138,8 +138,8 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %i.n = load ptr, ptr %i.h, align 8, !tbaa !27   ; 4 uses
   %i.o = ptrtoint ptr %i.j to i64
-  %i.p = ptrtoint ptr %i.n to i64
-  %i.q = sub i64 %i.o, %i.p                       ; 6 uses
+  %i.p = ptrtoint ptr %i.n to i64                 ; 2 uses
+  %i.q = sub i64 %i.o, %i.p                       ; 5 uses
   %i.r = icmp eq i64 %i.q, 9223372036854775800
   br i1 %i.r, label %bb.d, label %_ZNKSt6vectorIN4Luau7CodeGen20UnwindFunctionDwarf2ESaIS2_EE12_M_check_lenEmPKc.exit.i.i
 
@@ -177,16 +177,18 @@ _ZNSt6vectorIN4Luau7CodeGen20UnwindFunctionDwarf2ESaIS2_EE11_S_relocateEPS2_S5_S
   br i1 %.not.i17.i.i, label %_ZNSt6vectorIN4Luau7CodeGen20UnwindFunctionDwarf2ESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i, label %bb.f
 
 bb.f:                                             ; preds = %_ZNSt6vectorIN4Luau7CodeGen20UnwindFunctionDwarf2ESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.n, i64 noundef %i.q) #15
-  %.pre.pre = load ptr, ptr %i.a, align 8, !tbaa !20
+  %1 = load ptr, ptr %i.k, align 8, !tbaa !25
+  %2 = ptrtoint ptr %1 to i64
+  %3 = sub i64 %2, %i.p
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.n, i64 noundef %3) #15
   br label %_ZNSt6vectorIN4Luau7CodeGen20UnwindFunctionDwarf2ESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i
 
 _ZNSt6vectorIN4Luau7CodeGen20UnwindFunctionDwarf2ESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i: ; preds = %bb.f, %_ZNSt6vectorIN4Luau7CodeGen20UnwindFunctionDwarf2ESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i
-  %.pre = phi ptr [ %.pre.pre, %bb.f ], [ %i.b, %_ZNSt6vectorIN4Luau7CodeGen20UnwindFunctionDwarf2ESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i ]
   store ptr %i.y, ptr %i.h, align 8, !tbaa !27
   store ptr %i.ab, ptr %i.i, align 8, !tbaa !24
   %i.ac = getelementptr inbounds nuw [12 x i8], ptr %i.y, i64 %i.w
   store ptr %i.ac, ptr %i.k, align 8, !tbaa !25
+  %.pre = load ptr, ptr %i.a, align 8, !tbaa !20
   br label %_ZNSt6vectorIN4Luau7CodeGen20UnwindFunctionDwarf2ESaIS2_EE9push_backERKS2_.exit
 
 _ZNSt6vectorIN4Luau7CodeGen20UnwindFunctionDwarf2ESaIS2_EE9push_backERKS2_.exit: ; preds = %bb.b, %_ZNSt6vectorIN4Luau7CodeGen20UnwindFunctionDwarf2ESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i

@@ -205,7 +205,7 @@ define dso_local noundef ptr @_ZN6bParse5bFile10readStructEPcRNS_9bChunkIndE(ptr
 bb.a:
   %3 = alloca %class.b3HashPtr, align 8           ; 4 uses
   %i.a = alloca ptr, align 8                      ; 4 uses
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 536 ; 2 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 536 ; 3 uses
   %i.c = load i32, ptr %i.b, align 8, !tbaa !66
   %i.d = and i32 %i.c, 4
   %.not = icmp eq i32 %i.d, 0
@@ -235,7 +235,7 @@ bb.d:                                             ; preds = %bb.c
   %i.r = load i16, ptr %i.l, align 2, !tbaa !91
   %i.s = sext i16 %i.r to i32
   %i.t = tail call noundef signext i16 @_ZN6bParse4bDNA9getLengthEi(ptr noundef nonnull align 8 dereferenceable(420) %i.q, i32 noundef %i.s) ; 2 uses
-  %i.u = load i32, ptr %i.b, align 8, !tbaa !66   ; 2 uses
+  %i.u = load i32, ptr %i.b, align 8, !tbaa !66
   %i.v = and i32 %i.u, 128
   %.not80 = icmp eq i32 %i.v, 0
   br i1 %.not80, label %bb.h, label %bb.e
@@ -253,28 +253,33 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.aa, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
-  %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 20
-  %i.ac = load i32, ptr %i.ab, align 4, !tbaa !95 ; 6 uses
+  %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 20 ; 2 uses
+  %i.ac = load i32, ptr %i.ab, align 4, !tbaa !95
   %i.ad = shl nsw i32 %i.ac, 1
   %i.ae = or disjoint i32 %i.ad, 1
-  %i.af = sext i32 %i.ae to i64                   ; 2 uses
+  %i.af = sext i32 %i.ae to i64
   %i.ag = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.af) #31 ; 8 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.ag, i8 0, i64 %i.af, i1 false)
-  %i.ah = icmp sgt i32 %i.ac, 0
+  %4 = load i32, ptr %i.ab, align 4, !tbaa !95    ; 6 uses
+  %5 = shl nsw i32 %4, 1
+  %6 = or disjoint i32 %5, 1
+  %7 = sext i32 %6 to i64
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.ag, i8 0, i64 %7, i1 false)
+  %i.ah = icmp sgt i32 %4, 0
   br i1 %i.ah, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.g
-  %i.ai = and i32 %i.u, 4
+  %8 = load i32, ptr %i.b, align 8, !tbaa !66
+  %i.ai = and i32 %8, 4
   %.not83 = icmp eq i32 %i.ai, 0
   br i1 %.not83, label %.lr.ph.split.us.preheader, label %iter.check
 
 iter.check:                                       ; preds = %.lr.ph
-  %wide.trip.count = zext nneg i32 %i.ac to i64   ; 6 uses
-  %min.iters.check = icmp ult i32 %i.ac, 4
+  %wide.trip.count = zext nneg i32 %4 to i64      ; 6 uses
+  %min.iters.check = icmp ult i32 %4, 4
   br i1 %min.iters.check, label %.lr.ph.split.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
-  %min.iters.check98 = icmp ult i32 %i.ac, 16
+  %min.iters.check98 = icmp ult i32 %4, 16
   br i1 %min.iters.check98, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
@@ -338,7 +343,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br label %.lr.ph.split
 
 .lr.ph.split.us.preheader:                        ; preds = %.lr.ph
-  %i.az = shl nuw i32 %i.ac, 1
+  %i.az = shl nuw i32 %4, 1
   %i.ba = zext i32 %i.az to i64
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 2 %i.ag, ptr align 2 %1, i64 %i.ba, i1 false), !tbaa !91
   br label %._crit_edge
@@ -388,14 +393,16 @@ bb.j:                                             ; preds = %bb.i
   %i.bw = load i16, ptr %i.bq, align 2, !tbaa !91
   %i.bx = sext i16 %i.bw to i32
   %i.by = tail call noundef signext i16 @_ZN6bParse4bDNA9getLengthEi(ptr noundef nonnull align 8 dereferenceable(420) %i.bv, i32 noundef %i.bx) ; 2 uses
-  %i.bz = sext i16 %i.by to i32
-  %i.ca = getelementptr inbounds nuw i8, ptr %2, i64 20 ; 3 uses
+  %i.bz = sext i16 %i.by to i32                   ; 2 uses
+  %i.ca = getelementptr inbounds nuw i8, ptr %2, i64 20 ; 4 uses
   %i.cb = load i32, ptr %i.ca, align 4, !tbaa !95
-  %i.cc = mul nsw i32 %i.cb, %i.bz                ; 2 uses
+  %i.cc = mul nsw i32 %i.cb, %i.bz
   %i.cd = add nsw i32 %i.cc, 1
   %i.ce = sext i32 %i.cd to i64
   %i.cf = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.ce) #31 ; 5 uses
-  %i.cg = sext i32 %i.cc to i64
+  %9 = load i32, ptr %i.ca, align 4, !tbaa !95
+  %10 = mul nsw i32 %9, %i.bz
+  %i.cg = sext i32 %10 to i64
   tail call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.cf, i8 0, i64 %i.cg, i1 false)
   %i.ch = load ptr, ptr %0, align 8, !tbaa !19
   %i.ci = getelementptr inbounds nuw i8, ptr %i.ch, i64 32
@@ -432,12 +439,15 @@ bb.k:                                             ; preds = %.lr.ph91, %bb.k
   br i1 %i.cu, label %bb.k, label %.thread, !llvm.loop !139
 
 bb.l:                                             ; preds = %bb.h, %bb.i, %bb.c
-  %i.cv = getelementptr inbounds nuw i8, ptr %2, i64 4 ; 2 uses
+  %i.cv = getelementptr inbounds nuw i8, ptr %2, i64 4 ; 3 uses
   %i.cw = load i32, ptr %i.cv, align 4, !tbaa !77
   %i.cx = add nsw i32 %i.cw, 1
-  %i.cy = sext i32 %i.cx to i64                   ; 2 uses
+  %i.cy = sext i32 %i.cx to i64
   %i.cz = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.cy) #31 ; 4 uses
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.cz, i8 0, i64 %i.cy, i1 false)
+  %11 = load i32, ptr %i.cv, align 4, !tbaa !77
+  %12 = add nsw i32 %11, 1
+  %13 = sext i32 %12 to i64
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.cz, i8 0, i64 %13, i1 false)
   %i.da = load ptr, ptr %0, align 8, !tbaa !19
   %i.db = getelementptr inbounds nuw i8, ptr %i.da, i64 32
   %i.dc = load ptr, ptr %i.db, align 8

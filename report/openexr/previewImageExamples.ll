@@ -61,7 +61,7 @@ define dso_local void @_Z16makePreviewImageRKN7Imf_3_47Array2DINS_4RgbaEEEiiRNS0
 bb.a:
   %i.a = sdiv i32 %1, 8
   store i32 %i.a, ptr %4, align 4, !tbaa !9
-  %i.b = sdiv i32 %2, 8                           ; 3 uses
+  %i.b = sdiv i32 %2, 8                           ; 2 uses
   store i32 %i.b, ptr %5, align 4, !tbaa !9
   %i.c = sext i32 %i.b to i64                     ; 2 uses
   %i.d = load i32, ptr %4, align 4, !tbaa !9
@@ -93,15 +93,14 @@ bb.c:                                             ; preds = %bb.c, %bb.b
 
 bb.d:                                             ; preds = %.loopexit.i
   tail call void @_ZdaPv(ptr noundef nonnull %i.q) #12
-  %.pre = load i32, ptr %5, align 4, !tbaa !9
   br label %_ZN7Imf_3_47Array2DINS_11PreviewRgbaEE11resizeEraseEll.exit
 
 _ZN7Imf_3_47Array2DINS_11PreviewRgbaEE11resizeEraseEll.exit: ; preds = %.loopexit.i, %bb.d
-  %6 = phi i32 [ %i.b, %.loopexit.i ], [ %.pre, %bb.d ] ; 2 uses
   store i64 %i.c, ptr %3, align 8, !tbaa !16
   %i.s = getelementptr inbounds nuw i8, ptr %3, i64 8
   store i64 %i.e, ptr %i.s, align 8, !tbaa !17
   store ptr %i.j, ptr %i.p, align 8, !tbaa !11
+  %6 = load i32, ptr %5, align 4, !tbaa !9        ; 2 uses
   %i.t = icmp sgt i32 %6, 0
   br i1 %i.t, label %.preheader.lr.ph, label %._crit_edge31
 

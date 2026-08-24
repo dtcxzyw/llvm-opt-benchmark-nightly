@@ -202,7 +202,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit99: ; preds = %_ZN
   br label %bb.be
 
 bb.au:                                            ; preds = %.lr.ph181, %bb.bb
-  %.sroa.0107.0180 = phi ptr [ %.sroa.0116.0.lcssa, %.lr.ph181 ], [ %i.ja, %bb.bb ] ; 4 uses
+  %.sroa.0107.0180 = phi ptr [ %.sroa.0116.0.lcssa, %.lr.ph181 ], [ %i.ja, %bb.bb ] ; 5 uses
   %i.hv = getelementptr inbounds nuw i8, ptr %.sroa.0107.0180, i64 6 ; 2 uses
   invoke void @_ZN5rabit5utils9PollErrorIsEENSt9enable_ifIXsr3stdE13is_integral_vIT_EEN7xgboost10collective6ResultEE4typeERKS3_(ptr dead_on_unwind writable sret(%"struct.xgboost::collective::Result") align 8 %0, ptr noundef nonnull align 2 dereferenceable(2) %i.hv)
           to label %bb.av unwind label %bb.aw
@@ -222,7 +222,7 @@ bb.ax:                                            ; preds = %bb.av
   %i.hy = load i16, ptr %i.hv, align 2, !tbaa !285
   %i.hz = getelementptr inbounds nuw i8, ptr %.sroa.0107.0180, i64 4
   %i.ia = load i16, ptr %i.hz, align 4, !tbaa !206
-  %i.ib = load i32, ptr %.sroa.0107.0180, align 4, !tbaa !49 ; 4 uses
+  %i.ib = load i32, ptr %.sroa.0107.0180, align 4, !tbaa !49 ; 3 uses
   %i.ic = sext i32 %i.ib to i64                   ; 2 uses
   %i.id = load i64, ptr %i.ez, align 8, !tbaa !199 ; 2 uses
   %i.ie = urem i64 %i.ic, %i.id                   ; 3 uses
@@ -267,7 +267,8 @@ bb.ba:                                            ; preds = %.lr.ph.i.i.i.i
 .noexc101:                                        ; preds = %.loopexit.i.i
   store ptr null, ptr %i.is, align 8, !tbaa !201
   %i.it = getelementptr inbounds nuw i8, ptr %i.is, i64 8
-  store i32 %i.ib, ptr %i.it, align 8, !tbaa !202
+  %10 = load i32, ptr %.sroa.0107.0180, align 4, !tbaa !49
+  store i32 %10, ptr %i.it, align 8, !tbaa !202
   %i.iu = getelementptr inbounds nuw i8, ptr %i.is, i64 12
   store i64 0, ptr %i.iu, align 4
   %i.iv = invoke ptr @_ZNSt10_HashtableIiSt4pairIKi6pollfdESaIS3_ENSt8__detail10_Select1stESt8equal_toIiESt4hashIiENS5_18_Mod_range_hashingENS5_20_Default_ranged_hashENS5_20_Prime_rehash_policyENS5_17_Hashtable_traitsILb0ELb0ELb1EEEE21_M_insert_unique_nodeEmmPNS5_10_Hash_nodeIS3_Lb0EEEm(ptr noundef nonnull align 8 dereferenceable(56) %1, i64 noundef %i.ie, i64 noundef %i.ic, ptr noundef nonnull %i.is, i64 noundef 1)

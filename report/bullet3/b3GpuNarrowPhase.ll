@@ -205,17 +205,17 @@ define dso_local void @_ZN16b3GpuNarrowPhaseC2EP11_cl_contextP13_cl_device_idP17
 bb.a:
   %5 = alloca %struct.b3InertiaData, align 16     ; 4 uses
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTV16b3GpuNarrowPhase, i64 16), ptr %0, align 8, !tbaa !9
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 26 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 31 uses
   store ptr null, ptr %i.a, align 8, !tbaa !11
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 20
   store i32 -1, ptr %i.b, align 4, !tbaa !18
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i32 -1, ptr %i.c, align 8, !tbaa !19
-  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 3 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 5 uses
   store ptr %1, ptr %i.d, align 8, !tbaa !20
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 40
   store ptr %2, ptr %i.e, align 8, !tbaa !21
-  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 3 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 5 uses
   store ptr %3, ptr %i.f, align 8, !tbaa !22
   %i.g = tail call noalias noundef nonnull dereferenceable(664) ptr @_Znwm(i64 noundef 664) #16 ; 3 uses
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 616
@@ -240,7 +240,7 @@ bb.b:                                             ; preds = %bb.a
           to label %bb.c unwind label %bb.bh
 
 bb.c:                                             ; preds = %bb.b
-  %i.r = load ptr, ptr %i.a, align 8, !tbaa !11   ; 2 uses
+  %i.r = load ptr, ptr %i.a, align 8, !tbaa !11
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 296
   store ptr %i.l, ptr %i.s, align 8, !tbaa !83
   %i.t = tail call noalias noundef nonnull dereferenceable(32) ptr @_Znwm(i64 noundef 32) #16 ; 5 uses
@@ -252,7 +252,8 @@ bb.c:                                             ; preds = %bb.b
   store i32 0, ptr %i.w, align 4, !tbaa !89
   %i.x = getelementptr inbounds nuw i8, ptr %i.t, i64 8 ; 2 uses
   store i32 0, ptr %i.x, align 8, !tbaa !90
-  %i.y = getelementptr inbounds nuw i8, ptr %i.r, i64 328
+  %6 = load ptr, ptr %i.a, align 8, !tbaa !11
+  %i.y = getelementptr inbounds nuw i8, ptr %6, i64 328
   store ptr %i.t, ptr %i.y, align 8, !tbaa !91
   %i.z = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.aa = load i32, ptr %i.z, align 4, !tbaa !92  ; 7 uses
@@ -655,7 +656,7 @@ bb.ay:                                            ; preds = %bb.ax
           to label %bb.az unwind label %bb.by
 
 bb.az:                                            ; preds = %bb.ay
-  %i.ov = load ptr, ptr %i.a, align 8, !tbaa !11  ; 3 uses
+  %i.ov = load ptr, ptr %i.a, align 8, !tbaa !11
   %i.ow = getelementptr inbounds nuw i8, ptr %i.ov, i64 200
   store ptr %i.oq, ptr %i.ow, align 8, !tbaa !188
   %i.ox = call noalias noundef nonnull dereferenceable(32) ptr @_Znwm(i64 noundef 32) #16 ; 5 uses
@@ -667,7 +668,8 @@ bb.az:                                            ; preds = %bb.ay
   store i32 0, ptr %i.pa, align 4, !tbaa !194
   %i.pb = getelementptr inbounds nuw i8, ptr %i.ox, i64 8 ; 2 uses
   store i32 0, ptr %i.pb, align 8, !tbaa !195
-  store ptr %i.ox, ptr %i.ov, align 8, !tbaa !196
+  %7 = load ptr, ptr %i.a, align 8, !tbaa !11     ; 2 uses
+  store ptr %i.ox, ptr %7, align 8, !tbaa !196
   %i.pc = load i32, ptr %i.ea, align 4, !tbaa !124 ; 8 uses
   %i.pd = icmp sgt i32 %i.pc, 0
   br i1 %i.pd, label %_ZN20b3AlignedObjectArrayIP15b3ConvexUtilityE8allocateEi.exit.i.i, label %_ZN20b3AlignedObjectArrayIP15b3ConvexUtilityE6resizeEiRKS1_.exit
@@ -801,7 +803,7 @@ bb.ba:                                            ; preds = %_ZNK20b3AlignedObje
   br label %_ZN20b3AlignedObjectArrayIP15b3ConvexUtilityE6resizeEiRKS1_.exit
 
 _ZN20b3AlignedObjectArrayIP15b3ConvexUtilityE6resizeEiRKS1_.exit: ; preds = %.lr.ph.i154, %bb.az
-  %i.qm = phi ptr [ %.pre206, %.lr.ph.i154 ], [ %i.ov, %bb.az ] ; 8 uses
+  %i.qm = phi ptr [ %.pre206, %.lr.ph.i154 ], [ %7, %bb.az ] ; 8 uses
   %i.qn = phi i32 [ %.pr201, %.lr.ph.i154 ], [ %i.pc, %bb.az ] ; 9 uses
   store i32 %i.pc, ptr %i.pa, align 4, !tbaa !194
   %i.qo = getelementptr inbounds nuw i8, ptr %i.qm, i64 12 ; 4 uses
@@ -956,15 +958,15 @@ _ZN20b3AlignedObjectArrayI22b3ConvexPolyhedronDataE10deallocateEv.exit.i.i: ; pr
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.loopexit.loopexit, %_ZN20b3AlignedObjectArrayIP15b3ConvexUtilityE6resizeEiRKS1_.exit
-  %i.sj = phi ptr [ %.pre207, %.loopexit.loopexit ], [ %i.qm, %_ZN20b3AlignedObjectArrayIP15b3ConvexUtilityE6resizeEiRKS1_.exit ] ; 5 uses
+  %i.sj = phi ptr [ %.pre207, %.loopexit.loopexit ], [ %i.qm, %_ZN20b3AlignedObjectArrayIP15b3ConvexUtilityE6resizeEiRKS1_.exit ] ; 2 uses
   store i32 %i.qn, ptr %i.qo, align 4, !tbaa !155
   %i.sk = getelementptr inbounds nuw i8, ptr %i.sj, i64 368
   store i32 0, ptr %i.sk, align 8, !tbaa !204
   %i.sl = getelementptr inbounds nuw i8, ptr %i.sj, i64 372
   store i32 0, ptr %i.sl, align 4, !tbaa !205
   %i.sm = call noalias noundef nonnull dereferenceable(56) ptr @_Znwm(i64 noundef 56) #16 ; 7 uses
-  %i.sn = load ptr, ptr %i.d, align 8, !tbaa !20  ; 3 uses
-  %i.so = load ptr, ptr %i.f, align 8, !tbaa !22  ; 3 uses
+  %i.sn = load ptr, ptr %i.d, align 8, !tbaa !20
+  %i.so = load ptr, ptr %i.f, align 8, !tbaa !22
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTV13b3OpenCLArrayI16b3BvhSubtreeInfoE, i64 16), ptr %i.sm, align 8, !tbaa !9
   %i.sp = getelementptr inbounds nuw i8, ptr %i.sm, i64 8
   %i.sq = getelementptr inbounds nuw i8, ptr %i.sm, i64 32
@@ -976,35 +978,42 @@ _ZN20b3AlignedObjectArrayI22b3ConvexPolyhedronDataE10deallocateEv.exit.i.i: ; pr
   store i8 1, ptr %i.ss, align 8, !tbaa !211
   %i.st = getelementptr inbounds nuw i8, ptr %i.sm, i64 49
   store i8 1, ptr %i.st, align 1, !tbaa !212
-  %i.su = getelementptr inbounds nuw i8, ptr %i.sj, i64 608
+  %8 = load ptr, ptr %i.a, align 8, !tbaa !11
+  %i.su = getelementptr inbounds nuw i8, ptr %8, i64 608
   store ptr %i.sm, ptr %i.su, align 8, !tbaa !213
   %i.sv = call noalias noundef nonnull dereferenceable(56) ptr @_Znwm(i64 noundef 56) #16 ; 7 uses
+  %9 = load ptr, ptr %i.d, align 8, !tbaa !20
+  %10 = load ptr, ptr %i.f, align 8, !tbaa !22
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTV13b3OpenCLArrayI18b3QuantizedBvhNodeE, i64 16), ptr %i.sv, align 8, !tbaa !9
   %i.sw = getelementptr inbounds nuw i8, ptr %i.sv, i64 8
   %i.sx = getelementptr inbounds nuw i8, ptr %i.sv, i64 32
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.sw, i8 0, i64 24, i1 false)
-  store ptr %i.sn, ptr %i.sx, align 8, !tbaa !214
+  store ptr %9, ptr %i.sx, align 8, !tbaa !214
   %i.sy = getelementptr inbounds nuw i8, ptr %i.sv, i64 40
-  store ptr %i.so, ptr %i.sy, align 8, !tbaa !216
+  store ptr %10, ptr %i.sy, align 8, !tbaa !216
   %i.sz = getelementptr inbounds nuw i8, ptr %i.sv, i64 48
   store i8 1, ptr %i.sz, align 8, !tbaa !217
   %i.ta = getelementptr inbounds nuw i8, ptr %i.sv, i64 49
   store i8 1, ptr %i.ta, align 1, !tbaa !218
-  %i.tb = getelementptr inbounds nuw i8, ptr %i.sj, i64 600
+  %11 = load ptr, ptr %i.a, align 8, !tbaa !11
+  %i.tb = getelementptr inbounds nuw i8, ptr %11, i64 600
   store ptr %i.sv, ptr %i.tb, align 8, !tbaa !219
   %i.tc = call noalias noundef nonnull dereferenceable(56) ptr @_Znwm(i64 noundef 56) #16 ; 7 uses
+  %12 = load ptr, ptr %i.d, align 8, !tbaa !20
+  %13 = load ptr, ptr %i.f, align 8, !tbaa !22
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTV13b3OpenCLArrayI9b3BvhInfoE, i64 16), ptr %i.tc, align 8, !tbaa !9
   %i.td = getelementptr inbounds nuw i8, ptr %i.tc, i64 8
   %i.te = getelementptr inbounds nuw i8, ptr %i.tc, i64 32
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.td, i8 0, i64 24, i1 false)
-  store ptr %i.sn, ptr %i.te, align 8, !tbaa !220
+  store ptr %12, ptr %i.te, align 8, !tbaa !220
   %i.tf = getelementptr inbounds nuw i8, ptr %i.tc, i64 40
-  store ptr %i.so, ptr %i.tf, align 8, !tbaa !222
+  store ptr %13, ptr %i.tf, align 8, !tbaa !222
   %i.tg = getelementptr inbounds nuw i8, ptr %i.tc, i64 48
   store i8 1, ptr %i.tg, align 8, !tbaa !223
   %i.th = getelementptr inbounds nuw i8, ptr %i.tc, i64 49
   store i8 1, ptr %i.th, align 1, !tbaa !224
-  %i.ti = getelementptr inbounds nuw i8, ptr %i.sj, i64 592
+  %14 = load ptr, ptr %i.a, align 8, !tbaa !11
+  %i.ti = getelementptr inbounds nuw i8, ptr %14, i64 592
   store ptr %i.tc, ptr %i.ti, align 8, !tbaa !225
   ret void
 

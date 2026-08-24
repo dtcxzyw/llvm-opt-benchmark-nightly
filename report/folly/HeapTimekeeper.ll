@@ -202,7 +202,7 @@ define void @_ZN5folly14HeapTimekeeper5State22clearAndAdjustCapacityERSt6vectorI
 bb.a:
   %1 = alloca %"class.std::vector", align 8       ; 6 uses
   %i.a = load ptr, ptr %0, align 8, !tbaa !271    ; 5 uses
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 5 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !274  ; 3 uses
   %.not.i.i = icmp eq ptr %i.c, %i.a
   br i1 %.not.i.i, label %_ZNSt6vectorIN5folly14HeapTimekeeper5State2OpESaIS3_EE5clearEv.exit, label %.lr.ph.i.i.i.i
@@ -265,8 +265,8 @@ _ZSt8_DestroyIPN5folly14HeapTimekeeper5State2OpES3_EvT_S5_RSaIT0_E.exit.i.i: ; p
 
 _ZNSt6vectorIN5folly14HeapTimekeeper5State2OpESaIS3_EE5clearEv.exit: ; preds = %bb.a, %_ZSt8_DestroyIPN5folly14HeapTimekeeper5State2OpES3_EvT_S5_RSaIT0_E.exit.i.i
   %i.q = phi ptr [ %i.c, %bb.a ], [ %i.a, %_ZSt8_DestroyIPN5folly14HeapTimekeeper5State2OpES3_EvT_S5_RSaIT0_E.exit.i.i ]
-  %i.r = phi ptr [ %i.a, %bb.a ], [ %.pre, %_ZSt8_DestroyIPN5folly14HeapTimekeeper5State2OpES3_EvT_S5_RSaIT0_E.exit.i.i ] ; 3 uses
-  %i.s = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
+  %i.r = phi ptr [ %i.a, %bb.a ], [ %.pre, %_ZSt8_DestroyIPN5folly14HeapTimekeeper5State2OpES3_EvT_S5_RSaIT0_E.exit.i.i ] ; 2 uses
+  %i.s = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !276  ; 2 uses
   %i.u = ptrtoint ptr %i.t to i64
   %i.v = ptrtoint ptr %i.r to i64                 ; 2 uses
@@ -285,25 +285,26 @@ bb.h:                                             ; preds = %_ZNSt6vectorIN5foll
   call void @_ZNSt6vectorIN5folly14HeapTimekeeper5State2OpESaIS3_EED2Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %1) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #18
   %.pre7 = load ptr, ptr %i.s, align 8, !tbaa !276
-  %.pre8 = load ptr, ptr %0, align 8, !tbaa !271  ; 2 uses
+  %.pre8 = load ptr, ptr %0, align 8, !tbaa !271
   %.pre9 = ptrtoint ptr %.pre7 to i64
   %.pre10 = ptrtoint ptr %.pre8 to i64            ; 2 uses
   %.pre12 = sub i64 %.pre9, %.pre10
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %_ZNSt6vectorIN5folly14HeapTimekeeper5State2OpESaIS3_EE5clearEv.exit
-  %.pre-phi13 = phi i64 [ %.pre12, %bb.h ], [ %i.w, %_ZNSt6vectorIN5folly14HeapTimekeeper5State2OpESaIS3_EE5clearEv.exit ] ; 2 uses
+  %.pre-phi13 = phi i64 [ %.pre12, %bb.h ], [ %i.w, %_ZNSt6vectorIN5folly14HeapTimekeeper5State2OpESaIS3_EE5clearEv.exit ]
   %.pre-phi11 = phi i64 [ %.pre10, %bb.h ], [ %i.v, %_ZNSt6vectorIN5folly14HeapTimekeeper5State2OpESaIS3_EE5clearEv.exit ]
-  %2 = phi ptr [ %.pre8, %bb.h ], [ %i.r, %_ZNSt6vectorIN5folly14HeapTimekeeper5State2OpESaIS3_EE5clearEv.exit ] ; 4 uses
   %i.aa = icmp ult i64 %.pre-phi13, 8192
   br i1 %i.aa, label %_ZNSt12_Vector_baseIN5folly14HeapTimekeeper5State2OpESaIS3_EE11_M_allocateEm.exit.i, label %bb.k
 
 _ZNSt12_Vector_baseIN5folly14HeapTimekeeper5State2OpESaIS3_EE11_M_allocateEm.exit.i: ; preds = %bb.i
-  %i.ab = load ptr, ptr %i.b, align 8, !tbaa !274 ; 3 uses
+  %i.ab = load ptr, ptr %i.b, align 8, !tbaa !274
   %i.ac = ptrtoint ptr %i.ab to i64
   %i.ad = sub i64 %i.ac, %.pre-phi11
   %i.ae = call noalias noundef nonnull dereferenceable(8192) ptr @_Znwm(i64 noundef 8192) #28 ; 4 uses
-  %.not10.i.i.i.i = icmp eq ptr %2, %i.ab
+  %2 = load ptr, ptr %0, align 8, !tbaa !271      ; 5 uses
+  %3 = load ptr, ptr %i.b, align 8, !tbaa !274    ; 2 uses
+  %.not10.i.i.i.i = icmp eq ptr %2, %3
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorIN5folly14HeapTimekeeper5State2OpESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit.i, label %.lr.ph.i.i.i.i5
 
 .lr.ph.i.i.i.i5:                                  ; preds = %_ZNSt12_Vector_baseIN5folly14HeapTimekeeper5State2OpESaIS3_EE11_M_allocateEm.exit.i, %.lr.ph.i.i.i.i5
@@ -320,7 +321,7 @@ _ZNSt12_Vector_baseIN5folly14HeapTimekeeper5State2OpESaIS3_EE11_M_allocateEm.exi
   store ptr null, ptr %i.ah, align 8, !tbaa !21, !alias.scope !280, !noalias !277
   %i.aj = getelementptr inbounds nuw i8, ptr %.0911.i.i.i.i, i64 16 ; 2 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i, i64 16
-  %.not.i.i.i.i6 = icmp eq ptr %i.aj, %i.ab
+  %.not.i.i.i.i6 = icmp eq ptr %i.aj, %3
   br i1 %.not.i.i.i.i6, label %_ZNSt6vectorIN5folly14HeapTimekeeper5State2OpESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit.i, label %.lr.ph.i.i.i.i5, !llvm.loop !282
 
 _ZNSt6vectorIN5folly14HeapTimekeeper5State2OpESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit.i: ; preds = %.lr.ph.i.i.i.i5, %_ZNSt12_Vector_baseIN5folly14HeapTimekeeper5State2OpESaIS3_EE11_M_allocateEm.exit.i
@@ -328,7 +329,11 @@ _ZNSt6vectorIN5folly14HeapTimekeeper5State2OpESaIS3_EE11_S_relocateEPS3_S6_S6_RS
   br i1 %.not.i8.i, label %_ZNSt6vectorIN5folly14HeapTimekeeper5State2OpESaIS3_EE7reserveEm.exit, label %bb.j
 
 bb.j:                                             ; preds = %_ZNSt6vectorIN5folly14HeapTimekeeper5State2OpESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit.i
-  call void @_ZdlPvm(ptr noundef nonnull %2, i64 noundef %.pre-phi13) #26
+  %4 = load ptr, ptr %i.s, align 8, !tbaa !276
+  %5 = ptrtoint ptr %4 to i64
+  %6 = ptrtoint ptr %2 to i64
+  %7 = sub i64 %5, %6
+  call void @_ZdlPvm(ptr noundef nonnull %2, i64 noundef %7) #26
   br label %_ZNSt6vectorIN5folly14HeapTimekeeper5State2OpESaIS3_EE7reserveEm.exit
 
 _ZNSt6vectorIN5folly14HeapTimekeeper5State2OpESaIS3_EE7reserveEm.exit: ; preds = %_ZNSt6vectorIN5folly14HeapTimekeeper5State2OpESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit.i, %bb.j

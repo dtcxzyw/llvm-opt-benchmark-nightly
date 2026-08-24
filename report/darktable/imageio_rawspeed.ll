@@ -205,7 +205,7 @@ bb.a:
   %10 = alloca %"class.rawspeed::RawImage", align 8 ; 2 uses
   %11 = alloca %"class.rawspeed::RawImage", align 8 ; 55 uses
   %12 = alloca %"class.std::vector", align 16     ; 10 uses
-  %13 = alloca %"class.rawspeed::RawImage", align 8 ; 6 uses
+  %13 = alloca %"class.rawspeed::RawImage", align 8 ; 8 uses
   %14 = alloca %"class.rawspeed::Array2DRef.100", align 8 ; 4 uses
   %15 = alloca %"class.rawspeed::Array2DRef.100", align 8 ; 5 uses
   %16 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
@@ -608,7 +608,7 @@ begin_hunk_1_@dt_imageio_open_rawspeed:bb.a
   br i1 %exitcond329.not.i, label %.loopexit.i, label %.preheader287.lr.ph.i, !llvm.loop !295
 
 .loopexit.i:                                      ; preds = %._crit_edge.i, %._crit_edge297.i, %._crit_edge306.i, %._crit_edge315.i, %.lr.ph299.i, %.preheader285.i, %.lr.ph.i, %.preheader288.i, %.lr.ph317.i, %.preheader.i, %.lr.ph308.i, %.preheader282.i
-  %i.yb = phi ptr [ %i.ps, %._crit_edge297.i ], [ %i.kn, %._crit_edge306.i ], [ %i.kn, %._crit_edge315.i ], [ %i.kn, %.lr.ph317.i ], [ %i.ps, %.preheader288.i ], [ %i.ps, %.lr.ph.i ], [ %i.ps, %.preheader285.i ], [ %i.ps, %.lr.ph299.i ], [ %i.kn, %.preheader282.i ], [ %i.kn, %.lr.ph308.i ], [ %i.kn, %.preheader.i ], [ %i.ps, %._crit_edge.i ] ; 3 uses
+  %i.yb = phi ptr [ %i.ps, %._crit_edge297.i ], [ %i.kn, %._crit_edge306.i ], [ %i.kn, %._crit_edge315.i ], [ %i.kn, %.lr.ph317.i ], [ %i.ps, %.preheader288.i ], [ %i.ps, %.lr.ph.i ], [ %i.ps, %.preheader285.i ], [ %i.ps, %.lr.ph299.i ], [ %i.kn, %.preheader282.i ], [ %i.kn, %.lr.ph308.i ], [ %i.kn, %.preheader.i ], [ %i.ps, %._crit_edge.i ]
   %i.yc = getelementptr inbounds nuw i8, ptr %0, i64 1600
   store i32 2, ptr %i.yc, align 16, !tbaa !255
   %i.yd = getelementptr inbounds nuw i8, ptr %0, i64 1480
@@ -688,7 +688,8 @@ bb.bv:                                            ; preds = %bb.bu, %bb.bt, %._c
   %i.ys = getelementptr inbounds nuw i8, ptr %i.yp, i64 %i.yj
   store i8 0, ptr %i.ys, align 1, !tbaa !21
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #23
-  %i.yt = getelementptr inbounds nuw i8, ptr %i.yb, i64 352
+  %22 = load ptr, ptr %13, align 8, !tbaa !138
+  %i.yt = getelementptr inbounds nuw i8, ptr %22, i64 352
   %i.yu = load ptr, ptr %i.yt, align 8, !tbaa !18 ; 4 uses
   %i.yv = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 7 uses
   store ptr %i.yv, ptr %4, align 8, !tbaa !14
@@ -761,7 +762,8 @@ bb.cc:                                            ; preds = %bb.cb, %bb.ca, %._c
   %i.zg = getelementptr inbounds nuw i8, ptr %i.zd, i64 %i.yx
   store i8 0, ptr %i.zg, align 1, !tbaa !21
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #23
-  %i.zh = getelementptr inbounds nuw i8, ptr %i.yb, i64 384
+  %23 = load ptr, ptr %13, align 8, !tbaa !138
+  %i.zh = getelementptr inbounds nuw i8, ptr %23, i64 384
   %i.zi = load ptr, ptr %i.zh, align 8, !tbaa !18 ; 4 uses
   %i.zj = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 7 uses
   store ptr %i.zj, ptr %5, align 8, !tbaa !14

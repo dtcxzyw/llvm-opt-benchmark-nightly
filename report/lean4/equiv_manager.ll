@@ -55,10 +55,10 @@ bb.a:
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !8    ; 3 uses
   %i.c = load ptr, ptr %0, align 8, !tbaa !12     ; 4 uses
   %i.d = ptrtoint ptr %i.b to i64
-  %i.e = ptrtoint ptr %i.c to i64
-  %i.f = sub i64 %i.d, %i.e                       ; 6 uses
+  %i.e = ptrtoint ptr %i.c to i64                 ; 2 uses
+  %i.f = sub i64 %i.d, %i.e                       ; 5 uses
   %i.g = ashr exact i64 %i.f, 3                   ; 6 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !13
   %.not.i = icmp eq ptr %i.b, %i.i
   br i1 %.not.i, label %bb.c, label %bb.b
@@ -105,7 +105,10 @@ _ZNSt6vectorIN4lean13equiv_manager4nodeESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exi
   br i1 %.not.i17.i.i, label %_ZNSt6vectorIN4lean13equiv_manager4nodeESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i, label %bb.f
 
 bb.f:                                             ; preds = %_ZNSt6vectorIN4lean13equiv_manager4nodeESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.c, i64 noundef %i.f) #20
+  %1 = load ptr, ptr %i.h, align 8, !tbaa !13
+  %2 = ptrtoint ptr %1 to i64
+  %3 = sub i64 %2, %i.e
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.c, i64 noundef %3) #20
   br label %_ZNSt6vectorIN4lean13equiv_manager4nodeESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i
 
 _ZNSt6vectorIN4lean13equiv_manager4nodeESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i: ; preds = %bb.f, %_ZNSt6vectorIN4lean13equiv_manager4nodeESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i
@@ -293,10 +296,10 @@ _ZNSt13unordered_mapIN4lean4exprEjNS0_9expr_hashESt8equal_toIS1_E16mi_stl_alloca
   %i.al = load ptr, ptr %i.ak, align 8, !tbaa !8  ; 3 uses
   %i.am = load ptr, ptr %0, align 8, !tbaa !12    ; 4 uses
   %i.an = ptrtoint ptr %i.al to i64
-  %i.ao = ptrtoint ptr %i.am to i64
-  %i.ap = sub i64 %i.an, %i.ao                    ; 6 uses
+  %i.ao = ptrtoint ptr %i.am to i64               ; 2 uses
+  %i.ap = sub i64 %i.an, %i.ao                    ; 5 uses
   %i.aq = ashr exact i64 %i.ap, 3                 ; 6 uses
-  %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.as = load ptr, ptr %i.ar, align 8, !tbaa !13
   %.not.i.i = icmp eq ptr %i.al, %i.as
   br i1 %.not.i.i, label %bb.j, label %bb.i
@@ -343,7 +346,10 @@ _ZNSt6vectorIN4lean13equiv_manager4nodeESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exi
   br i1 %.not.i17.i.i.i, label %_ZNSt6vectorIN4lean13equiv_manager4nodeESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i, label %bb.m
 
 bb.m:                                             ; preds = %_ZNSt6vectorIN4lean13equiv_manager4nodeESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.am, i64 noundef %i.ap) #20
+  %3 = load ptr, ptr %i.ar, align 8, !tbaa !13
+  %4 = ptrtoint ptr %3 to i64
+  %5 = sub i64 %4, %i.ao
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.am, i64 noundef %5) #20
   br label %_ZNSt6vectorIN4lean13equiv_manager4nodeESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i
 
 _ZNSt6vectorIN4lean13equiv_manager4nodeESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i: ; preds = %bb.m, %_ZNSt6vectorIN4lean13equiv_manager4nodeESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i.i

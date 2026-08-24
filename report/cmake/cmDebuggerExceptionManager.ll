@@ -202,7 +202,7 @@ _ZN3dap8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEC2EOS7_.ex
 define linkonce_odr dso_local noundef nonnull align 8 dereferenceable(64) ptr @_ZNSt8__detail9_Map_baseI11MessageTypeSt4pairIKS1_N10cmDebugger25cmDebuggerExceptionFilterEESaIS6_ENS_10_Select1stESt8equal_toIS1_ENS4_26cmDebuggerExceptionManager15MessageTypeHashENS_18_Mod_range_hashingENS_20_Default_ranged_hashENS_20_Prime_rehash_policyENS_17_Hashtable_traitsILb1ELb0ELb1EEELb1EEixEOS1_(ptr noundef nonnull align 1 dereferenceable(1) %0, ptr noundef nonnull align 4 dereferenceable(4) %1) local_unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %2 = alloca %"struct.std::_Hashtable<MessageType, std::pair<const MessageType, cmDebugger::cmDebuggerExceptionFilter>, std::allocator<std::pair<const MessageType, cmDebugger::cmDebuggerExceptionFilter>>, std::__detail::_Select1st, std::equal_to<MessageType>, cmDebugger::cmDebuggerExceptionManager::MessageTypeHash, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<true, false, true>>::_Scoped_node", align 8 ; 6 uses
-  %i.a = load i32, ptr %1, align 4, !tbaa !52     ; 4 uses
+  %i.a = load i32, ptr %1, align 4, !tbaa !52     ; 3 uses
   %i.b = sext i32 %i.a to i64                     ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.d = load i64, ptr %i.c, align 8, !tbaa !36   ; 2 uses
@@ -255,7 +255,8 @@ bb.d:                                             ; preds = %.lr.ph.i.i
   %i.aa = tail call noalias noundef nonnull dereferenceable(88) ptr @_Znwm(i64 noundef 88) #21 ; 9 uses
   store ptr null, ptr %i.aa, align 8, !tbaa !60
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 8
-  store i32 %i.a, ptr %i.ab, align 8, !tbaa !172
+  %3 = load i32, ptr %1, align 4, !tbaa !52
+  store i32 %3, ptr %i.ab, align 8, !tbaa !172
   %i.ac = getelementptr inbounds nuw i8, ptr %i.aa, i64 16
   %i.ad = getelementptr inbounds nuw i8, ptr %i.aa, i64 32 ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.ad, i8 0, i64 48, i1 false)
@@ -658,7 +659,7 @@ bb.o:                                             ; preds = %_ZNSt12_Vector_base
 define linkonce_odr dso_local noundef nonnull align 8 dereferenceable(64) ptr @_ZNSt8__detail9_Map_baseI11MessageTypeSt4pairIKS1_N10cmDebugger25cmDebuggerExceptionFilterEESaIS6_ENS_10_Select1stESt8equal_toIS1_ENS4_26cmDebuggerExceptionManager15MessageTypeHashENS_18_Mod_range_hashingENS_20_Default_ranged_hashENS_20_Prime_rehash_policyENS_17_Hashtable_traitsILb1ELb0ELb1EEELb1EEixERS3_(ptr noundef nonnull align 1 dereferenceable(1) %0, ptr noundef nonnull align 4 dereferenceable(4) %1) local_unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %2 = alloca %"struct.std::_Hashtable<MessageType, std::pair<const MessageType, cmDebugger::cmDebuggerExceptionFilter>, std::allocator<std::pair<const MessageType, cmDebugger::cmDebuggerExceptionFilter>>, std::__detail::_Select1st, std::equal_to<MessageType>, cmDebugger::cmDebuggerExceptionManager::MessageTypeHash, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<true, false, true>>::_Scoped_node", align 8 ; 6 uses
-  %i.a = load i32, ptr %1, align 4, !tbaa !52     ; 4 uses
+  %i.a = load i32, ptr %1, align 4, !tbaa !52     ; 3 uses
   %i.b = sext i32 %i.a to i64                     ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.d = load i64, ptr %i.c, align 8, !tbaa !36   ; 2 uses
@@ -711,7 +712,8 @@ bb.d:                                             ; preds = %.lr.ph.i.i
   %i.aa = tail call noalias noundef nonnull dereferenceable(88) ptr @_Znwm(i64 noundef 88) #21 ; 9 uses
   store ptr null, ptr %i.aa, align 8, !tbaa !60
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 8
-  store i32 %i.a, ptr %i.ab, align 8, !tbaa !172
+  %3 = load i32, ptr %1, align 4, !tbaa !52
+  store i32 %3, ptr %i.ab, align 8, !tbaa !172
   %i.ac = getelementptr inbounds nuw i8, ptr %i.aa, i64 16
   %i.ad = getelementptr inbounds nuw i8, ptr %i.aa, i64 32 ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.ad, i8 0, i64 48, i1 false)

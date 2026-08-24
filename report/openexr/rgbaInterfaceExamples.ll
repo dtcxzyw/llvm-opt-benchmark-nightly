@@ -202,8 +202,8 @@ bb.b:                                             ; preds = %bb.a
   %i.l = add nsw i32 %i.k, 1                      ; 2 uses
   store i32 %i.l, ptr %3, align 4, !tbaa !27
   %i.m = sext i32 %i.l to i64                     ; 2 uses
-  %i.n = load i32, ptr %2, align 4, !tbaa !27     ; 2 uses
-  %i.o = sext i32 %i.n to i64                     ; 3 uses
+  %i.n = load i32, ptr %2, align 4, !tbaa !27
+  %i.o = sext i32 %i.n to i64                     ; 2 uses
   %i.p = mul nsw i64 %i.o, %i.m                   ; 2 uses
   %i.q = icmp ugt i64 %i.p, 2305843009213693951
   %i.r = shl nuw i64 %i.p, 3
@@ -219,13 +219,9 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %.noexc
   call void @_ZdaPv(ptr noundef nonnull %i.v) #14
-  %.pre = load i32, ptr %2, align 4, !tbaa !27    ; 2 uses
-  %.pre14 = sext i32 %.pre to i64
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %.noexc
-  %.pre-phi = phi i64 [ %.pre14, %bb.c ], [ %i.o, %.noexc ]
-  %5 = phi i32 [ %.pre, %bb.c ], [ %i.n, %.noexc ]
   store i64 %i.m, ptr %1, align 8, !tbaa !31
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 8
   store i64 %i.o, ptr %i.x, align 8, !tbaa !32
@@ -233,11 +229,13 @@ bb.d:                                             ; preds = %bb.c, %.noexc
   %i.y = sext i32 %i.c to i64
   %i.z = sub nsw i64 0, %i.y
   %i.aa = getelementptr inbounds [8 x i8], ptr %i.t, i64 %i.z
+  %5 = load i32, ptr %2, align 4, !tbaa !27       ; 2 uses
   %i.ab = mul nsw i32 %5, %i.e
   %i.ac = sext i32 %i.ab to i64
   %i.ad = sub nsw i64 0, %i.ac
   %i.ae = getelementptr inbounds [8 x i8], ptr %i.aa, i64 %i.ad
-  invoke void @_ZN7Imf_3_413RgbaInputFile14setFrameBufferEPNS_4RgbaEmm(ptr noundef nonnull align 8 dereferenceable(64) %4, ptr noundef nonnull %i.ae, i64 noundef 1, i64 noundef %.pre-phi)
+  %6 = sext i32 %5 to i64
+  invoke void @_ZN7Imf_3_413RgbaInputFile14setFrameBufferEPNS_4RgbaEmm(ptr noundef nonnull align 8 dereferenceable(64) %4, ptr noundef nonnull %i.ae, i64 noundef 1, i64 noundef %6)
           to label %bb.e unwind label %bb.g
 
 bb.e:                                             ; preds = %bb.d

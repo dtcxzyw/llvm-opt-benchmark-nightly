@@ -56,7 +56,7 @@ bb.a:
   store i32 0, ptr %i.l, align 4, !tbaa !8
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 5 uses
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !10
-  %i.o = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 6 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 7 uses
   %i.p = load i32, ptr %i.o, align 8, !tbaa !14
   %i.q = call ptr @getDataInfo(ptr noundef %i.n, i32 noundef %i.p, ptr noundef nonnull align 4 dereferenceable(4) %i.j, ptr noundef nonnull align 4 dereferenceable(4) %i.k, ptr noundef nonnull %i.l) ; 5 uses
   %i.r = load i32, ptr %i.l, align 4, !tbaa !8
@@ -141,11 +141,12 @@ bb.j:                                             ; preds = %._crit_edge.i32
   %i.bg = load ptr, ptr @stderr, align 8, !tbaa !20
   %i.bh = getelementptr inbounds nuw i8, ptr %i.ax, i64 88
   store ptr %i.bg, ptr %i.bh, align 8, !tbaa !25
-  %i.bi = load i32, ptr %i.o, align 8, !tbaa !14  ; 2 uses
+  %i.bi = load i32, ptr %i.o, align 8, !tbaa !14
   %i.bj = sext i32 %i.bi to i64
   %i.bk = call noalias noundef nonnull ptr @_Znam(i64 noundef %i.bj) #12 ; 4 uses
   %i.bl = load ptr, ptr %i.m, align 8, !tbaa !10
-  %i.bm = call noundef i32 @ures_swap_78(ptr noundef %i.ax, ptr noundef %i.bl, i32 noundef %i.bi, ptr noundef nonnull %i.bk, ptr noundef nonnull %i.c), !inline_history !26 ; 0 uses
+  %5 = load i32, ptr %i.o, align 8, !tbaa !14
+  %i.bm = call noundef i32 @ures_swap_78(ptr noundef %i.ax, ptr noundef %i.bl, i32 noundef %5, ptr noundef nonnull %i.bk, ptr noundef nonnull %i.c), !inline_history !26 ; 0 uses
   %i.bn = load i32, ptr %i.o, align 8, !tbaa !14
   %i.bo = call ptr @getDataInfo(ptr noundef nonnull %i.bk, i32 noundef %i.bn, ptr noundef nonnull align 4 dereferenceable(4) %i.a, ptr noundef nonnull align 4 dereferenceable(4) %i.b, ptr noundef nonnull %i.c)
   %i.bp = load i32, ptr %i.b, align 4, !tbaa !15
@@ -251,7 +252,7 @@ bb.t:                                             ; preds = %bb.s
   store i32 0, ptr %i.h, align 4, !tbaa !8
   %i.cy = getelementptr inbounds nuw i8, ptr %i.cx, i64 8 ; 3 uses
   %i.cz = load ptr, ptr %i.cy, align 8, !tbaa !10
-  %i.da = getelementptr inbounds nuw i8, ptr %i.cx, i64 16 ; 3 uses
+  %i.da = getelementptr inbounds nuw i8, ptr %i.cx, i64 16 ; 4 uses
   %i.db = load i32, ptr %i.da, align 8, !tbaa !14
   %i.dc = invoke ptr @getDataInfo(ptr noundef %i.cz, i32 noundef %i.db, ptr noundef nonnull align 4 dereferenceable(4) %i.f, ptr noundef nonnull align 4 dereferenceable(4) %i.g, ptr noundef nonnull %i.h)
           to label %.noexc.i unwind label %bb.r   ; 3 uses
@@ -309,14 +310,15 @@ bb.y:                                             ; preds = %.noexc59.i
   %i.dy = load ptr, ptr @stderr, align 8, !tbaa !20
   %i.dz = getelementptr inbounds nuw i8, ptr %i.dp, i64 88
   store ptr %i.dy, ptr %i.dz, align 8, !tbaa !25
-  %i.ea = load i32, ptr %i.da, align 8, !tbaa !14 ; 2 uses
+  %i.ea = load i32, ptr %i.da, align 8, !tbaa !14
   %i.eb = sext i32 %i.ea to i64
   %i.ec = invoke noalias noundef nonnull ptr @_Znam(i64 noundef %i.eb) #12
           to label %.noexc61.i unwind label %bb.r ; 7 uses
 
 .noexc61.i:                                       ; preds = %bb.y
   %i.ed = load ptr, ptr %i.cy, align 8, !tbaa !10
-  %i.ee = invoke noundef i32 @ures_swap_78(ptr noundef nonnull %i.dp, ptr noundef %i.ed, i32 noundef %i.ea, ptr noundef nonnull %i.ec, ptr noundef nonnull %i.h)
+  %6 = load i32, ptr %i.da, align 8, !tbaa !14
+  %i.ee = invoke noundef i32 @ures_swap_78(ptr noundef nonnull %i.dp, ptr noundef %i.ed, i32 noundef %6, ptr noundef nonnull %i.ec, ptr noundef nonnull %i.h)
           to label %.noexc62.i unwind label %bb.r, !inline_history !26 ; 0 uses
 
 .noexc62.i:                                       ; preds = %.noexc61.i

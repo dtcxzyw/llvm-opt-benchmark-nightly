@@ -205,7 +205,7 @@ _ZSt8_DestroyIPN6duckdb11LogicalTypeEEvT_S3_.exit.i.i.i.i.i: ; preds = %.lr.ph.i
 
 bb.i:                                             ; preds = %_ZSt8_DestroyIPN6duckdb11LogicalTypeEEvT_S3_.exit.i.i.i.i.i
   %i.s = landingpad { ptr, i32 }
-          cleanup                                 ; 2 uses
+          cleanup
   invoke void @__cxa_end_catch()
           to label %.body125 unwind label %bb.j
 
@@ -222,9 +222,10 @@ bb.k:                                             ; preds = %_ZSt8_DestroyIPN6du
 .body125.thread:                                  ; preds = %bb.g
   %i.v = landingpad { ptr, i32 }
           cleanup
-  br label %.body
+  br label %.body125
 
-.body125:                                         ; preds = %bb.i
+.body125:                                         ; preds = %bb.i, %.body125.thread
+  %eh.lpad-body126 = phi { ptr, i32 } [ %i.v, %.body125.thread ], [ %i.s, %bb.i ] ; 2 uses
   %.pr = load ptr, ptr %5, align 8, !tbaa !83     ; 2 uses
   %.not.i.i.i.i = icmp eq ptr %.pr, null
   br i1 %.not.i.i.i.i, label %.body, label %bb.l
@@ -366,8 +367,8 @@ bb.w:                                             ; preds = %_ZSt10_ConstructIN6
   call void @_ZNSt6vectorIN6duckdb11LogicalTypeESaIS1_EED2Ev(ptr noundef nonnull align 8 dereferenceable(24) %5) #24
   br label %.body
 
-.body:                                            ; preds = %.body125.thread, %bb.l, %.body125, %bb.w
-  %.pn = phi { ptr, i32 } [ %i.bc, %bb.w ], [ %i.s, %.body125 ], [ %i.s, %bb.l ], [ %i.v, %.body125.thread ]
+.body:                                            ; preds = %bb.l, %.body125, %bb.w
+  %.pn = phi { ptr, i32 } [ %i.bc, %bb.w ], [ %eh.lpad-body126, %.body125 ], [ %eh.lpad-body126, %bb.l ]
   %i.bd = getelementptr inbounds nuw i8, ptr %6, i64 72
   call void @_ZN6duckdb11LogicalTypeD1Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %i.bd) #24
   %i.be = getelementptr inbounds nuw i8, ptr %6, i64 48

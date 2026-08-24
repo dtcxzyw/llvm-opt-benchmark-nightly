@@ -24,12 +24,12 @@ bb.b:                                             ; preds = %_ZNSt6vectorIjSaIjE
 
 bb.c:                                             ; preds = %bb.a, %_ZNSt6vectorIjSaIjEE13_M_assign_auxIPKjEEvT_S5_St20forward_iterator_tag.exit
   %.0.idx9 = phi i64 [ 24, %bb.a ], [ %.0.add, %_ZNSt6vectorIjSaIjEE13_M_assign_auxIPKjEEvT_S5_St20forward_iterator_tag.exit ] ; 2 uses
-  %.0.ptr = getelementptr inbounds nuw i8, ptr %0, i64 %.0.idx9 ; 5 uses
+  %.0.ptr = getelementptr inbounds nuw i8, ptr %0, i64 %.0.idx9 ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #11
   store i32 0, ptr %i.a, align 4, !tbaa !11
   %i.c = getelementptr inbounds nuw i8, ptr %.0.ptr, i64 16 ; 2 uses
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !12
-  %i.e = load ptr, ptr %.0.ptr, align 8, !tbaa !16 ; 6 uses
+  %i.e = load ptr, ptr %.0.ptr, align 8, !tbaa !16 ; 4 uses
   %i.f = ptrtoint ptr %i.d to i64
   %i.g = ptrtoint ptr %i.e to i64                 ; 2 uses
   %i.h = sub i64 %i.f, %i.g
@@ -40,11 +40,12 @@ bb.d:                                             ; preds = %bb.c
   %i.j = tail call noalias noundef nonnull dereferenceable(4) ptr @_Znwm(i64 noundef 4) #12 ; 3 uses
   store i32 0, ptr %i.j, align 4, !tbaa !11
   %i.k = getelementptr inbounds nuw i8, ptr %.0.ptr, i64 8
-  %.not.i.i = icmp eq ptr %i.e, null
+  %1 = load ptr, ptr %.0.ptr, align 8, !tbaa !16  ; 2 uses
+  %.not.i.i = icmp eq ptr %1, null
   br i1 %.not.i.i, label %_ZNSt12_Vector_baseIjSaIjEE13_M_deallocateEPjm.exit.i, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  tail call void @_ZdlPv(ptr noundef nonnull %i.e) #13
+  tail call void @_ZdlPv(ptr noundef nonnull %1) #13
   br label %_ZNSt12_Vector_baseIjSaIjEE13_M_deallocateEPjm.exit.i
 
 _ZNSt12_Vector_baseIjSaIjEE13_M_deallocateEPjm.exit.i: ; preds = %bb.e, %bb.d

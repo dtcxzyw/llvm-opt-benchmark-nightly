@@ -205,12 +205,12 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i) #7
-  %i.t = getelementptr inbounds nuw i8, ptr %0, i64 44
-  %i.u = load i32, ptr %i.t, align 4, !tbaa !36   ; 3 uses
+  %i.t = getelementptr inbounds nuw i8, ptr %0, i64 44 ; 2 uses
+  %i.u = load i32, ptr %i.t, align 4, !tbaa !36   ; 2 uses
   store i32 %i.u, ptr %i.i, align 4, !tbaa !37
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j) #7
-  %i.v = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %i.w = load i32, ptr %i.v, align 8, !tbaa !38   ; 2 uses
+  %i.v = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
+  %i.w = load i32, ptr %i.v, align 8, !tbaa !38
   store i32 %i.w, ptr %i.j, align 4, !tbaa !37
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k) #7
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 56
@@ -386,17 +386,19 @@ bb.d:                                             ; preds = %._crit_edge89.split
   br i1 %i.bl, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
+  %14 = load i32, ptr %i.t, align 4, !tbaa !36
   %i.bm = getelementptr inbounds nuw i8, ptr %1, i64 44
   %i.bn = load i32, ptr %i.bm, align 4, !tbaa !36
   %i.bo = add i32 %i.bn, %7
   %i.bp = add i32 %i.bo, %8
-  %i.bq = sub i32 %i.u, %i.bp
+  %i.bq = sub i32 %14, %i.bp
   store i32 %i.bq, ptr %i.p, align 4, !tbaa !37
+  %15 = load i32, ptr %i.v, align 8, !tbaa !38
   %i.br = getelementptr inbounds nuw i8, ptr %1, i64 48
   %i.bs = load i32, ptr %i.br, align 8, !tbaa !38
   %i.bt = add i32 %i.bs, %9
   %i.bu = add i32 %i.bt, %10
-  %i.bv = sub i32 %i.w, %i.bu
+  %i.bv = sub i32 %15, %i.bu
   store i32 %i.bv, ptr %i.q, align 4, !tbaa !37
   br label %bb.f
 

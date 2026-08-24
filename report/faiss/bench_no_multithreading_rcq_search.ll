@@ -202,18 +202,35 @@ declare i32 @__gxx_personality_v0(...)
 define internal void @_ZL12bench_searchRN9benchmark5StateEiif(ptr noundef nonnull align 64 dereferenceable(184) %0, i32 noundef %1, i32 noundef %2, float noundef %3) #3 personality ptr @__gxx_personality_v0 {
 bb.a:
   %4 = alloca %"struct.faiss::ResidualCoarseQuantizer", align 8 ; 14 uses
-  %5 = alloca %"class.std::vector.46", align 8    ; 9 uses
+  %5 = alloca %"class.std::vector.46", align 8    ; 12 uses
   %6 = alloca %"struct.faiss::SearchParametersResidualCoarseQuantizer", align 8 ; 7 uses
   %i.a = tail call noalias noundef nonnull dereferenceable(134217728) ptr @_Znwm(i64 noundef 134217728) #13 ; 5 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(134217728) %i.a, i8 0, i64 134217728, i1 false)
   invoke void @_ZN5faiss10float_randEPfml(ptr noundef nonnull %i.a, i64 noundef 33554432, i64 noundef 12345)
-          to label %bb.b unwind label %7
+          to label %bb.b unwind label %bb.s
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #12
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #12
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, i8 0, i64 24, i1 false)
   %i.b = invoke noalias noundef nonnull dereferenceable(16) ptr @_Znwm(i64 noundef 16) #13
-          to label %bb.c unwind label %bb.s       ; 4 uses
+          to label %bb.c unwind label %7          ; 4 uses
+
+7:                                                ; preds = %bb.b
+  %8 = landingpad { ptr, i32 }
+          cleanup                                 ; 2 uses
+  %9 = load ptr, ptr %5, align 8, !tbaa !38       ; 3 uses
+  %.not.i.i4.i = icmp eq ptr %9, null
+  br i1 %.not.i.i4.i, label %_ZNSt6vectorImSaImEED2Ev.exit74, label %10
+
+10:                                               ; preds = %7
+  %11 = getelementptr inbounds nuw i8, ptr %5, i64 16
+  %12 = load ptr, ptr %11, align 8, !tbaa !41
+  %13 = ptrtoint ptr %12 to i64
+  %14 = ptrtoint ptr %9 to i64
+  %15 = sub i64 %13, %14
+  tail call void @_ZdlPvm(ptr noundef nonnull %9, i64 noundef %15) #14
+  br label %_ZNSt6vectorImSaImEED2Ev.exit74
 
 bb.c:                                             ; preds = %bb.b
   store ptr %i.b, ptr %5, align 8, !tbaa !38
@@ -433,15 +450,10 @@ _ZNSt6vectorIfSaIfEED2Ev.exit72:                  ; preds = %_ZNSt6vectorIfSaIfE
   call void @_ZdlPvm(ptr noundef nonnull %i.a, i64 noundef 134217728) #14
   ret void
 
-7:                                                ; preds = %bb.a
-  %8 = landingpad { ptr, i32 }
-          cleanup
-  br label %_ZNSt6vectorIfSaIfEED2Ev.exit82
-
-bb.s:                                             ; preds = %bb.b
+bb.s:                                             ; preds = %bb.a
   %i.bf = landingpad { ptr, i32 }
           cleanup
-  br label %_ZNSt6vectorImSaImEED2Ev.exit74
+  br label %_ZNSt6vectorIfSaIfEED2Ev.exit82
 
 bb.t:                                             ; preds = %bb.c
   %i.bg = landingpad { ptr, i32 }
@@ -458,8 +470,8 @@ bb.u:                                             ; preds = %bb.t
   call void @_ZdlPvm(ptr noundef nonnull %i.bh, i64 noundef %i.bl) #14
   br label %_ZNSt6vectorImSaImEED2Ev.exit74
 
-_ZNSt6vectorImSaImEED2Ev.exit74:                  ; preds = %bb.u, %bb.t, %bb.s
-  %.pn = phi { ptr, i32 } [ %i.bf, %bb.s ], [ %i.bg, %bb.t ], [ %i.bg, %bb.u ]
+_ZNSt6vectorImSaImEED2Ev.exit74:                  ; preds = %bb.u, %bb.t, %10, %7
+  %.pn = phi { ptr, i32 } [ %8, %7 ], [ %i.bg, %bb.u ], [ %8, %10 ], [ %i.bg, %bb.t ]
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #12
   br label %bb.ag
 
@@ -556,8 +568,8 @@ bb.ag:                                            ; preds = %_ZNSt6vectorIfSaIfE
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #12
   br label %_ZNSt6vectorIfSaIfEED2Ev.exit82
 
-_ZNSt6vectorIfSaIfEED2Ev.exit82:                  ; preds = %bb.ag, %7
-  %.pn33.pn.pn.pn.pn.pn.pn.pn.pn = phi { ptr, i32 } [ %.pn33.pn.pn.pn.pn.pn.pn.pn, %bb.ag ], [ %8, %7 ]
+_ZNSt6vectorIfSaIfEED2Ev.exit82:                  ; preds = %bb.ag, %bb.s
+  %.pn33.pn.pn.pn.pn.pn.pn.pn.pn = phi { ptr, i32 } [ %.pn33.pn.pn.pn.pn.pn.pn.pn, %bb.ag ], [ %i.bf, %bb.s ]
   call void @_ZdlPvm(ptr noundef nonnull %i.a, i64 noundef 134217728) #14
   resume { ptr, i32 } %.pn33.pn.pn.pn.pn.pn.pn.pn.pn
 }

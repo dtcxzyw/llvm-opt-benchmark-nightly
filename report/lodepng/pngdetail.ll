@@ -205,9 +205,9 @@ define void @_Z7rescaleRKSt6vectorIhSaIhEEiiiib(ptr dead_on_unwind noalias nofre
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !116
-  %i.c = load ptr, ptr %1, align 8, !tbaa !117    ; 4 uses
+  %i.c = load ptr, ptr %1, align 8, !tbaa !117
   %i.d = ptrtoint ptr %i.b to i64
-  %i.e = ptrtoint ptr %i.c to i64                 ; 2 uses
+  %i.e = ptrtoint ptr %i.c to i64
   %i.f = sub i64 %i.d, %i.e
   %i.g = mul nsw i32 %3, %2
   %i.h = sext i32 %i.g to i64
@@ -274,6 +274,8 @@ bb.c:                                             ; preds = %bb.b, %.noexc175, %
   %i.af = and i64 %i.i, 2147483647                ; 6 uses
   %i.ag = zext nneg i32 %4 to i64                 ; 2 uses
   %wide.trip.count242 = zext nneg i32 %5 to i64
+  %.pre.pre.pre = load ptr, ptr %1, align 8, !tbaa !117 ; 2 uses
+  %.pre.pre.pre313 = ptrtoaddr ptr %.pre.pre.pre to i64
   %umax = tail call i64 @llvm.umax.i64(i64 %i.af, i64 1) ; 3 uses
   %min.iters.check = icmp samesign ult i64 %i.af, 4
   %min.iters.check313 = icmp samesign ult i64 %i.af, 32
@@ -446,6 +448,7 @@ bb.j:                                             ; preds = %bb.i
   %i.cx = fsub float %i.ci, %i.cw
   %i.cy = fpext float %i.cx to double
   %i.cz = fsub double 1.000000e+00, %i.cy         ; 2 uses
+  %7 = load ptr, ptr %1, align 8, !tbaa !117      ; 2 uses
   %i.da = sext i32 %i.cn to i64
   %i.db = sext i32 %i.co to i64                   ; 2 uses
   %i.dc = icmp eq i32 %i.cn, %i.co
@@ -466,7 +469,7 @@ bb.j:                                             ; preds = %bb.i
   %i.dl = mul i32 %i.dk, %i.j
   %i.dm = add nsw i32 %i.dl, %.0163222
   %i.dn = sext i32 %i.dm to i64
-  %i.do = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.dn
+  %i.do = getelementptr inbounds nuw i8, ptr %7, i64 %i.dn
   %i.dp = load i8, ptr %i.do, align 1, !tbaa !34
   %i.dq = uitofp i8 %i.dp to double
   %i.dr = tail call double @llvm.fmuladd.f64(double %.1158.us.peel, double %i.dq, double 0.000000e+00) ; 2 uses
@@ -482,7 +485,7 @@ bb.j:                                             ; preds = %bb.i
   %.1158.us = select i1 %i.dv, double %i.dh, double 1.000000e+00
   %i.dw = add nsw i32 %i.du, %.0163222
   %i.dx = sext i32 %i.dw to i64
-  %i.dy = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.dx
+  %i.dy = getelementptr inbounds nuw i8, ptr %7, i64 %i.dx
   %i.dz = load i8, ptr %i.dy, align 1, !tbaa !34
   %i.ea = uitofp i8 %i.dz to double
   %i.eb = tail call double @llvm.fmuladd.f64(double %.1158.us, double %i.ea, double %.0160200.us) ; 2 uses
@@ -714,13 +717,13 @@ iter.check:                                       ; preds = %.lr.ph195, %._crit_
   %i.ji = sext i32 %i.jf to i64                   ; 2 uses
   %sext = shl i64 %i.jh, 32
   %i.jj = ashr exact i64 %sext, 32                ; 2 uses
-  %invariant.gep = getelementptr i8, ptr %i.c, i64 %i.ji ; 3 uses
+  %invariant.gep = getelementptr i8, ptr %.pre.pre.pre, i64 %i.ji ; 3 uses
   %invariant.gep307 = getelementptr i8, ptr %i.v, i64 %i.jj ; 3 uses
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
   %i.jk = add i64 %i.jj, %i.w
-  %i.jl = add i64 %i.e, %i.ji
+  %i.jl = add i64 %.pre.pre.pre313, %i.ji
   %i.jm = sub i64 %i.jl, %i.jk
   %diff.check = icmp ugt i64 %i.jm, -32
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
@@ -1123,7 +1126,7 @@ bb.a:
   %i.c = alloca i8, align 1                       ; 4 uses
   %i.d = alloca i64, align 8                      ; 4 uses
   %4 = alloca %"class.std::map.30", align 8       ; 12 uses
-  %i.e = alloca i64, align 8                      ; 5 uses
+  %i.e = alloca i64, align 8                      ; 6 uses
   store i64 %2, ptr %i.d, align 8, !tbaa !87
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #26
   %i.f = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 7 uses
@@ -1526,7 +1529,7 @@ bb.bu:                                            ; preds = %bb.bs
 
 _Z14readExifUint32PKhmmb.exit350:                 ; preds = %bb.bt, %bb.bu
   %.0.i349 = phi i32 [ %i.lp, %bb.bu ], [ %i.lo, %bb.bt ] ; 2 uses
-  %i.lq = zext i32 %.0.i349 to i64                ; 5 uses
+  %i.lq = zext i32 %.0.i349 to i64                ; 4 uses
   store i64 %i.lq, ptr %i.e, align 8, !tbaa !87
   %.not225 = icmp eq i32 %.0.i349, 0
   br i1 %.not225, label %_Z14readExifUint32PKhmmb.exit350.thread, label %bb.bv
@@ -1597,7 +1600,8 @@ _ZNKSt6vectorImSaImEE12_M_check_lenEmPKc.exit.i.i353: ; preds = %bb.bx
 
 .noexc360:                                        ; preds = %_ZNKSt6vectorImSaImEE12_M_check_lenEmPKc.exit.i.i353
   %i.mi = getelementptr inbounds i8, ptr %i.mh, i64 %i.lz ; 2 uses
-  store i64 %i.lq, ptr %i.mi, align 8, !tbaa !87
+  %5 = load i64, ptr %i.e, align 8, !tbaa !87
+  store i64 %5, ptr %i.mi, align 8, !tbaa !87
   %i.mj = icmp sgt i64 %i.lz, 0
   br i1 %i.mj, label %bb.bz, label %_ZNSt6vectorImSaImEE17_M_realloc_insertIJRKmEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i358
 
@@ -2000,15 +2004,18 @@ bb.a:
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !106  ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 5 uses
   %.not10.i.i.i = icmp eq ptr %i.b, null
-  %.pre = load i64, ptr %1, align 8, !tbaa !87    ; 3 uses
-  br i1 %.not10.i.i.i, label %.critedge, label %.lr.ph.i.i.i.a
+  br i1 %.not10.i.i.i, label %.critedge, label %.lr.ph.i.i.i
 
-.lr.ph.i.i.i.a:                                   ; preds = %bb.a, %.lr.ph.i.i.i.a
-  %.012.i.i.i = phi ptr [ %.1.i.i.i, %.lr.ph.i.i.i.a ], [ %i.b, %bb.a ] ; 3 uses
-  %.0811.i.i.i = phi ptr [ %.19.i.i.i, %.lr.ph.i.i.i.a ], [ %i.c, %bb.a ]
+.lr.ph.i.i.i:                                     ; preds = %bb.a
+  %2 = load i64, ptr %1, align 8, !tbaa !87       ; 2 uses
+  br label %.lr.ph.i.i.i.a
+
+.lr.ph.i.i.i.a:                                   ; preds = %.lr.ph.i.i.i.a, %.lr.ph.i.i.i
+  %.012.i.i.i = phi ptr [ %i.b, %.lr.ph.i.i.i ], [ %.1.i.i.i, %.lr.ph.i.i.i.a ] ; 3 uses
+  %.0811.i.i.i = phi ptr [ %i.c, %.lr.ph.i.i.i ], [ %.19.i.i.i, %.lr.ph.i.i.i.a ]
   %i.d = getelementptr inbounds nuw i8, ptr %.012.i.i.i, i64 32
   %i.e = load i64, ptr %i.d, align 8, !tbaa !87
-  %i.f = icmp ult i64 %i.e, %.pre                 ; 2 uses
+  %i.f = icmp ult i64 %i.e, %2                    ; 2 uses
   %.19.i.i.i = select i1 %i.f, ptr %.0811.i.i.i, ptr %.012.i.i.i ; 6 uses
   %.1.in.v.i.i.i = select i1 %i.f, i64 24, i64 16
   %.1.in.i.i.i = getelementptr inbounds nuw i8, ptr %.012.i.i.i, i64 %.1.in.v.i.i.i
@@ -2023,14 +2030,15 @@ _ZNSt3mapImbSt4lessImESaISt4pairIKmbEEE11lower_boundERS3_.exit: ; preds = %.lr.p
 bb.b:                                             ; preds = %_ZNSt3mapImbSt4lessImESaISt4pairIKmbEEE11lower_boundERS3_.exit
   %i.h = getelementptr inbounds nuw i8, ptr %.19.i.i.i, i64 32
   %i.i = load i64, ptr %i.h, align 8, !tbaa !87
-  %i.j = icmp ult i64 %.pre, %i.i
+  %i.j = icmp ult i64 %2, %i.i
   br i1 %i.j, label %.critedge, label %_ZNSt8_Rb_treeImSt4pairIKmbESt10_Select1stIS2_ESt4lessImESaIS2_EE22_M_emplace_hint_uniqueIJRKSt21piecewise_construct_tSt5tupleIJRS1_EESD_IJEEEEESt17_Rb_tree_iteratorIS2_ESt23_Rb_tree_const_iteratorIS2_EDpOT_.exit
 
 .critedge:                                        ; preds = %bb.a, %_ZNSt3mapImbSt4lessImESaISt4pairIKmbEEE11lower_boundERS3_.exit, %bb.b
   %.08.lcssa.i.i.i14 = phi ptr [ %.19.i.i.i, %bb.b ], [ %.19.i.i.i, %_ZNSt3mapImbSt4lessImESaISt4pairIKmbEEE11lower_boundERS3_.exit ], [ %i.c, %bb.a ]
   %i.k = tail call noalias noundef nonnull dereferenceable(48) ptr @_Znwm(i64 noundef 48) #29 ; 6 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 32 ; 3 uses
-  store i64 %.pre, ptr %i.l, align 8, !tbaa !318
+  %3 = load i64, ptr %1, align 8, !tbaa !87
+  store i64 %3, ptr %i.l, align 8, !tbaa !318
   %i.m = getelementptr inbounds nuw i8, ptr %i.k, i64 40
   store i8 0, ptr %i.m, align 8, !tbaa !320
   %i.n = invoke { ptr, ptr } @_ZNSt8_Rb_treeImSt4pairIKmbESt10_Select1stIS2_ESt4lessImESaIS2_EE29_M_get_insert_hint_unique_posESt23_Rb_tree_const_iteratorIS2_ERS1_(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr %.08.lcssa.i.i.i14, ptr noundef nonnull align 8 dereferenceable(8) %i.l)
@@ -2433,11 +2441,11 @@ bb.b:                                             ; preds = %bb.a
   %i.a = ptrtoint ptr %3 to i64                   ; 2 uses
   %i.b = ptrtoint ptr %2 to i64
   %i.c = sub i64 %i.a, %i.b                       ; 16 uses
-  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !128
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 8 uses
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !116  ; 8 uses
-  %i.h = ptrtoint ptr %i.e to i64                 ; 2 uses
+  %i.h = ptrtoint ptr %i.e to i64
   %i.i = ptrtoint ptr %i.g to i64                 ; 4 uses
   %i.j = sub i64 %i.h, %i.i
   %.not54 = icmp ult i64 %i.j, %i.c
@@ -2658,7 +2666,9 @@ bb.ak:                                            ; preds = %bb.aj, %bb.ai, %bb.
   br i1 %.not.i59, label %_ZNSt12_Vector_baseIhSaIhEE13_M_deallocateEPhm.exit, label %bb.al
 
 bb.al:                                            ; preds = %bb.ak
-  %i.bv = sub i64 %i.h, %i.aw
+  %4 = load ptr, ptr %i.d, align 8, !tbaa !128
+  %5 = ptrtoint ptr %4 to i64
+  %i.bv = sub i64 %5, %i.aw
   tail call void @_ZdlPvm(ptr noundef nonnull %i.av, i64 noundef %i.bv) #27
   br label %_ZNSt12_Vector_baseIhSaIhEE13_M_deallocateEPhm.exit
 

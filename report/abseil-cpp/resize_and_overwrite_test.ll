@@ -202,7 +202,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZNKS
   %i.bv = call { ptr, i8 } @_ZNSt10_HashtableINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_mESaIS8_ENSt8__detail10_Select1stESt8equal_toIS5_ESt4hashIS5_ENSA_18_Mod_range_hashingENSA_20_Default_ranged_hashENSA_20_Prime_rehash_policyENSA_17_Hashtable_traitsILb1ELb0ELb1EEEE10_M_emplaceIJS5_mEEES6_INSA_14_Node_iteratorIS8_Lb0ELb1EEEbESt17integral_constantIbLb1EEDpOT_(ptr noundef nonnull align 8 dereferenceable(56) %i.c, ptr noundef nonnull align 8 dereferenceable(32) %1, ptr noundef nonnull align 8 dereferenceable(8) %i.b) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #29
   %i.bw = load ptr, ptr %i.bq, align 8, !tbaa !31 ; 4 uses
-  %i.bx = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  %i.bx = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.by = load ptr, ptr %i.bx, align 8, !tbaa !32
   %.not.i.i = icmp eq ptr %i.bw, %i.by
   br i1 %.not.i.i, label %bb.n, label %bb.m
@@ -216,8 +216,8 @@ bb.m:                                             ; preds = %_ZNSt7__cxx1112basi
 bb.n:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
   %i.ca = load ptr, ptr %0, align 8, !tbaa !16    ; 4 uses
   %i.cb = ptrtoint ptr %i.bw to i64
-  %i.cc = ptrtoint ptr %i.ca to i64
-  %i.cd = sub i64 %i.cb, %i.cc                    ; 6 uses
+  %i.cc = ptrtoint ptr %i.ca to i64               ; 2 uses
+  %i.cd = sub i64 %i.cb, %i.cc                    ; 5 uses
   %i.ce = icmp eq i64 %i.cd, 9223372036854775800
   br i1 %i.ce, label %bb.o, label %_ZNKSt6vectorIPN7testing8internal30ParameterizedTestSuiteInfoBaseESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i
 
@@ -251,7 +251,10 @@ _ZNSt6vectorIPN7testing8internal30ParameterizedTestSuiteInfoBaseESaIS3_EE11_S_re
   br i1 %.not.i17.i.i.i, label %_ZNSt6vectorIPN7testing8internal30ParameterizedTestSuiteInfoBaseESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i, label %bb.q
 
 bb.q:                                             ; preds = %_ZNSt6vectorIPN7testing8internal30ParameterizedTestSuiteInfoBaseESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i
-  call void @_ZdlPvm(ptr noundef nonnull %i.ca, i64 noundef %i.cd) #31
+  %6 = load ptr, ptr %i.bx, align 8, !tbaa !32
+  %7 = ptrtoint ptr %6 to i64
+  %8 = sub i64 %7, %i.cc
+  call void @_ZdlPvm(ptr noundef nonnull %i.ca, i64 noundef %8) #31
   br label %_ZNSt6vectorIPN7testing8internal30ParameterizedTestSuiteInfoBaseESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i
 
 _ZNSt6vectorIPN7testing8internal30ParameterizedTestSuiteInfoBaseESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i: ; preds = %bb.q, %_ZNSt6vectorIPN7testing8internal30ParameterizedTestSuiteInfoBaseESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i
@@ -654,9 +657,9 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress uwtable
-define internal noundef nonnull ptr @_ZNK7testing8internal30ValuesInIteratorRangeGeneratorIN12_GLOBAL__N_123ResizeAndOverwriteParamEE8Iterator7CurrentEv(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(32) %0) unnamed_addr #1 align 2 {
+define internal noundef ptr @_ZNK7testing8internal30ValuesInIteratorRangeGeneratorIN12_GLOBAL__N_123ResizeAndOverwriteParamEE8Iterator7CurrentEv(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(32) %0) unnamed_addr #1 align 2 {
 bb.a:
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 4 uses
   %.val1 = load ptr, ptr %i.a, align 8, !tbaa !81 ; 2 uses
   %i.b = icmp eq ptr %.val1, null
   br i1 %i.b, label %_ZNSt10unique_ptrIKN12_GLOBAL__N_123ResizeAndOverwriteParamESt14default_deleteIS2_EE5resetEPS2_.exit.a, label %bb.b
@@ -666,11 +669,18 @@ _ZNSt10unique_ptrIKN12_GLOBAL__N_123ResizeAndOverwriteParamESt14default_deleteIS
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16
   %.val2 = load ptr, ptr %i.d, align 8, !tbaa !182
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %i.c, ptr noundef nonnull align 8 dereferenceable(24) %.val2, i64 24, i1 false), !tbaa.struct !183
+  %1 = load ptr, ptr %i.a, align 8, !tbaa !81     ; 2 uses
   store ptr %i.c, ptr %i.a, align 8, !tbaa !81
+  %.not.i.i = icmp eq ptr %1, null
+  br i1 %.not.i.i, label %bb.b, label %_ZNKSt14default_deleteIKN12_GLOBAL__N_123ResizeAndOverwriteParamEEclEPS2_.exit.i.i
+
+_ZNKSt14default_deleteIKN12_GLOBAL__N_123ResizeAndOverwriteParamEEclEPS2_.exit.i.i: ; preds = %_ZNSt10unique_ptrIKN12_GLOBAL__N_123ResizeAndOverwriteParamESt14default_deleteIS2_EE5resetEPS2_.exit.a
+  tail call void @_ZdlPvm(ptr noundef nonnull %1, i64 noundef 24) #31
+  %.val.pre = load ptr, ptr %i.a, align 8, !tbaa !81
   br label %bb.b
 
-bb.b:                                             ; preds = %_ZNSt10unique_ptrIKN12_GLOBAL__N_123ResizeAndOverwriteParamESt14default_deleteIS2_EE5resetEPS2_.exit.a, %bb.a
-  %.val = phi ptr [ %i.c, %_ZNSt10unique_ptrIKN12_GLOBAL__N_123ResizeAndOverwriteParamESt14default_deleteIS2_EE5resetEPS2_.exit.a ], [ %.val1, %bb.a ]
+bb.b:                                             ; preds = %_ZNKSt14default_deleteIKN12_GLOBAL__N_123ResizeAndOverwriteParamEEclEPS2_.exit.i.i, %_ZNSt10unique_ptrIKN12_GLOBAL__N_123ResizeAndOverwriteParamESt14default_deleteIS2_EE5resetEPS2_.exit.a, %bb.a
+  %.val = phi ptr [ %.val.pre, %_ZNKSt14default_deleteIKN12_GLOBAL__N_123ResizeAndOverwriteParamEEclEPS2_.exit.i.i ], [ %i.c, %_ZNSt10unique_ptrIKN12_GLOBAL__N_123ResizeAndOverwriteParamESt14default_deleteIS2_EE5resetEPS2_.exit.a ], [ %.val1, %bb.a ]
   ret ptr %.val
 }
 

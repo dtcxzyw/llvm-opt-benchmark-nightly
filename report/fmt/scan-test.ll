@@ -205,7 +205,7 @@ declare void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_assignERK
 define linkonce_odr hidden void @_ZN7testing15AssertionResult13AppendMessageERKNS_7MessageE(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(8) %1) local_unnamed_addr #1 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %2 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !135  ; 2 uses
   %i.c = icmp eq ptr %i.b, null
   br i1 %i.c, label %_ZNSt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS5_EE5resetEPS5_.exit.a, label %bb.b
@@ -217,16 +217,35 @@ _ZNSt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14defaul
   %i.f = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   store i64 0, ptr %i.f, align 8, !tbaa !45
   store i8 0, ptr %i.e, align 8, !tbaa !10
+  %3 = load ptr, ptr %i.a, align 8, !tbaa !135    ; 4 uses
   store ptr %i.d, ptr %i.a, align 8, !tbaa !135
+  %.not.i.i = icmp eq ptr %3, null
+  br i1 %.not.i.i, label %bb.b, label %4
+
+4:                                                ; preds = %_ZNSt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS5_EE5resetEPS5_.exit.a
+  %5 = load ptr, ptr %3, align 8, !tbaa !49       ; 2 uses
+  %6 = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
+  %7 = icmp eq ptr %5, %6
+  br i1 %7, label %_ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEPS5_.exit.i.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i
+
+_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i: ; preds = %4
+  %8 = load i64, ptr %6, align 8, !tbaa !10
+  %9 = add i64 %8, 1
+  tail call void @_ZdlPvm(ptr noundef %5, i64 noundef %9) #35
+  br label %_ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEPS5_.exit.i.i
+
+_ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEPS5_.exit.i.i: ; preds = %4, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i
+  tail call void @_ZdlPvm(ptr noundef nonnull %3, i64 noundef 32) #35
+  %.pre = load ptr, ptr %i.a, align 8, !tbaa !135
   br label %bb.b
 
-bb.b:                                             ; preds = %_ZNSt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS5_EE5resetEPS5_.exit.a, %bb.a
-  %3 = phi ptr [ %i.d, %_ZNSt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS5_EE5resetEPS5_.exit.a ], [ %i.b, %bb.a ] ; 2 uses
+bb.b:                                             ; preds = %_ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEPS5_.exit.i.i, %_ZNSt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS5_EE5resetEPS5_.exit.a, %bb.a
+  %10 = phi ptr [ %.pre, %_ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEPS5_.exit.i.i ], [ %i.d, %_ZNSt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS5_EE5resetEPS5_.exit.a ], [ %i.b, %bb.a ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #34
   call void @_ZNK7testing7Message9GetStringB5cxx11Ev(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %2, ptr noundef nonnull align 8 dereferenceable(8) %1)
   %i.g = load ptr, ptr %2, align 8, !tbaa !49     ; 2 uses
   %i.h = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.g) #34 ; 2 uses
-  %i.i = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %i.i = getelementptr inbounds nuw i8, ptr %10, i64 8
   %i.j = load i64, ptr %i.i, align 8, !tbaa !45
   %i.k = sub i64 4611686018427387903, %i.j
   %i.l = icmp ult i64 %i.k, %i.h
@@ -240,7 +259,7 @@ bb.c:                                             ; preds = %bb.b
   unreachable
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE15_M_check_lengthEmmPKc.exit.i: ; preds = %bb.b
-  %i.m = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_appendEPKcm(ptr noundef nonnull align 8 dereferenceable(32) %3, ptr noundef nonnull %i.g, i64 noundef %i.h)
+  %i.m = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_appendEPKcm(ptr noundef nonnull align 8 dereferenceable(32) %10, ptr noundef nonnull %i.g, i64 noundef %i.h)
           to label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit unwind label %bb.d ; 0 uses
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE15_M_check_lengthEmmPKc.exit.i

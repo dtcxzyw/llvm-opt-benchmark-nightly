@@ -120,7 +120,7 @@ bb.c:                                             ; preds = %bb.a
   %i.g = tail call noundef ptr %i.f(ptr noundef nonnull align 8 dereferenceable(24) %0)
   %i.h = load i64, ptr %0, align 8
   %i.i = and i64 %i.h, -256
-  %i.j = or disjoint i64 %i.i, 2                  ; 2 uses
+  %i.j = or disjoint i64 %i.i, 2
   store i64 %i.j, ptr %0, align 8
   tail call void @llvm.experimental.noalias.scope.decl(metadata !19)
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 12
@@ -144,14 +144,13 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.c
   %i.y = tail call noundef ptr %i.t(ptr noundef %i.g, i64 noundef %i.r), !noalias !19, !inline_history !24
-  %.pre = load i64, ptr %0, align 8
   br label %_ZN4absl12lts_2026052618container_internal12_GLOBAL__N_117AllocBackingArrayERNS1_12CommonFieldsERKNS1_15PolicyFunctionsEmbPv.exit
 
 _ZN4absl12lts_2026052618container_internal12_GLOBAL__N_117AllocBackingArrayERNS1_12CommonFieldsERKNS1_15PolicyFunctionsEmbPv.exit: ; preds = %bb.d, %bb.e
-  %5 = phi i64 [ %i.j, %bb.d ], [ %.pre, %bb.e ]  ; 2 uses
   %i.z = phi ptr [ %i.x, %bb.d ], [ %i.y, %bb.e ] ; 4 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 8 ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %i.z, i64 %i.p ; 2 uses
+  %5 = load i64, ptr %0, align 8                  ; 2 uses
   %i.ac = and i64 %5, -256
   %i.ad = add i64 %i.ac, 131072
   %i.ae = and i64 %5, 255
@@ -284,7 +283,7 @@ bb.c:                                             ; preds = %bb.a
   %i.g = tail call noundef ptr %i.f(ptr noundef nonnull align 8 dereferenceable(24) %0)
   %i.h = load i64, ptr %0, align 8
   %i.i = and i64 %i.h, -256
-  %i.j = or disjoint i64 %i.i, 2                  ; 2 uses
+  %i.j = or disjoint i64 %i.i, 2
   store i64 %i.j, ptr %0, align 8
   tail call void @llvm.experimental.noalias.scope.decl(metadata !36)
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 12
@@ -308,14 +307,13 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.c
   %i.y = tail call noundef ptr %i.t(ptr noundef %i.g, i64 noundef %i.r), !noalias !36, !inline_history !24
-  %.pre = load i64, ptr %0, align 8
   br label %_ZN4absl12lts_2026052618container_internal12_GLOBAL__N_117AllocBackingArrayERNS1_12CommonFieldsERKNS1_15PolicyFunctionsEmbPv.exit
 
 _ZN4absl12lts_2026052618container_internal12_GLOBAL__N_117AllocBackingArrayERNS1_12CommonFieldsERKNS1_15PolicyFunctionsEmbPv.exit: ; preds = %bb.d, %bb.e
-  %5 = phi i64 [ %i.j, %bb.d ], [ %.pre, %bb.e ]  ; 2 uses
   %i.z = phi ptr [ %i.x, %bb.d ], [ %i.y, %bb.e ] ; 4 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 8 ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %i.z, i64 %i.p ; 2 uses
+  %5 = load i64, ptr %0, align 8                  ; 2 uses
   %i.ac = and i64 %5, -256
   %i.ad = add i64 %i.ac, 131072
   %i.ae = and i64 %5, 255
@@ -409,7 +407,7 @@ bb.c:                                             ; preds = %bb.a
   %i.g = tail call noundef ptr %i.f(ptr noundef nonnull align 8 dereferenceable(24) %0)
   %i.h = load i64, ptr %0, align 8
   %i.i = and i64 %i.h, -256
-  %i.j = or disjoint i64 %i.i, 2                  ; 2 uses
+  %i.j = or disjoint i64 %i.i, 2
   store i64 %i.j, ptr %0, align 8
   tail call void @llvm.experimental.noalias.scope.decl(metadata !39)
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 12
@@ -433,14 +431,13 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.c
   %i.y = tail call noundef ptr %i.t(ptr noundef %i.g, i64 noundef %i.r), !noalias !39, !inline_history !24
-  %.pre = load i64, ptr %0, align 8
   br label %_ZN4absl12lts_2026052618container_internal12_GLOBAL__N_117AllocBackingArrayERNS1_12CommonFieldsERKNS1_15PolicyFunctionsEmbPv.exit
 
 _ZN4absl12lts_2026052618container_internal12_GLOBAL__N_117AllocBackingArrayERNS1_12CommonFieldsERKNS1_15PolicyFunctionsEmbPv.exit: ; preds = %bb.d, %bb.e
-  %5 = phi i64 [ %i.j, %bb.d ], [ %.pre, %bb.e ]  ; 2 uses
   %i.z = phi ptr [ %i.x, %bb.d ], [ %i.y, %bb.e ] ; 4 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 8 ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %i.z, i64 %i.p ; 2 uses
+  %5 = load i64, ptr %0, align 8                  ; 2 uses
   %i.ac = and i64 %5, -256
   %i.ad = add i64 %i.ac, 131072
   %i.ae = and i64 %5, 255
@@ -534,7 +531,7 @@ bb.c:                                             ; preds = %bb.a
   %i.g = tail call noundef ptr %i.f(ptr noundef nonnull align 8 dereferenceable(24) %0)
   %i.h = load i64, ptr %0, align 8
   %i.i = and i64 %i.h, -256
-  %i.j = or disjoint i64 %i.i, 2                  ; 2 uses
+  %i.j = or disjoint i64 %i.i, 2
   store i64 %i.j, ptr %0, align 8
   tail call void @llvm.experimental.noalias.scope.decl(metadata !42)
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 12
@@ -558,14 +555,13 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.c
   %i.y = tail call noundef ptr %i.t(ptr noundef %i.g, i64 noundef %i.r), !noalias !42, !inline_history !24
-  %.pre = load i64, ptr %0, align 8
   br label %_ZN4absl12lts_2026052618container_internal12_GLOBAL__N_117AllocBackingArrayERNS1_12CommonFieldsERKNS1_15PolicyFunctionsEmbPv.exit
 
 _ZN4absl12lts_2026052618container_internal12_GLOBAL__N_117AllocBackingArrayERNS1_12CommonFieldsERKNS1_15PolicyFunctionsEmbPv.exit: ; preds = %bb.d, %bb.e
-  %5 = phi i64 [ %i.j, %bb.d ], [ %.pre, %bb.e ]  ; 2 uses
   %i.z = phi ptr [ %i.x, %bb.d ], [ %i.y, %bb.e ] ; 4 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 8 ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %i.z, i64 %i.p ; 2 uses
+  %5 = load i64, ptr %0, align 8                  ; 2 uses
   %i.ac = and i64 %5, -256
   %i.ad = add i64 %i.ac, 131072
   %i.ae = and i64 %5, 255
@@ -659,7 +655,7 @@ bb.c:                                             ; preds = %bb.a
   %i.g = tail call noundef ptr %i.f(ptr noundef nonnull align 8 dereferenceable(24) %0)
   %i.h = load i64, ptr %0, align 8
   %i.i = and i64 %i.h, -256
-  %i.j = or disjoint i64 %i.i, 2                  ; 2 uses
+  %i.j = or disjoint i64 %i.i, 2
   store i64 %i.j, ptr %0, align 8
   tail call void @llvm.experimental.noalias.scope.decl(metadata !45)
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 12
@@ -683,14 +679,13 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.c
   %i.y = tail call noundef ptr %i.t(ptr noundef %i.g, i64 noundef %i.r), !noalias !45, !inline_history !24
-  %.pre = load i64, ptr %0, align 8
   br label %_ZN4absl12lts_2026052618container_internal12_GLOBAL__N_117AllocBackingArrayERNS1_12CommonFieldsERKNS1_15PolicyFunctionsEmbPv.exit
 
 _ZN4absl12lts_2026052618container_internal12_GLOBAL__N_117AllocBackingArrayERNS1_12CommonFieldsERKNS1_15PolicyFunctionsEmbPv.exit: ; preds = %bb.d, %bb.e
-  %5 = phi i64 [ %i.j, %bb.d ], [ %.pre, %bb.e ]  ; 2 uses
   %i.z = phi ptr [ %i.x, %bb.d ], [ %i.y, %bb.e ] ; 4 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 8 ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %i.z, i64 %i.p ; 2 uses
+  %5 = load i64, ptr %0, align 8                  ; 2 uses
   %i.ac = and i64 %5, -256
   %i.ad = add i64 %i.ac, 131072
   %i.ae = and i64 %5, 255

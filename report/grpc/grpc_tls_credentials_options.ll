@@ -164,7 +164,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %0) #25
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN9grpc_core7ExecCtxE, i64 16), ptr %0, align 8, !tbaa !8
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 3 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 4 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.a, i8 0, i64 32, i1 false)
   store i64 1, ptr %i.b, align 8, !tbaa !10
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 48
@@ -237,7 +237,9 @@ bb.f:                                             ; preds = %_ZN9grpc_core7ExecC
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(17) %i.x, i8 0, i64 17, i1 false)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.y, i8 0, i64 16, i1 false)
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN9grpc_core7ExecCtxE, i64 16), ptr %0, align 8, !tbaa !8
-  store i64 1, ptr %i.b, align 8, !tbaa !10
+  %1 = load i64, ptr %i.b, align 8, !tbaa !10
+  %2 = or i64 %1, 1
+  store i64 %2, ptr %i.b, align 8, !tbaa !10
   %i.aa = invoke noundef zeroext i1 @_ZN9grpc_core7ExecCtx5FlushEv(ptr noundef nonnull align 8 dereferenceable(96) %0)
           to label %bb.g unwind label %bb.n, !inline_history !66 ; 0 uses
 

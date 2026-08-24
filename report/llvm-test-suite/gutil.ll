@@ -202,7 +202,7 @@ define dso_local noundef ptr @_ZN2kc10f_mkselvarEPKci(ptr nofree noundef readonl
 bb.a:
   %i.a = alloca [8192 x i8], align 16             ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #13
-  %i.b = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %0) #12 ; 2 uses
+  %i.b = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %0) #12
   %i.c = add i64 %i.b, 31                         ; 2 uses
   %i.d = icmp ugt i64 %i.c, 8192
   br i1 %i.d, label %bb.b, label %bb.c
@@ -215,7 +215,8 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   %.011 = phi ptr [ %i.e, %bb.b ], [ null, %bb.a ] ; 2 uses
   %.0 = phi ptr [ %i.e, %bb.b ], [ %i.a, %bb.a ]  ; 3 uses
   %i.f = call ptr @strcpy(ptr noundef nonnull dereferenceable(1) %.0, ptr noundef nonnull dereferenceable(1) %0) #13 ; 0 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %.0, i64 %i.b
+  %2 = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %0) #12
+  %i.g = getelementptr inbounds nuw i8, ptr %.0, i64 %2
   %i.h = call i32 (ptr, ptr, ...) @sprintf(ptr noundef nonnull dereferenceable(1) %i.g, ptr noundef nonnull dereferenceable(1) @.str.9, i32 noundef %1) #13 ; 0 uses
   %i.i = call noundef ptr @_ZN2kc12mkcasestringEPKci(ptr noundef nonnull %.0, i32 noundef -1)
   %i.j = call noundef ptr @_ZN2kc3StrEPNS_20impl_casestring__StrE(ptr noundef %i.i)
@@ -252,7 +253,7 @@ define dso_local noundef ptr @_ZN2kc11f_mkselvar2EPKcii(ptr nofree noundef reado
 bb.a:
   %i.a = alloca [8192 x i8], align 16             ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #13
-  %i.b = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %0) #12 ; 2 uses
+  %i.b = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %0) #12
   %i.c = add i64 %i.b, 62                         ; 2 uses
   %i.d = icmp ugt i64 %i.c, 8192
   br i1 %i.d, label %bb.b, label %bb.c
@@ -265,7 +266,8 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   %.014 = phi ptr [ %i.e, %bb.b ], [ null, %bb.a ] ; 2 uses
   %.0 = phi ptr [ %i.e, %bb.b ], [ %i.a, %bb.a ]  ; 3 uses
   %i.f = call ptr @strcpy(ptr noundef nonnull dereferenceable(1) %.0, ptr noundef nonnull dereferenceable(1) %0) #13 ; 0 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %.0, i64 %i.b
+  %3 = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %0) #12
+  %i.g = getelementptr inbounds nuw i8, ptr %.0, i64 %3
   %i.h = call i32 (ptr, ptr, ...) @sprintf(ptr noundef nonnull dereferenceable(1) %i.g, ptr noundef nonnull dereferenceable(1) @.str.10, i32 noundef %1, i32 noundef %2) #13 ; 0 uses
   %i.i = call noundef ptr @_ZN2kc12mkcasestringEPKci(ptr noundef nonnull %.0, i32 noundef -1)
   %i.j = call noundef ptr @_ZN2kc3StrEPNS_20impl_casestring__StrE(ptr noundef %i.i)
