@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.bd = load i32, ptr %i.bc, align 1, !tbaa !30
   %i.be = tail call i32 @llvm.bswap.i32(i32 %i.bd)
   %i.bf = and i32 %i.az, 7
-  %i.bg = shl i32 %i.be, %i.bf                    ; 3 uses
+  %i.bg = shl i32 %i.be, %i.bf                    ; 4 uses
   %i.bh = lshr i32 %i.bg, 30                      ; 7 uses
   %i.bi = add i32 %i.az, 2
   %i.bj = tail call i32 @llvm.umin.i32(i32 %i.u, i32 %i.bi) ; 4 uses
@@ -608,12 +608,12 @@ bb.l:                                             ; preds = %.lr.ph21, %bb.l
 .preheader11:                                     ; preds = %.preheader11.loopexit, %.preheader12
   %.pre164168 = phi i32 [ %.promoted31, %.preheader12 ], [ %i.oq, %.preheader11.loopexit ]
   %.2185.lcssa = phi i32 [ %.1184.lcssa, %.preheader12 ], [ %i.ot, %.preheader11.loopexit ]
-  %.2.lcssa = phi i32 [ %.1.lcssa, %.preheader12 ], [ %i.nz, %.preheader11.loopexit ] ; 3 uses
+  %.2.lcssa = phi i32 [ %.1.lcssa, %.preheader12 ], [ %i.nz, %.preheader11.loopexit ] ; 4 uses
   br i1 %.not12.i230, label %.preheader10, label %.lr.ph34
 
 .lr.ph34:                                         ; preds = %.preheader11
   %i.oa = getelementptr inbounds nuw i8, ptr %i.b, i64 192
-  %i.ob = zext i32 %.2.lcssa to i64
+  %i.ob = zext nneg i32 %.2.lcssa to i64
   %i.oc = mul nuw nsw i64 %i.ob, 3
   %scevgep = getelementptr i8, ptr %1, i64 %i.oc
   %i.od = lshr i32 %i.bg, 30
@@ -654,19 +654,23 @@ bb.m:                                             ; preds = %.lr.ph28, %bb.m
   br i1 %exitcond102.not, label %.preheader11.loopexit, label %bb.m, !llvm.loop !195
 
 .preheader10:                                     ; preds = %.lr.ph34, %.preheader11
-  %.3.lcssa = phi i32 [ %.2.lcssa, %.preheader11 ], [ %i.of, %.lr.ph34 ] ; 3 uses
+  %.3.lcssa = phi i32 [ %.2.lcssa, %.preheader11 ], [ %i.of, %.lr.ph34 ]
   br i1 %.not12.i236, label %._crit_edge, label %.lr.ph38
 
 .lr.ph38:                                         ; preds = %.preheader10
   %i.oy = getelementptr inbounds nuw i8, ptr %i.b, i64 240
-  %i.oz = zext nneg i32 %.3.lcssa to i64
-  %i.pa = mul nuw nsw i64 %i.oz, 3
+  %4 = lshr i32 %i.bg, 30
+  %5 = zext nneg i32 %4 to i64
+  %i.oz = zext nneg i32 %.2.lcssa to i64
+  %6 = add nuw nsw i64 %5, %i.oz                  ; 2 uses
+  %i.pa = mul nuw nsw i64 %6, 3
   %scevgep112 = getelementptr i8, ptr %1, i64 %i.pa
   %i.pb = lshr i32 %i.ca, 28
   %narrow185.a = mul nuw nsw i32 %i.pb, 3
   %i.pc = zext nneg i32 %narrow185.a to i64
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %i.oy, ptr align 1 %scevgep112, i64 %i.pc, i1 false)
-  %i.pd = add i32 %.3.lcssa, %i.cb
+  %7 = trunc nuw i64 %6 to i32
+  %i.pd = add i32 %i.cb, %7
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.lr.ph38, %.preheader10

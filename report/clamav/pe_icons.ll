@@ -205,16 +205,20 @@ bb.bk:                                            ; preds = %.preheader1138, %bb
   %i.ul = mul nuw nsw i32 %i.om, %0
   %i.um = zext nneg i32 %i.ul to i64
   %invariant.gep1880 = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.um ; 2 uses
-  %n.vec31 = and i64 %i.i, 508                    ; 3 uses
+  %n.vec31 = and i64 %i.i, 504                    ; 3 uses
   br label %vector.body32
 
 vector.body32:                                    ; preds = %vector.body32, %.loopexit1140
   %index33 = phi i64 [ 0, %.loopexit1140 ], [ %index.next34, %vector.body32 ] ; 3 uses
-  %i.un = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %index33
+  %i.un = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %index33 ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %i.un, i64 16
   store <4 x i32> splat (i32 -16777216), ptr %i.un, align 4, !tbaa !57
-  %i.uo = getelementptr inbounds nuw [4 x i8], ptr %invariant.gep1880, i64 %index33
+  store <4 x i32> splat (i32 -16777216), ptr %4, align 4, !tbaa !57
+  %i.uo = getelementptr inbounds nuw [4 x i8], ptr %invariant.gep1880, i64 %index33 ; 2 uses
+  %5 = getelementptr inbounds nuw i8, ptr %i.uo, i64 16
   store <4 x i32> splat (i32 -16777216), ptr %i.uo, align 4, !tbaa !57
-  %index.next34 = add nuw i64 %index33, 4         ; 2 uses
+  store <4 x i32> splat (i32 -16777216), ptr %5, align 4, !tbaa !57
+  %index.next34 = add nuw i64 %index33, 8         ; 2 uses
   %i.up = icmp eq i64 %index.next34, %n.vec31
   br i1 %i.up, label %middle.block35, label %vector.body32, !llvm.loop !136
 

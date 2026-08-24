@@ -205,12 +205,13 @@ bb.au:                                            ; preds = %bb.al
 
 bb.av:                                            ; preds = %bb.bc, %.lr.ph.i
   %.sroa.28.0.i = phi float [ 0.000000e+00, %.lr.ph.i ], [ %.sroa.28.3.i, %bb.bc ] ; 2 uses
-  %indvars.iv109.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next110.i, %bb.bc ] ; 15 uses
+  %indvars.iv109.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next110.i, %bb.bc ] ; 16 uses
   %indvars.iv100.i = phi i32 [ 1, %.lr.ph.i ], [ %indvars.iv.next101.i, %bb.bc ] ; 7 uses
   %.05688.i = phi i32 [ 0, %.lr.ph.i ], [ %.3.i, %bb.bc ] ; 2 uses
   %.05787.i = phi i32 [ 0, %.lr.ph.i ], [ %.158.i, %bb.bc ] ; 8 uses
   %i.cg = phi <2 x float> [ zeroinitializer, %.lr.ph.i ], [ %i.nu, %bb.bc ] ; 2 uses
-  %i.ch = trunc i64 %indvars.iv109.i to i32       ; 2 uses
+  %51 = trunc i64 %indvars.iv109.i to i32
+  %i.ch = trunc i64 %indvars.iv109.i to i32
   %i.ci = trunc i64 %indvars.iv109.i to i32
   %i.cj = trunc i64 %indvars.iv109.i to i32       ; 2 uses
   %i.ck = trunc i64 %indvars.iv109.i to i32
@@ -371,7 +372,7 @@ scalar.ph512.preheader:                           ; preds = %.preheader62.i, %ve
   %indvars.iv.i.ph = phi i64 [ %i.eo, %vector.body519 ], [ %i.ea, %.preheader62.i ] ; 3 uses
   %i.fe = trunc i64 %indvars.iv.i.ph to i32       ; 2 uses
   %i.ff = sub i32 %indvars.iv100.i, %i.fe
-  %i.fg = sub i32 %i.ch, %i.fe
+  %i.fg = sub i32 %51, %i.fe
   %xtraiter = and i32 %i.ff, 3                    ; 2 uses
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0
   br i1 %lcmp.mod.not, label %scalar.ph512.prol.loopexit, label %scalar.ph512.prol
@@ -774,7 +775,7 @@ bb.ih:                                            ; preds = %bb.ii, %bb.ig
   %i.amp = lshr i64 %store_forwarded, 30
   %i.amq = xor i64 %i.amp, %store_forwarded
   %i.amr = mul nuw nsw i64 %i.amq, 1812433253
-  %i.ams = add nuw i64 %i.amr, %.011.i.i.i        ; 2 uses
+  %i.ams = add nuw nsw i64 %i.amr, %.011.i.i.i    ; 2 uses
   %i.amt = and i64 %i.ams, 4294967295             ; 2 uses
   store i64 %i.amt, ptr %i.amo, align 8, !tbaa !131
   %i.amu = add nuw nsw i64 %.011.i.i.i, 1         ; 2 uses

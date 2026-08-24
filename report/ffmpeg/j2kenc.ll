@@ -205,8 +205,10 @@ bb.bl:                                            ; preds = %bb.ax
 
 .preheader177.us.i.i.i:                           ; preds = %.preheader177.lr.ph.i.i.i, %._crit_edge.us.i120.i.i
   %.18.i.i = phi i32 [ %.24.i.i, %._crit_edge.us.i120.i.i ], [ 0, %.preheader177.lr.ph.i.i.i ]
-  %indvars.iv193.i.i.i = phi i64 [ %indvars.iv.next194.i.i.i, %._crit_edge.us.i120.i.i ], [ 0, %.preheader177.lr.ph.i.i.i ] ; 6 uses
+  %indvars.iv193.i.i.i = phi i64 [ %indvars.iv.next194.i.i.i, %._crit_edge.us.i120.i.i ], [ 0, %.preheader177.lr.ph.i.i.i ] ; 7 uses
   %indvars34.i.i = trunc i64 %indvars.iv193.i.i.i to i32 ; 2 uses
+  %sext.i.i = shl nuw i64 %indvars.iv193.i.i.i, 32
+  %5 = ashr exact i64 %sext.i.i, 32
   %i.avj = or disjoint i64 %indvars.iv193.i.i.i, 3 ; 2 uses
   %i.avk = icmp samesign ult i64 %i.avj, %i.aip
   %i.avl = or disjoint i64 %indvars.iv193.i.i.i, 1
@@ -406,7 +408,7 @@ bb.bu:                                            ; preds = %.preheader.us.3.i.i
   br label %.loopexit.us.i.i.i
 
 .lr.ph181.us.preheader.i.i.i:                     ; preds = %.preheader.us.3.i.i.i, %.preheader.us.2.i.i.i, %.preheader.us.1.i.i.i, %.preheader.us.preheader.i123.i.i
-  %.0157.lcssa.us.ph.i.i.i = phi i32 [ 2, %.preheader.us.2.i.i.i ], [ 3, %.preheader.us.3.i.i.i ], [ 1, %.preheader.us.1.i.i.i ], [ 0, %.preheader.us.preheader.i123.i.i ] ; 3 uses
+  %.0157.lcssa.us.ph.i.i.i = phi i32 [ 2, %.preheader.us.2.i.i.i ], [ 3, %.preheader.us.3.i.i.i ], [ 1, %.preheader.us.1.i.i.i ], [ 0, %.preheader.us.preheader.i123.i.i ] ; 4 uses
   call void @ff_mqc_encode(ptr noundef nonnull %i.adk, ptr noundef nonnull %i.adm, i32 noundef 1) #11
   %i.bac = lshr i32 %.0157.lcssa.us.ph.i.i.i, 1
   call void @ff_mqc_encode(ptr noundef nonnull %i.adk, ptr noundef nonnull %i.adn, i32 noundef %i.bac) #11
@@ -417,11 +419,13 @@ bb.bu:                                            ; preds = %.preheader.us.3.i.i
   %i.baf = getelementptr [2 x i8], ptr %i.adj, i64 %indvars.iv.i116.i.i ; 4 uses
   %i.bag = getelementptr [4 x i8], ptr %4, i64 %indvars.iv.i116.i.i ; 2 uses
   %i.bah = trunc nuw nsw i64 %indvars.iv.i116.i.i to i32
-  %i.bai = sext i32 %i.bae to i64                 ; 2 uses
+  %6 = zext nneg i32 %.0157.lcssa.us.ph.i.i.i to i64
+  %7 = or disjoint i64 %5, %6
+  %i.bai = sext i32 %i.bae to i64
   br label %.lr.ph181.us.i.i.i
 
 .lr.ph181.us.i.i.i:                               ; preds = %bb.bz, %.lr.ph181.us.preheader.i.i.i
-  %indvars.iv31.i.i = phi i64 [ %indvars.iv.next32.i.i, %bb.bz ], [ %i.bai, %.lr.ph181.us.preheader.i.i.i ] ; 5 uses
+  %indvars.iv31.i.i = phi i64 [ %indvars.iv.next32.i.i, %bb.bz ], [ %7, %.lr.ph181.us.preheader.i.i.i ] ; 5 uses
   %.22.i.i = phi i32 [ %.23.i.i, %bb.bz ], [ %.19.i.i, %.lr.ph181.us.preheader.i.i.i ] ; 3 uses
   %i.baj = phi i32 [ %i.bcu, %bb.bz ], [ %.pre197.i.i.i, %.lr.ph181.us.preheader.i.i.i ] ; 3 uses
   %indvars.iv.next32.i.i = add nuw nsw i64 %indvars.iv31.i.i, 1 ; 6 uses

@@ -91,13 +91,15 @@ bb.a:
 .preheader49.us:                                  ; preds = %.preheader49.us, %.preheader49.us.preheader.new
   %indvars.iv = phi i64 [ 0, %.preheader49.us.preheader.new ], [ %indvars.iv.next.1, %.preheader49.us ] ; 4 uses
   %niter = phi i64 [ 0, %.preheader49.us.preheader.new ], [ %niter.next.1, %.preheader49.us ]
-  %3 = getelementptr inbounds nuw [128 x i8], ptr @Truth10, i64 %indvars.iv
-  %i.l = getelementptr inbounds nuw [128 x i8], ptr %i.b, i64 %indvars.iv
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %i.l, ptr nonnull align 16 %3, i64 %i.j, i1 false), !tbaa !14
+  %3 = shl nuw nsw i64 %indvars.iv, 7
+  %scevgep = getelementptr nuw i8, ptr %i.b, i64 %3
+  %i.l = getelementptr inbounds nuw [128 x i8], ptr @Truth10, i64 %indvars.iv
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %scevgep, ptr nonnull align 16 %i.l, i64 %i.j, i1 false), !tbaa !14
   %indvars.iv.next = or disjoint i64 %indvars.iv, 1 ; 2 uses
-  %4 = getelementptr inbounds nuw [128 x i8], ptr @Truth10, i64 %indvars.iv.next
-  %i.m = getelementptr inbounds nuw [128 x i8], ptr %i.b, i64 %indvars.iv.next
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %i.m, ptr nonnull align 16 %4, i64 %i.j, i1 false), !tbaa !14
+  %4 = shl nuw nsw i64 %indvars.iv.next, 7
+  %scevgep.1 = getelementptr nuw i8, ptr %i.b, i64 %4
+  %i.m = getelementptr inbounds nuw [128 x i8], ptr @Truth10, i64 %indvars.iv.next
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %scevgep.1, ptr nonnull align 16 %i.m, i64 %i.j, i1 false), !tbaa !14
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
@@ -111,9 +113,10 @@ bb.a:
   %indvars.iv.epil.init = phi i64 [ 0, %.preheader49.us.preheader ], [ %indvars.iv.next.1, %.preheader48.loopexit.unr-lcssa ] ; 2 uses
   %lcmp.mod235 = trunc i32 %1 to i1
   tail call void @llvm.assume(i1 %lcmp.mod235)
-  %5 = getelementptr inbounds nuw [128 x i8], ptr @Truth10, i64 %indvars.iv.epil.init
-  %i.n = getelementptr inbounds nuw [128 x i8], ptr %i.b, i64 %indvars.iv.epil.init
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %i.n, ptr nonnull align 16 %5, i64 %i.j, i1 false), !tbaa !14
+  %5 = shl nuw nsw i64 %indvars.iv.epil.init, 7
+  %scevgep.epil = getelementptr nuw i8, ptr %i.b, i64 %5
+  %i.n = getelementptr inbounds nuw [128 x i8], ptr @Truth10, i64 %indvars.iv.epil.init
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %scevgep.epil, ptr nonnull align 16 %i.n, i64 %i.j, i1 false), !tbaa !14
   br label %.preheader48
 
 .preheader48:                                     ; preds = %.preheader49.us.epil.preheader, %.preheader48.loopexit.unr-lcssa, %.preheader49.lr.ph, %bb.a

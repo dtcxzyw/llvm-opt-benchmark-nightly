@@ -204,7 +204,7 @@ bb.h:                                             ; preds = %bb.f
   br i1 %i.ag, label %.lr.ph.preheader, label %._crit_edge.thread
 
 .lr.ph.preheader:                                 ; preds = %.preheader103
-  %wide.trip.count = zext nneg i32 %1 to i64      ; 5 uses
+  %wide.trip.count = zext nneg i32 %1 to i64      ; 3 uses
   %min.iters.check = icmp ult i32 %1, 4
   br i1 %min.iters.check, label %.lr.ph.preheader128, label %vector.ph
 
@@ -278,12 +278,13 @@ bb.k:                                             ; preds = %bb.h
 
 .lr.ph108:                                        ; preds = %._crit_edge
   %i.az = getelementptr inbounds nuw i8, ptr %i.b, i64 104 ; 3 uses
-  %xtraiter = and i64 %wide.trip.count, 1
+  %wide.trip.count115 = zext nneg i32 %1 to i64   ; 2 uses
+  %xtraiter = and i64 %wide.trip.count115, 1
   %i.ba = icmp eq i32 %1, 1
   br i1 %i.ba, label %.epil.preheader, label %.lr.ph108.new
 
 .lr.ph108.new:                                    ; preds = %.lr.ph108
-  %unroll_iter = and i64 %wide.trip.count, 2147483646
+  %unroll_iter = and i64 %wide.trip.count115, 2147483646
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.p, %.lr.ph108.new
