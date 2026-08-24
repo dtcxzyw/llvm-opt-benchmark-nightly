@@ -204,33 +204,36 @@ bb.a:
   br i1 %i.a, label %.preheader, label %.thread
 
 .preheader:                                       ; preds = %bb.a, %bb.b
-  %.04055 = phi i32 [ %6, %bb.b ], [ 254, %bb.a ] ; 5 uses
-  %3 = zext nneg i32 %.04055 to i64
-  %i.b = getelementptr [8 x i8], ptr @major_names, i64 %3
+  %indvars.iv = phi i64 [ %indvars.iv.next.1, %bb.b ], [ 254, %bb.a ] ; 4 uses
+  %i.b = getelementptr [8 x i8], ptr @major_names, i64 %indvars.iv
   %i.c = load ptr, ptr %i.b, align 16
   %i.d = icmp eq ptr %i.c, null
-  br i1 %i.d, label %.thread, label %.preheader.1
+  br i1 %i.d, label %.thread.loopexit, label %.preheader.1
 
 .preheader.1:                                     ; preds = %.preheader
-  %4 = add nsw i32 %.04055, -1                    ; 4 uses
-  %5 = zext nneg i32 %4 to i64
-  %i.e = getelementptr [8 x i8], ptr @major_names, i64 %5
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 3 uses
+  %i.e = getelementptr [8 x i8], ptr @major_names, i64 %indvars.iv.next
   %i.f = load ptr, ptr %i.e, align 8
   %i.g = icmp eq ptr %i.f, null
-  br i1 %i.g, label %.thread, label %bb.b
+  br i1 %i.g, label %.thread.loopexit, label %bb.b
 
 bb.b:                                             ; preds = %.preheader.1
-  %6 = add nsw i32 %.04055, -2
-  %.not67 = icmp eq i32 %4, 1
+  %indvars.iv.next.1 = add nsw i64 %indvars.iv, -2
+  %.not67 = icmp eq i64 %indvars.iv.next, 1
   br i1 %.not67, label %bb.c, label %.preheader, !llvm.loop !17
 
 bb.c:                                             ; preds = %bb.b
   %i.h = tail call i32 (ptr, ...) @_printk(ptr noundef nonnull @.str.4, ptr noundef nonnull @__func__.__register_blkdev, ptr noundef %1) #15 ; 0 uses
   br label %bb.i
 
-.thread:                                          ; preds = %.preheader, %.preheader.1, %bb.a
-  %.041 = phi i32 [ 0, %bb.a ], [ %.04055, %.preheader ], [ %4, %.preheader.1 ]
-  %.0 = phi i32 [ %0, %bb.a ], [ %.04055, %.preheader ], [ %4, %.preheader.1 ] ; 6 uses
+.thread.loopexit:                                 ; preds = %.preheader.1, %.preheader
+  %indvars.iv.lcssa = phi i64 [ %indvars.iv, %.preheader ], [ %indvars.iv.next, %.preheader.1 ]
+  %3 = trunc nuw nsw i64 %indvars.iv.lcssa to i32 ; 2 uses
+  br label %.thread
+
+.thread:                                          ; preds = %.thread.loopexit, %bb.a
+  %.041 = phi i32 [ 0, %bb.a ], [ %3, %.thread.loopexit ]
+  %.0 = phi i32 [ %0, %bb.a ], [ %3, %.thread.loopexit ] ; 6 uses
   %i.i = icmp ugt i32 %.0, 511
   br i1 %i.i, label %.thread45, label %bb.d
 

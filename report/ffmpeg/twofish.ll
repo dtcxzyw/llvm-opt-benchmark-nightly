@@ -204,7 +204,7 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.b, %.lr.ph.split
-  %indvars.iv.i = phi i64 [ 15, %.lr.ph.split ], [ %indvars.iv.next.i, %bb.b ] ; 3 uses
+  %.079.i = phi i32 [ 15, %.lr.ph.split ], [ %9, %bb.b ] ; 3 uses
   %.sroa.0.078.i = phi i32 [ %i.dr, %.lr.ph.split ], [ %i.fs, %bb.b ] ; 2 uses
   %.sroa.12.077.i = phi i32 [ %i.dv, %.lr.ph.split ], [ %i.fz, %bb.b ]
   %.sroa.23.076.i = phi i32 [ %i.dj, %.lr.ph.split ], [ %i.hw, %bb.b ] ; 6 uses
@@ -254,15 +254,16 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.split
   %i.fm = xor i32 %i.fh, %i.fl                    ; 2 uses
   %i.fn = tail call i32 @llvm.fshl.i32(i32 %.sroa.0.078.i, i32 %.sroa.0.078.i, i32 1)
   %i.fo = add i32 %i.fm, %i.eq
-  %.idx.i = shl nuw nsw i64 %indvars.iv.i, 3
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 %.idx.i ; 4 uses
-  %i.fp = getelementptr inbounds nuw i8, ptr %6, i64 32
+  %6 = shl nuw nsw i32 %.079.i, 1
+  %7 = zext nneg i32 %6 to i64
+  %8 = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %7 ; 4 uses
+  %i.fp = getelementptr inbounds nuw i8, ptr %8, i64 32
   %i.fq = load i32, ptr %i.fp, align 4, !tbaa !12
   %i.fr = add i32 %i.fo, %i.fq
   %i.fs = xor i32 %i.fr, %i.fn                    ; 6 uses
   %i.ft = shl i32 %i.fm, 1
   %i.fu = add i32 %i.ft, %i.eq
-  %i.fv = getelementptr inbounds nuw i8, ptr %6, i64 36
+  %i.fv = getelementptr inbounds nuw i8, ptr %8, i64 36
   %i.fw = load i32, ptr %i.fv, align 4, !tbaa !12
   %i.fx = add i32 %i.fu, %i.fw
   %i.fy = xor i32 %i.fx, %.sroa.12.077.i          ; 4 uses
@@ -312,19 +313,19 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.split
   %i.hq = xor i32 %i.hl, %i.hp                    ; 2 uses
   %i.hr = tail call i32 @llvm.fshl.i32(i32 %.sroa.23.076.i, i32 %.sroa.23.076.i, i32 1)
   %i.hs = add i32 %i.hq, %i.gu
-  %i.ht = getelementptr inbounds nuw i8, ptr %6, i64 24
+  %i.ht = getelementptr inbounds nuw i8, ptr %8, i64 24
   %i.hu = load i32, ptr %i.ht, align 4, !tbaa !12
   %i.hv = add i32 %i.hs, %i.hu
   %i.hw = xor i32 %i.hv, %i.hr                    ; 2 uses
   %i.hx = shl i32 %i.hq, 1
   %i.hy = add i32 %i.hx, %i.gu
-  %i.hz = getelementptr inbounds nuw i8, ptr %6, i64 28
+  %i.hz = getelementptr inbounds nuw i8, ptr %8, i64 28
   %i.ia = load i32, ptr %i.hz, align 4, !tbaa !12
   %i.ib = add i32 %i.hy, %i.ia
   %i.ic = xor i32 %i.ib, %.sroa.33.075.i          ; 2 uses
   %i.id = tail call i32 @llvm.fshl.i32(i32 %i.ic, i32 %i.ic, i32 31) ; 2 uses
-  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -2
-  %i.ie = icmp samesign ugt i64 %indvars.iv.i, 1
+  %9 = add nsw i32 %.079.i, -2
+  %i.ie = icmp samesign ugt i32 %.079.i, 1
   br i1 %i.ie, label %bb.b, label %bb.c, !llvm.loop !19
 
 bb.c:                                             ; preds = %bb.b

@@ -205,15 +205,16 @@ _ZN11hb_vector_tIjLb0EE6resizeEi.exit:            ; preds = %_ZN11hb_vector_tIjL
   %i.ea = getelementptr inbounds nuw i8, ptr %2, i64 4
   %i.eb = load i32, ptr @_hb_NullPool, align 16
   %i.ec = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %3 = zext nneg i32 %.035138 to i64
   br label %bb.n
 
 bb.n:                                             ; preds = %.lr.ph140, %bb.v
-  %.035139 = phi i32 [ %.035138, %.lr.ph140 ], [ %.035, %bb.v ] ; 4 uses
+  %indvars.iv = phi i64 [ %3, %.lr.ph140 ], [ %indvars.iv.next, %bb.v ] ; 4 uses
   %i.ed = load i32, ptr %i.da, align 4, !tbaa !352
-  %.not.i44 = icmp ult i32 %.035139, %i.ed
+  %4 = zext i32 %i.ed to i64
+  %.not.i44 = icmp samesign ult i64 %indvars.iv, %4
   %i.ee = load ptr, ptr %i.dz, align 8
-  %3 = zext nneg i32 %.035139 to i64
-  %i.ef = getelementptr inbounds nuw [4 x i8], ptr %i.ee, i64 %3
+  %i.ef = getelementptr inbounds nuw [4 x i8], ptr %i.ee, i64 %indvars.iv
   %.0.i = select i1 %.not.i44, ptr %i.ef, ptr @_hb_NullPool, !prof !137
   %i.eg = load i32, ptr %.0.i, align 4, !tbaa !147 ; 3 uses
   %i.eh = call noundef nonnull ptr @_ZN22hb_serialize_context_t4pushIvEEPT_v(ptr noundef nonnull align 8 dereferenceable(144) %1) ; 0 uses
@@ -314,8 +315,8 @@ bb.u:                                             ; preds = %.lr.ph, %bb.u
 bb.v:                                             ; preds = %bb.t, %bb.s
   %.0.i51 = phi ptr [ @_hb_CrapPool, %bb.s ], [ %i.fo, %bb.t ]
   store i32 %i.fl, ptr %.0.i51, align 4, !tbaa !147
-  %.035 = add nsw i32 %.035139, -1
-  %i.fq = icmp slt i32 %.035139, 1
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
+  %i.fq = icmp slt i64 %indvars.iv, 1
   br i1 %i.fq, label %.critedge, label %bb.n, !llvm.loop !526
 
 .critedge:                                        ; preds = %bb.v, %_ZN11hb_vector_tIjLb0EE6resizeEi.exit

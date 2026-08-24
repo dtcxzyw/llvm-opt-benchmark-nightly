@@ -205,12 +205,15 @@ bb.v:                                             ; preds = %bb.u, %bb.t
 
 Lf_CutCompareDelay.exit.thread:                   ; preds = %bb.v, %bb.s, %bb.n, %Lf_SetLastCutContainsArea.exit, %bb.p, %Lf_CutCompareDelay.exit.thread38, %bb.q
   %i.dc = icmp sgt i32 %.0.i, 1
-  br i1 %i.dc, label %.lr.ph.i35, label %Lf_SetSortByArea.exit
+  br i1 %i.dc, label %.lr.ph.preheader.i, label %Lf_SetSortByArea.exit
 
-.lr.ph.i35:                                       ; preds = %Lf_CutCompareDelay.exit.thread, %Lf_CutCompareArea.exit.i
-  %.016.i = phi i32 [ %4, %Lf_CutCompareArea.exit.i ], [ %.0.i, %Lf_CutCompareDelay.exit.thread ] ; 3 uses
-  %3 = zext nneg i32 %.016.i to i64
-  %i.dd = getelementptr [8 x i8], ptr %0, i64 %3  ; 3 uses
+.lr.ph.preheader.i:                               ; preds = %Lf_CutCompareDelay.exit.thread
+  %3 = zext nneg i32 %.0.i to i64
+  br label %.lr.ph.i35
+
+.lr.ph.i35:                                       ; preds = %Lf_CutCompareArea.exit.i, %.lr.ph.preheader.i
+  %indvars.iv.i36 = phi i64 [ %3, %.lr.ph.preheader.i ], [ %indvars.iv.next.i37, %Lf_CutCompareArea.exit.i ] ; 3 uses
+  %i.dd = getelementptr [8 x i8], ptr %0, i64 %indvars.iv.i36 ; 3 uses
   %i.de = getelementptr i8, ptr %i.dd, i64 -8     ; 2 uses
   %i.df = load ptr, ptr %i.de, align 8, !tbaa !94 ; 4 uses
   %i.dg = load ptr, ptr %i.dd, align 8, !tbaa !94 ; 4 uses
@@ -266,8 +269,8 @@ bb.ab:                                            ; preds = %bb.aa
 Lf_CutCompareArea.exit.i:                         ; preds = %bb.ab, %bb.aa, %bb.y, %bb.w
   store ptr %i.dg, ptr %i.de, align 8, !tbaa !94
   store ptr %i.df, ptr %i.dd, align 8, !tbaa !94
-  %4 = add nsw i32 %.016.i, -1
-  %i.ek = icmp sgt i32 %.016.i, 2
+  %indvars.iv.next.i37 = add nsw i64 %indvars.iv.i36, -1
+  %i.ek = icmp sgt i64 %indvars.iv.i36, 2
   br i1 %i.ek, label %.lr.ph.i35, label %Lf_SetSortByArea.exit, !llvm.loop !166
 
 Lf_SetSortByArea.exit:                            ; preds = %.lr.ph.i35, %bb.x, %bb.z, %bb.ab, %Lf_CutCompareArea.exit.i, %Lf_CutCompareDelay.exit.thread

@@ -205,7 +205,7 @@ bb.r:                                             ; preds = %.thread312.a, %bb.q
 
 bb.s:                                             ; preds = %bb.r
   %i.ad = load ptr, ptr %i.a, align 8, !tbaa !43  ; 4 uses
-  %i.ae = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.ac) #17
+  %i.ae = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.ac) #17 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #16
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %4, ptr noundef nonnull align 8 dereferenceable(24) @__const.display_error_msgs.path, i64 24, i1 false)
   %i.af = getelementptr inbounds nuw i8, ptr %i.ad, i64 60
@@ -214,22 +214,25 @@ bb.s:                                             ; preds = %bb.r
   br i1 %.not.i, label %update_sparsity_for_prefix.exit, label %.preheader.i
 
 .preheader.i:                                     ; preds = %bb.s
-  %i.ah = trunc i64 %i.ae to i32                  ; 2 uses
+  %i.ah = trunc i64 %i.ae to i32
   %i.ai = icmp sgt i32 %i.ah, 0
-  br i1 %i.ai, label %.lr.ph.i, label %._crit_edge.i
+  br i1 %i.ai, label %.lr.ph.preheader.i, label %._crit_edge.i
 
-.lr.ph.i:                                         ; preds = %.preheader.i, %bb.t
-  %.014.i = phi i32 [ %9, %bb.t ], [ %i.ah, %.preheader.i ] ; 4 uses
-  %8 = zext nneg i32 %.014.i to i64               ; 2 uses
-  %i.aj = getelementptr i8, ptr %i.ac, i64 %8
+.lr.ph.preheader.i:                               ; preds = %.preheader.i
+  %8 = and i64 %i.ae, 2147483647
+  br label %.lr.ph.i
+
+.lr.ph.i:                                         ; preds = %bb.t, %.lr.ph.preheader.i
+  %indvars.iv.i = phi i64 [ %8, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %bb.t ] ; 5 uses
+  %i.aj = getelementptr i8, ptr %i.ac, i64 %indvars.iv.i
   %i.ak = getelementptr i8, ptr %i.aj, i64 -1
   %i.al = load i8, ptr %i.ak, align 1, !tbaa !82
   %i.am = icmp eq i8 %i.al, 47
   br i1 %i.am, label %bb.t, label %.critedge.i
 
 bb.t:                                             ; preds = %.lr.ph.i
-  %9 = add nsw i32 %.014.i, -1
-  %i.an = icmp sgt i32 %.014.i, 1
+  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1
+  %i.an = icmp sgt i64 %indvars.iv.i, 1
   br i1 %i.an, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !83
 
 ._crit_edge.i:                                    ; preds = %bb.t, %.preheader.i
@@ -237,10 +240,10 @@ bb.t:                                             ; preds = %.lr.ph.i
   unreachable
 
 .critedge.i:                                      ; preds = %.lr.ph.i
-  %10 = add nuw nsw i32 %.014.i, 1
-  %11 = zext nneg i32 %10 to i64
-  call void @strbuf_grow(ptr noundef nonnull %4, i64 noundef %11) #16
-  call void @strbuf_add(ptr noundef nonnull %4, ptr noundef nonnull %i.ac, i64 noundef %8) #16
+  %9 = add nuw nsw i64 %indvars.iv.i, 1
+  %10 = and i64 %9, 4294967295
+  call void @strbuf_grow(ptr noundef nonnull %4, i64 noundef %10) #16
+  call void @strbuf_add(ptr noundef nonnull %4, ptr noundef nonnull %i.ac, i64 noundef %indvars.iv.i) #16
   %i.ao = load i64, ptr %4, align 8, !tbaa !85    ; 2 uses
   %.not.i.i.i = icmp eq i64 %i.ao, 0
   br i1 %.not.i.i.i, label %strbuf_avail.exit.thread.i.i, label %strbuf_avail.exit.i.i
@@ -643,14 +646,17 @@ bb.k:                                             ; preds = %bb.j
   %i.bb = getelementptr inbounds nuw i8, ptr %i.ba, i64 12
   %i.bc = load i32, ptr %i.bb, align 4, !tbaa !101
   %.not.i = icmp ult i32 %i.ay, %i.bc
-  br i1 %.not.i, label %.lr.ph.i95, label %unpack_failed.exit.thread
+  br i1 %.not.i, label %.lr.ph.preheader.i95, label %unpack_failed.exit.thread
 
-.lr.ph.i95:                                       ; preds = %bb.k, %skip_prefix_impl.exit.i
-  %.02646.i = phi i32 [ %8, %skip_prefix_impl.exit.i ], [ %i.ay, %bb.k ] ; 3 uses
+.lr.ph.preheader.i95:                             ; preds = %bb.k
+  %7 = zext nneg i32 %i.ay to i64
+  br label %.lr.ph.i95
+
+.lr.ph.i95:                                       ; preds = %skip_prefix_impl.exit.i, %.lr.ph.preheader.i95
+  %indvars.iv.i97 = phi i64 [ %7, %.lr.ph.preheader.i95 ], [ %indvars.iv.next.i99, %skip_prefix_impl.exit.i ] ; 3 uses
   %i.bd = load ptr, ptr %i.az, align 8, !tbaa !43
   %i.be = load ptr, ptr %i.bd, align 8, !tbaa !102
-  %7 = zext nneg i32 %.02646.i to i64
-  %i.bf = getelementptr inbounds nuw [8 x i8], ptr %i.be, i64 %7
+  %i.bf = getelementptr inbounds nuw [8 x i8], ptr %i.be, i64 %indvars.iv.i97
   %i.bg = load ptr, ptr %i.bf, align 8, !tbaa !103 ; 4 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %i.bg, i64 108
   %i.bi = load ptr, ptr %4, align 8, !tbaa !122
@@ -696,8 +702,8 @@ bb.q:                                             ; preds = %bb.p
   br i1 %.not34.i, label %skip_prefix_impl.exit.i, label %next_cache_entry.exit.thread139
 
 skip_prefix_impl.exit.i:                          ; preds = %bb.q, %bb.p
-  %8 = add nsw i32 %.02646.i, -1
-  %i.by = icmp sgt i32 %.02646.i, 0
+  %indvars.iv.next.i99 = add nsw i64 %indvars.iv.i97, -1
+  %i.by = icmp sgt i64 %indvars.iv.i97, 0
   br i1 %i.by, label %.lr.ph.i95, label %unpack_failed.exit.thread, !llvm.loop !169
 
 next_cache_entry.exit:                            ; preds = %bb.i

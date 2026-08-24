@@ -204,7 +204,7 @@ bb.o:                                             ; preds = %bb.n, %bb.m
 .preheader71.i.i:                                 ; preds = %bb.o, %.preheader71.i.i
   %indvars.iv94.i.i = phi i64 [ %indvars.iv.next95.i.i.1, %.preheader71.i.i ], [ 0, %bb.o ] ; 4 uses
   %i.cd = trunc i64 %indvars.iv94.i.i to i32      ; 2 uses
-  %i.ce = sub nuw nsw i32 4095, %i.cd
+  %i.ce = sub nsw i32 4095, %i.cd
   %i.cf = uitofp nneg i32 %i.ce to double
   %i.cg = fmul nnan double %i.cf, f0x3F30000000000000
   %i.ch = tail call double @pow(double noundef %i.cg, double noundef 8.000000e+00) #13
@@ -216,7 +216,7 @@ bb.o:                                             ; preds = %bb.n, %bb.m
   store i32 %i.cd, ptr %i.cl, align 4
   %indvars.iv.next95.i.i = or disjoint i64 %indvars.iv94.i.i, 1 ; 2 uses
   %i.cm = trunc i64 %indvars.iv.next95.i.i to i32 ; 2 uses
-  %i.cn = sub nuw nsw i32 4095, %i.cm
+  %i.cn = sub nsw i32 4095, %i.cm
   %i.co = uitofp nneg i32 %i.cn to double
   %i.cp = fmul nnan double %i.co, f0x3F30000000000000
   %i.cq = tail call double @pow(double noundef %i.cp, double noundef 8.000000e+00) #13
