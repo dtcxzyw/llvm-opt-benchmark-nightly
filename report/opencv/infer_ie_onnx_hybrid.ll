@@ -204,17 +204,17 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i277: ; preds = %
   %i.tb = load float, ptr %i.sz, align 4, !tbaa !191, !noalias !192
   %i.tc = call noundef float @expf(float noundef %i.tb) #29, !noalias !192 ; 3 uses
   store float %i.tc, ptr %i.ta, align 4, !tbaa !191, !noalias !192
-  %i.td = getelementptr inbounds nuw i8, ptr %i.ta, i64 4 ; 3 uses
+  %i.td = getelementptr inbounds nuw i8, ptr %i.ta, i64 4 ; 2 uses
   %.07.i.i.ptr.1.i = getelementptr inbounds nuw i8, ptr %i.sz, i64 4
   %i.te = load float, ptr %.07.i.i.ptr.1.i, align 4, !tbaa !191, !noalias !192
   %i.tf = call noundef float @expf(float noundef %i.te) #29, !noalias !192 ; 3 uses
   store float %i.tf, ptr %i.td, align 4, !tbaa !191, !noalias !192
-  %i.tg = getelementptr inbounds nuw i8, ptr %i.ta, i64 8 ; 3 uses
+  %i.tg = getelementptr inbounds nuw i8, ptr %i.ta, i64 8 ; 2 uses
   %.07.i.i.ptr.2.i = getelementptr inbounds nuw i8, ptr %i.sz, i64 8
   %i.th = load float, ptr %.07.i.i.ptr.2.i, align 4, !tbaa !191, !noalias !192
   %i.ti = call noundef float @expf(float noundef %i.th) #29, !noalias !192 ; 3 uses
   store float %i.ti, ptr %i.tg, align 4, !tbaa !191, !noalias !192
-  %i.tj = getelementptr inbounds nuw i8, ptr %i.ta, i64 12 ; 3 uses
+  %i.tj = getelementptr inbounds nuw i8, ptr %i.ta, i64 12 ; 2 uses
   %.07.i.i.ptr.3.i = getelementptr inbounds nuw i8, ptr %i.sz, i64 12
   %i.tk = load float, ptr %.07.i.i.ptr.3.i, align 4, !tbaa !191, !noalias !192
   %i.tl = call noundef float @expf(float noundef %i.tk) #29, !noalias !192 ; 3 uses
@@ -244,22 +244,20 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i277: ; preds = %
   %i.ub = fadd float %i.ua, %i.to
   %i.uc = fadd float %i.ub, %i.tr
   %i.ud = fadd float %i.uc, %i.tu
-  %i.ue = fadd float %i.ud, %i.tw                 ; 5 uses
-  %65 = fdiv float %i.tc, %i.ue                   ; 3 uses
-  store float %65, ptr %i.ta, align 4, !tbaa !191, !noalias !192
-  %66 = fdiv float %i.tf, %i.ue                   ; 3 uses
-  store float %66, ptr %i.td, align 4, !tbaa !191, !noalias !192
-  %67 = fdiv float %i.ti, %i.ue                   ; 3 uses
-  store float %67, ptr %i.tg, align 4, !tbaa !191, !noalias !192
-  %68 = fdiv float %i.tl, %i.ue                   ; 3 uses
-  store float %68, ptr %i.tj, align 4, !tbaa !191, !noalias !192
-  %69 = insertelement <4 x float> poison, float %i.to, i64 0
-  %i.uf = insertelement <4 x float> %69, float %i.tr, i64 1
-  %i.ug = insertelement <4 x float> %i.uf, float %i.tu, i64 2
-  %i.uh = insertelement <4 x float> %i.ug, float %i.tw, i64 3
-  %i.ui = insertelement <4 x float> poison, float %i.ue, i64 0
-  %70 = shufflevector <4 x float> %i.ui, <4 x float> poison, <4 x i32> zeroinitializer
-  %i.uj = fdiv <4 x float> %i.uh, %70             ; 5 uses
+  %i.ue = fadd float %i.ud, %i.tw
+  %65 = insertelement <4 x float> poison, float %i.tc, i64 0
+  %66 = insertelement <4 x float> %65, float %i.tf, i64 1
+  %67 = insertelement <4 x float> %66, float %i.ti, i64 2
+  %68 = insertelement <4 x float> %67, float %i.tl, i64 3
+  %69 = insertelement <4 x float> poison, float %i.ue, i64 0
+  %70 = shufflevector <4 x float> %69, <4 x float> poison, <4 x i32> zeroinitializer ; 2 uses
+  %71 = fdiv <4 x float> %68, %70                 ; 5 uses
+  store <4 x float> %71, ptr %i.ta, align 4, !tbaa !191, !noalias !192
+  %i.uf = insertelement <4 x float> poison, float %i.to, i64 0
+  %i.ug = insertelement <4 x float> %i.uf, float %i.tr, i64 1
+  %i.uh = insertelement <4 x float> %i.ug, float %i.tu, i64 2
+  %i.ui = insertelement <4 x float> %i.uh, float %i.tw, i64 3
+  %i.uj = fdiv <4 x float> %i.ui, %70             ; 5 uses
   store <4 x float> %i.uj, ptr %i.tm, align 4, !tbaa !191, !noalias !192
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #29
   store i64 0, ptr %i.ob, align 8
@@ -277,12 +275,16 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i277: ; preds = %
 bb.ee:                                            ; preds = %.noexc282
   %.sroa.02.06.i.i.ptr.7.i = getelementptr inbounds nuw i8, ptr %i.ta, i64 28
   %i.uk = ptrtoint ptr %i.ta to i64
-  %i.ul = fcmp olt float %65, %66                 ; 2 uses
-  %i.um = select i1 %i.ul, float %66, float %65   ; 2 uses
-  %i.un = fcmp olt float %i.um, %67               ; 2 uses
-  %i.uo = select i1 %i.un, float %67, float %i.um ; 2 uses
-  %i.up = fcmp olt float %i.uo, %68               ; 2 uses
-  %i.uq = select i1 %i.up, float %68, float %i.uo ; 2 uses
+  %72 = extractelement <4 x float> %71, i64 0     ; 2 uses
+  %73 = extractelement <4 x float> %71, i64 1     ; 2 uses
+  %i.ul = fcmp olt float %72, %73                 ; 2 uses
+  %i.um = select i1 %i.ul, float %73, float %72   ; 2 uses
+  %74 = extractelement <4 x float> %71, i64 2     ; 2 uses
+  %i.un = fcmp olt float %i.um, %74               ; 2 uses
+  %i.uo = select i1 %i.un, float %74, float %i.um ; 2 uses
+  %75 = extractelement <4 x float> %71, i64 3     ; 2 uses
+  %i.up = fcmp olt float %i.uo, %75               ; 2 uses
+  %i.uq = select i1 %i.up, float %75, float %i.uo ; 2 uses
   %i.ur = extractelement <4 x float> %i.uj, i64 0 ; 2 uses
   %i.us = fcmp olt float %i.uq, %i.ur             ; 2 uses
   %i.ut = select i1 %i.us, float %i.ur, float %i.uq ; 2 uses

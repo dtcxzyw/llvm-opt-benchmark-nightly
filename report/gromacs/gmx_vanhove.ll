@@ -205,13 +205,11 @@ _ZNSt10filesystem7__cxx114pathD2Ev.exit342:       ; preds = %_ZNSt10filesystem7_
   %i.ch = getelementptr inbounds nuw i8, ptr %i.k, i64 16
   %i.ci = getelementptr inbounds nuw i8, ptr %i.k, i64 20
   %i.cj = getelementptr inbounds nuw i8, ptr %i.k, i64 24 ; 2 uses
-  %i.ck = getelementptr inbounds nuw i8, ptr %i.k, i64 28 ; 2 uses
+  %i.ck = getelementptr inbounds nuw i8, ptr %i.k, i64 28
   %i.cl = getelementptr inbounds nuw i8, ptr %i.k, i64 32
   br label %bb.y
 
 bb.y:                                             ; preds = %bb.ao, %_ZNSt10filesystem7__cxx114pathD2Ev.exit342
-  %.sroa.36.0 = phi float [ 0.000000e+00, %_ZNSt10filesystem7__cxx114pathD2Ev.exit342 ], [ %27, %bb.ao ]
-  %.sroa.41.0 = phi float [ 0.000000e+00, %_ZNSt10filesystem7__cxx114pathD2Ev.exit342 ], [ %29, %bb.ao ]
   %.sroa.46.0 = phi float [ 0.000000e+00, %_ZNSt10filesystem7__cxx114pathD2Ev.exit342 ], [ %i.dw, %bb.ao ]
   %indvars.iv755 = phi i32 [ 1, %_ZNSt10filesystem7__cxx114pathD2Ev.exit342 ], [ %indvars.iv.next756, %bb.ao ] ; 2 uses
   %indvars.iv712 = phi i64 [ 0, %_ZNSt10filesystem7__cxx114pathD2Ev.exit342 ], [ %indvars.iv.next713, %bb.ao ] ; 7 uses
@@ -219,6 +217,7 @@ bb.y:                                             ; preds = %bb.ao, %_ZNSt10file
   %.0540 = phi ptr [ null, %_ZNSt10filesystem7__cxx114pathD2Ev.exit342 ], [ %.1541, %bb.ao ] ; 2 uses
   %.0 = phi ptr [ null, %_ZNSt10filesystem7__cxx114pathD2Ev.exit342 ], [ %.1, %bb.ao ] ; 2 uses
   %.0264 = phi i32 [ 0, %_ZNSt10filesystem7__cxx114pathD2Ev.exit342 ], [ %.1265, %bb.ao ] ; 3 uses
+  %26 = phi <2 x float> [ zeroinitializer, %_ZNSt10filesystem7__cxx114pathD2Ev.exit342 ], [ %28, %bb.ao ]
   %i.cm = phi <2 x float> [ zeroinitializer, %_ZNSt10filesystem7__cxx114pathD2Ev.exit342 ], [ %i.dt, %bb.ao ]
   %i.cn = phi <4 x float> [ zeroinitializer, %_ZNSt10filesystem7__cxx114pathD2Ev.exit342 ], [ %i.dv, %bb.ao ]
   %i.co = sext i32 %.0264 to i64
@@ -334,10 +333,8 @@ bb.aj:                                            ; preds = %bb.ah
   %i.dt = fadd <2 x float> %i.cm, %i.ds           ; 2 uses
   %i.du = load <4 x float>, ptr %i.cf, align 8, !tbaa !34
   %i.dv = fadd <4 x float> %i.cn, %i.du           ; 5 uses
-  %26 = load float, ptr %i.cj, align 8, !tbaa !34
-  %27 = fadd float %.sroa.36.0, %26               ; 2 uses
-  %28 = load float, ptr %i.ck, align 4, !tbaa !34
-  %29 = fadd float %.sroa.41.0, %28               ; 2 uses
+  %27 = load <2 x float>, ptr %i.cj, align 8, !tbaa !34
+  %28 = fadd <2 x float> %26, %27                 ; 2 uses
   %i.dw = fadd float %.sroa.46.0, %i.dq           ; 2 uses
   %i.dx = load i32, ptr %i.n, align 4, !tbaa !9
   %i.dy = sext i32 %i.dx to i64
@@ -679,9 +676,9 @@ bb.bf:                                            ; preds = %bb.be, %_ZL13gmx_sn
   %.0236 = phi float [ 0.000000e+00, %bb.be ], [ %i.jl, %_ZL13gmx_snew_implIiEvPKcS1_iRPT_m.exit355 ] ; 2 uses
   %i.jq = uitofp nneg i32 %i.gu to double
   %i.jr = fdiv double 1.000000e+00, %i.jq
-  %i.js = fptrunc double %i.jr to float           ; 8 uses
+  %i.js = fptrunc double %i.jr to float           ; 6 uses
   %i.jt = insertelement <2 x float> poison, float %i.js, i64 0
-  %i.ju = shufflevector <2 x float> %i.jt, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.ju = shufflevector <2 x float> %i.jt, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.jv = fmul <2 x float> %i.dt, %i.ju           ; 3 uses
   %i.jw = extractelement <4 x float> %i.dv, i64 0
   %i.jx = fmul float %i.jw, %i.js                 ; 2 uses
@@ -690,9 +687,8 @@ bb.bf:                                            ; preds = %bb.be, %_ZL13gmx_sn
   %i.ka = extractelement <4 x float> %i.dv, i64 2
   %i.kb = fmul float %i.ka, %i.js                 ; 5 uses
   %i.kc = extractelement <4 x float> %i.dv, i64 3
-  %30 = fmul float %i.kc, %i.js                   ; 2 uses
-  %i.kd = fmul float %27, %i.js                   ; 3 uses
-  %31 = fmul float %29, %i.js                     ; 4 uses
+  %i.kd = fmul float %i.kc, %i.js                 ; 2 uses
+  %29 = fmul <2 x float> %28, %i.ju               ; 3 uses
   %i.ke = fmul float %i.dw, %i.js                 ; 6 uses
   %wide.trip.count760 = zext i32 %indvars.iv755 to i64
   %i.kf = fpext float %i.ke to double             ; 2 uses
@@ -701,11 +697,12 @@ bb.bf:                                            ; preds = %bb.be, %_ZL13gmx_sn
   %i.ki = fpext float %i.kb to double             ; 2 uses
   %i.kj = fmul double %i.ki, 5.000000e-01         ; 2 uses
   %i.kk = fmul double %i.ki, -5.000000e-01        ; 2 uses
-  %i.kl = extractelement <2 x float> %i.jv, i64 0 ; 3 uses
+  %i.kl = extractelement <2 x float> %i.jv, i64 0 ; 2 uses
   %i.km = fpext float %i.kl to double             ; 2 uses
   %i.kn = fmul double %i.km, 5.000000e-01         ; 2 uses
   %i.ko = fmul double %i.km, -5.000000e-01        ; 2 uses
-  %i.kp = extractelement <2 x float> %i.jv, i64 1
+  %30 = extractelement <2 x float> %29, i64 0     ; 2 uses
+  %i.kp = extractelement <2 x float> %29, i64 1   ; 3 uses
   br label %bb.bg
 
 bb.bg:                                            ; preds = %bb.bf, %.loopexit559
@@ -830,11 +827,11 @@ bb.br:                                            ; preds = %bb.bj
   %i.mi = fmul float %i.kb, %i.md
   %i.mj = call float @llvm.fmuladd.f32(float %i.jz, float %i.mh, float %i.mi) ; 2 uses
   %i.mk = fmul float %i.kb, %i.lq                 ; 2 uses
-  %i.ml = fmul float %31, %i.mj
-  %i.mm = call float @llvm.fmuladd.f32(float %i.kd, float %i.mh, float %i.ml)
+  %i.ml = fmul float %i.kp, %i.mj
+  %i.mm = call float @llvm.fmuladd.f32(float %30, float %i.mh, float %i.ml)
   %i.mn = call float @llvm.fmuladd.f32(float %i.ke, float %i.ma, float %i.mm)
   %i.mo = fmul float %i.ke, %i.mg
-  %i.mp = call float @llvm.fmuladd.f32(float %31, float %i.mk, float %i.mo)
+  %i.mp = call float @llvm.fmuladd.f32(float %i.kp, float %i.mk, float %i.mo)
   %i.mq = fmul float %i.ke, %i.lr
   %i.mr = load i32, ptr %i.n, align 4, !tbaa !9   ; 2 uses
   %i.ms = icmp sgt i32 %i.mr, 0
@@ -852,7 +849,7 @@ bb.bs:                                            ; preds = %.lr.ph621, %.loopex
   %indvars.iv723 = phi i64 [ 0, %.lr.ph621 ], [ %indvars.iv.next724, %.loopexit557 ] ; 3 uses
   %i.mw = getelementptr inbounds nuw [12 x i8], ptr %i.mu, i64 %indvars.iv723 ; 10 uses
   %i.mx = load float, ptr %i.mw, align 4, !tbaa !34 ; 3 uses
-  %i.my = getelementptr inbounds nuw i8, ptr %i.mw, i64 4 ; 7 uses
+  %i.my = getelementptr inbounds nuw i8, ptr %i.mw, i64 4 ; 5 uses
   %i.mz = load float, ptr %i.my, align 4, !tbaa !34 ; 2 uses
   %i.na = fmul float %i.mp, %i.mz
   %i.nb = call float @llvm.fmuladd.f32(float %i.mn, float %i.mx, float %i.na)
@@ -875,38 +872,45 @@ bb.bs:                                            ; preds = %.lr.ph621, %.loopex
   %i.nm = fsub float %i.ne, %i.nl
   %i.nn = fpext float %i.nm to double             ; 2 uses
   %i.no = fcmp olt double %i.kg, %i.nn
-  br i1 %i.no, label %.lr.ph611, label %.preheader553
+  br i1 %i.no, label %.lr.ph611.preheader, label %.preheader553
 
-.preheader553:                                    ; preds = %.lr.ph611, %.preheader556
-  %.pre-phi824 = phi double [ %i.nn, %.preheader556 ], [ %i.nx, %.lr.ph611 ]
-  %i.np = phi float [ %i.ng, %.preheader556 ], [ %35, %.lr.ph611 ] ; 2 uses
-  %i.nq = phi float [ %i.nh, %.preheader556 ], [ %34, %.lr.ph611 ] ; 2 uses
-  %i.nr = phi float [ %i.ne, %.preheader556 ], [ %i.nu, %.lr.ph611 ] ; 2 uses
+.lr.ph611.preheader:                              ; preds = %.preheader556
+  %31 = insertelement <2 x float> poison, float %i.nh, i64 0
+  %32 = insertelement <2 x float> %31, float %i.ng, i64 1
+  br label %.lr.ph611
+
+.preheader553.loopexit:                           ; preds = %.lr.ph611
+  %33 = extractelement <2 x float> %36, i64 1
+  %34 = extractelement <2 x float> %36, i64 0
+  br label %.preheader553
+
+.preheader553:                                    ; preds = %.preheader553.loopexit, %.preheader556
+  %.pre-phi824 = phi double [ %i.nn, %.preheader556 ], [ %i.nx, %.preheader553.loopexit ]
+  %i.np = phi float [ %i.ng, %.preheader556 ], [ %33, %.preheader553.loopexit ] ; 2 uses
+  %i.nq = phi float [ %i.nh, %.preheader556 ], [ %34, %.preheader553.loopexit ] ; 2 uses
+  %i.nr = phi float [ %i.ne, %.preheader556 ], [ %i.nu, %.preheader553.loopexit ] ; 2 uses
   %i.ns = fcmp ult double %i.kh, %.pre-phi824
   br i1 %i.ns, label %._crit_edge617, label %.lr.ph616
 
-.lr.ph611:                                        ; preds = %.preheader556, %.lr.ph611
-  %32 = phi float [ %i.nu, %.lr.ph611 ], [ %i.ne, %.preheader556 ]
-  %33 = phi float [ %35, %.lr.ph611 ], [ %i.ng, %.preheader556 ]
-  %i.nt = phi float [ %34, %.lr.ph611 ], [ %i.nh, %.preheader556 ]
-  %34 = fsub float %i.nt, %i.kd                   ; 3 uses
-  %35 = fsub float %33, %31                       ; 3 uses
-  %i.nu = fsub float %32, %i.ke                   ; 4 uses
-  store float %34, ptr %i.mw, align 4, !tbaa !34
-  store float %35, ptr %i.my, align 4, !tbaa !34
+.lr.ph611:                                        ; preds = %.lr.ph611.preheader, %.lr.ph611
+  %i.nt = phi float [ %i.nu, %.lr.ph611 ], [ %i.ne, %.lr.ph611.preheader ]
+  %35 = phi <2 x float> [ %36, %.lr.ph611 ], [ %32, %.lr.ph611.preheader ]
+  %36 = fsub <2 x float> %35, %29                 ; 4 uses
+  %i.nu = fsub float %i.nt, %i.ke                 ; 4 uses
+  store <2 x float> %36, ptr %i.mw, align 4, !tbaa !34
   store float %i.nu, ptr %i.nc, align 4, !tbaa !34
   %i.nv = load float, ptr %i.nk, align 4, !tbaa !34
   %i.nw = fsub float %i.nu, %i.nv
   %i.nx = fpext float %i.nw to double             ; 2 uses
   %i.ny = fcmp olt double %i.kg, %i.nx
-  br i1 %i.ny, label %.lr.ph611, label %.preheader553, !llvm.loop !52
+  br i1 %i.ny, label %.lr.ph611, label %.preheader553.loopexit, !llvm.loop !52
 
 .lr.ph616:                                        ; preds = %.preheader553, %.lr.ph616
   %i.nz = phi float [ %i.oe, %.lr.ph616 ], [ %i.nr, %.preheader553 ]
   %i.oa = phi float [ %i.od, %.lr.ph616 ], [ %i.np, %.preheader553 ]
   %i.ob = phi float [ %i.oc, %.lr.ph616 ], [ %i.nq, %.preheader553 ]
-  %i.oc = fadd float %i.ob, %i.kd                 ; 3 uses
-  %i.od = fadd float %i.oa, %31                   ; 3 uses
+  %i.oc = fadd float %i.ob, %30                   ; 3 uses
+  %i.od = fadd float %i.oa, %i.kp                 ; 3 uses
   %i.oe = fadd float %i.nz, %i.ke                 ; 4 uses
   store float %i.oc, ptr %i.mw, align 4, !tbaa !34
   store float %i.od, ptr %i.my, align 4, !tbaa !34
@@ -934,7 +938,7 @@ bb.bs:                                            ; preds = %.lr.ph621, %.loopex
   %i.ot = phi float [ %i.ou, %.lr.ph611.1 ], [ %i.ok, %._crit_edge617 ]
   %i.ou = fsub float %i.ot, %i.jz                 ; 3 uses
   %i.ov = fsub float %i.os, %i.kb                 ; 4 uses
-  %i.ow = fsub float %i.or, %30                   ; 3 uses
+  %i.ow = fsub float %i.or, %i.kd                 ; 3 uses
   store float %i.ou, ptr %i.mw, align 4, !tbaa !34
   store float %i.ov, ptr %i.my, align 4, !tbaa !34
   store float %i.ow, ptr %i.nc, align 4, !tbaa !34
@@ -958,7 +962,7 @@ bb.bs:                                            ; preds = %.lr.ph621, %.loopex
   %i.ph = phi float [ %i.pi, %.lr.ph616.1 ], [ %i.pc, %.preheader553.1 ]
   %i.pi = fadd float %i.ph, %i.jz                 ; 3 uses
   %i.pj = fadd float %i.pg, %i.kb                 ; 4 uses
-  %i.pk = fadd float %i.pf, %30                   ; 3 uses
+  %i.pk = fadd float %i.pf, %i.kd                 ; 3 uses
   store float %i.pi, ptr %i.mw, align 4, !tbaa !34
   store float %i.pj, ptr %i.my, align 4, !tbaa !34
   store float %i.pk, ptr %i.nc, align 4, !tbaa !34
@@ -976,29 +980,36 @@ bb.bs:                                            ; preds = %.lr.ph621, %.loopex
   %i.pt = fsub float %i.pr, %i.ps
   %i.pu = fpext float %i.pt to double             ; 2 uses
   %i.pv = fcmp olt double %i.kn, %i.pu
-  br i1 %i.pv, label %.lr.ph611.2, label %.preheader553.2
+  br i1 %i.pv, label %.lr.ph611.2.preheader, label %.preheader553.2
 
-.lr.ph611.2:                                      ; preds = %._crit_edge617.1, %.lr.ph611.2
-  %36 = phi float [ %39, %.lr.ph611.2 ], [ %i.pp, %._crit_edge617.1 ]
-  %37 = phi float [ %i.px, %.lr.ph611.2 ], [ %i.pq, %._crit_edge617.1 ]
-  %i.pw = phi float [ %38, %.lr.ph611.2 ], [ %i.pr, %._crit_edge617.1 ]
-  %38 = fsub float %i.pw, %i.kl                   ; 4 uses
-  %i.px = fsub float %37, %i.kp                   ; 3 uses
-  %39 = fsub float %36, %i.jx                     ; 3 uses
-  store float %38, ptr %i.mw, align 4, !tbaa !34
-  store float %i.px, ptr %i.my, align 4, !tbaa !34
-  store float %39, ptr %i.nc, align 4, !tbaa !34
-  %40 = load float, ptr %i.nj, align 4, !tbaa !34
-  %i.py = fsub float %38, %40
+.lr.ph611.2.preheader:                            ; preds = %._crit_edge617.1
+  %37 = insertelement <2 x float> poison, float %i.pr, i64 0
+  %38 = insertelement <2 x float> %37, float %i.pq, i64 1
+  br label %.lr.ph611.2
+
+.lr.ph611.2:                                      ; preds = %.lr.ph611.2.preheader, %.lr.ph611.2
+  %i.pw = phi float [ %i.px, %.lr.ph611.2 ], [ %i.pp, %.lr.ph611.2.preheader ]
+  %39 = phi <2 x float> [ %40, %.lr.ph611.2 ], [ %38, %.lr.ph611.2.preheader ]
+  %i.px = fsub float %i.pw, %i.jx                 ; 3 uses
+  %40 = fsub <2 x float> %39, %i.jv               ; 4 uses
+  store <2 x float> %40, ptr %i.mw, align 4, !tbaa !34
+  store float %i.px, ptr %i.nc, align 4, !tbaa !34
+  %41 = load float, ptr %i.nj, align 4, !tbaa !34
+  %42 = extractelement <2 x float> %40, i64 0     ; 2 uses
+  %i.py = fsub float %42, %41
   %i.pz = fpext float %i.py to double             ; 2 uses
   %i.qa = fcmp olt double %i.kn, %i.pz
-  br i1 %i.qa, label %.lr.ph611.2, label %.preheader553.2, !llvm.loop !52
+  br i1 %i.qa, label %.lr.ph611.2, label %.preheader553.2.loopexit, !llvm.loop !52
 
-.preheader553.2:                                  ; preds = %.lr.ph611.2, %._crit_edge617.1
-  %.pre-phi828 = phi double [ %i.pu, %._crit_edge617.1 ], [ %i.pz, %.lr.ph611.2 ]
-  %i.qb = phi float [ %i.pp, %._crit_edge617.1 ], [ %39, %.lr.ph611.2 ]
-  %i.qc = phi float [ %i.pq, %._crit_edge617.1 ], [ %i.px, %.lr.ph611.2 ]
-  %i.qd = phi float [ %i.pr, %._crit_edge617.1 ], [ %38, %.lr.ph611.2 ]
+.preheader553.2.loopexit:                         ; preds = %.lr.ph611.2
+  %43 = extractelement <2 x float> %40, i64 1
+  br label %.preheader553.2
+
+.preheader553.2:                                  ; preds = %.preheader553.2.loopexit, %._crit_edge617.1
+  %.pre-phi828 = phi double [ %i.pu, %._crit_edge617.1 ], [ %i.pz, %.preheader553.2.loopexit ]
+  %i.qb = phi float [ %i.pp, %._crit_edge617.1 ], [ %i.px, %.preheader553.2.loopexit ]
+  %i.qc = phi float [ %i.pq, %._crit_edge617.1 ], [ %43, %.preheader553.2.loopexit ]
+  %i.qd = phi float [ %i.pr, %._crit_edge617.1 ], [ %42, %.preheader553.2.loopexit ]
   %i.qe = fcmp ult double %i.ko, %.pre-phi828
   br i1 %i.qe, label %.loopexit557, label %.lr.ph616.2.preheader
 
