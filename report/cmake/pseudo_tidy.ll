@@ -26,7 +26,7 @@ sub_0.preheader:                                  ; preds = %bb.a
   br label %sub_0
 
 sub_0:                                            ; preds = %sub_0.preheader, %bb.j
-  %indvars.iv = phi i64 [ 1, %sub_0.preheader ], [ %indvars.iv.next, %bb.j ] ; 3 uses
+  %indvars.iv = phi i64 [ 1, %sub_0.preheader ], [ %indvars.iv.next, %bb.j ] ; 4 uses
   %i.b = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv ; 3 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !9    ; 7 uses
   %i.d = load i8, ptr %i.c, align 1               ; 2 uses
@@ -46,14 +46,15 @@ sub_1:                                            ; preds = %sub_0
   br i1 %i.i, label %.preheader.preheader, label %.tail.thread
 
 .preheader.preheader:                             ; preds = %.tail
-  %2 = zext nneg i32 %0 to i64                    ; 2 uses
-  %indvars.iv.next6488 = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %3 = icmp samesign ult i64 %indvars.iv.next6488, %2
-  br i1 %3, label %sub_030, label %.loopexit
+  %2 = add nsw i32 %0, -1
+  %wide.trip.count66 = zext nneg i32 %2 to i64    ; 2 uses
+  %exitcond67.not91 = icmp eq i64 %indvars.iv, %wide.trip.count66
+  br i1 %exitcond67.not91, label %.loopexit, label %sub_030
 
 sub_030:                                          ; preds = %.preheader.preheader, %.preheader.backedge
-  %indvars.iv.next6489 = phi i64 [ %indvars.iv.next64, %.preheader.backedge ], [ %indvars.iv.next6488, %.preheader.preheader ] ; 2 uses
-  %i.j = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv.next6489
+  %indvars.iv.next6489 = phi i64 [ %indvars.iv.next6492, %.preheader.backedge ], [ %indvars.iv, %.preheader.preheader ]
+  %indvars.iv.next6492 = add nuw nsw i64 %indvars.iv.next6489, 1 ; 3 uses
+  %i.j = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv.next6492
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !9    ; 3 uses
   %i.l = load i8, ptr %i.k, align 1
   %.not46 = icmp eq i8 %i.l, 45
@@ -72,9 +73,8 @@ sub_232:                                          ; preds = %sub_131
   br i1 %i.q, label %bb.b, label %.preheader.backedge
 
 .preheader.backedge:                              ; preds = %sub_131, %sub_030, %sub_232
-  %indvars.iv.next64 = add nuw nsw i64 %indvars.iv.next6489, 1 ; 2 uses
-  %4 = icmp samesign ult i64 %indvars.iv.next64, %2
-  br i1 %4, label %sub_030, label %.loopexit, !llvm.loop !12
+  %exitcond67.not = icmp eq i64 %indvars.iv.next6492, %wide.trip.count66
+  br i1 %exitcond67.not, label %.loopexit, label %sub_030, !llvm.loop !12
 
 bb.b:                                             ; preds = %sub_232
   %i.r = load ptr, ptr @stderr, align 8, !tbaa !14

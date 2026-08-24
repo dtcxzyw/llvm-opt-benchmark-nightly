@@ -17,7 +17,7 @@ _ZNK4bssl3der5InputixEm.exit.preheader:           ; preds = %bb.a, %bb.a
   br label %_ZNK4bssl3der5InputixEm.exit
 
 _ZNK4bssl3der5InputixEm.exit:                     ; preds = %_ZNK4bssl3der5InputixEm.exit.preheader, %bb.c
-  %.01641 = phi i64 [ %i.g, %bb.c ], [ 0, %_ZNK4bssl3der5InputixEm.exit.preheader ] ; 3 uses
+  %.01641 = phi i64 [ %i.g, %bb.c ], [ 0, %_ZNK4bssl3der5InputixEm.exit.preheader ] ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 %.01641
   %i.b = load i8, ptr %i.a, align 1, !tbaa !11    ; 3 uses
   %.not23 = icmp eq i8 %i.b, -1
@@ -30,32 +30,38 @@ bb.b:                                             ; preds = %_ZNK4bssl3der5Input
   br i1 %.not24, label %.preheader.preheader, label %.thread
 
 .preheader.preheader:                             ; preds = %bb.b
+  %2 = add i64 %1, -1                             ; 2 uses
   %.053 = add nuw i64 %.01641, 1                  ; 2 uses
-  %.not26.not.not.not54 = icmp ult i64 %.053, %1
-  br i1 %.not26.not.not.not54, label %_ZNK4bssl3der5InputixEm.exit30, label %.thread
+  %exitcond4455 = icmp eq i64 %.01641, %2
+  br i1 %exitcond4455, label %_ZNK4bssl3der5InputixEm.exit30..thread.loopexit_crit_edge.a, label %_ZNK4bssl3der5InputixEm.exit30
 
 .preheader:                                       ; preds = %_ZNK4bssl3der5InputixEm.exit30
   %.0 = add nuw i64 %.055, 1                      ; 2 uses
-  %.not26.not.not.not = icmp ult i64 %.0, %1
-  br i1 %.not26.not.not.not, label %_ZNK4bssl3der5InputixEm.exit30, label %.thread, !llvm.loop !12
+  %exitcond44 = icmp eq i64 %.055, %2
+  br i1 %exitcond44, label %_ZNK4bssl3der5InputixEm.exit30..thread.loopexit_crit_edge.a, label %_ZNK4bssl3der5InputixEm.exit30, !llvm.loop !12
 
 _ZNK4bssl3der5InputixEm.exit30:                   ; preds = %.preheader.preheader, %.preheader
-  %.055 = phi i64 [ %.0, %.preheader ], [ %.053, %.preheader.preheader ] ; 2 uses
+  %.055 = phi i64 [ %.0, %.preheader ], [ %.053, %.preheader.preheader ] ; 4 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 %.055
   %i.f = load i8, ptr %i.e, align 1, !tbaa !11
   %.not25 = icmp eq i8 %i.f, 0
-  br i1 %.not25, label %.preheader, label %_ZNK4bssl3der5InputixEm.exit30..thread.loopexit_crit_edge.a, !llvm.loop !12
+  br i1 %.not25, label %.preheader, label %_ZNK4bssl3der5InputixEm.exit30..thread.loopexit_crit_edge, !llvm.loop !12
 
 bb.c:                                             ; preds = %_ZNK4bssl3der5InputixEm.exit
   %i.g = add nuw i64 %.01641, 1                   ; 2 uses
   %exitcond.not = icmp eq i64 %i.g, %1
   br i1 %exitcond.not, label %.thread, label %_ZNK4bssl3der5InputixEm.exit, !llvm.loop !14
 
-_ZNK4bssl3der5InputixEm.exit30..thread.loopexit_crit_edge.a: ; preds = %_ZNK4bssl3der5InputixEm.exit30
-  br label %.thread, !llvm.loop !12
+_ZNK4bssl3der5InputixEm.exit30..thread.loopexit_crit_edge: ; preds = %_ZNK4bssl3der5InputixEm.exit30
+  br label %_ZNK4bssl3der5InputixEm.exit30..thread.loopexit_crit_edge.a, !llvm.loop !12
 
-.thread:                                          ; preds = %bb.c, %.preheader, %.preheader.preheader, %_ZNK4bssl3der5InputixEm.exit30..thread.loopexit_crit_edge.a, %bb.b, %bb.a
-  %.5 = phi i1 [ false, %bb.a ], [ true, %.preheader ], [ false, %bb.b ], [ false, %_ZNK4bssl3der5InputixEm.exit30..thread.loopexit_crit_edge.a ], [ true, %.preheader.preheader ], [ true, %bb.c ]
+_ZNK4bssl3der5InputixEm.exit30..thread.loopexit_crit_edge.a: ; preds = %.preheader, %_ZNK4bssl3der5InputixEm.exit30..thread.loopexit_crit_edge, %.preheader.preheader
+  %.0.lcssa = phi i64 [ %.055, %_ZNK4bssl3der5InputixEm.exit30..thread.loopexit_crit_edge ], [ %.053, %.preheader.preheader ], [ %.0, %.preheader ]
+  %.not26.not.le = icmp uge i64 %.0.lcssa, %1
+  br label %.thread
+
+.thread:                                          ; preds = %bb.c, %_ZNK4bssl3der5InputixEm.exit30..thread.loopexit_crit_edge.a, %bb.b, %bb.a
+  %.5 = phi i1 [ false, %bb.a ], [ %.not26.not.le, %_ZNK4bssl3der5InputixEm.exit30..thread.loopexit_crit_edge.a ], [ false, %bb.b ], [ true, %bb.c ]
   ret i1 %.5
 }
 

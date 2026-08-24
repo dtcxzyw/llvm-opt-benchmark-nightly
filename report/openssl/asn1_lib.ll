@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/openssl/original/asn1_lib?download=true
 inline.NumInlined: 17
 inline.NumDeleted: 4
-loop-unroll.NumRuntimeUnrolled: 2
-loop-unroll.NumUnrolled: 2
+loop-unroll.NumRuntimeUnrolled: 3
+loop-unroll.NumUnrolled: 3
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -84,9 +84,9 @@ bb.a:
   br i1 %i.b, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @ERR_new() #13
-  tail call void @ERR_set_debug(ptr noundef nonnull @.str, i32 noundef 56, ptr noundef nonnull @__func__.ASN1_get_object) #13
-  tail call void (i32, i32, ptr, ...) @ERR_set_error(i32 noundef 13, i32 noundef 224, ptr noundef null) #13
+  tail call void @ERR_new() #14
+  tail call void @ERR_set_debug(ptr noundef nonnull @.str, i32 noundef 56, ptr noundef nonnull @__func__.ASN1_get_object) #14
+  tail call void (i32, i32, ptr, ...) @ERR_set_error(i32 noundef 13, i32 noundef 224, ptr noundef null) #14
   br label %bb.p
 
 bb.c:                                             ; preds = %bb.a
@@ -164,56 +164,109 @@ bb.j:                                             ; preds = %bb.i
   br i1 %.not3234.i, label %.thread, label %.lr.ph.preheader.i
 
 .lr.ph.preheader.i:                               ; preds = %.preheader33.i
-  %i.ag = zext nneg i8 %i.ad to i32
+  %i.ag = zext nneg i8 %i.ad to i32               ; 2 uses
   %i.ah = getelementptr i8, ptr %.152, i64 %i.af
   %scevgep.i = getelementptr i8, ptr %i.ah, i64 1
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.k, %.lr.ph.preheader.i
-  %.036.i = phi i32 [ %i.al, %bb.k ], [ %i.ag, %.lr.ph.preheader.i ] ; 4 uses
-  %.02835.i = phi ptr [ %i.ak, %bb.k ], [ %i.ae, %.lr.ph.preheader.i ] ; 4 uses
+  %indvar = phi i32 [ %indvar.next, %bb.k ], [ 0, %.lr.ph.preheader.i ] ; 2 uses
+  %.036.i = phi i32 [ %i.al, %bb.k ], [ %i.ag, %.lr.ph.preheader.i ] ; 5 uses
+  %.02835.i = phi ptr [ %i.ak, %bb.k ], [ %i.ae, %.lr.ph.preheader.i ] ; 5 uses
   %i.ai = load i8, ptr %.02835.i, align 1, !tbaa !11
   %i.aj = icmp eq i8 %i.ai, 0
-  br i1 %i.aj, label %bb.k, label %.critedge.i.a
+  br i1 %i.aj, label %bb.k, label %.critedge.i
 
 bb.k:                                             ; preds = %.lr.ph.i
   %i.ak = getelementptr inbounds nuw i8, ptr %.02835.i, i64 1
   %i.al = add nsw i32 %.036.i, -1                 ; 2 uses
   %.not32.i = icmp eq i32 %i.al, 0
+  %indvar.next = add i32 %indvar, 1
   br i1 %.not32.i, label %.thread, label %.lr.ph.i, !llvm.loop !15
 
-.critedge.i.a:                                    ; preds = %.lr.ph.i
-  %i.am = icmp samesign ugt i32 %.036.i, 8
-  br i1 %i.am, label %asn1_get_length.exit.thread, label %.lr.ph44.i
+.critedge.i:                                      ; preds = %.lr.ph.i
+  %5 = icmp samesign ugt i32 %.036.i, 8
+  br i1 %5, label %asn1_get_length.exit.thread, label %.critedge.i.a
 
-.lr.ph44.i:                                       ; preds = %.critedge.i.a, %.lr.ph44.i
-  %.143.i = phi i32 [ %i.as, %.lr.ph44.i ], [ %.036.i, %.critedge.i.a ] ; 2 uses
-  %.02642.i = phi i64 [ %i.ar, %.lr.ph44.i ], [ 0, %.critedge.i.a ]
-  %.12941.i = phi ptr [ %i.ao, %.lr.ph44.i ], [ %.02835.i, %.critedge.i.a ] ; 2 uses
-  %i.an = shl i64 %.02642.i, 8                    ; 2 uses
-  %i.ao = getelementptr inbounds nuw i8, ptr %.12941.i, i64 1
-  %i.ap = load i8, ptr %.12941.i, align 1, !tbaa !11
+.critedge.i.a:                                    ; preds = %.critedge.i
+  %xtraiter = and i32 %.036.i, 3                  ; 3 uses
+  %6 = sub i32 %indvar, %i.ag
+  %i.am = icmp ugt i32 %6, -4
+  br i1 %i.am, label %.lr.ph44.i.epil.preheader, label %.lr.ph44.i.preheader.new
+
+.lr.ph44.i.preheader.new:                         ; preds = %.critedge.i.a
+  %unroll_iter = and i32 %.036.i, 12
+  br label %.lr.ph44.i
+
+.lr.ph44.i:                                       ; preds = %.lr.ph44.i, %.lr.ph44.i.preheader.new
+  %.02642.i = phi i64 [ 0, %.lr.ph44.i.preheader.new ], [ %i.ar, %.lr.ph44.i ]
+  %.12941.i = phi ptr [ %.02835.i, %.lr.ph44.i.preheader.new ], [ %i.ao, %.lr.ph44.i ] ; 5 uses
+  %.143.i = phi i32 [ 0, %.lr.ph44.i.preheader.new ], [ %i.as, %.lr.ph44.i ]
+  %7 = getelementptr inbounds nuw i8, ptr %.12941.i, i64 1
+  %8 = load i8, ptr %.12941.i, align 1, !tbaa !11
+  %9 = zext i8 %8 to i64
+  %10 = shl i64 %.02642.i, 16
+  %11 = shl nuw nsw i64 %9, 8
+  %12 = or disjoint i64 %10, %11
+  %13 = getelementptr inbounds nuw i8, ptr %.12941.i, i64 2
+  %14 = load i8, ptr %7, align 1, !tbaa !11
+  %15 = zext i8 %14 to i64
+  %16 = or disjoint i64 %12, %15
+  %17 = getelementptr inbounds nuw i8, ptr %.12941.i, i64 3
+  %18 = load i8, ptr %13, align 1, !tbaa !11
+  %19 = zext i8 %18 to i64
+  %20 = shl i64 %16, 16
+  %i.an = shl nuw nsw i64 %19, 8
+  %21 = or disjoint i64 %20, %i.an                ; 2 uses
+  %i.ao = getelementptr inbounds nuw i8, ptr %.12941.i, i64 4 ; 2 uses
+  %i.ap = load i8, ptr %17, align 1, !tbaa !11
   %i.aq = zext i8 %i.ap to i64
-  %i.ar = or disjoint i64 %i.an, %i.aq            ; 2 uses
-  %i.as = add nsw i32 %.143.i, -1
-  %5 = icmp samesign ugt i32 %.143.i, 1
-  br i1 %5, label %.lr.ph44.i, label %._crit_edge.i, !llvm.loop !16
+  %i.ar = or disjoint i64 %21, %i.aq              ; 3 uses
+  %i.as = add i32 %.143.i, 4                      ; 2 uses
+  %niter.ncmp.3.not = icmp eq i32 %i.as, %unroll_iter
+  br i1 %niter.ncmp.3.not, label %._crit_edge.i.unr-lcssa, label %.lr.ph44.i, !llvm.loop !16
 
-._crit_edge.i:                                    ; preds = %.lr.ph44.i
+._crit_edge.i.unr-lcssa:                          ; preds = %.lr.ph44.i
+  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %._crit_edge.i, label %.lr.ph44.i.epil.preheader
+
+.lr.ph44.i.epil.preheader:                        ; preds = %._crit_edge.i.unr-lcssa, %.critedge.i.a
+  %.02642.i.epil.init = phi i64 [ 0, %.critedge.i.a ], [ %i.ar, %._crit_edge.i.unr-lcssa ]
+  %.12941.i.epil.init = phi ptr [ %.02835.i, %.critedge.i.a ], [ %i.ao, %._crit_edge.i.unr-lcssa ]
+  %lcmp.mod123 = icmp ne i32 %xtraiter, 0
+  tail call void @llvm.assume(i1 %lcmp.mod123)
+  br label %.lr.ph44.i.epil
+
+.lr.ph44.i.epil:                                  ; preds = %.lr.ph44.i.epil, %.lr.ph44.i.epil.preheader
+  %.02642.i.epil = phi i64 [ %26, %.lr.ph44.i.epil ], [ %.02642.i.epil.init, %.lr.ph44.i.epil.preheader ]
+  %.12941.i.epil = phi ptr [ %23, %.lr.ph44.i.epil ], [ %.12941.i.epil.init, %.lr.ph44.i.epil.preheader ] ; 2 uses
+  %epil.iter = phi i32 [ %epil.iter.next, %.lr.ph44.i.epil ], [ 0, %.lr.ph44.i.epil.preheader ]
+  %22 = shl i64 %.02642.i.epil, 8                 ; 2 uses
+  %23 = getelementptr inbounds nuw i8, ptr %.12941.i.epil, i64 1
+  %24 = load i8, ptr %.12941.i.epil, align 1, !tbaa !11
+  %25 = zext i8 %24 to i64
+  %26 = or disjoint i64 %22, %25                  ; 2 uses
+  %epil.iter.next = add i32 %epil.iter, 1         ; 2 uses
+  %epil.iter.cmp.not = icmp eq i32 %epil.iter.next, %xtraiter
+  br i1 %epil.iter.cmp.not, label %._crit_edge.i, label %.lr.ph44.i.epil, !llvm.loop !17
+
+._crit_edge.i:                                    ; preds = %.lr.ph44.i.epil, %._crit_edge.i.unr-lcssa
+  %.lcssa111 = phi i64 [ %21, %._crit_edge.i.unr-lcssa ], [ %22, %.lr.ph44.i.epil ]
+  %.lcssa = phi i64 [ %i.ar, %._crit_edge.i.unr-lcssa ], [ %26, %.lr.ph44.i.epil ]
   %i.at = zext nneg i32 %.036.i to i64
   %scevgep49.i = getelementptr i8, ptr %.02835.i, i64 %i.at
-  %i.au = icmp slt i64 %i.an, 0
+  %i.au = icmp slt i64 %.lcssa111, 0
   br i1 %i.au, label %asn1_get_length.exit.thread, label %.thread
 
 .thread:                                          ; preds = %bb.k, %bb.i, %.preheader33.i, %._crit_edge.i
   %.2.i.ph = phi ptr [ %scevgep49.i, %._crit_edge.i ], [ %i.ae, %.preheader33.i ], [ %i.ae, %bb.i ], [ %scevgep.i, %bb.k ]
-  %.127.i.ph = phi i64 [ %i.ar, %._crit_edge.i ], [ 0, %.preheader33.i ], [ %i.af, %bb.i ], [ 0, %bb.k ] ; 2 uses
-  store i64 %.127.i.ph, ptr %1, align 8, !tbaa !17
+  %.127.i.ph = phi i64 [ %.lcssa, %._crit_edge.i ], [ 0, %.preheader33.i ], [ %i.af, %bb.i ], [ 0, %bb.k ] ; 2 uses
+  store i64 %.127.i.ph, ptr %1, align 8, !tbaa !19
   br label %bb.m
 
 bb.l:                                             ; preds = %bb.h
   %i.av = getelementptr inbounds nuw i8, ptr %.152, i64 1
-  store i64 0, ptr %1, align 8, !tbaa !17
+  store i64 0, ptr %1, align 8, !tbaa !19
   %.not42 = icmp eq i32 %i.e, 0
   br i1 %.not42, label %asn1_get_length.exit.thread, label %bb.m
 
@@ -229,9 +282,9 @@ bb.m:                                             ; preds = %.thread, %bb.l
   br i1 %i.ba, label %bb.n, label %bb.o
 
 bb.n:                                             ; preds = %bb.m
-  tail call void @ERR_new() #13
-  tail call void @ERR_set_debug(ptr noundef nonnull @.str, i32 noundef 95, ptr noundef nonnull @__func__.ASN1_get_object) #13
-  tail call void (i32, i32, ptr, ...) @ERR_set_error(i32 noundef 13, i32 noundef 155, ptr noundef null) #13
+  tail call void @ERR_new() #14
+  tail call void @ERR_set_debug(ptr noundef nonnull @.str, i32 noundef 95, ptr noundef nonnull @__func__.ASN1_get_object) #14
+  tail call void (i32, i32, ptr, ...) @ERR_set_error(i32 noundef 13, i32 noundef 155, ptr noundef null) #14
   %i.bb = or disjoint i32 %i.e, 128
   br label %bb.o
 
@@ -241,10 +294,10 @@ bb.o:                                             ; preds = %bb.n, %bb.m
   %i.bc = or i32 %.031, %.04963
   br label %bb.p
 
-asn1_get_length.exit.thread:                      ; preds = %bb.e, %._crit_edge.i, %bb.j, %.critedge.i.a, %bb.l, %bb.g, %bb.f, %bb.d
-  tail call void @ERR_new() #13
-  tail call void @ERR_set_debug(ptr noundef nonnull @.str, i32 noundef 105, ptr noundef nonnull @__func__.ASN1_get_object) #13
-  tail call void (i32, i32, ptr, ...) @ERR_set_error(i32 noundef 13, i32 noundef 123, ptr noundef null) #13
+asn1_get_length.exit.thread:                      ; preds = %bb.e, %._crit_edge.i, %bb.j, %.critedge.i, %bb.l, %bb.g, %bb.f, %bb.d
+  tail call void @ERR_new() #14
+  tail call void @ERR_set_debug(ptr noundef nonnull @.str, i32 noundef 105, ptr noundef nonnull @__func__.ASN1_get_object) #14
+  tail call void (i32, i32, ptr, ...) @ERR_set_error(i32 noundef 13, i32 noundef 123, ptr noundef null) #14
   br label %bb.p
 
 bb.p:                                             ; preds = %asn1_get_length.exit.thread, %bb.o, %bb.b
@@ -309,7 +362,7 @@ bb.c:                                             ; preds = %bb.a
   store i8 %spec.select.prol, ptr %i.q, align 1, !tbaa !11
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
-  br i1 %prol.iter.cmp.not, label %.peel.next.prol.loopexit, label %.peel.next.prol, !llvm.loop !19
+  br i1 %prol.iter.cmp.not, label %.peel.next.prol.loopexit, label %.peel.next.prol, !llvm.loop !21
 
 .peel.next.prol.loopexit:                         ; preds = %.peel.next.prol, %.peel.next.preheader
   %indvars.iv41.in.unr = phi i64 [ %indvars.iv, %.peel.next.preheader ], [ %indvars.iv41.prol, %.peel.next.prol ]
@@ -325,7 +378,7 @@ bb.d:                                             ; preds = %bb.c, %bb.d
   %i.t = add nuw nsw i32 %.02335, 1               ; 2 uses
   %.not39 = icmp eq i32 %i.s, 0
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
-  br i1 %.not39, label %.preheader, label %bb.d, !llvm.loop !21
+  br i1 %.not39, label %.preheader, label %bb.d, !llvm.loop !22
 
 .peel.next:                                       ; preds = %.peel.next.prol.loopexit, %.peel.next
   %indvars.iv41.in = phi i64 [ %indvars.iv41.3, %.peel.next ], [ %indvars.iv41.in.unr, %.peel.next.prol.loopexit ] ; 6 uses
@@ -355,7 +408,7 @@ bb.d:                                             ; preds = %bb.c, %bb.d
   %spec.select.3 = or disjoint i8 %i.ac, -128
   store i8 %spec.select.3, ptr %i.ae, align 1, !tbaa !11
   %i.af = icmp sgt i64 %indvars.iv41.in, 4
-  br i1 %i.af, label %.peel.next, label %.loopexit, !llvm.loop !22
+  br i1 %i.af, label %.peel.next, label %.loopexit, !llvm.loop !23
 
 .loopexit:                                        ; preds = %.peel.next.prol.loopexit, %.peel.next, %.preheader
   %i.ag = zext nneg i32 %i.t to i64
@@ -390,7 +443,7 @@ bb.h:                                             ; preds = %bb.g
   %i.ao = add nuw nsw i32 %.01924.i, 1            ; 3 uses
   %.not.i = icmp eq i32 %i.an, 0
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1
-  br i1 %.not.i, label %bb.i, label %.preheader.i, !llvm.loop !24
+  br i1 %.not.i, label %bb.i, label %.preheader.i, !llvm.loop !25
 
 bb.i:                                             ; preds = %.preheader.i
   %i.ap = trunc i32 %i.ao to i8
@@ -411,7 +464,7 @@ bb.i:                                             ; preds = %.preheader.i
   %i.at = lshr i32 %.02126.i.prol, 8              ; 2 uses
   %prol.iter53.next = add i64 %prol.iter53, 1     ; 2 uses
   %prol.iter53.cmp.not = icmp eq i64 %prol.iter53.next, %xtraiter51
-  br i1 %prol.iter53.cmp.not, label %.prol.loopexit, label %.prol.preheader, !llvm.loop !25
+  br i1 %prol.iter53.cmp.not, label %.prol.loopexit, label %.prol.preheader, !llvm.loop !26
 
 .prol.loopexit:                                   ; preds = %.prol.preheader, %bb.i
   %indvars.iv28.i.unr = phi i64 [ %indvars.iv.i, %bb.i ], [ %indvars.iv.next29.i.prol, %.prol.preheader ]
@@ -442,7 +495,7 @@ bb.i:                                             ; preds = %.preheader.i
   %i.bi = getelementptr i8, ptr %i.bh, i64 -3
   store i8 %i.bg, ptr %i.bi, align 1, !tbaa !11
   %i.bj = icmp sgt i64 %indvars.iv28.i, 4
-  br i1 %i.bj, label %.new, label %.unr-lcssa, !llvm.loop !26
+  br i1 %i.bj, label %.new, label %.unr-lcssa, !llvm.loop !27
 
 .unr-lcssa:                                       ; preds = %.new, %.prol.loopexit
   %i.bk = getelementptr inbounds nuw i8, ptr %.033, i64 1
@@ -506,7 +559,7 @@ bb.d:                                             ; preds = %.loopexit26
   %i.i = lshr i32 %.028, 8                        ; 2 uses
   %i.j = add nuw nsw i32 %.227, 1                 ; 2 uses
   %.not29 = icmp eq i32 %i.i, 0
-  br i1 %.not29, label %.loopexit, label %.preheader, !llvm.loop !27
+  br i1 %.not29, label %.loopexit, label %.preheader, !llvm.loop !28
 
 .loopexit:                                        ; preds = %.preheader, %bb.d, %bb.c
   %.3 = phi i32 [ %i.f, %bb.c ], [ %i.g, %bb.d ], [ %i.j, %.preheader ] ; 2 uses
@@ -525,13 +578,13 @@ bb.e:                                             ; preds = %.loopexit, %bb.a
 define void @ossl_asn1_string_set_bits_left(ptr nofree noundef captures(none) %0, i32 noundef %1) local_unnamed_addr #6 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %i.b = load i64, ptr %i.a, align 8, !tbaa !28
+  %i.b = load i64, ptr %i.a, align 8, !tbaa !29
   %i.c = and i64 %i.b, -16
   %i.d = and i32 %1, 7
   %i.e = or disjoint i32 %i.d, 8
   %i.f = zext nneg i32 %i.e to i64
   %i.g = or disjoint i64 %i.c, %i.f
-  store i64 %i.g, ptr %i.a, align 8, !tbaa !28
+  store i64 %i.g, ptr %i.a, align 8, !tbaa !29
   ret void
 }
 
@@ -543,26 +596,26 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %i.c = load i32, ptr %i.b, align 4, !tbaa !30
+  %i.c = load i32, ptr %i.b, align 4, !tbaa !31
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 4
-  store i32 %i.c, ptr %i.d, align 4, !tbaa !30
+  store i32 %i.c, ptr %i.d, align 4, !tbaa !31
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.f = load ptr, ptr %i.e, align 8, !tbaa !31
-  %i.g = load i32, ptr %1, align 8, !tbaa !32
+  %i.f = load ptr, ptr %i.e, align 8, !tbaa !32
+  %i.g = load i32, ptr %1, align 8, !tbaa !33
   %i.h = tail call i32 @ASN1_STRING_set(ptr noundef %0, ptr noundef %i.f, i32 noundef %i.g)
   %.not = icmp eq i32 %i.h, 0
   br i1 %.not, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
-  %i.j = load i64, ptr %i.i, align 8, !tbaa !28
+  %i.j = load i64, ptr %i.i, align 8, !tbaa !29
   %i.k = and i64 %i.j, 128                        ; 2 uses
-  store i64 %i.k, ptr %i.i, align 8, !tbaa !28
+  store i64 %i.k, ptr %i.i, align 8, !tbaa !29
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.m = load i64, ptr %i.l, align 8, !tbaa !28
+  %i.m = load i64, ptr %i.l, align 8, !tbaa !29
   %i.n = and i64 %i.m, -129
   %i.o = or disjoint i64 %i.n, %i.k
-  store i64 %i.o, ptr %i.i, align 8, !tbaa !28
+  store i64 %i.o, ptr %i.i, align 8, !tbaa !29
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.b, %bb.a, %bb.c
@@ -581,7 +634,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.b, label %bb.l, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.c = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %1) #14
+  %i.c = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %1) #15
   br label %bb.e
 
 bb.d:                                             ; preds = %bb.a
@@ -594,17 +647,17 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   br i1 %i.e, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
-  tail call void @ERR_new() #13
-  tail call void @ERR_set_debug(ptr noundef nonnull @.str, i32 noundef 305, ptr noundef nonnull @__func__.ASN1_STRING_set) #13
-  tail call void (i32, i32, ptr, ...) @ERR_set_error(i32 noundef 13, i32 noundef 223, ptr noundef null) #13
+  tail call void @ERR_new() #14
+  tail call void @ERR_set_debug(ptr noundef nonnull @.str, i32 noundef 305, ptr noundef nonnull @__func__.ASN1_STRING_set) #14
+  tail call void (i32, i32, ptr, ...) @ERR_set_error(i32 noundef 13, i32 noundef 223, ptr noundef null) #14
   br label %bb.l
 
 bb.g:                                             ; preds = %bb.e
-  %i.f = load i32, ptr %0, align 8, !tbaa !32
+  %i.f = load i32, ptr %0, align 8, !tbaa !33
   %i.g = sext i32 %i.f to i64
   %.not = icmp ult i64 %.0, %i.g
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.i = load ptr, ptr %i.h, align 8, !tbaa !31   ; 3 uses
+  %i.i = load ptr, ptr %i.h, align 8, !tbaa !32   ; 3 uses
   br i1 %.not, label %bb.h, label %._crit_edge
 
 bb.h:                                             ; preds = %bb.g
@@ -615,26 +668,26 @@ bb.h:                                             ; preds = %bb.g
   %i.k = phi ptr [ null, %bb.h ], [ %i.i, %bb.g ] ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.m = add nuw nsw i64 %.0, 1
-  %i.n = tail call ptr @CRYPTO_realloc(ptr noundef %i.k, i64 noundef %i.m, ptr noundef nonnull @.str, i32 noundef 314) #13 ; 3 uses
-  store ptr %i.n, ptr %i.l, align 8, !tbaa !31
+  %i.n = tail call ptr @CRYPTO_realloc(ptr noundef %i.k, i64 noundef %i.m, ptr noundef nonnull @.str, i32 noundef 314) #14 ; 3 uses
+  store ptr %i.n, ptr %i.l, align 8, !tbaa !32
   %i.o = icmp eq ptr %i.n, null
   br i1 %i.o, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %._crit_edge
-  store ptr %i.k, ptr %i.l, align 8, !tbaa !31
+  store ptr %i.k, ptr %i.l, align 8, !tbaa !32
   br label %bb.l
 
 bb.j:                                             ; preds = %._crit_edge, %bb.h
   %i.p = phi ptr [ %i.n, %._crit_edge ], [ %i.i, %bb.h ]
   %i.q = trunc nuw nsw i64 %.0 to i32
-  store i32 %i.q, ptr %0, align 8, !tbaa !32
+  store i32 %i.q, ptr %0, align 8, !tbaa !33
   %.not27 = icmp eq ptr %1, null
   br i1 %.not27, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.p, ptr nonnull align 1 %1, i64 %.0, i1 false)
-  %i.s = load ptr, ptr %i.r, align 8, !tbaa !31
+  %i.s = load ptr, ptr %i.r, align 8, !tbaa !32
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 %.0
   store i8 0, ptr %i.t, align 1, !tbaa !11
   br label %bb.l
@@ -651,31 +704,31 @@ bb.a:
   br i1 %.not, label %ASN1_STRING_free.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 24, ptr noundef nonnull @.str, i32 noundef 355) #13 ; 7 uses
+  %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 24, ptr noundef nonnull @.str, i32 noundef 355) #14 ; 7 uses
   %i.b = icmp eq ptr %i.a, null
   br i1 %i.b, label %ASN1_STRING_free.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 4
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %i.e = load i32, ptr %i.d, align 4, !tbaa !30
-  store i32 %i.e, ptr %i.c, align 4, !tbaa !30
+  %i.e = load i32, ptr %i.d, align 4, !tbaa !31
+  store i32 %i.e, ptr %i.c, align 4, !tbaa !31
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.g = load ptr, ptr %i.f, align 8, !tbaa !31
-  %i.h = load i32, ptr %0, align 8, !tbaa !32
+  %i.g = load ptr, ptr %i.f, align 8, !tbaa !32
+  %i.h = load i32, ptr %0, align 8, !tbaa !33
   %i.i = tail call i32 @ASN1_STRING_set(ptr noundef nonnull %i.a, ptr noundef %i.g, i32 noundef %i.h)
   %.not.i = icmp eq i32 %i.i, 0
   %i.j = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
-  %i.k = load i64, ptr %i.j, align 8, !tbaa !28   ; 3 uses
+  %i.k = load i64, ptr %i.j, align 8, !tbaa !29   ; 3 uses
   br i1 %.not.i, label %bb.d, label %ASN1_STRING_copy.exit
 
 ASN1_STRING_copy.exit:                            ; preds = %bb.c
   %i.l = and i64 %i.k, 128
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.n = load i64, ptr %i.m, align 8, !tbaa !28
+  %i.n = load i64, ptr %i.m, align 8, !tbaa !29
   %i.o = and i64 %i.n, -129
   %i.p = or disjoint i64 %i.o, %i.l
-  store i64 %i.p, ptr %i.j, align 8, !tbaa !28
+  store i64 %i.p, ptr %i.j, align 8, !tbaa !29
   br label %ASN1_STRING_free.exit
 
 bb.d:                                             ; preds = %bb.c
@@ -685,8 +738,8 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d
   %i.r = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %i.s = load ptr, ptr %i.r, align 8, !tbaa !31
-  tail call void @CRYPTO_free(ptr noundef %i.s, ptr noundef nonnull @.str, i32 noundef 367) #13
+  %i.s = load ptr, ptr %i.r, align 8, !tbaa !32
+  tail call void @CRYPTO_free(ptr noundef %i.s, ptr noundef nonnull @.str, i32 noundef 367) #14
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d
@@ -695,7 +748,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   br i1 %i.u, label %bb.g, label %ASN1_STRING_free.exit
 
 bb.g:                                             ; preds = %bb.f
-  tail call void @CRYPTO_free(ptr noundef nonnull %i.a, ptr noundef nonnull @.str, i32 noundef 369) #13
+  tail call void @CRYPTO_free(ptr noundef nonnull %i.a, ptr noundef nonnull @.str, i32 noundef 369) #14
   br label %ASN1_STRING_free.exit
 
 ASN1_STRING_free.exit:                            ; preds = %bb.b, %bb.g, %bb.f, %ASN1_STRING_copy.exit, %bb.a
@@ -706,13 +759,13 @@ ASN1_STRING_free.exit:                            ; preds = %bb.b, %bb.g, %bb.f,
 ; Function Attrs: nounwind uwtable
 define ptr @ASN1_STRING_new() local_unnamed_addr #1 {
 bb.a:
-  %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 24, ptr noundef nonnull @.str, i32 noundef 355) #13 ; 3 uses
+  %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 24, ptr noundef nonnull @.str, i32 noundef 355) #14 ; 3 uses
   %i.b = icmp eq ptr %i.a, null
   br i1 %i.b, label %ASN1_STRING_type_new.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  store i32 4, ptr %i.c, align 4, !tbaa !30
+  store i32 4, ptr %i.c, align 4, !tbaa !31
   br label %ASN1_STRING_type_new.exit
 
 ASN1_STRING_type_new.exit:                        ; preds = %bb.a, %bb.b
@@ -727,15 +780,15 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.c = load i64, ptr %i.b, align 8, !tbaa !28   ; 2 uses
+  %i.c = load i64, ptr %i.b, align 8, !tbaa !29   ; 2 uses
   %i.d = and i64 %i.c, 16
   %.not.i = icmp eq i64 %i.d, 0
   br i1 %.not.i, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.f = load ptr, ptr %i.e, align 8, !tbaa !31
-  tail call void @CRYPTO_free(ptr noundef %i.f, ptr noundef nonnull @.str, i32 noundef 367) #13
+  %i.f = load ptr, ptr %i.e, align 8, !tbaa !32
+  tail call void @CRYPTO_free(ptr noundef %i.f, ptr noundef nonnull @.str, i32 noundef 367) #14
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
@@ -744,7 +797,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   br i1 %i.h, label %bb.e, label %ossl_asn1_string_embed_free.exit
 
 bb.e:                                             ; preds = %bb.d
-  tail call void @CRYPTO_free(ptr noundef nonnull %0, ptr noundef nonnull @.str, i32 noundef 369) #13
+  tail call void @CRYPTO_free(ptr noundef nonnull %0, ptr noundef nonnull @.str, i32 noundef 369) #14
   br label %ossl_asn1_string_embed_free.exit
 
 ossl_asn1_string_embed_free.exit:                 ; preds = %bb.e, %bb.d, %bb.a
@@ -763,10 +816,10 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 define void @ASN1_STRING_set0(ptr nofree noundef captures(none) initializes((0, 4)) %0, ptr noundef %1, i32 noundef %2) local_unnamed_addr #1 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !31
-  tail call void @CRYPTO_free(ptr noundef %i.b, ptr noundef nonnull @.str, i32 noundef 341) #13
-  store ptr %1, ptr %i.a, align 8, !tbaa !31
-  store i32 %2, ptr %0, align 8, !tbaa !32
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !32
+  tail call void @CRYPTO_free(ptr noundef %i.b, ptr noundef nonnull @.str, i32 noundef 341) #14
+  store ptr %1, ptr %i.a, align 8, !tbaa !32
+  store i32 %2, ptr %0, align 8, !tbaa !33
   ret void
 }
 
@@ -775,13 +828,13 @@ declare void @CRYPTO_free(ptr noundef, ptr noundef, i32 noundef) local_unnamed_a
 ; Function Attrs: nounwind uwtable
 define ptr @ASN1_STRING_type_new(i32 noundef %0) local_unnamed_addr #1 {
 bb.a:
-  %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 24, ptr noundef nonnull @.str, i32 noundef 355) #13 ; 3 uses
+  %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 24, ptr noundef nonnull @.str, i32 noundef 355) #14 ; 3 uses
   %i.b = icmp eq ptr %i.a, null
   br i1 %i.b, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  store i32 %0, ptr %i.c, align 4, !tbaa !30
+  store i32 %0, ptr %i.c, align 4, !tbaa !31
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
@@ -798,15 +851,15 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.c = load i64, ptr %i.b, align 8, !tbaa !28
+  %i.c = load i64, ptr %i.b, align 8, !tbaa !29
   %i.d = and i64 %i.c, 16
   %.not = icmp eq i64 %i.d, 0
   br i1 %.not, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.f = load ptr, ptr %i.e, align 8, !tbaa !31
-  tail call void @CRYPTO_free(ptr noundef %i.f, ptr noundef nonnull @.str, i32 noundef 367) #13
+  %i.f = load ptr, ptr %i.e, align 8, !tbaa !32
+  tail call void @CRYPTO_free(ptr noundef %i.f, ptr noundef nonnull @.str, i32 noundef 367) #14
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
@@ -814,7 +867,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   br i1 %i.g, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
-  tail call void @CRYPTO_free(ptr noundef nonnull %0, ptr noundef nonnull @.str, i32 noundef 369) #13
+  tail call void @CRYPTO_free(ptr noundef nonnull %0, ptr noundef nonnull @.str, i32 noundef 369) #14
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.a, %bb.e, %bb.d
@@ -829,33 +882,33 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !31   ; 2 uses
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !32   ; 2 uses
   %.not = icmp eq ptr %i.c, null
   br i1 %.not, label %bb.e, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.e = load i64, ptr %i.d, align 8, !tbaa !28
+  %i.e = load i64, ptr %i.d, align 8, !tbaa !29
   %i.f = and i64 %i.e, 16
   %.not7 = icmp eq i64 %i.f, 0
   br i1 %.not7, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %i.g = load i32, ptr %0, align 8, !tbaa !32
+  %i.g = load i32, ptr %0, align 8, !tbaa !33
   %i.h = sext i32 %i.g to i64
-  tail call void @OPENSSL_cleanse(ptr noundef nonnull %i.c, i64 noundef %i.h) #13
+  tail call void @OPENSSL_cleanse(ptr noundef nonnull %i.c, i64 noundef %i.h) #14
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.b, %bb.c, %bb.d
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.j = load i64, ptr %i.i, align 8, !tbaa !28   ; 2 uses
+  %i.j = load i64, ptr %i.i, align 8, !tbaa !29   ; 2 uses
   %i.k = and i64 %i.j, 16
   %.not.i.i = icmp eq i64 %i.k, 0
   br i1 %.not.i.i, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
-  %i.l = load ptr, ptr %i.b, align 8, !tbaa !31
-  tail call void @CRYPTO_free(ptr noundef %i.l, ptr noundef nonnull @.str, i32 noundef 367) #13
+  %i.l = load ptr, ptr %i.b, align 8, !tbaa !32
+  tail call void @CRYPTO_free(ptr noundef %i.l, ptr noundef nonnull @.str, i32 noundef 367) #14
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
@@ -864,7 +917,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   br i1 %i.n, label %bb.h, label %ASN1_STRING_free.exit
 
 bb.h:                                             ; preds = %bb.g
-  tail call void @CRYPTO_free(ptr noundef nonnull %0, ptr noundef nonnull @.str, i32 noundef 369) #13
+  tail call void @CRYPTO_free(ptr noundef nonnull %0, ptr noundef nonnull @.str, i32 noundef 369) #14
   br label %ASN1_STRING_free.exit
 
 ASN1_STRING_free.exit:                            ; preds = %bb.h, %bb.g, %bb.a
@@ -876,8 +929,8 @@ declare void @OPENSSL_cleanse(ptr noundef, i64 noundef) local_unnamed_addr #2
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
 define i32 @ASN1_STRING_cmp(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #9 {
 bb.a:
-  %i.a = load i32, ptr %0, align 8, !tbaa !32     ; 3 uses
-  %i.b = load i32, ptr %1, align 8, !tbaa !32
+  %i.a = load i32, ptr %0, align 8, !tbaa !33     ; 3 uses
+  %i.b = load i32, ptr %1, align 8, !tbaa !33
   %i.c = sub nsw i32 %i.a, %i.b                   ; 2 uses
   %i.d = icmp eq i32 %i.c, 0
   br i1 %i.d, label %bb.b, label %bb.d
@@ -888,19 +941,19 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.f = load ptr, ptr %i.e, align 8, !tbaa !31
+  %i.f = load ptr, ptr %i.e, align 8, !tbaa !32
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.h = load ptr, ptr %i.g, align 8, !tbaa !31
+  %i.h = load ptr, ptr %i.g, align 8, !tbaa !32
   %i.i = sext i32 %i.a to i64
-  %i.j = tail call i32 @memcmp(ptr noundef %i.f, ptr noundef %i.h, i64 noundef %i.i) #14 ; 2 uses
+  %i.j = tail call i32 @memcmp(ptr noundef %i.f, ptr noundef %i.h, i64 noundef %i.i) #15 ; 2 uses
   %i.k = icmp eq i32 %i.j, 0
   br i1 %i.k, label %.thread, label %bb.d
 
 .thread:                                          ; preds = %bb.b, %bb.c
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %i.m = load i32, ptr %i.l, align 4, !tbaa !30
+  %i.m = load i32, ptr %i.l, align 4, !tbaa !31
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %i.o = load i32, ptr %i.n, align 4, !tbaa !30
+  %i.o = load i32, ptr %i.n, align 4, !tbaa !31
   %i.p = sub nsw i32 %i.m, %i.o
   br label %bb.d
 
@@ -915,14 +968,14 @@ declare i32 @memcmp(ptr noundef captures(none), ptr noundef captures(none), i64 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define i32 @ASN1_STRING_length(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #10 {
 bb.a:
-  %i.a = load i32, ptr %0, align 8, !tbaa !32
+  %i.a = load i32, ptr %0, align 8, !tbaa !33
   ret i32 %i.a
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
 define void @ASN1_STRING_length_set(ptr nofree noundef writeonly captures(none) initializes((0, 4)) %0, i32 noundef %1) local_unnamed_addr #11 {
 bb.a:
-  store i32 %1, ptr %0, align 8, !tbaa !32
+  store i32 %1, ptr %0, align 8, !tbaa !33
   ret void
 }
 
@@ -930,7 +983,7 @@ bb.a:
 define i32 @ASN1_STRING_type(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #10 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %i.b = load i32, ptr %i.a, align 4, !tbaa !30
+  %i.b = load i32, ptr %i.a, align 4, !tbaa !31
   ret i32 %i.b
 }
 
@@ -938,7 +991,7 @@ bb.a:
 define ptr @ASN1_STRING_get0_data(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #10 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !31
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !32
   ret ptr %i.b
 }
 
@@ -947,16 +1000,16 @@ define ptr @ossl_sk_ASN1_UTF8STRING2text(ptr noundef %0, ptr nofree noundef read
 bb.a:
   %i.a = icmp eq ptr %1, null
   %spec.store.select = select i1 %i.a, ptr @.str.1, ptr %1 ; 2 uses
-  %i.b = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %spec.store.select) #14
+  %i.b = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %spec.store.select) #15
   %.fr57 = freeze i64 %i.b                        ; 5 uses
-  %i.c = tail call i32 @OPENSSL_sk_num(ptr noundef %0) #13
+  %i.c = tail call i32 @OPENSSL_sk_num(ptr noundef %0) #14
   %i.d = icmp sgt i32 %i.c, 0
   br i1 %i.d, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.a
   %.not46.not = icmp eq i64 %2, 0
-  %i.e = tail call ptr @OPENSSL_sk_value(ptr noundef %0, i32 noundef 0) #13
-  %i.f = load i32, ptr %i.e, align 8, !tbaa !32
+  %i.e = tail call ptr @OPENSSL_sk_value(ptr noundef %0, i32 noundef 0) #14
+  %i.f = load i32, ptr %i.e, align 8, !tbaa !33
   %i.g = sext i32 %i.f to i64                     ; 5 uses
   br i1 %.not46.not, label %.lr.ph.split.us.preheader, label %.lr.ph.split.preheader
 
@@ -965,40 +1018,40 @@ bb.a:
   br i1 %i.h, label %.loopexit, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph.split.preheader
-  %i.i = tail call i32 @OPENSSL_sk_num(ptr noundef %0) #13
+  %i.i = tail call i32 @OPENSSL_sk_num(ptr noundef %0) #14
   %i.j = icmp sgt i32 %i.i, 1
   br i1 %i.j, label %.lr.ph.split, label %._crit_edge
 
 .lr.ph.split.us.preheader:                        ; preds = %.lr.ph
-  %i.k = tail call i32 @OPENSSL_sk_num(ptr noundef %0) #13
+  %i.k = tail call i32 @OPENSSL_sk_num(ptr noundef %0) #14
   %i.l = icmp sgt i32 %i.k, 1
   br i1 %i.l, label %.lr.ph.split.us, label %._crit_edge
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph.split.us.preheader, %.lr.ph.split.us
   %.03850.us = phi i64 [ %i.p, %.lr.ph.split.us ], [ %i.g, %.lr.ph.split.us.preheader ]
   %.04049.us = phi i32 [ %i.q, %.lr.ph.split.us ], [ 1, %.lr.ph.split.us.preheader ] ; 2 uses
-  %i.m = tail call ptr @OPENSSL_sk_value(ptr noundef %0, i32 noundef %.04049.us) #13
+  %i.m = tail call ptr @OPENSSL_sk_value(ptr noundef %0, i32 noundef %.04049.us) #14
   %spec.select.us = add i64 %.fr57, %.03850.us
-  %i.n = load i32, ptr %i.m, align 8, !tbaa !32
+  %i.n = load i32, ptr %i.m, align 8, !tbaa !33
   %i.o = sext i32 %i.n to i64
   %i.p = add i64 %spec.select.us, %i.o            ; 2 uses
   %i.q = add nuw nsw i32 %.04049.us, 1            ; 2 uses
-  %i.r = tail call i32 @OPENSSL_sk_num(ptr noundef %0) #13
+  %i.r = tail call i32 @OPENSSL_sk_num(ptr noundef %0) #14
   %i.s = icmp slt i32 %i.q, %i.r
-  br i1 %i.s, label %.lr.ph.split.us, label %._crit_edge, !llvm.loop !33
+  br i1 %i.s, label %.lr.ph.split.us, label %._crit_edge, !llvm.loop !34
 
 bb.c:                                             ; preds = %.lr.ph.split
   %i.t = add nuw nsw i32 %.04049, 1               ; 2 uses
-  %i.u = tail call i32 @OPENSSL_sk_num(ptr noundef %0) #13
+  %i.u = tail call i32 @OPENSSL_sk_num(ptr noundef %0) #14
   %i.v = icmp slt i32 %i.t, %i.u
-  br i1 %i.v, label %.lr.ph.split, label %._crit_edge, !llvm.loop !34
+  br i1 %i.v, label %.lr.ph.split, label %._crit_edge, !llvm.loop !35
 
 .lr.ph.split:                                     ; preds = %bb.b, %bb.c
   %.03850 = phi i64 [ %i.z, %bb.c ], [ %i.g, %bb.b ]
   %.04049 = phi i32 [ %i.t, %bb.c ], [ 1, %bb.b ] ; 2 uses
-  %i.w = tail call ptr @OPENSSL_sk_value(ptr noundef %0, i32 noundef %.04049) #13
+  %i.w = tail call ptr @OPENSSL_sk_value(ptr noundef %0, i32 noundef %.04049) #14
   %spec.select = add i64 %.fr57, %.03850
-  %i.x = load i32, ptr %i.w, align 8, !tbaa !32
+  %i.x = load i32, ptr %i.w, align 8, !tbaa !33
   %i.y = sext i32 %i.x to i64
   %i.z = add i64 %spec.select, %i.y               ; 3 uses
   %i.aa = icmp ugt i64 %i.z, %2
@@ -1007,12 +1060,12 @@ bb.c:                                             ; preds = %.lr.ph.split
 ._crit_edge:                                      ; preds = %bb.c, %.lr.ph.split.us, %bb.b, %.lr.ph.split.us.preheader, %bb.a
   %.038.lcssa = phi i64 [ 0, %bb.a ], [ %i.p, %.lr.ph.split.us ], [ %i.g, %.lr.ph.split.us.preheader ], [ %i.g, %bb.b ], [ %i.z, %bb.c ]
   %i.ab = add i64 %.038.lcssa, 1
-  %i.ac = tail call noalias ptr @CRYPTO_malloc(i64 noundef %i.ab, ptr noundef nonnull @.str, i32 noundef 449) #13 ; 6 uses
+  %i.ac = tail call noalias ptr @CRYPTO_malloc(i64 noundef %i.ab, ptr noundef nonnull @.str, i32 noundef 449) #14 ; 6 uses
   %i.ad = icmp eq ptr %i.ac, null
   br i1 %i.ad, label %.loopexit, label %.preheader
 
 .preheader:                                       ; preds = %._crit_edge
-  %i.ae = tail call i32 @OPENSSL_sk_num(ptr noundef %0) #13
+  %i.ae = tail call i32 @OPENSSL_sk_num(ptr noundef %0) #14
   %i.af = icmp sgt i32 %i.ae, 0
   br i1 %i.af, label %.lr.ph53, label %._crit_edge54
 
@@ -1022,48 +1075,48 @@ bb.c:                                             ; preds = %.lr.ph.split
   br i1 %.not58, label %.lr.ph53.split.us, label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph53
-  %i.ah = tail call ptr @OPENSSL_sk_value(ptr noundef %0, i32 noundef 0) #13 ; 2 uses
-  %i.ai = load i32, ptr %i.ah, align 8, !tbaa !32
+  %i.ah = tail call ptr @OPENSSL_sk_value(ptr noundef %0, i32 noundef 0) #14 ; 2 uses
+  %i.ai = load i32, ptr %i.ah, align 8, !tbaa !33
   %i.aj = sext i32 %i.ai to i64                   ; 2 uses
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.ah, i64 8
-  %.pre = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !31
-  %i.ak = tail call ptr @strncpy(ptr noundef nonnull %i.ac, ptr noundef %.pre, i64 noundef %i.aj) #13 ; 0 uses
+  %.pre = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !32
+  %i.ak = tail call ptr @strncpy(ptr noundef nonnull %i.ac, ptr noundef %.pre, i64 noundef %i.aj) #14 ; 0 uses
   %i.al = getelementptr inbounds nuw i8, ptr %i.ac, i64 %i.aj ; 2 uses
-  %i.am = tail call i32 @OPENSSL_sk_num(ptr noundef %0) #13
+  %i.am = tail call i32 @OPENSSL_sk_num(ptr noundef %0) #14
   %i.an = icmp sgt i32 %i.am, 1
   br i1 %i.an, label %.lr.ph53.split.peel.next, label %._crit_edge54
 
 .lr.ph53.split.us:                                ; preds = %.lr.ph53, %.lr.ph53.split.us
   %.052.us = phi ptr [ %i.au, %.lr.ph53.split.us ], [ %i.ac, %.lr.ph53 ] ; 2 uses
   %.14151.us = phi i32 [ %i.av, %.lr.ph53.split.us ], [ 0, %.lr.ph53 ] ; 2 uses
-  %i.ao = tail call ptr @OPENSSL_sk_value(ptr noundef %0, i32 noundef %.14151.us) #13 ; 2 uses
-  %i.ap = load i32, ptr %i.ao, align 8, !tbaa !32
+  %i.ao = tail call ptr @OPENSSL_sk_value(ptr noundef %0, i32 noundef %.14151.us) #14 ; 2 uses
+  %i.ap = load i32, ptr %i.ao, align 8, !tbaa !33
   %i.aq = sext i32 %i.ap to i64                   ; 2 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %i.ao, i64 8
-  %i.as = load ptr, ptr %i.ar, align 8, !tbaa !31
-  %i.at = tail call ptr @strncpy(ptr noundef %.052.us, ptr noundef %i.as, i64 noundef %i.aq) #13 ; 0 uses
+  %i.as = load ptr, ptr %i.ar, align 8, !tbaa !32
+  %i.at = tail call ptr @strncpy(ptr noundef %.052.us, ptr noundef %i.as, i64 noundef %i.aq) #14 ; 0 uses
   %i.au = getelementptr inbounds nuw i8, ptr %.052.us, i64 %i.aq ; 2 uses
   %i.av = add nuw nsw i32 %.14151.us, 1           ; 2 uses
-  %i.aw = tail call i32 @OPENSSL_sk_num(ptr noundef %0) #13
+  %i.aw = tail call i32 @OPENSSL_sk_num(ptr noundef %0) #14
   %i.ax = icmp slt i32 %i.av, %i.aw
-  br i1 %i.ax, label %.lr.ph53.split.us, label %._crit_edge54, !llvm.loop !35
+  br i1 %i.ax, label %.lr.ph53.split.us, label %._crit_edge54, !llvm.loop !36
 
 .lr.ph53.split.peel.next:                         ; preds = %bb.d, %.lr.ph53.split.peel.next
   %.052 = phi ptr [ %i.bg, %.lr.ph53.split.peel.next ], [ %i.al, %bb.d ] ; 2 uses
   %.14151 = phi i32 [ %i.bh, %.lr.ph53.split.peel.next ], [ 1, %bb.d ] ; 2 uses
-  %i.ay = tail call ptr @OPENSSL_sk_value(ptr noundef %0, i32 noundef %.14151) #13 ; 2 uses
-  %i.az = load i32, ptr %i.ay, align 8, !tbaa !32
+  %i.ay = tail call ptr @OPENSSL_sk_value(ptr noundef %0, i32 noundef %.14151) #14 ; 2 uses
+  %i.az = load i32, ptr %i.ay, align 8, !tbaa !33
   %i.ba = sext i32 %i.az to i64                   ; 2 uses
-  %i.bb = tail call ptr @strncpy(ptr noundef nonnull %.052, ptr noundef nonnull %spec.store.select, i64 noundef %i.ag) #13 ; 0 uses
+  %i.bb = tail call ptr @strncpy(ptr noundef nonnull %.052, ptr noundef nonnull %spec.store.select, i64 noundef %i.ag) #14 ; 0 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %.052, i64 %.fr57 ; 2 uses
   %i.bd = getelementptr inbounds nuw i8, ptr %i.ay, i64 8
-  %i.be = load ptr, ptr %i.bd, align 8, !tbaa !31
-  %i.bf = tail call ptr @strncpy(ptr noundef nonnull %i.bc, ptr noundef %i.be, i64 noundef %i.ba) #13 ; 0 uses
+  %i.be = load ptr, ptr %i.bd, align 8, !tbaa !32
+  %i.bf = tail call ptr @strncpy(ptr noundef nonnull %i.bc, ptr noundef %i.be, i64 noundef %i.ba) #14 ; 0 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %i.bc, i64 %i.ba ; 2 uses
   %i.bh = add nuw nsw i32 %.14151, 1              ; 2 uses
-  %i.bi = tail call i32 @OPENSSL_sk_num(ptr noundef %0) #13
+  %i.bi = tail call i32 @OPENSSL_sk_num(ptr noundef %0) #14
   %i.bj = icmp slt i32 %i.bh, %i.bi
-  br i1 %i.bj, label %.lr.ph53.split.peel.next, label %._crit_edge54, !llvm.loop !36
+  br i1 %i.bj, label %.lr.ph53.split.peel.next, label %._crit_edge54, !llvm.loop !37
 
 ._crit_edge54:                                    ; preds = %.lr.ph53.split.peel.next, %.lr.ph53.split.us, %bb.d, %.preheader
   %.0.lcssa = phi ptr [ %i.ac, %.preheader ], [ %i.au, %.lr.ph53.split.us ], [ %i.al, %bb.d ], [ %i.bg, %.lr.ph53.split.peel.next ]
@@ -1084,6 +1137,9 @@ declare noalias ptr @CRYPTO_malloc(i64 noundef, ptr noundef, i32 noundef) local_
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare ptr @strncpy(ptr noalias noundef returned writeonly, ptr noalias noundef readonly captures(none), i64 noundef) local_unnamed_addr #12
 
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
+declare void @llvm.assume(i1 noundef) #13
+
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
@@ -1097,8 +1153,9 @@ attributes #9 = { mustprogress nofree norecurse nosync nounwind willreturn memor
 attributes #10 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #11 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #12 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #13 = { nounwind }
-attributes #14 = { nounwind willreturn memory(read) }
+attributes #13 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #14 = { nounwind }
+attributes #15 = { nounwind willreturn memory(read) }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}
@@ -1121,24 +1178,25 @@ attributes #14 = { nounwind willreturn memory(read) }
 !14 = !{!5, !5, i64 0}
 !15 = distinct !{!15, !13}
 !16 = distinct !{!16, !13}
-!17 = !{!18, !18, i64 0}
-!18 = !{!"long", !6, i64 0}
-!19 = distinct !{!19, !20}
-!20 = !{!"llvm.loop.unroll.disable"}
-!21 = distinct !{!21, !13}
-!22 = distinct !{!22, !13, !23}
-!23 = !{!"llvm.loop.peeled.count", i32 1}
-!24 = distinct !{!24, !13}
-!25 = distinct !{!25, !20}
-!26 = distinct !{!26, !13}
+!17 = distinct !{!17, !18}
+!18 = !{!"llvm.loop.unroll.disable"}
+!19 = !{!20, !20, i64 0}
+!20 = !{!"long", !6, i64 0}
+!21 = distinct !{!21, !18}
+!22 = distinct !{!22, !13}
+!23 = distinct !{!23, !13, !24}
+!24 = !{!"llvm.loop.peeled.count", i32 1}
+!25 = distinct !{!25, !13}
+!26 = distinct !{!26, !18}
 !27 = distinct !{!27, !13}
-!28 = !{!29, !18, i64 16}
-!29 = !{!"asn1_string_st", !5, i64 0, !5, i64 4, !9, i64 8, !18, i64 16}
-!30 = !{!29, !5, i64 4}
-!31 = !{!29, !9, i64 8}
-!32 = !{!29, !5, i64 0}
-!33 = distinct !{!33, !13, !23}
-!34 = distinct !{!34, !13, !23}
-!35 = distinct !{!35, !13}
-!36 = distinct !{!36, !13, !23}
+!28 = distinct !{!28, !13}
+!29 = !{!30, !20, i64 16}
+!30 = !{!"asn1_string_st", !5, i64 0, !5, i64 4, !9, i64 8, !20, i64 16}
+!31 = !{!30, !5, i64 4}
+!32 = !{!30, !9, i64 8}
+!33 = !{!30, !5, i64 0}
+!34 = distinct !{!34, !13, !24}
+!35 = distinct !{!35, !13, !24}
+!36 = distinct !{!36, !13}
+!37 = distinct !{!37, !13, !24}
 end_hunk_0

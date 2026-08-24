@@ -202,7 +202,7 @@ _ZN7rocksdbeqERKNS_5SliceES2_.exit:               ; preds = %bb.a, %bb.b
 define internal void @_ZNK7rocksdb12_GLOBAL__N_122BytewiseComparatorImpl21FindShortestSeparatorEPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKNS_5SliceE(ptr nofree nonnull readnone align 8 captures(none) %0, ptr noundef %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %2) unnamed_addr #1 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 4 uses
-  %i.b = load i64, ptr %i.a, align 8, !tbaa !44   ; 3 uses
+  %i.b = load i64, ptr %i.a, align 8, !tbaa !44   ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.d = load i64, ptr %i.c, align 8, !tbaa !34   ; 2 uses
   %.sroa.speculated = tail call i64 @llvm.umin.i64(i64 %i.d, i64 %i.b) ; 2 uses
@@ -244,9 +244,9 @@ bb.e:                                             ; preds = %bb.d
   br i1 %or.cond, label %bb.f, label %.preheader.preheader
 
 .preheader.preheader:                             ; preds = %bb.e
-  %.1100 = add nuw i64 %.03560, 1                 ; 2 uses
-  %3 = icmp ult i64 %.1100, %i.b
-  br i1 %3, label %.lr.ph103, label %.critedge42
+  %.1100 = add i64 %i.b, -1                       ; 2 uses
+  %exitcond66.not100 = icmp eq i64 %.03560, %.1100
+  br i1 %exitcond66.not100, label %.critedge42, label %.lr.ph103
 
 bb.f:                                             ; preds = %bb.e
   %i.t = add nuw i8 %i.h, 1
@@ -310,23 +310,22 @@ bb.l:                                             ; preds = %bb.f
   br i1 %i.ah, label %.critedge42.sink.split, label %.critedge42
 
 .preheader:                                       ; preds = %.lr.ph103
-  %.1 = add nuw i64 %.1102, 1                     ; 2 uses
-  %4 = icmp ult i64 %.1, %i.b
-  br i1 %4, label %.lr.ph103, label %.critedge42, !llvm.loop !118
+  %exitcond66.not = icmp eq i64 %.1, %.1100
+  br i1 %exitcond66.not, label %.critedge42, label %.lr.ph103, !llvm.loop !118
 
 .lr.ph103:                                        ; preds = %.preheader.preheader, %.preheader
-  %.1102 = phi i64 [ %.1, %.preheader ], [ %.1100, %.preheader.preheader ] ; 4 uses
-  %.1.in101 = phi i64 [ %.1102, %.preheader ], [ %.03560, %.preheader.preheader ]
-  %i.ai = getelementptr inbounds nuw i8, ptr %i.e, i64 %.1102
+  %.1102 = phi i64 [ %.1, %.preheader ], [ %.03560, %.preheader.preheader ] ; 2 uses
+  %.1 = add nuw i64 %.1102, 1                     ; 4 uses
+  %i.ai = getelementptr inbounds nuw i8, ptr %i.e, i64 %.1
   %i.aj = load i8, ptr %i.ai, align 1, !tbaa !50  ; 2 uses
   %.not39 = icmp eq i8 %i.aj, -1
   br i1 %.not39, label %.preheader, label %bb.m, !llvm.loop !118
 
 bb.m:                                             ; preds = %.lr.ph103
-  %i.ak = getelementptr inbounds nuw i8, ptr %i.e, i64 %.1102
+  %i.ak = getelementptr inbounds nuw i8, ptr %i.e, i64 %.1
   %i.al = add nuw i8 %i.aj, 1
   store i8 %i.al, ptr %i.ak, align 1, !tbaa !50
-  %i.am = add nuw i64 %.1.in101, 2                ; 7 uses
+  %i.am = add nuw i64 %.1102, 2                   ; 7 uses
   %i.an = load i64, ptr %i.a, align 8, !tbaa !44  ; 7 uses
   %i.ao = icmp ult i64 %i.an, %i.am
   br i1 %i.ao, label %bb.n, label %bb.s
