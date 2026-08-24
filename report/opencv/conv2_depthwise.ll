@@ -205,21 +205,21 @@ bb.dc:                                            ; preds = %.loopexit.us.us.i.i
   %i.asn = getelementptr inbounds [4 x i8], ptr %.0239427.i.i.i, i64 %i.asm
   %.idx3.i.i.a = shl nuw nsw i64 %indvars.iv473.i.i.i, 5
   %i.aso = getelementptr inbounds nuw i8, ptr %.2238401.us.i.i.i, i64 %.idx3.i.i.a ; 9 uses
-  %28 = getelementptr inbounds nuw i8, ptr %i.aso, i64 4 ; 2 uses
-  %i.asp = getelementptr inbounds nuw i8, ptr %i.aso, i64 8 ; 2 uses
-  %i.asq = getelementptr inbounds nuw i8, ptr %i.aso, i64 12 ; 2 uses
-  %i.asr = getelementptr inbounds nuw i8, ptr %i.aso, i64 16 ; 2 uses
-  %i.ass = getelementptr inbounds nuw i8, ptr %i.aso, i64 20 ; 2 uses
-  %i.ast = getelementptr inbounds nuw i8, ptr %i.aso, i64 24 ; 2 uses
-  %i.asu = getelementptr inbounds nuw i8, ptr %i.aso, i64 28 ; 2 uses
-  %.promoted.i.i.i = load float, ptr %i.aso, align 4, !tbaa !89
-  %.promoted588.i.i.i = load float, ptr %28, align 4, !tbaa !89
-  %.promoted589.i.i.i = load float, ptr %i.asp, align 4, !tbaa !89
-  %.promoted590.i.i.i = load float, ptr %i.asq, align 4, !tbaa !89
-  %.promoted591.i.i.i = load float, ptr %i.asr, align 4, !tbaa !89
-  %.promoted592.i.i.i = load float, ptr %i.ass, align 4, !tbaa !89
-  %.promoted593.i.i.i = load float, ptr %i.ast, align 4, !tbaa !89
-  %.promoted594.i.i.i = load float, ptr %i.asu, align 4, !tbaa !89
+  %.pre497.i.i.i = load float, ptr %i.aso, align 4, !tbaa !89
+  %i.asp = getelementptr inbounds nuw i8, ptr %i.aso, i64 4 ; 2 uses
+  %i.asq = getelementptr inbounds nuw i8, ptr %i.aso, i64 8 ; 2 uses
+  %i.asr = getelementptr inbounds nuw i8, ptr %i.aso, i64 12 ; 2 uses
+  %i.ass = getelementptr inbounds nuw i8, ptr %i.aso, i64 16 ; 2 uses
+  %i.ast = getelementptr inbounds nuw i8, ptr %i.aso, i64 20 ; 2 uses
+  %i.asu = getelementptr inbounds nuw i8, ptr %i.aso, i64 24 ; 2 uses
+  %28 = getelementptr inbounds nuw i8, ptr %i.aso, i64 28 ; 2 uses
+  %.promoted588.i.i.i = load float, ptr %i.asp, align 4, !tbaa !89
+  %.promoted589.i.i.i = load float, ptr %i.asq, align 4, !tbaa !89
+  %.promoted590.i.i.i = load float, ptr %i.asr, align 4, !tbaa !89
+  %.promoted591.i.i.i = load float, ptr %i.ass, align 4, !tbaa !89
+  %.promoted592.i.i.i = load float, ptr %i.ast, align 4, !tbaa !89
+  %.promoted593.i.i.i = load float, ptr %i.asu, align 4, !tbaa !89
+  %.promoted594.i.i.i = load float, ptr %28, align 4, !tbaa !89
   br label %bb.dd
 
 bb.dd:                                            ; preds = %bb.dd, %.lr.ph391.us.us.i.i.i
@@ -230,7 +230,7 @@ bb.dd:                                            ; preds = %bb.dd, %.lr.ph391.u
   %i.asz = phi float [ %i.atz, %bb.dd ], [ %.promoted590.i.i.i, %.lr.ph391.us.us.i.i.i ]
   %i.ata = phi float [ %i.atu, %bb.dd ], [ %.promoted589.i.i.i, %.lr.ph391.us.us.i.i.i ]
   %i.atb = phi float [ %i.atp, %bb.dd ], [ %.promoted588.i.i.i, %.lr.ph391.us.us.i.i.i ]
-  %i.atc = phi float [ %i.atk, %bb.dd ], [ %.promoted.i.i.i, %.lr.ph391.us.us.i.i.i ]
+  %i.atc = phi float [ %i.atk, %bb.dd ], [ %.pre497.i.i.i, %.lr.ph391.us.us.i.i.i ]
   %indvars.iv468.i.i.i = phi i64 [ %indvars.iv.next469.i.i.i, %bb.dd ], [ 0, %.lr.ph391.us.us.i.i.i ] ; 3 uses
   %i.atd = getelementptr inbounds nuw [4 x i8], ptr %i.fa, i64 %indvars.iv468.i.i.i
   %i.ate = load i32, ptr %i.atd, align 4, !tbaa !21
@@ -247,43 +247,43 @@ bb.dd:                                            ; preds = %bb.dd, %.lr.ph391.u
   %i.atn = getelementptr inbounds nuw i8, ptr %i.ati, i64 4
   %i.ato = load float, ptr %i.atn, align 4, !tbaa !89
   %i.atp = tail call float @llvm.fmuladd.f32(float %i.atm, float %i.ato, float %i.atb) ; 2 uses
-  store float %i.atp, ptr %28, align 4, !tbaa !89
+  store float %i.atp, ptr %i.asp, align 4, !tbaa !89
   %i.atq = getelementptr inbounds nuw i8, ptr %i.atg, i64 8
   %i.atr = load float, ptr %i.atq, align 4, !tbaa !89
   %i.ats = getelementptr inbounds nuw i8, ptr %i.ati, i64 8
   %i.att = load float, ptr %i.ats, align 4, !tbaa !89
   %i.atu = tail call float @llvm.fmuladd.f32(float %i.atr, float %i.att, float %i.ata) ; 2 uses
-  store float %i.atu, ptr %i.asp, align 4, !tbaa !89
+  store float %i.atu, ptr %i.asq, align 4, !tbaa !89
   %i.atv = getelementptr inbounds nuw i8, ptr %i.atg, i64 12
   %i.atw = load float, ptr %i.atv, align 4, !tbaa !89
   %i.atx = getelementptr inbounds nuw i8, ptr %i.ati, i64 12
   %i.aty = load float, ptr %i.atx, align 4, !tbaa !89
   %i.atz = tail call float @llvm.fmuladd.f32(float %i.atw, float %i.aty, float %i.asz) ; 2 uses
-  store float %i.atz, ptr %i.asq, align 4, !tbaa !89
+  store float %i.atz, ptr %i.asr, align 4, !tbaa !89
   %i.aua = getelementptr inbounds nuw i8, ptr %i.atg, i64 16
   %i.aub = load float, ptr %i.aua, align 4, !tbaa !89
   %i.auc = getelementptr inbounds nuw i8, ptr %i.ati, i64 16
   %i.aud = load float, ptr %i.auc, align 4, !tbaa !89
   %i.aue = tail call float @llvm.fmuladd.f32(float %i.aub, float %i.aud, float %i.asy) ; 2 uses
-  store float %i.aue, ptr %i.asr, align 4, !tbaa !89
+  store float %i.aue, ptr %i.ass, align 4, !tbaa !89
   %i.auf = getelementptr inbounds nuw i8, ptr %i.atg, i64 20
   %i.aug = load float, ptr %i.auf, align 4, !tbaa !89
   %i.auh = getelementptr inbounds nuw i8, ptr %i.ati, i64 20
   %i.aui = load float, ptr %i.auh, align 4, !tbaa !89
   %i.auj = tail call float @llvm.fmuladd.f32(float %i.aug, float %i.aui, float %i.asx) ; 2 uses
-  store float %i.auj, ptr %i.ass, align 4, !tbaa !89
+  store float %i.auj, ptr %i.ast, align 4, !tbaa !89
   %i.auk = getelementptr inbounds nuw i8, ptr %i.atg, i64 24
   %i.aul = load float, ptr %i.auk, align 4, !tbaa !89
   %i.aum = getelementptr inbounds nuw i8, ptr %i.ati, i64 24
   %i.aun = load float, ptr %i.aum, align 4, !tbaa !89
   %i.auo = tail call float @llvm.fmuladd.f32(float %i.aul, float %i.aun, float %i.asw) ; 2 uses
-  store float %i.auo, ptr %i.ast, align 4, !tbaa !89
+  store float %i.auo, ptr %i.asu, align 4, !tbaa !89
   %i.aup = getelementptr inbounds nuw i8, ptr %i.atg, i64 28
   %i.auq = load float, ptr %i.aup, align 4, !tbaa !89
   %i.aur = getelementptr inbounds nuw i8, ptr %i.ati, i64 28
   %i.aus = load float, ptr %i.aur, align 4, !tbaa !89
   %i.aut = tail call float @llvm.fmuladd.f32(float %i.auq, float %i.aus, float %i.asv) ; 2 uses
-  store float %i.aut, ptr %i.asu, align 4, !tbaa !89
+  store float %i.aut, ptr %28, align 4, !tbaa !89
   %indvars.iv.next469.i.i.i = add nuw nsw i64 %indvars.iv468.i.i.i, 1 ; 2 uses
   %exitcond472.not.i.i.i = icmp eq i64 %indvars.iv.next469.i.i.i, %wide.trip.count457.i.i.i
   br i1 %exitcond472.not.i.i.i, label %._crit_edge.us395.us.i.i.i, label %bb.dd, !llvm.loop !124
