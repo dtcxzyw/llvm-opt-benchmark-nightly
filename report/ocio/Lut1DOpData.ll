@@ -204,7 +204,7 @@ bb.k:                                             ; preds = %.loopexit
 
 bb.l:                                             ; preds = %bb.o
   %i.bb = add nsw i64 %.0170255, -2               ; 2 uses
-  %.idx191.1 = mul nuw nsw i64 %i.bb, 12
+  %.idx191.1 = mul nsw i64 %i.bb, 12
   %gep213.1 = getelementptr i8, ptr %i.v, i64 %.idx191.1
   %i.bc = load float, ptr %gep213.1, align 4, !tbaa !18
   %i.bd = fcmp oeq float %i.bc, %i.ba
@@ -212,7 +212,7 @@ bb.l:                                             ; preds = %bb.o
 
 bb.m:                                             ; preds = %bb.l
   %i.be = add nsw i64 %.0170255, -3               ; 4 uses
-  %.idx191.2 = mul nuw nsw i64 %i.be, 12
+  %.idx191.2 = mul nsw i64 %i.be, 12
   %gep213.2 = getelementptr i8, ptr %i.v, i64 %.idx191.2
   %i.bf = load float, ptr %gep213.2, align 4, !tbaa !18
   %i.bg = fcmp oeq float %i.bf, %i.ba
@@ -225,7 +225,7 @@ bb.n:                                             ; preds = %bb.m
 bb.o:                                             ; preds = %bb.n, %bb.k
   %.0170255 = phi i64 [ 31743, %bb.k ], [ %i.be, %bb.n ] ; 4 uses
   %i.bh = add nsw i64 %.0170255, -1               ; 2 uses
-  %.idx191 = mul nuw nsw i64 %i.bh, 12
+  %.idx191 = mul nsw i64 %i.bh, 12
   %gep213 = getelementptr i8, ptr %i.v, i64 %.idx191
   %i.bi = load float, ptr %gep213, align 4, !tbaa !18
   %i.bj = fcmp oeq float %i.bi, %i.ba
