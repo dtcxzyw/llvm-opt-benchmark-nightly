@@ -205,10 +205,10 @@ _ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashSetPolicy
 bb.h:                                             ; preds = %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashSetPolicyIiEEJEE8iterator21skip_empty_or_deletedEv.exit.i.i
   br label %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashSetPolicyIiEEJEE8iteratorppEv.exit.i
 
-_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashSetPolicyIiEEJEE8iteratorppEv.exit.i: ; preds = %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashSetPolicyIiEEJEE4findIiEENS5_8iteratorERKi.exit, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashSetPolicyIiEEJEE8iterator21skip_empty_or_deletedEv.exit.i.i, %bb.h
-  %.sink37 = phi ptr [ %i.ay, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashSetPolicyIiEEJEE8iterator21skip_empty_or_deletedEv.exit.i.i ], [ %i.ay, %bb.h ], [ null, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashSetPolicyIiEEJEE4findIiEENS5_8iteratorERKi.exit ]
-  %.sink35 = phi ptr [ %.lcssa14.i, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashSetPolicyIiEEJEE8iterator21skip_empty_or_deletedEv.exit.i.i ], [ null, %bb.h ], [ null, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashSetPolicyIiEEJEE4findIiEENS5_8iteratorERKi.exit ]
-  %.sink = phi ptr [ %.sroa.6.0, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashSetPolicyIiEEJEE8iterator21skip_empty_or_deletedEv.exit.i.i ], [ %.sroa.6.0, %bb.h ], [ %i.az, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashSetPolicyIiEEJEE4findIiEENS5_8iteratorERKi.exit ]
+_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashSetPolicyIiEEJEE8iteratorppEv.exit.i: ; preds = %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashSetPolicyIiEEJEE4findIiEENS5_8iteratorERKi.exit, %bb.h, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashSetPolicyIiEEJEE8iterator21skip_empty_or_deletedEv.exit.i.i
+  %.sink37 = phi ptr [ %i.ay, %bb.h ], [ %i.ay, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashSetPolicyIiEEJEE8iterator21skip_empty_or_deletedEv.exit.i.i ], [ null, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashSetPolicyIiEEJEE4findIiEENS5_8iteratorERKi.exit ]
+  %.sink35 = phi ptr [ null, %bb.h ], [ %.lcssa14.i, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashSetPolicyIiEEJEE8iterator21skip_empty_or_deletedEv.exit.i.i ], [ null, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashSetPolicyIiEEJEE4findIiEENS5_8iteratorERKi.exit ]
+  %.sink = phi ptr [ %.sroa.6.0, %bb.h ], [ %.sroa.6.0, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashSetPolicyIiEEJEE8iterator21skip_empty_or_deletedEv.exit.i.i ], [ %i.az, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashSetPolicyIiEEJEE4findIiEENS5_8iteratorERKi.exit ]
   store ptr %.sink37, ptr %0, align 8
   %.sroa.8.0..sroa_idx8 = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.az, ptr %.sroa.8.0..sroa_idx8, align 8
@@ -611,7 +611,7 @@ bb.j:                                             ; preds = %_ZN4absl12lts_20260
   br label %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashSetPolicyIiEEJNS1_19StatefulTestingHashENS1_20StatefulTestingEqualENS1_5AllocIiEEEE11equal_rangeIiEESt4pairINS9_8iteratorESC_ERKi.exit
 
 _ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashSetPolicyIiEEJNS1_19StatefulTestingHashENS1_20StatefulTestingEqualENS1_5AllocIiEEEE11equal_rangeIiEESt4pairINS9_8iteratorESC_ERKi.exit: ; preds = %bb.j, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashSetPolicyIiEEJNS1_19StatefulTestingHashENS1_20StatefulTestingEqualENS1_5AllocIiEEEE8iterator21skip_empty_or_deletedEv.exit.i.i.i
-  %.sink21.i = phi ptr [ %.lcssa14.i.i, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashSetPolicyIiEEJNS1_19StatefulTestingHashENS1_20StatefulTestingEqualENS1_5AllocIiEEEE8iterator21skip_empty_or_deletedEv.exit.i.i.i ], [ null, %bb.j ]
+  %.sink21.i = phi ptr [ null, %bb.j ], [ %.lcssa14.i.i, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashSetPolicyIiEEJNS1_19StatefulTestingHashENS1_20StatefulTestingEqualENS1_5AllocIiEEEE8iterator21skip_empty_or_deletedEv.exit.i.i.i ]
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #36
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #36
   store i32 0, ptr %i.b, align 4, !tbaa !84
@@ -945,7 +945,7 @@ bb.al:                                            ; preds = %_ZN4absl12lts_20260
   br label %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashSetPolicyIiEEJNS1_19StatefulTestingHashENS1_20StatefulTestingEqualENS1_5AllocIiEEEE11equal_rangeIiEESt4pairINS9_8iteratorESC_ERKi.exit108
 
 _ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashSetPolicyIiEEJNS1_19StatefulTestingHashENS1_20StatefulTestingEqualENS1_5AllocIiEEEE11equal_rangeIiEESt4pairINS9_8iteratorESC_ERKi.exit108: ; preds = %bb.al, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashSetPolicyIiEEJNS1_19StatefulTestingHashENS1_20StatefulTestingEqualENS1_5AllocIiEEEE8iterator21skip_empty_or_deletedEv.exit.i.i.i98
-  %.sink21.i102 = phi ptr [ %.lcssa14.i.i100, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashSetPolicyIiEEJNS1_19StatefulTestingHashENS1_20StatefulTestingEqualENS1_5AllocIiEEEE8iterator21skip_empty_or_deletedEv.exit.i.i.i98 ], [ null, %bb.al ]
+  %.sink21.i102 = phi ptr [ null, %bb.al ], [ %.lcssa14.i.i100, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashSetPolicyIiEEJNS1_19StatefulTestingHashENS1_20StatefulTestingEqualENS1_5AllocIiEEEE8iterator21skip_empty_or_deletedEv.exit.i.i.i98 ]
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #36
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #36
   store i32 1, ptr %i.d, align 4, !tbaa !84
@@ -1348,7 +1348,7 @@ bb.e:                                             ; preds = %_ZN4absl12lts_20260
   br label %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashSetPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEJNS1_19StatefulTestingHashENS1_20StatefulTestingEqualENS1_5AllocIS9_EEEE11equal_rangeIS9_EESt4pairINSF_8iteratorESI_ERKS9_.exit
 
 _ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashSetPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEJNS1_19StatefulTestingHashENS1_20StatefulTestingEqualENS1_5AllocIS9_EEEE11equal_rangeIS9_EESt4pairINSF_8iteratorESI_ERKS9_.exit: ; preds = %bb.e, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashSetPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEJNS1_19StatefulTestingHashENS1_20StatefulTestingEqualENS1_5AllocIS9_EEEE8iterator21skip_empty_or_deletedEv.exit.i.i.i
-  %.sink21.i = phi ptr [ %.lcssa14.i.i, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashSetPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEJNS1_19StatefulTestingHashENS1_20StatefulTestingEqualENS1_5AllocIS9_EEEE8iterator21skip_empty_or_deletedEv.exit.i.i.i ], [ null, %bb.e ]
+  %.sink21.i = phi ptr [ null, %bb.e ], [ %.lcssa14.i.i, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashSetPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEJNS1_19StatefulTestingHashENS1_20StatefulTestingEqualENS1_5AllocIS9_EEEE8iterator21skip_empty_or_deletedEv.exit.i.i.i ]
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #36
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #36
   store i32 0, ptr %i.a, align 4, !tbaa !84
@@ -1625,7 +1625,7 @@ bb.z:                                             ; preds = %_ZN4absl12lts_20260
   br label %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashSetPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEJNS1_19StatefulTestingHashENS1_20StatefulTestingEqualENS1_5AllocIS9_EEEE11equal_rangeIS9_EESt4pairINSF_8iteratorESI_ERKS9_.exit104
 
 _ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashSetPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEJNS1_19StatefulTestingHashENS1_20StatefulTestingEqualENS1_5AllocIS9_EEEE11equal_rangeIS9_EESt4pairINSF_8iteratorESI_ERKS9_.exit104: ; preds = %bb.z, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashSetPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEJNS1_19StatefulTestingHashENS1_20StatefulTestingEqualENS1_5AllocIS9_EEEE8iterator21skip_empty_or_deletedEv.exit.i.i.i94
-  %.sink21.i98 = phi ptr [ %.lcssa14.i.i96, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashSetPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEJNS1_19StatefulTestingHashENS1_20StatefulTestingEqualENS1_5AllocIS9_EEEE8iterator21skip_empty_or_deletedEv.exit.i.i.i94 ], [ null, %bb.z ]
+  %.sink21.i98 = phi ptr [ null, %bb.z ], [ %.lcssa14.i.i96, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashSetPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEJNS1_19StatefulTestingHashENS1_20StatefulTestingEqualENS1_5AllocIS9_EEEE8iterator21skip_empty_or_deletedEv.exit.i.i.i94 ]
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #36
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #36
   store i32 1, ptr %i.c, align 4, !tbaa !84
@@ -2028,7 +2028,7 @@ bb.j:                                             ; preds = %_ZN4absl12lts_20260
   br label %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashSetPolicyINS1_4EnumEEEJNS1_19StatefulTestingHashENS1_20StatefulTestingEqualENS1_5AllocIS4_EEEE11equal_rangeIS4_EESt4pairINSA_8iteratorESD_ERKS4_.exit
 
 _ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashSetPolicyINS1_4EnumEEEJNS1_19StatefulTestingHashENS1_20StatefulTestingEqualENS1_5AllocIS4_EEEE11equal_rangeIS4_EESt4pairINSA_8iteratorESD_ERKS4_.exit: ; preds = %bb.j, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashSetPolicyINS1_4EnumEEEJNS1_19StatefulTestingHashENS1_20StatefulTestingEqualENS1_5AllocIS4_EEEE8iterator21skip_empty_or_deletedEv.exit.i.i.i
-  %.sink21.i = phi ptr [ %.lcssa14.i.i, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashSetPolicyINS1_4EnumEEEJNS1_19StatefulTestingHashENS1_20StatefulTestingEqualENS1_5AllocIS4_EEEE8iterator21skip_empty_or_deletedEv.exit.i.i.i ], [ null, %bb.j ]
+  %.sink21.i = phi ptr [ null, %bb.j ], [ %.lcssa14.i.i, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashSetPolicyINS1_4EnumEEEJNS1_19StatefulTestingHashENS1_20StatefulTestingEqualENS1_5AllocIS4_EEEE8iterator21skip_empty_or_deletedEv.exit.i.i.i ]
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #36
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #36
   store i32 0, ptr %i.b, align 4, !tbaa !84
@@ -2360,7 +2360,7 @@ bb.al:                                            ; preds = %_ZN4absl12lts_20260
   br label %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashSetPolicyINS1_4EnumEEEJNS1_19StatefulTestingHashENS1_20StatefulTestingEqualENS1_5AllocIS4_EEEE11equal_rangeIS4_EESt4pairINSA_8iteratorESD_ERKS4_.exit108
 
 _ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashSetPolicyINS1_4EnumEEEJNS1_19StatefulTestingHashENS1_20StatefulTestingEqualENS1_5AllocIS4_EEEE11equal_rangeIS4_EESt4pairINSA_8iteratorESD_ERKS4_.exit108: ; preds = %bb.al, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashSetPolicyINS1_4EnumEEEJNS1_19StatefulTestingHashENS1_20StatefulTestingEqualENS1_5AllocIS4_EEEE8iterator21skip_empty_or_deletedEv.exit.i.i.i98
-  %.sink21.i102 = phi ptr [ %.lcssa14.i.i100, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashSetPolicyINS1_4EnumEEEJNS1_19StatefulTestingHashENS1_20StatefulTestingEqualENS1_5AllocIS4_EEEE8iterator21skip_empty_or_deletedEv.exit.i.i.i98 ], [ null, %bb.al ]
+  %.sink21.i102 = phi ptr [ null, %bb.al ], [ %.lcssa14.i.i100, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashSetPolicyINS1_4EnumEEEJNS1_19StatefulTestingHashENS1_20StatefulTestingEqualENS1_5AllocIS4_EEEE8iterator21skip_empty_or_deletedEv.exit.i.i.i98 ]
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #36
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #36
   store i32 1, ptr %i.d, align 4, !tbaa !84
@@ -2763,7 +2763,7 @@ bb.j:                                             ; preds = %_ZN4absl12lts_20260
   br label %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashSetPolicyINS1_9EnumClassEEEJNS1_19StatefulTestingHashENS1_20StatefulTestingEqualENS1_5AllocIS4_EEEE11equal_rangeIS4_EESt4pairINSA_8iteratorESD_ERKS4_.exit
 
 _ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashSetPolicyINS1_9EnumClassEEEJNS1_19StatefulTestingHashENS1_20StatefulTestingEqualENS1_5AllocIS4_EEEE11equal_rangeIS4_EESt4pairINSA_8iteratorESD_ERKS4_.exit: ; preds = %bb.j, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashSetPolicyINS1_9EnumClassEEEJNS1_19StatefulTestingHashENS1_20StatefulTestingEqualENS1_5AllocIS4_EEEE8iterator21skip_empty_or_deletedEv.exit.i.i.i
-  %.sink21.i = phi ptr [ %.lcssa14.i.i, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashSetPolicyINS1_9EnumClassEEEJNS1_19StatefulTestingHashENS1_20StatefulTestingEqualENS1_5AllocIS4_EEEE8iterator21skip_empty_or_deletedEv.exit.i.i.i ], [ null, %bb.j ]
+  %.sink21.i = phi ptr [ null, %bb.j ], [ %.lcssa14.i.i, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashSetPolicyINS1_9EnumClassEEEJNS1_19StatefulTestingHashENS1_20StatefulTestingEqualENS1_5AllocIS4_EEEE8iterator21skip_empty_or_deletedEv.exit.i.i.i ]
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #36
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #36
   store i32 0, ptr %i.b, align 4, !tbaa !84
@@ -3095,7 +3095,7 @@ bb.al:                                            ; preds = %_ZN4absl12lts_20260
   br label %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashSetPolicyINS1_9EnumClassEEEJNS1_19StatefulTestingHashENS1_20StatefulTestingEqualENS1_5AllocIS4_EEEE11equal_rangeIS4_EESt4pairINSA_8iteratorESD_ERKS4_.exit108
 
 _ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashSetPolicyINS1_9EnumClassEEEJNS1_19StatefulTestingHashENS1_20StatefulTestingEqualENS1_5AllocIS4_EEEE11equal_rangeIS4_EESt4pairINSA_8iteratorESD_ERKS4_.exit108: ; preds = %bb.al, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashSetPolicyINS1_9EnumClassEEEJNS1_19StatefulTestingHashENS1_20StatefulTestingEqualENS1_5AllocIS4_EEEE8iterator21skip_empty_or_deletedEv.exit.i.i.i98
-  %.sink21.i102 = phi ptr [ %.lcssa14.i.i100, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashSetPolicyINS1_9EnumClassEEEJNS1_19StatefulTestingHashENS1_20StatefulTestingEqualENS1_5AllocIS4_EEEE8iterator21skip_empty_or_deletedEv.exit.i.i.i98 ], [ null, %bb.al ]
+  %.sink21.i102 = phi ptr [ null, %bb.al ], [ %.lcssa14.i.i100, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashSetPolicyINS1_9EnumClassEEEJNS1_19StatefulTestingHashENS1_20StatefulTestingEqualENS1_5AllocIS4_EEEE8iterator21skip_empty_or_deletedEv.exit.i.i.i98 ]
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #36
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #36
   store i32 1, ptr %i.d, align 4, !tbaa !84

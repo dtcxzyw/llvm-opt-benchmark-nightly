@@ -202,15 +202,15 @@ bb.q:                                             ; preds = %bb.y, %bb.k
   %.sroa.0.0 = phi ptr [ %2, %bb.k ], [ %storemerge210, %bb.y ] ; 4 uses
   %.sroa.019.0 = phi i8 [ 0, %bb.k ], [ %.sroa.019.1, %bb.y ] ; 3 uses
   %.not209 = icmp eq ptr %.sroa.0.0, null         ; 2 uses
-  br i1 %.sroa.15.0, label %bb.r, label %.preheader.preheader, !prof !22
+  br i1 %.sroa.15.0, label %.preheader.preheader, label %bb.r, !prof !22
 
 .preheader.preheader:                             ; preds = %bb.q
-  br i1 %.not209, label %_RINvYNtNtCs2AWtUsOyxgP_3std4path9AncestorsNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator8try_foldINtNtNtBM_3num7nonzero7NonZerojENCNvXs_NvBE_10advance_byB3_NtB2l_13SpecAdvanceBy15spec_advance_by0INtNtBM_6option6OptionB1I_EECs3aZOKTqqjPR_11ruff_server.exit, label %bb.s
-
-bb.r:                                             ; preds = %bb.q
   br i1 %.not209, label %_RINvYNtNtCs2AWtUsOyxgP_3std4path9AncestorsNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator8try_foldINtNtNtBM_3num7nonzero7NonZerojENCNvXs_NvBE_10advance_byB3_NtB2l_13SpecAdvanceBy15spec_advance_by0INtNtBM_6option6OptionB1I_EECs3aZOKTqqjPR_11ruff_server.exit, label %bb.t
 
-bb.s:                                             ; preds = %.preheader.preheader
+bb.r:                                             ; preds = %bb.q
+  br i1 %.not209, label %_RINvYNtNtCs2AWtUsOyxgP_3std4path9AncestorsNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator8try_foldINtNtNtBM_3num7nonzero7NonZerojENCNvXs_NvBE_10advance_byB3_NtB2l_13SpecAdvanceBy15spec_advance_by0INtNtBM_6option6OptionB1I_EECs3aZOKTqqjPR_11ruff_server.exit, label %bb.s
+
+bb.s:                                             ; preds = %bb.r
   %i.fz = invoke { ptr, i64 } @_RNvMs16_NtCs2AWtUsOyxgP_3std4pathNtB6_4Path6parent(ptr noalias noundef nonnull readonly captures(address, read_provenance) %.sroa.0.0, i64 noundef %.sroa.9.0350)
           to label %.noexc unwind label %.loopexit ; 2 uses
 
@@ -219,7 +219,7 @@ bb.s:                                             ; preds = %.preheader.preheade
   %.not212 = icmp eq ptr %i.ga, null
   br i1 %.not212, label %_RINvYNtNtCs2AWtUsOyxgP_3std4path9AncestorsNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator8try_foldINtNtNtBM_3num7nonzero7NonZerojENCNvXs_NvBE_10advance_byB3_NtB2l_13SpecAdvanceBy15spec_advance_by0INtNtBM_6option6OptionB1I_EECs3aZOKTqqjPR_11ruff_server.exit, label %bb.u
 
-bb.t:                                             ; preds = %bb.r
+bb.t:                                             ; preds = %.preheader.preheader
   %i.gb = invoke { ptr, i64 } @_RNvMs16_NtCs2AWtUsOyxgP_3std4pathNtB6_4Path6parent(ptr noalias noundef nonnull readonly captures(address, read_provenance) %.sroa.0.0, i64 noundef %.sroa.9.0350)
           to label %bb.v unwind label %.loopexit.split-lp.loopexit
 
@@ -241,8 +241,8 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc4sync3ArcNtNtNtN
           cleanup
   br label %.thread
 
-_RINvYNtNtCs2AWtUsOyxgP_3std4path9AncestorsNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator8try_foldINtNtNtBM_3num7nonzero7NonZerojENCNvXs_NvBE_10advance_byB3_NtB2l_13SpecAdvanceBy15spec_advance_by0INtNtBM_6option6OptionB1I_EECs3aZOKTqqjPR_11ruff_server.exit: ; preds = %.noexc, %bb.r, %.preheader.preheader, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCs3ZkgueCtkyH_14ruff_workspace8settings8SettingsNtCsiXichZnxgbf_6anyhow5ErrorEECs3aZOKTqqjPR_11ruff_server.exit
-  %.sroa.039.0 = phi i8 [ %i.hn, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCs3ZkgueCtkyH_14ruff_workspace8settings8SettingsNtCsiXichZnxgbf_6anyhow5ErrorEECs3aZOKTqqjPR_11ruff_server.exit ], [ 2, %.preheader.preheader ], [ 2, %bb.r ], [ 2, %.noexc ] ; 2 uses
+_RINvYNtNtCs2AWtUsOyxgP_3std4path9AncestorsNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator8try_foldINtNtNtBM_3num7nonzero7NonZerojENCNvXs_NvBE_10advance_byB3_NtB2l_13SpecAdvanceBy15spec_advance_by0INtNtBM_6option6OptionB1I_EECs3aZOKTqqjPR_11ruff_server.exit: ; preds = %.noexc, %.preheader.preheader, %bb.r, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCs3ZkgueCtkyH_14ruff_workspace8settings8SettingsNtCsiXichZnxgbf_6anyhow5ErrorEECs3aZOKTqqjPR_11ruff_server.exit
+  %.sroa.039.0 = phi i8 [ %i.hn, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCs3ZkgueCtkyH_14ruff_workspace8settings8SettingsNtCsiXichZnxgbf_6anyhow5ErrorEECs3aZOKTqqjPR_11ruff_server.exit ], [ 2, %bb.r ], [ 2, %.preheader.preheader ], [ 2, %.noexc ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.an)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.am)
   invoke fastcc void @_RNvMs1_NtNtNtCs3aZOKTqqjPR_11ruff_server7session5index13ruff_settingsNtB5_12RuffSettings8fallback(ptr noalias noundef align 8 captures(address) dereferenceable(3056) %i.am, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(128) %4, ptr noalias noundef nonnull readonly captures(address, read_provenance) %2, i64 noundef %3)

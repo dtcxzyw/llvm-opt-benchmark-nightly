@@ -204,7 +204,7 @@ _RNvNtNtCscuBBDlOF0VN_8schemars8__private7rustdoc7to_utf8.exit15: ; preds = %.sp
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !313
   br label %bb.p
 
-bb.f:                                             ; preds = %.preheader, %bb.h
+bb.f:                                             ; preds = %bb.h, %.preheader
   %.sroa.01.0 = phi i64 [ %.sroa.10.122.i, %bb.h ], [ %.sroa.010.081, %.preheader ] ; 5 uses
   %i.x = sub i64 %.sroa.10.122.i, %.sroa.01.0     ; 2 uses
   %.not.i16 = icmp eq i64 %i.x, 0

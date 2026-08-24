@@ -204,17 +204,17 @@ _ZL19coords_out_of_rangeP8PJconstsPKN12_GLOBAL__N_16hornerEdd.exit.i: ; preds = 
   %.in29.i = getelementptr inbounds nuw i8, ptr %i.b, i64 48
   %i.o = load ptr, ptr %.in29.i, align 8, !tbaa !67
   %i.p = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %i.q = load i32, ptr %i.p, align 8, !tbaa !45   ; 6 uses
+  %i.q = load i32, ptr %i.p, align 8, !tbaa !45   ; 5 uses
   %i.r = add i32 %i.q, 1
   %i.s = add i32 %i.q, 2
   %i.t = mul i32 %i.r, %i.s
   %i.u = lshr i32 %i.t, 1
   %i.v = zext nneg i32 %i.u to i64                ; 2 uses
-  %i.w = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %i.v
-  %i.x = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %i.v
-  %i.y = getelementptr inbounds i8, ptr %i.x, i64 -8 ; 2 uses
+  %i.w = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %i.v ; 2 uses
+  %i.x = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %i.v ; 2 uses
+  %i.y = getelementptr inbounds i8, ptr %i.x, i64 -8
   %i.z = load double, ptr %i.y, align 8, !tbaa !66
-  %i.aa = getelementptr inbounds i8, ptr %i.w, i64 -8 ; 2 uses
+  %i.aa = getelementptr inbounds i8, ptr %i.w, i64 -8
   %i.ab = load double, ptr %i.aa, align 8, !tbaa !66
   %.not.i = icmp eq i32 %i.q, 0
   %i.ac = insertelement <2 x double> poison, double %i.z, i64 0
@@ -226,36 +226,32 @@ _ZL19coords_out_of_rangeP8PJconstsPKN12_GLOBAL__N_16hornerEdd.exit.i: ; preds = 
   br label %.lr.ph55.i.i
 
 .lr.ph55.i.i:                                     ; preds = %.lr.ph55.i.i.preheader, %._crit_edge.i.i
-  %.03453.i.i = phi i32 [ %i.an, %._crit_edge.i.i ], [ %i.q, %.lr.ph55.i.i.preheader ] ; 3 uses
-  %.03750.i.i = phi ptr [ %.1.lcssa.i.i, %._crit_edge.i.i ], [ %i.aa, %.lr.ph55.i.i.preheader ]
-  %.03849.i.i = phi ptr [ %.139.lcssa.i.i, %._crit_edge.i.i ], [ %i.y, %.lr.ph55.i.i.preheader ]
+  %.03453.i.i = phi i32 [ %i.an, %._crit_edge.i.i ], [ %i.q, %.lr.ph55.i.i.preheader ] ; 2 uses
+  %.03750.i.i = phi ptr [ %.142.i.i, %._crit_edge.i.i ], [ %i.w, %.lr.ph55.i.i.preheader ]
+  %.03849.i.i = phi ptr [ %.13941.i.i, %._crit_edge.i.i ], [ %i.x, %.lr.ph55.i.i.preheader ]
   %i.af = phi <2 x double> [ %i.am, %._crit_edge.i.i ], [ %i.ad, %.lr.ph55.i.i.preheader ]
-  %i.ag = getelementptr inbounds i8, ptr %.03849.i.i, i64 -8 ; 3 uses
+  %i.ag = getelementptr inbounds i8, ptr %.03849.i.i, i64 -16 ; 2 uses
   %i.ah = load double, ptr %i.ag, align 8, !tbaa !66
-  %i.ai = getelementptr inbounds i8, ptr %.03750.i.i, i64 -8 ; 3 uses
+  %i.ai = getelementptr inbounds i8, ptr %.03750.i.i, i64 -16 ; 2 uses
   %i.aj = load double, ptr %i.ai, align 8, !tbaa !66
-  %.not40.i.i = icmp ult i32 %i.q, %.03453.i.i
   %i.ak = insertelement <2 x double> poison, double %i.ah, i64 0
-  %i.al = insertelement <2 x double> %i.ak, double %i.aj, i64 1 ; 2 uses
-  br i1 %.not40.i.i, label %._crit_edge.i.i, label %.lr.ph.i.i
+  %i.al = insertelement <2 x double> %i.ak, double %i.aj, i64 1
+  br label %.lr.ph.i.i
 
-._crit_edge.i.i:                                  ; preds = %.lr.ph.i.i, %.lr.ph55.i.i
-  %.139.lcssa.i.i = phi ptr [ %i.ag, %.lr.ph55.i.i ], [ %i.ap, %.lr.ph.i.i ]
-  %.1.lcssa.i.i = phi ptr [ %i.ai, %.lr.ph55.i.i ], [ %i.ar, %.lr.ph.i.i ]
-  %2 = phi <2 x double> [ %i.al, %.lr.ph55.i.i ], [ %i.av, %.lr.ph.i.i ]
-  %i.am = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.e, <2 x double> %i.af, <2 x double> %2) ; 2 uses
+._crit_edge.i.i:                                  ; preds = %.lr.ph.i.i
+  %i.am = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.e, <2 x double> %i.af, <2 x double> %i.av) ; 2 uses
   %i.an = add i32 %.03453.i.i, -1                 ; 2 uses
   %.not30.i = icmp eq i32 %i.an, 0
   br i1 %.not30.i, label %_ZL17real_default_implP8PJconstsPKN12_GLOBAL__N_16hornerE12PJ_DIRECTION5PJ_UV.exit, label %.lr.ph55.i.i, !llvm.loop !71
 
-.lr.ph.i.i:                                       ; preds = %.lr.ph55.i.i, %.lr.ph.i.i
+.lr.ph.i.i:                                       ; preds = %.lr.ph.i.i, %.lr.ph55.i.i
   %.045.i.i = phi i32 [ %i.aw, %.lr.ph.i.i ], [ %i.q, %.lr.ph55.i.i ]
-  %.142.i.i = phi ptr [ %i.ar, %.lr.ph.i.i ], [ %i.ai, %.lr.ph55.i.i ]
-  %.13941.i.i = phi ptr [ %i.ap, %.lr.ph.i.i ], [ %i.ag, %.lr.ph55.i.i ]
+  %.142.i.i = phi ptr [ %i.ar, %.lr.ph.i.i ], [ %i.ai, %.lr.ph55.i.i ] ; 2 uses
+  %.13941.i.i = phi ptr [ %i.ap, %.lr.ph.i.i ], [ %i.ag, %.lr.ph55.i.i ] ; 2 uses
   %i.ao = phi <2 x double> [ %i.av, %.lr.ph.i.i ], [ %i.al, %.lr.ph55.i.i ]
-  %i.ap = getelementptr inbounds i8, ptr %.13941.i.i, i64 -8 ; 3 uses
+  %i.ap = getelementptr inbounds i8, ptr %.13941.i.i, i64 -8 ; 2 uses
   %i.aq = load double, ptr %i.ap, align 8, !tbaa !66
-  %i.ar = getelementptr inbounds i8, ptr %.142.i.i, i64 -8 ; 3 uses
+  %i.ar = getelementptr inbounds i8, ptr %.142.i.i, i64 -8 ; 2 uses
   %i.as = load double, ptr %i.ar, align 8, !tbaa !66
   %i.at = insertelement <2 x double> poison, double %i.aq, i64 0
   %i.au = insertelement <2 x double> %i.at, double %i.as, i64 1
@@ -302,17 +298,17 @@ _ZL19coords_out_of_rangeP8PJconstsPKN12_GLOBAL__N_16hornerEdd.exit.i: ; preds = 
   %.in29.i = getelementptr inbounds nuw i8, ptr %i.b, i64 64
   %i.o = load ptr, ptr %.in29.i, align 8, !tbaa !67
   %i.p = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %i.q = load i32, ptr %i.p, align 8, !tbaa !45   ; 6 uses
+  %i.q = load i32, ptr %i.p, align 8, !tbaa !45   ; 5 uses
   %i.r = add i32 %i.q, 1
   %i.s = add i32 %i.q, 2
   %i.t = mul i32 %i.r, %i.s
   %i.u = lshr i32 %i.t, 1
   %i.v = zext nneg i32 %i.u to i64                ; 2 uses
-  %i.w = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %i.v
-  %i.x = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %i.v
-  %i.y = getelementptr inbounds i8, ptr %i.x, i64 -8 ; 2 uses
+  %i.w = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %i.v ; 2 uses
+  %i.x = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %i.v ; 2 uses
+  %i.y = getelementptr inbounds i8, ptr %i.x, i64 -8
   %i.z = load double, ptr %i.y, align 8, !tbaa !66
-  %i.aa = getelementptr inbounds i8, ptr %i.w, i64 -8 ; 2 uses
+  %i.aa = getelementptr inbounds i8, ptr %i.w, i64 -8
   %i.ab = load double, ptr %i.aa, align 8, !tbaa !66
   %.not.i = icmp eq i32 %i.q, 0
   %i.ac = insertelement <2 x double> poison, double %i.z, i64 0
@@ -324,36 +320,32 @@ _ZL19coords_out_of_rangeP8PJconstsPKN12_GLOBAL__N_16hornerEdd.exit.i: ; preds = 
   br label %.lr.ph55.i.i
 
 .lr.ph55.i.i:                                     ; preds = %.lr.ph55.i.i.preheader, %._crit_edge.i.i
-  %.03453.i.i = phi i32 [ %i.an, %._crit_edge.i.i ], [ %i.q, %.lr.ph55.i.i.preheader ] ; 3 uses
-  %.03750.i.i = phi ptr [ %.1.lcssa.i.i, %._crit_edge.i.i ], [ %i.aa, %.lr.ph55.i.i.preheader ]
-  %.03849.i.i = phi ptr [ %.139.lcssa.i.i, %._crit_edge.i.i ], [ %i.y, %.lr.ph55.i.i.preheader ]
+  %.03453.i.i = phi i32 [ %i.an, %._crit_edge.i.i ], [ %i.q, %.lr.ph55.i.i.preheader ] ; 2 uses
+  %.03750.i.i = phi ptr [ %.142.i.i, %._crit_edge.i.i ], [ %i.w, %.lr.ph55.i.i.preheader ]
+  %.03849.i.i = phi ptr [ %.13941.i.i, %._crit_edge.i.i ], [ %i.x, %.lr.ph55.i.i.preheader ]
   %i.af = phi <2 x double> [ %i.am, %._crit_edge.i.i ], [ %i.ad, %.lr.ph55.i.i.preheader ]
-  %i.ag = getelementptr inbounds i8, ptr %.03849.i.i, i64 -8 ; 3 uses
+  %i.ag = getelementptr inbounds i8, ptr %.03849.i.i, i64 -16 ; 2 uses
   %i.ah = load double, ptr %i.ag, align 8, !tbaa !66
-  %i.ai = getelementptr inbounds i8, ptr %.03750.i.i, i64 -8 ; 3 uses
+  %i.ai = getelementptr inbounds i8, ptr %.03750.i.i, i64 -16 ; 2 uses
   %i.aj = load double, ptr %i.ai, align 8, !tbaa !66
-  %.not40.i.i = icmp ult i32 %i.q, %.03453.i.i
   %i.ak = insertelement <2 x double> poison, double %i.ah, i64 0
-  %i.al = insertelement <2 x double> %i.ak, double %i.aj, i64 1 ; 2 uses
-  br i1 %.not40.i.i, label %._crit_edge.i.i, label %.lr.ph.i.i
+  %i.al = insertelement <2 x double> %i.ak, double %i.aj, i64 1
+  br label %.lr.ph.i.i
 
-._crit_edge.i.i:                                  ; preds = %.lr.ph.i.i, %.lr.ph55.i.i
-  %.139.lcssa.i.i = phi ptr [ %i.ag, %.lr.ph55.i.i ], [ %i.ap, %.lr.ph.i.i ]
-  %.1.lcssa.i.i = phi ptr [ %i.ai, %.lr.ph55.i.i ], [ %i.ar, %.lr.ph.i.i ]
-  %2 = phi <2 x double> [ %i.al, %.lr.ph55.i.i ], [ %i.av, %.lr.ph.i.i ]
-  %i.am = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.e, <2 x double> %i.af, <2 x double> %2) ; 2 uses
+._crit_edge.i.i:                                  ; preds = %.lr.ph.i.i
+  %i.am = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.e, <2 x double> %i.af, <2 x double> %i.av) ; 2 uses
   %i.an = add i32 %.03453.i.i, -1                 ; 2 uses
   %.not30.i = icmp eq i32 %i.an, 0
   br i1 %.not30.i, label %_ZL17real_default_implP8PJconstsPKN12_GLOBAL__N_16hornerE12PJ_DIRECTION5PJ_UV.exit, label %.lr.ph55.i.i, !llvm.loop !71
 
-.lr.ph.i.i:                                       ; preds = %.lr.ph55.i.i, %.lr.ph.i.i
+.lr.ph.i.i:                                       ; preds = %.lr.ph.i.i, %.lr.ph55.i.i
   %.045.i.i = phi i32 [ %i.aw, %.lr.ph.i.i ], [ %i.q, %.lr.ph55.i.i ]
-  %.142.i.i = phi ptr [ %i.ar, %.lr.ph.i.i ], [ %i.ai, %.lr.ph55.i.i ]
-  %.13941.i.i = phi ptr [ %i.ap, %.lr.ph.i.i ], [ %i.ag, %.lr.ph55.i.i ]
+  %.142.i.i = phi ptr [ %i.ar, %.lr.ph.i.i ], [ %i.ai, %.lr.ph55.i.i ] ; 2 uses
+  %.13941.i.i = phi ptr [ %i.ap, %.lr.ph.i.i ], [ %i.ag, %.lr.ph55.i.i ] ; 2 uses
   %i.ao = phi <2 x double> [ %i.av, %.lr.ph.i.i ], [ %i.al, %.lr.ph55.i.i ]
-  %i.ap = getelementptr inbounds i8, ptr %.13941.i.i, i64 -8 ; 3 uses
+  %i.ap = getelementptr inbounds i8, ptr %.13941.i.i, i64 -8 ; 2 uses
   %i.aq = load double, ptr %i.ap, align 8, !tbaa !66
-  %i.ar = getelementptr inbounds i8, ptr %.142.i.i, i64 -8 ; 3 uses
+  %i.ar = getelementptr inbounds i8, ptr %.142.i.i, i64 -8 ; 2 uses
   %i.as = load double, ptr %i.ar, align 8, !tbaa !66
   %i.at = insertelement <2 x double> poison, double %i.aq, i64 0
   %i.au = insertelement <2 x double> %i.at, double %i.as, i64 1

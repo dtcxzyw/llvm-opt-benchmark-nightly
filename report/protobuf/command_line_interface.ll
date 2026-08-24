@@ -205,14 +205,14 @@ bb.e:                                             ; preds = %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #37
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #37
   %i.l = load ptr, ptr %12, align 8, !tbaa !105   ; 6 uses
-  %i.m = load i64, ptr %i.d, align 8, !tbaa !101  ; 3 uses
+  %i.m = load i64, ptr %i.d, align 8, !tbaa !101  ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %13, i64 8
   %.not.i = icmp eq i64 %i.m, 0
   br i1 %.not.i, label %_ZNSt6vectorISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_ESaIS7_EE12emplace_backIJRA1_KcRSt17basic_string_viewIcS4_EEEERS7_DpOT_.exit.i, label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i
 
 _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i:   ; preds = %bb.e, %bb.f
   %.1.i.i.in.i = phi i64 [ %.1.i.i.i, %bb.f ], [ %i.m, %bb.e ] ; 2 uses
-  %.1.i.i.i = add i64 %.1.i.i.in.i, -1            ; 4 uses
+  %.1.i.i.i = add i64 %.1.i.i.in.i, -1            ; 7 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.l, i64 %.1.i.i.i
   %i.p = load i8, ptr %i.o, align 1, !tbaa !34
   switch i8 %i.p, label %bb.f [
@@ -229,12 +229,11 @@ _ZNKSt17basic_string_viewIcSt11char_traitsIcEE12find_last_ofEPKcm.exit.i: ; pred
   br i1 %or.cond.i, label %_ZNSt6vectorISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_ESaIS7_EE12emplace_backIJRA1_KcRSt17basic_string_viewIcS4_EEEERS7_DpOT_.exit.i, label %bb.g
 
 bb.g:                                             ; preds = %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE12find_last_ofEPKcm.exit.i
-  %.sroa.speculated.i.i = call i64 @llvm.umin.i64(i64 %i.m, i64 %.1.i.i.i) ; 5 uses
-  store i64 %.sroa.speculated.i.i, ptr %13, align 8, !tbaa !30
+  store i64 %.1.i.i.i, ptr %13, align 8, !tbaa !30
   store ptr %i.l, ptr %i.n, align 8, !tbaa !192
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #37
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #37
-  store i64 %.sroa.speculated.i.i, ptr %10, align 8, !tbaa !30
+  store i64 %.1.i.i.i, ptr %10, align 8, !tbaa !30
   %.sroa.2.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %10, i64 8
   store ptr %i.l, ptr %.sroa.2.0..sroa_idx.i.i.i, align 8, !tbaa !192
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #37
@@ -295,7 +294,7 @@ bb.k:                                             ; preds = %bb.j, %bb.i, %bb.g
 bb.l:                                             ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #37
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #37
-  store i64 %.sroa.speculated.i.i, ptr %15, align 8, !tbaa !30
+  store i64 %.1.i.i.i, ptr %15, align 8, !tbaa !30
   %.sroa.2.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %15, i64 8
   store ptr %i.l, ptr %.sroa.2.0..sroa_idx.i.i, align 8, !tbaa !192
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #37
@@ -357,8 +356,8 @@ bb.o:                                             ; preds = %.invoke.i, %_ZNSt7_
   br label %bb.z
 
 _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i49.i: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i44.i, %bb.p
-  %.1.i.i50.in.i = phi i64 [ %.1.i.i50.i, %bb.p ], [ %.sroa.speculated.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i44.i ] ; 2 uses
-  %.1.i.i50.i = add i64 %.1.i.i50.in.i, -1        ; 4 uses
+  %.1.i.i50.in.i = phi i64 [ %.1.i.i50.i, %bb.p ], [ %.1.i.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i44.i ] ; 2 uses
+  %.1.i.i50.i = add i64 %.1.i.i50.in.i, -1        ; 5 uses
   %i.at = getelementptr inbounds nuw i8, ptr %i.l, i64 %.1.i.i50.i
   %i.au = load i8, ptr %i.at, align 1, !tbaa !34
   switch i8 %i.au, label %bb.p [
@@ -375,11 +374,10 @@ _ZNKSt17basic_string_viewIcSt11char_traitsIcEE12find_last_ofEPKcm.exit53.i: ; pr
   br i1 %or.cond3.i, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE12find_last_ofEPKcm.exit53.thread.i, label %bb.q
 
 bb.q:                                             ; preds = %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE12find_last_ofEPKcm.exit53.i
-  %.sroa.speculated.i54.i = call i64 @llvm.umin.i64(i64 %.sroa.speculated.i.i, i64 %.1.i.i50.i) ; 2 uses
-  store i64 %.sroa.speculated.i54.i, ptr %13, align 8, !tbaa !30
+  store i64 %.1.i.i50.i, ptr %13, align 8, !tbaa !30
   call void @llvm.lifetime.start.p0(ptr nonnull %17) #37
   call void @llvm.lifetime.start.p0(ptr nonnull %18) #37
-  store i64 %.sroa.speculated.i54.i, ptr %18, align 8, !tbaa !30
+  store i64 %.1.i.i50.i, ptr %18, align 8, !tbaa !30
   %.sroa.2.0..sroa_idx.i57.i = getelementptr inbounds nuw i8, ptr %18, i64 8
   store ptr %i.l, ptr %.sroa.2.0..sroa_idx.i57.i, align 8, !tbaa !192
   call void @llvm.lifetime.start.p0(ptr nonnull %19) #37

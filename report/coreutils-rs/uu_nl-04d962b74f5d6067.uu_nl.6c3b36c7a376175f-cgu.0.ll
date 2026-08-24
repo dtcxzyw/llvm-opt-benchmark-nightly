@@ -204,9 +204,9 @@ bb.ay:                                            ; preds = %bb.ap
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.av, ptr noundef nonnull align 8 dereferenceable(24) %i.aw, i64 24, i1 false)
   call void @_RNvNtNtCsh036I4OHgIr_6uucore4mods6locale21get_message_with_args(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.ax, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @66, i64 noundef 27, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.av) #22
   call void @llvm.lifetime.end.p0(ptr nonnull %i.av)
-  %.pre = load i64, ptr %i.bb, align 8, !alias.scope !1336, !noalias !1339 ; 3 uses
-  %.pre220 = load i64, ptr %i.az, align 8, !range !40, !alias.scope !1336, !noalias !1339
   call void @llvm.lifetime.end.p0(ptr nonnull %i.aw)
+  %.pre = load i64, ptr %i.bb, align 8, !alias.scope !1336, !noalias !1339, !noundef !4 ; 3 uses
+  %.pre220 = load i64, ptr %i.az, align 8, !range !40, !alias.scope !1336, !noalias !1339, !noundef !4
   %i.is = icmp eq i64 %.pre, %.pre220
   br i1 %i.is, label %bb.az, label %_RNvMsG_NtCs7tKScEop1B6_5alloc3vecINtB5_3VecNtNtB7_6string6StringE8push_mutCs9i6ZclbYTs9_5uu_nl.exit135
 

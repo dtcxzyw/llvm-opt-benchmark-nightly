@@ -204,7 +204,7 @@ bb.l:                                             ; preds = %bb.d
 
 bb.m:                                             ; preds = %bb.l
   %i.ap = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.aq = load i64, ptr %i.ap, align 8, !tbaa !62 ; 3 uses
+  %i.aq = load i64, ptr %i.ap, align 8, !tbaa !62 ; 2 uses
   %.not.i = icmp eq i64 %i.aq, 0
   br i1 %.not.i, label %.loopexit, label %bb.n
 
@@ -213,7 +213,7 @@ bb.n:                                             ; preds = %bb.m
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.p, %bb.n
-  %.1.i.in = phi i64 [ %i.aq, %bb.n ], [ %.1.i, %bb.p ] ; 2 uses
+  %.1.i.in = phi i64 [ %i.aq, %bb.n ], [ %.1.i, %bb.p ] ; 9 uses
   %.1.i = add i64 %.1.i.in, -1                    ; 3 uses
   %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 %.1.i
   %i.at = load i8, ptr %i.as, align 1, !tbaa !15
@@ -258,12 +258,11 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE16find_last_not_ofEcm.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %17) #30
   %i.az = getelementptr inbounds nuw i8, ptr %17, i64 16 ; 10 uses
   store ptr %i.az, ptr %17, align 8, !tbaa !61, !alias.scope !113
-  %spec.select.i.i.i = call noundef i64 @llvm.umin.i64(i64 %.1.i.in, i64 %i.aq) ; 8 uses
-  %i.ba = icmp ugt i64 %spec.select.i.i.i, 15
+  %i.ba = icmp ugt i64 %.1.i.in, 15
   br i1 %i.ba, label %bb.s, label %._crit_edge.i.i.i
 
 bb.s:                                             ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE16find_last_not_ofEcm.exit
-  %i.bb = icmp slt i64 %spec.select.i.i.i, 0
+  %i.bb = icmp slt i64 %.1.i.in, 0
   br i1 %i.bb, label %.noexc10.i.i, label %bb.t
 
 .noexc10.i.i:                                     ; preds = %bb.s
@@ -274,7 +273,7 @@ bb.s:                                             ; preds = %_ZNKSt7__cxx1112bas
   unreachable
 
 bb.t:                                             ; preds = %bb.s
-  %i.bc = add nuw i64 %spec.select.i.i.i, 1       ; 2 uses
+  %i.bc = add nuw i64 %.1.i.in, 1                 ; 2 uses
   %i.bd = icmp slt i64 %i.bc, 0
   br i1 %i.bd, label %.noexc11.i.i, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit.i.i.i, !prof !116
 
@@ -291,12 +290,12 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit.i.i.i: 
 
 .noexc101:                                        ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit.i.i.i
   store ptr %i.be, ptr %17, align 8, !tbaa !9, !alias.scope !113
-  store i64 %spec.select.i.i.i, ptr %i.az, align 8, !tbaa !15, !alias.scope !113
+  store i64 %.1.i.in, ptr %i.az, align 8, !tbaa !15, !alias.scope !113
   br label %._crit_edge.i.i.i
 
 ._crit_edge.i.i.i:                                ; preds = %.noexc101, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE16find_last_not_ofEcm.exit
   %i.bf = phi ptr [ %i.be, %.noexc101 ], [ %i.az, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE16find_last_not_ofEcm.exit ] ; 3 uses
-  %cond = icmp eq i64 %spec.select.i.i.i, 1
+  %cond = icmp eq i64 %.1.i.in, 1
   br i1 %cond, label %bb.u, label %bb.v
 
 bb.u:                                             ; preds = %._crit_edge.i.i.i
@@ -305,13 +304,13 @@ bb.u:                                             ; preds = %._crit_edge.i.i.i
   br label %bb.w
 
 bb.v:                                             ; preds = %._crit_edge.i.i.i
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.bf, ptr nonnull align 1 %i.ar, i64 %spec.select.i.i.i, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.bf, ptr nonnull align 1 %i.ar, i64 %.1.i.in, i1 false)
   br label %bb.w
 
 bb.w:                                             ; preds = %bb.v, %bb.u
   %i.bh = getelementptr inbounds nuw i8, ptr %17, i64 8 ; 5 uses
-  store i64 %spec.select.i.i.i, ptr %i.bh, align 8, !tbaa !62, !alias.scope !113
-  %i.bi = getelementptr inbounds nuw i8, ptr %i.bf, i64 %spec.select.i.i.i
+  store i64 %.1.i.in, ptr %i.bh, align 8, !tbaa !62, !alias.scope !113
+  %i.bi = getelementptr inbounds nuw i8, ptr %i.bf, i64 %.1.i.in
   store i8 0, ptr %i.bi, align 1, !tbaa !15
   call void @llvm.experimental.noalias.scope.decl(metadata !117)
   %i.bj = load i64, ptr %i.bh, align 8, !tbaa !62, !noalias !117 ; 5 uses

@@ -205,6 +205,10 @@ _RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit: ; preds = %._R
   %.not18.i88 = icmp eq i64 %i.co, 0
   br i1 %.not18.i88, label %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig10shift_left.exit98.loopexit, label %.lr.ph.split.i89.preheader
 
+_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig10shift_left.exit98.loopexit: ; preds = %.split.i87
+  store i128 0, ptr %2, align 16, !alias.scope !10480, !noalias !10483
+  br label %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig10shift_left.exit98
+
 .lr.ph.split.i89.preheader:                       ; preds = %.split.i87
   %i.cp = zext nneg i64 %i.co to i128
   %.not374 = icmp ult i64 %i.ci, 128
@@ -224,10 +228,6 @@ _RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit: ; preds = %._R
   %extract.t397 = trunc nuw i128 %extract396 to i32
   %extract400 = lshr i128 %spec.select419, 112
   %extract.t401 = trunc nuw nsw i128 %extract400 to i32
-  br label %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig10shift_left.exit98
-
-_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig10shift_left.exit98.loopexit: ; preds = %.split.i87
-  store i128 0, ptr %2, align 16, !alias.scope !10480, !noalias !10483
   br label %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig10shift_left.exit98
 
 _RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig10shift_left.exit98: ; preds = %.lr.ph.split.i89.preheader, %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig10shift_left.exit98.loopexit, %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit
@@ -451,6 +451,10 @@ _RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit123: ; preds = %
   %.not18.i126 = icmp eq i64 %i.ge, 0
   br i1 %.not18.i126, label %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig10shift_left.exit136.loopexit, label %.lr.ph.split.i127.preheader
 
+_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig10shift_left.exit136.loopexit: ; preds = %.split.i125
+  store i128 0, ptr %2, align 16, !alias.scope !10504, !noalias !10507
+  br label %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig10shift_left.exit136
+
 .lr.ph.split.i127.preheader:                      ; preds = %.split.i125
   %i.gf = zext nneg i64 %i.ge to i128
   %.not365 = icmp ult i64 %i.fy, 128
@@ -462,10 +466,6 @@ _RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit123: ; preds = %
   %extract.t367.a = trunc nuw i128 %extract to i64
   %extract370 = lshr i128 %spec.select420, 96
   %extract.t371 = trunc nuw nsw i128 %extract370 to i64
-  br label %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig10shift_left.exit136
-
-_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig10shift_left.exit136.loopexit: ; preds = %.split.i125
-  store i128 0, ptr %2, align 16, !alias.scope !10504, !noalias !10507
   br label %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig10shift_left.exit136
 
 _RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig10shift_left.exit136: ; preds = %.lr.ph.split.i127.preheader, %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig10shift_left.exit136.loopexit, %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit123
