@@ -154,7 +154,7 @@ bb.p:                                             ; preds = %bb.o, %.sink.split
   %i.bh = mul nsw i32 %i.bg, %spec.select
   %.not1354 = icmp ne i32 %i.bh, %i.bc
   %i.bi = zext i1 %.not1354 to i32
-  %.0 = add i32 %i.bg, %i.bi                      ; 6 uses
+  %.0 = add nsw i32 %i.bg, %i.bi                  ; 5 uses
   %i.bj = mul nsw i32 %spec.select, %spec.select
   %i.bk = tail call i32 @llvm.smin.i32(i32 %i.bc, i32 5) ; 2 uses
   %i.bl = load i32, ptr %13, align 4, !tbaa !8    ; 4 uses
@@ -197,21 +197,18 @@ bb.q:                                             ; preds = %.lr.ph1536, %bb.eh
 
 bb.r:                                             ; preds = %.lr.ph1526, %.loopexit1415
   %indvars.iv1573.a = phi i32 [ %spec.select, %.lr.ph1526 ], [ %indvars.iv.next1574.a, %.loopexit1415 ] ; 2 uses
-  %indvars.iv1571.in = phi i32 [ %.0, %.lr.ph1526 ], [ %indvars.iv1571, %.loopexit1415 ]
   %indvars.iv = phi i32 [ 1, %.lr.ph1526 ], [ %indvars.iv.next, %.loopexit1415 ] ; 3 uses
   %.012361524 = phi i32 [ 1, %.lr.ph1526 ], [ %i.po, %.loopexit1415 ] ; 5 uses
   %.012391523 = phi i32 [ 0, %.lr.ph1526 ], [ %.14, %.loopexit1415 ] ; 2 uses
   %.012401522 = phi i32 [ 0, %.lr.ph1526 ], [ %.17, %.loopexit1415 ] ; 2 uses
   %.012561521 = phi double [ 0.000000e+00, %.lr.ph1526 ], [ %.151271, %.loopexit1415 ] ; 2 uses
   %.012731520 = phi double [ 0.000000e+00, %.lr.ph1526 ], [ %.131286, %.loopexit1415 ] ; 2 uses
-  %indvars.iv1571 = add i32 %indvars.iv1571.in, -1 ; 2 uses
   %i.bv = sext i32 %indvars.iv to i64             ; 8 uses
-  %.inv1617 = icmp slt i32 %indvars.iv1571, 1
-  %17 = select i1 %.inv1617, i32 1, i32 2
   %i.bw = add nsw i32 %.012361524, -1
   %i.bx = mul nsw i32 %i.bw, %spec.select         ; 3 uses
-  %i.by = sub nsw i32 %.0, %.012361524            ; 2 uses
+  %i.by = sub nsw i32 %.0, %.012361524            ; 3 uses
   store i32 %i.by, ptr %i.c, align 4, !tbaa !8
+  %17 = call i32 @llvm.smin.i32(i32 %i.by, i32 1)
   %.not13611455 = icmp slt i32 %i.by, 0
   br i1 %.not13611455, label %._crit_edge1464, label %.lr.ph1463.preheader
 
@@ -225,7 +222,7 @@ bb.r:                                             ; preds = %.lr.ph1526, %.loope
   %.012371461 = phi i32 [ %i.bz, %.lr.ph1463.preheader ], [ %i.cb, %._crit_edge ]
   %.11460 = phi i32 [ %.012391523, %.lr.ph1463.preheader ], [ %.2.lcssa, %._crit_edge ] ; 2 uses
   %.112411459 = phi i32 [ %.012401522, %.lr.ph1463.preheader ], [ %.21242.lcssa, %._crit_edge ] ; 2 uses
-  %.012551458 = phi i32 [ 0, %.lr.ph1463.preheader ], [ %i.pn, %._crit_edge ] ; 3 uses
+  %.012551458 = phi i32 [ 0, %.lr.ph1463.preheader ], [ %i.pn, %._crit_edge ] ; 4 uses
   %.112571457 = phi double [ %.012561521, %.lr.ph1463.preheader ], [ %.21258.lcssa, %._crit_edge ] ; 2 uses
   %.112741456 = phi double [ %.012731520, %.lr.ph1463.preheader ], [ %.21275.lcssa, %._crit_edge ] ; 2 uses
   %i.ca = mul nuw nsw i32 %.012551458, %spec.select
@@ -628,11 +625,11 @@ bb.bw:                                            ; preds = %.loopexit1414, %bb.
   %.21258.lcssa = phi double [ %.112571457, %.lr.ph1463 ], [ %.71263, %bb.bw ] ; 2 uses
   %.21242.lcssa = phi i32 [ %.112411459, %.lr.ph1463 ], [ %.91249, %bb.bw ] ; 2 uses
   %.2.lcssa = phi i32 [ %.11460, %.lr.ph1463 ], [ %.7, %bb.bw ] ; 2 uses
-  %i.pn = add nuw nsw i32 %.012551458, 1          ; 2 uses
+  %i.pn = add nuw nsw i32 %.012551458, 1
+  %.not1361.not = icmp slt i32 %.012551458, %17
   %indvars.iv.next1562 = add i32 %indvars.iv1561, %spec.select
   %indvars.iv.next1564 = add i32 %indvars.iv1563, %indvars.iv1561
-  %exitcond.not = icmp eq i32 %i.pn, %17
-  br i1 %exitcond.not, label %._crit_edge1464, label %.lr.ph1463, !llvm.loop !15
+  br i1 %.not1361.not, label %.lr.ph1463, label %._crit_edge1464, !llvm.loop !15
 
 ._crit_edge1464:                                  ; preds = %._crit_edge, %bb.r
   %.11274.lcssa = phi double [ %.012731520, %bb.r ], [ %.21275.lcssa, %._crit_edge ] ; 2 uses
@@ -645,7 +642,7 @@ bb.bw:                                            ; preds = %.loopexit1414, %bb.
   br i1 %.not13621502.not, label %.lr.ph1509, label %.loopexit1416
 
 .lr.ph1509:                                       ; preds = %._crit_edge1464, %._crit_edge1497
-  %indvars.iv1575.a = phi i32 [ %indvars.iv.next1576, %._crit_edge1497 ], [ %indvars.iv1573.a, %._crit_edge1464 ] ; 2 uses
+  %indvars.iv1575.a = phi i32 [ %indvars.iv.next1574, %._crit_edge1497 ], [ %indvars.iv1573.a, %._crit_edge1464 ] ; 2 uses
   %.012381507 = phi i32 [ %i.acr, %._crit_edge1497 ], [ %i.po, %._crit_edge1464 ] ; 4 uses
   %.81506 = phi i32 [ %.9.lcssa, %._crit_edge1497 ], [ %.1.lcssa, %._crit_edge1464 ] ; 2 uses
   %.1012501505 = phi i32 [ %.111251.lcssa, %._crit_edge1497 ], [ %.11241.lcssa, %._crit_edge1464 ] ; 2 uses
@@ -1048,10 +1045,10 @@ bb.ea:                                            ; preds = %.loopexit1413, %bb.
   %.91265.lcssa = phi double [ %.812641504, %.lr.ph1509 ], [ %.141270, %bb.ea ] ; 2 uses
   %.111251.lcssa = phi i32 [ %.1012501505, %.lr.ph1509 ], [ %.16, %bb.ea ] ; 2 uses
   %.9.lcssa = phi i32 [ %.81506, %.lr.ph1509 ], [ %.13, %bb.ea ] ; 2 uses
-  %i.acr = add i32 %.012381507, 1
-  %indvars.iv.next1576 = add i32 %indvars.iv1575.a, %spec.select
-  %exitcond1583.not = icmp eq i32 %.012381507, %.0
-  br i1 %exitcond1583.not, label %.loopexit1416, label %.lr.ph1509, !llvm.loop !18
+  %i.acr = add nuw nsw i32 %.012381507, 1
+  %.not1362.not = icmp slt i32 %.012381507, %.0
+  %indvars.iv.next1574 = add i32 %indvars.iv1575.a, %spec.select
+  br i1 %.not1362.not, label %.lr.ph1509, label %.loopexit1416, !llvm.loop !18
 
 .loopexit1416:                                    ; preds = %._crit_edge1497, %._crit_edge1464, %bb.dt
   %.131286 = phi double [ %.11274.lcssa, %._crit_edge1464 ], [ %.101283, %bb.dt ], [ %.81281.lcssa, %._crit_edge1497 ] ; 2 uses

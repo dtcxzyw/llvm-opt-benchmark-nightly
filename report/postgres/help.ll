@@ -202,37 +202,35 @@ bb.d:                                             ; preds = %bb.c
   %i.m = trunc nuw nsw i32 %.0111 to i16          ; 2 uses
   %.lhs.trunc = add nuw nsw i16 %i.m, 189
   %i.n = udiv i16 %.lhs.trunc, %i.m               ; 2 uses
-  %.zext = zext nneg i16 %i.n to i32              ; 4 uses
+  %.zext = zext nneg i16 %i.n to i32              ; 3 uses
   %i.o = add nuw nsw i32 %.zext, 1
   %.not128 = icmp eq i16 %1, 0
   %i.p = select i1 %.not128, ptr null, ptr getelementptr inbounds nuw (i8, ptr @pset, i64 48)
   %i.q = call ptr @PageOutput(i32 noundef %i.o, ptr noundef %i.p) #10 ; 9 uses
   %i.r = call i64 @fwrite(ptr nonnull @.str.272, i64 16, i64 1, ptr %i.q) ; 0 uses
   %i.s = icmp samesign ugt i32 %.0111, 1
-  br i1 %i.s, label %.lr.ph167.us.preheader, label %.lr.ph172.split.preheader
-
-.lr.ph172.split.preheader:                        ; preds = %.lr.ph172
-  %4 = zext nneg i16 %i.n to i64
-  br label %.lr.ph172.split
+  %4 = zext nneg i16 %i.n to i64                  ; 2 uses
+  br i1 %i.s, label %.lr.ph167.us.preheader, label %.lr.ph172.split
 
 .lr.ph167.us.preheader:                           ; preds = %.lr.ph172
   %i.t = add nsw i32 %.0111, -1                   ; 2 uses
+  %umax = call i32 @llvm.umax.i32(i32 %.zext, i32 1)
+  %wide.trip.count192 = zext nneg i32 %umax to i64
   %wide.trip.count = zext nneg i32 %i.t to i64
   %i.u = mul nuw nsw i32 %i.t, %.zext
+  %5 = zext nneg i32 %i.u to i64
   br label %.lr.ph167.us
 
 .lr.ph167.us:                                     ; preds = %.lr.ph167.us.preheader, %bb.g
-  %.0110170.us = phi i32 [ %10, %bb.g ], [ 0, %.lr.ph167.us.preheader ] ; 3 uses
+  %indvars.iv189 = phi i64 [ 0, %.lr.ph167.us.preheader ], [ %indvars.iv.next190, %bb.g ] ; 3 uses
   %i.v = call i32 (ptr, ptr, ...) @pg_fprintf(ptr noundef %i.q, ptr noundef nonnull @.str.273) #10 ; 0 uses
+  %invariant.gep = getelementptr inbounds nuw [40 x i8], ptr @QL_HELP, i64 %indvars.iv189
   br label %bb.e
 
 bb.e:                                             ; preds = %.lr.ph167.us, %bb.e
   %indvars.iv184 = phi i64 [ 0, %.lr.ph167.us ], [ %indvars.iv.next185, %bb.e ] ; 2 uses
-  %5 = trunc nuw nsw i64 %indvars.iv184 to i32
-  %6 = mul i32 %5, %.zext
-  %7 = add i32 %6, %.0110170.us
-  %8 = sext i32 %7 to i64
-  %i.w = getelementptr inbounds [40 x i8], ptr @QL_HELP, i64 %8
+  %6 = mul nuw nsw i64 %indvars.iv184, %4
+  %i.w = getelementptr inbounds nuw [40 x i8], ptr %invariant.gep, i64 %6
   %i.x = load ptr, ptr %i.w, align 8              ; 2 uses
   %.not130.us = icmp eq ptr %i.x, null
   %spec.select.us = select i1 %.not130.us, ptr @.str.275, ptr %i.x
@@ -242,8 +240,7 @@ bb.e:                                             ; preds = %.lr.ph167.us, %bb.e
   br i1 %exitcond.not.a, label %._crit_edge168.us, label %bb.e, !llvm.loop !10
 
 bb.f:                                             ; preds = %._crit_edge168.us
-  %9 = sext i32 %12 to i64
-  %i.z = getelementptr inbounds [40 x i8], ptr @QL_HELP, i64 %9
+  %i.z = getelementptr inbounds nuw [40 x i8], ptr @QL_HELP, i64 %7
   %i.aa = load ptr, ptr %i.z, align 8             ; 2 uses
   %.not129.us = icmp eq ptr %i.aa, null
   %spec.select131.us = select i1 %.not129.us, ptr @.str.275, ptr %i.aa
@@ -252,17 +249,17 @@ bb.f:                                             ; preds = %._crit_edge168.us
 
 bb.g:                                             ; preds = %bb.f, %._crit_edge168.us
   %i.ac = call i32 @fputc(i32 noundef 10, ptr noundef %i.q) ; 0 uses
-  %10 = add nuw nsw i32 %.0110170.us, 1           ; 2 uses
-  %11 = icmp samesign ult i32 %10, %.zext
-  br i1 %11, label %.lr.ph167.us, label %._crit_edge173, !llvm.loop !11
+  %indvars.iv.next190 = add nuw nsw i64 %indvars.iv189, 1 ; 2 uses
+  %exitcond193.not = icmp eq i64 %indvars.iv.next190, %wide.trip.count192
+  br i1 %exitcond193.not, label %._crit_edge173, label %.lr.ph167.us, !llvm.loop !11
 
 ._crit_edge168.us:                                ; preds = %bb.e
-  %12 = add i32 %i.u, %.0110170.us                ; 2 uses
-  %13 = icmp slt i32 %12, 190
-  br i1 %13, label %bb.f, label %bb.g
+  %7 = add nuw nsw i64 %indvars.iv189, %5         ; 2 uses
+  %.wide = icmp samesign ult i64 %7, 190
+  br i1 %.wide, label %bb.f, label %bb.g
 
-.lr.ph172.split:                                  ; preds = %.lr.ph172.split.preheader, %bb.i
-  %indvars.iv = phi i64 [ 0, %.lr.ph172.split.preheader ], [ %indvars.iv.next, %bb.i ] ; 3 uses
+.lr.ph172.split:                                  ; preds = %.lr.ph172, %bb.i
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.i ], [ 0, %.lr.ph172 ] ; 3 uses
   %i.ad = call i32 (ptr, ptr, ...) @pg_fprintf(ptr noundef %i.q, ptr noundef nonnull @.str.273) #10 ; 0 uses
   %i.ae = icmp samesign ult i64 %indvars.iv, 190
   br i1 %i.ae, label %bb.h, label %bb.i
@@ -278,8 +275,8 @@ bb.h:                                             ; preds = %.lr.ph172.split
 bb.i:                                             ; preds = %bb.h, %.lr.ph172.split
   %i.ai = call i32 @fputc(i32 noundef 10, ptr noundef %i.q) ; 0 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %14 = icmp samesign ult i64 %indvars.iv.next, %4
-  br i1 %14, label %.lr.ph172.split, label %._crit_edge173, !llvm.loop !11
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %4
+  br i1 %exitcond.not, label %._crit_edge173, label %.lr.ph172.split, !llvm.loop !11
 
 ._crit_edge173:                                   ; preds = %bb.i, %bb.g
   call void @ClosePager(ptr noundef %i.q) #10

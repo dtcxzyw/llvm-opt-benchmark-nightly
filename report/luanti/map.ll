@@ -204,12 +204,11 @@ bb.a:
   br i1 %or.cond289, label %._crit_edge219, label %.preheader192.preheader
 
 .preheader192.preheader:                          ; preds = %.preheader192.lr.ph
-  %5 = sext i32 %i.g to i64
+  %sext267 = shl i64 %.sroa.021.0.extract.trunc, 48
+  %5 = ashr exact i64 %sext267, 48
   %i.at = sext i32 %i.p to i64
   %sext = sext i48 %i.ae to i64
-  %6 = shl i64 %.sroa.021.0.extract.trunc, 48
-  %sext268 = add nsw i64 %6, 281474976710656
-  %wide.trip.count = ashr exact i64 %sext268, 48
+  %6 = sext i32 %i.g to i64
   br label %.preheader192
 
 .preheader192:                                    ; preds = %.preheader192.preheader, %._crit_edge215
@@ -234,7 +233,7 @@ bb.a:
   %tr.sh.diff.i = trunc nuw i48 %sh.diff.i to i32
   %.sroa.4.0.insert.shift.i = and i32 %tr.sh.diff.i, -65536
   %.sroa.2.0.extract.trunc.i = trunc i48 %sh.diff.i to i16 ; 2 uses
-  %i.az = shl i16 %.040214, 4
+  %i.az = shl nsw i16 %.040214, 4
   br label %bb.b
 
 ._crit_edge215:                                   ; preds = %._crit_edge212
@@ -244,12 +243,12 @@ bb.a:
 
 ._crit_edge212:                                   ; preds = %_ZN11StreamProxylsEPFRSoS0_E.exit92
   %i.ba = add nsw i16 %.040214, 1
-  %exitcond234 = icmp eq i16 %.040214, %.sroa.5.0.extract.trunc
-  br i1 %exitcond234, label %._crit_edge215, label %.preheader186, !llvm.loop !300
+  %.not43.not = icmp slt i16 %.040214, %.sroa.5.0.extract.trunc
+  br i1 %.not43.not, label %.preheader186, label %._crit_edge215, !llvm.loop !300
 
 bb.b:                                             ; preds = %.preheader186, %_ZN11StreamProxylsEPFRSoS0_E.exit92
   %i.bb = phi ptr [ %i.ay, %.preheader186 ], [ %i.hw, %_ZN11StreamProxylsEPFRSoS0_E.exit92 ] ; 4 uses
-  %indvars.iv = phi i64 [ %5, %.preheader186 ], [ %indvars.iv.next, %_ZN11StreamProxylsEPFRSoS0_E.exit92 ] ; 6 uses
+  %indvars.iv = phi i64 [ %6, %.preheader186 ], [ %indvars.iv.next, %_ZN11StreamProxylsEPFRSoS0_E.exit92 ] ; 7 uses
   %i.bc = trunc nsw i64 %indvars.iv to i16        ; 5 uses
   %i.bd = trunc i64 %indvars.iv to i48
   %.sroa.0134.0.insert.ext135 = and i48 %i.bd, 65535
@@ -613,7 +612,7 @@ _ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i122: ; preds = %.noexc125, %
 
 .thread:                                          ; preds = %_ZN3Map20getBlockNoCreateNoExEN4core8vector3dIsEE.exit, %bb.t
   %.038178 = phi ptr [ %i.en, %bb.t ], [ %i.cr, %_ZN3Map20getBlockNoCreateNoExEN4core8vector3dIsEE.exit ]
-  %i.fr = shl i16 %i.bc, 4
+  %i.fr = shl nsw i16 %i.bc, 4
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #27
   %i.fs = getelementptr inbounds nuw i8, ptr %.038178, i64 88
   invoke void @_ZN16NodeMetadataList10getAllKeysEv(ptr dead_on_unwind nonnull writable sret(%"class.std::vector") align 8 %4, ptr noundef nonnull align 8 dereferenceable(56) %i.fs)
@@ -796,9 +795,9 @@ _ZNSt6vectorIN4core8vector3dIsEESaIS2_EE9push_backERKS2_.exit: ; preds = %.lr.ph
 
 _ZN11StreamProxylsEPFRSoS0_E.exit92:              ; preds = %bb.w, %.noexc127, %_ZNSt6vectorIN4core8vector3dIsEESaIS2_EED2Ev.exit
   %i.hw = phi ptr [ %i.bb, %bb.w ], [ %i.bb, %.noexc127 ], [ %i.fw, %_ZNSt6vectorIN4core8vector3dIsEESaIS2_EED2Ev.exit ] ; 3 uses
-  %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
-  %exitcond = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond, label %._crit_edge212, label %bb.b, !llvm.loop !308
+  %indvars.iv.next = add nsw i64 %indvars.iv, 1
+  %.not44.not = icmp slt i64 %indvars.iv, %5
+  br i1 %.not44.not, label %bb.b, label %._crit_edge212, !llvm.loop !308
 
 _ZNSt6vectorIN4core8vector3dIsEESaIS2_EED2Ev.exit105: ; preds = %bb.ag, %bb.af, %bb.ad
   %.pn = phi { ptr, i32 } [ %i.ga, %bb.ad ], [ %lpad.loopexit.split-lp, %bb.af ], [ %lpad.phi272, %bb.ag ]
@@ -1201,13 +1200,13 @@ bb.k:                                             ; preds = %_ZNK4core8vector3dI
 
 ._crit_edge120:                                   ; preds = %._crit_edge
   %i.cj = add nsw i16 %.023122, 1
-  %exitcond127 = icmp eq i16 %.023122, %.sroa.8.0.extract.trunc
-  br i1 %exitcond127, label %_ZNK9VoxelArea14hasEmptyExtentEv.exit.thread, label %.preheader114, !llvm.loop !372
+  %.not.not = icmp slt i16 %.023122, %.sroa.8.0.extract.trunc
+  br i1 %.not.not, label %.preheader114, label %_ZNK9VoxelArea14hasEmptyExtentEv.exit.thread, !llvm.loop !372
 
 ._crit_edge:                                      ; preds = %bb.ad
   %i.ck = add nsw i16 %.022119, 1
-  %exitcond126 = icmp eq i16 %.022119, %.sroa.693.0.extract.trunc
-  br i1 %exitcond126, label %._crit_edge120, label %.preheader, !llvm.loop !373
+  %.not32.not = icmp slt i16 %.022119, %.sroa.693.0.extract.trunc
+  br i1 %.not32.not, label %.preheader, label %._crit_edge120, !llvm.loop !373
 
 bb.l:                                             ; preds = %.preheader, %bb.ad
   %.021117 = phi i16 [ %.sroa.096.0.extract.trunc, %.preheader ], [ %i.fn, %bb.ad ] ; 9 uses
@@ -1435,8 +1434,8 @@ bb.ad:                                            ; preds = %_ZNKSt4lessIN4core8
   %i.fm = getelementptr inbounds nuw i8, ptr %.sroa.06.0.i, i64 38
   store i8 %.not12.i, ptr %i.fm, align 1, !tbaa !146
   %i.fn = add nsw i16 %.021117, 1
-  %exitcond = icmp eq i16 %.021117, %.sroa.091.0.extract.trunc
-  br i1 %exitcond, label %._crit_edge, label %bb.l, !llvm.loop !378
+  %.not33.not = icmp slt i16 %.021117, %.sroa.091.0.extract.trunc
+  br i1 %.not33.not, label %bb.l, label %._crit_edge, !llvm.loop !378
 
 bb.ae:                                            ; preds = %.critedge.i77
   %i.fo = landingpad { ptr, i32 }

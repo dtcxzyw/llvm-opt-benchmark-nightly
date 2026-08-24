@@ -205,8 +205,8 @@ begin_hunk_0_@_process_opposed:bb.a
 
 ._crit_edge.split.us.us.us:                       ; preds = %.split362.us.us.us.us
   %indvars.iv.next455 = add nuw nsw i64 %indvars.iv454, 1 ; 2 uses
-  %exitcond457.not = icmp eq i64 %indvars.iv.next455, %i.dg
-  br i1 %exitcond457.not, label %._crit_edge371, label %.preheader357.us.us
+  %9 = icmp ugt i64 %i.dg, %indvars.iv.next455
+  br i1 %9, label %.preheader357.us.us, label %._crit_edge371
 
 .preheader357.us:                                 ; preds = %.preheader357.lr.ph.split.us, %._crit_edge.split.us381
   %indvars.iv435 = phi i64 [ %indvars.iv.next436, %._crit_edge.split.us381 ], [ 0, %.preheader357.lr.ph.split.us ] ; 4 uses
@@ -428,8 +428,8 @@ begin_hunk_0_@_process_opposed:bb.a
 
 ._crit_edge.split.us381:                          ; preds = %.split362.us
   %indvars.iv.next436 = add nuw nsw i64 %indvars.iv435, 1 ; 2 uses
-  %exitcond438.not = icmp eq i64 %indvars.iv.next436, %i.dg
-  br i1 %exitcond438.not, label %._crit_edge371, label %.preheader357.us
+  %10 = icmp ugt i64 %i.dg, %indvars.iv.next436
+  br i1 %10, label %.preheader357.us, label %._crit_edge371
 
 ._crit_edge371.thread:                            ; preds = %bb.h, %.preheader357.lr.ph
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #33
@@ -471,7 +471,6 @@ begin_hunk_0_@_process_opposed:bb.a
 
 .preheader353.preheader:                          ; preds = %.preheader353.lr.ph
   %umax = tail call i64 @llvm.umax.i64(i64 %i.ay, i64 1) ; 5 uses
-  %umax477 = tail call i64 @llvm.umax.i64(i64 %i.bc, i64 1)
   %exitcond463.peel.not = icmp ult i32 %i.ax, 2
   %.off521 = add i32 %i.aw, -6
   %exitcond463.peel469.not = icmp ult i32 %.off521, 3
@@ -748,8 +747,8 @@ bb.k:                                             ; preds = %bb.j
 
 ._crit_edge:                                      ; preds = %.lr.ph.split.us.prol.loopexit, %.lr.ph.split.us, %bb.n, %middle.block, %vec.epilog.middle.block, %bb.i, %bb.j, %bb.k
   %i.va = add nuw i64 %.0274389, 1                ; 2 uses
-  %exitcond478.not = icmp eq i64 %i.va, %umax477
-  br i1 %exitcond478.not, label %._crit_edge390.split, label %.preheader353
+  %11 = icmp ult i64 %i.va, %i.bc
+  br i1 %11, label %.preheader353, label %._crit_edge390.split
 
 .lr.ph.split:                                     ; preds = %bb.k, %bb.n
   %.0273385 = phi i64 [ %i.vq, %bb.n ], [ 3, %bb.k ] ; 3 uses

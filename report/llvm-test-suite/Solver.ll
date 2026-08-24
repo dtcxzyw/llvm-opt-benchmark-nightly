@@ -204,20 +204,20 @@ _ZN3vecIiE6shrinkEi.exit:                         ; preds = %._crit_edge, %.lr.p
 
 bb.d:                                             ; preds = %.lr.ph25, %_ZN4HeapIN6Solver10VarOrderLtEE13percolateDownEi.exit
   %indvars.iv30 = phi i64 [ %i.al, %.lr.ph25 ], [ %indvars.iv.next31, %_ZN4HeapIN6Solver10VarOrderLtEE13percolateDownEi.exit ] ; 2 uses
-  %indvars.iv.next31 = add nsw i64 %indvars.iv30, -1 ; 6 uses
-  %i.am = getelementptr inbounds nuw [4 x i8], ptr %i.ak, i64 %indvars.iv.next31
+  %indvars.iv.next31 = add nsw i64 %indvars.iv30, -1 ; 3 uses
+  %indvars = trunc i64 %indvars.iv.next31 to i32  ; 3 uses
+  %2 = and i64 %indvars.iv.next31, 4294967295     ; 2 uses
+  %i.am = getelementptr inbounds nuw [4 x i8], ptr %i.ak, i64 %2
   %i.an = load i32, ptr %i.am, align 4, !tbaa !4  ; 2 uses
-  %2 = shl nuw nsw i64 %indvars.iv.next31, 1      ; 2 uses
-  %3 = or disjoint i64 %2, 1                      ; 2 uses
+  %3 = shl nuw nsw i32 %indvars, 1                ; 2 uses
+  %4 = or disjoint i32 %3, 1                      ; 2 uses
   %i.ao = load i32, ptr %i.b, align 8, !tbaa !55  ; 2 uses
-  %4 = sext i32 %i.ao to i64
-  %i.ap = icmp slt i64 %3, %4
+  %i.ap = icmp slt i32 %4, %i.ao
   %i.aq = sext i32 %i.an to i64                   ; 2 uses
   br i1 %i.ap, label %.lr.ph.i16, label %..thread_crit_edge.i
 
 ..thread_crit_edge.i:                             ; preds = %bb.d
   %.pre30.i = load ptr, ptr %.phi.trans.insert29.i, align 8, !tbaa !54
-  %5 = trunc nsw i64 %indvars.iv.next31 to i32
   br label %_ZN4HeapIN6Solver10VarOrderLtEE13percolateDownEi.exit
 
 .lr.ph.i16:                                       ; preds = %bb.d
@@ -226,16 +226,13 @@ bb.d:                                             ; preds = %.lr.ph25, %_ZN4Heap
   %i.at = getelementptr inbounds [8 x i8], ptr %i.as, i64 %i.aq
   %i.au = load double, ptr %i.at, align 8, !tbaa !8
   %i.av = load ptr, ptr %.phi.trans.insert29.i, align 8 ; 2 uses
-  %6 = trunc nsw i64 %3 to i32
-  %7 = trunc nsw i64 %2 to i32
-  %8 = trunc nsw i64 %indvars.iv.next31 to i32
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.i, %.lr.ph.i16
   %i.aw = phi i32 [ %i.ao, %.lr.ph.i16 ], [ %i.bx, %bb.i ]
-  %i.ax = phi i32 [ %6, %.lr.ph.i16 ], [ %i.bw, %bb.i ] ; 4 uses
-  %i.ay = phi i32 [ %7, %.lr.ph.i16 ], [ %i.bv, %bb.i ]
-  %.01922.i = phi i32 [ %8, %.lr.ph.i16 ], [ %i.bq, %bb.i ] ; 3 uses
+  %i.ax = phi i32 [ %4, %.lr.ph.i16 ], [ %i.bw, %bb.i ] ; 4 uses
+  %i.ay = phi i32 [ %3, %.lr.ph.i16 ], [ %i.bv, %bb.i ]
+  %.01922.i = phi i32 [ %indvars, %.lr.ph.i16 ], [ %i.bq, %bb.i ] ; 3 uses
   %i.az = add nsw i32 %i.ay, 2                    ; 3 uses
   %i.ba = icmp slt i32 %i.az, %i.aw
   br i1 %i.ba, label %bb.f, label %._crit_edge.i
@@ -294,14 +291,15 @@ bb.i:                                             ; preds = %bb.h
   br label %_ZN4HeapIN6Solver10VarOrderLtEE13percolateDownEi.exit
 
 _ZN4HeapIN6Solver10VarOrderLtEE13percolateDownEi.exit: ; preds = %..thread_crit_edge.i, %.thread.loopexit.i
-  %.pre-phi35.i = phi i64 [ %indvars.iv.next31, %..thread_crit_edge.i ], [ %.pre34.i, %.thread.loopexit.i ]
+  %.pre-phi35.i = phi i64 [ %2, %..thread_crit_edge.i ], [ %.pre34.i, %.thread.loopexit.i ]
   %i.bz = phi ptr [ %.pre30.i, %..thread_crit_edge.i ], [ %i.av, %.thread.loopexit.i ]
-  %.019.lcssa.i = phi i32 [ %5, %..thread_crit_edge.i ], [ %.019.lcssa.ph.i, %.thread.loopexit.i ]
+  %.019.lcssa.i = phi i32 [ %indvars, %..thread_crit_edge.i ], [ %.019.lcssa.ph.i, %.thread.loopexit.i ]
   %i.ca = getelementptr inbounds [4 x i8], ptr %i.ak, i64 %.pre-phi35.i
   store i32 %i.an, ptr %i.ca, align 4, !tbaa !4
   %i.cb = getelementptr inbounds [4 x i8], ptr %i.bz, i64 %i.aq
   store i32 %.019.lcssa.i, ptr %i.cb, align 4, !tbaa !4
-  %i.cc = icmp sgt i64 %indvars.iv30, 1
+  %5 = trunc nuw i64 %indvars.iv30 to i32
+  %i.cc = icmp sgt i32 %5, 1
   br i1 %i.cc, label %bb.d, label %._crit_edge26, !llvm.loop !136
 }
 

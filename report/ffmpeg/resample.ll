@@ -204,19 +204,15 @@ bb.b:                                             ; preds = %bb.a
 .preheader.lr.ph:                                 ; preds = %.preheader38
   %i.u = icmp sgt i32 %., 0
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 15036
-  br i1 %i.u, label %.preheader.preheader, label %._crit_edge41.split
-
-.preheader.preheader:                             ; preds = %.preheader.lr.ph
-  %smax = tail call i32 @llvm.smax.i32(i32 %i.i, i32 1)
-  br label %.preheader
+  br i1 %i.u, label %.preheader, label %._crit_edge41.split
 
 bb.c:                                             ; preds = %bb.b
   tail call void (ptr, i32, ptr, ...) @av_log(ptr noundef null, i32 noundef 0, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.6, ptr noundef nonnull @.str.3, i32 noundef 445) #8
   tail call void @abort() #9
   unreachable
 
-.preheader:                                       ; preds = %.preheader.preheader, %._crit_edge
-  %indvars.iv = phi i64 [ 0, %.preheader.preheader ], [ %indvars.iv.next, %._crit_edge ] ; 2 uses
+.preheader:                                       ; preds = %.preheader.lr.ph, %._crit_edge
+  %indvars.iv = phi i64 [ %indvars.iv.next, %._crit_edge ], [ 0, %.preheader.lr.ph ] ; 2 uses
   %i.w = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %indvars.iv
   br label %bb.d
 
@@ -239,7 +235,7 @@ bb.d:                                             ; preds = %.preheader, %bb.d
   %i.al = sext i32 %i.ac to i64
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.af, ptr align 1 %i.ak, i64 %i.al, i1 false)
   %i.am = add nuw nsw i32 %.039, 1                ; 2 uses
-  %exitcond.not = icmp eq i32 %i.am, %smax
+  %exitcond.not = icmp eq i32 %i.am, %i.i
   br i1 %exitcond.not, label %._crit_edge, label %bb.d, !llvm.loop !60
 
 ._crit_edge:                                      ; preds = %bb.d

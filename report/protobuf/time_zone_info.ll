@@ -181,7 +181,7 @@ bb.a:
   %i.i = ptrtoint ptr %i.g to i64
   %i.j = ptrtoint ptr %i.h to i64
   %i.k = sub i64 %i.i, %i.j                       ; 3 uses
-  %i.l = sdiv exact i64 %i.k, 48                  ; 4 uses
+  %i.l = sdiv i64 %i.k, 48                        ; 4 uses
   %.not60 = icmp eq ptr %i.g, %i.h
   br i1 %.not60, label %._crit_edge, label %.lr.ph
 
@@ -262,9 +262,8 @@ bb.e:                                             ; preds = %_ZSteqIcSt11char_tr
   br i1 %.not, label %._crit_edge, label %.lr.ph.split, !llvm.loop !27
 
 ._crit_edge:                                      ; preds = %bb.e, %bb.c, %bb.a
-  %.030.lcssa = phi i64 [ 0, %bb.a ], [ %i.l, %bb.c ], [ %i.l, %bb.e ] ; 2 uses
   %.029.lcssa = phi i64 [ %i.d, %bb.a ], [ %spec.select, %bb.c ], [ %.1, %bb.e ] ; 4 uses
-  %i.av = icmp ult i64 %.030.lcssa, 256
+  %i.av = icmp ult i64 %i.l, 256
   %i.aw = icmp ult i64 %.029.lcssa, 256
   %or.cond.not = select i1 %i.av, i1 %i.aw, i1 false
   br i1 %or.cond.not, label %bb.f, label %bb.l
@@ -340,7 +339,7 @@ bb.k:                                             ; preds = %_ZNSt7__cxx1112basi
   br label %.thread44
 
 .thread44:                                        ; preds = %.thread38, %bb.k
-  %.03059 = phi i64 [ %.us-phi, %.thread38 ], [ %.030.lcssa, %bb.k ]
+  %.03059 = phi i64 [ %.us-phi, %.thread38 ], [ %i.l, %bb.k ]
   %i.bz = trunc nuw i64 %.03059 to i8
   store i8 %i.bz, ptr %4, align 1, !tbaa !33
   br label %bb.l

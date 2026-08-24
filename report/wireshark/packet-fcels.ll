@@ -202,20 +202,17 @@ bb.c:                                             ; preds = %bb.b
   %i.e = load i32, ptr @hf_fcels_rscn_page_len, align 4
   %i.f = tail call ptr @proto_tree_add_item(ptr noundef %i.b, i32 noundef %i.e, ptr noundef %0, i32 noundef 1, i32 noundef 1, i32 noundef 0) ; 0 uses
   %i.g = tail call zeroext i16 @tvb_get_ntohs(ptr noundef %0, i32 noundef 2) ; 2 uses
+  %4 = zext i16 %i.g to i32
   %i.h = load i32, ptr @hf_fcels_rscn_payload_len, align 4
   %i.i = tail call ptr @proto_tree_add_item(ptr noundef %i.b, i32 noundef %i.h, ptr noundef %0, i32 noundef 2, i32 noundef 2, i32 noundef 0) ; 0 uses
+  %5 = add nsw i32 %4, -4
+  %6 = sdiv i32 %5, 4
   %i.j = icmp ugt i16 %i.g, 7
-  br i1 %i.j, label %.lr.ph.preheader, label %.loopexit
+  br i1 %i.j, label %.lr.ph, label %.loopexit
 
-.lr.ph.preheader:                                 ; preds = %bb.c
-  %.lhs.trunc = add i16 %i.g, -4
-  %4 = lshr i16 %.lhs.trunc, 2
-  %.zext = zext nneg i16 %4 to i32
-  br label %.lr.ph
-
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
-  %.02 = phi i32 [ %i.aa, %.lr.ph ], [ 0, %.lr.ph.preheader ] ; 2 uses
-  %.0371 = phi i32 [ %i.z, %.lr.ph ], [ 4, %.lr.ph.preheader ] ; 7 uses
+.lr.ph:                                           ; preds = %bb.c, %.lr.ph
+  %.02 = phi i32 [ %i.aa, %.lr.ph ], [ 0, %bb.c ] ; 2 uses
+  %.0371 = phi i32 [ %i.z, %.lr.ph ], [ 4, %bb.c ] ; 7 uses
   %i.k = load i32, ptr @ett_fcels_rscn_rec, align 4
   %i.l = tail call ptr (ptr, ptr, i32, i32, i32, ptr, ptr, ...) @proto_tree_add_subtree_format(ptr noundef %i.b, ptr noundef %0, i32 noundef %.0371, i32 noundef 4, i32 noundef %i.k, ptr noundef null, ptr noundef nonnull @.str.611, i32 noundef %.02) ; 5 uses
   %i.m = load i32, ptr @hf_fcels_rscn_evqual, align 4
@@ -233,8 +230,8 @@ bb.c:                                             ; preds = %bb.b
   %i.y = tail call ptr @proto_tree_add_item(ptr noundef %i.l, i32 noundef %i.w, ptr noundef %0, i32 noundef %i.x, i32 noundef 1, i32 noundef 0) ; 0 uses
   %i.z = add nuw nsw i32 %.0371, 4
   %i.aa = add nuw nsw i32 %.02, 1                 ; 2 uses
-  %exitcond.not = icmp eq i32 %i.aa, %.zext
-  br i1 %exitcond.not, label %.loopexit, label %.lr.ph, !llvm.loop !8
+  %7 = icmp slt i32 %i.aa, %6
+  br i1 %7, label %.lr.ph, label %.loopexit, !llvm.loop !8
 
 .loopexit:                                        ; preds = %.lr.ph, %bb.c, %bb.a, %bb.b
   ret void
