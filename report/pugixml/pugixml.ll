@@ -205,7 +205,7 @@ bb.o:                                             ; preds = %bb.n
   br i1 %i.ba, label %_ZN4pugi4impl12_GLOBAL__N_119strcpy_insitu_allowImEEbmRKT_mPc.exit.thread51, label %.split
 
 .split:                                           ; preds = %bb.o
-  %i.bb = sub i64 %i.ax, %4
+  %i.bb = sub nuw i64 %i.ax, %4
   %i.bc = lshr i64 %i.ax, 1
   %i.bd = icmp ult i64 %i.bb, %i.bc
   br i1 %i.bd, label %_ZN4pugi4impl12_GLOBAL__N_119strcpy_insitu_allowImEEbmRKT_mPc.exit.thread51, label %_ZN4pugi4impl12_GLOBAL__N_119strcpy_insitu_allowImEEbmRKT_mPc.exit.thread
@@ -608,13 +608,13 @@ bb.v:                                             ; preds = %.lr.ph165
 
 .critedge4:                                       ; preds = %bb.v, %bb.u
   %.2.lcssa = phi i64 [ %i.bf, %bb.u ], [ %1, %bb.v ]
-  %i.bp = sub i64 %.2.lcssa, %i.bf
+  %i.bp = sub nuw i64 %.2.lcssa, %i.bf
   store i64 %i.bp, ptr %3, align 8, !tbaa !36
   br label %.critedge
 
 bb.w:                                             ; preds = %.lr.ph165
   %i.bq = getelementptr inbounds nuw i8, ptr %0, i64 %.2164
-  %i.br = sub i64 %.2164, %i.bf
+  %i.br = sub nuw i64 %.2164, %i.bf
   store i64 %i.br, ptr %3, align 8, !tbaa !36
   %i.bs = load i8, ptr %i.bq, align 1, !tbaa !30
   %i.bt = zext i8 %i.bs to i32
