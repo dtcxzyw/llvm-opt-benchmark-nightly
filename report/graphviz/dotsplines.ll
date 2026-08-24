@@ -205,7 +205,7 @@ place_vnlabel.exit:                               ; preds = %bb.bc, %bb.az, %.lr
   %i.os = getelementptr inbounds nuw i8, ptr %19, i64 32 ; 5 uses
   %i.ot = getelementptr inbounds nuw i8, ptr %34, i64 96 ; 3 uses
   %.sroa.28.0..sroa_idx487.i = getelementptr inbounds nuw i8, ptr %17, i64 16
-  %.sroa.951.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %18, i64 48 ; 4 uses
+  %.sroa.951.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %18, i64 48 ; 3 uses
   %i.ou = getelementptr inbounds nuw i8, ptr %19, i64 40 ; 4 uses
   %.sroa.gep516.i = getelementptr inbounds nuw i8, ptr %15, i64 56 ; 2 uses
   %.sroa.gep517.i = getelementptr inbounds nuw i8, ptr %15, i64 120
@@ -608,7 +608,7 @@ bb.gs:                                            ; preds = %bb.gr, %._crit_edge
   %i.bsd = load double, ptr %.204.i.i.sroa.sel, align 8
   %i.bse = insertelement <2 x double> poison, double %i.bsc, i64 0
   %i.bsf = insertelement <2 x double> %i.bse, double %i.bsd, i64 1
-  %i.bsg = fadd <2 x double> %i.bsb, %i.bsf       ; 5 uses
+  %i.bsg = fadd <2 x double> %i.bsb, %i.bsf       ; 6 uses
   %i.bsh = getelementptr inbounds nuw i8, ptr %.205.i.i, i64 32
   %.206.i.i.sroa.sel = select i1 %i.brz, ptr %.sroa.gep530, ptr %.sroa.gep529
   %i.bsi = load <2 x double>, ptr %i.bsh, align 8
@@ -621,8 +621,8 @@ bb.gs:                                            ; preds = %bb.gr, %._crit_edge
   %i.bso = getelementptr inbounds nuw i8, ptr %.lcssa.i.i, i64 120
   %i.bsp = load ptr, ptr %i.bso, align 8, !tbaa !68 ; 3 uses
   %.not150.i.i = icmp eq ptr %i.bsp, null
-  %i.bsq = extractelement <2 x double> %i.bsg, i64 0 ; 2 uses
-  %i.bsr = extractelement <2 x double> %i.bsg, i64 1 ; 3 uses
+  %i.bsq = extractelement <2 x double> %i.bsg, i64 0
+  %i.bsr = extractelement <2 x double> %i.bsg, i64 1
   br i1 %.not150.i.i, label %makeLineEdge.exit.i, label %bb.gt
 
 bb.gt:                                            ; preds = %bb.gs
@@ -648,11 +648,12 @@ bb.gt:                                            ; preds = %bb.gs
   %.sroa.11.0.copyload.i.i = load double, ptr %.sroa.11.0..sroa_idx.i.i, align 8, !tbaa !74 ; 2 uses
   %i.btd = insertelement <2 x double> %i.bsn, double %.sroa.023.0.copyload.i.i, i64 0
   %i.bte = fsub <2 x double> %i.btd, %i.bsg       ; 2 uses
-  %36 = fsub double %.sroa.11.0.copyload.i.i, %i.bsr
-  %foldExtExtBinop1174 = fsub <2 x double> %i.bsn, %i.bsg
+  %36 = insertelement <2 x double> %i.bsn, double %.sroa.11.0.copyload.i.i, i64 1
+  %foldExtExtBinop1174 = fsub <2 x double> %36, %i.bsg ; 2 uses
   %i.btf = extractelement <2 x double> %foldExtExtBinop1174, i64 0
   %i.btg = fneg double %i.btf
-  %i.bth = fmul double %36, %i.btg
+  %37 = extractelement <2 x double> %foldExtExtBinop1174, i64 1
+  %i.bth = fmul double %37, %i.btg
   %i.bti = extractelement <2 x double> %i.bte, i64 0
   %i.btj = extractelement <2 x double> %i.bte, i64 1
   %i.btk = call double @llvm.fmuladd.f64(double %i.btj, double %i.bti, double %i.bth)
@@ -665,8 +666,7 @@ bb.gt:                                            ; preds = %bb.gs
   %i.btp = fneg double %i.btn
   %.sroa.11.0.p.i.i = select i1 %i.btl, double %i.btp, double %i.btn
   %.sroa.11.0.i.i = fadd double %.sroa.11.0.copyload.i.i, %.sroa.11.0.p.i.i ; 2 uses
-  store double %i.bsq, ptr %i.ok, align 8, !tbaa !74
-  store double %i.bsr, ptr %.sroa.951.0..sroa_idx.i.i, align 8, !tbaa !74
+  store <2 x double> %i.bsg, ptr %i.ok, align 8, !tbaa !74
   %i.btq = call i64 @gv_list_append_slot_(ptr noundef nonnull %18, i64 noundef 16) #24
   %i.btr = load ptr, ptr %18, align 8, !tbaa !104
   %i.bts = getelementptr inbounds nuw [16 x i8], ptr %i.btr, i64 %i.btq

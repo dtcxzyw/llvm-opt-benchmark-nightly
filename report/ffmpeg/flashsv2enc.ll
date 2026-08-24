@@ -204,15 +204,15 @@ bb.a:
   store i32 64, ptr %i.b, align 4, !tbaa !55
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 100 ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 120
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 2 uses
   %i.e = load <2 x i32>, ptr %i.d, align 8, !tbaa !58
   %i.f = add nsw <2 x i32> %i.e, splat (i32 63)
-  %i.g = sdiv <2 x i32> %i.f, splat (i32 64)      ; 2 uses
-  %1 = extractelement <2 x i32> %i.g, i64 1       ; 3 uses
-  store i32 %1, ptr %i.c, align 4, !tbaa !80
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 3 uses
-  %i.h = extractelement <2 x i32> %i.g, i64 0     ; 3 uses
-  store i32 %i.h, ptr %2, align 8, !tbaa !70
-  %i.i = mul nsw i32 %i.h, %1
+  %i.g = sdiv <2 x i32> %i.f, splat (i32 64)      ; 3 uses
+  %2 = shufflevector <2 x i32> %i.g, <2 x i32> poison, <2 x i32> <i32 1, i32 0>
+  store <2 x i32> %2, ptr %i.c, align 4, !tbaa !58
+  %i.h = extractelement <2 x i32> %i.g, i64 0     ; 2 uses
+  %3 = extractelement <2 x i32> %i.g, i64 1       ; 2 uses
+  %i.i = mul nsw i32 %i.h, %3
   %i.j = sext i32 %i.i to i64
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 84 ; 2 uses
   %i.l = load i32, ptr %i.k, align 4, !tbaa !111
@@ -224,14 +224,14 @@ bb.a:
   br i1 %i.o, label %bb.b, label %._crit_edge
 
 bb.b:                                             ; preds = %bb.a
-  %i.r = sext i32 %1 to i64
+  %i.r = sext i32 %3 to i64
   %narrow = mul nsw i32 %i.h, 56
   %i.s = sext i32 %narrow to i64
   %i.t = tail call ptr @av_realloc_array(ptr noundef %i.q, i64 noundef %i.r, i64 noundef %i.s) #10
   store ptr %i.t, ptr %i.p, align 8, !tbaa !73
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 2 uses
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !81
-  %i.w = load i32, ptr %2, align 8, !tbaa !70
+  %i.w = load i32, ptr %1, align 8, !tbaa !70
   %i.x = sext i32 %i.w to i64
   %i.y = load i32, ptr %i.c, align 4, !tbaa !80
   %i.z = sext i32 %i.y to i64
@@ -246,7 +246,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.ad = load i32, ptr %i.c, align 4, !tbaa !80
-  %i.ae = load i32, ptr %2, align 8, !tbaa !70
+  %i.ae = load i32, ptr %1, align 8, !tbaa !70
   %i.af = mul i32 %i.ad, 56
   %i.ag = mul i32 %i.af, %i.ae
   store i32 %i.ag, ptr %i.k, align 4, !tbaa !111
