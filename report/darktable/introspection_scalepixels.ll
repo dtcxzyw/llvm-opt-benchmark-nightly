@@ -204,12 +204,11 @@ _transform.exit:
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %3, ptr noundef nonnull align 4 dereferenceable(20) %2, i64 20, i1 false), !tbaa.struct !70
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   %i.b = getelementptr i8, ptr %1, i64 16
-  %.val = load ptr, ptr %i.b, align 16, !tbaa !31 ; 3 uses
+  %.val = load ptr, ptr %i.b, align 16, !tbaa !31 ; 2 uses
   %.val.val = load float, ptr %.val, align 4, !tbaa !73 ; 3 uses
   %i.c = fcmp reassoc nsz arcp contract afn olt float %.val.val, 1.000000e+00 ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %4 = getelementptr inbounds nuw i8, ptr %.val, i64 4
-  %i.e = getelementptr inbounds nuw i8, ptr %.val, i64 8
+  %i.e = getelementptr inbounds nuw i8, ptr %.val, i64 4
   %i.f = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.g = load float, ptr %i.f, align 4, !tbaa !74
   %i.h = getelementptr inbounds nuw i8, ptr %3, i64 16
@@ -227,11 +226,10 @@ _transform.exit:
   %i.s = sitofp <2 x i32> %i.r to <2 x float>
   %i.t = load <2 x i32>, ptr %i.a, align 4, !tbaa !11
   %i.u = sitofp <2 x i32> %i.t to <2 x float>
-  %i.v = fdiv reassoc nsz arcp contract afn <2 x float> %i.s, %i.u ; 3 uses
-  %i.w = extractelement <2 x float> %i.v, i64 0   ; 3 uses
-  store float %i.w, ptr %4, align 4, !tbaa !44
-  %i.x = extractelement <2 x float> %i.v, i64 1   ; 3 uses
-  store float %i.x, ptr %i.e, align 4, !tbaa !49
+  %i.v = fdiv reassoc nsz arcp contract afn <2 x float> %i.s, %i.u ; 4 uses
+  %i.w = extractelement <2 x float> %i.v, i64 0   ; 2 uses
+  %i.x = extractelement <2 x float> %i.v, i64 1   ; 2 uses
+  store <2 x float> %i.v, ptr %i.e, align 4, !tbaa !50
   %i.y = fcmp reassoc nsz arcp contract afn ogt float %i.w, %i.x
   %. = select reassoc nsz arcp contract afn i1 %i.y, float %i.w, float %i.x
   %i.z = fmul reassoc nsz arcp contract afn float %., %i.g

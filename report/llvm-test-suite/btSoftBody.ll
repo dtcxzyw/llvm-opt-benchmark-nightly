@@ -205,41 +205,38 @@ _ZNK10btSoftBody9getVolumeEv.exit.._crit_edge111_crit_edge: ; preds = %_ZNK10btS
   %i.mk = load ptr, ptr %i.mj, align 8, !tbaa !43
   %i.ml = getelementptr inbounds nuw i8, ptr %0, i64 724 ; 2 uses
   %i.mm = getelementptr inbounds nuw i8, ptr %0, i64 728 ; 2 uses
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 740 ; 2 uses
   %i.mn = getelementptr inbounds nuw i8, ptr %0, i64 744 ; 2 uses
   %.promoted = load float, ptr %i.mb, align 8, !tbaa !159
-  %.promoted112 = load float, ptr %i.ml, align 4, !tbaa !159
-  %.promoted113.a = load float, ptr %i.mm, align 8, !tbaa !159
-  %.promoted114 = load float, ptr %i.md, align 8, !tbaa !159
-  %.promoted115 = load float, ptr %3, align 4, !tbaa !159
+  %.promoted113.a = load float, ptr %i.ml, align 4, !tbaa !159
+  %.promoted114 = load float, ptr %i.mm, align 8, !tbaa !159
+  %3 = load <2 x float>, ptr %i.md, align 8, !tbaa !159
   %.promoted116 = load float, ptr %i.mn, align 8, !tbaa !159
   %wide.trip.count133 = zext nneg i32 %.pre137 to i64
-  %i.mo = insertelement <2 x float> poison, float %.promoted113.a, i64 0
+  %i.mo = insertelement <2 x float> poison, float %.promoted114, i64 0
   %i.mp = insertelement <2 x float> %i.mo, float %.promoted, i64 1
   br label %bb.r
 
 bb.r:                                             ; preds = %.lr.ph110, %bb.r
   %indvars.iv130 = phi i64 [ 0, %.lr.ph110 ], [ %indvars.iv.next131, %bb.r ] ; 3 uses
-  %4 = phi float [ 0.000000e+00, %.lr.ph110 ], [ %i.nz, %bb.r ]
-  %i.mq = phi float [ %.promoted116, %.lr.ph110 ], [ %i.nu, %bb.r ]
-  %i.mr = phi float [ %.promoted115, %.lr.ph110 ], [ %11, %bb.r ]
-  %i.ms = phi float [ %.promoted114, %.lr.ph110 ], [ %10, %bb.r ]
-  %5 = phi float [ %.promoted112, %.lr.ph110 ], [ %i.nh, %bb.r ]
-  %i.mt = phi <2 x float> [ zeroinitializer, %.lr.ph110 ], [ %i.oa, %bb.r ]
-  %i.mu = phi <2 x float> [ %i.mp, %.lr.ph110 ], [ %i.np, %bb.r ]
+  %i.mq = phi float [ 0.000000e+00, %.lr.ph110 ], [ %i.nz, %bb.r ]
+  %i.mr = phi float [ %.promoted116, %.lr.ph110 ], [ %i.nu, %bb.r ]
+  %i.ms = phi float [ %.promoted113.a, %.lr.ph110 ], [ %i.nh, %bb.r ]
+  %4 = phi <2 x float> [ zeroinitializer, %.lr.ph110 ], [ %i.oa, %bb.r ]
+  %i.mt = phi <2 x float> [ %i.mp, %.lr.ph110 ], [ %i.np, %bb.r ]
+  %i.mu = phi <2 x float> [ %3, %.lr.ph110 ], [ %9, %bb.r ]
   %i.mv = getelementptr inbounds nuw [16 x i8], ptr %i.mi, i64 %indvars.iv130 ; 5 uses
   %i.mw = getelementptr inbounds nuw [4 x i8], ptr %i.mk, i64 %indvars.iv130
   %i.mx = load float, ptr %i.mv, align 4, !tbaa !159 ; 2 uses
   %i.my = load float, ptr %i.mw, align 4, !tbaa !159 ; 3 uses
   %i.mz = fmul float %i.mx, %i.my                 ; 2 uses
-  %i.na = getelementptr inbounds nuw i8, ptr %i.mv, i64 4 ; 3 uses
+  %i.na = getelementptr inbounds nuw i8, ptr %i.mv, i64 4 ; 2 uses
   %i.nb = load float, ptr %i.na, align 4, !tbaa !159 ; 2 uses
-  %i.nc = fmul float %i.my, %i.nb                 ; 3 uses
+  %i.nc = fmul float %i.my, %i.nb                 ; 2 uses
   %i.nd = getelementptr inbounds nuw i8, ptr %i.mv, i64 8 ; 2 uses
   %i.ne = load float, ptr %i.nd, align 4, !tbaa !159 ; 2 uses
   %i.nf = fmul float %i.my, %i.ne                 ; 2 uses
   %i.ng = fmul float %i.mz, %i.nb
-  %i.nh = fadd float %i.ng, %5                    ; 3 uses
+  %i.nh = fadd float %i.ng, %i.ms                 ; 3 uses
   store float %i.nh, ptr %i.ml, align 4, !tbaa !159
   %i.ni = insertelement <2 x float> poison, float %i.nf, i64 0
   %i.nj = shufflevector <2 x float> %i.ni, <2 x float> poison, <2 x i32> zeroinitializer
@@ -248,36 +245,36 @@ bb.r:                                             ; preds = %.lr.ph110, %bb.r
   %i.nm = insertelement <2 x float> poison, float %i.mz, i64 0
   %i.nn = shufflevector <2 x float> %i.nm, <2 x float> poison, <2 x i32> zeroinitializer
   %i.no = fmul <2 x float> %i.nl, %i.nn
-  %i.np = fadd <2 x float> %i.no, %i.mu           ; 4 uses
+  %i.np = fadd <2 x float> %i.no, %i.mt           ; 4 uses
   %i.nq = extractelement <2 x float> %i.np, i64 1 ; 2 uses
   %i.nr = extractelement <2 x float> %i.np, i64 0 ; 2 uses
   store float %i.nq, ptr %i.mb, align 8, !tbaa !159
   store float %i.nr, ptr %i.mm, align 8, !tbaa !159
-  %6 = load float, ptr %i.mv, align 4, !tbaa !159
-  %7 = fmul float %i.nc, %6
-  %i.ns = load float, ptr %i.na, align 4, !tbaa !159
+  %i.ns = load float, ptr %i.nd, align 4, !tbaa !159
   %i.nt = fmul float %i.nc, %i.ns
-  %8 = load float, ptr %i.nd, align 4, !tbaa !159
-  %9 = fmul float %i.nc, %8
-  %10 = fadd float %7, %i.ms                      ; 3 uses
-  store float %10, ptr %i.md, align 8, !tbaa !159
-  %11 = fadd float %i.nt, %i.mr                   ; 3 uses
-  store float %11, ptr %3, align 4, !tbaa !159
-  %i.nu = fadd float %9, %i.mq                    ; 3 uses
+  %5 = load <2 x float>, ptr %i.mv, align 4, !tbaa !159
+  %6 = insertelement <2 x float> poison, float %i.nc, i64 0
+  %7 = shufflevector <2 x float> %6, <2 x float> poison, <2 x i32> zeroinitializer
+  %8 = fmul <2 x float> %7, %5
+  %9 = fadd <2 x float> %8, %i.mu                 ; 4 uses
+  store <2 x float> %9, ptr %i.md, align 8, !tbaa !159
+  %i.nu = fadd float %i.nt, %i.mr                 ; 3 uses
   store float %i.nu, ptr %i.mn, align 8, !tbaa !159
   %i.nv = load float, ptr %i.mv, align 4, !tbaa !159
   %i.nw = fmul float %i.nf, %i.nv
   %i.nx = load <2 x float>, ptr %i.na, align 4, !tbaa !159
   %i.ny = fmul <2 x float> %i.nj, %i.nx
-  %i.nz = fadd float %i.nw, %4                    ; 3 uses
+  %i.nz = fadd float %i.nw, %i.mq                 ; 3 uses
   store float %i.nz, ptr %i.mc, align 8, !tbaa !159
-  %i.oa = fadd <2 x float> %i.ny, %i.mt           ; 5 uses
+  %i.oa = fadd <2 x float> %i.ny, %4              ; 5 uses
   store <2 x float> %i.oa, ptr %.sroa.495.0..sroa_idx, align 4, !tbaa !159
   %indvars.iv.next131 = add nuw nsw i64 %indvars.iv130, 1 ; 2 uses
   %exitcond134.not = icmp eq i64 %indvars.iv.next131, %wide.trip.count133
   br i1 %exitcond134.not, label %._crit_edge111.loopexit, label %bb.r
 
 ._crit_edge111.loopexit:                          ; preds = %bb.r
+  %10 = extractelement <2 x float> %9, i64 1
+  %11 = extractelement <2 x float> %9, i64 0
   %i.ob = extractelement <2 x float> %i.oa, i64 0
   %i.oc = extractelement <2 x float> %i.oa, i64 1
   br label %._crit_edge111
@@ -286,12 +283,12 @@ bb.r:                                             ; preds = %.lr.ph110, %bb.r
   %i.od = phi float [ %.pre147, %_ZNK10btSoftBody9getVolumeEv.exit.._crit_edge111_crit_edge ], [ %i.nr, %._crit_edge111.loopexit ] ; 2 uses
   %i.oe = phi float [ %.pre145, %_ZNK10btSoftBody9getVolumeEv.exit.._crit_edge111_crit_edge ], [ %i.nh, %._crit_edge111.loopexit ] ; 5 uses
   %i.of = phi float [ %.pre143, %_ZNK10btSoftBody9getVolumeEv.exit.._crit_edge111_crit_edge ], [ %i.nq, %._crit_edge111.loopexit ] ; 3 uses
-  %i.og = phi float [ %.pre142, %_ZNK10btSoftBody9getVolumeEv.exit.._crit_edge111_crit_edge ], [ %10, %._crit_edge111.loopexit ] ; 4 uses
+  %i.og = phi float [ %.pre142, %_ZNK10btSoftBody9getVolumeEv.exit.._crit_edge111_crit_edge ], [ %11, %._crit_edge111.loopexit ] ; 4 uses
   %i.oh = phi float [ 0.000000e+00, %_ZNK10btSoftBody9getVolumeEv.exit.._crit_edge111_crit_edge ], [ %i.nz, %._crit_edge111.loopexit ] ; 4 uses
   %i.oi = phi float [ 0.000000e+00, %_ZNK10btSoftBody9getVolumeEv.exit.._crit_edge111_crit_edge ], [ %i.ob, %._crit_edge111.loopexit ]
   %i.oj = phi float [ %.pre141, %_ZNK10btSoftBody9getVolumeEv.exit.._crit_edge111_crit_edge ], [ %i.nu, %._crit_edge111.loopexit ] ; 4 uses
   %i.ok = phi float [ 0.000000e+00, %_ZNK10btSoftBody9getVolumeEv.exit.._crit_edge111_crit_edge ], [ %i.oc, %._crit_edge111.loopexit ]
-  %i.ol = phi float [ %.pre139, %_ZNK10btSoftBody9getVolumeEv.exit.._crit_edge111_crit_edge ], [ %11, %._crit_edge111.loopexit ] ; 4 uses
+  %i.ol = phi float [ %.pre139, %_ZNK10btSoftBody9getVolumeEv.exit.._crit_edge111_crit_edge ], [ %10, %._crit_edge111.loopexit ] ; 4 uses
   %i.om = phi <2 x float> [ zeroinitializer, %_ZNK10btSoftBody9getVolumeEv.exit.._crit_edge111_crit_edge ], [ %i.oa, %._crit_edge111.loopexit ] ; 2 uses
   %i.on = phi <2 x float> [ %i.mg, %_ZNK10btSoftBody9getVolumeEv.exit.._crit_edge111_crit_edge ], [ %i.np, %._crit_edge111.loopexit ] ; 3 uses
   %.sroa.596.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 760
@@ -694,7 +691,7 @@ bb.d:                                             ; preds = %bb.d, %.lr.ph.i.new
   %.sroa.3.12.vec.insert.i.i = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.bz, i64 0
   %i.ca = getelementptr inbounds nuw i8, ptr %i.s, i64 264 ; 3 uses
   store <2 x float> %.sroa.0.4.vec.insert.i.i, ptr %i.ca, align 8
-  %.sroa.526.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.s, i64 272 ; 2 uses
+  %.sroa.526.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.s, i64 272
   store <2 x float> %.sroa.3.12.vec.insert.i.i, ptr %.sroa.526.0..sroa_idx, align 8, !tbaa !185
   %.promoted304 = load float, ptr %i.f, align 4
   %i.cb = insertelement <2 x float> <float poison, float 2.000000e-04>, float %.promoted304, i64 0 ; 2 uses
@@ -864,7 +861,6 @@ bb.e:                                             ; preds = %._crit_edge, %.loop
   %i.gx = getelementptr inbounds nuw i8, ptr %i.s, i64 352 ; 4 uses
   %.sroa.5255.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.s, i64 360 ; 3 uses
   %i.gy = getelementptr inbounds nuw i8, ptr %i.s, i64 368 ; 2 uses
-  %.sroa.4247.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.s, i64 372
   %.sroa.5248.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.s, i64 376 ; 2 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.gx, i8 0, i64 32, i1 false)
   br i1 %i.v, label %.lr.ph326, label %._crit_edge327
@@ -874,11 +870,10 @@ bb.e:                                             ; preds = %._crit_edge, %.loop
   %i.ha = load ptr, ptr %i.gz, align 8, !tbaa !362
   %i.hb = getelementptr inbounds nuw i8, ptr %i.s, i64 48
   %i.hc = load ptr, ptr %i.hb, align 8, !tbaa !43
+  %6 = getelementptr inbounds nuw i8, ptr %i.s, i64 268
   %wide.trip.count369 = zext nneg i32 %i.u to i64
-  %6 = load <2 x float>, ptr %i.ca, align 8, !tbaa !159 ; 2 uses
-  %.pre383 = load float, ptr %.sroa.526.0..sroa_idx, align 8, !tbaa !159
-  %7 = shufflevector <2 x float> %6, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
-  %8 = insertelement <2 x float> %7, float %.pre383, i64 0
+  %.pre383 = load float, ptr %i.ca, align 8, !tbaa !159
+  %7 = load <2 x float>, ptr %6, align 4, !tbaa !159
   br label %bb.g
 
 bb.f:                                             ; preds = %.lr.ph, %bb.f
@@ -931,11 +926,10 @@ bb.f:                                             ; preds = %.lr.ph, %bb.f
 
 bb.g:                                             ; preds = %.lr.ph326, %bb.g
   %indvars.iv366 = phi i64 [ 0, %.lr.ph326 ], [ %indvars.iv.next367, %bb.g ] ; 3 uses
-  %9 = phi float [ 0.000000e+00, %.lr.ph326 ], [ %i.jr, %bb.g ]
-  %i.it = phi float [ 0.000000e+00, %.lr.ph326 ], [ %25, %bb.g ]
-  %i.iu = phi float [ 0.000000e+00, %.lr.ph326 ], [ %23, %bb.g ]
-  %10 = phi float [ 0.000000e+00, %.lr.ph326 ], [ %i.jj, %bb.g ]
-  %i.iv = phi <2 x float> [ zeroinitializer, %.lr.ph326 ], [ %i.ji, %bb.g ]
+  %i.it = phi float [ 0.000000e+00, %.lr.ph326 ], [ %i.jr, %bb.g ]
+  %i.iu = phi float [ 0.000000e+00, %.lr.ph326 ], [ %i.jj, %bb.g ]
+  %8 = phi <2 x float> [ zeroinitializer, %.lr.ph326 ], [ %i.ji, %bb.g ]
+  %i.iv = phi <2 x float> [ zeroinitializer, %.lr.ph326 ], [ %24, %bb.g ]
   %i.iw = getelementptr inbounds nuw [8 x i8], ptr %i.ha, i64 %indvars.iv366
   %i.ix = load ptr, ptr %i.iw, align 8, !tbaa !251 ; 4 uses
   %i.iy = getelementptr inbounds nuw i8, ptr %i.ix, i64 48
@@ -948,47 +942,51 @@ bb.g:                                             ; preds = %.lr.ph326, %bb.g
   %i.jf = insertelement <2 x float> poison, float %i.ja, i64 0
   %i.jg = shufflevector <2 x float> %i.jf, <2 x float> poison, <2 x i32> zeroinitializer
   %i.jh = fmul <2 x float> %i.jg, %i.je           ; 4 uses
-  %i.ji = fadd <2 x float> %i.jh, %i.iv           ; 3 uses
+  %i.ji = fadd <2 x float> %i.jh, %8              ; 3 uses
   store <2 x float> %i.ji, ptr %i.gx, align 8, !tbaa !159
-  %i.jj = fadd float %i.jd, %10                   ; 3 uses
+  %i.jj = fadd float %i.jd, %i.iu                 ; 3 uses
   store float %i.jj, ptr %.sroa.5255.0..sroa_idx, align 8, !tbaa !159
   %i.jk = getelementptr inbounds nuw i8, ptr %i.ix, i64 16
-  %i.jl = getelementptr inbounds nuw i8, ptr %i.ix, i64 24
-  %11 = load float, ptr %i.jl, align 4, !tbaa !159
-  %i.jm = extractelement <2 x float> %i.jh, i64 1
+  %9 = load float, ptr %i.jk, align 4, !tbaa !159
+  %i.jl = getelementptr inbounds nuw i8, ptr %i.ix, i64 20
+  %10 = extractelement <2 x float> %i.jh, i64 1   ; 2 uses
+  %i.jm = extractelement <2 x float> %i.jh, i64 0
   %i.jn = fneg float %i.jm
-  %i.jo = load <2 x float>, ptr %i.jk, align 4, !tbaa !159 ; 2 uses
-  %i.jp = fsub <2 x float> %i.jo, %6              ; 2 uses
-  %12 = shufflevector <2 x float> %i.jo, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
-  %13 = insertelement <2 x float> %12, float %11, i64 0
-  %14 = fsub <2 x float> %13, %8                  ; 2 uses
-  %15 = extractelement <2 x float> %14, i64 0
-  %16 = fmul float %15, %i.jn
-  %17 = extractelement <2 x float> %i.jp, i64 1
-  %18 = call float @llvm.fmuladd.f32(float %17, float %i.jd, float %16)
+  %i.jo = load <2 x float>, ptr %i.jl, align 4, !tbaa !159
+  %i.jp = fsub <2 x float> %i.jo, %7              ; 3 uses
+  %11 = fsub float %9, %.pre383                   ; 2 uses
+  %12 = fneg float %i.jd
+  %13 = fneg float %10
+  %14 = shufflevector <2 x float> %i.jp, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %15 = insertelement <2 x float> %14, float %11, i64 1
+  %16 = insertelement <2 x float> poison, float %13, i64 0
+  %17 = insertelement <2 x float> %16, float %12, i64 1
+  %18 = fmul <2 x float> %15, %17
   %19 = shufflevector <2 x float> %i.jh, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
   %20 = insertelement <2 x float> %19, float %i.jd, i64 0
-  %21 = fneg <2 x float> %20
-  %22 = fmul <2 x float> %i.jp, %21
-  %i.jq = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %14, <2 x float> %i.jh, <2 x float> %22) ; 2 uses
-  %23 = fadd float %i.iu, %18                     ; 3 uses
-  store float %23, ptr %i.gy, align 8, !tbaa !159
-  %24 = extractelement <2 x float> %i.jq, i64 0
-  %25 = fadd float %24, %i.it                     ; 3 uses
-  store float %25, ptr %.sroa.4247.0..sroa_idx, align 4, !tbaa !159
-  %26 = extractelement <2 x float> %i.jq, i64 1
-  %i.jr = fadd float %26, %9                      ; 3 uses
+  %i.jq = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.jp, <2 x float> %20, <2 x float> %18)
+  %21 = extractelement <2 x float> %i.jp, i64 0
+  %22 = fmul float %21, %i.jn
+  %23 = call float @llvm.fmuladd.f32(float %11, float %10, float %22)
+  %24 = fadd <2 x float> %i.iv, %i.jq             ; 4 uses
+  store <2 x float> %24, ptr %i.gy, align 8, !tbaa !159
+  %i.jr = fadd float %23, %i.it                   ; 3 uses
   store float %i.jr, ptr %.sroa.5248.0..sroa_idx, align 8, !tbaa !159
   %indvars.iv.next367 = add nuw nsw i64 %indvars.iv366, 1 ; 2 uses
   %exitcond370.not = icmp eq i64 %indvars.iv.next367, %wide.trip.count369
-  br i1 %exitcond370.not, label %._crit_edge327, label %bb.g
+  br i1 %exitcond370.not, label %._crit_edge327.loopexit, label %bb.g
 
-._crit_edge327:                                   ; preds = %bb.g, %bb.e
-  %i.js = phi float [ 0.000000e+00, %bb.e ], [ %i.jr, %bb.g ] ; 2 uses
-  %i.jt = phi float [ 0.000000e+00, %bb.e ], [ %25, %bb.g ] ; 2 uses
-  %i.ju = phi float [ 0.000000e+00, %bb.e ], [ %23, %bb.g ] ; 2 uses
-  %i.jv = phi float [ 0.000000e+00, %bb.e ], [ %i.jj, %bb.g ]
-  %i.jw = phi <2 x float> [ zeroinitializer, %bb.e ], [ %i.ji, %bb.g ]
+._crit_edge327.loopexit:                          ; preds = %bb.g
+  %25 = extractelement <2 x float> %24, i64 1
+  %26 = extractelement <2 x float> %24, i64 0
+  br label %._crit_edge327
+
+._crit_edge327:                                   ; preds = %._crit_edge327.loopexit, %bb.e
+  %i.js = phi float [ 0.000000e+00, %bb.e ], [ %i.jr, %._crit_edge327.loopexit ] ; 2 uses
+  %i.jt = phi float [ 0.000000e+00, %bb.e ], [ %25, %._crit_edge327.loopexit ] ; 2 uses
+  %i.ju = phi float [ 0.000000e+00, %bb.e ], [ %26, %._crit_edge327.loopexit ] ; 2 uses
+  %i.jv = phi float [ 0.000000e+00, %bb.e ], [ %i.jj, %._crit_edge327.loopexit ]
+  %i.jw = phi <2 x float> [ zeroinitializer, %bb.e ], [ %i.ji, %._crit_edge327.loopexit ]
   %i.jx = load float, ptr %i.bt, align 4, !tbaa !159 ; 2 uses
   %i.jy = fmul float %i.jx, %i.jv
   %i.jz = getelementptr inbounds nuw i8, ptr %i.s, i64 396

@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.b
 define linkonce_odr dso_local void @_Z24integrateSingleTransformP15b3RigidBodyDataiffRK9b3Vector3(ptr noundef %0, i32 noundef %1, float noundef %2, float noundef %3, ptr noundef nonnull align 16 dereferenceable(16) %4) local_unnamed_addr #15 comdat {
 bb.a:
   %i.a = sext i32 %1 to i64
-  %i.b = getelementptr inbounds [80 x i8], ptr %0, i64 %i.a ; 11 uses
+  %i.b = getelementptr inbounds [80 x i8], ptr %0, i64 %i.a ; 10 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 68
   %i.d = load float, ptr %i.c, align 4, !tbaa !16
   %i.e = fcmp une float %i.d, 0.000000e+00
@@ -215,7 +215,6 @@ bb.b:                                             ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 48 ; 2 uses
   %i.g = load float, ptr %i.f, align 16, !tbaa !15
   %i.h = getelementptr inbounds nuw i8, ptr %i.b, i64 52 ; 2 uses
-  %5 = getelementptr inbounds nuw i8, ptr %i.b, i64 56
   %i.i = load <2 x float>, ptr %i.h, align 4, !tbaa !15 ; 2 uses
   %i.j = insertelement <2 x float> poison, float %3, i64 0
   %i.k = shufflevector <2 x float> %i.j, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
@@ -225,10 +224,8 @@ bb.b:                                             ; preds = %bb.a
   %i.o = extractelement <2 x float> %i.n, i64 1   ; 3 uses
   store float %i.o, ptr %i.f, align 16, !tbaa !15
   %i.p = fmul <2 x float> %i.k, %i.i              ; 5 uses
-  %6 = extractelement <2 x float> %i.p, i64 0
-  store float %6, ptr %i.h, align 4, !tbaa !15
-  %i.q = extractelement <2 x float> %i.p, i64 1   ; 3 uses
-  store float %i.q, ptr %5, align 8, !tbaa !15
+  %i.q = extractelement <2 x float> %i.p, i64 1   ; 2 uses
+  store <2 x float> %i.p, ptr %i.h, align 4, !tbaa !15
   %foldExtExtBinop = fmul <2 x float> %i.p, %i.p
   %i.r = extractelement <2 x float> %foldExtExtBinop, i64 0
   %i.s = tail call float @llvm.fmuladd.f32(float %i.o, float %i.o, float %i.r)

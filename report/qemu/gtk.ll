@@ -204,14 +204,14 @@ bb.e:                                             ; preds = %bb.d
   %i.q = insertelement <2 x i32> poison, i32 %3, i64 0
   %i.r = insertelement <2 x i32> %i.q, i32 %4, i64 1
   %i.s = sitofp <2 x i32> %i.r to <2 x double>
-  %i.t = fdiv <2 x double> %i.p, %i.s             ; 4 uses
+  %i.t = fdiv <2 x double> %i.p, %i.s             ; 3 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.a, i64 324
   %i.v = load i32, ptr %i.u, align 4
   %.not28 = icmp eq i32 %i.v, 0
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 176 ; 2 uses
   br i1 %.not28, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 176
   %i.w = extractelement <2 x double> %i.t, i64 0  ; 2 uses
   %i.x = extractelement <2 x double> %i.t, i64 1  ; 2 uses
   %i.y = fcmp olt double %i.w, %i.x
@@ -223,10 +223,7 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.e
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 168
-  %6 = extractelement <2 x double> %i.t, i64 0
-  store double %6, ptr %i.ab, align 8
-  %7 = extractelement <2 x double> %i.t, i64 1
-  store double %7, ptr %5, align 8
+  store <2 x double> %i.t, ptr %i.ab, align 8
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.f, %bb.g, %bb.d, %bb.a, %bb.c

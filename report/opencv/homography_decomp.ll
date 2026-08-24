@@ -204,7 +204,6 @@ bb.a:
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 32 ; 2 uses
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 48 ; 2 uses
-  %.sroa.1026.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 56
   %.sroa.11.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 64 ; 2 uses
   %i.v = load <2 x double>, ptr %.sroa.437.0..sroa_idx, align 8 ; 3 uses
   %i.w = shufflevector <2 x double> %i.g, <2 x double> poison, <2 x i32> zeroinitializer
@@ -262,7 +261,7 @@ bb.a:
   %i.bw = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.au, <2 x double> %i.bv, <2 x double> %i.at) ; 4 uses
   %i.bx = insertelement <2 x double> %i.ak, double %i.bu, i64 1
   %i.by = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.bb, <2 x double> %i.bx, <2 x double> %i.ba) ; 5 uses
-  %i.bz = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.bp, <2 x double> %i.bv, <2 x double> %i.bn) ; 6 uses
+  %i.bz = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.bp, <2 x double> %i.bv, <2 x double> %i.bn) ; 5 uses
   %i.ca = extractelement <2 x double> %i.bs, i64 1
   %i.cb = tail call double @llvm.fmuladd.f64(double %i.s, double %i.al, double %i.ca)
   %i.cc = tail call double @llvm.fmuladd.f64(double %i.u, double %i.am, double %i.cb) ; 3 uses
@@ -270,10 +269,7 @@ bb.a:
   %i.cd = extractelement <2 x double> %i.by, i64 0
   store <2 x double> %i.by, ptr %.sroa.5.0..sroa_idx, align 8
   store <2 x double> %i.bh, ptr %.sroa.7.0..sroa_idx, align 8
-  %5 = extractelement <2 x double> %i.bz, i64 0
-  store double %5, ptr %.sroa.9.0..sroa_idx, align 8
-  %6 = extractelement <2 x double> %i.bz, i64 1
-  store double %6, ptr %.sroa.1026.0..sroa_idx, align 8
+  store <2 x double> %i.bz, ptr %.sroa.9.0..sroa_idx, align 8
   store double %i.cc, ptr %.sroa.11.0..sroa_idx, align 8, !tbaa !13
   %i.ce = fneg <2 x double> %i.bh                 ; 2 uses
   %i.cf = shufflevector <2 x double> %i.ce, <2 x double> poison, <2 x i32> <i32 1, i32 1>

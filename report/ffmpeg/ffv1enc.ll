@@ -205,7 +205,7 @@ bb.a:
   %i.n = alloca [2 x [32 x i8]], align 16         ; 11 uses
   %i.o = alloca [32 x i8], align 16               ; 17 uses
   %i.p = alloca [15 x i32], align 16              ; 31 uses
-  %i.q = alloca [15 x i32], align 16              ; 31 uses
+  %i.q = alloca [15 x i32], align 16              ; 28 uses
   %2 = alloca %struct.RangeCoder, align 8         ; 4 uses
   %i.r = alloca [4 x ptr], align 16               ; 8 uses
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 32
@@ -354,9 +354,6 @@ bb.i:                                             ; preds = %bb.h
   %i.dm = getelementptr inbounds nuw i8, ptr %i.q, i64 20
   %i.dn = getelementptr inbounds nuw i8, ptr %i.q, i64 24
   %i.do = getelementptr inbounds nuw i8, ptr %i.q, i64 28
-  %3 = getelementptr inbounds nuw i8, ptr %i.q, i64 32
-  %4 = getelementptr inbounds nuw i8, ptr %i.q, i64 36
-  %5 = getelementptr inbounds nuw i8, ptr %i.q, i64 40
   %i.dp = getelementptr inbounds nuw i8, ptr %i.q, i64 44
   %i.dq = getelementptr inbounds nuw i8, ptr %i.q, i64 48
   %i.dr = getelementptr inbounds nuw i8, ptr %i.q, i64 52
@@ -364,12 +361,6 @@ bb.i:                                             ; preds = %bb.h
   br label %.preheader133.us.i
 
 .preheader133.us.i:                               ; preds = %._crit_edge.us.i, %.preheader133.us.preheader.i
-  %.lcssa201230.i = phi i32 [ %29, %._crit_edge.us.i ], [ 0, %.preheader133.us.preheader.i ]
-  %.lcssa199228.i = phi i32 [ %30, %._crit_edge.us.i ], [ 0, %.preheader133.us.preheader.i ]
-  %.lcssa197226.i = phi i32 [ %31, %._crit_edge.us.i ], [ 0, %.preheader133.us.preheader.i ]
-  %.lcssa195224.i = phi i32 [ %32, %._crit_edge.us.i ], [ 0, %.preheader133.us.preheader.i ]
-  %.lcssa193222.i = phi i32 [ %33, %._crit_edge.us.i ], [ 0, %.preheader133.us.preheader.i ]
-  %.lcssa191220.i = phi i32 [ %34, %._crit_edge.us.i ], [ 0, %.preheader133.us.preheader.i ]
   %.lcssa189218.i = phi i32 [ %i.jq, %._crit_edge.us.i ], [ 0, %.preheader133.us.preheader.i ]
   %.lcssa187216.i = phi i32 [ %i.jr, %._crit_edge.us.i ], [ 0, %.preheader133.us.preheader.i ]
   %.lcssa185214.i.a = phi i32 [ %i.js, %._crit_edge.us.i ], [ 0, %.preheader133.us.preheader.i ]
@@ -391,46 +382,40 @@ bb.i:                                             ; preds = %bb.h
   %i.ec = phi i32 [ %i.ki, %._crit_edge.us.i ], [ 0, %.preheader133.us.preheader.i ]
   %i.ed = phi i32 [ %i.kj, %._crit_edge.us.i ], [ 0, %.preheader133.us.preheader.i ]
   %i.ee = phi i32 [ %i.kk, %._crit_edge.us.i ], [ 0, %.preheader133.us.preheader.i ]
-  %i.ef = phi i32 [ %35, %._crit_edge.us.i ], [ 0, %.preheader133.us.preheader.i ]
-  %6 = phi i32 [ %36, %._crit_edge.us.i ], [ 0, %.preheader133.us.preheader.i ]
-  %.0115140.us.i = phi i32 [ %i.kr, %._crit_edge.us.i ], [ 0, %.preheader133.us.preheader.i ] ; 7 uses
-  %i.eg = icmp ne i32 %.0115140.us.i, 0
+  %i.ef = phi i32 [ %i.kr, %._crit_edge.us.i ], [ 0, %.preheader133.us.preheader.i ] ; 7 uses
+  %3 = phi <4 x i32> [ %18, %._crit_edge.us.i ], [ zeroinitializer, %.preheader133.us.preheader.i ]
+  %4 = phi <4 x i32> [ %17, %._crit_edge.us.i ], [ zeroinitializer, %.preheader133.us.preheader.i ]
+  %i.eg = icmp ne i32 %i.ef, 0
   br label %bb.j
 
 bb.j:                                             ; preds = %.loopexit.us.i, %.preheader133.us.i
-  %7 = phi i32 [ %.lcssa201230.i, %.preheader133.us.i ], [ %29, %.loopexit.us.i ] ; 2 uses
-  %8 = phi i32 [ %.lcssa199228.i, %.preheader133.us.i ], [ %30, %.loopexit.us.i ] ; 2 uses
-  %9 = phi i32 [ %.lcssa197226.i, %.preheader133.us.i ], [ %31, %.loopexit.us.i ] ; 2 uses
-  %10 = phi i32 [ %.lcssa195224.i, %.preheader133.us.i ], [ %32, %.loopexit.us.i ]
-  %11 = phi i32 [ %.lcssa193222.i, %.preheader133.us.i ], [ %33, %.loopexit.us.i ]
-  %i.eh = phi i32 [ %.lcssa191220.i, %.preheader133.us.i ], [ %34, %.loopexit.us.i ]
-  %i.ei = phi i32 [ %.lcssa189218.i, %.preheader133.us.i ], [ %i.jq, %.loopexit.us.i ]
-  %i.ej = phi i32 [ %.lcssa187216.i, %.preheader133.us.i ], [ %i.jr, %.loopexit.us.i ]
-  %i.ek = phi i32 [ %.lcssa185214.i.a, %.preheader133.us.i ], [ %i.js, %.loopexit.us.i ]
-  %i.el = phi i32 [ %.lcssa183212.i.a, %.preheader133.us.i ], [ %i.jt, %.loopexit.us.i ]
-  %i.em = phi i32 [ %.lcssa181210.i.a, %.preheader133.us.i ], [ %i.ju, %.loopexit.us.i ]
-  %i.en = phi i32 [ %.lcssa179208.i.a, %.preheader133.us.i ], [ %i.jv, %.loopexit.us.i ]
-  %i.eo = phi i32 [ %.lcssa177206.i.a, %.preheader133.us.i ], [ %i.jw, %.loopexit.us.i ] ; 2 uses
-  %i.ep = phi i32 [ %.lcssa175204.i.a, %.preheader133.us.i ], [ %i.jx, %.loopexit.us.i ] ; 2 uses
-  %i.eq = phi i32 [ %.lcssa173203.i.a, %.preheader133.us.i ], [ %i.jy, %.loopexit.us.i ] ; 2 uses
-  %i.er = phi i32 [ %i.dt, %.preheader133.us.i ], [ %i.jz, %.loopexit.us.i ]
-  %i.es = phi i32 [ %i.du, %.preheader133.us.i ], [ %i.ka, %.loopexit.us.i ]
-  %i.et = phi i32 [ %i.dv, %.preheader133.us.i ], [ %i.kb, %.loopexit.us.i ]
-  %i.eu = phi i32 [ %i.dw, %.preheader133.us.i ], [ %i.kc, %.loopexit.us.i ]
-  %i.ev = phi i32 [ %i.dx, %.preheader133.us.i ], [ %i.kd, %.loopexit.us.i ]
-  %i.ew = phi i32 [ %i.dy, %.preheader133.us.i ], [ %i.ke, %.loopexit.us.i ] ; 2 uses
-  %i.ex = phi i32 [ %i.dz, %.preheader133.us.i ], [ %i.kf, %.loopexit.us.i ] ; 2 uses
-  %i.ey = phi i32 [ %i.ea, %.preheader133.us.i ], [ %i.kg, %.loopexit.us.i ] ; 2 uses
-  %i.ez = phi i32 [ %i.eb, %.preheader133.us.i ], [ %i.kh, %.loopexit.us.i ] ; 2 uses
-  %i.fa = phi i32 [ %i.ec, %.preheader133.us.i ], [ %i.ki, %.loopexit.us.i ] ; 2 uses
-  %i.fb = phi i32 [ %i.ed, %.preheader133.us.i ], [ %i.kj, %.loopexit.us.i ] ; 2 uses
-  %12 = phi i32 [ %i.ee, %.preheader133.us.i ], [ %i.kk, %.loopexit.us.i ] ; 2 uses
-  %i.fc = phi i32 [ %i.ef, %.preheader133.us.i ], [ %35, %.loopexit.us.i ] ; 2 uses
-  %i.fd = phi i32 [ %6, %.preheader133.us.i ], [ %36, %.loopexit.us.i ] ; 2 uses
+  %i.eh = phi i32 [ %.lcssa189218.i, %.preheader133.us.i ], [ %i.jq, %.loopexit.us.i ] ; 2 uses
+  %i.ei = phi i32 [ %.lcssa187216.i, %.preheader133.us.i ], [ %i.jr, %.loopexit.us.i ] ; 2 uses
+  %i.ej = phi i32 [ %.lcssa185214.i.a, %.preheader133.us.i ], [ %i.js, %.loopexit.us.i ] ; 2 uses
+  %i.ek = phi i32 [ %.lcssa183212.i.a, %.preheader133.us.i ], [ %i.jt, %.loopexit.us.i ]
+  %i.el = phi i32 [ %.lcssa181210.i.a, %.preheader133.us.i ], [ %i.ju, %.loopexit.us.i ]
+  %i.em = phi i32 [ %.lcssa179208.i.a, %.preheader133.us.i ], [ %i.jv, %.loopexit.us.i ]
+  %i.en = phi i32 [ %.lcssa177206.i.a, %.preheader133.us.i ], [ %i.jw, %.loopexit.us.i ]
+  %i.eo = phi i32 [ %.lcssa175204.i.a, %.preheader133.us.i ], [ %i.jx, %.loopexit.us.i ]
+  %i.ep = phi i32 [ %.lcssa173203.i.a, %.preheader133.us.i ], [ %i.jy, %.loopexit.us.i ] ; 2 uses
+  %i.eq = phi i32 [ %i.dt, %.preheader133.us.i ], [ %i.jz, %.loopexit.us.i ] ; 2 uses
+  %i.er = phi i32 [ %i.du, %.preheader133.us.i ], [ %i.ka, %.loopexit.us.i ] ; 2 uses
+  %i.es = phi i32 [ %i.dv, %.preheader133.us.i ], [ %i.kb, %.loopexit.us.i ]
+  %i.et = phi i32 [ %i.dw, %.preheader133.us.i ], [ %i.kc, %.loopexit.us.i ]
+  %i.eu = phi i32 [ %i.dx, %.preheader133.us.i ], [ %i.kd, %.loopexit.us.i ]
+  %i.ev = phi i32 [ %i.dy, %.preheader133.us.i ], [ %i.ke, %.loopexit.us.i ]
+  %i.ew = phi i32 [ %i.dz, %.preheader133.us.i ], [ %i.kf, %.loopexit.us.i ]
+  %i.ex = phi i32 [ %i.ea, %.preheader133.us.i ], [ %i.kg, %.loopexit.us.i ] ; 2 uses
+  %i.ey = phi i32 [ %i.eb, %.preheader133.us.i ], [ %i.kh, %.loopexit.us.i ] ; 2 uses
+  %i.ez = phi i32 [ %i.ec, %.preheader133.us.i ], [ %i.ki, %.loopexit.us.i ] ; 2 uses
+  %i.fa = phi i32 [ %i.ed, %.preheader133.us.i ], [ %i.kj, %.loopexit.us.i ] ; 2 uses
+  %i.fb = phi i32 [ %i.ee, %.preheader133.us.i ], [ %i.kk, %.loopexit.us.i ] ; 2 uses
   %indvars.iv.i = phi i64 [ 0, %.preheader133.us.i ], [ %indvars.iv.next.i, %.loopexit.us.i ] ; 11 uses
-  %.0119138.us.i = phi i32 [ 0, %.preheader133.us.i ], [ %.0118.us.i, %.loopexit.us.i ]
-  %.0120137.us.i = phi i32 [ 0, %.preheader133.us.i ], [ %.0117.us.i, %.loopexit.us.i ]
-  %.0121136.us.i = phi i32 [ 0, %.preheader133.us.i ], [ %.0116.us.i, %.loopexit.us.i ]
+  %i.fc = phi i32 [ 0, %.preheader133.us.i ], [ %.0118.us.i, %.loopexit.us.i ]
+  %i.fd = phi i32 [ 0, %.preheader133.us.i ], [ %.0117.us.i, %.loopexit.us.i ]
+  %.0119138.us.i = phi i32 [ 0, %.preheader133.us.i ], [ %.0116.us.i, %.loopexit.us.i ]
+  %5 = phi <4 x i32> [ %3, %.preheader133.us.i ], [ %18, %.loopexit.us.i ] ; 2 uses
+  %6 = phi <4 x i32> [ %4, %.preheader133.us.i ], [ %17, %.loopexit.us.i ]
   br i1 %i.cs, label %bb.n, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
@@ -443,21 +428,21 @@ bb.l:                                             ; preds = %bb.k
   %i.fg = shl nuw nsw i64 %indvars.iv.i, 1        ; 3 uses
   %i.fh = getelementptr inbounds nuw i8, ptr %i.bc, i64 %i.fg
   %i.fi = load i32, ptr %i.ay, align 8, !tbaa !63
-  %i.fj = mul nsw i32 %i.fi, %.0115140.us.i
+  %i.fj = mul nsw i32 %i.fi, %i.ef
   %i.fk = sext i32 %i.fj to i64
   %i.fl = getelementptr inbounds i8, ptr %i.fh, i64 %i.fk
   %i.fm = load i16, ptr %i.fl, align 2, !tbaa !78
   %i.fn = zext i16 %i.fm to i32                   ; 2 uses
   %i.fo = getelementptr inbounds nuw i8, ptr %i.bm, i64 %i.fg
   %i.fp = load i32, ptr %i.dc, align 4, !tbaa !63
-  %i.fq = mul nsw i32 %i.fp, %.0115140.us.i
+  %i.fq = mul nsw i32 %i.fp, %i.ef
   %i.fr = sext i32 %i.fq to i64
   %i.fs = getelementptr inbounds i8, ptr %i.fo, i64 %i.fr
   %i.ft = load i16, ptr %i.fs, align 2, !tbaa !78
   %i.fu = zext i16 %i.ft to i32                   ; 2 uses
   %i.fv = getelementptr inbounds nuw i8, ptr %i.bw, i64 %i.fg
   %i.fw = load i32, ptr %i.dd, align 8, !tbaa !63
-  %i.fx = mul nsw i32 %i.fw, %.0115140.us.i
+  %i.fx = mul nsw i32 %i.fw, %i.ef
   %i.fy = sext i32 %i.fx to i64
   %i.fz = getelementptr inbounds i8, ptr %i.fv, i64 %i.fy
   %i.ga = load i16, ptr %i.fz, align 2, !tbaa !78
@@ -470,7 +455,7 @@ bb.m:                                             ; preds = %bb.k
   %i.gc = mul nsw i64 %indvars.iv.i, %i.df
   %i.gd = getelementptr inbounds i8, ptr %i.bc, i64 %i.gc
   %i.ge = load i32, ptr %i.ay, align 8, !tbaa !63
-  %i.gf = mul nsw i32 %i.ge, %.0115140.us.i
+  %i.gf = mul nsw i32 %i.ge, %i.ef
   %i.gg = sext i32 %i.gf to i64
   %i.gh = getelementptr inbounds i8, ptr %i.gd, i64 %i.gg ; 3 uses
   %i.gi = load i16, ptr %i.gh, align 2, !tbaa !78
@@ -487,7 +472,7 @@ bb.n:                                             ; preds = %bb.j
   %i.gq = shl nuw nsw i64 %indvars.iv.i, 2
   %i.gr = getelementptr inbounds nuw i8, ptr %i.bc, i64 %i.gq
   %i.gs = load i32, ptr %i.ay, align 8, !tbaa !63
-  %i.gt = mul nsw i32 %i.gs, %.0115140.us.i
+  %i.gt = mul nsw i32 %i.gs, %i.ef
   %i.gu = sext i32 %i.gt to i64
   %i.gv = getelementptr inbounds i8, ptr %i.gr, i64 %i.gu
   %i.gw = load i32, ptr %i.gv, align 4, !tbaa !63 ; 3 uses
@@ -502,9 +487,9 @@ bb.o:                                             ; preds = %bb.n, %bb.m, %bb.l
   %.0118.us.i = phi i32 [ %i.gx, %bb.n ], [ %i.gp, %bb.m ], [ %..i, %bb.l ] ; 2 uses
   %.0117.us.i = phi i32 [ %i.gz, %bb.n ], [ %i.gm, %bb.m ], [ %.231.i, %bb.l ] ; 2 uses
   %.0116.us.i = phi i32 [ %i.hb, %bb.n ], [ %i.gj, %bb.m ], [ %i.gb, %bb.l ] ; 2 uses
-  %i.hc = sub nsw i32 %.0116.us.i, %.0121136.us.i ; 2 uses
-  %i.hd = sub nsw i32 %.0117.us.i, %.0120137.us.i ; 2 uses
-  %i.he = sub nsw i32 %.0118.us.i, %.0119138.us.i ; 2 uses
+  %i.hc = sub nsw i32 %.0116.us.i, %.0119138.us.i ; 2 uses
+  %i.hd = sub nsw i32 %.0117.us.i, %i.fd          ; 2 uses
+  %i.he = sub nsw i32 %.0118.us.i, %i.fc          ; 2 uses
   %i.hf = icmp ne i64 %indvars.iv.i, 0
   %or.cond3.us.i = and i1 %i.eg, %i.hf
   br i1 %or.cond3.us.i, label %.loopexit.us.loopexit.i, label %.loopexit.us.i
@@ -513,7 +498,7 @@ bb.o:                                             ; preds = %bb.n, %bb.m, %bb.l
   %i.hg = getelementptr inbounds nuw [2 x i8], ptr %i.cy, i64 %indvars.iv.i
   %i.hh = load i16, ptr %i.hg, align 2, !tbaa !78
   %i.hi = sext i16 %i.hh to i32
-  %i.hj = sub nsw i32 %i.hd, %i.hi                ; 16 uses
+  %i.hj = sub nsw i32 %i.hd, %i.hi                ; 13 uses
   %i.hk = getelementptr inbounds nuw [2 x i8], ptr %i.dg, i64 %indvars.iv.i
   %i.hl = load i16, ptr %i.hk, align 2, !tbaa !78
   %i.hm = sext i16 %i.hl to i32
@@ -525,102 +510,90 @@ bb.o:                                             ; preds = %bb.n, %bb.m, %bb.l
   %.neg836 = sub nsw i32 %i.he, %i.hm             ; 2 uses
   %i.hs = sub nsw i32 %.neg836, %i.hj             ; 7 uses
   %i.ht = tail call i32 @llvm.abs.i32(i32 %i.hj, i1 true)
-  %i.hu = add nsw i32 %i.ht, %i.eq
+  %i.hu = add nsw i32 %i.ht, %i.er
   %i.hv = add nsw i32 %i.hs, %i.hr
   %i.hw = ashr i32 %i.hv, 2
   %i.hx = add nsw i32 %i.hw, %i.hj
   %i.hy = tail call i32 @llvm.abs.i32(i32 %i.hx, i1 true)
-  %i.hz = add nsw i32 %i.hy, %i.ep                ; 2 uses
+  %i.hz = add nsw i32 %i.hy, %i.eq                ; 2 uses
   %i.ia = shl nsw i32 %i.hr, 1                    ; 2 uses
   %i.ib = shl nsw i32 %i.hs, 1                    ; 2 uses
   %i.ic = add nsw i32 %i.ib, %i.ia
   %i.id = ashr i32 %i.ic, 2
   %i.ie = add nsw i32 %i.id, %i.hj
   %i.if = tail call i32 @llvm.abs.i32(i32 %i.ie, i1 true)
-  %i.ig = add nsw i32 %i.if, %i.eo                ; 2 uses
+  %i.ig = add nsw i32 %i.if, %i.ep                ; 2 uses
   %i.ih = ashr i32 %i.hs, 1
   %i.ii = add nsw i32 %i.ih, %i.hj
   %i.ij = tail call i32 @llvm.abs.i32(i32 %i.ii, i1 true)
-  %i.ik = add nsw i32 %i.ij, %i.fd                ; 2 uses
+  %i.ik = add nsw i32 %i.ij, %i.fb                ; 2 uses
   %i.il = ashr i32 %i.hr, 1
   %i.im = add nsw i32 %i.il, %i.hj
   %i.in = tail call i32 @llvm.abs.i32(i32 %i.im, i1 true)
-  %i.io = add nsw i32 %i.in, %i.fc                ; 2 uses
+  %i.io = add nsw i32 %i.in, %i.fa                ; 2 uses
   %i.ip = add nsw i32 %i.hr, %i.hj
   %i.iq = tail call i32 @llvm.abs.i32(i32 %i.ip, i1 true)
-  %i.ir = add nsw i32 %i.iq, %12                  ; 2 uses
+  %i.ir = add nsw i32 %i.iq, %i.ez                ; 2 uses
   %i.is = tail call i32 @llvm.abs.i32(i32 %.neg836, i1 true)
-  %i.it = add nsw i32 %i.is, %i.fb                ; 2 uses
+  %i.it = add nsw i32 %i.is, %i.ey                ; 2 uses
   %i.iu = mul nsw i32 %i.hs, 3                    ; 2 uses
-  %13 = ashr i32 %i.iu, 2
-  %14 = add nsw i32 %13, %i.hj
-  %15 = tail call i32 @llvm.abs.i32(i32 %14, i1 true)
-  %16 = add nsw i32 %15, %i.fa                    ; 2 uses
   %i.iv = mul nsw i32 %i.hr, 3                    ; 2 uses
-  %17 = ashr i32 %i.iv, 2
-  %i.iw = add nsw i32 %17, %i.hj
-  %18 = tail call i32 @llvm.abs.i32(i32 %i.iw, i1 true)
-  %i.ix = add nsw i32 %18, %i.ez                  ; 2 uses
-  %19 = add nsw i32 %i.iv, %i.hs
-  %20 = ashr i32 %19, 2
-  %21 = add nsw i32 %20, %i.hj
-  %22 = tail call i32 @llvm.abs.i32(i32 %21, i1 true)
-  %23 = add nsw i32 %22, %i.ey                    ; 2 uses
-  %24 = add nsw i32 %i.iu, %i.hr
-  %25 = ashr i32 %24, 2
-  %26 = add nsw i32 %25, %i.hj
-  %27 = tail call i32 @llvm.abs.i32(i32 %26, i1 true)
-  %28 = add nsw i32 %27, %i.ex                    ; 2 uses
+  %i.iw = add nsw i32 %i.iv, %i.hs
+  %i.ix = add nsw i32 %i.iu, %i.hr
+  %7 = insertelement <4 x i32> poison, i32 %i.iu, i64 0
+  %8 = insertelement <4 x i32> %7, i32 %i.iv, i64 1
+  %9 = insertelement <4 x i32> %8, i32 %i.iw, i64 2
+  %10 = insertelement <4 x i32> %9, i32 %i.ix, i64 3
+  %11 = ashr <4 x i32> %10, splat (i32 2)
+  %12 = insertelement <4 x i32> poison, i32 %i.hj, i64 0
+  %13 = shufflevector <4 x i32> %12, <4 x i32> poison, <4 x i32> zeroinitializer
+  %14 = add nsw <4 x i32> %11, %13
+  %15 = tail call <4 x i32> @llvm.abs.v4i32(<4 x i32> %14, i1 true)
+  %16 = add nsw <4 x i32> %15, %5                 ; 2 uses
   %i.iy = add nsw i32 %i.ib, %i.hr
   %i.iz = ashr i32 %i.iy, 2
   %i.ja = add nsw i32 %i.iz, %i.hj
   %i.jb = tail call i32 @llvm.abs.i32(i32 %i.ja, i1 true)
-  %i.jc = add nsw i32 %i.jb, %i.ew                ; 2 uses
+  %i.jc = add nsw i32 %i.jb, %i.ex                ; 2 uses
   %i.jd = add nsw i32 %i.ia, %i.hs
   %i.je = ashr i32 %i.jd, 2
   %i.jf = add nsw i32 %i.je, %i.hj
   %i.jg = tail call i32 @llvm.abs.i32(i32 %i.jf, i1 true)
-  %i.jh = add nsw i32 %i.jg, %9                   ; 2 uses
+  %i.jh = add nsw i32 %i.jg, %i.ej                ; 2 uses
   %i.ji = ashr i32 %i.hs, 2
   %i.jj = add nsw i32 %i.ji, %i.hj
   %i.jk = tail call i32 @llvm.abs.i32(i32 %i.jj, i1 true)
-  %i.jl = add nsw i32 %i.jk, %8                   ; 2 uses
+  %i.jl = add nsw i32 %i.jk, %i.ei                ; 2 uses
   %i.jm = ashr i32 %i.hr, 2
   %i.jn = add nsw i32 %i.jm, %i.hj
   %i.jo = tail call i32 @llvm.abs.i32(i32 %i.jn, i1 true)
-  %i.jp = add nsw i32 %i.jo, %7                   ; 2 uses
+  %i.jp = add nsw i32 %i.jo, %i.eh                ; 2 uses
   br label %.loopexit.us.i
 
 .loopexit.us.i:                                   ; preds = %.loopexit.us.loopexit.i, %bb.o
-  %29 = phi i32 [ %i.jp, %.loopexit.us.loopexit.i ], [ %7, %bb.o ] ; 3 uses
-  %30 = phi i32 [ %i.jl, %.loopexit.us.loopexit.i ], [ %8, %bb.o ] ; 3 uses
-  %31 = phi i32 [ %i.jh, %.loopexit.us.loopexit.i ], [ %9, %bb.o ] ; 3 uses
-  %32 = phi i32 [ %i.jc, %.loopexit.us.loopexit.i ], [ %10, %bb.o ] ; 3 uses
-  %33 = phi i32 [ %28, %.loopexit.us.loopexit.i ], [ %11, %bb.o ] ; 3 uses
-  %34 = phi i32 [ %23, %.loopexit.us.loopexit.i ], [ %i.eh, %bb.o ] ; 3 uses
-  %i.jq = phi i32 [ %i.ix, %.loopexit.us.loopexit.i ], [ %i.ei, %bb.o ] ; 3 uses
-  %i.jr = phi i32 [ %16, %.loopexit.us.loopexit.i ], [ %i.ej, %bb.o ] ; 3 uses
-  %i.js = phi i32 [ %i.it, %.loopexit.us.loopexit.i ], [ %i.ek, %bb.o ] ; 3 uses
-  %i.jt = phi i32 [ %i.ir, %.loopexit.us.loopexit.i ], [ %i.el, %bb.o ] ; 3 uses
-  %i.ju = phi i32 [ %i.io, %.loopexit.us.loopexit.i ], [ %i.em, %bb.o ] ; 3 uses
-  %i.jv = phi i32 [ %i.ik, %.loopexit.us.loopexit.i ], [ %i.en, %bb.o ] ; 3 uses
-  %i.jw = phi i32 [ %i.ig, %.loopexit.us.loopexit.i ], [ %i.eo, %bb.o ] ; 3 uses
-  %i.jx = phi i32 [ %i.hz, %.loopexit.us.loopexit.i ], [ %i.ep, %bb.o ] ; 3 uses
-  %i.jy = phi i32 [ %i.hu, %.loopexit.us.loopexit.i ], [ %i.eq, %bb.o ] ; 4 uses
-  %i.jz = phi i32 [ %i.jp, %.loopexit.us.loopexit.i ], [ %i.er, %bb.o ] ; 3 uses
-  %i.ka = phi i32 [ %i.jl, %.loopexit.us.loopexit.i ], [ %i.es, %bb.o ] ; 3 uses
-  %i.kb = phi i32 [ %i.jh, %.loopexit.us.loopexit.i ], [ %i.et, %bb.o ] ; 3 uses
-  %i.kc = phi i32 [ %i.ig, %.loopexit.us.loopexit.i ], [ %i.eu, %bb.o ] ; 3 uses
-  %i.kd = phi i32 [ %i.hz, %.loopexit.us.loopexit.i ], [ %i.ev, %bb.o ] ; 3 uses
-  %i.ke = phi i32 [ %i.jc, %.loopexit.us.loopexit.i ], [ %i.ew, %bb.o ] ; 3 uses
-  %i.kf = phi i32 [ %28, %.loopexit.us.loopexit.i ], [ %i.ex, %bb.o ] ; 3 uses
-  %i.kg = phi i32 [ %23, %.loopexit.us.loopexit.i ], [ %i.ey, %bb.o ] ; 3 uses
-  %i.kh = phi i32 [ %i.ix, %.loopexit.us.loopexit.i ], [ %i.ez, %bb.o ] ; 3 uses
-  %i.ki = phi i32 [ %16, %.loopexit.us.loopexit.i ], [ %i.fa, %bb.o ] ; 3 uses
-  %i.kj = phi i32 [ %i.it, %.loopexit.us.loopexit.i ], [ %i.fb, %bb.o ] ; 3 uses
-  %i.kk = phi i32 [ %i.ir, %.loopexit.us.loopexit.i ], [ %12, %bb.o ] ; 3 uses
-  %35 = phi i32 [ %i.io, %.loopexit.us.loopexit.i ], [ %i.fc, %bb.o ] ; 3 uses
-  %36 = phi i32 [ %i.ik, %.loopexit.us.loopexit.i ], [ %i.fd, %bb.o ] ; 3 uses
+  %i.jq = phi i32 [ %i.jp, %.loopexit.us.loopexit.i ], [ %i.eh, %bb.o ] ; 3 uses
+  %i.jr = phi i32 [ %i.jl, %.loopexit.us.loopexit.i ], [ %i.ei, %bb.o ] ; 3 uses
+  %i.js = phi i32 [ %i.jh, %.loopexit.us.loopexit.i ], [ %i.ej, %bb.o ] ; 3 uses
+  %i.jt = phi i32 [ %i.jc, %.loopexit.us.loopexit.i ], [ %i.ek, %bb.o ] ; 3 uses
+  %i.ju = phi i32 [ %i.it, %.loopexit.us.loopexit.i ], [ %i.el, %bb.o ] ; 3 uses
+  %i.jv = phi i32 [ %i.ir, %.loopexit.us.loopexit.i ], [ %i.em, %bb.o ] ; 3 uses
+  %i.jw = phi i32 [ %i.io, %.loopexit.us.loopexit.i ], [ %i.en, %bb.o ] ; 3 uses
+  %i.jx = phi i32 [ %i.ik, %.loopexit.us.loopexit.i ], [ %i.eo, %bb.o ] ; 3 uses
+  %i.jy = phi i32 [ %i.ig, %.loopexit.us.loopexit.i ], [ %i.ep, %bb.o ] ; 3 uses
+  %i.jz = phi i32 [ %i.hz, %.loopexit.us.loopexit.i ], [ %i.eq, %bb.o ] ; 3 uses
+  %i.ka = phi i32 [ %i.hu, %.loopexit.us.loopexit.i ], [ %i.er, %bb.o ] ; 4 uses
+  %i.kb = phi i32 [ %i.jp, %.loopexit.us.loopexit.i ], [ %i.es, %bb.o ] ; 3 uses
+  %i.kc = phi i32 [ %i.jl, %.loopexit.us.loopexit.i ], [ %i.et, %bb.o ] ; 3 uses
+  %i.kd = phi i32 [ %i.jh, %.loopexit.us.loopexit.i ], [ %i.eu, %bb.o ] ; 3 uses
+  %i.ke = phi i32 [ %i.ig, %.loopexit.us.loopexit.i ], [ %i.ev, %bb.o ] ; 3 uses
+  %i.kf = phi i32 [ %i.hz, %.loopexit.us.loopexit.i ], [ %i.ew, %bb.o ] ; 3 uses
+  %i.kg = phi i32 [ %i.jc, %.loopexit.us.loopexit.i ], [ %i.ex, %bb.o ] ; 3 uses
+  %i.kh = phi i32 [ %i.it, %.loopexit.us.loopexit.i ], [ %i.ey, %bb.o ] ; 3 uses
+  %i.ki = phi i32 [ %i.ir, %.loopexit.us.loopexit.i ], [ %i.ez, %bb.o ] ; 3 uses
+  %i.kj = phi i32 [ %i.io, %.loopexit.us.loopexit.i ], [ %i.fa, %bb.o ] ; 3 uses
+  %i.kk = phi i32 [ %i.ik, %.loopexit.us.loopexit.i ], [ %i.fb, %bb.o ] ; 3 uses
+  %17 = phi <4 x i32> [ %16, %.loopexit.us.loopexit.i ], [ %6, %bb.o ] ; 3 uses
+  %18 = phi <4 x i32> [ %16, %.loopexit.us.loopexit.i ], [ %5, %bb.o ] ; 6 uses
   %i.kl = trunc i32 %i.hd to i16
   %i.km = getelementptr inbounds nuw [2 x i8], ptr %i.cy, i64 %indvars.iv.i
   store i16 %i.kl, ptr %i.km, align 2, !tbaa !78
@@ -635,48 +608,49 @@ bb.o:                                             ; preds = %bb.n, %bb.m, %bb.l
   br i1 %exitcond150.not.i, label %._crit_edge.us.i, label %bb.j, !llvm.loop !202
 
 ._crit_edge.us.i:                                 ; preds = %.loopexit.us.i
-  %i.kr = add nuw nsw i32 %.0115140.us.i, 1       ; 2 uses
+  %i.kr = add nuw nsw i32 %i.ef, 1                ; 2 uses
   %exitcond151.not.i = icmp eq i32 %i.kr, %i.x
   br i1 %exitcond151.not.i, label %.preheader.loopexit.i, label %.preheader133.us.i, !llvm.loop !203
 
 .preheader.loopexit.i:                            ; preds = %._crit_edge.us.i
-  store i32 %i.jy, ptr %i.q, align 16
-  store i32 %i.jx, ptr %i.di, align 4
-  store i32 %i.jw, ptr %i.dj, align 8
-  store i32 %i.jv, ptr %i.dk, align 4
-  store i32 %i.ju, ptr %i.dl, align 16
-  store i32 %i.jt, ptr %i.dm, align 4
-  store i32 %i.js, ptr %i.dn, align 8
-  store i32 %i.jr, ptr %i.do, align 4
-  store i32 %i.jq, ptr %3, align 16
-  store i32 %34, ptr %4, align 4
-  store i32 %33, ptr %5, align 8
-  store i32 %32, ptr %i.dp, align 4
-  store i32 %31, ptr %i.dq, align 16
-  store i32 %30, ptr %i.dr, align 4
-  store i32 %29, ptr %i.ds, align 8
-  %i.ks = icmp slt i32 %i.kd, %i.jy               ; 2 uses
+  store i32 %i.ka, ptr %i.q, align 16
+  store i32 %i.jz, ptr %i.di, align 4
+  store i32 %i.jy, ptr %i.dj, align 8
+  store i32 %i.jx, ptr %i.dk, align 4
+  store i32 %i.jw, ptr %i.dl, align 16
+  store i32 %i.jv, ptr %i.dm, align 4
+  store i32 %i.ju, ptr %i.dn, align 8
+  store <4 x i32> %17, ptr %i.do, align 4
+  store i32 %i.jt, ptr %i.dp, align 4
+  store i32 %i.js, ptr %i.dq, align 16
+  store i32 %i.jr, ptr %i.dr, align 4
+  store i32 %i.jq, ptr %i.ds, align 8
+  %i.ks = icmp slt i32 %i.kf, %i.ka               ; 2 uses
   %i.kt = zext i1 %i.ks to i32
   %.phi.trans.insert1307.sroa.sel.idx = select i1 %i.ks, i64 4, i64 0
   %.phi.trans.insert1307.sroa.sel = getelementptr inbounds nuw i8, ptr %i.q, i64 %.phi.trans.insert1307.sroa.sel.idx
   %.pre1309 = load i32, ptr %.phi.trans.insert1307.sroa.sel, align 4, !tbaa !63
-  %i.ku = icmp slt i32 %i.kc, %.pre1309
+  %i.ku = icmp slt i32 %i.ke, %.pre1309
   %i.kv = select i1 %i.ku, i32 2, i32 %i.kt
+  %19 = extractelement <4 x i32> %18, i64 0
+  %20 = extractelement <4 x i32> %18, i64 1
+  %21 = extractelement <4 x i32> %18, i64 2
+  %22 = extractelement <4 x i32> %18, i64 3
   br label %choose_rct_params.exit
 
 choose_rct_params.exit:                           ; preds = %.preheader133.lr.ph.i, %bb.i, %.preheader.loopexit.i
-  %i.kw = phi i32 [ 0, %bb.i ], [ %i.jz, %.preheader.loopexit.i ], [ 0, %.preheader133.lr.ph.i ]
-  %i.kx = phi i32 [ 0, %bb.i ], [ %i.ka, %.preheader.loopexit.i ], [ 0, %.preheader133.lr.ph.i ]
-  %i.ky = phi i32 [ 0, %bb.i ], [ %i.kb, %.preheader.loopexit.i ], [ 0, %.preheader133.lr.ph.i ]
-  %i.kz = phi i32 [ 0, %bb.i ], [ %i.ke, %.preheader.loopexit.i ], [ 0, %.preheader133.lr.ph.i ]
-  %i.la = phi i32 [ 0, %bb.i ], [ %i.kf, %.preheader.loopexit.i ], [ 0, %.preheader133.lr.ph.i ]
-  %i.lb = phi i32 [ 0, %bb.i ], [ %i.kg, %.preheader.loopexit.i ], [ 0, %.preheader133.lr.ph.i ]
-  %i.lc = phi i32 [ 0, %bb.i ], [ %i.kh, %.preheader.loopexit.i ], [ 0, %.preheader133.lr.ph.i ]
-  %i.ld = phi i32 [ 0, %bb.i ], [ %i.ki, %.preheader.loopexit.i ], [ 0, %.preheader133.lr.ph.i ]
-  %i.le = phi i32 [ 0, %bb.i ], [ %i.kj, %.preheader.loopexit.i ], [ 0, %.preheader133.lr.ph.i ]
-  %i.lf = phi i32 [ 0, %bb.i ], [ %i.kk, %.preheader.loopexit.i ], [ 0, %.preheader133.lr.ph.i ]
-  %i.lg = phi i32 [ 0, %bb.i ], [ %35, %.preheader.loopexit.i ], [ 0, %.preheader133.lr.ph.i ]
-  %i.lh = phi i32 [ 0, %bb.i ], [ %36, %.preheader.loopexit.i ], [ 0, %.preheader133.lr.ph.i ]
+  %i.kw = phi i32 [ 0, %bb.i ], [ %i.kb, %.preheader.loopexit.i ], [ 0, %.preheader133.lr.ph.i ]
+  %i.kx = phi i32 [ 0, %bb.i ], [ %i.kc, %.preheader.loopexit.i ], [ 0, %.preheader133.lr.ph.i ]
+  %i.ky = phi i32 [ 0, %bb.i ], [ %i.kd, %.preheader.loopexit.i ], [ 0, %.preheader133.lr.ph.i ]
+  %i.kz = phi i32 [ 0, %bb.i ], [ %i.kg, %.preheader.loopexit.i ], [ 0, %.preheader133.lr.ph.i ]
+  %i.la = phi i32 [ 0, %bb.i ], [ %22, %.preheader.loopexit.i ], [ 0, %.preheader133.lr.ph.i ]
+  %i.lb = phi i32 [ 0, %bb.i ], [ %21, %.preheader.loopexit.i ], [ 0, %.preheader133.lr.ph.i ]
+  %i.lc = phi i32 [ 0, %bb.i ], [ %20, %.preheader.loopexit.i ], [ 0, %.preheader133.lr.ph.i ]
+  %i.ld = phi i32 [ 0, %bb.i ], [ %19, %.preheader.loopexit.i ], [ 0, %.preheader133.lr.ph.i ]
+  %i.le = phi i32 [ 0, %bb.i ], [ %i.kh, %.preheader.loopexit.i ], [ 0, %.preheader133.lr.ph.i ]
+  %i.lf = phi i32 [ 0, %bb.i ], [ %i.ki, %.preheader.loopexit.i ], [ 0, %.preheader133.lr.ph.i ]
+  %i.lg = phi i32 [ 0, %bb.i ], [ %i.kj, %.preheader.loopexit.i ], [ 0, %.preheader133.lr.ph.i ]
+  %i.lh = phi i32 [ 0, %bb.i ], [ %i.kk, %.preheader.loopexit.i ], [ 0, %.preheader133.lr.ph.i ]
   %spec.select.1.i = phi i32 [ 0, %bb.i ], [ %i.kv, %.preheader.loopexit.i ], [ 0, %.preheader133.lr.ph.i ] ; 2 uses
   %i.li = zext nneg i32 %spec.select.1.i to i64
   %i.lj = getelementptr inbounds nuw [4 x i8], ptr %i.q, i64 %i.li

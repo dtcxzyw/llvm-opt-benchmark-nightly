@@ -204,7 +204,7 @@ bb.a:
   %i.a = alloca float, align 4                    ; 6 uses
   %i.b = alloca float, align 4                    ; 4 uses
   %8 = alloca %class.b3Vector3, align 16          ; 5 uses
-  %9 = alloca %class.b3Vector3, align 16          ; 6 uses
+  %9 = alloca %class.b3Vector3, align 16          ; 5 uses
   %10 = alloca %class.b3Vector3, align 16         ; 7 uses
   %11 = alloca %class.b3Vector3, align 16         ; 7 uses
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 88
@@ -276,9 +276,8 @@ _ZNK9b3Vector36isZeroEv.exit.thread:              ; preds = %bb.b, %bb.a, %_ZNK9
   %i.az = getelementptr inbounds nuw i8, ptr %i.p, i64 80
   %i.ba = getelementptr inbounds nuw i8, ptr %i.p, i64 200
   %i.bb = getelementptr inbounds nuw i8, ptr %i.p, i64 88
-  %12 = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 2 uses
-  %i.bc = getelementptr inbounds nuw i8, ptr %5, i64 104
-  %i.bd = getelementptr inbounds nuw i8, ptr %9, i64 4
+  %i.bc = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 2 uses
+  %i.bd = getelementptr inbounds nuw i8, ptr %5, i64 104
   %i.be = getelementptr inbounds nuw i8, ptr %4, i64 80
   %i.bf = getelementptr inbounds nuw i8, ptr %5, i64 32 ; 4 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %5, i64 40
@@ -447,7 +446,7 @@ bb.j:                                             ; preds = %_ZN20b3AlignedObjec
   br label %_ZNK12b3SolverBody18getAngularVelocityER9b3Vector3.exit
 
 _ZNK12b3SolverBody18getAngularVelocityER9b3Vector3.exit: ; preds = %_ZN20b3AlignedObjectArrayI18b3SolverConstraintE21expandNonInitializingEv.exit, %bb.j
-  %.sroa.0169.0 = phi <2 x float> [ %i.dm, %bb.j ], [ zeroinitializer, %_ZN20b3AlignedObjectArrayI18b3SolverConstraintE21expandNonInitializingEv.exit ] ; 2 uses
+  %.sroa.0169.0 = phi <2 x float> [ %i.dm, %bb.j ], [ zeroinitializer, %_ZN20b3AlignedObjectArrayI18b3SolverConstraintE21expandNonInitializingEv.exit ]
   %.sroa.6170.0 = phi <2 x float> [ %.sroa.3.12.vec.insert.i.i.i, %bb.j ], [ zeroinitializer, %_ZN20b3AlignedObjectArrayI18b3SolverConstraintE21expandNonInitializingEv.exit ]
   %i.dq = load ptr, ptr %i.ax, align 16, !tbaa !17
   %.not.i136 = icmp eq ptr %i.dq, null
@@ -464,26 +463,25 @@ bb.k:                                             ; preds = %_ZNK12b3SolverBody1
   br label %_ZNK12b3SolverBody18getAngularVelocityER9b3Vector3.exit141
 
 _ZNK12b3SolverBody18getAngularVelocityER9b3Vector3.exit141: ; preds = %_ZNK12b3SolverBody18getAngularVelocityER9b3Vector3.exit, %bb.k
-  %.sroa.0168.0 = phi <2 x float> [ %i.dt, %bb.k ], [ zeroinitializer, %_ZNK12b3SolverBody18getAngularVelocityER9b3Vector3.exit ] ; 2 uses
+  %.sroa.0168.0 = phi <2 x float> [ %i.dt, %bb.k ], [ zeroinitializer, %_ZNK12b3SolverBody18getAngularVelocityER9b3Vector3.exit ]
   %.sroa.6.0 = phi <2 x float> [ %.sroa.3.12.vec.insert.i.i.i139, %bb.k ], [ zeroinitializer, %_ZNK12b3SolverBody18getAngularVelocityER9b3Vector3.exit ]
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #22
-  %foldExtExtBinop = fsub <2 x float> %.sroa.0168.0, %.sroa.0169.0
-  %13 = extractelement <2 x float> %foldExtExtBinop, i64 0 ; 3 uses
-  %foldExtExtBinop186.a = fsub <2 x float> %.sroa.0168.0, %.sroa.0169.0
-  %14 = extractelement <2 x float> %foldExtExtBinop186.a, i64 1 ; 3 uses
+  %foldExtExtBinop186.a = fsub <2 x float> %.sroa.0168.0, %.sroa.0169.0 ; 4 uses
   %foldExtExtBinop188.a = fsub <2 x float> %.sroa.6.0, %.sroa.6170.0 ; 2 uses
   %i.dx = extractelement <2 x float> %foldExtExtBinop188.a, i64 0 ; 3 uses
   %.sroa.3.12.vec.insert.i.i196 = insertelement <2 x float> %foldExtExtBinop188.a, float 0.000000e+00, i64 1
-  store <2 x float> %.sroa.3.12.vec.insert.i.i196, ptr %12, align 8
-  %i.dy = load float, ptr %i.bc, align 8, !tbaa !99
+  store <2 x float> %.sroa.3.12.vec.insert.i.i196, ptr %i.bc, align 8
+  %i.dy = load float, ptr %i.bd, align 8, !tbaa !99
   %i.dz = fcmp ogt float %i.dy, 0.000000e+00
   %i.ea = icmp sgt i32 %.0127171, 0
   %or.cond = select i1 %i.dz, i1 %i.ea, i1 false
   br i1 %or.cond, label %bb.l, label %bb.v
 
 bb.l:                                             ; preds = %_ZNK12b3SolverBody18getAngularVelocityER9b3Vector3.exit141
-  %15 = fmul float %14, %14
-  %i.eb = call float @llvm.fmuladd.f32(float %13, float %13, float %15)
+  %foldExtExtBinop186 = fmul <2 x float> %foldExtExtBinop186.a, %foldExtExtBinop186.a
+  %12 = extractelement <2 x float> %foldExtExtBinop186, i64 1
+  %13 = extractelement <2 x float> %foldExtExtBinop186.a, i64 0 ; 2 uses
+  %i.eb = call float @llvm.fmuladd.f32(float %13, float %13, float %12)
   %i.ec = call noundef float @llvm.fmuladd.f32(float %i.dx, float %i.dx, float %i.eb)
   %sqrt.i = call noundef float @llvm.sqrt.f32(float %i.ec) ; 2 uses
   %i.ed = load float, ptr %i.be, align 4, !tbaa !110
@@ -491,16 +489,18 @@ bb.l:                                             ; preds = %_ZNK12b3SolverBody1
   br i1 %i.ee, label %bb.m, label %bb.o
 
 bb.m:                                             ; preds = %bb.l
-  %i.ef = fdiv float 1.000000e+00, %sqrt.i        ; 3 uses
-  %16 = fmul float %13, %i.ef                     ; 3 uses
-  store float %16, ptr %9, align 16, !tbaa !17
-  %i.eg = fmul float %14, %i.ef                   ; 3 uses
-  store float %i.eg, ptr %i.bd, align 4, !tbaa !17
-  %17 = fmul float %i.dx, %i.ef                   ; 3 uses
-  store float %17, ptr %12, align 8, !tbaa !17
-  %18 = fmul float %i.eg, %i.eg
-  %i.eh = call float @llvm.fmuladd.f32(float %16, float %16, float %18)
-  %i.ei = call noundef float @llvm.fmuladd.f32(float %17, float %17, float %i.eh)
+  %i.ef = fdiv float 1.000000e+00, %sqrt.i        ; 2 uses
+  %14 = insertelement <2 x float> poison, float %i.ef, i64 0
+  %15 = shufflevector <2 x float> %14, <2 x float> poison, <2 x i32> zeroinitializer
+  %16 = fmul <2 x float> %foldExtExtBinop186.a, %15 ; 4 uses
+  store <2 x float> %16, ptr %9, align 16, !tbaa !17
+  %i.eg = fmul float %i.dx, %i.ef                 ; 3 uses
+  store float %i.eg, ptr %i.bc, align 8, !tbaa !17
+  %foldExtExtBinop188 = fmul <2 x float> %16, %16
+  %17 = extractelement <2 x float> %foldExtExtBinop188, i64 1
+  %18 = extractelement <2 x float> %16, i64 0     ; 2 uses
+  %i.eh = call float @llvm.fmuladd.f32(float %18, float %18, float %17)
+  %i.ei = call noundef float @llvm.fmuladd.f32(float %i.eg, float %i.eg, float %i.eh)
   %sqrt.i142 = call noundef float @llvm.sqrt.f32(float %i.ei)
   %i.ej = fpext float %sqrt.i142 to double
   %i.ek = fcmp ogt double %i.ej, 1.000000e-03

@@ -205,7 +205,7 @@ bb.a:
   %3 = alloca %"class.Catch::AssertionHandler", align 8 ; 11 uses
   %4 = alloca %"struct.Catch::SourceLineInfo", align 8 ; 5 uses
   %5 = alloca %"class.Catch::BinaryExpr", align 8 ; 11 uses
-  %6 = alloca %"struct.std::array.34", align 4    ; 7 uses
+  %6 = alloca %"struct.std::array.34", align 8    ; 6 uses
   %7 = alloca %"struct.std::array.34", align 8    ; 6 uses
   %8 = alloca %"class.std::unordered_set", align 8 ; 18 uses
   %9 = alloca %class.anon.99, align 8             ; 5 uses
@@ -216,25 +216,20 @@ bb.a:
   %i.b = load ptr, ptr %0, align 8, !tbaa !112, !nonnull !114, !align !115 ; 2 uses
   %.promoted = load i32, ptr %i.b, align 4, !tbaa !36
   %i.c = mul i32 %.promoted, 1103515245
-  %12 = getelementptr inbounds nuw i8, ptr %6, i64 4
-  %13 = add i32 %i.c, 12345                       ; 2 uses
-  %14 = mul i32 %13, 1103515245
-  %i.d = add i32 %14, 12345                       ; 2 uses
+  %12 = add i32 %i.c, 12345                       ; 2 uses
+  %13 = mul i32 %12, 1103515245
+  %14 = insertelement <2 x i32> poison, i32 %12, i64 0
+  %i.d = add i32 %13, 12345                       ; 2 uses
   %i.e = mul i32 %i.d, 1103515245
   %i.f = add i32 %i.e, 12345                      ; 2 uses
-  %15 = insertelement <2 x i32> poison, i32 %13, i64 0
-  %i.g = insertelement <2 x i32> %15, i32 %i.f, i64 1
+  %i.g = insertelement <2 x i32> %14, i32 %i.f, i64 1
   %i.h = sdiv <2 x i32> %i.g, splat (i32 65536)
   %i.i = trunc nsw <2 x i32> %i.h to <2 x i16>
   %i.j = and <2 x i16> %i.i, splat (i16 32767)
   %i.k = urem <2 x i16> %i.j, splat (i16 3001)
-  %16 = zext nneg <2 x i16> %i.k to <2 x i32>
-  %17 = add nsw <2 x i32> %16, splat (i32 -1500)
-  %i.l = sitofp <2 x i32> %17 to <2 x float>      ; 3 uses
-  %18 = extractelement <2 x float> %i.l, i64 0    ; 2 uses
-  store float %18, ptr %6, align 4, !tbaa !116
-  %19 = extractelement <2 x float> %i.l, i64 1    ; 2 uses
-  store float %19, ptr %12, align 4, !tbaa !116
+  %15 = add nsw <2 x i16> %i.k, splat (i16 -1500)
+  %i.l = sitofp <2 x i16> %15 to <2 x float>      ; 4 uses
+  store <2 x float> %i.l, ptr %6, align 8, !tbaa !116
   %i.m = mul i32 %i.f, 1103515245
   %i.n = add i32 %i.m, 12345                      ; 2 uses
   %i.o = insertelement <2 x i32> poison, i32 %i.d, i64 0
@@ -262,7 +257,7 @@ bb.a:
   %.zext.i.2 = zext nneg i16 %i.ai to i32
   %i.aj = add nsw i32 %.zext.i.2, -1500
   %i.ak = sitofp nsz i32 %i.aj to float           ; 3 uses
-  store float %i.ak, ptr %i.y, align 4, !tbaa !116
+  store float %i.ak, ptr %i.y, align 8, !tbaa !116
   %i.al = extractelement <2 x i16> %i.ah, i64 1
   %narrow.2 = add nuw nsw i16 %i.al, 1
   %i.am = uitofp nneg i16 %narrow.2 to float
@@ -300,6 +295,8 @@ bb.a:
   %i.bd = getelementptr inbounds nuw i8, ptr %5, i64 40
   %i.be = getelementptr inbounds nuw i8, ptr %3, i64 59
   %i.bf = getelementptr inbounds nuw i8, ptr %3, i64 64
+  %16 = extractelement <2 x float> %i.l, i64 0
+  %17 = extractelement <2 x float> %i.l, i64 1
   %i.bg = extractelement <2 x float> %i.w, i64 0
   %i.bh = extractelement <2 x float> %i.w, i64 1
   br label %.preheader.i
@@ -307,7 +304,7 @@ bb.a:
 .preheader.i:                                     ; preds = %.thread.i, %.preheader.lr.ph.i
   %.sroa.03.011.i = phi ptr [ %.val, %.preheader.lr.ph.i ], [ %i.dh, %.thread.i ] ; 5 uses
   %i.bi = load float, ptr %.sroa.03.011.i, align 4, !tbaa !116 ; 2 uses
-  %i.bj = fcmp nsz olt float %i.bi, %18
+  %i.bj = fcmp nsz olt float %i.bi, %16
   %i.bk = fcmp nsz ogt float %i.bi, %i.bg
   %or.cond34 = select i1 %i.bj, i1 true, i1 %i.bk
   br i1 %or.cond34, label %.thread.i, label %bb.b
@@ -315,7 +312,7 @@ bb.a:
 bb.b:                                             ; preds = %.preheader.i
   %i.bl = getelementptr inbounds nuw i8, ptr %.sroa.03.011.i, i64 4
   %i.bm = load float, ptr %i.bl, align 4, !tbaa !116 ; 2 uses
-  %i.bn = fcmp nsz olt float %i.bm, %19
+  %i.bn = fcmp nsz olt float %i.bm, %17
   %i.bo = fcmp nsz ogt float %i.bm, %i.bh
   %or.cond = select i1 %i.bn, i1 true, i1 %i.bo
   br i1 %or.cond, label %.thread.i, label %bb.c

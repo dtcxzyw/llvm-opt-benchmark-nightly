@@ -8,17 +8,14 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nofree norecurse nosync nounwind memory(write, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define dso_local i32 @DES_quad_cksum(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef writeonly captures(address) %1, i64 noundef %2, i32 noundef %3, ptr nofree noundef readonly captures(none) %4) local_unnamed_addr #0 {
 bb.a:
-  %5 = load i32, ptr %4, align 1                  ; 9 uses
-  %6 = getelementptr inbounds nuw i8, ptr %4, i64 4
-  %7 = load i32, ptr %6, align 1                  ; 5 uses
+  %5 = load <2 x i32>, ptr %4, align 1            ; 9 uses
   %i.a = icmp sgt i64 %2, 0
   br i1 %i.a, label %.preheader.us, label %.preheader
 
 .preheader.us:                                    ; preds = %bb.a, %bb.d
   %.03954.us = phi ptr [ %.140.us, %bb.d ], [ %0, %bb.a ] ; 4 uses
   %.04153.us = phi i64 [ %.142.us, %bb.d ], [ %2, %bb.a ] ; 2 uses
-  %.14652.us = phi i32 [ %10, %bb.d ], [ %7, %bb.a ] ; 3 uses
-  %.14851.us = phi i32 [ %9, %bb.d ], [ %5, %bb.a ]
+  %6 = phi <2 x i32> [ %12, %bb.d ], [ %5, %bb.a ] ; 2 uses
   %.not49.us = icmp eq i64 %.04153.us, 1
   br i1 %.not49.us, label %bb.c, label %bb.b
 
@@ -39,34 +36,35 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %.044.us = phi i32 [ %i.c, %bb.b ], [ %i.h, %bb.c ]
   %.142.us = phi i64 [ %i.e, %bb.b ], [ 0, %bb.c ] ; 2 uses
   %.140.us = phi ptr [ %i.d, %bb.b ], [ %i.f, %bb.c ]
-  %i.i = add i32 %.044.us, %.14851.us             ; 3 uses
-  %8 = mul i32 %i.i, %i.i
-  %i.j = mul i32 %.14652.us, %.14652.us
-  %.narrow.us.a = add i32 %8, %i.j
-  %9 = urem i32 %.narrow.us.a, 2147483647         ; 4 uses
-  %i.k = add i32 %.14652.us, 83653421
-  %.narrow50.us = mul i32 %i.i, %i.k
-  %10 = urem i32 %.narrow50.us, 2147483647        ; 3 uses
+  %7 = extractelement <2 x i32> %6, i64 0
+  %i.i = add i32 %.044.us, %7                     ; 3 uses
+  %8 = extractelement <2 x i32> %6, i64 1         ; 3 uses
+  %i.j = mul i32 %8, %8
+  %.narrow.us.a = add i32 %8, 83653421
+  %9 = mul i32 %i.i, %i.i
+  %.narrow50.us = mul i32 %i.i, %.narrow.us.a
+  %i.k = add i32 %9, %i.j
+  %10 = insertelement <2 x i32> poison, i32 %i.k, i64 0
+  %11 = insertelement <2 x i32> %10, i32 %.narrow50.us, i64 1
+  %12 = urem <2 x i32> %11, splat (i32 2147483647) ; 4 uses
   %i.l = icmp sgt i64 %.142.us, 0
   br i1 %i.l, label %.preheader.us, label %._crit_edge.us, !llvm.loop !11
 
 bb.e:                                             ; preds = %._crit_edge.us
-  %11 = getelementptr inbounds nuw i8, ptr %1, i64 4
-  store i32 %9, ptr %1, align 4, !tbaa !13
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 8
-  store i32 %10, ptr %11, align 4, !tbaa !13
+  store <2 x i32> %12, ptr %1, align 4, !tbaa !13
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %._crit_edge.us
-  %.1.us = phi ptr [ %i.m, %bb.e ], [ null, %._crit_edge.us ] ; 4 uses
+  %.1.us = phi ptr [ %i.m, %bb.e ], [ null, %._crit_edge.us ] ; 3 uses
   %exitcond64.not = icmp slt i32 %3, 2
+  %13 = extractelement <2 x i32> %12, i64 0
   br i1 %exitcond64.not, label %.split61.us, label %.preheader.us.1
 
 .preheader.us.1:                                  ; preds = %bb.f, %bb.i
   %.03954.us.1 = phi ptr [ %.140.us.1, %bb.i ], [ %0, %bb.f ] ; 4 uses
   %.04153.us.1 = phi i64 [ %.142.us.1, %bb.i ], [ %2, %bb.f ] ; 2 uses
-  %.14652.us.1 = phi i32 [ %14, %bb.i ], [ %10, %bb.f ] ; 3 uses
-  %.14851.us.1 = phi i32 [ %13, %bb.i ], [ %9, %bb.f ]
+  %14 = phi <2 x i32> [ %20, %bb.i ], [ %12, %bb.f ] ; 2 uses
   %.not49.us.1 = icmp eq i64 %.04153.us.1, 1
   br i1 %.not49.us.1, label %bb.h, label %bb.g
 
@@ -87,14 +85,17 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   %.044.us.1 = phi i32 [ %i.o, %bb.g ], [ %i.t, %bb.h ]
   %.142.us.1 = phi i64 [ %i.q, %bb.g ], [ 0, %bb.h ] ; 2 uses
   %.140.us.1 = phi ptr [ %i.p, %bb.g ], [ %i.r, %bb.h ]
-  %i.u = add nuw i32 %.044.us.1, %.14851.us.1     ; 3 uses
-  %12 = mul i32 %i.u, %i.u
-  %i.v = mul i32 %.14652.us.1, %.14652.us.1
-  %.narrow.us.1.a = add i32 %12, %i.v
-  %13 = urem i32 %.narrow.us.1.a, 2147483647      ; 4 uses
-  %i.w = add nuw i32 %.14652.us.1, 83653421
-  %.narrow50.us.1 = mul i32 %i.u, %i.w
-  %14 = urem i32 %.narrow50.us.1, 2147483647      ; 3 uses
+  %15 = extractelement <2 x i32> %14, i64 0
+  %i.u = add nuw i32 %.044.us.1, %15              ; 3 uses
+  %16 = extractelement <2 x i32> %14, i64 1       ; 3 uses
+  %i.v = mul i32 %16, %16
+  %.narrow.us.1.a = add nuw i32 %16, 83653421
+  %17 = mul i32 %i.u, %i.u
+  %.narrow50.us.1 = mul i32 %i.u, %.narrow.us.1.a
+  %i.w = add i32 %17, %i.v
+  %18 = insertelement <2 x i32> poison, i32 %i.w, i64 0
+  %19 = insertelement <2 x i32> %18, i32 %.narrow50.us.1, i64 1
+  %20 = urem <2 x i32> %19, splat (i32 2147483647) ; 4 uses
   %i.x = icmp sgt i64 %.142.us.1, 0
   br i1 %i.x, label %.preheader.us.1, label %._crit_edge.us.1, !llvm.loop !11
 
@@ -103,22 +104,20 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   br i1 %.not.us.1, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %._crit_edge.us.1
-  %15 = getelementptr inbounds nuw i8, ptr %.1.us, i64 4
-  store i32 %13, ptr %.1.us, align 4, !tbaa !13
   %i.y = getelementptr inbounds nuw i8, ptr %.1.us, i64 8
-  store i32 %14, ptr %15, align 4, !tbaa !13
+  store <2 x i32> %20, ptr %.1.us, align 4, !tbaa !13
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %._crit_edge.us.1
-  %.1.us.1 = phi ptr [ %i.y, %bb.j ], [ null, %._crit_edge.us.1 ] ; 4 uses
+  %.1.us.1 = phi ptr [ %i.y, %bb.j ], [ null, %._crit_edge.us.1 ] ; 3 uses
   %exitcond64.not.1 = icmp eq i32 %3, 2
+  %21 = extractelement <2 x i32> %20, i64 0
   br i1 %exitcond64.not.1, label %.split61.us, label %.preheader.us.2
 
 .preheader.us.2:                                  ; preds = %bb.k, %bb.n
   %.03954.us.2 = phi ptr [ %.140.us.2, %bb.n ], [ %0, %bb.k ] ; 4 uses
   %.04153.us.2 = phi i64 [ %.142.us.2, %bb.n ], [ %2, %bb.k ] ; 2 uses
-  %.14652.us.2 = phi i32 [ %18, %bb.n ], [ %14, %bb.k ] ; 3 uses
-  %.14851.us.2 = phi i32 [ %17, %bb.n ], [ %13, %bb.k ]
+  %22 = phi <2 x i32> [ %28, %bb.n ], [ %20, %bb.k ] ; 2 uses
   %.not49.us.2 = icmp eq i64 %.04153.us.2, 1
   br i1 %.not49.us.2, label %bb.m, label %bb.l
 
@@ -139,14 +138,17 @@ bb.n:                                             ; preds = %bb.m, %bb.l
   %.044.us.2 = phi i32 [ %i.aa, %bb.l ], [ %i.af, %bb.m ]
   %.142.us.2 = phi i64 [ %i.ac, %bb.l ], [ 0, %bb.m ] ; 2 uses
   %.140.us.2 = phi ptr [ %i.ab, %bb.l ], [ %i.ad, %bb.m ]
-  %i.ag = add nuw i32 %.044.us.2, %.14851.us.2    ; 3 uses
-  %16 = mul i32 %i.ag, %i.ag
-  %i.ah = mul i32 %.14652.us.2, %.14652.us.2
-  %.narrow.us.2.a = add i32 %16, %i.ah
-  %17 = urem i32 %.narrow.us.2.a, 2147483647      ; 4 uses
-  %i.ai = add nuw i32 %.14652.us.2, 83653421
-  %.narrow50.us.2 = mul i32 %i.ag, %i.ai
-  %18 = urem i32 %.narrow50.us.2, 2147483647      ; 3 uses
+  %23 = extractelement <2 x i32> %22, i64 0
+  %i.ag = add nuw i32 %.044.us.2, %23             ; 3 uses
+  %24 = extractelement <2 x i32> %22, i64 1       ; 3 uses
+  %i.ah = mul i32 %24, %24
+  %.narrow.us.2.a = add nuw i32 %24, 83653421
+  %25 = mul i32 %i.ag, %i.ag
+  %.narrow50.us.2 = mul i32 %i.ag, %.narrow.us.2.a
+  %i.ai = add i32 %25, %i.ah
+  %26 = insertelement <2 x i32> poison, i32 %i.ai, i64 0
+  %27 = insertelement <2 x i32> %26, i32 %.narrow50.us.2, i64 1
+  %28 = urem <2 x i32> %27, splat (i32 2147483647) ; 4 uses
   %i.aj = icmp sgt i64 %.142.us.2, 0
   br i1 %i.aj, label %.preheader.us.2, label %._crit_edge.us.2, !llvm.loop !11
 
@@ -155,22 +157,20 @@ bb.n:                                             ; preds = %bb.m, %bb.l
   br i1 %.not.us.2, label %bb.p, label %bb.o
 
 bb.o:                                             ; preds = %._crit_edge.us.2
-  %19 = getelementptr inbounds nuw i8, ptr %.1.us.1, i64 4
-  store i32 %17, ptr %.1.us.1, align 4, !tbaa !13
   %i.ak = getelementptr inbounds nuw i8, ptr %.1.us.1, i64 8
-  store i32 %18, ptr %19, align 4, !tbaa !13
+  store <2 x i32> %28, ptr %.1.us.1, align 4, !tbaa !13
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.o, %._crit_edge.us.2
-  %.1.us.2 = phi ptr [ %i.ak, %bb.o ], [ null, %._crit_edge.us.2 ] ; 3 uses
+  %.1.us.2 = phi ptr [ %i.ak, %bb.o ], [ null, %._crit_edge.us.2 ] ; 2 uses
   %exitcond64.not.2 = icmp eq i32 %3, 3
+  %29 = extractelement <2 x i32> %28, i64 0
   br i1 %exitcond64.not.2, label %.split61.us, label %.preheader.us.3
 
 .preheader.us.3:                                  ; preds = %bb.p, %bb.s
   %.03954.us.3 = phi ptr [ %.140.us.3, %bb.s ], [ %0, %bb.p ] ; 4 uses
   %.04153.us.3 = phi i64 [ %.142.us.3, %bb.s ], [ %2, %bb.p ] ; 2 uses
-  %.14652.us.3 = phi i32 [ %22, %bb.s ], [ %18, %bb.p ] ; 3 uses
-  %.14851.us.3 = phi i32 [ %21, %bb.s ], [ %17, %bb.p ]
+  %30 = phi <2 x i32> [ %36, %bb.s ], [ %28, %bb.p ] ; 2 uses
   %.not49.us.3 = icmp eq i64 %.04153.us.3, 1
   br i1 %.not49.us.3, label %bb.r, label %bb.q
 
@@ -191,25 +191,30 @@ bb.s:                                             ; preds = %bb.r, %bb.q
   %.044.us.3 = phi i32 [ %i.am, %bb.q ], [ %i.ar, %bb.r ]
   %.142.us.3 = phi i64 [ %i.ao, %bb.q ], [ 0, %bb.r ] ; 2 uses
   %.140.us.3 = phi ptr [ %i.an, %bb.q ], [ %i.ap, %bb.r ]
-  %i.as = add nuw i32 %.044.us.3, %.14851.us.3    ; 3 uses
-  %20 = mul i32 %i.as, %i.as
-  %i.at = mul i32 %.14652.us.3, %.14652.us.3
-  %.narrow.us.3.a = add i32 %20, %i.at
-  %21 = urem i32 %.narrow.us.3.a, 2147483647      ; 4 uses
-  %i.au = add nuw i32 %.14652.us.3, 83653421
-  %.narrow50.us.3 = mul i32 %i.as, %i.au
-  %22 = urem i32 %.narrow50.us.3, 2147483647      ; 2 uses
+  %31 = extractelement <2 x i32> %30, i64 0
+  %i.as = add nuw i32 %.044.us.3, %31             ; 3 uses
+  %32 = extractelement <2 x i32> %30, i64 1       ; 3 uses
+  %i.at = mul i32 %32, %32
+  %.narrow.us.3.a = add nuw i32 %32, 83653421
+  %33 = mul i32 %i.as, %i.as
+  %.narrow50.us.3 = mul i32 %i.as, %.narrow.us.3.a
+  %i.au = add i32 %33, %i.at
+  %34 = insertelement <2 x i32> poison, i32 %i.au, i64 0
+  %35 = insertelement <2 x i32> %34, i32 %.narrow50.us.3, i64 1
+  %36 = urem <2 x i32> %35, splat (i32 2147483647) ; 3 uses
   %i.av = icmp sgt i64 %.142.us.3, 0
   br i1 %i.av, label %.preheader.us.3, label %._crit_edge.us.3, !llvm.loop !11
 
 ._crit_edge.us.3:                                 ; preds = %bb.s
   %.not.us.3 = icmp eq ptr %.1.us.2, null
-  br i1 %.not.us.3, label %.split61.us, label %bb.t
+  br i1 %.not.us.3, label %37, label %bb.t
 
 bb.t:                                             ; preds = %._crit_edge.us.3
-  %23 = getelementptr inbounds nuw i8, ptr %.1.us.2, i64 4
-  store i32 %21, ptr %.1.us.2, align 4, !tbaa !13
-  store i32 %22, ptr %23, align 4, !tbaa !13
+  store <2 x i32> %36, ptr %.1.us.2, align 4, !tbaa !13
+  br label %37
+
+37:                                               ; preds = %bb.t, %._crit_edge.us.3
+  %38 = extractelement <2 x i32> %36, i64 0
   br label %.split61.us
 
 ._crit_edge.us:                                   ; preds = %bb.d
@@ -221,15 +226,14 @@ bb.t:                                             ; preds = %._crit_edge.us.3
   br i1 %.not, label %bb.v, label %bb.u
 
 bb.u:                                             ; preds = %.preheader
-  %24 = getelementptr inbounds nuw i8, ptr %1, i64 4
-  store i32 %5, ptr %1, align 4, !tbaa !13
   %i.aw = getelementptr inbounds nuw i8, ptr %1, i64 8
-  store i32 %7, ptr %24, align 4, !tbaa !13
+  store <2 x i32> %5, ptr %1, align 4, !tbaa !13
   br label %bb.v
 
 bb.v:                                             ; preds = %.preheader, %bb.u
-  %.1 = phi ptr [ %i.aw, %bb.u ], [ null, %.preheader ] ; 4 uses
+  %.1 = phi ptr [ %i.aw, %bb.u ], [ null, %.preheader ] ; 3 uses
   %exitcond.not = icmp slt i32 %3, 2
+  %39 = extractelement <2 x i32> %5, i64 0
   br i1 %exitcond.not, label %.split61.us, label %.preheader.1
 
 .preheader.1:                                     ; preds = %bb.v
@@ -237,15 +241,14 @@ bb.v:                                             ; preds = %.preheader, %bb.u
   br i1 %.not.1, label %bb.x, label %bb.w
 
 bb.w:                                             ; preds = %.preheader.1
-  %25 = getelementptr inbounds nuw i8, ptr %.1, i64 4
-  store i32 %5, ptr %.1, align 4, !tbaa !13
   %i.ax = getelementptr inbounds nuw i8, ptr %.1, i64 8
-  store i32 %7, ptr %25, align 4, !tbaa !13
+  store <2 x i32> %5, ptr %.1, align 4, !tbaa !13
   br label %bb.x
 
 bb.x:                                             ; preds = %bb.w, %.preheader.1
-  %.1.1 = phi ptr [ %i.ax, %bb.w ], [ null, %.preheader.1 ] ; 4 uses
+  %.1.1 = phi ptr [ %i.ax, %bb.w ], [ null, %.preheader.1 ] ; 3 uses
   %exitcond.not.1 = icmp eq i32 %3, 2
+  %40 = extractelement <2 x i32> %5, i64 0
   br i1 %exitcond.not.1, label %.split61.us, label %.preheader.2
 
 .preheader.2:                                     ; preds = %bb.x
@@ -253,27 +256,30 @@ bb.x:                                             ; preds = %bb.w, %.preheader.1
   br i1 %.not.2, label %bb.z, label %bb.y
 
 bb.y:                                             ; preds = %.preheader.2
-  %26 = getelementptr inbounds nuw i8, ptr %.1.1, i64 4
-  store i32 %5, ptr %.1.1, align 4, !tbaa !13
   %i.ay = getelementptr inbounds nuw i8, ptr %.1.1, i64 8
-  store i32 %7, ptr %26, align 4, !tbaa !13
+  store <2 x i32> %5, ptr %.1.1, align 4, !tbaa !13
   br label %bb.z
 
 bb.z:                                             ; preds = %bb.y, %.preheader.2
-  %.1.2 = phi ptr [ %i.ay, %bb.y ], [ null, %.preheader.2 ] ; 3 uses
+  %.1.2 = phi ptr [ %i.ay, %bb.y ], [ null, %.preheader.2 ] ; 2 uses
   %exitcond.not.2 = icmp eq i32 %3, 3
-  %.not.3 = icmp eq ptr %.1.2, null
-  %or.cond = select i1 %exitcond.not.2, i1 true, i1 %.not.3
-  br i1 %or.cond, label %.split61.us, label %bb.aa
+  %41 = extractelement <2 x i32> %5, i64 0
+  br i1 %exitcond.not.2, label %.split61.us, label %.preheader.3
 
-bb.aa:                                            ; preds = %bb.z
-  %27 = getelementptr inbounds nuw i8, ptr %.1.2, i64 4
-  store i32 %5, ptr %.1.2, align 4, !tbaa !13
-  store i32 %7, ptr %27, align 4, !tbaa !13
+.preheader.3:                                     ; preds = %bb.z
+  %.not.3 = icmp eq ptr %.1.2, null
+  br i1 %.not.3, label %42, label %bb.aa
+
+bb.aa:                                            ; preds = %.preheader.3
+  store <2 x i32> %5, ptr %.1.2, align 4, !tbaa !13
+  br label %42
+
+42:                                               ; preds = %bb.aa, %.preheader.3
+  %43 = extractelement <2 x i32> %5, i64 0
   br label %.split61.us
 
-.split61.us:                                      ; preds = %bb.v, %bb.x, %bb.z, %bb.aa, %bb.f, %bb.k, %bb.p, %bb.t, %._crit_edge.us.3
-  %.us-phi = phi i32 [ %21, %._crit_edge.us.3 ], [ %9, %bb.f ], [ %13, %bb.k ], [ %17, %bb.p ], [ %21, %bb.t ], [ %5, %bb.v ], [ %5, %bb.aa ], [ %5, %bb.z ], [ %5, %bb.x ]
+.split61.us:                                      ; preds = %bb.v, %bb.x, %bb.z, %42, %bb.f, %bb.k, %bb.p, %37
+  %.us-phi = phi i32 [ %38, %37 ], [ %13, %bb.f ], [ %21, %bb.k ], [ %29, %bb.p ], [ %39, %bb.v ], [ %40, %bb.x ], [ %41, %bb.z ], [ %43, %42 ]
   ret i32 %.us-phi
 }
 

@@ -205,19 +205,17 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph73.i:                                       ; preds = %._crit_edge.i, %par_shapes__normalize3.exit.i
   %.071.i = phi i32 [ %i.ak, %par_shapes__normalize3.exit.i ], [ 0, %._crit_edge.i ]
-  %.05570.i = phi ptr [ %i.al, %par_shapes__normalize3.exit.i ], [ %i.l, %._crit_edge.i ] ; 6 uses
-  %2 = getelementptr inbounds nuw i8, ptr %.05570.i, i64 4
+  %.05570.i = phi ptr [ %i.al, %par_shapes__normalize3.exit.i ], [ %i.l, %._crit_edge.i ] ; 5 uses
   %i.z = load <2 x float>, ptr %.05570.i, align 4
-  %i.aa = fmul <2 x float> %i.z, zeroinitializer  ; 3 uses
-  %i.ab = extractelement <2 x float> %i.aa, i64 0 ; 3 uses
-  store float %i.ab, ptr %.05570.i, align 4
-  %3 = extractelement <2 x float> %i.aa, i64 1    ; 3 uses
-  store float %3, ptr %2, align 4
-  %4 = getelementptr inbounds nuw i8, ptr %.05570.i, i64 8 ; 2 uses
-  %5 = load float, ptr %4, align 4                ; 3 uses
-  %6 = fmul ninf float %3, %3
-  %i.ac = tail call float @llvm.fmuladd.f32(float %i.ab, float %i.ab, float %6)
-  %i.ad = tail call float @llvm.fmuladd.f32(float %5, float %5, float %i.ac) ; 2 uses
+  %i.aa = fmul <2 x float> %i.z, zeroinitializer  ; 5 uses
+  %i.ab = extractelement <2 x float> %i.aa, i64 0 ; 2 uses
+  store <2 x float> %i.aa, ptr %.05570.i, align 4
+  %2 = getelementptr inbounds nuw i8, ptr %.05570.i, i64 8 ; 2 uses
+  %3 = load float, ptr %2, align 4                ; 3 uses
+  %foldExtExtBinop = fmul ninf <2 x float> %i.aa, %i.aa
+  %4 = extractelement <2 x float> %foldExtExtBinop, i64 1
+  %i.ac = tail call float @llvm.fmuladd.f32(float %i.ab, float %i.ab, float %4)
+  %i.ad = tail call float @llvm.fmuladd.f32(float %3, float %3, float %i.ac) ; 2 uses
   %i.ae = fcmp ogt float %i.ad, 0.000000e+00
   br i1 %i.ae, label %bb.c, label %par_shapes__normalize3.exit.i
 
@@ -228,8 +226,8 @@ bb.c:                                             ; preds = %.lr.ph73.i
   %i.ah = shufflevector <2 x float> %i.ag, <2 x float> poison, <2 x i32> zeroinitializer
   %i.ai = fmul <2 x float> %i.aa, %i.ah
   store <2 x float> %i.ai, ptr %.05570.i, align 4
-  %i.aj = fmul float %5, %i.af
-  store float %i.aj, ptr %4, align 4
+  %i.aj = fmul float %3, %i.af
+  store float %i.aj, ptr %2, align 4
   br label %par_shapes__normalize3.exit.i
 
 par_shapes__normalize3.exit.i:                    ; preds = %bb.c, %.lr.ph73.i
@@ -327,20 +325,18 @@ bb.f:                                             ; preds = %bb.e, %bb.d
 
 .lr.ph73:                                         ; preds = %bb.f, %par_shapes__normalize3.exit
   %.071 = phi i32 [ %i.be, %par_shapes__normalize3.exit ], [ 0, %bb.f ]
-  %.05570 = phi ptr [ %i.bf, %par_shapes__normalize3.exit ], [ %i.j, %bb.f ] ; 6 uses
-  %4 = getelementptr inbounds nuw i8, ptr %.05570, i64 4
+  %.05570 = phi ptr [ %i.bf, %par_shapes__normalize3.exit ], [ %i.j, %bb.f ] ; 5 uses
   %i.aq = load <2 x float>, ptr %.05570, align 4
-  %i.ar = fmul <2 x float> %i.ap, %i.aq           ; 3 uses
-  %5 = extractelement <2 x float> %i.ar, i64 0    ; 3 uses
-  store float %5, ptr %.05570, align 4
-  %i.as = extractelement <2 x float> %i.ar, i64 1 ; 3 uses
-  store float %i.as, ptr %4, align 4
+  %i.ar = fmul <2 x float> %i.ap, %i.aq           ; 5 uses
+  %i.as = extractelement <2 x float> %i.ar, i64 0 ; 2 uses
+  store <2 x float> %i.ar, ptr %.05570, align 4
   %i.at = getelementptr inbounds nuw i8, ptr %.05570, i64 8 ; 3 uses
   %i.au = load float, ptr %i.at, align 4
   %i.av = fmul float %.058, %i.au                 ; 4 uses
   store float %i.av, ptr %i.at, align 4
-  %6 = fmul float %i.as, %i.as
-  %i.aw = tail call float @llvm.fmuladd.f32(float %5, float %5, float %6)
+  %foldExtExtBinop = fmul <2 x float> %i.ar, %i.ar
+  %4 = extractelement <2 x float> %foldExtExtBinop, i64 1
+  %i.aw = tail call float @llvm.fmuladd.f32(float %i.as, float %i.as, float %4)
   %i.ax = tail call float @llvm.fmuladd.f32(float %i.av, float %i.av, float %i.aw) ; 2 uses
   %i.ay = fcmp ogt float %i.ax, 0.000000e+00
   br i1 %i.ay, label %bb.g, label %par_shapes__normalize3.exit

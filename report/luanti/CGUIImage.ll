@@ -204,7 +204,7 @@ bb.a:
   %1 = alloca %"class.core::rect", align 4        ; 12 uses
   %2 = alloca [4 x %"class.video::SColor"], align 16 ; 4 uses
   %3 = alloca %"class.core::rect", align 16       ; 6 uses
-  %4 = alloca %"class.core::rect", align 4        ; 9 uses
+  %4 = alloca %"class.core::rect", align 16       ; 9 uses
   %5 = alloca %"class.core::rect", align 16       ; 6 uses
   %6 = alloca %"class.video::SColor", align 4     ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 160
@@ -316,15 +316,15 @@ bb.h:                                             ; preds = %bb.f
   %i.bp = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
   %i.bq = sub nsw i32 %i.ah, %i.ag                ; 2 uses
   %i.br = sub nsw i32 %i.af, %i.ae                ; 2 uses
-  %i.bs = load i64, ptr %i.bp, align 8            ; 2 uses
-  %i.bt = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 3 uses
-  %i.bu = trunc i64 %i.bs to i32                  ; 2 uses
+  %i.bs = load i64, ptr %i.bp, align 8            ; 3 uses
+  %i.bt = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
+  %i.bu = trunc i64 %i.bs to i32
   %i.bv = add nsw i32 %i.bq, %i.bu
   %i.bw = lshr i64 %i.bs, 32
-  %i.bx = trunc nuw i64 %i.bw to i32              ; 2 uses
+  %i.bx = trunc nuw i64 %i.bw to i32
   %i.by = add nsw i32 %i.br, %i.bx
-  %i.bz = getelementptr inbounds nuw i8, ptr %4, i64 12 ; 3 uses
-  %i.ca = getelementptr inbounds nuw i8, ptr %4, i64 4 ; 3 uses
+  %i.bz = getelementptr inbounds nuw i8, ptr %4, i64 12 ; 2 uses
+  %i.ca = getelementptr inbounds nuw i8, ptr %4, i64 4 ; 2 uses
   %i.cb = getelementptr inbounds nuw i8, ptr %0, i64 344
   %i.cc = getelementptr inbounds nuw i8, ptr %0, i64 352
   %i.cd = insertelement <2 x i32> poison, i32 %i.bq, i64 0
@@ -336,42 +336,34 @@ bb.h:                                             ; preds = %bb.f
   %i.cj = fsub <2 x float> splat (float 1.000000e+00), %i.ci
   %i.ck = shufflevector <2 x float> %i.ch, <2 x float> %i.cj, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   %i.cl = fmul <4 x float> %i.ck, %i.cg
-  %i.cm = fadd <4 x float> %i.cl, splat (float 5.000000e-01) ; 4 uses
-  %7 = extractelement <4 x float> %i.cm, i64 0
-  %8 = tail call noundef float @llvm.floor.f32(float %7)
-  %9 = fptosi float %8 to i32
-  %10 = add nsw i32 %i.bu, %9                     ; 3 uses
-  store i32 %10, ptr %4, align 4, !tbaa !66
-  %11 = extractelement <4 x float> %i.cm, i64 1
-  %12 = tail call noundef float @llvm.floor.f32(float %11)
-  %13 = fptosi float %12 to i32
-  %14 = add nsw i32 %i.bx, %13                    ; 3 uses
-  store i32 %14, ptr %i.ca, align 4, !tbaa !68
-  %15 = extractelement <4 x float> %i.cm, i64 2
-  %16 = tail call noundef float @llvm.floor.f32(float %15)
-  %17 = fptosi float %16 to i32
-  %18 = sub nsw i32 %i.bv, %17                    ; 3 uses
-  store i32 %18, ptr %i.bt, align 4, !tbaa !65
-  %19 = extractelement <4 x float> %i.cm, i64 3
-  %20 = tail call noundef float @llvm.floor.f32(float %19)
-  %21 = fptosi float %20 to i32
-  %22 = sub nsw i32 %i.by, %21                    ; 3 uses
-  store i32 %22, ptr %i.bz, align 4, !tbaa !67
+  %i.cm = fadd <4 x float> %i.cl, splat (float 5.000000e-01)
+  %7 = tail call <4 x float> @llvm.floor.v4f32(<4 x float> %i.cm)
+  %8 = fptosi <4 x float> %7 to <4 x i32>         ; 2 uses
+  %9 = insertelement <2 x i64> poison, i64 %i.bs, i64 0
+  %10 = bitcast <2 x i64> %9 to <4 x i32>
+  %11 = insertelement <4 x i32> %10, i32 %i.bv, i64 2
+  %12 = insertelement <4 x i32> %11, i32 %i.by, i64 3 ; 2 uses
+  %13 = add nsw <4 x i32> %12, %8                 ; 3 uses
+  %14 = sub nsw <4 x i32> %12, %8                 ; 3 uses
+  %15 = shufflevector <4 x i32> %13, <4 x i32> %14, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
+  store <4 x i32> %15, ptr %4, align 16, !tbaa !59
   %i.cn = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.co = getelementptr inbounds nuw i8, ptr %0, i64 88
   %i.cp = load i32, ptr %i.co, align 8, !tbaa !65 ; 6 uses
-  %i.cq = icmp slt i32 %i.cp, %18
+  %16 = extractelement <4 x i32> %14, i64 2       ; 2 uses
+  %i.cq = icmp slt i32 %i.cp, %16
   br i1 %i.cq, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %bb.h
-  store i32 %i.cp, ptr %i.bt, align 4, !tbaa !65
+  store i32 %i.cp, ptr %i.bt, align 8, !tbaa !65
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h
-  %i.cr = phi i32 [ %i.cp, %bb.i ], [ %18, %bb.h ]
+  %i.cr = phi i32 [ %i.cp, %bb.i ], [ %16, %bb.h ]
   %i.cs = getelementptr inbounds nuw i8, ptr %0, i64 92
   %i.ct = load i32, ptr %i.cs, align 4, !tbaa !67 ; 6 uses
-  %i.cu = icmp slt i32 %i.ct, %22
+  %17 = extractelement <4 x i32> %14, i64 3       ; 2 uses
+  %i.cu = icmp slt i32 %i.ct, %17
   br i1 %i.cu, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %bb.j
@@ -379,13 +371,13 @@ bb.k:                                             ; preds = %bb.j
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.j
-  %i.cv = phi i32 [ %i.ct, %bb.k ], [ %22, %bb.j ]
+  %i.cv = phi i32 [ %i.ct, %bb.k ], [ %17, %bb.j ]
   %i.cw = load i32, ptr %i.cn, align 8, !tbaa !66 ; 4 uses
   %i.cx = icmp sgt i32 %i.cw, %i.cr
   br i1 %i.cx, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %bb.l
-  store i32 %i.cw, ptr %i.bt, align 4, !tbaa !65
+  store i32 %i.cw, ptr %i.bt, align 8, !tbaa !65
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %bb.l
@@ -399,16 +391,18 @@ bb.o:                                             ; preds = %bb.n
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.o, %bb.n
-  %i.db = icmp slt i32 %i.cp, %10
+  %18 = extractelement <4 x i32> %13, i64 0       ; 2 uses
+  %i.db = icmp slt i32 %i.cp, %18
   br i1 %i.db, label %bb.q, label %bb.r
 
 bb.q:                                             ; preds = %bb.p
-  store i32 %i.cp, ptr %4, align 4, !tbaa !66
+  store i32 %i.cp, ptr %4, align 16, !tbaa !66
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.q, %bb.p
-  %i.dc = phi i32 [ %i.cp, %bb.q ], [ %10, %bb.p ]
-  %i.dd = icmp slt i32 %i.ct, %14
+  %i.dc = phi i32 [ %i.cp, %bb.q ], [ %18, %bb.p ]
+  %19 = extractelement <4 x i32> %13, i64 1       ; 2 uses
+  %i.dd = icmp slt i32 %i.ct, %19
   br i1 %i.dd, label %bb.s, label %bb.t
 
 bb.s:                                             ; preds = %bb.r
@@ -416,12 +410,12 @@ bb.s:                                             ; preds = %bb.r
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.s, %bb.r
-  %i.de = phi i32 [ %i.ct, %bb.s ], [ %14, %bb.r ]
+  %i.de = phi i32 [ %i.ct, %bb.s ], [ %19, %bb.r ]
   %i.df = icmp sgt i32 %i.cw, %i.dc
   br i1 %i.df, label %bb.u, label %bb.v
 
 bb.u:                                             ; preds = %bb.t
-  store i32 %i.cw, ptr %4, align 4, !tbaa !66
+  store i32 %i.cw, ptr %4, align 16, !tbaa !66
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.u, %bb.t

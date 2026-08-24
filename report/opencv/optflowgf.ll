@@ -205,12 +205,11 @@ bb.cr:                                            ; preds = %bb.cq
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #23
   %.pre.i.i = load i32, ptr %.phi.trans.insert.i.i, align 4
   %.fr159.i.i = freeze i32 %.pre.i.i              ; 2 uses
-  %.pre191.i.i = load ptr, ptr %.phi.trans.insert190.i.i, align 8 ; 21 uses
+  %.pre191.i.i = load ptr, ptr %.phi.trans.insert190.i.i, align 8 ; 20 uses
   br i1 %.not129.i.i, label %._crit_edge149.split.i.i, label %.preheader.lr.ph.i.i
 
 .preheader.lr.ph.i.i:                             ; preds = %bb.cr
   %i.mx = icmp slt i32 %.fr159.i.i, 2
-  %52 = getelementptr inbounds nuw i8, ptr %.pre191.i.i, i64 8
   %i.my = getelementptr inbounds nuw i8, ptr %.pre191.i.i, i64 24 ; 2 uses
   %i.mz = getelementptr inbounds nuw i8, ptr %.pre191.i.i, i64 40 ; 2 uses
   br i1 %i.mx, label %.preheader.lr.ph.split.split.us.i.i, label %.preheader.preheader.i.i
@@ -226,15 +225,13 @@ bb.cr:                                            ; preds = %bb.cq
   %.promoted157.i.i = load double, ptr %i.mz, align 8, !tbaa !122
   %i.nd = sext i32 %i.ks to i64                   ; 2 uses
   %i.ne = add nuw i32 %i.jd, 1                    ; 2 uses
-  %53 = insertelement <4 x double> poison, double %.promoted157.i.i, i64 0
-  %54 = insertelement <4 x double> %53, double %.promoted155.i.i, i64 1
-  %55 = shufflevector <2 x double> %i.nc, <2 x double> poison, <4 x i32> <i32 1, i32 0, i32 poison, i32 poison>
-  %56 = shufflevector <4 x double> %54, <4 x double> %55, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
   br label %.preheader.us.i.i
 
 .preheader.us.i.i:                                ; preds = %._crit_edge140.split.us.us.i.i, %.preheader.lr.ph.split.split.us.i.i
   %indvars.iv185.i.i = phi i64 [ %indvars.iv.next186.i.i, %._crit_edge140.split.us.us.i.i ], [ %i.nd, %.preheader.lr.ph.split.split.us.i.i ] ; 3 uses
-  %57 = phi <4 x double> [ %66, %._crit_edge140.split.us.us.i.i ], [ %56, %.preheader.lr.ph.split.split.us.i.i ]
+  %.lcssa146.us158.i.i = phi double [ %65, %._crit_edge140.split.us.us.i.i ], [ %.promoted157.i.i, %.preheader.lr.ph.split.split.us.i.i ]
+  %.lcssa144.us156.i.i = phi double [ %61, %._crit_edge140.split.us.us.i.i ], [ %.promoted155.i.i, %.preheader.lr.ph.split.split.us.i.i ]
+  %52 = phi <2 x double> [ %59, %._crit_edge140.split.us.us.i.i ], [ %i.nc, %.preheader.lr.ph.split.split.us.i.i ]
   %i.nf = getelementptr inbounds [4 x i8], ptr %i.kj, i64 %indvars.iv185.i.i
   %i.ng = load float, ptr %i.nf, align 4, !tbaa !107
   %i.nh = trunc nsw i64 %indvars.iv185.i.i to i32
@@ -243,7 +240,9 @@ bb.cr:                                            ; preds = %bb.cq
 
 bb.cs:                                            ; preds = %bb.cs, %.preheader.us.i.i
   %indvars.iv180.i.i = phi i64 [ %indvars.iv.next181.i.i, %bb.cs ], [ %i.nd, %.preheader.us.i.i ] ; 3 uses
-  %58 = phi <4 x double> [ %66, %bb.cs ], [ %57, %.preheader.us.i.i ]
+  %53 = phi double [ %65, %bb.cs ], [ %.lcssa146.us158.i.i, %.preheader.us.i.i ]
+  %54 = phi double [ %61, %bb.cs ], [ %.lcssa144.us156.i.i, %.preheader.us.i.i ]
+  %55 = phi <2 x double> [ %59, %bb.cs ], [ %52, %.preheader.us.i.i ]
   %i.nj = getelementptr inbounds [4 x i8], ptr %i.kj, i64 %indvars.iv180.i.i
   %i.nk = load float, ptr %i.nj, align 4, !tbaa !107
   %i.nl = trunc nsw i64 %indvars.iv180.i.i to i32
@@ -251,16 +250,18 @@ bb.cs:                                            ; preds = %bb.cs, %.preheader.
   %i.nn = fmul float %i.ng, %i.nk                 ; 2 uses
   %i.no = fmul float %i.nn, %i.nm
   %i.np = fmul float %i.no, %i.nm                 ; 3 uses
-  %59 = fmul float %i.np, %i.nm
-  %60 = fmul float %59, %i.nm
-  %i.nq = fmul float %i.np, %i.ni
-  %i.nr = fmul float %i.nq, %i.ni
-  %61 = insertelement <4 x float> poison, float %i.nr, i64 0
-  %62 = insertelement <4 x float> %61, float %60, i64 1
-  %63 = insertelement <4 x float> %62, float %i.np, i64 2
-  %64 = insertelement <4 x float> %63, float %i.nn, i64 3
-  %65 = fpext <4 x float> %64 to <4 x double>
-  %66 = fadd <4 x double> %58, %65                ; 6 uses
+  %56 = insertelement <2 x float> poison, float %i.nn, i64 0
+  %57 = insertelement <2 x float> %56, float %i.np, i64 1
+  %58 = fpext <2 x float> %57 to <2 x double>
+  %59 = fadd <2 x double> %55, %58                ; 3 uses
+  %i.nq = fmul float %i.np, %i.nm
+  %i.nr = fmul float %i.nq, %i.nm
+  %60 = fpext float %i.nr to double
+  %61 = fadd double %54, %60                      ; 3 uses
+  %62 = fmul float %i.np, %i.ni
+  %63 = fmul float %62, %i.ni
+  %64 = fpext float %63 to double
+  %65 = fadd double %53, %64                      ; 3 uses
   %indvars.iv.next181.i.i = add nsw i64 %indvars.iv180.i.i, 1 ; 2 uses
   %lftr.wideiv183.i.i = trunc i64 %indvars.iv.next181.i.i to i32
   %exitcond184.not.i.i = icmp eq i32 %i.ne, %lftr.wideiv183.i.i
@@ -273,14 +274,9 @@ bb.cs:                                            ; preds = %bb.cs, %.preheader.
   br i1 %exitcond189.not.i.i, label %._crit_edge149.split151.us.i.i, label %.preheader.us.i.i, !llvm.loop !124
 
 ._crit_edge149.split151.us.i.i:                   ; preds = %._crit_edge140.split.us.us.i.i
-  %67 = extractelement <4 x double> %66, i64 3
-  store double %67, ptr %.pre191.i.i, align 8, !tbaa !122
-  %68 = extractelement <4 x double> %66, i64 2
-  store double %68, ptr %52, align 8, !tbaa !122
-  %69 = extractelement <4 x double> %66, i64 1
-  store double %69, ptr %i.my, align 8, !tbaa !122
-  %70 = extractelement <4 x double> %66, i64 0
-  store double %70, ptr %i.mz, align 8, !tbaa !122
+  store <2 x double> %59, ptr %.pre191.i.i, align 8, !tbaa !122
+  store double %61, ptr %i.my, align 8, !tbaa !122
+  store double %65, ptr %i.mz, align 8, !tbaa !122
   br label %._crit_edge149.split.i.i
 
 .preheader.i.i:                                   ; preds = %._crit_edge140.split.i.i, %.preheader.preheader.i.i

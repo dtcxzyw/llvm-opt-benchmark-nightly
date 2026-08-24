@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %.lr.ph, %_ZZN3igl12
   %i.az = fsub <2 x float> %i.av, %i.ao           ; 2 uses
   %i.ba = fneg <2 x float> %i.az
   %i.bb = fmul <2 x float> %i.au, %i.ba
-  %i.bc = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ap, <2 x float> %i.ay, <2 x float> %i.bb) ; 5 uses
+  %i.bc = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ap, <2 x float> %i.ay, <2 x float> %i.bb) ; 4 uses
   %i.bd = extractelement <2 x float> %i.ay, i64 1
   %i.be = fneg float %i.bd
   %i.bf = extractelement <2 x float> %i.ap, i64 0
@@ -213,13 +213,9 @@ bb.c:                                             ; preds = %.lr.ph, %_ZZN3igl12
   %i.bh = extractelement <2 x float> %i.au, i64 1
   %i.bi = extractelement <2 x float> %i.az, i64 0
   %i.bj = tail call float @llvm.fmuladd.f32(float %i.bh, float %i.bi, float %i.bg) ; 4 uses
-  %7 = getelementptr inbounds nuw i8, ptr %i.t, i64 %.idx.i.i.i.i.i ; 5 uses
-  %8 = extractelement <2 x float> %i.bc, i64 0
-  store float %8, ptr %7, align 4, !tbaa !9
-  %i.bk = getelementptr i8, ptr %7, i64 4         ; 2 uses
-  %9 = extractelement <2 x float> %i.bc, i64 1
-  store float %9, ptr %i.bk, align 4, !tbaa !9
-  %i.bl = getelementptr i8, ptr %7, i64 8         ; 2 uses
+  %i.bk = getelementptr inbounds nuw i8, ptr %i.t, i64 %.idx.i.i.i.i.i ; 5 uses
+  store <2 x float> %i.bc, ptr %i.bk, align 4, !tbaa !9
+  %i.bl = getelementptr i8, ptr %i.bk, i64 8      ; 2 uses
   store float %i.bj, ptr %i.bl, align 4, !tbaa !9
   %i.bm = fmul <2 x float> %i.bc, %i.bc           ; 2 uses
   %i.bn = fmul float %i.bj, %i.bj
@@ -231,12 +227,13 @@ bb.c:                                             ; preds = %.lr.ph, %_ZZN3igl12
   br i1 %i.bs, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
+  %7 = getelementptr i8, ptr %i.bk, i64 4
   %i.bt = load ptr, ptr %i.u, align 8, !tbaa !1386, !nonnull !163 ; 3 uses
   %i.bu = load float, ptr %i.bt, align 4, !tbaa !9
-  store float %i.bu, ptr %7, align 4, !tbaa !9
+  store float %i.bu, ptr %i.bk, align 4, !tbaa !9
   %i.bv = getelementptr inbounds nuw i8, ptr %i.bt, i64 4
   %i.bw = load float, ptr %i.bv, align 4, !tbaa !9
-  store float %i.bw, ptr %i.bk, align 4, !tbaa !9
+  store float %i.bw, ptr %7, align 4, !tbaa !9
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bt, i64 8
   %i.by = load float, ptr %i.bx, align 4, !tbaa !9
   br label %_ZZN3igl12parallel_forIiZNS_16per_face_normalsIN5Eigen6MatrixIfLin1ELi3ELi1ELin1ELi3EEENS3_IjLin1ELi3ELi1ELin1ELi3EEENS3_IfLi3ELi1ELi0ELi3ELi1EEES4_EEvRKNS2_10MatrixBaseIT_EERKNS7_IT0_EERKNS7_IT1_EERNS2_15PlainObjectBaseIT2_EEEUliE_EEbS8_RKSC_mENKUlimE_clEim.exit
@@ -246,7 +243,7 @@ bb.e:                                             ; preds = %bb.c
   %i.ca = insertelement <2 x float> poison, float %i.bz, i64 0
   %i.cb = shufflevector <2 x float> %i.ca, <2 x float> poison, <2 x i32> zeroinitializer
   %i.cc = fdiv <2 x float> %i.bc, %i.cb
-  store <2 x float> %i.cc, ptr %7, align 4, !tbaa !9
+  store <2 x float> %i.cc, ptr %i.bk, align 4, !tbaa !9
   %i.cd = fdiv float %i.bj, %i.bz
   br label %_ZZN3igl12parallel_forIiZNS_16per_face_normalsIN5Eigen6MatrixIfLin1ELi3ELi1ELin1ELi3EEENS3_IjLin1ELi3ELi1ELin1ELi3EEENS3_IfLi3ELi1ELi0ELi3ELi1EEES4_EEvRKNS2_10MatrixBaseIT_EERKNS7_IT0_EERKNS7_IT1_EERNS2_15PlainObjectBaseIT2_EEEUliE_EEbS8_RKSC_mENKUlimE_clEim.exit
 
@@ -649,7 +646,7 @@ bb.b:                                             ; preds = %_ZZN3igl12parallel_
   %i.at = fsub <2 x float> %i.ap, %i.ai           ; 2 uses
   %i.au = fneg <2 x float> %i.at
   %i.av = fmul <2 x float> %i.ao, %i.au
-  %i.aw = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.aj, <2 x float> %i.as, <2 x float> %i.av) ; 5 uses
+  %i.aw = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.aj, <2 x float> %i.as, <2 x float> %i.av) ; 4 uses
   %i.ax = extractelement <2 x float> %i.as, i64 1
   %i.ay = fneg float %i.ax
   %i.az = extractelement <2 x float> %i.aj, i64 0
@@ -657,13 +654,9 @@ bb.b:                                             ; preds = %_ZZN3igl12parallel_
   %i.bb = extractelement <2 x float> %i.ao, i64 1
   %i.bc = extractelement <2 x float> %i.at, i64 0
   %i.bd = tail call float @llvm.fmuladd.f32(float %i.bb, float %i.bc, float %i.ba) ; 4 uses
-  %4 = getelementptr inbounds i8, ptr %i.m, i64 %.idx.i.i.i.i.i.i ; 5 uses
-  %5 = extractelement <2 x float> %i.aw, i64 0
-  store float %5, ptr %4, align 4, !tbaa !9
-  %i.be = getelementptr i8, ptr %4, i64 4         ; 2 uses
-  %6 = extractelement <2 x float> %i.aw, i64 1
-  store float %6, ptr %i.be, align 4, !tbaa !9
-  %i.bf = getelementptr i8, ptr %4, i64 8         ; 2 uses
+  %i.be = getelementptr inbounds i8, ptr %i.m, i64 %.idx.i.i.i.i.i.i ; 5 uses
+  store <2 x float> %i.aw, ptr %i.be, align 4, !tbaa !9
+  %i.bf = getelementptr i8, ptr %i.be, i64 8      ; 2 uses
   store float %i.bd, ptr %i.bf, align 4, !tbaa !9
   %i.bg = fmul <2 x float> %i.aw, %i.aw           ; 2 uses
   %i.bh = fmul float %i.bd, %i.bd
@@ -675,12 +668,13 @@ bb.b:                                             ; preds = %_ZZN3igl12parallel_
   br i1 %i.bm, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
+  %4 = getelementptr i8, ptr %i.be, i64 4
   %i.bn = load ptr, ptr %i.n, align 8, !tbaa !1386, !nonnull !163 ; 3 uses
   %i.bo = load float, ptr %i.bn, align 4, !tbaa !9
-  store float %i.bo, ptr %4, align 4, !tbaa !9
+  store float %i.bo, ptr %i.be, align 4, !tbaa !9
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bn, i64 4
   %i.bq = load float, ptr %i.bp, align 4, !tbaa !9
-  store float %i.bq, ptr %i.be, align 4, !tbaa !9
+  store float %i.bq, ptr %4, align 4, !tbaa !9
   %i.br = getelementptr inbounds nuw i8, ptr %i.bn, i64 8
   %i.bs = load float, ptr %i.br, align 4, !tbaa !9
   br label %_ZZN3igl12parallel_forIiZNS_16per_face_normalsIN5Eigen6MatrixIfLin1ELi3ELi1ELin1ELi3EEENS3_IjLin1ELi3ELi1ELin1ELi3EEENS3_IfLi3ELi1ELi0ELi3ELi1EEES4_EEvRKNS2_10MatrixBaseIT_EERKNS7_IT0_EERKNS7_IT1_EERNS2_15PlainObjectBaseIT2_EEEUliE_EEbS8_RKSC_mENKUlimE_clEim.exit.i
@@ -690,7 +684,7 @@ bb.d:                                             ; preds = %bb.b
   %i.bu = insertelement <2 x float> poison, float %i.bt, i64 0
   %i.bv = shufflevector <2 x float> %i.bu, <2 x float> poison, <2 x i32> zeroinitializer
   %i.bw = fdiv <2 x float> %i.aw, %i.bv
-  store <2 x float> %i.bw, ptr %4, align 4, !tbaa !9
+  store <2 x float> %i.bw, ptr %i.be, align 4, !tbaa !9
   %i.bx = fdiv float %i.bd, %i.bt
   br label %_ZZN3igl12parallel_forIiZNS_16per_face_normalsIN5Eigen6MatrixIfLin1ELi3ELi1ELin1ELi3EEENS3_IjLin1ELi3ELi1ELin1ELi3EEENS3_IfLi3ELi1ELi0ELi3ELi1EEES4_EEvRKNS2_10MatrixBaseIT_EERKNS7_IT0_EERKNS7_IT1_EERNS2_15PlainObjectBaseIT2_EEEUliE_EEbS8_RKSC_mENKUlimE_clEim.exit.i
 

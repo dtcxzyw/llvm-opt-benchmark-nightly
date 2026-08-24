@@ -205,34 +205,30 @@ bb.a:
   %3 = alloca %"class.Eigen::Block.561", align 8  ; 10 uses
   %4 = alloca %"class.Eigen::VectorBlock.547", align 8 ; 12 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 4 uses
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 4 uses
-  %5 = load <2 x float>, ptr %0, align 16, !tbaa !9 ; 2 uses
-  %6 = fmul <2 x float> %5, %5                    ; 2 uses
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %8 = getelementptr inbounds nuw i8, ptr %0, i64 12
-  %i.d = load <2 x float>, ptr %8, align 4, !tbaa !9 ; 2 uses
-  %9 = fmul <2 x float> %i.d, %i.d                ; 2 uses
-  %10 = load <4 x float>, ptr %7, align 8, !tbaa !9
-  %11 = shufflevector <4 x float> %10, <4 x float> poison, <2 x i32> <i32 0, i32 3> ; 2 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 3 uses
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %6 = load <4 x float>, ptr %0, align 16, !tbaa !9 ; 3 uses
+  %7 = shufflevector <4 x float> %6, <4 x float> poison, <2 x i32> <i32 0, i32 3> ; 2 uses
+  %8 = fmul <2 x float> %7, %7
+  %i.d = load <2 x float>, ptr %5, align 16, !tbaa !9 ; 2 uses
+  %9 = shufflevector <4 x float> %6, <4 x float> poison, <2 x i32> <i32 2, i32 poison>
+  %10 = shufflevector <2 x float> %i.d, <2 x float> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
+  %11 = shufflevector <4 x float> %6, <4 x float> %10, <2 x i32> <i32 1, i32 4> ; 2 uses
   %i.e = fmul <2 x float> %11, %11
-  %12 = shufflevector <2 x float> %6, <2 x float> %9, <2 x i32> <i32 1, i32 3>
-  %13 = fadd <2 x float> %12, %i.e
-  %14 = shufflevector <2 x float> %6, <2 x float> %9, <2 x i32> <i32 0, i32 2>
-  %i.f = fadd <2 x float> %14, %13
-  %i.g = tail call <2 x float> @llvm.sqrt.v2f32(<2 x float> %i.f) ; 2 uses
-  %15 = extractelement <2 x float> %i.g, i64 0    ; 4 uses
-  store float %15, ptr %i.c, align 16, !tbaa !9
-  store float %15, ptr %i.b, align 8, !tbaa !9
-  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 84
-  %16 = extractelement <2 x float> %i.g, i64 1    ; 4 uses
-  store float %16, ptr %i.h, align 4, !tbaa !9
-  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 76
-  store float %16, ptr %i.i, align 4, !tbaa !9
-  %i.j = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %17 = getelementptr inbounds nuw i8, ptr %0, i64 64
-  %18 = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
-  %i.k = fcmp olt float %15, %16
-  %i.l = select i1 %i.k, float %16, float %15
+  %12 = shufflevector <2 x float> %9, <2 x float> %i.d, <2 x i32> <i32 0, i32 3> ; 2 uses
+  %13 = fmul <2 x float> %12, %12
+  %14 = fadd <2 x float> %i.e, %13
+  %i.f = fadd <2 x float> %8, %14
+  %i.g = tail call <2 x float> @llvm.sqrt.v2f32(<2 x float> %i.f) ; 3 uses
+  %15 = shufflevector <2 x float> %i.g, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
+  store <4 x float> %15, ptr %i.b, align 8, !tbaa !9
+  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 64
+  %i.j = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
+  %16 = extractelement <2 x float> %i.g, i64 0    ; 2 uses
+  %17 = extractelement <2 x float> %i.g, i64 1    ; 2 uses
+  %i.k = fcmp olt float %16, %17
+  %i.l = select i1 %i.k, float %17, float %16
   %i.m = fmul float %i.l, f0x34000000             ; 2 uses
   %i.n = fmul float %i.m, %i.m
   %i.o = fdiv float %i.n, 3.000000e+00
@@ -274,7 +270,7 @@ bb.b:                                             ; preds = %bb.i
   store i32 0, ptr %i.aj, align 16, !tbaa !146
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 36
   store i32 1, ptr %i.ak, align 4, !tbaa !146
-  %i.al = load i64, ptr %18, align 16, !tbaa !235
+  %i.al = load i64, ptr %i.j, align 16, !tbaa !235
   %sext80 = shl i64 %i.al, 32
   %i.am = ashr exact i64 %sext80, 30
   %i.an = getelementptr inbounds i8, ptr %i.aj, i64 %i.am ; 2 uses
@@ -340,7 +336,7 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d, %_ZNK5Eigen9DenseBaseINS_5BlockINS_6MatrixIfLi1ELi2ELi1ELi1ELi2EEELi1ELin1ELb0EEEE8maxCoeffIlEEfPT_.exit
-  %i.bp = getelementptr inbounds nuw [8 x i8], ptr %18, i64 %.073148
+  %i.bp = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %.073148
   store i64 %i.bh, ptr %i.bp, align 8, !tbaa !235
   %.not81 = icmp eq i64 %.sroa.5.2.i.i, 0
   %.pre = mul nuw nsw i64 %.073148, 12            ; 3 uses
@@ -390,7 +386,7 @@ bb.g:                                             ; preds = %bb.f
   store i64 3, ptr %.sroa.8109.0..sroa_idx, align 8
   store i64 %.073148, ptr %i.t, align 8, !tbaa !156, !alias.scope !239
   store i64 3, ptr %i.u, align 8, !tbaa !242, !alias.scope !239
-  %i.cj = getelementptr inbounds nuw [4 x i8], ptr %i.j, i64 %.073148 ; 2 uses
+  %i.cj = getelementptr inbounds nuw [4 x i8], ptr %i.h, i64 %.073148 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #19
   %i.ck = getelementptr inbounds nuw i8, ptr %i.ci, i64 4
   store ptr %i.ck, ptr %1, align 8, !tbaa !251
@@ -438,7 +434,7 @@ bb.i:                                             ; preds = %bb.h, %._crit_edge1
   store i64 3, ptr %.sroa.8103.0..sroa_idx, align 8
   store i64 %i.cs, ptr %i.ah, align 8, !tbaa !156, !alias.scope !261
   store i64 3, ptr %i.ai, align 8, !tbaa !242, !alias.scope !261
-  %i.cv = getelementptr inbounds nuw [4 x i8], ptr %17, i64 %i.cs
+  %i.cv = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %i.cs
   call void @_ZN5Eigen10MatrixBaseINS_5BlockINS_6MatrixIfLi3ELi2ELi0ELi3ELi2EEELin1ELin1ELb0EEEE25applyHouseholderOnTheLeftINS_11VectorBlockINS1_IS3_Li3ELi1ELb1EEELin1EEEEEvRKT_RKfPf(ptr noundef nonnull align 1 dereferenceable(1) %3, ptr noundef nonnull align 8 dereferenceable(96) %4, ptr noundef nonnull align 4 dereferenceable(4) %i.cj, ptr noundef nonnull %i.cv)
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #19
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #19

@@ -205,7 +205,7 @@ bb.a:
   %13 = alloca %struct.ImVec4, align 8            ; 6 uses
   %14 = alloca %struct.ImVec2, align 8            ; 9 uses
   %i.i = alloca [4 x float], align 16             ; 4 uses
-  %15 = alloca %struct.ImVec2, align 8            ; 8 uses
+  %15 = alloca %struct.ImVec2, align 8            ; 7 uses
   %16 = alloca %struct.ImVec2, align 4            ; 9 uses
   %17 = alloca %struct.ImVec2, align 4            ; 9 uses
   %18 = alloca %struct.ImVec2, align 4            ; 9 uses
@@ -355,12 +355,8 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   %i.cd = fadd float %i.bh, %i.cc                 ; 5 uses
   %i.ce = insertelement <2 x float> poison, float %i.bu, i64 0
   %i.cf = insertelement <2 x float> %i.ce, float %i.bm, i64 1
-  %i.cg = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.cf, <2 x float> splat (float 5.000000e-01), <2 x float> %i.by) ; 2 uses
-  %39 = extractelement <2 x float> %i.cg, i64 0   ; 3 uses
-  store float %39, ptr %15, align 8, !tbaa !135
-  %40 = getelementptr inbounds nuw i8, ptr %15, i64 4
-  %41 = extractelement <2 x float> %i.cg, i64 1   ; 3 uses
-  store float %41, ptr %40, align 4, !tbaa !140
+  %i.cg = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.cf, <2 x float> splat (float 5.000000e-01), <2 x float> %i.by) ; 3 uses
+  store <2 x float> %i.cg, ptr %15, align 8, !tbaa !130
   %i.ch = fmul float %i.bm, 2.700000e-02
   %i.ci = fptosi float %i.ch to i32
   %i.cj = sitofp i32 %i.ci to float
@@ -525,14 +521,16 @@ bb.x:                                             ; preds = %_ZN5ImGui15Invisibl
   %.val466 = load float, ptr %i.em, align 8, !tbaa !135
   %i.en = getelementptr i8, ptr %i.w, i64 980
   %.val467 = load float, ptr %i.en, align 4, !tbaa !140
+  %39 = extractelement <2 x float> %i.cg, i64 0   ; 2 uses
   %i.eo = fsub float %.val466, %39                ; 3 uses
-  %i.ep = fsub float %.val467, %41                ; 3 uses
+  %40 = extractelement <2 x float> %i.cg, i64 1   ; 2 uses
+  %i.ep = fsub float %.val467, %40                ; 3 uses
   %i.eq = getelementptr inbounds nuw i8, ptr %i.w, i64 296
   %.val462 = load float, ptr %i.eq, align 8, !tbaa !135
   %i.er = getelementptr i8, ptr %i.w, i64 300
   %.val463 = load float, ptr %i.er, align 4, !tbaa !140
   %i.es = fsub float %.val462, %39                ; 2 uses
-  %i.et = fsub float %.val463, %41                ; 2 uses
+  %i.et = fsub float %.val463, %40                ; 2 uses
   %i.eu = fmul float %i.ep, %i.ep
   %i.ev = call noundef float @llvm.fmuladd.f32(float %i.eo, float %i.eo, float %i.eu) ; 2 uses
   %i.ew = fadd float %i.bt, -1.000000e+00         ; 2 uses

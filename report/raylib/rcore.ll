@@ -205,10 +205,10 @@ bb.a:
   %i.o = insertelement <2 x float> %i.n, float %i.f, i64 1
   %i.p = insertelement <2 x float> poison, float %i.m, i64 0
   %i.q = shufflevector <2 x float> %i.p, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
-  %i.r = fmul <2 x float> %i.o, %i.q              ; 4 uses
+  %i.r = fmul <2 x float> %i.o, %i.q              ; 5 uses
   %i.s = fmul <2 x float> %i.e, %i.q              ; 2 uses
   %i.t = fneg <2 x float> %i.s
-  %i.u = extractelement <2 x float> %i.r, i64 1   ; 4 uses
+  %i.u = extractelement <2 x float> %i.r, i64 1   ; 3 uses
   %i.v = fneg float %i.u
   %i.w = shufflevector <2 x float> %5, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
   %i.x = insertelement <2 x float> %i.w, float %6, i64 1
@@ -240,7 +240,7 @@ bb.a:
   %i.aw = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.r, <2 x float> %i.an, <2 x float> %i.av) ; 3 uses
   %i.ax = extractelement <2 x float> %i.an, i64 1 ; 3 uses
   %i.ay = fneg float %i.ax
-  %i.az = extractelement <2 x float> %i.r, i64 0  ; 3 uses
+  %i.az = extractelement <2 x float> %i.r, i64 0  ; 2 uses
   %i.ba = fmul float %i.az, %i.ay
   %i.bb = tail call float @llvm.fmuladd.f32(float %i.ab, float %i.ao, float %i.ba) ; 2 uses
   store float %i.ax, ptr %0, align 4
@@ -248,13 +248,11 @@ bb.a:
   store float %i.ao, ptr %i.d, align 4
   store <2 x float> %i.aw, ptr %i.a, align 4
   %i.bc = getelementptr inbounds nuw i8, ptr %0, i64 36
-  store float %i.az, ptr %i.bc, align 4
   %i.bd = getelementptr inbounds nuw i8, ptr %0, i64 8
   store float %i.ap, ptr %i.bd, align 4
   %i.be = getelementptr inbounds nuw i8, ptr %0, i64 24
   store float %i.bb, ptr %i.be, align 4
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 40
-  store float %i.u, ptr %7, align 4
+  store <2 x float> %i.r, ptr %i.bc, align 4
   %i.bf = fmul float %.sroa.069.4.vec.extract, %i.ao
   %i.bg = tail call float @llvm.fmuladd.f32(float %i.ax, float %.sroa.069.0.vec.extract, float %i.bf)
   %i.bh = tail call float @llvm.fmuladd.f32(float %i.ap, float %2, float %i.bg)
@@ -657,10 +655,10 @@ bb.a:
   %i.q = insertelement <2 x float> %i.p, float %i.h, i64 1
   %i.r = insertelement <2 x float> poison, float %i.o, i64 0
   %i.s = shufflevector <2 x float> %i.r, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
-  %i.t = fmul <2 x float> %i.q, %i.s              ; 4 uses
+  %i.t = fmul <2 x float> %i.q, %i.s              ; 5 uses
   %i.u = fmul <2 x float> %i.g, %i.s              ; 2 uses
   %i.v = fneg <2 x float> %i.u
-  %i.w = extractelement <2 x float> %i.t, i64 1   ; 4 uses
+  %i.w = extractelement <2 x float> %i.t, i64 1   ; 3 uses
   %i.x = fneg float %i.w
   %i.y = shufflevector <2 x float> %.sroa.0.0.copyload, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
   %i.z = insertelement <2 x float> %i.y, float %.sroa.2.0.copyload, i64 1
@@ -692,7 +690,7 @@ bb.a:
   %i.ay = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.t, <2 x float> %i.ap, <2 x float> %i.ax) ; 3 uses
   %i.az = extractelement <2 x float> %i.ap, i64 1 ; 3 uses
   %i.ba = fneg float %i.az
-  %i.bb = extractelement <2 x float> %i.t, i64 0  ; 3 uses
+  %i.bb = extractelement <2 x float> %i.t, i64 0  ; 2 uses
   %i.bc = fmul float %i.bb, %i.ba
   %i.bd = tail call float @llvm.fmuladd.f32(float %i.ad, float %i.aq, float %i.bc) ; 2 uses
   store float %i.az, ptr %0, align 4, !alias.scope !198
@@ -700,13 +698,11 @@ bb.a:
   store float %i.aq, ptr %i.f, align 4, !alias.scope !198
   store <2 x float> %i.ay, ptr %i.c, align 4, !alias.scope !198
   %i.be = getelementptr inbounds nuw i8, ptr %0, i64 36
-  store float %i.bb, ptr %i.be, align 4, !alias.scope !198
   %i.bf = getelementptr inbounds nuw i8, ptr %0, i64 8
   store float %i.ar, ptr %i.bf, align 4, !alias.scope !198
   %i.bg = getelementptr inbounds nuw i8, ptr %0, i64 24
   store float %i.bd, ptr %i.bg, align 4, !alias.scope !198
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 40
-  store float %i.w, ptr %2, align 4, !alias.scope !198
+  store <2 x float> %i.t, ptr %i.be, align 4, !alias.scope !198
   %i.bh = fmul float %.sroa.069.4.vec.extract.i, %i.aq
   %i.bi = tail call float @llvm.fmuladd.f32(float %i.az, float %.sroa.069.0.vec.extract.i, float %i.bh)
   %i.bj = tail call float @llvm.fmuladd.f32(float %i.ar, float %.sroa.24.0.copyload, float %i.bi)
@@ -1109,7 +1105,7 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, argmem: readwrite, inaccessiblemem: none, errnomem: readwrite, target_mem: none) uwtable
 define void @GetScreenToWorldRayEx(ptr dead_on_unwind noalias nofree writable writeonly sret(%struct.Ray) align 4 captures(none) initializes((0, 24)) %0, <2 x float> %1, ptr nofree noundef readonly byval(%struct.Camera3D) align 8 captures(none) %2, i32 noundef %3, i32 noundef %4) local_unnamed_addr #29 {
 bb.a:
-  %5 = alloca %struct.Matrix, align 8             ; 17 uses
+  %5 = alloca %struct.Matrix, align 8             ; 16 uses
   %6 = alloca %struct.Matrix, align 8             ; 22 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(24) %0, i8 0, i64 24, i1 false)
   %.sroa.070.0.vec.extract = extractelement <2 x float> %1, i64 0
@@ -1156,10 +1152,10 @@ bb.a:
   %i.y = insertelement <2 x float> %i.x, float %i.p, i64 1
   %i.z = insertelement <2 x float> poison, float %i.w, i64 0
   %i.aa = shufflevector <2 x float> %i.z, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
-  %i.ab = fmul <2 x float> %i.y, %i.aa            ; 4 uses
+  %i.ab = fmul <2 x float> %i.y, %i.aa            ; 5 uses
   %i.ac = fmul <2 x float> %i.o, %i.aa            ; 2 uses
   %i.ad = fneg <2 x float> %i.ac
-  %i.ae = extractelement <2 x float> %i.ab, i64 1 ; 4 uses
+  %i.ae = extractelement <2 x float> %i.ab, i64 1 ; 3 uses
   %i.af = fneg float %i.ae
   %i.ag = shufflevector <2 x float> %.sroa.051.0.copyload, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
   %i.ah = insertelement <2 x float> %i.ag, float %.sroa.252.0.copyload, i64 1
@@ -1191,7 +1187,7 @@ bb.a:
   %i.bg = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ab, <2 x float> %i.ax, <2 x float> %i.bf) ; 3 uses
   %i.bh = extractelement <2 x float> %i.ax, i64 1 ; 3 uses
   %i.bi = fneg float %i.bh
-  %i.bj = extractelement <2 x float> %i.ab, i64 0 ; 3 uses
+  %i.bj = extractelement <2 x float> %i.ab, i64 0 ; 2 uses
   %i.bk = fmul float %i.bj, %i.bi
   %i.bl = tail call float @llvm.fmuladd.f32(float %i.al, float %i.ay, float %i.bk) ; 2 uses
   store float %i.bh, ptr %5, align 8, !alias.scope !280
@@ -1199,13 +1195,11 @@ bb.a:
   store float %i.ay, ptr %i.n, align 4, !alias.scope !280
   store <2 x float> %i.bg, ptr %i.k, align 8, !alias.scope !280
   %i.bm = getelementptr inbounds nuw i8, ptr %5, i64 36
-  store float %i.bj, ptr %i.bm, align 4, !alias.scope !280
   %i.bn = getelementptr inbounds nuw i8, ptr %5, i64 8
   store float %i.az, ptr %i.bn, align 8, !alias.scope !280
   %i.bo = getelementptr inbounds nuw i8, ptr %5, i64 24
   store float %i.bl, ptr %i.bo, align 8, !alias.scope !280
-  %7 = getelementptr inbounds nuw i8, ptr %5, i64 40
-  store float %i.ae, ptr %7, align 8, !alias.scope !280
+  store <2 x float> %i.ab, ptr %i.bm, align 4, !alias.scope !280
   %i.bp = fmul float %.sroa.069.4.vec.extract.i, %i.ay
   %i.bq = tail call float @llvm.fmuladd.f32(float %i.bh, float %.sroa.069.0.vec.extract.i, float %i.bp)
   %i.br = tail call float @llvm.fmuladd.f32(float %i.az, float %.sroa.256.0.copyload, float %i.bq)
@@ -1459,10 +1453,10 @@ bb.a:
   %i.q = insertelement <2 x float> %i.p, float %i.h, i64 1
   %i.r = insertelement <2 x float> poison, float %i.o, i64 0
   %i.s = shufflevector <2 x float> %i.r, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
-  %i.t = fmul <2 x float> %i.q, %i.s              ; 4 uses
+  %i.t = fmul <2 x float> %i.q, %i.s              ; 5 uses
   %i.u = fmul <2 x float> %i.g, %i.s              ; 2 uses
   %i.v = fneg <2 x float> %i.u
-  %i.w = extractelement <2 x float> %i.t, i64 1   ; 4 uses
+  %i.w = extractelement <2 x float> %i.t, i64 1   ; 3 uses
   %i.x = fneg float %i.w
   %i.y = shufflevector <2 x float> %.sroa.0.0.copyload, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
   %i.z = insertelement <2 x float> %i.y, float %.sroa.2.0.copyload, i64 1
@@ -1494,7 +1488,7 @@ bb.a:
   %i.ay = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.t, <2 x float> %i.ap, <2 x float> %i.ax) ; 3 uses
   %i.az = extractelement <2 x float> %i.ap, i64 1 ; 3 uses
   %i.ba = fneg float %i.az
-  %i.bb = extractelement <2 x float> %i.t, i64 0  ; 3 uses
+  %i.bb = extractelement <2 x float> %i.t, i64 0  ; 2 uses
   %i.bc = fmul float %i.bb, %i.ba
   %i.bd = tail call float @llvm.fmuladd.f32(float %i.ad, float %i.aq, float %i.bc) ; 2 uses
   store float %i.az, ptr %0, align 4, !alias.scope !289
@@ -1502,13 +1496,11 @@ bb.a:
   store float %i.aq, ptr %i.f, align 4, !alias.scope !289
   store <2 x float> %i.ay, ptr %i.c, align 4, !alias.scope !289
   %i.be = getelementptr inbounds nuw i8, ptr %0, i64 36
-  store float %i.bb, ptr %i.be, align 4, !alias.scope !289
   %i.bf = getelementptr inbounds nuw i8, ptr %0, i64 8
   store float %i.ar, ptr %i.bf, align 4, !alias.scope !289
   %i.bg = getelementptr inbounds nuw i8, ptr %0, i64 24
   store float %i.bd, ptr %i.bg, align 4, !alias.scope !289
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 40
-  store float %i.w, ptr %2, align 4, !alias.scope !289
+  store <2 x float> %i.t, ptr %i.be, align 4, !alias.scope !289
   %i.bh = fmul float %.sroa.069.4.vec.extract.i, %i.aq
   %i.bi = tail call float @llvm.fmuladd.f32(float %i.az, float %.sroa.069.0.vec.extract.i, float %i.bh)
   %i.bj = tail call float @llvm.fmuladd.f32(float %i.ar, float %.sroa.24.0.copyload, float %i.bi)

@@ -205,31 +205,24 @@ bb.a:
   %3 = alloca %"class.Eigen::Block.4407", align 8 ; 10 uses
   %4 = alloca %"class.Eigen::VectorBlock.4393", align 8 ; 12 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 4 uses
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 4 uses
-  %5 = load <2 x float>, ptr %0, align 16, !tbaa !12 ; 2 uses
-  %6 = fmul <2 x float> %5, %5                    ; 2 uses
-  %shift = shufflevector <2 x float> %6, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = fadd <2 x float> %6, %shift
-  %7 = extractelement <2 x float> %foldExtExtBinop, i64 0
-  %8 = tail call noundef float @llvm.sqrt.f32(float %7) ; 4 uses
-  store float %8, ptr %i.c, align 16, !tbaa !12
-  store float %8, ptr %i.b, align 8, !tbaa !12
-  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.e = load <2 x float>, ptr %i.d, align 8, !tbaa !12 ; 2 uses
-  %i.f = fmul <2 x float> %i.e, %i.e              ; 2 uses
-  %shift154 = shufflevector <2 x float> %i.f, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop155 = fadd <2 x float> %i.f, %shift154
-  %9 = extractelement <2 x float> %foldExtExtBinop155, i64 0
-  %10 = tail call noundef float @llvm.sqrt.f32(float %9) ; 4 uses
-  %11 = getelementptr inbounds nuw i8, ptr %0, i64 68
-  store float %10, ptr %11, align 4, !tbaa !12
-  %12 = getelementptr inbounds nuw i8, ptr %0, i64 60
-  store float %10, ptr %12, align 4, !tbaa !12
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 3 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 4
+  %i.e = load <2 x float>, ptr %i.d, align 4, !tbaa !12 ; 2 uses
+  %i.f = fmul <2 x float> %i.e, %i.e
+  %5 = load <4 x float>, ptr %0, align 16, !tbaa !12
+  %6 = shufflevector <4 x float> %5, <4 x float> poison, <2 x i32> <i32 0, i32 3> ; 2 uses
+  %7 = fmul <2 x float> %6, %6
+  %8 = fadd <2 x float> %i.f, %7
+  %9 = tail call <2 x float> @llvm.sqrt.v2f32(<2 x float> %8) ; 3 uses
+  %10 = shufflevector <2 x float> %9, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
+  store <4 x float> %10, ptr %i.b, align 8, !tbaa !12
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
-  %i.j = fcmp olt float %8, %10
-  %i.k = select i1 %i.j, float %10, float %8
+  %11 = extractelement <2 x float> %9, i64 0      ; 2 uses
+  %12 = extractelement <2 x float> %9, i64 1      ; 2 uses
+  %i.j = fcmp olt float %11, %12
+  %i.k = select i1 %i.j, float %12, float %11
   %i.l = fmul float %i.k, f0x34000000             ; 2 uses
   %i.m = fmul float %i.l, %i.l
   %i.n = fmul float %i.m, 5.000000e-01

@@ -202,35 +202,31 @@ bb.a:
 ; Function Attrs: nounwind uwtable
 define internal fastcc void @SetInitialGuess2(ptr noundef %0, ptr nofree noundef nonnull readonly captures(none) %1) unnamed_addr #0 {
 bb.a:
-  %i.a = tail call ptr @N_VGetArrayPointer(ptr noundef %0) #11 ; 6 uses
+  %i.a = tail call ptr @N_VGetArrayPointer(ptr noundef %0) #11 ; 5 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
-  %2 = load double, ptr %1, align 8, !tbaa !12
-  %3 = load double, ptr %i.b, align 8, !tbaa !12
-  %4 = fadd double %2, %3
-  %5 = fmul double %4, 5.000000e-01               ; 3 uses
-  %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %6 = load double, ptr %i.c, align 8, !tbaa !12
-  %i.d = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
-  %7 = load double, ptr %i.d, align 8, !tbaa !12
-  %8 = fadd double %6, %7
-  %9 = fmul double %8, 5.000000e-01               ; 3 uses
-  store double %5, ptr %i.a, align 8, !tbaa !12
-  %10 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store double %9, ptr %10, align 8, !tbaa !12
+  %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %i.d = getelementptr inbounds nuw i8, ptr %1, i64 24
+  %2 = load <2 x double>, ptr %1, align 8, !tbaa !12
+  %3 = load <2 x double>, ptr %i.b, align 8, !tbaa !12
+  %4 = fadd <2 x double> %2, %3
+  %5 = fmul <2 x double> %4, splat (double 5.000000e-01) ; 3 uses
+  store <2 x double> %5, ptr %i.a, align 8, !tbaa !12
   %i.e = load double, ptr %1, align 8, !tbaa !12
-  %i.f = fsub double %5, %i.e
+  %6 = extractelement <2 x double> %5, i64 0      ; 2 uses
+  %i.f = fsub double %6, %i.e
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   store double %i.f, ptr %i.g, align 8, !tbaa !12
   %i.h = load double, ptr %i.b, align 8, !tbaa !12
-  %i.i = fsub double %5, %i.h
+  %i.i = fsub double %6, %i.h
   %i.j = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   store double %i.i, ptr %i.j, align 8, !tbaa !12
   %i.k = load double, ptr %i.c, align 8, !tbaa !12
-  %i.l = fsub double %9, %i.k
+  %7 = extractelement <2 x double> %5, i64 1      ; 2 uses
+  %i.l = fsub double %7, %i.k
   %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 32
   store double %i.l, ptr %i.m, align 8, !tbaa !12
   %i.n = load double, ptr %i.d, align 8, !tbaa !12
-  %i.o = fsub double %9, %i.n
+  %i.o = fsub double %7, %i.n
   %i.p = getelementptr inbounds nuw i8, ptr %i.a, i64 40
   store double %i.o, ptr %i.p, align 8, !tbaa !12
   ret void

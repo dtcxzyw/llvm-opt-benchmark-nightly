@@ -204,8 +204,7 @@ bb.a:
   %.sroa.040.0.copyload = load <2 x float>, ptr %i.ab, align 4 ; 4 uses
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ab, i64 8
   %.sroa.5.0.copyload = load float, ptr %.sroa.5.0..sroa_idx, align 4, !tbaa !123 ; 4 uses
-  %i.ac = getelementptr inbounds nuw [12 x i8], ptr %i.aa, i64 %indvars.iv115 ; 4 uses
-  %2 = getelementptr inbounds nuw i8, ptr %i.ac, i64 4
+  %i.ac = getelementptr inbounds nuw [12 x i8], ptr %i.aa, i64 %indvars.iv115 ; 3 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 8 ; 2 uses
   %invariant.gep128 = getelementptr [12 x i8], ptr %i.f, i64 %indvars.iv115
   %i.ae = load <2 x float>, ptr %i.ac, align 4, !tbaa !123
@@ -274,17 +273,14 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.bl = insertelement <2 x float> poison, float %i.ap, i64 0
   %i.bm = shufflevector <2 x float> %i.bl, <2 x float> poison, <2 x i32> zeroinitializer
   %i.bn = fmul <2 x float> %i.bm, %i.bk
-  %i.bo = fadd <2 x float> %i.an, %i.bn           ; 4 uses
-  %3 = extractelement <2 x float> %i.bo, i64 0
-  store float %3, ptr %i.ac, align 4, !tbaa !259
-  %4 = extractelement <2 x float> %i.bo, i64 1
-  store float %4, ptr %2, align 4, !tbaa !260
+  %i.bo = fadd <2 x float> %i.an, %i.bn           ; 3 uses
+  store <2 x float> %i.bo, ptr %i.ac, align 4, !tbaa !123
   %i.bp = fadd float %i.bb, %i.am                 ; 3 uses
   store float %i.bp, ptr %i.ad, align 4, !tbaa !255
   %indvars.iv.next107 = add nsw i64 %indvars.iv106, -1 ; 2 uses
   %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
   %i.bq = icmp sgt i64 %indvars.iv.next107, %i.al
-  br i1 %i.bq, label %bb.b, label %._crit_edge, !llvm.loop !261
+  br i1 %i.bq, label %bb.b, label %._crit_edge, !llvm.loop !259
 }
 
 declare void @_ZN2cv3MatC1ERKS0_RKNS_5Rect_IiEE(ptr noundef nonnull align 8 dereferenceable(208), ptr noundef nonnull align 8 dereferenceable(208), ptr noundef nonnull align 4 dereferenceable(16)) unnamed_addr #11
@@ -613,7 +609,5 @@ attributes #34 = { noreturn }
 !256 = !{!"_ZTSN2cv7Point3_IfEE", !124, i64 0, !124, i64 4, !124, i64 8}
 !257 = distinct !{!257, !93}
 !258 = distinct !{!258, !93}
-!259 = !{!256, !124, i64 0}
-!260 = !{!256, !124, i64 4}
-!261 = distinct !{!261, !93}
+!259 = distinct !{!259, !93}
 end_hunk_0

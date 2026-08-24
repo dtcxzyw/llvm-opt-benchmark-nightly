@@ -204,15 +204,15 @@ bb.a:
   %i.a = load double, ptr getelementptr inbounds nuw (i8, ptr @ff_tx_tab_8_double, i64 8), align 8, !tbaa !30 ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 32
-  %i.d = load double, ptr %i.c, align 8, !tbaa !51 ; 2 uses
+  %i.d = load double, ptr %i.c, align 8, !tbaa !51
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %2, i64 40
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 56
-  %i.h = load double, ptr %i.g, align 8, !tbaa !53 ; 2 uses
+  %i.h = load double, ptr %i.g, align 8, !tbaa !53
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
-  %i.k = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 2 uses
-  %i.l = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
+  %i.k = getelementptr inbounds nuw i8, ptr %1, i64 40
+  %i.l = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.m = getelementptr inbounds nuw i8, ptr %2, i64 64
   %i.n = getelementptr inbounds nuw i8, ptr %2, i64 80
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 80 ; 2 uses
@@ -229,35 +229,26 @@ bb.a:
   %i.z = getelementptr inbounds nuw i8, ptr %1, i64 104
   %i.aa = getelementptr inbounds nuw i8, ptr %1, i64 72
   %i.ab = fneg nsz double %i.a
-  %i.ac = load <2 x double>, ptr %2, align 8, !tbaa !30 ; 3 uses
-  %i.ad = load <2 x double>, ptr %i.b, align 8, !tbaa !30 ; 3 uses
-  %foldExtExtBinop = fadd nsz <2 x double> %i.ac, %i.ad
-  %4 = extractelement <2 x double> %foldExtExtBinop, i64 0 ; 2 uses
-  %i.ae = load <2 x double>, ptr %i.f, align 8, !tbaa !30 ; 3 uses
-  %5 = extractelement <2 x double> %i.ae, i64 1
-  %6 = fadd nsz double %5, %i.d                   ; 2 uses
-  %7 = fsub nsz double %4, %6                     ; 3 uses
-  store double %7, ptr %i.e, align 8, !tbaa !51
-  %8 = fadd nsz double %4, %6                     ; 3 uses
-  store double %8, ptr %1, align 8, !tbaa !51
+  %i.ac = load <2 x double>, ptr %2, align 8, !tbaa !30 ; 2 uses
+  %i.ad = load <2 x double>, ptr %i.b, align 8, !tbaa !30 ; 2 uses
+  %i.ae = load <2 x double>, ptr %i.f, align 8, !tbaa !30 ; 2 uses
   %i.af = fsub nsz <2 x double> %i.ac, %i.ad      ; 2 uses
-  %foldExtExtBinop114 = fadd nsz <2 x double> %i.ac, %i.ad
-  %9 = extractelement <2 x double> %foldExtExtBinop114, i64 1 ; 2 uses
-  %i.ag = insertelement <2 x double> poison, double %i.h, i64 0
-  %10 = insertelement <2 x double> %i.ag, double %i.d, i64 1
-  %11 = fsub nsz <2 x double> %i.ae, %10          ; 2 uses
-  %12 = extractelement <2 x double> %i.ae, i64 0
-  %13 = fadd nsz double %12, %i.h                 ; 2 uses
-  %i.ah = fadd nsz <2 x double> %11, %i.af        ; 3 uses
-  store <2 x double> %i.ah, ptr %i.j, align 8, !tbaa !30
-  %14 = fsub nsz double %9, %13                   ; 3 uses
-  store double %14, ptr %i.k, align 8, !tbaa !53
-  %15 = fadd nsz double %9, %13                   ; 3 uses
-  store double %15, ptr %i.l, align 8, !tbaa !53
+  %4 = insertelement <2 x double> poison, double %i.h, i64 0
+  %i.ag = insertelement <2 x double> %4, double %i.d, i64 1 ; 2 uses
+  %5 = fsub nsz <2 x double> %i.ae, %i.ag         ; 2 uses
+  %6 = fadd nsz <2 x double> %5, %i.af            ; 3 uses
+  store <2 x double> %6, ptr %i.j, align 8, !tbaa !30
+  %7 = fadd nsz <2 x double> %i.ac, %i.ad         ; 2 uses
+  %i.ah = fadd nsz <2 x double> %i.ae, %i.ag
+  %8 = shufflevector <2 x double> %i.ah, <2 x double> poison, <2 x i32> <i32 1, i32 0> ; 2 uses
+  %9 = fsub nsz <2 x double> %7, %8               ; 3 uses
+  store <2 x double> %9, ptr %i.e, align 8, !tbaa !30
+  %10 = fadd nsz <2 x double> %7, %8              ; 3 uses
+  store <2 x double> %10, ptr %1, align 8, !tbaa !30
   %i.ai = insertelement <2 x double> poison, double %i.a, i64 0 ; 2 uses
   %i.aj = insertelement <2 x double> %i.ai, double %i.ab, i64 1
   %i.ak = shufflevector <2 x double> %i.ai, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.al = fsub nsz <2 x double> %i.af, %11        ; 3 uses
+  %i.al = fsub nsz <2 x double> %i.af, %5         ; 3 uses
   store <2 x double> %i.al, ptr %i.i, align 8, !tbaa !30
   %i.am = load double, ptr %i.m, align 8, !tbaa !51 ; 2 uses
   %i.an = load double, ptr %i.n, align 8, !tbaa !51 ; 2 uses
@@ -279,23 +270,27 @@ bb.a:
   %i.bb = fsub nsz double %i.ay, %i.az
   %i.bc = fsub nsz double %i.aw, %i.ao            ; 2 uses
   %i.bd = fadd nsz double %i.ao, %i.aw            ; 2 uses
-  %i.be = fsub nsz double %8, %i.bd
+  %11 = extractelement <2 x double> %10, i64 0    ; 2 uses
+  %i.be = fsub nsz double %11, %i.bd
   store double %i.be, ptr %i.x, align 8, !tbaa !51
-  %i.bf = fadd nsz double %8, %i.bd
+  %i.bf = fadd nsz double %11, %i.bd
   store double %i.bf, ptr %1, align 8, !tbaa !51
-  %i.bg = fsub nsz double %14, %i.bc
+  %12 = extractelement <2 x double> %9, i64 1     ; 2 uses
+  %i.bg = fsub nsz double %12, %i.bc
   store double %i.bg, ptr %i.z, align 8, !tbaa !53
-  %i.bh = fadd nsz double %14, %i.bc
+  %i.bh = fadd nsz double %12, %i.bc
   store double %i.bh, ptr %i.k, align 8, !tbaa !53
   %i.bi = fsub nsz double %i.as, %i.ba            ; 2 uses
   %i.bj = fadd nsz double %i.as, %i.ba            ; 2 uses
-  %i.bk = fsub nsz double %7, %i.bi
+  %13 = extractelement <2 x double> %9, i64 0     ; 2 uses
+  %i.bk = fsub nsz double %13, %i.bi
   store double %i.bk, ptr %i.y, align 8, !tbaa !51
-  %i.bl = fadd nsz double %7, %i.bi
+  %i.bl = fadd nsz double %13, %i.bi
   store double %i.bl, ptr %i.e, align 8, !tbaa !51
-  %i.bm = fsub nsz double %15, %i.bj
+  %14 = extractelement <2 x double> %10, i64 1    ; 2 uses
+  %i.bm = fsub nsz double %14, %i.bj
   store double %i.bm, ptr %i.aa, align 8, !tbaa !53
-  %i.bn = fadd nsz double %15, %i.bj
+  %i.bn = fadd nsz double %14, %i.bj
   store double %i.bn, ptr %i.l, align 8, !tbaa !53
   %i.bo = fmul nsz double %i.a, %i.at
   %i.bp = insertelement <2 x double> poison, double %i.ap, i64 0
@@ -318,9 +313,9 @@ bb.a:
   store <2 x double> %i.cf, ptr %i.u, align 8, !tbaa !30
   %i.cg = fadd nsz <2 x double> %i.al, %i.ce
   store <2 x double> %i.cg, ptr %i.i, align 8, !tbaa !30
-  %i.ch = fsub nsz <2 x double> %i.ah, %i.cb
+  %i.ch = fsub nsz <2 x double> %6, %i.cb
   store <2 x double> %i.ch, ptr %i.o, align 8, !tbaa !30
-  %i.ci = fadd nsz <2 x double> %i.ah, %i.cb
+  %i.ci = fadd nsz <2 x double> %6, %i.cb
   store <2 x double> %i.ci, ptr %i.j, align 8, !tbaa !30
   ret void
 }

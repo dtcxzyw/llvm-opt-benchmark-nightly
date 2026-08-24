@@ -205,35 +205,33 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %i.dn = getelementptr inbounds nuw i8, ptr %0, i64 152
   store float 0.000000e+00, ptr %i.dn, align 8, !tbaa !36
   %i.do = getelementptr inbounds nuw i8, ptr %0, i64 156 ; 2 uses
-  %1 = fsub <2 x float> %i.di, %i.dh              ; 2 uses
   %i.dp = fsub float %.092.lcssa, %.097.lcssa     ; 2 uses
-  %2 = extractelement <2 x float> %1, i64 0       ; 3 uses
-  store float %2, ptr %i.do, align 4, !tbaa !36
-  %i.dq = getelementptr inbounds nuw i8, ptr %0, i64 160
-  %3 = extractelement <2 x float> %1, i64 1       ; 3 uses
-  store float %3, ptr %i.dq, align 8, !tbaa !36
-  %i.dr = getelementptr inbounds nuw i8, ptr %0, i64 164
-  store float %i.dp, ptr %i.dr, align 4, !tbaa !36
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 168
-  store float 0.000000e+00, ptr %4, align 8, !tbaa !36
-  %5 = fdiv float %i.ck, f0x3FDDB3D7              ; 8 uses
-  %i.ds = fcmp olt float %2, %3                   ; 2 uses
-  %..i = select i1 %i.ds, float %3, float %2
+  %1 = fsub <2 x float> %i.di, %i.dh              ; 3 uses
+  store <2 x float> %1, ptr %i.do, align 4, !tbaa !36
+  %i.dq = getelementptr inbounds nuw i8, ptr %0, i64 164
+  store float %i.dp, ptr %i.dq, align 4, !tbaa !36
+  %i.dr = getelementptr inbounds nuw i8, ptr %0, i64 168
+  store float 0.000000e+00, ptr %i.dr, align 8, !tbaa !36
+  %2 = fdiv float %i.ck, f0x3FDDB3D7              ; 8 uses
+  %3 = extractelement <2 x float> %1, i64 0       ; 2 uses
+  %4 = extractelement <2 x float> %1, i64 1       ; 2 uses
+  %i.ds = fcmp olt float %3, %4                   ; 2 uses
+  %..i = select i1 %i.ds, float %4, float %3
   %.5.i = zext i1 %i.ds to i32
   %i.dt = fcmp olt float %..i, %i.dp
   %i.du = select i1 %i.dt, i32 2, i32 %.5.i       ; 2 uses
   %i.dv = zext nneg i32 %i.du to i64              ; 2 uses
   %i.dw = getelementptr inbounds nuw [4 x i8], ptr %i.do, i64 %i.dv
   %i.dx = load float, ptr %i.dw, align 4, !tbaa !36 ; 2 uses
-  %i.dy = fneg float %5
+  %i.dy = fneg float %2
   %i.dz = tail call float @llvm.fmuladd.f32(float %i.dx, float 5.000000e-01, float %i.dy)
   %i.ea = fmul float %i.dz, f0x3A800000
   %i.eb = getelementptr inbounds nuw i8, ptr %0, i64 120 ; 7 uses
   %i.ec = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 4 uses
-  store float %5, ptr %i.ec, align 8, !tbaa !36
+  store float %2, ptr %i.ec, align 8, !tbaa !36
   %i.ed = getelementptr inbounds nuw i8, ptr %0, i64 124 ; 4 uses
-  store float %5, ptr %i.ed, align 4, !tbaa !36
-  store float %5, ptr %i.eb, align 8, !tbaa !36
+  store float %2, ptr %i.ed, align 4, !tbaa !36
+  store float %2, ptr %i.eb, align 8, !tbaa !36
   %i.ee = fmul float %i.dx, 5.000000e-01          ; 2 uses
   %i.ef = getelementptr inbounds nuw [4 x i8], ptr %i.eb, i64 %i.dv ; 2 uses
   store float %i.ee, ptr %i.ef, align 4, !tbaa !36
@@ -510,7 +508,7 @@ bb.p:                                             ; preds = %.lr.ph.i.7
 
 ._crit_edge.i.7:                                  ; preds = %bb.p, %._crit_edge.i.7.loopexit
   %wide.trip.count.i168.pre-phi = phi i64 [ %.pre322, %._crit_edge.i.7.loopexit ], [ %wide.trip.count.i.7, %bb.p ] ; 8 uses
-  %i.jt = fsub float %i.ck, %5
+  %i.jt = fsub float %i.ck, %2
   %i.ju = fmul float %i.jt, f0x3A800000           ; 2 uses
   %i.jv = shl nuw nsw i32 1, %i.du
   %i.jw = and i32 %i.jv, 3                        ; 2 uses
@@ -532,9 +530,9 @@ _ZNK18btConvexPolyhedron15testContainmentEv.exit: ; preds = %.lr.ph.i, %.lr.ph.i
   br i1 %exitcond298.not, label %.critedge, label %bb.h, !llvm.loop !83
 
 .critedge:                                        ; preds = %_ZNK18btConvexPolyhedron15testContainmentEv.exit
-  store float %5, ptr %i.ec, align 8, !tbaa !36
-  store float %5, ptr %i.ed, align 4, !tbaa !36
-  store float %5, ptr %i.eb, align 8, !tbaa !36
+  store float %2, ptr %i.ec, align 8, !tbaa !36
+  store float %2, ptr %i.ed, align 4, !tbaa !36
+  store float %2, ptr %i.eb, align 8, !tbaa !36
   br label %.loopexit
 
 bb.q:                                             ; preds = %._crit_edge.i.7, %.critedge109

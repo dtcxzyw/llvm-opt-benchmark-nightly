@@ -205,7 +205,7 @@ nsvg__addPathPoint.exit208.i:                     ; preds = %._crit_edge30.i203.
   %i.qb = getelementptr i8, ptr %i.qa, i64 -32
   br label %.lr.ph.i.i
 
-.preheader.i.i:                                   ; preds = %nsvg__normalize.exit.i.i
+.preheader.i.i:                                   ; preds = %.lr.ph.i.i
   %.phi.trans.insert15.i.i = getelementptr i8, ptr %i.qa, i64 -20
   %.pre16.i.i = load float, ptr %.phi.trans.insert15.i.i, align 4, !tbaa !175 ; 2 uses
   %.phi.trans.insert17.i.i = getelementptr i8, ptr %i.qa, i64 -24
@@ -263,39 +263,31 @@ bb.ak:                                            ; preds = %bb.aj, %.lr.ph7.spl
   %exitcond12.not.i.i = icmp eq i32 %i.rg, %i.pw
   br i1 %exitcond12.not.i.i, label %nsvg__prepareStroke.exit.i, label %.lr.ph7.split.us.i.i, !llvm.loop !179
 
-.lr.ph.i.i:                                       ; preds = %nsvg__normalize.exit.i.i, %.lr.ph.preheader.i.i
-  %.0613.i.i = phi ptr [ %22, %nsvg__normalize.exit.i.i ], [ %.val184.i, %.lr.ph.preheader.i.i ] ; 3 uses
-  %.0622.i.i = phi ptr [ %.0613.i.i, %nsvg__normalize.exit.i.i ], [ %i.qb, %.lr.ph.preheader.i.i ] ; 4 uses
-  %.0651.i.i = phi i32 [ %23, %nsvg__normalize.exit.i.i ], [ 0, %.lr.ph.preheader.i.i ]
-  %i.rh = getelementptr inbounds nuw i8, ptr %.0622.i.i, i64 8 ; 2 uses
+.lr.ph.i.i:                                       ; preds = %.lr.ph.i.i, %.lr.ph.preheader.i.i
+  %.0613.i.i = phi ptr [ %19, %.lr.ph.i.i ], [ %.val184.i, %.lr.ph.preheader.i.i ] ; 3 uses
+  %.0622.i.i = phi ptr [ %.0613.i.i, %.lr.ph.i.i ], [ %i.qb, %.lr.ph.preheader.i.i ] ; 3 uses
+  %.0651.i.i = phi i32 [ %20, %.lr.ph.i.i ], [ 0, %.lr.ph.preheader.i.i ]
+  %i.rh = getelementptr inbounds nuw i8, ptr %.0622.i.i, i64 8
   %i.ri = load <2 x float>, ptr %.0613.i.i, align 4, !tbaa !32
   %i.rj = load <2 x float>, ptr %.0622.i.i, align 4, !tbaa !32
-  %i.rk = fsub <2 x float> %i.ri, %i.rj           ; 3 uses
-  %i.rl = extractelement <2 x float> %i.rk, i64 0 ; 3 uses
-  store float %i.rl, ptr %i.rh, align 4, !tbaa !176
-  %11 = getelementptr inbounds nuw i8, ptr %.0622.i.i, i64 12
-  %12 = extractelement <2 x float> %i.rk, i64 1   ; 3 uses
-  store float %12, ptr %11, align 4, !tbaa !175
-  %13 = fmul float %12, %12
-  %14 = tail call float @llvm.fmuladd.f32(float %i.rl, float %i.rl, float %13)
-  %sqrt.i.i.i = tail call float @llvm.sqrt.f32(float %14) ; 3 uses
-  %15 = fcmp ogt float %sqrt.i.i.i, f0x358637BD
-  br i1 %15, label %16, label %nsvg__normalize.exit.i.i
-
-16:                                               ; preds = %.lr.ph.i.i
-  %17 = fdiv nnan float 1.000000e+00, %sqrt.i.i.i
-  %18 = insertelement <2 x float> poison, float %17, i64 0
-  %19 = shufflevector <2 x float> %18, <2 x float> poison, <2 x i32> zeroinitializer
-  %20 = fmul <2 x float> %i.rk, %19
-  store <2 x float> %20, ptr %i.rh, align 4, !tbaa !32
-  br label %nsvg__normalize.exit.i.i
-
-nsvg__normalize.exit.i.i:                         ; preds = %16, %.lr.ph.i.i
-  %21 = getelementptr inbounds nuw i8, ptr %.0622.i.i, i64 16
-  store float %sqrt.i.i.i, ptr %21, align 4, !tbaa !180
-  %22 = getelementptr inbounds nuw i8, ptr %.0613.i.i, i64 32
-  %23 = add nuw nsw i32 %.0651.i.i, 1             ; 2 uses
-  %exitcond.not.i.i = icmp eq i32 %23, %i.pw
+  %i.rk = fsub <2 x float> %i.ri, %i.rj           ; 5 uses
+  %11 = extractelement <2 x float> %i.rk, i64 0   ; 2 uses
+  %foldExtExtBinop319 = fmul <2 x float> %i.rk, %i.rk
+  %i.rl = extractelement <2 x float> %foldExtExtBinop319, i64 1
+  %12 = tail call float @llvm.fmuladd.f32(float %11, float %11, float %i.rl)
+  %sqrt.i.i.i = tail call float @llvm.sqrt.f32(float %12) ; 3 uses
+  %13 = fcmp ogt float %sqrt.i.i.i, f0x358637BD
+  %14 = fdiv nnan float 1.000000e+00, %sqrt.i.i.i
+  %15 = insertelement <2 x float> poison, float %14, i64 0
+  %16 = shufflevector <2 x float> %15, <2 x float> poison, <2 x i32> zeroinitializer
+  %17 = fmul <2 x float> %i.rk, %16
+  %storemerge325 = select i1 %13, <2 x float> %17, <2 x float> %i.rk
+  store <2 x float> %storemerge325, ptr %i.rh, align 4, !tbaa !32
+  %18 = getelementptr inbounds nuw i8, ptr %.0622.i.i, i64 16
+  store float %sqrt.i.i.i, ptr %18, align 4, !tbaa !180
+  %19 = getelementptr inbounds nuw i8, ptr %.0613.i.i, i64 32
+  %20 = add nuw nsw i32 %.0651.i.i, 1             ; 2 uses
+  %exitcond.not.i.i = icmp eq i32 %20, %i.pw
   br i1 %exitcond.not.i.i, label %.preheader.i.i, label %.lr.ph.i.i, !llvm.loop !181
 
 .lr.ph7.split.i.i:                                ; preds = %.preheader.i.i, %bb.ap
@@ -502,7 +494,7 @@ nsvg__appendPathPoint.exit219.i:                  ; preds = %nsvg__appendPathPoi
   %i.um = getelementptr i8, ptr %i.ul, i64 -32
   br label %.lr.ph.i166
 
-.preheader.i173:                                  ; preds = %nsvg__normalize.exit.i171
+.preheader.i173:                                  ; preds = %.lr.ph.i166
   %.phi.trans.insert15.i174 = getelementptr i8, ptr %i.ul, i64 -20
   %.pre16.i175 = load float, ptr %.phi.trans.insert15.i174, align 4, !tbaa !175 ; 2 uses
   %.phi.trans.insert17.i176 = getelementptr i8, ptr %i.ul, i64 -24
@@ -560,39 +552,31 @@ bb.ax:                                            ; preds = %bb.aw, %.lr.ph7.spl
   %exitcond12.not.i190 = icmp eq i32 %i.vr, %i.ui
   br i1 %exitcond12.not.i190, label %.sink.split.i, label %.lr.ph7.split.us.i185, !llvm.loop !179
 
-.lr.ph.i166:                                      ; preds = %nsvg__normalize.exit.i171, %.lr.ph.preheader.i165
-  %.0613.i167 = phi ptr [ %35, %nsvg__normalize.exit.i171 ], [ %.val182.i, %.lr.ph.preheader.i165 ] ; 3 uses
-  %.0622.i168 = phi ptr [ %.0613.i167, %nsvg__normalize.exit.i171 ], [ %i.um, %.lr.ph.preheader.i165 ] ; 4 uses
-  %.0651.i169 = phi i32 [ %36, %nsvg__normalize.exit.i171 ], [ 0, %.lr.ph.preheader.i165 ]
-  %i.vs = getelementptr inbounds nuw i8, ptr %.0622.i168, i64 8 ; 2 uses
+.lr.ph.i166:                                      ; preds = %.lr.ph.i166, %.lr.ph.preheader.i165
+  %.0613.i167 = phi ptr [ %29, %.lr.ph.i166 ], [ %.val182.i, %.lr.ph.preheader.i165 ] ; 3 uses
+  %.0622.i168 = phi ptr [ %.0613.i167, %.lr.ph.i166 ], [ %i.um, %.lr.ph.preheader.i165 ] ; 3 uses
+  %.0651.i169 = phi i32 [ %30, %.lr.ph.i166 ], [ 0, %.lr.ph.preheader.i165 ]
+  %i.vs = getelementptr inbounds nuw i8, ptr %.0622.i168, i64 8
   %i.vt = load <2 x float>, ptr %.0613.i167, align 4, !tbaa !32
   %i.vu = load <2 x float>, ptr %.0622.i168, align 4, !tbaa !32
-  %i.vv = fsub <2 x float> %i.vt, %i.vu           ; 3 uses
-  %i.vw = extractelement <2 x float> %i.vv, i64 0 ; 3 uses
-  store float %i.vw, ptr %i.vs, align 4, !tbaa !176
-  %24 = getelementptr inbounds nuw i8, ptr %.0622.i168, i64 12
-  %25 = extractelement <2 x float> %i.vv, i64 1   ; 3 uses
-  store float %25, ptr %24, align 4, !tbaa !175
-  %26 = fmul float %25, %25
-  %27 = tail call float @llvm.fmuladd.f32(float %i.vw, float %i.vw, float %26)
-  %sqrt.i.i170 = tail call float @llvm.sqrt.f32(float %27) ; 3 uses
-  %28 = fcmp ogt float %sqrt.i.i170, f0x358637BD
-  br i1 %28, label %29, label %nsvg__normalize.exit.i171
-
-29:                                               ; preds = %.lr.ph.i166
-  %30 = fdiv nnan float 1.000000e+00, %sqrt.i.i170
-  %31 = insertelement <2 x float> poison, float %30, i64 0
-  %32 = shufflevector <2 x float> %31, <2 x float> poison, <2 x i32> zeroinitializer
-  %33 = fmul <2 x float> %i.vv, %32
-  store <2 x float> %33, ptr %i.vs, align 4, !tbaa !32
-  br label %nsvg__normalize.exit.i171
-
-nsvg__normalize.exit.i171:                        ; preds = %29, %.lr.ph.i166
-  %34 = getelementptr inbounds nuw i8, ptr %.0622.i168, i64 16
-  store float %sqrt.i.i170, ptr %34, align 4, !tbaa !180
-  %35 = getelementptr inbounds nuw i8, ptr %.0613.i167, i64 32
-  %36 = add nuw nsw i32 %.0651.i169, 1            ; 2 uses
-  %exitcond.not.i172 = icmp eq i32 %36, %i.ui
+  %i.vv = fsub <2 x float> %i.vt, %i.vu           ; 5 uses
+  %21 = extractelement <2 x float> %i.vv, i64 0   ; 2 uses
+  %foldExtExtBinop321 = fmul <2 x float> %i.vv, %i.vv
+  %i.vw = extractelement <2 x float> %foldExtExtBinop321, i64 1
+  %22 = tail call float @llvm.fmuladd.f32(float %21, float %21, float %i.vw)
+  %sqrt.i.i170 = tail call float @llvm.sqrt.f32(float %22) ; 3 uses
+  %23 = fcmp ogt float %sqrt.i.i170, f0x358637BD
+  %24 = fdiv nnan float 1.000000e+00, %sqrt.i.i170
+  %25 = insertelement <2 x float> poison, float %24, i64 0
+  %26 = shufflevector <2 x float> %25, <2 x float> poison, <2 x i32> zeroinitializer
+  %27 = fmul <2 x float> %i.vv, %26
+  %storemerge326 = select i1 %23, <2 x float> %27, <2 x float> %i.vv
+  store <2 x float> %storemerge326, ptr %i.vs, align 4, !tbaa !32
+  %28 = getelementptr inbounds nuw i8, ptr %.0622.i168, i64 16
+  store float %sqrt.i.i170, ptr %28, align 4, !tbaa !180
+  %29 = getelementptr inbounds nuw i8, ptr %.0613.i167, i64 32
+  %30 = add nuw nsw i32 %.0651.i169, 1            ; 2 uses
+  %exitcond.not.i172 = icmp eq i32 %30, %i.ui
   br i1 %exitcond.not.i172, label %.preheader.i173, label %.lr.ph.i166, !llvm.loop !181
 
 .lr.ph7.split.i178:                               ; preds = %.preheader.i173, %bb.bc
@@ -667,7 +651,7 @@ bb.bc:                                            ; preds = %bb.bb, %bb.ba, %bb.
   %i.xg = getelementptr i8, ptr %i.xf, i64 -32
   br label %.lr.ph.i159
 
-.preheader.i161:                                  ; preds = %nsvg__normalize.exit.i
+.preheader.i161:                                  ; preds = %.lr.ph.i159
   %.phi.trans.insert15.i = getelementptr i8, ptr %i.xf, i64 -20
   %.pre16.i = load float, ptr %.phi.trans.insert15.i, align 4, !tbaa !175 ; 2 uses
   %.phi.trans.insert17.i = getelementptr i8, ptr %i.xf, i64 -24
@@ -725,39 +709,31 @@ bb.be:                                            ; preds = %bb.bd, %.lr.ph7.spl
   %exitcond12.not.i = icmp eq i32 %i.yl, %.val181.i
   br i1 %exitcond12.not.i, label %.sink.split.i, label %.lr.ph7.split.us.i, !llvm.loop !179
 
-.lr.ph.i159:                                      ; preds = %nsvg__normalize.exit.i, %.lr.ph.preheader.i158
-  %.0613.i = phi ptr [ %48, %nsvg__normalize.exit.i ], [ %i.ji, %.lr.ph.preheader.i158 ] ; 3 uses
-  %.0622.i = phi ptr [ %.0613.i, %nsvg__normalize.exit.i ], [ %i.xg, %.lr.ph.preheader.i158 ] ; 4 uses
-  %.0651.i = phi i32 [ %49, %nsvg__normalize.exit.i ], [ 0, %.lr.ph.preheader.i158 ]
-  %i.ym = getelementptr inbounds nuw i8, ptr %.0622.i, i64 8 ; 2 uses
+.lr.ph.i159:                                      ; preds = %.lr.ph.i159, %.lr.ph.preheader.i158
+  %.0613.i = phi ptr [ %39, %.lr.ph.i159 ], [ %i.ji, %.lr.ph.preheader.i158 ] ; 3 uses
+  %.0622.i = phi ptr [ %.0613.i, %.lr.ph.i159 ], [ %i.xg, %.lr.ph.preheader.i158 ] ; 3 uses
+  %.0651.i = phi i32 [ %40, %.lr.ph.i159 ], [ 0, %.lr.ph.preheader.i158 ]
+  %i.ym = getelementptr inbounds nuw i8, ptr %.0622.i, i64 8
   %i.yn = load <2 x float>, ptr %.0613.i, align 4, !tbaa !32
   %i.yo = load <2 x float>, ptr %.0622.i, align 4, !tbaa !32
-  %i.yp = fsub <2 x float> %i.yn, %i.yo           ; 3 uses
-  %i.yq = extractelement <2 x float> %i.yp, i64 0 ; 3 uses
-  store float %i.yq, ptr %i.ym, align 4, !tbaa !176
-  %37 = getelementptr inbounds nuw i8, ptr %.0622.i, i64 12
-  %38 = extractelement <2 x float> %i.yp, i64 1   ; 3 uses
-  store float %38, ptr %37, align 4, !tbaa !175
-  %39 = fmul float %38, %38
-  %40 = tail call float @llvm.fmuladd.f32(float %i.yq, float %i.yq, float %39)
-  %sqrt.i.i = tail call float @llvm.sqrt.f32(float %40) ; 3 uses
-  %41 = fcmp ogt float %sqrt.i.i, f0x358637BD
-  br i1 %41, label %42, label %nsvg__normalize.exit.i
-
-42:                                               ; preds = %.lr.ph.i159
-  %43 = fdiv nnan float 1.000000e+00, %sqrt.i.i
-  %44 = insertelement <2 x float> poison, float %43, i64 0
-  %45 = shufflevector <2 x float> %44, <2 x float> poison, <2 x i32> zeroinitializer
-  %46 = fmul <2 x float> %i.yp, %45
-  store <2 x float> %46, ptr %i.ym, align 4, !tbaa !32
-  br label %nsvg__normalize.exit.i
-
-nsvg__normalize.exit.i:                           ; preds = %42, %.lr.ph.i159
-  %47 = getelementptr inbounds nuw i8, ptr %.0622.i, i64 16
-  store float %sqrt.i.i, ptr %47, align 4, !tbaa !180
-  %48 = getelementptr inbounds nuw i8, ptr %.0613.i, i64 32
-  %49 = add nuw nsw i32 %.0651.i, 1               ; 2 uses
-  %exitcond.not.i160 = icmp eq i32 %49, %.val181.i
+  %i.yp = fsub <2 x float> %i.yn, %i.yo           ; 5 uses
+  %31 = extractelement <2 x float> %i.yp, i64 0   ; 2 uses
+  %foldExtExtBinop323 = fmul <2 x float> %i.yp, %i.yp
+  %i.yq = extractelement <2 x float> %foldExtExtBinop323, i64 1
+  %32 = tail call float @llvm.fmuladd.f32(float %31, float %31, float %i.yq)
+  %sqrt.i.i = tail call float @llvm.sqrt.f32(float %32) ; 3 uses
+  %33 = fcmp ogt float %sqrt.i.i, f0x358637BD
+  %34 = fdiv nnan float 1.000000e+00, %sqrt.i.i
+  %35 = insertelement <2 x float> poison, float %34, i64 0
+  %36 = shufflevector <2 x float> %35, <2 x float> poison, <2 x i32> zeroinitializer
+  %37 = fmul <2 x float> %i.yp, %36
+  %storemerge = select i1 %33, <2 x float> %37, <2 x float> %i.yp
+  store <2 x float> %storemerge, ptr %i.ym, align 4, !tbaa !32
+  %38 = getelementptr inbounds nuw i8, ptr %.0622.i, i64 16
+  store float %sqrt.i.i, ptr %38, align 4, !tbaa !180
+  %39 = getelementptr inbounds nuw i8, ptr %.0613.i, i64 32
+  %40 = add nuw nsw i32 %.0651.i, 1               ; 2 uses
+  %exitcond.not.i160 = icmp eq i32 %40, %.val181.i
   br i1 %exitcond.not.i160, label %.preheader.i161, label %.lr.ph.i159, !llvm.loop !181
 
 .lr.ph7.split.i:                                  ; preds = %.preheader.i161, %bb.bj
@@ -1160,8 +1136,8 @@ declare float @fmodf(float noundef, float noundef) local_unnamed_addr #22
 ; Function Attrs: nounwind memory(readwrite, target_mem: none) uwtable
 define internal fastcc void @nsvg__expandStroke(ptr nofree noundef %0, ptr nofree noundef readonly captures(none) %1, i32 noundef %2, i32 noundef range(i32 -128, 128) %3, i32 noundef range(i32 -128, 128) %4, i32 noundef range(i32 -128, 128) %5, float noundef %6) unnamed_addr #3 {
 bb.a:
-  %7 = alloca %struct.NSVGpoint, align 8          ; 21 uses
-  %8 = alloca %struct.NSVGpoint, align 8          ; 22 uses
+  %7 = alloca %struct.NSVGpoint, align 8          ; 20 uses
+  %8 = alloca %struct.NSVGpoint, align 8          ; 21 uses
   %i.a = fmul float %6, 5.000000e-01              ; 8 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.c = load float, ptr %i.b, align 8, !tbaa !316
@@ -1242,7 +1218,7 @@ nsvg__normalize.exit:                             ; preds = %bb.a
   %i.bg = fmul <2 x float> %i.ay, %i.bf
   %i.bh = insertelement <2 x i1> poison, i1 %i.bc, i64 0
   %i.bi = shufflevector <2 x i1> %i.bh, <2 x i1> poison, <2 x i32> zeroinitializer
-  %i.bj = select <2 x i1> %i.bi, <2 x float> %i.bg, <2 x float> %i.ay ; 7 uses
+  %i.bj = select <2 x i1> %i.bi, <2 x float> %i.bg, <2 x float> %i.ay ; 8 uses
   switch i32 %5, label %bb.j [
     i32 0, label %bb.c
     i32 2, label %bb.f
@@ -1318,16 +1294,16 @@ nsvg__buttCap.exit:                               ; preds = %bb.c, %bb.e, %.sink
   br label %bb.j
 
 bb.f:                                             ; preds = %nsvg__normalize.exit
-  %i.cs = fneg <2 x float> %i.bj                  ; 2 uses
-  %i.ct = insertelement <2 x float> poison, float %i.a, i64 0 ; 2 uses
-  %i.cu = shufflevector <2 x float> %i.ct, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.cv = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.cs, <2 x float> %i.cu, <2 x float> %i.ax)
-  %9 = shufflevector <2 x float> %i.cv, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
-  %10 = shufflevector <2 x float> %i.cs, <2 x float> %i.bj, <4 x i32> <i32 1, i32 2, i32 3, i32 0>
-  %11 = shufflevector <2 x float> %i.ct, <2 x float> poison, <4 x i32> zeroinitializer
-  %12 = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %10, <4 x float> %11, <4 x float> %9) ; 6 uses
-  %i.cw = extractelement <4 x float> %12, i64 1   ; 3 uses
-  %i.cx = extractelement <4 x float> %12, i64 3   ; 3 uses
+  %i.cs = fneg <2 x float> %i.bj                  ; 3 uses
+  %i.ct = insertelement <2 x float> poison, float %i.a, i64 0
+  %i.cu = shufflevector <2 x float> %i.ct, <2 x float> poison, <2 x i32> zeroinitializer ; 3 uses
+  %i.cv = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.cs, <2 x float> %i.cu, <2 x float> %i.ax) ; 2 uses
+  %9 = shufflevector <2 x float> %i.cs, <2 x float> %i.bj, <2 x i32> <i32 1, i32 2>
+  %10 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %9, <2 x float> %i.cu, <2 x float> %i.cv) ; 4 uses
+  %11 = shufflevector <2 x float> %i.bj, <2 x float> %i.cs, <2 x i32> <i32 1, i32 2>
+  %12 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %11, <2 x float> %i.cu, <2 x float> %i.cv) ; 4 uses
+  %i.cw = extractelement <2 x float> %10, i64 1   ; 2 uses
+  %i.cx = extractelement <2 x float> %12, i64 1   ; 2 uses
   %i.cy = fcmp oeq float %i.cw, %i.cx
   br i1 %i.cy, label %nsvg__squareCap.exit, label %bb.g
 
@@ -1374,21 +1350,16 @@ bb.h:                                             ; preds = %bb.g
   %.49.i.i114 = select i1 %i.dq, i32 1, i32 -1
   %i.ds = insertelement <4 x i1> poison, i1 %i.dq, i64 0
   %i.dt = shufflevector <4 x i1> %i.ds, <4 x i1> poison, <4 x i32> zeroinitializer
-  %13 = shufflevector <4 x float> %12, <4 x float> poison, <4 x i32> <i32 2, i32 3, i32 0, i32 1>
-  %i.du = select <4 x i1> %i.dt, <4 x float> %12, <4 x float> %13
+  %13 = shufflevector <2 x float> %10, <2 x float> %12, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %14 = shufflevector <2 x float> %12, <2 x float> %10, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %i.du = select <4 x i1> %i.dt, <4 x float> %13, <4 x float> %14
   store <4 x float> %i.du, ptr %i.do, align 8, !tbaa !32
   store i32 %.49.i.i114, ptr %i.dr, align 8, !tbaa !155
   br label %nsvg__squareCap.exit
 
 nsvg__squareCap.exit:                             ; preds = %bb.f, %bb.h, %.sink.split.i.i109
-  %14 = extractelement <4 x float> %12, i64 0
-  store float %14, ptr %7, align 8, !tbaa !151
-  %15 = getelementptr inbounds nuw i8, ptr %7, i64 4
-  store float %i.cw, ptr %15, align 4, !tbaa !152
-  %16 = extractelement <4 x float> %12, i64 2
-  store float %16, ptr %8, align 8, !tbaa !151
-  %17 = getelementptr inbounds nuw i8, ptr %8, i64 4
-  store float %i.cx, ptr %17, align 4, !tbaa !152
+  store <2 x float> %10, ptr %7, align 8, !tbaa !32
+  store <2 x float> %12, ptr %8, align 8, !tbaa !32
   br label %bb.j
 
 bb.i:                                             ; preds = %nsvg__normalize.exit
@@ -1791,9 +1762,8 @@ bb.b:                                             ; preds = %bb.a
   %i.x = insertelement <2 x float> %i.w, float %i.f, i64 1
   %i.y = insertelement <2 x float> poison, float %i.o, i64 0
   %i.z = shufflevector <2 x float> %i.y, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.aa = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.x, <2 x float> %i.z, <2 x float> %i.v) ; 5 uses
-  %8 = extractelement <2 x float> %i.aa, i64 1    ; 2 uses
-  %i.ab = extractelement <2 x float> %i.aa, i64 0 ; 2 uses
+  %i.aa = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.x, <2 x float> %i.z, <2 x float> %i.v) ; 4 uses
+  %i.ab = extractelement <2 x float> %i.aa, i64 1 ; 2 uses
   %exitcond.peel.not = icmp eq i32 %6, 1
   br i1 %exitcond.peel.not, label %._crit_edge, label %.peel.next.preheader
 
@@ -1882,10 +1852,9 @@ nsvg__addEdge.exit:                               ; preds = %.peel.next, %bb.d, 
   br i1 %exitcond.not, label %._crit_edge, label %.peel.next, !llvm.loop !319
 
 ._crit_edge:                                      ; preds = %nsvg__addEdge.exit, %bb.b, %bb.a
-  %.063.lcssa = phi float [ 0.000000e+00, %bb.a ], [ %i.ab, %bb.b ], [ %i.ab, %nsvg__addEdge.exit ]
-  %.061.lcssa = phi float [ 0.000000e+00, %bb.a ], [ %8, %bb.b ], [ %8, %nsvg__addEdge.exit ] ; 3 uses
-  %i.by = phi <2 x float> [ zeroinitializer, %bb.a ], [ zeroinitializer, %bb.b ], [ %i.bw, %nsvg__addEdge.exit ] ; 5 uses
-  %i.bz = phi <2 x float> [ zeroinitializer, %bb.a ], [ %i.aa, %bb.b ], [ %i.aa, %nsvg__addEdge.exit ] ; 2 uses
+  %.063.lcssa = phi float [ 0.000000e+00, %bb.a ], [ %i.ab, %bb.b ], [ %i.ab, %nsvg__addEdge.exit ] ; 2 uses
+  %i.by = phi <2 x float> [ zeroinitializer, %bb.a ], [ zeroinitializer, %bb.b ], [ %i.bw, %nsvg__addEdge.exit ] ; 4 uses
+  %i.bz = phi <2 x float> [ zeroinitializer, %bb.a ], [ %i.aa, %bb.b ], [ %i.aa, %nsvg__addEdge.exit ] ; 3 uses
   %.not = icmp eq i32 %7, 0
   br i1 %.not, label %nsvg__addEdge.exit95, label %bb.e
 
@@ -1893,7 +1862,7 @@ bb.e:                                             ; preds = %._crit_edge
   %i.ca = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.cb = load <2 x float>, ptr %1, align 4, !tbaa !32 ; 2 uses
   %i.cc = load float, ptr %i.ca, align 4, !tbaa !152 ; 2 uses
-  %i.cd = fcmp oeq float %i.cc, %.061.lcssa
+  %i.cd = fcmp oeq float %i.cc, %.063.lcssa
   br i1 %i.cd, label %nsvg__addEdge.exit81, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
@@ -1934,7 +1903,7 @@ bb.g:                                             ; preds = %bb.f
   %i.ct = getelementptr inbounds [32 x i8], ptr %i.cr, i64 %i.cs ; 2 uses
   %i.cu = add nsw i32 %i.cq, 1
   store i32 %i.cu, ptr %i.ce, align 8, !tbaa !145
-  %i.cv = fcmp olt float %i.cc, %.061.lcssa       ; 2 uses
+  %i.cv = fcmp olt float %i.cc, %.063.lcssa       ; 2 uses
   %i.cw = getelementptr inbounds nuw i8, ptr %i.ct, i64 16
   %.49.i77 = select i1 %i.cv, i32 1, i32 -1
   %i.cx = insertelement <4 x i1> poison, i1 %i.cv, i64 0
@@ -1948,10 +1917,11 @@ bb.g:                                             ; preds = %bb.f
   br label %nsvg__addEdge.exit81
 
 nsvg__addEdge.exit81:                             ; preds = %bb.e, %bb.g, %.sink.split.i72
-  %i.dd = load <2 x float>, ptr %2, align 4, !tbaa !32 ; 3 uses
-  %9 = extractelement <2 x float> %i.by, i64 1    ; 2 uses
-  %i.de = extractelement <2 x float> %i.dd, i64 1 ; 2 uses
-  %i.df = fcmp oeq float %9, %i.de
+  %8 = getelementptr inbounds nuw i8, ptr %2, i64 4
+  %i.dd = load <2 x float>, ptr %2, align 4, !tbaa !32 ; 2 uses
+  %9 = load float, ptr %8, align 4, !tbaa !152    ; 2 uses
+  %i.de = extractelement <2 x float> %i.by, i64 1 ; 2 uses
+  %i.df = fcmp oeq float %i.de, %9
   br i1 %i.df, label %nsvg__addEdge.exit95, label %bb.h
 
 bb.h:                                             ; preds = %nsvg__addEdge.exit81
@@ -1989,31 +1959,24 @@ bb.i:                                             ; preds = %bb.h
   %i.ds = phi i32 [ %i.dh, %._crit_edge.i92 ], [ %.pre37.i85, %._crit_edge36.i84 ] ; 2 uses
   %i.dt = phi ptr [ %.pre.i94, %._crit_edge.i92 ], [ %i.dq, %._crit_edge36.i84 ]
   %i.du = sext i32 %i.ds to i64
-  %i.dv = getelementptr inbounds [32 x i8], ptr %i.dt, i64 %i.du ; 3 uses
+  %i.dv = getelementptr inbounds [32 x i8], ptr %i.dt, i64 %i.du ; 2 uses
   %i.dw = add nsw i32 %i.ds, 1
   store i32 %i.dw, ptr %i.dg, align 8, !tbaa !145
-  %i.dx = fcmp olt float %9, %i.de                ; 2 uses
-  %10 = getelementptr inbounds nuw i8, ptr %i.dv, i64 8
+  %i.dx = fcmp olt float %i.de, %9                ; 2 uses
   %i.dy = getelementptr inbounds nuw i8, ptr %i.dv, i64 16
   %.49.i91 = select i1 %i.dx, i32 1, i32 -1
-  %11 = insertelement <2 x i1> poison, i1 %i.dx, i64 0
-  %12 = shufflevector <2 x i1> %11, <2 x i1> poison, <2 x i32> zeroinitializer ; 2 uses
-  %13 = select <2 x i1> %12, <2 x float> %i.by, <2 x float> %i.dd
-  store <2 x float> %13, ptr %i.dv, align 8, !tbaa !32
-  %14 = select <2 x i1> %12, <2 x float> %i.dd, <2 x float> %i.by
-  store <2 x float> %14, ptr %10, align 8, !tbaa !32
+  %10 = insertelement <4 x i1> poison, i1 %i.dx, i64 0
+  %11 = shufflevector <4 x i1> %10, <4 x i1> poison, <4 x i32> zeroinitializer
+  %12 = shufflevector <2 x float> %i.by, <2 x float> %i.dd, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %13 = shufflevector <2 x float> %i.dd, <2 x float> %i.by, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %14 = select <4 x i1> %11, <4 x float> %12, <4 x float> %13
+  store <4 x float> %14, ptr %i.dv, align 8, !tbaa !32
   store i32 %.49.i91, ptr %i.dy, align 8, !tbaa !155
   br label %nsvg__addEdge.exit95
 
 nsvg__addEdge.exit95:                             ; preds = %.sink.split.i86, %bb.i, %nsvg__addEdge.exit81, %._crit_edge
-  store float %.063.lcssa, ptr %1, align 4, !tbaa !151
-  %15 = getelementptr inbounds nuw i8, ptr %1, i64 4
-  store float %.061.lcssa, ptr %15, align 4, !tbaa !152
-  %16 = extractelement <2 x float> %i.by, i64 0
-  store float %16, ptr %2, align 4, !tbaa !151
-  %17 = getelementptr inbounds nuw i8, ptr %2, i64 4
-  %18 = extractelement <2 x float> %i.by, i64 1
-  store float %18, ptr %17, align 4, !tbaa !152
+  store <2 x float> %i.bz, ptr %1, align 4, !tbaa !32
+  store <2 x float> %i.by, ptr %2, align 4, !tbaa !32
   ret void
 }
 

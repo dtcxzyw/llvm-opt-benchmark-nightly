@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph, %bb.i
-  %.pn44 = phi ptr [ %.pn42, %.lr.ph ], [ %.pn, %bb.i ] ; 12 uses
+  %.pn44 = phi ptr [ %.pn42, %.lr.ph ], [ %.pn, %bb.i ] ; 9 uses
   %i.p = getelementptr inbounds nuw i8, ptr %.pn44, i64 520 ; 3 uses
   %i.q = load ptr, ptr %i.p, align 8
   %.not35 = icmp eq ptr %i.q, null
@@ -220,25 +220,26 @@ bb.e:                                             ; preds = %bb.d
   %i.w = load double, ptr %i.j, align 8
   %i.x = fdiv double %i.v, %i.w
   %i.y = tail call double @SDL_floor_REAL(double noundef %i.x) #5
-  %2 = fptosi double %i.y to i32                  ; 3 uses
   %i.z = load i32, ptr %i.k, align 8
   %i.aa = sitofp i32 %i.z to double
   %i.ab = load double, ptr %i.l, align 8
   %i.ac = fdiv double %i.aa, %i.ab
   %i.ad = tail call double @SDL_floor_REAL(double noundef %i.ac) #5
-  %3 = fptosi double %i.ad to i32                 ; 3 uses
   %i.ae = load i32, ptr %i.m, align 4
   %i.af = sitofp i32 %i.ae to double
   %i.ag = load double, ptr %i.j, align 8
   %i.ah = fdiv double %i.af, %i.ag
   %i.ai = tail call double @SDL_ceil_REAL(double noundef %i.ah) #5
-  %4 = fptosi double %i.ai to i32                 ; 3 uses
   %i.aj = load i32, ptr %i.n, align 8
   %i.ak = sitofp i32 %i.aj to double
   %i.al = load double, ptr %i.l, align 8
   %i.am = fdiv double %i.ak, %i.al
   %i.an = tail call double @SDL_ceil_REAL(double noundef %i.am) #5
-  %5 = fptosi double %i.an to i32                 ; 3 uses
+  %2 = insertelement <4 x double> poison, double %i.y, i64 0
+  %3 = insertelement <4 x double> %2, double %i.ad, i64 1
+  %4 = insertelement <4 x double> %3, double %i.ai, i64 2
+  %5 = insertelement <4 x double> %4, double %i.an, i64 3
+  %6 = fptosi <4 x double> %5 to <4 x i32>        ; 8 uses
   %i.ao = load i32, ptr %i.o, align 4
   %i.ap = sitofp i32 %i.ao to double
   %i.aq = load double, ptr %i.j, align 8
@@ -247,25 +248,29 @@ bb.e:                                             ; preds = %bb.d
   %i.at = fptosi double %i.as to i32              ; 3 uses
   %i.au = getelementptr inbounds nuw i8, ptr %.pn44, i64 528 ; 2 uses
   %i.av = load i32, ptr %i.au, align 8
-  %i.aw = icmp eq i32 %i.av, %2
+  %7 = extractelement <4 x i32> %6, i64 0         ; 2 uses
+  %i.aw = icmp eq i32 %i.av, %7
   br i1 %i.aw, label %bb.f, label %SDL_RectsEqual.exit.thread
 
 bb.f:                                             ; preds = %bb.e
   %i.ax = getelementptr inbounds nuw i8, ptr %.pn44, i64 532
   %i.ay = load i32, ptr %i.ax, align 4
-  %i.az = icmp eq i32 %i.ay, %3
+  %8 = extractelement <4 x i32> %6, i64 1
+  %i.az = icmp eq i32 %i.ay, %8
   br i1 %i.az, label %bb.g, label %SDL_RectsEqual.exit.thread
 
 bb.g:                                             ; preds = %bb.f
   %i.ba = getelementptr inbounds nuw i8, ptr %.pn44, i64 536
   %i.bb = load i32, ptr %i.ba, align 8
-  %i.bc = icmp eq i32 %i.bb, %4
+  %9 = extractelement <4 x i32> %6, i64 2
+  %i.bc = icmp eq i32 %i.bb, %9
   br i1 %i.bc, label %SDL_RectsEqual.exit, label %SDL_RectsEqual.exit.thread
 
 SDL_RectsEqual.exit:                              ; preds = %bb.g
   %i.bd = getelementptr inbounds nuw i8, ptr %.pn44, i64 540
   %i.be = load i32, ptr %i.bd, align 4
-  %i.bf = icmp eq i32 %i.be, %5
+  %10 = extractelement <4 x i32> %6, i64 3
+  %i.bf = icmp eq i32 %i.be, %10
   br i1 %i.bf, label %bb.h, label %SDL_RectsEqual.exit.thread
 
 bb.h:                                             ; preds = %SDL_RectsEqual.exit
@@ -275,22 +280,19 @@ bb.h:                                             ; preds = %SDL_RectsEqual.exit
   br i1 %.not36, label %bb.i, label %SDL_RectsEqual.exit.thread
 
 SDL_RectsEqual.exit.thread:                       ; preds = %bb.e, %bb.f, %bb.g, %bb.h, %SDL_RectsEqual.exit
-  store i32 %2, ptr %i.au, align 8
-  %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.pn44, i64 532
-  store i32 %3, ptr %.sroa.6.0..sroa_idx, align 4
-  %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.pn44, i64 536
-  store i32 %4, ptr %.sroa.9.0..sroa_idx, align 8
-  %.sroa.12.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.pn44, i64 540
-  store i32 %5, ptr %.sroa.12.0..sroa_idx, align 4
+  store <4 x i32> %6, ptr %i.au, align 8
   %i.bi = getelementptr inbounds nuw i8, ptr %.pn44, i64 544
   store i32 %i.at, ptr %i.bi, align 8
   %i.bj = load ptr, ptr %i.p, align 8             ; 2 uses
-  %. = tail call i32 @llvm.smin.i32(i32 %4, i32 %i.at)
-  %i.bk = add nsw i32 %., %2
+  %11 = extractelement <4 x i32> %6, i64 2
+  %. = tail call i32 @llvm.smin.i32(i32 %11, i32 %i.at)
+  %i.bk = add nsw i32 %., %7
   %i.bl = load ptr, ptr @WAYLAND_wl_proxy_marshal_flags, align 8
   %i.bm = load ptr, ptr @WAYLAND_wl_proxy_get_version, align 8
   %i.bn = tail call i32 %i.bm(ptr noundef %i.bj) #5, !inline_history !7
-  %i.bo = tail call ptr (ptr, i32, ptr, i32, i32, ...) %i.bl(ptr noundef %i.bj, i32 noundef 6, ptr noundef null, i32 noundef %i.bn, i32 noundef 0, i32 noundef %i.bk, i32 noundef %3, i32 noundef 1, i32 noundef %5) #5, !inline_history !7 ; 0 uses
+  %12 = extractelement <4 x i32> %6, i64 1
+  %13 = extractelement <4 x i32> %6, i64 3
+  %i.bo = tail call ptr (ptr, i32, ptr, i32, i32, ...) %i.bl(ptr noundef %i.bj, i32 noundef 6, ptr noundef null, i32 noundef %i.bn, i32 noundef 0, i32 noundef %i.bk, i32 noundef %12, i32 noundef 1, i32 noundef %13) #5, !inline_history !7 ; 0 uses
   %i.bp = load ptr, ptr %i.p, align 8             ; 2 uses
   %i.bq = load ptr, ptr @WAYLAND_wl_proxy_marshal_flags, align 8
   %i.br = load ptr, ptr @WAYLAND_wl_proxy_get_version, align 8

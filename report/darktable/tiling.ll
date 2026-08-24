@@ -205,13 +205,13 @@ _fit_output_to_input_roi.exit.thread.i:           ; preds = %.critedge.i.i
   %i.rr = load <4 x i32>, ptr %32, align 16, !tbaa !55
   %i.rs = sitofp <4 x i32> %i.rr to <4 x float>
   %i.rt = fdiv reassoc nsz arcp contract afn <4 x float> %i.rs, %i.rq
-  %i.ru = fpext <4 x float> %i.rt to <4 x double> ; 8 uses
+  %i.ru = fpext <4 x float> %i.rt to <4 x double> ; 6 uses
   %i.rv = call noalias dereferenceable_or_null(40) ptr @malloc(i64 noundef 40) #12 ; 20 uses
   %i.rw = call noalias dereferenceable_or_null(40) ptr @malloc(i64 noundef 40) #12 ; 18 uses
   %i.rx = call noalias dereferenceable_or_null(32) ptr @malloc(i64 noundef 32) #12 ; 4 uses
   %i.ry = call noalias dereferenceable_or_null(32) ptr @malloc(i64 noundef 32) #12 ; 3 uses
   %i.rz = call noalias dereferenceable_or_null(32) ptr @malloc(i64 noundef 32) #12 ; 4 uses
-  %i.sa = call noalias dereferenceable_or_null(32) ptr @malloc(i64 noundef 32) #12 ; 5 uses
+  %i.sa = call noalias dereferenceable_or_null(32) ptr @malloc(i64 noundef 32) #12 ; 2 uses
   store ptr %i.sa, ptr %i.rv, align 8, !tbaa !120
   %i.sb = call noalias dereferenceable_or_null(32) ptr @malloc(i64 noundef 32) #12 ; 2 uses
   %i.sc = getelementptr inbounds nuw i8, ptr %i.rv, i64 8 ; 8 uses
@@ -219,45 +219,28 @@ _fit_output_to_input_roi.exit.thread.i:           ; preds = %.critedge.i.i
   %i.sd = call noalias dereferenceable_or_null(32) ptr @malloc(i64 noundef 32) #12 ; 2 uses
   %i.se = getelementptr inbounds nuw i8, ptr %i.rv, i64 16 ; 7 uses
   store ptr %i.sd, ptr %i.se, align 8, !tbaa !120
-  %i.sf = call noalias dereferenceable_or_null(32) ptr @malloc(i64 noundef 32) #12 ; 4 uses
+  %i.sf = call noalias dereferenceable_or_null(32) ptr @malloc(i64 noundef 32) #12 ; 2 uses
   %i.sg = getelementptr inbounds nuw i8, ptr %i.rv, i64 24 ; 7 uses
   store ptr %i.sf, ptr %i.sg, align 8, !tbaa !120
-  %i.sh = call noalias dereferenceable_or_null(32) ptr @malloc(i64 noundef 32) #12 ; 4 uses
-  %33 = getelementptr inbounds nuw i8, ptr %i.rv, i64 32 ; 7 uses
-  store ptr %i.sh, ptr %33, align 8, !tbaa !120
-  %34 = extractelement <4 x double> %i.ru, i64 0
-  store double %34, ptr %i.sa, align 8, !tbaa !122
-  %35 = getelementptr inbounds nuw i8, ptr %i.sa, i64 8
-  %36 = extractelement <4 x double> %i.ru, i64 1
-  store double %36, ptr %35, align 8, !tbaa !122
-  %i.si = getelementptr inbounds nuw i8, ptr %i.sa, i64 16
-  %37 = extractelement <4 x double> %i.ru, i64 2
-  store double %37, ptr %i.si, align 8, !tbaa !122
-  %38 = getelementptr inbounds nuw i8, ptr %i.sa, i64 24
-  %39 = extractelement <4 x double> %i.ru, i64 3  ; 2 uses
-  store double %39, ptr %38, align 8, !tbaa !122
+  %i.sh = call noalias dereferenceable_or_null(32) ptr @malloc(i64 noundef 32) #12 ; 3 uses
+  %i.si = getelementptr inbounds nuw i8, ptr %i.rv, i64 32 ; 7 uses
+  store ptr %i.sh, ptr %i.si, align 8, !tbaa !120
+  store <4 x double> %i.ru, ptr %i.sa, align 8, !tbaa !122
   %i.sj = fadd reassoc nsz arcp contract afn <4 x double> %i.ru, <double f0x3FED9EA2EA4C9A82, double f0x3FCBF8120F357AD9, double f0x3FCBF8120F357AD9, double f0x3FCBF8120F357AD9> ; 4 uses
   store <4 x double> %i.sj, ptr %i.sb, align 8, !tbaa !122
-  %40 = extractelement <4 x double> %i.sj, i64 3
   %i.sk = shufflevector <4 x double> %i.ru, <4 x double> %i.sj, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
-  %i.sl = fadd reassoc nsz arcp contract afn <4 x double> %i.sk, <double f0x3FCBF8120F357AD9, double f0x3FED9EA2EA4C9A82, double -0.000000e+00, double -0.000000e+00> ; 2 uses
+  %i.sl = fadd reassoc nsz arcp contract afn <4 x double> %i.sk, <double f0x3FCBF8120F357AD9, double f0x3FED9EA2EA4C9A82, double -0.000000e+00, double -0.000000e+00> ; 3 uses
   store <4 x double> %i.sl, ptr %i.sd, align 8, !tbaa !122
-  %41 = extractelement <4 x double> %i.sl, i64 0  ; 2 uses
-  store double %41, ptr %i.sf, align 8, !tbaa !122
-  %42 = getelementptr inbounds nuw i8, ptr %i.sf, i64 8
-  %43 = shufflevector <4 x double> %i.ru, <4 x double> poison, <2 x i32> <i32 1, i32 2>
-  %44 = fadd reassoc nsz arcp contract afn <2 x double> %43, <double f0x3FCBF8120F357AD9, double f0x3FED9EA2EA4C9A82> ; 2 uses
-  store <2 x double> %44, ptr %42, align 8, !tbaa !122
-  %45 = getelementptr inbounds nuw i8, ptr %i.sf, i64 24
-  store double %40, ptr %45, align 8, !tbaa !122
-  store double %41, ptr %i.sh, align 8, !tbaa !122
-  %i.sm = getelementptr inbounds nuw i8, ptr %i.sh, i64 8
-  %46 = shufflevector <2 x double> %44, <2 x double> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
-  %47 = shufflevector <4 x double> %46, <4 x double> %i.sj, <2 x i32> <i32 0, i32 6>
-  store <2 x double> %47, ptr %i.sm, align 8, !tbaa !122
-  %48 = fadd reassoc nsz arcp contract afn double %39, f0x3FED9EA2EA4C9A82
-  %49 = getelementptr inbounds nuw i8, ptr %i.sh, i64 24
-  store double %48, ptr %49, align 8, !tbaa !122
+  %33 = shufflevector <4 x double> %i.sl, <4 x double> %i.ru, <4 x i32> <i32 0, i32 5, i32 6, i32 poison>
+  %34 = shufflevector <4 x double> %33, <4 x double> %i.sj, <4 x i32> <i32 0, i32 1, i32 2, i32 7>
+  %35 = fadd reassoc nsz arcp contract afn <4 x double> %34, <double -0.000000e+00, double f0x3FCBF8120F357AD9, double f0x3FED9EA2EA4C9A82, double -0.000000e+00> ; 2 uses
+  store <4 x double> %35, ptr %i.sf, align 8, !tbaa !122
+  %36 = shufflevector <4 x double> %i.sl, <4 x double> %35, <2 x i32> <i32 0, i32 5>
+  store <2 x double> %36, ptr %i.sh, align 8, !tbaa !122
+  %i.sm = getelementptr inbounds nuw i8, ptr %i.sh, i64 16
+  %37 = shufflevector <4 x double> %i.sj, <4 x double> %i.ru, <2 x i32> <i32 2, i32 7>
+  %38 = fadd reassoc nsz arcp contract afn <2 x double> %37, <double -0.000000e+00, double f0x3FED9EA2EA4C9A82>
+  store <2 x double> %38, ptr %i.sm, align 8, !tbaa !122
   %i.sn = load ptr, ptr %i.rv, align 8, !tbaa !120
   call void @llvm.lifetime.start.p0(ptr nonnull %23) #11
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(20) %23, ptr noundef nonnull align 16 dereferenceable(20) %32, i64 20, i1 false), !tbaa.struct !118
@@ -550,7 +533,7 @@ bb.bp:                                            ; preds = %bb.bo, %bb.bn
   br i1 %i.wx, label %bb.bq, label %.preheader1.1.i.i.i.i
 
 bb.bq:                                            ; preds = %bb.bp
-  %i.yj = load ptr, ptr %33, align 8, !tbaa !120
+  %i.yj = load ptr, ptr %i.si, align 8, !tbaa !120
   %i.yk = load double, ptr %i.yj, align 8, !tbaa !122
   %i.yl = fadd reassoc nsz arcp contract afn double %i.yk, %.1.3.i.i.i.i
   br label %.preheader1.1.i.i.i.i
@@ -604,7 +587,7 @@ bb.by:                                            ; preds = %bb.bx, %bb.bw
   br i1 %i.wx, label %bb.bz, label %.preheader1.2.i.i.i.i
 
 bb.bz:                                            ; preds = %bb.by
-  %i.zc = load ptr, ptr %33, align 8, !tbaa !120
+  %i.zc = load ptr, ptr %i.si, align 8, !tbaa !120
   %i.zd = getelementptr inbounds nuw i8, ptr %i.zc, i64 8
   %i.ze = load double, ptr %i.zd, align 8, !tbaa !122
   %i.zf = fadd reassoc nsz arcp contract afn double %i.ze, %.1.3.1.i.i.i.i
@@ -659,7 +642,7 @@ bb.ch:                                            ; preds = %bb.cg, %bb.cf
   br i1 %i.wx, label %bb.ci, label %.preheader1.3.i.i.i.i
 
 bb.ci:                                            ; preds = %bb.ch
-  %i.zw = load ptr, ptr %33, align 8, !tbaa !120
+  %i.zw = load ptr, ptr %i.si, align 8, !tbaa !120
   %i.zx = getelementptr inbounds nuw i8, ptr %i.zw, i64 16
   %i.zy = load double, ptr %i.zx, align 8, !tbaa !122
   %i.zz = fadd reassoc nsz arcp contract afn double %i.zy, %.1.3.2.i.i.i.i
@@ -714,7 +697,7 @@ bb.cq:                                            ; preds = %bb.cp, %bb.co
   br i1 %i.wx, label %bb.cr, label %.preheader10.i.i.i.i
 
 bb.cr:                                            ; preds = %bb.cq
-  %i.aaq = load ptr, ptr %33, align 8, !tbaa !120
+  %i.aaq = load ptr, ptr %i.si, align 8, !tbaa !120
   %i.aar = getelementptr inbounds nuw i8, ptr %i.aaq, i64 24
   %i.aas = load double, ptr %i.aar, align 8, !tbaa !122
   %i.aat = fadd reassoc nsz arcp contract afn double %i.aas, %.1.3.3.i.i.i.i
@@ -1040,7 +1023,7 @@ bb.cu:                                            ; preds = %.preheader5.i.i.i.i
   br i1 %i.ww, label %.preheader.4.i.i.i.i, label %.loopexit.4.i.i.i.i
 
 .preheader.4.i.i.i.i:                             ; preds = %.loopexit.3.i.i.i.i
-  %i.aio = load ptr, ptr %33, align 8, !tbaa !120 ; 5 uses
+  %i.aio = load ptr, ptr %i.si, align 8, !tbaa !120 ; 5 uses
   %i.aip = load double, ptr %.pre.i.i.i, align 8, !tbaa !122 ; 2 uses
   %i.aiq = load double, ptr %i.aio, align 8, !tbaa !122
   %i.air = fsub reassoc nsz arcp contract afn double %i.aiq, %i.aip
@@ -1183,7 +1166,7 @@ _simplex.exit.i.i.i:                              ; preds = %bb.cw, %bb.cv
   call void @free(ptr noundef %i.amf) #11
   %i.amg = load ptr, ptr %i.sg, align 8, !tbaa !120
   call void @free(ptr noundef %i.amg) #11
-  %i.amh = load ptr, ptr %33, align 8, !tbaa !120
+  %i.amh = load ptr, ptr %i.si, align 8, !tbaa !120
   call void @free(ptr noundef %i.amh) #11
   call void @free(ptr noundef nonnull %i.rv) #11
   %i.ami = load i32, ptr getelementptr inbounds nuw (i8, ptr @darktable, i64 8), align 8, !tbaa !56 ; 2 uses

@@ -205,7 +205,7 @@ bb.l:                                             ; preds = %bb.d
   br label %bb.an
 
 bb.m:                                             ; preds = %bb.d
-  %i.cc = tail call fastcc ptr @alloc_interpolation_points(ptr noundef %1, i64 noundef %2, i32 %3, i1 noundef zeroext false) ; 114 uses
+  %i.cc = tail call fastcc ptr @alloc_interpolation_points(ptr noundef %1, i64 noundef %2, i32 %3, i1 noundef zeroext false) ; 108 uses
   switch i32 %i.i, label %bb.am [
     i32 1, label %bb.n
     i32 2, label %bb.o
@@ -513,102 +513,61 @@ bb.q:                                             ; preds = %bb.m
 
 bb.r:                                             ; preds = %bb.m
   %i.hb = add i64 %2, 8                           ; 2 uses
-  %i.hc = tail call fastcc ptr @gv_calloc(i64 noundef %i.hb, i64 noundef 16) ; 21 uses
+  %i.hc = tail call fastcc ptr @gv_calloc(i64 noundef %i.hb, i64 noundef 16) ; 14 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.hc, ptr noundef nonnull align 8 dereferenceable(16) %1, i64 16, i1 false), !tbaa.struct !8
   %i.hd = getelementptr inbounds nuw i8, ptr %i.hc, i64 16
   %i.he = getelementptr inbounds nuw i8, ptr %1, i64 16
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.hd, ptr noundef nonnull align 8 dereferenceable(16) %i.he, i64 16, i1 false), !tbaa.struct !8
-  %i.hf = getelementptr inbounds nuw i8, ptr %i.cc, i64 48 ; 2 uses
-  %i.hg = getelementptr inbounds nuw i8, ptr %i.cc, i64 64
-  %8 = getelementptr inbounds nuw i8, ptr %i.hc, i64 32 ; 3 uses
-  %9 = getelementptr inbounds nuw i8, ptr %i.cc, i64 56 ; 2 uses
-  %i.hh = getelementptr inbounds nuw i8, ptr %i.cc, i64 72
+  %i.hf = getelementptr inbounds nuw i8, ptr %i.cc, i64 48 ; 3 uses
+  %i.hg = getelementptr inbounds nuw i8, ptr %i.cc, i64 64 ; 2 uses
+  %i.hh = getelementptr inbounds nuw i8, ptr %i.hc, i64 32 ; 3 uses
   %i.hi = load <2 x double>, ptr %i.hf, align 8, !tbaa !9 ; 2 uses
   %i.hj = load <2 x double>, ptr %i.hg, align 8, !tbaa !9
   %i.hk = fsub <2 x double> %i.hj, %i.hi
   %i.hl = fadd <2 x double> %i.hi, %i.hk          ; 3 uses
-  store <2 x double> %i.hl, ptr %8, align 8, !tbaa !9
-  %10 = load double, ptr %i.hf, align 8, !tbaa !19
+  store <2 x double> %i.hl, ptr %i.hh, align 8, !tbaa !9
   %i.hm = getelementptr inbounds nuw i8, ptr %i.cc, i64 32
-  %11 = load double, ptr %i.hm, align 8, !tbaa !19
-  %12 = fsub double %10, %11
-  %13 = extractelement <2 x double> %i.hl, i64 0
-  %14 = fadd double %13, %12                      ; 3 uses
-  %15 = getelementptr inbounds nuw i8, ptr %i.hc, i64 48 ; 2 uses
-  store double %14, ptr %15, align 8, !tbaa !19
-  %16 = getelementptr inbounds nuw i8, ptr %i.cc, i64 40
-  %17 = getelementptr inbounds nuw i8, ptr %i.hc, i64 56
-  %i.hn = getelementptr inbounds nuw i8, ptr %i.hc, i64 64
-  %i.ho = load <2 x double>, ptr %9, align 8, !tbaa !9
-  %i.hp = load <2 x double>, ptr %16, align 8, !tbaa !9
+  %8 = getelementptr inbounds nuw i8, ptr %i.hc, i64 48 ; 2 uses
+  %9 = load <2 x double>, ptr %i.hf, align 8, !tbaa !9
+  %10 = load <2 x double>, ptr %i.hm, align 8, !tbaa !9
+  %11 = fsub <2 x double> %9, %10
+  %12 = fadd <2 x double> %i.hl, %11              ; 3 uses
+  store <2 x double> %12, ptr %8, align 8, !tbaa !9
+  %i.hn = getelementptr inbounds nuw i8, ptr %i.hc, i64 64 ; 2 uses
+  %i.ho = load <2 x double>, ptr %i.hg, align 8, !tbaa !9
+  %i.hp = load <2 x double>, ptr %i.hf, align 8, !tbaa !9
   %i.hq = fsub <2 x double> %i.ho, %i.hp
-  %18 = shufflevector <2 x double> %i.hl, <2 x double> poison, <2 x i32> <i32 1, i32 0> ; 3 uses
-  %19 = insertelement <2 x double> %18, double %14, i64 1
-  %i.hr = fadd <2 x double> %19, %i.hq            ; 3 uses
-  store <2 x double> %i.hr, ptr %17, align 8, !tbaa !9
-  %20 = load double, ptr %i.hh, align 8, !tbaa !17
-  %21 = load <2 x double>, ptr %9, align 8
-  %22 = getelementptr inbounds nuw i8, ptr %i.hc, i64 72
-  %i.hs = getelementptr inbounds nuw i8, ptr %i.hc, i64 80
-  %23 = insertelement <2 x double> %18, double %20, i64 0
-  %24 = insertelement <2 x double> %21, double %14, i64 1
-  %i.ht = fsub <2 x double> %23, %24
-  %i.hu = fadd <2 x double> %i.hr, %i.ht          ; 2 uses
-  store <2 x double> %i.hu, ptr %22, align 8, !tbaa !9
-  %25 = getelementptr inbounds nuw i8, ptr %i.hc, i64 88
+  %i.hr = fadd <2 x double> %12, %i.hq            ; 2 uses
+  store <2 x double> %i.hr, ptr %i.hn, align 8, !tbaa !9
+  %i.hs = getelementptr inbounds nuw i8, ptr %i.hc, i64 80 ; 2 uses
+  %i.ht = fsub <2 x double> %i.hl, %12
+  %i.hu = fadd <2 x double> %i.ht, %i.hr
+  store <2 x double> %i.hu, ptr %i.hs, align 8, !tbaa !9
   %i.hv = getelementptr inbounds nuw i8, ptr %i.cc, i64 96 ; 3 uses
-  %26 = load double, ptr %i.hv, align 8, !tbaa !19 ; 2 uses
   %i.hw = getelementptr inbounds nuw i8, ptr %i.cc, i64 80 ; 2 uses
-  %27 = load double, ptr %i.hw, align 8, !tbaa !19
-  %28 = fsub double %27, %26
-  %29 = fadd double %26, %28                      ; 3 uses
-  %30 = getelementptr inbounds nuw i8, ptr %i.hc, i64 144 ; 2 uses
-  store double %29, ptr %30, align 8, !tbaa !19
-  %31 = getelementptr inbounds nuw i8, ptr %i.cc, i64 104 ; 3 uses
-  %32 = getelementptr inbounds nuw i8, ptr %i.cc, i64 88 ; 2 uses
-  %i.hx = getelementptr inbounds nuw i8, ptr %i.hc, i64 152
-  %33 = load double, ptr %i.hv, align 8, !tbaa !19
+  %i.hx = getelementptr inbounds nuw i8, ptr %i.hc, i64 144 ; 2 uses
   %i.hy = getelementptr inbounds nuw i8, ptr %i.cc, i64 112
-  %34 = load double, ptr %i.hy, align 8, !tbaa !19
-  %35 = fsub double %33, %34
-  %36 = fadd double %29, %35                      ; 3 uses
-  %37 = getelementptr inbounds nuw i8, ptr %i.hc, i64 128 ; 2 uses
-  store double %36, ptr %37, align 8, !tbaa !19
-  %38 = getelementptr inbounds nuw i8, ptr %i.cc, i64 120
-  %39 = getelementptr inbounds nuw i8, ptr %i.hc, i64 136
-  %40 = load double, ptr %i.hw, align 8, !tbaa !19
-  %41 = load double, ptr %i.hv, align 8, !tbaa !19
-  %42 = fsub double %40, %41
-  %43 = fadd double %36, %42                      ; 2 uses
-  %i.hz = getelementptr inbounds nuw i8, ptr %i.hc, i64 112 ; 2 uses
-  store double %43, ptr %i.hz, align 8, !tbaa !19
-  %i.ia = getelementptr inbounds nuw i8, ptr %i.hc, i64 120
-  %i.ib = getelementptr inbounds nuw i8, ptr %i.hc, i64 96 ; 2 uses
-  %44 = insertelement <2 x double> %18, double %29, i64 1
-  %45 = insertelement <2 x double> %i.hr, double %36, i64 1
-  %i.ic = fsub <2 x double> %44, %45
-  %46 = insertelement <2 x double> %i.hu, double %43, i64 1
-  %i.id = fadd <2 x double> %i.ic, %46
-  store <2 x double> %i.id, ptr %25, align 8, !tbaa !9
-  %47 = load double, ptr %31, align 8, !tbaa !17  ; 2 uses
-  %48 = load double, ptr %32, align 8, !tbaa !17
-  %49 = fsub double %48, %47
-  %50 = fadd double %47, %49                      ; 3 uses
-  store double %50, ptr %i.hx, align 8, !tbaa !17
-  %51 = load double, ptr %31, align 8, !tbaa !17
-  %52 = load double, ptr %38, align 8, !tbaa !17
-  %53 = fsub double %51, %52
-  %54 = fadd double %50, %53                      ; 3 uses
-  store double %54, ptr %39, align 8, !tbaa !17
-  %55 = load double, ptr %32, align 8, !tbaa !17
-  %56 = load double, ptr %31, align 8, !tbaa !17
-  %57 = fsub double %55, %56
-  %58 = fadd double %54, %57                      ; 2 uses
-  store double %58, ptr %i.ia, align 8, !tbaa !17
-  %59 = fsub double %50, %54
-  %60 = fadd double %59, %58
-  %61 = getelementptr inbounds nuw i8, ptr %i.hc, i64 104
-  store double %60, ptr %61, align 8, !tbaa !17
+  %i.hz = getelementptr inbounds nuw i8, ptr %i.hc, i64 128 ; 2 uses
+  %i.ia = getelementptr inbounds nuw i8, ptr %i.hc, i64 112 ; 2 uses
+  %i.ib = getelementptr inbounds nuw i8, ptr %i.hc, i64 96 ; 3 uses
+  %13 = load <2 x double>, ptr %i.hv, align 8, !tbaa !9 ; 2 uses
+  %14 = load <2 x double>, ptr %i.hw, align 8, !tbaa !9
+  %i.ic = fsub <2 x double> %14, %13
+  %i.id = fadd <2 x double> %13, %i.ic            ; 3 uses
+  store <2 x double> %i.id, ptr %i.hx, align 8, !tbaa !9
+  %15 = load <2 x double>, ptr %i.hv, align 8, !tbaa !9
+  %16 = load <2 x double>, ptr %i.hy, align 8, !tbaa !9
+  %17 = fsub <2 x double> %15, %16
+  %18 = fadd <2 x double> %i.id, %17              ; 3 uses
+  store <2 x double> %18, ptr %i.hz, align 8, !tbaa !9
+  %19 = load <2 x double>, ptr %i.hw, align 8, !tbaa !9
+  %20 = load <2 x double>, ptr %i.hv, align 8, !tbaa !9
+  %21 = fsub <2 x double> %19, %20
+  %22 = fadd <2 x double> %18, %21                ; 2 uses
+  store <2 x double> %22, ptr %i.ia, align 8, !tbaa !9
+  %23 = fsub <2 x double> %i.id, %18
+  %24 = fadd <2 x double> %23, %22
+  store <2 x double> %24, ptr %i.ib, align 8, !tbaa !9
   %i.ie = getelementptr inbounds nuw i8, ptr %i.hc, i64 160
   %i.if = getelementptr inbounds nuw i8, ptr %1, i64 32
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ie, ptr noundef nonnull align 8 dereferenceable(16) %i.if, i64 16, i1 false), !tbaa.struct !8
@@ -616,11 +575,11 @@ bb.r:                                             ; preds = %bb.m
   %i.ih = getelementptr inbounds nuw i8, ptr %1, i64 48
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ig, ptr noundef nonnull align 8 dereferenceable(16) %i.ih, i64 16, i1 false), !tbaa.struct !8
   tail call void @gvrender_polygon(ptr noundef %0, ptr noundef nonnull %i.hc, i64 noundef %i.hb, i32 noundef %4) #26
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %7, ptr noundef nonnull align 8 dereferenceable(16) %8, i64 16, i1 false), !tbaa.struct !8
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %7, ptr noundef nonnull align 8 dereferenceable(16) %i.hh, i64 16, i1 false), !tbaa.struct !8
   %i.ii = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 2 uses
   %i.ij = getelementptr inbounds nuw i8, ptr %7, i64 32 ; 2 uses
-  %i.ik = load <2 x double>, ptr %8, align 8, !tbaa !9 ; 2 uses
-  %i.il = load <2 x double>, ptr %15, align 8, !tbaa !9 ; 2 uses
+  %i.ik = load <2 x double>, ptr %i.hh, align 8, !tbaa !9 ; 2 uses
+  %i.il = load <2 x double>, ptr %8, align 8, !tbaa !9 ; 2 uses
   %i.im = fsub <2 x double> %i.il, %i.ik
   %i.in = fsub <2 x double> %i.ik, %i.im          ; 2 uses
   store <2 x double> %i.in, ptr %i.ii, align 16, !tbaa !9
@@ -633,15 +592,15 @@ bb.r:                                             ; preds = %bb.m
   call void @gvrender_polyline(ptr noundef %0, ptr noundef nonnull %7, i64 noundef 4) #26
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %7, ptr noundef nonnull align 8 dereferenceable(16) %i.ib, i64 16, i1 false), !tbaa.struct !8
   %i.is = load <2 x double>, ptr %i.ib, align 8, !tbaa !9 ; 2 uses
-  %i.it = load <2 x double>, ptr %i.hz, align 8, !tbaa !9 ; 2 uses
+  %i.it = load <2 x double>, ptr %i.ia, align 8, !tbaa !9 ; 2 uses
   %i.iu = fsub <2 x double> %i.it, %i.is
   %i.iv = fsub <2 x double> %i.is, %i.iu          ; 2 uses
   store <2 x double> %i.iv, ptr %i.ii, align 16, !tbaa !9
-  %i.iw = load <2 x double>, ptr %37, align 8, !tbaa !9
+  %i.iw = load <2 x double>, ptr %i.hz, align 8, !tbaa !9
   %i.ix = fsub <2 x double> %i.iw, %i.it
   %i.iy = fadd <2 x double> %i.iv, %i.ix
   store <2 x double> %i.iy, ptr %i.ij, align 16, !tbaa !9
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.ir, ptr noundef nonnull align 8 dereferenceable(16) %30, i64 16, i1 false), !tbaa.struct !8
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.ir, ptr noundef nonnull align 8 dereferenceable(16) %i.hx, i64 16, i1 false), !tbaa.struct !8
   call void @gvrender_polyline(ptr noundef %0, ptr noundef nonnull %7, i64 noundef 4) #26
   call void @free(ptr noundef %i.hc) #26
   br label %bb.am

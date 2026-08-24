@@ -205,18 +205,17 @@ bb.n:                                             ; preds = %bb.l
   %.not392 = icmp eq ptr %13, null
   %spec.select279 = select i1 %.not392, ptr null, ptr %12 ; 13 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #27
-  %.sroa.0368.0.vec.extract = extractelement <2 x float> %4, i64 0 ; 3 uses
-  store float %.sroa.0368.0.vec.extract, ptr %16, align 8, !tbaa !153
-  %i.bt = getelementptr inbounds nuw i8, ptr %16, i64 4 ; 3 uses
-  %.sroa.0368.4.vec.extract = extractelement <2 x float> %4, i64 1 ; 3 uses
-  store float %.sroa.0368.4.vec.extract, ptr %i.bt, align 4, !tbaa !155
+  %.sroa.0368.0.vec.extract = extractelement <2 x float> %4, i64 0 ; 2 uses
+  %i.bt = getelementptr inbounds nuw i8, ptr %16, i64 4 ; 2 uses
+  store <2 x float> %4, ptr %16, align 8, !tbaa !152
   %i.bu = getelementptr inbounds nuw i8, ptr %16, i64 8 ; 5 uses
-  store float %5, ptr %i.bu, align 8, !tbaa !156
-  %22 = fmul float %.sroa.0368.4.vec.extract, %.sroa.0368.4.vec.extract
+  store float %5, ptr %i.bu, align 8, !tbaa !153
+  %foldExtExtBinop = fmul <2 x float> %4, %4
+  %22 = extractelement <2 x float> %foldExtExtBinop, i64 1
   %i.bv = tail call float @llvm.fmuladd.f32(float %.sroa.0368.0.vec.extract, float %.sroa.0368.0.vec.extract, float %22)
   %i.bw = tail call noundef float @llvm.fmuladd.f32(float %5, float %5, float %i.bv) ; 2 uses
   %i.bx = fcmp olt float %i.bw, f0x01000000
-  br i1 %i.bx, label %bb.o, label %bb.p, !prof !157
+  br i1 %i.bx, label %bb.o, label %bb.p, !prof !155
 
 bb.o:                                             ; preds = %.loopexit397
   %i.by = call noundef float @_ZNK9Imath_3_14Vec3IfE10lengthTinyEv(ptr noundef nonnull align 4 dereferenceable(12) %16) #27
@@ -229,7 +228,7 @@ bb.p:                                             ; preds = %.loopexit397
 _ZNK9Imath_3_14Vec3IfE6lengthEv.exit.i:           ; preds = %bb.p, %bb.o
   %.0.i.i = phi float [ %i.by, %bb.o ], [ %i.bz, %bb.p ] ; 3 uses
   %i.ca = fcmp une float %.0.i.i, 0.000000e+00
-  br i1 %i.ca, label %bb.q, label %_ZN9Imath_3_14Vec3IfE9normalizeEv.exit, !prof !158
+  br i1 %i.ca, label %bb.q, label %_ZN9Imath_3_14Vec3IfE9normalizeEv.exit, !prof !156
 
 bb.q:                                             ; preds = %_ZNK9Imath_3_14Vec3IfE6lengthEv.exit.i
   %i.cb = load <2 x float>, ptr %16, align 8, !tbaa !152
@@ -237,28 +236,26 @@ bb.q:                                             ; preds = %_ZNK9Imath_3_14Vec3
   %i.cd = shufflevector <2 x float> %i.cc, <2 x float> poison, <2 x i32> zeroinitializer
   %i.ce = fdiv <2 x float> %i.cb, %i.cd
   store <2 x float> %i.ce, ptr %16, align 8, !tbaa !152
-  %i.cf = load float, ptr %i.bu, align 8, !tbaa !156
+  %i.cf = load float, ptr %i.bu, align 8, !tbaa !153
   %i.cg = fdiv float %i.cf, %.0.i.i
-  store float %i.cg, ptr %i.bu, align 8, !tbaa !156
+  store float %i.cg, ptr %i.bu, align 8, !tbaa !153
   br label %_ZN9Imath_3_14Vec3IfE9normalizeEv.exit
 
 _ZN9Imath_3_14Vec3IfE9normalizeEv.exit:           ; preds = %_ZNK9Imath_3_14Vec3IfE6lengthEv.exit.i, %bb.q
   call void @llvm.lifetime.start.p0(ptr nonnull %17) #27
-  %foldExtExtBinop = fadd <2 x float> %4, %6
-  %23 = extractelement <2 x float> %foldExtExtBinop, i64 0 ; 3 uses
-  %foldExtExtBinop533.a = fadd <2 x float> %4, %6
-  %24 = extractelement <2 x float> %foldExtExtBinop533.a, i64 1 ; 3 uses
-  %25 = fadd float %5, %7                         ; 3 uses
-  store float %23, ptr %17, align 8, !tbaa !153, !alias.scope !159
-  %i.ch = getelementptr inbounds nuw i8, ptr %17, i64 4 ; 2 uses
-  store float %24, ptr %i.ch, align 4, !tbaa !155, !alias.scope !159
-  %26 = getelementptr inbounds nuw i8, ptr %17, i64 8 ; 4 uses
-  store float %25, ptr %26, align 8, !tbaa !156, !alias.scope !159
-  %27 = fmul float %24, %24
-  %i.ci = call float @llvm.fmuladd.f32(float %23, float %23, float %27)
-  %i.cj = call noundef float @llvm.fmuladd.f32(float %25, float %25, float %i.ci) ; 2 uses
+  %23 = fadd float %5, %7                         ; 3 uses
+  %24 = getelementptr inbounds nuw i8, ptr %17, i64 4
+  %foldExtExtBinop533.a = fadd <2 x float> %4, %6 ; 4 uses
+  store <2 x float> %foldExtExtBinop533.a, ptr %17, align 8, !tbaa !152, !alias.scope !157
+  %i.ch = getelementptr inbounds nuw i8, ptr %17, i64 8 ; 4 uses
+  store float %23, ptr %i.ch, align 8, !tbaa !153, !alias.scope !157
+  %foldExtExtBinop533 = fmul <2 x float> %foldExtExtBinop533.a, %foldExtExtBinop533.a
+  %25 = extractelement <2 x float> %foldExtExtBinop533, i64 1
+  %26 = extractelement <2 x float> %foldExtExtBinop533.a, i64 0 ; 2 uses
+  %i.ci = call float @llvm.fmuladd.f32(float %26, float %26, float %25)
+  %i.cj = call noundef float @llvm.fmuladd.f32(float %23, float %23, float %i.ci) ; 2 uses
   %i.ck = fcmp olt float %i.cj, f0x01000000
-  br i1 %i.ck, label %bb.r, label %bb.s, !prof !157
+  br i1 %i.ck, label %bb.r, label %bb.s, !prof !155
 
 bb.r:                                             ; preds = %_ZN9Imath_3_14Vec3IfE9normalizeEv.exit
   %i.cl = call noundef float @_ZNK9Imath_3_14Vec3IfE10lengthTinyEv(ptr noundef nonnull align 4 dereferenceable(12) %17) #27
@@ -271,7 +268,7 @@ bb.s:                                             ; preds = %_ZN9Imath_3_14Vec3I
 _ZNK9Imath_3_14Vec3IfE6lengthEv.exit.i285:        ; preds = %bb.s, %bb.r
   %.0.i.i286 = phi float [ %i.cl, %bb.r ], [ %i.cm, %bb.s ] ; 3 uses
   %i.cn = fcmp une float %.0.i.i286, 0.000000e+00
-  br i1 %i.cn, label %bb.t, label %_ZN9Imath_3_14Vec3IfE9normalizeEv.exit287, !prof !158
+  br i1 %i.cn, label %bb.t, label %_ZN9Imath_3_14Vec3IfE9normalizeEv.exit287, !prof !156
 
 bb.t:                                             ; preds = %_ZNK9Imath_3_14Vec3IfE6lengthEv.exit.i285
   %i.co = load <2 x float>, ptr %17, align 8, !tbaa !152
@@ -279,28 +276,26 @@ bb.t:                                             ; preds = %_ZNK9Imath_3_14Vec3
   %i.cq = shufflevector <2 x float> %i.cp, <2 x float> poison, <2 x i32> zeroinitializer
   %i.cr = fdiv <2 x float> %i.co, %i.cq
   store <2 x float> %i.cr, ptr %17, align 8, !tbaa !152
-  %i.cs = load float, ptr %26, align 8, !tbaa !156
+  %i.cs = load float, ptr %i.ch, align 8, !tbaa !153
   %i.ct = fdiv float %i.cs, %.0.i.i286
-  store float %i.ct, ptr %26, align 8, !tbaa !156
+  store float %i.ct, ptr %i.ch, align 8, !tbaa !153
   br label %_ZN9Imath_3_14Vec3IfE9normalizeEv.exit287
 
 _ZN9Imath_3_14Vec3IfE9normalizeEv.exit287:        ; preds = %_ZNK9Imath_3_14Vec3IfE6lengthEv.exit.i285, %bb.t
   call void @llvm.lifetime.start.p0(ptr nonnull %18) #27
-  %foldExtExtBinop535 = fadd <2 x float> %4, %8
-  %28 = extractelement <2 x float> %foldExtExtBinop535, i64 0 ; 3 uses
-  %foldExtExtBinop537 = fadd <2 x float> %4, %8
-  %29 = extractelement <2 x float> %foldExtExtBinop537, i64 1 ; 3 uses
-  %30 = fadd float %5, %9                         ; 3 uses
-  store float %28, ptr %18, align 8, !tbaa !153, !alias.scope !162
-  %i.cu = getelementptr inbounds nuw i8, ptr %18, i64 4 ; 2 uses
-  store float %29, ptr %i.cu, align 4, !tbaa !155, !alias.scope !162
-  %31 = getelementptr inbounds nuw i8, ptr %18, i64 8 ; 4 uses
-  store float %30, ptr %31, align 8, !tbaa !156, !alias.scope !162
-  %32 = fmul float %29, %29
-  %i.cv = call float @llvm.fmuladd.f32(float %28, float %28, float %32)
-  %i.cw = call noundef float @llvm.fmuladd.f32(float %30, float %30, float %i.cv) ; 2 uses
+  %27 = fadd float %5, %9                         ; 3 uses
+  %28 = getelementptr inbounds nuw i8, ptr %18, i64 4
+  %foldExtExtBinop537 = fadd <2 x float> %4, %8   ; 4 uses
+  store <2 x float> %foldExtExtBinop537, ptr %18, align 8, !tbaa !152, !alias.scope !160
+  %i.cu = getelementptr inbounds nuw i8, ptr %18, i64 8 ; 4 uses
+  store float %27, ptr %i.cu, align 8, !tbaa !153, !alias.scope !160
+  %foldExtExtBinop535 = fmul <2 x float> %foldExtExtBinop537, %foldExtExtBinop537
+  %29 = extractelement <2 x float> %foldExtExtBinop535, i64 1
+  %30 = extractelement <2 x float> %foldExtExtBinop537, i64 0 ; 2 uses
+  %i.cv = call float @llvm.fmuladd.f32(float %30, float %30, float %29)
+  %i.cw = call noundef float @llvm.fmuladd.f32(float %27, float %27, float %i.cv) ; 2 uses
   %i.cx = fcmp olt float %i.cw, f0x01000000
-  br i1 %i.cx, label %bb.u, label %bb.v, !prof !157
+  br i1 %i.cx, label %bb.u, label %bb.v, !prof !155
 
 bb.u:                                             ; preds = %_ZN9Imath_3_14Vec3IfE9normalizeEv.exit287
   %i.cy = call noundef float @_ZNK9Imath_3_14Vec3IfE10lengthTinyEv(ptr noundef nonnull align 4 dereferenceable(12) %18) #27
@@ -313,7 +308,7 @@ bb.v:                                             ; preds = %_ZN9Imath_3_14Vec3I
 _ZNK9Imath_3_14Vec3IfE6lengthEv.exit.i288:        ; preds = %bb.v, %bb.u
   %.0.i.i289 = phi float [ %i.cy, %bb.u ], [ %i.cz, %bb.v ] ; 3 uses
   %i.da = fcmp une float %.0.i.i289, 0.000000e+00
-  br i1 %i.da, label %bb.w, label %_ZN9Imath_3_14Vec3IfE9normalizeEv.exit290, !prof !158
+  br i1 %i.da, label %bb.w, label %_ZN9Imath_3_14Vec3IfE9normalizeEv.exit290, !prof !156
 
 bb.w:                                             ; preds = %_ZNK9Imath_3_14Vec3IfE6lengthEv.exit.i288
   %i.db = load <2 x float>, ptr %18, align 8, !tbaa !152
@@ -321,20 +316,20 @@ bb.w:                                             ; preds = %_ZNK9Imath_3_14Vec3
   %i.dd = shufflevector <2 x float> %i.dc, <2 x float> poison, <2 x i32> zeroinitializer
   %i.de = fdiv <2 x float> %i.db, %i.dd
   store <2 x float> %i.de, ptr %18, align 8, !tbaa !152
-  %i.df = load float, ptr %31, align 8, !tbaa !156
+  %i.df = load float, ptr %i.cu, align 8, !tbaa !153
   %i.dg = fdiv float %i.df, %.0.i.i289
-  store float %i.dg, ptr %31, align 8, !tbaa !156
+  store float %i.dg, ptr %i.cu, align 8, !tbaa !153
   br label %_ZN9Imath_3_14Vec3IfE9normalizeEv.exit290
 
 _ZN9Imath_3_14Vec3IfE9normalizeEv.exit290:        ; preds = %_ZNK9Imath_3_14Vec3IfE6lengthEv.exit.i288, %bb.w
-  %i.dh = load float, ptr %16, align 8, !tbaa !153 ; 2 uses
-  %i.di = load float, ptr %17, align 8, !tbaa !153 ; 2 uses
-  %i.dj = load float, ptr %i.bt, align 4, !tbaa !155 ; 2 uses
-  %i.dk = load float, ptr %i.ch, align 4, !tbaa !155 ; 2 uses
+  %i.dh = load float, ptr %16, align 8, !tbaa !163 ; 2 uses
+  %i.di = load float, ptr %17, align 8, !tbaa !163 ; 2 uses
+  %i.dj = load float, ptr %i.bt, align 4, !tbaa !164 ; 2 uses
+  %i.dk = load float, ptr %24, align 4, !tbaa !164 ; 2 uses
   %i.dl = fmul float %i.dj, %i.dk
   %i.dm = call float @llvm.fmuladd.f32(float %i.dh, float %i.di, float %i.dl)
-  %i.dn = load float, ptr %i.bu, align 8, !tbaa !156 ; 2 uses
-  %i.do = load float, ptr %26, align 8, !tbaa !156 ; 2 uses
+  %i.dn = load float, ptr %i.bu, align 8, !tbaa !153 ; 2 uses
+  %i.do = load float, ptr %i.ch, align 8, !tbaa !153 ; 2 uses
   %i.dp = call noundef float @llvm.fmuladd.f32(float %i.dn, float %i.do, float %i.dm) ; 3 uses
   %i.dq = fcmp ugt float %i.dp, -1.000000e+00
   br i1 %i.dq, label %bb.x, label %_ZN11OpenImageIO4v3_19safe_acosIfEET_S2_.exit281
@@ -351,11 +346,11 @@ _ZN11OpenImageIO4v3_19safe_acosIfEET_S2_.exit281: ; preds = %_ZN9Imath_3_14Vec3I
   %.0.i280 = phi float [ %i.ds, %bb.y ], [ f0x40490FDB, %_ZN9Imath_3_14Vec3IfE9normalizeEv.exit290 ], [ 0.000000e+00, %bb.x ] ; 2 uses
   %i.dt = fcmp olt float %.0.i280, f0x322BCC77
   %.sroa.speculated335 = select i1 %i.dt, float f0x322BCC77, float %.0.i280 ; 3 uses
-  %i.du = load float, ptr %18, align 8, !tbaa !153 ; 2 uses
-  %i.dv = load float, ptr %i.cu, align 4, !tbaa !155 ; 2 uses
+  %i.du = load float, ptr %18, align 8, !tbaa !163 ; 2 uses
+  %i.dv = load float, ptr %28, align 4, !tbaa !164 ; 2 uses
   %i.dw = fmul float %i.dj, %i.dv
   %i.dx = call float @llvm.fmuladd.f32(float %i.dh, float %i.du, float %i.dw)
-  %i.dy = load float, ptr %31, align 8, !tbaa !156 ; 2 uses
+  %i.dy = load float, ptr %i.cu, align 8, !tbaa !153 ; 2 uses
   %i.dz = call noundef float @llvm.fmuladd.f32(float %i.dn, float %i.dy, float %i.dx) ; 3 uses
   %i.ea = fcmp ugt float %i.dz, -1.000000e+00
   br i1 %i.ea, label %bb.z, label %_ZN11OpenImageIO4v3_19safe_acosIfEET_S2_.exit
@@ -558,11 +553,11 @@ bb.ao:                                            ; preds = %bb.am, %bb.br
   %i.hi = fmul float %.sroa.0325.0, %.0227418
   %i.hj = fmul float %.sroa.5.0, %.0227418
   %i.hk = fmul float %.sroa.8.0, %.0227418
-  %i.hl = load float, ptr %16, align 8, !tbaa !153, !noalias !172
+  %i.hl = load float, ptr %16, align 8, !tbaa !163, !noalias !172
   %i.hm = fadd float %i.hi, %i.hl                 ; 3 uses
-  %i.hn = load float, ptr %i.bt, align 4, !tbaa !155, !noalias !172
+  %i.hn = load float, ptr %i.bt, align 4, !tbaa !164, !noalias !172
   %i.ho = fadd float %i.hj, %i.hn                 ; 3 uses
-  %i.hp = load float, ptr %i.bu, align 8, !tbaa !156, !noalias !172
+  %i.hp = load float, ptr %i.bu, align 8, !tbaa !153, !noalias !172
   %i.hq = fadd float %i.hk, %i.hp                 ; 3 uses
   %i.hr = load i8, ptr %i.gj, align 4, !tbaa !175, !range !92, !noundef !93
   %i.hs = trunc nuw i8 %i.hr to i1
@@ -965,7 +960,7 @@ declare float @hypotf(float noundef, float noundef) local_unnamed_addr #24
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
 define linkonce_odr hidden noundef float @_ZNK9Imath_3_14Vec3IfE10lengthTinyEv(ptr noundef nonnull align 4 dereferenceable(12) %0) local_unnamed_addr #16 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = load float, ptr %0, align 4, !tbaa !153  ; 3 uses
+  %i.a = load float, ptr %0, align 4, !tbaa !163  ; 3 uses
   %i.b = fcmp ult float %i.a, 0.000000e+00
   %i.c = fneg float %i.a
   %i.d = select i1 %i.b, float %i.c, float %i.a   ; 3 uses
@@ -981,7 +976,7 @@ bb.a:
   %i.m = fcmp olt float %.0, %i.l
   %.1 = select i1 %i.m, float %i.l, float %.0     ; 4 uses
   %i.n = fcmp oeq float %.1, 0.000000e+00
-  br i1 %i.n, label %bb.c, label %bb.b, !prof !157
+  br i1 %i.n, label %bb.c, label %bb.b, !prof !155
 
 bb.b:                                             ; preds = %bb.a
   %i.o = fdiv float %i.d, %.1                     ; 2 uses
@@ -1265,18 +1260,18 @@ attributes #32 = { noreturn nounwind }
 !150 = !{!"_ZTSNSt12_Vector_baseIN11OpenImageIO4v3_110ParamValueESaIS2_EE17_Vector_impl_dataE", !151, i64 0, !151, i64 8, !151, i64 16}
 !151 = !{!"p1 _ZTSN11OpenImageIO4v3_110ParamValueE", !9, i64 0}
 !152 = !{!36, !36, i64 0}
-!153 = !{!154, !36, i64 0}
+!153 = !{!154, !36, i64 8}
 !154 = !{!"_ZTSN9Imath_3_14Vec3IfEE", !36, i64 0, !36, i64 4, !36, i64 8}
-!155 = !{!154, !36, i64 4}
-!156 = !{!154, !36, i64 8}
-!157 = !{!"branch_weights", !"expected", i32 1, i32 2000}
-!158 = !{!"branch_weights", !"expected", i32 2000, i32 1}
-!159 = !{!160}
-!160 = distinct !{!160, !161, !"_ZNK9Imath_3_14Vec3IfEplERKS1_: argument 0"}
-!161 = distinct !{!161, !"_ZNK9Imath_3_14Vec3IfEplERKS1_"}
-!162 = !{!163}
-!163 = distinct !{!163, !164, !"_ZNK9Imath_3_14Vec3IfEplERKS1_: argument 0"}
-!164 = distinct !{!164, !"_ZNK9Imath_3_14Vec3IfEplERKS1_"}
+!155 = !{!"branch_weights", !"expected", i32 1, i32 2000}
+!156 = !{!"branch_weights", !"expected", i32 2000, i32 1}
+!157 = !{!158}
+!158 = distinct !{!158, !159, !"_ZNK9Imath_3_14Vec3IfEplERKS1_: argument 0"}
+!159 = distinct !{!159, !"_ZNK9Imath_3_14Vec3IfEplERKS1_"}
+!160 = !{!161}
+!161 = distinct !{!161, !162, !"_ZNK9Imath_3_14Vec3IfEplERKS1_: argument 0"}
+!162 = distinct !{!162, !"_ZNK9Imath_3_14Vec3IfEplERKS1_"}
+!163 = !{!154, !36, i64 0}
+!164 = !{!154, !36, i64 4}
 !165 = !{!29, !34, i64 20}
 !166 = !{!29, !33, i64 19}
 !167 = !{!29, !35, i64 22}

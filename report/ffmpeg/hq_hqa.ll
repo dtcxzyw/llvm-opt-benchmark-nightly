@@ -60,7 +60,7 @@ bb.a:
 ; Function Attrs: nounwind uwtable
 define internal i32 @hq_hqa_decode_frame(ptr noundef %0, ptr noundef %1, ptr nofree noundef writeonly captures(none) %2, ptr nofree noundef readonly captures(none) %3) #1 {
 bb.a:
-  %i.a = alloca [9 x i32], align 16               ; 13 uses
+  %i.a = alloca [9 x i32], align 16               ; 10 uses
   %i.b = alloca [21 x i32], align 16              ; 7 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !9    ; 33 uses
@@ -112,7 +112,7 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bytestream2_init.exit
-  %.sroa.0.0 = phi ptr [ %i.u, %bb.f ], [ %i.i, %bytestream2_init.exit ] ; 14 uses
+  %.sroa.0.0 = phi ptr [ %i.u, %bb.f ], [ %i.i, %bytestream2_init.exit ] ; 11 uses
   %i.v = ptrtoint ptr %i.k to i64                 ; 3 uses
   %i.w = ptrtoint ptr %.sroa.0.0 to i64
   %i.x = sub i64 %i.v, %i.w                       ; 3 uses
@@ -515,29 +515,11 @@ bb.ah:                                            ; preds = %bb.af
   br i1 %i.mk, label %hqa_decode_frame.exit, label %.preheader63.i
 
 .preheader63.i:                                   ; preds = %bb.ah
-  %4 = getelementptr inbounds nuw i8, ptr %.sroa.0.0, i64 16
-  %5 = load i32, ptr %i.me, align 1, !tbaa !36
-  %6 = tail call i32 @llvm.bswap.i32(i32 %5)
-  %7 = add i32 %6, -4                             ; 3 uses
-  store i32 %7, ptr %i.a, align 16, !tbaa !39
-  %8 = getelementptr inbounds nuw i8, ptr %.sroa.0.0, i64 20
-  %9 = load i32, ptr %4, align 1, !tbaa !36
-  %10 = tail call i32 @llvm.bswap.i32(i32 %9)
-  %11 = add i32 %10, -4                           ; 4 uses
-  %12 = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  store i32 %11, ptr %12, align 4, !tbaa !39
-  %13 = getelementptr inbounds nuw i8, ptr %.sroa.0.0, i64 24
-  %14 = load i32, ptr %8, align 1, !tbaa !36
-  %15 = tail call i32 @llvm.bswap.i32(i32 %14)
-  %16 = add i32 %15, -4                           ; 4 uses
-  %17 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store i32 %16, ptr %17, align 8, !tbaa !39
   %i.ml = getelementptr inbounds nuw i8, ptr %.sroa.0.0, i64 28
-  %18 = load i32, ptr %13, align 1, !tbaa !36
-  %19 = tail call i32 @llvm.bswap.i32(i32 %18)
-  %20 = add i32 %19, -4                           ; 4 uses
-  %21 = getelementptr inbounds nuw i8, ptr %i.a, i64 12
-  store i32 %20, ptr %21, align 4, !tbaa !39
+  %4 = load <4 x i32>, ptr %i.me, align 1, !tbaa !36
+  %5 = tail call <4 x i32> @llvm.bswap.v4i32(<4 x i32> %4)
+  %6 = add <4 x i32> %5, splat (i32 -4)           ; 5 uses
+  store <4 x i32> %6, ptr %i.a, align 16, !tbaa !39
   %i.mm = getelementptr inbounds nuw i8, ptr %.sroa.0.0, i64 32
   %i.mn = load i32, ptr %i.ml, align 1, !tbaa !36
   %i.mo = tail call i32 @llvm.bswap.i32(i32 %i.mn)
@@ -594,32 +576,36 @@ bb.ah:                                            ; preds = %bb.af
   br i1 %.not.i.i, label %.preheader.split.us.preheader.i, label %.preheader.split.i
 
 .preheader.split.us.preheader.i:                  ; preds = %.preheader63.i
+  %7 = extractelement <4 x i32> %6, i64 0         ; 2 uses
   %i.oh = icmp ult i32 %7, 27
   br i1 %i.oh, label %.split.us.i, label %bb.ai
 
 bb.ai:                                            ; preds = %.preheader.split.us.preheader.i
-  %.not.us.i = icmp uge i32 %7, %11
-  %i.oi = zext i32 %11 to i64
+  %8 = extractelement <4 x i32> %6, i64 1         ; 3 uses
+  %.not.us.i = icmp uge i32 %7, %8
+  %i.oi = zext i32 %8 to i64
   %i.oj = icmp samesign ult i64 %i.le, %i.oi
   %or.cond.us.i = select i1 %.not.us.i, i1 true, i1 %i.oj
   br i1 %or.cond.us.i, label %.split.us.i, label %hqa_decode_slice.exit.us.i
 
 hqa_decode_slice.exit.us.i:                       ; preds = %bb.ai
-  %.not.us.1.i = icmp uge i32 %11, %16
-  %i.ok = zext i32 %16 to i64
+  %9 = extractelement <4 x i32> %6, i64 2         ; 3 uses
+  %.not.us.1.i = icmp uge i32 %8, %9
+  %i.ok = zext i32 %9 to i64
   %i.ol = icmp samesign ult i64 %i.le, %i.ok
   %or.cond.us.1.i = select i1 %.not.us.1.i, i1 true, i1 %i.ol
   br i1 %or.cond.us.1.i, label %.split.us.i, label %hqa_decode_slice.exit.us.1.i
 
 hqa_decode_slice.exit.us.1.i:                     ; preds = %hqa_decode_slice.exit.us.i
-  %.not.us.2.i = icmp uge i32 %16, %20
-  %i.om = zext i32 %20 to i64
+  %10 = extractelement <4 x i32> %6, i64 3        ; 3 uses
+  %.not.us.2.i = icmp uge i32 %9, %10
+  %i.om = zext i32 %10 to i64
   %i.on = icmp samesign ult i64 %i.le, %i.om
   %or.cond.us.2.i = select i1 %.not.us.2.i, i1 true, i1 %i.on
   br i1 %or.cond.us.2.i, label %.split.us.i, label %hqa_decode_slice.exit.us.2.i
 
 hqa_decode_slice.exit.us.2.i:                     ; preds = %hqa_decode_slice.exit.us.1.i
-  %.not.us.3.i = icmp uge i32 %20, %i.mp
+  %.not.us.3.i = icmp uge i32 %10, %i.mp
   %i.oo = zext i32 %i.mp to i64
   %i.op = icmp samesign ult i64 %i.le, %i.oo
   %or.cond.us.3.i = select i1 %.not.us.3.i, i1 true, i1 %i.op
@@ -1021,6 +1007,9 @@ declare i16 @llvm.bswap.i16(i16) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.bswap.i32(i32) #6
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <4 x i32> @llvm.bswap.v4i32(<4 x i32>) #6
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #7

@@ -204,18 +204,17 @@ bb.ah:                                            ; preds = %bb.ah, %.lr.ph431.n
 
 bb.ai:                                            ; preds = %.lr.ph434, %bb.ai
   %indvars.iv477 = phi i64 [ 4, %.lr.ph434 ], [ %indvars.iv.next478, %bb.ai ] ; 2 uses
-  %i.ht = getelementptr [32 x i8], ptr %.pre497.pre, i64 %indvars.iv477 ; 11 uses
+  %i.ht = getelementptr [32 x i8], ptr %.pre497.pre, i64 %indvars.iv477 ; 10 uses
   %i.hu = getelementptr i8, ptr %i.ht, i64 -128
   %i.hv = getelementptr i8, ptr %i.ht, i64 -112
   store double 0.000000e+00, ptr %i.hv, align 8, !tbaa !68
-  %1 = getelementptr i8, ptr %i.ht, i64 -64       ; 2 uses
-  %i.hw = getelementptr i8, ptr %i.ht, i64 -56
+  %i.hw = getelementptr i8, ptr %i.ht, i64 -64    ; 2 uses
   %i.hx = getelementptr i8, ptr %i.ht, i64 -104
   %i.hy = getelementptr i8, ptr %i.ht, i64 -48
   store double 0.000000e+00, ptr %i.hy, align 8, !tbaa !68
   %i.hz = getelementptr i8, ptr %i.ht, i64 -40
   %i.ia = getelementptr i8, ptr %i.ht, i64 -96
-  %i.ib = load <2 x double>, ptr %1, align 8, !tbaa !57 ; 7 uses
+  %i.ib = load <2 x double>, ptr %i.hw, align 8, !tbaa !57 ; 7 uses
   %i.ic = load <2 x double>, ptr %i.hu, align 8, !tbaa !57 ; 2 uses
   %i.id = load <2 x double>, ptr %i.ht, align 8, !tbaa !57 ; 2 uses
   %i.ie = shufflevector <2 x double> %i.ib, <2 x double> %i.id, <2 x i32> <i32 1, i32 3>
@@ -259,14 +258,11 @@ bb.ai:                                            ; preds = %.lr.ph434, %bb.ai
   %i.jh = shufflevector <2 x double> %i.jg, <2 x double> poison, <2 x i32> zeroinitializer
   %i.ji = insertelement <2 x double> poison, double %cos364, i64 0
   %i.jj = insertelement <2 x double> %i.ji, double %sin363, i64 1
-  %i.jk = call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.jh, <2 x double> %i.jj, <2 x double> %i.ib) ; 5 uses
+  %i.jk = call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.jh, <2 x double> %i.jj, <2 x double> %i.ib) ; 4 uses
   %i.jl = fadd nsz <2 x double> %i.ib, %i.iy
   %i.jm = fadd nsz <2 x double> %i.jl, %i.jk
   %i.jn = fdiv nsz <2 x double> %i.jm, splat (double 3.000000e+00) ; 2 uses
-  %2 = extractelement <2 x double> %i.jk, i64 0
-  store double %2, ptr %1, align 8, !tbaa !63
-  %3 = extractelement <2 x double> %i.jk, i64 1
-  store double %3, ptr %i.hw, align 8, !tbaa !67
+  store <2 x double> %i.jk, ptr %i.hw, align 8, !tbaa !57
   %i.jo = shufflevector <2 x double> %i.jk, <2 x double> %i.jn, <2 x i32> <i32 0, i32 2>
   %i.jp = shufflevector <2 x double> %i.iy, <2 x double> poison, <2 x i32> zeroinitializer
   %i.jq = fsub nsz <2 x double> %i.jo, %i.jp      ; 3 uses

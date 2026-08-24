@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.c, %bb.f, %bb.e,
 define void @Gia_ManTestProblem() local_unnamed_addr #25 {
 bb.a:
   %i.a = alloca [64 x [100 x i32]], align 16      ; 6 uses
-  %i.b = alloca [64 x float], align 16            ; 22 uses
+  %i.b = alloca [64 x float], align 16            ; 13 uses
   %i.c = alloca [100 x float], align 16           ; 25 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #38
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(25600) %i.a, i8 0, i64 25600, i1 false)
@@ -502,10 +502,14 @@ bb.c:                                             ; preds = %.loopexit116
   br i1 %exitcond178.not, label %.preheader112.preheader, label %.preheader114, !llvm.loop !320
 
 .preheader112.preheader:                          ; preds = %.preheader114
-  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.b, i64 56 ; 2 uses
+  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.b, i64 56 ; 3 uses
   %.pre = load float, ptr %.phi.trans.insert, align 8, !tbaa !318
-  %.phi.trans.insert205 = getelementptr inbounds nuw i8, ptr %i.b, i64 60 ; 2 uses
+  %.phi.trans.insert205 = getelementptr inbounds nuw i8, ptr %i.b, i64 60 ; 3 uses
   %.pre206 = load float, ptr %.phi.trans.insert205, align 4, !tbaa !318
+  %0 = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 2 uses
+  %1 = getelementptr inbounds nuw i8, ptr %i.b, i64 32 ; 2 uses
+  %2 = getelementptr inbounds nuw i8, ptr %i.b, i64 48 ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 52 ; 2 uses
   %i.eo = getelementptr inbounds nuw i8, ptr %i.c, i64 4
   %i.ep = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   %i.eq = getelementptr inbounds nuw i8, ptr %i.c, i64 12
@@ -526,52 +530,75 @@ bb.c:                                             ; preds = %.loopexit116
   %i.ff = getelementptr inbounds nuw i8, ptr %i.c, i64 72
   %i.fg = getelementptr inbounds nuw i8, ptr %i.c, i64 76
   %i.fh = getelementptr inbounds nuw i8, ptr %i.c, i64 80
-  %0 = load <16 x float>, ptr %i.b, align 16
+  %4 = load <4 x float>, ptr %i.b, align 16
+  %5 = load <4 x float>, ptr %0, align 16
+  %6 = load <4 x float>, ptr %1, align 16
+  %.promoted375 = load float, ptr %2, align 16
+  %.promoted377 = load float, ptr %3, align 4
+  %.phi.trans.insert.promoted379 = load float, ptr %.phi.trans.insert, align 8
+  %.phi.trans.insert205.promoted381 = load float, ptr %.phi.trans.insert205, align 4
   br label %.preheader112
 
 .preheader112:                                    ; preds = %.preheader112.preheader, %bb.bb
-  %i.fi = phi float [ %i.oa, %bb.bb ], [ %.pre206, %.preheader112.preheader ] ; 2 uses
-  %i.fj = phi float [ %i.ob, %bb.bb ], [ %.pre, %.preheader112.preheader ] ; 2 uses
+  %storemerge263308.lcssa382 = phi float [ %storemerge263308, %bb.bb ], [ %.phi.trans.insert205.promoted381, %.preheader112.preheader ]
+  %storemerge262306.lcssa380 = phi float [ %storemerge262306, %bb.bb ], [ %.phi.trans.insert.promoted379, %.preheader112.preheader ]
+  %storemerge261350.lcssa378 = phi float [ %storemerge261350, %bb.bb ], [ %.promoted377, %.preheader112.preheader ] ; 5 uses
+  %i.fi = phi float [ %storemerge260347, %bb.bb ], [ %.promoted375, %.preheader112.preheader ] ; 5 uses
+  %i.fj = phi float [ %i.oa, %bb.bb ], [ %.pre206, %.preheader112.preheader ] ; 4 uses
+  %7 = phi float [ %i.ob, %bb.bb ], [ %.pre, %.preheader112.preheader ] ; 4 uses
   %.198145 = phi i32 [ %i.oc, %bb.bb ], [ 0, %.preheader112.preheader ] ; 2 uses
-  %1 = phi <16 x float> [ %23, %bb.bb ], [ %0, %.preheader112.preheader ] ; 4 uses
-  %2 = insertelement <16 x float> %1, float %i.fj, i64 14
-  %3 = insertelement <16 x float> %2, float %i.fi, i64 15
-  %4 = shufflevector <16 x float> %1, <16 x float> %3, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 28, i32 29, i32 30, i32 31> ; 3 uses
-  %5 = fcmp ogt <16 x float> %4, zeroinitializer
-  %6 = fneg <16 x float> %4
-  %7 = select <16 x i1> %5, <16 x float> %4, <16 x float> %6 ; 16 uses
-  %i.fk = extractelement <16 x float> %7, i64 0
+  %8 = phi <4 x float> [ %43, %bb.bb ], [ %4, %.preheader112.preheader ] ; 5 uses
+  %9 = phi <4 x float> [ %45, %bb.bb ], [ %5, %.preheader112.preheader ] ; 5 uses
+  %10 = phi <4 x float> [ %47, %bb.bb ], [ %6, %.preheader112.preheader ] ; 5 uses
+  %11 = fcmp ogt <4 x float> %8, zeroinitializer
+  %12 = fneg <4 x float> %8
+  %13 = select <4 x i1> %11, <4 x float> %8, <4 x float> %12 ; 4 uses
+  %i.fk = extractelement <4 x float> %13, i64 0
   %i.fl = fadd float %i.fk, 0.000000e+00
-  %i.fm = extractelement <16 x float> %7, i64 1
+  %i.fm = extractelement <4 x float> %13, i64 1
   %i.fn = fadd float %i.fl, %i.fm
-  %i.fo = extractelement <16 x float> %7, i64 2
+  %i.fo = extractelement <4 x float> %13, i64 2
   %i.fp = fadd float %i.fn, %i.fo
-  %i.fq = extractelement <16 x float> %7, i64 3
+  %i.fq = extractelement <4 x float> %13, i64 3
   %i.fr = fadd float %i.fp, %i.fq
-  %i.fs = extractelement <16 x float> %7, i64 4
+  %14 = fcmp ogt <4 x float> %9, zeroinitializer
+  %15 = fneg <4 x float> %9
+  %16 = select <4 x i1> %14, <4 x float> %9, <4 x float> %15 ; 4 uses
+  %i.fs = extractelement <4 x float> %16, i64 0
   %i.ft = fadd float %i.fr, %i.fs
-  %i.fu = extractelement <16 x float> %7, i64 5
+  %i.fu = extractelement <4 x float> %16, i64 1
   %i.fv = fadd float %i.ft, %i.fu
-  %i.fw = extractelement <16 x float> %7, i64 6
+  %i.fw = extractelement <4 x float> %16, i64 2
   %i.fx = fadd float %i.fv, %i.fw
-  %i.fy = extractelement <16 x float> %7, i64 7
+  %i.fy = extractelement <4 x float> %16, i64 3
   %i.fz = fadd float %i.fx, %i.fy
-  %i.ga = extractelement <16 x float> %7, i64 8
+  %17 = fcmp ogt <4 x float> %10, zeroinitializer
+  %18 = fneg <4 x float> %10
+  %19 = select <4 x i1> %17, <4 x float> %10, <4 x float> %18 ; 4 uses
+  %i.ga = extractelement <4 x float> %19, i64 0
   %i.gb = fadd float %i.fz, %i.ga
-  %i.gc = extractelement <16 x float> %7, i64 9
+  %i.gc = extractelement <4 x float> %19, i64 1
   %i.gd = fadd float %i.gb, %i.gc
-  %i.ge = extractelement <16 x float> %7, i64 10
+  %i.ge = extractelement <4 x float> %19, i64 2
   %i.gf = fadd float %i.gd, %i.ge
-  %i.gg = extractelement <16 x float> %7, i64 11
+  %i.gg = extractelement <4 x float> %19, i64 3
   %i.gh = fadd float %i.gf, %i.gg
-  %8 = extractelement <16 x float> %7, i64 12
-  %i.gi = fadd float %i.gh, %8
-  %9 = extractelement <16 x float> %7, i64 13
-  %i.gj = fadd float %i.gi, %9
-  %10 = extractelement <16 x float> %7, i64 14
-  %i.gk = fadd float %i.gj, %10
-  %11 = extractelement <16 x float> %7, i64 15
-  %i.gl = fadd float %i.gk, %11
+  %20 = fcmp ogt float %i.fi, 0.000000e+00
+  %21 = fneg float %i.fi
+  %22 = select i1 %20, float %i.fi, float %21
+  %i.gi = fadd float %i.gh, %22
+  %23 = fcmp ogt float %storemerge261350.lcssa378, 0.000000e+00
+  %24 = fneg float %storemerge261350.lcssa378
+  %25 = select i1 %23, float %storemerge261350.lcssa378, float %24
+  %i.gj = fadd float %i.gi, %25
+  %26 = fcmp ogt float %7, 0.000000e+00
+  %27 = fneg float %7
+  %28 = select i1 %26, float %7, float %27
+  %i.gk = fadd float %i.gj, %28
+  %29 = fcmp ogt float %i.fj, 0.000000e+00
+  %30 = fneg float %i.fj
+  %31 = select i1 %29, float %i.fj, float %30
+  %i.gl = fadd float %i.gk, %31
   %i.gm = fpext float %i.gl to double
   %i.gn = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.79, i32 noundef %.198145, double noundef %i.gm) ; 0 uses
   %i.go = load float, ptr %i.c, align 16, !tbaa !318
@@ -641,26 +668,34 @@ bb.c:                                             ; preds = %.loopexit116
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader112, %.loopexit
-  %i.iz = phi float [ %i.fi, %.preheader112 ], [ %i.oa, %.loopexit ]
-  %i.ja = phi float [ %i.fj, %.preheader112 ], [ %i.ob, %.loopexit ]
+  %storemerge261351 = phi float [ %storemerge261350.lcssa378, %.preheader112 ], [ %storemerge261350, %.loopexit ]
+  %storemerge260348 = phi float [ %i.fi, %.preheader112 ], [ %storemerge260347, %.loopexit ]
+  %storemerge263309 = phi float [ %storemerge263308.lcssa382, %.preheader112 ], [ %storemerge263308, %.loopexit ] ; 7 uses
+  %storemerge262307 = phi float [ %storemerge262306.lcssa380, %.preheader112 ], [ %storemerge262306, %.loopexit ] ; 7 uses
+  %storemerge261305 = phi float [ %storemerge261350.lcssa378, %.preheader112 ], [ %storemerge261304, %.loopexit ] ; 4 uses
+  %storemerge260302 = phi float [ %i.fi, %.preheader112 ], [ %storemerge260301, %.loopexit ] ; 4 uses
+  %i.iz = phi float [ %i.fj, %.preheader112 ], [ %i.oa, %.loopexit ]
+  %i.ja = phi float [ %7, %.preheader112 ], [ %i.ob, %.loopexit ]
   %indvars.iv199 = phi i64 [ 0, %.preheader112 ], [ %indvars.iv.next200, %.loopexit ] ; 4 uses
-  %12 = phi <16 x float> [ %1, %.preheader112 ], [ %23, %.loopexit ]
-  %13 = phi <16 x float> [ %1, %.preheader112 ], [ %24, %.loopexit ] ; 32 uses
-  %14 = extractelement <16 x float> %13, i64 15   ; 6 uses
-  %15 = extractelement <16 x float> %13, i64 14   ; 6 uses
+  %32 = phi <4 x float> [ %8, %.preheader112 ], [ %43, %.loopexit ]
+  %33 = phi <4 x float> [ %8, %.preheader112 ], [ %44, %.loopexit ] ; 10 uses
+  %34 = phi <4 x float> [ %9, %.preheader112 ], [ %45, %.loopexit ]
+  %35 = phi <4 x float> [ %9, %.preheader112 ], [ %46, %.loopexit ] ; 10 uses
+  %36 = phi <4 x float> [ %10, %.preheader112 ], [ %47, %.loopexit ]
+  %37 = phi <4 x float> [ %10, %.preheader112 ], [ %48, %.loopexit ] ; 10 uses
   %invariant.gep = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv199 ; 16 uses
   %i.jb = load i32, ptr %invariant.gep, align 4, !tbaa !8 ; 2 uses
   %i.jc = icmp sgt i32 %i.jb, 0
   br i1 %i.jc, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %.preheader
-  %i.jd = extractelement <16 x float> %13, i64 0
+  %i.jd = extractelement <4 x float> %33, i64 0
   %i.je = fcmp ogt float %i.jd, 0.000000e+00
   br i1 %i.je, label %bb.f, label %.thread
 
 bb.e:                                             ; preds = %.preheader
   %i.jf = icmp ne i32 %i.jb, 0
-  %i.jg = extractelement <16 x float> %13, i64 0
+  %i.jg = extractelement <4 x float> %33, i64 0
   %i.jh = fcmp olt float %i.jg, 0.000000e+00
   %or.cond = select i1 %i.jf, i1 %i.jh, i1 false
   br i1 %or.cond, label %bb.f, label %.thread
@@ -677,13 +712,13 @@ bb.f:                                             ; preds = %bb.e, %bb.d, %.thre
 
 bb.g:                                             ; preds = %bb.f
   %i.jk = icmp ne i32 %i.ji, 0
-  %i.jl = extractelement <16 x float> %13, i64 1
+  %i.jl = extractelement <4 x float> %33, i64 1
   %i.jm = fcmp olt float %i.jl, 0.000000e+00
   %or.cond383 = select i1 %i.jk, i1 %i.jm, i1 false
   br i1 %or.cond383, label %bb.i, label %.thread.1
 
 bb.h:                                             ; preds = %bb.f
-  %i.jn = extractelement <16 x float> %13, i64 1
+  %i.jn = extractelement <4 x float> %33, i64 1
   %i.jo = fcmp ogt float %i.jn, 0.000000e+00
   br i1 %i.jo, label %bb.i, label %.thread.1
 
@@ -700,13 +735,13 @@ bb.i:                                             ; preds = %bb.g, %bb.h
 
 bb.j:                                             ; preds = %.thread.1
   %i.js = icmp ne i32 %i.jq, 0
-  %i.jt = extractelement <16 x float> %13, i64 2
+  %i.jt = extractelement <4 x float> %33, i64 2
   %i.ju = fcmp olt float %i.jt, 0.000000e+00
   %or.cond385 = select i1 %i.js, i1 %i.ju, i1 false
   br i1 %or.cond385, label %bb.l, label %.thread.2
 
 bb.k:                                             ; preds = %.thread.1
-  %i.jv = extractelement <16 x float> %13, i64 2
+  %i.jv = extractelement <4 x float> %33, i64 2
   %i.jw = fcmp ogt float %i.jv, 0.000000e+00
   br i1 %i.jw, label %bb.l, label %.thread.2
 
@@ -723,13 +758,13 @@ bb.l:                                             ; preds = %bb.j, %bb.k
 
 bb.m:                                             ; preds = %.thread.2
   %i.ka = icmp ne i32 %i.jy, 0
-  %i.kb = extractelement <16 x float> %13, i64 3
+  %i.kb = extractelement <4 x float> %33, i64 3
   %i.kc = fcmp olt float %i.kb, 0.000000e+00
   %or.cond387 = select i1 %i.ka, i1 %i.kc, i1 false
   br i1 %or.cond387, label %bb.o, label %.thread.3
 
 bb.n:                                             ; preds = %.thread.2
-  %i.kd = extractelement <16 x float> %13, i64 3
+  %i.kd = extractelement <4 x float> %33, i64 3
   %i.ke = fcmp ogt float %i.kd, 0.000000e+00
   br i1 %i.ke, label %bb.o, label %.thread.3
 
@@ -746,13 +781,13 @@ bb.o:                                             ; preds = %bb.m, %bb.n
 
 bb.p:                                             ; preds = %.thread.3
   %i.ki = icmp ne i32 %i.kg, 0
-  %i.kj = extractelement <16 x float> %13, i64 4
+  %i.kj = extractelement <4 x float> %35, i64 0
   %i.kk = fcmp olt float %i.kj, 0.000000e+00
   %or.cond389 = select i1 %i.ki, i1 %i.kk, i1 false
   br i1 %or.cond389, label %bb.r, label %.thread.4
 
 bb.q:                                             ; preds = %.thread.3
-  %i.kl = extractelement <16 x float> %13, i64 4
+  %i.kl = extractelement <4 x float> %35, i64 0
   %i.km = fcmp ogt float %i.kl, 0.000000e+00
   br i1 %i.km, label %bb.r, label %.thread.4
 
@@ -769,13 +804,13 @@ bb.r:                                             ; preds = %bb.p, %bb.q
 
 bb.s:                                             ; preds = %.thread.4
   %i.kq = icmp ne i32 %i.ko, 0
-  %i.kr = extractelement <16 x float> %13, i64 5
+  %i.kr = extractelement <4 x float> %35, i64 1
   %i.ks = fcmp olt float %i.kr, 0.000000e+00
   %or.cond391 = select i1 %i.kq, i1 %i.ks, i1 false
   br i1 %or.cond391, label %bb.u, label %.thread.5
 
 bb.t:                                             ; preds = %.thread.4
-  %i.kt = extractelement <16 x float> %13, i64 5
+  %i.kt = extractelement <4 x float> %35, i64 1
   %i.ku = fcmp ogt float %i.kt, 0.000000e+00
   br i1 %i.ku, label %bb.u, label %.thread.5
 
@@ -792,13 +827,13 @@ bb.u:                                             ; preds = %bb.s, %bb.t
 
 bb.v:                                             ; preds = %.thread.5
   %i.ky = icmp ne i32 %i.kw, 0
-  %i.kz = extractelement <16 x float> %13, i64 6
+  %i.kz = extractelement <4 x float> %35, i64 2
   %i.la = fcmp olt float %i.kz, 0.000000e+00
   %or.cond393 = select i1 %i.ky, i1 %i.la, i1 false
   br i1 %or.cond393, label %bb.x, label %.thread.6
 
 bb.w:                                             ; preds = %.thread.5
-  %i.lb = extractelement <16 x float> %13, i64 6
+  %i.lb = extractelement <4 x float> %35, i64 2
   %i.lc = fcmp ogt float %i.lb, 0.000000e+00
   br i1 %i.lc, label %bb.x, label %.thread.6
 
@@ -815,13 +850,13 @@ bb.x:                                             ; preds = %bb.v, %bb.w
 
 bb.y:                                             ; preds = %.thread.6
   %i.lg = icmp ne i32 %i.le, 0
-  %i.lh = extractelement <16 x float> %13, i64 7
+  %i.lh = extractelement <4 x float> %35, i64 3
   %i.li = fcmp olt float %i.lh, 0.000000e+00
   %or.cond395 = select i1 %i.lg, i1 %i.li, i1 false
   br i1 %or.cond395, label %bb.aa, label %.thread.7
 
 bb.z:                                             ; preds = %.thread.6
-  %i.lj = extractelement <16 x float> %13, i64 7
+  %i.lj = extractelement <4 x float> %35, i64 3
   %i.lk = fcmp ogt float %i.lj, 0.000000e+00
   br i1 %i.lk, label %bb.aa, label %.thread.7
 
@@ -838,13 +873,13 @@ bb.aa:                                            ; preds = %bb.y, %bb.z
 
 bb.ab:                                            ; preds = %.thread.7
   %i.lo = icmp ne i32 %i.lm, 0
-  %i.lp = extractelement <16 x float> %13, i64 8
+  %i.lp = extractelement <4 x float> %37, i64 0
   %i.lq = fcmp olt float %i.lp, 0.000000e+00
   %or.cond397 = select i1 %i.lo, i1 %i.lq, i1 false
   br i1 %or.cond397, label %bb.ad, label %.thread.8
 
 bb.ac:                                            ; preds = %.thread.7
-  %i.lr = extractelement <16 x float> %13, i64 8
+  %i.lr = extractelement <4 x float> %37, i64 0
   %i.ls = fcmp ogt float %i.lr, 0.000000e+00
   br i1 %i.ls, label %bb.ad, label %.thread.8
 
@@ -861,13 +896,13 @@ bb.ad:                                            ; preds = %bb.ab, %bb.ac
 
 bb.ae:                                            ; preds = %.thread.8
   %i.lw = icmp ne i32 %i.lu, 0
-  %i.lx = extractelement <16 x float> %13, i64 9
+  %i.lx = extractelement <4 x float> %37, i64 1
   %i.ly = fcmp olt float %i.lx, 0.000000e+00
   %or.cond399 = select i1 %i.lw, i1 %i.ly, i1 false
   br i1 %or.cond399, label %bb.ag, label %.thread.9
 
 bb.af:                                            ; preds = %.thread.8
-  %i.lz = extractelement <16 x float> %13, i64 9
+  %i.lz = extractelement <4 x float> %37, i64 1
   %i.ma = fcmp ogt float %i.lz, 0.000000e+00
   br i1 %i.ma, label %bb.ag, label %.thread.9
 
@@ -884,13 +919,13 @@ bb.ag:                                            ; preds = %bb.ae, %bb.af
 
 bb.ah:                                            ; preds = %.thread.9
   %i.me = icmp ne i32 %i.mc, 0
-  %i.mf = extractelement <16 x float> %13, i64 10
+  %i.mf = extractelement <4 x float> %37, i64 2
   %i.mg = fcmp olt float %i.mf, 0.000000e+00
   %or.cond401 = select i1 %i.me, i1 %i.mg, i1 false
   br i1 %or.cond401, label %bb.aj, label %.thread.10
 
 bb.ai:                                            ; preds = %.thread.9
-  %i.mh = extractelement <16 x float> %13, i64 10
+  %i.mh = extractelement <4 x float> %37, i64 2
   %i.mi = fcmp ogt float %i.mh, 0.000000e+00
   br i1 %i.mi, label %bb.aj, label %.thread.10
 
@@ -907,13 +942,13 @@ bb.aj:                                            ; preds = %bb.ah, %bb.ai
 
 bb.ak:                                            ; preds = %.thread.10
   %i.mm = icmp ne i32 %i.mk, 0
-  %i.mn = extractelement <16 x float> %13, i64 11
+  %i.mn = extractelement <4 x float> %37, i64 3
   %i.mo = fcmp olt float %i.mn, 0.000000e+00
   %or.cond403 = select i1 %i.mm, i1 %i.mo, i1 false
   br i1 %or.cond403, label %bb.am, label %.thread.11
 
 bb.al:                                            ; preds = %.thread.10
-  %i.mp = extractelement <16 x float> %13, i64 11
+  %i.mp = extractelement <4 x float> %37, i64 3
   %i.mq = fcmp ogt float %i.mp, 0.000000e+00
   br i1 %i.mq, label %bb.am, label %.thread.11
 
@@ -930,14 +965,12 @@ bb.am:                                            ; preds = %bb.ak, %bb.al
 
 bb.an:                                            ; preds = %.thread.11
   %i.mu = icmp ne i32 %i.ms, 0
-  %16 = extractelement <16 x float> %13, i64 12
-  %i.mv = fcmp olt float %16, 0.000000e+00
+  %i.mv = fcmp olt float %storemerge260302, 0.000000e+00
   %or.cond405 = select i1 %i.mu, i1 %i.mv, i1 false
   br i1 %or.cond405, label %bb.ap, label %.thread.12
 
 bb.ao:                                            ; preds = %.thread.11
-  %17 = extractelement <16 x float> %13, i64 12
-  %i.mw = fcmp ogt float %17, 0.000000e+00
+  %i.mw = fcmp ogt float %storemerge260302, 0.000000e+00
   br i1 %i.mw, label %bb.ap, label %.thread.12
 
 bb.ap:                                            ; preds = %bb.an, %bb.ao
@@ -953,14 +986,12 @@ bb.ap:                                            ; preds = %bb.an, %bb.ao
 
 bb.aq:                                            ; preds = %.thread.12
   %i.na = icmp ne i32 %i.my, 0
-  %18 = extractelement <16 x float> %13, i64 13
-  %i.nb = fcmp olt float %18, 0.000000e+00
+  %i.nb = fcmp olt float %storemerge261305, 0.000000e+00
   %or.cond407 = select i1 %i.na, i1 %i.nb, i1 false
   br i1 %or.cond407, label %bb.as, label %.thread.13
 
 bb.ar:                                            ; preds = %.thread.12
-  %19 = extractelement <16 x float> %13, i64 13
-  %i.nc = fcmp ogt float %19, 0.000000e+00
+  %i.nc = fcmp ogt float %storemerge261305, 0.000000e+00
   br i1 %i.nc, label %bb.as, label %.thread.13
 
 bb.as:                                            ; preds = %bb.aq, %bb.ar
@@ -979,11 +1010,11 @@ bb.at:                                            ; preds = %.thread.13
   br i1 %i.ng, label %bb.au, label %.thread.14
 
 bb.au:                                            ; preds = %bb.at
-  %i.nh = fcmp olt float %15, 0.000000e+00
+  %i.nh = fcmp olt float %storemerge262307, 0.000000e+00
   br i1 %i.nh, label %bb.aw, label %.thread.14
 
 bb.av:                                            ; preds = %.thread.13
-  %i.ni = fcmp ogt float %15, 0.000000e+00
+  %i.ni = fcmp ogt float %storemerge262307, 0.000000e+00
   br i1 %i.ni, label %bb.aw, label %.thread.14
 
 bb.aw:                                            ; preds = %bb.av, %bb.au
@@ -991,7 +1022,7 @@ bb.aw:                                            ; preds = %bb.av, %bb.au
 
 .thread.14:                                       ; preds = %bb.at, %bb.au, %bb.av, %bb.aw
   %.sink409 = phi i32 [ 1, %bb.aw ], [ -1, %bb.av ], [ -1, %bb.au ], [ -1, %bb.at ]
-  %i.nj = phi float [ %15, %bb.aw ], [ %15, %bb.av ], [ %15, %bb.au ], [ %i.ja, %bb.at ]
+  %i.nj = phi float [ %storemerge262307, %bb.aw ], [ %storemerge262307, %bb.av ], [ %storemerge262307, %bb.au ], [ %i.ja, %bb.at ]
   %i.nk = add nsw i32 %i.nd, %.sink409
   %gep.15 = getelementptr inbounds nuw i8, ptr %invariant.gep, i64 6000
   %i.nl = load i32, ptr %gep.15, align 4, !tbaa !8 ; 2 uses
@@ -1003,11 +1034,11 @@ bb.ax:                                            ; preds = %.thread.14
   br i1 %i.nn, label %bb.ay, label %.thread.15
 
 bb.ay:                                            ; preds = %bb.ax
-  %i.no = fcmp olt float %14, 0.000000e+00
+  %i.no = fcmp olt float %storemerge263309, 0.000000e+00
   br i1 %i.no, label %bb.ba, label %.thread.15
 
 bb.az:                                            ; preds = %.thread.14
-  %i.np = fcmp ogt float %14, 0.000000e+00
+  %i.np = fcmp ogt float %storemerge263309, 0.000000e+00
   br i1 %i.np, label %bb.ba, label %.thread.15
 
 bb.ba:                                            ; preds = %bb.az, %bb.ay
@@ -1015,7 +1046,7 @@ bb.ba:                                            ; preds = %bb.az, %bb.ay
 
 .thread.15:                                       ; preds = %bb.ax, %bb.ay, %bb.az, %bb.ba
   %.sink410 = phi i32 [ 1, %bb.ba ], [ -1, %bb.az ], [ -1, %bb.ay ], [ -1, %bb.ax ]
-  %i.nq = phi float [ %14, %bb.ba ], [ %14, %bb.az ], [ %14, %bb.ay ], [ %i.iz, %bb.ax ]
+  %i.nq = phi float [ %storemerge263309, %bb.ba ], [ %storemerge263309, %bb.az ], [ %storemerge263309, %bb.ay ], [ %i.iz, %bb.ax ]
   %i.nr = add nsw i32 %i.nk, %.sink410            ; 3 uses
   %i.ns = icmp eq i32 %i.nr, 0
   br i1 %i.ns, label %.loopexit, label %.loopexit.sink.split
@@ -1027,23 +1058,37 @@ bb.ba:                                            ; preds = %bb.az, %bb.ay
   %i.nw = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %indvars.iv199 ; 2 uses
   %.str.82..str.83 = select i1 %i.nu, ptr @.str.82, ptr @.str.83
   %.430 = select i1 %i.nu, float 2.000000e-02, float -2.000000e-02
-  %.431 = select i1 %i.nu, float -2.000000e-02, float 2.000000e-02 ; 3 uses
+  %.431 = select i1 %i.nu, float -2.000000e-02, float 2.000000e-02 ; 5 uses
   %i.nx = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) %.str.82..str.83, i32 noundef %i.nv, double noundef f0x3F947AE140000000) ; 0 uses
   %i.ny = load float, ptr %i.nw, align 4, !tbaa !318
   %i.nz = fadd float %i.ny, %.430
   store float %i.nz, ptr %i.nw, align 4, !tbaa !318
-  %storemerge247 = fadd float %15, %.431
-  %20 = insertelement <16 x float> poison, float %.431, i64 0
-  %21 = shufflevector <16 x float> %20, <16 x float> poison, <16 x i32> zeroinitializer
-  %22 = fadd <16 x float> %13, %21                ; 2 uses
-  %storemerge248 = fadd float %14, %.431
+  %38 = insertelement <4 x float> poison, float %.431, i64 0
+  %39 = shufflevector <4 x float> %38, <4 x float> poison, <4 x i32> zeroinitializer ; 3 uses
+  %40 = fadd <4 x float> %33, %39                 ; 2 uses
+  %41 = fadd <4 x float> %35, %39                 ; 2 uses
+  %42 = fadd <4 x float> %37, %39                 ; 2 uses
+  %storemerge245 = fadd float %storemerge260302, %.431 ; 2 uses
+  %storemerge246 = fadd float %storemerge261305, %.431 ; 2 uses
+  %storemerge247 = fadd float %storemerge262307, %.431 ; 2 uses
+  %storemerge248 = fadd float %storemerge263309, %.431 ; 2 uses
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.loopexit.sink.split, %.thread.15
+  %storemerge261350 = phi float [ %storemerge261351, %.thread.15 ], [ %storemerge246, %.loopexit.sink.split ] ; 3 uses
+  %storemerge260347 = phi float [ %storemerge260348, %.thread.15 ], [ %storemerge245, %.loopexit.sink.split ] ; 3 uses
+  %storemerge263308 = phi float [ %storemerge263309, %.thread.15 ], [ %storemerge248, %.loopexit.sink.split ] ; 3 uses
+  %storemerge262306 = phi float [ %storemerge262307, %.thread.15 ], [ %storemerge247, %.loopexit.sink.split ] ; 3 uses
+  %storemerge261304 = phi float [ %storemerge261305, %.thread.15 ], [ %storemerge246, %.loopexit.sink.split ]
+  %storemerge260301 = phi float [ %storemerge260302, %.thread.15 ], [ %storemerge245, %.loopexit.sink.split ]
   %i.oa = phi float [ %i.nq, %.thread.15 ], [ %storemerge248, %.loopexit.sink.split ] ; 2 uses
   %i.ob = phi float [ %i.nj, %.thread.15 ], [ %storemerge247, %.loopexit.sink.split ] ; 2 uses
-  %23 = phi <16 x float> [ %12, %.thread.15 ], [ %22, %.loopexit.sink.split ] ; 18 uses
-  %24 = phi <16 x float> [ %13, %.thread.15 ], [ %22, %.loopexit.sink.split ]
+  %43 = phi <4 x float> [ %32, %.thread.15 ], [ %40, %.loopexit.sink.split ] ; 3 uses
+  %44 = phi <4 x float> [ %33, %.thread.15 ], [ %40, %.loopexit.sink.split ]
+  %45 = phi <4 x float> [ %34, %.thread.15 ], [ %41, %.loopexit.sink.split ] ; 3 uses
+  %46 = phi <4 x float> [ %35, %.thread.15 ], [ %41, %.loopexit.sink.split ]
+  %47 = phi <4 x float> [ %36, %.thread.15 ], [ %42, %.loopexit.sink.split ] ; 3 uses
+  %48 = phi <4 x float> [ %37, %.thread.15 ], [ %42, %.loopexit.sink.split ]
   %indvars.iv.next200 = add nuw nsw i64 %indvars.iv199, 1 ; 2 uses
   %exitcond202.not = icmp eq i64 %indvars.iv.next200, 21
   br i1 %exitcond202.not, label %bb.bb, label %.preheader, !llvm.loop !321
@@ -1054,51 +1099,13 @@ bb.bb:                                            ; preds = %.loopexit
   br i1 %exitcond203.not, label %bb.bc, label %.preheader112, !llvm.loop !322
 
 bb.bc:                                            ; preds = %bb.bb
-  %25 = getelementptr inbounds nuw i8, ptr %i.b, i64 52
-  %26 = getelementptr inbounds nuw i8, ptr %i.b, i64 48
-  %27 = getelementptr inbounds nuw i8, ptr %i.b, i64 44
-  %28 = getelementptr inbounds nuw i8, ptr %i.b, i64 40
-  %29 = getelementptr inbounds nuw i8, ptr %i.b, i64 36
-  %30 = getelementptr inbounds nuw i8, ptr %i.b, i64 32
-  %31 = getelementptr inbounds nuw i8, ptr %i.b, i64 28
-  %32 = getelementptr inbounds nuw i8, ptr %i.b, i64 24
-  %33 = getelementptr inbounds nuw i8, ptr %i.b, i64 20
-  %34 = getelementptr inbounds nuw i8, ptr %i.b, i64 16
-  %35 = getelementptr inbounds nuw i8, ptr %i.b, i64 12
-  %36 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %37 = getelementptr inbounds nuw i8, ptr %i.b, i64 4
-  %38 = extractelement <16 x float> %23, i64 0
-  store float %38, ptr %i.b, align 16
-  %39 = extractelement <16 x float> %23, i64 1
-  store float %39, ptr %37, align 4
-  %40 = extractelement <16 x float> %23, i64 2
-  store float %40, ptr %36, align 8
-  %41 = extractelement <16 x float> %23, i64 3
-  store float %41, ptr %35, align 4
-  %42 = extractelement <16 x float> %23, i64 4
-  store float %42, ptr %34, align 16
-  %43 = extractelement <16 x float> %23, i64 5
-  store float %43, ptr %33, align 4
-  %44 = extractelement <16 x float> %23, i64 6
-  store float %44, ptr %32, align 8
-  %45 = extractelement <16 x float> %23, i64 7
-  store float %45, ptr %31, align 4
-  %46 = extractelement <16 x float> %23, i64 8
-  store float %46, ptr %30, align 16
-  %47 = extractelement <16 x float> %23, i64 9
-  store float %47, ptr %29, align 4
-  %48 = extractelement <16 x float> %23, i64 10
-  store float %48, ptr %28, align 8
-  %49 = extractelement <16 x float> %23, i64 11
-  store float %49, ptr %27, align 4
-  %50 = extractelement <16 x float> %23, i64 12
-  store float %50, ptr %26, align 16
-  %51 = extractelement <16 x float> %23, i64 13
-  store float %51, ptr %25, align 4
-  %52 = extractelement <16 x float> %23, i64 14
-  store float %52, ptr %.phi.trans.insert, align 8
-  %53 = extractelement <16 x float> %23, i64 15
-  store float %53, ptr %.phi.trans.insert205, align 4
+  store <4 x float> %43, ptr %i.b, align 16
+  store <4 x float> %45, ptr %0, align 16
+  store <4 x float> %47, ptr %1, align 16
+  store float %storemerge260347, ptr %2, align 16
+  store float %storemerge261350, ptr %3, align 4
+  store float %storemerge262306, ptr %.phi.trans.insert, align 8
+  store float %storemerge263308, ptr %.phi.trans.insert205, align 4
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #38
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #38
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #38

@@ -41,7 +41,7 @@ $_ZNSt10filesystem7__cxx114pathD2Ev = comdat any
 ; Function Attrs: mustprogress uwtable
 define void @_Z8do_pairs19InteractionFunctioniPKiPK9t_iparamsPA3_KfPA4_fPA3_fPK5t_pbcPS5_PfN3gmx8ArrayRefIS5_EESJ_NSI_IKbEENSI_IKtEEiPK10t_forcerecbRKNSH_12StepWorkloadEP17gmx_grppairener_tPi(i32 noundef %0, i32 noundef %1, ptr nofree noundef readonly captures(none) %2, ptr nofree noundef readonly captures(none) %3, ptr noundef %4, ptr nofree noundef captures(none) %5, ptr nofree noundef captures(none) %6, ptr noundef %7, ptr nofree noundef readonly captures(none) %8, ptr nofree noundef captures(none) %9, ptr nofree noundef readonly byval(%"class.gmx::ArrayRef") align 8 captures(none) %10, ptr nofree noundef readonly byval(%"class.gmx::ArrayRef") align 8 captures(none) %11, ptr nofree noundef readonly byval(%"class.gmx::ArrayRef.0") align 8 captures(none) %12, ptr nofree noundef readonly byval(%"class.gmx::ArrayRef.3") align 8 captures(none) %13, i32 noundef %14, ptr nofree noundef readonly captures(none) %15, i1 noundef zeroext %16, ptr nofree noundef nonnull readonly align 1 captures(none) dereferenceable(19) %17, ptr nofree noundef readonly captures(none) %18, ptr noundef %19) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = alloca [3 x float], align 8              ; 9 uses
+  %i.a = alloca [3 x float], align 8              ; 8 uses
   %i.b = alloca float, align 4                    ; 9 uses
   %i.c = alloca float, align 4                    ; 9 uses
   %i.d = alloca [2 x float], align 4              ; 9 uses
@@ -52,7 +52,7 @@ bb.a:
   %i.i = alloca [2 x float], align 8              ; 7 uses
   %i.j = alloca [2 x float], align 8              ; 7 uses
   %20 = alloca %"class.std::filesystem::__cxx11::path", align 8 ; 5 uses
-  %i.k = alloca [3 x float], align 8              ; 9 uses
+  %i.k = alloca [3 x float], align 8              ; 8 uses
   %i.l = alloca float, align 4                    ; 9 uses
   %i.m = alloca float, align 4                    ; 9 uses
   %i.n = alloca [2 x float], align 4              ; 9 uses
@@ -296,7 +296,6 @@ bb.p:                                             ; preds = %bb.o
   %i.da = icmp eq ptr %i.bd, %i.bf
   %i.db = getelementptr inbounds nuw i8, ptr %15, i64 152 ; 2 uses
   %i.dc = getelementptr inbounds nuw i8, ptr %15, i64 12
-  %23 = getelementptr inbounds nuw i8, ptr %i.k, i64 4
   %i.dd = getelementptr inbounds nuw i8, ptr %i.k, i64 8 ; 3 uses
   %i.de = getelementptr inbounds nuw i8, ptr %15, i64 160
   %i.df = getelementptr inbounds nuw i8, ptr %6, i64 264 ; 2 uses
@@ -651,11 +650,8 @@ bb.ap:                                            ; preds = %bb.ao, %bb.an, %bb.
   store float %i.mm, ptr %i.mk, align 4, !tbaa !172
   %i.mn = insertelement <2 x float> poison, float %.1209.i, i64 0
   %i.mo = shufflevector <2 x float> %i.mn, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.mp = fmul <2 x float> %i.gu, %i.mo           ; 6 uses
-  %24 = extractelement <2 x float> %i.mp, i64 0
-  store float %24, ptr %i.k, align 8, !tbaa !172
-  %25 = extractelement <2 x float> %i.mp, i64 1
-  store float %25, ptr %23, align 4, !tbaa !172
+  %i.mp = fmul <2 x float> %i.gu, %i.mo           ; 5 uses
+  store <2 x float> %i.mp, ptr %i.k, align 8, !tbaa !172
   %i.mq = fmul float %i.gt, %.1209.i              ; 5 uses
   store float %i.mq, ptr %i.dd, align 8, !tbaa !172
   %i.mr = getelementptr inbounds [16 x i8], ptr %5, i64 %i.dn ; 3 uses
@@ -847,7 +843,6 @@ bb.ax:                                            ; preds = %bb.aw
   %i.ph = icmp eq ptr %i.bd, %i.bf
   %i.pi = getelementptr inbounds nuw i8, ptr %15, i64 152 ; 2 uses
   %i.pj = getelementptr inbounds nuw i8, ptr %15, i64 12
-  %26 = getelementptr inbounds nuw i8, ptr %i.a, i64 4
   %i.pk = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 3 uses
   %i.pl = getelementptr inbounds nuw i8, ptr %15, i64 160
   br label %bb.ay
@@ -1199,11 +1194,8 @@ bb.bx:                                            ; preds = %bb.bw, %bb.bv, %bb.
   store float %i.yr, ptr %i.yp, align 4, !tbaa !172
   %i.ys = insertelement <2 x float> poison, float %.1205.i, i64 0
   %i.yt = shufflevector <2 x float> %i.ys, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.yu = fmul <2 x float> %i.sz, %i.yt           ; 4 uses
-  %27 = extractelement <2 x float> %i.yu, i64 0
-  store float %27, ptr %i.a, align 8, !tbaa !172
-  %28 = extractelement <2 x float> %i.yu, i64 1
-  store float %28, ptr %26, align 4, !tbaa !172
+  %i.yu = fmul <2 x float> %i.sz, %i.yt           ; 3 uses
+  store <2 x float> %i.yu, ptr %i.a, align 8, !tbaa !172
   %i.yv = fmul float %i.sy, %.1205.i              ; 3 uses
   store float %i.yv, ptr %i.pk, align 8, !tbaa !172
   %i.yw = getelementptr inbounds [16 x i8], ptr %5, i64 %i.ps ; 3 uses

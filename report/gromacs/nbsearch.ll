@@ -205,7 +205,7 @@ _ZN3gmx8internal34AnalysisNeighborhoodPairSearchImpl11startSearchERKNS_29Analysi
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr noundef zeroext i1 @_ZN3gmx8internal34AnalysisNeighborhoodPairSearchImpl10searchNextIPFbifPKfEEEbT_(ptr noundef nonnull align 8 dereferenceable(140) %0, ptr noundef %1) local_unnamed_addr #15 comdat align 2 {
 bb.a:
-  %i.a = alloca [3 x float], align 8              ; 8 uses
+  %i.a = alloca [3 x float], align 8              ; 7 uses
   %i.b = alloca [3 x float], align 8              ; 10 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 5 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 3 uses
@@ -220,7 +220,6 @@ bb.a:
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 92 ; 7 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 60 ; 3 uses
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 68 ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.b, i64 4
   %i.o = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 3 uses
@@ -230,7 +229,6 @@ bb.a:
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 120
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 108 ; 2 uses
-  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 4
   %i.v = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 96
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 124
@@ -479,6 +477,8 @@ bb.l:                                             ; preds = %bb.k, %_ZNK3gmx8int
 
 .lr.ph124.preheader:                              ; preds = %bb.l
   %i.fa = sext i32 %.036 to i64
+  %2 = insertelement <2 x float> poison, float %.sroa.0.5, i64 0
+  %3 = insertelement <2 x float> %2, float %.sroa.10.5, i64 1
   br label %.lr.ph124
 
 .lr.ph124:                                        ; preds = %.lr.ph124.preheader, %.thread
@@ -567,30 +567,26 @@ _ZN3gmx8internal34AnalysisNeighborhoodPairSearchImpl10isExcludedEi.exit: ; preds
   %i.go = getelementptr inbounds nuw i8, ptr %i.fb, i64 24
   %i.gp = load ptr, ptr %i.go, align 8, !tbaa !154
   %i.gq = sext i32 %i.fh to i64
-  %i.gr = getelementptr inbounds [12 x i8], ptr %i.gp, i64 %i.gq ; 3 uses
-  %4 = load float, ptr %i.gr, align 4, !tbaa !82
-  %5 = load float, ptr %i.l, align 4, !tbaa !82
-  %6 = fsub float %4, %5
-  %i.gs = getelementptr inbounds nuw i8, ptr %i.gr, i64 4
+  %i.gr = getelementptr inbounds [12 x i8], ptr %i.gp, i64 %i.gq ; 2 uses
+  %i.gs = getelementptr inbounds nuw i8, ptr %i.gr, i64 8
   %i.gt = load float, ptr %i.gs, align 4, !tbaa !82
-  %i.gu = load float, ptr %2, align 8, !tbaa !82
+  %i.gu = load float, ptr %i.m, align 4, !tbaa !82
   %i.gv = fsub float %i.gt, %i.gu
-  %7 = getelementptr inbounds nuw i8, ptr %i.gr, i64 8
-  %8 = load float, ptr %7, align 4, !tbaa !82
-  %9 = load float, ptr %i.m, align 4, !tbaa !82
-  %i.gw = fsub float %8, %9
-  %10 = fsub float %6, %.sroa.0.5                 ; 3 uses
-  %11 = fsub float %i.gv, %.sroa.10.5             ; 3 uses
-  %12 = fsub float %i.gw, %.sroa.18.5             ; 3 uses
-  store float %10, ptr %i.a, align 8, !tbaa !82
-  store float %11, ptr %3, align 4, !tbaa !82
-  store float %12, ptr %i.v, align 8, !tbaa !82
+  %i.gw = fsub float %i.gv, %.sroa.18.5           ; 3 uses
+  %4 = load <2 x float>, ptr %i.gr, align 4, !tbaa !82
+  %5 = load <2 x float>, ptr %i.l, align 4, !tbaa !82
+  %6 = fsub <2 x float> %4, %5
+  %7 = fsub <2 x float> %6, %3                    ; 4 uses
+  store <2 x float> %7, ptr %i.a, align 8, !tbaa !82
+  store float %i.gw, ptr %i.v, align 8, !tbaa !82
   %i.gx = getelementptr inbounds nuw i8, ptr %i.fb, i64 12
   %i.gy = load i8, ptr %i.gx, align 4, !tbaa !38, !range !95, !noundef !92
   %i.gz = trunc nuw i8 %i.gy to i1
-  %13 = fmul float %11, %11
-  %i.ha = call float @llvm.fmuladd.f32(float %10, float %10, float %13) ; 2 uses
-  %i.hb = call float @llvm.fmuladd.f32(float %12, float %12, float %i.ha)
+  %foldExtExtBinop = fmul <2 x float> %7, %7
+  %8 = extractelement <2 x float> %foldExtExtBinop, i64 1
+  %9 = extractelement <2 x float> %7, i64 0       ; 2 uses
+  %i.ha = call float @llvm.fmuladd.f32(float %9, float %9, float %8) ; 2 uses
+  %i.hb = call float @llvm.fmuladd.f32(float %i.gw, float %i.gw, float %i.ha)
   %i.hc = select i1 %i.gz, float %i.ha, float %i.hb ; 3 uses
   %i.hd = getelementptr inbounds nuw i8, ptr %i.fb, i64 8
   %i.he = load float, ptr %i.hd, align 8, !tbaa !37
@@ -946,8 +942,7 @@ bb.a:
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 92 ; 7 uses
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 60 ; 3 uses
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 64
-  %i.l = getelementptr inbounds nuw i8, ptr %0, i64 68
+  %i.l = getelementptr inbounds nuw i8, ptr %0, i64 68 ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 4 ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 3 uses
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -955,7 +950,7 @@ bb.a:
   %i.q = load ptr, ptr %1, align 8, !nonnull !92, !align !241 ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.s = load ptr, ptr %i.r, align 8, !nonnull !92, !align !241 ; 4 uses
-  %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 4 ; 2 uses
+  %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 4
   %i.u = getelementptr inbounds nuw i8, ptr %i.s, i64 8 ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 136
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 2 uses
@@ -1217,6 +1212,8 @@ bb.l:                                             ; preds = %bb.k, %_ZNK3gmx8int
   %i.fk = sext i32 %.034 to i64
   %sext = shl i64 %i.fb, 30
   %wide.trip.count = ashr i64 %sext, 32
+  %2 = insertelement <2 x float> poison, float %.sroa.068.5, i64 0
+  %3 = insertelement <2 x float> %2, float %.sroa.10.5, i64 1
   br label %bb.m
 
 bb.m:                                             ; preds = %.lr.ph106, %_ZN3gmx12_GLOBAL__N_113MindistActionclEifPKf.exit
@@ -1295,24 +1292,23 @@ _ZN3gmx8internal34AnalysisNeighborhoodPairSearchImpl10isExcludedEi.exit: ; preds
   %i.gp = load ptr, ptr %i.fh, align 8, !tbaa !154
   %i.gq = sext i32 %i.fm to i64
   %i.gr = getelementptr inbounds [12 x i8], ptr %i.gp, i64 %i.gq ; 2 uses
-  %3 = load float, ptr %i.gr, align 4, !tbaa !82
-  %i.gs = load float, ptr %i.k, align 4, !tbaa !82
-  %4 = fsub float %3, %i.gs
-  %5 = getelementptr inbounds nuw i8, ptr %i.gr, i64 4
-  %i.gt = load <2 x float>, ptr %5, align 4, !tbaa !82
-  %i.gu = load <2 x float>, ptr %2, align 8, !tbaa !82
-  %i.gv = fsub <2 x float> %i.gt, %i.gu           ; 2 uses
-  %6 = fsub float %4, %.sroa.068.5                ; 3 uses
-  %7 = extractelement <2 x float> %i.gv, i64 0
-  %i.gw = fsub float %7, %.sroa.10.5              ; 3 uses
-  %8 = extractelement <2 x float> %i.gv, i64 1
-  %9 = fsub float %8, %.sroa.18.5                 ; 3 uses
-  %10 = load i8, ptr %i.fi, align 4, !tbaa !38, !range !95, !noundef !92
-  %11 = trunc nuw i8 %10 to i1
-  %12 = fmul float %i.gw, %i.gw
-  %i.gx = call float @llvm.fmuladd.f32(float %6, float %6, float %12) ; 2 uses
-  %i.gy = call float @llvm.fmuladd.f32(float %9, float %9, float %i.gx)
-  %i.gz = select i1 %11, float %i.gx, float %i.gy ; 3 uses
+  %4 = getelementptr inbounds nuw i8, ptr %i.gr, i64 8
+  %i.gs = load float, ptr %4, align 4, !tbaa !82
+  %5 = load float, ptr %i.l, align 4, !tbaa !82
+  %6 = fsub float %i.gs, %5
+  %i.gt = load <2 x float>, ptr %i.gr, align 4, !tbaa !82
+  %i.gu = load <2 x float>, ptr %i.k, align 4, !tbaa !82
+  %i.gv = fsub <2 x float> %i.gt, %i.gu
+  %7 = fsub <2 x float> %i.gv, %3                 ; 4 uses
+  %i.gw = fsub float %6, %.sroa.18.5              ; 3 uses
+  %8 = load i8, ptr %i.fi, align 4, !tbaa !38, !range !95, !noundef !92
+  %9 = trunc nuw i8 %8 to i1
+  %foldExtExtBinop = fmul <2 x float> %7, %7
+  %10 = extractelement <2 x float> %foldExtExtBinop, i64 1
+  %11 = extractelement <2 x float> %7, i64 0      ; 2 uses
+  %i.gx = call float @llvm.fmuladd.f32(float %11, float %11, float %10) ; 2 uses
+  %i.gy = call float @llvm.fmuladd.f32(float %i.gw, float %i.gw, float %i.gx)
+  %i.gz = select i1 %9, float %i.gx, float %i.gy  ; 3 uses
   %i.ha = load float, ptr %i.fj, align 8, !tbaa !37
   %i.hb = fcmp ugt float %i.gz, %i.ha
   br i1 %i.hb, label %_ZN3gmx12_GLOBAL__N_113MindistActionclEifPKf.exit, label %bb.v
@@ -1325,9 +1321,8 @@ bb.v:                                             ; preds = %.loopexit
 bb.w:                                             ; preds = %bb.v
   store i32 %i.fm, ptr %i.q, align 4, !tbaa !41
   store float %i.gz, ptr %i.p, align 4, !tbaa !82
-  store float %6, ptr %i.s, align 4, !tbaa !82
-  store float %i.gw, ptr %i.t, align 4, !tbaa !82
-  store float %9, ptr %i.u, align 4, !tbaa !82
+  store <2 x float> %7, ptr %i.s, align 4, !tbaa !82
+  store float %i.gw, ptr %i.u, align 4, !tbaa !82
   br label %_ZN3gmx12_GLOBAL__N_113MindistActionclEifPKf.exit
 
 _ZN3gmx12_GLOBAL__N_113MindistActionclEifPKf.exit: ; preds = %.loopexit, %bb.v, %bb.w, %_ZN3gmx8internal34AnalysisNeighborhoodPairSearchImpl10isExcludedEi.exit, %bb.o
