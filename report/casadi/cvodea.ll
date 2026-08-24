@@ -205,7 +205,7 @@ bb.p:                                             ; preds = %.lr.ph, %bb.p
   br i1 %exitcond248.not, label %.loopexit203, label %bb.o, !llvm.loop !97
 
 .loopexit203:                                     ; preds = %._crit_edge, %._crit_edge216
-  %.0157307314 = phi i32 [ %i.cp, %._crit_edge216 ], [ %i.cj, %._crit_edge ] ; 6 uses
+  %.0157307314 = phi i32 [ %i.cp, %._crit_edge216 ], [ %i.cj, %._crit_edge ] ; 7 uses
   %.not170224 = icmp slt i32 %.0157307314, 1
   br i1 %.not170224, label %.loopexit201, label %.preheader200.lr.ph
 
@@ -215,8 +215,6 @@ bb.p:                                             ; preds = %.lr.ph, %bb.p
   %i.eu = icmp sgt i32 %.fr238, 0
   %i.ev = getelementptr inbounds nuw i8, ptr %i.b, i64 272 ; 2 uses
   %i.ew = zext nneg i32 %.0157307314 to i64       ; 2 uses
-  %4 = add nuw i32 %.0157307314, 1
-  %wide.trip.count278 = zext i32 %4 to i64        ; 2 uses
   br i1 %i.eu, label %.preheader200.us.preheader, label %.preheader200
 
 .preheader200.us.preheader:                       ; preds = %.preheader200.lr.ph
@@ -224,27 +222,30 @@ bb.p:                                             ; preds = %.lr.ph, %bb.p
   br label %.preheader200.us
 
 .preheader200.us:                                 ; preds = %.preheader200.us.preheader, %.split.us.us
-  %indvars.iv275 = phi i64 [ 1, %.preheader200.us.preheader ], [ %indvars.iv.next276, %.split.us.us ] ; 3 uses
+  %.0155225.us = phi i32 [ %8, %.split.us.us ], [ 1, %.preheader200.us.preheader ] ; 4 uses
   br label %.lr.ph222.us.us
 
 .lr.ph222.us.us:                                  ; preds = %..loopexit199_crit_edge.us.us, %.preheader200.us
-  %indvars.iv272 = phi i64 [ %indvars.iv.next273, %..loopexit199_crit_edge.us.us ], [ %i.ew, %.preheader200.us ] ; 6 uses
-  %i.ex = getelementptr inbounds [8 x i8], ptr %i.es, i64 %indvars.iv272
+  %indvars.iv272 = phi i64 [ %indvars.iv.next273, %..loopexit199_crit_edge.us.us ], [ %i.ew, %.preheader200.us ] ; 5 uses
+  %i.ex = getelementptr inbounds nuw [8 x i8], ptr %i.es, i64 %indvars.iv272
   %i.ey = load double, ptr %i.ex, align 8, !tbaa !93
-  %5 = sub nsw i64 %indvars.iv272, %indvars.iv275
-  %i.ez = getelementptr inbounds nuw [8 x i8], ptr %i.es, i64 %5
+  %4 = trunc nuw i64 %indvars.iv272 to i32        ; 2 uses
+  %5 = sub nsw i32 %4, %.0155225.us
+  %6 = zext nneg i32 %5 to i64
+  %i.ez = getelementptr inbounds nuw [8 x i8], ptr %i.es, i64 %6
   %i.fa = load double, ptr %i.ez, align 8, !tbaa !93
   %i.fb = fsub double %i.ey, %i.fa
   %i.fc = fdiv double %i.bz, %i.fb                ; 3 uses
-  %i.fd = getelementptr inbounds [8 x i8], ptr %i.et, i64 %indvars.iv272
+  %i.fd = getelementptr inbounds nuw [8 x i8], ptr %i.et, i64 %indvars.iv272
   %i.fe = load ptr, ptr %i.fd, align 8, !tbaa !72 ; 2 uses
   %i.ff = fneg double %i.fc                       ; 2 uses
-  %indvars.iv.next273 = add nsw i64 %indvars.iv272, -1 ; 3 uses
-  %i.fg = getelementptr inbounds [8 x i8], ptr %i.et, i64 %indvars.iv.next273
+  %indvars.iv.next273 = add nsw i64 %indvars.iv272, -1 ; 2 uses
+  %7 = and i64 %indvars.iv.next273, 4294967295    ; 2 uses
+  %i.fg = getelementptr inbounds nuw [8 x i8], ptr %i.et, i64 %7
   %i.fh = load ptr, ptr %i.fg, align 8, !tbaa !72
   tail call void @N_VLinearSum(double noundef %i.fc, ptr noundef %i.fe, double noundef %i.ff, ptr noundef %i.fh, ptr noundef %i.fe) #7
-  %i.fi = getelementptr inbounds [8 x i8], ptr %i.ev, i64 %indvars.iv272
-  %i.fj = getelementptr inbounds [8 x i8], ptr %i.ev, i64 %indvars.iv.next273
+  %i.fi = getelementptr inbounds nuw [8 x i8], ptr %i.ev, i64 %indvars.iv272
+  %i.fj = getelementptr inbounds nuw [8 x i8], ptr %i.ev, i64 %7
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.q, %.lr.ph222.us.us
@@ -261,40 +262,43 @@ bb.q:                                             ; preds = %bb.q, %.lr.ph222.us
   br i1 %exitcond271.not, label %..loopexit199_crit_edge.us.us, label %bb.q, !llvm.loop !98
 
 ..loopexit199_crit_edge.us.us:                    ; preds = %bb.q
-  %.not171.us.us.not = icmp sgt i64 %indvars.iv272, %indvars.iv275
+  %.not171.us.us.not = icmp slt i32 %.0155225.us, %4
   br i1 %.not171.us.us.not, label %.lr.ph222.us.us, label %.split.us.us, !llvm.loop !99
 
 .split.us.us:                                     ; preds = %..loopexit199_crit_edge.us.us
-  %indvars.iv.next276 = add nuw nsw i64 %indvars.iv275, 1 ; 2 uses
-  %exitcond279.not.a = icmp eq i64 %indvars.iv.next276, %wide.trip.count278
+  %8 = add nuw i32 %.0155225.us, 1
+  %exitcond279.not.a = icmp eq i32 %.0155225.us, %.0157307314
   br i1 %exitcond279.not.a, label %.loopexit201, label %.preheader200.us, !llvm.loop !100
 
 .preheader200:                                    ; preds = %.preheader200.lr.ph, %.split
-  %indvars.iv262 = phi i64 [ %indvars.iv.next263, %.split ], [ 1, %.preheader200.lr.ph ] ; 3 uses
+  %.0155225 = phi i32 [ %13, %.split ], [ 1, %.preheader200.lr.ph ] ; 4 uses
   br label %.loopexit199
 
 .loopexit199:                                     ; preds = %.preheader200, %.loopexit199
-  %indvars.iv259 = phi i64 [ %i.ew, %.preheader200 ], [ %indvars.iv.next260, %.loopexit199 ] ; 5 uses
-  %i.fq = getelementptr inbounds [8 x i8], ptr %i.es, i64 %indvars.iv259
+  %indvars.iv259 = phi i64 [ %i.ew, %.preheader200 ], [ %indvars.iv.next260, %.loopexit199 ] ; 4 uses
+  %i.fq = getelementptr inbounds nuw [8 x i8], ptr %i.es, i64 %indvars.iv259
   %i.fr = load double, ptr %i.fq, align 8, !tbaa !93
-  %6 = sub nsw i64 %indvars.iv259, %indvars.iv262
-  %i.fs = getelementptr inbounds nuw [8 x i8], ptr %i.es, i64 %6
+  %9 = trunc nuw i64 %indvars.iv259 to i32        ; 2 uses
+  %10 = sub nsw i32 %9, %.0155225
+  %11 = zext nneg i32 %10 to i64
+  %i.fs = getelementptr inbounds nuw [8 x i8], ptr %i.es, i64 %11
   %i.ft = load double, ptr %i.fs, align 8, !tbaa !93
   %i.fu = fsub double %i.fr, %i.ft
   %i.fv = fdiv double %i.bz, %i.fu                ; 2 uses
-  %i.fw = getelementptr inbounds [8 x i8], ptr %i.et, i64 %indvars.iv259
+  %i.fw = getelementptr inbounds nuw [8 x i8], ptr %i.et, i64 %indvars.iv259
   %i.fx = load ptr, ptr %i.fw, align 8, !tbaa !72 ; 2 uses
   %i.fy = fneg double %i.fv
   %indvars.iv.next260 = add nsw i64 %indvars.iv259, -1 ; 2 uses
-  %i.fz = getelementptr inbounds [8 x i8], ptr %i.et, i64 %indvars.iv.next260
+  %12 = and i64 %indvars.iv.next260, 4294967295
+  %i.fz = getelementptr inbounds nuw [8 x i8], ptr %i.et, i64 %12
   %i.ga = load ptr, ptr %i.fz, align 8, !tbaa !72
   tail call void @N_VLinearSum(double noundef %i.fv, ptr noundef %i.fx, double noundef %i.fy, ptr noundef %i.ga, ptr noundef %i.fx) #7
-  %.not171.not = icmp sgt i64 %indvars.iv259, %indvars.iv262
+  %.not171.not = icmp slt i32 %.0155225, %9
   br i1 %.not171.not, label %.loopexit199, label %.split, !llvm.loop !99
 
 .split:                                           ; preds = %.loopexit199
-  %indvars.iv.next263 = add nuw nsw i64 %indvars.iv262, 1 ; 2 uses
-  %exitcond266.not = icmp eq i64 %indvars.iv.next263, %wide.trip.count278
+  %13 = add nuw i32 %.0155225, 1
+  %exitcond266.not = icmp eq i32 %.0155225, %.0157307314
   br i1 %exitcond266.not, label %.loopexit201, label %.preheader200, !llvm.loop !100
 
 .loopexit201:                                     ; preds = %.split, %.split.us.us, %.thread304, %.loopexit203, %bb.l

@@ -204,10 +204,14 @@ bb.p:                                             ; preds = %bb.o, %.lr.ph141.i
   br i1 %i.bs, label %bb.q, label %bb.z
 
 bb.q:                                             ; preds = %.lr.ph143.i
-  %i.bt = load i32, ptr %i.ab, align 8, !tbaa !12
-  %i.bu = sext i32 %i.bt to i64                   ; 2 uses
+  %i.bt = load i32, ptr %i.ab, align 8, !tbaa !12 ; 2 uses
+  %i.bu = sext i32 %i.bt to i64
   %.not.i.i = icmp slt i64 %indvars.iv166.i, %i.bu
-  br i1 %.not.i.i, label %.preheader.i.i.a, label %.lr.ph.i.i
+  br i1 %.not.i.i, label %.preheader.i.i, label %.lr.ph.i.i
+
+.preheader.i.i:                                   ; preds = %bb.q
+  %5 = zext nneg i32 %i.bt to i64
+  br label %.preheader.i.i.a
 
 .lr.ph.i.i:                                       ; preds = %bb.q, %bb.s
   %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i, %bb.s ], [ 0, %bb.q ] ; 2 uses
@@ -228,10 +232,10 @@ bb.s:                                             ; preds = %bb.r, %.lr.ph.i.i
   %exitcond.not.i.i = icmp eq i64 %indvars.iv.next.i.i, %wide.trip.count.i.i
   br i1 %exitcond.not.i.i, label %allocate_vertex.exit.i, label %.lr.ph.i.i, !llvm.loop !25
 
-.preheader.i.i.a:                                 ; preds = %bb.q, %bb.y
-  %indvars.iv58.i.i = phi i64 [ %indvars.iv.next59.i.i, %bb.y ], [ 0, %bb.q ] ; 4 uses
-  %.053.i.i = phi double [ %.1.i.i, %bb.y ], [ -1.000000e+00, %bb.q ] ; 4 uses
-  %.03652.i.i = phi i32 [ %.137.i.i, %bb.y ], [ 0, %bb.q ] ; 3 uses
+.preheader.i.i.a:                                 ; preds = %bb.y, %.preheader.i.i
+  %indvars.iv58.i.i = phi i64 [ 0, %.preheader.i.i ], [ %indvars.iv.next59.i.i, %bb.y ] ; 4 uses
+  %.053.i.i = phi double [ -1.000000e+00, %.preheader.i.i ], [ %.1.i.i, %bb.y ] ; 4 uses
+  %.03652.i.i = phi i32 [ 0, %.preheader.i.i ], [ %.137.i.i, %bb.y ] ; 3 uses
   %i.cb = getelementptr inbounds nuw [4 x i8], ptr %i.af, i64 %indvars.iv58.i.i
   %i.cc = load i32, ptr %i.cb, align 4, !tbaa !8  ; 3 uses
   %.not44.i.i = icmp eq i32 %i.cc, -1
@@ -245,8 +249,8 @@ bb.t:                                             ; preds = %.preheader.i.i.a
   br i1 %i.cg, label %bb.u, label %bb.y
 
 bb.u:                                             ; preds = %bb.t
-  %5 = icmp slt i64 %indvars.iv58.i.i, %i.bu
-  br i1 %5, label %bb.v, label %bb.w
+  %6 = icmp samesign ult i64 %indvars.iv58.i.i, %5
+  br i1 %6, label %bb.v, label %bb.w
 
 bb.v:                                             ; preds = %bb.u
   %i.ch = load ptr, ptr %1, align 8, !tbaa !26

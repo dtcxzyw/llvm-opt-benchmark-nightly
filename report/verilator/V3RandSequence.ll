@@ -204,14 +204,14 @@ bb.ml:                                            ; preds = %_ZN9AstAssignC2EP8F
   br label %bb.uf
 
 bb.mm:                                            ; preds = %.lr.ph3420, %_ZNSt15_Deque_iteratorIP13AstRSProdItemRS1_PS1_EppEv.exit1201
-  %indvars.iv4740 = phi i64 [ -1, %.lr.ph3420 ], [ %indvars.iv.next4741, %_ZNSt15_Deque_iteratorIP13AstRSProdItemRS1_PS1_EppEv.exit1201 ]
+  %.23613419 = phi i32 [ -1, %.lr.ph3420 ], [ %66, %_ZNSt15_Deque_iteratorIP13AstRSProdItemRS1_PS1_EppEv.exit1201 ]
   %.sroa.01329.03418 = phi ptr [ %i.akm, %.lr.ph3420 ], [ %.sroa.01329.1, %_ZNSt15_Deque_iteratorIP13AstRSProdItemRS1_PS1_EppEv.exit1201 ] ; 2 uses
   %.sroa.111333.03417 = phi ptr [ %i.akp, %.lr.ph3420 ], [ %.sroa.111333.1, %_ZNSt15_Deque_iteratorIP13AstRSProdItemRS1_PS1_EppEv.exit1201 ] ; 2 uses
   %.sroa.141334.03416 = phi ptr [ %i.ako, %.lr.ph3420 ], [ %.sroa.141334.1, %_ZNSt15_Deque_iteratorIP13AstRSProdItemRS1_PS1_EppEv.exit1201 ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i) #22
   %i.alr = load ptr, ptr %.sroa.01329.03418, align 8, !tbaa !389
   store ptr %i.alr, ptr %i.i, align 8, !tbaa !389
-  %indvars.iv.next4741 = add nsw i64 %indvars.iv4740, 1 ; 11 uses
+  %66 = add nsw i32 %.23613419, 1                 ; 2 uses
   %i.als = invoke noalias noundef nonnull dereferenceable(160) ptr @_Znwm(i64 noundef 160) #27
           to label %bb.mn unwind label %bb.ns     ; 10 uses
 
@@ -248,6 +248,7 @@ _ZN8AstConstC2EP8FileLineNS_12WidthedValueEij.exit1064: ; preds = %.noexc1061
           to label %bb.mr unwind label %bb.nu     ; 3 uses
 
 bb.mr:                                            ; preds = %_ZN8AstConstC2EP8FileLineNS_12WidthedValueEij.exit1064
+  %67 = zext nneg i32 %66 to i64                  ; 10 uses
   %i.aly = load ptr, ptr %i.akq, align 8, !tbaa !499, !noalias !512 ; 2 uses
   %i.alz = load ptr, ptr %i.akr, align 8, !tbaa !503, !noalias !512
   %i.ama = load ptr, ptr %i.aks, align 8, !tbaa !504, !noalias !512
@@ -255,7 +256,7 @@ bb.mr:                                            ; preds = %_ZN8AstConstC2EP8Fi
   %i.amc = ptrtoint ptr %i.alz to i64
   %i.amd = sub i64 %i.amb, %i.amc
   %i.ame = ashr exact i64 %i.amd, 3
-  %i.amf = add nsw i64 %i.ame, %indvars.iv.next4741 ; 5 uses
+  %i.amf = add nsw i64 %i.ame, %67                ; 5 uses
   %i.amg = icmp sgt i64 %i.amf, -1
   br i1 %i.amg, label %bb.ms, label %bb.mv
 
@@ -264,7 +265,7 @@ bb.ms:                                            ; preds = %bb.mr
   br i1 %i.amh, label %bb.mt, label %bb.mu
 
 bb.mt:                                            ; preds = %bb.ms
-  %i.ami = getelementptr inbounds [8 x i8], ptr %i.aly, i64 %indvars.iv.next4741
+  %i.ami = getelementptr inbounds nuw [8 x i8], ptr %i.aly, i64 %67
   br label %_ZNSt5dequeIP6AstVarSaIS1_EEixEm.exit1066
 
 bb.mu:                                            ; preds = %bb.ms
@@ -667,7 +668,7 @@ bb.ot:                                            ; preds = %_ZN8AstConstC2EP8Fi
   %i.aql = ptrtoint ptr %i.aqi to i64
   %i.aqm = sub i64 %i.aqk, %i.aql
   %i.aqn = ashr exact i64 %i.aqm, 3
-  %i.aqo = add nsw i64 %i.aqn, %indvars.iv.next4741 ; 5 uses
+  %i.aqo = add nsw i64 %i.aqn, %67                ; 5 uses
   %i.aqp = icmp sgt i64 %i.aqo, -1
   br i1 %i.aqp, label %bb.ou, label %bb.ox
 
@@ -676,7 +677,7 @@ bb.ou:                                            ; preds = %bb.ot
   br i1 %i.aqq, label %bb.ov, label %bb.ow
 
 bb.ov:                                            ; preds = %bb.ou
-  %i.aqr = getelementptr inbounds [8 x i8], ptr %i.aqh, i64 %indvars.iv.next4741
+  %i.aqr = getelementptr inbounds nuw [8 x i8], ptr %i.aqh, i64 %67
   br label %_ZNSt5dequeIP6AstVarSaIS1_EEixEm.exit1117
 
 bb.ow:                                            ; preds = %bb.ou
@@ -909,7 +910,7 @@ bb.pp:                                            ; preds = %bb.po
   %i.asp = ptrtoint ptr %i.asm to i64
   %i.asq = sub i64 %i.aso, %i.asp
   %i.asr = ashr exact i64 %i.asq, 3
-  %i.ass = add nsw i64 %i.asr, %indvars.iv.next4741 ; 5 uses
+  %i.ass = add nsw i64 %i.asr, %67                ; 5 uses
   %i.ast = icmp sgt i64 %i.ass, -1
   br i1 %i.ast, label %bb.pq, label %bb.pt
 
@@ -918,7 +919,7 @@ bb.pq:                                            ; preds = %bb.pp
   br i1 %i.asu, label %bb.pr, label %bb.ps
 
 bb.pr:                                            ; preds = %bb.pq
-  %i.asv = getelementptr inbounds [8 x i8], ptr %i.asl, i64 %indvars.iv.next4741
+  %i.asv = getelementptr inbounds nuw [8 x i8], ptr %i.asl, i64 %67
   br label %_ZNSt5dequeIP6AstVarSaIS1_EEixEm.exit1139
 
 bb.ps:                                            ; preds = %bb.pq
@@ -962,7 +963,7 @@ bb.px:                                            ; preds = %bb.pw
   %i.atl = ptrtoint ptr %i.ati to i64
   %i.atm = sub i64 %i.atk, %i.atl
   %i.atn = ashr exact i64 %i.atm, 3
-  %i.ato = add nsw i64 %i.atn, %indvars.iv.next4741 ; 5 uses
+  %i.ato = add nsw i64 %i.atn, %67                ; 5 uses
   %i.atp = icmp sgt i64 %i.ato, -1
   br i1 %i.atp, label %bb.py, label %bb.qb
 
@@ -971,7 +972,7 @@ bb.py:                                            ; preds = %bb.px
   br i1 %i.atq, label %bb.pz, label %bb.qa
 
 bb.pz:                                            ; preds = %bb.py
-  %i.atr = getelementptr inbounds [8 x i8], ptr %i.ath, i64 %indvars.iv.next4741
+  %i.atr = getelementptr inbounds nuw [8 x i8], ptr %i.ath, i64 %67
   br label %_ZNSt5dequeIP6AstVarSaIS1_EEixEm.exit1141
 
 bb.qa:                                            ; preds = %bb.py
@@ -1133,7 +1134,7 @@ bb.qm:                                            ; preds = %_ZN8AstConstC2EP8Fi
   %i.avb = ptrtoint ptr %i.auy to i64
   %i.avc = sub i64 %i.ava, %i.avb
   %i.avd = ashr exact i64 %i.avc, 3
-  %i.ave = add nsw i64 %i.avd, %indvars.iv.next4741 ; 5 uses
+  %i.ave = add nsw i64 %i.avd, %67                ; 5 uses
   %i.avf = icmp sgt i64 %i.ave, -1
   br i1 %i.avf, label %bb.qn, label %bb.qq
 
@@ -1142,7 +1143,7 @@ bb.qn:                                            ; preds = %bb.qm
   br i1 %i.avg, label %bb.qo, label %bb.qp
 
 bb.qo:                                            ; preds = %bb.qn
-  %i.avh = getelementptr inbounds [8 x i8], ptr %i.aux, i64 %indvars.iv.next4741
+  %i.avh = getelementptr inbounds nuw [8 x i8], ptr %i.aux, i64 %67
   br label %_ZNSt5dequeIP6AstVarSaIS1_EEixEm.exit1171
 
 bb.qp:                                            ; preds = %bb.qn

@@ -205,14 +205,13 @@ bb.bo:                                            ; preds = %bb.bo, %.lr.ph.i203
   br i1 %i.to, label %.preheader.lr.ph.i, label %._crit_edge94.i
 
 .preheader.lr.ph.i:                               ; preds = %._crit_edge.i
-  %i.tp = sub nsw i32 %i.qt, %i.qy                ; 2 uses
+  %i.tp = sub nsw i32 %i.qt, %i.qy                ; 3 uses
   %i.tq = icmp sgt i32 %i.tp, %i.qy
   %i.tr = sitofp i32 %i.ti to double              ; 3 uses
   br i1 %i.tq, label %.preheader.lr.ph.split.us.i, label %.preheader.lr.ph.split.i
 
 .preheader.lr.ph.split.us.i:                      ; preds = %.preheader.lr.ph.i
   %wide.trip.count140.i = zext nneg i32 %i.qu to i64 ; 2 uses
-  %wide.trip.count135.i = sext i32 %i.tp to i64   ; 2 uses
   br i1 %.not74.i, label %.preheader.us.us.preheader.i, label %.preheader.us.preheader.i
 
 .preheader.us.preheader.i:                        ; preds = %.preheader.lr.ph.split.us.i
@@ -228,6 +227,7 @@ bb.bo:                                            ; preds = %bb.bo, %.lr.ph.i203
 
 .preheader.us.us.preheader.i:                     ; preds = %.preheader.lr.ph.split.us.i
   %i.tv = sext i32 %i.qy to i64                   ; 3 uses
+  %wide.trip.count133.i = sext i32 %i.tp to i64
   %i.tw = sext i32 %i.qt to i64                   ; 2 uses
   %i.tx = shl nsw i64 %i.tv, 1                    ; 2 uses
   %i.ty = sub nsw i64 %i.tw, %i.tx
@@ -302,7 +302,7 @@ bb.bo:                                            ; preds = %bb.bo, %.lr.ph.i203
   %i.vo = fmul double %i.vn, %i.vn
   %i.vp = fadd double %i.vh, %i.vo                ; 2 uses
   %indvars.iv.next133.i.3 = add nsw i64 %indvars.iv132.i, 4 ; 2 uses
-  %exitcond136.not.i.3 = icmp eq i64 %indvars.iv.next133.i.3, %wide.trip.count135.i
+  %exitcond136.not.i.3 = icmp eq i64 %indvars.iv.next133.i.3, %wide.trip.count133.i
   br i1 %exitcond136.not.i.3, label %._crit_edge90.split.us.us.us.i, label %.preheader.us.us.i.new, !llvm.loop !86
 
 ._crit_edge90.split.us.us.us.i:                   ; preds = %.preheader.us.us.i.new, %.prol.loopexit
@@ -409,8 +409,9 @@ bb.bp:                                            ; preds = %bb.bp, %.epil.prehe
   %i.xs = fmul double %i.xr, %i.xr
   %i.xt = fadd double %.05888.us96.i, %i.xs       ; 2 uses
   %indvars.iv.next123.i = add nuw nsw i64 %indvars.iv122.i, 1 ; 2 uses
-  %exitcond126.not.i = icmp eq i64 %indvars.iv.next123.i, %wide.trip.count135.i
-  br i1 %exitcond126.not.i, label %._crit_edge90.split.us98.i, label %.lr.ph84.us.i, !llvm.loop !86
+  %25 = trunc nuw i64 %indvars.iv.next123.i to i32
+  %26 = icmp sgt i32 %i.tp, %25
+  br i1 %26, label %.lr.ph84.us.i, label %._crit_edge90.split.us98.i, !llvm.loop !86
 
 ._crit_edge90.split.us98.i:                       ; preds = %._crit_edge85.us.i
   %i.xu = fdiv double %i.xt, %i.tr                ; 2 uses

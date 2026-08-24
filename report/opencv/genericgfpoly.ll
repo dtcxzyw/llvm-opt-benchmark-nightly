@@ -204,7 +204,7 @@ bb.o:                                             ; preds = %_ZNSt6vectorIiSaIiE
   %i.dr = sub i64 %i.dp, %i.dq
   %i.ds = lshr exact i64 %i.dr, 2
   %i.dt = trunc i64 %i.ds to i32                  ; 2 uses
-  %i.du = sub nsw i32 %i.dk, %i.dt                ; 4 uses
+  %i.du = sub nsw i32 %i.dk, %i.dt                ; 5 uses
   %i.dv = icmp sgt i32 %i.du, 0
   br i1 %i.dv, label %.lr.ph, label %.preheader
 
@@ -268,7 +268,7 @@ scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %sc
   br i1 %i.ei, label %.lr.ph124.preheader, label %._crit_edge
 
 .lr.ph124.preheader:                              ; preds = %.preheader
-  %i.ej = sext i32 %i.du to i64                   ; 2 uses
+  %i.ej = sext i32 %i.du to i64
   br label %.lr.ph124
 
 bb.p:                                             ; preds = %_ZN5zxing8ArrayRefIiED2Ev.exit
@@ -319,9 +319,11 @@ bb.r:                                             ; preds = %.lr.ph124
 .lr.ph124:                                        ; preds = %.lr.ph124.preheader, %bb.s
   %indvars.iv126 = phi i64 [ %i.ej, %.lr.ph124.preheader ], [ %indvars.iv.next127, %bb.s ] ; 4 uses
   %i.fa = phi ptr [ %i.df, %.lr.ph124.preheader ], [ %i.fk, %bb.s ]
-  %6 = sub nsw i64 %indvars.iv126, %i.ej
+  %6 = trunc nsw i64 %indvars.iv126 to i32
+  %7 = sub nsw i32 %6, %i.du
+  %8 = zext nneg i32 %7 to i64
   %i.fb = load ptr, ptr %i.dl, align 8, !tbaa !21
-  %i.fc = getelementptr inbounds nuw [4 x i8], ptr %i.fb, i64 %6
+  %i.fc = getelementptr inbounds nuw [4 x i8], ptr %i.fb, i64 %8
   %i.fd = load i32, ptr %i.fc, align 4, !tbaa !30
   %i.fe = getelementptr inbounds nuw [4 x i8], ptr %i.fa, i64 %indvars.iv126
   %i.ff = load i32, ptr %i.fe, align 4, !tbaa !30

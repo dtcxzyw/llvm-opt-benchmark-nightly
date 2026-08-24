@@ -204,11 +204,11 @@ bb.b:                                             ; preds = %.lr.ph, %.thread298
   %i.l = load ptr, ptr %i.f, align 8, !tbaa !46
   %i.m = getelementptr inbounds nuw [48 x i8], ptr %i.l, i64 %indvars.iv379 ; 5 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 12
-  %i.o = load i32, ptr %i.n, align 4, !tbaa !25   ; 2 uses
+  %i.o = load i32, ptr %i.n, align 4, !tbaa !25   ; 3 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.m, i64 8
   %i.q = load i32, ptr %i.p, align 8, !tbaa !28   ; 3 uses
   %i.r = sext i32 %i.q to i64                     ; 4 uses
-  %i.s = sext i32 %i.o to i64                     ; 8 uses
+  %i.s = sext i32 %i.o to i64                     ; 7 uses
   %i.t = mul nsw i64 %i.r, %i.s
   %i.u = getelementptr inbounds nuw i8, ptr %i.m, i64 25
   %i.v = load i8, ptr %i.u, align 1, !tbaa !29
@@ -591,7 +591,7 @@ bb.j:                                             ; preds = %bb.i
 bb.k:                                             ; preds = %bb.j, %bb.i
   %i.kl = icmp slt i64 %indvars.iv, %invariant.op
   %i.km = sub nsw i64 %i.s, %indvars.iv
-  %i.kn = shl nsw i64 %i.km, 1
+  %i.kn = shl nuw nsw i64 %i.km, 1
   %i.ko = select i1 %i.kl, i64 8, i64 %i.kn       ; 6 uses
   call void @llvm.memcpy.p0.p0.i64(ptr align 2 %.0161341.us, ptr nonnull align 16 %i.a, i64 %i.ko, i1 false)
   br i1 %i.ai, label %bb.p, label %bb.l
@@ -622,7 +622,8 @@ bb.q:                                             ; preds = %bb.p, %bb.o, %bb.n
   %i.kr = getelementptr inbounds nuw i8, ptr %.0159343.us, i64 8
   %i.ks = getelementptr inbounds nuw i8, ptr %.0158344.us, i64 8
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
-  %.not198.us = icmp slt i64 %indvars.iv.next, %i.s
+  %5 = trunc nuw i64 %indvars.iv.next to i32
+  %.not198.us = icmp sgt i32 %i.o, %5
   br i1 %.not198.us, label %bb.d, label %._crit_edge.us, !llvm.loop !51
 
 ._crit_edge.us:                                   ; preds = %bb.q

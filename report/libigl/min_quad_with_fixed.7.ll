@@ -205,13 +205,14 @@ _ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS
 
 .lr.ph.prol:                                      ; preds = %.lr.ph.preheader
   %i.ch = getelementptr inbounds [4 x i8], ptr %i.k, i64 %i.bx
-  %i.ci = load i32, ptr %i.ch, align 4, !tbaa !104
-  %i.cj = sext i32 %i.ci to i64                   ; 2 uses
+  %i.ci = load i32, ptr %i.ch, align 4, !tbaa !104 ; 2 uses
+  %i.cj = sext i32 %i.ci to i64
   %i.ck = icmp sgt i64 %indvars.iv, %i.cj
   br i1 %i.ck, label %.lr.ph.prol.loopexit.unr-lcssa, label %bb.k
 
 bb.k:                                             ; preds = %.lr.ph.prol
-  %i.cl = getelementptr inbounds [4 x i8], ptr %2, i64 %i.cj
+  %3 = zext nneg i32 %i.ci to i64
+  %i.cl = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %3
   %i.cm = load i32, ptr %i.cl, align 4, !tbaa !104
   %.sroa.speculated97.prol = tail call i32 @llvm.smax.i32(i32 %i.cm, i32 %i.bu)
   %i.cn = sext i32 %.sroa.speculated97.prol to i64
@@ -238,13 +239,14 @@ bb.k:                                             ; preds = %.lr.ph.prol
 .lr.ph:                                           ; preds = %.lr.ph.prol.loopexit, %bb.n
   %.sroa.7.0129 = phi i64 [ %i.do, %bb.n ], [ %.sroa.7.0129.unr, %.lr.ph.prol.loopexit ] ; 3 uses
   %i.ct = getelementptr inbounds [4 x i8], ptr %i.k, i64 %.sroa.7.0129
-  %i.cu = load i32, ptr %i.ct, align 4, !tbaa !104
-  %i.cv = sext i32 %i.cu to i64                   ; 2 uses
+  %i.cu = load i32, ptr %i.ct, align 4, !tbaa !104 ; 2 uses
+  %i.cv = sext i32 %i.cu to i64
   %i.cw = icmp sgt i64 %indvars.iv, %i.cv
   br i1 %i.cw, label %.lr.ph.1, label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph
-  %i.cx = getelementptr inbounds [4 x i8], ptr %2, i64 %i.cv
+  %4 = zext nneg i32 %i.cu to i64
+  %i.cx = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %4
   %i.cy = load i32, ptr %i.cx, align 4, !tbaa !104
   %.sroa.speculated97 = tail call i32 @llvm.smax.i32(i32 %i.cy, i32 %i.bu)
   %i.cz = sext i32 %.sroa.speculated97 to i64
@@ -257,13 +259,14 @@ bb.l:                                             ; preds = %.lr.ph
 .lr.ph.1:                                         ; preds = %.lr.ph, %bb.l
   %i.dd = getelementptr [4 x i8], ptr %i.k, i64 %.sroa.7.0129
   %i.de = getelementptr i8, ptr %i.dd, i64 4
-  %i.df = load i32, ptr %i.de, align 4, !tbaa !104
-  %i.dg = sext i32 %i.df to i64                   ; 2 uses
+  %i.df = load i32, ptr %i.de, align 4, !tbaa !104 ; 2 uses
+  %i.dg = sext i32 %i.df to i64
   %i.dh = icmp sgt i64 %indvars.iv, %i.dg
   br i1 %i.dh, label %bb.n, label %bb.m
 
 bb.m:                                             ; preds = %.lr.ph.1
-  %i.di = getelementptr inbounds [4 x i8], ptr %2, i64 %i.dg
+  %5 = zext nneg i32 %i.df to i64
+  %i.di = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %5
   %i.dj = load i32, ptr %i.di, align 4, !tbaa !104
   %.sroa.speculated97.1 = tail call i32 @llvm.smax.i32(i32 %i.dj, i32 %i.bu)
   %i.dk = sext i32 %.sroa.speculated97.1 to i64
@@ -469,14 +472,15 @@ _ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS
 bb.u:                                             ; preds = %.lr.ph139, %bb.w
   %.sroa.9.0138 = phi i64 [ %i.gl, %.lr.ph139 ], [ %i.hn, %bb.w ] ; 3 uses
   %i.gv = getelementptr inbounds [4 x i8], ptr %i.fb, i64 %.sroa.9.0138
-  %i.gw = load i32, ptr %i.gv, align 4, !tbaa !104
-  %i.gx = sext i32 %i.gw to i64                   ; 2 uses
+  %i.gw = load i32, ptr %i.gv, align 4, !tbaa !104 ; 2 uses
+  %i.gx = sext i32 %i.gw to i64
   %i.gy = icmp sgt i64 %indvars.iv161, %i.gx
   br i1 %i.gy, label %bb.w, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
   %i.gz = load i32, ptr %i.gu, align 4, !tbaa !104 ; 2 uses
-  %i.ha = getelementptr inbounds [4 x i8], ptr %2, i64 %i.gx
+  %6 = zext nneg i32 %i.gw to i64
+  %i.ha = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %6
   %i.hb = load i32, ptr %i.ha, align 4, !tbaa !104 ; 2 uses
   %.sroa.speculated82 = tail call i32 @llvm.smax.i32(i32 %i.hb, i32 %i.gz)
   %i.hc = sext i32 %.sroa.speculated82 to i64

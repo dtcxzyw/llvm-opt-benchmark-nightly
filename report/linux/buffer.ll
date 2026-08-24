@@ -204,7 +204,8 @@ bb.e:                                             ; preds = %bb.d
   %i.s = tail call i64 asm "movq %gs:$1, $0", "=r,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(ptr) %i.r) #18, !srcloc !98
   tail call void asm "movq $1, %gs:$0", "=*m,re,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(ptr) %i.q, i64 %i.s) #13, !srcloc !99
   %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1 ; 2 uses
-  %i.t = icmp eq i64 %indvars.iv.next.i, 0
+  %4 = and i64 %indvars.iv.next.i, 4294967295
+  %i.t = icmp eq i64 %4, 0
   br i1 %i.t, label %bb.f, label %.preheader.i, !llvm.loop !100
 
 bb.f:                                             ; preds = %.preheader.i

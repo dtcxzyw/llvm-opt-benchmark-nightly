@@ -43,7 +43,6 @@ bb.a:
 .lr.ph:                                           ; preds = %bb.a
   %i.a = zext i8 %1 to i64                        ; 2 uses
   %i.b = uitofp i32 %0 to double
-  %invariant.gep = getelementptr [8 x i8], ptr @_ZZN8facebook5velox9functions3kll6detail12_GLOBAL__N_116powerOfTwoThirdsEiE5kMemo, i64 %i.a
   br label %bb.b
 
 ._crit_edge:                                      ; preds = %_ZN8facebook5velox9functions3kll6detail13levelCapacityEjhh.exit, %bb.a
@@ -104,7 +103,9 @@ bb.c:                                             ; preds = %bb.b
 
 _ZN8facebook5velox9functions3kll6detail13levelCapacityEjhh.exit: ; preds = %bb.b, %bb.c, %"_ZZN8facebook5velox9functions3kll6detail12_GLOBAL__N_116powerOfTwoThirdsEiENK3$_0clEv.exit.i.i"
   %i.aa = xor i64 %indvars.iv, -1
-  %gep = getelementptr [8 x i8], ptr %invariant.gep, i64 %i.aa
+  %2 = add nsw i64 %i.aa, %i.a
+  %3 = and i64 %2, 4294967295
+  %gep = getelementptr inbounds nuw [8 x i8], ptr @_ZZN8facebook5velox9functions3kll6detail12_GLOBAL__N_116powerOfTwoThirdsEiE5kMemo, i64 %3
   %i.ab = load double, ptr %gep, align 8, !tbaa !9
   %i.ac = fmul double %i.ab, %i.b
   %i.ad = fptoui double %i.ac to i32
@@ -171,9 +172,10 @@ _ZN8facebook5velox9functions3kll6detail12_GLOBAL__N_116powerOfTwoThirdsEi.exit: 
   %i.y = zext i8 %2 to i64
   %i.z = xor i64 %i.y, -1
   %i.aa = zext i8 %1 to i64
+  %3 = add nsw i64 %i.z, %i.aa
   %i.ab = uitofp i32 %0 to double
-  %3 = getelementptr [8 x i8], ptr @_ZZN8facebook5velox9functions3kll6detail12_GLOBAL__N_116powerOfTwoThirdsEiE5kMemo, i64 %i.z
-  %i.ac = getelementptr [8 x i8], ptr %3, i64 %i.aa
+  %4 = and i64 %3, 4294967295
+  %i.ac = getelementptr inbounds nuw [8 x i8], ptr @_ZZN8facebook5velox9functions3kll6detail12_GLOBAL__N_116powerOfTwoThirdsEiE5kMemo, i64 %4
   %i.ad = load double, ptr %i.ac, align 8, !tbaa !9
   %i.ae = fmul double %i.ad, %i.ab
   %i.af = fptoui double %i.ae to i32

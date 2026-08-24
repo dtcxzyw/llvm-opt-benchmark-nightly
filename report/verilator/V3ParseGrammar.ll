@@ -204,18 +204,19 @@ bb.c:                                             ; preds = %bb.b
 
 .lr.ph.preheader.i.i:                             ; preds = %bb.c
   %i.k = zext nneg i32 %i.h to i64
-  %1 = sext i32 %i.e to i64
-  %invariant.gep.i.i = getelementptr [2 x i8], ptr @_ZL7yycheck, i64 %1
   br label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.f, %.lr.ph.preheader.i.i
   %indvars.iv.i.i = phi i64 [ %i.k, %.lr.ph.preheader.i.i ], [ %indvars.iv.next.i.i, %bb.f ] ; 4 uses
   %.0345.i.i = phi i32 [ 0, %.lr.ph.preheader.i.i ], [ %.1.i.i, %bb.f ] ; 4 uses
-  %gep.i.i = getelementptr [2 x i8], ptr %invariant.gep.i.i, i64 %indvars.iv.i.i
+  %1 = trunc nuw i64 %indvars.iv.i.i to i32       ; 2 uses
+  %2 = add nsw i32 %i.e, %1
+  %3 = zext nneg i32 %2 to i64
+  %gep.i.i = getelementptr inbounds nuw [2 x i8], ptr @_ZL7yycheck, i64 %3
   %i.l = load i16, ptr %gep.i.i, align 2, !tbaa !88
-  %2 = sext i16 %i.l to i32                       ; 2 uses
-  %3 = trunc nsw i64 %indvars.iv.i.i to i32
-  %i.m = icmp eq i32 %3, %2
+  %4 = sext i16 %i.l to i64
+  %5 = and i64 %4, 4294967295
+  %i.m = icmp eq i64 %indvars.iv.i.i, %5
   %i.n = icmp ne i64 %indvars.iv.i.i, 1
   %or.cond.i.i = and i1 %i.n, %i.m
   br i1 %or.cond.i.i, label %bb.d, label %bb.f
@@ -228,15 +229,15 @@ bb.e:                                             ; preds = %bb.d
   %i.p = add i32 %.0345.i.i, 1
   %i.q = sext i32 %.0345.i.i to i64
   %i.r = getelementptr inbounds [4 x i8], ptr %i.b, i64 %i.q
-  store i32 %2, ptr %i.r, align 4, !tbaa !692
+  store i32 %1, ptr %i.r, align 4, !tbaa !692
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %.lr.ph.i.i
   %.1.i.i = phi i32 [ %i.p, %bb.e ], [ %.0345.i.i, %.lr.ph.i.i ] ; 4 uses
   %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1 ; 2 uses
-  %lftr.wideiv.i.i = trunc i64 %indvars.iv.next.i.i to i32
-  %exitcond.not.i.i = icmp eq i32 %i.j, %lftr.wideiv.i.i
-  br i1 %exitcond.not.i.i, label %.critedge.i.i, label %.lr.ph.i.i, !llvm.loop !694
+  %lftr.wideiv.i.i = trunc nuw i64 %indvars.iv.next.i.i to i32
+  %.not.i.i = icmp sgt i32 %i.j, %lftr.wideiv.i.i
+  br i1 %.not.i.i, label %.lr.ph.i.i, label %.critedge.i.i, !llvm.loop !694
 
 .critedge.i.i:                                    ; preds = %bb.f
   switch i32 %.1.i.i, label %_ZL25yy_syntax_error_argumentsPK12yypcontext_tP15yysymbol_kind_ti.exit [

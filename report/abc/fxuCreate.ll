@@ -204,18 +204,19 @@ bb.d:                                             ; preds = %.lr.ph70, %.critedg
 
 bb.e:                                             ; preds = %bb.d
   %i.z = load i32, ptr %i.c, align 4, !tbaa !84
-  %i.aa = add nsw i32 %i.z, %i.t
-  %i.ab = sext i32 %i.aa to i64                   ; 2 uses
+  %i.aa = add nsw i32 %i.z, %i.t                  ; 2 uses
+  %i.ab = sext i32 %i.aa to i64
   %i.ac = icmp slt i64 %.pre76, %i.ab
   br i1 %i.ac, label %.lr.ph.i48, label %Fxu_CreateCoversFirstCube.exit55
 
 .lr.ph.i48:                                       ; preds = %bb.e
   %i.ad = load ptr, ptr %i.p, align 8, !tbaa !21
+  %wide.trip.count.i49 = zext nneg i32 %i.aa to i64
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.g
   %indvars.iv.next.i53 = add nuw nsw i64 %indvars.iv.i50, 1 ; 2 uses
-  %exitcond.not.i54 = icmp eq i64 %indvars.iv.next.i53, %i.ab
+  %exitcond.not.i54 = icmp eq i64 %indvars.iv.next.i53, %wide.trip.count.i49
   br i1 %exitcond.not.i54, label %Fxu_CreateCoversFirstCube.exit55, label %bb.g, !llvm.loop !85
 
 bb.g:                                             ; preds = %bb.f, %.lr.ph.i48

@@ -205,7 +205,7 @@ ir_allocate_big_spill_slot.exit.i:                ; preds = %bb.n, %bb.m
 
 ._crit_edge.i:                                    ; preds = %.loopexit457.i, %.loopexit458.i
   %i.da = getelementptr inbounds nuw i8, ptr %0, i64 176 ; 6 uses
-  %i.db = load i32, ptr %i.da, align 8, !tbaa !48 ; 6 uses
+  %i.db = load i32, ptr %i.da, align 8, !tbaa !48 ; 8 uses
   %.not234537.i = icmp eq i32 %i.db, 0
   %.pre740.i = load ptr, ptr %i.s, align 8, !tbaa !52 ; 5 uses
   br i1 %.not234537.i, label %._crit_edge541.i, label %.lr.ph540.i
@@ -483,18 +483,17 @@ bb.ak:                                            ; preds = %bb.ak, %bb.aj
   br i1 %.not.i286.i, label %ir_merge_to_unhandled.exit.i, label %.preheaderthread-pre-split.i.i, !llvm.loop !196
 
 ir_merge_to_unhandled.exit.i:                     ; preds = %.critedge.i285.i, %bb.ak, %._crit_edge541.i
-  %2 = sext i32 %i.db to i64                      ; 3 uses
   %i.gw = add i32 %i.db, 35
-  %i.gx = call i32 @llvm.smax.i32(i32 %i.db, i32 %i.gw)
-  %smax = sext i32 %i.gx to i64                   ; 2 uses
-  %3 = add nsw i64 %smax, %2
-  %4 = and i64 %3, 1
-  %lcmp.mod697.not.not = icmp eq i64 %4, 0
+  %i.gx = call i32 @llvm.smax.i32(i32 %i.db, i32 %i.gw) ; 2 uses
+  %2 = add i32 %i.gx, %i.db
+  %3 = and i32 %2, 1
+  %lcmp.mod697.not.not = icmp eq i32 %3, 0
   br i1 %lcmp.mod697.not.not, label %.prol.preheader, label %.prol.loopexit
 
 .prol.preheader:                                  ; preds = %ir_merge_to_unhandled.exit.i
-  %indvars.iv.next727.i.prol = add nsw i64 %2, 1  ; 3 uses
-  %i.gy = getelementptr inbounds [8 x i8], ptr %.pre740.i, i64 %indvars.iv.next727.i.prol
+  %.1205549.i.prol = add nsw i32 %i.db, 1         ; 3 uses
+  %4 = zext nneg i32 %.1205549.i.prol to i64
+  %i.gy = getelementptr inbounds nuw [8 x i8], ptr %.pre740.i, i64 %4
   %i.gz = load ptr, ptr %i.gy, align 8, !tbaa !79 ; 6 uses
   %.not272.i.prol = icmp eq ptr %i.gz, null
   br i1 %.not272.i.prol, label %.prol.loopexit, label %bb.al
@@ -509,16 +508,17 @@ bb.al:                                            ; preds = %.prol.preheader
 
 .prol.loopexit:                                   ; preds = %.prol.preheader, %bb.al, %ir_merge_to_unhandled.exit.i
   %.1416.i.lcssa.unr = phi ptr [ poison, %ir_merge_to_unhandled.exit.i ], [ null, %.prol.preheader ], [ %i.gz, %bb.al ]
-  %indvars.iv726.i.unr = phi i64 [ %2, %ir_merge_to_unhandled.exit.i ], [ %indvars.iv.next727.i.prol, %bb.al ], [ %indvars.iv.next727.i.prol, %.prol.preheader ]
+  %.1205549.in.i.unr = phi i32 [ %i.db, %ir_merge_to_unhandled.exit.i ], [ %.1205549.i.prol, %bb.al ], [ %.1205549.i.prol, %.prol.preheader ]
   %.0415548.i.unr = phi ptr [ null, %ir_merge_to_unhandled.exit.i ], [ null, %.prol.preheader ], [ %i.gz, %bb.al ]
   %.not = icmp slt i32 %i.db, 2147483613
   br i1 %.not, label %ir_merge_to_unhandled.exit.i.new, label %.unr-lcssa
 
 ir_merge_to_unhandled.exit.i.new:                 ; preds = %.prol.loopexit, %bb.ap
-  %indvars.iv726.i = phi i64 [ %indvars.iv.next727.i.1, %bb.ap ], [ %indvars.iv726.i.unr, %.prol.loopexit ] ; 2 uses
+  %.1205549.in.i = phi i32 [ %.1205549.i.1, %bb.ap ], [ %.1205549.in.i.unr, %.prol.loopexit ] ; 2 uses
   %.0415548.i = phi ptr [ %.1416.i.1, %bb.ap ], [ %.0415548.i.unr, %.prol.loopexit ] ; 2 uses
-  %indvars.iv.next727.i = add nsw i64 %indvars.iv726.i, 1 ; 2 uses
-  %i.hd = getelementptr inbounds [8 x i8], ptr %.pre740.i, i64 %indvars.iv.next727.i
+  %.1205549.i = add nsw i32 %.1205549.in.i, 1     ; 2 uses
+  %5 = zext nneg i32 %.1205549.i to i64
+  %i.hd = getelementptr inbounds nuw [8 x i8], ptr %.pre740.i, i64 %5
   %i.he = load ptr, ptr %i.hd, align 8, !tbaa !79 ; 5 uses
   %.not272.i = icmp eq ptr %i.he, null
   br i1 %.not272.i, label %bb.an, label %bb.am
@@ -533,8 +533,9 @@ bb.am:                                            ; preds = %ir_merge_to_unhandl
 
 bb.an:                                            ; preds = %bb.am, %ir_merge_to_unhandled.exit.i.new
   %.1416.i = phi ptr [ %.0415548.i, %ir_merge_to_unhandled.exit.i.new ], [ %i.he, %bb.am ] ; 2 uses
-  %indvars.iv.next727.i.1 = add nsw i64 %indvars.iv726.i, 2 ; 2 uses
-  %i.hi = getelementptr inbounds [8 x i8], ptr %.pre740.i, i64 %indvars.iv.next727.i.1
+  %.1205549.i.1 = add nsw i32 %.1205549.in.i, 2   ; 2 uses
+  %6 = zext nneg i32 %.1205549.i.1 to i64
+  %i.hi = getelementptr inbounds nuw [8 x i8], ptr %.pre740.i, i64 %6
   %i.hj = load ptr, ptr %i.hi, align 8, !tbaa !79 ; 5 uses
   %.not272.i.1 = icmp eq ptr %i.hj, null
   br i1 %.not272.i.1, label %bb.ap, label %bb.ao
@@ -549,7 +550,7 @@ bb.ao:                                            ; preds = %bb.an
 
 bb.ap:                                            ; preds = %bb.ao, %bb.an
   %.1416.i.1 = phi ptr [ %.1416.i, %bb.an ], [ %i.hj, %bb.ao ] ; 2 uses
-  %exitcond.not.1 = icmp eq i64 %indvars.iv.next727.i, %smax
+  %exitcond.not.1 = icmp eq i32 %.1205549.i, %i.gx
   br i1 %exitcond.not.1, label %.unr-lcssa, label %ir_merge_to_unhandled.exit.i.new, !llvm.loop !198
 
 .unr-lcssa:                                       ; preds = %bb.ap, %.prol.loopexit

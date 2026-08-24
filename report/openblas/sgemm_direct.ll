@@ -202,8 +202,8 @@ begin_hunk_0_@sgemm_direct:bb.a
   br i1 %i.tj, label %.preheader1318, label %.preheader1324, !llvm.loop !19
 
 .preheader1323:                                   ; preds = %._crit_edge1442, %.preheader1324
-  %.5.lcssa = phi i32 [ %.4.lcssa, %.preheader1324 ], [ %i.xe, %._crit_edge1442 ]
-  %9 = sext i32 %.5.lcssa to i64                  ; 2 uses
+  %.5.lcssa = phi i32 [ %.4.lcssa, %.preheader1324 ], [ %i.xe, %._crit_edge1442 ] ; 2 uses
+  %9 = zext nneg i32 %.5.lcssa to i64             ; 2 uses
   %i.tk = icmp sgt i64 %1, %9
   br i1 %i.tk, label %.preheader1316.lr.ph, label %._crit_edge1469
 
@@ -350,7 +350,8 @@ begin_hunk_0_@sgemm_direct:bb.a
   br i1 %i.xf, label %.preheader1317, label %.preheader1323, !llvm.loop !23
 
 .preheader1316:                                   ; preds = %.preheader1316.lr.ph, %._crit_edge1463
-  %indvars.iv1797 = phi i64 [ %9, %.preheader1316.lr.ph ], [ %indvars.iv.next1798, %._crit_edge1463 ] ; 6 uses
+  %indvars.iv1797 = phi i64 [ %9, %.preheader1316.lr.ph ], [ %11, %._crit_edge1463 ] ; 5 uses
+  %.61468 = phi i32 [ %.5.lcssa, %.preheader1316.lr.ph ], [ %10, %._crit_edge1463 ]
   %invariant.gep1455 = getelementptr [4 x i8], ptr %5, i64 %indvars.iv1797 ; 5 uses
   br i1 %i.m, label %.lr.ph1462.preheader, label %._crit_edge1463
 
@@ -484,9 +485,10 @@ begin_hunk_0_@sgemm_direct:bb.a
   store float %.01254.lcssa, ptr %i.aaa, align 4, !tbaa !20
   %i.aab = getelementptr [4 x i8], ptr %i.ud, i64 %indvars.iv1797
   store float %.01253.lcssa, ptr %i.aab, align 4, !tbaa !20
-  %indvars.iv.next1798 = add nsw i64 %indvars.iv1797, 1 ; 2 uses
-  %10 = icmp sgt i64 %1, %indvars.iv.next1798
-  br i1 %10, label %.preheader1316, label %._crit_edge1469, !llvm.loop !27
+  %10 = add nsw i32 %.61468, 1                    ; 2 uses
+  %11 = zext nneg i32 %10 to i64                  ; 2 uses
+  %12 = icmp samesign ugt i64 %1, %11
+  br i1 %12, label %.preheader1316, label %._crit_edge1469, !llvm.loop !27
 
 ._crit_edge1469:                                  ; preds = %._crit_edge1463, %.preheader1323
   %indvars.iv.next1801.a = add nuw nsw i64 %indvars.iv1800.a, 4 ; 3 uses
@@ -889,9 +891,9 @@ bb.f:                                             ; preds = %bb.f, %.epil.prehea
   br i1 %i.aqz, label %.preheader1303, label %.preheader1309, !llvm.loop !42
 
 .preheader1308:                                   ; preds = %._crit_edge1549, %.preheader1309
-  %.12.lcssa = phi i32 [ %.11.lcssa, %.preheader1309 ], [ %i.aua, %._crit_edge1549 ]
-  %11 = sext i32 %.12.lcssa to i64                ; 2 uses
-  %i.ara = icmp sgt i64 %1, %11
+  %.12.lcssa = phi i32 [ %.11.lcssa, %.preheader1309 ], [ %i.aua, %._crit_edge1549 ] ; 2 uses
+  %13 = zext nneg i32 %.12.lcssa to i64           ; 2 uses
+  %i.ara = icmp sgt i64 %1, %13
   br i1 %i.ara, label %.preheader1301.lr.ph, label %._crit_edge1568
 
 .preheader1301.lr.ph:                             ; preds = %.preheader1308
@@ -1025,7 +1027,8 @@ bb.g:                                             ; preds = %bb.g, %.epil.prehea
   br i1 %i.aub, label %.preheader1302, label %.preheader1308, !llvm.loop !45
 
 .preheader1301:                                   ; preds = %.preheader1301.lr.ph, %._crit_edge1564
-  %indvars.iv1850.a = phi i64 [ %11, %.preheader1301.lr.ph ], [ %indvars.iv.next1851, %._crit_edge1564 ] ; 4 uses
+  %indvars.iv1850.a = phi i64 [ %13, %.preheader1301.lr.ph ], [ %15, %._crit_edge1564 ] ; 3 uses
+  %.131567 = phi i32 [ %.12.lcssa, %.preheader1301.lr.ph ], [ %14, %._crit_edge1564 ]
   %invariant.gep1558 = getelementptr [4 x i8], ptr %5, i64 %indvars.iv1850.a ; 5 uses
   br i1 %i.as, label %.lr.ph1563.preheader, label %._crit_edge1564
 
@@ -1117,9 +1120,10 @@ bb.g:                                             ; preds = %bb.g, %.epil.prehea
   store float %.01202.lcssa, ptr %i.avq, align 4, !tbaa !20
   %i.avr = getelementptr [4 x i8], ptr %i.arj, i64 %indvars.iv1850.a
   store float %.01201.lcssa, ptr %i.avr, align 4, !tbaa !20
-  %indvars.iv.next1851 = add nsw i64 %indvars.iv1850.a, 1 ; 2 uses
-  %12 = icmp sgt i64 %1, %indvars.iv.next1851
-  br i1 %12, label %.preheader1301, label %._crit_edge1568, !llvm.loop !48
+  %14 = add nsw i32 %.131567, 1                   ; 2 uses
+  %15 = zext nneg i32 %14 to i64                  ; 2 uses
+  %16 = icmp samesign ugt i64 %1, %15
+  br i1 %16, label %.preheader1301, label %._crit_edge1568, !llvm.loop !48
 
 ._crit_edge1568:                                  ; preds = %._crit_edge1564, %.preheader1308
   %indvars.iv.next1854 = add nuw nsw i64 %indvars.iv1853, 2 ; 3 uses
@@ -1522,9 +1526,9 @@ bb.l:                                             ; preds = %bb.l, %.epil.prehea
   br i1 %i.bky, label %.preheader1288, label %.preheader1294, !llvm.loop !64
 
 .preheader1293:                                   ; preds = %._crit_edge1629, %.preheader1294
-  %.19.lcssa = phi i32 [ %.18.lcssa, %.preheader1294 ], [ %i.bnt, %._crit_edge1629 ]
-  %13 = sext i32 %.19.lcssa to i64                ; 2 uses
-  %i.bkz = icmp sgt i64 %1, %13
+  %.19.lcssa = phi i32 [ %.18.lcssa, %.preheader1294 ], [ %i.bnt, %._crit_edge1629 ] ; 2 uses
+  %17 = zext nneg i32 %.19.lcssa to i64           ; 2 uses
+  %i.bkz = icmp sgt i64 %1, %17
   br i1 %i.bkz, label %.preheader.lr.ph, label %._crit_edge1644
 
 .preheader.lr.ph:                                 ; preds = %.preheader1293
@@ -1658,7 +1662,8 @@ bb.m:                                             ; preds = %bb.m, %.epil.prehea
   br i1 %i.bnu, label %.preheader1287, label %.preheader1293, !llvm.loop !67
 
 .preheader:                                       ; preds = %.preheader.lr.ph, %._crit_edge1641
-  %indvars.iv1909 = phi i64 [ %13, %.preheader.lr.ph ], [ %indvars.iv.next1910, %._crit_edge1641 ] ; 3 uses
+  %indvars.iv1909 = phi i64 [ %17, %.preheader.lr.ph ], [ %19, %._crit_edge1641 ] ; 2 uses
+  %.201643 = phi i32 [ %.19.lcssa, %.preheader.lr.ph ], [ %18, %._crit_edge1641 ]
   %invariant.gep1636 = getelementptr [4 x i8], ptr %5, i64 %indvars.iv1909 ; 9 uses
   br i1 %i.aaq, label %.lr.ph1640.preheader, label %._crit_edge1641
 
@@ -1757,9 +1762,10 @@ bb.m:                                             ; preds = %bb.m, %.epil.prehea
   %.01157.lcssa = phi float [ 0.000000e+00, %.preheader ], [ %i.bpi, %._crit_edge1641.loopexit.unr-lcssa ], [ %i.bpn, %.lr.ph1640.epil ]
   %i.bpo = getelementptr [4 x i8], ptr %i.bld, i64 %indvars.iv1909
   store float %.01157.lcssa, ptr %i.bpo, align 4, !tbaa !20
-  %indvars.iv.next1910 = add nsw i64 %indvars.iv1909, 1 ; 2 uses
-  %14 = icmp sgt i64 %1, %indvars.iv.next1910
-  br i1 %14, label %.preheader, label %._crit_edge1644, !llvm.loop !70
+  %18 = add nsw i32 %.201643, 1                   ; 2 uses
+  %19 = zext nneg i32 %18 to i64                  ; 2 uses
+  %20 = icmp samesign ugt i64 %1, %19
+  br i1 %20, label %.preheader, label %._crit_edge1644, !llvm.loop !70
 
 ._crit_edge1644:                                  ; preds = %._crit_edge1641, %.preheader1293
   %indvars.iv.next1913 = add nuw nsw i64 %indvars.iv1912, 1 ; 2 uses

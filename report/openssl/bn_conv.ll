@@ -204,23 +204,25 @@ bn_expand.exit:                                   ; preds = %bb.n
 .critedge65.preheader:                            ; preds = %.critedge65.preheader.preheader, %.critedge65
   %indvars.iv78 = phi i64 [ %indvars.iv.next79, %.critedge65 ], [ 0, %.critedge65.preheader.preheader ] ; 2 uses
   %indvars.iv74 = phi i64 [ %indvars.iv.next75, %.critedge65 ], [ %indvars.iv, %.critedge65.preheader.preheader ] ; 4 uses
+  %indvars80 = trunc i64 %indvars.iv74 to i32
   %umin = tail call i64 @llvm.umin.i64(i64 %indvars.iv74, i64 16)
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.o, %.critedge65.preheader
   %indvars.iv76 = phi i64 [ %indvars.iv.next77, %bb.o ], [ %umin, %.critedge65.preheader ] ; 3 uses
   %.052 = phi i64 [ %i.ad, %bb.o ], [ 0, %.critedge65.preheader ]
-  %i.x = sub nsw i64 %indvars.iv74, %indvars.iv76
-  %i.y = getelementptr inbounds i8, ptr %.054, i64 %i.x
+  %i.x = sub i64 %indvars.iv74, %indvars.iv76
+  %2 = and i64 %i.x, 4294967295
+  %i.y = getelementptr inbounds nuw i8, ptr %.054, i64 %2
   %i.z = load i8, ptr %i.y, align 1, !tbaa !13
   %i.aa = tail call i32 @OPENSSL_hexchar2int(i8 noundef zeroext %i.z) #3
   %spec.store.select = tail call i32 @llvm.smax.i32(i32 %i.aa, i32 0)
   %i.ab = shl i64 %.052, 4
   %i.ac = zext nneg i32 %spec.store.select to i64
   %i.ad = or i64 %i.ab, %i.ac                     ; 2 uses
+  %3 = icmp samesign ult i64 %indvars.iv76, 2
   %indvars.iv.next77 = add nsw i64 %indvars.iv76, -1
-  %2 = icmp samesign ult i64 %indvars.iv76, 2
-  br i1 %2, label %.critedge65, label %bb.o
+  br i1 %3, label %.critedge65, label %bb.o
 
 .critedge65:                                      ; preds = %bb.o
   %i.ae = load ptr, ptr %.053, align 8, !tbaa !14
@@ -228,7 +230,7 @@ bb.o:                                             ; preds = %bb.o, %.critedge65.
   %i.af = getelementptr inbounds nuw [8 x i8], ptr %i.ae, i64 %indvars.iv78
   store i64 %i.ad, ptr %i.af, align 8, !tbaa !15
   %indvars.iv.next75 = add nsw i64 %indvars.iv74, -16
-  %i.ag = icmp sgt i64 %indvars.iv74, 16
+  %i.ag = icmp sgt i32 %indvars80, 16
   br i1 %i.ag, label %.critedge65.preheader, label %bb.p, !llvm.loop !25
 
 bb.p:                                             ; preds = %.critedge65

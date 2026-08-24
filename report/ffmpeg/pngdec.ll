@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
-  %.fr194 = phi i32 [ %i.q, %bb.b ], [ 4, %bb.a ] ; 11 uses
+  %.fr194 = phi i32 [ %i.q, %bb.b ], [ 4, %bb.a ] ; 12 uses
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 329 ; 2 uses
   %i.s = load i8, ptr %i.r, align 1, !tbaa !134
   %i.t = icmp eq i8 %i.s, 1
@@ -342,10 +342,11 @@ bb.j:                                             ; preds = %._crit_edge
   %i.cp = getelementptr inbounds nuw i8, ptr %1, i64 320 ; 5 uses
   %i.cq = getelementptr inbounds nuw i8, ptr %1, i64 312 ; 5 uses
   %i.cr = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 3 uses
-  %i.cs = sext i32 %.fr194 to i64                 ; 11 uses
+  %i.cs = sext i32 %.fr194 to i64                 ; 9 uses
   %i.ct = icmp slt i32 %.fr194, 11
   %i.cu = add i32 %.fr194, -1                     ; 8 uses
   %i.cv = sext i32 %i.cu to i64                   ; 8 uses
+  %3 = zext nneg i32 %.fr194 to i64               ; 2 uses
   br i1 %i.ct, label %.lr.ph192.split.us, label %.lr.ph192.split.preheader
 
 .lr.ph192.split.preheader:                        ; preds = %.lr.ph192
@@ -619,7 +620,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 ._crit_edge163.us.us.us.us:                       ; preds = %.lr.ph162.split.split.us184.us.us.us.epil.preheader, %._crit_edge163.us.us.us.us.loopexit275.unr-lcssa, %.lr.ph162.split.split.us.us.us.us.us, %middle.block, %vec.epilog.middle.block, %.lr.ph162.split.us.us.us.us.us.preheader
   store i8 %i.ej, ptr %i.cw, align 1, !tbaa !9
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.0133169.us.us.us.us, ptr nonnull align 1 %i.a, i64 %i.cs, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.0133169.us.us.us.us, ptr nonnull align 1 %i.a, i64 %3, i1 false)
   br label %bb.n
 
 .lr.ph162.split.split.us.us.us.us.us:             ; preds = %.lr.ph162.split.split.us.us.us.us.us.preheader, %.lr.ph162.split.split.us.us.us.us.us
@@ -723,7 +724,7 @@ bb.q:                                             ; preds = %bb.p
   %i.jb = trunc nuw i32 %i.ja to i8
   %i.jc = add i8 %.0130146.us.us, %i.jb
   store i8 %i.jc, ptr %i.a, align 1, !tbaa !9
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.0133169.us.us, ptr nonnull align 1 %i.a, i64 %i.cs, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.0133169.us.us, ptr nonnull align 1 %i.a, i64 %3, i1 false)
   br label %bb.r
 
 bb.r:                                             ; preds = %.thread.us.us, %bb.q, %bb.p

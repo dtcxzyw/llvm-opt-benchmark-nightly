@@ -203,7 +203,6 @@ bb.a:
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %i.b = shl nuw nsw i32 %i.a, 2
-  %3 = zext nneg i32 %i.b to i64
   br label %.lr.ph
 
 .preheader:                                       ; preds = %.lr.ph
@@ -212,16 +211,18 @@ bb.a:
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
   %indvars.iv76 = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next77, %.lr.ph ] ; 2 uses
-  %indvars.iv = phi i64 [ %3, %.lr.ph.preheader ], [ %indvars.iv.next, %.lr.ph ] ; 2 uses
+  %.072 = phi i32 [ %i.b, %.lr.ph.preheader ], [ %4, %.lr.ph ] ; 2 uses
   %i.c = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %indvars.iv76 ; 2 uses
-  %i.d = getelementptr inbounds [4 x i8], ptr %0, i64 %indvars.iv ; 2 uses
+  %3 = zext nneg i32 %.072 to i64
+  %i.d = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %3 ; 2 uses
   %i.e = load <4 x i32>, ptr %i.c, align 4, !tbaa !9
   %i.f = load <4 x i32>, ptr %i.d, align 4, !tbaa !9
   store <4 x i32> %i.f, ptr %i.c, align 4, !tbaa !9
   store <4 x i32> %i.e, ptr %i.d, align 4, !tbaa !9
   %indvars.iv.next77 = add nuw nsw i64 %indvars.iv76, 4 ; 2 uses
-  %indvars.iv.next = add nsw i64 %indvars.iv, -4  ; 2 uses
-  %i.g = icmp slt i64 %indvars.iv.next77, %indvars.iv.next
+  %4 = add nsw i32 %.072, -4                      ; 2 uses
+  %5 = sext i32 %4 to i64
+  %i.g = icmp slt i64 %indvars.iv.next77, %5
   br i1 %i.g, label %.lr.ph, label %.preheader
 
 .lr.ph75:                                         ; preds = %.preheader, %.lr.ph75

@@ -67,7 +67,7 @@ bb.a:
   %i.ac = sext i32 %narrow722 to i64
   %i.ad = getelementptr inbounds [8 x i8], ptr %14, i64 %i.ac ; 13 uses
   %i.ae = getelementptr inbounds i8, ptr %18, i64 -8 ; 4 uses
-  %i.af = getelementptr inbounds i8, ptr %20, i64 -4 ; 11 uses
+  %i.af = getelementptr inbounds i8, ptr %20, i64 -4 ; 12 uses
   store i32 0, ptr %21, align 4, !tbaa !8
   %i.ag = tail call i32 @lsame_(ptr noundef %0, ptr noundef nonnull @.str) #5
   %i.ah = load i32, ptr %19, align 4, !tbaa !8
@@ -431,7 +431,7 @@ bb.ak:                                            ; preds = %.lr.ph763
   store i32 %i.fc, ptr %i.fe, align 4, !tbaa !8
   %i.ff = icmp eq i32 %i.fa, %i.fc
   %i.fg = sext i1 %i.ff to i32
-  %spec.select733 = add i32 %.1663, %i.fg         ; 5 uses
+  %spec.select733 = add i32 %.1663, %i.fg         ; 6 uses
   br i1 %.not, label %bb.bb, label %.lr.ph807
 
 .lr.ph807:                                        ; preds = %._crit_edge764
@@ -440,14 +440,16 @@ bb.ak:                                            ; preds = %.lr.ph763
   %i.fi = icmp sgt i32 %spec.select732, 0
   %i.fj = add i32 %i.p, 1
   %i.fk = add i32 %i.y, 1
-  %22 = sext i32 %spec.select733 to i64           ; 2 uses
-  %i.fl = getelementptr [4 x i8], ptr %i.af, i64 %22 ; 2 uses
+  %22 = zext nneg i32 %spec.select733 to i64
+  %i.fl = getelementptr [4 x i8], ptr %i.af, i64 %22
   %i.fm = getelementptr i8, ptr %i.fl, i64 8
   %i.fn = add i32 %spec.select733, 1
   %i.fo = sext i32 %i.s to i64                    ; 4 uses
   %i.fp = sext i32 %i.ab to i64                   ; 4 uses
   %i.fq = zext i32 %spec.select732 to i64
-  %i.fr = sext i32 %i.fh to i64
+  %23 = sext i32 %i.fh to i64
+  %i.fr = sext i32 %spec.select733 to i64         ; 2 uses
+  %24 = getelementptr inbounds [4 x i8], ptr %i.af, i64 %i.fr
   %i.fs = sext i32 %i.fn to i64
   %i.ft = getelementptr inbounds [4 x i8], ptr %i.af, i64 %i.fs
   br label %bb.al
@@ -464,7 +466,7 @@ bb.al:                                            ; preds = %.lr.ph807, %bb.ba
   br i1 %i.fi, label %.lr.ph790.us, label %.loopexit754.preheader
 
 .loopexit754.preheader:                           ; preds = %.lr.ph794
-  %i.fu = load i32, ptr %i.fl, align 4, !tbaa !8
+  %i.fu = load i32, ptr %24, align 4, !tbaa !8
   %i.fv = load i32, ptr %i.ft, align 4, !tbaa !8
   %i.fw = sub i32 %i.fv, %i.fu
   store i32 %i.fw, ptr %i.i, align 4, !tbaa !8
@@ -472,7 +474,7 @@ bb.al:                                            ; preds = %.lr.ph807, %bb.ba
 
 .lr.ph790.us:                                     ; preds = %bb.at, %.lr.ph794
   %i.fx = phi i32 [ 0, %.lr.ph794 ], [ %i.ie, %bb.at ]
-  %indvars.iv871 = phi i64 [ %i.fr, %.lr.ph794 ], [ %indvars.iv.next872, %bb.at ] ; 4 uses
+  %indvars.iv871 = phi i64 [ %23, %.lr.ph794 ], [ %indvars.iv.next872, %bb.at ] ; 4 uses
   %i.fy = getelementptr inbounds nuw [4 x i8], ptr %i.af, i64 %indvars.iv871
   %i.fz = load i32, ptr %i.fy, align 4, !tbaa !8  ; 11 uses
   %indvars.iv.next872 = add nuw nsw i64 %indvars.iv871, 1
@@ -496,7 +498,7 @@ bb.al:                                            ; preds = %.lr.ph807, %bb.ba
   %i.gq = sext i32 %i.gl to i64
   %i.gr = getelementptr [8 x i8], ptr %i.ad, i64 %i.gq
   %i.gs = getelementptr i8, ptr %i.gr, i64 8
-  %i.gt = icmp slt i64 %indvars.iv871, %22        ; 2 uses
+  %i.gt = icmp slt i64 %indvars.iv871, %i.fr      ; 2 uses
   %i.gu = mul nsw i32 %i.gb, %i.p
   %i.gv = add nsw i32 %i.gu, %i.fz
   %i.gw = sext i32 %i.gv to i64

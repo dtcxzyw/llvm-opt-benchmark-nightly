@@ -205,7 +205,7 @@ bb.bc:                                            ; preds = %bb.bb
   %i.fd = load ptr, ptr %i.fa, align 8, !tbaa !38
   %i.fe = getelementptr inbounds nuw [4 x i8], ptr %i.fd, i64 %indvars.iv126.i
   %i.ff = load float, ptr %i.fe, align 4, !tbaa !28 ; 2 uses
-  %wide.trip.count.i = zext nneg i32 %.058107.i to i64
+  %wide.trip.count.i = zext nneg i32 %.058107.i to i64 ; 2 uses
   br label %bb.bd
 
 bb.bd:                                            ; preds = %bb.bf, %.lr.ph.i
@@ -235,14 +235,15 @@ bb.bf:                                            ; preds = %bb.bd
   %.pre = load ptr, ptr %i.fa, align 8, !tbaa !38
   %.phi.trans.insert = getelementptr inbounds nuw [4 x i8], ptr %.pre, i64 %indvars.iv126.i
   %.pre149 = load float, ptr %.phi.trans.insert, align 4, !tbaa !28
+  %.pre150 = zext nneg i32 %.058107.i to i64
   br label %.loopexit.thread.i
 
 .loopexit.thread.i:                               ; preds = %bb.bf, %.loopexit.i..loopexit.thread.i_crit_edge
+  %.pre-phi = phi i64 [ %.pre150, %.loopexit.i..loopexit.thread.i_crit_edge ], [ %wide.trip.count.i, %bb.bf ]
   %i.fm = phi float [ %.pre149, %.loopexit.i..loopexit.thread.i_crit_edge ], [ %i.ff, %bb.bf ]
   %i.fn = getelementptr inbounds nuw [4 x i8], ptr %i.ex, i64 %indvars.iv126.i
   store i32 %.058107.i, ptr %i.fn, align 4, !tbaa !9
-  %14 = sext i32 %.058107.i to i64
-  %i.fo = getelementptr inbounds [4 x i8], ptr %i.ey, i64 %14
+  %i.fo = getelementptr inbounds nuw [4 x i8], ptr %i.ey, i64 %.pre-phi
   store float %i.fm, ptr %i.fo, align 4, !tbaa !28
   %i.fp = add i32 %.058107.i, 1
   br label %bb.bg

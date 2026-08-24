@@ -204,15 +204,19 @@ bb.av:                                            ; preds = %_ZNSt6vectorIlSaIlE
   br i1 %i.do, label %.preheader.lr.ph, label %.loopexit
 
 .preheader.lr.ph:                                 ; preds = %.preheader142
-  %i.du = load i32, ptr %i.cp, align 4, !tbaa !46 ; 4 uses
+  %i.du = load i32, ptr %i.cp, align 4, !tbaa !46 ; 5 uses
   %.not91146 = icmp slt i32 %i.du, 0
   %i.dv = add nsw i32 %i.du, 1
-  %13 = sext i32 %i.dv to i64
-  %14 = sext i32 %i.du to i64                     ; 2 uses
-  br i1 %.not91146, label %.loopexit, label %.preheader
+  %13 = zext nneg i32 %i.dv to i64
+  %14 = zext nneg i32 %i.du to i64
+  br i1 %.not91146, label %.loopexit, label %.preheader.preheader
 
-.preheader:                                       ; preds = %.preheader.lr.ph, %._crit_edge
-  %.052151 = phi i64 [ %i.ef, %._crit_edge ], [ 0, %.preheader.lr.ph ] ; 4 uses
+.preheader.preheader:                             ; preds = %.preheader.lr.ph
+  %15 = zext nneg i32 %i.du to i64
+  br label %.preheader
+
+.preheader:                                       ; preds = %.preheader.preheader, %._crit_edge
+  %.052151 = phi i64 [ %i.ef, %._crit_edge ], [ 0, %.preheader.preheader ] ; 4 uses
   %i.dw = mul nuw nsw i64 %.052151, %13
   %i.dx = getelementptr [8 x i8], ptr %i.dd, i64 %i.dw
   %i.dy = mul nuw nsw i64 %.052151, %14
@@ -238,7 +242,7 @@ bb.ay:                                            ; preds = %bb.ax, %bb.aw
   %.150 = phi i32 [ %i.ee, %bb.ax ], [ %.049147, %bb.aw ] ; 2 uses
   %.not93 = icmp eq i32 %.150, %i.du
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
-  %.not91 = icmp sge i64 %indvars.iv, %14
+  %.not91 = icmp samesign uge i64 %indvars.iv, %15
   %or.cond = or i1 %.not93, %.not91
   br i1 %or.cond, label %._crit_edge, label %bb.aw, !llvm.loop !54
 
@@ -641,17 +645,16 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not31, label %._crit_edge33, label %.preheader.lr.ph
 
 .preheader.lr.ph:                                 ; preds = %bb.b
-  %i.n = load i32, ptr %3, align 4, !tbaa !74     ; 5 uses
+  %i.n = load i32, ptr %3, align 4, !tbaa !74     ; 4 uses
   %i.o = icmp sgt i32 %i.n, 0
-  %6 = sext i32 %i.n to i64
+  %6 = zext i32 %i.n to i64                       ; 3 uses
   br i1 %i.o, label %.preheader.lr.ph.split.us, label %.preheader.lr.ph.split
 
 .preheader.lr.ph.split.us:                        ; preds = %.preheader.lr.ph
   %i.p = load ptr, ptr %4, align 8, !tbaa !91
-  %wide.trip.count = zext nneg i32 %i.n to i64    ; 2 uses
-  %xtraiter = and i64 %wide.trip.count, 1
+  %xtraiter = and i64 %6, 1
   %i.q = icmp eq i32 %i.n, 1
-  %unroll_iter = and i64 %wide.trip.count, 2147483646
+  %unroll_iter = and i64 %6, 2147483646
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   %lcmp.mod43 = trunc i32 %i.n to i1
   br label %.preheader.us

@@ -205,23 +205,20 @@ bb.b:                                             ; preds = %bb.c, %.lr.ph99.us
   %.098.us.us = phi i64 [ 0, %.lr.ph99.us ], [ %i.ac, %bb.c ] ; 3 uses
   %.497.us.us = phi double [ %.3104.us, %.lr.ph99.us ], [ %.5.us.us, %bb.c ] ; 2 uses
   %i.i = getelementptr inbounds nuw [4 x i8], ptr %i.g, i64 %.098.us.us
-  %i.j = load i32, ptr %i.i, align 4, !tbaa !50
-  %i.k = sext i32 %i.j to i64                     ; 4 uses
+  %i.j = load i32, ptr %i.i, align 4, !tbaa !50   ; 2 uses
+  %i.k = sext i32 %i.j to i64
   %.not.us.us = icmp slt i64 %indvars.iv135, %i.k
-  br i1 %.not.us.us, label %.preheader91.us.us.preheader, label %bb.c
+  br i1 %.not.us.us, label %.preheader91.us.us, label %bb.c
 
-.preheader91.us.us.preheader:                     ; preds = %bb.b
-  br i1 %i.c, label %.preheader91.us.us.epil.preheader, label %.preheader91.us.us.a
-
-.preheader91.us.us.a:                             ; preds = %.preheader91.us.us.preheader, %.preheader91.us.us.a
-  %indvars.iv129 = phi i64 [ %indvars.iv.next130.1, %.preheader91.us.us.a ], [ 0, %.preheader91.us.us.preheader ] ; 3 uses
-  %.196.us.us = phi double [ %i.ab, %.preheader91.us.us.a ], [ 0.000000e+00, %.preheader91.us.us.preheader ]
-  %niter186 = phi i64 [ %niter186.next.1, %.preheader91.us.us.a ], [ 0, %.preheader91.us.us.preheader ]
+.preheader91.us.us.a:                             ; preds = %.preheader91.us.us, %.preheader91.us.us.a
+  %indvars.iv129 = phi i64 [ %indvars.iv.next130.1, %.preheader91.us.us.a ], [ 0, %.preheader91.us.us ] ; 3 uses
+  %.196.us.us = phi double [ %i.ab, %.preheader91.us.us.a ], [ 0.000000e+00, %.preheader91.us.us ]
+  %niter186 = phi i64 [ %niter186.next.1, %.preheader91.us.us.a ], [ 0, %.preheader91.us.us ]
   %i.l = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %indvars.iv129
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !8    ; 2 uses
   %i.n = getelementptr inbounds nuw [8 x i8], ptr %i.m, i64 %indvars.iv135
   %i.o = load double, ptr %i.n, align 8, !tbaa !34
-  %i.p = getelementptr inbounds [8 x i8], ptr %i.m, i64 %i.k
+  %i.p = getelementptr inbounds nuw [8 x i8], ptr %i.m, i64 %5
   %i.q = load double, ptr %i.p, align 8, !tbaa !34
   %i.r = fsub double %i.o, %i.q                   ; 2 uses
   %i.s = tail call double @llvm.fmuladd.f64(double %i.r, double %i.r, double %.196.us.us)
@@ -230,7 +227,7 @@ bb.b:                                             ; preds = %bb.c, %.lr.ph99.us
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !8    ; 2 uses
   %i.w = getelementptr inbounds nuw [8 x i8], ptr %i.v, i64 %indvars.iv135
   %i.x = load double, ptr %i.w, align 8, !tbaa !34
-  %i.y = getelementptr inbounds [8 x i8], ptr %i.v, i64 %i.k
+  %i.y = getelementptr inbounds nuw [8 x i8], ptr %i.v, i64 %5
   %i.z = load double, ptr %i.y, align 8, !tbaa !34
   %i.aa = fsub double %i.x, %i.z                  ; 2 uses
   %i.ab = tail call double @llvm.fmuladd.f64(double %i.aa, double %i.aa, double %i.s) ; 3 uses
@@ -245,18 +242,22 @@ bb.c:                                             ; preds = %._crit_edge.us.us, 
   %exitcond134.not = icmp eq i64 %i.ac, %i.e
   br i1 %exitcond134.not, label %._crit_edge100.split.us.us, label %bb.b, !llvm.loop !163
 
+.preheader91.us.us:                               ; preds = %bb.b
+  %5 = zext nneg i32 %i.j to i64                  ; 3 uses
+  br i1 %i.c, label %.preheader91.us.us.epil.preheader, label %.preheader91.us.us.a
+
 ._crit_edge.us.us.unr-lcssa:                      ; preds = %.preheader91.us.us.a
   br i1 %lcmp.mod182.not, label %._crit_edge.us.us, label %.preheader91.us.us.epil.preheader
 
-.preheader91.us.us.epil.preheader:                ; preds = %._crit_edge.us.us.unr-lcssa, %.preheader91.us.us.preheader
-  %indvars.iv129.epil.init = phi i64 [ 0, %.preheader91.us.us.preheader ], [ %indvars.iv.next130.1, %._crit_edge.us.us.unr-lcssa ]
-  %.196.us.us.epil.init = phi double [ 0.000000e+00, %.preheader91.us.us.preheader ], [ %i.ab, %._crit_edge.us.us.unr-lcssa ]
+.preheader91.us.us.epil.preheader:                ; preds = %._crit_edge.us.us.unr-lcssa, %.preheader91.us.us
+  %indvars.iv129.epil.init = phi i64 [ 0, %.preheader91.us.us ], [ %indvars.iv.next130.1, %._crit_edge.us.us.unr-lcssa ]
+  %.196.us.us.epil.init = phi double [ 0.000000e+00, %.preheader91.us.us ], [ %i.ab, %._crit_edge.us.us.unr-lcssa ]
   tail call void @llvm.assume(i1 %lcmp.mod184)
   %i.ad = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %indvars.iv129.epil.init
   %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !8  ; 2 uses
   %i.af = getelementptr inbounds nuw [8 x i8], ptr %i.ae, i64 %indvars.iv135
   %i.ag = load double, ptr %i.af, align 8, !tbaa !34
-  %i.ah = getelementptr inbounds [8 x i8], ptr %i.ae, i64 %i.k
+  %i.ah = getelementptr inbounds nuw [8 x i8], ptr %i.ae, i64 %5
   %i.ai = load double, ptr %i.ah, align 8, !tbaa !34
   %i.aj = fsub double %i.ag, %i.ai                ; 2 uses
   %i.ak = tail call double @llvm.fmuladd.f64(double %i.aj, double %i.aj, double %.196.us.us.epil.init)
@@ -311,23 +312,20 @@ bb.d:                                             ; preds = %bb.e, %.lr.ph110.us
   %.078109.us.us = phi i64 [ 0, %.lr.ph110.us ], [ %i.bu, %bb.e ] ; 3 uses
   %.181108.us.us = phi double [ %.080115.us, %.lr.ph110.us ], [ %.2.us.us, %bb.e ] ; 2 uses
   %i.ba = getelementptr inbounds nuw [4 x i8], ptr %i.ay, i64 %.078109.us.us
-  %i.bb = load i32, ptr %i.ba, align 4, !tbaa !50
-  %i.bc = sext i32 %i.bb to i64                   ; 4 uses
+  %i.bb = load i32, ptr %i.ba, align 4, !tbaa !50 ; 2 uses
+  %i.bc = sext i32 %i.bb to i64
   %.not88.us.us = icmp slt i64 %indvars.iv152, %i.bc
-  br i1 %.not88.us.us, label %.preheader.us.us.preheader, label %bb.e
+  br i1 %.not88.us.us, label %.preheader.us.us, label %bb.e
 
-.preheader.us.us.preheader:                       ; preds = %bb.d
-  br i1 %i.au, label %.preheader.us.us.epil.preheader, label %.preheader.us.us.a
-
-.preheader.us.us.a:                               ; preds = %.preheader.us.us.preheader, %.preheader.us.us.a
-  %indvars.iv146 = phi i64 [ %indvars.iv.next147.1, %.preheader.us.us.a ], [ 0, %.preheader.us.us.preheader ] ; 3 uses
-  %.079107.us.us = phi double [ %i.bt, %.preheader.us.us.a ], [ 0.000000e+00, %.preheader.us.us.preheader ]
-  %niter199 = phi i64 [ %niter199.next.1, %.preheader.us.us.a ], [ 0, %.preheader.us.us.preheader ]
+.preheader.us.us.a:                               ; preds = %.preheader.us.us, %.preheader.us.us.a
+  %indvars.iv146 = phi i64 [ %indvars.iv.next147.1, %.preheader.us.us.a ], [ 0, %.preheader.us.us ] ; 3 uses
+  %.079107.us.us = phi double [ %i.bt, %.preheader.us.us.a ], [ 0.000000e+00, %.preheader.us.us ]
+  %niter199 = phi i64 [ %niter199.next.1, %.preheader.us.us.a ], [ 0, %.preheader.us.us ]
   %i.bd = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %indvars.iv146
   %i.be = load ptr, ptr %i.bd, align 8, !tbaa !8  ; 2 uses
   %i.bf = getelementptr inbounds nuw [8 x i8], ptr %i.be, i64 %indvars.iv152
   %i.bg = load double, ptr %i.bf, align 8, !tbaa !34
-  %i.bh = getelementptr inbounds [8 x i8], ptr %i.be, i64 %i.bc
+  %i.bh = getelementptr inbounds nuw [8 x i8], ptr %i.be, i64 %6
   %i.bi = load double, ptr %i.bh, align 8, !tbaa !34
   %i.bj = fsub double %i.bg, %i.bi                ; 2 uses
   %i.bk = tail call double @llvm.fmuladd.f64(double %i.bj, double %i.bj, double %.079107.us.us)
@@ -336,7 +334,7 @@ bb.d:                                             ; preds = %bb.e, %.lr.ph110.us
   %i.bn = load ptr, ptr %i.bm, align 8, !tbaa !8  ; 2 uses
   %i.bo = getelementptr inbounds nuw [8 x i8], ptr %i.bn, i64 %indvars.iv152
   %i.bp = load double, ptr %i.bo, align 8, !tbaa !34
-  %i.bq = getelementptr inbounds [8 x i8], ptr %i.bn, i64 %i.bc
+  %i.bq = getelementptr inbounds nuw [8 x i8], ptr %i.bn, i64 %6
   %i.br = load double, ptr %i.bq, align 8, !tbaa !34
   %i.bs = fsub double %i.bp, %i.br                ; 2 uses
   %i.bt = tail call double @llvm.fmuladd.f64(double %i.bs, double %i.bs, double %i.bk) ; 3 uses
@@ -351,18 +349,22 @@ bb.e:                                             ; preds = %._crit_edge.us.us11
   %exitcond151.not = icmp eq i64 %i.bu, %i.aw
   br i1 %exitcond151.not, label %._crit_edge111.split.us.us, label %bb.d, !llvm.loop !166
 
+.preheader.us.us:                                 ; preds = %bb.d
+  %6 = zext nneg i32 %i.bb to i64                 ; 3 uses
+  br i1 %i.au, label %.preheader.us.us.epil.preheader, label %.preheader.us.us.a
+
 ._crit_edge.us.us116.unr-lcssa:                   ; preds = %.preheader.us.us.a
   br i1 %lcmp.mod195.not, label %._crit_edge.us.us116, label %.preheader.us.us.epil.preheader
 
-.preheader.us.us.epil.preheader:                  ; preds = %._crit_edge.us.us116.unr-lcssa, %.preheader.us.us.preheader
-  %indvars.iv146.epil.init = phi i64 [ 0, %.preheader.us.us.preheader ], [ %indvars.iv.next147.1, %._crit_edge.us.us116.unr-lcssa ]
-  %.079107.us.us.epil.init = phi double [ 0.000000e+00, %.preheader.us.us.preheader ], [ %i.bt, %._crit_edge.us.us116.unr-lcssa ]
+.preheader.us.us.epil.preheader:                  ; preds = %._crit_edge.us.us116.unr-lcssa, %.preheader.us.us
+  %indvars.iv146.epil.init = phi i64 [ 0, %.preheader.us.us ], [ %indvars.iv.next147.1, %._crit_edge.us.us116.unr-lcssa ]
+  %.079107.us.us.epil.init = phi double [ 0.000000e+00, %.preheader.us.us ], [ %i.bt, %._crit_edge.us.us116.unr-lcssa ]
   tail call void @llvm.assume(i1 %lcmp.mod197)
   %i.bv = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %indvars.iv146.epil.init
   %i.bw = load ptr, ptr %i.bv, align 8, !tbaa !8  ; 2 uses
   %i.bx = getelementptr inbounds nuw [8 x i8], ptr %i.bw, i64 %indvars.iv152
   %i.by = load double, ptr %i.bx, align 8, !tbaa !34
-  %i.bz = getelementptr inbounds [8 x i8], ptr %i.bw, i64 %i.bc
+  %i.bz = getelementptr inbounds nuw [8 x i8], ptr %i.bw, i64 %6
   %i.ca = load double, ptr %i.bz, align 8, !tbaa !34
   %i.cb = fsub double %i.by, %i.ca                ; 2 uses
   %i.cc = tail call double @llvm.fmuladd.f64(double %i.cb, double %i.cb, double %.079107.us.us.epil.init)

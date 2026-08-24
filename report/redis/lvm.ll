@@ -202,7 +202,7 @@ bb.fl:                                            ; preds = %bb.l
   %i.acj = load i8, ptr %i.aci, align 1, !tbaa !88
   %i.ack = zext i8 %i.acj to i32
   %i.acl = xor i32 %i.ack, -1
-  %i.acm = add i32 %i.acg, %i.acl                 ; 5 uses
+  %i.acm = add i32 %i.acg, %i.acl                 ; 6 uses
   %i.acn = icmp eq i32 %i.abw, 0
   br i1 %i.acn, label %bb.fm, label %bb.fp
 
@@ -243,14 +243,15 @@ bb.fp:                                            ; preds = %bb.fo, %bb.fl
   br label %.critedge
 
 .lr.ph:                                           ; preds = %bb.fp
-  %4 = sext i32 %i.acm to i64                     ; 2 uses
+  %4 = zext nneg i32 %i.acm to i64
   %i.ada = sub nsw i64 0, %4
+  %5 = sext i32 %i.acm to i64
   %wide.trip.count = zext nneg i32 %.0713 to i64
   br label %bb.fq
 
 bb.fq:                                            ; preds = %.lr.ph, %bb.fs
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.fs ] ; 5 uses
-  %i.adb = icmp slt i64 %indvars.iv, %4
+  %i.adb = icmp slt i64 %indvars.iv, %5
   br i1 %i.adb, label %bb.fr, label %bb.fs
 
 bb.fr:                                            ; preds = %bb.fq

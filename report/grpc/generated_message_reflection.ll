@@ -205,10 +205,10 @@ _ZNSt6vectorIPKN6google8protobuf15FieldDescriptorESaIS4_EE7reserveEm.exit: ; pre
   ret i32 %.072.lcssa
 
 bb.f:                                             ; preds = %.lr.ph, %_ZZNK6google8protobuf10Reflection25IsEmptyOrCollectSetFieldsILb0EPSt6vectorIPKNS0_15FieldDescriptorESaIS6_EEEEiRKNS0_7MessageERKNS0_10DescriptorET0_ENKUlRS5_E_clESH_.exit
-  %indvars.iv = phi i64 [ -1, %.lr.ph ], [ %indvars.iv.next, %_ZZNK6google8protobuf10Reflection25IsEmptyOrCollectSetFieldsILb0EPSt6vectorIPKNS0_15FieldDescriptorESaIS6_EEEEiRKNS0_7MessageERKNS0_10DescriptorET0_ENKUlRS5_E_clESH_.exit ]
   %.083 = phi ptr [ %i.ak, %.lr.ph ], [ %i.fa, %_ZZNK6google8protobuf10Reflection25IsEmptyOrCollectSetFieldsILb0EPSt6vectorIPKNS0_15FieldDescriptorESaIS6_EEEEiRKNS0_7MessageERKNS0_10DescriptorET0_ENKUlRS5_E_clESH_.exit ] ; 17 uses
+  %.03182 = phi i32 [ -1, %.lr.ph ], [ %4, %_ZZNK6google8protobuf10Reflection25IsEmptyOrCollectSetFieldsILb0EPSt6vectorIPKNS0_15FieldDescriptorESaIS6_EEEEiRKNS0_7MessageERKNS0_10DescriptorET0_ENKUlRS5_E_clESH_.exit ]
   %.07281 = phi i32 [ 0, %.lr.ph ], [ %.1, %_ZZNK6google8protobuf10Reflection25IsEmptyOrCollectSetFieldsILb0EPSt6vectorIPKNS0_15FieldDescriptorESaIS6_EEEEiRKNS0_7MessageERKNS0_10DescriptorET0_ENKUlRS5_E_clESH_.exit ] ; 7 uses
-  %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
+  %4 = add nsw i32 %.03182, 1                     ; 2 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %.083, i64 3
   %i.as = load i8, ptr %i.ar, align 1
   %i.at = and i8 %i.as, 8
@@ -315,7 +315,8 @@ _ZNK6google8protobuf8internal16ReflectionSchema11InRealOneofEPKNS0_15FieldDescri
   br i1 %.not76, label %bb.w, label %bb.n
 
 bb.n:                                             ; preds = %_ZNK6google8protobuf8internal16ReflectionSchema11InRealOneofEPKNS0_15FieldDescriptorE.exit
-  %i.co = getelementptr inbounds [4 x i8], ptr %i.f, i64 %indvars.iv.next
+  %5 = zext nneg i32 %4 to i64
+  %i.co = getelementptr inbounds nuw [4 x i8], ptr %i.f, i64 %5
   %i.cp = load i32, ptr %i.co, align 4, !tbaa !64 ; 3 uses
   %.not35 = icmp eq i32 %i.cp, -1
   br i1 %.not35, label %bb.w, label %bb.o
@@ -718,9 +719,9 @@ _ZNK6google8protobuf8internal16ReflectionSchema11InRealOneofEPKNS0_15FieldDescri
   br i1 %.not.us.not, label %_ZNK6google8protobuf10Reflection26IsFieldPresentGivenHasbitsERKNS0_7MessageEPKNS0_15FieldDescriptorEPKjj.exit.thread, label %.lr.ph.split.us
 
 .lr.ph.split:                                     ; preds = %.lr.ph, %.critedge
-  %indvars.iv = phi i64 [ %indvars.iv.next, %.critedge ], [ -1, %.lr.ph ]
   %.03352 = phi ptr [ %i.ch, %.critedge ], [ %i.h, %.lr.ph ] ; 9 uses
-  %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
+  %.03451 = phi i32 [ %4, %.critedge ], [ -1, %.lr.ph ]
+  %4 = add nsw i32 %.03451, 1                     ; 2 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %.03352, i64 3
   %i.aq = load i8, ptr %i.ap, align 1
   %i.ar = and i8 %i.aq, 8
@@ -759,7 +760,8 @@ bb.c:                                             ; preds = %.lr.ph.split
   br i1 %.not42, label %_ZNK6google8protobuf10Reflection26IsFieldPresentGivenHasbitsERKNS0_7MessageEPKNS0_15FieldDescriptorEPKjj.exit.thread, label %.critedge
 
 _ZNK6google8protobuf8internal16ReflectionSchema11InRealOneofEPKNS0_15FieldDescriptorE.exit: ; preds = %.lr.ph.split
-  %i.bp = getelementptr inbounds [4 x i8], ptr %i.f, i64 %indvars.iv.next
+  %5 = zext nneg i32 %4 to i64
+  %i.bp = getelementptr inbounds nuw [4 x i8], ptr %i.f, i64 %5
   %i.bq = load i32, ptr %i.bp, align 4, !tbaa !64 ; 3 uses
   %.not41 = icmp eq i32 %i.bq, -1
   br i1 %.not41, label %bb.g, label %bb.d

@@ -204,8 +204,8 @@ bb.a:
   %indvars.iv.next136 = add nuw nsw i64 %indvars.iv135, 1 ; 3 uses
   %i.co = trunc i64 %indvars.iv135 to i32
   %i.cp = add i32 %.reass, %i.co
-  %i.cq = add i32 %i.cp, %.neg
-  %i.cr = sext i32 %i.cq to i64                   ; 2 uses
+  %i.cq = add i32 %i.cp, %.neg                    ; 2 uses
+  %i.cr = sext i32 %i.cq to i64
   %i.cs = icmp slt i64 %indvars.iv.next136, %i.cr
   br i1 %i.cs, label %.lr.ph.i77, label %.loopexit
 
@@ -273,8 +273,9 @@ bb.a:
   tail call void @_ZN7CaDiCaL6Solver3addEi(ptr noundef nonnull align 8 dereferenceable(24) %i.s, i32 noundef 0) #13
   tail call void @_ZdlPvm(ptr noundef nonnull %i.ef, i64 noundef 12) #16
   %indvars.iv.next133 = add nuw nsw i64 %indvars.iv132, 1 ; 2 uses
-  %3 = icmp slt i64 %indvars.iv.next133, %i.cr
-  br i1 %3, label %.lr.ph.i77, label %.loopexit.loopexit, !llvm.loop !182
+  %3 = trunc nuw i64 %indvars.iv.next133 to i32
+  %4 = icmp sgt i32 %i.cq, %3
+  br i1 %4, label %.lr.ph.i77, label %.loopexit.loopexit, !llvm.loop !182
 }
 
 ; Function Attrs: mustprogress nounwind uwtable

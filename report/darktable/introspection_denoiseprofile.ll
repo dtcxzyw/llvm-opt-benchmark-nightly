@@ -205,7 +205,7 @@ bb.x:                                             ; preds = %bb.w
   br label %bb.y
 
 bb.y:                                             ; preds = %bb.x, %bb.w, %bb.v, %bb.u, %bb.t, %bb.s, %bb.r, %bb.q
-  %.0178.lcssa.i = phi i32 [ 0, %bb.q ], [ 7, %bb.x ], [ 1, %bb.r ], [ 6, %bb.w ], [ 2, %bb.s ], [ 4, %bb.u ], [ 3, %bb.t ], [ 5, %bb.v ] ; 2 uses
+  %.0178.lcssa.i = phi i32 [ 0, %bb.q ], [ 7, %bb.x ], [ 1, %bb.r ], [ 6, %bb.w ], [ 2, %bb.s ], [ 4, %bb.u ], [ 3, %bb.t ], [ 5, %bb.v ] ; 3 uses
   %i.qi = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.qj = load i32, ptr %i.qi, align 4, !tbaa !193 ; 9 uses
   %i.qk = getelementptr inbounds nuw i8, ptr %4, i64 12
@@ -608,7 +608,7 @@ debug_dump_PFM.exit.i:                            ; preds = %bb.ao, %bb.an, %pre
   %i.aie = getelementptr inbounds nuw i8, ptr %i.w, <4 x i64> <i64 144, i64 172, i64 200, i64 116>
   %i.aif = uitofp reassoc nsz arcp contract afn i64 %i.qo to float
   %i.aig = fadd reassoc nsz arcp contract afn float %i.aif, -1.000000e+00 ; 2 uses
-  %i.aih = zext nneg i32 %.0178.lcssa.i to i64    ; 2 uses
+  %i.aih = zext nneg i32 %.0178.lcssa.i to i64
   %i.aii = insertelement <2 x float> poison, float %i.aig, i64 0
   %i.aij = shufflevector <2 x float> %i.aii, <2 x float> poison, <2 x i32> zeroinitializer
   %i.aik = fdiv reassoc nsz arcp contract afn <2 x float> splat (float 1.000000e+00), %i.aij
@@ -721,10 +721,10 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   br i1 %i.ajo, label %._crit_edge.i, label %vec.epilog.vector.body, !llvm.loop !247
 
 bb.ap:                                            ; preds = %variance_stabilizing_xform.exit.i, %.lr.ph.i
-  %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %variance_stabilizing_xform.exit.i ] ; 3 uses
+  %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %variance_stabilizing_xform.exit.i ] ; 2 uses
   %.018041.i = phi ptr [ %i.aib, %.lr.ph.i ], [ %.018140.i, %variance_stabilizing_xform.exit.i ] ; 4 uses
   %.018140.i = phi ptr [ %i.aia, %.lr.ph.i ], [ %.018041.i, %variance_stabilizing_xform.exit.i ] ; 2 uses
-  %i.ajp = trunc nuw nsw i64 %indvars.iv.i to i32 ; 5 uses
+  %i.ajp = trunc nuw nsw i64 %indvars.iv.i to i32 ; 6 uses
   %i.ajq = uitofp nneg i32 %i.ajp to float
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m) #18
   %i.ajr = load ptr, ptr %i.f, align 8, !tbaa !188
@@ -774,14 +774,15 @@ debug_dump_PFM.exit214.i:                         ; preds = %bb.aq, %bb.ar, %deb
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o) #18
   %i.akd = load float, ptr %i.m, align 16, !tbaa !16
   %i.ake = load <2 x float>, ptr %i.aic, align 4, !tbaa !16
-  %7 = xor i64 %indvars.iv.i, -1
-  %8 = add nsw i64 %7, %i.aih                     ; 2 uses
+  %7 = xor i32 %i.ajp, -1
+  %8 = add nsw i32 %.0178.lcssa.i, %7
   %i.akf = load i32, ptr %i.xo, align 8, !tbaa !220
   %i.akg = icmp eq i32 %i.akf, 0
+  %9 = zext nneg i32 %8 to i64                    ; 2 uses
   br i1 %i.akg, label %bb.as, label %bb.at
 
 bb.as:                                            ; preds = %debug_dump_PFM.exit214.i
-  %i.akh = getelementptr inbounds [4 x i8], <4 x ptr> %i.aie, i64 %8
+  %i.akh = getelementptr inbounds nuw [4 x i8], <4 x ptr> %i.aie, i64 %9
   %i.aki = call <4 x float> @llvm.masked.gather.v4f32.v4p0(<4 x ptr> align 4 %i.akh, <4 x i1> splat (i1 true), <4 x float> poison), !tbaa !16 ; 2 uses
   %i.akj = fmul reassoc nsz arcp contract afn <4 x float> %i.aki, %i.aki ; 2 uses
   %i.akk = shufflevector <4 x float> %i.akj, <4 x float> poison, <2 x i32> <i32 3, i32 poison>
@@ -791,7 +792,7 @@ bb.as:                                            ; preds = %debug_dump_PFM.exit
   br label %variance_stabilizing_xform.exit.i
 
 bb.at:                                            ; preds = %debug_dump_PFM.exit214.i
-  %i.ako = getelementptr inbounds [4 x i8], ptr %i.aid, i64 %8
+  %i.ako = getelementptr inbounds nuw [4 x i8], ptr %i.aid, i64 %9
   %i.akp = call <8 x float> @llvm.masked.load.v8f32.p0(ptr nonnull align 4 %i.ako, <8 x i1> <i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true>, <8 x float> poison), !tbaa !16
   %i.akq = shufflevector <8 x float> %i.akp, <8 x float> <float poison, float poison, float poison, float 1.000000e+00, float poison, float poison, float poison, float poison>, <4 x i32> <i32 0, i32 7, i32 7, i32 11> ; 2 uses
   %i.akr = fmul reassoc nsz arcp contract afn <4 x float> %i.akq, %i.akq

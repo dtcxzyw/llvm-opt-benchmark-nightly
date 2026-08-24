@@ -202,18 +202,18 @@ bb.t:                                             ; preds = %bb.r
   br i1 %.not6068.i.i, label %.loopexit.i, label %.lr.ph70.i.i
 
 .lr.ph70.i.i:                                     ; preds = %bb.t, %bb.z
-  %indvars.iv79.i.i = phi i64 [ %indvars.iv.next80.i.i, %bb.z ], [ -1, %bb.t ]
   %2 = phi ptr [ %i.dm, %bb.z ], [ %i.ca, %bb.t ]
-  %indvars.iv.next80.i.i = add nsw i64 %indvars.iv79.i.i, 1 ; 4 uses
+  %.04569.i.i = phi i32 [ %3, %bb.z ], [ -1, %bb.t ]
+  %3 = add nsw i32 %.04569.i.i, 1                 ; 4 uses
   %i.cb = load i32, ptr %i.a, align 4
   %i.cc = call i32 @cr_get_coremap_offset(i32 noundef %i.cb) #18 ; 2 uses
   %i.cd = load i32, ptr %i.a, align 4
   %i.ce = add nsw i32 %i.cd, 1
   %i.cf = call i32 @cr_get_coremap_offset(i32 noundef %i.ce) #18 ; 2 uses
   %i.cg = load ptr, ptr %i.ap, align 8
-  %3 = trunc nsw i64 %indvars.iv.next80.i.i to i32 ; 2 uses
   %4 = call i32 @get_job_resources_offset(ptr noundef %i.cg, i32 noundef %3, i16 noundef zeroext 0, i16 noundef zeroext 0) #18
   %5 = icmp slt i32 %i.cc, %i.cf
+  %6 = zext nneg i32 %3 to i64                    ; 2 uses
   br i1 %5, label %.lr.ph.i.i, label %.critedge.i.i
 
 .lr.ph.i.i:                                       ; preds = %.lr.ph70.i.i
@@ -229,7 +229,7 @@ bb.u:                                             ; preds = %bb.x, %.lr.ph.i.i
   %i.ck = load ptr, ptr %i.ap, align 8            ; 2 uses
   %i.cl = getelementptr inbounds nuw i8, ptr %i.ck, i64 40
   %i.cm = load ptr, ptr %i.cl, align 8
-  %i.cn = getelementptr inbounds [2 x i8], ptr %i.cm, i64 %indvars.iv.next80.i.i
+  %i.cn = getelementptr inbounds nuw [2 x i8], ptr %i.cm, i64 %6
   %i.co = load i16, ptr %i.cn, align 2
   %i.cp = zext i16 %i.co to i32
   %i.cq = icmp slt i32 %.065.i.i, %i.cp
@@ -262,7 +262,7 @@ bb.x:                                             ; preds = %bb.w, %bb.v
   %i.cx = load ptr, ptr %i.ap, align 8            ; 3 uses
   %i.cy = getelementptr inbounds nuw i8, ptr %i.cx, i64 40
   %i.cz = load ptr, ptr %i.cy, align 8
-  %i.da = getelementptr inbounds [2 x i8], ptr %i.cz, i64 %indvars.iv.next80.i.i
+  %i.da = getelementptr inbounds nuw [2 x i8], ptr %i.cz, i64 %6
   %i.db = load i16, ptr %i.da, align 2
   %i.dc = zext i16 %i.db to i32
   %i.dd = icmp slt i32 %.0.lcssa.i.i, %i.dc
@@ -665,10 +665,10 @@ bb.gd:                                            ; preds = %bb.gb
   br label %_validate_core_resrcs.exit
 
 .lr.ph56.i:                                       ; preds = %bb.gd, %._crit_edge.i227
-  %indvars.iv63.i = phi i64 [ %indvars.iv.next64.i, %._crit_edge.i227 ], [ -1, %bb.gd ]
   %6 = phi ptr [ %i.qh, %._crit_edge.i227 ], [ %i.pu, %bb.gd ]
-  %.03654.i.a = phi i32 [ %.1.lcssa.i, %._crit_edge.i227 ], [ -1, %bb.gd ] ; 2 uses
-  %indvars.iv.next64.i = add nsw i64 %indvars.iv63.i, 1 ; 2 uses
+  %.03654.i = phi i32 [ %.1.lcssa.i, %._crit_edge.i227 ], [ -1, %bb.gd ] ; 2 uses
+  %.03654.i.a = phi i32 [ %7, %._crit_edge.i227 ], [ -1, %bb.gd ]
+  %7 = add nsw i32 %.03654.i.a, 1                 ; 2 uses
   %i.pv = load i32, ptr %i.a, align 4
   %i.pw = call i32 @cr_get_coremap_offset(i32 noundef %i.pv) #18 ; 2 uses
   %i.px = load i32, ptr %i.a, align 4
@@ -679,8 +679,9 @@ bb.gd:                                            ; preds = %bb.gb
 
 .lr.ph.i228:                                      ; preds = %.lr.ph56.i
   %i.qb = getelementptr inbounds nuw i8, ptr %6, i64 544 ; 2 uses
+  %8 = zext nneg i32 %7 to i64
   %i.qc = sext i32 %i.pw to i64
-  %i.qd = sext i32 %.03654.i.a to i64
+  %i.qd = sext i32 %.03654.i to i64
   br label %bb.ge
 
 ._crit_edge.loopexit.i:                           ; preds = %bb.gi
@@ -688,7 +689,7 @@ bb.gd:                                            ; preds = %bb.gb
   br label %._crit_edge.i227
 
 ._crit_edge.i227:                                 ; preds = %._crit_edge.loopexit.i, %.lr.ph56.i
-  %.1.lcssa.i = phi i32 [ %.03654.i.a, %.lr.ph56.i ], [ %i.qe, %._crit_edge.loopexit.i ]
+  %.1.lcssa.i = phi i32 [ %.03654.i, %.lr.ph56.i ], [ %i.qe, %._crit_edge.loopexit.i ]
   %i.qf = load i32, ptr %i.a, align 4
   %i.qg = add nsw i32 %i.qf, 1
   store i32 %i.qg, ptr %i.a, align 4
@@ -720,7 +721,7 @@ bb.gh:                                            ; preds = %bb.gg, %bb.gf
   %i.qm = load i16, ptr %i.qb, align 8
   %i.qn = getelementptr inbounds nuw i8, ptr %i.ql, i64 40
   %i.qo = load ptr, ptr %i.qn, align 8
-  %i.qp = getelementptr inbounds [2 x i8], ptr %i.qo, i64 %indvars.iv.next64.i ; 2 uses
+  %i.qp = getelementptr inbounds nuw [2 x i8], ptr %i.qo, i64 %8 ; 2 uses
   %i.qq = load i16, ptr %i.qp, align 2
   %i.qr = add i16 %i.qq, %i.qm
   store i16 %i.qr, ptr %i.qp, align 2

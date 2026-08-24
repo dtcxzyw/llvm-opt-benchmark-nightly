@@ -205,30 +205,34 @@ bb.e:                                             ; preds = %bb.d
 .lr.ph27:                                         ; preds = %bb.e, %bb.d, %bb.c
   store i8 1, ptr %i.f, align 8, !tbaa !15
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 3 uses
-  %4 = zext nneg i32 %2 to i64
   %wide.trip.count32 = zext nneg i32 %2 to i64    ; 2 uses
-  %5 = getelementptr i8, ptr %1, i64 %4           ; 3 uses
   %xtraiter37 = and i64 %wide.trip.count32, 1
   %unroll_iter40 = and i64 %wide.trip.count32, 2147483646
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.f, %.lr.ph27
-  %indvars.iv29 = phi i64 [ 0, %.lr.ph27 ], [ %indvars.iv.next30.1, %bb.f ] ; 5 uses
+  %indvars.iv29 = phi i64 [ 0, %.lr.ph27 ], [ %indvars.iv.next30.1, %bb.f ] ; 4 uses
   %niter41 = phi i64 [ 0, %.lr.ph27 ], [ %niter41.next.1, %bb.f ]
-  %6 = xor i64 %indvars.iv29, -1
-  %i.y = getelementptr i8, ptr %5, i64 %6
+  %4 = trunc nuw nsw i64 %indvars.iv29 to i32
+  %5 = xor i32 %4, -1
+  %6 = add nsw i32 %2, %5
+  %7 = zext nneg i32 %6 to i64
+  %i.y = getelementptr inbounds nuw i8, ptr %1, i64 %7
   %i.z = load i8, ptr %i.y, align 1, !tbaa !19
   %i.aa = add i8 %i.z, -48
   %i.ab = load ptr, ptr %i.x, align 8, !tbaa !19
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 %indvars.iv29
   store i8 %i.aa, ptr %i.ac, align 1, !tbaa !19
-  %7 = xor i64 %indvars.iv29, -2
-  %i.ad = getelementptr i8, ptr %5, i64 %7
+  %indvars.iv.next30 = or disjoint i64 %indvars.iv29, 1 ; 2 uses
+  %8 = trunc nuw nsw i64 %indvars.iv.next30 to i32
+  %9 = xor i32 %8, -1
+  %10 = add nsw i32 %2, %9
+  %11 = zext nneg i32 %10 to i64
+  %i.ad = getelementptr inbounds nuw i8, ptr %1, i64 %11
   %i.ae = load i8, ptr %i.ad, align 1, !tbaa !19
   %i.af = add i8 %i.ae, -48
   %i.ag = load ptr, ptr %i.x, align 8, !tbaa !19
-  %8 = getelementptr inbounds nuw i8, ptr %i.ag, i64 %indvars.iv29
-  %i.ah = getelementptr inbounds nuw i8, ptr %8, i64 1
+  %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 %indvars.iv.next30
   store i8 %i.af, ptr %i.ah, align 1, !tbaa !19
   %indvars.iv.next30.1 = add nuw nsw i64 %indvars.iv29, 2 ; 3 uses
   %niter41.next.1 = add i64 %niter41, 2           ; 2 uses
@@ -293,8 +297,11 @@ bb.f:                                             ; preds = %bb.f, %.lr.ph27
 .epil.preheader:                                  ; preds = %.loopexit.loopexit.unr-lcssa
   %lcmp.mod39 = trunc i32 %2 to i1
   tail call void @llvm.assume(i1 %lcmp.mod39)
-  %9 = xor i64 %indvars.iv.next30.1, -1
-  %i.bh = getelementptr i8, ptr %5, i64 %9
+  %12 = trunc nuw nsw i64 %indvars.iv.next30.1 to i32
+  %13 = xor i32 %12, -1
+  %14 = add nsw i32 %2, %13
+  %15 = zext nneg i32 %14 to i64
+  %i.bh = getelementptr inbounds nuw i8, ptr %1, i64 %15
   %i.bi = load i8, ptr %i.bh, align 1, !tbaa !19
   %i.bj = add i8 %i.bi, -48
   %i.bk = load ptr, ptr %i.x, align 8, !tbaa !19

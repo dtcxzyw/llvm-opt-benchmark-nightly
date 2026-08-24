@@ -202,12 +202,13 @@ bb.d:                                             ; preds = %bb.b
   br label %bb.e
 
 bb.e:                                             ; preds = %._crit_edge.i, %bb.d
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %._crit_edge.i ], [ -1, %bb.d ]
-  %.026.i.a = phi i32 [ %.127.lcssa.i, %._crit_edge.i ], [ 0, %bb.d ]
-  %.024.i = phi i32 [ %.125.lcssa.i, %._crit_edge.i ], [ 0, %bb.d ] ; 4 uses
-  %.0.i = phi i32 [ %.1.lcssa.i, %._crit_edge.i ], [ -1, %bb.d ] ; 8 uses
-  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, 1 ; 6 uses
-  %i.af = getelementptr inbounds [4 x i8], ptr %i.ac, i64 %indvars.iv.next.i
+  %.026.i = phi i32 [ 0, %bb.d ], [ %.127.lcssa.i, %._crit_edge.i ]
+  %.026.i.a = phi i32 [ 0, %bb.d ], [ %.125.lcssa.i, %._crit_edge.i ] ; 4 uses
+  %.024.i = phi i32 [ -1, %bb.d ], [ %4, %._crit_edge.i ]
+  %.0.i = phi i32 [ -1, %bb.d ], [ %.1.lcssa.i, %._crit_edge.i ] ; 8 uses
+  %4 = add nsw i32 %.024.i, 1                     ; 2 uses
+  %5 = zext nneg i32 %4 to i64                    ; 5 uses
+  %i.af = getelementptr inbounds nuw [4 x i8], ptr %i.ac, i64 %5
   %i.ag = load i32, ptr %i.af, align 4            ; 3 uses
   %i.ah = icmp ne i32 %i.ag, 0
   %i.ai = icmp slt i32 %.0.i, %i.r                ; 2 uses
@@ -216,11 +217,11 @@ bb.e:                                             ; preds = %._crit_edge.i, %bb.
 
 iter.check:                                       ; preds = %bb.e
   %i.ak = load ptr, ptr %i.ad, align 8
-  %i.al = getelementptr inbounds [2 x i8], ptr %i.ak, i64 %indvars.iv.next.i
+  %i.al = getelementptr inbounds nuw [2 x i8], ptr %i.ak, i64 %5
   %i.am = load i16, ptr %i.al, align 2
   %i.an = zext i16 %i.am to i32
   %i.ao = load ptr, ptr %i.ae, align 8
-  %i.ap = getelementptr inbounds [2 x i8], ptr %i.ao, i64 %indvars.iv.next.i
+  %i.ap = getelementptr inbounds nuw [2 x i8], ptr %i.ao, i64 %5
   %i.aq = load i16, ptr %i.ap, align 2
   %i.ar = zext i16 %i.aq to i32
   %i.as = mul nuw i32 %i.ar, %i.an                ; 5 uses
@@ -242,7 +243,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %n.vec = and i32 %i.ax, -16                     ; 6 uses
   %i.az = add i32 %.0.i, %n.vec                   ; 3 uses
   %i.ba = mul i32 %n.vec, %i.as
-  %i.bb = add i32 %.024.i, %i.ba                  ; 3 uses
+  %i.bb = add i32 %.026.i.a, %i.ba                ; 3 uses
   %i.bc = add nsw i32 %.0.i, 15
   br label %vector.body
 
@@ -271,7 +272,7 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
   %n.vec145 = and i32 %i.ax, -4                   ; 5 uses
   %i.bi = add i32 %.0.i, %n.vec145                ; 2 uses
   %i.bj = mul i32 %n.vec145, %i.as
-  %i.bk = add i32 %.024.i, %i.bj                  ; 3 uses
+  %i.bk = add i32 %.026.i.a, %i.bj                ; 3 uses
   %i.bl = add nsw i32 %bc.resume.val, 3
   br label %vec.epilog.vector.body
 
@@ -293,7 +294,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.131.i.ph = phi i32 [ %.0.i, %iter.check ], [ %i.az, %vec.epilog.iter.check ], [ %i.bi, %vec.epilog.middle.block ]
   %.02330.i.ph = phi i32 [ 0, %iter.check ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec145, %vec.epilog.middle.block ]
-  %.12529.i.ph = phi i32 [ %.024.i, %iter.check ], [ %i.bb, %vec.epilog.iter.check ], [ %i.bk, %vec.epilog.middle.block ]
+  %.12529.i.ph = phi i32 [ %.026.i.a, %iter.check ], [ %i.bb, %vec.epilog.iter.check ], [ %i.bk, %vec.epilog.middle.block ]
   br label %vec.epilog.scalar.ph
 
 vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.ph.preheader, %vec.epilog.scalar.ph
@@ -309,18 +310,18 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   br i1 %i.bw, label %vec.epilog.scalar.ph, label %._crit_edge.i, !llvm.loop !15
 
 ._crit_edge.i:                                    ; preds = %vec.epilog.scalar.ph, %middle.block, %vec.epilog.middle.block, %bb.e
-  %.127.lcssa.i = phi i32 [ %.026.i.a, %bb.e ], [ %ind.escape155, %vec.epilog.middle.block ], [ %ind.escape, %middle.block ], [ %.12529.i, %vec.epilog.scalar.ph ] ; 2 uses
-  %.125.lcssa.i = phi i32 [ %.024.i, %bb.e ], [ %i.bk, %vec.epilog.middle.block ], [ %i.bb, %middle.block ], [ %i.br, %vec.epilog.scalar.ph ]
+  %.127.lcssa.i = phi i32 [ %.026.i, %bb.e ], [ %ind.escape155, %vec.epilog.middle.block ], [ %ind.escape, %middle.block ], [ %.12529.i, %vec.epilog.scalar.ph ] ; 2 uses
+  %.125.lcssa.i = phi i32 [ %.026.i.a, %bb.e ], [ %i.bk, %vec.epilog.middle.block ], [ %i.bb, %middle.block ], [ %i.br, %vec.epilog.scalar.ph ]
   %.1.lcssa.i = phi i32 [ %.0.i, %bb.e ], [ %i.bi, %vec.epilog.middle.block ], [ %i.az, %middle.block ], [ %i.bs, %vec.epilog.scalar.ph ]
   %.lcssa.i = phi i1 [ %i.ai, %bb.e ], [ %i.bq, %vec.epilog.middle.block ], [ %i.bh, %middle.block ], [ %i.bv, %vec.epilog.scalar.ph ]
   br i1 %.lcssa.i, label %bb.e, label %_get_local_node_info.exit, !llvm.loop !16
 
 _get_local_node_info.exit:                        ; preds = %._crit_edge.i
   %i.bx = load ptr, ptr %i.ad, align 8
-  %i.by = getelementptr inbounds [2 x i8], ptr %i.bx, i64 %indvars.iv.next.i
+  %i.by = getelementptr inbounds nuw [2 x i8], ptr %i.bx, i64 %5
   %i.bz = load i16, ptr %i.by, align 2
   %i.ca = load ptr, ptr %i.ae, align 8
-  %i.cb = getelementptr inbounds [2 x i8], ptr %i.ca, i64 %indvars.iv.next.i
+  %i.cb = getelementptr inbounds nuw [2 x i8], ptr %i.ca, i64 %5
   %i.cc = load i16, ptr %i.cb, align 2
   %i.cd = tail call i32 @slurm_get_log_level() #9
   %i.ce = icmp sgt i32 %i.cd, 6

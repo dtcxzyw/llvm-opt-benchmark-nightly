@@ -204,23 +204,24 @@ bb.i:                                             ; preds = %.lr.ph, %_ZN5Ipopt8
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.j, %bb.i
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.j ], [ -1, %bb.i ]
-  %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 6 uses
-  %i.bz = getelementptr inbounds [4 x i8], ptr %i.ad, i64 %indvars.iv.next
+  %.029 = phi i32 [ -1, %bb.i ], [ %3, %bb.j ]
+  %3 = add nsw i32 %.029, 1                       ; 2 uses
+  %4 = zext nneg i32 %3 to i64                    ; 5 uses
+  %i.bz = getelementptr inbounds nuw [4 x i8], ptr %i.ad, i64 %4
   %i.ca = load i32, ptr %i.bz, align 4, !tbaa !24 ; 2 uses
   %.not = icmp slt i32 %i.by, %i.ca
   br i1 %.not, label %bb.k, label %bb.j, !llvm.loop !127
 
 bb.k:                                             ; preds = %bb.j
   %i.cb = load ptr, ptr %i.ae, align 8, !tbaa !75, !noalias !128
-  %i.cc = getelementptr inbounds nuw [8 x i8], ptr %i.cb, i64 %indvars.iv.next
+  %i.cc = getelementptr inbounds nuw [8 x i8], ptr %i.cb, i64 %4
   %i.cd = load ptr, ptr %i.cc, align 8, !tbaa !79, !noalias !128 ; 2 uses
   %.not.i.i = icmp eq ptr %i.cd, null
   br i1 %.not.i.i, label %_ZNK5Ipopt14CompoundVector9ConstCompEi.exit.i, label %bb.l
 
 _ZNK5Ipopt14CompoundVector9ConstCompEi.exit.i:    ; preds = %bb.k
   %i.ce = load ptr, ptr %i.bu, align 8, !tbaa !82, !noalias !128
-  %i.cf = getelementptr inbounds nuw [8 x i8], ptr %i.ce, i64 %indvars.iv.next
+  %i.cf = getelementptr inbounds nuw [8 x i8], ptr %i.ce, i64 %4
   %i.cg = load ptr, ptr %i.cf, align 8, !tbaa !83, !noalias !128, !nonnull !85, !noundef !85
   br label %bb.l
 
@@ -270,14 +271,14 @@ bb.p:                                             ; preds = %_ZN5Ipopt8SmartPtrI
   %i.db = getelementptr inbounds nuw i8, ptr %i.ck, i64 216
   %i.dc = load ptr, ptr %i.db, align 8, !tbaa !104
   %i.dd = load ptr, ptr %i.ae, align 8, !tbaa !75, !noalias !131
-  %i.de = getelementptr inbounds nuw [8 x i8], ptr %i.dd, i64 %indvars.iv.next
+  %i.de = getelementptr inbounds nuw [8 x i8], ptr %i.dd, i64 %4
   %i.df = load ptr, ptr %i.de, align 8, !tbaa !79, !noalias !131 ; 2 uses
   %.not.i.i39 = icmp eq ptr %i.df, null
   br i1 %.not.i.i39, label %_ZNK5Ipopt14CompoundVector9ConstCompEi.exit.i43, label %_ZNK5Ipopt14CompoundVector9ConstCompEi.exit.thread.i40
 
 _ZNK5Ipopt14CompoundVector9ConstCompEi.exit.i43:  ; preds = %bb.p
   %i.dg = load ptr, ptr %i.bu, align 8, !tbaa !82, !noalias !131
-  %i.dh = getelementptr inbounds nuw [8 x i8], ptr %i.dg, i64 %indvars.iv.next
+  %i.dh = getelementptr inbounds nuw [8 x i8], ptr %i.dg, i64 %4
   %i.di = load ptr, ptr %i.dh, align 8, !tbaa !83, !noalias !131, !nonnull !85, !noundef !85
   br label %_ZNK5Ipopt14CompoundVector9ConstCompEi.exit.thread.i40
 

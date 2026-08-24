@@ -205,10 +205,11 @@ bb.e:                                             ; preds = %bb.o
   br i1 %exitcond87.not, label %bb.d, label %.preheader, !llvm.loop !160
 
 bb.f:                                             ; preds = %.preheader, %bb.o
-  %indvars.iv = phi i64 [ -1, %.preheader ], [ %indvars.iv.next, %bb.o ] ; 2 uses
-  %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 3 uses
-  %i.ar = getelementptr inbounds nuw [8 x i8], ptr %i.ap, i64 %indvars.iv.next ; 9 uses
-  %i.as = trunc i64 %indvars.iv to i16
+  %.02681 = phi i32 [ -1, %.preheader ], [ %3, %bb.o ] ; 2 uses
+  %3 = add nsw i32 %.02681, 1                     ; 3 uses
+  %4 = zext nneg i32 %3 to i64
+  %i.ar = getelementptr inbounds nuw [8 x i8], ptr %i.ap, i64 %4 ; 9 uses
+  %i.as = trunc nsw i32 %.02681 to i16
   %i.at = load i16, ptr %i.x, align 8, !tbaa !41
   %i.au = add i16 %i.at, %i.as                    ; 2 uses
   %i.av = load i16, ptr %i.y, align 2, !tbaa !42  ; 2 uses
@@ -409,7 +410,7 @@ bb.n:                                             ; preds = %bb.m, %_ZN16VoxelMa
   br label %bb.o
 
 bb.o:                                             ; preds = %_ZN16VoxelManipulator11getNodeNoExERKN4core8vector3dIsEE.exit.thread, %bb.m, %bb.n, %_ZN16VoxelManipulator11getNodeNoExERKN4core8vector3dIsEE.exit
-  %exitcond.not = icmp eq i64 %indvars.iv.next, 2
+  %exitcond.not = icmp eq i32 %3, 2
   br i1 %exitcond.not, label %bb.e, label %bb.f, !llvm.loop !166
 }
 

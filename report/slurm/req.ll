@@ -202,9 +202,9 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.i
 
 bb.e:                                             ; preds = %.lr.ph, %bb.h
-  %indvars.iv = phi i64 [ -1, %.lr.ph ], [ %indvars.iv.next, %bb.h ]
-  %.043.a = phi i32 [ -1, %.lr.ph ], [ %.1, %bb.h ] ; 2 uses
-  %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
+  %.043 = phi i32 [ -1, %.lr.ph ], [ %.1, %bb.h ] ; 2 uses
+  %.043.a = phi i32 [ -1, %.lr.ph ], [ %2, %bb.h ]
+  %2 = add nsw i32 %.043.a, 1                     ; 2 uses
   %i.p = load ptr, ptr %i.m, align 8
   %i.q = load i32, ptr %i.a, align 4
   %i.r = sext i32 %i.q to i64
@@ -213,7 +213,7 @@ bb.e:                                             ; preds = %.lr.ph, %bb.h
   br i1 %.not36, label %bb.h, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.t = add nsw i32 %.043.a, 1                   ; 3 uses
+  %i.t = add nsw i32 %.043, 1                     ; 3 uses
   %i.u = load ptr, ptr %i.h, align 8
   %i.v = sext i32 %i.t to i64                     ; 2 uses
   %i.w = getelementptr inbounds [8 x i8], ptr %i.u, i64 %i.v ; 2 uses
@@ -230,14 +230,15 @@ bb.g:                                             ; preds = %bb.f
   %i.ab = getelementptr inbounds [8 x i8], ptr %i.aa, i64 %i.v
   %i.ac = load i64, ptr %i.ab, align 8
   %i.ad = load ptr, ptr %i.o, align 8
-  %i.ae = getelementptr inbounds [8 x i8], ptr %i.ad, i64 %indvars.iv.next ; 2 uses
+  %3 = zext nneg i32 %2 to i64
+  %i.ae = getelementptr inbounds nuw [8 x i8], ptr %i.ad, i64 %3 ; 2 uses
   %i.af = load i64, ptr %i.ae, align 8
   %i.ag = add i64 %i.af, %i.ac
   store i64 %i.ag, ptr %i.ae, align 8
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.f, %bb.g, %bb.e
-  %.1 = phi i32 [ %i.t, %bb.f ], [ %.043.a, %bb.e ], [ %i.t, %bb.g ]
+  %.1 = phi i32 [ %i.t, %bb.f ], [ %.043, %bb.e ], [ %i.t, %bb.g ]
   %i.ah = load i32, ptr %i.a, align 4
   %i.ai = add nsw i32 %i.ah, 1
   store i32 %i.ai, ptr %i.a, align 4
