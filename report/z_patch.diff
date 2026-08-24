@@ -1,0 +1,150 @@
+diff --git a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+index ccdc51d67ac60..b124eeab6b1db 100644
+--- a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
++++ b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+@@ -1140,36 +1140,44 @@ void State::addInfoForInductions(BasicBlock &BB) {
+   DomTreeNode *DTN = DT.getNode(InLoopSucc);
+ 
+   // If we looked through `PN + C`, only derive facts when that add is
+-  // really the induction's post-increment.
+-  if (IncStep && (*IncStep != *StepOffset || StepOffset->isNegative()))
++  // really the induction's post-increment or post-decrement.
++  if (IncStep && *IncStep != *StepOffset)
+     return;
+ 
+   MonotonicInfo Info = getMonotonicityInfo(*PN, Backedge);
+ 
+   // Handle negative steps.
+   if (StepOffset->isNegative()) {
+-    // TODO: Extend to allow steps > -1.
++    // TODO: Extend to allow steps > -1. Note that the preconditions below
++    // assume a step of -1; a step of -N needs the bound shifted by N, not by 1.
+     if (!(-*StepOffset).isOne())
+       return;
+ 
++    // The loop exits when the counting value reaches B. For a compare on the
++    // phi itself that is PN == B, reached without wrapping as long as
++    // B <= StartValue. A post-decrement compare (`icmp (PN + Step), B`) exits
++    // at PN == B + 1 instead, so it needs the strict B < StartValue: at
++    // B == StartValue the phi steps past B and wraps around the whole range.
++    CmpInst::Predicate UPrecond =
++        IncStep ? CmpInst::ICMP_ULT : CmpInst::ICMP_ULE;
++    ConditionTy BBeforeStartU = {UPrecond, B, StartValue};
++    ConditionTy BBeforeStartS = {ICmpInst::getSignedPredicate(UPrecond), B,
++                                 StartValue};
++
+     // AR may wrap.
+-    // Add StartValue >= PN conditional on B <= StartValue which guarantees that
+-    // the loop exits before wrapping with a step of -1.
++    // Add StartValue >= PN conditional on the no-wrap precondition, which
++    // guarantees that the loop exits before wrapping.
+     WorkList.push_back(FactOrCheck::getConditionFact(
+-        DTN, CmpInst::ICMP_UGE, StartValue, PN,
+-        ConditionTy(CmpInst::ICMP_ULE, B, StartValue)));
++        DTN, CmpInst::ICMP_UGE, StartValue, PN, BBeforeStartU));
+     if (!(Info.Decreasing && Info.Signed))
+       WorkList.push_back(FactOrCheck::getConditionFact(
+-          DTN, CmpInst::ICMP_SGE, StartValue, PN,
+-          ConditionTy(CmpInst::ICMP_SLE, B, StartValue)));
+-    // Add PN > B conditional on B <= StartValue which guarantees that the loop
+-    // exits when reaching B with a step of -1.
+-    WorkList.push_back(FactOrCheck::getConditionFact(
+-        DTN, CmpInst::ICMP_UGT, PN, B,
+-        ConditionTy(CmpInst::ICMP_ULE, B, StartValue)));
+-    WorkList.push_back(FactOrCheck::getConditionFact(
+-        DTN, CmpInst::ICMP_SGT, PN, B,
+-        ConditionTy(CmpInst::ICMP_SLE, B, StartValue)));
++          DTN, CmpInst::ICMP_SGE, StartValue, PN, BBeforeStartS));
++    // Add PN > B conditional on the no-wrap precondition, which guarantees that
++    // the loop exits when reaching B.
++    WorkList.push_back(FactOrCheck::getConditionFact(DTN, CmpInst::ICMP_UGT, PN,
++                                                     B, BBeforeStartU));
++    WorkList.push_back(FactOrCheck::getConditionFact(DTN, CmpInst::ICMP_SGT, PN,
++                                                     B, BBeforeStartS));
+     return;
+   }
+ 
+diff --git a/llvm/test/Transforms/ConstraintElimination/induction-condition-in-loop-exit-postinc.ll b/llvm/test/Transforms/ConstraintElimination/induction-condition-in-loop-exit-postinc.ll
+index e5e4dab8fcec9..20409e77bfd0e 100644
+--- a/llvm/test/Transforms/ConstraintElimination/induction-condition-in-loop-exit-postinc.ll
++++ b/llvm/test/Transforms/ConstraintElimination/induction-condition-in-loop-exit-postinc.ll
+@@ -634,12 +634,9 @@ define void @header_postdec_negative_step_folds() {
+ ; CHECK-NEXT:    [[EC:%.*]] = icmp eq i8 [[IV_NEXT]], 2
+ ; CHECK-NEXT:    br i1 [[EC]], label %[[EXIT:.*]], label %[[LOOP_LATCH]]
+ ; CHECK:       [[LOOP_LATCH]]:
+-; CHECK-NEXT:    [[UGT:%.*]] = icmp ugt i8 [[IV]], 2
+-; CHECK-NEXT:    call void @use(i1 [[UGT]])
+-; CHECK-NEXT:    [[ULE:%.*]] = icmp ule i8 [[IV]], 5
+-; CHECK-NEXT:    call void @use(i1 [[ULE]])
+-; CHECK-NEXT:    [[SGT:%.*]] = icmp sgt i8 [[IV]], 2
+-; CHECK-NEXT:    call void @use(i1 [[SGT]])
++; CHECK-NEXT:    call void @use(i1 true)
++; CHECK-NEXT:    call void @use(i1 true)
++; CHECK-NEXT:    call void @use(i1 true)
+ ; CHECK-NEXT:    call void @use(i1 true)
+ ; CHECK-NEXT:    br label %[[LOOP]]
+ ; CHECK:       [[EXIT]]:
+@@ -678,12 +675,9 @@ define void @latch_postdec_negative_step_folds() {
+ ; CHECK-NEXT:    br label %[[LOOP:.*]]
+ ; CHECK:       [[LOOP]]:
+ ; CHECK-NEXT:    [[IV:%.*]] = phi i8 [ 5, %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LOOP_LATCH:.*]] ]
+-; CHECK-NEXT:    [[UGT:%.*]] = icmp ugt i8 [[IV]], 2
+-; CHECK-NEXT:    call void @use(i1 [[UGT]])
+-; CHECK-NEXT:    [[ULE:%.*]] = icmp ule i8 [[IV]], 5
+-; CHECK-NEXT:    call void @use(i1 [[ULE]])
+-; CHECK-NEXT:    [[SGT:%.*]] = icmp sgt i8 [[IV]], 2
+-; CHECK-NEXT:    call void @use(i1 [[SGT]])
++; CHECK-NEXT:    call void @use(i1 true)
++; CHECK-NEXT:    call void @use(i1 true)
++; CHECK-NEXT:    call void @use(i1 true)
+ ; CHECK-NEXT:    call void @use(i1 true)
+ ; CHECK-NEXT:    br label %[[LOOP_LATCH]]
+ ; CHECK:       [[LOOP_LATCH]]:
+@@ -769,10 +763,8 @@ define void @header_postdec_negative_step_strict_precond(i8 %start, i8 %b) {
+ ; CHECK-NEXT:    [[EC:%.*]] = icmp eq i8 [[IV_NEXT]], [[B]]
+ ; CHECK-NEXT:    br i1 [[EC]], label %[[EXIT]], label %[[LOOP_LATCH]]
+ ; CHECK:       [[LOOP_LATCH]]:
+-; CHECK-NEXT:    [[UGT:%.*]] = icmp ugt i8 [[IV]], [[B]]
+-; CHECK-NEXT:    call void @use(i1 [[UGT]])
+-; CHECK-NEXT:    [[ULE:%.*]] = icmp ule i8 [[IV]], [[START]]
+-; CHECK-NEXT:    call void @use(i1 [[ULE]])
++; CHECK-NEXT:    call void @use(i1 true)
++; CHECK-NEXT:    call void @use(i1 true)
+ ; CHECK-NEXT:    br label %[[LOOP]]
+ ; CHECK:       [[EXIT]]:
+ ; CHECK-NEXT:    ret void
+@@ -864,10 +856,8 @@ define void @header_postdec_negative_step_signed_precond(i8 %start, i8 %b) {
+ ; CHECK-NEXT:    [[EC:%.*]] = icmp eq i8 [[IV_NEXT]], [[B]]
+ ; CHECK-NEXT:    br i1 [[EC]], label %[[EXIT]], label %[[LOOP_LATCH]]
+ ; CHECK:       [[LOOP_LATCH]]:
+-; CHECK-NEXT:    [[SGT:%.*]] = icmp sgt i8 [[IV]], [[B]]
+-; CHECK-NEXT:    call void @use(i1 [[SGT]])
+-; CHECK-NEXT:    [[SLE:%.*]] = icmp sle i8 [[IV]], [[START]]
+-; CHECK-NEXT:    call void @use(i1 [[SLE]])
++; CHECK-NEXT:    call void @use(i1 true)
++; CHECK-NEXT:    call void @use(i1 true)
+ ; CHECK-NEXT:    [[UGT:%.*]] = icmp ugt i8 [[IV]], [[B]]
+ ; CHECK-NEXT:    call void @use(i1 [[UGT]])
+ ; CHECK-NEXT:    br label %[[LOOP]]
+@@ -908,8 +898,7 @@ define void @latch_postdec_redundant_header_guard(i32 %n) {
+ ; CHECK-NEXT:    br i1 [[GUARD]], label %[[LOOP:.*]], label %[[EXIT:.*]]
+ ; CHECK:       [[LOOP]]:
+ ; CHECK-NEXT:    [[IV:%.*]] = phi i32 [ [[N]], %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LOOP_LATCH:.*]] ]
+-; CHECK-NEXT:    [[C:%.*]] = icmp sgt i32 [[IV]], 0
+-; CHECK-NEXT:    br i1 [[C]], label %[[LOOP_LATCH]], label %[[EXIT]]
++; CHECK-NEXT:    br i1 true, label %[[LOOP_LATCH]], label %[[EXIT]]
+ ; CHECK:       [[LOOP_LATCH]]:
+ ; CHECK-NEXT:    [[IV_NEXT]] = add i32 [[IV]], -1
+ ; CHECK-NEXT:    call void @launch(i32 [[IV_NEXT]])
+@@ -963,10 +952,9 @@ define i64 @latch_postdec_umin_clamp(ptr %s, i64 %n) {
+ ; CHECK-NEXT:    br i1 [[EC]], label %[[EXIT]], label %[[LOOP]]
+ ; CHECK:       [[IF_FOUND]]:
+ ; CHECK-NEXT:    [[IDX:%.*]] = sub i64 [[N]], [[IV]]
+-; CHECK-NEXT:    [[CLAMPED:%.*]] = call i64 @llvm.umin.i64(i64 [[N]], i64 [[IDX]])
+ ; CHECK-NEXT:    br label %[[EXIT]]
+ ; CHECK:       [[EXIT]]:
+-; CHECK-NEXT:    [[RES:%.*]] = phi i64 [ 0, %[[ENTRY]] ], [ [[N]], %[[LOOP_LATCH]] ], [ [[CLAMPED]], %[[IF_FOUND]] ]
++; CHECK-NEXT:    [[RES:%.*]] = phi i64 [ 0, %[[ENTRY]] ], [ [[N]], %[[LOOP_LATCH]] ], [ [[IDX]], %[[IF_FOUND]] ]
+ ; CHECK-NEXT:    ret i64 [[RES]]
+ ;
+ entry:
