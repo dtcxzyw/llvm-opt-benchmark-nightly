@@ -204,7 +204,7 @@ bb.g:                                             ; preds = %bb.d
   %i.am = load i32, ptr %i.al, align 8, !tbaa !786
   %i.an = add nsw i32 %i.am, %i.w
   store i32 %i.an, ptr %i.al, align 8, !tbaa !786
-  %i.ao = load i32, ptr %i.v, align 8, !tbaa !877 ; 3 uses
+  %i.ao = load i32, ptr %i.v, align 8, !tbaa !877 ; 2 uses
   %i.ap = icmp sgt i32 %i.ao, 0
   br i1 %i.ap, label %.lr.ph, label %.loopexit
 
@@ -220,7 +220,6 @@ bb.g:                                             ; preds = %bb.d
   br label %bb.h
 
 bb.h:                                             ; preds = %.lr.ph, %_ZN4Node10AddOutEdgeEP4Edge.exit
-  %.pre29 = phi i32 [ %i.ao, %.lr.ph ], [ %.pre30, %_ZN4Node10AddOutEdgeEP4Edge.exit ] ; 2 uses
   %i.ay = phi i32 [ %i.ao, %.lr.ph ], [ %i.by, %_ZN4Node10AddOutEdgeEP4Edge.exit ]
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %_ZN4Node10AddOutEdgeEP4Edge.exit ] ; 2 uses
   %.sroa.0.026 = phi ptr [ %i.aw, %.lr.ph ], [ %i.bz, %_ZN4Node10AddOutEdgeEP4Edge.exit ] ; 2 uses
@@ -281,19 +280,17 @@ _ZNSt6vectorIP4EdgeSaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit16.i.i.i: ; preds = 
 
 bb.m:                                             ; preds = %_ZNSt6vectorIP4EdgeSaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit16.i.i.i
   call void @_ZdlPv(ptr noundef nonnull %i.bi) #22
-  %.pre.pre = load i32, ptr %i.v, align 8, !tbaa !877
   br label %_ZNSt6vectorIP4EdgeSaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i
 
 _ZNSt6vectorIP4EdgeSaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i: ; preds = %bb.m, %_ZNSt6vectorIP4EdgeSaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit16.i.i.i
-  %.pre = phi i32 [ %.pre.pre, %bb.m ], [ %.pre29, %_ZNSt6vectorIP4EdgeSaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit16.i.i.i ] ; 2 uses
   store ptr %i.bt, ptr %i.bc, align 8, !tbaa !881
   store ptr %i.bw, ptr %i.bd, align 8, !tbaa !879
   %i.bx = getelementptr inbounds nuw [8 x i8], ptr %i.bt, i64 %i.br
   store ptr %i.bx, ptr %i.bf, align 8, !tbaa !880
+  %.pre = load i32, ptr %i.v, align 8, !tbaa !877
   br label %_ZN4Node10AddOutEdgeEP4Edge.exit
 
 _ZN4Node10AddOutEdgeEP4Edge.exit:                 ; preds = %bb.i, %_ZNSt6vectorIP4EdgeSaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i
-  %.pre30 = phi i32 [ %.pre29, %bb.i ], [ %.pre, %_ZNSt6vectorIP4EdgeSaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i ]
   %i.by = phi i32 [ %i.ay, %bb.i ], [ %.pre, %_ZNSt6vectorIP4EdgeSaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.bz = getelementptr inbounds nuw i8, ptr %.sroa.0.026, i64 8
@@ -696,12 +693,12 @@ _ZNSt5dequeIP4NodeSaIS1_EE23_M_reserve_map_at_frontEm.exit: ; preds = %bb.c
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden void @_ZNSt5dequeIP4NodeSaIS1_EE17_M_reallocate_mapEmb(ptr noundef nonnull align 8 dereferenceable(80) %0, i64 noundef %1, i1 noundef zeroext %2) local_unnamed_addr #0 comdat align 2 {
 bb.a:
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 2 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !742  ; 3 uses
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !728  ; 8 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 3 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !742  ; 2 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 3 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !728  ; 6 uses
   %i.e = ptrtoint ptr %i.b to i64
-  %i.f = ptrtoint ptr %i.d to i64                 ; 4 uses
+  %i.f = ptrtoint ptr %i.d to i64                 ; 3 uses
   %i.g = sub i64 %i.e, %i.f
   %i.h = ashr exact i64 %i.g, 3
   %i.i = add nsw i64 %i.h, 1                      ; 3 uses
@@ -793,14 +790,17 @@ _ZNSt11_Deque_baseIP4NodeSaIS1_EE15_M_allocate_mapEm.exit: ; preds = %bb.k
   %i.at = getelementptr inbounds nuw [8 x i8], ptr %i.aq, i64 %i.as
   %i.au = select i1 %2, i64 %1, i64 0
   %i.av = getelementptr inbounds nuw [8 x i8], ptr %i.at, i64 %i.au ; 3 uses
-  %i.aw = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %i.ax = ptrtoint ptr %i.aw to i64
-  %i.ay = sub i64 %i.ax, %i.f                     ; 3 uses
+  %3 = load ptr, ptr %i.c, align 8, !tbaa !728    ; 3 uses
+  %4 = load ptr, ptr %i.a, align 8, !tbaa !742
+  %i.aw = getelementptr inbounds nuw i8, ptr %4, i64 8
+  %5 = ptrtoint ptr %i.aw to i64
+  %i.ax = ptrtoint ptr %3 to i64
+  %i.ay = sub i64 %5, %i.ax                       ; 3 uses
   %i.az = icmp sgt i64 %i.ay, 8
   br i1 %i.az, label %bb.o, label %bb.p, !prof !1558
 
 bb.o:                                             ; preds = %_ZNSt11_Deque_baseIP4NodeSaIS1_EE15_M_allocate_mapEm.exit
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.av, ptr align 8 %i.d, i64 %i.ay, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.av, ptr align 8 %3, i64 %i.ay, i1 false)
   br label %_ZSt4copyIPPP4NodeS3_ET0_T_S5_S4_.exit24
 
 bb.p:                                             ; preds = %_ZNSt11_Deque_baseIP4NodeSaIS1_EE15_M_allocate_mapEm.exit
@@ -808,7 +808,7 @@ bb.p:                                             ; preds = %_ZNSt11_Deque_baseI
   br i1 %i.ba, label %bb.q, label %_ZSt4copyIPPP4NodeS3_ET0_T_S5_S4_.exit24
 
 bb.q:                                             ; preds = %bb.p
-  %i.bb = load ptr, ptr %i.d, align 8, !tbaa !719
+  %i.bb = load ptr, ptr %3, align 8, !tbaa !719
   store ptr %i.bb, ptr %i.av, align 8, !tbaa !719
   br label %_ZSt4copyIPPP4NodeS3_ET0_T_S5_S4_.exit24
 
