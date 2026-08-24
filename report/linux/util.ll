@@ -205,9 +205,9 @@ bb.b:                                             ; preds = %bb.a
   %i.x = phi i8 [ %i.cc, %..loopexit_crit_edge.us ], [ %i.n, %.lr.ph54.split.us.preheader ] ; 3 uses
   %i.y = phi i8 [ %i.cd, %..loopexit_crit_edge.us ], [ %i.m, %.lr.ph54.split.us.preheader ] ; 3 uses
   %indvars.iv = phi i64 [ %indvars.iv.next, %..loopexit_crit_edge.us ], [ 0, %.lr.ph54.split.us.preheader ] ; 4 uses
-  %i.z = phi i32 [ %i.ce, %..loopexit_crit_edge.us ], [ %i.t, %.lr.ph54.split.us.preheader ] ; 2 uses
+  %i.z = phi i32 [ %i.ce, %..loopexit_crit_edge.us ], [ %i.t, %.lr.ph54.split.us.preheader ]
   %.04252.us = phi i32 [ %.3.us, %..loopexit_crit_edge.us ], [ 0, %.lr.ph54.split.us.preheader ] ; 5 uses
-  %i.aa = zext nneg i32 %i.z to i64
+  %i.aa = zext nneg i32 %i.z to i64               ; 2 uses
   %i.ab = icmp samesign ult i64 %indvars.iv, %i.aa
   br i1 %i.ab, label %bb.e, label %bb.c
 
@@ -217,10 +217,8 @@ bb.c:                                             ; preds = %.lr.ph54.split.us
   br i1 %.not47.us, label %.lr.ph.split.us61, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %4 = trunc nuw nsw i64 %indvars.iv to i32
-  %5 = sub nsw i32 %4, %i.z
-  %6 = zext nneg i32 %5 to i64
-  %i.ad = getelementptr i8, ptr %i.ac, i64 %6
+  %4 = sub nuw nsw i64 %indvars.iv, %i.aa
+  %i.ad = getelementptr i8, ptr %i.ac, i64 %4
   br label %bb.f
 
 bb.e:                                             ; preds = %.lr.ph54.split.us

@@ -205,7 +205,7 @@ bb.ac:                                            ; preds = %bb.aj, %bb.ai, %bb.
   br label %bb.aq
 
 bb.ad:                                            ; preds = %bb.r
-  %i.ao = sub i64 %i.s, %.01614.i                 ; 3 uses
+  %i.ao = sub nuw i64 %i.s, %.01614.i             ; 3 uses
   %i.ap = call noundef i64 @llvm.umin.i64(i64 %i.ao, i64 2048) ; 9 uses
   %.not18.i = icmp eq i64 %i.s, %.01614.i
   br i1 %.not18.i, label %._crit_edge.i, label %.lr.ph.i
@@ -608,9 +608,9 @@ bb.bw:                                            ; preds = %bb.ch, %bb.cg, %bb.
   br label %bb.co
 
 bb.bx:                                            ; preds = %bb.bl
-  %i.fy = sub i64 %i.fb, %.026108.i               ; 3 uses
+  %i.fy = sub nuw i64 %i.fb, %.026108.i           ; 2 uses
   %i.fz = call noundef i64 @llvm.umin.i64(i64 %i.fy, i64 2048) ; 12 uses
-  %.not112.i = icmp eq i64 %i.fb, %.026108.i      ; 2 uses
+  %.not112.i = icmp eq i64 %i.fb, %.026108.i
   br i1 %.not112.i, label %._crit_edge.i37, label %.lr.ph.i35
 
 .lr.ph.i35:                                       ; preds = %bb.bx
@@ -689,7 +689,7 @@ bb.bz:                                            ; preds = %._crit_edge.i37
 
 .noexc.i39:                                       ; preds = %bb.bz
   %i.hh = load ptr, ptr %i.fh, align 8, !tbaa !1048 ; 5 uses
-  %i.hi = add nsw i64 %i.fz, -1
+  %i.hi = add nsw i64 %i.fz, -1                   ; 2 uses
   %xtraiter547 = and i64 %i.fz, 3                 ; 3 uses
   %i.hj = icmp ult i64 %i.hi, 3
   br i1 %i.hj, label %.lr.ph.i.i40.epil.preheader, label %.noexc.i39.new
@@ -789,15 +789,12 @@ bb.ca:                                            ; preds = %.noexc56.i
 
 _ZN6duckdbL18ReorderPayloadDataINS_7SortKeyILNS_11SortKeyTypeE6EEEEEvRNS_19TupleDataCollectionERNS_20TupleDataAppendStateEPKPT_RNS_19TupleDataChunkStateERKm.exit.i: ; preds = %.noexc60.i
   invoke void @_ZN6duckdb14ConstantVector16VerifyVectorTypeIKPhEEvRKNS_6VectorE(ptr noundef nonnull align 8 dereferenceable(104) %i.fk)
-          to label %_ZN6duckdb10FlatVector7GetDataIKPhEEPT_RNS_6VectorE.exit.i unwind label %bb.cc
+          to label %.lr.ph104.i.preheader unwind label %bb.cc
 
-_ZN6duckdb10FlatVector7GetDataIKPhEEPT_RNS_6VectorE.exit.i: ; preds = %_ZN6duckdbL18ReorderPayloadDataINS_7SortKeyILNS_11SortKeyTypeE6EEEEEvRNS_19TupleDataCollectionERNS_20TupleDataAppendStateEPKPT_RNS_19TupleDataChunkStateERKm.exit.i
+.lr.ph104.i.preheader:                            ; preds = %_ZN6duckdbL18ReorderPayloadDataINS_7SortKeyILNS_11SortKeyTypeE6EEEEEvRNS_19TupleDataCollectionERNS_20TupleDataAppendStateEPKPT_RNS_19TupleDataChunkStateERKm.exit.i
   %47 = load ptr, ptr %i.fl, align 8, !tbaa !1048 ; 5 uses
-  br i1 %.not112.i, label %._crit_edge105.i, label %.lr.ph104.i.preheader
-
-.lr.ph104.i.preheader:                            ; preds = %_ZN6duckdb10FlatVector7GetDataIKPhEEPT_RNS_6VectorE.exit.i
   %xtraiter553 = and i64 %i.fz, 3                 ; 3 uses
-  %i.it = icmp ult i64 %i.fy, 4
+  %i.it = icmp ult i64 %i.hi, 3
   br i1 %i.it, label %.lr.ph104.i.epil.preheader, label %.lr.ph104.i.preheader.new
 
 .lr.ph104.i.preheader.new:                        ; preds = %.lr.ph104.i.preheader
@@ -828,7 +825,7 @@ _ZN6duckdb10FlatVector7GetDataIKPhEEPT_RNS_6VectorE.exit.i: ; preds = %_ZN6duckd
   %epil.iter554.cmp.not = icmp eq i64 %epil.iter554.next, %xtraiter553
   br i1 %epil.iter554.cmp.not, label %._crit_edge105.i, label %.lr.ph104.i.epil, !llvm.loop !1427
 
-._crit_edge105.i:                                 ; preds = %._crit_edge105.i.loopexit.unr-lcssa, %.lr.ph104.i.epil, %_ZN6duckdb10FlatVector7GetDataIKPhEEPT_RNS_6VectorE.exit.i
+._crit_edge105.i:                                 ; preds = %.lr.ph104.i.epil, %._crit_edge105.i.loopexit.unr-lcssa
   %i.ja = add i64 %i.fz, %.026108.i               ; 2 uses
   %i.jb = icmp ult i64 %i.ja, %i.fb
   br i1 %i.jb, label %bb.bl, label %._crit_edge111.i, !llvm.loop !1428
@@ -1231,9 +1228,9 @@ bb.du:                                            ; preds = %bb.ef, %bb.ee, %bb.
   br label %bb.em
 
 bb.dv:                                            ; preds = %bb.dj
-  %i.mw = sub i64 %i.lz, %.026108.i83             ; 3 uses
+  %i.mw = sub nuw i64 %i.lz, %.026108.i83         ; 2 uses
   %i.mx = call noundef i64 @llvm.umin.i64(i64 %i.mw, i64 2048) ; 12 uses
-  %.not112.i86 = icmp eq i64 %i.lz, %.026108.i83  ; 2 uses
+  %.not112.i86 = icmp eq i64 %i.lz, %.026108.i83
   br i1 %.not112.i86, label %._crit_edge.i92, label %.lr.ph.i87
 
 .lr.ph.i87:                                       ; preds = %bb.dv
@@ -1312,7 +1309,7 @@ bb.dx:                                            ; preds = %._crit_edge.i92
 
 .noexc.i97:                                       ; preds = %bb.dx
   %i.of = load ptr, ptr %i.mf, align 8, !tbaa !1048 ; 5 uses
-  %i.og = add nsw i64 %i.mx, -1
+  %i.og = add nsw i64 %i.mx, -1                   ; 2 uses
   %xtraiter526 = and i64 %i.mx, 3                 ; 3 uses
   %i.oh = icmp ult i64 %i.og, 3
   br i1 %i.oh, label %.lr.ph.i.i98.epil.preheader, label %.noexc.i97.new
@@ -1412,15 +1409,12 @@ bb.dy:                                            ; preds = %.noexc56.i102
 
 _ZN6duckdbL18ReorderPayloadDataINS_7SortKeyILNS_11SortKeyTypeE7EEEEEvRNS_19TupleDataCollectionERNS_20TupleDataAppendStateEPKPT_RNS_19TupleDataChunkStateERKm.exit.i: ; preds = %.noexc60.i106
   invoke void @_ZN6duckdb14ConstantVector16VerifyVectorTypeIKPhEEvRKNS_6VectorE(ptr noundef nonnull align 8 dereferenceable(104) %i.mi)
-          to label %_ZN6duckdb10FlatVector7GetDataIKPhEEPT_RNS_6VectorE.exit.i107 unwind label %bb.ea
+          to label %.lr.ph104.i108.preheader unwind label %bb.ea
 
-_ZN6duckdb10FlatVector7GetDataIKPhEEPT_RNS_6VectorE.exit.i107: ; preds = %_ZN6duckdbL18ReorderPayloadDataINS_7SortKeyILNS_11SortKeyTypeE7EEEEEvRNS_19TupleDataCollectionERNS_20TupleDataAppendStateEPKPT_RNS_19TupleDataChunkStateERKm.exit.i
+.lr.ph104.i108.preheader:                         ; preds = %_ZN6duckdbL18ReorderPayloadDataINS_7SortKeyILNS_11SortKeyTypeE7EEEEEvRNS_19TupleDataCollectionERNS_20TupleDataAppendStateEPKPT_RNS_19TupleDataChunkStateERKm.exit.i
   %48 = load ptr, ptr %i.mj, align 8, !tbaa !1048 ; 5 uses
-  br i1 %.not112.i86, label %._crit_edge105.i111, label %.lr.ph104.i108.preheader
-
-.lr.ph104.i108.preheader:                         ; preds = %_ZN6duckdb10FlatVector7GetDataIKPhEEPT_RNS_6VectorE.exit.i107
   %xtraiter532 = and i64 %i.mx, 3                 ; 3 uses
-  %i.pr = icmp ult i64 %i.mw, 4
+  %i.pr = icmp ult i64 %i.og, 3
   br i1 %i.pr, label %.lr.ph104.i108.epil.preheader, label %.lr.ph104.i108.preheader.new
 
 .lr.ph104.i108.preheader.new:                     ; preds = %.lr.ph104.i108.preheader
@@ -1451,7 +1445,7 @@ _ZN6duckdb10FlatVector7GetDataIKPhEEPT_RNS_6VectorE.exit.i107: ; preds = %_ZN6du
   %epil.iter533.cmp.not = icmp eq i64 %epil.iter533.next, %xtraiter532
   br i1 %epil.iter533.cmp.not, label %._crit_edge105.i111, label %.lr.ph104.i108.epil, !llvm.loop !1436
 
-._crit_edge105.i111:                              ; preds = %._crit_edge105.i111.loopexit.unr-lcssa, %.lr.ph104.i108.epil, %_ZN6duckdb10FlatVector7GetDataIKPhEEPT_RNS_6VectorE.exit.i107
+._crit_edge105.i111:                              ; preds = %.lr.ph104.i108.epil, %._crit_edge105.i111.loopexit.unr-lcssa
   %i.py = add i64 %i.mx, %.026108.i83             ; 2 uses
   %i.pz = icmp ult i64 %i.py, %i.lz
   br i1 %i.pz, label %bb.dj, label %._crit_edge111.i112, !llvm.loop !1437
@@ -1854,9 +1848,9 @@ bb.fs:                                            ; preds = %bb.gd, %bb.gc, %bb.
   br label %bb.gk
 
 bb.ft:                                            ; preds = %bb.fh
-  %i.tu = sub i64 %i.sx, %.026108.i176            ; 3 uses
+  %i.tu = sub nuw i64 %i.sx, %.026108.i176        ; 2 uses
   %i.tv = call noundef i64 @llvm.umin.i64(i64 %i.tu, i64 2048) ; 12 uses
-  %.not112.i179 = icmp eq i64 %i.sx, %.026108.i176 ; 2 uses
+  %.not112.i179 = icmp eq i64 %i.sx, %.026108.i176
   br i1 %.not112.i179, label %._crit_edge.i185, label %.lr.ph.i180
 
 .lr.ph.i180:                                      ; preds = %bb.ft
@@ -1935,7 +1929,7 @@ bb.fv:                                            ; preds = %._crit_edge.i185
 
 .noexc.i190:                                      ; preds = %bb.fv
   %i.vd = load ptr, ptr %i.td, align 8, !tbaa !1048 ; 5 uses
-  %i.ve = add nsw i64 %i.tv, -1
+  %i.ve = add nsw i64 %i.tv, -1                   ; 2 uses
   %xtraiter505 = and i64 %i.tv, 3                 ; 3 uses
   %i.vf = icmp ult i64 %i.ve, 3
   br i1 %i.vf, label %.lr.ph.i.i191.epil.preheader, label %.noexc.i190.new
@@ -2035,15 +2029,12 @@ bb.fw:                                            ; preds = %.noexc56.i195
 
 _ZN6duckdbL18ReorderPayloadDataINS_7SortKeyILNS_11SortKeyTypeE8EEEEEvRNS_19TupleDataCollectionERNS_20TupleDataAppendStateEPKPT_RNS_19TupleDataChunkStateERKm.exit.i: ; preds = %.noexc60.i199
   invoke void @_ZN6duckdb14ConstantVector16VerifyVectorTypeIKPhEEvRKNS_6VectorE(ptr noundef nonnull align 8 dereferenceable(104) %i.tg)
-          to label %_ZN6duckdb10FlatVector7GetDataIKPhEEPT_RNS_6VectorE.exit.i200 unwind label %bb.fy
+          to label %.lr.ph104.i201.preheader unwind label %bb.fy
 
-_ZN6duckdb10FlatVector7GetDataIKPhEEPT_RNS_6VectorE.exit.i200: ; preds = %_ZN6duckdbL18ReorderPayloadDataINS_7SortKeyILNS_11SortKeyTypeE8EEEEEvRNS_19TupleDataCollectionERNS_20TupleDataAppendStateEPKPT_RNS_19TupleDataChunkStateERKm.exit.i
+.lr.ph104.i201.preheader:                         ; preds = %_ZN6duckdbL18ReorderPayloadDataINS_7SortKeyILNS_11SortKeyTypeE8EEEEEvRNS_19TupleDataCollectionERNS_20TupleDataAppendStateEPKPT_RNS_19TupleDataChunkStateERKm.exit.i
   %49 = load ptr, ptr %i.th, align 8, !tbaa !1048 ; 5 uses
-  br i1 %.not112.i179, label %._crit_edge105.i204, label %.lr.ph104.i201.preheader
-
-.lr.ph104.i201.preheader:                         ; preds = %_ZN6duckdb10FlatVector7GetDataIKPhEEPT_RNS_6VectorE.exit.i200
   %xtraiter511 = and i64 %i.tv, 3                 ; 3 uses
-  %i.wp = icmp ult i64 %i.tu, 4
+  %i.wp = icmp ult i64 %i.ve, 3
   br i1 %i.wp, label %.lr.ph104.i201.epil.preheader, label %.lr.ph104.i201.preheader.new
 
 .lr.ph104.i201.preheader.new:                     ; preds = %.lr.ph104.i201.preheader
@@ -2074,7 +2065,7 @@ _ZN6duckdb10FlatVector7GetDataIKPhEEPT_RNS_6VectorE.exit.i200: ; preds = %_ZN6du
   %epil.iter512.cmp.not = icmp eq i64 %epil.iter512.next, %xtraiter511
   br i1 %epil.iter512.cmp.not, label %._crit_edge105.i204, label %.lr.ph104.i201.epil, !llvm.loop !1445
 
-._crit_edge105.i204:                              ; preds = %._crit_edge105.i204.loopexit.unr-lcssa, %.lr.ph104.i201.epil, %_ZN6duckdb10FlatVector7GetDataIKPhEEPT_RNS_6VectorE.exit.i200
+._crit_edge105.i204:                              ; preds = %.lr.ph104.i201.epil, %._crit_edge105.i204.loopexit.unr-lcssa
   %i.ww = add i64 %i.tv, %.026108.i176            ; 2 uses
   %i.wx = icmp ult i64 %i.ww, %i.sx
   br i1 %i.wx, label %bb.fh, label %._crit_edge111.i205, !llvm.loop !1446
@@ -2477,9 +2468,9 @@ bb.hy:                                            ; preds = %bb.im, %bb.il, %bb.
   br label %bb.it
 
 bb.hz:                                            ; preds = %bb.hl
-  %i.abe = sub i64 %i.aaa, %.028138.i             ; 3 uses
+  %i.abe = sub nuw i64 %i.aaa, %.028138.i         ; 2 uses
   %i.abf = call noundef i64 @llvm.umin.i64(i64 %i.abe, i64 2048) ; 17 uses
-  %.not142.i = icmp eq i64 %i.aaa, %.028138.i     ; 2 uses
+  %.not142.i = icmp eq i64 %i.aaa, %.028138.i
   br i1 %.not142.i, label %._crit_edge.i260, label %.lr.ph.i258
 
 .lr.ph.i258:                                      ; preds = %bb.hz
@@ -2558,7 +2549,7 @@ bb.ib:                                            ; preds = %._crit_edge.i260
 
 .noexc.i262:                                      ; preds = %bb.ib
   %i.acn = load ptr, ptr %i.aag, align 8, !tbaa !1048 ; 5 uses
-  %i.aco = add nsw i64 %i.abf, -1                 ; 2 uses
+  %i.aco = add nsw i64 %i.abf, -1                 ; 3 uses
   %xtraiter479 = and i64 %i.abf, 3                ; 3 uses
   %i.acp = icmp ult i64 %i.aco, 3
   br i1 %i.acp, label %.lr.ph.i.i263.epil.preheader, label %.noexc.i262.new
@@ -2658,15 +2649,12 @@ bb.ic:                                            ; preds = %.noexc65.i
 
 _ZN6duckdbL18ReorderPayloadDataINS_7SortKeyILNS_11SortKeyTypeE9EEEEEvRNS_19TupleDataCollectionERNS_20TupleDataAppendStateEPKPT_RNS_19TupleDataChunkStateERKm.exit.i: ; preds = %.noexc69.i
   invoke void @_ZN6duckdb14ConstantVector16VerifyVectorTypeIKPhEEvRKNS_6VectorE(ptr noundef nonnull align 8 dereferenceable(104) %i.aaj)
-          to label %_ZN6duckdb10FlatVector7GetDataIKPhEEPT_RNS_6VectorE.exit.i266 unwind label %bb.ie
+          to label %.lr.ph134.i.preheader unwind label %bb.ie
 
-_ZN6duckdb10FlatVector7GetDataIKPhEEPT_RNS_6VectorE.exit.i266: ; preds = %_ZN6duckdbL18ReorderPayloadDataINS_7SortKeyILNS_11SortKeyTypeE9EEEEEvRNS_19TupleDataCollectionERNS_20TupleDataAppendStateEPKPT_RNS_19TupleDataChunkStateERKm.exit.i
+.lr.ph134.i.preheader:                            ; preds = %_ZN6duckdbL18ReorderPayloadDataINS_7SortKeyILNS_11SortKeyTypeE9EEEEEvRNS_19TupleDataCollectionERNS_20TupleDataAppendStateEPKPT_RNS_19TupleDataChunkStateERKm.exit.i
   %50 = load ptr, ptr %i.aak, align 8, !tbaa !1048 ; 5 uses
-  br i1 %.not142.i, label %._crit_edge135.i, label %.lr.ph134.i.preheader
-
-.lr.ph134.i.preheader:                            ; preds = %_ZN6duckdb10FlatVector7GetDataIKPhEEPT_RNS_6VectorE.exit.i266
   %xtraiter484 = and i64 %i.abf, 3                ; 3 uses
-  %i.adz = icmp ult i64 %i.abe, 4
+  %i.adz = icmp ult i64 %i.aco, 3
   br i1 %i.adz, label %.lr.ph134.i.epil.preheader, label %.lr.ph134.i.preheader.new
 
 .lr.ph134.i.preheader.new:                        ; preds = %.lr.ph134.i.preheader
@@ -2697,7 +2685,7 @@ _ZN6duckdb10FlatVector7GetDataIKPhEEPT_RNS_6VectorE.exit.i266: ; preds = %_ZN6du
   %epil.iter485.cmp.not = icmp eq i64 %epil.iter485.next, %xtraiter484
   br i1 %epil.iter485.cmp.not, label %._crit_edge135.i, label %.lr.ph134.i.epil, !llvm.loop !1454
 
-._crit_edge135.i:                                 ; preds = %._crit_edge135.i.loopexit.unr-lcssa, %.lr.ph134.i.epil, %_ZN6duckdb10FlatVector7GetDataIKPhEEPT_RNS_6VectorE.exit.i266
+._crit_edge135.i:                                 ; preds = %.lr.ph134.i.epil, %._crit_edge135.i.loopexit.unr-lcssa
   %i.aeg = invoke noundef nonnull align 8 dereferenceable(192) ptr @_ZNK6duckdb10unique_ptrINS_19TupleDataCollectionESt14default_deleteIS1_ELb1EEdeEv(ptr noundef nonnull align 8 dereferenceable(8) %3)
           to label %bb.if unwind label %bb.id     ; 2 uses
 
@@ -3100,8 +3088,8 @@ begin_hunk_5_@_ZN14duckdb_pdqsort14pdqsort_detail26partition_right_branchlessIN6
   %i.ok = getelementptr inbounds nuw i8, ptr %i.ct, i64 %.067507
   %i.ol = icmp eq i64 %.3451, %.3
   call void @_ZN14duckdb_pdqsort14pdqsort_detail12swap_offsetsIN6duckdb16block_iterator_tIKNS2_18BlockIteratorStateILNS2_22BlockIteratorStateTypeE0EEENS2_7SortKeyILNS2_11SortKeyTypeE1EEEEEEEvT_SC_PhSD_mb(ptr noundef nonnull dead_on_return %3, ptr noundef nonnull dead_on_return %4, ptr noundef %i.oj, ptr noundef %i.ok, i64 noundef %.sroa.speculated, i1 noundef zeroext %i.ol)
-  %i.om = sub i64 %.3451, %.sroa.speculated       ; 3 uses
-  %i.on = sub i64 %.3, %.sroa.speculated          ; 4 uses
+  %i.om = sub nuw i64 %.3451, %.sroa.speculated   ; 3 uses
+  %i.on = sub nuw i64 %.3, %.sroa.speculated      ; 4 uses
   %i.oo = add i64 %.sroa.speculated, %.068506
   %i.op = add i64 %.sroa.speculated, %.067507
   %.not453 = icmp ugt i64 %.3451, %.3             ; 3 uses
@@ -3504,7 +3492,7 @@ _ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateT
   br i1 %exitcond259.not, label %bb.r, label %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE1EEEEplERKm.exit38, !llvm.loop !2146
 
 bb.s:                                             ; preds = %bb.r
-  %i.gt = sub i64 %.0225, %i.fy
+  %i.gt = sub nuw i64 %.0225, %i.fy
   br label %.backedge
 
 bb.t:                                             ; preds = %bb.i
@@ -3907,8 +3895,8 @@ _ZZN15duckdb_ska_sort6detail15StdSortFallbackIN6duckdb16block_iterator_tIKNS2_18
   %i.sy = getelementptr inbounds nuw i8, ptr %i.dv, i64 %.067560
   %i.sz = icmp eq i64 %.3491, %.3
   call void @_ZN14duckdb_pdqsort14pdqsort_detail12swap_offsetsIN6duckdb16block_iterator_tIKNS2_18BlockIteratorStateILNS2_22BlockIteratorStateTypeE0EEENS2_7SortKeyILNS2_11SortKeyTypeE2EEEEEEEvT_SC_PhSD_mb(ptr noundef nonnull dead_on_return %3, ptr noundef nonnull dead_on_return %4, ptr noundef %i.sx, ptr noundef %i.sy, i64 noundef %.sroa.speculated, i1 noundef zeroext %i.sz)
-  %i.ta = sub i64 %.3491, %.sroa.speculated       ; 3 uses
-  %i.tb = sub i64 %.3, %.sroa.speculated          ; 4 uses
+  %i.ta = sub nuw i64 %.3491, %.sroa.speculated   ; 3 uses
+  %i.tb = sub nuw i64 %.3, %.sroa.speculated      ; 4 uses
   %i.tc = add i64 %.sroa.speculated, %.068559
   %i.td = add i64 %.sroa.speculated, %.067560
   %.not495 = icmp ugt i64 %.3491, %.3             ; 3 uses
@@ -4311,7 +4299,7 @@ _ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateT
   br i1 %exitcond255.not, label %bb.r, label %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE2EEEEplERKm.exit35, !llvm.loop !3169
 
 bb.s:                                             ; preds = %bb.r
-  %i.gq = sub i64 %.0221, %i.fw
+  %i.gq = sub nuw i64 %.0221, %i.fw
   br label %.backedge
 
 bb.t:                                             ; preds = %bb.i
@@ -4714,8 +4702,8 @@ _ZZN15duckdb_ska_sort6detail15StdSortFallbackIN6duckdb16block_iterator_tIKNS2_18
   %i.we = getelementptr inbounds nuw i8, ptr %i.eh, i64 %.067593
   %i.wf = icmp eq i64 %.3513, %.3
   call void @_ZN14duckdb_pdqsort14pdqsort_detail12swap_offsetsIN6duckdb16block_iterator_tIKNS2_18BlockIteratorStateILNS2_22BlockIteratorStateTypeE0EEENS2_7SortKeyILNS2_11SortKeyTypeE3EEEEEEEvT_SC_PhSD_mb(ptr noundef nonnull dead_on_return %3, ptr noundef nonnull dead_on_return %4, ptr noundef %i.wd, ptr noundef %i.we, i64 noundef %.sroa.speculated, i1 noundef zeroext %i.wf)
-  %i.wg = sub i64 %.3513, %.sroa.speculated       ; 3 uses
-  %i.wh = sub i64 %.3, %.sroa.speculated          ; 4 uses
+  %i.wg = sub nuw i64 %.3513, %.sroa.speculated   ; 3 uses
+  %i.wh = sub nuw i64 %.3, %.sroa.speculated      ; 4 uses
   %i.wi = add i64 %.sroa.speculated, %.068592
   %i.wj = add i64 %.sroa.speculated, %.067593
   %.not517 = icmp ugt i64 %.3513, %.3             ; 3 uses
@@ -5118,7 +5106,7 @@ _ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateT
   br i1 %exitcond255.not, label %bb.r, label %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE3EEEEplERKm.exit35, !llvm.loop !4185
 
 bb.s:                                             ; preds = %bb.r
-  %i.gq = sub i64 %.0221, %i.fw
+  %i.gq = sub nuw i64 %.0221, %i.fw
   br label %.backedge
 
 bb.t:                                             ; preds = %bb.i
@@ -5521,8 +5509,8 @@ _ZZN15duckdb_ska_sort6detail15StdSortFallbackIN6duckdb16block_iterator_tIKNS2_18
   %i.zk = getelementptr inbounds nuw i8, ptr %i.et, i64 %.067621
   %i.zl = icmp eq i64 %.3535, %.3
   call void @_ZN14duckdb_pdqsort14pdqsort_detail12swap_offsetsIN6duckdb16block_iterator_tIKNS2_18BlockIteratorStateILNS2_22BlockIteratorStateTypeE0EEENS2_7SortKeyILNS2_11SortKeyTypeE4EEEEEEEvT_SC_PhSD_mb(ptr noundef nonnull dead_on_return %3, ptr noundef nonnull dead_on_return %4, ptr noundef %i.zj, ptr noundef %i.zk, i64 noundef %.sroa.speculated, i1 noundef zeroext %i.zl)
-  %i.zm = sub i64 %.3535, %.sroa.speculated       ; 3 uses
-  %i.zn = sub i64 %.3, %.sroa.speculated          ; 4 uses
+  %i.zm = sub nuw i64 %.3535, %.sroa.speculated   ; 3 uses
+  %i.zn = sub nuw i64 %.3, %.sroa.speculated      ; 4 uses
   %i.zo = add i64 %.sroa.speculated, %.068620
   %i.zp = add i64 %.sroa.speculated, %.067621
   %.not539 = icmp ugt i64 %.3535, %.3             ; 3 uses
@@ -5925,7 +5913,7 @@ _ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateT
   br i1 %exitcond255.not, label %bb.r, label %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE4EEEEplERKm.exit35, !llvm.loop !5201
 
 bb.s:                                             ; preds = %bb.r
-  %i.gq = sub i64 %.0221, %i.fw
+  %i.gq = sub nuw i64 %.0221, %i.fw
   br label %.backedge
 
 bb.t:                                             ; preds = %bb.i
@@ -6328,8 +6316,8 @@ _ZZN15duckdb_ska_sort6detail15StdSortFallbackIN6duckdb16block_iterator_tIKNS2_18
   %i.adk = getelementptr inbounds nuw i8, ptr %i.ey, i64 %.067692
   %i.adl = icmp eq i64 %.3616, %.3
   call void @_ZN14duckdb_pdqsort14pdqsort_detail12swap_offsetsIN6duckdb16block_iterator_tIKNS2_18BlockIteratorStateILNS2_22BlockIteratorStateTypeE0EEENS2_7SortKeyILNS2_11SortKeyTypeE5EEEEEEEvT_SC_PhSD_mb(ptr noundef nonnull dead_on_return %6, ptr noundef nonnull dead_on_return %7, ptr noundef %i.adj, ptr noundef %i.adk, i64 noundef %.sroa.speculated, i1 noundef zeroext %i.adl)
-  %i.adm = sub i64 %.3616, %.sroa.speculated      ; 3 uses
-  %i.adn = sub i64 %.3, %.sroa.speculated         ; 4 uses
+  %i.adm = sub nuw i64 %.3616, %.sroa.speculated  ; 3 uses
+  %i.adn = sub nuw i64 %.3, %.sroa.speculated     ; 4 uses
   %i.ado = add i64 %.sroa.speculated, %.068691
   %i.adp = add i64 %.sroa.speculated, %.067692
   %.not625 = icmp ugt i64 %.3616, %.3             ; 3 uses
@@ -6732,7 +6720,7 @@ _ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateT
   br i1 %exitcond255.not, label %bb.r, label %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE5EEEEplERKm.exit35, !llvm.loop !6205
 
 bb.s:                                             ; preds = %bb.r
-  %i.gq = sub i64 %.0221, %i.fw
+  %i.gq = sub nuw i64 %.0221, %i.fw
   br label %.backedge
 
 bb.t:                                             ; preds = %bb.i
@@ -7135,8 +7123,8 @@ begin_hunk_15_@_ZN14duckdb_pdqsort14pdqsort_detail26partition_right_branchlessIN
   %i.oh = getelementptr inbounds nuw i8, ptr %i.cq, i64 %.067485
   %i.oi = icmp eq i64 %.3431, %.3
   call void @_ZN14duckdb_pdqsort14pdqsort_detail12swap_offsetsIN6duckdb16block_iterator_tIKNS2_18BlockIteratorStateILNS2_22BlockIteratorStateTypeE0EEENS2_7SortKeyILNS2_11SortKeyTypeE6EEEEEEEvT_SC_PhSD_mb(ptr noundef nonnull dead_on_return %6, ptr noundef nonnull dead_on_return %7, ptr noundef %i.og, ptr noundef %i.oh, i64 noundef %.sroa.speculated, i1 noundef zeroext %i.oi)
-  %i.oj = sub i64 %.3431, %.sroa.speculated       ; 3 uses
-  %i.ok = sub i64 %.3, %.sroa.speculated          ; 4 uses
+  %i.oj = sub nuw i64 %.3431, %.sroa.speculated   ; 3 uses
+  %i.ok = sub nuw i64 %.3, %.sroa.speculated      ; 4 uses
   %i.ol = add i64 %.sroa.speculated, %.068484
   %i.om = add i64 %.sroa.speculated, %.067485
   %.not433 = icmp ugt i64 %.3431, %.3             ; 3 uses
@@ -7539,7 +7527,7 @@ _ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateT
   br i1 %exitcond255.not, label %bb.r, label %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE6EEEEplERKm.exit35, !llvm.loop !7209
 
 bb.s:                                             ; preds = %bb.r
-  %i.gq = sub i64 %.0221, %i.fw
+  %i.gq = sub nuw i64 %.0221, %i.fw
   br label %.backedge
 
 bb.t:                                             ; preds = %bb.i
@@ -7942,8 +7930,8 @@ _ZZN15duckdb_ska_sort6detail15StdSortFallbackIN6duckdb16block_iterator_tIKNS2_18
   %i.sy = getelementptr inbounds nuw i8, ptr %i.dv, i64 %.067542
   %i.sz = icmp eq i64 %.3473, %.3
   call void @_ZN14duckdb_pdqsort14pdqsort_detail12swap_offsetsIN6duckdb16block_iterator_tIKNS2_18BlockIteratorStateILNS2_22BlockIteratorStateTypeE0EEENS2_7SortKeyILNS2_11SortKeyTypeE7EEEEEEEvT_SC_PhSD_mb(ptr noundef nonnull dead_on_return %6, ptr noundef nonnull dead_on_return %7, ptr noundef %i.sx, ptr noundef %i.sy, i64 noundef %.sroa.speculated, i1 noundef zeroext %i.sz)
-  %i.ta = sub i64 %.3473, %.sroa.speculated       ; 3 uses
-  %i.tb = sub i64 %.3, %.sroa.speculated          ; 4 uses
+  %i.ta = sub nuw i64 %.3473, %.sroa.speculated   ; 3 uses
+  %i.tb = sub nuw i64 %.3, %.sroa.speculated      ; 4 uses
   %i.tc = add i64 %.sroa.speculated, %.068541
   %i.td = add i64 %.sroa.speculated, %.067542
   %.not477 = icmp ugt i64 %.3473, %.3             ; 3 uses
@@ -8346,7 +8334,7 @@ _ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateT
   br i1 %exitcond255.not, label %bb.r, label %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE7EEEEplERKm.exit35, !llvm.loop !8225
 
 bb.s:                                             ; preds = %bb.r
-  %i.gq = sub i64 %.0221, %i.fw
+  %i.gq = sub nuw i64 %.0221, %i.fw
   br label %.backedge
 
 bb.t:                                             ; preds = %bb.i
@@ -8749,8 +8737,8 @@ _ZZN15duckdb_ska_sort6detail15StdSortFallbackIN6duckdb16block_iterator_tIKNS2_18
   %i.we = getelementptr inbounds nuw i8, ptr %i.eh, i64 %.067575
   %i.wf = icmp eq i64 %.3495, %.3
   call void @_ZN14duckdb_pdqsort14pdqsort_detail12swap_offsetsIN6duckdb16block_iterator_tIKNS2_18BlockIteratorStateILNS2_22BlockIteratorStateTypeE0EEENS2_7SortKeyILNS2_11SortKeyTypeE8EEEEEEEvT_SC_PhSD_mb(ptr noundef nonnull dead_on_return %6, ptr noundef nonnull dead_on_return %7, ptr noundef %i.wd, ptr noundef %i.we, i64 noundef %.sroa.speculated, i1 noundef zeroext %i.wf)
-  %i.wg = sub i64 %.3495, %.sroa.speculated       ; 3 uses
-  %i.wh = sub i64 %.3, %.sroa.speculated          ; 4 uses
+  %i.wg = sub nuw i64 %.3495, %.sroa.speculated   ; 3 uses
+  %i.wh = sub nuw i64 %.3, %.sroa.speculated      ; 4 uses
   %i.wi = add i64 %.sroa.speculated, %.068574
   %i.wj = add i64 %.sroa.speculated, %.067575
   %.not499 = icmp ugt i64 %.3495, %.3             ; 3 uses
@@ -9153,7 +9141,7 @@ _ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateT
   br i1 %exitcond255.not, label %bb.r, label %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE8EEEEplERKm.exit35, !llvm.loop !9241
 
 bb.s:                                             ; preds = %bb.r
-  %i.gq = sub i64 %.0221, %i.fw
+  %i.gq = sub nuw i64 %.0221, %i.fw
   br label %.backedge
 
 bb.t:                                             ; preds = %bb.i
@@ -9556,8 +9544,8 @@ _ZZN15duckdb_ska_sort6detail15StdSortFallbackIN6duckdb16block_iterator_tIKNS2_18
   %i.yp = getelementptr inbounds nuw i8, ptr %i.eh, i64 %.067672
   %i.yq = icmp eq i64 %.3596, %.3
   call void @_ZN14duckdb_pdqsort14pdqsort_detail12swap_offsetsIN6duckdb16block_iterator_tIKNS2_18BlockIteratorStateILNS2_22BlockIteratorStateTypeE0EEENS2_7SortKeyILNS2_11SortKeyTypeE9EEEEEEEvT_SC_PhSD_mb(ptr noundef nonnull dead_on_return %6, ptr noundef nonnull dead_on_return %7, ptr noundef %i.yo, ptr noundef %i.yp, i64 noundef %.sroa.speculated, i1 noundef zeroext %i.yq)
-  %i.yr = sub i64 %.3596, %.sroa.speculated       ; 3 uses
-  %i.ys = sub i64 %.3, %.sroa.speculated          ; 4 uses
+  %i.yr = sub nuw i64 %.3596, %.sroa.speculated   ; 3 uses
+  %i.ys = sub nuw i64 %.3, %.sroa.speculated      ; 4 uses
   %i.yt = add i64 %.sroa.speculated, %.068671
   %i.yu = add i64 %.sroa.speculated, %.067672
   %.not605 = icmp ugt i64 %.3596, %.3             ; 3 uses
@@ -9960,7 +9948,7 @@ _ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateT
   br i1 %exitcond255.not, label %bb.r, label %_ZNK6duckdb16block_iterator_tIKNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE0EEENS_7SortKeyILNS_11SortKeyTypeE9EEEEplERKm.exit35, !llvm.loop !10245
 
 bb.s:                                             ; preds = %bb.r
-  %i.gq = sub i64 %.0221, %i.fw
+  %i.gq = sub nuw i64 %.0221, %i.fw
   br label %.backedge
 
 bb.t:                                             ; preds = %bb.i

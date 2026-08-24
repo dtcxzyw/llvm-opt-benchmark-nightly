@@ -2,8 +2,7 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 584
 inline.NumDeleted: 123
 loop-unroll.NumCompletelyUnrolled: 5
-loop-unroll.NumRuntimeUnrolled: 1
-loop-unroll.NumUnrolled: 6
+loop-unroll.NumUnrolled: 5
 begin_hunk_0_@_ZNK6icu_7816SimpleDateFormat14checkIntSuffixERKNS_13UnicodeStringEiia:bb.a
   %i.r = sext i16 %i.q to i32
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 124
@@ -205,7 +204,7 @@ bb.b:                                             ; preds = %_ZN6icu_7812LocalPo
   %.sroa.0.0 = phi ptr [ %i.h, %bb.b ], [ null, %bb.a ] ; 3 uses
   %.026 = phi ptr [ %i.h, %bb.b ], [ %6, %bb.a ]  ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 3 uses
-  %i.n = load i32, ptr %i.m, align 8              ; 3 uses
+  %i.n = load i32, ptr %i.m, align 8              ; 2 uses
   %i.o = load ptr, ptr %.026, align 8
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 160
   %i.q = load ptr, ptr %i.p, align 8
@@ -214,7 +213,7 @@ bb.b:                                             ; preds = %_ZN6icu_7812LocalPo
   br i1 %i.r, label %bb.c, label %bb.e
 
 bb.c:                                             ; preds = %.thread
-  %i.s = load i32, ptr %i.m, align 8              ; 2 uses
+  %i.s = load i32, ptr %i.m, align 8
   %i.t = sub nsw i32 %i.s, %i.n                   ; 2 uses
   %i.u = icmp sgt i32 %i.t, %3
   br i1 %i.u, label %bb.d, label %bb.e
@@ -222,43 +221,22 @@ bb.c:                                             ; preds = %.thread
 bb.d:                                             ; preds = %bb.c
   %i.v = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.w = load i64, ptr %i.v, align 8
-  %i.x = trunc i64 %i.w to i32                    ; 3 uses
-  %i.y = sub nsw i32 %i.t, %3                     ; 4 uses
-  %10 = icmp sgt i32 %i.y, 0
-  br i1 %10, label %.lr.ph.preheader, label %._crit_edge
+  %i.x = trunc i64 %i.w to i32
+  %i.y = sub nuw nsw i32 %i.t, %3
+  br label %.lr.ph
 
-.lr.ph.preheader:                                 ; preds = %bb.d
-  %11 = xor i32 %i.n, -1
-  %12 = add i32 %i.s, %11
-  %xtraiter = and i32 %i.y, 1
-  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.lr.ph.prol.loopexit, label %.lr.ph.prol
+.lr.ph:                                           ; preds = %bb.d, %.lr.ph
+  %.037 = phi i32 [ %i.z, %.lr.ph ], [ %i.x, %bb.d ]
+  %.02536 = phi i32 [ %i.aa, %.lr.ph ], [ %i.y, %bb.d ] ; 2 uses
+  %i.z = sdiv i32 %.037, 10                       ; 2 uses
+  %i.aa = add nsw i32 %.02536, -1
+  %10 = icmp samesign ugt i32 %.02536, 1
+  br i1 %10, label %.lr.ph, label %._crit_edge, !llvm.loop !51
 
-.lr.ph.prol:                                      ; preds = %.lr.ph.preheader
-  %13 = sdiv i32 %i.x, 10                         ; 2 uses
-  %14 = add nsw i32 %i.y, -1
-  br label %.lr.ph.prol.loopexit
-
-.lr.ph.prol.loopexit:                             ; preds = %.lr.ph.prol, %.lr.ph.preheader
-  %.037.unr = phi i32 [ %i.x, %.lr.ph.preheader ], [ %13, %.lr.ph.prol ]
-  %.02536.unr = phi i32 [ %i.y, %.lr.ph.preheader ], [ %14, %.lr.ph.prol ]
-  %.lcssa.unr = phi i32 [ poison, %.lr.ph.preheader ], [ %13, %.lr.ph.prol ]
-  %15 = icmp eq i32 %12, %3
-  br i1 %15, label %._crit_edge, label %.lr.ph
-
-.lr.ph:                                           ; preds = %.lr.ph.prol.loopexit, %.lr.ph
-  %.037 = phi i32 [ %i.z, %.lr.ph ], [ %.037.unr, %.lr.ph.prol.loopexit ]
-  %.02536 = phi i32 [ %i.aa, %.lr.ph ], [ %.02536.unr, %.lr.ph.prol.loopexit ] ; 2 uses
-  %i.z = sdiv i32 %.037, 100                      ; 2 uses
-  %i.aa = add nsw i32 %.02536, -2
-  %16 = icmp sgt i32 %.02536, 2
-  br i1 %16, label %.lr.ph, label %._crit_edge, !llvm.loop !51
-
-._crit_edge:                                      ; preds = %.lr.ph.prol.loopexit, %.lr.ph, %bb.d
-  %.0.lcssa = phi i32 [ %i.x, %bb.d ], [ %.lcssa.unr, %.lr.ph.prol.loopexit ], [ %i.z, %.lr.ph ]
+._crit_edge:                                      ; preds = %.lr.ph
   %i.ab = add nsw i32 %i.n, %3
   store i32 %i.ab, ptr %i.m, align 8
-  call void @_ZN6icu_7811Formattable7setLongEi(ptr noundef nonnull align 8 dereferenceable(112) %2, i32 noundef %.0.lcssa) #17
+  call void @_ZN6icu_7811Formattable7setLongEi(ptr noundef nonnull align 8 dereferenceable(112) %2, i32 noundef %i.z) #17
   br label %bb.e
 
 bb.e:                                             ; preds = %.thread, %._crit_edge, %bb.c

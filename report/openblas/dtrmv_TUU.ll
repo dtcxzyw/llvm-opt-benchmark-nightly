@@ -25,8 +25,8 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.h = icmp sgt i64 %0, 0
   br i1 %i.h, label %.lr.ph, label %._crit_edge
 
-.lr.ph:                                           ; preds = %bb.c, %8
-  %.05865 = phi i64 [ %9, %8 ], [ %0, %bb.c ]     ; 6 uses
+.lr.ph:                                           ; preds = %bb.c, %bb.h
+  %.05865 = phi i64 [ %7, %bb.h ], [ %0, %bb.c ]  ; 6 uses
   %umin = tail call i64 @llvm.umin.i64(i64 %.05865, i64 32) ; 6 uses
   %i.i = add nsw i64 %umin, -1
   br label %bb.d
@@ -59,25 +59,21 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   br i1 %exitcond.not, label %bb.g, label %bb.d, !llvm.loop !10
 
 bb.g:                                             ; preds = %bb.f
-  %6 = sub nsw i64 %.05865, %umin                 ; 3 uses
-  %7 = icmp sgt i64 %6, 0
-  br i1 %7, label %bb.h, label %8
+  %.not66 = icmp samesign ult i64 %.05865, 33
+  br i1 %.not66, label %._crit_edge, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
+  %6 = sub nuw nsw i64 %.05865, %umin             ; 2 uses
   %i.y = mul nsw i64 %6, %2
   %i.z = getelementptr inbounds [8 x i8], ptr %1, i64 %i.y
   %i.aa = getelementptr inbounds nuw [8 x i8], ptr %.0, i64 %.05865
   %i.ab = sub nsw i64 0, %umin
   %i.ac = getelementptr inbounds [8 x i8], ptr %i.aa, i64 %i.ab
   %i.ad = tail call i32 @dgemv_t(i64 noundef %6, i64 noundef %umin, i64 noundef 0, double noundef 1.000000e+00, ptr noundef %i.z, i64 noundef %2, ptr noundef %.0, i64 noundef 1, ptr noundef nonnull %i.ac, i64 noundef 1, ptr noundef %.057) #3 ; 0 uses
-  br label %8
+  %7 = add nsw i64 %.05865, -32
+  br label %.lr.ph
 
-8:                                                ; preds = %bb.g, %bb.h
-  %9 = add nsw i64 %.05865, -32
-  %10 = icmp sgt i64 %.05865, 32
-  br i1 %10, label %.lr.ph, label %._crit_edge, !llvm.loop !12
-
-._crit_edge:                                      ; preds = %8, %bb.c
+._crit_edge:                                      ; preds = %bb.g, %bb.c
   br i1 %.not, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %._crit_edge
@@ -118,5 +114,4 @@ attributes #3 = { nounwind }
 !9 = !{!"double", !6, i64 0}
 !10 = distinct !{!10, !11}
 !11 = !{!"llvm.loop.mustprogress"}
-!12 = distinct !{!12, !11}
 end_hunk_0

@@ -205,30 +205,23 @@ define void @_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable14driftsort_mainINt
 bb.a:
   %i.a = alloca [4096 x i8], align 8              ; 3 uses
   %i.b = lshr i64 %1, 1
-  %i.c = sub nsw i64 %1, %i.b                     ; 2 uses
+  %i.c = sub nuw nsw i64 %1, %i.b
   %.sroa.0.0.i = tail call noundef i64 @llvm.umin.i64(i64 %1, i64 1000000)
   %.sroa.0.0.i11 = tail call noundef i64 @llvm.umax.i64(i64 %.sroa.0.0.i, i64 %i.c) ; 2 uses
   %.sroa.0.0.i12 = tail call noundef i64 @llvm.umax.i64(i64 %.sroa.0.0.i11, i64 48) ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  %i.d = icmp ugt i64 %.sroa.0.0.i11, 512         ; 3 uses
-  br i1 %i.d, label %3, label %bb.c
+  %i.d = icmp samesign ugt i64 %.sroa.0.0.i11, 512 ; 3 uses
+  br i1 %i.d, label %_RNvXs_NtCscdodAO9FK5_5alloc5allocNtB4_6GlobalNtNtCs4NRVxsYgnAr_4core5alloc9Allocator8allocate.exit.i.i.i, label %bb.c
 
-3:                                                ; preds = %bb.a
-  %4 = shl i64 %.sroa.0.0.i12, 3                  ; 3 uses
-  %5 = icmp ugt i64 %i.c, 2305843009213693951
-  %.not.i.i.i = icmp ugt i64 %4, 9223372036854775800
-  %or.cond.i.i.i = or i1 %5, %.not.i.i.i
-  br i1 %or.cond.i.i.i, label %.noexc, label %_RNvXs_NtCscdodAO9FK5_5alloc5allocNtB4_6GlobalNtNtCs4NRVxsYgnAr_4core5alloc9Allocator8allocate.exit.i.i.i, !prof !606
-
-_RNvXs_NtCscdodAO9FK5_5alloc5allocNtB4_6GlobalNtNtCs4NRVxsYgnAr_4core5alloc9Allocator8allocate.exit.i.i.i: ; preds = %3
+_RNvXs_NtCscdodAO9FK5_5alloc5allocNtB4_6GlobalNtNtCs4NRVxsYgnAr_4core5alloc9Allocator8allocate.exit.i.i.i: ; preds = %bb.a
+  %3 = shl nuw nsw i64 %.sroa.0.0.i12, 3          ; 2 uses
   tail call void @_RNvCs9wFQrvczXsK_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #62, !noalias !4442
-  %i.e = tail call noundef align 8 ptr @_RNvCs9wFQrvczXsK_7___rustc12___rust_alloc(i64 noundef %4, i64 noundef range(i64 1, 17) 8) #62, !noalias !4442 ; 3 uses
+  %i.e = tail call noundef align 8 ptr @_RNvCs9wFQrvczXsK_7___rustc12___rust_alloc(i64 noundef %3, i64 noundef range(i64 1, 17) 8) #62, !noalias !4442 ; 3 uses
   %i.f = icmp eq ptr %i.e, null
   br i1 %i.f, label %.noexc, label %bb.c
 
-.noexc:                                           ; preds = %_RNvXs_NtCscdodAO9FK5_5alloc5allocNtB4_6GlobalNtNtCs4NRVxsYgnAr_4core5alloc9Allocator8allocate.exit.i.i.i, %3
-  %.sroa.4.0.ph.i.i = phi i64 [ 8, %_RNvXs_NtCscdodAO9FK5_5alloc5allocNtB4_6GlobalNtNtCs4NRVxsYgnAr_4core5alloc9Allocator8allocate.exit.i.i.i ], [ 0, %3 ]
-  tail call void @_RNvNtCscdodAO9FK5_5alloc7raw_vec12handle_error(i64 noundef %.sroa.4.0.ph.i.i, i64 %4) #61
+.noexc:                                           ; preds = %_RNvXs_NtCscdodAO9FK5_5alloc5allocNtB4_6GlobalNtNtCs4NRVxsYgnAr_4core5alloc9Allocator8allocate.exit.i.i.i
+  tail call void @_RNvNtCscdodAO9FK5_5alloc7raw_vec12handle_error(i64 noundef 8, i64 %3) #61
   unreachable
 
 bb.b:                                             ; preds = %bb.c
@@ -252,7 +245,7 @@ bb.e:                                             ; preds = %_RINvNtCs4NRVxsYgnA
   ret void
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VecINtNtB4_6option6OptionRNtNtCskLngH8kgpZI_15ruff_python_ast5nodes9ParameterEEEB1y_.exit: ; preds = %bb.d
-  %i.i = shl nuw i64 %.sroa.0.0.i12, 3
+  %i.i = shl nuw nsw i64 %.sroa.0.0.i12, 3
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6.1) ]
   call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.sroa.6.1, i64 noundef %i.i, i64 noundef range(i64 1, -9223372036854775807) 8) #62
   br label %bb.e
@@ -261,7 +254,7 @@ bb.f:                                             ; preds = %_RINvNtCs4NRVxsYgnA
   resume { ptr, i32 } %i.g
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VecINtNtB4_6option6OptionRNtNtCskLngH8kgpZI_15ruff_python_ast5nodes9ParameterEEEB1y_.exit13: ; preds = %bb.b
-  %i.j = shl nuw i64 %.sroa.0.0.i12, 3
+  %i.j = shl nuw nsw i64 %.sroa.0.0.i12, 3
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6.1) ]
   call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.sroa.6.1, i64 noundef %i.j, i64 noundef range(i64 1, -9223372036854775807) 8) #62
   br label %bb.f
@@ -664,7 +657,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.b
   %i.i = lshr i64 %1, 1
-  %i.j = sub nsw i64 %1, %i.i
+  %i.j = sub nuw nsw i64 %1, %i.i
   %.sroa.0.0.i32 = tail call noundef i64 @llvm.umin.i64(i64 %i.j, i64 64)
   br label %bb.e
 
@@ -1067,14 +1060,14 @@ bb.i:                                             ; preds = %bb.f
 
 bb.j:                                             ; preds = %bb.i, %bb.h, %bb.g
   %.sroa.0.0.i = phi i64 [ 8, %bb.g ], [ 4, %bb.h ], [ 1, %bb.i ] ; 4 uses
-  %i.v = sub nsw i64 %.sroa.16.0.lcssa, %i.i      ; 2 uses
+  %i.v = sub nuw nsw i64 %.sroa.16.0.lcssa, %i.i  ; 2 uses
   %i.w = icmp samesign ult i64 %.sroa.0.0.i, %i.i
   br i1 %i.w, label %.lr.ph.i, label %.loopexit.i
 
 .loopexit.i:                                      ; preds = %_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared9smallsort11insert_tailINtNtBa_6option6OptionRNtNtCskLngH8kgpZI_15ruff_python_ast5nodes9ParameterENCINvMNtCscdodAO9FK5_5alloc5sliceSB18_11sort_by_keyNtNtCs2MoD74u7shA_14ruff_text_size4size8TextSizeNCNvMs1N_B1x_NtB1x_10Parameters17iter_source_order0E0EB1z_.exit.i, %bb.j
   %i.x = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.0.ph.lcssa134, i64 %i.i
   %i.y = getelementptr [8 x i8], ptr %2, i64 %i.i ; 6 uses
-  %i.z = icmp ult i64 %.sroa.0.0.i, %i.v
+  %i.z = icmp samesign ult i64 %.sroa.0.0.i, %i.v
   br i1 %i.z, label %.lr.ph.1.i, label %.loopexit.1.i
 
 .lr.ph.1.i:                                       ; preds = %.loopexit.i, %_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared9smallsort11insert_tailINtNtBa_6option6OptionRNtNtCskLngH8kgpZI_15ruff_python_ast5nodes9ParameterENCINvMNtCscdodAO9FK5_5alloc5sliceSB18_11sort_by_keyNtNtCs2MoD74u7shA_14ruff_text_size4size8TextSizeNCNvMs1N_B1x_NtB1x_10Parameters17iter_source_order0E0EB1z_.exit.1.i
@@ -1149,7 +1142,7 @@ bb.n:                                             ; preds = %bb.m, %_RNCNvMs1N_N
   br label %_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared9smallsort11insert_tailINtNtBa_6option6OptionRNtNtCskLngH8kgpZI_15ruff_python_ast5nodes9ParameterENCINvMNtCscdodAO9FK5_5alloc5sliceSB18_11sort_by_keyNtNtCs2MoD74u7shA_14ruff_text_size4size8TextSizeNCNvMs1N_B1x_NtB1x_10Parameters17iter_source_order0E0EB1z_.exit.1.i
 
 _RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared9smallsort11insert_tailINtNtBa_6option6OptionRNtNtCskLngH8kgpZI_15ruff_python_ast5nodes9ParameterENCINvMNtCscdodAO9FK5_5alloc5sliceSB18_11sort_by_keyNtNtCs2MoD74u7shA_14ruff_text_size4size8TextSizeNCNvMs1N_B1x_NtB1x_10Parameters17iter_source_order0E0EB1z_.exit.1.i: ; preds = %.split.1.i, %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSINtNtCs4NRVxsYgnAr_4core6option6OptionRNtNtCskLngH8kgpZI_15ruff_python_ast5nodes9ParameterE11sort_by_keyNtNtCs2MoD74u7shA_14ruff_text_size4size8TextSizeNCNvMs1N_B1c_NtB1c_10Parameters17iter_source_order0E0B1e_.exit.i36.1.i
-  %i.al = add nuw i64 %.sroa.05.08.1.i, 1         ; 2 uses
+  %i.al = add nuw nsw i64 %.sroa.05.08.1.i, 1     ; 2 uses
   %exitcond.1.not.i = icmp eq i64 %i.al, %i.v
   br i1 %exitcond.1.not.i, label %.loopexit.1.i, label %.lr.ph.1.i
 
@@ -1346,7 +1339,7 @@ bb.z:                                             ; preds = %bb.y, %_RNCNvMs1N_N
   br label %_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared9smallsort11insert_tailINtNtBa_6option6OptionRNtNtCskLngH8kgpZI_15ruff_python_ast5nodes9ParameterENCINvMNtCscdodAO9FK5_5alloc5sliceSB18_11sort_by_keyNtNtCs2MoD74u7shA_14ruff_text_size4size8TextSizeNCNvMs1N_B1x_NtB1x_10Parameters17iter_source_order0E0EB1z_.exit.i
 
 _RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared9smallsort11insert_tailINtNtBa_6option6OptionRNtNtCskLngH8kgpZI_15ruff_python_ast5nodes9ParameterENCINvMNtCscdodAO9FK5_5alloc5sliceSB18_11sort_by_keyNtNtCs2MoD74u7shA_14ruff_text_size4size8TextSizeNCNvMs1N_B1x_NtB1x_10Parameters17iter_source_order0E0EB1z_.exit.i: ; preds = %.split.i, %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSINtNtCs4NRVxsYgnAr_4core6option6OptionRNtNtCskLngH8kgpZI_15ruff_python_ast5nodes9ParameterE11sort_by_keyNtNtCs2MoD74u7shA_14ruff_text_size4size8TextSizeNCNvMs1N_B1c_NtB1c_10Parameters17iter_source_order0E0B1e_.exit.i36.i
-  %i.cf = add nuw i64 %.sroa.05.08.i, 1           ; 2 uses
+  %i.cf = add nuw nsw i64 %.sroa.05.08.i, 1       ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.cf, %i.i
   br i1 %exitcond.not.i, label %.loopexit.i, label %.lr.ph.i
 
@@ -1749,14 +1742,14 @@ bb.a:
   %.sroa.01.020.i.i.i.i = phi i64 [ %i.h, %.lr.ph.i.i.i.i ], [ %.val39.i, %bb.a ] ; 2 uses
   %.sroa.05.019.i.i.i.i = phi i64 [ %i.g, %.lr.ph.i.i.i.i ], [ 0, %bb.a ] ; 2 uses
   %i.c = lshr i64 %.sroa.01.020.i.i.i.i, 1        ; 2 uses
-  %i.d = add nuw i64 %i.c, %.sroa.05.019.i.i.i.i  ; 3 uses
+  %i.d = add nuw nsw i64 %i.c, %.sroa.05.019.i.i.i.i ; 3 uses
   %i.e = icmp ult i64 %i.d, %.val39.i
   tail call void @llvm.assume(i1 %i.e)
   %i.f = getelementptr inbounds nuw [12 x i8], ptr %.val.i, i64 %i.d
   %.val16.i.i.i.i = load i32, ptr %i.f, align 4, !alias.scope !6922, !noalias !6927, !noundef !3
   %.not.i.i.i.i = icmp ult i32 %.val16.i.i.i.i, %1
   %i.g = select i1 %.not.i.i.i.i, i64 %i.d, i64 %.sroa.05.019.i.i.i.i, !unpredictable !3 ; 2 uses
-  %i.h = sub i64 %.sroa.01.020.i.i.i.i, %i.c      ; 2 uses
+  %i.h = sub nuw nsw i64 %.sroa.01.020.i.i.i.i, %i.c ; 2 uses
   %i.i = icmp ugt i64 %i.h, 1
   br i1 %i.i, label %.lr.ph.i.i.i.i, label %_RINvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCskLngH8kgpZI_15ruff_python_ast5token5Token15partition_pointNCNvMNtBx_6tokensNtB1C_6Tokens22binary_search_by_start0EBz_.exit.i.i
 
@@ -1856,7 +1849,7 @@ bb.a:
   %.sroa.01.021.i.i = phi i64 [ %i.n, %.lr.ph.i.i ], [ %i.g, %bb.a ] ; 2 uses
   %.sroa.05.020.i.i = phi i64 [ %i.m, %.lr.ph.i.i ], [ 0, %bb.a ] ; 2 uses
   %i.h = lshr i64 %.sroa.01.021.i.i, 1            ; 2 uses
-  %i.i = add nuw i64 %i.h, %.sroa.05.020.i.i      ; 3 uses
+  %i.i = add nuw nsw i64 %i.h, %.sroa.05.020.i.i  ; 3 uses
   %i.j = icmp ult i64 %i.i, %i.g
   tail call void @llvm.assume(i1 %i.j)
   %i.k = getelementptr inbounds nuw [12 x i8], ptr %i.e, i64 %i.i
@@ -1864,7 +1857,7 @@ bb.a:
   %.val16.i.i = load i32, ptr %i.l, align 4, !alias.scope !6931, !noalias !6936, !noundef !3
   %.not.i18.i.i = icmp ugt i32 %.val16.i.i, %1
   %i.m = select i1 %.not.i18.i.i, i64 %.sroa.05.020.i.i, i64 %i.i, !unpredictable !3 ; 2 uses
-  %i.n = sub i64 %.sroa.01.021.i.i, %i.h          ; 2 uses
+  %i.n = sub nuw nsw i64 %.sroa.01.021.i.i, %i.h  ; 2 uses
   %i.o = icmp ugt i64 %i.n, 1
   br i1 %i.o, label %.lr.ph.i.i, label %_RINvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCskLngH8kgpZI_15ruff_python_ast5token5Token15partition_pointNCNvMNtBx_6tokensNtB1C_6Tokens5after0EBz_.exit
 
@@ -1932,14 +1925,14 @@ bb.a:
   %.sroa.01.020.i.i.i = phi i64 [ %i.m, %.lr.ph.i.i.i ], [ %i.g, %bb.a ] ; 2 uses
   %.sroa.05.019.i.i.i = phi i64 [ %i.l, %.lr.ph.i.i.i ], [ 0, %bb.a ] ; 2 uses
   %i.h = lshr i64 %.sroa.01.020.i.i.i, 1          ; 2 uses
-  %i.i = add nuw i64 %i.h, %.sroa.05.019.i.i.i    ; 3 uses
+  %i.i = add nuw nsw i64 %i.h, %.sroa.05.019.i.i.i ; 3 uses
   %i.j = icmp ult i64 %i.i, %i.g
   tail call void @llvm.assume(i1 %i.j)
   %i.k = getelementptr inbounds nuw [12 x i8], ptr %i.e, i64 %i.i
   %.val16.i.i.i = load i32, ptr %i.k, align 4, !alias.scope !6942, !noalias !6947, !noundef !3
   %.not.i.i.i = icmp ult i32 %.val16.i.i.i, %1
   %i.l = select i1 %.not.i.i.i, i64 %i.i, i64 %.sroa.05.019.i.i.i, !unpredictable !3 ; 2 uses
-  %i.m = sub i64 %.sroa.01.020.i.i.i, %i.h        ; 2 uses
+  %i.m = sub nuw nsw i64 %.sroa.01.020.i.i.i, %i.h ; 2 uses
   %i.n = icmp ugt i64 %i.m, 1
   br i1 %i.n, label %.lr.ph.i.i.i, label %_RINvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCskLngH8kgpZI_15ruff_python_ast5token5Token15partition_pointNCNvMNtBx_6tokensNtB1C_6Tokens11before_impl0EBz_.exit.i
 
@@ -2011,7 +2004,7 @@ bb.a:
   %.sroa.01.021.i.i.i = phi i64 [ %i.q, %.lr.ph.i.i.i ], [ %i.j, %bb.a ] ; 2 uses
   %.sroa.05.020.i.i.i = phi i64 [ %i.p, %.lr.ph.i.i.i ], [ 0, %bb.a ] ; 2 uses
   %i.k = lshr i64 %.sroa.01.021.i.i.i, 1          ; 2 uses
-  %i.l = add nuw i64 %i.k, %.sroa.05.020.i.i.i    ; 3 uses
+  %i.l = add nuw nsw i64 %i.k, %.sroa.05.020.i.i.i ; 3 uses
   %i.m = icmp ult i64 %i.l, %i.j
   tail call void @llvm.assume(i1 %i.m)
   %i.n = getelementptr inbounds nuw [12 x i8], ptr %i.h, i64 %i.l
@@ -2019,7 +2012,7 @@ bb.a:
   %.val16.i.i.i = load i32, ptr %i.o, align 4, !alias.scope !6953, !noalias !6958, !noundef !3
   %.not.i18.i.i.i = icmp ugt i32 %.val16.i.i.i, %1
   %i.p = select i1 %.not.i18.i.i.i, i64 %.sroa.05.020.i.i.i, i64 %i.l, !unpredictable !3 ; 2 uses
-  %i.q = sub i64 %.sroa.01.021.i.i.i, %i.k        ; 2 uses
+  %i.q = sub nuw nsw i64 %.sroa.01.021.i.i.i, %i.k ; 2 uses
   %i.r = icmp ugt i64 %i.q, 1
   br i1 %i.r, label %.lr.ph.i.i.i, label %_RINvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCskLngH8kgpZI_15ruff_python_ast5token5Token15partition_pointNCNvMNtBx_6tokensNtB1C_6Tokens5after0EBz_.exit.i
 
@@ -2074,14 +2067,14 @@ _RNvMNtNtCskLngH8kgpZI_15ruff_python_ast5token6tokensNtB2_6Tokens5after.exit: ; 
   %.sroa.01.020.i.i.i = phi i64 [ %i.ah, %.lr.ph.i.i.i7 ], [ %i.ab, %_RNvMNtNtCskLngH8kgpZI_15ruff_python_ast5token6tokensNtB2_6Tokens5after.exit ] ; 2 uses
   %.sroa.05.019.i.i.i = phi i64 [ %i.ag, %.lr.ph.i.i.i7 ], [ 0, %_RNvMNtNtCskLngH8kgpZI_15ruff_python_ast5token6tokensNtB2_6Tokens5after.exit ] ; 2 uses
   %i.ac = lshr i64 %.sroa.01.020.i.i.i, 1         ; 2 uses
-  %i.ad = add nuw i64 %i.ac, %.sroa.05.019.i.i.i  ; 3 uses
+  %i.ad = add nuw nsw i64 %i.ac, %.sroa.05.019.i.i.i ; 3 uses
   %i.ae = icmp ult i64 %i.ad, %i.ab
   tail call void @llvm.assume(i1 %i.ae)
   %i.af = getelementptr inbounds nuw [12 x i8], ptr %i.aa, i64 %i.ad
   %.val16.i.i.i8 = load i32, ptr %i.af, align 4, !alias.scope !6964, !noalias !6969, !noundef !3
   %.not.i.i.i = icmp ult i32 %.val16.i.i.i8, %2
   %i.ag = select i1 %.not.i.i.i, i64 %i.ad, i64 %.sroa.05.019.i.i.i, !unpredictable !3 ; 2 uses
-  %i.ah = sub i64 %.sroa.01.020.i.i.i, %i.ac      ; 2 uses
+  %i.ah = sub nuw nsw i64 %.sroa.01.020.i.i.i, %i.ac ; 2 uses
   %i.ai = icmp ugt i64 %i.ah, 1
   br i1 %i.ai, label %.lr.ph.i.i.i7, label %_RINvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCskLngH8kgpZI_15ruff_python_ast5token5Token15partition_pointNCNvMNtBx_6tokensNtB1C_6Tokens11before_impl0EBz_.exit.i
 
@@ -2147,14 +2140,14 @@ bb.a:
   %.sroa.01.020.i.i = phi i64 [ %i.m, %.lr.ph.i.i ], [ %i.g, %bb.a ] ; 2 uses
   %.sroa.05.019.i.i = phi i64 [ %i.l, %.lr.ph.i.i ], [ 0, %bb.a ] ; 2 uses
   %i.h = lshr i64 %.sroa.01.020.i.i, 1            ; 2 uses
-  %i.i = add nuw i64 %i.h, %.sroa.05.019.i.i      ; 3 uses
+  %i.i = add nuw nsw i64 %i.h, %.sroa.05.019.i.i  ; 3 uses
   %i.j = icmp ult i64 %i.i, %i.g
   tail call void @llvm.assume(i1 %i.j)
   %i.k = getelementptr inbounds nuw [12 x i8], ptr %i.e, i64 %i.i
   %.val16.i.i = load i32, ptr %i.k, align 4, !alias.scope !6972, !noalias !6977, !noundef !3
   %.not.i.i = icmp ult i32 %.val16.i.i, %2
   %i.l = select i1 %.not.i.i, i64 %i.i, i64 %.sroa.05.019.i.i, !unpredictable !3 ; 2 uses
-  %i.m = sub i64 %.sroa.01.020.i.i, %i.h          ; 2 uses
+  %i.m = sub nuw nsw i64 %.sroa.01.020.i.i, %i.h  ; 2 uses
   %i.n = icmp ugt i64 %i.m, 1
   br i1 %i.n, label %.lr.ph.i.i, label %._crit_edge.i.i
 
@@ -2223,14 +2216,14 @@ bb.a:
   %.sroa.01.020.i.i.i = phi i64 [ %i.h, %.lr.ph.i.i.i ], [ %.val39, %bb.a ] ; 2 uses
   %.sroa.05.019.i.i.i = phi i64 [ %i.g, %.lr.ph.i.i.i ], [ 0, %bb.a ] ; 2 uses
   %i.c = lshr i64 %.sroa.01.020.i.i.i, 1          ; 2 uses
-  %i.d = add nuw i64 %i.c, %.sroa.05.019.i.i.i    ; 3 uses
+  %i.d = add nuw nsw i64 %i.c, %.sroa.05.019.i.i.i ; 3 uses
   %i.e = icmp ult i64 %i.d, %.val39
   tail call void @llvm.assume(i1 %i.e)
   %i.f = getelementptr inbounds nuw [12 x i8], ptr %.val, i64 %i.d
   %.val16.i.i.i = load i32, ptr %i.f, align 4, !alias.scope !6985, !noalias !6990, !noundef !3
   %.not.i.i.i = icmp ult i32 %.val16.i.i.i, %2
   %i.g = select i1 %.not.i.i.i, i64 %i.d, i64 %.sroa.05.019.i.i.i, !unpredictable !3 ; 2 uses
-  %i.h = sub i64 %.sroa.01.020.i.i.i, %i.c        ; 2 uses
+  %i.h = sub nuw nsw i64 %.sroa.01.020.i.i.i, %i.c ; 2 uses
   %i.i = icmp ugt i64 %i.h, 1
   br i1 %i.i, label %.lr.ph.i.i.i, label %_RINvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCskLngH8kgpZI_15ruff_python_ast5token5Token15partition_pointNCNvMNtBx_6tokensNtB1C_6Tokens22binary_search_by_start0EBz_.exit.i
 
@@ -2633,8 +2626,8 @@ bb.bg:                                            ; preds = %bb.bf
 
 bb.bh:                                            ; preds = %bb.bf
   %i.ej = getelementptr inbounds nuw [24 x i8], ptr %i.ef, i64 %i.eg
-  %i.ek = sub nsw i64 %i.ed, %i.dx                ; 3 uses
-  %i.el = mul nsw i64 %i.ek, 24
+  %i.ek = sub nuw nsw i64 %i.ed, %i.dx            ; 3 uses
+  %i.el = mul nuw nsw i64 %i.ek, 24
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.ej, ptr nonnull align 8 %i.eh, i64 %i.el, i1 false), !alias.scope !7531, !noalias !7532
   store i64 %.sroa.0.0.copyload.i.i.i33199239.i.i, ptr %i.eh, align 8, !alias.scope !7525, !noalias !7527
   %.sroa.946.0..sroa_idx51.i.i = getelementptr inbounds nuw i8, ptr %i.eh, i64 8
@@ -2643,14 +2636,14 @@ bb.bh:                                            ; preds = %bb.bf
   store i64 %.sroa.17.1.i.i, ptr %.sroa.1155.0..sroa_idx60.i.i, align 8, !alias.scope !7525, !noalias !7527
   %i.em = getelementptr inbounds nuw [32 x i8], ptr %i.dq, i64 %i.dx ; 2 uses
   %i.en = getelementptr inbounds nuw [32 x i8], ptr %i.dq, i64 %i.eg
-  %i.eo = shl nsw i64 %i.ek, 5
+  %i.eo = shl nuw nsw i64 %i.ek, 5
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.en, ptr nonnull align 8 %i.em, i64 %i.eo, i1 false), !alias.scope !7534, !noalias !7537
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.em, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.19.i.i, i64 32, i1 false), !noalias !7489
   %i.ep = getelementptr inbounds nuw i8, ptr %i.dq, i64 632 ; 2 uses
   %i.eq = getelementptr inbounds nuw [8 x i8], ptr %i.ep, i64 %i.eg
   %i.er = getelementptr inbounds nuw [8 x i8], ptr %i.ep, i64 %i.dx
   %i.es = getelementptr inbounds nuw i8, ptr %i.er, i64 16
-  %i.et = shl nsw i64 %i.ek, 3
+  %i.et = shl nuw nsw i64 %i.ek, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.es, ptr nonnull align 8 %i.eq, i64 %i.et, i1 false), !alias.scope !7539, !noalias !7542
   br label %bb.bi
 
@@ -3053,7 +3046,7 @@ default.unreachable:                              ; preds = %bb.f
   %.sroa.01.021.i.i.i = phi i64 [ %i.y, %.lr.ph.i.i.i ], [ %i.r, %switch.lookup48 ] ; 2 uses
   %.sroa.05.020.i.i.i = phi i64 [ %i.x, %.lr.ph.i.i.i ], [ 0, %switch.lookup48 ] ; 2 uses
   %i.s = lshr i64 %.sroa.01.021.i.i.i, 1          ; 2 uses
-  %i.t = add nuw i64 %i.s, %.sroa.05.020.i.i.i    ; 3 uses
+  %i.t = add nuw nsw i64 %i.s, %.sroa.05.020.i.i.i ; 3 uses
   %i.u = icmp ult i64 %i.t, %i.r
   tail call void @llvm.assume(i1 %i.u)
   %i.v = getelementptr inbounds nuw [12 x i8], ptr %i.p, i64 %i.t
@@ -3061,7 +3054,7 @@ default.unreachable:                              ; preds = %bb.f
   %.val16.i.i.i = load i32, ptr %i.w, align 4, !alias.scope !9027, !noalias !9032, !noundef !3
   %.not.i18.i.i.i = icmp ugt i32 %.val16.i.i.i, %.val2.pn.i
   %i.x = select i1 %.not.i18.i.i.i, i64 %.sroa.05.020.i.i.i, i64 %i.t, !unpredictable !3 ; 2 uses
-  %i.y = sub i64 %.sroa.01.021.i.i.i, %i.s        ; 2 uses
+  %i.y = sub nuw nsw i64 %.sroa.01.021.i.i.i, %i.s ; 2 uses
   %i.z = icmp ugt i64 %i.y, 1
   br i1 %i.z, label %.lr.ph.i.i.i, label %_RINvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCskLngH8kgpZI_15ruff_python_ast5token5Token15partition_pointNCNvMNtBx_6tokensNtB1C_6Tokens5after0EBz_.exit.i
 
@@ -3292,14 +3285,14 @@ _RNvXs5J_NtCskLngH8kgpZI_15ruff_python_ast9generatedNtB6_7ExprRefNtNtCs2MoD74u7s
   %.sroa.01.020.i.i.i.i = phi i64 [ %i.bz, %.lr.ph.i.i.i.i ], [ %i.bt, %_RNvXs5J_NtCskLngH8kgpZI_15ruff_python_ast9generatedNtB6_7ExprRefNtNtCs2MoD74u7shA_14ruff_text_size6traits6Ranged5range.exit25 ] ; 2 uses
   %.sroa.05.019.i.i.i.i = phi i64 [ %i.by, %.lr.ph.i.i.i.i ], [ 0, %_RNvXs5J_NtCskLngH8kgpZI_15ruff_python_ast9generatedNtB6_7ExprRefNtNtCs2MoD74u7shA_14ruff_text_size6traits6Ranged5range.exit25 ] ; 2 uses
   %i.bu = lshr i64 %.sroa.01.020.i.i.i.i, 1       ; 2 uses
-  %i.bv = add nuw i64 %i.bu, %.sroa.05.019.i.i.i.i ; 3 uses
+  %i.bv = add nuw nsw i64 %i.bu, %.sroa.05.019.i.i.i.i ; 3 uses
   %i.bw = icmp ult i64 %i.bv, %i.bt
   tail call void @llvm.assume(i1 %i.bw)
   %i.bx = getelementptr inbounds nuw [12 x i8], ptr %i.br, i64 %i.bv
   %.val16.i.i.i.i = load i32, ptr %i.bx, align 4, !alias.scope !9045, !noalias !9050, !noundef !3
   %.not.i.i.i.i26 = icmp ult i32 %.val16.i.i.i.i, %.val.pn.i21
   %i.by = select i1 %.not.i.i.i.i26, i64 %i.bv, i64 %.sroa.05.019.i.i.i.i, !unpredictable !3 ; 2 uses
-  %i.bz = sub i64 %.sroa.01.020.i.i.i.i, %i.bu    ; 2 uses
+  %i.bz = sub nuw nsw i64 %.sroa.01.020.i.i.i.i, %i.bu ; 2 uses
   %i.ca = icmp ugt i64 %i.bz, 1
   br i1 %i.ca, label %.lr.ph.i.i.i.i, label %_RINvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCskLngH8kgpZI_15ruff_python_ast5token5Token15partition_pointNCNvMNtBx_6tokensNtB1C_6Tokens11before_impl0EBz_.exit.i.i
 

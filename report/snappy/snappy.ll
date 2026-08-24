@@ -205,11 +205,11 @@ bb.h:                                             ; preds = %bb.g, %bb.i
   br i1 %.not, label %.critedge37, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %i.bc = sub nsw i64 %i.an, %.02939
+  %i.bc = sub nuw nsw i64 %i.an, %.02939
   %.sroa.speculated = call i64 @llvm.umin.i64(i64 %i.bb, i64 %i.bc) ; 3 uses
   %i.bd = getelementptr inbounds nuw i8, ptr %i.ap, i64 %.02939
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.bd, ptr align 1 %i.ba, i64 %.sroa.speculated, i1 false)
-  %i.be = add i64 %.sroa.speculated, %.02939      ; 2 uses
+  %i.be = add nuw nsw i64 %.sroa.speculated, %.02939 ; 2 uses
   %i.bf = load ptr, ptr %0, align 8, !tbaa !54    ; 2 uses
   %i.bg = load ptr, ptr %i.bf, align 8, !tbaa !56
   %i.bh = getelementptr inbounds nuw i8, ptr %i.bg, i64 32
@@ -612,7 +612,7 @@ bb.r:                                             ; preds = %_ZNK6snappy8interna
   %i.dn = load ptr, ptr %i.dm, align 8
   call void %i.dn(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef %i.da, i64 noundef %i.dk) #24
   %i.do = add i64 %i.dk, %.05883                  ; 2 uses
-  %i.dp = sub i64 %.07982, %.sroa.speculated73    ; 2 uses
+  %i.dp = sub nuw i64 %.07982, %.sroa.speculated73 ; 2 uses
   %i.dq = load ptr, ptr %0, align 8, !tbaa !56
   %i.dr = getelementptr inbounds nuw i8, ptr %i.dq, i64 32
   %i.ds = load ptr, ptr %i.dr, align 8
@@ -1015,7 +1015,7 @@ bb.n:                                             ; preds = %bb.m, %._crit_edge2
   %i.by = add i64 %i.bx, %.sroa.speculated.i.i
   store i64 %i.by, ptr %i.w, align 8, !tbaa !76
   %i.bz = getelementptr inbounds nuw i8, ptr %.0917.i.i, i64 %.sroa.speculated.i.i
-  %i.ca = sub i64 %storemerge16.i.i, %.sroa.speculated.i.i ; 2 uses
+  %i.ca = sub nuw nsw i64 %storemerge16.i.i, %.sroa.speculated.i.i ; 2 uses
   %.not.i.i = icmp eq i64 %i.ca, 0
   br i1 %.not.i.i, label %.loopexit, label %bb.k, !llvm.loop !151
 
@@ -1042,7 +1042,7 @@ bb.n:                                             ; preds = %bb.m, %._crit_edge2
   br label %.thread148
 
 bb.o:                                             ; preds = %.loopexit
-  %i.cm = sub i64 %.193161, %.0163                ; 3 uses
+  %i.cm = sub nuw nsw i64 %.193161, %.0163        ; 3 uses
   %i.cn = getelementptr inbounds nuw i8, ptr %i.ck, i64 %i.cl ; 2 uses
   store ptr %i.cn, ptr %i.e, align 8, !tbaa !53
   %.sroa.speculated.i126 = call i64 @llvm.smin.i64(i64 %i.cl, i64 4)
@@ -1445,7 +1445,7 @@ bb.f:                                             ; preds = %bb.e, %._crit_edge2
   %i.y = add i64 %i.x, %.sroa.speculated.i
   store i64 %i.y, ptr %i.a, align 8, !tbaa !76
   %i.z = getelementptr inbounds nuw i8, ptr %.0917.i, i64 %.sroa.speculated.i
-  %i.aa = sub i64 %storemerge16.i, %.sroa.speculated.i ; 2 uses
+  %i.aa = sub nuw i64 %storemerge16.i, %.sroa.speculated.i ; 2 uses
   %.not.i = icmp eq i64 %i.aa, 0
   br i1 %.not.i, label %_ZN6snappy17SnappyIOVecWriter13AppendNoCheckEPKcm.exit, label %bb.c, !llvm.loop !151
 
@@ -1576,7 +1576,7 @@ bb.h:                                             ; preds = %bb.g, %._crit_edge2
   %i.an = add i64 %i.am, %.sroa.speculated.i
   store i64 %i.an, ptr %i.b, align 8, !tbaa !76
   %i.ao = getelementptr inbounds nuw i8, ptr %.0917.i, i64 %.sroa.speculated.i
-  %i.ap = sub i64 %storemerge16.i, %.sroa.speculated.i ; 2 uses
+  %i.ap = sub nuw i64 %storemerge16.i, %.sroa.speculated.i ; 2 uses
   %.not.i = icmp eq i64 %i.ap, 0
   br i1 %.not.i, label %_ZN6snappy17SnappyIOVecWriter13AppendNoCheckEPKcm.exit, label %bb.e, !llvm.loop !151
 
@@ -1979,7 +1979,7 @@ bb.k:                                             ; preds = %.lr.ph
   br label %.thread192
 
 bb.l:                                             ; preds = %bb.k
-  %i.bw = sub i64 %.193211, %.0213                ; 3 uses
+  %i.bw = sub nuw nsw i64 %.193211, %.0213        ; 3 uses
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bu, i64 %i.bv ; 3 uses
   store ptr %i.bx, ptr %i.d, align 8, !tbaa !53
   %.sroa.speculated.i126 = call i64 @llvm.smin.i64(i64 %i.bv, i64 4)
@@ -2382,7 +2382,7 @@ bb.n:                                             ; preds = %.lr.ph
   br label %_ZN6snappy17SnappyArrayWriter14AppendFromSelfEmmPPc.exit125.thread209
 
 bb.o:                                             ; preds = %bb.n
-  %i.cu = sub i64 %.193225, %.0227                ; 3 uses
+  %i.cu = sub nuw nsw i64 %.193225, %.0227        ; 3 uses
   %i.cv = getelementptr inbounds nuw i8, ptr %i.cs, i64 %i.ct ; 2 uses
   store ptr %i.cv, ptr %i.d, align 8, !tbaa !53
   %.sroa.speculated.i130 = call i64 @llvm.smin.i64(i64 %i.ct, i64 4)
@@ -2785,7 +2785,7 @@ bb.o:                                             ; preds = %_ZN6snappy21SnappyS
   br label %.thread178
 
 bb.p:                                             ; preds = %bb.o
-  %i.dc = sub i64 %.193188, %.0190                ; 3 uses
+  %i.dc = sub nuw nsw i64 %.193188, %.0190        ; 3 uses
   %i.dd = getelementptr inbounds nuw i8, ptr %i.da, i64 %i.db ; 2 uses
   store ptr %i.dd, ptr %i.e, align 8, !tbaa !53
   %.sroa.speculated.i126 = call i64 @llvm.smin.i64(i64 %i.db, i64 4)

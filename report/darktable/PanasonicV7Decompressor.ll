@@ -134,7 +134,7 @@ bb.j:                                             ; preds = %bb.g
   tail call void @llvm.assume(i1 %i.af)
   %i.ag = icmp sgt i32 %i.ac, -1
   tail call void @llvm.assume(i1 %i.ag)
-  %i.ah = sub i32 %i.ac, %i.ae
+  %i.ah = sub nuw i32 %i.ac, %i.ae
   %i.ai = lshr i32 %i.ah, 4
   %i.aj = zext nneg i32 %i.ai to i64
   %i.ak = icmp samesign ugt i64 %i.aa, %i.aj
@@ -154,9 +154,9 @@ bb.m:                                             ; preds = %bb.k
 
 bb.n:                                             ; preds = %bb.j
   %i.am = trunc nuw nsw i64 %i.aa to i32
-  %i.an = shl nuw i32 %i.am, 4                    ; 3 uses
+  %i.an = shl nuw nsw i32 %i.am, 4                ; 2 uses
   %i.ao = zext i32 %i.ae to i64                   ; 2 uses
-  %i.ap = zext i32 %i.an to i64                   ; 2 uses
+  %i.ap = zext nneg i32 %i.an to i64              ; 2 uses
   %i.aq = add nuw nsw i64 %i.ao, %i.ap
   %i.ar = zext nneg i32 %i.ac to i64
   %.not.i.i.i.i = icmp samesign ugt i64 %i.aq, %i.ar
@@ -175,8 +175,6 @@ bb.p:                                             ; preds = %bb.n
   %i.au = icmp samesign ule i32 %i.at, %i.ac
   tail call void @llvm.assume(i1 %i.au)
   %i.av = getelementptr inbounds nuw i8, ptr %i.as, i64 %i.ao
-  %3 = icmp sgt i32 %i.an, -1
-  tail call void @llvm.assume(i1 %3)
   %i.aw = getelementptr inbounds nuw i8, ptr %2, i64 12
   %i.ax = load i16, ptr %i.aw, align 4, !tbaa !23, !noalias !101
   %.sroa.4.8.insert.ext.i.i.i = zext i16 %i.ax to i64

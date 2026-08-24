@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.c, %bb.d
 define void @Wlc_BlastAdderFast_int(ptr noundef %0, ptr nofree noundef captures(none) %1, ptr nofree noundef readonly captures(none) %2, i32 noundef %3, i32 noundef %4) local_unnamed_addr #3 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 3 uses
-  %i.b = shl nuw i32 1, %3                        ; 10 uses
+  %i.b = shl nuw i32 1, %3                        ; 11 uses
   %i.c = add nuw nsw i32 %i.b, 1
   %i.d = sext i32 %i.c to i64                     ; 3 uses
   %i.e = tail call noalias ptr @calloc(i64 noundef %i.d, i64 noundef 4) #29 ; 15 uses
@@ -284,7 +284,7 @@ bb.i:                                             ; preds = %bb.a
 
 .lr.ph181.preheader:                              ; preds = %bb.i, %.preheader170
   %i.y = add nsw i32 %3, -1
-  %i.z = sext i32 %i.b to i64                     ; 2 uses
+  %i.z = sext i32 %i.b to i64
   %wide.trip.count205 = zext nneg i32 %i.y to i64
   br label %.lr.ph181
 
@@ -333,7 +333,8 @@ bb.i:                                             ; preds = %bb.a
   store i32 %i.az, ptr %i.aq, align 4, !tbaa !8
   store i32 %i.aw, ptr %i.ao, align 4, !tbaa !8
   %indvars.iv.next200 = add nuw nsw i64 %indvars.iv199, 2 ; 2 uses
-  %.not165 = icmp sgt i64 %indvars.iv.next200, %i.z
+  %5 = trunc nuw i64 %indvars.iv.next200 to i32
+  %.not165 = icmp slt i32 %i.b, %5
   br i1 %.not165, label %._crit_edge, label %.lr.ph179, !llvm.loop !80
 
 ._crit_edge:                                      ; preds = %.lr.ph179, %.lr.ph181
@@ -736,7 +737,7 @@ bb.c:                                             ; preds = %.lr.ph129, %bb.e
   br i1 %.not117, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.w = sub nsw i64 %indvars.iv, %indvars.iv149
+  %i.w = sub nuw nsw i64 %indvars.iv, %indvars.iv149
   %i.x = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %i.w
   %i.y = load i32, ptr %i.x, align 4, !tbaa !8
   br label %bb.e
@@ -774,7 +775,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %.not118, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %.lr.ph133
-  %i.aq = sub nsw i64 %indvars.iv141, %indvars.iv149
+  %i.aq = sub nuw nsw i64 %indvars.iv141, %indvars.iv149
   %i.ar = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %i.aq
   %i.as = load i32, ptr %i.ar, align 4, !tbaa !8
   br label %bb.h

@@ -202,13 +202,13 @@ bb.k:                                             ; preds = %bb.i
   %i.be = add nsw i64 %i.c, -1
   %i.bf = add i64 %i.be, %i.aw
   %i.bg = sub nsw i64 0, %i.c
-  %i.bh = and i64 %i.bf, %i.bg                    ; 4 uses
+  %i.bh = and i64 %i.bf, %i.bg                    ; 5 uses
   %.val = load i128, ptr %1, align 16
   %i.bi = zext i64 %i.aw to i128
   %i.bj = add i128 %.val, %i.bi
   %i.bk = sext i32 %i.e to i128
   %i.bl = and i128 %i.bj, %i.bk                   ; 4 uses
-  %i.bm = zext i64 %i.bh to i128                  ; 2 uses
+  %i.bm = zext i64 %i.bh to i128
   %.not = icmp sgt i128 %i.bl, %i.bm
   br i1 %.not, label %bb.l, label %vhost_vdpa_iommu_region_add.exit
 
@@ -253,24 +253,16 @@ bb.p:                                             ; preds = %bb.o
   br label %trace_vhost_vdpa_listener_region_add.exit
 
 trace_vhost_vdpa_listener_region_add.exit:        ; preds = %int128_get64.exit, %bb.n, %bb.o, %bb.p
-  %3 = sub nsw i128 %i.bl, %i.bm                  ; 3 uses
   %i.cd = getelementptr inbounds nuw i8, ptr %0, i64 234 ; 2 uses
   %i.ce = load i8, ptr %i.cd, align 2, !range !11, !noundef !12
   %i.cf = trunc nuw i8 %i.ce to i1
-  %4 = icmp ult i128 %3, 18446744073709551616     ; 2 uses
-  br i1 %i.cf, label %5, label %9
+  %3 = trunc nuw i128 %i.bl to i64
+  %4 = sub i64 %3, %i.bh                          ; 2 uses
+  br i1 %i.cf, label %int128_get64.exit68, label %.int128_get64.exit69_crit_edge
 
-5:                                                ; preds = %trace_vhost_vdpa_listener_region_add.exit
-  %6 = load i64, ptr %i.av, align 8               ; 2 uses
-  br i1 %4, label %int128_get64.exit68, label %7
-
-7:                                                ; preds = %5
-  tail call void @__assert_fail(ptr noundef nonnull @.str.31, ptr noundef nonnull @.str.32, i32 noundef 31, ptr noundef nonnull @__PRETTY_FUNCTION__.int128_get64) #14
-  unreachable
-
-int128_get64.exit68:                              ; preds = %5
-  %8 = trunc nuw i128 %3 to i64                   ; 2 uses
-  %i.cg = add i64 %8, -1
+int128_get64.exit68:                              ; preds = %trace_vhost_vdpa_listener_region_add.exit
+  %5 = load i64, ptr %i.av, align 8               ; 2 uses
+  %i.cg = add i64 %4, -1
   %i.ch = getelementptr inbounds nuw i8, ptr %2, i64 16
   store i64 %i.cg, ptr %i.ch, align 8
   %i.ci = load i8, ptr %i.bw, align 16, !range !11, !noundef !12
@@ -281,7 +273,7 @@ int128_get64.exit68:                              ; preds = %5
   store i32 %i.cl, ptr %i.cm, align 8
   %i.cn = getelementptr inbounds nuw i8, ptr %0, i64 216
   %i.co = load ptr, ptr %i.cn, align 8
-  %i.cp = call i32 @vhost_iova_tree_map_alloc_gpa(ptr noundef %i.co, ptr noundef nonnull %2, i64 noundef %6) #12 ; 2 uses
+  %i.cp = call i32 @vhost_iova_tree_map_alloc_gpa(ptr noundef %i.co, ptr noundef nonnull %2, i64 noundef %5) #12 ; 2 uses
   %.not63 = icmp eq i32 %i.cp, 0
   br i1 %.not63, label %.thread75, label %bb.q, !prof !7
 
@@ -289,7 +281,7 @@ bb.q:                                             ; preds = %int128_get64.exit68
   call void (ptr, ...) @error_report(ptr noundef nonnull @.str.14, i32 noundef %i.cp) #12
   %i.cq = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.cr = load i64, ptr %i.cq, align 8
-  %i.cs = icmp eq i64 %i.cr, %6
+  %i.cs = icmp eq i64 %i.cr, %5
   br i1 %i.cs, label %.thread72, label %bb.s
 
 .thread75:                                        ; preds = %int128_get64.exit68
@@ -297,24 +289,15 @@ bb.q:                                             ; preds = %int128_get64.exit68
   call fastcc void @vhost_vdpa_iotlb_batch_begin_once(ptr noundef nonnull %i.a)
   br label %int128_get64.exit69
 
-9:                                                ; preds = %trace_vhost_vdpa_listener_region_add.exit
+.int128_get64.exit69_crit_edge:                   ; preds = %trace_vhost_vdpa_listener_region_add.exit
   tail call fastcc void @vhost_vdpa_iotlb_batch_begin_once(ptr noundef nonnull %i.a)
-  br i1 %4, label %.int128_get64.exit69_crit_edge, label %10
-
-.int128_get64.exit69_crit_edge:                   ; preds = %9
-  %.pre = trunc nuw i128 %3 to i64
   br label %int128_get64.exit69
 
-10:                                               ; preds = %9
-  tail call void @__assert_fail(ptr noundef nonnull @.str.31, ptr noundef nonnull @.str.32, i32 noundef 31, ptr noundef nonnull @__PRETTY_FUNCTION__.int128_get64) #14
-  unreachable
-
 int128_get64.exit69:                              ; preds = %.int128_get64.exit69_crit_edge, %.thread75
-  %.pre-phi = phi i64 [ %.pre, %.int128_get64.exit69_crit_edge ], [ %8, %.thread75 ]
   %.177 = phi i64 [ %i.bh, %.int128_get64.exit69_crit_edge ], [ %i.ct, %.thread75 ]
   %i.cu = load i8, ptr %i.bw, align 16, !range !11, !noundef !12
   %i.cv = trunc nuw i8 %i.cu to i1
-  %i.cw = call i32 @vhost_vdpa_dma_map(ptr noundef nonnull %i.a, i32 noundef 0, i64 noundef %.177, i64 noundef %.pre-phi, ptr noundef %i.bt, i1 noundef zeroext %i.cv)
+  %i.cw = call i32 @vhost_vdpa_dma_map(ptr noundef nonnull %i.a, i32 noundef 0, i64 noundef %.177, i64 noundef %4, ptr noundef %i.bt, i1 noundef zeroext %i.cv)
   %.not64 = icmp eq i32 %i.cw, 0
   br i1 %.not64, label %vhost_vdpa_iommu_region_add.exit, label %.thread72
 
@@ -495,7 +478,7 @@ trace_vhost_vdpa_listener_region_del.exit:        ; preds = %int128_get64.exit, 
   br i1 %.not, label %bb.o, label %bb.u
 
 bb.o:                                             ; preds = %trace_vhost_vdpa_listener_region_del.exit
-  %i.bi = sub nuw nsw i128 %i.az, %i.bh           ; 5 uses
+  %i.bi = sub nuw nsw i128 %i.az, %i.bh           ; 4 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %0, i64 234
   %i.bk = load i8, ptr %i.bj, align 2, !range !11, !noundef !12
   %i.bl = trunc nuw i8 %i.bk to i1
@@ -507,7 +490,7 @@ bb.p:                                             ; preds = %bb.o
   store i64 0, ptr %2, align 8
   %i.bn = load i64, ptr %i.ai, align 8
   store i64 %i.bn, ptr %i.bm, align 8
-  %i.bo = icmp ult i128 %i.bi, 18446744073709551616
+  %i.bo = icmp samesign ult i128 %i.bi, 18446744073709551616
   br i1 %i.bo, label %int128_get64.exit77, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
@@ -557,15 +540,10 @@ int128_get64.exit80:                              ; preds = %int128_get64.exit78
   br label %int128_get64.exit81
 
 bb.s:                                             ; preds = %bb.r
-  %4 = icmp ult i128 %i.bi, 18446744073709551616
   %extract.t = trunc nuw i128 %i.bi to i64
-  br i1 %4, label %int128_get64.exit81, label %5
+  br label %int128_get64.exit81
 
-5:                                                ; preds = %bb.s
-  tail call void @__assert_fail(ptr noundef nonnull @.str.31, ptr noundef nonnull @.str.32, i32 noundef 31, ptr noundef nonnull @__PRETTY_FUNCTION__.int128_get64) #14
-  unreachable
-
-int128_get64.exit81:                              ; preds = %.thread, %int128_get64.exit80, %bb.s
+int128_get64.exit81:                              ; preds = %bb.s, %.thread, %int128_get64.exit80
   %.06388.off0 = phi i64 [ %extract.t, %bb.s ], [ %i.bq, %.thread ], [ -9223372036854775808, %int128_get64.exit80 ] ; 2 uses
   %.287 = phi i64 [ %i.av, %bb.s ], [ %i.bw, %.thread ], [ %i.ca, %int128_get64.exit80 ] ; 2 uses
   %i.cb = call i32 @vhost_vdpa_dma_unmap(ptr noundef nonnull %i.a, i32 noundef 0, i64 noundef %.287, i64 noundef %.06388.off0) ; 2 uses

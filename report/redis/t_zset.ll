@@ -204,7 +204,7 @@ bb.aa:                                            ; preds = %bb.z
   br i1 %.not98, label %zslGetElementByRank.exit, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
-  %i.bz = sub nsw i64 %.0.i, %spec.store.select   ; 7 uses
+  %i.bz = sub nuw nsw i64 %.0.i, %spec.store.select ; 7 uses
   %i.ca = getelementptr inbounds nuw i8, ptr %i.bw, i64 24
   %i.cb = load i32, ptr %i.ca, align 8, !tbaa !18 ; 2 uses
   %i.cc = icmp sgt i32 %i.cb, 0
@@ -239,7 +239,7 @@ bb.ac:                                            ; preds = %.critedge.i.i
   %i.ck = load ptr, ptr %i.ch, align 8, !tbaa !31
   %.not.i.us40.i.i = icmp ne ptr %i.ck, null
   %i.cl = zext i1 %.not.i.us40.i.i to i64
-  %i.cm = add i64 %.01845.i.i, %i.cl              ; 4 uses
+  %i.cm = add nuw i64 %.01845.i.i, %i.cl          ; 4 uses
   %.not2227.us41.i.i = icmp ugt i64 %i.cm, %i.bz
   br i1 %.not2227.us41.i.i, label %.critedge.thread.i.i, label %.thread.us.i.preheader.i
 
@@ -247,8 +247,7 @@ bb.ac:                                            ; preds = %.critedge.i.i
   %i.cn = getelementptr inbounds nuw i8, ptr %i.cj, i64 16
   %i.co = load ptr, ptr %i.cn, align 8, !tbaa !31 ; 2 uses
   %.not.us.i.peel.i = icmp eq ptr %i.co, null
-  %6 = add i64 %i.cm, 1
-  %.not2227.us.i.peel.i = icmp ugt i64 %6, %i.bz
+  %.not2227.us.i.peel.i = icmp uge i64 %i.cm, %i.bz
   %or.cond.i.peel.i = or i1 %.not2227.us.i.peel.i, %.not.us.i.peel.i
   br i1 %or.cond.i.peel.i, label %.critedge.i.thread.i, label %.thread.us.i.i
 
@@ -651,7 +650,7 @@ bb.ag:                                            ; preds = %bb.af, %bb.ae
 bb.ah:                                            ; preds = %bb.ag, %bb.ah
   %.2 = phi i64 [ %.0154, %bb.ag ], [ %i.co, %bb.ah ] ; 2 uses
   %i.cn = tail call i64 @llvm.umin.i64(i64 %.2, i64 %i.ch) ; 2 uses
-  %i.co = sub i64 %.2, %i.cn                      ; 2 uses
+  %i.co = sub nuw nsw i64 %.2, %i.cn              ; 2 uses
   %i.cp = load ptr, ptr %i.cl, align 8, !tbaa !75
   %i.cq = trunc nuw nsw i64 %i.cn to i32          ; 2 uses
   tail call void @lpRandomPairs(ptr noundef %i.cp, i32 noundef %i.cq, ptr noundef %i.cj, ptr noundef %.0158, i32 noundef 2) #17

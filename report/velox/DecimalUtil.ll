@@ -202,7 +202,7 @@ _ZN8facebook5velox12_GLOBAL__N_113extractDigitsEPKcmm.exit.thread.i: ; preds = %
 _ZN8facebook5velox12_GLOBAL__N_113extractDigitsEPKcmm.exit.i: ; preds = %.lr.ph.i.i, %bb.g
   %.0.lcssa.i.i = phi i64 [ 1, %bb.g ], [ %.09.i.i, %.lr.ph.i.i ] ; 5 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %i.f, i64 %.062.i ; 8 uses
-  %i.ac = sub i64 %.0.lcssa.i.i, %.062.i          ; 9 uses
+  %i.ac = sub nuw i64 %.0.lcssa.i.i, %.062.i      ; 9 uses
   %i.ad = icmp eq i64 %.0.lcssa.i.i, %i.g
   br i1 %i.ad, label %bb.i, label %bb.m
 
@@ -286,10 +286,11 @@ bb.o:                                             ; preds = %.lr.ph.i79.i
 .loopexit:                                        ; preds = %.lr.ph.i79.i, %bb.o, %bb.n
   %.0.lcssa.i76.i = phi i64 [ %i.at, %bb.n ], [ %.09.i80.i, %.lr.ph.i79.i ], [ %i.g, %bb.o ] ; 2 uses
   %i.az = getelementptr inbounds nuw i8, ptr %i.f, i64 %i.at ; 2 uses
-  %i.ba = sub i64 %.0.lcssa.i76.i, %i.at          ; 2 uses
-  %34 = or i64 %i.ba, %i.ac
-  %or.cond.a = icmp eq i64 %34, 0
-  br i1 %or.cond.a, label %.thread144, label %bb.r
+  %i.ba = sub nuw i64 %.0.lcssa.i76.i, %i.at      ; 2 uses
+  %34 = icmp eq i64 %i.ac, 0
+  %or.cond.a = icmp eq i64 %i.ba, 0
+  %or.cond = select i1 %34, i1 %or.cond.a, i1 false
+  br i1 %or.cond, label %.thread144, label %bb.r
 
 .thread:                                          ; preds = %bb.m
   %i.bb = icmp eq i64 %i.ac, 0

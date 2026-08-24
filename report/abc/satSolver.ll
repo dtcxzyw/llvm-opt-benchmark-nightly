@@ -85,8 +85,7 @@ bb.b:                                             ; preds = %._crit_edge
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 240
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !32   ; 3 uses
   %i.p = getelementptr i8, ptr %0, i64 304
-  %3 = zext nneg i32 %2 to i64
-  %wide.trip.count80 = zext nneg i32 %2 to i64
+  %wide.trip.count80 = zext nneg i32 %2 to i64    ; 2 uses
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph67, %bb.i
@@ -102,7 +101,7 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.c, %bb.d
   %i.t = phi i64 [ %i.s, %bb.d ], [ %indvars.iv77, %bb.c ] ; 2 uses
   %i.u = load i64, ptr %i.i, align 8, !tbaa !30
-  %i.v = sub nsw i64 %3, %indvars.iv77
+  %i.v = sub nuw nsw i64 %wide.trip.count80, %indvars.iv77
   %i.w = mul i64 %i.u, %i.v
   %i.x = getelementptr inbounds [8 x i8], ptr %i.m, i64 %i.t
   store i64 %i.w, ptr %i.x, align 8, !tbaa !28
@@ -181,9 +180,9 @@ bb.j:                                             ; preds = %._crit_edge
   %indvars.iv72 = phi i64 [ %indvars.iv.next73, %bb.n ], [ 0, %.lr.ph64 ] ; 4 uses
   %i.az = trunc i64 %indvars.iv72 to i32
   %i.ba = sub i32 %2, %i.az
-  %4 = sitofp i32 %i.ba to double
+  %3 = uitofp nneg i32 %i.ba to double
   %i.bb = getelementptr inbounds nuw [8 x i8], ptr %i.av, i64 %indvars.iv72
-  store double %4, ptr %i.bb, align 8, !tbaa !28
+  store double %3, ptr %i.bb, align 8, !tbaa !28
   %i.bc = getelementptr inbounds nuw [4 x i8], ptr %i.ax, i64 %indvars.iv72
   %i.bd = load i32, ptr %i.bc, align 4, !tbaa !33 ; 4 uses
   %.not45.us = icmp eq i32 %i.bd, -1
@@ -245,10 +244,10 @@ bb.n:                                             ; preds = %order_update.exit59
   %i.bx = load i32, ptr %i.bw, align 4, !tbaa !33
   %i.by = trunc i64 %indvars.iv to i32
   %i.bz = sub i32 %2, %i.by
-  %5 = sitofp i32 %i.bz to double
+  %4 = uitofp nneg i32 %i.bz to double
   %i.ca = sext i32 %i.bx to i64                   ; 2 uses
   %i.cb = getelementptr inbounds [8 x i8], ptr %i.av, i64 %i.ca
-  store double %5, ptr %i.cb, align 8, !tbaa !28
+  store double %4, ptr %i.cb, align 8, !tbaa !28
   %i.cc = getelementptr inbounds [4 x i8], ptr %i.ax, i64 %i.ca
   %i.cd = load i32, ptr %i.cc, align 4, !tbaa !33 ; 4 uses
   %.not45 = icmp eq i32 %i.cd, -1

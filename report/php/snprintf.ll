@@ -100,7 +100,7 @@ bb.f:                                             ; preds = %bb.d
   br i1 %i.d, label %bb.g, label %bb.o
 
 bb.g:                                             ; preds = %bb.f
-  %i.q = load i32, ptr %i.a, align 4, !tbaa !24   ; 9 uses
+  %i.q = load i32, ptr %i.a, align 4, !tbaa !24   ; 8 uses
   %i.r = icmp slt i32 %i.q, 1
   br i1 %i.r, label %bb.h, label %bb.m
 
@@ -139,21 +139,20 @@ bb.l:                                             ; preds = %bb.k
   br label %bb.q
 
 bb.m:                                             ; preds = %bb.g
-  %i.ac = call i32 @llvm.usub.sat.i32(i32 %i.q, i32 319) ; 2 uses
-  %i.ad = sub nsw i32 %i.q, %i.ac                 ; 5 uses
+  %i.ac = call i32 @llvm.usub.sat.i32(i32 %i.q, i32 319) ; 3 uses
+  %i.ad = sub nsw i32 %i.q, %i.ac                 ; 6 uses
   %i.ae = add nsw i32 %i.ad, -1                   ; 4 uses
   store i32 %i.ae, ptr %i.a, align 4, !tbaa !24
-  %8 = icmp sgt i32 %i.ad, 0
-  br i1 %8, label %.lr.ph.preheader, label %.preheader
+  %.not126 = icmp eq i32 %i.q, %i.ac
+  br i1 %.not126, label %.preheader, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.m
-  %9 = call i32 @llvm.umin.i32(i32 %i.q, i32 319)
-  %i.af = zext nneg i32 %9 to i64                 ; 2 uses
-  %min.iters.check = icmp ult i32 %i.q, 24
+  %i.af = zext i32 %i.ad to i64                   ; 2 uses
+  %min.iters.check = icmp ult i32 %i.ad, 24
   br i1 %min.iters.check, label %.lr.ph.preheader177, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader
-  %i.ag = zext nneg i32 %i.ad to i64              ; 2 uses
+  %i.ag = zext i32 %i.ad to i64                   ; 2 uses
   %scevgep132 = getelementptr i8, ptr %6, i64 %i.ag ; 2 uses
   %scevgep133 = getelementptr inbounds nuw i8, ptr %i.a, i64 4 ; 2 uses
   %scevgep134 = getelementptr i8, ptr %.064, i64 %i.ag ; 2 uses
@@ -171,8 +170,8 @@ vector.memcheck:                                  ; preds = %.lr.ph.preheader
   br i1 %conflict.rdx141, label %.lr.ph.preheader177, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %i.af, 504                     ; 5 uses
-  %i.ah = trunc nuw nsw i64 %n.vec to i32
+  %n.vec = and i64 %i.af, 4294967288              ; 5 uses
+  %i.ah = trunc nuw i64 %n.vec to i32
   %i.ai = sub i32 %i.ae, %i.ah
   %i.aj = getelementptr i8, ptr %.064, i64 %n.vec ; 2 uses
   %i.ak = getelementptr i8, ptr %6, i64 %n.vec    ; 2 uses
@@ -244,7 +243,7 @@ middle.block:                                     ; preds = %vector.body
   %i.az = zext nneg i32 %i.ac to i64
   call void @llvm.memset.p0.i64(ptr align 1 %.167.lcssa, i8 48, i64 %i.az, i1 false), !tbaa !14
   %i.ba = xor i32 %i.ad, -1
-  %i.bb = add i32 %i.q, %i.ba
+  %i.bb = add nsw i32 %i.q, %i.ba
   %i.bc = zext i32 %i.bb to i64
   %i.bd = getelementptr i8, ptr %.167.lcssa, i64 %i.bc
   %scevgep = getelementptr i8, ptr %i.bd, i64 1
@@ -646,9 +645,6 @@ declare i32 @llvm.usub.sat.i32(i32, i32) #13
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #16
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umin.i32(i32, i32) #13
 
 attributes #0 = { nofree norecurse nosync nounwind memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

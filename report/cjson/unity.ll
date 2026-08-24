@@ -204,7 +204,7 @@ bb.m:                                             ; preds = %.split.us
   %.148 = phi i64 [ %i.bm, %bb.m ], [ %.us-phi69, %.split.us ], [ %i.m, %.preheader117 ], [ %i.w, %UnityIsOneArrayNull.exit.preheader.split.us.jt8 ]
   tail call fastcc void @UnityTestResultsFailBegin(i64 noundef %4)
   tail call void @UnityPrint(ptr noundef nonnull @UnityStrElement)
-  %i.bn = sub i32 %2, %.us-phi70110
+  %i.bn = sub nuw i32 %2, %.us-phi70110
   %i.bo = zext i32 %i.bn to i64
   tail call void @UnityPrintNumberUnsigned(i64 noundef %i.bo)
   tail call void @UnityPrint(ptr noundef nonnull @UnityStrExpected)
@@ -325,7 +325,7 @@ bb.k:                                             ; preds = %bb.j, %bb.i
 UnityFloatsWithin.exit.thread37:                  ; preds = %bb.k
   tail call fastcc void @UnityTestResultsFailBegin(i64 noundef %4)
   tail call void @UnityPrint(ptr noundef nonnull @UnityStrElement)
-  %i.ag = sub i32 %2, %.02644
+  %i.ag = sub nuw i32 %2, %.02644
   %i.ah = zext i32 %i.ag to i64
   tail call void @UnityPrintNumberUnsigned(i64 noundef %i.ah)
   tail call void @UnityPrint(ptr noundef nonnull @UnityStrExpected)
@@ -603,7 +603,7 @@ bb.k:                                             ; preds = %bb.j, %bb.i
 UnityDoublesWithin.exit.thread37:                 ; preds = %bb.k
   tail call fastcc void @UnityTestResultsFailBegin(i64 noundef %4)
   tail call void @UnityPrint(ptr noundef nonnull @UnityStrElement)
-  %i.ag = sub i32 %2, %.02644
+  %i.ag = sub nuw i32 %2, %.02644
   %i.ah = zext i32 %i.ag to i64
   tail call void @UnityPrintNumberUnsigned(i64 noundef %i.ah)
   tail call void @UnityPrint(ptr noundef nonnull @UnityStrExpected)
@@ -1006,14 +1006,14 @@ bb.h:                                             ; preds = %.lr.ph133
 
 bb.i:                                             ; preds = %.split.us
   tail call void @UnityPrint(ptr noundef nonnull @UnityStrElement)
-  %i.al = sub i32 %3, %.us-phi
+  %i.al = sub nuw i32 %3, %.us-phi
   %i.am = zext i32 %i.al to i64
   tail call void @UnityPrintNumberUnsigned(i64 noundef %i.am)
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %.split.us
   tail call void @UnityPrint(ptr noundef nonnull @UnityStrByte)
-  %i.an = sub i32 %2, %.us-phi61
+  %i.an = sub nuw i32 %2, %.us-phi61
   %i.ao = zext i32 %i.an to i64
   tail call void @UnityPrintNumberUnsigned(i64 noundef %i.ao)
   tail call void @UnityPrint(ptr noundef nonnull @UnityStrExpected)

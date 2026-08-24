@@ -202,7 +202,7 @@ bb.aj:                                            ; preds = %bb.ai
   br label %_ZN2cv3dnn14dnn5_v20260605L14normalize_axisEii.exit
 
 bb.ak:                                            ; preds = %bb.ai
-  %i.ar = sub nsw i32 %i.ae, %i.af
+  %i.ar = sub nuw nsw i32 %i.ae, %i.af
   br label %_ZN2cv3dnn14dnn5_v20260605L14normalize_axisEii.exit
 
 _ZN2cv3dnn14dnn5_v20260605L14normalize_axisEii.exit: ; preds = %bb.ak, %bb.aj, %bb.ah
@@ -605,11 +605,11 @@ bb.i:                                             ; preds = %bb.h
   br label %_ZN2cv3dnn14dnn5_v20260605L14normalize_axisEii.exit
 
 bb.j:                                             ; preds = %bb.h
-  %i.p = sub nsw i32 %i.d, %i.a
+  %i.p = sub nuw nsw i32 %i.d, %i.a
   br label %_ZN2cv3dnn14dnn5_v20260605L14normalize_axisEii.exit
 
 _ZN2cv3dnn14dnn5_v20260605L14normalize_axisEii.exit: ; preds = %bb.g, %bb.i, %bb.j
-  %i.q = phi i32 [ %i.p, %bb.j ], [ %i.o, %bb.i ], [ %i.d, %bb.g ] ; 2 uses
+  %i.q = phi i32 [ %i.p, %bb.j ], [ %i.o, %bb.i ], [ %i.d, %bb.g ] ; 3 uses
   %or.cond = icmp ult i32 %i.q, %i.a
   br i1 %or.cond, label %.split, label %bb.k
 
@@ -664,8 +664,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.o,
   %i.ad = getelementptr inbounds nuw i8, ptr %2, i64 12 ; 2 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %3, i64 12
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 12
-  %i.ag = zext nneg i32 %i.q to i64               ; 2 uses
-  %14 = sext i32 %i.b to i64
+  %i.ag = zext nneg i32 %i.q to i64
+  %14 = zext nneg i32 %i.q to i64
   %wide.trip.count = zext nneg i32 %i.ab to i64
   %invariant.op = sub i32 1, %i.b
   br label %bb.p
@@ -675,7 +675,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.o,
 
 bb.p:                                             ; preds = %.lr.ph, %_ZN2cv8MatShapeixEm.exit59
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %_ZN2cv8MatShapeixEm.exit59 ] ; 7 uses
-  %i.ah = icmp samesign ult i64 %indvars.iv, %i.ag
+  %i.ah = icmp samesign ult i64 %indvars.iv, %14
   br i1 %i.ah, label %bb.q, label %bb.u
 
 bb.q:                                             ; preds = %bb.p
@@ -720,15 +720,16 @@ _ZNK2cv8MatShapeixEm.exit:                        ; preds = %bb.q
 
 bb.u:                                             ; preds = %bb.p
   %i.as = sub nuw nsw i64 %indvars.iv, %i.ag      ; 3 uses
-  %15 = icmp slt i64 %i.as, %14
-  br i1 %15, label %bb.v, label %bb.z
+  %15 = trunc nuw i64 %i.as to i32
+  %16 = icmp sgt i32 %i.b, %15
+  br i1 %16, label %bb.v, label %bb.z
 
 bb.v:                                             ; preds = %bb.u
   %i.at = load i32, ptr %3, align 4, !tbaa !50
   %narrow.i42 = tail call i32 @llvm.smax.i32(i32 %i.at, i32 1)
-  %16 = trunc nsw i64 %i.as to i32
-  %17 = icmp ugt i32 %narrow.i42, %16
-  br i1 %17, label %_ZNK2cv8MatShapeixEm.exit47, label %bb.w
+  %17 = zext nneg i32 %narrow.i42 to i64
+  %18 = icmp samesign ult i64 %i.as, %17
+  br i1 %18, label %_ZNK2cv8MatShapeixEm.exit47, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #19
@@ -1131,7 +1132,7 @@ _ZSt4fillIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEEiEvT_S7_RKT0_.exit
 
 _ZSt4fillIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEEiEvT_S7_RKT0_.exit: ; preds = %_ZSt4fillIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEEiEvT_S7_RKT0_.exit.loopexit, %bb.f
   %i.au = phi i32 [ %.pre, %_ZSt4fillIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEEiEvT_S7_RKT0_.exit.loopexit ], [ %i.aj, %bb.f ] ; 2 uses
-  %i.av = sub i64 %1, %i.ah
+  %i.av = sub nuw i64 %1, %i.ah
   %.idx.i.i.i.i.i = shl nuw nsw i64 %i.av, 2
   %i.aw = getelementptr inbounds nuw i8, ptr %i.ae, i64 %.idx.i.i.i.i.i ; 2 uses
   %i.ax = shl i64 %1, 2

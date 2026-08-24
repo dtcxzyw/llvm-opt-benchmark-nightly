@@ -205,14 +205,14 @@ _RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsfu0rQ
   %.sroa.01.017.i.i = phi i64 [ %i.cm, %.lr.ph.i.i ], [ %.ph134, %_RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsfu0rQaTkGUu_12clap_builder.exit.thread44.i ] ; 2 uses
   %.sroa.05.016.i.i = phi i64 [ %i.cl, %.lr.ph.i.i ], [ 0, %_RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsfu0rQaTkGUu_12clap_builder.exit.thread44.i ] ; 2 uses
   %i.cg = lshr i64 %.sroa.01.017.i.i, 1           ; 2 uses
-  %i.ch = add nuw i64 %i.cg, %.sroa.05.016.i.i    ; 3 uses
+  %i.ch = add nuw nsw i64 %i.cg, %.sroa.05.016.i.i ; 3 uses
   %i.ci = icmp ult i64 %i.ch, %.ph134
   tail call void @llvm.assume(i1 %i.ci)
   %i.cj = getelementptr inbounds nuw [32 x i8], ptr %.ph135, i64 %i.ch
   %.val12.i.i = load double, ptr %i.cj, align 8, !alias.scope !1225, !noalias !1228, !noundef !13
   %i.ck = fcmp ogt double %.val12.i.i, %i.ce
   %i.cl = select i1 %i.ck, i64 %.sroa.05.016.i.i, i64 %i.ch, !unpredictable !13 ; 2 uses
-  %i.cm = sub i64 %.sroa.01.017.i.i, %i.cg        ; 2 uses
+  %i.cm = sub nuw nsw i64 %.sroa.01.017.i.i, %i.cg ; 2 uses
   %i.cn = icmp ugt i64 %i.cm, 1
   br i1 %i.cn, label %.lr.ph.i.i, label %._crit_edge.i.i
 
@@ -615,14 +615,14 @@ _RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsfu0rQ
   %.sroa.01.017.i.i = phi i64 [ %i.bs, %.lr.ph.i.i ], [ %i.n, %_RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsfu0rQaTkGUu_12clap_builder.exit.thread39.i ] ; 2 uses
   %.sroa.05.016.i.i = phi i64 [ %i.br, %.lr.ph.i.i ], [ 0, %_RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsfu0rQaTkGUu_12clap_builder.exit.thread39.i ] ; 2 uses
   %i.bm = lshr i64 %.sroa.01.017.i.i, 1           ; 2 uses
-  %i.bn = add nuw i64 %i.bm, %.sroa.05.016.i.i    ; 3 uses
+  %i.bn = add nuw nsw i64 %i.bm, %.sroa.05.016.i.i ; 3 uses
   %i.bo = icmp ult i64 %i.bn, %i.n
   tail call void @llvm.assume(i1 %i.bo)
   %i.bp = getelementptr inbounds nuw [32 x i8], ptr %i.o, i64 %i.bn
   %.val12.i.i = load double, ptr %i.bp, align 8, !alias.scope !1357, !noalias !1360, !noundef !13
   %i.bq = fcmp ogt double %.val12.i.i, %i.s
   %i.br = select i1 %i.bq, i64 %.sroa.05.016.i.i, i64 %i.bn, !unpredictable !13 ; 2 uses
-  %i.bs = sub i64 %.sroa.01.017.i.i, %i.bm        ; 2 uses
+  %i.bs = sub nuw nsw i64 %.sroa.01.017.i.i, %i.bm ; 2 uses
   %i.bt = icmp ugt i64 %i.bs, 1
   br i1 %i.bt, label %.lr.ph.i.i, label %._crit_edge.i.i
 
@@ -1025,7 +1025,7 @@ _RINvNtNtNtCs4wP2HXfJTCR_5alloc11collections5btree4node12slice_insertRNtNtNtCsfu
 
 bb.ag:                                            ; preds = %bb.af
   %i.fp = getelementptr inbounds nuw [32 x i8], ptr %i.ez, i64 %i.fl
-  %i.fq = sub nsw i64 %i.fj, %i.fd                ; 2 uses
+  %i.fq = sub nuw nsw i64 %i.fj, %i.fd            ; 2 uses
   %i.fr = shl nuw nsw i64 %i.fq, 5
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.fp, ptr nonnull align 8 %i.fm, i64 %i.fr, i1 false), !alias.scope !3523, !noalias !3524
   store i64 %.sroa.0.sroa.0.087.i.i.i, ptr %i.fm, align 8, !alias.scope !3511, !noalias !3513
@@ -1428,7 +1428,7 @@ _RNvMsi_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree3mapINtB5_8BTreeMapTjNtNtBb
   %i.nd = uitofp i64 %i.nb to float
   %i.ne = fdiv float %i.nc, %i.nd
   %i.nf = fcmp ule float %i.ne, 4.000000e-01
-  %i.ng = sub i64 %i.nb, %i.na
+  %i.ng = sub nuw i64 %i.nb, %i.na
   br i1 %i.mz, label %.lr.ph.i.split.us.i, label %.lr.ph.i.split.i
 
 .lr.ph.i.split.us.i:                              ; preds = %.loopexit
@@ -1831,7 +1831,7 @@ _RINvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB7_4IterNtNtNtCsfu0rQaTkGUu_12cla
   %i.ba = uitofp i64 %.val1.i.i.i.i.fr.i to float
   %i.bb = fdiv float %i.az, %i.ba
   %i.bc = fcmp ogt float %i.bb, 4.000000e-01
-  %i.bd = sub i64 %.val1.i.i.i.i.fr.i, %i.ay
+  %i.bd = sub nuw i64 %.val1.i.i.i.i.fr.i, %i.ay
   br i1 %i.ax, label %.lr.ph.i.split.us.i, label %.lr.ph.i.split.i
 
 .lr.ph.i.split.us.i:                              ; preds = %.loopexit26, %.backedge.i.us.i
@@ -2234,7 +2234,7 @@ _RINvNtNtNtCs4wP2HXfJTCR_5alloc11collections5btree4node12slice_insertRNtNtNtCsfu
 
 bb.az:                                            ; preds = %bb.ay
   %i.ll = getelementptr inbounds nuw [32 x i8], ptr %i.kv, i64 %i.lh
-  %i.lm = sub nsw i64 %i.lf, %i.kz                ; 2 uses
+  %i.lm = sub nuw nsw i64 %i.lf, %i.kz            ; 2 uses
   %i.ln = shl nuw nsw i64 %i.lm, 5
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.ll, ptr nonnull align 8 %i.li, i64 %i.ln, i1 false), !alias.scope !4802, !noalias !4803
   store i64 %.sroa.0.sroa.0.087.i.i.i, ptr %i.li, align 8, !alias.scope !4790, !noalias !4792
@@ -2637,7 +2637,7 @@ _RINvNtNtNtCs4wP2HXfJTCR_5alloc11collections5btree4node12slice_insertRNtNtNtCsfu
 
 bb.au:                                            ; preds = %bb.at
   %i.jq = getelementptr inbounds nuw [24 x i8], ptr %i.jl, i64 %i.jm
-  %i.jr = sub nsw i64 %i.jj, %i.je                ; 2 uses
+  %i.jr = sub nuw nsw i64 %i.jj, %i.je            ; 2 uses
   %i.js = mul nuw nsw i64 %i.jr, 24
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.jq, ptr nonnull align 8 %i.jn, i64 %i.js, i1 false), !alias.scope !5084, !noalias !5087
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.jn, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.11.i.i.i, i64 24, i1 false), !noalias !5068
@@ -3040,14 +3040,14 @@ _RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsfu0rQ
   %.sroa.01.017.i.i = phi i64 [ %i.ht, %.lr.ph.i.i86 ], [ %.sink, %_RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsfu0rQaTkGUu_12clap_builder.exit.thread71.i ] ; 2 uses
   %.sroa.05.016.i.i = phi i64 [ %i.hs, %.lr.ph.i.i86 ], [ 0, %_RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsfu0rQaTkGUu_12clap_builder.exit.thread71.i ] ; 2 uses
   %i.hn = lshr i64 %.sroa.01.017.i.i, 1           ; 2 uses
-  %i.ho = add nuw i64 %i.hn, %.sroa.05.016.i.i    ; 3 uses
+  %i.ho = add nuw nsw i64 %i.hn, %.sroa.05.016.i.i ; 3 uses
   %i.hp = icmp ult i64 %i.ho, %.sink
   call void @llvm.assume(i1 %i.hp)
   %i.hq = getelementptr inbounds nuw [32 x i8], ptr %.ph, i64 %i.ho
   %.val12.i.i = load double, ptr %i.hq, align 8, !alias.scope !8121, !noalias !8124, !noundef !13
   %i.hr = fcmp ogt double %.val12.i.i, %.lcssa424
   %i.hs = select i1 %i.hr, i64 %.sroa.05.016.i.i, i64 %i.ho, !unpredictable !13 ; 2 uses
-  %i.ht = sub i64 %.sroa.01.017.i.i, %i.hn        ; 2 uses
+  %i.ht = sub nuw nsw i64 %.sroa.01.017.i.i, %i.hn ; 2 uses
   %i.hu = icmp ugt i64 %i.ht, 1
   br i1 %i.hu, label %.lr.ph.i.i86, label %._crit_edge.i.i
 
@@ -3450,14 +3450,14 @@ _RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsfu0rQ
   %.sroa.01.017.i.i.i.i = phi i64 [ %i.afl, %.lr.ph.i.i.i.i511 ], [ %i.adg, %_RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsfu0rQaTkGUu_12clap_builder.exit.thread43.i.i.i ] ; 2 uses
   %.sroa.05.016.i.i.i.i = phi i64 [ %i.afk, %.lr.ph.i.i.i.i511 ], [ 0, %_RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsfu0rQaTkGUu_12clap_builder.exit.thread43.i.i.i ] ; 2 uses
   %i.aff = lshr i64 %.sroa.01.017.i.i.i.i, 1      ; 2 uses
-  %i.afg = add nuw i64 %i.aff, %.sroa.05.016.i.i.i.i ; 3 uses
+  %i.afg = add nuw nsw i64 %i.aff, %.sroa.05.016.i.i.i.i ; 3 uses
   %i.afh = icmp ult i64 %i.afg, %i.adg
   call void @llvm.assume(i1 %i.afh)
   %i.afi = getelementptr inbounds nuw [32 x i8], ptr %i.adh, i64 %i.afg
   %.val12.i.i.i.i512 = load double, ptr %i.afi, align 8, !alias.scope !9092, !noalias !9095, !noundef !13
   %i.afj = fcmp ogt double %.val12.i.i.i.i512, %i.adl
   %i.afk = select i1 %i.afj, i64 %.sroa.05.016.i.i.i.i, i64 %i.afg, !unpredictable !13 ; 2 uses
-  %i.afl = sub i64 %.sroa.01.017.i.i.i.i, %i.aff  ; 2 uses
+  %i.afl = sub nuw nsw i64 %.sroa.01.017.i.i.i.i, %i.aff ; 2 uses
   %i.afm = icmp ugt i64 %i.afl, 1
   br i1 %i.afm, label %.lr.ph.i.i.i.i511, label %._crit_edge.i.i.i.i
 
@@ -3860,7 +3860,7 @@ bb.k:                                             ; preds = %bb.j
 
 .split3.i.i:                                      ; preds = %bb.k, %bb.j
   %i.aw = getelementptr inbounds nuw i8, ptr %i.x, i64 %i.as ; 7 uses
-  %i.ax = sub i64 %i.z, %i.as                     ; 6 uses
+  %i.ax = sub nuw i64 %i.z, %i.as                 ; 6 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !12159)
   br label %.lr.ph.i.i.i7.i
 

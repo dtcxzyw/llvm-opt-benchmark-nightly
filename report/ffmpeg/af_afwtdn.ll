@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %.lr.ph.i253
   br i1 %exitcond.not.i258, label %.critedge68.i, label %.lr.ph.i253, !llvm.loop !96
 
 .critedge68.i:                                    ; preds = %.critedge.i257, %.split179.i
-  %i.cm = sext i32 %i.be to i64                   ; 3 uses
+  %i.cm = sext i32 %i.be to i64                   ; 7 uses
   %i.cn = getelementptr inbounds [4 x i8], ptr %i.ba, i64 %i.cm ; 4 uses
   %i.co = load i32, ptr %i.cn, align 4, !tbaa !71 ; 2 uses
   %i.cp = icmp slt i32 %i.co, %i.bq
@@ -247,7 +247,7 @@ bb.d:                                             ; preds = %bb.c, %.critedge68.
 .lr.ph.i.i:                                       ; preds = %bb.d
   %i.dh = getelementptr inbounds nuw i8, ptr %i.dg, i64 24 ; 2 uses
   %i.di = getelementptr inbounds nuw i8, ptr %i.b, i64 68
-  %i.dj = zext nneg i32 %i.be to i64              ; 2 uses
+  %i.dj = zext nneg i32 %i.be to i64
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.h, %.lr.ph.i.i
@@ -318,34 +318,33 @@ bb.h:                                             ; preds = %bb.g, %._crit_edge.
   br i1 %exitcond.not.i.i, label %.critedge.i.i, label %bb.e, !llvm.loop !97
 
 .critedge.i.i:                                    ; preds = %bb.h, %bb.d
-  %.pre-phi101.i.i = phi i64 [ %i.cm, %bb.d ], [ %i.dj, %bb.h ] ; 5 uses
-  %i.eu = getelementptr inbounds [4 x i8], ptr %i.de, i64 %.pre-phi101.i.i ; 3 uses
+  %i.eu = getelementptr inbounds [4 x i8], ptr %i.de, i64 %i.cm ; 3 uses
   %i.ev = load i32, ptr %i.eu, align 4, !tbaa !71 ; 2 uses
   %i.ew = icmp slt i32 %i.ev, %i.bq
   br i1 %i.ew, label %bb.i, label %.critedge._crit_edge.i.i
 
 .critedge._crit_edge.i.i:                         ; preds = %.critedge.i.i
-  %.phi.trans.insert95.i.i = getelementptr inbounds [8 x i8], ptr %i.dc, i64 %.pre-phi101.i.i
+  %.phi.trans.insert95.i.i = getelementptr inbounds [8 x i8], ptr %i.dc, i64 %i.cm
   %.pre96.i.i = load ptr, ptr %.phi.trans.insert95.i.i, align 8, !tbaa !95
   br label %bb.k
 
 bb.i:                                             ; preds = %.critedge.i.i
   %i.ex = getelementptr inbounds nuw i8, ptr %i.dg, i64 24 ; 2 uses
   %i.ey = load ptr, ptr %i.ex, align 8, !tbaa !35
-  %i.ez = getelementptr inbounds [8 x i8], ptr %i.ey, i64 %.pre-phi101.i.i
+  %i.ez = getelementptr inbounds [8 x i8], ptr %i.ey, i64 %i.cm
   tail call void @av_freep(ptr noundef %i.ez) #11
   store i32 0, ptr %i.eu, align 4, !tbaa !71
   %i.fa = add nsw i32 %i.bq, 1                    ; 2 uses
   %i.fb = sext i32 %i.fa to i64
   %i.fc = tail call noalias ptr @av_calloc(i64 noundef %i.fb, i64 noundef 8) #11 ; 4 uses
   %i.fd = load ptr, ptr %i.ex, align 8, !tbaa !35
-  %i.fe = getelementptr inbounds [8 x i8], ptr %i.fd, i64 %.pre-phi101.i.i
+  %i.fe = getelementptr inbounds [8 x i8], ptr %i.fd, i64 %i.cm
   store ptr %i.fc, ptr %i.fe, align 8, !tbaa !95
   %.not88.i.i = icmp eq ptr %i.fc, null
   br i1 %.not88.i.i, label %inverse.exit, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %i.ff = getelementptr inbounds [8 x i8], ptr %i.dc, i64 %.pre-phi101.i.i
+  %i.ff = getelementptr inbounds [8 x i8], ptr %i.dc, i64 %i.cm
   store ptr %i.fc, ptr %i.ff, align 8, !tbaa !95
   br label %bb.k
 

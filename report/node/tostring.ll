@@ -48,7 +48,7 @@ bb.a:
   %i.b = load i32, ptr %2, align 4
   %i.c = zext i1 %6 to i8
   store ptr %3, ptr %8, align 8
-  %.sroa.2.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 3 uses
+  %.sroa.2.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 2 uses
   store i32 %4, ptr %.sroa.2.0..sroa_idx.i, align 8
   %i.d = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 3 uses
   store i32 %5, ptr %i.d, align 8
@@ -64,7 +64,7 @@ bb.a:
   %i.j = zext i32 %i.b to i64
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 %i.j ; 10 uses
   store ptr %i.k, ptr %i.i, align 8
-  %i.l = getelementptr inbounds nuw i8, ptr %8, i64 48 ; 14 uses
+  %i.l = getelementptr inbounds nuw i8, ptr %8, i64 48 ; 13 uses
   store ptr %i.k, ptr %i.l, align 8
   %i.m = getelementptr inbounds nuw i8, ptr %8, i64 56 ; 3 uses
   store i64 0, ptr %i.m, align 8
@@ -116,7 +116,7 @@ _ZN2v86bigint12_GLOBAL__N_117ToStringFormatterC2ENS0_6DigitsEibPcjPNS0_13Process
   br label %_ZN2v86bigint12_GLOBAL__N_117ToStringFormatterC2ENS0_6DigitsEibPcjPNS0_13ProcessorImplE.exit
 
 _ZN2v86bigint12_GLOBAL__N_117ToStringFormatterC2ENS0_6DigitsEibPcjPNS0_13ProcessorImplE.exit: ; preds = %_ZN2v86bigint12_GLOBAL__N_117ToStringFormatterC2ENS0_6DigitsEibPcjPNS0_13ProcessorImplE.exit.loopexit, %bb.a
-  %i.u = phi i32 [ %indvars.i.i56, %_ZN2v86bigint12_GLOBAL__N_117ToStringFormatterC2ENS0_6DigitsEibPcjPNS0_13ProcessorImplE.exit.loopexit ], [ 0, %bb.a ] ; 6 uses
+  %i.u = phi i32 [ %indvars.i.i56, %_ZN2v86bigint12_GLOBAL__N_117ToStringFormatterC2ENS0_6DigitsEibPcjPNS0_13ProcessorImplE.exit.loopexit ], [ 0, %bb.a ] ; 7 uses
   %i.v = icmp sgt i32 %5, 0
   %i.w = tail call range(i32 1, 32) i32 @llvm.ctpop.i32(i32 %5)
   %i.x = icmp samesign ult i32 %i.w, 2
@@ -124,7 +124,7 @@ _ZN2v86bigint12_GLOBAL__N_117ToStringFormatterC2ENS0_6DigitsEibPcjPNS0_13Process
   br i1 %or.cond, label %bb.c, label %_ZN2v86bigint12IsPowerOfTwoEi.exit.thread
 
 bb.c:                                             ; preds = %_ZN2v86bigint12_GLOBAL__N_117ToStringFormatterC2ENS0_6DigitsEibPcjPNS0_13ProcessorImplE.exit
-  %i.y = tail call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %5, i1 true) ; 7 uses
+  %i.y = tail call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %5, i1 true) ; 6 uses
   %i.z = add nsw i32 %5, -1                       ; 3 uses
   %.not58.i = icmp eq i32 %i.u, 1
   %.pre.i = zext nneg i32 %i.z to i64             ; 2 uses
@@ -132,13 +132,15 @@ bb.c:                                             ; preds = %_ZN2v86bigint12_GLO
 
 .lr.ph48.i:                                       ; preds = %bb.c
   %i.aa = zext nneg i32 %i.y to i64
+  %9 = add i32 %i.u, -1
+  %10 = zext i32 %9 to i64                        ; 2 uses
   br label %bb.d
 
 ._crit_edge49.i:                                  ; preds = %._crit_edge.i, %bb.c
-  %i.ab = phi ptr [ %i.k, %bb.c ], [ %12, %._crit_edge.i ]
-  %.035.lcssa.i = phi i64 [ 0, %bb.c ], [ %.136.lcssa.i, %._crit_edge.i ]
-  %.034.lcssa.i = phi i32 [ 0, %bb.c ], [ %.1.lcssa.i, %._crit_edge.i ] ; 2 uses
-  %.lcssa.i = phi i64 [ 0, %bb.c ], [ %15, %._crit_edge.i ]
+  %i.ab = phi ptr [ %i.k, %bb.c ], [ %i.bg, %._crit_edge.i ]
+  %.035.lcssa.i = phi i64 [ 0, %bb.c ], [ %i.bh, %._crit_edge.i ]
+  %.034.lcssa.i = phi i32 [ 0, %bb.c ], [ %i.bi, %._crit_edge.i ] ; 2 uses
+  %.lcssa.i = phi i64 [ 0, %bb.c ], [ %10, %._crit_edge.i ]
   %i.ac = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %.lcssa.i
   %.0.copyload.i.i.i = load i64, ptr %i.ac, align 1 ; 2 uses
   %i.ad = zext nneg i32 %.034.lcssa.i to i64
@@ -149,14 +151,13 @@ bb.c:                                             ; preds = %_ZN2v86bigint12_GLO
   %i.ai = zext nneg i32 %i.ah to i64
   %i.aj = getelementptr inbounds nuw i8, ptr @_ZN2v86bigint12_GLOBAL__N_116kConversionCharsE, i64 %i.ai
   %i.ak = load i8, ptr %i.aj, align 1
-  %i.al = getelementptr inbounds i8, ptr %i.ab, i64 -1 ; 2 uses
+  %i.al = getelementptr inbounds i8, ptr %i.ab, i64 -1 ; 4 uses
   store ptr %i.al, ptr %i.l, align 8
   store i8 %i.ak, ptr %i.al, align 1
   %i.am = sub nsw i32 %i.y, %.034.lcssa.i
   %i.an = zext nneg i32 %i.am to i64
   %i.ao = lshr i64 %.0.copyload.i.i.i, %i.an      ; 2 uses
   %.not53.i = icmp eq i64 %i.ao, 0
-  %.promoted.i.pre83 = load ptr, ptr %i.l, align 8 ; 2 uses
   br i1 %.not53.i, label %_ZN2v86bigint12_GLOBAL__N_117ToStringFormatter14BasePowerOfTwoEv.exit, label %.lr.ph56.i
 
 .lr.ph56.i:                                       ; preds = %._crit_edge49.i
@@ -164,10 +165,10 @@ bb.c:                                             ; preds = %_ZN2v86bigint12_GLO
   br label %bb.e
 
 bb.d:                                             ; preds = %._crit_edge.i, %.lr.ph48.i
-  %i.aq = phi ptr [ %i.k, %.lr.ph48.i ], [ %12, %._crit_edge.i ]
+  %i.aq = phi ptr [ %i.k, %.lr.ph48.i ], [ %i.bg, %._crit_edge.i ]
   %indvars.iv.i = phi i64 [ 0, %.lr.ph48.i ], [ %indvars.iv.next.i, %._crit_edge.i ] ; 2 uses
-  %.03445.i = phi i32 [ 0, %.lr.ph48.i ], [ %.1.lcssa.i, %._crit_edge.i ] ; 2 uses
-  %.03544.i = phi i64 [ 0, %.lr.ph48.i ], [ %.136.lcssa.i, %._crit_edge.i ]
+  %.03445.i = phi i32 [ 0, %.lr.ph48.i ], [ %i.bi, %._crit_edge.i ] ; 2 uses
+  %.03544.i = phi i64 [ 0, %.lr.ph48.i ], [ %i.bh, %._crit_edge.i ]
   %i.ar = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %indvars.iv.i
   %.0.copyload.i.i39.i = load i64, ptr %i.ar, align 1 ; 2 uses
   %i.as = zext nneg i32 %.03445.i to i64
@@ -178,43 +179,36 @@ bb.d:                                             ; preds = %._crit_edge.i, %.lr
   %i.ax = zext nneg i32 %i.aw to i64
   %i.ay = getelementptr inbounds nuw i8, ptr @_ZN2v86bigint12_GLOBAL__N_116kConversionCharsE, i64 %i.ax
   %i.az = load i8, ptr %i.ay, align 1
-  %i.ba = getelementptr inbounds i8, ptr %i.aq, i64 -1 ; 3 uses
+  %i.ba = getelementptr inbounds i8, ptr %i.aq, i64 -1 ; 2 uses
   store i8 %i.az, ptr %i.ba, align 1
   %i.bb = sub nsw i32 %i.y, %.03445.i             ; 2 uses
-  %9 = zext nneg i32 %i.bb to i64
-  %10 = lshr i64 %.0.copyload.i.i39.i, %9         ; 2 uses
-  %11 = sub nsw i32 64, %i.bb                     ; 3 uses
-  %.not3840.i = icmp slt i32 %11, %i.y
-  br i1 %.not3840.i, label %._crit_edge.i, label %.lr.ph.i
+  %11 = sub nsw i32 64, %i.bb
+  %12 = zext nneg i32 %i.bb to i64
+  %13 = lshr i64 %.0.copyload.i.i39.i, %12
+  br label %.lr.ph.i
 
-.lr.ph.i:                                         ; preds = %bb.d, %.lr.ph.i
+.lr.ph.i:                                         ; preds = %.lr.ph.i, %bb.d
   %i.bc = phi ptr [ %i.bg, %.lr.ph.i ], [ %i.ba, %bb.d ]
   %.142.i = phi i32 [ %i.bi, %.lr.ph.i ], [ %11, %bb.d ]
-  %.13641.i = phi i64 [ %i.bh, %.lr.ph.i ], [ %10, %bb.d ] ; 2 uses
+  %.13641.i = phi i64 [ %i.bh, %.lr.ph.i ], [ %13, %bb.d ] ; 2 uses
   %i.bd = and i64 %.13641.i, %.pre.i
   %i.be = getelementptr inbounds nuw i8, ptr @_ZN2v86bigint12_GLOBAL__N_116kConversionCharsE, i64 %i.bd
   %i.bf = load i8, ptr %i.be, align 1
-  %i.bg = getelementptr inbounds i8, ptr %i.bc, i64 -1 ; 4 uses
+  %i.bg = getelementptr inbounds i8, ptr %i.bc, i64 -1 ; 5 uses
   store ptr %i.bg, ptr %i.l, align 8
   store i8 %i.bf, ptr %i.bg, align 1
-  %i.bh = lshr i64 %.13641.i, %i.aa               ; 2 uses
-  %i.bi = sub nsw i32 %.142.i, %i.y               ; 3 uses
+  %i.bh = lshr i64 %.13641.i, %i.aa               ; 3 uses
+  %i.bi = sub nuw nsw i32 %.142.i, %i.y           ; 4 uses
   %.not38.i = icmp slt i32 %i.bi, %i.y
   br i1 %.not38.i, label %._crit_edge.i, label %.lr.ph.i, !llvm.loop !7
 
-._crit_edge.i:                                    ; preds = %.lr.ph.i, %bb.d
-  %12 = phi ptr [ %i.ba, %bb.d ], [ %i.bg, %.lr.ph.i ] ; 2 uses
-  %.136.lcssa.i = phi i64 [ %10, %bb.d ], [ %i.bh, %.lr.ph.i ] ; 2 uses
-  %.1.lcssa.i = phi i32 [ %11, %bb.d ], [ %i.bi, %.lr.ph.i ] ; 2 uses
+._crit_edge.i:                                    ; preds = %.lr.ph.i
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
-  %13 = load i32, ptr %.sroa.2.0..sroa_idx.i, align 8
-  %14 = add i32 %13, -1
-  %15 = zext i32 %14 to i64                       ; 2 uses
-  %i.bj = icmp samesign ult i64 %indvars.iv.next.i, %15
+  %i.bj = icmp samesign ult i64 %indvars.iv.next.i, %10
   br i1 %i.bj, label %bb.d, label %._crit_edge49.i, !llvm.loop !8
 
 bb.e:                                             ; preds = %bb.e, %.lr.ph56.i
-  %i.bk = phi ptr [ %.promoted.i.pre83, %.lr.ph56.i ], [ %i.bo, %bb.e ]
+  %i.bk = phi ptr [ %i.al, %.lr.ph56.i ], [ %i.bo, %bb.e ]
   %.254.i = phi i64 [ %i.ao, %.lr.ph56.i ], [ %i.bp, %bb.e ] ; 2 uses
   %i.bl = and i64 %.254.i, %.pre.i
   %i.bm = getelementptr inbounds nuw i8, ptr @_ZN2v86bigint12_GLOBAL__N_116kConversionCharsE, i64 %i.bl
@@ -617,7 +611,7 @@ _ZN2v86bigint13ScratchDigitsD2Ev.exit.i:          ; preds = %.preheader.i21.i, %
   br label %_ZN2v86bigint12_GLOBAL__N_117ToStringFormatter14BasePowerOfTwoEv.exit
 
 _ZN2v86bigint12_GLOBAL__N_117ToStringFormatter14BasePowerOfTwoEv.exit: ; preds = %bb.e, %_ZN2v86bigint12_GLOBAL__N_117ToStringFormatter4FastEv.exit._ZN2v86bigint12_GLOBAL__N_117ToStringFormatter14BasePowerOfTwoEv.exit_crit_edge, %_ZN2v86bigint13ScratchDigitsD2Ev.exit.i, %_ZN2v86bigint12_GLOBAL__N_117ToStringFormatter12BasecaseLastEmPc.exit.i, %bb.l, %._crit_edge49.i
-  %.promoted.i = phi ptr [ %.promoted.i.pre, %_ZN2v86bigint12_GLOBAL__N_117ToStringFormatter4FastEv.exit._ZN2v86bigint12_GLOBAL__N_117ToStringFormatter14BasePowerOfTwoEv.exit_crit_edge ], [ %.promoted.i.pre83, %._crit_edge49.i ], [ %.09.i25.i, %_ZN2v86bigint13ScratchDigitsD2Ev.exit.i ], [ %.09.i.i, %_ZN2v86bigint12_GLOBAL__N_117ToStringFormatter12BasecaseLastEmPc.exit.i ], [ %i.eo, %bb.l ], [ %i.bo, %bb.e ] ; 5 uses
+  %.promoted.i = phi ptr [ %.promoted.i.pre, %_ZN2v86bigint12_GLOBAL__N_117ToStringFormatter4FastEv.exit._ZN2v86bigint12_GLOBAL__N_117ToStringFormatter14BasePowerOfTwoEv.exit_crit_edge ], [ %i.al, %._crit_edge49.i ], [ %.09.i25.i, %_ZN2v86bigint13ScratchDigitsD2Ev.exit.i ], [ %.09.i.i, %_ZN2v86bigint12_GLOBAL__N_117ToStringFormatter12BasecaseLastEmPc.exit.i ], [ %i.eo, %bb.l ], [ %i.bo, %bb.e ] ; 5 uses
   %i.ip = load ptr, ptr %i.i, align 8             ; 3 uses
   %i.iq = icmp ult ptr %.promoted.i, %i.ip
   br i1 %i.iq, label %.lr.ph.preheader.i, label %.critedge.i

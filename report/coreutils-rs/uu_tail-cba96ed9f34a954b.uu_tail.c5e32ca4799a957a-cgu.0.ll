@@ -205,7 +205,7 @@ bb.a:
   %.sroa.01.025.i.i = phi i64 [ %i.u, %.lr.ph.i.i ], [ %i.d, %bb.a ] ; 2 uses
   %.sroa.05.024.i.i = phi i64 [ %i.t, %.lr.ph.i.i ], [ 0, %bb.a ] ; 2 uses
   %i.k = lshr i64 %.sroa.01.025.i.i, 1            ; 2 uses
-  %i.l = add nuw i64 %i.k, %.sroa.05.024.i.i      ; 3 uses
+  %i.l = add nuw nsw i64 %i.k, %.sroa.05.024.i.i  ; 3 uses
   %i.m = icmp ult i64 %i.l, %i.d
   tail call void @llvm.assume(i1 %i.m)
   %i.n = getelementptr inbounds nuw [144 x i8], ptr %i.b, i64 %i.l ; 2 uses
@@ -223,7 +223,7 @@ bb.a:
   %spec.select.i.i.i.i23.i.i = select i1 %i.q, i64 %i.r, i64 %i.p
   %i.s = icmp sgt i64 %spec.select.i.i.i.i23.i.i, 0
   %i.t = select i1 %i.s, i64 %.sroa.05.024.i.i, i64 %i.l, !unpredictable !4 ; 2 uses
-  %i.u = sub i64 %.sroa.01.025.i.i, %i.k          ; 2 uses
+  %i.u = sub nuw nsw i64 %.sroa.01.025.i.i, %i.k  ; 2 uses
   %i.v = icmp ugt i64 %i.u, 1
   br i1 %i.v, label %.lr.ph.i.i, label %._crit_edge.i.i
 
@@ -333,7 +333,7 @@ bb.a:
   %.sroa.01.025.i.i = phi i64 [ %i.u, %.lr.ph.i.i ], [ %i.d, %bb.a ] ; 2 uses
   %.sroa.05.024.i.i = phi i64 [ %i.t, %.lr.ph.i.i ], [ 0, %bb.a ] ; 2 uses
   %i.k = lshr i64 %.sroa.01.025.i.i, 1            ; 2 uses
-  %i.l = add nuw i64 %i.k, %.sroa.05.024.i.i      ; 3 uses
+  %i.l = add nuw nsw i64 %i.k, %.sroa.05.024.i.i  ; 3 uses
   %i.m = icmp ult i64 %i.l, %i.d
   tail call void @llvm.assume(i1 %i.m)
   %i.n = getelementptr inbounds nuw [144 x i8], ptr %i.b, i64 %i.l ; 2 uses
@@ -351,7 +351,7 @@ bb.a:
   %spec.select.i.i.i.i23.i.i = select i1 %i.q, i64 %i.r, i64 %i.p
   %i.s = icmp sgt i64 %spec.select.i.i.i.i23.i.i, 0
   %i.t = select i1 %i.s, i64 %.sroa.05.024.i.i, i64 %i.l, !unpredictable !4 ; 2 uses
-  %i.u = sub i64 %.sroa.01.025.i.i, %i.k          ; 2 uses
+  %i.u = sub nuw nsw i64 %.sroa.01.025.i.i, %i.k  ; 2 uses
   %i.v = icmp ugt i64 %i.u, 1
   br i1 %i.v, label %.lr.ph.i.i, label %._crit_edge.i.i
 
@@ -485,7 +485,7 @@ bb.a:
   %.sroa.01.025.i.i = phi i64 [ %i.u, %.lr.ph.i.i ], [ %i.d, %bb.a ] ; 2 uses
   %.sroa.05.024.i.i = phi i64 [ %i.t, %.lr.ph.i.i ], [ 0, %bb.a ] ; 2 uses
   %i.k = lshr i64 %.sroa.01.025.i.i, 1            ; 2 uses
-  %i.l = add nuw i64 %i.k, %.sroa.05.024.i.i      ; 3 uses
+  %i.l = add nuw nsw i64 %i.k, %.sroa.05.024.i.i  ; 3 uses
   %i.m = icmp ult i64 %i.l, %i.d
   tail call void @llvm.assume(i1 %i.m)
   %i.n = getelementptr inbounds nuw [144 x i8], ptr %i.b, i64 %i.l ; 2 uses
@@ -503,7 +503,7 @@ bb.a:
   %spec.select.i.i.i.i23.i.i = select i1 %i.q, i64 %i.r, i64 %i.p
   %i.s = icmp sgt i64 %spec.select.i.i.i.i23.i.i, 0
   %i.t = select i1 %i.s, i64 %.sroa.05.024.i.i, i64 %i.l, !unpredictable !4 ; 2 uses
-  %i.u = sub i64 %.sroa.01.025.i.i, %i.k          ; 2 uses
+  %i.u = sub nuw nsw i64 %.sroa.01.025.i.i, %i.k  ; 2 uses
   %i.v = icmp ugt i64 %i.u, 1
   br i1 %i.v, label %.lr.ph.i.i, label %._crit_edge.i.i
 
@@ -906,7 +906,7 @@ bb.v:                                             ; preds = %bb.u, %bb.t, %.lr.p
 
 _RNvMsa_NtCs7GWc7oqutCf_9hashbrown3rawNtB5_13RawTableInner15rehash_in_place.exit: ; preds = %bb.v, %_RNvMsa_NtCs7GWc7oqutCf_9hashbrown3rawNtB5_13RawTableInner23prepare_rehash_in_place.exit.thread14.i
   %i.ib = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.ic = sub i64 %.sroa.03.0.i, %i.b
+  %i.ic = sub nuw i64 %.sroa.03.0.i, %i.b
   store i64 %i.ic, ptr %i.ib, align 8, !alias.scope !544
   br label %_RINvMsa_NtCs7GWc7oqutCf_9hashbrown3rawNtB6_13RawTableInner20reserve_rehash_innerNtNtCs7tKScEop1B6_5alloc5alloc6GlobalECsgZlHlzpN0xi_7uu_tail.exit
 
@@ -1309,7 +1309,7 @@ bb.f:                                             ; preds = %bb.x, %bb.b
   br i1 %or.cond46, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %._crit_edge, %bb.f
-  %i.af = phi i64 [ %.pre82, %._crit_edge ], [ %i.aa, %bb.f ] ; 5 uses
+  %i.af = phi i64 [ %.pre82, %._crit_edge ], [ %i.aa, %bb.f ] ; 6 uses
   %i.ag = phi i64 [ %.pre81, %._crit_edge ], [ %i.ab, %bb.f ] ; 8 uses
   %i.ah = icmp sgt i64 %i.ag, -1
   call void @llvm.assume(i1 %i.ah)
@@ -1348,7 +1348,7 @@ bb.l:                                             ; preds = %bb.g
   call void @llvm.experimental.noalias.scope.decl(metadata !1577)
   %i.ar = add nuw i64 %i.af, 32
   %i.as = shl nuw i64 %i.af, 1
-  %..i.i.i = call noundef i64 @llvm.umax.i64(i64 %i.ar, i64 %i.as) ; 4 uses
+  %..i.i.i = call noundef i64 @llvm.umax.i64(i64 %i.ar, i64 %i.as) ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !1580
   call fastcc void @_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner11finish_growCsgZlHlzpN0xi_7uu_tail(ptr noalias nofree noundef align 8 captures(none) dereferenceable(24) %i.c, i64 %i.af, ptr %.pre83, i64 noundef %..i.i.i, i64 noundef 1, i64 noundef 1) #33, !noalias !1580
   %i.at = load i64, ptr %i.c, align 8, !range !210, !noalias !1580, !noundef !4
@@ -1366,6 +1366,9 @@ _RNvMs2_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner11try_reserveCsgZlHlzpN0
   %i.aw = icmp sgt i64 %..i.i.i, -1
   call void @llvm.assume(i1 %i.aw)
   store i64 %..i.i.i, ptr %1, align 8, !alias.scope !1580
+  %.pre.i = sub nuw nsw i64 %..i.i.i, %i.af
+  %2 = icmp samesign ugt i64 %.pre.i, 31
+  call void @llvm.assume(i1 %2)
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.g, %_RNvMs2_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner11try_reserveCsgZlHlzpN0xi_7uu_tail.exit
